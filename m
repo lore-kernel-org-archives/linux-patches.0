@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044117;
-	b=HQE6FHiPBIHcwnTPVCG2S+1UCloJtTXwkAJcuz3eBuKOB3WH4IwLYxocNL7BXkNCvO1M
-	 HAwV0kzykyM6ke15MbwRpgErfxn0Zb9TIDTmJodZBOa9KjFR1Ms5RMG4SbFr9ZyqtI6+9
-	 nI5MtRR2MFsXy/mb29fjpF5tvY0snHGUlpj63Q2E+dkPrXozzRwHaOSfJz2tBdJiSHa79
-	 MyYudLNs28JrW5EN0fUR4yT/DMmxbyaAIIY7i4gjdPm+XGKwvEHahWFC13rUsG5Q67I2f
-	 2IVhyl809oVQR2ihKCZY9UTsW/oFsHPLpKCfTiYOIyVfMU6S41w62wgXkyVNt3Vg1eA==
+	t=1795044119;
+	b=yOWIGre1PHHszqre82DNacK2XAgCrxFSpdE5wlZLdTDSrAnYEMjEed6ykQVsiJo/8xWb
+	 2VV7fELmhmKqW5c013TFMAlI6H2nQY2mYUmvXyniMNPpQYyPziMevtxMjDj6Qj+Nmd9LS
+	 kSd6TMVW4GyseWXBIRnH/Fun1zVwbKUM459JMwlwHOvP/ScPBlpvsRviHtxHeFDdLV31K
+	 K65qWW4GjEupzvNuC6hjrUlTpdKoqt/aQuS6aMH039ZYdhu6RUQsATdeyHTMmCBXxlVAV
+	 ucEW+zcH3nxUteZ+za9ftb8lYSkGOALLc4efsppjQKZhWrrsjjMrbYSgBm8GqmSUhEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044117;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044119;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BbNoFPG3ZPGD4EHzLpduKPP3esKwzDT9ShY9hgAsrGI=;
-	b=BC/ErbKyOItrFQq+ymDCFysbSMUXZ1l0yYIy66vYQ7HbTCM24TkyaGz7KPoK12FO4ltv
-	 JXokQ48imu7JUZu03iFEP1vDPSMolLs3zas0I+Xk08Gzf28KvVd5Ecc8csBQc/l0OUrTa
-	 X2QKG4PV6udQH/UW9ipLIBur1/HgueNY8/U8L4sGsr50Y9cJHeNsAh4H0JWvflmXYdvs6
-	 NYzubqbKxQbiTv/njhIMcp2I1kT5VSX7/gIdrKj0eco9qlGXY708YdFxfv9lx665O9fTM
-	 yJ564DDgralcJ1HH2RCJ2zqMGnbRaUgb2RU+i2c9wJWpwwDHcIOCFXPs8aFH3sngXsw==
+	bh=28rrBrjHQPTBT1ODGLA681bZxZWnzufKPgMca8MQpEA=;
+	b=d+OTS6/DlY3vt7Aw2K908VbppplhEVdPSDtcNWaomDYzKDMBVTNy6YhLacCHINERnKyo
+	 87Mm4fpFpplEVWuse0KFLvfcqhsetqOZchK95BTCGwKF4SpbtHNlfTKOozXZmWcoDoIVQ
+	 cSBr273O99/vHTe2PmINbXJPAApKw4M8TDCoILMQRKq4cqOASQKyeVZqSnL8BhoZSUxTt
+	 XBIHG1ogSwV3Vr5djYl0MdCpvH883MTik53odPu2TSri+MSVQzkddkTARg9w9AUcv89kZ
+	 onGTHZcU226+btpZC4FV8MFuZhTDHPzhBchq4uU2IDOU4891XGuBHCqGZ3qeeBRQ1ew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="g3TgC/pc";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OuQpERZj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F32606A31C;
-	Wed, 18 Nov 2026 23:21:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0726606A31C;
+	Wed, 18 Nov 2026 23:21:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g3TgC/pc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 434221F000C4;
-	Wed, 18 Nov 2026 23:21:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OuQpERZj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E1821F000C4;
+	Wed, 18 Nov 2026 23:21:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044116;
-	bh=BbNoFPG3ZPGD4EHzLpduKPP3esKwzDT9ShY9hgAsrGI=;
+	s=korg; t=1795044119;
+	bh=28rrBrjHQPTBT1ODGLA681bZxZWnzufKPgMca8MQpEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g3TgC/pc7s9nXcBakHfrGzTxQHSGeWguiDwy8OwxXuj/TaiKJFSdOEakMLE77Hpki
-	 uJ8EzEdsJQJ3KMAVIQjXasCBLVaEdsYS75m7BsSODiFeXIRv/4lkZVpzeYJGmW2uMH
-	 YtAfUaV+335QitbMi0lH98f0iGMlLRDg4PCEiv44=
+	b=OuQpERZjFhCcSCGkNPXMtGC34L5MpALv+fD9ww5ScpxrRYPduHyxCUTiJCyYfmOi3
+	 rf/SLyz+G6kQM3uoX50cqmESPDj7m05Ufj8ZIAHyykLJ8xBSHuM/QtLGRSs0qRp4GB
+	 8g/Yyd7tN9G9labGwfrczjFLWiwaKu2PsYEKIZFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Katherine Leaver <kleaver@janestreet.com>,
-	Bjoern Doebel <doebel@amazon.de>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	stable <stable@kernel.org>,
+	Daniel Starke <daniel.starke@siemens.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0451/2857] packet: use ubuf_info completion for TX_RING packets
-Date: Wed, 18 Nov 2026 15:24:45 +0100
-Message-ID: <20261118150217.620213620@linuxfoundation.org>
+Subject: [PATCH 6.1 0452/2857] tty: n_gsm: fix missing modem controls after DLCI open in convergence layer type 2
+Date: Wed, 18 Nov 2026 15:24:46 +0100
+Message-ID: <20261118150217.655816796@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,268 +68,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Daniel Starke <daniel.starke@siemens.com>
 
-[ Upstream commit 9518405613863d0bf0700927a21367f5942cf058 ]
+[ Upstream commit 11ea5a63d30ad6d305b1c22301cd99ff45a98c8d ]
 
-tpacket_snd sends skbs with frags pointing into its ring slots. Slots
-are released when skb->destructor is called.
+The current implementation only updates the virtual V.24 control signals
+after DLCI open in basic option mode. In advanced option mode with
+convergence layer type 2 an empty data frame needs to be transmitted to
+inform the peer about the initial virtual V.24 control signals. Not doing
+so has two unwanted side effects:
+1. hardware flow control status is unclear (initial CTS line is unknown)
+2. DLCI user presence is not transmitted (initial DTR line is unknown)
 
-A call to skb_orphan calls skb->destructor before the skb is freed.
-This can cause the slot to be reused while still linked into the skb.
+Applications waiting on these lines can not start after a DLCI has been
+opened until the first data frame has been transmitted.
 
-Switch to standard zerocopy completion (ubuf_info) so the slot is only
-released once all references to the payload are freed or copied.
-Restore skb->destructor to standard sock_wfree.
+Fix this by using gsm_modem_update() thoroughly which handles basic and
+advanced option mode correctly. Add a flag in gsm_modem_update() and the
+delegated gsm_modem_upd_via_msc() to control whether waiting for the MSC
+command response is possible. Remove obsolete gsm_modem_send_initial_msc().
 
-The ubuf_info completion callback can be called with a NULL skb, but
-only from net_zcopy_put and related API, used by zerocopy implementations
-that hold their own reference on the uarg, such as MSG_ZEROCOPY. This
-uarg is only ever completed from skb_zcopy_clear, so skb is always set.
-
-To prevent userspace from aliasing in-flight state on shared ring
-slots, allocate tpacket_uarg per packet, rather than per slot. This
-adds a small allocation to the transmit path. Use standard kmalloc to
-allow backporting to stable kernels.
-
-The uarg holds an sk_wmem_alloc reference, rather than an sk_refcnt
-reference. packet_free_tx_ring waits on sk_wmem_alloc before freeing
-the ring pages. Always allocate vec->deferred for tx_ring so page-backed
-rings also wait on sk_wmem_alloc when skb_copy_ubufs drops page refs
-before calling tpacket_ubuf_complete.
-
-Drop the tx_ring.pg_vec test that tpacket_destruct_skb performed before
-accessing the slot. The sk_wmem_alloc reference now guarantees that the
-slot is valid. The test is also not sufficient by itself, as it reads
-pg_vec without pg_vec_lock, so it can race with packet_set_ring.
-
-As a result a slot is released when its payload is copied, which can
-be before transmission (e.g., in skb_orphan_frags_rx). If copied
-before skb_tx_timestamp() is called, no slot timestamp is recorded,
-similar to when skb_orphan() was called early in the datapath before
-this patch.
-
-Revert the now unused previous skb_zcopy_.._nouarg infra.
-
-Depends on commit 992cc9f94ca9 ("net/packet: defer vmalloc TX_RING
-free until skbs finish").
-
-Reported-by: Katherine Leaver <kleaver@janestreet.com>
-Reported-by: Bjoern Doebel <doebel@amazon.de>
-Closes: https://lore.kernel.org/netdev/20260909085542.3370986-1-doebel@amazon.de/
-Fixes: 5cd8d46ea156 ("packet: copy user buffers before orphan or clone")
-Cc: stable@vger.kernel.org
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260919004748.1463985-3-willemdebruijn.kernel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: Replaced uarg->ops->complete and .ops = &tpacket_ubuf_ops with the older uarg->callback and .callback = tpacket_ubuf_complete, used plain kzalloc, and kept older context lines in tpacket_fill_skb(). ]
+Fixes: 3cf0b3c243e5 ("tty: n_gsm: Don't block input queue by waiting MSC")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Daniel Starke <daniel.starke@siemens.com>
+Link: https://patch.msgid.link/20260826063026.2472-1-daniel.starke@siemens.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ sashal: Kept the tree's if (dlci->addr) form in gsm_dlci_open() without upstream's DLCI 0 keep-alive else branch, and deleted the helper whose comment text differs. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skbuff.h | 19 +-------
- net/packet/af_packet.c | 98 ++++++++++++++++++++++++++----------------
- 2 files changed, 61 insertions(+), 56 deletions(-)
+ drivers/tty/n_gsm.c | 47 ++++++++++++++-------------------------------
+ 1 file changed, 14 insertions(+), 33 deletions(-)
 
-diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-index 1f646364926e4..1a5e463502a95 100644
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -1736,22 +1736,6 @@ static inline void skb_zcopy_set(struct sk_buff *skb, struct ubuf_info *uarg,
+diff --git a/drivers/tty/n_gsm.c b/drivers/tty/n_gsm.c
+index db9382b573000..9d354a3260bf6 100644
+--- a/drivers/tty/n_gsm.c
++++ b/drivers/tty/n_gsm.c
+@@ -414,13 +414,12 @@ static const u8 gsm_fcs8[256] = {
+ #define GOOD_FCS	0xCF
+ 
+ static int gsmld_output(struct gsm_mux *gsm, u8 *data, int len);
+-static int gsm_modem_update(struct gsm_dlci *dlci, u8 brk);
++static int gsm_modem_update(struct gsm_dlci *dlci, u8 brk, bool wait);
+ static struct gsm_msg *gsm_data_alloc(struct gsm_mux *gsm, u8 addr, int len,
+ 								u8 ctrl);
+ static int gsm_send_packet(struct gsm_mux *gsm, struct gsm_msg *msg);
+ static void gsmld_write_trigger(struct gsm_mux *gsm);
+ static void gsmld_write_task(struct work_struct *work);
+-static int gsm_modem_send_initial_msc(struct gsm_dlci *dlci);
+ 
+ /**
+  *	gsm_fcs_add	-	update FCS
+@@ -1835,7 +1834,7 @@ static void gsm_dlci_open(struct gsm_dlci *dlci)
+ 		pr_debug("DLCI %d goes open.\n", dlci->addr);
+ 	/* Send current modem state */
+ 	if (dlci->addr)
+-		gsm_modem_send_initial_msc(dlci);
++		gsm_modem_update(dlci, 0, false);
+ 	gsm_dlci_data_kick(dlci);
+ 	wake_up(&dlci->gsm->event);
+ }
+@@ -3466,9 +3465,10 @@ static void gsm_modem_upd_via_data(struct gsm_dlci *dlci, u8 brk)
+  *	gsm_modem_upd_via_msc	-	send modem bits via control frame
+  *	@dlci: channel
+  *	@brk: break signal
++ *	@wait: wait for the MSC command
+  */
+ 
+-static int gsm_modem_upd_via_msc(struct gsm_dlci *dlci, u8 brk)
++static int gsm_modem_upd_via_msc(struct gsm_dlci *dlci, u8 brk, bool wait)
+ {
+ 	u8 modembits[3];
+ 	struct gsm_control *ctrl;
+@@ -3485,41 +3485,22 @@ static int gsm_modem_upd_via_msc(struct gsm_dlci *dlci, u8 brk)
+ 		modembits[2] = (brk << 4) | 2 | EA; /* Length, Break, EA */
+ 		len++;
+ 	}
++	if (!wait)
++		return gsm_control_command(dlci->gsm, CMD_MSC, modembits, len);
+ 	ctrl = gsm_control_send(dlci->gsm, CMD_MSC, modembits, len);
+ 	if (ctrl == NULL)
+ 		return -ENOMEM;
+ 	return gsm_control_wait(dlci->gsm, ctrl);
+ }
+ 
+-/**
+- * gsm_modem_send_initial_msc - Send initial modem status message
+- *
+- * @dlci channel
+- *
+- * Send an initial MSC message after DLCI open to set the initial
+- * modem status lines. This is only done for basic mode.
+- * Does not wait for a response as we cannot block the input queue
+- * processing.
+- */
+-static int gsm_modem_send_initial_msc(struct gsm_dlci *dlci)
+-{
+-	u8 modembits[2];
+-
+-	if (dlci->adaption != 1 || dlci->gsm->encoding != GSM_BASIC_OPT)
+-		return 0;
+-
+-	modembits[0] = (dlci->addr << 2) | 2 | EA; /* DLCI, Valid, EA */
+-	modembits[1] = (gsm_encode_modem(dlci) << 1) | EA;
+-	return gsm_control_command(dlci->gsm, CMD_MSC, (const u8 *)&modembits, 2);
+-}
+-
+ /**
+  *	gsm_modem_update	-	send modem status line state
+  *	@dlci: channel
+  *	@brk: break signal
++ *	@wait: wait for the MSC command
+  */
+ 
+-static int gsm_modem_update(struct gsm_dlci *dlci, u8 brk)
++static int gsm_modem_update(struct gsm_dlci *dlci, u8 brk, bool wait)
+ {
+ 	if (dlci->gsm->dead)
+ 		return -EL2HLT;
+@@ -3529,7 +3510,7 @@ static int gsm_modem_update(struct gsm_dlci *dlci, u8 brk)
+ 		return 0;
+ 	} else if (dlci->gsm->encoding == GSM_BASIC_OPT) {
+ 		/* Send as MSC control message. */
+-		return gsm_modem_upd_via_msc(dlci, brk);
++		return gsm_modem_upd_via_msc(dlci, brk, wait);
+ 	}
+ 
+ 	/* Modem status lines are not supported. */
+@@ -3568,7 +3549,7 @@ static void gsm_dtr_rts(struct tty_port *port, int onoff)
+ 		modem_tx &= ~(TIOCM_DTR | TIOCM_RTS);
+ 	if (modem_tx != dlci->modem_tx) {
+ 		dlci->modem_tx = modem_tx;
+-		gsm_modem_update(dlci, 0);
++		gsm_modem_update(dlci, 0, true);
  	}
  }
  
--static inline void skb_zcopy_set_nouarg(struct sk_buff *skb, void *val)
--{
--	skb_shinfo(skb)->destructor_arg = (void *)((uintptr_t) val | 0x1UL);
--	skb_shinfo(skb)->flags |= SKBFL_ZEROCOPY_FRAG;
--}
--
--static inline bool skb_zcopy_is_nouarg(struct sk_buff *skb)
--{
--	return (uintptr_t) skb_shinfo(skb)->destructor_arg & 0x1UL;
--}
--
--static inline void *skb_zcopy_get_nouarg(struct sk_buff *skb)
--{
--	return (void *)((uintptr_t) skb_shinfo(skb)->destructor_arg & ~0x1UL);
--}
--
- static inline void net_zcopy_put(struct ubuf_info *uarg)
- {
- 	if (uarg)
-@@ -1774,8 +1758,7 @@ static inline void skb_zcopy_clear(struct sk_buff *skb, bool zerocopy_success)
- 	struct ubuf_info *uarg = skb_zcopy(skb);
+@@ -3760,7 +3741,7 @@ static int gsmtty_tiocmset(struct tty_struct *tty,
  
- 	if (uarg) {
--		if (!skb_zcopy_is_nouarg(skb))
--			uarg->callback(skb, uarg, zerocopy_success);
-+		uarg->callback(skb, uarg, zerocopy_success);
- 
- 		skb_shinfo(skb)->flags &= ~SKBFL_ALL_ZEROCOPY;
+ 	if (modem_tx != dlci->modem_tx) {
+ 		dlci->modem_tx = modem_tx;
+-		return gsm_modem_update(dlci, 0);
++		return gsm_modem_update(dlci, 0, true);
  	}
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index 73663db442cce..cc5bb8765f52e 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2592,26 +2592,6 @@ static int tpacket_rcv(struct sk_buff *skb, struct net_device *dev,
- 	goto drop_n_restore;
+ 	return 0;
+ }
+@@ -3822,7 +3803,7 @@ static void gsmtty_throttle(struct tty_struct *tty)
+ 		dlci->modem_tx &= ~TIOCM_RTS;
+ 	dlci->throttled = true;
+ 	/* Send an MSC with RTS cleared */
+-	gsm_modem_update(dlci, 0);
++	gsm_modem_update(dlci, 0, true);
  }
  
--static void tpacket_destruct_skb(struct sk_buff *skb)
--{
--	struct packet_sock *po = pkt_sk(skb->sk);
--
--	if (likely(po->tx_ring.pg_vec)) {
--		void *ph;
--		__u32 ts;
--
--		ph = skb_zcopy_get_nouarg(skb);
--
--		ts = __packet_set_timestamp(po, ph, skb);
--		__packet_set_status(po, ph, TP_STATUS_AVAILABLE | ts);
--
--		packet_dec_pending(&po->tx_ring);
--		complete(&po->skb_completion);
--	}
--
--	sock_wfree(skb);
--}
--
- static int __packet_snd_vnet_parse(struct virtio_net_hdr *vnet_hdr, size_t len)
- {
- 	if ((vnet_hdr->flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) &&
-@@ -2641,27 +2621,52 @@ static int packet_snd_vnet_parse(struct msghdr *msg, size_t *len,
- 	return __packet_snd_vnet_parse(vnet_hdr, *len);
+ static void gsmtty_unthrottle(struct tty_struct *tty)
+@@ -3834,7 +3815,7 @@ static void gsmtty_unthrottle(struct tty_struct *tty)
+ 		dlci->modem_tx |= TIOCM_RTS;
+ 	dlci->throttled = false;
+ 	/* Send an MSC with RTS set */
+-	gsm_modem_update(dlci, 0);
++	gsm_modem_update(dlci, 0, true);
  }
  
-+struct tpacket_uarg {
-+	struct ubuf_info	ubuf;
-+	struct packet_sock	*po;
-+	void			*ph;
-+};
-+
-+static void tpacket_ubuf_complete(struct sk_buff *skb, struct ubuf_info *uarg,
-+				  bool success)
-+{
-+	struct tpacket_uarg *tu = container_of(uarg, struct tpacket_uarg, ubuf);
-+	struct packet_sock *po = tu->po;
-+	void *ph = tu->ph;
-+	__u32 ts;
-+
-+	DEBUG_NET_WARN_ON_ONCE(!skb);
-+
-+	if (!refcount_dec_and_test(&uarg->refcnt))
-+		return;
-+
-+	ts = __packet_set_timestamp(po, ph, skb);
-+	__packet_set_status(po, ph, TP_STATUS_AVAILABLE | ts);
-+
-+	packet_dec_pending(&po->tx_ring);
-+	complete(&po->skb_completion);
-+
-+	kfree(tu);
-+	sk_free(&po->sk);
-+}
-+
- static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
--		void *frame, struct net_device *dev, void *data, int tp_len,
-+		struct net_device *dev, void *data, int tp_len,
- 		__be16 proto, unsigned char *addr, int hlen, int copylen,
- 		int hard_header_len,
- 		const struct sockcm_cookie *sockc)
- {
--	union tpacket_uhdr ph;
- 	int to_write, offset, len, nr_frags, len_max;
- 	struct socket *sock = po->sk.sk_socket;
- 	struct page *page;
- 	int err;
- 
--	ph.raw = frame;
--
- 	skb->protocol = proto;
- 	skb->dev = dev;
- 	skb->priority = READ_ONCE(po->sk.sk_priority);
- 	skb->mark = READ_ONCE(po->sk.sk_mark);
- 	skb->tstamp = sockc->transmit_time;
- 	skb_setup_tx_timestamp(skb, sockc->tsflags);
--	skb_zcopy_set_nouarg(skb, ph.raw);
- 
- 	skb_reserve(skb, hlen);
- 	skb_reset_network_header(skb);
-@@ -2801,6 +2806,7 @@ static int tpacket_snd(struct packet_sock *po, struct msghdr *msg)
- 	struct virtio_net_hdr vnet_hdr;
- 	bool has_vnet_hdr = false;
- 	struct sockcm_cookie sockc;
-+	struct tpacket_uarg *uarg;
- 	__be16 proto;
- 	int err, reserve = 0;
- 	void *ph;
-@@ -2931,7 +2937,7 @@ static int tpacket_snd(struct packet_sock *po, struct msghdr *msg)
- 				err = len_sum;
- 			goto out_status;
- 		}
--		tp_len = tpacket_fill_skb(po, skb, ph, dev, data, tp_len, proto,
-+		tp_len = tpacket_fill_skb(po, skb, dev, data, tp_len, proto,
- 					  addr, hlen, copylen, hard_header_len,
- 					  &sockc);
- 		if (likely(tp_len >= 0) &&
-@@ -2963,7 +2969,24 @@ static int tpacket_snd(struct packet_sock *po, struct msghdr *msg)
- 			virtio_net_hdr_set_proto(skb, &vnet_hdr);
- 		}
- 
--		skb->destructor = tpacket_destruct_skb;
-+		uarg = kmalloc(sizeof(*uarg), GFP_KERNEL);
-+		if (unlikely(!uarg)) {
-+			if (likely(len_sum > 0))
-+				err = len_sum;
-+			else
-+				err = -ENOMEM;
-+			goto out_status;
-+		}
-+		uarg->po = po;
-+		uarg->ph = ph;
-+		uarg->ubuf.callback = tpacket_ubuf_complete;
-+		uarg->ubuf.flags = SKBFL_ZEROCOPY_FRAG;
-+		refcount_set(&uarg->ubuf.refcnt, 1);
-+
-+		/* Hold a sk_wmem_alloc reference until completion */
-+		refcount_inc(&po->sk.sk_wmem_alloc);
-+		skb_zcopy_init(skb, &uarg->ubuf);
-+
- 		__packet_set_status(po, ph, TP_STATUS_SENDING);
- 		packet_inc_pending(&po->tx_ring);
- 
-@@ -4516,21 +4539,20 @@ static struct pgv *alloc_pg_vec(struct tpacket_req *req, int order, bool tx_ring
- 	vec->len = block_nr;
- 	pg_vec = vec->pg_vec;
- 
-+	if (tx_ring) {
-+		vec->deferred = kzalloc(sizeof(*vec->deferred),
-+					GFP_KERNEL | __GFP_NOWARN);
-+		if (!vec->deferred)
-+			goto out_free_pgvec;
-+		vec->deferred->vec = vec;
-+		INIT_DELAYED_WORK(&vec->deferred->work,
-+				  packet_free_pg_vec_work);
-+	}
-+
- 	for (i = 0; i < block_nr; i++) {
- 		pg_vec[i].buffer = alloc_one_pg_vec_page(order);
- 		if (unlikely(!pg_vec[i].buffer))
- 			goto out_free_pgvec;
--
--		if (tx_ring && !vec->deferred &&
--		    is_vmalloc_addr(pg_vec[i].buffer)) {
--			vec->deferred = kzalloc(sizeof(*vec->deferred),
--						GFP_KERNEL | __GFP_NOWARN);
--			if (!vec->deferred)
--				goto out_free_pgvec;
--			vec->deferred->vec = vec;
--			INIT_DELAYED_WORK(&vec->deferred->work,
--					  packet_free_pg_vec_work);
--		}
+ static int gsmtty_break_ctl(struct tty_struct *tty, int state)
+@@ -3852,7 +3833,7 @@ static int gsmtty_break_ctl(struct tty_struct *tty, int state)
+ 		if (encode > 0x0F)
+ 			encode = 0x0F;	/* Best effort */
  	}
+-	return gsm_modem_update(dlci, encode);
++	return gsm_modem_update(dlci, encode, true);
+ }
  
- out:
+ static void gsmtty_cleanup(struct tty_struct *tty)
 -- 
 2.53.0
 
