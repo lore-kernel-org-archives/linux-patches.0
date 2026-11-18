@@ -1,59 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038979;
-	b=iFxeZ9bc/LTkvKy7M5YiIaQSCXZj1Kp6WUMO71SQj95s/R1Tb9HX4rB2+wVJZxA6VoTz
-	 n+dYnk0meZHe83QTqrH4PO0JzHfmjRQvPlbPxIahfLetODdcCeX+oHdaEmk9jbllwc/gu
-	 BMjbEWSXrQiWpvbSBy30MadTsm/bxa2dkzcr5pq0vEiMmrG/6TEVzmCQr5WsJTkwhx2Z+
-	 63ZOXYgomYB1Xdj2kEvKsa2SNF3sqynCPUnHYBYNjdP+X4y+TshJUd/CCPDSzTuAj7cmu
-	 snjGP0dupQ6N/NMUcBMKCR425U1jRynn8IivOrXW9uCGDraWpVNTxNQwPdzuPU+JHNA==
+	t=1795038981;
+	b=WpBktuVTT2mpgEJPdFmAsbXNVMtRrxGWmRNQVLgxlwua9OFTk6+1EJtdMGL0doAE6E4A
+	 cV9M3xZsVaA5tyQGxA6sw249RrS3Polwbr2JQeRb9b7L/GKIyq5dOnjJOvoUusbrAVMQd
+	 X7mjHor3ZEXEtZ8hUYTiNq6y43ZMO1WgPN+krTwqoYDyTQV92JznaCqowVU7PFNZ43/rU
+	 4DL+GDqud6McLQX/veCVTJw5fX1XFlo8wIFV50Ewbo10AW7qtyYL3THFVL80LQhSb0k9a
+	 OW6XJFgCe1HWWL82FiQK1oHx6CVXzbh61gAh6XEaudbAsh/m/nRZFhim0i0N9S9B3kA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038979;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038981;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=euxeACe1aD/BCNIBT89mNn2hhm+3u+79YW1pz4bLZco=;
-	b=KhnSrnlCIh8gPmBgAMgts014tUcjas1R6biNGDAZZWMNeHXO7dJKdq8UXJksa/mCoHG6
-	 Y+Lw+gtIVgBL0sxg0uhx3EYCNhiJFvkwW7Rxyp0MPMVFp6mwnz6S4VdDQbOhCODJ5k5Bp
-	 wq97vrzWM2INF/heCqytvx20pEzbvlUJWrTmiI77TaveRDj8eyfzcznFndHh81jz9tSdS
-	 po6a3Hi3XUfyLzokRTQwurL+6GVilA9PrIBV91DygNFp3M/FOjJoKcCOwXrWnr1QuALmj
-	 8QHhirlER9F2kpgYwAhEQA9bHdN0z8b9U1FrJbpYao52tx1EEwqMaNC2idR/ZEWhW6g==
+	bh=TRhGbEiDON5VShd7B2RCpBQptSLs829hIWMklnDkP1M=;
+	b=YURkK8sTnIspU5aIGmWScTYQggR3bt3y4fS2khk/4/Yztu853BpEXc7M7m0XI4Qjxp8L
+	 E1rVx1fn6VjaUoYMtPFsQOxtAxkXVFIAAyFPKEh8ehxAIbQS2QmfGhsIIxZ0oYF36Z3gn
+	 bgmiayU3LgfLh5NYMNWhpUJ4nDc3tAemti33BwihG96rd98n7Sc7XL10akHqt3c06Dozq
+	 ZjvzcDx+orN2l7olq2BZoewSsoulYWbeemS2ZziAPZ8bqjMgA/P8Izw9fYtenuMHYXZxO
+	 1gjKdhmHRLzpIkZEZxKtuDfwoscBkrC2l+2CNr1Y6H471aw9En8otdCYQfint895CoQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cps9fX5m;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jPrUZ2Cs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11775606A31C;
-	Wed, 18 Nov 2026 21:56:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F90606A31C;
+	Wed, 18 Nov 2026 21:56:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cps9fX5m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E2BF1F000C6;
-	Wed, 18 Nov 2026 21:56:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jPrUZ2Cs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32C691F000C4;
+	Wed, 18 Nov 2026 21:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038978;
-	bh=euxeACe1aD/BCNIBT89mNn2hhm+3u+79YW1pz4bLZco=;
+	s=korg; t=1795038981;
+	bh=TRhGbEiDON5VShd7B2RCpBQptSLs829hIWMklnDkP1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cps9fX5md0FzvvZy1C0zBwrB6xjf4o5qWZxd8OnjskqERMYi9yTWer1Re0AeD3VUs
-	 AfXMcXc1CWgsZndmCZV9QFnhYv/1VEoXhtnB2cGYvaH4g82SAHgyvoaCP4cCBBNyD7
-	 K5/cTOWjEkyIafxg2Y3ccLaN2YkrRmSq/Cfrpz34=
+	b=jPrUZ2CsY8eRziP9t7YbzDKHFmpwjs9sJAAMvWWnw8IR3qpbiZc/JrJXuDbwzSlNV
+	 l4UCqLGFeDpMAQZ5FTlaUq7e/Yn0iE6qvDJ8+JcOb5q8cn/9LFNAooV2C8+kH7+yf/
+	 WP1l1ZNPnjvNif6ZQ2e5/aDU9SfMDrpKmUQiM6YY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Suren Baghdasaryan <surenb@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	David Hildenbrand <david@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Ying Huang <ying.huang@linux.alibaba.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Michal Hocko <mhocko@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1936/3318] mm/mempolicy: apply bind policies against the scoped allocation zone
-Date: Wed, 18 Nov 2026 15:42:38 +0100
-Message-ID: <20261118150420.123148731@linuxfoundation.org>
+Subject: [PATCH 6.6 1937/3318] mm: call wp_page_copy() under the VMA lock
+Date: Wed, 18 Nov 2026 15:42:39 +0100
+Message-ID: <20261118150420.154610869@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -75,89 +69,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price (Meta) <gourry@gourry.net>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit d4ea410ce4b8aa46a316476ea2624a357bf31fa9 ]
+[ Upstream commit 164b06f238b986317131e6b61b2f22aabcbc2cc0 ]
 
-QEMU fails to start a guest with a VFIO device when guest RAM comes
-from a memory backend bound to a movable-only node:
+It is usually safe to call wp_page_copy() under the VMA lock.  The only
+unsafe situation is when no anon_vma has been allocated for this VMA, and
+we have to look at adjacent VMAs to determine if their anon_vma can be
+shared.  Since this happens only for the first COW of a page in this VMA,
+the majority of calls to wp_page_copy() do not need to fall back to the
+mmap_sem.
 
-  vfio_container_dma_map(0x55b1b1317800, 0x0, 0x10000000,
-                         0x7f39a2200000)
-    = -12 (Cannot allocate memory)
+Add vmf_anon_prepare() as an alternative to anon_vma_prepare() which will
+return RETRY if we currently hold the VMA lock and need to allocate an
+anon_vma.  This lets us drop the check in do_wp_page().
 
-VFIO pins guest RAM when the device is realized, and the pin faults
-the pages in. io_uring fixed buffers fail the same way. Faulting the
-range in before pinning lets the same pin succeed, since resident
-pages are migrated off the node instead.
-
-A long-term pin faults under memalloc_pin_save(). PF_MEMALLOC_PIN makes
-current_gfp_context() clear __GFP_MOVABLE, but policy_nodemask() tests
-apply_policy_zone() against the caller's gfp.
-
-The bind keeps its movable-only nodemask, and the allocation finds no
-usable zone:
-
-  page allocation failure:
-      order:0,
-      mode:0x140dc2(GFP_HIGHUSER|__GFP_ZERO|__GFP_COMP),
-      nodemask=1,cpuset=/,mems_allowed=0-1
-
-  Call Trace:
-   warn_alloc+0x136/0x150
-   __alloc_frozen_pages_noprof+0xed8/0x1720
-   alloc_pages_mpol+0xaa/0x170
-   vma_alloc_folio_noprof+0x65/0xd0
-   __handle_mm_fault+0x137b/0x1ac0
-   handle_mm_fault+0xa0/0x270
-   __get_user_pages+0x250/0xfd0
-   __gup_longterm_locked+0x116/0x870
-   gup_fast_fallback+0xcfc/0xdf0
-   pin_user_pages_fast+0x47/0x60
-   io_pin_pages+0x9a/0x110
-
-Base page faults fail with -ENOMEM.
-hugetlb faults fail with -EFAULT.
-
-Check the policy zone against current_gfp_context(gfp), so a pin-scoped
-fault falls back off the movable-only nodemask, like any other
-non-movable allocation under the same bind.
-
-Tested in qemu with a dax/kmem movable-only node 1. io_uring and VFIO
-pins of unfaulted base pages and 2MB hugetlb pages now succeed and land
-on node 0 (correct). QEMU now starts with the same backend binding.
-
-Link: https://lore.kernel.org/20261018023349.1697434-1-gourry@gourry.net
-Fixes: 8e3560d963d2 ("mm: honor PF_MEMALLOC_PIN for all movable pages")
-Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
+Link: https://lkml.kernel.org/r/20231006195318.4087158-3-willy@infradead.org
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Reviewed-by: Suren Baghdasaryan <surenb@google.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Ying Huang <ying.huang@linux.alibaba.com>
-Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: <stable@vger.kernel.org>
-[ sashal: adapted the switch-based MPOL_BIND check using pol to the existing conditional check using policy ]
+Stable-dep-of: 8db6921cc07b ("mm/memory: reject remote COW faults on PFN mappings")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mempolicy.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/memory.c | 39 ++++++++++++++++++++++++++-------------
+ 1 file changed, 26 insertions(+), 13 deletions(-)
 
-diff --git a/mm/mempolicy.c b/mm/mempolicy.c
-index 393b2f1fee9ce..c991376056923 100644
---- a/mm/mempolicy.c
-+++ b/mm/mempolicy.c
-@@ -1839,7 +1839,7 @@ nodemask_t *policy_nodemask(gfp_t gfp, struct mempolicy *policy)
+diff --git a/mm/memory.c b/mm/memory.c
+index 853400f26159b..2ad125baa9504 100644
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -3050,6 +3050,21 @@ static inline void wp_page_reuse(struct vm_fault *vmf)
+ 	count_vm_event(PGREUSE);
+ }
  
- 	/* Lower zones don't get a nodemask applied for MPOL_BIND */
- 	if (unlikely(mode == MPOL_BIND) &&
--		apply_policy_zone(policy, gfp_zone(gfp)) &&
-+		apply_policy_zone(policy, gfp_zone(current_gfp_context(gfp))) &&
- 		cpuset_nodemask_valid_mems_allowed(&policy->nodes))
- 		return &policy->nodes;
++static vm_fault_t vmf_anon_prepare(struct vm_fault *vmf)
++{
++	struct vm_area_struct *vma = vmf->vma;
++
++	if (likely(vma->anon_vma))
++		return 0;
++	if (vmf->flags & FAULT_FLAG_VMA_LOCK) {
++		vma_end_read(vma);
++		return VM_FAULT_RETRY;
++	}
++	if (__anon_vma_prepare(vma))
++		return VM_FAULT_OOM;
++	return 0;
++}
++
+ /*
+  * Handle the case of a page which we actually need to copy to a new page,
+  * either due to COW or unsharing.
+@@ -3077,27 +3092,29 @@ static vm_fault_t wp_page_copy(struct vm_fault *vmf)
+ 	pte_t entry;
+ 	int page_copied = 0;
+ 	struct mmu_notifier_range range;
+-	int ret;
++	vm_fault_t ret;
  
+ 	delayacct_wpcopy_start();
+ 
+ 	if (vmf->page)
+ 		old_folio = page_folio(vmf->page);
+-	if (unlikely(anon_vma_prepare(vma)))
+-		goto oom;
++	ret = vmf_anon_prepare(vmf);
++	if (unlikely(ret))
++		goto out;
+ 
+ 	if (is_zero_pfn(pte_pfn(vmf->orig_pte))) {
+ 		new_folio = vma_alloc_zeroed_movable_folio(vma, vmf->address);
+ 		if (!new_folio)
+ 			goto oom;
+ 	} else {
++		int err;
+ 		new_folio = vma_alloc_folio(GFP_HIGHUSER_MOVABLE, 0, vma,
+ 				vmf->address, false);
+ 		if (!new_folio)
+ 			goto oom;
+ 
+-		ret = __wp_page_copy_user(&new_folio->page, vmf->page, vmf);
+-		if (ret) {
++		err = __wp_page_copy_user(&new_folio->page, vmf->page, vmf);
++		if (err) {
+ 			/*
+ 			 * COW failed, if the fault was solved by other,
+ 			 * it's fine. If not, userspace would re-fault on
+@@ -3110,7 +3127,7 @@ static vm_fault_t wp_page_copy(struct vm_fault *vmf)
+ 				folio_put(old_folio);
+ 
+ 			delayacct_wpcopy_end();
+-			return ret == -EHWPOISON ? VM_FAULT_HWPOISON : 0;
++			return err == -EHWPOISON ? VM_FAULT_HWPOISON : 0;
+ 		}
+ 		kmsan_copy_page_meta(&new_folio->page, vmf->page);
+ 	}
+@@ -3220,11 +3237,13 @@ static vm_fault_t wp_page_copy(struct vm_fault *vmf)
+ oom_free_new:
+ 	folio_put(new_folio);
+ oom:
++	ret = VM_FAULT_OOM;
++out:
+ 	if (old_folio)
+ 		folio_put(old_folio);
+ 
+ 	delayacct_wpcopy_end();
+-	return VM_FAULT_OOM;
++	return ret;
+ }
+ 
+ /**
+@@ -3449,12 +3468,6 @@ static vm_fault_t do_wp_page(struct vm_fault *vmf)
+ 		return 0;
+ 	}
+ copy:
+-	if ((vmf->flags & FAULT_FLAG_VMA_LOCK) && !vma->anon_vma) {
+-		pte_unmap_unlock(vmf->pte, vmf->ptl);
+-		vma_end_read(vmf->vma);
+-		return VM_FAULT_RETRY;
+-	}
+-
+ 	/*
+ 	 * Ok, we need to copy. Oh, well..
+ 	 */
 -- 
 2.53.0
 
