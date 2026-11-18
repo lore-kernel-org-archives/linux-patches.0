@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047391;
-	b=gsPVHKBIAhdHk/IEmSelDH/8RuFRKw1T4EL9Y2i0fyXqcihfCRZJO3E9vWFn9kRUbSpe
-	 R0Lg2UWK1Dcl9vF8H5O9kEQdz9+C4HHHwfUgC45DdZkdRRpuXoyGrVVgecmVJcVREl/kv
-	 +R+rE5nJ1IMTfHs93aTlznNIKskrlRjLbYgMs8zn79qlPcxxPxQ1b/b4qoez60mXgoYTh
-	 MroTBl8ttEKY1kjtxlRNkbESbDeLA0KqPzc9FNdf83yM32qFqGYYFm2WDeVTlRBUgy7dG
-	 7ZGxzfRU1Rr8Gt1k2wk9aX1eMB+P/IuDhNfl/kLvZXsKUn0WbSRxdJvCqYMITHEcLzA==
+	t=1795047394;
+	b=rwTaWxmmHW+LWEjn0XBchOzhH3BTZW93eZSjGnipCs4ftxVbJlXWEgL3HQCTYrQ907Ie
+	 Kq+R1MeXh165ikW1oI1HJBo0RXBpmaxuLaBH3qJAVQxMU4wvZkcSWOXPCKvcr0X7ElYcZ
+	 SlPBVz5XFkXMMl/z9R6UyR7qJoTTXQ0MC5pQ2lCgzj4R/QSdmjwqmNECareWv8UsecdQj
+	 GMv+omWUhHZo1NyQ1KSJjcG0sj9AygHW+JhEnAtu+I9VOaC0eoazZg0Mec0lr1a7Lnb5g
+	 /zfBE0pp9ccsNBrsVp4zjEUoTXPXy3kEUh5vjwM4Um07OHWjaAJMAMvAy1s669jydtQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047391;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047394;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sXqbKLKbiqw9v4RTTlKCZPm4/qvG+kkuu9LK061snpk=;
-	b=03JOA0bTOeHddZFTcJJg/RQ+cHUCrN0SeDxe9BsVsa70OkU0rWm/x7dHsAmFfFcOdj0v
-	 r9XPpxghGrDGKfBU8V3eY3tKwEGHHzB8FK5S0u6tWyNn540BFItq/9BbkMerqQSRj76aY
-	 Cr3gxM0mGTG0BuatYCIDX1BpIaVUrx0Xol0Sg6lGxLn/8hc6GyxpgGDdI7HCN/PVKqXTg
-	 GA5/uVG7FGL4plt25YsgElbr4HCNwHf2IwCm9Ln+HaJC0pDzXRv5Vu7I0r5QHXo6FfG0D
-	 XvX+2/U6xqBR5eYcqXGMdrR2lUes5zZ1h3U127/O6msQE0q9FANYCzYwHcghTi9WoZQ==
+	bh=Tya5gptw47M8W6AmP3CMWRSeIzY54i7qZsc/YFWjOdk=;
+	b=GnV+pnkc/zQk/ku94tzCrH/mlK+8eE1BPskL2FUhjcy3UVoUU8EXObqY4C6ZpuEwxvt+
+	 pavzEwUd3rS94ZKPhXXD2zsfdz9p31XQ0Hhq470sfz129peZ8widsi3N45j5hQD8dXNIU
+	 NlivvBg1w2npqn0e3lUUM4htv891sm7CNjfS9ctIrKX83nJJdy8WK4vtUjdVfIdbrlxGy
+	 eUHlqjMdBFJxYqmcOP0q3DbzxofKFcqXskpNg2ZVK/CPLnYMl17UTPGrfD8ZT6LnEzTGP
+	 ZXjhZUgW0KZSlpp9lXhRnUajtWDCgKp39ZVzENVK+cvdMiTDgpHX+evNFiKQwnuIV8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=toUAiMd6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GOtWYB03;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6335A606A31C;
-	Thu, 19 Nov 2026 00:16:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3622B606A320;
+	Thu, 19 Nov 2026 00:16:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=toUAiMd6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4A351F000C5;
-	Thu, 19 Nov 2026 00:16:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GOtWYB03
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 897C91F000C4;
+	Thu, 19 Nov 2026 00:16:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047391;
-	bh=sXqbKLKbiqw9v4RTTlKCZPm4/qvG+kkuu9LK061snpk=;
+	s=korg; t=1795047394;
+	bh=Tya5gptw47M8W6AmP3CMWRSeIzY54i7qZsc/YFWjOdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=toUAiMd6Yl7Frg2XcTcBmIX4GnaiwKp1s6b2+ZiBWW4HKOOcLxqvJy61QuIQvVo23
-	 vSr0KdWij00SA65nLxI5ovnf+HlpRxj2Cf50CZfaungneIfheANdW6H3OoLiw9szz6
-	 oC3OF1m7z45I77+OF8HVi4jbMJRYvTZnHQUbpdmM=
+	b=GOtWYB03T/My8Z/nRz07FI0MLbxvB2N2V9aBbsJswbTTV/v1iTzoQHvcoeX07dnyV
+	 iyDzZLTdZDqUIRHIX/WNf3bejEcRxihpDG09qt4yJ3fPCSQVIzPbt0rcUfCl2VlE6z
+	 eNJ+CpGt0lynaChUZZSlpBliLuiggKNfShCK/9CU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1622/2857] ALSA: compress: fix buffer leak on failed SET_PARAMS
-Date: Wed, 18 Nov 2026 15:44:16 +0100
-Message-ID: <20261118150259.745793437@linuxfoundation.org>
+Subject: [PATCH 6.1 1596/2857] media: sti: delta: use unaligned accessors for MJPEG SOF fields
+Date: Wed, 18 Nov 2026 15:43:50 +0100
+Message-ID: <20261118150258.840013873@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,55 +69,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit fbc74ca9fbf7e0b8f6872ccac62f9f4a1f3b5e53 ]
+[ Upstream commit fdc5bf02aeaef04e7d13895db9b6eaf8083953f9 ]
 
-When the driver has neither ops->copy nor a preallocated dma_buffer_p,
-snd_compr_allocate_buffer() kmallocs runtime->buffer. If
-ops->set_params() then rejects the parameters, SET_PARAMS fails, the
-stream stays in the OPEN state and keeps the buffer. The next
-SET_PARAMS allocates a new buffer and overwrites the pointer, so
-repeated SET_PARAMS calls with parameters that the driver rejects leak
-one buffer per call.
+delta_mjpeg_read_header() scans a compressed MJPEG access unit byte by
+byte and passes the bytes after an SOF marker to delta_mjpeg_read_sof().
+The SOF parser then reads 16-bit big-endian fields directly from that
+byte stream.
 
-Release the framework-owned buffer when ops->set_params() fails on an
-OPEN stream, so that a failed SET_PARAMS leaves no buffer behind and
-the buffer is allocated only once per successful setup. Use the same
-ownership check as snd_compr_free().
+The SOF payload is not an aligned object. The marker scan can find the
+payload at any byte position, and the SOF layout also puts frame_height
+and frame_width after a one-byte sample_precision field. Those fields
+therefore sit at odd offsets within the payload even when the payload
+base happens to be 2-byte aligned.
 
-Fixes: b21c60a4edd2 ("ALSA: core: add support for compress_offload")
+Avoid casting the byte stream to __be16 pointers and use
+get_unaligned_be16() for the SOF length, height, and width fields.
+
+This issue was detected by our static analysis tool and confirmed by
+manual audit. A focused UBSAN alignment validation of the same typed
+load shape reported a misaligned __be16 access in delta_mjpeg_read_sof().
+
+Fixes: 433ff5b4a29b ("[media] st-delta: add mjpeg support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20261019144533.30665-2-peter.ujfalusi@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[ sashal: Retained goto out instead of a direct return to preserve explicit params cleanup. ]
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ sashal: Replaced the unaligned header include with its older architecture-provided equivalent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/compress_offload.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/media/platform/st/sti/delta/delta-mjpeg-hdr.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/sound/core/compress_offload.c b/sound/core/compress_offload.c
-index e961d79f076bb..08289fe8d5519 100644
---- a/sound/core/compress_offload.c
-+++ b/sound/core/compress_offload.c
-@@ -602,8 +602,15 @@ snd_compr_set_params(struct snd_compr_stream *stream, unsigned long arg)
- 		}
+diff --git a/drivers/media/platform/st/sti/delta/delta-mjpeg-hdr.c b/drivers/media/platform/st/sti/delta/delta-mjpeg-hdr.c
+index 90e5b2f72c82b..6e156cd806bb5 100644
+--- a/drivers/media/platform/st/sti/delta/delta-mjpeg-hdr.c
++++ b/drivers/media/platform/st/sti/delta/delta-mjpeg-hdr.c
+@@ -4,6 +4,7 @@
+  * Author: Hugues Fruchet <hugues.fruchet@st.com> for STMicroelectronics.
+  */
  
- 		retval = stream->ops->set_params(stream, params);
--		if (retval)
-+		if (retval) {
-+			/* the stream stays OPEN: drop the buffer of the rejected setup */
-+			if (stream->runtime->state == SNDRV_PCM_STATE_OPEN &&
-+			    !stream->runtime->dma_buffer_p) {
-+				kfree(stream->runtime->buffer);
-+				stream->runtime->buffer = NULL;
-+			}
- 			goto out;
-+		}
++#include <asm/unaligned.h>
+ #include "delta.h"
+ #include "delta-mjpeg.h"
  
- 		stream->metadata_set = false;
- 		stream->next_track = false;
+@@ -48,13 +49,13 @@ static int delta_mjpeg_read_sof(struct delta_ctx *pctx,
+ 		goto err_no_more;
+ 
+ 	memset(header, 0, sizeof(*header));
+-	header->length           = be16_to_cpu(*(__be16 *)(data + offset));
++	header->length           = get_unaligned_be16(data + offset);
+ 	offset += sizeof(u16);
+ 	header->sample_precision = *(u8 *)(data + offset);
+ 	offset += sizeof(u8);
+-	header->frame_height     = be16_to_cpu(*(__be16 *)(data + offset));
++	header->frame_height     = get_unaligned_be16(data + offset);
+ 	offset += sizeof(u16);
+-	header->frame_width      = be16_to_cpu(*(__be16 *)(data + offset));
++	header->frame_width      = get_unaligned_be16(data + offset);
+ 	offset += sizeof(u16);
+ 	header->nb_of_components = *(u8 *)(data + offset);
+ 	offset += sizeof(u8);
 -- 
 2.53.0
 
