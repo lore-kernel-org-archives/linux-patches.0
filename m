@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017965;
-	b=p1/YQavrZfr072wOYO3RG4ziIWVaIK3ByPxiykIprO5NMa8H42Fcwli3bOy+2x0LrSl1
-	 LUaoSDP6jQOgUMvNbg6hffKL+6eQR48j03KhcUE4NyjPRYdUwklPJzTM89M0EggVv1Tac
-	 ttAwdI2yQ+HyZ27I0GaGoe7U6b6BOHDo/2IxexIwAu3VGdkZAWTBSaI26ZXJtkQry68ZY
-	 duJ3Fvd+ck2699Ios60PgS+p778Qp6iwDCmhHNZSQ6gbWFVRfkYUDr0+QYVKkqg4gs6m0
-	 FFn3h039L+zKOVMF2JogqMh5rF44ftcgdboVOGgTTpWyw1RnXBmATRQaeGt5GOp0sMw==
+	t=1795017967;
+	b=0/qFVz80lJML8CkRVb8QI7ILM6Pbz9UM3CNhGBi1SrkinMK4s3/ZZUTfMrqMrTGsQ4Vw
+	 +pEEGB3QtdVfekfJaG3YEgnX5l1oZIW2KmbajNFWF+E158xeqd5g1P75KjNB0AgwbXqMg
+	 b9MwCx5vJI+K1PCHHfm+JPXZVLpHXytWpfl8lS0lUvRvLa4M2gq4vvbkburrklHzksxOp
+	 Z3Btr6K1qsjHppZ9IGbsq6+PT3zZIw/gjuuNiYysVlNHJ+S3vppX2pbntMMwvDItnGcv9
+	 z9QiJFWikssbvalROE8K3oHhIIWymQW8eI3rRmMu2nvbOh9wRSstwH6p4u/pXg6aNjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017965;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017967;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=iyNwQf7xdf0tYDPZIsxJqv1Gilae7N+HT+B+bQzxjYo=;
-	b=A01PiESLTuxMJiZZMo2dF15h3LesalCFYwglEehZ0D9rNnbRINRY9xJK4jXu0Ajvmy1r
-	 Cg4Dpjt/6Et3YhHQU+CROjcJmGhDp8xJ2keXjUcOmBb9RRcp7hNwy2NfcNFBWSzX6/MvG
-	 4HRVvH4KtB/yH/ZbNnSPM3sCsiQoZNWJEQOl5rR6RNWfc25p9Rhyb3PPDlo0gZFsjgEzg
-	 M3OWB09/L7owIXEw2IzzWTaBVwu/NAyr9cuKIhMIqWxpadaApaufChNHQu9j2c+dS5P08
-	 hxkz4Pjk3gFgGn+ehWFUvZJfYO8UkhJ9mr978DYQQOEIFK4Dvy+XKzX0ppgSmt6Fprg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=GehZG+DPjpxivVCuSaEHqYWYD2IeoUXmcs2LyOT/+ls=;
+	b=wjO7wyaJUBMBWnib593B5f1Rr21F+PKiNx37YEhHWh+gmW7hfzeOkALe9vzn2wL8XNAB
+	 rmC1Clftt7JZ5/PeSvWHAmbEV5POZWv6WBCQDvU7DXfh15fsCqukEZ/DAXMwwNyZ+ualI
+	 kh7jAYkcO/I4knJijzYsRGXyoQyh8johtILc0klUKFCbEOB5drm7hBnkWra6XdOBLUdQ0
+	 RCqs6DlLLN0TA+z9Y9XpmAp4RCkb2QSW/Q/RWrqbePkGhMGsVlF7h/B0/XK8xSyCeggyB
+	 TYtVqz/teasnDJ8pukMO0DK6hdxfG1pSK4ruxRTuzQJkDeC7yk7ZnG42ir59MvzAh3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JudFy1HX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UxvStrpI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04C82606A32A;
-	Wed, 18 Nov 2026 16:06:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB7BC606A31C;
+	Wed, 18 Nov 2026 16:06:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JudFy1HX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 566911F000C4;
-	Wed, 18 Nov 2026 16:06:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UxvStrpI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 356A51F000C7;
+	Wed, 18 Nov 2026 16:06:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017964;
-	bh=iyNwQf7xdf0tYDPZIsxJqv1Gilae7N+HT+B+bQzxjYo=;
+	s=korg; t=1795017967;
+	bh=GehZG+DPjpxivVCuSaEHqYWYD2IeoUXmcs2LyOT/+ls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JudFy1HXZmdR98JGUD0cx/r1iJQtGd/zdjg76KiiPGng6jOYQOGVzkdk5o3L8Wm8n
-	 vdMSzKv5zVqNzqIEcAcuOPqqmt0mXxab9B7S/9pBKRCBEQldicLzmmM3XslkjqKC6x
-	 UeuhDrmfBI1JsneHZkH6wW9X6HafInOt3lHWnx48=
+	b=UxvStrpIIF7CbeNnNODPDncO1llm8kkSlh8MR1NH73pe9kyKjVscJcNbnmDqkDYxD
+	 Cti23iCF0Q9YqgQu444UdIdHF37kTGVBqkDzgeuPud9qOotftuGn6+Jnqaew7lOyfb
+	 6Ur8er6Y91ke3V7+CHjVJSq1qGLvZtkaM/hLDuUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Michal Pluta <michalpl2003@gmail.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Waiman Long <longman@redhat.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1071/2651] perf symbol: Dont return an unterminated Rust demangle buffer
-Date: Wed, 18 Nov 2026 15:38:31 +0100
-Message-ID: <20261118150326.542215360@linuxfoundation.org>
+Subject: [PATCH 7.3 1072/2651] cgroup/cpuset: Use cpuset_v2() in cpuset_num_cpus()
+Date: Wed, 18 Nov 2026 15:38:32 +0100
+Message-ID: <20261118150326.577052946@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,62 +64,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Pluta <michalpl2003@gmail.com>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 0b0752e8a493634915e16456df609c08c0595e85 ]
+[ Upstream commit 5ffe20411787dd9947a35669ef8cb9484053efcf ]
 
-When dso__demangle_sym() runs out of retries or fails to grow the
-output buffer for a Rust v0 symbol, it returns the buffer and callers
-blindly use it as the demangled symbol name.  However,
-rust_demangle_display_demangle() doesn't NUL terminate its output when
-it reports OverflowOverflow, so the buffer isn't a string.
+The cpuset code has 2 different helpers for determining if it is in a
+v1 or v2 working environment - cpuset_v2() and is_in_v2_mode().
 
-Free the buffer and return NULL in both cases.  Callers already fall back
-to the mangled name when no demangled name is returned.
+cpuset_v2() checks the binding of the cpuset subsystem is on a v1
+or v2 hierarchy. It can also help to optimize out v1 specific code
+if CONFIG_CPUSETS_V1 isn't defined.
 
-Fixes: e20848c317b51e74 ("perf symbol-elf: Integrate rust-v0 demangling")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Assisted-by: LLM
-Signed-off-by: Michal Pluta <michalpl2003@gmail.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+is_in_v2_mode() layers on top of cpuset_v2() and returns true if it is in
+a v2 hierarchy or in a v1 hierarchy with "cpuset_v2_mode" mount option
+enabled to make "cpuset.cpus" and "cpuset.mems" behave in a way similar
+to their v2 counterparts. However the cpuset hierarchy may still be a
+standalone one separated from the other cgroup hierarchies.
+
+Commit 90ac22ffef48 ("sched/fair: Add cgroup_mode: max") adds a new
+cpuset_num_cpus() helper to return the number of effective CPUs in a given
+cgroup. It is part of the "sched: Flatten the pick" patch series to help
+flatten the cpu cgroup runqueue hierarchies. cpuset_num_cpus() currently
+uses is_in_v2_mode() to determine if it is in a v2 environment. However
+is_in_v2_mode() can be true in a v1 environment where the cpuset and cpu
+cgroup subsystems can be in two separate hierarchies. The current use
+case [1] for cpuset_num_cpus() assumes that it can return the number
+of effective CPUs present in the current cpu cgroup which may not be
+the case.
+
+Fix that by switching to use cpuset_v2() which signifies that it is in
+a unified hierarchy where both cpuset and cpu cgroup subsystems share
+the same cgroup hierarchy if it returns true.
+
+[1] https://lore.kernel.org/lkml/20260930081125.GF88198@noisy.programming.kicks-ass.net
+
+Fixes: 90ac22ffef48 ("sched/fair: Add cgroup_mode: max")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Reviewed-by: Michal Koutný <mkoutny@suse.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/symbol.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ kernel/cgroup/cpuset.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/symbol.c b/tools/perf/util/symbol.c
-index ad21f9bbe4404..a9ff973e6bb2b 100644
---- a/tools/perf/util/symbol.c
-+++ b/tools/perf/util/symbol.c
-@@ -2765,17 +2765,16 @@ char *dso__demangle_sym(struct dso *dso, int kmodule, const char *elf_name)
- 		     buf_len < 1024 * 1024; buf_len += 32) {
- 			char *tmp = realloc(demangled, buf_len);
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index 4a8166101a69a..ab3b4ee27d3ef 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -4337,7 +4337,7 @@ int cpuset_num_cpus(struct cgroup *cgrp)
+ 	int nr = num_online_cpus();
+ 	struct cpuset *cs;
  
--			if (!tmp) {
--				/* Failure to grow output buffer, return what is there. */
--				return demangled;
--			}
-+			if (!tmp)
-+				break;
- 			demangled = tmp;
- 			if (rust_demangle_display_demangle(&rust_demangle, demangled, buf_len,
- 							   /*alternate=*/true) == OverflowOk)
- 				return demangled;
- 		}
--		/* Buffer exceeded sensible bounds, return what is there. */
--		return demangled;
-+		/* Failure to grow output buffer or buffer exceeded sensible bounds. */
-+		free(demangled);
-+		return NULL;
- 	}
- 
- 	demangled = cxx_demangle_sym(elf_name, verbose > 0, verbose > 0);
+-	if (is_in_v2_mode()) {
++	if (cpuset_v2()) {
+ 		guard(rcu)();
+ 		cs = css_cs(cgroup_e_css(cgrp, &cpuset_cgrp_subsys));
+ 		if (cs)
 -- 
 2.53.0
 
