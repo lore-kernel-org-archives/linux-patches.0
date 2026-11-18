@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042836;
-	b=nT8phEltUdpMReH2hgCq5C5Byh3SfyQJFhZjYnLQufjWgfn5xaZWrMFMAlFI1OJWcRjj
-	 BBhjNgalPFVJWUdbbY0jP+lUrsPpvPUbk3IKw3avDJD0yqx60j9JEVIXFzMgaBj/vptq7
-	 XUBm5LibehIxnDO8FbNWQ7P7IJmUoIJ//LMXoQSo5ph9/hfwJZ1wzBlYgQc4xH7BjdQWE
-	 zxhBRPIkOCQSUrvcbSHSLNrehxE+eRSwvdtkLxjTYDmqNlNAFfDVEwPgTgwU6zjaVjNTE
-	 WBrowrG8c1/Xoezsk/q2F6zi1N/L/Wb2CTvFdT8rFX2CiEY5zHUTSEH1ksSMKam5raQ==
+	t=1795042838;
+	b=1sk4U3xPGN0e1BV3yaKPkPAtZT7g+nkSum32XyIpO/VY+AWk7pZMG3rr9vb0nnRQ/8+h
+	 +Hwvy0SLi8Zb+0PNtVpmipRlhykW15WsBdTT17nSXbnP8CAQL3rMzK3sjvaiuUIdcgoV1
+	 F9J+rW1SJmsF5Au2+9aYTHtmWvsWYmIs15+CEczL9wIh7DlY1mvKXPd975iqNHyrRQEqu
+	 PLltw9uNzlijaVHSvZxaKyonGJTmzWsb5jYRAo1dMHqiNageDaXCxDLvzCE5S1rGOb0fQ
+	 a5lDyh2BLusJHLlkJN38f5srSzHpqRvAr/E1yHzKX5IYBuFwJSQxoCbgvmqpFrBlkpw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042836;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042838;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/GZYygUMgC0NnypUxKP5WopSOSj9Jck/0jD0OROyB9c=;
-	b=uiUpayYvU7Xl5FxyHp4f4nBs+3fOPl6TVjXpoGRK5vh80d23pi9lc9lf6env/CCRsDBm
-	 ZcUaujBinc4DqbxI89d+63q7JIcO2oOpPMRmBmo9xfWTe8B8/vb/MXUPTtnPOMMJO1Lot
-	 2h1uS+CdPUqNXN/pUiPQW/rXcaX+OiTCx0iJx+/wDd+INsYrH1JSnmWZFId8HK4cK4/S8
-	 nLXdHGySCTnuWCAfeIcoIBzxBvx1GnBJzvY+vkxQ/fSw/k7pTzJ3was1KLBILx32xjfrJ
-	 Q6nETjTr8q8uucMCjJhiq40cqQ2x+5xF8PYd2JpAeYBgmqpse7BAlTO5TOnvDNQygKQ==
+	bh=LQ+YnGtJH5nNybJPbylYqP1KYEra7B6TFV8qTnBamcA=;
+	b=We2yRHd+fSnb+AxJRbBQbz6HkWwpiTZJhszCPfP5f4dHxZZv3aycA7kdlaL3XWOlGyz3
+	 ezJCuCEKg6R3++WEIKu0QZf/5Jfn/gn1nJwL3PTj9NIkYlUCEsA9GxNF3edMD2zThUWnW
+	 LcrcAfwxruH6Ayg49FP/r/9V/uMvBskiOCCLbKrmlaMLe/na4LmaKhQKZRNjpF+1Ks/0L
+	 Xa4xlxCN1NhJUq8KnP9AFwrr7VrrM/VOpym5xcqqUWOh3M72po0fam9GqjXWpC52X8xWj
+	 wK32VVZiks28YnQRPQ/squCBi0MKblrJRhQYJtUkkNBbrRv1XnV8PYxBxBfVlazyr+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aaHAdFBt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="FBe/NL0w";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2EA8606A31C;
-	Wed, 18 Nov 2026 23:00:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A41E8606A32C;
+	Wed, 18 Nov 2026 23:00:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aaHAdFBt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 402131F000C4;
-	Wed, 18 Nov 2026 23:00:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FBe/NL0w
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0477B1F000C4;
+	Wed, 18 Nov 2026 23:00:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042835;
-	bh=/GZYygUMgC0NnypUxKP5WopSOSj9Jck/0jD0OROyB9c=;
+	s=korg; t=1795042838;
+	bh=LQ+YnGtJH5nNybJPbylYqP1KYEra7B6TFV8qTnBamcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aaHAdFBt1QvSnn+SSjM2YFAtET/i6jgs1ncU3AcHcG+739DMqhVmmCo8vQEfTkBCd
-	 UTwP9MPiyQEPNrOfwZyRb2pUtIQ670ZgOC9uuw2Mr6eok7gOhAgJRl7M53FA3/VRoO
-	 zVkkHCzQJCtmgRrlnpc7H/JkhflCDmTpnUmYnoOs=
+	b=FBe/NL0wdtX4muJZ6PeLUgIN44cB5Xhp/Z7pS+LdpaQTY1nXx0ECtuWJ5hr6uq0Xb
+	 qahr8egcHUyE1kk19jTdVumdj5PmOCnbUOwv5aiIVwBsTTSMMmLRM9C9MD8RH34ZA4
+	 7wJNtv4kM4yzDu34ksQJsQfsADXcTby7ChoHS118=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	StanleyYP Wang <StanleyYP.Wang@mediatek.com>,
-	Shayne Chen <shayne.chen@mediatek.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.6 3312/3318] wifi: mt76: mt7996: fix alignment of sta info event
-Date: Wed, 18 Nov 2026 16:05:34 +0100
-Message-ID: <20261118150458.939717755@linuxfoundation.org>
+Subject: [PATCH 6.6 3313/3318] wifi: mt76: mt7996: fix mt7996_mcu_all_sta_info_event struct packing
+Date: Wed, 18 Nov 2026 16:05:35 +0100
+Message-ID: <20261118150458.965475012@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,31 +67,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit d58a9778f7ca0634622d2fc2e9f76163467bdf5b upstream.
+commit 2ee1c40daeb9a33e25c460bf87feca58e91af879 upstream.
 
-Fix the alignment of struct mt7996_mcu_all_sta_info_event.
+The internal struct and union inside mt7996_mcu_all_sta_info_event is
+marked as being aligned, which conflicts with it being unaligned
+within that structure:
+
+drivers/net/wireless/mediatek/mt76/mt7996/mcu.h:165:2: error: field  within 'struct mt7996_mcu_all_sta_info_event' is less aligned than 'union mt7996_mcu_all_sta_info_event::(anonymous at ../drivers/net/wireless/mediatek/mt76/mt7996/mcu.h:165:2)' and is usually due to 'struct mt7996_mcu_all_sta_info_event' being packed, which can lead to unaligned accesses [-Werror,-Wunaligned-access]
+
+Mark all three as being packed as well to ensure byte packing for
+the entire thing.
 
 Fixes: adde3eed4a75 ("wifi: mt76: mt7996: Add mcu commands for getting sta tx statistic")
-Signed-off-by: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mcu.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mcu.h |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 --- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
 +++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
-@@ -181,7 +181,7 @@ struct mt7996_mcu_all_sta_info_event {
- 	u8 more;
- 	u8 rsv2;
- 	__le16 sta_num;
--	u8 rsv3[2];
-+	u8 rsv3[4];
+@@ -190,15 +190,15 @@ struct mt7996_mcu_all_sta_info_event {
+ 			u8 rsv[2];
+ 			__le32 tx_bytes[IEEE80211_NUM_ACS];
+ 			__le32 rx_bytes[IEEE80211_NUM_ACS];
+-		} adm_stat[0];
++		} adm_stat[0] __packed;
  
- 	union {
- 		struct all_sta_trx_rate rate[0];
+ 		struct {
+ 			__le16 wlan_idx;
+ 			u8 rsv[2];
+ 			__le32 tx_msdu_cnt;
+ 			__le32 rx_msdu_cnt;
+-		} msdu_cnt[0];
+-	};
++		} msdu_cnt[0] __packed;
++	} __packed;
+ } __packed;
+ 
+ enum mt7996_chan_mib_offs {
 
 
