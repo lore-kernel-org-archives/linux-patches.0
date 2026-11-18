@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044089;
-	b=NOii7Q0ro7cl+YjmztU9qBZIWFHcMdTEH4ITustMzQBsEQDUMlWjl5OXAngBq01I05lK
-	 pT5hFer7IY9QPTxw2P5gRw86y4qJBjo7JRXzkV6+lNtXrLTpa/0E3ttHf2iSH7eFsCaeo
-	 sK6B8SWdvAQorpw+75HF96RU7q2YXyCKX8/1b7klMUI/sxopJVkYCbTmmn3PEdcTiMyVS
-	 sM0POcGlYf2uiG8yAsdoMAMBiYe3HzwhsWoAts085u9M57wtM5qv6zWZpjlKRvW1ZcpVp
-	 x/t83zkdPp2IOMIC4FX//RXL1eX2VZ5cXBO2F1ZdJjush78jjuhEqMSA9k86DZgwtoQ==
+	t=1795044092;
+	b=vRpdzjvy/8eQlT8SNAj+y+pjFQYW1NCTK406t3G9SWI11I5WkfSEApN1F/slRbrPbJKJ
+	 YgY9XLJ91NkgiROUkWCnC8f7GLGqXg4kIPorOUgK9CFpI2rFx6jmBZc2vHymQXKb/ewM7
+	 KZ5TO/k4LuKZINJ124Nfu8XgFXnsFlreqZ3hMKLdCyOWkQilMU8qHNzYltQhSpEKOF7zd
+	 fz0XuQg1EUkDmWrCoOtC+yaYR+13Yz5lXVkH0mbacJh3XiYFLtvCDryPO5hArxwmwXTDn
+	 qZRwqIBbYipRljnSdGdFkhJAsmDf8VPJuUerctFsqib+OhbS1MpXY41JA9YsT/1gaoQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044089;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044092;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=guS+i5N+CCvo/P/t0XAGo0NnVodJdvWtNXKQZk11088=;
-	b=P0YfsYpKh4g8ZYPtu/awu0CU/aw8RbXfLuZJnR2FVGS6fXjZDtqvgB7cffTX/5f3IujB
-	 pxZiDNwMXRy7+r1O9ODTpxktmoRjJsL09XdQ9jogGKmreYaeOw+mEbL35evo2soJhaZWY
-	 KnUuzP+25PKXcha9GMpA7cJdM+d8scVRjHPLF+c6hwM9jerI1mVgp3VAXRpciAh2l7R2b
-	 GBUV9vXQcvr8AJ2Lj6pJZw1vfA2RcCPQBgnEF+/ebqxMNIrOsXTS2o1UwVr00pNmWoWbY
-	 FpLBweba/nLl3sS+r2Wkxqt/btkQcizz+nIFbmqysC/T3bm9sW7G/+f5zLO5t7KPSWQ==
+	bh=pAfL2xvsBnad3OULQhxCKg96Oh3mCw96CxhxSOPva9Y=;
+	b=cXUTsoS0vV17Qb6il1Kcy5ubNDx9hQsMtDGVYW7x6FufkEOW1AK8BMe+srzZ6m+bowPI
+	 5kuSk/kjXZcIRE0UC3rEXWhGYytBphUNmcMSnIWAX+8kb75hroWDir8ooI6Sgtp1NnGFh
+	 NxlbfzOptpBo0go7YeprfJeULy8u1YUWmBuIGrk3ZlLDR8UiJ2SjB9VJzbwjZSy1xjyuQ
+	 E80LrVaim9KNpzN1xt6d7WpSDLnR/8XRNuPNlrM2PpYh3BZ6BU62NqQSv9S1Ve61DXQV1
+	 oWmuRDKO9MdsImu3DDkBuOOt7MU4aWpHg7rSgB6T1DXObXbV+GlV9y/qro3r0bVxzJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=klcCLSwV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CF38y62c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B46B606A31C;
-	Wed, 18 Nov 2026 23:21:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22569606A32A;
+	Wed, 18 Nov 2026 23:21:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=klcCLSwV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 710C81F000C4;
-	Wed, 18 Nov 2026 23:21:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CF38y62c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E2821F000C4;
+	Wed, 18 Nov 2026 23:21:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044089;
-	bh=guS+i5N+CCvo/P/t0XAGo0NnVodJdvWtNXKQZk11088=;
+	s=korg; t=1795044091;
+	bh=pAfL2xvsBnad3OULQhxCKg96Oh3mCw96CxhxSOPva9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=klcCLSwV1diyOHmjq8NG5ZTxR8+SqraWaMKBvXspjXqzQYHfs/t8F92RJCuV1kM/9
-	 gk0lQgfpGZIJwRqcyW5iBPDhmiOpvL1cE2uoiE+CeLZKt5glSnyzQZKcqxtgPTSZmE
-	 s0cPhdtqrwDgDi28aOvtZNv7ES57H7EZnuMIaxBA=
+	b=CF38y62cAWP3HAba1Qpt7IG379lixDx6i/C7QKacGnuldPuq4nNqDmHPonGI6R7aS
+	 xCXfyEVXY2mEk+3/HEGc/MpG9OoiCuNS0qNs8oBwatzfPnMAhT5lXOmjE0iMQ1krDE
+	 hKyo4Q6CTabn5kAm3J4FSuCuV3nkzffP7TdHm308=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	syzbot+eeb58d2197d88720a228@syzkaller.appspotmail.com,
+	Adarsh Das <adarshdas950@gmail.com>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0442/2857] mm/damon/vaddr: avoid hw-driven pte updates during damon_hugetlb_mkold()
-Date: Wed, 18 Nov 2026 15:24:36 +0100
-Message-ID: <20261118150217.283230059@linuxfoundation.org>
+Subject: [PATCH 6.1 0443/2857] smb: client: delete compound mids on send failure before unlock
+Date: Wed, 18 Nov 2026 15:24:37 +0100
+Message-ID: <20261118150217.330601798@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,77 +69,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Adarsh Das <adarshdas950@gmail.com>
 
-[ Upstream commit 39c0ceedd54557bdc1542de08d22b2ed33e534e4 ]
+[ Upstream commit 8f6f8a48399f82f4a83f7b9f25b9707e0062a4f9 ]
 
-damon_hugetlb_mkold() reads the page table entry into a local variable,
-unsets the accessed bit in the variable, and updates the page table entry
-with the updated variable value.  If hardware updates the same page table
-entry in parallel, the hw updates could be lost.  For example,
-hardware-updated dirty bits might be lost.
+When sending a compound request fails, smb_send_rqst() kicks off a
+reconnect. compound_send_recv() still has those mids on pending_mid_q,
+but it unlocks the server without removing them first.
 
-Avoid the parallel updates by clearing the page table entry when reading
-it together, using huge_ptep_get_and_clear().  If a parallel write to the
-memory is made after the clearing, the hw will see the page table entry is
-cleared, trigger page fault and wait until it is handled.  The page fault
-handling will wait for damon_hugetlb_mkold() due to the page table lock.
+During reconnect, cifs_abort_connection() walks pending_mid_q and runs
+each mid callback. With no response yet, those callbacks return credits
+and drop in_flight. Then compound_send_recv()'s send-error path returns
+the same credits again. in_flight ends up decremented twice and
+smb2_add_credits() WARNs.
 
-Because hugetlbfs is an in-memory file system and hugetlb pages cannot be
-reclaimed, no critical issue is expected to my best knowledge.  But
-definitely this is a nasty bug that should be fixed sooner rather than
-later.
+syzbot hits this during SMB2_negotiate when the socket send fails.
 
-The issue was discovered [1] by Sashiko.
+cifs_call_async() already calls delete_mid() before unlock on send
+failure. Do the same for compound chains and set cancelled_mid[] so the
+out: path does not delete them again.
 
-Link: https://lore.kernel.org/20260907170358.100168-1-sj@kernel.org
-Link: https://lore.kernel.org/20260830160545.98969-1-sj@kernel.org [1]
-Fixes: 49f4203aae06 ("mm/damon: add access checking for hugetlb pages")
-Signed-off-by: SJ Park <sj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: <stable@vger.kernel.org> # 5.17.x
-[ sashal: Adapted to older hugetlb and page APIs: one-argument huge_ptep_get(), page instead of folio helpers, and huge_ptep_get_and_clear()/set_huge_pte_at() without the psize argument. ]
+Fixes: ee258d79159a ("CIFS: Move credit processing to mid callbacks for SMB3")
+Reported-by: syzbot+eeb58d2197d88720a228@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/6a727d22.40259c87.584f4.04ce.GAE@google.com
+Tested-by: syzbot+eeb58d2197d88720a228@syzkaller.appspotmail.com
+Assisted-by: LLM
+Cc: stable@vger.kernel.org
+Signed-off-by: Adarsh Das <adarshdas950@gmail.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/vaddr.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ fs/smb/client/transport.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-index 4aa89347d754d..d7b6d53d28fd4 100644
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -332,6 +332,17 @@ static int damon_mkold_pmd_entry(pmd_t *pmd, unsigned long addr,
- }
+diff --git a/fs/smb/client/transport.c b/fs/smb/client/transport.c
+index c5c81b4261985..e41cd9581cd43 100644
+--- a/fs/smb/client/transport.c
++++ b/fs/smb/client/transport.c
+@@ -1200,6 +1200,10 @@ compound_send_recv(const unsigned int xid, struct cifs_ses *ses,
+ 	if (rc < 0) {
+ 		revert_current_mid(server, num_rqst);
+ 		server->sequence_number -= 2;
++		for (i = 0; i < num_rqst; i++) {
++			delete_mid(midQ[i]);
++			cancelled_mid[i] = true;
++		}
+ 	}
  
- #ifdef CONFIG_HUGETLB_PAGE
-+static bool damon_hugetlb_ptep_mkold(pte_t *pte, struct mm_struct *mm,
-+		struct vm_area_struct *vma, unsigned long addr, pte_t *entry)
-+{
-+	if (!pte_young(*entry))
-+		return false;
-+	*entry = huge_ptep_get_and_clear(mm, addr, pte);
-+	*entry = pte_mkold(*entry);
-+	set_huge_pte_at(mm, addr, pte, *entry);
-+	return true;
-+}
-+
- static void damon_hugetlb_mkold(pte_t *pte, struct mm_struct *mm,
- 				struct vm_area_struct *vma, unsigned long addr)
- {
-@@ -341,11 +352,7 @@ static void damon_hugetlb_mkold(pte_t *pte, struct mm_struct *mm,
- 
- 	get_page(page);
- 
--	if (pte_young(entry)) {
--		referenced = true;
--		entry = pte_mkold(entry);
--		set_huge_pte_at(mm, addr, pte, entry);
--	}
-+	referenced = damon_hugetlb_ptep_mkold(pte, mm, vma, addr, &entry);
- 
- #ifdef CONFIG_MMU_NOTIFIER
- 	if (mmu_notifier_clear_young(mm, addr,
+ 	cifs_server_unlock(server);
 -- 
 2.53.0
 
