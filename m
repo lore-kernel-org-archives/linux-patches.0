@@ -1,57 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022101;
-	b=Rz7DLJtbizhykj5JilKGge7Qwsi4XUcJNN4vJRtcx4orIdxed03lm83dAt7LzySB/k6t
-	 nZSskIBp17iz5GpHEsgjvaN45HJBjYMFRNyR+ichpXWyZLtOu7sWNTXlGAUOaAA6a8viZ
-	 2GAU6MBLdkPg+UgjdaeA4bBKMTOFJMcSdm8ox43FlsfG67jK9ouKecu4/o9zAOeFileuo
-	 /pgEqAklkMausGt9f4xfTc7dYtcyrUKt0PzBKwBtwVtgtLQ6fS3T0Udw0a6b7TGpBxVHK
-	 WBCF/MoopDX7PgP3nh2FE6R2UUTz1EhtNDH9IccFmuYGDcbKq9TL0bBAVM9VoXpjCNw==
+	t=1795022104;
+	b=lF8N93y8mCKIZJ4qgUm/GlKhu44XEPBjfEhllbVS1z6LDBOdEziz1LDmG26l5uDobBzU
+	 38h9qf6168ALIomGHxlIhxO9bqo0CHax2ljyLpc4Lf1Kx/p41rxCeOfiT+6L3SpPIQs2h
+	 rG6O985wgzarCi4vAkE4wMyhHP8+dv6++XrSbEfXH9VK+FHN7WXJEtYxMmso1JIaTBzeK
+	 RbU49Z/PrHXJbJPwmOvnK1m1/08ti1Om5MaWXe6rE3i7OqICSn0NzWdaUr2rBC4ikvpcB
+	 hdVLExoaXqIsgHmoNR/wf8gtFXvbbKg+sqqAM0U/ICYjq/cPjOepkYHcBvMa4llKGfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022101;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022104;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=H8cioA1U+esna49kkpVMouGdpp/vWfVjbXCO10U19nc=;
-	b=UpMN/yJhbHEG3sFkcKiRJQBOidUJGqm269Ey0bKVHIdEkupP/ABIjLDTlR+yAK1d+opZ
-	 aIVBp0iPQLNY2aRndf3hj7rIaN7vwxV791Eee/VIu2b0z6g/T9EuLSOIVi7NZr0SilbFj
-	 Oo/opiT7curFQJNudH5+hxKSwOMmVoqJojL5svCy1DGQEqnp/DK/l9ht2QJb4NwbIaBDN
-	 fqLGulS74imBuyYAHj0C4j9YIgXEIPl3jMiCpn3w3R4M2nhjeufLJSaPMo32A3WsfAFWI
-	 W+VeK06slSnpmQD/D6sb/ujCIIlRPsmIY2dV8h0P0tKHmRW1MfzHU9g0brnhD2dTf5Q==
+	bh=5nKFpulICa7BcvDjSg/ylaSH8PgQlECFdRmEFAn7aGc=;
+	b=zwPpjFHg0Xxd1DkfUc+4Hj7wCam5mU+fZU7D+dFhA6DlwinOMoWQ8y9nVjXo3YzH4MCn
+	 kLxeFOjAfxgWPpQ98TSPVaodw40pr/sURbVLoPi8xI2kn4MEqU+sAERFIVPoUQ5uc1e5p
+	 uAI7iRtOMuUy6R2yUoa+jZE3B8/VCS5uSPjdWulYYm4vyftXXQJQfWI8zzDgvFFEyeAEF
+	 wy77sLnnJbVffj00q71h72zWGeOARML9Cmi6L1/agUkgKPujHmM+h/z8lLeLlKo8ekEW2
+	 wdHTJdwN8AI0Oo+HNTNFoLfBqhhKiJW9WFORLeu9El9sf9AHk2RvnMpuJuVvSLoF9MA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=te54MCwY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OTKpWcT+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4EF60A2608;
-	Wed, 18 Nov 2026 17:15:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8666C606A32A;
+	Wed, 18 Nov 2026 17:15:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=te54MCwY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1EBA1F000CE;
-	Wed, 18 Nov 2026 17:15:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OTKpWcT+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0F71F000C7;
+	Wed, 18 Nov 2026 17:15:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022101;
-	bh=H8cioA1U+esna49kkpVMouGdpp/vWfVjbXCO10U19nc=;
+	s=korg; t=1795022104;
+	bh=5nKFpulICa7BcvDjSg/ylaSH8PgQlECFdRmEFAn7aGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=te54MCwYsJ7iwjQ07+/5cx3uRXoJ2MaYHr6h0w/ILyUS1MvKe+jom3kPw7qCxingd
-	 /GTNjOZ6nfYkU3Kw9zD3quTK8NNOY1Zu0v5k8+pTZBxUbSMnKcykc43orv9FMh12QR
-	 OSEvSoLUFXgjKIXtr2bKqZlS7ZZ3Tjqy71TuiboQ=
+	b=OTKpWcT+5TMo2HWn87dyhXISTEpwEV8rquoq4t/GvI7nqYCxfe14gosu4w/1RIIGs
+	 q5f0Wwr8X7NMVMjVm40P3M6Vi+5q8HCch5Vc0we+PvBWHHvZVS9ddDVDfoHITMLbbx
+	 yvuqRTfiw9BBhdmA/135HsA9V0RMD05Kvf4Rc+i4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
 	Christoph Hellwig <hch@lst.de>,
 	Sagi Grimberg <sagi@grimberg.me>,
 	Chaitanya Kulkarni <kch@nvidia.com>,
-	Josef Bacik <josef@toxicpanda.com>,
+	Chris Mason <mason@kernel.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2535/2651] nvmet-auth: take only AUTH_Negotiate for a negotiation
-Date: Wed, 18 Nov 2026 16:02:55 +0100
-Message-ID: <20261118150415.856245214@linuxfoundation.org>
+Subject: [PATCH 7.3 2544/2651] nvmet: dont clear sq->ctrl for a Connect with sqsize 0
+Date: Wed, 18 Nov 2026 16:03:04 +0100
+Message-ID: <20261118150416.124514030@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -73,48 +72,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 7dd1d31e2e3124f331056d68af9a48c501b37e02 ]
+[ Upstream commit 89480d137bf0d943a82c64f86ae2407a15276b5e ]
 
-nvmet_execute_auth_send() hands a common-type message to
-nvmet_auth_negotiate() if its ID is AUTH_Negotiate or matches the step
-the queue is in. The second case is wrong: the only other common-type
-message a host sends is AUTH_Failure2, and no queue waits in that step.
-A host can name the step on purpose though, and its message is then
-treated as a new AUTH_Negotiate without the work that goes with a new
-transaction, like reloading the keys on the admin queue.
+nvmet_install_queue() checks sqsize first and jumps to err on zero,
+where sq->ctrl is set to NULL. Since commit b71df12605ca the cmpxchg()
+that sets sq->ctrl comes after the checks, so err now undoes a bind
+that this call never made. Over RDMA a host can send two Connects
+together and the second is parsed before the first executes, so a
+second Connect with sqsize 0 clears the sq->ctrl the first one set.
+The reference it held is never dropped and the controller leaks, with
+its cntlid, until reboot. The discovery subsystem lets any host do
+that, 20 connections leak around 10 controllers. A pending AER on such
+a queue hangs nvmet_sq_destroy() forever, and a queue can keep its
+"authenticated" mark across a rebind.
 
-Fail every other common-type message, as AUTH_Failure2 already is.
+Return the status directly, as the two checks after it do, so err is
+only reached after this call's cmpxchg() succeeded.
 
-Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
-Cc: Hannes Reinecke <hare@suse.de>
+Fixes: b71df12605ca ("nvmet: avoid duplicate qid in connect cmd")
 Cc: Christoph Hellwig <hch@lst.de>
 Cc: Sagi Grimberg <sagi@grimberg.me>
 Cc: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Chris Mason <mason@kernel.org>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fabrics-cmd-auth.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/nvme/target/fabrics-cmd.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/target/fabrics-cmd-auth.c b/drivers/nvme/target/fabrics-cmd-auth.c
-index edff0eed18884..70136f6c22e8c 100644
---- a/drivers/nvme/target/fabrics-cmd-auth.c
-+++ b/drivers/nvme/target/fabrics-cmd-auth.c
-@@ -345,8 +345,9 @@ void nvmet_execute_auth_send(struct nvmet_req *req)
- 			}
- 			req->sq->dhchap_step =
- 				NVME_AUTH_DHCHAP_MESSAGE_NEGOTIATE;
--		} else if (data->auth_id != req->sq->dhchap_step)
-+		} else {
- 			goto done_failure1;
-+		}
- 		/* Validate negotiation parameters */
- 		dhchap_status = nvmet_auth_negotiate(req, d, tl);
- 		if (dhchap_status == 0)
+diff --git a/drivers/nvme/target/fabrics-cmd.c b/drivers/nvme/target/fabrics-cmd.c
+index b451029ab8f49..fc626c2fd2c92 100644
+--- a/drivers/nvme/target/fabrics-cmd.c
++++ b/drivers/nvme/target/fabrics-cmd.c
+@@ -186,8 +186,7 @@ static u16 nvmet_install_queue(struct nvmet_ctrl *ctrl, struct nvmet_req *req)
+ 		pr_warn("queue size zero!\n");
+ 		req->error_loc = offsetof(struct nvmf_connect_command, sqsize);
+ 		req->cqe->result.u32 = IPO_IATTR_CONNECT_SQE(sqsize);
+-		ret = NVME_SC_CONNECT_INVALID_PARAM | NVME_STATUS_DNR;
+-		goto err;
++		return NVME_SC_CONNECT_INVALID_PARAM | NVME_STATUS_DNR;
+ 	}
+ 
+ 	if (ctrl->sqs[qid] != NULL) {
 -- 
 2.53.0
 
