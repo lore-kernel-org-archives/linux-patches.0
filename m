@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031489;
-	b=N3R/Eh94ov2gDWc55dC6IIPutABCR7fVtcbx8XycUNQxc5NuWWJar4AIRYllBnHwMbws
-	 8VN5IQD7dmaBcMw5mKR0uEg1VP0ci4zN2FIKoA34n0EspSn8t/Y+7Wp39vXoKrniUon3h
-	 jE20B/S0Q/SIBC5eT3cWDwwnK7HRBYQIWGw5Z2Q0j0lp+Ys3mPUI/J/wei0LylvxVHqrb
-	 251OrXrt0n5POqwsL3QzTylLyO2gHz3f0E4509RhjhE0OHmb9qylao/xqLNYQU/d53AIU
-	 iME5KE2+CENtHoZBHgeVckm+cJwIHVUPIW/9dParogzsYxV52yTphP74fU2VL2qnTIA==
+	t=1795031492;
+	b=3qv6+Pyon2GXyZ//zSPqlFK6LrksRwn022hUUkBBrk9KUFW/61XSRiMCQ7Tg7/q1JmQ0
+	 FXnCIr67ed6lm3UT1zm5I9l1fmtPmXek27nZz8g0W8Q8AULLbXa13bFnsl/il2K8XtKN9
+	 vcXau5j36LSuoQyPEDKcxExDpDXtOe1maaCSPy7XJSMcwymzPUxrQ/3nHC+epGDUC9YYb
+	 wJWZMb2bfyYS2ERv02wDNM77zepoXFULyylMdyBsBdt8Fw9R4y2G5KnS4qNj3Gq7XmvWf
+	 iXoUZloZUuKK+SjbN4WkFchnT43BAGQQKN4ykjNk+rZA9MqLOotSI1hbqvdq1eS/H+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031489;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031492;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yNTkOSxcVqEnz19Caefry9RO4fKM2K2sNfHbTP5g5QA=;
-	b=CJ40ir5dxOQxgC/PxM/1AW7c6B6MXmb+4bPL7l6fsMlSf1mTZTCilN+S/89xtIqu3c7s
-	 JiWm19ShvNoqFn6meS8XtMysx1218NbOY5hPgLRHHwrAynk9jVjsrshEElt9zXVmrrMfD
-	 F1Kl8A+/C2otRtSuWqTkGv1ZUm51XFDcpK/lGG+FNskH2+vyzilsFGhPLRAqAz8vn3gkR
-	 70oy0stk4pTUxvu6flaPgFbIiD3MTNeOgAqsM9+RyjHAfr9fRZ79xeEwXN+bAGCcL/Y+L
-	 +X9Tz6MWUdT8gbhWzSMUoqf2d+qCLTlEKp2PJG5JeFr233lTSYZvWUH4ECcV/JTfweQ==
+	bh=fFg1FZat884eXgF7ZneSMXkBDa22GhrXErtxvxNdGjs=;
+	b=Z/CtCQzEHQwyW9gyMfpLrRYN9PbBZT0SNaqvZKkxrCeMeESQjheg9tA9e5y24cX28F+h
+	 Nq7zH9jZwjZjMwqSear5KN6NJS6eX3MN0LWIJCvX2CFjdd6m/WPVLSRMZeYMAaZ7KGwh1
+	 ibjaj+bCI9Uq3zc6hE+v9EaUBMPsIYnftF5KpRtF6abPau1dbnBL8pPnT3RPGSdoV/z+N
+	 /0t1/vybYIOUvwJ2UDgLKgxQbSS9rIMIrfhHkQCkJXPV75u4y+co4b3eu3F4Zga4/zn+6
+	 IswOToa4gbB+knPRq6pDahx+IHIZ4IPB+CG+hACcAoj/98EHSHgXVQ0poXZDr60zHDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G3RNotOt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V1ev9uYl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351E0606A32C;
-	Wed, 18 Nov 2026 19:51:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F566606A31C;
+	Wed, 18 Nov 2026 19:51:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G3RNotOt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8833F1F000C4;
-	Wed, 18 Nov 2026 19:51:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V1ev9uYl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6257F1F000C4;
+	Wed, 18 Nov 2026 19:51:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031489;
-	bh=yNTkOSxcVqEnz19Caefry9RO4fKM2K2sNfHbTP5g5QA=;
+	s=korg; t=1795031491;
+	bh=fFg1FZat884eXgF7ZneSMXkBDa22GhrXErtxvxNdGjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G3RNotOtNYWsmiUOVo4UOnVVDk8pDJ77vFOzqvwEBTi9pnyfBFy3fcK88/lIUA0RK
-	 ax9z+tDFB4pMa/puGgOcOp1pUVHcBuIgw2Q81+1KLwyFsyJIcV5foWaNc1lXRKjYyV
-	 c1aOYbrkwepKr+43m8SDPNwmdARWj9KVgyYX29/Y=
+	b=V1ev9uYlrT6/FJUMSQjt9hHbvx3A4tCKbuLFED3/pRJrNRv9Qh3NWQegtaUQ3DBvy
+	 htNprVlWkz/5tXdjdxgHXTI8T0VUjSwt/8oemxCmdFB0/K63G+46hL3aP85trlT3xn
+	 Y2mSAx6DKTHskCt/8ZXJmL+0voDU4uOk6blIqDM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1077/1756] btrfs: qgroup: fix swapped blocks existence check when tracing after COW
-Date: Wed, 18 Nov 2026 15:53:24 +0100
-Message-ID: <20261118150053.104153767@linuxfoundation.org>
+Subject: [PATCH 6.12 1078/1756] btrfs: fix lost error return value in btrfs_alloc_logged_file_extent()
+Date: Wed, 18 Nov 2026 15:53:25 +0100
+Message-ID: <20261118150053.142258368@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,57 +71,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 0388b5bd3a6eb8bcb20208c3b6dbee96fd30bbe0 ]
+[ Upstream commit 784cd5a83476c6c720521f21350fb823928555ff ]
 
-In btrfs_qgroup_trace_subtree_after_cow(), after we erase the swapped
-block, iterate over all possible tree levels to check if we sill have
-other swapped blocks. However the check is wrong, it considers that there
-are other swapped blocks if any rbtree for any level is empty, instead of
-not empty. As a consequence we set blocks->swapped to true basically every
-time since we always find an empty rbtree at least at level 7, since in
-practice it's nearly impossible to find such a huge btree. This makes
-every future call to btrfs_qgroup_trace_subtree_after_cow() do an
-unnecessary rbtree search instead of returning immediately.
+If we fail to allocate a reserved file extent we then call
+btrfs_record_squota_delta() and assign its return value to 'ret',
+discarding the error from the failed allocation attempt and allowing
+log replay to proceed as if no errors happened, resulting in some
+replayed file extent item to point to an unallocated extent. At the
+moment btrfs_record_squota_delta() always returns 0 (success).
 
-Fix this by updating the condition to set swapped to true if we find an
-rbtree that is not empty.
-
-Fixes: f616f5cd9da7 ("btrfs: qgroup: Use delayed subtree rescan for balance")
+Fixes: cecbb533b5fc ("btrfs: record simple quota deltas in delayed refs")
 Reviewed-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ctree.h  | 2 +-
- fs/btrfs/qgroup.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ fs/btrfs/extent-tree.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/ctree.h b/fs/btrfs/ctree.h
-index 937f32e5ad72b..3a0c0ac0d1184 100644
---- a/fs/btrfs/ctree.h
-+++ b/fs/btrfs/ctree.h
-@@ -155,7 +155,7 @@ enum {
-  */
- struct btrfs_qgroup_swapped_blocks {
- 	spinlock_t lock;
--	/* RM_EMPTY_ROOT() of above blocks[] */
-+	/* True if any of the rbtrees in the blocks array below is not empty. */
- 	bool swapped;
- 	struct rb_root blocks[BTRFS_MAX_LEVEL];
- };
-diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
-index 68b2df4355766..de30aa41458c9 100644
---- a/fs/btrfs/qgroup.c
-+++ b/fs/btrfs/qgroup.c
-@@ -4918,7 +4918,7 @@ int btrfs_qgroup_trace_subtree_after_cow(struct btrfs_trans_handle *trans,
- 	/* Found one, remove it from @blocks first and update blocks->swapped */
- 	rb_erase(&block->node, &blocks->blocks[level]);
- 	for (i = 0; i < BTRFS_MAX_LEVEL; i++) {
--		if (RB_EMPTY_ROOT(&blocks->blocks[i])) {
-+		if (!RB_EMPTY_ROOT(&blocks->blocks[i])) {
- 			swapped = true;
- 			break;
- 		}
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index a821ea34674f3..1497a99fc725c 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -5010,7 +5010,8 @@ int btrfs_alloc_logged_file_extent(struct btrfs_trans_handle *trans,
+ 					 offset, ins, 1, root_objectid);
+ 	if (ret)
+ 		btrfs_pin_extent(trans, ins->objectid, ins->offset);
+-	ret = btrfs_record_squota_delta(fs_info, &delta);
++	else
++		ret = btrfs_record_squota_delta(fs_info, &delta);
+ 	btrfs_put_block_group(block_group);
+ 	return ret;
+ }
 -- 
 2.53.0
 
