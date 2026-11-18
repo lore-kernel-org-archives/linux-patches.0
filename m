@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018280;
-	b=Sm/ZmWdqbXySVU0jIoVaD7Dqtvz6yosWN2K/Ag1rGOFkhKkERzyyRT3wbvMqa8sYfZzK
-	 VnAPZsYCBhyHcqALrJJIdIyQHYw5Jo5XLVOJMe7P4uei8F2Ot/z2Uw8UMrO9vHKXgO0Qt
-	 GwPCj7OhHOapsSqe+8ZRmmIpLavJCrDQo7B730SccmYnSHfWeLYEvYLDJ/oKQJa1DTQWZ
-	 wwbGydhaH74UJ2LIdVEXvFEbQEGr1JlcmhLhLZxBFB+PE52Ncki+JBExjYcnw2J+K4QGd
-	 gyClDBZQxHJVLP6t8fgrwB2j0onyaAijiIgFYkjHzSKksmMAH5uQd2YfwOY7fwEXj2w==
+	t=1795018283;
+	b=qtDegq/2ZU8HQU7BP9QaqRrft7tfPrjmrcxT/OPh5dRnR7zUHCfuDqPEcb/wi8vdbjzM
+	 LY8tSUboXlRi4rq9IHu4h8NWowz9WxZWDBp9belng+t+cBtKWK2uus7AZkY2THkNH5bM9
+	 ZvIHpuZOskHXhnA1UC5GWG7qdRE4e74TpGwdhq0OI1nRffOzaURu2LAKkp8Ba47FGGyW+
+	 WpiYgLPCF/Mi2K21VFKEnMVp2elr8I1BPEixvLKDtb4B7gQYrNNxk+RI9kKLf+4rNseAL
+	 GM2r3urxXhlAbmp8v7/5NAcgNvDwizyUMQ3SndHa222Eo7SsEHYBvUG04YaTPoLRnoA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018280;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018283;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+IlMy7yciLFGlKSUJY0Lsc+/HV1iPhgZt+lFvXuK/34=;
-	b=ATPCorXy4vMcYAiDoPEjNhfJ3Kg4m1z2angK4lAOc/B8YYnCC5MOD++ZsmTf4t3IJLBk
-	 LpCznXGDYe0voYCpfY3N14QoY9/+8dAqf+XKIEJecjxFqNKyFET4MXOUyDCVr9tZojCmR
-	 qcGz9n3HFXiQhecn3uDy6kbu9gL/nve0JsI/vT8ASjdrLpqBesqGkn7YBzKMoU/LXGI6e
-	 3kv/2fsaV+uJUgOJtyZEuDbL5AiLPiq+g1n/m3jvR3r6kenTAFD2gtHm6wiFYKybYfz4Q
-	 Vw+Dx3QfexnvTUtIXxY5/shCNYV3gh1EnU5zJXVLv4yfwY4PzRNMPR0Ix8qoMxFnkyw==
+	bh=IgRZ9uCZ79o4ukZ9Tru32CC3+hqv1tH+KSNH51HKzaY=;
+	b=l+WcMfiNjSrvZVytHDf7iG5qO7FdUJAUCm/qcpu71XylzxQr0duWbxSlVnl0tsgcX5Ce
+	 RPaFkF98LLQ5y4FTbcgrnn5WsHGgJyZYB+2Qbxk+vvST0GF38VOHO5e4hY2r4/bVKLds/
+	 0PoKUL721Ktd9+o9LJcCzOWPMjkCb0oZHnUBYAYeGADxi477bN8OMONOt5KNKTY1V0n6s
+	 HAmWQixlMLCcbOd/AYrgxaRtCagASbvlgENW2dWGR5D4nYl74ejWagUeh6p44NDcTg2HH
+	 5I9jlEb1xvTs4T4AmeQXMQYZif8xLVlvBXw6lFlO7X7ZIqaf0UR+wVERtolVx1OWz3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LYQmvL78;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lpk0tUUZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EDAB606A334;
-	Wed, 18 Nov 2026 16:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449F3606A32C;
+	Wed, 18 Nov 2026 16:11:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LYQmvL78
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 807131F000C6;
-	Wed, 18 Nov 2026 16:11:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lpk0tUUZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5191F000C5;
+	Wed, 18 Nov 2026 16:11:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018280;
-	bh=+IlMy7yciLFGlKSUJY0Lsc+/HV1iPhgZt+lFvXuK/34=;
+	s=korg; t=1795018282;
+	bh=IgRZ9uCZ79o4ukZ9Tru32CC3+hqv1tH+KSNH51HKzaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LYQmvL787pEJzZoaF9ayW6ITidF3qRbTCZoWU1oLby28NrIjp6XPVgI9ksIwmR3vG
-	 OWtZ+qy7hbG0Qnle/CCiSEZJ6pePoNIwXQ3OVp1EGCpA47Z9CcPs81DMDtbaAHOflL
-	 rQbFXujmdjXZuWAoWfhCr+0TnA/ILOymlRxWVUQY=
+	b=lpk0tUUZiWUjeklXpOk/0A+kphazHRJPUl950nPYzS4fqoomSbBEDX+PPyNvpfQWu
+	 q+SOxg4c86USPa5AyBP1zZQ/FwcFZQj8gF3/FetXSIIwa0FlagEGQT0G/T3+Q/sQFT
+	 wKlnjo9ue585Q5ojpumVV0cq7Qy9oHTgF2/wFYtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Gavin Shan <gshan@redhat.com>,
 	James Morse <james.morse@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1185/2651] arm_mpam: resctrl: Make read_mon_cdp_safe() self consistent
-Date: Wed, 18 Nov 2026 15:40:25 +0100
-Message-ID: <20261118150330.664553046@linuxfoundation.org>
+Subject: [PATCH 7.3 1186/2651] arm_mpam: Dont loop forever if there is the maximum possible amount of PARTIDs
+Date: Wed, 18 Nov 2026 15:40:26 +0100
+Message-ID: <20261118150330.698687129@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,49 +71,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Ben Horgan <ben.horgan@arm.com>
 
-[ Upstream commit 09ff5358c6233c3155c8779c608c24d7f146f532 ]
+[ Upstream commit 1e105782a1ce59ad066492a574ee57ff2f4374d1 ]
 
-When read_mon_cdp_safe() is called with cdp_enabled equal to false then the
-reading returned in val is the sum of the monitor values for the given
-component. However, when cdp_enabled equal to true it is again the sum of
-the monitor values but with the initial value of val also added. Both
-resctrl_arch_cntr_read() and resctrl_arch_rmid_read() call
-read_mon_cdp_safe() and are documented to return the val directly without
-consideration of the older value.
+On a theoretical platform with the maximum possible number of usable
+PARTIDs, 0XFFFF, the loops iterating over PARTID in mpam_reset_ris() and
+mpam_reprogram_ris() will never reach their termination condition leading
+to a system hang when register the cpu hotplug handlers when MPAM is
+enabling.
 
-The val is always zeroed before read_mon_cdp_safe() is called except in
-__check_limbo() and __l3_mon_event_count_sum() but the latter is not
-relevant on MPAM systems.  The extra accumulation in __check_limbo() means
-when there are multiple RMIDs in limbo some of them may be marked dirty
-when they are already clean.
+Fix these loops.
 
-Change the cdp_enabled equals true case to match the false case.
-
-Fixes: fb56b29932ca ("arm_mpam: resctrl: Add resctrl_arch_rmid_read()")
+Fixes: f188a36ca241 ("arm_mpam: Reset MSC controls from cpuhp callbacks")
+Fixes: 09b89d2a72f3 ("arm_mpam: Allow configuration to be applied and restored during cpu online")
 Signed-off-by: Ben Horgan <ben.horgan@arm.com>
 Tested-by: Gavin Shan <gshan@redhat.com>
 Reviewed-by: Gavin Shan <gshan@redhat.com>
 Reviewed-by: James Morse <james.morse@arm.com>
-[morse: fixed commit message indenting and removed stale description]
 Signed-off-by: James Morse <james.morse@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/resctrl/mpam_resctrl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/resctrl/mpam_devices.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/resctrl/mpam_resctrl.c b/drivers/resctrl/mpam_resctrl.c
-index b825bd90d4bdb..321741a702fea 100644
---- a/drivers/resctrl/mpam_resctrl.c
-+++ b/drivers/resctrl/mpam_resctrl.c
-@@ -497,7 +497,7 @@ static int read_mon_cdp_safe(struct mpam_resctrl_mon *mon, struct mpam_component
- 		if (err)
- 			return err;
+diff --git a/drivers/resctrl/mpam_devices.c b/drivers/resctrl/mpam_devices.c
+index a4fa3129ec0c8..e859e877ca839 100644
+--- a/drivers/resctrl/mpam_devices.c
++++ b/drivers/resctrl/mpam_devices.c
+@@ -1760,7 +1760,7 @@ static int mpam_save_mbwu_state(void *arg)
+  */
+ static int mpam_reset_ris(void *arg)
+ {
+-	u16 partid, partid_max;
++	u16 partid_max;
+ 	struct mpam_config reset_cfg = {};
+ 	struct mpam_msc_ris *ris = arg;
  
--		*val += code_val + data_val;
-+		*val = code_val + data_val;
- 		return 0;
- 	}
+@@ -1770,7 +1770,7 @@ static int mpam_reset_ris(void *arg)
+ 	spin_lock(&partid_max_lock);
+ 	partid_max = mpam_partid_max;
+ 	spin_unlock(&partid_max_lock);
+-	for (partid = 0; partid <= partid_max; partid++)
++	for (u32 partid = 0; partid <= partid_max; partid++)
+ 		mpam_reprogram_ris_partid(ris, partid, &reset_cfg);
  
+ 	return 0;
+@@ -1817,7 +1817,6 @@ static int __write_config(void *arg)
+ 
+ static void mpam_reprogram_msc(struct mpam_msc *msc)
+ {
+-	u16 partid;
+ 	bool reset;
+ 	struct mpam_config *cfg;
+ 	struct mpam_msc_ris *ris;
+@@ -1841,7 +1840,7 @@ static void mpam_reprogram_msc(struct mpam_msc *msc)
+ 		arg.comp = ris->vmsc->comp;
+ 		arg.ris = ris;
+ 		reset = true;
+-		for (partid = 0; partid <= mpam_partid_max; partid++) {
++		for (u32 partid = 0; partid <= mpam_partid_max; partid++) {
+ 			cfg = &ris->vmsc->comp->cfg[partid];
+ 			if (!bitmap_empty(cfg->features, MPAM_FEATURE_LAST))
+ 				reset = false;
 -- 
 2.53.0
 
