@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032088;
-	b=27CWSuXUVJ76gPqeo3VBczi/n6hkP5kSkFB8ARs6OVy6+HQQ5Kq71dy6pa3KQWlRM0Hp
-	 Tomdq1YWo3dqWmo3UlBwt5zJiaZQVvNIzGeJZMm/UPGOWAH9dowF37G5lw/9/44vgDkg/
-	 2/J8c86mGOaD/3LwUM3J9nk/f8T9OfUlA7dssOba4RsF6x2jol5bW15/FBMYnX4++pqBN
-	 T6CltxPqZj/HXiHizHFrVJmmhwAQ+0mg33k1Fese8soHz4DyjLjATwbNMAp8C/rueNYvZ
-	 jFqoaaDWCfa9ILiGW92Pm5cP6bhgBPYjOfjduSTQH3XY0u8HVW/wPJivZohteuVeu7Q==
+	t=1795032091;
+	b=vQizU6M2Dzis+EWbOha7sw+R8aNGWEpFxpIpePPzU5/SuyDCQi/ceI27UtYbn7LiSVkl
+	 YxVfku5dDpDh+n5Db6/sknGf/dG7mwzIMjhq/WieLqek8iMxeZiQCZ3iaU0FyLMgdWyZT
+	 R7XD8ANLpcGqFoPp2yfAZ8hW2TAd97Qb5/xcmXSZoHdfr0e0A11U2FEJUwrTH/R61NPID
+	 SDYf+5f1g6DjJBm8HpknopU98cIBX1SpQa15L+1krGYeNqQMQDroZXYuaWH/Yt4EhIV+v
+	 HKQTEvEHd4kvgNnRNZ3F332EjyrhDG0w2MoZI19I4zEdo+Y0v42JCdFIfRQ11im6SiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032088;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032091;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0Yr/rVf3SomyNtnucI4XJMOQJft39lINQCrWtSP4vpk=;
-	b=tN7R5zBh0NIcReX426AKepZNqbKNdHWgD6mX5z/ieAgWiVZSOurQuT5P5yL5oOSXQZt0
-	 Sj23X/utNteEWSgSmP9ZccxbKjdU3McTou9WPCScV8RxmcxLrrEAEQ4JCEJE6A2grBgi9
-	 lOvsKcuQKjMs7AeOlbfOefzSqorJKpo+q09WF4Lp/eE5ar/Y2vUp9nkXw3i9DG86XCQvb
-	 Q7PngNXe4RKlfWxBFKwt+NGu8zMT9cMfYgBH5FZEMYrsDDLlslviSvmcS8Z39b6OyvtMt
-	 71avi2tte9cYj4xzlpVu8y98rdVO3lxQfNaD5dyqtUYtfwM39yJHHngYLyYJPVr4rQg==
+	bh=idR/4W1wU/Yi5KWm4TyeLbJYT42lWfl5o8GWOgPInEc=;
+	b=Ih0OmZJyj50U9MFNzPun7ih41y0hWbwpkA6zEvOSzieqPgHJxBVBTP8zg5u9pagOCo76
+	 YwsSf6wvdFhB0PxDxrQVELEmt1nkk5UT+8HxYNdD7odUaCgCzcpd3xz6Kuotp9m6k9MlM
+	 JX2Ywvg50atzIEnbxuOhHyCO/IVmkHPo82IEQiDrUAotOFfeqBfu2jnH+PQ4nv5otTkZC
+	 Ks3fmKuloO4ObD7ZIvop42UNArNK0yfvUIUBP3b51/WnFqmZFOe2p2/Q1slwEYvuKwAbt
+	 pd/s7Ni0yyESjm6cp1eIqXbBvsOjaJpn/nDpccUX81ZkmC9uuX48DA0Qr1zdA3Hk8zg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TPmqTINF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wn5j+iVW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687F6606A320;
-	Wed, 18 Nov 2026 20:01:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2623B606A31C;
+	Wed, 18 Nov 2026 20:01:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TPmqTINF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C204F1F000C4;
-	Wed, 18 Nov 2026 20:01:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wn5j+iVW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A9A71F000C4;
+	Wed, 18 Nov 2026 20:01:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032088;
-	bh=0Yr/rVf3SomyNtnucI4XJMOQJft39lINQCrWtSP4vpk=;
+	s=korg; t=1795032091;
+	bh=idR/4W1wU/Yi5KWm4TyeLbJYT42lWfl5o8GWOgPInEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TPmqTINFH0+3Ew09IAciVlskyCksuXLkljFwOjMShmqU3kBxvlH6GHTj5AuKDNDAJ
-	 W2QZUjEiQDSbDVaRE4KgCymmVRGQ4n6/mmiLnyOvW9Z7Y9cIFCreWcqavC0uAuCJTi
-	 gMCwTj/m4U4Fah4VJ2MzBl+yn83e2Elu5ulH7keQ=
+	b=wn5j+iVWfhN/HFz0x3yr5MpFa2IXPZQl7lupeVLe0tnUoPYmoUmbectG+QXGndjjs
+	 5qU4lIMvYKg5X/PI9Hiufn1Byh/RjbIBrDVIKRsj99zbvn2vXZmGdbFVQA/Vu+QtgW
+	 I7wbTLLfDBXviBqL9vOYVdbuvIXCIboWyUQShPwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1281/1756] ALSA: core: Serialize snd_refcount put and sync
-Date: Wed, 18 Nov 2026 15:56:48 +0100
-Message-ID: <20261118150100.569042506@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 6.12 1290/1756] selftests: keep the build status from wrapping to success
+Date: Wed, 18 Nov 2026 15:56:57 +0100
+Message-ID: <20261118150100.907061232@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,73 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+[ Upstream commit 907d138279ee3747efedc9f7403d8b0edb52aca2 ]
 
-[ Upstream commit 6904743ab77e0684dff319f3806ef982e5eea6cf ]
+The top-level all and install rules return failure only when every
+selected target fails, which commit cad6f32665cb ("selftests: Deescalate
+error reporting") deliberately kept as the default. They implement this
+by multiplying the exit statuses of the targets:
 
-When a thread tries to sync-and-destroy the resource with
-snd_refcount_sync(), it might lead to a UAF in a very slight time
-window.  Namely, snd_refount_put() calls wake_up() after
-atomic_dec_and_test(), but wait_event() in snd_refcount_sync() checks
-the condition via atomic_test() without serialization, hence the
-thread that called snd_refcount_sync() can continue immediately to
-release the resource before another thread calls wake_up().
+  ret=$$((ret * $$?))
 
-For avoiding the race above, introduce the spinlock and take it at
-snd_refcount_put() and snd_refcount_sync() in order to serialize the
-operations.
+A failing recursive make exits with status 2, so eight failing targets
+produce 256, and "exit 256" reports success. Building eight or more
+targets that all fail therefore succeeds, and install goes on to
+package an empty installation.
 
-Fixes: dcca9b6064c3 ("ALSA: Add simple refcount helper functions")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20261015071838.31082-1-tiwai%40suse.de
-Reviewed-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/20261015112256.3902-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Record a successful target instead of multiplying statuses. The rules
+still fail only when no target succeeds, and FORCE_TARGETS still stops
+at the first failure.
+
+Link: https://lore.kernel.org/r/20261014200115.1363363-2-sashal@kernel.org
+Fixes: 5f70bde26a48 ("selftests: fix build behaviour on targets' failures")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/core.h | 1 +
- sound/core/misc.c    | 5 ++++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ tools/testing/selftests/Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/sound/core.h b/include/sound/core.h
-index 9c56a7b0ae78f..e215dc1e25bde 100644
---- a/include/sound/core.h
-+++ b/include/sound/core.h
-@@ -84,6 +84,7 @@ struct snd_device {
- struct snd_refcount {
- 	atomic_t count;
- 	wait_queue_head_t waiter;
-+	spinlock_t lock;
- };
+diff --git a/tools/testing/selftests/Makefile b/tools/testing/selftests/Makefile
+index a9e363b7f489f..310fb9cfe014a 100644
+--- a/tools/testing/selftests/Makefile
++++ b/tools/testing/selftests/Makefile
+@@ -202,7 +202,7 @@ all:
+ 		$(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET	\
+ 				O=$(abs_objtree)		\
+ 				$(if $(FORCE_TARGETS),|| exit);	\
+-		ret=$$((ret * $$?));				\
++		[ $$? -eq 0 ] && ret=0;				\
+ 	done; exit $$ret;
  
- void snd_refcount_init(struct snd_refcount *ref);
-diff --git a/sound/core/misc.c b/sound/core/misc.c
-index 4772b2a3b808d..9d59e95222ae1 100644
---- a/sound/core/misc.c
-+++ b/sound/core/misc.c
-@@ -183,11 +183,13 @@ void snd_refcount_init(struct snd_refcount *ref)
- {
- 	atomic_set(&ref->count, 0);
- 	init_waitqueue_head(&ref->waiter);
-+	spin_lock_init(&ref->lock);
- }
- EXPORT_SYMBOL_GPL(snd_refcount_init);
+ run_tests: all
+@@ -269,7 +269,7 @@ ifdef INSTALL_PATH
+ 				OBJ_PATH=$(INSTALL_PATH) \
+ 				O=$(abs_objtree)		\
+ 				$(if $(FORCE_TARGETS),|| exit);	\
+-		ret=$$((ret * $$?));		\
++		[ $$? -eq 0 ] && ret=0;		\
+ 	done; exit $$ret;
  
- void snd_refcount_put(struct snd_refcount *ref)
- {
-+	guard(spinlock_irqsave)(&ref->lock);
- 	if (atomic_dec_and_test(&ref->count))
- 		wake_up(&ref->waiter);
- }
-@@ -195,6 +197,7 @@ EXPORT_SYMBOL_GPL(snd_refcount_put);
  
- void snd_refcount_sync(struct snd_refcount *ref)
- {
--	wait_event(ref->waiter, !atomic_read(&ref->count));
-+	guard(spinlock_irq)(&ref->lock);
-+	wait_event_lock_irq(ref->waiter, !atomic_read(&ref->count), ref->lock);
- }
- EXPORT_SYMBOL_GPL(snd_refcount_sync);
 -- 
 2.53.0
 
