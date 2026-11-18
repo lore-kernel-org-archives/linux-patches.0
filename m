@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029968;
-	b=c8Ji6EJ59cOXoWUQ+vNCUc1c4C0ufBezsMJtomuD+n9LyJ66jNfYHCzjoqcYhCQsLeeZ
-	 VFDZnCis2vRwJWxCdJIU+JuliIKXn5rPX/v9365MO2eG6pnXaYuS0DBKy5b6hrM8SEvho
-	 9okhUsZB/UhMtv9gZ6YmqKlVC9JKp+K6MX9UhkP9F29bGF0KzLhF6YxCqdE/NsjNfgeho
-	 RLaHWE1iNiU7HIYdQbgsgGXSZs/cVJ7hOZsLNVAUDImdXwwpwy1KHfVxv0bGidbJW47ZY
-	 r1XYL73UyuPsSAfa/dvou3sBd5KcJ62WSax3hxwEJ2nO842gtEKxl1LcVBxM32bck5Q==
+	t=1795029971;
+	b=I8e0ZKZq+w86HwD/D2GUg8LOGLwbGapcg4UIm3TT7Ngoq6G7yX6abgazRarqFmMxOiij
+	 4/OhSpHih+hZgNno3LAn0vfJsHzh2y2/VH0iYRG7awRQDVSzINlc/0zkxsYTeirehgGqr
+	 FFoD8gMRlOoZR+b6J2I6Q7xiV/z7Po/mNhn4C8FHddwl8ufPWAWRbQbxV0J0ACsAyigWw
+	 Rsz8pY9RXUP1a4JXHtesDl8GAvPoUkrfZx81c+UYvqZGpRJTXsPkMFFtSQuW9S5v3qMKb
+	 axuXx1JbSKb94lBuo7yZVzvipqoO+ftTFZNr0l19mh7rXYUJEDxC8wjtFkT0Qkl5zKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029968;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029971;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r2A8/Itphkp1Z2AeYZyzEOnxeikYK0ZUPVxriVk2rL0=;
-	b=Iv8YvBpStd9o7sx1GYmfkUymg63VZ6mCSwfr3BtZueqZ6CBiZ00XUZFPvhXr5m6WPOwk
-	 bRGvj/uvkHADfZqiAwRq6YfKA1CUVpcJcqVfgZxGiZwufmrXI2cc97tspY5u4qnB602U9
-	 FQ3/VGHIbYbvCoeS+yhjpCXvIhzb/jQ0NrLIlm0HMy/qCrXYc7LOLwPOv4M5rYALcvBpf
-	 1B6L47Qs1eye3dUf/O1hRdZTjQK29vPo9RvV+l+YQCcbUw30mMAqrMEa02PBMI66gqGfT
-	 lpEITLyy4dAst6e20FCbdTR2cBsVlnWZVXYgN0fGE3NzPfSlmwu4Xy6UcwqhP4aCptw==
+	bh=mS8rTX7qxWpYW/5PxYcJw0AWrdVRKXnB3J9bIqHOyE0=;
+	b=XB7Q1AHQ6EO1xkUqnK+Pin21ffbvMEypf44LtspXIGQU8HVKJVBttMczn0siI9sluEYK
+	 6G5H/oCppS8cqRciwSdU7FFgVwdsLXUCb89JM/uzD8EYwa273bFy52TeGvufrTIj+jOQO
+	 IEDbTM/DFgj1/j81HLBNXJe4QwXW9tuN3ffqGButcKqjebdhuc43tSgC5abYX4G5ZCIQ3
+	 VDo7YklNBy/P3qzKUykGvNbwCVrXmtcBBDqj4IYXyzZVgzxlt41+EZInTjOPmrBnGhYLq
+	 /HaEcMy28GiftWTfXRAVn8DaKp7AiO5z1BB6ZFCm+4M4Sw5dSv+U87R0nz6k9tD1hxw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UPrDIy9B;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wl4cdqKu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2697606A320;
-	Wed, 18 Nov 2026 19:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B0D5606A31C;
+	Wed, 18 Nov 2026 19:26:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UPrDIy9B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4597D1F000C4;
-	Wed, 18 Nov 2026 19:26:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wl4cdqKu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D0C1F000C4;
+	Wed, 18 Nov 2026 19:26:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029967;
-	bh=r2A8/Itphkp1Z2AeYZyzEOnxeikYK0ZUPVxriVk2rL0=;
+	s=korg; t=1795029970;
+	bh=mS8rTX7qxWpYW/5PxYcJw0AWrdVRKXnB3J9bIqHOyE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UPrDIy9BVsLya5C5XvyeIMmFXTK2+HAGPjQL+25yGimHCZwMaGYLY3t4+AnOb2rES
-	 zMNetWv51QsiRu3EyfrIouXa8Ubowiqv3mpu3mSjlQ+Dp+bXBrqMmX1by2W9uN+yCB
-	 F/o+2r0AUwGB9lT9M/jLzLc0vk0AEziIbDJmYa0Q=
+	b=wl4cdqKu92YCTRrbZYrKSmx2OfZ3lHZmZed4w2r53wsVl06yclAriMNON3DqP7xcm
+	 JxVP4FTIQgUlBlC2KCTTqY7TpvmVwh1rELe9karyz/HQvMWB0V5qcx30GqJybgd7BX
+	 wBHHf7TPDNAh87vEhid09Dgh7Ml1fwTnz7LrPJDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stan Johnson <userm57@yahoo.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0538/1756] swim: Check drive ready bit
-Date: Wed, 18 Nov 2026 15:44:25 +0100
-Message-ID: <20261118150030.578695427@linuxfoundation.org>
+Subject: [PATCH 6.12 0539/1756] swim: Revisit delays
+Date: Wed, 18 Nov 2026 15:44:26 +0100
+Message-ID: <20261118150030.615271114@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -72,112 +72,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit abae04f5bed924590e98fe1519566a6e0144e6b5 ]
+[ Upstream commit bbcd3e38a4f355d6b0320f3f6916df96c109f2ad ]
 
-The drive provides a readiness signal that has to be tested before
-certain commands are issued to the drive. Rename the SEEK_COMPLETE flag
-as READY because that's how it's known in the documentation as well as
-the mkLinux source code.
+AFAIK, timing requirements for the various FDHD drive mechanisms aren't
+well documented. But we do have the UPD72070 spec and secondary sources
+like swim3.c and mkLinux source code. This patch is needed to satisfy
+the requirements in the UPD72070 spec and follows mkLinux.
 
-Poll for that signal after stepping the heads and also after switching
-to MFM mode, as that's what mkLinux does. Check for readiness when
-stepping because testing shows that some drives require this.
+Change the LSTRB pulse to 2 microseconds, because this is what mkLinux
+does. Inside Macintosh says, "Hold LSTRB high for at least one usec but
+not more than one msec".
+
+When a disk is ejected, pause before de-asserting /ENBL. Wait 150 us after
+the STEP command for valid signalling. Pause for 1 us after setting the
+step direction before sending the STEP command.
 
 Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
 Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 Signed-off-by: Finn Thain <fthain@linux-m68k.org>
 Tested-by: Stan Johnson <userm57@yahoo.com>
-Link: https://patch.msgid.link/8d6fc833c719de2248b64ee521418b1032b1e509.1788513997.git.fthain@linux-m68k.org
+Link: https://patch.msgid.link/af356248a1e6a4fd956f71acf17feead27ba4918.1788513997.git.fthain@linux-m68k.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/swim.c | 29 ++++++++++++++++++++++-------
- 1 file changed, 22 insertions(+), 7 deletions(-)
+ drivers/block/swim.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/block/swim.c b/drivers/block/swim.c
-index b4148dbe27142..1de2b9f7d40a1 100644
+index 1de2b9f7d40a1..2b324b67b9ef3 100644
 --- a/drivers/block/swim.c
 +++ b/drivers/block/swim.c
-@@ -117,7 +117,7 @@ struct iwm {
- #define TACHO		0x103
- #define READ_DATA_1	0x104
- #define GCR_MODE	0x105
--#define SEEK_COMPLETE	0x106
-+#define READY		0x106
- #define TWOMEG_MEDIA	0x107
+@@ -290,7 +290,7 @@ static inline void swim_action(struct swim __iomem *base, int action)
+ 	swim_select(base, action);
+ 	udelay(1);
+ 	swim_write(base, phase, LSTRB | action | PHASE_PIN_DIR);
+-	udelay(1);
++	udelay(2);
+ 	swim_write(base, phase, action | PHASE_PIN_DIR);
+ 	udelay(1);
  
- /* Bits in handshake register */
-@@ -313,6 +313,14 @@ static inline bool swim_readbit(struct swim __iomem *base, int bit)
- #define swim_readbit_timeout(base, bit, val, timeout_us) \
- 	poll_timeout_us(, swim_readbit(base, bit) == val, 1000, timeout_us, false)
- 
-+#define swim_READY_timeout(base) \
-+({ \
-+	int ret = swim_readbit_timeout(base, READY, true, 1000 * 1000); \
-+	if (ret) \
-+		printk(KERN_DEBUG "%s: drive not ready\n", __func__); \
-+	ret; \
-+})
-+
- static inline void swim_drive(struct swim __iomem *base,
- 			      enum drive_location location)
- {
-@@ -351,8 +359,6 @@ static inline void swim_eject(struct swim __iomem *base)
- 
- static inline void swim_head(struct swim __iomem *base, enum head head)
- {
--	/* wait drive is ready */
--
- 	if (head == UPPER_HEAD)
- 		swim_select(base, READ_DATA_1);
- 	else if (head == LOWER_HEAD)
-@@ -387,20 +393,25 @@ static inline int swim_track00(struct swim __iomem *base)
- 
- static inline int swim_seek(struct swim __iomem *base, int step)
- {
--	if (step == 0)
--		return 0;
--
- 	if (step < 0) {
- 		swim_action(base, SEEK_NEGATIVE);
- 		step = -step;
--	} else
-+	} else if (step > 0)
- 		swim_action(base, SEEK_POSITIVE);
- 
-+	swim_READY_timeout(base);
-+
-+	if (step == 0)
-+		return 0;
-+
- 	for ( ; step > 0; step--) {
- 		if (swim_step(base))
- 			return -1;
+@@ -337,6 +337,7 @@ static inline void swim_drive(struct swim __iomem *base,
+ 		swim_write(base, mode0, EXTERNAL_DRIVE);
+ 		swim_write(base, mode0, MOTON);
  	}
- 
-+	msleep(30);
-+	swim_READY_timeout(base);
-+
- 	return 0;
++	udelay(1);
  }
  
-@@ -482,6 +493,8 @@ static blk_status_t floppy_read_sectors(struct floppy_state *fs,
+ static inline void swim_motor(struct swim __iomem *base,
+@@ -355,6 +356,7 @@ static inline void swim_eject(struct swim __iomem *base)
+ {
+ 	swim_action(base, EJECT);
+ 	swim_readbit_timeout(base, DISK_IN, false, 2000 * 1000);
++	msleep(1);
+ }
  
+ static inline void swim_head(struct swim __iomem *base, enum head head)
+@@ -368,6 +370,7 @@ static inline void swim_head(struct swim __iomem *base, enum head head)
+ static inline int swim_step(struct swim __iomem *base)
+ {
+ 	swim_action(base, STEP);
++	udelay(150);
+ 	return swim_readbit_timeout(base, STEP, false, 20 * 1000);
+ }
  
- 	swim_drive(base, fs->location);
-+	swim_READY_timeout(base);
-+
- 	for (i = req_sector; i < req_sector + sectors_nb; i++) {
- 		int x;
- 		track = i / fs->secpercyl;
-@@ -602,6 +615,8 @@ static int floppy_open(struct gendisk *disk, blk_mode_t mode)
+@@ -398,6 +401,7 @@ static inline int swim_seek(struct swim __iomem *base, int step)
+ 		step = -step;
+ 	} else if (step > 0)
+ 		swim_action(base, SEEK_POSITIVE);
++	udelay(1);
  
- 	swim_motor(base, ON);
- 	swim_action(base, SETMFM);
-+	msleep(30);
-+	swim_READY_timeout(base);
- 
- 	set_capacity(fs->disk, fs->total_secs);
+ 	swim_READY_timeout(base);
  
 -- 
 2.53.0
