@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020422;
-	b=GM0YCfHhDSF6Zk943j0Q9sMKhkDgax93LWeH0XZ4KJxsScWxlLfLz3WsdHEqKX+WRAsd
-	 D0nwOgoXkMc/cZy2483aZA8r81S/7SI0XQOE3ZrbyIe3s6Z8dWttRDgfpCgoCbcbg6rPU
-	 z4VyLeT0LEKUnhV+S9HKGrSiI1KnGWsaM5mFWJaH6D50uJqkgCdHBlWgH3Ix57ZxKqUzK
-	 SYkxy3hOjSRNcPwzyQLt95EbAwOozun8UTYvmGe8oCQFyG0CNAushdl6yJX3mUkvXygeS
-	 8MxCj+bGV9bjIbCeRcegDA9777fI60raEinBUh5YpEB2GdDTUSLoWoazhILwzoxpGOQ==
+	t=1795020424;
+	b=La7nPchql3X/AxL468NPnGqt1ChjCUBDtsl6jBgRUF1C1YES+xzbkmS4YmZ7ARhEFfxX
+	 MZuRm5fLMACoDAgocPiI5Eq/sdGMnYGoLf8bv+FN+ZhXciQ2tHFURkNSqHz7ZNy8+/Q1o
+	 OA23dpb2BLR18YYuDm3rnbEqZriXFmKVgMAN9i9Miwq7LoDVcCDCEIT3syibccAcKnfQF
+	 UED5O5Qo9xqTVtg50erTJQW/3IqsX4t3YbyL5zvZtT1FdFPjVbot+CFnNIrJAS7PH1gAv
+	 9iBu3DFYrsK2hIdjLkNoBA+Tbg9ELwGFhUZUJ1nIr5u4wocZin2GGSQqbcNcHNkhNNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020422;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020424;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=v4HDk/DqbuptjoB0DodhVU2kaAiYxnARCrkzYXHLoMM=;
-	b=Uzk26mW0qVfmPeaAHdCsw4cECjarrLFJA252Fv/GqsAva+4ATfgS9wxReqAI72wMmGr8
-	 f0IrmofeZeqT0wOeC5UFpy0GrQ6MWn3/Bx7laXcQfdFqKBkGPTzood/jUx4EXkE+WxCLK
-	 cFQ8+RjCqV38eTfoqRCZQKSjDWiERObbVW1mOwM7o+w8tI1Gw5tortJQBrQdM6cm9RVKm
-	 dSznQ2j70saw01+W2OOhJE4dIlvQRQnfLTnd/RpV/WgCkqa79zQaXo7Fx4sVf5BEFo5dm
-	 SblhqsPL72LDjGkeoaYu3vdhpgTcTyjf8yTms7cBUvawR9FETzpUKTqelpMcagWsfHQ==
+	bh=kq7JLxwCpAsjIxxr9PX2IInsCG1VSI0QV7LR+UmsE0Q=;
+	b=AsdhO/U0Yfss3siXov90+L5Gw37Qd6FGcFaeZVQY/jvwysaFi2wN4QLKglqU2S96ysuL
+	 S21mzQpOa0zTdPBNkZAvaJg30Y5sQ5oxnLR7D3bd2x3wiy3MooBAeRZ5YPEzwX3tpZ1Po
+	 uWcxtXvY/jd/FeJLqRdkS6mvgqF834Jn14iBXRsgOkYIKl1knYoYjj1S3PWUDxgeAICOC
+	 seV8zs8vMuXaNRXqUaFLNjV5toEn4mb3aSaj/qPNRuyL9dQKbcsMTWoLNFNHOkmjxQeIu
+	 P053eJuwjBnxm4WJLuYhnGNfbDPLPaBAdc/ZRo1FeQOOXAquue8NXkUdhGOtPVxoECA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wa23Mp40;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tt8s9oHr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB989606A320;
-	Wed, 18 Nov 2026 16:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D835F606A32F;
+	Wed, 18 Nov 2026 16:47:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wa23Mp40
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7240E1F000C4;
-	Wed, 18 Nov 2026 16:47:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tt8s9oHr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3714D1F000C4;
+	Wed, 18 Nov 2026 16:47:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020422;
-	bh=v4HDk/DqbuptjoB0DodhVU2kaAiYxnARCrkzYXHLoMM=;
+	s=korg; t=1795020424;
+	bh=kq7JLxwCpAsjIxxr9PX2IInsCG1VSI0QV7LR+UmsE0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wa23Mp403MtOmfzHVENSGzDWPJVHeBsgmlynFys/AVh/dQ6t1x8bQawAIBAO4lhKF
-	 1z7kQ4MeG9LuajJi8Ce0jfBYAXmWWtJuPt470rm66lIQsFhYEID6HCSIpO1owoC6Gf
-	 3MiOFaUqWdc1zk2YaARCRYQ9PtpTumjXOT77PNKQ=
+	b=tt8s9oHrBRh9Iijy7XUWj+o0M7g6W2qIOkZy+XACv0t0etD3BMUxrtu8NTi6btVKp
+	 dZDIcI5vYCw8Q/W/tdqpci5RznXzNSeXwxqbuMLHoIKKsR3C1eXkyPfdm2YbNWeqPX
+	 tpxov8Ol+GKFKwwnW/WfTokHThHHON6LmKvcYV9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Thomas Gleixner <tglx@kernel.org>,
 	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1946/2651] irqchip/gic-v3-its: Dont free the tables of an enabled ITS
-Date: Wed, 18 Nov 2026 15:53:06 +0100
-Message-ID: <20261118150356.659607697@linuxfoundation.org>
+Subject: [PATCH 7.3 1947/2651] irqchip/gic-v3: Dont register a redistributor that was never counted
+Date: Wed, 18 Nov 2026 15:53:07 +0100
+Message-ID: <20261118150356.689198686@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,53 +71,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Fuad Tabba <fuad.tabba@linux.dev>
 
-[ Upstream commit d09b36d8e0e60f35bd1cd7d63aadc6dfad61700c ]
+[ Upstream commit 6a21693b97ee5cb0a21d04bfd051a05dde5aa783 ]
 
-its_probe_one() enables the ITS before its_init_domain(), the last step
-that can fail, and the unwind from there frees the tables and the
-command queue without disabling it. The kernel comes up with an enabled
-ITS pointing at freed pages.
+gic_acpi_match_gicc() counts only the enabled GICCs with a non-zero
+gicr_base_address, and that count sizes redist_regs[], but
+gic_acpi_parse_madt_gicc() registers every enabled one. On a MADT with
+no GICR entries, an enabled GICC with a zero GICR base therefore makes
+gic_acpi_register_redist() write a struct redist_region past the end of
+the array.
 
-Enable the ITS last. Nothing reaches the new domain before then: this
-runs from init_IRQ(), and the ITS joins its_nodes only after the enable.
+Commit fa2dabe57220e ("irqchip/gic-v3: Don't return errors from
+gic_acpi_match_gicc()") removed the check that kept the two consistent.
+Its message says such entries are still caught by gic_populate_rdist(),
+but that runs from gic_cpu_init(), after the write.
 
-Fixes: 4c21f3c26ecc2 ("irqchip: GICv3: ITS: DT probing and initialization")
+Skip the entry instead, and mark the CPU's redistributor broken as the
+online-capable path does, so that gic_check_rdist() rejects the CPU.
+gic_starting_cpu() runs past cpuhp's last failure point, so without the
+mark the CPU would come online with its redistributor and CPU interface
+unconfigured. With an ITS, its_cpu_init() would then dereference a NULL
+rd_base.
+
+Fixes: fa2dabe57220e ("irqchip/gic-v3: Don't return errors from gic_acpi_match_gicc()")
 Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Reviewed-by: Marc Zyngier <maz@kernel.org>
-Link: https://patch.msgid.link/20260925085000.753400-3-fuad.tabba@linux.dev
+Link: https://patch.msgid.link/20260925085000.753400-4-fuad.tabba@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/irqchip/irq-gic-v3.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index 73bce111d202f..011415f59b34e 100644
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -5334,16 +5334,18 @@ static int __init its_probe_one(struct its_node *its)
+diff --git a/drivers/irqchip/irq-gic-v3.c b/drivers/irqchip/irq-gic-v3.c
+index b0142b0a93fa4..93d7364352317 100644
+--- a/drivers/irqchip/irq-gic-v3.c
++++ b/drivers/irqchip/irq-gic-v3.c
+@@ -2345,6 +2345,17 @@ gic_acpi_parse_madt_gicc(union acpi_subtable_headers *header,
+ 		return 0;
  	}
  
- 	gits_write_cwriter(0, its->base + GITS_CWRITER);
++	/* Not counted by gic_acpi_match_gicc(), so there is no slot for it */
++	if (!gicc->gicr_base_address) {
++		int cpu = get_cpu_for_acpi_id(gicc->uid);
 +
-+	err = its_init_domain(its);
-+	if (err)
-+		goto out_free_collection;
++		pr_warn(FW_BUG "GICC entry with ACPI UID %u has no GICR base address, CPU kept offline\n",
++			gicc->uid);
++		if (cpu >= 0)
++			cpumask_set_cpu(cpu, &broken_rdists);
++		return 0;
++	}
 +
-+	/* Enable last: the unwind frees memory an enabled ITS may access */
- 	ctlr = readl_relaxed(its->base + GITS_CTLR);
- 	ctlr |= GITS_CTLR_ENABLE;
- 	if (is_v4(its))
- 		ctlr |= GITS_CTLR_ImDe;
- 	writel_relaxed(ctlr, its->base + GITS_CTLR);
- 
--	err = its_init_domain(its);
--	if (err)
--		goto out_free_collection;
--
- 	raw_spin_lock(&its_lock);
- 	list_add(&its->entry, &its_nodes);
- 	raw_spin_unlock(&its_lock);
+ 	redist_base = ioremap(gicc->gicr_base_address, size);
+ 	if (!redist_base)
+ 		return -ENOMEM;
 -- 
 2.53.0
 
