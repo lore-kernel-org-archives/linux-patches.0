@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033589;
-	b=SYUo9Q0zGqVUWNiQ75JWXKR3ggAX/dXgTnXihHlvINiWCNqtozujOk/WrjJ8/PBiVdCP
-	 1ifgi0si0zbOZu0NC16+vXRiN3Z5NfZMqIibqRvNsafA55Mpht78tlk5MV/3KGfCth8BZ
-	 7wqGByrXSoTLKqrEPTX0dYQHbOWc1AchloWdAjZVOpLhbhK8++Zfbndh12xLGY8Xsix1T
-	 lKgpjW/PQZaft6V1IEb2g2CSAysPeRwEdwWVbfV3CRgUgkfc5aQWriRNKu653XSbfLlZv
-	 MNOw+y4ZvEioHrVfh+Ae3EbykrquRb4gGHYzHwRpdGEB3UEvw5uw9mB9d2KGCbwpk3Q==
+	t=1795033591;
+	b=Sltcf/ENf9mjHPESZ4ZX+/HdG2ROICSlW7vJyBkuQx7kTbIYYd4laxI/AHcH0FCMOZfc
+	 4hIZVDiwmDR/AqgSAES+e3dR5AQxHDR4mS7kSuCJwJbpXfm8ojBVR27ZHw4e9FpxZ747s
+	 /4FsXFqD8IBEjSitfzWEqYUxDDjG1U1NAmwNBHhHMOOWdigDU2xzCjCEhy7+I00Zus20I
+	 08gqhZ324zWbIPjWgqllvIXVq3vf98LO7/cOovzhUupsq4VZHa3vKo2waOOypIc2HGneE
+	 9Io1xZ9UFKnV/74M5SJ7vmPIBA+XB68I8BPRq2DY8xVGKiso+1sPgNB4pa2vq4nAbVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033589;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033591;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kwynf8EsYPH5ZnpAyDu6rnsMWh70ZerrDF1zyH5iRtM=;
-	b=o/QfVCaS9kqt+9X9CUnRV1E51V/isjyXG4axXM2D50pMsPWjkhW/vGlcCudOcF+PG3TQ
-	 BnbQp9GiSoedZA+LnGA8T92wQsbHUtPF3pZNyrzx6zapaQaGjg2XmQntLMO/WA03EcqlY
-	 +RjwJ+EukTaQANNZWGea4nKLGPaSoA1SGQYoqrHYc4qsqYHqbsH0gMbL06jBNJ1rF1RZN
-	 YUEUaperukZUhoK9CDSeCNSF+Ie6ARup3DEZYoKMY4lyrbjhHttSV2TMs32n2I1Nfhcx0
-	 tz/yztAW3Gv595nzMCBVBpUknt+xZIUJjw6QwwN+EUnWRBO7GyWYctLvu2sG5991jmg==
+	bh=pGhQBSNkH5Srz+u2oNwDMREDPvl/iNzF2O8GnKfxZAg=;
+	b=YhvgEsnEufTP8hAhDBg44/lNjNcgf8n3tfeTwi6e5rKS2qzHSZOGIfm9vpL/dDqaG6DC
+	 M7L+4B1AgeC0pZ4mrpfDPp3kj/Q/phYKxRKFWufyFkxx21Kleuld1IgaofNQ1/2KA//xX
+	 4rgBm3fHVkSsMdphAmJ53P7R7P+eXXLrUQvOzltTzXVJf+gtEYTaGjZ4Q/RA9R8TV7wrq
+	 cliuZP4HmhyDS0QyTBgEgmZzPE8kvam3LHAk1dallWk3DTMoC/HEyTM3yasOtVZaCdBHL
+	 t5wSre/YLTbsecpzS5QCha4wY20oEMxUGT5g297zxurFVkv0C14c4PVrdAfKxU/+HiQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lid5Osew;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e8tn7819;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17693606A320;
-	Wed, 18 Nov 2026 20:26:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7266606A31C;
+	Wed, 18 Nov 2026 20:26:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lid5Osew
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7260A1F000C4;
-	Wed, 18 Nov 2026 20:26:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e8tn7819
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 379721F000C4;
+	Wed, 18 Nov 2026 20:26:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033588;
-	bh=kwynf8EsYPH5ZnpAyDu6rnsMWh70ZerrDF1zyH5iRtM=;
+	s=korg; t=1795033591;
+	bh=pGhQBSNkH5Srz+u2oNwDMREDPvl/iNzF2O8GnKfxZAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lid5Osew8IoVLknnMPoSBxsBsXb/pFc8PLyDV4rY09iNnGekwiOe+77YQ1BX4yRYZ
-	 Gb+XunW0EkVIHNcyZOr05z3BYZHGbQKX1K9wHzNdGUlLvfY8UXob4gqA23znkh/CSm
-	 LUM45J4NL8awF6yryXl1n8xc2XiBPIVt43Cf4Ves=
+	b=e8tn78190ptTyHaHkL7ORa8xuR8T8PFT2fDYYGAiZihZYOl9aKI8pZek6IrhS6cd8
+	 uOg45CVScE37H9btQX/f//IELo3ia7O4gu3pRAmBWVflUS6Q/Veg1GSEJb38x4K8vL
+	 R3Y1tgFWTUZ2FLEs/kCwBORCY9aU6wr/LYC1iLbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Jonathan Cameron <jic23@kernel.org>,
+	David Heidelberg <david@ixit.cz>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0066/3318] iio: adc: max1241: add missing MODULE_DEVICE_TABLE()
-Date: Wed, 18 Nov 2026 15:11:28 +0100
-Message-ID: <20261118150315.984104621@linuxfoundation.org>
+Subject: [PATCH 6.6 0067/3318] soc: qcom: socinfo: Add SoC ID for SDM850
+Date: Wed, 18 Nov 2026 15:11:29 +0100
+Message-ID: <20261118150316.020919255@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,41 +69,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: David Heidelberg <david@ixit.cz>
 
-[ Upstream commit 790a2080e0c9eabefea3561dec301172043de236 ]
+[ Upstream commit 743af1d6a8b4bfa62dd01b5c2d81b1c62ea597f7 ]
 
-The driver has a match table for the spi bus wired into its driver
-structure, but the table is not exported with MODULE_DEVICE_TABLE().
+Recognize the SDM850 SoC.
 
-Add the missing MODULE_DEVICE_TABLE() entry so module alias information
-is generated for automatic module loading.
-
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the driver registration structure, and the missing module alias
-publication.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260627-sda850-v2-2-44bf46ade42e@ixit.cz
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/max1241.c | 1 +
+ drivers/soc/qcom/socinfo.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/iio/adc/max1241.c b/drivers/iio/adc/max1241.c
-index 500bb09ab19bc..4fa1461823099 100644
---- a/drivers/iio/adc/max1241.c
-+++ b/drivers/iio/adc/max1241.c
-@@ -179,6 +179,7 @@ static const struct spi_device_id max1241_id[] = {
- 	{ "max1241", max1241 },
- 	{}
- };
-+MODULE_DEVICE_TABLE(spi, max1241_id);
- 
- static const struct of_device_id max1241_dt_ids[] = {
- 	{ .compatible = "maxim,max1241" },
+diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+index 714d1259b3137..33d6be349a067 100644
+--- a/drivers/soc/qcom/socinfo.c
++++ b/drivers/soc/qcom/socinfo.c
+@@ -339,6 +339,7 @@ static const struct soc_id soc_id[] = {
+ 	{ qcom_board_id(IPQ8078) },
+ 	{ qcom_board_id(SDM636) },
+ 	{ qcom_board_id(SDA636) },
++	{ qcom_board_id(SDM850) },
+ 	{ qcom_board_id(SDM632) },
+ 	{ qcom_board_id(SDA632) },
+ 	{ qcom_board_id(SDA450) },
 -- 
 2.53.0
 
