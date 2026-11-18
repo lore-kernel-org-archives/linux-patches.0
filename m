@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060072;
-	b=QQkFPpLMTFi25mOe789L+M2R86fY7FieVUhX1JUtBAJaCHS7KOF167Ec2KRiDDjDt3sH
-	 zw368D5uwvrYQVO4fZEL+6nz7h0W8dNK6mGMIqEgOWVj7w07pngnWJpCeJvqHreg2ZgoH
-	 qL7HP8ka01tnMYmWOrnhdBb8IINlhPsUNamBH61IDYtvlNZu5igBB/D6BWeth4n6WZHsY
-	 d2+cZQttUypLlIkXcV0v0B8u3c8o4mKqZLWuDoephwn1mN7DQPYG09JLZtBTFJCwareKm
-	 CyfChcbM+cc9L0N5gD9YOtItTmu6NRL03/sTxx6svH9b1ff8/SjzoxnEgikKjU0BGOQ==
+	t=1795060075;
+	b=Y2FECJJg2Nxc9G2J1+AqHcQCYVDa23MVBKK6sOOPGCb2EKAFdE4sL0LAy64qOKnfshYG
+	 VfYZ9KFhE3WIYvbVzIKALk7qKKp/0CfJcrZ1/c7KUBE/pLAtPKBFo/FEvxAZbUTwLSUMK
+	 Zl2JR9gmE/EaqSUhOQFMB/niFbG+/jLc9B602rsGieiNasq6gwzsWUp3e3yVjGjdvWw47
+	 j2esnYA/lB846Im1bHWJT2PvWR2VGJWGpENyzZhYpkSPfb6zuzAwmZfNUHyP2OZzKCp1H
+	 MhebMJAHrIaxeh8pn59ID8FPS4o3f5bFPnoPZd3B08OKug+7pB1nTlFHhdkbWTirmtw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060072;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060075;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=J+0DoM5+oPFeMd2ctxG6nNaJuvh511wDo9QQwsHXIq8=;
-	b=E9ImMpRTSZRdolu1G/nlQhIb7uBoN3Wl3Y0Az8yFY5d9XWdYgUlJKYefjnBqiaTQQZ4g
-	 ZQDw06Udr9jKUFOv2OX2yR7+vuskS8c9pyTjngQqWwB2zEr8QRiFUVFVU4HW3DnFjLjtX
-	 7RX3aJ2Jrr1RoVzYxgf/rZ7na/MlGyH8QNf2ykyJtK/jQ0EnNBTKe0GPdBF1lfX29Qlnw
-	 +O9Qpf+ZNUsPwLB+ps3heGrfE6yb8K5L8ygKcvW6+OyGDOGQiUPujxbEcmRvaehVn0Enp
-	 /Ml6WSMvvhJfDL3uBUpI6rpon/R2AYGo6XnpGymwZPwT6qrtAI7W0exsxDg5UcrVJWw==
+	bh=RQHjeWUCLkth5N8BNJyxFeyf2RGC9CELwyYFz0Jb3tA=;
+	b=AbMJJ1iDWJPQfY8DsmMt4DzRKO1a5rYsjHNFqV6m9j86BjdQVhN/cIQE/M7szNyRo2Fq
+	 KTWVa3DlbV6GqODkC5AH7RYZ+pR6x540CtXPHcG0j4pzKcir9rD1IWlrFAHI7tGpqyKho
+	 /a884cpaHHF9WfCfBOrf4sxENa0ErL/hm+PQHLNVLWaYT/gW7KY71nvxW1zzqm+6R2iRZ
+	 GKhHUqy81wpgG49hXazJx3BwU02OT0sPMF4iLO62TXZqOIQ4I0AMRESvS7xftl5nTvYFS
+	 84Veh09pB0j5C0wDHWlt+FCHTy+vq+xtBm4zdKOVThM5ht4E1/pNvqihrduQzPtJqJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w9yDXMS1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vbLtIEhR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1E1606A326;
-	Thu, 19 Nov 2026 03:47:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38307606A320;
+	Thu, 19 Nov 2026 03:47:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w9yDXMS1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D22951F000C4;
-	Thu, 19 Nov 2026 03:47:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vbLtIEhR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91C8F1F000C4;
+	Thu, 19 Nov 2026 03:47:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060072;
-	bh=J+0DoM5+oPFeMd2ctxG6nNaJuvh511wDo9QQwsHXIq8=;
+	s=korg; t=1795060075;
+	bh=RQHjeWUCLkth5N8BNJyxFeyf2RGC9CELwyYFz0Jb3tA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w9yDXMS1MLCjzhQ4mleltTPhZxHQCJVMwDZSG31DG9qVNelq94gOuBTMn8L4pxSET
-	 U1GNcndSqJd2U4R8Ujs10EjxPG7KpGUzDimxP78XHh8FAE0j9GJce3UliggmRpMyRE
-	 dy+lTe36oBSbSwCCrwNF+WkUrVvoF5k7hs/VlUZE=
+	b=vbLtIEhRAuYTs8Ejx9kRsc6aqtTxQC+gLDOggkmb+IaCs4K11L7Rb7nUcFf0CjcKx
+	 tdImBSTTnLIXXnIR03ztEdL0dTGiTT3jLAglzIh87i12FYPgLjphpx851Ktd6HQQc+
+	 QYj4/jyqZFwjMI1yHpWu40IGkmPUSO0o6LJa0LwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kimi Security Team <bug-report@moonshot.ai>,
-	Yilin Zhang <yilinzhang@moonshot.ai>,
-	Chuck Lever <cel@kernel.org>,
-	Bjoern Doebel <doebel@amazon.de>,
+	Chris Mason <mason@kernel.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1017/1848] SUNRPC: Copy the deferred RPC Call from the head buffer
-Date: Wed, 18 Nov 2026 15:50:55 +0100
-Message-ID: <20261118145959.510374651@linuxfoundation.org>
+Subject: [PATCH 5.10 1062/1848] aio: fix NULL deref when a fault races ring truncation
+Date: Wed, 18 Nov 2026 15:51:40 +0100
+Message-ID: <20261118150002.025272714@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,78 +68,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Chris Mason <mason@kernel.org>
 
-commit 2192a56b0686599358909c3e12e9a366f5b5d452 upstream.
+[ Upstream commit d53b5aa5cfae27e4d236fc0ab9581085d27f7d33 ]
 
-svc_defer() snapshots the RPC Call for replay once a pending cache
-upcall resolves. It copies the Call starting (rq_arg.len -
-head[0].iov_len) bytes before head[0].iov_base, a back-up that once
-covered a transport header. No transport has had one since commit
-983084b2672c ("SUNRPC: Remove svc_rqst::rq_xprt_hlen"), so the two
-lengths are meant to be equal.
+The aio ring lives in a file on the aio pseudo filesystem and the ring
+VMA uses filemap_fault(). aio_ctx_aops doesn't have a ->read_folio
+because aio_setup_ring() puts all folios of the ring into the page
+cache. So a fault on the ring only works as long as it finds its folio
+in the page cache. If it doesn't, filemap_fault() calls ->read_folio
+without checking and we jump to NULL.
 
-An RPCSEC_GSS Call breaks that assumption. Unwrapping the integrity
-service truncates rq_arg.len by the length of the trailing checksum,
-and unwrapping the privacy service leaves rq_arg.len short by an
-amount the client sets with trailing bytes after the wrap token.
-Neither adjusts head[0].iov_len. Both lengths are size_t, so the
-subtraction underflows and the copy starts past head[0].iov_base.
-Every deferred integrity Call replays a shifted snapshot.
+We already fixed this twice this year. A forked child could inherit the
+ring mapping, fixed by commit c03ce4173c7b ("fs: aio: set
+VMA_DONTCOPY_BIT in mmap to fix NULL-pointer-dereference error"). And a
+partial mremap() could leave part of the ring mapped, fixed by
+commit 3adf7ae18bf4 ("fs: aio: reject partial mremap to avoid
+Null-pointer-dereference error"). Both times a VMA outlived the ring and
+the ring file was truncated under it.
 
-A deferred replay skips GSS verification, so a shifted snapshot runs
-as an authenticated Call. With the privacy service the offset is
-client-chosen. A forged Call placed in that window, naming another
-user's GSS context handle, runs under that identity.
+There's a third way to get there. kill_ioctx() and the error path of
+ioctx_alloc() unmap the ring with vm_munmap() and ignore the return
+value. If vm_munmap() has to wait for mmap_lock and a fatal signal is
+pending it returns -EINTR and the VMA stays. free_ioctx() then calls
+put_aio_ring_file() which truncates the ring file to zero. A fault that
+passed the i_size check in filemap_fault() before that doesn't find its
+folio anymore, allocates a new one and calls ->read_folio:
 
-Copy the Call from head[0].iov_base. Refuse to defer a Call whose
-length runs past the head buffer, so the copy cannot read out of
-bounds.
+    fault on the ring                 io_destroy() with SIGKILL pending
+    =================                 =================================
+                                      vm_munmap() returns -EINTR
+    filemap_fault()
+      i_size check passes
+                                      free_ioctx()
+                                        put_aio_ring_file()
+                                          truncate_setsize(inode, 0)
+      no folio, allocate a new one
+      filemap_read_folio()
+        ->read_folio == NULL
 
-Fixes: 260c1d1298f6 ("svc: Add transport hdr size for defer/revisit")
+All that's needed is a second process that shares the mm. If a CLONE_VM
+child calls io_destroy() and gets SIGKILLed while it waits for mmap_lock
+the ring stays mapped for the threads of the parent. Any user can do
+that.
+
+Instead of plugging the routes one by one give the ring a ->read_folio
+that unlocks the folio and returns -EIO. All folios of a live ring are
+in the page cache so a fault can only end up there if the ring was
+truncated. The fault now gets SIGBUS. Nothing else reads the ring file
+and the aio filesystem uses noop_backing_dev_info so there's no
+readahead either.
+
+Making vm_munmap() unkillable in those two places would only close this
+one route and bring back what commit ae7987835643 ("mm: make vm_munmap
+killable") fixed.
+
+Fixes: 36bc08cc0170 ("fs/aio: Add support to aio ring pages migration")
 Cc: stable@vger.kernel.org
-Reported-by: Kimi Security Team <bug-report@moonshot.ai>
-Reported-by: Yilin Zhang <yilinzhang@moonshot.ai>
-Link: https://patch.msgid.link/20260902133101.48914-1-cel@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
-[doebel: 5.10 backport. Here rq_arg.len > head[0].iov_len for every
- Call at svc_defer() time, so the upstream guard and copy-from-iov_base
- cannot apply; keep the skip-based snapshot that svc_deferred_recv()
- expects (5.10 still has rq_xprt_hlen). Only gss_unwrap_kerberos_v2()
- breaks the len - iov_len invariant, by resetting buf->len; refuse to
- defer after a GSS integrity/privacy unwrap (rq_auth_slack != 0) or
- when len < head[0].iov_len.]
-Signed-off-by: Bjoern Doebel <doebel@amazon.de>
+Signed-off-by: Chris Mason <mason@kernel.org>
+Link: https://patch.msgid.link/20261029-work-fs-ai-fixes-v1-1-88f22792f6f7@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[ sashal: adapted the folio-based read_folio callback to page-based readpage using unlock_page() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/svc_xprt.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ fs/aio.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/net/sunrpc/svc_xprt.c b/net/sunrpc/svc_xprt.c
-index db1f565cc8ec0..dd30050c4e514 100644
---- a/net/sunrpc/svc_xprt.c
-+++ b/net/sunrpc/svc_xprt.c
-@@ -1202,6 +1202,20 @@ static struct cache_deferred_req *svc_defer(struct cache_req *req)
- 	} else {
- 		size_t skip;
- 		size_t size;
+diff --git a/fs/aio.c b/fs/aio.c
+index 16ceed755b7e5..8ba65b4ec8fc2 100644
+--- a/fs/aio.c
++++ b/fs/aio.c
+@@ -455,7 +455,18 @@ static int aio_migratepage(struct address_space *mapping, struct page *new,
+ }
+ #endif
+ 
++/*
++ * filemap_fault() reads a page that it did not find in the page cache. All
++ * pages of a live ring are there, so the ring was truncated under the fault.
++ */
++static int aio_readpage(struct file *file, struct page *page)
++{
++	unlock_page(page);
++	return -EIO;
++}
 +
-+		/*
-+		 * A GSS integrity/privacy unwrap can reset rq_arg.len so
-+		 * it no longer measures from the start of the receive
-+		 * buffer (see gss_unwrap_kerberos_v2()). In that state
-+		 * len - iov_len does not locate the buffer start, and a
-+		 * snapshot taken here would be replayed without GSS
-+		 * verification. Refuse to defer; the caller fails the
-+		 * request and the client retries.
-+		 */
-+		if (rqstp->rq_auth_slack ||
-+		    rqstp->rq_arg.len < rqstp->rq_arg.head[0].iov_len)
-+			return NULL;
-+
- 		/* FIXME maybe discard if size too large */
- 		size = sizeof(struct svc_deferred_req) + rqstp->rq_arg.len;
- 		dr = kmalloc(size, GFP_KERNEL);
+ static const struct address_space_operations aio_ctx_aops = {
++	.readpage	= aio_readpage,
+ 	.set_page_dirty = __set_page_dirty_no_writeback,
+ #if IS_ENABLED(CONFIG_MIGRATION)
+ 	.migratepage	= aio_migratepage,
 -- 
 2.53.0
 
