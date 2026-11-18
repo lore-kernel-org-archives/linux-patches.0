@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019839;
-	b=iGCgrPQvddQu4o1LN6hMxLnhCWp91LdKrT5mRwvZIWajFJVXXUHnBzSkW+nZoEOOgHnz
-	 ZWeqc44WvcTbPfZyGGSioMKPumz26RznDkg2YwYoUjgdOzWesG6kKojo6ZAfqNQ0slGDO
-	 5dpQ8Tc9Garsr90JKDx/xh/hm9SBl3Xj1F8GOMyL1IZKkeQAl804zeNE154ikPCue+kyi
-	 /oO0C7320FHFHGrgpQErQUDMPzq2/KPWD+lYjP+5GdmbZAx+zWLJ92BaeKWvsW/A0za/A
-	 cKGrh4CtyIg7eFrk+3A2f/jwDBmouiMY9FRVOaCXVqOzcsD2RKrF1X1xe256bZ4ZJpg==
+	t=1795019842;
+	b=lgIDRj7Rm9IX4c1vmxrh8ZO7FrdZ/9qrdbFd4AfMzrRjcC2UuN66WxItOELOOXXlwuBQ
+	 2kkbjmxskpVrnpaaOrPR7mTU6IVgJgop5xnA1gggUOcBbgwaREUjpPdgvqhnUwYvLUXEA
+	 LJL23Pp8jhmOpfND72hMqW4d0uCl9bJbZTD+uuOxKuIcwZ0HQfUfzmNva7emnlndFjqhY
+	 U/KPEnILXXacnCLLHrMLqfyO0I1+xSVwlgP1aj66C6d4zp4JOXrEKhmlXTpsKb5OxYkXT
+	 xTtk7PTdI/LtBXaBEDOzeq1zBCpNB33f6sVZ1CzUpAjC1XJ5pkqGmXJcAds529ImY7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019839;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019842;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KsVgL3JH7ePTH5hNo7qdQbMcYALfnBIq/H4OckB0mKc=;
-	b=qClUzCnmQA4DZa/FkhP0Z1I/Ug9DcsiLR/BhcmbkoXTaSSFpzmt2kTQOP35lZXcLaDSX
-	 N4lJMYEXtpB4GBribanZC2GlQwth9vEHTjuqbcW3bA9yVQ5xeVqmG+gw+965WLtv+GNJX
-	 IErvGX9/UfP/2QUCXLGhCXwzb1HrOY7Y9JmA7U9Puqaln1zoFUy2/3J/92ky62q82boHN
-	 Z+bGfiZcd28cGyFq61NuftzfP90qSHfarYf+EVckOEw5hpYhGjbyftB4AoO41xKoi8UzZ
-	 4hqniJU1kSUAcacmQVRe5FJ3cFNqrRGt8OWmWA/li/W1Je5Gs0q5M3o7x/jLRiJZLUw==
+	bh=E87GI17vsz69vgv2NGpsHRkiJhDHRMmMuG/FG8ynI6w=;
+	b=aQGiMJ6K1U6kXIYRQCuzoFBjiqd/U+8WvRy5WekSCJ+L+NYJ9rGftr4fAjRRHH7DoxvD
+	 HtqXmRJU9rE5HHTeqTOJWookJO8Wxi2gIyiC4SlUYSy/Lg4kSTF9/JrTZNYmBNhVaReQK
+	 g9s43Xnq9B1S3qOcTGrUUzvZAeP5/WZz/lCrbBlhjmmNzZ/zj1dibDHWObiQOD6+zSK3X
+	 U4B2FQZOluYGITS12Jsh0OlJ1EKSKobUKuVInMLVKgA2/svcgTE/4cTiP6NGQiXNCYate
+	 XJbgOSjVbDL76VDwqVlRB+8Uh2RELtpVCik5UXp1vAcoRDtOqugLL6UGQDsxRI/ZLtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Hv1r6G/3";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sHHUbtiZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD10D60A260A;
-	Wed, 18 Nov 2026 16:37:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0E0606A330;
+	Wed, 18 Nov 2026 16:37:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hv1r6G/3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E6591F000C7;
-	Wed, 18 Nov 2026 16:37:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sHHUbtiZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2B5F1F000C4;
+	Wed, 18 Nov 2026 16:37:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019839;
-	bh=KsVgL3JH7ePTH5hNo7qdQbMcYALfnBIq/H4OckB0mKc=;
+	s=korg; t=1795019842;
+	bh=E87GI17vsz69vgv2NGpsHRkiJhDHRMmMuG/FG8ynI6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hv1r6G/3g3mRcs325neIRL4vPnZBeJ2SD6v+uqiAK2deZjcco/vh5kOtqIjg8aqU0
-	 L0LY3RYgHQSMe/H94qIlbl9lXPovF7I8mMiWWZveEEjfZojOJ0JmJNGEzJ/cXMm86l
-	 2qLjtz8rhmLWCqnK6Kc8+IbEbWJ74KmXQsOHad2Y=
+	b=sHHUbtiZ9ciD9iH9RRIcmy8uprPfhTBlQ0Ya6gg+HnaxI0JJha7I4AiWovsi3bMvf
+	 6mPHTxh4lHSA+1VKZCZIfWohohdKj/ZQHdzKScyvIa1w/gNZTMD5PPW02rKUm5yZlO
+	 bh6UDFAn6L422f2Wor88CnkCkxQIrkPRDL/+zbU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <oss.patchbox@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Conor Dooley <mail@conchuod.ie>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1738/2651] bus: arm-cci: Drop cci-control-port node reference in __cci_ace_get_port()
-Date: Wed, 18 Nov 2026 15:49:38 +0100
-Message-ID: <20261118150350.149280135@linuxfoundation.org>
+Subject: [PATCH 7.3 1739/2651] soc: mpfs: use kref cleanup on probe failure
+Date: Wed, 18 Nov 2026 15:49:39 +0100
+Message-ID: <20261118150350.180169305@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,44 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <oss.patchbox@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 810ccc792193909ba9bbb4246e0eb0de14dad724 ]
+[ Upstream commit 6f77194e1147d85c10b4964edee7091c701a25c2 ]
 
-__cci_ace_get_port() looks up the device's "cci-control-port" node with
-of_parse_phandle(), which returns the node with its reference count
-raised, and only compares the pointer against the probed ports.  Neither
-the match nor the no-match return releases it.
+After kref_init(), the device_get_match_data() failure path frees the
+mailbox channel and sys_controller directly, bypassing the matching
+kref_put() for the initial reference.
 
-Drop the reference on both paths once the comparison is done.
+Use mpfs_sys_controller_put() on this path so that the initial
+reference established by kref_init() is released through the existing
+kref release callback.
 
-Fixes: ed69bdd8fd9b ("drivers: bus: add ARM CCI support")
-Signed-off-by: Yuho Choi <oss.patchbox@gmail.com>
-Link: https://lore.kernel.org/r/20260923164122.596910-1-oss.patchbox@gmail.com
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Rename the error label to reflect that cleanup is now performed
+through the kref helper.
+
+This issue was found by manual code inspection.
+
+Fixes: 75ef23397558 ("soc: microchip: mpfs-sys-controller: fix resource leak on probe error")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Conor Dooley <mail@conchuod.ie>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/arm-cci.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/soc/microchip/mpfs-sys-controller.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bus/arm-cci.c b/drivers/bus/arm-cci.c
-index 076ac8e06bd01..435952602d06a 100644
---- a/drivers/bus/arm-cci.c
-+++ b/drivers/bus/arm-cci.c
-@@ -167,9 +167,12 @@ static int __cci_ace_get_port(struct device_node *dn, int type)
- 	cci_portn = of_parse_phandle(dn, "cci-control-port", 0);
- 	for (i = 0; i < nb_cci_ports; i++) {
- 		ace_match = ports[i].type == type;
--		if (ace_match && cci_portn == ports[i].dn)
-+		if (ace_match && cci_portn == ports[i].dn) {
-+			of_node_put(cci_portn);
- 			return i;
-+		}
+diff --git a/drivers/soc/microchip/mpfs-sys-controller.c b/drivers/soc/microchip/mpfs-sys-controller.c
+index 0400a01b2338d..ef27e1083f0f7 100644
+--- a/drivers/soc/microchip/mpfs-sys-controller.c
++++ b/drivers/soc/microchip/mpfs-sys-controller.c
+@@ -159,7 +159,7 @@ static int mpfs_sys_controller_probe(struct platform_device *pdev)
+ 	of_data = (struct mpfs_syscon_config *) device_get_match_data(dev);
+ 	if (!of_data) {
+ 		ret = dev_err_probe(dev, -EINVAL, "Error getting match data\n");
+-		goto out_free_channel;
++		goto out_put;
  	}
-+	of_node_put(cci_portn);
- 	return -ENODEV;
- }
  
+ 	for (i = 0; i < of_data->nb_subdevs; i++) {
+@@ -173,8 +173,9 @@ static int mpfs_sys_controller_probe(struct platform_device *pdev)
+ 
+ 	return 0;
+ 
+-out_free_channel:
+-	mbox_free_channel(sys_controller->chan);
++out_put:
++	mpfs_sys_controller_put(sys_controller);
++	return ret;
+ out_free:
+ 	kfree(sys_controller);
+ 	return ret;
 -- 
 2.53.0
 
