@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044342;
-	b=3HKJigIyk7wiPV73jml9fOEbw9wuDbtx1SMRxQ4ETQqlKMT2iv6E7rllIgoS6mhg/4jO
-	 gbN981tlp7RdDmiyyN+L8S0aq/T5NACYL0Odj8vTALGo2dokmb5i3G7QZphFlQyav/Wbq
-	 +UkQ1zzzOBABi+ZhGOfQNdA2J0rHAdf7IwGL8giRa+PXAVBX+eZX4o1kVKpZIPVqfnqRk
-	 VOuI4+uhiWsby6xFPG7CeJjzQW9/FLfQM4B68mQnb+4Se9vo3jzG4w1LBCoNR9v8msxSU
-	 Ar4mxFqDJfkKFfOyuEI1XUn5qLmz2vQHmcuix2lZ/QVM5ZJpcGFvp3oYFkfs+bMFgPw==
+	t=1795044345;
+	b=NjpWOHeqtVoiafTWJe7M3M4bu5UPv0Z4ZT5ZySCjnuk7lXZYfaNYS3vFxQIPUfRFPo36
+	 geMtPgQBajeMl9cdUSy9dQZKUesSWyu4IDOHvAf4aQBNDOG1yx6VGVmJDuMv8kzyirek8
+	 nIDZCIK3ygm7dreOhnOZgdVLorB6+CgDtUakZgtRDxzv5NZvIh7uhegEjR38bp+f3qGE3
+	 T1opscyAqWfqI6X46zGUszg5ddPytLzjG1el9jfl1fdKVGdn3OZ93R5Bp9g3WmnSg6gVY
+	 oPgeZKZ3YPCLSyO2KlBhjBHS9SGf2ih2/4/+1rr0L94ztUoblOwfxSZkIsuQ7K744Ww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044342;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044345;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NI+WUsIvRJYSirAZ9fC7HcMRtVTvvonGjPglY9Z+o1s=;
-	b=vMBm+Wn4AMrP1Q5hBubFHQJBgqgyRpgVT60biON8uHYkW2xL0fQrH3UWIskX2MIeXeI0
-	 YxPSyk+Vv4kNbbTtU3GPo2yz8XRwyhc2pFPh8BVp9H2NsY1fZOtzR1wdqce7bLXFDa+TO
-	 p50e9FcEAd/Qyt4XnG1eZ45429ahUw4yyb1+CZb61ANauqbIbBim9+oOh/PJk+eW9up7u
-	 opMTC5GFFzeHV9jgPKH0XcwEucQNplPhHDjZQ/MKnVBaPYPTMyg+MfrS7elqpBnKV1Rp4
-	 NsPPHyXBfE1M5VUDp164rYO5jPqdURFPVTYdWiduymfw8kDg1NCnt6hm1SM/RihLNdA==
+	bh=6KXFOYvZu/R5q3i/DroaY+szDRGzXCYCIPrBpmnlhwI=;
+	b=FxYPwZ4BKXD0u/jrsmFT9NpF8zflPSoPMsR9x2qexSwmnU0C4hHVjlZsKTWV6cnLMQhw
+	 Nm1kovmOfHPevNZbVMmJynSybUrLMKXEvFySx3SyjTaWEa3ZknJ8UGdEpHvmc49lNMOXV
+	 waiqT6OpQLyCKujmGXPzjeFVzKO63/k2YkZ+jp3kTWAQshgXQ2bSVN3x5WP0OP75Pwomh
+	 gX0x9UlExr3qQbTuzmHv8O7y/7JYhFuNtVUPCSMYynNhN9YtCnz+QMPsFy2WzlWucplZg
+	 FQiuJR643Y8uxqGyurpQVZzDSxdenKrwO+AxLWNEdqp2JB78KcDmSfLEBk84JxtjjcA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uJdufyZX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kd5Q4Nl8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 486F4606A334;
-	Wed, 18 Nov 2026 23:25:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F913606A31C;
+	Wed, 18 Nov 2026 23:25:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uJdufyZX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 971491F000C7;
-	Wed, 18 Nov 2026 23:25:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kd5Q4Nl8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C1F1F000C9;
+	Wed, 18 Nov 2026 23:25:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044342;
-	bh=NI+WUsIvRJYSirAZ9fC7HcMRtVTvvonGjPglY9Z+o1s=;
+	s=korg; t=1795044344;
+	bh=6KXFOYvZu/R5q3i/DroaY+szDRGzXCYCIPrBpmnlhwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uJdufyZXtAVMqCmzYXogHIfbuiuYwWS5H7OkmebXG0sCMfkwviQ7W2A2gGYSEH7hB
-	 PO790dSQLNVDFvlWOD3JIrN+9Y5eV3Tmk2NjeYGZuUo2olB2dzHJGrr2MIacBs5qGa
-	 IqwS3chtC3BepgannUJTu2ozsp9nyNnr1o61IBEk=
+	b=Kd5Q4Nl8lzynRdpS9Ot9R6qPeXh9iT86VxS/mb8pTStmUSkaDiEIFYumrzxy4UQyD
+	 RtLtohBLhyZmyXZZEC1y/iCUrw0yqQ/2CEKH0uq71gbkWq7pBb0t4a8hLDUQLy2eIk
+	 JogUhqEALNzDnKcXy9FB8QQ9qAo8LmlabArOX+2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.1 0534/2857] lockd: Fix use-after-free in nlmsvc_retry_blocked
-Date: Wed, 18 Nov 2026 15:26:08 +0100
-Message-ID: <20261118150220.710702279@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.1 0535/2857] media: au0828: fix use-after-free in bulk_timeout timer on disconnect
+Date: Wed, 18 Nov 2026 15:26:09 +0100
+Message-ID: <20261118150220.746367953@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,65 +67,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit f5b7634f0f213299a07b461fb10385c8639a4ab8 upstream.
+commit 521030837bee352515d5ea57cc6a29581db3506e upstream.
 
-nlmsvc_retry_blocked() examines the block at the head of nlm_blocked
-under nlm_blocked_lock, then releases the lock before calling
-nlmsvc_grant_blocked() or retry_deferred_block(). The nlm_blocked list
-reference is all that keeps the block alive across that window.
-nlmsvc_grant_blocked() does take one of its own, but not until after
-the lock has been dropped. Unmounting the nfsd filesystem while a lock
-request is still blocked reaches nlmsvc_traverse_blocks(), which drops
-the list reference and frees the block along with the nlm_rqst hanging
-off it.
+start_urb_transfer() arms dev->bulk_timeout, whose callback
+au0828_bulk_timeout() queues dev->restart_streaming; that work in turn
+calls start_urb_transfer() and re-arms the timer.
 
-  BUG: KASAN: slab-use-after-free in nlm_async_call+0xd6/0x230
-  Read of size 8 at addr ffff88811b04c808 by task lockd/8377
-    nlm_async_call+0xd6/0x230
-    nlmsvc_retry_blocked+0x61c/0x800
-    lockd+0x144/0x1c0
-  Freed by task 8392:
-    nlmsvc_release_block+0x231/0x290
-    nlmsvc_traverse_blocks+0x139/0x1b0
-    nlm_traverse_files+0x1aa/0xa00
-    nlmsvc_free_host_resources+0x12/0x60
-    nlm_shutdown_hosts_net+0x127/0x280
-    lockd_down+0xd5/0x1c0
+au0828_dvb_unregister() cancels restart_streaming on disconnect but does
+not sync bulk_timeout. au0828_usb_release() then frees dev with kfree(),
+so a timer still armed or pending at that point can fire after the free
+and dereference dev through timer_container_of().
 
-Take a reference before releasing nlm_blocked_lock and drop it once
-the retry has run.
+Sync the timer with timer_shutdown_sync() before cancel_work_sync().  The
+timer callback queues the work, so the timer must be stopped first; the
+shutdown variant is needed because the work re-arms the timer through
+start_urb_transfer().  The dvb->frontend == NULL early return guards the
+register-failure path where the timer was never set up.
 
-Fixes: 0e4ac9d93515 ("lockd: handle fl_grant callbacks")
+This bug was found by static analysis.
+
+Fixes: 53460c53b761 ("[media] au0828: Add timer to restart TS stream if no data arrives on bulk endpoint")
 Cc: stable@vger.kernel.org
-Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Closes: https://lore.kernel.org/linux-nfs/20260818235808.3458075-1-shuangpeng.kernel@gmail.com/
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260822-lockd-retry-blocked-uaf-v3-1-761661eae60c@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/lockd/svclock.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/usb/au0828/au0828-dvb.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/lockd/svclock.c
-+++ b/fs/lockd/svclock.c
-@@ -1014,6 +1014,7 @@ nlmsvc_retry_blocked(void)
- 			timeout = block->b_when - jiffies;
- 			break;
- 		}
-+		kref_get(&block->b_count);
- 		spin_unlock(&nlm_blocked_lock);
+--- a/drivers/media/usb/au0828/au0828-dvb.c
++++ b/drivers/media/usb/au0828/au0828-dvb.c
+@@ -537,6 +537,7 @@ void au0828_dvb_unregister(struct au0828
+ 	if (dvb->frontend == NULL)
+ 		return;
  
- 		dprintk("nlmsvc_retry_blocked(%p, when=%ld)\n",
-@@ -1024,6 +1025,7 @@ nlmsvc_retry_blocked(void)
- 			retry_deferred_block(block);
- 		} else
- 			nlmsvc_grant_blocked(block);
-+		nlmsvc_release_block(block);
- 		spin_lock(&nlm_blocked_lock);
- 	}
- 	spin_unlock(&nlm_blocked_lock);
++	timer_shutdown_sync(&dev->bulk_timeout);
+ 	cancel_work_sync(&dev->restart_streaming);
+ 
+ 	dvb_net_release(&dvb->net);
 
 
