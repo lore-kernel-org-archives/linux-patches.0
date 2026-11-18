@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033926;
-	b=hvAP7t8KvLrvYkybngHLsor5WqcFhb9O7gjfLDETKxR+WLoIMfYVuDxl3SJbzQPv1aoR
-	 5xfb9ZeHynjY5rjEd7tZK3fNrd/ShrykYrXs84HyHeJwHsjC3rQLNfmUiCDtPq1+9h22S
-	 Ek86Vv6J7bL2YCQ4SArIF67U1E3H61ExVHZ8WnV1SXHa+vyvCY4WrG6fuoczNT+5Aq6cN
-	 KTYFJCR2sxEiAlGzj87VFtxkBAGd1RXuC7GG6LZfr3wxnPY9zdlJl1SYMs1OMv1gVJMex
-	 s1C2GRi/fER9SAF9LoFQpmmtWjTFejskLzXEixFjebj8SByvZGDv6BpW8UZBe27Kygg==
+	t=1795033928;
+	b=sjuLgYS5pQBana0CE5ZbcdP0v9OZCWLQ09JpskcDEF+bhpawszj/Zj+3ctPED5i4VcNN
+	 /sN3g8HZfmil1pKuw82iDmaGzqpEXmdrAAmT6E6T2MLU9d5xTgqQ+cFY5AVyj+AUcIVTe
+	 4Opx5xjmlfJXzIbkDvrVvnGMKoTKuNmV3bGU0ANuroYlW4UNy/iafHFdQ26T6d0G4Zdrn
+	 67bo6TPfKzECtxyzmfU/JJLnVViapXpsI7N3sn7nK8YoEFq9ASEyZs0XWNlUDB41/aS7w
+	 m8/mlDAlPNtlzooTJg4swPFZ+4jynns0+0sr8/+ItzfICv3U1Se4MHnyJ6EH5NUM56g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033926;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033928;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=3hygDRSjEnQWrvMTsVAHuMuQSSACVnii7lJOwz1xQ18=;
-	b=L0XXu7yswtd2FRa4RQ+CxDOxwpWmuLjZzoyRPXe9z1vtNiSWi6FhiuzmGWebZr+02l7p
-	 toG0ijgkS+2IzE7MRnNMs10++7QeEHIbAs3oRyJB867pkvK23UjTTRDfMZdT0XK88K3LC
-	 4sG1utSK+HkTEdgulng8fdEMIbTSTUJho36PPSEsq5apLOlnRzHCB53kmO+SdepuZE5Eg
-	 zCJxbapVkpV2ttvQ61NPWJf/ggmNkVNbjmqXjhrSvHMkiajERWYCy0ascvN4BOl1j2Iz7
-	 dp0IDaVNqhExv1dBjtiFeM/MH5AV4UjQxcLlWmUyISkx6f2UxbKMJMIQ0zbQUngt+UA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=mXBpXz4RPH7d9vdDn66mTIyXeaPrbYPrgY3jXxJRPRo=;
+	b=gin10fjOxoa9d+F1o7RCwRi6fkJ5rWHE36+98dR+fe8x3euR+XuiNFLFFPfsyApcVFuO
+	 2RCP9kj4jkCS1PPAyo5yJCESpMafnhOqmTvUqQZrkpOvOXsjzvERHP+26fCmHSA0iB2pg
+	 RkFsC6w1U6hsyCrMIyWX4f1ngkww60C4nX0UEGVjYbRpgWS8bgsAXwFpwAdqAqmeR1tFW
+	 CE+osfDjCZMz6+kgmaDRL+ipfIWCJE1Xrzlk7aOSDWXTcoeeb75GSTw+V50wakpXQ4d/O
+	 QbM84onhZcSG50q2wymib1I/+Hz31aNGwmwXVyYnmedMHNCssfna+nIiCg1bPsFU9lA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pblQYSPT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vxVHyCVx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B132606A31C;
-	Wed, 18 Nov 2026 20:32:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9184606A32A;
+	Wed, 18 Nov 2026 20:32:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pblQYSPT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D6ED1F000C4;
-	Wed, 18 Nov 2026 20:32:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vxVHyCVx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31FF81F000C4;
+	Wed, 18 Nov 2026 20:32:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033926;
-	bh=3hygDRSjEnQWrvMTsVAHuMuQSSACVnii7lJOwz1xQ18=;
+	s=korg; t=1795033928;
+	bh=mXBpXz4RPH7d9vdDn66mTIyXeaPrbYPrgY3jXxJRPRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pblQYSPTSnXFe/8X9m/LMgFZB/QzpLGVoDKWQIMV8R38kZHd2BB/ncVdzqzsH+eMx
-	 +hINYCkOPFwJ93xuqYnMrmVZcmUkWsCJOmHK8ko5si16piHeAfPN7sJYIiEnF8xauK
-	 RxKWlPI7olmbOsePAyszE6r0q5KIYd3ksLiCZP1M=
+	b=vxVHyCVxpM4gPYgAqjgkmXZte6ZkYChvdphKS36i6KQRqzffTMHTcB9bt2o6+oB2R
+	 3OVAsQwMAa6eRRKRLS8GD84jkb5nDsrwIHbtUESYsaY5Vju2HvZleAUf1SBpgGCVlm
+	 DrzSK3Uojv6V3U5m+kMgDtNHDWEb4WFW9cTOoNWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Schocher <hs@nabladev.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Thierry Reding <treding@nvidia.com>,
+	Dmitry Osipenko <digetx@gmail.com>,
+	=?UTF-8?q?Jonas=20Schw=C3=B6bel?= <jonasschwoebel@yahoo.de>,
+	Svyatoslav Ryhel <clamor95@gmail.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0161/3318] drm/panel: simple: Add Kyocera tcg070wvlq panel
-Date: Wed, 18 Nov 2026 15:13:03 +0100
-Message-ID: <20261118150319.408793872@linuxfoundation.org>
+Subject: [PATCH 6.6 0188/3318] clk: tegra: support 48MHz clock for pll_p_out1
+Date: Wed, 18 Nov 2026 15:13:30 +0100
+Message-ID: <20261118150320.415697386@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,47 +65,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Heiko Schocher <hs@nabladev.com>
+From: Dmitry Osipenko <digetx@gmail.com>
 
-[ Upstream commit 900517da69afca6f72dacf14278aee3b65275507 ]
+[ Upstream commit 46e31d69a547530fbef499bde888b6bb45a1deac ]
 
-Commit 922fb2db0287 ("dt-bindings: display: simple: Add Kyocera
-tcg070wvlq panel") added the compatible string for the Kyocera
-tcg070wvlq panel to the devicetree bindings documentation
-(panel-simple.yaml), but the corresponding entry was not added
-to the panel-simple driver.
+UEFI on Surface2 sets pll_p_out1 to 48MHz which is not supported by kernel
+and causes BUG() early on. Add 48MHz clock support for pll_p_out1.
 
-Add the missing compatible entry to the driver.
-
-Signed-off-by: Heiko Schocher <hs@nabladev.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20260721041935.757240-1-hs@nabladev.com
+Acked-by: Thierry Reding <treding@nvidia.com>
+Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
+Signed-off-by: Jonas Schwöbel <jonasschwoebel@yahoo.de>
+Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-simple.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/clk/tegra/clk-pll.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index 213604d46bbd3..6a565c12f9b01 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -4388,6 +4388,9 @@ static const struct of_device_id platform_of_match[] = {
- 	}, {
- 		.compatible = "koe,tx31d200vm0baa",
- 		.data = &koe_tx31d200vm0baa,
-+	}, {
-+		.compatible = "kyo,tcg070wvlq",
-+		.data = &lg_lb070wv8,
- 	}, {
- 		.compatible = "kyo,tcg121xglp",
- 		.data = &kyo_tcg121xglp,
+diff --git a/drivers/clk/tegra/clk-pll.c b/drivers/clk/tegra/clk-pll.c
+index 100b5d9b7e26e..976feb8f41277 100644
+--- a/drivers/clk/tegra/clk-pll.c
++++ b/drivers/clk/tegra/clk-pll.c
+@@ -575,6 +575,7 @@ static int _calc_rate(struct clk_hw *hw, struct tegra_clk_pll_freq_table *cfg,
+ 		break;
+ 	case 9600000:
+ 	case 28800000:
++	case 48000000:
+ 		/*
+ 		 * PLL_P_OUT1 rate is not listed in PLLA table
+ 		 */
 -- 
 2.53.0
 
