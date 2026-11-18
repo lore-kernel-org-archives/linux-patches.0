@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039882;
-	b=y2KwMARGPwcMRnofu7G6cm66eCJS9ob8sIczGktiA6jsW60Jzs25CFAeiPxGYeCT6dhQ
-	 X8UXUFSxUwe2E8FEu6vEtHhNw2M1Tzsu/9ZRY1m900gWw0Iqc4dbelAK+lgHs/0E1sJfZ
-	 BEFnNoOuNgZ90ys1QckXvXyzqZmkAtY0Wn7rWsaqGZS8ewsRxpjFRsdrtbBTEuxHIeutf
-	 wEMNqHIDEb9GWFwXtmDjRJ6Mkm0D0arj6D+FcgLBFBmB3D3f0iIZcD39XbHnA9IZJhq2k
-	 UYinXZDSNv7E7rY6Z99L79CCduIhZNRzeJ3Lvu6N+lzOpEhMoPOAdM3oJgMdU6F13Pg==
+	t=1795039885;
+	b=W7bB1R+rYGXod7WSNZIFLAW4n8H49pF6iC1rJbwYXfIB8t8xUhKNfpAs3g2SZprgaUEa
+	 fbDnAFzxXtXOXG+sk+G2g3KW2DPUbv1PD1Ban+D1EMMJG4h+e45rwdHNOjK8dSFBF6jzN
+	 EHgd1lgmxfqwNl2nbTKn48KSN7bmkaUeStS15fXvlxA0zFzm5orjBMNbXvpmB6UQHxQrT
+	 U1fGW3/1swL70ckNzmxwa5z++nGlYbdKavhBApMIdt0OyPFwOAv+wsfAn8tUdA+Yqr7YU
+	 Ap9yoWjWgNVYzgyjST49fQV9UA0ZD5qpsY/EanAvUPAuuDoYCesmxaU5m9rIOpNf8Rg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039882;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039885;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RoI57r+kHCFGJ0UCuGw5OD/lIdZvKgrODnE24tAIgAE=;
-	b=QoWsLiE3QC9fFAggsCSowSlupTI8lUYUTywpkqvNcU0c4e2mkz7tn8XNxZxaJacsxmmq
-	 7WNa1Pf/Jid80l8kvV3e+Xtqhq/6P3ltK5x88NYvm66dv7aeu9CsOm8qHKl079MSzt4xQ
-	 /f2mLZWHSVD+EIQGAkP3KzbKDc1eSGaYnHbaCpMyUtSb5Wd6xUrSI9VjOF+7N7+JacDMo
-	 ge7xfR0WV5QXI+Xc7TNFxqfHKGnAGtGd9M9PQcvGl6ElV2NXftos+SOYQzyYgX8obcgmY
-	 G7k7pnWV7TR17TCdJzj+CD2c1vKzjHhD0Ayx92/a88fWORZ1DBIqSOm+pMWg1gWuVLA==
+	bh=rdQqgdciZWEsIKPR0uCwKgOqcTNSY7tstjg/ylIXsFM=;
+	b=k3aQbOPfHuUioL35aFbc7vLNNU4+xYJsY2QTMuHfhlbnyB+4jORxgTRSyQB4w0TDn/Yk
+	 QMJsOKqS0jMuw3mFADCnMFkyisYptFR95Q657J6Irkv7yM8kMC+O0WSFAPtE7hgJ5Jv3K
+	 hRwSdipDjvocxPuG7f+/Zb3d+4s1ZroY6PSmAJAG2NXcU1Zn1ZhILK2eru2hfgt74T/32
+	 5QbneqVc/ORQEaMqJNZZ/9Qh7LMTEO98MAvt00jyQkEkcMyC6XqJJP9PvDfAEBvTp8N7s
+	 Ec9ldCCEkXpMXpVZJSC7ePbczSD7inZwbdSxXAGYBBTEzo5WHZblyHwUrN9FPMnS+IA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cSBIctHL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fCQuxYil;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA3C606A32C;
-	Wed, 18 Nov 2026 22:11:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6DCF606A320;
+	Wed, 18 Nov 2026 22:11:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cSBIctHL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 616D41F000C4;
-	Wed, 18 Nov 2026 22:11:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fCQuxYil
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4138D1F000C4;
+	Wed, 18 Nov 2026 22:11:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039881;
-	bh=RoI57r+kHCFGJ0UCuGw5OD/lIdZvKgrODnE24tAIgAE=;
+	s=korg; t=1795039884;
+	bh=rdQqgdciZWEsIKPR0uCwKgOqcTNSY7tstjg/ylIXsFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cSBIctHLUKtCcGnTpYR+1HEjtumIUSHtKOyUxpRNSzdtPvHi4/YFCRVjnKKi5qG7l
-	 n44VFGp84ik9ojtmIRT2a+96HmpJ4Pl2AoQMAPiOuYyTkcz/pYbbnMFB7b8cXb+2ZC
-	 ApTY5vla/5jwygLautMfERfL21MhevgqXyAhqCac=
+	b=fCQuxYilg8rf91kvmmrSOSuftaDO0x4/idgF2OxzLkqTWmfrFrvgmgq7P+/JvpbOt
+	 uP5Er/+sVtwaepbKYGqdMxQXrz9fxg9Xg2oGb5nGpT4/GBkSkLDdsRdFkasSv4IZh/
+	 1BQCiCBnBSAT9VKt+nQnItbA+sQxds8gbTwvqU8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahsan Atta <ahsan.atta@intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Thomas Huth <thuth@redhat.com>,
+	Slavin Liu <bolin.liu@seu.edu.cn>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2258/3318] crypto: qat - fix active_devs leak on crypto alg registration failure
-Date: Wed, 18 Nov 2026 15:48:00 +0100
-Message-ID: <20261118150429.560798375@linuxfoundation.org>
+Subject: [PATCH 6.6 2259/3318] crypto: atmel-sha - reject initialization without a device
+Date: Wed, 18 Nov 2026 15:48:01 +0100
+Message-ID: <20261118150429.590647780@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,142 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahsan Atta <ahsan.atta@intel.com>
+From: Slavin Liu <bolin.liu@seu.edu.cn>
 
-[ Upstream commit 178829f1b5b259938188a10f4103fdb901b6435e ]
+[ Upstream commit a9a2152d292fd0bc73814eb4a127278ee7dd3f6a ]
 
-adf_dev_start() registered both alg sets in a single condition.
-If qat_algs_register() succeeds but qat_asym_algs_register() fails,
-ADF_STATUS_CRYPTO_ALGS_REGISTERED is left clear, so adf_dev_stop() skips
-qat_algs_unregister(): the skciphers and aeads stay registered with
-active_devs stuck at 1, pinning the module.
+A transform may be initialized for the first time after the last
+device has been removed from the driver list. Return -ENODEV when the
+lookup is empty, before the debug message reads dd->dev.
 
-Both helpers leak active_devs internally as well - they increment it and
-return without decrementing when a crypto_register_*() call fails, and
-the asym path also leaves the already-registered akcipher behind.
+Detected by static analysis and reviewed with AI-assisted source auditing.
 
-Split the registration in adf_dev_start() so that an asym failure
-unregisters qat_algs, and unwind active_devs (and the akcipher) on the
-error paths of both register helpers. While at it, propagate the error
-code returned by the register helpers instead of a blanket -EFAULT.
-
-Fixes: 9b2f33a1bfcd ("crypto: qat - fix unregistration of crypto algorithms")
-Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
-Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Fixes: ebc82efa1cd6 ("crypto: atmel - add Atmel SHA1/SHA256 driver")
+Assisted-by: LLM
+Signed-off-by: Slavin Liu <bolin.liu@seu.edu.cn>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../crypto/intel/qat/qat_common/adf_init.c    | 24 ++++++++++++-----
- .../crypto/intel/qat/qat_common/qat_algs.c    | 15 ++++++-----
- .../intel/qat/qat_common/qat_asym_algs.c      | 26 ++++++++++++++-----
- 3 files changed, 45 insertions(+), 20 deletions(-)
+ drivers/crypto/atmel-sha.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_init.c b/drivers/crypto/intel/qat/qat_common/adf_init.c
-index 718bedff9c16e..169d4d39ee7de 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_init.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_init.c
-@@ -232,13 +232,23 @@ static int adf_dev_start(struct adf_accel_dev *accel_dev)
- 	clear_bit(ADF_STATUS_STARTING, &accel_dev->status);
- 	set_bit(ADF_STATUS_STARTED, &accel_dev->status);
+diff --git a/drivers/crypto/atmel-sha.c b/drivers/crypto/atmel-sha.c
+index d32fb4e770119..1aecd175eb77b 100644
+--- a/drivers/crypto/atmel-sha.c
++++ b/drivers/crypto/atmel-sha.c
+@@ -430,6 +430,9 @@ static int atmel_sha_init(struct ahash_request *req)
+ 	struct atmel_sha_reqctx *ctx = ahash_request_ctx(req);
+ 	struct atmel_sha_dev *dd = atmel_sha_find_dev(tctx);
  
--	if (!list_empty(&accel_dev->crypto_list) &&
--	    (qat_algs_register() || qat_asym_algs_register())) {
--		dev_err(&GET_DEV(accel_dev),
--			"Failed to register crypto algs\n");
--		set_bit(ADF_STATUS_STARTING, &accel_dev->status);
--		clear_bit(ADF_STATUS_STARTED, &accel_dev->status);
--		return -EFAULT;
-+	if (!list_empty(&accel_dev->crypto_list)) {
-+		ret = qat_algs_register();
-+		if (ret) {
-+			dev_err(&GET_DEV(accel_dev), "Failed to register crypto algs\n");
-+			set_bit(ADF_STATUS_STARTING, &accel_dev->status);
-+			clear_bit(ADF_STATUS_STARTED, &accel_dev->status);
-+			return ret;
-+		}
++	if (!dd)
++		return -ENODEV;
 +
-+		ret = qat_asym_algs_register();
-+		if (ret) {
-+			dev_err(&GET_DEV(accel_dev), "Failed to register crypto asym algs\n");
-+			qat_algs_unregister();
-+			set_bit(ADF_STATUS_STARTING, &accel_dev->status);
-+			clear_bit(ADF_STATUS_STARTED, &accel_dev->status);
-+			return ret;
-+		}
- 	}
- 	set_bit(ADF_STATUS_CRYPTO_ALGS_REGISTERED, &accel_dev->status);
+ 	ctx->dd = dd;
  
-diff --git a/drivers/crypto/intel/qat/qat_common/qat_algs.c b/drivers/crypto/intel/qat/qat_common/qat_algs.c
-index 274bcc83a1fc2..2ff0efb23513a 100644
---- a/drivers/crypto/intel/qat/qat_common/qat_algs.c
-+++ b/drivers/crypto/intel/qat/qat_common/qat_algs.c
-@@ -1395,19 +1395,22 @@ int qat_algs_register(void)
- 	ret = crypto_register_skciphers(qat_skciphers,
- 					ARRAY_SIZE(qat_skciphers));
- 	if (ret)
--		goto unlock;
-+		goto err_dec;
- 
- 	ret = crypto_register_aeads(qat_aeads, ARRAY_SIZE(qat_aeads));
- 	if (ret)
--		goto unreg_algs;
-+		goto err_unreg_skciphers;
- 
--unlock:
- 	mutex_unlock(&algs_lock);
--	return ret;
-+	return 0;
- 
--unreg_algs:
-+err_unreg_skciphers:
- 	crypto_unregister_skciphers(qat_skciphers, ARRAY_SIZE(qat_skciphers));
--	goto unlock;
-+err_dec:
-+	active_devs--;
-+unlock:
-+	mutex_unlock(&algs_lock);
-+	return ret;
- }
- 
- void qat_algs_unregister(void)
-diff --git a/drivers/crypto/intel/qat/qat_common/qat_asym_algs.c b/drivers/crypto/intel/qat/qat_common/qat_asym_algs.c
-index fc0613f37b7e1..96f0fece1ceac 100644
---- a/drivers/crypto/intel/qat/qat_common/qat_asym_algs.c
-+++ b/drivers/crypto/intel/qat/qat_common/qat_asym_algs.c
-@@ -1284,13 +1284,25 @@ int qat_asym_algs_register(void)
- 	int ret = 0;
- 
- 	mutex_lock(&algs_lock);
--	if (++active_devs == 1) {
--		rsa.base.cra_flags = 0;
--		ret = crypto_register_akcipher(&rsa);
--		if (ret)
--			goto unlock;
--		ret = crypto_register_kpp(&dh);
--	}
-+	if (++active_devs != 1)
-+		goto unlock;
-+
-+	rsa.base.cra_flags = 0;
-+	ret = crypto_register_akcipher(&rsa);
-+	if (ret)
-+		goto err_dec;
-+
-+	ret = crypto_register_kpp(&dh);
-+	if (ret)
-+		goto err_unreg_akcipher;
-+
-+	mutex_unlock(&algs_lock);
-+	return 0;
-+
-+err_unreg_akcipher:
-+	crypto_unregister_akcipher(&rsa);
-+err_dec:
-+	active_devs--;
- unlock:
- 	mutex_unlock(&algs_lock);
- 	return ret;
+ 	ctx->flags = 0;
 -- 
 2.53.0
 
