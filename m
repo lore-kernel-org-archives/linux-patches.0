@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018059;
-	b=Sjw4ThkHNIdaJP7YpbZ8ebii3cIqrya2wsHNo9W41HLnoMt8OYNTKtjupbnkT90ws0In
-	 bVGCKJtO9QasYw3qLXfqwGoshqrLbwZSmgsp/w+yLPjEMlyRCA9EJ9vhLlTL7Vy+BLIMi
-	 bz8JXzXgbn8DoF9Q0/OnbRePkxj/oMBIz+EQDeeLMBgQ3FEJ0PgGbXvwCr1K6+wlO8ken
-	 vPYNfJJpeg4eUVrNKhbne/4AKqCId0AXQkdYF5qeIPdnvKDW1Ca18Lou+OrIRw6O6ltc+
-	 Es3+9Zh6392NfmNcSe0mMQxulUTk0iwY25pblD0KShKlwa9WPtz/OdK961G8Kt4iDxQ==
+	t=1795018062;
+	b=Iu46xOTx9pCbB8th5fsdWHg5absMzU4iF0dQ59OS/3CUomrdM02Jtq21cwwY1xhRoGWU
+	 Jn4lekj1q6YzmFR3fKSUkODhEM7UFcVpIx6r9HI014nKkaksRsOFleXGRU48nmQrDphIE
+	 FL4/ZoYWWwOGQwPdh/f2TZgYfuRPA+Rh1tp7EOgBvfk7g1fWoVLNYOmKzDiIhZ+AT9R8W
+	 gzT85hUvVjIhqxNLiLNPSQdGjcUaW9CNCEdCrjnY8A8NsTP60dxZKYLqKG8m12L8qeZF/
+	 9I19lJsu1vhWIAy8TMIaLXokLhowLoH9EJV0ZW2/NSvHjJtU60f0Wf3n5MrXzF+BNGQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018059;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018062;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mnk3lykODxMOda6g2qxoVGP8p2sddxKQHTCOFinK5ZI=;
-	b=lpBdPh7cWiYThSGsBtZimj2nkjeDGnU+19Fa9/6k+fv/vCrprINZbnceJdBiPfBrh8d4
-	 Kc8wg5AozbosLah2EPPlqqLFf6YtL2IbLHByDOl3+6uxTHFnF62KEB/hUFqoCaxOzzDe0
-	 BkTitz5tNNMomx1LfNVTg6CLX/8puXcUtpKv7z4mNKb0ODHTBbIEhyz4fxGft9EIyaP2A
-	 kO7U7iOWjEqUoBq1/jvi6LIWNXkI9hhzAoQ9X2F+JkmFEYe1emQ9O//a3mztkE7kRQuSo
-	 s2FcfDMSb3MummpDYRoa6mWgOqT1XqmhndUgdtJLPCI9k0fvuRakzfeh/PrRCViwN8A==
+	bh=3B/u/N42xytnI6oynFvY9/pgVYs7sYSnAxFHsYg4/JI=;
+	b=hnlhIAVueXxDstcpHWSbfW+jrleYIYPcMqi8Hj5V4o1eJ8PeqssrZxtntHfNwMfYtLzm
+	 149dTFOV3JcLEE8Gt60a0O5GmXW8rleI8ubnLghQarYgcaLW6luuvuMO1Be8lfrubQLYs
+	 5LRKxvqd8v3TPkL3PomUtfcMptdOhkLMyqC+RG6xIywdQio/EiwtmprbdZ8JUaB7d3obf
+	 fntxNBRDeiemRRvVJask6UUpcCAFGk1lL7SwkEeMCLbPxAxpb2i76pSFS//d/HrQH7UHc
+	 ZYhpFQOMecdGVKD72IqBxhTxGScil2aj9Mk2Iwv4qU5w0F/eTOzV7QtIvJMsXvFN4dw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wdfySimp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q0SAazD6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537BF606A337;
-	Wed, 18 Nov 2026 16:07:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1C660A2611;
+	Wed, 18 Nov 2026 16:07:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wdfySimp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62F421F000C4;
-	Wed, 18 Nov 2026 16:07:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q0SAazD6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F7891F000C8;
+	Wed, 18 Nov 2026 16:07:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018058;
-	bh=mnk3lykODxMOda6g2qxoVGP8p2sddxKQHTCOFinK5ZI=;
+	s=korg; t=1795018061;
+	bh=3B/u/N42xytnI6oynFvY9/pgVYs7sYSnAxFHsYg4/JI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wdfySimpXAlkXLGrQDHDFbSdDbAnygck58nOSbiwpXrtTRk1F3t2LB/rgfSD2KLzQ
-	 lyMxmW9PCDokolHnDfqpk6RU0si7hRnTvprnJOcHNgUJ/W4FqG1NbcbI8diGIwPpSj
-	 Wb1mcnHnV380VF1lUy0HOf+1PtPEnCMvPHAoPV/Q=
+	b=Q0SAazD62TAYfMXt7EYbnSTLG+Jjh7mzkXwLHEz8QA0OO1qAopjb88x+A5/2cAIBn
+	 wXY4qf1egpK8olqB+dAsu6vwaVwfSm4jjZh/yGye4I9JL+vOj7EAppC8P7kjR6355L
+	 4xctZ3OAbVZtm8Rslw+KDwsIeRmEkq1LZKLo0Oe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danish Khateeb <danishkhateeb03@gmail.com>,
+	Mateusz Nowicki <mateusz.nowicki@posteo.net>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1105/2651] serial: 8250: Fix section mismatch with CONFIG_MODULES=n
-Date: Wed, 18 Nov 2026 15:39:05 +0100
-Message-ID: <20261118150327.774496369@linuxfoundation.org>
+Subject: [PATCH 7.3 1106/2651] arm64: dts: st: fix sai3b unit address on stm32mp251
+Date: Wed, 18 Nov 2026 15:39:06 +0100
+Message-ID: <20261118150327.810530105@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -67,45 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danish Khateeb <danishkhateeb03@gmail.com>
+From: Mateusz Nowicki <mateusz.nowicki@posteo.net>
 
-[ Upstream commit c44a4925cdac02af781ebfae96df68a7bf3580b0 ]
+[ Upstream commit 64a74189380955bd2d45e5e38a90947b0f63efd3 ]
 
-Without CONFIG_MODULES, __init_or_module means __init, so
-serial8250_pnp_exit() and serial8250_hub6_exit() end up in .init.text.
-They are also called from serial8250_exit(), which is __exit, and
-modpost warns:
+The unit address of the sai3b node, 502b0024, is the address of the
+SAI_BCR1 register in the secure alias of SAI3. The reg property of the
+node translates to the non-secure address 0x402b0024, which all other
+SAI nodes use. Fix the unit address to match.
 
-  WARNING: modpost: vmlinux: section mismatch in reference: serial8250_exit+0x2a (section: .exit.text) -> serial8250_pnp_exit (section: .init.text)
-
-The exit code never runs in such a kernel, so nothing breaks at runtime.
-But a function that is called from both __init and __exit code can't
-carry either annotation, so drop it.
-
-Fixes: a300273c458c ("serial: 8250: hub6: Add cleanup code")
-Fixes: 4cf187f9dea9 ("serial: 8250: pnp: Annotate init and exit functions for conditional discarding")
-Assisted-by: LLM
-Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
-Link: https://patch.msgid.link/20260926163506.487201-1-danishkhateeb03@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: bf26d75a95f1 ("arm64: dts: st: add sai support on stm32mp251")
+Signed-off-by: Mateusz Nowicki <mateusz.nowicki@posteo.net>
+Link: https://lore.kernel.org/r/20260924193759.27881-2-mateusz.nowicki@posteo.net
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_hub6.c | 2 +-
+ arch/arm64/boot/dts/st/stm32mp251.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/8250/8250_hub6.c b/drivers/tty/serial/8250/8250_hub6.c
-index 4d4c54c951cb9..848d9723ac56a 100644
---- a/drivers/tty/serial/8250/8250_hub6.c
-+++ b/drivers/tty/serial/8250/8250_hub6.c
-@@ -54,7 +54,7 @@ int __init serial8250_hub6_init(void)
- 	return platform_device_register(&hub6_device);
- }
+diff --git a/arch/arm64/boot/dts/st/stm32mp251.dtsi b/arch/arm64/boot/dts/st/stm32mp251.dtsi
+index 2dcbba65e2986..f81fd06f4be5e 100644
+--- a/arch/arm64/boot/dts/st/stm32mp251.dtsi
++++ b/arch/arm64/boot/dts/st/stm32mp251.dtsi
+@@ -1291,7 +1291,7 @@ sai3a: audio-controller@402b0004 {
+ 					status = "disabled";
+ 				};
  
--void __init_or_module serial8250_hub6_exit(void)
-+void serial8250_hub6_exit(void)
- {
- 	platform_device_unregister(&hub6_device);
- }
+-				sai3b: audio-controller@502b0024 {
++				sai3b: audio-controller@402b0024 {
+ 					compatible = "st,stm32-sai-sub-b";
+ 					reg = <0x24 0x20>;
+ 					#sound-dai-cells = <0>;
 -- 
 2.53.0
 
