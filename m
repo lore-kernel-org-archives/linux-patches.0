@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041621;
-	b=nIrHEgaEDd0YPYT98exh2xlMPGIiQJ5gzNwGQwtAk50vq3DD13YT0dJXmaJ9CgDLmJiT
-	 f7ic0RXrMBlznGOgQe2vgGsHz+kKJM4q77xO3+UAdW8ExZ1tX5MtUy0APPKfBaAOA6mKl
-	 g89V1WXwVI7zk4wdWzbl5ULI37l5uKnPsUsyDiFhx8qcOuIGK4pxKrvrby2p2g2IarML6
-	 twgrU9EzS0b6yzKe7xODxzQt4IvBRrMk4YpRE9QmAChH71dHtAU4kLVGlhJRJvqJA4g7p
-	 o3KqcGZ/XoiN61BPnQEVV9/8JAL/4uH/9Ku/yftCjZM5fuXktO0ef33OD626Arnxsyg==
+	t=1795041624;
+	b=a9qXFNZxU6+K/CF2DYXFKLZpqqz4DuiFsETj/vaTOxEVQ0LwaU7cIAlX5Ri7GYPdQ9CE
+	 41BSn3+avAao4yyDwc1iJ7SrOpyHZGuGNaR6jxMM7tI9HsmKimgE0EV3ebGyXmX/rtrb+
+	 6IDca3OkxLAkYYgi2nDaFHywAAjGJ/XWkrWxHaZo5bKA42Lh/Ih24hj05p4TVgcEzdwPt
+	 SaL+Zh9H20otKDIBV87P4rqmWzhmkaIchSGeekY6z94iuNA2RTkuYsKs937p7J5K9CwlJ
+	 HzUUbBxRwX2HIbWK4kymy24WMBcvf9OWDpoVj0VQJp9Bd+5QcMvSxMga3ZWmXDRcFcA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041621;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041624;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/YSOMZ4sTrnGS2rYv62T+sh4lBBv7cFVhmIUw30TUXU=;
-	b=NKItuDaghEgeOINnNyn4uf+JU30bL1xfuOCni+aAqh1OrfJAuK++p7acCwK6CBItYkV4
-	 6vAGnZyD7C+4WID+EPgxmUIr8tG7HXJjmtB+vxp+5F0+Lv/lzLva03QdI+kRUBnXrC5Yx
-	 WvgAnzg7ckM+Nvt/qfOQ3543LkLLcbETaYGLU07FHL/4i4SDY8NSgH/Z81VEVPcYLtJHK
-	 myhbG4s5L0Pie7T7t49TFX0ISV2WOAUHm4PBV9PKKBs/Q2lo+8JkHNSADzA3CAIfh85//
-	 KMw2fdPxnhfAZ4nh6IB0kKRss5c2cDbl6UOMj7plgYTnL9h+WU6kJvQ9BPsWdfe0MMA==
+	bh=cpXvEgR92P4oDeR4sL8jy6orD+lAbeDim6C3x2NJX6o=;
+	b=CC5vwOaWVdwf0MrhQu7GvW6EdoZjdHu3NR5PHAr6PBnNt2yhlIVG1v73g/DxQ+yoNffC
+	 awJY3bKuG3l195KBu31X4MZ/No1HSYPmzGRAkwf6B5MrFRJ2g+8BnEBC1zoutYq18keKf
+	 HIzdCtD3jaw0+FIbObAFOd3T1BdUbiO6BJTbeELzxOSd5LJLuikozJPW2chIeCvOtw5X7
+	 lon0XMoEcsJ3zdB4Zlai002F35x/hvja8kQK0P4po+R5zNNnb8tbUlLNJmyt5bI0rQA8f
+	 QNPVxp7RvP9bIPd/rIH98Uk09LCfxdgfj7P4e7hlDv7W3tWbTo4sLGe4QuewkfsmkWg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="J/lkq7Rz";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UCgi7EGT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA786606A6C3;
-	Wed, 18 Nov 2026 22:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7CD606A6C0;
+	Wed, 18 Nov 2026 22:40:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J/lkq7Rz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CC2C1F000C4;
-	Wed, 18 Nov 2026 22:40:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UCgi7EGT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C26791F000C4;
+	Wed, 18 Nov 2026 22:40:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041621;
-	bh=/YSOMZ4sTrnGS2rYv62T+sh4lBBv7cFVhmIUw30TUXU=;
+	s=korg; t=1795041624;
+	bh=cpXvEgR92P4oDeR4sL8jy6orD+lAbeDim6C3x2NJX6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J/lkq7RzA42K4/CNst9AN1kiz0EuwQREvYYsP6Oh8eG+/FAg0x+dR0YxLeAxzyYSX
-	 cuNPZ+pWOG5a2faXoRPm/BF21KZ45ISPJBcW6OqAz088I0OWxxb6Gz+jHCLDmxRZDe
-	 NV8t9x6RKp1vBmmR34+bA9+feiQ/mTvXgsPBkOAo=
+	b=UCgi7EGTBOo2+O+76Bg8+0pd8NNpJ8df5Ou1hvzMhuprr5Ur9cqlq51xihOlwWdhX
+	 dZp8KldPfcMFoB+eidh3bSKHblLJtHzcKY0L7xONcUEen1DJHZWS3AXdeTaw50FdAg
+	 wsdyzH/GniYFGNcyGh2K4CUD437TWW0wZCSPyYAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
+	Zijun Hu <zijun.hu@oss.qualcomm.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2878/3318] Bluetooth: L2CAP: hold chan in l2cap_ecred_conn_rsp()
-Date: Wed, 18 Nov 2026 15:58:20 +0100
-Message-ID: <20261118150446.879551539@linuxfoundation.org>
+Subject: [PATCH 6.6 2879/3318] Bluetooth: btusb: Make btusb_recv_{event,acl}() take struct hci_dev *
+Date: Wed, 18 Nov 2026 15:58:21 +0100
+Message-ID: <20261118150446.906259552@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,66 +68,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Zijun Hu <zijun.hu@oss.qualcomm.com>
 
-[ Upstream commit b508a2a2d846ccc4c8f691e4e3dfca6f97dfe85a ]
+[ Upstream commit d6d15018c8e1527841e39a6a80c60997e594ca70 ]
 
-l2cap_chan_del() calls l2cap_chan_put() to drop the conn->chan_l
-reference.  If this was the last reference, UAF follows.
+Both helpers currently take struct btusb_data *, which is private to
+btusb.c, as parameter type as below:
 
-l2cap_ecred_conn_rsp() iterates chan_l list and calls l2cap_chan_del()
-on some members, without holding chan reference.
+  int btusb_recv_event(struct btusb_data *data, struct sk_buff *skb)
+  int btusb_recv_acl(struct btusb_data *data, struct sk_buff *skb)
 
-Fix by holding refcount while using chan after l2cap_chan_del().
+To allow vendor USB-transport-specific source files to share them as
+well, change the type to struct hci_dev *.
 
-Since orig is looked up by dcid provided by remote, it's also possible
-orig == chan, so reference needs to be held also after orig use.
-
-Fixes: 41c2713b204e ("Bluetooth: L2CAP: Fix possible crash on l2cap_ecred_conn_rsp")
-Assisted-by: deepseek-v4-flash
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: fa96916cfd05 ("Bluetooth: btusb: Preserve event and ACL packet ordering")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/bluetooth/btusb.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 3c3a377673936..d6dfcb197365e 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -5387,12 +5387,14 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
- 		    chan->state == BT_CONNECTED)
- 			continue;
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 80411a09d8682..3500e74eb0389 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -1159,14 +1159,16 @@ static inline void btusb_free_frags(struct btusb_data *data)
+ 	spin_unlock_irqrestore(&data->rxlock, flags);
+ }
  
-+		l2cap_chan_hold(chan);
- 		l2cap_chan_lock(chan);
- 
- 		/* Check that there is a dcid for each pending channel */
- 		if (cmd_len < sizeof(dcid)) {
- 			l2cap_chan_del(chan, ECONNREFUSED);
- 			l2cap_chan_unlock(chan);
-+			l2cap_chan_put(chan);
- 			continue;
- 		}
- 
-@@ -5431,6 +5433,8 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
- 				__set_chan_timer(orig, 0);
- 				l2cap_chan_unlock(orig);
- 			}
+-static int btusb_recv_event(struct btusb_data *data, struct sk_buff *skb)
++static int btusb_recv_event(struct hci_dev *hdev, struct sk_buff *skb)
+ {
++	struct btusb_data *data = hci_get_drvdata(hdev);
 +
-+			l2cap_chan_put(chan);
- 			continue;
- 		}
- 
-@@ -5476,6 +5480,7 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
- 		}
- 
- 		l2cap_chan_unlock(chan);
-+		l2cap_chan_put(chan);
+ 	if (data->intr_interval) {
+ 		/* Trigger dequeue immediatelly if an event is received */
+ 		schedule_delayed_work(&data->rx_work, 0);
  	}
  
+-	return data->recv_event(data->hdev, skb);
++	return data->recv_event(hdev, skb);
+ }
+ 
+ static int btusb_recv_intr(struct btusb_data *data, void *buffer, int count)
+@@ -1226,7 +1228,7 @@ static int btusb_recv_intr(struct btusb_data *data, void *buffer, int count)
+ 			}
+ 
+ 			/* Complete frame */
+-			btusb_recv_event(data, skb);
++			btusb_recv_event(data->hdev, skb);
+ 			skb = NULL;
+ 		}
+ 	}
+@@ -1237,13 +1239,15 @@ static int btusb_recv_intr(struct btusb_data *data, void *buffer, int count)
  	return err;
+ }
+ 
+-static int btusb_recv_acl(struct btusb_data *data, struct sk_buff *skb)
++static int btusb_recv_acl(struct hci_dev *hdev, struct sk_buff *skb)
+ {
++	struct btusb_data *data = hci_get_drvdata(hdev);
++
+ 	/* Only queue ACL packet if intr_interval is set as it means
+ 	 * force_poll_sync has been enabled.
+ 	 */
+ 	if (!data->intr_interval)
+-		return data->recv_acl(data->hdev, skb);
++		return data->recv_acl(hdev, skb);
+ 
+ 	skb_queue_tail(&data->acl_q, skb);
+ 	schedule_delayed_work(&data->rx_work, data->intr_interval);
+@@ -1298,7 +1302,7 @@ static int btusb_recv_bulk(struct btusb_data *data, void *buffer, int count)
+ 
+ 		if (!hci_skb_expect(skb)) {
+ 			/* Complete frame */
+-			btusb_recv_acl(data, skb);
++			btusb_recv_acl(data->hdev, skb);
+ 			skb = NULL;
+ 		}
+ 	}
 -- 
 2.53.0
 
