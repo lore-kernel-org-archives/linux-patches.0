@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058439;
-	b=4qjZck/IWSS+NrDHjKjjXm8WHvosGHrF1Z57l3nfyBP7Km+6+BSMUe8E54atXWoxUJj/
-	 ikEmUmLjTye2dP4QGZNuuwH3Ci8hSiiSZ/hqpSG24NRe5owiUo1Lq6a7lMZ5ZKLZ67vdf
-	 4JkrOmG2h5W5hRsycCHg5VVxvIT9tP4M8Cd4NXyO2zkR7lz8OXS5USiLtPR5YySs3UL+q
-	 TWWGRv4LQDLo39urIVx5tOWWVNnCFC+lyRTcaAWplv73efR68VzgpId86MnBfzobgB07S
-	 +NrgizL78JAvgSlUL5CLi/+WSNSa4+UamTinQOS9j3JUdI9sg5Q3PQRkvXUGpF7aD2A==
+	t=1795058442;
+	b=HmUuZ77240kYGSXIDFPFKaWtclXcxvDYikxh0Uggj+gArRw2H4+JeaNBC36z3w0BIniv
+	 pzPHsjbSpNqjqJG4X0SE1bhCCDOhR+xE9XXgp+lo4xZLf2TI2H4QsNXFtoPknyL0Or1S0
+	 cj9ZXRkYxnB/f2GrkRwtx2jshWmLvwkkjbAdhFPSwRXJwCbwc1EWNEMdoawvCFjyz6dcM
+	 hY4hp84jUkE66HJWQ3lgXt/NsJ5FpQF97/SwfDjnBI4UWaCSVNVuK4nWaoXZJCS8DjTcg
+	 eMcpCQgBMEiEyLbsoezzJcJdX0JA0irXlYHMaP8LY00/75XQXImXZJpj8jKis33+U4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058439;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058442;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=75KBF4Q4ipbzDfv0Y8YyEhPlD9GHkl55M2+ReGQ+4v0=;
-	b=MEUJI8lEr+Ypv5MzvorZrKQD/B/jXJzRwJA69EG+aGHOwSehq6tpO/9pEJr6WYEy3CD+
-	 wHMQSEkVaPAJ9rvXS9ITrCUtGkodQWEEnkueqL69JX2zOYWBFM8d/5pvEze4urAUx6xK2
-	 GvCn2/JfGWwMdM7JocYY/KTwCG/57QGE5uWgdF5I/v7kaH4C97iKHOO9kuwBPhGe6NSbb
-	 qBrki/SoABaKYMSNOxlo1WVJfCJuFoEe8FpMgUUBmMGokaV7Xks/yWrz0gbGSqwsf8eSo
-	 7noS5TToq08sajFhLJceCW98j53Aw3GMjd1K+627psJM7DbOi+4Gekk/hszNc7Ccyog==
+	bh=xyxcBTexnKW+v/E9fZ3pNzVOLTxzns8/yoIBWl7hGKk=;
+	b=lfcf6UTFxSGdtNdDeGiYsaIyn7gOi7of3uTUCLwZL3Uu8noWriEPWrA1HhrcIS/9t5vS
+	 QISOTWszZbBq2BlDh92LWErZOJ+84FmK/NsvVcpHMYKmZvO9Jd/BvnHsFQm7w/9LFPbQu
+	 Imcvhk5QePPEslrVdXhlGDN4H0anQitHEpGNp9oLkzgyD/8ryOfTDs0ByojE5D0NPpqrZ
+	 HjXcBxtZDDZHCWns6f1mm9N5kyi9+JkGumwAFmS4EOk3VpUthnUTsvbemcwUNObbBGbsc
+	 U4UY+fXvKeRafnsnbqWovdSvkRfYV0B0a3nr1/tjzyNrsdY15juiFq14FOp9jxpX9tw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vXJQ3m9Y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rgZJ6giy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D97606A33B;
-	Thu, 19 Nov 2026 03:20:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B210F606A32F;
+	Thu, 19 Nov 2026 03:20:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vXJQ3m9Y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35EC11F000C5;
-	Thu, 19 Nov 2026 03:20:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rgZJ6giy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA2A1F000C5;
+	Thu, 19 Nov 2026 03:20:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058439;
-	bh=75KBF4Q4ipbzDfv0Y8YyEhPlD9GHkl55M2+ReGQ+4v0=;
+	s=korg; t=1795058442;
+	bh=xyxcBTexnKW+v/E9fZ3pNzVOLTxzns8/yoIBWl7hGKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vXJQ3m9Y1epdRMVt2lrSIgHiWnSncYtxBF2pq3zRRftFfclsRwzU/e/l76FfsxhOL
-	 JDRNkuGhJZ1GAgxXbz5fnKUVcO+AF/gYTTlXtFrWT4XzxdK/+DyKXNI3Mh1+9B3lxG
-	 eKtopSecP6nVAQmk/A6U8FZ+GreU0Nnr3AxWlYLU=
+	b=rgZJ6giyVb2Kc/cm+cbr2xwZwxuhn+pw22MSW1ibv/Cl7Hm//o2WswI/DsyNEP6YB
+	 iN8GCG/XfWiUlx/Aiw3ukf9SLxUbsUsQBoDp8bjqn5sAJc+WjUSTHC+0ZXVSky3RMe
+	 xFWgCsmhY4MiGtFxQ2yh4GH1YHNEKKUoeJNDx+Sk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Baruch Siach <baruch@tkos.co.il>,
+	David Heidelberg <david@ixit.cz>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0484/1848] clocksource/drivers/digicolor: Fix clk reference leak on request_irq failure
-Date: Wed, 18 Nov 2026 15:42:02 +0100
-Message-ID: <20261118145934.449492139@linuxfoundation.org>
+Subject: [PATCH 5.10 0445/1848] arm64: dts: qcom: sdm845-xiaomi-beryllium: Extend the xbl_mem region
+Date: Wed, 18 Nov 2026 15:41:23 +0100
+Message-ID: <20261118145932.910304373@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,43 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: David Heidelberg <david@ixit.cz>
 
-[ Upstream commit 9cc2e18b32f12d26ae6729c62a03640423956b17 ]
+[ Upstream commit 511c4fea32708a065e03503c0e4d44f48990c530 ]
 
-digicolor_timer_init() obtains the timer clock with of_clk_get() and
-enables it, but the request_irq() failure path returns without releasing
-the clock reference, leaking both the enable/prepare state and the
-reference itself.
+Xiaomi's Oreo-era tree still had the CAF 1 MiB region, the 2 MiB version
+arrived with the Pie import. This isn't a board-layout quirk, it tracks
+the firmware. The later XBL wants one extra MiB below the old region.
 
-Disable and put the clock before returning on the request_irq() failure
-path. The success path keeps the clock enabled for the lifetime of the
-timer and is left untouched.
-
-Fixes: 9b8bb7736b78 ("clocksource: Driver for Conexant Digicolor SoC timer")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Acked-by: Baruch Siach <baruch@tkos.co.il>
-Link: https://patch.msgid.link/20260915045242.1726702-1-vulab@iscas.ac.cn
+Fixes: 77809cf74a8c ("arm64: dts: qcom: Add support for Xiaomi Poco F1 (Beryllium)")
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260916-sdm845-xbl-mem-v1-1-6e3c88507997@ixit.cz
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-digicolor.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/clocksource/timer-digicolor.c b/drivers/clocksource/timer-digicolor.c
-index 1e984a4d8ad00..ae758b3059cc1 100644
---- a/drivers/clocksource/timer-digicolor.c
-+++ b/drivers/clocksource/timer-digicolor.c
-@@ -193,6 +193,8 @@ static int __init digicolor_timer_init(struct device_node *node)
- 			  &dc_timer_dev.ce);
- 	if (ret) {
- 		pr_warn("request of timer irq %d failed (%d)\n", irq, ret);
-+		clk_disable_unprepare(clk);
-+		clk_put(clk);
- 		return ret;
- 	}
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+index b38b3bcdf429e..204d293d3c3b4 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+@@ -23,6 +23,7 @@
+ /delete-node/ &slpi_mem;
+ /delete-node/ &spss_mem;
+ /delete-node/ &rmtfs_mem;
++/delete-node/ &xbl_mem;
  
+ / {
+ 	model = "Xiaomi Pocophone F1";
+@@ -52,6 +53,11 @@ vol-up {
+ 
+ 	/* Reserved memory changes from downstream */
+ 	reserved-memory {
++		xbl-mem@85d00000 {
++			reg = <0 0x85d00000 0 0x200000>;
++			no-map;
++		};
++
+ 		tz_mem: memory@86200000 {
+ 			reg = <0 0x86200000 0 0x4900000>;
+ 			no-map;
 -- 
 2.53.0
 
