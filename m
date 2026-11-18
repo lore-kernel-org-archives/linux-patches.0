@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018177;
-	b=rc1sRU/iLSWZfLSztly5ItUD0Vmk3yy24+88g4sawVdrPq7xfkoOJ28egDcUSUuEACP4
-	 qXEeGBhwA9TCPtWtSiGmE7nmBMYxPZsLnDsaA7KjtlY01wMMXTIQr1pPY5oFk2+0PJdt9
-	 WWW4MBwLIG4bCBJ4+SilXS9lmQRTjTxh685bvbFDp/KDY3yr5VICqdim2AwXTVYgNWBPI
-	 1//aOCxpE13GEDU8i9j+vNeRgkq4P4315M1Mw9zi+uWGtzYWJAu7umybbJIFS2RB24ESW
-	 XlE/5dySPzvuaIyQDLgBFA2fpIEFhTyzNkZJYeR7di9Zf0zUEWEZ/0Wpa5jTkHTdfIA==
+	t=1795018179;
+	b=TiejvWiijv/rdofk51urrIm9VgOy817Zyz7yrDKrinL1IEf/3YeuYeHLUz6ICP2koCdy
+	 mtHQWgZCIxcpq4FQSJ/bv0xEQRQ/m+JrK2aCBjgXDE537h9lvKRWHfr/K7HgdFra3LNiJ
+	 v6eUKKLH553R8/ZeVjKC5tErUBwwwPnw+p7Jf4Gf554Y+MX/dE8lMu+cHX5F4iTkTrAYL
+	 GCjvOwaKOuQofWq/cfxrQAX58ogMZm8ywzm2AzZRHn6Nbj2kIKXiw3L4Xd1GY71o7i/lr
+	 aV2801XD6El1442zrSXt85QRcNg/NKaDa0XXDP1ZLgkaeByRtB9LAC5tzVwlz9gZqyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018177;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018179;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zT2jUpQk/S8aV+X0RLhSlJzf3VaNvJ/EQw35HxIUnY8=;
-	b=hoK+yXgkSGFxoMmbmuTs0nKpNHfwJszkT4EFD4DGAOo/LG4ZDbpkXNorFFac+UeSXQb7
-	 AJlVNFUUUU93W0T4L11Nugq1Wwbt5DrNr6syrtd9uaUIjf/EfiQ3I5vNC60TLZIR6gFmk
-	 uQMQnPy16k3H11H5LX2RPyEpZiY4u8FJ2brB/iKpUnKTkJPDjCRjdY4wpTClK5Aknu4NG
-	 FFJUeeY4nFIcME2fAb4eaFX1AeJsaI5ZPIUr/B3RHxm23V5F34Cl4bzEIzsmVzVpDvZiZ
-	 TXkktrdPoDqJivH5ISgJhayt6YTHRa0Tv9WI/dcuQ1wqXblK0V76F9d+4VZN3KIptow==
+	bh=ExV3F7qTViIOma2PbQ7XfMiANQty8Pnxib7/F6IssBY=;
+	b=ZnHcNcrioggeWp1C5mC1mLpp9jwvRvP3baRNbwbTJOM/aiGfTdg6qb3H5xJCc+bVg3pt
+	 h624KlDOmX14pxgkptdaMeN6oyt406XAGfuFGBG49XqgNFEhWuUfWQ2qwdv+NWPV76+l/
+	 hAJVblo4bu8lKAwzSKw8hP5sdAWfjv6J3GDfcsNPEN2eqbNI21D6y3dFnD2sxtFaXRNBn
+	 NPWoDvef/DX+/vQTcxxOeXXxbpC5eFjD6Djmqs1nBd8NegM5coleDfEjb9ynhmyQInayv
+	 XAVxqopCSo+Gw5V8smkacaFmQqbGvlL2UeaWmBAlpVtGCytOZUXs1ACH8s64G+KDAsg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xk3p2vWG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FATOzonN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0696606A33F;
-	Wed, 18 Nov 2026 16:09:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE21E606A320;
+	Wed, 18 Nov 2026 16:09:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xk3p2vWG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5402C1F000C9;
-	Wed, 18 Nov 2026 16:09:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FATOzonN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E4C01F000CC;
+	Wed, 18 Nov 2026 16:09:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018176;
-	bh=zT2jUpQk/S8aV+X0RLhSlJzf3VaNvJ/EQw35HxIUnY8=;
+	s=korg; t=1795018179;
+	bh=ExV3F7qTViIOma2PbQ7XfMiANQty8Pnxib7/F6IssBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xk3p2vWGWAYs2Dh1Xg7hvaX2EMdDoJnipGZvnloQbzdFJTgv/m+4DuldYAjLyv+Ln
-	 c/Twz8h+CgzNgeT8p7rLbScvPDF/iKGkFIXiqWP7cNhInHwW1OfqVhd+Gm4w0h2ext
-	 AbfreOtlrSqsToRs8xu1OJMpj8MpSk75Hqe3smeI=
+	b=FATOzonNvh7Gm7mqI6f+RgviYNLIioGvNrcOAbUrvbIjiixL3pDumub1kVDMjUHt6
+	 69zT3goejbxRAgowzVLbAR59SLxN0ovYRnzrzdJrj47KWNhumokO8aSADgFjuX8qg7
+	 dkYIJNdBi9T9ubHuOiR72N2i9HOLamDg9xozclHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Radaelli <stefano.r@variscite.com>,
-	Bryan Brattlof <bb@ti.com>,
-	Kendall Willis <k-willis@ti.com>,
-	"Markus Schneider-Pargmann (TI)" <msp@baylibre.com>,
-	Nishanth Menon <nm@ti.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Fangzhi Zuo <jerry.zuo@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1148/2651] arm64: dts: ti: var-som-am62p: Fix wkup R5F memory region size
-Date: Wed, 18 Nov 2026 15:39:48 +0100
-Message-ID: <20261118150329.336092201@linuxfoundation.org>
+Subject: [PATCH 7.3 1131/2651] drm/amd/display: fix unused function warnings
+Date: Wed, 18 Nov 2026 15:39:31 +0100
+Message-ID: <20261118150328.725720300@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,48 +70,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Markus Schneider-Pargmann (TI) <msp@baylibre.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit c9b15cd49b3fbd54f3382655b4e898921a7adb4e ]
+[ Upstream commit a387d5d707850627b0a6d6fd479afc7c83cdb02a ]
 
-The wkup_r5fss0_core0_memory_region was reserved with
-0x01e00000 but the MCU SDK linker for the wkup R5F firmware on
-AM62P defines the DM code/data DDR footprint differently:
+When CONFIG_DRM_AMD_DC_DCE is disabled, most functions insde dce110_hwseq.c
+are no longer referenced, causing a lot of warnings such as
 
-    /* DDR for DM R5F code/data [ size 27 MiB + 396 KB ] */
-    DDR                         : ORIGIN = 0x9CAA5000 LENGTH = 0x1B63000
+drivers/gpu/drm/amd/amdgpu/../display/dc/hwss/dce110/dce110_hwseq.c:3510:13: error: 'dce110_enable_analog_link_output' defined but not used [-Werror=unused-function]
+ 3510 | static void dce110_enable_analog_link_output(
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/gpu/drm/amd/amdgpu/../display/dc/hwss/dce110/dce110_hwseq.c:3391:13: error: 'dce110_set_cursor_attribute' defined but not used [-Werror=unused-function]
+ 3391 | static void dce110_set_cursor_attribute(struct pipe_ctx *pipe_ctx)
 
-which results in an end at 0x9e608000. For this memory region which
-starts at 0x9c900000 this means a length of:
+Replace the #ifdef with an IS_ENABLED() check that leads to an empty function
+in this configuration, so the compiler can eliminate the unused functions
+and not complain about it.
 
-    0x9e608000 - 0x9c900000 = 0x1d08000
-
-Link: https://github.com/TexasInstruments/mcupsdk-core-k3/blob/k3_main/examples/drivers/ipc/ipc_rpmsg_echo_linux/am62px-sk/wkup-r5fss0-0_freertos/ti-arm-clang/linker.cmd
-Fixes: 571562e76458 ("arm64: dts: ti: Add support for Variscite VAR-SOM-AM62P")
-Reviewed-by: Stefano Radaelli <stefano.r@variscite.com>
-Reviewed-by: Bryan Brattlof <bb@ti.com>
-Reviewed-by: Kendall Willis <k-willis@ti.com>
-Signed-off-by: Markus Schneider-Pargmann (TI) <msp@baylibre.com>
-Link: https://patch.msgid.link/20260918-topic-am62a-ioddr-dt-v6-19-v9-6-40972ef1f663@baylibre.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Fixes: cd2cfe4d1504 ("drm/amd/display: gate DCE ASIC code behind CONFIG_DRM_AMD_DC_DCE")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Fangzhi Zuo <jerry.zuo@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62p5-var-som.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c  | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am62p5-var-som.dtsi b/arch/arm64/boot/dts/ti/k3-am62p5-var-som.dtsi
-index 8a8dec80cb30e..3d1a2c5bc4647 100644
---- a/arch/arm64/boot/dts/ti/k3-am62p5-var-som.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-am62p5-var-som.dtsi
-@@ -71,7 +71,7 @@ wkup_r5fss0_core0_dma_memory_region: r5f-dma-memory@9c800000 {
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+index f974968af21b2..f593aae34745e 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+@@ -3619,7 +3619,6 @@ void dce110_disable_link_output(struct dc_link *link,
+ 	dc->link_srv->dp_trace_source_sequence(link, DPCD_SOURCE_SEQ_AFTER_DISABLE_LINK_PHY);
+ }
  
- 		wkup_r5fss0_core0_memory_region: r5f-memory@9c900000 {
- 			compatible = "shared-dma-pool";
--			reg = <0x00 0x9c900000 0x00 0x01e00000>;
-+			reg = <0x00 0x9c900000 0x00 0x01d08000>;
- 			no-map;
- 		};
+-#if defined(CONFIG_DRM_AMD_DC_DCE)
+ static const struct hw_sequencer_funcs dce110_funcs = {
+ 	.program_gamut_remap = program_gamut_remap,
+ 	.program_output_csc = program_output_csc,
+@@ -3685,9 +3684,8 @@ static const struct hwseq_private_funcs dce110_private_funcs = {
  
+ void dce110_hw_sequencer_construct(struct dc *dc)
+ {
+-	dc->hwss = dce110_funcs;
+-	dc->hwseq->funcs = dce110_private_funcs;
++	if (IS_ENABLED(CONFIG_DRM_AMD_DC_DCE)) {
++		dc->hwss = dce110_funcs;
++		dc->hwseq->funcs = dce110_private_funcs;
++	}
+ }
+-
+-#endif /* CONFIG_DRM_AMD_DC_DCE */
+-
 -- 
 2.53.0
 
