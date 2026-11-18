@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032481;
-	b=x0rOV6AuBq9v3Q03Pc+yk2HdkGDKO7XRVK/TAmMgzCanKk3j8KTGFxrrWhdVTggdKYFX
-	 ica+bu9df67uxOEWG9X74h55EHUJ74ZGdTlVRLcyHJ7el9GurFi/OeemkVuz4OmQkO5k6
-	 chIjuqkQx24yA/yloiy15l04axb/yGYYa5t4WSwbNVFJQ+XL5dzCJKkz3DjqhGgwL+FYl
-	 IlE7i4KnnAiIkWeEZ0NQ7XJu7ZzTSHPXbiU9uUkCEBl4Ezf/K5PNlyZjmshgvae76EP4j
-	 LYI+Pw+roTftXhCZdqGiat6RHjMnJyCCFpcLhMUpJrgFuab35CYua8Cdx6t8L+TiDOw==
+	t=1795032484;
+	b=jgVn+qOnuqCbraY7VVHiMmpThL/BBliDZvTaIRQCmJHrkFuTxFou9Gbk3RuuRRQNbYZS
+	 1PNkB5/w1cdHKa8LOShtwAbL310REB28wgveS6Z8a/LV7H3dY1ybMfLuLiLV25IjZqyK/
+	 qy4aUk53FHu3gO1yYw8loyN+w23stBDPBZ/hrLV1Js6Cw2KiT5A6J3UTVDhcVAxmNJSJ6
+	 MeU8E9JLgv8AlvCuLwchphxl9N5QbOTpCzidtWjYrz/xL+3Ao6dqF1DIk6aQ4+EZPJK4/
+	 +vMhFrgGF1tHQHRYIgu97kGE4WxuwJcD1cb8KUeSEJQWwqF1CxhYs35zayl0i73P2BA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032481;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032484;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=n71iGR7eQkidXX+NzvrDRAeA2eBrGw1EP1tk5QUk5yM=;
-	b=zO8hr52uodJTQpLzO3iABEoT9Eg/rCPZgly2wgTNOHG5aDqj0Os1ihwheUhfwBSOgJA4
-	 ALNIGAHsB3ePEMA1VZqVMPcyJtiW4wvaJ6nI1wKt/7GNTIY1D9ic4MuWlt6wAf47EXXje
-	 G/4Gzz2w1Cb7Ef8Z2kj6SJgax1M1T6yL5aDRKZllejIayKtaDOp0x/jOJBP/dKoKgPIW7
-	 hTNJW04l3n4tD/aSGe7PVsfJ49XL9+kP73C2YRzTLgaER+H+qwc9OfxESR2WJPcb1aJIW
-	 giEvIAh7/E3jkFMKKcrA6c+u4NK0NongKbp+D/JZCrhHG8Yi1nUID/5COq3ooyOt8bQ==
+	bh=3JxVrcSs+Dh/ksK522gmb1TeTpBE3Ep/g3LryODkKbc=;
+	b=iP8P18XEjDibOh2xcNo+VesiL1387uoA/gJWdlLoVgDbOhqta9JGhnwx73fK1C8bUmvD
+	 Ac4SWFwvH9GKV3QyI/ZacOBikKeiL2VbAqMlKLeNcHuRpK5Cbp7r8uwRhBr8WDSNcOISF
+	 TN99Ptdf9rdi4zSzv9jloQMwfiGjxePQNnUY9PO0ny1rJXlYohfCvIVcoyB7AUrS22t05
+	 UnB5zGz3cGjyNg9sfIxDOPfzFn2gUW23JkUAn6pio2K1ruH4YogARIdkHI4/BrpqsWmoO
+	 XthmeI3r+l7OBWBDVelq8NXS9YUKmWV5BhBc9eCX2gqQo0OGmioWBlhbmP76JrS/vxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="l7t/eC3V";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pVhF3YfS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B96606A846;
-	Wed, 18 Nov 2026 20:08:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F12606A849;
+	Wed, 18 Nov 2026 20:08:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l7t/eC3V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92E3B1F000C6;
-	Wed, 18 Nov 2026 20:08:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pVhF3YfS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 520E81F000C4;
+	Wed, 18 Nov 2026 20:08:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032480;
-	bh=n71iGR7eQkidXX+NzvrDRAeA2eBrGw1EP1tk5QUk5yM=;
+	s=korg; t=1795032483;
+	bh=3JxVrcSs+Dh/ksK522gmb1TeTpBE3Ep/g3LryODkKbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l7t/eC3Va5VwlesXFFvddRKehyPlAxYj2Vm2FUUMtvmYJxs6xbiTDpPiVZKW6a4Qy
-	 q3Y3OWCFyN6P9oCQ16e+fbV8+QQiRka9WOuE5Ew5AGB7BqA5Ds0ej91REgmDc3bIjK
-	 O5d1+KdYZOGtDFFN2GnhBVYEpgC2DP2zM+2R1A+g=
+	b=pVhF3YfSmQtDUj9Gn9Ysg6DupX2PUlbvWTGT8SfZWtYH/6tVGiRhMIjuDzn/J1bmH
+	 1dYfFgRxLqcMMqWdPAwzPXR0Q8Yiqjp0LdyC2M4NwRQi9BwpdjA+YjTjJYDPtUuWoI
+	 ie5jdrecH0l5dbadSAatKZpDrOK1Maw4wqLUT4l4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Yongzhao Chen <yongzhao.derek@gmail.com>,
+	James Hilliard <james.hilliard1@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1428/1756] net: phy: qca83xx: read resolved QCA8337 link status
-Date: Wed, 18 Nov 2026 15:59:15 +0100
-Message-ID: <20261118150106.054508735@linuxfoundation.org>
+Subject: [PATCH 6.12 1429/1756] net: stmmac: avoid duplicate XSK TX completions
+Date: Wed, 18 Nov 2026 15:59:16 +0100
+Message-ID: <20261118150106.091388092@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,127 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongzhao Chen <yongzhao.derek@gmail.com>
+From: James Hilliard <james.hilliard1@gmail.com>
 
-[ Upstream commit 42a91cbfc7a3ab99d05cb2ed0de5a24b9652cfed ]
+[ Upstream commit daac93975b8ff0a0a036a5e3562236c0b40c3e36 ]
 
-After a QCA8337 SmartSpeed downshift, genphy_read_status() can report
-1000 Mbit/s from the advertised modes when the PHY is running at
-100 Mbit/s. On a Redmi AX5400 running downstream OpenWrt Linux 6.18.52,
-this caused qca8k to program the user-port MAC for 1000 Mbit/s and
-traffic failed. An earlier prototype that read the resolved speed
-from the PHY restored traffic.
+stmmac_tx_clean() reports completed AF_XDP TX descriptors through
+xsk_tx_completed(), but leaves their buffer type as STMMAC_TXBUF_T_XSK_TX.
+The slots retain that type until they are reused for another buffer type.
 
-Wrap genphy_read_status() and use at803x_read_specific_status() to
-replace its speed and duplex result when an autonegotiated link comes
-up. Resolve pause for the resulting duplex. Until the PHY reports a
-resolved speed and duplex, report the link as down so that the next
-poll reads them again, as marvell_read_status_page_an() does. In that
-case also clear the duplex, master/slave state and link partner modes
-that genphy_read_status() read for an up link. QCA8337's register
-layout matches the helper (data sheet 80-Y0619-3 Rev. D, pages
-327-328).
+On interface close or XDP teardown, dma_free_tx_skbufs() walks the entire
+TX ring, not just the dirty_tx..cur_tx range. stmmac_free_tx_buffer()
+counts the stale XSK_TX slots again, causing xsk_tx_completed() to advance
+the completion-ring producer for buffers that have already been returned.
+This publishes completion entries without matching outstanding TX
+reservations and corrupts completion accounting for a socket which stays
+bound across the teardown.
 
-Keep the generic master/slave read order and the early return for a
-steady autonegotiated link. This avoids additional reads of the
-clear-on-read idle error count in MII_STAT1000. Forced mode continues
-to use BMCR. Report the MDI-X state read at link-up and invalidate it
-when the link goes down or autonegotiation is disabled. Clear
-mdix_ctrl because this driver does not implement MDI-X configuration.
+Reset the XSK buffer type after counting the completion in both
+stmmac_tx_clean() and stmmac_free_tx_buffer(). XSK TX slots have a NULL
+skb pointer and no per-slot DMA mapping, so the SKB type represents an
+empty slot. Pending XSK descriptors keep their type until they are
+completed or released, and a released slot can no longer be counted
+again by a later cleanup.
 
-The QCA8327 entries keep genphy_read_status(). The AR8327 data sheet
-(MKG-15791 Rev. 1.0) lists the QCA8327-A PHY ID and documents the same
-PHY-specific status layout, with SmartSpeed enabled after a hardware
-reset, so those PHYs may have the same problem. That is untested on
-QCA8327 hardware, so limit this change to QCA8337.
-
-Fixes: b3591c2a3661 ("net: dsa: qca8k: Switch to PHYLINK instead of PHYLIB")
-Suggested-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Yongzhao Chen <yongzhao.derek@gmail.com>
-Assisted-by: LLM
-Link: https://patch.msgid.link/20261013190339.51909-1-yongzhao.derek@gmail.com
+Fixes: 132c32ee5bc0 ("net: stmmac: Add TX via XDP zero-copy socket")
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Link: https://patch.msgid.link/20261013-submit-stmmac-xsk-tx-completion-v1-v1-1-f21b9d098e62@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/qcom/qca83xx.c | 58 ++++++++++++++++++++++++++++++++++
- 1 file changed, 58 insertions(+)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/phy/qcom/qca83xx.c b/drivers/net/phy/qcom/qca83xx.c
-index a05d0df6fa16b..f8000dab2ccdc 100644
---- a/drivers/net/phy/qcom/qca83xx.c
-+++ b/drivers/net/phy/qcom/qca83xx.c
-@@ -94,6 +94,63 @@ static int qca83xx_probe(struct phy_device *phydev)
- 	return 0;
- }
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 84c146eb3df2b..a05a6ebb15433 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -1534,8 +1534,10 @@ static void stmmac_free_tx_buffer(struct stmmac_priv *priv,
+ 		tx_q->xdpf[i] = NULL;
+ 	}
  
-+static int qca8337_read_status(struct phy_device *phydev)
-+{
-+	struct at803x_ss_mask ss_mask = {
-+		.speed_mask = AT803X_SS_SPEED_MASK,
-+		.speed_shift = __bf_shf(AT803X_SS_SPEED_MASK),
-+	};
-+	int ret, old_link = phydev->link;
-+
-+	ret = genphy_read_status(phydev);
-+	if (ret)
-+		return ret;
-+
-+	/* Keep the state resolved at link-up while the link stays up */
-+	if (phydev->autoneg == AUTONEG_ENABLE && old_link && phydev->link)
-+		goto out;
-+
-+	phydev->mdix = ETH_TP_MDI_INVALID;
-+
-+	/* genphy_read_status() derives speed and duplex from the
-+	 * advertisements, which is wrong after a SmartSpeed downshift.
-+	 * Use what the PHY resolved instead.
-+	 */
-+	if (phydev->autoneg == AUTONEG_ENABLE && phydev->autoneg_complete &&
-+	    phydev->link) {
-+		phydev->speed = SPEED_UNKNOWN;
-+		phydev->duplex = DUPLEX_UNKNOWN;
-+		phydev->pause = false;
-+		phydev->asym_pause = false;
-+
-+		ret = at803x_read_specific_status(phydev, ss_mask);
-+		if (ret)
-+			return ret;
-+
-+		/* Report the link down until speed and duplex are resolved,
-+		 * so that the next poll reads them again. Also clear what
-+		 * genphy_read_status() read for an up link, as the
-+		 * PHY_HALTED path of the state machine does.
-+		 */
-+		if (phydev->speed == SPEED_UNKNOWN ||
-+		    phydev->duplex == DUPLEX_UNKNOWN) {
-+			phydev->link = 0;
-+			phydev->duplex = DUPLEX_UNKNOWN;
-+			phydev->mdix = ETH_TP_MDI_INVALID;
-+			phydev->master_slave_state = MASTER_SLAVE_STATE_UNKNOWN;
-+			linkmode_zero(phydev->lp_advertising);
-+		} else {
-+			phy_resolve_aneg_pause(phydev);
-+		}
+-	if (tx_q->tx_skbuff_dma[i].buf_type == STMMAC_TXBUF_T_XSK_TX)
++	if (tx_q->tx_skbuff_dma[i].buf_type == STMMAC_TXBUF_T_XSK_TX) {
+ 		tx_q->xsk_frames_done++;
++		tx_q->tx_skbuff_dma[i].buf_type = STMMAC_TXBUF_T_SKB;
 +	}
-+
-+out:
-+	/* MDI-X configuration is not implemented */
-+	phydev->mdix_ctrl = ETH_TP_MDI_INVALID;
-+
-+	return 0;
-+}
-+
- static int qca83xx_config_init(struct phy_device *phydev)
- {
- 	u8 switch_revision;
-@@ -222,6 +279,7 @@ static struct phy_driver qca83xx_driver[] = {
- 	.flags			= PHY_IS_INTERNAL,
- 	.config_init		= qca83xx_config_init,
- 	.soft_reset		= genphy_soft_reset,
-+	.read_status		= qca8337_read_status,
- 	.get_sset_count		= qca83xx_get_sset_count,
- 	.get_strings		= qca83xx_get_strings,
- 	.get_stats		= qca83xx_get_stats,
+ 
+ 	if (tx_q->tx_skbuff[i] &&
+ 	    tx_q->tx_skbuff_dma[i].buf_type == STMMAC_TXBUF_T_SKB) {
+@@ -2728,8 +2730,11 @@ static int stmmac_tx_clean(struct stmmac_priv *priv, int budget, u32 queue,
+ 			tx_q->xdpf[entry] = NULL;
+ 		}
+ 
+-		if (tx_q->tx_skbuff_dma[entry].buf_type == STMMAC_TXBUF_T_XSK_TX)
++		if (tx_q->tx_skbuff_dma[entry].buf_type == STMMAC_TXBUF_T_XSK_TX) {
+ 			tx_q->xsk_frames_done++;
++			/* Teardown must not count this slot again. */
++			tx_q->tx_skbuff_dma[entry].buf_type = STMMAC_TXBUF_T_SKB;
++		}
+ 
+ 		if (tx_q->tx_skbuff_dma[entry].buf_type == STMMAC_TXBUF_T_SKB) {
+ 			if (likely(skb)) {
 -- 
 2.53.0
 
