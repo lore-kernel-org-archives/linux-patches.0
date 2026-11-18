@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057214;
-	b=W+j6lHCUD1EbaKlDGiA7zNiT24mckfA/LsUaVRCPWKbwGWxjbBVc4bcm2n71wmvRLGu9
-	 +vu8Po3KtnYR2OlrdZdBZZrgYTFJ84/WamYBl+4ZH97tPCX47kPNeWYZlLj/GnD87SHgS
-	 3SrkQwk6cf8E4yYfmK3Jp63HlhBmhStq0UPXGC6iyucPjcguhJiy3M9VlI5HIo1uIdWO3
-	 2O7ZVvba8XUMJJrjmCo7OOMuchI8Q0+7jxQezJjp5LReaQj7k4yjwFqrMtU/hE8Qoo5B5
-	 n6Knz60aOdolyzszzyHYHyjRn353bNFv1RAoqM8lMwthB1j1AqBetpoOQJn0NRjISaA==
+	t=1795057217;
+	b=rndsGCZXnIJ9lQpa7Rv3eFlBw1pSEtTALoyLhd+HrhV7eyyl7ck4nJzI9Z2hTOWqee9w
+	 jeLXQbxYjS7NpDcO1gyzwivdt6TyxMEAvRgWjcl/h7lHzI3dOSgBkYNn3MsZPQ8HnuSGo
+	 9Le1NSRXoroaglXILFDGrh+y+s/ynleXatfnqXBXqS592gjCj8/oF3viDqdRzfqhfrzD9
+	 GETS6x0jzizTD+lHe1RDtzQm9LbmlZlG2IkI+808PVu2Y09HAu2XV5Rj6d8Tgva9lh74+
+	 sKbBrb6xlGPTWzoAZCgXd5Buc9PiCCfoI1l8P68zD4Qzdupjv4XxqzcUytwECV6RXfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057214;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057217;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=PdK/8ikoWl6BiHFk0iq/gcBxeUJywmDpqU/CWQmN7zo=;
-	b=2Iwt2PKJX/4OSv0zw3dwRXYS/stFTvyC3Lh4tVlE5RybYAemki2Png9s26Cvwnge149J
-	 LtSGPNDxwBU7tQHxP/HY/1D/9dhfon7dTq20ybuI2pjsQxUdPuSQoZLnR4Pup/L7p479g
-	 IKpHKj2A6v1sJ5MBrI1apoH0occarp9ZFC/sDFtKMx/5q2mChf6vnLwwyrXuiwJ2qK1mb
-	 7+4918+eUCq+Jfb8uoT/do4sc4A2lubPTtB2cahYlZg9XERA7cHa4rLi6dufD1d9FMG5P
-	 MLXzAyvp7PfatJMwIOsMh44HaSR7GVkE218jX6ClTK+vCm77Y4oPGTfQXOeP7dv40LA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=p5dihUVBiR4mmYonRoVU4GVYTPuyyxx6lTWiE1a3hMM=;
+	b=hq2ht9kwGOrLKaJa2M8iB984zVsDJiKnWjRUzTHzKrw0zSeGJP5dAdqlU1sF7pd++NjP
+	 tLHC5esVuoF7iJikBOUVvPxsUSddrb6ZqPRWswp02qD7WIwWtpqjnLk9RjXBKRze1FyLA
+	 oIsKZU14FHitxdNRMH2GSEHK8JZo0+F9Aegvw2nMg9URJVGPtCBTpYhE01AKCgMbbD2ZJ
+	 u5kj2JgvhMvmEXPYy2/cWCjxpDUmYSQS0rLyQNDKJy8jjHCSXprEJaaCjgClYEo+53DKi
+	 o7EAw+aKV5nyBev2b5Vm27ytl5W2gv9b93BWFZpsyYc7D5G5Gl/kIq7jjrz5+//HOIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pjuomomd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lIqJvq+q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A4F60A2606;
-	Thu, 19 Nov 2026 03:00:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC6060A2601;
+	Thu, 19 Nov 2026 03:00:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pjuomomd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B5F71F000C4;
-	Thu, 19 Nov 2026 03:00:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lIqJvq+q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5DE31F00926;
+	Thu, 19 Nov 2026 03:00:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057214;
-	bh=PdK/8ikoWl6BiHFk0iq/gcBxeUJywmDpqU/CWQmN7zo=;
+	s=korg; t=1795057217;
+	bh=p5dihUVBiR4mmYonRoVU4GVYTPuyyxx6lTWiE1a3hMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pjuomomdSLvRGr/fSH2BOzQd/7SzWV0CjHIhTCVD0S7cy56/SYXwXPCPoj+ha1xuM
-	 DgIopIQy1Mc8wh3PMdsOVBxbWu6KDKRyEBs7b1phnnVj2Zt3plnjiJGWLnXQLqMFCw
-	 hpn7iwZVsll4NgMpkStsRC+AjHa+a4YI13iKSDA8=
+	b=lIqJvq+qg7v/gs8zQNZBVEHZ4ifDotZjmKP8ht64Frk+IF93Cr/VWDNa2VfRPAmbB
+	 mLWZqryOeNP/RWUFgrHRtTUF/lx7Qk7SgygHKuC2UT01cpSK889uP5Jgd9l9MLuTRc
+	 MTa+0AT51njCCqag60pL7DcUkqZv5yjyPqkBRHpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0009/1848] asymmetric_keys: reject trust keys without IDs
-Date: Wed, 18 Nov 2026 15:34:07 +0100
-Message-ID: <20261118145911.596141088@linuxfoundation.org>
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Eric Biggers <ebiggers@kernel.org>
+Subject: [PATCH 5.10 0010/1848] lib/crypto: arm64: Fix lost Poly1305 carry when resuming NEON state
+Date: Wed, 18 Nov 2026 15:34:08 +0100
+Message-ID: <20261118145911.628595144@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -63,68 +62,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit 9695df3b1db4ac4534274d38ee16e3b9b0bf910e ]
+commit 24f07e8c07a0c0dd275331cbb41c79a78741eef9 upstream.
 
-The PKCS#8 parser deliberately leaves the asym_key_ids payload slot
-empty. key_or_keyring_common() unconditionally dereferences that slot
-when a PKCS#8 key is supplied to a key_or_keyring restriction. Both the
-plain and :chain forms reach this branch, allowing an unprivileged caller
-to trigger a NULL pointer dereference through KEYCTL_RESTRICT_KEYRING
-followed by add_key().
+When poly1305_blocks_neon() resumes from a base 2^26 accumulator and the
+next update contains an odd number of full 16-byte blocks, it processes
+one leading block through poly1305_mult() so that the remaining NEON
+work has an even block count.  That requires converting the accumulator
+to the base 2^64 form used by poly1305_mult().  The final ADC of that
+conversion stores the carry into d2, but the following accumulation and
+poly1305_mult() use h2.  If the conversion carries across bit 128, the
+carry is dropped and the emitted tag is wrong.
 
- Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000
- KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
- RIP: 0010:key_or_keyring_common (crypto/asymmetric_keys/restrict.c:205 crypto/asymmetric_keys/restrict.c:279)
- Call Trace:
-  <TASK>
-  __key_create_or_update (security/keys/key.c:884)
-  key_create_or_update (security/keys/key.c:1021)
-  __do_sys_add_key (security/keys/keyctl.c:134)
-  do_syscall_64 (arch/x86/entry/common.c:52 arch/x86/entry/common.c:83)
-  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-  </TASK>
- Kernel panic - not syncing: Fatal exception
+This was introduced by Cryptogams commit 03dc4adf91c8
+("arm/poly1305-armv*.pl: optimize branches."), which removed the
+reduction that consumed d2 shortly before Linux imported the code.
+OpenSSL's copy did not take that change.
 
-Reject an asymmetric restriction key without key IDs. A PKCS#8 private
-key cannot identify the signer of a candidate certificate and is not a
-valid trust anchor.
+The carry is possible because the NEON code stores the accumulator [h0,
+h1, h2, h3, h4] in a lazily reduced, redundant base 2^26 form: its final
+carry chain leaves h0, h2, h3 < 2^26, but h1 and h4 may slightly exceed
+2^26 - 1.  For example, the reachable state
 
-Fixes: 3c58b2362ba8 ("KEYS: Implement PKCS#8 RSA Private Key parser [ver #2]")
+  h0 = 4
+  h1 = 2^26
+  h2 = 2^26 - 1
+  h3 = 2^26 - 1
+  h4 = 2^24 - 1
+
+represents 4 + 2^26*2^26 + (2^26-1)*2^52 + (2^26-1)*2^78 +
+(2^24-1)*2^104 = 2^128 + 4, despite the bit representing the 2^128 term
+(bit 24 of h4) not being set; the extra comes from the h1 limb being
+above the normal base 2^26 range.  When this value is converted into the
+non-redundant base 2^64 form, a carry into the new 2^128 bit (in bit 0
+of h2) is necessary to preserve the value.
+
+Given the above bounds, a carry into bit 128 happens exactly when
+h1 >= 2^26, h2 = h3 = 2^26 - 1, and h4 mod 2^24 = 2^24 - 1.
+
+Store the carry into h2, matching the other base 2^26 to base 2^64
+conversions in poly1305_blocks() and poly1305_emit().
+
+This bug causes an incorrect tag to be emitted.  However, this is
+unlikely to happen in practice where Poly1305 is used with a random key,
+since the random key tends to distribute the accumulator values
+throughout their valid range.  There isn't an obvious way for an
+attacker without knowledge of the r_key to cause [h0, h1, h2, h3, h4] to
+land on the precise values where this bug occurs.
+
+[EB: Rewrote the commit message to more clearly describe the bug and
+ its impact, and simplified explanation about why there's a carry bit.]
+
+Fixes: f569ca164751 ("crypto: arm64/poly1305 - incorporate OpenSSL/CRYPTOGAMS NEON implementation")
 Cc: stable@vger.kernel.org
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Link: https://lore.kernel.org/r/20260429181629.110802-2-bestswngs@gmail.com
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-[ sashal: Adapted the null check to the existing signer_ids structure pointer. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Assisted-by: LLM
+Reviewed-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Link: https://patch.msgid.link/20261009125354.315476-2-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/asymmetric_keys/restrict.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/crypto/poly1305-armv8.pl |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/crypto/asymmetric_keys/restrict.c b/crypto/asymmetric_keys/restrict.c
-index 77ebebada29c4..45b7fe05d84ef 100644
---- a/crypto/asymmetric_keys/restrict.c
-+++ b/crypto/asymmetric_keys/restrict.c
-@@ -154,6 +154,8 @@ static int key_or_keyring_common(struct key *dest_keyring,
- 			const struct asymmetric_key_ids *signer_ids;
+--- a/arch/arm64/crypto/poly1305-armv8.pl
++++ b/arch/arm64/crypto/poly1305-armv8.pl
+@@ -372,7 +372,7 @@ poly1305_blocks_neon:
+ 	adc	$h1,$h1,xzr
+ 	lsr	$h2,x14,#24
+ 	adds	$h1,$h1,x14,lsl#40
+-	adc	$d2,$h2,xzr		// can be partially reduced...
++	adc	$h2,$h2,xzr		// preserve carry into top limb
  
- 			signer_ids = asymmetric_key_ids(trusted);
-+			if (!signer_ids)
-+				return -ENOKEY;
- 
- 			/*
- 			 * The auth_ids come from the candidate key (the
--- 
-2.53.0
-
+ 	ldp	$d0,$d1,[$inp],#16	// load input
+ 	sub	$len,$len,#16
 
 
