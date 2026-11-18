@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016735;
-	b=VgvU0uqIPScpq7xHtzvkoV5N24WZhGs+frLyYHw3tI3y6BZlbL+OvhL5KkKcvS0A605+
-	 nAYuyP8kvvpZju1GbfHi5NDmRzG9SRASnvyQkIsKKZXoD7J5x6TofWfXv61dIuoRqTAA8
-	 GiYuLZaIDRAsu4ZmwYpAw6AlWGwosUeO0JUWR6pn5x/MlkB/OBu11KX5GaR5mPmLZuMB/
-	 ou6boCF4geznLMFxuH7ReC51148TO6/0MymHfeJ5Mxh3zTsFR6mUJPLd/9eN3spD81xuJ
-	 ZCZCY6qywQV3Acwh1xX+HtP/z4kBtN2b1oBQXGCq1icSCa03nFcKAJltN3WiT3mlXsg==
+	t=1795016738;
+	b=XJML2pHiMULLXVRPopi0P7gdft7SlTV92m83TydpLnacczK3a2u12N+BV7xDAABA4oW/
+	 T6CEeM8CT8lxCRJNGdsa5jDKbFDfSai82WcwzlCImZT1hEB4QHo+DQqzy0VgVwAhN5Y0N
+	 Ebld5amlrAa5PBDV/OgX9asyMIPjYOpRBJsErcyzQqlicgX5B9eQYgNLApmY9hlaUk/KB
+	 U6iZof+r1U/NkbUkExBIK1zoc7RNjTRh6JXhkhMkcPHMiF3/iLwI1VZi31bgxIvOTszPi
+	 LChf2VY13+8c8nZuLbnCNxxe3Qq5LOyuD0ghAooNsUpeRCsCPHapmZwmkLx4Md2li6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016735;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016738;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=13MlUsSYXeqqlkSX3eCKcVq0n0m8qFRymDv4ZrwNRyc=;
-	b=F0NFbOHC72P9mqJ3Tm4rwHGoZHZMDksv9MVHp4ue73TYTqF6qjDg7XhI5J7DyXcaEHtx
-	 EIvZZXy91CGeSPyyxmoSUInMl+MkrBMdfex7u3upwL0QebrTsUdosJjXUcStDq8ZBVRCA
-	 3IwxmAo790ZgpYiQiQMsMhNODPdA41QbsNf3jqSsT/Nzq5NByK+cnUt2RMEgYZJMOBI8U
-	 UxmJ1OwEq9sn+Ufht7w4sfwEcgtrgldzDucvb7QQ0wSUISr3+wsU8ocnxhS7ZtYt6LcA6
-	 uEhG6PpNBBR1IVZyv7X6jC+dche+CYGRiLxvDGwIlkgTXhcQNtnqf97N5wESnq4UYSg==
+	bh=rT9orQxdO8yWP1vQDwsy/desq3urLfNUo6sqxDiMLro=;
+	b=DpNJqxz78ScR7Kq29z7UmIe3ir8nRpveu7X8ZYE+N2JZ3KpbbFtqMxkIkIhXxk5xP/90
+	 fDHFdimn/DW/jEgJG0DKzVG0kP7LW4VovguZn8oyPFVV7WYqpAR5DT2oYfgh3oYFXx0Ek
+	 4mONRMHijDrB+qfetWb0PIif7bb+r9l73Z81q3lnxr5s2xAkfNtOf/RLao/tzP8oLn56P
+	 M/q5kVuQt640g/9E69jYdGyAUXP8VsVo7HFAMYF8Pz6f2vAb9946l7JcITV551eJT/p8x
+	 ah9KGL1ngEMrKStB6YPVNpGC/JZhj4aFgWhf3lraiZwlEGJBW+OKD46lNGo+m+m3GnQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xUQDShyV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ABxE/d54";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D884606A33F;
-	Wed, 18 Nov 2026 15:45:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298C1606A31C;
+	Wed, 18 Nov 2026 15:45:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xUQDShyV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75E711F000C5;
-	Wed, 18 Nov 2026 15:45:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ABxE/d54
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47D831F000C4;
+	Wed, 18 Nov 2026 15:45:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016735;
-	bh=13MlUsSYXeqqlkSX3eCKcVq0n0m8qFRymDv4ZrwNRyc=;
+	s=korg; t=1795016737;
+	bh=rT9orQxdO8yWP1vQDwsy/desq3urLfNUo6sqxDiMLro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xUQDShyV4N608gF2UEd6QmXV3nUG3FNKsXnVNxif5tuZTxRHOMkI2m/NtJYXjBQQj
-	 j5BTItZrHT1MGwSu05Lm+7AS1FEQFVPgI/SKkikMN6LFqoMpwHvD8HL/zuFZ3C3eSF
-	 Ag55Oy9nIgaEVda+reb7rSBy3+/hR53BtiHpop7Q=
+	b=ABxE/d54h1fkV6ZFwEoAuTWJwkX0KdHk7cRFUplPi6SgjqD7FiiOAjscQapsQdK09
+	 QhdwiUYSMa7hILwc95MSi8oIAJQ8aXi9xkkKS5AnW/Ca/8Faegt+CWRHXR6y0O3feW
+	 gXJwUODtwmWqbVOHlAZoMONjnNLI4GTGZD0wp2cU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2ef75c54d0b2ac5d00ba@syzkaller.appspotmail.com,
-	Yogesh Gaur <yogeshgaur.83@gmail.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Peter Xu <peterx@redhat.com>,
+	Lance Yang <lance.yang@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0633/2651] md/raid5: give the io_unit slab caches per-array names
-Date: Wed, 18 Nov 2026 15:31:13 +0100
-Message-ID: <20261118150310.472129708@linuxfoundation.org>
+Subject: [PATCH 7.3 0634/2651] mm/gup: honour FOLL_PIN in NOMMU __get_user_pages_locked()
+Date: Wed, 18 Nov 2026 15:31:14 +0100
+Message-ID: <20261118150310.507970070@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,118 +72,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yogesh Gaur <yogeshgaur.83@gmail.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 96858e2308431ff5678e0e6fab1a06e19f3d95da ]
+[ Upstream commit da01399b90a73cd00b502f7903fa5acbfac4a103 ]
 
-Both raid5 log backends create their io_unit slab cache per array but
-name it after the struct:
+The !CONFIG_MMU implementation of __get_user_pages_locked() takes a bare
+get_page() reference for each page regardless of foll_flags:
+	if (pages[i])
+		get_page(pages[i]);
 
-	ppl_conf->io_kc = KMEM_CACHE(ppl_io_unit, 0);
-	log->io_kc      = KMEM_CACHE(r5l_io_unit, 0);
+This is reached from pin_user_pages*() with FOLL_PIN set.
+unpin_user_page() is shared between MMU and NOMMU configurations and
+unconditionally calls gup_put_folio(..., FOLL_PIN), which subtracts
+GUP_PIN_COUNTING_BIAS (1024) from the folio refcount.
 
-KMEM_CACHE() passes the stringified type as the cache name, so every
-array that enables PPL or attaches a journal asks for a cache called
-"ppl_io_unit" or "r5l_io_unit".  With two such arrays live at the same
-time the second one trips kmem_cache_sanity_check():
+This means that pin adds 1, and then unpin will subtract 1024.
 
-  kmem_cache of name 'ppl_io_unit' already exists
-  WARNING: mm/slab_common.c:112 at __kmem_cache_create_args+0xae/0x460
-   ppl_init_log+0x285/0x1310 drivers/md/raid5-ppl.c:1363
-   log_init drivers/md/raid5-log.h:138 [inline]
-   raid5_change_consistency_policy+0x255/0x740 drivers/md/raid5.c:9141
-   consistency_policy_store+0x7f/0x230 drivers/md/md.c:5883
-   md_attr_store+0x3b7/0x640 drivers/md/md.c:6158
+If a user maps a page (refcount 1), registers it 1023 times as an
+io_uring fixed buffer (1023 pin_user_pages calls -> refcount 1024), then
+unregisters: the first unpin_user_page subtracts 1024, refcount hits 0,
+the page is freed and returned to the buddy allocator.  The remaining
+1022 unpins write into whatever was reallocated, and the user's VMA
+still maps the freed page (NOMMU has no MMU to invalidate it).
+Reallocating the page for an io_uring pbuf_ring then lets userspace
+corrupt the new owner's data through the stale mapping.
 
-which is reachable by any user that can write "ppl" to
-md/consistency_policy on two arrays, and equally by assembling two
-journalled arrays.  The cache is created and destroyed correctly on
-every path, so this is a name collision only - duplicate names confuse
-slabtop and /proc/slabinfo, which is what the check is there to catch.
+Use try_grab_folio() which adds GUP_PIN_COUNTING_BIAS for FOLL_PIN and 1
+for FOLL_GET, mirroring the CONFIG_MMU path so pin and unpin are
+symmetric. Keep supporting the traditional behavior where users specify
+a pages array but don't set FOLL_GET.
 
-Build the name from the array instead, the way grow_stripes() already
-does for the stripe_head cache in this driver, and fall back to the
-mddev pointer for dm-raid where mdname() is the constant "mdX".  The
-buffer is sized like conf->cache_name[] because mdname() can return up
-to DISK_NAME_LEN bytes.
+While at it, don't return NULL pointers in the page array,
+as this is really not expected for GUP users; instead, just fail and return
+-EFAULT.
 
-The explicit size/align arguments keep what KMEM_CACHE() expanded to,
-so object layout does not change.
+[ david: support traditional behavior with no FOLL_GET, extend
+  description ]
 
-Fixes: 3418d036c81d ("raid5-ppl: Partial Parity Log write logging implementation")
-Fixes: f6bed0ef0a80 ("raid5: add basic stripe log")
-Reported-by: syzbot+2ef75c54d0b2ac5d00ba@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=2ef75c54d0b2ac5d00ba
-Assisted-by: LLM
-Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
-Link: https://patch.msgid.link/20260920091533.413-1-yogeshgaur.83@gmail.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Lance Yang <lance.yang@linux.dev>
+Reported-by: Anthropic
+Fixes: 3faa52c03f44 ("mm/gup: track FOLL_PIN pages")
+Assisted-by: gkh_clanker_t1000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Tested-by: Lance Yang <lance.yang@linux.dev>
+Link: https://patch.msgid.link/20260921-nommu_gup_pin-v4-1-c410041cc479@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5-cache.c | 12 +++++++++++-
- drivers/md/raid5-ppl.c   | 12 +++++++++++-
- 2 files changed, 22 insertions(+), 2 deletions(-)
+ mm/gup.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/md/raid5-cache.c b/drivers/md/raid5-cache.c
-index 62460e231f025..2600cb5ac393a 100644
---- a/drivers/md/raid5-cache.c
-+++ b/drivers/md/raid5-cache.c
-@@ -3084,6 +3084,7 @@ int r5l_init_log(struct r5conf *conf, struct md_rdev *rdev)
- {
- 	struct r5l_log *log;
- 	struct md_thread *thread;
-+	char cache_name[48];
- 	int ret;
+diff --git a/mm/gup.c b/mm/gup.c
+index 4f58ad22a756b..9a387ed1e5f52 100644
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -1987,6 +1987,7 @@ static long __get_user_pages_locked(struct mm_struct *mm, unsigned long start,
+ 	struct vm_area_struct *vma;
+ 	bool must_unlock = false;
+ 	vm_flags_t vm_flags;
++	int ret, err = -EFAULT;
+ 	long i;
  
- 	pr_debug("md/raid:%s: using device %pg as journal\n",
-@@ -3123,7 +3124,16 @@ int r5l_init_log(struct r5conf *conf, struct md_rdev *rdev)
- 	INIT_LIST_HEAD(&log->flushing_ios);
- 	INIT_LIST_HEAD(&log->finished_ios);
+ 	if (!nr_pages)
+@@ -2003,6 +2004,10 @@ static long __get_user_pages_locked(struct mm_struct *mm, unsigned long start,
+ 		*locked = 1;
+ 	}
  
--	log->io_kc = KMEM_CACHE(r5l_io_unit, 0);
-+	if (mddev_is_dm(conf->mddev))
-+		snprintf(cache_name, sizeof(cache_name), "r5l_io_unit-%p",
-+			 conf->mddev);
-+	else
-+		snprintf(cache_name, sizeof(cache_name), "r5l_io_unit-%s",
-+			 mdname(conf->mddev));
++	/* See the MMU variant: support the traditional behavior. */
++	if (pages && !(foll_flags & FOLL_PIN))
++		foll_flags |= FOLL_GET;
 +
-+	log->io_kc = kmem_cache_create(cache_name, sizeof(struct r5l_io_unit),
-+				       __alignof__(struct r5l_io_unit),
-+				       0, NULL);
- 	if (!log->io_kc)
- 		goto io_kc;
+ 	/* calculate required read or write permissions.
+ 	 * If FOLL_FORCE is set, we only require the "MAY" flags.
+ 	 */
+@@ -2023,8 +2028,14 @@ static long __get_user_pages_locked(struct mm_struct *mm, unsigned long start,
  
-diff --git a/drivers/md/raid5-ppl.c b/drivers/md/raid5-ppl.c
-index 7f8a9d3fd578d..0530632f9d2a1 100644
---- a/drivers/md/raid5-ppl.c
-+++ b/drivers/md/raid5-ppl.c
-@@ -1318,6 +1318,7 @@ int ppl_init_log(struct r5conf *conf)
- {
- 	struct ppl_conf *ppl_conf;
- 	struct mddev *mddev = conf->mddev;
-+	char cache_name[48];
- 	int ret = 0;
- 	int max_disks;
- 	int i;
-@@ -1360,7 +1361,16 @@ int ppl_init_log(struct r5conf *conf)
+ 		if (pages) {
+ 			pages[i] = virt_to_page((void *)start);
+-			if (pages[i])
+-				get_page(pages[i]);
++			if (!pages[i])
++				break;
++			ret = try_grab_folio(page_folio(pages[i]), 1, foll_flags);
++			if (unlikely(ret)) {
++				pages[i] = NULL;
++				err = ret;
++				break;
++			}
+ 		}
  
- 	ppl_conf->mddev = mddev;
+ 		start = (start + PAGE_SIZE) & PAGE_MASK;
+@@ -2035,7 +2046,7 @@ static long __get_user_pages_locked(struct mm_struct *mm, unsigned long start,
+ 		*locked = 0;
+ 	}
  
--	ppl_conf->io_kc = KMEM_CACHE(ppl_io_unit, 0);
-+	if (mddev_is_dm(mddev))
-+		snprintf(cache_name, sizeof(cache_name), "ppl_io_unit-%p", mddev);
-+	else
-+		snprintf(cache_name, sizeof(cache_name), "ppl_io_unit-%s",
-+			 mdname(mddev));
-+
-+	ppl_conf->io_kc = kmem_cache_create(cache_name,
-+					    sizeof(struct ppl_io_unit),
-+					    __alignof__(struct ppl_io_unit),
-+					    0, NULL);
- 	if (!ppl_conf->io_kc) {
- 		ret = -ENOMEM;
- 		goto err;
+-	return i ? : -EFAULT;
++	return i ? : err;
+ }
+ #endif /* !CONFIG_MMU */
+ 
 -- 
 2.53.0
 
