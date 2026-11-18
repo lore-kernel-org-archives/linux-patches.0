@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034199;
-	b=QiW6A9qyD/jL/9K+76cKODBaYcvzkkOvRLmHizy+CEQF0yHMcTmx4K1F6WiiWPdEO4SN
-	 5X++f5OmiQsDMPuqpkXzHZJ9oP+p7sCvJqBovkRxkW0EzgKZSc+UVgBpT2lXPZn/94VE5
-	 2FjeFsxZXw9UahAr8BOaXDX2F5eOZ3ZgEWJ0JCwyaownCXdUAHx4H7hiNP4fY6HTOtf6b
-	 bapfS+pM9WyRxVRBJTvLqcKFEulDVMTFQWpPVdjAZqvLfHH91Rxs+92zrTeTlJENgwga5
-	 SlYpmexpJkEWrKNbec39RJxEhqHzQdg9DOUaFZdEFEoH7UfkYsrTWF4xp/lERKN6g7Q==
+	t=1795034202;
+	b=LbNjk7R7K45U9R3X6uIzNFRdlsp8ZHGeAb0CbpEBgFrnGLvCXwMBM94hIRmt6rTjkHjc
+	 1vRKyWx5wxo8Kr4tjGxaOhbfoVgq1y9PxIzRq1So1H22GilWqaH22XlAXuOvOzAYe0j1J
+	 q0lQ6T0Jys1u1YrCa11BG6xZ8K57lBbE/C7wQqMG1/JspSYVEZzoZz0bGzEHTktPMdxas
+	 m1539Fh3sLPxdTJxj0h+3O80uD02q6WPRiuEtlv1fxsWw0d7X85LwE7S/vnDQ2IYLyUE/
+	 EBgWJ0LdNS7zv2JdK7aQdwfi8a8SeA7qe9757QkB7KaR9cxKd/iDjjMUM4uN18jDxZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034199;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034202;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OyjmTv65o0V5OjfJ/OsuIU2keknMxACFtNzploM9tH8=;
-	b=3gDZF9IHJBIR3lJDiPpOa3+IIGe6vZpOdH/Q9+6/qIjhmuo2MYj/jsDss4gchT9n3Rwk
-	 VHutamkrOo3A9KqaA/ruaEUTfmoiZMT7bMUhdg3SFC9VP/5POxs7XUbdaOj5UInIFJPY8
-	 8oJuafuengKv+cqV1gtdr+8+1oULrdrPlb01zEcTRZOUu4Qce7OACrlhZ3+YbvuJ6xlQ+
-	 h50bRRRf5IvMsmS2nY/4u5sQT6ahuqRy0Yl89bT9VSiFsRrbXcghflaHaXM/Zg+I/OwLO
-	 QOrkRRMCVvB6gwKLOWOVikOdlYl8UHeUnlF2yAt2M9Frtdj7PaGEphmK2RwMC8i4dCw==
+	bh=qSygZM2YRE5Ps4iGZ0MpmqOJ1b2NxrPuxC4vlUr9ezw=;
+	b=RN/OBsuTGHCioSWJ5130nkRY/oMbDs2t7Fsvep97PZuCtHBPrzrsErFHExmUpVRSCa4P
+	 W8tW3clrixkwUNsOS66yDBgWQj0E7IwzShRM5/DKaPtiSNyWrLJTNTngSCWODz0bezUAi
+	 iKCqSmrKpQ8Nwwbtx/P4kL6g7KlxEnSA9IGdtqC/Hs5LE5Ew9Y78nrriQHXBjlgHLDJBW
+	 OtCtpr2Vymo1q+MyAQhEkA2h9lhR1WI0po4s1q2kfD2aJGSzLtOayy/VLIUqgbsrbxgK1
+	 IZ/kgCEcaKbVAwXWhh9ODOaWYpQujOqPKKNiHkqaSMGnGYbUlyr/76x/QwOLYzC2ewA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BeO8qq59;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kU1D26SE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27DF7606A320;
-	Wed, 18 Nov 2026 20:36:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50BCF606A32A;
+	Wed, 18 Nov 2026 20:36:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BeO8qq59
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 816761F000C4;
-	Wed, 18 Nov 2026 20:36:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kU1D26SE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 496231F000C6;
+	Wed, 18 Nov 2026 20:36:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034199;
-	bh=OyjmTv65o0V5OjfJ/OsuIU2keknMxACFtNzploM9tH8=;
+	s=korg; t=1795034201;
+	bh=qSygZM2YRE5Ps4iGZ0MpmqOJ1b2NxrPuxC4vlUr9ezw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BeO8qq59SxgquPfsZ+W2/Y/7FxxvvzkYBqHcSheL7B/cEO7YwKKbBzkbN2oGKFgs8
-	 J6vC4NxJ0dfXY34DZQAwGY34klgIraADvwKrlmaol+7LS77Vzwe/e8l8ZlX1NKI/Kj
-	 xKrmXYWyC8l+s0z/krUmKpZ/ix7Xz13lIRWWJLWw=
+	b=kU1D26SEtCFXLpToc00J4dyu1yDxpUmqcApvpP6KNKT1j7fayM/H7IcAWdDNRPksr
+	 fGeVrPdfZuM++ljhTuxvB/k+MZYSbLOfWMr4nrpt6NLm9t8cA14y2DclGfW1vsFqPK
+	 l8EujDbAoJOcMipScmVlXG5O6Vwpti2LGBTMlu+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Qiang <liqiang01@kylinos.cn>,
+	Muhammad Saheed <muhammad.saheed.iam@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0249/3318] Bluetooth: hci_bcsp: validate received packet lengths
-Date: Wed, 18 Nov 2026 15:14:31 +0100
-Message-ID: <20261118150322.758488124@linuxfoundation.org>
+Subject: [PATCH 6.6 0250/3318] Bluetooth: hci_sync: Disable legacy instances ext adv before setup snapshot
+Date: Wed, 18 Nov 2026 15:14:32 +0100
+Message-ID: <20261118150322.792811352@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,48 +68,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Qiang <liqiang01@kylinos.cn>
+From: Muhammad Saheed <muhammad.saheed.iam@gmail.com>
 
-[ Upstream commit ceea75ad8925425ee6520ead964b55888fe871ec ]
+[ Upstream commit 75722cde87ee24029e93e4e32d85309989f55991 ]
 
-The BCSP transmit path reads an HCI command header when an extension
-packet has only been tested for a nonzero length. Its LE configuration
-packet handler also indexes bytes through offset seven without a length
-check.
+hci_setup_ext_adv_instance_sync(...) only disabled
+HCI_OP_LE_SET_EXT_ADV_ENABLE before setup snapshot in case of non-legacy
+instances (instance > 0) and never disabled the same for legacy instance
+(instance == 0). This would lead to failure in setting ext adv params
+with HCI_ERROR_COMMAND_DISALLOWED (0x0c) error like below, when toggling
+the discoverable/connectable property of a controller with advertising
+enabled.
+```
+$ btmgmt advertising off
+hci0 Set Advertising complete, settings: powered ssp br/edr le
+  secure-conn wide-band-speech cis-central cis-peripheral
+$ btmgmt connectable on
+hci0 Set Connectable complete, settings: powered connectable ssp br/edr
+  le secure-conn wide-band-speech cis-central cis-peripheral
+$ btmgmt connectable off
+hci0 Set Connectable complete, settings: powered ssp br/edr le
+  secure-conn wide-band-speech cis-central cis-peripheral
 
-Validate the complete command and LE configuration packet headers
-before accessing their fields.
+$ btmgmt advertising on
+hci0 Set Advertising complete, settings: powered connectable ssp br/edr
+  le advertising secure-conn wide-band-speech cis-central cis-peripheral
+$ btmgmt connectable on
+Set Connectable for hci0 failed with status 0x0a (Busy)
+$ btmgmt connectable off
+Set Connectable for hci0 failed with status 0x0a (Busy)
 
-Signed-off-by: Li Qiang <liqiang01@kylinos.cn>
+$ dmesg
+...
+[   21.970527] hci0: Opcode 0x2036
+[   21.970529] hci0: opcode 0x2036 plen 25
+[   21.970537] hci0: skb len 28
+[   21.970539] hci0: length 1
+[   21.976099] hci0: result 0x0c
+[   21.976105] hci0: end: err -16
+[   21.976114] Bluetooth: hci0: Opcode 0x2036 failed: -16
+```
+
+Signed-off-by: Muhammad Saheed <muhammad.saheed.iam@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_bcsp.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/bluetooth/hci_sync.c | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/drivers/bluetooth/hci_bcsp.c b/drivers/bluetooth/hci_bcsp.c
-index e991d9e624869..0bd50471ef869 100644
---- a/drivers/bluetooth/hci_bcsp.c
-+++ b/drivers/bluetooth/hci_bcsp.c
-@@ -194,7 +194,7 @@ static struct sk_buff *bcsp_prepare_pkt(struct bcsp_struct *bcsp, u8 *data,
- 		return NULL;
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 4c67795758789..54a1660269231 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -1203,6 +1203,32 @@ int hci_update_random_address_sync(struct hci_dev *hdev, bool require_privacy,
+ 	return 0;
+ }
+ 
++static int hci_disable_ext_adv_legacy_instance_sync(struct hci_dev *hdev)
++{
++	struct hci_cp_le_set_ext_adv_enable *cp;
++	struct hci_cp_ext_adv_set *set;
++	u8 data[sizeof(*cp) + sizeof(*set) * 1];
++	u8 size;
++
++	if (!hci_dev_test_flag(hdev, HCI_LE_ADV_0))
++		return 0;
++
++	memset(data, 0, sizeof(data));
++
++	cp = (void *)data;
++	set = (void *)cp->data;
++
++	cp->num_of_sets = 0x01;
++	cp->enable = 0x00;
++
++	set->handle = 0x00;
++
++	size = sizeof(*cp) + sizeof(*set) * cp->num_of_sets;
++
++	return __hci_cmd_sync_status(hdev, HCI_OP_LE_SET_EXT_ADV_ENABLE,
++				     size, data, HCI_CMD_TIMEOUT);
++}
++
+ static int hci_disable_ext_adv_instance_sync(struct hci_dev *hdev, u8 instance)
+ {
+ 	struct hci_cp_le_set_ext_adv_enable *cp;
+@@ -1433,6 +1459,10 @@ int hci_setup_ext_adv_instance_sync(struct hci_dev *hdev, u8 instance)
+ 			return -EINVAL;
+ 		}
+ 	} else {
++		err = hci_disable_ext_adv_legacy_instance_sync(hdev);
++		if (err)
++			return err;
++
+ 		adv = NULL;
  	}
  
--	if (hciextn && chan == 5) {
-+	if (hciextn && chan == 5 && len > HCI_COMMAND_HDR_SIZE) {
- 		__le16 opcode = ((struct hci_command_hdr *)data)->opcode;
- 
- 		/* Vendor specific commands */
-@@ -402,6 +402,9 @@ static void bcsp_handle_le_pkt(struct hci_uart *hu)
- 	u8 sync_pkt[4]     = { 0xda, 0xdc, 0xed, 0xed };
- 
- 	/* spot "conf" pkts and reply with a "conf rsp" pkt */
-+	if (bcsp->rx_skb->len < 8)
-+		return;
-+
- 	if (bcsp->rx_skb->data[1] >> 4 == 4 && bcsp->rx_skb->data[2] == 0 &&
- 	    !memcmp(&bcsp->rx_skb->data[4], conf_pkt, 4)) {
- 		struct sk_buff *nskb = alloc_skb(4, GFP_ATOMIC);
 -- 
 2.53.0
 
