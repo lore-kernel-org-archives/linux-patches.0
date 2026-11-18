@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032693;
-	b=A4D+iPXy3yLYckCXotQ5V4breuQ3tJ6lcJ1tJgh40dhGbR4ORGETXtdrtzkzV2uMRIkS
-	 apuSU9crszw6Dke5+j1kSz0QQ5t1D4WsW5SPdRRbTXN1w4lZrhi5i8M7UXgxxtnR/zXU7
-	 XDP41dQVtj9zpC17p6mZCED74Ql/EzRtVAt3JzDIEx0ynbwetqS9xz54t28FmCGVJKopv
-	 HA79lH9l6eU19PHD+CD4UCw54Eb25xB8xa5GvsyerajA5KQxDZTR50U5WC49/wNc0gici
-	 t/gW/bZ1nspoElPFj34km6qJZyAJaBToGtZ3ZHJmEEyfIHFwZVANBjMrk6UTbr+HHGA==
+	t=1795032696;
+	b=TawbBK/s/vs6e5h/7hN5lc6Lq4FWwTuekHj735bgr/A6muSbMqFYaLvBrHpXh7owa2zD
+	 7jPBzcxbTI629PtZynUw3uqsytdWk6CCWfM2zGSWkUnscpFtRDXHU6XDhModIulRpR83Y
+	 se1VFTPx1nBauWx+ivlBXDXvotlplVLa95lOj5jwafIPqXmrA+gfjPXZHIq3wg/nh5Nrg
+	 YHKPHuapsVHgrEHucAIkHLiPkXskeiG5VFTBLiOwNfxqX7p3PnX3SiI1yIyJym/jSm/hW
+	 Rrg/d6SIecBEI6T5clvQl4KK6tA1DD/Tw7rHKPb82gQn+O1jRD1ckD1qUp1WW8GN8/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032693;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032696;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bGRN/+UUHLk666aw+UYziPB+m3Bl3THV6JmkFKcn+Jc=;
-	b=zDmuWraOnbDQVWqvtIIReCLQ+EqImC/C80HkU7GlpOgDiyJjvZZZKvRPrxrBtVazpdVR
-	 ajW5hL9G6Nz/VN0evLTRFchBAnLpdIzHODfxxhE7OGnNcMDh1z0tcNWhD5daSkl04sivG
-	 meud6GblLxUQ1SnhMEHOeQvSwMeXvwymh3yVRg/dgO0Nh5PSpn/gVDLQdmP5KRobhHFHs
-	 CUuIMferdBbdq7WCVd+7law/UyHJ6D18tXq9aUk6pITU3/Q3vQp1p/hWCQGYvKQmOTKj7
-	 MunKD5ci/U42BvIb3ER+1W5qzfZEUfeF6qg5CXg8HIqmFh30TWy0iL/9Eelj5ZyMNLw==
+	bh=hecomrR0kQgUz5Kt4dKS8gBEtzwLyHE9B/6Gskddr7Q=;
+	b=Pf3mQ/vs/hohJN5yUpQ4161pW0pFi5Si0gxsv+C8xjxykIgp0xOX8555FTSsZXzBjXRl
+	 ORHC+OkB6XTi0yybHkBdP47PFm9NcxCQKjOekm0hthnlH97xpF3amNvbHeOWJiFnjBfXt
+	 EAzDEn+Zxkdkl+x12EuXeAUh3fz3/2Sd8jslC9yKskSKa6jrlCd2GrtT0kUlAUnHMTWBz
+	 VaBOFItDXSVHUricNlHTkchvtZxn+DoRCTpqgz7H560d1Y6kJsbNucm7dBMH9xOkAUF3a
+	 QQC2cbvklWyNt6ZOFdRhwlNhjlvYpNFu+9rFD7FBzCU20FbYBcYh8aQptkaqnB7Yo5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Hboz1OH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MlrK6Oie;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E34B4606A334;
-	Wed, 18 Nov 2026 20:11:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F065E606A330;
+	Wed, 18 Nov 2026 20:11:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Hboz1OH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BA411F000C4;
-	Wed, 18 Nov 2026 20:11:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MlrK6Oie
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A6081F000C4;
+	Wed, 18 Nov 2026 20:11:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032692;
-	bh=bGRN/+UUHLk666aw+UYziPB+m3Bl3THV6JmkFKcn+Jc=;
+	s=korg; t=1795032695;
+	bh=hecomrR0kQgUz5Kt4dKS8gBEtzwLyHE9B/6Gskddr7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2Hboz1OH72m7Es55z61BzgSZxYhBUG7OQa/GnxT2goPvmn+UN1Iw/SQBNJlKaAkY/
-	 vQz3J0SLq8JbCtinV6v/42knll59DnkmoqiYRzn2U0sUps9ftf85B6n0+OWxGkkLzc
-	 kF5Ngktb4X6o49elL2v3fVrcFnCOP7ZsIS5Nmg3Q=
+	b=MlrK6OiekWszlooUzKBWvj3WiQf6qocTb7/TJ17CnhxD0VFBBXORbpNZypHnKTBMH
+	 sQQffXyYDOZeUleHdeXpkHoct+Bv6U6iE5uk/rXysXT/Fs//hPTMfvD+7Jw5uoCQ0l
+	 rluw50Wng9Ac/92IWYkuw6uGsS8jktYSneKF3wx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Tomlin <atomlin@atomlin.com>,
-	Dmitry Ilvokhin <d@ilvokhin.com>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1501/1756] perf c2c: Fix memory leaks on output fields
-Date: Wed, 18 Nov 2026 16:00:28 +0100
-Message-ID: <20261118150108.684166621@linuxfoundation.org>
+Subject: [PATCH 6.12 1466/1756] net: stmmac: Track the TX DMA threshold per queue
+Date: Wed, 18 Nov 2026 15:59:53 +0100
+Message-ID: <20261118150107.401376533@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -72,111 +69,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
 
-[ Upstream commit 7d0fe18bc905a4bf59271e2f7ecc95479caebd7b ]
+[ Upstream commit 9dd53418781900f02897c805eed397555cf98417 ]
 
-The perf_hpp_list was not freed after use.  Let's add it for the main
-c2c hists list in perf c2c report and a local list in print_pareto().
+Commit 3a6c12a0c6c3 ("net: stmmac: bump tc when get underflow error from
+DMA descriptor") made dwmac4 raise the DMA threshold of the queues that
+report TX underflows. This is done by incrementing a module global
+parameter 'tc' by 64 on each underflow.
 
-Previously it was detected by ASAN like below.
+This leads to inconsistent TX DMA thresholds between queues and causes
+issues on platforms with multiple stmmac controllers, as 'tc' is shared
+by all of them. Once 'tc' goes over 256 the bumping stops, and queues
+that did not underflow before are left at the initial threshold.
 
-  =================================================================
-  ==42183==ERROR: LeakSanitizer: detected memory leaks
+On the Renesas RZ/V2H platform, which has two dwmac4 controllers, we
+observed sporadic iperf3 TCP TX failures:
 
-  Indirect leak of 1064 byte(s) in 7 object(s) allocated from:
-      #0 0x7f17334ef24f in calloc (/lib64/libasan.so.8+0xef24f) (BuildId: 61e8165ca90f7a4f06b73f064a938c76deaae079)
-      #1 0x0000005fa099 in zalloc  ../../lib/zalloc.c:8
-      #2 0x0000004faf6d in get_format  tools/perf/builtin-c2c.c:1978
-      #3 0x0000004fb45e in c2c_hists__init_output  tools/perf/builtin-c2c.c:2004
-      #4 0x0000004fb7de in __hpp_list__parse  tools/perf/builtin-c2c.c:2047
-      #5 0x0000004fbae9 in hpp_list__parse  tools/perf/builtin-c2c.c:2085
-      #6 0x0000004fee13 in print_pareto  tools/perf/builtin-c2c.c:2563
-      #7 0x0000004ffcd7 in perf_c2c__hists_fprintf  tools/perf/builtin-c2c.c:2708
-      #8 0x000000500ab5 in perf_c2c_display  tools/perf/builtin-c2c.c:2949
-      #9 0x0000005045c3 in perf_c2c__report  tools/perf/builtin-c2c.c:3522
-      #10 0x000000505caa in cmd_c2c  tools/perf/builtin-c2c.c:3676
-      #11 0x0000005df50e in run_builtin  tools/perf/perf.c:383
-      #12 0x0000005df9b1 in handle_internal_command  tools/perf/perf.c:436
-      #13 0x0000005dfd7f in run_argv  tools/perf/perf.c:480
-      #14 0x0000005e02d6 in main  tools/perf/perf.c:581
-      #15 0x7f1729450680 in __libc_start_call_main (/lib64/libc.so.6+0x3680) (BuildId: 85075e2ae2e13352a1413d41c327dacf6461526c)
-      #16 0x7f1729450797 in __libc_start_main@GLIBC_2.2.5 (/lib64/libc.so.6+0x3797) (BuildId: 85075e2ae2e13352a1413d41c327dacf6461526c)
-      #17 0x000000409c34 in _start (tools/perf/perf+0x409c34) (BuildId: 36a64600776d92e4ab7dfd5ca20c92280d72a645)
+  iperf3 -c <server> -t5 --bind-dev end1
+  ...
+  [  5]   0.00-5.00   sec  1.00 MBytes  1.68 Mbits/sec   87       sender
+  [  5]   0.00-5.00   sec   768 KBytes  1.26 Mbits/sec            receiver
 
-  SUMMARY: AddressSanitizer: 1064 byte(s) leaked in 7 allocation(s).
+This happens because the TX queues of end1 were underflowing on a large
+fraction of the packets, but the DMA TX threshold was never raised from
+the default of 64 bytes. The threshold was not raised because end0
+had underflowed first and had already pushed 'tc' past 256. Which
+controller is affected depends on which one underflows first.
 
-Fixes: c75540e3160fb586 ("perf c2c report: Add dimension support")
-Reviewed-by: Aaron Tomlin <atomlin@atomlin.com>
-Reviewed-by: Dmitry Ilvokhin <d@ilvokhin.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+To fix this, make the TX DMA threshold per queue instead of global.
+Each time an underflow happens on a queue, its TX DMA threshold gets
+incremented, without affecting other queues or controllers. With this
+change, 'tc' is only used as the initial value, and the RX threshold
+is no longer bumped together with the TX one, as TX underflows have
+nothing to do with the RX side.
+
+Fixes: 3a6c12a0c6c3 ("net: stmmac: bump tc when get underflow error from DMA descriptor")
+Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20261013114503.57487-2-ovidiu.panait.rb@renesas.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-c2c.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac.h  |  1 +
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c | 33 +++++++++++--------
+ 2 files changed, 21 insertions(+), 13 deletions(-)
 
-diff --git a/tools/perf/builtin-c2c.c b/tools/perf/builtin-c2c.c
-index 15e1fce71c722..850aa3b7d3fec 100644
---- a/tools/perf/builtin-c2c.c
-+++ b/tools/perf/builtin-c2c.c
-@@ -2076,6 +2076,11 @@ static int c2c_hists__reinit(struct c2c_hists *c2c_hists,
- 	return hpp_list__parse(&c2c_hists->list, output, sort);
- }
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
+index db7bea0fcafe4..8d6507cef53a9 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
+@@ -272,6 +272,7 @@ struct stmmac_priv {
+ 	int sph_cap;
+ 	u32 sarc_type;
+ 	u32 rx_riwt[MTL_MAX_RX_QUEUES];
++	u32 tx_threshold[MTL_MAX_TX_QUEUES];
+ 	int hwts_rx_en;
  
-+static void c2c_hists__exit(struct c2c_hists *c2c_hists)
-+{
-+	perf_hpp__reset_output_field(&c2c_hists->list);
-+}
-+
- #define DISPLAY_LINE_LIMIT  0.001
- 
- static u8 filter_display(u32 val, u32 sum)
-@@ -2475,7 +2480,7 @@ static void print_pareto(FILE *out)
- 	ret = hpp_list__parse(&hpp_list, cl_output, NULL);
- 
- 	if (WARN_ONCE(ret, "failed to setup sort entries\n"))
--		return;
-+		goto out;
- 
- 	nd = rb_first_cached(&c2c.hists.hists.entries);
- 
-@@ -2489,6 +2494,9 @@ static void print_pareto(FILE *out)
- 		c2c_he = container_of(he, struct c2c_hist_entry, he);
- 		print_cacheline(c2c_he->hists, he, &hpp_list, out);
- 	}
-+
-+out:
-+	perf_hpp__reset_output_field(&hpp_list);
- }
- 
- static void print_c2c_info(FILE *out, struct perf_session *session)
-@@ -3105,12 +3113,12 @@ static int perf_c2c__report(int argc, const char **argv)
- 	err = setup_nodes(session);
- 	if (err) {
- 		pr_err("Failed setup nodes\n");
--		goto out_session;
-+		goto out_hists;
+ 	void __iomem *ioaddr;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index ddaf43cdfc339..adb530635f30b 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -2381,7 +2381,6 @@ static void stmmac_dma_operation_mode(struct stmmac_priv *priv)
  	}
  
- 	err = mem2node__init(&c2c.mem2node, &session->header.env);
- 	if (err)
--		goto out_session;
-+		goto out_hists;
+ 	if (priv->plat->force_thresh_dma_mode) {
+-		txmode = tc;
+ 		rxmode = tc;
+ 	} else if (priv->plat->force_sf_dma_mode || priv->plat->tx_coe) {
+ 		/*
+@@ -2395,7 +2394,6 @@ static void stmmac_dma_operation_mode(struct stmmac_priv *priv)
+ 		rxmode = SF_DMA_MODE;
+ 		priv->xstats.threshold = SF_DMA_MODE;
+ 	} else {
+-		txmode = tc;
+ 		rxmode = SF_DMA_MODE;
+ 	}
  
- 	err = setup_callchain(session->evlist);
- 	if (err)
-@@ -3197,6 +3205,8 @@ static int perf_c2c__report(int argc, const char **argv)
+@@ -2424,8 +2422,11 @@ static void stmmac_dma_operation_mode(struct stmmac_priv *priv)
+ 	for (chan = 0; chan < tx_channels_count; chan++) {
+ 		qmode = priv->plat->tx_queues_cfg[chan].mode_to_use;
  
- out_mem2node:
- 	mem2node__exit(&c2c.mem2node);
-+out_hists:
-+	c2c_hists__exit(&c2c.hists);
- out_session:
- 	perf_session__delete(session);
- out:
+-		stmmac_dma_tx_mode(priv, priv->ioaddr, txmode, chan,
+-				txfifosz, qmode);
++		if (txmode == SF_DMA_MODE)
++			priv->tx_threshold[chan] = SF_DMA_MODE;
++
++		stmmac_dma_tx_mode(priv, priv->ioaddr, priv->tx_threshold[chan],
++				   chan, txfifosz, qmode);
+ 	}
+ }
+ 
+@@ -2592,17 +2593,20 @@ static bool stmmac_xdp_xmit_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
+ 
+ static void stmmac_bump_dma_threshold(struct stmmac_priv *priv, u32 chan)
+ {
+-	if (unlikely(priv->xstats.threshold != SF_DMA_MODE) && tc <= 256) {
+-		tc += 64;
++	u32 thresh = priv->tx_threshold[chan];
+ 
+-		if (priv->plat->force_thresh_dma_mode)
+-			stmmac_set_dma_operation_mode(priv, tc, tc, chan);
+-		else
+-			stmmac_set_dma_operation_mode(priv, tc, SF_DMA_MODE,
+-						      chan);
++	if (unlikely(thresh == SF_DMA_MODE) || thresh > 256)
++		return;
+ 
+-		priv->xstats.threshold = tc;
+-	}
++	thresh += 64;
++
++	if (priv->plat->force_thresh_dma_mode)
++		stmmac_set_dma_operation_mode(priv, thresh, tc, chan);
++	else
++		stmmac_set_dma_operation_mode(priv, thresh, SF_DMA_MODE, chan);
++
++	priv->tx_threshold[chan] = thresh;
++	priv->xstats.threshold = thresh;
+ }
+ 
+ /**
+@@ -7789,6 +7793,9 @@ int stmmac_dvr_probe(struct device *device,
+ 
+ 	priv->xstats.threshold = tc;
+ 
++	for (i = 0; i < MTL_MAX_TX_QUEUES; i++)
++		priv->tx_threshold[i] = tc;
++
+ 	/* Initialize RSS */
+ 	rxq = priv->plat->rx_queues_to_use;
+ 	netdev_rss_key_fill(priv->rss.key, sizeof(priv->rss.key));
 -- 
 2.53.0
 
