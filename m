@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032962;
-	b=Tec51qL4tpVcsg4WEIJTKKHl4bHAaO9dWY+6qBjYVLpHJECUtTrmpaJRkhjQ96MVn334
-	 kqbX6LZr93TFkmZJ23VFcTJbDMbRT01HMnlMifKYDtMq9nWWDA/YagLf8opkCL5aWKkde
-	 nHdnOrXfCQQPaui49S6WLFK3zS0CtpNfd6VWYnhjEYdJRlS58F795H0uhpTXUshJ7Gh9w
-	 fzaQTjtCoSzhOThM5y59L/+zLY/nx2tK5lV8Sjl1YZxN2uYzWBVfNF6PCnQBWoFRSnlx/
-	 a1/V537CM+ATK+MFyyf6mnJepVg9AdRr480u3O0tu/AblJEde0G8ENmq455M86E3xiA==
+	t=1795032965;
+	b=3tfR36epDoWLSuFrKy1wqOaJeXPjTNnOJH+zAyzPtQVwwGwtF14HMOLQKTJrOSc8OV2C
+	 roGQyW5Vzlug050GDMj9HzJPbyMiEy3gMzHqSr1m6bo6S7Ooos8hDn4ISAVVc+6e4Dm+r
+	 +I6TB4n5lDhoX6XWt3BCAv+RhH3gcn5675K+//xuMIu1BLQe0MF0V8nOBmqOqpYpYsYhS
+	 T76fidzVfGbo68yYtfMcj3ZivdT8hOzq1JOSYcDzBH/C9bYgEn/hvxn1Gvelh4lKXu+Cs
+	 NB3TCgy2a+ylIoAVkKLZvK9a8Z4T2DgymMoGq6qQCk9V/CTbkdhgPxnkLLEixLlQqDg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032962;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032965;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B3DRqzq/EAdmzkxw7emAu1agjcaIu965wLHyaVpSoPo=;
-	b=sYSnQ4ib5uh8iQa8tuWuwvrM/INUpLbtQeg54lQnzJZqCRm94Ur5WM5vccGnwr3KHf5y
-	 nM8r1fyp3FYeMS+im4A0pf6hTROysm7XnpazlyGtLUs+cLf7YJhicAITvYiyuaEStL5vj
-	 P2pgAmu19zHnuxE0DN3psrQO2mP3b4nhQt7xyJ8TmNqytuGf4bkIpj3Zgzlt6+9AQyChT
-	 xTS9tDIcFUwgJcCOZnCN8WWpjN3Co6a/+i/y7vU32dbhvQozvLl8gKjT5epuo/VFT3sdm
-	 LbYzM0TXyAcvj2ABrJ1z4Mh+MtC4aMrilOu5ZykUDwwZisZzXdX18AQV1oN9f69cUnw==
+	bh=h8mnHc96KxTjaQdTXtUcVK7C2kG5Czgus4zCNmH18oM=;
+	b=JyeszjjjOK5PXMuRsIjSu6JYnjyrM89vfhpc4jLApL9TSM/IpfLG1MFRxrFjnHJ2RqyL
+	 o0AOkIMMthuBi6fZHUSUW408w3DZAQX2L0vcC585v3YdGfq9rvuXix2pXgs91gprd+BMF
+	 9SetUDWg82OEiDfLNKOXTtSTwPfFl57gmib3Kv5ETtsHrIuEzkjn6PQw9rrDfKhoN/Irr
+	 cLrQX21foPeUoX+v2XVZVTHSmExF6fbsXnzHTScEmxGBsSnjcnnE3pnmtyWD74a92KIzF
+	 QnZWMv0JP/zRwOv+Kj3xWFK0e8recc6Z3SE+Gz5x4IDukZKgbMom3f4xIBMUXjuqR7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bsRcs+xR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YRXDTZnv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677A4606A33E;
-	Wed, 18 Nov 2026 20:16:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40736606A325;
+	Wed, 18 Nov 2026 20:16:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bsRcs+xR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B72501F000C4;
-	Wed, 18 Nov 2026 20:16:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YRXDTZnv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 904201F000C4;
+	Wed, 18 Nov 2026 20:16:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032962;
-	bh=B3DRqzq/EAdmzkxw7emAu1agjcaIu965wLHyaVpSoPo=;
+	s=korg; t=1795032965;
+	bh=h8mnHc96KxTjaQdTXtUcVK7C2kG5Czgus4zCNmH18oM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bsRcs+xR94ciQOKGNNvmy6ZHL24CyAnTnfZtVNgncK3zZbooMd9+IeqUbvT4A5Qu8
-	 w3PSmUPgxG7CLje4d4sP/FvGLDQjPHGy6Y9que/pSkIwqUVDsiuF7zL1eetaRhBkvS
-	 ilwi/lT6Wgspk3dr5SebWW0dlmJUH+Z1Z9VKkeqI=
+	b=YRXDTZnvIwAmX9xUiAd5g6CEZ6Dp7m2bDCjNrLcDW/UePnV0As4o0BkJEq1bVWbnQ
+	 t8g7T4aBUq9bqr4Xptn2ULVS4M/vl4awY+JP3Zg/UBJANJVSagIEHMJd4DWp87n/bC
+	 7NHcUpsEPD1IbpLCpKjFbLzQXqd517YS6SeYnpqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1596/1756] net: usb: cdc_mbim: dont enable BHs in tx_fixup under netpoll
-Date: Wed, 18 Nov 2026 16:02:03 +0100
-Message-ID: <20261118150113.452404453@linuxfoundation.org>
+Subject: [PATCH 6.12 1597/1756] ALSA: pcmtest: Honor the enable parameter
+Date: Wed, 18 Nov 2026 16:02:04 +0100
+Message-ID: <20261118150113.487729296@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,42 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit bfd7ced012c7857b5ab5edf7e416c2789b652702 ]
+[ Upstream commit fe3b45a0875a8b0944d2adee3ca62283d876edc0 ]
 
-cdc_mbim_tx_fixup() has the same spin_unlock_bh() as cdc_ncm_tx_fixup().
-Under netpoll it runs pending softirqs while the txq lock is held, and
-a transmit from one of them spins on that lock.
+The enable module parameter is declared and documented as "Enable
+pcmtest soundcard.", but nothing reads it. Loading the module with
+enable=0 still creates the card.
 
-Use plain spin_lock() as in cdc_ncm.
+Return -ENODEV from mod_init() when enable is false, as the pcsp driver
+does.
 
-Fixes: 9bf211a30b3f ("net: cdc_mbim: adding MBIM driver")
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Link: https://patch.msgid.link/20261024-cdc-ncm-netpoll-v3-2-6284ca03f967@tipi-net.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 315a3d57c64c ("ALSA: Implement the new Virtual PCM Test Driver")
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20261027012228.3797565-1-sammiee5311@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/cdc_mbim.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ sound/drivers/pcmtest.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/usb/cdc_mbim.c b/drivers/net/usb/cdc_mbim.c
-index 917c8637533b2..3571c4f37b9d6 100644
---- a/drivers/net/usb/cdc_mbim.c
-+++ b/drivers/net/usb/cdc_mbim.c
-@@ -290,9 +290,10 @@ static struct sk_buff *cdc_mbim_tx_fixup(struct usbnet *dev, struct sk_buff *skb
- 		}
- 	}
+diff --git a/sound/drivers/pcmtest.c b/sound/drivers/pcmtest.c
+index 3c85f90c0cc1e..0376fe17365a8 100644
+--- a/sound/drivers/pcmtest.c
++++ b/sound/drivers/pcmtest.c
+@@ -762,6 +762,9 @@ static int __init mod_init(void)
+ {
+ 	int err = 0;
  
--	spin_lock_bh(&ctx->mtx);
-+	/* BHs or IRQs are always off here, see cdc_ncm_tx_fixup() */
-+	spin_lock(&ctx->mtx);
- 	skb_out = cdc_ncm_fill_tx_frame(dev, skb, sign);
--	spin_unlock_bh(&ctx->mtx);
-+	spin_unlock(&ctx->mtx);
- 	return skb_out;
- 
- error:
++	if (!enable)
++		return -ENODEV;
++
+ 	buf_allocated = setup_patt_bufs();
+ 	if (!buf_allocated)
+ 		return -ENOMEM;
 -- 
 2.53.0
 
