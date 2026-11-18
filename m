@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021757;
-	b=aZbeinvPzBZXBDDvc9IQq3Lr/Gd3ea4HaLhg4huCqP6+usP8lAwzJOaUhPl4wFzjx/w3
-	 5jB0hvOkCSBkWGF0L459BapxS265xH+hGT2PKV6tdzwCRXUKLcwUCU1ALkOzx2D+37omh
-	 Z0TEAyCqayD2UYvLmn8MZElwwjNH/cBsQ9a9QnulrLKIvA84qJBN7CLUghyTWlWeBQ/ag
-	 0goHZoypUl2GNVS3E7gBI1Jo1z9CWUvypUL26pFJqPnUckTTAwQaTaGesvNz1+4Q0U8gE
-	 rCaSRn6e8xDqAejJjkncgcT90J1C3A9tS7yINM1Prm6FjA2gBSekwV4hyKOaDXdMwuw==
+	t=1795021760;
+	b=u/xufAGsSdM5Yhp7HSS5dOxxpbZWE5kDdqaDAeXjpL1pKIXlCUzSI/rz5922/4kAjzfb
+	 aHNaIKzDpTWH3EeFj1XTC1tr5dRey6UMOYXg+jZcxQO5StY01yF3YuYcgn5CJjRAF77Hy
+	 D8k6aIdNiUmu2YDESp38sUX/Z8JFJHfdaVnK8ARebGN4jmxL0IGsB7xWxuoKe/XrqY72Y
+	 fp9UrWP15hiTLiNUkiEom3/aDhSekpuExu9HhSm6+LOs5GE6A64dbribINGL196tOkDtD
+	 6U57pyDd5/g9vxkCOcsQwLWRVHFMNEl4otNZngO9bebfV5Fy0x4NCZpu+r8KqgfypqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021757;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021760;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=p+KIRW02VBFwKmG0WHYHZG8QmizQT8EeYBQ88H6/99w=;
-	b=dnIsZhaU1puiPE7rZ2qLwBK9T0m1k/z/SV8udxqf7E5nAM1ZoXSW3ku65qzC2I5Jw5Lc
-	 ARqAbjsvLXWDagZ7Kk9X3u9qDzWl0LtuuRfZ6tsAEW4tOo1aiF1h6dFM3iHYEbNwG7SIL
-	 XIxMO6mV/69CSphBEkIHPkqUjoBKPUbHqYiu9gFJy6WZfeL37rWPMyZ/ULgvyVvb1vn4p
-	 DsXFMbIfaaB8+IlR+hm4whLHqLlKC8oRr5gWDH99DlfWtX6iK+OWlY1lEb/ZLdgjfjR07
-	 QD+DRu7F5t3jpkF2to6UyPa66yRWFie6vRNRnijZcBgWQW/nat8bDYTQUSOF4XXkcCw==
+	bh=oKleffkJDNixMN/JDAk5Hf0XA+SUIITmki5Qr8admqY=;
+	b=pJMSIxYRKRH/hpZ6dvPlqn4pP/qrA0burs6BpbW6yOwlswtHH58vwPmOH1cqHLZ2R78D
+	 9sFiQ2B2nkcQLlbLZDlkmzA6DS109zRh4/yFiaNk3WEMCCt3f752M7d+mS26nJWkFo83/
+	 qRvVBbb3zUcApnq5Rrb8wMRoeYjW8lYCEPTV8SJnHUcNhCEcFHiShjknJAZeFDE8HmKol
+	 XJ3ZmfUqW4eAF/LMv7HITXNi7I5dHcwiNoUwiCYMdPEAPXnmaT6WRJr6B5Zz7Qc64Qnyl
+	 2ZRGB9foBP0vCoOXAor3AWAgpEQ0AYIA+ZGTUYBUx+h/G9aPbnLSmfi5va3btDLQLWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AvOHGwhl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R8cgC1gf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430ED60A381C;
-	Wed, 18 Nov 2026 17:09:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0EC60A2616;
+	Wed, 18 Nov 2026 17:09:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AvOHGwhl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9220F1F000C6;
-	Wed, 18 Nov 2026 17:09:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R8cgC1gf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D1691F000C7;
+	Wed, 18 Nov 2026 17:09:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021757;
-	bh=p+KIRW02VBFwKmG0WHYHZG8QmizQT8EeYBQ88H6/99w=;
+	s=korg; t=1795021760;
+	bh=oKleffkJDNixMN/JDAk5Hf0XA+SUIITmki5Qr8admqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AvOHGwhlmWOQG1LBnL4oYw76V9EJGnegjdFia4u/PI9gEXX6F8/qZ8i2gxHXrnuH0
-	 bH65sJZNMUYLebeuCIhai3g+HMJdxPnidbpBlTZtX2PcyK0L7FfmxXoqYtY0eZYosE
-	 r1SaWgYeh8l2VQ302jO+QLM/AsBZjGkH/1+zygcs=
+	b=R8cgC1gfTMs4/Y52qtU0EuPco2gGazI9VMolMEpU5rYPiDOZoe1hFDfYGe/+8H4zW
+	 DYQ7kL7TK10E6DNZ192QbBbVP4bvHyuaKuYOzLBLEIlHMGEq1ROJFqKwvfZvmZkNRe
+	 I3B/PGJFtFNa9HsK75F3qEKB76IWnNZnBbVET8tc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+21f8628595b2061c438d@syzkaller.appspotmail.com,
-	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Waiman Long <longman@redhat.com>,
+	Guopeng Zhang <zhangguopeng@kylinos.cn>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2421/2651] libceph: reject bad connect_seq in msgr1 READY reply
-Date: Wed, 18 Nov 2026 16:01:01 +0100
-Message-ID: <20261118150412.409287251@linuxfoundation.org>
+Subject: [PATCH 7.3 2422/2651] cgroup/cpuset: Find furthest isolated ancestor for invalidated isolated partition
+Date: Wed, 18 Nov 2026 16:01:02 +0100
+Message-ID: <20261118150412.438639261@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,55 +69,206 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 6dfc1b1a99da4909aee07a906352be5c3fc9baba ]
+[ Upstream commit 0bce85ff2cc0f7f7d8de16f5fdfc0ae7d29f21f1 ]
 
-process_connect() WARN_ON()s when the peer's READY/SEQ reply carries a
-connect_seq other than ours + 1. That value comes off the wire, so a
-misbehaving or malicious server can trigger the warning at will (and
-panic machines running with panic_on_warn).
+Commit 46b885416c27 ("cgroup/cpuset: Fix a missing isolated_cpus
+update in update_cpumasks_hier()") searches for the closet partition
+root ancestor to determine if the isolated CPUs in a to be invalidated
+isolation partition should be removed from isolated_cpus or not.
 
-Check it before touching connection state and fail the connection with
-a protocol error instead, like the other bad-reply cases here.
+As reported by sashiko, this method may not work when there is a deeply
+nested isolated partition hierarchy. For instance, Consider a nested
+hierarchy A0 -> A1 -> A2 -> A3 where all four are PRS_ISOLATED:
 
-Fixes: 31b8006e10a4 ("ceph: messenger library")
-Reported-by: syzbot+21f8628595b2061c438d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=21f8628595b2061c438d
-Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+  A0: effective_xcpus = 0-4
+  A1: effective_xcpus = 1-4
+  A2: effective_xcpus = 2-4
+  A3: effective_xcpus = 3-4
+
+When A1 shrinks its exclusive_cpus from 1-4 to 1-2, A2 will update it
+effective_xcpus to 2. A3 will find its closet partition root ancestor
+A2 and decides that its effective_xcpus 3-4 should be removed from
+isolated_cpus which is incorrect.
+
+Address this corner case by adding a new isolated_cpus_release() helper
+to replace the existing ancestor_partition() helper. This new helper
+will search for the furthest isolated partition root ancestor to decide
+if some or all of its isolated CPUs should be removed from isolated_cpus
+and also perform the removal when appropriate.
+
+The is_remote_partition() and is_local_partition() helpers are also
+moved up so they can be used in earlier functions.
+
+There are other pre-existing problems that will still prevent the
+above test case to work correctly. These problems will be addressed in
+subsequent patches.
+
+Fixes: 46b885416c27 ("cgroup/cpuset: Fix a missing isolated_cpus update in update_cpumasks_hier()")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Reviewed-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ceph/messenger_v1.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ kernel/cgroup/cpuset.c | 104 +++++++++++++++++++++--------------------
+ 1 file changed, 53 insertions(+), 51 deletions(-)
 
-diff --git a/net/ceph/messenger_v1.c b/net/ceph/messenger_v1.c
-index c9e002d963190..b3ff3274344e9 100644
---- a/net/ceph/messenger_v1.c
-+++ b/net/ceph/messenger_v1.c
-@@ -887,6 +887,12 @@ static int process_connect(struct ceph_connection *con)
- 			return -1;
- 		}
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index d39953799ad56..f9ce9383af3f5 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -1281,6 +1281,16 @@ static void reset_partition_data(struct cpuset *cs)
+ 		cpumask_copy(cs->effective_cpus, parent->effective_cpus);
+ }
  
-+		if (le32_to_cpu(con->v1.in_reply.connect_seq) !=
-+		    con->v1.connect_seq + 1) {
-+			con->error_msg = "protocol error, bad connect_seq";
-+			return -1;
-+		}
++static inline bool is_remote_partition(struct cpuset *cs)
++{
++	return cs->remote_partition;
++}
 +
- 		WARN_ON(con->state != CEPH_CON_S_V1_CONNECT_MSG);
- 		con->state = CEPH_CON_S_OPEN;
- 		con->v1.auth_retry = 0;    /* we authenticated; clear flag */
-@@ -898,8 +904,6 @@ static int process_connect(struct ceph_connection *con)
- 		     con->v1.peer_global_seq,
- 		     le32_to_cpu(con->v1.in_reply.connect_seq),
- 		     con->v1.connect_seq);
--		WARN_ON(con->v1.connect_seq !=
--			le32_to_cpu(con->v1.in_reply.connect_seq));
++static inline bool is_local_partition(struct cpuset *cs)
++{
++	return is_partition_valid(cs) && !is_remote_partition(cs);
++}
++
+ /* Return true if isolated_cpus changes. */
+ static bool isolated_cpu_update(int new_prs, int cpu)
+ {
+@@ -1323,6 +1333,45 @@ static void isolated_cpus_update(int old_prs, int new_prs, struct cpumask *xcpus
+ 		update_housekeeping = true;
+ }
  
- 		if (con->v1.in_reply.flags & CEPH_MSG_CONNECT_LOSSY)
- 			ceph_con_flag_set(con, CEPH_CON_F_LOSSYTX);
++/*
++ * isolated_cpus_release - Remove the relevant CPUs in @xcpus from isolated_cpus
++ * @cs: the current cpuset
++ * @xcpus: the set of effective xcpus to be considered for removal
++ *
++ * This function is called when an isolated partition is invalidated or when
++ * some of its effective xcpus are to be removed from isolated_cpus due to
++ * changes in parent cpuset. The given @xcpus must be modifiable as the function
++ * will update its value to determine the right set of CPUs to be removed.
++ */
++static void isolated_cpus_release(struct cpuset *cs, struct cpumask *xcpus)
++{
++	struct cpuset *ancestor = parent_cs(cs);
++	struct cpuset *iancestor = NULL;
++
++	/*
++	 * Search the furthest isolated partition root ancestor available
++	 * until top_cpuset or a remote partition root is hit.
++	 */
++	for (; ancestor; ancestor = parent_cs(ancestor)) {
++		if (ancestor->partition_root_state == PRS_ISOLATED)
++			iancestor = ancestor;
++		if (is_remote_partition(ancestor))
++			break;
++	}
++
++	/*
++	 * If a furthest isolated partition acnestor is found, use it to
++	 * determine which of the CPUs in @xcpus should be removed from
++	 * isolated_cpus. Otherwise, all of them will be removed.
++	 */
++	if (iancestor && !cpumask_andnot(xcpus, xcpus, iancestor->effective_xcpus))
++		return; /* No CPU should be removed from isolated_cpus */
++
++	spin_lock_irq(&callback_lock);
++	isolated_cpus_update(PRS_ISOLATED, PRS_ROOT, xcpus);
++	spin_unlock_irq(&callback_lock);
++}
++
+ /*
+  * partition_xcpus_add - Add new exclusive CPUs to partition
+  * @new_prs: new partition_root_state
+@@ -1595,16 +1644,6 @@ static int compute_trialcs_excpus(struct cpuset *trialcs, struct cpuset *cs)
+ 	return rm_siblings_excl_cpus(parent, cs, excpus);
+ }
+ 
+-static inline bool is_remote_partition(struct cpuset *cs)
+-{
+-	return cs->remote_partition;
+-}
+-
+-static inline bool is_local_partition(struct cpuset *cs)
+-{
+-	return is_partition_valid(cs) && !is_remote_partition(cs);
+-}
+-
+ /*
+  * remote_partition_enable - Enable current cpuset as a remote partition root
+  * @cs: the cpuset to update
+@@ -2184,25 +2223,6 @@ static void compute_partition_effective_cpumask(struct cpuset *cs,
+ 	rcu_read_unlock();
+ }
+ 
+-/*
+- * ancestor_partition - Find and return the closest valid partition root ancestor
+- * @cs: the current cpuset
+- *
+- * Return: The closet partition root ancestor cpuset
+- */
+-static struct cpuset *ancestor_partition(struct cpuset *cs)
+-{
+-	struct cpuset *ancestor = parent_cs(cs);
+-
+-	/*
+-	 * The top_cpuset is always a valid partition root which will stop
+-	 * the loop if it is reached.
+-	 */
+-	while (!is_partition_valid(ancestor))
+-		ancestor = parent_cs(ancestor);
+-	return ancestor;
+-}
+-
+ /*
+  * update_cpumasks_hier - Update effective cpumasks and tasks in the subtree
+  * @cs:  the cpuset to consider
+@@ -2296,7 +2316,6 @@ static void update_cpumasks_hier(struct cpuset *cs, struct tmpmasks *tmp,
+ 		 */
+ 		if ((cp != cs) && old_prs) {
+ 			int parent_prs = parent->partition_root_state;
+-			struct cpumask *del_cpus = NULL;
+ 
+ 			switch (parent_prs) {
+ 			case PRS_ROOT:
+@@ -2310,32 +2329,15 @@ static void update_cpumasks_hier(struct cpuset *cs, struct tmpmasks *tmp,
+ 				 * child partition roots become invalid too.
+ 				 *
+ 				 * For a to be invalidated isolated partition,
+-				 * its isolated CPUs may or may not need to be
+-				 * removed from isolated_cpus depending on if
+-				 * its closest partition root ancestor is a root
+-				 * or isolated partition. With a PRS_ISOLATED
+-				 * ancestor, the CPUs are checked against its
+-				 * effective xcpus to see if any of them needed
+-				 * to be removed.
++				 * call return_isolated_cpus() to remove the
++				 * relevant CPUs from isolated_cpus.
+ 				 */
+ 				if (is_partition_valid(cp))
+ 					new_prs = -old_prs;
+ 
+ 				if (old_prs == PRS_ISOLATED) {
+-					struct cpuset *ancestor = ancestor_partition(cp);
+-
+-					if (ancestor->partition_root_state == PRS_ROOT)
+-						del_cpus = cp->effective_xcpus;
+-					else if (cpumask_andnot(tmp->delmask,
+-								cp->effective_xcpus,
+-								ancestor->effective_xcpus))
+-						del_cpus = tmp->delmask;
+-
+-					if (del_cpus) {
+-						spin_lock_irq(&callback_lock);
+-						isolated_cpus_update(old_prs, new_prs, del_cpus);
+-						spin_unlock_irq(&callback_lock);
+-					}
++					cpumask_copy(tmp->delmask, cp->effective_xcpus);
++					isolated_cpus_release(cp, tmp->delmask);
+ 				}
+ 				WRITE_ONCE(cp->prs_err,
+ 					   is_partition_invalid(parent)
 -- 
 2.53.0
 
