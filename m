@@ -1,57 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060606;
-	b=cg5Bu4sJdBHcWtGYSraxngM4oIo25Z0spva2LrwI5Skgw1UaY0vZSbJRxxJawk7IpO8Y
-	 0TdTXgyLQWX4cAW8711Ap6bVsLtaeZTFY1kQazI9lSlH9Edtk22XLj3j5ez5lHnkzcH3+
-	 suGX+rux6C8FjAY0gBwfbjjqeJcRrsiwLSsOQPSd6M/KXue9GW+Chq1xA/a+XbSCCqH20
-	 FaCvT+KsC1PStABkjB72T4LeEhYsGJPMSk9YF5MJMWMnCo/BFyPz7elYYJePSVEfmpZxi
-	 h1pSb6Dl0W9VsEOVL18oZ0LA+evdcS1kFvISUeC5fltsx1UYQOtHEfCs3/7V4miSjRQ==
+	t=1795060609;
+	b=Cwz9kKZYPhGp3w7SXMlmne5tYl5vv/Uv1h9x3cOQNPqRHvvU6bkmT2iG3kMEtNwHSKnH
+	 9VeZuJrXsOdCUqOfYRsj24H87+GSnJF4jdWCoCuWaBQfetfAwgxMwiAzbUiGn296sLDzK
+	 zZBg6XQ82uwS+syAnOmMmkD9REj4ZNnX2o3WzBaLR3SXm8ZF4QZB0UWf+AiyxZ7zzOJDY
+	 Eq1xJhzue3P20uQX7aq9nCs4k2Brw9udknCMHy6cl9+XCvhuJPRZVda4A3AzS5I/RJ3Rh
+	 LkUU6mlyQcyedNK0MMI2PIbRCsycZ93c6XoBHjvOLEjPoLrOtTUqZwtqSFGJAhn8zJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060606;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060609;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=gn2L56coisp7qcfZf49C10nwb1T0zFtsZpVybIjSasM=;
-	b=XLrzAgdDGNE/DPgGUCjgRV658RIwTamLvy0Icp2ghnqamK3trQtWKwPkKinfHbTWx/BU
-	 goCX+X+RBsZCUIPropJAfeS28ueVDy8aRMP5LP41uUFRj//4UBRBYZ+PWrjm+O4BUocNb
-	 72iSGkdQdH6N0XJe0nPNyPfqFIuw0yf6MAkt7yKWpc/RGHdOlPmI9BAGbMwHZJvcz2r+z
-	 qMQfGp9J7ND7TmfgmBZlslol5jfSUnlZOB5jO6VLBulW3EwxT5jxO7f1y3BoJWOyWOQKt
-	 W4D3QL8whLWeWwCf2kpl69TQx6adIszfOrby5StjJRFGIi1sJeaWDCRlYjnxoe0h9ag==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=D9ewG1KJaqj4ZZOyOcc2xbUe62xwljy09Q9K5L+I/jQ=;
+	b=scRp+WLW5nTZ0oIRJ4nHHxoYdB4xJOuf/EqpceJUoFkW//GLfMPmRruQPRtNFmPypQk7
+	 fTD/JBJtZzg0VKmaTFcHJ1L42VCAuXPqKTARnlBeLAVT0lZ+j8m/4yijK21CjTE14uF9A
+	 FckOX25A79iJUx4yioKHKiLHoAEc9Yne7jfcXPmQRySQd95YIdAcHhJ9sDuuy5CVokrTP
+	 eENwktXFHMGYP3J/tYT33S6e4COS3paQIe5J3bh5z5SqlckSPLaVNmmZFNrvCQHjL8Y/m
+	 1x6s11Iv1mm4xrZdeGC4p2ly1QlWRrbQMdRBi83S0QjteZODCZe1iXCujXGT3znH/Ag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y62UiDbB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GTEht3SH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C742606A325;
-	Thu, 19 Nov 2026 03:56:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4458D606A325;
+	Thu, 19 Nov 2026 03:56:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y62UiDbB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BAA1F000C4;
-	Thu, 19 Nov 2026 03:56:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GTEht3SH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 719691F000C4;
+	Thu, 19 Nov 2026 03:56:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060606;
-	bh=gn2L56coisp7qcfZf49C10nwb1T0zFtsZpVybIjSasM=;
+	s=korg; t=1795060608;
+	bh=D9ewG1KJaqj4ZZOyOcc2xbUe62xwljy09Q9K5L+I/jQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y62UiDbBOpOxwGUWRNz399jVoze0htBrsQOUIxO1JvZnwSfDrrHRJn7l4ca2JDeSt
-	 JN1D4RMJRnkHPF5v7b2z9DDOTWjiLJQR5Q0eh2Dspa8kfL41X5a1hrXBb/CACwNzHU
-	 WOaFzQX8dSCdOu4hfzbLfkXQMsXjf0g09jgT/JbA=
+	b=GTEht3SHhWQqFritC92HmQOy95fDYPbZUFrbC9HjxbcxluxtVLdVJrIAdKRIkCP4H
+	 uPA4hCYO2qPcQYO43yGfyjls02IaWXHYQFT2lmUwhxroaZli0W6960Kaxw0X74xPOy
+	 N7PtB9WaRhRuE0VZY/CHb2z+9Rrvf7xgD/l3Gye0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Samuel Moelius <sam.moelius@trailofbits.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
 	John Hubbard <jhubbard@nvidia.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	=?UTF-8?q?J=C3=A9r=C3=B4me=20Glisse?= <jglisse@redhat.com>,
-	Ralph Campbell <rcampbell@nvidia.com>,
-	Shuah Khan <shuah@kernel.org>,
+	Peter Xu <peterx@redhat.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1259/1848] mm/gup_benchmark: rename to mm/gup_test
-Date: Wed, 18 Nov 2026 15:54:57 +0100
-Message-ID: <20261118150012.438132729@linuxfoundation.org>
+Subject: [PATCH 5.10 1260/1848] mm/gup_test: reject wrapped user ranges
+Date: Wed, 18 Nov 2026 15:54:58 +0100
+Message-ID: <20261118150012.473006595@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -67,396 +66,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Hubbard <jhubbard@nvidia.com>
+From: Samuel Moelius <sam.moelius@trailofbits.com>
 
-[ Upstream commit 9c84f229268fa229e250b7225611d0eb7094fea0 ]
+[ Upstream commit e8ae6fd67021fafa9205330b3b248c9fc7216e0b ]
 
-Patch series "selftests/vm: gup_test, hmm-tests, assorted improvements", v3.
+gup_test accepts an address and size from the debugfs ioctl and repeatedly
+compares against addr + size.  If that addition wraps, the loop can be
+skipped and the ioctl returns success with size rewritten to zero.
 
-Summary: This series provides two main things, and a number of smaller
-supporting goodies.  The two main points are:
+Compute the end address once with overflow checking and use that checked
+end for the loop bounds.
 
-1) Add a new sub-test to gup_test, which in turn is a renamed version
-   of gup_benchmark.  This sub-test allows nicer testing of dump_pages(),
-   at least on user-space pages.
-
-   For quite a while, I was doing a quick hack to gup_test.c whenever I
-   wanted to try out changes to dump_page().  Then Matthew Wilcox asked me
-   what I meant when I said "I used my dump_page() unit test", and I
-   realized that it might be nice to check in a polished up version of
-   that.
-
-   Details about how it works and how to use it are in the commit
-   description for patch #6 ("selftests/vm: gup_test: introduce the
-   dump_pages() sub-test").
-
-2) Fixes a limitation of hmm-tests: these tests are incredibly useful,
-   but only if people actually build and run them.  And it turns out that
-   libhugetlbfs is a little too effective at throwing a wrench in the
-   works, there.  So I've added a little configuration check that removes
-   just two of the 21 hmm-tests, if libhugetlbfs is not available.
-
-   Further details in the commit description of patch #8
-   ("selftests/vm: hmm-tests: remove the libhugetlbfs dependency").
-
-Other smaller things that this series does:
-
-a) Remove code duplication by creating gup_test.h.
-
-b) Clear up the sub-test organization, and their invocation within
-   run_vmtests.sh.
-
-c) Other minor assorted improvements.
-
-[1] v2 is here:
-https://lore.kernel.org/linux-doc/20200929212747.251804-1-jhubbard@nvidia.com/
-
-[2] https://lore.kernel.org/r/CAHk-=wgh-TMPHLY3jueHX7Y2fWh3D+nMBqVS__AZm6-oorquWA@mail.gmail.com
-
-This patch (of 9):
-
-Rename nearly every "gup_benchmark" reference and file name to "gup_test".
-The one exception is for the actual gup benchmark test itself.
-
-The current code already does a *little* bit more than benchmarking, and
-definitely covers more than get_user_pages_fast().  More importantly,
-however, subsequent patches are about to add some functionality that is
-non-benchmark related.
-
-Closely related changes:
-
-* Kconfig: in addition to renaming the options from GUP_BENCHMARK to
-  GUP_TEST, update the help text to reflect that it's no longer a
-  benchmark-only test.
-
-Link: https://lkml.kernel.org/r/20201026064021.3545418-1-jhubbard@nvidia.com
-Link: https://lkml.kernel.org/r/20201026064021.3545418-2-jhubbard@nvidia.com
-Signed-off-by: John Hubbard <jhubbard@nvidia.com>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Jérôme Glisse <jglisse@redhat.com>
-Cc: Ralph Campbell <rcampbell@nvidia.com>
-Cc: Shuah Khan <shuah@kernel.org>
+Assisted-by: Codex:gpt-5.5-cyber-preview
+Link: https://lore.kernel.org/20260609004814.1240586.6294d614ac80.gup-test-range-end-wrap@trailofbits.com
+Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Peter Xu <peterx@redhat.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Stable-dep-of: 44817a536aaa ("mm/gup_test: safely calculate GUP batch size")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/core-api/pin_user_pages.rst     |  6 ++--
- arch/s390/configs/debug_defconfig             |  2 +-
- arch/s390/configs/defconfig                   |  2 +-
- mm/Kconfig                                    | 15 +++++---
- mm/Makefile                                   |  2 +-
- mm/{gup_benchmark.c => gup_test.c}            | 36 +++++++++----------
- tools/testing/selftests/vm/.gitignore         |  2 +-
- tools/testing/selftests/vm/Makefile           |  2 +-
- tools/testing/selftests/vm/config             |  2 +-
- .../vm/{gup_benchmark.c => gup_test.c}        | 16 ++++-----
- tools/testing/selftests/vm/run_vmtests        |  8 ++---
- 11 files changed, 49 insertions(+), 44 deletions(-)
- rename mm/{gup_benchmark.c => gup_test.c} (81%)
- rename tools/testing/selftests/vm/{gup_benchmark.c => gup_test.c} (85%)
+ mm/gup_test.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/core-api/pin_user_pages.rst b/Documentation/core-api/pin_user_pages.rst
-index 7ca8c7bac6502..eae972b232243 100644
---- a/Documentation/core-api/pin_user_pages.rst
-+++ b/Documentation/core-api/pin_user_pages.rst
-@@ -221,12 +221,12 @@ Unit testing
- ============
- This file::
- 
-- tools/testing/selftests/vm/gup_benchmark.c
-+ tools/testing/selftests/vm/gup_test.c
- 
- has the following new calls to exercise the new pin*() wrapper functions:
- 
--* PIN_FAST_BENCHMARK (./gup_benchmark -a)
--* PIN_BENCHMARK (./gup_benchmark -b)
-+* PIN_FAST_BENCHMARK (./gup_test -a)
-+* PIN_BENCHMARK (./gup_test -b)
- 
- You can monitor how many total dma-pinned pages have been acquired and released
- since the system was booted, via two new /proc/vmstat entries: ::
-diff --git a/arch/s390/configs/debug_defconfig b/arch/s390/configs/debug_defconfig
-index fe6f529ac82cf..3601c28d15260 100644
---- a/arch/s390/configs/debug_defconfig
-+++ b/arch/s390/configs/debug_defconfig
-@@ -102,7 +102,7 @@ CONFIG_ZSMALLOC_STAT=y
- CONFIG_DEFERRED_STRUCT_PAGE_INIT=y
- CONFIG_IDLE_PAGE_TRACKING=y
- CONFIG_PERCPU_STATS=y
--CONFIG_GUP_BENCHMARK=y
-+CONFIG_GUP_TEST=y
- CONFIG_NET=y
- CONFIG_PACKET=y
- CONFIG_PACKET_DIAG=m
-diff --git a/arch/s390/configs/defconfig b/arch/s390/configs/defconfig
-index 17d5df2c1eff3..e2171a0088094 100644
---- a/arch/s390/configs/defconfig
-+++ b/arch/s390/configs/defconfig
-@@ -95,7 +95,7 @@ CONFIG_ZSMALLOC_STAT=y
- CONFIG_DEFERRED_STRUCT_PAGE_INIT=y
- CONFIG_IDLE_PAGE_TRACKING=y
- CONFIG_PERCPU_STATS=y
--CONFIG_GUP_BENCHMARK=y
-+CONFIG_GUP_TEST=y
- CONFIG_NET=y
- CONFIG_PACKET=y
- CONFIG_PACKET_DIAG=m
-diff --git a/mm/Kconfig b/mm/Kconfig
-index 8c49d09da2141..1494da7e9099f 100644
---- a/mm/Kconfig
-+++ b/mm/Kconfig
-@@ -821,13 +821,18 @@ config PERCPU_STATS
- 	  information includes global and per chunk statistics, which can
- 	  be used to help understand percpu memory usage.
- 
--config GUP_BENCHMARK
--	bool "Enable infrastructure for get_user_pages() and related calls benchmarking"
-+config GUP_TEST
-+	bool "Enable infrastructure for get_user_pages()-related unit tests"
- 	help
--	  Provides /sys/kernel/debug/gup_benchmark that helps with testing
--	  performance of get_user_pages() and related calls.
-+	  Provides /sys/kernel/debug/gup_test, which in turn provides a way
-+	  to make ioctl calls that can launch kernel-based unit tests for
-+	  the get_user_pages*() and pin_user_pages*() family of API calls.
- 
--	  See tools/testing/selftests/vm/gup_benchmark.c
-+	  These tests include benchmark testing of the _fast variants of
-+	  get_user_pages*() and pin_user_pages*(), as well as smoke tests of
-+	  the non-_fast variants.
-+
-+	  See tools/testing/selftests/vm/gup_test.c
- 
- config GUP_GET_PTE_LOW_HIGH
- 	bool
-diff --git a/mm/Makefile b/mm/Makefile
-index d73aed0fc99c1..069f216e109ea 100644
---- a/mm/Makefile
-+++ b/mm/Makefile
-@@ -90,7 +90,7 @@ obj-$(CONFIG_PAGE_COUNTER) += page_counter.o
- obj-$(CONFIG_MEMCG) += memcontrol.o vmpressure.o
- obj-$(CONFIG_MEMCG_SWAP) += swap_cgroup.o
- obj-$(CONFIG_CGROUP_HUGETLB) += hugetlb_cgroup.o
--obj-$(CONFIG_GUP_BENCHMARK) += gup_benchmark.o
-+obj-$(CONFIG_GUP_TEST) += gup_test.o
- obj-$(CONFIG_MEMORY_FAILURE) += memory-failure.o
- obj-$(CONFIG_HWPOISON_INJECT) += hwpoison-inject.o
- obj-$(CONFIG_DEBUG_KMEMLEAK) += kmemleak.o
-diff --git a/mm/gup_benchmark.c b/mm/gup_test.c
-similarity index 81%
-rename from mm/gup_benchmark.c
-rename to mm/gup_test.c
-index 8b3e5b5cd8fa5..59472ea6aa394 100644
---- a/mm/gup_benchmark.c
+diff --git a/mm/gup_test.c b/mm/gup_test.c
+index 59472ea6aa394..340fc9bb6d0f9 100644
+--- a/mm/gup_test.c
 +++ b/mm/gup_test.c
-@@ -5,13 +5,13 @@
- #include <linux/ktime.h>
- #include <linux/debugfs.h>
- 
--#define GUP_FAST_BENCHMARK	_IOWR('g', 1, struct gup_benchmark)
--#define GUP_BENCHMARK		_IOWR('g', 2, struct gup_benchmark)
--#define PIN_FAST_BENCHMARK	_IOWR('g', 3, struct gup_benchmark)
--#define PIN_BENCHMARK		_IOWR('g', 4, struct gup_benchmark)
--#define PIN_LONGTERM_BENCHMARK	_IOWR('g', 5, struct gup_benchmark)
-+#define GUP_FAST_BENCHMARK	_IOWR('g', 1, struct gup_test)
-+#define GUP_BENCHMARK		_IOWR('g', 2, struct gup_test)
-+#define PIN_FAST_BENCHMARK	_IOWR('g', 3, struct gup_test)
-+#define PIN_BENCHMARK		_IOWR('g', 4, struct gup_test)
-+#define PIN_LONGTERM_BENCHMARK	_IOWR('g', 5, struct gup_test)
- 
--struct gup_benchmark {
-+struct gup_test {
- 	__u64 get_delta_usec;
- 	__u64 put_delta_usec;
- 	__u64 addr;
-@@ -56,7 +56,7 @@ static void verify_dma_pinned(unsigned int cmd, struct page **pages,
- 			if (WARN(!page_maybe_dma_pinned(page),
- 				 "pages[%lu] is NOT dma-pinned\n", i)) {
- 
--				dump_page(page, "gup_benchmark failure");
-+				dump_page(page, "gup_test failure");
- 				break;
- 			}
- 		}
-@@ -64,8 +64,8 @@ static void verify_dma_pinned(unsigned int cmd, struct page **pages,
- 	}
- }
- 
--static int __gup_benchmark_ioctl(unsigned int cmd,
--		struct gup_benchmark *gup)
-+static int __gup_test_ioctl(unsigned int cmd,
-+		struct gup_test *gup)
- {
- 	ktime_t start_time, end_time;
+@@ -71,11 +71,15 @@ static int __gup_test_ioctl(unsigned int cmd,
  	unsigned long i, nr_pages, addr, next;
-@@ -164,10 +164,10 @@ static int __gup_benchmark_ioctl(unsigned int cmd,
- 	return ret;
- }
+ 	int nr;
+ 	struct page **pages;
++	unsigned long end;
+ 	int ret = 0;
+ 	bool needs_mmap_lock =
+ 		cmd != GUP_FAST_BENCHMARK && cmd != PIN_FAST_BENCHMARK;
  
--static long gup_benchmark_ioctl(struct file *filep, unsigned int cmd,
-+static long gup_test_ioctl(struct file *filep, unsigned int cmd,
- 		unsigned long arg)
- {
--	struct gup_benchmark gup;
-+	struct gup_test gup;
- 	int ret;
+-	if (gup->size > ULONG_MAX)
++	if (gup->addr > ULONG_MAX || gup->size > ULONG_MAX)
++		return -EINVAL;
++	if (check_add_overflow((unsigned long)gup->addr,
++			       (unsigned long)gup->size, &end))
+ 		return -EINVAL;
  
- 	switch (cmd) {
-@@ -184,7 +184,7 @@ static long gup_benchmark_ioctl(struct file *filep, unsigned int cmd,
- 	if (copy_from_user(&gup, (void __user *)arg, sizeof(gup)))
- 		return -EFAULT;
+ 	nr_pages = gup->size / PAGE_SIZE;
+@@ -91,13 +95,13 @@ static int __gup_test_ioctl(unsigned int cmd,
+ 	i = 0;
+ 	nr = gup->nr_pages_per_call;
+ 	start_time = ktime_get();
+-	for (addr = gup->addr; addr < gup->addr + gup->size; addr = next) {
++	for (addr = gup->addr; addr < end; addr = next) {
+ 		if (nr != gup->nr_pages_per_call)
+ 			break;
  
--	ret = __gup_benchmark_ioctl(cmd, &gup);
-+	ret = __gup_test_ioctl(cmd, &gup);
- 	if (ret)
- 		return ret;
+ 		next = addr + nr * PAGE_SIZE;
+-		if (next > gup->addr + gup->size) {
+-			next = gup->addr + gup->size;
++		if (next > end) {
++			next = end;
+ 			nr = (next - addr) / PAGE_SIZE;
+ 		}
  
-@@ -194,17 +194,17 @@ static long gup_benchmark_ioctl(struct file *filep, unsigned int cmd,
- 	return 0;
- }
- 
--static const struct file_operations gup_benchmark_fops = {
-+static const struct file_operations gup_test_fops = {
- 	.open = nonseekable_open,
--	.unlocked_ioctl = gup_benchmark_ioctl,
-+	.unlocked_ioctl = gup_test_ioctl,
- };
- 
--static int gup_benchmark_init(void)
-+static int gup_test_init(void)
- {
--	debugfs_create_file_unsafe("gup_benchmark", 0600, NULL, NULL,
--				   &gup_benchmark_fops);
-+	debugfs_create_file_unsafe("gup_test", 0600, NULL, NULL,
-+				   &gup_test_fops);
- 
- 	return 0;
- }
- 
--late_initcall(gup_benchmark_init);
-+late_initcall(gup_test_init);
-diff --git a/tools/testing/selftests/vm/.gitignore b/tools/testing/selftests/vm/.gitignore
-index 849e8226395aa..2c8ddcf41c0e3 100644
---- a/tools/testing/selftests/vm/.gitignore
-+++ b/tools/testing/selftests/vm/.gitignore
-@@ -15,7 +15,7 @@ userfaultfd
- mlock-intersect-test
- mlock-random-test
- virtual_address_range
--gup_benchmark
-+gup_test
- va_128TBswitch
- map_fixed_noreplace
- write_to_hugetlbfs
-diff --git a/tools/testing/selftests/vm/Makefile b/tools/testing/selftests/vm/Makefile
-index d8479552e2224..2ed4f1eabc741 100644
---- a/tools/testing/selftests/vm/Makefile
-+++ b/tools/testing/selftests/vm/Makefile
-@@ -23,7 +23,7 @@ MAKEFLAGS += --no-builtin-rules
- CFLAGS = -Wall -I ../../../../usr/include $(EXTRA_CFLAGS)
- LDLIBS = -lrt
- TEST_GEN_FILES = compaction_test
--TEST_GEN_FILES += gup_benchmark
-+TEST_GEN_FILES += gup_test
- TEST_GEN_FILES += hmm-tests
- TEST_GEN_FILES += hugepage-mmap
- TEST_GEN_FILES += hugepage-shm
-diff --git a/tools/testing/selftests/vm/config b/tools/testing/selftests/vm/config
-index 69dd0d1aa30b2..60e82da0de850 100644
---- a/tools/testing/selftests/vm/config
-+++ b/tools/testing/selftests/vm/config
-@@ -3,4 +3,4 @@ CONFIG_USERFAULTFD=y
- CONFIG_TEST_VMALLOC=m
- CONFIG_DEVICE_PRIVATE=y
- CONFIG_TEST_HMM=m
--CONFIG_GUP_BENCHMARK=y
-+CONFIG_GUP_TEST=y
-diff --git a/tools/testing/selftests/vm/gup_benchmark.c b/tools/testing/selftests/vm/gup_test.c
-similarity index 85%
-rename from tools/testing/selftests/vm/gup_benchmark.c
-rename to tools/testing/selftests/vm/gup_test.c
-index 1d4359341e44c..00b4731f535eb 100644
---- a/tools/testing/selftests/vm/gup_benchmark.c
-+++ b/tools/testing/selftests/vm/gup_test.c
-@@ -14,18 +14,18 @@
- #define MB (1UL << 20)
- #define PAGE_SIZE sysconf(_SC_PAGESIZE)
- 
--#define GUP_FAST_BENCHMARK	_IOWR('g', 1, struct gup_benchmark)
--#define GUP_BENCHMARK		_IOWR('g', 2, struct gup_benchmark)
-+#define GUP_FAST_BENCHMARK	_IOWR('g', 1, struct gup_test)
-+#define GUP_BENCHMARK		_IOWR('g', 2, struct gup_test)
- 
- /* Similar to above, but use FOLL_PIN instead of FOLL_GET. */
--#define PIN_FAST_BENCHMARK	_IOWR('g', 3, struct gup_benchmark)
--#define PIN_BENCHMARK		_IOWR('g', 4, struct gup_benchmark)
--#define PIN_LONGTERM_BENCHMARK	_IOWR('g', 5, struct gup_benchmark)
-+#define PIN_FAST_BENCHMARK	_IOWR('g', 3, struct gup_test)
-+#define PIN_BENCHMARK		_IOWR('g', 4, struct gup_test)
-+#define PIN_LONGTERM_BENCHMARK	_IOWR('g', 5, struct gup_test)
- 
- /* Just the flags we need, copied from mm.h: */
- #define FOLL_WRITE	0x01	/* check pte is writable */
- 
--struct gup_benchmark {
-+struct gup_test {
- 	__u64 get_delta_usec;
- 	__u64 put_delta_usec;
- 	__u64 addr;
-@@ -37,7 +37,7 @@ struct gup_benchmark {
- 
- int main(int argc, char **argv)
- {
--	struct gup_benchmark gup;
-+	struct gup_test gup;
- 	unsigned long size = 128 * MB;
- 	int i, fd, filed, opt, nr_pages = 1, thp = -1, repeats = 1, write = 0;
- 	int cmd = GUP_FAST_BENCHMARK, flags = MAP_PRIVATE;
-@@ -104,7 +104,7 @@ int main(int argc, char **argv)
- 	if (write)
- 		gup.flags |= FOLL_WRITE;
- 
--	fd = open("/sys/kernel/debug/gup_benchmark", O_RDWR);
-+	fd = open("/sys/kernel/debug/gup_test", O_RDWR);
- 	if (fd == -1) {
- 		perror("open");
- 		exit(1);
-diff --git a/tools/testing/selftests/vm/run_vmtests b/tools/testing/selftests/vm/run_vmtests
-index a3f4f30f0a2e8..d1843d5f3c308 100755
---- a/tools/testing/selftests/vm/run_vmtests
-+++ b/tools/testing/selftests/vm/run_vmtests
-@@ -124,9 +124,9 @@ else
- fi
- 
- echo "--------------------------------------------"
--echo "running 'gup_benchmark -U' (normal/slow gup)"
-+echo "running 'gup_test -U' (normal/slow gup)"
- echo "--------------------------------------------"
--./gup_benchmark -U
-+./gup_test -U
- if [ $? -ne 0 ]; then
- 	echo "[FAIL]"
- 	exitcode=1
-@@ -135,9 +135,9 @@ else
- fi
- 
- echo "------------------------------------------"
--echo "running gup_benchmark -b (pin_user_pages)"
-+echo "running gup_test -b (pin_user_pages)"
- echo "------------------------------------------"
--./gup_benchmark -b
-+./gup_test -b
- if [ $? -ne 0 ]; then
- 	echo "[FAIL]"
- 	exitcode=1
 -- 
 2.53.0
 
