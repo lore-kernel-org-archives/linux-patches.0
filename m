@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053377;
-	b=2NaGkZkA2s8WYzvJNyfIUXS9r/rzwD/pSDKtkXdMTGyWi95+tPEKTnTHNTrdOOzo1MT3
-	 9ydgNqubCxSlj/FZp3d+GYpsNA4kuJChWJSwfFkV9FGwX5xUeEP9ZW06UsG+4kJVkxlbg
-	 bPotqmcSMq3V/P1pCYHMdDAb0iowdXuBmKGpqP5NkDLQNzLQH9SuORqsfS9PuOYhg83zB
-	 leAXn3bbxXqxdUOmofsFdJHczreClWAruap3/5f/k8uyM0VfXb3ktyYQKh/3KdE/4cK9d
-	 uEelkoCUc+EiK2OK/QjYlDs5lMH1ZGZbMFrGZvQ/VSqkmCuqGE5RsToRkbd28kwqAjw==
+	t=1795053380;
+	b=Ao/4WX8OTYAYKB5Okm+m8/KalVZ2iO3+POXmexUlW7VKTNuk71uSwX5CsA6sn+a9AUzl
+	 SrVGw387DRxooIxZKcDeitxf60kKOZHbjB1CgpFxhJTjSAn6CEatVLxH/2BP9df5TwvBz
+	 dwG9V+NLiCQEL2NtyrBfLiBtijKMESzwfuLZOad+tTJyRqhsJQpWeyW/7kbXAXxWPkNBY
+	 kjkqQLfshcw0ZpAjW9fXUNjnJuSlqvYItde54LnwmOD4ncyAwAdKHRDSwq1etX7VmfKgM
+	 W7Zj8kgdWFapsdNHf+sMCc2a630kmlM0mF3jHMnboP7Hda9RtaI0SWStsQhBRhlSpBA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053377;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053380;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wstOyPWIIcFMyo58OfGLaICSPcwFYMH8TE5QETdCsao=;
-	b=h5sWRcLI/RCK5WFiwWmyTmniJcK4X3KMTpf3UwjKxvuNQFZNyJR9to9i07H3cijmxsjr
-	 OkUAD19nSxqeyNWryZZfHO2wXO/o0Rg/xByXQJAcQlWXJdKYEMEui9E7q4NrqYnzKE30y
-	 APj3J/eT3JWuiv2FdmCJCpQrU3FQHHzmObxHZy+QHLj68V4viJCzGTUWxdEkyIaSJXoPs
-	 /i9kgwkz4cCkfGLQ0/SoXZpvYhsrnAPzlubJDlvRSDs+H3G+WI9Aoe05LBy0adxVZidWk
-	 Rg9Qss/ALVLu/9OpcpefIGPH6sT9H3vcjE2tTWh96onBylHZZSJw+77aO+TH1W8+luw==
+	bh=PSqY5bq5kUFcGb5xQwvQgdwA8bTEZlCoAksdBSVmVTQ=;
+	b=v9Wv/splufAe4q3ZQFsTBguyz1TnrhYNXynzXkfbg39sBoN1SpXfJtRL80ZY6RGt+dX3
+	 9l5eciUmpkj3k3KVm9ALo2+KVq0uaqGZ/BQrUM3qwzx0umtTTZZ5YB7XWXThKZ3aHgf0j
+	 Wn5Y+F36wBXAdLsq4fl7vw4NdVDnFaSFafpiVPbuGFaNjj+E9dGXXp35m2mwq3i2cogy1
+	 sqMPmWlr9OdxaKTCigMGiwE1RIr/tXF1lCxe+BeBHaEdeiREPPDALuNRPoA2aY3qPYNW2
+	 /8zUgiTlmPwbrSuPw6Vmb8byXecjdWVPxuwJK6Om/EKxwpqxXTVIg9SbmuXrKhQitOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ODTgBEap;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xOs+Ioza;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 470A1606A325;
-	Thu, 19 Nov 2026 01:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9AC2606A32A;
+	Thu, 19 Nov 2026 01:56:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ODTgBEap
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 968EA1F000C4;
-	Thu, 19 Nov 2026 01:56:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xOs+Ioza
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DCFF1F000C4;
+	Thu, 19 Nov 2026 01:56:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053377;
-	bh=wstOyPWIIcFMyo58OfGLaICSPcwFYMH8TE5QETdCsao=;
+	s=korg; t=1795053379;
+	bh=PSqY5bq5kUFcGb5xQwvQgdwA8bTEZlCoAksdBSVmVTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ODTgBEap67vmqB2MEBjfCx4rb9sF6+YVSV4CYImlbdtqsiggk2SbVARbSCw7tn+P9
-	 F0iRwRq/HPNqKAfXC/cnu4J/Rj94dr0DPF1nVFOs0PK16gPlEwBzxuj6FX3ubebbv7
-	 F4DlnaahPFRxAZn+TgujOdFczHEOkHFhyUf5WJ0w=
+	b=xOs+IozaIWZGlIgi72po5wXD4UVpzLUBj4kfFbC8w4NbNj+2YkUwrIijcZSpPrQ7U
+	 dtMjnTm/y5NrCyn5gY3xmGisvNqonVxPFM7yRzOvR0VmvC07srI6z1PlPIMgcDMw7D
+	 uTer/MwEQNb8fkIbOKAUj7Al3uuGYMV5Oby6cINk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Hungyu Lin <dennylin0707@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	ChunYuZhiQiang <chunyuzhiqiang@yinhe.ht>,
+	Vincent Mailhol <mailhol@kernel.org>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0891/2214] inotify: do not coalesce rename events
-Date: Wed, 18 Nov 2026 15:42:47 +0100
-Message-ID: <20261118150047.940041730@linuxfoundation.org>
+Subject: [PATCH 5.15 0900/2214] can: dev: can_fill_info(): dont wake up controller if interface is down
+Date: Wed, 18 Nov 2026 15:42:56 +0100
+Message-ID: <20261118150048.285129361@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,52 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: ChunYuZhiQiang <chunyuzhiqiang@yinhe.ht>
 
-[ Upstream commit 581230d2ec3c0380917d1255792508851e7c4627 ]
+[ Upstream commit 75332c410c8190d61499001c5516af977ca426c3 ]
 
-inotify compares the mask, watch descriptor and name when coalescing
-adjacent unread events, but ignores their rename cookies. Distinct
-IN_MOVED_FROM events can therefore be coalesced, losing the cookie needed
-to match a later IN_MOVED_TO event.
+If the interface is down, the CAN controller might be powered down and
+its clocks gated. Don't call do_get_berr_counter() to read the bus error
+counters if the interface is down, and adjust can_get_size() to match.
 
-For example, watch two directories with IN_MOVE. Move an entry from the
-first directory into an unwatched directory, recreate it under the same
-name, then move it from the first directory into the second watched
-directory before reading the events. The second IN_MOVED_FROM is merged
-with the first, while the IN_MOVED_TO retains the second rename's cookie.
-Userspace can no longer pair the second rename's events.
+This removes one trigger for a synchronous external abort seen on
+i.MX8QXP when "ip link show" is run on a flexcan interface that was
+never brought up. The underlying cause is platform-specific: on i.MX8QXP
+the CAN clocks are gated through the SCU LPCG and the subsystem shares
+the IMX_SC_R_CAN_0 power domain, and there is a window after
+pm_runtime_resume_and_get() returns where the clock has not reached the
+module yet. This patch avoids the netlink query path while the interface
+is down, but does not root-cause the LPCG window itself.
 
-The original inotify implementation compared cookies before coalescing.
-The fsnotify conversion lost this comparison. Do not coalesce
-IN_MOVED_FROM or IN_MOVED_TO events, which carry the identity of their
-respective renames. Leave coalescing of other event types unchanged.
+As a result, IFLA_CAN_BERR_COUNTER is no longer reported for down
+interfaces. Userspace must treat the attribute as optional.
 
-Fixes: 63c882a05416 ("inotify: reimplement inotify using fsnotify")
+The issue was triggered on an i.MX8QXP board by running "ip link show"
+without ever bringing the interface up:
+
+    Internal error: synchronous external abort: 0000000096000210
+
+    pc : flexcan_read_le+0x0/0x18
+    lr : flexcan_get_berr_counter+0x4c/0x8c
+    Call trace:
+     flexcan_read_le+0x0/0x18
+     flexcan_get_berr_counter+0x4c/0x8c
+     can_fill_info+0x1f8/0x434
+     rtnl_fill_ifinfo+0x8fc/0xbb4
+     rtnl_dump_ifinfo+0x364/0x448
+
+This is the same class of problem fixed for m_can in
+commit 91a55c72a821 ("can: m_can: m_can_get_berr_counter(): don't
+wake up controller if interface is down").
+
+Fixes: ec56acfef2af1 ("can: flexcan: flexcan_get_berr_counter(): switch on clocks before accessing ecr register")
 Cc: stable@vger.kernel.org
-Suggested-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Link: https://patch.msgid.link/20261027192027.8617-1-dennylin0707@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: ChunYuZhiQiang <chunyuzhiqiang@yinhe.ht>
+Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
+Link: https://patch.msgid.link/20261027065012.191348-1-chunyuzhiqiang@yinhe.ht
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/inotify/inotify_fsnotify.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/can/dev/netlink.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/notify/inotify/inotify_fsnotify.c b/fs/notify/inotify/inotify_fsnotify.c
-index 993375f0db673..ff0af29745a8c 100644
---- a/fs/notify/inotify/inotify_fsnotify.c
-+++ b/fs/notify/inotify/inotify_fsnotify.c
-@@ -36,7 +36,7 @@ static bool event_compare(struct fsnotify_event *old_fsn,
+diff --git a/drivers/net/can/dev/netlink.c b/drivers/net/can/dev/netlink.c
+index 29e2beae3357b..58bd762e78307 100644
+--- a/drivers/net/can/dev/netlink.c
++++ b/drivers/net/can/dev/netlink.c
+@@ -241,7 +241,7 @@ static size_t can_get_size(const struct net_device *dev)
+ 	size += nla_total_size(sizeof(u32));			/* IFLA_CAN_STATE */
+ 	size += nla_total_size(sizeof(struct can_ctrlmode));	/* IFLA_CAN_CTRLMODE */
+ 	size += nla_total_size(sizeof(u32));			/* IFLA_CAN_RESTART_MS */
+-	if (priv->do_get_berr_counter)				/* IFLA_CAN_BERR_COUNTER */
++	if (priv->do_get_berr_counter && netif_running(dev))	/* IFLA_CAN_BERR_COUNTER */
+ 		size += nla_total_size(sizeof(struct can_berr_counter));
+ 	if (priv->data_bittiming.bitrate)			/* IFLA_CAN_DATA_BITTIMING */
+ 		size += nla_total_size(sizeof(struct can_bittiming));
+@@ -286,7 +286,7 @@ static int can_fill_info(struct sk_buff *skb, const struct net_device *dev)
+ 	    nla_put(skb, IFLA_CAN_CTRLMODE, sizeof(cm), &cm) ||
+ 	    nla_put_u32(skb, IFLA_CAN_RESTART_MS, priv->restart_ms) ||
  
- 	old = INOTIFY_E(old_fsn);
- 	new = INOTIFY_E(new_fsn);
--	if (old->mask & FS_IN_IGNORED)
-+	if (old->mask & (FS_IN_IGNORED | FS_MOVE))
- 		return false;
- 	if ((old->mask == new->mask) &&
- 	    (old->wd == new->wd) &&
+-	    (priv->do_get_berr_counter &&
++	    (priv->do_get_berr_counter && netif_running(dev) &&
+ 	     !priv->do_get_berr_counter(dev, &bec) &&
+ 	     nla_put(skb, IFLA_CAN_BERR_COUNTER, sizeof(bec), &bec)) ||
+ 
 -- 
 2.53.0
 
