@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045462;
-	b=zfqTLn+Kj0/s4ej/JSpqM4Ii8p37GDCg4KHxhDxj/5aYW41lcu1JQPAOVBSYNieyUYL6
-	 TxHwJOhFsuoROPImmx4dfU/aREjy0XkPpEsW0v3eO3ExC89MqBqEVaUZIGGyYoqKH9YpC
-	 g7pgTqB11YLeJYUxUniknMMXAaeQ5Ev0FxWH5M41Ds8oLGsJ4tVwvA1JOYExEceqTURbs
-	 yWPt10cMU8pGJ6/rYkAqxEiLDns55lhnGtyFRULZxlGz0EBGFr5TOJp6nC42hDtk8zb1u
-	 LLEOr1erSUkBspzXBGzcJ0e59lPlUCiVruBx51vzEEEsn6I2ESUqArZMEuzF5J2LUwA==
+	t=1795045467;
+	b=3mZMQqpWwwWSpAEQrPDhoLrIKj1Pr4fCbotoqO3Rb7kQ6mQnSQMoXZRA2To97/P+T+w8
+	 A/W/6/ykI2KBi67Rb7bsk30mn29ujHVmp09kxzY0DQ9m6AX8RwDek4nBUJHt1Zpjb6Kbn
+	 nnK5oSX32R0KiMbrUdcAbwNM5VAyFNyNqi1TFGlYUSm09mjn9GR0XrUuKgTyBriOYDG9k
+	 lLAZeYQ3It4kvoUznJ7FstKFYwI+5Oj//ceQTKc4/EDmTqyJvgzkNTWN0bE7fTVx8Np14
+	 bILX1BJtbWr1hEcLPR1wIUbluYDMoZwgr7W8f4y0FlpmDru4qXEsunlX1Ip0oeXzFBQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045462;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045467;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Q6F284oBdUC9E/VrvJI6NgINsOytf0Ure+DjZajKNIA=;
-	b=LvU84zGY/vXPP2kDmzea64RLoTTGH0Zb+JPca6B8+//tFx9iDCMinbf0HmpEKvhmJXG8
-	 t36CdNdw+9THuRytk7GO/pEn49yAxJu/oBktaA1KNE+Cw6xnInWsg9WtDmbEyGW8B8Nrb
-	 FGWIJy6aUlCzGjdsihV5ezkWRySHIzZ2iquELyTipoNWRGpfSAs6PQqz5b8PJanAL6M7U
-	 pbLiO7YsxYQmg/rnua7dRPyLvZ9mAkRcSzxafTPD9y0emzsFKFUcxM5hg4/3DrUTIQBsj
-	 bIxPAwX4xZyAA/FLi8SU5X/517Ml+8vnV/HUGdLqPmbj5Yy9IJiwMPb4fAEbjH7wH/Q==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=q8sHc0tDJw0WTjxwPn6DDv6bon+Yrslglp8XwE2qR7E=;
+	b=WWuHlIxeI/7RTZy+cWyZoe4rUN99ziLwtYeOuwk+bS6Ql/OVD9lbU3ivnj3sKxcgMzOS
+	 wXyvvz/sRxgOsNTwVzsfQT3JZtG8tHr4R+XaUvfdU00mYzSL4tHVk/biiCek8KhiBV0et
+	 dQtgimAg8WtvdLVwdEHMfv47eIQx2a20FlrYmLdGAjdVFJaYzDyHzfyrNzZWh26FRDuMb
+	 pZwbGxBAEyZTJbEjFMmP39KO2T+1BQ2Qd65fPJZziCgyVHYK6HFS47ZTHwOnXN/60FC96
+	 SdsJCTBRvnk9egsnVKJTe6ra8EOVm+56tF2q1lXvNWv7nyugLt05HsmXBhnACFG8ztg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pU6ZkNzc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mb2colyj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9DFF606A320;
-	Wed, 18 Nov 2026 23:44:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09A3606A31C;
+	Wed, 18 Nov 2026 23:44:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pU6ZkNzc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 012951F000C4;
-	Wed, 18 Nov 2026 23:44:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mb2colyj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1CD91F000C6;
+	Wed, 18 Nov 2026 23:44:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045462;
-	bh=Q6F284oBdUC9E/VrvJI6NgINsOytf0Ure+DjZajKNIA=;
+	s=korg; t=1795045466;
+	bh=q8sHc0tDJw0WTjxwPn6DDv6bon+Yrslglp8XwE2qR7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pU6ZkNzcM9g4npOXVss5VHHRUMl4HIENfkqCPaAx4deHs9q2pfUqNNdzaWCL6x/li
-	 cb0rWsthAuY0xKMtrIMK609Q2rVmwQWoDOc29eN4GIKIXxs6bbsxjogyNeSR0Uwiy0
-	 6A1X9tzcSg1teTaIpILAVMPpWxWWK3j86mkRcJS0=
+	b=mb2colyjIrRr3h931TIkne4Dz+0VTPvvi7e/L2GU0oH8Lfaxr+85xHtnmZ0KmlVxN
+	 extSNLsnistwoYNMlIG16uz6/BIsaQ9TNY0lvAOUNvgkXfOkc6+d4DkSXRPTSxm67k
+	 hXsWzwMq9YIxIXkWDtNCBQ5ayhxJR9PfYwpVKLxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yijia Wang <wangyijia.yeah@bytedance.com>,
-	Guixiong Wei <weiguixiong@bytedance.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0930/2857] platform/x86/intel-uncore-freq: Continue restoring limits on resume
-Date: Wed, 18 Nov 2026 15:32:44 +0100
-Message-ID: <20261118150235.074081704@linuxfoundation.org>
+Subject: [PATCH 6.1 0931/2857] fbdev: ssd1307fb: check for fb_deferred_io_init() error
+Date: Wed, 18 Nov 2026 15:32:45 +0100
+Message-ID: <20261118150235.108555346@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -64,60 +62,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guixiong Wei <weiguixiong@bytedance.com>
+From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-[ Upstream commit 38998529f45c02edcf96b0a3ddd3c83de6d11bbe ]
+[ Upstream commit 81ae1f9a6c850efab3e5dec6b7c9aa5c587f92b7 ]
 
-The PM notifier iterates over every uncore frequency instance to restore
-user-configured MSR_UNCORE_RATIO_LIMIT values after resume. Entries that
-have never been configured legitimately have stored_uncore_data set to
-zero.
+fb_deferred_io_init() allocates deferred I/O state, populating
+info->fbdefio_state, or leaving it NULL if an error occurs.
 
-The refactoring that split common and enumeration code changed the
-iteration from active control CPUs to all allocated instances. It also
-changed the skip for an invalid or unconfigured entry from continue to
-return, causing that entry to terminate the entire restore operation.
+Currently ssd1307fb_probe() ignores its return value.
 
-On a multi-package or multi-die system, configuring only a later instance
-therefore leaves its limit unrestored after suspend, hibernation, or
-restore if an earlier entry is invalid or unconfigured.
+Therefore if an error arises in fb_deferred_io_init() (for instance, due
+to an allocation failure) info->fbdefio_state is left NULL.
 
-Use continue to skip only the current entry and restore all remaining
-configured instances.
+When the file is subsequently opened, fb_open() will dereference a NULL
+pointer (calling fb_deferred_io_open()).
 
-Fixes: dbce412a7733 ("platform/x86/intel-uncore-freq: Split common and enumeration part")
+Fix this by checking for the error.
+
+Fixes: 56c134f7f1b5 ("fbdev: Track deferred-I/O pages in pageref struct")
 Cc: stable@vger.kernel.org
-Tested-by: Yijia Wang <wangyijia.yeah@bytedance.com>
-Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://patch.msgid.link/20260929163133.14326-2-weiguixiong@bytedance.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/video/fbdev/ssd1307fb.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c
-index 0be3087e21d51..3f56ddf330b3d 100644
---- a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c
-+++ b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c
-@@ -184,7 +184,7 @@ static int uncore_pm_notify(struct notifier_block *nb, unsigned long mode,
- 			struct uncore_data *data = &uncore_instances[i];
+diff --git a/drivers/video/fbdev/ssd1307fb.c b/drivers/video/fbdev/ssd1307fb.c
+index 61f84abb5e0c9..13aa9e6bff5cf 100644
+--- a/drivers/video/fbdev/ssd1307fb.c
++++ b/drivers/video/fbdev/ssd1307fb.c
+@@ -771,7 +771,11 @@ static int ssd1307fb_probe(struct i2c_client *client)
+ 	info->fix.smem_start = __pa(vmem);
+ 	info->fix.smem_len = vmem_size;
  
- 			if (!data || !data->valid || !data->stored_uncore_data)
--				return 0;
-+				continue;
+-	fb_deferred_io_init(info);
++	ret = fb_deferred_io_init(info);
++	if (ret) {
++		dev_err(dev, "failed to init fb deferred io: %d\n", ret);
++		goto fb_defio_error;
++	}
  
- 			wrmsrl_on_cpu(data->control_cpu, MSR_UNCORE_RATIO_LIMIT,
- 				      data->stored_uncore_data);
+ 	i2c_set_clientdata(client, info);
+ 
 -- 
 2.53.0
 
