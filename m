@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016876;
-	b=wFf/oeCM6SqNeQJzZ35+ljjsBMHYZnm+IFoUAR8YJahEBznW2GJgvu9WdIQlzEFlM9AM
-	 iwfU932dDpeCN5vAbjdhGExPTKN55BWYplFyAahyq0P8a6sIQ1Cq7Bnezk8FZ1l4jB3Su
-	 XxemLrIaIV70GOVgfoOXGw2ply701LRnGcBJyLv6kGsP6iScXVFtNmX89j3J1pJ1NeAyo
-	 3xPBRqsoO+HJ25cNo48yO9zIVFSL1b02uv+KSX4OBPtkVibI1v1z3w4F0VnSj4tGLm9dR
-	 i7p3UIsMtclbCRy9f00ogOHWTsgMjAcOqazX9XGfvSntYmNzucX+YiGRsLQaIHfu5LQ==
+	t=1795016878;
+	b=1kg8bFeCKs8JbvUagGIMEzjMlG6/RzsPvN+KCOsvt4PTLFGcTNVRPZZtEG5XwqUuWX/q
+	 ooXqJTrBBvQKX4pCV4oMJ5baVgPSdQgx0WAXTU9CjUt4YmJYrxFMgU+Wjyt2qn1dIeOkO
+	 rrHkhoQeqg7+o6t8RkeH3+Dxeu93DxYHuufenozngoqG1asuVx9JsC2vZKU/62Bs3NK6X
+	 yHSrYv8IBDwt51SytxFGDGVixJKjfHzjuCYFb71C6yR5TQh1/IQAiCnyoT9kRMA+Y42Kf
+	 Rmt/MPq//feEcKHUghwxfJogXwyrF8UfMjnQ3VRHD4JRC66WRgloQSVwwH0CFcMXMCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016876;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016878;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=X/4LMB+ETPChtWqvjjGO42Xpu4BZO3Pq0+XSS3tdIrU=;
-	b=SqLGdwWf19pDK1cNAfR5HZV7uuYvpRb5A0rhuiKTNYHO4cxkBjmCsefQreRZqddO1COm
-	 vm6mLoKPvSA1cZkX0WgQaKuelSVrIcM24noE43izd+gljLn/WDHV8DG8qbgdB0GK/NHiJ
-	 eTWrC0smhk4/jaO2BGhUJm07RyyH58meTmTb52SkAZqFfqo7z+aqNo3O2TQ6/y6RZuseP
-	 8iXGWQr6okYKC5VDo8R2OUICfGvY92BuvZKD6HREWQgDpSWz1FVl7dWyfIFoZ9VXzH0m8
-	 +6moKlMlJHmDca9iiMDOnglpYz9NlcJZqJfziRwHJSK1Gzm7deLGge4lrqCbBE0iWrw==
+	bh=fcj6Srgjl+WuHo29QU+IN3wPAkaP3t5PboVoPRiduZQ=;
+	b=z9c740JjRv9y5VOmSPs1yeUd1xKn1mDFBdK2e8lWiPEk6jcL2tvW0lnw5Mxkgof0LiXD
+	 Ux7q+xc2v65i+OeU3F75mhd46GvDKUDvqDv4DCbDPLBhwGDsRpCvstazJ5j9ulim1+gcH
+	 aYerJkmi94ri6SONryiTrJTw9eLDSY2ycW9xRmeBgVO2eJshXvTTuq/uxkQ572bznn9z2
+	 hjB0FA58UpgfhkCztvFvJnSOvPTKdp4p7eMUci7lH5okJdUL0w2TI5nyItIBtVGj9ygdZ
+	 t2dUy75CagOi1UY8nuT3YDmLjvhWW8U2RhWdiKyetS4x2+QeIZVtHBj/rigjSzwmZwg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H8zkm9ro;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NPFYfb4y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F07B3606A31C;
-	Wed, 18 Nov 2026 15:47:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7B11606A325;
+	Wed, 18 Nov 2026 15:47:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H8zkm9ro
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E17D1F000C4;
-	Wed, 18 Nov 2026 15:47:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NPFYfb4y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 260361F000C4;
+	Wed, 18 Nov 2026 15:47:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016875;
-	bh=X/4LMB+ETPChtWqvjjGO42Xpu4BZO3Pq0+XSS3tdIrU=;
+	s=korg; t=1795016878;
+	bh=fcj6Srgjl+WuHo29QU+IN3wPAkaP3t5PboVoPRiduZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H8zkm9ro+F+sylnr8iiJdwflh4n75wNS6/ypjzIjQ506hi3eTMG6tUDY+3gFApoOj
-	 IhOX4PRlKQ6txHE2ov2jYdE0T7lKsIUZXPg5HSUeZjx8NcKljVlk0SoRB0EFGVFiL3
-	 yGsGCo1G4gQDjGc5vIIPojkorkJeZuitdQy4yXYA=
+	b=NPFYfb4yBpnBmW6Z6nuLvKiINfJmLX4YbezvbSiLx3+4IDtQIulxQZteWFmR2MpYs
+	 4JaE9FDrGuGjH0GP5zf1NgxSAlfQy2j2LXXAYNQhkuRGZ3ByCk9ebwhc4S20LomJB8
+	 CNS755odeKxN2oxjVIey3PADkYZgJWk1UhQItvWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Slavin Liu <bolin.liu@seu.edu.cn>,
+	Wentao Liang <vulab@iscas.ac.cn>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0683/2651] RDMA/irdma: check vport device allocation
-Date: Wed, 18 Nov 2026 15:32:03 +0100
-Message-ID: <20261118150312.450155781@linuxfoundation.org>
+Subject: [PATCH 7.3 0684/2651] RDMA/cxgb4: Fix neigh reference leak in rx_pkt()
+Date: Wed, 18 Nov 2026 15:32:04 +0100
+Message-ID: <20261118150312.484177503@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,38 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Slavin Liu <bolin.liu@seu.edu.cn>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 2a770e6a64d66fc3a7317669ecca9773d8339ead ]
+[ Upstream commit 5fb3051aa4611ae18e304814fb1b74a30065fd85 ]
 
-An existing RDMA function does not guarantee allocation of the new
-vport device. Return -ENOMEM before initializing a NULL iwdev.
+If ip_dev_find() fails on the loopback path the code jumps to
+free_dst without releasing the neighbour reference taken by
+dst_neigh_lookup_skb(), leaking one neigh reference.
 
-Detected by static analysis and reviewed with AI-assisted source auditing.
+Release the neighbour before jumping to free_dst.
 
-Fixes: 2ad49ae7330b ("RDMA/irdma: Introduce GEN3 vPort driver support")
-Assisted-by: LLM
-Signed-off-by: Slavin Liu <bolin.liu@seu.edu.cn>
-Link: https://patch.msgid.link/20260911060909.94219-1-bolin.liu@seu.edu.cn
+Fixes: ef42520240aa ("RDMA/cxgb4: add null-ptr-check after ip_dev_find()")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260916183530.2092534-1-vulab@iscas.ac.cn
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/infiniband/hw/cxgb4/cm.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/hw/irdma/main.c b/drivers/infiniband/hw/irdma/main.c
-index 95957d52883dd..106915b51e7cb 100644
---- a/drivers/infiniband/hw/irdma/main.c
-+++ b/drivers/infiniband/hw/irdma/main.c
-@@ -80,6 +80,8 @@ static int ig3rdma_vport_probe(struct auxiliary_device *aux_dev,
- 		return -ENOMEM;
- 	}
- 	iwdev = ib_alloc_device(irdma_device, ibdev);
-+	if (!iwdev)
-+		return -ENOMEM;
- 	/* Fill iwdev info */
- 	iwdev->is_vport = true;
- 	iwdev->rf = rf;
+diff --git a/drivers/infiniband/hw/cxgb4/cm.c b/drivers/infiniband/hw/cxgb4/cm.c
+index b3b45c49077d5..f57a31cf4fc78 100644
+--- a/drivers/infiniband/hw/cxgb4/cm.c
++++ b/drivers/infiniband/hw/cxgb4/cm.c
+@@ -4156,6 +4156,7 @@ static int rx_pkt(struct c4iw_dev *dev, struct sk_buff *skb)
+ 		pdev = ip_dev_find(&init_net, iph->daddr);
+ 		if (!pdev) {
+ 			pr_err("%s - failed to find device!\n", __func__);
++			neigh_release(neigh);
+ 			goto free_dst;
+ 		}
+ 		e = cxgb4_l2t_get(dev->rdev.lldi.l2t, neigh,
 -- 
 2.53.0
 
