@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021060;
-	b=rD3fDJXKHCNRbibMqlco+x3AdHcgevmCjWytfdoYnLv7uonG96RhrbtlT3XC/RCJk5Jd
-	 oPfcFL1sHLs/IwVF60qPpb9wzphSlc+xKUhlP+mNIUXJw9BMquHxYmZ6qqiDAHTRdewOe
-	 DjMt6sLrUqf4IKVJkrTnSnbj4L2NINCGK0gfGwHjBfEnDu1ZSUcIq5536M+/4nBTT7gEp
-	 W7L27Z5njJbcJiYDFR79OTzr7/Cn6Buk3ANM4yFp3cnqlXPNcVbXdLu7dpoVc6b6UWcog
-	 az6veiKJz1+P0zVUu3zWZ7OTgNGcaPUoXOm3bM8JbM7+Y6E0u5dIBAWsgq0K3K2Lv5Q==
+	t=1795021063;
+	b=QBS5JwqcsWd2Vj4ThVnRYVxilBlZUFnd6h0QsVgumnmAsBFejnjV0TXAy5AfxzmcbCfe
+	 KcgHIOw2jrnxkNyvftcRs7eVX1qZ+u4SIi3nwKFRIAbL22MlARUyBMnRQhFu58YgrC+/T
+	 H8x9U4Sli5m2F7atgtwqYe9Tu+wPib6pWRPb534B9hCFnQNeovRgYdvooGO1DxX0u+PvB
+	 gC9NwSocfVMPBAK0vBtwajbsBkfdSn9wDKQMiaaK6oXudeXcpUp+jZqlZWuSKxXj3xnu3
+	 AFFruWt57jojyu20d5UmwtTj++67QuFcYvLAIxGfb/xAlq4I/SGWcZ12t3z9Wy3bI1g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021060;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021063;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zpgW3YBxH8rVr8VQZU7TfjDvYoLTI4eWp4ZHvwNoIFk=;
-	b=KKhGod0w7W41U4vQZspwCnWzwVRgS4QPNGhWpQHEsih9C7HVeXl2NTnMsdvdlOh9RK12
-	 cshM1bYf7otc8GrKziGqy7P6j/dPntHZ7edcQzl0uYBEdXAX0V/ofTzxKkDm2sQ79Nw0f
-	 Ucs99Ml6+eJAj9Nr+G+xvHRsIbnGION9vMgdfJXNBK+OebRzwnE9KLix34WC6XwSYDQj9
-	 8j0oZjxFFvaF78jkD+8lrHVtkTyOgLo5Cm4cfF+WD86bMHGq5KkgscWY4scu5KeHyF43V
-	 UMYnjpaWfETuacdJvW9jT1J1naI0ow/DsPaEF4BnTp50kApglxzKYh9XND2bUdmDP5w==
+	bh=lfEVc6+YqEUrVF1iNpWcGhIH7f3kdYRl4K7miXemTKU=;
+	b=rdtH6MXphdFRPdt/pSqoAD9ChnKB+3eBJZFZhWRbq5U5G8i9eF5XhVLgnddPdpCfzjhY
+	 RVyx3fP5nheS//pMscK05ecECmH/ubz4bgcGFPuBHd8M5B0qnqLDYceabB/TX7UIa81jO
+	 QiIyJihGrT5Cdcv8rsJUn4pyCA0IlJJM2qkdbcelMVuXJrrVCx4VfHWrpRHeaR8eSl3Zr
+	 Gq1VZzWHds3GhDhU0aROLAVG8ltlO9NkFY81YVgZ6AfDY7EOX1Gzp79FUOPZS214yJUB3
+	 d8pwnN92feQ1cRKRzpYmaUva35+K7rhAopVyYFlb4WKDnnI300X5DbQPF2TXhiwLPHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xB+JcLIW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u4zEmZk5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600FA606A331;
-	Wed, 18 Nov 2026 16:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F69606A331;
+	Wed, 18 Nov 2026 16:57:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xB+JcLIW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5E961F000C4;
-	Wed, 18 Nov 2026 16:57:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u4zEmZk5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966251F000C4;
+	Wed, 18 Nov 2026 16:57:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021060;
-	bh=zpgW3YBxH8rVr8VQZU7TfjDvYoLTI4eWp4ZHvwNoIFk=;
+	s=korg; t=1795021063;
+	bh=lfEVc6+YqEUrVF1iNpWcGhIH7f3kdYRl4K7miXemTKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xB+JcLIW5sImut5hL9UvqsrBXbNB2NNGWIAm4sJJ//QCng3HG8M8a3U5Q0QTxoM46
-	 Lwe7B4Shb6FVf92b4MfJCsUkEXYQLvLbTNiRPKn7q+JGYGQiNmvoH9qI9S93mA5GVN
-	 GNNo3MX50IIDBDJXBydkZ7y+aGjRM78BdnRfFuPk=
+	b=u4zEmZk5G3J5rGxKMo3LWwXNneBaszmN7XyV5ZfqfXFxguEGIRTsZJT5FHQ3gKXGe
+	 19z/88vuxR89jFZB5/hygjrCiEEihbC8noO/fWjcE/uOZhwooPNgmj/9liY4dcaiB2
+	 6+orJGREcSZtUYX/X3xkVWT9SiKmLWe8y3f+uvuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Daeho Jeong <daehojeong@google.com>,
+	Wenjie Qi <qiwenjie@xiaomi.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2172/2651] ALSA: pcm: Protect channel-map reads against runtime detach
-Date: Wed, 18 Nov 2026 15:56:52 +0100
-Message-ID: <20261118150403.998263884@linuxfoundation.org>
+Subject: [PATCH 7.3 2173/2651] f2fs: refresh pinned allocation boundary after resize
+Date: Wed, 18 Nov 2026 15:56:53 +0100
+Message-ID: <20261118150404.032071262@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,90 +70,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Wenjie Qi <qwjhust@gmail.com>
 
-[ Upstream commit bb4834d5242c4829c0d8467ee68eb25a9bafc38d ]
+[ Upstream commit e4df12e37300d4e181ae76746ae0fd7f7b92aa36 ]
 
-Channel-map controls remain accessible between PCM opens. In-tree HDA
-code publishes the generic controls through add_std_chmaps(), so a
-SNDRV_CTL_IOCTL_ELEM_READ can overlap the final close of the same PCM
-substream.
+Online shrink updates MAIN_SECS() but leaves resizable_tail_secno and
+pinned_area_max_secno unchanged. The pinned allocation limit can exceed
+the new main area when shrinking beyond the reserved tail.
 
-pcm_chmap_ctl_get() checks substream->runtime and later reads its channel
-count. Final close clears and frees that runtime under pcm->open_mutex,
-while the control callback holds only controls_rwsem:
+Consume the reserved tail by the number of removed sections, clamping
+it to zero, before refreshing the shared pinned allocation boundary.
+This preserves the boundary while shrinking within the reservation and
+limits it to the new main area otherwise, retaining the zoned limit.
 
-  Control GET                         Final PCM close
-  -----------                         ---------------
-  snd_ctl_elem_read()
-    down_read(controls_rwsem)
-    pcm_chmap_ctl_get()
-      check substream->runtime
-                                      lock(pcm->open_mutex)
-                                      snd_pcm_release_substream()
-                                        snd_pcm_detach_substream()
-                                          substream->runtime = NULL
-                                          kfree(runtime)
-                                      unlock(pcm->open_mutex)
-      substream->runtime->channels
-        NULL or freed-pointer access
-    up_read(controls_rwsem)
+Save the old tail count and restore it before rolling back the geometry
+if the final checkpoint fails.
 
-Reloading the cleared field can fault through NULL, while retaining the
-old pointer can access freed storage. controls_rwsem keeps the control
-alive, but does not serialize the matching PCM close.
+Also bound pinned section allocation by the current MAIN_SECS(). Range
+evacuation temporarily reduces it before moving cursegs, while the
+cached pinned boundary still describes the old geometry. Otherwise, a
+pinned curseg can be reallocated into the range being removed.
 
-Copy the channel count under open_mutex and use that scalar for the map
-lookup. Use trylock with -EBUSY because snd_pcm_dev_disconnect() takes
-open_mutex before removing controls under controls_rwsem; blocking in
-the reverse order from GET could deadlock.
-
-Fixes: 2d3391ec0ecc ("ALSA: PCM: channel mapping API implementation")
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/pm-pmb-0b5d6bc7124d0b921f2c-v4-b9738bdeab8823999181@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: c966d29e01bb ("f2fs: support resizable tail section and unify pinned allocation")
+Suggested-by: Daeho Jeong <daehojeong@google.com>
+Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
+Reviewed-by: Daeho Jeong <daehojeong@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm_lib.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ Documentation/filesystems/f2fs.rst |  3 ++-
+ fs/f2fs/gc.c                       |  6 +++++-
+ fs/f2fs/segment.c                  |  2 +-
+ fs/f2fs/segment.h                  | 11 +++++++++++
+ fs/f2fs/super.c                    | 15 ++-------------
+ 5 files changed, 21 insertions(+), 16 deletions(-)
 
-diff --git a/sound/core/pcm_lib.c b/sound/core/pcm_lib.c
-index 4d665b4148d70..1ec7db324196f 100644
---- a/sound/core/pcm_lib.c
-+++ b/sound/core/pcm_lib.c
-@@ -2496,6 +2496,7 @@ static int pcm_chmap_ctl_get(struct snd_kcontrol *kcontrol,
- 	unsigned int idx = snd_ctl_get_ioffidx(kcontrol, &ucontrol->id);
- 	struct snd_pcm_substream *substream;
- 	const struct snd_pcm_chmap_elem *map;
-+	unsigned int channels;
+diff --git a/Documentation/filesystems/f2fs.rst b/Documentation/filesystems/f2fs.rst
+index 771216f45207a..55798421f2c45 100644
+--- a/Documentation/filesystems/f2fs.rst
++++ b/Documentation/filesystems/f2fs.rst
+@@ -421,7 +421,8 @@ resizable_tail_secno=%u  Control the number of sections at the tail of the
+ 			 (MAIN_SECS - resizable_tail_secno) - 1. If set to 0
+ 			 (default), there is no tail restriction unless running
+ 			 on a zoned block device where conventional zones are
+-			 used.
++			 used. Online shrink consumes this reservation, reducing
++			 the value by the number of removed sections, down to zero.
+ ======================== ============================================================
  
- 	if (!info->chmap)
- 		return -EINVAL;
-@@ -2504,11 +2505,20 @@ static int pcm_chmap_ctl_get(struct snd_kcontrol *kcontrol,
- 		return -ENODEV;
- 	memset(ucontrol->value.integer.value, 0,
- 	       sizeof(long) * info->max_channels);
--	if (!substream->runtime)
--		return 0; /* no channels set */
-+	/*
-+	 * PCM disconnect takes open_mutex before removing controls.
-+	 * Use trylock to avoid a deadlock with controls_rwsem.
-+	 */
-+	scoped_cond_guard(mutex_try, return -EBUSY,
-+			  &info->pcm->open_mutex) {
-+		if (!substream->runtime)
-+			return 0; /* no channels set */
-+		channels = substream->runtime->channels;
-+	}
- 	for (map = info->chmap; map->channels; map++) {
- 		int i;
--		if (map->channels == substream->runtime->channels &&
+ Debugfs Entries
+diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
+index 6220d55709e9c..8d620799df121 100644
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -2323,6 +2323,7 @@ static void update_fs_metadata(struct f2fs_sb_info *sbi, int secs)
+ 	SM_I(sbi)->segment_count = (int)SM_I(sbi)->segment_count + segs;
+ 	MAIN_SEGS(sbi) = (int)MAIN_SEGS(sbi) + segs;
+ 	MAIN_SECS(sbi) += secs;
++	f2fs_adjust_pinned_area_boundary(sbi);
+ 	if (sbi->allocate_section_hint > MAIN_SECS(sbi))
+ 		sbi->allocate_section_hint = MAIN_SECS(sbi);
+ 	FREE_I(sbi)->free_sections = (int)FREE_I(sbi)->free_sections + secs;
+@@ -2354,7 +2355,7 @@ int f2fs_resize_fs(struct file *filp, __u64 block_count)
+ 	struct f2fs_lock_context lc;
+ 	struct f2fs_lock_context glc;
+ 	struct f2fs_lock_context clc;
+-	unsigned int secs;
++	unsigned int secs, old_tail;
+ 	int err = 0;
+ 	__u32 rem;
+ 
+@@ -2463,6 +2464,8 @@ int f2fs_resize_fs(struct file *filp, __u64 block_count)
+ 		goto recover_out;
+ 	}
+ 
++	old_tail = F2FS_OPTION(sbi).resizable_tail_secno;
++	F2FS_OPTION(sbi).resizable_tail_secno -= min(old_tail, secs);
+ 	update_fs_metadata(sbi, -secs);
+ 	clear_sbi_flag(sbi, SBI_IS_RESIZEFS);
+ 	set_sbi_flag(sbi, SBI_IS_DIRTY);
+@@ -2470,6 +2473,7 @@ int f2fs_resize_fs(struct file *filp, __u64 block_count)
+ 	stat_inc_cp_call_count(sbi, TOTAL_CALL);
+ 	err = f2fs_write_checkpoint(sbi, &cpc);
+ 	if (err) {
++		F2FS_OPTION(sbi).resizable_tail_secno = old_tail;
+ 		update_fs_metadata(sbi, secs);
+ 		update_sb_metadata(sbi, secs);
+ 		f2fs_commit_super(sbi, false);
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index 75f78ed7eb909..c1d78939ce845 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -2980,7 +2980,7 @@ static int get_new_segment(struct f2fs_sb_info *sbi,
+ 		alloc_hint = MAIN_SECS(sbi);
+ 
+ 	if (pinning) {
+-		max_secno = sbi->pinned_area_max_secno;
++		max_secno = min(sbi->pinned_area_max_secno, MAIN_SECS(sbi));
+ 		hint = 0;
+ 	} else if (alloc_policy == ALLOCATE_FORWARD_FROM_HINT &&
+ 		hint < alloc_hint) {
+diff --git a/fs/f2fs/segment.h b/fs/f2fs/segment.h
+index 5949aa5200ac1..6c3af51f352c4 100644
+--- a/fs/f2fs/segment.h
++++ b/fs/f2fs/segment.h
+@@ -91,6 +91,17 @@ static inline void sanity_check_seg_type(struct f2fs_sb_info *sbi,
+ #define GET_ZONE_FROM_SEG(sbi, segno)				\
+ 	GET_ZONE_FROM_SEC(sbi, GET_SEC_FROM_SEG(sbi, segno))
+ 
++static inline void f2fs_adjust_pinned_area_boundary(struct f2fs_sb_info *sbi)
++{
++	sbi->pinned_area_max_secno = MAIN_SECS(sbi);
++	if (f2fs_sb_has_blkzoned(sbi) && sbi->first_seq_zone_segno != NULL_SEGNO)
++		sbi->pinned_area_max_secno = min(sbi->pinned_area_max_secno,
++				GET_SEC_FROM_SEG(sbi, sbi->first_seq_zone_segno));
++	if (F2FS_OPTION(sbi).resizable_tail_secno)
++		sbi->pinned_area_max_secno = min(sbi->pinned_area_max_secno,
++				MAIN_SECS(sbi) - F2FS_OPTION(sbi).resizable_tail_secno);
++}
 +
-+		if (map->channels == channels &&
- 		    valid_chmap_channels(info, map->channels)) {
- 			for (i = 0; i < map->channels; i++)
- 				ucontrol->value.integer.value[i] = map->map[i];
+ #define GET_SUM_BLOCK(sbi, segno)	\
+ 	(SM_I(sbi)->ssa_blkaddr + (segno / (sbi)->sums_per_block))
+ #define GET_SUM_BLKOFF(sbi, segno) (segno % (sbi)->sums_per_block)
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index 09bc78f2d0b58..c422a0d15260c 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -554,17 +554,6 @@ static inline void adjust_unusable_cap_perc(struct f2fs_sb_info *sbi)
+ 			F2FS_OPTION(sbi).unusable_cap_perc);
+ }
+ 
+-static inline void adjust_pinned_area_boundary(struct f2fs_sb_info *sbi)
+-{
+-	sbi->pinned_area_max_secno = MAIN_SECS(sbi);
+-	if (f2fs_sb_has_blkzoned(sbi) && sbi->first_seq_zone_segno != NULL_SEGNO)
+-		sbi->pinned_area_max_secno = min(sbi->pinned_area_max_secno,
+-				GET_SEC_FROM_SEG(sbi, sbi->first_seq_zone_segno));
+-	if (F2FS_OPTION(sbi).resizable_tail_secno)
+-		sbi->pinned_area_max_secno = min(sbi->pinned_area_max_secno,
+-				MAIN_SECS(sbi) - F2FS_OPTION(sbi).resizable_tail_secno);
+-}
+-
+ static void init_once(void *foo)
+ {
+ 	struct f2fs_inode_info *fi = (struct f2fs_inode_info *) foo;
+@@ -3098,7 +3087,7 @@ static int __f2fs_remount(struct fs_context *fc, struct super_block *sb)
+ 	sb->s_flags = (sb->s_flags & ~SB_POSIXACL) |
+ 		(test_opt(sbi, POSIX_ACL) ? SB_POSIXACL : 0);
+ 
+-	adjust_pinned_area_boundary(sbi);
++	f2fs_adjust_pinned_area_boundary(sbi);
+ 	limit_reserve_root(sbi);
+ 	fc->sb_flags = (flags & ~SB_LAZYTIME) | (sb->s_flags & SB_LAZYTIME);
+ 
+@@ -5414,7 +5403,7 @@ static int f2fs_fill_super(struct super_block *sb, struct fs_context *fc)
+ 	/* get segno of first zoned block device */
+ 	sbi->first_seq_zone_segno = get_first_seq_zone_segno(sbi);
+ 
+-	adjust_pinned_area_boundary(sbi);
++	f2fs_adjust_pinned_area_boundary(sbi);
+ 
+ 	sbi->reserved_pin_section = f2fs_sb_has_blkzoned(sbi) ?
+ 			ZONED_PIN_SEC_REQUIRED_COUNT :
 -- 
 2.53.0
 
