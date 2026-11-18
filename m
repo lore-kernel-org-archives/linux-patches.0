@@ -1,64 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059439;
-	b=0Top+ZRtKESjZw+/0ipO7ZzmXhnVgLEuU8lDXei78F+KIHra25/mzMydbbPlbgSYrVjJ
-	 e7UML1u0PNUNW7SKZQnfszn246o95/4N2ZksgvPkX1cwPPyd04C8+ECpbULaFqOkg1vT6
-	 Yn+y/LSVhe9e9zuwxWtHvn5xI7TYoTtTor8DBbL8YwO35VbyWF/joVkxIzjls5AhfLVXO
-	 UR8zM8Mgjs7zWUBemhGm9fbKFxznMtBtsDFLT3J/XeCYcxOuoBHfGdvKRqlBENBtFA/a3
-	 Sx+3xwUhHdr/8ZtVvYYq90slEU3NKDm/z2efyZkY63dWBPw3X6w84O1GSCDfK6pEVug==
+	t=1795059442;
+	b=UXaLt/8RZQwKg+XP8aHOquA9lkuEGnt3YDQ8Z3qKcGsG0K+R5U2wvhwK0zYfNAzvn/vU
+	 w9mRKV0ZDm8SMx5AqtuirQkDNltXnu0P4N2TpZTtYbql2wFEnXmmHGME98iLUWymkbjNz
+	 3uuW47MiBbG6FG9Zg5j3G1kg7C0xkZyAzU4cqti2/IP+NyHSKu4yuIsaHXuEiLuWnIiTv
+	 NyHb9Ucm41YC4xtgPfuYDFWe7LgyHbDE22RgNAC3UBEK7S3SHmx+ifmAb8u935mze7UFA
+	 OYqK2rowR2njxG8em9dmaMRxT2Ckf7O27bfy25jmWA0pQ6uG5TBUfHi1S5I19FA+IXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059439;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059442;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GFkkNo+zag44yzuLSqj2nXrhGhxESceGNOmzp1YWcac=;
-	b=ei4RWg02RwXQ635P7jGlqiKyjOpN+CPKJD9H33gApTQStMhXdMeOL6QFwx3L9npfua+j
-	 3JI3Qpk7QrdjFfrj8eos7hHGVlACqyADDPc5fsy2fOlLwbuo2OUs3qerpxg3zE82ythUT
-	 jFbwX8JGO+dSgQpz3DnKjrkpwOvr/71QSGB5Oc3JNfjr7vgsMSETHQ2fpeHhWiKXbsGe9
-	 PzkXJzkNRU3lOd4/SQthyitJSo/sIlnEIdZLg34FfD1yzsAIrQhNMpJZa4yrlXdGU1zSu
-	 ZhPdPCygzyHJ0N1b/PfOV0b30kN1/qiLyykvsKK/eqVpPlNfopwPLVVAHqooCEIzgNA==
+	bh=3TAl/AeAuPs9g/GzMjHpVzwwF0KupsiNMmOb9SScfm8=;
+	b=1SvxH0MSc/3JQIjL7hLgUpqAjt9tUww1vPYOxdQbr977Po/BhxzHIFt/5hDOMWiLe4qg
+	 2zQCZiBSsRjACc28ZFrfSxiX+qjfkElEyV8ww314g1nXOLTVN9kWP2wdbHftsTFfplp5O
+	 iYHRl+ca5mxhU51XJ0giWGbUTfvd/f5O/ceIfqbJ3XedW5Dn7OF1EsvdMHTmOp1NfAzWC
+	 o6ATxKALeVk09vuLdcz6FeZfoq9uJYxmZsxRVKEd3Id7chct1FhJVDsS7SkyKv4SpP8Pr
+	 3Hdfsfnx8SJS/hrOBMa4sXibvg8+1Q1EYX4SX4FvbMbwauKKJOZ7AhKJd8es/4lvWXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PkOJWK1E;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sbv4IsEc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91EF5606A31C;
-	Thu, 19 Nov 2026 03:37:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532C6606A325;
+	Thu, 19 Nov 2026 03:37:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PkOJWK1E
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3E9A1F000C4;
-	Thu, 19 Nov 2026 03:37:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sbv4IsEc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85761F000C4;
+	Thu, 19 Nov 2026 03:37:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059439;
-	bh=GFkkNo+zag44yzuLSqj2nXrhGhxESceGNOmzp1YWcac=;
+	s=korg; t=1795059442;
+	bh=3TAl/AeAuPs9g/GzMjHpVzwwF0KupsiNMmOb9SScfm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PkOJWK1EkDV77rGnUnUUUm9g5Izy8+1aEd0BnBJ6j8E0UAZrXZFUf125wYB4UAmiV
-	 Hqc918wVFQ6y48e+bz1DVTmiV2ilEMBYAkaiKZpj6Q2xgSAK1BOiDd7D/o4ZFYTdK+
-	 hZqUsjJOp3W3JTdfWRDyWGsx5u4sxqFKvUkwcw6c=
+	b=Sbv4IsEc1TqVeNHeCr5u5LwWyAqVOSc5o0TcUaPrR9uTE7jhDKmIPOAwLcqlNscnL
+	 DF3pmT6R/kPMj9MA+JjHfkIWxKB6TISTUYqiIincfrXJXs/hzZLZMyLNkLdqpB1kh+
+	 FgGCxJANVGi1Q4m02QrmfasdNnY/37mxi6Wxqxok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pedro Falcato <pfalcato@suse.de>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Samarth Narang <samarth.colleges@gmail.com>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Zi Yan <ziy@nvidia.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	SJ Park <sj@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Minchan Kim <minchan@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
+	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0840/1848] mm/madvise: atomically clear the young bit on THP MADV_COLD
-Date: Wed, 18 Nov 2026 15:47:58 +0100
-Message-ID: <20261118145951.806920003@linuxfoundation.org>
+Subject: [PATCH 5.10 0801/1848] batman-adv: tt: only update flags for TT events
+Date: Wed, 18 Nov 2026 15:47:19 +0100
+Message-ID: <20261118145949.902211130@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -80,82 +67,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Falcato <pfalcato@suse.de>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit 246c8cc33438a71c28f9b86baa492d9a0a130316 ]
+commit ad1fd828aa3944efc393b84b0d7c02483f1b5638 upstream.
 
-As-is, madvise_cold_or_pageout_pte_range() discards the hardware young bit
-by invalidating the PMD, doing pmd_mkold() and subsequently writing to the
-pmd again.  However, it does so in a racy manner, looking at a
-possibly-stale snapshot.  It's entirely possible that a write elsewhere
-set the hardware D bit, which this logic now loses.
+In the first implementation of the translation table events, it was only
+possible to announce:
 
-Fix it by using pmdp_test_and_clear_young().  This is an atomic
-modification of the PMD entry, and thus safe against any possible racing
-writes.  As a (nice) side-effect, this elides one non-required TLB flush
-in pmdp_invalidate().
+* ADD: new locally detected client
+* DEL: disappeared local client
 
-This bug can interact with the swapping system in complicated ways,
-leading to data loss.  For instance, if a folio is marked lazyfree, but
-was later read from, and then MADV_COLD'd while racing a write to that
-same THP, dropping the dirty bit may lead to data loss as
-reclaim/MADV_PAGEOUT drops the "clean" anon folio:
+If an ADD event was queued and then a DEL event was queued in the same
+timeslot, it is valid to destroy both events because nothing actually
+changed for remode nodes
 
-T0                                T1
-================================================================
-MADV_FREE(thp)			|
-  folio marked lazyfree		|
-read(thp)			|
-  PMD marked young by hardware	|
-				| MADV_COLD(thp)
-write(thp)			|   if (pmd_young(pmd)) {
-  PMD marked dirty by hardware	|     set(pmdp, pmd_mkold(pmd));
-MADV_PAGEOUT/reclaim		|
-  dirty bit may or may not be   |
-  set				|
-    reclaim/pageout may drop    |
-    the folio			|
+But with commit 3c4f7ab60cc2 ("batman-adv: improve the TT component to
+support runtime flag changes") and subsequent changes, it could also happen
+that there are extra ADD events:
 
-Link: https://lore.kernel.org/20261013191719.95502-1-pfalcato@suse.de
-Fixes: 9c276cc65a58 ("mm: introduce MADV_COLD")
-Signed-off-by: Pedro Falcato <pfalcato@suse.de>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Samarth Narang <samarth.colleges@gmail.com>
-Closes: https://lore.kernel.org/linux-mm/20261011132227.413217-1-samarth.colleges@gmail.com/
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: SJ Park <sj@kernel.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: <stable@vger.kernel.org>
-[ sashal: adjusted context because the pmd_young() check lacks the !pageout guard ]
+* ADD: _NEW_ locally detected client
+* ADD: already existing client with new flags
+* DEL: disappeared local client
+
+The first and the last type of event could in theory still be removed
+together from the (to be announced) events queue. But if the "update flags"
+ADD is dropped together with the DEL, it would still leave global
+translation table of a remote node in the incorrect state - believing that
+the client didn't disappear.
+
+If a detected client was previously announced, a DEL event must only
+overwrite the "update flags" ADD but the DEL itself must still continue to
+exist in the (to be anounced) events queue. For now, adjustment of the
+announced flags is used for everything instead of dropping already queued
+up events completely.
+
+Similarly, a DEL followed by an ADD caused both entries to be deleted. But
+the new ADD could announce flags changes which were not yet present for the
+client before it was marked for DELetion. The new ADD must therefore only
+overwrite the DEL - but still be kept.
+
+Cc: stable@vger.kernel.org
+Fixes: 3c4f7ab60cc2 ("batman-adv: improve the TT component to support runtime flag changes")
+[ Context, drop now unused code for removed entries ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/madvise.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ net/batman-adv/translation-table.c | 41 ++++++++----------------------
+ 1 file changed, 11 insertions(+), 30 deletions(-)
 
-diff --git a/mm/madvise.c b/mm/madvise.c
-index 8b6ed35c1d265..ad33cdbf27a88 100644
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -361,10 +361,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- 		}
+diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
+index ce36340f97459..df99ffaad1bae 100644
+--- a/net/batman-adv/translation-table.c
++++ b/net/batman-adv/translation-table.c
+@@ -456,6 +456,9 @@ batadv_tt_orig_list_entry_put(struct batadv_tt_orig_list_entry *orig_entry)
+  * @bat_priv: the bat priv with all the soft interface information
+  * @tt_local_entry: the TT entry involved in the event
+  * @event_flags: flags to store in the event structure
++ *
++ * Only a single change per client is queued. It describes the latest state of
++ * the client and a new event therefore replaces an already queued one.
+  */
+ static void batadv_tt_local_event(struct batadv_priv *bat_priv,
+ 				  struct batadv_tt_local_entry *tt_local_entry,
+@@ -464,8 +467,7 @@ static void batadv_tt_local_event(struct batadv_priv *bat_priv,
+ 	struct batadv_tt_change_node *tt_change_node, *entry, *safe;
+ 	struct batadv_tt_common_entry *common = &tt_local_entry->common;
+ 	u8 flags = common->flags | event_flags;
+-	bool event_removed = false;
+-	bool del_op_requested, del_op_entry;
++	bool del_op_requested;
  
- 		if (pmd_young(orig_pmd)) {
--			pmdp_invalidate(vma, addr, pmd);
--			orig_pmd = pmd_mkold(orig_pmd);
+ 	tt_change_node = kmem_cache_alloc(batadv_tt_change_cache, GFP_ATOMIC);
+ 	if (!tt_change_node)
+@@ -497,44 +499,23 @@ static void batadv_tt_local_event(struct batadv_priv *bat_priv,
+ 		if (entry->change.vid != tt_change_node->change.vid)
+ 			continue;
+ 
+-		/* DEL+ADD in the same orig interval have no effect and can be
+-		 * removed to avoid silly behaviour on the receiver side. The
+-		 * other way around (ADD+DEL) can happen in case of roaming of
+-		 * a client still in the NEW state. Roaming of NEW clients is
+-		 * now possible due to automatically recognition of "temporary"
+-		 * clients
+-		 */
+-		del_op_entry = entry->change.flags & BATADV_TT_CLIENT_DEL;
+-		if (!del_op_requested && del_op_entry)
+-			goto del;
+-		if (del_op_requested && !del_op_entry)
+-			goto del;
 -
--			set_pmd_at(mm, addr, pmd, orig_pmd);
-+			pmdp_test_and_clear_young(vma, addr, pmd);
- 			tlb_remove_pmd_tlb_entry(tlb, pmd, addr);
- 		}
+-		/* this is a second add in the same originator interval. It
+-		 * means that flags have been changed: update them!
++		/* the other nodes may know the client with different
++		 * flags. A DEL+ADD must therefore still announce the
++		 * current flags and an ADD+DEL must still remove the
++		 * client. ADD+ADD and DEL+DEL only update the flags
+ 		 */
+-		if (!del_op_requested && !del_op_entry)
+-			entry->change.flags = flags;
+-
+-		continue;
+-del:
+-		list_del(&entry->list);
+-		kmem_cache_free(batadv_tt_change_cache, entry);
++		entry->change.flags = flags;
+ 		kmem_cache_free(batadv_tt_change_cache, tt_change_node);
+-		event_removed = true;
++
+ 		goto unlock;
+ 	}
  
+ 	/* track the change in the OGMinterval list */
+ 	list_add_tail(&tt_change_node->list, &bat_priv->tt.changes_list);
++	atomic_inc(&bat_priv->tt.local_changes);
+ 
+ unlock:
+ 	spin_unlock_bh(&bat_priv->tt.changes_list_lock);
+-
+-	if (event_removed)
+-		atomic_dec(&bat_priv->tt.local_changes);
+-	else
+-		atomic_inc(&bat_priv->tt.local_changes);
+ }
+ 
+ /**
 -- 
 2.53.0
 
