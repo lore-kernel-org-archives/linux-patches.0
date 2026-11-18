@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020982;
-	b=elsASEbNNzzHbIZ7X19QJoS+NAklX51LWRAVmx1owe5dPeAAow7Sd0OWqzAzx6waaHth
-	 fk6vCuhvbUquDmTurMBLSirV29aeKJD/++5o5kj0aZh+OITX6yMYRnWW3HlnixdogM5Ue
-	 SW0asd37GAhtu1UAJm6K3T7AYTpd74Jov6fJ7km7JMzWpkOUFehRqU/at9MB+lWb4/fv0
-	 NjQyWINqtw2B7Ere2VhmWO3EZuvKM4HBxuM7dJR4Oh4PxxUSaX1GhDLoQHokumN6m0RCg
-	 C9K5hFNjNwJ3Ai8aZQ2sP8dWdWK2KThLBtXiGCQm/ma14rGif932H0z0MDY4L7jX43g==
+	t=1795020984;
+	b=YmV61kruLLOXfEjkEQLfmbT8p1m73YaAzs4fbG+2oFOuYWtqqiZ4O9DE24wIQuO+0IV6
+	 x2a8oJs4jrEBm7XxrV+ZV8a5bVDpQX+c8fgi8v5Czp/cShkMwSe0K91h6I8q41QHd7Th0
+	 wHC4eSlqN9rCbB0bvg0rUfbY60fyQUhbzEk7tXkUFTawjUTmwA86VexgRfF5ke48EnOU9
+	 eVvEx6iIQ03q30WiMij+l7cEjoScSUJYAEW3eKRLDsNqGicnmb3DELV5o6kbqpG8O8gbU
+	 TO1MiTmEcTKtDQfOu5WYjBkI5iWiXYJtyyzzD/vyfmb297IXsQ40HcSy9vvGnTLYK9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020982;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020984;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VINsW03Oz3KYydkrKb0izNIHHp/utP1G7ikCKPJ09o0=;
-	b=iWQqcubST9TIHkfI3HcZ1Q1CLx1rOvuDz6aO1g243pIi2VGCC9ZfudKOSgFh4VKoT+HA
-	 kgJY9elED8xI2vahZCodew7gIvmPH60fwP1LqJ1L1g6fH2+7mMyqVg/DxumbGoWkOAZT9
-	 0tXgtxByZzuhSt3GZb0qyg/Z2hJRg0iq8np96iuDNJ11GIROc6bbskoYSKAcckxEylLj6
-	 hcL4Kxzx0R+OVauAGvsq+aWdT6tNnA0Ny7aDT1V90jzFWFclrfrbASBytG7rxB3ym1fVR
-	 ciVwWc8GznpxHPYzFHCKxcXbi3MSInmsAuXj9Yw+Fhw0mXy9yoOrpq1I+WA2vz+qUFg==
+	bh=OL4qe2DchchjG/CxTTJCWyVngdEdQ4VwDkml7ANy3AY=;
+	b=XJS88XESZ4QvHhXgUyFUEx5FfTdf4TsuiLa6AKJk3ktAf6CKP3R//nzmdw+IqM9ZB5Tp
+	 HBycgGEAL5j8nFUZanWDL26+vnOSDrLAmCvtyMjIwKI+iTk5Y1pTagFvdRkJa7fgoE2M9
+	 hCMOFNvkLGH190zCCkDF+VNt2mdzfbZ+yhP1AUPuy4oJKvhBFlTPbZ9rxUA7F/qGAsfW3
+	 t15cql6wYkQgVIHk4l2qZ2fvs0xgENP8vM8D9NMVd2EHOuB9GO88Oqxse0cmhyO5y93Fv
+	 aXlv7ASovHnyrT5LbOKD+fqulChV/rW3MOdCkW12deot1ohJAwEAAoSpvkupJkjIbhA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ejXFUDfH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="XGMHDE/v";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD02606A32A;
-	Wed, 18 Nov 2026 16:56:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C80606A31C;
+	Wed, 18 Nov 2026 16:56:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ejXFUDfH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6309D1F000C4;
-	Wed, 18 Nov 2026 16:56:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XGMHDE/v
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31BA21F000C4;
+	Wed, 18 Nov 2026 16:56:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020981;
-	bh=VINsW03Oz3KYydkrKb0izNIHHp/utP1G7ikCKPJ09o0=;
+	s=korg; t=1795020984;
+	bh=OL4qe2DchchjG/CxTTJCWyVngdEdQ4VwDkml7ANy3AY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ejXFUDfH/rMe1H3uGGt5glRDos5hPfaMrNFHCsa6q+d+T2sBe3AGpStPkaKzulNe6
-	 5JW+QjIi+Co7/pjtlMQn8QrVc7G11i+oilkg/JazONBaPme0stBoQAGcPZfF7Kx2fx
-	 maSLl0qARnUrGjJmRGsE63787ygZTCT7lFawjS4c=
+	b=XGMHDE/v8XuoH0UXhOYK2OZWl+L74eBkPO/hJ/ziU8/ZPm3SdMGb4yxxm83JI7wBq
+	 Luf2YxWneu1kTcqmPK8sh0EJ3BoeVx5+QVVCQOXBgIABAG35HBcBJtF7YxhHoBVPj/
+	 IFvTsj4So1O8TsqFBd2Gj2YxETStdcIKd8o1V7EI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2105/2651] bpf: Hold the socket in the sk_storage map iterator
-Date: Wed, 18 Nov 2026 15:55:45 +0100
-Message-ID: <20261118150401.753944305@linuxfoundation.org>
+Subject: [PATCH 7.3 2096/2651] bpf: Dont let bpf_skb_adjust_room() use up the MSS
+Date: Wed, 18 Nov 2026 15:55:36 +0100
+Message-ID: <20261118150401.462008800@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,166 +70,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 070a96b2a98f66087797d8a31d53126de7a5208f ]
+[ Upstream commit 12d07c38e1b0f79e48a37abd7103194212f2da8c ]
 
-The iterator over a sk_storage map passes the owner of an element to its
-program as ctx->sk, without a reference. All that it holds is the RCU read
-lock, which keeps the element and the storage, not the socket.
+When bpf_skb_adjust_room() grows a TCP GSO packet without
+BPF_F_ADJ_ROOM_FIXED_GSO, gso_size is lowered by the number of bytes
+added. Nothing looks at how large it is.
 
-An element is unlinked by bpf_sk_storage_free(), which __sk_destruct()
-calls right before it frees the socket. That is no better for a socket
-with SOCK_RCU_FREE: the grace period comes in front of __sk_destruct(),
-so a reader which starts behind call_rcu() still finds the element. The
-program and the helpers it hands ctx->sk to, such as
-bpf_sk_storage_get() or bpf_sk_storage_delete(), use a socket which is
-being freed on another CPU. It takes nothing but reading the iterator
-while sockets with an element in the map are closed, by whomever.
+gso_size is the size of the segments the peer has sent if the packet
+comes out of GRO, and what the sender has written into the virtio header
+if it comes from a tun device or a packet socket. If it equals len_diff
+the result is 0, and a packet of up to 64 KB is no GSO packet any more. If
+it is smaller, the 16 bit value wraps around.
 
-Take a reference for the time of the program, and skip the element if
-there is none to be had. To look at the owner at all, do what
-bpf_selem_unlink_nofail() does for bpf_local_storage_map_free(): as long
-as the element is linked under the lock of the storage,
-bpf_local_storage_destroy() has not got past it, unless it has given up
-on the lock, and then it waits for owner_refcnt.
+One less than len_diff gives GSO_BY_FRAGS. skb_segment() then takes the
+length of each segment from the frag_list. A packet with more than 64 KB
+of payload gets that far, and one from a tun device has no frag_list:
 
-The last reference may now be dropped by the iterator. The end of a socket
-may want process context: rfcomm_sock_destruct() takes a mutex. So only
-drop the reference under RCU, and free a socket whose last one it was when
-the RCU read lock has been released, which is at the end of a bucket and
-of every read() at the latest.
+  BUG: KASAN: null-ptr-deref in skb_segment+0xcf1/0x1a90
+  BUG: kernel NULL pointer dereference, address: 0000000000000070
+   tcp_gso_segment+0x1be/0x9f0
+   inet_gso_segment+0x288/0x740
+   inet_gso_segment+0x288/0x740
+   skb_mac_gso_segment+0x179/0x2e0
 
-Fixes: c69d2ddb2072 ("bpf: Using rcu_read_lock for bpf_sk_storage_map iterator")
+What is left must not be less than TCP_MIN_GSO_SIZE either. The stack
+relies on that for the number of segments to fit into gso_segs, see
+commit c27c449d455a ("virtio-net: Ensure that TCP packets don't overflow
+gso_segs").
+
+Refuse to grow a packet that would end up with less, with the error that
+other packets which cannot be adjusted get.
+
+Fixes: 2be7e212d541 ("bpf: add bpf_skb_adjust_room helper")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-18-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261017163745.3341787-9-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/bpf_sk_storage.c | 73 ++++++++++++++++++++++++++++++++++++---
- 1 file changed, 68 insertions(+), 5 deletions(-)
+ net/core/filter.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/core/bpf_sk_storage.c b/net/core/bpf_sk_storage.c
-index aea67b446c7c4..ea22ec5ef5b19 100644
---- a/net/core/bpf_sk_storage.c
-+++ b/net/core/bpf_sk_storage.c
-@@ -699,8 +699,37 @@ struct bpf_iter_seq_sk_storage_map_info {
- 	struct bpf_map *map;
- 	unsigned int bucket_id;
- 	unsigned skip_elems;
-+	struct rcu_head *dead_sks;
- };
- 
-+/*
-+ * sock_put() in two halves. The end of a socket may want process context:
-+ * rfcomm_sock_destruct() takes a mutex. If the iterator drops the last
-+ * reference, it keeps the socket until it has left the RCU read side critical
-+ * section. Nobody uses sk_rcu before sk_destruct().
-+ */
-+static void
-+bpf_sk_storage_map_seq_put_sk(struct bpf_iter_seq_sk_storage_map_info *info,
-+			      struct sock *sk)
-+{
-+	if (refcount_dec_and_test(&sk->sk_refcnt)) {
-+		sk->sk_rcu.next = info->dead_sks;
-+		info->dead_sks = &sk->sk_rcu;
-+	}
-+}
-+
-+static void
-+bpf_sk_storage_map_seq_free_sks(struct bpf_iter_seq_sk_storage_map_info *info)
-+{
-+	struct sock *sk;
-+
-+	while (info->dead_sks) {
-+		sk = container_of(info->dead_sks, struct sock, sk_rcu);
-+		info->dead_sks = sk->sk_rcu.next;
-+		sk_free(sk);
-+	}
-+}
-+
- static struct bpf_local_storage_elem *
- bpf_sk_storage_map_seq_find_next(struct bpf_iter_seq_sk_storage_map_info *info,
- 				 struct bpf_local_storage_elem *prev_selem)
-@@ -729,6 +758,7 @@ bpf_sk_storage_map_seq_find_next(struct bpf_iter_seq_sk_storage_map_info *info,
- 			/* not found, unlock and go to the next bucket */
- 			b = &smap->buckets[bucket_id++];
- 			rcu_read_unlock();
-+			bpf_sk_storage_map_seq_free_sks(info);
- 			skip_elems = 0;
- 			break;
- 		}
-@@ -796,12 +826,44 @@ DEFINE_BPF_ITER_FUNC(bpf_sk_storage_map, struct bpf_iter_meta *meta,
- 		     struct bpf_map *map, struct sock *sk,
- 		     void *value)
- 
-+/*
-+ * Take a reference on the socket which owns @selem. RCU keeps the element, not
-+ * its owner. As long as the element is linked under the lock of the storage,
-+ * the owner has not got past bpf_sk_storage_free(), unless that has given up
-+ * on the lock. Then it still waits for owner_refcnt.
-+ */
-+static struct sock *
-+bpf_sk_storage_selem_get_sk(struct bpf_local_storage_elem *selem)
-+{
-+	struct bpf_local_storage *sk_storage;
-+	struct sock *sk = NULL;
-+	unsigned long flags;
-+
-+	sk_storage = rcu_dereference(selem->local_storage);
-+	/* reset since ->next() looked: the socket goes away */
-+	if (!sk_storage)
-+		return NULL;
-+
-+	if (raw_res_spin_lock_irqsave(&sk_storage->lock, flags))
-+		return NULL;
-+
-+	if (!hlist_unhashed(&selem->snode) &&
-+	    refcount_inc_not_zero(&sk_storage->owner_refcnt)) {
-+		sk = sk_storage->owner;
-+		if (!refcount_inc_not_zero(&sk->sk_refcnt))
-+			sk = NULL;
-+		bpf_local_storage_unpin_owner(sk_storage);
-+	}
-+	raw_res_spin_unlock_irqrestore(&sk_storage->lock, flags);
-+
-+	return sk;
-+}
-+
- static int __bpf_sk_storage_map_seq_show(struct seq_file *seq,
- 					 struct bpf_local_storage_elem *selem)
- {
- 	struct bpf_iter_seq_sk_storage_map_info *info = seq->private;
- 	struct bpf_iter__bpf_sk_storage_map ctx = {};
--	struct bpf_local_storage *sk_storage;
- 	struct bpf_iter_meta meta;
- 	struct bpf_prog *prog;
- 	int ret = 0;
-@@ -812,14 +874,14 @@ static int __bpf_sk_storage_map_seq_show(struct seq_file *seq,
- 		ctx.meta = &meta;
- 		ctx.map = info->map;
- 		if (selem) {
--			sk_storage = rcu_dereference(selem->local_storage);
--			/* reset since ->next() looked: the socket goes away */
--			if (!sk_storage)
-+			ctx.sk = bpf_sk_storage_selem_get_sk(selem);
-+			if (!ctx.sk)
- 				return SEQ_SKIP;
--			ctx.sk = sk_storage->owner;
- 			ctx.value = SDATA(selem)->data;
- 		}
- 		ret = bpf_iter_run_prog(prog, &ctx);
-+		if (ctx.sk)
-+			bpf_sk_storage_map_seq_put_sk(info, ctx.sk);
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 99e6aa572b2bc..845c1427a8e0b 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -3619,6 +3619,14 @@ static int bpf_skb_net_grow(struct sk_buff *skb, u32 off, u32 len_diff,
+ 			return -ENOTSUPP;
  	}
  
- 	return ret;
-@@ -837,6 +899,7 @@ static void bpf_sk_storage_map_seq_stop(struct seq_file *seq, void *v)
- 		(void)__bpf_sk_storage_map_seq_show(seq, v);
- 	else
- 		rcu_read_unlock();
-+	bpf_sk_storage_map_seq_free_sks(seq->private);
- }
- 
- static int bpf_iter_init_sk_storage_map(void *priv_data,
++	/*
++	 * The MSS is lowered by len_diff. Leave the least that the stack lets a
++	 * TCP GSO packet have, or gso_segs can overflow.
++	 */
++	if (skb_is_gso(skb) && !(flags & BPF_F_ADJ_ROOM_FIXED_GSO) &&
++	    skb_shinfo(skb)->gso_size < len_diff + TCP_MIN_GSO_SIZE)
++		return -ENOTSUPP;
++
+ 	ret = skb_cow_head(skb, meta_len + len_diff);
+ 	if (unlikely(ret < 0))
+ 		return ret;
 -- 
 2.53.0
 
