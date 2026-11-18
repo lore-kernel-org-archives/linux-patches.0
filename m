@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056013;
-	b=IjlN0y3HazGmE1338yJvMMRdo+ISjQJrIF3kVIbEYpKVqd53hGTp46oaN1PGXYJAsrfR
-	 ZR/xWDx1x7kHBoTb12K0VDIuW1OjISI4BJdqhIYH6EwWqVWJ4bhmfa94SKjrFv/MrqGWc
-	 mHoZg+5N6ah8+nrEToL0e7zL3C7hHQIdTq9qbBB9kksh/T/FNpj7G0kXL4fLy+lV5Gssd
-	 q+ljqgHx8ZGZgR+JyD/7UDzLlln0xAQ8Fvx56XNjvmh3wrCw3xVA0PNan6jaAR/W9JSW0
-	 q+F7mipYJ7ST7PNFecmHwZxQudA8x8LJwJktb3NNVAqzxtpVXupNkg1phtG1stM7sdw==
+	t=1795056016;
+	b=luASfC/IHLMVuVE6Aw5dLiDMFDatNQEFT1mBeMuPW5icCyUx3zgjy+lB4tZRy+pCjly2
+	 QZCsS092XdAa0NESmLxz31VaOx27qUiP5+Ci2X5oNeuT1CYSYVVj6OlPIraS5hutgIAEW
+	 0UjzTZGmFwmBhUn8bR+rtHIR8Zmr7U4osy6HgqRZzzTxVgjCLMbTg7oiFbA2gf5JmZ3uM
+	 5kzu48hbhdChYqi9leX/MF9gAPp5ll7R079F1RZd8sWjSu/S8wHCOazbKfzpEj2eg0zTs
+	 5zbVFnH6PDiGSu1v8weJdbk3Ca5LWD3XXlX0wG+7WLV3di13K5qSVW9U6YeJU628z5Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056013;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056016;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kDAGYVHSzuqJwDkb9kHMMcf8wwrG7Ok9G3UNFHkYv+Y=;
-	b=mW3uxefDQdEdZC0/laouTRfd1NhfU6nV73LRERaVmnggbQM0p1lt239XTj7Gi3MeFqeC
-	 W36WZKS0pgeDZxYj6+dHPdy0h+1XYXmT1HDlyDlhGJQPR33dXx2ynBHHlIKM2kbyUNTBV
-	 oDKxky0Epz522rLl0uXzgfYHCcvOsTkVYFZXFwyN0Sb7G7TzBLE2vGL0E/QopwaSqtzJa
-	 oA5H/wemWAD3+NI/1TyHjrJ4RXiYMt1pQa1cuU5M5WUQIxYyRk9YJiakNyJNumwoYabdR
-	 wXKedmNoZCkw/GadXoOw10tbWbUFhT1rGQS3xNgOZlRG8FQ5x1iNwRbOO72LUtYvrQg==
+	bh=WM1LHiPTKG4EavUz5It+sd8nMXHfLhThd/4dX9HZ9oA=;
+	b=5DfviC2ZSoAMCfwv7EQKxfbzgDKumr8/vgRz6AxsanXpVBvGQ4IskddEGlsw+Kv5f041
+	 Oli1y8/gruJr+ak0RUGIwaeeJOsMty5vWbd70+ytQtaFMRyrD+MLMtF7Nm74iRE0YdCDw
+	 8KJwXKAORAvfaTyduW5BjOQ0z8P9ReksCFpISUfk4ieozU8gLmmX3luy2tUqJp+yKtnlg
+	 dMCXq8NdR2pdY/IXwvl5/Zhcor+GMcsNkdA0P1/jEWaPfgjtW07kq1YG/Wajz8mlRMlAN
+	 HOHaRUb7JjXozLIoTLMqrBT24qpgl4Czwzf7+xm/GNL450pDYYs+R49LwQC0do0jwlw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QpuoWOjm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q9MyU6c8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE151606A32F;
-	Thu, 19 Nov 2026 02:40:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFBE1606A325;
+	Thu, 19 Nov 2026 02:40:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QpuoWOjm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B831F000C4;
-	Thu, 19 Nov 2026 02:40:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q9MyU6c8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B771F000C9;
+	Thu, 19 Nov 2026 02:40:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056012;
-	bh=kDAGYVHSzuqJwDkb9kHMMcf8wwrG7Ok9G3UNFHkYv+Y=;
+	s=korg; t=1795056015;
+	bh=WM1LHiPTKG4EavUz5It+sd8nMXHfLhThd/4dX9HZ9oA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QpuoWOjmk9n0lABw8q70H/Gcl8+qXWA7qQZX+vWbEWRwyTAPAsYWT9lmZYNzU5IIV
-	 F+mjl0uanwSgeeDBM+4CLXaM084TqMBYZ+O6Yzgdf+8bgc/ClwAsS5oBjxneUz3EPb
-	 0TAcYcS4RGKwo4MeH/QZsNYTyAhFiSwT7KXERdKI=
+	b=Q9MyU6c8fQwpUys9cBSy2tvmu/tdVAh5FX/3iNXaVGSJu3UfZn6WqugMAURgfU6v0
+	 IWDqU/VcgsKk//OMYq8la29aqy20f+wOkarf2mvFR1yd8vEmbV7aZp4w8VuqO/Lx0z
+	 qrTOXXJhLURkWQIIu+ICk3UVz40VJbEuVWarFOTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,12 +44,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Leon Romanovsky <leonro@nvidia.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Tushar Dave <tdave@nvidia.com>,
-	Logan Gunthorpe <logang@deltatee.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1836/2214] PCI/P2PDMA: Safely terminate ACS redirect lists
-Date: Wed, 18 Nov 2026 15:58:32 +0100
-Message-ID: <20261118150124.880841158@linuxfoundation.org>
+Subject: [PATCH 5.15 1837/2214] PCI/P2PDMA: Gate the host bridge whitelist warning on verbose
+Date: Wed, 18 Nov 2026 15:58:33 +0100
+Message-ID: <20261118150124.920580042@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -73,48 +73,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit fa291d6429ebc1efb7fab011f643b842ae5f23f1 ]
+[ Upstream commit 36038f0e8377ef316b723d0d85b1510bc64069ab ]
 
-seq_buf marks an overflow by setting len to size + 1. The ACS diagnostic
-path unconditionally writes a terminator to buffer[len - 1], so a path with
-enough ACS ports to fill the 128-byte buffer writes one byte beyond the
-buffer when verbose diagnostics are requested.
+calc_map_type_and_dist() prints every other diagnostic under its verbose
+argument, but reaches the "Host bridge not in P2PDMA whitelist" warning
+through host_bridge_whitelist(), which it hands acs_redirects instead.  A
+caller that asked for a silent answer still gets the warning whenever any
+port on the path has an ACS redirect bit set, the CPU is not whitelisted by
+cpu_supports_p2pdma(), and the host bridge is not in
+pci_p2pdma_whitelist[].
 
-Use seq_buf_str() to terminate truncated output safely and remove the final
-semicolon only when the buffer did not overflow.
+pci_p2pmem_find_many() is such a caller. It sweeps every device with
+published p2pmem and asks for the distance to each client with
+verbose=false, and pci_p2pdma_distance_many() recomputes rather than
+consulting the map_types cache, so the warning repeats on every sweep.
 
-Fixes: 52916982af48 ("PCI/P2PDMA: Support peer-to-peer memory")
+The argument was never meant to say "ACS redirects were found". When commit
+cf201bfe8cdc ("PCI/P2PDMA: Warn if host bridge not in whitelist") added it,
+acs_redirects was a bool pointer that the quiet entry point passed as NULL:
+
+  if (verbose)
+	  map = calc_map_type_and_dist_warn(provider, pci_client,
+					    &distance);
+  else
+	  map = calc_map_type_and_dist(provider, pci_client,
+				       &distance, NULL, NULL);
+
+so the argument was true on exactly the path that commit describes.
+Folding the two entry points into one verbose flag turned the pointer into
+a value and left the call site alone, silently narrowing the warning to
+paths that carry an ACS redirect.
+
+Pass verbose. This also restores the warning for a verbose caller that
+takes the host bridge route with no ACS redirect on the path, which until
+now was told it could not use peer-to-peer DMA without being told which
+vendor and device would have to be added to the whitelist.
+
+Fixes: d1b8dc09dd71 ("PCI/P2PDMA: Simplify distance calculation")
 Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Tested-by: Tushar Dave <tdave@nvidia.com>
-Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
 Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://patch.msgid.link/20260830-batch-p2p-fixes-v1-4-5044e8dfbe2e@nvidia.com
+Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
+Link: https://patch.msgid.link/20260830-batch-p2p-fixes-v1-5-5044e8dfbe2e@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/p2pdma.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/pci/p2pdma.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/drivers/pci/p2pdma.c b/drivers/pci/p2pdma.c
-index e70993730728b..1663a8e2c4174 100644
+index 1663a8e2c4174..c175a87eefcb7 100644
 --- a/drivers/pci/p2pdma.c
 +++ b/drivers/pci/p2pdma.c
-@@ -515,11 +515,13 @@ calc_map_type_and_dist(struct pci_dev *provider, struct pci_dev *client,
- 	}
- 
- 	if (verbose) {
--		acs_list.buffer[acs_list.len-1] = 0; /* drop final semicolon */
-+		/* Drop the final semicolon; the list is not empty here */
-+		if (!seq_buf_has_overflowed(&acs_list))
-+			acs_list.buffer[acs_list.len - 1] = '\0';
- 		pci_warn(client, "ACS redirect is set between the client and provider (%s)\n",
- 			 pci_name(provider));
+@@ -452,7 +452,6 @@ calc_map_type_and_dist(struct pci_dev *provider, struct pci_dev *client,
+ {
+ 	enum pci_p2pdma_map_type map_type = PCI_P2PDMA_MAP_THRU_HOST_BRIDGE;
+ 	struct pci_dev *a = provider, *b = client, *bb;
+-	bool acs_redirects = false;
+ 	struct pci_p2pdma *p2pdma;
+ 	struct seq_buf acs_list;
+ 	int acs_cnt = 0;
+@@ -523,11 +522,10 @@ calc_map_type_and_dist(struct pci_dev *provider, struct pci_dev *client,
  		pci_warn(client, "to disable ACS redirect for this path, add the kernel parameter: pci=disable_acs_redir=%s\n",
--			 acs_list.buffer);
-+			 seq_buf_str(&acs_list));
+ 			 seq_buf_str(&acs_list));
  	}
- 	acs_redirects = true;
+-	acs_redirects = true;
  
+ map_through_host_bridge:
+ 	if (!cpu_supports_p2pdma() &&
+-	    !host_bridge_whitelist(provider, client, acs_redirects)) {
++	    !host_bridge_whitelist(provider, client, verbose)) {
+ 		if (verbose)
+ 			pci_warn(client, "cannot be used for peer-to-peer DMA as the client and provider (%s) do not share an upstream bridge or whitelisted host bridge\n",
+ 				 pci_name(provider));
 -- 
 2.53.0
 
