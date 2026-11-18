@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016318;
-	b=ymyLda3/J9YlGRhaXi/w0tOvovc2EJdNUyr6dIAEgJCW86Nj54nQvTwrO5RyzsTeByF9
-	 2G3NyOxTDwafuXUBhnksMiG5uRl0emJY/77dYK2BCS4oPqZWqnnhvdOjMmhwAu1pXYW5u
-	 WsHQoSrn+x2EqnVTYTNCph/AWE2QdnVBD79rlqe5fF+QzyhnTzbW7HcS5ZazQ+x3zuZS7
-	 7Lfo5UVENg6g168w7VTrvduSPIkoQf4meZiKHFKp0EVvB1V+aoAUjauF+MQQZ48+bvLg0
-	 wx0i9FdVPVyYNSvgdCBizBTC+vt+s+7qniU3Bp6ktlX2NZCnysSvBm7KxsI+EF907+w==
+	t=1795016320;
+	b=HjQHLRK7TN8ybvT65ONN1bCqFnUMBmA4luH6ezF/b48G/vnKByCiLq7vATYcHbql/skT
+	 +DtgKE9nntqC90FD6ugm6t/3KCWFzN58LpR94ArdFh1NrLyONJlEF95sp0ld6SLK783wU
+	 zhyayPpHbDxOdXhzU5ago4BtUQ/viWYgUvrAHfKEseFPAlRIOfvyu+AiU9FeuGXN2i4B3
+	 EYyGDjEQ8oBfq4ob99wrn4DtNxh1RwPylFa6L68ig6g6hHqtaG2by2ZQGWroWaaQrsGmj
+	 yO4vLJ6z4Xj1KvMAYK3gc/6Yfil5YIsPAYVPGS1QFJ57R9tSxKUXpY9iL2tn+o7xoGQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016318;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016320;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=nkgXAjniqhq9fVRafsP/tauONyRC+1VuEWwTFfPSuQA=;
-	b=hVo/tOEwPdY6RiCwPEm1OkJ1sspwnKAz/1skDAIP5FeyW+Qm84UtNlsOFN0s+VEFRC5i
-	 BNlodsRUaoNh2qOTZKrPw+nb5UxJ5SFDMCZupOOIXzobA/sp4p5LJJIlOZZ/PdPDstEtI
-	 jRZbUO8olgdphHD6Uf9qA9srxDjJ0MdV4P5ONB0G+SxZ/pzNoPABckCVGS+ZAxvH6Qx/e
-	 1SVnRTayoIaBVIN6iAkSC2kxAm9KwUnjuh3j6Ny3JJXSaNKNpH1TIgEsSRICMUe8jj4nE
-	 wk8vfz6xAEAEaVf3gT8V2soyNzK9c6NXvw71RLHbakj7AE7LOldDTmo77ORNXXBLNqQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=pHyp2ujQIAxC8Tjyc7sBKzJtpBIoFM0sXbVQKcY5Wog=;
+	b=UNzAUlv4DL3FIJw59SnA6sINB94QrX6Ew2lGhqUOrW3YmsHlGxn7Boeau4i1QzXXtKI/
+	 On1ISQ+0RyUwrkCCAxret4kGnCUvAVm1LqiIjwalDuyVvvOVaHm0n3IozZYECTmfJGJpO
+	 KJKU8Erjw6FTjlbJE5IIk1cINF6gJhAegsRnpJ5NtYmkPS/ghbyT2LmuKJsB/gXd3Pwwr
+	 bw2LMgeQ29UAOBOzq31HPzBqVGPlMw8Ups1v9mjHo2CcnyrHHGwcg2OCdxQk6rDQUoeAF
+	 0LrdNSdbYzyJ0bP2zTugsDBZzrBBPTYQuVi3BoaOX9AbpAsI83HBGXv7jsVCK3yIzGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iTHlUnvY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hSuCUDE7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2EEE60A261D;
-	Wed, 18 Nov 2026 15:38:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8375606A338;
+	Wed, 18 Nov 2026 15:38:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iTHlUnvY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16E5D1F000C4;
-	Wed, 18 Nov 2026 15:38:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hSuCUDE7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE6E01F000C4;
+	Wed, 18 Nov 2026 15:38:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016317;
-	bh=nkgXAjniqhq9fVRafsP/tauONyRC+1VuEWwTFfPSuQA=;
+	s=korg; t=1795016320;
+	bh=pHyp2ujQIAxC8Tjyc7sBKzJtpBIoFM0sXbVQKcY5Wog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iTHlUnvYA1aOA3fKoR+5Q6uwP54nBHZmIPYrJ0SXhKHk8FktYgOeKzZrv9WsOoNZA
-	 HqxO8k0kYPeajiei+VjWuA8FaObjblp0qi7BsoGd+02oNq85GXRdWVwnOnEAkewznx
-	 4dG+hwmfoJOWKxTGjCwLFAEeJI8BxrZQJWbHolvs=
+	b=hSuCUDE76IZqgnETxEJpBVnrS5cBwQvpAdQ3isyP8H0uwcbGg8xAhjFTrtryyXBt0
+	 rP1WKgE07V+POjVI6uMRSXe+YTHWe7ft90tXZAFngxmGSoN6O9ZCgz5m4QKHJtyCuq
+	 tUS8TMfLsSn4Eqr9hMQl+Fwvw7k48ecYLS3FuusU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xueqin Luo <luoxueqin@kylinos.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Luka Gejak <luka.gejak@linux.dev>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0487/2651] platform/x86: Add ACPI_COMPANION() NULL check in topstar_acpi_probe
-Date: Wed, 18 Nov 2026 15:28:47 +0100
-Message-ID: <20261118150305.312411387@linuxfoundation.org>
+Subject: [PATCH 7.3 0488/2651] wifi: rtw88: sdio: zero the padding added to a TX transfer
+Date: Wed, 18 Nov 2026 15:28:48 +0100
+Message-ID: <20261118150305.347196354@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,52 +62,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xueqin Luo <luoxueqin@kylinos.cn>
+From: Luka Gejak <luka.gejak@linux.dev>
 
-[ Upstream commit 17d0f874b1f8774c61ad495a4ad20ed8c829dfae ]
+[ Upstream commit b81ead28aeb1fd9bc3b0de4e20342b6b538ac658 ]
 
-Add NULL check for ACPI_COMPANION() in topstar_acpi_probe() to prevent
-NULL pointer dereference when driver_override matches a device without
-ACPI companion.
+rtw_sdio_write_port() rounds the transfer up with sdio_align_size() and
+then hands that length to sdio_memcpy_toio() while the skb still only
+holds skb->len bytes. The difference, between one and 511 bytes, is read
+from beyond the end of the frame and transmitted. Whether it stays
+inside the skb's allocation depends on how much tailroom the skb happens
+to have, so this is at best sending uninitialised memory over the air.
 
-Fixes: 3471415c8186 ("platform/x86: topstar-laptop: Convert ACPI driver to a platform one")
-Signed-off-by: Xueqin Luo <luoxueqin@kylinos.cn>
-Reviewed-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/20260811022115.338595-1-luoxueqin@kylinos.cn
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Pad the skb up to the transfer size first. __skb_pad() zeroes the added
+bytes, reallocates a cloned skb rather than writing into a buffer a
+clone still shares, and leaves skb->len alone, so nothing else in the
+transmit path has to change.
+
+It must not free the skb on failure: rtw_sdio_write_data() frees the skb
+itself and rtw_sdio_process_tx_queue() requeues it, so both callers
+still own it and would double free.
+
+Found while reworking this path for the RTL8723BS. Measured on RTL8723BS
+hardware, padding the transfer costs about 2% observable over transfer:
+uplink is 19.5 to 19.8 Mbit/s padded against 20.9 to 21.1 Mbit/s unpadded
+in an interleaved A/B, with scans, reconnection and a UDP flood clean in
+both. The other SDIO parts sharing this path are untested; I have only the
+RTL8723BS.
+
+Fixes: 65371a3f14e7 ("wifi: rtw88: sdio: Add HCI implementation for SDIO based chipsets")
+Signed-off-by: Luka Gejak <luka.gejak@linux.dev>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260909074556.55709-5-luka.gejak@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/topstar-laptop.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw88/sdio.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/platform/x86/topstar-laptop.c b/drivers/platform/x86/topstar-laptop.c
-index 0e842c55dcc52..730a599abf0f7 100644
---- a/drivers/platform/x86/topstar-laptop.c
-+++ b/drivers/platform/x86/topstar-laptop.c
-@@ -287,10 +287,14 @@ static const struct dmi_system_id topstar_dmi_ids[] = {
- 
- static int topstar_acpi_probe(struct platform_device *pdev)
+diff --git a/drivers/net/wireless/realtek/rtw88/sdio.c b/drivers/net/wireless/realtek/rtw88/sdio.c
+index 5b40d74b16ee0..8466abad972af 100644
+--- a/drivers/net/wireless/realtek/rtw88/sdio.c
++++ b/drivers/net/wireless/realtek/rtw88/sdio.c
+@@ -636,6 +636,7 @@ static int rtw_sdio_write_port(struct rtw_dev *rtwdev, struct sk_buff *skb,
+ 			       enum rtw_tx_queue_type queue)
  {
--	struct acpi_device *device = ACPI_COMPANION(&pdev->dev);
-+	struct acpi_device *device;
- 	struct topstar_laptop *topstar;
- 	int err;
+ 	struct rtw_sdio *rtwsdio = (struct rtw_sdio *)rtwdev->priv;
++	size_t pad_size;
+ 	bool bus_claim;
+ 	size_t txsize;
+ 	u32 txaddr;
+@@ -646,6 +647,17 @@ static int rtw_sdio_write_port(struct rtw_dev *rtwdev, struct sk_buff *skb,
+ 		return -EINVAL;
  
-+	device = ACPI_COMPANION(&pdev->dev);
-+	if (!device)
-+		return -ENODEV;
+ 	txsize = sdio_align_size(rtwsdio->sdio_func, skb->len);
++	pad_size = txsize - skb->len;
 +
- 	dmi_check_system(topstar_dmi_ids);
++	if (pad_size > 0) {
++		/*
++		 * __skb_pad() must not free the skb on failure: both callers
++		 * still own it, one requeues it and the other frees it.
++		 */
++		ret = __skb_pad(skb, pad_size, false);
++		if (ret)
++			return ret;
++	}
  
- 	topstar = kzalloc_obj(struct topstar_laptop);
+ 	ret = rtw_sdio_check_free_txpg(rtwdev, queue, txsize);
+ 	if (ret)
 -- 
 2.53.0
 
