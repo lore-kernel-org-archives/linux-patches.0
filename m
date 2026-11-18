@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022079;
-	b=Dy1JS9h79lw+5MQwsgB1QtxC6azWB80W/R2pvbLLDxkZu6hLoX49PaDmpB5oAbpvaN2/
-	 lZchOctH4bJjZtNIkuMKAdzFcd560zD8jksbcISQKdYz48Oxx8xULBIL+EbtTdWufJDV6
-	 0vGeGt7+rXJZUzcna4QJMBsE+cYReChYwdGq67eXzM/IPqV5izMJd+wpQ+nsGg0wTH6CA
-	 wZurvko06sJgvxy7fBUTOG2Kwx5V1VP2ScLXYxBA4eMNP4CgwmOR5pqmV7ZX04Fjltk9K
-	 15gvlvDfIdpwdwO4A3B3wgeZkgbdolG5BGPaF64F2bZDvOFqMhgJnrjWq+WuE8QIZfw==
+	t=1795022082;
+	b=cbnJkhT4qjKm7mELjXhTOkjRpJHrE978HB5F9l/5fpZI9sRZcnYL/6wDE+J56ySKyTdl
+	 SPc5PC8/O3RQrdQx48UVkXXEE59K2b4Kpe5ktex634cHRETrWryFTn9Mlfh132gZVgX0A
+	 FxvquOmKtvQlmsxU4MU2VktFZk0T9o0K5JXcVRGgUG6KtBYfGbgOMkejxd5JPTZoiWy8t
+	 H2C4v1SA9vGf29kLnjmH0FbiDSDhs5syNn3fWWKuWHkUpmKVPvpFMr1wwzUz6nyeq/x1K
+	 j3rcMV0NK0LY8OkPcJkLh4Hxtbkqln/dIHrebUqCAhNTe9Uf9aC7TyNIMZkjfaUUUNg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022079;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022082;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+RGYfmGWuvNOoCiYuGSxvCYbGgEjXNYxTwbThD4MZmk=;
-	b=gfR874JNLwkx+4dDyt821RfEMXJA+0XfE5N/GowiWxM1TLF4C31TYVY9i1uBFsmd2Vln
-	 amzBjmaLXIJ+eVrBUAe0KKo/MfeCgezEyCqOI12tzOW2Rm3mFUGI2gei65eN5kYIx2JQa
-	 PpqhMy/U0rXWu4v1hsjVWMK2ZmMfy4XAQex/kMCZmGlr2aAszTAe/sLwszWxqCEwrPgGL
-	 ZlK7lIA0cMiwcXlSE+RYmLOPTMgISey4zvN8B2KcPxA+/O99KdrzZxJHZ+U/ZWdDlof8T
-	 55vFo9iSXTF1Rd88CPg0PsCRe/wsMESLPlxyW54HDaUxnaCB0itJzrslGJFjbbHyIxw==
+	bh=TFwFdo0TecpC7S5u1/R+P6YGgPqOiaHdeNBeUlA9IK4=;
+	b=pJ4fgHT9OhBBWVJxuyduCpAG4Q36ZvnwgcLFPi3K+cAag4Q7Ow6qAM/I5ngbwUBAJGVT
+	 X6KBZEzLGJ/knYNj17PUa+CyxlELEMrLRdTqp1N1Ct3y4NG6hMN/LZ8KwaUlXkxeXqBkB
+	 k98kD0iqz66MUoqz9QdJso1rG1Ssjz3UD20K1Ese+YvJ2Hy3TM3HlYF7DaJcPr222EkIJ
+	 7bfw3GL9gI82UfitfI3dfB3bERsZi92WHga45ZhatwtNDLp+nc8fenM5/QBNUS7njxnqV
+	 t4b6SvYKtBksUOvOVArYWLU9wUA+qD5KdG1qpJhzilmbuLxiIPSIJcfMJ8vtlsNuZpA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tWRqt3jP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jt9AcO7t;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44766606A32A;
-	Wed, 18 Nov 2026 17:14:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E40D606A320;
+	Wed, 18 Nov 2026 17:14:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tWRqt3jP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95DDC1F000C4;
-	Wed, 18 Nov 2026 17:14:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jt9AcO7t
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F2C61F000C4;
+	Wed, 18 Nov 2026 17:14:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022079;
-	bh=+RGYfmGWuvNOoCiYuGSxvCYbGgEjXNYxTwbThD4MZmk=;
+	s=korg; t=1795022081;
+	bh=TFwFdo0TecpC7S5u1/R+P6YGgPqOiaHdeNBeUlA9IK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tWRqt3jPEwVI4lFi2rEtNMsgN9BEvYS0ZrC6gdU383e5e8cE1P0iZOyeSd5tFSZO6
-	 01nQ9Xy8bBC7TBVX3bZ49xn5bDoTcpNXlMCVr/job6inOwlJFHKVegc/pITiOsSTJW
-	 rMNKbn90O27hw3MQPgEbnzRAcjfK+nYBMi5DEF4M=
+	b=Jt9AcO7tpNN9gFM5NkwQGSxPvjU95SqVuwzfhZ7kVCcw8zveT9mpA7D6UVCpfzpnO
+	 1vPUonzzT8Tc28AK4kW/APPXUPUPl1cgemEhde+UycLbwduG+Hu6sNV8ANbbTpNzvG
+	 Yomcz8UYUaiW7HGNThO1SEnRdpwt2e9MKcDZmCeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Naveen Kumar Chaudhary <naveen.osdev@gmail.com>,
-	Douglas Anderson <dianders@chromium.org>,
 	Daniel Thompson <daniel@riscstar.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2532/2651] kdb: fix memory leak in kdb_setenv() when environment is full
-Date: Wed, 18 Nov 2026 16:02:52 +0100
-Message-ID: <20261118150415.768121108@linuxfoundation.org>
+Subject: [PATCH 7.3 2533/2651] kdb: unify CMD_BUFLEN definition into kdb_private.h
+Date: Wed, 18 Nov 2026 16:02:53 +0100
+Message-ID: <20261118150415.796763954@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,35 +70,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
 
-[ Upstream commit 22d59ccad2935b7dea7f818793b739343de433a8 ]
+[ Upstream commit 2a052074582d976bfa81e41a0337d8ae6dd1dc65 ]
 
-When kdb_setenv() fails to find a free slot in __env[], the function
-returns KDB_ENVFULL without freeing the previously allocated string
-buffer 'ep', leaking memory on every failed call.
+CMD_BUFLEN was defined separately in kdb_io.c (256) and kdb_main.c
+(200), causing kdb_main.c to use the wrong size when formatting the
+prompt string into kdb_prompt_str (which is 256 bytes).
 
-Add the missing kfree(ep) before returning KDB_ENVFULL.
+Move CMD_BUFLEN (256) into kdb_private.h so all users share a single
+consistent definition, and remove the local definitions from both
+files.
 
-Fixes: a30d4ff8193e ("kdb: remove usage of static environment buffer")
+Fixes: 5d5314d6795f ("kdb: core for kgdb back end (1 of 2)")
 Signed-off-by: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/mbwhul34esbxkdbmlbjaquv5lgyzznn6pdapohry3lsiidbz6n@zucvm5os363q
+Link: https://lore.kernel.org/r/l6b6bomrw3bvkehlv73fyghk6loz6jpdwqk5c4nthnhl7j7kzk@4jjhfpzv5zon
 Signed-off-by: Daniel Thompson <daniel@riscstar.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/debug/kdb/kdb_main.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/debug/kdb/kdb_io.c      | 1 -
+ kernel/debug/kdb/kdb_main.c    | 6 ++----
+ kernel/debug/kdb/kdb_private.h | 3 ++-
+ 3 files changed, 4 insertions(+), 6 deletions(-)
 
+diff --git a/kernel/debug/kdb/kdb_io.c b/kernel/debug/kdb/kdb_io.c
+index c399f11740ef3..f5b1b7d4c9c87 100644
+--- a/kernel/debug/kdb/kdb_io.c
++++ b/kernel/debug/kdb/kdb_io.c
+@@ -22,7 +22,6 @@
+ #include <linux/kallsyms.h>
+ #include "kdb_private.h"
+ 
+-#define CMD_BUFLEN 256
+ char kdb_prompt_str[CMD_BUFLEN];
+ 
+ int kdb_trap_printk;
 diff --git a/kernel/debug/kdb/kdb_main.c b/kernel/debug/kdb/kdb_main.c
-index ddce56b47b25a..31abaea5454e6 100644
+index 31abaea5454e6..40c332d2179d8 100644
 --- a/kernel/debug/kdb/kdb_main.c
 +++ b/kernel/debug/kdb/kdb_main.c
-@@ -338,6 +338,7 @@ static int kdb_setenv(const char *var, const char *val)
- 		}
- 	}
+@@ -784,8 +784,6 @@ static int kdb_exec_defcmd(int argc, const char **argv)
  
-+	kfree(ep);
- 	return KDB_ENVFULL;
- }
+ /* Command history */
+ #define KDB_CMD_HISTORY_COUNT	32
+-#define CMD_BUFLEN		200	/* kdb_printf: max printline
+-					 * size == 256 */
+ static unsigned int cmd_head, cmd_tail;
+ static unsigned int cmdptr;
+ static char cmd_hist[KDB_CMD_HISTORY_COUNT][CMD_BUFLEN];
+@@ -1266,8 +1264,8 @@ static int kdb_local(kdb_reason_t reason, int error, struct pt_regs *regs,
+ 
+ do_full_getstr:
+ 		/* PROMPT can only be set if we have MEM_READ permission. */
+-		snprintf(kdb_prompt_str, CMD_BUFLEN, kdbgetenv("PROMPT"),
+-			 raw_smp_processor_id());
++		snprintf(kdb_prompt_str, CMD_BUFLEN,
++			 kdbgetenv("PROMPT"), raw_smp_processor_id());
+ 
+ 		/*
+ 		 * Fetch command from keyboard
+diff --git a/kernel/debug/kdb/kdb_private.h b/kernel/debug/kdb/kdb_private.h
+index 92a28b8ab604e..722e8aa50724b 100644
+--- a/kernel/debug/kdb/kdb_private.h
++++ b/kernel/debug/kdb/kdb_private.h
+@@ -225,7 +225,8 @@ extern void kdb_kbd_cleanup_state(void);
+ #define kdb_kbd_cleanup_state()
+ #endif /* ! CONFIG_KDB_KEYBOARD */
+ 
+-extern char kdb_prompt_str[];
++#define CMD_BUFLEN 256
++extern char kdb_prompt_str[CMD_BUFLEN];
+ 
+ #define	KDB_WORD_SIZE	((int)sizeof(unsigned long))
  
 -- 
 2.53.0
