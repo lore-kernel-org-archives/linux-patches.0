@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022909;
-	b=EyfWyaGkuoX1ThyIAOS3ZZatg5dYmlCgMTCmKesRI8JWeQUGKxjyK7vRetO5ePyqzbH2
-	 NMGYKhiMJll9quBXkGD9UrNDnbun0JMcaVt8zyYH46fwdkSpES3/FcGrxQ8lT/KVMb9O6
-	 R7b1hCBbZAbu06kb5ysOOqvpF2piBvxgtgRoq9dlYXu6qLypIamyDQeLHxMuVjuYkLC0o
-	 WyEPo4yF3SmAigAd+nV1Z12vSrYd27D+BTajWTJTnWaEleSPQVC3UHPIWkA+EiYYmfxqw
-	 8ejDVrTB/H6Q3rfh2QKIZvnv/w0WYH3Ma9+88DgI0DaER8vLB8TVko8MlDJ5l3LQNOA==
+	t=1795022912;
+	b=taM9bWVoazCHeisO64PotmF34/3qPQhkyq02IvrL43P40apbeQBgyCGUr+GRsQnfqZ2R
+	 cvvn/KD1Jq0pzkaQxDNCKubxfUlvjbPn+V8KaBlwAkmfYxQfYoFBMTNjbfJTZWWP5rfHI
+	 Vt0Q04ImLAL3UZcRyaxGemfMTa0q4xU4J5yhPGMalBJm0QUlhcn7yIgKQTdEvR3+IAxTB
+	 +Dx1ESfgpBsFkrp+ywjN/nNdCaavNJj3fId84h9vpCQ0YVFNaUQPes8QvtpSTfaH3Aido
+	 q248CaFFNeSHA8pLBWCpfcoZk62M+Uj2XeCzD77yP7Pgi58op3m1AsajEOTkGWX126Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022909;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022912;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=54/X4mDSIXkQgOIHN/qllQQjIToxMYXxIHgr/G5s3Ow=;
-	b=F81B0DXj8gIfdYLrdAxw0RyP1gYc2xCzmhisq50nCqIZ0ZNEKC40Qb2qjRnfvwKfn1lZ
-	 90BsOv55GsOg+jTMRTU5YQbLpliOtdbZ4fUYwygr+3DBCwP67Bj4xM48aTMncGNtnT4hq
-	 cMGUcyp+4cpgrHyxqQV2DJ/++nhJoTvavVnl1lJVY2dirqwSZcBgrK0fzUoKHNEkg76Q8
-	 T3cElvxeRwfnliTFQLq5kHxgPkwi+gXXGqDdZp2exmBEEQ3yJkx7SCNbwySglzLE/pZmL
-	 p5fjtjrtGKzKQAQFP9qDIEc9NcL3PJ8bUWkmeG49/t5P3SWHszHFUPsH6af9GeScoZQ==
+	bh=kbvIdErdAy/ssvp6WLYkfOowJrtyOB26EPQhoDnb+FE=;
+	b=oWXmDga31NIuUwVw6Wv14iUvM3kGU0R+GlPZQW7PTDeu7MEFx+LYKNCrLX+uBb4Y2AoS
+	 zQ9EZcPAD/4Np9PbsPYBqDDIPlS+17AwqZ+4TCUelyxB1Q3IIkdD+gs2kUCV7gR7Srhfv
+	 ZDRFVZc23hNuDaes9ZIoLc0A0S5FV6OyWXLi3Pme9+FX8TkYpYg+QP/Xynz8yyLjd3Ns2
+	 t+Ay6+yLzF/7K4G/Doyn1CQHtfYSg435pEVXIWGsn2b5APxXtDS3kkangYPgnGmf8/YXt
+	 ahByO56RacTDK5XjpeEjq0ytXEZmukeWt4+FKYvFMHsEDBsZKDvKH1hyjUh36/x7Zig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rSK2FtpT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AdbF74Wr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E8E606A748;
-	Wed, 18 Nov 2026 17:28:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79190606A755;
+	Wed, 18 Nov 2026 17:28:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rSK2FtpT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F28801F000C6;
-	Wed, 18 Nov 2026 17:28:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AdbF74Wr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA071F000C7;
+	Wed, 18 Nov 2026 17:28:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022909;
-	bh=54/X4mDSIXkQgOIHN/qllQQjIToxMYXxIHgr/G5s3Ow=;
+	s=korg; t=1795022912;
+	bh=kbvIdErdAy/ssvp6WLYkfOowJrtyOB26EPQhoDnb+FE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rSK2FtpT8Ju78zviQHmCDJWpl5a4916rTYVvZuxQwK4FHnLYYWn2ZUmRuX2sXaokg
-	 GivTihKhprL/RlvYyqzT16BALXXEA/laWGbEfGWXHztk2E25/T3j15ipVWTIKqn9mJ
-	 JeAaaMMenDHroEBL/kX4E14j3foE37YNPT2MhbH0=
+	b=AdbF74WrYseRJLAf6ugAP3CtYFDiRL4Vyi+4sZy3o5Yz1rURh0ZPr1NJPpbGqXNLr
+	 eDtSxp8ib2nhQkfhSbLh7Hr2uLV25EXCa32iP381l1sWgPD4oC2lZaltBcEzuvCVYP
+	 1YcHFqlubTI2dq2CRbvDDiv8IA1UtdyoS1gZbWNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Cai Xinchen <caixinchen1@huawei.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0179/2151] dt-bindings: clock: qcom,milos-videocc: Add missing power-domains support
-Date: Wed, 18 Nov 2026 15:31:54 +0100
-Message-ID: <20261118150128.252626756@linuxfoundation.org>
+Subject: [PATCH 6.18 0180/2151] lsm: dont call security_backing_file_free() multiple times
+Date: Wed, 18 Nov 2026 15:31:55 +0100
+Message-ID: <20261118150128.286904901@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,77 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taniya Das <taniya.das@oss.qualcomm.com>
+From: Cai Xinchen <caixinchen1@huawei.com>
 
-[ Upstream commit 3da90acddd2f211549032e9fdad40a5879803442 ]
+[ Upstream commit 3a84fc1a21577dbc8da7e4b6a49c9d8b07c07000 ]
 
-The Milos video clock controller requires the CX and MX power
-domains, along with their performance state votes, to be enabled
-before the clock controller can be accessed.
+I found the following path:
 
-Document the 'power-domains' and 'required-opps' properties and add
-them to the required properties list and example. Since these
-properties become required for the already-documented
-qcom,milos-videocc compatible, this is an ABI break for any devicetree
-using this binding without specifying them.
+alloc_empty_backing-file
+    init_file(&ff->file, xxx)
+        -> file_ref_init(&f->f_ref, 1); // only 1
+    error = init_backing_file
+        -> security_backing_file_alloc
+        -> rc = call_int_hook(backing_file_alloc, ...)
+           if (unlikely(rc))
+           	security_backing_file_free(backing_file); // first call
+    if (unlikely(error)) {
+        fput(&ff->file);
+         -> if (unlikely(file_ref_put(&file->f_ref))) // zero
+                __fput_deferred(file);
+                 -> ____fput -> __fput -> file_free(file);
+                 -> backing_file_free(backing_file(f));
+                 -> security_backing_file_free(&ff->file); // second call
 
-Fixes: a4937e974186 ("dt-bindings: clock: qcom: document the Milos Video Clock Controller")
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260806-eliza-mm-cc-v9-v10-2-6ba52dd14343@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Currently, only SELinux has the lsm backing_file_alloc hook, and it always
+return 0. When security_backing_file_free is called for the first time,
+the blobs pointer is set to NULL. Therefore, double free will not occur in
+the code.
+
+Fixes: 6af36aeb147a ("lsm: add backing_file LSM hooks")
+Signed-off-by: Cai Xinchen <caixinchen1@huawei.com>
+[PM: subject line tweaks]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bindings/clock/qcom,milos-videocc.yaml    | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ security/security.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,milos-videocc.yaml b/Documentation/devicetree/bindings/clock/qcom,milos-videocc.yaml
-index 14c31efe1308a..4d8d109cd304e 100644
---- a/Documentation/devicetree/bindings/clock/qcom,milos-videocc.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,milos-videocc.yaml
-@@ -26,9 +26,21 @@ properties:
-       - description: Sleep clock source
-       - description: Video AHB clock from GCC
+diff --git a/security/security.c b/security/security.c
+index 9285909908ab8..a611a63af574b 100644
+--- a/security/security.c
++++ b/security/security.c
+@@ -3040,9 +3040,8 @@ void security_backing_file_free(struct file *backing_file)
+ {
+ 	void *blob = backing_file_security(backing_file);
  
-+  power-domains:
-+    items:
-+      - description: CX power domain
-+      - description: MX power domain
-+
-+  required-opps:
-+    items:
-+      - description: CX performance point
-+      - description: MX performance point
-+
- required:
-   - compatible
-   - clocks
-+  - power-domains
-+  - required-opps
- 
- allOf:
-   - $ref: qcom,gcc.yaml#
-@@ -38,6 +50,7 @@ unevaluatedProperties: false
- examples:
-   - |
-     #include <dt-bindings/clock/qcom,milos-gcc.h>
-+    #include <dt-bindings/power/qcom,rpmhpd.h>
-     clock-controller@aaf0000 {
-         compatible = "qcom,milos-videocc";
-         reg = <0x0aaf0000 0x10000>;
-@@ -45,6 +58,12 @@ examples:
-                  <&bi_tcxo_ao_div2>,
-                  <&sleep_clk>,
-                  <&gcc GCC_VIDEO_AHB_CLK>;
-+
-+        power-domains = <&rpmhpd RPMHPD_CX>,
-+                        <&rpmhpd RPMHPD_MX>;
-+        required-opps = <&rpmhpd_opp_low_svs>,
-+                        <&rpmhpd_opp_low_svs>;
-+
-         #clock-cells = <1>;
-         #reset-cells = <1>;
-         #power-domain-cells = <1>;
+-	call_void_hook(backing_file_free, backing_file);
+-
+ 	if (blob) {
++		call_void_hook(backing_file_free, backing_file);
+ 		backing_file_set_security(backing_file, NULL);
+ 		kmem_cache_free(lsm_backing_file_cache, blob);
+ 	}
 -- 
 2.53.0
 
