@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015336;
-	b=Us/V+5O0SVcyOU3wxP/mRHJ2TpsPFOSXcTBUeC9anIuEbeQH+Fg9zaYuttVuTaLwHdHi
-	 xhiWNN52nnyRMaSumwfcBde5it1Elaoh2A8uYdYkAuthPN4HAHSEm5Thf3fSwTemEKUTb
-	 fpUtLg4xHfiCi8NC9t49Wb5hIMeY67/pWaSkBMrM5aDmM4a9aD8i+YZIIl+PnFSfhmY78
-	 nIp428+SYoCBUsUfjUFc/a+AIC/RIWbWcIbqBW0Osm3Krm8kmBfGun042WvtdeUm/W7rW
-	 PKnAYdU4p0QSBtDKTczB2feM/8wrE2O/QYrLkWWbFbZKjMcO+QpnjTVJTDkhsBzRI6w==
+	t=1795015339;
+	b=PjABV9szB+1IX4qIjsLWDPAC/n7Pn6UXp/MQPzahnsoX6x8R83994ZXQoOPCeacwtMQ6
+	 wAgyHdiU9xfMzLBQy/qzBIy25xpBB1qnuH+d2325Rqf+93b4eIDBXypZxOXmJo1R8W9P3
+	 pgfMMRBZUMnhV4cqSmqsEtS3CdjxkE3HciT794oqM1So7xDSuAgUzg56rA8FslIQESq0C
+	 0k9NjK5Z5w/yMwgFJBqjCph57vR28Y2jrcYaHZ7JQaarZr457qKHWO8vnSWAXxNzRTB6U
+	 JwWH0859eGm7IlOdDW5QAjSLXqo3oXztHKbqDtsLc+7Bem68ifyZ0XqasGKuMa02kpw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015336;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015339;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=FB91Vwca4OHBf5SYpAzWSkeJ4FgEND9Q+HIHAUo1TrA=;
-	b=eaIYkjZD3oHa5QOPapweYQBtaQ1uY+yhQT6YGOD0DL3m1s2HT9p6KmsIPTL0jLn9YT19
-	 zZFLxMoqAH50aTh16waeVhyMdA31OFDeW4FENukVnViq3GcX37M/KXUwtWh/pIYQQCHkK
-	 VTmZLxLRmI96wkg68Pv2zw7Y8Go4xANwakxFpBye+NiWxZOfADmoWhCrdrPZWNrphTXmf
-	 lNeFdpbkIVEDBuq06B3jPx41IWmxqzOSRhYml5jF7D8STgv43Ky93POZRqf55zipHxaHZ
-	 J7qKWya+WqN6rAucHn0UGyyHKnCh6kbqBgwBq35/L6+NcAcKit6hObqAtymCfiKh0KA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=7NTEn5yyFy2BP4P5UF03hLwOtVdnZppMc4TtPYSS1yM=;
+	b=dAVDjKvaqqm6CChBGaXUSQ1ZdSUIKg4L7CWBALx3q+E+iGO+mTnZA+HAlVWjXAKLwq3Z
+	 wH34FG2VHtJ9JF1FOIuHVFcXazWewEIJJcBCQ5TUB2qrEEfeWLK0TaidhxbOWtuGVDXKg
+	 hTOwiAIhHIIYc36ybLhx3trbxopzg9f67oB9MVWR5eMGQ2A6Ji2v0tFH4wwpXOHsFMtHn
+	 0oGlkzesAf6zPN9KJOa5uo+TeLaW3Yrx2MjNzk8DstwWUN7RmIkicTqW6GW3aiwdzLCxM
+	 VngUH7jLouJgQoRMeLvKtkhnDhwXxsD5C3pu453Rj/R9Hdc6eEG2F8wYWRv+KYAzJKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tGxS+4WG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1Nl736Lt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6E0D606A335;
-	Wed, 18 Nov 2026 15:22:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E7F960A2621;
+	Wed, 18 Nov 2026 15:22:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tGxS+4WG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECF2E1F000C9;
-	Wed, 18 Nov 2026 15:22:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1Nl736Lt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD8611F00925;
+	Wed, 18 Nov 2026 15:22:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015336;
-	bh=FB91Vwca4OHBf5SYpAzWSkeJ4FgEND9Q+HIHAUo1TrA=;
+	s=korg; t=1795015339;
+	bh=7NTEn5yyFy2BP4P5UF03hLwOtVdnZppMc4TtPYSS1yM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tGxS+4WG9zw0YkwJsdJk4lu1uihI6KNiycu/MJ3Vyy+HH84hrmAgnTwREVdT4AEV2
-	 cQFGHVbUoYaIEHRcepUu8IZtWIvV9njEQ/ifnhH74KnevxIXnGFYnkLbsPO8m/nUtw
-	 P4QZMThqZMwnsEgzfs3xIRCLrOAKjj1y3VtAUObo=
+	b=1Nl736LtwU0C5Ar/cBFydL5fMGZTeJolo5S3M3MYmNn00DSVObz5NTyuNGLbi4mEt
+	 up/vAQAz5Ao6INovqnFGtKOcCRJBUQuew4Uvuh1jYJTYu5wg845ScVfpXAYPRVt3GL
+	 VhO+glhkAcPIKYMmPzg/rcQkGIuDNmTUOPCeTSpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0137/2651] pwm: renesas-tpu: Fix runtime PM reference leak
-Date: Wed, 18 Nov 2026 15:22:57 +0100
-Message-ID: <20261118150252.782540361@linuxfoundation.org>
+Subject: [PATCH 7.3 0138/2651] spi: omap2-mcspi: Remove unbalanced pm_runtime_put_sync() calls
+Date: Wed, 18 Nov 2026 15:22:58 +0100
+Message-ID: <20261118150252.818895722@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,104 +62,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 62cff15fbf2b12ebbb0b01ca720030c2bc12aed1 ]
+[ Upstream commit 5f01cb141169fe422c42279f7d502479b1ff9fd2 ]
 
-tpu_pwm_timer_start() used pm_runtime_get_sync() without checking its
-return value before touching the TPU clock.  A failed runtime resume was
-therefore ignored, and the callback continued into register access.
+pm_runtime_put_sync() is called in the probe error path and in remove
+when nothing holds a runtime PM reference anymore, so it underflows
+the usage count.
 
-Use pm_runtime_resume_and_get() and propagate a failed resume.  Keep the
-matching put when clock preparation fails after a successful resume.
-
-tpu_pwm_disable() also needs to propagate a failed start so that the PWM
-apply callback does not access registers while runtime PM is inactive.
-
-This issue was found by a static analysis checker and confirmed by manual
-source review.
-
-Fixes: 99b82abb0a35 ("pwm: Add Renesas TPU PWM driver")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Link: https://patch.msgid.link/20260814134143.1388120-1-ruoyuw560@gmail.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Fixes: 0e6f357a5deb ("spi: omap2-mcspi: Fix PM regression with deferred probe for pm_runtime_reinit")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Link: https://patch.msgid.link/20260826-mcspi-v1-1-0a8dd7f6dd56@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-renesas-tpu.c | 23 ++++++++++++++++++-----
- 1 file changed, 18 insertions(+), 5 deletions(-)
+ drivers/spi/spi-omap2-mcspi.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/pwm/pwm-renesas-tpu.c b/drivers/pwm/pwm-renesas-tpu.c
-index 140fd0bcb93f3..e35f2e14777dd 100644
---- a/drivers/pwm/pwm-renesas-tpu.c
-+++ b/drivers/pwm/pwm-renesas-tpu.c
-@@ -149,10 +149,14 @@ static int tpu_pwm_timer_start(struct tpu_pwm_device *tpd)
+diff --git a/drivers/spi/spi-omap2-mcspi.c b/drivers/spi/spi-omap2-mcspi.c
+index a3355147f5de5..82c8b91e504e7 100644
+--- a/drivers/spi/spi-omap2-mcspi.c
++++ b/drivers/spi/spi-omap2-mcspi.c
+@@ -1595,7 +1595,6 @@ static int omap2_mcspi_probe(struct platform_device *pdev)
  
- 	if (!tpd->timer_on) {
- 		/* Wake up device and enable clock. */
--		pm_runtime_get_sync(&tpd->tpu->pdev->dev);
-+		ret = pm_runtime_resume_and_get(&tpd->tpu->pdev->dev);
-+		if (ret < 0)
-+			return ret;
-+
- 		ret = clk_prepare_enable(tpd->tpu->clk);
- 		if (ret) {
- 			dev_err(&tpd->tpu->pdev->dev, "cannot enable clock\n");
-+			pm_runtime_put(&tpd->tpu->pdev->dev);
- 			return ret;
- 		}
- 		tpd->timer_on = true;
-@@ -382,15 +386,21 @@ static int tpu_pwm_enable(struct pwm_chip *chip, struct pwm_device *pwm)
- 	return 0;
+ err_disable_rpm:
+ 	pm_runtime_dont_use_autosuspend(&pdev->dev);
+-	pm_runtime_put_sync(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ err_release_dma:
+ 	omap2_mcspi_release_dma(ctlr);
+@@ -1613,7 +1612,6 @@ static void omap2_mcspi_remove(struct platform_device *pdev)
+ 	omap2_mcspi_release_dma(ctlr);
+ 
+ 	pm_runtime_dont_use_autosuspend(mcspi->dev);
+-	pm_runtime_put_sync(mcspi->dev);
+ 	pm_runtime_disable(&pdev->dev);
  }
  
--static void tpu_pwm_disable(struct pwm_chip *chip, struct pwm_device *pwm)
-+static int tpu_pwm_disable(struct pwm_chip *chip, struct pwm_device *pwm)
- {
- 	struct tpu_device *tpu = to_tpu_device(chip);
- 	struct tpu_pwm_device *tpd = &tpu->tpd[pwm->hwpwm];
-+	int ret;
- 
- 	/* The timer must be running to modify the pin output configuration. */
--	tpu_pwm_timer_start(tpd);
-+	ret = tpu_pwm_timer_start(tpd);
-+	if (ret < 0)
-+		return ret;
-+
- 	tpu_pwm_set_pin(tpd, TPU_PIN_INACTIVE);
- 	tpu_pwm_timer_stop(tpd);
-+
-+	return 0;
- }
- 
- static int tpu_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
-@@ -401,7 +411,10 @@ static int tpu_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 
- 	if (state->polarity != pwm->state.polarity) {
- 		if (enabled) {
--			tpu_pwm_disable(chip, pwm);
-+			err = tpu_pwm_disable(chip, pwm);
-+			if (err)
-+				return err;
-+
- 			enabled = false;
- 		}
- 
-@@ -412,7 +425,7 @@ static int tpu_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 
- 	if (!state->enabled) {
- 		if (enabled)
--			tpu_pwm_disable(chip, pwm);
-+			return tpu_pwm_disable(chip, pwm);
- 
- 		return 0;
- 	}
 -- 
 2.53.0
 
