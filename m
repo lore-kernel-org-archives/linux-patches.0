@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040124;
-	b=XMffHhpK6INyObu13NQRJdSCJKrGs02kP8CojGHgpmIcXQZUCYCeG55QCR2AN2gMk9Ig
-	 BKbE67di1HnxO7ceUBpgETd7Lv6rju5Dg7GfCJ1ALgpcJrapgNVif8m6hfOICFz6Dz75b
-	 fiLGCAM9IQaD9CvZdJFwkisBSuLQABVag5gUcGBU36EVWD0if/sndAXGYqyUDHxhEdbp1
-	 UKCdmsTtL0OdHDb1kIQGLhLU3Wu/b8FzUEFrZ2Wq5cQJ9RJJtci3F1yTqRLTcoDnVj78M
-	 8pNoxR1jFaNtDliI+KGLzoGHwqydT1xb0Qa+QH8+iqIX2FE+4zrCSTy2pk6uZxK5S0Q==
+	t=1795040126;
+	b=4cfF61Uwiaq6bM/gNAeCsbb410dj+JZ796NhQ/uz0LD+GHupRoi20mcvEVdbwR1Yda3O
+	 zIIV/CbW9G/CxKt4GxiKoZlk2yQdKSY1uJKLvcWGcqX1Wa8AdznQlWqe66BaqQUNOAOM/
+	 /CRok0AtjVkvejMRH8uYxSUzL+t1cyL6wpf+DUdC24Byt3IFIgbWmmd12llGVionwFlzk
+	 uto3VuNp+BU1PmLaZ2yzEsPozia2LrEJV6BCqbydXWvGa2QZ7S+nwWVSnxQ/VG07By146
+	 wSu3e4c8CixVoTMqD/BJRzi50YVnYk+7jucHPy6drESjaV1TY8kEid3UPigkmaty3ug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040124;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040126;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8+IdeluatVwNSeJp+zSMgUYMdyGAJUg3VSg4siifI7Q=;
-	b=MmwvhETHkGyGHibMq7J1FjQP3nP/BYfn9zyonYxHL65Hu3ylIYzQDtown9dzh5bJVj30
-	 0L3P7ZR757teZmPue1dNtDpn4W4NeiN/WD2tccvHCLJ77Qa2e9G76hExQ0WUMDXlsFZZG
-	 R2Of4IrYIf4vf9GGOocXtePnj2KZHFck17S4wYKXjapg74QZh6IfaQQpkNfbqBvBubGeM
-	 cnsdF+n45PVR3BmlJ1uYBizKMSOMhFls74RelwIpK3B6fyyWzq88bJvFJedRV5M8qU2u1
-	 d2gCxzR2CsNABky0Ok/3V3zYjij98ltwQEeESb3gfkGBjDR4b0RNApKCV9lfSKJ+8dQ==
+	bh=fkAceajfMcywp6XiDlZOs3sYlQwnTB4hhkb+8FPjREk=;
+	b=3Tfc9QKRsDDOJMHOIXA7TKNgzfPRlMdBtL0h7m7nYYfl26EY1lA1atnF4grGJJjA0xxv
+	 JfyD7g2C/8bg2AI9vpwNF47iMUZL+5v6WQB2hjYG6RZvk9l2r5rdFk6spY9g/VWsQvCri
+	 LRP912+pLTXkjTwRdgjDzwrZDk7aAypVtw675zk7tUivy66oMZLn17TLKPrfnnR9WgH8h
+	 dpEf7aSY0SpdV7wHNHcaoOW966iZi51OSZDiR8GHevSCx1smn1+lBqy3Kb5Up9O7EUtys
+	 WxUcONLQ9bZG+GkYVBKplgjj0VrgdL5ckKug3fZlyS4tKraUJbq8Nc1R2DZJwMdnHwg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WxszoCVb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NW4fTXCD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7666606A32C;
-	Wed, 18 Nov 2026 22:15:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA679606A31C;
+	Wed, 18 Nov 2026 22:15:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WxszoCVb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F1B1F000C4;
-	Wed, 18 Nov 2026 22:15:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NW4fTXCD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAE521F000C4;
+	Wed, 18 Nov 2026 22:15:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040123;
-	bh=8+IdeluatVwNSeJp+zSMgUYMdyGAJUg3VSg4siifI7Q=;
+	s=korg; t=1795040126;
+	bh=fkAceajfMcywp6XiDlZOs3sYlQwnTB4hhkb+8FPjREk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WxszoCVb7tWfk56zrP/M1p+w3LikNC1hICSuY0kgH/mKs2st93R3WiATLVQEsuz2l
-	 ermKkVBIUI6MXeHNuaGzqVv5CIRn1t24J3Vydqf5AkN67iW3EJrCepYdc+9MtTsMWC
-	 ONn77RduskZ/bQ7YpG+lruwgih8/jXhJWA1j9r/o=
+	b=NW4fTXCDPMUmMKD74EuFCY4olyzwui2NjXnkqEUcXFOWXKHJJNoh28e3I/6KiIkZV
+	 A0+PvUQ1edy1hCE8xdnaqcjuRgyAVN3MlqCdGTJAZt4FzaWXHvojTNR7WmPIhDh3xL
+	 e6x3vt0H9Ip/QhBhf2voWyXvNJ6+T8f2pz1GM8MU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <cel@kernel.org>,
-	Prabhakar Pujeri <prabhakar.pujeri@dell.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Slavin Liu <bolin.liu@seu.edu.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2344/3318] NFS: use TCP for MOUNT when xprtsec= selects TLS
-Date: Wed, 18 Nov 2026 15:49:26 +0100
-Message-ID: <20261118150431.947637562@linuxfoundation.org>
+Subject: [PATCH 6.6 2345/3318] ASoC: fsl_asrc: check the second front-end DMA channel
+Date: Wed, 18 Nov 2026 15:49:27 +0100
+Message-ID: <20261118150431.975352974@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,58 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Slavin Liu <bolin.liu@seu.edu.cn>
 
-[ Upstream commit 72233aabc78cd0415c850641bc2a6e4fea23173f ]
+[ Upstream commit b4136c0d69ead737197af741e20edd1c3574f6b4 ]
 
-An NFSv2 or NFSv3 text mount that specifies xprtsec= but no
-mountproto= crashes in nfs_init_timeout_values():
+The temporary Front-End DMA request can fail independently of the
+persistent channel acquired earlier in fsl_asrc_dma_hw_params(). The
+returned NULL pointer is immediately used to read its private data.
 
-  RIP: 0010:nfs_init_timeout_values+0x10a/0x110 [nfs]
-  Call Trace:
-   nfs_mount+0x1c3/0x330 [nfs]
-   nfs_try_get_tree+0x1e5/0x460 [nfs]
-   nfs_get_tree+0x64d/0x6d0 [nfs]
-   vfs_get_tree+0x2b/0xe0
-   vfs_cmd_create+0x5f/0xd0
-   vfs_fsconfig_locked+0x50/0x130
-   __se_sys_fsconfig+0x2f9/0x3a0
+Check the temporary channel and release the previously acquired
+persistent Front-End channel on failure. Clear its slot so a later
+hw_free cannot release it twice. ASoC marks a component's hw_params
+only after success and skips unmarked components during rollback, so
+returning an error alone would leak the earlier channel.
 
-nfs_validate_transport_protocol() sets nfs_server.protocol to
-XPRT_TRANSPORT_TCP_TLS when xprtsec= is present, but the switch in
-nfs_set_mount_transport_protocol() has no case for that value.
-mount_server.protocol stays zero, and nfs_init_timeout_values()
-calls BUG() on a transport it does not recognize.
+Detected by static analysis and reviewed with AI-assisted source auditing.
 
-mount.nfs always appends mountproto= after probing the server's
-rpcbind, so only a caller that bypasses it, such as "mount -i" or a
-program that drives fsconfig() directly, reaches the crash.
-
-Select TCP for MOUNT when the NFS transport is XPRT_TRANSPORT_TCP_TLS.
-nfs_mount() requests no transport security, so MOUNT already runs
-over plain TCP whenever mount.nfs supplies mountproto=tcp.
-
-Fixes: c8407f2e560c ("NFS: Add an "xprtsec=" NFS mount option")
-Signed-off-by: Chuck Lever <cel@kernel.org>
-Reviewed-by: Prabhakar Pujeri <prabhakar.pujeri@dell.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: 3117bb3109dc ("ASoC: fsl_asrc: Add ASRC ASoC CPU DAI and platform drivers")
+Assisted-by: LLM
+Signed-off-by: Slavin Liu <bolin.liu@seu.edu.cn>
+Link: https://patch.msgid.link/20260913125147.109920-1-bolin.liu@seu.edu.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/fs_context.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/fsl/fsl_asrc_dma.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/nfs/fs_context.c b/fs/nfs/fs_context.c
-index 41126d6dcd760..649d27a9398e0 100644
---- a/fs/nfs/fs_context.c
-+++ b/fs/nfs/fs_context.c
-@@ -370,6 +370,7 @@ static void nfs_set_mount_transport_protocol(struct nfs_fs_context *ctx)
- 		ctx->mount_server.protocol = XPRT_TRANSPORT_UDP;
- 		break;
- 	case XPRT_TRANSPORT_TCP:
-+	case XPRT_TRANSPORT_TCP_TLS:
- 	case XPRT_TRANSPORT_RDMA:
- 		ctx->mount_server.protocol = XPRT_TRANSPORT_TCP;
- 	}
+diff --git a/sound/soc/fsl/fsl_asrc_dma.c b/sound/soc/fsl/fsl_asrc_dma.c
+index 91dd85153e83e..7c6f12816deda 100644
+--- a/sound/soc/fsl/fsl_asrc_dma.c
++++ b/sound/soc/fsl/fsl_asrc_dma.c
+@@ -233,6 +233,11 @@ static int fsl_asrc_dma_hw_params(struct snd_soc_component *component,
+ 
+ 		/* Get DMA request of Front-End */
+ 		tmp_chan = asrc->get_dma_channel(pair, dir);
++		if (!tmp_chan) {
++			dma_release_channel(pair->dma_chan[!dir]);
++			pair->dma_chan[!dir] = NULL;
++			return -EINVAL;
++		}
+ 		tmp_data = tmp_chan->private;
+ 		pair->dma_data.dma_request2 = tmp_data->dma_request;
+ 		pair->dma_data.peripheral_type = tmp_data->peripheral_type;
 -- 
 2.53.0
 
