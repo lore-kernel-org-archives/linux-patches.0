@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053858;
-	b=xiBYz9IpTL0+zvWuAdBK7tOPXjuaWVPQlMTWABwsPkerLQhjHeYgGdkkn4sQwCrLlv5f
-	 a618MxPtMx3M7ExN1eDt2uc9yXD28YVSbO2enO92efljnDd8xqWeG4uJN9G6cCUmKQozW
-	 IFds8AhkaZJv978VkBrQ4Hxhy5caYJJLi9Lw3r5jrZbKIyd4/QkZkY8MJuh/SZupiJD1n
-	 L8o3hFXcar4/q021nNtnkQyrjkp6tDW0WF7V0Gx920ab/RwDMrKTpjy0M0xachVT1hHzL
-	 Qr5jTF1w/NrtfTzP0ngYCx4FBYjReoeNGVNvgbErVdIFknr5r8ROOWBqatvH1/7hGqg==
+	t=1795053861;
+	b=oA8DSQWJPdWBYf3MRz6qjv7rEzOj5q/ppBlY/HdFLUPgxVde/jHDRAXk7bDlwCH0xJ9e
+	 iAYtmgmq0ZPMaudz41FKIm64Uon4ff2u3JHXSZQ9x2uh56D6iwyKhmXIJCD7c86LkMESH
+	 9xzxLv06U6A9V9bkMjozdwKV1bJ0gNuVOp3kiU+Skjxiy29ia8ZNy7WUBvtBwesz3dbRA
+	 pSqQCxg441vskwLFbGFKl819GJTO/h6DEPeSbI8w7XAC3sq665xx/Mk8cS1dBnQx51Gj6
+	 ub4Wg26xwsnG2OpjzZX6MJA8Z9K1iHZYx//i8zivFBkTYvL9Tcun/5sa6Z14LmY7jWA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053858;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053861;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sfr/Xt3/7QBYNuY1ahHQHUSNDApRkNTHmdTUw2HaFoM=;
-	b=EdOHlWzrmOguvRjtrlD4TFUG9mT6ytlku3iT6w6rDDNqCj3YIv0cKFWpqOKnwV7sRc7F
-	 TBzBKFR0RXXNDpu7rcMVZolHkY8CQfUG6/C6y83aO3UBVDDKd7LMlJcHq9US2w52/SwFe
-	 kYb9pFuERT3kFYCa/h+MZH/ZwpLpaZ2t3Sm+6gP2CbVgDNY4gXk19Ooj0mZ8NTjka0kVf
-	 hh5HC37zPh+3astOmKVHF0AZDB6zRDChpmeNOFGw3e+nkgwfjr4OUh1NWXfjN/DJgtPgi
-	 acGvJ6T9++YtX66E2IXqTY3gyl9Vm9JyK8Ho98Jl3pW4iS686GHErbwhECkLue8bgJQ==
+	bh=lSuSFtdcPoZ9f/HSUYFsHRwhawtXf0rT2fYdJRbtdeA=;
+	b=NNBrGuRQThlm1I8kyP/XrotEfoKrEzG00OTpVNpx7Ca23ZhZLBxaTvryGQMdmmqLkOfl
+	 nJ0wHEJe2ne7qRBU3b4418llgbitBAS8rZ2to1nJbvw1YNFu5SA4TJ7QmHpaNr71ndp8+
+	 5023hit3wGp8PXJyiu5Eiqs2lnklM6kRKsT0JZeWlOA4/xrCKDbQxPAcuZPYT8gvRHJO/
+	 LeJbrFGCgZWHzlDr0Po078hbJbxzR4O4+hQwQ2WOprriMojy8lOdte9iliehxS0knvwfP
+	 aNTFNJo4uP7RABPhJ0g/fkzbVyIVuZDdeAOyV5VBOW/90H2I95geliSfV6S+SI7hW5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PXiRIio3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lMM8kPsf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0334606A31C;
-	Thu, 19 Nov 2026 02:04:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554F3606A31C;
+	Thu, 19 Nov 2026 02:04:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PXiRIio3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D95C31F000C5;
-	Thu, 19 Nov 2026 02:04:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lMM8kPsf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A93051F000C4;
+	Thu, 19 Nov 2026 02:04:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053858;
-	bh=sfr/Xt3/7QBYNuY1ahHQHUSNDApRkNTHmdTUw2HaFoM=;
+	s=korg; t=1795053861;
+	bh=lSuSFtdcPoZ9f/HSUYFsHRwhawtXf0rT2fYdJRbtdeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PXiRIio3ousJD+0EbW+IaPXPcZLKqFs5dtA8zTl3L1SQSbJTCkshwUgvFR2jIsgta
-	 WZDwHPWc3s+Vp/+4cqnoscGPN7b2vWKJwmvuLDlLD2NuG+Ao2NmJFRDD/du26SKGoi
-	 nIwwf0VyN9mzNSLnY51JpzTiLtXWb9dD542oChlw=
+	b=lMM8kPsf60ui/5N9O8sS/pt1Rl3GfJa+n/gAUWX5iJBh6kiawn2iMqRLHQQBg9BHZ
+	 b9thWCb335nj9N6xk0lsAHPpD8AiDhI/CvSyMllcLWux3jmTHbA0mxNnEWr1vU0SZS
+	 aJfPJ5geN7UTyI3K8eDNQKM/USdUR7q/AGoL8Ww4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bin Yu <byu@xidian.edu.cn>,
-	Cheng Wen <wencheng@xidian.edu.cn>,
-	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Wang Jiang <jiangwang@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1027/2214] ALSA: hwdep: Serialize DSP load requests
-Date: Wed, 18 Nov 2026 15:45:03 +0100
-Message-ID: <20261118150053.424430316@linuxfoundation.org>
+Subject: [PATCH 5.15 1028/2214] drm/amd/display: skip pre-flip post_update on DCE
+Date: Wed, 18 Nov 2026 15:45:04 +0100
+Message-ID: <20261118150053.459988699@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,93 +67,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+From: Wang Jiang <jiangwang@kylinos.cn>
 
-[ Upstream commit aee83c204f80d56b4d55f53acdb8594308ddcd4a ]
+The v5.15.119 backport of the dc_update_planes_and_stream series
+(commit 3c1aa91b37f9 "drm/amd/display: Add wrapper to call planes and
+stream update", upstream commit 81f743a08f3b) made
+update_planes_and_stream_adapter() call
+dc_post_update_surfaces_to_stream() before every UPDATE_TYPE_FAST flip.
 
-The check of the loaded DSP indices and the call of the driver's
-dsp_load callback in snd_hwdep_dsp_load() are not serialized.  A hwdep
-file descriptor can be shared among threads, or inherited across fork,
-so two SNDRV_HWDEP_IOCTL_DSP_LOAD requests for the same index can both
-observe the index as unloaded and enter the driver's callback
-concurrently, even though the device itself is opened exclusively.
+In mainline that series was merged in the same cycle as commit
+32953485c558 ("drm/amd/display: Do not update DRR while BW optimizations
+pending"), which restructured dc_post_update_surfaces_to_stream() so
+that disable_plane()/optimize_bandwidth() only run on DCN, retaining the
+legacy behaviour for DCE.  That companion commit was never backported to
+5.15.y, so on DCE every desktop flip now runs disable_plane() for each
+unused pipe - an ATOM enable_disp_power_gating VBIOS call each - plus
+optimize_bandwidth() immediately before the new surface address is
+programmed.
 
-This breaks the assumption behind hw->dsp_loaded that a firmware index
-is loaded only once.  For example, snd-usb-usx2y hits
-WARN_ON(usx2y->as04.buffer) in usx2y_async_seq04_init() and may
-allocate the US-428 sequence URBs twice.
+On Carrizo (DCE 11) this occasionally wedges the active pipe: the
+surface update stays GRPH_SURFACE_UPDATE_PENDING set forever and is
+never taken, GRPH_PFLIP never fires, drm_atomic_helper_wait_for_flip_done()
+times out and the desktop freezes.  When it hits the first desktop
+commit after boot, the pipe scans out zero data, which shows as a green
+screen on YCbCr 4:4:4 HDMI outputs (black on RGB/DP).  A VT switch
+recovers because the full modeset reprograms the front end.  Wedging
+boots also show "atombios stuck in loop" in the EnableDispPowerGating
+table and smu8 message timeouts.  Later modesets can deadlock in
+dce_mi_free_dmif().
 
-Serialize the check, the callback invocation and the bookkeeping with a
-per-hwdep mutex, so that the second request returns -EBUSY.
+This is the same class of regression that commit 62e5a7e2333a
+("drm/amd/display: Fix surface optimization regression on Carrizo")
+fixed for the previous call site in dc_commit_updates_for_stream(),
+which the new adapter path bypasses.  Mainline is not affected (DCE is
+guarded inside dc_post_update_surfaces_to_stream(), later cleaned up by
+commit 9571dbaf98c8); 6.1.y, 6.6.y and 6.12.y all carry the guard.
+Only 5.15.y is missing it.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Co-developed-by: Bin Yu <byu@xidian.edu.cn>
-Signed-off-by: Bin Yu <byu@xidian.edu.cn>
-Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
-Link: https://patch.msgid.link/20261029084810.21910-2-25031212351@stu.xidian.edu.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Restrict the pre-update call to DCN, matching mainline behaviour.  The
+full mainline rework does not backport cleanly; this is the minimal
+equivalent for 5.15.y.
 
-5.10 and 5.15 still build with -std=gnu89, so guard() cannot be used
-after the early returns of this function.  Take the mutex explicitly
-and release it on every exit path instead.
+Tested on LENOVO 90K7S04400/3141 (Carrizo, Wani [1002:9874], DCE 11,
+BIOS M25KT37A): without this patch the wedge reproduces within minutes
+of desktop use on 5.15.120 and later; with it (and on v5.15.110 which
+predates the series) it does not reproduce.
 
+Fixes: 3c1aa91b37f9 ("drm/amd/display: Add wrapper to call planes and stream update")
+Signed-off-by: Wang Jiang <jiangwang@kylinos.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/hwdep.h |  1 +
- sound/core/hwdep.c    | 14 ++++++++++----
- 2 files changed, 11 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/sound/hwdep.h b/include/sound/hwdep.h
-index 8d6cdb254039d..137be4b4074b2 100644
---- a/include/sound/hwdep.h
-+++ b/include/sound/hwdep.h
-@@ -57,6 +57,7 @@ struct snd_hwdep {
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index b1fab9ba82963..91799bdb83ef8 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -376,7 +376,8 @@ static inline bool update_planes_and_stream_adapter(struct dc *dc,
+ 	/*
+ 	 * Previous frame finished and HW is ready for optimization.
+ 	 */
+-	if (update_type == UPDATE_TYPE_FAST)
++	if (update_type == UPDATE_TYPE_FAST &&
++	    dc->ctx->dce_version >= DCE_VERSION_MAX)
+ 		dc_post_update_surfaces_to_stream(dc);
  
- 	struct mutex open_mutex;
- 	int used;			/* reference counter */
-+	struct mutex dsp_mutex;		/* serializes DSP load requests */
- 	unsigned int dsp_loaded;	/* bit fields of loaded dsp indices */
- 	unsigned int exclusive:1;	/* exclusive access mode */
- };
-diff --git a/sound/core/hwdep.c b/sound/core/hwdep.c
-index e95fa275c2893..f7cde6bb8a061 100644
---- a/sound/core/hwdep.c
-+++ b/sound/core/hwdep.c
-@@ -212,14 +212,19 @@ static int snd_hwdep_dsp_load(struct snd_hwdep *hw,
- 		return -ENXIO;
- 	if (info->index >= 32)
- 		return -EINVAL;
-+	mutex_lock(&hw->dsp_mutex);
- 	/* check whether the dsp was already loaded */
--	if (hw->dsp_loaded & (1u << info->index))
--		return -EBUSY;
-+	if (hw->dsp_loaded & (1u << info->index)) {
-+		err = -EBUSY;
-+		goto unlock;
-+	}
- 	err = hw->ops.dsp_load(hw, info);
- 	if (err < 0)
--		return err;
-+		goto unlock;
- 	hw->dsp_loaded |= (1u << info->index);
--	return 0;
-+unlock:
-+	mutex_unlock(&hw->dsp_mutex);
-+	return err;
- }
- 
- static int snd_hwdep_dsp_load_user(struct snd_hwdep *hw,
-@@ -377,6 +382,7 @@ int snd_hwdep_new(struct snd_card *card, char *id, int device,
- 
- 	init_waitqueue_head(&hwdep->open_wait);
- 	mutex_init(&hwdep->open_mutex);
-+	mutex_init(&hwdep->dsp_mutex);
- 	hwdep->card = card;
- 	hwdep->device = device;
- 	if (id)
+ 	return dc_update_planes_and_stream(dc,
 -- 
 2.53.0
 
