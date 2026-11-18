@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048376;
-	b=uM1kzgQiatfZPKC5LuZ7KGLyBnFm8IIIEPFLKOI+S7nDEyQ7+BOnrLm/WkMlVPaXtbfo
-	 LbIW3IXd1y3Rz+fGZLRIHmRF2KoCDcz0b28XTIly+HlLY7zGfPee/WpMykOCXnFqAO9E+
-	 1LLmrxuFDqeLLqcViLp0OzxDj/7SvjQtjdtiMz+u0q094/5nDgrDE9pA/9mQAzesQCKZl
-	 EaQYaZzjYCav1dwVO0X/KYnyAewn1FBraXJw09RSul2mnKqErpHEONPoAKONKpgFOKmk9
-	 in9hngUvkJ/SGnKwv3xXFnwA8ztXh6t7U228ZdbD4Y7mhQuuannpIJ5aCz8QJUvEXVQ==
+	t=1795048378;
+	b=oCvT/MXM6z0bjHoF/qg6K+7eFddQa4bJpiUxsnwC8hqG8tKvKp3na98yXHfiQ4os4BoZ
+	 Slj9t60Xh1w83W5iNGRAuVx/oxGqDVpLGU9w44d4Z9AnIMOW8fc3PsgASVei5ZuEArp63
+	 6kEBcp4WxQjmJsiiDrOBYsrVYuyeM8jvV6Quceyihyq+lyxuL9KRrmoWBTJDkEVjcX0c9
+	 lFaXzvbbSZ4s448Mjm9vzGYtmMrRyplfgQmLhR6RaAomn17yGhkN3NNp3jDEezJq2Vwxs
+	 jzW2Tm+83vVNpCiYg267emSj+su0CDAo8+4juOCm8gvDR2GvcOi9i//qKU6/DwtLz3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048376;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048378;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Jp81vWZmZ1pr9z7GG8D8qIG1YMshIZZkbQq+icg+KzQ=;
-	b=HuSoiKapU6YzZoVLOJuet6WwHrjKQTOhGeHXfSCzdSsZoesfFDGIVyOW26R4/nxWBORJ
-	 l7WEKn6J8UGJ7I3/tV073/9cCXE1s3D51rnPObzyIM/uf9vpHuK1aDFRXR3y+Po60q7im
-	 XA5Q4FXxPpN/cd7UnnSFoszZ/P6Xe69r00eC8J2Cux7sF3jWXr3AQ6fQ3nkCe2uPR7A63
-	 3mCrsuI24fcbMbgQ6E2E5QfGOOWo2CVxvMhe6zMAmbn09Mc8uOfGWAjOwMpdG0q7esx3t
-	 yWfGtiISqOUv+3SDk5NVfyma9j6AH6iXUQRt64xGXrWHoFQ4BGf5Sxb5bGVYBIGZbSg==
+	bh=nHHjI0Vd5FoC+YM98U6/HbY/jzDBrDSppFsk56LoF7Y=;
+	b=uVEa2yVJ94R0j2jW1POLRD/djhoNpB0aMMmUmUvyyxSzc9b2XtlJmiwCJn8AgiyOzovj
+	 vRMAYLMzag4J5WtoUjy3fwwP83v80V5C26RtD14n1IV4tLddAjGQp8Yj4pBmGBWBkAy2B
+	 676/ROQZ558BcpzdyaylL9jiCrhwUf1WiuwjDs42JPZfE7Gpz96P4I43RiQHUiu4+zSpT
+	 zzua98GUlMmcHvbonDR9JMfxQEc+PsnTQGgcYkKY+QcvwTwilo9M0LcogOHMgJ4hJ6SQK
+	 BVJeIU9BIDfktJ/IiM/M5STvFZoPhMaR1t7kcPw/UGH0vLQPHG09o6Hm9/o0CKfqTAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WHOZo+vI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cpdTysSe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416E760A262E;
-	Thu, 19 Nov 2026 00:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6DC160A3801;
+	Thu, 19 Nov 2026 00:32:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WHOZo+vI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65ECB1F000C4;
-	Thu, 19 Nov 2026 00:32:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cpdTysSe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF0D1F000C4;
+	Thu, 19 Nov 2026 00:32:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048375;
-	bh=Jp81vWZmZ1pr9z7GG8D8qIG1YMshIZZkbQq+icg+KzQ=;
+	s=korg; t=1795048378;
+	bh=nHHjI0Vd5FoC+YM98U6/HbY/jzDBrDSppFsk56LoF7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WHOZo+vIGr7UE890RPuzJ9MF7VlE2VKV91X2JadRmCYtDzTjgtFoIsDzUmJKUSYI8
-	 b4bNGQc7cIV41F6FiLWxs6UoBsJgQaCIY3ea5iM4bIV+iu4UHR4lbBDP9z3P/eYvQN
-	 vYrONM9dqgi1TB2ovoDVt7Yq9hk6UtorIo984WyE=
+	b=cpdTysSe1JUVrASFcyZxfCxHxFzaAS5nUjMCmt2XUSvB+FuS2h1sLXIsdUfTOnlzl
+	 vTVRBbqhbmGuIf/VUQw5AXKZTBWpmVfNW5zAg8LVgPavtdH8jWTkR+bsjBfJ5qGFsP
+	 jfcwX9+ZssdPnJoEJaMqO4h6ge5yhWd8Q29qKbj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Christian Loehle <christian.loehle@arm.com>,
-	Sumit Gupta <sumitg@nvidia.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Jonathan Corbet <corbet@lwn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1972/2857] ACPI: CPPC: Validate the _CPC package header
-Date: Wed, 18 Nov 2026 15:50:06 +0100
-Message-ID: <20261118150312.398543839@linuxfoundation.org>
+Subject: [PATCH 6.1 1946/2857] loadpin: Fix stale KEXEC_VERIFY_SIG reference in documentation
+Date: Wed, 18 Nov 2026 15:49:40 +0100
+Message-ID: <20261118150311.340679294@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,88 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Loehle <christian.loehle@arm.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit fb345025f161d17fe7c8a6048c7e80e467fa8ddf ]
+[ Upstream commit eb0b0d222a832b6ec851e56d4922a775ac762955 ]
 
-The _CPC NumEntries field includes every package element, including
-NumEntries and Revision. acpi_cppc_processor_probe() nevertheless reads
-those first two elements before checking that they exist and trusts
-NumEntries when walking the remaining elements.
+Commit 99d5cadfde2b ("kexec_file: split KEXEC_VERIFY_SIG into KEXEC_SIG
+and KEXEC_SIG_FORCE") removed CONFIG_KEXEC_VERIFY_SIG but left the
+LoadPin documentation pointing at it. Refer to CONFIG_KEXEC_SIG instead.
 
-Reject packages with fewer than two elements and NumEntries values which
-exceed the package count before accessing Revision or iterating over
-register descriptors. Although the specification defines NumEntries as the
-number of package elements, tolerate additional trailing elements because
-ignoring them is safe and avoids rejecting padded firmware.
+While at it, clean up the grammar of the sentence.
 
-Revision is specified as a BYTE, but the parser assigns its 64-bit AML
-Integer to an unsigned int before validating it. Reject values above U8_MAX
-before conversion so, for example, 0x100000004 cannot truncate to revision
-4.
-
-Fixes: 337aadff8e45 ("ACPI: Introduce CPU performance controls using CPPC")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260724134251.1632824-1-christian.loehle%40arm.com
-Link: https://sashiko.dev/#/patchset/20260808082644.1251332-1-christian.loehle%40arm.com
-Signed-off-by: Christian Loehle <christian.loehle@arm.com>
-Tested-by: Sumit Gupta <sumitg@nvidia.com>
-Link: https://patch.msgid.link/20260916162805.1039247-2-christian.loehle@arm.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 99d5cadfde2b ("kexec_file: split KEXEC_VERIFY_SIG into KEXEC_SIG and KEXEC_SIG_FORCE")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Message-ID: <20260905013655.58665-1-kmehltretter@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/cppc_acpi.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ Documentation/admin-guide/LSM/LoadPin.rst | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
-index 1ffa8bee50539..9e776560e4aff 100644
---- a/drivers/acpi/cppc_acpi.c
-+++ b/drivers/acpi/cppc_acpi.c
-@@ -706,6 +706,11 @@ int acpi_cppc_processor_probe(struct acpi_processor *pr)
- 	}
- 
- 	out_obj = (union acpi_object *) output.pointer;
-+	if (out_obj->package.count < 2) {
-+		pr_debug("Unexpected _CPC package count (%u) for CPU:%d\n",
-+			 out_obj->package.count, pr->id);
-+		goto out_buf_free;
-+	}
- 
- 	cpc_ptr = kzalloc(sizeof(struct cpc_desc), GFP_KERNEL);
- 	if (!cpc_ptr) {
-@@ -716,12 +721,15 @@ int acpi_cppc_processor_probe(struct acpi_processor *pr)
- 	/* First entry is NumEntries. */
- 	cpc_obj = &out_obj->package.elements[0];
- 	if (cpc_obj->type == ACPI_TYPE_INTEGER)	{
--		num_ent = cpc_obj->integer.value;
--		if (num_ent <= 1) {
--			pr_debug("Unexpected _CPC NumEntries value (%d) for CPU:%d\n",
--				 num_ent, pr->id);
-+		if (cpc_obj->integer.value < 2 ||
-+		    cpc_obj->integer.value > out_obj->package.count) {
-+			pr_debug("Invalid _CPC NumEntries (%llu) for package count (%u) on CPU:%d\n",
-+				 cpc_obj->integer.value, out_obj->package.count,
-+				 pr->id);
- 			goto out_free;
- 		}
-+
-+		num_ent = cpc_obj->integer.value;
- 	} else {
- 		pr_debug("Unexpected _CPC NumEntries entry type (%d) for CPU:%d\n",
- 			 cpc_obj->type, pr->id);
-@@ -731,6 +739,12 @@ int acpi_cppc_processor_probe(struct acpi_processor *pr)
- 	/* Second entry should be revision. */
- 	cpc_obj = &out_obj->package.elements[1];
- 	if (cpc_obj->type == ACPI_TYPE_INTEGER)	{
-+		if (cpc_obj->integer.value > U8_MAX) {
-+			pr_debug("Invalid _CPC Revision (%llu) for CPU:%d\n",
-+				 cpc_obj->integer.value, pr->id);
-+			ret = -EINVAL;
-+			goto out_free;
-+		}
- 		cpc_rev = cpc_obj->integer.value;
- 	} else {
- 		pr_debug("Unexpected _CPC Revision entry type (%d) for CPU:%d\n",
+diff --git a/Documentation/admin-guide/LSM/LoadPin.rst b/Documentation/admin-guide/LSM/LoadPin.rst
+index dd3ca68b5df18..a90fd9dac9606 100644
+--- a/Documentation/admin-guide/LSM/LoadPin.rst
++++ b/Documentation/admin-guide/LSM/LoadPin.rst
+@@ -23,9 +23,9 @@ sysctl allows for easy testing on systems with a mutable filesystem.)
+ It's also possible to exclude specific file types from LoadPin using kernel
+ command line option "``loadpin.exclude``". By default, all files are
+ included, but they can be excluded using kernel command line option such
+-as "``loadpin.exclude=kernel-module,kexec-image``". This allows to use
++as "``loadpin.exclude=kernel-module,kexec-image``". This allows using
+ different mechanisms such as ``CONFIG_MODULE_SIG`` and
+-``CONFIG_KEXEC_VERIFY_SIG`` to verify kernel module and kernel image while
+-still use LoadPin to protect the integrity of other files kernel loads. The
+-full list of valid file types can be found in ``kernel_read_file_str``
+-defined in ``include/linux/kernel_read_file.h``.
++``CONFIG_KEXEC_SIG`` to verify kernel modules and kernel images while
++still using LoadPin to protect the integrity of other files the kernel
++loads. The full list of valid file types can be found in
++``kernel_read_file_str`` defined in ``include/linux/kernel_read_file.h``.
 -- 
 2.53.0
 
