@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034020;
-	b=mGrAyaVvIC03jJFmfBMB4AlrxNxFkre631G7m9MpZ/NrHVFV+x3T6xEbvHa7gwbMwq76
-	 CBtFQMokfepZ/SjzlvnTfzX95ZgiIPrtgSqyKb6FrEN2IoMo4IKoEI6s0PKAT1t0Midxm
-	 MJCKDM+fqi9/x0+uwvT8T7SsGi7Jfg4ORIkqa+flx/Pi66yXwhi7/u3/DKXZxZXcww1jT
-	 RjlmxgfIrPoHQeZxKWdRTELo6acNHhJ6mPFgUpcbzyAfrnngwxuTXDjDqQjxx91DrJI4V
-	 0bZXiHnUkZA9sH36AuvNkotVW6TYT3jpyXxUZliuVfCJwO6B9/afDjVuQ6nbX9iaNnQ==
+	t=1795034024;
+	b=GCD4G9DrqBL4FvnDH9g7sEBxtN2oWQ5rpcQTrxAevaoxJsupEKytZ0sXUU39ZJ66M5j0
+	 LjVeyQSyOeNXe6CqkHaAx6zwos7CcmSefHCwNXkRM3P0nEF2kM/l3SUgo1N7z36+Ju47u
+	 KVMvVQObeOL72MIjK+clmObp4BqX3m8iBijq14Ck4gyZM+9TynrJf3iUWf4WRxdGHKsOd
+	 7zYEXlgZtOZn47Z3WNGq7mwQWMwyqH7/PLe2iXuWhszVYxZmumIzYaKZML9rYBWi31MHu
+	 i/ERLt9GqvdAZVLDMHOvdgRGt/dr6OyejOxTtbJa42cH8WXLTKoBeyh2vgJygbbcB1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034020;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034024;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=gWADfR/cLDEIizYX2JQeeGFVtjxFReSu1HEuth7ORRc=;
-	b=lIVCI9P29FMYZ4AmMne6B+JtyXHIPuZonzRCoSIiOFMMAm2lhHMk1p4LjGCbtYp2l1F/
-	 DeJXYWfAC4JUN1O2LaOsLbtAatD3pEw8cyOIW1C8K7e60utO+EabGgXuDSspkv0UFZJ2J
-	 FdTeF86U5rZO0yI0p8Pujz1wINa31ICQqzd11St6DF3gI89jURnWOcZZx7Z4FrlGSTUoJ
-	 WDbZuwHtufa9DJsXCiq2uwX/+JisjxWug/sfmy/5UJ7aMQvSxkPW8cFyqpX19/JDPyesy
-	 RVxTjZiY9ujEApf9X7DForf6BXFR7e7t+ojwOYAhy5Y4nqeK6x7mLjiWoHl90DLKEMA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=pZFWqBHaksZ+38YZ9rqpyLw8B0AB+xlA449l0yjGTNE=;
+	b=CDzJO9cCsMYzvLg6Qx77ny1o9PQYJqjmgf9lTBp4UG+7oJWV63LmrcEbAoVV2Wk4jmYZ
+	 9ji9Fo8ARhoaFvEmYIAfd+i7b7HBQoqpsx1UC+cb5uP74vCieg2hpCSc7I2YtDJtSjZLA
+	 jToBQAOlHXWuQizMqokDiBGyPmsSAI+Rfe2V8PVpN2VJ7zB5VW0Qney1e8gjD8WMCVEL1
+	 +gE4EUqmFUnQaPOeilQDEkxBPGqqHYaWYuiOfPjEbt9B4yoICzLKqmG8/OFcZCNSHrTVs
+	 o4g7KzBxIc9zAy9kGIgaduJowRb2nnscsSLn6L8u1AdwnainHMuPZvfzWu8r7NXforA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ONIs5M3X;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DBapV9Fy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BBEC606A31C;
-	Wed, 18 Nov 2026 20:33:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0446606A325;
+	Wed, 18 Nov 2026 20:33:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ONIs5M3X
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EABCC1F000C4;
-	Wed, 18 Nov 2026 20:33:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DBapV9Fy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B88A61F000C4;
+	Wed, 18 Nov 2026 20:33:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034020;
-	bh=gWADfR/cLDEIizYX2JQeeGFVtjxFReSu1HEuth7ORRc=;
+	s=korg; t=1795034023;
+	bh=pZFWqBHaksZ+38YZ9rqpyLw8B0AB+xlA449l0yjGTNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ONIs5M3XrX6u7s+jJTbbC93fIlv1vu1MPlltfOw5lSDKgX72fl8N9RJwVCxmFszzZ
-	 TZ8x7/GlbbqnzFZ/WMBNDH+NqWkjs95HQpwan5J1pLZyptRZ0LXCTYLVkwURDm2caD
-	 il1TSBgF0U3CdBt2caXRrggI5rDiAwE+5aLLrCwc=
+	b=DBapV9FyinrRIlmykDa+QYaoPPhh9j0cOD44vCvf+IMRvBzWrkKYv6OBI06iVtRou
+	 aibwkGjV91QU7PO+R0l3MtcwEpAUOKRSYg+bawCnQs+ybaGicWJTsw85RaUNsnlQqq
+	 91XTm5NldqolMgU9ADFw7WTj8HYzO+szYOVk6pUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Bauer <mail@david-bauer.net>,
-	Felix Fietkau <nbd@nbd.name>,
+	=?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
+	Allison Henderson <achender@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0204/3318] wifi: mt76: mt7915: configure noise floor reporting on reset
-Date: Wed, 18 Nov 2026 15:13:46 +0100
-Message-ID: <20261118150321.004481069@linuxfoundation.org>
+Subject: [PATCH 6.6 0222/3318] net/rds: hold the socket while an rds_mr references it
+Date: Wed, 18 Nov 2026 15:14:04 +0100
+Message-ID: <20261118150321.657109900@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,66 +63,138 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Bauer <mail@david-bauer.net>
+From: Håkon Bugge <haakon.bugge@oracle.com>
 
-[ Upstream commit a92cd5dd792a63a5d8a72142835382d4edbe9933 ]
+[ Upstream commit 9079adef042c1e7a6141dcdfd3041acd30607297 ]
 
-When performing a full system recovery of the MCU on a dual-phy
-platform, band 0 (usually 2.4GHz) stops reading correct noise floor
-data.
+Each rds_mr stores a bare back pointer to the socket that created it
+(mr->r_sock) but takes no reference on it.  When the mr is destroyed it
+references the rs. Hence, provisions must be made to avoid the rs
+being destroyed before all mrs referencing it have been destroyed.
 
-This is due to noise floor reporting only being configured correctly
-for the second device PHY.
+The MR itself is refcounted, and in-flight messages legitimately hold
+MR krefs that can outlive the socket: rds_release() drops the rb-tree
+references via rds_rdma_drop_keys(), but a send completion arriving
+afterwards drops the final message reference from the CQ handler and
+ends up in
 
-Configure the respective registers correctly after restarting the MCU
-firmware to fix reported noise-floor values.
+  rds_message_purge()
+    __rds_put_mr_final()
+      rds_destroy_mr()   -> takes rs->rs_rdma_lock
 
-Signed-off-by: David Bauer <mail@david-bauer.net>
-Link: https://patch.msgid.link/20260516144944.2574053-1-mail@david-bauer.net
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+dereferencing a socket that may already have been freed.
+
+Oracle UEK fixed the same use-after-free ("rds: Add proper refcnt when
+an RDS MR references an RDS Socket") after seeing crashes of the form:
+
+  PF: supervisor write access in kernel mode
+  _raw_spin_lock_irqsave+0x4a/0x6a
+  __rds_put_mr_final+0x2c/0xe0 [rds]
+  rds_message_purge+0x13c/0x150 [rds]
+  rds_message_put+0x39/0x54 [rds]
+  rds_ib_send_cqe_handler+0x147/0x3dd [rds_rdma]
+
+To fix this, take a socket reference when an MR is created and drop it
+when the final MR kref goes away.  The reference cycle is broken by
+rds_release(), which always runs rds_rdma_drop_keys() on close.  So the
+socket reference held by an MR never prevents release, it only delays
+sk_free() until the last MR user is done.
+
+The hold sits next to kref_init() at both allocation sites -
+__rds_rdma_map() and the on-demand-paging path in
+rds_cmsg_rdma_args() - so every MR owns exactly one socket reference
+from the moment it becomes kref-managed.  For that to work on the ODP
+path, its get_mr() error handling is converted from a bare kfree() to
+kref_put(..., __rds_put_mr_final), with r_trans_private cleared first
+since it holds an ERR_PTR there; both sites then tear down through
+the same path and a future error-path change cannot silently leak or
+double-drop the reference.
+
+Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
+[achender: port to net-next (sock_hold/sock_put in place of the UEK
+ rds_sock_addref/rds_sock_put helpers); also balance the reference on
+ the rds_cmsg_rdma_args() ODP path and unify its error path with
+ __rds_put_mr_final(); update commit message]
+Signed-off-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20260730041629.3512480-3-achender@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/mac.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/rds/rdma.c | 14 +++++++++++++-
+ net/rds/rds.h  |  5 ++++-
+ 2 files changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
-index fd743ef86e7ab..3490a13b0abe5 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
-@@ -1302,6 +1302,7 @@ mt7915_mac_restart(struct mt7915_dev *dev)
- 	struct mt7915_phy *phy2;
- 	struct mt76_phy *ext_phy;
- 	struct mt76_dev *mdev = &dev->mt76;
-+	bool run_main, run_ext;
- 	int i, ret;
+diff --git a/net/rds/rdma.c b/net/rds/rdma.c
+index 37695056756be..062c12d9318e9 100644
+--- a/net/rds/rdma.c
++++ b/net/rds/rdma.c
+@@ -117,6 +117,7 @@ void __rds_put_mr_final(struct kref *kref)
+ 	struct rds_mr *mr = container_of(kref, struct rds_mr, r_kref);
  
- 	ext_phy = dev->mt76.phys[MT_BAND1];
-@@ -1394,13 +1395,17 @@ mt7915_mac_restart(struct mt7915_dev *dev)
- 	mt7915_init_txpower(dev, &dev->mphy.sband_5g.sband);
- 	ret = mt7915_txbf_init(dev);
+ 	rds_destroy_mr(mr);
++	sock_put(rds_rs_to_sk(mr->r_sock));
+ 	kfree(mr);
+ }
  
--	if (test_bit(MT76_STATE_RUNNING, &dev->mphy.state)) {
-+	run_main = test_and_clear_bit(MT76_STATE_RUNNING, &dev->mphy.state);
-+	run_ext = ext_phy &&
-+		  test_and_clear_bit(MT76_STATE_RUNNING, &ext_phy->state);
-+
-+	if (run_main) {
- 		ret = mt7915_run(dev->mphy.hw);
- 		if (ret)
- 			goto out;
- 	}
+@@ -243,7 +244,11 @@ static int __rds_rdma_map(struct rds_sock *rs, struct rds_get_mr_args *args,
+ 	kref_init(&mr->r_kref);
+ 	RB_CLEAR_NODE(&mr->r_rb_node);
+ 	mr->r_trans = rs->rs_transport;
++	/* The MR can outlive its socket: a socket reference is held
++	 * until the final kref is dropped in __rds_put_mr_final().
++	 */
+ 	mr->r_sock = rs;
++	sock_hold(rds_rs_to_sk(rs));
  
--	if (ext_phy && test_bit(MT76_STATE_RUNNING, &ext_phy->state)) {
-+	if (run_ext) {
- 		ret = mt7915_run(ext_phy->hw);
- 		if (ret)
- 			goto out;
+ 	if (args->flags & RDS_RDMA_USE_ONCE)
+ 		mr->r_use_once = 1;
+@@ -762,7 +767,12 @@ int rds_cmsg_rdma_args(struct rds_sock *rs, struct rds_message *rm,
+ 			RB_CLEAR_NODE(&local_odp_mr->r_rb_node);
+ 			kref_init(&local_odp_mr->r_kref);
+ 			local_odp_mr->r_trans = rs->rs_transport;
++			/* The MR can outlive its socket: a socket
++			 * reference is held until the final kref is
++			 * dropped in __rds_put_mr_final().
++			 */
+ 			local_odp_mr->r_sock = rs;
++			sock_hold(rds_rs_to_sk(rs));
+ 			local_odp_mr->r_trans_private =
+ 				rs->rs_transport->get_mr(
+ 					NULL, 0, rs, &local_odp_mr->r_key, NULL,
+@@ -771,7 +781,9 @@ int rds_cmsg_rdma_args(struct rds_sock *rs, struct rds_message *rm,
+ 				ret = PTR_ERR(local_odp_mr->r_trans_private);
+ 				rdsdebug("get_mr ret %d %p\"", ret,
+ 					 local_odp_mr->r_trans_private);
+-				kfree(local_odp_mr);
++				local_odp_mr->r_trans_private = NULL;
++				kref_put(&local_odp_mr->r_kref,
++					 __rds_put_mr_final);
+ 				ret = -EOPNOTSUPP;
+ 				goto out_pages;
+ 			}
+diff --git a/net/rds/rds.h b/net/rds/rds.h
+index 7a5863c118edd..a1dd83c2f9a29 100644
+--- a/net/rds/rds.h
++++ b/net/rds/rds.h
+@@ -299,7 +299,10 @@ struct rds_mr {
+ 	unsigned int		r_invalidate:1;
+ 	unsigned int		r_write:1;
+ 
+-	struct rds_sock		*r_sock; /* back pointer to the socket that owns us */
++	struct rds_sock		*r_sock; /* socket that owns us; counted
++					  * reference, dropped by
++					  * __rds_put_mr_final()
++					  */
+ 	struct rds_transport	*r_trans;
+ 	void			*r_trans_private;
+ };
 -- 
 2.53.0
 
