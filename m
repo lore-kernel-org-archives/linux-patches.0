@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060449;
-	b=w6eis/6tU1GAjR6AmRdrB7R12A7dkXvZ3qjf5cpA1kDcrzzufT8pmaiOE668jXZ4+2xC
-	 44AwOi05o5TI7JK+zusLuuSVA+fq7skaJtIRKeUwZvP4ABsTSCX7XmdQ1MCjrgcNif9ii
-	 JRbQhvHfkhh1j6WzBbjbxeE4hoOmB3Tibq4dCiIuTIVqdbU63/KexVjAQfeqqBuR3DpHv
-	 8pZ1x6zNLUcRS4d7oVI/6adNHzCtOJ2YLw/pNbTHrhHERBwrCwXN5ZEZVwU+eXLhG+Kiu
-	 LvKVQeM4SMM+nFVpAibI5hOMje3bl//RNYVayY+11sY1HTp0ay8fpSlJasXO+2TXOGA==
+	t=1795060452;
+	b=pTIaxYGAMZ7ng/IbTghhPUyQsTOGqhOgv6aFZaM4gEW5t848I6zcqH5I20UNlm2kraXm
+	 tJDs9rIPHVAsFWJ2/yZEM5p6ITCdISMynxazzVro9ybXPP0qlgG2a+vyDg3relUAkm4XC
+	 Qa+ut7bUu/HCkk7VYxRoTTGzqtoTgS7XphnN6301t3wkAkooKasOjoYGhaycsZpUL47X/
+	 PAmovRq3xTMGKEjRwB56fwRKshskC2S18vuCqXE2YCx6/MWuEhKajPpkTays6qvJJUe+T
+	 P8onUAd6EZJpQv80qtGzaLJlL+n5V7YbWIK2JpUivdcM76xwtM7mCyTw5Ml3LB0kRYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060449;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060452;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CmsF/Eplp/F0wxS9enjGNRVqtnOaIz+yAaRFYpgAws4=;
-	b=Gs81X+b5wJHnhZzgLCbk81OGUmZmOy6W+hX3pngS57CcElj+y/vgvHtSNJW1/6X+Dmbn
-	 v0ttcCooYTO5jyJ2nKSIjrOoJcSxsbS2MFZgVEG05/Ogm0jYl1mbzLuORQOP1HhxLYEpZ
-	 Dl4/tp3NUzqMzY2ZCtl5sHlKWRupwro0Imr5mtWUQNC8zokapJr572XnSxWqVqZxf6pTR
-	 +2kwOhxEwId4hd5iQ6hEOEjdvQGE7Td8rBmLiQCJrcqflTZxXBtbzfapFwC1/90j354/W
-	 +gT+gnUc8Cs6df0J/pbi1js53g3uoNeYe0Y3DbOEZEQEWmwufYmGtgNj+agiVOdzSEA==
+	bh=92BkXAiaezx4wseehsVMgbszZuaV3huVsampRCw+Dqg=;
+	b=43VB8eeFZwcfmYfc07mc9r5MlvIveJ3Zi7/wgUlKSsZEkPXDHxlSVcu9ikExmu3gTpfZ
+	 Mj8KAu/bSffg/zwrCohijToOANq+sa7quukvO45uP7XAYvXN+/FjI/4vULRkQiZNm477G
+	 0gZFTVOzlz/pKFdKVHfaAD8F/2vhjGnsthJRvRnP6GJi/iaG8iLJqwNMX7D5C28khpeP8
+	 0d07Zc210cwH0ND3aSFVphR0Ij6JGeFcfoSI/msbY1Nw37UgmRygG08I/GnAKpO1uI0wm
+	 C2h9uBjEuQ5SvR1V0lbEo0cv0t5K0aerHZ+F0zHppaUkOj+8ec5r8ol5D7B2I6q1ppg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aGbeG5nl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zJj45XyM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFBFB606A32A;
-	Thu, 19 Nov 2026 03:54:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61098606A320;
+	Thu, 19 Nov 2026 03:54:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aGbeG5nl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C82421F000C4;
-	Thu, 19 Nov 2026 03:54:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zJj45XyM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACB0D1F000C4;
+	Thu, 19 Nov 2026 03:54:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060449;
-	bh=CmsF/Eplp/F0wxS9enjGNRVqtnOaIz+yAaRFYpgAws4=;
+	s=korg; t=1795060452;
+	bh=92BkXAiaezx4wseehsVMgbszZuaV3huVsampRCw+Dqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aGbeG5nl9X7XRcK0zadCxVYx/v2v0zu+v7MMwQc8K1tcjwJjlJK+zJDCzKNrZJIRh
-	 RgZaFXUHghDNzW2NLztQmG5B73mM4QZ7KKbqSM1cfKVJSsbOadBLmSxvsslqIhDtUE
-	 KFUd34DpHq+vkkAe3declnhyRh3rDBuq0M+mcc/I=
+	b=zJj45XyMCC1UdeD/ZgT7L7r2WRceGGnYBQMlE4SQYbVmW6mM1OJbyVXqHB1Jpb1uM
+	 hG1OLEmFG+5t6/SSrxc5+t4Jhnsj14PnXSArdzZAB/RcKDbb46cH6yitIaxZVhJFH3
+	 DjE5QVA1acpfrcfJIvw9XhApwh3lJD9huvVY9ngk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salah Triki <salah.triki@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1204/1848] iio: imu: adis16400: Check return value of spi_setup()
-Date: Wed, 18 Nov 2026 15:54:02 +0100
-Message-ID: <20261118150010.426022785@linuxfoundation.org>
+Subject: [PATCH 5.10 1205/1848] efi/libstub: Fix efi_set_event_at() parameter documentation
+Date: Wed, 18 Nov 2026 15:54:03 +0100
+Message-ID: <20261118150010.462928132@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,43 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salah Triki <salah.triki@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit a7c07602e00596a45de8a4a700af96392953ed38 ]
+[ Upstream commit c12a3a4b35e47fd511fbd550d3637318be41c4eb ]
 
-In adis16400_initial_setup(), the return value of spi_setup() was ignored.
-If SPI configuration fails, the driver would proceed with the
-initialization anyway, leading to undefined behavior or silent failures
-during device setup.
+efi_set_event_at() documents ids although its array index argument is
+named idx. This produces missing and excess parameter warnings.
 
-Check the return value of spi_setup() and return the error code immediately
-if it fails.
+Match the argument name and fix the adjacent spelling of array.
 
-Fixes: cd888a17f95f ("staging:iio:adis16400: Use adis library")
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Fixes: 8c0a839c2bcc ("efi/libstub: Descriptions for stub helper functions")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/imu/adis16400.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/firmware/efi/libstub/efistub.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iio/imu/adis16400.c b/drivers/iio/imu/adis16400.c
-index 07171e5379969..cb5685cbb5541 100644
---- a/drivers/iio/imu/adis16400.c
-+++ b/drivers/iio/imu/adis16400.c
-@@ -450,7 +450,10 @@ static int adis16400_initial_setup(struct iio_dev *indio_dev)
- 	else
- 		st->adis.spi->max_speed_hz = ADIS16400_SPI_FAST;
- 	st->adis.spi->mode = SPI_MODE_3;
--	spi_setup(st->adis.spi);
-+
-+	ret = spi_setup(st->adis.spi);
-+	if (ret)
-+		return ret;
- 
- 	ret = adis_initial_startup(&st->adis);
- 	if (ret)
+diff --git a/drivers/firmware/efi/libstub/efistub.h b/drivers/firmware/efi/libstub/efistub.h
+index c5e0c6e99d20c..40a954033ef2a 100644
+--- a/drivers/firmware/efi/libstub/efistub.h
++++ b/drivers/firmware/efi/libstub/efistub.h
+@@ -181,8 +181,8 @@ typedef void (__efiapi *efi_event_notify_t)(efi_event_t, void *);
+  * efi_set_event_at() - add event to events array
+  *
+  * @events:	array of UEFI events
+- * @ids:	index where to put the event in the array
+- * @event:	event to add to the aray
++ * @idx:	index where to put the event in the array
++ * @event:	event to add to the array
+  *
+  * boottime->wait_for_event() takes an array of events as input.
+  * Provide a helper to set it up correctly for mixed mode.
 -- 
 2.53.0
 
