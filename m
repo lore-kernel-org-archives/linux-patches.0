@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030969;
-	b=3fvRc3BgHSsw5AQ6816h1Cu2bFiGrsDy7DzEnZ+TMvH4SaK8kn4C/KUt2nC0AM6RK9LE
-	 37c8XdC8vREtZa86x6aj+2Xv8UJ9IMQgQjwHhd/pQXfBhxG2vYjGvcvnFR2zRkQHIWJNZ
-	 IpK8ZnjYfC+vlusIVnKXYJB71/mm1CfVJukqrbHfYohBEzCEmjY51dIMvEl4QmDxGXkn4
-	 91m31+xXifVxuVkdWKLw0YVKKUIPVDqB44lhIOeH0XvODjlEMJNBe5f8a/3nOIo08ock4
-	 PtcroR49TMuB1hKVj1vn00SjRNS9divMIMF5GIATUC4toONdwkcvmJXW+Lw9w+amK1w==
+	t=1795030972;
+	b=dJdfMHTVAMhURwKwDKEYa95QT1onwfaawWBf9D+BKeFp6eLq9FzYNOX4A8oWfH9JbpCd
+	 uM4YMSd/nJ5h8GJSa6GKEF460BcD+gqid3n7wXBO212BOZsjSdbttD4RXXcTpfZhKn1mi
+	 FMOk6+pt8Cx9wBoCWx1zi65w3fuu+VxZ8yGIN8nyvYczWv1yzLA+unvo00HgWwG9vJcKA
+	 Z6dwoqVpTYRb+CNupAp0HzZdsnilgRPxPtMmh9p5Dyq8ahJmqZtsQUxqhHu5m897fAP5n
+	 +2j+D8byRtGQeazPbVUq2E7YM9l62yUDhO4WjW2VMw+CwirIUzq284+8IvcclDbjMdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030969;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030972;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4WnySvZDkDYEr7gSgMSae6c3Iehmb48nQ0FcnXdn0UQ=;
-	b=tdK2H9Kl0hXgQBJvYlWifljKnIhmYeGQK2EmyMCdGRstqZyRto9yeiWlJAjohhWQp7Hn
-	 szNsEQMQ5BjAnHp48YGXNxUz6Op7yWtEKLBOe3+6uGEAAzBTdXZ/zBVMwAogIM0xyo8MJ
-	 +Q7wJpK32C87YulmZqIu/J1zZ6NHvZL6ZjvNDcqxVWEmd2/oBNZH5wabNLLem71Z3YNpX
-	 OH1jcO6G0XB1yPGLPanvD7YXZAZThoXOCm0AvBpg4MaJIn2p0U6qUyKGSwMEiQPbYgNcU
-	 rF6SWM605PedV4wvgPuDxatabRU569BW9kFnpAgCexLl8Jvb0IdMwSgMamQ+UnMz3kw==
+	bh=rULF3Z4kaeu1yINGboeBdz8b+55qF9vXduH++kwtwCU=;
+	b=TRCqmCLPBd/Uic8CMeFMh9Pnc0q33oS2JxOtI+S4dj2dvdOpcOyTRAZYQDFdLVF2uP5n
+	 RUJs3dwNcwlaLyxaQNylDXLp4YqPMuRiUI5APQ+qVY+kMfvsT9Qsf1+ZehQV4Eyx4A5Cf
+	 UBf4OShfabzuv43vXL+nAcd33JTMEOC12ZjYQHMfkkDi4YI1Wi6LlDjiyfbJLD8V2g936
+	 oL3EV4/1zJird+pLvrO0JPAuWoQPrtq187k/NVhZi2zYwmW5Nm4ndV2VCnQBLT2385FsU
+	 /IqhAu3bLaHtbB7qyBhtmGNdvWQnpCVIWzE42nGN31KEZoOYdMQ88z3b4kVDc3TAAtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J9QI0bGg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JwnHrbJR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 837C9606A33E;
-	Wed, 18 Nov 2026 19:42:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464E7606A31C;
+	Wed, 18 Nov 2026 19:42:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J9QI0bGg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBB881F000C4;
-	Wed, 18 Nov 2026 19:42:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JwnHrbJR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BC6D1F000C4;
+	Wed, 18 Nov 2026 19:42:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030969;
-	bh=4WnySvZDkDYEr7gSgMSae6c3Iehmb48nQ0FcnXdn0UQ=;
+	s=korg; t=1795030972;
+	bh=rULF3Z4kaeu1yINGboeBdz8b+55qF9vXduH++kwtwCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J9QI0bGgpTSBco259LcaALoqlh/Ae1NrAHQJhV7AU/cq3HuKS7ZdLTR0Pvtr3hYYb
-	 DXMbF2e9UW+r07biWXld73JuQ2T/NLXYJFkNeTAsVYixoJiYYFSAadY5GPhOa3Pb6f
-	 BHiwMxkuxXRbUHypzAMu84yAAHDcElu6vAAyqIX4=
+	b=JwnHrbJRfVcnOdzTlpQ2F6NN8BlVMkjkQ7BLxKuxoA1vi8SRsC0jYqS38Xrte8Oqb
+	 bJuj3gh2gX6epz/yat+CF14n+IUXP7lcSWKjz00FSAKglIdpezYh7aZcHX0kXd+dXC
+	 6PjtShOiMrJEzRUAVTa/TRhzPPK28khwYzZz3Gqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linus Walleij <linusw@kernel.org>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0893/1756] dmaengine: ste_dma40: Validate disabled channel indexes
-Date: Wed, 18 Nov 2026 15:50:20 +0100
-Message-ID: <20261118150045.409789674@linuxfoundation.org>
+Subject: [PATCH 6.12 0894/1756] dmaengine: ste_dma40: Validate DMA specifier length
+Date: Wed, 18 Nov 2026 15:50:21 +0100
+Message-ID: <20261118150045.489194697@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,48 +71,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit c96e9f056095825b5f8d4a11f4107fc174892f92 ]
+[ Upstream commit 9f1064ebe17cf3ab65ac6eb166398e02678aea33 ]
 
-d40_of_probe() checks how many entries disabled-channels contains, but not
-the channel numbers themselves. d40_phy_res_init() later uses every value
-as an index into base->phy_res, whose size is the number of channels found
-in this DMA40 instance. An out-of-range value can therefore write beyond
-the allocation.
+The DMA40 binding requires three cells, but d40_xlate() reads args[0],
+args[1], and args[2] without checking args_count. A malformed provider node
+can specify fewer cells, leaving some of these values uninitialized when
+the OF DMA core invokes the translation callback.
 
-Validate each disabled channel against the detected hardware channel count
-before allocating and initializing the channel resources.
+Reject specifiers that do not contain exactly three cells before reading
+the argument array.
 
-Fixes: 499c2bc3cc89 ("dmaengine: ste_dma40: Fetch disabled channels from DT")
+Fixes: fa332de5c6b3 ("dmaengine: ste_dma40: Supply full Device Tree parsing support")
 Assisted-by: LLM
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-16-89f595e8851d@kernel.org
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-17-89f595e8851d@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/dma/ste_dma40.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index ac3f1f2a4cd10..d51b7c19d42dc 100644
+index d51b7c19d42dc..bc4e30d46bdc9 100644
 --- a/drivers/dma/ste_dma40.c
 +++ b/drivers/dma/ste_dma40.c
-@@ -3256,6 +3256,15 @@ static int __init d40_hw_detect_init(struct platform_device *pdev,
+@@ -2395,6 +2395,9 @@ static struct dma_chan *d40_xlate(struct of_phandle_args *dma_spec,
+ 	dma_cap_mask_t cap;
+ 	u32 flags;
  
- 	num_phy_chans = min(num_phy_chans, STEDMA40_MAX_PHYS);
++	if (dma_spec->args_count != 3)
++		return NULL;
++
+ 	memset(&cfg, 0, sizeof(struct stedma40_chan_cfg));
  
-+	for (i = 0; plat_data->disabled_channels[i] != -1; i++) {
-+		int chan = plat_data->disabled_channels[i];
-+
-+		if (chan < 0 || chan >= num_phy_chans) {
-+			dev_err(dev, "Invalid disabled channel %d\n", chan);
-+			return -EINVAL;
-+		}
-+	}
-+
- 	/* The number of channels used for memcpy */
- 	num_memcpy_chans = plat_data->num_of_memcpy_chans;
- 	num_log_chans = num_phy_chans * D40_MAX_LOG_CHAN_PER_PHY;
+ 	dma_cap_zero(cap);
 -- 
 2.53.0
 
