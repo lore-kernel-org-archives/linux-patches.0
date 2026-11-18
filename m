@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047009;
-	b=HyuGWEyXBHDABJWo6B9d6AI8y+HKnUeKDZYsbeK5X79GDoWJH2/0rAF/B7vB4x7qMjzu
-	 QZb+8Ix6KagBTO5MX993vfu08vRqbimgwft8+I3gZp7vzPsEfi4ORAzHmtNS/knUsTIbN
-	 Zdwi9bFAUrBREkiMTSLK3iJ4UQIMupK0Ws0DoWjjtgHL4SLCxq2Dn2+uPNLVLQ+QA/3Ez
-	 P969yf8fP5XII7nH0KdmxS33riBCKo2KTol3Tks01Szws4/2/sfYwbOdNnUq9nzkqHuCf
-	 5lqkwn9HskQ5YGBJarV0sfI5Wc1bxUuxo1hktJz6gOnfS9C6KIrlHwkkJcmmkg0dztg==
+	t=1795047012;
+	b=zi+KuZKPnSHiMR8GgBiqdc6kHq3XI0QYGzG/A4krVsIVuzcGtt+Tf4ifYKcddZSfMnZu
+	 clO73uImBSBbfpG3L2I7Ms0vXg4kVrD92WcvXvsaQBA8DQdVZsPMoM3YGvg6BfEjN0mKL
+	 TzD+hjZD2cvqzeBmw+sXqrJwTAnUgW4ij14r377DQQKSc2JJhSdHWAGaXmxgImR2Yx6pM
+	 j1+xUimEA0IY0Ip+Vc32wHftTk29g4NO2Y1kADbRF9VU0WFCw+Ohy6F1ZaYj4R7X5GEiR
+	 2e/8R7Pr5Ukg7SvJ0QqjlpuC9PcgQ63ikIkuRXFelYiXLyIqt+ouCimMwOT8HelAfPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047009;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047012;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WwErkstPhpZpoSKip50+8PvTuIiHHXJRA72ZtCj5TyM=;
-	b=Ri0weACcWllCFm4m4F0bwHbrlFPDZ0AZAfcq3lrBotLLtoTjMT7bt2LfO1DxNNHtwnJp
-	 o+8OnHqh1Pl++L5scjzYlkZr2THRaG5potFF6hFXGszlbAoIpTnt5g7VAxVlMFq+7yC9i
-	 soZkMPQkCbA/sJPsFCNMkoYKsscYOL5iUUFKwtVzv7xUk0li//aI/6OqeRomItNrWYrGM
-	 QK1Sm2NIwzOlHvNTMoxNbVJxC0FPUbVXdp3JMRVhuIe3JlCZy0xbq4cMXFnjvlUoisvnT
-	 aOzgPatluQU2x/UXtlFaxv0vMaPrSXgzem5mcBvL4Aa5/KwvS7bYBchBg6mkuuvlF9w==
+	bh=fRNLPz72qMBmu0HxJXQ/Cto6Bi5A5DQc946H/3HYCHI=;
+	b=gJ8omMaFFDwVqkQ1WECKuscyRvPA/GQzYstO8cQBXuxeKU51EXxNHl8q4aU21/BSZcQt
+	 DSYOFwP2zK1ydj94t3MO/4JU65Mrp8O9lS0SIO44+eqmbrCo+uOBrdpMViv9kEbHacqig
+	 wdBipDuIwg18u9aOD7EBAGH6pIuEFHcIaYkIf4Pf8+GWEKrshZQQMfw2U7S6+uz1cUHVG
+	 3sxm6eHJYAOwcpg6izmz8KSThHkhgRT2ancvBWx6YKkmUB5fTgfBFv0Y8+mCfNQ+yswBR
+	 Illm+v1x60Z1qq/6MG3bUnPmmxpPvCJbwh56O7SHxDPEm/2zEw9f2bc3huS3NRYGK4g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QnYpjM+W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HhY6Im14;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2609606A332;
-	Thu, 19 Nov 2026 00:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB338606A32C;
+	Thu, 19 Nov 2026 00:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QnYpjM+W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7F1A1F000C4;
-	Thu, 19 Nov 2026 00:10:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HhY6Im14
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFF781F000C5;
+	Thu, 19 Nov 2026 00:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047009;
-	bh=WwErkstPhpZpoSKip50+8PvTuIiHHXJRA72ZtCj5TyM=;
+	s=korg; t=1795047012;
+	bh=fRNLPz72qMBmu0HxJXQ/Cto6Bi5A5DQc946H/3HYCHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QnYpjM+WdMbMpbhv70tB2C5NTFa/vBA0Il8i4ow/NDoUmT9uzc1opVXgJq5s0F2vy
-	 jdfRXe3VlLIiV5iFC6f2Mql9ONvp1tpfMGLRRO3lvOjNFGXCq0nczVlAjxtIr5x/v7
-	 VlBB/u4fe8GYCLu8nmvI/stOiBGgEexzlluZKLdY=
+	b=HhY6Im14ho74sHfKM94ZmX2B6OCHlnaRwayArApbeDkMxvGHwFeG2mqpD38uw88Mu
+	 OF5GQ8Mi+zxMgWUeRT/MkD0tlzjm7qTCWnEI7KkFp4o8s5rz9ZdMeDh+6rQQpZW9xz
+	 g3LK406GtR1e6CrN5G7R+Wbyyc8J8L84tezazusM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Bean Huo <beanhuo@micron.com>,
+	Peter Wang <peter.wang@mediatek.com>,
+	Stanley Jhu <stanleyjhu@google.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1485/2857] f2fs: fix to use bio_in_atomic() in f2fs_read_end_io()
-Date: Wed, 18 Nov 2026 15:41:59 +0100
-Message-ID: <20261118150254.786637593@linuxfoundation.org>
+Subject: [PATCH 6.1 1486/2857] scsi: ufs: core: Add a helper for clearing hba->outstanding_reqs
+Date: Wed, 18 Nov 2026 15:42:00 +0100
+Message-ID: <20261118150254.826886977@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,76 +71,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Stanley Jhu <stanleyjhu@google.com>
 
-[ Upstream commit a605d5d71a6d280c43c7ede9778dda63fb5c3f22 ]
+[ Upstream commit 22d14117ec1845a81acb3a5c4be325f7e8332f70 ]
 
-f2fs_read_end_io() uses "in_task() && !irqs_disabled()" to decide
-whether it is safe to sleep, the result is passed down as @in_task to:
-- f2fs_put_dic() -> f2fs_free_dic() -> f2fs_release_decomp_mem()
-  -> vm_unmap_ram(), which may sleep.
-- f2fs_end_read_compressed_page() -> f2fs_cache_compressed_page()
-  -> f2fs_grab_cache() -> f2fs_lock_cache(), which may sleep in
-  wait_on_bit_lock().
+ufshcd_poll() and ufshcd_abort() each have their own copy of the code that
+clears bits in hba->outstanding_reqs under hba->outstanding_lock.
 
-However, the check still treats below task contexts as sleepable:
-- with spinlock held via spin_lock(), i.e. preempt count != 0 while
-  irqs are enabled.
-- with BH disabled via local_bh_disable().
-- inside an RCU read lock on kernels with CONFIG_PREEMPTION.
-- with any spinlock held on kernels without CONFIG_PREEMPT_COUNT.
+Move that code into ufshcd_clear_outstanding_reqs() and its locked variant
+__ufshcd_clear_outstanding_reqs(), and use them in both functions. No
+functional change.
 
-So the "sleeping function called from invalid context" issue fixed by
-commit 08a7efc5b02a ("f2fs: vm_unmap_ram() may be called from an
-invalid context") can still be triggered.
-
-The block layer provides bio_in_atomic() for exactly this purpose, it
-checks rcu_preempt_depth() and preemptible(), and conservatively returns
-true if CONFIG_PREEMPT_COUNT is disabled, let's use it instead. The
-difference is as below:
-
- old: intask = in_task() && !irqs_disabled()
- new: intask = !bio_in_atomic()
-
- Context                              | old intask     | new intask
- -------------------------------------+----------------+----------------
- Hard IRQ / softirq                   | false          | false
- IRQs disabled                        | false          | false
- spin_lock() held, IRQs enabled       | true (wrong)   | false
- BH disabled by local_bh_disable()    | true (wrong)   | false
- RCU read lock (CONFIG_PREEMPTION)    | true (wrong)   | false
- Spinlock held, w/o PREEMPT_COUNT     | true (wrong)   | false
-
-Note that on kernels without CONFIG_PREEMPT_COUNT, bio_in_atomic()
-always returns true, so dic freeing will always be offloaded to sbi->wq,
-and compressed pages will not be cached in f2fs_read_end_io(); this is
-the price of correctness, since there is no way to tell whether the
-current context can sleep.
-
-Cc: stable@kernel.org
-Fixes: 08a7efc5b02a ("f2fs: vm_unmap_ram() may be called from an invalid context")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ sashal: replaced !bio_in_atomic() with equivalent inline RCU and preemption checks because the helper is unavailable ]
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/3779e125-9acc-42c8-9489-51b9e3c6716d@acm.org
+Suggested-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Bean Huo <beanhuo@micron.com>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20261022034443.3034432-3-stanleyjhu@google.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+[ sashal: adjusted context for the existing single-queue UFS implementation ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/ufs/core/ufshcd.c | 48 +++++++++++++++++++++++++++++----------
+ 1 file changed, 36 insertions(+), 12 deletions(-)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index 691f32c720a38..03265ae7f55c7 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -273,7 +273,8 @@ static void f2fs_read_end_io(struct bio *bio)
- {
- 	struct f2fs_sb_info *sbi = F2FS_P_SB(bio_first_page_all(bio));
- 	struct bio_post_read_ctx *ctx;
--	bool intask = in_task() && !irqs_disabled();
-+	bool intask = !(IS_ENABLED(CONFIG_PREEMPTION) && rcu_preempt_depth()) &&
-+		IS_ENABLED(CONFIG_PREEMPT_COUNT) && preemptible();
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index c86f4d226fb3e..24d1321a9b519 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -5435,6 +5435,37 @@ static void ufshcd_clear_polled(struct ufs_hba *hba,
+ 	}
+ }
  
- 	iostat_update_and_unbind_ctx(bio, 0);
- 	ctx = bio->bi_private;
++/*
++ * Return a bitmask of the transfer requests cleared from
++ * @hba->outstanding_reqs.
++ */
++static unsigned long __ufshcd_clear_outstanding_reqs(struct ufs_hba *hba,
++						     unsigned long mask,
++						     bool from_irq)
++	__must_hold(&hba->outstanding_lock)
++{
++	unsigned long completed_reqs = mask & hba->outstanding_reqs;
++
++	if (from_irq) {
++		/* Do not complete polled requests from interrupt context. */
++		ufshcd_clear_polled(hba, &completed_reqs);
++	}
++	hba->outstanding_reqs &= ~completed_reqs;
++
++	return completed_reqs;
++}
++
++/*
++ * Return a bitmask of the transfer requests cleared from
++ * @hba->outstanding_reqs.
++ */
++static unsigned long ufshcd_clear_outstanding_reqs(struct ufs_hba *hba,
++						   unsigned long mask)
++{
++	guard(spinlock_irqsave)(&hba->outstanding_lock);
++	return __ufshcd_clear_outstanding_reqs(hba, mask, false);
++}
++
+ /*
+  * Returns > 0 if one or more commands have been completed or 0 if no
+  * requests have been completed.
+@@ -5444,15 +5475,13 @@ static int ufshcd_poll(struct Scsi_Host *shost, unsigned int queue_num)
+ 	struct ufs_hba *hba = shost_priv(shost);
+ 	unsigned long completed_reqs, flags;
+ 	u32 tr_doorbell;
++	bool from_irq;
+ 
+ 	spin_lock_irqsave(&hba->outstanding_lock, flags);
+ 	tr_doorbell = ufshcd_readl(hba, REG_UTP_TRANSFER_REQ_DOOR_BELL);
+-	completed_reqs = ~tr_doorbell & hba->outstanding_reqs;
+-	if (queue_num == UFSHCD_POLL_FROM_INTERRUPT_CONTEXT) {
+-		/* Do not complete polled requests from interrupt context. */
+-		ufshcd_clear_polled(hba, &completed_reqs);
+-	}
+-	hba->outstanding_reqs &= ~completed_reqs;
++	from_irq = queue_num == UFSHCD_POLL_FROM_INTERRUPT_CONTEXT;
++	completed_reqs = __ufshcd_clear_outstanding_reqs(hba, ~tr_doorbell,
++							 from_irq);
+ 	spin_unlock_irqrestore(&hba->outstanding_lock, flags);
+ 
+ 	if (completed_reqs)
+@@ -7251,7 +7280,6 @@ static int ufshcd_abort(struct scsi_cmnd *cmd)
+ 	struct ufshcd_lrb *lrbp = &hba->lrb[tag];
+ 	unsigned long flags;
+ 	int err = FAILED;
+-	bool outstanding;
+ 	u32 reg;
+ 
+ 	WARN_ONCE(tag < 0, "Invalid tag %d\n", tag);
+@@ -7333,11 +7361,7 @@ static int ufshcd_abort(struct scsi_cmnd *cmd)
+ 	 * Clear the corresponding bit from outstanding_reqs since the command
+ 	 * has been aborted successfully.
+ 	 */
+-	spin_lock_irqsave(&hba->outstanding_lock, flags);
+-	outstanding = __test_and_clear_bit(tag, &hba->outstanding_reqs);
+-	spin_unlock_irqrestore(&hba->outstanding_lock, flags);
+-
+-	if (outstanding)
++	if (ufshcd_clear_outstanding_reqs(hba, BIT(tag)))
+ 		ufshcd_release_scsi_cmd(hba, lrbp);
+ 
+ 	err = SUCCESS;
 -- 
 2.53.0
 
