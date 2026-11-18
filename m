@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043868;
-	b=mB2AhpWJPnAHPituQzg2JfFRGENisXhpmp69uDRBbi4XW0QcudHtFu+stJzTLMwvMUkS
-	 BrbthMOfsBKpGGHzxT0Rg+/3HPlmqbY4MC2tKqNJGFlOJPiC684/mBve4T79v8d0WBHCE
-	 D7uVRhyKkS7VWMhe7ZBB+Q4uywsZZDvGOvd7Nu82R0bV9zcQ5p7ETS1nGDDXmjlkppjum
-	 rqtcmm5lRtJ5frBU2pr3FrSIC4fyZX8vHRhnof22x802ZR74r/seTaGq8iIgvPu8Lnh9r
-	 +Bkaj3jkwmi0oN+KjYza0xpemUZKnnIZ6R/OIfP+T8wOtEPsa+GipoA9Q+pk9ass0DA==
+	t=1795043870;
+	b=p0RxnqplWpExwbjvvQa24zA9XhtPBULXIOOTIUTcS0efXjrxCNavcMM74V5doF49+TpF
+	 wx3AnBzMR90s+7btjIwiBDPnJgdSW1hf/tl5rSgSLeMeULFantDMlwyJsbJInfdxJOsvj
+	 Wm69GtuZMJWlUSRWuAh2ZSJRS0vKO/pYrjhOj/0Pelw9QYgNwhuu5xOmQNkiARVwvGgzB
+	 s42YmzFY1k/A390pdZLquP6fvLwrkZOhXP7HwL44byALbWjzW0RBXY7/mmnD3cl5fTuil
+	 q8jrtBz2fgD+CGVhprUcBVMXmVLzDu8RjdRrnudPts0nLYDt+T8K00BBZI5AY554xGw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043868;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043870;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=jZ9HU+lxgxZ8olI82zFT5fu1cZzONX6jBLuhdwYyJwE=;
-	b=N5oE5NmM2chQOHZXCc+tU42Nm3EJLf1LRNtkKk4WdKNG5oN1A0xJPNgk0R2F5JHaS0j0
-	 WsqwSH0zxLMKjpRxYVR4j7onodykJ99+zYR34uNjaqbqjhuOZD7q1XAI1JvBVSh5NdiuB
-	 khhKmWYe1BPfC7LfJ3SlEIowlvcXrSDzid871FhEj3pwWN4NWDoYP4SDaQUo68twysq7x
-	 8yMU+PUJ0Jz/MoyB7257ORLCGHm8+JytPUkzJbWuzEQFRg2hfwjDErlH02ewX+Uuqe2Xg
-	 VXFEKMWFCzg2fH8aUnEQ2O2sv9f8kVpdbFaTbj3p0wC/a6qGg5VjvFpWNLPNdTyRI5A==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=Q77V3CFgiWUoIj4sRPSg5Gn6NiUKRdiMfojHDoVpYtY=;
+	b=CPil5opFteXzJZ0r+FP23unoL0tgzE8eegsHhFkwCHXY0P/YjoKAR0fp5IcalArWLuIP
+	 vTWqF3JuwZa7OmwHUyL22amM1aCSIXrpnz9PVWA3ZhKpHfUl4c3NTZIDZkIDh4kpVptG3
+	 MfaS869RxP3z+hTg8KFLOOl6FnVkjzOODMzySW8jhU7/ZtHT877s1+hwlHp0j/zGlsbmP
+	 4fFpTy9BHQiXnSWm+gy2PDoiqv6t6lsiT4U9moWlz4fTRQCP/6i1Smaue2Y3hJ6yD3yYG
+	 3gbJtqbapbPlIk7LFHoMIxqpZ/1KV2dYqUQJEievFD646T6nWsB2f7sS7sIvrItxKQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="t/DWMdYE";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="zA/Odygw";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8278606A32C;
-	Wed, 18 Nov 2026 23:17:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A27606A320;
+	Wed, 18 Nov 2026 23:17:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t/DWMdYE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E711F000C4;
-	Wed, 18 Nov 2026 23:17:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zA/Odygw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B97441F000C4;
+	Wed, 18 Nov 2026 23:17:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043867;
-	bh=jZ9HU+lxgxZ8olI82zFT5fu1cZzONX6jBLuhdwYyJwE=;
+	s=korg; t=1795043870;
+	bh=Q77V3CFgiWUoIj4sRPSg5Gn6NiUKRdiMfojHDoVpYtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t/DWMdYEmy+11LYC098Xu9pvWXoeoufxSy01i/iScWxuRcQMNkv5j4BwiMhB/ZnoQ
-	 kwHPlRCuYs57bnDCSrguPwuJujf635JSq7AUq6nSZX7Wve6/CEKi4wt7m6385Kf4L1
-	 Uk3ols0LcJGNMsYZbasDPBXE8Uf662a+Wz4ExUhg=
+	b=zA/OdygwUAiJV9Ng+MLb8k5WDySo+6/GE2EmdROCwiHuHfnDht2jA3T+0pZMyqaPV
+	 gwidQOHIUEQ0U6x5KoR2HWN0v3u1e1WiNVOGT6hMxmL3zZwptlDKjdughnt06Cnf3s
+	 4KkGSNCL86D9tMhbJDFbx42VhYsTCcSK3izwsPWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Andrea Scian <andrea.scian@dave.eu>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0362/2857] platform/x86: think-lmi: Use strreplace() to replace a character by nul
-Date: Wed, 18 Nov 2026 15:23:16 +0100
-Message-ID: <20261118150214.468445414@linuxfoundation.org>
+Subject: [PATCH 6.1 0324/2857] mtd: rawnand: pl353: Add message about ECC mode
+Date: Wed, 18 Nov 2026 15:22:38 +0100
+Message-ID: <20261118150213.108958202@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,100 +62,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Andrea Scian <andrea.scian@dave.eu>
 
-[ Upstream commit 6cb9c8637c672584d4915559001020237840acba ]
+[ Upstream commit 1e06dbfdfb851170b243d6498e442b449324c664 ]
 
-We can replace
-	p = strchrnul(str, '$OLD');
-	*p = '\0';
-with
-	strreplace(str, '$OLD', '\0');
-that does the compatible modification without a need of the temporary variable.
+This just add some information on kernel log about the selected ECC
 
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20230918135116.1248560-2-andriy.shevchenko@linux.intel.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Stable-dep-of: 54745d563114 ("platform/x86: think-lmi: Fix current password length check")
+Signed-off-by: Andrea Scian <andrea.scian@dave.eu>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Stable-dep-of: 80ecacd054ff ("mtd: rawnand: pl353: Make sure we use the monolithic helpers for raw accesses")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/think-lmi.c | 19 ++++---------------
- 1 file changed, 4 insertions(+), 15 deletions(-)
+ drivers/mtd/nand/raw/pl35x-nand-controller.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/platform/x86/think-lmi.c b/drivers/platform/x86/think-lmi.c
-index a0338c8ec7be7..f32f960b9a5cf 100644
---- a/drivers/platform/x86/think-lmi.c
-+++ b/drivers/platform/x86/think-lmi.c
-@@ -198,14 +198,6 @@ static struct think_lmi tlmi_priv;
- static struct class *fw_attr_class;
- static DEFINE_MUTEX(tlmi_mutex);
+diff --git a/drivers/mtd/nand/raw/pl35x-nand-controller.c b/drivers/mtd/nand/raw/pl35x-nand-controller.c
+index 04e62c3ab5975..929dc759c6b24 100644
+--- a/drivers/mtd/nand/raw/pl35x-nand-controller.c
++++ b/drivers/mtd/nand/raw/pl35x-nand-controller.c
+@@ -975,15 +975,18 @@ static int pl35x_nand_attach_chip(struct nand_chip *chip)
  
--/* ------ Utility functions ------------*/
--/* Strip out CR if one is present */
--static void strip_cr(char *str)
--{
--	char *p = strchrnul(str, '\n');
--	*p = '\0';
--}
--
- /* Convert BIOS WMI error string to suitable error code */
- static int tlmi_errstr_to_err(const char *errstr)
- {
-@@ -411,7 +403,7 @@ static ssize_t current_password_store(struct kobject *kobj,
- 
- 	strscpy(setting->password, buf, setting->maxlen);
- 	/* Strip out CR if one is present, setting password won't work if it is present */
--	strip_cr(setting->password);
-+	strreplace(setting->password, '\n', '\0');
- 	return count;
- }
- 
-@@ -930,7 +922,7 @@ static ssize_t display_name_show(struct kobject *kobj, struct kobj_attribute *at
- static ssize_t current_value_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf)
- {
- 	struct tlmi_attr_setting *setting = to_tlmi_attr_setting(kobj);
--	char *item, *value, *p;
-+	char *item, *value;
- 	int ret;
- 
- 	ret = tlmi_setting(setting->index, &item, LENOVO_BIOS_SETTING_GUID);
-@@ -943,8 +935,7 @@ static ssize_t current_value_show(struct kobject *kobj, struct kobj_attribute *a
- 		ret = -EINVAL;
- 	else {
- 		/* On Workstations remove the Options part after the value */
--		p = strchrnul(value, ';');
--		*p = '\0';
-+		strreplace(value, ';', '\0');
- 		ret = sysfs_emit(buf, "%s\n", value + 1);
- 	}
- 	kfree(item);
-@@ -1451,7 +1442,6 @@ static int tlmi_analyze(void)
- 	for (i = 0; i < TLMI_SETTINGS_COUNT; ++i) {
- 		struct tlmi_attr_setting *setting;
- 		char *item = NULL;
--		char *p;
- 
- 		tlmi_priv.setting[i] = NULL;
- 		status = tlmi_setting(i, &item, LENOVO_BIOS_SETTING_GUID);
-@@ -1468,8 +1458,7 @@ static int tlmi_analyze(void)
- 		strreplace(item, '/', '\\');
- 
- 		/* Remove the value part */
--		p = strchrnul(item, ',');
--		*p = '\0';
-+		strreplace(item, ',', '\0');
- 
- 		/* Create a setting entry */
- 		setting = kzalloc(sizeof(*setting), GFP_KERNEL);
+ 	switch (chip->ecc.engine_type) {
+ 	case NAND_ECC_ENGINE_TYPE_ON_DIE:
++		dev_dbg(nfc->dev, "Using on-die ECC\n");
+ 		/* Keep these legacy BBT descriptors for ON_DIE situations */
+ 		chip->bbt_td = &bbt_main_descr;
+ 		chip->bbt_md = &bbt_mirror_descr;
+ 		fallthrough;
+ 	case NAND_ECC_ENGINE_TYPE_NONE:
+ 	case NAND_ECC_ENGINE_TYPE_SOFT:
++		dev_dbg(nfc->dev, "Using software ECC (Hamming 1-bit/512B)\n");
+ 		chip->ecc.write_page_raw = nand_monolithic_write_page_raw;
+ 		break;
+ 	case NAND_ECC_ENGINE_TYPE_ON_HOST:
++		dev_dbg(nfc->dev, "Using hardware ECC\n");
+ 		ret = pl35x_nand_init_hw_ecc_controller(nfc, chip);
+ 		if (ret)
+ 			return ret;
 -- 
 2.53.0
 
