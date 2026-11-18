@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025152;
-	b=IbPowuYfI341VhR3SxFMAvt6fkbxmn738VZuicDLEDLcHQOLcsmgLGxzmAHncsNrvpw4
-	 8+wJp5nnnbLZkL4jt4BJsQgg+TGwKJqYwGNfPa6Fyh9ZhobX4wECrv6/4+7y8Q0yQsI6Q
-	 EhkigDdPDmvmnu1+tMpxxi0K22la7Mp2jR+N/Leq+lyhagFDpRj3UDwpWWKiIJsG7TV3T
-	 OP+BWkXfd57Bfc2CTz0K4PrJ4pvxlF6b28/FVRonWPUrnynJNKG+pzRgvbHoyH/wP+w6/
-	 /5VZQ50SpjLmgDtBiRlizni3EBPnsbeR0etWzIv/mSPMXzZsLhOXDoGO8/sAPy3L70Q==
+	t=1795025155;
+	b=My5atFDGupgjcCz8hHdW8DYYyt1dutZEWJNUr69ZjJZeg8lwtyKKfPysDpV17Kt4NgyF
+	 LCjQRN6/Hyqft7oMzG90qL08vhM74nGpMt9i0vqKD3EX8OnMn2+kxO0MIM0V5Xr3vghmR
+	 +ZGTwbvqp1yCqkCOGRGCzPFZdlUDth80bGhjU2fgDtgZPqmK/uxC9LS5maWn+u6G8woCt
+	 OP9wnWXEwKBTKAWpNT+dGhc/pNbpkocIhckLIcQFDbKKn70eJXUczIZG2l/yOCxFKIoYv
+	 klYZS7mPN8WpPSzQlq0GehYcBxjwTNLhz/1RaaCce7x+LBP3n8qCQ4YHOA9Lcguig6g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025152;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025155;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=jRvOizki2anR/U69YqDvh7QY3YYyrTGNRciogQm2140=;
-	b=O6UCOXuSHrCsOcnAvzmvRkJn8eVbxKd/J5OMiERKEWC+FQUkfHfyDhn6iQIuRN8NOCpZ
-	 Mb7cVrHnkmUt0kWG5ZDZz/Jg+iwN+USYIJCdMEBg9mVe++1mRiQ3QpYtN7kroUe12vPhS
-	 aY+wctBHy2YMw12R2hd/LfX77GvsO6zQG6urQx9ka2UaT2cVxPWuXASBfhvu46zpWzEL7
-	 cSaUR8tYMhieJfviB/BjYlgZMntcmBTfrQ/9nOUxNsErfiyloB1su1ZrHZfT/bxxONt3k
-	 VgIM3uurRLOQWZG69XKSTlYtyeti2h9gSH6rlAMc25T5GOhjtsOG5Y4caIqBFZo3D1w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=OfTFIpj2LOxQTEb0rAyXTpxsNqbxT3SeyYuNgtZa6wc=;
+	b=t0Fyc+hSE6u+KmD9+gQnxFKTvalxwMwAoANYJ6wfX+ItZgalIy/geQMOG0jeQIFAVbag
+	 zdRO/CTEWs8cTin2xZUS+ub3Kj8/DBmwYahA50iuIZs6ztCkO4ab6SZYMS2SdtEph+3C1
+	 tlhmO2DzB4wO3nyBHq7uVCQ+zo5Ghdp8aR3EoYYk7SA4w6dHroRxWbJvYp+0PF7ir/h2I
+	 5Vp3FT11QtaAmkRi1sC66oBFOIVWlzJ39s1NWEAZ7c9izGnhT+MM+mLnqSv7n8cTvI+WK
+	 dj3sRD3cCQ7quSQial2GckSZKayl6znlscbFqelbVJ5JoJUWtBcvj2ApplsGkzfqiNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oXzt5qtd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S2yFtW2f;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD015606A32F;
-	Wed, 18 Nov 2026 18:05:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D62A606A32A;
+	Wed, 18 Nov 2026 18:05:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oXzt5qtd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B94E91F000C6;
-	Wed, 18 Nov 2026 18:05:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S2yFtW2f
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FF921F000C4;
+	Wed, 18 Nov 2026 18:05:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025152;
-	bh=jRvOizki2anR/U69YqDvh7QY3YYyrTGNRciogQm2140=;
+	s=korg; t=1795025155;
+	bh=OfTFIpj2LOxQTEb0rAyXTpxsNqbxT3SeyYuNgtZa6wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oXzt5qtdKLQUE/xRMkoQjSZto2XXtooQT4iz4jtvi6QNIV8IOfQD7RpqRGlNoE2Ec
-	 Hzhp3KaPFdnMlj2vpP8Iv8xJlTMrKLyAAEFaxtZDnfMYWjvlSRUmKcvWN5PQborfAP
-	 eIxpBaEes8dR+U0a4r3mT+2cIlHaYyby46Tqfioo=
+	b=S2yFtW2ff+wdMKyaWWpZDqSpsWRGjZiR10BPVArpJqiS7ASJ+vTNAiaSK332Dt5eL
+	 8gkXIVWqfMPQnXzo2U72buKhKUEJluW/64i9q4wO//xwMTi3xG1K63aY59GyfwFMzf
+	 m0oqwLjvFz4Cg+/YyjRf8y20lIFQMmhLtb99Geww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Omar Ramadan <omar@blockcast.net>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0937/2151] perf trace: Copy sockaddr arguments by their length
-Date: Wed, 18 Nov 2026 15:44:32 +0100
-Message-ID: <20261118150156.615023231@linuxfoundation.org>
+Subject: [PATCH 6.18 0928/2151] amt: pull the AMT header behind the transport header in amt_parse_type()
+Date: Wed, 18 Nov 2026 15:44:23 +0100
+Message-ID: <20261118150156.276803933@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -62,97 +63,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Omar Ramadan <omar@blockcast.net>
 
-[ Upstream commit 1c443dfc3202048b2cb1d3c2534b39b28701e929 ]
+[ Upstream commit eb0c18404c8943356f4aa164e5db9067b79ea93c ]
 
-The BTF augmenter copies sizeof(struct sockaddr), 16 bytes, for the
-sockaddr arguments of connect, bind and sendto, and runs before the
-sys_enter_connect and sys_enter_sendto programs that copy their length.
-An IPv6 address needs 24 or 28 bytes, so the rest was read from past the
-payload, and now that the printers are bounded only its family is shown.
+A gateway's encap socket passes ICMP errors to amt_err_lookup(), which
+calls amt_parse_type() on the quoted datagram to see which AMT message
+failed. On that path skb->data points at the quoted IP header and the
+transport header at the quoted UDP header, and icmp_socket_deliver()
+only guarantees the quoted IP header plus 8 bytes, that is, up to the
+end of the UDP header.
 
-Copy them as buffers sized by the length argument after them, up to the
-32 bytes augmented buffers are limited to. That holds an IPv6 address
-and doubles the AF_LOCAL path shown.
+amt_parse_type() pulls sizeof(struct udphdr) + sizeof(struct amt_header)
+bytes from skb->data, which on this path stays inside the quoted IP
+header, and then reads the AMT header behind udp_hdr(skb). An ICMP error
+that quotes only the IP and UDP headers of a Request, the minimum RFC 792
+asks for, therefore makes it read past the pulled data, and past the end
+of the packet when nothing follows.
 
-Committer testing:
+Pull up to the transport header plus the UDP and AMT headers, as
+vxlan_err_lookup() does. amt_rcv() is called with the transport header
+at skb->data, so the pull on the receive path does not change.
 
-Is using BPF:
-
-  root@x2:~# strace -e bpf perf trace -e connect,bind |& head -5
-  bpf(BPF_TOKEN_CREATE, {token_create={flags=0, bpffs_fd=12}}, 8) = -1 EOPNOTSUPP (Operation not supported)
-  bpf(BPF_PROG_LOAD, {prog_type=BPF_PROG_TYPE_SOCKET_FILTER, insn_cnt=2, insns=0x7ffea3054260, license="GPL", log_level=0, log_size=0, log_buf=NULL, kern_version=KERNEL_VERSION(0, 0, 0), prog_flags=0, prog_name="", prog_ifindex=0, expected_attach_type=BPF_CGROUP_INET_INGRESS, prog_btf_fd=0, func_info_rec_size=0, func_info=NULL, func_info_cnt=0, line_info_rec_size=0, line_info=NULL, line_info_cnt=0, attach_btf_id=0, attach_prog_fd=0, core_relo_cnt=0, fd_array=NULL, core_relos=NULL, core_relo_rec_size=0, log_true_size=0, prog_token_fd=0}, 148) = 12
-  bpf(BPF_PROG_LOAD, {prog_type=BPF_PROG_TYPE_SOCKET_FILTER, insn_cnt=2, insns=0x7ffea3054390, license="GPL", log_level=0, log_size=0, log_buf=NULL, kern_version=KERNEL_VERSION(0, 0, 0), prog_flags=0, prog_name="", prog_ifindex=0, expected_attach_type=BPF_CGROUP_INET_INGRESS, prog_btf_fd=0, func_info_rec_size=0, func_info=NULL, func_info_cnt=0, line_info_rec_size=0, line_info=NULL, line_info_cnt=0, attach_btf_id=0, attach_prog_fd=0, core_relo_cnt=0, fd_array=NULL, core_relos=NULL, core_relo_rec_size=0, log_true_size=0, prog_token_fd=0, fd_array_cnt=0, signature=NULL, signature_size=0, keyring_id=0}, 168) = 12
-  bpf(BPF_PROG_LOAD, {prog_type=BPF_PROG_TYPE_SOCKET_FILTER, insn_cnt=2, insns=0x7ffea3053f80, license="GPL", log_level=0, log_size=0, log_buf=NULL, kern_version=KERNEL_VERSION(0, 0, 0), prog_flags=0, prog_name="libbpf_nametest", prog_ifindex=0, expected_attach_type=BPF_CGROUP_INET_INGRESS, prog_btf_fd=0, func_info_rec_size=0, func_info=NULL, func_info_cnt=0, line_info_rec_size=0, line_info=NULL, line_info_cnt=0, attach_btf_id=0, attach_prog_fd=0, core_relo_cnt=0, fd_array=NULL, core_relos=NULL, core_relo_rec_size=0, log_true_size=0, prog_token_fd=0}, 148) = 12
-  bpf(BPF_MAP_CREATE, {map_type=BPF_MAP_TYPE_ARRAY, key_size=4, value_size=4, max_entries=1, map_flags=BPF_F_MMAPABLE, inner_map_fd=0, map_name="libbpf_mmap", map_ifindex=0, btf_fd=0, btf_key_type_id=0, btf_value_type_id=0, btf_vmlinux_value_type_id=0, map_extra=0, value_type_btf_obj_fd=0, map_token_fd=0, excl_prog_hash=NULL, excl_prog_hash_size=0}, 92) = 12
-  root@x2:~#
-
-And btf:
-
-  root@x2:~# strace -e openat perf trace -e connect,bind |& grep "/sys/kernel/btf/vmlinux"
-  openat(AT_FDCWD, "/sys/kernel/btf/vmlinux", O_RDONLY) = 12
-  ^C
-  root@x2:~#
-
-And copying the sockaddr parameters according to its addrlen or the cap
-in the augmented bpf, that probably needs to be a bit bigger for local
-sockets:
-
-  ⬢ [acme@toolbx perf-tools-next]$ echo -n /var/run/.heim_org.h5l.kcm-soc | wc -c
-  30
-  ⬢ [acme@toolbx perf-tools-next]$ ls -la /var/run/.heim_org.h5l.kcm-socket
-  srw-rw-rw-. 1 nobody nobody 0 Sep 14 23:13 /var/run/.heim_org.h5l.kcm-socket
-  ⬢ [acme@toolbx perf-tools-next]$
-
-  root@x2:~# perf trace -e connect,bind --max-events 10
-       0.000 ( 0.717 ms): pool-0/29901 connect(fd: 9, uservaddr: { .family: LOCAL, path: /var/run/.heim_org.h5l.kcm-soc }, addrlen: 110) = 0
-       3.733 ( 0.059 ms): pool-0/29901 connect(fd: 10, uservaddr: { .family: LOCAL, path: /var/run/.heim_org.h5l.kcm-soc }, addrlen: 110) = 0
-       8.859 ( 0.054 ms): pool-0/29901 connect(fd: 9, uservaddr: { .family: LOCAL, path: /var/run/.heim_org.h5l.kcm-soc }, addrlen: 110) = 0
-      10.880 ( 0.053 ms): pool-0/29901 connect(fd: 9, uservaddr: { .family: LOCAL, path: /var/run/.heim_org.h5l.kcm-soc }, addrlen: 110) = 0
-    1225.303 ( 0.081 ms): systemd-resolv/103685 connect(fd: 30, uservaddr: { .family: INET6, port: 53, addr: fd55:6f31:c26b::1, scope_id: 4 }, addrlen: 28) = 0
-    1226.000 ( 0.046 ms): systemd-resolv/103685 connect(fd: 31, uservaddr: { .family: INET6, port: 53, addr: fd55:6f31:c26b::1, scope_id: 4 }, addrlen: 28) = 0
-    1371.972 ( 0.055 ms): systemd-resolv/103685 connect(fd: 27, uservaddr: { .family: INET6, port: 53, addr: fd55:6f31:c26b::1, scope_id: 4 }, addrlen: 28) = 0
-    1382.266 ( 0.260 ms): Socket Thread/2663038 connect(fd: 178, uservaddr: { .family: INET, port: 443, addr: 186.192.83.34 }, addrlen: 16) = -1 (unknown) (Operation now in progress)
-    5003.508 ( 0.063 ms): pool-0/29901 connect(fd: 9, uservaddr: { .family: LOCAL, path: /var/run/.heim_org.h5l.kcm-soc }, addrlen: 110) = 0
-    5007.007 ( 0.054 ms): pool-0/29901 connect(fd: 10, uservaddr: { .family: LOCAL, path: /var/run/.heim_org.h5l.kcm-soc }, addrlen: 110) = 0
-  root@x2:~#
-
-Fixes: a68fd6a6cdd309bb ("perf trace: Collect augmented data using BPF")
-Assisted-by: Antigravity:gemini-3.1-pro
-Signed-off-by: Ian Rogers <irogers@google.com>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: cbc21dc1cfe9 ("amt: add data plane of amt interface")
+Signed-off-by: Omar Ramadan <omar@blockcast.net>
+Reviewed-by: Eric Dumazet <edumazet@@google.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20260928181557.85796-1-omar@blockcast.net
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/amt.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index da8fce7801ba5..cac1027bf4800 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -3887,7 +3887,12 @@ static int trace__bpf_sys_enter_beauty_map(struct trace *trace, int e_machine, i
- 				continue;
+diff --git a/drivers/net/amt.c b/drivers/net/amt.c
+index 3f4e974762926..96cde820237d3 100644
+--- a/drivers/net/amt.c
++++ b/drivers/net/amt.c
+@@ -1289,8 +1289,12 @@ static int amt_parse_type(struct sk_buff *skb)
+ {
+ 	struct amt_header *amth;
  
- 			bt = sc->arg_fmt[i].type;
--			beauty_array[i] = bt->size;
-+			/* Copy a sockaddr as a buffer sized by the next argument, e.g. addrlen. */
-+			if (strcmp(name, "sockaddr") == 0 && field->next &&
-+			    strstr(field->next->name, "len"))
-+				beauty_array[i] = -((i + 1) + 1);
-+			else
-+				beauty_array[i] = bt->size;
- 			can_augment = true;
- 		} else if (field->flags & TEP_FIELD_IS_POINTER && /* string */
- 			   strcmp(field->type, "const char *") == 0 &&
+-	if (!pskb_may_pull(skb, sizeof(struct udphdr) +
+-			   sizeof(struct amt_header)))
++	/* skb->data is the UDP header on receive, but the quoted IP header
++	 * when amt_err_lookup() parses an ICMP error, so pull up to the
++	 * transport header rather than from skb->data.
++	 */
++	if (!pskb_may_pull(skb, skb_transport_offset(skb) +
++			   sizeof(struct udphdr) + sizeof(struct amt_header)))
+ 		return -1;
+ 
+ 	amth = (struct amt_header *)(udp_hdr(skb) + 1);
 -- 
 2.53.0
 
