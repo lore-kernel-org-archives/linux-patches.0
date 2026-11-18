@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037826;
-	b=T2/0E18J4G/d3FFAcJXibiQPWJIRM0dhxRrgPLMzCqkLSeRTjmut8PxvSK9Nx8Iql7HS
-	 /rKcIuBio1DlYFVS/ZEXTpcV+1DDNFD9DvZEK64cvaa48dyLNUP8r7tmb40+t8f867E8f
-	 V4uGqKw3Ij4pRFb+cvqjy40YUw+YPa4YqEBlCySqMdcbfRXJldEtxI6mHEhw1bYwo+QYh
-	 oqnjgFhGHeZTnc8OEb9gsnaqtmZXDdN/jibmh4ydDTopj/l1/gPMoHDs4HYw1iSmO4Pjd
-	 hn4L7du6l61BAPtyAA+T2Yby8hydzT6p8be3OaNbByCMI97VqCGs8LrUZ1igD7jcAdw==
+	t=1795037829;
+	b=RXM+fAHnnpTzTC0S9EIneVD+SLr7cVnTKQ7mMq3kVLsPhyzm/xQlepGxQ4oZUq5Q2RLB
+	 YPzOjEo3iTdBwpwXQ6TOuyAqdoX2KoamrEKhclkrAhZG9Y39ej0G00K9LLMemCbpv1+1G
+	 paqIukmwfyU6lgHTetZJ1s+6WabNGR6znxYmk16CZqYZp6ScAwUA3sYUtxhecS9c20spb
+	 lsbys3h2i/K4S0l/CyrW/xUCgZQXo6G5sYk9/T0aJaLssw4CVWMpjby5davbsFGKyhumF
+	 /X1q+ca6G9e1kArhhfjD2umpZwOY2SCa4Lnuox1xo59z9kREWL61VTlLoCKFtXmRJfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037826;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037829;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Kk2eh0R0gMjXvgH9+SErkf64iQdTqcfUEaDIIPqhHbM=;
-	b=M+0yPavTZe7V0gVZDYd7acxJ8+gL+5bWAprwFQ7BXVo4woo0VswzNI1PgvhGZSBWhqXx
-	 8QX/JB+oUaCSq994XukxkipEk1JkP5DemSxHxchb+RigD32b6bdyeyCjAlC36osaVKFxJ
-	 usHQox9orWP/2H01GMV84pHC5pQkqcQljBXlLElKHtCEL8KFlyKp79JuBjFtkFqz3c2zg
-	 do4v5Ry7cxfck9vwhA5e95/KkFvAn7wSJuRq40lHje56KFhJ1OHoYei488PmPymJQeEhP
-	 QvNdMmXBAflVZmZnWhg3HEcnqCzzDmDp++lGL+cvalpHhIawwyehJk+T1Jqh0lRlDpQ==
+	bh=W2ziai1dZ8wkk5yRUtRhxImqbgUNiDQcXXI0yYdyG58=;
+	b=wz+2C5qQAabK53a2R2EXNZL0GQ7F/xzyDdJyD7qelH9dYVkvIC7OeOakROOaSdtqTMKc
+	 FkecJaG92FqOlqsHwFfJu7tY1UECuR+fOopwGmbDxrHOY6SIvSrj6G3KooR1wKT8E0keG
+	 pk0tqxksbAw0pvy4xFyhjBK6CysfS6LfiBNgtgOWjVfFdn7gGqn9H9mrCYmI9BKoBuAwu
+	 CBC6AupRfYiFKYQysaWXsjPo986KP8LKQyarMSDanRi6tPU2tLzluUwD3BocOoAkSaMzc
+	 Nu2rudBu3ZgeMUhhwSwy58IKLzIMShOCJpLWPSxnAD5gWGjTUOggYKPCmQxeoW8ggMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wjqqjGXn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QkVd5w88;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C3A606A330;
-	Wed, 18 Nov 2026 21:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 273BB606A32A;
+	Wed, 18 Nov 2026 21:37:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wjqqjGXn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5304C1F000C8;
-	Wed, 18 Nov 2026 21:37:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QkVd5w88
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BAD41F000C7;
+	Wed, 18 Nov 2026 21:37:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037825;
-	bh=Kk2eh0R0gMjXvgH9+SErkf64iQdTqcfUEaDIIPqhHbM=;
+	s=korg; t=1795037828;
+	bh=W2ziai1dZ8wkk5yRUtRhxImqbgUNiDQcXXI0yYdyG58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wjqqjGXnFeo06SNEg9aZd+AIBFTHUlpKgbv4MsmfiIUUCf7Sb3N+LwtnCzihXIj7U
-	 lk6q+KhFOzIAwQ+UCdv3eBDYbi1ABSLHvIDSNrt7cUyRb1KAE5Fb96UMj72MT3hmcB
-	 3FPOBx8Rjds4D2ZhV41LERwXUbdFTh+wKc9FsoEs=
+	b=QkVd5w88M3z/xpBHXk0IUMwoPNfwPwtrnXrG5C+NRx2R+iDfrN19MtcNqVidnKeJc
+	 t96g+4TjpDJfE+pRBc428spOgwhVQGmVexXe2h2vtMGI5PLv562t/YpP6ZkjgrIzBy
+	 f8Zby2PVxQlHUdAITiu4QMJgGotMcExH7JAT917w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kylie C <kyliepc@proton.me>,
-	Alex Hung <alex.hung@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
+	Erhan Bilgili <erhan.bilgili@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1531/3318] drm/amd/display: Dont select zero V_TOTAL_MIN/MAX on seamless boot
-Date: Wed, 18 Nov 2026 15:35:53 +0100
-Message-ID: <20261118150406.904286901@linuxfoundation.org>
+Subject: [PATCH 6.6 1532/3318] drm/amdgpu: Fix duplicate dependency fence releases
+Date: Wed, 18 Nov 2026 15:35:54 +0100
+Message-ID: <20261118150406.934253928@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,45 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kylie C <kyliepc@proton.me>
+From: Erhan Bilgili <erhan.bilgili@gmail.com>
 
-[ Upstream commit d13f36e4e055cce03761de590bc8dc6346b1d5c8 ]
+[ Upstream commit ea47f84199241dd083d40a241beea665415d4f6c ]
 
-Initialize V_TOTAL_MIN/MAX to V_TOTAL before enabling the selectors if
-they are still 0, as optc1_program_timing() does without seamless boot.
+drm_sched_job_add_dependency() consumes its fence reference on success
+and failure. Do not release the fence again if
+drm_sched_job_add_dependency() fails.
 
-Tested on Renoir (DCN 2.1) eDP with amdgpu.seamless=1.
-
-This removes the flash between the bios logo & plymouth on my laptop.
-
-Signed-off-by: Kylie C <kyliepc@proton.me>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
+Fixes: 41cc108b2451 ("drm/amdgpu: fix missing dma_fence_put in error path")
+Fixes: c1c4a8b21721 ("drm/amdgpu: grab extra fence reference for drm_sched_job_add_dependency")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Erhan Bilgili <erhan.bilgili@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 1ad7473e82b9242c4ee7eea82ab16d3f82f01651)
+(cherry picked from commit e04f3dfb2071451633e6440a3911a9bb65df9144)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn20/dcn20_optc.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_sync.c    | 4 +---
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c | 1 -
+ 2 files changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_optc.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_optc.c
-index 58bdbd859bf9b..3933f332b1b6a 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_optc.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_optc.c
-@@ -461,6 +461,13 @@ void optc2_lock_doublebuffer_disable(struct timing_generator *optc)
- void optc2_setup_manual_trigger(struct timing_generator *optc)
- {
- 	struct optc *optc1 = DCN10TG_FROM_TG(optc);
-+	uint32_t v_total, v_total_max;
-+
-+	REG_GET(OTG_V_TOTAL_MAX, OTG_V_TOTAL_MAX, &v_total_max);
-+	if (!v_total_max) {
-+		REG_GET(OTG_V_TOTAL, OTG_V_TOTAL, &v_total);
-+		optc->funcs->set_vtotal_min_max(optc, v_total, v_total);
-+	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_sync.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_sync.c
+index 1b013a44ca99a..03ba96c7a71d9 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_sync.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_sync.c
+@@ -392,10 +392,8 @@ int amdgpu_sync_push_to_job(struct amdgpu_sync *sync, struct amdgpu_job *job)
  
- 	/* Set the min/max selectors unconditionally so that
- 	 * DMCUB fw may change OTG timings when necessary
+ 		dma_fence_get(f);
+ 		r = drm_sched_job_add_dependency(&job->base, f);
+-		if (r) {
+-			dma_fence_put(f);
++		if (r)
+ 			return r;
+-		}
+ 	}
+ 	return 0;
+ }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
+index be7d91574ec56..c8e510b27654c 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
+@@ -246,7 +246,6 @@ static int amdgpu_vm_sdma_update(struct amdgpu_vm_update_params *p,
+ 		dma_fence_get(fence);
+ 		r = drm_sched_job_add_dependency(&p->job->base, fence);
+ 		if (r) {
+-			dma_fence_put(fence);
+ 			dma_resv_iter_end(&cursor);
+ 			return r;
+ 		}
 -- 
 2.53.0
 
