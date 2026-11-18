@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038187;
-	b=fXK5eK8bJYVGprSO+WqLgK6AzNpRcmL1Xprnd1RpfHpksPPit4ZNKFiOx4yEcJu/BOtA
-	 PZSo6ZYfV5QrWbkTWtji4e3isvx/WOTkxl2Q+0P/jLDWtYGhrMv9f89aok2I7Gg2GwK9L
-	 5SRZSXGQ1pVrslfvDbMFo7mqBIPt3WZjw4wvgul8TVyxqOgs5HOQuheF0dh63N788PlcP
-	 h1h/l2LGdMtew9C0vQ96tP+tbB7Dcf5jeoBNHvIHtftmiCHxaLmskxBKjxxW0HXT7Tb1p
-	 4PDiZ7RdIV6zCLQu/2SQcdLZkFj+Mex86QZam3SvdnClq80t3KQd1lluhvMl+FJOLeA==
+	t=1795038190;
+	b=qP4QE8IRTDCmBkviL3h9CBtjnCoFrAqlEN8t6PKEhz4JvVOUYcxauXcDrRS9YRU3KaGe
+	 oaf8yBWx64g/4YudQ1YO14xClnfd96LQBy5UJOvAE5f+ZcHhsgnKLs9/qYZQVm8Tl7ytf
+	 KGK6yS9js/I+kisj35jIS54t+3jUWH2dX1DQNGG91gCVwg7AdNTwhAsRMCC6zJtFi6i8n
+	 0YNx4ES1ADQarPRJKScKNcXIZ2NL5iCC/gZ6RU5hcjplo4pAI2IuXJtP6Vp9/d/orPaCE
+	 uGLqKvWHRlID8u3hbEnxvTfCQaEOK1gMKShPtfc1cljLbQsRDYLLyyOCNjlZDt1SH3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038187;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038190;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KcjCtfH8Kfygvi46Wvyvq4WCBFT/ovs4jIksp03cpQY=;
-	b=ScRwEJZTSKz6L4OHsls8y7HJfTGWh4pzOEgNI/hyg33ipCEwUtdk8NeNYMsRu2KtdbvQ
-	 3O3gMHFVwxcDZmnjs6Ci6RXKnPRA+uGVqzBPPG9kibbcqHute10MBwrtn34pFb94mFNT2
-	 TGIADEsZ3H3wk2y7AvdB+Cvxn9Zc2w3vCtekjuXrsXwJXQUPAxtQwZOgSzEzFDEtRO7yy
-	 wCJyVX+gZJgh6A2WrSt4rb/W8abj1QeZmnDuLWmWvEGIk2O2MId7H1KfUTt2I9NfZLN1n
-	 W61nhfV9gWWq+j8p3xOrsyaK8l9d6N1PNtEdhCbYRnkhRBdTcORrgAbJbRbqjxU5Ijw==
+	bh=5VC0Y9Lii/N4vtVqvDatnE3BH85bsIDWyq0K4k5tdmA=;
+	b=vvEuaSkfIisWv4jk8Ua9vFfA914G+y/pfHX4mVXy3CsX62vml49w5t+Ej8FFbkmRBqGg
+	 iA0MkK/QOZh2eaE0mq2shi5wz2OdrOSBTd4FTeVW018BHhFvgyJ6yEuQLSKiaaPkZbDsO
+	 bS7AKHOm5YIfCBAqvYTruvXKX3D8OAokQzzGguY9hFn8sRLWyFtxj/F8waTE//5RGPa5l
+	 B7H6kyb1DrN7jNJC9+IraP8Eldkq7ZYhphxRx0mttsoGtdH442G5npbhiPanQmX1Ghkup
+	 F0SnvysUg+PmcLQ93RV209+LhJpEnG0pHhwcZ2BfL8iV9WUtE6lwLeni7BtKPoUQOgw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="q61/wmqM";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UHX4E7eG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8E4606A32C;
-	Wed, 18 Nov 2026 21:43:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD2D606A32C;
+	Wed, 18 Nov 2026 21:43:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q61/wmqM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31D411F000C4;
-	Wed, 18 Nov 2026 21:43:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UHX4E7eG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01CE31F000C5;
+	Wed, 18 Nov 2026 21:43:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038187;
-	bh=KcjCtfH8Kfygvi46Wvyvq4WCBFT/ovs4jIksp03cpQY=;
+	s=korg; t=1795038190;
+	bh=5VC0Y9Lii/N4vtVqvDatnE3BH85bsIDWyq0K4k5tdmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q61/wmqMTr639o+AQfy/0JmIA68JaHSzbicZmynnJDUf3osNQuKBpl6UoEoKbVX9Z
-	 vgsvGVjXCoH0ilZZg5qO98Wr2YJwHUjZ7xyrF4eZEak9R5mFuuBi6QcAeBN3fQdorf
-	 4YWeMd0D5IU1chaKvnUIGDosubjtSSEirs9rC1ts=
+	b=UHX4E7eGwDD1g0yu0qnQHXT6e3fDO7ZXgw0OgWIxrMkiZ55/otl4CjFYjsAwtFCIJ
+	 3P2uBMev+bAMzeEAnW2EwkvETspeWohC4p9eIrRMY/aDZB9neB1SnY6tsqp+ihiK4U
+	 mFYeW/XssnUmlLZ7EPSMQfSurn9WJWdOof/qqsok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuejie Shi <syjcnss@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	co+fd80bc5967eb22c3@bugs.sh,
+	Michal Pecio <michal.pecio@gmail.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1657/3318] fs/ntfs3: validate the EA value length in ntfs_read_ea()
-Date: Wed, 18 Nov 2026 15:37:59 +0100
-Message-ID: <20261118150411.483559839@linuxfoundation.org>
+Subject: [PATCH 6.6 1658/3318] usb: xhci: Fix bounce buffer overflow
+Date: Wed, 18 Nov 2026 15:38:00 +0100
+Message-ID: <20261118150411.513306851@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,148 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuejie Shi <syjcnss@gmail.com>
+From: Michal Pecio <michal.pecio@gmail.com>
 
-[ Upstream commit 351817226fbf0031c4c63d1f5d7f15c3172312eb ]
+[ Upstream commit 68c5cb7574c567e83ba95258cb146db95e069a87 ]
 
-ntfs_read_ea() checks the $EA list for consistency, but it only
-recomputes the packed size of an entry when the entry's own size field is
-zero:
+High-speed devices with out of spec 1024 byte bulk endpoints exist and
+are allowed by USB core, but xhci-hcd always sets packet size to 512.
+The exact nature of these devices isn't documented, commit fb5ee84ea72c
+("USB: Accept bulk endpoints with 1024-byte maxpacket") only states
+that they "don't work with xHCI host controllers", whatever it means.
 
-	for (off = 0; off < size; off += ea_size) {
-		const struct EA_FULL *ef = Add2Ptr(ea_p, off);
-		u32 bytes = size - off;
-		...
-		if (ef->size) {
-			ea_size = le32_to_cpu(ef->size);
-			if (ea_size > bytes)
-				goto out1;
-			continue;              /* <- elength never checked */
-		}
-		...
-		ea_size = ALIGN(struct_size(ef, name,
-					    1 + ef->name_len +
-						    le16_to_cpu(ef->elength)),
-				4);
-		if (ea_size > bytes)
-			goto out1;
-	}
+But somebody (or a malicious device) can try, and then the driver will
+allocate a 512 byte bounce buffer for this endpoint and may write up to
+1024 bytes into it if particular scatter-gather URBs are used, because
+xhci_align_td() obtains packet size from the descriptor. Fix this.
 
-ef->size is non-zero for every entry except the last one, and it is what
-ntfs3 itself writes (ntfs_set_ea() stores exactly that aligned packed
-size), so in practice elength is not validated at all.  find_ea() then
-uses unpacked_ea_size(), which also prefers ea->size when it is set, so
-it agrees and hands the entry back.
+As a side effect, TRBs will be aligned to the packet size chosen by the
+driver on all endpoints of all speeds. Alignment serves the xHC, not
+device, so this is fine. Only out of spec devices are affected anyway.
 
-ntfs_get_ea() copies elength bytes with no further bound of its own:
-
-	len = le16_to_cpu(ea->elength);
-	...
-	if (len > size) {              /* size is the *caller's* buffer */
-		err = -ERANGE;
-		...
-	}
-	memcpy(buffer, ea->name + ea->name_len + 1, len);
-
-so a caller that supplies a large enough buffer receives up to 64 KiB of
-whatever follows the small $EA allocation -- straight to userspace via
-getxattr(2).
-
-Compute the packed size unconditionally and require it to fit in the
-entry.  Hoist the "bytes < offsetof(struct EA_FULL, name)" test above the
-ef->size branch as well: name_len and elength were being read there
-without it, which is itself a small over-read of the kmalloc'd buffer
-when fewer than 8 bytes are left.  The old "bytes < sizeof(ef->size)"
-test is subsumed by it.
-
-  # mkntfs image; create /mnt/ntfs/poc with user.ntfs6 set, then rewrite
-  # that EA_FULL's elength from 0xf to 0xff00 on the raw device
-  mount -t ntfs3 -o ro /dev/vda /mnt/ntfs
-  getxattr("/mnt/ntfs/poc", "user.ntfs6", buf, 128 * 1024);
-
-  BUG: KASAN: slab-out-of-bounds in ntfs_get_ea+0x294/0x3e0
-  Read of size 65280 at addr ffff0000cca53acf by task xattr_probe/142
-   __asan_memcpy+0x3c/0xa0
-   ntfs_get_ea+0x294/0x3e0
-   ntfs_getxattr+0x284/0x318
-   __vfs_getxattr+0x104/0x160
-   vfs_getxattr+0x1b4/0x1e0
-   do_getxattr+0xcc/0x230
-   path_getxattrat+0x184/0x270
-   __arm64_sys_getxattr+0x64/0x80
-  Allocated by task 142:
-   __kmalloc_noprof+0x294/0x668
-   ntfs_read_ea+0x1e4/0x420
-   ntfs_get_ea+0x2c8/0x3e0
-  The buggy address belongs to the object at ffff0000cca53a80
-   which belongs to the cache kmalloc-96 of size 96
-
-The object being over-read is the one ntfs_read_ea() just allocated, and
-it is 96 bytes.
-
-Entries written by ntfs3 and by Windows set size to the aligned packed
-size, so the new test does not reject anything a working filesystem
-produces.
-
-Fixes: be71b5cba2e6 ("fs/ntfs3: Add attrib operations")
+Reported-by: co+fd80bc5967eb22c3@bugs.sh
+Link: https://lore.kernel.org/linux-usb/D4tcSGerkYkIV1DmaUo1t8TaR5qQElDLkidn@bugs.sh/
+Fixes: f9c589e142d0 ("xhci: TD-fragment, align the unsplittable case with a bounce buffer")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yuejie Shi <syjcnss@gmail.com>
-[almaz.alexandrovich@paragon-software.com: applied as-is, logic is the same but the code is cleaner]
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-[ sashal: adjusted context on top of c22f91d82cb9, which already validates ef->size ]
+Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20261009151624.618967-11-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ sashal: adapted the max_pkt assignment removal to match usb_endpoint_maxp() instead of xhci_usb_endpoint_maxp() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/xattr.c | 25 ++++++++++++++-----------
- 1 file changed, 14 insertions(+), 11 deletions(-)
+ drivers/usb/host/xhci-ring.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c
-index 30d5b8b53974d..1c18ab072987b 100644
---- a/fs/ntfs3/xattr.c
-+++ b/fs/ntfs3/xattr.c
-@@ -146,29 +146,32 @@ static int ntfs_read_ea(struct ntfs_inode *ni, struct EA_FULL **ea,
- 	for (off = 0; off < size; off += ea_size) {
- 		const struct EA_FULL *ef = Add2Ptr(ea_p, off);
- 		u32 bytes = size - off;
--		size_t need;
--
--		/* Check if we can use field ea->size. */
--		if (bytes < sizeof(ef->size))
--			goto out1;
-+		u32 packed_size;
+diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
+index 66c399253a9b4..3794492b16ec2 100644
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -3644,15 +3644,13 @@ static u32 xhci_td_remainder(struct xhci_hcd *xhci, int transferred,
  
- 		/* Check if we can use fields ef->name_len and ef->elength. */
- 		if (bytes < offsetof(struct EA_FULL, name))
- 			goto out1;
  
--		/* Size needed to hold this record's name and value. */
--		need = struct_size(ef, name,
--				   1 + ef->name_len + le16_to_cpu(ef->elength));
-+		/*
-+		 * The name and the value have to fit in the entry whether or
-+		 * not ef->size is set, because ntfs_get_ea() copies elength
-+		 * bytes out of this buffer and checks them only against the
-+		 * caller supplied buffer size.
-+		 */
-+		packed_size =
-+			ALIGN(struct_size(ef, name,
-+					  1 + ef->name_len +
-+						  le16_to_cpu(ef->elength)),
-+			      4);
+ static int xhci_align_td(struct xhci_hcd *xhci, struct urb *urb, u32 enqd_len,
+-			 u32 *trb_buff_len, struct xhci_segment *seg)
++			 u32 *trb_buff_len, struct xhci_segment *seg, u32 max_pkt)
+ {
+ 	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
+ 	unsigned int unalign;
+-	unsigned int max_pkt;
+ 	u32 new_buff_len;
+ 	size_t len;
  
- 		if (ef->size) {
- 			ea_size = le32_to_cpu(ef->size);
--			/* ef->size must fit the list and cover the record. */
--			if (ea_size > bytes || ea_size < need)
-+			if (ea_size > bytes || packed_size > ea_size)
- 				goto out1;
- 			continue;
- 		}
+-	max_pkt = usb_endpoint_maxp(&urb->ep->desc);
+ 	unalign = (enqd_len + *trb_buff_len) % max_pkt;
  
--		ea_size = ALIGN(need, 4);
-+		ea_size = packed_size;
- 		if (ea_size > bytes)
- 			goto out1;
- 	}
+ 	/* we got lucky, last normal TRB data on segment is packet aligned */
+@@ -3797,9 +3795,8 @@ int xhci_queue_bulk_tx(struct xhci_hcd *xhci, gfp_t mem_flags,
+ 		if (enqd_len + trb_buff_len < full_len) {
+ 			field |= TRB_CHAIN;
+ 			if (trb_is_link(ring->enqueue + 1)) {
+-				if (xhci_align_td(xhci, urb, enqd_len,
+-						  &trb_buff_len,
+-						  ring->enq_seg)) {
++				if (xhci_align_td(xhci, urb, enqd_len, &trb_buff_len,
++						ring->enq_seg, ring->bounce_buf_len)) {
+ 					send_addr = ring->enq_seg->bounce_dma;
+ 					/* TD bounced at least, and last on this seg */
+ 					td->bounce_seg = ring->enq_seg;
 -- 
 2.53.0
 
