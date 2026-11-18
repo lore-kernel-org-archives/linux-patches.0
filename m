@@ -1,56 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033465;
-	b=yKJh7cdsGCFx2xNo0R8V2GXOSiBTtJ9aM9Mdp3Q/vhTIb7NGShAzhnp8intQofXlNfNi
-	 Jv1qxzjjISUkoFHY1kCJr8CASJJNdP1WTDXkfdrS5z1M7n8josWvpUGOGS/97fOUUlFTO
-	 d8iaWPso/ttw5HGyXUfdeG4YHbhLepipOU5nMSO4fHay8yeypEU3ATadva61Rl4rxkGLX
-	 es7RBdKg2smPwwqkZ7XvKPW0UmbEWDFVDA3vyG00Qmy1447lytj+m/69iWfYy50bqI4AZ
-	 TG7ARTTJNfYe3gZgDQpQ9czBPQPW8XdpXhnFm06Py1/x95pcgpKe1nJHBbmm2jr9J6g==
+	t=1795033467;
+	b=OwxmUvO+2WF+ON8hBJiSlmBvWJGL90QpdgIbgVCV8kdEwA4xTI/LLwee/0QBh2PyQCfd
+	 ZIjnirtP2eEctWFSvT3D/Os5PhzNuWpZpQSoqR7B/XKpZP+dU0Rx7uCwkz2iO+mXfj7IN
+	 Z7hfwAk8N0ZjWJYZiU2fbgLiZuTVERiruD+rwc26wOna3TDVmhpd4HHrAv0P6PhmlP28x
+	 8PMqfVPzKn/3a+sMMqbRmN9QWX+bbFJmJhNdRM3w4jHbHvDSfGRyRIRtzBHh77JUTlgJy
+	 TKv4FI6hTjd/SqN5MP4Kaqjdcyev8D8T5j2EbkseSoeDWSQGkkDW4PGTVBwpANQnwyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033465;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033467;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FiWcO9YNjCyIx8chNwJH6wXzaJGWhI3X/QjinDybx4o=;
-	b=t/68OXKrm3W+AgWmoeOyeWM5w5gj01X4x4XQ6kC6Bz0qY29AL6yY7h2RTE//9ztnWftJ
-	 NuY6+8matQfiMoyLUYaOVqPlFi+1kE4R8PSSVLXa8ceFZ3PrTDth27l4ZMqvkIjz6ixGZ
-	 8V7yrrz4BaVzhDmMo7xWYVOvCcaRz1lS07rG67ah5PSRfzbc1At0rbxXmrZGicGWZBIi5
-	 G1C9T8PbKXBPljPEcnErVbrFWGMq8doke4U6MbVQgYTYDP0r9DTQ0dpYf6B4D+7DFZPoH
-	 mfcPOatIczEesYt5v3uTc3EoHA1fs5uD+J7KEIXitw76B1z8B5z4Qpi1YB8fmmxYsWw==
+	bh=rUDTIGqpntY890CNudxzLqXkOrlK9MIIMjzmkK5hReE=;
+	b=MRQFIRoSgtnStBWtxYEvzYwFyzJskf95KBn0vzpAa2lrQsfgAtHb3V5yNU7GB+ErAXvO
+	 XA0BDCLTkTuhL5XXBh2D4yurTPwSkjwv12NDqvctkBAuDGYGPzIf9mmSKsa3QCj+Iqh74
+	 uI+dxDNbeklhKPamJmMCK6PXP8FBHTLJgXVVf+43DPV6kkoNrm0/BqH/LsVovJagYx/5a
+	 eOkWWE1vHX1XF7a1SNKMYlQdo44uc9QE5czmWgzZOS2J64nYyhqP/VjWGVBfESnIphLeW
+	 MPE7ei3EomCH22PHR1qDE+iPj4OvZLmHd5XPD4KGfzrUHoXQgpq64JieO6GjQgNfmwg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NReXpOQT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=owwngxRD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9F5606A31C;
-	Wed, 18 Nov 2026 20:24:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD3C4606A32A;
+	Wed, 18 Nov 2026 20:24:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NReXpOQT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E4181F000C4;
-	Wed, 18 Nov 2026 20:24:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=owwngxRD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 318611F000C4;
+	Wed, 18 Nov 2026 20:24:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033464;
-	bh=FiWcO9YNjCyIx8chNwJH6wXzaJGWhI3X/QjinDybx4o=;
+	s=korg; t=1795033467;
+	bh=rUDTIGqpntY890CNudxzLqXkOrlK9MIIMjzmkK5hReE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NReXpOQTgO58Xi/3/6pLqjg6sKEHoJHU1jD8VOp6OEkRMhch3MQdlhs9H063qqhiF
-	 wKIWr6KdqfYs0mb9dKetN111ypF7w8FcVRNJY3ZYXYx8qxXLKjef+icUxo8iJbgNj/
-	 khDWFNElb87G5nRUMlmFQEy6Zglk+gvQRibiC6ts=
+	b=owwngxRDYeO8EejpscqyqmuG41fRG4Cr5Geg+pSW1xYrpQqZDihKg+wcC5eaxYrYw
+	 ekrqjUUn115W0GzQw4opbnQvt1wyiFKe+guAR34ziVU2pt91wTOaArIej2nCmJb1P5
+	 caAg36vDHfnK2MLdLpHrorl84FQK1svklUvMw28A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hiroyuki Katsura <hk590@cam.ac.uk>,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oupton@kernel.org>,
-	Mark Bundschuh <mkbund@amazon.com>,
+	SJ Park <sj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0006/3318] KVM: arm64: Transfer the hyp stack pages out of the host stage-2
-Date: Wed, 18 Nov 2026 15:10:28 +0100
-Message-ID: <20261118150313.817447427@linuxfoundation.org>
+Subject: [PATCH 6.6 0007/3318] mm/damon/sysfs: put target pids for damon_start() failure
+Date: Wed, 18 Nov 2026 15:10:29 +0100
+Message-ID: <20261118150313.852207568@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,57 +67,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: SJ Park <sj@kernel.org>
 
-[ Upstream commit 3a8c562892b96f35bba1e00d5e455a15963bbb92 ]
+damon_sysfs_turn_damon_on() allocates and sets up damon_ctx to start.
+If it is for virtual address space monitoring, the setup increases the
+reference counts of the target pids.  After the setup, the function
+invokes damon_start().  If damon_start() fails, it deallocates the
+damon_ctx object without decreasing the reference counts of target pids.
+As a result, pids can be leaked.
 
-fix_host_ownership() walks only the linear-map alias of each memblock
-region, and the per-CPU hyp stack, mapped in the private VA range for
-its guard page, has none.
+Fix the leak by putting pids using damon_sysfs_destroy_targets() before
+deallocating the damon_ctx object.
 
-Walk each stack's VA range with the same walker.
-
-Fixes: 1a919b17ef012 ("KVM: arm64: Add guard pages for pKVM (protected nVHE) hypervisor stack")
-Reported-by: Hiroyuki Katsura <hk590@cam.ac.uk>
-Cc: stable@vger.kernel.org
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Reviewed-by: Vincent Donnefort <vdonnefort@google.com>
-Tested-by: Vincent Donnefort <vdonnefort@google.com>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Link: https://patch.msgid.link/20260908110713.1540304-2-fuad.tabba@linux.dev
-Signed-off-by: Oliver Upton <oupton@kernel.org>
-[ 38f9e4b905a0 ("arm64: kvm: Introduce nvhe stack size constants") is
-  not backported because it converts nvhe stack code in eight files to
-  NVHE_STACK_SIZE, and the hyp stack here is one page, so PAGE_SIZE
-  replaces it. ]
-Assisted-by: LLM
-Signed-off-by: Mark Bundschuh <mkbund@amazon.com>
+Fixes: a61ea561c871 ("mm/damon/sysfs: link DAMON for virtual address spaces monitoring")
+Cc: <stable@vger.kernel.org> # 5.18.x
+Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/hyp/nvhe/setup.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ mm/damon/sysfs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/kvm/hyp/nvhe/setup.c b/arch/arm64/kvm/hyp/nvhe/setup.c
-index 29df463ab350c..e8c1f975e38e8 100644
---- a/arch/arm64/kvm/hyp/nvhe/setup.c
-+++ b/arch/arm64/kvm/hyp/nvhe/setup.c
-@@ -240,6 +240,16 @@ static int fix_host_ownership(void)
- 			return ret;
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index 46980a4bef23a..d95fda1054a00 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -1465,6 +1465,7 @@ static int damon_sysfs_turn_damon_on(struct damon_sysfs_kdamond *kdamond)
+ 		return PTR_ERR(ctx);
+ 	err = damon_start(&ctx, 1, false);
+ 	if (err) {
++		damon_sysfs_destroy_targets(ctx);
+ 		damon_destroy_ctx(ctx);
+ 		return err;
  	}
- 
-+	/* The stacks sit in the private VA range, not the linear map. */
-+	for (i = 0; i < hyp_nr_cpus; i++) {
-+		struct kvm_nvhe_init_params *params = per_cpu_ptr(&kvm_init_params, i);
-+		u64 start = params->stack_hyp_va - PAGE_SIZE;
-+
-+		ret = kvm_pgtable_walk(&pkvm_pgtable, start, PAGE_SIZE, &walker);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	return 0;
- }
- 
 -- 
 2.53.0
 
