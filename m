@@ -1,64 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038301;
-	b=StUvHORe/V16vD6OkVhd3clD20SaIvRdAD9hJFs9GISVGWd+xEjh7AOsZFZnTTX6lrWy
-	 bLLe0r49JdrWasI8Z/6oB9IHT6oSX2xIs+OTe5FIdRjOrs900FoQDcLi9WE915vOLT4wE
-	 Tz4z2ne63BoBduFaifK9scVKp4LlyQY6Ctja9KKXoz88oSE2F6ByxIzrdb7EYFb5Bnz9j
-	 N0huIk4WbD2hYmVFKcN0qkgUMrJ77aofOsRWUF+UX7M03Q0C36eZiupcMRT+s/aTNl5YN
-	 iomR8ujgxGRmzNVgYPtankeIFkIube6megELVFMbExgz6QcfXnLhA1JWHE+oE1cCbVw==
+	t=1795038304;
+	b=Otp5PF+Go1p+/yeiNuYvM2iDxBhxCE8dAJ/gNgTIIRxiBygIevtLWqa05QMSEpLJWeGZ
+	 RCgD4T4CzFUdDMg25jBRS+Q1dRW3fDCn0hRIBnQyP28A0K8utjqq0qZNtwir/N2fPavUy
+	 sxAXPPKfvC/Ama+xEsr6yHnpq73epvdVCFcFJnh6I//UG2aQBY/UWZhQDbSS4SsK3BqGm
+	 nMWliK0chPv1gc6GuLpHT5L/ssKZoupA0goagkSOaW0qHWPcnztsfleYSpo3THiVe4Yw9
+	 XZmHkmZyB3MkPbcGGnSupDEMBUKoOmVV5OWZQsjo2BH1X0MQsLOZe5fqMP5DzrLyV7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038301;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038304;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ISKmvrvPxEcCCwRCCvmWN+SSB5OFz3gObjGno/DGn9U=;
-	b=arwhSRtAcG4bhFMLhHUU84tah7E/kGv0T7O0q9STYA61ETBZgLPvL3NspPzUEkDu9PX8
-	 5ErH6PHZR8AP6ee3Q+MbHTNNo3l5baTt4L90pwHc+hl7aFCoACaYNeYiVozZTLHJiLYu5
-	 viY/Vgc0QT/gnJoavcozQOf7SeHpaGw8lAJTe+HKZJjzoZNEt2KVUjlGF9JeaCfeLbYsX
-	 zoVE+u0KBfj+3h2nzt2o8TLHXw0snqZ+kRLG9KFJIFmmG2M8MZNKMlwRruzFKo+aTkDdQ
-	 RyMpsCoV9/C2njLnumnDMcFBx+ntYslH5TzZA0qUrsegi9qJNiTYSgICKgYDIVl6z9A==
+	bh=uaClj4WTT2dTNqyJGtiUIfx5LQc5OgnTofMT4Tp8mAg=;
+	b=vuXikT0NPl3AaTzYM4VdAO9wRm/iAF6zmDgAbCQsnVPqDD+7+HCQqTuLPhaVuhLQTO2C
+	 KW9H8kw2OGUp8fc9JN5uqBfunV46HBSTV7WqGu/v9+KYcL+1ZTkjNQOVhyg9XOexRa569
+	 qgTMWFP+RazNZ96rTbYF/DTAvw1gDEe5zKBmfCpsD8hqqFQSgVRp8wHAZIqgHr6890jA/
+	 n3uN6+0Q5w/lsW6GYlg8uIl+ArM2RTg2jhnow4Q69/BRsyy6Fg4PaXVo/IuFWwWiBLDje
+	 lJCf0JpLkT9krB40/eXaf0fG8UTyyKFB4PFvRfcS3b28Oagu0xkuA7OGkG/BpXYdbLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vAtQjaEN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2TJg0vwo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D0D606A32A;
-	Wed, 18 Nov 2026 21:45:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4031C606A32F;
+	Wed, 18 Nov 2026 21:45:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vAtQjaEN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 779251F000C4;
-	Wed, 18 Nov 2026 21:45:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2TJg0vwo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91DD71F000C4;
+	Wed, 18 Nov 2026 21:45:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038301;
-	bh=ISKmvrvPxEcCCwRCCvmWN+SSB5OFz3gObjGno/DGn9U=;
+	s=korg; t=1795038304;
+	bh=uaClj4WTT2dTNqyJGtiUIfx5LQc5OgnTofMT4Tp8mAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vAtQjaENDvIR8wBV/iKt/Ic620ZCKlRggA/UkEHwm6SNxVG0EE+ykuqZJbtdPPNmt
-	 Iz8S1pDPrSA3AIarBsxpYsXk5dIvJJA2kuuNqVhoWp24dlCtnqMuPmdXhPQusSbPgc
-	 q2DPjs+hM/sQfr7BiOELxAT9JWTDzDqcefMKq1bw=
+	b=2TJg0vwob2fIUGflhfln+MJnQjTwsolvJOk8qs6j7dlWw0SJZIrTxMaWW0og9s59N
+	 lanv5Oxv6z0JYnON1ariwjioH7SVaT8sHPH72IQbKLdusatY9+dHSuskf7Td6P3NjE
+	 twpLSubDRQcea2wO9ITerBa/fOgr3wmRlWLZmYXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pedro Falcato <pfalcato@suse.de>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Samarth Narang <samarth.colleges@gmail.com>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Zi Yan <ziy@nvidia.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	SJ Park <sj@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Minchan Kim <minchan@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1654/3318] mm/madvise: atomically clear the young bit on THP MADV_COLD
-Date: Wed, 18 Nov 2026 15:37:56 +0100
-Message-ID: <20261118150411.387266621@linuxfoundation.org>
+Subject: [PATCH 6.6 1655/3318] ALSA: compress_offload: Use automatic cleanup of kfree()
+Date: Wed, 18 Nov 2026 15:37:57 +0100
+Message-ID: <20261118150411.423638682@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -80,81 +67,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Falcato <pfalcato@suse.de>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 246c8cc33438a71c28f9b86baa492d9a0a130316 ]
+[ Upstream commit 9b02221422a55e834469fdc91dc4d5147f5a1fb9 ]
 
-As-is, madvise_cold_or_pageout_pte_range() discards the hardware young bit
-by invalidating the PMD, doing pmd_mkold() and subsequently writing to the
-pmd again.  However, it does so in a racy manner, looking at a
-possibly-stale snapshot.  It's entirely possible that a write elsewhere
-set the hardware D bit, which this logic now loses.
+There are common patterns where a temporary buffer is allocated and
+freed at the exit, and those can be simplified with the recent cleanup
+mechanism via __free(kfree).
 
-Fix it by using pmdp_test_and_clear_young().  This is an atomic
-modification of the PMD entry, and thus safe against any possible racing
-writes.  As a (nice) side-effect, this elides one non-required TLB flush
-in pmdp_invalidate().
+A caveat is that some allocations are memdup_user() and they return an
+error pointer instead of NULL.  Those need special cares and the value
+has to be cleared with no_free_ptr() at the allocation error path.
 
-This bug can interact with the swapping system in complicated ways,
-leading to data loss.  For instance, if a folio is marked lazyfree, but
-was later read from, and then MADV_COLD'd while racing a write to that
-same THP, dropping the dirty bit may lead to data loss as
-reclaim/MADV_PAGEOUT drops the "clean" anon folio:
+Other than that, the conversions are straightforward.
 
-T0                                T1
-================================================================
-MADV_FREE(thp)			|
-  folio marked lazyfree		|
-read(thp)			|
-  PMD marked young by hardware	|
-				| MADV_COLD(thp)
-write(thp)			|   if (pmd_young(pmd)) {
-  PMD marked dirty by hardware	|     set(pmdp, pmd_mkold(pmd));
-MADV_PAGEOUT/reclaim		|
-  dirty bit may or may not be   |
-  set				|
-    reclaim/pageout may drop    |
-    the folio			|
+No functional changes, only code refactoring.
 
-Link: https://lore.kernel.org/20261013191719.95502-1-pfalcato@suse.de
-Fixes: 9c276cc65a58 ("mm: introduce MADV_COLD")
-Signed-off-by: Pedro Falcato <pfalcato@suse.de>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Samarth Narang <samarth.colleges@gmail.com>
-Closes: https://lore.kernel.org/linux-mm/20261011132227.413217-1-samarth.colleges@gmail.com/
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: SJ Park <sj@kernel.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: <stable@vger.kernel.org>
-[ sashal: Retained pmd_young(orig_pmd) without the !pageout guard because the corresponding reclaim optimization is absent. ]
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://lore.kernel.org/r/20240222111509.28390-4-tiwai@suse.de
+Stable-dep-of: 82da1acad6fd ("ALSA: compress: reject buffer geometry change on gapless next_track")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/madvise.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ sound/core/compress_offload.c | 36 +++++++++++++----------------------
+ 1 file changed, 13 insertions(+), 23 deletions(-)
 
-diff --git a/mm/madvise.c b/mm/madvise.c
-index 209d0cc950139..e29bd73de12ae 100644
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -404,10 +404,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- 		}
+diff --git a/sound/core/compress_offload.c b/sound/core/compress_offload.c
+index 3c259b9419598..511087456568d 100644
+--- a/sound/core/compress_offload.c
++++ b/sound/core/compress_offload.c
+@@ -458,7 +458,7 @@ static int
+ snd_compr_get_codec_caps(struct snd_compr_stream *stream, unsigned long arg)
+ {
+ 	int retval;
+-	struct snd_compr_codec_caps *caps;
++	struct snd_compr_codec_caps *caps __free(kfree) = NULL;
  
- 		if (pmd_young(orig_pmd)) {
--			pmdp_invalidate(vma, addr, pmd);
--			orig_pmd = pmd_mkold(orig_pmd);
+ 	if (!stream->ops->get_codec_caps)
+ 		return -ENXIO;
+@@ -469,12 +469,9 @@ snd_compr_get_codec_caps(struct snd_compr_stream *stream, unsigned long arg)
+ 
+ 	retval = stream->ops->get_codec_caps(stream, caps);
+ 	if (retval)
+-		goto out;
++		return retval;
+ 	if (copy_to_user((void __user *)arg, caps, sizeof(*caps)))
+-		retval = -EFAULT;
 -
--			set_pmd_at(mm, addr, pmd, orig_pmd);
-+			pmdp_test_and_clear_young(vma, addr, pmd);
- 			tlb_remove_pmd_tlb_entry(tlb, pmd, addr);
- 		}
+-out:
+-	kfree(caps);
++		return -EFAULT;
+ 	return retval;
+ }
+ #endif /* !COMPR_CODEC_CAPS_OVERFLOW */
+@@ -579,7 +576,7 @@ static int snd_compress_check_input(struct snd_compr_params *params)
+ static int
+ snd_compr_set_params(struct snd_compr_stream *stream, unsigned long arg)
+ {
+-	struct snd_compr_params *params;
++	struct snd_compr_params *params __free(kfree) = NULL;
+ 	int retval;
+ 
+ 	if (stream->runtime->state == SNDRV_PCM_STATE_OPEN || stream->next_track) {
+@@ -589,24 +586,22 @@ snd_compr_set_params(struct snd_compr_stream *stream, unsigned long arg)
+ 		 */
+ 		params = memdup_user((void __user *)arg, sizeof(*params));
+ 		if (IS_ERR(params))
+-			return PTR_ERR(params);
++			return PTR_ERR(no_free_ptr(params));
+ 
+ 		retval = snd_compress_check_input(params);
+ 		if (retval)
+-			goto out;
++			return retval;
+ 
+ 		retval = snd_compr_allocate_buffer(stream, params);
+-		if (retval) {
+-			retval = -ENOMEM;
+-			goto out;
+-		}
++		if (retval)
++			return -ENOMEM;
+ 
+ 		retval = stream->ops->set_params(stream, params);
+ 		if (retval)
+-			goto out;
++			return retval;
+ 
+ 		if (stream->next_track)
+-			goto out;
++			return retval;
+ 
+ 		stream->metadata_set = false;
+ 		stream->next_track = false;
+@@ -615,15 +610,13 @@ snd_compr_set_params(struct snd_compr_stream *stream, unsigned long arg)
+ 	} else {
+ 		return -EPERM;
+ 	}
+-out:
+-	kfree(params);
+ 	return retval;
+ }
+ 
+ static int
+ snd_compr_get_params(struct snd_compr_stream *stream, unsigned long arg)
+ {
+-	struct snd_codec *params;
++	struct snd_codec *params __free(kfree) = NULL;
+ 	int retval;
+ 
+ 	if (!stream->ops->get_params)
+@@ -634,12 +627,9 @@ snd_compr_get_params(struct snd_compr_stream *stream, unsigned long arg)
+ 		return -ENOMEM;
+ 	retval = stream->ops->get_params(stream, params);
+ 	if (retval)
+-		goto out;
++		return retval;
+ 	if (copy_to_user((char __user *)arg, params, sizeof(*params)))
+-		retval = -EFAULT;
+-
+-out:
+-	kfree(params);
++		return -EFAULT;
+ 	return retval;
+ }
  
 -- 
 2.53.0
