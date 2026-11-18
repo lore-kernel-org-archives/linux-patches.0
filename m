@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051325;
-	b=cfOj7QSAGNKkSG+EBjYbSEEeaMbpe/HuuiKU7AD0E4rbqT6RJ96bQu7CgYkJPeekN0LR
-	 UPrrjFnHKfupMhKcPEpCJgHSi9ExtAnl+gu+UpxxLp4NKaCk2FlcKgRoBmEoCXPV14oTR
-	 YW8iT9gt4m76n+5pq1JTDCDVvssScdrMzPYD/qQDAtyxiAHsa7UEE0OnXE8w74A5CRtwm
-	 cdgIGdqwXcDMBRx6rRpFunXCgNDfj05eQKyWWpCEuvZbO6GYGDenKtbjMcoNnrWrsJ6mQ
-	 7plxqD8l/AXpiOaT6UvAAjVOzpI3xwQCaM5h6POxex0ZfMgomMZW0dIDeWlDxa3nT4A==
+	t=1795051328;
+	b=t/RNcevwAgiBu1n+Haa0A4TyNy6Wqa357A0hy3L+bzGDhGGtOKhTUe3C9IYBsJaqnORJ
+	 Eeh56SBDPsHe+a7ZRwyz2jZfrt7JUzJY1YPOn8Q4lxbOBwJP/V2pFAhetF/V89vkmKC1N
+	 eGf/bZk5M2ZBx7rQfXL6Vt1GgSqmbeHvtW4tO6jSScaMzA7/tkRpYByjrb5iWypS1C3I3
+	 C466rRnpLkjwpAYNcytDhTM7YTPlW4tsGrZFlLrj2oVGMj20nex39qR7LOKHB6LunvOs2
+	 y+29HNxUdX9ootVwSB1wyVR609iRQ9PvVzfM9ZqKemxZ1eSvlIBZH47rwTBiBG7YiqQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051325;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051328;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=D8LimvLP5+baMR/0RlFT6/9XcIx8HXs+XEH4lLdL8PU=;
-	b=tBJLFtWlwvX4c1wE1koFva/BAxlrUxwFNw/ECNEm1mlyyaqVBFwuA3oK1tMIqZOYazYt
-	 Ncl6Dd324cBQ8xX2A3kxEWLQ01YnoenFKf7YrZlfvMhqeAmfg/qyoJ1pZH8///bZO28dS
-	 p5mR5C49duzFr0Uoqti19RYxjJ1OMcGPW2VmruhX1nDMNWBt7mDpA1lSUICTVtpCXrDYn
-	 yGxaSO+KWCJNQMX43LzgsAdabANTEfiYtHFucnwEasmbO2UZfZjHsai+Ea0JIW2+Nz7E4
-	 7hM1kiO2KOqCTwAuYEGsT2vcy8InzZkKIwHlgvciLV5PwVvNXw97VazpRJszS24mocg==
+	bh=LnaYmbrVqApSKyZKb7drkYpy67uQRdbAEeVoQDM4XPU=;
+	b=ZpcXsOkPMco/WrmBk/eESiu6+Px/r0Jvb9nqQ8HjCfxZea4Emm4eXk/otDjMTqbjzRs7
+	 NoM9sBfZK+hl1hvPvfKcfDlwRzOh6+tAk6N31BifCsKllOV+ywFDg3bWkG2f+R7HsAAQb
+	 5IQe9KIKfh6caXo77TNpK/XATysRl2DxfzcTLmvtBrE/6w6ozXJ81j0govTWJfZT9FhjA
+	 FqZr29SQO27aSwIIEXERwUY15BvzokC9cBxPYeXmt++F5oFiDv7mnKn0riciQ33R2FTy6
+	 FzxqAmObB2sy/JqaFtT/ISwDG/CzjP/B/d/mj9lzk2sHCgL+jKR5JC8qX3XUlZOqfhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lca6qMm7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=umuVVDo6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38027606A320;
-	Thu, 19 Nov 2026 01:22:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 149D5606A325;
+	Thu, 19 Nov 2026 01:22:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lca6qMm7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 861681F000C4;
-	Thu, 19 Nov 2026 01:22:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=umuVVDo6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64F451F000C4;
+	Thu, 19 Nov 2026 01:22:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051325;
-	bh=D8LimvLP5+baMR/0RlFT6/9XcIx8HXs+XEH4lLdL8PU=;
+	s=korg; t=1795051327;
+	bh=LnaYmbrVqApSKyZKb7drkYpy67uQRdbAEeVoQDM4XPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lca6qMm76dy9zf3wALRnECvJNkGa71QaPYXbbaxXxgrS2C6hx2zslVqQ594a9i4X2
-	 ALluzwXCZ7VLfelEzjkfD6bdOw3MiMM8oHIYz4KDb1M3q1ZHW0hSwJOtGJCSbtoeio
-	 MO0jxwKKJwcUVgMInvvfbMhluL6jGrG9NgVRt35Y=
+	b=umuVVDo6l0AgffFyEGiM4iU78nLKky9hpXQroSwupFKySQxn4SiiNLXqhcLi2ozg4
+	 8JVzJxoxOwwpbQDGN+j2s9G32pZFc+E2ReH7RHnzL029X1f/HOBFeOTda5dpxMnFl8
+	 evAgb0g0zxGYL9hiDqJlWdTwn7CQ1elWCH+Z5pBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Can Peng <pengcan@kylinos.cn>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Aaron Ma <mapengyu@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0166/2214] wifi: brcmfmac: validate msgbuf flowring IDs before use
-Date: Wed, 18 Nov 2026 15:30:42 +0100
-Message-ID: <20261118150016.741476141@linuxfoundation.org>
+Subject: [PATCH 5.15 0167/2214] HID: quirks: Add ALWAYS_POLL quirk for Beitong BTP-KP20D dongle
+Date: Wed, 18 Nov 2026 15:30:43 +0100
+Message-ID: <20261118150016.781017005@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,130 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Can Peng <pengcan@kylinos.cn>
+From: Aaron Ma <mapengyu@gmail.com>
 
-[ Upstream commit 32856f39fefdc75bd253cab999f996750628648e ]
+[ Upstream commit bfff246b3a31cb45ec297ca5e2a77c1410b207ac ]
 
-Firmware messages carry flow_ring_id values which brcmfmac converts
-to an internal flowid by subtracting
-BRCMF_H2D_MSGRING_FLOWRING_IDSTART. The resulting value is used as
-a bit index in txstatus_done_map and as an array index into
-msgbuf->flowrings and the flowring state.
+The BTP-KP20D dongle in Direct/HID mode (20dd:5159) re-enumerates every
+few seconds because usbhid never submits its interrupt-IN URB: no HID
+driver binds to the vendor-specific report descriptor, so the device is
+never opened, and the firmware treats the idle endpoint as a lost link.
 
-Validate the firmware supplied flow_ring_id before using it. This
-prevents flow_ring_id values below BRCMF_H2D_MSGRING_FLOWRING_IDSTART
-from underflowing and rejects values outside msgbuf->max_flowrings.
+Add HID_QUIRK_ALWAYS_POLL to keep the interrupt-IN URB submitted from
+probe time.
 
-In the tx status path, complete the packet with an error after
-removing a valid packet id so the skb is not leaked when the flow
-ring id is invalid.
-
-Signed-off-by: Can Peng <pengcan@kylinos.cn>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260723055618.550834-1-pengcan@kylinos.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Aaron Ma <mapengyu@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../broadcom/brcm80211/brcmfmac/msgbuf.c      | 46 ++++++++++++++++---
- 1 file changed, 40 insertions(+), 6 deletions(-)
+ drivers/hid/hid-ids.h    | 3 +++
+ drivers/hid/hid-quirks.c | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
-index cca042d88887b..f578ac00e5d1c 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
-@@ -561,6 +561,28 @@ brcmf_msgbuf_remove_flowring(struct brcmf_msgbuf *msgbuf, u16 flowid)
- 	brcmf_flowring_delete(msgbuf->flow, flowid);
- }
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index 924fd16c56174..d79a8188cd821 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -233,6 +233,9 @@
+ #define USB_VENDOR_ID_BAANTO		0x2453
+ #define USB_DEVICE_ID_BAANTO_MT_190W2	0x0100
  
-+static bool brcmf_msgbuf_get_flowid(struct brcmf_msgbuf *msgbuf,
-+				    u16 flow_ring_id, u16 *flowid)
-+{
-+	u32 id = flow_ring_id;
++#define USB_VENDOR_ID_BEITONG		0x20dd
++#define USB_DEVICE_ID_BEITONG_KP20D	0x5159
 +
-+	if (id < BRCMF_H2D_MSGRING_FLOWRING_IDSTART) {
-+		bphy_err(msgbuf->drvr, "invalid flowring id %u\n",
-+			 flow_ring_id);
-+		return false;
-+	}
-+
-+	id -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
-+	if (id >= msgbuf->max_flowrings) {
-+		bphy_err(msgbuf->drvr, "invalid flowring id %u\n",
-+			 flow_ring_id);
-+		return false;
-+	}
-+
-+	*flowid = id;
-+	return true;
-+}
-+
+ #define USB_VENDOR_ID_BELKIN		0x050d
+ #define USB_DEVICE_ID_FLIP_KVM		0x3201
  
- static struct brcmf_msgbuf_work_item *
- brcmf_msgbuf_dequeue_work(struct brcmf_msgbuf *msgbuf)
-@@ -877,17 +899,23 @@ brcmf_msgbuf_process_txstatus(struct brcmf_msgbuf *msgbuf, void *buf)
- 	struct msgbuf_tx_status *tx_status;
- 	u32 idx;
- 	struct sk_buff *skb;
-+	u16 flow_ring_id;
- 	u16 flowid;
- 
- 	tx_status = (struct msgbuf_tx_status *)buf;
- 	idx = le32_to_cpu(tx_status->msg.request_id) - 1;
--	flowid = le16_to_cpu(tx_status->compl_hdr.flow_ring_id);
--	flowid -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
-+	flow_ring_id = le16_to_cpu(tx_status->compl_hdr.flow_ring_id);
- 	skb = brcmf_msgbuf_get_pktid(msgbuf->drvr->bus_if->dev,
- 				     msgbuf->tx_pktids, idx);
- 	if (!skb)
- 		return;
- 
-+	if (!brcmf_msgbuf_get_flowid(msgbuf, flow_ring_id, &flowid)) {
-+		brcmf_txfinalize(brcmf_get_ifp(msgbuf->drvr, tx_status->msg.ifidx),
-+				 skb, false);
-+		return;
-+	}
-+
- 	set_bit(flowid, msgbuf->txstatus_done_map);
- 	commonring = msgbuf->flowrings[flowid];
- 	atomic_dec(&commonring->outstanding_tx);
-@@ -1234,13 +1262,16 @@ brcmf_msgbuf_process_flow_ring_create_response(struct brcmf_msgbuf *msgbuf,
- 	struct msgbuf_flowring_create_resp *flowring_create_resp;
- 	u16 status;
- 	u16 flowid;
-+	u16 flow_ring_id;
- 
- 	flowring_create_resp = (struct msgbuf_flowring_create_resp *)buf;
- 
--	flowid = le16_to_cpu(flowring_create_resp->compl_hdr.flow_ring_id);
--	flowid -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
-+	flow_ring_id = le16_to_cpu(flowring_create_resp->compl_hdr.flow_ring_id);
- 	status =  le16_to_cpu(flowring_create_resp->compl_hdr.status);
- 
-+	if (!brcmf_msgbuf_get_flowid(msgbuf, flow_ring_id, &flowid))
-+		return;
-+
- 	if (status) {
- 		bphy_err(drvr, "Flowring creation failed, code %d\n", status);
- 		brcmf_msgbuf_remove_flowring(msgbuf, flowid);
-@@ -1263,13 +1294,16 @@ brcmf_msgbuf_process_flow_ring_delete_response(struct brcmf_msgbuf *msgbuf,
- 	struct msgbuf_flowring_delete_resp *flowring_delete_resp;
- 	u16 status;
- 	u16 flowid;
-+	u16 flow_ring_id;
- 
- 	flowring_delete_resp = (struct msgbuf_flowring_delete_resp *)buf;
- 
--	flowid = le16_to_cpu(flowring_delete_resp->compl_hdr.flow_ring_id);
--	flowid -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
-+	flow_ring_id = le16_to_cpu(flowring_delete_resp->compl_hdr.flow_ring_id);
- 	status =  le16_to_cpu(flowring_delete_resp->compl_hdr.status);
- 
-+	if (!brcmf_msgbuf_get_flowid(msgbuf, flow_ring_id, &flowid))
-+		return;
-+
- 	if (status) {
- 		bphy_err(drvr, "Flowring deletion failed, code %d\n", status);
- 		brcmf_flowring_delete(msgbuf->flow, flowid);
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index 0654f8e257417..fbc145b732298 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -45,6 +45,7 @@ static const struct hid_device_id hid_quirks[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ATEN, USB_DEVICE_ID_ATEN_CS682), HID_QUIRK_NOGET },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ATEN, USB_DEVICE_ID_ATEN_CS692), HID_QUIRK_NOGET },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ATEN, USB_DEVICE_ID_ATEN_UC100KM), HID_QUIRK_NOGET },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_BEITONG, USB_DEVICE_ID_BEITONG_KP20D), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_MULTI_TOUCH), HID_QUIRK_MULTI_INPUT },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_PIXART_USB_OPTICAL_MOUSE), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_PIXART_USB_OPTICAL_MOUSE2), HID_QUIRK_ALWAYS_POLL },
 -- 
 2.53.0
 
