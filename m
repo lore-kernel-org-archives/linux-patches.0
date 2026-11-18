@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032992;
-	b=5KSaHoqDbHijv6YhXyuLR8DM6XguwTRx4phgj6vpa2oQpNxkd+aHXv5PjAuGGCBfmet6
-	 nXa3xPZky1GQsDklBfa1PIyOgdxkMDfSdk25+bWi5SJ8K99zef2kmOE56QVoz9a4CmlJ8
-	 PXD6KlHoYEJodWQ9nwZCgpJqn1T9L0HFJyFtCAKT867lC/hRoZBVrD/euLcr9suus+YRK
-	 TpsXwl2c70kPPK3TD+CKJnk1KDA3v/W+XgLqtTJ7Jb3IcdG9+R+hNIgS8ky28WskKJ7nK
-	 ZttXfTJMWjP1S4Cnhh6ONP1LA0+s9UAJ9/G1UzeSjVLV24bONhIgqOJwdrHyE0XUi6A==
+	t=1795032995;
+	b=hVBCMg/LnZli5C+UUI2zCYakCxUr2/pcD5vv1+PRLs0skfjeKGDsgDFlYBHpOUcPCZ7g
+	 CJHIKou2ld6IhdgXo+AoXRg1joiBlRcKku0HhSNxWj7KHIidPH585+WmHwyMw6tR4ifR1
+	 4tZkPXQOjinx1Q4g45N3/1PrLUQ4xePO5mM1hw/ZkQWjs5z5EzLVIwO71aR6VBC/AeMsQ
+	 bujB2qhuUrARUDFZoEVJjAQOqMTfPlGQd0TA4pGvHQS2gqxt9bDMVqqoEX6kYi5zGsg/x
+	 DlTrlJsFqFKUBmGzluEbVOviss5s+pvG+olNmM0X5lVyNGMI+FleKfFp6tp//yQsdWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032992;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032995;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0ok3vWLPVV85mnIHbXWhp4KMPw976PaJMT4mgldEhtE=;
-	b=W/aFPPZp8ieJBhhopwYcBBRpEOUO/ocJRTfMFfLkScjsDJm/1lTLCjSW3gTcPtE2OxKT
-	 mJUq3RKw3uYRZwKpQ0sWXKwHGnjEkABsW4bJ5Srsl3jGwCZq323cIEvIbx/Ov4JPjpoVQ
-	 8cLK91fr0OOUxkpyDPgvgsNHy1Uq5VloTxPEX/qp54o+kq3UqLT9kSCfhZXExCtCtzKLU
-	 ERIOrjecXZ8f7tS4N2E90gNqn3UzilEFuXeAVCDDAHFyCUkcD9jUnKjwpnkNTMVSyiqYX
-	 5ge/pHXPpXMJUT5yEFDfcw3Su4Fl1M0w/jwEsQiBD45MBmowpKofVC53Yb7fcnIhNaw==
+	bh=3NX4cvcZSvZlmmOm7xaam4d62dWJ7pxE8VKP8roRgds=;
+	b=VOfQTw1TZGhchqwrRkgBixo6nV6yiOcpezMnN0UyOnRuTtErjV//kLmUO/kFG5C/YEXi
+	 2g9Rd2tTnMMepqjRLRKsI06TBSgGRxX+Zb5P/Bk/FAx/6OCv78BVAnBX8wzzitXiSLfd5
+	 CD607fwP4upLybyN0Qb83GTLBasjT7+vuucMU6RgJuBuGbNk/c0ESKlBpjDqOJEyG5TZi
+	 mWQmtLBs8QoRn+cXIVlPjg3/b8CjP+Ibomw/+hNwLk09PimRqOKzFqrNXvMmB4HoQxRB4
+	 G+1POjILCvgP28TFYk6v/AikhWXeM5c9dEEL0Z7Sd5OuLJkbDbi1gty3kEYMFbn2oRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l6igUTrt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MuMXPQtk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9105F606A320;
-	Wed, 18 Nov 2026 20:16:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DE15606A325;
+	Wed, 18 Nov 2026 20:16:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l6igUTrt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E29F81F000C4;
-	Wed, 18 Nov 2026 20:16:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MuMXPQtk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966CE1F000C4;
+	Wed, 18 Nov 2026 20:16:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032992;
-	bh=0ok3vWLPVV85mnIHbXWhp4KMPw976PaJMT4mgldEhtE=;
+	s=korg; t=1795032995;
+	bh=3NX4cvcZSvZlmmOm7xaam4d62dWJ7pxE8VKP8roRgds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l6igUTrtJmqGKg/LgiA7plFCVGr17Y7D5Z8Z7seowRaZmk/nsX3yV/GXNTMEoKp+I
-	 qTSIdn8xpLmQPkP7fL/n2OBj7lI/xtnWFpZYOy9JsCcq5tmLqD/TA8q/9xhH3roOE1
-	 IB1L1nB/TaHG0knWtsN3wcDkkznX3oGzuPjoQmm8=
+	b=MuMXPQtkjjIZ/8ERJAxkPPo0YmewlUkTfMs6brl/FIzH+4wizhzSPhlYm2QBEGpXe
+	 1UYjZwFmGl3WPRlQS9ACgXIvvwbSu/4jK1mOAYyOB2AedEwLWJtKNNhs1jOpr5fyn4
+	 2GuBeOcNNcVrb7gtDtEKzkV9uimBZ3dOtRNcwj00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harkirat Gill <harkirat.gill@amd.com>,
-	Kenneth Feng <kenneth.feng@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1610/1756] drm/amdgpu: re-enable GFXOFF for compute on GFX12
-Date: Wed, 18 Nov 2026 16:02:17 +0100
-Message-ID: <20261118150113.960480945@linuxfoundation.org>
+Subject: [PATCH 6.12 1611/1756] net: lan966x: fix the DB dataptr of frames from ndo_xdp_xmit
+Date: Wed, 18 Nov 2026 16:02:18 +0100
+Message-ID: <20261118150113.994668129@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,56 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harkirat Gill <harkirat.gill@amd.com>
+From: Daniel Machon <daniel.machon@microchip.com>
 
-[ Upstream commit 6a1dbb006056ad1ce6df0d6d5f2155767c20f410 ]
+[ Upstream commit ce3192e0dafa829e76edefecc16a32589b53c875 ]
 
-Commit 2affe2bbc997 ("drm/amdgpu: disable gfxoff with the compute
-workload on gfx12") disabled GFXOFF whenever a user-mode compute queue
-exists, as a workaround for an OpenCL test failure. The MES firmware
-issue behind that failure has since been addressed, so the workaround
-is no longer required.
+lan966x_fdma_xmit_xdpf() transmits both XDP_TX frames and xdp_frames
+from ndo_xdp_xmit, and builds the DB with
+lan966x_fdma_xdp_tx_dataptr_cb(), which adds XDP_PACKET_HEADROOM to the
+stored DMA address.
 
-Without this change, idle inference servers that hold a context for
-hours never let the graphics block power down, costing roughly 3-4%
-reported GPU activity and ~3 W per GPU at idle.
+Before this patch, the headroom is also added for xdp_frames. For
+XDP_TX the stored address is the start of the page pool page, but for an
+xdp_frame it is the mapping of the IFH placed in front of the frame
+data, so frames from ndo_xdp_xmit are read from XDP_PACKET_HEADROOM
+bytes after their IFH.
 
-Measured on gfx1200 with an idle HIP process holding one stream and
-two resident KFD queues:
+Use the plain tx dataptr callback for xdp_frames.
 
-  before:  VDDGFX 695 mV, GPU load 2%, ~9-10 W
-  after:   VDDGFX  35 mV, GPU load 0%, ~8 W (idle baseline)
+Found by an AI code review agent. Reproduced on a lan9668 board with an
+XDP program redirecting frames from one port to another: none of the 20
+frames arrived intact on the link partner. With the fix all 20 did.
 
-The resident queue count is unchanged in both cases; only GFXOFF
-availability differs. The ocltst runtime suite (40 tests) passes with
-and without this change.
-
-Fixes: 2affe2bbc997 ("drm/amdgpu: disable gfxoff with the compute workload on gfx12")
-Signed-off-by: Harkirat Gill <harkirat.gill@amd.com>
-Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit f6d97ecb68b8623da2f83997a9c8c57a1a9649f9)
+Fixes: 29cc3a66a81d ("net: lan966x: use FDMA library for adding DCB's in the tx path")
+Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20261026-lan966x-xdp-xmit-dataptr-v1-1-d0dd068324de@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-index 2de2895e3850b..3e946b61df152 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-@@ -737,9 +737,8 @@ int amdgpu_amdkfd_submit_ib(struct amdgpu_device *adev,
- void amdgpu_amdkfd_set_compute_idle(struct amdgpu_device *adev, bool idle)
- {
- 	enum amd_powergating_state state = idle ? AMD_PG_STATE_GATE : AMD_PG_STATE_UNGATE;
--	if ((IP_VERSION_MAJ(amdgpu_ip_version(adev, GC_HWIP, 0)) == 11 &&
--	    ((adev->mes.kiq_version & AMDGPU_MES_VERSION_MASK) <= 64)) ||
--		(IP_VERSION_MAJ(amdgpu_ip_version(adev, GC_HWIP, 0)) == 12)) {
-+	if (IP_VERSION_MAJ(amdgpu_ip_version(adev, GC_HWIP, 0)) == 11 &&
-+	    ((adev->mes.kiq_version & AMDGPU_MES_VERSION_MASK) <= 64)) {
- 		pr_debug("GFXOFF is %s\n", idle ? "enabled" : "disabled");
- 		amdgpu_gfx_off_ctrl(adev, idle);
- 	} else if ((IP_VERSION_MAJ(amdgpu_ip_version(adev, GC_HWIP, 0)) == 9) &&
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c b/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
+index b13c60438b978..4e9f347a1387c 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
+@@ -686,7 +686,8 @@ int lan966x_fdma_xmit_xdpf(struct lan966x_port *port, void *ptr, u32 len)
+ 		       FDMA_DCB_STATUS_BLOCKO(0) |
+ 		       FDMA_DCB_STATUS_BLOCKL(next_dcb_buf->len),
+ 		       &fdma_nextptr_cb,
+-		       &lan966x_fdma_xdp_tx_dataptr_cb);
++		       len ? &lan966x_fdma_xdp_tx_dataptr_cb :
++			     &lan966x_fdma_tx_dataptr_cb);
+ 
+ 	/* Start the transmission */
+ 	lan966x_fdma_tx_start(tx);
 -- 
 2.53.0
 
