@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019383;
-	b=VLEtUcQSl7I8XnmtJ5NxPbfQQMvWSt+H/KplNP52M1EeobhrfWGoR91Go1Dqg9wbzhTo
-	 qNTcmFwm9125GiFBwogZdwsw5R4P8eBn8oOb2mHzViS8VBO51PugjokUhd+FpFQ6P0OgY
-	 Tar9vhdOVz2U35anSdoWNm6QWBfw+GwIt2rYWov70WzA76qmM2WuEfskCJbqlqosyZWgv
-	 DRYEWgcpQzKWcRdrjY1tmgELwzpoI4adwG9//4NMbM7r9lsuCRMYLJ7ijPU+ys+4LiRaG
-	 W0V84MWzKbFHRMtau4uDrW1g/MKUlFJIUyZWir/+aisrTpIGFellTP5PHBR9sGo6o2A==
+	t=1795019385;
+	b=fpdPlHmIwbte1UgYGrF0KkclnSN1vZH342RGm8eJlrayWK0Hq6Ynjw8LJtd3dmtL6UGn
+	 wO0NXYrHrHyGYVeeIkuQf/aKDKgHj8N24cSaZNu6gB5zCRzVomDO+o9JIL/DB0qVsWetb
+	 Kd9OXyRQPpsPwgU4CoR3B0JMAj+cVlBwS5PstnprU9RbbY2V91rOGNJfsqgC99UayLRD0
+	 FBnUsHrtQCjUxj6/hNz8l+VIxjPyh+LVF08I9ZwY+h++Ch9I7EalICuOe75DuSAdpBs9M
+	 ZvlQxzUS0WDIpM9j/i+MK7FHxY33LaSpePzAFuK+gJ3HWm5rh1hnNtVsliLaGAWA6Bw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019383;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019385;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kdeAIu9LmZMuSa+2Oyl9X1tP0KD6y9KaUHy5axKC5+g=;
-	b=EbPXHc4y9h9WnaoctOrXRxaSymsRL37n3shFZ/i1nFUqyUa8k1U0VBxiq3bAXkA1b5y1
-	 eN0n14jn7rMgqv0Hrx4dfYf5ZtFPmwuaBGW6LzY1HRDq90bb5oOUOBdzdS9kFlFxxrBC5
-	 04MkvtKLHE6xm4L0/gks80bxKuH2e0mEpW7iKi0fTay+xuPAnL+athCGxHbmWr1v15zBz
-	 /SkRS4HXE1qHmL7pdh+RYmKMkcT2vcS3TvhjytfzNkGWqBbKUhhDA79MjqG5Oggc7B5Yn
-	 ehOkuCRaPht39wHpA0exylkk5NKk33FfTmsmsnIwwnUXrfVyVL4E6oXsHT71hdei0Ig==
+	bh=bwj5DlUQuivYcEOMxOTUmwFpUhZGNzOLSf2l2VxO5Ks=;
+	b=KwHIeAMm4LVMariP9cD5XGNxOrOqcH0ewbB2X4nlBQfT6O7UcedeeufgIbC8uZ4HaTXE
+	 iuWRL0ajqry+uI2GVYqd45R821OXgI8lGwB1DRXw8hLRzwNBhovPLquVn9Rr41hlM9oAN
+	 Baa19ihsT4JL1xM7H7gg3ENot5rj6vR5rjKmOAMRaf06Hyci5KTlEDiL7hhTWD+UIbWoL
+	 uj388Mrz+sLSR5OJ+f2jxUGQaUtlE14NDDifYzN9duooAvU77g/S3/kbVT5Z7ybzXB0YC
+	 /+IyWE9N9dC99+aPQ99IAhr6SSOQEDR+fKrQltFqEJ+smXwXNHUie/lOCvzkuqSmjgg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vAaolZsi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cfe9uwPu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 320F160A260D;
-	Wed, 18 Nov 2026 16:29:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA61660A2602;
+	Wed, 18 Nov 2026 16:29:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vAaolZsi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80ABE1F000C4;
-	Wed, 18 Nov 2026 16:29:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cfe9uwPu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D871F000C4;
+	Wed, 18 Nov 2026 16:29:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019383;
-	bh=kdeAIu9LmZMuSa+2Oyl9X1tP0KD6y9KaUHy5axKC5+g=;
+	s=korg; t=1795019385;
+	bh=bwj5DlUQuivYcEOMxOTUmwFpUhZGNzOLSf2l2VxO5Ks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vAaolZsi69yj7iiCNvvsswSPwjn+b5SPfTurx5VfcFy5+YVBQ6AXSz2AeSjvmRrNw
-	 3dgD/ymWsHqqFDW63ukV2UkD3QbTMh4pd5/GMKTbwdbRwVCsbfO2U8BWTcUFCHCmOo
-	 BTL6k/2n6Ol0PiBfElcMUC9g4YuOkwlk5wvvyLek=
+	b=cfe9uwPuriZ/fbME9TV/e3WYSOsKLd0OPh1X9O1Cmilr6ei+zdMSZ3BkBjAiFVoxR
+	 Y56LjBAnJ3iG1j9XW20uXL7nv6Qd8n70qPpetlhiNmJsTafyLf36wB47dorBT8zSay
+	 lasiaC2cVU6Bo1MVQjfoSSd1YvzE1WGANsnuj0Gs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1525/2651] ALSA: info: Fix memory leak at card removal
-Date: Wed, 18 Nov 2026 15:46:05 +0100
-Message-ID: <20261118150342.895208684@linuxfoundation.org>
+	"Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Sasha Levin <sashal@kernel.org>,
+	"Claude Opus 5.5" <noreply@anthropic.com>
+Subject: [PATCH 7.3 1570/2651] dma-direct: Restore arch_dma_alloc() for the DMA_ATTR_NO_KERNEL_MAPPING case
+Date: Wed, 18 Nov 2026 15:46:50 +0100
+Message-ID: <20261118150344.461079629@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,55 +69,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit a3e8eec7692eac706ba0934fa18453e46acd1a08 ]
+[ Upstream commit 5e3bc6b44c8853bcc7782eac122c5baf2d02f399 ]
 
-The fix for potential deadlock at disconnection by the commit
-c7a606519533 ("ALSA: info: Fix potential deadlock at disconnection")
-clears card->proc_root pointer at snd_info_card_disconnect(), in order
-just to be sure.  But this leads to a memory leak of card->proc_root
-content that should have been released at a later call of
-snd_info_card_free().
+Commit 849facea92fa ("dma-direct: simplify the DMA_ATTR_NO_KERNEL_MAPPING
+handling") moved the DMA_ATTR_NO_KERNEL_MAPPING shortcut in
+dma_direct_alloc() in front of the arch_dma_alloc() call. Architectures
+providing their own DMA coherent allocator (CONFIG_ARCH_HAS_DMA_ALLOC)
+therefore no longer see such requests. ARM 32bit is one of such. Lack of
+the call to arch_dma_alloc() results in the lack of proper cache
+management on HighMem pages.
 
-For addressing the memory leak, simply drop the card->proc_root
-clearance at snd_info_card_disconnect().
+Take the dma-direct shortcut only for coherent devices or when the
+architecture doesn't provide arch_dma_alloc(). While touching this,
+move that check into separate function to avoid duplication in alloc
+and free paths.
 
-Since card->proc_root might be still looked at in
-snd_info_card_id_change() that may be running concurrently during the
-connection procedure, add a sanity check there, too.
-
-Fixes: c7a606519533 ("ALSA: info: Fix potential deadlock at disconnection")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20261006174002.703431-1-tiwai%40suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261007172533.14667-5-tiwai@suse.de
+Fixes: 849facea92fa ("dma-direct: simplify the DMA_ATTR_NO_KERNEL_MAPPING handling")
+Reported-by: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
+Closes: https://lore.kernel.org/all/yq5ams2akznl.fsf@kernel.org/
+Assisted-by: Claude Opus 5.5 <noreply@anthropic.com>
+Link: https://lore.kernel.org/r/20260930135734.1013905-1-m.szyprowski@samsung.com
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/info.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/dma/direct.c | 22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/sound/core/info.c b/sound/core/info.c
-index 3b8ccda04e1a5..c4d57d0809adf 100644
---- a/sound/core/info.c
-+++ b/sound/core/info.c
-@@ -528,6 +528,8 @@ int snd_info_card_register(struct snd_card *card)
- void snd_info_card_id_change(struct snd_card *card)
- {
- 	guard(mutex)(&info_mutex);
-+	if (card->shutdown)
-+		return;
- 	if (card->proc_root_link) {
- 		proc_remove(card->proc_root_link);
- 		card->proc_root_link = NULL;
-@@ -555,7 +557,6 @@ void snd_info_card_disconnect(struct snd_card *card)
- 	if (card->proc_root)
- 		snd_info_clear_entries(card->proc_root);
- 	card->proc_root_link = NULL;
--	card->proc_root = NULL;
+diff --git a/kernel/dma/direct.c b/kernel/dma/direct.c
+index da665ca22d5c0..a31bd3129f3f4 100644
+--- a/kernel/dma/direct.c
++++ b/kernel/dma/direct.c
+@@ -179,6 +179,22 @@ static struct page *dma_direct_alloc_from_pool(struct device *dev, size_t size,
+ 	return page;
  }
  
- /*
++/*
++ * Check if the allocation can skip the kernel mapping and return the page
++ * pointer as the cookie.
++ */
++static bool dma_direct_use_no_mapping(struct device *dev, unsigned long attrs)
++{
++	if ((attrs & (DMA_ATTR_NO_KERNEL_MAPPING | __DMA_ATTR_ALLOC_CC_SHARED)) !=
++	    DMA_ATTR_NO_KERNEL_MAPPING)
++		return false;
++	if (is_swiotlb_for_alloc(dev))
++		return false;
++	if (IS_ENABLED(CONFIG_ARCH_HAS_DMA_ALLOC) && !dev_is_dma_coherent(dev))
++		return false;
++	return true;
++}
++
+ static void *dma_direct_alloc_no_mapping(struct device *dev, size_t size,
+ 		dma_addr_t *dma_handle, gfp_t gfp)
+ {
+@@ -226,8 +242,7 @@ void *dma_direct_alloc(struct device *dev, size_t size,
+ 	if (attrs & DMA_ATTR_NO_WARN)
+ 		gfp |= __GFP_NOWARN;
+ 
+-	if (((attrs & (DMA_ATTR_NO_KERNEL_MAPPING | __DMA_ATTR_ALLOC_CC_SHARED)) ==
+-	     DMA_ATTR_NO_KERNEL_MAPPING) && !is_swiotlb_for_alloc(dev))
++	if (dma_direct_use_no_mapping(dev, attrs))
+ 		return dma_direct_alloc_no_mapping(dev, size, dma_handle, gfp);
+ 
+ 	if (!dev_is_dma_coherent(dev)) {
+@@ -374,8 +389,7 @@ void dma_direct_free(struct device *dev, size_t size,
+ 	if (attrs & __DMA_ATTR_ALLOC_CC_SHARED)
+ 		mark_mem_encrypted = true;
+ 
+-	if (((attrs & (DMA_ATTR_NO_KERNEL_MAPPING | __DMA_ATTR_ALLOC_CC_SHARED)) ==
+-	     DMA_ATTR_NO_KERNEL_MAPPING) && !is_swiotlb_for_alloc(dev)) {
++	if (dma_direct_use_no_mapping(dev, attrs)) {
+ 		/* cpu_addr is a struct page cookie, not a kernel address */
+ 		dma_free_contiguous(dev, cpu_addr, size);
+ 		return;
 -- 
 2.53.0
 
