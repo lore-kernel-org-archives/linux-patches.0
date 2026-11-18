@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020013;
-	b=0J4eabLpNZ3x0WvQpL22m1YlhGwmJwLdi8F1AC38tfHVuAg4U7hV83ENR6vsKTZEWdXv
-	 oMXxkv240gOUMmRVkVEI9WQ1vXjcXW1FedETtCQ9EFvFIF20naGTeapUCFoHXI2R2s4dE
-	 KDjWOy+WutHNAMga5C+yjU+5rWe/PsiwP3s2Psp6VsA3RfCZrT5njUSOGK/qOlJw1Q/S/
-	 EFiMR6ufnAsbdpjb4i7bBwTF3+BA8RTv+aP28gHy5io3tR402Zv8flD/08dmW2MPUrpFQ
-	 DL355YlS99nGLGstiiSeq2mYRmh/DhySG36dAsiMJmBW78FPdrK4KaS1wamAv5nhOTA==
+	t=1795020015;
+	b=07XEz/r1LpJt6cdVRvGYvTQawzC2tZMGFARnXGChl2zeA/kD+uZT7XNUQAkpXFf0brhR
+	 g9ZPqrxXmZVk+QFYD0KQ0pPtdOapWPM5KU7IF6fLhNvu5v4SA4NbOo+VY19ARjYqOM4Cx
+	 QzKomB3RsXqyO8zdFoCvgAojG5DPZVandT4dzkkv66mfYs63+MPyisI3dCHTgMJJPMNXn
+	 ykPAp/HrkBGrpnvh3eQeT595xDNFfIqbg6R8LZGZW1jQtWIYwBRUkRBJ8u1RF4OwP2G9R
+	 oQk+M7KHn9D9+O43xY5E+zLpvDhS6okyTcW40/JMlANOzSV0lH3G9Z2Z5r2wb+TO1WA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020013;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020015;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=K2MpLtYxjJ3RwJqp1dNUwNPNfFvvGXleaFUK6ElvBr4=;
-	b=FTDUIUyr7Mv4VSV3SbQPxVYi7DHLhu+OJufCQdY4ccTAg8AZdaKVS1n9uWFllCroCb7g
-	 5BniukrgNkyJ7YX+TiCOnjf0q3EuKDnjAju26LRX1+RV9GKfiHXVqNhFVrn1RmcqKMLdx
-	 q0lWvM4Oi4LLUl90D0+UVDn23HUeUaW69AJLR4A8NN7GYE8lHkowdTdh0Z7ODoqGuGsqC
-	 zZ1DR/8Sr8hdHgrCNXL/FKK9xeS7GHQOZpGuQmDL9IFSAx/CtdtP44uARvBuLl+dj7zKp
-	 PT5OtuKD8emMGFyxNbFT6GtlpUxBwzqKTSvwz2PY9sAiS3Ut4oSyie4hOFycZGOs08Q==
+	bh=X0/Okos0wmGMC40KpQKefhQufkR+LRz53Fv6/slmJ3E=;
+	b=Zm7wTTEFatEg2c0FLixX7BZ1qTXLZj5CrUVrF2vFHRKTdqO+/sUmO0FT3irdR8o8e9Ft
+	 8adDSLxI1oQ9Dygmzv/TPoGrVpmiAABj3uX9IumpbQ5XEV6BFr4OLrrbk+x3PWbNp9jK+
+	 3UDy/0nJN/P9iLhh2FNgBCr5YLe9bYN0pxIXQ+oxXUE7ZVraelpzZwfdGZT4IAVEBfaW0
+	 Rl42uLits1IrbBNOD8WotGEN748cK+lgj7erlJTtGDi+AiT+MCWC+k7O/yQJ/Rd7BfG/C
+	 SJGLJeLO+hRB4pVFM/f8qHuKuh+IQjzIHfip1oYhSeYb3vu+wvJMTgVKJ/yd9R+mjdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mv0fPzTs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EAhdSM3P;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED35F606A32C;
-	Wed, 18 Nov 2026 16:40:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57C5606A31C;
+	Wed, 18 Nov 2026 16:40:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mv0fPzTs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5167E1F000C4;
-	Wed, 18 Nov 2026 16:40:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EAhdSM3P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 193F91F000CE;
+	Wed, 18 Nov 2026 16:40:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020012;
-	bh=K2MpLtYxjJ3RwJqp1dNUwNPNfFvvGXleaFUK6ElvBr4=;
+	s=korg; t=1795020015;
+	bh=X0/Okos0wmGMC40KpQKefhQufkR+LRz53Fv6/slmJ3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mv0fPzTsdUsT/0pud68o2CsiA3UUaJnv3rZpEDlUVydMo11I8dHkF9e5aJRgSrjvC
-	 GkQRep1I3rOyDhnVUZtUwvOIELGimrq1pMi70mXj2zhWAIjDuHTNSxxM2+pyKr4BND
-	 oTO73ePwmDqdhJ8QAG+/je2Wjy4sn5L26eEx5X6w=
+	b=EAhdSM3PPHsbXwag7J89i0iwXRW5B8v/Y9t2Iy9JRsfQ3do7oLbLzkehdJoGuGnU/
+	 DZ16bzW+biAMyA0vYitT9Bzz7wqsWuvwByDLq95HoJxnOewoncT4YFmqBwouZ8PwMX
+	 HBLQMFamReMf7OOTv3KNH+g782FFdwyL27CBemDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -47,9 +47,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Remi Bernon <rbernon@codeweavers.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1801/2651] perf symbol: Fix symbol loading from libbfd
-Date: Wed, 18 Nov 2026 15:50:41 +0100
-Message-ID: <20261118150352.127339120@linuxfoundation.org>
+Subject: [PATCH 7.3 1802/2651] perf symbol: Add missing symsrc__destroy() for libbfd
+Date: Wed, 18 Nov 2026 15:50:42 +0100
+Message-ID: <20261118150352.157030498@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -73,13 +73,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit f814d9e6cdbef6413a72d6dd6d5e4e79e815cf44 ]
+[ Upstream commit 35477b351e6a697c85dc7d37e5081621889f8e40 ]
 
-The dso__load() should return a positive number (number of symbols
-loaded) when it succeded to load symbols.  But dso__load_bfd_symbols()
-only returns 0 and it's hard to check if it actually loaded symbols or
-not.  Let's return the value of dso__has_symbol() and check it in
-dso__load() so that it can return 1 for success.
+When libbfd loaded symbols and there's a pending syms_ss, it'd be lost
+or overwrite existing symbols.  Let's destroy it before breaking the
+loop so that it can safely return from the function.
 
 Closes: https://lore.kernel.org/r/sashiko-outbox-162540@kernel.org
 Fixes: eac9a4342e5447ca ("perf symbols: Try reading the symbol table with libbfd")
@@ -90,52 +88,30 @@ Cc: Remi Bernon <rbernon@codeweavers.com>
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/pe-file-parsing.c | 2 +-
- tools/perf/util/libbfd.c           | 2 +-
- tools/perf/util/symbol.c           | 4 ++--
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ tools/perf/util/symbol.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/tests/pe-file-parsing.c b/tools/perf/tests/pe-file-parsing.c
-index 30c7da79e109b..3979f38bf127c 100644
---- a/tools/perf/tests/pe-file-parsing.c
-+++ b/tools/perf/tests/pe-file-parsing.c
-@@ -59,7 +59,7 @@ static int run_dir(const char *d)
- 	TEST_ASSERT_VAL("Failed to get dso", dso);
- 
- 	ret = dso__load_bfd_symbols(dso, debugfile);
--	TEST_ASSERT_VAL("Failed to load symbols", ret == 0);
-+	TEST_ASSERT_VAL("Failed to load symbols", ret > 0);
- 
- 	dso__sort_by_name(dso);
- 	sym = dso__find_symbol_by_name(dso, "main", &idx);
-diff --git a/tools/perf/util/libbfd.c b/tools/perf/util/libbfd.c
-index 59f4ab252bb16..3636da74f9784 100644
---- a/tools/perf/util/libbfd.c
-+++ b/tools/perf/util/libbfd.c
-@@ -451,7 +451,7 @@ int dso__load_bfd_symbols(struct dso *dso, const char *debugfile)
- 	symbols__fixup_duplicate(dso__symbols(dso));
- 	dso__set_adjust_symbols(dso, true);
- 
--	err = 0;
-+	err = dso__has_symbols(dso);
- out_free:
- 	free(symbols);
- out_close:
 diff --git a/tools/perf/util/symbol.c b/tools/perf/util/symbol.c
-index a9ff973e6bb2b..06a3b88d7c747 100644
+index 06a3b88d7c747..3a5488e74590c 100644
 --- a/tools/perf/util/symbol.c
 +++ b/tools/perf/util/symbol.c
-@@ -1929,8 +1929,8 @@ int dso__load(struct dso *dso, struct map *map)
- 		if (nsexit)
- 			nsinfo__mountns_enter(dso__nsinfo(dso), &nsc);
+@@ -1931,7 +1931,7 @@ int dso__load(struct dso *dso, struct map *map)
  
--		if (bfdrc == 0) {
--			ret = 0;
-+		if (bfdrc > 0) {
-+			ret = 1;
- 			break;
+ 		if (bfdrc > 0) {
+ 			ret = 1;
+-			break;
++			goto out_destroy;
  		}
  
+ 		if (!is_reg || sirc < 0)
+@@ -1996,6 +1996,7 @@ int dso__load(struct dso *dso, struct map *map)
+ 			ret += nr_plt;
+ 	}
+ 
++out_destroy:
+ 	for (; ss_pos > 0; ss_pos--)
+ 		symsrc__destroy(&ss_[ss_pos - 1]);
+ out_free:
 -- 
 2.53.0
 
