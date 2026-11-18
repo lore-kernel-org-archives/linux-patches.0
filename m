@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061052;
-	b=LNqE4OG2rojg53f1vpnIlQbZq/BMDhuwqdJ7MjytOAoMnFPCEw+fjqbk5eXtLZBneNM6
-	 G4hNPnaFZBUd4nW0maeYB4JfF2ZGFq84K5utfhD3iEG6I95aRWEV5NiKPtWATv8ACkYLw
-	 9ery7IxpeCn362H8W2Vkiiik9ubwPvqZv7TeYvx75Y32J7ZLvGsyJhRk8qrcPt86LGisB
-	 lwfM84Iuma9d1CEHYaXdaFPeGSUJ9pv4eYcaNrFvW4vXumPKCNMerEogISWURJmtatFnq
-	 RkMoqcpeY96mY0zfUIdPqHqkN6whO0aGnbHgXWRk9RBnPa7vfKYTQesDkHmnJR98Omw==
+	t=1795061055;
+	b=eq9r3k3vENQfqDmYW49ErL5FhBFAMYlZkWWKb9g4dTIWzhWoMl40A+FkHarTCARrwzOn
+	 EpXo3KkvlL0ejfUiAaq9dCz1xW4vBBdE4pTLArTl940CaI3zLL91CgKfg3JP4TZd7pgWy
+	 INbZpQ/9VHBL6bBlq85rVGFaX4swB2HPBvQ4Zf5DYFHN4nEbKBfFeCWWtbgs6FYuR10/H
+	 lmT3fjC13QuLXvRE8CH2mmhnuG12L3Pl4NDaKJPYAiMmZmXsHhsvkY/o1kUMIniMi8D5L
+	 JUHX0Wp6h5dZyUMNluPuaMt8da+hkBHVgBouf5XyiDKcYLcI8idAgDUdEgVoCAPbdwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061052;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061055;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SB7CRaFtmEuAENs6jmMf3VREQQ5QylgKtF7xiBJzfco=;
-	b=Lw2kYTHKs0rhD30svkoUGrJRHkKfVXR9adVRphL7SdnhKvFJeqMougrtVcqTJeZ+gJLv
-	 PIAfPPWtFp6VxV+Ra4FdBqRBvBvILwWyPaNNAO0k4y3zv0csjpgtDLhKD7VS2EZXfgoxa
-	 HxmE+VJwMMnVxrY9BypoQ4cDkEdsp/369wxwPUxOffhoQWwIP6SPajwlJcrGfLUrVpwET
-	 oWWwc/Xfdy37EAOEpbVV2N4WzbKyn7qNcDGPUe/A25nUd1tp9hl0osGQ9yOmkqUTg7/fE
-	 r5TL5t8xuW380PTshpdMg8gmV4HxBx9u/2oFwFJDGbSYZa7HH6g06t2oGcDNoLyt4+g==
+	bh=zUSyHZdwU4GsOyJ7Czk2wv60l+YYTTLXfWdN/xLCZFY=;
+	b=vBmOh0amNuZpkpYVQp6WHOXgntI3hU3VEzUJjrVDEiHIgKY+D9kiYOMba2Zamio4hdO1
+	 qWnrMpbdGVvLrs0mOMATUzNvvpPsculAzm2iH3hP+wkW2VQYfSEsrF1cI0jsYKa2HVndp
+	 zHvdYDpAl10LypaNpL8mZytIM1FDg4fp5iBVsUOtstgs4qkTp/7+jYf6G/G5zRdnpI5wr
+	 likjVLbNVaEmg86xkp7A0Tr+sJsQuqJroZjhdJx+fazbfNw/2mOr67wMFgS5819jSvPoX
+	 e0Eo8aD0ogFbtEbljNrTZ9b6pZtEkmj6t+o/fJFuOYTgr5fAj9pI+KBOGbZdI4uqzKQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="zxv73/0r";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MviL3YmT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA763606A32C;
-	Thu, 19 Nov 2026 04:04:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7752B606A320;
+	Thu, 19 Nov 2026 04:04:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zxv73/0r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C8031F000C4;
-	Thu, 19 Nov 2026 04:04:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MviL3YmT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD8401F000C5;
+	Thu, 19 Nov 2026 04:04:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061052;
-	bh=SB7CRaFtmEuAENs6jmMf3VREQQ5QylgKtF7xiBJzfco=;
+	s=korg; t=1795061055;
+	bh=zUSyHZdwU4GsOyJ7Czk2wv60l+YYTTLXfWdN/xLCZFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zxv73/0rZK78e9u3K10bdq9hHrMNHhg8EcOloci/Ys2OV7OJZW79/nt5+6bGDOrFq
-	 FwsLqEm5fmm6GCljiktFuQZGTaovOTMdU8cRj1vYdHpIJADPh1YWfx2ghglp/EnMHN
-	 bIHKPnx5AIuK16GAbb+uFpwMJ9bW4O6/do5G8OII=
+	b=MviL3YmT5ZYPNDEpZTEAS0/An15WMeECu/Y9otwGRGQAKev3FA913DyavuuI03MyU
+	 3p7mvL3BS/FzLoBy1ktn7Lib+aTpOnCD1JgxJc0YkOH/sxWmQqvsuxBlj3ZvuvsUTY
+	 Sfp7Zytn4uycLeB1NjBlqab7l4RDLewH+6XwP6Zs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Braha <julianbraha@gmail.com>,
-	Nicolas Schier <n.schier@fritz.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Andreas Kemnade <andreas@kemnade.info>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1414/1848] kconfig: tests: Provide defconfig outfile for savedefconfig
-Date: Wed, 18 Nov 2026 15:57:32 +0100
-Message-ID: <20261118150018.693808930@linuxfoundation.org>
+Subject: [PATCH 5.10 1415/1848] rtc: bd70528: properly enable wakeup
+Date: Wed, 18 Nov 2026 15:57:33 +0100
+Message-ID: <20261118150018.728317459@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,43 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Schier <n.schier@fritz.com>
+From: Andreas Kemnade <andreas@kemnade.info>
 
-[ Upstream commit 09bd92ba15bd00d937deea38a10a439458393043 ]
+[ Upstream commit cb8a6249236fd970fc3418d5d2b27dc37376f3ff ]
 
-Let kconfig test framework's 'savedefconfig' forward the requested
-output 'defconfig' filename to 'conf'.
+Wakeup on RTC alarm now only accidentially works when wakeup for the power
+button connected to the same PMIC is also enabled. Fix that by properly
+specifying the wakeup irq.
 
-The original implementation was calling 'conf' with '--savedefconfig'
-but missed the mandatory filename for the defconfig output file.
-
-While at it, honour the 'dot_config' argument which points to the input
-config file.
-
-Fixes: 022a4bf6b59d ("kconfig: tests: add framework for Kconfig unit testing")
-Reviewed-by: Julian Braha <julianbraha@gmail.com>
-Signed-off-by: Nicolas Schier <n.schier@fritz.com>
-Link: https://patch.msgid.link/20260929-kconfig-tests-minor-updates-v2-2-c5902bee1d0c@fritz.com
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Fixes: 32a4a4ebf768 ("rtc: bd70528: Initial support for ROHM bd70528 RTC")
+Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
+Link: https://patch.msgid.link/20260922-rtc-bd-v3-1-7f2580c55d58@kemnade.info
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/tests/conftest.py | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/rtc/rtc-bd70528.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/scripts/kconfig/tests/conftest.py b/scripts/kconfig/tests/conftest.py
-index 3d75025437a70..0bc635f840a9e 100644
---- a/scripts/kconfig/tests/conftest.py
-+++ b/scripts/kconfig/tests/conftest.py
-@@ -209,7 +209,8 @@ class Conf:
-         dot_config: .config file for input
-         returncode: exit status of the Kconfig executable
-         """
--        return self._run_conf('--savedefconfig', out_file='defconfig')
-+        return self._run_conf('--savedefconfig={}'.format(out_file),
-+                              dot_config=dot_config, out_file='defconfig')
+diff --git a/drivers/rtc/rtc-bd70528.c b/drivers/rtc/rtc-bd70528.c
+index 4492b770422c8..1d738e17d0760 100644
+--- a/drivers/rtc/rtc-bd70528.c
++++ b/drivers/rtc/rtc-bd70528.c
+@@ -10,6 +10,7 @@
+ #include <linux/module.h>
+ #include <linux/of.h>
+ #include <linux/platform_device.h>
++#include <linux/pm_wakeirq.h>
+ #include <linux/regmap.h>
+ #include <linux/rtc.h>
  
-     def listnewconfig(self, dot_config=None):
-         """Run listnewconfig.
+@@ -572,6 +573,10 @@ static int bd70528_probe(struct platform_device *pdev)
+ 	device_set_wakeup_capable(&pdev->dev, true);
+ 	device_wakeup_enable(&pdev->dev);
+ 
++	ret = devm_pm_set_wake_irq(&pdev->dev, irq);
++	if (ret)
++		return ret;
++
+ 	rtc = devm_rtc_allocate_device(&pdev->dev);
+ 	if (IS_ERR(rtc)) {
+ 		dev_err(&pdev->dev, "RTC device creation failed\n");
 -- 
 2.53.0
 
