@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023592;
-	b=fv2I8VYbKZQX0MXipaGM1GaYHmR94T++VWIoLz3EgAM6JSriNU7/0/4wexclJw3caAWZ
-	 St4HHL9VfGvgheUPNexbvKNcYoP1lGDCDIkVCWekpoVw8Nw8A1wxivTIqOoTBhghm4Qhs
-	 t00JdTmiIxWqlvnCpiWjw9Aawr0ZZVtsgJxwCqkGef0gRw/+iO0aXleIl8F7dilvIZB+U
-	 belGkrvItmwBwDCvVA1exK9DUTpW6OLZu/JTgneebEIuiZj1HjE5W/eJGst94f+p13Jq2
-	 isVfRv+bdyxSE2u8bSvvaYmPYkMJlK3yyJgPXhzf7RyDPe1q5B/VKCD+7ZHBQN9mThg==
+	t=1795023595;
+	b=JLVG3MAxuvMzVdx0NJegnkYZmvLp9cS7Yq4azby+47/+W2aNsh7Q7Z1COlf2V6+3ajcS
+	 2ntZ8WJISZaAXs8NNHkOJIQuanLUgniqD2eJUTbv+9yhyPAOIlaBWYSRLNEpjEJKW7afx
+	 fwwsXhbb6VEJmmZ9UkBcfedkGnvfQP+vFVcSzfi3FKtwlLvXFB8l8miPJ1gyyvFgnzc0v
+	 /dhf8E69skGt07DVRkauCYKGGGw1ZucJIHgA6VlLT1nylu/mXydx5xPr3QEl2YJtSeRYY
+	 noqQpMCfHFjXIViGrfLbp8iuLkn9hADmPlsHa0jbRk22oNZSKGzCsZ76OUR4pkYWqdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023592;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023595;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y3MA96MwX7vPvaQFj1Y4wiilzJTwLQbDRzHq9tzXhuQ=;
-	b=BWigs9TB3GzsYGrBnKh6MLvDaerP12zoVqiAMvSf19SGrEpFmONx6ZeOD1A0gznVrnsf
-	 d7ToXbqIyzvSmI0wNE5L5+achbHHnwHAZ6/aIcEqGZyp7jNc9IAEYbuLTEjk97s8745j6
-	 LCdU55hmUSOHe+7naVwVuYkwZkC5VTsl92p00/toF6l9tvUNE+ADuivOBD6FmyDhyMFjA
-	 WBIC7Ytt3xfOSmpWlLjzX2f0Kp2EbMUWroluD2BRWBfiKUIO/27k/0M3/BLozF9WmDDum
-	 OLNpPkixxZvqcfxkKNJlxV4t9iIRDptdyn6A98zyVitdlk8SaL8lTd9S973klx49+sA==
+	bh=FadU00Q78autfYAhq+fNJbOUosLAWvE78zlOy0xwIhE=;
+	b=EAQHe5NGFFNvbxp7ZmuGuVJZL6ODqsSf9hmLsrI5F/Fs1LcvYm2JVsFr4K6Pk/Gq0Enn
+	 bTVzzCsxHlWe8WfUkxfPPCa+58O6JzSmC9rgvCP3JkjmGqw890TfzTMHOqdJDHWw1/bgm
+	 6stuBILyveHDR2GT4oKzdyUlEEBb7vGIhxR0tqZJqGYRPYWMeTLheSnKOsYMQa7rKi9J6
+	 VeGbScsxzx/btnIyQfxkivQO8r5+BS7Gs/MK3GS1wPuejxQwYAmT17yuPTD1ZhVeiK2jx
+	 Uph5RsYKDR6z1es70wK6t6+J7deiGHJbrPHkGe+AIlirMNYZG4i5+FucHsvPhQkgZsQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ysBSpZjA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YV6cuDkh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE4F606A332;
-	Wed, 18 Nov 2026 17:39:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E51606A32A;
+	Wed, 18 Nov 2026 17:39:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ysBSpZjA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5C301F000C5;
-	Wed, 18 Nov 2026 17:39:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YV6cuDkh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934CA1F000C4;
+	Wed, 18 Nov 2026 17:39:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023592;
-	bh=Y3MA96MwX7vPvaQFj1Y4wiilzJTwLQbDRzHq9tzXhuQ=;
+	s=korg; t=1795023595;
+	bh=FadU00Q78autfYAhq+fNJbOUosLAWvE78zlOy0xwIhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ysBSpZjAxtZpYF7JZNZZhZOZLCwMG8JRXpqmTrMgHKqyUxytQSrlaYOIShD6EThzJ
-	 JyGYmYN+ZyIkv3QL4iN0vmgEPGU8zHxNZtRWCqH+y461mGc5pzkYvl5vw1wYnX8R8q
-	 XT8DBlzFE54xIP6B999vyg67M4nYWi6vIe++kVBo=
+	b=YV6cuDkhQdEEoXPAt+cz752akfhlX0xezIV0w4gxFbhzc3pqLIKhx9uDSwoJ3BhhW
+	 Bn/cZJ+zdNDcJsmzYu+w5H8+FJ5SQ0MU9pFr2VkAsh+hbflw/WC9Zk1mv6vr9o8c00
+	 kdvgJ9Hpsn2VA2M3JsMJkEEV/AfGLr2SE93v8fMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Armin Wolf <W_Armin@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0422/2151] ACPI: fan: Fix memory leak due to leftover devm_kcalloc() argument
-Date: Wed, 18 Nov 2026 15:35:57 +0100
-Message-ID: <20261118150137.426725770@linuxfoundation.org>
+Subject: [PATCH 6.18 0423/2151] ACPI: video: Fix backlight unregistration ordering
+Date: Wed, 18 Nov 2026 15:35:58 +0100
+Message-ID: <20261118150137.465410481@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,63 +70,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 2cf65d00347005eccf9a24801783377d7f920021 ]
+[ Upstream commit 46577d36611953d1b99e86493289cfc824116ad2 ]
 
-An ACPI device object's dev field in passed as the first argument to
-devm_kcalloc() in acpi_fan_get_fps() which is incorrect and leads to
-a memory leak on driver probe errors and removal because the driver
-is not bound to that ACPI device.
+In acpi_video_dev_unregister_backlight(), the sysfs interface of the
+cooling class device may access the brightness object under the
+backlight device's ACPI companion, so that object cannot be freed
+before unregistering the cooling class device.
 
-Address this by replacing that pointer with a pointer to the device the
-driver is actually bound to.
+Adjust the code to take that into account.
 
-While at it, drop a redundant error message after a memory allocation
-failure (that also gets printed relative to the ACPI device).
-
-Fixes: d91a1d129b63 ("ACPI: fan: Use platform device for devres-related actions")
+Fixes: 67b662e189f4 ("ACPI / video: seperate backlight control and event interface")
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Reviewed-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://patch.msgid.link/14089663.uLZWGnKmhe@rafael.j.wysocki
+[ rjw: Fixed the Fixes: tag ]
+Link: https://patch.msgid.link/3429468.aeNJFYEL58@rafael.j.wysocki
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/fan_core.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/acpi/acpi_video.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/acpi/fan_core.c b/drivers/acpi/fan_core.c
-index 46e7fe7a506d5..6cdbbd4253f6f 100644
---- a/drivers/acpi/fan_core.c
-+++ b/drivers/acpi/fan_core.c
-@@ -259,7 +259,7 @@ static int acpi_fan_speed_cmp(const void *a, const void *b)
- 	return fps1->speed - fps2->speed;
+diff --git a/drivers/acpi/acpi_video.c b/drivers/acpi/acpi_video.c
+index be8e7e18abcab..1d56b42aef669 100644
+--- a/drivers/acpi/acpi_video.c
++++ b/drivers/acpi/acpi_video.c
+@@ -1841,6 +1841,12 @@ static int acpi_video_bus_register_backlight(struct acpi_video_bus *video)
+ 
+ static void acpi_video_dev_unregister_backlight(struct acpi_video_device *device)
+ {
++	if (device->cooling_dev) {
++		sysfs_remove_link(&device->dev->dev.kobj, "thermal_cooling");
++		sysfs_remove_link(&device->cooling_dev->device.kobj, "device");
++		thermal_cooling_device_unregister(device->cooling_dev);
++		device->cooling_dev = NULL;
++	}
+ 	if (device->backlight) {
+ 		backlight_device_unregister(device->backlight);
+ 		device->backlight = NULL;
+@@ -1850,12 +1856,6 @@ static void acpi_video_dev_unregister_backlight(struct acpi_video_device *device
+ 		kfree(device->brightness);
+ 		device->brightness = NULL;
+ 	}
+-	if (device->cooling_dev) {
+-		sysfs_remove_link(&device->dev->dev.kobj, "thermal_cooling");
+-		sysfs_remove_link(&device->cooling_dev->device.kobj, "device");
+-		thermal_cooling_device_unregister(device->cooling_dev);
+-		device->cooling_dev = NULL;
+-	}
  }
  
--static int acpi_fan_get_fps(struct acpi_device *device)
-+static int acpi_fan_get_fps(struct device *dev, struct acpi_device *device)
- {
- 	struct acpi_fan *fan = acpi_driver_data(device);
- 	struct acpi_buffer buffer = { ACPI_ALLOCATE_BUFFER, NULL };
-@@ -279,11 +279,8 @@ static int acpi_fan_get_fps(struct acpi_device *device)
- 	}
- 
- 	fan->fps_count = obj->package.count - 1; /* minus revision field */
--	fan->fps = devm_kcalloc(&device->dev,
--				fan->fps_count, sizeof(struct acpi_fan_fps),
--				GFP_KERNEL);
-+	fan->fps = devm_kcalloc(dev, fan->fps_count, sizeof(*fan->fps), GFP_KERNEL);
- 	if (!fan->fps) {
--		dev_err(&device->dev, "Not enough memory\n");
- 		status = -ENOMEM;
- 		goto err;
- 	}
-@@ -341,7 +338,7 @@ static int acpi_fan_probe(struct platform_device *pdev)
- 		if (result)
- 			return result;
- 
--		result = acpi_fan_get_fps(device);
-+		result = acpi_fan_get_fps(&pdev->dev, device);
- 		if (result)
- 			return result;
- 	}
+ static int acpi_video_bus_unregister_backlight(struct acpi_video_bus *video)
 -- 
 2.53.0
 
