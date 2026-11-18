@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025641;
-	b=ctts+lU99WUZ99v5pnXyG2rIsXrRxaZDNCL4keNDaYUYfBkEILBJvyRTEeZbyobOzL0O
-	 IACJ8IowBP6wtv52tLhA11ZyJtbEJO3ZickbijfdNxxxilJ7IT9OArujFklmuPA2qrt0D
-	 fJvFINwB1Gul+j8vnG9GBU4zFMyWMWzqA2D2mkHI2HyJAYDzFGYQs5xBlkIpecVpZGqts
-	 /0up6WuPS8a9J28NiUX4btWFu+upfvL6LYVvVIo/xjYt7zlS1aUM5SSSrpbYt5pkAX3ck
-	 Zbpg7oN4OqZjgwuDU06wFKUIlWUR15cGLsKpV4R0JzuUYvyHuHCkDXAKhWXEWC/JcSQ==
+	t=1795025644;
+	b=YQuMw6r/GWFsNmdWGzVK8vIkGrUdi5760IP0oHXITnENMZYRUR+jGdlS203tNlu/XWKy
+	 MKOrlrsMGKSMTdUWNN/CepM8d4JGPtNxusupw8xLcd9kA9fZsgEn6EiUyhvUX8r/Lt0Np
+	 Yuc1N4/jU+C0W7iLPhfbVPehAUttpuqaaxs68dyGJTOtv4bXforb7gPUBTAdi4bRhX9la
+	 tyYKu5ftr3GHGHqf4MiKqiDiCbP/LH5W61sA7xpd/W6nzgvZRsEPkc28QGg7KsS69Tk+f
+	 iACDZdPqMqOkMyYvFv9AEBlYxoXi8/uo3GCs0UuKGK8S+0NE4JBLiYi7PfFuM2AWr3Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025641;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025644;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jMeg4IWrNiFTIOzHgMZuuWsR6C2ZloI5MzRP2T2vrYU=;
-	b=dRDSX33UZES1nh3nHWBdcl6iWpiuSZjxswIBdLuRA4/Nw8wzCIlriDoU3Z0camYEmm4u
-	 P+jKOZUwk2weWNoN8hqztgUgKtGwM0AMmXpsaKaZSFhBrsUWs11i5u0pIQOU150dHqwE9
-	 wOHB93nTA9oZ59PIpTNshENNTg6b7cmipAcU068O4HWp9DWufFt5HUUfnb49JE92Gquly
-	 yzDHbMWS/titqwco0FOtMQDVDxHHt1bq7X6pbe019B1HRkORAC8kNFAjawJKCxQZT6O7P
-	 ftHE2GAXHFrFoeKG4FuzT34wPLJL3ZA3cw/2BVZ4tK828VC3o8inqjk8JPqeYD5XObg==
+	bh=Rl/DSCNXWO1e5wWnxXdbRwpGdZKEL0lu3Dps2IsGNwc=;
+	b=gmDvKpCfhiSxtHxDag/h+Nn0Psf/6ds5/n/nSveg6tOMZ6oeFS2aR2qWWVUfkAo+fPzw
+	 5KaNFCR3J/xTwIoLA8m4+Q/Tl2DLECEOHw6BxUOg/JdED1XVy4p7OpBnOS13dfMuZFWUj
+	 S/Lts93SHekZimZ9m74I3b2dLpWEhyQgO9Nh66H0wf0w4wljNmElJSv4hwt1RDwJ7xNU/
+	 rLwa08bZfreYbh1TrnpJTEoEwB3QjGv/etGygErh69wj4gkoPbzqYF6zx6UG9XLZW7uhg
+	 to2LEzK0w+qMGnXArqnrkPgl4NLZWZ5vdtM+eDsQ9DAQhokmYRqsV9NNy/A7T8cWpcQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nFXhPx9z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SA9amNe3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50412606A325;
-	Wed, 18 Nov 2026 18:14:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FFC8606A320;
+	Wed, 18 Nov 2026 18:14:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nFXhPx9z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1C1B1F000C4;
-	Wed, 18 Nov 2026 18:14:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SA9amNe3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9F61F000C4;
+	Wed, 18 Nov 2026 18:14:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025641;
-	bh=jMeg4IWrNiFTIOzHgMZuuWsR6C2ZloI5MzRP2T2vrYU=;
+	s=korg; t=1795025643;
+	bh=Rl/DSCNXWO1e5wWnxXdbRwpGdZKEL0lu3Dps2IsGNwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nFXhPx9zM9zMm8KtpbztIw7kl+bExHjtRSgrZT6dN4mRzxM7bYG6gkjgtnLFtG13/
-	 yLH3SotUMWnqVMos7xQ7nM5PUzvR1kHti9fgx/HVTub2Jdr1aBhKIsVGPQwkZwt+Sn
-	 btC+qXWCbx7q5on8Bv8VXJ2bCtHF+lC7FG877zzg=
+	b=SA9amNe3ZylM8ioyltQMGpzwL5TkneggvZP2SXoidvoDy4KJAr+73jMtrRiAD5Mgf
+	 nBIlDxwnu2VeUSzICMQpO9pDQoFLKPipYXLhq0OmFakd92hO5vm4L77tGT+05wCknV
+	 M70F0p9LQTWPSRuEbxzDa8MpWZTlxdeCcGVXgsiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurelien Jarno <aurelien@aurel32.net>,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>,
+	Florian Fuchs <fuchsfl@gmail.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1149/2151] riscv: fix RVG_SYSTEM_CSR_MASK width mask
-Date: Wed, 18 Nov 2026 15:48:04 +0100
-Message-ID: <20261118150204.037196287@linuxfoundation.org>
+Subject: [PATCH 6.18 1150/2151] sh: Fix built-in DTB build with generic rule
+Date: Wed, 18 Nov 2026 15:48:05 +0100
+Message-ID: <20261118150204.075576646@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,36 +68,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aurelien Jarno <aurelien@aurel32.net>
+From: Florian Fuchs <fuchsfl@gmail.com>
 
-[ Upstream commit f89e5ee4d8c6cd56499cd87e550d4d4e19cf7e17 ]
+[ Upstream commit 642c9b8ee61dd492eb75b347f9e5f0ce6bf24281 ]
 
-RVG_SYSTEM_CSR_MASK should be 12 bits [31:20], shifted down by 20 bits.
-Replace GENMASK(12, 0) by GENMASK(11, 0).
+Commit 21bcc49974c2 ("sh: Migrate to the generic rule for built-in DTB")
+selected GENERIC_BUILTIN_DTB and renamed the Kconfig symbols, but left
+arch/sh/boot/dts/Makefile using the old obj-y form. So convert them as
+well, to fix the build error when using CONFIG_BUILTIN_DTB.
 
-Fixes: cd054837243b ("riscv: Allocate user's vector context in the first-use trap")
-Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-Reviewed-by: Jisheng Zhang <jszhang@kernel.org>
-Link: https://patch.msgid.link/20260911194233.3379532-1-aurelien@aurel32.net
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Fixes: 21bcc49974c2 ("sh: Migrate to the generic rule for built-in DTB")
+Signed-off-by: Florian Fuchs <fuchsfl@gmail.com>
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/insn.h | 2 +-
+ arch/sh/boot/dts/Makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/include/asm/insn.h b/arch/riscv/include/asm/insn.h
-index c3005573e8c99..ad348d8b88574 100644
---- a/arch/riscv/include/asm/insn.h
-+++ b/arch/riscv/include/asm/insn.h
-@@ -142,7 +142,7 @@
- #define RVG_OPCODE_JAL		0x6f
- #define RVG_OPCODE_SYSTEM	0x73
- #define RVG_SYSTEM_CSR_OFF	20
--#define RVG_SYSTEM_CSR_MASK	GENMASK(12, 0)
-+#define RVG_SYSTEM_CSR_MASK	GENMASK(11, 0)
- 
- /* parts of opcode for RVF, RVD and RVQ */
- #define RVFDQ_FL_FS_WIDTH_OFF	12
+diff --git a/arch/sh/boot/dts/Makefile b/arch/sh/boot/dts/Makefile
+index d109978a5eb9c..16e281b859ae2 100644
+--- a/arch/sh/boot/dts/Makefile
++++ b/arch/sh/boot/dts/Makefile
+@@ -1,2 +1,2 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+-obj-$(CONFIG_BUILTIN_DTB) += $(addsuffix .dtb.o, $(CONFIG_BUILTIN_DTB_NAME))
++dtb-y += $(addsuffix .dtb, $(CONFIG_BUILTIN_DTB_NAME))
 -- 
 2.53.0
 
