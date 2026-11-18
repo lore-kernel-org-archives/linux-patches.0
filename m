@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030298;
-	b=b8ylO5xeILFZh14dY/GihXBVRG95ReTUpduFe/OTyqpYSzUhs1G2XWzISBMvLnXeO918
-	 Dq+ZGgMRpCMXdyTe+79E502h/4rht3FeCZSa+TY5Tga7vvgyVFwz7BCWXU/xtc2vdGCxb
-	 DY/kZXMU3SDKARUF8gGP6qKIE2ibqyiCS3SYSFvgc/ztgitQHU8ZOIDQus4wHF+AtkrPN
-	 S2GbSZ5ekx4XPjCTZYror/LHzrXkaukw/ciQ3Vm4Ged7BAUD0ZVqEUrhzX5cshmNk4MKn
-	 XfErH7K/RA0zGdCqMg9iLZxJal831Qh/Ba5RLBeUBenQ3HFeMzF+geMqAZP6TSizP8Q==
+	t=1795030300;
+	b=wBEV6N5Cu2S3CivzqUZn8oJSTvWeIsKqDNEf6BBdE4JNGRNHMJ/yevWbGoy/5IBO8WM+
+	 7FeykUHtfll8EmSrH6AX+g4UUF7yGow1ZC3InMjd8K+xZM+SzelzDISjWzdQqW+CO4jBv
+	 J8rr8W09YDFtXEvqo3BKwa/iTzPzJPWbESqchTKM2c1jQj+2H+rwlehoUKug9N9if3XiV
+	 urkuW8cbi1SJJNHOz2VHJHJ7R31joTH/R6W8zfcVyYHnYLxDr35qpQ3FBXhQ5uuhi9kIX
+	 Nib0MlsqJK4Vr86XwfXkMUO4j0wtUvHfC15qmbLrqgO3nOC/zJCqxYHlL6EkopVGnVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030298;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030300;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jBu780p5/Vpwd1sIHWgm00B99Fon4SvLMtQ19yKQTVA=;
-	b=1uxo+fW64BJB+drwqxJwv94X9lKJyQDDG57GfAlXKbhj3TQ2uIce8UPE550mBtltYveW
-	 Ql76CkzynC+ljx8mG3RzGwQ6DsBDL8l+SqGKYtYEt2i/ZCJNd/SeoVJInmpsD5wafL65/
-	 KwxCeqW/HzvW8/V7KE/aruS9dFa6CjGZI89eCacrMfYwZ/GeZm0sgxkX8cmwimHNhKyVZ
-	 3bi+j5DxRAeKLKgf9UjdNQt3EKQl66rle60zwWwWK/BT6FGqt2qWR+GdzsTxQKvH0JBCm
-	 mRwN1/BkG8bHMhkfFUHoCUklYkbjmj9Q0fc2fXVSJjQtZuiOSR3zE47DIs+m4S8uDig==
+	bh=vgEzId7ik4sRlxn/3Q59C3fpOW8kPuc+W1wE1Pyll80=;
+	b=DWwp0KpAWxC8hU6VabASwgGNyo9juHOUVH04netuJbUKkE4kq+NfAABiDLnsVcdsq/tq
+	 9nRdrE8FLwN/MlQ88TAWWYjpGDWUyapHY1eDKBYTST8XBcCZOsFeXSrzWyiETbeqEBZvJ
+	 k9upEmj8QFuf4hLdEe3Sm5ic6fq+LAmdFKIQr4zBlLFlIAVALLCUQNzSZt9wqPbQASy7x
+	 uXeyUhR9jDqL2++pVT/ZGeX8uUvI3teU0QnJ8IP1F50oTAOSvsX7Vfu0YH73qM4/CX9nB
+	 EUKODxqdQqU4DuqBzkHpIPk07/d6z+aOFan6g0WcKMNO54ppUQGzwS4gM78aT60yDPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sCkgzl1W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r0Bv2Co1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E13606A92E;
-	Wed, 18 Nov 2026 19:31:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16AF606A7E6;
+	Wed, 18 Nov 2026 19:31:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sCkgzl1W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 562731F000C5;
-	Wed, 18 Nov 2026 19:31:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r0Bv2Co1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 232C01F000C4;
+	Wed, 18 Nov 2026 19:31:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030297;
-	bh=jBu780p5/Vpwd1sIHWgm00B99Fon4SvLMtQ19yKQTVA=;
+	s=korg; t=1795030300;
+	bh=vgEzId7ik4sRlxn/3Q59C3fpOW8kPuc+W1wE1Pyll80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sCkgzl1WLl5biYZRErCSiZMGKaBsXh9S4c8KGLfp7R0wx8qo+eyGwRtP1mxnTHBs4
-	 jfIHuVU5Z0QJ/muuq2nOBm2EuttgY28rcJCzVhzmXRDDPIrpKIUB6V5GpwZJOLfoE5
-	 BKCaM0f+XryMwzdgvj4dScPQuuXndPnrPeI/1uBw=
+	b=r0Bv2Co1wX5uWxffaxuGDwqlBHEw9+EGjYfJdafXyQtT7BAJQMDQJsTExFJzQwGq9
+	 Ue2QA88j7MBLBeJSq44xaAV8x4K/x/7MevKcmxegmALO+s3O+UVu4WB87kKrOlqF61
+	 CVJoYsxKdqFNWlYzFwNATLcuXsuWOqQCjiRHTiYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	bui duc phuc <phucduc.bui@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0656/1756] ASoC: mediatek: mt8192: Propagate errors in I2S DAI DAPM event handlers
-Date: Wed, 18 Nov 2026 15:46:23 +0100
-Message-ID: <20261118150034.995601594@linuxfoundation.org>
+Subject: [PATCH 6.12 0657/1756] ASoC: mediatek: mt8192-mt6359: Fix error handling in MTKAIF calibration
+Date: Wed, 18 Nov 2026 15:46:24 +0100
+Message-ID: <20261118150035.068701931@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,99 +70,95 @@ Content-Transfer-Encoding: 8bit
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 49aeb628d10ef3d5694c39b7a3427d34bde06bb2 ]
+[ Upstream commit d6c8a0b5bf696d89350e43bf554362de8929f801 ]
 
-Currently, DAPM event handlers in mt8192-dai-i2s.c ignore return values
-from mt8192_afe_gpio_request(), mt8192_apll1_enable(),
-mt8192_apll2_enable(), and mt8192_mck_enable(). If GPIO configuration or
-clock setup fails during DAPM events, the error is silently ignored.
+mt8192_mt6359_mtkaif_calibration() ignored the return values of
+pm_runtime_get_sync() and mt8192_afe_gpio_request(), which could
+leave PM runtime references or GPIO state unbalanced on failure.
 
-Fix this by checking and propagating error codes properly in all I2S DAI
-DAPM event handlers.
+Switch to pm_runtime_resume_and_get(), check each GPIO request,
+and unwind on error.
 
-Fixes: 2c37b4ed730b ("ASoC: mediatek: mt8192: support i2s in platform driver")
+Fixes: 18b13ff23fab ("ASoC: mediatek: mt8192: add machine driver with mt6359, rt1015 and rt5682")
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260918133912.133799-15-phucduc.bui@gmail.com
+Link: https://patch.msgid.link/20260918133912.133799-16-phucduc.bui@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8192/mt8192-dai-i2s.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ .../mt8192/mt8192-mt6359-rt1015-rt5682.c      | 37 +++++++++++++------
+ 1 file changed, 25 insertions(+), 12 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8192/mt8192-dai-i2s.c b/sound/soc/mediatek/mt8192/mt8192-dai-i2s.c
-index 47dc7ec4cae7e..374df85411b7c 100644
---- a/sound/soc/mediatek/mt8192/mt8192-dai-i2s.c
-+++ b/sound/soc/mediatek/mt8192/mt8192-dai-i2s.c
-@@ -586,6 +586,7 @@ static int mtk_i2s_en_event(struct snd_soc_dapm_widget *w,
- 	struct snd_soc_component *cmpnt = snd_soc_dapm_to_component(w->dapm);
- 	struct mtk_base_afe *afe = snd_soc_component_get_drvdata(cmpnt);
- 	struct mtk_afe_i2s_priv *i2s_priv;
-+	int ret;
+diff --git a/sound/soc/mediatek/mt8192/mt8192-mt6359-rt1015-rt5682.c b/sound/soc/mediatek/mt8192/mt8192-mt6359-rt1015-rt5682.c
+index dd1d43ce2af62..5f50b4cf19c28 100644
+--- a/sound/soc/mediatek/mt8192/mt8192-mt6359-rt1015-rt5682.c
++++ b/sound/soc/mediatek/mt8192/mt8192-mt6359-rt1015-rt5682.c
+@@ -163,12 +163,23 @@ static int mt8192_mt6359_mtkaif_calibration(struct snd_soc_pcm_runtime *rtd)
+ 	int chosen_phase_1, chosen_phase_2, chosen_phase_3;
+ 	int counter;
+ 	int mtkaif_calib_ok;
++	int ret = 0;
  
- 	i2s_priv = get_i2s_priv_by_name(afe, w->name);
+-	pm_runtime_get_sync(afe->dev);
+-	mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 1);
+-	mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 0);
+-	mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34, 1);
+-	mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34, 0);
++	ret = pm_runtime_resume_and_get(afe->dev);
++	if (ret < 0)
++		return ret;
++	ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 1);
++	if (ret)
++		goto err_pm_put;
++	ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 0);
++	if (ret)
++		goto err_disable_adda_1;
++	ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34, 1);
++	if (ret)
++		goto err_disable_adda_0;
++	ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34, 0);
++	if (ret)
++		goto err_disable_adda_ch34_1;
  
-@@ -599,16 +600,17 @@ static int mtk_i2s_en_event(struct snd_soc_dapm_widget *w,
+ 	mt6359_mtkaif_calibration_enable(cmpnt_codec);
  
- 	switch (event) {
- 	case SND_SOC_DAPM_PRE_PMU:
--		mt8192_afe_gpio_request(afe->dev, true, i2s_priv->id, 0);
-+		ret = mt8192_afe_gpio_request(afe->dev, true, i2s_priv->id, 0);
- 		break;
- 	case SND_SOC_DAPM_POST_PMD:
--		mt8192_afe_gpio_request(afe->dev, false, i2s_priv->id, 0);
-+		ret = mt8192_afe_gpio_request(afe->dev, false, i2s_priv->id, 0);
- 		break;
- 	default:
-+		ret = 0;
- 		break;
- 	}
+@@ -289,10 +300,14 @@ static int mt8192_mt6359_mtkaif_calibration(struct snd_soc_pcm_runtime *rtd)
+ 
+ 	mt6359_mtkaif_calibration_disable(cmpnt_codec);
+ 
+-	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 1);
+-	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 0);
+-	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA_CH34, 1);
+ 	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA_CH34, 0);
++err_disable_adda_ch34_1:
++	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA_CH34, 1);
++err_disable_adda_0:
++	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 0);
++err_disable_adda_1:
++	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 1);
++err_pm_put:
+ 	pm_runtime_put(afe->dev);
+ 
+ 	dev_dbg(afe->dev, "%s(), mtkaif_chosen_phase[0/1/2]:%d/%d/%d\n",
+@@ -301,7 +316,7 @@ static int mt8192_mt6359_mtkaif_calibration(struct snd_soc_pcm_runtime *rtd)
+ 		afe_priv->mtkaif_chosen_phase[1],
+ 		afe_priv->mtkaif_chosen_phase[2]);
  
 -	return 0;
 +	return ret;
  }
  
- static int mtk_apll_event(struct snd_soc_dapm_widget *w,
-@@ -617,6 +619,7 @@ static int mtk_apll_event(struct snd_soc_dapm_widget *w,
- {
- 	struct snd_soc_component *cmpnt = snd_soc_dapm_to_component(w->dapm);
- 	struct mtk_base_afe *afe = snd_soc_component_get_drvdata(cmpnt);
-+	int ret;
+ static int mt8192_mt6359_init(struct snd_soc_pcm_runtime *rtd)
+@@ -319,9 +334,7 @@ static int mt8192_mt6359_init(struct snd_soc_pcm_runtime *rtd)
+ 	afe_priv->mtkaif_protocol = MTKAIF_PROTOCOL_2_CLK_P2;
  
- 	dev_dbg(cmpnt->dev, "%s(), name %s, event 0x%x\n",
- 		__func__, w->name, event);
-@@ -624,9 +627,11 @@ static int mtk_apll_event(struct snd_soc_dapm_widget *w,
- 	switch (event) {
- 	case SND_SOC_DAPM_PRE_PMU:
- 		if (snd_soc_dapm_widget_name_cmp(w, APLL1_W_NAME) == 0)
--			mt8192_apll1_enable(afe);
-+			ret = mt8192_apll1_enable(afe);
- 		else
--			mt8192_apll2_enable(afe);
-+			ret = mt8192_apll2_enable(afe);
-+		if (ret)
-+			return ret;
- 		break;
- 	case SND_SOC_DAPM_POST_PMD:
- 		if (snd_soc_dapm_widget_name_cmp(w, APLL1_W_NAME) == 0)
-@@ -704,6 +709,7 @@ static int mtk_mclk_en_event(struct snd_soc_dapm_widget *w,
- 	struct snd_soc_component *cmpnt = snd_soc_dapm_to_component(w->dapm);
- 	struct mtk_base_afe *afe = snd_soc_component_get_drvdata(cmpnt);
- 	struct mtk_afe_i2s_priv *i2s_priv;
-+	int ret;
+ 	/* mtkaif calibration */
+-	mt8192_mt6359_mtkaif_calibration(rtd);
+-
+-	return 0;
++	return mt8192_mt6359_mtkaif_calibration(rtd);
+ }
  
- 	dev_dbg(cmpnt->dev, "%s(), name %s, event 0x%x\n",
- 		__func__, w->name, event);
-@@ -716,7 +722,9 @@ static int mtk_mclk_en_event(struct snd_soc_dapm_widget *w,
- 
- 	switch (event) {
- 	case SND_SOC_DAPM_PRE_PMU:
--		mt8192_mck_enable(afe, i2s_priv->mclk_id, i2s_priv->mclk_rate);
-+		ret = mt8192_mck_enable(afe, i2s_priv->mclk_id, i2s_priv->mclk_rate);
-+		if (ret)
-+			return ret;
- 		break;
- 	case SND_SOC_DAPM_POST_PMD:
- 		i2s_priv->mclk_rate = 0;
+ static int mt8192_rt5682_init(struct snd_soc_pcm_runtime *rtd)
 -- 
 2.53.0
 
