@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019573;
-	b=fwrgKzjY1YZAbjvjkokEXXvHxcJfmfLOpEZt1MZpnmKeIpPjGTIyDImDZ8BFbIDS5pxt
-	 m3y/XL0dQGBPjUvN9jH36bK57yoBSosSx6RRxTCu7scAtfEfwVVNwh7tfkOwmCj5LY30I
-	 7r3PXSoPMbrhQSoLJ0rb4Jjw4R6yHYziW79OBs1K9EtnMFewHjjbh+pusnnaiRVHFPSC1
-	 XL11kBuPM/UoWTNvDyu7vPpO7DNion8r/BGE3aoOsJvJmWi4JqDrlD+EOyHQdk02p6dB9
-	 iPlweK4LK1BXP5bhoW4E7aVFd9899uZsJE2ArnTv1uz8zaycYh7aH008flq+EAS647A==
+	t=1795019577;
+	b=b9y4JwZBKKglH8TLB0LVtDbVBfAUrxKKbWWqrx69T8ZGQEooCyK7fDI3+6ehKYQWY/Q8
+	 tX3aTSTyXSm2ZEQ62mI7pU2RZCFCuI5cuJJKJgRGl8pgR0NMrzOe+ObQdIgIMcMbTMuv7
+	 IBJ7wSG7aFHfCOwRiumhh4RyxmCeQFAPMOtXcMrv07HJatariu8+tkrv9ik3Q+CXgafzt
+	 iOHi/vE/nbGZhV/1gzJ9VNrD9Ltkf56tE+mE+6zaD6xxOXYyoofK+0ZbZ91gonYuUqH+4
+	 H2zvBHUTTBN8LUyxIQV7is3gs3BNAkkCjpqYZlbckOCTjfDO5szbmwuTPTkOGdfnytg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019573;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019577;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=s053aImAo1Ww7UNENyodxOroqjrUJxxpP1LkkJjMzrE=;
-	b=RLoTITC72+o6kccgQi9oOI3fEeEeNV4AQmN9dCC79Bizgyue04LRRk54I36HJRHtDY/W
-	 Sk9110MxuWtbpRSBs6MTnxCdzHvhxU67zTXoq2tdeCdpZXCjEWReFWg67/G32gsbBbit3
-	 Nfsc99S88Bzt9vd3iSGNs9lRdj0w2/jEZPls/s8CRfQkGTRmfVUKsG4uGGcasdDyUbK5J
-	 0qATs0F7hJE7+S0Oy8D2we/+G1znVvpN8RrUAmJGXwLP0UE+AH1HS917301XXsypPJ6W9
-	 edqYMZI9nNaxJ69lB8JWikeC/0fJUNHFFJzr16+byNtPCgvZNh9syVXT5wtpKgseEbA==
+	bh=W/+rMD2RAohNpWpHWvElqjR457tmnVfDvR5TD8lkJ1g=;
+	b=OVnfUG+j5cxIIVfcEcii3thI88x6mu01grtBkSCLEcXIYTzCtymR0rDhxJktf8RZrCY+
+	 jF93OhyVF+juk2QvPRTBb1jFx8KJT0TlOIXuHKJY8UbAiLiUcjJrPj7xNtfwo9tQMLzhW
+	 ImiHG78ErsUfdQlDZhwvPeVhk6y7Wm6lYQBcj3iGrysyyZ1QeD1WzPcte/XVQWiL3EMXT
+	 4Q+k6XCFOfAD7SseWRF/dNw9RB3UMiakqOAhJ7NW7kmMq0vfJQUZJgKniJOd8dH+sN9dJ
+	 eNuIrulQihXNUtJzZbBi/bxJfpNXpl15GOy3X54ZOeX/19YTYBxayaqrLdLmSUXxJyQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p4Uq5nXH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oj9i+JGD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDEC1606A7C8;
-	Wed, 18 Nov 2026 16:32:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10428606A325;
+	Wed, 18 Nov 2026 16:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p4Uq5nXH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9B991F000C4;
-	Wed, 18 Nov 2026 16:32:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oj9i+JGD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CA5D1F000C6;
+	Wed, 18 Nov 2026 16:32:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019573;
-	bh=s053aImAo1Ww7UNENyodxOroqjrUJxxpP1LkkJjMzrE=;
+	s=korg; t=1795019576;
+	bh=W/+rMD2RAohNpWpHWvElqjR457tmnVfDvR5TD8lkJ1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p4Uq5nXHKIAUUqRFESG6C/hcV92dxb837QrViILuNP+guwdGX7zzEGa9M+AamKY2t
-	 kmUJB/96rD3wctSxgh8pVVi1rvNtLKtQaBf4gBsIxxLgQSI2JUhG377nMEpyyPfo5o
-	 ZyCosGq3dQWWIHmbc0d+cakkVmzrG5k+glslR+og=
+	b=oj9i+JGD8PcDhRgtiuPLOZFR2iAqNa0QFxjlbX8twsUn8WNld/bcSdRb0gnDdpMCK
+	 0erZgT9dsqAD6zYcIjQWmrSTGa/xvKMGyF68sCJleTFs6kxscFEf64CI4q3p8tpULs
+	 iByCjtUPNChZMvQGj4AM7BhcmCmWCPImW91ghDNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ting-Han Hou <ue081723@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Hannes Reinecke <hare@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Tal Zussman <tz2294@columbia.edu>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1617/2651] ALSA: virtio: reset I/O message fill level on prepare
-Date: Wed, 18 Nov 2026 15:47:37 +0100
-Message-ID: <20261118150346.069824072@linuxfoundation.org>
+Subject: [PATCH 7.3 1644/2651] block: take i_rwsem for the splice read path
+Date: Wed, 18 Nov 2026 15:48:04 +0100
+Message-ID: <20261118150346.993176603@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,109 +71,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ting-Han Hou <ue081723@gmail.com>
+From: Tal Zussman <tz2294@columbia.edu>
 
-[ Upstream commit f0e9db0f84249b65a72b5fba43e91212281ad378 ]
+[ Upstream commit 5574b81c642e83d962732e86399020517f5f15af ]
 
-Since commit fe981e67568c ("ALSA: virtio: use ack callback"), an I/O
-message is only queued to the device once the application has filled
-the whole period: virtsnd_pcm_msg_send() accumulates the transferred
-bytes in msg->length and queues the message when it reaches
-period_bytes.  msg->length is reset to 0 only when the device completes
-the message.
+def_blk_fops wires ->splice_read directly to filemap_splice_read(),
+which allocates folios based on mapping_min_folio_order() without any
+lock against set_blocksize(). A splice from a block device can race
+set_blocksize() raising the minimum folio order and insert a folio that
+is too small for the mapping. blkdev_read_iter() wraps filemap_read()
+in inode_lock_shared() for this reason, but the splice path was missed.
 
-If the substream is stopped (e.g. snd_pcm_drop()) while a period is
-only partially filled, the corresponding message is never queued and
-keeps its partial length.  virtsnd_pcm_prepare() resets msg_count,
-hw_ptr and the indirect PCM state, but not msg->length.  After the
-next start, the stale length is added to the new data, the sum never
-equals period_bytes, and the message is never sent again.  Playback
-then stalls once hw_ptr reaches that period: writes fail with -EIO
-("DMA or IRQ trouble") and drain fails with -EIO.  Capture is affected the
-same way after a partial read.
+Splicing from a block device while toggling the block size between 512
+bytes and 64K with BLKBSZSET hits this within seconds on a
+CONFIG_DEBUG_VM kernel:
 
-Clear the fill level of all messages in prepare.  Outside of the resume
-path, virtsnd_pcm_prepare() already refuses to run while I/O messages
-are pending, so no message is owned by the device at this point and the
-reset does not race with message completion.
+  page dumped because: VM_BUG_ON_FOLIO(folio_order(folio) < mapping_min_folio_order(mapping))
+  kernel BUG at mm/filemap.c:858!
+  Oops: invalid opcode: 0000 [#1] SMP NOPTI
+  RIP: 0010:__filemap_add_folio+0x51c/0x570
+  Call Trace:
+   filemap_add_folio+0x64/0x140
+   page_cache_ra_order+0x1dd/0x3d0
+   filemap_get_pages+0x153/0x760
+   filemap_splice_read+0x13f/0x300
+   splice_file_to_pipe+0xc0/0xd0
+   do_splice+0x6a8/0x890
+   __do_splice+0xb0/0x210
+   __x64_sys_splice+0x80/0x100
+   do_syscall_64+0x10e/0x520
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Reproduced in QEMU (virtio-sound-pci, wav audiodev): prepare, write 1.5
-periods, drop, prepare, write 16 full periods, drain.  Without this
-patch WRITEI returns -EIO after 14 periods and DRAIN fails; with it all
-16 periods are played and DRAIN succeeds.  Period-aligned prefill works
-in both cases.  The same sequence on capture (read 1.5 periods, drop,
-prepare, read 16 periods) fails with -EIO after 10 periods without this
-patch and reads all 16 with it.
+Take inode_lock_shared() around filemap_splice_read(), like the read
+path does.
 
-Found by code inspection, confirmed with the reproducer above.
-
-Fixes: fe981e67568c ("ALSA: virtio: use ack callback")
-Assisted-by: LLM
-Signed-off-by: Ting-Han Hou <ue081723@gmail.com>
-Link: https://patch.msgid.link/20261011125426.35745-1-ue081723@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 3c20917120ce ("block/bdev: enable large folio support for large logical block sizes")
+Assisted-by: Claude:claude-fable-5
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Signed-off-by: Tal Zussman <tz2294@columbia.edu>
+Link: https://patch.msgid.link/20261009-blkdev-fixes-v6-3-307939c387df@columbia.edu
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/virtio/virtio_pcm.h     |  2 ++
- sound/virtio/virtio_pcm_msg.c | 19 +++++++++++++++++++
- sound/virtio/virtio_pcm_ops.c |  1 +
- 3 files changed, 22 insertions(+)
+ block/fops.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/sound/virtio/virtio_pcm.h b/sound/virtio/virtio_pcm.h
-index 368dafa5df3f3..8837dfc128289 100644
---- a/sound/virtio/virtio_pcm.h
-+++ b/sound/virtio/virtio_pcm.h
-@@ -118,6 +118,8 @@ int virtsnd_pcm_msg_alloc(struct virtio_pcm_substream *vss,
- 
- void virtsnd_pcm_msg_free(struct virtio_pcm_substream *vss);
- 
-+void virtsnd_pcm_msg_reset(struct virtio_pcm_substream *vss);
-+
- int virtsnd_pcm_msg_send(struct virtio_pcm_substream *vss, unsigned long offset,
- 			 unsigned long bytes);
- 
-diff --git a/sound/virtio/virtio_pcm_msg.c b/sound/virtio/virtio_pcm_msg.c
-index a5c4e70277173..72103f6067169 100644
---- a/sound/virtio/virtio_pcm_msg.c
-+++ b/sound/virtio/virtio_pcm_msg.c
-@@ -182,6 +182,25 @@ void virtsnd_pcm_msg_free(struct virtio_pcm_substream *vss)
- 	vss->nmsgs = 0;
+diff --git a/block/fops.c b/block/fops.c
+index 6aef34865d1ad..847d22094d326 100644
+--- a/block/fops.c
++++ b/block/fops.c
+@@ -888,6 +888,22 @@ static ssize_t blkdev_read_iter(struct kiocb *iocb, struct iov_iter *to)
+ 	return ret;
  }
  
-+/**
-+ * virtsnd_pcm_msg_reset() - Reset the fill level of all I/O messages.
-+ * @vss: VirtIO PCM substream.
-+ *
-+ * Messages that were only partially filled by the application when the
-+ * substream was stopped are never sent to the device, so their length must be
-+ * cleared before the substream is started again.
-+ *
-+ * Context: Any context. Takes and releases the VirtIO substream spinlock.
++/*
++ * Take i_rwsem to avoid racing with set_blocksize changing i_blkbits/folio
++ * order and punching out the pagecache.
 + */
-+void virtsnd_pcm_msg_reset(struct virtio_pcm_substream *vss)
++static ssize_t blkdev_splice_read(struct file *in, loff_t *ppos,
++		struct pipe_inode_info *pipe, size_t len, unsigned int flags)
 +{
-+	unsigned int i;
++	struct inode *bd_inode = bdev_file_inode(in);
++	ssize_t ret;
 +
-+	guard(spinlock_irqsave)(&vss->lock);
-+	for (i = 0; vss->msgs && i < vss->nmsgs; ++i)
-+		vss->msgs[i]->length = 0;
++	inode_lock_shared(bd_inode);
++	ret = filemap_splice_read(in, ppos, pipe, len, flags);
++	inode_unlock_shared(bd_inode);
++	return ret;
 +}
 +
- /**
-  * virtsnd_pcm_msg_send() - Send asynchronous I/O messages.
-  * @vss: VirtIO PCM substream.
-diff --git a/sound/virtio/virtio_pcm_ops.c b/sound/virtio/virtio_pcm_ops.c
-index 1105e7ff3523a..1091100a4c982 100644
---- a/sound/virtio/virtio_pcm_ops.c
-+++ b/sound/virtio/virtio_pcm_ops.c
-@@ -299,6 +299,7 @@ static int virtsnd_pcm_prepare(struct snd_pcm_substream *substream)
- 	vss->xfer_xrun = false;
- 	vss->suspended = false;
- 	vss->msg_count = 0;
-+	virtsnd_pcm_msg_reset(vss);
- 
- 	memset(&vss->pcm_indirect, 0, sizeof(vss->pcm_indirect));
- 	vss->pcm_indirect.sw_buffer_size =
+ #define	BLKDEV_FALLOC_FL_SUPPORTED					\
+ 		(FALLOC_FL_KEEP_SIZE | FALLOC_FL_PUNCH_HOLE |		\
+ 		 FALLOC_FL_ZERO_RANGE | FALLOC_FL_WRITE_ZEROES)
+@@ -989,7 +1005,7 @@ const struct file_operations def_blk_fops = {
+ #ifdef CONFIG_COMPAT
+ 	.compat_ioctl	= compat_blkdev_ioctl,
+ #endif
+-	.splice_read	= filemap_splice_read,
++	.splice_read	= blkdev_splice_read,
+ 	.splice_write	= iter_file_splice_write,
+ 	.fallocate	= blkdev_fallocate,
+ 	.uring_cmd	= blkdev_uring_cmd,
 -- 
 2.53.0
 
