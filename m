@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033343;
-	b=pAzDmgBNrHwwUV4oiyR2toHqBZvTbZtuf8lTN/TLUOGp+xuRipnpGF25HfbQAm94XYed
-	 yoCFRxZJZ58xBjdBPCOy2Y1kSv6BP62pREgtYeJFxXz+DJd73a2Tuf4LqOfhtxbsfRd3S
-	 bxOrABJ5b+8Qmq4/A1RW1leEBOuL8pq27WKxz8hLaQmwSZkVkMWekpCw0q6OPDfCR35Z8
-	 f5AtkVurccaFZVoMJ9DMf8TQyHgphyEj3chdNMDqkqGo7KBrigqdi61JWrfwu0SxwtYvJ
-	 i6HRQA2sEwGJr3/bDIHv/T80ljJozOv35eGSYE3ItMryPfTuf150IhYenJpDADaZO+g==
+	t=1795033345;
+	b=N7wM+IO34tGQLun4WeXY1cUV1TnVZwcQ3pDEk1thsX4YzB0PLYgkH0AAh9iU4/V5cktP
+	 Oq7R3a9F5uhIDq1aRsP+2YrKN6K/TQtugUaoOYpTn2uX7SLqmwuS6HufkhWWdFjMRQ2bW
+	 9Q9NmR8mefSwqrWpge9moJQcrchl9wlkUJer72KAVMT/r4dtlhWRy0xpo6yP1lEW61VYj
+	 gI3u6d1ZPjRQf/cuPmgIFnD06UAnOFgKWSq465PRJH0li4FeM3SRoPP3h/7VA/a0bwo7f
+	 NuSKZLEa09/cjbm+fAql1vnN90JV0De9LGs5TWX2nTEzUI/l6IaRURLlZ5VvrfYbuIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033343;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033345;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gK8mCK2/PoMTRIXaaTuVz5SmcobmGj1a74APGoHrVyM=;
-	b=oQHLq7D+IQzHoF3ZDTmdOYVuYXCw6OsAaBOzdYHZJgc6G4+OPL3ER8O2Eea+8LyN502F
-	 raUApYjf/NwuCeWQuC7/GoTP7i7ruSjnVjhZVAmRbMUk0UbgOsVV1dAsymBNs+Lt9Vt5X
-	 EEexzH1homVJ7NPFa+SHGFELEXM1gCc5Ofs/ke8+Vz+id58Ng+GyBrUj7eBVVMBnUYZvM
-	 zniFTh8r6YxcjqiJXonkIrSFfogWKXVxdYlj7Fshp7JC+5fvBqxSvwOfmd01QIVU8fWoe
-	 O+QiQvTf7Bttz2v3f9DHMSsv6Tn4T/+VL1tuZimdceO4uZhVsacohDmi5yntyle4v6Q==
+	bh=MPRlwY3Vi7BDlSstC5IogQwhkLZJUbDHTkzfs0E8BT8=;
+	b=sRx8nq2fw8uSNMSMmDhSTFUGItR2gVxygixseJMYwabHPafzr9SoOkhjSe0cHmNoUsQn
+	 4SpqvQXX2/yDhTwkk/K2fKMGa7e+X1qnMRfXEFyv9I+hwsEF6cXzhD+4zo1XANGlVmnan
+	 NDNEBArTS9et4yY/yST2YiK3koG2lBcLmUGiAvdo8LM7H2m6oBnEEUWq5Qfs/jcWUfRmP
+	 e4IYjwPQyo4WsgZyHU8RkQ9BJRHf+8/y9uR+ZDo+zW9tOqryZhbXu4PB6oIgNdfySSgDT
+	 oGKKE03P1VuidHfMtgfFbKljeMLeEPRL1VwZwmOvgddxMuRLd/H7+hgmv/CYlFDWbrw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2wZtxD4n;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bYNQQMO2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC2D606A320;
-	Wed, 18 Nov 2026 20:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA103606A320;
+	Wed, 18 Nov 2026 20:22:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2wZtxD4n
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64DAF1F000C4;
-	Wed, 18 Nov 2026 20:22:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bYNQQMO2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C63D1F000C4;
+	Wed, 18 Nov 2026 20:22:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033343;
-	bh=gK8mCK2/PoMTRIXaaTuVz5SmcobmGj1a74APGoHrVyM=;
+	s=korg; t=1795033345;
+	bh=MPRlwY3Vi7BDlSstC5IogQwhkLZJUbDHTkzfs0E8BT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2wZtxD4ncTVpxzHjSaRiQ7fLtH7Co9FdtRGbExOpzQERHdzLw2g1+nRO1qDhPKaU6
-	 FU8hDiyn17enJJ5NtF6i8VTHnfOLhyXolyobHPurSBZs1T2LtYtoUKlkEYgoapCdrw
-	 spDZn6V+5AG8VpQwthB9/X5NvZJOp1SqKM0oMTPM=
+	b=bYNQQMO2BSNg9On0dUmR6HbssosSFiGOMqzf1p6REP9Tyi5oXNDIln1LDFkfPidzg
+	 JXOcJCik6MOK1p3ZjMJENOJdkAp8lUmVlEeOjilB8k/cgc8CuS/RIVC1eB3WjLUF63
+	 XIdsqxVlkCIWigdaY6mWJbGawygIAnI6iOg7hmsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shanker Donthineni <sdonthineni@nvidia.com>,
-	Steven Price <steven.price@arm.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.12 1733/1756] irqchip/gic-v3-its: Fix over allocation in itt_alloc_pool()
-Date: Wed, 18 Nov 2026 16:04:20 +0100
-Message-ID: <20261118150118.558008322@linuxfoundation.org>
+	Adam Ford <aford173@gmail.com>,
+	kernel test robot <lkp@intel.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.12 1734/1756] phy: freescale: fsl-samsung-hdmi: Fix 64-by-32 division cocci warnings
+Date: Wed, 18 Nov 2026 16:04:21 +0100
+Message-ID: <20261118150118.594334699@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,37 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Price <steven.price@arm.com>
+From: Adam Ford <aford173@gmail.com>
 
-commit bc88d44bd7e45b992cf8c2c2ffbc7bb3e24db4a7 upstream.
+commit 739214dd1c209e34323814fb815fb17cccb9f95b upstream.
 
-itt_alloc_pool() calls its_alloc_pages_node() to allocate an individual
-page to add to the pool (for allocations <PAGE_SIZE). However the final
-argument of its_alloc_pages_node() is the page order not the number of
-pages. Currently it allocates two pages and leaks the second page.
-Fix it by passing 0 instead (1 << 0 = 1 page).
+The Kernel test robot returns the following warning:
+ do_div() does a 64-by-32 division, please consider using div64_ul instead.
 
-Fixes: b08e2f42e86b ("irqchip/gic-v3-its: Share ITS tables with a non-trusted hypervisor")
-Reported-by: Shanker Donthineni <sdonthineni@nvidia.com>
-Signed-off-by: Steven Price <steven.price@arm.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/1f6e19c4-1fb9-43ab-a8a2-a465c9cff84b@arm.com
-Closes: https://lore.kernel.org/r/ed65312a-245c-4fa5-91ad-5d620cab7c6b%40nvidia.com
+To prevent the 64-by-32 divsion, consolidate both the multiplication
+and the do_div into one line which explicitly uses u64 sizes.
+
+Fixes: 1951dbb41d1d ("phy: freescale: fsl-samsung-hdmi: Support dynamic integer")
+Signed-off-by: Adam Ford <aford173@gmail.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202412091243.fSObwwPi-lkp@intel.com/
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/irqchip/irq-gic-v3-its.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -265,7 +265,7 @@ static void *itt_alloc_pool(int node, in
- 		if (addr)
- 			break;
- 
--		page = its_alloc_pages_node(node, GFP_KERNEL | __GFP_ZERO, 1);
-+		page = its_alloc_pages_node(node, GFP_KERNEL | __GFP_ZERO, 0);
- 		if (!page)
- 			break;
- 
+Link: https://lore.kernel.org/r/20241215220555.99113-1-aford173@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+---
+ drivers/phy/freescale/phy-fsl-samsung-hdmi.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+--- a/drivers/phy/freescale/phy-fsl-samsung-hdmi.c
++++ b/drivers/phy/freescale/phy-fsl-samsung-hdmi.c
+@@ -483,8 +483,7 @@ static unsigned long fsl_samsung_hdmi_ph
+ 			 * Fvco = (M * f_ref) / P,
+ 			 * where f_ref is 24MHz.
+ 			 */
+-			tmp = (u64)_m * 24 * MHZ;
+-			do_div(tmp, _p);
++			tmp = div64_ul((u64)_m * 24 * MHZ, _p);
+ 			if (tmp < 750 * MHZ ||
+ 			    tmp > 3000 * MHZ)
+ 				continue;
 
 
