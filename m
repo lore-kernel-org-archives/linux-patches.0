@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040950;
-	b=1EV+4LSrtR0+PI0+j8OdPb+sVd4ARjMaDcCQdtvEMH5AzYOmQEd0ThcYUf+rS1F/LFej
-	 wZUTJnKJVhJt8m/5hZVWS5PbHn5CRQxJXGJZUWlJWimGwjhXOQNjAjbipdmMH97BrPYCv
-	 UUXmcGV1rrIKLnIf8Zmt2fYILdLvErBK0tuptNY6giGh1GaSYjqYwVA58LMd3sH0I9iB1
-	 B4bxKA7n7IZ/0HYdY1LQyOkv+97Gps1oXJaF0L5pcvHjfVDUXmOuH0ncx2M+0zYPufi5V
-	 AUMUIsceNwsx2wxGgR0rGuhtGGb2qYieqVopq4qTQxIlMRytI66riDVO9KaLQ/jYVMA==
+	t=1795040953;
+	b=3i1R11lteHexZj9ssrDh/GLHJ5bnjGeFzGaGHZZvq6JYpUycnf0tr8Afo3B8Vzllc4L7
+	 FuTKYjsjaMeLHUdh/FcaWhWqOp9+dChgeM5u8OHanZVdtv32KEfO9n6hl3CCT6E74AG3U
+	 xjjGaWvaRt/M1ZPLAwqccryVnPqBNnSDvy0ez4q+TbHjrcTWRliG9Kn1poLPqHMI77PpL
+	 o1ey0TOo/s2DvwD5v9Y4Gj9UaDlYzv4OY7YIKRBBmI9Q3JU6AHxlLe6IjMoNzj0IjUfPv
+	 zXiQDcNB4rJ73FJd2cJItNpnbjxQbrhSUCPwwQ/+GNFwDZQWbYVI6HkQucjGsqNfbug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040950;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040953;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9g0q3hYsBFtTNJ/jneHHFQMbkR4czxWiBBcUpFdgnuY=;
-	b=X+Q7uslz47YKCqSaWDAvygnmcKlnpbfDTacBgNWK5fREknJmjEX1k3fkQc9yihNDTDdQ
-	 FRY6sJpkTFUCnbyHb73z5Vv6L1hNnbUpZe8y9rlohtMtVzFx/AIT8cJs1TXfWXJipfcH8
-	 SNhGvKHXzd3toLFlG5eOQqEnZM9Ri8rjGPBAYQ9YzvDyvYETdAsZ36NCJ7+NgL6Tn3dhe
-	 cNDXym1ALcZ8MK38r5F5iH7sWqSu6HmFttbMSWnEBytiGUGfgwDlcNdOFIunT4DkjmKHf
-	 IfVaKkLDySXGez3ex2iz3tbnW0GLmFNUA0DiH3vUBIwo5c8BgC82PKrqY0OHXcXMzZg==
+	bh=G02aMgNo8Na5iAbEmbWZQP1Rhcm86CKQe/ZYczQiEko=;
+	b=evsC4OUVm6/M7aYAg1o2RphH4b7glaxZI2GepJQr12zt81Ug2MNjYahLZQD33fh1fOF2
+	 q34bc7ScF3R4UQmDQTEcqr/jI2TZ3/e7DDaG6oK5joQ3pjTg347/8sCTcloTCT43zluRD
+	 Melrp1u1OI7NcOdKYxXibGbh3IlQhiloSEpui/5yU7cpdEVcuFi0/bUGrHMjrgSGra8Hi
+	 9y6WXJR4h0mRNoB9m0kToumYpaw+n0mZLlPLbT6LZVnKY3kbId/h350kI6HI6GDW0pxXo
+	 tlWH9zjL0qDdvAR31p25IPqXTYFLf5J1eJEjYgzd9fZWW9o/9+h+GCQsk3hKpEMcI3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WKPnq4Cx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gqoCxuEA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DAB606A31C;
-	Wed, 18 Nov 2026 22:29:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D4B606A325;
+	Wed, 18 Nov 2026 22:29:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WKPnq4Cx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 265E51F000C4;
-	Wed, 18 Nov 2026 22:29:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gqoCxuEA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C6F31F000C4;
+	Wed, 18 Nov 2026 22:29:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040950;
-	bh=9g0q3hYsBFtTNJ/jneHHFQMbkR4czxWiBBcUpFdgnuY=;
+	s=korg; t=1795040953;
+	bh=G02aMgNo8Na5iAbEmbWZQP1Rhcm86CKQe/ZYczQiEko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WKPnq4CxWIWj16JFrW/rzNBMqi6oqMzIxOc03v7WdIbLBTx23ulSWEbSpOvkMITXV
-	 OSqbAjt/9PKZKyIb/E9pb2GweKA7PRXE1LwFg/BrVybo82dHwq7JU95e2k37geiAz3
-	 dEf++zUnhR33yu+u+gNp/Waro3ZYyMeyjqJyt05g=
+	b=gqoCxuEAIU8FT8lBG1GOjQYkAKIGGN64kFWIzQlv6RxRIcesOHHCHZS4CPWD0pS8o
+	 VYYqF7gdp+kZ47Le8ymd4zmd8Dz41Oy/5khwC4a4xWgiDcKgaGZHsfwM/viw7Hp9E+
+	 Fuw3PFKe3bjnhf/ghShgTDmB4d+DRORTtGWvnqlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tobias Schramm <t.schramm@manjaro.org>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Jonas Rebmann <jre@pengutronix.de>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+c388db0347b7fc88fa7a@syzkaller.appspotmail.com,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2640/3318] spi: spi-sun4i: sun4i_spi_handler(): fix race condition between transfer completion and RX FIFO interrupt
-Date: Wed, 18 Nov 2026 15:54:22 +0100
-Message-ID: <20261118150440.272985966@linuxfoundation.org>
+Subject: [PATCH 6.6 2641/3318] nilfs2: fix link count underflow when removing corrupted directory
+Date: Wed, 18 Nov 2026 15:54:23 +0100
+Message-ID: <20261118150440.302241583@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,126 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit b8f09251da7871fbb9c62bd83516af422641d816 ]
+[ Upstream commit 814f5a53b4724798795b15690ff3d1c1d9ac1eb6 ]
 
-In commit 196737912da5 ("spi: sun4i: Allow transfers larger than FIFO
-size"), support for transfers larger than the FIFO size was added.
+When removing an empty directory with a corrupted link count (e.g.,
+i_nlink is 1 due to filesystem corruption), nilfs_rmdir() calls
+drop_nlink() via nilfs_do_unlink() and then calls drop_nlink() again
+on the directory inode.  This second call causes an underflow of
+i_nlink, triggering a kernel WARNING in drop_nlink().
 
-This commit moves the draining of the RX-FIFO from
-sun4i_spi_transfer_one() (after completion of the transfer) to the IRQ
-handler when the IRQ "transfer complete" is handled. In addition, the
-IRQ "RX-FIFO 3/4 full" is activated for all transfers.
+Fix this issue by using clear_nlink() instead of drop_nlink() to
+finalize the link count reset for the target directory in nilfs_rmdir().
+Additionally, log a warning message when i_nlink is not 2 before
+removing an empty directory to notify about the link count inconsistency.
 
-However, this does not take into account that the RX-IRQ for transfers
-that exceed 3/4 of the FIFO size is still pending after the IRQ
-"transfer complete" has been processed. All interrupt sources are only
-deactivated after the wait_for_completion_timeout() in
-sun4i_spi_transfer_one().
-
-This opens a race window for "RX-FIFO 3/4 full" interrupts to come.
-The sequence is as follows:
-
-| sun4i_spi_transfer_one()
-|     sun4i_spi_fill_fifo()       // fill TX-FIFO with 48 bytes
-|     // enable RX-FIFO 3/4 full IRQ
-|     wait_for_completion_timeout();
-|
-| // SPI controller transfers 48 bytes
-| // SPI controller issues "transfer complete" and "RX-FIFO 3/4 full" IRQ
-|
-| // IRQ handler start
-|     sun4i_spi_handler()
-|         // ACK "transfer complete" IRQ
-|         sun4i_spi_drain_fifo();
-|         complete();                         ----.
-|         return IRQ_HANDLED;                      \
-| // IRQ handler end                                \__ race
-|                                                   /   window
-|     // wait_for_completion_timeout() continues   /
-|     // disable all IRQ sources              ----'
-
-Avoid the race condition by disabling all interrupts when handling the
-"transfer complete" IRQ and before calling complete(). Also move the
-draining of the RX-FIFO back into sun4i_spi_transfer_one() where it
-was before commit 196737912da5 ("spi: sun4i: Allow transfers larger than
-FIFO size").
-
-This has the added benefit of spending a little less time in the IRQ
-handler.
-
-With all interrupts disabled once the transfer completed, omit the
-clearing of the Transfer Complete bit in sun4i_spi_handler. This is safe
-because sun4i_spi_transfer_one() takes care of this before enabling any
-interrupts again.
-
-Cc: Tobias Schramm <t.schramm@manjaro.org>
-Fixes: 196737912da5 ("spi: sun4i: Allow transfers larger than FIFO size")
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Jonas Rebmann <jre@pengutronix.de>
-Link: https://patch.msgid.link/20260914-spi-sun4i-fixes-v3-4-9fe919d5cecf@pengutronix.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: syzbot+c388db0347b7fc88fa7a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c388db0347b7fc88fa7a
+Fixes: d25006523d0b ("nilfs2: pathname operations")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-sun4i.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ fs/nilfs2/namei.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-sun4i.c b/drivers/spi/spi-sun4i.c
-index 59e8a82cd8b64..ad0200d8dce8c 100644
---- a/drivers/spi/spi-sun4i.c
-+++ b/drivers/spi/spi-sun4i.c
-@@ -82,6 +82,8 @@ struct sun4i_spi {
+diff --git a/fs/nilfs2/namei.c b/fs/nilfs2/namei.c
+index 43f01fe556fe1..1a84f8587f422 100644
+--- a/fs/nilfs2/namei.c
++++ b/fs/nilfs2/namei.c
+@@ -341,10 +341,16 @@ static int nilfs_rmdir(struct inode *dir, struct dentry *dentry)
  
- 	struct completion	done;
- 
-+	int			irq;
+ 	err = -ENOTEMPTY;
+ 	if (nilfs_empty_dir(inode)) {
++		if (unlikely(inode->i_nlink != 2))
++			nilfs_warn(dir->i_sb,
++				"inconsistent empty directory link count %u (ino=%llu)",
++				inode->i_nlink,
++				(unsigned long long)inode->i_ino);
 +
- 	const u8		*tx_buf;
- 	u8			*rx_buf;
- 	int			len;
-@@ -333,6 +335,7 @@ static int sun4i_spi_transfer_one(struct spi_controller *host,
- 	start = jiffies;
- 	time_left = wait_for_completion_timeout(&sspi->done,
- 						msecs_to_jiffies(tx_time));
-+
- 	end = jiffies;
- 	if (!time_left) {
- 		dev_warn(&host->dev,
-@@ -340,12 +343,11 @@ static int sun4i_spi_transfer_one(struct spi_controller *host,
- 			 dev_name(&spi->dev), tfr->len, tfr->speed_hz,
- 			 jiffies_to_msecs(end - start), tx_time);
- 		ret = -ETIMEDOUT;
--		goto out;
-+		sun4i_spi_write(sspi, SUN4I_INT_CTL_REG, 0);
-+		synchronize_irq(sspi->irq);
- 	}
- 
--
--out:
--	sun4i_spi_write(sspi, SUN4I_INT_CTL_REG, 0);
-+	sun4i_spi_drain_fifo(sspi, SUN4I_FIFO_DEPTH);
- 
- 	return ret;
- }
-@@ -357,8 +359,7 @@ static irqreturn_t sun4i_spi_handler(int irq, void *dev_id)
- 
- 	/* Transfer complete */
- 	if (status & SUN4I_INT_CTL_TC) {
--		sun4i_spi_write(sspi, SUN4I_INT_STA_REG, SUN4I_INT_CTL_TC);
--		sun4i_spi_drain_fifo(sspi, SUN4I_FIFO_DEPTH);
-+		sun4i_spi_write(sspi, SUN4I_INT_CTL_REG, 0);
- 		complete(&sspi->done);
- 		return IRQ_HANDLED;
- 	}
-@@ -462,6 +463,7 @@ static int sun4i_spi_probe(struct platform_device *pdev)
- 		goto err_free_host;
- 	}
- 
-+	sspi->irq = irq;
- 	sspi->host = host;
- 	host->max_speed_hz = 100 * 1000 * 1000;
- 	host->min_speed_hz = 3 * 1000;
+ 		err = nilfs_do_unlink(dir, dentry);
+ 		if (!err) {
+ 			inode->i_size = 0;
+-			drop_nlink(inode);
++			clear_nlink(inode);
+ 			nilfs_mark_inode_dirty(inode);
+ 			drop_nlink(dir);
+ 			nilfs_mark_inode_dirty(dir);
 -- 
 2.53.0
 
