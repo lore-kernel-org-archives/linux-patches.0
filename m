@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060091;
-	b=QhDhTKAG2PJH+YZozmEdMe/cQZa/A2LqjDAp+7XcZFEcwVJLuWmpHYTmSEOm2jOgwCYB
-	 WFy7yxunmc9VJzRs4Je46m2QOfjR8JWdqka7s8WVhKZgGzCZ8wfFwgfRf7pbBbrOqObGY
-	 VnnVlW0/xSq/7gF2oKSpr2kUMmMzTSjdqN62vE9jyC0njiA6pPfihJjLWwBWuAc+GQhj5
-	 YeWe9BP6gEatlZp7cE72VSRP74c4DECj1unn77leDkxPszFjqdMO7PBNyHlCp+ZwOowGm
-	 6vXG0pcNYUw9zE4j82nRSyOQYdWQXdDwUFL+tP69UvkbfrYk02AcjW68kDd4zAHg4Qg==
+	t=1795060094;
+	b=w46UOwpygmmyFJ6OiDODtXi30SQOBYhAGjCvf5x8m+XSGR1tOzpcmiy4ngT9de/uUOZx
+	 b2FeyXOGmJHltv5g29nHu5f+akXNITBa+gZ5T3x6cZWA7kyPPPFzmTTAZJhnYpuZCtQXI
+	 AQ/kqEfgG58qHKgYJTe8epW5sAhGjnbtg5MaX99YnddvCVhiHUavDKPzDSr924H9ajsm3
+	 q+MgrQEdXIxIsRVXLLp0gjvSbKXb6UKZYcz3uxgtrGPsZGSUQW3FOpU5nh4rxbTbNxjxd
+	 eTfeZBRDQBIVNSyZlmbdo9R9N+Jf334iWxkDgw4lqN0SapeRqbAQaVt0I8e8SyIOOTg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060091;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060094;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=E414nUUn4lm1Qy5BRZeoEYA2Gv0Z51cnNTgJCe13GPY=;
-	b=2+VnHmeMs0CaEdfv721E4ZTQa29ieXKu61YeYuJiD0fhz3VZFEzZ+dfCKxgkr2yPZoB7
-	 rLL6gw1OD1OUz6n9BJ3CiMwsPYj6bU6XF+7ChHUXqvOCRLfJKadx7/4cBgvUpNBAYb6z0
-	 bqy9E/eIwoBTytAPeuh/CwTAUxYyV20l1n6QuigQfST9OtbxTJxBqq9bwAf7LzboBIb2Z
-	 /B4a2u3vBD8F5SNZ/1y2cJlfjbdbLl+4S7a3EUDElcvSfRmiKn1PgmO5RKm36/mrt+Qhk
-	 JbA/bINQWRF9rTbquJ0NcUAdIug+S72R1/LntiKziNOt/9aSSZbrGlBOSmPTavDEbrw==
+	bh=VsrOjJ1IuheNdarLTse3UWmxStJj/bkdgU9ZkzvMHFI=;
+	b=jCXnUfcfPZrdEmOox+9eQOBYvGX26ShuuGHZR5+si5d2ZtkM0rr/WFFyK+vPr46xH9FH
+	 nWEaggBQ+hc41yXTNqKI0fJbEa5e/MXwzFg9nKYDgMTiGXdOwDBJUifTT3uCx6B3+EiYw
+	 LHiganWMzyQDdjjoco+xwT2cbFq5uzfZhfcPtjIYaHuWWf4uBp1qL3svwazZ6shzZeu0P
+	 k1I9tPG1q9qx8JRaSW3v+XmDfhq8riYdRjdy5G3Emq5HF+0zAJOUL8PaKELwQXYE1GJch
+	 yOMrWTE17CrUDEuV3fvcJeamAgbqBHhgpWXgBBhvpnuxZpEIntwL3gAD/8cun5mN0gw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fy7oIgD2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=da0tGDeI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4654606A32C;
-	Thu, 19 Nov 2026 03:48:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A45606A32A;
+	Thu, 19 Nov 2026 03:48:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fy7oIgD2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 365BD1F000C4;
-	Thu, 19 Nov 2026 03:48:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=da0tGDeI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1299E1F000C6;
+	Thu, 19 Nov 2026 03:48:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060091;
-	bh=E414nUUn4lm1Qy5BRZeoEYA2Gv0Z51cnNTgJCe13GPY=;
+	s=korg; t=1795060094;
+	bh=VsrOjJ1IuheNdarLTse3UWmxStJj/bkdgU9ZkzvMHFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fy7oIgD2ubN73hkfhmQvSZ8nLdXt86TRIsJqZuGEBZmiClO6en0hXtgOLItMuCFyd
-	 g+oOvBJ+1iBRCCMCJ2VDLIRBJbepB6QU050Mgxl1A5B6RdsXXyj/DQlqxqx25SSign
-	 S50z4sXakbrKqOrUZRkTeUAx4G6oWCTQMyi0ZA/0=
+	b=da0tGDeIIw+vzJbFR+bpvAxsBkotSZYhpXthXZ49KtQEzYKJ2axq5FbYpVRY8uO3q
+	 fY/GMgjkZ+JG3x1zZqiJmYIhekl39V4WRxemTi92aa1TAGerxAYvwLREZRNCA6Jq8W
+	 w9OWF1t4zzxustdUjFgRLOBMRUr87kXJGNk45uok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Francis Perron <francis@akrites.dev>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Cen Zhang (Microsoft)" <cenzhang@linux.microsoft.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1076/1848] mm/userfaultfd: compare exact registration modes before skipping
-Date: Wed, 18 Nov 2026 15:51:54 +0100
-Message-ID: <20261118150003.145262218@linuxfoundation.org>
+Subject: [PATCH 5.10 1077/1848] apparmor: fix query_data() output overlapping the lookup key
+Date: Wed, 18 Nov 2026 15:51:55 +0100
+Message-ID: <20261118150003.254628680@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,44 +70,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price <gourry@gourry.net>
+From: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
 
-[ Upstream commit 05f64f211a25f7d9771d4fde109aad97174a1cf3 ]
+[ Upstream commit d30844001360a403a511cf24fc75ecaa6a7a7544 ]
 
-Changing registration from MISSING|WP to WP returns success but leaves
-MISSING enabled. The no-op check sees that WP is already set and skips
-the update, so later accesses to missing pages still wait for userspace.
+In query_data(), buf and query point into the same multi_transaction
+buffer: buf at the start, query a few bytes in, and the lookup key
+right after the label string that query points to. Reusing the buffer
+is by design and is safe as long as the query is fully parsed before
+buf is written to, but the key is not: it is dereferenced on every
+iteration of label_for_each_confined(), after output has already been
+written. So when the label has more than one profile with a data
+table, the data of the first matching profile is written to buf while
+the key is still needed, and overwrites it if the data is large enough.
+The later lookups then run on a corrupted key. Besides, if the data has
+no NUL byte from the key's position to the end of the allocation,
+strhash() -> strlen() -> jhash() reads past the 4096-byte slab object,
+triggering an out-of-bound read:
 
-Skip the update only when the current and requested UFFD modes match
-exactly.
+  BUG: KASAN: slab-out-of-bounds in jhash+0x595/0x5e0
+  Read of size 1 at addr ff1100001159d000 by task exploit/155
+  CPU: 0 UID: 1000 PID: 155 Comm: exploit Not tainted 7.3.0-rc7 #1
+  Call Trace:
+   jhash+0x595/0x5e0
+   aa_write_access+0x880/0x1400
+   vfs_write+0x26f/0xd20
+   ksys_write+0x115/0x210
 
-Fixes: 63b2d4174c4a ("userfaultfd: wp: add the writeprotect API to userfaultfd ioctl")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
-[ david: apply fixup from Lorenzo ]
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-26-d6437171ecc3@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: Replaced newer VMA bitmap helpers with an inline integer flag comparison using the VM_UFFD_MISSING | VM_UFFD_WP mask. ]
+Writing to the .access file is unprivileged (0666), but triggering this
+requires loaded profiles that carry a data table, which needs
+CAP_MAC_ADMIN and is not the case on default distribution policies.
+
+Fix by copying the key with kstrdup() before writing any output to buf,
+so the key stays valid across all loop iterations regardless of what
+gets written to the overlapping buffer.
+
+Fixes: 317d9a054e1c ("apparmor: update query interface to support label queries")
+Cc: stable@vger.kernel.org # v4.13+
+Cc: Francis Perron <francis@akrites.dev>
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
+[ sashal: adjusted context for label critical-section helpers that do not take needput arguments ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/userfaultfd.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ security/apparmor/apparmorfs.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/fs/userfaultfd.c b/fs/userfaultfd.c
-index 21c32d941f4a9..23230321c7756 100644
---- a/fs/userfaultfd.c
-+++ b/fs/userfaultfd.c
-@@ -1409,7 +1409,8 @@ static int userfaultfd_register(struct userfaultfd_ctx *ctx,
- 		 * userfaultfd and with the right tracking mode too.
- 		 */
- 		if (vma->vm_userfaultfd_ctx.ctx == ctx &&
--		    (vma->vm_flags & vm_flags) == vm_flags)
-+		    (vma->vm_flags & (VM_UFFD_MISSING | VM_UFFD_WP)) ==
-+		    vm_flags)
- 			goto skip;
+diff --git a/security/apparmor/apparmorfs.c b/security/apparmor/apparmorfs.c
+index c957cd6188084..81580a2db2d12 100644
+--- a/security/apparmor/apparmorfs.c
++++ b/security/apparmor/apparmorfs.c
+@@ -739,7 +739,7 @@ static void profile_query_cb(struct aa_profile *profile, struct aa_perms *perms,
+ static ssize_t query_data(char *buf, size_t buf_len,
+ 			  char *query, size_t query_len)
+ {
+-	char *out;
++	char *out, *keydup;
+ 	const char *key;
+ 	struct label_it i;
+ 	struct aa_label *label, *curr;
+@@ -760,11 +760,18 @@ static ssize_t query_data(char *buf, size_t buf_len,
+ 	if (buf_len < sizeof(bytes) + sizeof(blocks))
+ 		return -EINVAL; /* not enough space */
  
- 		if (vma->vm_start > start)
++	/* buf overlaps query, keep a copy of the key for the later lookups */
++	keydup = kstrdup(key, GFP_KERNEL);
++	if (!keydup)
++		return -ENOMEM;
++
+ 	curr = begin_current_label_crit_section();
+ 	label = aa_label_parse(curr, query, GFP_KERNEL, false, false);
+ 	end_current_label_crit_section(curr);
+-	if (IS_ERR(label))
++	if (IS_ERR(label)) {
++		kfree(keydup);
+ 		return PTR_ERR(label);
++	}
+ 
+ 	/* We are going to leave space for two numbers. The first is the total
+ 	 * number of bytes we are writing after the first number. This is so
+@@ -782,13 +789,14 @@ static ssize_t query_data(char *buf, size_t buf_len,
+ 		if (!profile->data)
+ 			continue;
+ 
+-		data = rhashtable_lookup_fast(profile->data, &key,
++		data = rhashtable_lookup_fast(profile->data, &keydup,
+ 					      profile->data->p);
+ 
+ 		if (data) {
+ 			if (out + sizeof(outle32) + data->size > buf +
+ 			    buf_len) {
+ 				aa_put_label(label);
++				kfree(keydup);
+ 				return -EINVAL; /* not enough space */
+ 			}
+ 			outle32 = __cpu_to_le32(data->size);
+@@ -800,6 +808,7 @@ static ssize_t query_data(char *buf, size_t buf_len,
+ 		}
+ 	}
+ 	aa_put_label(label);
++	kfree(keydup);
+ 
+ 	outle32 = __cpu_to_le32(out - buf - sizeof(bytes));
+ 	memcpy(buf, &outle32, sizeof(outle32));
 -- 
 2.53.0
 
