@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039128;
-	b=Lxd1AzapCfyxNHN8wUPCjSebpD8x+TM08OoDJNNpzREVrOZUriZ2ZSR4P96MXY0jO16F
-	 cvo52odM0u0jIa/b/62Vj8VxNu8ptTVA+sJICaOg/MXI17zXLzewmRn/I19wPg4jjdK9d
-	 q+34DIxWe+IsPYmrogQgXqhn+xSA4s3O5GjoAR+XTkJbirGr7fXtOMgd7O/so9xCjNgh/
-	 knuxyQZveF8Rd1jCyadGO0utHd59wszseQIBIJpMOri8ndmG5WbmvnL9T/I6F9ZmnWq+G
-	 kEON8cBerMVZjQVCKUTXPjogoQ9UrfKgjuBoorcuHDRaq3OxUou6aOaL6Oh0L1gBYDQ==
+	t=1795039130;
+	b=D6uZ+qtiITtMEd9WZkdT7b4JkHlX9To8reqVysAk0ghBJHAjnvDbHouR96H3HE70jO0C
+	 3M5MmSBe1lBDGsxZH2ZaQ+YNiAw8M8XAxjUe9f+wGqZeVQYg3+YmS6wGGTA8jtzY/U4J4
+	 8GH+YeLD4tVPIzVvQbxhSB9Y64cSUqdQEJClSYnLJQSpHrPUwcOtew1mj2td3TtUkA3kh
+	 jplDhzhKZ1i9hgEYAuAU1zUGKEGtvdAtMeY3PXVNlmBteJRRbfSuUK2Cvd12TgxwIVdwE
+	 Z1Fh5yDsn+eRl4oIvK73BC75cGxrRCUogeXYpE+SVWbps2A7wwrRW4rxng39O6LQHiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039128;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039130;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=88EuMMZOYH+5Y2ZkGyhdhAkAree3r6Y3VDoky3pD3NA=;
-	b=k91EBk4u6wPEUYgjcU0wEqZKAO+q4rb5asCOTttyfUgIHRa6YwF5VriwZkgdMZj3qzwd
-	 5k6C+MccF5fVtWlNWUFttV1MnwgnLjWCKbqHPUlS02IZCC+s0NfcGCU0qcDe2UGPcigi2
-	 PYsRIbU2KCB93qLU9sXHA7QU7UVgyJKvlxFAg6S37duLbKcQnsDk5iSgfvkpZhPwq6Bx/
-	 87Qpf0bm/N3QQUJrzox3sFPC5nTuaZ19YZK6WzJCdHveNXSKFZxeyitpUBGVAjb/e7aLE
-	 VxM/Qbua/gC6le2acFUVq3rUEoqzWXcxmMjLc7dItCykXB3BCNH4qLQXsy0V6xMWlcg==
+	bh=ton9pE9600hGONO7+rTa2Kh7TAVOyog00UcW4MWebXU=;
+	b=FZ8F9iC1gBX0rJ2ix1O6kglR9F+u6RzLi+pWruVRQlTMx2Sn6wJxoY3q4FEcuSm1ctuG
+	 RuxVVoyi82Q0Q6ID4jzixXn/7vOTnWDYITrWzITdPRQjy+Rzg6fX4NfIJE1INRh3/5T9r
+	 Tzo/vz/FFf5LST5etrCyvdLvQSMsf/AvLV8H7v8KTKFEgGV0b1lnqPykuB6ZSID7F9l7v
+	 no17Vup03KqYwv9rB3pypiLQweUJ83G+vkvcGJJBPy44WTPafLpIWLQt+8oxJz1yWCqA7
+	 Ye3drsacvX5PTm3QHY0S4nff8OblLq4SaHxixn55BSx2OZwfx6510x2x6q+kTkQY0MQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iq4XeOxo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=010bfDqZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C7BB606A31C;
-	Wed, 18 Nov 2026 21:58:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03B1606A32A;
+	Wed, 18 Nov 2026 21:58:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iq4XeOxo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D4C41F000C4;
-	Wed, 18 Nov 2026 21:58:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=010bfDqZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 258C51F000C4;
+	Wed, 18 Nov 2026 21:58:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039128;
-	bh=88EuMMZOYH+5Y2ZkGyhdhAkAree3r6Y3VDoky3pD3NA=;
+	s=korg; t=1795039130;
+	bh=ton9pE9600hGONO7+rTa2Kh7TAVOyog00UcW4MWebXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Iq4XeOxoOKAVo8BdZ8UpVwjpytXcOYYDGGx4/CoqgMJNzuF/Ke8KNg7oMm5wqlQQY
-	 ep4fJDedk6Y6fvQIHVv0dfrlH/vFcdp1SWMV4iUPuasMpFOu6rCmGgKDJsyr1OMk/a
-	 sfkRgiV2YeRDS8wYk3LW1SX3icnH35Rqpkfsox/4=
+	b=010bfDqZqhJA+rpXj1x+wY3Ne3w9EnM241CNrSxY3+wzLJ88i9WFLRpqxVxbVevKZ
+	 JMaTibjtFmyUbUpmTaZBNDJph2uNV/7HXzzrkjnj7nODlAZBhF8fqMZlhssGua1IGo
+	 7yhBEj8/Dy/uEwFIoYICaAEidNsu+dd20M+PzR9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1989/3318] spi: sh-msiof: propagate setup runtime-PM errors
-Date: Wed, 18 Nov 2026 15:43:31 +0100
-Message-ID: <20261118150421.734148793@linuxfoundation.org>
+Subject: [PATCH 6.6 1963/3318] mm: document mmu_notifier_invalidate_range_start_nonblock()
+Date: Wed, 18 Nov 2026 15:43:05 +0100
+Message-ID: <20261118150420.977121930@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,48 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit 152867998da9f331d6235d76aae1c7e1650708a9 ]
+[ Upstream commit 7ced098fcfe596feab3cea4f40128b0119c7bf1a ]
 
-sh_msiof_spi_setup() ignores pm_runtime_get_sync() before programming
-native chip-select registers and marking the configuration initialized.
+Document what mmu_notifier_invalidate_range_start_nonblock() is for.  Also
+add a __must_check annotation to signal that callers must bail out if a
+notifier vetoes the operation.
 
-Use the checked runtime-PM helper and return failure before register
-access.
-
-Fixes: 7ff0b53c4051 ("spi: sh-msiof: Avoid writing to registers from spi_master.setup()")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260830140133.24156-1-pengpeng@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lkml.kernel.org/r/20230918201832.265108-1-jannh@google.com
+Signed-off-by: Jann Horn <jannh@google.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Alistair Popple <apopple@nvidia.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 6d65925777ec ("mm/mmu_notifier: finish non-blocking interval invalidation on error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-sh-msiof.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/linux/mmu_notifier.h | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-sh-msiof.c b/drivers/spi/spi-sh-msiof.c
-index ea94891023da8..e848f40786801 100644
---- a/drivers/spi/spi-sh-msiof.c
-+++ b/drivers/spi/spi-sh-msiof.c
-@@ -558,6 +558,7 @@ static int sh_msiof_spi_setup(struct spi_device *spi)
- 	struct sh_msiof_spi_priv *p =
- 		spi_controller_get_devdata(spi->controller);
- 	u32 clr, set, tmp;
-+	int ret;
+diff --git a/include/linux/mmu_notifier.h b/include/linux/mmu_notifier.h
+index 6e3c857606f19..f349e08a9dfe1 100644
+--- a/include/linux/mmu_notifier.h
++++ b/include/linux/mmu_notifier.h
+@@ -459,7 +459,14 @@ mmu_notifier_invalidate_range_start(struct mmu_notifier_range *range)
+ 	lock_map_release(&__mmu_notifier_invalidate_range_start_map);
+ }
  
- 	if (spi_get_csgpiod(spi, 0) || spi_controller_is_target(p->ctlr))
- 		return 0;
-@@ -573,7 +574,9 @@ static int sh_msiof_spi_setup(struct spi_device *spi)
- 		clr |= SIMDR1_SYNCAC;
- 	else
- 		set |= SIMDR1_SYNCAC;
--	pm_runtime_get_sync(&p->pdev->dev);
-+	ret = pm_runtime_resume_and_get(&p->pdev->dev);
-+	if (ret < 0)
-+		return ret;
- 	tmp = sh_msiof_read(p, SITMDR1) & ~clr;
- 	sh_msiof_write(p, SITMDR1, tmp | set | SIMDR1_TRMD | SITMDR1_PCON);
- 	tmp = sh_msiof_read(p, SIRMDR1) & ~clr;
+-static inline int
++/*
++ * This version of mmu_notifier_invalidate_range_start() avoids blocking, but it
++ * can return an error if a notifier can't proceed without blocking, in which
++ * case you're not allowed to modify PTEs in the specified range.
++ *
++ * This is mainly intended for OOM handling.
++ */
++static inline int __must_check
+ mmu_notifier_invalidate_range_start_nonblock(struct mmu_notifier_range *range)
+ {
+ 	int ret = 0;
 -- 
 2.53.0
 
