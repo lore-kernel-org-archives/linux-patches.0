@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038924;
-	b=GzrhvyECg5YzJPfeKoI6Jq3pjSs/DWvB5XeesNGqVvell9tHZ3gR7f7G7ZXbptSkcolM
-	 YrfhiReJJ4yGOnHUcXjlnLpHxafBADBOsSfqvLCp3TrsV8EBj91RIsVW1QeF2t8JDgDXT
-	 RTW1l0LMuFbfONoSYZEdez+78Lq2zyYX1ff1ztaD9SqSxcNaHV02XSbNzcazmPbb66fc0
-	 IZ3aWrRGW7u1cezpxIbu6j3Viju1TOuJjLpKXk+kQNTgYATxaKDissgWouKh9E0meBK11
-	 2TiZVhG/PiEw5J5skJf9ZAWJdAgG6dpDmUQUqnLV6OsZ8gliVm7X/MBCWXORRBAzbDg==
+	t=1795038927;
+	b=C/2h3MrRwEM1LbRyGJncuK3WjyhrdFd0lpFsNjrMOSHPnamDDrcq2DEoFdaMF0DGrPEv
+	 GUrvsWNDM3qcFFB2xHyiJ5zsb4XgMP8LOp2afCPk5XIbot4bCSIpnxdz8NQAaM5IJElz0
+	 Tim2O4ImSaoKlMPkp4Co3kYZsHIHoy/RWQFr+TO1zAnP/EgjOs4b2UM00BKVH0UGqCYiM
+	 MMSaM+cM5ppyOqmkRIRYW3GShTf24n6moH2Qi2hOlQw+tUYfmhPDID9ckDbLgb3VBWnm+
+	 323ge+MJspvMK5trflK6BzGMXC+TSLauY4dMBSCKEKk6B8ZAvnezlGMI7YZmFNWwpTA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038924;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038927;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZgQVQAlbQMjHVpaoxtU/ZaWlDV04TxuNv7DHwfcp2do=;
-	b=S87C9h6g4jLVXJyoicyIEvf/74QYnbJmu8QPRG5jdveoqbd2jznCKKT4elKYrHAS5iaw
-	 +r2s52dyrCBFRDdBdKfs6gJX9xQT2dKIzWU7a4CJ+sriBRGrxDiFc9hVjR9hC/Xaeku/A
-	 3wB4MI+Uv5xAzQAsWh4yS+DEIO59K/I5q0FJQ23UCa7E3Mz2OwNUpqcZ6zFO/36dWF5Fh
-	 G3SsXBYij9zJ7goQNnDhQXV+Fg4b7BSZ74MgDHKegQ0KB0jriVCycViN4J04dd/57zjXQ
-	 jWxbCewaNcW+wKPmj8enF6A2FwgNf/qOw9FOUPrPGo7KFvtj+iBgLqyWDp0P6o3ZPRQ==
+	bh=gvvSS1qekZp2BQU2Ev7ZtxqU8in4LreTE5Jp4GKqc24=;
+	b=FfARQKAOvO+UtvNHPn14BidE//XjveSxlxlnzcRTZOcs1l/KnkmruZPStKXrhxbggO9r
+	 4bS+gb+zzRuTA5NJedAoYpfU+GPDcrZxDmUh0w9xg1fRyRMclp2dA/iq8gwWNab+qfsRQ
+	 GqGj+oXGC5PJieP8lrosgK9qd2ny15s3GqaxthM4I8B+XDj/FDIgoVZuNOxSbf4CtNQBw
+	 2pbJvNuv/DXVfX3GRY2qvM3fdFX2JB0nOJz/RSiKGchgN7tMHJqqDa2q3OVkTItolAeRA
+	 VOXSAGQ5t5hJW7YsVX9eoRUd9TRHhVbt3eCaxlTaMrTwKpvLR/0ttfOKqGmRrjP54ag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=09TTy6eu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dg8Fb36L;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E079606A320;
-	Wed, 18 Nov 2026 21:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21FBE606A325;
+	Wed, 18 Nov 2026 21:55:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=09TTy6eu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76B9B1F000C4;
-	Wed, 18 Nov 2026 21:55:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dg8Fb36L
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E1941F000C4;
+	Wed, 18 Nov 2026 21:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038924;
-	bh=ZgQVQAlbQMjHVpaoxtU/ZaWlDV04TxuNv7DHwfcp2do=;
+	s=korg; t=1795038926;
+	bh=gvvSS1qekZp2BQU2Ev7ZtxqU8in4LreTE5Jp4GKqc24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=09TTy6eu14I3nVgkovsZd8/3bKGT5XS3yhIdVJqbLI77vOYJ8O4WloI1tnNQ8jVBj
-	 V0TXMzM0lbNoyYlRU2nIkjcbqDXKZKxuPmgkLHrfNL/1emA1TQgKGtoyYtx8Q0ndGe
-	 F9w4igF/iCehZoR0+SKgPXHkrLceU5eCQQJePNpM=
+	b=dg8Fb36LnYEyjQXNi4ADM4dLDZGrbaHX3dOt1VoPJEiu7DogtSML9WXTgQI5jlalW
+	 1mMiUgbHnAzC14S9x9+568gPrRPsJG9S0NV66WjG5aNQFDSEgmREkHYJR0q926p4TI
+	 jWVEdRsk28kUhx1XjQOP/aC/fndZEK71+ab9Xm7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Bridges <icb@fastmail.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1914/3318] ksmbd: do not read past the DACL in the access denied debug message
-Date: Wed, 18 Nov 2026 15:42:16 +0100
-Message-ID: <20261118150419.425948579@linuxfoundation.org>
+Subject: [PATCH 6.6 1876/3318] mm/userfaultfd: write-lock the VMA before waking waiters when unregistering
+Date: Wed, 18 Nov 2026 15:41:38 +0100
+Message-ID: <20261118150418.259308299@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,46 +72,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Bridges <icb@fastmail.org>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit 8296a64df5448548f410fb246c1d88a93609602b ]
+[ Upstream commit 35f7ecd55ce7e51cb6d5ef49e6dd51f3c80f61e4 ]
 
-When smb_check_perm_dacl() falls back to the POSIX ACL and then denies
-the request, its debug message prints the access mask of the ACE that
-the second DACL walk stopped at. On that path the walk ran to the end
-of the DACL, so the pointer is one past the last ACE. If the DACL is
-the last part of the stored security descriptor, the message reads 4
-bytes past the buffer, and KASAN reports a slab-out-of-bounds read in
-smb_check_perm_dacl().
+userfaultfd_unregister() wakes pending missing faults before clearing the
+VMA's userfaultfd registration. With per-VMA fault locking, holding
+mmap_lock for write does not prevent another fault from queuing after
+the wakeup but before userfaultfd_clear_vma() write-locks the VMA. That
+waiter can then remain asleep indefinitely.
 
-Print the requested and allowed masks instead. They are what the check
-compares.
+Call vma_start_write() before waking waiters. Existing fault handlers
+queue themselves before dropping the VMA read lock, and new readers are
+excluded until mmap_write_unlock().
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Fixes: 29a22b9e08d7 ("mm: handle userfaults under VMA lock")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ian Bridges <icb@fastmail.org>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ sashal: Adjusted context for the broader access mask check at the check_access_bits label. ]
+Reported-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Suren Baghdasaryan <surenb@google.com>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-23-d6437171ecc3@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: adjusted the patch location because userfaultfd still resides in the filesystem subsystem ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smbacl.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/userfaultfd.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
-index 40b2e6b499457..6147322bb4b0d 100644
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -1640,8 +1640,8 @@ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
- check_access_bits:
- 	if (granted &
- 	    ~(access_bits | FILE_READ_ATTRIBUTES | READ_CONTROL | WRITE_DAC | DELETE)) {
--		ksmbd_debug(SMB, "Access denied with winACL, granted : %x, access_req : %x\n",
--			    granted, le32_to_cpu(ace->access_req));
-+		ksmbd_debug(SMB, "Access denied with winACL, requested : %x, allowed : %x\n",
-+			    granted, access_bits);
- 		rc = -EACCES;
- 		goto err_out;
- 	}
+diff --git a/fs/userfaultfd.c b/fs/userfaultfd.c
+index bd64d6b9cf899..11b4ed7efa5f8 100644
+--- a/fs/userfaultfd.c
++++ b/fs/userfaultfd.c
+@@ -1664,6 +1664,9 @@ static int userfaultfd_unregister(struct userfaultfd_ctx *ctx,
+ 			start = vma->vm_start;
+ 		vma_end = min(end, vma->vm_end);
+ 
++		/* Prevent new userfaults from being queued after the wakeup. */
++		vma_start_write(vma);
++
+ 		if (userfaultfd_missing(vma)) {
+ 			/*
+ 			 * Wake any concurrent pending userfault while
 -- 
 2.53.0
 
