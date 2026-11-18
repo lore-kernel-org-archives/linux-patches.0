@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053676;
-	b=dLVD4ESLspMlbrzu0AWafE94j/M94YTZLQZtEVackbfivXlRR+2mJBGxxNGcg/Kvzjrw
-	 s3kGQs4syuTJkdZo2qhd3uQ8W4qKWKQkkijaxydB6GaG2CorSK44FUENXQZzEnSpQK5LF
-	 QsokoM3u30GgPyGwFSo24Tqh6yzz10DdZzxrkJYTI8VoxoQgN9GoJYbDnuZFzagXlJ+rC
-	 uJllD67o2Rk3r260gwe9PXxJvOje7AzQXc+MMMPpQkAQfdPzUZ6qvx2upkpforP9N+T2z
-	 Nwo8wu/dyDw2T7VeIp7azp0WEpysBFVDWdfCOtMH9j6eBTd6TtbsI8YPnus6ZqU8jOg==
+	t=1795053678;
+	b=io+VuHuyQSocAQeDAT+seDrPHc9i7a+/mZxraXXW3W/MdmBLHzx5dGtbV9g1OpRHsRBN
+	 c9ZlOpZZCCqWo+PBN+fNVHP5Zafux/q9PyVPL9JXjHH9/pEsn2yQc4C/qb5R1g3B4PVSM
+	 1dfSg9/UJHAERkhEEzdsPuYzagzmjvysiL4mDtoQwFY9yHfqKDkyJbx+lqKLmwg0VDV+7
+	 nGmqRBnr9SlJ+/4vPWZlhrZgvWQSvLrKgWjMJT93t/+L4xrgrgMGvkVCbPd33nigG31MG
+	 UWzR3caxyQhIXDyesHJ/MG1AJk0CtemAhJ0ATuN9IQIjBeAM40i0xI/L2ajD+lnaYOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053676;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053678;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CQVXxQojC7Fh//Hwc3xhNnSd4POjVDmz3plQruswuzc=;
-	b=nxSIKaeVwzCmyqN+BRZsRt8QIoJ6MLDYAiFsQpiGZGCJyZir3SaZnauL/Qg9ozJV1Vfx
-	 B0rO/vUodfQ+k6EK1IXQ1E2I6RfrdXYKT+OGe6BcRBgGQNPFSsbBcWl/eHz0Bd8Ph5M2S
-	 n9vVlF+SZKJeCgVCO1SKofNt5Hsc2zscApNa6c1QsytYNneAnxRwad3arw/3zTjJz/8eQ
-	 hLISDEMFKcL1r6PU9Ll9aB2FYeBG46J3HQrDFPghCyn5OHmZAvmkscSGg0KByvDFChuZE
-	 1HWi2BVH4DNYjpHZoHvGIR/UWltkicZq1M9QeBf90Ca928m+byxC8uq624jxpl4z+PA==
+	bh=VcAC6Cwbb2s9JhffpsTC2NlpuAk2k0YQDqBFxysQqjo=;
+	b=nkePMkk5OMFoxODfPvnapZpgtBCURNbEXlKIw/DPj3MHL4AHyKprRcsRNPMYWKSxIwhB
+	 cr0+sUx+vRamYmaAc94+KHZb0yi8j8Z8wiBjbUdX35ap6P7fYFJ+QDaOqtTmw6+BLorpj
+	 47zLhEZ9IS1BSCcDLk/u/VahlK70SFL8ECHn207ClPDlohL6Ou4n3Pkepbiq4XGk8tLJs
+	 uAr+kBCGW2pnybXkGNTTQrCXBYOhYX6mzGT8/dg2vGfLtEGzO59ITx0ydlQMzmDaLLGP9
+	 TocBLcaoCHn3js+2nHHzrIbd0iTUQQJyrATE45F5Rw5emzxNULhTaR6Tmr2thh1XyDA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HVNnAxgm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SxCKU26q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 328BF606A31C;
-	Thu, 19 Nov 2026 02:01:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B5E606A31C;
+	Thu, 19 Nov 2026 02:01:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HVNnAxgm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76BB51F000C4;
-	Thu, 19 Nov 2026 02:01:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SxCKU26q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 397871F000C4;
+	Thu, 19 Nov 2026 02:01:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053676;
-	bh=CQVXxQojC7Fh//Hwc3xhNnSd4POjVDmz3plQruswuzc=;
+	s=korg; t=1795053678;
+	bh=VcAC6Cwbb2s9JhffpsTC2NlpuAk2k0YQDqBFxysQqjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HVNnAxgm2kY5Hjb04sdGMHFQzZcX6G1TAWboGzpc8znnrknRjmQKodJRDlFmYfIFP
-	 QVqi7iiYUzm+KYJ53N/kAMtPTp0O/JWZCixIurO3o0x1aJR11GNwoBubj6waTS40bB
-	 CF1lvJlfwUsHzvzozvXBrS24P2ZjINtvSwfDdS/w=
+	b=SxCKU26qkjpf+V6AwYB8wjNhNWsy0TTqaP0Kjs5VM/HsrPC6wmroCSA66kQEidaPf
+	 bJ0BrWgjXzPNbODZwWK/KRIjjlz5bGXgfrGNLtme+wXO6fcM7Rn6VgDKXS2iZ+yd/+
+	 p9OPhHVNSrvQNDppRdbakkZe81Rofc2+gIXQDTK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinwang Li <jinwang.li@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Siwei Zhang <oss@fourdim.xyz>,
+	Abdifatah Suruur <suruurism@gmail.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1003/2214] Bluetooth: L2CAP: Ignore connection responses with wrong ident
-Date: Wed, 18 Nov 2026 15:44:39 +0100
-Message-ID: <20261118150052.528677034@linuxfoundation.org>
+Subject: [PATCH 5.15 1004/2214] xen/gntdev: prevent private mappings from becoming writable
+Date: Wed, 18 Nov 2026 15:44:40 +0100
+Message-ID: <20261118150052.566489916@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,49 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinwang Li <jinwang.li@oss.qualcomm.com>
+From: Abdifatah Suruur <suruurism@gmail.com>
 
-commit a9f9eeb5344fc7dc625e5700ccf09891bc2603b5 upstream.
+[ Upstream commit 2176dea8d8c19cb43a9b3651bfa1cb21eab1b31a ]
 
-Adjusted context as stable does not have the lockdep_assert_held()
-call in l2cap_connect_create_rsp().
+gntdev_mmap() rejects writable private (non-shared) mappings of foreign
+grant pages, because a private writable mapping takes the COW path on
+pages that have no proper struct-page backing.  However, VM_MAYWRITE is
+left set, so userspace can map the grant read-only and then upgrade the
+mapping to writable with mprotect(), hitting the same COW path the
+check was written to prevent.
 
-L2CAP/COS/CED/BI-28-C requires the IUT to ignore a Connection Response
-that carries an invalid Identifier.
+Clear VM_MAYWRITE for private mappings, as i915 does for its read-only
+objects and as fixed in drm/vc4 (CVE-2026-68445) and drm/panthor
+(CVE-2024-53071) and ptp: vmclock (commit
+a5edadbae57e2298a56cf7a4e774a027905a331f).
 
-l2cap_connect_create_rsp() only checks that a connection request is
-outstanding, not that the response answers it. Add an ident check
-against the pending request so that a mismatched response is dropped.
+Fixes: ab31523c2fcac ("xen/gntdev: allow usermode to map granted pages")
+Cc: stable@vger.kernel.org
+Signed-off-by: Abdifatah Suruur <suruurism@gmail.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Jinwang Li <jinwang.li@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
+Message-ID: <20260819084217.1577-1-suruurism@gmail.com>
+[ sashal: Replaced vm_flags_clear() with direct vma->vm_flags bit clearing because the helper is unavailable. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/xen/gntdev.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 75c2ab39be167..a25a134087861 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -4467,11 +4467,11 @@ static int l2cap_connect_create_rsp(struct l2cap_conn *conn,
+diff --git a/drivers/xen/gntdev.c b/drivers/xen/gntdev.c
+index 6c6e264c6f11d..6b538c3c7bab7 100644
+--- a/drivers/xen/gntdev.c
++++ b/drivers/xen/gntdev.c
+@@ -1074,6 +1074,13 @@ static int gntdev_mmap(struct file *flip, struct vm_area_struct *vma)
+ 	if ((vma->vm_flags & VM_WRITE) && !(vma->vm_flags & VM_SHARED))
+ 		return -EINVAL;
  
- 	l2cap_chan_lock(chan);
++	/*
++	 * Private mappings of foreign grant pages must never become
++	 * writable: they would take the COW path on granted pages.
++	 */
++	if (!(vma->vm_flags & VM_SHARED))
++		vma->vm_flags &= ~VM_MAYWRITE;
++
+ 	pr_debug("map %d+%d at %lx (pgoff %lx)\n",
+ 		 index, count, vma->vm_start, vma->vm_pgoff);
  
--	/* Only accept a response to a connection request we sent and that
--	 * is still outstanding. A channel waiting in BT_CONNECT for security
--	 * or the feature mask has not sent one yet.
-+	/* Only accept a response matching a connection request we sent and
-+	 * that is still outstanding. A channel waiting in BT_CONNECT for
-+	 * security or the feature mask has not sent one yet.
- 	 */
--	if (!l2cap_chan_connect_pending(chan))
-+	if (!l2cap_chan_connect_pending(chan) || chan->ident != cmd->ident)
- 		goto done;
- 
- 	switch (result) {
 -- 
 2.53.0
 
