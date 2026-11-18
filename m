@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031099;
-	b=YOykmA3+PKNHbLs9SJlBLhju7WqRK0lMvEy0PbfJdY2BUORKmDeYeoJcT92MjjAFmEXx
-	 wOjZf2zwdKTtn5Rsk8v+h393+OhmZbcLP5pjeWvy9HCyDtjOQ3OgXtLI7GFIH+RJ7fUUo
-	 PNfNL7L5fdyCn6bcNKdPu2yYZEZbO7KxfoE46k45gvVp28q43oJYkPp8Ge+q+0MdDX8qH
-	 cRNMgjWEZ55zlp6BgMjJz3Ovg1O5oIxtGEKy4rzBaip6tse9+hCN4qY7eSZnQskDMLedt
-	 Sy+rIJhne/xHZQNmqNfBNNhSx11UKUpQfLoH/+VJozvZxVoin/Eiv/2fC4qTGCS/l0A==
+	t=1795031101;
+	b=Fbdpj7Yx/Vmv67R4oxOHb0e1MMEAv4EmdiBTpuq75Mu908F8eN3OqchKChkQiBraiLPD
+	 G1mvu94L4xNA6hNPyEv6Wbx17bnvVLBCtzqjTFyBh4jBlL82CoEeAUoUQD7upnH+SyGCO
+	 cwxjuU+YYsKhq030UmZdxpFaCQyzvrMu1LsRO44SBb6k0WfFPX8bje/nZ7RiucnlJ6JFO
+	 aEuAj6M/mckTMRGOfjTphdOCSz+gx57IgeVsOqJATbEoDWe0aWq4vWkQFlVAKt1tclR1e
+	 mtgac/d3xNxLWZIeR7853zJF34j7/DcJCzppXTBPftbAgMBrJK23OHkpq6XyKHxnd+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031099;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031101;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UZQi2hzqfiXvKCKiBhJuatg8z701MxIQN8HOIppX5vQ=;
-	b=sLzAvu7O7jwN7utKv4rauBdkxeucfOLHgEya/Fh+/zh42GZ45ZbrI5gfULuegPzQ8c+D
-	 BnjUzYmkRAsUcdq/tA4We4tOq78E5gT0+DgdtKNS/LWnMuebcatinoicSObbVCWc6te1n
-	 Dqq9CJPYT8myS18XLB8dvfVLZhcWyFBrHMdtp9+INCIdQ1VJhz2d3j1Jz0y441Yr3jftW
-	 YDNwyAojoEi1v9SFBHTWy4z9GhSb6Eq6FVAtu/tOO6VTZsvO8TYpXuzKnZmty9qCzwr5l
-	 IZNk88HucW+7f+eIJKZ/Ggn6c4SRaKo+74rEMXs8VpTk0YEUFzGq+tFrLi4SVevzHsw==
+	bh=/y4da/Nq/Qlt2B+nlpud1IaXAyH+408jXDrKzNIocPU=;
+	b=a3WsPjgYfmJTk5ySTWmx4oVbcsfqS6sQ2Y3sPXPobKEdfHIpr1ICC8Z8fSTJ0uwDipEr
+	 N1aiNsXkVe+egr3oAqZdCdki5O/YMdeLuRBRLNJscqsiNO+2OV5pyNrvNEVo1xjUYIvSh
+	 PZZwT14445cj2P0fpq97ibaVN32sRi5Omt03JEtP2f7zvA7m9WoucHRxS+EYQalqEePF5
+	 N71UCU3/02/A1KEqzwFIJOzqwmI2i2t5z+Dap6aNLthgH7QtJub9Ft+neM6jvcyJhq9xp
+	 MMY6kF465uJ3VKtZbLNrD5KlkXr9AG29whlJR7iAe1IDo9yQMqIGZ+9ZalJALKOpnUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZDV4ca7f;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BCu5fYfW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18131606A31C;
-	Wed, 18 Nov 2026 19:44:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB8A606A330;
+	Wed, 18 Nov 2026 19:45:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZDV4ca7f
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 726831F000C4;
-	Wed, 18 Nov 2026 19:44:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BCu5fYfW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A45A1F000C4;
+	Wed, 18 Nov 2026 19:45:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031098;
-	bh=UZQi2hzqfiXvKCKiBhJuatg8z701MxIQN8HOIppX5vQ=;
+	s=korg; t=1795031101;
+	bh=/y4da/Nq/Qlt2B+nlpud1IaXAyH+408jXDrKzNIocPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZDV4ca7fWPCUyUshOoAdYbJHUKRMw/+mUjUDBI2dA/7YkDV5uXwmKjzcTIKMhlf1L
-	 FFs8m/4+lYRCceyYSU3EZK6QCzmebupmtjewxPmh8ok+BRn3wag0RcdI4tEvbvtd5r
-	 HrXfxCU7PIvpZeMhepQU8aeN+7B2QTkPb+GMsyX8=
+	b=BCu5fYfWiDUdObU2wezXRVwhD64ZI4ddCeRBfKEvZAHaLt6cDZBm87Eh37YeCX97P
+	 5h2ohPo8CRB/WenyFMKNgbXhcS5AZBol0DmsrZG/1bsbmzR99B2UivC7Zl7hYgXuhq
+	 uFUxnMTduegG0mq6WEWq/VWlJuyaL8OHMgDLxwkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Schmaus <florian.schmaus@codasip.com>,
+	Wilson Felipe Pereira <wfelipe@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Heiher <r@hev.cc>,
-	Roman Penyaev <rpenyaev@suse.de>,
-	Shuah Khan <shuah@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0939/1756] selftests/epoll: fix race condition in multi-waiter wakeup tests
-Date: Wed, 18 Nov 2026 15:51:06 +0100
-Message-ID: <20261118150047.385020606@linuxfoundation.org>
+Subject: [PATCH 6.12 0940/1756] init/main: fix off-by-one in argv_init cleanup
+Date: Wed, 18 Nov 2026 15:51:07 +0100
+Message-ID: <20261118150047.446570119@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -72,141 +68,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Schmaus <florian.schmaus@codasip.com>
+From: Wilson Felipe Pereira <wfelipe@google.com>
 
-[ Upstream commit 4238e66c82b6ee888a768cb298c85083b4566726 ]
+[ Upstream commit b82ed0e3a1dafe41577b095318a3ea6c0eec6f46 ]
 
-In tests with multiple concurrent waiters on edge-triggered epoll
-instances where an emitter writes to multiple sockets (epoll16, epoll56,
-epoll58):
+Patch series "init: fix array boundary bugs in boot parameter parsing".
 
-When the emitter performs its first write(), ep_poll_callback() fires and
-wakes up both waiters because one waiter uses epoll_wait() and the other
-one uses poll().  This translates to different wait queues, ep->wq for
-epoll and ep->poll_wait for poll/select, which are both awoken by the
-kernel because of that single write.  Next, both waiter threads invoke
-epoll_wait(), but since there is only one event, only one epoll_wait()
-will return non-zero because of the edge-triggered mode being used (in
-level-triggered mode, the kernel would re-queue the event because of
-remaining unread data).
+This series fixes two distinct boundary logic edge-case bugs in
+`init/main.c` related to parsing boot command-line arguments and
+environment variables.  Both bugs have been present since the early git
+history (Linux-2.6.12-rc2).
 
-Since the second waiter sees an empty ready list, it does not increment
-ctx.count and the test fails spuriously with ctx.count == 1 instead of 2.
+1. The first patch fixes an off-by-one error in `init_setup()` where
+   the final slot of the `argv_init` array was left uncleared. This
+   allowed a stale kernel parameter to leak into the `init` process's
+   user-space command line if exactly `MAX_INIT_ARGS` unknown
+   parameters were passed.
 
-  Emitter (CPU 0)      Thread 0 (CPU 1)        Thread 1 (CPU 2)
-  ===============      ================        ================
-                       epoll_wait(e0, -1)      poll(e0, -1)
-                       [on e0->wq]             [on e0->poll_wait]
+2. The second patch fixes a false-positive kernel panic in
+   `unknown_bootoption()`. If a user filled the environment variable
+   array up to its exact limit (32) and then attempted to overwrite
+   the final variable, the kernel would panic before evaluating
+   whether it was a harmless duplicate.
 
-  write(sfd[1])
-       |
-       +--(Kernel wakes BOTH e0->wq and e0->poll_wait via callback)--+
-       |                                                             |
-       |               wakes up                wakes up              |
-       |               epoll_wait() reaps e1   poll() returns 1      |
-       |               (e1 removed via ET)     (wants event)         |
-       |               e0->rdllist is EMPTY          |               |
-       |               count++ (count = 1)           v               |
-       |                                       epoll_wait(e0, 0)     |
-       |                                       sees EMPTY list!      |
-       |                                       returns 0!            |
-       |                                       thread exits          |
-       v                                                             |
-  write(sfd[3])                                                      |
-  (event arrives too late!)                                          v
-                           EXPECT_EQ(count, 2)  <-- SPURIOUS FAILURE!
+Exact QEMU reproduction steps for both edge cases are documented inside
+their respective commit descriptions.
 
-Introduce waiter_entry1ap_loop() to retry poll() if the initial
-epoll_wait(..., 0) yielded no events.  This ensures the thread waits for
-the subsequent write rather than failing immediately.  Apply this helper
-in epoll16, epoll56, and for both waiter threads in epoll58.
+This patch (of 2):
 
-Link: https://lore.kernel.org/20260828-selftest-epoll-fix-race-v2-1-953ab57fd60a@codasip.com
-Fixes: f2728fe80cef ("selftests: add epoll selftests")
-Signed-off-by: Florian Schmaus <florian.schmaus@codasip.com>
+When cleaning up argv_init in init_setup() and rdinit_setup(), the loop
+terminates one element early due to using '<' instead of '<='.  Since
+argv_init is sized MAX_INIT_ARGS+2, index MAX_INIT_ARGS is a valid element
+that should be cleared to NULL.
+
+If exactly MAX_INIT_ARGS unknown arguments are passed before 'init=', the
+uncleared argv_init[MAX_INIT_ARGS] can act as a ghost argument to
+/sbin/init or cause a spurious kernel panic when later appended to.
+
+To verify the argument leak, boot a VM into a shell with 32 unknown kernel
+arguments, the init parameter, and 31 user arguments:
+
+  STALE_ARGS=$(for i in {1..32}; do echo -n "stale$i "; done)
+  USER_ARGS=$(for i in {1..31}; do echo -n "user$i "; done)
+  qemu-system-x86_64 -kernel bzImage \
+      -append "$STALE_ARGS init=/bin/sh $USER_ARGS"
+
+Running `cat /proc/1/cmdline` inside the shell reveals that the 32nd
+kernel argument ('stale32') incorrectly leaked into the init process's
+command line.  This patch zeroes the final slot, cleanly terminating the
+array.
+
+Link: https://lore.kernel.org/20260818045357.4123784-1-wfelipe@google.com
+Link: https://lore.kernel.org/20260818045357.4123784-2-wfelipe@google.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: ffdfc40976dd ("[PATCH] Add rdinit parameter to pick early userspace init")
+Signed-off-by: Wilson Felipe Pereira <wfelipe@google.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Heiher <r@hev.cc>
-Cc: Roman Penyaev <rpenyaev@suse.de>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../filesystems/epoll/epoll_wakeup_test.c     | 32 +++++++++++++------
- 1 file changed, 22 insertions(+), 10 deletions(-)
+ init/main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/filesystems/epoll/epoll_wakeup_test.c b/tools/testing/selftests/filesystems/epoll/epoll_wakeup_test.c
-index 65ede506305c8..9805aa3a22754 100644
---- a/tools/testing/selftests/filesystems/epoll/epoll_wakeup_test.c
-+++ b/tools/testing/selftests/filesystems/epoll/epoll_wakeup_test.c
-@@ -74,6 +74,24 @@ static void *waiter_entry1ap(void *data)
- 	return NULL;
+diff --git a/init/main.c b/init/main.c
+index bad880340de43..92397b5a3a6e3 100644
+--- a/init/main.c
++++ b/init/main.c
+@@ -570,7 +570,7 @@ static int __init init_setup(char *str)
+ 	 * the shell think it should execute a script with such name.
+ 	 * So we ignore all arguments entered _before_ init=... [MJ]
+ 	 */
+-	for (i = 1; i < MAX_INIT_ARGS; i++)
++	for (i = 1; i <= MAX_INIT_ARGS; i++)
+ 		argv_init[i] = NULL;
+ 	return 1;
  }
+@@ -582,7 +582,7 @@ static int __init rdinit_setup(char *str)
  
-+static void *waiter_entry1ap_loop(void *data)
-+{
-+	struct pollfd pfd;
-+	struct epoll_event e;
-+	struct epoll_mtcontext *ctx = data;
-+
-+	pfd.fd = ctx->efd[0];
-+	pfd.events = POLLIN;
-+	while (poll(&pfd, 1, 2000) > 0) {
-+		if (epoll_wait(ctx->efd[0], &e, 1, 0) > 0) {
-+			__sync_fetch_and_add(&ctx->count, 1);
-+			break;
-+		}
-+	}
-+
-+	return NULL;
-+}
-+
- static void *waiter_entry1o(void *data)
- {
- 	struct epoll_event e;
-@@ -809,7 +827,7 @@ TEST(epoll16)
- 	ASSERT_EQ(epoll_ctl(ctx.efd[0], EPOLL_CTL_ADD, ctx.sfd[2], events), 0);
- 
- 	ctx.main = pthread_self();
--	ASSERT_EQ(pthread_create(&ctx.waiter, NULL, waiter_entry1ap, &ctx), 0);
-+	ASSERT_EQ(pthread_create(&ctx.waiter, NULL, waiter_entry1ap_loop, &ctx), 0);
- 	ASSERT_EQ(pthread_create(&emitter, NULL, emitter_entry2, &ctx), 0);
- 
- 	if (epoll_wait(ctx.efd[0], events, 1, -1) > 0)
-@@ -2925,7 +2943,7 @@ TEST(epoll56)
- 	ASSERT_EQ(epoll_ctl(ctx.efd[0], EPOLL_CTL_ADD, ctx.efd[2], &e), 0);
- 
- 	ctx.main = pthread_self();
--	ASSERT_EQ(pthread_create(&ctx.waiter, NULL, waiter_entry1ap, &ctx), 0);
-+	ASSERT_EQ(pthread_create(&ctx.waiter, NULL, waiter_entry1ap_loop, &ctx), 0);
- 	ASSERT_EQ(pthread_create(&emitter, NULL, emitter_entry2, &ctx), 0);
- 
- 	if (epoll_wait(ctx.efd[0], &e, 1, -1) > 0)
-@@ -3030,7 +3048,6 @@ TEST(epoll57)
- TEST(epoll58)
- {
- 	pthread_t emitter;
--	struct pollfd pfd;
- 	struct epoll_event e;
- 	struct epoll_mtcontext ctx = { 0 };
- 
-@@ -3061,15 +3078,10 @@ TEST(epoll58)
- 	ASSERT_EQ(epoll_ctl(ctx.efd[0], EPOLL_CTL_ADD, ctx.efd[2], &e), 0);
- 
- 	ctx.main = pthread_self();
--	ASSERT_EQ(pthread_create(&ctx.waiter, NULL, waiter_entry1ap, &ctx), 0);
-+	ASSERT_EQ(pthread_create(&ctx.waiter, NULL, waiter_entry1ap_loop, &ctx), 0);
- 	ASSERT_EQ(pthread_create(&emitter, NULL, emitter_entry2, &ctx), 0);
- 
--	pfd.fd = ctx.efd[0];
--	pfd.events = POLLIN;
--	if (poll(&pfd, 1, -1) > 0) {
--		if (epoll_wait(ctx.efd[0], &e, 1, 0) > 0)
--			__sync_fetch_and_add(&ctx.count, 1);
--	}
-+	waiter_entry1ap_loop(&ctx);
- 
- 	ASSERT_EQ(pthread_join(ctx.waiter, NULL), 0);
- 	EXPECT_EQ(ctx.count, 2);
+ 	ramdisk_execute_command = str;
+ 	/* See "auto" comment in init_setup */
+-	for (i = 1; i < MAX_INIT_ARGS; i++)
++	for (i = 1; i <= MAX_INIT_ARGS; i++)
+ 		argv_init[i] = NULL;
+ 	return 1;
+ }
 -- 
 2.53.0
 
