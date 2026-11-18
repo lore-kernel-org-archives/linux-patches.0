@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047856;
-	b=4omDrRNDZTS1FwSkxDfPWnA07Bkl5vw4T4L+gBY+MwlKzBESkUdVCbxCpXE2XE+9Z3DT
-	 uVoNms2FY+BbCr8swEkIsTrau/Ac14dYwgoDpmWQubQjA+doQPG4RkXzAagI6IdhY/4Rh
-	 Tt5c3rHvAWPWd5conBA9Hkc5fFPujXjgoFDII8iTYfpjFNopohrIKCsfUHCNyoGyUnnTY
-	 zC7BFLH2+aKv5DgI3CTqCV7aZhojKWRK6qWPCswyQEhbvg0qw3x27R+7BWK35t+toIcAC
-	 HXhF7TdGpS/5utbErSDWO3W1NIyYokr9uMJuVQYGQXRm11ZCaCxD3preShUUTVZhjqQ==
+	t=1795047859;
+	b=Woe+k5nOhCsmzA2E9lxywiDfzrEbYKUx1zMj4npVGtpgUmnQePZcroQx5NhKsGyJefPF
+	 BfXX1xDkREaX/K7ycyAzNrgKJsO3rkh19DSK7kBE5q4IZYnoBaYwhVHDtx/vCpIcIyIcN
+	 jRuxgF+l+dqbJPeba/Gxs3arQ4Ao2VRa8egprnind3xhhbNbA3MwrXLOFIN9WA54sANuj
+	 kXlEQeMBu1e1MevmZ/5Ii8aQLnpBfRXeRVy8NSAiOucDOg/styTFbyWsb6VBTIZJT3COb
+	 4p17O9/zAs0IXHKoapppl6B1OTeyLCjG1Xf2tqbAlhiVHeuyKkhR6cGtj4fbKMuOE5w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047856;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047859;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4PlwTsDNDBulrTWQqQyOGo5cdXakQ2NXuZmgiaTAA2g=;
-	b=XTplfYNMfmVhuN9SsrzpA5LI+8f+qQH5k0LmsEhdbewcO8BwP5vG7gzkO5+wM0tC3h/m
-	 +yKhw7WD+mctNg5HIKMprD4Rb8U9rSifIS+/yZdePPq1zdIQ0INuTyLmGiGRHMsMSZ1/M
-	 ihG0HWTTzG7Y8xRzjnw3HqW40BSksozXYu8hyefXzKvXkPKpaGh6yjuBgRx8ae3/QSnSU
-	 +R0xGYlh6s5IGWH5xYylq2xXH/9guUPcO/zWN0wgbfOvqVzpZWfPxOWhC8xyeG8AvWEYF
-	 ck8CD83BaPaxmbUDbOriN8WyEoo4nvGXDzImoJtOsGW15JvNKxK5DtqN4FczI0KwnzA==
+	bh=KhXkW+XM1b7nsLu3UaxiUsNkv1/clDfd2ScfJO6DxP0=;
+	b=vAOtg+lZJ1QmkxNPM19R3hGMqgOGoMlaaYDpnFrOIkzKz81Ir1dSMe00zP0b2WIUUBrD
+	 oapSEd77Hvskvd7MpRtx43bZjlQxstD+ct+ysMHu57WsukExxBG8vgcvsBbMrIppbE16o
+	 qVMIMepvp16qTk01k50QkvJqFEpsEU3mmfZZU3o3My3zPFcyGQwhAnOPs4wVe2p//n9NA
+	 Wspuz9Ph3r+tvQ1gWnmfR9OtM8MxgBnL3m7m9ljWlDYxihOkPQZrkT+HQDnuDx8vz30IG
+	 vifxuGHnukM60iV9RE7mk8A30A4iODSzwETrvFvvXxqL8Orqhlx3aecXEkB+PTnvmuw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JImWv50Z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gbwloimQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF82606A31C;
-	Thu, 19 Nov 2026 00:24:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 505A7606A32C;
+	Thu, 19 Nov 2026 00:24:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JImWv50Z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E38AD1F000C6;
-	Thu, 19 Nov 2026 00:24:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gbwloimQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A46821F000C4;
+	Thu, 19 Nov 2026 00:24:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047856;
-	bh=4PlwTsDNDBulrTWQqQyOGo5cdXakQ2NXuZmgiaTAA2g=;
+	s=korg; t=1795047859;
+	bh=KhXkW+XM1b7nsLu3UaxiUsNkv1/clDfd2ScfJO6DxP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JImWv50Zrsor4DcSGnbhhJyHuT+pAiOCpknEVYTRIJOl9N4zmv4e147l0lbw3I2LW
-	 p8I/CwfBR9BhZeI9wIC9xT92faaf3QpWgnnCfH05PpKRdwX3o4Ja06jmMwMRG2uB6B
-	 DdxMObuSFom5iCf5bnLcAmcAe1UJGxdyEt3Y2f2s=
+	b=gbwloimQJGLjK+G7bTLyQ+02I3YTksmoSp44cVDP12/GJGF6LTnsFOISFKB/uMfyo
+	 fMcpaZ0BqM80xjuHpidV5LbrD7EPorLwr9E4dMQ3FNlK2COuBB0da53g5xWvA2M+1f
+	 UUWvLPVS+PTVi4HIQHeqi2YLvfR13Y2j5raaOgLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Orgad Shaneh <orgads@gmail.com>,
-	Dan Carpenter <error27@gmail.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1771/2857] staging: octeon: schedule the TX cleanup tasklet every 1024th packet
-Date: Wed, 18 Nov 2026 15:46:45 +0100
-Message-ID: <20261118150305.049024869@linuxfoundation.org>
+Subject: [PATCH 6.1 1789/2857] dmaengine: fsl_raid: dont invoke client callback under desc_lock
+Date: Wed, 18 Nov 2026 15:47:03 +0100
+Message-ID: <20261118150305.682229332@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,52 +69,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Orgad Shaneh <orgads@gmail.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit db57f6517bf65523968ae29cd34a790bfa7d32af ]
+[ Upstream commit 62c267ce97444f8a381f2bb3cd5d534eb362c540 ]
 
-cvm_oct_xmit() means to schedule the cleanup tasklet once every 1024
-packets, as its comment says, to cover the pathological case of heavy
-traffic on one port delaying the cleanup of another port blocked
-waiting for it.
+fsl_re_dequeue() holds re_chan->desc_lock while calling
+fsl_re_desc_done(), which synchronously invokes the DMA client completion
+callback via dmaengine_desc_get_callback_invoke(). If that callback
+submits new work (e.g. fsl_re_tx_submit()), it tries to reacquire the
+same desc_lock and deadlocks on the spinlock.
 
-The test is inverted: total_to_clean & 0x3ff is true for 1023 of every
-1024 values, and false only on the multiples of 1024. So the tasklet is
-scheduled on nearly every packet, and skipped on exactly the packet the
-comment wants. That costs one TASKLET softirq per transmitted packet,
-each walking every port and doing an FAU fetch-and-add per non-empty
-queue, and it buys nothing for this port, which already frees its
-completed skbs inline from the skb_to_free value it reads out of the
-FAU.
+Collect completed descriptors into a local list under the lock, then
+release the lock and invoke the callbacks before moving the descriptors
+to the ack queue.
 
-Test the mask against zero. On a CN50XX board (2 cores at 300MHz)
-carrying ~6.9k transmitted packets/s, TASKLET softirqs drop from 7133/s
-to 597/s with no throughput change; the freeing work is conserved, so
-this removes softirq entries, not work.
-
-Fixes: 4898c560103f ("Staging: Octeon:  Free transmit SKBs in a timely manner")
-Signed-off-by: Orgad Shaneh <orgads@gmail.com>
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Link: https://patch.msgid.link/20260820113239.8169-1-orgads@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ad80da658bbc ("dmaengine: Driver support for FSL RaidEngine device.")
+Assisted-by: opencode:hy3-free
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260718053010.3074329-1-rosenp@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/octeon/ethernet-tx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/fsl_raid.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/staging/octeon/ethernet-tx.c b/drivers/staging/octeon/ethernet-tx.c
-index 9244bccc7afb9..de6c2fd9ae8d8 100644
---- a/drivers/staging/octeon/ethernet-tx.c
-+++ b/drivers/staging/octeon/ethernet-tx.c
-@@ -485,7 +485,7 @@ netdev_tx_t cvm_oct_xmit(struct sk_buff *skb, struct net_device *dev)
- 			cvmx_fau_fetch_and_add32(FAU_TOTAL_TX_TO_CLEAN, 1);
- 	}
+diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
+index fdf3500d96a9e..562a3a3f75f16 100644
+--- a/drivers/dma/fsl_raid.c
++++ b/drivers/dma/fsl_raid.c
+@@ -161,6 +161,7 @@ static void fsl_re_dequeue(struct tasklet_struct *t)
+ 	struct fsl_re_hw_desc *hwdesc;
+ 	unsigned long flags;
+ 	unsigned int count, oub_count;
++	LIST_HEAD(completed);
+ 	int found;
  
--	if (total_to_clean & 0x3ff) {
-+	if ((total_to_clean & 0x3ff) == 0) {
- 		/*
- 		 * Schedule the cleanup tasklet every 1024 packets for
- 		 * the pathological case of high traffic on one port
+ 	fsl_re_cleanup_descs(re_chan);
+@@ -181,8 +182,7 @@ static void fsl_re_dequeue(struct tasklet_struct *t)
+ 		}
+ 
+ 		if (found) {
+-			fsl_re_desc_done(desc);
+-			list_move_tail(&desc->node, &re_chan->ack_q);
++			list_move_tail(&desc->node, &completed);
+ 		} else {
+ 			dev_err(re_chan->dev,
+ 				"found hwdesc not in sw queue, discard it\n");
+@@ -195,6 +195,17 @@ static void fsl_re_dequeue(struct tasklet_struct *t)
+ 			 FSL_RE_RMVD_JOB(1));
+ 	}
+ 	spin_unlock_irqrestore(&re_chan->desc_lock, flags);
++
++	/* Invoke the client callbacks outside the channel lock. The callback
++	 * may submit new work which re-acquires desc_lock, so holding it here
++	 * would deadlock.
++	 */
++	list_for_each_entry_safe(desc, _desc, &completed, node) {
++		fsl_re_desc_done(desc);
++		spin_lock_irqsave(&re_chan->desc_lock, flags);
++		list_move_tail(&desc->node, &re_chan->ack_q);
++		spin_unlock_irqrestore(&re_chan->desc_lock, flags);
++	}
+ }
+ 
+ /* Per Job Ring interrupt handler */
 -- 
 2.53.0
 
