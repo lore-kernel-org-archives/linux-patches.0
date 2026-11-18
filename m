@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023204;
-	b=q7xS3dArA+skgMXjmMPmBgRqXy6BmngDEB8qlr8oo+jMDD3+Hm2u5t5UhSAke5uhJQCO
-	 YBb8pguwjoI4G3oQN/4azCCmASRb2Y84XwJfpQ9aswNWaP5YRXP6zsAs+eo1uz1D7tUIm
-	 N0kRHeDq39BdGOlgGQAq8juCyHOXV9O2aay0Wj6N1FJkit1iG4EsVo1U0f1hbSMTv9WuF
-	 GEz5e+Li37PXKh2Ws9NGNqFF0kxyk7n0TktZOGCOSvLhzGGhKRekZHFN08uhHEUQP7ivi
-	 Xr2+EnxMOsfCQMF+ZwtVjujU/qbWwnV7Fti7gRbLiENHihmJEmkK4Swz5qicSP3gEUQ==
+	t=1795023206;
+	b=lGZOAUwnYUGC/+BvuzYIrHyJO0OeJQmfDNHrG6m3oKuOpG72Ce4CEimUD7IVgEk67WsH
+	 /1hfwEnsXCAIx8NvdZVCYDXw/gWE1qKF26NcY+5FGhn098HAgMHfSPtmKRpBEUqQ7spxe
+	 cvl9pJeI7y3FwQ6hk+0fYFaPIQfunWmv2XgPr7PZqTx+i/F87fpui8oIFNFsgMRtARL6j
+	 mPrvtvlT3SWDhsUTFBdG6MM6+yy2PatYssuE9hcCnge6+py1LkttTdZfTNVVBjViYdNHb
+	 GSgYDDqA9zpiHMx5eL6/AI5aZsscnXJ3BEfUt8Yvw6A7jgmhmbISE2qv38C3m+CeLwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023204;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023206;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=knVNeAVpb/M3dtttxjrtrTv/MSM/Sqq56i5mt698e5Y=;
-	b=x5e+lkJ7CMkM4nG0+hunTcVF8pRk9WjAxiFLptJsdikbGK/rlNlT/Pysjz0P2o1J29U6
-	 eiH+X/tJiS9IIZw5oKBtMHPHRqSh0HHvZfFURnLtFaPa/EgWoQ7F1vn2dws9S6QSeYwSD
-	 ueWvVC5JnktZJyl050fxYvwwr01GF83gCfariyslphXP1qPb0oVYRTHExj70jgnfWhLPJ
-	 KE6RZbNSaXf22LkEugiQs/hTqVrxYHrFxVs1f756yXKXa2A82eKRLYq0t+LM7PPwBsfvJ
-	 Fu/HThWX3vFOoBlKsFHNchZcWb487Wot6ayAJ6m0LXqhctos4nT/U1TOJiTagNUWWDw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=nJYC9/SWLBF1fOYSzO8JBuoKs48+Hj7KaHWTNn4I0os=;
+	b=X/elYVQ5i2KxrYIZIiuvkkTYil8E3/6DrbcnDC65Q0+7IZU9NyJyOe5bGniWAcCq+D0+
+	 doloCquhL5cWexR1C6yg6cUO6yShP4lVMnTtpO1aR+h9JbXBFJFe5vEvwS7qupJPXAotS
+	 1PkH/e5P8CannRpyi0nyftRe078MFGQfydIsIn65awKfKOR4XYbuoCha1AGOx9GYAVSgY
+	 IuJ+BOF8IMTVSiFVgaPK+zuKPUzk6CboKruzXJQZ4YrrNrE8tx0izRNj5/5zoG0wzt0rW
+	 Za851iYJ83aX/8jIe4tC6Fju1VcVaAUxSYdxbSShWAZ0kAVN9p0LIZHc9v1ESb4Zpuw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fjwDDAiL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NuUdl77B;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1213D606A325;
-	Wed, 18 Nov 2026 17:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8253606A31C;
+	Wed, 18 Nov 2026 17:33:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fjwDDAiL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6735E1F000C4;
-	Wed, 18 Nov 2026 17:33:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NuUdl77B
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DA5E1F000C4;
+	Wed, 18 Nov 2026 17:33:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023203;
-	bh=knVNeAVpb/M3dtttxjrtrTv/MSM/Sqq56i5mt698e5Y=;
+	s=korg; t=1795023206;
+	bh=nJYC9/SWLBF1fOYSzO8JBuoKs48+Hj7KaHWTNn4I0os=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fjwDDAiLOItMp2OtAnsF6SBPBIiFXRIrXU/LIj0/n+nT585zuimY7i6IwqxfXUJbV
-	 xCwaaSdSDGIAXc2ZMUurO0yO9lpb2WWmB/4IRzVWsy0ItPlG8XuckqNakL+edwpnDv
-	 o77u6iwVtlcmHil+IAYcot1LyxVYRdIeh3T9h/zo=
+	b=NuUdl77BvEZ+zaLApfIG/V466/SsksRLvWRSkbpMHkyNPNM1MfxX4p0mR+el5xCW7
+	 ZdxxnTvpcb4z2wgucv47mQcgmywoImom/iXrVAY9XjHjWt2REDY54rtP0vn/8xHR6a
+	 ZMsYg0KPXtSEFdL+qM+aE4yfZLLGP0s+Q5/C5OHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko AI review <sashiko-bot@kernel.org>,
-	Manush Prajwal <manushprajwal555@gmail.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Tianyi Chen <hi@tychen.cc>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0284/2151] pwm: lp3943: fix NULL pointer dereference for an unconfigured channel
-Date: Wed, 18 Nov 2026 15:33:39 +0100
-Message-ID: <20261118150132.242040838@linuxfoundation.org>
+Subject: [PATCH 6.18 0285/2151] selftests/sched_ext: Handle CPU hotplug write failures
+Date: Wed, 18 Nov 2026 15:33:40 +0100
+Message-ID: <20261118150132.279438950@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -63,66 +62,149 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Manush Prajwal <manushprajwal555@gmail.com>
+From: Tianyi Chen <hi@tychen.cc>
 
-[ Upstream commit 17dbb6938d3ab444cd6be1c95506450595a8800d ]
+[ Upstream commit 49c64ffb2fd996af4c82007196c61e17d74cb1ab ]
 
-lp3943_pwm_probe() unconditionally registers a pwmchip with
-LP3943_NUM_PWMS(2) hwpwm channels, but lp3943_pwm_parse_dt() only
-populates pdata->pwms[i] for the channels whose ti,pwm0/ti,pwm1
-property is actually present in the devicetree (the binding
-explicitly allows each PWM generator to drive zero or more outputs,
-and lp3943_pwm_parse_dt() only fails outright with -ENODATA if
-*neither* property is present). A devicetree that configures only one
-of the two channels leaves pdata->pwms[] NULL for the other.
+toggle_online_status() logs failed CPU state changes but discards the
+write result. The hotplug tests can consequently wait indefinitely for
+a scheduler exit that the failed operation never triggered.
 
-lp3943_pwm_request_map() dereferences pdata->pwms[hwpwm] with no NULL
-check:
+Return the write result and stop both hotplug tests when a required
+CPU state change fails. Release the acquired scheduler resources on
+these paths and let the existing cleanup callback retry restoring
+CPU1. Also fail the test when its normal CPU restoration fails.
 
-	pwm_map->output = pdata->pwms[hwpwm]->output;
-	pwm_map->num_outputs = pdata->pwms[hwpwm]->num_outputs;
+Tested in a two-vCPU VM running a kernel built from the same source
+as the selftests. Injecting EIO with strace into each of the ten CPU
+state writes makes the fixed test return 1, with CPU1 online and
+sched_ext disabled after cleanup. The original test does not finish
+within three seconds when either of the first two writes fails.
+Normal hotplug tests pass before and after the change. Making the
+online file read-only also produces a failure without hanging.
 
-so requesting the unconfigured channel (e.g. exporting it from
-sysfs) crashes with a NULL pointer dereference instead of failing
-cleanly.
-
-Return -ENODEV from lp3943_pwm_request_map() when the channel was
-never configured, before the pointer is dereferenced. The caller,
-lp3943_pwm_request(), already propagates an ERR_PTR return correctly
-(it does so today for the existing -EBUSY case).
-
-Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/6a9d4c6b.79b5ea6e.147aa1.5883@mx.google.com?part=1
-Signed-off-by: Manush Prajwal <manushprajwal555@gmail.com>
-Link: https://patch.msgid.link/6a9d5187.d63de05c.175391.a17c@mx.google.com
-Fixes: af66b3c0934e ("pwm: Add LP3943 PWM driver")
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Fixes: a5db7817af78 ("sched_ext: Add selftests")
+Assisted-by: LLM
+Signed-off-by: Tianyi Chen <hi@tychen.cc>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-lp3943.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/selftests/sched_ext/hotplug.c | 34 ++++++++++++++-------
+ 1 file changed, 23 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/pwm/pwm-lp3943.c b/drivers/pwm/pwm-lp3943.c
-index 90b0733c00c1b..ad761daab4f44 100644
---- a/drivers/pwm/pwm-lp3943.c
-+++ b/drivers/pwm/pwm-lp3943.c
-@@ -38,6 +38,9 @@ lp3943_pwm_request_map(struct lp3943_pwm *lp3943_pwm, int hwpwm)
- 	struct lp3943_pwm_map *pwm_map = &lp3943_pwm->pwm_map[hwpwm];
- 	int i, offset;
+diff --git a/tools/testing/selftests/sched_ext/hotplug.c b/tools/testing/selftests/sched_ext/hotplug.c
+index 0cfbb111a2d09..10b8d42bd89be 100644
+--- a/tools/testing/selftests/sched_ext/hotplug.c
++++ b/tools/testing/selftests/sched_ext/hotplug.c
+@@ -21,15 +21,17 @@ static bool is_cpu_online(void)
+ 	return file_read_long(online_path) > 0;
+ }
  
-+	if (!pdata->pwms[hwpwm])
-+		return ERR_PTR(-ENODEV);
+-static void toggle_online_status(bool online)
++static int toggle_online_status(bool online)
+ {
+ 	long val = online ? 1 : 0;
+ 	int ret;
+ 
+ 	ret = file_write_long(online_path, val);
+ 	if (ret != 0)
+-		fprintf(stderr, "Failed to bring CPU %s (%s)",
++		fprintf(stderr, "Failed to bring CPU %s (%s)\n",
+ 			online ? "online" : "offline", strerror(errno));
 +
- 	pwm_map->output = pdata->pwms[hwpwm]->output;
- 	pwm_map->num_outputs = pdata->pwms[hwpwm]->num_outputs;
++	return ret;
+ }
  
+ static enum scx_test_status setup(void **ctx)
+@@ -44,6 +46,7 @@ static enum scx_test_status test_hotplug(bool onlining, bool cbs_defined)
+ {
+ 	struct hotplug *skel;
+ 	struct bpf_link *link;
++	enum scx_test_status status = SCX_TEST_FAIL;
+ 	long kind, code;
+ 
+ 	SCX_ASSERT(is_cpu_online());
+@@ -54,8 +57,8 @@ static enum scx_test_status test_hotplug(bool onlining, bool cbs_defined)
+ 	SCX_FAIL_IF(hotplug__load(skel), "Failed to load skel");
+ 
+ 	/* Testing the offline -> online path, so go offline before starting */
+-	if (onlining)
+-		toggle_online_status(0);
++	if (onlining && toggle_online_status(0))
++		goto out_destroy_skel;
+ 
+ 	if (cbs_defined) {
+ 		kind = SCX_KIND_VAL(SCX_EXIT_UNREG_BPF);
+@@ -79,7 +82,8 @@ static enum scx_test_status test_hotplug(bool onlining, bool cbs_defined)
+ 		return SCX_TEST_FAIL;
+ 	}
+ 
+-	toggle_online_status(onlining ? 1 : 0);
++	if (toggle_online_status(onlining ? 1 : 0))
++		goto out_destroy_link;
+ 
+ 	while (!UEI_EXITED(skel, uei))
+ 		sched_yield();
+@@ -87,20 +91,23 @@ static enum scx_test_status test_hotplug(bool onlining, bool cbs_defined)
+ 	SCX_EQ(skel->data->uei.kind, kind);
+ 	SCX_EQ(UEI_REPORT(skel, uei), code);
+ 
+-	if (!onlining)
+-		toggle_online_status(1);
++	if (!onlining && toggle_online_status(1))
++		goto out_destroy_link;
+ 
++	status = SCX_TEST_PASS;
++out_destroy_link:
+ 	bpf_link__destroy(link);
++out_destroy_skel:
+ 	hotplug__destroy(skel);
+ 
+-	return SCX_TEST_PASS;
++	return status;
+ }
+ 
+ static enum scx_test_status test_hotplug_attach(void)
+ {
+ 	struct hotplug *skel;
+ 	struct bpf_link *link;
+-	enum scx_test_status status = SCX_TEST_PASS;
++	enum scx_test_status status = SCX_TEST_FAIL;
+ 	long kind, code;
+ 
+ 	SCX_ASSERT(is_cpu_online());
+@@ -115,10 +122,12 @@ static enum scx_test_status test_hotplug_attach(void)
+ 	 * Take the CPU offline to increment the global hotplug seq, which
+ 	 * should cause attach to fail due to us setting the hotplug seq above
+ 	 */
+-	toggle_online_status(0);
++	if (toggle_online_status(0))
++		goto out_destroy_skel;
+ 	link = bpf_map__attach_struct_ops(skel->maps.hotplug_nocb_ops);
+ 
+-	toggle_online_status(1);
++	if (toggle_online_status(1))
++		goto out_destroy_link;
+ 
+ 	SCX_ASSERT(link);
+ 	while (!UEI_EXITED(skel, uei))
+@@ -130,7 +139,10 @@ static enum scx_test_status test_hotplug_attach(void)
+ 	SCX_EQ(skel->data->uei.kind, kind);
+ 	SCX_EQ(UEI_REPORT(skel, uei), code);
+ 
++	status = SCX_TEST_PASS;
++out_destroy_link:
+ 	bpf_link__destroy(link);
++out_destroy_skel:
+ 	hotplug__destroy(skel);
+ 
+ 	return status;
 -- 
 2.53.0
 
