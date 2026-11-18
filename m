@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023261;
-	b=4jdOjBZ29UzJMbkNRSdoQj+B89kM3V7fXvNHyk20JXlEXt0vfRvEo8TRIVumRD1MIn/k
-	 3ZMevDGjklGKK5SxaA8NqLhYTGh3gcyFEYNXFiiJ5Hv+I0COLnlkkFqqUfzOG71QvN8tT
-	 NR6Asb99i6qTjyUcziko1w4RLPi2eMwJ3dwVBqhlExobXhyI9CRu86Xy5Xne535tsYggn
-	 qvuxJ2TkcFEjTi0RmQ93LcNZsfx25wqBEBypERPOTy8tcziFGsTJotjO1eLS1rdJsf4Df
-	 rMpZ/bUHK2PG0jJwRBqeuhqXnkyiaKHfEqRCW4hjhe/18STgOv71hdCVNL7gv5DD3cQ==
+	t=1795023264;
+	b=MNVtQTzTU+ABMljyae7L7rLUBDaQ4jVsQ/yfZUN+z+HFITjg8ToLopWcDqHhePi9hMDo
+	 AsUQ074rjAPaj+oduPpWiYWpHo+JgT+sreCMnXziiVHDGCfiaTTfbZU0e77RqaDaCmpXO
+	 a3w1dF7f78GC28SSPscZnmiMLYiTCP5SKTDjP1mTFbxtR6PCC8DdZnYxOA0lzNlJ+fJ0I
+	 2KyxPdexSIzntnyuhwdWmjuy+IPkudS8D9nh+ljFn4AI2cKFrYlLwrNCgEK1i2kEuroYk
+	 q9Xv9D4Th7o3kopHie0hLF4WBZt58xyc3khRqUgpR8QWeftxj7tEgEFLJbzFHxnB3wg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023261;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023264;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=u970YrW/OqX6OqMR7A8FaWPweq+myhcGxOOLmBTBu04=;
-	b=GQYeBobOgJ4912NnmPZQ5fqk+ecjaUKlNJqMMZKh6jktlGTmRcxLwe7fF/+30nzka6su
-	 hcIQ1zdCogaioW0xo4xurp5pIQ4oB1t4ztPkNVc2FYLYlnOJxv4nzDS6AWI2RQQxRk9u5
-	 8fRvifyrmcDbrMpX3/WH1fNxxyrlf0iL1ZsGm543o+rI2jsyOhAPa1or3EXeey7Cvs85m
-	 bwTssgUmGVjPxU7kIUZz2BAZc83pDSiD0urtvUj76XUGu13kAsvTV41b7c4FjgeANwWug
-	 OuO8VY8Wg7NtDzvrqLzL5aiF5W+6MWK2jm+FDQSXXj1400s1q9JA/WZ4GuNWhLepLKA==
+	bh=b/l+fMZ5ei2qCRNQdp64vYdYPmxQ5PiTuzbWueD6Dso=;
+	b=Kev+Nx70kPOI9kH9X40iPqsZ2T3aPwMrmn+6u5/EbsQ5lAirG3sbGy535duIATvspZhH
+	 o7Z6urbrzhwof2II4FVFocvGC4SFmoIAMdvLJbecPRHYx8sJPI133k6OKKuVeYdtqxhub
+	 YVxuC3gp4/8oJIXFHKV5rp18BQwEtOLStW0WefrrupBeIso9Hk3Lf7JEiiWcXu+JmLUpD
+	 DP2o3pP2tumu01gNH8vLlLIjlYkfvQf86qvyrAl2zmQycmYam/zxRSfESN5c4Pf2LJL07
+	 lslPFmMKLq4OSo7Ju7mxFtGMDS8eoirhaTa4X5UmzevmeHVZ8Sy9nboLmnglwNFUSYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QGpedsCG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EnH3ov0P;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 845FB606A31C;
-	Wed, 18 Nov 2026 17:34:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A9F606A320;
+	Wed, 18 Nov 2026 17:34:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QGpedsCG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D63481F000C4;
-	Wed, 18 Nov 2026 17:34:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EnH3ov0P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE36D1F000C4;
+	Wed, 18 Nov 2026 17:34:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023261;
-	bh=u970YrW/OqX6OqMR7A8FaWPweq+myhcGxOOLmBTBu04=;
+	s=korg; t=1795023264;
+	bh=b/l+fMZ5ei2qCRNQdp64vYdYPmxQ5PiTuzbWueD6Dso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QGpedsCGCIj3dqOZh2Xb2CcW8DPWtD5DCmjPg23BWfDNsHGyTs10pcFqkFGhFdlqf
-	 sJyQgkBk4PtkRI31Hd9jRUzlXkIerdeFl4rVkCgHUcSyLwW5V+Az+nSriamgR3mOch
-	 fOczrkC6DgXTihyq74hzbY+/Fcip4LYl6sXB5UOk=
+	b=EnH3ov0PN3bbEMSmK/jgtXSfbwx/hF0ELoiUBlkegsSND61FAIeqKnaEzS4ESNoTp
+	 Fluz1DMexCPFvuSASl7ELXPR3z36Igq/b4IA6+m5KE/BYPZl7lxxCIXmQFyLVorgZk
+	 8MJZ87I4EZ6SNcgoYecDkJ6IFWjhkpNvFPUKCUvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Ian Gallagher <cdine@cdine.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0307/2151] ASoC: nau8822: keep regcache offline while supplies are off
-Date: Wed, 18 Nov 2026 15:34:02 +0100
-Message-ID: <20261118150133.098675571@linuxfoundation.org>
+Subject: [PATCH 6.18 0308/2151] ACPI: button: Add lid_init_state quirk for Razer Blade Stealth 13 (Early 2020) RZ09-0310
+Date: Wed, 18 Nov 2026 15:34:03 +0100
+Message-ID: <20261118150133.135652912@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,77 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Ian Gallagher <cdine@cdine.org>
 
-[ Upstream commit 9c343445b349422bddebb4cb9668c246bc6f08de ]
+[ Upstream commit f16c512a07b954aa3b0b3c580e7abb5dd4f5e703 ]
 
-nau8822_suspend() disables all codec supplies and marks the register
-cache dirty, but leaves regmap in live I/O mode. Resume then attempts
-the cache replay without first leaving a corresponding cache-only state.
+This patch adds a quirk mapping for the "Blade Stealth 13 (Early 2020) -
+RZ09-0310" laptop, which exhibits the same issue as the following two
+related products already accounted for in this file.
 
-Enter cache-only mode after the regulators have been disabled
-successfully, leave it after the supplies are restored, and stop the
-local resume sequence if cache replay fails. Do not power the codec back
-down on a resume error, because deferred component resume remains best
-effort and continues after the callback.
+ - Razer Blade Stealth 13 Late 2019
+ - Blade Pro 17 (Early 2020) - RZ09-0329
 
-regulator_bulk_disable() restores regulators already disabled by the
-same bulk operation if a later disable fails. Only publish cache-only
-state after the whole power-off operation succeeds, so the regmap state
-continues to match the hardware state on either outcome.
+Summary of the issue this fixes:
+The firmware's _LID method still returns "closed" after resume when the
+lid was opened during S3, causing systemd-logind to suspend the system
+again within several seconds (15-40) after waking.
 
-Fixes: 1e3cb6c321be ("ASoC: nau8822: new codec driver")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260830141828.34419-1-pengpeng@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Ian Gallagher <cdine@cdine.org>
+
+Link: https://patch.msgid.link/90ab9b58-da8b-4ffc-bd4b-adf7590545a9@app.fastmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/nau8822.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/acpi/button.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/sound/soc/codecs/nau8822.c b/sound/soc/codecs/nau8822.c
-index 978d44ea76eb0..6ca83ad95321f 100644
---- a/sound/soc/codecs/nau8822.c
-+++ b/sound/soc/codecs/nau8822.c
-@@ -1061,10 +1061,14 @@ static int nau8822_suspend(struct snd_soc_component *component)
- {
- 	struct nau8822 *nau8822 = snd_soc_component_get_drvdata(component);
- 	struct snd_soc_dapm_context *dapm = snd_soc_component_to_dapm(component);
-+	int ret;
- 
- 	snd_soc_dapm_force_bias_level(dapm, SND_SOC_BIAS_OFF);
--	regulator_bulk_disable(NAU8822_NUM_SUPPLIES, nau8822->supplies);
-+	ret = regulator_bulk_disable(NAU8822_NUM_SUPPLIES, nau8822->supplies);
-+	if (ret)
-+		return ret;
- 
-+	regcache_cache_only(nau8822->regmap, true);
- 	regcache_mark_dirty(nau8822->regmap);
- 
- 	return 0;
-@@ -1074,7 +1078,9 @@ static int nau8822_resume(struct snd_soc_component *component)
- {
- 	struct nau8822 *nau8822 = snd_soc_component_get_drvdata(component);
- 	struct snd_soc_dapm_context *dapm = snd_soc_component_to_dapm(component);
--	int ret = regulator_bulk_enable(NAU8822_NUM_SUPPLIES, nau8822->supplies);
-+	int ret;
-+
-+	ret = regulator_bulk_enable(NAU8822_NUM_SUPPLIES, nau8822->supplies);
- 
- 	if (ret) {
- 		dev_err(component->dev,
-@@ -1084,7 +1090,10 @@ static int nau8822_resume(struct snd_soc_component *component)
- 
- 	fsleep(100);
- 
--	regcache_sync(nau8822->regmap);
-+	regcache_cache_only(nau8822->regmap, false);
-+	ret = regcache_sync(nau8822->regmap);
-+	if (ret)
-+		return ret;
- 
- 	snd_soc_dapm_force_bias_level(dapm, SND_SOC_BIAS_STANDBY);
- 
+diff --git a/drivers/acpi/button.c b/drivers/acpi/button.c
+index b507b88df6c37..44a1f26d6c969 100644
+--- a/drivers/acpi/button.c
++++ b/drivers/acpi/button.c
+@@ -143,6 +143,18 @@ static const struct dmi_system_id dmi_lid_quirks[] = {
+ 		},
+ 		.driver_data = (void *)(long)ACPI_BUTTON_LID_INIT_OPEN,
+ 	},
++	{
++		/*
++		 * Razer Blade Stealth 13 early 2020, when the lid is opened
++		 * while suspended the open notification is lost and _LID keeps
++		 * returning closed after resume, causing spurious re-suspends.
++		 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Razer"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Blade Stealth 13 (Early 2020) - RZ09-0310"),
++		},
++		.driver_data = (void *)(long)ACPI_BUTTON_LID_INIT_OPEN,
++	},
+ 	{
+ 		/*
+ 		 * Samsung galaxybook2 ,initial _LID device notification returns
 -- 
 2.53.0
 
