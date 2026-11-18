@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060695;
-	b=3uqVkIiM4Jp/fm3RFFkjXs9ueBPehvOrhiVVCukcenqQCOI9ABDaR4SrX11xKxy7P2N+
-	 9Lzt61NwkOA6+j7ugFBvcegvjAFxj/gWLe9/gGXxQKqfqHcSXcHvSgbR9d6lAfPjWAdxR
-	 aXvd148DlTtOTBsx3493w0dlUCOiqMik8Gbt683lNAxLB/m7VCexyint88LaEYY81E3Rq
-	 MCeoY1dXh8fFpkj3GYkOR7Ax+bEFDYdeMlMGMrDrcSx+smxTzKiBkYI5Hcy7kzq5YdO13
-	 dKNYfgKfRssd3w5x7f1yBxFvrFSpmpFMuN0975AfX1iwSya+rk89/M1kHEOMEYp/vmg==
+	t=1795060698;
+	b=tgfLRrWIrQ4M74DbO3eqJ74tUeZ5kb18IiQvJRvFy+961iujLgTxY63PrYmPDDq+iL7M
+	 oVyvxaZ+xqk12laqmLPMo49wPDkL6o/8N5JNJ/XwDZhYp9XNeez25BqxOgvbLox8Od9k8
+	 yGC29QQOorDTlc4OPGtiBAevgU+LBm51LzlA7a9KcT4EuKRVsn+vlsueUVMMRD0TguToU
+	 YR692sdLji5S3BXJ8I/UJiJ0hPVrAdeJ++9jSruhkf/stLHsUQlknuwqP2SyBqqiR6p7w
+	 FWmKEpelITsjZm++1HVCsnZKJtRr4c3OT9ryP1xRwYXxDOxmsnhKFi0P6LZpw4IJ77w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060695;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060698;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YhU+Hh0iFk1DyxdJAJYVSU5+RFg49izFdg/ar/52CNc=;
-	b=4VCPPeecek7ZgJKAxtMQAhsF56TqSLC51AlOzCpP3t+MgiZ6KwZpe/+Fe+K1XTFt0X2C
-	 Z5QklUNR3gfBCRD/srBUFwMgS8RTiO4Dud0s1ppspvsHne+Frvl2ebX2s5SiXM9g8sjsJ
-	 u2I+8rmq6w1BuUnugLyWcBdNG/j2+SMabDFmvVn0ljTAM7W9OoYlOFggDOG+0OH0SLqW+
-	 SSUA/9wbDXWI41+d7IK6unJQCgUKRgJRT9m2mlQvvSuJLvxbTwgwekSGoa7s/1HNgqAQs
-	 At/nnlP/gkgW4vKsShpBz20SwsEen3x+9JRRzX3Nft5RdLDbmvFmud/BSzttLffM8ZA==
+	bh=g6LqmJ4/7oF86yfHuc22JJ/PRIvS0LnGzb5IxqJJUPw=;
+	b=XU0bnduyh0Ku2VKApnKCe/0uVHGLsw0cOBh6Aco+sCpedq+xdtMWR3xh1MmzyQAVzY5H
+	 PclEaIreZ/MjEPV5fwq3Qp4UHiPzAFsY5maWDVO6qVwUaIuLeRntlmSKtT88N5kfhdX6I
+	 9bcjDnb0jrjx6mKd3OQL3QK+1m15I7Ic0CVsVnu09IoosQhHxtNPnJJS4NOxN0IdwLSUs
+	 3cKtWVCZwBjNDiS2pdbUDWmIpyWfVwy34IxkInMEAiEchOTxdUcLGuxGE/FjTof6xtAJf
+	 iFpdWJ9Vcm2o4+AVWMKqv2E8Qvo6Ls1a6u4cyJHe1ryAhnAtsAyN8NUuU5fAHnr+zqg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FziTLYY8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rBnj36TZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CED6606A320;
-	Thu, 19 Nov 2026 03:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D02606A320;
+	Thu, 19 Nov 2026 03:58:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FziTLYY8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82C7F1F000C4;
-	Thu, 19 Nov 2026 03:58:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rBnj36TZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 451141F000C4;
+	Thu, 19 Nov 2026 03:58:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060695;
-	bh=YhU+Hh0iFk1DyxdJAJYVSU5+RFg49izFdg/ar/52CNc=;
+	s=korg; t=1795060697;
+	bh=g6LqmJ4/7oF86yfHuc22JJ/PRIvS0LnGzb5IxqJJUPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FziTLYY84hWqVGfX/CN+e/xpL3VjnbUWpEUhjgsifDBXeT6ItG1gi1hs1mQIqFrYO
-	 AnYcITOl6S6uNSggM2Pch5ky+QdzVNNBPcMm39Fe7EkgXje7ie5kibKEri5e3+3XfX
-	 aUaqCbToSZonNBryjvCX3T3xaWzfWKFFaMiPOWWY=
+	b=rBnj36TZoVQQITPgIsLH4vSSj0tKunFruZiO99j5W2c2RfoMRyigzoD7BMR11avoZ
+	 28fThf+PCjAPI9sqt3KH/D9sPF0+jIDaiYjyjMIztXBde6iwsFkRzi0fw8cfjggHe9
+	 /clGfcBggWvEqUEmd+vrvnL0j0JmOK0XhZZ+730g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmad Fatoum <a.fatoum@pengutronix.de>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Pengpeng Hou <hppiscas@163.com>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1239/1848] ARM: dts: stm32: lxa-mc1: change stdout-path baud rate from 9600 to 115200
-Date: Wed, 18 Nov 2026 15:54:37 +0100
-Message-ID: <20261118150011.715742422@linuxfoundation.org>
+Subject: [PATCH 5.10 1285/1848] pmdomain: imx: Propagate SCU provider registration failures
+Date: Wed, 18 Nov 2026 15:55:23 +0100
+Message-ID: <20261118150013.383503399@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,50 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmad Fatoum <a.fatoum@pengutronix.de>
+From: Pengpeng Hou <hppiscas@163.com>
 
-[ Upstream commit fc3c0ffefc169719316eddb8c36e2427e11ce713 ]
+[ Upstream commit d3efba7921f3ebebd91fc481910a428c78414fd8 ]
 
-The default baud rate when none is specified is up to the DT consumer.
+imx_scu_init_pm_domains() ignores of_genpd_add_provider_onecell() and
+returns success even when none of the initialized domains are published to
+DT consumers.
 
-In the case of the Linux STM32 serial driver, it defaults to 9600 baud,
-which differs from the 115200 baud that this board's barebox bootloader
-configured.
+Return the provider error and remove the initialized domains in reverse
+order before devm releases their backing storage on probe failure.
 
-This went unnoticed, because barebox automatically fixes up a console=
-command-line option that looks like this on the LXA boards:
+The issue was found by our static-analysis tool and manually reviewed.
 
-  console=ttySTM0,115200n8
-
-This had precedence over the 9600 fallback baud rate.
-
-But when EFI booting a kernel via GRUB, we run into this issue, because
-the barebox-provided command-line is disregarded by GRUB.
-
-Fix this by explicitly setting the baud rate to the correct 115200.
-
-Fixes: 666b5ca85cd3 ("ARM: dts: stm32: add STM32MP1-based Linux Automation MC-1 board")
-Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
-Link: https://lore.kernel.org/r/20260611-lxa-stdout-path-baudrate-v1-1-59b60a5069ff@pengutronix.de
-Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
+Fixes: c800cd7824bd ("firmware: imx: add SCU power domain driver")
+Assisted-by: gpt 5
+Signed-off-by: Pengpeng Hou <hppiscas@163.com>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/stm32mp157c-lxa-mc1.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/firmware/imx/scu-pd.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/stm32mp157c-lxa-mc1.dts b/arch/arm/boot/dts/stm32mp157c-lxa-mc1.dts
-index 1e5333fd437fe..32c173d2e2404 100644
---- a/arch/arm/boot/dts/stm32mp157c-lxa-mc1.dts
-+++ b/arch/arm/boot/dts/stm32mp157c-lxa-mc1.dts
-@@ -33,7 +33,7 @@ backlight: backlight {
- 	};
+diff --git a/drivers/firmware/imx/scu-pd.c b/drivers/firmware/imx/scu-pd.c
+index 946eea292b52f..c3b8122b9034d 100644
+--- a/drivers/firmware/imx/scu-pd.c
++++ b/drivers/firmware/imx/scu-pd.c
+@@ -304,7 +304,7 @@ static int imx_scu_init_pm_domains(struct device *dev,
+ 	struct genpd_onecell_data *pd_data;
+ 	struct imx_sc_pm_domain *sc_pd;
+ 	u32 count = 0;
+-	int i, j;
++	int i, j, ret;
  
- 	chosen {
--		stdout-path = &uart4;
-+		stdout-path = "serial0:115200n8";
- 	};
+ 	for (i = 0; i < pd_soc->num_ranges; i++)
+ 		count += pd_ranges[i].num;
+@@ -333,7 +333,13 @@ static int imx_scu_init_pm_domains(struct device *dev,
+ 	pd_data->num_domains = count;
+ 	pd_data->xlate = imx_scu_pd_xlate;
  
- 	led-act {
+-	of_genpd_add_provider_onecell(dev->of_node, pd_data);
++	ret = of_genpd_add_provider_onecell(dev->of_node, pd_data);
++	if (ret) {
++		while (count)
++			pm_genpd_remove(domains[--count]);
++
++		return ret;
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
