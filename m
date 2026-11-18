@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061459;
-	b=UVK2an84BTqz/eLcaPUulnKgu6wtIVKJGSfUK42yrpNyvlpc63GYA0nsS+PkPPitGYhl
-	 zqAQv9V7Va7rQdOth1ybA8Fe7jTVbCwHPhHxeJLUMRlasQJKp6RMXk0bLBV53zya/bV9B
-	 fTajkFEz2wyFied3nSDNq8dq3Kw2IePoPxM2ZOZrUPwSgG0zbr7VEdWYaDDYgkk3qmbUa
-	 ew2ZiQkYkI76F51zu5puDj8WMWcyNb5Hw0B9nV3bncxkUbkWlRWDqhHbdIwKqaC48cAv/
-	 488d78rggiLlDCTAPFE4FWCRRvu6v+3E2X2mhTxD5FpeoQkBM4KqYso70YqkI2Vtf1A==
+	t=1795061462;
+	b=Dt63fvsEWMmFEvITjSYEyw8VE3+GUXTiaAGRZX/87LlWHY5qLORDqdt8xpL6OlrnrIfG
+	 TwqQFDVdSPmS9f8tqQNwmYD1UBr+yU7O8hWiTwr9F2vD4W04P4tjdulD2X36Je6udZl8G
+	 ie6aQ6WFKo9YYGpTRHEK61mirIYK4aAioWROKXvnVDq6AO1cekC4DYxXb8dabF8bhH42A
+	 J/LMum5yPnfynbMtScW0JZqgowB25Q/SjTdeU/NxPFCWs8iyzHvyGWubPhsyYTfu+kePG
+	 3ct1FAf16rQI827fdCvlbM0kTkfcIxkzqztclbs6c0sEiTxMwhK1/N2Y5SeTYsF4mZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061459;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061462;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=gc3afVJ3ZDeHee/nBq0Q8jUtQOTw6/gnAuD8pqIvh2E=;
-	b=djc4kto8s05pXQNTIa3bjylnaXI1JJ2RBbbKToYDZzInp/KF0l0UwwhxV8hhkxpFHfh7
-	 aOIygz8NtoMuDCF20b9ywcPeRemkrSsuHmjzXdUepIRc43Q4EtRYFhYjgFwZxk/gitJNn
-	 D79w/JXcHIX8vs6A0Tuc8xRobf71JOSwZY60U1h3xSwGcktxws3o87mHZn2xom986N5np
-	 +IZb3dcA2cq7Wb+IcJteEloGX3m4whP0y7AJnQu1mKh5Q9n8hPX90Wr8QCA3lroTMf20M
-	 lNxqC1shqxNYYSlPYIhvaSpVwdyuwCwwyHoysMdWzGSDybssf7Jbmo7dASZLF9SfXIA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Euty6C5XezTL275n/3YgjMgxROLB482A5PBjhd3ykak=;
+	b=OKvcIyXG1IBbsD00UZqX7zo1xFm/OI/vln8vD+ZM4u/Bu0xxgpzo3/UDLH70JIO4b+ax
+	 xYe7ZywXI/9rHm6FMivx1mahE2CNiDuKjy3+WTwNFZjZtY1PMEsEdz2Uj/bKuhfPNvfB9
+	 7PsjXYJbYFuVqbdAWVZfUyvLu+yrPknktjd4sS7sj2dtCWu4w1gWgmSzF91hasQUVX5Am
+	 rAyHKHuDthayNPRMS5vEQySzmLpEmtY1vtfOY1GlPo46ED2HCZ2twtb3CKDNzQfuQKYLb
+	 aUcPiq2x17tfjLhyfHfs0zY0j9Xf8fuIWg9x0k+JOC794H68o2CxZV5XVdbEniK0XhA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B+zm7Gbw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=exesZhW1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 624BE606A320;
-	Thu, 19 Nov 2026 04:10:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CCE6606A32A;
+	Thu, 19 Nov 2026 04:11:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B+zm7Gbw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A73421F000C4;
-	Thu, 19 Nov 2026 04:10:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=exesZhW1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A94A1F000C4;
+	Thu, 19 Nov 2026 04:11:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061459;
-	bh=gc3afVJ3ZDeHee/nBq0Q8jUtQOTw6/gnAuD8pqIvh2E=;
+	s=korg; t=1795061462;
+	bh=Euty6C5XezTL275n/3YgjMgxROLB482A5PBjhd3ykak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B+zm7Gbw5ETzi9q+iU68Kshcs401pbmJqZxZg5qgquIK9zaM/xSdajTTqJJf2Lwcn
-	 t0xyUXwlR0C+uUYUSlXYr4nJ8AhfNBEcMGSRSSrt0XWE9rn1MHyRvHtMGzEVLy9sNH
-	 atbAIcYQVxB/WrV0flloP1GfLc2gMmgdP5trPOWU=
+	b=exesZhW1ngXOmNenuH1LGP0iXWhKiYtiq2+1Myx/bxLjENRATWhDe+8s9vh5P2E8u
+	 ItUaaZj8RejiYBPQYkOukDGJBJU97hx/5bZ+aS/pEQxCkkRCkwXmsiAmReiVYvoO88
+	 CY6Fq3Nns3nHQvVqvWF5X1R9nvhwz9RhA8MAIFAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prathamesh Deshpande <prathameshdeshpande7@gmail.com>,
-	Chenguang Zhao <zhaochenguang@kylinos.cn>,
-	Leon Romanovsky <leon@kernel.org>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Steven Price <steven.price@arm.com>,
+	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1561/1848] RDMA/mlx5: Cancel deferred page-fault EQ work before teardown
-Date: Wed, 18 Nov 2026 15:59:59 +0100
-Message-ID: <20261118150024.954072574@linuxfoundation.org>
+Subject: [PATCH 5.10 1562/1848] drm/panfrost: Explicitly enable MMU interrupts at device init
+Date: Wed, 18 Nov 2026 16:00:00 +0100
+Message-ID: <20261118150024.991973622@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -63,45 +63,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+From: Adrián Larumbe <adrian.larumbe@collabora.com>
 
-[ Upstream commit aea64024ac37d29e99b82b315a56a9145dc0bc23 ]
+[ Upstream commit 8a597d099b8b2f25df655cbe8e30765013784fed ]
 
-Page-fault EQ work can remain queued after the notifier is disabled.
-Destroying the EQ before cancelling that work can let the worker access
-freed EQ memory.
+Because the device must be in a position to accept jobs between the time
+drm_dev_register() is called and autosuspend first kicks in, there's a very
+narrow window inbetween during which jobs targeting the tiler buffer
+object would time out, since the device's PM status is 'Active', but no MMU
+interrupts were enabled at device initialisation time.
 
-Cancel the deferred work before destroying the EQ.
-
-Fixes: d5d284b829a6 ("{net,IB}/mlx5: Move Page fault EQ and ODP logic to RDMA")
-Signed-off-by: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
-Link: https://patch.msgid.link/20261007234216.2765-1-prathameshdeshpande7@gmail.com
-Reviewed-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Fixes: 73e467f60acd ("drm/panfrost: Consolidate reset handling")
+Reviewed-by: Steven Price <steven.price@arm.com>
+Link: https://patch.msgid.link/20261012-claude-fixes-v15-7-bc0a6c498553@collabora.com
+Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/odp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/panfrost/panfrost_mmu.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/odp.c b/drivers/infiniband/hw/mlx5/odp.c
-index 5c853ec1b0d81..c4b85b629ada1 100644
---- a/drivers/infiniband/hw/mlx5/odp.c
-+++ b/drivers/infiniband/hw/mlx5/odp.c
-@@ -1644,8 +1644,8 @@ mlx5_ib_destroy_pf_eq(struct mlx5_ib_dev *dev, struct mlx5_ib_pf_eq *eq)
- 	int err;
+diff --git a/drivers/gpu/drm/panfrost/panfrost_mmu.c b/drivers/gpu/drm/panfrost/panfrost_mmu.c
+index c81f3ac22cddb..53fbb2cd5d0a1 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_mmu.c
++++ b/drivers/gpu/drm/panfrost/panfrost_mmu.c
+@@ -195,6 +195,12 @@ void panfrost_mmu_as_put(struct panfrost_device *pfdev, struct panfrost_mmu *mmu
+ 	WARN_ON(atomic_read(&mmu->as_count) < 0);
+ }
  
- 	mlx5_eq_disable(dev->mdev, eq->core, &eq->irq_nb);
--	err = mlx5_eq_destroy_generic(dev->mdev, eq->core);
- 	cancel_work_sync(&eq->work);
-+	err = mlx5_eq_destroy_generic(dev->mdev, eq->core);
- 	destroy_workqueue(eq->wq);
- 	mempool_destroy(eq->pool);
++static void panfrost_mmu_enable_interrupts(struct panfrost_device *pfdev)
++{
++	mmu_write(pfdev, MMU_INT_CLEAR, ~0);
++	mmu_write(pfdev, MMU_INT_MASK, ~0);
++}
++
+ void panfrost_mmu_reset(struct panfrost_device *pfdev)
+ {
+ 	struct panfrost_mmu *mmu, *mmu_tmp;
+@@ -211,8 +217,7 @@ void panfrost_mmu_reset(struct panfrost_device *pfdev)
+ 
+ 	spin_unlock(&pfdev->as_lock);
+ 
+-	mmu_write(pfdev, MMU_INT_CLEAR, ~0);
+-	mmu_write(pfdev, MMU_INT_MASK, ~0);
++	panfrost_mmu_enable_interrupts(pfdev);
+ }
+ 
+ static size_t get_pgsize(u64 addr, size_t size)
+@@ -706,6 +711,8 @@ int panfrost_mmu_init(struct panfrost_device *pfdev)
+ 		return err;
+ 	}
+ 
++	panfrost_mmu_enable_interrupts(pfdev);
++
+ 	return 0;
+ }
  
 -- 
 2.53.0
