@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056002;
-	b=xQiaVePR71E1ZE2fAJtBV6LW/JaAETmJqu+uKeCm2QIFpfClC4NJd0tRFs3U9AqvehY0
-	 uoK+59yyPIT/Z1wf2mnR7GKo95Tn7x+L8vP7JPQsBhZjRcP/7qm2cVEQlQvCKij8E0wn/
-	 Uo2U+N3E/MXvq/csXRywoWBRH1rAkyPCJSomtJu9u9lD9p2kK1israWbwV+5DhmMvMXLb
-	 BTrBhBBnFWihH8vyUVhk6ToNjqx2D3jg8SyBPT1K+kT3yEsU9i/hVPgDOdsViWzYlKD19
-	 vVZuvUvvjhupMGZn1Du+m29pCWhdcCgCujJVtPjq8+w76gs27rEpYtb3MSvwSTnKZvQ==
+	t=1795056004;
+	b=348mVJvs3JBO1vaYgoI/URQxUo8ex5s4xMZQPgQI8Noq2RRyHveAJT9VRgLTtGFDPqS5
+	 aUvxzB9fS9zFb3yQGv0PaBhpzuMjujR57J2Y48Ph7vLHOT6n6AALhPn/vdarbG6NmiaB9
+	 4Rg1OnM/u/C4pxFXfPuJPcsY/xPPB6izpTXf8iHB2vPB8h21Jju77xfAQWqojjWoO7/aU
+	 L3Jv2a29hNXEkOkIa+ZNY+FkLOGr/x1LvSI18bj4SkxFnuxJd1PN/juLNbl6Dcdl+lalo
+	 lKB0YlC/5Kbq4Fx4/bSgnvtISU0bMwoh3LiBmZJTiH09aeIz08D/eGwU9VK7rVUaObQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056002;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056004;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wYvO14P+P8A4w1QCKR6rlHyz+JXOSOrM3myykj4WYVU=;
-	b=KBOQmYd6d7GcsxKsCIA2ovbhXdqMjjo46lU0sEKI5aW1/EuYMSM/8eyeaC8tS5oKBvju
-	 8fvt70i4fL/drPvNU2CwwDohukIbV2pvk5zWkFqZ8vW1JwopU4mg3xlvPhe8IRWekTP6b
-	 jzS8w19jq0tY113wxMLOX1WjgIe4q6pJ4awfh7LlANy79W5T8bXHeHWAbKV3HzoeENy4W
-	 FDLmdX/FpzuMbiAPldKfc4vOXEd87iRAsZ8ldDOqFtSvK/NHjAmVoAzoyoAUYVROPYMtc
-	 8eJSLYBlfMb8PssMlnx6eNN9jDr8wAGpgGrZFM/ClwFB9d6RKMPOPsoQbX/LNlMxUGA==
+	bh=QKzl7okVbgyl+OM52JAJ0j8FlO3IH362OWmoJwQq/Qc=;
+	b=DOa0OM/Ph1+htFMhYtvls8YHnC8ogl6Vo3pz5k4lgc6RkHwp7t1YIurtubjvhsUCxg1M
+	 aHUJXbNRDiUsc6gMOw7fQaS+KCwrOBVXYxU/4eVyhrPJs+a1xoCMtOIGa0HSOdUQrCcrZ
+	 GXYDK4F3yxZ8CJAbFXRin5cfrXOiKMkTG0tg9GB9lWNsV89JL59ewJADROWCD5mihmhqp
+	 Xjdg+EDCvyMnUeBdDhUxQhsTpaTH+8lMBi8+5O+Cbutd/X2hSigICePrnaXZGCrdN0mx8
+	 03BWSh1/7EKYVHgVX8q26k8sbHSJSXwUZs8tZ8hM2LcpOmJ6spFNNqlJBn0kTRrIHyw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tGOS1Hi2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EbYtyC9m;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11933606A320;
-	Thu, 19 Nov 2026 02:40:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D738C606A31C;
+	Thu, 19 Nov 2026 02:40:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tGOS1Hi2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 123EA1F000C4;
-	Thu, 19 Nov 2026 02:40:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EbYtyC9m
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED251F000C4;
+	Thu, 19 Nov 2026 02:40:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056001;
-	bh=wYvO14P+P8A4w1QCKR6rlHyz+JXOSOrM3myykj4WYVU=;
+	s=korg; t=1795056004;
+	bh=QKzl7okVbgyl+OM52JAJ0j8FlO3IH362OWmoJwQq/Qc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tGOS1Hi2bhYn+n5O8KFA+AKw6G6iU94/aSc8bRzUuCIkTE6AyIpq+efltHdOL8wCG
-	 ObdqE9ATDE+bbaoPGN9xYDeXyLm+UemDwAL+Be6STElq4q2h3dNmG14eX4n1qUiYJ2
-	 4HCMvTtvL+ZSIGy5LF38Nuu9ffDnQCNz5b2u1B9w=
+	b=EbYtyC9mmUjekwXAUEkGwrxmCr25HvlYcatIcmCzjWrPZcuLOY9wt6t9r5s/+lul5
+	 wZN2n3AnqBJ5n+JKhgxwnyA0YHqZiAGj2jwyurxOW4WwL2r8FdMpMH0e+Y5tnzXjeS
+	 2XXYWyVRDPI6e7+N29mew2Xdlan99seBLB2/P7qI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoni Pokusinski <apokusinski01@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Petr Mladek <pmladek@suse.com>,
+	Yosry Ahmed <yosryahmed@google.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1832/2214] rtc: abx80x: properly handle shared IRQs
-Date: Wed, 18 Nov 2026 15:58:28 +0100
-Message-ID: <20261118150124.719256585@linuxfoundation.org>
+Subject: [PATCH 5.15 1833/2214] seq_buf: Add seq_buf_do_printk() helper
+Date: Wed, 18 Nov 2026 15:58:29 +0100
+Message-ID: <20261118150124.761720094@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,122 +71,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antoni Pokusinski <apokusinski01@gmail.com>
+From: Sergey Senozhatsky <senozhatsky@chromium.org>
 
-[ Upstream commit 632916c7bde35495f2f6776d8e335c3ec6e306ec ]
+[ Upstream commit 96928d9032a7c34f12a88df879665562bcebf59a ]
 
-The abx80x RTC driver registers its interrupt handler with IRQF_SHARED,
-but the handler always returned IRQ_HANDLED and cleared the status
-register even when no interrupt source from the RTC was active.
+Sometimes we use seq_buf to format a string buffer, which
+we then pass to printk(). However, in certain situations
+the seq_buf string buffer can get too big, exceeding the
+PRINTKRB_RECORD_MAX bytes limit, and causing printk() to
+truncate the string.
 
-This could cause the driver to claim interrupts belonging to other
-devices sharing the same IRQ line and could also clear unrelated status
-bits in the RTC status register.
+Add a new seq_buf helper. This helper prints the seq_buf
+string buffer line by line, using \n as a delimiter,
+rather than passing the whole string buffer to printk()
+at once.
 
-Only handle the interrupt when the alarm or watchdog flags are set, and
-clear only those interrupt status bits that were handled. Return
-IRQ_NONE when the interrupt was not generated by the RTC.
+Link: https://lkml.kernel.org/r/20230415100110.1419872-1-senozhatsky@chromium.org
 
-Fixes: 718a820a303c ("rtc: abx80x: add alarm support")
-Signed-off-by: Antoni Pokusinski <apokusinski01@gmail.com>
-Link: https://patch.msgid.link/20260916205138.16771-5-apokusinski01@gmail.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Tested-by: Yosry Ahmed <yosryahmed@google.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Stable-dep-of: fa291d6429eb ("PCI/P2PDMA: Safely terminate ACS redirect lists")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-abx80x.c | 52 ++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 50 insertions(+), 2 deletions(-)
+ include/linux/seq_buf.h |  2 ++
+ lib/seq_buf.c           | 32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 34 insertions(+)
 
-diff --git a/drivers/rtc/rtc-abx80x.c b/drivers/rtc/rtc-abx80x.c
-index 6b3a47c6d0108..08c5adcc8a5e2 100644
---- a/drivers/rtc/rtc-abx80x.c
-+++ b/drivers/rtc/rtc-abx80x.c
-@@ -48,12 +48,18 @@
- #define ABX8XX_CTRL2_RSVD	BIT(5)
+diff --git a/include/linux/seq_buf.h b/include/linux/seq_buf.h
+index 5b31c51479694..515d7fcb9634b 100644
+--- a/include/linux/seq_buf.h
++++ b/include/linux/seq_buf.h
+@@ -159,4 +159,6 @@ extern int
+ seq_buf_bprintf(struct seq_buf *s, const char *fmt, const u32 *binary);
+ #endif
  
- #define ABX8XX_REG_IRQ		0x12
-+#define ABX8XX_IRQ_EX1E		BIT(0)
-+#define ABX8XX_IRQ_EX2E		BIT(1)
- #define ABX8XX_IRQ_AIE		BIT(2)
-+#define ABX8XX_IRQ_TIE		BIT(3)
-+#define ABX8XX_IRQ_BLIE		BIT(4)
- #define ABX8XX_IRQ_IM_1_4	(0x3 << 5)
- 
- #define ABX8XX_REG_CD_TIMER_CTL	0x18
- 
- #define ABX8XX_REG_OSC		0x1c
-+#define ABX8XX_OSC_ACIE		BIT(0)
-+#define ABX8XX_OSC_OFIE		BIT(1)
- #define ABX8XX_OSC_FOS		BIT(3)
- #define ABX8XX_OSC_BOS		BIT(4)
- #define ABX8XX_OSC_ACAL_512	BIT(5)
-@@ -249,6 +255,7 @@ static irqreturn_t abx80x_handle_irq(int irq, void *dev_id)
- 	struct i2c_client *client = dev_id;
- 	struct abx80x_priv *priv = i2c_get_clientdata(client);
- 	struct rtc_device *rtc = priv->rtc;
-+	unsigned int status_flags_clear;
- 	int status;
- 
- 	status = i2c_smbus_read_byte_data(client, ABX8XX_REG_STATUS);
-@@ -265,9 +272,15 @@ static irqreturn_t abx80x_handle_irq(int irq, void *dev_id)
- 	if (status & ABX8XX_STATUS_WDT)
- 		dev_alert(&client->dev, "watchdog timeout interrupt.\n");
- 
--	i2c_smbus_write_byte_data(client, ABX8XX_REG_STATUS, 0);
-+	status_flags_clear = status & (ABX8XX_STATUS_AF | ABX8XX_STATUS_WDT);
- 
--	return IRQ_HANDLED;
-+	if (status_flags_clear) {
-+		i2c_smbus_write_byte_data(client, ABX8XX_REG_STATUS,
-+					  status & ~status_flags_clear);
-+		return IRQ_HANDLED;
-+	}
++void seq_buf_do_printk(struct seq_buf *s, const char *lvl);
 +
-+	return IRQ_NONE;
+ #endif /* _LINUX_SEQ_BUF_H */
+diff --git a/lib/seq_buf.c b/lib/seq_buf.c
+index 0a68f7aa85d67..45c450f423fa8 100644
+--- a/lib/seq_buf.c
++++ b/lib/seq_buf.c
+@@ -93,6 +93,38 @@ int seq_buf_printf(struct seq_buf *s, const char *fmt, ...)
  }
+ EXPORT_SYMBOL_GPL(seq_buf_printf);
  
- static int abx80x_read_alarm(struct device *dev, struct rtc_wkalrm *t)
-@@ -821,6 +834,41 @@ static int abx80x_probe(struct i2c_client *client,
- 
- 	i2c_set_clientdata(client, priv);
- 
-+	/* Disable unused interrupts */
-+	data = i2c_smbus_read_byte_data(client, ABX8XX_REG_IRQ);
-+	if (data < 0) {
-+		dev_err(&client->dev, "Unable to read irq register\n");
-+		return -EIO;
++/**
++ * seq_buf_do_printk - printk seq_buf line by line
++ * @s: seq_buf descriptor
++ * @lvl: printk level
++ *
++ * printk()-s a multi-line sequential buffer line by line. The function
++ * makes sure that the buffer in @s is nul terminated and safe to read
++ * as a string.
++ */
++void seq_buf_do_printk(struct seq_buf *s, const char *lvl)
++{
++	const char *start, *lf;
++
++	if (s->size == 0 || s->len == 0)
++		return;
++
++	seq_buf_terminate(s);
++
++	start = s->buffer;
++	while ((lf = strchr(start, '\n'))) {
++		int len = lf - start + 1;
++
++		printk("%s%.*s", lvl, len, start);
++		start = ++lf;
 +	}
 +
-+	err = i2c_smbus_write_byte_data(client, ABX8XX_REG_IRQ,
-+					data & ~(ABX8XX_IRQ_EX1E |
-+						 ABX8XX_IRQ_EX2E |
-+						 ABX8XX_IRQ_TIE |
-+						 ABX8XX_IRQ_BLIE));
-+	if (err < 0) {
-+		dev_err(&client->dev, "Unable to write irq register\n");
-+		return -EIO;
-+	}
++	/* No trailing LF */
++	if (start < s->buffer + s->len)
++		printk("%s%s\n", lvl, start);
++}
++EXPORT_SYMBOL_GPL(seq_buf_do_printk);
 +
-+	data = i2c_smbus_read_byte_data(client, ABX8XX_REG_OSC);
-+	if (data < 0) {
-+		dev_err(&client->dev, "Unable to read Oscillator Control register\n");
-+		return -EIO;
-+	}
-+
-+	/* Unlock write access to Oscillator Control Register */
-+	if (abx80x_write_config_key(client, ABX8XX_CFG_KEY_OSC) < 0)
-+		return -EIO;
-+
-+	err = i2c_smbus_write_byte_data(client, ABX8XX_REG_OSC,
-+					data & ~(ABX8XX_OSC_ACIE |
-+						 ABX8XX_OSC_OFIE));
-+	if (err < 0) {
-+		dev_err(&client->dev, "Unable to write Oscillator Control register\n");
-+		return -EIO;
-+	}
-+
- 	if (abx80x_caps[part].has_wdog) {
- 		err = abx80x_setup_watchdog(priv);
- 		if (err)
+ #ifdef CONFIG_BINARY_PRINTF
+ /**
+  * seq_buf_bprintf - Write the printf string from binary arguments
 -- 
 2.53.0
 
