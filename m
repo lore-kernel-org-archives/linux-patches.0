@@ -1,63 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042538;
-	b=HkTQGyuucv9tamab6KzFrgs2ZKMqWNaFVjtiHuHhpI2XvGhbzLSgNfeR3rIlpyHpx0yL
-	 YRmNOnFCqvfR7cdqXhbKlKepRgk1efjXTrCxAlDVowKZ4TNteF/uJQOYV2xmKP9c2OIKv
-	 wPxCWLWaBzYAJg3LJOQBgFWClmtfQywpBpk9NSVSGjMDDV6eRr6Ok8PZNINXg9J+/kij9
-	 hsZisIiuIifMhwlyhgUWDC+XAiz2nxkF1rhgseY5KhSr5GLN1qA2RNUBvaX0RNCUNuF/L
-	 99WEkvINCDwg4Z6nLzc+y+4sKOCBI8xdVr8v4HUfqdPN3ILHhus3TXTTAYG73uFL0rg==
+	t=1795042540;
+	b=2DanM99obQ/dR64czewkHyu7swofkhNO2ZpC6YiOZRgA+GLzq4Xkt678nYgZ5uHnmKUx
+	 24biab6cmI7rnQDqnST+Yyd1a9kLPYBvYWt/BTSYufWq6T1Sr18Yg6BMoqOw7y243BoYu
+	 SgJBaN+L36wI5O/q97s1WurAb7M+mCHsw8HYpUkSC+TQGxsAw0IpuXu5AnGU9nlopAD+I
+	 jpJJufQwNg7juC6A6gyTbljEHzBb55y7bGT47Q1+ZVtBBdWIQnWrWzqbKFqeA5NYwPLdr
+	 2KKcJXfZjIq9nTWlfVrA/TEjdXArLrkAU1lLdtP67n083kXXBLlNelWASpiYCgkY9Eg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042538;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042540;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xSPLpqHiqAOPe23TXxaZDfwL10m6WMJcb6/A8YV6jD0=;
-	b=tAQa5RuQcVKNPHAwXtJL14nXDOd4l9sl2aFZivGaFyVVCFNBF/5eBRpsaMmZXr3qDRsD
-	 SvWdZ8mxis2pwXGrHux6ApBWJ2sZEJVW3W69auLN9q97FtK0GqCr6lWjtyng8lL6KpSJ8
-	 PzzQRMVeVLto5HswV1l89o9xBcRMvtP1PzTeyB6/S7NkwYK+6w4zOSXwJMvRYQ1hupWaD
-	 te2xK2vw/P+vjkLh6GH6dy8VEqOOhh+yLRdEiT332IUDa5FI2I4igHMECfpFH7eeU2kRV
-	 TJq0HbuD2tJ8PXTO0tfbeSPROpdh9Sz3fdgMfBv90QTUx21pOEFAdjtNxA+5/kdMtQg==
+	bh=z9Lk9ZHq0iGIsDoJpFG0E1UsxQ/s5rKryoO+BX8aVXI=;
+	b=Twk1SOP2umROs6SUaBAQvDkIWTm3B3Gzj4CBHs7H6hPA4rHKy7qhlCeSHV6Uclx5aWTD
+	 mAsfvnqiZCwl31zVAItcDJX1m3DndFQ4TgOLq45guTKbZw3BhRsP7bArLVz7WPI1n9n8I
+	 JG0PxjYRScjf0Tz6iM5g3Vm3Jn/JxJsxOnxJYyhIC/TEK2uINWPdOpp/YY+eCVO1yiQ/O
+	 ZkeysXHP51izinI+6H2e3BkBLASsjC6fiIIyzZDBTbdkTfcwMeyw+3zvU3W6Cq2GlsdJV
+	 GqMhTwqYLiFMLly8SrKQ6EmRG2UxFis8KnaBgDZciXLUfFMfXLcS/GolBI03DGLlGWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2UAHFwV2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Au1rxwL0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3344606A31C;
-	Wed, 18 Nov 2026 22:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B37F8606A31C;
+	Wed, 18 Nov 2026 22:55:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2UAHFwV2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 198B91F000C4;
-	Wed, 18 Nov 2026 22:55:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Au1rxwL0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 119991F000C4;
+	Wed, 18 Nov 2026 22:55:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042537;
-	bh=xSPLpqHiqAOPe23TXxaZDfwL10m6WMJcb6/A8YV6jD0=;
+	s=korg; t=1795042540;
+	bh=z9Lk9ZHq0iGIsDoJpFG0E1UsxQ/s5rKryoO+BX8aVXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2UAHFwV2aTo/HXEPWO2E7j31sFbk6M/1sPodp4h5BwPFRXz0Wyv9V+84K48qWUDEp
-	 XLUemhMy9mVYUaYaa+Tb+LKOENm5imgzo4s4Q6CZIa3irAYtn/3adnx3lNYTrNi17O
-	 WbCjW8VI3BHfh8tstOnOup5t0Phm3icQOviVIwQs=
+	b=Au1rxwL0gvlJbsMv8KxyH0zjvh3P2qvfko2w8a+0YRJoCwmw4+eYb2aFLmGcrwZxL
+	 v+CDgxspdXnnvWcPQSK+ThcN503V4lLiSm9fSQrUOFUD5Htnlmzke7tqO3qcMzLZkr
+	 fvZaArPcRaWQcdIUClqIt6Rj/l+GjDsS0asqmCPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Moses <p@1g4.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@intel.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Andrea Parri <parri.andrea@gmail.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3199/3318] perf mmap: Use the head selected by read_init
-Date: Wed, 18 Nov 2026 16:03:41 +0100
-Message-ID: <20261118150455.735236205@linuxfoundation.org>
+Subject: [PATCH 6.6 3208/3318] nvmet: zns: reject a NUMD whose byte count wraps
+Date: Wed, 18 Nov 2026 16:03:50 +0100
+Message-ID: <20261118150455.986604750@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -79,62 +68,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Moses <p@1g4.org>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-[ Upstream commit 022c64992af554cfd8c564bff86100fb5ed98678 ]
+[ Upstream commit 12740bec646dafe009a7d9a4d22d3495ef1ea5cd ]
 
-perf_mmap__push() reads the producer head before calling
-perf_mmap__read_init(), which reads it again to select the range to
-copy.
+Zone Management Receive computes its buffer size as (numd + 1) << 2 in
+u32, in nvmet_bdev_validate_zone_mgmt_recv(),
+nvmet_bdev_zone_zmgmt_recv_work() and
+nvmet_bdev_execute_zone_mgmt_recv(). NUMD is a 32-bit dword count, so
+any NUMD from 0x3fffffff up wraps.
 
-If the producer advances between those reads, push() copies through the
-newer head but stores the earlier head in prev. The next drain starts at
-that earlier position and can write the same records to perf.data again.
+The data length check in nvmet_bdev_execute_zone_mgmt_recv() sees the
+same wrapped value, so such a command can pass it. A data length that
+does not match the wrapped size is already rejected by that check, with
+Data SGL Length Invalid.
 
-Use the head selected by read_init(): end for forward buffers and start
-for overwrite buffers. Save it before the copy loop advances start so
-prev matches the range that was copied.
+Every site agrees on the wrapped size, so the target zeroes and fills
+only that many bytes and nothing leaks, but it answers a command whose
+NUMD asks for 4 GiB or more.
 
-Fixes: 8872481bd04850b1 ("perf mmap: Introduce perf_mmap__read_init()")
-Signed-off-by: Paul Moses <p@1g4.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@intel.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Reject a NUMD from U32_MAX / 4 up with Invalid Field at the start of
+nvmet_bdev_execute_zone_mgmt_recv(), before this handler or its work
+item computes the byte count. A size_t computation would still wrap on
+32-bit kernels, where nvmet_check_transfer_len() and req->transfer_len
+are 32 bits wide.
+
+nvmet_io_cmd_transfer_len() in core.c, which the pci-epf transport uses
+to size its buffer, computes the same expression before this handler
+runs. Return 0 there for such a NUMD, so pci-epf allocates no buffer and
+the handler then rejects the command.
+
+Tested over the loop, tcp, rdma and fc transports with a zoned
+null_blk namespace: a wrapping NUMD, sent with a data length that
+matches the wrapped size, was accepted before this patch and now fails
+with Invalid Field, while ordinary NUMD values still succeed. The core.c
+change only affects pci-epf and is build-tested only.
+
+Fixes: aaf2e048af27 ("nvmet: add ZBD over ZNS backend support")
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/mmap.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/nvme/target/core.c |  3 +++
+ drivers/nvme/target/zns.c  | 12 ++++++++++--
+ 2 files changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/mmap.c b/tools/perf/util/mmap.c
-index 49093b21ee2da..4d3e351ccf553 100644
---- a/tools/perf/util/mmap.c
-+++ b/tools/perf/util/mmap.c
-@@ -324,7 +324,7 @@ int mmap__mmap(struct mmap *map, struct mmap_params *mp, int fd, struct perf_cpu
- int perf_mmap__push(struct mmap *md, void *to,
- 		    int push(struct mmap *map, void *to, void *buf, size_t size))
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index e3dd453025751..7b24528174ca8 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -906,6 +906,9 @@ static u32 nvmet_io_cmd_transfer_len(struct nvmet_req *req)
+ 	case nvme_cmd_dsm:
+ 		return nvmet_dsm_len(req);
+ 	case nvme_cmd_zone_mgmt_recv:
++		/* The handler rejects a NUMD whose byte count would wrap. */
++		if (le32_to_cpu(req->cmd->zmr.numd) >= U32_MAX / 4)
++			return 0;
+ 		return (le32_to_cpu(req->cmd->zmr.numd) + 1) << 2;
+ 	default:
+ 		return 0;
+diff --git a/drivers/nvme/target/zns.c b/drivers/nvme/target/zns.c
+index 34b30ec859c99..8f6909ef67ba5 100644
+--- a/drivers/nvme/target/zns.c
++++ b/drivers/nvme/target/zns.c
+@@ -323,9 +323,17 @@ static void nvmet_bdev_zone_zmgmt_recv_work(struct work_struct *w)
+ 
+ void nvmet_bdev_execute_zone_mgmt_recv(struct nvmet_req *req)
  {
--	u64 head = perf_mmap__read_head(&md->core);
-+	u64 head;
- 	unsigned char *data = md->core.base + page_size;
- 	unsigned long size;
- 	void *buf;
-@@ -334,6 +334,7 @@ int perf_mmap__push(struct mmap *md, void *to,
- 	if (rc < 0)
- 		return (rc == -EAGAIN) ? 1 : -1;
+-	u32 out_bufsize = (le32_to_cpu(req->cmd->zmr.numd) + 1) << 2;
++	u32 numd = le32_to_cpu(req->cmd->zmr.numd);
++
++	/* From U32_MAX / 4 up, (numd + 1) << 2 wraps here and in the work. */
++	if (numd >= U32_MAX / 4) {
++		req->error_loc = offsetof(struct nvme_zone_mgmt_recv_cmd, numd);
++		nvmet_req_complete(req,
++				   NVME_SC_INVALID_FIELD | NVME_STATUS_DNR);
++		return;
++	}
  
-+	head = md->core.overwrite ? md->core.start : md->core.end;
- 	size = md->core.end - md->core.start;
+-	if (!nvmet_check_transfer_len(req, out_bufsize))
++	if (!nvmet_check_transfer_len(req, (numd + 1) << 2))
+ 		return;
  
- 	if ((md->core.start & md->core.mask) + size != (md->core.end & md->core.mask)) {
+ 	INIT_WORK(&req->z.zmgmt_work, nvmet_bdev_zone_zmgmt_recv_work);
 -- 
 2.53.0
 
