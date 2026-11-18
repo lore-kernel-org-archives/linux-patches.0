@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053476;
-	b=ZzyQ+u99q8RpJE49xXh3MKyQq6VZ0JgruFg5DfH++KlalT/iJENJVTPUqcZjMkHABZDz
-	 qalvY/RwgKky0K3es9S+tAJYWLAsTKjcTUgp2ROw25KaQllnND4sbNITAURU2a6amcEpA
-	 S/7XYCebKiogINBxeteuLeI68QPMDb0n7/BhShSA7xdDynLcvJNXVYFKcq1GFLsJFnIQ7
-	 b4SCMt+pWxXYVZzP8kD7QGAGRB+EhqwV1H17DPjRMmrskh23ZECbQibOFdjd4HE2x9R3y
-	 E3wP0aLDq+ULln+Phdx/EGn/Bxqysqq7BI0u2B6Ike3uWw9dFp+uI/+tZeKoy3kn8bw==
+	t=1795053479;
+	b=l1ZUJPZ9nc96i7H1M6JjsD7wKyDLLVRHdD/1mnNNzy1MTufGRD0gwUPIxj5vwcLMYVAy
+	 hOZU04LpgKRJR8pqXe/6Y5oV9Xj5Tcybl2Ii0t63MloHGFV+evvn3aSccmmPc5OYzSpsJ
+	 IO8J8kv3bux615LyAW8qCS5m/yvIVRo9G1FKcDMzGLT88gjaluknHVT6MZ+NdhMmxetps
+	 +XIPXJ9GvVIXUYD22YIur4rJuvCM1zpKozJaQtmrycc/qqSmGngmFKBEfBqDK0vQ/F7qe
+	 9km8nTU1+32CJmdUvCKHzUyM920TN622HzK16eYtP6B6GnEbdnanNIjxRrxlxfDHeng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053476;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053479;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5bznCeAMAZuV5t9f8h8l+HXv7Ox+rUThhhMCe2/2HHU=;
-	b=n9InxESElKcPK6rJQK9rMUrL/IOoK+ZtOwKd00DBD3xTlOJJ3UERsXIBjTaDbz+eCTq6
-	 s2KNsL/6smU7eUlmS4E9anozLBafCWvk4q6AzE0NJMrkxJgFCvPyb+REw5Uqn9s8jKfxi
-	 WtqTqm32kOntx9JQb2UOYR9k/hxwkGd8M9yfyizX5ntK0Y5tQpB3127copiFaNIyYcjB+
-	 GRfemVsWuqJDyS9MpcznIrEOFAyT1EuhUyppeGiGwy8F8eQnSVLrKPo7ZX9okRO+yjXQI
-	 fVCAf4j1//F8sxAnj9PBWZip3dwaNvPWaf0rjUrhYQOf1A1T0rUYNBPnw2lN/TkFhog==
+	bh=7D5IUAmxDJQL2pksRMYwcR4qsYdtezxb1QQajvd70xM=;
+	b=uLI05T1E6uk8ea4IE0l/ri/+LPZkHmoxid3Ku5Eg5YEou9WUoKg+qSR15gzjFYQUcpEd
+	 +RHIAk1blj+ECgLZZWd2vv9eeyWXtsIzy//6sGOIKC2zk9ZmLCAQyqehBWCMk2ZRaQydH
+	 MaJ+6JQBvImkRV40ClP6xKX4b9NMK916+C5bHIfMdrJyAVcg1PSOa8EnO83QLsuTP81ZB
+	 H1R4y3/qp0D0mrpiDEG9h2YqdVHnHECAeH07yvOMKzz5M8Mcl74XUjJ9IVUIN1USIYkVl
+	 C2dTy4sWlUFTjJA8U8b/2p1j8H7M2PkgxwjVo+Pa8jrR3T0TFC+AamZxjZLJJ+BhMVA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1h8FjI8F;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S+phAd3e;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6278D606A32A;
-	Thu, 19 Nov 2026 01:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4EB606A31C;
+	Thu, 19 Nov 2026 01:57:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1h8FjI8F
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B889C1F000C4;
-	Thu, 19 Nov 2026 01:57:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S+phAd3e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8037B1F000C4;
+	Thu, 19 Nov 2026 01:57:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053476;
-	bh=5bznCeAMAZuV5t9f8h8l+HXv7Ox+rUThhhMCe2/2HHU=;
+	s=korg; t=1795053479;
+	bh=7D5IUAmxDJQL2pksRMYwcR4qsYdtezxb1QQajvd70xM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1h8FjI8FZK6l/YzgU8xW6KUmShKc347okaoFPQH9jESnx1ioK9FQ6F0GNr63CCcCY
-	 Kyj3hdwvgpsofD6TjeNy3GhDt14MDt1q2LnPGC1IvAxZ2bipbhCswrcuM/szT5CCLT
-	 iHFaQ5va3yNYXjlZt4KcsxO1TW3yTP1Hkomuw1SA=
+	b=S+phAd3ekjlG1g5QMJU0gSN88HPOJ7iixGvKk1u28Qi8ddcHSWzmKcWyPISeeQ+CP
+	 f+xRFs0Z05vjILZpnnf/4VUWEbF5qKafqVi0za2rJvCpnUf6VCsBnIVrp+mGP+qurd
+	 eAknIuXBuDC3rla7F+BgbRTU42pjQoAX3oX9whno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyrylo Biryuk <illofspeed@gmail.com>,
-	Marco Ziliani <rylos78@gmail.com>,
-	Niklas Cassel <cassel@kernel.org>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0931/2214] ata: libata-pmp: disable the SEMB port on Marvell 88SM9705
-Date: Wed, 18 Nov 2026 15:43:27 +0100
-Message-ID: <20261118150049.606637253@linuxfoundation.org>
+Subject: [PATCH 5.15 0932/2214] can: replace ARPHRD_CAN type checks with can_get_ml_priv()
+Date: Wed, 18 Nov 2026 15:43:28 +0100
+Message-ID: <20261118150049.648992499@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,93 +69,247 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Ziliani <rylos78@gmail.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-[ Upstream commit 6b67cdb463b006e57f15e3fe4ea03b00f0ac9ee5 ]
+commit 962947b69589881167054bae5accc8abfd5aa4b6 upstream.
 
-The Marvell 88SM9705 is a 1-to-5 SATA port multiplier with one
-additional SEMB (SATA Enclosure Management Bridge) port [1].  Ports
-0-4 are device ports and port 5 is the SEMB.  The number of fan-out
-ports in GSCR[2] is 6 when the SEMB is enabled and 5 when it is not,
-so on boards without the SEMB there is no link 5 and this quirk does
-nothing.  That includes the common 8-port PCIe cards that pair an
-88SE9215 with an 88SM9705, which report 5 ports.
+Commit 4e096a18867a ("net: introduce CAN specific pointer in the struct
+net_device") introduced an explicit way to assign the midlayer private
+pointer (dev->ml_priv) to named users like ML_PRIV_CAN. A valid pointer
+returned by can_get_ml_priv() therefore identifies a real CAN device.
 
-The SEMB port never answers SRST.  libata probes it like a device
-port, and every EH round on the PMP ends in a retry loop that lasts
-about a minute before EH gives up, then starts over:
+The referenced commit only converted the j1939 and proc code to this
+check, while the other parts of the CAN subsystem still rely on
+dev->type == ARPHRD_CAN.
 
-  ata19.15: Port Multiplier 1.2, 0x1b4b:0x9705 r160, 6 ports, feat 0x1/0x1f
-  ata19.05: hard resetting link
-  ata19.05: failed to resume link (SControl 0)
-  ata19.05: softreset failed (1st FIS failed)
-  ata19.05: hard resetting link
-  ...
-  ata20.05: reset failed, giving up
+The TUNSETLINK ioctl allows a down TUN/TAP device to set its hardware
+type to ARPHRD_CAN while dev->ml_priv remains NULL. Such a repurposed
+netdevice passes the ARPHRD_CAN checks.
 
-Disk discovery waits for this, including disks on other controllers.
+Commit 8aa59e355949 ("can: af_can: fix NULL pointer dereference in
+can_rx_register()") already made can_rx_register() reject such devices.
+But can_rx_unregister() still only checks dev->type and dereferences
+the NULL ml_priv when it walks the receive lists of the device.
 
-libata.force only partly works around it.  The "disable" horkage
-only takes effect after IDENTIFY, which the SEMB link never reaches.
-"norst" on port 5 stops the retry loop, but the disks still come up
-about a minute later than with this change (see below).
+CAN_ISOTP reaches this path: isotp_bind() ignores the return values of
+can_rx_register() and binds the socket anyway. When the socket is
+released or the device is unregistered, isotp_release() and
+isotp_notify() remove the filters that have never been registered and
+trigger the NULL pointer dereference in can_rx_unregister(). This only
+requires owning a TUN/TAP device or CAP_NET_ADMIN in an unprivileged
+user namespace.
 
-Treat port 5 the same way as port 4 of the Marvell 88SM4140 and mark
-the link ATA_LFLAG_DISABLED.
+Convert the remaining ARPHRD_CAN checks in af_can, bcm, gw, isotp and
+raw to can_get_ml_priv().
 
-Tested on a Synology DX1222 expansion unit (four 88SM9705 r160 behind
-a Marvell 88SE9235, passed through to a KVM guest, 6 disks), 7.4-rc1
-with and without this change, one boot each:
-
-                                    softreset  reset failed,  last disk
-                                    failed     giving up      attached
-  7.4-rc1, no libata.force          60         12             197 s
-  7.4-rc1, libata.force=N.05:norst   0          0              70 s
-  7.4-rc1 + this patch, no force     0          0              11 s
-
-The problem was first found on a Synology DX1215 with the same chain,
-where this change brought the disks up after about 20 s instead of
-about 200 s, including a disk on a separate AHCI controller.
-
-Each PMP still logs one "failed to resume link (SControl 0)" for port 5
-at probe time.
-
-Link: https://www.marvell.com/content/dam/marvell/en/public-collateral/storage/marvell-storage-88sm9705-functional-specifications-2015-06.pdf [1]
+Fixes: 4e096a18867a ("net: introduce CAN specific pointer in the struct net_device")
 Cc: stable@vger.kernel.org
-Tested-by: Kyrylo Biryuk <illofspeed@gmail.com>
-Signed-off-by: Marco Ziliani <rylos78@gmail.com>
-Link: https://lore.kernel.org/r/20261107-pmp-88sm9705-v2-1-18eed983d3db@gmail.com
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Cc: Oleksij Rempel <o.rempel@pengutronix.de>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20261027-can-rx-lock-v12-1-eb5afc2d8b9b@hartkopp.net
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+[ backport to 5.15: This tree has no can_skb_ext, so only the ARPHRD_CAN
+  check is removed from the conditions in can_rcv() and canfd_rcv().
+  There is no canxl_rcv() in this tree. Add the <linux/can/can-ml.h>
+  include to raw.c, which upstream got with commit faba5860fcf9 ("can:
+  raw: instantly reject disabled CAN frames"). ]
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-pmp.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ net/can/af_can.c | 10 +++++-----
+ net/can/bcm.c    |  7 ++++---
+ net/can/gw.c     |  7 ++++---
+ net/can/isotp.c  |  5 +++--
+ net/can/raw.c    |  5 +++--
+ 5 files changed, 19 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/ata/libata-pmp.c b/drivers/ata/libata-pmp.c
-index 5347ed88f6386..63f0370a3ac87 100644
---- a/drivers/ata/libata-pmp.c
-+++ b/drivers/ata/libata-pmp.c
-@@ -471,6 +471,20 @@ static void sata_pmp_quirks(struct ata_port *ap)
- 			if (link->pmp == 4)
- 				link->flags |= ATA_LFLAG_DISABLED;
- 		}
-+	} else if (vendor == 0x1b4b && devid == 0x9705) {
-+		/*
-+		 * Marvell 88SM9705 quirks
-+		 *
-+		 * 1-to-5 PMP with an extra SEMB port.  It reports 6 ports and
-+		 * port 5 is the SEMB, which never answers SRST: EH spends about
-+		 * a minute per round retrying it, and disk discovery waits for
-+		 * that.  Seen behind a Marvell 88SE9235 in the Synology DX1215
-+		 * and DX1222.
-+		 */
-+		ata_for_each_link(link, ap, EDGE) {
-+			if (link->pmp == 5)
-+				link->flags |= ATA_LFLAG_DISABLED;
-+		}
+diff --git a/net/can/af_can.c b/net/can/af_can.c
+index cd31c4e014d1f..5943543284b5c 100644
+--- a/net/can/af_can.c
++++ b/net/can/af_can.c
+@@ -225,7 +225,7 @@ int can_send(struct sk_buff *skb, int loop)
+ 		goto inval_skb;
  	}
- }
  
+-	if (unlikely(skb->dev->type != ARPHRD_CAN)) {
++	if (unlikely(!can_get_ml_priv(skb->dev))) {
+ 		err = -EPERM;
+ 		goto inval_skb;
+ 	}
+@@ -452,7 +452,7 @@ int can_rx_register(struct net *net, struct net_device *dev, canid_t can_id,
+ 
+ 	/* insert new receiver  (dev,canid,mask) -> (func,data) */
+ 
+-	if (dev && (dev->type != ARPHRD_CAN || !can_get_ml_priv(dev)))
++	if (dev && !can_get_ml_priv(dev))
+ 		return -ENODEV;
+ 
+ 	if (dev && !net_eq(net, dev_net(dev)))
+@@ -519,7 +519,7 @@ void can_rx_unregister(struct net *net, struct net_device *dev, canid_t can_id,
+ 	struct can_rcv_lists_stats *rcv_lists_stats = net->can.rcv_lists_stats;
+ 	struct can_dev_rcv_lists *dev_rcv_lists;
+ 
+-	if (dev && dev->type != ARPHRD_CAN)
++	if (dev && !can_get_ml_priv(dev))
+ 		return;
+ 
+ 	if (dev && !net_eq(net, dev_net(dev)))
+@@ -687,7 +687,7 @@ static int can_rcv(struct sk_buff *skb, struct net_device *dev,
+ {
+ 	struct canfd_frame *cfd = (struct canfd_frame *)skb->data;
+ 
+-	if (unlikely(dev->type != ARPHRD_CAN || !can_get_ml_priv(dev) || skb->len != CAN_MTU)) {
++	if (unlikely(!can_get_ml_priv(dev) || skb->len != CAN_MTU)) {
+ 		pr_warn_once("PF_CAN: dropped non conform CAN skbuff: dev type %d, len %d\n",
+ 			     dev->type, skb->len);
+ 		goto free_skb;
+@@ -713,7 +713,7 @@ static int canfd_rcv(struct sk_buff *skb, struct net_device *dev,
+ {
+ 	struct canfd_frame *cfd = (struct canfd_frame *)skb->data;
+ 
+-	if (unlikely(dev->type != ARPHRD_CAN || !can_get_ml_priv(dev) || skb->len != CANFD_MTU)) {
++	if (unlikely(!can_get_ml_priv(dev) || skb->len != CANFD_MTU)) {
+ 		pr_warn_once("PF_CAN: dropped non conform CAN FD skbuff: dev type %d, len %d\n",
+ 			     dev->type, skb->len);
+ 		goto free_skb;
+diff --git a/net/can/bcm.c b/net/can/bcm.c
+index 2cf63940f6a9b..266faffd84000 100644
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -54,6 +54,7 @@
+ #include <linux/if_arp.h>
+ #include <linux/skbuff.h>
+ #include <linux/can.h>
++#include <linux/can/can-ml.h>
+ #include <linux/can/core.h>
+ #include <linux/can/skb.h>
+ #include <linux/can/bcm.h>
+@@ -1663,7 +1664,7 @@ static int bcm_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
+ 				goto out_release;
+ 			}
+ 
+-			if (dev->type != ARPHRD_CAN) {
++			if (!can_get_ml_priv(dev)) {
+ 				dev_put(dev);
+ 				ret = -ENODEV;
+ 				goto out_release;
+@@ -1811,7 +1812,7 @@ static int bcm_notifier(struct notifier_block *nb, unsigned long msg,
+ {
+ 	struct net_device *dev = netdev_notifier_info_to_dev(ptr);
+ 
+-	if (dev->type != ARPHRD_CAN)
++	if (!can_get_ml_priv(dev))
+ 		return NOTIFY_DONE;
+ 	if (msg != NETDEV_UNREGISTER && msg != NETDEV_DOWN)
+ 		return NOTIFY_DONE;
+@@ -1967,7 +1968,7 @@ static int bcm_connect(struct socket *sock, struct sockaddr *uaddr, int len,
+ 			ret = -ENODEV;
+ 			goto fail;
+ 		}
+-		if (dev->type != ARPHRD_CAN) {
++		if (!can_get_ml_priv(dev)) {
+ 			dev_put(dev);
+ 			ret = -ENODEV;
+ 			goto fail;
+diff --git a/net/can/gw.c b/net/can/gw.c
+index db5cfe64e9ad3..584b26a6b4832 100644
+--- a/net/can/gw.c
++++ b/net/can/gw.c
+@@ -52,6 +52,7 @@
+ #include <linux/if_arp.h>
+ #include <linux/skbuff.h>
+ #include <linux/can.h>
++#include <linux/can/can-ml.h>
+ #include <linux/can/core.h>
+ #include <linux/can/skb.h>
+ #include <linux/can/gw.h>
+@@ -603,7 +604,7 @@ static int cgw_notifier(struct notifier_block *nb,
+ 	struct net_device *dev = netdev_notifier_info_to_dev(ptr);
+ 	struct net *net = dev_net(dev);
+ 
+-	if (dev->type != ARPHRD_CAN)
++	if (!can_get_ml_priv(dev))
+ 		return NOTIFY_DONE;
+ 
+ 	if (msg == NETDEV_UNREGISTER) {
+@@ -1154,7 +1155,7 @@ static int cgw_create_job(struct sk_buff *skb,  struct nlmsghdr *nlh,
+ 	if (!gwj->src.dev)
+ 		goto out;
+ 
+-	if (gwj->src.dev->type != ARPHRD_CAN)
++	if (!can_get_ml_priv(gwj->src.dev))
+ 		goto out;
+ 
+ 	gwj->dst.dev = __dev_get_by_index(net, gwj->ccgw.dst_idx);
+@@ -1162,7 +1163,7 @@ static int cgw_create_job(struct sk_buff *skb,  struct nlmsghdr *nlh,
+ 	if (!gwj->dst.dev)
+ 		goto out;
+ 
+-	if (gwj->dst.dev->type != ARPHRD_CAN)
++	if (!can_get_ml_priv(gwj->dst.dev))
+ 		goto out;
+ 
+ 	ASSERT_RTNL();
+diff --git a/net/can/isotp.c b/net/can/isotp.c
+index 8832761193634..4caf83d694a0a 100644
+--- a/net/can/isotp.c
++++ b/net/can/isotp.c
+@@ -65,6 +65,7 @@
+ #include <linux/if_arp.h>
+ #include <linux/skbuff.h>
+ #include <linux/can.h>
++#include <linux/can/can-ml.h>
+ #include <linux/can/core.h>
+ #include <linux/can/skb.h>
+ #include <linux/can/isotp.h>
+@@ -1550,7 +1551,7 @@ static int isotp_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 		err = -ENODEV;
+ 		goto out;
+ 	}
+-	if (dev->type != ARPHRD_CAN) {
++	if (!can_get_ml_priv(dev)) {
+ 		err = -ENODEV;
+ 		goto out_put_dev;
+ 	}
+@@ -1850,7 +1851,7 @@ static int isotp_notifier(struct notifier_block *nb, unsigned long msg,
+ {
+ 	struct net_device *dev = netdev_notifier_info_to_dev(ptr);
+ 
+-	if (dev->type != ARPHRD_CAN)
++	if (!can_get_ml_priv(dev))
+ 		return NOTIFY_DONE;
+ 	if (msg != NETDEV_UNREGISTER && msg != NETDEV_DOWN)
+ 		return NOTIFY_DONE;
+diff --git a/net/can/raw.c b/net/can/raw.c
+index fccc2904bb181..6e515f3460f7b 100644
+--- a/net/can/raw.c
++++ b/net/can/raw.c
+@@ -49,6 +49,7 @@
+ #include <linux/if_arp.h>
+ #include <linux/skbuff.h>
+ #include <linux/can.h>
++#include <linux/can/can-ml.h>
+ #include <linux/can/core.h>
+ #include <linux/can/skb.h>
+ #include <linux/can/raw.h>
+@@ -315,7 +316,7 @@ static int raw_notifier(struct notifier_block *nb, unsigned long msg,
+ {
+ 	struct net_device *dev = netdev_notifier_info_to_dev(ptr);
+ 
+-	if (dev->type != ARPHRD_CAN)
++	if (!can_get_ml_priv(dev))
+ 		return NOTIFY_DONE;
+ 	if (msg != NETDEV_UNREGISTER && msg != NETDEV_DOWN)
+ 		return NOTIFY_DONE;
+@@ -454,7 +455,7 @@ static int raw_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 			err = -ENODEV;
+ 			goto out;
+ 		}
+-		if (dev->type != ARPHRD_CAN) {
++		if (!can_get_ml_priv(dev)) {
+ 			err = -ENODEV;
+ 			goto out_put_dev;
+ 		}
 -- 
 2.53.0
 
