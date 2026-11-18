@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023687;
-	b=mSbtgvok4ZDyoX8IU+A9aLtLtUy3sCbzwFKWeFm/72TeYZoh3lW3etzAeVzYBg0baO95
-	 7mRUDl6I1GNpXXkEAE98r5jyMcElgJDopf/eRJY1h3JsHZdvYqmDjGLURKgDTJ3X8XqIW
-	 wislqQJsOjCRbP4ufBj5yUWZNRCRs9DuMG3r8uoLRyp233tMA366RE0WeroO/888qvk84
-	 +XuOOW6OE6MSKgRHSXJ3uZtWr4AliXYbN2QwnerDnQyOwL+VJJcdXR+/e/z3f4Wz0FMKD
-	 I2aq8SuTKdui9syi+vm5OJz5R5AyCZNzHnxQQQJGiSQGXhPUoaCHM4Q3oQ6w+EmJ+bQ==
+	t=1795023690;
+	b=WC19FBic31z49dUO9r9tZB1/qbSSigcx1wXuZ5Vsr3GWSn4lB08BJNVmPMcsDjQ6enel
+	 mjJENpLRe+gadf7yz7FznyeJti0XeddZhjJFNq9NsS/3AdSYDP0lCKmsXCyFm6DjZSoaQ
+	 nhgBQhlBy+gNW3OL6PeyBV/hBumOgze26YkOeoeBx8zomuY0I5iEPPUim3lu1Ee4hq4+C
+	 EPIuF3vu+r8o2RTZhaOPPXXT2TeanVrORLwSifTlsGWD+VSCm2K4Q0DWMcY5/U2RHdxOg
+	 o+Jg9wD4lc5pm/l9uX+mvA8J+M1ZKrFWjQXgw/cdyDzWnAk5eB8pAhBRMaEfpbTxCnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023687;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023690;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=0bYlUOd1E3F/U2oBZTMCYXhTRcw4N/9Tpz8/JcEZyUE=;
-	b=3J9h5Po1SxTLa8syEX0zSTn7WzhKQKITa0F3tkHOya3IVjiadsB/Le+3rz+UJxXPfsoy
-	 1/5K754d/KajzMzBzDG6moB3MBVChQ1ahB3eSljbhGgF7s/B/xv/glIOh5bUjJM+JSUsm
-	 pV/OPyy8ryCtOQcnRknrajLbX802Jy9Wpkw9pOazY7MVGiGDTbsZrUpD/8VG7vOGdIsC9
-	 aVt7b2TbvpYiiSvpNmdBQha6sje0xdhv9C8yeM92ZV8AuMytzeja4/JqEalF29b448gx3
-	 mrLMLjH6vYUXxSDirJOZ/HLvcgscKXjNwdi/8PfpDA0Y48rBoMJVApaNod+Gik31NkA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=MLpo9L6yZ8XJ7peIPZK3ZWJ9xbf18Jb3MJYpX48eHGc=;
+	b=hrBVyL0wS/PCbcYJeFup05WwjUGnYfcsffEbYuDrP+hfKlgCHY5C5Ltu1kArGwBMH0M2
+	 hJN2l+xUTxvJNmorVaJjE4n8MxH85rwD0CQdXVSF2Ovi5Q2U30A5GpjS5HJV13rRU1oHa
+	 O+Iu/KwzzoWNs9QH04GN68YKvK3A5ELbH5qrbXdiO+1978j6sEanOsh8TgHsgIP5ygByc
+	 62kGIV9cdmoi7NwtjHl5DlOqg9V16pAMpsIj/EXLFVGBdUM5VL1yVTdf9bYbtUX6w3mgI
+	 4p+giEhv1v6U4ipoVgIqkeqLugYx73D9a26Cm1YYOqu3oh6tQwoXy7MCxmqGTMsrVdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rxtzT508;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DRIdsPpU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D1CF606A325;
-	Wed, 18 Nov 2026 17:41:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F17A606A320;
+	Wed, 18 Nov 2026 17:41:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rxtzT508
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2ABC1F000C4;
-	Wed, 18 Nov 2026 17:41:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DRIdsPpU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 705091F000C4;
+	Wed, 18 Nov 2026 17:41:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023687;
-	bh=0bYlUOd1E3F/U2oBZTMCYXhTRcw4N/9Tpz8/JcEZyUE=;
+	s=korg; t=1795023690;
+	bh=MLpo9L6yZ8XJ7peIPZK3ZWJ9xbf18Jb3MJYpX48eHGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rxtzT5080QUmYLRvWeITmy1v2rOmiAzeMpHK6CVj+rzaupo/XwqkfCvstze6d5H1v
-	 mLkgDr3qW0DZn0sZonqnOl5GBdDNNoFtfWqNX2t4S0ha142M4JtNJJiN5o06U79CyN
-	 V6Ge+/ywKNZCRtRFO9YDYGw8jvccZbQVfnNAam34=
+	b=DRIdsPpUOcnLVvQMeAfAZmRXue7BSwKdXCoEtxWDQ7MzqAQao+4Aodfqkny/LP/NX
+	 PYQqe4sZ397NO0o0JzSmHkUjwLfqouDcyjr2vpCsYxAIwDHtA2vMBS9urOMLNUv1Hu
+	 JimJFbNXpwLB5R/vet2tyEDE/1cN9lBHfYGgLAwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Luka Gejak <luka.gejak@linux.dev>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0457/2151] platform/x86/intel/vsec: reset state before re-enumerating
-Date: Wed, 18 Nov 2026 15:36:32 +0100
-Message-ID: <20261118150138.674077500@linuxfoundation.org>
+Subject: [PATCH 6.18 0458/2151] wifi: rtw88: sdio: zero the padding added to a TX transfer
+Date: Wed, 18 Nov 2026 15:36:33 +0100
+Message-ID: <20261118150138.707682608@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -62,88 +62,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Luka Gejak <luka.gejak@linux.dev>
 
-[ Upstream commit ee26050614d02397eb743854d718689dcaf1889b ]
+[ Upstream commit b81ead28aeb1fd9bc3b0de4e20342b6b538ac658 ]
 
-The change referenced by the Fixes tag split the VSEC enumeration logic
-out of intel_vsec_pci_probe() and made PCIe error recovery call
-intel_vsec_pci_init() directly. This avoids another pcim_enable_device()
-devm action and another devm allocation during slot reset, but it also
-means that error recovery reuses the priv structure allocated by probe.
+rtw_sdio_write_port() rounds the transfer up with sdio_align_size() and
+then hands that length to sdio_memcpy_toio() while the skb still only
+holds skb->len bytes. The difference, between one and 511 bytes, is read
+from beyond the end of the frame and transmitted. Whether it stays
+inside the skb's allocation depends on how much tailroom the skb happens
+to have, so this is at best sending uninitialised memory over the air.
 
-On the initial probe, priv is zeroed by devm_kzalloc(), so state[],
-suppliers[] and found_caps start from their initial values. During slot
-reset, the existing aux devices are removed before re-enumerating, but
-the reused priv still records the old devices as registered and the old
-capabilities as found.
+Pad the skb up to the transfer size first. __skb_pad() zeroes the added
+bytes, reallocates a cloned skb rather than writing into a buffer a
+clone still shares, and leaves skb->len alone, so nothing else in the
+transmit path has to change.
 
-The next intel_vsec_pci_init() call can therefore short-circuit in
-intel_vsec_register_device() with -EEXIST, or stop early because
-found_caps already matches info->caps. The aux devices removed during
-slot reset are then not recreated, leaving VSEC functionality missing
-after PCIe error recovery.
+It must not free the skb on failure: rtw_sdio_write_data() frees the skb
+itself and rtw_sdio_process_tx_queue() requeues it, so both callers
+still own it and would double free.
 
-Reset the VSEC registration state after removing the old aux devices and
-before re-enumerating them.
+Found while reworking this path for the RTL8723BS. Measured on RTL8723BS
+hardware, padding the transfer costs about 2% observable over transfer:
+uplink is 19.5 to 19.8 Mbit/s padded against 20.9 to 21.1 Mbit/s unpadded
+in an interleaved A/B, with scans, reconnection and a UDP flood clean in
+both. The other SDIO parts sharing this path are untested; I have only the
+RTL8723BS.
 
-Fixes: 348ccc754d89 ("platform/x86/intel/vsec: Fix enable_cnt imbalance on PCIe error recovery")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260708032647.712412-1-lgs201920130244@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 65371a3f14e7 ("wifi: rtw88: sdio: Add HCI implementation for SDIO based chipsets")
+Signed-off-by: Luka Gejak <luka.gejak@linux.dev>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260909074556.55709-5-luka.gejak@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/vsec.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/net/wireless/realtek/rtw88/sdio.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/platform/x86/intel/vsec.c b/drivers/platform/x86/intel/vsec.c
-index 814e418bea82b..3c157ff9d54b6 100644
---- a/drivers/platform/x86/intel/vsec.c
-+++ b/drivers/platform/x86/intel/vsec.c
-@@ -49,6 +49,13 @@ struct vsec_priv {
- 	unsigned long found_caps;
- };
- 
-+static void intel_vsec_reset_state(struct vsec_priv *priv)
-+{
-+	memset(priv->suppliers, 0, sizeof(priv->suppliers));
-+	memset(priv->state, 0, sizeof(priv->state));
-+	priv->found_caps = 0;
-+}
-+
- static const char *intel_vsec_name(enum intel_vsec_id id)
+diff --git a/drivers/net/wireless/realtek/rtw88/sdio.c b/drivers/net/wireless/realtek/rtw88/sdio.c
+index e35de52d8eb43..2fa8563940fa8 100644
+--- a/drivers/net/wireless/realtek/rtw88/sdio.c
++++ b/drivers/net/wireless/realtek/rtw88/sdio.c
+@@ -636,6 +636,7 @@ static int rtw_sdio_write_port(struct rtw_dev *rtwdev, struct sk_buff *skb,
+ 			       enum rtw_tx_queue_type queue)
  {
- 	switch (id) {
-@@ -829,6 +836,7 @@ static pci_ers_result_t intel_vsec_pci_slot_reset(struct pci_dev *pdev)
- {
- 	struct intel_vsec_device *intel_vsec_dev;
- 	pci_ers_result_t status = PCI_ERS_RESULT_DISCONNECT;
-+	struct vsec_priv *priv = pci_get_drvdata(pdev);
- 	unsigned long index;
+ 	struct rtw_sdio *rtwsdio = (struct rtw_sdio *)rtwdev->priv;
++	size_t pad_size;
+ 	bool bus_claim;
+ 	size_t txsize;
+ 	u32 txaddr;
+@@ -646,6 +647,17 @@ static int rtw_sdio_write_port(struct rtw_dev *rtwdev, struct sk_buff *skb,
+ 		return -EINVAL;
  
- 	dev_info(&pdev->dev, "Resetting PCI slot\n");
-@@ -849,6 +857,13 @@ static pci_ers_result_t intel_vsec_pci_slot_reset(struct pci_dev *pdev)
- 		devm_release_action(&pdev->dev, intel_vsec_remove_aux,
- 				    &intel_vsec_dev->auxdev);
- 	}
+ 	txsize = sdio_align_size(rtwsdio->sdio_func, skb->len);
++	pad_size = txsize - skb->len;
 +
-+	/*
-+	 * intel_vsec_pci_init() reuses priv. Reset the registration state
-+	 * after tearing down old aux devices or the rewalk will skip them as
-+	 * already registered.
-+	 */
-+	intel_vsec_reset_state(priv);
- 	pci_restore_state(pdev);
- 	intel_vsec_pci_init(pdev);
++	if (pad_size > 0) {
++		/*
++		 * __skb_pad() must not free the skb on failure: both callers
++		 * still own it, one requeues it and the other frees it.
++		 */
++		ret = __skb_pad(skb, pad_size, false);
++		if (ret)
++			return ret;
++	}
  
+ 	ret = rtw_sdio_check_free_txpg(rtwdev, queue, txsize);
+ 	if (ret)
 -- 
 2.53.0
 
