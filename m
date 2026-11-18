@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018611;
-	b=k33LWgEWQ/9AnNnM61hDpFjR5eCrJETg7N+CUVa6qMVSpZJDUBUqk8qSAN3Dk/K6HLT5
-	 HU4OOXTjwzhTKmY/rloZU/M9xHvl006asbZhmDCdYeESocaYurz/TxqULWtPLd7HcYWoc
-	 Hhge9Tc92zat3MUJOGEqwzzJe+KHWoDRd22ILBVwYec7f7rBUIBplK6+III8tQ0EIoQN6
-	 3y5Jg4HPPVgo8IFoc7fcDwWL5R/r53IeVLgBEv7Sot/StK4xPO75EcAGI8Xp6B73ZR1Fj
-	 yAAGhxxpEjtSwz6ORinulSDg//Sf1vabMbgGDT88Nqpsw4f/82TtDSWtgrqbmD8dhFg==
+	t=1795018614;
+	b=BHEOv1lNnB2Dit5smtq6szIQMRsKwMuIS3eDMJTBL7oRpvJG4pcpQOPYTBEDX+RNeHF2
+	 FPkaQrivhZZYOOM6hTMZ1OaiU+pcZ6YAmzNVUoEV8X+OuT/9NnPkXGJ1xKjvJkA6WYYB1
+	 Rm/goWJ8MM7ub1vD+5TnLiUCUeTVjMgXbkhB2idvj/amAKiRZhX+ydTP0yIDOGnsqOKdj
+	 FZX7QmkUegcA4lpxETR93eJnhwnLLG8459su3DTz6oQIhmdbIo2Nq6Lvo8nJMv+EJ1YeA
+	 Te/n2bHlwfgrQ6MEDY+2DpH+N5FSYapzHhL299guFQ8u/FMT06hZtwQUhgjWHTYKvug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018611;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018614;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OK2GcT5G6sNJjJZxUkfOT3die8TVceaYTsiult25sAk=;
-	b=nsNdxsElMVpiw+fMfMieW0pwl+EWODLeyF0iqghPN5ECCMtJ0G/UGh4McQUEtlScAXSE
-	 IUFRkr7a+dugaddTf3WHECa6V30yFn+zYdqnjJGRqjN89KpOmfPjtB8YxkrW04wFLtvC8
-	 vGBSnJv6do/o2QfzmCT8pypExEh+Wk0r54vfyaP6npHAfTOqR0i5scdNvKTacWFlA6YOB
-	 ++WEo6VzGzEbPGpiZOWTLye2J3ZutIlyjsDaBwGPp5JmH2xRzx6vbDrhiN+kZ8HwP0mhr
-	 Vu613xVG0B+1WP0bmu+MW4xmWY/01g8PaSTf96WZu8tksZDJNY6waHqdW5Yk0swVJyA==
+	bh=tVUJ/jlVibh789HnAbwISwnuDz/HXfgUSqDpqB8H6J0=;
+	b=CPMQtJFi/tE+0smR0HDepYM6uVIROSuHUh+ikA1t1EH0vi1BmprQ00mih5dldWOviE1a
+	 z9CEin38bOufGghCYmqs8481tXhrRKESmIRvD/zch2ZP4lIoue3IbEkBAs607Y/QjgL+S
+	 oHZe8gXFTt88AxWxJvoQrfqbezE8RkRM4s70AzNaIFsOqu1/ZPBMX6F4coFniQTv934bP
+	 e3+9fMt9Q6E6KUOXaBI371fAM2pVFjnD+a61GhF2WBRNdzZ4bIk74UhQXC5TQqd8pwt+u
+	 FF2yuHOC2qmYVEQMTHx0CU+6tzAtcgBXAyqV4EwQIIMhrqMGHwM9zNz+9//SkSstqKA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1+7iE5He;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VlI7+qlQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F648606A331;
-	Wed, 18 Nov 2026 16:16:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CB93606A31C;
+	Wed, 18 Nov 2026 16:16:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1+7iE5He
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C27471F000CB;
-	Wed, 18 Nov 2026 16:16:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VlI7+qlQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D9C21F000C5;
+	Wed, 18 Nov 2026 16:16:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018611;
-	bh=OK2GcT5G6sNJjJZxUkfOT3die8TVceaYTsiult25sAk=;
+	s=korg; t=1795018614;
+	bh=tVUJ/jlVibh789HnAbwISwnuDz/HXfgUSqDpqB8H6J0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1+7iE5HenueLLTlgZrBarzljIoZZJ+Cu4VPmkPRn5DvfNPSf+DEFv4o/pCLb/B7iB
-	 Q5Jb6IQXqmGh/DQ+YLTUWQZUOPWD2kUOo8/sK0pvpUCy8zlfkxjmz7nrrnLA1xUFox
-	 6YBg3cxoRNrihY6a2qfoLWB041JGKESvWuT4reQA=
+	b=VlI7+qlQUpXBbN9seaSVwKOoly3KYZei8dLvz+q38J7SMdsta45emyyyutUY9aXfY
+	 sgpARG+y35MoyHQed350YJ254bdW8IbzxTojlJS1Y+Js2Q9ByZhBVeIZEI1Gp6lNPX
+	 +m2TMCdyjpZkz3L5KUwNBR8KDPobl9NU+7u6OC6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joonhoe Kim <26rote@gmail.com>,
-	Pengyu Luo <mitltlatltl@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1300/2651] drm/msm/dpu: round up the compressed INTF width
-Date: Wed, 18 Nov 2026 15:42:20 +0100
-Message-ID: <20261118150334.768815085@linuxfoundation.org>
+Subject: [PATCH 7.3 1301/2651] firmware: qcom: tzmem: Use DO_ONCE_SLEEPABLE() in qcom_tzmem_enable()
+Date: Wed, 18 Nov 2026 15:42:21 +0100
+Message-ID: <20261118150334.803232660@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,60 +70,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joonhoe Kim <26rote@gmail.com>
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 
-[ Upstream commit 6b93e8b453fa27a1b6a1d472f3ff8663e6811fae ]
+[ Upstream commit 60d4a6edea9ec617725db6dd1e66d96a13bc8d0a ]
 
-For DSI with DSC, drm_mode_to_intf_timing_params() scales the INTF
-active width by bpp / (3 * bits_per_component) and rounds down. The DSI
-host computes the same width with DIV_ROUND_UP, both for the pixel clock
-(dsi_adjust_pclk_for_compression()) and for the active width it programs
-(dsi_timing_setup(), from bytes per line). When the division is not
-exact the INTF line is one pclk shorter than the DSI line, and the DSI
-FIFO overflows.
+qcom_tzmem_enable() is called from qcom_scm_probe() in a sleepable process
+context. The helper it wraps, qcom_tzmem_init(), calls
+qcom_scm_shm_bridge_enable() -> qcom_scm_call(), which invokes
+might_sleep() and later acquires the qcom_scm_lock mutex via
+__scm_smc_do().
 
-Example: a bonded DSI video-mode panel, 952 pixels per link, DSC 8 bpp at
-10 bpc: 952 * 8 / 30 = 253.87, so the INTF uses 253 and the DSI 254.
+DO_ONCE() takes the once_lock spinlock with IRQs disabled, so invoking
+qcom_tzmem_init() from inside DO_ONCE() runs a sleepable call chain in
+atomic context. CONFIG_DEBUG_ATOMIC_SLEEP=y catches this on boot:
 
-Round up, as the DSI host does. Qualcomm's downstream SDE driver also
-rounds this width up, and Pengyu Luo needed the same rounding on the
-Legion Y700 gen 4 [1].
+  BUG: sleeping function called from invalid context at drivers/firmware/qcom/qcom_scm.c:334
+  in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 49, name: kworker/u16:2
+  ...
+   __might_resched+0x148/0x24c
+   __might_sleep+0x48/0x7c
+   qcom_scm_call+0x30/0xc0
+   __qcom_scm_is_call_available+0x98/0x100
+   qcom_scm_shm_bridge_enable+0x60/0xbc
+   qcom_tzmem_enable+0xf8/0x118
+   qcom_scm_probe+0x2d0/0x680
 
-Tested on a Lenovo Legion Tab Y700 gen 5 (SM8850) with that panel, with a
-module parameter selecting the rounding: rounding down, DPMS off/on gives
-no vblank and 14000-17000 DSI FIFO error interrupts per second
-(dsi_err_worker: status=4); rounding up, the picture comes back and there
-are no errors. Only tested on this device.
+  [ BUG: Invalid wait context ]
+  ...
+  kworker/u16:2/49 is trying to lock:
+  ffffa83e8a485e38 (qcom_scm_lock){....}-{4:4}, at: __scm_smc_do+0x70/0x488
 
-Link: https://lore.kernel.org/all/CAH2e8h6oinKxN1ndcvHCSc+=bFLXVVDZVAVF0cQHoiaMvEwhPQ@mail.gmail.com/ [1]
-Fixes: f9ce482d7dc0 ("drm/msm/dpu: fix video mode DSC for DSI")
-Assisted-by: LLM
-Signed-off-by: Joonhoe Kim <26rote@gmail.com>
-Reviewed-by: Pengyu Luo <mitltlatltl@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/757958/
-Link: https://lore.kernel.org/r/20261004102758.84436-1-26rote@gmail.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Switch to DO_ONCE_SLEEPABLE(), which guards the one-shot init with a
+mutex-style path (__do_once_sleepable_start/done) that is safe to hold
+across sleeping callees. All callers of qcom_tzmem_enable() are in
+process context (driver probe), so this is safe.
+
+Fixes: 9941fe8a04f3 ("firmware: qcom: scm: Fix tzmem state on probe retry")
+Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Closes: https://lore.kernel.org/lkml/5ea74dd3-7471-4c7c-9242-c2005312b1ab@samsung.com/
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260921195636.1925869-1-mukesh.ojha@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/firmware/qcom/qcom_tzmem.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-index ba810f26ea309..2ac517db50fcd 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-@@ -134,8 +134,8 @@ static void drm_mode_to_intf_timing_params(
- 		 * TODO: replace drm_dsc_get_bpp_int with logic to handle
- 		 * fractional part if there is fraction
- 		 */
--		timing->width = timing->width * drm_dsc_get_bpp_int(dsc) /
--				(dsc->bits_per_component * 3);
-+		timing->width = DIV_ROUND_UP(timing->width * drm_dsc_get_bpp_int(dsc),
-+					     dsc->bits_per_component * 3);
- 		timing->xres = timing->width;
- 		timing->dce_bytes_per_line = msm_dsc_get_bytes_per_line(dsc);
- 	}
+diff --git a/drivers/firmware/qcom/qcom_tzmem.c b/drivers/firmware/qcom/qcom_tzmem.c
+index f926c1f648221..9fca7d3029433 100644
+--- a/drivers/firmware/qcom/qcom_tzmem.c
++++ b/drivers/firmware/qcom/qcom_tzmem.c
+@@ -516,7 +516,7 @@ int qcom_tzmem_enable(struct device *dev)
+ 	static int result;
+ 
+ 	qcom_tzmem_dev = dev;
+-	DO_ONCE(qcom_tzmem_do_init, &result);
++	DO_ONCE_SLEEPABLE(qcom_tzmem_do_init, &result);
+ 	return result;
+ }
+ EXPORT_SYMBOL_GPL(qcom_tzmem_enable);
 -- 
 2.53.0
 
