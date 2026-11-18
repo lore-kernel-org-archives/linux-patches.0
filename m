@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034532;
-	b=oDbRIiXVhmm3mwASThpbxEl0QdjvEYAHE4POYGzkhANWnkTCuPtSx+ztAufLy1KHHl7b
-	 7HMDkxVtK3qUORy7jFlqNYwUrBvlpJr8heZoJV9XXEv0UDeXKPDWnz047ubfCXyq1EKdz
-	 b5Rf/WoN2ZpJlAaYhT9caVA5dw1qkopHkH/cszgaehSxLBlqkb5KKR79SiK651bjID16O
-	 G96S6xRxuYcxTswqmk0UPkkIDCTeQLBHXnBcnc8epUPl/4nBLp5NCw49pJQNkXpr7bVcF
-	 psyyWxjp0l+FiiH6aWlyw4wrYAN3DFighr3SGUF8y6tRUxi58Wi3qqyf/+lWKkJKCaA==
+	t=1795034534;
+	b=T+W5cgEugKcvG8y5ZKvu6rUq227s3zT55RvRuaA/kGLRut/c5wxUf90drz6mbFCDwyyV
+	 sVCrNatnBEW6WfVXJbAvJoqK6pGwNm2CVv0n9b9QcIks+oIunLN91KtVBUvFoQL0JuBWi
+	 egad3W+2mtV2JqXNcKzmlT1GIKtH+lKOL/UNo0ZTkg5GPlqoYUe+d+iiXp0dw8Zi274F1
+	 jgUmfSXcVX+6j4Ye41qOSEGCdnsWXMmF0TI+OEGnkIgZVrsk2GzXZvC8IEHpkXo0FHYLn
+	 ZJh8pK0n5S2qcNX4VZ5WV3OSO2B32o/6VM9UID1n5Fqc2CaPyPPXf++WVzkjCHvlGXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034532;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034534;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eFaeCslYaIG6bMAaDp+Mp5hKHyRjfn8HhdcF6ROJdww=;
-	b=Qprnc4r9xM+GPNystpwyggMOly+ZnxyajWT6uzUEShUHovntwveyF92VICMjX8EWxys5
-	 J7ZkPC+RN/Fu4BF2kGM/kpPjM8prlhLBY6aLMfZh2rOM+s8oZyAmpnrD7qDoJLLaakq1d
-	 mSflTSdHAzuUL7PuGXIulQYU1yjJc2uLrmRA1hJYB2x3ZIKrAHMTYRIlJRGjyJNE1myJ2
-	 oacQZFhg0nMhbW7Wy3R0yPcEhkpXwogRkaqRlCUKMKFv74atTM7qVWjl/6+g6zrPLFRgZ
-	 6jMX1WEq5TKpJjHTntiQD4xtkxgk2H83e3zPYCfmZOL6b9DNEjxoN2wcmyXmCtCvb4Q==
+	bh=NcQZ8dC1ggqWfSkqcozjkMUyyO5ADJnHvbRrWCvJ7Og=;
+	b=gooAbgA9mCzHDWZWBb+5V8Sr3zGewqCG7fxKIBuZWem9G4P7e7Icgx1kNQB4AwwutR5V
+	 d05eXA14QRlEOZ7IuWKTqlDX6XPv2AvPCAauuGPQzqO/EEpWbHFjasaZuIZF/2SsFYI3J
+	 7LLLJDTVQXfLvj7Yp9kNt2nBWmgJyeoPF0+ypzLGaUJQR9NqpQPTctjT8yIl9AfJTZAIG
+	 ix3Vi/1gTVYzVShL9q412KvIbg5P2LGl+Cn1RWeAb500IHIxcFa4wkH98luYspgjoDdDz
+	 dqhLB6aY0sI6cVMm8OQ1sCrAXaCw239v0fbG3PAXmj8OPpzR/el1Iy5o7Sz0Rzhu2TA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nkcxj8Bd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="le/EV11F";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1109E606A32A;
-	Wed, 18 Nov 2026 20:42:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C24B3606A31C;
+	Wed, 18 Nov 2026 20:42:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nkcxj8Bd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6615F1F000C7;
-	Wed, 18 Nov 2026 20:42:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=le/EV11F
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2651C1F000C6;
+	Wed, 18 Nov 2026 20:42:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034531;
-	bh=eFaeCslYaIG6bMAaDp+Mp5hKHyRjfn8HhdcF6ROJdww=;
+	s=korg; t=1795034534;
+	bh=NcQZ8dC1ggqWfSkqcozjkMUyyO5ADJnHvbRrWCvJ7Og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nkcxj8Bd8s3PLrDUeZLooHvpFT4szOP18Vj6Ygr2yMO4QZQiY/vsj8Z+nlLE6DP5/
-	 8yoQghNKHOJH7NbbT56pOvSX2lO6MEFl5e+cRFN4IFdsQYmXLaaVx8/T6XW5HiS3l0
-	 fOHqil2nQRpXzN3wkamjwGMJVOVzfwYNN0LwxAk8=
+	b=le/EV11FeFAZFZga2TtbFA4pRSgAXU7tHh1Cz5lOMWBEe9RC7ul6pNH4uyL4y2qUd
+	 ssY7D05onrB29QN+C2k2ord2Y6iH1NQYCXBHMEPvqT2cpZEZTAsOcpekGK2FT6e0nQ
+	 3u+E1J/V9R6jEFZvt9IuXG0GWNjBqINF6dITapsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-dev@google.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0403/3318] scsi: qla2xxx: Clamp max_npiv_vports to VP_CTRL bitmap capacity
-Date: Wed, 18 Nov 2026 15:17:05 +0100
-Message-ID: <20261118150328.523719966@linuxfoundation.org>
+Subject: [PATCH 6.6 0404/3318] btrfs: do not overwrite NODATASUM flag when removing NODATACOW flag
+Date: Wed, 18 Nov 2026 15:17:06 +0100
+Message-ID: <20261118150328.559732592@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,94 +69,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilesh Javali <njavali@marvell.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 2ac6a829843cf3df522d19e091276109b94c4c7a ]
+[ Upstream commit 15f7c86215e8d5f14b24127fa88af6c79363d50e ]
 
-ha->max_npiv_vports is taken from firmware (mcp->mb[11]) and only
-constrained so that (max_npiv_vports + 1) is a multiple of
-MIN_MULTI_ID_FABRIC, which permits values of 63, 127, 191 and 255.
-NPIV vports are then allocated up to that count.
+[TEST FAILURE]
+The test case generic/628 will fail if MOUNT_OPTIONS is set to
+"-o nodatasum":
 
-VP enable uses the VP_CONFIG IOCB, which addresses a vport through a
-plain vp_index byte, so a vp_index beyond 128 is enabled without issue.
-VP disable, however, uses the VP_CTRL IOCB, which selects target vports
-through the fixed 128-bit vp_idx_map bitmap. qla24xx_control_vp()
-rejects a vp_index past that bitmap and the IOCB builder cannot set a bit
-beyond 127, yet qla24xx_vport_delete() frees the local state regardless.
-A vport with vp_index > 128 can therefore be created and enabled but
-never disabled, leaving it permanently active in firmware: a resource
-leak.
+  FSTYP         -- btrfs
+  PLATFORM      -- Linux/x86_64 btrfs-vm 7.1.0-rc4-custom+ #383 SMP PREEMPT_DYNAMIC Sat May 30 07:35:42 ACST 2026
+  MKFS_OPTIONS  -- -O bgt -K /dev/mapper/test-scratch1
+  MOUNT_OPTIONS -- -o nodatasum /dev/mapper/test-scratch1 /mnt/scratch
 
-Cap ha->max_npiv_vports at init to the vp_idx_map capacity so such
-vports are never created. This collapses 191/255 to 127 (still
-modulo-valid) and leaves the real-world 63/127 cases unaffected.
+#  generic/628  1s ... - output mismatch (see /home/adam/xfstests/results//generic/628.out.bad)
+#     --- tests/generic/628.out	2022-05-11 11:25:30.816666664 +0930
+#     +++ /home/adam/xfstests/results//generic/628.out.bad	2026-06-08 18:56:49.878542927 +0930
+#     @@ -8,8 +8,9 @@
+#      310f146ce52077fcd3308dcbe7632bb2  SCRATCH_MNT/a
+#      310f146ce52077fcd3308dcbe7632bb2  SCRATCH_MNT/d
+#      test reflink flag not set iflag
+#     +XFS_IOC_CLONE: Invalid argument
+#      310f146ce52077fcd3308dcbe7632bb2  SCRATCH_MNT/a
+#     -310f146ce52077fcd3308dcbe7632bb2  SCRATCH_MNT/b
+#     +d41d8cd98f00b204e9800998ecf8427e  SCRATCH_MNT/b
+#     ...
 
-Fixes: 4d0ea24769c8 ("[SCSI] qla2xxx: Retrieve max-NPIV support capabilities from FW.")
+[CAUSE]
+The direct cause is that after "chattr +S", the btrfs inode will lose its
+NODATASUM flag inherited from the mount option. E.g.:
+
+  # mkfs.btrfs -f $dev
+  # mount $dev $mnt -o nodatasum
+  # touch $mnt/foobar
+  # sync
+  # btrfs ins dump-tree -t 5 $dev | grep "(257 INODE_ITEM 0) itemoff" -A 3
+         item 4 key (257 INODE_ITEM 0) itemoff 15879 itemsize 160
+         	generation 9 transid 9 size 0 nbytes 0
+         	block group 0 mode 100644 links 1 uid 0 gid 0 rdev 0
+         	sequence 1 flags 0x1(NODATASUM)
+         	                     ^^^^^^^^^ Proper NODATASUM flag
+
+  # chattr +S $mnt/foobar
+  # sync
+  # btrfs ins dump-tree -t 5 $dev | grep "(257 INODE_ITEM 0) itemoff" -A 3
+  	item 4 key (257 INODE_ITEM 0) itemoff 15879 itemsize 160
+         	generation 9 transid 10 size 0 nbytes 0
+         	block group 0 mode 100644 links 1 uid 0 gid 0 rdev 0
+         	sequence 2 flags 0x20(SYNC)
+         	                      ^^^^ Only the new SYNC flag
+
+This makes the inode drop the old NODATASUM flag, while the new reflink
+destination will still inherit the NODATASUM flag.  The mismatching
+NODATASUM flags will cause the reflink to fail.
+
+The root cause is that, inside btrfs_fileattr_set() if no FS_NOCOW_FL is
+set, we remove both NODATASUM and NODATACOW flag.
+
+However we should not touch NODATASUM flag, as data COW doesn't require
+checksum.  Only NODATACOW implies NODATASUM, but DATACOW doesn't imply
+DATASUM.
+
+The deeper problems are:
+
+- Fileattr API is too binary
+  It either clears or sets a flag, there is no "do not change" option.
+  So that why "chattr +S" implies "chattr -C", and is forcing us to
+  change NODATACOW along with NODATASUM flag.
+
+- No way to change NODATASUM through fileattr API
+  In fact NODATASUM can only be modified through mount option.
+
+The deeper problems are much harder to attack.
+
+[FIX]
+Remove NODATACOW flag when FS_NOCOW_FL is not set, but only remove
+NODATASUM if "nodatasum" mount option is not set.
+
+This allows the existing "chattr +C" then "chattr -C" to remove
+both NODATACOW and NODATASUM flags on a default mount.
+
+But for a mount with "nodatasum" option, the NODATASUM inode flag will
+persist through either "chattr +C" and "chattr -C".
+
+Fixes: 7e97b8daf634 ("btrfs: allow setting NOCOW for a zero sized file via ioctl")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-dev@google.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-20-njavali@marvell.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+[ sashal: Renamed inode_flags to binode_flags and inode->vfs_inode.i_mode/i_size to inode->i_mode/i_size, because this tree's older code uses the VFS inode directly. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_fw.h   |  4 ++++
- drivers/scsi/qla2xxx/qla_init.c | 13 +++++++++++++
- drivers/scsi/qla2xxx/qla_mid.c  |  2 +-
- 3 files changed, 18 insertions(+), 1 deletion(-)
+ fs/btrfs/ioctl.c | 23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_fw.h b/drivers/scsi/qla2xxx/qla_fw.h
-index f307beed9d29d..e7ded95afb9a8 100644
---- a/drivers/scsi/qla2xxx/qla_fw.h
-+++ b/drivers/scsi/qla2xxx/qla_fw.h
-@@ -1442,6 +1442,10 @@ struct vp_ctrl_entry_24xx {
- 	uint8_t reserved_5[24];
- };
- 
-+/* vp_idx_map is a 128-bit (16-byte) bitmap selecting target VPs. */
-+#define VP_CTRL_IDX_MAP_BITS \
-+	(sizeof_field(struct vp_ctrl_entry_24xx, vp_idx_map) * 8)
-+
- /*
-  * Modify Virtual Port Configuration IOCB
-  */
-diff --git a/drivers/scsi/qla2xxx/qla_init.c b/drivers/scsi/qla2xxx/qla_init.c
-index 914b5993d110f..374dba3216ad5 100644
---- a/drivers/scsi/qla2xxx/qla_init.c
-+++ b/drivers/scsi/qla2xxx/qla_init.c
-@@ -4408,6 +4408,19 @@ qla2x00_setup_chip(scsi_qla_host_t *vha)
- 					    MIN_MULTI_ID_FABRIC))
- 						ha->max_npiv_vports =
- 						    MIN_MULTI_ID_FABRIC - 1;
-+
-+					/*
-+					 * The VP_CTRL IOCB selects target VPs
-+					 * through the fixed vp_idx_map bitmap,
-+					 * so a vp_index beyond it can be enabled
-+					 * via VP_CONFIG but never disabled via
-+					 * VP_CTRL, leaking the VP.  Cap the count
-+					 * to the bitmap capacity.
-+					 */
-+					if (ha->max_npiv_vports >=
-+					    VP_CTRL_IDX_MAP_BITS)
-+						ha->max_npiv_vports =
-+						    VP_CTRL_IDX_MAP_BITS - 1;
- 				}
- 				qla2x00_get_resource_cnts(vha);
- 				qla_init_iocb_limit(vha);
-diff --git a/drivers/scsi/qla2xxx/qla_mid.c b/drivers/scsi/qla2xxx/qla_mid.c
-index 86c0217d1763e..27ca16a7f1aab 100644
---- a/drivers/scsi/qla2xxx/qla_mid.c
-+++ b/drivers/scsi/qla2xxx/qla_mid.c
-@@ -967,7 +967,7 @@ int qla24xx_control_vp(scsi_qla_host_t *vha, int cmd)
- 	 * (16-byte) vp_idx_map bitmap, so vp_index must fit within it even
- 	 * if firmware advertises more NPIV vports.
- 	 */
--	if (vp_index > sizeof_field(struct vp_ctrl_entry_24xx, vp_idx_map) * 8)
-+	if (vp_index > VP_CTRL_IDX_MAP_BITS)
- 		return QLA_PARAMETER_ERROR;
- 
- 	/* ref: INIT */
+diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
+index e4df4f5daefd7..54e3ec0685834 100644
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -321,14 +321,21 @@ int btrfs_fileattr_set(struct mnt_idmap *idmap,
+ 			binode_flags |= BTRFS_INODE_NODATACOW;
+ 		}
+ 	} else {
+-		/*
+-		 * Revert back under same assumptions as above
+-		 */
+-		if (S_ISREG(inode->i_mode)) {
+-			if (inode->i_size == 0)
+-				binode_flags &= ~(BTRFS_INODE_NODATACOW |
+-						  BTRFS_INODE_NODATASUM);
+-		} else {
++		/* We can only change NODATACOW for zero-sized regular file. */
++		if (S_ISREG(inode->i_mode) && (inode->i_size == 0)) {
++			binode_flags &= ~BTRFS_INODE_NODATACOW;
++			/*
++			 * There is currently no way to change NODATASUM flag
++			 * through fileattr API.  If we unconditionally keep the
++			 * current NODATASUM flag, chattr +C then chattr -C will
++			 * keep the NODATASUM flag, and no way to remove that
++			 * flag.
++			 *
++			 * So respect the current mount option for NODATASUM flag.
++			 */
++			if (!btrfs_test_opt(fs_info, NODATASUM))
++				binode_flags &= ~BTRFS_INODE_NODATASUM;
++		} else if (!S_ISREG(inode->i_mode)) {
+ 			binode_flags &= ~BTRFS_INODE_NODATACOW;
+ 		}
+ 	}
 -- 
 2.53.0
 
