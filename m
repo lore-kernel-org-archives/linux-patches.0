@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016631;
-	b=KiofWpZsvfVNyvKT9vjKk6G1R26jyZaHr7Y6lVdZvcK9cTSaZZnRjQ/sfmcccmWEIdiv
-	 gK8JkEvHVcymcGZtMbWoiMQyV0niVzIEZxZO4WgGVufzSGc7SMP7GB6lqvhNBXPdfb0ne
-	 tBEU907feQzJiSiF1DNmMSL7hUZ/CZBUTJ99c949r+VqolpBj5CiDNO9ehMBgNK3LlYFb
-	 3sZDCRZYAasaB+Hi98FkCnTHuiLgPDU3sx1raw4h9QvneR4ZA0BNOn1cBN6P95tSolyir
-	 fAPeRW8f78zyNjBa249zIagtBx5MpZBqgjYIkpqFDfo5ofKQNtjlwWktcFQPEWgZpXg==
+	t=1795016634;
+	b=TpyRpGXAi1Kl9UNsIcZcpCJcD47Icf6voF1EjlwNsHpHWfT38CInIr0UC2RxjEFHDhAY
+	 CnwGV1DcCDSGGgcqxrp3OZRwP0E97Gqh3rmpIFtaBDpHGEgXaEjY2mGUu/d+Z/RBrTujz
+	 UiQBm8/XdUc6+IRi5seSk6LrJicIkiGnI01OQ+0UYea9144YKILxCQ3EiPBG5C3pMHayA
+	 n/WyR1Gn8eHQfg1NE5bWN26ESIPhiOasTYrLAZZ3vy/2PboclVbYaThV+eTnEWw9QQybD
+	 ShU9ggQ9Ckd5BfIVqPR3HrduamnI3Q9nzm1MdZFh24tEyO0iKxK/bYyzZHKWXb5VUZw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016631;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016634;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JZB/h32wtFFGd983U6OTX/F1Ts9cElG3nxNV1rjpNBU=;
-	b=VBd2zCZQe4xed+dnD1LRh9IrWHyt3oapQEoAjL6xlf+5CAsi04CCoFWghyW6t+0BLlp+
-	 3mP8nStJDUba4JlV+EMyR384Vv9CJ5DhBu85LV6pSclR/EIebtPfcWh4LtTl1Mlqnxxhi
-	 KZgyxRTI2+dfWOGyGQukd9LmY70oZ1PSrVeRA4TiQQKjnDu0NUU0o4lCBxL4bUMO4xHNA
-	 7NJwnly8P3ep6xd1DTmEx7T1/f8HIvEsxWiSHXeSK0lBmQoaK71c4hgRQtQOEN560K1ld
-	 ZMKRRL1c7rX22Mwb4zEYa6Q53R8dnZqQybIX4CMH57GfZquXkackZQwwAAFNIrJnJPQ==
+	bh=VON4BMyFoT4BqSv2c4HpAGB+WejJ0quM0t8pp4spbcs=;
+	b=aNMwiBfq8Rh+hp6nI6kTYFqo5q81dDSLX/6jL44SfJc+VlTPztBz4PlXogFQ1yUn+J+L
+	 z3uYMROa+6DJ8867Whmw/FBscY56Wm41POfq154ptirEgK+veUEBC8vzwanVAPUfFBTSr
+	 qTykwQi5xKYKY+X8F8ggsGKw/s08tqbzM8O454UtjmqhEMr6gyDWw22XG9h9wSg9Q5jhZ
+	 mjLzg0xpMWdHvnChdZFWox2lneY7d7TMyBvLssLXGG0HTRAC4xwzbLD/Hegklc7wW1dAx
+	 W/gmiNiOt6WKiOZxrmG03mrOqkhmcuNz1wISWzdqYh9KiQbNkTM06OEhOxEEqmNlC3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tAGq8mXV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CmUfbtwM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D299C606A320;
-	Wed, 18 Nov 2026 15:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65CE606A31C;
+	Wed, 18 Nov 2026 15:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tAGq8mXV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37DCC1F000C4;
-	Wed, 18 Nov 2026 15:43:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CmUfbtwM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0476F1F000C5;
+	Wed, 18 Nov 2026 15:43:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016631;
-	bh=JZB/h32wtFFGd983U6OTX/F1Ts9cElG3nxNV1rjpNBU=;
+	s=korg; t=1795016634;
+	bh=VON4BMyFoT4BqSv2c4HpAGB+WejJ0quM0t8pp4spbcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tAGq8mXV8dedEesXp5bfvwcJPrjKIBToGKhJER5VzcWSJkAwWolJb1jttWHcOC3Aa
-	 EUmkOoiZ74rhD0sKt1UnKgQOZWfgzUnmDKCCwRV2S8H2yRDeOhT2UTyFJFj165F+xL
-	 6akiqAF/XZyD2UWxjuwpGdU1AcMTO6J66hZOVubI=
+	b=CmUfbtwMbmwEMvwzFCpPaEIzkpulg77YeD3RHlFA5KN5PHo01R7QsMmdx7Zyn2GDv
+	 GH6zqJIpz0yteM0igqYGqUk6kG5OniSNbcQ0wQQRb5yxP4UHevzcpNE+CyOvhFrDRc
+	 pU4ocvg2s1PojFd/PVXsvUK2Q9Hgq9VGGMS3D+5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Karl Asseily <karl@asseily.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0596/2651] perf libbfd: Report success when an address is found
-Date: Wed, 18 Nov 2026 15:30:36 +0100
-Message-ID: <20261118150309.173583374@linuxfoundation.org>
+Subject: [PATCH 7.3 0597/2651] dt-bindings: vendor-prefixes: add ESS Technology
+Date: Wed, 18 Nov 2026 15:30:37 +0100
+Message-ID: <20261118150309.211593486@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,100 +69,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Karl Asseily <karl@asseily.com>
 
-[ Upstream commit 3d8fb5a4a1d793f6afdfe6df6868f82e610e447e ]
+[ Upstream commit beb56d1d3de522885b30bb97fee83825041d65c2 ]
 
-libbfd__addr2line() only reports success when the caller asked for a file
-name. addr2inlines() passes a NULL file as it just wants the inline_node
-populating, so libbfd__addr2line() returns 0 for it unless
-bfd_find_inliner_info() happened to find an inline frame.
+Add the vendor prefix for ESS Technology, Inc., maker of the SABRE family
+of audio DACs. The prefix follows the company's domain, esstech.com.
 
-addr2line() in srcline.c treats 0 as a failure and tries the next
-addr2line implementation, which appends its own frames to the
-inline_node libbfd already appended to.
-
-Every frame that isn't inlined is then reported twice, which happens by
-default when perf is built with libbfd but without libdw as the fallback
-order is then libbfd followed by the addr2line command:
-
-  $ perf record --call-graph dwarf -- perf test -w inlineloop 1
-  $ perf script --fields +srcline
-  ...
-	    56051a994f8e parent+0x2e (perf)
-    inlineloop.c:32
-	    56051a99503a inlineloop+0x8a (perf)
-    inlineloop.c:47
-	    56051a99503a inlineloop+0x8a (perf)
-    inlineloop.c:47
-	    56051a95841a cmd_test+0xb7a (perf)
-    ??:0
-	    56051a95841a cmd_test+0xb7a (perf)
-    ??:0
-  ...
-
-Report success whenever the address is found, like libdw__addr2line()
-does, and clear the frames appended so far when appending fails so that a
-following implementation starts from an empty node.
-
-Fixes: 257046a36750a6db ("perf srcline: Fallback between addr2line implementations")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Assisted-by: Antigravity:gemini-3.1-pro
-Cc: Ian Rogers <irogers@google.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Karl Asseily <karl@asseily.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260918182317.143223-2-karl@asseily.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/libbfd.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/perf/util/libbfd.c b/tools/perf/util/libbfd.c
-index 2a73124b76b85..936555217e81a 100644
---- a/tools/perf/util/libbfd.c
-+++ b/tools/perf/util/libbfd.c
-@@ -258,6 +258,7 @@ int libbfd__addr2line(const char *dso_name, u64 addr,
- 		int cnt = 0;
- 
- 		if (node && inline_list__append_dso_a2l(dso, node, sym)) {
-+			inline_node__clear_frames(node);
- 			ret = 0;
- 			goto out;
- 		}
-@@ -271,23 +272,32 @@ int libbfd__addr2line(const char *dso_name, u64 addr,
- 
- 			if (node != NULL) {
- 				if (inline_list__append_dso_a2l(dso, node, sym)) {
-+					inline_node__clear_frames(node);
- 					ret = 0;
- 					goto out;
- 				}
--				// found at least one inline frame
--				ret = 1;
- 			}
- 		}
- 	}
- 
- 	if (file) {
- 		*file = a2l->filename ? strdup(a2l->filename) : NULL;
--		ret = *file ? 1 : 0;
-+		if (!*file) {
-+			/* Leave ret as 0 so that another addr2line is tried. */
-+			goto out;
-+		}
- 	}
- 
- 	if (line)
- 		*line = a2l->line;
- 
-+	/*
-+	 * The address was found, report success so that the caller doesn't try
-+	 * another addr2line implementation that would append the inline frames
-+	 * above a second time.
-+	 */
-+	ret = 1;
-+
- out:
- 	mutex_unlock(dso__lock(dso));
- 	return ret;
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index ba20029693734..ff4a85f4cbd4e 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -559,6 +559,8 @@ patternProperties:
+     description: Seiko Epson Corp.
+   "^esp,.*":
+     description: Espressif Systems Co. Ltd.
++  "^esstech,.*":
++    description: ESS Technology, Inc.
+   "^est,.*":
+     description: ESTeem Wireless Modems
+   "^eswin,.*":
 -- 
 2.53.0
 
