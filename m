@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049577;
-	b=SP3Bhn2hz+USjVj4ozeVu2ZaR29MTLjdbpYSsTNF97CP+ABvP1ey8LsCVv2TRmsS3UII
-	 EPqrNxteBXse9UQTMgc98pvQzQwo1SJ9Ns+ime0vML6TrENvQxb8yHSXWUEStToBeRPBw
-	 xBR6PnYVX+HqKHniLFYKVzq0Y9DfX1851QgOZkndwsg0gUJck6gp8pfB2W26BGAMRnPk6
-	 hEeqwcS2hV5jlMRHlldDqsp0+zYwrWuS26GRTRFRAZw6bW71Uzv7NPrvs6OZMRlfsoFYi
-	 7oFjWLRwgCUWHbOGTtZWRe1Ka0ZTgUCKByN/SM9+svPeWFa4aAmx8v8ui6HPyRidmmA==
+	t=1795049580;
+	b=DbdwCKcxzzuidC1TjTw+jT/6myzKCVDAgZXSyKNVwMmp3DHJMkcyWIWiNY13+hKCYZr7
+	 qX06e4SHRyUZCObl9I5HPwCq6TvQdAzwNT3dbpfZvO9mjUVD+lcmM6VEc0KkAwR3qsDQH
+	 I5oJhXybkDR4eJuYhrByolvQzYPtgmpR1yeM1/HXXkSwsrNvedJMO/0zrpLgKfyzzdLc9
+	 P1uYz0tZwanQ3hK6m6wfxec7AruQL2CbC+a/HEelE3INpczBFr1L0sfh+KGoc9G+KuPmQ
+	 U/LzkVJuJlM5pUswHrxLSxt8U4CUZnNiKmm9T+YVtNnP1Yh+LKpwp0q3HLMxqZ7IZwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049577;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049580;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UHBweowZy67Z4/yrO11ezipFk+ihGzCfDE1hDYfVVd4=;
-	b=txvhbVc3IRAs5Xobcp5qSs7URyi6n2QhW1A6Ike3gMsg73tzLnXQqSJRiGIM84cpkA2F
-	 Uk2T9ydynqh2+5ZL5Kj9HjsYm6K3NH5pDaHIjrFYDz8Pa+aTlTHIXsWJrn7hQnSMWankx
-	 oFjJdsXfDLc1sVadk1LWxVOHTE599DnTC7rJ63e1k/yIbzCa1TWs7fKlDxOKRW0vlTAnH
-	 HWA8uBexsykC2vJhnxjThqERyjMwc1cG3UGOrDqCF3GELWVWbRnuik99byDezsJtgkeQO
-	 TBWdHdJRD46FZa9/R/e1tgYPs8/wVb7uj+vKBMK/tzw91DXmTSzFrl6t2kr6KxhDpdA==
+	bh=pFVaQmB8gAXNo6CwbWl3IW3T2f6AS6cj45ROcKS369M=;
+	b=wYPvGuGFer9VlGEmtyr1nY0LWjutzfaNMXd8JveBTc3W7frXH8lVeYgM8mgU5f5FCRKI
+	 1U+9Tk6cCrG49qyf5+WSL4WmVvXlXIL2hLS7sExQ/zAtGKGbVuzWbuSte8mr+Z0Y2RCwm
+	 wxqWIUttAGxroqcjEf3ezNklr/kgYkDvvwOJIQqH3gnPoCDl6haFPJTj3DKGidQ+lWu+k
+	 2gMf+EPRpWSO9oOCTlH1yqHgmHltfmRX5xWfHwIxs/13jw4OV5vFp84U4sHJiGkc1mJPH
+	 0SLhVWx4RzkuQo6pmKKYdkt9hWMadqRCjt/0U2cXQaXp9i+aYSlC2hXwQ8jONCIKmLg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XqdSfbkj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ejuzL/oq";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE77606A331;
-	Thu, 19 Nov 2026 00:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EABA1606A32F;
+	Thu, 19 Nov 2026 00:52:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XqdSfbkj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91CA41F000C4;
-	Thu, 19 Nov 2026 00:52:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ejuzL/oq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D8531F000C4;
+	Thu, 19 Nov 2026 00:52:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049577;
-	bh=UHBweowZy67Z4/yrO11ezipFk+ihGzCfDE1hDYfVVd4=;
+	s=korg; t=1795049579;
+	bh=pFVaQmB8gAXNo6CwbWl3IW3T2f6AS6cj45ROcKS369M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XqdSfbkj18AWDcJYdXZJWLxOJsDTY4aD+X2PDJS7Yf0crSVrDBrbqzOeYJjPZmgF4
-	 /NOsX/9c9fVZtj495iVA82v6YESJ6jQ4t/lcwgKqwJ+equntAOV9SRLYCxSXecblDB
-	 Do/clec6gKuzluRF6niCcSpRJL176cvhyw0r8iVs=
+	b=ejuzL/oqwU3sSDuDqGR1CW2+qVef9A5/y2xizWlu4fYLxuW2gVVfed+UnOU0E7oK7
+	 cFHVMgz4s31U2yB3BsPEsQNjK8ZXx7OTcVx9CxCoYNMouz/TUmbW9X0VCJpAydlsbL
+	 MYRd566jGvtth7Ga1XWyY0V68MtH8kFOMVF+ZLa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Dumazet <edumazet@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2399/2857] tcp_bic: fix divide by zero on max_increment == 0
-Date: Wed, 18 Nov 2026 15:57:13 +0100
-Message-ID: <20261118150327.899875659@linuxfoundation.org>
+Subject: [PATCH 6.1 2400/2857] tcp_hybla: fix divide by zero on rtt0 == 0
+Date: Wed, 18 Nov 2026 15:57:14 +0100
+Message-ID: <20261118150327.937737131@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -72,56 +72,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 8edbf6c23363563e508a61f3f26f4e4b6eec9dd5 ]
+[ Upstream commit f09eb97322b16a6f709a47599c95b62f786905f9 ]
 
-max_increment is how many packets cwnd can grow per RTT, so 0 makes
-no sense, and bictcp_update() divides by it.
+rtt0 is the reference RTT in ms, so 0 makes no sense, and
+hybla_recalc_param() divides by it right from hybla_init().
 
-Reject values below 1 when the parameter is written.
+Reject values below 1 when the parameter is written. Also cap it at
+U32_MAX / USEC_PER_MSEC, since rtt0 * USEC_PER_MSEC can wrap to 0 on
+32-bit. An rtt0 above that (about 71 minutes) makes no sense anyway.
 
-Fixes: 83803034f423 ("[TCP]: Add TCP BIC congestion control module.")
+Fixes: 835b3f0c0d7e ("[TCP]: Add TCP Hybla congestion control module.")
+Fixes: 740b0f1841f6 ("tcp: switch rtt estimations to usec resolution")
 Reported-by: VEGA <vega@nebusec.ai>
 Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
 Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261008092641.140777-2-jiayuan.chen@linux.dev
+Link: https://patch.msgid.link/20261008092641.140777-3-jiayuan.chen@linux.dev
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_bic.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ net/ipv4/tcp_hybla.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/tcp_bic.c b/net/ipv4/tcp_bic.c
-index 58358bf92e1b8..08f58cdeb7f80 100644
---- a/net/ipv4/tcp_bic.c
-+++ b/net/ipv4/tcp_bic.c
-@@ -27,15 +27,25 @@
- 					  */
+diff --git a/net/ipv4/tcp_hybla.c b/net/ipv4/tcp_hybla.c
+index abd7d91807e54..b9b482180d30b 100644
+--- a/net/ipv4/tcp_hybla.c
++++ b/net/ipv4/tcp_hybla.c
+@@ -26,8 +26,20 @@ struct hybla {
+ };
  
- static int fast_convergence = 1;
--static int max_increment = 16;
-+static unsigned int max_increment = 16;
- static int low_window = 14;
- static int beta = 819;		/* = 819/1024 (BICTCP_BETA_SCALE) */
- static int initial_ssthresh;
- static int smooth_part = 20;
- 
-+static int max_increment_set(const char *val, const struct kernel_param *kp)
+ /* Hybla reference round trip time (default= 1/40 sec = 25 ms), in ms */
+-static int rtt0 = 25;
+-module_param(rtt0, int, 0644);
++static unsigned int rtt0 = 25;
++
++static int rtt0_set(const char *val, const struct kernel_param *kp)
 +{
-+	return param_set_uint_minmax(val, kp, 1, INT_MAX);
++	/* avoid rtt0 * USEC_PER_MSEC overflow */
++	return param_set_uint_minmax(val, kp, 1, U32_MAX / USEC_PER_MSEC);
 +}
 +
-+static const struct kernel_param_ops max_increment_ops = {
-+	.set = max_increment_set,
++static const struct kernel_param_ops rtt0_ops = {
++	.set = rtt0_set,
 +	.get = param_get_uint,
 +};
 +
- module_param(fast_convergence, int, 0644);
- MODULE_PARM_DESC(fast_convergence, "turn on/off fast convergence");
--module_param(max_increment, int, 0644);
-+module_param_cb(max_increment, &max_increment_ops, &max_increment, 0644);
- MODULE_PARM_DESC(max_increment, "Limit on increment allowed during binary search");
- module_param(low_window, int, 0644);
- MODULE_PARM_DESC(low_window, "lower bound on congestion window (for TCP friendliness)");
++module_param_cb(rtt0, &rtt0_ops, &rtt0, 0644);
+ MODULE_PARM_DESC(rtt0, "reference rout trip time (ms)");
+ 
+ /* This is called to refresh values for hybla parameters */
 -- 
 2.53.0
 
