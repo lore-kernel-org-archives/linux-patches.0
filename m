@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016898;
-	b=z640wpVi5irLdPlkG5cVvq2jxK+hEsUX8BrGFjRg5p4xbJphj+3TJcgQk8zIe4yi6U49
-	 SSg5pAf7k+E1ZWsG8pU9LaHUW6Q+byfGjdpcxeIwNWDDbxY5r+atiNVw03oOI96bO+9H/
-	 DJsTYKoS77C+ePRIpkClaY3oItTmfKNCcfMvS5VMO3Gyox6WShQVMstfzqnozR8vyHqsD
-	 7wL++Y0ECPyXGwsFH3IHvDE8TaBUMZnhsQ0IcezzOpNbch8Gv+Fov4Y+mKhGQTlZUYRMC
-	 R6paKVBXBc3GGkGrR6Rubf4lSzEBvchxpsi84kqrfqLhF/JMxFOBrvzUNvSn2aG8R2g==
+	t=1795016901;
+	b=UJs+bBfDwJ6iKVtWtiv6zXu5sP7WvoDpavzv0AXCHcIjt642OjQrfsH5aKpeUUbrk+VS
+	 0bTfp+R2JV4K/Nt1CMT82M9DiuVh3+VIZuMcQkTIXU6eFMAirTkcqCccQCHoOycGdtZJz
+	 cNVDg6RTxICHlkE7I58HNN188YyI/tbnmay+sZxaw3/udcqbYYiPr53SkDDnPcCHQ2aUT
+	 cQAOsw5xDRISHY5OO+GhovQZ4kofrOQsG1CUJmeFLcjr12EwZS9SMgnu1glne4zhKdZ56
+	 23geZ+w5g6/HimD2yeMroX/pE1xCwEYk7aQgAV19CcnNS5pokuOcpUgGD6E4tprwQAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016898;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016901;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9/YFRzpZ9QsE2zTxde2iEeolX5ddp3s3pRGehkU8iNo=;
-	b=MONJ24JlYW9JUd+cCrkjgV8XjVKo4BxWhK1o3c/XO9TqSm+J+0RQrEiEfciYarNM1ufL
-	 K8FgWqjqjlgpEAx73ucQcuaBK7ZkzxpMJRU+hd0X2/Z0pk5BtKhjVDwF/ot/3kt5LVh7L
-	 GMHLzR8EFEp4NpCSKwEvPiptD199UTHEkNdfkii1Lv+mGqCVwiZidqCsN9L3EBTOUvxje
-	 o2ZwJwqYNA5ADO/w9c/9pgeMKT27jsZNpMVjnr5C9kxc2H/uvJ+On4tNn9v6Zrw64k6vV
-	 LtSgko0f2ZiTYMzgyiclEVTm+s1PFpBfJ3LQ7cpqjJuOFy+W7zBlPajPezPnjnd88eA==
+	bh=+arbI3VkAcmZ7dL36okAGoAtEjubzDWFwsb3Qr0OyOc=;
+	b=zMSi3nD5D8bgtUt0ae6QpZBeq8PR8ESlQKNuYIOvXEmYp/yinyKhfVRNNpWSIhvaDFak
+	 pnqbOFZyuEvkA4rZzm6Yhfi9cOVqezJvnk5Lw/35gTmr6jx/AlOkofECSB684wSgWaj0/
+	 Xwz0e5TZ+7qaWW4+F87ZIqPuHCC+CLS8hLGtpddeOX8Xua70HudmZJcUKCuSMf0U5Xgk4
+	 sb4lNb37gum6oguyA1L9haZLa1l4Yw7uUnG6LGzXyLczsDEcCLDHzLxMILXebQXQxFhsi
+	 f+ebKebyEvaXl4Z1tXDMPI61UJ2l7UFeK23AqmsoC1F0Hf4e8W9zNVTxtN31pnxZ3FQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sVHN6UKo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JdYQ6eFF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D70606A320;
-	Wed, 18 Nov 2026 15:48:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB53D606A31C;
+	Wed, 18 Nov 2026 15:48:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sVHN6UKo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E11AB1F000C4;
-	Wed, 18 Nov 2026 15:48:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JdYQ6eFF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A2D1F000C4;
+	Wed, 18 Nov 2026 15:48:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016898;
-	bh=9/YFRzpZ9QsE2zTxde2iEeolX5ddp3s3pRGehkU8iNo=;
+	s=korg; t=1795016901;
+	bh=+arbI3VkAcmZ7dL36okAGoAtEjubzDWFwsb3Qr0OyOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sVHN6UKoIBq2tBQvtei4LXxjTXb4tRa7qDKIpoeEOD8jTBmcmIQdLBVQvTM+Hv2Jw
-	 dWIdmXQlQ6E8E6KkkcGLAmkfEk7BBtKfAqsNLTWo7ESLdfuJ8R5uFImEXbun69VOIa
-	 kZ64M6I7D8H6NG5hSZLJY1wA9nNjSN+KeYks5m7k=
+	b=JdYQ6eFFRINYo9v9elzGvTQXHbDy8xalZKJs2Fg92LzRaaInbKzT+fLUAZ1/CWrTj
+	 1ZNMSA+OxgSrnbr7nKF9EvMpRgLyUNDmkhOdhfs8cyiMpsGI4D0AJqEywV8UJ3RAoa
+	 oViDSgpYzbN1Za4FF8E1HBRSpuVXLgrdKcep/ZSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Manuel Fombuena <fombuena@outlook.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0690/2651] hwrng: starfive - propagate clock and reset errors
-Date: Wed, 18 Nov 2026 15:32:10 +0100
-Message-ID: <20261118150312.693154728@linuxfoundation.org>
+Subject: [PATCH 7.3 0652/2651] leds: st1202: Scale pattern brightness to the 12-bit PWM range
+Date: Wed, 18 Nov 2026 15:31:32 +0100
+Message-ID: <20261118150311.158286875@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,94 +68,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Manuel Fombuena <fombuena@outlook.com>
 
-[ Upstream commit ace145efdd80cd2eb95e84b1087d0f1fc55bdc0d ]
+[ Upstream commit 82f8b88d6ac2edf01651bbd84e03ede04b2ca80e ]
 
-The StarFive TRNG probe and resume paths ignore failures from their clock
-and reset operations. That lets the driver register or resume while its
-hardware access prerequisites were not established.
+The LED1202 PWM registers are 12 bits wide, but st1202_led_pattern_set()
+writes the 8-bit brightness value carried by struct led_pattern into
+them unscaled. A pattern step asking for full brightness therefore
+drives the channel at 255 out of 4095, about 6% duty cycle, so a pattern
+is dimmer than the same brightness set directly.
 
-Check each transition, unwind only the previously enabled clock on failure,
-and propagate the error to the probe or PM core.
+Scale the value to the full PWM range before programming it.
 
-Fixes: c388f458bc34 ("hwrng: starfive - Add TRNG driver for StarFive SoC")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Scale against max_brightness rather than the register maximum. The LED
+core takes max_brightness from the DT max-brightness property, so a
+board can declare a ceiling below full scale, and the pattern trigger
+already rejects steps above it. Scaling against a hardcoded 255 would
+leave such a board unable to reach its own declared maximum from the
+pattern path while the brightness path reaches it.
+
+Scaling divides by max_brightness. The LED core replaces a zero
+max-brightness from the device tree with LED_FULL, so the divisor should
+never be zero, but the helper returns zero rather than rely on that.
+max_brightness is capped at U8_MAX, the driver's own maximum, so a
+device tree declaring more than the part supports is treated as full
+scale. struct led_pattern brightness is signed, so clamp both ends and
+floor a negative value to LED_OFF rather than let it wrap.
+
+Document that a step is relative to max_brightness, since the range
+given in the documentation no longer holds when the device tree sets
+max-brightness.
+
+Fixes: 259230378c65 ("leds: Add LED1202 I2C driver")
+Signed-off-by: Manuel Fombuena <fombuena@outlook.com>
+Assisted-by: LLM
+Link: https://patch.msgid.link/GV1PR08MB8497B938D3592582E17CB757C5BA2@GV1PR08MB8497.eurprd08.prod.outlook.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/jh7110-trng.c | 39 +++++++++++++++++++++-------
- 1 file changed, 29 insertions(+), 10 deletions(-)
+ Documentation/leds/leds-st1202.rst |  5 +++++
+ drivers/leds/leds-st1202.c         | 16 +++++++++++++++-
+ 2 files changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/char/hw_random/jh7110-trng.c b/drivers/char/hw_random/jh7110-trng.c
-index aee12caab5780..61eb4db7ac014 100644
---- a/drivers/char/hw_random/jh7110-trng.c
-+++ b/drivers/char/hw_random/jh7110-trng.c
-@@ -320,9 +320,17 @@ static int starfive_trng_probe(struct platform_device *pdev)
- 		return dev_err_probe(&pdev->dev, PTR_ERR(trng->rst),
- 				     "Error getting hardware reset line\n");
+diff --git a/Documentation/leds/leds-st1202.rst b/Documentation/leds/leds-st1202.rst
+index ed32eb3a27d45..28479a1123899 100644
+--- a/Documentation/leds/leds-st1202.rst
++++ b/Documentation/leds/leds-st1202.rst
+@@ -20,6 +20,11 @@ brightness (PWM) and duration must be written to hw_pattern.
+ - Min pattern duration: 22 ms
+ - Max pattern duration: 5610 ms
  
--	clk_prepare_enable(trng->hclk);
--	clk_prepare_enable(trng->ahb);
--	reset_control_deassert(trng->rst);
-+	ret = clk_prepare_enable(trng->hclk);
-+	if (ret)
-+		return ret;
++If the device tree sets max-brightness, that value replaces 255 as the
++upper limit, and a step equal to it drives the channel at full scale.
++The hardware cannot go above 255, so with a larger max-brightness every
++step from 255 upwards is full scale.
 +
-+	ret = clk_prepare_enable(trng->ahb);
-+	if (ret)
-+		goto disable_hclk;
-+
-+	ret = reset_control_deassert(trng->rst);
-+	if (ret)
-+		goto disable_ahb;
+ The format of the hardware pattern values should be:
+ "brightness duration brightness duration ..."
  
- 	trng->rng.name = dev_driver_string(&pdev->dev);
- 	trng->rng.init = starfive_trng_init;
-@@ -342,13 +350,18 @@ static int starfive_trng_probe(struct platform_device *pdev)
- 		pm_runtime_disable(&pdev->dev);
- 
- 		reset_control_assert(trng->rst);
--		clk_disable_unprepare(trng->ahb);
--		clk_disable_unprepare(trng->hclk);
--
--		return dev_err_probe(&pdev->dev, ret, "Failed to register hwrng\n");
-+		ret = dev_err_probe(&pdev->dev, ret, "Failed to register hwrng\n");
-+		goto disable_ahb;
- 	}
- 
- 	return 0;
-+
-+disable_ahb:
-+	clk_disable_unprepare(trng->ahb);
-+disable_hclk:
-+	clk_disable_unprepare(trng->hclk);
-+
-+	return ret;
+diff --git a/drivers/leds/leds-st1202.c b/drivers/leds/leds-st1202.c
+index 4ef1cdc86de34..21d1aa4d460ec 100644
+--- a/drivers/leds/leds-st1202.c
++++ b/drivers/leds/leds-st1202.c
+@@ -89,6 +89,16 @@ static uint8_t st1202_prescalar_to_miliseconds(unsigned int value)
+ 	return value / ST1202_MILLIS_PATTERN_DUR_MIN;
  }
  
- static int __maybe_unused starfive_trng_suspend(struct device *dev)
-@@ -364,11 +377,17 @@ static int __maybe_unused starfive_trng_suspend(struct device *dev)
- static int __maybe_unused starfive_trng_resume(struct device *dev)
++static u16 st1202_brightness_to_pwm(int brightness, unsigned int max_brightness)
++{
++	if (!max_brightness)
++		return 0;
++
++	brightness = clamp_t(int, brightness, LED_OFF, max_brightness);
++
++	return brightness * ST1202_PATTERN_PWM_FULL / max_brightness;
++}
++
+ static int st1202_pwm_pattern_write(struct st1202_chip *chip, int led_num,
+ 				int pattern, unsigned int value)
  {
- 	struct starfive_trng *trng = dev_get_drvdata(dev);
-+	int ret;
+@@ -233,8 +243,11 @@ static int st1202_led_pattern_set(struct led_classdev *ldev,
+ {
+ 	struct st1202_led *led = cdev_to_st1202_led(ldev);
+ 	struct st1202_chip *chip = led->chip;
++	unsigned int max_brightness;
+ 	int ret;
+ 
++	max_brightness = min_t(unsigned int, ldev->max_brightness, U8_MAX);
 +
-+	ret = clk_prepare_enable(trng->hclk);
-+	if (ret)
-+		return ret;
+ 	if (len > ST1202_MAX_PATTERNS)
+ 		return -EINVAL;
  
--	clk_prepare_enable(trng->hclk);
--	clk_prepare_enable(trng->ahb);
-+	ret = clk_prepare_enable(trng->ahb);
-+	if (ret)
-+		clk_disable_unprepare(trng->hclk);
+@@ -252,7 +265,8 @@ static int st1202_led_pattern_set(struct led_classdev *ldev,
  
--	return 0;
-+	return ret;
- }
+ 	for (int pattern = 0; pattern < len; pattern++) {
+ 		ret = st1202_pwm_pattern_write(chip, led->led_num, pattern,
+-						patterns[pattern].brightness);
++					st1202_brightness_to_pwm(patterns[pattern].brightness,
++								max_brightness));
+ 		if (ret != 0)
+ 			return ret;
  
- static const struct dev_pm_ops starfive_trng_pm_ops = {
 -- 
 2.53.0
 
