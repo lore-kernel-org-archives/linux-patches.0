@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051379;
-	b=Fd4FilRwlQXisuuRvwjyAJphCQ5c86w4dCCdQ1jYHNJjzlvQvXF1PCOJsN3X0gkRvPvW
-	 YpzUkGDIWyk3TEe0HMwlyCcg/c/pzi33C0ihCSlIL2NrObFxw1C653FOGH8T2/3e75x7C
-	 78FSEL3n/7VQ3rjCstgeU5CEbMzi/N9DwL3cAlWAgRxs5lKaKZubRSsxi9B8Hew1bEehv
-	 5dabhDUmpw5TciyMfkaaK8BqSdbDtbTnDk2GUilHfXxVwNETUlnZcL86T/LUsI1oB6ujo
-	 PF3046EbGT637Pn3VMFMu0VLlwksEQtnToCfP+q/dvnGk2SJX1CWIBSYE2ebhcqMB5w==
+	t=1795051382;
+	b=GpDpWnNGQ18E1bLsXd2RadgolMAeit7apecFqlJn0agpsK8MzU174g7BSFthQWMKspgI
+	 VXqOmBDKXmLM0RegD3pzbffN8FF1ii65Ll7a1flgvcedwzoVFrz0oiDXciVmSFtz8Vw1L
+	 aAj7wf0vuNKy0C/doSV9GDka2Wg+tPZPbOUM12E2MYrF6OnQbRU3B5st7BaA7qP9u25q3
+	 zmwIjSSXQY5bhyqfGBIBoq5Y505laFoCMwnI0QuEyLyCi+O4gUUT+5eZkjDw4J4cM+fBQ
+	 ArpszQaU6A+j3sKAFwXkL9NhcLSHfZz8pvV92sKt1C9ai/WA+VDEZL/RnYgKkEBJhUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051379;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051382;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=70wyyoStpmxzX35qXaBVNDz7F1AjxbjIHWZahA7CyiA=;
-	b=UBXbHCPz58QpgSpzYaYPaDdKmNXOlqPdXZq0aRtb7L2z55ix0QL4NPj52uWQUReUF5dZ
-	 QCLLFICUXaASwHyqmjRDS6E2ZNF6rOEK7iZ++OGzl8I+Ud4zLc9IU9M1d8iq89KigxZXj
-	 PkQitXWqItMW2QPvQlSJFbxlCOOQixqMgj6xR0AXRQdlyq6EoCfczSyTNtxQcXYVk1USR
-	 hhYuJg37x39kEWUQc+2nWwFVbGuKy6MaGiKISaOGM7UxICsZjHrKXRK+nGYsjp7afDjWV
-	 AmkWxqX6Ss4Rw/ksDPTvEtNI+RBUCqJWD2uplVT8aryIxMMDkUqPWNxDbaXnshy69VA==
+	bh=DycvQstYxYa6fHvmGZEYkuWw4dF+je74/i2e0Pps6ow=;
+	b=SF5fVb6AcfXtalqnIiGMoN3wdLYowPWTqjcfnnt9s2A/suRzJefH1VxXI7fd0KGOE810
+	 Eu6jRobuYNsoWssRIq2lskED5u8dk3HT4dSVaPVVX4GO5kD67DhnGwSrqq45dLM7fXQoi
+	 RGajM6qF6/lwLjh+1PiTQlH0ITNxD/adz9XTw6iWqVGfjpvsr3PiSd8AWWYBK0kkoSevK
+	 /oKt7Z+9nWAfg4ziYy4UChEOlbhDYrq+DkoA6bRAmP3NmYFIkrIvhtXXE8cC21KTcCSyB
+	 aU7SaqUHschi31sefwsQENjTP71xfJujmN3hZsWxJNBlG3DFnSMpu7AmdyLWNdbjNjA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v7cVfx56;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CDiIUvTN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A31A606A31C;
-	Thu, 19 Nov 2026 01:22:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80860606A32F;
+	Thu, 19 Nov 2026 01:23:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v7cVfx56
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A41C31F000C6;
-	Thu, 19 Nov 2026 01:22:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CDiIUvTN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D4751F000C6;
+	Thu, 19 Nov 2026 01:23:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051379;
-	bh=70wyyoStpmxzX35qXaBVNDz7F1AjxbjIHWZahA7CyiA=;
+	s=korg; t=1795051382;
+	bh=DycvQstYxYa6fHvmGZEYkuWw4dF+je74/i2e0Pps6ow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v7cVfx563bzPxPx8P7iTcLAHsBG+vI0sRssr8kVEjd32UakJa7LFO9hmtp6JExmWN
-	 vNjBto8i+mwKoLWlPb/pKlaJbtU8MC6PV/OdLKAApQoWt9py+uvyA/7xPn7fzkWQ9o
-	 ANB04zGhq3+jIaG30Tk8rjop4qtvNoHwr31X6wzc=
+	b=CDiIUvTNoAh5HpLEGukHkuySE8H5VaOkRiWO7JnCiRX+waPNEsPgZqY/0J9Dn0W92
+	 GSLqXK6v4ExSguHdAH7TnPxpU6irzLoMj2VISwR/Zfn7Dg0VI4vUJ7qfJqTCcElpv5
+	 ifnEQfaM1x55/xRFa+9OAJQqH6hQxRi3bADjMYkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junhao He <hejunhao3@h-partners.com>,
-	Wupeng Ma <mawupeng1@huawei.com>,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Tony Luck <tony.luck@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Chen Changcheng <chenchangcheng@kylinos.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0188/2214] ACPI: APEI: Handle repeated SEA error storms
-Date: Wed, 18 Nov 2026 15:31:04 +0100
-Message-ID: <20261118150017.654264473@linuxfoundation.org>
+Subject: [PATCH 5.15 0189/2214] Bluetooth: btrsi: Move set_bt_context after successful HCI registration
+Date: Wed, 18 Nov 2026 15:31:05 +0100
+Message-ID: <20261118150017.701443531@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -71,99 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junhao He <hejunhao3@h-partners.com>
+From: Chen Changcheng <chenchangcheng@kylinos.cn>
 
-[ Upstream commit e61487226b7df39e5f4683b036ee6aa7a5039d7b ]
+[ Upstream commit 290a3644609526f7ac12529cd1618042fa5a32db ]
 
-When hardware memory corruption occurs and a user process accesses the
-corrupted page, the CPU triggers a Synchronous External Abort (SEA).
-The kernel invokes do_sea() to handle the exception, which calls
-memory_failure() to handle the faulty page.
+In rsi_hci_attach(), ops->set_bt_context() stores the newly allocated
+h_adapter into common->bt_adapter before hci_alloc_dev() and
+hci_register_dev() are called. If either of these fails, h_adapter
+is freed but common->bt_adapter remains a non-NULL dangling pointer.
 
-Scenario 1: Memory Error Interrupt First, then SEA
-The page is already poisoned by the memory error interrupt path. The
-subsequent SEA handler sends a SIGBUS to the task, which accesses the
-poisoned page. This flow is correct.
+This causes a deterministically reachable use-after-free when the
+device operates in a BT+WiFi coexistence mode and CONFIG_RSI_COEX
+is enabled. The following software-only trigger paths exist:
 
-Scenario 2: SEA first, then memory error interrupt (problematic scenario)
-If a user task directly accesses corrupted memory through a PFNMAP-style
-mapping (e.g., devmem), the page may still be in the free-buddy state when
-SEA is handled. In this case, memory_failure() will poison the page without
-invoking kill_accessing_process(), and then takes the free-buddy recovery
-path.
+  1. SDIO driver .remove  (rsi_disconnect)
+  2. USB  driver .disconnect (rsi_disconnect)
+  3. SDIO driver .shutdown (rsi_shutdown)
+  4. Hibernation .freeze  (rsi_freeze)
 
-After the CPU returns to the task context, the task re-enters the SEA
-handler due to the same access. However, ghes_estatus_cached() suppresses
-all subsequent entries during the 10-second window, preventing
-ghes_do_proc() from being called. This suppression blocks the
-MF_ACTION_REQUIRED-based SIGBUS delivery, causing the kernel to fail to
-kill the task immediately. Consequently, the process keeps re-entering
-the SEA handler, leading to an SEA storm. Later, the memory error
-interrupt path also cannot kill the task, leaving the system stuck in
-this repeated loop.
+All four paths check:
+    if (IS_ENABLED(CONFIG_RSI_COEX) && coex_mode > 1 && bt_adapter)
+        rsi_bt_ops.detach(bt_adapter);  // use-after-free
 
-The following error logs are explained using the devmem process:
-  NOTICE:  SEA Handle
-  [Hardware Error]: Hardware error from APEI Generic Hardware Error Source: 9
-  [Hardware Error]: event severity: recoverable
-  [Hardware Error]:   section_type: ARM processor error
-  [Hardware Error]:    physical fault address: 0x0000001000093c00
-  [T54990] Memory failure: 0x1000093: recovery action for free buddy page: Recovered
-  [ T9955] EDAC MC0: 1 UE Multi-bit ECC on unknown memory
-           (page:0x1000093 offset:0xc00 grain:1 - APEI location: ...)
-  NOTICE:  SEA Handle
-  NOTICE:  SEA Handle
-  ...
-  ...        ---> SEA storm
-  ...
-  NOTICE:  SEA Handle
-  [ T9955] Memory failure: 0x1000093: already hardware poisoned
-  ghes_print_estatus: 1 callbacks suppressed
-  [Hardware Error]: Hardware error from APEI Generic Hardware Error Source: 9
-  [Hardware Error]: event severity: recoverable
-  [Hardware Error]:   section_type: ARM processor error
-  [Hardware Error]:    physical fault address: 0x0000001000093c00
-  [T54990] Memory failure: 0x1000093: already hardware poisoned
-  [T54990] 0x1000093: Sending SIGBUS to devmem:54990 due to hardware memory corruption
+coex_mode is set during rsi_91x_init(), before rsi_hci_attach() is
+called, and is not cleared on attach failure. Since set_bt_context()
+already wrote bt_adapter before the failure, the deinit paths see a
+non-NULL dangling pointer and proceed to detach it.
 
-To resolve this, return an error when encountering the same SEA again.
-The subsequent SEA handler invocation uses arm64_notify_die() to send a
-SIGBUS signal to the task, which terminates the process and prevents it
-from re-entering the handler loop.
+Fix this by moving set_bt_context() after hci_register_dev() succeeds.
+On failure paths bt_adapter stays NULL, and the deinit callers correctly
+skip the detach call.
 
-Signed-off-by: Junhao He <hejunhao3@h-partners.com>
-Reviewed-by: Wupeng Ma <mawupeng1@huawei.com>
-Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Reviewed-by: Tony Luck <tony.luck@intel.com>
-Link: https://patch.msgid.link/20260527082707.2013499-1-hejunhao3@h-partners.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/apei/ghes.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btrsi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
-index 28651f9e6d60f..88c01d4a7f8fa 100644
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -1102,8 +1102,16 @@ static int ghes_in_nmi_queue_one_entry(struct ghes *ghes,
- 	ghes_clear_estatus(ghes, &tmp_header, buf_paddr, fixmap_idx);
+diff --git a/drivers/bluetooth/btrsi.c b/drivers/bluetooth/btrsi.c
+index 8646b6dd11e94..5de25c6a4dfc5 100644
+--- a/drivers/bluetooth/btrsi.c
++++ b/drivers/bluetooth/btrsi.c
+@@ -118,7 +118,6 @@ static int rsi_hci_attach(void *priv, struct rsi_proto_ops *ops)
+ 		return -ENOMEM;
  
- 	/* This error has been reported before, don't process it again. */
--	if (ghes_estatus_cached(estatus))
-+	if (ghes_estatus_cached(estatus)) {
-+		/*
-+		 * Return failure on duplicate SEA entries so that the
-+		 * subsequent SEA handler invocation sends a SIGBUS signal to
-+		 * the task to prevent it from re-entering the handler loop.
-+		 */
-+		if (is_hest_sync_notify(ghes))
-+			rc = -ECANCELED;
- 		goto no_work;
-+	}
+ 	h_adapter->priv = priv;
+-	ops->set_bt_context(priv, h_adapter);
+ 	h_adapter->proto_ops = ops;
  
- 	llist_add(&estatus_node->llnode, &ghes_estatus_llist);
+ 	hdev = hci_alloc_dev();
+@@ -148,6 +147,8 @@ static int rsi_hci_attach(void *priv, struct rsi_proto_ops *ops)
+ 		goto err;
+ 	}
  
++	ops->set_bt_context(priv, h_adapter);
++
+ 	return 0;
+ err:
+ 	h_adapter->hdev = NULL;
 -- 
 2.53.0
 
