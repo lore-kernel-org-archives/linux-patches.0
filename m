@@ -1,59 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020043;
-	b=Ca9tch1x7YfZVe1IJD9PcGeeIP/hwPPLWzlmId6APT+ugkUCenRdNm8CReKT36f/MM67
-	 vS8t2zl71RddDNODpomRhHyM7RrO8tnlx5n8deCScbAi3RqPNaE/QGgTLu5cPr8CQM4bz
-	 pbgmBgLUNOVrs4r1oaKoVRhXXjFwORNBdmx2Ik6oEKiDQs2RbKWz90YifI6wtTyqbVhzV
-	 NZF0YEjzNv1ReQs33vvhHZmED7DUrhbx6li9vwPUg1Bw9rRM6F27qYLwtCgrZq0IUia5L
-	 Ln+rs6kEylGdxGqCkanZoqrnsWaQf8aL37k89TuooKxaj66gKuSR1qmdDg1xFuWcBJA==
+	t=1795020046;
+	b=TZ46ObeNq53qz/+Aw0Nd7KAZB3ZCUQqa4Gj4uAzJtfxxWt+3ElQy+ukGAO/YzCmZ+BBt
+	 F5cnN72vvZqRfoy8p7tqm9/28fR2NgBQxsMHW9ulbr11FsJ/A9cqNpBtvyNaumxAeA0AI
+	 80Fv6k4MOLh0xQ0+ar01j0891L1OiqqZHbnBDFa5Kh5xKVLqYP8Bf/Ny33k1FUACr3rZO
+	 42QN1Tlzdc06RQjZiUwSu93WAo8EsupHDHbXeAEHCvnoOS39DqLD7NeVDGtElLs3hdhIW
+	 OCBtW89cGOJp3M0WQgsmR2rccxv+pLwdTFWbMGtnES/Xm7nxJx6FS7bzTgjm0rXoCOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020043;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020046;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=z7IXAG8+ycKyTf8N3XuRartNb1G1/ye+BOXRViA6Pr4=;
-	b=jlaSnXjxnv8bvagw89d7PMATbclvM4rzQrHm6Z67T3E19rFkfgSAAVas1/tbQ3H1iWqE
-	 h7DMjPmq4+QLOEN7c4O4sp1wvQJZ/032qIEh+/D/Drs9LixLSieafDC3Z5uPIFknp4Wf2
-	 lrYpupcHnK4sxrSBCNkbGg3h88sT64drbEYWFRGHo4Y2S/K2NVRXNj0yKasG3LujZzvhe
-	 F61NP7IUdIMcCVXYqQ4WdNBBks/tG4Mlpk3L6u60fnRCSQcKehH07B4kwTcTIvjXi4nOa
-	 V1xij3Pdb1jr0gjs88v9G7zf9hV0+AZ8sccE7Q9MWbJCMyZ92ZuV2b0VjcfEz5saeCg==
+	bh=qGjfH2dAWG6AgQlraZ0xLxH8wfo86szd2fk3kbDDeiE=;
+	b=1US0hjJSjWzoIFNa4x1Sob/p/i+WIfZZzHosF6iEnfGB1ToOYq6qEpSAzA7vzogvV+D+
+	 4V6UJd8A72iJ+vHGGCz8J7lArc7idnZFjrl8GDSb4eLXm7rj+gbTAd9qTaB93O172tENt
+	 405CjsxutdKuttIvEQpLSUNGWammKPCOwGzyYk9UGJR6Ki4plO9UZf6/uusVKfRh/ZYco
+	 jyFIJ00dei91dsNsgFFsdDkto+RafTg8qwKhkjXMmgcMIJzPSrBKhvhnkFFW4QewFDDL0
+	 pnH55KA5/ZHzWsqwfqlZ+I8pRCqVeL3r0K/Ak7GZ1/b6OV76EwQVBYDs3GlT2xLurjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w9BJsI+f;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KeP2pqhJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F84606A33D;
-	Wed, 18 Nov 2026 16:40:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96335606A33E;
+	Wed, 18 Nov 2026 16:40:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w9BJsI+f
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFEA01F000C4;
-	Wed, 18 Nov 2026 16:40:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KeP2pqhJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E9F1F000C4;
+	Wed, 18 Nov 2026 16:40:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020043;
-	bh=z7IXAG8+ycKyTf8N3XuRartNb1G1/ye+BOXRViA6Pr4=;
+	s=korg; t=1795020046;
+	bh=qGjfH2dAWG6AgQlraZ0xLxH8wfo86szd2fk3kbDDeiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w9BJsI+fOmqRcBPocNor0bLoSzjioQXUzk9nZeGnEPOnJSV9OyuyQnXyRFDdkDbri
-	 ZGxpSdLYqu6U7oe2sfYwDAO/qvrzLS5dLuS/nGl+FsfvNhcVPkZYOB7z8yuQbP8Ao7
-	 nV7PyUh+OJbqSOOTWoeOvYck5h6fF6TCwFN0XyIo=
+	b=KeP2pqhJf8Am1p7D3EntKgqJr+Ai2Kazx0+gSar+W1X1flqLWksx7WcLlioCz4fEB
+	 oJbsbzFm/W9R0WMUJiEDzlv2ZNfSnSbQU1cTn5iKJb4c51AmBrMMHySV4gsipiZG94
+	 U/LSGQw4n0QuwmPseqS7fLv37WiDj445Tydi0hZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	syzbot+a68ce48df87b8e36e915@syzkaller.appspotmail.com,
+	Heming Zhao <heming.zhao@suse.com>,
 	Mark Fasheh <mark@fasheh.com>,
 	Joel Becker <jlbec@evilplan.org>,
 	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1811/2651] ocfs2: retain all security xattrs during inode creation
-Date: Wed, 18 Nov 2026 15:50:51 +0100
-Message-ID: <20261118150352.431438420@linuxfoundation.org>
+Subject: [PATCH 7.3 1812/2651] ocfs2: fix possible deadlock between nfs_sync_rwlock and fs_reclaim
+Date: Wed, 18 Nov 2026 15:50:52 +0100
+Message-ID: <20261118150352.461258400@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -77,334 +75,276 @@ Content-Transfer-Encoding: 8bit
 
 From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit d637475617d8468c2740a3436428681bcc8d3572 ]
+[ Upstream commit 169bc4d16a8efa7852b101fdaa4c028505cd6750 ]
 
-When creating a new inode, ocfs2_init_security_get() stores the security
-xattr returned by the LSM framework in ocfs2_security_xattr_info so that
-it can be written later within the same transaction.  But
-ocfs2_initxattrs() only ever looks at the first element of the xattr
-array, and it keeps the name as a bare pointer into memory owned by the
-security layer instead of copying it.  The value, by contrast, is already
-duplicated with kmemdup().
+syzbot detected a circular locking dependency on &osb->nfs_sync_rwlock:
 
-With stacked LSMs, security_inode_init_security() provides one xattr per
-LSM, so all labels but the first are silently dropped and never written to
-disk, leaving newly created files without the security xattrs the other
-LSMs rely on.
+       CPU0                    CPU1
+       ----                    ----
+  lock(fs_reclaim);
+                               lock(&ocfs2_sysfile_lock_key[INODE_ALLOC_SYSTEM_INODE]);
+                               lock(fs_reclaim);
+  rlock(&osb->nfs_sync_rwlock);
 
-The borrowed name is not an outright bug with the LSMs in tree today:
-security_inode_init_security() frees only ->value once the callback
-returns, and documents ->name as the attribute name suffix, so the pointer
-stays valid for as long as ocfs2 uses it.  It is fragile though, as an LSM
-that allocates the name together with the value would turn it into a
-use-after-free, so the rework below copies the names as well.
+ *** DEADLOCK ***
 
-Fix this by storing copies of all the security xattrs: allocate an array
-in ocfs2_initxattrs(), copy the names and values, account for all of them
-in the credit calculations, and write each one in
-ocfs2_init_security_set().
+Chain exists of:
+  &osb->nfs_sync_rwlock --> &ocfs2_sysfile_lock_key[INODE_ALLOC_SYSTEM_INODE] --> fs_reclaim
 
-While at it, switch the allocations from GFP_KERNEL to GFP_NOFS.  The
-callback runs in the inode creation path with the parent directory locked,
-and the security layer allocates the very same xattr array with GFP_NOFS,
-so direct reclaim must not be allowed to recurse into the filesystem from
-here.
+CPU0 is kswapd.  The dentry shrinker runs under fs_reclaim and reaches
+ocfs2_delete_inode() through ->evict_inode():
 
-Link: https://lore.kernel.org/20260917014825.678947-1-joseph.qi@linux.alibaba.com
-Fixes: de3004c874e7 ("ocfs2: Switch to security_inode_init_security()")
+kswapd
+ balance_pgdat
+  shrink_node
+   shrink_slab
+    super_cache_scan
+     prune_dcache_sb
+      shrink_dentry_list
+       dentry_kill
+        ocfs2_dentry_iput
+         evict
+          ocfs2_evict_inode
+           ocfs2_delete_inode
+            ocfs2_nfs_sync_lock
+             down_read(&osb->nfs_sync_rwlock)      //C0: grabbing
+
+CPU1 is a task deleting an inode.  It takes nfs_sync_rwlock first, then
+the orphan dir and inode alloc system inode i_rwsems, and allocates the
+metadata reservation with GFP_KERNEL while holding them:
+
+evict
+ ocfs2_evict_inode
+  ocfs2_delete_inode
+  + ocfs2_nfs_sync_lock
+  |  down_read(&osb->nfs_sync_rwlock)              //C1: hold
+  + ocfs2_wipe_inode
+     + inode_lock(orphan_dir_inode)                //C1: hold
+     + ocfs2_truncate_for_delete
+     |  ocfs2_commit_truncate
+     |   ocfs2_remove_btree_range
+     |    ocfs2_reserve_blocks_for_rec_trunc
+     |     ocfs2_reserve_new_metadata_blocks
+     |      kzalloc_obj()                          //C1: grabbing
+     |      // GFP_KERNEL -> might_alloc -> fs_reclaim_acquire
+     + ocfs2_remove_inode
+        inode_lock(inode_alloc_inode)
+
+jbd2 pins allocations to GFP_NOFS for the lifetime of a transaction
+handle, but these reservations are made before ocfs2_start_trans(), so
+fs_reclaim is acquired with ocfs2 locks still held and the cycle closes.
+
+The same cycle is reachable from ocfs2_get_dentry() and
+ocfs2_get_parent(), which hold nfs_sync_rwlock for write across
+ocfs2_test_inode_bit() and ocfs2_iget().
+
+This is more than a lockdep artifact.  A GFP_KERNEL allocation under the
+orphan dir i_rwsem enters direct reclaim, which runs the shrinkers, which
+can evict another ocfs2 inode and re-enter ocfs2_wipe_inode() on the same
+task; the second inode_lock() on the singleton orphan dir inode then
+self-deadlocks, since i_rwsem is not recursive.
+
+Establish a GFP_NOFS allocation context for the whole nfs_sync_rwlock
+critical section so that nothing holding it can recurse into filesystem
+reclaim.  Do it in ocfs2_nfs_sync_lock()/ocfs2_nfs_sync_unlock() rather
+than at the call sites, so that future callers cannot forget it.
+
+Link: https://lore.kernel.org/20260922093437.954127-1-joseph.qi@linux.alibaba.com
+Fixes: 6ca497a83e59 ("ocfs2: fix rare stale inode errors when exporting via nfs")
 Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
+Reported-by: syzbot+a68ce48df87b8e36e915@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=a68ce48df87b8e36e915
+Cc: Heming Zhao <heming.zhao@suse.com>
 Cc: Mark Fasheh <mark@fasheh.com>
 Cc: Joel Becker <jlbec@evilplan.org>
 Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/namei.c |   6 +--
- fs/ocfs2/xattr.c | 133 +++++++++++++++++++++++++++++++++++++----------
- fs/ocfs2/xattr.h |  12 +++--
- 3 files changed, 116 insertions(+), 35 deletions(-)
+ fs/ocfs2/dlmglue.c | 29 +++++++++++++++++++++++++----
+ fs/ocfs2/dlmglue.h |  5 +++--
+ fs/ocfs2/export.c  | 10 ++++++----
+ fs/ocfs2/inode.c   |  5 +++--
+ 4 files changed, 37 insertions(+), 12 deletions(-)
 
-diff --git a/fs/ocfs2/namei.c b/fs/ocfs2/namei.c
-index 58c6061ed983c..ef03f90e7265a 100644
---- a/fs/ocfs2/namei.c
-+++ b/fs/ocfs2/namei.c
-@@ -248,7 +248,6 @@ static int ocfs2_mknod(struct mnt_idmap *idmap,
- 	int want_meta = 0;
- 	int xattr_credits = 0;
- 	struct ocfs2_security_xattr_info si = {
--		.name = NULL,
- 		.enable = 1,
- 	};
- 	int did_quota_inode = 0;
-@@ -475,7 +474,7 @@ static int ocfs2_mknod(struct mnt_idmap *idmap,
+diff --git a/fs/ocfs2/dlmglue.c b/fs/ocfs2/dlmglue.c
+index a2a33c34fdf98..c281902e3bece 100644
+--- a/fs/ocfs2/dlmglue.c
++++ b/fs/ocfs2/dlmglue.c
+@@ -19,6 +19,7 @@
+ #include <linux/time.h>
+ #include <linux/delay.h>
+ #include <linux/quotaops.h>
++#include <linux/sched/mm.h>
+ #include <linux/sched/signal.h>
+ #include <linux/string_choices.h>
  
- 	brelse(new_fe_bh);
- 	brelse(parent_fe_bh);
--	kfree(si.value);
-+	ocfs2_free_security_xattrs(&si);
+@@ -2854,21 +2855,34 @@ void ocfs2_rename_unlock(struct ocfs2_super *osb)
+ 		ocfs2_cluster_unlock(osb, lockres, DLM_LOCK_EX);
+ }
  
- 	ocfs2_acl_init_release(&acl_state);
- 
-@@ -1831,7 +1830,6 @@ static int ocfs2_symlink(struct mnt_idmap *idmap,
- 	int want_clusters = 0;
- 	int xattr_credits = 0;
- 	struct ocfs2_security_xattr_info si = {
--		.name = NULL,
- 		.enable = 1,
- 	};
- 	int did_quota = 0, did_quota_inode = 0;
-@@ -2063,7 +2061,7 @@ static int ocfs2_symlink(struct mnt_idmap *idmap,
- 
- 	brelse(new_fe_bh);
- 	brelse(parent_fe_bh);
--	kfree(si.value);
-+	ocfs2_free_security_xattrs(&si);
- 	ocfs2_free_dir_lookup_result(&lookup);
- 	if (inode_ac)
- 		ocfs2_free_alloc_context(inode_ac);
-diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
-index 0b49e6c929c9a..316418e2d909f 100644
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -622,10 +622,15 @@ int ocfs2_calc_security_init(struct inode *dir,
- 			     int *xattr_credits,
- 			     struct ocfs2_alloc_context **xattr_ac)
+-int ocfs2_nfs_sync_lock(struct ocfs2_super *osb, int ex)
++int ocfs2_nfs_sync_lock(struct ocfs2_super *osb, int ex, unsigned int *nofs_flag)
  {
-+	int i;
- 	int ret = 0;
- 	struct ocfs2_super *osb = OCFS2_SB(dir->i_sb);
--	int s_size = ocfs2_xattr_entry_real_size(strlen(si->name),
--						 si->value_len);
-+	int s_size = 0;
-+
-+	for (i = 0; i < si->count; i++)
-+		s_size += ocfs2_xattr_entry_real_size(
-+				strlen(si->xattrs[i].name),
-+				si->xattrs[i].value_len);
+ 	int status;
++	unsigned int flags;
+ 	struct ocfs2_lock_res *lockres = &osb->osb_nfs_sync_lockres;
  
- 	/*
- 	 * The max space of security xattr taken inline is
-@@ -642,14 +647,27 @@ int ocfs2_calc_security_init(struct inode *dir,
- 		*xattr_credits += OCFS2_XATTR_BLOCK_CREATE_CREDITS;
- 	}
+ 	if (ocfs2_is_hard_readonly(osb))
+ 		return -EROFS;
  
--	/* reserve clusters for xattr value which will be set in B tree*/
--	if (si->value_len > OCFS2_XATTR_INLINE_SIZE) {
--		int new_clusters = ocfs2_clusters_for_bytes(dir->i_sb,
--							    si->value_len);
 +	/*
-+	 * when blocksize = 512, the security xattrs may not fit in the
-+	 * single block reserved above and a bucket has to be allocated
-+	 * for them, so reserve the cluster it needs as well.
++	 * ocfs2_delete_inode() takes this lock from ->evict_inode(), which the
++	 * dentry shrinker reaches while holding fs_reclaim.  Anything allocated
++	 * under the lock must therefore stay out of filesystem reclaim, or
++	 * reclaim recurses back into the shrinker and tries to take this lock
++	 * again.  Cover the whole critical section, including the cluster lock
++	 * and the sysfile inode locks the callers take below it.
 +	 */
-+	if (dir->i_sb->s_blocksize == OCFS2_MIN_BLOCKSIZE &&
-+	    s_size > OCFS2_XATTR_FREE_IN_BLOCK(dir)) {
-+		*want_clusters += 1;
-+		*xattr_credits += ocfs2_blocks_per_xattr_bucket(dir->i_sb);
-+	}
- 
--		*xattr_credits += ocfs2_clusters_to_blocks(dir->i_sb,
--							   new_clusters);
--		*want_clusters += new_clusters;
-+	/* reserve clusters for xattr value which will be set in B tree*/
-+	for (i = 0; i < si->count; i++) {
-+		if (si->xattrs[i].value_len > OCFS2_XATTR_INLINE_SIZE) {
-+			int new_clusters = ocfs2_clusters_for_bytes(dir->i_sb,
-+						si->xattrs[i].value_len);
++	flags = memalloc_nofs_save();
 +
-+			*xattr_credits += ocfs2_clusters_to_blocks(dir->i_sb,
-+								   new_clusters);
-+			*want_clusters += new_clusters;
-+		}
- 	}
- 	return ret;
- }
-@@ -659,12 +677,16 @@ void ocfs2_calc_xattr_init(struct inode *dir, umode_t mode,
- 			   int *want_clusters, int *xattr_credits,
- 			   int *want_meta, struct ocfs2_acl_state *acl_state)
- {
-+	int i;
- 	struct ocfs2_super *osb = OCFS2_SB(dir->i_sb);
- 	int s_size = 0, a_size = 0, acl_len = 0, new_clusters;
+ 	if (ex)
+ 		down_write(&osb->nfs_sync_rwlock);
+ 	else
+ 		down_read(&osb->nfs_sync_rwlock);
  
--	if (si->enable)
--		s_size = ocfs2_xattr_entry_real_size(strlen(si->name),
--						     si->value_len);
-+	if (si->enable) {
-+		for (i = 0; i < si->count; i++)
-+			s_size += ocfs2_xattr_entry_real_size(
-+					strlen(si->xattrs[i].name),
-+					si->xattrs[i].value_len);
-+	}
- 
- 	if (osb->s_mount_opt & OCFS2_MOUNT_POSIX_ACL) {
- 		if (acl_state->default_acl && S_ISDIR(mode)) {
-@@ -711,12 +733,14 @@ void ocfs2_calc_xattr_init(struct inode *dir, umode_t mode,
- 	 * reserve credits and clusters for xattrs which has large value
- 	 * and have to be set outside
- 	 */
--	if (si->enable && si->value_len > OCFS2_XATTR_INLINE_SIZE) {
--		new_clusters = ocfs2_clusters_for_bytes(dir->i_sb,
--							si->value_len);
--		*xattr_credits += ocfs2_clusters_to_blocks(dir->i_sb,
--							   new_clusters);
--		*want_clusters += new_clusters;
-+	for (i = 0; si->enable && i < si->count; i++) {
-+		if (si->xattrs[i].value_len > OCFS2_XATTR_INLINE_SIZE) {
-+			new_clusters = ocfs2_clusters_for_bytes(dir->i_sb,
-+						si->xattrs[i].value_len);
-+			*xattr_credits += ocfs2_clusters_to_blocks(dir->i_sb,
-+								   new_clusters);
-+			*want_clusters += new_clusters;
-+		}
- 	}
- 	if (osb->s_mount_opt & OCFS2_MOUNT_POSIX_ACL) {
- 		if (acl_state->default_acl && S_ISDIR(mode)) {
-@@ -7763,17 +7787,46 @@ static int ocfs2_initxattrs(struct inode *inode, const struct xattr *xattr_array
- {
- 	struct ocfs2_security_xattr_info *si = fs_info;
- 	const struct xattr *xattr;
-+	struct ocfs2_security_xattr *xattrs;
-+	int count = 0, i;
- 	int err = 0;
- 
- 	if (si) {
--		si->value = kmemdup(xattr_array->value, xattr_array->value_len,
--				    GFP_KERNEL);
--		if (!si->value)
-+		for (xattr = xattr_array; xattr->name != NULL; xattr++)
-+			count++;
-+
-+		xattrs = kcalloc(count, sizeof(*xattrs), GFP_NOFS);
-+		if (!xattrs)
- 			return -ENOMEM;
- 
--		si->name = xattr_array->name;
--		si->value_len = xattr_array->value_len;
-+		for (i = 0; i < count; i++) {
-+			xattrs[i].name = kstrdup(xattr_array[i].name, GFP_NOFS);
-+			if (!xattrs[i].name) {
-+				err = -ENOMEM;
-+				goto out_err;
-+			}
-+
-+			xattrs[i].value = kmemdup(xattr_array[i].value,
-+						  xattr_array[i].value_len,
-+						  GFP_NOFS);
-+			if (!xattrs[i].value) {
-+				err = -ENOMEM;
-+				goto out_err;
-+			}
-+			xattrs[i].value_len = xattr_array[i].value_len;
-+		}
-+
-+		si->xattrs = xattrs;
-+		si->count = count;
+-	if (ocfs2_mount_local(osb))
++	if (ocfs2_mount_local(osb)) {
++		*nofs_flag = flags;
  		return 0;
-+
-+out_err:
-+		for (; i >= 0; i--) {
-+			kfree(xattrs[i].name);
-+			kfree(xattrs[i].value);
-+		}
-+		kfree(xattrs);
-+		return err;
++	}
+ 
+ 	status = ocfs2_cluster_lock(osb, lockres, ex ? LKM_EXMODE : LKM_PRMODE,
+ 				    0, 0);
+@@ -2879,12 +2893,17 @@ int ocfs2_nfs_sync_lock(struct ocfs2_super *osb, int ex)
+ 			up_write(&osb->nfs_sync_rwlock);
+ 		else
+ 			up_read(&osb->nfs_sync_rwlock);
++		memalloc_nofs_restore(flags);
++		return status;
  	}
  
- 	for (xattr = xattr_array; xattr->name != NULL; xattr++) {
-@@ -7786,6 +7839,19 @@ static int ocfs2_initxattrs(struct inode *inode, const struct xattr *xattr_array
- 	return err;
+-	return status;
++	*nofs_flag = flags;
++
++	return 0;
  }
  
-+void ocfs2_free_security_xattrs(struct ocfs2_security_xattr_info *si)
-+{
-+	int i;
-+
-+	for (i = 0; i < si->count; i++) {
-+		kfree(si->xattrs[i].name);
-+		kfree(si->xattrs[i].value);
-+	}
-+	kfree(si->xattrs);
-+	si->xattrs = NULL;
-+	si->count = 0;
-+}
-+
- int ocfs2_init_security_get(struct inode *inode,
- 			    struct inode *dir,
- 			    const struct qstr *qstr,
-@@ -7803,7 +7869,7 @@ int ocfs2_init_security_get(struct inode *inode,
- 		 * security_inode_init_security() does not return -EOPNOTSUPP,
- 		 * we have to check the xattr ourselves.
- 		 */
--		if (!ret && !si->name)
-+		if (!ret && !si->count)
- 			si->enable = 0;
- 
- 		return ret;
-@@ -7820,10 +7886,21 @@ int ocfs2_init_security_set(handle_t *handle,
- 			    struct ocfs2_alloc_context *xattr_ac,
- 			    struct ocfs2_alloc_context *data_ac)
+-void ocfs2_nfs_sync_unlock(struct ocfs2_super *osb, int ex)
++void ocfs2_nfs_sync_unlock(struct ocfs2_super *osb, int ex,
++			   unsigned int nofs_flag)
  {
--	return ocfs2_xattr_set_handle(handle, inode, di_bh,
--				     OCFS2_XATTR_INDEX_SECURITY,
--				     si->name, si->value, si->value_len, 0,
--				     xattr_ac, data_ac);
-+	int i;
-+	int ret = 0;
+ 	struct ocfs2_lock_res *lockres = &osb->osb_nfs_sync_lockres;
+ 
+@@ -2895,6 +2914,8 @@ void ocfs2_nfs_sync_unlock(struct ocfs2_super *osb, int ex)
+ 		up_write(&osb->nfs_sync_rwlock);
+ 	else
+ 		up_read(&osb->nfs_sync_rwlock);
 +
-+	for (i = 0; i < si->count; i++) {
-+		ret = ocfs2_xattr_set_handle(handle, inode, di_bh,
-+					     OCFS2_XATTR_INDEX_SECURITY,
-+					     si->xattrs[i].name,
-+					     si->xattrs[i].value,
-+					     si->xattrs[i].value_len, 0,
-+					     xattr_ac, data_ac);
-+		if (ret)
-+			break;
-+	}
-+
-+	return ret;
++	memalloc_nofs_restore(nofs_flag);
  }
  
- const struct xattr_handler ocfs2_xattr_security_handler = {
-diff --git a/fs/ocfs2/xattr.h b/fs/ocfs2/xattr.h
-index 887cc1a18b1af..1dd08f979e3c2 100644
---- a/fs/ocfs2/xattr.h
-+++ b/fs/ocfs2/xattr.h
-@@ -20,13 +20,18 @@ enum ocfs2_xattr_type {
- 	OCFS2_XATTR_MAX
- };
+ int ocfs2_trim_fs_lock(struct ocfs2_super *osb,
+diff --git a/fs/ocfs2/dlmglue.h b/fs/ocfs2/dlmglue.h
+index a3ebd7303ea20..faa58ed8699b1 100644
+--- a/fs/ocfs2/dlmglue.h
++++ b/fs/ocfs2/dlmglue.h
+@@ -161,8 +161,9 @@ void ocfs2_orphan_scan_unlock(struct ocfs2_super *osb, u32 seqno);
  
--struct ocfs2_security_xattr_info {
--	int enable;
--	const char *name;
-+struct ocfs2_security_xattr {
-+	char *name;
- 	void *value;
- 	size_t value_len;
- };
+ int ocfs2_rename_lock(struct ocfs2_super *osb);
+ void ocfs2_rename_unlock(struct ocfs2_super *osb);
+-int ocfs2_nfs_sync_lock(struct ocfs2_super *osb, int ex);
+-void ocfs2_nfs_sync_unlock(struct ocfs2_super *osb, int ex);
++int ocfs2_nfs_sync_lock(struct ocfs2_super *osb, int ex, unsigned int *nofs_flag);
++void ocfs2_nfs_sync_unlock(struct ocfs2_super *osb, int ex,
++			   unsigned int nofs_flag);
+ void ocfs2_trim_fs_lock_res_init(struct ocfs2_super *osb);
+ void ocfs2_trim_fs_lock_res_uninit(struct ocfs2_super *osb);
+ int ocfs2_trim_fs_lock(struct ocfs2_super *osb,
+diff --git a/fs/ocfs2/export.c b/fs/ocfs2/export.c
+index 9c2665dd24e21..90b9e510e700d 100644
+--- a/fs/ocfs2/export.c
++++ b/fs/ocfs2/export.c
+@@ -37,6 +37,7 @@ static struct dentry *ocfs2_get_dentry(struct super_block *sb,
+ 	struct inode *inode;
+ 	struct ocfs2_super *osb = OCFS2_SB(sb);
+ 	u64 blkno = handle->ih_blkno;
++	unsigned int nofs_flag = 0;
+ 	int status, set;
+ 	struct dentry *result;
  
-+struct ocfs2_security_xattr_info {
-+	int enable;
-+	struct ocfs2_security_xattr *xattrs;
-+	int count;
-+};
-+
- extern const struct xattr_handler ocfs2_xattr_user_handler;
- extern const struct xattr_handler ocfs2_xattr_trusted_handler;
- extern const struct xattr_handler ocfs2_xattr_security_handler;
-@@ -49,6 +54,7 @@ int ocfs2_xattr_remove(struct inode *, struct buffer_head *);
- int ocfs2_init_security_get(struct inode *, struct inode *,
- 			    const struct qstr *,
- 			    struct ocfs2_security_xattr_info *);
-+void ocfs2_free_security_xattrs(struct ocfs2_security_xattr_info *);
- int ocfs2_init_security_set(handle_t *, struct inode *,
- 			    struct buffer_head *,
- 			    struct ocfs2_security_xattr_info *,
+@@ -59,7 +60,7 @@ static struct dentry *ocfs2_get_dentry(struct super_block *sb,
+ 	 * This will synchronize us against ocfs2_delete_inode() on
+ 	 * all nodes
+ 	 */
+-	status = ocfs2_nfs_sync_lock(osb, 1);
++	status = ocfs2_nfs_sync_lock(osb, 1, &nofs_flag);
+ 	if (status < 0) {
+ 		mlog(ML_ERROR, "getting nfs sync lock(EX) failed %d\n", status);
+ 		goto check_err;
+@@ -90,7 +91,7 @@ static struct dentry *ocfs2_get_dentry(struct super_block *sb,
+ 	inode = ocfs2_iget(osb, blkno, 0, 0);
+ 
+ unlock_nfs_sync:
+-	ocfs2_nfs_sync_unlock(osb, 1);
++	ocfs2_nfs_sync_unlock(osb, 1, nofs_flag);
+ 
+ check_err:
+ 	if (status < 0) {
+@@ -133,12 +134,13 @@ static struct dentry *ocfs2_get_parent(struct dentry *child)
+ 	u64 blkno;
+ 	struct dentry *parent;
+ 	struct inode *dir = d_inode(child);
++	unsigned int nofs_flag = 0;
+ 	int set;
+ 
+ 	trace_ocfs2_get_parent(child, child->d_name.len, child->d_name.name,
+ 			       (unsigned long long)OCFS2_I(dir)->ip_blkno);
+ 
+-	status = ocfs2_nfs_sync_lock(OCFS2_SB(dir->i_sb), 1);
++	status = ocfs2_nfs_sync_lock(OCFS2_SB(dir->i_sb), 1, &nofs_flag);
+ 	if (status < 0) {
+ 		mlog(ML_ERROR, "getting nfs sync lock(EX) failed %d\n", status);
+ 		parent = ERR_PTR(status);
+@@ -183,7 +185,7 @@ static struct dentry *ocfs2_get_parent(struct dentry *child)
+ 	ocfs2_inode_unlock(dir, 0);
+ 
+ unlock_nfs_sync:
+-	ocfs2_nfs_sync_unlock(OCFS2_SB(dir->i_sb), 1);
++	ocfs2_nfs_sync_unlock(OCFS2_SB(dir->i_sb), 1, nofs_flag);
+ 
+ bail:
+ 	trace_ocfs2_get_parent_end(parent);
+diff --git a/fs/ocfs2/inode.c b/fs/ocfs2/inode.c
+index 9228d6ef23c24..bcfe53bc356ea 100644
+--- a/fs/ocfs2/inode.c
++++ b/fs/ocfs2/inode.c
+@@ -1109,6 +1109,7 @@ static void ocfs2_delete_inode(struct inode *inode)
+ {
+ 	int wipe, status;
+ 	sigset_t oldset;
++	unsigned int nofs_flag = 0;
+ 	struct buffer_head *di_bh = NULL;
+ 	struct ocfs2_dinode *di = NULL;
+ 
+@@ -1143,7 +1144,7 @@ static void ocfs2_delete_inode(struct inode *inode)
+ 	 * shared mode so that all nodes can still concurrently
+ 	 * process deletes.
+ 	 */
+-	status = ocfs2_nfs_sync_lock(OCFS2_SB(inode->i_sb), 0);
++	status = ocfs2_nfs_sync_lock(OCFS2_SB(inode->i_sb), 0, &nofs_flag);
+ 	if (status < 0) {
+ 		mlog(ML_ERROR, "getting nfs sync lock(PR) failed %d\n", status);
+ 		ocfs2_cleanup_delete_inode(inode, 0);
+@@ -1215,7 +1216,7 @@ static void ocfs2_delete_inode(struct inode *inode)
+ 	brelse(di_bh);
+ 
+ bail_unlock_nfs_sync:
+-	ocfs2_nfs_sync_unlock(OCFS2_SB(inode->i_sb), 0);
++	ocfs2_nfs_sync_unlock(OCFS2_SB(inode->i_sb), 0, nofs_flag);
+ 
+ bail_unblock:
+ 	ocfs2_unblock_signals(&oldset);
 -- 
 2.53.0
 
