@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035832;
-	b=WfBrtqL2ZzHPxymCFFe+Mx2KgZMNwH33Cc9wDJQVhA2KQAN7fVIEwaUsi7Es/Be5WGlH
-	 yncbcNvAUm39R5Nv+FzbPe/6K5QTX9RogTdG9lEbyjXPcXqh5iRloNsT6tq0U+I1O6zYo
-	 n6p9JtQeFjIPBtgc7AXgBilzo1ZI3pv49qzBgUdqcHQYHN7H2oID4LJ/l2xmafEFY/7z5
-	 cMU7JCHy1eX3XRwb/Goop+6QDR7OS0/xfZxkeufzRQsNAnyTcWR8W2bMXxMV/zXE4PJJT
-	 gAZqMmMXdIR69hHSBhxLJwLpzkr7bdbOuaHLk0IcMm9JoyypXpJPexnYDWzEf1dD79A==
+	t=1795035835;
+	b=sT8xxAG5wrd48rX60zShg4pz3fRtFzGqDiLPD8E7/Ux8Okm3JrwPYAiDunakFMtYKGtF
+	 lwua44exTwyH8E3TaAc6OOoI6yP8GAhTQoY00k3xfK52wPjr+/oHvFqnBpQp0uCmzJqCH
+	 GJW3N2X37tnxvptH+AUCvxysOdwLyawNgYxNl+j4vsOnG2th8z6OTi+Pftu4HjZo9LFHx
+	 08hQApnkPnICJVWVi3YomCpG82k2DNAe0EB5gdU4jXczO9tz4OR+TpBLL22lODSutZfFN
+	 mg610UGqyTaQGvYhHMYUQ57qYlL0lasrlOqdsYfwW2CHY97joXRoi4gvefpYfzQDaHg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035832;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035835;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=V0cw9gxJpyFUtOomi1w9uX0OOfBqoh/aDe6hfREqlGs=;
-	b=jv6k6dOpzIZKJYC5jTK9Fb7W/90yoyFK8kVhYpI3MDmMrB9pcT7yr6qbw8/II+q4D+rb
-	 0JkP74lruEymj9x0fElYfgR3wEEJLi5aX4TclEbO+J4aMRTxfSOK6YYzcVt04inscg1Hz
-	 QsO1fm9WXAIyA/uJGs+0PKK/gsrhljJQJZ2oxGGQa2zdAkvJB8yl6D7/saoHQl2a/1Kzx
-	 bGLELaduEbxj+2VTRmMOOPpp01Rbmu6RCmEmMHB9XAyR7OJ74bmUvma1KTsJn7WFuono3
-	 o4+U8+BfwOI+ler4DWar+Nu+HLfy5/DxlZVKmxfTU8075rvXWYYsuj+q4/PyTRQTkTA==
+	bh=TXzfBhtAyydVXOY8+Aq+8QCuascxHlAK8kY/hF36Qf0=;
+	b=5kUJZa2KTWleTm8iEUirrVyY1ZODG/wSrb08Ln6pYFtMtTJ+29lI9tlp2yV/4U5xSQAT
+	 5v9wPzq4amm1TwUD4OGDoRP4RUzGTE1IjhY/fxFoaPUAco40tiU/ocos2cpjHktcMR21M
+	 4jZqQrHk3WoYVuTj1TXkSexRAsD4ASyftm5QE5/+cc5VvOHSApXOjzDH1DWdMwLmigI3K
+	 TpZduYdPue98KB/Q8yywxDCcD+CC5K7YfzG4CCNPZL2wsW8Lyok5Cu/hWfktTCJNVWS5b
+	 hHKE5qC+0rwN59x1UMfaIiPzOPyXSODWQsWmB4xT8iLS8DnEVfAnr7Mh8VkiAfNnX4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=POeOcPaJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aYo0dYlm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6217C60A2602;
-	Wed, 18 Nov 2026 21:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B41A606A31C;
+	Wed, 18 Nov 2026 21:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=POeOcPaJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B32F41F000CE;
-	Wed, 18 Nov 2026 21:03:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aYo0dYlm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83CDF1F01573;
+	Wed, 18 Nov 2026 21:03:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035832;
-	bh=V0cw9gxJpyFUtOomi1w9uX0OOfBqoh/aDe6hfREqlGs=;
+	s=korg; t=1795035835;
+	bh=TXzfBhtAyydVXOY8+Aq+8QCuascxHlAK8kY/hF36Qf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=POeOcPaJLGTmodHq6GwkZOU4sEZ+LFNIAoPho4aj1qcLyFLkg0R3PaOpOvHbawMtE
-	 yhjSEwWlxnzKgaEAxlE1r1uxJWtC1GYwuCFOum5GoeKb+hLLh5bqOTPsGSBYgXgs9e
-	 GkO9Zr9UmePScWuv+KajWT0Yt/Hbrh5+CwkMkwq0=
+	b=aYo0dYlm4aF7eYYtruoFxy8LItpcNu/kgvsaA9eTrFFe4Mvx3ciQPVeZdxZ/Hh4yD
+	 5nY4wle9eOv2vx23lNCuuJZrKXDCh6RTkUu4x0voEgZxjkYAfcoeYL1JlP82GzNHJO
+	 SGjDLmHTZrwsIkJiT+wekGaSOtoM12vWb6fm3vqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eugen Hristev <ehristev@kernel.org>,
 	Balakrishnan Sambath <balakrishnan.s@microchip.com>,
+	Eugen Hristev <ehristev@kernel.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0844/3318] media: microchip-isc: fix awb_mutex and lock lifecycle
-Date: Wed, 18 Nov 2026 15:24:26 +0100
-Message-ID: <20261118150344.505009303@linuxfoundation.org>
+Subject: [PATCH 6.6 0845/3318] media: microchip-isc: synchronize the IRQ before disabling clocks on stop
+Date: Wed, 18 Nov 2026 15:24:27 +0100
+Message-ID: <20261118150344.535346095@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,158 +71,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
 
-[ Upstream commit 5540b48c0702f6a1389db3d473d7fd0db930422a ]
+[ Upstream commit 19fa5407da5ef3e605cacfcd90f70d8b2c121cd7 ]
 
-isc->lock and awb_mutex were initialised in isc_async_complete() and
-destroyed in isc_async_unbind(), tying their lifetime to the subdev
-bind/unbind cycle instead of the device:
+isc_stop_streaming() masks the DMA interrupt and then drops the runtime
+PM reference, which disables the ISC clocks. microchip_isc_interrupt()
+may still be executing on another CPU at that point; it reads ISC_INTSR
+over regmap, and touching the unclocked registers triggers an external
+abort.
 
- - isc_async_unbind() destroyed awb_mutex before cancel_work_sync(),
-   which takes it;
- - a failed .complete() left them initialised, and isc->lock was
-   destroyed only on the .complete() error path, so the normal unbind
-   path leaked it;
- - a rebind runs .complete() again and reinitialises a live mutex.
+Store the IRQ number at probe and call synchronize_irq() after masking
+the interrupt, before dropping the PM reference.
 
-Initialise both with devm_mutex_init() at probe so they live for the
-whole device lifetime and are freed at remove, and drop the init and
-destroy from the .complete()/.unbind() callbacks.
-
-isc_async_complete_err then only returned ret, so drop the label and
-return directly at each error site.
-
-Fixes: 314c96e5203d ("media: atmel: atmel-isc-base: use mutex to lock awb workq from streaming")
+Fixes: 106267444f12 ("[media] atmel-isc: add the Image Sensor Controller code")
 Cc: stable@vger.kernel.org
-Reviewed-by: Eugen Hristev <ehristev@kernel.org>
 Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+Reviewed-by: Eugen Hristev <ehristev@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/platform/microchip/microchip-isc-base.c | 15 ++++-----------
- .../platform/microchip/microchip-sama5d2-isc.c    |  9 +++++++++
- .../platform/microchip/microchip-sama7g5-isc.c    |  9 +++++++++
- 3 files changed, 22 insertions(+), 11 deletions(-)
+ drivers/media/platform/microchip/microchip-isc-base.c    | 3 +++
+ drivers/media/platform/microchip/microchip-isc.h         | 1 +
+ drivers/media/platform/microchip/microchip-sama5d2-isc.c | 2 ++
+ drivers/media/platform/microchip/microchip-sama7g5-isc.c | 2 ++
+ 4 files changed, 8 insertions(+)
 
 diff --git a/drivers/media/platform/microchip/microchip-isc-base.c b/drivers/media/platform/microchip/microchip-isc-base.c
-index 78a26babf3894..df3b36e9f7f25 100644
+index df3b36e9f7f25..608985499826e 100644
 --- a/drivers/media/platform/microchip/microchip-isc-base.c
 +++ b/drivers/media/platform/microchip/microchip-isc-base.c
-@@ -1745,7 +1745,6 @@ static void isc_async_unbind(struct v4l2_async_notifier *notifier,
- {
- 	struct isc_device *isc = container_of(notifier->v4l2_dev,
- 					      struct isc_device, v4l2_dev);
--	mutex_destroy(&isc->awb_mutex);
- 	cancel_work_sync(&isc->awb_work);
- 	video_unregister_device(&isc->video_dev);
- 	v4l2_ctrl_handler_free(&isc->ctrls.handler);
-@@ -1809,8 +1808,6 @@ static int isc_async_complete(struct v4l2_async_notifier *notifier)
+@@ -425,6 +425,9 @@ static void isc_stop_streaming(struct vb2_queue *vq)
+ 	/* Disable DMA interrupt */
+ 	regmap_write(isc->regmap, ISC_INTDIS, ISC_INT_DDONE);
  
- 	isc->current_subdev = container_of(notifier,
- 					   struct isc_subdev_entity, notifier);
--	mutex_init(&isc->lock);
--	mutex_init(&isc->awb_mutex);
++	/* let a running IRQ handler finish before the clock is disabled */
++	synchronize_irq(isc->irq);
++
+ 	pm_runtime_put_sync(isc->dev);
  
- 	init_completion(&isc->comp);
+ 	/* Disable stream on the sub device */
+diff --git a/drivers/media/platform/microchip/microchip-isc.h b/drivers/media/platform/microchip/microchip-isc.h
+index ad4e98a1dd8fc..f5e322c2e36bc 100644
+--- a/drivers/media/platform/microchip/microchip-isc.h
++++ b/drivers/media/platform/microchip/microchip-isc.h
+@@ -287,6 +287,7 @@ struct isc_device {
+ 	u32			dcfg;
  
-@@ -1829,7 +1826,7 @@ static int isc_async_complete(struct v4l2_async_notifier *notifier)
- 	ret = vb2_queue_init(q);
- 	if (ret < 0) {
- 		dev_err(isc->dev, "vb2_queue_init() failed: %d\n", ret);
--		goto isc_async_complete_err;
-+		return ret;
- 	}
- 
- 	/* Init video dma queues */
-@@ -1840,13 +1837,13 @@ static int isc_async_complete(struct v4l2_async_notifier *notifier)
- 	ret = isc_set_default_fmt(isc);
- 	if (ret) {
- 		dev_err(isc->dev, "Could not set default format\n");
--		goto isc_async_complete_err;
-+		return ret;
- 	}
- 
- 	ret = isc_ctrl_init(isc);
- 	if (ret) {
- 		dev_err(isc->dev, "Init isc ctrols failed: %d\n", ret);
--		goto isc_async_complete_err;
-+		return ret;
- 	}
- 
- 	/* Register video device */
-@@ -1866,7 +1863,7 @@ static int isc_async_complete(struct v4l2_async_notifier *notifier)
- 	ret = video_register_device(vdev, VFL_TYPE_VIDEO, -1);
- 	if (ret < 0) {
- 		dev_err(isc->dev, "video_register_device failed: %d\n", ret);
--		goto isc_async_complete_err;
-+		return ret;
- 	}
- 
- 	ret = isc_scaler_link(isc);
-@@ -1881,10 +1878,6 @@ static int isc_async_complete(struct v4l2_async_notifier *notifier)
- 
- isc_async_complete_unregister_device:
- 	video_unregister_device(vdev);
--
--isc_async_complete_err:
--	mutex_destroy(&isc->awb_mutex);
--	mutex_destroy(&isc->lock);
- 	return ret;
- }
+ 	struct device		*dev;
++	int			irq;
+ 	struct v4l2_device	v4l2_dev;
+ 	struct video_device	video_dev;
  
 diff --git a/drivers/media/platform/microchip/microchip-sama5d2-isc.c b/drivers/media/platform/microchip/microchip-sama5d2-isc.c
-index 4033bfc96bb77..7cedfd29ac130 100644
+index 7cedfd29ac130..583d3c4dca54f 100644
 --- a/drivers/media/platform/microchip/microchip-sama5d2-isc.c
 +++ b/drivers/media/platform/microchip/microchip-sama5d2-isc.c
-@@ -30,6 +30,7 @@
- #include <linux/interrupt.h>
- #include <linux/math64.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/of.h>
- #include <linux/of_graph.h>
- #include <linux/platform_device.h>
-@@ -424,6 +425,14 @@ static int microchip_isc_probe(struct platform_device *pdev)
- 	platform_set_drvdata(pdev, isc);
- 	isc->dev = dev;
+@@ -448,6 +448,8 @@ static int microchip_isc_probe(struct platform_device *pdev)
+ 	if (irq < 0)
+ 		return irq;
  
-+	ret = devm_mutex_init(dev, &isc->lock);
-+	if (ret)
-+		return ret;
++	isc->irq = irq;
 +
-+	ret = devm_mutex_init(dev, &isc->awb_mutex);
-+	if (ret)
-+		return ret;
-+
- 	io_base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(io_base))
- 		return PTR_ERR(io_base);
+ 	ret = devm_request_irq(dev, irq, microchip_isc_interrupt, 0,
+ 			       "microchip-sama5d2-isc", isc);
+ 	if (ret < 0) {
 diff --git a/drivers/media/platform/microchip/microchip-sama7g5-isc.c b/drivers/media/platform/microchip/microchip-sama7g5-isc.c
-index 58cfbf6fcd668..36f52ea38d55b 100644
+index 36f52ea38d55b..d2e1899869c43 100644
 --- a/drivers/media/platform/microchip/microchip-sama7g5-isc.c
 +++ b/drivers/media/platform/microchip/microchip-sama7g5-isc.c
-@@ -33,6 +33,7 @@
- #include <linux/interrupt.h>
- #include <linux/math64.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/of.h>
- #include <linux/of_graph.h>
- #include <linux/platform_device.h>
-@@ -413,6 +414,14 @@ static int microchip_xisc_probe(struct platform_device *pdev)
- 	platform_set_drvdata(pdev, isc);
- 	isc->dev = dev;
+@@ -437,6 +437,8 @@ static int microchip_xisc_probe(struct platform_device *pdev)
+ 	if (irq < 0)
+ 		return irq;
  
-+	ret = devm_mutex_init(dev, &isc->lock);
-+	if (ret)
-+		return ret;
++	isc->irq = irq;
 +
-+	ret = devm_mutex_init(dev, &isc->awb_mutex);
-+	if (ret)
-+		return ret;
-+
- 	io_base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(io_base))
- 		return PTR_ERR(io_base);
+ 	ret = devm_request_irq(dev, irq, microchip_isc_interrupt, 0,
+ 			       "microchip-sama7g5-xisc", isc);
+ 	if (ret < 0) {
 -- 
 2.53.0
 
