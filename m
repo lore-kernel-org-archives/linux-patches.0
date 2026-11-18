@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060614;
-	b=nJCD3fbY6oPQ2Dm8cEgah761IDwMasURXQVaXflLW/WA48O5cpUJNhPkbtdgmtkVyApr
-	 XE3jVbkx1i/zzZWY5dJAmuXolh7HeuSgXppat1+bRJRfH8HIVOQnjDRbRCwCCwAcR/P3B
-	 OhQFnTxRouHYdSSc16/cd1s0ZfQuli/CJHCh6vLJmTYkvkPHGqzowrT8e8ZbtSX/XUlif
-	 ARqrhLOcQ8Sv89keQ/lLfKLeV2ou5erLkq0glAzGq3lwA7eBB2g9G2aKt5br815puA4d9
-	 e5U1Nm3I0d3G6TJkXQCHZ2F04vzWADBMAqiOOgcWQwaHrxXQaw5f3dh3wws2C0g56Pw==
+	t=1795060617;
+	b=xcOmqWRtq4A4mKt4XxM4yxTBG5+sTralv1QSVhe9ctB2pffi6xrMe829qtyzB71Fasjy
+	 h87Yq28cjYBGUzNhMAfOChze48tjGqyrOIaWZbRXzL7JvtyG++o/npaa/nWyXJLxhBOIh
+	 Kg6FXHlMYO7mBITC9mz5CoJv68wlLUizJ98iP1c7YnaCTf3R4Lc6wyrtaN5vuIXb9G0Oq
+	 9GtGZV+i+fihyjtRRl2LHFNkqrDeMjU2i9U19GUu/zx0nop7HQt7iF8+WMSTRICjeW/3w
+	 e6Hebz9EfXDVU+W0GSvpR0lDPBilUUEAmEp4nfZklp2M21iPM7qhugQLabOUUNa1m9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060614;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060617;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qAY+gwhaxhKRi7UiyqwL0MmvI6WfNCZO3ppapolx05I=;
-	b=bagIDagKtcEYNCgQpONUv46KuFltpwaHBHCOia7Km7NOXSkzyaSfVPSLtvV9xiz6Q9vA
-	 OlXTpaB9wR/uoJ8PcqVWRUKDXcZn3FrCVi1yWfOfpA+F6fDxszYS2QJunRERqvE/jt5CH
-	 ZfpLZJbo2mbkEcvH4InEd15upFL+hBaSpXgKenubturSYDvwJNzJCzLHi2hzjkPA66PrJ
-	 4Gocm7XV0WzbEamxPCfA79/M1jKhJOiZDLAMZ9BYVi3LE3FqlGklp5y73xtjzSxAqSSZL
-	 aHQF+yUH/W4Y48lgULfJi95kXR1OcS58Nw2Nbz/Ik1sYlNgSyx6gmrckgyDCxDknzhA==
+	bh=rorQAEu0oPfuphsaILUcaC9c5S+qisDP7KIVlyXRZPk=;
+	b=kOexPaPmicI9JG9pdNdnQDU9xBXVeC+ZEufjQHc8iDhAR9Nru6rzsbj5QbNZe133JOmv
+	 iPAfDCTlNOeuKjvjd7p1CP2EzoiR43y50/t4Uz4Hxt5tS36MZOi5at/ugpukS1piMW3Kq
+	 fD3z5rAjYbSQGhQXMFHK4Vk3Vb4c8+Bqz04Qf1cYHidb8rlui3M8mA93JWb1K+Ac1iZXd
+	 hUp0mpqksP4/lz0qmrOkZKVmXmculfJ6BMUT0qOuwL90eFn+h09IHmnxpKvffuW/7YPmd
+	 v8Tt3OXjMKUsw351iBlG79tvj3LuhHVVHQuwTm/6zqYDjCmkgAncRjUPcV6nqTh5aCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bsd5VqwG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XMe3+gJF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E54C606A320;
-	Thu, 19 Nov 2026 03:56:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42CCC606A320;
+	Thu, 19 Nov 2026 03:56:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bsd5VqwG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B803C1F000C4;
-	Thu, 19 Nov 2026 03:56:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XMe3+gJF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FEBE1F000C4;
+	Thu, 19 Nov 2026 03:56:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060614;
-	bh=qAY+gwhaxhKRi7UiyqwL0MmvI6WfNCZO3ppapolx05I=;
+	s=korg; t=1795060617;
+	bh=rorQAEu0oPfuphsaILUcaC9c5S+qisDP7KIVlyXRZPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bsd5VqwGDA+5nE6lfGfc0sk9+3KEhxft0MfxKRvDmTQgaZgNuwBzqfBtadD37mim0
-	 PZTYEJR1Ws7G22sk4ttb48o6f61MyUuxCr5cZfOE9b1peSBSi3KxmDn0E3FTr1Ikn0
-	 oPHX4KIkpz0FwJHto5iQB6QhOXSvtWcuyzvbvjpE=
+	b=XMe3+gJF+Ttyg//ivQW0h8pu0Jqc+nuV7HkY0dWOYFRZ4+djYC8DqSklMnZdb+mSX
+	 GA7UteMHMn80TNht1VqiAk2tOApB/Pq1ZYIiuzvjc4pw3pR3bopYSyLR5XXV+FWKZx
+	 qdwicnbJHiQqDQAuiULH32PgSmLYBVr20b+9mTLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Sarthak Sharma <sarthak.sharma@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Slavin Liu <bolin.liu@seu.edu.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1262/1848] mm/gup_test: report actual pinned bytes
-Date: Wed, 18 Nov 2026 15:55:00 +0100
-Message-ID: <20261118150012.540663335@linuxfoundation.org>
+Subject: [PATCH 5.10 1263/1848] ACPI: tables: handle failed initrd override mappings
+Date: Wed, 18 Nov 2026 15:55:01 +0100
+Message-ID: <20261118150012.573976146@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,45 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sarthak Sharma <sarthak.sharma@arm.com>
+From: Slavin Liu <bolin.liu@seu.edu.cn>
 
-[ Upstream commit 65a79b9b693d8c7bd7e5e4865c02cce922a7cc50 ]
+[ Upstream commit 047c834d939df75386cfc0603c7ddeaa23a349a4 ]
 
-__gup_test_ioctl() advances addr to the end of the current batch before
-checking if GUP pinned the entire requested batch. If GUP pins more than
-0 pages but less than the requested batch size, addr still advances by
-the requested batch size.
+The runtime AML table-loading path can invoke initrd override after
+permanent mappings are enabled. Mapping bookkeeping can then fail.
 
-The next iteration detects the partial pinning and breaks out of the loop.
-Again gup->size is calculated using addr - gup->addr, so it also includes
-the unpinned pages of the requested batch.
+Return AE_NO_MEMORY in that case to prevent a NULL pointer dereference
+when attempting to read the table length.
 
-Calculate gup->size using the actual number of pages pinned multiplied
-by PAGE_SIZE.
+Detected by static analysis and reviewed with AI-assisted source auditing.
 
-Fixes: 64c349f4ae78 ("mm: add infrastructure for get_user_pages_fast() benchmarking")
-Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Signed-off-by: Sarthak Sharma <sarthak.sharma@arm.com>
-Link: https://patch.msgid.link/20260901083452.115365-3-sarthak.sharma@arm.com
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Fixes: b2a35003dfbc ("ACPI: Implement physical address table override")
+Assisted-by: LLM
+Signed-off-by: Slavin Liu <bolin.liu@seu.edu.cn>
+[ rjw: Added empty code line after conditional, changelog edits ]
+Link: https://patch.msgid.link/20260913125123.109803-1-bolin.liu@seu.edu.cn
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/gup_test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/tables.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/mm/gup_test.c b/mm/gup_test.c
-index cdf30cfcba139..b1e6746749a50 100644
---- a/mm/gup_test.c
-+++ b/mm/gup_test.c
-@@ -144,7 +144,7 @@ static int __gup_test_ioctl(unsigned int cmd,
- 	nr_pages = i;
- 
- 	gup->get_delta_usec = ktime_us_delta(end_time, start_time);
--	gup->size = addr - gup->addr;
-+	gup->size = nr_pages * PAGE_SIZE;
- 
- 	/*
- 	 * Take an un-benchmark-timed moment to verify DMA pinned
+diff --git a/drivers/acpi/tables.c b/drivers/acpi/tables.c
+index 9d581045acff0..59e669ff81d43 100644
+--- a/drivers/acpi/tables.c
++++ b/drivers/acpi/tables.c
+@@ -640,6 +640,9 @@ acpi_table_initrd_override(struct acpi_table_header *existing_table,
+ 	while (table_offset + ACPI_HEADER_SIZE <= all_tables_size) {
+ 		table = acpi_os_map_memory(acpi_tables_addr + table_offset,
+ 					   ACPI_HEADER_SIZE);
++		if (!table)
++			return AE_NO_MEMORY;
++
+ 		if (table_offset + table->length > all_tables_size) {
+ 			acpi_os_unmap_memory(table, ACPI_HEADER_SIZE);
+ 			WARN_ON(1);
 -- 
 2.53.0
 
