@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032556;
-	b=yiWjZUJ7VS5JcbioKv27zW/cIAXpaBDobZHZCP3Poj9T1oLsqDlvp2nnp5H84QKw4sv4
-	 3qOmVY/+MNZj8hfKex31KW+DuKC13G5MoM3phV4fIGvSzCayRm0Fr+OytWq63pw+9VKKe
-	 aQUy3HZ6a60ONhnEot2Q6J7PxoE66VQeZdK7zttcd5KBNeFD1LCxhGwg4E2ilK76f2B0a
-	 Io5leKOzCe6wFsXQoh6YYAAcuOyFrEZgLbRwcQtVz/vMWWRnQKToO8KBAt9vy0QspLRv/
-	 tSb9Wamc/5CYnOgJmilvWHEldiDM/YcnC2io12JLLS0G5HH11vIQm7tBnw9uAQlffCg==
+	t=1795032559;
+	b=NAstT7osbL7vpRXx+dd4OltfimLqLLv7zsAk5Tqls5aNbImDuq11jhFlAXTcajqUrDi6
+	 O9lz9yQvBx4M9JWH3QJ6ErKBxMwmIbv9H3MQD8CaeCnEvGrInSx1ptfkUZPW9XCp4rpF8
+	 TVwRYufTQqwIVA1TryVS/nO5VpWdgcLpTUY4x8le8kNlSnNCUx2pAHkhnOLdVvv3OMEFg
+	 QvYh4nn4DnbOB14zvU6LemzuhmopUqseU+g3ygcVjvGYDDbB1OISyIUpcJD48CEIm4qwW
+	 9tWMr3354sctnLVgKequGKUKCZc+iUikP13rx5PqqAEND+ExM6A/bIT4F2tVmXzz1Zw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032556;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032559;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LN7q8En7WDX+2wUJu9mX2xM/tB4LWHJCeQZiSEnkZR8=;
-	b=YqcM0foEAFXhwoHgScPnQZmOZZmWzi480EvNoBFouqYLcEdD11tsnD3yEipMkApTftW6
-	 7/J6aw1HStZOKbqeSN/Gs0WoUKU8ViKuvv9OmOC9hn9Nj34IC0YN6bJIrgjQA1xIb3yD8
-	 ohjRe+ZQHwQuqaretILokaWNbT63FijdZrCfBcepmtgNJd9fzBhEROsdNB56Xx+HuLmzm
-	 qK8H3EGXmRulyWWxaNEN9zpRMrOJLoJRJDOij0LKZrMZA1O+jaaRyiryR6phIVJQ7EoAw
-	 fWs/qI+HgZaJ4ko7y+bh4avrSW+ARMcwj6OfVaMcyfX4dBTYru3tg4MuSxh+N313p2Q==
+	bh=uyClaR7KsoZdt6lkopYRshkIQg2BbXUxw1HktJJ8pnA=;
+	b=RP/QFbecRbTayAp5Agds3X29in1iqJ3BPrGaOYmJtrNtFZHvVhLAxwXUOTI4GEt4Wx8q
+	 EQ3Y1ySiXZslNv6LO8tfGqt0X28Fgvs8Ob2caXPARNBOXx25Dnm+n9IIu9LfQkIdLt8M6
+	 6ll02m7hYrpw7DehKEe2/+bzcqqlQ8LHcnOLzzgSkfNT+avFKxqb8A5EqHx19Way8nXT/
+	 M/38vH52Tl36AWGREUaTxBTzG7+t2OVD23fXanGt5KE3VUYepwyAhCX9MuQynKibG5N8Q
+	 fCTLRDMozPHp12/D5zkAioh2n5iMTl4JVBzU19Jtw1xu6Kr/cEpGO7wWjqZiFwRf1ww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j7lyGj63;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PuEf8cTr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C65606A33F;
-	Wed, 18 Nov 2026 20:09:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AD1460A2608;
+	Wed, 18 Nov 2026 20:09:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j7lyGj63
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E4501F000C4;
-	Wed, 18 Nov 2026 20:09:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PuEf8cTr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF38E1F000C4;
+	Wed, 18 Nov 2026 20:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032556;
-	bh=LN7q8En7WDX+2wUJu9mX2xM/tB4LWHJCeQZiSEnkZR8=;
+	s=korg; t=1795032559;
+	bh=uyClaR7KsoZdt6lkopYRshkIQg2BbXUxw1HktJJ8pnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j7lyGj63qr/PquM9ZxlNQSUGg2crSjxvkG22iMQV+U3mNBZowDOZhFOdBO/s5TwDD
-	 qn10WjcCC5e90/iN9EuIKF+aAA9VhMr4O+Mn4onK+tibt7m3E+FGtCnBOLOc7xV7Tw
-	 o8hmWxNVEVcakWill2bT7XXA8yP9H6rS0zy8u8zo=
+	b=PuEf8cTrOXJyr/PzFGC5yOO2eJPTPZzIO/VpWcCClMqiJsME24vPcmu7HLqFy0iGZ
+	 jlnqHunWLuSDuhga2ku3jN+zBoAbkwHkcomcZHtSqpKD6jgirkseu4W0QMRoE9SaUK
+	 sRdlUiY3lFsayZkHViJqECDpxBp7NreCHs1EzZKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
 	Justin Chen <justin.chen@broadcom.com>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1452/1756] net: bcmasp: unmap previous DMA mappings on TX map failure
-Date: Wed, 18 Nov 2026 15:59:39 +0100
-Message-ID: <20261118150106.904079501@linuxfoundation.org>
+Subject: [PATCH 6.12 1453/1756] net: bcmasp: validate minimum RX packet size in bcmasp_rx_poll()
+Date: Wed, 18 Nov 2026 15:59:40 +0100
+Message-ID: <20261118150106.941952487@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -72,45 +71,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit a3cf9877558ab2c51182af558815dde64fc17cb9 ]
+[ Upstream commit 07b624d2f5a4517d7d0022fbd4aef17e884b5686 ]
 
-When mapping an skb with fragments for transmission in bcmasp_xmit(),
-if mapping fails on fragment i > 0, the error handler calls
-bcmasp_clean_txcb() for previous iterations j < i. However,
-bcmasp_clean_txcb() only zeroes the control block fields without
-unmapping the DMA buffers, leaking the DMA mappings allocated for the
-head and earlier fragments.
+In bcmasp_rx_poll(), the driver removes a 2-byte alignment pad and
+optionally strips the ETH_FCS_LEN CRC from received packets before
+passing them to eth_type_trans().
 
-Call dma_unmap_single() before calling bcmasp_clean_txcb() in the error
-cleanup loop.
+If the hardware reports a descriptor size smaller than the sum of the
+2-byte pad, the Ethernet header (ETH_HLEN), and optional CRC
+(ETH_FCS_LEN), subtracting the pad and CRC lengths underflows u32 len.
+This adds ~4 GiB to rx_bytes statistics, while the undersized frame
+reaches eth_type_trans(), which reads past skb->len into stale buffer
+data.
+
+Check that desc->size is at least (2 + ETH_HLEN + (crc_fwd ? ETH_FCS_LEN
+: 0)) before proceeding to process the descriptor.
 
 Fixes: 490cb412007d ("net: bcmasp: Add support for ASP2.0 Ethernet controller")
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
 Reviewed-by: Justin Chen <justin.chen@broadcom.com>
 Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20261013204439.3494046-3-florian.fainelli@broadcom.com
+Link: https://patch.msgid.link/20261013204439.3494046-4-florian.fainelli@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
-index c87baf249c5f6..a67205cf9647f 100644
+index a67205cf9647f..74df12df941f1 100644
 --- a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
 +++ b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
-@@ -317,6 +317,11 @@ static netdev_tx_t bcmasp_xmit(struct sk_buff *skb, struct net_device *dev)
- 			intf->mib.tx_dma_failed++;
- 			spb_index = intf->tx_spb_index;
- 			for (j = 0; j < i; j++) {
-+				txcb = &intf->tx_cbs[spb_index];
-+				dma_unmap_single(kdev,
-+						 dma_unmap_addr(txcb, dma_addr),
-+						 dma_unmap_len(txcb, dma_len),
-+						 DMA_TO_DEVICE);
- 				bcmasp_clean_txcb(intf, spb_index);
- 				spb_index = incr_ring(spb_index,
- 						      DESC_RING_COUNT);
+@@ -560,6 +560,12 @@ static int bcmasp_rx_poll(struct napi_struct *napi, int budget)
+ 					DMA_FROM_DEVICE);
+ 
+ 		len = desc->size;
++		if (unlikely(len < 2 + ETH_HLEN + (intf->crc_fwd ? ETH_FCS_LEN : 0))) {
++			u64_stats_update_begin(&stats->syncp);
++			u64_stats_inc(&stats->rx_dropped);
++			u64_stats_update_end(&stats->syncp);
++			goto next;
++		}
+ 
+ 		skb = napi_alloc_skb(napi, len);
+ 		if (!skb) {
 -- 
 2.53.0
 
