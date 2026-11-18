@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037811;
-	b=ZhKCknb6FRxg0aCx1FMKJPLjK7dET7F4L6TdUq5spoYZDqZtQlzw7yOiXXi19HfB0Vza
-	 K6+Oy9bgtk++0KfHoOtgcsyocpDnU2NAUIR289JC/Z3bTM8PWvKoyPDiceLXt0NAZ0Kui
-	 anh9QrgSlvd3rGojeFMymENs3VpbI4Pi+xupaxSlusOE3+PFIT+38TwiDpzwnUS0oZpQf
-	 R601VtYe50HiXMlWEk7JhBWjoppyCTSopROsrcX741AVMFeCG67IjcRLbc/Loqoymsaad
-	 Rr+D2dfU/qixQv4/0hyq0qy8tcTDhZ0nw7E58Tiw5rzkJOTcSGHTpXHMHnb5Fw1hAdQ==
+	t=1795037814;
+	b=fneCJuPzGHPT8Qpy/3izQXNwrxNOuKPS2PkjbkhLKVffELf4p4649DuTgoc5gl3wnG5y
+	 Yiw1a23SYwbNyWBciDrywjwNk74Nv1D1PmGqqeheRViiZdfr1tEjwOagFi50HbihKhh7f
+	 RPNRBsr+TqWj4zv/e7ttyPphRY/aDz5wdfs6HjB5zz+4O09/7VnxEz02Jh2CG4rzPcRFY
+	 BbAjc1l66dAbpqWlP/L3oXFfVkFr/rs2GzZOjRuyIpOppRvcPz0F48wZm2KrhtJC/JMIS
+	 WOe3+U30VDGXK/nlpbVeXn0PZeoo/qYzJ5WgvrcYN7X+IP8C27tk0yYTRK2LgcV+mfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037811;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037814;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=WCn+I6Kx4ixlVztHgz3jFSxb9RKvJmEx9K8iNGQUO/A=;
-	b=nrHPFWro8hIoz0jHnNYFhNJSKR01ziL//YYGCJ0wrKIrI9VBN3rGBwPCRwFWfuZVdKmF
-	 Zp06QCl9+/UIoqfoGT7sNzcQYOq9ID1gBnWdt6ot8h2APh3hQDS7LqfhHPhH/kpOUiYhH
-	 AdqCGYC0JqoGWB5rvXFkoS2SbScoqZHDIT6QQdRFrAUcuBpkQ7uI4mZyqs/XrOwcORGiU
-	 BHhJ68X3bbFkM4ITDmZhT48uNCxP/eHj+myTAQ2xacocb1FCcKtxiQ3HV/iSdzO/VxQt1
-	 D28k54I6lYE4V9NE8PFSaZrjqa3ZJjg1NXh07uUAJwN6ZCW2HZrzqdf0QYjivDRDswg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=nufRLpoD9wU9ASrkZZrlz9fSF9PgKBnuJRJri3vTDMg=;
+	b=tTLt3qAiPPGEX/UAVmBYOY+Hzpxo3l3cMlcMdjCPMlCEiaTONkgvIEQHUAZWYu9ikOch
+	 iN6W8AouNN1YsEPLdKjioVwuCV9Plpg3PrvG5HBnIBW95cv1TzlPSjG1T8pDyfMRqqbjJ
+	 zG7Jz8ZFxgmbdwVEpiL/9aNT7EMpOkU6K6lgv9WUxfeMKMTR9pvxIowXbpwc0Od5nAIwP
+	 200Lub+c+QHmMbxrqe99hU7yZdHWTn+TGhODnkMHkrUATj/LPr4go4+TMH0K1yucJKNUV
+	 2o4gBFohiILmYXMcGAjml4NmpLp/yQt5uyeF+l+7cxqCVQDC+sYa8129OCaZX00PbLg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uxMFu8eq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jVdDzwna;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD01D606A320;
-	Wed, 18 Nov 2026 21:36:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78897606A334;
+	Wed, 18 Nov 2026 21:36:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uxMFu8eq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFDA21F000C4;
-	Wed, 18 Nov 2026 21:36:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jVdDzwna
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99C101F000C4;
+	Wed, 18 Nov 2026 21:36:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037811;
-	bh=WCn+I6Kx4ixlVztHgz3jFSxb9RKvJmEx9K8iNGQUO/A=;
+	s=korg; t=1795037814;
+	bh=nufRLpoD9wU9ASrkZZrlz9fSF9PgKBnuJRJri3vTDMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uxMFu8eqXzurbCUiWF4DqY9747NLvdE3ktBX0wjd78usdBpxC3tff2JzLzDfCk7Sd
-	 a8c5uz+ZwKWHabTFy3VJS4W4cl/eMSTt+/WRsAgx0tEsB3ebkbkZtGWxTPvSLXazu6
-	 LBeWnUvPFvxFqzeckyqW7pdAFiVRy1dujQcx1piE=
+	b=jVdDzwna+hoya3rFFUDFVV6a790tV6xG2mulkcL6DAshA3I4uFy2FeDk0ftY4B4zg
+	 c6BIYoe+gH7d48ksUB4jCWIunwbrVVXoBLeHoapcwDfDl61zYInWeJ6uZuIg50dtZk
+	 HSkrB7W/mCJ5FpzRqQQC5paWFIPjHr35TmNjTxwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Danijel Slivka <Danijel.Slivka@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
+	Milan Milicevic <Milan.Milicevic@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1527/3318] drm/amdgpu: keep the CS user fence BO in GTT
-Date: Wed, 18 Nov 2026 15:35:49 +0100
-Message-ID: <20261118150406.776071640@linuxfoundation.org>
+Subject: [PATCH 6.6 1528/3318] drm/amdgpu: clear RB_OVERFLOW bit when enabling interrupts for navi10_ih
+Date: Wed, 18 Nov 2026 15:35:50 +0100
+Message-ID: <20261118150406.807410145@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -63,76 +63,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Milan Milicevic <Milan.Milicevic@amd.com>
 
-[ Upstream commit 7a56d929dc2304edaa6231e1eb5eb82b7e8b74a9 ]
+[ Upstream commit 146b96974b33b8cca52755ffed3cd24a82836013 ]
 
-The CS ioctl hands the GPU the GART address of the user fence BO, but
-since the BO keeps its own preferred and allowed domains, it no longer
-makes sure the BO is in GTT. A user fence in a VRAM BO, which only needs
-to be a page in size, gets its address from amdgpu_bo_gpu_offset(), which
-warns about non-contiguous VRAM. On navi31, a CS with a user fence in a
-4K VRAM BO, or in one created with AMDGPU_GEM_CREATE_VM_ALWAYS_VALID:
+Port this change to navi10_ih.c:
+commit afbf7955ff01 ("drm/amdgpu: clear RB_OVERFLOW bit when enabling interrupts")
 
-  WARNING: amdgpu_object.c:1531 at amdgpu_bo_gpu_offset+0x86/0xb0 [amdgpu], CPU#11: cs_gem_checks/18393
-  RIP: 0010:amdgpu_bo_gpu_offset+0x86/0xb0 [amdgpu]
-  Call Trace:
-   <TASK>
-   amdgpu_cs_parser_bos.isra.0+0x4eb/0x850 [amdgpu]
-   amdgpu_cs_ioctl+0x97e/0x2510 [amdgpu]
-   drm_ioctl_kernel+0xac/0x110 [drm]
-   drm_ioctl+0x2c6/0x5b0 [drm]
-   __x64_sys_ioctl+0xa0/0xf0
-   do_syscall_64+0xa3/0x4d0
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Setting IH_RB_WPTR to 0 does not clear RB_OVERFLOW if RB_ENABLE is not
+set. Pulse WPTR_OVERFLOW_CLEAR after RB_ENABLE (and with
+WPTR_OVERFLOW_ENABLE) so overflow is cleared when interrupts are
+enabled.
 
-and BOs which can't be in GTT at all, like GWS or OA ones of a page in
-size, pass the checks as well.
-
-Only take BOs which can't be anywhere else than in GTT as user fence,
-which the CS then validates there along with its other BOs. While at it,
-detect userptrs with amdgpu_ttm_tt_is_userptr(); amdgpu_ttm_tt_get_usermm()
-returns NULL once the task which created the userptr is gone.
-
-v2: only take BOs which can only be in GTT instead of special casing the
-    user fence BO in the validation, use amdgpu_ttm_tt_is_userptr()
-    (Christian)
-
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Signed-off-by: Danijel Slivka <Danijel.Slivka@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Milan Milicevic <Milan.Milicevic@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit f16989def9561d04d0f2e77216f5319112d29bf1)
+(cherry picked from commit 713fb4ab04f4d2af6120f8eb607c5673b2759b38)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/navi10_ih.c | 28 ++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index 3150b9d064235..efbd297f4cc43 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -159,7 +159,12 @@ static int amdgpu_cs_p1_user_fence(struct amdgpu_cs_parser *p,
- 	if (size != PAGE_SIZE || data->offset > (size - 8))
- 		return -EINVAL;
- 
--	if (amdgpu_ttm_tt_get_usermm(p->uf_bo->tbo.ttm))
-+	if (amdgpu_ttm_tt_is_userptr(p->uf_bo->tbo.ttm))
-+		return -EINVAL;
+diff --git a/drivers/gpu/drm/amd/amdgpu/navi10_ih.c b/drivers/gpu/drm/amd/amdgpu/navi10_ih.c
+index 737eff53f54f0..cdfc334d793b7 100644
+--- a/drivers/gpu/drm/amd/amdgpu/navi10_ih.c
++++ b/drivers/gpu/drm/amd/amdgpu/navi10_ih.c
+@@ -161,6 +161,34 @@ static int navi10_ih_toggle_ring_interrupts(struct amdgpu_device *adev,
+ 	tmp = RREG32(ih_regs->ih_rb_cntl);
+ 	tmp = REG_SET_FIELD(tmp, IH_RB_CNTL, RB_ENABLE, (enable ? 1 : 0));
+ 	tmp = REG_SET_FIELD(tmp, IH_RB_CNTL, RB_GPU_TS_ENABLE, 1);
 +
-+	/* The GPU writes the user fence through the GART */
-+	if (p->uf_bo->preferred_domains != AMDGPU_GEM_DOMAIN_GTT &&
-+	    p->uf_bo->allowed_domains != AMDGPU_GEM_DOMAIN_GTT)
- 		return -EINVAL;
- 
- 	*offset = data->offset;
++	if (enable) {
++		/* Unset the CLEAR_OVERFLOW bit to make sure the next step
++		 * is switching the bit from 0 to 1
++		 */
++		tmp = REG_SET_FIELD(tmp, IH_RB_CNTL, WPTR_OVERFLOW_CLEAR, 0);
++		if (amdgpu_sriov_vf(adev) && amdgpu_sriov_reg_indirect_ih(adev)) {
++			if (psp_reg_program(&adev->psp, ih_regs->psp_reg_id, tmp))
++				return -ETIMEDOUT;
++		} else {
++			WREG32_NO_KIQ(ih_regs->ih_rb_cntl, tmp);
++		}
++
++		/* Clear RB_OVERFLOW bit */
++		tmp = REG_SET_FIELD(tmp, IH_RB_CNTL, WPTR_OVERFLOW_CLEAR, 1);
++		if (amdgpu_sriov_vf(adev) && amdgpu_sriov_reg_indirect_ih(adev)) {
++			if (psp_reg_program(&adev->psp, ih_regs->psp_reg_id, tmp))
++				return -ETIMEDOUT;
++		} else {
++			WREG32_NO_KIQ(ih_regs->ih_rb_cntl, tmp);
++		}
++
++		/* Unset the CLEAR_OVERFLOW bit immediately so new overflows
++		 * can be detected.
++		 */
++		tmp = REG_SET_FIELD(tmp, IH_RB_CNTL, WPTR_OVERFLOW_CLEAR, 0);
++	}
++
+ 	/* enable_intr field is only valid in ring0 */
+ 	if (ih == &adev->irq.ih)
+ 		tmp = REG_SET_FIELD(tmp, IH_RB_CNTL, ENABLE_INTR, (enable ? 1 : 0));
 -- 
 2.53.0
 
