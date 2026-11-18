@@ -1,53 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015099;
-	b=GNxYcnocxedP+GcrPkJj9vRB+UwkbSkwNAsVEFcD4Y83x3FoKdQCkTHHh6Y84ADAivqA
-	 IuSR0ZCfux6RLWi6SZiPHFXCQpw4jNs/nwvh8fxgNjz349w4pu2utOkKaDJmRcUgMacT2
-	 rzH1q/B8+yPgILp6fA0ezkGJDf4Iz2d4yxWW7TctnrTIKx3L/7IyJTzD7aBTEwbPSJXiB
-	 4ogEpLYJg5xFKAXxjnIJg/MC/Bfkfmg9Ltvuh4S3UdAtK1tCG6vm3irkUzwnR9Sb9orlq
-	 wOW3nLs8l7gqGqSTOwoNzPm7kE2h9Ykq3vPMb+M0KgptXK0L0+eUd/SWLNUFeicnXyA==
+	t=1795015102;
+	b=M0F9KR2bmJUELpSBI+Fqr/mVLXTmH+23IDMfRNeNc9D7RA1LQ5yW5rvadmrl5bDKF0b3
+	 UA6fS0mD5VPiwu1owQX4pUzlPMjyBTC1Rgr9oXTVUni6gRmRa/DKgpecma0eE9lmSWFWc
+	 CJFNjndTH171QNuk24Ed4YVKG6ioTjk9q23IZYvjz/JfhbaNY39wi/4MKqVA6AxPg7J8W
+	 BnH/mK/Gu+bcNso4f6iT3STaOcnchPLmq5Ibv3LW228C5FgoSKe+XTDZCn9caLu2Yr6Q7
+	 K9BZ5h016IfaVtKquBs8iT7RVg46HVm8eUjww/cOB9vqmVacD4kDyEYXvBLT5WWoamw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015099;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015102;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QrYDYJ/Wa/l8PhXKIOxKRh/i0Dl9gfDI9V7aXD+WgjI=;
-	b=uMbScSM3NIN9kYmzbyTOyLnG1/j3xrQ8b0YMYyd/M+6hEgWaXtkqAK8NQATMicenYD2f
-	 HU5YgTyKyMIsEaTyU13xpstrVUeUhUlU7Mrvj8du9Wa6jsn4rP0S9peP0Vi6G2huICdzK
-	 ook1LgMj6g2dIS8tQgj6e8PVGBegQsv2lkXlA/YrpEW7gc61Tr2d4zozxCycxi32eY2H5
-	 KXW24FofFWXZGz3UzEX0KBimpiXLtB5oiH+BeloOkTWdajGhyWuJlM6OyWMQ29y7bz18T
-	 Ao20TXmm9dpkQMQ/Hmndaw7mUj/sWS3MXv6TbZB6dIJyQEhnQ+CXPKO3kG+smERu11Q==
+	bh=MfWKuLlHOSinXO/vOY+Q4Fd7Fkx9Izf0IaYrGz6XEw8=;
+	b=HBZgyIryYI/zOitpRnGvn7IxUkMhp6s5dI1fFKrJVKiroo86J+4SyMVGveSXdCVzTjie
+	 Z/AgTyQXss64M+Z70KEi8YiZ5h9HY5SXFrPVzmqUxkxbCUphDpjzEBaGJvf9Ve+Vu7bbY
+	 NHkLrYYzK3sebUUrq6woYez99isgk3JCzHMWaQEFUsyYbfJqFDAn0AKLp9WaSKKDyUhEn
+	 TPPbVQXBuf67pRqY0ceJSgY3nyHsjZOJpI6AM8qFU/HBkGkAVDQUAghrn8v5xSjVTCXsx
+	 +fSLm9nPFHGWzAbuY2kEhPhHvHNEGS7BpT3DFR2qa5cGOzdPrrsTM/K/mebk7ZvpSeA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0AlLRMQm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0vN1aRFT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D31160A263F;
-	Wed, 18 Nov 2026 15:18:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED53260A6F50;
+	Wed, 18 Nov 2026 15:18:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0AlLRMQm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAB061F000CA;
-	Wed, 18 Nov 2026 15:18:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0vN1aRFT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD6A1F0182F;
+	Wed, 18 Nov 2026 15:18:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015099;
-	bh=QrYDYJ/Wa/l8PhXKIOxKRh/i0Dl9gfDI9V7aXD+WgjI=;
+	s=korg; t=1795015101;
+	bh=MfWKuLlHOSinXO/vOY+Q4Fd7Fkx9Izf0IaYrGz6XEw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0AlLRMQmlipLAzpzIUFGm+0VbvNIrlWkuXIOhiTymcs3TqpYVgXfzxC08K8trwd/3
-	 U1UAVi44a90lNwpbaQzrBTxU5cPNttbp9JUmHk9CKghwxCwoCjIMzxfdrm+BWnC5M2
-	 rGhBvy2fesc1HROtTp6V41+HKtMQMjxF9TRHspew=
+	b=0vN1aRFTtvJSmFXFIAxOSIZzlBVCiSZtl0N4rLB5dcwktkvuCOQm3vj2aQe4Rl36e
+	 URKQWx9vm6kZsrS4rQBoDA7Cc9T6g5fDbzGZ9b+ra3ZYd8MyM8aicde1tZ3HyGn7dK
+	 9ipL+4mx0ZuoG1s2Utw8qbgjNFZdglAVhVch3+RM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a4cedab706d0a8a3f988@syzkaller.appspotmail.com,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Ian Abbott <abbotti@mev.co.uk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0052/2651] comedi: dt2811: fix shift-out-of-bounds in IRQ check
-Date: Wed, 18 Nov 2026 15:21:32 +0100
-Message-ID: <20261118150249.831300253@linuxfoundation.org>
+	Tapio Reijonen <tapio.reijonen@vaisala.com>
+Subject: [PATCH 7.3 0053/2651] serial: max310x: schedule tx_work directly from the IRQ handler
+Date: Wed, 18 Nov 2026 15:21:33 +0100
+Message-ID: <20261118150249.865117311@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,51 +66,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Tapio Reijonen <tapio.reijonen@vaisala.com>
 
-[ Upstream commit 471ce96a9c415b8a67bd5081ac2089a458cacc2f ]
+commit c06fcc258db0c0c7f607e64a7ce6a157bb2414b1 upstream.
 
-The IRQ number passed via comedi_devconfig->options[1] is a signed int
-that comes from userspace.  The check `it->options[1] <= 7` does not
-reject negative values, so a negative IRQ number reaches
-`BIT(it->options[1])`, which is undefined behavior and triggers a UBSAN
-shift-out-of-bounds warning:
+The TXEMPTY interrupt asks for a FIFO refill, and start_tx() does
+nothing beyond scheduling tx_work, so going through it makes no
+functional difference. It does conflate two distinct events, though:
+start_tx() is the serial core starting a new transmission, while
+TXEMPTY can only fire for a transmission that is already running -
+the bit latches on the FIFO's non-empty to empty transition, and the
+IRQ handler's read of IRQSTS consumes the latch, so a stale TXEMPTY
+cannot exist on an idle port (if the bit were level-triggered, the
+handler's read-until-clear loop would never terminate).
 
-  UBSAN: shift-out-of-bounds in drivers/comedi/drivers/dt2811.c:570:31
-  shift exponent -251 is negative
+Schedule tx_work directly, keeping the interrupt path a pure FIFO
+refill. This is preparation for a following patch that adds
+software-timed RS485 RTS control, where start_tx() also starts the
+RTS envelope and a refill must not restart it.
 
-Add an explicit lower bound check (`it->options[1] >= 0`) so that only
-valid IRQ numbers 0..7 are accepted before the shift.
+No functional change.
 
-Fixes: f2975a9b2ab9 ("staging: comedi: dt2811: add async command support for AI subdevice")
-Reported-by: syzbot+a4cedab706d0a8a3f988@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6ab21240.e548f532.1ca396.0018.GAE@google.com/#R
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Reviewed-by: Ian Abbott <abbotti@mev.co.uk>
-Tested-by: syzbot+a4cedab706d0a8a3f988@syzkaller.appspotmail.com
-Link: https://patch.msgid.link/02c46315293a26169d2a3862a2047959a1651ef4.1790061387.git.xiaopei01@kylinos.cn
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Tapio Reijonen <tapio.reijonen@vaisala.com>
+Link: https://patch.msgid.link/20261008-max310x-rs485-sw-delay-v8-7-6ba881f81e1f@vaisala.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/comedi/drivers/dt2811.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/max310x.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/comedi/drivers/dt2811.c b/drivers/comedi/drivers/dt2811.c
-index 0438b8c90e441..53cb17993ae79 100644
---- a/drivers/comedi/drivers/dt2811.c
-+++ b/drivers/comedi/drivers/dt2811.c
-@@ -567,7 +567,7 @@ static int dt2811_attach(struct comedi_device *dev, struct comedi_devconfig *it)
- 	dt2811_reset(dev);
+--- a/drivers/tty/serial/max310x.c
++++ b/drivers/tty/serial/max310x.c
+@@ -840,8 +840,12 @@ static irqreturn_t max310x_port_irq(stru
+ 		}
+ 		if (rxlen)
+ 			max310x_handle_rx(port, rxlen);
++		/*
++		 * TXEMPTY latches on the FIFO becoming empty, so a stale
++		 * interrupt cannot pump data during an RTS setup delay.
++		 */
+ 		if (ists & MAX310X_IRQ_TXEMPTY_BIT)
+-			max310x_start_tx(port);
++			schedule_work(&s->p[portno].tx_work);
+ 	} while (1);
  
- 	/* IRQ's 2,3,5,7 are valid for async command support */
--	if (it->options[1] <= 7  && (BIT(it->options[1]) & 0xac)) {
-+	if (it->options[1] >= 0 && it->options[1] <= 7 && (BIT(it->options[1]) & 0xac)) {
- 		ret = request_irq(it->options[1], dt2811_interrupt, 0,
- 				  dev->board_name, dev);
- 		if (ret == 0)
--- 
-2.53.0
-
+ 	return res;
 
 
