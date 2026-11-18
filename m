@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018826;
-	b=PW/tE77G2FaBnfg5N5gHg/sWdRYXrIVrjhmTLDUDRWhgyBZ7fVUpcpYuVtYa95d6n0tA
-	 uBla3048lFhitiELV3NDUvO63g1PrUTPbHm+sMacmMIJttYqGoJ1Jg9ZMUYSfgZVJDpZb
-	 Ri7g7rUBmehTBrzRnP+cAquZ2buA/dnvXTwNWh3SWI7Ytu/YfYFFUs28wuSkO0TlmZzua
-	 6HbgxsvPXStW/R6Z3B9+rlxERgKwphIwa9r11KaebNVfmxI751gwVxYSrfYbpu0xabOtY
-	 K9XPDY4itolTGz6RRmvlciz7Ki+WrohgJYH5GfUYTOJ/j5bHHYIpAw7jm+ysz4tsU1Q==
+	t=1795018829;
+	b=OZmb1utwSntp+BAQgah4isxMmAqvsUFiwqhws2JJfq7pGYWRsYEfAZaEMeGAcswc4OEs
+	 JdSiNkOgPMy+dnO7MnzYzYMB2Ai4hGIOWdva/9hKbxQbfvn3Kdom2megMCgeKhe1HwVos
+	 VP07HILghNKyJBf9/s2X5Igv6wfNeoDDIEOfprlVH8z8MXK/nWhbaqnlZL5LG6UziHKAy
+	 s9UqSkCPuaSehGWxikZPZkIv+RTZfuEZivjEvDBdN63tEMSAChfrAObS8J3CtNueeY+Cr
+	 9oixKM9fRspve09kpkYJ4R6hCUbJx5MwuokIv1xqXYauUuBvxCNklvD6ZcK4kkAXInA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018826;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018829;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=rb+nYMwO8/Ixwp0esj2eZhCsmzDJEJLz1xr7QUop4Nk=;
-	b=oKvFXGhE+MPiHk83sBWqWVa25jjQ9fwsFXbwx2lfsug9SL2nSmDwyUCVRdIGxRn6SR4n
-	 z8wZ7nBh3ezZNjO26clJ9Qwid4WD49ohb3kj5ufjawFbWMahk6ScE6pFz4HuvGVg4Ppqt
-	 Vvf+rPe0yataTpZdQN0DhDxUvax+LE8BMqA5HLbtwfsRqABIEsiQ8w7dlNlhoLxbscSK6
-	 wGisPxJo0P/GruwsU3m74D4KIbI6ewqz4WGkvdjWeJmuZjP6/O/671BRDfswbKq1LvFuX
-	 /zBikTNKiBcSmDC+RyRZqfV2P1MsQiT7jnksWkKSvY27U+jTTI/scUQJKlCsXCoGtvw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=ldSwWppIA++mjkIqMUT75AVSVafWCd85UPAcKjeAoOY=;
+	b=1G7k9uGeOr7wAib0v2luoDIR7dsJKnyMya8fu8QXuf/sst7+7YfZAxZyQGBspEXSPVz7
+	 t/Zz2Dpe4xR46jbLIUGATYQpmehR99DKhmk/joVlKS5qoac7mMKv4S5nnCf6W69x3+b0U
+	 UQe6d5X3Nuc2XHeT6F5bCfNyMQSZFtjiGEL3IOzoqfhHCby240Z12+oTX9ovetWY4sPep
+	 OWN46R0ANV0Z8ksw8Z+BsDdaMcWcIv8ifdin/fMOoYNtL/D7sgzc7FTcxsrSrk8qrH5rZ
+	 rvHjj5BOiNMAHg91dZGJa2qOcSEqtYcQ6RurojvxKeq3UhaCqfvQHNlJ3dmDdBYap3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dzvd2iyQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pqn33D53;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77076606A330;
-	Wed, 18 Nov 2026 16:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D0D7606A31C;
+	Wed, 18 Nov 2026 16:20:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dzvd2iyQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D3261F000C4;
-	Wed, 18 Nov 2026 16:20:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pqn33D53
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D0AE1F000C4;
+	Wed, 18 Nov 2026 16:20:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018826;
-	bh=rb+nYMwO8/Ixwp0esj2eZhCsmzDJEJLz1xr7QUop4Nk=;
+	s=korg; t=1795018828;
+	bh=ldSwWppIA++mjkIqMUT75AVSVafWCd85UPAcKjeAoOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dzvd2iyQ6xq8pvci0qdsbkXHlRlbnx83tr3wq3kZ38n4vDZZEiNUiuNik5WMerhNl
-	 i7nBRnMzNrCu0KhR+nzDT5zAaL26R5Ob73tgdZSQb9zox01Vqjtk6mWSXfdPeBGmPm
-	 1c011HQaJuOER0RGFdPyHTqcoSbIEf12OzUwZAKY=
+	b=pqn33D53STa2U0v/VpzmkmijtL+XPlW7dN1FJx8g8zTirWipj+LKeMc7p2YtZ8bnf
+	 vYnY8qwA7WGgQ4qeewCk4CxBRU1PQg7ML6T/xomAr6+Iog/0UKEgvI/YjCs9vAaMnO
+	 tLZd/nnjokQFEtT09LqRylgVViXa8rZYTre1uz4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Linus Walleij <linusw@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Daniel Drake <dan@reactivated.net>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1351/2651] dmaengine: ste_dma40: Fix event group bounds
-Date: Wed, 18 Nov 2026 15:43:11 +0100
-Message-ID: <20261118150336.660921103@linuxfoundation.org>
+Subject: [PATCH 7.3 1378/2651] drm/vc4: Set DRM DMA device directly from HVS and V3D
+Date: Wed, 18 Nov 2026 15:43:38 +0100
+Message-ID: <20261118150337.636821087@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -64,140 +62,176 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Daniel Drake <dan@reactivated.net>
 
-[ Upstream commit e66a9dbe04c71249cfb2a544c9c25d1b3b761fba ]
+[ Upstream commit b0a6b769cc174dd9fd154270f78acf72dc3e5c7e ]
 
-The dev_type validation can allow values whose derived event group has no
-matching physical channel pair. d40_allocate_channel() then indexes
-phy_res with j + event_group * 2, and __d40_set_prio_rt() uses the same
-group to select priority and realtime registers.
+vc4 uses of_dma_configure() during bind to set the DMA configuration of
+the drm device by borrowing the configuration of one of its component
+devices.
 
-The physical-mode validation also compares dev_type with the number of
-physical channels. However, dev_type identifies an event line: DB8500 has
-eight physical channels but 64 source and 64 destination event lines. The
-event group determines which physical channel pair can serve an event, so
-the physical channel count is not a valid dev_type limit.
+This violates driver model expectations that IOMMU probing and domain
+attachment occur before driver binding - see commit bcb81ac6ae3c ("iommu:
+Get DT/ACPI parsing into the proper probe path").
 
-Reject dev_type values outside the hardware event-group range, remove the
-incorrect physical channel count limit, and stop the physical-channel
-search before a partial final channel group can index past phy_res.
+With the introduction of the bcm2712-iommu driver behind the vc4 hvs
+device, a warning is triggered:
 
-Fixes: 26955c07dcf3 ("dmaengine: ste_dma40: Amalgamate DMA source and destination channel numbers")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260819225008.5F9651F000E9@smtp.kernel.org/
-Assisted-by: LLM
-Link: https://lore.kernel.org/dmaengine/20260819225008.5F9651F000E9@smtp.kernel.org/
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-20-89f595e8851d@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+    vc4-drm gpu: late IOMMU probe at driver bind, something fishy here!
+
+Instead of configuring the virtual aggregate device, adopt the pattern
+used by sun4i/sun8i/exynos where candidate DMA-capable hardware components
+register themselves as the device to use for DRM allocations via
+drm_dev_set_dma_dev(), provided a DMA device has not already been
+assigned.
+
+HVS will typically bind first and claim the DMA device. The gen6 36-bit
+DMA mask configuration was moved into vc4_hvs_bind() accordingly. For
+older generations, vc4's v3d component continues to be available as a
+fallback, and the default platform bus 32-bit DMA mask is retained.
+
+Fixes: da8e393e23ef ("drm/vc4: drv: Adopt the dma configuration from the HVS or V3D component")
+Signed-off-by: Daniel Drake <dan@reactivated.net>
+Link: https://patch.msgid.link/20261004-drm-dma-device-2-v3-1-45b121ab819f@reactivated.net
+Reviewed-by: Maíra Canal <mcanal@igalia.com>
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 26 ++++++++++++++++++++++----
- 1 file changed, 22 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/vc4/vc4_bo.c  |  3 ++-
+ drivers/gpu/drm/vc4/vc4_drv.c | 28 ----------------------------
+ drivers/gpu/drm/vc4/vc4_hvs.c | 10 ++++++++++
+ drivers/gpu/drm/vc4/vc4_v3d.c |  7 +++++++
+ 4 files changed, 19 insertions(+), 29 deletions(-)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index fcb0749286757..91dc143f9a808 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -82,6 +82,10 @@ struct stedma40_platform_data {
- #define D40_LCLA_LINK_PER_EVENT_GRP 128
- #define D40_LCLA_END D40_LCLA_LINK_PER_EVENT_GRP
+diff --git a/drivers/gpu/drm/vc4/vc4_bo.c b/drivers/gpu/drm/vc4/vc4_bo.c
+index 7b8b3364000fc..da4b11b7ce9f7 100644
+--- a/drivers/gpu/drm/vc4/vc4_bo.c
++++ b/drivers/gpu/drm/vc4/vc4_bo.c
+@@ -303,7 +303,8 @@ static void vc4_bo_purge(struct drm_gem_object *obj)
  
-+/* Number of event groups per hardware register layout */
-+#define D40_EVENT_GROUPS_V4A 4
-+#define D40_EVENT_GROUPS_V4B 5
-+
- /* Max number of logical channels per physical channel */
- #define D40_MAX_LOG_CHAN_PER_PHY 32
+ 	drm_vma_node_unmap(&obj->vma_node, dev->anon_inode->i_mapping);
  
-@@ -522,6 +526,7 @@ struct d40_chan {
-  * @high_prio_clear: the high priority clear register
-  * @interrupt_en: the interrupt enable register
-  * @interrupt_clear: the interrupt clear register
-+ * @num_event_groups: number of supported event groups
-  * @il: the pointer to struct d40_interrupt_lookup
-  * @il_size: the size of d40_interrupt_lookup array
-  * @init_reg: the pointer to the struct d40_reg_val
-@@ -536,6 +541,7 @@ struct d40_gen_dmac {
- 	u32				 high_prio_clear;
- 	u32				 interrupt_en;
- 	u32				 interrupt_clear;
-+	u32				 num_event_groups;
- 	struct d40_interrupt_lookup	*il;
- 	u32				 il_size;
- 	struct d40_reg_val		*init_reg;
-@@ -1883,6 +1889,11 @@ static int d40_validate_conf(struct d40_chan *d40c,
- 	bool is_log = conf->mode == STEDMA40_MODE_LOGICAL;
- 	bool invalid_dev_type = conf->dev_type < 0;
+-	dma_free_wc(dev->dev, obj->size, bo->base.vaddr, bo->base.dma_addr);
++	dma_free_wc(drm_dev_dma_dev(dev), obj->size, bo->base.vaddr,
++		    bo->base.dma_addr);
+ 	bo->base.vaddr = NULL;
+ 	bo->madv = __VC4_MADV_PURGED;
+ }
+diff --git a/drivers/gpu/drm/vc4/vc4_drv.c b/drivers/gpu/drm/vc4/vc4_drv.c
+index 6930ca20e14b4..6072b4e1ffed3 100644
+--- a/drivers/gpu/drm/vc4/vc4_drv.c
++++ b/drivers/gpu/drm/vc4/vc4_drv.c
+@@ -24,10 +24,8 @@
+ #include <linux/clk.h>
+ #include <linux/component.h>
+ #include <linux/device.h>
+-#include <linux/dma-mapping.h>
+ #include <linux/io.h>
+ #include <linux/module.h>
+-#include <linux/of_device.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm_runtime.h>
  
-+	if (!invalid_dev_type &&
-+	    D40_TYPE_TO_GROUP(conf->dev_type) >=
-+	    d40c->base->gen_dmac.num_event_groups)
-+		invalid_dev_type = true;
-+
- 	if (!conf->dir) {
- 		chan_err(d40c, "Invalid direction.\n");
- 		res = -EINVAL;
-@@ -1899,8 +1910,7 @@ static int d40_validate_conf(struct d40_chan *d40c,
- 		invalid_dev_type = conf->dev_type >= max_dev_type;
+@@ -273,15 +271,6 @@ static void vc4_component_unbind_all(void *ptr)
+ 	component_unbind_all(vc4->dev, &vc4->base);
+ }
+ 
+-static const struct of_device_id vc4_dma_range_matches[] = {
+-	{ .compatible = "brcm,bcm2711-hvs" },
+-	{ .compatible = "brcm,bcm2712-hvs" },
+-	{ .compatible = "brcm,bcm2835-hvs" },
+-	{ .compatible = "brcm,bcm2835-v3d" },
+-	{ .compatible = "brcm,cygnus-v3d" },
+-	{}
+-};
+-
+ static int vc4_drm_bind(struct device *dev)
+ {
+ 	struct platform_device *pdev = to_platform_device(dev);
+@@ -294,8 +283,6 @@ static int vc4_drm_bind(struct device *dev)
+ 	enum vc4_gen gen;
+ 	int ret = 0;
+ 
+-	dev->coherent_dma_mask = DMA_BIT_MASK(32);
+-
+ 	gen = (enum vc4_gen)of_device_get_match_data(dev);
+ 
+ 	if (gen > VC4_GEN_4)
+@@ -303,21 +290,6 @@ static int vc4_drm_bind(struct device *dev)
+ 	else
+ 		driver = &vc4_drm_driver;
+ 
+-	if (gen >= VC4_GEN_6_C)
+-		dma_set_mask_and_coherent(dev, DMA_BIT_MASK(36));
+-	else
+-		dma_set_mask_and_coherent(dev, DMA_BIT_MASK(32));
+-
+-	node = of_find_matching_node_and_match(NULL, vc4_dma_range_matches,
+-					       NULL);
+-	if (node) {
+-		ret = of_dma_configure(dev, node, true);
+-		of_node_put(node);
+-
+-		if (ret)
+-			return ret;
+-	}
+-
+ 	vc4 = devm_drm_dev_alloc(dev, driver, struct vc4_dev, base);
+ 	if (IS_ERR(vc4))
+ 		return PTR_ERR(vc4);
+diff --git a/drivers/gpu/drm/vc4/vc4_hvs.c b/drivers/gpu/drm/vc4/vc4_hvs.c
+index e715147d091ca..b1fb096858ccc 100644
+--- a/drivers/gpu/drm/vc4/vc4_hvs.c
++++ b/drivers/gpu/drm/vc4/vc4_hvs.c
+@@ -22,6 +22,7 @@
+ #include <linux/bitfield.h>
+ #include <linux/clk.h>
+ #include <linux/component.h>
++#include <linux/dma-mapping.h>
+ #include <linux/platform_device.h>
+ 
+ #include <drm/drm_atomic_helper.h>
+@@ -1662,6 +1663,15 @@ static int vc4_hvs_bind(struct device *dev, struct device *master, void *data)
+ 		hvs->regset.nregs = ARRAY_SIZE(vc4_hvs_regs);
  	}
  
--	if (invalid_dev_type ||
--	    (!is_log && conf->dev_type > d40c->base->num_phy_chans)) {
-+	if (invalid_dev_type) {
- 		chan_err(d40c, "Invalid device type (%d)\n", conf->dev_type);
- 		res = -EINVAL;
- 	}
-@@ -2065,8 +2075,12 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
- 				}
- 			}
- 		} else
--			for (j = 0; j < d40c->base->num_phy_chans; j += 8) {
-+			for (j = 0; j < d40c->base->num_phy_chans;
-+			     j += D40_GROUP_SIZE) {
- 				int phy_num = j  + event_group * 2;
-+				if (phy_num + 1 >= num_phy_chans)
-+					break;
++	if (vc4->gen >= VC4_GEN_6_C) {
++		ret = dma_set_mask_and_coherent(dev, DMA_BIT_MASK(36));
++		if (ret)
++			return ret;
++	}
 +
- 				for (i = phy_num; i < phy_num + 2; i++) {
- 					if (d40_alloc_mask_set(&phys[i],
- 							       is_src,
-@@ -2086,8 +2100,10 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
- 		return -EINVAL;
++	if (drm_dev_dma_dev(drm) == drm->dev)
++		drm_dev_set_dma_dev(drm, dev);
++
+ 	if (vc4->gen >= VC4_GEN_5) {
+ 		struct rpi_firmware *firmware;
+ 		struct device_node *node;
+diff --git a/drivers/gpu/drm/vc4/vc4_v3d.c b/drivers/gpu/drm/vc4/vc4_v3d.c
+index d16eecf83fbaa..29737ae6a7459 100644
+--- a/drivers/gpu/drm/vc4/vc4_v3d.c
++++ b/drivers/gpu/drm/vc4/vc4_v3d.c
+@@ -441,6 +441,13 @@ static int vc4_v3d_bind(struct device *dev, struct device *master, void *data)
+ 	vc4->v3d = v3d;
+ 	v3d->vc4 = vc4;
  
- 	/* Find logical channel */
--	for (j = 0; j < d40c->base->num_phy_chans; j += 8) {
-+	for (j = 0; j < d40c->base->num_phy_chans; j += D40_GROUP_SIZE) {
- 		int phy_num = j + event_group * 2;
-+		if (phy_num + 1 >= num_phy_chans)
-+			break;
- 
- 		if (d40c->dma_cfg.use_fixed_channel) {
- 			i = d40c->dma_cfg.phy_channel;
-@@ -3467,6 +3483,7 @@ static int __init d40_hw_detect_init(struct platform_device *pdev,
- 	base->log_chans = &base->phy_chans[num_phy_chans];
- 
- 	if (base->plat_data->num_of_phy_chans == 14) {
-+		base->gen_dmac.num_event_groups = D40_EVENT_GROUPS_V4B;
- 		base->gen_dmac.backup = d40_backup_regs_v4b;
- 		base->gen_dmac.backup_size = BACKUP_REGS_SZ_V4B;
- 		base->gen_dmac.interrupt_en = D40_DREG_CPCMIS;
-@@ -3480,6 +3497,7 @@ static int __init d40_hw_detect_init(struct platform_device *pdev,
- 		base->gen_dmac.init_reg = dma_init_reg_v4b;
- 		base->gen_dmac.init_reg_size = ARRAY_SIZE(dma_init_reg_v4b);
- 	} else {
-+		base->gen_dmac.num_event_groups = D40_EVENT_GROUPS_V4A;
- 		if (base->rev >= 3) {
- 			base->gen_dmac.backup = d40_backup_regs_v4a;
- 			base->gen_dmac.backup_size = BACKUP_REGS_SZ_V4A;
++	/*
++	 * In headless setups where HVS is absent, use V3D as the fallback
++	 * DMA controller for buffer allocations.
++	 */
++	if (drm_dev_dma_dev(drm) == drm->dev)
++		drm_dev_set_dma_dev(drm, dev);
++
+ 	v3d->clk = devm_clk_get_optional(dev, NULL);
+ 	if (IS_ERR(v3d->clk))
+ 		return dev_err_probe(dev, PTR_ERR(v3d->clk), "Failed to get V3D clock\n");
 -- 
 2.53.0
 
