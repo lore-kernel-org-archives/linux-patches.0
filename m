@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039937;
-	b=HO+Uqqdgjv7ZoR6WAeZe5tSmJ5LyEaY6Vk8Jw4PGxbHRWwvnoPxOVul8s7jOPS5evCT6
-	 Z0NC3CdZBB2HZQhknQJ6rIqaTQVvz3mTSlAPgRuPPL8FCrAlc79ZTS8swUs7WUSao+gFu
-	 1sTMRGM1gfSltraINw6IRtzBE3Owe32RyH6mlnfgQi8PTXZ01EUCr/MdFkgNAsz0nYJRL
-	 2mxlDAtTQeVu+26lcyUj1UskwljDAsyPkEzzXWK32PJ4+rNGXSi5w5LjgTbXBB7K0h+2P
-	 SX9yLffSeihsmJnjzyh6egQEHoQ1YvbGDyxpc+P9ef6I4e5TGZAhDfTMUr9YHfxZAew==
+	t=1795039941;
+	b=PljoV8ZNFKmR0FkY1gN3nWzuMPCCRG7UZq3daGBI6RDVygUIn5ojYZJ4TQohvUJEb6JS
+	 N6Nc6VsEr1h25dZkJRprbjDpGrmg8BJbJGC5Rz9izDsg+x1bwS11+D5H6LZP4L1L4x5qE
+	 RWK3L7i9a+kDJqykXnYwxNqCpHf0sLD2OhRvODrf4vsYPV6AkzxLNSOnBrCvCswLbVFT6
+	 w62f5Zf0qS5irvTGu+E5wIZH6KSDsrLtUGtMtgvjJNQ/rdOBNSrTwqRVrCirlyVVnKxuW
+	 0Y8BBhMjBdAeVobiOHqXe1LZ9LQAXeHnbfmlkW6OtB6CdG2Y6nlSHsiZNa8Eroc4F7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039937;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039941;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Uyi872vlthIFF+uRDLdlZC8wvi1NPL5BQRmUEr/f0NM=;
-	b=j2MNAAnoQrykKM8tYKcMViSENr86v93z2eRqepL6ovJzvEZikyeTpJIknrREsqmNTnc7
-	 NBEwIBI8Txu+rM5b0AxD2OXgwCI0L6Kagm812TBBtKT/IOmX1BIcI15ODEteOndFiXVpF
-	 iqr+bqxxr4mznxrbpWPCReYm5E1KOUJ8g7wE+xNzCXyCQnOmcB66vadk8lavj24SDJbh/
-	 GuqXPF3vVNA6N+vkKVvs+1oqkzGQnfVEQ5AKfeWMFV5hGwMiTDPWpMwboUTbHJPQNn84t
-	 BO8tiT+ERxS2sXMJjUMRUSp8hzzIB5FXa1Yo4Z6xP9RqJX2l9yIzpmTCm98/Kdz2zXw==
+	bh=r6YuNPCV0Y5zIzWCcObQ5mugDARXgN25UHFG7xh67Wc=;
+	b=DI6S+tDS7owNKjc6g9t4ffD748j9RUbiwSFUGOJ+HMD6ADdoP0rWhtqv3V7e6a9RmhIT
+	 jX5G3he7lbDd39O0YeZdKTFvZwFwa7kbfff8yXVI4PE+U19/6sVDS3IG5pghy67ToAGEH
+	 rXZPEee++NBH8Y7+2YAC4qLVYLgHqe2OS7HutfhfjN4vCG03mvrJa75saC8WnE0vbO4+7
+	 EIgGMK0bc9LIFePzozaysYiE3U6ObVcimXTG9z45gzeJeVVEKT385oZanqHFDZI/DsLxg
+	 pafRomaYIifCuk3z/p074AjALPrOKY8OpDoDiYBHhi8caZPIdIf9J5GQmdZCZoVxbCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DQnrmPfw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o+v5+4Xl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1A9606A31C;
-	Wed, 18 Nov 2026 22:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B28606A325;
+	Wed, 18 Nov 2026 22:12:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DQnrmPfw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ED111F000C4;
-	Wed, 18 Nov 2026 22:12:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o+v5+4Xl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 040BC1F000C4;
+	Wed, 18 Nov 2026 22:12:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039937;
-	bh=Uyi872vlthIFF+uRDLdlZC8wvi1NPL5BQRmUEr/f0NM=;
+	s=korg; t=1795039940;
+	bh=r6YuNPCV0Y5zIzWCcObQ5mugDARXgN25UHFG7xh67Wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DQnrmPfw8ZeiNsGHdFxvR/kh40XZ8rygv0/Fewx1VDReeJQLS4aDDeOGKpdWWT8IC
-	 zyirRO953hQ+XYsPGt4nbvcxAVNVvSWyqm09fy/K2osmPhtW2RX3BiuYPIalhWGurr
-	 ginlwCYgx5BbYeTfCerjHdYcyiNiJ7Z87XVd16JM=
+	b=o+v5+4XlM5KjNM/cxAzO5Vb/AXxmiA60ilve+V5LboRZw55H5ICykCBcle6djBhvR
+	 d5/ZfEczB/6XeWMg3cFJhr3pteri0R0qvRKFNFMrk0CFWcLFpqWIdsBd3t2XvrOcs5
+	 7mrULwS8PKEcSYWC5UoUvE5eYB7neI7g/5jbbHnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Andrea Parri <parri.andrea@gmail.com>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2272/3318] bpf, lsm: Reject writes into the BPF LSM program context
-Date: Wed, 18 Nov 2026 15:48:14 +0100
-Message-ID: <20261118150429.952405941@linuxfoundation.org>
+Subject: [PATCH 6.6 2281/3318] pstore: reject persistent RAM zones too small for the buffer header
+Date: Wed, 18 Nov 2026 15:48:23 +0100
+Message-ID: <20261118150430.201244455@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,50 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-[ Upstream commit c42da1d3ba9d5067cf3f0676b98bcb3f5f9e3ce1 ]
+[ Upstream commit 1b30df8662ac85a6759be4332f3bec7e3cb28efc ]
 
-The verifier types a load from a tracing-style context by its offset
-alone: btf_ctx_access() looks the offset up in the attach hook's
-prototype, and check_mem_access() stamps the resulting type onto the
-destination register. Nothing tracks what the slot actually holds.
-That is sound only as long as the context is read-only, and for BPF LSM
-it is not. lsm_verifier_ops wires ->is_valid_access() straight to
-btf_ctx_access(), which never looks at enum bpf_access_type, so a store
-into the context passes verification. Every other user of the helper
-either goes through bpf_tracing_btf_ctx_access() or open-codes the same
-type != BPF_READ test first; BPF LSM is the only one that does neither.
+persistent_ram_buffer_map() computes
 
-A program can therefore store a scalar of its choosing into a context
-slot, read the slot back, and get a register the verifier believes is a
-trusted pointer of the hook's argument type. Handing that to a kfunc or
-helper which dereferences a trusted argument turns it into an arbitrary
-kernel access. Route BPF LSM through bpf_tracing_btf_ctx_access() like
-everyone else.
+	prz->buffer_size = size - sizeof(struct persistent_ram_buffer);
 
-Fixes: fc611f47f218 ("bpf: Introduce BPF_PROG_TYPE_LSM")
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20260915150739.284189-3-daniel@iogearbox.net
+without checking that size is large enough to hold the header.  A
+ramoops zone configured with a tiny size (e.g. ramoops.pmsg_size=1)
+underflows buffer_size to a huge value, which defeats every bounds
+check in persistent_ram_write() and persistent_ram_write_user(); a
+write to /dev/pmsg0 then copies user data far past the end of the zone
+and corrupts kernel memory.
+
+Reject zones that are not larger than the buffer header.
+
+Fixes: 404a6043385de ("staging: android: persistent_ram: handle reserving and mapping memory")
+Assisted-by: LLM
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
+Link: https://patch.msgid.link/20260921202317.70595-3-parri.andrea@gmail.com
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/bpf_lsm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/pstore/ram_core.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/kernel/bpf/bpf_lsm.c b/kernel/bpf/bpf_lsm.c
-index 984e944a0221d..7904513373672 100644
---- a/kernel/bpf/bpf_lsm.c
-+++ b/kernel/bpf/bpf_lsm.c
-@@ -399,6 +399,6 @@ const struct bpf_prog_ops lsm_prog_ops = {
- };
+diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
+index 95675d4bab141..4d07280768975 100644
+--- a/fs/pstore/ram_core.c
++++ b/fs/pstore/ram_core.c
+@@ -507,6 +507,12 @@ static int persistent_ram_buffer_map(phys_addr_t start, phys_addr_t size,
+ 	prz->paddr = start;
+ 	prz->size = size;
  
- const struct bpf_verifier_ops lsm_verifier_ops = {
--	.get_func_proto = bpf_lsm_func_proto,
--	.is_valid_access = btf_ctx_access,
-+	.get_func_proto		= bpf_lsm_func_proto,
-+	.is_valid_access	= bpf_tracing_btf_ctx_access,
- };
++	if (size <= sizeof(struct persistent_ram_buffer)) {
++		pr_err("%s: persistent ram zone too small (%#llx bytes)\n",
++		       prz->label, (unsigned long long)size);
++		return -EINVAL;
++	}
++
+ 	if (pfn_valid(start >> PAGE_SHIFT))
+ 		prz->vaddr = persistent_ram_vmap(start, size, memtype);
+ 	else
 -- 
 2.53.0
 
