@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043383;
-	b=Mx2dp0eERYzvbuJs6t6S31uEZdgXSR46aEEyA50SKiRIkW5VXjQdpuyD8DDyw9dgxCm+
-	 yeUnGV7XgFgSfVKqlaq2Y/sBg10SENE4S8vkYArbDgfRAyi7vxrg4idGl7yHv8XAA133l
-	 f3ZyCsNK9M4sQJ7rzomk5XOTOtJbxii2+FF9vN7tEHDyEC2BwXgCRV3+Z5CzJtRclEBE+
-	 E5KinO73Fey/kr667bxPp1aObyzfOwwzRhf/ZERkNZGLYMBJKysJJG5297qgfZDy2YavR
-	 RCu1YwOMRLGmi++rS/MJUUMNk4+c8bvCbTNYRPXQFbTa9TTUtEw7FktctRm4zwnBvWA==
+	t=1795043386;
+	b=LkNxEQz6l4C5S++bjNsCGQpM+Oe00DEpEAaiunkMsBnnLHr73PDG3JUsSvxY05ZqHbgR
+	 c50qdqkfMihheu2/9tJtn3qHzFCla28DOt3B0tOnf/ycpfQliVBVi6AEzxPu99D3imoIu
+	 PL7QP/dOXWh1GOiyMyan3onSeOP/KAkn6Yb3GNOrRyTPD3YWl1RGC9VmuM17FryIhS/nM
+	 CN44UdOs+711Qmn17eKZBeMKU10oSnezVXC2NUNBMARbW4CogH590L/3sp9P5+2BhJt9S
+	 WGvX953fMQ7elRt1PLPbz04WN44aiYDp24zYPKMmT4mennYhMVtwfWaMJF5hePgOkLw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043383;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043386;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JxoMnJQrVC2VsQatidknaAb+GJ47OPUvQ8IdIrnpRJw=;
-	b=MM1FTwEURc3ZW6JxT114pIG80TNZm43Z6KaoFgreJb5A7ZkwIKS7CIkNj07lzrZrT7CV
-	 bbwfXg3RB/xEiTdOzi7aNJidW7XpPZQpTUUFwzeO+GnJ6igx+fERR0mrm1J+QWBXjwm3J
-	 zWePaDqVomMu9EV4QAY4kDbLHbVfx20mnSJJeb7RHonmi/iKhH4jqbm/wCGF8utBvneaJ
-	 EBRso4w5XWJhlfW/wZ0YnDEDY9S7q763t60Yfwf13jP5AEPLQBQSfwNuuQQlEW61nUZeW
-	 fpJYPo6fgjocJUwl3vwGqgfdtNMSaXC9O34l4pj4PVWcnrkWzzpvXnHCyQPaurKLqQw==
+	bh=DXQEXlEVkgLQ1gzZWzreY3LuSEFpPTsePwLCoo7V6nM=;
+	b=xmK/z1Rg5mYrx9c8pPuq2WFvZ5MwEe1Bh6kek5d8wK01mtFOfDCaX53ww4kJB/tESKv8
+	 eQGi8NMBhD5tOoCxXZ6QdZvWwkBltgBlYTap0hYaqapH2VRbrE4dylJ8CvccAOsll7w74
+	 stLtHc35JPu5Asl0h7gbh3Wj7NBN4jMjnH8fpnUHjFDj70Zxs1Ejfp1ZKkBr4eGlUSrZc
+	 diwm+F9JZT7p5qkjOy2cygCB7RoVO5tTmcLlbOFfzfSDqOIH2H8MAJoyKGxtd+iY2i/lf
+	 8TO61uXWvZNorxepp1rzLYicIHwCaHCKNFuIHkhSNCF5bHfBGiSoVyXh3iLAT8klNvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CT9+MEzf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HOolcB61;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FEEC606A320;
-	Wed, 18 Nov 2026 23:09:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E04606A325;
+	Wed, 18 Nov 2026 23:09:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CT9+MEzf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF6BA1F000C4;
-	Wed, 18 Nov 2026 23:09:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HOolcB61
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6A051F000C4;
+	Wed, 18 Nov 2026 23:09:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043383;
-	bh=JxoMnJQrVC2VsQatidknaAb+GJ47OPUvQ8IdIrnpRJw=;
+	s=korg; t=1795043386;
+	bh=DXQEXlEVkgLQ1gzZWzreY3LuSEFpPTsePwLCoo7V6nM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CT9+MEzfgfrQa++WnG7mRvhKBbQhvZvyDKHc3YhRmJrpO70CJ8xBAAm2O9PY339To
-	 AL1owofRjk1c5Od1f9J/D2YqMwTbljiftJ+qmT44fq8YNlflj5HB842ZWTfRcqEZXr
-	 h7R/gU7p7kR+ucYhHh8KMPv4u8Oyw3DL1gNFGavA=
+	b=HOolcB61jM2Wy76MV97hmfjLB1O6bqI+xrCxVqhuHizlzv7N4iKMgu/8YXQvCOUn4
+	 PWjuS6+eaUJk+/wbv3gvFseghn/S35wUxvg6/Pq5DiY6Z9DXVKquSB5nFh6s/SD4lk
+	 oYt7Hjpd13oJJAvocS80gmQ7xWzAlJ8a8yxmn9Co=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuxiang Lin <mclyxfdw@gmail.com>,
+	Wahid Khan <wahidzk0091@gmail.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Zhang Lixu <lixu.zhang@intel.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0189/2857] HID: quirks: add ALWAYS_POLL quirk for AULA Mini 60 HE Pro Dongle
-Date: Wed, 18 Nov 2026 15:20:23 +0100
-Message-ID: <20261118150208.160652038@linuxfoundation.org>
+Subject: [PATCH 6.1 0190/2857] HID: intel-ish-hid: ignore post-init ENUM_DEVICES from firmware
+Date: Wed, 18 Nov 2026 15:20:24 +0100
+Message-ID: <20261118150208.193370600@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,53 +70,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuxiang Lin <mclyxfdw@gmail.com>
+From: Wahid Khan <wahidzk0091@gmail.com>
 
-[ Upstream commit 2884e21b18613708f050ec75330b265dd07ecc03 ]
+[ Upstream commit f3f3f6df05226dfa220c4e603310dae94595060a ]
 
-The AULA Mini 60 HE Pro wireless keyboard dongle (USB ID
-0c45:fefe) becomes unresponsive after roughly one minute of idle.
-No error appears in dmesg; the only recovery is physically
-replugging the dongle.
+Some ISH firmware versions (observed on Tiger Lake LP, 8086:a0fc,
+GUID {33AECD58-B679-4E54-9BD9-A04D34F0C226}) periodically re-send an
+unsolicited HOSTIF_DM_ENUM_DEVICES response roughly every 79 seconds.
 
-This has been reproduced across kernels 6.8, 6.14 and 7.1.3.
+The current guard collapses two distinct cases into one condition:
 
-Testing shows HID_QUIRK_ALWAYS_POLL alone resolves the issue,
-verified via usbhid.quirks=0x0c45:0xfefe:0x400.
+  if (!(response_flag) || init_done)  ->  bad packet + ish_hw_reset
 
-Signed-off-by: Yuxiang Lin <mclyxfdw@gmail.com>
+This incorrectly treats a valid post-init firmware announcement as a
+corrupted packet, triggering an ISH soft-reset and a full ISHTP
+re-initialisation cycle on each occurrence (~1100 times per day on
+affected hardware).
+
+Split the check: reject messages with no response flag as before, but
+simply discard valid ENUM_DEVICES messages that arrive after init is
+complete.
+
+Signed-off-by: Wahid Khan <wahidzk0091@gmail.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Tested-by: Zhang Lixu <lixu.zhang@intel.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h    | 1 +
- drivers/hid/hid-quirks.c | 2 ++
- 2 files changed, 3 insertions(+)
+ drivers/hid/intel-ish-hid/ishtp-hid-client.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 4d185a3a4d2ad..0176d074ebea9 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -723,6 +723,7 @@
- #define USB_DEVICE_ID_JESS_YUREX	0x1010
- #define USB_DEVICE_ID_ASUS_MD_5112	0x5112
- #define USB_DEVICE_ID_REDRAGON_ASURA	0x760b
-+#define USB_DEVICE_ID_AULA_MINI_60_HE_PRO 0xfefe
+diff --git a/drivers/hid/intel-ish-hid/ishtp-hid-client.c b/drivers/hid/intel-ish-hid/ishtp-hid-client.c
+index a0c1dc0941497..9b0790b81e9dc 100644
+--- a/drivers/hid/intel-ish-hid/ishtp-hid-client.c
++++ b/drivers/hid/intel-ish-hid/ishtp-hid-client.c
+@@ -113,8 +113,7 @@ static void process_recv(struct ishtp_cl *hid_ishtp_cl, void *recv_buf,
  
- #define USB_VENDOR_ID_JESS2		0x0f30
- #define USB_DEVICE_ID_JESS2_COLOR_RUMBLE_PAD 0x0111
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index 683b3a2251ed6..1d2f0b260ab63 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -113,6 +113,8 @@ static const struct hid_device_id hid_quirks[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_HP, USB_PRODUCT_ID_HP_PIXART_OEM_USB_OPTICAL_MOUSE_1f4a), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_IDEACOM, USB_DEVICE_ID_IDEACOM_IDC6680), HID_QUIRK_MULTI_INPUT },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_INNOMEDIA, USB_DEVICE_ID_INNEX_GENESIS_ATARI), HID_QUIRK_MULTI_INPUT },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_JESS, USB_DEVICE_ID_AULA_MINI_60_HE_PRO),
-+		HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_KYE, USB_DEVICE_ID_PIXART_USB_OPTICAL_MOUSE_ID2), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_KYE, USB_DEVICE_ID_KYE_MOUSEPEN_I608X), HID_QUIRK_MULTI_INPUT },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_KYE, USB_DEVICE_ID_KYE_EASYPEN_M610X), HID_QUIRK_MULTI_INPUT },
+ 		switch (recv_msg->hdr.command & CMD_MASK) {
+ 		case HOSTIF_DM_ENUM_DEVICES:
+-			if ((!(recv_msg->hdr.command & ~CMD_MASK) ||
+-					client_data->init_done)) {
++			if (!(recv_msg->hdr.command & ~CMD_MASK)) {
+ 				++client_data->bad_recv_cnt;
+ 				report_bad_packet(hid_ishtp_cl, recv_msg,
+ 						  cur_pos,
+@@ -122,6 +121,8 @@ static void process_recv(struct ishtp_cl *hid_ishtp_cl, void *recv_buf,
+ 				ish_hw_reset(ishtp_get_ishtp_device(hid_ishtp_cl));
+ 				break;
+ 			}
++			if (client_data->init_done)
++				break;
+ 			client_data->hid_dev_count = (unsigned int)*payload;
+ 			if (!client_data->hid_devices)
+ 				client_data->hid_devices = devm_kcalloc(
 -- 
 2.53.0
 
