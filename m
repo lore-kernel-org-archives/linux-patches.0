@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795062130;
-	b=XumGlMCJq+KdlcOKB3xmN1GxZqy4WiU6Na2DrjrqeE6I8eNT4NfNVbjFmC5JzfizHjRT
-	 rbMRF/Xirr6Mlp5zjJnnmS5n33FMvtt8ZoeFkeVZvTzLuMzaqNZNEJyZ6dQuq8F2IANe9
-	 tuaZ3ud7i8bPZSTBesxEUa6ZPiXm/Q+rn3o1nhNdHDQziCt1eWePXb43QY+z43OjlvWpL
-	 Fu0HfCQ3NBBZaNUoXeDhhZUBruWquudhCtcGZtUPw2fZTl5FtZbGVPd1JSz4Yinx1Sa04
-	 wA8aaijfsxnVR5qiQEEzplY+pRNyG6mLhfKQ5jttEn3ukt/CBjiZWqRAKLFTPIldybA==
+	t=1795062132;
+	b=pOqf0OpDqcXXL1Wp58IDCWmahvp0K80x3a3lfeiXLAu8Q+8DE7h53P7Qhwm6rn+VOVOy
+	 BEn9/QTpBRRYDBD6r975pDm8iOgWWnIYuJ1bqYWbeY1OFxFAtPvrMU4t1YvLbyuya2OzE
+	 j0C3ogi+ueKIYVdIZ1byGk7L1F3lp0KxSyAVuU/XVxQWN8QfxFFbMIKmZP6sWPMBwgkSS
+	 YSrlOXf0nz3PrgQOpVPqFwEEfhKJNXvcvxXqrKp2iLiF8ZyOqyd3S3g77y599i4Z7jyGE
+	 7fGKFiYChpX7Xg9qE0guKQtJWJmqYrYRlH0akr284XvUpFEg0oL1AHWtT3HwVED64SA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795062130;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062132;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=N1QHtGop3CD8OE+e8bKcxJB3xZEPu86O2jlEH8b1oEg=;
-	b=peTKKwMmCP5CDvS9WoIDEbtwUM4OSJq5VN8/v6GYstCFTZphJHR97ywDGBydtQS8ZxAt
-	 zVFfaAyekF7EBw5DNUi5+hRJutNUJaqkeuCTcK3ctazYCkJ1PPWYqn6fe+0+xOaxkyWnx
-	 IER7fIwqUf4HMmyS/AP0iFu0KjyW07phoGykLi0ess+2/h1kfc6LdNUuGcy9eTJYAO2fi
-	 Gvx0guZe0Edcg1nSpz97w7KTZGMuG2NWSBrSJKRh2LAIwpsCwWWuKXTEsTp4nsBc5x0XN
-	 EZuJAw+90xCbz1Rr5Hde3GdtcBUprReFfuZaZT2s8uWEKMTKYMxtlkx255hlkmGHXtA==
+	bh=mwMmnN9/UdyIV3AQKWt0vzwudEerYiHtjPl51r1r17c=;
+	b=cOC0qV3tsTPC9SPq9f3L72+1Ke25KipESp3VNR4f7ZHdOFBEkwnACKyXW3Rd3+JFTxok
+	 1y5YMQ208tKoUFHzYol2T8MieRxK2+dDtEQQSydRk5f0XUcHILe7M/wq8OQqvbWV6HHFL
+	 IkNv4m2z6SbJz6oBKaLkVKBM6WsYjZ04WqkH3M5AshmN/lBCMFAC7kIrwBloxqPlOl2g1
+	 C4u+1y1Eeh+CW4qnyG8koYQx8/aFQdPlLWFY4JtOobiR2O98TLxP58OHuSxHtoTvkgn98
+	 Icp9zNMDWrKqeWGAJVdFHv2IE2o/KyGRu8YdOrDf3kH7N23wX7NLgr124JDHXMb3FTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=THUO1zwS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="iFyhu/6G";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02747606A320;
-	Thu, 19 Nov 2026 04:22:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5E2A606A320;
+	Thu, 19 Nov 2026 04:22:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=THUO1zwS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5517A1F000C4;
-	Thu, 19 Nov 2026 04:22:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iFyhu/6G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3708A1F000C4;
+	Thu, 19 Nov 2026 04:22:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795062129;
-	bh=N1QHtGop3CD8OE+e8bKcxJB3xZEPu86O2jlEH8b1oEg=;
+	s=korg; t=1795062132;
+	bh=mwMmnN9/UdyIV3AQKWt0vzwudEerYiHtjPl51r1r17c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=THUO1zwSSZMBJgxGzZqDWGRKzHbYQKtGlZ50lH3kb0XOF5FznPvt+/hzq6dUe+sGY
-	 9ngk3nyTO3zkVgmld6l6v4yRxccAgCdlMgQ4Omrj4Ac0LO1Iat6vZeWFoZmADY1TuE
-	 klPw1sOIOrLOCU3OZN1bHVuOCBOSemp5ri/6jP2g=
+	b=iFyhu/6Gfb/aOxnaiVQ5bhHoaMcPWn4IOwuPpNxJUuenfvZ1k1pAt/w7paNmwzSDX
+	 lMuyEgZ6ADa54sZHHDKGD8YQ5Wk4wgZBt+obBTr4iNKLF3RECVhUOJt3JPTpG9/ZHb
+	 0LZBI5vwMHbN4ZLIf43ALg23BU+b0s/rwda+i4n4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c98b21427617af7f547a@syzkaller.appspotmail.com,
-	Rongzheng Wang <testwrzwrz@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1800/1848] nvmet: use the enabled transport when disabling a port
-Date: Wed, 18 Nov 2026 16:03:58 +0100
-Message-ID: <20261118150034.610743356@linuxfoundation.org>
+Subject: [PATCH 5.10 1801/1848] nvmet-tcp: stop listening when a port is removed
+Date: Wed, 18 Nov 2026 16:03:59 +0100
+Message-ID: <20261118150034.692760894@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,99 +72,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rongzheng Wang <testwrzwrz@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 60385038754ed9fb05dab127b35f88c702252505 ]
+[ Upstream commit ece0f4e67f08792c8572080fb0fcc231554f08ca ]
 
-nvmet_disable_port() looks up the transport from the current
-disc_addr.trtype, while nvmet_enable_port() records the transport in
-port->tr_ops.  If trtype is changed while a port is being enabled, the
-port can be removed through a different transport, passing the private
-data of the original transport to the wrong ->remove_port().
+nvmet_tcp_accept_work() accepts until there's nothing left. A
+connection that is already dead when accepted is torn down right there,
+which takes a few ms, and more can arrive meanwhile.
+nvmet_tcp_remove_port() waits for the work with cancel_work_sync(), so
+someone opening and closing connections in a loop keeps the removal from
+finishing. It holds nvmet_config_sem for writing, so nothing can be
+configured and no port answers a Connect until the flood stops. No
+secret needed, just an admin removing the port at the wrong time.
 
-The same mismatch is reachable with loop and RDMA: loop add_port()
-leaves port->priv NULL, and RDMA remove_port() dereferences it.
+Shut the listening socket down first. Pending connections are dropped,
+as they were on release, and the next kernel_accept() fails and ends the
+work.
 
-Use port->tr_ops for removal and serialize trtype changes with
-nvmet_config_sem in nvmet_addr_trtype_store(), so the transport that
-added the port is also the one that removes it.
-
-Fixes: 8f000cac6e7a ("nvmet-rdma: add a NVMe over Fabrics RDMA target driver")
-Reported-by: syzbot+c98b21427617af7f547a@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?extid=c98b21427617af7f547a
-Link: https://lore.kernel.org/all/6acbc835.a150a118.27e199.003c.GAE@google.com/T/
-Signed-off-by: Rongzheng Wang <testwrzwrz@gmail.com>
+Fixes: 872d26a391da ("nvmet-tcp: add NVMe over TCP target driver")
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Sagi Grimberg <sagi@grimberg.me>
+Cc: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/configfs.c | 16 ++++++++++++----
- drivers/nvme/target/core.c     |  8 +++++---
- 2 files changed, 17 insertions(+), 7 deletions(-)
+ drivers/nvme/target/tcp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
-index 299f7854acd83..e4eb3b10071dc 100644
---- a/drivers/nvme/target/configfs.c
-+++ b/drivers/nvme/target/configfs.c
-@@ -313,10 +313,15 @@ static ssize_t nvmet_addr_trtype_store(struct config_item *item,
- 		const char *page, size_t count)
- {
- 	struct nvmet_port *port = to_nvmet_port(item);
-+	ssize_t ret = count;
- 	int i;
- 
--	if (nvmet_is_port_enabled(port, __func__))
--		return -EACCES;
-+	down_write(&nvmet_config_sem);
-+
-+	if (nvmet_is_port_enabled(port, __func__)) {
-+		ret = -EACCES;
-+		goto out;
-+	}
- 
- 	for (i = 0; i < ARRAY_SIZE(nvmet_transport); i++) {
- 		if (sysfs_streq(page, nvmet_transport[i].name))
-@@ -324,7 +329,8 @@ static ssize_t nvmet_addr_trtype_store(struct config_item *item,
- 	}
- 
- 	pr_err("Invalid value '%s' for trtype\n", page);
--	return -EINVAL;
-+	ret = -EINVAL;
-+	goto out;
- 
- found:
- 	memset(&port->disc_addr.tsas, 0, NVMF_TSAS_SIZE);
-@@ -333,7 +339,9 @@ static ssize_t nvmet_addr_trtype_store(struct config_item *item,
- 		nvmet_port_init_tsas_rdma(port);
- 	else if (port->disc_addr.trtype == NVMF_TRTYPE_TCP)
- 		nvmet_port_init_tsas_tcp(port, NVMF_TCP_SECTYPE_NONE);
--	return count;
-+out:
-+	up_write(&nvmet_config_sem);
-+	return ret;
- }
- 
- CONFIGFS_ATTR(nvmet_, addr_trtype);
-diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
-index f1a8918156ea7..a9b2dc434a2e4 100644
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -367,11 +367,13 @@ void nvmet_disable_port(struct nvmet_port *port)
- 
- 	lockdep_assert_held(&nvmet_config_sem);
- 
--	port->enabled = false;
--	port->tr_ops = NULL;
-+	if (!port->enabled)
-+		return;
- 
--	ops = nvmet_transports[port->disc_addr.trtype];
-+	ops = port->tr_ops;
-+	port->enabled = false;
- 	ops->remove_port(port);
-+	port->tr_ops = NULL;
- 	module_put(ops->owner);
- }
- 
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index 871aa40adf355..05a599f6c8d59 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -1827,6 +1827,8 @@ static void nvmet_tcp_remove_port(struct nvmet_port *nport)
+ 	port->sock->sk->sk_data_ready = port->data_ready;
+ 	port->sock->sk->sk_user_data = NULL;
+ 	write_unlock_bh(&port->sock->sk->sk_callback_lock);
++	/* The accept work goes on for as long as there is something to accept */
++	kernel_sock_shutdown(port->sock, SHUT_RDWR);
+ 	cancel_work_sync(&port->accept_work);
+ 	/*
+ 	 * Destroy the remaining queues, which are not belong to any
 -- 
 2.53.0
 
