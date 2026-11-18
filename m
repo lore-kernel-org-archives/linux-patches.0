@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040472;
-	b=mAqKi7Mw2HcpuzQaZ1FKYAZfmaM9efQisuJ9UOcUnBpKCkYnGqILFgoXOob1ZIxffErC
-	 +EA//IT3lIoWkaCSSaxmxEaaH1zcberBtNbRzX8IhdEmdgdfnJd+Cbe1CXwmJuNe9W8pN
-	 TYjKNvp+P8qszt10Qs9Y4Vo2UmZ9iZpx3TU+8zFOzVLnlD66B6YeNysbeIj/0+wvBAwjU
-	 L7TQU9ytaftiXI+zUehgX0Uf07Edp1BjUtf+oJzsF97DUPz6ze1JXl63ViA3JsSqhLiw5
-	 /ytIEvnxWR+HDSbgJLiHCaaH1sG8LJ2SJU7LOxC0gzvf5kw7htnqoaTC0536RIT1x/A==
+	t=1795040475;
+	b=VXYDAxLT0urBCcAIEF43oLTtQUe+XN0o/BdJnA1tzUk7yU88q2Vl6Fr/u81Vz47tMW7C
+	 OdIZM2rt0j8QbLkj7v+3wKzqheYljqMoljKcfUXRPx0DgQtW9rSRpehWrZ6ORnIYt1q5g
+	 hgAg6VHD69RhF35YK1ljzWE55oiG+UgeCn4M9HeB9i5KNrrbV57TkFsZj30wpsWDBq9vu
+	 M9Tn8YxRL5JG9N2l8jNUNOuvR/3nFYWC7HKsKPdAf/H3sTFjlB/c6zmupJ9nb1MyNgpeq
+	 RZeHb84uCYqCmfePhe+NSzuy2L7f0Xbugx9kyTCoPDbci9IgsPa4BcJ3uadN8srq1Pg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040472;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040475;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NQ1MX9WHVqCOIfkczStZQbTRn/tk24YiqcgHoyeh04M=;
-	b=qPhHa2djBa1NwMsqRgon61LEKa67rnZv/PM0s5ugHC0G720ELasdjEFpH/cnnKImYDeq
-	 WKs9SAAY0DRO9KMu4xV3mac2j3QCh1sjd9d3Hdo1cMp+diWgyZ8Uoab0dzKzKZ1xwIsQ1
-	 /e48IvRHBYojyXibko6iGa/yJjUYq+C3ifggVylMFbZMFi04wVcJQH8h2NVn6dCnT1l9b
-	 FvZkBSXXsSl72rOUxD1PLI1XZtR64laDNP6ySTIZFMby4jutEJe7NkaUaQZXQaK/tbMl0
-	 JNXkI+qCXFJ1oB8RDABXtxCvs9KgbKfUvzgUxjlE8hTvnN49tgS9AqrHmUAVsSxnmRA==
+	bh=OoU1jlp8G5lLuyw8PfZR5DEoQ2IsPGrD46DIou8CGVU=;
+	b=XhKay5pSuFwFGey7BjTClRkjMd2jHIYs13vkzXFfaYUk9vculvH3UKVtsY1jNkTvZxp2
+	 28zSH/JQ8gWn3JNxVQutwi8i66wytGtqPCZSta+uNbkMmYN4iDD5N/jmxgK2B8feYteqT
+	 EQGHeVeUEORYaUvhQYcWB166vy+am+yfA3EAFB2/RRbDxaRfFa1UrVQX0VCClTw6ewgHd
+	 8sNQFF9xHdIhzZNuq55h/+b0h3i5UCd46Jb7r7e7iyWF61pRACatlbOjR5iIN8ZxUMoul
+	 ar8Q/k3E7IRNWgr4qVdqlY9UlkSF83I7VGO733MCagvDEjDt4fQobn1N9/XaxbKaQsw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="i4g/dVj+";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wKS8RjE2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C783606A31C;
-	Wed, 18 Nov 2026 22:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011DF606A31C;
+	Wed, 18 Nov 2026 22:21:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i4g/dVj+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 698E71F000C4;
-	Wed, 18 Nov 2026 22:21:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wKS8RjE2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B121F000C4;
+	Wed, 18 Nov 2026 22:21:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040472;
-	bh=NQ1MX9WHVqCOIfkczStZQbTRn/tk24YiqcgHoyeh04M=;
+	s=korg; t=1795040474;
+	bh=OoU1jlp8G5lLuyw8PfZR5DEoQ2IsPGrD46DIou8CGVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i4g/dVj+05PDNa1y4gPTLja+n6ggLQtQ0lwd8k8qU2O/qOW74KluA3p9WW7yRHoCQ
-	 kmTniahS/7aZnYxXFPhnJCIzAWt2yPCHAwmqEVW6AaKXJREYVqBxVt7RbtV1f1oWV6
-	 Q3tRu+y2PSuDsKKT5z+ZqkgpcSBdlANyqwnHPxyw=
+	b=wKS8RjE2jva1S7138y4e0D1T7oygPyiTWOl8aoM0IoUq1MVXI61kjpKxlkdtnWob9
+	 Wh/UdraliIFwwqRm0QgzQyGH/B3nLV2mUj+m/P7WUELJpJrRtIZI3t2yy7oX3xleCs
+	 FowrrXaQTqTIEml5Lni4++7R2UfUBq1V4JbdU8YQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serhat Kumral <serhatkumral1@gmail.com>,
-	Bernard Metzler <bernard.metzler@linux.dev>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Hongyan Xu <getshell@seu.edu.cn>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2469/3318] RDMA/siw: Fix length of first chunk in siw_try_1seg()
-Date: Wed, 18 Nov 2026 15:51:31 +0100
-Message-ID: <20261118150435.484115390@linuxfoundation.org>
+Subject: [PATCH 6.6 2470/3318] RDMA/hfi1: shut down the trap timer before unregistering
+Date: Wed, 18 Nov 2026 15:51:32 +0100
+Message-ID: <20261118150435.512263235@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,42 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Serhat Kumral <serhatkumral1@gmail.com>
+From: Hongyan Xu <getshell@seu.edu.cn>
 
-[ Upstream commit aac27aa8c5cfe3c3c6029b9c0f1113e0a53329de ]
+[ Upstream commit a1c9d476c2316685f85fffb6450ad88d01836357 ]
 
-When a short-single SGE payload crosses a page boundary, siw_try_1seg()
-computes the length of the first chunk as the amount that spills into
-the second page instead of the amount left in the first page
+MAD processing arms a trap timer embedded in each hfi1_ibport. Device
+unregistration does not stop the timer, so its callback can run after
+the port and its containing hfi1_devdata have been released.
 
-	part = bytes - (PAGE_SIZE - off);
+Shut down every port timer before unregistering the IB device. The
+shutdown form also prevents a concurrent path from rearming the timer.
 
-Use the remaining length of the first page as the first chunk.
-
-Fixes: b9be6f18cf9e ("rdma/siw: transmit path")
-Link: https://patch.msgid.link/r/20260927115351.12245-1-serhatkumral1@gmail.com
-Assisted-by: LLM
-Signed-off-by: Serhat Kumral <serhatkumral1@gmail.com>
-Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: bf90aadd630c ("IB/hfi1: Send MAD traps until repressed")
+Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
+Link: https://patch.msgid.link/20260928134151.1213-1-getshell@seu.edu.cn
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_qp_tx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/hfi1/verbs.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/infiniband/sw/siw/siw_qp_tx.c b/drivers/infiniband/sw/siw/siw_qp_tx.c
-index 03e3f6668840f..540f133196851 100644
---- a/drivers/infiniband/sw/siw/siw_qp_tx.c
-+++ b/drivers/infiniband/sw/siw/siw_qp_tx.c
-@@ -80,7 +80,7 @@ static int siw_try_1seg(struct siw_iwarp_tx *c_tx, void *paddr)
- 			if (likely(PAGE_SIZE - off >= bytes)) {
- 				memcpy(paddr, buffer + off, bytes);
- 			} else {
--				unsigned long part = bytes - (PAGE_SIZE - off);
-+				unsigned long part = PAGE_SIZE - off;
+diff --git a/drivers/infiniband/hw/hfi1/verbs.c b/drivers/infiniband/hw/hfi1/verbs.c
+index fbdcfecb1768c..641a9eca61550 100644
+--- a/drivers/infiniband/hw/hfi1/verbs.c
++++ b/drivers/infiniband/hw/hfi1/verbs.c
+@@ -1890,6 +1890,10 @@ int hfi1_register_ib_device(struct hfi1_devdata *dd)
+ void hfi1_unregister_ib_device(struct hfi1_devdata *dd)
+ {
+ 	struct hfi1_ibdev *dev = &dd->verbs_dev;
++	int i;
++
++	for (i = 0; i < dd->num_pports; i++)
++		timer_shutdown_sync(&dd->pport[i].ibport_data.rvp.trap_timer);
  
- 				memcpy(paddr, buffer + off, part);
- 				kunmap_local(buffer);
+ 	hfi1_verbs_unregister_sysfs(dd);
+ 
 -- 
 2.53.0
 
