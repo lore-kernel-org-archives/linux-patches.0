@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043094;
-	b=0+xGFuhvyI3g5GjpJpP3S5PFu/44iFwOdNbsRzjazyCD8bxYS3AoC4IdNRXrhUCQU75d
-	 UVIn6zvyyB5qw72YCcHmyiUPTPXYsucyFh5SDKaGAtxpYO5uluKTnPRsoRRuiPPTfBhdU
-	 TFUO5JWCvB0o0j3WuO7xpy2KFENB3DJyabXlafhTCcN4EeVTDWno8XyGpQb3g7Sai+zHs
-	 zCeR/VX6dHJ1aRO8CPSAeTV61ALIFPSAMzwOSbblzGTGFXrFVS02pZyfElJKdwTCI8MKf
-	 c8Wfnk27soE3B/R6SPjiqTqx1CJblvDgHxamHgEzygxwek+XqGn2UzRoXhJz4ls2/gQ==
+	t=1795043097;
+	b=wbpWXQupqmArw+SWkbqixmiDGlHzmyU+crPt/apkH5orREOEON323CBMx9FBzIRqouG4
+	 J1MZJKfF3YGxWI57TB8mJfgfZASIKoaIh0fL3FamQSKFB0whBeQaCQhEmQvpx3PrVmUf+
+	 OWvFrLUTkOwk7/YymaUaYBzz8KGAQnIINLExPpbhLa0uA2gFqC3HpNEX6eaOrmDytsHNm
+	 jjqyPw1ocap6O4n/7MGsh1MNTny3etuhHqXJOC1pRjwnI2PabK9TGGxI2Ps6kgfUNj7n1
+	 ELbk9Nyzg1t0iKAZRAxdjDZ9t4AQrZfSmjQhKwyxpwI9nZUX+h8TjhdBVZJCxefKhig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043094;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043097;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZTImoLPaXZvn8JUOiNkXd8/0XH1Op6n/PxNOxQfy74I=;
-	b=MQK/fbO9FtiR1/r6Qckt4WL7hZa2wC7elImAk6o2ki+iJ04TiP5CQdGxmm4jGa4TSuT1
-	 4LTx7gjytF8Q9LCAqIzkvXjebQtp3QDRjC0Hqg1Ib9gVS6A8hkoIFurCFaVhyChR92bwG
-	 FMBIX1rxZxMu42X+87Y7WpAH81BE7rmk/PZCgz1vvrmTIkKUwlyBXCv/kRGwz2hb7becn
-	 pl+v3eXXLhcOgInMV1M9swvnN5nRa7eQsMjYwVQCV5bSYIyOWJ5z66gYDV8fOeEdmjAan
-	 mq5ZODbDUeWU/uzWO3GLZ8IziEiOKy8zdGd0amb2nvIMGEJjmxDSPBGuOB5HEqqlLMQ==
+	bh=f6sBRPEvu2GcGvXA53JaYPnv+yJCIjoZXG2K0t4SmPc=;
+	b=DF4ASKU+O6n6fuhdlR+2oaLUPh81/yOZ/+GuU5GdKkwLnUSIDievnRxqGuCCy2mWfmsI
+	 2fdFdSUVGLw8DHvj7c3TTMT3J97yQ+PkxZDHZREFH3wXeBRrGiVIHnFh3mtQqsV0oxps1
+	 /kT6GLrwCAMcTYaBLUls21EnBDhIiQIb+NZ0Duwo3gdO9TYzYWCS23Yr5jWLH3S6OsAf0
+	 Cl3hXugWD1uMDfgveOMqLcIuF8z3z1I+eilcoB+0+c4zU5/DMcsxwQaUFluT4c2T+xIAb
+	 ErWH2N1RA8oWDkJScn+Bi9SazJSxI93mttI7Sf1Uym6UlOpfIL/Q78ik/P6gnVgV6WQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sTQ7rhWH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bv4l4RRU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6AD7606A32C;
-	Wed, 18 Nov 2026 23:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770ED606A31C;
+	Wed, 18 Nov 2026 23:04:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sTQ7rhWH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1907F1F000C4;
-	Wed, 18 Nov 2026 23:04:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bv4l4RRU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD2B51F000C4;
+	Wed, 18 Nov 2026 23:04:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043094;
-	bh=ZTImoLPaXZvn8JUOiNkXd8/0XH1Op6n/PxNOxQfy74I=;
+	s=korg; t=1795043097;
+	bh=f6sBRPEvu2GcGvXA53JaYPnv+yJCIjoZXG2K0t4SmPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sTQ7rhWH0JsK8zxSArzC2wUSRTSRwjML12mUAmxFmHP7w0YGQ93x3gOF3o4abVtOp
-	 QgCunDisghcomfvNQ7ALlQ4lOfTdkr0UYMDhw/dAcZINEch3973txXuWW9wkefND72
-	 GUdhZp3/K99WYZegBjYVtjX47f5XmNIFAlxyijWg=
+	b=bv4l4RRUlfP77rcDvbsZHnNB4PTQfab6QMAk4KYeqQkygfKS5bu3oViUH9wLxEE9M
+	 2zQnXO1v9Oe3MTjNFGepTxsk+B/T64DrUdzor1qd+OWRWef5v5f5lndSd+EJZVo5pT
+	 efMd7PoJjoVEhpoY+ooqESyOKVAkPPCuUpKpR7kQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tanmay Shah <tanmay.shah@amd.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Jurison Murati <eng.juri@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0061/2857] remoteproc: core: Full attach detach during recovery
-Date: Wed, 18 Nov 2026 15:18:15 +0100
-Message-ID: <20261118150203.499567785@linuxfoundation.org>
+Subject: [PATCH 6.1 0088/2857] media: i2c: ov8865: Program the sensor on stream start
+Date: Wed, 18 Nov 2026 15:18:42 +0100
+Message-ID: <20261118150204.456961521@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,52 +68,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tanmay Shah <tanmay.shah@amd.com>
+From: Jurison Murati <eng.juri@gmail.com>
 
-[ Upstream commit d93ffd549fb4df18c934ca7a47d4128a18c718cb ]
+[ Upstream commit 4e1446ac169a1a621ba90502ab8db3be821fe726 ]
 
-Current attach on recovery mechanism loads the clean resource table
-during recovery, but doesn't re-allocate the resources. RPMsg
-communication will fail after recovery due to this. Fix this
-incorrect behavior by doing the full detach and attach of remote
-processor during the recovery. This will load the clean resource table
-and re-allocate all the resources, which will set up correct vring
-information in the resource table.
+The sensor registers are only written in the runtime PM resume
+handler; ov8865_set_fmt() merely stores the requested mode, relying on
+the sensor being runtime suspended between uses so that the next
+resume applies it.
 
-Signed-off-by: Tanmay Shah <tanmay.shah@amd.com>
-Link: https://lore.kernel.org/r/20260630004806.3835488-2-tanmay.shah@amd.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+That assumption breaks when something keeps the sensor powered. On
+IPU3 platforms, ipu_bridge instantiates the VCM device with a
+DL_FLAG_PM_RUNTIME device link to the sensor, so a userspace process
+holding the VCM subdev open (e.g. wireplumber's camera monitor) pins
+the sensor runtime-active. A subsequent set_fmt() then never reaches
+the hardware: the sensor keeps streaming the mode programmed on the
+last resume while the CSI-2 receiver expects the newly negotiated
+format.
+
+On a Surface Book 2 (IPU3, ov8865 + dw9719 VCM), requesting the
+3264x2448 mode while the hardware was left programmed for the
+1632x1224 binned mode makes ipu3-cio2 report "frame sync error" and
+"payload length is 10340352, received 2585088" (exactly one binned
+frame) for every frame, and the inverse case stalls the stream after
+a single frame. Camera applications end up displaying one bogus frame
+forever.
+
+Program the sensor configuration and apply the control values on
+stream start instead, where the negotiated mode is always current,
+and only write the configuration in the runtime PM resume handler
+when resuming with the stream already started.
+
+Signed-off-by: Jurison Murati <eng.juri@gmail.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/remoteproc_core.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/media/i2c/ov8865.c | 34 +++++++++++++++++++++++++---------
+ 1 file changed, 25 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-index fc92de3cc0de2..80ea239394875 100644
---- a/drivers/remoteproc/remoteproc_core.c
-+++ b/drivers/remoteproc/remoteproc_core.c
-@@ -1782,7 +1782,20 @@ static int rproc_attach_recovery(struct rproc *rproc)
+diff --git a/drivers/media/i2c/ov8865.c b/drivers/media/i2c/ov8865.c
+index 498448b2ba2ab..be0cbed3b57b4 100644
+--- a/drivers/media/i2c/ov8865.c
++++ b/drivers/media/i2c/ov8865.c
+@@ -2617,7 +2617,7 @@ static int ov8865_s_stream(struct v4l2_subdev *subdev, int enable)
+ {
+ 	struct ov8865_sensor *sensor = ov8865_subdev_sensor(subdev);
+ 	struct ov8865_state *state = &sensor->state;
+-	int ret;
++	int ret = 0;
+ 
+ 	if (enable) {
+ 		ret = pm_runtime_resume_and_get(sensor->dev);
+@@ -2626,7 +2626,23 @@ static int ov8865_s_stream(struct v4l2_subdev *subdev, int enable)
+ 	}
+ 
+ 	mutex_lock(&sensor->mutex);
+-	ret = ov8865_sw_standby(sensor, !enable);
++
++	/*
++	 * The sensor may have been kept powered by something else (e.g. the
++	 * VCM's runtime PM device link on IPU3 platforms), in which case
++	 * runtime resume did not run and the hardware may still be
++	 * configured for a previous mode. Always program the negotiated
++	 * configuration on stream start.
++	 */
++	if (enable) {
++		ret = ov8865_sensor_init(sensor);
++		if (!ret)
++			ret = __v4l2_ctrl_handler_setup(&sensor->ctrls.handler);
++	}
++
++	if (!ret)
++		ret = ov8865_sw_standby(sensor, !enable);
++
+ 	mutex_unlock(&sensor->mutex);
+ 
+ 	if (ret || !enable)
+@@ -2914,15 +2930,15 @@ static int ov8865_resume(struct device *dev)
  	if (ret)
- 		return ret;
+ 		goto complete;
  
--	return __rproc_attach(rproc);
-+	/* clean up all acquired resources */
-+	rproc_resource_cleanup(rproc);
-+
-+	/* release HW resources if needed */
-+	rproc_unprepare_device(rproc);
-+
-+	rproc_disable_iommu(rproc);
-+
-+	/* Free the copy of the resource table */
-+	kfree(rproc->cached_table);
-+	rproc->cached_table = NULL;
-+	rproc->table_ptr = NULL;
-+
-+	return rproc_attach(rproc);
- }
+-	ret = ov8865_sensor_init(sensor);
+-	if (ret)
+-		goto error_power;
++	if (state->streaming) {
++		ret = ov8865_sensor_init(sensor);
++		if (ret)
++			goto error_power;
  
- static int rproc_boot_recovery(struct rproc *rproc)
+-	ret = __v4l2_ctrl_handler_setup(&sensor->ctrls.handler);
+-	if (ret)
+-		goto error_power;
++		ret = __v4l2_ctrl_handler_setup(&sensor->ctrls.handler);
++		if (ret)
++			goto error_power;
+ 
+-	if (state->streaming) {
+ 		ret = ov8865_sw_standby(sensor, false);
+ 		if (ret)
+ 			goto error_power;
 -- 
 2.53.0
 
