@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015370;
-	b=3hnlAoclh6NSdPb+W3o19VPF7v0RbbebqRheyruylLxPUlu+Ef0Y7efElZUyo78e+e/M
-	 xR/xRpzpREqu+OruP87e/RtVJBgM5O+/USgpS9H7gdoiETY+ftII53h9Pe5tVH44Ysiew
-	 bTza9i11S/nw5u5o2D0MrhV1r+95cqUamyKX0ket8RA2kjrY//HUe8x2KSvg3//6BmoFA
-	 D40q7NEb/b1Q/6nhGQWlvWbHiTl0BhJ6K+s+KHVN9yqbAo8F3fpxnXwd5u1CAYBjXS0mv
-	 Z3Z7rv/9wcOD/4uG74IRNd1VpYxwP7ItZkXXk64vATq3AH93A1alsxU4jL0hJrdd6Mg==
+	t=1795015372;
+	b=HINR0hF4lB5rUw9HpGoF/m2iUm/N+IZJ8ch37n2ObElVK7SkPU86jZ/QK0hTdZKtg0kH
+	 VSHtCV66u1HLOflyAgsP5FVnWl2X0UuY4HydNh1Ubte9pHohbe6wSdfmxm3TYEziH6roo
+	 nAxlDrGrLb4HEQdZBkawfbPT8z/QU42aOl8tZsT4mQq5pD9AUVfMYBePhzCjexRp1SJr1
+	 zKgNvRKebgrA5rg3Xq3K7YRqvo3UxklgR/eQm0cr7Nj2wm7P+8/39ySntNT4+MFTaJon2
+	 /H3PZfDH5vXmgC0tjzZVcChMtBYUxoTnRg5fjGW2FOOYPFYZZiKLPu+kHJQh6TQ8A2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015370;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015372;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6jV1cboApr5UXp5nPRkae8n1BzpU/vOBQ6aTzHBZMts=;
-	b=zB/a2SAZhOInB3Rrq5FMsOociI4O3xTK4k/GferS+2ySeFe04cVBUPpUur4k0O5chrvd
-	 xFBUFAN3LJ07WD/f+4g++UOn3CjLiYxX1oGuoVpG3ITnNGoXTh/Vgnaz628S1oN3bxvDQ
-	 y7Y0qY+6OqgGQRMcwdn3gwIwiB9Td/I2a7jKl4SuLEsCdYr2j7ZIPMq9OP91ZgNHnOdu4
-	 8Q6cHcGUBOgti1P64eTCzIwoIWud0BtvlPlEHQhlXb7nJAE4gFRBucEj54ViqI5+i56PY
-	 xVtlSYHJKOpzQvvf1QhrryxmplmhgdCy8qyGFMqNAI4ryuinj/4sxdKzchMRrBqvsAQ==
+	bh=N7Kmr3YQD04pNlWBcUiOTnra+pzfXapBMh4/M/WR+vs=;
+	b=qcTBylwBQABz65tVJxA5hXPJMoE1oY/x0ZfM2wo8Z9VgOGFO1nclb3N4LpAOO919Fdbu
+	 FA6bwozc1Qw7WJn5Rmn0x5YwXSgO6xgBmiaXm3iAUSAaGmCd2duFhBK8gY/h4MRQNXvpl
+	 SZs9M+Ub7eQJdJCXwMQMqnWCC0X6kEdVPBbzEqni2BuSJm9E1pR2ioGlnImk1RVGTQ8FW
+	 CXsOYwYzE9NyNPEQgPFpli5oEmkMifeg3H8/pK50sU7OxrlNlNJNtoQ+H+Wxd63UFH5ce
+	 VeI9EBNgZZAxi+p06vxdzGd90y0hZ4bij33rhocHb+/Dv0jhvn0Yf2tww1H+x0rkUxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fUbqXPeU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M2IhPBme;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057D1606A330;
-	Wed, 18 Nov 2026 15:22:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBEDB606A32F;
+	Wed, 18 Nov 2026 15:22:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fUbqXPeU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 646851F000C4;
-	Wed, 18 Nov 2026 15:22:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M2IhPBme
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38B011F000C4;
+	Wed, 18 Nov 2026 15:22:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015369;
-	bh=6jV1cboApr5UXp5nPRkae8n1BzpU/vOBQ6aTzHBZMts=;
+	s=korg; t=1795015372;
+	bh=N7Kmr3YQD04pNlWBcUiOTnra+pzfXapBMh4/M/WR+vs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fUbqXPeUc8FNzxtQGHj4H5QR5WtOpBNQFA2KkVM4myzd9EMionIK6Bou8JeyBhkvy
-	 x3+uZ9fvTPRenYTsrcEejWVDhOZZYTzfezjC1MxfwatPN7j/dO31wk/lb3zyF2jMkl
-	 G+vdiE6qfgg33lVlvWMeA9VVgqXotc9UobUP67PU=
+	b=M2IhPBmekHvlsLGYF116uBDdK1Pqj2Sdu3JbMG4agvlA+zDJMl0EYM23hvNLOGm8o
+	 VJiuxSIzAht5tak81ZKEO0cdNAO/a5SmD8Fi1bpnyWhXWVxzM+bw9jqJQh730p+tOi
+	 1PFADyCgV89yEso+Q6oxisY2UZX6lZIGhOYx1BkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Shaikh Kamaluddin <shaikhkamal2012@gmail.com>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Boris Faure <boris@fau.re>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0148/2651] cxl/test: Map mock device nodes to an online node
-Date: Wed, 18 Nov 2026 15:23:08 +0100
-Message-ID: <20261118150253.184352296@linuxfoundation.org>
+Subject: [PATCH 7.3 0149/2651] soundwire: intel: initialise quirk_mask before reading it
+Date: Wed, 18 Nov 2026 15:23:09 +0100
+Message-ID: <20261118150253.221965282@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,82 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Davidlohr Bueso <dave@stgolabs.net>
+From: Boris Faure <boris@fau.re>
 
-[ Upstream commit 6f057dea152574dd044382fd0ba5ed19e3ecba25 ]
+[ Upstream commit ee8a8cfe4e8d3c67456e554c988017c252710a25 ]
 
-cxl_type3_mem_init() and cxl_type2_mem_init() assign alternating NUMA
-nodes to the mock memdevs to model multi-node topologies. On a
-single-node host node 1 has no pgdat, and the first node-aware
-allocation in an odd device's probe faults on a NULL zonelist:
+sdw_master_read_intel_prop() declares quirk_mask without an initialiser
+and ignores the return value of fwnode_property_read_u32(). When a BIOS
+does not describe "intel-quirk-mask" for a link, the property read leaves
+the variable untouched and stack garbage decides whether
+SDW_INTEL_QUIRK_MASK_BUS_DISABLE is honoured, so the link may be marked
+hw_disabled at random.
 
-  Oops: general protection fault, probably for non-canonical address 0xdffffc00000006e3
-  KASAN: probably user-memory-access in range [0x0000000000003718-0x000000000000371f]
-  Workqueue: async async_run_entry_fn
-  RIP: __alloc_frozen_pages_noprof+0x288
-   new_slab
-   ___slab_alloc
-   __kmalloc_node_track_caller_noprof
-   devm_kmalloc
-   cxl_mock_mem_probe
+Initialise it to 0, matching is_link_enabled() in
+sound/hda/core/intel-sdw-acpi.c.
+Found by code inspection, not observed at run time.
 
-Map the requested node to an online one, as dax_hmem already does
-for its target node.
-
-Fixes: cf1f6877b088 ("cxl/memdev: Add numa_node attribute")
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Tested-by: Alison Schofield <alison.schofield@intel.com>
-Tested-by: Shaikh Kamaluddin <shaikhkamal2012@gmail.com>
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Link: https://patch.msgid.link/20260831175119.3247915-1-dave@stgolabs.net
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Fixes: 395713d8ca43 ("soundwire: intel: handle disabled links")
+Signed-off-by: Boris Faure <boris@fau.re>
+Link: https://patch.msgid.link/20260820212220.226912-1-boris@fau.re
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/cxl/test/cxl.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/soundwire/intel_auxdevice.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/cxl/test/cxl.c b/tools/testing/cxl/test/cxl.c
-index 62bd92b3be45f..221be4addb0e7 100644
---- a/tools/testing/cxl/test/cxl.c
-+++ b/tools/testing/cxl/test/cxl.c
-@@ -1945,7 +1945,7 @@ static int cxl_type2_mem_init(void)
- 			goto err_mem;
- 		}
- 		pdev->dev.parent = &dport->dev;
--		set_dev_node(&pdev->dev, i % 2);
-+		set_dev_node(&pdev->dev, numa_map_to_online_node(i % 2));
+diff --git a/drivers/soundwire/intel_auxdevice.c b/drivers/soundwire/intel_auxdevice.c
+index a8407560bf4fd..9b1465af26458 100644
+--- a/drivers/soundwire/intel_auxdevice.c
++++ b/drivers/soundwire/intel_auxdevice.c
+@@ -159,7 +159,7 @@ static int sdw_master_read_intel_prop(struct sdw_bus *bus)
+ 	struct sdw_intel_prop *intel_prop;
+ 	struct fwnode_handle *link;
+ 	char name[32];
+-	u32 quirk_mask;
++	u32 quirk_mask = 0;
  
- 		rc = cxl_mock_platform_device_add(pdev, &cxl_mem[i]);
- 		if (rc)
-@@ -1974,7 +1974,7 @@ static int cxl_type3_mem_init(void)
- 			goto err_mem;
- 		}
- 		pdev->dev.parent = &dport->dev;
--		set_dev_node(&pdev->dev, i % 2);
-+		set_dev_node(&pdev->dev, numa_map_to_online_node(i % 2));
- 
- 		rc = cxl_mock_platform_device_add(pdev, &cxl_mem[i]);
- 		if (rc)
-@@ -1991,7 +1991,7 @@ static int cxl_type3_mem_init(void)
- 			goto err_single;
- 		}
- 		pdev->dev.parent = &dport->dev;
--		set_dev_node(&pdev->dev, i % 2);
-+		set_dev_node(&pdev->dev, numa_map_to_online_node(i % 2));
- 
- 		rc = cxl_mock_platform_device_add(pdev, &cxl_mem_single[i]);
- 		if (rc)
-@@ -2009,7 +2009,7 @@ static int cxl_type3_mem_init(void)
- 			goto err_rcd;
- 		}
- 		pdev->dev.parent = &rch->dev;
--		set_dev_node(&pdev->dev, i % 2);
-+		set_dev_node(&pdev->dev, numa_map_to_online_node(i % 2));
- 
- 		rc = cxl_mock_platform_device_add(pdev, &cxl_rcd[i]);
- 		if (rc)
+ 	/* Find master handle */
+ 	snprintf(name, sizeof(name),
 -- 
 2.53.0
 
