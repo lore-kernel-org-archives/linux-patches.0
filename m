@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051881;
-	b=vRzjYsMYsRZ5l6mCeToX5JjNB1ZfdAV0P+FGzGEiRxvWbDvHuKWGsNC5C7VkVxC5j99g
-	 mJrGq1HHGZK0vxr+xT4LzLsT5ddbjIy+dSC7sxRv+bwr1giI7fETDyro8QaoG2V5moq1C
-	 LHOptJIukuvxuUHj7OdEvXLw3+mJuBwWEjAt4qbeM1mPEdmClSlIV/RdCSTxWqzcTu4Nm
-	 HMLpNEybhDne3tEz1yzvfJPsGyHECXvI720XXdBvhY6rt5WpEDBznxqKbPkbXgu0DkLFS
-	 WN/L2s4johXk1Lwoi9p8Sj/hRlgd02ECLVL5u04RldDRlDid2CiQLyPLYntyLwwS64w==
+	t=1795051883;
+	b=x9MPfFvZoMgSROX6/UB3lOW0gwQgbMhazhSva5ppN8KU7zhHWx411UO/qSCEsTx681MO
+	 G+GieESnuHAtougBeKgEHAA1RqAzx8DqwghoIzdZ+1Gu7Ub/8XNGgWLGlntEC/PXFqcgJ
+	 m/g8hgq1178DABo2gMU5ZmmErMs7CEYvVi+y0M8VqUxeB6HsN8P4McehvoGdGAL/DIMvL
+	 mlJJGUFeV2vOuM0sptImRu9MyojX6ICO47U/rU/GjxGXYXG63HkwTIqYnGbng0bbnvB9U
+	 3uzItMhN0HiZ2p+7I/XX0nXDErvxPvBEppgqHOCyYKCt+iNk15jIBy+DnWEsYkP2D+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051881;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051883;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=7NpCZH6Qh7lvUrvk+k8UdtYylyDdcAMR4lzdI0jKVic=;
-	b=nJYERxe1KyxJ0vVL1cRUblwKF+e4OHFJkiTLEwf+xTeMajSERd2xMYHiAMNUPzUZfosC
-	 Jej0HFmVSHXd5vuzxZt+EQnnsnJ8IAun/NdIo0vmMyeW04I6Jr3BOGR4yjMTujOpdlY2T
-	 /wehcuUb75GTHKqaks3dSUu+jlS6C5KnXGtF5GvYyRyG8YWu8rpO83zxecj2SNZ4yJcMx
-	 G5F5ZkJJaUGSwn5Jcj3zLk/eckBnXTm4IWEG4Zty8O8JirYYlmBX8rMqod21+1C9zb/uB
-	 QrOObIpFWmQkgfAZMUQMS/NOCQu6eq9I06/V/Z1jcI/3dd7fKeoCxuavnudt3Aq8H7A==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Rx7gO12jsA0YyfuZbB28tZmqby3KGLFS9qQukMhj2yA=;
+	b=Y8T/q84gaQcDfUOaWlL25+yZCDHPaQ6s6F2tY+2v1XSpFygi//WoI77PvjBG3de7u0Xj
+	 IBfIn8Q+lWX8pAF8DyWrJ/nvrawymBH3QN6EC+E8X2CCH+3lrRZqCRc+UtfQ9X3Hlax9v
+	 9849naG3UBZfCPHpDG2KBIbWanVqh5OFeLRxhI1JO7D40oHUV6DFRY64LsYwvSOFs2RJ7
+	 Wqd6iHgCKA4cs0/wB3EAhm1XzgAlkx1SX+PXoF5nWe1WxlIkmVLoJVyP6CUzqRzbQt6jt
+	 wPuBxN6Pb2Dt0ROEcuVsv0d+BVgd2nDatv2MU42Gbc/NJaw6uzmrUn8vbQ/J26MbpOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M0N4PhyZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YgDUtQeo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E884F606A31C;
-	Thu, 19 Nov 2026 01:31:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA9A2606A325;
+	Thu, 19 Nov 2026 01:31:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M0N4PhyZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B531F000C4;
-	Thu, 19 Nov 2026 01:31:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YgDUtQeo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19AC91F000C4;
+	Thu, 19 Nov 2026 01:31:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051880;
-	bh=7NpCZH6Qh7lvUrvk+k8UdtYylyDdcAMR4lzdI0jKVic=;
+	s=korg; t=1795051883;
+	bh=Rx7gO12jsA0YyfuZbB28tZmqby3KGLFS9qQukMhj2yA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M0N4PhyZ/JI2b9oBrQLh0ef04Ru6buXf9746T14JijKYKUKFtor5pnlufNE1sJgwZ
-	 RF/bZCqZ8z6tLv6sEcjDMPyjAsvtPMVVTDsV71VSF9EncJtbDqvGipsoYU0xfntXlT
-	 8Sldfw58Z9buXE3j3EJ3dQjVR8vPSvElIof/9G2k=
+	b=YgDUtQeoVSSAXaRZD2HhwIJYPqFv9eZ+wDIJe/knE2RD0W274eGwNC+gfWQAi8WOR
+	 Xud07UmiC7izpXZWWHjn6NIxSCcdSc6M24zks8iaE01GZAmM7CWL1ninJ8J/KaAxk2
+	 /BH+XslUxhUmv3Ecw02g0TYmBFiftFuxkIzSpqv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YANXIN LI <fadouse@pm.me>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 5.15 0316/2214] ufs: use u64 for directory size in ufs_last_byte
-Date: Wed, 18 Nov 2026 15:33:12 +0100
-Message-ID: <20261118150022.778902597@linuxfoundation.org>
+	Nickolai Zeldovich <nickolai@csail.mit.edu>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Tejun Heo <tj@kernel.org>,
+	Bradley Morgan <brads@mainlining.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Thierry Reding <treding@nvidia.com>
+Subject: [PATCH 5.15 0317/2214] resource: report a devm_request_resource() conflict under the lock
+Date: Wed, 18 Nov 2026 15:33:13 +0100
+Message-ID: <20261118150022.813483543@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,82 +66,104 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: YANXIN LI <fadouse@pm.me>
+From: Nickolai Zeldovich <nickolai@csail.mit.edu>
 
-commit 1eff23433e73d7da4f9e3529d2701e34962b161f upstream.
+commit d2f7bdfdeac8137e942b32e0badc40e181127d7b upstream.
 
-ufs1_read_inode() and ufs2_read_inode() copy the untrusted 64-bit
-on-disk size into inode->i_size.  ufs_last_byte() then truncates that
-value to an unsigned int before calculating the valid extent of a
-directory folio.
+devm_request_resource() calls request_resource_conflict(), which takes
+resource_lock, tries to insert the new resource and returns a pointer to
+the conflicting resource after dropping the lock.  The error message is
+then formatted from that pointer: conflict->name and the %pR argument
+read the name, start, end, flags and desc of a resource that nothing
+pins any more.  The owner of the conflicting resource may call
+release_resource() and free it the moment the lock is dropped.
 
-A directory size of exactly 4 GiB is truncated to zero.  In
-ufs_find_entry(), subtracting the requested record length from that zero
-forms an endpoint almost 4 GiB beyond the mapped folio.  A crafted UFS2
-image produces:
+The conflicting resource normally belongs to another device.  With two
+devices whose drivers claim overlapping regions (two PCI host bridges
+whose "ranges" windows overlap, two instances of a controller on the
+same aperture, or a stale claim an administrator is replacing), the
+following interleaving reads freed memory:
 
-  BUG: KASAN: use-after-free in ufs_find_entry+0x583/0x6e0 [ufs]
-  Read of size 1
-  ...
-  ufs_find_entry
-  ufs_inode_by_name
-  ufs_lookup
-  __lookup_slow
-  path_lookupat
+  CPU 0: driver B probe                  CPU 1: driver A unbind
+  devm_request_resource(devB, root, resB)
+    request_resource_conflict()
+      write_lock(&resource_lock)
+      __request_resource() -> resA
+      write_unlock(&resource_lock)
+                                         devres_release_all(devA)
+                                           devm_resource_release()
+                                             release_resource(resA)
+                                         put_device() -> kfree(resA)
+    dev_err(..., resA->name, resA)        use after free
 
-The KASAN classification reflects that the adjacent physical page was
-free; the source-level operation is an out-of-folio read.  A controlled
-UFS1 test with CONFIG_UFS_FS_WRITE enabled also made ufs_find_entry()
-return a directory entry from an adjacent anonymous page.  unlink() then
-passed that pointer to ufs_delete_entry(), which cleared the adjacent
-page's 3
-2-bit d_ino.  This write result reproduced three out of three
-times.
+Both halves are reachable from userspace on any kernel: a write to the
+"unbind" file of the driver that holds the region and a write to the
+"bind" file of the driver that wants it.  One in-tree path is
+drivers/pci/bus.c devm_request_pci_bus_resources(), called from host
+bridge probe for every bridge window; the windows are the embedded
+struct resource of kzalloc'ed resource_entry objects that
+pci_free_resource_list() frees when the other bridge is released.
+In the common case the "resource collision" message is garbled; with
+the slab object poisoned (CONFIG_SLUB_DEBUG) or reused, formatting
+conflict->name oopses, and KASAN reports a slab-use-after-free read in
+devm_request_resource().  All of this happens in a probe that is
+already failing with -EBUSY.  The window is a few hundred instructions
+wide and exists only when two devices actually collide, so the race
+has not been observed outside of analysis.
 
-UFS normally requires a privileged mount path.  A relevant boundary is
-a privileged automounter or image-processing service handling an
-attacker-supplied filesystem.  The write primitive additionally requires
-UFS1 to be mounted read-write with CONFIG_UFS_FS_WRITE enabled; the read
-is reachable with read-only UFS2.
+Do the same here: take resource_lock, insert with __request_resource()
+and print the diagnostic while the lock still keeps the conflicting
+resource in the tree, then drop the lock.  The return values and the
+devres handling are unchanged.
 
-Keep the intermediate size arithmetic at 64 bits so non-final pages are
-bounded at PAGE_SIZE.  With this change, the same controlled tests reach
-the real on-disk directory entry and produce no adjacent-page write or
-KASAN report.  A reproducer and full validation logs are available on
-request.
+The change was built for x86_64 and RISC-V; the resource KUnit tests
+pass on both.
 
-The vulnerable helper is present in v7.2-rc3, v7.1, v6.18.38, v6.12.95,
-v6.6.111, and upstream master at 1229e2e57a5c.  Runtime reproduction and
-fix validation were performed in an x86-64 QEMU guest running v7.2-rc3
-with generic KASAN.
+Found by formal verification of kernel/resource.c against the kernel
+binary.
 
-Fixes: b71034e5e67d ("[PATCH] ufs: directory and page cache:  from blocks to pages")
-Cc: stable@vger.kernel.org
-Signed-off-by: YANXIN LI <fadouse@pm.me>
-Link: https://patch.msgid.link/20260718190300.867109-1-fadouse@pm.me
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Link: https://lore.kernel.org/20261016140043.790048-1-nickolai@csail.mit.edu
+Fixes: 8d38821cbcf5 ("resources: Add device-managed request/release_resource()")
+Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Acked-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Assisted-by: LLM
+Cc: Bjorn Helgaas <bhelgaas@google.com>
+Cc: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Cc: Thierry Reding <treding@nvidia.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ufs/dir.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/resource.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/fs/ufs/dir.c
-+++ b/fs/ufs/dir.c
-@@ -211,7 +211,7 @@ fail:
- static unsigned
- ufs_last_byte(struct inode *inode, unsigned long page_nr)
- {
--	unsigned last_byte = inode->i_size;
-+	u64 last_byte = inode->i_size;
+--- a/kernel/resource.c
++++ b/kernel/resource.c
+@@ -1521,10 +1521,15 @@ int devm_request_resource(struct device
  
- 	last_byte -= page_nr << PAGE_SHIFT;
- 	if (last_byte > PAGE_SIZE)
+ 	*ptr = new;
+ 
+-	conflict = request_resource_conflict(root, new);
+-	if (conflict) {
++	/* Report a conflict while the lock still keeps it in the tree. */
++	write_lock(&resource_lock);
++	conflict = __request_resource(root, new);
++	if (conflict)
+ 		dev_err(dev, "resource collision: %pR conflicts with %s %pR\n",
+ 			new, conflict->name, conflict);
++	write_unlock(&resource_lock);
++
++	if (conflict) {
+ 		devres_free(ptr);
+ 		return -EBUSY;
+ 	}
 
 
