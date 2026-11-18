@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047436;
-	b=dyzxVwCVXV7grk/eJy2K//yDntlo8hmgVzHiD270YPugXwhauO7F3rc/wfLEsjaPtsRC
-	 CZxHjpdbTAoL1eK4JfetpBXlRumsgJJLEcXCvptCPfTVt5me8k/745qe0vkADDX+N6eht
-	 kQX7i26CETZvUDQA6uBntGFg6dtLG5clNP10zCMNAwLYnc8bzVnQ6lg74NPpVDUHAfLHM
-	 D+NcZ6hCWowBF3i49aamR7uFcCuGEY06eKiOSCVl+6DxMZN1PVqTchtN4kK2Ljuf8MaDB
-	 TwMuZd75BtkMnAam0kILmhzFR57JNcu2LVAOM80infPTVI6QDYNCCNGM5dkrN3GDdDQ==
+	t=1795047439;
+	b=e2Z45DDmvqs11aY6/60sJVcD/PhSiOnPdL2Z/X3UdrHUF9BkCBycI4yiBuMePHqJiNkD
+	 RO96fWiJocPDcrUU+/EgPHc+YLZlqQAcT7yVfLps3OOumnNoIpQVdkDkUpCrtauCrmGWO
+	 WCDogK6eHTc+uIyQEMNB9n4Dol6oZeJyE2m2Bk09Ckg2brRsrwbJEcxOafCAV6UvaLUp8
+	 9PmCF07jKub+7QhLDvI/9ZJIVWIyylJs1/iuayw8Fo+tj6iyOKjX7edwkgGjpPPE6KK3U
+	 Z73ACA16c7gkJHTdTWFQK9DJwqgrJtbStrktIywK3OVdOKZah2r+Gc4OYehnYKrs6YA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047436;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047439;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=D4wJYihkqbTfZlahw4Q0SRjxU+enkHwy4QXZ16Mh13k=;
-	b=bYL3xUsauNkgB4so70KrZzb4GdNW8Vkvz1dOtE08emr8PCsUQ2eOHTaw6SpTU+7ti7kL
-	 5VEGRLn4S7AYC4pDziOT7CybYXVjG2LRXx3krNByoQ+DTRzu6zpzFOT+OfGv6SfXARWj6
-	 lq9CEXzQnKt2CaauEmZQMvvUJOJimPcgl/YVjGm0nRehFSy9tx1LZi0D8DvZFOGz4ZSbd
-	 2D/WiATyWLAidAfFSq134Eb8n5pHuSfH96jVQVmhzr9uj6dFaMK6AClvnPqGY1wFJMVvM
-	 9d2ax/GGk7kY0QDyNEP3g/gp9sDC61h3AALS8ScAiYo4wr8as9NffSEvg6j6ltFKqmA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=9mKd6Y7yppHZvBUcvTepQjUf6lZAez4cZdfjxejjJHA=;
+	b=UA7qvxsZCJ4cCpKliqRN4w5ACRenuk7dOHhqnuTgDNDakX6GHlqJyf+/9qkehoNXgjVJ
+	 DwvtuuhqZ+q4QRjUglDK1g/qSAk5kiYb+YXgK1SRANnd/QbA7N5AXqrl7LdsJ3rZX5h8i
+	 q/Jj7o+MK0j727lQvs1DMgjPnuWUEdQJVKGEHMNbokJrHRZnLramCf4iUiBbTkPvJGtaf
+	 QFyt2vKBtvUgSgt8qu2akA0jypQ2nLH/LQBzXWaZQozkkWDvPnsmlzqjzlcJBOd4Q0Diu
+	 O0OTvOcSH/ZfB9b6yIAocF+x9M4h2x6sC1wy0Bm2vrhgTGIDYaFlZpAaIBN+3JVvW9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F0OVyVnD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ho+8BngR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991FF606A31C;
-	Thu, 19 Nov 2026 00:17:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72CCC606A332;
+	Thu, 19 Nov 2026 00:17:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F0OVyVnD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA47A1F000C4;
-	Thu, 19 Nov 2026 00:17:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ho+8BngR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7B421F000C7;
+	Thu, 19 Nov 2026 00:17:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047436;
-	bh=D4wJYihkqbTfZlahw4Q0SRjxU+enkHwy4QXZ16Mh13k=;
+	s=korg; t=1795047439;
+	bh=9mKd6Y7yppHZvBUcvTepQjUf6lZAez4cZdfjxejjJHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F0OVyVnDBWHVOPyEmn2UuzMDlz2jkuyCQlqXXf4YlOFaJ7jridg6NL4Yyw7fmMLN+
-	 PFmNTFlxV7ux/avx45WIyeGRw9ddkgG97CCWZl+veBwPuj/Lf+C31VK4c0gsjEbAzT
-	 JnHoW8lPC1llBR0fe/tbdzfk5Ciwu7DoVutX/9eE=
+	b=ho+8BngRxmUaKb2sNUUQzGqe0YkNMm2kdhr5irMbcQTBN/nSL4V8JFA9srqWHigob
+	 NtNESOafMeU+Pf2O2rSvY9DAhqp8oRRqlPAbhUY7p2v9LOIf9qb+/snH3NlpCT+1ZF
+	 lrFuI1KuBqzCQ1DSToiu1HlOYCZxsaU9oGuF8iws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	David Teigland <teigland@redhat.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1636/2857] drm/amdgpu: drop the gang leader reference when freeing gang jobs
-Date: Wed, 18 Nov 2026 15:44:30 +0100
-Message-ID: <20261118150300.243663079@linuxfoundation.org>
+Subject: [PATCH 6.1 1598/2857] dlm: fix send buffer backpressure handling
+Date: Wed, 18 Nov 2026 15:43:52 +0100
+Message-ID: <20261118150258.912680932@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,101 +65,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit c1584e10a7deb655438f21867b2b7a356a9aaf9f ]
+[ Upstream commit e234d7625598b2eaded84fa99f53c8062650828f ]
 
-Every job of a gang except the leader holds a reference to the
-scheduled fence of the leader in job->gang_submit. Only
-amdgpu_job_free(), used for jobs which never ran, drops it, so for every
-gang submission which completes the scheduler fence of the leader, and
-with it its hardware fence, is leaked. amdgpu_job_free() in turn checks
-for the leader only after drm_sched_job_cleanup() cleared the scheduler
-fence, so a leader freed there drops a reference it never took.
+lowcomms.c tests and clears SOCKWQ_ASYNC_NOSPACE in con->sock->flags,
+but this bit has not been stored there for ten years.
 
-On navi31, 100 submissions of a GFX + COMPUTE gang grow the slab cache
-drm_sched_fence is merged into by 60 to 180 objects each time, while
-100 GFX only submissions don't.
+Commit 9cd3e072b0be ("net: rename SOCK_ASYNC_NOSPACE and
+SOCK_ASYNC_WAITDATA") mechanically renamed the two dlm users, then
+commit ceb5d58b2170 ("net: fix sock_wake_async() rcu protection") moved
+the bit from socket->flags to the RCU protected socket_wq->flags, where
+it is reachable only through sk_set_bit() and sk_clear_bit(), and is
+only maintained for sockets having SOCK_FASYNC set.  dlm uses kernel
+sockets, which never have SOCK_FASYNC set, and never sets the bit
+itself, so the test in send_to_sock() has been false ever since.
 
-Use amdgpu_job_free() for the jobs the scheduler frees too, and check
-for the gang leader there before drm_sched_job_cleanup() clears the
-scheduler fence. As the scheduler clears the entity of the jobs it
-picked up, check for the scheduler fence instead to tell whether the job
-needs cleaning up.
+The consequence is that when sock_sendmsg() returns -EAGAIN because the
+socket send buffer is full, dlm no longer sets CF_APP_LIMITED, does not
+increment sk_write_pending, and does not return DLM_IO_END to wait for
+lowcomms_write_space().  It returns DLM_IO_RESCHED instead, and
+process_send_sockets() immediately requeues the send work.  A connection
+to a peer that is slow to drain thus keeps cycling through
+sock_sendmsg() and -EAGAIN, burning CPU, instead of sleeping until TCP
+reports that space is available again.
 
-Keep freeing the remaining IBs with amdgpu_job_free_resources() after
-drm_sched_job_cleanup(), so that it frees them with the hardware fence or
-right away and not with the scheduler fence, which nobody signals for
-jobs aborted after drm_sched_job_arm(), like a CS returning -EAGAIN.
+Test SOCK_NOSPACE instead.  This is the bit that lives in socket->flags,
+that TCP sets whenever sendmsg() returns -EAGAIN for lack of send buffer
+space (tcp_sendmsg_locked() and sk_stream_wait_memory()), and that
+lowcomms_write_space() already clears.  This restores the semantics dlm
+had before the bit moved.
 
-v2: unify amdgpu_job_free() and amdgpu_job_free_cb() (Christian), don't
-    free the remaining IBs with the scheduler fence
-v3: drop the comments (Christian)
-v4: free the IBs with amdgpu_job_free_resources() again (Christian)
+Also remove the clear_bit() of SOCKWQ_ASYNC_NOSPACE from
+lowcomms_write_space(), for the same reason.
 
-Fixes: 68ce8b242242 ("drm/amdgpu: add gang submit backend v2")
-Fixes: f7d66fb2ea43 ("drm/amdgpu: cleanup scheduler job initialization v2")
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit df4d6d404d44bbc8fc850bc7f9f136a25dabf180)
+SCTP connections are deliberately left as they are.  SCTP does not set
+SOCK_NOSPACE, and it never calls sk->sk_write_space(): sctp_wfree() ends
+up in sctp_wake_up_waiters(), which calls sctp_write_space() directly.
+lowcomms_write_space() is thus never invoked for an SCTP connection, and
+the test added here stays false, so send_to_sock() keeps returning
+DLM_IO_RESCHED as it does today.  This is the only safe behavior, as
+returning DLM_IO_END would wait for a callback that never comes.
+
+Fixes: ceb5d58b2170 ("net: fix sock_wake_async() rcu protection")
 Cc: stable@vger.kernel.org
-[ sashal: Adapted job cleanup to use sync and sched_sync while preserving the embedded hardware fence’s ownership model. ]
+Cc: David Teigland <teigland@redhat.com>
+Acked-by: Alexander Aring <aahringo@redhat.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20260929071743.23624-2-edumazet@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: adapted context to the older kernel_sendpage() loop with its existing ret == -EAGAIN guard ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_job.c | 20 +++++---------------
- 1 file changed, 5 insertions(+), 15 deletions(-)
+ fs/dlm/lowcomms.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-index d321db549a1e0..00e632e45f656 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-@@ -179,18 +179,7 @@ void amdgpu_job_free_resources(struct amdgpu_job *job)
+diff --git a/fs/dlm/lowcomms.c b/fs/dlm/lowcomms.c
+index 4ad492d035dd1..6260c8ed179fd 100644
+--- a/fs/dlm/lowcomms.c
++++ b/fs/dlm/lowcomms.c
+@@ -521,10 +521,8 @@ static void lowcomms_write_space(struct sock *sk)
  
- static void amdgpu_job_free_cb(struct drm_sched_job *s_job)
- {
--	struct amdgpu_job *job = to_amdgpu_job(s_job);
--
--	drm_sched_job_cleanup(s_job);
--
--	amdgpu_sync_free(&job->sync);
--	amdgpu_sync_free(&job->sched_sync);
--
--	/* only put the hw fence if has embedded fence */
--	if (!job->hw_fence.ops)
--		kfree(job);
--	else
--		dma_fence_put(&job->hw_fence);
-+	amdgpu_job_free(to_amdgpu_job(s_job));
+ 	clear_bit(SOCK_NOSPACE, &con->sock->flags);
+ 
+-	if (test_and_clear_bit(CF_APP_LIMITED, &con->flags)) {
++	if (test_and_clear_bit(CF_APP_LIMITED, &con->flags))
+ 		con->sock->sk->sk_write_pending--;
+-		clear_bit(SOCKWQ_ASYNC_NOSPACE, &con->sock->flags);
+-	}
+ 
+ 	queue_work(send_workqueue, &con->swork);
  }
- 
- void amdgpu_job_set_gang_leader(struct amdgpu_job *job,
-@@ -211,14 +200,15 @@ void amdgpu_job_set_gang_leader(struct amdgpu_job *job,
- 
- void amdgpu_job_free(struct amdgpu_job *job)
- {
--	if (job->base.entity)
-+	if (job->gang_submit != &job->base.s_fence->scheduled)
-+		dma_fence_put(job->gang_submit);
-+
-+	if (job->base.s_fence)
- 		drm_sched_job_cleanup(&job->base);
- 
- 	amdgpu_job_free_resources(job);
- 	amdgpu_sync_free(&job->sync);
- 	amdgpu_sync_free(&job->sched_sync);
--	if (job->gang_submit != &job->base.s_fence->scheduled)
--		dma_fence_put(job->gang_submit);
- 
- 	if (!job->hw_fence.ops)
- 		kfree(job);
+@@ -1330,7 +1328,7 @@ static void send_to_sock(struct connection *con)
+ 		trace_dlm_send(con->nodeid, ret);
+ 		if (ret == -EAGAIN || ret == 0) {
+ 			if (ret == -EAGAIN &&
+-			    test_bit(SOCKWQ_ASYNC_NOSPACE, &con->sock->flags) &&
++			    test_bit(SOCK_NOSPACE, &con->sock->flags) &&
+ 			    !test_and_set_bit(CF_APP_LIMITED, &con->flags)) {
+ 				/* Notify TCP that we're limited by the
+ 				 * application window size.
 -- 
 2.53.0
 
