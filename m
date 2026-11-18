@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034722;
-	b=phrArIBpdcTgJ/8oKdm82R9/U0Ip8dvLBwQmR7PjClAYRxusZ9hyIEwm5+zOl4GizbL4
-	 YhBbz3S29NS+W/L66RH/FOVtpof/BxoIKC2YeKfh31UvO7WxIm9TqaDOtW2StHst7ZQWR
-	 SkewVfJbB7cSgbW2B0Q2+of/wmWv6tMaYMUeEm6PJ4joBwlVc6GFWO6utqmveeNPMfeHw
-	 PtOxbaDIzIwkyOpVILyRM4LL1CWb7PfBvXWxwv9CU7WEBkiJrg/XY0QpLj/U6SGZFvgPj
-	 GyXFrUGlJylZK45RHm8TSNDutnGaIpygGpMx+ILkibGtBfQkZbR+JarLsWkDcXPGn9Q==
+	t=1795034725;
+	b=R28V5KxSSt1uc3khbHf95hBJkeiH9fD9heu1Uh/hM/wMk7VDXAA5RBPUISikTqV1gOkv
+	 4E9LAvcLIqCNgCIjb5vO7ThB3vMVc8cvvozyfynHjR7xPV2QZtpDtbvjDDvKeHoR3ImwH
+	 a5pDRxIHeuUWZw/DAX1dgnstL68DbUW/E16PsjCjjL1WdlXc7I7Da6cpkGOtfcQ6P51AL
+	 Ehze4pbnC4GkxA0SsnHyk5tQk6Qz+BhxVGmI1sRgKl5C/AeUDlzUCKlhCIxVROXEEo6z8
+	 +q2t9skkOM5yZA+hO4Vl7P9n5uaSr64LkUhaTj1OTNfz5VJAv4YspGA1RJFegF7VkkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034722;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034725;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=G9COZYt+8p7wUfOaMfnj10WInUYt2RydzZVrNgEt0fQ=;
-	b=is5UB0ZfTgvbXiEftbpXYRPrGJgGVqzPO1xMfvZPnFjKIllGKoK4L4qsWbVtz7TRDStP
-	 0+jC/UagDe3/jVzK40L9WRf4N3RwULNbTG4jQLpQjDswMfzy3u4qIpxyUS+dyOoXXwBue
-	 M3sRYXPP+vYhAnjn1HLBiEn9KWGoe4M9CdruCkJONRlezEH3dcRMruMiMujT6HqEMGVIE
-	 zS2+foF/b52nSu1tHFF2R9HsnSqY2nVC+iYlfObmMYwvoZP8D68SV/GC9PYQKOqmBDbUJ
-	 azDPSMfCy9GE3emygX17ss/3l6FmE6gjPL8whaZWSohVWkCQd1bSuQ3Oqn2DPlp0kbw==
+	bh=GDM36imokqSrUtAKMTmGv1cFoZqZSlozoTf4oAdC5So=;
+	b=XXlE8owrxxh/WSfmIxLu8bHZzhOjn/H4G8uAGxXvL1+1oRhYgQDvh7i8sVeBxiDzs7XI
+	 4DweuOPk2YVr2HFH3RuVUfkKZTZND1GNMm9gK3asPsB+bY/+lwR1kfZg29ZH7tWkicUc3
+	 SVrbfsVWV2cFczmlG3qeZ5/bD/S5Vktl/R7+iqo+t2tiKkGicSKBtUvLKqRRLwow6aaa4
+	 6IhELspFiXCWPCdXXsBVZAigL/ECn+dvKuNy4BFBdvju7yeqLOcVCGkp3VwqVauv2ys8d
+	 yNAmTlIiNPcx8yL+R17HF87V4j9Dm1CBMAg/CuT6jK2OyNFHK8b1SZM3eeO1TBlAddw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="H/eL4hap";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=029DkBE4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7477A606A32F;
-	Wed, 18 Nov 2026 20:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF7D606A32A;
+	Wed, 18 Nov 2026 20:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H/eL4hap
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B9ED1F000C4;
-	Wed, 18 Nov 2026 20:45:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=029DkBE4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C7EF1F000C4;
+	Wed, 18 Nov 2026 20:45:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034722;
-	bh=G9COZYt+8p7wUfOaMfnj10WInUYt2RydzZVrNgEt0fQ=;
+	s=korg; t=1795034725;
+	bh=GDM36imokqSrUtAKMTmGv1cFoZqZSlozoTf4oAdC5So=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H/eL4hapcYww4IDow8wq7hFBfTLvKc+/539zmKwmhXQbbYBaG9nGcTHlBcXM4MdUx
-	 iS2jicayT0qbWpBZ7cBLJvQSq9J+RQYjG1PGFVEq42PrGPyRc+Al4baGc2VJ41s8Qw
-	 xqgNQDcrRmOAV6VN9iTbFytru9MAx1m0v+cBsvdc=
+	b=029DkBE48qEaKYW5jXtUJ5SUcxguMIKcV4TM97FWxNBRsBBd78LI+rCIz6MtroUDd
+	 FIhmGBdkMsVgAZYud+t/7cdD5okpcStgLD/duN6YmbwkwDP03aWKCHcWzE0vtr0dJQ
+	 G7OH2jaa9fgwdcyOyYcEBHWrEZribOzxaOXhEPJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0469/3318] arm64: Use load LSE atomics for the non-return per-CPU atomic operations
-Date: Wed, 18 Nov 2026 15:18:11 +0100
-Message-ID: <20261118150330.949177773@linuxfoundation.org>
+Subject: [PATCH 6.6 0434/3318] i2c: qcom-cci: Remove overcautious disable_irq() calls
+Date: Wed, 18 Nov 2026 15:17:36 +0100
+Message-ID: <20261118150329.675816178@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,73 +70,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Catalin Marinas <catalin.marinas@arm.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-[ Upstream commit 535fdfc5a228524552ee8810c9175e877e127c27 ]
+[ Upstream commit f0285c286bca5a1e018ba25040cef6c7806c31ef ]
 
-The non-return per-CPU this_cpu_*() atomic operations are implemented as
-STADD/STCLR/STSET when FEAT_LSE is available. On many microarchitecture
-implementations, these instructions tend to be executed "far" in the
-interconnect or memory subsystem (unless the data is already in the L1
-cache). This is in general more efficient when there is contention as it
-avoids bouncing cache lines between CPUs. The load atomics (e.g. LDADD
-without XZR as destination), OTOH, tend to be executed "near" with the
-data loaded into the L1 cache.
+In cci_probe() the controller's interrupt is requested using a devres
+managed API, and in cci_probe() error path and cci_remove() it'd be
+safe to rely on devres mechanism to free and shutdown the interrupt,
+thus explicit disable_irq() calls can be removed as unnecessary ones.
 
-STADD executed back to back as in srcu_read_{lock,unlock}*() incur an
-additional overhead due to the default posting behaviour on several CPU
-implementations. Since the per-CPU atomics are unlikely to be used
-concurrently on the same memory location, encourage the hardware to to
-execute them "near" by issuing load atomics - LDADD/LDCLR/LDSET - with
-the destination register unused (but not XZR).
-
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-Link: https://lore.kernel.org/r/e7d539ed-ced0-4b96-8ecd-048a5b803b85@paulmck-laptop
-Reported-by: Paul E. McKenney <paulmck@kernel.org>
-Tested-by: Paul E. McKenney <paulmck@kernel.org>
-Cc: Will Deacon <will@kernel.org>
-Reviewed-by: Palmer Dabbelt <palmer@dabbelt.com>
-[will: Add comment and link to the discussion thread]
-Signed-off-by: Will Deacon <will@kernel.org>
-Stable-dep-of: 8cf2093f5372 ("arm64: percpu: Fix LSE operations on {8,16}-bit types")
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20260515234121.1607425-5-vladimir.zapolskiy@linaro.org
+Stable-dep-of: f98d49864821 ("i2c: qcom-cci: fix autosuspend cleanup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/percpu.h | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/i2c/busses/i2c-qcom-cci.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/arch/arm64/include/asm/percpu.h b/arch/arm64/include/asm/percpu.h
-index 939dbaa7c90cb..31193bcf89a2b 100644
---- a/arch/arm64/include/asm/percpu.h
-+++ b/arch/arm64/include/asm/percpu.h
-@@ -77,7 +77,7 @@ __percpu_##name##_case_##sz(void *ptr, unsigned long val)		\
- 	"	stxr" #sfx "\t%w[loop], %" #w "[tmp], %[ptr]\n"		\
- 	"	cbnz	%w[loop], 1b",					\
- 	/* LSE atomics */						\
--		#op_lse "\t%" #w "[val], %[ptr]\n"			\
-+		#op_lse "\t%" #w "[val], %" #w "[tmp], %[ptr]\n"	\
- 		__nops(3))						\
- 	: [loop] "=&r" (loop), [tmp] "=&r" (tmp),			\
- 	  [ptr] "+Q"(*(u##sz *)ptr)					\
-@@ -124,9 +124,16 @@ PERCPU_RW_OPS(8)
- PERCPU_RW_OPS(16)
- PERCPU_RW_OPS(32)
- PERCPU_RW_OPS(64)
--PERCPU_OP(add, add, stadd)
--PERCPU_OP(andnot, bic, stclr)
--PERCPU_OP(or, orr, stset)
-+
-+/*
-+ * Use value-returning atomics for CPU-local ops as they are more likely
-+ * to execute "near" to the CPU (e.g. in L1$).
-+ *
-+ * https://lore.kernel.org/r/e7d539ed-ced0-4b96-8ecd-048a5b803b85@paulmck-laptop
-+ */
-+PERCPU_OP(add, add, ldadd)
-+PERCPU_OP(andnot, bic, ldclr)
-+PERCPU_OP(or, orr, ldset)
- PERCPU_RET_OP(add, add, ldadd)
+diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
+index e5dacc6677b01..cd2fe0cb77bdd 100644
+--- a/drivers/i2c/busses/i2c-qcom-cci.c
++++ b/drivers/i2c/busses/i2c-qcom-cci.c
+@@ -630,7 +630,7 @@ static int cci_probe(struct platform_device *pdev)
  
- #undef PERCPU_RW_OPS
+ 	ret = cci_reset(cci);
+ 	if (ret < 0)
+-		goto error;
++		goto disable_clocks;
+ 
+ 	cci_init(cci);
+ 
+@@ -662,8 +662,6 @@ static int cci_probe(struct platform_device *pdev)
+ 			of_node_put(cci->master[i].adap.dev.of_node);
+ 		}
+ 	}
+-error:
+-	disable_irq(cci->irq);
+ disable_clocks:
+ 	cci_disable_clocks(cci);
+ 
+@@ -683,7 +681,6 @@ static void cci_remove(struct platform_device *pdev)
+ 		}
+ 	}
+ 
+-	disable_irq(cci->irq);
+ 	pm_runtime_disable(&pdev->dev);
+ 	pm_runtime_set_suspended(&pdev->dev);
+ }
 -- 
 2.53.0
 
