@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059813;
-	b=J9xDBGRzrayr23VUDIh6GgDhj0L4HT6CybrTKok2Cx0vq6EuXDEKcl2gpPJkR47Hmoq8
-	 CpxDnTIvlHhy68IbMIU0eMCgbtfWvKVDf/W2mpTRIw3ACW+Qa46oXVe3erwOdGxIvN5UQ
-	 CIBos7A7Swk/flfVnmmwfJq30KPFFaVSoSuvPffcLmQd/AB4KGFrYVHoL0fVpn+RnJcz2
-	 vvpxkkwmEApzEZR2bW1c2MRtZmoVLjPlGrM6TrhUb8q58UowHML57isjs/inb4m7rusVr
-	 T7HT8C7YurBi75gSU3vtVJXfhrWW3YNyofEJwGTf0b/rEBJTbSCDA595p471ZxAKNWA==
+	t=1795059816;
+	b=B/m9HHSl2JQr2z9jRWxXUEHpaWFGTp/p3XTHtLmnIYNfjmHcloHHLIz5Qy2U2qRBmtSp
+	 Mn+BqLe6xmqhM0e6I3YKLnh9vbY2i84/dnfyCtQgzP3aD4FDtdD/et50fSSLBAGxFacu7
+	 mXALsAVnO66ds+SWpPviKIR0z3VzjwKhcT4L0WS346CHAA/GIDYS3VrIU5/1fYECteMPn
+	 5VrLw3Al2E0l5r9lFlg4onA0j0PyCE6vjsj4Tx+4dIirbHlkp/q4pRVF2HDCTeXCOraiv
+	 TS5LVdvoAjj1sSnq5Ds9njbh/eBpFUDifCJmtu3Yfg99jNnniO58WIyAkswIFygRLdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059813;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059816;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=npKo2qNfmRU/LjWt/tvplKWiXIfCf4VBls52ltXXAOE=;
-	b=apdnsih3PUtDPTpfm24NvM/ddmIVK2i3J2oUo4EMb5RlUOUw1OER/IhPvyD86jKK+8br
-	 MleNc/es9x5h2nmOpzDTEf4qMnSznoX6CUYasMOGp1Hw2euks6SeOes+oWn2iV3t1TMpI
-	 H+SAjNz//Bm8fv22gW2VUEut6GhqSpnt2UGnlP+pW3jFjvLF0be87PPrjJJmn7mpWkIVj
-	 bhP7REfeZ6GfjisqzF9ZlTt275sbm50eEl6hFldWQYSvdu3xsCqCj9sBSn2z8/0GIGT+M
-	 1UERd61aLEM6B1kb2V9LXBCSEqvTM32P9u2N4lV8uvovYVILpln/CLHTnBvJNyDHGbA==
+	bh=x0H/aXjtUJ76NYv3jyggJmT1S0Kc/yOFuRIcEPE15cY=;
+	b=QGfZzbXjb/hoTH5U8dt3k05VoQj78PIVpEGKQiwc+30LS8WN4KRnXqrLWt0hFbP1M99W
+	 H9GwpSj/D68Yel1AiSvGRfhTaavZX4OXt+4f+oL/frzPFfS1Ars0Q5vJ6Eq9/rXwwFOCt
+	 houKZwIHwSEL78VtMWGSc9fGNaDhcPCFUsehy5M7EcQvHZqSbHKlEemjGI3JWZMJsGTqW
+	 dLTU8/hH1i/VEkfc51eNKjfvvEYOGYSIX3sTTpf1duHwRx/BjO89amw5NkHtF/XVylL0J
+	 /ea+hvtuymRcRTFbqGtbD5utDnY82rfzIwwSpAMfZYeXW6DhKCYfCuBSy5oVYaT9N8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hip5zqoH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j4yaSK8Z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF506606A32A;
-	Thu, 19 Nov 2026 03:43:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 817C7606A320;
+	Thu, 19 Nov 2026 03:43:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hip5zqoH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF171F000C4;
-	Thu, 19 Nov 2026 03:43:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j4yaSK8Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B0A1F000C4;
+	Thu, 19 Nov 2026 03:43:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059813;
-	bh=npKo2qNfmRU/LjWt/tvplKWiXIfCf4VBls52ltXXAOE=;
+	s=korg; t=1795059816;
+	bh=x0H/aXjtUJ76NYv3jyggJmT1S0Kc/yOFuRIcEPE15cY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hip5zqoH801aGkcTnYDagKYyM6zwBD9cvNqCpgBPfSZaAw/nOt47SZjv9EN6engxg
-	 anHeT+lWyWpA8WYksSlLNmGMR4uMB6rEJpnsBKAx/tndK13unLUH13q/3BNiy3fBQo
-	 b/Bv5awtP9oSxlBxc4RBfYO7N8MPdtn0bYWdgqos=
+	b=j4yaSK8Zbep7S9MknnJy7smzgv6KXkS7eigvptBXSWVTEIxmde8pJqmsqMIoBuFRp
+	 g4E6WWWxhhICLAQenZcp6tOXOl4rJDv4dsNiKFT2uhPv9RVzRcHs3U/kbIvU/FWren
+	 FSMj4LhGuQnQtROqL3w7IG/8p1ADibLb5Lp/a2IM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eugen Hristev <ehristev@kernel.org>,
-	Balakrishnan Sambath <balakrishnan.s@microchip.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Georgia Garcia <georgia.garcia@canonical.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0935/1848] media: microchip-isc: do not touch WB registers when not streaming
-Date: Wed, 18 Nov 2026 15:49:33 +0100
-Message-ID: <20261118145955.950822662@linuxfoundation.org>
+Subject: [PATCH 5.10 0936/1848] apparmor: fix refcount leak in aa_get_newest_profile()
+Date: Wed, 18 Nov 2026 15:49:34 +0100
+Message-ID: <20261118145956.027641754@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,68 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit d8983c47d4d95eb1ed889dbb7516d3738fa854d8 ]
+[ Upstream commit 33ed50716251d5b2875706c40d0c8082d46be0b1 ]
 
-isc_s_awb_ctrl() called isc_update_awb_ctrls() unconditionally, writing
-the white balance registers even when the device is runtime suspended;
-on many ARM platforms accessing the unclocked registers is an external
-abort. The write was also done without awb_lock, racing isc_awb_work(),
-which holds it so the DMA done IRQ cannot latch a half-updated pipeline.
+The labels_profile() macro is evaluating its argument twice
 
-Write the registers only while streaming and not stopping, under
-awb_lock, and update the profile there. The isc->stop check covers the
-window where isc_stop_streaming() has gated the clocks but vb2 still
-reports streaming. Otherwise the new values stay cached and
-isc_configure() programs them at the next stream start.
+  #define labels_profile(X) ((X)->vec[(X)->size - 1])
 
-Fixes: 4e52889f48fe ("media: atmel: atmel-isc-base: expose white balance as v4l2 controls")
+unfortunately aa_get_newest_profile() passes
+   aa_get_newest_label(&p->label)
+so every call to aa_get_newest_profile results in 2 refcounts
+being taken with one being leaked.
+
+There is no need for labels_profile() to be a macro. Convert it to
+an inline fn, which ensures all uses are passing the correct struct
+and removes the double evaluation.
+
+Fixes: 637f688dc3dc ("apparmor: switch from profiles to using labels on contexts")
 Cc: stable@vger.kernel.org
-Reviewed-by: Eugen Hristev <ehristev@kernel.org>
-Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ sashal: adjusted isc_s_awb_ctrl() context to accommodate the missing awb_mutex operations ]
+Reported-by: Georgia Garcia <georgia.garcia@canonical.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
+[ sashal: adjusted context around labels_profile() for differences in surrounding macros and declarations ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/atmel/atmel-isc-base.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ security/apparmor/include/label.h | 6 +++++-
+ security/apparmor/label.c         | 1 -
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/atmel/atmel-isc-base.c b/drivers/media/platform/atmel/atmel-isc-base.c
-index 056876130b931..ec44a83a212e9 100644
---- a/drivers/media/platform/atmel/atmel-isc-base.c
-+++ b/drivers/media/platform/atmel/atmel-isc-base.c
-@@ -1944,19 +1944,23 @@ static int isc_s_awb_ctrl(struct v4l2_ctrl *ctrl)
- 		if (ctrl->cluster[ISC_CTRL_GB_OFF]->is_new)
- 			ctrls->offset[ISC_HIS_CFG_MODE_GB] = isc->gb_off_ctrl->val;
- 
--		isc_update_awb_ctrls(isc);
-+		if (vb2_is_streaming(&isc->vb2_vidq) && !isc->stop) {
-+			unsigned long flags;
- 
--		if (vb2_is_streaming(&isc->vb2_vidq)) {
- 			/*
--			 * If we are streaming, we can update profile to
--			 * have the new settings in place.
-+			 * awb_lock keeps the DMA done IRQ from latching a
-+			 * partially written WB pipeline.
- 			 */
-+			spin_lock_irqsave(&isc->awb_lock, flags);
-+			isc_update_awb_ctrls(isc);
-+			spin_unlock_irqrestore(&isc->awb_lock, flags);
+diff --git a/security/apparmor/include/label.h b/security/apparmor/include/label.h
+index a987bd117d88d..e7e0f3e0435fc 100644
+--- a/security/apparmor/include/label.h
++++ b/security/apparmor/include/label.h
+@@ -148,7 +148,11 @@ do {							\
+ #define __label_make_stale(X) ((X)->flags |= FLAG_STALE)
+ #define labels_ns(X) (vec_ns(&((X)->vec[0]), (X)->size))
+ #define labels_set(X) (&labels_ns(X)->labels)
+-#define labels_profile(X) ((X)->vec[(X)->size - 1])
 +
- 			isc_update_profile(isc);
- 		} else {
- 			/*
--			 * The auto cluster will activate automatically this
--			 * control. This has to be deactivated when not
--			 * streaming.
-+			 * Not streaming: keep the cached values for the next
-+			 * stream start and deactivate the cluster-activated
-+			 * do_white_balance button.
- 			 */
- 			v4l2_ctrl_activate(isc->do_wb_ctrl, false);
- 		}
++static inline struct aa_profile *labels_profile(const struct aa_label *label)
++{
++	return label->vec[label->size - 1];
++}
+ 
+ 
+ int aa_label_next_confined(struct aa_label *l, int i);
+diff --git a/security/apparmor/label.c b/security/apparmor/label.c
+index c675a11d8a551..f14802e2c2264 100644
+--- a/security/apparmor/label.c
++++ b/security/apparmor/label.c
+@@ -377,7 +377,6 @@ void aa_label_kref(struct kref *kref)
+ 		label_free_switch(label);
+ 		return;
+ 	}
+-	/* TODO: update labels_profile macro so it works here */
+ 	AA_BUG(label_isprofile(label) &&
+ 	       on_list_rcu(&label->vec[0]->base.profiles));
+ 	AA_BUG(label_isprofile(label) &&
 -- 
 2.53.0
 
