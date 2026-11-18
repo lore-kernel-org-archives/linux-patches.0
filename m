@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026922;
-	b=oasWtYdEzcwA6Wa83VZTATicgduPLxexUlh3B6IXrjesGIFpiXcqmsqtCCN3KnnEZ7Pn
-	 TuGTRNekHR06cXRAI7aha/6dKpH/SUghouGlhEqoUmfNR9C3lpsO19CylBew+PwDuPr2k
-	 FNnHwuvtz+dRuDJZ1YSilegWCoFAtznCFWQ6oaNhVEExAfsaNgk88av9TcQKz8JLVRwOh
-	 AO9KjdhNVk2mwUUT+Nn/ePEpIY9+EYYo8KS5+O/TvZnsIz//zlgwxlEWvwEGA7cjO283T
-	 BJX94Dejb5+zuCu3RQ5KkSonehTnRL046BrjiiIwTw8+DtnFSM6fhrUpbciwGQ0b7zw==
+	t=1795026925;
+	b=pmvHZoTuzZOTH1PFEmllsXQhXDNP7TtFYJQeilS2JMuicI5fzZfb1QVFSEl1RP2wSQDt
+	 1pcbt426mqjULRXjD290DDGIz6tVyvpgrhYH2NbaylgCHP8kflqRDFwyyVY288l9BuoIk
+	 1Z/46BmQXwEoy30SYMwi1CzP7v5J2TffFXLg72b6ZvYOF7NeTglb1OZzPAnfT+M8Gf/ZY
+	 syQI9h9lhIlNSryV6Tnh7DQn9mSd1OWwEhz6KQzBpl+EKvlFfL8qA3nJCFmy66ULMFyET
+	 EolpGBQzGuuxQOxIitdTAfTToTyzXR9wRmLFWdrgshAzSq1QU4GQxm0IelgKMIaKvFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026922;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026925;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=NTE3yKkTPhfE+B19d6dMD+jnQ9mN50Dp10NfMHDcBjY=;
-	b=N34adBF4U6hVs9VvqYFHDgs+ilE+TC9ru3JV9EO2YqpDbMck5CV3ZHRpzB4gJmiAQwdj
-	 Xt1t3h4ZeIrWuZ1CMLL0efbOllLeYfSVD6tx1YbFx0dd3hwC1zsGz72q85oVJ7f5fJYFz
-	 7PfUEjq1YO25FZuZIq8Fs/+rFBo30PzpzQHaj4X+2ahdKclcR77d0bHk9NwNDa1skNsDF
-	 mJwyq6gTswjByKW+Lq7AOxVkgkpabsGhrGjk7kbbnbtCxIF5uHWxbcyM5G4KnH6G+jIWT
-	 I3nYDjbPGzksnMS0Pww3jDEMMh0ILUYQfY8rgqb+Pr1UIhp3zCiF8Ybd7yp9vDvGTDg==
+	bh=2Pdt2dnEyyIK+cYv8YKii9LA6TkxN+37+8YhlnDtBvs=;
+	b=YR/+LO5gtm2XMpP5Qf9scW4GhXwGmnYoDYK11r+OfSXVm8tr6UcCUQ081EWqFTlDHcK/
+	 o77y1IN6S3EdUoqck0/2yg5YDMPSaRE6+HlH8S2+sghR9v36IlvY39meKuSghEoLlTARL
+	 9Nt+H5ZZXiR2AMq4RObngs8xiYFLPNq4ZnimRjK7SZhpZBl9Tjpg8UqoWZHVo1usrASvu
+	 AE+6fSU3y51Hu3K8UkPgp2uvxOjhS7374XA8o5DJbslwvWQk73zYsCcqn6z6LFesUT6oG
+	 ZPrua1pxVmkXJ7YDvKc6wN5CHAeLKx3ZZ+ll8GpjlzKGh6dYC6P9U0V2WtMQCzuSnCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gfiproSe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uOhA7NjM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E879606A31C;
-	Wed, 18 Nov 2026 18:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F138D606A331;
+	Wed, 18 Nov 2026 18:35:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gfiproSe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D0F81F000C4;
-	Wed, 18 Nov 2026 18:35:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uOhA7NjM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C6161F000C4;
+	Wed, 18 Nov 2026 18:35:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026922;
-	bh=NTE3yKkTPhfE+B19d6dMD+jnQ9mN50Dp10NfMHDcBjY=;
+	s=korg; t=1795026924;
+	bh=2Pdt2dnEyyIK+cYv8YKii9LA6TkxN+37+8YhlnDtBvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gfiproSeiXezvjLGi2VCyEXVTPAKZKLN//HZxJrDRcvLvC75S4RVC1PGm8xls0W+c
-	 tCDnL+z+qm4gELx2PS9LuqSjgZS7SIxwwWoDBoLZouZ5l2EbxttA1aGtxtKLT/F6oq
-	 sGNiR5zYKS6qq0wSD8WAOaVbCG1a0nx9ZOwiluto=
+	b=uOhA7NjMk2ycgGVXvM9j7VsyYpCdB/CEGFlT3pMHfkY9fxkl161J+oPB5AUk36bdw
+	 TkiULX9uB5iHo6RETNTxcPutLlWUnoMsy6r9Ju0ALcDT/2m8+fNHSr64jvqGe1AuGG
+	 iMpMz9N7W73Xe7LoFeoTyxgBDRPBjpySnFNjr7LU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Laight <david.laight.linux@gmail.com>,
 	Zhan Xusheng <zhanxusheng@xiaomi.com>,
 	Thomas Gleixner <tglx@kernel.org>,
 	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1608/2151] vdso/math64: Add and use __iter_div64_u64_rem()
-Date: Wed, 18 Nov 2026 15:55:43 +0100
-Message-ID: <20261118150220.445504991@linuxfoundation.org>
+Subject: [PATCH 6.18 1609/2151] vdso/vsyscall: Keep the CLOCK_AUX base scaled
+Date: Wed, 18 Nov 2026 15:55:44 +0100
+Message-ID: <20261118150220.484490829@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -73,115 +72,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhan Xusheng <zhanxusheng1024@gmail.com>
 
-[ Upstream commit dcd65074e2c593a06bed36178bba6d49d6b6883c ]
+[ Upstream commit 8d17190fae2caab89cd5df19257ed9dac0739e3b ]
 
-The vDSO basetimes for CLOCK_MONOTONIC and CLOCK_BOOTTIME are stored in
-the scaled nanoseconds of tkr_mono, so normalising them requires a
-division by NSEC_PER_SEC << shift.  That divisor does not fit the u32
-parameter of __iter_div_u64_rem(), so update_vdso_time_data() open-codes
-the same iterative division twice.
+The vDSO basetime of a clock is stored in the scaled nanoseconds of
+tkr_mono, so that the reader can floor the base and the cycle delta
+together in vdso_calc_ns().
 
-Repeated subtraction is the appropriate form at these two sites because
-the quotient never exceeds one.  accumulate_nsecs_to_secs() keeps
-xtime_nsec below one scaled second, and the offset added to it is a
-normalised timespec64 fraction, so the dividend stays below twice the
-divisor.  That bound holds on every architecture, which matters more here
-than the cost of a division on any particular one.
+vdso_time_update_aux() instead shifts the base down to nanoseconds, adds
+the offset, and shifts it back up, which zeroes the fractional nanoseconds
+of xtime_nsec.  The reader then floors the base and the delta separately:
 
-Add __iter_div64_u64_rem(), the u64-divisor counterpart of
-__iter_div_u64_rem(), and use it at both sites.  Return the quotient as a
-u32 for consistency with the u32-divisor variant; the bound above leaves
-no use for a wider type.
+  ktime_get_aux():  base + ((delta * mult + xtime_nsec) >> shift)
+  vdso:             base + (xtime_nsec >> shift)
+                         + ((delta * mult) >> shift)
 
-Store the remainder directly into the basetime, as the coarse clocks
-already do.  The CLOCK_BOOTTIME copy of the CLOCK_MONOTONIC values then
-takes both fields from the same place.
+Since floor(a) + floor(b) <= floor(a + b), the vDSO reports 0 or 1 ns
+below the syscall for the same clock.  It is not a monotonicity problem:
+across an update the step is floor(a + d) - floor(a) - floor(d), which is
+0 or 1, never negative.
 
-Folding the two open-coded loops into one inlined helper removes 16 bytes
-of vsyscall.o text on x86-64 with gcc 13.
+Add the offset in scaled nanoseconds as the other high resolution clocks
+do, and normalise with __iter_div64_u64_rem() so that the stored base
+stays below one second and the userspace fast-path does not iterate more
+in __iter_div_u64_rem().
 
-No functional change.
+Only the sub-second field changes.  (a + (b << shift)) >> shift is exactly
+(a >> shift) + b, so the seconds carried out of the normalisation are the
+same as before; what the old form dropped was the low shift bits of the
+remainder.
 
-Suggested-by: David Laight <david.laight.linux@gmail.com>
+monotonic_to_aux.tv_nsec is a normalised timespec64 fraction, so it stays
+below NSEC_PER_SEC even for a negative offset, and the sum stays below
+2 * (NSEC_PER_SEC << shift).  The largest shift clocks_calc_mult_shift()
+can pick is 32, which makes that 8.6e18 against a u64 limit of 1.8e19.
+
+Fixes: 380b84e168e5 ("vdso/vsyscall: Update auxiliary clock data in the datapage")
 Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Reviewed-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Link: https://patch.msgid.link/20261002153104.1347978-3-zhanxusheng@xiaomi.com
-Stable-dep-of: 8d17190fae2c ("vdso/vsyscall: Keep the CLOCK_AUX base scaled")
+Link: https://patch.msgid.link/20261002153104.1347978-4-zhanxusheng@xiaomi.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/vdso/math64.h  | 20 ++++++++++++++++++++
- kernel/time/vsyscall.c | 16 +++++-----------
- 2 files changed, 25 insertions(+), 11 deletions(-)
+ kernel/time/vsyscall.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/include/vdso/math64.h b/include/vdso/math64.h
-index 22ae212f8b28f..2ef4905585c59 100644
---- a/include/vdso/math64.h
-+++ b/include/vdso/math64.h
-@@ -21,6 +21,26 @@ __iter_div_u64_rem(u64 dividend, u32 divisor, u64 *remainder)
- 	return ret;
- }
- 
-+static __always_inline u32 __iter_div64_u64_rem(u64 dividend, u64 divisor, u64 *remainder)
-+{
-+	u32 ret = 0;
-+
-+	while (dividend >= divisor) {
-+		/*
-+		 * Prevent the compiler from optimising this loop into a
-+		 * modulo operation.
-+		 */
-+		OPTIMIZER_HIDE_VAR(dividend);
-+
-+		dividend -= divisor;
-+		ret++;
-+	}
-+
-+	*remainder = dividend;
-+
-+	return ret;
-+}
-+
- #if defined(CONFIG_ARCH_SUPPORTS_INT128) && defined(__SIZEOF_INT128__)
- 
- #ifndef mul_u64_u32_add_u64_shr
 diff --git a/kernel/time/vsyscall.c b/kernel/time/vsyscall.c
-index aa59919b8f2c2..f43dd3f4744b5 100644
+index f43dd3f4744b5..0e4b499328c08 100644
 --- a/kernel/time/vsyscall.c
 +++ b/kernel/time/vsyscall.c
-@@ -41,14 +41,12 @@ static inline void update_vdso_time_data(struct vdso_time_data *vdata, struct ti
+@@ -155,11 +155,11 @@ void vdso_time_update_aux(struct timekeeper *tk)
  
- 	nsec = tk->tkr_mono.xtime_nsec;
- 	nsec += ((u64)tk->wall_to_monotonic.tv_nsec << tk->tkr_mono.shift);
--	while (nsec >= (((u64)NSEC_PER_SEC) << tk->tkr_mono.shift)) {
--		nsec -= (((u64)NSEC_PER_SEC) << tk->tkr_mono.shift);
--		vdso_ts->sec++;
--	}
--	vdso_ts->nsec	= nsec;
-+	vdso_ts->sec	+= __iter_div64_u64_rem(nsec, (u64)NSEC_PER_SEC << tk->tkr_mono.shift,
-+						&vdso_ts->nsec);
+ 		vdso_ts->sec = tk->xtime_sec + tk->monotonic_to_aux.tv_sec;
  
- 	/* Copy MONOTONIC time for BOOTTIME */
- 	sec	= vdso_ts->sec;
-+	nsec	= vdso_ts->nsec;
- 	/* Add the boot offset */
- 	sec	+= tk->monotonic_to_boot.tv_sec;
- 	nsec	+= (u64)tk->monotonic_to_boot.tv_nsec << tk->tkr_mono.shift;
-@@ -56,12 +54,8 @@ static inline void update_vdso_time_data(struct vdso_time_data *vdata, struct ti
- 	/* CLOCK_BOOTTIME */
- 	vdso_ts		= &vc[CS_HRES_COARSE].basetime[CLOCK_BOOTTIME];
- 	vdso_ts->sec	= sec;
--
--	while (nsec >= (((u64)NSEC_PER_SEC) << tk->tkr_mono.shift)) {
--		nsec -= (((u64)NSEC_PER_SEC) << tk->tkr_mono.shift);
--		vdso_ts->sec++;
--	}
--	vdso_ts->nsec	= nsec;
-+	vdso_ts->sec	+= __iter_div64_u64_rem(nsec, (u64)NSEC_PER_SEC << tk->tkr_mono.shift,
-+						&vdso_ts->nsec);
+-		nsec = tk->tkr_mono.xtime_nsec >> tk->tkr_mono.shift;
+-		nsec += tk->monotonic_to_aux.tv_nsec;
+-		vdso_ts->sec += __iter_div_u64_rem(nsec, NSEC_PER_SEC, &nsec);
+-		nsec = nsec << tk->tkr_mono.shift;
+-		vdso_ts->nsec = nsec;
++		nsec = tk->tkr_mono.xtime_nsec;
++		nsec += (u64)tk->monotonic_to_aux.tv_nsec << tk->tkr_mono.shift;
++		vdso_ts->sec += __iter_div64_u64_rem(nsec,
++						     (u64)NSEC_PER_SEC << tk->tkr_mono.shift,
++						     &vdso_ts->nsec);
+ 	}
  
- 	/* CLOCK_MONOTONIC_RAW */
- 	vdso_ts		= &vc[CS_RAW].basetime[CLOCK_MONOTONIC_RAW];
+ 	__arch_update_vdso_clock(vc);
 -- 
 2.53.0
 
