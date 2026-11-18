@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024833;
-	b=gEiLR4BFnK6vSONnB/v/2LeX+VqX1GxkfjQaN5vRK2BGXqemaEtkOdjPsuUpZg3XbRyK
-	 BI7CPwcjpSBqnQZqvH/5W6Mnm0iDd3pHrFVq0C5Ca+A26GNLouN2cL/ems4cWha0NezHG
-	 7lS2eFW0aQGVyoJRBJeaTKWNC8PH548kRI9/XIpjpva8H3vtAJ70ovSaY5qGKLvPDJToc
-	 24ILlh4Am21HK2kcz8PgiPvI6jRSbL93OjxcTDtgef0IKgR2KfLLqaaEkjwdjTZSvbZeg
-	 vlev0AfLPw0lEycbcEniXeHYwn9UmXTiiJm1hdDQq/86nCxjdAC9isktRXs5EFH0lKw==
+	t=1795024836;
+	b=UiUnThbTY/DWseA7/XVZOs3X/YwPLd8nZCF63cwj+M/HaYmbmgBe2UHoEm9N/T5zMNrL
+	 JnUU1ebBfbKKpCKAbvf5yZeUebOra8eZv91o/l7VL/RzyNuSVhUdvxnUGnq7qB5CV2Ele
+	 fSrM2fXdBSPuCmPir1hsbUNBK8q2oBE1+MNvWHh379Ss1u2CvDPpwCuy7JNdhdGn3bTgP
+	 S0DtZQOgab2s9tB/Tb4T/OXR5iMglpx0g1jQotGE+dfP3KE8gH/6GoAVZTTL9b+fvbYIq
+	 XZstvOKNmzADH8wyLJkKFcP4OCj39nbvBjH+rE1OTep0S1n0UAOnheOgrGURh8rnRUw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024833;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024836;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iCjZ190UQ0djTDOxP4TLSmTEnrROxdA2M7XKeSEaBJo=;
-	b=31UVBD7UtzNVJs2vhJH1zbNkROqafzFXqJDa/gLz63AN9f1AU/cQ6iKJB5R9qyjFhYde
-	 O3YPkmAQz6wcBTNfeX/SOXml9e8634CVgaFOy7nyNPm61DK4OBNZhEnNL3yVLd0g9hdpF
-	 V74tCd5B3+7whurwIDIxEiM6MBFrahhuMqEPm/QCgRw6ZnUoyEt0VvMxkBKq14jQC9s1E
-	 iXl+9hmEUzYhAHFYdmSdI/80cNWI3qm2d6aRuHx6KXwG3uD6A5tVC0S72d77u+wj2BV07
-	 bZrFuPmIIl6NmCHc2dBkkpjrktPGAXUpGR/raKUo6Hk8MMQkHdaXq8Yr/f9T7lqqivQ==
+	bh=lBNZoj/Nb4585t5pqodZu2HHUwiqM9dRBILB5ze4BFE=;
+	b=a7iLuK8t5fwj7P0507Qch5yrQz6Ar/56/n5NXosmk9+53xbNTBq4G4ewjhYIJDRFzjGP
+	 qkUMUYO1nOVqZrbeD2e8tnM6OLRiXCeu7W3eKZfruVCEk/5pXjM+1YxQeszDgtY4M3ugt
+	 IR0XcT7oz9LKbKGcLebt9LxV3Cje2JiAzIcn9Vw4X4oSHIHPpWl5gjb9FUXXsGvYreB9s
+	 C6IMx0/B86AN+cTN9/oQ+MsaMkdXkzgSLn6stxQnJtt+WIkwQe0I+kVpTwWoFhF9oA3ak
+	 G13T6JZhxgy90EB9Qxpht/cOA0Vxoe5WsPNHEYu0XO48YLEXwenchg002qQcjJL8XNA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hA1EqvYL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iKI+KDHN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15F9606A31C;
-	Wed, 18 Nov 2026 18:00:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7335606A31C;
+	Wed, 18 Nov 2026 18:00:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hA1EqvYL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D03A1F000C4;
-	Wed, 18 Nov 2026 18:00:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iKI+KDHN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06D381F000C6;
+	Wed, 18 Nov 2026 18:00:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024833;
-	bh=iCjZ190UQ0djTDOxP4TLSmTEnrROxdA2M7XKeSEaBJo=;
+	s=korg; t=1795024836;
+	bh=lBNZoj/Nb4585t5pqodZu2HHUwiqM9dRBILB5ze4BFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hA1EqvYLuSwxD430f3MXM8thT2SPWnojcZlt3dhEunpyguil6yY9k6SmNkbzp+mYm
-	 z3kKxhncaHY6n6/Cjy7AT6rHXD5baLw+/5ozB+bfukfBGybVAjBpEpUktCLj/O/Kt7
-	 kNWopXyinz6SjEbb4vw2HmHIRHNRXQa33MN+5d8Y=
+	b=iKI+KDHNhYLcWLkDzObncwe0Hy9cghzwWfT8bdSQ/UBGRYftCK7usabKfU7cF0h2J
+	 whk2Idwn78wEanSgXJmEAdCLwW7ulCPeMkAyUPEHjeLvNAhW8wj9RfjxOXxOB8NKs7
+	 3+/Sbb4rRmQ+Y8wjOmNR37RUsF8snNX3lGIF/r1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Hungyu Lin <dennylin0707@gmail.com>,
+	Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Bryan ODonoghue <bod@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0863/2151] media: venus: Drop session events without an instance
-Date: Wed, 18 Nov 2026 15:43:18 +0100
-Message-ID: <20261118150153.657769515@linuxfoundation.org>
+Subject: [PATCH 6.18 0864/2151] media: iris: cancel sys error work on driver removal
+Date: Wed, 18 Nov 2026 15:43:19 +0100
+Message-ID: <20261118150153.691578727@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,49 +70,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-[ Upstream commit 8921f6da06fd869b6f1aa8d02e40a4e2e2a45fe4 ]
+[ Upstream commit 4524809316482b64ff092afb7e7b0525ce137c75 ]
 
-hfi_process_msg_packet() intentionally allows HFI_MSG_EVENT_NOTIFY
-packets without a matching session instance because HFI_EVENT_SYS_ERROR
-is a system event and has no session attached.
+Cancel sys_error_handler before tearing down the driver.
 
-That exception currently applies to every event-notify packet. If the
-firmware reports a late or otherwise invalid session event after
-to_instance() fails, hfi_event_notify() can dispatch it to session-only
-handlers such as event_seq_changed() or event_release_buffer_ref(), which
-dereference inst.
+The delayed work may still be pending when iris_remove()
+runs. Since iris_core is allocated with devm_kzalloc(),
+allowing the work to execute after driver removal could
+result in accessing freed memory.
 
-Only system errors are valid without a session instance. Drop other
-event notifications before the session event handlers can dereference a
-NULL inst.
-
-This issue was found by a static analysis checker and confirmed by
-manual source review.
-
-Fixes: 09c2845e8fe4 ("[media] media: venus: hfi: add Host Firmware Interface (HFI)")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Fixes: fb583a214337 ("media: iris: introduce host firmware interface with necessary hooks")
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Reviewed-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+[bod: Fixed patch title]
 Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/hfi_msgs.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/platform/qcom/iris/iris_probe.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media/platform/qcom/venus/hfi_msgs.c
-index 47b99d5b5af73..3135c1024fb1f 100644
---- a/drivers/media/platform/qcom/venus/hfi_msgs.c
-+++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
-@@ -230,6 +230,9 @@ static void hfi_event_notify(struct venus_core *core, struct venus_inst *inst,
- 	if (!packet)
+diff --git a/drivers/media/platform/qcom/iris/iris_probe.c b/drivers/media/platform/qcom/iris/iris_probe.c
+index b6251493bd9cc..e9f30093afa2d 100644
+--- a/drivers/media/platform/qcom/iris/iris_probe.c
++++ b/drivers/media/platform/qcom/iris/iris_probe.c
+@@ -254,6 +254,8 @@ static void iris_remove(struct platform_device *pdev)
+ 	if (!core)
  		return;
  
-+	if (!inst && pkt->event_id != HFI_EVENT_SYS_ERROR)
-+		return;
++	cancel_delayed_work_sync(&core->sys_error_handler);
 +
- 	switch (pkt->event_id) {
- 	case HFI_EVENT_SYS_ERROR:
- 		event_sys_error(core, EVT_SYS_ERROR, pkt);
+ 	iris_core_deinit(core);
+ 
+ 	video_unregister_device(core->vdev_dec);
 -- 
 2.53.0
 
