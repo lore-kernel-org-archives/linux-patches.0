@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044715;
-	b=mFKbocKUr1r87PUyv4ID5OixGv+zClhtUeV4XbqyxCqeEH22+JZhqBtTAMfMvlzexoyG
-	 vqSt2K7pMOA79j7X+o5Gj6LvavaYErNp0W7gUR7OrN0sQiWivasmGcxZatYQNaAQVZuaq
-	 r4EhyaXK269xB7Yf8aJUq7h3LN1PcOdgYLnDbRr9zNuKMi+bwQB7jjvj70H3eCZkibO36
-	 ePj0WdYre+iO1UHlNTxccGnXoroJ/BmA9TiUAUuzld7uqaPkrq/2FG2M6/VXOxQlT91Ms
-	 R1ujt9UE7kPoj8tbLeqejgrGN6zw2M5jjXZPDYRfXLwVstQvDrzN3xG8e9SJS0SUeCQ==
+	t=1795044717;
+	b=GHUs0i/pOgQMrvmuAyaudE9OF3DACNk91Wyug190KudJhGjJMbQ8L5q+Ht3XaEhzMyk2
+	 Di2MxiPmiFS0fZgUf6ZmPCSU0b1bS46gOgZ/5iKPPQX8gZO3foC+NrIKHo81Vo5oNEQr2
+	 gevPequuA6pwSdSO7CTMvuaVkDujtJMgLNalLduCkByKGt9Otvica6Nlqv8s28rWZg0D8
+	 /JAbPINBs2ZbjnY042b70HF4OBRin7nSSKAvfSMvYkOL6ha6FqiEhq9JvYBzi/1kimc3c
+	 w5BJEkRP/M6QiEMoD7JHUTm/PZiq4wLnJD5EOSVMK7yJrHNG8AXL7WwHn3RFzaKXclA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044715;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044717;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=n2C66DDzSbiTNNQu4J6sF4Qns8Fwf7jXQiBxavzkjqM=;
-	b=RkHC242VGI6q0ojksvfQxP8EpXKwBoaGo6If+aIpOB3EofaqQxvDAuDwDcwSufPZcTHF
-	 h4yZMHjhNAFn/lYNy2lxTcrq5KkDzWXuxiYjXsm8h5SyXSLXf8gIcWu9+4CnIppx87yt8
-	 xfA48+7/p/vnVeUvNgXtrrDbSREdkY4igBy95bo/aUThMWqn5I6yzYAG3Aw3cbNPVfS0F
-	 19PmaKLYY/Yt23W18m0HmkB0Bx4sSg0FzYbqqpQF3J3zO36br/yujlVZNNKxQzR/zdiWB
-	 +GSrRg3JOmPWMGWhRfDSVm8i89eXz3iQC8QaFoHQwfH9HFEKHP4vNV61itsB9VMF+3A==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=FSmNmAokA2eRkRyXmCCfUQ+czoRGr5NYpijeDQ8UCGo=;
+	b=UlMOsfFoRanSS1G1BvBL5r5nrzOBKaScFPKOT5EkPLrWfRfSvSlq488EEkuVJaCWSKwK
+	 CrS434XWGx6SW1eCU4QsUeaPEtFVXr3XIwSDJbgUdrycNDz1chpxck88xHsncFWMdZvtc
+	 xWg5o6l9Rzk6Czku2A2Uel3ahgyVnCTmfvUGOuHo/d4dZDUU+6Q+g8aLMnWpTBUvP6iQg
+	 fqbNhmosDA4uUAsRKlfcByn4nkZJuWpcusSJ+vGkhM2u/DmOdRRfJMGcAWuM6oW7Blsjb
+	 lOExKlqgN+8HlLi2kAScyVttFDZXWmoh3kmeJ2bq9A42+sZK63zVz+gj7SeV0IMxNCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f9CjlU5z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rw3MHLS8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 040D4606A320;
-	Wed, 18 Nov 2026 23:31:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDE77606A325;
+	Wed, 18 Nov 2026 23:31:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f9CjlU5z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50D741F000C4;
-	Wed, 18 Nov 2026 23:31:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rw3MHLS8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A7061F000C4;
+	Wed, 18 Nov 2026 23:31:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044714;
-	bh=n2C66DDzSbiTNNQu4J6sF4Qns8Fwf7jXQiBxavzkjqM=;
+	s=korg; t=1795044717;
+	bh=FSmNmAokA2eRkRyXmCCfUQ+czoRGr5NYpijeDQ8UCGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f9CjlU5zgZw9+flGMTUn9tKXn/X495QWryEqGKVVAk/1IeB1Njhw/PhQq/fc13jCx
-	 vMI/FBdj2eKDAfyRBp+5n/zfEdSZ7ozu7j/ub8d1CqXCiaJaWr0utjfQfdnGDN6b51
-	 XfySoOMNcHQcZetVuwcpn1w9NnQrOgz6X5U0LXUY=
+	b=rw3MHLS8qo+uHSpeKKBjHbvUQa3FFSZRrEVuLXvPWUuJlXQ3/b2UxzAUI4YdoNc8i
+	 xGTD5qzIqYS3kC0Vzqd3wZR2Dq2HEeHE+xVgzUrHWcMb3wZ90i+GDotJnlY7i0gYSx
+	 k2lbFlPgyRB4+V7O0pe7jklbYg9ojvjGALdFNksQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lutomirski <luto@kernel.org>,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 0664/2857] tun: Require CAP_NET_ADMIN to attach to an ownerless device
-Date: Wed, 18 Nov 2026 15:28:18 +0100
-Message-ID: <20261118150225.458631722@linuxfoundation.org>
+	Ratnaker Gautam <ratnaker.gautam@kuleuven.be>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0665/2857] ksmbd: validate security descriptor offsets before pointer arithmetic
+Date: Wed, 18 Nov 2026 15:28:19 +0100
+Message-ID: <20261118150225.494138476@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,124 +62,112 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit ffdf678dd16610e3f006dac904bd37c09684673c upstream.
+[ Upstream commit 3474e1a304fbf9f7c996b24adcd519e031227a90 ]
 
-Twenty years ago I made creating a tuntap device require CAP_NET_ADMIN
-in commit ca6bb5d7ab22 ("[NET]: Require CAP_NET_ADMIN to create tuntap
-devices.")
+parse_sec_desc() constructs SID and DACL pointers by adding untrusted
+32-bit offsets to the security descriptor before checking their bounds.
+The existing checks reject offsets into the descriptor header, but do
+not reject offsets beyond the descriptor's length.
 
-The idea was to allow the permissions on /dev/net/tun to be relaxed to
-0666 and thus allow owners of tun devices assigned with TUNSETOWNER to
-actually open it and get at their devices.
+On a 32-bit kernel, a large offset can wrap the pointer before the
+descriptor. The end-only checks in parse_sid() and parse_dacl() can then
+accept it, allowing an authenticated SMB2 SET_INFO request to access
+memory outside the security descriptor and fault the kernel.
 
-What we missed at the time was that persistent devices with *no* owner
-were already essentially world-consumable, and anyone who could open
-the device node could also attach to those.
+Check each nonzero offset against acl_len before constructing its
+pointer. Initialize the optional owner and group SID pointers to NULL
+so an omitted SID remains absent when parsing the DACL.
 
-Even then, using persistent devices with no explicitly set owner — on
-the (false) presumption that CAP_NET_ADMIN would be required to open
-them — wasn't an egregious userspace bug. There are cases where it does
-make sense to separate the creation/configuration of the netdevice, from
-the process which shovels packets into it.
+The 6.1 tree uses a void parse_dacl(). Preserve that interface in this
+backport.
 
-Since then, TUNSETGROUP was added a year later in commit 8c644623fe7e
-("[NET]: Allow group ownership of TUN/TAP devices."). Its commit message
-noted that if both uid and gid are set, both have to match (in itself a
-bizarre choice) — but still not that with *neither* set, no permission
-at all was required.
-
-Then in 2012 commit c8d68e6be1c3 ("tuntap: multiqueue support") allowed
-new queues to be attached to a device from the moment of its creation,
-with no way for userspace to close the race between creation and a
-subsequent TUNSET{OWNER,GROUP}.
-
-In 2024, commit 3ca459eaba1bf ("tun: fix group permission check") tried
-to fix things to be saner: only require the user *or* the group to
-match, in line with standard POSIX permissions, and require
-CAP_NET_ADMIN if neither the user nor group authorised the access
-(although it put the CAP_NET_ADMIN check first, and would wrongly have
-reported the capability as having been used even when it was not).
-
-That fix was reverted in commit a70c7b3cbc06 ("tun: revert fix group
-permission check") due to allegedly causing a regression in an selinux
-test suite which *expected* the attachment to succeed when authorised
-by none of user, group, nor CAP_NET_ADMIN:
-https://lore.kernel.org/netdev/CAFqZXNtkCBT4f+PwyVRmQGoT3p1eVa01fCG_aNtpt6dakXncUg@mail.gmail.com/
-
-We should not break UAPI. But we don't have to consider an selinux test
-case which deliberately exercises a security flaw to be UAPI worth
-preserving either. To which end, I have fixed it in selinux-testsuite
-commit b2f894f0016b ("tests/tun_tap: set an owner on the device for the
-relabel tests").
-
-So: fix the lack of CAP_NET_ADMIN check on devices which *haven't* been
-assigned an owner or group, while leaving the weird tun ownership model
-as it was (user *and* group have to match, if both are set). If someone
-still wants to fix the latter (which wasn't actually the reason the
-previous attempt was reverted), they can do it under separate cover.
-
-Permit attaching to an existing device only if an owner and/or group was
-set and the caller matches all that were set, or if the caller has
-CAP_NET_ADMIN. The only behavioural change is that a device with no
-owner or group now requires CAP_NET_ADMIN to attach — precisely the
-loophole we want to close.
-
-And put the CAP_NET_ADMIN check in the right place this time.
-
-Fixes: ca6bb5d7ab22 ("[NET]: Require CAP_NET_ADMIN to create tuntap devices.")
-Reported-by: Andrew Lutomirski <luto@kernel.org>
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
 Cc: stable@vger.kernel.org
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/3c77f88acff5b3c2617b22d64faad15f6212619c.camel@infradead.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+(cherry picked from commit 3474e1a304fbf9f7c996b24adcd519e031227a90)
+Signed-off-by: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c |   14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ fs/smb/server/smbacl.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -574,14 +574,18 @@ static u16 tun_select_queue(struct net_d
- 	return ret;
- }
- 
--static inline bool tun_not_capable(struct tun_struct *tun)
-+static inline bool tun_permitted(struct tun_struct *tun)
+diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
+index e03adba7d8ee3..bbbcb12aa9d06 100644
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -885,7 +885,7 @@ int parse_sec_desc(struct user_namespace *user_ns, struct smb_ntsd *pntsd,
+ 		   int acl_len, struct smb_fattr *fattr)
  {
- 	const struct cred *cred = current_cred();
- 	struct net *net = dev_net(tun->dev);
+ 	int rc = 0;
+-	struct smb_sid *owner_sid_ptr, *group_sid_ptr;
++	struct smb_sid *owner_sid_ptr = NULL, *group_sid_ptr = NULL;
+ 	struct smb_acl *dacl_ptr; /* no need for SACL ptr */
+ 	char *end_of_acl = ((char *)pntsd) + acl_len;
+ 	__u32 dacloffset;
+@@ -897,12 +897,7 @@ int parse_sec_desc(struct user_namespace *user_ns, struct smb_ntsd *pntsd,
+ 	if (acl_len < sizeof(struct smb_ntsd))
+ 		return -EINVAL;
  
--	return ((uid_valid(tun->owner) && !uid_eq(cred->euid, tun->owner)) ||
--		(gid_valid(tun->group) && !in_egroup_p(tun->group))) &&
--		!ns_capable(net->user_ns, CAP_NET_ADMIN);
-+	/* If both uid and gid are set, *both* must match */
-+	if ((uid_valid(tun->owner) || gid_valid(tun->group)) &&
-+	    (!uid_valid(tun->owner) || uid_eq(cred->euid, tun->owner)) &&
-+	    (!gid_valid(tun->group) || in_egroup_p(tun->group)))
-+		return true;
-+
-+	return ns_capable(net->user_ns, CAP_NET_ADMIN);
- }
+-	owner_sid_ptr = (struct smb_sid *)((char *)pntsd +
+-			le32_to_cpu(pntsd->osidoffset));
+-	group_sid_ptr = (struct smb_sid *)((char *)pntsd +
+-			le32_to_cpu(pntsd->gsidoffset));
+ 	dacloffset = le32_to_cpu(pntsd->dacloffset);
+-	dacl_ptr = (struct smb_acl *)((char *)pntsd + dacloffset);
+ 	ksmbd_debug(SMB,
+ 		    "revision %d type 0x%x ooffset 0x%x goffset 0x%x sacloffset 0x%x dacloffset 0x%x\n",
+ 		    pntsd->revision, pntsd->type, le32_to_cpu(pntsd->osidoffset),
+@@ -918,9 +913,12 @@ int parse_sec_desc(struct user_namespace *user_ns, struct smb_ntsd *pntsd,
+ 	pntsd->type = cpu_to_le16(DACL_PRESENT);
  
- static void tun_set_real_num_queues(struct tun_struct *tun)
-@@ -2781,7 +2785,7 @@ static int tun_set_iff(struct net *net,
- 		    !!(tun->flags & IFF_MULTI_QUEUE))
+ 	if (pntsd->osidoffset) {
+-		if (le32_to_cpu(pntsd->osidoffset) < sizeof(struct smb_ntsd))
++		if (le32_to_cpu(pntsd->osidoffset) < sizeof(struct smb_ntsd) ||
++		    le32_to_cpu(pntsd->osidoffset) >= acl_len)
  			return -EINVAL;
  
--		if (tun_not_capable(tun))
-+		if (!tun_permitted(tun))
- 			return -EPERM;
- 		err = security_tun_dev_open(tun->security);
- 		if (err < 0)
++		owner_sid_ptr = (struct smb_sid *)((char *)pntsd +
++				le32_to_cpu(pntsd->osidoffset));
+ 		rc = parse_sid(owner_sid_ptr, end_of_acl);
+ 		if (rc) {
+ 			pr_err("%s: Error %d parsing Owner SID\n", __func__, rc);
+@@ -936,9 +934,12 @@ int parse_sec_desc(struct user_namespace *user_ns, struct smb_ntsd *pntsd,
+ 	}
+ 
+ 	if (pntsd->gsidoffset) {
+-		if (le32_to_cpu(pntsd->gsidoffset) < sizeof(struct smb_ntsd))
++		if (le32_to_cpu(pntsd->gsidoffset) < sizeof(struct smb_ntsd) ||
++		    le32_to_cpu(pntsd->gsidoffset) >= acl_len)
+ 			return -EINVAL;
+ 
++		group_sid_ptr = (struct smb_sid *)((char *)pntsd +
++				le32_to_cpu(pntsd->gsidoffset));
+ 		rc = parse_sid(group_sid_ptr, end_of_acl);
+ 		if (rc) {
+ 			pr_err("%s: Error %d mapping Owner SID to gid\n",
+@@ -960,9 +961,10 @@ int parse_sec_desc(struct user_namespace *user_ns, struct smb_ntsd *pntsd,
+ 		pntsd->type |= cpu_to_le16(DACL_PROTECTED);
+ 
+ 	if (dacloffset) {
+-		if (dacloffset < sizeof(struct smb_ntsd))
++		if (dacloffset < sizeof(struct smb_ntsd) || dacloffset >= acl_len)
+ 			return -EINVAL;
+ 
++		dacl_ptr = (struct smb_acl *)((char *)pntsd + dacloffset);
+ 		parse_dacl(user_ns, dacl_ptr, end_of_acl,
+ 			   owner_sid_ptr, group_sid_ptr, fattr);
+ 	}
+-- 
+2.53.0
+
 
 
