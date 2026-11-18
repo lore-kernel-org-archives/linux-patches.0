@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016519;
-	b=hkXpLJcc48VhJeRvtlJP5s39MXoU6PQmAKLm1RZPzAH3nZnd6RgqRmvFF2wjZzZW1R8H
-	 DGzh4Qt6WMmp6RVKJzy1jvZ2Oq7snY6OSm51b151Cgq1c5v/TnOhqf5Stf+ui+Ofv8ZV+
-	 VsChr6TUjz0oivzr0dEC54prXCa3oFS9xOyvZX8DJ4R4u1weXAIllTzA6kpcQIQLvDiHt
-	 MHYblVRH5wqppHOtrFmXLa5rN+ziEaa6g2DzpZkyDzV9FXQ9RHB75vczCTmBvksyR065u
-	 qOpmo6QuU1TgOYPZHq1vEj3TY6IKzk1b4tlAR2tiJw2pT2wLiduwfQlyorGgna2S1AQ==
+	t=1795016522;
+	b=3tmj48ksLaBZwEWvYMaROGZG1HNA9s5ohLja5dkoFUPlCfsTvemYJNTB1jUex/LnyYKB
+	 SPO3/tFduTCW9UAWK4UZAaKdFiFyip8GANGxu3J33l/Eml0Wvpnzi7XL63y+Cyv8JfPBY
+	 iJk6yCPdczmXVwblAmJap6BoxkanyXLUReqNw0kQJPE5kkMI2AmrOYMfBLaWqTa2CIz7G
+	 3e3/YUctWvgTPJcT4xzUIl1vG+LMireylWBhX6uHEHCpVONW94HVFbg/ni5j5nmRAbCP0
+	 8UvC9ivu61geKXEkIqp/Qqfj9MMG+5Qn7l8U34LzHo3zLx1U4Psm3wH9isOSeRPmh8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016519;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016522;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FDImzFdj3agR5ZGKBQIHbUL/1CiZ1PG/I8OE7/lzHR4=;
-	b=Z5tkT/OjRpkz1Ni93TiDrL+cv4QWGwmfRzxwQA5d1mqpswcsQlJnfJAUyMS1xYJon3Y+
-	 6RmALVnBWI3WrXEQLP+u4QkUHgj6zZuNqFHNplaRFYQ9lUIocYcz6tBMi+JtLx+jnQFQk
-	 c3NbxJBzXG5L6qAF/TWuL0hUxfEZX5ooX92hHGGakov5zGib+gBMMHvBO9OkQ9t8wMHWI
-	 5HD6VMPKOK4O1uRqUWGp1etR/j1/2fXXD6jUD5QVTSwJw9XUiXfFPVt12BBOkoCTnm/iI
-	 vcvRSW6I7O2daiHX7bEDDgdqwEdHVP57jKiN1K6255RX2RYIY+sO8XQmpmfP3y90IlQ==
+	bh=1a1rejp8EB8Vx0QRA3YNAklyA/TxqvZgXVDxrBNeb9Q=;
+	b=v85HNGiEvc6MDdbjWWWpLFUpcb2e2cjhbnzPM4SxwzXhmYL11IQ4hZgAJ5yeXIfBXOI8
+	 evmIywKwLqPAN6yzpwJ8FbtCYd0C0OKlWflZ03oXf/D24+w2ClEr6uzvYxBkwBbrvs5JP
+	 IBMnbjp5nEHPkqRRRYwiKrekEqeWU1+KZtYw7FVr7z8yYPH5Cwsd4Pq3uDucqu9qCWALw
+	 oVxw7kXTH4o+d7WMi2Ysd0N8xl3DHKT/nhOniYiMq+YztKvxPyu1HqP25y3fNQmA6pi7H
+	 i4hm2NTMHeGcmZ0ZobO4sj883ZqPbex3T7/SfpeuHjv+DxaaZ/rnk1ffL293KohXKgg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="B4z/a2sq";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rkl8kXE0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3844E606A320;
-	Wed, 18 Nov 2026 15:41:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103E7606A31C;
+	Wed, 18 Nov 2026 15:42:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B4z/a2sq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A961F000C4;
-	Wed, 18 Nov 2026 15:41:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rkl8kXE0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C261F000C4;
+	Wed, 18 Nov 2026 15:42:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016519;
-	bh=FDImzFdj3agR5ZGKBQIHbUL/1CiZ1PG/I8OE7/lzHR4=;
+	s=korg; t=1795016521;
+	bh=1a1rejp8EB8Vx0QRA3YNAklyA/TxqvZgXVDxrBNeb9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B4z/a2sqFC7/o0ogqAWakjqKjluzUNUWj/+SsgHwBtpTz8ZoclZuSe5Gt5GpbRgOA
-	 IjbB3lBG92LWPmxoTjd2QMZXe/S0U26JNV3/wMJ0Uxb1RtHOn8C5V8j4aoEDAKi+RC
-	 ++CR5TXlHD0UY9iUSRGz/XUvFkpXmdkwMCNL9PH0=
+	b=Rkl8kXE0eKlwXFCtw3aIpp3LC099OCMY31MdorVus+lHKhguIw1q1JVJAQFODwHAs
+	 CkO9Opzg8ZzJ1Aub7NKrpUACXZ7LsApEoGSbn684nrJpz7JtqTA/WLSxm/Dao32MFd
+	 zMWJrZTyaYF5nnSxMnEmI6LjDd5jR0RuoVoxpACM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	Mingpei CAO <caomingpei@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Amery Hung <ameryhung@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0555/2651] dt-bindings: interrupt-controller: chrp,open-pic: Fix dangling reference
-Date: Wed, 18 Nov 2026 15:29:55 +0100
-Message-ID: <20261118150307.725066382@linuxfoundation.org>
+Subject: [PATCH 7.3 0556/2651] libbpf: Reject local struct_ops bitfields before data access
+Date: Wed, 18 Nov 2026 15:29:56 +0100
+Message-ID: <20261118150307.758989719@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,38 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Mingpei CAO <caomingpei@gmail.com>
 
-[ Upstream commit 2fb6f1a87cba099b2921fc3e777bf399d4153a39 ]
+[ Upstream commit 961b8946acb482b6d7a39c266d623e5f9c4e873f ]
 
-The target of "[1]" was lost during the conversion to json-schema.
-Replace it by an inline reference.
+A local struct_ops type can contain a bitfield absent from the
+corresponding kernel BTF type. bpf_map__init_kern_struct_ops() checks
+whether data for an absent local member is zero.
 
-Fixes: a241f1a1b338b714 ("dt-bindings: interrupt-controller: Convert chrp,open-pic to DT schema")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/86dd3544f7286fc117dc7ad0f6d799761283ec54.1788426169.git.geert+renesas@glider.be
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+For a bitfield, member->offset contains the bit offset and field width.
+bpf_map__init_kern_struct_ops() used the encoded value to calculate the
+member data pointer before rejecting the bitfield. The zero-data check
+could therefore read outside st_ops->data and crash libbpf.
+
+Reject local bitfields before calculating the member data pointer. Keep
+the existing rejection for bitfields in the kernel type.
+
+Fixes: c911fc61a7ce ("libbpf: Skip zeroed or null fields if not found in the kernel type.")
+Signed-off-by: Mingpei CAO <caomingpei@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Amery Hung <ameryhung@gmail.com>
+Link: https://lore.kernel.org/bpf/20260915162252.473044-2-caomingpei@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bindings/interrupt-controller/chrp,open-pic.yaml         | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tools/lib/bpf/libbpf.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/interrupt-controller/chrp,open-pic.yaml b/Documentation/devicetree/bindings/interrupt-controller/chrp,open-pic.yaml
-index 5363f4c6ffbcf..294af57a7c372 100644
---- a/Documentation/devicetree/bindings/interrupt-controller/chrp,open-pic.yaml
-+++ b/Documentation/devicetree/bindings/interrupt-controller/chrp,open-pic.yaml
-@@ -12,8 +12,9 @@ maintainers:
- description:
-   This binding specifies what properties must be available in the device tree
-   representation of an Open PIC compliant interrupt controller.  This binding is
--  based on the binding defined for Open PIC in [1] and is a superset of that
--  binding.
-+  based on the binding defined for Open PIC in the Devicetree Specification
-+  (available from https://www.devicetree.org/specifications/) and is a superset
-+  of that binding.
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index 5dc99096487f7..03daf99224a3f 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -1223,6 +1223,12 @@ static int bpf_map__init_kern_struct_ops(struct bpf_map *map)
+ 		const char *mname;
  
- properties:
-   compatible:
+ 		mname = btf__name_by_offset(btf, member->name_off);
++		if (btf_member_bitfield_size(type, i)) {
++			pr_warn("struct_ops init_kern %s: local bitfield %s is not supported\n",
++				map->name, mname);
++			return -ENOTSUP;
++		}
++
+ 		moff = member->offset / 8;
+ 		mdata = data + moff;
+ 		msize = btf__resolve_size(btf, member->type);
+@@ -1259,8 +1265,7 @@ static int bpf_map__init_kern_struct_ops(struct bpf_map *map)
+ 		}
+ 
+ 		kern_member_idx = kern_member - btf_members(kern_type);
+-		if (btf_member_bitfield_size(type, i) ||
+-		    btf_member_bitfield_size(kern_type, kern_member_idx)) {
++		if (btf_member_bitfield_size(kern_type, kern_member_idx)) {
+ 			pr_warn("struct_ops init_kern %s: bitfield %s is not supported\n",
+ 				map->name, mname);
+ 			return -ENOTSUP;
 -- 
 2.53.0
 
