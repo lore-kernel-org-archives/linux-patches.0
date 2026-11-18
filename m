@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037466;
-	b=pQKvXSUV83iMe8P/ENdcCcW5jCCEcR6l+218LW3wU2OqeisYT4WJclJrsRni8a+bQgse
-	 6uEhN+9Jk762ij7GZF0lSy0unRHIQ/plpgvLV3OUc5d1cWEKQMY6YO+ZtbN2IQDyYscsr
-	 8xfK68EyRrkucXv/H+6Bno16HlypdndXqEMXy8hJTvSmiFrEjjJ492AVXOq8GLAu8E/vi
-	 m2BveFN5NpcL5VtkK8biKge9tBgiOP3n0LnEbXptsWFDNyRcLS1L4yj0ilQgI4isg3Ybf
-	 ZMV9ucYpV8BjMAdhzkGU/s5HqZ3WwFYKE3m9VVGOP6sIL9PhRhD8bkfIfrEyLzrfDRQ==
+	t=1795037470;
+	b=gt1K5B6U37PFZVALiIw2Pa10tu+79vleZZ+7HCI5POhoDMXgUX3e25vjaUlkDojeyqTH
+	 INV0qHduWbJ3I2rSjoro1rLFvcZoJQyxTvuZv83o+3ALCfnj5eJoqunTs0EhZXjyc7F5s
+	 Hvmdr60JfR629piPyWY90G3rEiloissUpbBNy8aaKfSSZE4yjnpDUaRn0DlZJ+Rl4Dz/R
+	 iG3OQH6XEx0us9SojqZve01SABWeYT4FqscRALehrpVDNC4ewn+T7SQO7H/cQUDp3OCCn
+	 qWEbf2E/6nC+wiWJFB63PeVZDiJEuD0utQjuixFn7JjRa1sQacac/vT34+CRcC/U+Ig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037466;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037470;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NpH+VMmTl6GtShOMAl9CF0f1tuUxYEAYuFptRMSF8nk=;
-	b=v0tm6W0byL/BO2wDNKEVivC30cwfgwOFBzkYAXVoBXUmIdX1eW1xJ12w6NBHrGK+qBCJ
-	 R9uAMf4uuoY4UWg3gj1Qulcav6d9kV0iXOunrkwgQLPNICoq5a+iBZoRGxTgZboBPTonD
-	 EMM7+W1H1GzzEYjSVEorL1MJvnkRNrwvIKZ/XhDp6aSy6mwKGOkG/ez7noiDfDGqXU4RL
-	 wgWe3IBmC1CN2/5u62SSIp83Bzi9g3m9s+F/fTduvyDSsk0VUlD3YPVWNVyZmWxshBZ9Y
-	 jjZ95guoj8qrzcyV2Quv6J0+O1HUGsHTk6/350q/bJCkHZnFhJUghJG1sf9dTUEwq5Q==
+	bh=pNY2W9ROb3ss+DsLT0zTJbYToAEspmhdWwB62wrssYs=;
+	b=Ujvn6Af2yWkhtx7g+wV80eR5K6lalgtMZlV8MPr31teBGr9OCelkXdbQi+59ADopZpvL
+	 dOGCcFTFQlxg76Rw5PBsL0AH+taF9EgJhzKeK6SKoCt8mNJKg5GKFfLHGN7b5F+hPTvtC
+	 OdGkFj0SVyWlVXRQK8ZAcTnHs2Z4R8Qi9x+61E7L7ce8zcpDnqcpLjbp2swt7mxnamjUA
+	 d2ljEBGg5mmF+Jcnncndy2KSXBUipAndV+sMp+M4kuJlPDmnoBz+E65xtK5Fo8LYqIqYJ
+	 g4HhfHeRkAUGa6aZPC9StMfXKkz5xvc9m24sqIMoqRMqYbDwm75hzoaYZz9uAut4zQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oNAB1X6D;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zpM7JZNN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F8A606A31C;
-	Wed, 18 Nov 2026 21:31:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35517606A31C;
+	Wed, 18 Nov 2026 21:31:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oNAB1X6D
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD22A1F000C4;
-	Wed, 18 Nov 2026 21:31:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zpM7JZNN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 321E01F000C4;
+	Wed, 18 Nov 2026 21:31:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037466;
-	bh=NpH+VMmTl6GtShOMAl9CF0f1tuUxYEAYuFptRMSF8nk=;
+	s=korg; t=1795037469;
+	bh=pNY2W9ROb3ss+DsLT0zTJbYToAEspmhdWwB62wrssYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oNAB1X6Dy6tz+T+JczhRyK/CSBSaXhU1djhdzyWcZB+SoWoL3edVDnyr+P6Y0t1zr
-	 Sbcgs1W5VXQasEURjcm0YQxzydiKX7bvmB1jbKkXYG23Lrzc+O3cYp05sf/KFX0Taq
-	 UHo5XVddRJ3mZZiGDOIbow2B5kbttLjwzBxrikt0=
+	b=zpM7JZNN7s93S4lpw9SkEvI2UkEojf8upZuJuNacR1pDaVZ6V4Z5CCg7J1YHGidRc
+	 58X0HzvjEpuqJvIHuu1qaVbHO7ugvjpceqc3tdOYpEWYXK2THwB5mjL5bYXmCA+wdh
+	 ohW2LJURB/KLsExMc75QlKPUnWNiM7RVq+O+iGcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Weigang He <geoffreyhe2@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1381/3318] media: require two-byte Cypress type 04 records
-Date: Wed, 18 Nov 2026 15:33:23 +0100
-Message-ID: <20261118150401.965643987@linuxfoundation.org>
+Subject: [PATCH 6.6 1408/3318] wifi: mac80211: reload TDLS header pointer after skb_linearize()
+Date: Wed, 18 Nov 2026 15:33:50 +0100
+Message-ID: <20261118150402.883952078@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,57 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Weigang He <geoffreyhe2@gmail.com>
 
-[ Upstream commit e22872703386c3885d8c6bd595124587bc4e5081 ]
+[ Upstream commit 35c5a5ea4418571997a7e7af3e7e8922b136f6e6 ]
 
-Both Cypress Intel HEX parsers read two address bytes from type 04
-records. Generic record framing permits any record length, so a short
-record can make the parser consume the checksum or bytes beyond the
-firmware record. A longer record also violates the Intel HEX type 04
-layout.
+ieee80211_process_tdls_channel_switch() sets tf = skb->data before it
+calls skb_linearize(), and reads tf->action_code afterwards.
 
-Require the type 04 payload length to be exactly two bytes in both
-implementations.
+ieee80211_rx_h_data() queues TDLS channel switch requests and
+responses to the interface after pulling only
+offsetof(struct ieee80211_tdls_data, u) bytes, so the skb can still be
+non-linear when the interface work handles it. Drivers that build
+paged RX skbs do this for every frame that does not fit into the skb
+head, e.g. iwlwifi (mvm), which is also the only mac80211 driver
+that sets NL80211_FEATURE_TDLS_CHANNEL_SWITCH. If the remaining data
+does not fit into the tailroom, skb_linearize() moves the data to a
+new head and frees the old one, and the action code is then read from
+freed memory. Depending on what that memory holds by then, the frame
+is handled as before or ends in the WARN_ON_ONCE() of the default
+case.
 
-Fixes: 79a63c60a6a2 ("[media] media: move dvb-usb-v2/cypress_firmware.c to media/common")
-Fixes: 776338e121b9 ("[PATCH] dvb: Add generalized dvb-usb driver")
-Cc: stable@kernel.org
-Assisted-by: Codex:gpt-5
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+The frame only has to be a data frame with the TDLS ethertype from an
+authorized peer, e.g. relayed by the AP from another station in the
+BSS; the read happens before the sender is checked to be a TDLS peer.
+
+Load tf after skb_linearize(), as the request and response handlers
+already do.
+
+Found by static analysis tool CodeQL.
+
+Fixes: 8a4d32f30d11 ("mac80211: add TDLS channel-switch Rx flow")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM codeql
+Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
+Link: https://patch.msgid.link/20261021145807.3018338-1-geoffreyhe2@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/common/cypress_firmware.c      | 2 ++
- drivers/media/usb/dvb-usb/dvb-usb-firmware.c | 2 ++
- 2 files changed, 4 insertions(+)
+ net/mac80211/tdls.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/common/cypress_firmware.c b/drivers/media/common/cypress_firmware.c
-index cdc7050ed3ac8..3468eff508b02 100644
---- a/drivers/media/common/cypress_firmware.c
-+++ b/drivers/media/common/cypress_firmware.c
-@@ -59,6 +59,8 @@ static int cypress_get_hexline(const struct firmware *fw,
- 	if (hx->type == 0x04) {
- 		/* b[4] and b[5] are the Extended linear address record data
- 		 * field */
-+		if (hx->len != 2)
-+			return -EINVAL;
- 		hx->addr |= (b[4] << 24) | (b[5] << 16);
- 	}
+diff --git a/net/mac80211/tdls.c b/net/mac80211/tdls.c
+index 38cbfced6ae34..7579176d9bb08 100644
+--- a/net/mac80211/tdls.c
++++ b/net/mac80211/tdls.c
+@@ -2060,7 +2060,7 @@ void
+ ieee80211_process_tdls_channel_switch(struct ieee80211_sub_if_data *sdata,
+ 				      struct sk_buff *skb)
+ {
+-	struct ieee80211_tdls_data *tf = (void *)skb->data;
++	struct ieee80211_tdls_data *tf;
+ 	struct wiphy *wiphy = sdata->local->hw.wiphy;
  
-diff --git a/drivers/media/usb/dvb-usb/dvb-usb-firmware.c b/drivers/media/usb/dvb-usb/dvb-usb-firmware.c
-index 0fb3fa6100e4a..675d9d1d4f472 100644
---- a/drivers/media/usb/dvb-usb/dvb-usb-firmware.c
-+++ b/drivers/media/usb/dvb-usb/dvb-usb-firmware.c
-@@ -141,6 +141,8 @@ int dvb_usb_get_hexline(const struct firmware *fw, struct hexline *hx,
- 
- 	if (hx->type == 0x04) {
- 		/* b[4] and b[5] are the Extended linear address record data field */
-+		if (hx->len != 2)
-+			return -EINVAL;
- 		hx->addr |= (b[4] << 24) | (b[5] << 16);
- /*		hx->len -= 2;
- 		data_offs += 2; */
+ 	lockdep_assert_wiphy(wiphy);
+@@ -2076,6 +2076,7 @@ ieee80211_process_tdls_channel_switch(struct ieee80211_sub_if_data *sdata,
+ 	 * The packet/size was already validated by mac80211 Rx path, only look
+ 	 * at the action type.
+ 	 */
++	tf = (void *)skb->data;
+ 	switch (tf->action_code) {
+ 	case WLAN_TDLS_CHANNEL_SWITCH_REQUEST:
+ 		ieee80211_process_tdls_channel_switch_req(sdata, skb);
 -- 
 2.53.0
 
