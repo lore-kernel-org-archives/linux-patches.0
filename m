@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057847;
-	b=AUAP8ZjBIlPG0vqZce/4O+iO9vmMQzRM2kC5Cz+F5Lh1VuPXDs2lycBEC7ysxLccMKG0
-	 XSdEX7qjkOJKMsm9Rsp76EzW9K91eodytRY8aKEZFQsAAQj/Xv5Bz2H/MWeboKmJQeu/U
-	 sDgZhP6x7ZEGkx3ZRgbwy8ce85GxI0ePR2l0WShoKH7PNZJaPK7o5cFQeBmBGk9Zb2rxV
-	 Vr7DnKZCQqizrA9P0oX+aFI/XiVTr32Gb0Qj2tB6YV+Q41cWAC1VMgGlSKYAZODc/j0Bk
-	 U3hf6Lxp/e/2bk+57yblnP1JbhNNjNakVQEUQXJfaNuiUmStJtaabnm/NOt0l2QRYsA==
+	t=1795057850;
+	b=G+n443OFHwczZ8EGA5YERvayDZ18G47/rnIYxBQYQuiFgI6C3Ao4gB8uzjVMAxCAqeS/
+	 KWXkzEL8cTZXAA7jtJ+abHQJZr5AarfoNM44DmOVHLkg9VeS6Drfp7IWDDLqogOFttrNf
+	 ouyVmu5s8MVa9gZrx+DkIkZPT8sQcS9GiQYBChNP9+2kHDRZ2n8qOGwX6VrRM/CFzNcO1
+	 f0bMYEzrlvnDbaXkeXVQGEKPFLMoqoMPGkQX+lP3FQXS8IqEZqpxGEvIihkxk0lsEUgEr
+	 oiPCcaf0eh0NLmYmGt9tWaYN7E9MkbMB98kKmFBGI22HgpOqGArFgzKyauq2PIh/sdA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057847;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057850;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=u2ymRVV0uS5rB/gaLJLXDPiU+1EUqGWEy5FvDGVgYpE=;
-	b=aLSZHJ7PNHiwEHqwAZiMNhfQmImvE/b/yD5+qxrQmshZyZa2JWnRZHWD5Aum4J+dvdKy
-	 bQ+k8PVqPfENxgY4Km+xNsoNrvDQjTooHaveTP47PckBG023UM0zp/5cIh8NNKgWeclVd
-	 Lk2b7BH6HIi+P8LuPaED9ZU6USENAj6P/mawKOzfNnyFrSIRcYfcCqHZVUnlU63SnlonT
-	 NdeTgCisrjiRFR67P7UYEPRuPdeS9msYDd2coqpOPLeu7iT8U+zTmS9Js5/RVMXs2zAG4
-	 16QZpM6nPQ2wgdr8YTFtbxnxwHJChKaM4NP8R/uv26PPicpJ3rUwRhtcxoccVdGp/fg==
+	bh=bwrlWSxwx3ypAZpfire23NxjrAHRCM0eA8jVvINb8NI=;
+	b=3WpVQA+AraT1LsfnRPQ/vn5/enyonHvvf1P3i+c+BXYwQW+Uw9KbB8vxTv7mkbRipIYA
+	 DROdRE/j798FrAI4UnJzZhedV09IOBu6SKSvgINMEE+0oddztNEL/lo1tPHqi+6FIlDqh
+	 gMg5mBaNaCW+3IRu/Wctl+KFdWAPc3UIiLxSjjeKdu/+5LccrW57u/ZYZ4bMu1Z9Vo8xd
+	 jKU91ThDWDqyYk7mJ17wWU6FiBgXRrChhGFJThi3OEztP96cLGJH+j33ri/iZ4HqDEY4L
+	 D+coaIVsjPn9DujvcXwfc9wyhshd88u8J7TmOo42fiAHtBhboJB+yWTP2IKoryQi6Dw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qegVytmE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="b2/QHh2l";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272DE60A260D;
-	Thu, 19 Nov 2026 03:10:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9CD60A261D;
+	Thu, 19 Nov 2026 03:10:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qegVytmE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A11B1F000D0;
-	Thu, 19 Nov 2026 03:10:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b2/QHh2l
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A72B1F000D0;
+	Thu, 19 Nov 2026 03:10:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057847;
-	bh=u2ymRVV0uS5rB/gaLJLXDPiU+1EUqGWEy5FvDGVgYpE=;
+	s=korg; t=1795057849;
+	bh=bwrlWSxwx3ypAZpfire23NxjrAHRCM0eA8jVvINb8NI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qegVytmE8PJ3gwxdeDIRNLfF8pAjbjsbyFBAaLWNq/tJkX4QlWYD7EKVWRSM/2r9I
-	 ywAqX53B6IQBQR1R/u64ZtDBEbZfQJcMpGX/rwIqmwdlyWE+Y4j+7lO8Mip2WbhSKo
-	 Wvjjtd5Om6sYeYOBBDaa2buVNyPHXx1DfRknnxQA=
+	b=b2/QHh2l3RsjbJCrNmjuz9xspcBlgXT1ulGqhDlmON4tOL1A5v4Cj9Mv8Y60ZvDyI
+	 xWwN4WSrlms/5t8FKE5FJdi35LArgdOg0Iwe04ZVpcKwDeQygTyc1mckC3Sb1OBHcY
+	 PJ7XKUC7cIAyljK86mJOhvpcE/7Y5UHoFyAry+3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 5.10 0276/1848] xfs: reject out-of-range attribute value lengths in xfs_attr_copy_value
-Date: Wed, 18 Nov 2026 15:38:34 +0100
-Message-ID: <20261118145923.790141819@linuxfoundation.org>
+Subject: [PATCH 5.10 0277/1848] xfs: reject remote xattr entries with an out-of-range value length
+Date: Wed, 18 Nov 2026 15:38:35 +0100
+Message-ID: <20261118145923.819395918@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,58 +70,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-commit 0643549ffecaeb716c0b75590a9b76dfa5eb35b3 upstream.
+commit 15ccd92a782a0253f4a17895f3d3f71e5c1d1973 upstream.
 
-xfs_attr_copy_value() takes the value length as a signed int and, for a
-remote xattr, is handed args->rmtvaluelen.  That field is filled from the
-on-disk __be32 xfs_attr_leaf_name_remote.valuelen in
-xfs_attr3_leaf_getvalue(), so a crafted length such as 0x80000000 is
-stored into the signed rmtvaluelen as a negative number.
+xfs_attr3_leaf_verify_entry() validates a remote attribute entry's name
+but never bounds its on-disk value length (xfs_attr_leaf_name_remote.
+valuelen, a __be32). A crafted leaf with valuelen = 0x80000000 passes
+the verifier and the CRC.
 
-The "buffer too small" guard in xfs_attr_copy_value() is a signed
-comparison:
+That length is later assigned into the signed int args->rmtvaluelen
+(xfs_attr3_leaf_getvalue), becoming negative, which slips past the signed
+-ERANGE check in xfs_attr_copy_value(); a getxattr() with a small buffer
+then memcpy()s a full remote block into the small kvalue buffer
+(xfs_attr_rmtval_copyout) -- a heap out-of-bounds write with
+attacker-controlled content, from an unprivileged getxattr(2) on a
+mounted crafted image.
 
-	if (args->valuelen < valuelen)
-		return -ERANGE;
+Reject remote entries whose value length exceeds XFS_XATTR_SIZE_MAX in
+the leaf verifier, so the malicious block is rejected at read time.
 
-A negative valuelen therefore compares as smaller than the caller's
-buffer size, skips the -ERANGE path, and is then used as a copy length,
-leading to an out-of-bounds copy of a full remote block into a small
-getxattr(2) buffer on a mounted crafted image.
-
-Reject a value length that is negative or larger than the maximum xattr
-size before it is used, so a bogus on-disk length can no longer slip
-through the value copier.
-
-Fixes: 9df243a1a9e6 ("xfs: consolidate attribute value copying")
+Fixes: c84760659dcf ("xfs: check attribute leaf block structure")
 Cc: stable@vger.kernel.org
 Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 Reviewed-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_attr_leaf.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/xfs/libxfs/xfs_attr_leaf.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/fs/xfs/libxfs/xfs_attr_leaf.c
 +++ b/fs/xfs/libxfs/xfs_attr_leaf.c
-@@ -486,6 +486,17 @@ xfs_attr_copy_value(
- 	int			valuelen)
- {
- 	/*
-+	 * A value length that is negative or larger than the maximum xattr
-+	 * size is on-disk corruption.  The remote value length is an on-disk
-+	 * __be32 stored into the signed args->rmtvaluelen, so a crafted value
-+	 * such as 0x80000000 becomes negative and would slip past the
-+	 * "args->valuelen < valuelen" check below and be used as a copy
-+	 * length.  Reject it before that can happen.
-+	 */
-+	if (valuelen < 0 || valuelen > XFS_XATTR_SIZE_MAX)
-+		return -EFSCORRUPTED;
-+
-+	/*
- 	 * No copy if all we have to do is get the length
- 	 */
- 	if (!args->valuelen) {
+@@ -293,6 +293,8 @@ xfs_attr3_leaf_verify_entry(
+ 		if (!(ent->flags & XFS_ATTR_INCOMPLETE) &&
+ 		    rentry->valueblk == 0)
+ 			return __this_address;
++		if (be32_to_cpu(rentry->valuelen) > XFS_XATTR_SIZE_MAX)
++			return __this_address;
+ 	}
+ 
+ 	if (name_end > buf_end)
 
 
