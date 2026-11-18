@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034272;
-	b=urw41jiaRuRROsbpbvKwtqMBvYdhE8MwUOFaD2dMjrQOBAGlE19BR3ToxzqrmRlNjEB+
-	 Ed+neHoV21Wv/EHV5efX/q7JZ6JU8sC/5mPiE4O/HgUvEBG5bNrJ8srK4QMbw71a5k4we
-	 2JA4TpguOuztbpzVOyQZCp9K8GJKTG9FYHsdv4aiCRj78x2TgYgTBS4mYZhhRNwQ2xb57
-	 WcRG8lp/Be4D/p4aq2EHlEzcEPrnt+hJRXZrL0sy3rTh6rWFvk88gQAfSW/DSHzL9QszT
-	 7S+2c8RUXyZ43EcNfBzNZq6044L3M0FZTwXbBwsmSgszOKNu5RF5KXCZxXXavuhHFNg==
+	t=1795034275;
+	b=IUFAU6GtUJATGomWvkHkMqRE+J2BEUD7KEJDqCCA3mAcm2Wr74E99ttZixnTfOAkrFXg
+	 NoigSP4xAZDwueWDWNGZxeuTasycn7BKZNVkRNEYdewP1lxfG0G5FTCaAQefqrVU787JR
+	 YzIqKoWHUAZ4cQm5aryajLfp/Xr7GUuIEIN4uDMXfeuFNAN96Ite+LL+hQpSavjpMyn9V
+	 a2+/gxWxBi7zPzw3tRxuy1jb0Ck2M8rTtIABw4l5OngvQzQvhPX1LqsFqvrqUJnbl5Ody
+	 npN9slhcP1RNObDlQE2oC8+J+HvklX1CPJOjeJK6VROhKgzJ946dVnWeekW/J1+jMGw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034272;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034275;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YvwXHbt16EJfHzXUupErdfDtyrrJ7mr2s26THku0XeI=;
-	b=yzoW3EPH+XZynTKhI6PcVD/WKVSoUuJHMorJsEmno/CX40vst7y3wZj9scly+1VmGZIG
-	 YZS9CpJGTQBqx/WZqIVd3uo9HwS9DL2Iifj1k7vjRrocqM0NCeQJjiaZ+A5OBPSsynzQ6
-	 6OmkBeP6QNy58jJqBdbH4VX9uXSncRdtmco2bxXcFhl4alICHuA19byBspx99703fjb/c
-	 a0mlLoL/2f5QcJxdbZJmXRNjqwCDKWB261yi7CWtYY8SfOu+QaeYDPUWD+TUHFKgAR8cy
-	 jhaxNy7B3Wf1J5oezL5IUHJlOH9ICzsDERT9YwTJFqPTkDiHuhq+uKXIiBHk66pmy6w==
+	bh=l5iugvRkGB/k+mTrO5Q/0QX/yteKhvPsHlbgQfuo/sA=;
+	b=DBf+Tg2jkoPDAhepy04Xwg8x9pACf9yDRfkKxVvgvGjMFGSf595qUt5RtqJELxN7BUKg
+	 Awh+o0jIlM1ZEmYLiKBcsgAEi317cCNMEThy9wtS5+nqJcumtY8XHLLnEF8WnO6pWQNec
+	 iL+HGKMsX9IYB8qHKuq+NxE0eckATm8a1lS/oK0vQxmxTL+YWL2z8QcA/cu/XRZX3rmCD
+	 x7NiJ5RLCIKh7L+DSOAsM6NF6KHLQFGw67AdFuAUbgNF2757pX0YIH/mXi8ZkMGirCIEl
+	 CJYbLj6+uggbnEMtcYS4HZlDFg4Q5D2tzqnWKjjRleh1qw5coXBOYz1st7K2tREuWqg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IbbJp06W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cE7PjTqI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D85AA606A338;
-	Wed, 18 Nov 2026 20:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2CCF606A330;
+	Wed, 18 Nov 2026 20:37:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IbbJp06W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 372FE1F000C5;
-	Wed, 18 Nov 2026 20:37:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cE7PjTqI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03F801F000C7;
+	Wed, 18 Nov 2026 20:37:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034272;
-	bh=YvwXHbt16EJfHzXUupErdfDtyrrJ7mr2s26THku0XeI=;
+	s=korg; t=1795034275;
+	bh=l5iugvRkGB/k+mTrO5Q/0QX/yteKhvPsHlbgQfuo/sA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IbbJp06WVa8RLzh8l+7vtjAs2E6wyYCpva7vMO930+HY0WRlCxxm3tQnCOc/GafiK
-	 B1og5jcHGA07Hs3Xe2dNOg19iwVTgZKK/82976rQPMI0PBpQLpBPzg3PdgoFDv922D
-	 DI1rNkSgvaFfKD0K8JgrFsgbLt9tZ4nys8kaFHZ4=
+	b=cE7PjTqIfgOp3bwst2xmMwc76nP+7i7qAJ/hrhMPMG2mBl+/yMNI2byGxqnSaCM2k
+	 Z1wrilL2zcPmfv3oZk35BC+oE/WtpGv4F8iOK4V4L+IJH6CDzTrr1MaGZXVzUZ0Lty
+	 S9uXZhV+SIhlIffiGEsBYDmmRj8VU7r4vmsNDehg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0311/3318] rtc: brcmstb-waketimer: add missing MODULE_DEVICE_TABLE()
-Date: Wed, 18 Nov 2026 15:15:33 +0100
-Message-ID: <20261118150325.130340344@linuxfoundation.org>
+Subject: [PATCH 6.6 0312/3318] fbdev: maxine: fix 64-bit build error
+Date: Wed, 18 Nov 2026 15:15:34 +0100
+Message-ID: <20261118150325.165367917@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,40 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 402c89d28fecd28652a4bfe997f08f6544836381 ]
+[ Upstream commit 3adec5c640dc09dca5605043e138412fd5a0629d ]
 
-The driver has an OF match table wired to .of_match_table, but does
-not export the table with MODULE_DEVICE_TABLE().
+The KSEG1ADDR() macro is only defined for non-64BIT builds.
+Use the CKSEG1ADDR() macro instead.
 
-Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
-information is generated for OF based module autoloading.
+In file included from ../drivers/video/fbdev/maxinefb.c:34:
+../drivers/video/fbdev/maxinefb.c: In function 'maxinefb_ims332_write_register':
+../include/video/maxinefb.h:16:41: error: implicit declaration of function 'KSEG1ADDR'; did you mean 'CKSEG1ADDR'? [-Wimplicit-function-declaration]
+   16 | #define MAXINEFB_IMS332_ADDRESS         KSEG1ADDR(0x1c140000)
+../drivers/video/fbdev/maxinefb.c:66:49: note: in expansion of macro 'MAXINEFB_IMS332_ADDRESS'
+   66 |         register unsigned char *regs = (char *) MAXINEFB_IMS332_ADDRESS;
+../drivers/video/fbdev/maxinefb.c:66:40: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+   66 |         register unsigned char *regs = (char *) MAXINEFB_IMS332_ADDRESS;
 
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the platform driver, and the missing module alias publication.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260704121734.54941-1-pengpeng@iscas.ac.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Acked-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-brcmstb-waketimer.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/video/maxinefb.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/rtc/rtc-brcmstb-waketimer.c b/drivers/rtc/rtc-brcmstb-waketimer.c
-index 1a65a4e0dc003..9741f843ff4ec 100644
---- a/drivers/rtc/rtc-brcmstb-waketimer.c
-+++ b/drivers/rtc/rtc-brcmstb-waketimer.c
-@@ -414,6 +414,7 @@ static const __maybe_unused struct of_device_id brcmstb_waketmr_of_match[] = {
- 	{ .compatible = "brcm,brcmstb-waketimer" },
- 	{ /* sentinel */ },
- };
-+MODULE_DEVICE_TABLE(of, brcmstb_waketmr_of_match);
+diff --git a/include/video/maxinefb.h b/include/video/maxinefb.h
+index 6aeb4acca2bdb..2b66b32f355cf 100644
+--- a/include/video/maxinefb.h
++++ b/include/video/maxinefb.h
+@@ -13,13 +13,13 @@
+ /*
+  * IMS332 video controller register base address
+  */
+-#define MAXINEFB_IMS332_ADDRESS		KSEG1ADDR(0x1c140000)
++#define MAXINEFB_IMS332_ADDRESS		CKSEG1ADDR(0x1c140000)
  
- static struct platform_driver brcmstb_waketmr_driver = {
- 	.probe			= brcmstb_waketmr_probe,
+ /*
+  * Begin of DECstation 5000/xx onboard framebuffer memory, default resolution
+  * is 1024x768x8
+  */
+-#define DS5000_xx_ONBOARD_FBMEM_START	KSEG1ADDR(0x0a000000)
++#define DS5000_xx_ONBOARD_FBMEM_START	CKSEG1ADDR(0x0a000000)
+ 
+ /*
+  *      The IMS 332 video controller used in the DECstation 5000/xx series
 -- 
 2.53.0
 
