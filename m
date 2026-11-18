@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035010;
-	b=q4oh4vfIVyS8Vis2Lvg0KHFcAiP1KHn3uPH0I3+oIK5n5BgEC1tTK9iqL1n7F7Lx/Ioh
-	 eIlnb7eiZ80dRQlJJTbFQUWpWLHSTGkR+8jYqCHgpgYStijG8s0dYPjr2sXiMX7Z/tpQy
-	 jmoQjO8N+RKkV3kZX9rqx0icHto7jDn4kDcBcDhy7AVkbDQh0+NLY0aVHrOXTU/D9LZnb
-	 Tt1AFfGpvetrMrHxjA2jo/lWo1LoVagBVAjhk59+7/H2sC5kY4g/ZvRhRScnwvYuuSSh/
-	 iUVoK7cJZo5WZxnuD09rc2mdRMzmwBzD4sGJWjULySOZr2Hh0Zn/aJ4xgLKGcSdy3Sw==
+	t=1795035013;
+	b=jCTWewpqQp1o0+rIx8UeAwrlTWU9UMQi7njDgCDZauOf0tlcdmK/KXntM1jvNWMXGZVg
+	 Ho2SraGEEyRu3dD8rpnFqEWiCDBBJdv1CE0ireZz0SItAvmOUyAV/B/IrlPVRf87NsRPD
+	 dEsaezKHR7TFoApOObStyvbOC3izGy93hVIFD+No6kQfH306F9Dk/3Lc3oRQUylGi3P3w
+	 SBrBJwIJ/bUzfY0JnVSObSf5pghaB4lj8M0JI7nrC4C53r7i/kPgCmwdoGGRfdmdNvx09
+	 l2SaZaptiawUAUTruLOfJW2NtGC8SUNoeb6yYRpn42zX3xnJ26Z4gz4DpQO1mHxmKYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035010;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035013;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Nit1wdCkh3AplmE2Ezk6OFl1Rg8oo+olTsVMURtgmaQ=;
-	b=oTLQD3Dz3JZSJ+/5graW25OmHWzwa/fNqQnTmfLy8AHXBoaMccxTIHFxqG2XE6K2kvl+
-	 WfaKq5e9uOHLvfcLJjGAol+vIZraL/mbpziWYYk2VTGsMYhOL3XffdX567b4T1Y/n78R+
-	 72TUzboJ1+mXgO2/glG6TqciyggPTRK45dZfd2we4U9xVwyWYkjQuOywZ4bZveJtowZ1n
-	 cdGxoFI++1tUqtkWjkpoFWmVPKnH2Xap+C18Az+WjKePp31mRkujPKBrQyY4PiGjXVyDV
-	 BZ0DHWcc0ZNEbhimaJKRFnMVX9/nJoMQ8DigLERBi4bGtAUpiwzWKK1sEYsH/LNWz4A==
+	bh=MxIcWJujWzEIlnUMbT3urHj7JteFaPw2I24qOIP8Fsw=;
+	b=dGCSwm3gInIYbgRjUpSqiS39/SaZdv4F25XYdoC4A63JZ4U3wSsXl2g7Sln2myjdv0wP
+	 wIIvCh4jtY347LxO6zwLhIsmTEWEQTHPRRvtURf0FRcaqUOSlzWjnBKtOvOZVxHKIuegk
+	 wrn4VrCVj04ad2coAk8FOH3hwqEx+Srsy/wjuP6sp29yhJFDyNd/+bkh+V5H15Ko+8Zpw
+	 G6DczkKa1EOA4xpks+D0jN72CEEz1fzdocQF0miw9FwEkTzLTvw2HFEj8seqBdWNk0KOE
+	 9b5RPssQDj7Z4yhqZkJKfho4Lg95vYw+yiFMQLKHCS4F4nhrS5Wja/DJD5ZqZ788+AA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="d/MxC4jf";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W16Z4eiX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60B61606A325;
-	Wed, 18 Nov 2026 20:50:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6742C606A31C;
+	Wed, 18 Nov 2026 20:50:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d/MxC4jf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B29EC1F000C4;
-	Wed, 18 Nov 2026 20:50:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W16Z4eiX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC951F000C4;
+	Wed, 18 Nov 2026 20:50:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035010;
-	bh=Nit1wdCkh3AplmE2Ezk6OFl1Rg8oo+olTsVMURtgmaQ=;
+	s=korg; t=1795035012;
+	bh=MxIcWJujWzEIlnUMbT3urHj7JteFaPw2I24qOIP8Fsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d/MxC4jfS9445MSFYaxxvqTzmbAm5GAeowJmOg/TBWSFqfaeDFmPcai+6R3cXoGCQ
-	 7KpmEy3IGU70ZynMrfbhW5ulbZux2X8raTGfz46PR50Oy5lMIJuAYqGrwHwgtml+gY
-	 0zT3L2Lvd+BN674CBdRhTgZYeMsIgjzFL2VBRyHk=
+	b=W16Z4eiXCNR7hV1Su+Wrt/fk99hmEeopCGCob0odY0Tqciyxw5vyxTai9lkQi26d7
+	 64bvrElp0LKhDcQzW0AW9tUpUo31AxkiC1Droc8cSNeF3JJpGGgLxD+vGaIfSKByQd
+	 qbJy2zAq2lO4fVUrSMKqr1M7M6qRX7xl8ltaM/co=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Cen Zhang (Microsoft)" <cenzhang@linux.microsoft.com>,
+	Jan Koester <j.koester@act-marketing.de>,
 	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 6.6 0572/3318] ksmbd: fix parent dentry lifetime in directory enumeration
-Date: Wed, 18 Nov 2026 15:19:54 +0100
-Message-ID: <20261118150334.612331360@linuxfoundation.org>
+Subject: [PATCH 6.6 0573/3318] ksmbd: ignore network devices of other namespaces
+Date: Wed, 18 Nov 2026 15:19:55 +0100
+Message-ID: <20261118150334.652491295@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,84 +67,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
+From: Jan Koester <j.koester@act-marketing.de>
 
-commit 171df27077fb49b4af2c53ad2cedcd0e39664fe8 upstream.
+commit 1f5ce2b8b9164b3fcb93a18fe1e7b451c2fc6eea upstream.
 
-ksmbd_populate_dot_dotdot_entries() builds the ".." entry from
-the open directory's d_parent and passes that pointer to
-ksmbd_vfs_fill_dentry_attrs() without taking a reference. That pointer
-is only valid while the directory stays under this parent. If a
-concurrent rename moves the directory elsewhere, the old parent loses
-its last reference; a following rmdir then turns it into a negative
-dentry with d_inode cleared, and after the RCU grace period the dentry
-itself is freed. The worker still holds the raw pointer and
-dereferences d_inode through vfs_getattr() and vfs_getxattr().
+With no interface list configured, ksmbd binds every interface that
+comes up. ksmbd_netdev_event() does not look at the device's namespace,
+and create_socket() opens the listener in the namespace of the task
+raising NETDEV_UP. A container with its own address on a bridge brings
+up its interface and finds port 445 in its namespace already taken by
+ksmbd, so an SMB server running inside the container fails with
+"Address already in use".
 
-A remote SMB client, authenticated or guest, triggers this by listing
-a directory while that directory is moved under a new parent and the
-old parent is deleted. It can be done by the client itself with write
-access or by other concurrent writers, triggering null-ptr-deref and
-slab-use-after-free on a KASAN build.
+Interfaces are also matched by name only, so a container's eth0 going
+down would stop the listener on the host's eth0.
 
-  KASAN: null-ptr-deref in range
-      [0x0000000000000000-0x0000000000000007]
-  Workqueue: ksmbd-io handle_ksmbd_work
-  RIP: 0010:xattr_permission+0x9d/0x160
-  Call Trace:
-   vfs_getxattr+0x9c/0x1b0
-   ksmbd_vfs_getxattr+0x82/0x100
-   ksmbd_vfs_get_dos_attrib_xattr+0x7f/0x130
-   ksmbd_vfs_fill_dentry_attrs+0x435/0x650
-   ksmbd_populate_dot_dotdot_entries+0x25e/0x630
-   smb2_query_dir+0xcf9/0x1a20
-   handle_ksmbd_work+0x5f1/0x1c80
-   process_one_work+0x90b/0x19d0
+Only handle netdev events for devices in init_net.
 
-Fix by using the dentry reference counting APIs: take the parent with
-dget_parent(), take a matching dget() on ".", and dput() the dentry
-once ksmbd_vfs_fill_dentry_attrs() has returned or the pattern does
-not match.
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
 Cc: stable@vger.kernel.org
-Cc: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
+Signed-off-by: Jan Koester <j.koester@act-marketing.de>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb_common.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/smb/server/transport_tcp.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/fs/smb/server/smb_common.c
-+++ b/fs/smb/server/smb_common.c
-@@ -447,16 +447,17 @@ int ksmbd_populate_dot_dotdot_entries(st
- 			if (i == 0) {
- 				d_info->name = ".";
- 				d_info->name_len = 1;
--				dentry = dir->filp->f_path.dentry;
-+				dentry = dget(dir->filp->f_path.dentry);
- 			} else {
- 				d_info->name = "..";
- 				d_info->name_len = 2;
--				dentry = dir->filp->f_path.dentry->d_parent;
-+				dentry = dget_parent(dir->filp->f_path.dentry);
- 			}
+--- a/fs/smb/server/transport_tcp.c
++++ b/fs/smb/server/transport_tcp.c
+@@ -603,6 +603,15 @@ static int ksmbd_netdev_event(struct not
+ 	struct interface *iface;
+ 	int ret;
  
- 			if (!match_pattern(d_info->name, d_info->name_len,
- 					   search_pattern)) {
- 				dir->dot_dotdot[i] = 1;
-+				dput(dentry);
- 				continue;
- 			}
- 
-@@ -465,6 +466,7 @@ int ksmbd_populate_dot_dotdot_entries(st
- 							 idmap,
- 							 dentry,
- 							 &ksmbd_kstat);
-+			dput(dentry);
- 			if (rc)
- 				break;
- 
++	/*
++	 * ksmbd serves the initial namespace only. create_socket() listens in
++	 * the namespace of the task raising the event, so a container bringing
++	 * up its own interface would get a listener on its port 445, and the
++	 * name-only interface lookup would let its interfaces stop ours.
++	 */
++	if (!net_eq(dev_net(netdev), &init_net))
++		return NOTIFY_DONE;
++
+ 	switch (event) {
+ 	case NETDEV_UP:
+ 		if (netif_is_bridge_port(netdev))
 
 
