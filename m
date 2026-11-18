@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030042;
-	b=CE/Wih1bg17kyUc+YoUW7y0rjS/DvKgSAj25XTEKJ3WJ/xJtfczVCY1RpEgNtEv7HER2
-	 qm/6Q/pY3kovEMQVlMZk/hVbVqKZnKKbf2JQzyqzOMgCo42PMPzXIBRPhWdd2f/n+3aAu
-	 WDE+OvcQueouU2FyQ+v5K3ftprRgrLXibbqTdOgKiu+NQQUP+Q9+fW2T86+S5+AK2TgBH
-	 p3RftBG734X2zA2K+pOEhoW+hiVjmAoP+QPuTWH8Vusu5P8lN7YoJnG0Zih2UgwuCZUlM
-	 FIPTjuV610OpWm1zUwKEnQ0pK2AZ9BxS8iKdhSP2T1MXLxkNzph+FxMeW2l/56QaGrw==
+	t=1795030045;
+	b=MgbJXVL8gOaA/nwyz1IPAwNkB2nUzoc/yhDSGBObnhWYcGKxaD95qs2JOB5CJt/K81+t
+	 ijFqFLQAc9XpAH2ryAz5jRc44IVDPtPaLMQeik5nvtZdnhN0Go20ApSMeZBUaG0djP9+g
+	 uWDW5hmvViQjQDzHvq5OAqe22g8uFCF3RBKh6i+c0aofvntruEyJbfsZE94IIdl5a2B8B
+	 Lf/99fYmWhlANUfDYfbNuV+x6NCQpb4Yroh8B4xs18WwZCvtjkw9dpSuLoYN/N3Rp0mzu
+	 MWxy9ThVZ4QQZERSClS8aszdQmQe/TrV6CmV1bJLIHml/YpWIbDS59bzR0OJv1iwuOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030042;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030045;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Gzlf5sPXIMlKFXKZFcOqymE9Tw8M0jRDYEywsJGHR4M=;
-	b=0cm2SG9JrFWu6rsfBuoV8RLcRMT1VeR5t9NGSrUnH5xHp2DpoCOCjLs2I3NUtpNFKhoc
-	 TSZ9ABEM3WDIQQyUhT6cTJ0SjNmZnRRsF4bw+0xaOpoh/QpnEzRXVUjjra+yud59SdZ/U
-	 KF4CfIoXHtA4Nzok66zWcjiiFu5Zm7vsiEjakl+CI3kA/StmxsEHoDDDpORTEnhkQZgF9
-	 Ny4ZAlRrIozL3Gz1WtJyNB6KsGQAOBPKV/Q6/DN0oFV2Yb9Vebnni7H+Zpo+kZYDPilM+
-	 DnHj6MKHbOv8qO6oOeoRMmQ0LVjnAvm5Z8/4JDgQEJUKLOqb3SX44/TnkuztlBXIT1Q==
+	bh=XEDMiKOIFktsaLJ7z5wSRsmMem3+hzZ4dV5LbyUcUvo=;
+	b=LggD0zBZFxP1ArTugMnOZEDr8JzerkatQiDDBvaPS6cLYOeQ+MLmlDGC/z85dr71O87x
+	 8WK7Try8dIBS2wG2eGW+nKjPVS6SrYvQGD5iKVTd4pPZ6UWHmiJiH4UzsrP24EoOotz1V
+	 L4BUYj9t1if/FTV9xLsYgpccOdwp5DZ+G4oaa00KTKPYSooWfHPSGhMwYyc3fA+ZRYNu4
+	 /E/Xbk0zvr1Hw/ZU7DaIrir902vFeLgUGFJ5NdFd8+ayB+QDKls02akbpHAXTuUrwbAG+
+	 sgn4sio1h6OG2nVDGqGPSply5yweNORoxOPVNH1hSqxMLnTUKUmNWnFYwMX2lnx4/6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KuEpu8Ay;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m+LQTHMg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8178860A2600;
-	Wed, 18 Nov 2026 19:27:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B61A60A2606;
+	Wed, 18 Nov 2026 19:27:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KuEpu8Ay
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF8F81F000D4;
-	Wed, 18 Nov 2026 19:27:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m+LQTHMg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 956C71F000C8;
+	Wed, 18 Nov 2026 19:27:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030042;
-	bh=Gzlf5sPXIMlKFXKZFcOqymE9Tw8M0jRDYEywsJGHR4M=;
+	s=korg; t=1795030045;
+	bh=XEDMiKOIFktsaLJ7z5wSRsmMem3+hzZ4dV5LbyUcUvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KuEpu8AyyJebjr2DSdF6Dh7sl4p00xsxzz/PEwURaYjz/zR4xD8A45FBOGS+r+JaZ
-	 HfdjSVWh5tpSkG4+qCgPaxfYfVWdsLnAHEJsfj5BcFyIzuYWjhim8FmHQKGYGRHYdp
-	 lpjCz0uHjeYrKnS4DxPTvsY2Fe3KhfTI+CQkl0IU=
+	b=m+LQTHMgXoAfekQBk7uONAfTkfuWbbytMyjlm1WlEObOkIstKTrdZ1lUGqMUq/1m9
+	 nRnzsTSpoqD5n6vbiGVpesEE13xO0T5mcAsISbitaJB3bckYP3l4PH+083Lp2USebU
+	 l8VIchj+av4sodDj2x/Fzz16opLNlbHDTWTm9xiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0557/1756] mfd: da9150: Balance IRQ wake on teardown
-Date: Wed, 18 Nov 2026 15:44:44 +0100
-Message-ID: <20261118150031.273807368@linuxfoundation.org>
+Subject: [PATCH 6.12 0566/1756] ASoC: es8316: return cache sync errors from resume
+Date: Wed, 18 Nov 2026 15:44:53 +0100
+Message-ID: <20261118150031.604784725@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,82 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit ef464f82f3aecad4071af71074b2ceb77ffbb609 ]
+[ Upstream commit 243d0c47e57a6af89d95aa451ef5fbf453983b1c ]
 
-DA9150 enables IRQ wake after registering its regmap IRQ chip, but does not
-disable it on a later probe failure or driver removal. This leaves the wake
-depth elevated after the handler is removed, and repeated bind attempts can
-accumulate the imbalance.
+es8316_resume() restores cached registers during component resume but
+discards the regcache_sync() result and returns success. A failed replay
+can therefore leave the hardware register state stale without reaching
+the component error reporting path.
 
-Remember whether enabling IRQ wake succeeded and balance only a successful
-call. Remove MFD children first so their nested IRQ users are gone, then
-disable wake before removing the regmap IRQ chip. Preserve the existing
-non-fatal behavior when IRQ wake cannot be enabled.
+Return the cache synchronization result. The ASoC component wrapper
+reports a negative callback result and retains the established
+best-effort resume state, so this adds observability without introducing
+rollback or retry semantics.
 
-This issue was identified during our ongoing static-analysis research
-while reviewing kernel code.
+The successful resume path is unchanged.
 
-Fixes: b8fce55c09d3 ("mfd: Add support for DA9150 combined charger & fuel-gauge device")
-Assisted-by: LLM
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260923021936.957065-1-mhun512@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+The issue was found by a tool we developed.
+
+Fixes: 4bac47a7b2f9 ("ASoC: codecs: add suspend and resume for ES8316")
+Assisted-by: gpt 5
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260902013256.93072-4-pengpeng@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/da9150-core.c       | 8 ++++++--
- include/linux/mfd/da9150/core.h | 1 +
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ sound/soc/codecs/es8316.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/mfd/da9150-core.c b/drivers/mfd/da9150-core.c
-index 5c59cc869fb3e..19325d72a27e7 100644
---- a/drivers/mfd/da9150-core.c
-+++ b/drivers/mfd/da9150-core.c
-@@ -450,7 +450,7 @@ static int da9150_probe(struct i2c_client *client)
+diff --git a/sound/soc/codecs/es8316.c b/sound/soc/codecs/es8316.c
+index f508df01145bf..da02716a89401 100644
+--- a/sound/soc/codecs/es8316.c
++++ b/sound/soc/codecs/es8316.c
+@@ -808,9 +808,7 @@ static int es8316_resume(struct snd_soc_component *component)
+ 	struct es8316_priv *es8316 = snd_soc_component_get_drvdata(component);
  
- 	da9150->irq_base = regmap_irq_chip_get_base(da9150->regmap_irq_data);
- 
--	enable_irq_wake(da9150->irq);
-+	da9150->irq_wake_enabled = !enable_irq_wake(da9150->irq);
- 
- 	ret = mfd_add_devices(da9150->dev, -1, da9150_devs,
- 			      ARRAY_SIZE(da9150_devs), NULL,
-@@ -463,6 +463,8 @@ static int da9150_probe(struct i2c_client *client)
- 	return 0;
- 
- mfd_fail:
-+	if (da9150->irq_wake_enabled)
-+		disable_irq_wake(da9150->irq);
- 	regmap_del_irq_chip(da9150->irq, da9150->regmap_irq_data);
- regmap_irq_fail:
- 	i2c_unregister_device(da9150->core_qif);
-@@ -474,8 +476,10 @@ static void da9150_remove(struct i2c_client *client)
- {
- 	struct da9150 *da9150 = i2c_get_clientdata(client);
- 
--	regmap_del_irq_chip(da9150->irq, da9150->regmap_irq_data);
- 	mfd_remove_devices(da9150->dev);
-+	if (da9150->irq_wake_enabled)
-+		disable_irq_wake(da9150->irq);
-+	regmap_del_irq_chip(da9150->irq, da9150->regmap_irq_data);
- 	i2c_unregister_device(da9150->core_qif);
+ 	regcache_cache_only(es8316->regmap, false);
+-	regcache_sync(es8316->regmap);
+-
+-	return 0;
++	return regcache_sync(es8316->regmap);
  }
  
-diff --git a/include/linux/mfd/da9150/core.h b/include/linux/mfd/da9150/core.h
-index d116d5f3ef561..369698036d1aa 100644
---- a/include/linux/mfd/da9150/core.h
-+++ b/include/linux/mfd/da9150/core.h
-@@ -65,6 +65,7 @@ struct da9150 {
- 	struct regmap_irq_chip_data *regmap_irq_data;
- 	int irq;
- 	int irq_base;
-+	bool irq_wake_enabled;
- };
- 
- /* Device I/O - Query Interface for FG and standard register access */
+ static int es8316_suspend(struct snd_soc_component *component)
 -- 
 2.53.0
 
