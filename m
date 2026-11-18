@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795062135;
-	b=ezTCr6DzY+iQq0sLcTyIo1yctPWpZSi4wyIpB8GoPw/pa3Mbrrlpn9xf4AKCe/COZAm4
-	 vYve7J/qBpwMIubB0vd6pJ9eoisAvGc0WUm0dbRzGmZWLKEqWxX63ZoepUzc5mkfOfSwG
-	 IGRp5NqTav9wp5zK2NTVS3S0TZ1MEDRBCWmxDBlehl9fVDdCH0yQcrn/mbdcOZtXNPTWs
-	 DaBhOvthru20/JwBd3GD5zbdJ4+LCRImuCYXsy3uNPHJB5K1COXiO6QQFdUaMSx/iyD/c
-	 vjUNSIBkblpDT4K7oSvETsWRF33NULzIyh6N846xuC6KFqmxtaXkFba1bxxgURhlObw==
+	t=1795062138;
+	b=xrKfm5eDovbnr/mWBMW5dPUQ5/GmcqDSZiP+lpZBk2pZmfFNMqusEZ7cUENYQQx6ug1S
+	 5UnAXVK7goDLqlZA1vTrex0+z29sMytOqKNstnHMVqidXeH3Y91GOKfKwLn+mW6/jMIyO
+	 T32fD7BIXd5l69+ymasUJLoNuygX9IXMy5s7+HUA4gXiUpGVnYjx2CV1ifPhNZMoGcd/v
+	 9xh1ukM0fN9sCHr3FhxDQfFARbgF1k1Iw7zh/tRVQVu52rqipULvc2ouqvG4CuT2lAwsd
+	 +KmRCSUjBsQoZ40m2wGA5yr1fizQ+FvW8EDaYw4iAm+8FmyYo7dZWwLbZJtYpr83VCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795062135;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062138;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y/6Qjkqi7r0Ki0sgdp+znPYJYvY4G3fzO7FKQeN+bGU=;
-	b=ruaVkUfHoLbTofj94tUL8RLfk2S1r1As7aFhhIjeuc0j8dDX7ZyZ3xv6pkvFik1oFWEK
-	 xXIBn0qTJBlX/6KjRfevbGChJyRjwRpQz+a3Z6npvufUVmlgpmKsuK1UhT9doSgJFySN1
-	 +MGXFdDrtgwhMIzEaaU/jywF7LwagU/2Te3AGDOC3ixjXzCJIvRSjA1JAtv7W1kfVOyJu
-	 vR33bVpbM2szyw+duOnaPToWqf+Rdk/B6sZ6Jb45pwX9e+6Mp9LMY0A37iM8q424bfP+x
-	 4n38niAgKnQX9bfgYqHu87TFe/EawVTUOtuCQLrEEqUT2oI35XoRIVYhGn+774c5P/A==
+	bh=zuuTACKvrGYDRAktX2BOOob+k84XUU6ImnFMaCisbwY=;
+	b=Y3TrVsMF7277U76Jbk5RDaDelLmIBWXbUDjqag7VLQMt4+p+FrBQCCCVGEoy/vNFXCdA
+	 l1PjufkK0l07qlgpoHIIXpzbRQQDvKtvKOoZPVO0MjICeLfJuRY48f8SN3g0xB7ZuiGOI
+	 maDgr94fUAkbFPP7HJ6xLV/vJ/jCnfQkPDiFhyQ3TAlMkR7uZuQfhqDDKn+v4PqP9u2kr
+	 fP67jU3hnxCpDHZLZJiaRkczGvTDMAbMlQHrXR/xe9kjNiK3X8tULJdSX1CqagUsEHVla
+	 bBn8oBvcIMRBLdGGsad79WF+Ft5d6nxGBwUULwU2fEj9FZHnlflVrO7/BtfItm2FMbw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pV67ft9G;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bIyKGnkp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A690B606A320;
-	Thu, 19 Nov 2026 04:22:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B76606A32C;
+	Thu, 19 Nov 2026 04:22:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pV67ft9G
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B1101F000C4;
-	Thu, 19 Nov 2026 04:22:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bIyKGnkp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBBA21F000C5;
+	Thu, 19 Nov 2026 04:22:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795062135;
-	bh=Y/6Qjkqi7r0Ki0sgdp+znPYJYvY4G3fzO7FKQeN+bGU=;
+	s=korg; t=1795062138;
+	bh=zuuTACKvrGYDRAktX2BOOob+k84XUU6ImnFMaCisbwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pV67ft9G9y8ueWOCp1yzX9y1v1vyqHvAZIOEUJ1SHDWxr0Saslwg3X/g17APIgpdB
-	 Xfrxlc0vumNI++VJA+yGkUhjIhruZG/Gp32ahrJy7G6up/EHmBQEIPjuFLw+DXEEvN
-	 YfqGfOx/p5YNVcZmmSHN30ZvqSoSmyBDrgFdb4+E=
+	b=bIyKGnkp36sLeD1iyxjSaYb2yJvQeWMA5MRjjcK9P1/xSVWzGl0HYKl9b/N/r3Wcl
+	 KBhq68CLPdAUJ4ZkpTBE3H1lT4XEC/82R60wN65hkswRt2ury99BZibm7nqGwxDNvW
+	 QQ7ATKns4+N4pCtCQORVId1MOasLjIv+ZwUEVOUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Keith Busch <kbusch@kernel.org>,
+	Hungyu Lin <dennylin0707@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1802/1848] nvmet-tcp: dont read a removed port at Connect time
-Date: Wed, 18 Nov 2026 16:04:00 +0100
-Message-ID: <20261118150034.754130489@linuxfoundation.org>
+Subject: [PATCH 5.10 1776/1848] thermal: Fix CPU mask truncation in power limit trace event
+Date: Wed, 18 Nov 2026 16:03:34 +0100
+Message-ID: <20261118150033.715711765@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -72,63 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-[ Upstream commit 3f98ce65a87979e881343dcf082c9595ec90ddc7 ]
+[ Upstream commit 82c9c94f54a444a686e926c872dae4b198d1036f ]
 
-nvmet_tcp_alloc_cmd() takes the nvmet port of a command from
-queue->port, and the commands of a queue are allocated from the io work
-when the Connect arrives. nvmet_tcp_remove_port() shuts down the queues
-that have no controller yet and frees the port without waiting for
-them, they're released later from a work. An io work handling a Connect
-at that moment reads the freed port for every command of the queue and
-hands the result to the core.
+num_possible_cpus() counts CPUs, but CPU IDs need not be contiguous.
+Using it to size the thermal_power_cpu_limit bitmap can omit CPUs with
+higher IDs. For example, possible CPUs 0 and 64 produce an eight-byte
+bitmap on a 64-bit system, dropping CPU 64.
 
-Note the nvmet port in the queue at allocation. It outlives the
-transport port.
+Use nr_cpumask_bits for both sizing and copying the bitmap.
 
-Fixes: 872d26a391da ("nvmet-tcp: add NVMe over TCP target driver")
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Sagi Grimberg <sagi@grimberg.me>
-Cc: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 6828a4711f99 ("thermal: add trace events to the power allocator governor")
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Link: https://patch.msgid.link/20261023060724.5691-1-dennylin0707@gmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/tcp.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/trace/events/thermal.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index 05a599f6c8d59..46547a1fcf872 100644
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -94,6 +94,7 @@ enum nvmet_tcp_queue_state {
- struct nvmet_tcp_queue {
- 	struct socket		*sock;
- 	struct nvmet_tcp_port	*port;
-+	struct nvmet_port	*nport;
- 	struct work_struct	io_work;
- 	struct nvmet_cq		nvme_cq;
- 	struct nvmet_sq		nvme_sq;
-@@ -1370,7 +1371,7 @@ static int nvmet_tcp_alloc_cmd(struct nvmet_tcp_queue *queue,
- 	u8 hdgst = nvmet_tcp_hdgst_len(queue);
+diff --git a/include/trace/events/thermal.h b/include/trace/events/thermal.h
+index 135e5421f0035..4ba9ea4c95631 100644
+--- a/include/trace/events/thermal.h
++++ b/include/trace/events/thermal.h
+@@ -129,7 +129,7 @@ TRACE_EVENT(thermal_power_cpu_limit,
+ 	TP_ARGS(cpus, freq, cdev_state, power),
  
- 	c->queue = queue;
--	c->req.port = queue->port->nport;
-+	c->req.port = queue->nport;
+ 	TP_STRUCT__entry(
+-		__bitmask(cpumask, num_possible_cpus())
++		__bitmask(cpumask, nr_cpumask_bits)
+ 		__field(unsigned int,  freq      )
+ 		__field(unsigned long, cdev_state)
+ 		__field(u32,           power     )
+@@ -137,7 +137,7 @@ TRACE_EVENT(thermal_power_cpu_limit,
  
- 	c->cmd_pdu = page_frag_alloc(&queue->pf_cache,
- 			sizeof(*c->cmd_pdu) + hdgst, GFP_KERNEL | __GFP_ZERO);
-@@ -1647,6 +1648,8 @@ static int nvmet_tcp_alloc_queue(struct nvmet_tcp_port *port,
- 	INIT_WORK(&queue->io_work, nvmet_tcp_io_work);
- 	queue->sock = newsock;
- 	queue->port = port;
-+	/* The port may be gone when the commands are allocated */
-+	queue->nport = port->nport;
- 	queue->nr_cmds = 0;
- 	spin_lock_init(&queue->state_lock);
- 	queue->state = NVMET_TCP_Q_CONNECTING;
+ 	TP_fast_assign(
+ 		__assign_bitmask(cpumask, cpumask_bits(cpus),
+-				num_possible_cpus());
++				nr_cpumask_bits);
+ 		__entry->freq = freq;
+ 		__entry->cdev_state = cdev_state;
+ 		__entry->power = power;
 -- 
 2.53.0
 
