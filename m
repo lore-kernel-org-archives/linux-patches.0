@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021768;
-	b=Eiefm6XuQg5aq78j73+G94he0Qwvfbr6T5zQcoIuhv5V9vG91ub2H7LsnSqZVlbcRH3J
-	 CR+1grDz+8u8HXJlADvs/vyFN6PCwTdEd0R7SHM5bptCl3dKn3d8/RBK7eHLdithPD/yP
-	 u2AmZZgox3HRMFb/dnLGDIF5JzCOYujOvUqvWZfxOLvx0dZNyU+MtktDmondGDgGleq3H
-	 KiJSTPK9Zh3FG7ZGWOMNondPf2K49ehFDnnS9CwQC0wcuSUhNgZH4M88Pq2vF7H3gdsSP
-	 wBqPNwCtJ+fRY0HlOqVceEWoKy6fDYtDkd49C8J3KTh70ZP5wjT17VTzz4lyD/2SCLQ==
+	t=1795021771;
+	b=OO9izECgQa3jzBWebmPZPt/LXamdO3S3/HqtEaiLiHtsty+KM3dPVmfSSejh0loyLWLR
+	 vng51+J77mMbcffTXhxUo1yKecL5+iL8bxvvVdgTmzc+Th6rvBwNnmcYRLzmIZQ9jqViJ
+	 XARQTI20AlUiZwjyticM5uOlNcch4rgcOX1da/WaH58yUb43gG9dss9xL6G5TAo0C2H09
+	 qGQxhgzHoMNx81u0Ougb+v/p4OFlLm7mFZKsFXloMxxC/5Vo0qWzkF+J6CgMsRWlLn3Ts
+	 71buCIif/sDKZYlrPmxwYBmAz8PKyWRxOTECEA9UjtRfauGTw3ZQYzwgZRE6JuPADsw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021768;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021771;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XYVsnrkxCAh2859kSiFDV53MsWnTwuYcXakmVONBeK4=;
-	b=v+U7gSxmTR0XeCaYwuKOwD8aqc8Yq70pDznoKTWcMKoHbWRXy+2uUb9VEqZu7fFSpU2w
-	 fmW3n929XDPBCo8Yx6QGXHCpAzm/PLFD6PK5NuJxU1pkeyyOEy/91rICm7FOfGX85w+Cb
-	 IcV6UBNK7igkj93jOveluowMKkoeu1m8WoT90trUcl8+gjT5M/o0ykxh6qz7yx3zLeye4
-	 jQnao9bsPeOLEhO/HWOZx22Ryo9PB3wtn3+HLWHfbSP25yCiQkQ8h14fp1YDSWrtGU3Kl
-	 c1wIndSmqmKEMEQarCtS8lia321vsP/r+JiBtJZYHue09rgaz80z65y5YoRZGcXu99Q==
+	bh=bwdpg/N45btJouN84nMM+5CSikvaLDTYtkjOcv/ewnE=;
+	b=Q40yg1zlpFvHD6EYGICeMp8jguyfODxWhK9qWMBn0D8Hw0RB3T340Nb62nrfVA771dR9
+	 89Srdfgro/g2JMd89vTvqdJDjnxI3BM8Y+GimtHtnhx8/nclMqProOpbd5eGA7MGJoiD8
+	 IFjyPmEXIBeqrYxNafZldTY93bHZtW1rKcEaPE2HmM5zyZndJLDRLkBEfjZ0GQzDxJK4m
+	 P257YEbwbZtCUE3+LNLc1eZy49Fu+nncoL4QkjHifspcCoy/PcDF3SU5hNa0g2dEZ2esW
+	 7VsaLunF1cEfpwzB+7OpzzQ3ojXYsS6CE8craY6zs5SDF1fCOIU+wbUu3jWQsxBKi5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B4XIL0+R;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lEzCf6hZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9AD660A2603;
-	Wed, 18 Nov 2026 17:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CA3060A2603;
+	Wed, 18 Nov 2026 17:09:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B4XIL0+R
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAA831F000C4;
-	Wed, 18 Nov 2026 17:09:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lEzCf6hZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6521F000C4;
+	Wed, 18 Nov 2026 17:09:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021768;
-	bh=XYVsnrkxCAh2859kSiFDV53MsWnTwuYcXakmVONBeK4=;
+	s=korg; t=1795021771;
+	bh=bwdpg/N45btJouN84nMM+5CSikvaLDTYtkjOcv/ewnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B4XIL0+RhP43s3x2jWWmZvKGbD9uvAgqwfkotaFFLohxLUl9KQDtsEcRzIepIpkFB
-	 BwQWZDO1prp0onzSeAQC6VDrbqzysduU0gRgAIkVj8bs0pGMuteh4Oq2rSg4ZJQdv4
-	 j/d9wbYGgAFiiJWnjLS7xnd9FZ2hKLbszZFCFdGs=
+	b=lEzCf6hZCRDZUTxB+mHtAmBhL3aNUfd8UW19s6dch3AJN0tJolhF8LPWTbmzyUVV5
+	 klFnSjf5WceuMOGUROwBByQgTCEkE9i/i6jgXlqPT6XcRMOrQgeujt64x72gDcMMEb
+	 2+ZUkNA7/8ujfcgfX4n11zL77FVhAx6OYAjP9NFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Guopeng Zhang <zhangguopeng@kylinos.cn>,
 	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2424/2651] cgroup/cpuset: Properly compute effective xcpus in update_parent_effective_cpumask()
-Date: Wed, 18 Nov 2026 16:01:04 +0100
-Message-ID: <20261118150412.503168624@linuxfoundation.org>
+Subject: [PATCH 7.3 2425/2651] cgroup/cpuset: Fix incorrect effective_cpus bug in update_cpumasks_hier()
+Date: Wed, 18 Nov 2026 16:01:05 +0100
+Message-ID: <20261118150412.536284352@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,271 +71,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 69a75e4f377629928bd173747b864694c2af4e1c ]
+[ Upstream commit d3873b45bea4cc99d135922cdc89841164f33855 ]
 
-Since the introduction of cpuset.cpus.exclusive in commit
-e2ffe502ba45 ("cgroup/cpuset: Add cpuset.cpus.exclusive for v2"), a
-compute_effective_exclusive_cpumask() helper which is later renamed to
-compute_excpus() is added to compute the effective xcpus of a partition
-root. However update_parent_effective_cpumask() is not updated in all
-proper places to use the new helper to check if a given cpuset should
-remain a valid partition root. This can cause a cpuset to incorrectly
-remain a valid partition root even if no effective xcpus is left.
+With the introduction of cpuset.cpus.exclusive, the computation of
+effective_cpus differs depending on if a cpuset is a valid partition
+root or not.
 
-Fix that problem by using compute_excpus() to compute the effective xcpus
-into delmask in all cases except partcmd_disable, partcmd_invalidate
-or partcmd_update with newmask set and use it for tasks_nocpu_error()
-check as well as checking its emptiness. This enables us to catch invalid
-partition root more accurately in update_parent_effective_cpumask().
+In update_cpumasks_hier(), effective_cpus is computed early
+to check if the current subtree can be skipped. Later on
+update_parent_effective_cpumask() may be called which can change the
+partition state from valid to invalid or vice versa. If the partition
+state changes, the previously computed effective_cpus may no longer be
+valid. Fix that by recomputing effective_cpus again when that happens.
 
-In the case of partcmd_update with newmask set, the passed in new
-effective xcpus value will directly be used in the tasks_nocpu_error()
-check without relying on old data in the cpuset.
-
-For the partcmd_update with NULL newmask case, the cpu exclusivity test
-there is also relaxed to be performed only if exclusive_cpus is empty.
-
-Some test case are added to test_cpuset_prs.sh for invalidating a
-partition root due to its effective xcpus becoming empty as well as
-making sure that an invalid partition can only be revived when exclusive
-CPUs are available agin.
+Also add a new test case into test_cpuset_prs.sh to verify this change.
 
 Fixes: e2ffe502ba45 ("cgroup/cpuset: Add cpuset.cpus.exclusive for v2")
 Signed-off-by: Waiman Long <longman@redhat.com>
 Reviewed-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
-Tested-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
 Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c                        | 87 ++++++++++---------
- .../selftests/cgroup/test_cpuset_prs.sh       | 11 +++
- 2 files changed, 56 insertions(+), 42 deletions(-)
+ kernel/cgroup/cpuset.c                            | 10 ++++++++--
+ tools/testing/selftests/cgroup/test_cpuset_prs.sh |  3 +++
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
 diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 53f6e3c470f11..770956ec1393a 100644
+index 770956ec1393a..731f96f42574f 100644
 --- a/kernel/cgroup/cpuset.c
 +++ b/kernel/cgroup/cpuset.c
-@@ -1820,7 +1820,7 @@ static void remote_cpus_update(struct cpuset *cs, struct cpumask *xcpus,
-  * update_parent_effective_cpumask - update effective_cpus mask of parent cpuset
-  * @cs:      The cpuset that requests change in partition root state
-  * @cmd:     Partition root state change command
-- * @newmask: Optional new cpumask for partcmd_update
-+ * @newmask: Optional new effective xcpus for partcmd_update
-  * @tmp:     Temporary addmask and delmask
-  * Return:   0 or a partition root state error code
-  *
-@@ -1835,11 +1835,11 @@ static void remote_cpus_update(struct cpuset *cs, struct cpumask *xcpus,
-  * given back to parent's effective_cpus. 0 will always be returned.
-  *
-  * For partcmd_update, if the optional newmask is specified, the cpu list is
-- * to be changed from effective_xcpus to newmask. Otherwise, effective_xcpus is
-- * assumed to remain the same. The cpuset should either be a valid or invalid
-- * partition root. The partition root state may change from valid to invalid
-- * or vice versa. An error code will be returned if transitioning from
-- * invalid to valid violates the exclusivity rule.
-+ * to be changed from effective_xcpus to newmask. Otherwise, effective_xcpus
-+ * will be computed and a valid partition will be invalidated if it is the new
-+ * cpumask is empty. The cpuset should either be a valid or invalid partition
-+ * root. The partition root state may change from valid to invalid or vice
-+ * versa.
-  *
-  * For partcmd_invalidate, the current partition will be made invalid.
-  *
-@@ -1862,7 +1862,6 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
- 	int deleting;	/* Deleting cpus from parent's effective_cpus	*/
- 	int old_prs, new_prs;
- 	int part_error = PERR_NONE;	/* Partition error? */
--	struct cpumask *xcpus = user_xcpus(cs);
- 	int parent_prs = parent->partition_root_state;
- 	bool nocpu;
- 
-@@ -1905,30 +1904,30 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
- 	if (!newmask && xcpus_empty(cs))
- 		return PERR_CPUSEMPTY;
- 
--	nocpu = tasks_nocpu_error(parent, cs, xcpus);
-+	/*
-+	 * Except for partcmd_disable and non-NULL newmask, use delmask
-+	 * to compute the current effective xcpus value and use it for
-+	 * tasks_nocpu_error check.
-+	 */
-+	if ((cmd != partcmd_disable) && !newmask) {
-+		compute_excpus(cs, tmp->delmask);
-+		nocpu = tasks_nocpu_error(parent, cs, tmp->delmask);
-+	}
- 
- 	if ((cmd == partcmd_enable) || (cmd == partcmd_enablei)) {
--		/*
--		 * Need to call compute_excpus() in case
--		 * exclusive_cpus not set. Sibling conflict should only happen
--		 * if exclusive_cpus isn't set.
--		 */
--		xcpus = tmp->delmask;
--		if (compute_excpus(cs, xcpus))
--			WARN_ON_ONCE(!cpumask_empty(cs->exclusive_cpus));
- 		new_prs = (cmd == partcmd_enable) ? PRS_ROOT : PRS_ISOLATED;
- 
- 		/*
- 		 * Enabling partition root is not allowed if its
- 		 * effective_xcpus is empty.
- 		 */
--		if (cpumask_empty(xcpus))
-+		if (cpumask_empty(tmp->delmask))
- 			return PERR_INVCPUS;
- 
--		if (prstate_housekeeping_conflict(new_prs, parent_prs, xcpus, NULL))
-+		if (prstate_housekeeping_conflict(new_prs, parent_prs, tmp->delmask, NULL))
- 			return PERR_HKEEPING;
- 
--		if (tasks_nocpu_error(parent, cs, xcpus))
-+		if (nocpu)
- 			return PERR_NOCPUS;
- 
- 		/*
-@@ -1940,16 +1939,14 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
- 		 *
- 		 * Warn if it is not the case.
- 		 */
--		cpumask_and(tmp->new_cpus, xcpus, cpu_active_mask);
-+		cpumask_and(tmp->new_cpus, tmp->delmask, cpu_active_mask);
- 		WARN_ON_ONCE(!cpumask_subset(tmp->new_cpus, parent->effective_cpus));
--
- 		deleting = true;
- 	} else if (cmd == partcmd_disable) {
- 		/*
- 		 * May need to add cpus back to parent's effective_cpus
- 		 * (and maybe removed from subpartitions_cpus/isolated_cpus)
--		 * for valid partition root. xcpus may contain CPUs that
--		 * shouldn't be removed from the two global cpumasks.
-+		 * for valid partition root.
- 		 */
- 		if (is_partition_valid(cs)) {
- 			cpumask_copy(tmp->addmask, cs->effective_xcpus);
-@@ -1969,8 +1966,8 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
- 			goto write_error;
- 		}
- 
--		/* Check newmask again, whether cpus are available for parent/cs */
--		nocpu |= tasks_nocpu_error(parent, cs, newmask);
-+		/* Check newmask whether cpus are available for parent/cs */
-+		nocpu = tasks_nocpu_error(parent, cs, newmask);
- 
- 		/*
- 		 * partcmd_update with newmask:
-@@ -2025,7 +2022,7 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
- 		/*
- 		 * partcmd_update w/o newmask
- 		 *
--		 * delmask = effective_xcpus & parent->effective_cpus
-+		 * delmask = newly computed effective xcpus value
- 		 *
- 		 * This can be called from:
- 		 * 1) update_cpumasks_hier()
-@@ -2037,7 +2034,7 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
- 		 * A partition error happens when parent has tasks and all
- 		 * its effective CPUs will have to be distributed out.
- 		 */
--		if (nocpu) {
-+		if (nocpu || cpumask_empty(tmp->delmask)) {
- 			part_error = PERR_NOCPUS;
- 			if (is_partition_valid(cs))
- 				adding = cpumask_and(tmp->addmask,
-@@ -2050,38 +2047,44 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
- 				cpumask_copy(tmp->addmask, cs->effective_xcpus);
- 				adding = true;
- 			}
--		} else if (is_partition_invalid(cs) && !cpumask_empty(xcpus) &&
--			   cpumask_subset(xcpus, parent->effective_xcpus)) {
-+		} else if (is_partition_invalid(cs)) {
- 			struct cgroup_subsys_state *css;
- 			struct cpuset *child;
- 			bool exclusive = true;
- 
+@@ -2368,10 +2368,16 @@ static void update_cpumasks_hier(struct cpuset *cs, struct tmpmasks *tmp,
+ 		if (update_parent) {
+ 			update_parent_effective_cpumask(cp, partcmd_update, NULL, tmp);
  			/*
- 			 * Convert invalid partition to valid has to pass the
--			 * cpu exclusivity test as well as the housekeeping
--			 * check.
-+			 * cpu exclusivity test when cpuset.cpus.exclusive is
-+			 * empty as well as the housekeeping check.
+-			 * The cpuset partition_root_state may become
+-			 * invalid. Capture it.
++			 * Capture current partition_root_state as it may have
++			 * changed. Recompute effective cpumask if changed.
  			 */
- 			if (prstate_housekeeping_conflict(cs->partition_root_state,
--							  parent_prs, xcpus, NULL)) {
-+							  parent_prs, tmp->delmask, NULL)) {
- 				part_error = PERR_HKEEPING;
- 				goto write_error;
- 			}
--			rcu_read_lock();
--			cpuset_for_each_child(child, css, parent) {
--				if (child == cs)
--					continue;
--				if (!cpusets_are_exclusive(cs, child)) {
--					exclusive = false;
--					break;
-+			if (cpumask_empty(cs->exclusive_cpus)) {
-+				rcu_read_lock();
-+				cpuset_for_each_child(child, css, parent) {
-+					if (child == cs)
-+						continue;
-+					if (!cpusets_are_exclusive(cs, child)) {
-+						exclusive = false;
-+						break;
-+					}
- 				}
-+				rcu_read_unlock();
- 			}
--			rcu_read_unlock();
- 			if (exclusive)
--				deleting = cpumask_and(tmp->delmask,
--						xcpus, parent->effective_cpus);
-+				deleting = !cpumask_empty(tmp->delmask);
- 			else
- 				part_error = PERR_NOTEXCL;
+ 			new_prs = cp->partition_root_state;
++			if (new_prs != old_prs) {
++				if (new_prs > 0)
++					compute_partition_effective_cpumask(cp, tmp->new_cpus);
++				else
++					compute_effective_cpumask(tmp->new_cpus, cp, parent);
++			}
  		}
-+		/*
-+		 * When both cs and parent remain valid, parent's
-+		 * compute_partition_effective_cpumask() call would have removed
-+		 * cs's effective_xcpus from the parent's effective_cpus. So
-+		 * there is no need to adjust parent's effective_cpus here.
-+		 */
- 	}
  
- write_error:
+ 		spin_lock_irq(&callback_lock);
 diff --git a/tools/testing/selftests/cgroup/test_cpuset_prs.sh b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
-index bb26a7da0ee73..3b59433ae8be8 100755
+index 3b59433ae8be8..644cf0d2a7c48 100755
 --- a/tools/testing/selftests/cgroup/test_cpuset_prs.sh
 +++ b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
-@@ -290,6 +290,8 @@ TEST_MATRIX=(
- 								       A1:P0|A2:P1|A3:P2|B1:P1 2-4|3"
- 	"  C1-6:P1 C3-6:P1 C5-6:P1 .      .      P2      .      .    0 A1:1-2|A2:3-6|A3:5-6 \
- 								       A1:P1|A2:P2|A3:P-1 3-6"
-+	"  C1-6:P2 C3-6:P2 C3-4:P2 .      .     C5-6     .      .    0 A1:1-4|A2:5-6|A3:5-6 \
-+								       A1:P2|A2:P2|A3:P-2 1-6"
+@@ -295,6 +295,9 @@ TEST_MATRIX=(
  	" C1-4:X2-4 C2-4:X3-4:P1 C3-4:X4:P2 \
  				   .      .      X5      .      .    0 A1:1-4|A2:2-4|A3:3-4 \
  								       A1:P0|A2:P-1|A3:P-2 ."
-@@ -358,6 +360,10 @@ TEST_MATRIX=(
- 	# cpuset.cpus is allowed, but those extra CPUs are ignored.
- 	"  C2-3:P1   C3:P1  .      .      .     C2-4    .      .     0 A1:|A2:2-3 A1:P1|A2:P1"
- 
-+	# A child cannot recover until its exclusive CPUs are available again.
-+	" CX1-4:P1 CX3-4:P1 .     .     X1-2     .      .      .     0 A1:1-2|A2:1-2|XA2: A1:P1|A2:P-1"
-+	" CX1-4:P1 CX3-4:P1 .     .  X1-2:X1-4   .      .      .     0 A1:1-2|A2:3-4|XA2:3-4 A1:P1|A2:P1"
-+
- 	# Taking away all CPUs from parent or itself if there are tasks
- 	# will make the partition invalid.
- 	"  C2-3:P1   C3:P1  .      .      T     C2-3    .      .     0 A1:2-3|A2:2-3 A1:P1|A2:P-1"
-@@ -437,6 +443,11 @@ TEST_MATRIX=(
- 	"  C1-3:P2 C2:P2    .      .       .     P1     .      .     0 A1:1-3|A2:2 A1:P2|A2:P-1 1-3"
- 	"  C1-3:P2 C2:P1    .      .       .    C2-3    .      .     0 A1:1-3|A2:2-3 A1:P2|A2:P-1 1-3"
- 
-+	# A middle isolated parent shrunk below coverage: the released CPUs of
-+	# an invalidated child stay isolated as a higher ancestor still covers them.
-+	" CX0-4:P2 CX2-4:P2 CX3-4:P2 .     .     X2     .      .     0 A1:0-1,3-4|A2:2|A3:2 \
-+								       A1:P2|A2:P2|A3:P-2 0-4"
-+
- 	#
- 	#  old-A1 old-A2 old-A3 old-B1 new-A1 new-A2 new-A3 new-B1 fail ECPUs Pstate ISOLCPUS
- 	#  ------ ------ ------ ------ ------ ------ ------ ------ ---- ----- ------ --------
++	" C1-5:X3-5:P2 C3-5:X4-5:P2 C4-5:X5:P2 \
++				   .    X1-4     .       .      .    0 A1:1-3|A2:4|A3:4 \
++								       A1:P2|A2:P2|A3:P-2 1-4"
+ 	" C1-4:X2-4 C1-4:X3-4:P1 C3-4:X4:P2 \
+ 				   .      .      .      X1      .    0 A1:1-2|A2:3-4|A3:3-4 \
+ 								       A1:P0|A2:P1|A3:P-2 ."
 -- 
 2.53.0
 
