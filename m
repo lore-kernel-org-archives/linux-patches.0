@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034896;
-	b=MRYtO7UgneNICILeDyTh2MJkeqPSlb5BfzKicLCdnureEasGs86yOV8ioBErylHuxJSF
-	 xAhuBlYWyQMnfmZK3ShPxOVeiNrwvsjKLPMLTgVMp6ieMsRxedtXEFJTKBjFxQoMLOsZj
-	 uIS3kURUm9EoQgqLgKftBE8OGgYw9bHwbZZWLnX7heSFnfO/dgZf8PHeJrIbKzNFiDJ9j
-	 xsHnZjAgXY2qgES9Xx3GcD6Vt0KlA29/WcBhJwHr04teR7gYnM1tAekIJEzG4FDQxZJRX
-	 DA9kPTb/ss79koiczf6sR4mbXxQ3wwrXYAZOvP3Gf3Q6R9W6vwcIV69qKSQs5395zIw==
+	t=1795034899;
+	b=q12+iKV0/41LoCtUZnSG7vmihcLo5lV5AV/jsQ4tPZcM0G/9itioQqGtsoVKKFbKnvUp
+	 fQ7If1Fw+TmwBkYexInjAi35l2KoXLNtzZmDgzZMSj5Qx5OkspFcWU/WWGxMoeneBcQc3
+	 28ZA0jt4qtTxdNznoouNEExiu/qU2UhwPpDuy/E2TgU4uP+o9/5Pwwnt7/8h3CQjPLMWS
+	 B89jScf5aOwhIPKece+QtQrq9ElbLqxLeuJAIIRFiJy/T/zfpn5PSxvREQSPUFyefJrZU
+	 l3NuaqOAdNt2eARfcNSOi9XigI5DdV3b5ay4WFB+KFzjHmBZU311RRUMh/MytVxlGYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034896;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034899;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hYRDC3F1eLtTCoWg59zwwxvIVxyB0V5cWuNsL/eUc34=;
-	b=io1GAgJtsDUvePlIXK2q6ryypljhyxxUUWlQIna8btV31wqrmZBc15vApXn+qCvS9Rj0
-	 7TlYmFX/5dLPAzKfBybobkH6YnUxvCCuHFQoxF2MybCtOtJ7oy0AsDEzP8W6RlnF0cziP
-	 8WQSAyOslf30MZ24vZ/9/dorwij/+jAAIQz01Y8MTH+OgmHVn2OyVas2M8hNLbMolZFCE
-	 Z/YvviCKBvJp/+CS4pZD9OZ1kVAOW9qdX124MlCH9qRQL9SF0f05v9C67uVh25W3c6ruQ
-	 XTUMi4X4oHtfqJMSaYZXTME+CmdrHQSGVteGzTz3CACvlDCUJTu0Ml98Q+peqZ6Tv/Q==
+	bh=0WSXVpdX1aEJj6zGRriOOeaVoP8CvdOpmJR+Udveukk=;
+	b=Vtxqrkc9l68HAB537Zxny15aQDyjV2TXw+SXfun4WKe2784pjrW253VQS2NjAKUfIvdF
+	 RUuywt+6l+cZZ7Veswiud+IJb9omrwoIY0MSaf/Eg5PZOgCl0G1OS/Q8Vkw1XBEMyrNP9
+	 7iEVQERvA0MCFdKu+7yU1cBUySrvVpLAkJKJrkNbeQIEMj8f7Z+3c6dnVRh4eRAhdOSh7
+	 Ski6MG/vxAAgDuzF5GnMVH1ptwZUYyxpwMukCcS8z2DyJZa/Oek25PYmilqoK6GeqOSeF
+	 g4E2SUFq380JntnFeHUMwJ9fnqsYBsI+6vkJpTz9tzyXHQ4b/kXhyE8rrau3oAI9YMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="m5+HqIC/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tBlqVLwa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64040606A31C;
-	Wed, 18 Nov 2026 20:48:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53695606A31C;
+	Wed, 18 Nov 2026 20:48:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m5+HqIC/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B702F1F000C5;
-	Wed, 18 Nov 2026 20:48:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tBlqVLwa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EACE1F000C4;
+	Wed, 18 Nov 2026 20:48:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034896;
-	bh=hYRDC3F1eLtTCoWg59zwwxvIVxyB0V5cWuNsL/eUc34=;
+	s=korg; t=1795034899;
+	bh=0WSXVpdX1aEJj6zGRriOOeaVoP8CvdOpmJR+Udveukk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m5+HqIC/Aku4oC8LJMDzjuo6NK73PwkQObYiXVCYXbmTvovl8lW4u2etLve6/dORK
-	 2huhG2UT4tJYk1HouLvv255tQZHm2ch/QQYCGWcYa4IIS9iIt8QDi1i5nxYncNUxxv
-	 PwKF2pFu3akV3hnoGP0xLoDlT3NzLeWrX+nLLe8A=
+	b=tBlqVLwaSPk5M7T3eqXsbj9aoxIl8/w8YACklGfZGdu201f+ho10JEYtA6zHMvbTA
+	 g2aGaPXaz0qp6ImOV14Uy5fBEdNV55C88o429hHs72VuT5aatj+qgsI4CHD74y/QKB
+	 vukR1jx0KmasYqS59Oj0t4Ps0k0SNEaAR753aA8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Theo Andersen Carton <andersen.theo@gmail.com>,
+	Hari Mishal <harimishal1@gmail.com>,
+	Fangzhi Zuo <jerry.zuo@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0531/3318] drm/amdgpu: skip the noirq suspend reset for a switcheroo-parked GPU
-Date: Wed, 18 Nov 2026 15:19:13 +0100
-Message-ID: <20261118150333.154366450@linuxfoundation.org>
+Subject: [PATCH 6.6 0532/3318] drm/amd/display: guard dc_sink dereferences in MST mode validation
+Date: Wed, 18 Nov 2026 15:19:14 +0100
+Message-ID: <20261118150333.193683700@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,61 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Theo Andersen Carton <andersen.theo@gmail.com>
+From: Hari Mishal <harimishal1@gmail.com>
 
-[ Upstream commit eadb85cca111152bd334b861fb53747ab851d13a ]
+[ Upstream commit 217f64f348c90cba62164e7ff38e0ccf78a5ca09 ]
 
-amdgpu_pmops_suspend_noirq() resets the ASIC unconditionally. When the GPU
-has been parked by vga_switcheroo it has neither power nor a PCIe link, so
-the reset cannot reach it: pci_set_power_state() reports the device as
-inaccessible and amdgpu_asic_reset() returns -EINVAL. A failure there
-aborts the entire noirq suspend phase, and with it the system suspend, so
-the machine cannot sleep at all while the GPU is switched off.
+dm_dp_mst_is_port_support_mode() reads
+aconnector->dc_sink->dsc_caps... for the DSC branch-throughput check,
+and get_conv_frl_bw()'s HDMI-PCON FRL-bandwidth path reads
+aconnector->dc_sink->edid_caps.max_frl_rate, both without a NULL
+check. dc_sink is cleared asynchronously on MST unplug, and both
+functions run from paths that the driver's own comments document as
+racing that teardown: the connector probe worker's ->mode_valid
+callback and a compositor's atomic check, neither of which holds the
+MST manager lock that the teardown path uses. The former does have an
+existing dsc_aux NULL check, but dsc_aux isn't reliably cleared in
+every path that clears dc_sink, so it doesn't cover this.
 
-amdgpu_device_prepare(), amdgpu_device_suspend() and amdgpu_device_resume()
-all bail out early on DRM_SWITCH_POWER_OFF. This callback was added later,
-for an unrelated reason, and did not inherit the check. nouveau guards
-every one of its PM callbacks the same way.
+Fail the port-support check and skip the FRL conversion path when the
+sink is already gone.
 
-Bail out the same way here. On a single-GPU system switch_power_state is
-never DRM_SWITCH_POWER_OFF, so this is a no-op there.
-
-Found on a MacBookPro11,5, where the Radeon is powered down through
-apple-gmux so that the internal panel can be driven by the iGPU instead.
-Every suspend failed in amdgpu_pmops_suspend_noirq() while the card was
-off; with this check a full S3 cycle completes.
-
-Fixes: 9e051720f9d3 ("drm/amdgpu: Ensure HDA function is suspended before ASIC reset")
-Signed-off-by: Theo Andersen Carton <andersen.theo@gmail.com>
+Fixes: f04d275d94e1 ("drm/amd/display: add mst port output bw check")
+Fixes: 5c9b8b27a883 ("drm/amd/display: Tie FRL support into amdgpu_dm")
+Assisted-by: gkh_clanker_t1000
+Signed-off-by: Hari Mishal <harimishal1@gmail.com>
+Reviewed-by: Fangzhi Zuo <jerry.zuo@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 539d0558638a6dcc066f1cf592b6b9a52adc8ea4)
+(cherry picked from commit 7c3db8da4e039698ae198c870712428644e965c7)
 Cc: stable@vger.kernel.org
-[ sashal: Kept the local amdgpu_pmops_suspend_noirq() body (no int r, no reset-domain locking, bare amdgpu_asic_reset()) and inserted the switcheroo power-off early return after suspend_complete = true;. ]
+[ sashal: Dropped the get_conv_frl_bw() hunk because that function doesn't exist here, and placed the dc_sink NULL guard in dm_dp_mst_is_port_support_mode() before the comment block due to differing context. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-index 1712c399c962d..1f8171c148ee6 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -2437,6 +2437,15 @@ static int amdgpu_pmops_suspend_noirq(struct device *dev)
- 	struct amdgpu_device *adev = drm_to_adev(drm_dev);
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+index acb5362d3450a..ee1bc9dab7db8 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -1653,6 +1653,9 @@ enum dc_status dm_dp_mst_is_port_support_mode(
+ 	struct dc_dsc_bw_range bw_range = {0};
+ 	uint16_t full_pbn = aconnector->mst_output_port->full_pbn;
  
- 	adev->suspend_complete = true;
++	if (!aconnector->dc_sink)
++		return DC_FAIL_BANDWIDTH_VALIDATE;
 +
-+	/*
-+	 * A GPU parked by vga_switcheroo has no power and no PCIe link, so the
-+	 * ASIC reset below would fail and abort the whole noirq suspend phase.
-+	 * Bail out like amdgpu_device_prepare/suspend/resume() already do.
-+	 */
-+	if (drm_dev->switch_power_state == DRM_SWITCH_POWER_OFF)
-+		return 0;
-+
- 	if (amdgpu_acpi_should_gpu_reset(adev))
- 		return amdgpu_asic_reset(adev);
- 
+ 	/*
+ 	 * Consider the case with the depth of the mst topology tree is equal or less than 2
+ 	 * A. When dsc bitstream can be transmitted along the entire path
 -- 
 2.53.0
 
