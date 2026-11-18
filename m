@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020269;
-	b=4ZgjhtY8eGG3/vU4EN315fkxZEq5WfsnLzGsCAhtvJTosnrQP2nZtGFr0rBw3D/yAkg3
-	 pl1MzK4Ilvu/YrYaQVt9pvQgvlgbDhfKNjajYqMeNnHMZDPYqLNnq+P0MXdu3c+P/a0Mh
-	 r8Zyw/BBae2tEozqwuTgFX+HueMd7KeDOfLbZzE6LRQF1sYPV6w0uHFLWKj7gOHJXm3yL
-	 +MS9hVZSZS9VQ7a1rbiwT9u6OwEQ2NFAeV9l3H8SyNQ6tIgqyTcogyC6g4gkpUlcDU5ou
-	 3ift4crthoXEUMhaDDqM7DpXVVQIAVoH7QK3LL2rPCJLYhpS0/dczE5X36N4riiuAug==
+	t=1795020272;
+	b=rCrJpJhnhyUQwkd2smbI5r+R4HIQgTTebV4p2vSaibehgxJysRO2ppxYCXbxPq1HH6dr
+	 5usCKfnB7I4/3K4XHaoOh2bsGIzoHz8mvf3UIiZBroGkQ7jvGshnJ7FL82PYZz2M/yX6S
+	 S1SjcykLkJrhNzYB+VUDtgbj+83enUwDGFVRbglZET9RP2Thgjh3C1RD1/EIU7N/VOakp
+	 fHVCjYPCFcUxnN7ypc2c5QvkjhhLSjJTZ5qqS497mBQ0Mh4y2BizOMw0DMjdWqvwumDwU
+	 rWpA43boALVslskBT83JVLxH6bYBXgMHeHJMir0+cud1hlGU9UZgR4dISqubEGa0UFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020269;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020272;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Mw+oRt4I/bUIA2KXykDx3clGCcD+jmqL8f1gxxvLKL0=;
-	b=jtUlogsz5u100DR22WTAhWFz1pONwUwGTOtyH5thILQrBmRN5Bwt73CU3K5mRPRDj7uV
-	 srf70+J4cvlyD1Z7epQ1XxodXz3mmzVuP5Z5t4TSE78eqREAia4sCOQ7V/tUHbCYZ5IX4
-	 Owxr9+5g7vv2ob49J8vP4i8yRg8xCs45Sl9iBkVqC0yO8jEXdKYm2Ipv62zMAi9fdWEol
-	 W3EuB+AoTJTVJr3d+2b7IC7N9IS3q+0OgUTSCAmfaxRj3r3fYvOxA3r1I6snIuhjRkWg4
-	 KBFUWZxFh1Tn+1iJnS26zPSlXdzhISjVyFPNr1W40mVJ+0A4t1RnRHPKWv8eSUhdrOw==
+	bh=HLLoiJCiaMTGa33v+BmX7dbiBoTPOu2KMGqECvn38ck=;
+	b=bdulzhFATgDQ659KxeS/eNisb9kLTfCsAPpwDXfzH7IgAW3Af1vUQtv7muPrpFmhmlRJ
+	 +laM8QY+Q/IWyv/Ta1Kqa7yY4uZ1yEBRtRAzorRTkeFmdpUi4xy3d9sK1cxfuxKetNBSv
+	 Tb5ESSGoHQnlAFpCiMg3+OvVFhUwqpavrqHlkj8r2aV6O3K8XzpM21jQvAbwQ97dCWP7y
+	 45ArSnst2ddK2pARwoxsDEEcx5PQBKPrVfI93EjFnBN3PQ59SGp/O3pQpzNvJMgcvZZG2
+	 izwbGD9WMdhDboVw/I+4fKy6c8Md9ntdc1TN7bynDLRQoPQXF1UVz7RRI6lUfq/d9eQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QDjJJCNZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eIdeUM+w;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CB9606A320;
-	Wed, 18 Nov 2026 16:44:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3457F606A32C;
+	Wed, 18 Nov 2026 16:44:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QDjJJCNZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2D931F000C4;
-	Wed, 18 Nov 2026 16:44:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eIdeUM+w
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8855B1F000C8;
+	Wed, 18 Nov 2026 16:44:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020269;
-	bh=Mw+oRt4I/bUIA2KXykDx3clGCcD+jmqL8f1gxxvLKL0=;
+	s=korg; t=1795020272;
+	bh=HLLoiJCiaMTGa33v+BmX7dbiBoTPOu2KMGqECvn38ck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QDjJJCNZawUbtIhxUisDHPv5RdBG2NbWJlueHIi2N9cBndzTShBd7ewIGG2hFljYg
-	 PLt6Q0gWlypIZoLEHUUcXQFFXriSzjJVlrK91iYkZweuDdWgdFEF/wfJCQc8Cx6ksy
-	 myLFjEhkFCNirQK4NNz9NgFfFWGUZZMk0mGQlWOw=
+	b=eIdeUM+wLP905dYEcl6NlEEJ8e4PDqpRKGtzZy3M63WbocKATvJFUp7vffvsPDNa1
+	 RbVig1Wa16TDdnZ6AQLOwC1UzcFFE9VYZidSN2DU89gnMdBMnuxtHEOJJEQn5mGs6Q
+	 u/8AWbzcNNiqI7+DQpehWnMO8OEfvsttQdEHGuuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1892/2651] Bluetooth: MGMT: Fix leaking instance on Add Extended Advertising Parameters
-Date: Wed, 18 Nov 2026 15:52:12 +0100
-Message-ID: <20261118150354.990794172@linuxfoundation.org>
+Subject: [PATCH 7.3 1893/2651] Bluetooth: 6LoWPAN: Use RCU-safe device list removal
+Date: Wed, 18 Nov 2026 15:52:13 +0100
+Message-ID: <20261118150355.020587832@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -67,65 +68,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit f7f0d0a9eb6e4616c0b3a2a95498b5204c5543c9 ]
+[ Upstream commit 8c27d7d06e21ba9455ddae4e14f364c57f095cba ]
 
-If queueing the command fails the instance is never removed, despite it
-having already been added or modified by hci_add_adv_instance, so remove
-it as it is done by add_ext_adv_params_complete on failure, signaling
-it has been removed if it was previously added.
+RCU readers of bt_6lowpan_devices must be able to follow an adapter's
+forward link until their read-side critical section ends. The entries
+are published with list_add_rcu(), but device_event() removes an entry
+on NETDEV_UNREGISTER with list_del(), poisoning that link.
 
-Fixes: cba6b758711c ("Bluetooth: hci_sync: Make use of hci_cmd_sync_queue set 2")
-Assisted-by: OpenCode:claude-opus-5.5
+When an adapter is being unregistered and 6LoWPAN is enabled, a
+6lowpan_control debugfs write with an existing LE L2CAP connection can
+enter lookup_peer() after unregister's first synchronize_net(). If the
+connection has no peer on that adapter, the reader must advance to the
+next list entry. Neither RTNL nor devices_lock excludes this RCU reader.
+
+The last peer's chan_close_cb() schedules delete_netdev(), which reaches
+unregister_netdevice_many_notify() through unregister_dev() and
+lowpan_unregister_netdev(). The following ordering is possible:
+
+  Unregister worker                 Control writer
+  -----------------                 --------------
+  synchronize_net() returns
+                                    lowpan_control_write()
+                                    lookup_peer(): rcu_read_lock()
+                                    reach adapter; no matching peer
+  device_event(): devices_lock
+  list_del(&entry->list)
+  spin_unlock(&devices_lock)
+                                    follow poisoned next link
+                                    read invalid adapter address
+  post-notifier synchronize_net()
+    waits for the reader
+
+This invalid pointer access can fault in lookup_peer(). The first grace
+period drains existing readers but permits new ones to start, and the
+later grace period cannot prevent the intervening poisoned-link access.
+
+Use list_del_rcu() under the existing devices_lock to preserve the
+forward link for readers that already reached the adapter. The existing
+post-notifier synchronize_net() waits for those readers before netdevice
+teardown frees the private storage containing lowpan_btle_dev.
+
+KASAN report as below:
+
+    [...]
+    [   45.867526] Oops: general protection fault, probably for non-canonical address 0xfbd59c0000000023: 0000 [#1] SMP KASAN NOPTI
+    [   45.869489] KASAN: maybe wild-memory-access in range [0xdead000000000118-0xdead00000000011f]
+    [   45.870981] CPU: 1 UID: 0 PID: 646 Comm: sh Not tainted 7.2.0-rc6-pmb-bt-functional-v1+ #4 PREEMPT(lazy)
+    [   45.872609] Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+    [   45.874380] RIP: 0010:lookup_peer+0x1ba/0x320
+    [   45.875067] Code: 48 89 d9 ba 04 00 00 00 4c 89 fe bf a0 06 00 00 e8 2b e8 ad fb e9 56 ff ff ff e8 01 1e c3 fb 49 8d 7f 18 48 89 f8 48 c1 e8 03 <80> 3c 28 00 0f 85 4a 01 00 00 4d 8b 47 18 4c 89 f1 ba 04 00 00 00
+    [   45.878206] RSP: 0018:ffff888114d67b90 EFLAGS: 00010212
+    [   45.879106] RAX: 1bd5a00000000023 RBX: 0000000000000000 RCX: ffffffff85c1d19f
+    [   45.880334] RDX: ffff88810dc35700 RSI: 0000000000000000 RDI: dead000000000118
+    [   45.881455] RBP: dffffc0000000000 R08: 0000000000000001 R09: 0000000000000001
+    [   45.882546] R10: ffffffff893d3057 R11: ffff88810dc35700 R12: ffff88810a690000
+    [   45.883839] R13: ffff888115451038 R14: ffff88810a690000 R15: dead000000000100
+    [   45.885186] FS:  00007fa889bac780(0000) GS:ffff8881fd852000(0000) knlGS:0000000000000000
+    [   45.886539] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+    [   45.887527] CR2: 00007ffe304f2f80 CR3: 0000000104f64005 CR4: 0000000000770ef0
+    [   45.888687] PKRU: 55555554
+    [   45.889183] Call Trace:
+    [   45.889666]  <TASK>
+    [   45.890061]  lowpan_control_write+0x445/0x9e0
+    [   45.890854]  ? __pfx_lowpan_control_write+0x10/0x10
+    [   45.891738]  ? srso_alias_return_thunk+0x5/0xfbef5
+    [   45.892603]  ? srso_alias_return_thunk+0x5/0xfbef5
+    [   45.893383]  ? __debugfs_file_get+0x1bd/0x7f0
+    [   45.894057]  ? srso_alias_return_thunk+0x5/0xfbef5
+    [   45.894902]  ? lock_acquire+0x17b/0x2f0
+    [   45.895593]  ? ksys_write+0x111/0x200
+    [   45.896290]  full_proxy_write+0x11f/0x180
+    [   45.896991]  vfs_write+0x25a/0x1010
+    [   45.897642]  ? __pfx_full_proxy_write+0x10/0x10
+    [   45.898440]  ? __pfx_vfs_write+0x10/0x10
+    [   45.899178]  ? lock_release+0x11f/0x280
+    [   45.899855]  ksys_write+0x111/0x200
+    [   45.900435]  ? __pfx_ksys_write+0x10/0x10
+    [   45.901074]  ? irqentry_exit+0xbe/0x820
+    [   45.901722]  ? srso_alias_return_thunk+0x5/0xfbef5
+    [   45.902489]  do_syscall_64+0x115/0x6a0
+    [   45.903064]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+    [   45.903813] RIP: 0033:0x7fa889c3e687
+    [   45.904359] Code: 48 89 fa 4c 89 df e8 58 b3 00 00 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b> c3 0f 1f 80 00 00 00 00 83 e2 39 83 fa 08 75 de e8 23 ff ff ff
+    [   45.906981] RSP: 002b:00007ffd7651b960 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
+    [   45.908070] RAX: ffffffffffffffda RBX: 00007fa889bac780 RCX: 00007fa889c3e687
+    [   45.909102] RDX: 000000000000001c RSI: 00005570f25e8d10 RDI: 0000000000000001
+    [   45.910133] RBP: 00005570f25e8d10 R08: 0000000000000000 R09: 0000000000000000
+    [   45.911162] R10: 0000000000000000 R11: 0000000000000202 R12: 0000000000000001
+    [   45.912190] R13: 000000000000001c R14: 0000000000000000 R15: 00005570f25e8a78
+    [   45.913208]  </TASK>
+    [   45.913530] Modules linked in:
+    [   45.914022] ---[ end trace 0000000000000000 ]---
+    [   45.914709] RIP: 0010:lookup_peer+0x1ba/0x320
+    [   45.915436] Code: 48 89 d9 ba 04 00 00 00 4c 89 fe bf a0 06 00 00 e8 2b e8 ad fb e9 56 ff ff ff e8 01 1e c3 fb 49 8d 7f 18 48 89 f8 48 c1 e8 03 <80> 3c 28 00 0f 85 4a 01 00 00 4d 8b 47 18 4c 89 f1 ba 04 00 00 00
+    [   45.919191] RSP: 0018:ffff888114d67b90 EFLAGS: 00010212
+    [   45.920046] RAX: 1bd5a00000000023 RBX: 0000000000000000 RCX: ffffffff85c1d19f
+    [   45.921129] RDX: ffff88810dc35700 RSI: 0000000000000000 RDI: dead000000000118
+    [   45.922553] RBP: dffffc0000000000 R08: 0000000000000001 R09: 0000000000000001
+    [   45.923653] R10: ffffffff893d3057 R11: ffff88810dc35700 R12: ffff88810a690000
+    [   45.925119] R13: ffff888115451038 R14: ffff88810a690000 R15: dead000000000100
+    [   45.926180] FS:  00007fa889bac780(0000) GS:ffff8881fd852000(0000) knlGS:0000000000000000
+    [   45.927817] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+    [   45.928726] CR2: 00007ffe304f2f80 CR3: 0000000104f64005 CR4: 0000000000770ef0
+    [   45.930069] PKRU: 55555554
+    [   45.930456] Kernel panic - not syncing: Fatal exception
+    [   45.931542] Kernel Offset: disabled
+    [   45.932040] Rebooting in 1 seconds..
+
+Fixes: 90305829635d ("Bluetooth: 6lowpan: Converting rwlocks to use RCU")
+Assisted-by: LLM
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ net/bluetooth/6lowpan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 492b86f39bdf9..09fa3202f28ab 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -9348,14 +9348,15 @@ static int add_ext_adv_params(struct sock *sk, struct hci_dev *hdev,
- 				       data, data_len);
- 		if (!cmd) {
- 			err = -ENOMEM;
--			hci_remove_adv_instance(hdev, cp->instance);
--			goto unlock;
-+			goto remove;
+diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
+index 500211793528f..9a3e3ced9fd6c 100644
+--- a/net/bluetooth/6lowpan.c
++++ b/net/bluetooth/6lowpan.c
+@@ -1273,7 +1273,7 @@ static int device_event(struct notifier_block *unused,
+ 			if (entry->netdev == netdev) {
+ 				BT_DBG("Unregistered netdev %s %p",
+ 				       netdev->name, netdev);
+-				list_del(&entry->list);
++				list_del_rcu(&entry->list);
+ 				break;
+ 			}
  		}
- 
- 		err = hci_cmd_sync_queue(hdev, add_ext_adv_params_sync, cmd,
- 					 add_ext_adv_params_complete);
--		if (err < 0)
-+		if (err < 0) {
- 			mgmt_pending_free(cmd);
-+			goto remove;
-+		}
- 	} else {
- 		rp.instance = cp->instance;
- 		rp.tx_power = HCI_ADV_TX_POWER_NO_PREFERENCE;
-@@ -9366,6 +9367,18 @@ static int add_ext_adv_params(struct sock *sk, struct hci_dev *hdev,
- 					MGMT_STATUS_SUCCESS, &rp, sizeof(rp));
- 	}
- 
-+	goto unlock;
-+
-+remove:
-+	/* The instance may have been modified already so remove it, like it
-+	 * is done in add_ext_adv_params_complete, signaling it has been
-+	 * removed if it was previously added.
-+	 */
-+	if (!adv->pending)
-+		mgmt_advertising_removed(sk, hdev, cp->instance);
-+
-+	hci_remove_adv_instance(hdev, cp->instance);
-+
- unlock:
- 	hci_dev_unlock(hdev);
- 
 -- 
 2.53.0
 
