@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018904;
-	b=5btepeM5b5SfFuBy9cYyI2q51YyaLbDmZUUgiGPzAphMeXbftvrnKmMPg4ZtH9w8pChE
-	 v8PoTc1WQjFzy9gSDTRsnNpJEgoRIHDtEiDFIZgJNwAuYfUmEqjiv3RxhWp4EH/4yuy5X
-	 DQ9NRAoixgzMujc3ZJtpvXQSGXcAtOyqj8rieGVOWKRSrpL2JsDCC4hNSb+dfhXJVB4g5
-	 H5z0XLu4iNvB4zVQDUfD5r/PrbJrcqdyZTtyAFulntZrSfXwzlio9DS95KFl+HcVg13QS
-	 7OOucXGofg0zdHr3pe7z3/uUvjYgsQ8kuC9ff8RclYvaYpJF8mG48cnhcxsAcZaq5Mw==
+	t=1795018907;
+	b=d8MFPvbTrsYQoDuDpEZ2zCNnfF1iryHMDism6vi3I+oPmGwLx+4ZRhjEIByUMgjMft6B
+	 9nxSyEE/ERBdX0Vf2AX39N1dxJgiTfa9DzX7Rtsv9XXxcbAO0gMW8uxHwB58R+hXQx/F3
+	 wPKFaAdBDzKkkBckyntRl46+4ZPa0KXST+J2j8YevuvCOdnNQDC8gx3JzEAbBJFDZflc6
+	 zYmh81Csl0pol9E8cxBaR1lA5SLLJ2uyda2dmPIDRM7JOMcvuAua6df0WAzw+8Ei+EalX
+	 gvFw2h37ZgoVCTy7fLjUabUK1KaAUCbzvyl+ruXGH9L5jREXk9eem26rRpN2qfF7uWA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018904;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018907;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=w7dCk6l3ysqc6uQg6q4iyqkkinE4BzP4zXdwT6TYAZs=;
-	b=dyCI5nc0D+9OKMcS6AfV2dYj+Z0Gpb2MuwyEcIFIhi9O57Dm/sHK4TFJlIrOHHlqQ9n8
-	 c6mCjfOzzeaPhsxuz5aNei7gurvqso4JUEH5ZwDlykPxMREsBZlB4W2JNLuj/tCMjUbgV
-	 TLSWF3vrmHNJQT2bP58Ci0+hV4y088pmzjqULe/fSbsQoECZpcjI4g4k/qsnXNrjB7rQm
-	 Lf2GmKpPpFyY1NhRiwSBCpZWfpPmVnnUJi/jXIv/+zGZYzkZaxx8zYwuRn6lPDzshoJr5
-	 N2HuFbTgT4OOSLKfUp+OWnymKTJyZosfenTy71ERjLNyfXCdv9bFM4Dlw+J/Dko3kMw==
+	bh=IX+AWxRQ37krY5ZIJbbiknhmTQ/+nbEaUPm7V/SMvZw=;
+	b=OldWWBdyk3oscjVFtfD/6W2xtzwXnZWJPnOOZahWUlaZWJNB0z5WMHmryxbZJ88lBpH5
+	 ve8amq/ovVfbv2dFJ4RoYUzcTxbE49GO9dxKrBrXrGQa/QIYS2tS90huQaxSUHmWHeS++
+	 FLQFyOZpPtTzxmtir0ASYrDzFUr2wiWhJ+UMUN97NTqgMA1v2GYPPGYx/Nf5jhFdzM6FW
+	 G9PwNBkuHnL7F/khoo1k9HMoEMAIUO1srFlMTospTeQvLFlV8Uf+ARRE4n2JqqnLlNWk9
+	 llV1TjnxHrO3xfrIuBpeJ8E/gWA7wSbqXq8hCGEDXKEcfShJG/RKONTcLRVWS9oC7DQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NsSrnGkX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DvGN6oqs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D29606A31C;
-	Wed, 18 Nov 2026 16:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E547606A31C;
+	Wed, 18 Nov 2026 16:21:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NsSrnGkX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 119D11F000C4;
-	Wed, 18 Nov 2026 16:21:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DvGN6oqs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF5081F000C4;
+	Wed, 18 Nov 2026 16:21:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018904;
-	bh=w7dCk6l3ysqc6uQg6q4iyqkkinE4BzP4zXdwT6TYAZs=;
+	s=korg; t=1795018907;
+	bh=IX+AWxRQ37krY5ZIJbbiknhmTQ/+nbEaUPm7V/SMvZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NsSrnGkXzJc9trllskzWOcjtrAhTt1pwrnpw6FhUue8UBm3EBZTkca7P+Q/3fsQ4p
-	 A8CDqvmOz8TAlmSufhLYMgYe1aUlIIYQMGo8olz6p/FcRbGlTuld+MLjpHrHCv5sMA
-	 yr6PVJFNsnBnb+n1J/M5rTDOm8/9bETkK1iJG53o=
+	b=DvGN6oqs5mtekoTy/vfoMxxs3m+rlnRgD0gkjCX9fLcyY08ZDvxt6DcGvdWKT6o4y
+	 ZOBkqkjZ082lP8qYxy2MaHPAC7ZxyImTmtdLZqR9QLIb5sVlNgMEjE2Ji96MUqsHXz
+	 9H9Dzn3eHx+s5j+CdmxS3raLoSBp7Tjlz5Xji5HY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1407/2651] perf test attr: Propagate the return value from the test to the wrapper
-Date: Wed, 18 Nov 2026 15:44:07 +0100
-Message-ID: <20261118150338.663643166@linuxfoundation.org>
+Subject: [PATCH 7.3 1408/2651] perf test attr: Fix wrong size expectation for events
+Date: Wed, 18 Nov 2026 15:44:08 +0100
+Message-ID: <20261118150338.696968889@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,34 +71,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Petlan <mpetlan@redhat.com>
 
-[ Upstream commit f8596112cbad0072cdc957c0ea06695afda246dc ]
+[ Upstream commit 5c52bb65844426070edca789ae7896c56e314bcb ]
 
-Currently it does not matter what the python script actually returns,
-the test always passes, as the $err variable is always 0.
+Although config4 and tee sample_simd_* fields has been added into
+'struct perf_event_attr', the size expectation for the struct hasn't
+been adjusted. This hasn't been noticed, since the testcase's return
+value has been ignored after rewriting the testcase to python until
+previous commit.
 
 Fix that.
 
-Fixes: 8519e4f44c2af722 ("perf test: Add a shell wrapper for "Setup struct perf_event_attr"")
+Fixes: eb89aef367e47010 ("perf headers: Sync perf_event.h/perf_regs.h with the kernel headers")
+Fixes: 80cdf208117a36de ("tools headers UAPI: Sync linux/perf_event.h with the kernel sources")
 Signed-off-by: Michael Petlan <mpetlan@redhat.com>
 Acked-by: Namhyung Kim <namhyung@kernel.org>
 Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+[ Updated it to take into account 80cdf208117a36de (sample_simd_* fields) 144 -> 176 ]
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/attr.sh | 1 +
- 1 file changed, 1 insertion(+)
+ tools/perf/tests/shell/attr/base-record          | 2 +-
+ tools/perf/tests/shell/attr/base-stat            | 2 +-
+ tools/perf/tests/shell/attr/system-wide-dummy    | 2 +-
+ tools/perf/tests/shell/attr/test-record-dummy-C0 | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/tests/shell/attr.sh b/tools/perf/tests/shell/attr.sh
-index 5a4e43b2471de..307e1535795a3 100755
---- a/tools/perf/tests/shell/attr.sh
-+++ b/tools/perf/tests/shell/attr.sh
-@@ -18,5 +18,6 @@ trap trap_cleanup EXIT TERM INT
- shelldir=$(dirname "$0")
- perf_path=$(which perf)
- python "${shelldir}"/lib/attr.py -d "${shelldir}"/attr -v -p "$perf_path"
-+err=$?
- cleanup
- exit $err
+diff --git a/tools/perf/tests/shell/attr/base-record b/tools/perf/tests/shell/attr/base-record
+index b44e4e6e44438..a4597d4c0cd12 100644
+--- a/tools/perf/tests/shell/attr/base-record
++++ b/tools/perf/tests/shell/attr/base-record
+@@ -5,7 +5,7 @@ group_fd=-1
+ flags=0|8
+ cpu=*
+ type=0|1
+-size=136
++size=176
+ config=0|1
+ sample_period=*
+ sample_type=263
+diff --git a/tools/perf/tests/shell/attr/base-stat b/tools/perf/tests/shell/attr/base-stat
+index fccd8ec4d1b02..67d6eea894703 100644
+--- a/tools/perf/tests/shell/attr/base-stat
++++ b/tools/perf/tests/shell/attr/base-stat
+@@ -5,7 +5,7 @@ group_fd=-1
+ flags=0|8
+ cpu=*
+ type=0
+-size=136
++size=176
+ config=0
+ sample_period=0
+ sample_type=65536
+diff --git a/tools/perf/tests/shell/attr/system-wide-dummy b/tools/perf/tests/shell/attr/system-wide-dummy
+index a1e1d6a263bf1..b062ad7f3c1c6 100644
+--- a/tools/perf/tests/shell/attr/system-wide-dummy
++++ b/tools/perf/tests/shell/attr/system-wide-dummy
+@@ -7,7 +7,7 @@ cpu=*
+ pid=-1
+ flags=8
+ type=1
+-size=136
++size=176
+ config=9
+ sample_period=1
+ # PERF_SAMPLE_IP | PERF_SAMPLE_TID | PERF_SAMPLE_TIME |
+diff --git a/tools/perf/tests/shell/attr/test-record-dummy-C0 b/tools/perf/tests/shell/attr/test-record-dummy-C0
+index 91499405fff4d..54adb835d203f 100644
+--- a/tools/perf/tests/shell/attr/test-record-dummy-C0
++++ b/tools/perf/tests/shell/attr/test-record-dummy-C0
+@@ -10,7 +10,7 @@ cpu=0
+ pid=-1
+ flags=8
+ type=1
+-size=136
++size=176
+ config=9
+ sample_period=4000
+ # PERF_SAMPLE_IP | PERF_SAMPLE_TID | PERF_SAMPLE_TIME |
 -- 
 2.53.0
 
