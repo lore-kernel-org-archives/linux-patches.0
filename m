@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019929;
-	b=mKopCPou/bqV/1GgzLwo8GGCCP+lbUHHchmaDFCsExkfrfy/Np8hMlWSfiC9368j5FTr
-	 4TLSItQx9q1PJzU/AqCZLmlBgRgG8EUjjnVE7/yvmNzoMA6JhMiHb0BJEcnslYFItt0lK
-	 XFMiVB/tHTOlGG2SIDS/+cYdmDSngKfE7CAbYlDpdu5vqNRtfZkMqJnwq+7ASJhUo+5lp
-	 Xi5Qlf5qtwXMxsidcpPorm77ysrE4Zhmt/+rUC0DZcIx3ruupwDI+pn5L/zhNNarGGoVG
-	 ShDj+WzNTbOw33dROliuoCl9Mn4QDqxWNUcgoiVS1GPU92PcsffncjKEtJ/QaOYJdgA==
+	t=1795019931;
+	b=Is4uCvEm+E786dYa+6NXRmaFcTXOY7F4rc9RreB7hA5UmCCa5pjeNEnribeE7JTwldTs
+	 Ft/tzXCRB+rxuY4OTHXOE/V+su0aJKqQncBXPp6LU4Q79GVskSyT7PYImEWOkccr9egQ4
+	 YtXOWFZNabLkduUjcq3ZeboczGx6eeo/tP1XcFJ6zINuW8GmbcaHFWWE0fI1k9zHZZEAb
+	 /chNPfJAniB4/q18bBfO57SNlpMLo5YhJVfPGnYzHiyd15LdRzEZKTRfEoNeE2j3/N7F6
+	 NL9fR8IYJJTPFIO9YrtThzJ+pfn42EGbqY46PYnoEGBrG8tW5TfLGymlCoej2k4u1fA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019929;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019931;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cnVpyHoGlrUc/IFPIbjMqDFu58ecPueTd07Nc0UPpwI=;
-	b=Y521TzjvjfhkQQqIrjzEtfUxpq644LKgL7gCucwTQe9TvxAcbDa6fmQ7Gu8PqwbQZ0zu
-	 NhHS6jG6k/kHag9cpNOdbPLlIQoHV9Cnmwcp78LugZWPw8epc7S4VrQwyTkR7bKl4bytK
-	 /i9gADBn2hCwknl6KbqKaFezRQKveZE8CFQpl0L929AB7I/lLwOX8ZFs+nV+I+DIvuitg
-	 f1mKj8QuRs+v+2LNly67/IAnbixbf/28XX3iDMpRer6ccrguL5427U+qDBn+tt7nPev/w
-	 3f6jA+oQxj5yVUooiMnW1iYzfttgGlnaDnooThMYFPxbXYoV/f4Q5O/o0eP51Uz9Q8A==
+	bh=UqUXYqIzNuD0caphU9iEV6dJLRv3mHH/INCJnIE1qdM=;
+	b=2qUwfjbTBxJQ6YDYel5KdAiiumvG1xIY+FSDaJW82EMkgLACZ3Uppq/4p0HDIG/WV0/t
+	 PPi8ezswDzWgPJd3JzjoK3RdE6fG9upSA/pqjJ7+ETYyALw8GuBkBUmwu9LhUD6jId8Xi
+	 uJawuy3/IsC50JywcqUU3LH0cNf4f9YGv8NeXw62rJYbUPBmw5UIE3Gi3o9Y6eKuEiP1P
+	 PRXY+1Ezylrnh/cmoPSHVmSjJyB0F1wxpddOvLP0BLS6Yeo6Dt62BjHUunv9uRaGq/2CX
+	 4GBttSoJdCv9LbyuFNEsoVxqGEZwOs+tShoakLJMnihUuBoJrfRNmPx5JAuXXuUNEBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eYNdyvcH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="a31fG3/K";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E050606A31C;
-	Wed, 18 Nov 2026 16:38:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A64C606A320;
+	Wed, 18 Nov 2026 16:38:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eYNdyvcH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18BF51F000C4;
-	Wed, 18 Nov 2026 16:38:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a31fG3/K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C334B1F000C5;
+	Wed, 18 Nov 2026 16:38:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019928;
-	bh=cnVpyHoGlrUc/IFPIbjMqDFu58ecPueTd07Nc0UPpwI=;
+	s=korg; t=1795019931;
+	bh=UqUXYqIzNuD0caphU9iEV6dJLRv3mHH/INCJnIE1qdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eYNdyvcHqlV8kxzYxtZdb6/CQftR4J0t2PxQcxIHIMWTcmsDi8h/YzYEElr95Bbia
-	 qiXJn2YOtKXWgdiEfnLVZX1Zgi0lYAAgbvV+3jgllaUM3pBZL8+ZsIg6BAi0pegUEt
-	 nhq+0AXP37eqZ9zSuyKZWQzkxZhhu15f6gD7rqrY=
+	b=a31fG3/KCNbirxKuGtN9aYwaKr7fSZFTL6bFFrhF3JBsleD8a41ugDjnsYiKZPUtf
+	 G+T0NlrOl6vR6j8gQ8lplmz2RZV/xOqHnpjGCOMlrhmzjGuSQRePfjTVZ+tEhkJeQ8
+	 wyGCTIZJMyjCFKEmHbbDOcxIoP78mxeEEf9RRutQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Longfang Liu <liulongfang@huawei.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Alex Williamson <alex.williamson@nvidia.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Simon Song <xinmengs@nvidia.com>,
 	Alex Williamson <alex@shazbot.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1770/2651] hisi_acc_vfio_pci: fix NULL dereference in reset_prepare on PF passthrough
-Date: Wed, 18 Nov 2026 15:50:10 +0100
-Message-ID: <20261118150351.140441206@linuxfoundation.org>
+Subject: [PATCH 7.3 1771/2651] vfio/pci: Remove the core dependency on driver data
+Date: Wed, 18 Nov 2026 15:50:11 +0100
+Message-ID: <20261118150351.168643393@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,75 +71,725 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Longfang Liu <liulongfang@huawei.com>
+From: Simon Song <xinmengs@nvidia.com>
 
-[ Upstream commit e1d2d60b1f50296828d3f7ff26c45d1a90f142ef ]
+[ Upstream commit 6a5f427bee12c82beaf13efbd133416da1541c39 ]
 
-When a PF is bound to the driver via driver_override and passed
-through to a VM, its pf_qm stays NULL. The PCI error handler
-reset_prepare() runs during open_device through
-pci_try_reset_function(), before the mig_ops gate, and dereferences
-the NULL pf_qm for the timeout log, crashing the kernel.
+vfio-pci-core currently has runtime functions that interpret pci
+driver_data as a pointer to vfio_pci_core_device, and enforce vfio
+variant drivers must set vfio_pci_core_device to their pci driver_data.
+This constrains variant drivers' private-data layout, including the
+typed driver data used by the Rust PCI infrastructure.
 
-Move the mig_ops check to the entry of reset_prepare() and
-aer_reset_done() so non-migration devices skip the QM_RESETTING
-coordination. The dev local resolved &qm->pdev->dev before the
-gate, so open code it at the dev_err() call where qm is known
-valid. Also clear set_reset_flag together with QM_RESETTING in
-aer_reset_done(); the flag was never cleared before, so a later
-timed-out reset could release a foreign lock.
+Add VFIO_PCI_CORE_DEFINE_CALLBACKS macro to generate wrapper code for
+each vfio variant driver, update vfio variant drivers to store their
+private structures in driver_data and use generated wrapper to pass the
+vfio core device to helpers.
 
-Fixes: b0eed085903e ("hisi_acc_vfio_pci: Add support for VFIO live migration")
-Fixes: a22099ed7936f ("hisi_acc_vfio_pci: fix VF reset timeout issue")
-Signed-off-by: Longfang Liu <liulongfang@huawei.com>
-Link: https://lore.kernel.org/r/20261013071929.3988687-2-liulongfang@huawei.com
+Assisted-by: LLM
+Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
+Suggested-by: Alex Williamson <alex.williamson@nvidia.com>
+Suggested-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://lore.kernel.org/all/DLFD2ZDSK9YQ.3A4R66G8UJMD8@kernel.org/
+Signed-off-by: Simon Song <xinmengs@nvidia.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://lore.kernel.org/r/20261005184236.1946167-2-xinmengs@nvidia.com
+[VGA chunks and commit log reference dropped with rebase to
+commit 93d41424caf7 ("PCI/VGA: pass a data pointer to be used in the decode callback (v2)")]
 Signed-off-by: Alex Williamson <alex@shazbot.org>
+Stable-dep-of: a80597900b8a ("hisi_acc_vfio_pci: reject live migration on 64KB page with QM_HW_V3 hardware")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ .../vfio/pci/hisilicon/hisi_acc_vfio_pci.c    | 27 ++++++------
+ drivers/vfio/pci/ism/main.c                   | 19 +++++----
+ drivers/vfio/pci/mlx5/main.c                  | 13 +++---
+ drivers/vfio/pci/nvgrace-gpu/main.c           | 19 +++++----
+ drivers/vfio/pci/pds/pci_drv.c                |  8 +++-
+ drivers/vfio/pci/pds/vfio_dev.c               |  5 +--
+ drivers/vfio/pci/qat/main.c                   | 12 +++---
+ drivers/vfio/pci/vfio_pci.c                   | 33 ++++++++++++++-
+ drivers/vfio/pci/vfio_pci_core.c              | 36 +++-------------
+ drivers/vfio/pci/virtio/main.c                |  8 +++-
+ drivers/vfio/pci/xe/main.c                    |  8 +++-
+ include/linux/vfio_pci_core.h                 | 41 +++++++++++++++++--
+ 12 files changed, 141 insertions(+), 88 deletions(-)
 
 diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-index 86362ec424a50..e6fdf4d2e5818 100644
+index e6fdf4d2e5818..2bdd625b0bcee 100644
 --- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
 +++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-@@ -1154,14 +1154,16 @@ static void hisi_acc_vf_pci_reset_prepare(struct pci_dev *pdev)
+@@ -16,6 +16,9 @@
+ 
+ #include "hisi_acc_vfio_pci.h"
+ 
++VFIO_PCI_CORE_DEFINE_CALLBACKS(hisi_acc_vf, struct hisi_acc_vf_core_device,
++			       core_device)
++
+ /* Return 0 on VM acc device ready, -ETIMEDOUT hardware timeout */
+ static int qm_wait_dev_not_ready(struct hisi_qm *qm)
  {
- 	struct hisi_acc_vf_core_device *hisi_acc_vdev = hisi_acc_drvdata(pdev);
- 	struct hisi_qm *qm = hisi_acc_vdev->pf_qm;
--	struct device *dev = &qm->pdev->dev;
- 	u32 delay = 0;
+@@ -588,10 +591,7 @@ static int vf_qm_state_save(struct hisi_acc_vf_core_device *hisi_acc_vdev,
  
-+	if (!hisi_acc_vdev->core_device.vdev.mig_ops)
-+		return;
-+
- 	/* All reset requests need to be queued for processing */
- 	while (test_and_set_bit(QM_RESETTING, &qm->misc_ctl)) {
- 		msleep(1);
- 		if (++delay > QM_RESET_WAIT_TIMEOUT) {
--			dev_err(dev, "reset prepare failed\n");
-+			dev_err(&qm->pdev->dev, "reset prepare failed\n");
- 			return;
- 		}
- 	}
-@@ -1174,12 +1176,14 @@ static void hisi_acc_vf_pci_aer_reset_done(struct pci_dev *pdev)
- 	struct hisi_acc_vf_core_device *hisi_acc_vdev = hisi_acc_drvdata(pdev);
- 	struct hisi_qm *qm = hisi_acc_vdev->pf_qm;
- 
--	if (hisi_acc_vdev->set_reset_flag)
--		clear_bit(QM_RESETTING, &qm->misc_ctl);
+ static struct hisi_acc_vf_core_device *hisi_acc_drvdata(struct pci_dev *pdev)
+ {
+-	struct vfio_pci_core_device *core_device = dev_get_drvdata(&pdev->dev);
 -
- 	if (!hisi_acc_vdev->core_device.vdev.mig_ops)
- 		return;
+-	return container_of(core_device, struct hisi_acc_vf_core_device,
+-			    core_device);
++	return pci_get_drvdata(pdev);
+ }
  
-+	if (hisi_acc_vdev->set_reset_flag) {
-+		clear_bit(QM_RESETTING, &qm->misc_ctl);
-+		hisi_acc_vdev->set_reset_flag = false;
-+	}
+ /* Check the PF's RAS state and Function INT state */
+@@ -1420,9 +1420,8 @@ static int hisi_acc_vf_debug_check(struct seq_file *seq, struct vfio_device *vde
+ static int hisi_acc_vf_debug_cmd(struct seq_file *seq, void *data)
+ {
+ 	struct device *vf_dev = seq->private;
+-	struct vfio_pci_core_device *core_device = dev_get_drvdata(vf_dev);
+-	struct vfio_device *vdev = &core_device->vdev;
+-	struct hisi_acc_vf_core_device *hisi_acc_vdev = hisi_acc_get_vf_dev(vdev);
++	struct hisi_acc_vf_core_device *hisi_acc_vdev = dev_get_drvdata(vf_dev);
++	struct vfio_device *vdev = &hisi_acc_vdev->core_device.vdev;
+ 	struct hisi_qm *vf_qm = &hisi_acc_vdev->vf_qm;
+ 	u64 value;
+ 	int ret;
+@@ -1449,9 +1448,8 @@ static int hisi_acc_vf_debug_cmd(struct seq_file *seq, void *data)
+ static int hisi_acc_vf_dev_read(struct seq_file *seq, void *data)
+ {
+ 	struct device *vf_dev = seq->private;
+-	struct vfio_pci_core_device *core_device = dev_get_drvdata(vf_dev);
+-	struct vfio_device *vdev = &core_device->vdev;
+-	struct hisi_acc_vf_core_device *hisi_acc_vdev = hisi_acc_get_vf_dev(vdev);
++	struct hisi_acc_vf_core_device *hisi_acc_vdev = dev_get_drvdata(vf_dev);
++	struct vfio_device *vdev = &hisi_acc_vdev->core_device.vdev;
+ 	size_t vf_data_sz = offsetofend(struct acc_vf_data, padding);
+ 	struct acc_vf_data *vf_data;
+ 	int ret;
+@@ -1496,9 +1494,7 @@ static int hisi_acc_vf_dev_read(struct seq_file *seq, void *data)
+ static int hisi_acc_vf_migf_read(struct seq_file *seq, void *data)
+ {
+ 	struct device *vf_dev = seq->private;
+-	struct vfio_pci_core_device *core_device = dev_get_drvdata(vf_dev);
+-	struct vfio_device *vdev = &core_device->vdev;
+-	struct hisi_acc_vf_core_device *hisi_acc_vdev = hisi_acc_get_vf_dev(vdev);
++	struct hisi_acc_vf_core_device *hisi_acc_vdev = dev_get_drvdata(vf_dev);
+ 	size_t vf_data_sz = offsetofend(struct acc_vf_data, padding);
+ 	struct hisi_acc_vf_migration_file *debug_migf = hisi_acc_vdev->debug_migf;
+ 
+@@ -1691,7 +1687,7 @@ static int hisi_acc_vfio_pci_probe(struct pci_dev *pdev, const struct pci_device
+ 	if (IS_ERR(hisi_acc_vdev))
+ 		return PTR_ERR(hisi_acc_vdev);
+ 
+-	dev_set_drvdata(&pdev->dev, &hisi_acc_vdev->core_device);
++	dev_set_drvdata(&pdev->dev, hisi_acc_vdev);
+ 	ret = vfio_pci_core_register_device(&hisi_acc_vdev->core_device);
+ 	if (ret)
+ 		goto out_put_vdev;
+@@ -1725,7 +1721,7 @@ MODULE_DEVICE_TABLE(pci, hisi_acc_vfio_pci_table);
+ static const struct pci_error_handlers hisi_acc_vf_err_handlers = {
+ 	.reset_prepare = hisi_acc_vf_pci_reset_prepare,
+ 	.reset_done = hisi_acc_vf_pci_aer_reset_done,
+-	.error_detected = vfio_pci_core_aer_err_detected,
++	.error_detected = hisi_acc_vf_aer_err_detected,
+ };
+ 
+ static struct pci_driver hisi_acc_vfio_pci_driver = {
+@@ -1733,6 +1729,7 @@ static struct pci_driver hisi_acc_vfio_pci_driver = {
+ 	.id_table = hisi_acc_vfio_pci_table,
+ 	.probe = hisi_acc_vfio_pci_probe,
+ 	.remove = hisi_acc_vfio_pci_remove,
++	.driver = { .pm = pm_ptr(&hisi_acc_vf_pm_ops) },
+ 	.err_handler = &hisi_acc_vf_err_handlers,
+ 	.driver_managed_dma = true,
+ };
+diff --git a/drivers/vfio/pci/ism/main.c b/drivers/vfio/pci/ism/main.c
+index f83e09b915ed4..cce3bdf1f0704 100644
+--- a/drivers/vfio/pci/ism/main.c
++++ b/drivers/vfio/pci/ism/main.c
+@@ -47,6 +47,9 @@ struct ism_vfio_pci_core_device {
+ 	struct kmem_cache *store_block_cache;
+ };
+ 
++VFIO_PCI_CORE_DEFINE_CALLBACKS(ism_vfio, struct ism_vfio_pci_core_device,
++			       core_device)
 +
- 	mutex_lock(&hisi_acc_vdev->state_mutex);
- 	hisi_acc_vf_reset(hisi_acc_vdev);
- 	mutex_unlock(&hisi_acc_vdev->state_mutex);
+ static int ism_vfio_pci_open_device(struct vfio_device *core_vdev)
+ {
+ 	struct ism_vfio_pci_core_device *ivpcd;
+@@ -363,7 +366,7 @@ static int ism_vfio_pci_probe(struct pci_dev *pdev,
+ 	if (IS_ERR(ivpcd))
+ 		return PTR_ERR(ivpcd);
+ 
+-	dev_set_drvdata(&pdev->dev, &ivpcd->core_device);
++	dev_set_drvdata(&pdev->dev, ivpcd);
+ 
+ 	ret = vfio_pci_core_register_device(&ivpcd->core_device);
+ 	if (ret)
+@@ -374,12 +377,7 @@ static int ism_vfio_pci_probe(struct pci_dev *pdev,
+ 
+ static void ism_vfio_pci_remove(struct pci_dev *pdev)
+ {
+-	struct vfio_pci_core_device *core_device;
+-	struct ism_vfio_pci_core_device *ivpcd;
+-
+-	core_device = dev_get_drvdata(&pdev->dev);
+-	ivpcd = container_of(core_device, struct ism_vfio_pci_core_device,
+-			     core_device);
++	struct ism_vfio_pci_core_device *ivpcd = pci_get_drvdata(pdev);
+ 
+ 	vfio_pci_core_unregister_device(&ivpcd->core_device);
+ 	vfio_put_device(&ivpcd->core_device.vdev);
+@@ -392,12 +390,17 @@ static const struct pci_device_id ism_device_table[] = {
+ };
+ MODULE_DEVICE_TABLE(pci, ism_device_table);
+ 
++static const struct pci_error_handlers ism_vfio_err_handlers = {
++	.error_detected = ism_vfio_aer_err_detected,
++};
++
+ static struct pci_driver ism_vfio_pci_driver = {
+ 	.name = KBUILD_MODNAME,
+ 	.id_table = ism_device_table,
+ 	.probe = ism_vfio_pci_probe,
+ 	.remove = ism_vfio_pci_remove,
+-	.err_handler = &vfio_pci_core_err_handlers,
++	.driver	= { .pm = pm_ptr(&ism_vfio_pm_ops) },
++	.err_handler = &ism_vfio_err_handlers,
+ 	.driver_managed_dma = true,
+ };
+ 
+diff --git a/drivers/vfio/pci/mlx5/main.c b/drivers/vfio/pci/mlx5/main.c
+index de306dee1d1ad..18a6d224b1fda 100644
+--- a/drivers/vfio/pci/mlx5/main.c
++++ b/drivers/vfio/pci/mlx5/main.c
+@@ -21,6 +21,9 @@
+ 
+ #include "cmd.h"
+ 
++VFIO_PCI_CORE_DEFINE_CALLBACKS(mlx5vf, struct mlx5vf_pci_core_device,
++			       core_device)
++
+ /* Device specification max LOAD size */
+ #define MAX_LOAD_SIZE (BIT_ULL(__mlx5_bit_sz(load_vhca_state_in, size)) - 1)
+ 
+@@ -28,10 +31,7 @@
+ 
+ static struct mlx5vf_pci_core_device *mlx5vf_drvdata(struct pci_dev *pdev)
+ {
+-	struct vfio_pci_core_device *core_device = dev_get_drvdata(&pdev->dev);
+-
+-	return container_of(core_device, struct mlx5vf_pci_core_device,
+-			    core_device);
++	return pci_get_drvdata(pdev);
+ }
+ 
+ static void mlx5vf_disable_fd(struct mlx5_vf_migration_file *migf)
+@@ -1415,7 +1415,7 @@ static int mlx5vf_pci_probe(struct pci_dev *pdev,
+ 	if (IS_ERR(mvdev))
+ 		return PTR_ERR(mvdev);
+ 
+-	dev_set_drvdata(&pdev->dev, &mvdev->core_device);
++	dev_set_drvdata(&pdev->dev, mvdev);
+ 	ret = vfio_pci_core_register_device(&mvdev->core_device);
+ 	if (ret)
+ 		goto out_put_vdev;
+@@ -1443,7 +1443,7 @@ MODULE_DEVICE_TABLE(pci, mlx5vf_pci_table);
+ 
+ static const struct pci_error_handlers mlx5vf_err_handlers = {
+ 	.reset_done = mlx5vf_pci_aer_reset_done,
+-	.error_detected = vfio_pci_core_aer_err_detected,
++	.error_detected = mlx5vf_aer_err_detected,
+ };
+ 
+ static struct pci_driver mlx5vf_pci_driver = {
+@@ -1451,6 +1451,7 @@ static struct pci_driver mlx5vf_pci_driver = {
+ 	.id_table = mlx5vf_pci_table,
+ 	.probe = mlx5vf_pci_probe,
+ 	.remove = mlx5vf_pci_remove,
++	.driver	= { .pm = pm_ptr(&mlx5vf_pm_ops) },
+ 	.err_handler = &mlx5vf_err_handlers,
+ 	.driver_managed_dma = true,
+ };
+diff --git a/drivers/vfio/pci/nvgrace-gpu/main.c b/drivers/vfio/pci/nvgrace-gpu/main.c
+index 208463c218088..846a1e354c263 100644
+--- a/drivers/vfio/pci/nvgrace-gpu/main.c
++++ b/drivers/vfio/pci/nvgrace-gpu/main.c
+@@ -73,6 +73,9 @@ struct nvgrace_gpu_pci_core_device {
+ 	int cxl_dvsec;
+ };
+ 
++VFIO_PCI_CORE_DEFINE_CALLBACKS(nvgrace_gpu, struct nvgrace_gpu_pci_core_device,
++			       core_device)
++
+ static void nvgrace_gpu_init_fake_bar_emu_regs(struct vfio_device *core_vdev)
+ {
+ 	struct nvgrace_gpu_pci_core_device *nvdev =
+@@ -1356,7 +1359,7 @@ static int nvgrace_gpu_probe(struct pci_dev *pdev,
+ 	if (ret)
+ 		goto out_put_vdev;
+ 
+-	dev_set_drvdata(&pdev->dev, &nvdev->core_device);
++	dev_set_drvdata(&pdev->dev, nvdev);
+ 
+ 	if (ops == &nvgrace_gpu_pci_ops) {
+ 		nvdev->has_mig_hw_bug = nvgrace_gpu_has_mig_hw_bug(pdev);
+@@ -1387,10 +1390,10 @@ static int nvgrace_gpu_probe(struct pci_dev *pdev,
+ 
+ static void nvgrace_gpu_remove(struct pci_dev *pdev)
+ {
+-	struct vfio_pci_core_device *core_device = dev_get_drvdata(&pdev->dev);
++	struct nvgrace_gpu_pci_core_device *nvdev = pci_get_drvdata(pdev);
+ 
+-	vfio_pci_core_unregister_device(core_device);
+-	vfio_put_device(&core_device->vdev);
++	vfio_pci_core_unregister_device(&nvdev->core_device);
++	vfio_put_device(&nvdev->core_device.vdev);
+ }
+ 
+ static const struct pci_device_id nvgrace_gpu_vfio_pci_table[] = {
+@@ -1422,17 +1425,14 @@ MODULE_DEVICE_TABLE(pci, nvgrace_gpu_vfio_pci_table);
+  */
+ static void nvgrace_gpu_vfio_pci_reset_done(struct pci_dev *pdev)
+ {
+-	struct vfio_pci_core_device *core_device = dev_get_drvdata(&pdev->dev);
+-	struct nvgrace_gpu_pci_core_device *nvdev =
+-		container_of(core_device, struct nvgrace_gpu_pci_core_device,
+-			     core_device);
++	struct nvgrace_gpu_pci_core_device *nvdev = pci_get_drvdata(pdev);
+ 
+ 	nvdev->reset_done = true;
+ }
+ 
+ static const struct pci_error_handlers nvgrace_gpu_vfio_pci_err_handlers = {
+ 	.reset_done = nvgrace_gpu_vfio_pci_reset_done,
+-	.error_detected = vfio_pci_core_aer_err_detected,
++	.error_detected = nvgrace_gpu_aer_err_detected,
+ };
+ 
+ static struct pci_driver nvgrace_gpu_vfio_pci_driver = {
+@@ -1440,6 +1440,7 @@ static struct pci_driver nvgrace_gpu_vfio_pci_driver = {
+ 	.id_table = nvgrace_gpu_vfio_pci_table,
+ 	.probe = nvgrace_gpu_probe,
+ 	.remove = nvgrace_gpu_remove,
++	.driver = { .pm = pm_ptr(&nvgrace_gpu_pm_ops) },
+ 	.err_handler = &nvgrace_gpu_vfio_pci_err_handlers,
+ 	.driver_managed_dma = true,
+ };
+diff --git a/drivers/vfio/pci/pds/pci_drv.c b/drivers/vfio/pci/pds/pci_drv.c
+index 4923f18231263..cf7e33d4d17b6 100644
+--- a/drivers/vfio/pci/pds/pci_drv.c
++++ b/drivers/vfio/pci/pds/pci_drv.c
+@@ -16,6 +16,9 @@
+ #include "pci_drv.h"
+ #include "cmds.h"
+ 
++VFIO_PCI_CORE_DEFINE_CALLBACKS(pds_vfio, struct pds_vfio_pci_device,
++			       vfio_coredev)
++
+ #define PDS_VFIO_DRV_DESCRIPTION	"AMD/Pensando VFIO Device Driver"
+ #define PCI_VENDOR_ID_PENSANDO		0x1dd8
+ 
+@@ -118,7 +121,7 @@ static int pds_vfio_pci_probe(struct pci_dev *pdev,
+ 	if (IS_ERR(pds_vfio))
+ 		return PTR_ERR(pds_vfio);
+ 
+-	dev_set_drvdata(&pdev->dev, &pds_vfio->vfio_coredev);
++	dev_set_drvdata(&pdev->dev, pds_vfio);
+ 
+ 	err = vfio_pci_core_register_device(&pds_vfio->vfio_coredev);
+ 	if (err)
+@@ -173,7 +176,7 @@ static void pds_vfio_pci_aer_reset_done(struct pci_dev *pdev)
+ 
+ static const struct pci_error_handlers pds_vfio_pci_err_handlers = {
+ 	.reset_done = pds_vfio_pci_aer_reset_done,
+-	.error_detected = vfio_pci_core_aer_err_detected,
++	.error_detected = pds_vfio_aer_err_detected,
+ };
+ 
+ static struct pci_driver pds_vfio_pci_driver = {
+@@ -181,6 +184,7 @@ static struct pci_driver pds_vfio_pci_driver = {
+ 	.id_table = pds_vfio_pci_table,
+ 	.probe = pds_vfio_pci_probe,
+ 	.remove = pds_vfio_pci_remove,
++	.driver = { .pm = pm_ptr(&pds_vfio_pm_ops) },
+ 	.err_handler = &pds_vfio_pci_err_handlers,
+ 	.driver_managed_dma = true,
+ };
+diff --git a/drivers/vfio/pci/pds/vfio_dev.c b/drivers/vfio/pci/pds/vfio_dev.c
+index be103c74e9695..6d2b2dc61a280 100644
+--- a/drivers/vfio/pci/pds/vfio_dev.c
++++ b/drivers/vfio/pci/pds/vfio_dev.c
+@@ -20,10 +20,7 @@ struct device *pds_vfio_to_dev(struct pds_vfio_pci_device *pds_vfio)
+ 
+ struct pds_vfio_pci_device *pds_vfio_pci_drvdata(struct pci_dev *pdev)
+ {
+-	struct vfio_pci_core_device *core_device = dev_get_drvdata(&pdev->dev);
+-
+-	return container_of(core_device, struct pds_vfio_pci_device,
+-			    vfio_coredev);
++	return pci_get_drvdata(pdev);
+ }
+ 
+ void pds_vfio_reset(struct pds_vfio_pci_device *pds_vfio,
+diff --git a/drivers/vfio/pci/qat/main.c b/drivers/vfio/pci/qat/main.c
+index 60ff907b6a67a..69448fa57df42 100644
+--- a/drivers/vfio/pci/qat/main.c
++++ b/drivers/vfio/pci/qat/main.c
+@@ -55,6 +55,9 @@ struct qat_vf_core_device {
+ 	struct qat_vf_migration_file *saving_migf;
+ };
+ 
++VFIO_PCI_CORE_DEFINE_CALLBACKS(qat_vf, struct qat_vf_core_device,
++			       core_device)
++
+ static int qat_vf_pci_open_device(struct vfio_device *core_vdev)
+ {
+ 	struct qat_vf_core_device *qat_vdev =
+@@ -623,9 +626,7 @@ static const struct vfio_device_ops qat_vf_pci_ops = {
+ 
+ static struct qat_vf_core_device *qat_vf_drvdata(struct pci_dev *pdev)
+ {
+-	struct vfio_pci_core_device *core_device = pci_get_drvdata(pdev);
+-
+-	return container_of(core_device, struct qat_vf_core_device, core_device);
++	return pci_get_drvdata(pdev);
+ }
+ 
+ static void qat_vf_pci_aer_reset_done(struct pci_dev *pdev)
+@@ -651,7 +652,7 @@ qat_vf_vfio_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	if (IS_ERR(qat_vdev))
+ 		return PTR_ERR(qat_vdev);
+ 
+-	pci_set_drvdata(pdev, &qat_vdev->core_device);
++	pci_set_drvdata(pdev, qat_vdev);
+ 	ret = vfio_pci_core_register_device(&qat_vdev->core_device);
+ 	if (ret)
+ 		goto out_put_device;
+@@ -686,7 +687,7 @@ MODULE_DEVICE_TABLE(pci, qat_vf_vfio_pci_table);
+ 
+ static const struct pci_error_handlers qat_vf_err_handlers = {
+ 	.reset_done = qat_vf_pci_aer_reset_done,
+-	.error_detected = vfio_pci_core_aer_err_detected,
++	.error_detected = qat_vf_aer_err_detected,
+ };
+ 
+ static struct pci_driver qat_vf_vfio_pci_driver = {
+@@ -694,6 +695,7 @@ static struct pci_driver qat_vf_vfio_pci_driver = {
+ 	.id_table = qat_vf_vfio_pci_table,
+ 	.probe = qat_vf_vfio_pci_probe,
+ 	.remove = qat_vf_vfio_pci_remove,
++	.driver	= { .pm = pm_ptr(&qat_vf_pm_ops) },
+ 	.err_handler = &qat_vf_err_handlers,
+ 	.driver_managed_dma = true,
+ };
+diff --git a/drivers/vfio/pci/vfio_pci.c b/drivers/vfio/pci/vfio_pci.c
+index 830369ff878db..e7c012febe912 100644
+--- a/drivers/vfio/pci/vfio_pci.c
++++ b/drivers/vfio/pci/vfio_pci.c
+@@ -223,13 +223,44 @@ static const struct pci_device_id vfio_pci_table[] = {
+ 
+ MODULE_DEVICE_TABLE(pci, vfio_pci_table);
+ 
++static int __maybe_unused vfio_pci_pm_suspend(struct device *dev)
++{
++	struct vfio_pci_core_device *vdev = dev_get_drvdata(dev);
++
++	return vfio_pci_core_runtime_suspend(vdev);
++}
++
++static int __maybe_unused vfio_pci_pm_resume(struct device *dev)
++{
++	struct vfio_pci_core_device *vdev = dev_get_drvdata(dev);
++
++	return vfio_pci_core_runtime_resume(vdev);
++}
++
++static const struct dev_pm_ops vfio_pci_pm_ops = {
++	SET_RUNTIME_PM_OPS(vfio_pci_pm_suspend, vfio_pci_pm_resume, NULL)
++};
++
++static pci_ers_result_t vfio_pci_aer_err_detected(struct pci_dev *pdev,
++					       pci_channel_state_t state)
++{
++	struct vfio_pci_core_device *vdev = pci_get_drvdata(pdev);
++
++	return vfio_pci_core_aer_err_detected(vdev);
++}
++
++static const struct pci_error_handlers vfio_pci_err_handlers = {
++	.error_detected = vfio_pci_aer_err_detected,
++};
++
+ static struct pci_driver vfio_pci_driver = {
+ 	.name			= "vfio-pci",
+ 	.id_table		= vfio_pci_table,
+ 	.probe			= vfio_pci_probe,
+ 	.remove			= vfio_pci_remove,
+ 	.sriov_configure	= vfio_pci_sriov_configure,
+-	.err_handler		= &vfio_pci_core_err_handlers,
++	.err_handler		= &vfio_pci_err_handlers,
++	.driver		= { .pm = pm_ptr(&vfio_pci_pm_ops) },
+ 	.driver_managed_dma	= true,
+ };
+ 
+diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
+index 9bce419c52c8f..5be06e391e5b4 100644
+--- a/drivers/vfio/pci/vfio_pci_core.c
++++ b/drivers/vfio/pci/vfio_pci_core.c
+@@ -488,10 +488,8 @@ static int vfio_pci_core_pm_exit(struct vfio_pci_core_device *vdev, u32 flags,
+ }
+ 
+ #ifdef CONFIG_PM
+-static int vfio_pci_core_runtime_suspend(struct device *dev)
++int vfio_pci_core_runtime_suspend(struct vfio_pci_core_device *vdev)
+ {
+-	struct vfio_pci_core_device *vdev = dev_get_drvdata(dev);
+-
+ 	down_write(&vdev->memory_lock);
+ 	/*
+ 	 * The user can move the device into D3hot state before invoking
+@@ -516,11 +514,10 @@ static int vfio_pci_core_runtime_suspend(struct device *dev)
+ 
+ 	return 0;
+ }
++EXPORT_SYMBOL_GPL(vfio_pci_core_runtime_suspend);
+ 
+-static int vfio_pci_core_runtime_resume(struct device *dev)
++int vfio_pci_core_runtime_resume(struct vfio_pci_core_device *vdev)
+ {
+-	struct vfio_pci_core_device *vdev = dev_get_drvdata(dev);
+-
+ 	/*
+ 	 * Resume with a pm_wake_eventfd_ctx signals the eventfd and exit
+ 	 * low power mode.
+@@ -537,6 +534,7 @@ static int vfio_pci_core_runtime_resume(struct device *dev)
+ 
+ 	return 0;
+ }
++EXPORT_SYMBOL_GPL(vfio_pci_core_runtime_resume);
+ #endif /* CONFIG_PM */
+ 
+ /*
+@@ -576,18 +574,6 @@ static void vfio_pci_core_map_bars(struct vfio_pci_core_device *vdev)
+ 	}
+ }
+ 
+-/*
+- * The pci-driver core runtime PM routines always save the device state
+- * before going into suspended state. If the device is going into low power
+- * state with only with runtime PM ops, then no explicit handling is needed
+- * for the devices which have NoSoftRst-.
+- */
+-static const struct dev_pm_ops vfio_pci_core_pm_ops = {
+-	SET_RUNTIME_PM_OPS(vfio_pci_core_runtime_suspend,
+-			   vfio_pci_core_runtime_resume,
+-			   NULL)
+-};
+-
+ int vfio_pci_core_enable(struct vfio_pci_core_device *vdev)
+ {
+ 	struct pci_dev *pdev = vdev->pdev;
+@@ -2221,10 +2207,6 @@ int vfio_pci_core_register_device(struct vfio_pci_core_device *vdev)
+ 	struct device *dev = &pdev->dev;
+ 	int ret;
+ 
+-	/* Drivers must set the vfio_pci_core_device to their drvdata */
+-	if (WARN_ON(vdev != dev_get_drvdata(dev)))
+-		return -EINVAL;
+-
+ 	/* Drivers must set a name.  Required for sequestering SR-IOV VFs */
+ 	if (WARN_ON(!vdev->vdev.ops->name))
+ 		return -EINVAL;
+@@ -2292,7 +2274,6 @@ int vfio_pci_core_register_device(struct vfio_pci_core_device *vdev)
+ 	 */
+ 	vfio_pci_set_power_state(vdev, PCI_D0);
+ 
+-	dev->driver->pm = &vfio_pci_core_pm_ops;
+ 	pm_runtime_allow(dev);
+ 	if (!vdev->disable_idle_d3)
+ 		pm_runtime_put(dev);
+@@ -2333,10 +2314,8 @@ void vfio_pci_core_unregister_device(struct vfio_pci_core_device *vdev)
+ }
+ EXPORT_SYMBOL_GPL(vfio_pci_core_unregister_device);
+ 
+-pci_ers_result_t vfio_pci_core_aer_err_detected(struct pci_dev *pdev,
+-						pci_channel_state_t state)
++pci_ers_result_t vfio_pci_core_aer_err_detected(struct vfio_pci_core_device *vdev)
+ {
+-	struct vfio_pci_core_device *vdev = dev_get_drvdata(&pdev->dev);
+ 	struct vfio_pci_eventfd *eventfd;
+ 
+ 	rcu_read_lock();
+@@ -2419,11 +2398,6 @@ int vfio_pci_core_sriov_configure(struct vfio_pci_core_device *vdev,
+ }
+ EXPORT_SYMBOL_GPL(vfio_pci_core_sriov_configure);
+ 
+-const struct pci_error_handlers vfio_pci_core_err_handlers = {
+-	.error_detected = vfio_pci_core_aer_err_detected,
+-};
+-EXPORT_SYMBOL_GPL(vfio_pci_core_err_handlers);
+-
+ static bool vfio_dev_in_groups(struct vfio_device *vdev,
+ 			       struct vfio_pci_group_info *groups)
+ {
+diff --git a/drivers/vfio/pci/virtio/main.c b/drivers/vfio/pci/virtio/main.c
+index d2e5cbca13c85..123ff51938125 100644
+--- a/drivers/vfio/pci/virtio/main.c
++++ b/drivers/vfio/pci/virtio/main.c
+@@ -18,6 +18,9 @@
+ 
+ #include "common.h"
+ 
++VFIO_PCI_CORE_DEFINE_CALLBACKS(virtiovf, struct virtiovf_pci_core_device,
++			       core_device)
++
+ static int virtiovf_pci_open_device(struct vfio_device *core_vdev)
+ {
+ 	struct virtiovf_pci_core_device *virtvdev = container_of(core_vdev,
+@@ -174,7 +177,7 @@ static int virtiovf_pci_probe(struct pci_dev *pdev,
+ 	if (sup_lm)
+ 		virtiovf_set_migratable(virtvdev);
+ 
+-	dev_set_drvdata(&pdev->dev, &virtvdev->core_device);
++	dev_set_drvdata(&pdev->dev, virtvdev);
+ 	ret = vfio_pci_core_register_device(&virtvdev->core_device);
+ 	if (ret)
+ 		goto out;
+@@ -211,7 +214,7 @@ static void virtiovf_pci_aer_reset_done(struct pci_dev *pdev)
+ 
+ static const struct pci_error_handlers virtiovf_err_handlers = {
+ 	.reset_done = virtiovf_pci_aer_reset_done,
+-	.error_detected = vfio_pci_core_aer_err_detected,
++	.error_detected = virtiovf_aer_err_detected,
+ };
+ 
+ static struct pci_driver virtiovf_pci_driver = {
+@@ -219,6 +222,7 @@ static struct pci_driver virtiovf_pci_driver = {
+ 	.id_table = virtiovf_pci_table,
+ 	.probe = virtiovf_pci_probe,
+ 	.remove = virtiovf_pci_remove,
++	.driver = { .pm = pm_ptr(&virtiovf_pm_ops) },
+ 	.err_handler = &virtiovf_err_handlers,
+ 	.driver_managed_dma = true,
+ };
+diff --git a/drivers/vfio/pci/xe/main.c b/drivers/vfio/pci/xe/main.c
+index cbff5af385ef5..fa6a29d8dfd2c 100644
+--- a/drivers/vfio/pci/xe/main.c
++++ b/drivers/vfio/pci/xe/main.c
+@@ -38,6 +38,9 @@ struct xe_vfio_pci_core_device {
+ 	struct xe_vfio_pci_migration_file *migf;
+ };
+ 
++VFIO_PCI_CORE_DEFINE_CALLBACKS(xe_vfio, struct xe_vfio_pci_core_device,
++			       core_device)
++
+ #define xe_vdev_to_dev(xe_vdev) (&(xe_vdev)->core_device.pdev->dev)
+ 
+ static void xe_vfio_pci_disable_file(struct xe_vfio_pci_migration_file *migf)
+@@ -140,7 +143,7 @@ static void xe_vfio_pci_reset_done(struct pci_dev *pdev)
+ static const struct pci_error_handlers xe_vfio_pci_err_handlers = {
+ 	.reset_prepare = xe_vfio_pci_reset_prepare,
+ 	.reset_done = xe_vfio_pci_reset_done,
+-	.error_detected = vfio_pci_core_aer_err_detected,
++	.error_detected = xe_vfio_aer_err_detected,
+ };
+ 
+ static int xe_vfio_pci_open_device(struct vfio_device *core_vdev)
+@@ -550,7 +553,7 @@ static int xe_vfio_pci_probe(struct pci_dev *pdev, const struct pci_device_id *i
+ 	if (IS_ERR(xe_vdev))
+ 		return PTR_ERR(xe_vdev);
+ 
+-	dev_set_drvdata(&pdev->dev, &xe_vdev->core_device);
++	dev_set_drvdata(&pdev->dev, xe_vdev);
+ 
+ 	ret = vfio_pci_core_register_device(&xe_vdev->core_device);
+ 	if (ret) {
+@@ -586,6 +589,7 @@ static struct pci_driver xe_vfio_pci_driver = {
+ 	.id_table = xe_vfio_pci_table,
+ 	.probe = xe_vfio_pci_probe,
+ 	.remove = xe_vfio_pci_remove,
++	.driver = { .pm = pm_ptr(&xe_vfio_pm_ops) },
+ 	.err_handler = &xe_vfio_pci_err_handlers,
+ 	.driver_managed_dma = true,
+ };
+diff --git a/include/linux/vfio_pci_core.h b/include/linux/vfio_pci_core.h
+index 9a1674c152aa2..2f3fa2787737a 100644
+--- a/include/linux/vfio_pci_core.h
++++ b/include/linux/vfio_pci_core.h
+@@ -8,6 +8,7 @@
+  * Author: Tom Lyon, pugs@cisco.com
+  */
+ 
++#include <linux/device.h>
+ #include <linux/mutex.h>
+ #include <linux/pci.h>
+ #include <linux/vfio.h>
+@@ -16,6 +17,7 @@
+ #include <linux/types.h>
+ #include <linux/uuid.h>
+ #include <linux/notifier.h>
++#include <linux/pm.h>
+ 
+ #ifndef VFIO_PCI_CORE_H
+ #define VFIO_PCI_CORE_H
+@@ -168,7 +170,6 @@ int vfio_pci_core_init_dev(struct vfio_device *core_vdev);
+ void vfio_pci_core_release_dev(struct vfio_device *core_vdev);
+ int vfio_pci_core_register_device(struct vfio_pci_core_device *vdev);
+ void vfio_pci_core_unregister_device(struct vfio_pci_core_device *vdev);
+-extern const struct pci_error_handlers vfio_pci_core_err_handlers;
+ int vfio_pci_core_sriov_configure(struct vfio_pci_core_device *vdev,
+ 				  int nr_virtfn);
+ long vfio_pci_core_ioctl(struct vfio_device *core_vdev, unsigned int cmd,
+@@ -193,8 +194,6 @@ int vfio_pci_core_match_token_uuid(struct vfio_device *core_vdev,
+ int vfio_pci_core_enable(struct vfio_pci_core_device *vdev);
+ void vfio_pci_core_disable(struct vfio_pci_core_device *vdev);
+ void vfio_pci_core_finish_enable(struct vfio_pci_core_device *vdev);
+-pci_ers_result_t vfio_pci_core_aer_err_detected(struct pci_dev *pdev,
+-						pci_channel_state_t state);
+ ssize_t vfio_pci_core_do_io_rw(struct vfio_pci_core_device *vdev, bool test_mem,
+ 			       void __iomem *io, char __user *buf,
+ 			       loff_t off, size_t count, size_t x_start,
+@@ -260,4 +259,40 @@ vfio_pci_core_get_iomap(struct vfio_pci_core_device *vdev, unsigned int bar)
+ int vfio_pci_dma_buf_iommufd_map(struct dma_buf_attachment *attachment,
+ 				 struct phys_vec *phys);
+ 
++int vfio_pci_core_runtime_suspend(struct vfio_pci_core_device *vdev);
++int vfio_pci_core_runtime_resume(struct vfio_pci_core_device *vdev);
++pci_ers_result_t vfio_pci_core_aer_err_detected(struct vfio_pci_core_device *vdev);
++
++/*
++ * Per-driver PM/AER trampolines. driver_data points to the driver's private
++ * structure, which embeds a struct vfio_pci_core_device.
++ *
++ * @name: prefix for <name>_pm_ops and <name>_aer_err_detected
++ * @drv_type: type of the driver's private structure, including struct
++ * @member: member containing the struct vfio_pci_core_device
++ */
++#define VFIO_PCI_CORE_DEFINE_CALLBACKS(name, drv_type, member)                \
++static int __maybe_unused name##_pm_suspend(struct device *dev)               \
++{                                                                             \
++	drv_type *drvdata = dev_get_drvdata(dev);                             \
++									      \
++	return vfio_pci_core_runtime_suspend(&drvdata->member);               \
++}                                                                             \
++static int __maybe_unused name##_pm_resume(struct device *dev)                \
++{                                                                             \
++	drv_type *drvdata = dev_get_drvdata(dev);                             \
++									      \
++	return vfio_pci_core_runtime_resume(&drvdata->member);                \
++}                                                                             \
++static const struct dev_pm_ops name##_pm_ops = {                              \
++	SET_RUNTIME_PM_OPS(name##_pm_suspend, name##_pm_resume, NULL)         \
++};                                                                            \
++static pci_ers_result_t name##_aer_err_detected(struct pci_dev *pdev,         \
++					     pci_channel_state_t state)       \
++{                                                                             \
++	drv_type *drvdata = pci_get_drvdata(pdev);                            \
++									      \
++	return vfio_pci_core_aer_err_detected(&drvdata->member);              \
++}
++
+ #endif /* VFIO_PCI_CORE_H */
 -- 
 2.53.0
 
