@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041366;
-	b=CrIC+q7gI10UB4ecJZoK+/mPeJeLq0M4rMCgo1WeCiPYhdgyZB7S7g/49WmxwZjPZvxL
-	 JstIJnWU5Xp2cp8uovFUGHTShGoggM+ZUaYuBsF7ww+p48cN27gkWGXqnuL98OyKznsnf
-	 WZ63A1QzWW6C3MR7+0WymX/IhGvjbTuy0ZfD9kBibtO1NZ0Wl1SDDvYWdcLvJhjjA4H15
-	 R7Ks1zS4IzcS5fc3393MMSfTdYhb0DjFeKsK3A/9M+JhoG5pPZ8IPW/0woVVBKq/FS3wi
-	 21kNof9wTXydcdFfsgI1/gbIToPYlGBicE6XvQHMjQ1sI6HYGuzsSfkPHgAXf+RzAdw==
+	t=1795041369;
+	b=1ZeuAFvWQsTh8jWF3Dlz8OAqOXeOpBlKHz1yibNXZ30gq2FZXJuQMFWAVnbTOCNsTwJg
+	 P6KHfRxqL9WKRsMvGRUq26pYz1D+8Kh2SAS5DcqMy0bMgVNEl5JQG8T7rkaYJtnits4TA
+	 rrWlpcaYPuhSyecvMOL4AKJwRCs72JGoTbnkNVvB2aUw2h2ZfrT3E9hMpeYktdroa6iIs
+	 PNDYSdeIchaSLOuwv/BDFH705sgt1BEf+rJhVbZgq3KXCEsCMmtuV9zd4M0yea13KsHqU
+	 ym6V7/oQsg7pbfrrglz6rBt2lSEjg1bX7SK1r+Pf6qAkdZaabi+13nYDU6MK5Cx9Uyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041366;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041369;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Al/HGNAajwzDLkJ/jGGt646tB/1gGaz7o/0HeqCT3g4=;
-	b=fpZsXWK5RTd8YYa3M5DNsZL1Sb3p07IS3FeczNFO1VqVl5Bvv7tCq5eoH3lkDO9nbjGp
-	 RWPcRrvtshANH11IyRPocrjVbwtlMd1Msu6atr8yWQm4KlPR7LtG08PJA6OlsIgBsUIhI
-	 VmkxWUBWVZZu0IbZVYm+SbQrBqNRZC+M2SBWS93Q8JwMUnK3q43kRP65i43hrT5q6JyaL
-	 RvTkkS2cpXHE4g+NeCfNrxJqR5/Saz9pq6TBlSl8brpO2epu9Bz28QugyGch/KKqySy5H
-	 RGgrUzEsm3ICLbevBecQs0DQwuCmPGXOGiY17QjRJPwUkGDv3WehQmknyXXQIGUFFAQ==
+	bh=2x6QDTCjxrmsoqgzGz3Gk9yxGB05t9/xs6D8k0X33WU=;
+	b=ryBg++FkAEtjaT2bvyp4kUbQOUQA7130AGqxA2FSlQ3iHFLfnMZ1US9o+fYwyxdOhowZ
+	 /dNTD2nRh3MF7IymKuUwsBILc+OaQ5aCVDXrkArADIyUgyeGcIN/l6MxCtx5NQZ3f9H+X
+	 J0Ly4d2up54xBgj3LFW9QmwNSK+N0fhCWitq6H6D51hVRfAb/o3g/6avH4V+va2cgx/8y
+	 zHVB+zK7Gl3V4bXmilLaStN55rSEG4Tp6qK0rKqCvxCWPjAefzvjEPEJbhcPYA7mkbz1z
+	 yk//SVEe3uT3zxqR/17ijqqZXL3P2/CQ9nATepyAiBmXBBQIVOXVF7KKMwcNCeFI9nw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vDZxwRqr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aHl33pVL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15C8606A320;
-	Wed, 18 Nov 2026 22:36:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C39D606A31C;
+	Wed, 18 Nov 2026 22:36:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vDZxwRqr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2FF71F000C4;
-	Wed, 18 Nov 2026 22:36:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aHl33pVL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62ECD1F000C4;
+	Wed, 18 Nov 2026 22:36:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041366;
-	bh=Al/HGNAajwzDLkJ/jGGt646tB/1gGaz7o/0HeqCT3g4=;
+	s=korg; t=1795041368;
+	bh=2x6QDTCjxrmsoqgzGz3Gk9yxGB05t9/xs6D8k0X33WU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vDZxwRqrm6JXCB2bpgo44gcgNvirocWiStXdr8LEGJF1/skrzK1cvNLzryfEVHWfk
-	 i64VKR0yunMm/cBqbqQSOHBBEEB2RnT05Gq21VJ6ScWH01MIpBvQQNohjz8BO2Mx7C
-	 SME0NetnzmDtY4qZfoisYvCP1UX7zyHxHZkcsaYo=
+	b=aHl33pVLAy0RUYxhPZcgjgrC3OYzcRx0N6BsQSwdstXhLF4vAoZZrYx9AxiOBcPbj
+	 soF7N17JczKQOx44G19rIRNKriMs3vhJtCgm2/wAXk53TkoD+1TQWRxLGdLaHoAyip
+	 S9xnPPPlaeMy1xpXLgef9ibzW8QNRM5F9qx47Tmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Tapio Reijonen <tapio.reijonen@vaisala.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2787/3318] serial: max310x: use common power function for all variants
-Date: Wed, 18 Nov 2026 15:56:49 +0100
-Message-ID: <20261118150444.300997343@linuxfoundation.org>
+Subject: [PATCH 6.6 2788/3318] serial: max310x: fix breaks not reaching the wire in RS485 mode
+Date: Wed, 18 Nov 2026 15:56:50 +0100
+Message-ID: <20261118150444.329693531@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,165 +67,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Tapio Reijonen <tapio.reijonen@vaisala.com>
 
-[ Upstream commit 9464833a765f66a9fbc0b972e89c1e1a13f4d3a0 ]
+[ Upstream commit 4efacb600bf98b13e0659f05afa4549795277e35 ]
 
-Simplify driver by defining a common function to handle the power
-control of all variants.
+The chip's auto-RTS (MODE1.TRNSCVCTRL) asserts the RS485 transceiver
+only while FIFO data is shifting out, and a break is not FIFO data: on
+an RS485 port a requested break sets the TX break bit but the
+transceiver is never enabled, so the break never reaches the wire.
+Break-led protocols cannot work at all.
 
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20240118152213.2644269-15-hugo@hugovil.com
+Disable auto-RTS for the break duration and drive RTS manually via the
+LCR RTS bit, then restore auto-RTS when the break ends. Track the break
+in tx_break and leave MODE1 alone in the rs485-config worker while it
+is set - a TIOCSRS485 arriving mid-break would otherwise re-enable
+auto-RTS on top of the manual RTS and release the transceiver before
+the break ends; break_ctl() restores auto-RTS from the then-current
+configuration when the break completes. The worker runs under
+port->mutex - break_ctl() and set_termios() already do - so the
+tx_break test and the MODE1 write cannot straddle a break starting or
+ending, and startup() clears tx_break alongside the latched TXBREAK
+bit, since a port can be closed with a break still asserted.
+
+Only the break assertion is gated on RS485 being enabled; the restore
+at break end runs unconditionally and derives MODE1 from the current
+configuration. Returning early for a port whose RS485 was disabled
+mid-break - that reconfigure is deferred like any other - would leak
+the manually driven RTS and leave the transceiver holding the bus
+indefinitely after the break ends. On a non-RS485 port the restore is
+a no-op: nothing else writes the LCR RTS bit.
+
+Fixes: 55367c620aed ("serial: max310x: Add support for RS-485 mode")
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Tapio Reijonen <tapio.reijonen@vaisala.com>
+Link: https://patch.msgid.link/20261008-max310x-rs485-sw-delay-v8-2-6ba881f81e1f@vaisala.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 4efacb600bf9 ("serial: max310x: fix breaks not reaching the wire in RS485 mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/max310x.c | 44 ++++++++++++++++--------------------
- 1 file changed, 19 insertions(+), 25 deletions(-)
+ drivers/tty/serial/max310x.c | 49 ++++++++++++++++++++++++++++++++++--
+ 1 file changed, 47 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/tty/serial/max310x.c b/drivers/tty/serial/max310x.c
-index cf68a7a24f4b7..b8aae5bc6083b 100644
+index b8aae5bc6083b..c83f351b7a199 100644
 --- a/drivers/tty/serial/max310x.c
 +++ b/drivers/tty/serial/max310x.c
-@@ -269,11 +269,12 @@ struct max310x_devtype {
- 		unsigned short max;
- 	} slave_addr;
- 	int	nr;
--	void	(*power)(struct uart_port *, int);
- 	char	name[9];
- 	u8	mode1;
- 	u8	rev_id_val;
- 	u8	rev_id_reg; /* Relevant only if rev_id_val is defined. */
-+	u8	power_reg; /* Register address for power/sleep control. */
-+	u8	power_bit; /* Bit for sleep or power-off mode (active high). */
+@@ -283,6 +283,7 @@ struct max310x_one {
+ 	struct work_struct	md_work;
+ 	struct work_struct	rs_work;
+ 	struct regmap		*regmap;
++	bool			tx_break;	/* break_ctl() owns the transceiver */
+ 
+ 	u8 rx_buf[MAX310X_FIFO_SIZE];
  };
- 
- struct max310x_one {
-@@ -387,18 +388,10 @@ static int max310x_detect(struct device *dev)
- 
- static void max310x_power(struct uart_port *port, int on)
- {
--	max310x_port_update(port, MAX310X_MODE1_REG,
--			    MAX310X_MODE1_FORCESLEEP_BIT,
--			    on ? 0 : MAX310X_MODE1_FORCESLEEP_BIT);
--	if (on)
--		msleep(50);
--}
-+	struct max310x_port *s = dev_get_drvdata(port->dev);
- 
--static void max14830_power(struct uart_port *port, int on)
--{
--	max310x_port_update(port, MAX310X_BRGCFG_REG,
--			    MAX14830_BRGCFG_CLKDIS_BIT,
--			    on ? 0 : MAX14830_BRGCFG_CLKDIS_BIT);
-+	max310x_port_update(port, s->devtype->power_reg, s->devtype->power_bit,
-+			    on ? 0 : s->devtype->power_bit);
- 	if (on)
- 		msleep(50);
+@@ -655,6 +656,12 @@ static void max310x_batch_read(struct uart_port *port, u8 *rxbuf, unsigned int l
+ 	regmap_noinc_read(one->regmap, MAX310X_RHR_REG, rxbuf, len);
  }
-@@ -409,7 +402,8 @@ static const struct max310x_devtype max3107_devtype = {
- 	.mode1	= MAX310X_MODE1_AUTOSLEEP_BIT | MAX310X_MODE1_IRQSEL_BIT,
- 	.rev_id_val = MAX3107_REV_ID,
- 	.rev_id_reg = MAX310X_REVID_REG,
--	.power	= max310x_power,
-+	.power_reg = MAX310X_MODE1_REG,
-+	.power_bit = MAX310X_MODE1_FORCESLEEP_BIT,
- 	.slave_addr	= {
- 		.min = 0x2c,
- 		.max = 0x2f,
-@@ -422,7 +416,8 @@ static const struct max310x_devtype max3108_devtype = {
- 	.mode1	= MAX310X_MODE1_AUTOSLEEP_BIT,
- 	.rev_id_val = 0, /* Unsupported. */
- 	.rev_id_reg = 0, /* Irrelevant when rev_id_val is not defined. */
--	.power	= max310x_power,
-+	.power_reg = MAX310X_MODE1_REG,
-+	.power_bit = MAX310X_MODE1_FORCESLEEP_BIT,
- 	.slave_addr	= {
- 		.min = 0x60,
- 		.max = 0x6f,
-@@ -435,7 +430,8 @@ static const struct max310x_devtype max3109_devtype = {
- 	.mode1	= MAX310X_MODE1_AUTOSLEEP_BIT,
- 	.rev_id_val = MAX3109_REV_ID,
- 	.rev_id_reg = MAX310X_REVID_EXTREG,
--	.power	= max310x_power,
-+	.power_reg = MAX310X_MODE1_REG,
-+	.power_bit = MAX310X_MODE1_FORCESLEEP_BIT,
- 	.slave_addr	= {
- 		.min = 0x60,
- 		.max = 0x6f,
-@@ -448,7 +444,8 @@ static const struct max310x_devtype max14830_devtype = {
- 	.mode1	= MAX310X_MODE1_IRQSEL_BIT,
- 	.rev_id_val = MAX14830_REV_ID,
- 	.rev_id_reg = MAX310X_REVID_EXTREG,
--	.power	= max14830_power,
-+	.power_reg = MAX310X_BRGCFG_REG,
-+	.power_bit = MAX14830_BRGCFG_CLKDIS_BIT,
- 	.slave_addr	= {
- 		.min = 0x60,
- 		.max = 0x6f,
-@@ -1052,10 +1049,9 @@ static int max310x_rs485_config(struct uart_port *port, struct ktermios *termios
+ 
++static void max310x_rts_ctl(struct uart_port *port, bool rts_state)
++{
++	max310x_port_update(port, MAX310X_LCR_REG, MAX310X_LCR_RTS_BIT,
++			    rts_state ? MAX310X_LCR_RTS_BIT : 0);
++}
++
+ static void max310x_handle_rx(struct uart_port *port, unsigned int rxlen)
+ {
+ 	struct max310x_one *one = to_max310x_port(port);
+@@ -890,9 +897,32 @@ static void max310x_set_mctrl(struct uart_port *port, unsigned int mctrl)
+ 
+ static void max310x_break_ctl(struct uart_port *port, int break_state)
+ {
++	struct max310x_one *one = to_max310x_port(port);
++
++	one->tx_break = break_state;
++
+ 	max310x_port_update(port, MAX310X_LCR_REG,
+ 			    MAX310X_LCR_TXBREAK_BIT,
+ 			    break_state ? MAX310X_LCR_TXBREAK_BIT : 0);
++
++	/*
++	 * The chip's auto-RTS asserts the transceiver only while FIFO data is
++	 * shifting out, and a break is not FIFO data. Disable auto-RTS for the
++	 * break duration and drive RTS manually so the break reaches the wire;
++	 * restore auto-RTS when the break ends.
++	 */
++	if (break_state) {
++		if (!(port->rs485.flags & SER_RS485_ENABLED))
++			return;
++		max310x_port_update(port, MAX310X_MODE1_REG,
++				    MAX310X_MODE1_TRNSCVCTRL_BIT, 0);
++	} else {
++		max310x_port_update(port, MAX310X_MODE1_REG,
++				    MAX310X_MODE1_TRNSCVCTRL_BIT,
++				    (port->rs485.flags & SER_RS485_ENABLED) ?
++				    MAX310X_MODE1_TRNSCVCTRL_BIT : 0);
++	}
++	max310x_rts_ctl(port, break_state);
+ }
+ 
+ static void max310x_set_termios(struct uart_port *port,
+@@ -1014,6 +1044,13 @@ static void max310x_rs_proc(struct work_struct *ws)
+ 	struct max310x_one *one = container_of(ws, struct max310x_one, rs_work);
+ 	unsigned int delay, mode1 = 0, mode2 = 0;
+ 
++	/*
++	 * Serialize against break_ctl() and set_termios(), which run under
++	 * port->mutex: the tx_break test below and the MODE1 write must not
++	 * straddle a break starting or ending.
++	 */
++	guard(mutex)(&one->port.state->port.mutex);
++
+ 	delay = (one->port.rs485.delay_rts_before_send << 4) |
+ 		one->port.rs485.delay_rts_after_send;
+ 	max310x_port_write(&one->port, MAX310X_HDPIXDELAY_REG, delay);
+@@ -1025,8 +1062,14 @@ static void max310x_rs_proc(struct work_struct *ws)
+ 			mode2 = MAX310X_MODE2_ECHOSUPR_BIT;
+ 	}
+ 
+-	max310x_port_update(&one->port, MAX310X_MODE1_REG,
+-			MAX310X_MODE1_TRNSCVCTRL_BIT, mode1);
++	/*
++	 * A break owns the transceiver: break_ctl() disabled auto-RTS and
++	 * drives RTS manually, and restores it when the break ends. Leave
++	 * MODE1 alone meanwhile or the break goes undriven mid-way.
++	 */
++	if (!one->tx_break)
++		max310x_port_update(&one->port, MAX310X_MODE1_REG,
++				    MAX310X_MODE1_TRNSCVCTRL_BIT, mode1);
+ 	max310x_port_update(&one->port, MAX310X_MODE2_REG,
+ 			MAX310X_MODE2_ECHOSUPR_BIT, mode2);
+ }
+@@ -1049,6 +1092,7 @@ static int max310x_rs485_config(struct uart_port *port, struct ktermios *termios
  
  static int max310x_startup(struct uart_port *port)
  {
--	struct max310x_port *s = dev_get_drvdata(port->dev);
++	struct max310x_one *one = to_max310x_port(port);
  	unsigned int val;
  
--	s->devtype->power(port, 1);
-+	max310x_power(port, 1);
+ 	max310x_power(port, 1);
+@@ -1058,6 +1102,7 @@ static int max310x_startup(struct uart_port *port)
+ 	 * closed with a break still asserted, and set_termios() no longer
+ 	 * rewrites it.
+ 	 */
++	one->tx_break = false;
+ 	max310x_port_update(port, MAX310X_LCR_REG, MAX310X_LCR_TXBREAK_BIT, 0);
  
- 	/*
- 	 * Clear a latched break: nothing clears TXBREAK when a port is
-@@ -1107,12 +1103,10 @@ static int max310x_startup(struct uart_port *port)
- 
- static void max310x_shutdown(struct uart_port *port)
- {
--	struct max310x_port *s = dev_get_drvdata(port->dev);
--
- 	/* Disable all interrupts */
- 	max310x_port_write(port, MAX310X_IRQEN_REG, 0);
- 
--	s->devtype->power(port, 0);
-+	max310x_power(port, 0);
- }
- 
- static const char *max310x_type(struct uart_port *port)
-@@ -1174,7 +1168,7 @@ static int __maybe_unused max310x_suspend(struct device *dev)
- 
- 	for (i = 0; i < s->devtype->nr; i++) {
- 		uart_suspend_port(&max310x_uart, &s->p[i].port);
--		s->devtype->power(&s->p[i].port, 0);
-+		max310x_power(&s->p[i].port, 0);
- 	}
- 
- 	return 0;
-@@ -1186,7 +1180,7 @@ static int __maybe_unused max310x_resume(struct device *dev)
- 	int i;
- 
- 	for (i = 0; i < s->devtype->nr; i++) {
--		s->devtype->power(&s->p[i].port, 1);
-+		max310x_power(&s->p[i].port, 1);
- 		uart_resume_port(&max310x_uart, &s->p[i].port);
- 	}
- 
-@@ -1431,7 +1425,7 @@ static int max310x_probe(struct device *dev, const struct max310x_devtype *devty
- 		set_bit(line, max310x_lines);
- 
- 		/* Go to suspend mode */
--		devtype->power(&s->p[i].port, 0);
-+		max310x_power(&s->p[i].port, 0);
- 	}
- 
- #ifdef CONFIG_GPIOLIB
-@@ -1486,7 +1480,7 @@ static void max310x_remove(struct device *dev)
- 		if (test_and_clear_bit(s->p[i].port.line, max310x_lines))
- 			uart_remove_one_port(&max310x_uart, &s->p[i].port);
- 
--		s->devtype->power(&s->p[i].port, 0);
-+		max310x_power(&s->p[i].port, 0);
- 	}
- 
- 	clk_disable_unprepare(s->clk);
+ 	/* Configure MODE1 register */
 -- 
 2.53.0
 
