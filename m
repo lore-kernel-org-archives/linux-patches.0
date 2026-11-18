@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018666;
-	b=mRM9IwY5JC35yIgKDGhzBPZ5Cgk5bQAotmMSvEtCoqd02y0Xt2PQ+fIVXJ1BH5ZlW6GN
-	 G8blFPjB7HitdkMm4/GzPhGY7SzV78BxRxhqF6P0J70iZ54ok1pjJUBJ5li7aoO0Bfqfz
-	 AQU5jyQhz2ENGOiCb5e5Y3ipyQvf4oBLY8DRM1Gz1pyZ/+6cYzE6/cytY3cVd/2ZCHdZU
-	 OmalzrvEe1KPp0MI+iCnnoUIucju3uWi7ewWGVngcLDBiYnEE3tSxmACdRXK3Rcr6PoSn
-	 N9yy8ccy4EjBpHaI5y5UOFKA8whMShFalkbXcQ7GKBrHSI4G8SKSkIQE+lgP7HBxVmA==
+	t=1795018669;
+	b=FqFUscRcjEv+CvnC46wB2oeU0Kdgdy+LN32ca88uPaTm2rukQx0TEmCy+XetSPHTctFT
+	 LP5ja9x1fEXaVwiL5VPGfSA2kR59LUO0U7RpR6BXZvDk2A6K32jGULjZeHzcMx6gUGQzk
+	 tblvcEjDmwNuyj6mSPNxqpmaTEfbEvzaKHJqYhuVyMBIoI099+JYv63d25sPT7RdWG7KQ
+	 dXMqiEw9C7q2UcxR/8eWgqjb1gECYXqtz0NK8PKjr5CZ7TIGOlOA+2Y9AriJ8THWWYx/7
+	 8NI5zVBZRltj7oJqIkAIMZ3NzU3NzqyEPguHmTDlQDKEE8DDiJ1p4Ec3umtjWGbqadw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018666;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018669;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PZGxpzDmajxT2JUwSXT2xPypJBBXgmGyqyVIh82l7II=;
-	b=EsTtd1HKg/QVE7b76EOo8QQOPHSvXpuAr1hQzXJozgfaAyS+1KydreLMNPw3PKLJpFh1
-	 xxTamQ2n9bsKCqFnEqrGGHFxseloZmPoOt0S2nYghuOxuPRX3i/NrgUm14yr+h4Rbf3Fy
-	 Zz2lTVReEldauqvM7udplhsMN5+gmWOE2T+XT4KtoPdP8nNkuLGiItS3GQkbVeBhSggGI
-	 2RC4Syqv22Gh+ZvNc7y5+DNafzPg23FKqzIIOrK6ecJYNotODYliOWTfv8IfECS0ahlJ1
-	 GS4WHm6TkxtWF0qABheFXn1XePORJkv4pCI1dLd8yNmqSCwTen/1AEisIV1CB8y91CQ==
+	bh=tIMzHsiubQGClv8oO6imDcynz8/aPruA9/bzHh/i5io=;
+	b=UlqeYNaW0+KN8+cPxLzquHVuuj6U+ruPISfKqrBEhXSoSR9TgKFSCD5JAmG62rAr9+Bc
+	 wzWVTsD7XkfPBhx8mT1TehMpmTeGEg329mnLHqpd4JwlSkkQ7rtJGnlAFvfNgNvKudF6S
+	 FAMgrWbNy7tsj7JwUnxbf5YyOxKO2u+rhai7Wnsu7A6+UFZnBAwutKiIEdADwX7bxk4hj
+	 JTU1+ZD0DinlXUx8aGx/4wASnLR5BTtXTXMFtZ9o+nCy8Ak0KTDQ9Dbtl4xvEUN3aOXg3
+	 QepTdDxLANTI94uq12KNyJmr0fRVognWURC+W4scJHNKVait2MQBOJd1zYCC9k0RC4g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RNbk4L0h;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O2I0Vk24;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB791606A320;
-	Wed, 18 Nov 2026 16:17:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C62C606A336;
+	Wed, 18 Nov 2026 16:17:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RNbk4L0h
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38EDD1F000C4;
-	Wed, 18 Nov 2026 16:17:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O2I0Vk24
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E79351F000CF;
+	Wed, 18 Nov 2026 16:17:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018666;
-	bh=PZGxpzDmajxT2JUwSXT2xPypJBBXgmGyqyVIh82l7II=;
+	s=korg; t=1795018669;
+	bh=tIMzHsiubQGClv8oO6imDcynz8/aPruA9/bzHh/i5io=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RNbk4L0h0x51ECcEF1nzrrl2cFbt/frW4xBcqo6I+NhxW36l255J6Ulxay5SgL3Nv
-	 r2lJlWC0QNbQighUtoG9NEqB1/mCRY3TpFWb5BUL8KLQgw8LfA64or4kQuXBboSvC5
-	 SHdQnoOck4jaHujAUrPN97XopX1F2ZinNf7F7Q9c=
+	b=O2I0Vk24vfc6vRFbpwfA4hLcG3++/VojahgJSxBV+zNdSNqAsBN6UETG56BkYhZDr
+	 Qb1bHems+bu4f5VYrfy/pKvPnYX4iz/9HntFwr5NHfpzvfVyffMF6522kJvAtRzgoX
+	 kW2vSJnzoWM9YHAeta9A0kI+zWxbrkcKpw0UT6ew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
+	Aamir Ahmed <elb12345@hotmail.co.uk>,
 	Jeff Chen <jeff.chen_1@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1322/2651] wifi: nxpwifi: fix missing error codes in _nxpwifi_fw_dpc()
-Date: Wed, 18 Nov 2026 15:42:42 +0100
-Message-ID: <20261118150335.595391390@linuxfoundation.org>
+Subject: [PATCH 7.3 1323/2651] wifi: nxpwifi: validate variable IE lengths in beacon parser
+Date: Wed, 18 Nov 2026 15:42:43 +0100
+Message-ID: <20261118150335.632117968@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,72 +68,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Chen <jeff.chen_1@nxp.com>
+From: Aamir Ahmed <elb12345@hotmail.co.uk>
 
-[ Upstream commit df40d3645443e884897b5b95873f9871bb44b7e5 ]
+[ Upstream commit 52c9568fa2eda80d02842961e7ba01e07eb01883 ]
 
-When nxpwifi_register_cfg80211(), nxpwifi_init_channel_scan_gap(),
-or nxpwifi_add_virtual_intf() fail, the function jumped to an error
-label but left ret == 0, causing _nxpwifi_fw_dpc() to return success
-despite the failure.
+nxpwifi_update_bss_desc_with_ie() stores pointers to the HT, VHT and HE
+capability and operation elements, to the operating mode notification
+and to the 20/40 BSS coexistence element, taken from a beacon or probe
+response, without checking that each element is long enough for the
+structure the driver later dereferences it as.
 
-Fix by propagating the return value of nxpwifi_register_cfg80211()
-and nxpwifi_init_channel_scan_gap() directly into ret, and by
-extracting the encoded error from the ERR_PTR wdev with PTR_ERR()
-before each goto err_add_intf. The P2P client interface path had
-the same IS_ERR/goto pattern and is fixed in the same way.
+bss_desc->beacon_buf is a tight kmemdup() of the on-air elements, so a
+truncated element leaves the stored pointer short of the structure and
+the consumers read past the end of that allocation at association time.
+Some of those bytes are copied into the association request, so a rogue
+access point in range can both trigger the read and receive the result.
+
+Reject the frame with -EINVAL when any of these elements is shorter than
+the structure read from it, as the FH, DS and CF parameter set cases in
+the same parser already do.
+
+The extended capabilities element has no structure size to check
+against, so nxpwifi_is_ap_11ax_twt_supported()'s read of
+bcn_ext_cap->data[9] is bounded at that consumer instead.
 
 Fixes: 73b01e57ed3e ("wifi: nxp: add nxpwifi driver for IW61x")
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/linux-wireless/anwshVbQWXXHTJpa@stanley.mountain/
-Assisted-by: Claude:claude-opus-4-8
+Assisted-by: LLM
+Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
+Reviewed-by: Jeff Chen <jeff.chen_1@nxp.com>
 Signed-off-by: Jeff Chen <jeff.chen_1@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/nxp/nxpwifi/main.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/net/wireless/nxp/nxpwifi/11ax.c |  2 ++
+ drivers/net/wireless/nxp/nxpwifi/scan.c | 18 ++++++++++++++++++
+ 2 files changed, 20 insertions(+)
 
-diff --git a/drivers/net/wireless/nxp/nxpwifi/main.c b/drivers/net/wireless/nxp/nxpwifi/main.c
-index 9e13348105c3b..8eefd57e92c93 100644
---- a/drivers/net/wireless/nxp/nxpwifi/main.c
-+++ b/drivers/net/wireless/nxp/nxpwifi/main.c
-@@ -603,14 +603,18 @@ static int _nxpwifi_fw_dpc(const struct firmware *firmware, void *context)
- 	maybe_quirk_fw_disable_ds(adapter);
+diff --git a/drivers/net/wireless/nxp/nxpwifi/11ax.c b/drivers/net/wireless/nxp/nxpwifi/11ax.c
+index 96540914f3cf6..dc1e747383eca 100644
+--- a/drivers/net/wireless/nxp/nxpwifi/11ax.c
++++ b/drivers/net/wireless/nxp/nxpwifi/11ax.c
+@@ -402,6 +402,8 @@ static u8 nxpwifi_is_ap_11ax_twt_supported(struct nxpwifi_bssdescriptor *bss_des
+ 		return false;
+ 	ext_cap = (struct element *)bss_desc->bcn_ext_cap;
  
- 	if (!adapter->wiphy) {
--		if (nxpwifi_register_cfg80211(adapter)) {
-+		ret = nxpwifi_register_cfg80211(adapter);
-+
-+		if (ret) {
- 			nxpwifi_dbg(adapter, ERROR,
- 				    "cannot register with cfg80211\n");
- 			goto err_init_fw;
- 		}
- 	}
++	if (ext_cap->datalen < 10)
++		return false;
+ 	if (!(ext_cap->data[9] & WLAN_EXT_CAPA10_TWT_RESPONDER_SUPPORT))
+ 		return false;
+ 	return true;
+diff --git a/drivers/net/wireless/nxp/nxpwifi/scan.c b/drivers/net/wireless/nxp/nxpwifi/scan.c
+index 67d7ff2f10c59..f3becafb9c23c 100644
+--- a/drivers/net/wireless/nxp/nxpwifi/scan.c
++++ b/drivers/net/wireless/nxp/nxpwifi/scan.c
+@@ -1209,6 +1209,8 @@ int nxpwifi_update_bss_desc_with_ie(struct nxpwifi_adapter *adapter,
+ 				(u16)(current_ptr - bss_entry->beacon_buf);
+ 			break;
+ 		case WLAN_EID_HT_CAPABILITY:
++			if (element_len < sizeof(*bss_entry->bcn_ht_cap))
++				return -EINVAL;
+ 			bss_entry->bcn_ht_cap =
+ 				(struct ieee80211_ht_cap *)(current_ptr +
+ 							    elem_size);
+@@ -1217,6 +1219,8 @@ int nxpwifi_update_bss_desc_with_ie(struct nxpwifi_adapter *adapter,
+ 				      bss_entry->beacon_buf);
+ 			break;
+ 		case WLAN_EID_HT_OPERATION:
++			if (element_len < sizeof(*bss_entry->bcn_ht_oper))
++				return -EINVAL;
+ 			bss_entry->bcn_ht_oper =
+ 				(struct ieee80211_ht_operation *)(current_ptr +
+ 								  elem_size);
+@@ -1225,6 +1229,8 @@ int nxpwifi_update_bss_desc_with_ie(struct nxpwifi_adapter *adapter,
+ 				      bss_entry->beacon_buf);
+ 			break;
+ 		case WLAN_EID_VHT_CAPABILITY:
++			if (element_len < sizeof(*bss_entry->bcn_vht_cap))
++				return -EINVAL;
+ 			bss_entry->disable_11ac = false;
+ 			bss_entry->bcn_vht_cap = (void *)(current_ptr +
+ 							  elem_size);
+@@ -1233,6 +1239,8 @@ int nxpwifi_update_bss_desc_with_ie(struct nxpwifi_adapter *adapter,
+ 				      bss_entry->beacon_buf);
+ 			break;
+ 		case WLAN_EID_VHT_OPERATION:
++			if (element_len < sizeof(*bss_entry->bcn_vht_oper))
++				return -EINVAL;
+ 			bss_entry->bcn_vht_oper =
+ 				(void *)(current_ptr + elem_size);
+ 			bss_entry->vht_info_offset =
+@@ -1240,6 +1248,8 @@ int nxpwifi_update_bss_desc_with_ie(struct nxpwifi_adapter *adapter,
+ 				      bss_entry->beacon_buf);
+ 			break;
+ 		case WLAN_EID_BSS_COEX_2040:
++			if (!element_len)
++				return -EINVAL;
+ 			bss_entry->bcn_bss_co_2040 = current_ptr;
+ 			bss_entry->bss_co_2040_offset =
+ 				(u16)(current_ptr - bss_entry->beacon_buf);
+@@ -1250,6 +1260,8 @@ int nxpwifi_update_bss_desc_with_ie(struct nxpwifi_adapter *adapter,
+ 				(u16)(current_ptr - bss_entry->beacon_buf);
+ 			break;
+ 		case WLAN_EID_OPMODE_NOTIF:
++			if (total_ie_len < sizeof(*bss_entry->oper_mode))
++				return -EINVAL;
+ 			bss_entry->oper_mode = (void *)current_ptr;
+ 			bss_entry->oper_mode_offset =
+ 				(u16)(current_ptr - bss_entry->beacon_buf);
+@@ -1262,6 +1274,9 @@ int nxpwifi_update_bss_desc_with_ie(struct nxpwifi_adapter *adapter,
  
--	if (nxpwifi_init_channel_scan_gap(adapter)) {
-+	ret = nxpwifi_init_channel_scan_gap(adapter);
-+
-+	if (ret) {
- 		nxpwifi_dbg(adapter, ERROR,
- 			    "could not init channel stats table\n");
- 		goto err_init_chan_scan;
-@@ -623,6 +627,7 @@ static int _nxpwifi_fw_dpc(const struct firmware *firmware, void *context)
- 	if (IS_ERR(wdev)) {
- 		nxpwifi_dbg(adapter, ERROR,
- 			    "cannot create default STA interface\n");
-+		ret = PTR_ERR(wdev);
- 		rtnl_unlock();
- 		goto err_add_intf;
- 	}
-@@ -632,6 +637,7 @@ static int _nxpwifi_fw_dpc(const struct firmware *firmware, void *context)
- 	if (IS_ERR(wdev)) {
- 		nxpwifi_dbg(adapter, ERROR,
- 			    "cannot create AP interface\n");
-+		ret = PTR_ERR(wdev);
- 		rtnl_unlock();
- 		goto err_add_intf;
- 	}
+ 			switch (elem->data[0]) {
+ 			case WLAN_EID_EXT_HE_CAPABILITY:
++				if (element_len <
++				    1 + sizeof(*bss_entry->bcn_he_cap))
++					return -EINVAL;
+ 				bss_entry->disable_11ax = false;
+ 				bss_entry->bcn_he_cap =
+ 					(void *)(current_ptr + elem_size + 1);
+@@ -1270,6 +1285,9 @@ int nxpwifi_update_bss_desc_with_ie(struct nxpwifi_adapter *adapter,
+ 					      bss_entry->beacon_buf);
+ 				break;
+ 			case WLAN_EID_EXT_HE_OPERATION:
++				if (element_len <
++				    1 + sizeof(*bss_entry->bcn_he_oper))
++					return -EINVAL;
+ 				bss_entry->bcn_he_oper =
+ 					(void *)(current_ptr + elem_size + 1);
+ 				bss_entry->he_info_offset =
 -- 
 2.53.0
 
