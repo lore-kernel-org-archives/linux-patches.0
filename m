@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036378;
-	b=Qcf52rdX6ken5XuPGMzMpO/fbWs7nYN1qBBrO6QDG9DidBb++0tuUeIydGuO8khOh3XY
-	 5OvPuCJUWzlHO9EEIKUOSNZ2uxdQl34rwjH0nCnt8ovtdhh2XrFF8CWaguOiM/GFoKw+a
-	 OFtY5MF/wGRY3XMggfzM6XkRbqaYj3EeWpaUulsgf7AGeienqcfyRFgubu9CiUH95QqeY
-	 ybbVkZXaz29p2j093ArtGjLuq/Yd6vfe/b92HS/Q0aru9XjKJH3U3MnPSVF0aiHlkhvix
-	 +MIiQUpn1zVTb2RN/YVFZArvIvfqaCcXYBVO9Ds9A+9y9pR8vxDq5WaD7FqMxHTHtqA==
+	t=1795036381;
+	b=WVMIaCZYHwX+yoI0rDgCGUhvPkVePR1v2w1V71qsxVSMm8goYjE1awCoMPHna4MieM+w
+	 KrtN/+5D7coW9zxCbHOquFJloabLtmh7dlsUICIHNDQW7oEdAV9kre2lM/IxRaMtOkDhR
+	 PU6AqgAylGtz40BV7TWfqKA17Zw46J9BfH9dKaoiARH3xa/pS8fk2ZFvgN/Iose+6+Iml
+	 cf6xB/Y+cj6hxJ59g+emwMYtUWcHH6hHTgjD+3IjEF578kfwXHO9egMQ51HPSWA013bvO
+	 yIG0ea4lalSj+8fiZlusIpCir6WdkrxT5a3gwKA3koXZpnnLJ6NjXTuakv3QmjamLWA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036378;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036381;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JwI7ADgJdrzfCzURNqZyppZwo20uNDDJDIdUyXKtU00=;
-	b=mCWHU2s02Xo6AsJoVl6AaF/hSRhIYt+z0Uegzl+R3BQgJpAFUr9JDOBXUkNsKrneBGw4
-	 +aLkTr5YmtGvRzUgiOexwFSiyKIm3zUMWFPnFSJKl1nLh/NEtHMTOXxmGmSTMxn4CAqBY
-	 ylTgnWaKftDSfqN7LR10hVVpzJYHG8aXREAC3QG3QhIzDNEmIGXdIF51L/mEQQys05zl4
-	 5zAF1csvj0NXo0u9YPnAyzpFNciK73HxaD1R5mKImM3HKgXMdpq8qbKWK82fDmYkh13O0
-	 5Dp3z+iqfJaeN84l/1dBkyy0nSgdNfmuWPqSYvPcsinGYXKRi5qa0nbOV9svXlh188Q==
+	bh=pkn0VDVeqjYpXA/Oakmcmu1P28Nuod0zBs4v405TSxU=;
+	b=D2Ai5CekX/nMzgOeOQ9fJAN3Skcnvf4s9ud5YArOv1XCxdlCVcC74gNOvUhvrQThNJ/r
+	 Hqf/HKBubG08pP/oq8PQ/QXTNblTopirTzGQ4NByINDrhmQSoCLs+lyk45h+x5/oewvfx
+	 iI2IjW0GkigWnpXGdIlAbRSzDbeGgflaldFeaUWF+kIEtdazbxV0o8/HCZNS/Gnbg5l9x
+	 F6VBOLNuqsnn3CwhYlX1hlfZXq0qm4L0kbh31z8ZSbVT2Y3HuE1xxWHKK4sQspBGeChRF
+	 +1BRm2U29YaETcKQAI/2KjawnJ6YNSWGXE2K03OrNx0hbdhQsnMXMDo+tr9NtBaRZkQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mrqP9PZW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JapP+LFW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77170606A325;
-	Wed, 18 Nov 2026 21:12:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4144E606A33E;
+	Wed, 18 Nov 2026 21:13:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mrqP9PZW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89C0B1F000C4;
-	Wed, 18 Nov 2026 21:12:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JapP+LFW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C6091F000CA;
+	Wed, 18 Nov 2026 21:13:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036378;
-	bh=JwI7ADgJdrzfCzURNqZyppZwo20uNDDJDIdUyXKtU00=;
+	s=korg; t=1795036381;
+	bh=pkn0VDVeqjYpXA/Oakmcmu1P28Nuod0zBs4v405TSxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mrqP9PZWwBgrKxi4hrFGU9A3vfn4XEU0CgJTlpPYM6TiExzzb2XkkwPtkBl6r+FIj
-	 hXtvd3cCcX9cvpbFRdvHkmHDglbnn6imuXWUEdmwdX/U4SWXXx/q3A/bVIlvvFem9v
-	 dGwkAkXHTVEWA0pxe8LUmp44FacLB85YQ1y70VAE=
+	b=JapP+LFW3h2TR3TfeNUvtKr7OEj0ztM5gYSrR04AZSJEllsGjN0A7HIsQC1y8HMtd
+	 H8lAtyHNGRsNJzQ7/HZyMkKtSOuXDT1erMYagojrBRw9UMWJ4TYxov6PoNUsQAbQ4F
+	 ttaIwLrkOJYZKPnUM6tWsU/ngPANtEOW02SYEbzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hsiu-Hsien Lee <swinds24@gmail.com>,
+	stable@kernel.org,
+	syzbot+4b03894b6ec5753ddf24@syzkaller.appspotmail.com,
+	Hemanth Selam <hemanth.selam@gmail.com>,
 	Jan Kara <jack@suse.cz>,
+	Jun Nie <jun.nie@linaro.org>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1038/3318] ext4: fix fast commit replay failing on a read-only mount
-Date: Wed, 18 Nov 2026 15:27:40 +0100
-Message-ID: <20261118150351.041720531@linuxfoundation.org>
+Subject: [PATCH 6.6 1039/3318] ext4: skip extra isize expansion while unmounting
+Date: Wed, 18 Nov 2026 15:27:41 +0100
+Message-ID: <20261118150351.075185396@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,114 +72,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hsiu-Hsien Lee <swinds24@gmail.com>
+From: Hemanth Selam <hemanth.selam@gmail.com>
 
-[ Upstream commit e1a881ea4674876721cab97680d1d8308f90e9a4 ]
+[ Upstream commit 418adcde99032194416248168df810535a1a93f9 ]
 
-A filesystem with fast_commit that needs recovery cannot be mounted
-read-only:
+syzbot reports a WARN from ext4_xattr_inode_create() reached through the
+unmount path:
 
-  EXT4-fs (dm-0): INFO: recovery required on readonly filesystem
-  EXT4-fs (dm-0): write access will be enabled during recovery
-  WARNING: CPU: 22 PID: 5544 at fs/ext4/ext4_jbd2.c:73
-   ext4_journal_check_start
-   __ext4_journal_start_sb
-   __ext4_unlink
-   ext4_fc_replay
-   do_one_pass
-   jbd2_journal_recover
-   jbd2_journal_load
-   __ext4_fill_super
-  JBD2: journal recovery failed
-  EXT4-fs (dm-0): error loading journal
+  EXT4-fs warning (device loop0): ext4_xattr_inode_create:1485: refuse to
+  create EA inode when umounting
+  WARNING: fs/ext4/xattr.c:1486 at ext4_xattr_inode_lookup_create
+   ext4_xattr_block_set
+   ext4_expand_extra_isize_ea
+   __ext4_expand_extra_isize
+   __ext4_mark_inode_dirty
+   ext4_dirty_inode
+   __mark_inode_dirty
+   sync_lazytime
+   iput
+   dentry_kill
+   shrink_dentry_list
+   shrink_dcache_for_umount
+   generic_shutdown_super
+   kill_block_super
+   ext4_kill_sb
 
-Fast commit replay runs ext4 metadata operations instead of writing
-blocks through the buffer cache: ext4_fc_replay_{unlink,link,create}()
-reach __ext4_unlink() and __ext4_link(), which start a handle.
-ext4_journal_check_start() returns -EROFS on a read-only sb, and as
-that is not -ENOENT it propagates out of jbd2_journal_recover() and
-kills the whole recovery.  The EXT4_FC_REPLAY check that would hand
-out a no-journal handle sits after the sb_rdonly() test, so replay can
-never complete read-only.
+shrink_dcache_for_umount() clears s_root before generic_shutdown_super()
+clears SB_ACTIVE, so during the dcache shrink the last iput() of a
+lazytime inode still redirties it and reaches the isize expansion.  The
+expansion can move xattrs out to a block, and creating the EA inode for
+them needs s_root, which ext4_xattr_inode_create() refuses without.
 
-ext4_load_journal() has already promised that write access will be
-enabled during recovery, so make that true for the superblock as well:
-clear SB_RDONLY across jbd2_journal_load() when recovery is needed on a
-read-only mount and the devices are writable, as ext4_orphan_cleanup()
-does.  Unlike ext4_handle_error(), which avoids SB_RDONLY because it
-would need s_umount, the sb here is still inside ext4_fill_super() and
-not published, so nothing can observe it.
+ext4_try_to_expand_extra_isize() already declines to expand when the
+superblock is not active, but that test does not cover this window.
+Decline while s_root is gone as well.  The expansion is best effort and
+__ext4_mark_inode_dirty() ignores its return value, so nothing else
+changes; the inode can be expanded on a later mount.
 
-The failure is not clean either: the replay handlers passing a NULL
-handle (ext4_fc_replay_inode(), _add_range(), _del_range()) never hit
-ext4_journal_check_start() and do write, leaving a partially applied
-fast commit behind.
+Running the syzbot reproducer for 60 seconds produced 3583 splats before
+this change and none after it, with the same number of mount cycles.
 
-Reproducer, where the unlink only ever reaches the fast commit area:
-
-  mke2fs -q -F -t ext4 -O fast_commit -b 4096 /dev/sdb3 262144
-  mount /dev/sdb3 /mnt
-  dd if=/dev/zero of=/mnt/victim bs=4k count=1 conv=fsync
-  sync                          # victim now in a full commit
-  rm /mnt/victim
-  dd if=/dev/zero of=/mnt/trigger bs=4k count=1 conv=fsync
-  <crash, or snapshot the device while mounted and write it back>
-  mount -o ro /dev/sdb3 /mnt
-
-Without this patch that mount fails; with it recovery completes and
-victim is gone, i.e. the UNLINK record was really replayed.
-
-Fixes: 8016e29f4362 ("ext4: fast commit recovery path")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hsiu-Hsien Lee <swinds24@gmail.com>
+Cc: stable@kernel.org
+Reported-by: syzbot+4b03894b6ec5753ddf24@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=4b03894b6ec5753ddf24
+Fixes: f31173c19901 ("ext4: refuse to create ea block when umounted")
+Signed-off-by: Hemanth Selam <hemanth.selam@gmail.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260812044353.1018268-1-swinds24@gmail.com
+Reviewed-by: Jun Nie <jun.nie@linaro.org>
+Link: https://patch.msgid.link/20260824094512.2436628-1-hemanth.selam@gmail.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ fs/ext4/inode.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index 94d40e03ff2f0..9be69402c704e 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -6017,6 +6017,7 @@ static int ext4_load_journal(struct super_block *sb,
- 	int err = 0;
- 	int really_read_only;
- 	int journal_dev_ro;
-+	bool enable_write = false;
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index b59857780c8fe..bc709e37c047f 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -6055,8 +6055,14 @@ static int ext4_try_to_expand_extra_isize(struct inode *inode,
+ 	 * When !SB_ACTIVE, iput triggers write_inode_now() which acquires
+ 	 * s_writepages_rwsem, causing a deadlock with the caller's active
+ 	 * jbd2 handle (lock order: s_writepages_rwsem -> jbd2_handle).
++	 *
++	 * Skip it while unmounting as well.  shrink_dcache_for_umount()
++	 * clears s_root before generic_shutdown_super() clears SB_ACTIVE, and
++	 * the last iput() of a lazytime inode in that window redirties it and
++	 * lands here.  Moving xattrs out to a block then needs a new EA inode,
++	 * which ext4_xattr_inode_create() refuses without s_root.
+ 	 */
+-	if (unlikely(!(inode->i_sb->s_flags & SB_ACTIVE)))
++	if (unlikely(!(inode->i_sb->s_flags & SB_ACTIVE) || !inode->i_sb->s_root))
+ 		return -EBUSY;
  
- 	if (WARN_ON_ONCE(!ext4_has_feature_journal(sb)))
- 		return -EFSCORRUPTED;
-@@ -6073,6 +6074,7 @@ static int ext4_load_journal(struct super_block *sb,
- 			}
- 			ext4_msg(sb, KERN_INFO, "write access will "
- 			       "be enabled during recovery");
-+			enable_write = true;
- 		}
- 	}
- 
-@@ -6089,7 +6091,19 @@ static int ext4_load_journal(struct super_block *sb,
- 		if (save)
- 			memcpy(save, ((char *) es) +
- 			       EXT4_S_ERR_START, EXT4_S_ERR_LEN);
-+		/*
-+		 * Fast commit replay performs regular ext4 metadata updates
-+		 * (see ext4_fc_replay()) which refuse to run on a read-only
-+		 * superblock.  We promised write access above, so make that
-+		 * true for the duration of the recovery, the same way
-+		 * ext4_orphan_cleanup() does.  The superblock is not published
-+		 * yet, so nothing can observe the transient state.
-+		 */
-+		if (enable_write)
-+			sb->s_flags &= ~SB_RDONLY;
- 		err = jbd2_journal_load(journal);
-+		if (enable_write)
-+			sb->s_flags |= SB_RDONLY;
- 		if (save && memcmp(((char *) es) + EXT4_S_ERR_START,
- 				   save, EXT4_S_ERR_LEN)) {
- 			memcpy(((char *) es) + EXT4_S_ERR_START,
+ 	/*
 -- 
 2.53.0
 
