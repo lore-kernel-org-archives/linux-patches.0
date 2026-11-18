@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036816;
-	b=OScW0Ag2Ev5nRTe/+r0+N9wLv19T196tMRztJhhffcksRxXww7wXfrArvfx1kH+jPe/E
-	 lCjN6GVjRhZ1WkFanrzuMz7/3VNF12xpPceIokGMjB4lT8pooNM73+/MV4N5KjuCAsWua
-	 CKClV5cqMMewpmoqdlGLuunz1oLSCK3U53ZJDUG5o0fKc+O2LsXvObD1m7oKlVo9QtVpz
-	 V8maEWQel0LcMu7VKI9JELQtPWDPQZt/otQCFQ+BfEQCDVqFwTbFkapIHXOe27uHbaQ3D
-	 UNJjK0TeHwOj6SgTmqnXgITZWzyVVasMIHRpJUAj84UxjauwkNK5s4OJ8Kf1EIRBHNA==
+	t=1795036819;
+	b=CLFRq96HN47aRs5KAHiqByAj4YLKE71nJaFh1b1LJYiUMAZN+rogn1cetmMSl1Bv3uHM
+	 fRqZ7DmQBuAxCOrRCn6JvItu+JcU/gWblE51RbqJjY/yhVmF3jPKAuhw9OxhUF7abFZeW
+	 4c0IcLhdMo/cvEK7e46G7bEZcUWkm51AG/99R3MgSQTxtsfa3n3JZ2wttfF6nb8SAekh4
+	 in8WImoTQZdhgdLVpuREw6ilchwdXjXn4VxdVGZxm6/z5jXrNVI0yXiMdg56BV2HbCIwC
+	 UK4dUFAi2ceXpQC2WD2SoZWV6+RbkkBpU6QiGKs0qJpK3sn1tGhE5iqMksMgQH/HI9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036816;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036819;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SvRrWCcCo9cwv3MwTyJDvSZ11EclWxghnuz49IzBmDQ=;
-	b=JWBqokoEmoTG0X6EEMvCxqRdEgqmDl1uV7kmeaSdXE5CFS2mKV9P35Ws6T7MA3Z6SLVD
-	 sjh+EzRNjQvWX4osy8FIGcUZsta5p56jXIPDupZu+A5/eSy07D384KCT8elLWp4nVXEuF
-	 axMLoK7uCd9bOhnsWUmwIOrxlMnalSdh1QO+ICayYkYPf9Db767KLpzevolp4ZEzkS/p6
-	 hIPnoN/cIjFin38bdzOmhr9WP51Px9UPz3s+ZfqHX5Wji2IOVaMZ3OdrpC/xr4METmxJe
-	 HDSrCabLqKwnezB3pyMJimGjyouc67IQRbaRCLp+n3dcdLGjWVLfbS/cFqJAKwPWbVQ==
+	bh=c5WjR64t0pGVKSDufAsOH7hPkYzW4q9sXgDR5UoRbSc=;
+	b=Cyh4NqeFbmhU1+VKZIxBGFgtd/nnraAjmnYNLpJOqmkDO3295tBRY+7jt6WfELeCad9T
+	 aUnqhpYazG8Qrtw958UE3mLO82LA0YvkPnyigC5QbzxlKzBfvqlc10YxRFsjh0+Q7bA6X
+	 0Ux0k3d9vDmbjFc6/N+N3d+QLd+q55FN6bC82SdtMeCPmCGctbf56EW+V5kNom1xxm+Mh
+	 WBn5PbZHkRdNIajguCiYFYJ29h3Ih5x5n6KigJt9VIbyieoslJ5xcy9Rz/nPCd/qspS8/
+	 nrlFwE1uihMZfQyGEsJnRSXYYosh4xzEvcgH0sSoYF8Tkn7SjbIJDFFmlj80rEkOIjw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jwyEQ+Vk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CqOl15xh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8E56606A32A;
-	Wed, 18 Nov 2026 21:20:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95723606A31C;
+	Wed, 18 Nov 2026 21:20:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jwyEQ+Vk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36CCB1F000C4;
-	Wed, 18 Nov 2026 21:20:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CqOl15xh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB9201F000C5;
+	Wed, 18 Nov 2026 21:20:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036816;
-	bh=SvRrWCcCo9cwv3MwTyJDvSZ11EclWxghnuz49IzBmDQ=;
+	s=korg; t=1795036819;
+	bh=c5WjR64t0pGVKSDufAsOH7hPkYzW4q9sXgDR5UoRbSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jwyEQ+VkTs5Ys0XzgvBHEQnG25ovZaXRNNdapya+8Au8Yas9ZJIWGMCF/rKHdfjA7
-	 Zp3AIT+7SnRKFEkg+73iU8J4s6AdRq+qPP9lK5rc5xheXltlrxbZovvDp7gjCDu9nh
-	 Bwk8LhiiU+aAUZ5eX6frQRmRuYp/FJYif0hmMhBc=
+	b=CqOl15xh021g43SfcMbwvRebU8W2uGP+NYL6bWcwXVboBO45uaewpch5cK09ELG9g
+	 AyW/96Vj4unPB+k+aAihrIVf/XnJ6+rcFXSkBMM9Tp1ORGayWPHXM9lw0bFwL6ER0F
+	 gsh2NTb/lP0AeFvXF0+Moe1AoTt+kX5WeHLBl2QY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	David Lee <david.lee@trailofbits.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Florian Fuchs <fuchsfl@gmail.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1157/3318] netfilter: nf_reject: initialize IPCB at inet ingress
-Date: Wed, 18 Nov 2026 15:29:39 +0100
-Message-ID: <20261118150354.814870429@linuxfoundation.org>
+Subject: [PATCH 6.6 1193/3318] sh: maple: Use the matching IRQ cookie when invoking free_irq()
+Date: Wed, 18 Nov 2026 15:30:15 +0100
+Message-ID: <20261118150355.959850512@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,78 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 73a73d442f9986353fe284bd1b504d0313d0f153 ]
+[ Upstream commit e3ef44e77b40e3cecfb34757ff3c15ecceea0309 ]
 
-The inet ingress hook runs before ip_rcv_core() and ip6_rcv_core(), so
-neither IPCB nor IP6CB has been initialized when nft_reject_inet passes
-a packet to nf_send_unreach() or nf_send_unreach6(). skb->cb can
-therefore retain metadata from an earlier protocol layer.
+The Maple DMA and VBLANK handlers are registered with
+&maple_unsupported_device as their dev_id. Passing NULL to free_irq()
+cannot find either action, so the handlers remain registered and the
+IRQ core warns.
 
-For IPv4, icmp_send() treats IPCB(skb)->opt as parsed IPv4 options.
-Stale option offsets can make __ip_options_echo() copy an
-attacker-controlled length into its 40-byte reply option buffer and
-overflow the stack. On an unpatched v7.2-rc5 kernel, the IPv4
-reproducer produced:
+Use the same cookie when freeing both handlers on the error paths.
 
-  BUG: KASAN: stack-out-of-bounds in __ip_options_echo()
-  Write of size 255
-
-For IPv6, icmpv6_send() consumes IP6CB(skb) as parsed IPv6 metadata. It
-always uses iif for source selection and, when MIP6 is enabled, uses
-dsthao as an extension-header offset. These fields must not be stale.
-
-For NF_INET_INGRESS, clear the address-family-specific control block and
-restore its input interface before constructing the ICMP error.  This
-matches similar initialization normally performed by ip_rcv_core() and
-ip6_rcv_core().
-
-Fixes: 117ca1f8920c ("netfilter: nft_reject_inet: allow to use reject from inet ingress")
+Fixes: b3c69e248176 ("maple: more robust device detection.")
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Assisted-by: LLM
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6-sol Codex:gpt-5.5-cyber
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Co-developed-by: David Lee <david.lee@trailofbits.com>
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Tested-by: Florian Fuchs <fuchsfl@gmail.com>
+Reviewed-By: Florian Fuchs <fuchsfl@gmail.com>
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/nf_reject_ipv4.c | 5 +++++
- net/ipv6/netfilter/nf_reject_ipv6.c | 5 +++++
- 2 files changed, 10 insertions(+)
+ drivers/sh/maple/maple.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/netfilter/nf_reject_ipv4.c b/net/ipv4/netfilter/nf_reject_ipv4.c
-index 549d355ebb1d9..68ad416a47c88 100644
---- a/net/ipv4/netfilter/nf_reject_ipv4.c
-+++ b/net/ipv4/netfilter/nf_reject_ipv4.c
-@@ -350,6 +350,11 @@ void nf_send_unreach(struct sk_buff *skb_in, int code, int hook)
- 	if (!skb_valid_dst(skb_in) && nf_reject_fill_skb_dst(skb_in) < 0)
- 		return;
+diff --git a/drivers/sh/maple/maple.c b/drivers/sh/maple/maple.c
+index e05473c5c267f..d5e052e90ba48 100644
+--- a/drivers/sh/maple/maple.c
++++ b/drivers/sh/maple/maple.c
+@@ -863,10 +863,10 @@ static int __init maple_bus_init(void)
+ 	kmem_cache_destroy(maple_queue_cache);
  
-+	if (hook == NF_INET_INGRESS) {
-+		memset(IPCB(skb_in), 0, sizeof(*IPCB(skb_in)));
-+		IPCB(skb_in)->iif = skb_in->skb_iif;
-+	}
-+
- 	if (skb_csum_unnecessary(skb_in) ||
- 	    !nf_reject_verify_csum(skb_in, dataoff, proto)) {
- 		icmp_send(skb_in, ICMP_DEST_UNREACH, code, 0);
-diff --git a/net/ipv6/netfilter/nf_reject_ipv6.c b/net/ipv6/netfilter/nf_reject_ipv6.c
-index d565cea4cc737..76e7e13c7e5c6 100644
---- a/net/ipv6/netfilter/nf_reject_ipv6.c
-+++ b/net/ipv6/netfilter/nf_reject_ipv6.c
-@@ -431,6 +431,11 @@ void nf_send_unreach6(struct net *net, struct sk_buff *skb_in,
- 	if (hooknum == NF_INET_LOCAL_OUT && skb_in->dev == NULL)
- 		skb_in->dev = net->loopback_dev;
+ cleanup_bothirqs:
+-	free_irq(HW_EVENT_VSYNC, 0);
++	free_irq(HW_EVENT_VSYNC, &maple_unsupported_device);
  
-+	if (hooknum == NF_INET_INGRESS) {
-+		memset(IP6CB(skb_in), 0, sizeof(*IP6CB(skb_in)));
-+		IP6CB(skb_in)->iif = skb_in->skb_iif;
-+	}
-+
- 	if (!skb_valid_dst(skb_in) && nf_reject6_fill_skb_dst(skb_in) < 0)
- 		return;
+ cleanup_irq:
+-	free_irq(HW_EVENT_MAPLE_DMA, 0);
++	free_irq(HW_EVENT_MAPLE_DMA, &maple_unsupported_device);
  
+ cleanup_dma:
+ 	free_pages((unsigned long) maple_sendbuf, MAPLE_DMA_PAGES);
 -- 
 2.53.0
 
