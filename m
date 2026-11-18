@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018382;
-	b=pFn//DMN+bmMJlL+zj/qwFxLQBHGQEAXcFnCKRFywJDfE+YJ72sj2LRBSrpdny+cqLxa
-	 10M77ofOrn/A4wABUJFFsUKaL0BzBu7erwGYXpqtIrvsvd0TseBUuraaOAy8B/FKVOCvg
-	 /y5y2aaEotTq9Hsebe9lSCVr3WK9eEZjmUX4AhR2PmJNvM7ODObT8mmxnlPW9KwdfpINQ
-	 8/l+w6WA54Stm5QSQorecgZpLim2yj1uNaEguJe3f2/Nm3GXQvTnNB+UF4Q1Y6brgA4uE
-	 Z03giTsVTYYn0R8ee+1EcCP2jUAHLnfG6/8bkmxt2AkZjCwTepdt6N3V8LQ91EVZ5cg==
+	t=1795018385;
+	b=LMLGWNH44b2II5n9n0GpiiqWHvyqxWdDB9fTcNHRLqa7vI8rfYPQ5Dx1sHOdIxCsDBFu
+	 xVtp7aDoS2yVDbyJsZdgnJVIgslUjLwsAAdxy8w52arqXI6K0C8gpXi7k+EjJlWkKGnJ+
+	 E2n/01PBELVIyQEX2bZzu9scsztUDEXkSWleG9FeNvrVy7RoFMGLarRm2IRvMxiHAiy/F
+	 US+qvvonDpIxHXxZw3EhJoipbcbRunMbo6GSBQ+KOvTUDakVfQbB38vI6agBNXI5B8bkn
+	 RPIFY/j3C963hm3T20FHlUZp8yAURlE8FzbcD5iZa+pOrbwnNRSz21vxDDCqN46id4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018382;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018385;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GoZHnQHG1FNZbPYxlEqbGtWd7yW5qYbRlgK4fdtThog=;
-	b=LLzJCcgGWK/1pYvJ6r84qyVhtT6qNBtVs4EOsv4YjspVE1kwSuQ1ecH+9IOpTJKw73Kr
-	 +Fx1RQgpcTYHxYQI/AYbpi/TixO1XnHYsycz/DylOW9+o5oHFDH2KzTDbTaSDUx0mpEWO
-	 QS9Iozt4q7L8ze4ZQ2spFW4LuqO2B7SJYT3rt8uzGqO/hSITUWd1cvkK94C7PrYl9sG4/
-	 4oZoL8+NaySTAToCuM6/tCP4Gq1zpn8mk47V9WT+KygvAgBp+jYobVtrIydhJNMQOmZ39
-	 j6YvL3ai8u1599QFSjVxNAC48I97uTkVALDeJzVQkEiqLIMUERhkRKaBmJu445wwrUA==
+	bh=ym2P2NazjfoQWaOrz2Dx7HGtDy9rTZurvAvDFFsLlrk=;
+	b=0OednkjgSkkp3jar/e0XYf05+wea6+8VNcNFucrWSykaemuzhyGbUkwvKeQBf/wajIwo
+	 UcBYZg1yg77lXvJIYVP/+Zd81mllVp/CCVcpivaTtYoUVll3H/Kt8DlWLAijvuhhq6jsk
+	 fglxKmvo5QJSNCGV7nj0dnlUyI6V9Kjvo6byPO9ypax8qELx09tbXqlh9qrxCWH8Mk2no
+	 MH9ofk2DZdK6yJscqpjTeFQEz/2oaW7vdEFPjmIKFuw30kptOIzjqyezxE3ppGmFE463R
+	 ecl1rMBkUwd5RJrDn/cayApqOTN/BTuafPmsGl9x6aeL22cASvKP8Vg2QYJDEytfJgg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1iBLVurz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qkTeOahp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C163606A320;
-	Wed, 18 Nov 2026 16:13:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D48F606A31C;
+	Wed, 18 Nov 2026 16:13:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1iBLVurz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C3191F000C4;
-	Wed, 18 Nov 2026 16:13:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qkTeOahp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF611F000C4;
+	Wed, 18 Nov 2026 16:13:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018382;
-	bh=GoZHnQHG1FNZbPYxlEqbGtWd7yW5qYbRlgK4fdtThog=;
+	s=korg; t=1795018385;
+	bh=ym2P2NazjfoQWaOrz2Dx7HGtDy9rTZurvAvDFFsLlrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1iBLVurzxFd+eWlCa8jMboFnJFhhEXJHZFb/HN7L6O1vsU0nxAaOauQSiR8sstw87
-	 2ZWHC61ZtWIKiWydPGOiF0Ue4q7G2hghT37nNYqClm52C4z840RklA5sc2HlWizube
-	 L6qjsiTI69pvycg+c+JjrAjFMqy9i8Ru6HdQwqYk=
+	b=qkTeOahpYykn1WrLPmQfZLVw0p6e5KzQYwbCxEV2xdRdIvDmvun+lGEnBmTLEpKpn
+	 DU9XG0TDpPN4pp15oAzY9zi4BvmroapGzxs4kIhZZQU+P7ZdXR8lYVyHb0Apen0hi6
+	 FWmcyGv1uULZe444AimCtr0Fv1hNQz8hb145tI5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Gavin Shan <gshan@redhat.com>,
 	James Morse <james.morse@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1180/2651] arm_mpam: Add missing mon_sel locking in MBWU save and restore
-Date: Wed, 18 Nov 2026 15:40:20 +0100
-Message-ID: <20261118150330.490319962@linuxfoundation.org>
+Subject: [PATCH 7.3 1181/2651] arm_mpam: Ensure MBWU counters are reset on restore
+Date: Wed, 18 Nov 2026 15:40:21 +0100
+Message-ID: <20261118150330.525075243@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,78 +71,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Ben Horgan <ben.horgan@arm.com>
 
-[ Upstream commit 0045b87f65bbdd3b433747cce0d723ae94f77d38 ]
+[ Upstream commit 80db6616c710a358391516ad82de44361580f8da ]
 
-The mon_sel_lock is used to protect the mbwu_state, as well as h/w accesses
-that use MPAMCFG_MON_SEL. However, in mpam_restore/save_mbwu_state(),
-mbwu_state is accessed without holding the mon_sel_lock.
-
-Add the missing locking.
+When an MSC becomes inaccessible due to cpu offline CFG_MBWU_CTL is set to
+zero in mpam_save_mbwu_state(). This is very likely to mean that the config
+will mismatch when restoring and so the monitor will be reset. However, the
+state may have been lost and so there are no guarantees. Ensure the reset
+happens by setting the reset_on_next_read and remove the unnecessary writes
+from mpam_save_mbwu_state().
 
 Fixes: 41e8a14950e1 ("arm_mpam: Track bandwidth counter state for power management")
 Signed-off-by: Ben Horgan <ben.horgan@arm.com>
 Tested-by: Gavin Shan <gshan@redhat.com>
 Reviewed-by: Gavin Shan <gshan@redhat.com>
 Reviewed-by: James Morse <james.morse@arm.com>
+[morse: Restored clearing of CTL register for kexec/powerdown]
 Signed-off-by: James Morse <james.morse@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/resctrl/mpam_devices.c | 27 ++++++++++++++++++---------
- 1 file changed, 18 insertions(+), 9 deletions(-)
+ drivers/resctrl/mpam_devices.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/resctrl/mpam_devices.c b/drivers/resctrl/mpam_devices.c
-index 403f302931817..8ada8eca049b3 100644
+index 8ada8eca049b3..8223e764e46e7 100644
 --- a/drivers/resctrl/mpam_devices.c
 +++ b/drivers/resctrl/mpam_devices.c
-@@ -1652,17 +1652,26 @@ static int mpam_restore_mbwu_state(void *_ris)
+@@ -1652,6 +1652,7 @@ static int mpam_restore_mbwu_state(void *_ris)
  	u64 val;
  	struct mon_read mwbu_arg;
  	struct mpam_msc_ris *ris = _ris;
-+	struct mpam_msc *msc = ris->vmsc->msc;
++	struct msmon_mbwu_state *mbwu_state;
+ 	struct mpam_msc *msc = ris->vmsc->msc;
  	struct mpam_class *class = ris->vmsc->comp->class;
  
- 	for (i = 0; i < ris->props.num_mbwu_mon; i++) {
--		if (ris->mbwu_state[i].enabled) {
--			mwbu_arg.ris = ris;
--			mwbu_arg.ctx = &ris->mbwu_state[i].cfg;
--			mwbu_arg.type = mpam_msmon_choose_counter(class);
--			mwbu_arg.val = &val;
-+		if (WARN_ON_ONCE(!mpam_mon_sel_lock(msc)))
-+			return -EIO;
- 
--			__ris_msmon_read(&mwbu_arg);
-+		if (!ris->mbwu_state[i].enabled) {
-+			mpam_mon_sel_unlock(msc);
-+			continue;
- 		}
-+
-+		mwbu_arg.ris = ris;
-+		mwbu_arg.ctx = &ris->mbwu_state[i].cfg;
-+		mwbu_arg.type = mpam_msmon_choose_counter(class);
-+		mwbu_arg.val = &val;
-+
-+		mpam_mon_sel_unlock(msc);
-+
-+		__ris_msmon_read(&mwbu_arg);
- 	}
- 
- 	return 0;
-@@ -1680,12 +1689,12 @@ static int mpam_save_mbwu_state(void *arg)
- 	struct mpam_msc *msc = ris->vmsc->msc;
- 
- 	for (i = 0; i < ris->props.num_mbwu_mon; i++) {
--		mbwu_state = &ris->mbwu_state[i];
--		cfg = &mbwu_state->cfg;
--
+@@ -1659,16 +1660,20 @@ static int mpam_restore_mbwu_state(void *_ris)
  		if (WARN_ON_ONCE(!mpam_mon_sel_lock(msc)))
  			return -EIO;
  
+-		if (!ris->mbwu_state[i].enabled) {
 +		mbwu_state = &ris->mbwu_state[i];
-+		cfg = &mbwu_state->cfg;
 +
- 		mon_sel = FIELD_PREP(MSMON_CFG_MON_SEL_MON_SEL, i) |
- 			  FIELD_PREP(MSMON_CFG_MON_SEL_RIS, ris->ris_idx);
- 		mpam_write_monsel_reg(msc, CFG_MON_SEL, mon_sel);
++		if (!mbwu_state->enabled) {
+ 			mpam_mon_sel_unlock(msc);
+ 			continue;
+ 		}
+ 
+ 		mwbu_arg.ris = ris;
+-		mwbu_arg.ctx = &ris->mbwu_state[i].cfg;
++		mwbu_arg.ctx = &mbwu_state->cfg;
+ 		mwbu_arg.type = mpam_msmon_choose_counter(class);
+ 		mwbu_arg.val = &val;
+ 
++		mbwu_state->reset_on_next_read = true;
++
+ 		mpam_mon_sel_unlock(msc);
+ 
+ 		__ris_msmon_read(&mwbu_arg);
+@@ -1703,13 +1708,10 @@ static int mpam_save_mbwu_state(void *arg)
+ 		cur_ctl = mpam_read_monsel_reg(msc, CFG_MBWU_CTL);
+ 		mpam_write_monsel_reg(msc, CFG_MBWU_CTL, 0);
+ 
+-		if (mpam_ris_has_mbwu_long_counter(ris)) {
++		if (mpam_ris_has_mbwu_long_counter(ris))
+ 			val = mpam_msc_read_mbwu_l(msc);
+-			mpam_msc_zero_mbwu_l(msc);
+-		} else {
++		else
+ 			val = mpam_read_monsel_reg(msc, MBWU);
+-			mpam_write_monsel_reg(msc, MBWU, 0);
+-		}
+ 
+ 		cfg->mon = i;
+ 		cfg->pmg = FIELD_GET(MSMON_CFG_x_FLT_PMG, cur_flt);
 -- 
 2.53.0
 
