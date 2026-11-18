@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018700;
-	b=fRK3383xNpWobVmBeKmeeWVJSINqGVytT+h/w5QRL67l8nwRLKzmI20GiVamHBIl3WZj
-	 lckZAmPYjEv/yXTGZx4CAd97zOPaG4h4RbmjZ7z5V/RYm3KBWDzDvth27fYq2DXd2+/gn
-	 yGm3DzKgcORjTaH8+Dt+HGArpZ5S710tJQN04qKoxY8iMwr0gAWHYbhta+u2DXOp0W/kc
-	 bJLXmez6exAkn5IW+S+Sxmi/q1fFkP8LJmna+/kGc0YM5LenSCH3z+5or4nUBQQcfqr1U
-	 HJRQvsLKurLoBWKScPcj+PxaKgn18rWbqeMaHGnzsNOnN8BrQkaVWajejAusHzNcnQQ==
+	t=1795018703;
+	b=KyLTeT7fCDwm6iC90g5WoispTrcv8p5PgTubKvchpAOIyo7Io8/JqwKhgRh4HMawrIhb
+	 BnTbPaz7gK8GRbydOCGS1sv9qJ33qai4bYrS06yXONwsoi3EroaUD2sjQwLQo9jaU0XG3
+	 bIHxnW4wGuulbemQlTGaE/WTNGiqyW/n9NWQbKqY/ehl3YvTN98cT3iG9k/S3VeF5MHdq
+	 Li19GjjHPRXpVjuo64OhtRmF3wHBR25cRPWYm42WmzZ3+9SRIr+TTBT9JzlTpQoB5r+H1
+	 dsjIYYzIn2fCd9+hZQrsE4nG9CjzbS3rpR2slPIAZ/+88hmc/kKQCurrReyhrkj1NLw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018700;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018703;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=remnqq4hO7/i0mrGwCdAUnGI7rTw6dTVcc3TxepIZxo=;
-	b=XWnqFNRGM70CSNzym04CrAL9s91kiXNlfXeKm736B0ardghQ6oEjGf12zPGZoSTY2Nnd
-	 ycFk6UOsshKNlrNG9uC6nH+K3rYdISoauimtLn1paUsSVcTz6l3mUOkc/aJNQQ+XcW44G
-	 JzWDKLju+LoIJ/gkdm6QDreXYA0xUZzmiT+9B17hgB1jOcnM4/bFx5+JwN6sWWPi5maB/
-	 TzqZFE9NbmgGKDpwTz7AJS1t+lTUmB6385Hdf6Vva0zgSRhDfU3SmMm+fW99yiQtyqTY/
-	 lgzvQnxU1Jt01vA2jrJ6IdRPfVWgemx47e5JQGyvzS00lM3BUElK1dyQqWdJWomPQFw==
+	bh=Z0wtvvOlHZvgsPsktNNwlS4SPzY3YS08ao+KqbDCiac=;
+	b=H8aZC+GYGeZoSf5lvw8bHREUTPBn1WJ4eaR8OTBzTcg5B0gF7o3yHa21rQGrUwK45hNm
+	 hyUb5gxPYvoMJYMEXlxVjAmo7/AuW+9h4g2rtw0fot+7rzmTql56oGNQd2WAoqH2R/sGy
+	 GETEzsN3mL4noEKrcH7fP0Lk8s/zOj/TYJg5jarMSnDb2BXRJP9H6qP9zuQPbpmJnMR0f
+	 zQuMtVsNR0V7pooi8EyZadNdLPeIueF/qJMkEST1hwYoDqVvWLnOVVqs6WWTp4bf4OqIW
+	 XyZvbpZNK5lSreLGkowKe88WlhIpIguUFPYkc5GJuNHUgacdEPkhr/2Hgdl5u2SgGFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X3qsDefG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a7FHv6OR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE852606A325;
-	Wed, 18 Nov 2026 16:18:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747E1606A32A;
+	Wed, 18 Nov 2026 16:18:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X3qsDefG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F115D1F000C4;
-	Wed, 18 Nov 2026 16:18:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a7FHv6OR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA9F41F000C5;
+	Wed, 18 Nov 2026 16:18:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018700;
-	bh=remnqq4hO7/i0mrGwCdAUnGI7rTw6dTVcc3TxepIZxo=;
+	s=korg; t=1795018703;
+	bh=Z0wtvvOlHZvgsPsktNNwlS4SPzY3YS08ao+KqbDCiac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X3qsDefGWxP+gL0WctZimzbg+Xn116K6CjoRCAbP0RhfbDZKxqPlu24nOWQVAGBDW
-	 FGdxA/0sBrLc8LKI1ErmC/bAH0UL5SBZS3Qvj0P47bdnabPfTjcXUpDxT+pofw73Cm
-	 nZ1YVfTnuQrGnrLZCrDCO9BEswoUlQAIZfkvGI5A=
+	b=a7FHv6ORgJNfaZHdy7x/25i38EC9jdoQlE4AqHrXBj00kCkFv+hcbeIFYa4GaMS5X
+	 wbbhIC/Kw4tmq8uwMAEUXyrlvFl1CrPT0CcmFD8g6ttl+IIiZ3ILbv7lR4rVnfuhoC
+	 FaoiKaHPg8sCFjW2RAPFcGpRdykxhzWh56MGA/Os=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.li@oss.nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1333/2651] dmaengine: ste_dma40: Fix cyclic transfer residue
-Date: Wed, 18 Nov 2026 15:42:53 +0100
-Message-ID: <20261118150335.997584277@linuxfoundation.org>
+Subject: [PATCH 7.3 1307/2651] ASoC: codecs: es8375: use devm_clk_get_optional() for mclk
+Date: Wed, 18 Nov 2026 15:42:27 +0100
+Message-ID: <20261118150335.028835611@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,237 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit c80edceff29ee212987c2d2c851b2cb2eb4b477a ]
+[ Upstream commit 58e7bca5cf264e910ad9199cfc40246e0a2834f4 ]
 
-DMA40 reads residue from the element count of the currently active LLI.
-For a cyclic transfer this reports at most one period, not the bytes
-remaining until the cyclic buffer wraps.
+es8375_read_device_properities() gets "mclk" with devm_clk_get() and
+then tests the result for NULL to print "assuming static mclk". A
+missing clock makes devm_clk_get() return -ENOENT, so the probe fails
+before that test can match.
 
-Once DMA40 advertises burst granularity, DMAengine PCM uses this residue
-directly. For a four-period PCM buffer it consequently reports the
-hardware pointer near three periods after every period interrupt. ALSA
-eventually stops playback with -EIO although DMA period callbacks
-continue.
+The binding does not require clocks, its example has none, and
+everest,mclk-src lets the codec run from SCLK instead of MCLK. Use
+devm_clk_get_optional(), as es8311, es8316, es8323, es8326 and es8389
+do for the same clock.
 
-Calculate cyclic residue from the current memory-side hardware pointer
-instead. Read the destination pointer for capture and the source pointer
-for playback. Sample the split logical channel pointer coherently and
-retain the last valid residue during relink transitions.
+Found with an experimental clang warning about NULL tests on functions
+that return error pointers. Tested only in QEMU with i2c-stub in place
+of the codec, not on real hardware.
 
-Make at most three residue sampling attempts: one initial read plus two
-retries. The retries let transient split-register updates or LLI relink
-windows settle, while the limit prevents unbounded polling if hardware does
-not yield a valid pointer.
-
-This avoids counting terminal-count interrupts, which races with hardware
-advancing to the next LLI and cannot account for coalesced interrupt
-status. Also reject cyclic periods that expand into multiple LLIs because
-logical cyclic LLIs each request a terminal-count interrupt and would
-generate more than one callback per period.
-
-Reject invalid cyclic geometries before dividing or constructing the
-scatterlist as well.
-
-Reported-by: Frank Li <Frank.li@oss.nxp.com>
-Closes: https://lore.kernel.org/dmaengine/aq2wIPJW6viUxyy9@SMW015318/
-Fixes: 15c606686541 ("dmaengine: ste_dma40: indicate granularity on channels")
+Fixes: de2b3119f9f7 ("ASoC: codecs: add support for ES8375")
 Assisted-by: LLM
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-2-89f595e8851d@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20261003190738.77564-1-kmehltretter@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 106 ++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 101 insertions(+), 5 deletions(-)
+ sound/soc/codecs/es8375.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index e4d689c9eba86..eab9c09b4bfec 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -65,6 +65,9 @@ struct stedma40_platform_data {
- /* Maximum iterations taken before giving up suspending a channel */
- #define D40_SUSPEND_MAX_IT 500
+diff --git a/sound/soc/codecs/es8375.c b/sound/soc/codecs/es8375.c
+index 2c58225feddd9..8a3e3a6a748f3 100644
+--- a/sound/soc/codecs/es8375.c
++++ b/sound/soc/codecs/es8375.c
+@@ -665,7 +665,7 @@ static int es8375_read_device_properities(struct device *dev, struct es8375_priv
+ 		return ret;
+ 	}
  
-+/* Maximum attempts to sample a stable cyclic residue position */
-+#define D40_RESIDUE_MAX_ATTEMPTS 3
-+
- /* Milliseconds */
- #define DMA40_AUTOSUSPEND_DELAY	100
+-	es8375->mclk = devm_clk_get(dev, "mclk");
++	es8375->mclk = devm_clk_get_optional(dev, "mclk");
+ 	if (IS_ERR(es8375->mclk))
+ 		return dev_err_probe(dev, PTR_ERR(es8375->mclk), "unable to get mclk\n");
  
-@@ -378,6 +381,9 @@ struct d40_lli_pool {
-  * @lli_len: Number of llis of current descriptor.
-  * @lli_current: Number of transferred llis.
-  * @lcla_alloc: Number of LCLA entries allocated.
-+ * @cyclic_dma_addr: Start address of the cyclic buffer.
-+ * @cyclic_buf_len: Length of the cyclic buffer.
-+ * @cyclic_residue: Last valid cyclic residue sample.
-  * @txd: DMA engine struct. Used for among other things for communication
-  * during a transfer.
-  * @node: List entry.
-@@ -396,6 +402,9 @@ struct d40_desc {
- 	int				 lli_len;
- 	int				 lli_current;
- 	int				 lcla_alloc;
-+	dma_addr_t			 cyclic_dma_addr;
-+	size_t				 cyclic_buf_len;
-+	size_t				 cyclic_residue;
- 
- 	struct dma_async_tx_descriptor	 txd;
- 	struct list_head		 node;
-@@ -1420,6 +1429,64 @@ static u32 d40_residue(struct d40_chan *d40c)
- 	return num_elt * d40c->dma_cfg.dst_info.data_width;
- }
- 
-+static bool d40_current_addr(struct d40_chan *d40c, dma_addr_t *addr)
-+{
-+	bool dst = d40c->dma_cfg.dir == DMA_DEV_TO_MEM;
-+	void __iomem *high_reg;
-+	void __iomem *low_reg;
-+	u32 low;
-+	u32 high;
-+	u32 check;
-+	int i;
-+
-+	if (chan_is_physical(d40c)) {
-+		*addr = readl(chan_base(d40c) +
-+			      (dst ? D40_CHAN_REG_SDPTR : D40_CHAN_REG_SSPTR));
-+		return true;
-+	}
-+
-+	if (dst) {
-+		low_reg = &d40c->lcpa->lcsp2;
-+		high_reg = &d40c->lcpa->lcsp3;
-+	} else {
-+		low_reg = &d40c->lcpa->lcsp0;
-+		high_reg = &d40c->lcpa->lcsp1;
-+	}
-+
-+	for (i = 0; i < D40_RESIDUE_MAX_ATTEMPTS; i++) {
-+		high = readl(high_reg) & D40_MEM_LCSP1_SPTR_MASK;
-+		low = readl(low_reg) & D40_MEM_LCSP0_SPTR_MASK;
-+		check = readl(high_reg) & D40_MEM_LCSP1_SPTR_MASK;
-+		if (high == check) {
-+			*addr = low | high;
-+			return true;
-+		}
-+	}
-+
-+	return false;
-+}
-+
-+static bool d40_cyclic_offset(struct d40_chan *d40c, struct d40_desc *d40d,
-+			      size_t *offset)
-+{
-+	dma_addr_t current_addr;
-+	dma_addr_t current_offset;
-+	int i;
-+
-+	for (i = 0; i < D40_RESIDUE_MAX_ATTEMPTS; i++) {
-+		if (!d40_current_addr(d40c, &current_addr))
-+			continue;
-+
-+		current_offset = current_addr - d40d->cyclic_dma_addr;
-+		if (current_offset <= d40d->cyclic_buf_len) {
-+			*offset = current_offset;
-+			return true;
-+		}
-+	}
-+
-+	return false;
-+}
-+
- static bool d40_tx_is_linked(struct d40_chan *d40c)
- {
- 	bool is_link;
-@@ -2108,15 +2175,26 @@ static bool d40_is_paused(struct d40_chan *d40c)
- 
- }
- 
--static u32 stedma40_residue(struct dma_chan *chan)
-+static u32 stedma40_residue(struct dma_chan *chan, dma_cookie_t cookie)
- {
- 	struct d40_chan *d40c =
- 		container_of(chan, struct d40_chan, chan);
-+	struct d40_desc *d40d;
-+	size_t offset;
- 	u32 bytes_left;
- 	unsigned long flags;
- 
- 	spin_lock_irqsave(&d40c->lock, flags);
--	bytes_left = d40_residue(d40c);
-+	d40d = d40_first_active_get(d40c);
-+	if (d40d && d40d->txd.cookie == cookie && d40d->cyclic &&
-+	    d40d->cyclic_buf_len) {
-+		if (d40_cyclic_offset(d40c, d40d, &offset))
-+			d40d->cyclic_residue = d40d->cyclic_buf_len - offset;
-+		bytes_left = d40d->cyclic_residue;
-+	} else {
-+		bytes_left = d40_residue(d40c);
-+	}
-+
- 	spin_unlock_irqrestore(&d40c->lock, flags);
- 
- 	return bytes_left;
-@@ -2246,8 +2324,13 @@ d40_prep_sg(struct dma_chan *dchan, struct scatterlist *sg_src,
- 	if (desc == NULL)
- 		goto unlock;
- 
--	if (sg_next(&sg_src[sg_len - 1]) == sg_src)
-+	if (sg_next(&sg_src[sg_len - 1]) == sg_src) {
- 		desc->cyclic = true;
-+		if (desc->lli_len != sg_len) {
-+			chan_err(chan, "Cyclic periods must fit in one LLI\n");
-+			goto free_desc;
-+		}
-+	}
- 
- 	src_dev_addr = 0;
- 	dst_dev_addr = 0;
-@@ -2524,11 +2607,18 @@ dma40_prep_dma_cyclic(struct dma_chan *chan, dma_addr_t dma_addr,
- 		     size_t buf_len, size_t period_len,
- 		     enum dma_transfer_direction direction, unsigned long flags)
- {
--	unsigned int periods = buf_len / period_len;
-+	unsigned int periods;
- 	struct dma_async_tx_descriptor *txd;
-+	struct d40_desc *desc;
- 	struct scatterlist *sg;
-+	dma_addr_t buf_addr = dma_addr;
- 	int i;
- 
-+	if (!buf_len || !period_len || buf_len % period_len)
-+		return NULL;
-+
-+	periods = buf_len / period_len;
-+
- 	sg = kzalloc_objs(struct scatterlist, periods + 1, GFP_NOWAIT);
- 	if (!sg)
- 		return NULL;
-@@ -2543,6 +2633,12 @@ dma40_prep_dma_cyclic(struct dma_chan *chan, dma_addr_t dma_addr,
- 
- 	txd = d40_prep_sg(chan, sg, sg, periods, direction,
- 			  DMA_PREP_INTERRUPT);
-+	if (txd) {
-+		desc = container_of(txd, struct d40_desc, txd);
-+		desc->cyclic_dma_addr = buf_addr;
-+		desc->cyclic_buf_len = buf_len;
-+		desc->cyclic_residue = buf_len;
-+	}
- 
- 	kfree(sg);
- 
-@@ -2563,7 +2659,7 @@ static enum dma_status d40_tx_status(struct dma_chan *chan,
- 
- 	ret = dma_cookie_status(chan, cookie, txstate);
- 	if (ret != DMA_COMPLETE && txstate)
--		dma_set_residue(txstate, stedma40_residue(chan));
-+		dma_set_residue(txstate, stedma40_residue(chan, cookie));
- 
- 	if (d40_is_paused(d40c))
- 		ret = DMA_PAUSED;
 -- 
 2.53.0
 
