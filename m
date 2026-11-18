@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053743;
-	b=NvrjE9ssyo5fXflvBcr+Xz6AK2rcKcLRu3vDkxSTpkVh+bdxY3sOb1TmwJpOpHoMIbf0
-	 y5DblO2LG5H7T3EANeLtRqxaUZzvNhjGdD8J139HhLPUCvQwBURe7W5sa7/lcXJ3SwKAI
-	 VlNzDWZ/SlnZKSTJIpDBIPEXOh4RY81dQeIurRD19G4TAP0l4hyteefvFAJ/2xMzJsKcr
-	 J9wPRFzN1i3nROb2d8cu+Zgca30RY+1xaF48x0GD50PtcDSTTxOLq3o25gAkJT03BnBjp
-	 aBT1U02EL8zvmoLUHyZwcUG7dt9A6/A7qz4nt+Ztlfz++9ZP5dTl+47h2OVP1eyArIA==
+	t=1795053746;
+	b=I/OKK2UgVvrZbQyH1MPdeUYJJWIox2TIthVJ9VggpsOE97P/+K3EbwbcIvE+NtW62PXh
+	 idrxRzYRtGePZkt8GbMIUR+p1peHO/F9Pv1ksflVafkOGTIAN9qgyZ86UXzFH/A+X/pFq
+	 cJGdfryl/Pd79TT9J8adKwJQ5PxSj2NxKckDXg3xP/Hc6hyLRKyAbIOcW3waU+PrspSo/
+	 et2EsQaWaqzKQknWVHSjoYnb+7JGukZDxF4ciFJ0wT6p8mQm5E85eLr4JIqojOYxOZ/pt
+	 YrP4RJA3hvyqgQ5sgJkF7Mrsvkhc7HRp/1CTqyH8KRw4VVcAH9+7YOZBHGJC98bNdmQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053743;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053746;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SuRYx1ka+GrGxRJoCyu5S0f9YEU85lcgMDeeuv13xLo=;
-	b=4TbY4nP9xUqku/2b1Ky0YARgWjsEl0vB9rsOP7JSrIxSAXxhqqEK0DkaXO16E5iUIpZN
-	 OIM7Uwd5RM+Hzkyd0BHXnUGFAYjuNtNz8jt8XgXr57T1yw1gt9IqHQsrgtWz9RMhxyy0I
-	 8VmksowCh6iju+NoTU/uywg2mRgDnrZ9LwJ69wUN/37cynsah34mBfY8oc94aAbS9lYsT
-	 u2vzDQtil6kAWRJNw5UVCt3GcgfE2mtsnZ+i3HRJraeH1ahZCBnNGMmnX/dqtYZQaraHk
-	 eruDQ54QgYrkXtNk7pbJTS6B8ml+d7TeuWFs+UpFDY5pNm67sEYkmMubnsUbowQSjxA==
+	bh=1rnXPph6O/KX+bha+jY8X6Djh1XedQyCdRigAqst8Fs=;
+	b=TTIp3efbAEB9enK7w3zHxkG7VRr4m/mpbGHGKzgsv7m1Y2eFuFeRuXh2MLNmTiChhmtA
+	 BM5BPn6xuouVQdN6uuFKV3yX1bRcc9WkZd/7h04+1IluXVWbWqYOsuo1cjtBiVBloiWAy
+	 NHBluMspo0oKUvbTslcK1ADDWsQ8R2KEN4xxdm7XWA4hzSOCC9/g/HsrLqJPhB76FfvhV
+	 kzqV7Gd8tC582wyn0SGugX8Coj5gsFo6FLg4Sp3jo3mKAJxf8NMwilixpScn8fZ4L/600
+	 cawnD68cVwKrz1pVVkMSFVZTZG6L5U3ehvcGY+bozy1LmkLlNV09CvVOqsO4tQwc2Kg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J87HXWBS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cwQwVlsu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A795606A320;
-	Thu, 19 Nov 2026 02:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7293606A325;
+	Thu, 19 Nov 2026 02:02:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J87HXWBS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CA391F000C4;
-	Thu, 19 Nov 2026 02:02:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cwQwVlsu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF6151F000C4;
+	Thu, 19 Nov 2026 02:02:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053742;
-	bh=SuRYx1ka+GrGxRJoCyu5S0f9YEU85lcgMDeeuv13xLo=;
+	s=korg; t=1795053746;
+	bh=1rnXPph6O/KX+bha+jY8X6Djh1XedQyCdRigAqst8Fs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J87HXWBSVaa4ZuR7fUoydk7+5gYEGv7PYsErwKFPTIDVcNHYRPPDYeiC1F71VrM69
-	 7wpqYypfmR71K1lJatSJFik3Uc1T3mfqbBSKKFyCaIbPGoGfLXBS+Y3OipiR2RSakY
-	 xB0KDYEx84gMH2YiBiTeYRRvUOj850McSilCqP+8=
+	b=cwQwVlsu93vyVA83g69bztBXQBUUhF2VkAwMVdMEXYoifaKDU93Cg9nlHOpeA/5Az
+	 ljvBC4VN8THQDrFvbaL0qufppOScIgwJpfmobBEFPemTdGIqFrX1SlHVJjbZnIk58V
+	 n5g0VeeX+jQzRR9eQa5DE+09fwj3MK1Mtb6L/L/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Eugen Hristev <ehristev@kernel.org>,
+	Balakrishnan Sambath <balakrishnan.s@microchip.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0986/2214] media: mtk-vpu: Remove redundant flush_workqueue() calls
-Date: Wed, 18 Nov 2026 15:44:22 +0100
-Message-ID: <20261118150051.677213865@linuxfoundation.org>
+Subject: [PATCH 5.15 0977/2214] media: microchip-isc: fix WB offset and gain register field masking
+Date: Wed, 18 Nov 2026 15:44:13 +0100
+Message-ID: <20261118150051.340380918@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,48 +69,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
 
-[ Upstream commit 360c887a39cb56e75be4f558b16f1b6409ecb93f ]
+[ Upstream commit 6e9eaa3b93870e4edac1bd2539fe113c24663eaf ]
 
-'destroy_workqueue()' already drains the queue before destroying it, so
-there is no need to flush it explicitly.
+ISC_WB_O_* and ISC_WB_G_* each pack two 13-bit fields. A negative offset
+sign-extends and corrupts the adjacent field. Add masks for the two
+fields and write them with FIELD_PREP(), which masks each value into its
+field, so sign extension can no longer bleed across.
 
-Remove the redundant 'flush_workqueue()' calls.
-
-This was generated with coccinelle:
-
-@@
-expression E;
-@@
-- 	flush_workqueue(E);
-	destroy_workqueue(E);
-
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Stable-dep-of: 2c50b58d4105 ("media: mediatek: vpu: free IRQ before destroying watchdog workqueue")
+Fixes: 73c1a577b839 ("media: atmel: atmel-isc: reworked white balance feature")
+Cc: stable@vger.kernel.org
+Reviewed-by: Eugen Hristev <ehristev@kernel.org>
+Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ sashal: adapted to older driver filenames with an explicit bitfield header include for FIELD_PREP(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mtk-vpu/mtk_vpu.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/media/platform/atmel/atmel-isc-base.c | 17 +++++++++--------
+ drivers/media/platform/atmel/atmel-isc-regs.h |  6 ++++++
+ 2 files changed, 15 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/media/platform/mtk-vpu/mtk_vpu.c b/drivers/media/platform/mtk-vpu/mtk_vpu.c
-index 87da09148b266..1657575346735 100644
---- a/drivers/media/platform/mtk-vpu/mtk_vpu.c
-+++ b/drivers/media/platform/mtk-vpu/mtk_vpu.c
-@@ -966,10 +966,8 @@ static int mtk_vpu_remove(struct platform_device *pdev)
- #ifdef CONFIG_DEBUG_FS
- 	debugfs_remove(vpu_debugfs);
- #endif
--	if (vpu->wdt.wq) {
--		flush_workqueue(vpu->wdt.wq);
-+	if (vpu->wdt.wq)
- 		destroy_workqueue(vpu->wdt.wq);
--	}
- 	vpu_free_ext_mem(vpu, P_FW);
- 	vpu_free_ext_mem(vpu, D_FW);
- 	of_reserved_mem_device_release(&pdev->dev);
+diff --git a/drivers/media/platform/atmel/atmel-isc-base.c b/drivers/media/platform/atmel/atmel-isc-base.c
+index eeaf91d80acd7..c856891adf99e 100644
+--- a/drivers/media/platform/atmel/atmel-isc-base.c
++++ b/drivers/media/platform/atmel/atmel-isc-base.c
+@@ -9,6 +9,7 @@
+  *
+  */
+ 
++#include <linux/bitfield.h>
+ #include <linux/clk.h>
+ #include <linux/clkdev.h>
+ #include <linux/clk-provider.h>
+@@ -75,17 +76,17 @@ static inline void isc_update_awb_ctrls(struct isc_device *isc)
+ 	/* In here we set our actual hw pipeline config */
+ 
+ 	regmap_write(isc->regmap, ISC_WB_O_RGR,
+-		     ((ctrls->offset[ISC_HIS_CFG_MODE_R])) |
+-		     ((ctrls->offset[ISC_HIS_CFG_MODE_GR]) << 16));
++		     FIELD_PREP(ISC_WB_O_LO, ctrls->offset[ISC_HIS_CFG_MODE_R]) |
++		     FIELD_PREP(ISC_WB_O_HI, ctrls->offset[ISC_HIS_CFG_MODE_GR]));
+ 	regmap_write(isc->regmap, ISC_WB_O_BGB,
+-		     ((ctrls->offset[ISC_HIS_CFG_MODE_B])) |
+-		     ((ctrls->offset[ISC_HIS_CFG_MODE_GB]) << 16));
++		     FIELD_PREP(ISC_WB_O_LO, ctrls->offset[ISC_HIS_CFG_MODE_B]) |
++		     FIELD_PREP(ISC_WB_O_HI, ctrls->offset[ISC_HIS_CFG_MODE_GB]));
+ 	regmap_write(isc->regmap, ISC_WB_G_RGR,
+-		     ctrls->gain[ISC_HIS_CFG_MODE_R] |
+-		     (ctrls->gain[ISC_HIS_CFG_MODE_GR] << 16));
++		     FIELD_PREP(ISC_WB_G_LO, ctrls->gain[ISC_HIS_CFG_MODE_R]) |
++		     FIELD_PREP(ISC_WB_G_HI, ctrls->gain[ISC_HIS_CFG_MODE_GR]));
+ 	regmap_write(isc->regmap, ISC_WB_G_BGB,
+-		     ctrls->gain[ISC_HIS_CFG_MODE_B] |
+-		     (ctrls->gain[ISC_HIS_CFG_MODE_GB] << 16));
++		     FIELD_PREP(ISC_WB_G_LO, ctrls->gain[ISC_HIS_CFG_MODE_B]) |
++		     FIELD_PREP(ISC_WB_G_HI, ctrls->gain[ISC_HIS_CFG_MODE_GB]));
+ }
+ 
+ static inline void isc_reset_awb_ctrls(struct isc_device *isc)
+diff --git a/drivers/media/platform/atmel/atmel-isc-regs.h b/drivers/media/platform/atmel/atmel-isc-regs.h
+index d06b72228d4fa..bac10cd653982 100644
+--- a/drivers/media/platform/atmel/atmel-isc-regs.h
++++ b/drivers/media/platform/atmel/atmel-isc-regs.h
+@@ -149,6 +149,12 @@
+ /* ISC White Balance Gain for B, GB Register */
+ #define ISC_WB_G_BGB	0x0000006c
+ 
++/* Each WB offset/gain register packs two 13-bit fields, low and high */
++#define ISC_WB_O_LO	GENMASK(12, 0)	/* R or B  offset [12:0]  */
++#define ISC_WB_O_HI	GENMASK(28, 16)	/* GR or GB offset [28:16] */
++#define ISC_WB_G_LO	GENMASK(12, 0)	/* R or B  gain [12:0]  */
++#define ISC_WB_G_HI	GENMASK(28, 16)	/* GR or GB gain [28:16] */
++
+ /* ISC Color Filter Array Control Register */
+ #define ISC_CFA_CTRL    0x00000070
+ 
 -- 
 2.53.0
 
