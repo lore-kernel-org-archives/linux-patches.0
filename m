@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036860;
-	b=2pWrd5c0QvDLFkvmyi/XcoAEXsnL8rB1l1YyBU3f5+d2vB2O71Ogh70zmXwLMtnYgRKq
-	 K7bJSmDKh65JgvsF+QLRQSmG0yTPXIYC0zBSESJO7rhLp5DIByY7RyTfEwwcBgNrSw4xn
-	 /PSD1Haxd6Dj2pgHxfXVSm13Pl2LY9CyruyKw8aXfOq4Dhklb6CVzSMWrHyRbrgAiIwWl
-	 E/lA46Ste8QW9Kuo+FvNMLwLk8sDyPpFHUn1YTA6Gdbu4k9oiPT65QpqmPZcYYfj7ePtj
-	 bz8Jf1hKt3E86uQxEV8pYu6rLkrXmEJxzJ77aoreApWBWbj6pNbRu5cEE5+t5/gWj0Q==
+	t=1795036863;
+	b=SMcntNU+3FKW8LM6wT+gWCboaX+QJdtQ1rlziO4PadObf4KbQn1NknUT40LmrcfBapPm
+	 JHHUPDoXiAASAARr+LDeZzTeLymTmiar6DoX/uuahuqhx172lF3GTC1QMviH5m8Y7Rxo6
+	 u/wo8N0T8KeoQBIaEB4RWrf6uBAvepek6fXzJ3x/ozkhblrAINDTcICwOEZF4vC0ngiv2
+	 Kc2hgFY430zXVu/1vyDenH4l5LPWq621ARP8bfQRAp6cBMly9myfJKfnxx+5xxhIlMI04
+	 EdcBtUHpoQFD+iWsJeEQfYD8Vubq4Ki8cbPTqQ18i//fWYr21Bz/ybdJJJ384y9P/SQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036860;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036863;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kcnesHdBZlvOWPbWqjPOBaUVOYNHKlEqo0v+VsuzDg4=;
-	b=hnSqG+03R2Eu/fDA4n6RWrBm3WAcMA1F3gN1sUbfy+kxmuVe3duyx+6rCqyAVmDzg18E
-	 C+lQ8cbBB0wRaX+gvRUJITRTtB6+8K3mU7e5sWM65fzWUUekUYjwlB5cGKkZNcqsY01Pq
-	 eCPL6jCZQLNLygDD6e7I+eh+AA501YLC/hnvbtlHKjum1ICiLgumnZfHfkzPl1oBEzI9+
-	 oGHLrdDKshivfhPymdDDyLauo9SNUCcCZIJQWW4CJV7qaEu7fOByCigm+8w4C0l29zWjN
-	 th8YigH26ThkXduWMbabrw2DeidrXspfayDg48LQOLLFMZ4MyqveclRdDX8IgMIg8Eg==
+	bh=YeMBGc2UTXkZszvLXlo4rWBPCDz6WCey6TVr3pAE8kk=;
+	b=RJZMRsbpLoDbylNK/lyDAvGaTD8oMVaLHqKqHDkKTC+TFL55kHoc/j5n/lbATRiLxUiA
+	 RFDNpz2cjsEt5Bw1u6/ue3szIH2yIudX2xtNn5zWHKpDbHxRAhJIghTlcsqsPeMPzL47O
+	 iF6xjRiYfAXdBcjdr0VCLp19uTajbN/bFZf3I+wzYDM2Z89D/Z1cM2713q7f0kbo2fq5I
+	 +C0uvZuFYbXd3nIFBgRaXETb24QaH51g1ArxAu0eCHd2Y9G+KH7ZM7p+KRmHsWvYgq43e
+	 ce8kB0791se7O8amHVWioj8bRsMEu9cMEYvFnkjoQrKVrweZqzwKdS2kNCMUHYuuTEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="gpB7Bw/z";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LLn9ILXQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7475D606A31C;
-	Wed, 18 Nov 2026 21:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13BB0606A31C;
+	Wed, 18 Nov 2026 21:21:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gpB7Bw/z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C93471F000C4;
-	Wed, 18 Nov 2026 21:20:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LLn9ILXQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FC641F000C4;
+	Wed, 18 Nov 2026 21:21:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036860;
-	bh=kcnesHdBZlvOWPbWqjPOBaUVOYNHKlEqo0v+VsuzDg4=;
+	s=korg; t=1795036862;
+	bh=YeMBGc2UTXkZszvLXlo4rWBPCDz6WCey6TVr3pAE8kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gpB7Bw/zQuLHNlYGCpYCMCcQBI6cCR2hyD7mtja8+HmIA7ta82/TDpjrFAOBT+EbX
-	 qlDu5VjhHFy26bPUgBDBKyv1DaMVRjY6OiLCk9cb8rg/Ii92Ic9aBKglLsiGW/2Yj7
-	 BvmiYWhob+C1XHxGnuUKoFymns3Sv2XeIeaFtO4g=
+	b=LLn9ILXQ6giJgJg5KSqGJBvHR/KrjSWiZdktR05CGQrUaFAb/OeO19qHlgN7DyUFR
+	 E3+Q/q9K+LO/BKCQSgRvgq6MlMtgtzaUqEeTl2wPN/QYOME4BGMfWp5YaZ8y+laeS+
+	 HZpIaXEJwGruLEZi2dLuoBOWdLUAx24pynyK+MM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.6 1210/3318] cgroup: dont kill migrated processes through their exiting threads
-Date: Wed, 18 Nov 2026 15:30:32 +0100
-Message-ID: <20261118150356.469961307@linuxfoundation.org>
+	yanxia <yanxia@cmss.chinamobile.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 1211/3318] veth: fix stale peer max_mtu on XDP program replacement
+Date: Wed, 18 Nov 2026 15:30:33 +0100
+Message-ID: <20261118150356.501217127@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,59 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-[ Upstream commit 5f4a3f743acc96987ae5c2e966947942c34ba56c ]
+From: yanxia <yanxia@cmss.chinamobile.com>
 
-Since commit da13e0e72a73 ("cgroup: fix cgroup.kill for exited thread
-group leader"), __cgroup_kill() visits every thread in the cgroup and
-sends SIGKILL with PIDTYPE_TGID, so each visited thread takes down its
-whole thread group.
+[ Upstream commit c955325db639e9503941227e14e1f1ccc99442a1 ]
 
-A thread that has started exiting can stay in a cgroup after its process
-has been moved out of it. cgroup_migrate_add_task() skips PF_EXITING
-tasks, and the thread is only unlinked by cgroup_task_dead() after its
-final context switch. mm_release() clears the thread's clear_child_tid
-word and wakes the joiner well before that, so pthread_join() can return
-while the thread is still in the old cgroup.
+veth_xdp_set() calculates the peer MTU limit from the incoming program's
+XDP fragment capability, but only stores it when no program was attached.
+Replacing a program with one having a different fragment capability
+therefore leaves the peer's max_mtu stale.
 
-If cgroup.kill is written in that window, __cgroup_kill() finds the
-exiting thread and complete_signal() passes the group-wide SIGKILL on to
-a live thread, killing a process that already left the cgroup. The cgroup
-selftest test_stress.sh runs into this: test_cgcore_proc_migration()
-joins its threads, moves itself back to the root cgroup, and cg_destroy()
-falls back to cgroup.kill on the old cgroup when rmdir() fails with
-EBUSY, so test_core kills itself. KernelCI has been reporting
-"with_stress.sh: line 94: ... Killed" on several arm64 boards since the
-commit reached linux-next.
+Replacing a regular program with an xdp.frags program keeps rejecting
+otherwise valid jumbo MTUs. The opposite replacement leaves a larger
+limit in place and permits MTUs which a fresh attachment of the regular
+program would reject.
 
-Keep visiting every thread, but go back to sending SIGKILL to the thread
-that was found. A SIGKILL sent to a live thread still kills its whole
-thread group, so both cases fixed by that commit stay fixed, and
-task_can_queue_signal() drops one sent to a thread that is already
-exiting.
+Update peer->max_mtu after every successful attachment or replacement.
+Keep the GSO feature update conditional on the first attachment.
 
-Fixes: da13e0e72a73 ("cgroup: fix cgroup.kill for exited thread group leader")
-Cc: stable@vger.kernel.org # v5.14+
-Link: https://lore.kernel.org/all/179272264722.329188.4773475583351189022@6e52bff8000c/
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Found during review of the XDP replacement path and confirmed with
+native XDP on an isolated veth pair. Before the fix, direct replacement
+rejects MTU 9000 after switching to xdp.frags, and accepts it after
+switching back to a regular program. Detaching and attaching instead
+produces the expected results in both directions.
+
+UML tests on net reproduce the problem before this change and match the
+detach/attach controls afterwards, with both devices up or down and
+with either endpoint receiving XDP. Failed replacements preserve the
+previous state; same-type replacements and detach also behave as
+expected. Small-frame traffic passes in the devices-up cases.
+
+Fixes: 7cda76d858a4 ("veth: Allow jumbo frames in xdp mode")
+Cc: stable@vger.kernel.org
+Signed-off-by: yanxia <yanxia@cmss.chinamobile.com>
+Link: https://patch.msgid.link/20261020020147.790274-1-yanxia@cmss.chinamobile.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cgroup.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/veth.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
-index ce51a032e7e0c..637eefb081892 100644
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -3986,7 +3986,7 @@ static void __cgroup_kill(struct cgroup *cgrp)
- 		if (__fatal_signal_pending(task))
- 			continue;
+diff --git a/drivers/net/veth.c b/drivers/net/veth.c
+index 334783a022194..06171a3deb9fe 100644
+--- a/drivers/net/veth.c
++++ b/drivers/net/veth.c
+@@ -1643,10 +1643,9 @@ static int veth_xdp_set(struct net_device *dev, struct bpf_prog *prog,
+ 			}
+ 		}
  
--		do_send_sig_info(SIGKILL, SEND_SIG_NOINFO, task, PIDTYPE_TGID);
-+		send_sig(SIGKILL, task, 0);
+-		if (!old_prog) {
++		if (!old_prog)
+ 			peer->hw_features &= ~NETIF_F_GSO_SOFTWARE;
+-			peer->max_mtu = max_mtu;
+-		}
++		peer->max_mtu = max_mtu;
+ 
+ 		xdp_features_set_redirect_target(peer, true);
  	}
- 	css_task_iter_end(&it);
- }
 -- 
 2.53.0
 
