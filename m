@@ -1,58 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.170
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031372;
-	b=KqK8bPPVUGVyEWXJxIhchjWdOEMfyhYaO0nfCKGFkaRTCgEulRsyqezdXTRmeQzJsuby
-	 oLOPxTTS89YYQwWRqEMPbIIxXAbP7ChOewFWrgFCjp0jAY6r/H9rpXlctDyD19n94YAjd
-	 sxPmKV4cJ4BitGcO0ichSoBNlJbHPbPDhjkcogmr2YudCq65ac0WlpcfDbKfaV9ZxQnw1
-	 Cc8ijUfcqGHkLUMvYeSanL4O2yn25w5bZGhL4o+SMqM3sF6XIPgq5h037McytETeMcQ+j
-	 5YJF0NqFHIPcDVNdqBjb2supD2MVqJrXZvOg+ZQaTHk9HU3QJ7OBIFP9izU52bzpiDQ==
+	t=1795031373;
+	b=gdRvi3MZ5Ezppxw0cjKitG5X3lEgqw0rLWDnn2wmKr02GrH1J3v7544x13XlpO1Xz1Lf
+	 YgDzKV8/QrbbO8jN6N1pNCT+ULFnJKjvkhfYMwq5H8QV8bje9ud3FmcpVGXsswkI6nWJ8
+	 aBao8x7EDPTGwcorSHx3caW+IPBC/lxW1eQRzMonyCVsRVCNZ3oBL6ZpxR0OUk2EvRPBO
+	 iH65Qj9QaYxpuyGsJDrHmaUIlf+xUJhrcX4H15uR+hxm67z8MzUIVjp2a0v07rTuT57Rv
+	 UAJHUnir9SUw16Ty+IoQHCgVyozgjN75XIKgs3gfKQnkC34uu7+IuEuenXwXGHgZLQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031372;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=oWO9V8S3Xs4+bx386DcMPK5t9cKMztEiUoP3c5Kpi7E=;
-	b=GAUGXmw4VOGuRa72e0vg55bDkaY2golOagTQbARRLnG4GJ9LAZ0aERHgu/JjhNIQi3tO
-	 EuE/R4ZiIkljiQWN4cnXIrfZdCuBb++0/hG2H9y4RhxsG5mElDM2ak5ch3guBtFVpUiqB
-	 j/rKw7jOjW+nHKS8nhY/AryDuHG27/KMNmPGayCMSOQf1wpFVTdazrCWz2tPfmkiEeOxK
-	 7PTL/yBeLee/sPArrXKfNxLtNuxworuw67whf7iJiZpyE5I6fQntx/dRP8sCprmoXyJnx
-	 7F4eF5UznHz9bkkgi1GzaWPP5YWUowu6rr6Ne90mFVSTb+93TjyvShMT9i2SwFKOwyw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031373;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=5z9WeWVp8pZ7m8YhqVv0OCEHCS96QI2xcezf4P1GqsI=;
+	b=cHrezlllR6FoFU58l0wetvzbLMde35AUnyf93jnOyp9688S5PefDwVC4D+RUeSDTu8Ia
+	 l1MCVL+l7foQeGJDIvaM+mqZvYG7VpQZ3kH9zdJzic2O5qTEtoqm8tf+inBbXt4ds5Khh
+	 0pZMoi5mJNnbFRXubR2WFSHPfWTCn1ymsNeLwsAwYpzFMDdtqzi8wE3Yt61aDy5plsu4o
+	 aHRzCa39LrlMYE55RIgBEfnqNRExOl4Hxn6wn1rto70FzhD0mrPqGdNHAUoFTzD1OwPJf
+	 Sh6ZannmZp3OhL8enzht5t1wFM3qs4/KUi+cJ5PMf1kkjJGotlOvYzwvShdBONaJfzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A8xvQe2D;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Ekl6RCP5;
+	arc=none smtp.remote-ip=209.85.222.170
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2FCB606A337;
-	Wed, 18 Nov 2026 19:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3CB0606A33E
+	for <patches@lists.linux.dev>; Wed, 18 Nov 2026 19:49:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D3CB0606A33E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A8xvQe2D
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FBCB1F000C7;
-	Wed, 18 Nov 2026 19:49:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031371;
-	bh=oWO9V8S3Xs4+bx386DcMPK5t9cKMztEiUoP3c5Kpi7E=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A8xvQe2DQUtCZgsoQGJXduARAKJU5/U+CVwVuRiP3TVyl/jHy1nnIT0jgwWtkf/qw
-	 BC43QVa58tMcHqLfD4FoDM434J+/T99JQ+o2Vo0ihim3B7Bl91mAmPwZPHgZFisGo6
-	 l/stHGtliipiYEYnBrK3Wgx/x+bpXgBjZGxsvoKo=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Antoni Pokusinski <apokusinski01@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1035/1756] rtc: abx80x: properly handle shared IRQs
-Date: Wed, 18 Nov 2026 15:52:42 +0100
-Message-ID: <20261118150051.269492511@linuxfoundation.org>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
-References: <20261118150007.957976754@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Ekl6RCP5
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-94965745d92so153917885a.2
+        for <patches@lists.linux.dev>; Wed, 18 Nov 2026 11:49:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795031372; x=1795636172; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=5z9WeWVp8pZ7m8YhqVv0OCEHCS96QI2xcezf4P1GqsI=;
+        b=Ekl6RCP5kg+HkhmgxaUmBdZG0i6PupdSnmphAg7EDpAGXHIbY3anUXpDaE+Ml8PKqw
+         lTp2sR9uL60Bi0O4TwKBPbKyOYBOEh7dUqWFU3kIwqrWoHGNr5i8uXlgJ0N/XEQBa6LP
+         wy6nhrAlPAVtvUKyUH1418fuesncc6b0d4gqy81zWH7wQMQyPvgegN6wG+vxV38VhcpY
+         wp31DfXp5H1mfvb/flKgz6YSL0Z6Xu5Ovamp8P2/N+vuLmDg/LtvvZQHyILf+azJODQa
+         fJ1doGYIkzrXJDY14dZcZOTKPpyDoQbp9p9SETQa+M4kpVTxbogEnC6gK1ixEsVeF5pn
+         Lj+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795031372; x=1795636172;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=5z9WeWVp8pZ7m8YhqVv0OCEHCS96QI2xcezf4P1GqsI=;
+        b=Q9OxXA9A/WsScIW/XTRDTDElTRLCbxfcMorlc82/NKwRAevez/2BjQdsR9kNO19Wjr
+         0EXRXF0Ag23fvq+jbKPhv8/nOc8rY4sFRRGTEkd/731Xr/nk8fOHoUQ6XY1i8TWdTDBV
+         YvoMkUMFWR89hNIN9nqsPvqIGTKLz/Bm/UdaEHWk9fRvT01Eb+9q/oK7RTJvgeGnYJ2Y
+         FsQBLhwEmY4aUK52MVYx8b68yoQanmxtbKg12Z6TY/h7Tiyam0PqDwSwvaT1c56rJXWB
+         vfgdhysDjXmShP47dbKzV0y5tZoH69HOmvfSyVVsAwxdlxzH9eb6yHkaIQmFrJAjpkHG
+         0crA==
+X-Gm-Message-State: APuU4Z9qXHWAtKc2t/3bXOXiercrMTrPE9gaXbrJt5vGdWPcns1nMA+D
+	N9jTGKKGOD8fLor/1O+X1fwDvbl0C084fKgzRMVj+VBg0Rwh+9lw+xaM
+X-Gm-Gg: AYBFou1oJnouWEyTtVoAXMP/MDD7LuTNbsMsrQDlWSXrB1qSyLvxAYITUez9ZiWBW5G
+	3fFbi7ikhHZLumc0uQ0VLZf1nrzLtTJGx8bdqGtSRDSKgv/lDHKCiwpK+DwaPTrypHjn4hgrltE
+	Qiq1iIs0mPVldFiLJ3V268IJHEdttbMgoiHGuOgL9U8IYZu1C2LfbefDV4HBlWdjyvObpppB95x
+	w3ScW8W3dvWYX2pShwZbXocZGcXSC0nJzZTCaHNsXtOJXrGem+e7ymnmH2GWpUIjsAzdoNsyEKF
+	/pWxOScOF1BiLxB5l/s4Bhl4JhrXjBzvuk0g1IXMG2QU0Fk03rdrhvD//0A5ExKfxYBW5M3/ocj
+	TwV6bRtbRYWhLqXQmeAtyCCL0NZ0DGoBe0V4kU4s63zhnYNj6aK8Lm+jBjn60cTusWWu2HjIJrP
+	4j0LKhcHnBe/9YZ38oC5k+3fHHgLAecG30R1NKsdGS5PLCPXAtuvEg4e9bW0kdOhy7WvGdJNqZA
+	q0JahG6cGW9KAyWl6y3WywC42G6bJ2tJ1NLEP8tSxNZoZPpP3tUar17/6pZlmQTJSNTrtuuWoVV
+	yKPp4xe62w0qcIzcjOicPcupNGkI677d8tu3ZwhbHEeFggrQfxOnO8mFvmNlHt1Vd8yUzN/9FQH
+	FYg==
+X-Received: by 2002:a05:620a:272a:b0:949:7bb1:ac5d with SMTP id af79cd13be357-949995a8346mr658000885a.38.1795031371742;
+        Wed, 18 Nov 2026 11:49:31 -0800 (PST)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-9499b743a8bsm257359285a.17.2026.11.18.11.49.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Nov 2026 11:49:31 -0800 (PST)
+Message-ID: <30d88b7b-7a34-4fad-9ffe-84f2d8a927e5@gmail.com>
+Date: Wed, 18 Nov 2026 11:49:28 -0800
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -62,130 +91,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.12 0000/1756] 6.12.119-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ sr@sladewatkins.com
+References: <20261118150007.957976754@linuxfoundation.org>
+Content-Language: en-US, fr-FR
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+On 11/18/26 06:35, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.12.119 release.
+> There are 1756 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 20 Nov 2026 14:55:44 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.119-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-------------------
+perf fails to build with:
 
-From: Antoni Pokusinski <apokusinski01@gmail.com>
-
-[ Upstream commit 632916c7bde35495f2f6776d8e335c3ec6e306ec ]
-
-The abx80x RTC driver registers its interrupt handler with IRQF_SHARED,
-but the handler always returned IRQ_HANDLED and cleared the status
-register even when no interrupt source from the RTC was active.
-
-This could cause the driver to claim interrupts belonging to other
-devices sharing the same IRQ line and could also clear unrelated status
-bits in the RTC status register.
-
-Only handle the interrupt when the alarm or watchdog flags are set, and
-clear only those interrupt status bits that were handled. Return
-IRQ_NONE when the interrupt was not generated by the RTC.
-
-Fixes: 718a820a303c ("rtc: abx80x: add alarm support")
-Signed-off-by: Antoni Pokusinski <apokusinski01@gmail.com>
-Link: https://patch.msgid.link/20260916205138.16771-5-apokusinski01@gmail.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/rtc/rtc-abx80x.c | 52 ++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 50 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/rtc/rtc-abx80x.c b/drivers/rtc/rtc-abx80x.c
-index ce0bcb03bfbdb..7b983cf21df25 100644
---- a/drivers/rtc/rtc-abx80x.c
-+++ b/drivers/rtc/rtc-abx80x.c
-@@ -50,12 +50,18 @@
- #define ABX8XX_CTRL2_RSVD	BIT(5)
- 
- #define ABX8XX_REG_IRQ		0x12
-+#define ABX8XX_IRQ_EX1E		BIT(0)
-+#define ABX8XX_IRQ_EX2E		BIT(1)
- #define ABX8XX_IRQ_AIE		BIT(2)
-+#define ABX8XX_IRQ_TIE		BIT(3)
-+#define ABX8XX_IRQ_BLIE		BIT(4)
- #define ABX8XX_IRQ_IM_1_4	(0x3 << 5)
- 
- #define ABX8XX_REG_CD_TIMER_CTL	0x18
- 
- #define ABX8XX_REG_OSC		0x1c
-+#define ABX8XX_OSC_ACIE		BIT(0)
-+#define ABX8XX_OSC_OFIE		BIT(1)
- #define ABX8XX_OSC_FOS		BIT(3)
- #define ABX8XX_OSC_BOS		BIT(4)
- #define ABX8XX_OSC_ACAL_512	BIT(5)
-@@ -261,6 +267,7 @@ static irqreturn_t abx80x_handle_irq(int irq, void *dev_id)
- 	struct i2c_client *client = dev_id;
- 	struct abx80x_priv *priv = i2c_get_clientdata(client);
- 	struct rtc_device *rtc = priv->rtc;
-+	unsigned int status_flags_clear;
- 	int status;
- 
- 	status = i2c_smbus_read_byte_data(client, ABX8XX_REG_STATUS);
-@@ -277,9 +284,15 @@ static irqreturn_t abx80x_handle_irq(int irq, void *dev_id)
- 	if (status & ABX8XX_STATUS_WDT)
- 		dev_alert(&client->dev, "watchdog timeout interrupt.\n");
- 
--	i2c_smbus_write_byte_data(client, ABX8XX_REG_STATUS, 0);
-+	status_flags_clear = status & (ABX8XX_STATUS_AF | ABX8XX_STATUS_WDT);
- 
--	return IRQ_HANDLED;
-+	if (status_flags_clear) {
-+		i2c_smbus_write_byte_data(client, ABX8XX_REG_STATUS,
-+					  status & ~status_flags_clear);
-+		return IRQ_HANDLED;
-+	}
-+
-+	return IRQ_NONE;
- }
- 
- static int abx80x_read_alarm(struct device *dev, struct rtc_wkalrm *t)
-@@ -914,6 +927,41 @@ static int abx80x_probe(struct i2c_client *client)
- 
- 	i2c_set_clientdata(client, priv);
- 
-+	/* Disable unused interrupts */
-+	data = i2c_smbus_read_byte_data(client, ABX8XX_REG_IRQ);
-+	if (data < 0) {
-+		dev_err(&client->dev, "Unable to read irq register\n");
-+		return -EIO;
-+	}
-+
-+	err = i2c_smbus_write_byte_data(client, ABX8XX_REG_IRQ,
-+					data & ~(ABX8XX_IRQ_EX1E |
-+						 ABX8XX_IRQ_EX2E |
-+						 ABX8XX_IRQ_TIE |
-+						 ABX8XX_IRQ_BLIE));
-+	if (err < 0) {
-+		dev_err(&client->dev, "Unable to write irq register\n");
-+		return -EIO;
-+	}
-+
-+	data = i2c_smbus_read_byte_data(client, ABX8XX_REG_OSC);
-+	if (data < 0) {
-+		dev_err(&client->dev, "Unable to read Oscillator Control register\n");
-+		return -EIO;
-+	}
-+
-+	/* Unlock write access to Oscillator Control Register */
-+	if (abx80x_write_config_key(client, ABX8XX_CFG_KEY_OSC) < 0)
-+		return -EIO;
-+
-+	err = i2c_smbus_write_byte_data(client, ABX8XX_REG_OSC,
-+					data & ~(ABX8XX_OSC_ACIE |
-+						 ABX8XX_OSC_OFIE));
-+	if (err < 0) {
-+		dev_err(&client->dev, "Unable to write Oscillator Control register\n");
-+		return -EIO;
-+	}
-+
- 	if (abx80x_caps[part].has_wdog) {
- 		err = abx80x_setup_watchdog(priv);
- 		if (err)
+util/annotate-data.c: In function 'global_var__collect':
+util/annotate-data.c:731:30: warning: implicit declaration of function 
+'die_get_type_die'; did you mean 'die_get_typename'? 
+[-Wimplicit-function-declaration]
+   731 |                         if (!die_get_type_die(dwarf, 
+pos->die_off, pos->die_tag,
+       |                              ^~~~~~~~~~~~~~~~
+       |                              die_get_typename
+util/annotate-data.c:731:71: error: 'struct die_var_type' has no member 
+named 'die_tag'
+   731 |                         if (!die_get_type_die(dwarf, 
+pos->die_off, pos->die_tag,
+       | 
+       ^~
+util/annotate-data.c:732:50: error: 'struct die_var_type' has no member 
+named 'from_alt'
+   732 |                                               pos->from_alt, 
+&type_die))
+       |                                                  ^~
+util/annotate-data.c:743:44: error: 'struct die_var_type' has no member 
+named 'from_alt'
+   743 |                                         pos->from_alt);
+       |                                            ^~
+util/annotate-data.c: In function 'get_global_var_type':
+util/annotate-data.c:801:26: warning: implicit declaration of function 
+'die_same_file' [-Wimplicit-function-declaration]
+   801 |                         !die_same_file(cu_die, type_die));
+       |                          ^~~~~~~~~~~~~
+util/annotate-data.c: In function 'update_var_state':
+util/annotate-data.c:839:42: error: 'struct die_var_type' has no member 
+named 'die_tag'
+   839 |                                       var->die_tag, 
+var->from_alt, &mem_die))
+       |                                          ^~
+util/annotate-data.c:839:56: error: 'struct die_var_type' has no member 
+named 'from_alt'
+   839 |                                       var->die_tag, 
+var->from_alt, &mem_die))
+       |                                                        ^~
+make[6]: *** 
+[/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/build/Makefile.build:105: 
+/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/util/annotate-data.o] 
+Error 1
+make[6]: *** Waiting for unfinished jobs....
 -- 
-2.53.0
-
-
-
+Florian
