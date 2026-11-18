@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040182;
-	b=kM6ujLy7SdVkcXr/JYtM4sXQ6SSlXOR1MRJ1hcUIWLWonJYlB3IJWTa4y7guavhhBGmy
-	 5QiWPvpcVgeKboZQp2Q/RwTeFfKFXTcLB4CU6FhC3zJs0Xkw25HkHKHmaecfzyP82LdzD
-	 s09TkE1/Dm4OH2CEaw/eoAjPJrHzh17X8o8m0gv8MoajsGZESUkwITjHMsmKfpg3D9mq2
-	 nSpW8lGFVU3s2i44CXPk0anVMqiSfN7HFybYUHcrtsntjClqJFFU9fPR/9Zies8hkbFx5
-	 01IzXWvZ4bn3TEFddp53hKA17dmnEYQYYn3B9doh51hvIeafkGOceB1hHzo+24VGHSg==
+	t=1795040185;
+	b=hi3BenKMCo0HvNsWLoMoHpq5CevNUWLBKW7LVKf/J2r7kHYYkv5oFAF8eoZKg1qL5DIO
+	 2SUnyCju/N0rmQnBRK1RIIuQvvhwt4HXtSye0VNJ9RHcgSkbvbKI7Q5aN4fkhR/ZLAr7n
+	 3Yn5S/lZtyu7VhWIU+P4lPtXQ2BlGWColjG4Urr7lUflRU+12U0lOT/0YRgOBSLRWevF9
+	 4FvPwExMl5getj6VKOkfBLHjlnVCmGtuEnBfCN8z0v75fFbkRxiWxpADW+e1+r9XxWZyo
+	 52VlSEmYbJB/meDU0Q9YaHYoBD27Tp4NmrHoy8cgrwEsIMHJg/Vmzm6jdmNHHF9qMeA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040182;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040185;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oT7GrsOQRGsdcPo7cn9nZQoX7VEe0PvanEhTqY/eDU4=;
-	b=B0X7vXPmVHlK34KKcxAiBxr/lg1qgbnFyv7vSaK8TJ8vPHKY15FBTvZY/IjELiDH6HP/
-	 jtX+QhapJrjdDfgHWVEagtrjB+qUkNJwNsrrdTx8kuPH87F5yIJJFgF936aR4tta3l04G
-	 yxOSnX0rtVda10NL6F1ovRd2y5U9EWuX2nnn45ymXEPjWleE4EihGq0kL0Czr20YdW878
-	 lBAUkVKOxmxMZAL4D3IG0Aq306zrFeh9UWmWBYSkEP+fExYaZDwBA6qW3Vn4OAOiSo+Ae
-	 7AMADo/FM+/JAoo+NMoWml8DBc/15KLM/H6m+hvgHFvCXyl3ZbwYhMiunqZvJI6BL/w==
+	bh=9AsXHlMM+D1+RTLtQpztg9kh3Zh6FmaxeW3E8SKK9hI=;
+	b=bDSc+/2RmoIas6/l4Jy7Lmkf4qcaFIa3QDh/iWPdFxpfjpHam34CmKXVcxtjjY1FHkt7
+	 SayupDvE7HodAt557aaSwGzjnPHHLW8Mo0BdQprW3Lhxu1whKjgw/Nl/kONnMctMdoc+b
+	 k5jCJkfxqQZVO820hz9wwzXm25iJ+cuZsu3nlR3gmgG0zvjtgSwvqmr7lnqZfSvNsjjFY
+	 lfzAq91eoDRmT1jm6EqBikkTkPyIZTfaLYU7Wl9Yh+9Disiqs3+n3X9y4dBFNPILxdTs1
+	 Y9KsZF6oZeTVFOWTz8Ej2RRoBKsckUt5qX6JQuR9wXSbVPbGUsydNE/T4KHXxjCtNkQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MsWRbLpm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vg5DJMMU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3182606A32A;
-	Wed, 18 Nov 2026 22:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9030C606A31C;
+	Wed, 18 Nov 2026 22:16:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MsWRbLpm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B900C1F000C4;
-	Wed, 18 Nov 2026 22:16:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vg5DJMMU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96C011F000C4;
+	Wed, 18 Nov 2026 22:16:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040182;
-	bh=oT7GrsOQRGsdcPo7cn9nZQoX7VEe0PvanEhTqY/eDU4=;
+	s=korg; t=1795040185;
+	bh=9AsXHlMM+D1+RTLtQpztg9kh3Zh6FmaxeW3E8SKK9hI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MsWRbLpmYZnuylmWC/ImmgSi5qkVOj+6VjAlap4kUTeGyIXagdzIRr5Ck4y0O9adf
-	 kNJT2g0dxTXCqRpjfAhUZD4Gi1MqqANiuM6vxoRCTMVFyHRbiq8dvCX1sECN8aRl52
-	 5GVt6TLYg0OYsr6knzOQA5czzbp8bwO1vSy4vEzc=
+	b=vg5DJMMUqjXXrPRhxoeoigZy1wyUlU3HKhCVPhiAqIEZ8388Mz1fRqy/xC+hkYmcZ
+	 p/K4jDG+tYqVC93F4W9riuhjRj+92PYVZ6EqVPRfmmDFskY+fg66OAI21tqrvYEUNO
+	 0E8F41IiskoYseE1DT9VbVuz1Yi/PUpVjSu57pwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Finn Thain <fthain@linux-m68k.org>,
-	Stan Johnson <userm57@yahoo.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2314/3318] swim: Recalibrate when drive is probed
-Date: Wed, 18 Nov 2026 15:48:56 +0100
-Message-ID: <20261118150431.111693681@linuxfoundation.org>
+Subject: [PATCH 6.6 2360/3318] ASoC: mediatek: mt8188: mt8188-afe-clk: Handle clock enable errors
+Date: Wed, 18 Nov 2026 15:49:42 +0100
+Message-ID: <20261118150432.387901750@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,122 +70,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit ba087774a1493ade524f8a783461fa8be9c75039 ]
+[ Upstream commit 1b65c13d1af99170e2a855ca9212a03daa3e7f04 ]
 
-Track zero recalibration can be slow and is normally done only once i.e.
-during system POST or boot-up. Recalibrate once after the drive is probed
-rather than every time the device is opened. Don't register the drive if
-recalibration fails. Park the heads before ejecting.
+Clock enable errors are currently ignored by several AFE clock
+control functions.
 
-Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Tested-by: Stan Johnson <userm57@yahoo.com>
-Link: https://patch.msgid.link/119e799afcc00d6bd4a479c31e0c960cb1a1d71b.1788513997.git.fthain@linux-m68k.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Check the return values and roll back previously enabled clocks when
+a subsequent clock enable fails.
+
+Fixes: f6b026479b13 ("ASoC: mediatek: mt8188: support audio clock control")
+Fixes: 9be0213a6858 ("ASoC: mediatek: mt8188: refine APLL control")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/20260907120310.135693-5-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/swim.c | 37 +++++++++++++++++--------------------
- 1 file changed, 17 insertions(+), 20 deletions(-)
+ sound/soc/mediatek/mt8188/mt8188-afe-clk.c | 69 ++++++++++++++++++----
+ 1 file changed, 58 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/block/swim.c b/drivers/block/swim.c
-index bc30382731cb8..70b5d5dfb6079 100644
---- a/drivers/block/swim.c
-+++ b/drivers/block/swim.c
-@@ -412,6 +412,7 @@ static inline int swim_track00(struct swim __iomem *base)
- 	if (swim_readbit(base, TRACK_ZERO))
- 		return 0;
- 
-+	pr_err("swim: track zero recalibration failed\n");
- 	return -1;
- }
- 
-@@ -456,6 +457,7 @@ static int floppy_eject(struct floppy_state *fs)
- 	struct swim __iomem *base = fs->swd->base;
- 
- 	swim_drive(base, fs->location);
-+	swim_track(fs, 40);
- 	swim_motor(base, OFF);
- 	swim_eject(base);
- 	swim_drive(base, NO_DRIVE);
-@@ -596,13 +598,6 @@ static void setup_medium(struct floppy_state *fs)
- 		struct floppy_struct *g;
- 		fs->disk_in = 1;
- 		fs->write_protected = swim_readbit(base, WRITE_PROT);
--
--		if (swim_track00(base))
--			printk(KERN_ERR
--				"SWIM: cannot move floppy head to track 0\n");
--
--		swim_track00(base);
--
- 		fs->type = swim_readbit(base, TWOMEG_MEDIA) ?
- 			HD_MEDIA : DD_MEDIA;
- 		fs->head_number = swim_readbit(base, SINGLE_SIDED) ? 1 : 2;
-@@ -610,7 +605,6 @@ static void setup_medium(struct floppy_state *fs)
- 		fs->total_secs = g->size;
- 		fs->secpercyl = g->head * g->sect;
- 		fs->secpertrack = g->sect;
--		fs->track = 0;
- 	} else {
- 		fs->disk_in = 0;
- 	}
-@@ -760,24 +754,33 @@ static const struct block_device_operations floppy_fops = {
- 	.check_events	 = floppy_check_events,
- };
- 
--static int swim_add_floppy(struct swim_priv *swd, enum drive_location location)
-+static void swim_add_floppy(struct swim_priv *swd, enum drive_location location)
+diff --git a/sound/soc/mediatek/mt8188/mt8188-afe-clk.c b/sound/soc/mediatek/mt8188/mt8188-afe-clk.c
+index 516b9b4ee0339..94f21cb15d23e 100644
+--- a/sound/soc/mediatek/mt8188/mt8188-afe-clk.c
++++ b/sound/soc/mediatek/mt8188/mt8188-afe-clk.c
+@@ -589,22 +589,47 @@ static int mt8188_afe_disable_top_cg(struct mtk_base_afe *afe, unsigned int cg_t
+ int mt8188_afe_enable_reg_rw_clk(struct mtk_base_afe *afe)
  {
- 	struct floppy_state *fs = &swd->unit[swd->floppy_count];
- 	struct swim __iomem *base = swd->base;
+ 	struct mt8188_afe_private *afe_priv = afe->platform_priv;
+-
++	int ret;
+ 	/* bus clock for AFE external access, like DRAM */
+-	mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_TOP_AUDIO_LOCAL_BUS_SEL]);
++	ret = mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_TOP_AUDIO_LOCAL_BUS_SEL]);
++	if (ret)
++		goto err_local_bus;
  
--	fs->location = location;
-+	swim_drive(base, location);
-+	if (!swim_readbit(base, DRIVE_PRESENT) ||
-+	    swim_readbit(base, ONEMEG_DRIVE))
-+		goto out;
-+	if (swim_readbit(base, DISK_IN))
-+		swim_motor(base, ON);
-+	if (swim_track00(base))
-+		goto out;
+ 	/* bus clock for AFE internal access, like AFE SRAM */
+-	mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_TOP_AUD_INTBUS_SEL]);
++	ret = mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_TOP_AUD_INTBUS_SEL]);
++	if (ret)
++		goto err_intbus;
  
--	swim_motor(base, OFF);
-+	fs->location = location;
+ 	/* audio 26m clock source */
+-	mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_ADSP_AUDIO_26M]);
++	ret = mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_ADSP_AUDIO_26M]);
++	if (ret)
++		goto err_26m;
  
- 	fs->type = HD_MEDIA;
- 	fs->head_number = 2;
+ 	/* AFE hw clock */
+-	mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_AFE]);
+-	mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_A1SYS_HP]);
+-	mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_A1SYS]);
++	ret = mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_AFE]);
++	if (ret)
++		goto err_afe;
++	ret = mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_A1SYS_HP]);
++	if (ret)
++		goto err_a1sys_hp;
++	ret = mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_A1SYS]);
++	if (ret)
++		goto err_a1sys;
  
- 	fs->ref_count = 0;
- 	fs->ejected = 1;
-+	fs->track = 0;
- 
- 	swd->floppy_count++;
- 
--	return 0;
-+out:
-+	swim_motor(base, OFF);
+ 	return 0;
++
++err_a1sys:
++	mt8188_afe_disable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_A1SYS_HP]);
++err_a1sys_hp:
++	mt8188_afe_disable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_AFE]);
++err_afe:
++	mt8188_afe_disable_clk(afe, afe_priv->clk[MT8188_CLK_ADSP_AUDIO_26M]);
++err_26m:
++	mt8188_afe_disable_clk(afe, afe_priv->clk[MT8188_CLK_TOP_AUD_INTBUS_SEL]);
++err_intbus:
++	mt8188_afe_disable_clk(afe, afe_priv->clk[MT8188_CLK_TOP_AUDIO_LOCAL_BUS_SEL]);
++err_local_bus:
++	return ret;
  }
  
- static const struct blk_mq_ops swim_mq_ops = {
-@@ -819,14 +822,8 @@ static int swim_floppy_init(struct swim_priv *swd)
+ int mt8188_afe_disable_reg_rw_clk(struct mtk_base_afe *afe)
+@@ -640,7 +665,13 @@ static int mt8188_afe_enable_a1sys(struct mtk_base_afe *afe)
+ 	if (ret)
+ 		return ret;
  
- 	/* scan floppy drives */
+-	return mt8188_afe_enable_top_cg(afe, MT8188_TOP_CG_A1SYS_TIMING);
++	ret = mt8188_afe_enable_top_cg(afe, MT8188_TOP_CG_A1SYS_TIMING);
++	if (ret) {
++		mt8188_afe_disable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_A1SYS]);
++		return ret;
++	}
++
++	return 0;
+ }
  
--	swim_drive(base, INTERNAL_DRIVE);
--	if (swim_readbit(base, DRIVE_PRESENT) &&
--	    !swim_readbit(base, ONEMEG_DRIVE))
--		swim_add_floppy(swd, INTERNAL_DRIVE);
--	swim_drive(base, EXTERNAL_DRIVE);
--	if (swim_readbit(base, DRIVE_PRESENT) &&
--	    !swim_readbit(base, ONEMEG_DRIVE))
--		swim_add_floppy(swd, EXTERNAL_DRIVE);
-+	swim_add_floppy(swd, INTERNAL_DRIVE);
-+	swim_add_floppy(swd, EXTERNAL_DRIVE);
- 	swim_drive(base, NO_DRIVE);
+ static int mt8188_afe_disable_a1sys(struct mtk_base_afe *afe)
+@@ -661,7 +692,13 @@ static int mt8188_afe_enable_a2sys(struct mtk_base_afe *afe)
+ 	if (ret)
+ 		return ret;
  
- 	/* register floppy drives */
+-	return mt8188_afe_enable_top_cg(afe, MT8188_TOP_CG_A2SYS_TIMING);
++	ret = mt8188_afe_enable_top_cg(afe, MT8188_TOP_CG_A2SYS_TIMING);
++	if (ret) {
++		mt8188_afe_disable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_A2SYS]);
++		return ret;
++	}
++
++	return 0;
+ }
+ 
+ static int mt8188_afe_disable_a2sys(struct mtk_base_afe *afe)
+@@ -749,8 +786,18 @@ int mt8188_apll2_disable(struct mtk_base_afe *afe)
+ 
+ int mt8188_afe_enable_main_clock(struct mtk_base_afe *afe)
+ {
+-	mt8188_afe_enable_top_cg(afe, MT8188_TOP_CG_26M_TIMING);
+-	mt8188_afe_enable_afe_on(afe);
++	int ret;
++
++	ret = mt8188_afe_enable_top_cg(afe, MT8188_TOP_CG_26M_TIMING);
++	if (ret)
++		return ret;
++
++	ret = mt8188_afe_enable_afe_on(afe);
++	if (ret) {
++		mt8188_afe_disable_top_cg(afe, MT8188_TOP_CG_26M_TIMING);
++		return ret;
++	}
++
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
