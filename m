@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033835;
-	b=y4ntFMleA52MY1Z/DdMVCe226DTsO/7zh7/GfKVpGKGkVFCPtDrO/+10j66BU0j1nGxF
-	 QMzNOYE4VP/JhQeHMwb+jfOnEOVCLzeagUrusgDgzQfbHZe3CqarULgU3vKd3WY2Dqgz1
-	 OBNRqfPISEOC4uCwwky8ffXOZlMEdCxPAJnxilRs/1FaQQltE/OgyI5co7x1YrfWYfKNp
-	 fOD9o7inQQ+DX3t6XHzV1X2Vdurnn4cSod2RkU9RgOsqVtr+3DSlUWE5S+OB3UkBBrPnN
-	 Lt2Rzi19v9lluveLYBLqcpqxSI2YVOmjxpPlckz2tZFM2f7XQQ7M5OTmUW50y/90/6w==
+	t=1795033837;
+	b=bMp1ztKZ0os3qiQqS0GfK1BnDCXdGTrUHmO2jkuq5hSV/2d7oEB0X/YnZPFfRuzo0vnn
+	 3ZXdo/RoQ7HhHg2Jm7+yQwXW7k6/OyJuIrJWXaEQhVyIf29nNqTo6dBdpEghwcb0NmwE+
+	 6TFlWqhO7lc9WzyhiqRovq2k8NCiaNO14/cbsf0UuzezIfuWqW+YL5aGq19CAMmMin6Dm
+	 icZAB2KjzeWgxJrHS2BstCG/i/ynVLw84/oypfRDgHFj7lZvu01aIXwTSUt+uTQQgX59w
+	 Z3XW4GjBy11/bNsOxlSCFjsoNs6nHUG7Vmt+Wea3yq2KUocu+Af8McC5ibqNFDTtONg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033835;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033837;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8ppGFeM4qqKxy6Nh1rzdCB0fLO3nLl74zikaOOgugVY=;
-	b=mFeYINkRt4IILX9vEZeKEQQq9uIuM65MquCAZCxihZmkJaPvqmI2yf89PzdPMjMeMfza
-	 OiI1mv18YXwNpLa0s+OzSkASKLus0vVqeBFfObAFe34aYCqSMQw/UZgKQueTg59JBeXqR
-	 0dRZhDqnJTQ0EqkkXSLAVTsq+FABJn8VkxrbDfX9FRC8bnv010Twf1hxuAN8aIVKfYivy
-	 3c+9furV2ZjVfJFjf/Nwu3Cn8xq3jQK9e4/sS3/CdyyDY5Q20/MdCID3/6POBpu8lW3ol
-	 V7tZT6JwWcVZds5P8pn3nrFYc9o5Gl1xHivQJtJ4u8X40cHZyF8ot61iuWQ8oU12EFA==
+	bh=1/DOsqVwmCDR6KXrUNxNv/Z/VHm9g/xyh5K1Jr4nyMY=;
+	b=0nyD0CrvQii7ptyt8HLod/IQk7TLlk8bekibEontNBmmxbMX87QAJLj4mjrqjE3DoQ9P
+	 sUvsyoG2+Q27EroJaecK1X+JmfJjBSwSycObhCkDQWGl5SkO7svJJjS87pzBr4lpobmRA
+	 rsaALEW55ip43C7kxVxPIlow2xdnqlaTaFb3PkHG4UXgFxrmVmXcyPOADx7YiNDJLL/C1
+	 nAEZZAAFXwujUnYH5UxNE3VzWnnEn4wrmUSL918kUO+H1N/s+8sURIEdQPY2FiCualoIb
+	 +72lS/qPLPqPgNtHYacAsoU06iRDEwD8BVN1ILvTR4sWblxGwwdjca36dbMvvRhzsvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pS0DuWOv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gtt9eY4K;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9EFA606A32F;
-	Wed, 18 Nov 2026 20:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F9B606A31C;
+	Wed, 18 Nov 2026 20:30:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pS0DuWOv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6151F000C4;
-	Wed, 18 Nov 2026 20:30:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gtt9eY4K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A586D1F000C4;
+	Wed, 18 Nov 2026 20:30:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033834;
-	bh=8ppGFeM4qqKxy6Nh1rzdCB0fLO3nLl74zikaOOgugVY=;
+	s=korg; t=1795033837;
+	bh=1/DOsqVwmCDR6KXrUNxNv/Z/VHm9g/xyh5K1Jr4nyMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pS0DuWOvwYyDc0LsfEemQDbF5jked4f58iRR1doSLKRzXOWxMd4jTr5zmEFcDtGuE
-	 5h1pv9qyNVC6lVrPIxpC00fNm/BRlkNg57Dfm/bTzWYkqbu6Gv7YCrKTv+S4MDnpTh
-	 E5y/Rlc+O/rYYiCE6arl5blSeQrJFJ0oDOrNZzxU=
+	b=Gtt9eY4KrPEpDyAy/W4XzYWy+j/APunLynAdDV7pu8pqbuBIRZCLMdLgd9kDeF35R
+	 LpB0yDAU52bDbLn36lMtLudTY1bZ5jKTWaYDogq/tJLOOhrcT+S4S6muLmRF+sQVnE
+	 zonxQ3pBO/KbqH2cL7Susc2vLRhqS+rNCrMaovF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas Martins Alves <lucas.alves@lumal21.com.br>,
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
+	Pu Lehui <pulehui@huawei.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0118/3318] usb: musb: host: clear stale RX interrupt on three-strikes error
-Date: Wed, 18 Nov 2026 15:12:20 +0100
-Message-ID: <20261118150317.854650241@linuxfoundation.org>
+Subject: [PATCH 6.6 0154/3318] riscv, bpf: Add support for BPF_SDIV and BPF_SMOD in RV32 JIT
+Date: Wed, 18 Nov 2026 15:12:56 +0100
+Message-ID: <20261118150319.158495508@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,60 +69,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lucas Martins Alves <lucas.alves@lumal21.com.br>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-[ Upstream commit 3a3a48487344a653f46a4aadc9ba296386eb3541 ]
+[ Upstream commit 2e0fa2389c50fd3a69bb738efa74e127b7516938 ]
 
-Unplugging a busy USB Ethernet adapter can leave a stale RX interrupt
-pending while the host handles MUSB_RXCSR_H_ERROR. On AM335x/DSPS
-platforms this can retrigger the same three-strikes error before the
-disconnect path completes, flooding the log and potentially leaving the
-host port stuck until reboot.
+The current rv32 bpf jit compiler incorrectly treats BPF_SDIV and
+BPF_SMOD as unsigned operations. The BPF instruction set allows
+signed division and modulo by reusing the BPF_DIV and BPF_MOD opcodes
+with the instruction offset set to 1.
 
-Clear the pending endpoint RX interrupt when aborting the transfer so
-the error storm is broken, and rate limit the error message to avoid
-spamming the log while the fault path completes.
+Update the emit_alu_r32() function to accept an 'is_sdiv' variable and
+emit the correct div and rem instructions when the offset is 1.
 
-Signed-off-by: Lucas Martins Alves <lucas.alves@lumal21.com.br>
-Link: https://patch.msgid.link/20260714134941.18508-1-lucas.alves@lumal21.com.br
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Before this patch:
+[   44.161771] test_bpf: #165 ALU_SDIV_X: -6 / 2 = -3 jited:1 ret 2147483645 != -3 (0x7ffffffd != 0xfffffffd)FAIL (1 times)
+[   44.167385] test_bpf: #166 ALU_SDIV_K: -6 / 2 = -3 jited:1 ret 2147483645 != -3 (0x7ffffffd != 0xfffffffd)FAIL (1 times)
+[   44.171053] test_bpf: #169 ALU_SMOD_X: -7 % 2 = -1 jited:1 ret 1 != -1 (0x1 != 0xffffffff)FAIL (1 times)
+[   44.172081] test_bpf: #170 ALU_SMOD_K: -7 % 2 = -1 jited:1 ret 1 != -1 (0x1 != 0xffffffff)FAIL (1 times)
+
+After this patch:
+[   16.002192] test_bpf: #165 ALU_SDIV_X: -6 / 2 = -3 jited:1 95 PASS
+[   16.002983] test_bpf: #166 ALU_SDIV_K: -6 / 2 = -3 jited:1 1059 PASS
+[   16.017167] test_bpf: #169 ALU_SMOD_X: -7 % 2 = -1 jited:1 136 PASS
+[   16.023002] test_bpf: #170 ALU_SMOD_K: -7 % 2 = -1 jited:1 109 PASS
+
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Reviewed-by: Pu Lehui <pulehui@huawei.com>
+Link: https://lore.kernel.org/bpf/20260714002451.4091139-2-visitorckw@gmail.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/musb/musb_host.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ arch/riscv/net/bpf_jit_comp32.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/usb/musb/musb_host.c b/drivers/usb/musb/musb_host.c
-index bc45077811679..96fbd7baf8e84 100644
---- a/drivers/usb/musb/musb_host.c
-+++ b/drivers/usb/musb/musb_host.c
-@@ -1774,7 +1774,8 @@ void musb_host_rx(struct musb *musb, u8 epnum)
- 		status = -EPIPE;
+diff --git a/arch/riscv/net/bpf_jit_comp32.c b/arch/riscv/net/bpf_jit_comp32.c
+index 529a83b85c1c9..cfe6814baa49c 100644
+--- a/arch/riscv/net/bpf_jit_comp32.c
++++ b/arch/riscv/net/bpf_jit_comp32.c
+@@ -509,12 +509,15 @@ static void emit_alu_r64(const s8 *dst, const s8 *src,
+ }
  
- 	} else if (rx_csr & MUSB_RXCSR_H_ERROR) {
--		dev_err(musb->controller, "ep%d RX three-strikes error", epnum);
-+		dev_err_ratelimited(musb->controller,
-+				    "ep%d RX three-strikes error\n", epnum);
+ static void emit_alu_r32(const s8 *dst, const s8 *src,
+-			 struct rv_jit_context *ctx, const u8 op)
++			 struct rv_jit_context *ctx,
++			 const struct bpf_insn *insn)
+ {
+ 	const s8 *tmp1 = bpf2rv32[TMP_REG_1];
+ 	const s8 *tmp2 = bpf2rv32[TMP_REG_2];
+ 	const s8 *rd = bpf_get_reg32(dst, tmp1, ctx);
+ 	const s8 *rs = bpf_get_reg32(src, tmp2, ctx);
++	u8 op = BPF_OP(insn->code);
++	bool is_signed = insn->off == 1;
  
- 		/*
- 		 * The three-strikes error could only happen when the USB
-@@ -1788,6 +1789,17 @@ void musb_host_rx(struct musb *musb, u8 epnum)
- 		rx_csr &= ~MUSB_RXCSR_H_ERROR;
- 		musb_writew(epio, MUSB_RXCSR, rx_csr);
+ 	switch (op) {
+ 	case BPF_MOV:
+@@ -539,10 +542,12 @@ static void emit_alu_r32(const s8 *dst, const s8 *src,
+ 		emit(rv_mul(lo(rd), lo(rd), lo(rs)), ctx);
+ 		break;
+ 	case BPF_DIV:
+-		emit(rv_divu(lo(rd), lo(rd), lo(rs)), ctx);
++		emit(is_signed ? rv_div(lo(rd), lo(rd), lo(rs)) :
++				 rv_divu(lo(rd), lo(rd), lo(rs)), ctx);
+ 		break;
+ 	case BPF_MOD:
+-		emit(rv_remu(lo(rd), lo(rd), lo(rs)), ctx);
++		emit(is_signed ? rv_rem(lo(rd), lo(rd), lo(rs)) :
++				 rv_remu(lo(rd), lo(rd), lo(rs)), ctx);
+ 		break;
+ 	case BPF_LSH:
+ 		emit(rv_sll(lo(rd), lo(rd), lo(rs)), ctx);
+@@ -1042,7 +1047,7 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
+ 			emit_imm32(tmp2, imm, ctx);
+ 			src = tmp2;
+ 		}
+-		emit_alu_r32(dst, src, ctx, BPF_OP(code));
++		emit_alu_r32(dst, src, ctx, insn);
+ 		break;
  
-+		/*
-+		 * Unplugging a USB-Ethernet adapter while it is busy can make
-+		 * the controller keep re-asserting the three-strikes error for
-+		 * this endpoint before the disconnect is processed. That floods
-+		 * the log and can wedge the host port until reboot. Drop the
-+		 * stale pending RX interrupt on platforms that support it (e.g.
-+		 * AM335x/DSPS) to break the storm; the transfer is still
-+		 * aborted below via the fault path.
-+		 */
-+		musb_platform_clear_ep_rxintr(musb, epnum);
-+
- 	} else if (rx_csr & MUSB_RXCSR_DATAERROR) {
+ 	case BPF_ALU | BPF_MOV | BPF_K:
+@@ -1066,7 +1071,7 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
+ 		 * src is ignored---choose tmp2 as a dummy register since it
+ 		 * is not on the stack.
+ 		 */
+-		emit_alu_r32(dst, tmp2, ctx, BPF_OP(code));
++		emit_alu_r32(dst, tmp2, ctx, insn);
+ 		break;
  
- 		if (USB_ENDPOINT_XFER_ISOC != qh->type) {
+ 	case BPF_ALU | BPF_END | BPF_FROM_LE:
 -- 
 2.53.0
 
