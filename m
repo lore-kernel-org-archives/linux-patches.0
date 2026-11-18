@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028420;
-	b=ih408/vi13HCU+1y6FdEo/tGKd8rcbxjzVY0Awsd3btc3HGirI+ufm9wD3O04HT/xvIc
-	 rxRnIIH3HFby1lxZvPHD5GDdpCcrv472EykKisXKq//4WBrG3Z7fi8UKSlx8XZm9WxEpX
-	 hdAB+MKPw+o/WyZ/KcZ+zlSlACDrj1ay8yHJOMWe7Gam56goDjBGD/SsCJ0vpqcISU8GQ
-	 DZJ4I0uHMpLL6h2QCO4fNmr6eSE68/A2pUytgHj4Dt5WYdueaSokQMbHpAP3BTiEQY9fq
-	 0RujLUMqOH/l7d90LIdXeEgdrMsNz7mBF5MvdEC+1kG21KwUUj06DgvQRuyZ9OS4Gnw==
+	t=1795028423;
+	b=z0OIjSfGtxofwH1J7ZNQJ/2PYisnrox/yHcZYsuv5Ydj5H8S8kGJALRdjjCn0MMJopFG
+	 kySkZYraYs9ZmjG1wJM1VuDJMnLVkmcEP3qmheDrMgV08kinYNq84CTe25/cJI1ZpS1L2
+	 hQwgHNJzwXyFuIgbZwA34f/FFntrgvHYXlHdk1nxSulrYF+FyHfzje4hfhpC0V/esvxui
+	 HuBhIzt4B+jzSSXW2tM+rl7drAfsfLVFMLs833N7O1MfUAkCA3ChIF+BkyMCQvTz0WqXY
+	 cmFcs+uiYIwstS8Rn0OotErPNB1VBc+fdIx+6Lxl7R5oqjvz5mZVfwDuIv0P/rRKr3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028420;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028423;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=xI4PI9SGxIMBoTQsaOILlIsL6WF75oRnG7Pqn7x6xVY=;
-	b=QPfsGdtpnubMOMQw/cl8bUTOe/i1k28ux8yHwJlUaRxXsgR2y3eKqtzM3e/v+zz1WeV/
-	 lHYh+297ruLzQjDocCn6dJrXytVPRzXMl3Kgr1K6hfSTxR7ugXHQhqnSmYb5LPrGu+Fgq
-	 dgrV46oob3omMdWKGijZnhrFXeuQvTxljOIAhmbDRynqdzHeAcdcWB9YeGIrK0u6IQ2hW
-	 xChFhQEYnj/eodVWVCaWlDt+Xq9yXxHTQQJJ2PFKZvWd50qerk4RMznRayKawOIOps8sL
-	 b830q/q039Q1YWN8P8sNGdXbtX9Lj517OqwC9MwVoviGZ2/j3WoIDTW70miHcxLhEWQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=ZXlZNPuRKKAGRBFS3UCQrviIC++51yUhQj5p1mz4e98=;
+	b=VOJfDlwrz/MyAdptaE+BI4UNC7Z+1K5iFUuWn07Ar2utvC2327wo4vJxYivRYDtPdQy9
+	 9D1Wa2Daa7c0IHknSCnggWmSOIG5ZcP0LoByeFlwTnJOHEcDuBwWjL3SBXOa294dehqWn
+	 2FQRn2PAqNlHSh6nCqX59srptlMLeBKL0ws8jvh+8FQeLXwisL9Vld2abT+WR5VtyDMUa
+	 SXn0IBhFoEGp2EoCPUohsU8+W4xdO91Jsm9TCyNSu79DpWPYtTJ/k2dQW8XLcuedqZtbs
+	 mbqdZcQWEGdHBNasY79FtOfiwvZvrrhI/WYrfVqIuB712r5/3GBF4DAmaph0IqBT4nw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FTXX1jiy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="CWrY/HSp";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967E5606A337;
-	Wed, 18 Nov 2026 19:00:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C0CD606A337;
+	Wed, 18 Nov 2026 19:00:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FTXX1jiy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB32F1F000C9;
-	Wed, 18 Nov 2026 19:00:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CWrY/HSp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B21501F000C9;
+	Wed, 18 Nov 2026 19:00:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028420;
-	bh=xI4PI9SGxIMBoTQsaOILlIsL6WF75oRnG7Pqn7x6xVY=;
+	s=korg; t=1795028423;
+	bh=ZXlZNPuRKKAGRBFS3UCQrviIC++51yUhQj5p1mz4e98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FTXX1jiyMr0xwolsfigCMd/o9AAYS/8KV2x6tjnYaJAXdOPHLjHIV6e1B9XFLXF7T
-	 SgWRS3OnbkfJ7Ik0Gdqp6dfiD6EuAsrxW2VRRUB7ue5nOPpAN7biqXMShGO5nevlx3
-	 I8LoFPMufgeWjr/LIVqnHcXCq04XVoRx1elVLvac=
+	b=CWrY/HSpCEJcxzjyC+G12ht4MP53Ee7ODKNmh8uqMZduIEBolVEmVNsjeu1sMNLeo
+	 LHF3e3kCDtd+vAhIuntpeVNAuhLzzG+RoVPSWrWgD8DzcBfktDyAIUTZz4Ay+UZ7b5
+	 URI5FGSB8+k6HpsUx2z5wZ8Snn7+23QUnPVp5kcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Tejun Heo <tj@kernel.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2087/2151] block/blk-iocost: Split ioc_rqos_throttle()
-Date: Wed, 18 Nov 2026 16:03:42 +0100
-Message-ID: <20261118150237.729227352@linuxfoundation.org>
+Subject: [PATCH 6.18 2132/2151] PCI/sysfs: Decouple acpi_index from the optional device name element
+Date: Wed, 18 Nov 2026 16:04:27 +0100
+Message-ID: <20261118150239.344612451@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -66,226 +62,124 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Krzysztof Wilczyński <kwilczynski@kernel.org>
 
-[ Upstream commit 1ff85a387947890938c05cfe22041dfeef3098dd ]
+[ Upstream commit 337bdf853101a0ee66eadf668f0fef21f8276b52 ]
 
-Prepare for inlining iocg_lock() and iocg_unlock() by moving the code
-between these two calls into a new function. No functionality has been
-changed.
+The "_DSM for Naming a PCI or PCI Express Device Under Operating Systems"
+(PCI Firmware r3.3, sec 4.6.7) returns a package of two elements:
 
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Cc: Tejun Heo <tj@kernel.org>
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Link: https://patch.msgid.link/a6d3ed953cef6669d23a80923bf46600733cbdae.1780682325.git.bvanassche@acm.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 0150554a3f38 ("blk-iocost: publish hweights as one atomic value")
+  1) Instance number (mandatory Integer)
+  2) String name (optional String, null string if not populated)
+
+These are exposed as sysfs 'acpi_index' and 'label'. Previously, if
+the name was malformed, reads of 'acpi_index' failed unnecessarily.
+
+Validate each element only for the attribute that exports it.  So
+"acpi_index" now depends on the instance number alone, and "label" reads
+fail with -EIO when the name element is neither a string nor a buffer.  The
+package elements pointer is read only after the object type has been
+checked.
+
+On platforms with a valid instance number and a malformed name element the
+"acpi_index" attribute starts returning data.  Because udev derives the
+onboard interface name from "acpi_index", an interface on such a platform
+may be renamed once, on the first boot after this change.  That is the
+attribute assuming the value the firmware always provided.
+
+Link: https://github.com/pciutils/pciutils/issues/175
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+[bhelgaas: commit log]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260814070522.2327975-3-kwilczynski@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-iocost.c | 163 ++++++++++++++++++++++++++-------------------
- 1 file changed, 94 insertions(+), 69 deletions(-)
+ drivers/pci/pci-label.c | 53 +++++++++++++++++++++++++----------------
+ 1 file changed, 33 insertions(+), 20 deletions(-)
 
-diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index 6df4d84bff842..6f9611c9314e4 100644
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -2609,6 +2609,88 @@ static u64 calc_size_vtime_cost(struct request *rq, struct ioc *ioc)
- 	return cost;
- }
- 
-+enum over_budget_action {
-+	action_retry,
-+	action_commit,
-+	action_wait,
-+	action_return,
-+};
-+
-+static enum over_budget_action
-+iocg_handle_over_budget(struct rq_qos *rqos, struct ioc_gq *iocg,
-+			struct bio *bio, struct ioc_now *now,
-+			struct iocg_wait *wait, bool use_debt, bool ioc_locked,
-+			u64 abs_cost, u64 cost)
-+{
-+	lockdep_assert_held(&iocg->waitq.lock);
-+
-+	/*
-+	 * @iocg must stay activated for debt and waitq handling. Deactivation
-+	 * is synchronized against both ioc->lock and waitq.lock and we won't
-+	 * get deactivated as long as we're waiting or have debt, so we're good
-+	 * if we're activated here. In the unlikely cases that we aren't, just
-+	 * issue the IO.
-+	 */
-+	if (unlikely(list_empty(&iocg->active_list)))
-+		return action_commit;
-+
-+	/*
-+	 * We're over budget. If @bio has to be issued regardless, remember
-+	 * the abs_cost instead of advancing vtime. iocg_kick_waitq() will pay
-+	 * off the debt before waking more IOs.
-+	 *
-+	 * This way, the debt is continuously paid off each period with the
-+	 * actual budget available to the cgroup. If we just wound vtime, we
-+	 * would incorrectly use the current hw_inuse for the entire amount
-+	 * which, for example, can lead to the cgroup staying blocked for a
-+	 * long time even with substantially raised hw_inuse.
-+	 *
-+	 * An iocg with vdebt should stay online so that the timer can keep
-+	 * deducting its vdebt and [de]activate use_delay mechanism
-+	 * accordingly. We don't want to race against the timer trying to
-+	 * clear them and leave @iocg inactive w/ dangling use_delay heavily
-+	 * penalizing the cgroup and its descendants.
-+	 */
-+	if (use_debt) {
-+		iocg_incur_debt(iocg, abs_cost, now);
-+		if (iocg_kick_delay(iocg, now))
-+			blkcg_schedule_throttle(rqos->disk,
-+						(bio->bi_opf & REQ_SWAP) ==
-+							REQ_SWAP);
-+		return action_return;
-+	}
-+
-+	/* guarantee that iocgs w/ waiters have maximum inuse */
-+	if (!iocg->abs_vdebt && iocg->inuse != iocg->active) {
-+		if (!ioc_locked)
-+			return action_retry;
-+		lockdep_assert_held(&iocg->ioc->lock);
-+		propagate_weights(iocg, iocg->active, iocg->active, true, now);
-+	}
-+
-+	/*
-+	 * Append self to the waitq and schedule the wakeup timer if we're
-+	 * the first waiter.  The timer duration is calculated based on the
-+	 * current vrate.  vtime and hweight changes can make it too short
-+	 * or too long.  Each wait entry records the absolute cost it's
-+	 * waiting for to allow re-evaluation using a custom wait entry.
-+	 *
-+	 * If too short, the timer simply reschedules itself.  If too long,
-+	 * the period timer will notice and trigger wakeups.
-+	 *
-+	 * All waiters are on iocg->waitq and the wait states are
-+	 * synchronized using waitq.lock.
-+	 */
-+	init_wait_func(&wait->wait, iocg_wake_fn);
-+	wait->bio = bio;
-+	wait->abs_cost = abs_cost;
-+	wait->committed = false; /* will be set true by waker */
-+
-+	__add_wait_queue_entry_tail(&iocg->waitq, &wait->wait);
-+	iocg_kick_waitq(iocg, ioc_locked, now);
-+	return action_wait;
-+}
-+
- static void ioc_rqos_throttle(struct rq_qos *rqos, struct bio *bio)
+diff --git a/drivers/pci/pci-label.c b/drivers/pci/pci-label.c
+index f81248a11a18e..08c461f1142d7 100644
+--- a/drivers/pci/pci-label.c
++++ b/drivers/pci/pci-label.c
+@@ -157,7 +157,7 @@ static int dsm_get_label(struct device *dev, char *buf,
  {
- 	struct blkcg_gq *blkg = bio->bi_blkg;
-@@ -2618,6 +2700,7 @@ static void ioc_rqos_throttle(struct rq_qos *rqos, struct bio *bio)
- 	struct iocg_wait wait;
- 	u64 abs_cost, cost, vtime;
- 	bool use_debt, ioc_locked;
-+	enum over_budget_action action;
- 	unsigned long flags;
+ 	acpi_handle handle = ACPI_HANDLE(dev);
+ 	union acpi_object *obj, *tmp;
+-	int len = 0;
++	int len;
  
- 	/* bypass IOs if disabled, still initializing, or for root cgroup */
-@@ -2658,80 +2741,22 @@ static void ioc_rqos_throttle(struct rq_qos *rqos, struct bio *bio)
- 	ioc_locked = use_debt || READ_ONCE(iocg->abs_vdebt);
- retry_lock:
- 	iocg_lock(iocg, ioc_locked, &flags);
--
--	/*
--	 * @iocg must stay activated for debt and waitq handling. Deactivation
--	 * is synchronized against both ioc->lock and waitq.lock and we won't
--	 * get deactivated as long as we're waiting or has debt, so we're good
--	 * if we're activated here. In the unlikely cases that we aren't, just
--	 * issue the IO.
--	 */
--	if (unlikely(list_empty(&iocg->active_list))) {
--		iocg_unlock(iocg, ioc_locked, &flags);
-+	action = iocg_handle_over_budget(rqos, iocg, bio, &now, &wait, use_debt,
-+					 ioc_locked, abs_cost, cost);
-+	iocg_unlock(iocg, ioc_locked, &flags);
-+	switch (action) {
-+	case action_retry:
-+		ioc_locked = true;
-+		goto retry_lock;
-+	case action_commit:
- 		iocg_commit_bio(iocg, bio, abs_cost, cost);
- 		return;
--	}
--
--	/*
--	 * We're over budget. If @bio has to be issued regardless, remember
--	 * the abs_cost instead of advancing vtime. iocg_kick_waitq() will pay
--	 * off the debt before waking more IOs.
--	 *
--	 * This way, the debt is continuously paid off each period with the
--	 * actual budget available to the cgroup. If we just wound vtime, we
--	 * would incorrectly use the current hw_inuse for the entire amount
--	 * which, for example, can lead to the cgroup staying blocked for a
--	 * long time even with substantially raised hw_inuse.
--	 *
--	 * An iocg with vdebt should stay online so that the timer can keep
--	 * deducting its vdebt and [de]activate use_delay mechanism
--	 * accordingly. We don't want to race against the timer trying to
--	 * clear them and leave @iocg inactive w/ dangling use_delay heavily
--	 * penalizing the cgroup and its descendants.
--	 */
--	if (use_debt) {
--		iocg_incur_debt(iocg, abs_cost, &now);
--		if (iocg_kick_delay(iocg, &now))
--			blkcg_schedule_throttle(rqos->disk,
--					(bio->bi_opf & REQ_SWAP) == REQ_SWAP);
--		iocg_unlock(iocg, ioc_locked, &flags);
-+	case action_return:
- 		return;
-+	case action_wait:
-+		break;
+ 	if (!handle)
+ 		return -ENODEV;
+@@ -167,30 +167,43 @@ static int dsm_get_label(struct device *dev, char *buf,
+ 	if (!obj)
+ 		return -EIO;
+ 
++	if (obj->type != ACPI_TYPE_PACKAGE || obj->package.count != 2) {
++		len = -EIO;
++		goto out;
++	}
++
+ 	tmp = obj->package.elements;
+-	if (obj->type == ACPI_TYPE_PACKAGE && obj->package.count == 2 &&
+-	    tmp[0].type == ACPI_TYPE_INTEGER &&
+-	    (tmp[1].type == ACPI_TYPE_STRING ||
+-	     tmp[1].type == ACPI_TYPE_BUFFER)) {
+-		/*
+-		 * The second string element is optional even when
+-		 * this _DSM is implemented; when not implemented,
+-		 * this entry must return a null string.
+-		 */
+-		if (attr == ACPI_ATTR_INDEX_SHOW) {
+-			len = sysfs_emit(buf, "%llu\n", tmp->integer.value);
+-		} else if (attr == ACPI_ATTR_LABEL_SHOW) {
+-			if (tmp[1].type == ACPI_TYPE_STRING)
+-				len = sysfs_emit(buf, "%s\n",
+-						 tmp[1].string.pointer);
+-			else if (tmp[1].type == ACPI_TYPE_BUFFER)
+-				len = dsm_label_utf16s_to_utf8s(tmp + 1, buf);
+-		}
++	if (tmp[0].type != ACPI_TYPE_INTEGER) {
++		len = -EIO;
++		goto out;
  	}
  
--	/* guarantee that iocgs w/ waiters have maximum inuse */
--	if (!iocg->abs_vdebt && iocg->inuse != iocg->active) {
--		if (!ioc_locked) {
--			iocg_unlock(iocg, false, &flags);
--			ioc_locked = true;
--			goto retry_lock;
--		}
--		propagate_weights(iocg, iocg->active, iocg->active, true,
--				  &now);
--	}
--
--	/*
--	 * Append self to the waitq and schedule the wakeup timer if we're
--	 * the first waiter.  The timer duration is calculated based on the
--	 * current vrate.  vtime and hweight changes can make it too short
--	 * or too long.  Each wait entry records the absolute cost it's
--	 * waiting for to allow re-evaluation using a custom wait entry.
--	 *
--	 * If too short, the timer simply reschedules itself.  If too long,
--	 * the period timer will notice and trigger wakeups.
--	 *
--	 * All waiters are on iocg->waitq and the wait states are
--	 * synchronized using waitq.lock.
--	 */
--	init_wait_func(&wait.wait, iocg_wake_fn);
--	wait.bio = bio;
--	wait.abs_cost = abs_cost;
--	wait.committed = false;	/* will be set true by waker */
--
--	__add_wait_queue_entry_tail(&iocg->waitq, &wait.wait);
--	iocg_kick_waitq(iocg, ioc_locked, &now);
--
--	iocg_unlock(iocg, ioc_locked, &flags);
--
- 	while (true) {
- 		set_current_state(TASK_UNINTERRUPTIBLE);
- 		if (wait.committed)
++	if (attr == ACPI_ATTR_INDEX_SHOW) {
++		len = sysfs_emit(buf, "%llu\n", tmp[0].integer.value);
++		goto out;
++	}
++
++	/*
++	 * Per PCI Firmware r3.3, sec 4.6.7, the device name is optional
++	 * even when this _DSM is implemented. When not implemented, this
++	 * entry must return a NULL string.
++	 */
++	switch (tmp[1].type) {
++	case ACPI_TYPE_STRING:
++		len = sysfs_emit(buf, "%s\n", tmp[1].string.pointer);
++		break;
++	case ACPI_TYPE_BUFFER:
++		len = dsm_label_utf16s_to_utf8s(&tmp[1], buf);
++		break;
++	default:
++		len = -EIO;
++		break;
++	}
++
++out:
+ 	ACPI_FREE(obj);
+ 
+-	return len > 0 ? len : -EIO;
++	return len;
+ }
+ 
+ static ssize_t label_show(struct device *dev, struct device_attribute *attr,
 -- 
 2.53.0
 
