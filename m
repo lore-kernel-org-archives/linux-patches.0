@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025295;
-	b=K/n111gPA1Vp/X/xK51aKk+363rRS4wjmX2aObNB00zdgWgrnC3aNn2TeLk0ee+Gm2ps
-	 z3EJiaKN6u/M5JqAueSFRa53TK7Enhjp4bKBlOpPskXr76kszwb1+weqhFfsfasLl8XXO
-	 j8VrO3JhVDzcKgN7K7LDOZSolbiJSho9b6er068PmRAlW28D0jYiV/HLDKaAQf8N6ivnu
-	 H/npE0VPqes+qPQrvSas/TnL0B2fz7RyTAuei2a7A1SvVyborH1KQdZ4Phtk+dnFIeca7
-	 9R4YcnvPUT+PqpK+W4P1HDFSXGO21XtssIKZeSvbCwINby7NOCKIeI5GDKZcIDX7ulw==
+	t=1795025298;
+	b=IsRolE5dmkNAKIwUu5yIOFZndszxODCIPugPVUUHnBm9Zh13injvVInTSilKwOnjBW+l
+	 3Zx3yM2P7IMMVWneVA+Yi7yD0bT5D/MgXTMgK3a6Mo3aitONGjJUwgWq6kzwmWyqcteaK
+	 c772Li9I726F8hOzFGqAFDTfjur2x6RswqwQaRtvxHbh+kA3vfC4iO62+4I2JHCNG3DU9
+	 K+LmaDL5h/SsA7jCm6ZfhAdcirhWtBU62+vSDIndDnEjDCZh3trj4XCBU3IXuUi6vhNRL
+	 +NwuzhMwao3fIwdYD25UTh8RJKDwfAkHovRihneo5GzZeiZQrfo0wegcGbCspIuXQ/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025295;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025298;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HIFEaThH5M7cM41ffWjEv4Ywpf6r2iKvQu+EsKIBDUY=;
-	b=aoofgY19A0WLYb9EzOzAWKu6UWUj66TkY3LvT4I2BPXhet2OC/9LthUXLAlhjAp2KXOk
-	 fTbRb9lK4iuh06ls/vUgbomXakh3dBOqaemQHqzVR/3un+uBnRUJ5cyihSUYkLeZq7qB2
-	 tUYd/lH9/vZOzdt02HVWYm8Ry96M+S9V8jvmRuvJ7hw5OdRjf/eUFmlSVHtHcM47bJlwk
-	 x52rfZsmWLbd9LJUh6GOB1c8VrwYdffTSl57mbXLcbnb9dr9VSCffw5WtmjQQxWkXD7ah
-	 nGct0XMC3Chxv9Hogb/nPTaEmxGpvNNGpllnkQ8HlDlrY/YnXM0221awnl41PS263vw==
+	bh=C5OX9D5eqtvBqmtkiEg36RBsYQJDMqb5jj28bXJYuYM=;
+	b=l8Ye8xiKi4sDU45weGStmiYQYe1VPCOQ4OhlbbjI/Nm1dVAgsTxGFHqoRtVW9naw1MV/
+	 JBfLVzH68pXhuj1JGjp5XcCFpUdHqTzx2u+rGMmxwry79CM3Hhwrqo8AyYSV4P90qT4gg
+	 r1ExMve3aHb8NF5l5y52CWgGdZVig5TEeLfp+iF5MCSI5dxSbsJRhTWNo2cqF/kS2nMmR
+	 16mUo0nOgASdNo4IhgqDrWg+FAEloWVkoxXjMwnbYeDUK6F41XvBeZSvMmcRCgI7jkWEA
+	 NdsJI6KA5C0ej5uwLCIYYo+bXt6jJtIipDt7JfrMslEnOmXByrRejSHd5mqz4oBTPEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AhPz7zl9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nXD4hML4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C307A60A262B;
-	Wed, 18 Nov 2026 18:08:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CCC9606A320;
+	Wed, 18 Nov 2026 18:08:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AhPz7zl9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D4311F000C7;
-	Wed, 18 Nov 2026 18:08:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nXD4hML4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F32271F000C4;
+	Wed, 18 Nov 2026 18:08:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025295;
-	bh=HIFEaThH5M7cM41ffWjEv4Ywpf6r2iKvQu+EsKIBDUY=;
+	s=korg; t=1795025298;
+	bh=C5OX9D5eqtvBqmtkiEg36RBsYQJDMqb5jj28bXJYuYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AhPz7zl9b5kHdJ/L+0FYC1CdL7dw1QxZbyU0l9ba5J23khC4BoGaB4UeRcZqDa0oD
-	 2iP+a9tuu6WBz9vcMMD3e1UmysGkTkrkcn0wDzInO2u/BHAcidFCb3M88BxLAoQ6Hi
-	 N273RWuPZ9o31k2YuPi9jM2CiDh4YIH/FoQ/Rf08=
+	b=nXD4hML4qfD92yxJv9W5sEq+qblSO+wqveD9TyXqUBhXqdT1E/W656jF7WF6H9f/F
+	 utgCmsWqQ7o17TJNkPdXahvwrdzAMfb+qDcNP8FzYJ/kkpfky/B/VE2IgXow/jeq3d
+	 y713l1rud8R/u4nWU2cwHQiLMY12J7mt9TlofHVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sang-Hoon Choi <csh0052@gmail.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1030/2151] md/raid5: protect big_stripe_tree lookup with RCU
-Date: Wed, 18 Nov 2026 15:46:05 +0100
-Message-ID: <20261118150159.895249456@linuxfoundation.org>
+Subject: [PATCH 6.18 1031/2151] dt-bindings: media: sun4i-a10-video-engine: Fix IOMMU count for H6
+Date: Wed, 18 Nov 2026 15:46:06 +0100
+Message-ID: <20261118150159.929321112@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,44 +71,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sang-Hoon Choi <csh0052@gmail.com>
+From: Chen-Yu Tsai <wens@kernel.org>
 
-[ Upstream commit 73b0df929494522acf9ccc8dafea4f721166965b ]
+[ Upstream commit ca9a67831805dc788407a05f276abb6b86b1174d ]
 
-big_stripe_tree is updated under tree_lock, and deleted radix-tree
-nodes are freed after an RCU grace period.  r5c_big_stripe_cached()
-used to run under an RCU read-side critical section, but that protection
-was removed together with unrelated rdev lookup protection.
+On the H6 SoC, the Video Engine has two memory ports, thus two IOMMU
+connections. The secondary one that is missing is likely used for
+reading reference frames. The newer H616 is the same. On the other
+hand, the D1 only has one memory port.
 
-The lookup can now be preempted while walking the tree, allowing a
-concurrent deletion and grace period to complete before the walk
-resumes.  Protect the lookup locally with rcu_read_lock().  Only the
-presence of the entry is used after unlocking.
+Add the missing IOMMU connection for the Video Engine.
 
-Fixes: ad8606702f26 ("md/raid5: remove rcu protection to access rdev from conf")
-Assisted-by: LLM
-Signed-off-by: Sang-Hoon Choi <csh0052@gmail.com>
-Link: https://patch.msgid.link/179070265341.12871.12495446593114993799.idr-bug-88@gmail.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Fixes: 62a8ccf3a248 ("arm64: dts: allwinner: h6: Fix Cedrus IOMMU usage")
+Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5-cache.c | 2 ++
- 1 file changed, 2 insertions(+)
+ .../allwinner,sun4i-a10-video-engine.yaml     | 21 ++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/md/raid5-cache.c b/drivers/md/raid5-cache.c
-index b3e2582a39d03..3b51e8b4425af 100644
---- a/drivers/md/raid5-cache.c
-+++ b/drivers/md/raid5-cache.c
-@@ -2970,7 +2970,9 @@ bool r5c_big_stripe_cached(struct r5conf *conf, sector_t sect)
- 		return false;
+diff --git a/Documentation/devicetree/bindings/media/allwinner,sun4i-a10-video-engine.yaml b/Documentation/devicetree/bindings/media/allwinner,sun4i-a10-video-engine.yaml
+index 01f2afa023f04..932043d7f0cc4 100644
+--- a/Documentation/devicetree/bindings/media/allwinner,sun4i-a10-video-engine.yaml
++++ b/Documentation/devicetree/bindings/media/allwinner,sun4i-a10-video-engine.yaml
+@@ -55,7 +55,10 @@ properties:
+     description: Phandle to the device SRAM
  
- 	tree_index = r5c_tree_index(conf, sect);
-+	rcu_read_lock();
- 	slot = radix_tree_lookup(&log->big_stripe_tree, tree_index);
-+	rcu_read_unlock();
- 	return slot != NULL;
- }
+   iommus:
+-    maxItems: 1
++    minItems: 1
++    items:
++      - description: VE port on IOMMU
++      - description: VE_R port on IOMMU
  
+   memory-region:
+     maxItems: 1
+@@ -82,6 +85,22 @@ required:
+   - resets
+   - allwinner,sram
+ 
++allOf:
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - allwinner,sun50i-h6-video-engine
++    then:
++      properties:
++        iommus:
++          minItems: 2
++    else:
++      properties:
++        iommus:
++          maxItems: 1
++
+ additionalProperties: false
+ 
+ examples:
 -- 
 2.53.0
 
