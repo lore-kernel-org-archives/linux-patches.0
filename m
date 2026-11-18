@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037923;
-	b=IyRvRKy9w0m3BEYzWGpXm+OlQE7pGECZsQ3rTkXvPhpSo7zyIwjCzO+GuinE1g0OwJ2t
-	 k4E7450rVmQT4rxveGpaHNEGH9FEL7tMk2lzoYC1dj+4GcIcgpmV6SV32U0Z509li2Wga
-	 ZGkdGCcSyCuczoGubTrnZrHKTTTEKjRDlperm1WDkKWwNGMm0ujCX3rr1gFLXW/v9vOjs
-	 p9XYb9480vLOCpyQNRyh25al7IPi8ZaSLtxsT6+EiJ+9izjajcLPx3T30FffsaoLGgPC4
-	 1dX2DQsSj708bTNPkD2Gr1o2rW2jJj4HCXDQyDkouAG4/vFRAZ7OSwJDzmW6J7QQ3lg==
+	t=1795037926;
+	b=o2a1ZumbxuohPiZW2/+9YTgdYCMIW1TCr25i2FV8bYL7tCR39UYWj5Z8U7RFl/u6FAR5
+	 /wVhk2P8qmQEWqPXRAs7KMzrRnxYpWm9Fe9IYWFm0sx9yp58wGQPWFlXzYeyJHkU5NOLS
+	 uJNG8rABF6JMZJ4zN9SpgC/Ac0xeDquYvFP+VrbqQsBo+Al2MVC3Ze6RBUoBHoQ7tytNS
+	 NQ9SjhVsArysjCQKPl1eV2k+TJMTuX/G/Xxhh50a8lNbV857fPQdgncvUPjJxpewO3Jnl
+	 6SsFpkdHcgK4SkLiXPtdwvMgpUAwddEtharPKDJIfvaUOS8aCalT62pcQzICTjNpmgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037923;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037926;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qGsiHJW236qmeuQz4yikX7KqVeXbL+xxcy0votZQh0k=;
-	b=WPiO+vX6VIy0HnTPggqzI88Saq4mOdd4u/3f7KgFe6NFsMco73PC2bD4hE6i4hPkvuno
-	 7f6PwhRHrvj4wIh0CeAur7+h2HGacW6Kc3zR1PScSm2+wfOqo5YV11WYTn/EctU708K1O
-	 xUI1QGg0d3hSLj1xkGlwk8yn2KhUz7uN/kpXg1QtUgDwIjOi460+uuu41IBS9qRLHbiKA
-	 bxzdrulunBRCJXXMdQ1fsUmIDf/w3LDOZ1o/nBpdlZPgnr0KfyA0rDcjFSvXck6CTjM8o
-	 AhFaYEl0EL2hVQEwLZUJXCLPNsEIf75X946yHS4NZ2Wur1TgXU6YSXeo/NCOCxCGzCg==
+	bh=B1JiFZ0TH5EJZeyaCjKjYheUzLdEafN60joIdIKMZ0o=;
+	b=RQw8XkITM0/Cudt+LVybY18MEHmCbsXgDHK801OgEzm8nZspbOoUo0nfOP5JTiP8ZdbS
+	 4K2ZdABQeP7H31xZdett1QcIMKlUfy4CIgx+DK3E7lfnD2iifWLcrTsvwFWUXE1LcmiwB
+	 o+p/tGEGjAP08fI1HSUbmlf8Um2HphmLm+Z9VhDEJxHb7eaFkZfROSf+uuQ66zvvLijjl
+	 RrOQhxhRYgLAx4M1GajlG9j9M1obPR+G6Yq8hXO2yrt99v4UmaGAYJ8e/QsHzkQl3LR7N
+	 SjT1NfLr+5SKODn+qJiKLMcT98VFd8xRdo9xHX7duJnCmY7bzPpC5F2Bu/IvqLj1PxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y4NqTexJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X1vGHiyT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C3D606A320;
-	Wed, 18 Nov 2026 21:38:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B4F606A325;
+	Wed, 18 Nov 2026 21:38:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y4NqTexJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D4DA1F000C4;
-	Wed, 18 Nov 2026 21:38:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X1vGHiyT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D2641F000C4;
+	Wed, 18 Nov 2026 21:38:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037923;
-	bh=qGsiHJW236qmeuQz4yikX7KqVeXbL+xxcy0votZQh0k=;
+	s=korg; t=1795037925;
+	bh=B1JiFZ0TH5EJZeyaCjKjYheUzLdEafN60joIdIKMZ0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y4NqTexJ8jydfmReTQ3qBabUiS3mBTqHE3hEd7+3XRxEPKUWPxs/fSop8DGF5EZWV
-	 3vZRGKX1dwEKL18pgxndsxik1pCLvEGS5DDfoSLlWFx8jkWa714BEFib6ZqjntOsEj
-	 FdrFpjFHqaY9+MXV6c7GfFkiJm9d3ZT7hZSzMOqE=
+	b=X1vGHiyTRfclNqOxaZkk7dPzRVMtvRwli3JHn/Eu28+pjuWibf+BiDG6nQjMe7Gre
+	 80Bo6cB5lRYk7oNgerIqrDPXA3eVaV8D53o1lpanhEnmzotD32MlpWiwgvXqsLTxRx
+	 PoFXEfvT4cnKTvZjhpX99rqE9yz2lIbbeX8C6DC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kaloz <kaloz@kernel.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Kyrylo Biryuk <illofspeed@gmail.com>,
+	Marco Ziliani <rylos78@gmail.com>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1558/3318] MIPS: mm: Fix the cache error vector jump for XKPHYS kernels
-Date: Wed, 18 Nov 2026 15:36:20 +0100
-Message-ID: <20261118150407.767094598@linuxfoundation.org>
+Subject: [PATCH 6.6 1567/3318] ata: libata-pmp: disable the SEMB port on Marvell 88SM9705
+Date: Wed, 18 Nov 2026 15:36:29 +0100
+Message-ID: <20261118150408.048702710@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,59 +69,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Kaloz <kaloz@kernel.org>
+From: Marco Ziliani <rylos78@gmail.com>
 
-[ Upstream commit 30b76362f80d39d80f1197c88b284d9fa7952356 ]
+[ Upstream commit 6b67cdb463b006e57f15e3fe4ea03b00f0ac9ee5 ]
 
-except_vec2_generic jumps to cache_parity_error with a j, which cannot
-leave the vector's 256MB region. An XKPHYS kernel such as IP30's, linked
-at 512MB, is outside it, so the j targets an unbacked address and its
-speculative fetch raises bus errors on unrelated fetches. Jump to the
-handler's uncached XKPHYS address instead.
+The Marvell 88SM9705 is a 1-to-5 SATA port multiplier with one
+additional SEMB (SATA Enclosure Management Bridge) port [1].  Ports
+0-4 are device ports and port 5 is the SEMB.  The number of fan-out
+ports in GSCR[2] is 6 when the SEMB is enabled and 5 when it is not,
+so on boards without the SEMB there is no link 5 and this quirk does
+nothing.  That includes the common 8-port PCIe cards that pair an
+88SE9215 with an 88SM9705, which report 5 ports.
 
-Fixes: 7505576d1c1a ("MIPS: add support for SGI Octane (IP30)")
+The SEMB port never answers SRST.  libata probes it like a device
+port, and every EH round on the PMP ends in a retry loop that lasts
+about a minute before EH gives up, then starts over:
+
+  ata19.15: Port Multiplier 1.2, 0x1b4b:0x9705 r160, 6 ports, feat 0x1/0x1f
+  ata19.05: hard resetting link
+  ata19.05: failed to resume link (SControl 0)
+  ata19.05: softreset failed (1st FIS failed)
+  ata19.05: hard resetting link
+  ...
+  ata20.05: reset failed, giving up
+
+Disk discovery waits for this, including disks on other controllers.
+
+libata.force only partly works around it.  The "disable" horkage
+only takes effect after IDENTIFY, which the SEMB link never reaches.
+"norst" on port 5 stops the retry loop, but the disks still come up
+about a minute later than with this change (see below).
+
+Treat port 5 the same way as port 4 of the Marvell 88SM4140 and mark
+the link ATA_LFLAG_DISABLED.
+
+Tested on a Synology DX1222 expansion unit (four 88SM9705 r160 behind
+a Marvell 88SE9235, passed through to a KVM guest, 6 disks), 7.4-rc1
+with and without this change, one boot each:
+
+                                    softreset  reset failed,  last disk
+                                    failed     giving up      attached
+  7.4-rc1, no libata.force          60         12             197 s
+  7.4-rc1, libata.force=N.05:norst   0          0              70 s
+  7.4-rc1 + this patch, no force     0          0              11 s
+
+The problem was first found on a Synology DX1215 with the same chain,
+where this change brought the disks up after about 20 s instead of
+about 200 s, including a disk on a separate AHCI controller.
+
+Each PMP still logs one "failed to resume link (SControl 0)" for port 5
+at probe time.
+
+Link: https://www.marvell.com/content/dam/marvell/en/public-collateral/storage/marvell-storage-88sm9705-functional-specifications-2015-06.pdf [1]
 Cc: stable@vger.kernel.org
-Signed-off-by: Imre Kaloz <kaloz@kernel.org>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Tested-by: Kyrylo Biryuk <illofspeed@gmail.com>
+Signed-off-by: Marco Ziliani <rylos78@gmail.com>
+Link: https://lore.kernel.org/r/20261107-pmp-88sm9705-v2-1-18eed983d3db@gmail.com
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/mm/cex-gen.S | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/ata/libata-pmp.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/arch/mips/mm/cex-gen.S b/arch/mips/mm/cex-gen.S
-index 45dff5cd4b8e7..b4c027b0421dc 100644
---- a/arch/mips/mm/cex-gen.S
-+++ b/arch/mips/mm/cex-gen.S
-@@ -8,6 +8,7 @@
-  *
-  * Cache error handler
-  */
-+#include <asm/addrspace.h>
- #include <asm/asm.h>
- #include <asm/regdef.h>
- #include <asm/mipsregs.h>
-@@ -37,6 +38,21 @@
- 	nop
- 	nop
+diff --git a/drivers/ata/libata-pmp.c b/drivers/ata/libata-pmp.c
+index 97f9fe5f5fb02..4306b0d947033 100644
+--- a/drivers/ata/libata-pmp.c
++++ b/drivers/ata/libata-pmp.c
+@@ -471,6 +471,20 @@ static void sata_pmp_quirks(struct ata_port *ap)
+ 			if (link->pmp == 4)
+ 				link->flags |= ATA_LFLAG_DISABLED;
+ 		}
++	} else if (vendor == 0x1b4b && devid == 0x9705) {
++		/*
++		 * Marvell 88SM9705 quirks
++		 *
++		 * 1-to-5 PMP with an extra SEMB port.  It reports 6 ports and
++		 * port 5 is the SEMB, which never answers SRST: EH spends about
++		 * a minute per round retrying it, and disk discovery waits for
++		 * that.  Seen behind a Marvell 88SE9235 in the Synology DX1215
++		 * and DX1222.
++		 */
++		ata_for_each_link(link, ap, EDGE) {
++			if (link->pmp == 5)
++				link->flags |= ATA_LFLAG_DISABLED;
++		}
+ 	}
+ }
  
-+#if defined(CONFIG_64BIT) && VMLINUX_LOAD_ADDRESS >= XKPHYS && \
-+    VMLINUX_LOAD_ADDRESS < XKSEG
-+	/*
-+	 * An XKPHYS kernel may lie outside the 256MB region a j from the
-+	 * vector reaches, so jump to the handler's uncached XKPHYS address.
-+	 */
-+	PTR_LA	k0, cache_parity_error
-+	PTR_LI	k1, TO_PHYS_MASK
-+	and	k0, k0, k1
-+	PTR_LI	k1, UNCAC_BASE
-+	or	k0, k0, k1
-+	jr	k0
-+	nop
-+#else
- 	j	cache_parity_error
- 	nop
-+#endif
- 	END(except_vec2_generic)
 -- 
 2.53.0
 
