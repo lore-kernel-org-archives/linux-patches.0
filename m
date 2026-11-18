@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020883;
-	b=qggGgH89liT/4eitikv5YyQj9Ulg6FizJyxe8xTHXhGLlrfu3MyaWMXMwUBD4hPDlabK
-	 PzDNS/fXPUxxSS30teU9qN9R/rOakbhfCgHLejyJJtNE54++VeF+JfD2Wkots4toRE26s
-	 oxiv6n7jGzhczVT9Z9nbznFSHkBHrYQt4V+fB0Ri+9WsGeCJzvnwSDWTnfy0q3WO3Y+dt
-	 gz4jXwmTiI5ZG4+dgk1dHVNUzFMLvfDXEKTFbr+RyzxHKVP34zjNg0MnrqXHyGJ/Nh5OC
-	 2C8p3xeA404GqHYieQUBBXpyEEOXwXaSuFcObEyJmHlsZbG3uZagqwnI0LYpIkHNzRw==
+	t=1795020886;
+	b=j7/y7rBNqmCrdLO8Lt7J4UY4AdJ81ED6b6q6DHKyJZ68PfIje/NByozFepbzkxBJwM+S
+	 iXwIv0s9CY0fZVyQl4NKWR6ej59RCn1nScPWHmXkG676dkS5dYU/n18FNgbydV0Uqcgux
+	 /kxzitCvdhBA++/tzcmgBDnXcY4LxYjfEa5nsTVOYX5adMYM3SYqBW96/v3koY8MBp1h2
+	 CSnZrnQC00tiAWVYKp4vIz3tGnSq771jM2AOUQCr7njkBew00Uqe6sTCb84ZRjYJzCWC4
+	 SWfviPvSvLTCjrEo9Hb7clbpfMA40rjVRXXFT03jI0qzTX1OKRK1ItszhqZy7g4+lqQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020883;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020886;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mGXczab4RXL9RmNbgdUbml+q046H93OPylico9qhSx8=;
-	b=otqTDkZacTE0EFcISU932bZLqEoG40t67VKT0er+ufLkh4ryuCo+fGpMSNBRjqcyQ3ZE
-	 qT8jRRajxsOoNxJfHbC/molmLkh002x5mxhryoAKQhRcJ21lOJIoq2VfSNd5NQuOPaIy4
-	 PTAHoonnbMq7MPKf4afeY9EF/oBVObHeqeRJr67oaa2+6TOEbz6ItmV6CqZbJV6swuFVo
-	 Ry+OfOwjvlf9rlkoT2WwLlrsCBKXBn1l1NPgkVPwnBYulZVC3zvg39s06+KOlOD/20n2y
-	 ZhztbDlq3K90SkSwURsZQ959ysxNf3klu+yccfoQm1wnLQiCUlt3SiB2kxTaGFibhdQ==
+	bh=6G0WyXMqwUFucwhZblR/bUjo/iS9XgV2C9Rhf+f4Yck=;
+	b=fkn4YCD6hmDpzvLBTaJpbMKwKVK7av5WiNQi3r/R+hkiBJTnLWIj8hF2+4YUTOIyKOlD
+	 lMvMC1BCSP6xxPDxL4mo5pMl8gZPpeIPxMedJdpAhPchykp9Aa7PiClXU3yx5g+4+n4zX
+	 wLoNW4q1QuFV0O4gA54sR/Urbznt7rPJNKZv1IE16tO8KUdUGgkokwj9ymnuOdylIDUgr
+	 VKT4oYkTNQUHfJ54RfsTAKrAuVsGbeKqk9neMfHonpcnclKt7s+XDAlJgKoNGrmL23Gcq
+	 bzXLsXEaNoYsCusRp7G+KJjd92GASEC7tpQmSG2NVj//0p6aQdwItJwI7x0TxgFHOog==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=evjgRPlE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="X+KtW/Nu";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4480606A332;
-	Wed, 18 Nov 2026 16:54:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF68F60A260F;
+	Wed, 18 Nov 2026 16:54:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=evjgRPlE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 365871F000C6;
-	Wed, 18 Nov 2026 16:54:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X+KtW/Nu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0B2B1F000C4;
+	Wed, 18 Nov 2026 16:54:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020883;
-	bh=mGXczab4RXL9RmNbgdUbml+q046H93OPylico9qhSx8=;
+	s=korg; t=1795020886;
+	bh=6G0WyXMqwUFucwhZblR/bUjo/iS9XgV2C9Rhf+f4Yck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=evjgRPlEGxSeMNMotjZaa3/gzugkIxgquOmRWHgZ6MGldex/jSGC84o+NLeWLSmTf
-	 CEYn3jq47dAd37QWYn2f4UeATksJ3/KSxuYQ8hk76enDQX4koGegNS2U31ROlg0gW3
-	 +zVEKY1MK4ls5KGe/Hq9QVDfNc2S6G+M0zz9XB8c=
+	b=X+KtW/NuLzjzHdCdbtMiHVeCvfaEHISvqonA1dEDDJhP2nblT8ViN5SdQbGZgAKPk
+	 /F8OVFeY+mOVbWr4JDSXhnvOG9XaxhyKnXbA7D+kTR5BgDRPz6crKWFAraLNZp4lNt
+	 6Kiq80etASqRFoaauCtZdvmKcZ5fddhxiA6IDmLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2111/2651] bpf: Check the maps that sleepable callbacks use
-Date: Wed, 18 Nov 2026 15:55:51 +0100
-Message-ID: <20261118150401.952578456@linuxfoundation.org>
+Subject: [PATCH 7.3 2112/2651] bpf: Assume no bounds for buffers behind a tail call
+Date: Wed, 18 Nov 2026 15:55:52 +0100
+Message-ID: <20261118150401.983001991@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,264 +70,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 3e6d7522af2cd1b8bf135ee7df6ca962986f44d6 ]
+[ Upstream commit 7fa323d77688e8b62b2f0bf6c3208a2c96d4a5e7 ]
 
-Sleepable programs can only use the kinds of map that do without an RCU
-read side critical section.  check_map_prog_compatibility() sees to that
-when a map is bound to the program, and asks whether the program is
-sleepable.  That misses the bpf_wq or bpf_task_work callback of a program
-that is not, which runs sleepable all the same, and it misses an inner
-map, which is not bound.
+The bpf_map_elem, bpf_sk_storage_map and sockmap iterators hand the key
+and the value of an element to the program as buffers.  The verifier notes
+how far a program reaches into them, and the iterator compares that with
+the map when the program is attached.  A program that does not touch the
+buffers passes.  It can tail-call another program of the same target,
+which gets the same context, and whose reach nobody compares with the
+map:
 
-The bpf_wq callback of a tc program that looks a key up in a sockhash
-gets as far as
+  BUG: KASAN: slab-out-of-bounds in ___bpf_prog_run+0xa46a/0xae80
 
-  WARNING: net/core/sock_map.c:903 at __sock_hash_lookup_elem+0x18f/0x1e0
+The program array can be filled at any time, so there is nothing to look
+at when the link is made.  For the same reason a program with a tail call
+is taken to use the whole stack and the whole packet.  Take it to reach
+as far as can be into the buffers as well, so that these iterators refuse
+it with -EACCES.
 
-Ask the same question for the map that is handed to a helper in sleepable
-context, unless the RCU read lock is held: by bpf_rcu_read_lock(), or by
-the helper that runs the callback, as bpf_for_each_map_elem() does for a
-hash map.  Programs that take the lock go on working.  Disabled preemption
-or interrupts are not enough, since the maps ask for rcu_read_lock_held().
-The other parts of the program may use such a map as before.
-
-A global function that is called with preemption or interrupts disabled is
-verified for the non-sleepable context, in which nothing is known of all
-that.  Verify it for a context of its own: not sleepable, and without the
-RCU read lock.  It differs in what maps can be used, and in nothing else.
-
-What is refused from now on runs into the warning above, or uses what the
-map frees behind a plain RCU grace period: an entry of a devmap, of a perf
-event array or of a cgroup array.
-
-A bloom filter does without RCU.  Add it to the list, so that callbacks
-which use one go on loading.  As a side effect sleepable programs can use
-bloom filters as well.
-
-A pointer to the value of a devmap which a program keeps beyond
-bpf_rcu_read_unlock() is not dealt with here.
-
-Fixes: 638e4b825d52 ("bpf: Allows per-cpu maps and map-in-map in sleepable programs")
-Fixes: 8e83da9732d9 ("bpf: add bpf_wq_start")
+Fixes: d6c4503cc296 ("bpf: Implement bpf iterator for hash maps")
+Fixes: 5ce6e77c7edf ("bpf: Implement bpf iterator for sock local storage map")
+Fixes: 0365351524d7 ("net: Allow iterating sockmap and sockhash")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-25-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261017163745.3341787-26-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h          |  14 ++++-
- include/linux/bpf_verifier.h |   2 +
- kernel/bpf/verifier.c        | 109 ++++++++++++++++++++++++-----------
- 3 files changed, 89 insertions(+), 36 deletions(-)
+ kernel/bpf/fixups.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index 0876bc8461784..8bc7800d90add 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -1684,12 +1684,20 @@ static inline void bpf_trampoline_multi_detach(struct bpf_prog *prog,
- static inline void bpf_trampoline_set_flags(struct bpf_trampoline *tr, u32 flags) {}
- #endif
+diff --git a/kernel/bpf/fixups.c b/kernel/bpf/fixups.c
+index 6f2c15b47c329..7968e81100b89 100644
+--- a/kernel/bpf/fixups.c
++++ b/kernel/bpf/fixups.c
+@@ -2018,6 +2018,8 @@ int bpf_do_misc_fixups(struct bpf_verifier_env *env)
+ 			if (!bpf_allow_tail_call_in_subprogs(env))
+ 				prog->aux->stack_depth = MAX_BPF_STACK;
+ 			prog->aux->max_pkt_offset = MAX_PACKET_OFF;
++			prog->aux->max_rdonly_access = U32_MAX;
++			prog->aux->max_rdwr_access = U32_MAX;
  
-+/* The contexts that a global function is called in, and is verified for. */
-+enum bpf_func_context {
-+	BPF_FUNC_CTX_NON_SLEEPABLE,
-+	BPF_FUNC_CTX_SLEEPABLE,
-+	/* Sleepable code has disabled preemption or interrupts: no RCU read lock. */
-+	BPF_FUNC_CTX_NO_RCU_LOCK,
-+	BPF_FUNC_CTX_CNT,
-+};
-+
- struct bpf_func_info_aux {
- 	u16 linkage;
- 	bool unreliable;
--	/* Indexed by in_sleepable. */
--	bool called[2];
--	bool verified[2];
-+	bool called[BPF_FUNC_CTX_CNT];
-+	bool verified[BPF_FUNC_CTX_CNT];
- };
- 
- enum bpf_jit_poke_reason {
-diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
-index 1446091539443..0eda96e1162f3 100644
---- a/include/linux/bpf_verifier.h
-+++ b/include/linux/bpf_verifier.h
-@@ -943,6 +943,8 @@ struct bpf_verifier_env {
- 	bool bypass_spec_v1;
- 	bool bypass_spec_v4;
- 	bool seen_direct_write;
-+	/* a global function is verified for BPF_FUNC_CTX_NO_RCU_LOCK */
-+	bool no_rcu_read_lock;
- 	bool seen_exception;
- 	bool signature;
- 	u32 insn_aux_data_len;
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 8ddab1b7db904..90fedae1bd3cd 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -216,6 +216,7 @@ static int ref_set_non_owning(struct bpf_verifier_env *env,
- 			      struct bpf_reg_state *reg);
- static bool is_trusted_reg(struct bpf_verifier_env *env, const struct bpf_reg_state *reg);
- static inline bool in_sleepable_context(struct bpf_verifier_env *env);
-+static bool in_rcu_callback(struct bpf_verifier_env *env);
- static const char *non_sleepable_context_description(struct bpf_verifier_env *env);
- static void scalar32_min_max_add(struct bpf_reg_state *dst_reg, struct bpf_reg_state *src_reg);
- static void scalar_min_max_add(struct bpf_reg_state *dst_reg, struct bpf_reg_state *src_reg);
-@@ -9079,12 +9080,71 @@ bool bpf_allow_tail_call_in_subprogs(struct bpf_verifier_env *env)
- 	       bpf_jit_supports_subprog_tailcalls();
- }
- 
-+/*
-+ * Is rcu_read_lock_held() true at run time? Unlike for in_rcu_cs(), disabled
-+ * preemption or interrupts will not do.
-+ */
-+static bool has_rcu_read_lock(struct bpf_verifier_env *env)
-+{
-+	struct bpf_verifier_state *state = env->cur_state;
-+
-+	if (state->active_rcu_locks || in_rcu_callback(env))
-+		return true;
-+	if (in_sleepable(env))
-+		return false;
-+	return !env->no_rcu_read_lock || state->frame[0]->in_async_callback_fn;
-+}
-+
-+/* May the map be used outside of an RCU read side critical section? */
-+static bool map_needs_no_rcu(const struct bpf_map *map)
-+{
-+	switch (map->map_type) {
-+	case BPF_MAP_TYPE_HASH:
-+	case BPF_MAP_TYPE_RHASH:
-+	case BPF_MAP_TYPE_LRU_HASH:
-+	case BPF_MAP_TYPE_ARRAY:
-+	case BPF_MAP_TYPE_PERCPU_HASH:
-+	case BPF_MAP_TYPE_PERCPU_ARRAY:
-+	case BPF_MAP_TYPE_LRU_PERCPU_HASH:
-+	case BPF_MAP_TYPE_LPM_TRIE:
-+	case BPF_MAP_TYPE_ARRAY_OF_MAPS:
-+	case BPF_MAP_TYPE_HASH_OF_MAPS:
-+	case BPF_MAP_TYPE_RINGBUF:
-+	case BPF_MAP_TYPE_USER_RINGBUF:
-+	case BPF_MAP_TYPE_INODE_STORAGE:
-+	case BPF_MAP_TYPE_SK_STORAGE:
-+	case BPF_MAP_TYPE_TASK_STORAGE:
-+	case BPF_MAP_TYPE_CGRP_STORAGE:
-+	case BPF_MAP_TYPE_QUEUE:
-+	case BPF_MAP_TYPE_STACK:
-+	case BPF_MAP_TYPE_ARENA:
-+	case BPF_MAP_TYPE_INSN_ARRAY:
-+	case BPF_MAP_TYPE_PROG_ARRAY:
-+	case BPF_MAP_TYPE_BLOOM_FILTER:
-+		return true;
-+	default:
-+		return false;
-+	}
-+}
-+
- static int check_map_func_compatibility(struct bpf_verifier_env *env,
- 					struct bpf_map *map, int func_id)
- {
- 	if (!map)
- 		return 0;
- 
-+	/*
-+	 * check_map_prog_compatibility() asks the program.  That misses the
-+	 * sleepable callback of another program, and an inner map.  They may
-+	 * use any map under the RCU read lock.  Disabled preemption or
-+	 * interrupts will not do: the maps ask for rcu_read_lock_held().
-+	 */
-+	if (!has_rcu_read_lock(env) && !map_needs_no_rcu(map)) {
-+		verbose(env, "map '%s' needs bpf_rcu_read_lock() in sleepable context\n",
-+			map->name);
-+		return -EINVAL;
-+	}
-+
- 	/* We need a two way check, first is from map perspective ... */
- 	switch (map->map_type) {
- 	case BPF_MAP_TYPE_PROG_ARRAY:
-@@ -10057,7 +10117,12 @@ static int check_func_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
- 		if (env->log.level & BPF_LOG_LEVEL)
- 			verbose(env, "Func#%d ('%s') is global and assumed valid.\n",
- 				subprog, sub_name);
--		sub_aux->called[in_sleepable_context(env)] = true;
-+		if (in_sleepable_context(env))
-+			sub_aux->called[BPF_FUNC_CTX_SLEEPABLE] = true;
-+		else if (has_rcu_read_lock(env))
-+			sub_aux->called[BPF_FUNC_CTX_NON_SLEEPABLE] = true;
-+		else
-+			sub_aux->called[BPF_FUNC_CTX_NO_RCU_LOCK] = true;
- 		returns_void = subprog_returns_void(env, subprog);
- 		if (env->subprog_info[subprog].changes_pkt_data)
- 			clear_all_pkt_pointers(env);
-@@ -18998,35 +19063,11 @@ static int check_map_prog_compatibility(struct bpf_verifier_env *env,
- 		return -EINVAL;
- 	}
- 
--	if (prog->sleepable)
--		switch (map->map_type) {
--		case BPF_MAP_TYPE_HASH:
--		case BPF_MAP_TYPE_RHASH:
--		case BPF_MAP_TYPE_LRU_HASH:
--		case BPF_MAP_TYPE_ARRAY:
--		case BPF_MAP_TYPE_PERCPU_HASH:
--		case BPF_MAP_TYPE_PERCPU_ARRAY:
--		case BPF_MAP_TYPE_LRU_PERCPU_HASH:
--		case BPF_MAP_TYPE_LPM_TRIE:
--		case BPF_MAP_TYPE_ARRAY_OF_MAPS:
--		case BPF_MAP_TYPE_HASH_OF_MAPS:
--		case BPF_MAP_TYPE_RINGBUF:
--		case BPF_MAP_TYPE_USER_RINGBUF:
--		case BPF_MAP_TYPE_INODE_STORAGE:
--		case BPF_MAP_TYPE_SK_STORAGE:
--		case BPF_MAP_TYPE_TASK_STORAGE:
--		case BPF_MAP_TYPE_CGRP_STORAGE:
--		case BPF_MAP_TYPE_QUEUE:
--		case BPF_MAP_TYPE_STACK:
--		case BPF_MAP_TYPE_ARENA:
--		case BPF_MAP_TYPE_INSN_ARRAY:
--		case BPF_MAP_TYPE_PROG_ARRAY:
--			break;
--		default:
--			verbose(env,
--				"Sleepable programs can only use array, hash, ringbuf and local storage maps\n");
--			return -EINVAL;
--		}
-+	if (prog->sleepable && !map_needs_no_rcu(map)) {
-+		verbose(env,
-+			"Sleepable programs can only use array, hash, ringbuf and local storage maps\n");
-+		return -EINVAL;
-+	}
- 
- 	if (bpf_map_is_cgroup_storage(map) &&
- 	    bpf_cgroup_storage_assign(env->prog->aux, map)) {
-@@ -19614,7 +19655,8 @@ static void free_states(struct bpf_verifier_env *env)
- 	}
- }
- 
--static int do_check_common(struct bpf_verifier_env *env, int subprog, bool is_sleepable)
-+static int do_check_common(struct bpf_verifier_env *env, int subprog,
-+			   enum bpf_func_context context)
- {
- 	bool pop_log = !(env->log.level & BPF_LOG_LEVEL2);
- 	struct bpf_subprog_info *sub = subprog_info(env, subprog);
-@@ -19634,7 +19676,8 @@ static int do_check_common(struct bpf_verifier_env *env, int subprog, bool is_sl
- 	state->curframe = 0;
- 	state->speculative = false;
- 	state->branches = 1;
--	state->in_sleepable = is_sleepable;
-+	state->in_sleepable = context == BPF_FUNC_CTX_SLEEPABLE;
-+	env->no_rcu_read_lock = context == BPF_FUNC_CTX_NO_RCU_LOCK;
- 	state->frame[0] = kzalloc_obj(struct bpf_func_state, GFP_KERNEL_ACCOUNT);
- 	if (!state->frame[0]) {
- 		kfree(state);
-@@ -19848,7 +19891,7 @@ static int do_check_subprogs(struct bpf_verifier_env *env)
- 
- 	/*
- 	 * We can't loop forever as each pass verifies at least one new context,
--	 * and there are only two contexts per global subprog.
-+	 * and there are only three contexts per global subprog.
- 	 */
- 	if (new_cnt)
- 		goto again;
+ 			/* mark bpf_tail_call as different opcode to avoid
+ 			 * conditional branch in the interpreter for every normal
 -- 
 2.53.0
 
