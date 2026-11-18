@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059703;
-	b=Hl0cpnKlOgakSlrp7KB7gExdx7556reubjqxOJ5rPnyntY0EHhxk6sV40j8iu8ExSvjN
-	 psws40qZ/R/edp25E785xtSiBM6iz+V6mtde6bU1WX5u58ZTXiQGZRoe/nICEmrCry7gF
-	 RMlBl6/JUQmlO5/f+7qiABRg0ksqz02UoYUNB+TvUhkbdGkGlJlSsxb5tLTyvOHfYUluk
-	 drpdwC1vIN7gVOJTQqkCGgGGo/OrbKioH7cdbBiFvJAlBvJmJbAUxi1dWXw/xAc4l9rcN
-	 cgVuvULSD9N3RXMKfolyemxwF09/mAzBKDpu13nnpsv5P2ts83V6qd7ACBRvHtEm+uA==
+	t=1795059705;
+	b=th1JGGbRc3PIrpCA/uhSjy1/OAO+NBLopf6/msu9HZYxh2IRRghgcqqffBFmi6hHU++9
+	 XVlqMB/U03m4tZE2tRly12XlvugGsvMmoAyUrgxydvJuXUN2ymbZcu/+SjpAxHDfqJJde
+	 7vf1XOvDxtqgDeZYxZPGT8iVrpF/zLm+H8dye35kXnr8JYVsRrPTN3qXEma10i/P47D17
+	 9EuO6sx5RZ6frdR5I9eHYCa51O8o8Xnq9v+zBVqBPq4PlkCSjUWlKX4r2bqrytLA+YeNL
+	 xylWFi/6EFvo8JOA+uriwlJ7B2rVSm8S9VrCuUWpn/+leLnORTnvggl0eYUXOxqyQXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059703;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059705;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sSrIUhkSXkhEZYk3onD1BYlAqi1ocWYRWe23OYWYxWk=;
-	b=J3OxpeAI29nTwPonGkeEbmenNHQkScDaFFeOO8W7REwbhoKCxcEqANa+sv2qzvijR3Gg
-	 9clgBPIeZ/84pUMxfnL38i/dZwKfrLk0uWxhQja70gT1Yg6HZ5+hnvSW9+7n6L+xRXYe+
-	 6aQY9ERdhK6/LMjCvWwsaRaACyyCeYOebAyuSbt+ODx1Gt5IW/xsFVlq8R06PxYCZ9O/q
-	 BqF/I5/tfE4nqsnS/cx3KF77EhE8dagp63CF6BqebOld1VPxODsmmFCZ+k3ZbQ8HKeJsV
-	 1uparhI9wGN6wMrY3vUcN4Hj5Bu+CnT9VoOLwUWXYCE+bqfk1m21RCfr50CJ3hzp4og==
+	bh=BBQNYwK3U/v/Hwmtuzi8ndiF5fSdK5BoSb7ZJofz6Bg=;
+	b=5nUlBd4hv2itx3D7Dxw6UyC3CtUD8e1eYKQ50OYbuVrWEtVFQ9VQGuYqbBjkgjuthO3u
+	 1dphchBf50nG4mV2EZI7xQTOTfzv8PPqJLMtY//D1MISK9L3rN/4iF0GB51EEOFXjnxAj
+	 7tFcPKy+P3BAgtxLfnM1HcCGHFxSmZUo6Pm2O0YKNFY1iBT2pgPY6wM/ybCugJhDxNPIF
+	 CEU0RFAeqiCiJQu9vdev3/chE3Qbih61VW4em8iOIf+KyeadEg+wacXyJjCIJHRyI9FZV
+	 VB9mGQsVmvNwqpG71pD1zOQL53PetlQZbfa4x8u6FM3Ot3LanCP1g7L2aCULQOE7nOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C5oIrK37;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zrc+1fbR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08008606A334;
-	Thu, 19 Nov 2026 03:41:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9547606A32C;
+	Thu, 19 Nov 2026 03:41:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C5oIrK37
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C8331F000C4;
-	Thu, 19 Nov 2026 03:41:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zrc+1fbR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FDC21F000C4;
+	Thu, 19 Nov 2026 03:41:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059702;
-	bh=sSrIUhkSXkhEZYk3onD1BYlAqi1ocWYRWe23OYWYxWk=;
+	s=korg; t=1795059705;
+	bh=BBQNYwK3U/v/Hwmtuzi8ndiF5fSdK5BoSb7ZJofz6Bg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C5oIrK37MvUoFT9LZm8koA7FkBR9W4W7HEcNaEXvR6ZZTQxPlNO1WSulrb9VC6W7W
-	 z+EeV6Hvfa3mkR5Fw5o8ZTJ0DPejd4vo9VsS0+ZbLPaR2CDRXmPE2L3O0wrWPxbcEY
-	 fJ+bnlFbqQM7JRuAkvt7+GqeP6pz87mdGQh9xXMc=
+	b=zrc+1fbR7iXMK7br8c6/sATiJVoDTkHSw7PZ3KpzSb+BpPwe+UAvZYCjsLFNS3M+E
+	 +DAUO700gIeIgl0B4J5vxcCJWYyW7WND7b1NkCmw68qxJlLVHAUaWR6qnYYU/slfbi
+	 /Izkj8KsWrsnZ32pfXNW+TCRD5XZw0f76RI0E8cQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bui Viet Dung <dungvn2345@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0885/1848] Bluetooth: hci_debugfs: Pin module for debugfs file operations
-Date: Wed, 18 Nov 2026 15:48:43 +0100
-Message-ID: <20261118145953.537201183@linuxfoundation.org>
+Subject: [PATCH 5.10 0930/1848] ALSA: emux: simplify snd_sf_list.callback handling
+Date: Wed, 18 Nov 2026 15:49:28 +0100
+Message-ID: <20261118145955.696050348@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,133 +68,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bui Viet Dung <dungvn2345@gmail.com>
+From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 
-[ Upstream commit 2a3e2287877b1ee40ffb80b7d769b633866533f3 ]
+[ Upstream commit 4c4cbe66828f185903d2127aed6ac9b7302e9d3a ]
 
-An open debugfs file retains its file_operations pointer in the
-debugfs proxy state. However, the file_operations defined in
-hci_debugfs.c (use_debug_keys_fops, sc_only_mode_fops,
-ssp_debug_mode_fops, force_bredr_smp_fops, force_static_address_fops,
-force_no_mitm_fops, dut_mode_fops, vendor_diag_fops, and the
-DEFINE_QUIRK_ATTRIBUTE macro) have no .owner set to THIS_MODULE.
+Both drivers provide both sample_new and sample_free, and it makes no
+sense to pretend that they could not. In fact, load_data() would already
+crash if sample_new was null. So remove the remaining null checks.
 
-As a result, full_proxy_open_regular() calls fops_get() which succeeds
-without taking a reference to the bluetooth module. When a userspace
-process opens any of these debugfs files, a subsequent controller removal
-and module unload (rmmod bluetooth) can succeed while the file descriptor
-remains open.
+Contrary to that, the emu10k1 driver actually has a null sample_reset,
+though I'm not convinced that this inconsistency is justified.
 
-When the userspace process subsequently closes the descriptor,
-full_proxy_release() accesses the already unmapped file_operations
-structure, triggering a kernel oops in full_proxy_release():
-
-  BUG: unable to handle page fault for address: fffffbfff8056f03
-  #PF: supervisor read access in kernel mode
-  Oops: 0000 [#1] SMP KASAN NOPTI
-  RIP: 0010:full_proxy_release+0x8e/0x140
-  Call Trace:
-   <TASK>
-   __fput+0x39f/0xa60
-   fput_close_sync+0xff/0x200
-   __x64_sys_close+0x8c/0xf0
-   do_syscall_64+0x115/0x6a0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
-
-The issue was discovered via manual code audit of
-net/bluetooth/hci_debugfs.c and verified on a Linux 7.3-rc6 test VM
-with CONFIG_BT=m.
-
-Set .owner = THIS_MODULE on all debugfs file_operations tables in
-hci_debugfs.c so that debugfs keeps the module loaded until close has
-finished.
-
-Fixes: 0886aea6acd2 ("Bluetooth: Expose debug keys usage setting via debugfs")
-Cc: stable@vger.kernel.org
-Signed-off-by: Bui Viet Dung <dungvn2345@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Message-ID: <20240406064830.1029573-18-oswald.buddenhagen@gmx.de>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 8a5d87c2ba30 ("ALSA: emux: Stop voices before freeing zones in all cases")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_debugfs.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ sound/synth/emux/emux.c      |  6 ++----
+ sound/synth/emux/soundfont.c | 12 +++++-------
+ 2 files changed, 7 insertions(+), 11 deletions(-)
 
-diff --git a/net/bluetooth/hci_debugfs.c b/net/bluetooth/hci_debugfs.c
-index 987a546de3ae1..dfb543ef657fe 100644
---- a/net/bluetooth/hci_debugfs.c
-+++ b/net/bluetooth/hci_debugfs.c
-@@ -68,6 +68,7 @@ static ssize_t __name ## _write(struct file *file,			      \
- }									      \
- 									      \
- static const struct file_operations __name ## _fops = {			      \
-+	.owner		= THIS_MODULE,					      \
- 	.open		= simple_open,					      \
- 	.read		= __name ## _read,				      \
- 	.write		= __name ## _write,				      \
-@@ -286,6 +287,7 @@ static ssize_t use_debug_keys_read(struct file *file, char __user *user_buf,
- }
- 
- static const struct file_operations use_debug_keys_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= use_debug_keys_read,
- 	.llseek		= default_llseek,
-@@ -304,6 +306,7 @@ static ssize_t sc_only_mode_read(struct file *file, char __user *user_buf,
- }
- 
- static const struct file_operations sc_only_mode_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= sc_only_mode_read,
- 	.llseek		= default_llseek,
-@@ -440,6 +443,7 @@ static ssize_t ssp_debug_mode_read(struct file *file, char __user *user_buf,
- }
- 
- static const struct file_operations ssp_debug_mode_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= ssp_debug_mode_read,
- 	.llseek		= default_llseek,
-@@ -532,6 +536,7 @@ static ssize_t force_bredr_smp_write(struct file *file,
- }
- 
- static const struct file_operations force_bredr_smp_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= force_bredr_smp_read,
- 	.write		= force_bredr_smp_write,
-@@ -781,6 +786,7 @@ static ssize_t force_static_address_write(struct file *file,
- }
- 
- static const struct file_operations force_static_address_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= force_static_address_read,
- 	.write		= force_static_address_write,
-@@ -1184,6 +1190,7 @@ static ssize_t force_no_mitm_write(struct file *file,
- }
- 
- static const struct file_operations force_no_mitm_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= force_no_mitm_read,
- 	.write		= force_no_mitm_write,
-@@ -1322,6 +1329,7 @@ static ssize_t dut_mode_write(struct file *file, const char __user *user_buf,
- }
- 
- static const struct file_operations dut_mode_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= dut_mode_read,
- 	.write		= dut_mode_write,
-@@ -1378,6 +1386,7 @@ static ssize_t vendor_diag_write(struct file *file, const char __user *user_buf,
- }
- 
- static const struct file_operations vendor_diag_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= vendor_diag_read,
- 	.write		= vendor_diag_write,
+diff --git a/sound/synth/emux/emux.c b/sound/synth/emux/emux.c
+index c60ff81390a44..8e080a4bcd16f 100644
+--- a/sound/synth/emux/emux.c
++++ b/sound/synth/emux/emux.c
+@@ -94,10 +94,8 @@ int snd_emux_register(struct snd_emux *emu, struct snd_card *card, int index, ch
+ 	/* create soundfont list */
+ 	memset(&sf_cb, 0, sizeof(sf_cb));
+ 	sf_cb.private_data = emu;
+-	if (emu->ops.sample_new)
+-		sf_cb.sample_new = sf_sample_new;
+-	if (emu->ops.sample_free)
+-		sf_cb.sample_free = sf_sample_free;
++	sf_cb.sample_new = sf_sample_new;
++	sf_cb.sample_free = sf_sample_free;
+ 	if (emu->ops.sample_reset)
+ 		sf_cb.sample_reset = sf_sample_reset;
+ 	emu->sflist = snd_sf_new(&sf_cb, emu->memhdr);
+diff --git a/sound/synth/emux/soundfont.c b/sound/synth/emux/soundfont.c
+index f76c3b21401d6..1266604cf33be 100644
+--- a/sound/synth/emux/soundfont.c
++++ b/sound/synth/emux/soundfont.c
+@@ -1044,7 +1044,7 @@ load_guspatch(struct snd_sf_list *sflist, const char __user *data,
+ 	/*
+ 	 * load wave data
+ 	 */
+-	if (smp->v.size > 0 && sflist->callback.sample_new) {
++	if (smp->v.size > 0) {
+ 		rc = sflist->callback.sample_new
+ 			(sflist->callback.private_data, smp, sflist->memhdr,
+ 			 data, count);
+@@ -1405,9 +1405,8 @@ snd_sf_clear(struct snd_sf_list *sflist)
+ 		}
+ 		for (sp = sf->samples; sp; sp = nextsp) {
+ 			nextsp = sp->next;
+-			if (sflist->callback.sample_free)
+-				sflist->callback.sample_free(sflist->callback.private_data,
+-							     sp, sflist->memhdr);
++			sflist->callback.sample_free(sflist->callback.private_data,
++						     sp, sflist->memhdr);
+ 			kfree(sp);
+ 		}
+ 		kfree(sf);
+@@ -1508,9 +1507,8 @@ snd_soundfont_remove_unlocked(struct snd_sf_list *sflist)
+ 			nextsp = sp->next;
+ 			sf->samples = nextsp;
+ 			sflist->mem_used -= sp->v.truesize;
+-			if (sflist->callback.sample_free)
+-				sflist->callback.sample_free(sflist->callback.private_data,
+-							     sp, sflist->memhdr);
++			sflist->callback.sample_free(sflist->callback.private_data,
++						     sp, sflist->memhdr);
+ 			kfree(sp);
+ 		}
+ 	}
 -- 
 2.53.0
 
