@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019249;
-	b=tvhAEy/XFLUhT/J6zwSR+A1CbedSb3N6ccFNVi66xLWS7lgxVQrDTm8tP7YKG5tf8f5Q
-	 LUzj+MxLJ6rAPqb9r86gYGRMXuNtBzSZKlwPIb5tTURdfZkzp0/ND0eRv+HIENZID4H3K
-	 yi8FseuafmpnH2T/iiFUbZ0xzUz+6yVv/2ESfAhe+S6gmKIqaR5NOhLPKQETg+DD4ZpPM
-	 YyuuCELFkU8ut0dyMSbPzatqLcdsrEseBl0At6K1KYgx7pxVkulGtTnkXG4vKjKM0Sdd4
-	 uJklQ3m3DRnGKh/vvNOI0zbDo9Nym48asEIdWH8WN5Nj6ildSriQkm8xzkastsUPokQ==
+	t=1795019252;
+	b=rGbCWRaeP3xLNp0tfPFTuLx6Y4kKkJbKodTXlxmMSYyxapdN5CAOXptHkBoaL4lC5o+K
+	 TJdLE541jYBal/tmDxqUMUNAIGgESltESHXoIvnkttUF4WJECxzqIFJ30+5UFFKCktTqv
+	 gN31yY0w+GsvMgdVjDlU6NXIhBNWsA6Ar4UVgG3po632BC9I0y7rwZ1JaHS6dxVIXvg8e
+	 gTD6rI7sToYqE6mQ+06UHbkDKKxoAwyKiaCfJNtpMC6DFB/3iiyKsufN+Z2217xVJ8WiL
+	 XTJlOH/co+vKalPPQWVzJgataC+2YpQcHXyFLGVMFtx03F1PCEZNNw1T9J+ovCjke1w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019249;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019252;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vRx39ZDuM9PcKrNrPUV9Hjeptkv5Cvi3rgCWzhQzGEY=;
-	b=NoPpa5bpPhPwTJ66wfzYJdgCDZSJaZLFRKt6xKu8NLnFSZ2GX/K5Ao3ggg7GG8PEoPMl
-	 PUKQ0pAkIxXmYLq0ZcbIpNFZ5b85rj6zRytkDztlLSk8SEG5ecJdgUzkbzMaqeOL/lmtb
-	 yhv6Ne+z3s5nPLy4nRhSPxP26EoSPTSV5yt7xym+cdivEzZdw2k0X10q0S96LQ5674C4S
-	 eJgFrQWwl34CbYpB+yJaX8mUpNzU15eNJ62b/E1LnXwI2O4QZNT0bmffJbRDfdkVhdn+B
-	 jKkYRU6VskqcFuU/xx95ngkamK30uZ9l6BWIraYH7G+AeYUCedMX6BEhmoZrqVM/BqA==
+	bh=Fv1O8HEqwb0Ki74/TRaZVoyRSY0GsTvb6uc09/5c4YU=;
+	b=MRwLDeoh2IjQeIYlay3hsYfUMT55EzNzslh23/7n86aRWoVPOu0KRgDxg2rviQ2TqUAx
+	 fmg7quyc5oNgFXf396wcVZZHmsDW9fOIjIcuzw7suzRBrKePsNxdQkss5ivn9oGXT0f+z
+	 wBnrWlUhcxA0OThf1+DYFryb4hnRo3MmQtkg4ga8KeHl8GkR+hGQHWGg+b/oN8V3MSVHl
+	 6bvBE/5N+je2t/UZjmRe3WbsCFvho6wZaaD+2oubbQDFQF+YB1looy8t5hfMQbiyEOi3K
+	 BJ7BCBj+No1mYSsm1JTMoCFXSKEBl8NCyqIzFDygxQHSXry4/zDbsoD4cCPd1WPxt0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AkLghbfI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W1WhpEl1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FF1760A2608;
-	Wed, 18 Nov 2026 16:27:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8190760A261A;
+	Wed, 18 Nov 2026 16:27:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AkLghbfI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A47F91F000C4;
-	Wed, 18 Nov 2026 16:27:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W1WhpEl1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 861B21F000C4;
+	Wed, 18 Nov 2026 16:27:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019249;
-	bh=vRx39ZDuM9PcKrNrPUV9Hjeptkv5Cvi3rgCWzhQzGEY=;
+	s=korg; t=1795019252;
+	bh=Fv1O8HEqwb0Ki74/TRaZVoyRSY0GsTvb6uc09/5c4YU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AkLghbfIuLpncc6xueJEU70XiIt3/A8Jvzx3/lc0WMI/yCIVDLaPrOGddM89Q1E8a
-	 8z0/5Uqvu01mDOPC91EVfxXUtfPoR0O9HEthBXocH8oecDhp7z54EsosSOLZDjfxZN
-	 t6/x2dN2Wt3xcCQZGF4nznF4R398Ci/MMdg9/q64=
+	b=W1WhpEl1ENvea8BAo5HCMH/GzTB90vtCoadzJow59kVh2fAkPQ26VpVK/DdIUgQSJ
+	 /m8arE/U/+jyXR2DmK98Nb7lawYsq6Xib14+O6mEci0c+q8p+JS7rlIdQbK8WxVDge
+	 77eHLBwlPb5rIAlfwSTSGcDFI4r7X89n+kM4OXyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1488/2651] kobject: Fix the kobj_set_name reference in kset_register() kernel-doc
-Date: Wed, 18 Nov 2026 15:45:28 +0100
-Message-ID: <20261118150341.585588865@linuxfoundation.org>
+Subject: [PATCH 7.3 1489/2651] wifi: mt76: mt7996: refuse scan and ROC until the hardware restart is done
+Date: Wed, 18 Nov 2026 15:45:29 +0100
+Message-ID: <20261118150341.621724532@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,38 +67,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 3aac49b236c137fa77b97968d25338a28c49f0f8 ]
+[ Upstream commit 3807d0bfeef650d2b3b567e36d218b4cb3e31d4b ]
 
-The kernel-doc comment of kset_register() refers to kobj_set_name, which
-does not exist. The name is kobject_set_name. Say kobject_set_name.
+mt7996_mac_restart() clears MT76_MCU_RESET before it loads the firmware
+again, and mac80211 adds the interfaces back only later, in
+ieee80211_reconfig() after ieee80211_restart_hw(). A scan or remain on
+channel that reaches mt76_hw_scan() or mt76_remain_on_channel() in
+between, for example a request that waited for dev->mutex during the
+reset, runs on a device that has no interfaces configured.
 
-Fixes: 1662cea4623f ("kset: fix memory leak when kset_register() returns error")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://patch.msgid.link/20260911222029.7267-1-kmehltretter@gmail.com
-[ Also drop the misplaced braces in "allocated by()". - Danilo ]
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Mark a full reset with MT76_RESTART and refuse a scan or remain on
+channel while it is set. Clear the flag in .start: ieee80211_reconfig()
+adds the interfaces back before it releases the wiphy lock, so no
+request runs in between. .reconfig_complete is not suitable, because
+mac80211 skips it when no interface is open, and the flag would then
+stay set.
+
+Fixes: c56d6edebc1f ("wifi: mt76: mt7996: use emulated hardware scan support")
+Fixes: 69d54ce7491d ("wifi: mt76: mt7996: switch to single multi-radio wiphy")
+Link: https://patch.msgid.link/20261007112419.1277594-1-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/kobject.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/channel.c     | 3 ++-
+ drivers/net/wireless/mediatek/mt76/mt7996/mac.c  | 1 +
+ drivers/net/wireless/mediatek/mt76/mt7996/main.c | 2 ++
+ drivers/net/wireless/mediatek/mt76/scan.c        | 3 ++-
+ 4 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/lib/kobject.c b/lib/kobject.c
-index e7b010a989fb9..76214cb6fd5ac 100644
---- a/lib/kobject.c
-+++ b/lib/kobject.c
-@@ -855,7 +855,7 @@ EXPORT_SYMBOL_GPL(kobj_sysfs_ops);
-  * kset_register() - Initialize and add a kset.
-  * @k: kset.
-  *
-- * NOTE: On error, the kset.kobj.name allocated by() kobj_set_name()
-+ * NOTE: On error, the kset.kobj.name allocated by kobject_set_name()
-  * is freed, it can not be used any more.
-  */
- int kset_register(struct kset *k)
+diff --git a/drivers/net/wireless/mediatek/mt76/channel.c b/drivers/net/wireless/mediatek/mt76/channel.c
+index 8d4daa76be541..ce1824da75631 100644
+--- a/drivers/net/wireless/mediatek/mt76/channel.c
++++ b/drivers/net/wireless/mediatek/mt76/channel.c
+@@ -382,7 +382,8 @@ int mt76_remain_on_channel(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+ 	mutex_lock(&dev->mutex);
+ 
+ 	if (phy->roc_vif || dev->scan.phy == phy ||
+-	    test_bit(MT76_MCU_RESET, &dev->phy.state)) {
++	    test_bit(MT76_MCU_RESET, &dev->phy.state) ||
++	    test_bit(MT76_RESTART, &dev->phy.state)) {
+ 		ret = -EBUSY;
+ 		goto out;
+ 	}
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+index c4e82b1e259c2..ce1e4773bddd2 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+@@ -2467,6 +2467,7 @@ mt7996_mac_full_reset(struct mt7996_dev *dev)
+ 
+ 	dev->recovery.hw_full_reset = true;
+ 
++	set_bit(MT76_RESTART, &dev->mphy.state);
+ 	set_bit(MT76_MCU_RESET, &dev->mphy.state);
+ 	wake_up(&dev->mt76.mcu.wait);
+ 	ieee80211_stop_queues(hw);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+index cc65964abbef9..335612c967dd0 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+@@ -59,6 +59,8 @@ static int mt7996_start(struct ieee80211_hw *hw)
+ 
+ 	flush_work(&dev->init_work);
+ 
++	clear_bit(MT76_RESTART, &dev->mphy.state);
++
+ 	mutex_lock(&dev->mt76.mutex);
+ 	ret = mt7996_mcu_set_hdr_trans(dev, true);
+ 	if (!ret && !is_mt7996(&dev->mt76)) {
+diff --git a/drivers/net/wireless/mediatek/mt76/scan.c b/drivers/net/wireless/mediatek/mt76/scan.c
+index c8c4d096c809d..7bf9b7d4a8d7b 100644
+--- a/drivers/net/wireless/mediatek/mt76/scan.c
++++ b/drivers/net/wireless/mediatek/mt76/scan.c
+@@ -216,7 +216,8 @@ int mt76_hw_scan(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+ 	mutex_lock(&dev->mutex);
+ 
+ 	if (dev->scan.req || phy->roc_vif ||
+-	    test_bit(MT76_MCU_RESET, &dev->phy.state)) {
++	    test_bit(MT76_MCU_RESET, &dev->phy.state) ||
++	    test_bit(MT76_RESTART, &dev->phy.state)) {
+ 		ret = -EBUSY;
+ 		goto out;
+ 	}
 -- 
 2.53.0
 
