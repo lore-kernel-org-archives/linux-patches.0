@@ -1,55 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038984;
-	b=ytM4UCoE9To0x3ntVkwCh71vWRYlsid6XGrcQWzmpexerRvCPrn5Jg2izEshBwjyuHGi
-	 BbFSv+KUs4ot5fXa5Rb6zzMGRpdDOzeXJNhEvWYnNZ1FAroF7s0affOe9f6tobaheBiHF
-	 ZC2ky/Xm/sHK8oat3PV1r3YQ8d/Hb7uT4j+9SMCVUCWrPRonKa4JO/RBSi64YM470SZ+v
-	 OawXLlCigaAen0i34Z5LnIl4KMufP+iz6jyWQOtQ4jdwbuQTPmlBORvf0qP4cMUfV+CO/
-	 /IyK/hXnMQ9cI7GXmgr/fh9dymXRKqiQhX88UeHPgVYfvTHzK5l1ntZ9N51SV/7pVdA==
+	t=1795038987;
+	b=grhJf8UQ97zDXR5uC+r77OWhhUTPBUD81zjZ/hCFmAalsILbFG2ZXfqCf5F14Fw2RksS
+	 MXvTublPlArJ4U0BvvJrAhbL/HLKw8/WcDwM0jZl0WvVCkXGEsglYGOUV4l/S2v1B9ZdC
+	 yQPcD6t0JGa3ekiHAB2OxZuVdbKfl1j2plWeNPo0HqZRK4gycUGKx1l2RaIRmPyo0Noh2
+	 5rmRmuLbI0aZiPjA5lXL5NrRnH9unolthYPXrzf+wRXHa6tbKokNOFl2Svst1kTZxfztg
+	 e/uHAZmiNxe//NglirGlAwSej1/chnws1CCIEdIpIFp5MJfNgxC4L977knfukSLBPzg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038984;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038987;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NNmwABoC7pFZOZqUhgVs9s7Wt7cCzRj/Ixt2orI3hZA=;
-	b=baY75UtvuMa5kQt5o4qKsfgWTLcbVBXIUoi+IPQ0aAVPB83NDzMJUcxOQxTcYssvZmW3
-	 Ud4LoTuqWqjKeDe/SRZGv4obGcqrNjUE3qZWTdaNpexyeY5+fItxQLR6F2clgfGCatDLv
-	 iQ/pilKvT3YbjTp2ZZgItzKt046ALcOsOyb2KX/ZiAblTyZOcGK53uUVbUVaY2fz8Ybu5
-	 WBgbW0iE9jpmu923O/1IprOtuEDuOVvg0BGQObk63I/Z8o/ORkS6q5CZNMAi4g8MlZGib
-	 PSHx3WkqrvSTra+m34uCpqDmrc1GEnPGEiFOmBnzVsXBOhAfMC/pQswJ7OuGYdeOh1g==
+	bh=ouqErwGAlf5wFddUoQ+N8I3Bl+fA6uufLm3BwRNzbu8=;
+	b=CJghxD6QrwH7soX4hVpGDLMGq/Dol4bP0DuW+lWXvZsZqNqmJD6hHMdKGzIb/2ejRbGi
+	 RNFRcTLil6oJh8KwdqG0jg+C3FksEUEmZXx1EUHObk3h/1hKjObw+rA53G4b5o2Mx3mRi
+	 tyTPF9mrMFG+wTCOsKA7c/Vo0pU0uzvTlrCE3RPObiOmalcsoqTcI/rqNH0zdoEN+qa5g
+	 dHbeZi0SHIbkod+S9cZQdvNyEFrATyXh7CZQPdQ2Qe88xZ+5Ua64M92XqznUqqTQSrmXy
+	 pHPOm6A5PhSVDZ7UGD56+BeztjfwLYhZ5D6eLBYHscpxy1NjkZL9cCXoDHyzal/jTlQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eevqPPH8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HGgRZYkg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A554A606A325;
-	Wed, 18 Nov 2026 21:56:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791D2606A31C;
+	Wed, 18 Nov 2026 21:56:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eevqPPH8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 068B11F000C4;
-	Wed, 18 Nov 2026 21:56:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HGgRZYkg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D00FF1F000C4;
+	Wed, 18 Nov 2026 21:56:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038984;
-	bh=NNmwABoC7pFZOZqUhgVs9s7Wt7cCzRj/Ixt2orI3hZA=;
+	s=korg; t=1795038987;
+	bh=ouqErwGAlf5wFddUoQ+N8I3Bl+fA6uufLm3BwRNzbu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eevqPPH8ntMYPdhItcnZ9mbCYi9sGaJQ3yqonaJ9lMRPvxxjJVSvsvr5Gi6mB4Zjh
-	 uTH028YzSD48Ij8DVsqc8SgKPicYniTlvfuEYYEH0jOXWIuzUW5y3vt7CvRt/XOBpA
-	 3OH8KIeMHAAu1UnZz9q2G7jBXOJeFOYe/Tsxc6/s=
+	b=HGgRZYkgL5nmfZxUZwBESiFNr1xrxmHHn1yGDZvqC21LonspsDVj1rbuVj+CpaQH7
+	 hYvR7ripDV9PacCqozVm1P9/tgePWQICzhMs0P/Io120t6DxapbfR4/roUzJIoSzr5
+	 bZ04UPQQAqi3QeKnuKLSs4D5QOczYiPE5hNDuDLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
 	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
 	Pedro Falcato <pfalcato@suse.de>,
+	Dev Jain <dev.jain@arm.com>,
 	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	Lance Yang <lance.yang@linux.dev>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1938/3318] mm/memory: reject remote COW faults on PFN mappings
-Date: Wed, 18 Nov 2026 15:42:40 +0100
-Message-ID: <20261118150420.185072876@linuxfoundation.org>
+Subject: [PATCH 6.6 1939/3318] mm/mremap: use pudp_huge_get_and_clear() when moving huge PUDs
+Date: Wed, 18 Nov 2026 15:42:41 +0100
+Message-ID: <20261118150420.215703980@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,72 +72,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit 8db6921cc07b74197a3866d62ed262b68aeadcf3 ]
+[ Upstream commit b4417d08034a7b4a3083e0e2d95429d4542524f2 ]
 
-When handling a COW fault without a normal source page (PFN mappings),
-__wp_page_copy_user() copies from the faulting user address. For remote
-faults, this accesses the wrong address space, resulting in wrong data
-getting copied.
+move_huge_pud() reads the old PUD and clears it in separate operations.
+Hardware accessed or dirty updates between those operations can be lost
+when the saved entry is installed at the new address.
 
-For example, user_events updates an enable bit in the registering
-process's memory. If that memory needs to be faulted in,
-user_event_enabler_fault_fixup() calls fixup_user_fault() from a work
-item. Placing the enable bit in a private PFN mapping can trigger this
-remote COW path.
+The raw pud_clear() also bypasses page_table_check_pud_clear(), while
+set_pud_at() accounts for the destination mapping. This leaves the
+checker counts unbalanced for mappings tracked by page table checking.
 
-Reject these faults with VM_FAULT_SIGBUS when the target mm differs from
-current->mm: remote faults. Ordinary (non-PFN) mappings are not affected.
+To fix it, simply use pudp_huge_get_and_clear().
 
-The user-address copy dates back to commit 6aab341e0a28 ("mm: re-architect
-the VM_UNPAGED logic"); likely, actual ways to get remote faults in
-there on COW PFN mappings appeared afterwards. But the fix is simple and
-straight forward.
-
-Fix generated by an LLM and sent by Chris Mason in private.
-
-Fixes: 6aab341e0a28 ("mm: re-architect the VM_UNPAGED logic")
+Fixes: 7d846db7d0e2 ("mm/mremap: convert huge PUD move to separate helper")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
 Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-[ david: simplify comment and description ]
 Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
 Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-35-d6437171ecc3@kernel.org
+Link: https://patch.msgid.link/20261031-fixes_core-v3-30-d6437171ecc3@kernel.org
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: Replaced pmc->old_addr with the existing old_addr parameter in pudp_huge_get_and_clear(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memory.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ mm/mremap.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/mm/memory.c b/mm/memory.c
-index 2ad125baa9504..a3f48457a2446 100644
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -2837,6 +2837,13 @@ static inline int __wp_page_copy_user(struct page *dst, struct page *src,
- 		return 0;
- 	}
+diff --git a/mm/mremap.c b/mm/mremap.c
+index 494064a9719de..19734461d39dc 100644
+--- a/mm/mremap.c
++++ b/mm/mremap.c
+@@ -418,8 +418,7 @@ static bool move_huge_pud(struct vm_area_struct *vma, unsigned long old_addr,
+ 		spin_lock_nested(new_ptl, SINGLE_DEPTH_NESTING);
  
-+	/*
-+	 * __copy_from_user_inatomic() only works as expected for local faults.
-+	 * Reject remote faults.
-+	 */
-+	if (unlikely(mm != current->mm))
-+		return -EFAULT;
-+
- 	/*
- 	 * If the source page was a PFN mapping, we don't have
- 	 * a "struct page" for it. We do a best-effort copy by
-@@ -3127,6 +3134,8 @@ static vm_fault_t wp_page_copy(struct vm_fault *vmf)
- 				folio_put(old_folio);
+ 	/* Clear the pud */
+-	pud = *old_pud;
+-	pud_clear(old_pud);
++	pud = pudp_huge_get_and_clear(mm, old_addr, old_pud);
  
- 			delayacct_wpcopy_end();
-+			if (err == -EFAULT)
-+				return VM_FAULT_SIGBUS;
- 			return err == -EHWPOISON ? VM_FAULT_HWPOISON : 0;
- 		}
- 		kmsan_copy_page_meta(&new_folio->page, vmf->page);
+ 	VM_BUG_ON(!pud_none(*new_pud));
+ 
 -- 
 2.53.0
 
