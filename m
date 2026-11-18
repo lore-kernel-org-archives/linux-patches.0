@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022833;
-	b=0r68Uyk/NV7dYm8j13U0I7UALcA+57xxyMF+M5rYDnGP/9oguFJNhAzt2URmt6Cgyhyb
-	 uRzQuhRD7ta2A4KuZ8qy6Q6lXlOcXg9MWwxojpec9Ov/EV3R/nhImWWi0N1xrWy+j8GjP
-	 WBYz7I84PUMr66/5pBy5Nuc81phcoyWAR+INOJGbygacxmGs7X/6KJ8unQ3IBme/0ANEs
-	 QxX1q6r7mPYJBitxZu8rq+2YhAvEf5tMriOR8RLj1Qi9ZqgwGKeTfMTBXrV0LBybuC7mJ
-	 Xt/G+/td/kixtLmflTJOcC/5zqqFebsehC0ua/bWSSVqQyVyL+b7ObTLA0EdsKO6N8A==
+	t=1795022836;
+	b=WjnzM54lan5ymnV814ZGzRK2yrrGrZALZzA6DtFLt7o/PixcFZTy6aZM2eBt+OpXKOcG
+	 uCm6oGWCa0uM0IxKIY5O1zUeQKhFY9lyqpOJ7hc1/fqVMvd56EOyByS2RyXkZIlkKJvaz
+	 pGFLW1i17Em5makTRWrsYPS9JWzyIyC0fk5p/h2Amf0lboXETLZXKzJq3j0GdNsnib/C+
+	 AwMnNfqALOUJ2OJ0v2uDTgD9FfwPuuZ8I8G1u062A7Xeg3OdjgmpNbS/hsDmt6Ju6sLFU
+	 1Xr0f1Fny4aqytpn0+SNdUeV5klliKGODHVbddJtU10Cy9Nc1f8fFmF6QN/OrAIkEgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022833;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022836;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jmLo71J50XO7ZjH5kginOquoGxFdJQUzmPdQgMTif/Q=;
-	b=Beg8Hu7ej/ew1q67yNO/Mok7AIAWDqU0zE1GNiU9tOA/ounIhQNzcAxkPBRq8Q31kP2X
-	 zVIikSm3DLZ9L0eWWH3xHqKLNSdIJ8031bJqF0XbGXKD31cIFNWwNp387djbCP6Ic7CLi
-	 th2lJGiHtfDvrJx8fF/puxFDFpb6/TfWkyjVtx5hVQZwCAUlHHNAyHcad7bCbNRapTnYw
-	 kN2fRxQmTS5MH+QJlNf/7uOxFnUXvE1NE8wKOySaM1EZGJRZzfQm/ENEkuPWKCtNXjoDX
-	 N9Zi221ygg1Sa61WF88jcT9IzzlLk3BZxdGNkfBmpGFBOseoIIlziTE3ZJpQAF8q4ew==
+	bh=GjHNiCg43+yTrs+Datpa0E0LihSUyaU60qmiWVtCsfg=;
+	b=WWZP1fnuRqFIkCVCw7KGxXAfqklMYSjcNqEg1Z0JQLDmg5eeSyt4NoKQu96Jz2wrK3C+
+	 4DykIVLWmwaVe4Wn/grZ0SQ5xsjFZJWCtEViaMkCX0jE9erX8YZUyP0kfUmlFGsKnyPI+
+	 opsMwf1HpDUvF8z6X3pCgFA63XzNNIf2uk4D7H5OQrjRCKnWMA26tnFl86h9efKnTqdSm
+	 4KM5ycDgWd95iLvd3RJAEDt58YDZOwlTCfC1HoZvzHgIPNn+X4s7SXQhoc/i6bchxoesH
+	 JwyHLeS05AQDO0gFKYodknfmmeJvDVPFUe/ScYuDCNP8eAyeD3oZEziixmVHMSP6rFA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uC3azxWQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZIcF8vvj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88223606A765;
-	Wed, 18 Nov 2026 17:27:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E07606A334;
+	Wed, 18 Nov 2026 17:27:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uC3azxWQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A004B1F000C7;
-	Wed, 18 Nov 2026 17:27:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZIcF8vvj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 753E01F000C4;
+	Wed, 18 Nov 2026 17:27:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022833;
-	bh=jmLo71J50XO7ZjH5kginOquoGxFdJQUzmPdQgMTif/Q=;
+	s=korg; t=1795022836;
+	bh=GjHNiCg43+yTrs+Datpa0E0LihSUyaU60qmiWVtCsfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uC3azxWQLrHpZmKGWhfAk4MQRSyOUQAU5Im6XebkX3O6ojH+YL+w3jRO6njIPzrz7
-	 GL3c7nR3CNGgK+n6YM18yyaJKlwhtY6u2484vpf52vySZblw1pT3696q3LSZPWkvES
-	 IX2UHn0GDU4DkkAyX35l1hXMTdq40rlRk0JjAgGQ=
+	b=ZIcF8vvjzBiLIv7cLsZtyn1RMUKeW8IhOBrjNjVaX+g/+yXcW+7+8b5vWDTq0WjcA
+	 tJ8yozKNpllQkVwTsQEmteDyJeFWJ+ZixhHmbDRI1jXhWwxcpRtothR6J/8VK9jBea
+	 pQTh/vldvIgp5hItK+iT5Z79ueKJuzdV0gxws5/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianlin Shi <shijianlin11@foxmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0137/2151] bpf: Return partial progress from bpf_stream_read on fault
-Date: Wed, 18 Nov 2026 15:31:12 +0100
-Message-ID: <20261118150126.777734499@linuxfoundation.org>
+Subject: [PATCH 6.18 0155/2151] ARM: dts: armada-388-helios4: fix vmmc property name
+Date: Wed, 18 Nov 2026 15:31:30 +0100
+Message-ID: <20261118150127.403490313@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,62 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianlin Shi <shijianlin11@foxmail.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 16790357a50baae10de1f619b608a85145d54bc2 ]
+[ Upstream commit 008e9faadef8c0aaa9b8a3ff05a2126e3c5b08b7 ]
 
-bpf_stream_read() pops and frees stream elements after a successful
-copy_to_user(). If a later copy_to_user() fails, it currently restores
-only the current element's consumed_len and returns -EFAULT, hiding
-bytes already delivered to userspace and making the consumed data
-unrecoverable on retry.
+The sdhci@d8000 node references the 3.3V regulator through a bare
+"vmmc" property, which is not part of the mmc controller DT
+binding. The binding requires supply properties in the form
+"vmmc-supply", so the current entry is ignored by the driver.
 
-On a short copy, keep the successfully copied prefix of the current
-element and return the number of bytes copied. Return -EFAULT only when
-no bytes were copied for the call.
+Rename the property to "vmmc-supply" so the fixed regulator is
+correctly wired up as the card power supply.
 
-Fixes: 5ab154f1463a ("bpf: Introduce BPF standard streams")
-Signed-off-by: Jianlin Shi <shijianlin11@foxmail.com>
-Link: https://lore.kernel.org/r/7668c5838c6beafeea719df8d55319e2fe08cfef.1787492521.git.shijianlin11@foxmail.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Fixes: ced8025b569e ("ARM: dts: armada388-helios4")
+Assisted-by: opencode:big-pickle
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/stream.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ arch/arm/boot/dts/marvell/armada-388-helios4.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/stream.c b/kernel/bpf/stream.c
-index 612f4a7954f4d..62af66d6ee391 100644
---- a/kernel/bpf/stream.c
-+++ b/kernel/bpf/stream.c
-@@ -310,6 +310,7 @@ static int bpf_stream_read(struct bpf_stream *stream, void __user *buf, int len)
- 
- 	while (rem_len) {
- 		int pos = len - rem_len;
-+		int chunk, n;
- 		bool cont;
- 
- 		node = bpf_stream_backlog_peek(stream);
-@@ -323,13 +324,14 @@ static int bpf_stream_read(struct bpf_stream *stream, void __user *buf, int len)
- 
- 		cons_len = elem->consumed_len;
- 		cont = bpf_stream_consume_elem(elem, &rem_len) == false;
--
--		ret = copy_to_user(buf + pos, elem->str + cons_len,
--				   elem->consumed_len - cons_len);
--		/* Restore in case of error. */
--		if (ret) {
--			ret = -EFAULT;
--			elem->consumed_len = cons_len;
-+		chunk = elem->consumed_len - cons_len;
-+
-+		n = copy_to_user(buf + pos, elem->str + cons_len, chunk);
-+		if (n) {
-+			/* Keep any successfully copied bytes; -EFAULT only if none. */
-+			elem->consumed_len -= n;
-+			rem_len += n;
-+			ret = (len == rem_len) ? -EFAULT : 0;
- 			break;
- 		}
+diff --git a/arch/arm/boot/dts/marvell/armada-388-helios4.dts b/arch/arm/boot/dts/marvell/armada-388-helios4.dts
+index f5ae4bea1211f..0545452a983fc 100644
+--- a/arch/arm/boot/dts/marvell/armada-388-helios4.dts
++++ b/arch/arm/boot/dts/marvell/armada-388-helios4.dts
+@@ -269,7 +269,7 @@ sdhci@d8000 {
+ 					     &helios_sdhci_cd_pins>;
+ 				pinctrl-names = "default";
+ 				status = "okay";
+-				vmmc = <&reg_3p3v>;
++				vmmc-supply = <&reg_3p3v>;
+ 				wp-inverted;
+ 			};
  
 -- 
 2.53.0
