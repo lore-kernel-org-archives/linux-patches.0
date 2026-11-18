@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034076;
-	b=BUu13KJbfSfI20e1wdqxONd5/ln3EQKheFOciR8xE3zHHFr45R2Nx++AZhJT04Yv9aXS
-	 nkciV2WJFQ+xUpccwlQveR9ONgbGc1/qrl0TL9sNgNeguidWTI/9sxE1EV6MatzCS0OZn
-	 WoiiJCTQcJXUa53WO1qEQ8l3nwkW1zEHfTpEQ06XPnUcVAPHB5C9n8hZoaDVumdh2iB3D
-	 GZfm4nXCDvTYsm8Vld3v6HXnV+Lpf36iyXvilosANm6IhU1UZ1mIiuYXTezJBJLXia5If
-	 y/0eSq9E5Pq/cZIKVzifhpjHsUCBhwZXWOeqLleZbelY/6EpvBkF1vJAn9kb4w+69lg==
+	t=1795034079;
+	b=1m1NIrKdLWvhlZKRSiTfaWTsJNQIt8Ckg3olCrY7OT0fB5+ihtwt/ybSq9+oYbMd2eQo
+	 sk3Ye/iA+/VbXve+O8lyE1U7LraNGrPF1AEjtwsWi/VdkpgSenc8FjHGjtJOSTSCJDj9X
+	 SVjxqvhdwkWXKKN5cOtPc6aStaaojK0SaZzIi3Cw+KZgT/GJ2FENEXBwwx1wYj/Wi38n1
+	 Ax/jARiiobaKW0h/zFWRkv8JFcW9qH48Qo3vvAmWvieFcBUxH8jHbmLEIifF+BiuKez9q
+	 oUIDlhzqlTLeRZqAJCFrjLN/oToOeRhZXzqpUQkUTZYSQvqDhaJ5pNZpKSyRPE9a1mw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034076;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034079;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5OarVjU2duB2r0M5xwbyBfjgIkdmFogF0+9ynMLtYxQ=;
-	b=P0RDJDJoqHMCE861Rwuo2C/6nR5dEbh4XJG1wAFjybQkbDvOI2dPh1+xyIW3zoFffV38
-	 NvPvydocDmtowq237cozrOh6sgxj1cMhpYL3o6ADKJfSTqI0EnLw9TEdsdbx0QuOaZbFR
-	 M0w/qa20jSQiHhwjNRdfV727W9Qk59Pyj7G0MYMy+zKLiZ5jjHDUHIbZdnCy60N7YHiYq
-	 z0bh21V0DyTNDj+uCTApicMP5S4hTyI2LejNJrqW6LiBGoK2nSp2sxyHuLbPatOnnJr9M
-	 aLzFD4LZ7p/bfPM62tXJzH4ItYYPMN7VJ5rZ+rzfEKbpXkG5ZlPw4zU5AR/YFxa8WPg==
+	bh=qZNbiriQTldJX1idC8fz2lmq3HhJTONeJl9gLfRZuU4=;
+	b=CGlLNX6DRZCaEqCEB3zVQmsHuqc7PFZmvRR25WsMU7Mo9b+M5hiXzFzJ7CzaJ8qGdelt
+	 0L/PY/i4k5uPWFDIHBHEi2SLRgKNQr70OFDjNhQ5iRGZ+27hTFM1Ky4yJvMPYIQQEx9qG
+	 uNPiPT79esKMgy77VqEd53+ZbM9WX2g6X0Q54IfGZPUc+hdxFj/uBYWXzu6ohGLjJ1fyK
+	 lezyX7eLk1T8avsIumfpBW4+U8w2eAiQ9IDdAI3miUKWey4ljSbAcm4LUzlo32Xh92PhX
+	 ICbqfK3rOl4l5HzflzvEekBkdGUNB6qxSy6o1XoPtUacLWXxreOeb2e4oStOHK19yow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xPQun9dN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VPAn2A+i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA83606A320;
-	Wed, 18 Nov 2026 20:34:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2127A606A33D;
+	Wed, 18 Nov 2026 20:34:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xPQun9dN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C92AA1F000C4;
-	Wed, 18 Nov 2026 20:34:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VPAn2A+i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 799001F000C5;
+	Wed, 18 Nov 2026 20:34:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034076;
-	bh=5OarVjU2duB2r0M5xwbyBfjgIkdmFogF0+9ynMLtYxQ=;
+	s=korg; t=1795034079;
+	bh=qZNbiriQTldJX1idC8fz2lmq3HhJTONeJl9gLfRZuU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xPQun9dNu44zP5vLGhGFkgtBVAj7DOc53ztze7nk2wO/xHWGTeTG2+e4o1BhGfPvk
-	 cmqXou5eETbp1O1HKbe+B4FYunXj5DZaQXZWqYN0nHNXh98oMIB+Ls+FwaTCG0PaAj
-	 YE9PtQY9qIS8rY1zjAGvYVGCJklDs9UD/HVEYGu8=
+	b=VPAn2A+iARKLahQdJz8SAvOdLjfNgYVHsQoSZVFfaiCkgHAEyQR//FRWvk9hvZQDt
+	 vgfueRvefI7ZIwdAglqdBe5sfd5anWzEgbereEZRpbWaB6+hsuAnekGqe2OPwsH9xk
+	 D4QgIpSvB19788pOFi+xuAsV8ySUmWIVKjrd3Uvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Haufler <andreas@haufler.info>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Rui Qi <qirui.001@bytedance.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0240/3318] tools/lib/thermal: Fix misplaced extern "C" closing brace
-Date: Wed, 18 Nov 2026 15:14:22 +0100
-Message-ID: <20261118150322.325516603@linuxfoundation.org>
+Subject: [PATCH 6.6 0241/3318] selftests/ftrace: Force C locale in ftracetest
+Date: Wed, 18 Nov 2026 15:14:23 +0100
+Message-ID: <20261118150322.359975567@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,53 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Haufler <andreas@haufler.info>
+From: Rui Qi <qirui.001@bytedance.com>
 
-[ Upstream commit cb0ec27efac2aaf92393ad563a35fb6f00d0a6cd ]
+[ Upstream commit c13fcd3951dcc19524ce0b3e852844b16cd32b22 ]
 
-The public libthermal header opens the C++ 'extern "C" {' block inside
-the __LIBTHERMAL_H include guard, but places the closing brace after
-the guard has already ended:
+Some ftracetest test cases parse command output by matching English
+field names. Tools such as readelf may localize their output via
+gettext, while ftracetest currently inherits the user locale from
+the environment.
 
-	#endif /* __LIBTHERMAL_H */
+If a translated field name is printed, parsing can fail even though
+the tested kernel behavior is unchanged. For example, add_remove_uprobe
+can fail to find the ELF entry point and then write a uprobe event with
+a missing offset.
 
-	#ifdef __cplusplus
-	}
-	#endif
+Export LC_ALL=C in the top-level ftracetest runner so every test case
+gets stable command output by default.
 
-On a single inclusion the braces still balance, so the problem is
-invisible. On the second inclusion of the header in the same C++
-translation unit the include guard skips the opening 'extern "C" {',
-while the closing '}' lives outside the guard and is emitted anyway.
-This leaves a stray '}' and breaks compilation for any C++ consumer
-that includes the header more than once.
+Link: https://lore.kernel.org/all/20260807081512.2974757-2-qirui.001@bytedance.com/
 
-Move the closing block inside the include guard so both halves of the
-'extern "C"' declaration are guarded consistently.
-
-Signed-off-by: Andreas Haufler <andreas@haufler.info>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Link: https://patch.msgid.link/20260721083230.91246-1-andreas@haufler.info
+Signed-off-by: Rui Qi <qirui.001@bytedance.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/thermal/include/thermal.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/ftrace/ftracetest | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/lib/thermal/include/thermal.h b/tools/lib/thermal/include/thermal.h
-index 1abc560602cfb..cf8381121c78e 100644
---- a/tools/lib/thermal/include/thermal.h
-+++ b/tools/lib/thermal/include/thermal.h
-@@ -135,8 +135,8 @@ LIBTHERMAL_API thermal_error_t thermal_sampling_handle(struct thermal_handler *t
+diff --git a/tools/testing/selftests/ftrace/ftracetest b/tools/testing/selftests/ftrace/ftracetest
+index c778d4dcc17e5..22d0f5ec9bd28 100755
+--- a/tools/testing/selftests/ftrace/ftracetest
++++ b/tools/testing/selftests/ftrace/ftracetest
+@@ -7,6 +7,9 @@
+ #  Written by Masami Hiramatsu <masami.hiramatsu.pt@hitachi.com>
+ #
  
- LIBTHERMAL_API int thermal_sampling_fd(struct thermal_handler *th);
- 
--#endif /* __LIBTHERMAL_H */
--
- #ifdef __cplusplus
- }
- #endif
++# Keep command output parsing stable regardless of the user's locale.
++export LC_ALL=C
 +
-+#endif /* __LIBTHERMAL_H */
+ usage() { # errno [message]
+ [ ! -z "$2" ] && echo $2
+ echo "Usage: ftracetest [options] [testcase(s)] [testcase-directory(s)]"
 -- 
 2.53.0
 
