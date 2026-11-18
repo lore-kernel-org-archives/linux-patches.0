@@ -1,57 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038798;
-	b=Og7p7Vqh3gq5aikRNpG3babXB9lL/pLvT+0+ZmNORYkGp5givBSM9aA6G1xESMEv/Zrs
-	 BKgSj1MZu/iCD0V5lL8qwXaNey86UC6ohTXWAqwURbld39ZIx6yWaH4yoYgnBy5y53O1n
-	 NPHE7uzR4Ic3GixJ8My+hP9sK0+CHnWopPtYJkZralmYuZ8tguXdnTc9Thp7raA8Jxmky
-	 0QB7EeL/QedJb7gNxzy9ZAIXSHxihhYbPC9h0nhm3qmvgN8DufIV+X6K8Jqa2MrAr75Cp
-	 zfh4jNqI6WdIt8wUB/JSyFqfI10Y9MQrtJ75DkbVe/Jet0SQ52rIKa8pgn+P157OH8Q==
+	t=1795038801;
+	b=qLXJ9zP5Z3mg1ySfb7CWg/mbHE3zkiyhzGLblb31exRWMyzs2HRPKXFAUFWOfnnmljDd
+	 VC1xBVB/qFpBUpZtDII0SsMexEYSlU+zHWeNQ8yYVzzic5kd3otSLEIbfLWc+U4BSgWZ7
+	 s42Yb0IhMicOR1DdUZO3MVadWxqd6L/8xe4p7t7jDJtqQBPUs5cVEatoBjNS3S15mPN04
+	 6RhdMWyt/QT7B7Kj4Zoe2XPALU3aU7No7jU9BSJhAeHL9XEVJA4fPPSjIiyfd7ySJo6ay
+	 /QGUjX6XRPzTrMnW4kCpwHHqu8pCCh8G48g5WZr96XB0T/3vqtGUBzrfLFAgfXD82dw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038798;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038801;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3YfwN5yQbTyJPt3LucxsCI5lnLYy6QeK/Qp8k5MxVAY=;
-	b=fCPn+XmUlwuTWS+N8dQEF8/1RJ8Uq8ckVe4CBSZdhn5YxtPpg2DpHzq/n8FGcXC6paLW
-	 okN/5oO/R+ughvAg3uAb8JqJoBRU2QXzgwab2anU2fl75bUJNPgrTJ15OAbD8NKnHRxDl
-	 f6SI1e6aclljUgvQ/D5S0UOZJjqO/vBqP1i45UEojdvZtAj7ebDqT1Y+9nMb+SRk+jeBx
-	 UZM6YrTH4S46vg63sq+5AyxlafKU5MU1NZjBA9rh2rY7Pur5HYiKzwgdyTPCPVFdTJodB
-	 mYJiFFMSphbMlwBwsTmFVwY3N7kPSvD/mRapIPjZIIff6TnQc2dYO0M/ZdPm151L/xw==
+	bh=nHBZcseV7cXqSuuXi3g+3Qzsxv6T1dtoFg6VHw9la40=;
+	b=YLSTi3AIeytgJ2p7bi1/wlxjIOMjfsCmu1K7J/F8TUoty4FlxfnU5QarG0c7ExnNNdDp
+	 qrcQjoOi18tf9EoIzDbRgq6O/RVULGYQR0RSN0BeAMxmiuuDBCWu7pSsa6g2tKquqMZSF
+	 4xn55sp53h3KWpiPCWIeSZr8hdLK5lsSyLpI4FrsThnM3TcLiv6b+jBPpPmdZiRcoz8sf
+	 D2htqtUCS8yXc4z0SVMz9IdAgO4t1fxvqtRP8Nk/khAdk3GSbZMIJ5MAzRhNK83lbS4Yl
+	 4DwzIRbfjuRd54wtAK2ZKJJ1xADTM9icaBgamLLiRQGcpk+HBihIXgAMyseGWltSYzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DtouqEIb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sfXYVDAO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A2F606A320;
-	Wed, 18 Nov 2026 21:53:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6441B606A31C;
+	Wed, 18 Nov 2026 21:53:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DtouqEIb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECC891F000C4;
-	Wed, 18 Nov 2026 21:53:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sfXYVDAO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5F451F000C5;
+	Wed, 18 Nov 2026 21:53:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038798;
-	bh=3YfwN5yQbTyJPt3LucxsCI5lnLYy6QeK/Qp8k5MxVAY=;
+	s=korg; t=1795038801;
+	bh=nHBZcseV7cXqSuuXi3g+3Qzsxv6T1dtoFg6VHw9la40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DtouqEIb60ikDonKGFoPUEhgnyGS0BQud2Y12pdfN4eMk3p6/oYbadcQeiRzBFT0+
-	 HM3wjwQvA74H/azxL6vDdpeUgZm/9qPZi8s1nFwftO5DRyRT1f7gcP+9kB0TR7F2BI
-	 7uav4A24B8uTQHnjkvBIoUAuBWMKqQX3s6EyhzAA=
+	b=sfXYVDAOcL1YvqYWiX41uJILQk8CG/rtjNWBzw8J6hWnv+XJOAS6jF1W22xDXPAHM
+	 KDOnz/Hs4r4OPLBT9oz2zgTSQQsK+YCnuVsBh2l8qh7LG1/Ci8+GF6W1iVQNVHjICw
+	 igH7hkkmB6SjrScFxoCpVOFesG1pUQPMhYqU1zuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Hocko <mhocko@suse.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Rik van Riel <riel@surriel.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
+	Qu Wenruo <wqu@suse.com>,
+	guolingxing <guolingxing@tju.edu.cn>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1869/3318] mm/memcontrol: fix stuck FLUSHING_CACHED_CHARGE bit on isolated cpus
-Date: Wed, 18 Nov 2026 15:41:31 +0100
-Message-ID: <20261118150418.014897059@linuxfoundation.org>
+Subject: [PATCH 6.6 1870/3318] btrfs: prevent deleting the wrong subvolume by ID
+Date: Wed, 18 Nov 2026 15:41:32 +0100
+Message-ID: <20261118150418.051622906@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -73,53 +69,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rik van Riel <riel@surriel.com>
+From: guolingxing <guolingxing@tju.edu.cn>
 
-[ Upstream commit d2f28a1a652e0a43f6f63de9b4e4d8d5f2716803 ]
+[ Upstream commit 1960146913b31b288ed2cd607d103ee3b41681d4 ]
 
-When drain_all_stock() sets FLUSHING_CACHED_CHARGE before checking
-isolation, schedule_drain_work() can drop the work in a separate RCU
-critical section, and housekeeping_update()'s synchronize_rcu() can race
-that second check, leaving the flag set.
+When deleting a subvolume by ID, btrfs_ioctl_snap_destroy() first
+resolves the requested ID to a name, then looks up that name again
+under the parent directory lock.
 
-drain_local_stock() only clears the bit for work that ran, so the flag
-remains set and the stock is never drained again.
+A concurrent rename can change which subvolume is associated with
+the name between these operations. Since the deletion path does not
+verify the ID of the resolved subvolume, it can delete a different
+subvolume while leaving the requested one intact.
 
-Have schedule_drain_work() return whether the work was queued, and clear
-FLUSHING_CACHED_CHARGE in drain_all_stock() when the remote CPU is
-isolated, so future drains can retry.
+This was reproduced by repeatedly exchanging the names of two
+subvolumes using renameat2(RENAME_EXCHANGE) while deleting one of
+them by ID. The wrong subvolume was deleted in 9 out of 14 independent
+tests.
 
-Link: https://lore.kernel.org/20260828135036.7d44361f@fangorn
-Fixes: 6a792697a53a ("memcg: do not drain charge pcp caches on remote isolated cpus")
-Suggested-by: Michal Hocko <mhocko@suse.com>
-Suggested-by: Shakeel Butt <shakeel.butt@linux.dev>
-Signed-off-by: Rik van Riel <riel@surriel.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: <stable@vger.kernel.org>
-[ sashal: adapted schedule_drain_work() return handling to a direct flag clear in the existing single-stock isolation branch ]
+Fix this by checking that the resolved subvolume ID matches the
+requested ID while holding the parent directory lock. Return -EAGAIN
+on a mismatch so that userspace can retry the operation instead of
+being told that the requested subvolume does not exist.
+
+Fixes: 949964c92843 ("btrfs: add new BTRFS_IOC_SNAP_DESTROY_V2 ioctl")
+CC: stable@vger.kernel.org
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: guolingxing <guolingxing@tju.edu.cn>
+Signed-off-by: David Sterba <dsterba@suse.com>
+[ sashal: adapted the error path to use err instead of ret and out_dput instead of out_end_removing. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memcontrol.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/btrfs/ioctl.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-index ff9927140c836..a5fb60f74a10f 100644
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -2396,6 +2396,8 @@ static void drain_all_stock(struct mem_cgroup *root_memcg)
- 				drain_local_stock(&stock->work);
- 			else if (!cpu_is_isolated(cpu))
- 				schedule_work_on(cpu, &stock->work);
-+			else
-+				clear_bit(FLUSHING_CACHED_CHARGE, &stock->flags);
- 		}
- 	}
- 	migrate_enable();
+diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
+index 54e3ec0685834..3b0c962d7a2f6 100644
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -2535,6 +2535,17 @@ static noinline int btrfs_ioctl_snap_destroy(struct file *file,
+ 
+ 	inode = d_inode(dentry);
+ 	dest = BTRFS_I(inode)->root;
++
++	/*
++	 * A concurrent rename may have changed which subvolume the name
++	 * refers to. Verify that the resolved ID still matches the requested ID.
++	 */
++	if (destroy_v2 && (vol_args2->flags & BTRFS_SUBVOL_SPEC_BY_ID) &&
++	    btrfs_root_id(dest) != vol_args2->subvolid) {
++		err = -EAGAIN;
++		goto out_dput;
++	}
++
+ 	if (!capable(CAP_SYS_ADMIN)) {
+ 		/*
+ 		 * Regular user.  Only allow this with a special mount
 -- 
 2.53.0
 
