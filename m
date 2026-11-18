@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047763;
-	b=xAiihm2FmmBX16eOntcBN+FHyEkLHwgi+FI8dEdoDOBhs8thdGrSoSGi5yHeSFEVhFO2
-	 wwZoshbeHyOmfp+ubBK87w9ZigIt3NxfuY8d/H9A5XuWbhOePwpv7Nt6u/iug8sBhSi65
-	 /ROHMFjG0YnPE4601+GZPLAgG6Z5LbghJqt/hcxqtcN0V0J5MT9t+Jr0C9WRMTwqqgErG
-	 LeVn7cSGoZvMUSFzDaejLeWqGvgAt/lPJTjgndJYHzorgJ3Jswa+8QV9gNkldhgFcQM7S
-	 qXghZ0KhHdxSFSSbQCgGqlsD8Htx395pwfrAv3fRPPi08rhqVR+Q/MthbkL8FwDQX6w==
+	t=1795047766;
+	b=BzeoMfaa+IA59ndQWUettjY5cq+TkvPiQGn1zVF4rsQFg/7HkTpOasQyAmAxaWtyXDKl
+	 DT9oHvHEPaFhutXWE/lz708iJqbF3rjWi6K/XIKvfZXuXgfT34Uz5asbRlJCAlb9rP6Gq
+	 sxdh+7tDfzfV9Q28CcQG4ziGeXHg8nNDPNnuGGdNmA9ImsiFyoKYjyvmzYmy7wr5OE+Ho
+	 SCsH4Gp8tvWbMmT0Oh8XvejO9ndstWkzn2bn/VUKPMAwJEw2FopToApAcpoKOIHH1v23l
+	 ixUJYvD79m54XF379K7TIF08lKctI2ZhfZjOqgLzv7DUEAvTjkkv0kIu2ZAVoyWfrlw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047763;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047766;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=9wscxnPW4RE7AjeKMhSub+9M2DGJWhGxhLQ0xRl5h3I=;
-	b=hw2b+yf0L2jLnSOOkHOOQvrKkShfmcdneOR5eY8TvZt8Eu3NyokPbOm7Ult+cZjidUyk
-	 S4DGJTFbCIyZTrcX6Eh4FINOa7juBFhrDK0WJutHB+arGO+l6gbHf20eMgvb++cK0S9im
-	 hFeQjSuYGKL/L3n3yS6MT3N3T3MgX+EUIhOyPYGyvz2CVRHBnMs8DlgHTvnpTzR0E37f5
-	 UllMI4uIapxoidJ7GPUo53F5jjaQeDVza33SYCLJ5drmhLmDGwJhkTH2K6G/mbiyGWwq0
-	 cACdVDtqjut3a0pQ+LjIz8pze3N7ndT0aX69HztE5PtMWn7SYfmTwJJbE5ML6LmS72Q==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=PFrZAcEZb7MhqJaAgxezfMXVm3sky6Y0ol6+Uu5qoEU=;
+	b=ung1Uk1kspUaECin1eJRi+pFAcwcdUhTxjaalh1qhI8h5MyPu50pyAnscXJ7FA3knBNp
+	 hcwyNJZNQKkASXamqu+kqTitpGgtVZ5uo9UO78sOUXx2M3UinAEFLvVx3MyVqezW8jCQr
+	 uRNzOXHOHF80lgEwmA3V0DGH86Vq1+97Lmq0n1jdVw6bli8JNf8ZXTtgdYd2ImOD3AwTI
+	 VSoupUwfYmyjszB3JFmfsZ6zuAkeRAFoCgnF9op8rLLfJro7WGFIVrDnzWaU8B0NmJVsE
+	 l1/CPgq7QFaRXhqUO+8sc7BCAIrEVwhN2wxShXGgOlJ2dPCevd7vQsD7CMEDbBYXXvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IZWGd5kp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ffHPRB8U;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E13A606A31C;
-	Thu, 19 Nov 2026 00:22:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1F31606A320;
+	Thu, 19 Nov 2026 00:22:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IZWGd5kp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A1EE1F000C4;
-	Thu, 19 Nov 2026 00:22:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ffHPRB8U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D2F31F000C4;
+	Thu, 19 Nov 2026 00:22:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047763;
-	bh=9wscxnPW4RE7AjeKMhSub+9M2DGJWhGxhLQ0xRl5h3I=;
+	s=korg; t=1795047765;
+	bh=PFrZAcEZb7MhqJaAgxezfMXVm3sky6Y0ol6+Uu5qoEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IZWGd5kpQojTaZFr3GaNjiKHuTH8KV1ieJu299terKMyWhGlzsCXKvvDGaiIHID8k
-	 1Mr5CJSRCJyU06hjqlQk2ziEdnX04PuG0TAzcqSRVmKFXRVA5pOMcI3ADKjRKfitaf
-	 oi2Jiu8bkJ9YTXJ4C0URSuLBoVUDs7GLmD5hOubE=
+	b=ffHPRB8UZAoUWL5vlxhyaZkD3zaH1t6hPH8YygtzHlOSAhaKD10YRHn+CozVlSJfy
+	 /7Y91KITBzW3WUXkzpKAsAC9dIllmohUnJ5pEwxcBEVzMQr37rsZ0VOdXCxjZhqiLs
+	 yptDbf2f5rwtq2IhBWZnfmfj6/d9XDU9FK8beNDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Stephane Eranian <eranian@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1728/2857] drm/omap: dsi: avoid sending bta sync all the time in writes
-Date: Wed, 18 Nov 2026 15:46:02 +0100
-Message-ID: <20261118150303.538347035@linuxfoundation.org>
+Subject: [PATCH 6.1 1755/2857] perf jitdump: Validate debug entries on native (non-swap) path
+Date: Wed, 18 Nov 2026 15:46:29 +0100
+Message-ID: <20261118150304.485790161@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -62,158 +64,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andreas Kemnade <andreas@kemnade.info>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 20207f78382ff339f3a7f7c5db2c0219b157d32a ]
+[ Upstream commit 51e14e495f0cea061bbad33e7635f7fd857113ad ]
 
-Some chips need configuration commands to be sent first, before they can
-send data. TC358762 for example needs PPI_LPTXTIMECNT configured
-and PPI_STARTPPI set to 1 to be able to transmit anything. To be able to
-configure such chips, do not send bta sync during writes if no acks are
-requested. Instead just wait for the packet to be sent to avoid FIFO
-overflows. There might be more to do about acks, but there seem to be
-virtually no users of that flag.
+The bounds-checking and nr_entry clamping added for the byte-swap path
+only runs when jd->needs_bswap is true.  On native-endian files, nr_entry
+passes through unvalidated to jit_repipe_debug_info(), which stores it
+as jd->nr_debug_entries.  Downstream, jit_process_debug_info() in
+genelf_debug.c iterates nr_debug_entries times via debug_entry_next(),
+which calls strlen() on each entry's name field — a crafted nr_entry
+causes OOB reads and writes.
 
-This came to light when fiddling with the Epson Moverio BT-200 display
-which consists of 2 TC358762 bridges with SPI funneled through
-to the unknown display chip. With that patch the bridge can be accessed,
-Reading back registers works, when the above-mentioned registers are set.
+Add bounds-checked iteration in jit_repipe_debug_info() that validates
+each debug_entry fits in the payload and its name is NUL-terminated
+before calling debug_entry_next().  Clamp nr_debug_entries to the count
+of valid entries.
 
-In Command-Mode update, there was a nop sent, apparently the most
-relevant part was the bta sync to actually force low power mode.
-
-Video mode panel at OMAP4 (BT-200) and video mode at OMAP5 was tested.
-
-Fixes: e70965386353e ("drm/omap: dsi: simplify write function")
-Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
-Link: https://patch.msgid.link/20260629-vm-upstr-v4-1-9f0c62d8808e@kemnade.info
-Link: https://patch.msgid.link/20260628-vm-upstr-v3-1-9e9add93378b@kemnade.info
-Link: https://patch.msgid.link/20260529-vm-upstr-v2-1-24c30671719f@kernel.org
-Link: https://lore.gitlab.freedesktop.org/drm-ai-reviews/review-patch1-20260529-vm-upstr-v2-1-24c30671719f@kernel.org/
-Link: https://patch.msgid.link/20260528-vm-upstr-v1-1-fb93ef8cbe47@kernel.org
-Link: https://patch.msgid.link/20260804-vm-upstr-v6-1-1bf3748b2fa3@kemnade.info
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Fixes: 598b7c6919c7bbcc ("perf jit: add source line info support")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Cc: Stephane Eranian <eranian@google.com>
+Assisted-by: LLM
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/omapdrm/dss/dsi.c | 63 +++++++++++++++----------------
- 1 file changed, 31 insertions(+), 32 deletions(-)
+ tools/perf/util/jitdump.c | 27 ++++++++++++++++++++++-----
+ 1 file changed, 22 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/omapdrm/dss/dsi.c b/drivers/gpu/drm/omapdrm/dss/dsi.c
-index 708520e5d4525..f0d54aaff357a 100644
---- a/drivers/gpu/drm/omapdrm/dss/dsi.c
-+++ b/drivers/gpu/drm/omapdrm/dss/dsi.c
-@@ -58,9 +58,6 @@ static void dsi_uninit_dispc(struct dsi_data *dsi);
+diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
+index e6d8b1aedcb0c..584932d1065e8 100644
+--- a/tools/perf/util/jitdump.c
++++ b/tools/perf/util/jitdump.c
+@@ -676,8 +676,10 @@ static int jit_repipe_code_move(struct jit_buf_desc *jd, union jr_entry *jr)
  
- static int dsi_vc_send_null(struct dsi_data *dsi, int vc, int channel);
- 
--static ssize_t _omap_dsi_host_transfer(struct dsi_data *dsi, int vc,
--				       const struct mipi_dsi_msg *msg);
--
- #ifdef DSI_PERF_MEASURE
- static bool dsi_perf;
- module_param(dsi_perf, bool, 0644);
-@@ -2189,28 +2186,45 @@ static int dsi_vc_send_null(struct dsi_data *dsi, int vc, int channel)
- static int dsi_vc_write_common(struct omap_dss_device *dssdev, int vc,
- 			       const struct mipi_dsi_msg *msg)
+ static int jit_repipe_debug_info(struct jit_buf_desc *jd, union jr_entry *jr)
  {
-+	DECLARE_COMPLETION_ONSTACK(completion);
- 	struct dsi_data *dsi = to_dsi_data(dssdev);
-+	u32 err;
- 	int r;
+-	void *data;
+-	size_t sz;
++	struct debug_entry *ent;
++	void *data, *end;
++	size_t sz, valid;
++	uint64_t i;
  
-+	/* wait for IRQ for packet transmission confirmation */
-+	r = dsi_register_isr_vc(dsi, vc, dsi_completion_handler,
-+				&completion, DSI_VC_IRQ_PACKET_SENT);
-+	if (r)
-+		return r;
-+
- 	if (mipi_dsi_packet_format_is_short(msg->type))
- 		r = dsi_vc_send_short(dsi, vc, msg);
- 	else
- 		r = dsi_vc_send_long(dsi, vc, msg);
- 
--	if (r < 0)
-+	if ((!r) && wait_for_completion_timeout(&completion,
-+				msecs_to_jiffies(500)) == 0)
-+		r = -EIO;
-+
-+	dsi_unregister_isr_vc(dsi, vc, dsi_completion_handler,
-+			      &completion, DSI_VC_IRQ_PACKET_SENT);
-+	if (r)
- 		return r;
- 
--	/*
--	 * TODO: we do not always have to do the BTA sync, for example
--	 * we can improve performance by setting the update window
--	 * information without sending BTA sync between the commands.
--	 * In that case we can return early.
--	 */
-+	/* TODO: find out if more needs to be done for MIPI_DSI_MSG_REQ_ACK */
- 
--	r = dsi_vc_send_bta_sync(dssdev, vc);
--	if (r) {
--		DSSERR("bta sync failed\n");
--		return r;
-+	if (msg->flags & MIPI_DSI_MSG_REQ_ACK) {
-+		r = dsi_vc_send_bta_sync(dssdev, vc);
-+		if (r) {
-+			DSSERR("bta sync failed\n");
-+			return r;
-+		}
-+	} else {
-+		err = dsi_get_errors(dsi);
-+		if (err) {
-+			DSSERR("Error while sending: %x\n", err);
-+			return -EIO;
-+		}
- 	}
- 
- 	/* RX_FIFO_NOT_EMPTY */
-@@ -3228,21 +3242,6 @@ static int _dsi_update(struct dsi_data *dsi)
- 	return 0;
- }
- 
--static int _dsi_send_nop(struct dsi_data *dsi, int vc, int channel)
--{
--	const u8 payload[] = { MIPI_DCS_NOP };
--	const struct mipi_dsi_msg msg = {
--		.channel = channel,
--		.type = MIPI_DSI_DCS_SHORT_WRITE,
--		.tx_len = 1,
--		.tx_buf = payload,
--	};
--
--	WARN_ON(!dsi_bus_is_locked(dsi));
--
--	return _omap_dsi_host_transfer(dsi, vc, &msg);
--}
--
- static int dsi_update_channel(struct omap_dss_device *dssdev, int vc)
- {
- 	struct dsi_data *dsi = to_dsi_data(dssdev);
-@@ -3263,13 +3262,13 @@ static int dsi_update_channel(struct omap_dss_device *dssdev, int vc)
- 	DSSDBG("dsi_update_channel: %d", vc);
+ 	if (!(jd && jr))
+ 		return -1;
+@@ -697,10 +699,25 @@ static int jit_repipe_debug_info(struct jit_buf_desc *jd, union jr_entry *jr)
+ 	jd->debug_data       = data;
  
  	/*
--	 * Send NOP between the frames. If we don't send something here, the
-+	 * Transition to LP here. If we don't send something here, the
- 	 * updates stop working. This is probably related to DSI spec stating
- 	 * that the DSI host should transition to LP at least once per frame.
+-	 * we must use nr_entry instead of size here because
+-	 * we cannot distinguish actual entry from padding otherwise
++	 * Clamp nr_debug_entries to entries that actually fit in the
++	 * payload.  The byte-swap path already does this for cross-endian
++	 * files; validate on the native path too, since downstream
++	 * jit_process_debug_info() iterates via debug_entry_next() which
++	 * calls strlen() on each entry's name field.
  	 */
--	r = _dsi_send_nop(dsi, VC_CMD, dsi->dsidev->channel);
-+	r = dsi_vc_send_bta_sync(dssdev, VC_CMD);
- 	if (r < 0) {
--		DSSWARN("failed to send nop between frames: %d\n", r);
-+		DSSWARN("failed to send bta sync between frames: %d\n", r);
- 		goto err;
- 	}
+-	jd->nr_debug_entries = jr->info.nr_entry;
++	end = data + sz;
++	ent = data;
++	valid = 0;
++	for (i = 0; i < jr->info.nr_entry; i++) {
++		if ((void *)ent + sizeof(*ent) > end)
++			break;
++		/* name must be NUL-terminated within the payload */
++		if (!memchr(ent->name, '\0', (char *)end - ent->name))
++			break;
++		ent = debug_entry_next(ent);
++		valid++;
++	}
++	jd->nr_debug_entries = valid;
  
+ 	return 0;
+ }
 -- 
 2.53.0
 
