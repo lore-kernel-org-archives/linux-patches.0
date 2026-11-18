@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059631;
-	b=SSd0Se7jvV1J52/aqGoE3CdBVECLTp2uK49a8pHkiChnRethOLvAZLR7BekYq3xirIuq
-	 VNcO9fYvFTVPVsJ9u7LneTsLWtXkWxzkphcDLKbW9wd+gsz4VRYFhiUXDKr+xX/XE/vxh
-	 mIQnIXoPQYK2dVhYWVlKnWm0gIr/hYfs1iJB1dWNxQs6DObBEjS1o2zd64GVSvOZIGg8P
-	 yeBOcNdIvQ1li9OQcGE1Zv9FDnir6me13ILmaveZKxUo2olW0g/2wvkyCikZhYqvTttCe
-	 iG/wP6XJTl8HVxggfgz7qr5HpSRnSAH5B35MRf/hMD32+kDugrD/brfjSxCkNP29hBA==
+	t=1795059634;
+	b=AzxSeOTLpG/+Jk2wZc3TjhDIIzXtXrEZxP0Qr210p0Tzf9HYB0+IJPff345a0ngsD11M
+	 z4Eb1Dh/iX/17UrynvGDxRfPhNQKaBLTYh4tCBRjd0KMSQ1HZ1EjahjbP9+TwOOMjLuVg
+	 5jYBJ/R/nhiXicACGFH9DjDVHz4F8/hoWbSryc5Cpkb7zttCpmY8rAiiZ7Q34uhmJMmEu
+	 yG1XwqijCZbpBYcpjSJJN2mUuWNU8qQkE2DsYAbxlDcAgQgAoYg5N8iaia/77fe+O+Fr0
+	 h9i5df6Kpch1bMnnKfrtQMBJIsPZOQvhA8H9QsSWrs9hyfFY81VPx8tw8XjBpRvPm+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059631;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059634;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Lne1jogUwxqZlypI8f1Bcnm5rMAeTw7cdlJzEnTmpXQ=;
-	b=KBoPzako3AKcaI5qZSEVpZCPCfPFVBb++Jr2WApoqYm5Fj5GnmljTSiglK39kSBMp7eR
-	 pJ5r7D0ssqatxETaWgRMppAEeu8CwUhtzk+GiStN3U8A4d0Qe2Xs4T+PRb0W1qnu9r+Yi
-	 m39G+HrJirgZdgCcCmLn9dP9XzkX2/x/WuPtitBG3o8R5H/bvCP3k+ZEE1+z/79jqIkR1
-	 aaPZJ5vhl3+00tMCs+Nvq865eyzVaNTPQzTTat6r03wJdy9wb/6dRdQFOAyaZHU/z1hh/
-	 lLliw0W/+9Y8HH0mbNxtNPfvID+4CE/CAdivbBvLQFuexSNL12l2qLszWeO5FtA3wew==
+	bh=roLvAKQFpPwj+6xarTylmvcF/eqTRP9nVqdZWneeX/A=;
+	b=oBLUMn6pvr0hFLOVAg2m/WMcfTVO8qHEAXq7NCU8XW94l8AX0ZDf0ffoLPbz6OiJlOd0
+	 oqtYibZXtt+oaJsVOwSY0jYkK/MjhCPdru8t4OsLK4j8m2KYUTsyKs8uhZHEUZ2P6KU4N
+	 SKmwT/YANixWZ8SiwUTeR/q2GbFxqO6oM+HcUuD4xqOScNj179N+U+EZYHKXXqiZQHRqv
+	 J/XkccD5hWGYhZHue6q3i2R1bJgfcBPMFQs5afoHiZpYXB6UJa+zm9r7Yf5aHfLM38f1Y
+	 gzq6Y3HuVaoY99p7Bwm+EdtOFifgdswPQznvzcGkYRiccrV3W+LdcOfKHJqn+mVJazQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J2gM7ajj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="e5tTYy/F";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 256D360A2629;
-	Thu, 19 Nov 2026 03:40:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A3A606A338;
+	Thu, 19 Nov 2026 03:40:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J2gM7ajj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68AE31F000C5;
-	Thu, 19 Nov 2026 03:40:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e5tTYy/F
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34EA11F000C5;
+	Thu, 19 Nov 2026 03:40:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059630;
-	bh=Lne1jogUwxqZlypI8f1Bcnm5rMAeTw7cdlJzEnTmpXQ=;
+	s=korg; t=1795059633;
+	bh=roLvAKQFpPwj+6xarTylmvcF/eqTRP9nVqdZWneeX/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J2gM7ajjfhyIUimtGv0tKoaEEgDVBMdJDbdwVibZIFtS69JY+DaVeH1oxxVt0Q1HD
-	 2kvr9kgiwcFNKEkPczyu8/KwusriAoflWvnzpw/uu6wgmv0ygSzTbK6ex3c1Hoq+hz
-	 whS0Q3gKSH2QHTXt2rgbPUxO0xa9YsYKzDFfR/NI=
+	b=e5tTYy/FbypoK5VjAmws9RHax+otlTNorZ6UwDCKum+TMiFJCCYCgNnFGe7NV3Ide
+	 HZyN4NP50EmXEj+X1OtaoTMzBsiY3TcxWIMTPdpArys3PyyWgUm+DtSxzeAbm5ps6t
+	 PmYCAB4Y9anUzfqRo1w303oWAtIAa33ITRD00dHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Jiaming Zhang <r772577952@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Janne Grunau <j@jannau.net>,
+	Neal Gompa <neal@gompa.dev>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0910/1848] nilfs2: force clear dirty state when restoring from the shadow map
-Date: Wed, 18 Nov 2026 15:49:08 +0100
-Message-ID: <20261118145954.963496071@linuxfoundation.org>
+Subject: [PATCH 5.10 0911/1848] wifi: brcmfmac: cfg80211: Report port_authorized for 4-way HS offload
+Date: Wed, 18 Nov 2026 15:49:09 +0100
+Message-ID: <20261118145955.001548515@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,213 +70,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaming Zhang <r772577952@gmail.com>
+From: Janne Grunau <j@jannau.net>
 
-[ Upstream commit cb6702e63e0a16afd83875294e5ce53becdd1b1f ]
+[ Upstream commit 6fff9de5c5b425817588eeed42bd56d665751c13 ]
 
-When garbage collection fails, nilfs2 rolls the DAT metadata file's page
-cache back to a shadow copy taken before GC started.
-nilfs_clear_dirty_pages() drops the dirty state of the folios in the DAT
-cache, then nilfs_copy_back_pages() overwrites them with the saved
-contents and warns if one is still dirty:
+Since commit 416386060 ("Mark authorization completed on driver
+indication during 4-way HS offload") [0] wpa_supplicant expects
+NL80211_CMD_PORT_AUTHORIZED to complete the authentication when the
+driver supports 4-way handshake offload.
+This was apparently never tested with the upstream brcmfmac driver as it
+does not report this. This broke authentication on Apple silicon devices
+(BRCM4378, BRMC4387, BRMC4388) and other devices when wpa_supplicant
+2.11 was released [1]. This was initially dealt with by reverting the
+commit in Fedora [2] and other Linux distributions.
+Instead of carrying the revert over to wpa_supplicant 2.12 add the
+expected NL80211_CMD_PORT_AUTHORIZED when the connection is established.
 
-	/* overwrite existing folio in the destination cache */
-	WARN_ON(folio_test_dirty(dfolio));
+The "Fixes:" tag is not fully accurate as this has only became an issue
+after userspace changes years after the change. Since the change is
+expected to be required in all active stable branches for wpa_supplicant
+2.11 / 2.12 compatibility it is helpful even though
+BRCMF_PROFILE_FWSUP_SAE did not exists then.
 
-nilfs_clear_dirty_pages() used to clear the dirty state unconditionally,
-which is safe here because the rollback runs with the log writer
-stopped, so nothing else can dirty the cache while it runs.  The same
-helper is also used when writeback finds dirty folios after the
-filesystem has degraded to read-only, where it does run concurrently
-with the log writer, so commit ca76bb226bf4 ("nilfs2: do not force clear
-folio if buffer is referenced") made nilfs_clear_folio_dirty() skip a
-folio if any of its buffer heads is busy.  The rollback caller shares
-that helper, so its clearing step can now return with a folio still
-dirty.
-
-A DAT folio can hold a busy buffer head without anyone modifying the
-folio: nilfs_mdt_read_block() submits read-ahead for the blocks
-following the one it was asked for and waits only for the first, so the
-read-ahead buffers are still locked when it returns.  With a block size
-smaller than the page size, a locked read-ahead buffer can share a folio
-with a block that GC dirtied and keep the whole folio dirty past the
-clearing step.
-
-Add a force flag to nilfs_clear_dirty_pages() and
-nilfs_clear_folio_dirty() that skips the busy buffer check, and set it
-in the two calls from nilfs_mdt_restore_from_shadow_map().  The
-read-only fallback callers keep passing false, so that commit still
-protects them and the WARN_ON() is left alone.
-
-Fixes: ca76bb226bf4 ("nilfs2: do not force clear folio if buffer is referenced")
-Closes: https://lore.kernel.org/lkml/CANypQFZSYrtcshnUzOPiqatyLd-M8_OReOewQoAi_V5yY0dTtg@mail.gmail.com/
+Link: https://github.com/zephyrproject-rtos/hostap/commit/41638606054a09867fe3f9a2b5523aa4678cbfa5 [0]
+Link: https://lists.infradead.org/pipermail/hostap/2024-August/042893.html [1]
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2302577 [2]
+Link: https://lore.kernel.org/linux-wireless/20260911065656.1269623-5-Jason.Huang2@infineon.com/ [3]
 Cc: stable@vger.kernel.org
-Suggested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Assisted-by: Claude Code:claude-opus-5
-Signed-off-by: Jiaming Zhang <r772577952@gmail.com>
-Acked-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-[ sashal: Adapted folio-based dirty-state handling to the page-based API, including the additional nilfs_writepage() caller. ]
+Fixes: b8a64f0e96c2 ("brcmfmac: support 4-way handshake offloading for WPA/WPA2-PSK")
+Signed-off-by: Janne Grunau <j@jannau.net>
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260915-brcmfmac-4way-handshake-offload-authenticated-event-v2-1-fbb9cc7ac177@jannau.net
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ sashal: adapted authorization handling to inline SAE/PSK checks with the older three-argument cfg80211_port_authorized() API ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/inode.c |  4 ++--
- fs/nilfs2/mdt.c   |  6 +++---
- fs/nilfs2/page.c  | 50 +++++++++++++++++++++++++++--------------------
- fs/nilfs2/page.h  |  4 ++--
- 4 files changed, 36 insertions(+), 28 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/nilfs2/inode.c b/fs/nilfs2/inode.c
-index 581ab03442015..a945b008a02d3 100644
---- a/fs/nilfs2/inode.c
-+++ b/fs/nilfs2/inode.c
-@@ -162,7 +162,7 @@ static int nilfs_writepages(struct address_space *mapping,
- 	int err = 0;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 3f6d4299965b2..361675045a67d 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -5973,6 +5973,7 @@ brcmf_bss_connect_done(struct brcmf_cfg80211_info *cfg,
+ 	struct brcmf_cfg80211_profile *profile = &ifp->vif->profile;
+ 	struct brcmf_cfg80211_connect_info *conn_info = cfg_to_conn(cfg);
+ 	struct cfg80211_connect_resp_params conn_params;
++	bool authorized;
  
- 	if (sb_rdonly(inode->i_sb)) {
--		nilfs_clear_dirty_pages(mapping);
-+		nilfs_clear_dirty_pages(mapping, false);
- 		return -EROFS;
+ 	brcmf_dbg(TRACE, "Enter\n");
+ 
+@@ -5993,7 +5994,12 @@ brcmf_bss_connect_done(struct brcmf_cfg80211_info *cfg,
+ 		conn_params.req_ie_len = conn_info->req_ie_len;
+ 		conn_params.resp_ie = conn_info->resp_ie;
+ 		conn_params.resp_ie_len = conn_info->resp_ie_len;
++		authorized = completed &&
++			     (profile->use_fwsup == BRCMF_PROFILE_FWSUP_SAE ||
++			      profile->use_fwsup == BRCMF_PROFILE_FWSUP_PSK);
+ 		cfg80211_connect_done(ndev, &conn_params, GFP_KERNEL);
++		if (authorized)
++			cfg80211_port_authorized(ndev, profile->bssid, GFP_KERNEL);
+ 		brcmf_dbg(CONN, "Report connect result - connection %s\n",
+ 			  completed ? "succeeded" : "failed");
  	}
- 
-@@ -185,7 +185,7 @@ static int nilfs_writepage(struct page *page, struct writeback_control *wbc)
- 		 * have dirty pages that try to be flushed in background.
- 		 * So, here we simply discard this dirty page.
- 		 */
--		nilfs_clear_dirty_page(page);
-+		nilfs_clear_dirty_page(page, false);
- 		unlock_page(page);
- 		return -EROFS;
- 	}
-diff --git a/fs/nilfs2/mdt.c b/fs/nilfs2/mdt.c
-index 1a907acc701d7..c1f9649164897 100644
---- a/fs/nilfs2/mdt.c
-+++ b/fs/nilfs2/mdt.c
-@@ -410,7 +410,7 @@ nilfs_mdt_write_page(struct page *page, struct writeback_control *wbc)
- 		 * have dirty pages that try to be flushed in background.
- 		 * So, here we simply discard this dirty page.
- 		 */
--		nilfs_clear_dirty_page(page);
-+		nilfs_clear_dirty_page(page, false);
- 		unlock_page(page);
- 		return -EROFS;
- 	}
-@@ -631,10 +631,10 @@ void nilfs_mdt_restore_from_shadow_map(struct inode *inode)
- 	if (mi->mi_palloc_cache)
- 		nilfs_palloc_clear_cache(inode);
- 
--	nilfs_clear_dirty_pages(inode->i_mapping);
-+	nilfs_clear_dirty_pages(inode->i_mapping, true);
- 	nilfs_copy_back_pages(inode->i_mapping, shadow->inode->i_mapping);
- 
--	nilfs_clear_dirty_pages(ii->i_assoc_inode->i_mapping);
-+	nilfs_clear_dirty_pages(ii->i_assoc_inode->i_mapping, true);
- 	nilfs_copy_back_pages(ii->i_assoc_inode->i_mapping,
- 			      NILFS_I(shadow->inode)->i_assoc_inode->i_mapping);
- 
-diff --git a/fs/nilfs2/page.c b/fs/nilfs2/page.c
-index ce5947cf4bd51..55dfd243cda0e 100644
---- a/fs/nilfs2/page.c
-+++ b/fs/nilfs2/page.c
-@@ -354,8 +354,9 @@ void nilfs_copy_back_pages(struct address_space *dmap,
- /**
-  * nilfs_clear_dirty_pages - discard dirty pages in address space
-  * @mapping: address space with dirty pages for discarding
-+ * @force: whether to clear the dirty state regardless of busy buffer heads
-  */
--void nilfs_clear_dirty_pages(struct address_space *mapping)
-+void nilfs_clear_dirty_pages(struct address_space *mapping, bool force)
- {
- 	struct pagevec pvec;
- 	unsigned int i;
-@@ -376,7 +377,7 @@ void nilfs_clear_dirty_pages(struct address_space *mapping)
- 			 * was acquired.  Skip processing in that case.
- 			 */
- 			if (likely(page->mapping == mapping))
--				nilfs_clear_dirty_page(page);
-+				nilfs_clear_dirty_page(page, force);
- 
- 			unlock_page(page);
- 		}
-@@ -388,13 +389,16 @@ void nilfs_clear_dirty_pages(struct address_space *mapping)
- /**
-  * nilfs_clear_dirty_page - discard dirty page
-  * @page: dirty page that will be discarded
-+ * @force: whether to clear the states regardless of busy buffer heads
-  *
-  * nilfs_clear_dirty_page() clears working states including dirty state for
-- * the page and its buffers.  If the page has buffers, clear only if it is
-- * confirmed that none of the buffer heads are busy (none have valid
-- * references and none are locked).
-+ * the page and its buffers.  If the page has buffers and force is false,
-+ * clear only if it is confirmed that none of the buffer heads are busy (none
-+ * have valid references and none are locked).  If force is true, the states
-+ * are cleared unconditionally, the caller should guarantee that the page is
-+ * not being modified concurrently.
-  */
--void nilfs_clear_dirty_page(struct page *page)
-+void nilfs_clear_dirty_page(struct page *page, bool force)
- {
- 	BUG_ON(!PageLocked(page));
- 
-@@ -405,24 +409,28 @@ void nilfs_clear_dirty_page(struct page *page)
- 			 BIT(BH_Async_Write) | BIT(BH_NILFS_Volatile) |
- 			 BIT(BH_NILFS_Checked) | BIT(BH_NILFS_Redirected) |
- 			 BIT(BH_Delay));
--		bool busy, invalidated = false;
-+
-+		if (!force) {
-+			bool busy, invalidated = false;
- 
- recheck_buffers:
--		busy = false;
--		bh = head;
--		do {
--			if (atomic_read(&bh->b_count) | buffer_locked(bh)) {
--				busy = true;
--				break;
-+			busy = false;
-+			bh = head;
-+			do {
-+				if (atomic_read(&bh->b_count) |
-+				    buffer_locked(bh)) {
-+					busy = true;
-+					break;
-+				}
-+			} while (bh = bh->b_this_page, bh != head);
-+
-+			if (busy) {
-+				if (invalidated)
-+					return;
-+				invalidate_bh_lrus();
-+				invalidated = true;
-+				goto recheck_buffers;
- 			}
--		} while (bh = bh->b_this_page, bh != head);
--
--		if (busy) {
--			if (invalidated)
--				return;
--			invalidate_bh_lrus();
--			invalidated = true;
--			goto recheck_buffers;
- 		}
- 
- 		bh = head;
-diff --git a/fs/nilfs2/page.h b/fs/nilfs2/page.h
-index a5b9b5a457ab2..be2d089748d8c 100644
---- a/fs/nilfs2/page.h
-+++ b/fs/nilfs2/page.h
-@@ -41,8 +41,8 @@ void nilfs_page_bug(struct page *);
- 
- int nilfs_copy_dirty_pages(struct address_space *, struct address_space *);
- void nilfs_copy_back_pages(struct address_space *, struct address_space *);
--void nilfs_clear_dirty_page(struct page *page);
--void nilfs_clear_dirty_pages(struct address_space *mapping);
-+void nilfs_clear_dirty_page(struct page *page, bool force);
-+void nilfs_clear_dirty_pages(struct address_space *mapping, bool force);
- void nilfs_mapping_init(struct address_space *mapping, struct inode *inode);
- unsigned int nilfs_page_count_clean_buffers(struct page *, unsigned int,
- 					    unsigned int);
 -- 
 2.53.0
 
