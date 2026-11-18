@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061827;
-	b=LJoLMEiayk/nOd5ZTumwvg8+/LYiu0FANDAcd6JXMiJOIj1Uzm0fhk4AYPibSIfBYUSJ
-	 tjMwfZK0cR5hf4z8raA+g206lFzHWwWvi400WFU/5CnL4OG9EEmFIr+GObe+SUZ/xhNfU
-	 ICxnJgIG+DUvHhc/6BkH8f/C0v97TdMAiLs31Raz/dqhwWmlDpjhdHe6zsa2kj/dd2WZu
-	 TSW26UwDJXNNuT34cgfYNJFbIIP0auNGW2zHoPs6cKJs42SukJAlEaGXZGuMQRXG8gvaa
-	 OqUoapL1QBYHTxqEIndDgq+9vE23A6lhE3tN6Tv6eKP6oRQIHVsJlYWIALawccsbJcQ==
+	t=1795061830;
+	b=c7U6mORbA+lAIrah9R73Z6g9fWcURCP9LCpg4Uwh/txTrDm9c3340Edo1MvUSJJuRrjJ
+	 B/R16Jp86Gjix5Sh+0OFJ9Xm3oJRI1YywgvWaG9fDjxL3AxzaY2JHYh2PD6HG1Z5v2CJk
+	 88paZWQVOpeoF6btvFimlMAYXTz9dhcrXH0hJLC2N0Y5tVbIXnWvp26577xgCqNLKRJr5
+	 mTtTkOms8qjy+6do3CPHF7GnzPco+QOSq4+5cn0KpfqbvmlwHt7ReH4B3dV0upMP7SQ/m
+	 FimYy2rPPcwdaufIWm2pjC0dULvxWr5MftADnQ/JllXGWbsaMF6dPeEtEIkGMlyDQlw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061827;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061830;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aMZvkYU2fpUeu7F7e9fCxfNR7GjxG2WiL6ILzIR8br4=;
-	b=g1MqYWuejMRUibxlm+k2N9Y8oTTf1tah82l0j3JRvcvl57oAK2CY7Fjj5Nz8P5voP1Ly
-	 kiSkUvFyAsz7fqh3COpnEo70k/bCO4sCoR7RVOVKoy9yoI/tTGxrmhQ+VCuRSz7L9VruS
-	 Ae9LIA22DgXG7K+e4Zx43i1hhofL285iZ6vi6k87CjJ4RCemgAHFbQPd/SPQRXappjjJc
-	 f+SDTalOFMivlDLsHF/pvUILOOdp9M2yWZdMGI3TuZURs+uhPDw/BJ87rPqrIHhOcMEcz
-	 74uLdcD21kFVJOc1xvKZJ40gb3legtK0YmVtLTs3MPSc5pbQh9dPyOlimD+x9yDeZ0w==
+	bh=+lej1lWMLfJj9YXveRzRybLOo6XWd3gqJNmJti6Ax1o=;
+	b=AAiEImOEC56WBmnF+M3QvyQlTkFEodZ04EEOGqidmcrxJIkxnCOV3+mSoYknpx+7w48h
+	 k3zxMwa0bUlo7qwBCSwcHnF/WczgjKcNr70MLuJllIIAwdm3yJP5+4FQj70o7dpke+TX8
+	 dDuHkwPyarM6/JIwx/IZIz5d7ckMXQiNszOtzX/4uV9IX7HZ4kPXPuusAx42SWAUgHO0a
+	 b92qSHm4Ra7CwtXTQZO1O4L5A7EpWB6cHdri1ABwWR58pipi6XGpVvyB5EfM+236c/xY4
+	 ChtsimsHtKzBQKf+7xxqjtKi4FruiqDI5giNj59gwwsqJrFnnAZ6i+Be5t1zL5T43/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JVlqZTB8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pN7+3oIb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A41606A320;
-	Thu, 19 Nov 2026 04:17:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F386606A320;
+	Thu, 19 Nov 2026 04:17:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JVlqZTB8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE3DF1F000C4;
-	Thu, 19 Nov 2026 04:17:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pN7+3oIb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF8AF1F000C4;
+	Thu, 19 Nov 2026 04:17:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061827;
-	bh=aMZvkYU2fpUeu7F7e9fCxfNR7GjxG2WiL6ILzIR8br4=;
+	s=korg; t=1795061830;
+	bh=+lej1lWMLfJj9YXveRzRybLOo6XWd3gqJNmJti6Ax1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JVlqZTB86OIqRMdM8sl43SYcoy0aUFxJXL98mFoc4/ec7afGdHJ+irqELefeuUy1I
-	 qtcaiZfjkkB4TlM+qn46yvE1LrJyVPfXHIQDBacC88Ip+QgtQpq+HR1NB4oLOzBInu
-	 DeHkxJ2IYEr6e1adxOYDIasGF1TTgX0JGpGkBQtU=
+	b=pN7+3oIbkpFk4AatnKdOPURG4ijYY6I1c7PLceFbxLGN7LdkWU4QcZOdqajS89CIP
+	 NIXDPT0HWGiu9cayLMf5o+c82lFxXKhYwXESRgkCG5JLRwI0hUOOGDZfzaY1g1CDSH
+	 HWy6RWSoV1wlzUmu5KOhlFbdJy92ZDqe8WV2+IQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
+	Brad Fitzpatrick <bradfitz@tailscale.com>,
+	Eric Dumazet <edumazet@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1685/1848] usbnet: switch to core handling of rx/tx byte/packet counters
-Date: Wed, 18 Nov 2026 16:02:03 +0100
-Message-ID: <20261118150030.300058125@linuxfoundation.org>
+Subject: [PATCH 5.10 1694/1848] gre: keep the UDP tunnel GSO type when completing GRO
+Date: Wed, 18 Nov 2026 16:02:12 +0100
+Message-ID: <20261118150030.687337146@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,122 +69,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Brad Fitzpatrick <bradfitz@tailscale.com>
 
-[ Upstream commit af0c351cc34857ad7b254850b9392d99da46be9e ]
+[ Upstream commit 718f364a20ecee4f25986789c25550cf4da73b4c ]
 
-Use netdev->tstats instead of a member of usbnet for storing a pointer
-to the per-cpu counters. This allows us to use core functionality for
-statistics handling.
+gre_gro_complete() assigns SKB_GSO_GRE to gso_type rather than OR-ing
+it in. When GRE is carried over UDP by FOU or GUE, udp_gro_complete()
+has already set SKB_GSO_UDP_TUNNEL{,_CSUM} before calling into the FOU
+or GUE gro_complete handler and then gre_gro_complete(), so that bit is
+lost.
 
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+That has broken forwarding of such packets since FOU gained GRO: if a
+host with a FOU or GUE socket on the tunnel's port merges transit
+packets and then forwards them out a device that can't segment them
+itself, udp4_ufo_fragment() finds neither tunnel bit and fails, and
+the packets are dropped. Since commit 3d010c8031e3 ("udp: do not accept
+non-tunnel GSO skbs landing in a tunnel"), local receive is broken too:
+udp_unexpected_gso() considers the merged skb, which reaches the
+encapsulation socket without either UDP tunnel bit, unexpected and
+hands it to udp_rcv_segment(). Segmenting fails, so the packet is
+freed and counted in UdpInErrors. Either way, only packets GRO didn't
+merge get through, so TCP over FOU or GUE GRE tunnels slows to about
+one segment per round trip whenever the receiving device has GRO
+enabled.
+
+OR in SKB_GSO_GRE instead, as ipip_gro_complete() and
+sit_gro_complete() do for SKB_GSO_IPXIP4. For plain GRE, gso_type is
+still zero at this point unless the driver set it, so nothing changes
+there in the usual case.
+
+The assignment dates to commit bf5a755f5e91 ("net-gre-gro: Add GRE
+support to the GRO stack"), but nothing set gso_type before it until
+FOU GRO came along, so the Fixes tag points there.
+
+Tested under virtme-ng with bulk TCP over a GRE tunnel between two
+network namespaces joined by a veth, with GRO on the receiving veth and
+segmentation off on the sending one, so GRO sees wire-sized packets.
+32 MiB took:
+
+                  before                  after
+  FOU over IPv4   26.0s, 9658 UDP errors  0.28s, 0 errors
+  GUE over IPv4   26.1s, 9686 UDP errors  0.39s, 0 errors
+  FOU over IPv6   26.4s, 9860 UDP errors  0.16s, 0 errors
+  plain GRE       0.17s                   0.15s
+
+Forwarding the same FOU traffic through a third namespace with its own
+FOU socket on the port, GRO on its ingress and segmentation off on its
+egress, took 26.0s with 4826 egress drops before and 0.31s with none
+after. On v6.8, before 3d010c8031e3, local receive was fine but
+forwarding failed the same way (25.7s, 4764 drops).
+
+With GRO off on the receiver, all took under 0.2s both before and
+after. The gre_gso.sh and fou_mcast_encap.sh selftests give the same
+results before and after.
+
+Fixes: afe93325bc02 ("fou: Add GRO support")
+Signed-off-by: Brad Fitzpatrick <bradfitz@tailscale.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261011-bradfitz-gre-fou-gro-b4-v1-1-df713aad1531@tailscale.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 95a5c641fc7b ("usbnet: fix smp_processor_id() use in preemptible context")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/usbnet.c   | 23 +++++++----------------
- include/linux/usb/usbnet.h |  6 ++----
- 2 files changed, 9 insertions(+), 20 deletions(-)
+ net/ipv4/gre_offload.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
-index 4b34544d88aa8..20713b67ea2b2 100644
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -314,7 +314,7 @@ static void __usbnet_status_stop_force(struct usbnet *dev)
-  */
- void usbnet_skb_return (struct usbnet *dev, struct sk_buff *skb)
- {
--	struct pcpu_sw_netstats *stats64 = this_cpu_ptr(dev->stats64);
-+	struct pcpu_sw_netstats *stats64 = this_cpu_ptr(dev->net->tstats);
- 	unsigned long flags;
- 	int	status;
+diff --git a/net/ipv4/gre_offload.c b/net/ipv4/gre_offload.c
+index b4da692b97342..e95b3ddb71a2e 100644
+--- a/net/ipv4/gre_offload.c
++++ b/net/ipv4/gre_offload.c
+@@ -239,7 +239,7 @@ static int gre_gro_complete(struct sk_buff *skb, int nhoff)
+ 	__be16 type;
  
-@@ -990,15 +990,6 @@ int usbnet_set_link_ksettings(struct net_device *net,
- }
- EXPORT_SYMBOL_GPL(usbnet_set_link_ksettings);
+ 	skb->encapsulation = 1;
+-	skb_shinfo(skb)->gso_type = SKB_GSO_GRE;
++	skb_shinfo(skb)->gso_type |= SKB_GSO_GRE;
  
--void usbnet_get_stats64(struct net_device *net, struct rtnl_link_stats64 *stats)
--{
--	struct usbnet *dev = netdev_priv(net);
--
--	netdev_stats_to_stats64(stats, &net->stats);
--	dev_fetch_sw_netstats(stats, dev->stats64);
--}
--EXPORT_SYMBOL_GPL(usbnet_get_stats64);
--
- u32 usbnet_get_link (struct net_device *net)
- {
- 	struct usbnet *dev = netdev_priv(net);
-@@ -1233,7 +1224,7 @@ static void tx_complete (struct urb *urb)
- 	struct usbnet		*dev = entry->dev;
- 
- 	if (urb->status == 0) {
--		struct pcpu_sw_netstats *stats64 = this_cpu_ptr(dev->stats64);
-+		struct pcpu_sw_netstats *stats64 = this_cpu_ptr(dev->net->tstats);
- 		unsigned long flags;
- 
- 		flags = u64_stats_update_begin_irqsave(&stats64->syncp);
-@@ -1614,7 +1605,7 @@ void usbnet_disconnect (struct usb_interface *intf)
- 	usb_free_urb(dev->interrupt);
- 	kfree(dev->padding_pkt);
- 
--	free_percpu(dev->stats64);
-+	free_percpu(net->tstats);
- 	free_netdev(net);
- }
- EXPORT_SYMBOL_GPL(usbnet_disconnect);
-@@ -1626,7 +1617,7 @@ static const struct net_device_ops usbnet_netdev_ops = {
- 	.ndo_tx_timeout		= usbnet_tx_timeout,
- 	.ndo_set_rx_mode	= usbnet_set_rx_mode,
- 	.ndo_change_mtu		= usbnet_change_mtu,
--	.ndo_get_stats64	= usbnet_get_stats64,
-+	.ndo_get_stats64	= dev_get_tstats64,
- 	.ndo_set_mac_address 	= eth_mac_addr,
- 	.ndo_validate_addr	= eth_validate_addr,
- };
-@@ -1689,8 +1680,8 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
- 	dev->driver_info = info;
- 	dev->driver_name = name;
- 
--	dev->stats64 = netdev_alloc_pcpu_stats(struct pcpu_sw_netstats);
--	if (!dev->stats64)
-+	net->tstats = netdev_alloc_pcpu_stats(struct pcpu_sw_netstats);
-+	if (!net->tstats)
- 		goto out0;
- 
- 	dev->msg_enable = netif_msg_init (msg_level, NETIF_MSG_DRV
-@@ -1842,7 +1833,7 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
- 	 */
- 	cancel_work_sync(&dev->kevent);
- 	del_timer_sync(&dev->delay);
--	free_percpu(dev->stats64);
-+	free_percpu(net->tstats);
- out0:
- 	free_netdev(net);
- out:
-diff --git a/include/linux/usb/usbnet.h b/include/linux/usb/usbnet.h
-index 6aaef1a3e16c8..a3c2583b31d92 100644
---- a/include/linux/usb/usbnet.h
-+++ b/include/linux/usb/usbnet.h
-@@ -65,8 +65,6 @@ struct usbnet {
- 	struct usb_anchor	deferred;
- 	struct tasklet_struct	bh;
- 
--	struct pcpu_sw_netstats __percpu *stats64;
--
- 	struct work_struct	kevent;
- 	unsigned long		flags;
- #		define EVENT_TX_HALT	0
-@@ -288,7 +286,7 @@ extern int usbnet_status_start(struct usbnet *dev, gfp_t mem_flags);
- extern void usbnet_status_stop(struct usbnet *dev);
- 
- extern void usbnet_update_max_qlen(struct usbnet *dev);
--extern void usbnet_get_stats64(struct net_device *dev,
--			       struct rtnl_link_stats64 *stats);
-+
-+#define usbnet_get_stats64 dev_get_tstats64
- 
- #endif /* __LINUX_USB_USBNET_H */
+ 	type = greh->protocol;
+ 	if (greh->flags & GRE_KEY)
 -- 
 2.53.0
 
