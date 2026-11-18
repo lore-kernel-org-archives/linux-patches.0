@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044381;
-	b=4qjEcGQe0uRPZngR+ze04oIBey7B0ouPq7WEnAiYHUmufbh/YCoKBrr9ZfOkBv7EmHnM
-	 HJ+ChuaWB6ukwA+pY70WIy/leaXkxLRQbx7zKm/IhTunRw3CD23cmE+Sv3PhgLA41CGh/
-	 l0KtdzT4szguHNzcaQLsrVXqswvT17BBGRX3Xcc6zhgjIO51XrTU1utVdpYBlhTQjPZ6t
-	 iNU0I9hqPqJzpY5hQ90Am7egtc5aukSaUGWbBmyLaPkq7+x4CGyx7Top74IZ6G0eeXZCQ
-	 gc3GfeGVZHbTaLYdjHS69C+Yex1pB/3c/2vh12ttYTY1OvtirQAcGfcPEa6dt3QaISQ==
+	t=1795044384;
+	b=DrOF629OI5X90UJp3wGVaDfdVimQC1R58X1DLanu8BQXIevTyYaBfGq4tUqZ+iIEqkTG
+	 1p/6xhcCgbY/ObGbpTOwK/fEHdWLlxtbil3psssT19PFzjBnJQgkjjI20DpWScP9KJfS7
+	 mPBffTIXk+ZQCDgCQsGwMytFlP3X5dWX5L6yTAClyhF4KAr2YLFno/RraUlCi8iLVr8Hq
+	 eeVR8+ieKo7FW9wyOV6ag/UVFHalUcVR6CX7+ETnhB9cueR859OAynl3pqCb9FsOufBd1
+	 5+LYyMHH7o4ukaEMIKP603mAtlefRkJNrRAQHWTAghBAYQgaYAwJboMXEiwKYh0NfCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044381;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044384;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=U6fJUzz1nE7q73pDNa2HHFhQmrjaujrUOjY7JGVJHn8=;
-	b=tJqlVUt9I6/9mTvbpW2zAxWwqOZcGSUZl41bKVtFogdGkIeRjfiPEeNxZtJDLkkTAGo6
-	 zeEyOCnb1XV/tel5og2xOjfRb6E4X0nfcYlhVoOKXUkBnvkGmwI0XRFaBGGcjHdwy4gHw
-	 fDbe49OCIo4cjmwrzEPwEBnHoikaEsmLhmrNsh50gTZXS4o6OCmtoVkoxT7aKm/NdmycT
-	 Mdi+hB+fmeWX/2HWljqzPW5HrQo+fYEPNHOlfFTsQEdbED4ECHYeyluvK6FySvinn32lv
-	 K8yutQQdlFdJb0aOaxnT1QvviX3Xy4DY6NBYhEl4ttlehOgTuE6L/x5HsIr72kgRImA==
+	bh=myknW+3c7LaUEfLWLgJOQvOu/2RFZpKmegnGX/14aJA=;
+	b=nV1C2WikwMkqdbH5uZ3s7swSbIQCWqoC4X78gnpPWY8LOolrwI5UzQgndmp0pKqk2yD+
+	 UlDR0ptQyrHl6EH9D4YVuBCX2zNagTW3OuFHGE+rsUCqKFVECj4+sMUS41j4zFfFdnN79
+	 WOHfqM/OzkzUzHChr7UxpxDRyeaknYgOUtFLaaPtbHsCbW1F71UpH3qcLdAgQpbktKARy
+	 P2zJwegs87W9UCShch8Vqh2MprpJSS8ebLATf+pNvKg2d+t+wc/E8lYHVWOaGHTFviGnQ
+	 S+ag8EgE1WzRp/4cu9EArC3LIPE33Xeb8rQlgobGdiYtFBzxbQ6S9B38i3513Ry1SWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jkNcBl1R;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bsgEj+Hf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79A88606A32A;
-	Wed, 18 Nov 2026 23:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC78606A31C;
+	Wed, 18 Nov 2026 23:26:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jkNcBl1R
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9938E1F000C4;
-	Wed, 18 Nov 2026 23:26:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bsgEj+Hf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BC701F000C4;
+	Wed, 18 Nov 2026 23:26:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044381;
-	bh=U6fJUzz1nE7q73pDNa2HHFhQmrjaujrUOjY7JGVJHn8=;
+	s=korg; t=1795044384;
+	bh=myknW+3c7LaUEfLWLgJOQvOu/2RFZpKmegnGX/14aJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jkNcBl1RFdEZpa4SuDZg6W8h4aSHtplMVT8v4843K7ZMG64yjzKK4UxATM+NCTeep
-	 qFRAFLAsqelClPfQgT5J6q0JP8n7AjBXwyfGskXkBVSCJux1sS0/wBPUGb9mu470Ki
-	 0l3k6ouJsu718KBxhlxYNg7VWezeV7Vp08aRShr0=
+	b=bsgEj+HfW9nqNpQDZSyYYcqFTt7n0IP9QtBkQK2O12Fzda8jWl2D1yG3W6NJnTzz3
+	 owi+4Ql3Gblx2bGNeYfl4iA4dl4MHacuI1G99b6Yt3A8Opp7Y7Vo0cZN8/N7UHny+l
+	 PxD4gE0DB8onvH1jhZSi5TRt5RKVq6CncaIBrkTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Bereknyei <tomberek@gmail.com>,
-	Elliot Berman <elliotjb@elliotjb.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0520/2857] ext4: fix NULL folio dereference in mballoc
-Date: Wed, 18 Nov 2026 15:25:54 +0100
-Message-ID: <20261118150220.193749213@linuxfoundation.org>
+	Lee Jones <lee@kernel.org>,
+	Ping Cheng <ping.cheng@wacom.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.1 0547/2857] HID: wacom: Fix Use-After-Free in wacom_intuos_pad
+Date: Wed, 18 Nov 2026 15:26:21 +0100
+Message-ID: <20261118150221.182028337@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,133 +68,186 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Elliot Berman <elliotjb@elliotjb.com>
+From: Lee Jones <lee@kernel.org>
 
-In 6.1, __filemap_get_folio() returns NULL on failure. The backported
-folio conversion of mballoc keeps the original IS_ERR() checks, so they
-are always false here. The fast-path lookup in ext4_mb_load_buddy_gfp()
-has no FGP_CREAT and returns NULL whenever the bitmap or buddy page of
-an initialised group has been evicted from the page cache, e.g. by
-drop_caches or memory pressure. The next block allocation from that
-group then oopses under ext4_mb_regular_allocator().
+commit ef32877368a7013c060ef6bd03a30b6da2fe0c41 upstream.
 
-$ echo 3 > /proc/sys/vm/drop_caches, in 0.51 seconds)
-$ dd if=/dev/zero of=/mnt/b0 bs=1M count=4 conv=fsync
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-PGD 5f19067 P4D 0
-Oops: 0000 [#1] PREEMPT SMP NOPTI
-CPU: 0 PID: 908 Comm: dd Not tainted 6.1.191 #1-NixOS
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
-RIP: 0010:ext4_mb_load_buddy_gfp (fs/ext4/mballoc.c:1536 (discriminator 1)) ext4
-Call Trace:
- <TASK>
-ext4_mb_regular_allocator (fs/ext4/mballoc.c:1641 fs/ext4/mballoc.c:2798) ext4
-ext4_mb_new_blocks (fs/ext4/mballoc.c:5793) ext4
- ? ext4_find_extent (fs/ext4/extents.c:925) ext4
-ext4_ext_map_blocks (fs/ext4/extents.c:4369) ext4
-   ...
+wacom_intuos_pad() accesses wacom->shared->touch_input locklessly
+inside the interrupt handler context.  If the Touch sibling device
+is disconnected, wacom_remove_shared_data() clears 'touch_input'
+outside any lock, creating a Time-of-Check to Time-of-Use (TOCTOU)
+race condition where a preempted reader in interrupt context
+dereferences the freed pointer, leading to a Use-After-Free.
 
-Check for NULL instead and return -ENOMEM, as failures did before the
-conversion.
+Resolve this by introducing RCU protection for the touch_input
+pointer:
 
-Fixes: d34e4fd4e73f ("ext4: convert bd_bitmap_page to bd_bitmap_folio")
-Fixes: 862483175d3d ("ext4: convert bd_buddy_page to bd_buddy_folio")
-Reported-by: Tom Bereknyei <tomberek@gmail.com>
-Signed-off-by: Elliot Berman <elliotjb@elliotjb.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ - Annotate 'touch_input' in wacom_shared struct with __rcu
+ - Wrap all lockless readers in wacom_wac.c with guard(rcu)() and
+   rcu_dereference() using a unified wacom_report_touch_mute()
+   helper
+ - Update writers in wacom_sys.c using rcu_assign_pointer()
+ - Call synchronize_rcu() in wacom_remove_shared_data() to ensure
+   all active RCU readers have finished before the input device is
+   freed
+
+Also wrap wacom_set_shared_values() and touch/pen assignments in
+wacom_add_shared_data() inside the wacom_udev_list_lock to serialize
+concurrent probe assignments, and verify that 'shared->touch == hdev'
+before setting touch_input to prevent concurrent sibling probe state
+desynchronization.
+
+Cc: stable@vger.kernel.org
+Fixes: 961794a00eab ("Input: wacom - add reporting of SW_MUTE_DEVICE events")
+Signed-off-by: Lee Jones <lee@kernel.org>
+Acked-by: Ping Cheng <ping.cheng@wacom.com>
+Tested-by: Ping Cheng <ping.cheng@wacom.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ drivers/hid/wacom_sys.c |   23 ++++++++++++++++-------
+ drivers/hid/wacom_wac.c |   36 ++++++++++++++++++------------------
+ drivers/hid/wacom_wac.h |    2 +-
+ 3 files changed, 35 insertions(+), 26 deletions(-)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index e77d56c533c0b..d0b276ce9401c 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -1375,8 +1375,8 @@ static int ext4_mb_get_buddy_page_lock(struct super_block *sb,
- 	poff = block % blocks_per_page;
- 	folio = __filemap_get_folio(inode->i_mapping, pnum,
- 			FGP_LOCK | FGP_ACCESSED | FGP_CREAT, gfp);
--	if (IS_ERR(folio))
--		return PTR_ERR(folio);
-+	if (!folio)
-+		return -ENOMEM;
- 	BUG_ON(folio->mapping != inode->i_mapping);
- 	e4b->bd_bitmap_folio = folio;
- 	e4b->bd_bitmap = folio_address(folio) + (poff * sb->s_blocksize);
-@@ -1389,8 +1389,8 @@ static int ext4_mb_get_buddy_page_lock(struct super_block *sb,
- 	/* blocks_per_page == 1, hence we need another page for the buddy */
- 	folio = __filemap_get_folio(inode->i_mapping, block + 1,
- 			FGP_LOCK | FGP_ACCESSED | FGP_CREAT, gfp);
--	if (IS_ERR(folio))
--		return PTR_ERR(folio);
-+	if (!folio)
-+		return -ENOMEM;
- 	BUG_ON(folio->mapping != inode->i_mapping);
- 	e4b->bd_buddy_folio = folio;
- 	return 0;
-@@ -1533,7 +1533,7 @@ ext4_mb_load_buddy_gfp(struct super_block *sb, ext4_group_t group,
+--- a/drivers/hid/wacom_sys.c
++++ b/drivers/hid/wacom_sys.c
+@@ -863,10 +863,16 @@ static void wacom_remove_shared_data(voi
+ 		data = container_of(wacom_wac->shared, struct wacom_hdev_data,
+ 				    shared);
  
- 	/* Avoid locking the folio in the fast path ... */
- 	folio = __filemap_get_folio(inode->i_mapping, pnum, FGP_ACCESSED, 0);
--	if (IS_ERR(folio) || !folio_test_uptodate(folio) || folio_test_locked(folio)) {
-+	if (!folio || !folio_test_uptodate(folio) || folio_test_locked(folio)) {
- 		/*
- 		 * folio_test_locked is employed to detect ongoing folio
- 		 * migrations, since concurrent migrations can lead to
-@@ -1543,11 +1543,11 @@ ext4_mb_load_buddy_gfp(struct super_block *sb, ext4_group_t group,
- 		 * try to get the folio with lock in both cases to avoid
- 		 * concurrency.
- 		 */
--		if (!IS_ERR(folio))
-+		if (folio)
- 			folio_put(folio);
- 		folio = __filemap_get_folio(inode->i_mapping, pnum,
- 				FGP_LOCK | FGP_ACCESSED | FGP_CREAT, gfp);
--		if (!IS_ERR(folio)) {
-+		if (folio) {
- 			if (WARN_RATELIMIT(folio->mapping != inode->i_mapping,
- 	"ext4: bitmap's mapping != inode->i_mapping\n")) {
- 				/* should never happen */
-@@ -1567,8 +1567,8 @@ ext4_mb_load_buddy_gfp(struct super_block *sb, ext4_group_t group,
- 			folio_unlock(folio);
- 		}
- 	}
--	if (IS_ERR(folio)) {
--		ret = PTR_ERR(folio);
-+	if (!folio) {
-+		ret = -ENOMEM;
- 		goto err;
- 	}
- 	if (!folio_test_uptodate(folio)) {
-@@ -1585,12 +1585,12 @@ ext4_mb_load_buddy_gfp(struct super_block *sb, ext4_group_t group,
- 	poff = block % blocks_per_page;
+-		if (wacom_wac->shared->touch == wacom->hdev)
+-			wacom_wac->shared->touch = NULL;
+-		else if (wacom_wac->shared->pen == wacom->hdev)
+-			wacom_wac->shared->pen = NULL;
++		scoped_guard(mutex, &wacom_udev_list_lock) {
++			if (wacom_wac->shared->touch == wacom->hdev) {
++				wacom_wac->shared->touch = NULL;
++				rcu_assign_pointer(wacom_wac->shared->touch_input, NULL);
++			} else if (wacom_wac->shared->pen == wacom->hdev) {
++				wacom_wac->shared->pen = NULL;
++			}
++		}
++
++		synchronize_rcu();
  
- 	folio = __filemap_get_folio(inode->i_mapping, pnum, FGP_ACCESSED, 0);
--	if (IS_ERR(folio) || !folio_test_uptodate(folio) || folio_test_locked(folio)) {
--		if (!IS_ERR(folio))
-+	if (!folio || !folio_test_uptodate(folio) || folio_test_locked(folio)) {
-+		if (folio)
- 			folio_put(folio);
- 		folio = __filemap_get_folio(inode->i_mapping, pnum,
- 				FGP_LOCK | FGP_ACCESSED | FGP_CREAT, gfp);
--		if (!IS_ERR(folio)) {
-+		if (folio) {
- 			if (WARN_RATELIMIT(folio->mapping != inode->i_mapping,
- 	"ext4: buddy bitmap's mapping != inode->i_mapping\n")) {
- 				/* should never happen */
-@@ -1609,8 +1609,8 @@ ext4_mb_load_buddy_gfp(struct super_block *sb, ext4_group_t group,
- 			folio_unlock(folio);
+ 		kref_put(&data->kref, wacom_release_shared_data);
+ 		wacom_wac->shared = NULL;
+@@ -903,6 +909,7 @@ static int wacom_add_shared_data(struct
+ 	mutex_unlock(&wacom_udev_list_lock);
+ 
+ 	retval = devm_add_action_or_reset(&hdev->dev, wacom_remove_shared_data, wacom);
++
+ 	return retval;
+ }
+ 
+@@ -2317,9 +2324,11 @@ static void wacom_set_shared_values(stru
+ 	}
+ 
+ 	if (wacom_wac->features.device_type & WACOM_DEVICETYPE_TOUCH) {
+-		wacom_wac->shared->type = wacom_wac->features.type;
+-		wacom_wac->shared->touch_input = wacom_wac->touch_input;
+-		wacom_wac->shared->touch = wacom->hdev;
++		if (wacom_wac->shared->touch == wacom->hdev || !wacom_wac->shared->touch) {
++			wacom_wac->shared->type = wacom_wac->features.type;
++			wacom_wac->shared->touch = wacom->hdev;
++			rcu_assign_pointer(wacom_wac->shared->touch_input, wacom_wac->touch_input);
++		}
+ 	} else if (wacom_wac->features.device_type & WACOM_DEVICETYPE_PEN) {
+ 		/* Pairs with smp_load_acquire() in wacom_sibling_pending() */
+ 		smp_store_release(&wacom_wac->shared->pen, wacom->hdev);
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -505,6 +505,18 @@ static void wacom_intuos_schedule_prox_e
+ 	}
+ }
+ 
++static void wacom_report_touch_mute(struct wacom_wac *wacom_wac, bool mute)
++{
++	struct input_dev *touch_input;
++
++	guard(rcu)();
++	touch_input = rcu_dereference(wacom_wac->shared->touch_input);
++	if (touch_input) {
++		input_report_switch(touch_input, SW_MUTE_DEVICE, mute);
++		input_sync(touch_input);
++	}
++}
++
+ static int wacom_intuos_pad(struct wacom_wac *wacom)
+ {
+ 	struct wacom_features *features = &wacom->features;
+@@ -645,12 +657,8 @@ static int wacom_intuos_pad(struct wacom
+ 	input_report_key(input, KEY_CONTROLPANEL, menu);
+ 	input_report_key(input, KEY_INFO, info);
+ 
+-	if (wacom->shared && wacom->shared->touch_input) {
+-		input_report_switch(wacom->shared->touch_input,
+-				    SW_MUTE_DEVICE,
+-				    !wacom->shared->is_touch_on);
+-		input_sync(wacom->shared->touch_input);
+-	}
++	if (wacom->shared)
++		wacom_report_touch_mute(wacom, !wacom->shared->is_touch_on);
+ 
+ 	input_report_abs(input, ABS_RX, strip1);
+ 	input_report_abs(input, ABS_RY, strip2);
+@@ -2189,7 +2197,7 @@ static void wacom_wac_pad_event(struct h
+ 	 */
+ 	if ((equivalent_usage == WACOM_HID_WD_MUTE_DEVICE) ||
+ 	   (equivalent_usage == WACOM_HID_WD_TOUCHONOFF)) {
+-		if (wacom_wac->shared->touch_input) {
++		if (wacom_wac->shared) {
+ 			bool *is_touch_on = &wacom_wac->shared->is_touch_on;
+ 
+ 			if (equivalent_usage == WACOM_HID_WD_MUTE_DEVICE && value)
+@@ -2197,9 +2205,7 @@ static void wacom_wac_pad_event(struct h
+ 			else if (equivalent_usage == WACOM_HID_WD_TOUCHONOFF)
+ 				*is_touch_on = value;
+ 
+-			input_report_switch(wacom_wac->shared->touch_input,
+-					    SW_MUTE_DEVICE, !(*is_touch_on));
+-			input_sync(wacom_wac->shared->touch_input);
++			wacom_report_touch_mute(wacom_wac, !(*is_touch_on));
  		}
+ 		return;
  	}
--	if (IS_ERR(folio)) {
--		ret = PTR_ERR(folio);
-+	if (!folio) {
-+		ret = -ENOMEM;
- 		goto err;
+@@ -3356,11 +3362,8 @@ static int wacom_wireless_irq(struct wac
+ 
+ 		if ((wacom->shared->type == INTUOSHT ||
+ 		    wacom->shared->type == INTUOSHT2) &&
+-		    wacom->shared->touch_input &&
+ 		    wacom->shared->touch_max) {
+-			input_report_switch(wacom->shared->touch_input,
+-					SW_MUTE_DEVICE, data[5] & 0x40);
+-			input_sync(wacom->shared->touch_input);
++			wacom_report_touch_mute(wacom, data[5] & 0x40);
+ 		}
+ 
+ 		pid = get_unaligned_be16(&data[6]);
+@@ -3395,11 +3398,8 @@ static int wacom_status_irq(struct wacom
+ 
+ 	if ((features->type == INTUOSHT ||
+ 	    features->type == INTUOSHT2) &&
+-	    wacom_wac->shared->touch_input &&
+ 	    features->touch_max) {
+-		input_report_switch(wacom_wac->shared->touch_input,
+-				    SW_MUTE_DEVICE, data[8] & 0x40);
+-		input_sync(wacom_wac->shared->touch_input);
++		wacom_report_touch_mute(wacom_wac, data[8] & 0x40);
  	}
- 	if (!folio_test_uptodate(folio)) {
--- 
-2.53.0
-
+ 
+ 	if (data[9] & 0x02) { /* wireless module is attached */
+--- a/drivers/hid/wacom_wac.h
++++ b/drivers/hid/wacom_wac.h
+@@ -287,7 +287,7 @@ struct wacom_shared {
+ 	/* for wireless device to access USB interfaces */
+ 	unsigned touch_max;
+ 	int type;
+-	struct input_dev *touch_input;
++	struct input_dev __rcu *touch_input;
+ 	struct hid_device *pen;
+ 	struct hid_device *touch;
+ 	bool has_mute_touch_switch;
 
 
