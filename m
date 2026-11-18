@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024578;
-	b=cT61d0k8neuB683zpcfyjZbh/7VIBKUUBk4mWM1DLDedffHd+pDeTzyDVi9Gy9BZprIb
-	 jwyXvoTl2ST4HNw7owliU5TSw1r6oF1eKNd+98lS95sIfb2Z5c3ZNNL0ZVO2paHlIUXJS
-	 SDtZBF6g6RIzv5rj0R2afDZWAkntSkvnKLqRRRHd6IWdQrlqdWsIc2jQMRDI5/BiO2a3Q
-	 HAn92I4nXLx2sZOx+IriBUcbGDiCsHslq2LPBm/nsYPokTTH6yss2MCYFrxOYN55Q7i4S
-	 bJgNTfgwm0nXQjzuJTxkIYItDCdXg79xaMbqYTxSjk6Q9CEL4IhpORQAPsuxODR96hw==
+	t=1795024581;
+	b=xr2O25f7sUQ3d/I1Y5dxVGrJzVWKyjlHTZ+zAN731JKdGhzX4WreFgtKrLt1LUO1rA8Y
+	 eOFa0Bdovf1lQhLwHcVw90JQ5HI5HqHhhg/vguXoY/5DYIZd2otuucMyh0foc4vHu1zO5
+	 Xx1qs406fHIwhpo/qkXiPFJzUUuw2r4JA1MnxhwCJIHC5xaKxw+KTkFw6SFo2L0sc2RHj
+	 iHqcRiqJehbnRHM8EcLoUzuRaOZT2j+HTF17sbeHj5P6tdrJnuLdkCqudFY0h36u7SoGD
+	 K4EYEH0QVufGgPcTiY4zQSIdWSpXSRbk49q9QrmoGj8GMfkg7vy28OqSMb91YDWSnRw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024578;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024581;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=12o8EsHw0IAVSPvSQBN8iWuudqg1veVOG5ElzYNXKTk=;
-	b=DcF5XsNssQmLOncX4UDWEMjSKWKJerqikm3jWl1+kNI6CkbKj9B/+sKUOAzNc1UYRBnp
-	 qW427BmtjGum/64Xw7AQNKQGtUcLQfirekYY6iFpusT7LiRK0m6n9mBJsJ1rq8XeBCjFX
-	 BH0q33N0PuPTldUdFUcZ7S829XPCndFUIVpeHchTOQsfX7oxDodMm0D8IYwGCXh48YARs
-	 nhCeNfy0vH8SwCQGrvJYeMG6izxuRMi0PwefFqqkW27YVz1xCcjfNpBLY09SehP0SPpwz
-	 0qUyc4h4OP+xZPN5/Nw0SddBJk4j41qVr3w9hc0VXCjxnMubbHnnS+VF9jyetb/1+3w==
+	bh=TL8sJPMCAPCHbAQpUVgtiwHt3bL7/VWagDVocDNX4Zg=;
+	b=P5CWPPPALEVuy79hKSdE3i3MsIgOJRJFA67CZkyWz22kTaDl3fgDI8G7Q1T8ExC44kPH
+	 tzDIqDF11/JxfFzD0D+OwxRnVMUUl98unyeAOYhSoetsFsjMy0tgt59dHMEmvhXS+f8Ii
+	 mnbST3l9LD15nv+pBHCQqeaejdQGz8zXSx9d5BJzfDnvRMU0TLtQX825xyIfn0dDPv1od
+	 oGsn9jdtgr8CmwJCGMenhWbtyTDsar0zZ3o2pP9NC6fhP0joLCSntjj4Mk1NSOG5VoFiD
+	 FMOOQaBVYgx+vVWtn9TLMZ3AY+SIOcxgo4+x/s4a3zJzxxN5XgLmQyiTmTLwqdDKAiA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yqkW0tSb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="yR/9m1nv";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C883606A320;
-	Wed, 18 Nov 2026 17:56:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8BE606A325;
+	Wed, 18 Nov 2026 17:56:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yqkW0tSb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD5671F000CC;
-	Wed, 18 Nov 2026 17:56:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yR/9m1nv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 845401F000C5;
+	Wed, 18 Nov 2026 17:56:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024578;
-	bh=12o8EsHw0IAVSPvSQBN8iWuudqg1veVOG5ElzYNXKTk=;
+	s=korg; t=1795024581;
+	bh=TL8sJPMCAPCHbAQpUVgtiwHt3bL7/VWagDVocDNX4Zg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yqkW0tSbIYAJUiCfX4Fcm3G7iQEVzdboXhECgdYVoU7Ix2HznYzYRfXNULPOh/W8O
-	 FDsqqi76WFkzNvq9suYq/REr9LnD3GU/gCNC38NQnkYTXTWHAYnKX/4Sb14/g7L8zu
-	 G7krq771dDrD6Ns8iPxIxfr1bBJdfBtc0NClTPuw=
+	b=yR/9m1nvtsUYAb8f/0UQtv6oz0R813m+QBkmfiV3lO+w5agMMZs5zHxtm6pnPV4kf
+	 dxuWsGHtuL/IeRbqqqeUonbEPrsP+970KnD8U4R67LGjYT1N74Hyu9O1mf7paCpBFi
+	 MOmamIlM0GaF1ZvDEziuMQ/oZF5+MfAM9U+Lptg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Nicolas Schier <n.schier@fritz.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0773/2151] kbuild: do not allocate .modinfo in vmlinux
-Date: Wed, 18 Nov 2026 15:41:48 +0100
-Message-ID: <20261118150150.295707911@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 6.18 0774/2151] kbuild: keep .modinfo when vmlinux is linked with --gc-sections
+Date: Wed, 18 Nov 2026 15:41:49 +0100
+Message-ID: <20261118150150.329277894@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,103 +67,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+[ Upstream commit a98db7418797bc27bef53c861b97ac748f598414 ]
 
-[ Upstream commit 5fe4dd59664105a9ea1a9468aa7391806b80364a ]
+Builds with CONFIG_LD_DEAD_CODE_DATA_ELIMINATION=y, such as arm
+allmodconfig, now fail while extracting modules.builtin.modinfo:
 
-Commit 3e86e4d74c04 ("kbuild: keep .modinfo section in vmlinux.unstripped")
-placed MODULE_INFO() strings in the .modinfo section in vmlinux.unstripped,
-however it left the section allocatable, so it gets assigned an address and
-on arm64, arm and riscv, the section is tagged as PT_LOAD.
+  arm-linux-gnueabihf-objcopy: vmlinux.unstripped: can't dump section
+  '.modinfo' - it does not exist: file format not recognized
+  /bin/sh: 1: cannot open modules.builtin.modinfo: No such file
 
-This is useless as the data is ultimately stripped anyway.
+or, with LLVM:
 
-Doing this results in a lot of unnecessary work - each pass copies the
-whole file, 450 MiB with relocations for an x86 allmodconfig build and 250
-MiB for an arm64 allmodconfig build.
+  llvm-objcopy: error: 'vmlinux.unstripped': section '.modinfo' not
+  found
 
-This adds ~0.7s on the serial tail of every build for arm64 and ~0.2s for
-x86 (the tail is single-threaded work done after parallel work has
-finished).
+Nothing references the MODULE_INFO() strings, so --gc-sections
+discards every .modinfo input section and vmlinux.unstripped ends up
+with no .modinfo data. This is not new: ever since
+modules.builtin.modinfo started being extracted from
+vmlinux.unstripped, these builds have silently produced an empty
+file, losing the modinfo of every built-in module. An arm
+multi_v7_defconfig build with LD_DEAD_CODE_DATA_ELIMINATION on current
+mainline yields a 0 byte modules.builtin.modinfo. The switch to
+--dump-section only turned that into a build error.
 
-Nothing requires .modinfo to exist at an address, so mark the output
-section (INFO) so that it's not allocated and use --dump-section to extract
-it as -O only emits allocated sections.
+Wrap the input section in KEEP() so that the linker retains it. The
+output section is still (INFO), so nothing is allocated for it. With
+the same arm config, modules.builtin.modinfo now has 14119 entries,
+and on x86_64 defconfig, where nothing is garbage collected, it is
+byte-identical before and after this change.
 
-The dump doesn't pick up the arch's OBJCOPYFLAGS any longer as they should
-not impact the output of this section.
+Found by KernelCI builds of the linus-next tree.
 
-Image, bzImage, System.map and modules.builtin.modinfo are unchanged and
-the stripped vmlinux differs only in its program headers.
-
-The objcopy passes are on the serial tail of every build that links
-vmlinux, no-op builds are unchanged.
-
-Whole build, 128-thread Threadripper 9980X, best of N runs:
-
-                                         before   after     delta
-                                         -------------------------------
-  x86 defconfig, touch mm/vma.c, gcc       11.2s    11.1s    -0.15s (-1%)
-  x86 defconfig, touch mm/vma.c, clang     11.3s    11.1s    -0.19s (-2%)
-  x86 defconfig, clean, gcc                32.5s    32.3s    -0.16s (-1%)
-  x86 defconfig, clean, clang              34.5s    34.2s    -0.26s (-1%)
-  x86 allmodconfig, touch mm/vma.c, gcc    40.1s    39.7s    -0.44s (-1%)
-
+Fixes: 39cfd5b12160 ("kbuild: extract modules.builtin.modinfo from vmlinux.unstripped")
+Fixes: 5fe4dd596641 ("kbuild: do not allocate .modinfo in vmlinux")
 Assisted-by: LLM
-Reviewed-by: Kees Cook <kees@kernel.org>
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Nicolas Schier <n.schier@fritz.com>
-Link: https://patch.msgid.link/20260923-build-speedup-v4-1-73128809a4a4@kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://patch.msgid.link/20260927161227.1179863-1-sashal@kernel.org
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Stable-dep-of: a98db7418797 ("kbuild: keep .modinfo when vmlinux is linked with --gc-sections")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/asm-generic/vmlinux.lds.h |  2 +-
- scripts/Makefile.vmlinux          | 10 ++--------
- 2 files changed, 3 insertions(+), 9 deletions(-)
+ include/asm-generic/vmlinux.lds.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
-index f60238b0b8918..3c62b1ef31800 100644
+index 3c62b1ef31800..52b57b7e133e3 100644
 --- a/include/asm-generic/vmlinux.lds.h
 +++ b/include/asm-generic/vmlinux.lds.h
 @@ -838,7 +838,7 @@ defined(CONFIG_AUTOFDO_CLANG) || defined(CONFIG_PROPELLER_CLANG)
  		.shstrtab 0 : { *(.shstrtab) }
  
  #define MODINFO								\
--		.modinfo : { *(.modinfo) }
-+		.modinfo (INFO) : { *(.modinfo) }
+-		.modinfo (INFO) : { *(.modinfo) }
++		.modinfo (INFO) : { KEEP(*(.modinfo)) }
  
  #ifdef CONFIG_GENERIC_BUG
  #define BUG_TABLE							\
-diff --git a/scripts/Makefile.vmlinux b/scripts/Makefile.vmlinux
-index 77b9969842e00..c9990f6a0d93e 100644
---- a/scripts/Makefile.vmlinux
-+++ b/scripts/Makefile.vmlinux
-@@ -89,11 +89,8 @@ remove-section-$(CONFIG_ARCH_VMLINUX_NEEDS_RELOCS) += '.rel.*'
- 
- remove-symbols := -w --strip-unneeded-symbol='__mod_device_table__*'
- 
--# To avoid warnings: "empty loadable segment detected at ..." from GNU objcopy,
--# it is necessary to remove the PT_LOAD flag from the segment.
- quiet_cmd_strip_relocs = OBJCOPY $@
--      cmd_strip_relocs = $(OBJCOPY) $(patsubst %,--set-section-flags %=noload,$(remove-section-y)) $< $@; \
--                         $(OBJCOPY) $(addprefix --remove-section=,$(remove-section-y)) $(remove-symbols) $@
-+      cmd_strip_relocs = $(OBJCOPY) $(addprefix --remove-section=,$(remove-section-y)) $(remove-symbols) $< $@
- 
- targets += vmlinux
- vmlinux: vmlinux.unstripped FORCE
-@@ -103,10 +100,7 @@ vmlinux: vmlinux.unstripped FORCE
- # ---------------------------------------------------------------------------
- 
- quiet_cmd_modules_builtin_modinfo = GEN     $@
--      cmd_modules_builtin_modinfo = $(cmd_objcopy); \
--                                    chmod -x $@
--
--OBJCOPYFLAGS_modules.builtin.modinfo := -j .modinfo -O binary
-+      cmd_modules_builtin_modinfo = $(OBJCOPY) -O binary -j .modinfo --dump-section .modinfo=$@ $< /dev/null
- 
- targets += modules.builtin.modinfo
- modules.builtin.modinfo: vmlinux.unstripped FORCE
 -- 
 2.53.0
 
