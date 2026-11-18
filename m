@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029525;
-	b=r07GnjWfyuFseq6QAACfSahvQf+dEmiqEXg5UKKfNpnRS2A2gxQywX29VKqwT0lsaEFC
-	 QNpD9GB29yjpPmUHw3nt/0Q8r5K3o3So/4suvJ5Li1d3L88q8NEd2BACUXJZ5/p5MD1ay
-	 obJytJnF0Ip7b/vSbLDoZlpo5CeLahtVMijrsUEn7i0hpJYwSNSEMi3Liu37H88UIn5h8
-	 lJyN4qi90oIach33wJQteL4fMwEO1N62JTY1e1x6+Bb1KpHSkgIwh8z9FnNcNvxbDyjfi
-	 8XvyLuPoMnsXiiqV8y4jNWzSBJPSfh5qPLzyU4jLyLuYKtEMSZci8wfjrG0CpJbnYWQ==
+	t=1795029528;
+	b=DTk6ipMLeS5iMwSN+HJZFKOA4MxspEaYm3V6csUIkT88XFQwb92KGo0r1i2kc4BeG6ir
+	 9hBa6YS4bkz5LOPa/olw4z/52OU62Uvv/+1dZ6KTEphOGkLNZuyYxmcwT/htczd6gM45L
+	 qVXVcej3dF8EijJWTymCEDurPeA73Z6YTwzB4qvMU7HoaafC8Z/RvyJPCvxR4D1R8UHR8
+	 yk/6mMnsKi5LfQIvvkRjhM5vSouDTlyULNtRqGMKTa04X4fIochV+LVG/VsakRgYDLreX
+	 /V0COnG9f5g2edXOQfpMobTVqAhYhqFenLblGwBZ1sMa0wRSqz9C1EM54CXEHoWhQdA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029525;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029528;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z2UP3xMJhWTFDlnp/PInYNcYRa5TAXTplkQJr9RM2CM=;
-	b=jsaPb1oKdfG3UC47m1SqCUoCLM7SQzzXFYnAJFVAZrr4UbYN84njn0xrB2lqbQg6Otpt
-	 rh7r7Hgf1HzkIgOesQUnYO0LKga9kqlesXwJeKSiosI703FzSS8/Y9V0aZ6IHff13zhUI
-	 LgXhto5M/k84wNwAK+DljL3vnI1uw7/Xy8xPy5PxK8VueE/TlkiXMHktpKlrlS0y3HGsv
-	 THCI4Q/jecKNu4I9OiCUFZvPtTLXfMSOAJyBv9Sf7ON2Xz6YkzzbYFEuPnmt40jq29IOR
-	 eRrl9Hb0oWllR7/KDDakpwvHXe4j1607XiK8Gr95O3smIaBmqxNOfmemb8cXtChsADw==
+	bh=+aKGUuRXxj76aGGzXI10xJYJl2+WR40Z7rI+hQTwgzY=;
+	b=pePHeFneeMLc/0O005jkBV5kkBEqbw+viMhpsXeUxQBmrG8xf/Dw1TNnHQWKLU4ANW7w
+	 tWrFkVrfCHmHTDvW4qMNQcMGAi/AuFO83HHMNl9PxG2oVS94cz2axgSLRppcU+cQY97XI
+	 JTRbRjk9fFhrIJMwt8LPr9pbUCPIV4DTMsihhFeVTDUz1RLE9st6UzKFvOT9LU0azUwpe
+	 KGwsuREqQYs6taUojJqpp6RFackol/HvMLRAsXDuNi5CKjddeUOmxXfDZo2DnWWmleyV4
+	 GZGVVMIIjVtHjqt+EzX1KWXpAYNOW6Ey1un6iFrTU7CaQr4etDxTR1hitNc+o4o0qJA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ix9WXxLz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VJCwLmWZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1850606A320;
-	Wed, 18 Nov 2026 19:18:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7768A606A31C;
+	Wed, 18 Nov 2026 19:18:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ix9WXxLz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18D4D1F000C4;
-	Wed, 18 Nov 2026 19:18:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VJCwLmWZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D19821F000C4;
+	Wed, 18 Nov 2026 19:18:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029525;
-	bh=Z2UP3xMJhWTFDlnp/PInYNcYRa5TAXTplkQJr9RM2CM=;
+	s=korg; t=1795029528;
+	bh=+aKGUuRXxj76aGGzXI10xJYJl2+WR40Z7rI+hQTwgzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ix9WXxLziUy1dB6/8ZYh6REcRqHnihgGfMPCRUFFRe3UPAUF3YRjt0Az1O8GwBz5D
-	 z2CZ7Qa7pThZgzahH/M6se3MxzAkgH5fa5cDauS42FMSIcvIl8xn9/+JcLg++Js3kw
-	 TTpiD6Pbyqi9goL7M4dE/36wXFYyNmf/IX33T9kU=
+	b=VJCwLmWZXaftvVxyhAidW0C/w9kuRTNghImTFJkAivCtR/EJaanqifefG2p5okKSW
+	 eB0YEth2ZbQFI4F4dB90nIzYAu4OzX54ehtx6+NxSzYRsmCUmvpEULRieacI44/T5/
+	 ewChPsRRte9L0c7f6tw9EP9w6futyk/JAaIkbDs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanghyun Park <sanghyun.park.cnu@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Sun Jian <sun.jian.kdev@gmail.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0374/1756] bpf: Fix program BTF use-after-free in sleepable programs
-Date: Wed, 18 Nov 2026 15:41:41 +0100
-Message-ID: <20261118150023.365337365@linuxfoundation.org>
+Subject: [PATCH 6.12 0383/1756] virtio: synchronize callbacks after device reset
+Date: Wed, 18 Nov 2026 15:41:50 +0100
+Message-ID: <20261118150023.855721633@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,52 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanghyun Park <sanghyun.park.cnu@gmail.com>
+From: Michael S. Tsirkin <mst@redhat.com>
 
-[ Upstream commit 88c9c6d0a766dd146545990053e8a04422ccb367 ]
+[ Upstream commit dd75508e6fe77116589c49658d0d18897688dc0b ]
 
-Object kfunc calls embed metadata owned by the program BTF. A sleepable
-program can remain active under Tasks Trace RCU after its last reference is
-dropped, while program teardown releases the BTF through ordinary RCU. The
-invocation can then dereference freed metadata in bpf_obj_new().
+virtio_reset_device says:
+	Note: this guarantees that vq callbacks are not in progress
+but in practice, only virtio pci correctly synchronizes the cbs.
 
-Move btf_put() into __bpf_prog_put_rcu(), the callback that frees the
-program. When teardown is deferred, that callback runs after the program's
-own grace period (Tasks Trace RCU for sleepable programs and ordinary RCU
-otherwise), so the BTF outlives every active invocation. The non-deferred
-path invokes the callback synchronously, so load-error cleanup stays direct.
+On other transports, a callback that is already executing, keeps running
+while the driver tears down the state it uses.
 
-Fixes: 958cf2e273f0 ("bpf: Introduce bpf_obj_new")
-Signed-off-by: Sanghyun Park <sanghyun.park.cnu@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Sun Jian <sun.jian.kdev@gmail.com>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://lore.kernel.org/bpf/20260901014829.3504342-2-sanghyun.park.cnu@gmail.com
+Add virtio_synchronize_cbs to virtio_reset_device fixing this for all
+transports that correctly implement synchronize_cbs().
+
+Reported-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://lore.kernel.org/all/20260818040433.66986-1-kmehltretter@gmail.com/
+Fixes: c46eccdaadab ("virtio: document virtio_reset_device")
+Tested-by: Karl Mehltretter <kmehltretter@gmail.com>
+Acked-by: Karl Mehltretter <kmehltretter@gmail.com>
+Assisted-by: LLM
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <8ae2995ee649adcfe1398f7f1c4fc9f7028c3db1.1789204858.git.mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/syscall.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/virtio/virtio.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index 854cc29b47c8f..9ebb51a32ff36 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -2194,6 +2194,7 @@ static void __bpf_prog_put_rcu(struct rcu_head *rcu)
- {
- 	struct bpf_prog_aux *aux = container_of(rcu, struct bpf_prog_aux, rcu);
+diff --git a/drivers/virtio/virtio.c b/drivers/virtio/virtio.c
+index 148ce610ccb83..078e5483b22f4 100644
+--- a/drivers/virtio/virtio.c
++++ b/drivers/virtio/virtio.c
+@@ -264,6 +264,8 @@ void virtio_reset_device(struct virtio_device *dev)
+ #endif
  
-+	btf_put(aux->btf);
- 	kvfree(aux->func_info);
- 	kfree(aux->func_info_aux);
- 	free_uid(aux->user);
-@@ -2204,7 +2205,6 @@ static void __bpf_prog_put_rcu(struct rcu_head *rcu)
- static void __bpf_prog_put_noref(struct bpf_prog *prog, bool deferred)
- {
- 	bpf_prog_kallsyms_del_all(prog);
--	btf_put(prog->aux->btf);
- 	module_put(prog->aux->mod);
- 	kvfree(prog->aux->jited_linfo);
- 	kvfree(prog->aux->linfo);
+ 	dev->config->reset(dev);
++	/* Flush pending VQ/configuration callbacks. */
++	virtio_synchronize_cbs(dev);
+ }
+ EXPORT_SYMBOL_GPL(virtio_reset_device);
+ 
 -- 
 2.53.0
 
