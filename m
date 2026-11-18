@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024350;
-	b=L15cCL2YF+TMFTjOhjvVfjgyj6/YSTTOeX1t8jdO76zbEKmXPJbMwg8D9k2j29ORLwoI
-	 pRvv+1XS48karWeRRlCLh3xtZdRkgfzTzgdjs70/IdaaLRTwGoA6R8ezsHythajiY8AHM
-	 hdeTiRvDlqy+rNZKX7TwgHDrMAbmANCY6gMdsVJH/0yyeBSazDqw4cGbHNGqBBbb5TXws
-	 eQZP8mkMRrpjL0WP42g8rceNTapnyie6+cwt4vu2OysqBkxkT8wg13XwBEGR1Ib1+3x9s
-	 +/baAlAIDG0ZrWwKj0p9/EE+s94mmfI88OvonX8RpK9azJqO4m/9JHurN3JffuEWbWw==
+	t=1795024353;
+	b=i5hDkYRHcUX50tXSc9npBgkPEh3puxO70pVBfRXR1yihsTfDlLHLoppsDQO58zxzlEd/
+	 nXrxt8NxiyD/8glLTrqAdVcfRVxrzPXVndjamUkk8H9JadVIHZ5ZtjviUemLjtYhsOxnp
+	 G2EjEvfSYDpNmxf5C0u3jg6/yvJkv2NIGT6vYZ4sMksV8vrW9BNUh7jPgjN8JCUlBmH73
+	 R+tSRRvDRXFPHnHqxFcnWFuzAMfXl7b2EF2UYk0e0ZkRQ8kwtCpAbt5fyUTxwq5PL3aKN
+	 otoTmO4OFnlM09UCp3GKFtrVPfq+3efarRUCGMOKVNQhkEpbNITgzqy3ogGM41kRcgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024350;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024353;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4Zlem4Z3U1GcKGR7gvmSvrkvkSYJirj0KhtWhhnh6+A=;
-	b=WrluxLalfkYtQ52W8ylqDB21HuhopnYsPmETcJRZNwP2/ILUOwajhhafM1TRkpF9xhGy
-	 PYQbbgOXIDFPxpscdvcQLDIxLVczbVYUn6NVYapVsMOUXzrqv7wJeYnzpQuVukETMzUgX
-	 ZlCbsoYl6GSyg6/ojyMVr4fe4KHhrbZI17H8k7d7oICojXntkdFWf9ScrS+P9rh7HV7wV
-	 zj8yslaS1wDW2/jbSYHH/sWLNN1rw+rZUSbXBcM8XxdSSrp3yizFsX2tR5ZoXttnZ5nNf
-	 B6JFgVxdqLVKhpunDCxLJArS5hb1KsOuL+9HzyXVQ93ge4iCAaI65Nw9l6XnC2AA3qg==
+	bh=tUFBsA2h6kq+f1C4lGAcdlkHZbrQhrsDz1sWWKybAWQ=;
+	b=xpM0yZLHcQLrh9pItgPqkH40vwEqiBQ8H4sCD06fiTov5jHbdQQw1+xcDIILqd3I8EgA
+	 nxBLH5xZ1k2qlHPDnErKxkHxGvsoulDMygN9zWm9w7GcLH5zmOToira99/Pe9aMQdArQz
+	 xpticT606giRepZosrd8qwcYP0/1sw1NM1YXv9WFkLhozfkCIWrvVcSuvndIM61UmSoVX
+	 +dJcNy5Zl6J0bCMxpeFiqtuQYmQn8DLMx1u1o7s0h8WPRTmMte76kzAe35cV3vx+My4Yj
+	 UWStQ55zmavuETcMI5wnguIvv2n3w2hDDzD8tmPA8CNjOgOmnc90DGBtExXZi4J5k4g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lQzu3dHB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NLRqiUrL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA4460A262E;
-	Wed, 18 Nov 2026 17:52:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E381C606A320;
+	Wed, 18 Nov 2026 17:52:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lQzu3dHB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FAE61F000C5;
-	Wed, 18 Nov 2026 17:52:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NLRqiUrL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4976D1F000C4;
+	Wed, 18 Nov 2026 17:52:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024350;
-	bh=4Zlem4Z3U1GcKGR7gvmSvrkvkSYJirj0KhtWhhnh6+A=;
+	s=korg; t=1795024352;
+	bh=tUFBsA2h6kq+f1C4lGAcdlkHZbrQhrsDz1sWWKybAWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lQzu3dHB5w/J0RCI22Yrg2/0YmUBB8d9/JdcAmz6FJ6wRU6aOyWM5EbqlmtES659p
-	 0j6zVuKDjHRZucNxgg0EYlrn+jRRbT5+zB9ZjvPoJRx/Y2N0vlmhXXfM++voZSA3h9
-	 T/cYJW1gln3zkpe/XTfeXO0szAO0T6HZKu3xA3Jo=
+	b=NLRqiUrLJ9jXgxooneG9qgrJoApRrl4jl1mVO0xkU8Lng9Szikvgx6cK1BZnIECem
+	 eKgVyFz4ohitRC6xtf1bN2F9aoH+LtV1WiIL0b0PY9kPRBlYu9i7o2JVou3n5pMJJv
+	 meLBgeIKoU1FnvX4q8QTdZCgVtcu0wUQIPxb67uc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Dmitry Sinyavin <sinyavin@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0653/2151] media: staging/ipu7: release ISYS firmware resources on remove
-Date: Wed, 18 Nov 2026 15:39:48 +0100
-Message-ID: <20261118150145.624709147@linuxfoundation.org>
+Subject: [PATCH 6.18 0654/2151] serial: msm: select PM_OPP
+Date: Wed, 18 Nov 2026 15:39:49 +0100
+Message-ID: <20261118150145.659678793@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,40 +67,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Dmitry Sinyavin <sinyavin@gmail.com>
 
-[ Upstream commit 628a575c99e767d6fac81215fca1190b61867148 ]
+[ Upstream commit 6a8352bb4e4bfcf67fa23c49d2e0d14684ffe2e6 ]
 
-isys_remove() tears down the registered ISYS devices but does not call
-ipu7_fw_isys_release() after a successful probe. The probe error path
-already uses this helper after ipu7_fw_isys_init() succeeds.
+Commit 173ebdedcd84 ("serial: msm: Use OPP table for DVFS support")
+made the MSM serial driver unconditionally configure the core clock
+through the OPP framework during probe.
 
-Without the matching release, resources initialized by
-ipu7_fw_isys_init() remain allocated on normal device removal.
+When CONFIG_PM_OPP is disabled, devm_pm_opp_set_clkname() is a stub that
+returns -EOPNOTSUPP, so every MSM serial port fails to probe. Select
+PM_OPP to keep minimal configurations functional.
 
-Call ipu7_fw_isys_release() after unregistering the ISYS devices to match
-the cleanup performed by the probe error path.
-
-Fixes: a516d36bdc3d ("media: staging/ipu7: add IPU7 input system device driver")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Fixes: 173ebdedcd84 ("serial: msm: Use OPP table for DVFS support")
+Signed-off-by: Dmitry Sinyavin <sinyavin@gmail.com>
+Link: https://patch.msgid.link/20260830085340.2542624-1-sinyavin@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/ipu7/ipu7-isys.c | 1 +
+ drivers/tty/serial/Kconfig | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/staging/media/ipu7/ipu7-isys.c b/drivers/staging/media/ipu7/ipu7-isys.c
-index 601e5a79ef8ec..a54393fbb9db6 100644
---- a/drivers/staging/media/ipu7/ipu7-isys.c
-+++ b/drivers/staging/media/ipu7/ipu7-isys.c
-@@ -590,6 +590,7 @@ static void isys_remove(struct auxiliary_device *auxdev)
+diff --git a/drivers/tty/serial/Kconfig b/drivers/tty/serial/Kconfig
+index 2b9c8b39d68f5..b75c7b9157b16 100644
+--- a/drivers/tty/serial/Kconfig
++++ b/drivers/tty/serial/Kconfig
+@@ -905,6 +905,7 @@ config SERIAL_JSM
+ config SERIAL_MSM
+ 	tristate "MSM on-chip serial port support"
+ 	depends on ARCH_QCOM || COMPILE_TEST
++	select PM_OPP
+ 	select SERIAL_CORE
  
- 	isys_notifier_cleanup(isys);
- 	isys_unregister_devices(isys);
-+	ipu7_fw_isys_release(isys);
- 
- 	cpu_latency_qos_remove_request(&isys->pm_qos);
- 
+ config SERIAL_MSM_CONSOLE
 -- 
 2.53.0
 
