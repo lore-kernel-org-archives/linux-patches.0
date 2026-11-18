@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027702;
-	b=fKRKl0xnSyOCW59onLvJbhGsYSc2qkCewycHBWkH3BzKU5rFkNlkKMufk1YVL9JGcMuV
-	 JT/1V6gop1JGPaakQdbnzhrfGl2Uq0KY1UScxeQILswRE3g+Kfn7MRcQXtRKG0OYhhuvf
-	 DzAC5fjrzx32NFTyz10K0FaPQDKYx8vIQSmezGQHib5dnyEkStEsAdRnSmVQYo5aSERvf
-	 OLK2E58HLfypJFHc5DoY64/gBiqeWurbOVBuXkKEsUQEcRhrzlkjBOvhSul0HByBgeEEJ
-	 mmnXcpg5K1fPV2tas+wpiEhG4h7l6bm2kMgWggeMYH71A8mET+RqW+u8w4PwdE63YdQ==
+	t=1795027705;
+	b=rAI3UYOA/BplMnHoipZDL1ERFmutZLBy1LLghYAKREa89CxjLnX3AjILhLThvq69EiJb
+	 IVwApiS9KMJ5n4afDSSMt9UpAcrNU+AN77DXDpFOlznPowjO+51GRbF8yG1C7ZjPU7O0S
+	 5zrPn/PCbJEHR6OfHx/NtWpepTGPKKBCmt4EXn2+GiKfesiZLF34ZLMWPwmTOSD1sd9tI
+	 6oXoZJaBEHTDR9ygy8vgOMCqlc4hNHo9pcKbY9DJOgpR9B8LotZ42hj68MQuLLd3FiMgO
+	 u+Ic70SjF7Ms2VcyQer79cXO4qTGvIOQqZtIOCM/GGG8AYwGeX2hiL7o1PSXKkRUzog==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027702;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027705;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bRNk2RTBq0cK1IV0+pu+FjxIWjJ7bBxc2BaBMgl7AWw=;
-	b=E67DVMEbYUK7Cm5XZZHz+5lPA0Vo0u+L1mR5GgqzEVCAYLmthfh/78RxoDamv7MPH/1U
-	 WBqd/0S+YXy9utwfHao13o4/ZEJq+0ZNgNfHOkvhgrrBADpzOmoUY6PTbjU/wSrdZ6ESo
-	 QQxwdeRBdBfHqmEF+LnrQy8TIhbBN3yzzaU8CGPN4f1CTElT3P7A6l86QmGvP710Hr7tu
-	 YfAjPaYAdRt2WsIKXsQtS5sM49RP3/PmsNVb463PIPlixF7FYIrLg9UbQC26r/+fOwpIr
-	 /uV3we4Kfs7uVdHLzJqD+3T6U3DrzmbUA2NnwZuI0WOlfK4GqHMKHFQmq4eXIMu5lKg==
+	bh=9ErTWyDqg5OIjuao63GeVCibiEyHlsPb74b5oxPo7Tk=;
+	b=ho4AdaXJ9r0mJ60HxdAzs8Wxv7b/myli8zLTaSl2Vywf7sZ1VHXb9LAkbPFEoJZ6U5mj
+	 R+UMBorfC3muLLv2ABWsBi2gQpLnGXPgUZONjDlH8CgPRhE61b7vr6arm+efB9NPsOqNc
+	 qH7ziDeyt6ojAAAP+xfZiZNvthscFoaKLIDDNDJEc4/Ezo0lJmVCpa2eBzvrHitck9/lW
+	 hkebEMISrgtKjMnOs1ArKWjJhGfAt1itKnoFROkezt6ltpdHzfmNai0i6Nhl3JVQceQd1
+	 QOekPwVnBYQYQDhDWnKdoLucrh1vVXYUVbMLVW1imcdDCX3guO9NemlYordSIFuApTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PEWXfKHd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=spOd2fPj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA17660A2610;
-	Wed, 18 Nov 2026 18:48:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B4E606A331;
+	Wed, 18 Nov 2026 18:48:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PEWXfKHd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27A321F00926;
-	Wed, 18 Nov 2026 18:48:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=spOd2fPj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 110191F000C4;
+	Wed, 18 Nov 2026 18:48:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027702;
-	bh=bRNk2RTBq0cK1IV0+pu+FjxIWjJ7bBxc2BaBMgl7AWw=;
+	s=korg; t=1795027705;
+	bh=9ErTWyDqg5OIjuao63GeVCibiEyHlsPb74b5oxPo7Tk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PEWXfKHdH4K+BNjJkeDfpujAe5lVYONk2oK8YlEHX8bUNP/GOW2HC42BM69v9FvpH
-	 ishwSGtJ/TOodIIVEHtU75kHLU+z42xCE7z80Li/9ybAgkeEbqGrrxv2ndYGWdi8sS
-	 r6AnkzXbXRtruaxbbpN1OqM3rwEpNdgk6IL6qywk=
+	b=spOd2fPjtPBPpLSMC4lNPaXKGXqoLK/kAGYXiwyCFAbcBPTmzjuom9vetz22ej0NK
+	 qOfpOrHobBpoEjIPnf9p8+N95H38PvV6mf6Ay1Tb7B6qwHojgcM1RHmxPNUmOx+eU5
+	 4x2qZ8YcrRR6IRZMCWYbu+5ARMxKLMs5xlmye2Fg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>,
-	Shawn Guo <shengchao.guo@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1884/2151] mailbox: qcom-cpucp: Add support for Nord CPUCP mailbox controller
-Date: Wed, 18 Nov 2026 16:00:19 +0100
-Message-ID: <20261118150230.429029918@linuxfoundation.org>
+Subject: [PATCH 6.18 1867/2151] selftests: ALSA: pcmtest: Check the frame count of each transfer
+Date: Wed, 18 Nov 2026 16:00:02 +0100
+Message-ID: <20261118150229.809224798@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,130 +68,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 0edda639ba13d9da37447586b5480582a2581e2b ]
+[ Upstream commit 317f2ddb6662fca8954e381a1bc632667872c4a3 ]
 
-The Nord SoC CPUCP mailbox supports 16 IPC channels, compared to 3 on
-x1e80100. The existing driver hardcodes the channel count via a
-compile-time constant (APSS_CPUCP_IPC_CHAN_SUPPORTED), making it
-impossible to support hardware with a different number of channels.
+The tests keep the result of snd_pcm_writei(), snd_pcm_readi() and
+their non-interleaved forms in a size_t. A size_t is never negative, so
+ASSERT_GE(res, 0) always passes.
 
-Introduce a qcom_cpucp_mbox_data per-hardware configuration struct that
-carries the channel count, and retrieve it via of_device_get_match_data()
-at probe time. Switch the channel array from a fixed-size member to a
-dynamically allocated buffer sized from the hardware data. Update the
-x1e80100 entry to supply its own data struct, and add a new Nord entry
-with num_chans = 16.
+The capture tests still catch a failed read when they compare the data.
+But the playback tests do not. The driver sets pc_test to 1 when it saw
+no corrupted data, and that is also true when it saw no data at all. So
+a playback test passes even when every write fails.
 
-Signed-off-by: Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>
-Signed-off-by: Shawn Guo <shengchao.guo@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
-Stable-dep-of: 74f1cf02d9fe ("mailbox: qcom-cpucp: read mbox hardware register using readq()")
+Store the result as snd_pcm_sframes_t and check that the whole request
+was transferred. The calls block, so a short count means an error.
+
+Fixes: 10b98a4db11a ("selftests: ALSA: Add test for the 'pcmtest' driver")
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/6f16e2a01f18c0ea069164bab31999182ff6d49e.1792390197.git.sammiee5311@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/qcom-cpucp-mbox.c | 35 ++++++++++++++++++++++++++-----
- 1 file changed, 30 insertions(+), 5 deletions(-)
+ .../selftests/alsa/test-pcmtest-driver.c      | 21 +++++++++++--------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/mailbox/qcom-cpucp-mbox.c b/drivers/mailbox/qcom-cpucp-mbox.c
-index d8fabc410a09c..515d2d12c01be 100644
---- a/drivers/mailbox/qcom-cpucp-mbox.c
-+++ b/drivers/mailbox/qcom-cpucp-mbox.c
-@@ -12,7 +12,6 @@
- #include <linux/module.h>
- #include <linux/platform_device.h>
+diff --git a/tools/testing/selftests/alsa/test-pcmtest-driver.c b/tools/testing/selftests/alsa/test-pcmtest-driver.c
+index 95065ef3b4410..5bba17434a6bc 100644
+--- a/tools/testing/selftests/alsa/test-pcmtest-driver.c
++++ b/tools/testing/selftests/alsa/test-pcmtest-driver.c
+@@ -166,7 +166,7 @@ FIXTURE_SETUP(pcmtest) {
+ TEST_F(pcmtest, playback) {
+ 	snd_pcm_t *handle;
+ 	unsigned char *it;
+-	size_t write_res;
++	snd_pcm_sframes_t write_res;
+ 	int test_results;
+ 	int i, cur_ch, pos_in_ch;
+ 	void *samples;
+@@ -190,7 +190,7 @@ TEST_F(pcmtest, playback) {
+ 		it[i] = patterns[cur_ch].buf[pos_in_ch % patterns[cur_ch].len];
+ 	}
+ 	write_res = snd_pcm_writei(handle, samples, params->rate * params->time);
+-	ASSERT_GE(write_res, 0);
++	ASSERT_EQ(write_res, params->rate * params->time);
  
--#define APSS_CPUCP_IPC_CHAN_SUPPORTED		3
- #define APSS_CPUCP_MBOX_CMD_OFF			0x4
+ 	snd_pcm_close(handle);
+ 	free(samples);
+@@ -206,7 +206,7 @@ TEST_F(pcmtest, playback) {
+ TEST_F(pcmtest, capture) {
+ 	snd_pcm_t *handle;
+ 	unsigned char *it;
+-	size_t read_res;
++	snd_pcm_sframes_t read_res;
+ 	int i, cur_ch, pos_in_ch;
+ 	void *samples;
+ 	struct pcmtest_test_params *params = &self->params;
+@@ -222,7 +222,7 @@ TEST_F(pcmtest, capture) {
+ 	snd_pcm_format_set_silence(params->format, samples,
+ 				   params->rate * params->channels * params->time);
+ 	read_res = snd_pcm_readi(handle, samples, params->rate * params->time);
+-	ASSERT_GE(read_res, 0);
++	ASSERT_EQ(read_res, params->rate * params->time);
+ 	snd_pcm_close(handle);
+ 	it = (unsigned char *)samples;
+ 	for (i = 0; i < self->params.sec_buf_len * self->params.time; i++) {
+@@ -239,7 +239,8 @@ TEST_F(pcmtest, ni_capture) {
+ 	snd_pcm_t *handle;
+ 	struct pcmtest_test_params params = self->params;
+ 	char **chan_samples;
+-	size_t i, j, read_res;
++	snd_pcm_sframes_t read_res;
++	size_t i, j;
  
- /* Tx Registers */
-@@ -26,6 +25,14 @@
- #define APSS_CPUCP_RX_MBOX_EN			0x4c00
- #define APSS_CPUCP_RX_MBOX_CMD_MASK		GENMASK_ULL(63, 0)
+ 	chan_samples = calloc(CH_NUM, sizeof(*chan_samples));
+ 	ASSERT_NE(chan_samples, NULL);
+@@ -257,7 +258,7 @@ TEST_F(pcmtest, ni_capture) {
  
-+/**
-+ * struct qcom_cpucp_mbox_data - Per-hardware mailbox configuration data
-+ * @num_chans:			Number of IPC channels supported by this hardware
-+ */
-+struct qcom_cpucp_mbox_data {
-+	int num_chans;
-+};
-+
- /**
-  * struct qcom_cpucp_mbox - Holder for the mailbox driver
-  * @chans:			The mailbox channel
-@@ -34,7 +41,7 @@
-  * @rx_base:			Base address of the CPUCP rx registers
-  */
- struct qcom_cpucp_mbox {
--	struct mbox_chan chans[APSS_CPUCP_IPC_CHAN_SUPPORTED];
-+	struct mbox_chan *chans;
- 	struct mbox_controller mbox;
- 	void __iomem *tx_base;
- 	void __iomem *rx_base;
-@@ -53,7 +60,7 @@ static irqreturn_t qcom_cpucp_mbox_irq_fn(int irq, void *data)
+ 	for (i = 0; i < 1; i++) {
+ 		read_res = snd_pcm_readn(handle, (void **)chan_samples, params.rate * params.time);
+-		ASSERT_GE(read_res, 0);
++		ASSERT_EQ(read_res, params.rate * params.time);
+ 	}
+ 	snd_pcm_close(handle);
  
- 	status = readq(cpucp->rx_base + APSS_CPUCP_RX_MBOX_STAT);
+@@ -273,7 +274,8 @@ TEST_F(pcmtest, ni_playback) {
+ 	snd_pcm_t *handle;
+ 	struct pcmtest_test_params params = self->params;
+ 	char **chan_samples;
+-	size_t i, j, read_res;
++	snd_pcm_sframes_t write_res;
++	size_t i, j;
+ 	int test_res;
  
--	for_each_set_bit(i, (unsigned long *)&status, APSS_CPUCP_IPC_CHAN_SUPPORTED) {
-+	for_each_set_bit(i, (unsigned long *)&status, cpucp->mbox.num_chans) {
- 		u32 val = readl(cpucp->rx_base + APSS_CPUCP_RX_MBOX_CMD(i) + APSS_CPUCP_MBOX_CMD_OFF);
- 		struct mbox_chan *chan = &cpucp->chans[i];
- 		struct mbox_client *cl;
-@@ -131,15 +138,24 @@ static const struct mbox_chan_ops qcom_cpucp_mbox_chan_ops = {
+ 	chan_samples = calloc(CH_NUM, sizeof(*chan_samples));
+@@ -294,8 +296,9 @@ TEST_F(pcmtest, ni_playback) {
+ 	}
  
- static int qcom_cpucp_mbox_probe(struct platform_device *pdev)
- {
-+	const struct qcom_cpucp_mbox_data *data;
- 	struct device *dev = &pdev->dev;
- 	struct qcom_cpucp_mbox *cpucp;
- 	struct mbox_controller *mbox;
- 	int irq, ret;
+ 	for (i = 0; i < 1; i++) {
+-		read_res = snd_pcm_writen(handle, (void **)chan_samples, params.rate * params.time);
+-		ASSERT_GE(read_res, 0);
++		write_res = snd_pcm_writen(handle, (void **)chan_samples,
++					   params.rate * params.time);
++		ASSERT_EQ(write_res, params.rate * params.time);
+ 	}
  
-+	data = of_device_get_match_data(dev);
-+	if (!data)
-+		return dev_err_probe(dev, -EINVAL, "No match data found\n");
-+
- 	cpucp = devm_kzalloc(dev, sizeof(*cpucp), GFP_KERNEL);
- 	if (!cpucp)
- 		return -ENOMEM;
- 
-+	cpucp->chans = devm_kcalloc(dev, data->num_chans, sizeof(*cpucp->chans), GFP_KERNEL);
-+	if (!cpucp->chans)
-+		return -ENOMEM;
-+
- 	cpucp->rx_base = devm_of_iomap(dev, dev->of_node, 0, NULL);
- 	if (IS_ERR(cpucp->rx_base))
- 		return PTR_ERR(cpucp->rx_base);
-@@ -165,7 +181,7 @@ static int qcom_cpucp_mbox_probe(struct platform_device *pdev)
- 
- 	mbox = &cpucp->mbox;
- 	mbox->dev = dev;
--	mbox->num_chans = APSS_CPUCP_IPC_CHAN_SUPPORTED;
-+	mbox->num_chans = data->num_chans;
- 	mbox->chans = cpucp->chans;
- 	mbox->ops = &qcom_cpucp_mbox_chan_ops;
- 
-@@ -176,8 +192,17 @@ static int qcom_cpucp_mbox_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
-+static const struct qcom_cpucp_mbox_data qcom_x1e80100_mbox_data = {
-+	.num_chans = 3,
-+};
-+
-+static const struct qcom_cpucp_mbox_data qcom_nord_mbox_data = {
-+	.num_chans = 16,
-+};
-+
- static const struct of_device_id qcom_cpucp_mbox_of_match[] = {
--	{ .compatible = "qcom,x1e80100-cpucp-mbox" },
-+	{ .compatible = "qcom,nord-cpucp-mbox", .data = &qcom_nord_mbox_data },
-+	{ .compatible = "qcom,x1e80100-cpucp-mbox", .data = &qcom_x1e80100_mbox_data },
- 	{}
- };
- MODULE_DEVICE_TABLE(of, qcom_cpucp_mbox_of_match);
+ 	snd_pcm_close(handle);
 -- 
 2.53.0
 
