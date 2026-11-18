@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047004;
-	b=SemM+52hB3EomBq3MCB/zlVCRbBAr65QDiF4Nfsw7XgqswuF7BsaqUONcfHHVZDSEASB
-	 RHr/si9/OG4rRBvmvVITto0pvP8sOoJqbB1jt7pzX0ItkPrhDcIrxEKFHaPZgrQwzQ86K
-	 zFlP60yyh8llA/IgNMddpJI0xWhSkAtG+/xrfwcwS6eF9zkfaXpBfPIF+2Dgh49iiYBY6
-	 YAiMewWAUAAOaN36+wiLh0od5lkG3fOObh+1EERp+7nGgMNzqDE/UTBg29h+2yVYaxuID
-	 9OFzGdDG6WzShfyXyCLBNgwZ914K9OceBRpqcEx0/j5bwjls9JvyKpLY0xTV86+Uv/Q==
+	t=1795047006;
+	b=C2ea90NvwkKQEL2P9cj6wkO3KoqRavLFzTG9ITF8zYZD8F97Qz/1dBzecWSWYoVcsvKW
+	 11KK/wecwBffA5xg5FVlFG6WYsslvef2h0dwRVUcugPvyY+hiaLdCchGB0ZHXs3vQWGI1
+	 4N2tcvonEY+gYJHkGYhJdaQylC8537Dp+O144hk+0IES+cZKbr7/mwMJP6nRn+ae/FxJQ
+	 2346Ro7WvzoizYzRxI6bDTKnVwI2tEDRMoNZYrTdNF9qUrr4RbvTJAy0RGjmyQVVjg/9E
+	 sEWHaRy2p+hrou8xRvX/641/DoBxfOH1g8Gt+MG+RgMhYbMHOTc0VIot+0JF9UA2kJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047004;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047006;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DMd8FfSdInUMr6OzCwJpud4VL35Kk+biEnjI/6XkiUw=;
-	b=OLQDwL8TqlholIhjSkjhHE5MdNjo4LBbIwri7dwlJ/OQSpFL+iYu1RwlMuhn4oJml5wz
-	 8O+U+ZCqFl1zLyOBwGUMOcGVv06yyE/rBKf4VT7vkjScPS5pdilX61X/3nIIRtXbP9DCw
-	 pm2N12y4ixRVfPwnjgX0SJfzDYhlFWHDSLk/SnnKOkuUP0JVsPtnIF1GO9+IiFxsZHpoJ
-	 KiapWyAAsLLFKwDef/YXLwnZFxrxdL6oZogJI0Ylj8U3hmfFvZlGk2YS2QdvdrGtWWLbD
-	 F1ZmandUbYaFjQtcdJSWDoBzFDlbiFBCxSs/EWztvQwCW534lJuUBvrVh/sR2+GdXfg==
+	bh=pC80Afn2hV6iem8DMJogvk36mn7PoyffL1klsufJiJA=;
+	b=XFJQLFUn5j4eOB2Drn0naz/uHPSygsWxemwGekc8HDhV9O48GAq8gZAc8hWA95amFef4
+	 LQBY0EFLFy4ghsY6TKfRJ4U17qQeXjPfZmjTe4jlABzYgDq/w0I3GbUnGPaHrQIBthMMN
+	 OAR7z/NzZ6GOs8MjTQfpjT2+N5XdiV7i+yigOEPnQVMm54KubOKQEXvASK7giS8FkEWvd
+	 w2X7T+/myDJGNofJZONZlQSYfcZ2fn/IPnoI2tafhOaiNLp/b4F6uRK9ndcHJDW8e2qB8
+	 OsGr+ER7p/J6N+R7EentzvHyeFKB17sZdZ+xhQOJr5M66nwTvpNyrmU4F+v74fmofRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x5VCwpHO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yb7cnNnL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0756060A263B;
-	Thu, 19 Nov 2026 00:10:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D191060A380D;
+	Thu, 19 Nov 2026 00:10:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x5VCwpHO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56EA71F000CA;
-	Thu, 19 Nov 2026 00:10:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yb7cnNnL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ED711F000C6;
+	Thu, 19 Nov 2026 00:10:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047003;
-	bh=DMd8FfSdInUMr6OzCwJpud4VL35Kk+biEnjI/6XkiUw=;
+	s=korg; t=1795047006;
+	bh=pC80Afn2hV6iem8DMJogvk36mn7PoyffL1klsufJiJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x5VCwpHOCcOQ8eiJnV0fWq1LEX/yYEAtBRVb/mrmxj2Egjzn8ZFYGi6hbTbkr/OGx
-	 uHIw6S9Et0kEcOyAhjVU2aZ7FlE9rdUUOifZN4AO5DCSkZyrvytot31OxKQzL98d9Y
-	 IPL0IR8JjpMgT8exWNfkpzLUM4uqQmG9R2S0nHbg=
+	b=yb7cnNnLccCthZzc1BSf0OwuqenleZuiybzw2gYL6gheQAirhcMGny1aMXlCujnK9
+	 3D0xMXjLOqhtxZeuUZDbJG4nWI2Xm+mM9tU8i79n4KMapVV58YUM9kO4H/q7vx4/dv
+	 iPSAp0gWP6UrrwjJFjpGJ4PkJHI+HwgnUQyAqDw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	stable@kernel.org,
+	Kaixuan Li <kaixuanli0131@gmail.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1483/2857] serial: 8250_exar: store the GPIO platform device in struct exar8250
-Date: Wed, 18 Nov 2026 15:41:57 +0100
-Message-ID: <20261118150254.701728041@linuxfoundation.org>
+Subject: [PATCH 6.1 1484/2857] f2fs: bound the SIT/NAT bitmaps by the checkpoint pack
+Date: Wed, 18 Nov 2026 15:41:58 +0100
+Message-ID: <20261118150254.747177103@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,148 +70,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Kaixuan Li <kaixuanli0131@gmail.com>
 
-[ Upstream commit 33d337816e00994daaf670243186d9e537ee090d ]
+[ Upstream commit 080833a32fd5dc10b3acf2fa9af9b3213e6cb617 ]
 
-The GPIO platform device is registered via platform->register_gpio()
-when port 0 is being set up. It is stored to port->port.private_data of
-the on-stack uart template (and from there it is copied into every
-registered port). pci_xr17v35x_exit() then fetches it back by
-serial8250_get_port(priv->line[0]).
+sit_ver_bitmap_bytesize and nat_ver_bitmap_bytesize are used as memcpy
+lengths into and out of sbi->ckpt, which is sized from cp_payload alone,
+and nothing compares either length against that allocation.
 
-But port 0 does not have to exist at that point. If
-serial8250_register_8250_port() fails for port 0, priv->line[0] holds a
-negative error code. The probe still succeeds (it only breaks the loop),
-so on unbind, priv->line[0] (a negative value) is passed to
-serial8250_get_port(). The GPIO device is never unregistered and a
-bogus port is accessed.
+sanity_check_ckpt() has checked these two fields since c77ec61ca0a4, which
+added them after a crafted image overran build_sit_info(). That check ties
+each length to a segment count; it never compares either against the
+allocation, which is the half this adds.
 
-The same problem would also occur after the planned conversion of
-serial8250_register_8250_port() to return a uart port instead of a
-line. As Sashiko pointed out in that case:
-  If board->setup() fails for the first port (i=0) in exar_pci_probe(),
-  priv->uport[0] remains NULL. If serial8250_register_8250_port() fails,
-  it returns an ERR_PTR. In either case, the loop breaks and probe
-  returns success. When the device is later unbound,
-  pci_xr17v35x_exit() unconditionally passes priv->uport[0] to
-  platform->unregister_gpio(), which will dereference it without
-  checking for validity.
+Mounting over-reads in build_sit_info() and build_node_manager(), and the
+first checkpoint writes the same lengths back through the same pointers,
+so the over-read's contents reach the on-disk checkpoint. An unmount is
+enough; the filesystem does not have to be used.
 
-The GPIO device belongs to the PCI device, not to any particular port.
-So store it in a new struct exar8250::gpio member. Pass priv to both
-->register_gpio() and ->unregister_gpio(), so that pci_xr17v35x_exit()
-does not need to look up any port at all.
+Bound both ends the way __bitmap_ptr() lays them out. The three branches
+differ, so a single sum of the two lengths would still admit a small
+overflow when cp_payload is non-zero.
 
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Fixes: d0aeaa83f0b0 ("serial: exar: split out the exar code from 8250_pci")
-Link: https://lore.kernel.org/all/sashiko-outbox-166269@kernel.org/
-Assisted-by: LLM
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/03a8b5c71614fc672fef1e55c083bda6c73b5bf3.1791873876.git.jirislaby@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 39a53e0ce0df ("f2fs: add superblock and major in-memory structure")
+Cc: stable@kernel.org
+Signed-off-by: Kaixuan Li <kaixuanli0131@gmail.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[ sashal: Replaced F2FS_BLKSIZE(sbi) with the constant F2FS_BLKSIZE in two expressions. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_exar.c | 36 ++++++++++++++---------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ fs/f2fs/super.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/drivers/tty/serial/8250/8250_exar.c b/drivers/tty/serial/8250/8250_exar.c
-index 9326a7bd4e2a1..7645cbf6b4d2e 100644
---- a/drivers/tty/serial/8250/8250_exar.c
-+++ b/drivers/tty/serial/8250/8250_exar.c
-@@ -169,8 +169,9 @@ struct exar8250_platform {
- 	int (*rs485_config)(struct uart_port *port, struct ktermios *termios,
- 			    struct serial_rs485 *rs485);
- 	const struct serial_rs485 *rs485_supported;
--	int (*register_gpio)(struct pci_dev *pcidev, struct uart_8250_port *port);
--	void (*unregister_gpio)(struct uart_8250_port *port);
-+	int (*register_gpio)(struct exar8250 *priv, struct pci_dev *pcidev,
-+			     struct uart_8250_port *port);
-+	void (*unregister_gpio)(struct exar8250 *priv);
- };
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index 1b6d28116a04c..89d1de05cb31c 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -3553,6 +3553,7 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
+ 	block_t avail_node_count, valid_node_count;
+ 	unsigned int nat_blocks, nat_bits_bytes, nat_bits_blocks;
+ 	unsigned int sit_blk_cnt;
++	unsigned long long ckpt_size, sit_end, nat_end;
+ 	int i, j;
  
- /**
-@@ -194,6 +195,7 @@ struct exar8250 {
- 	unsigned int		nr;
- 	struct exar8250_board	*board;
- 	void __iomem		*virt;
-+	struct platform_device	*gpio;
- 	int			line[];
- };
- 
-@@ -448,22 +450,21 @@ static const struct software_node exar_gpio_node = {
- 	.properties = exar_gpio_properties,
- };
- 
--static int xr17v35x_register_gpio(struct pci_dev *pcidev, struct uart_8250_port *port)
-+static int xr17v35x_register_gpio(struct exar8250 *priv, struct pci_dev *pcidev,
-+				  struct uart_8250_port *port)
- {
- 	if (pcidev->vendor == PCI_VENDOR_ID_EXAR)
--		port->port.private_data =
--			__xr17v35x_register_gpio(pcidev, &exar_gpio_node);
-+		priv->gpio = __xr17v35x_register_gpio(pcidev, &exar_gpio_node);
- 
- 	return 0;
- }
- 
--static void xr17v35x_unregister_gpio(struct uart_8250_port *port)
-+static void xr17v35x_unregister_gpio(struct exar8250 *priv)
- {
--	if (!port->port.private_data)
--		return;
--
--	__xr17v35x_unregister_gpio(port->port.private_data);
--	port->port.private_data = NULL;
-+	if (priv->gpio) {
-+		__xr17v35x_unregister_gpio(priv->gpio);
-+		priv->gpio = NULL;
-+	}
- }
- 
- static int generic_rs485_config(struct uart_port *port, struct ktermios *termios,
-@@ -546,8 +547,9 @@ static const struct software_node iot2040_gpio_node = {
- 	.properties = iot2040_gpio_properties,
- };
- 
--static int iot2040_register_gpio(struct pci_dev *pcidev,
--			      struct uart_8250_port *port)
-+static int iot2040_register_gpio(struct exar8250 *priv,
-+				 struct pci_dev *pcidev,
-+				 struct uart_8250_port *port)
- {
- 	u8 __iomem *p = port->port.membase;
- 
-@@ -556,8 +558,7 @@ static int iot2040_register_gpio(struct pci_dev *pcidev,
- 	writeb(IOT2040_UARTS_ENABLE, p + UART_EXAR_MPIOLVL_15_8);
- 	writeb(IOT2040_UARTS_GPIO_HI_MODE, p + UART_EXAR_MPIOSEL_15_8);
- 
--	port->port.private_data =
--		__xr17v35x_register_gpio(pcidev, &iot2040_gpio_node);
-+	priv->gpio = __xr17v35x_register_gpio(pcidev, &iot2040_gpio_node);
- 
- 	return 0;
- }
-@@ -631,7 +632,7 @@ pci_xr17v35x_setup(struct exar8250 *priv, struct pci_dev *pcidev,
- 		/* Setup Multipurpose Input/Output pins. */
- 		setup_gpio(pcidev, p);
- 
--		ret = platform->register_gpio(pcidev, port);
-+		ret = platform->register_gpio(priv, pcidev, port);
+ 	total = le32_to_cpu(raw_super->segment_count);
+@@ -3684,6 +3685,29 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
+ 		return 1;
  	}
  
- 	return ret;
-@@ -641,9 +642,8 @@ static void pci_xr17v35x_exit(struct pci_dev *pcidev)
- {
- 	const struct exar8250_platform *platform = exar_get_platform();
- 	struct exar8250 *priv = pci_get_drvdata(pcidev);
--	struct uart_8250_port *port = serial8250_get_port(priv->line[0]);
- 
--	platform->unregister_gpio(port);
-+	platform->unregister_gpio(priv);
- }
- 
- static inline void exar_misc_clear(struct exar8250 *priv)
++	/*
++	 * Nothing above ties the bitmap lengths to sbi->ckpt, which is
++	 * (1 + cp_payload) blocks. Bound both ends the way __bitmap_ptr()
++	 * lays them out.
++	 */
++	ckpt_size = (unsigned long long)(cp_payload + 1) * F2FS_BLKSIZE;
++	if (__is_set_ckpt_flags(ckpt, CP_LARGE_NAT_BITMAP_FLAG)) {
++		nat_end = CP_MIN_CHKSUM_OFFSET + sizeof(__le32) + nat_bitmap_size;
++		sit_end = nat_end + sit_bitmap_size;
++	} else if (cp_payload > 0) {
++		nat_end = CP_MIN_CHKSUM_OFFSET + nat_bitmap_size;
++		sit_end = F2FS_BLKSIZE + sit_bitmap_size;
++	} else {
++		sit_end = CP_MIN_CHKSUM_OFFSET + sit_bitmap_size;
++		nat_end = sit_end + nat_bitmap_size;
++	}
++
++	if (sit_end > ckpt_size || nat_end > ckpt_size) {
++		f2fs_err(sbi, "Bitmaps do not fit the checkpoint pack: sit ends at %llu, nat at %llu, pack is %llu bytes",
++			 sit_end, nat_end, ckpt_size);
++		return 1;
++	}
++
+ 	if (__is_set_ckpt_flags(ckpt, CP_LARGE_NAT_BITMAP_FLAG) &&
+ 		le32_to_cpu(ckpt->checksum_offset) != CP_MIN_CHKSUM_OFFSET) {
+ 		f2fs_warn(sbi, "using deprecated layout of large_nat_bitmap, "
 -- 
 2.53.0
 
