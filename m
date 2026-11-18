@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027338;
-	b=xAQrdXnYaa4aJj/zpEttREGcYG2BvcM+g6o4IY5ESPgkZGY7lvRwoGh66R0r0s7k8vXE
-	 xeCrkTqDDxDoudFkuCpHmOOLCjsBObcohSu1eQXcQMtQBJ0U0MRVWJuWRTzyoDprf6huw
-	 u1lUzfhl/hBXBNKsnmDW5bC5OjZJShhmMdyaO7qGka4b/jZ9lAHFoai9t8iXnzeQ8+EyV
-	 co4XQ6v8grAuiusGZJBr0z4S2Wlhv1nj1t8Tv0RJ0uBDrXYvQs5weypnwYY75pOuftEsk
-	 SMpUrMdA4v7PpXjpqcQsPWsu0hzD2Ul0cUgMzgG7EfNa5sU+IutOsIoDQLB+/qjWfig==
+	t=1795027341;
+	b=l9ga5+nFXEo48mG/2LHBqD98pFqFG/uT60zMR8S32jecO1c5l5dkNHC+K67QQwcwpGL0
+	 2eF4MSSeEEZpb3z9/miTjAiZIcHke8nyeqOkJNPUtMJ7lvfjtL/45rkxdFvPBeT9iozMe
+	 wktpxnTmSDMDiKJ9xBhQGboiCkz2IFCGza/Rvkv7EngXoOfaGIlNvbRg3MY9u1XQN8+Z+
+	 z7tyV8FCRMTYUo4clYAKdyOJWZ9WavS2EuZcP+YGwi65H25rygRhrONeuM/YijcFBbg4w
+	 lv8iqmHqgONCYOHFaLUtfjcBieMHDu09iJF1wyERrIY9TArThfoKqtU5mSpw3+nwdBA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027338;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027341;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2w9DH4ykW8WS7GOSt6qMoX60sAitP+5ZVgznEqFnxKw=;
-	b=E319gpCqYdoFOSH34wegy/2yg7fi84kJDo5xMNES+4MDIkr2SZh3opYN5jYDh+g2AGJW
-	 Bi/O4dx/0YlvGGlubYi7YnLzCeVllEtgIgjh97S6VjCZAy6UGjBam2NVVjTeQptBzzk2h
-	 HpBNXcwwKfCIbatAPgwYHllNMyxvZQnEiqkB3oZn2qeul7c4i8GonCGqcNbvspplB6CGU
-	 7osYxcWPUeUrOHRwGXozU4iXYWzJBAhlCPHNE3v+twIOUoOjt+jEm9oshNWlM7f/8ET1E
-	 Lzf9+6gdeanH2cfDY/Esi1hyvdDksnyrByHI9PtPUU6bdc9OCDsorv1bXp+B7B3nCMw==
+	bh=pMcLspIJpYSLaoO9xSTGu0ls0Afgqb9nouV3GnHAOro=;
+	b=pVwnOTAFOV1IvZoyf6orLVgaaW5ofxd1ZUfrApU//bblzcxmo/UTWJbPo/F6S0NgMTjN
+	 hBhKT5IEtNh9GXaBss300WR60RDaAMTOvRI0M46XAzUeDHON6KCgTHs+CphIgx4CUSaxm
+	 ys27lb2VsbbtFjcGX7irXDxE7gAHgJ2BHkUchCyGdMXkhTrPNFFZtqtEp7omutouqS0Zk
+	 BAgBMtyTGhk7xaqP3LlWJRvuqiUNwhWOCRgWqRyQuYPyAY4jVQti5aipxNKJOmwgBz5u0
+	 nmXZhHgRZAJjxwU7z82QOuV8OHCsbVCTCpfiXecrG+sr1rGtFh3w4D2U0E9o1pfkgfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UhYc8MhY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BbgpJjWk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D551E60A2610;
-	Wed, 18 Nov 2026 18:42:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E71E606A33B;
+	Wed, 18 Nov 2026 18:42:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UhYc8MhY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02DAA1F000C4;
-	Wed, 18 Nov 2026 18:42:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BbgpJjWk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B747D1F000C4;
+	Wed, 18 Nov 2026 18:42:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027338;
-	bh=2w9DH4ykW8WS7GOSt6qMoX60sAitP+5ZVgznEqFnxKw=;
+	s=korg; t=1795027341;
+	bh=pMcLspIJpYSLaoO9xSTGu0ls0Afgqb9nouV3GnHAOro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UhYc8MhYrGDxzgBYoShf4zZ+RJX2u+AUpV1EffoD9GGfytmVGvoVKRhbgaIDmMKfG
-	 vrt+qbqLtaNmcVsLt/As0/FJKUjW6FpqwkzF9hqcDXXpS+RNr8Zc93T7CWHTAOhLZo
-	 QzLd+5KFvl4p9gJVVdU5GnncAF8E4AoOiJqdEH34=
+	b=BbgpJjWko8YMukti26xK8RBXT7V2bvrjkLePSUK6UHJfXZOmR2zGqPUiVBZ8Puz/u
+	 tuKjjn8Fo85aysaHDKa+Z110xI1MNIVcnpITGU+fwgLf4PdF7gu6/7hlz2fiCgW+GQ
+	 EvqccR78Xpp6rB2kipLbfx+NiVeq5t+8Am7w/YQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serhat Kumral <serhatkumral1@gmail.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Leon Romanovsky <leon@kernel.org>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1754/2151] RDMA/srp: Avoid reading uninitialized has_port on srp_parse_in() failure
-Date: Wed, 18 Nov 2026 15:58:09 +0100
-Message-ID: <20261118150225.745678289@linuxfoundation.org>
+Subject: [PATCH 6.18 1755/2151] ASoC: codecs: sta32x: Fix definition of limiter threshold controls
+Date: Wed, 18 Nov 2026 15:58:10 +0100
+Message-ID: <20261118150225.781780784@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,36 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Serhat Kumral <serhatkumral1@gmail.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 4b8f20dc8d25f575e8b8bb5abb09ab803a7e1a3f ]
+[ Upstream commit e06bf60ee5bffa9eeacff0bf8b03d4572b04f67d ]
 
-srp_parse_in() returns -ENOMEM without initializing *has_port if
-kstrdup() fails. Only check has_port when srp_parse_in() succeeds.
+The limiter attack and release thresholds are the two 4-bit halves of
+one register, so their maximum is 15, not 16. With 16 the controls on
+bits 3:0 also write bit 4, which belongs to the other threshold.
 
-Fixes: bcef5b721568 ("RDMA/srp: Accept again source addresses that do not have a port number")
-Signed-off-by: Serhat Kumral <serhatkumral1@gmail.com>
-Link: https://patch.msgid.link/20261016211509.12973-1-serhatkumral1@gmail.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: c034abf6e503 ("ASoC: add STA32X codec driver")
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/179118fc7680b2b872d1f917b7fd21f54a73a6d8.1792135145.git.sammiee5311@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/srp/ib_srp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/sta32x.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/srp/ib_srp.c b/drivers/infiniband/ulp/srp/ib_srp.c
-index 0397934b1bcbb..2261a62b84cfd 100644
---- a/drivers/infiniband/ulp/srp/ib_srp.c
-+++ b/drivers/infiniband/ulp/srp/ib_srp.c
-@@ -3479,7 +3479,7 @@ static int srp_parse_options(struct net *net, const char *buf,
- 			}
- 			ret = srp_parse_in(net, &target->rdma_cm.dst.ss, p,
- 					   &has_port);
--			if (!has_port)
-+			if (ret == 0 && !has_port)
- 				ret = -EINVAL;
- 			if (ret < 0) {
- 				pr_warn("bad dest parameter '%s'\n", p);
+diff --git a/sound/soc/codecs/sta32x.c b/sound/soc/codecs/sta32x.c
+index 1c3e94fffe79e..739813d051dfd 100644
+--- a/sound/soc/codecs/sta32x.c
++++ b/sound/soc/codecs/sta32x.c
+@@ -510,21 +510,21 @@ SOC_ENUM("Limiter2 Release Rate (dB/ms)", sta32x_limiter2_release_rate_enum),
+  * two different enum definitions; provide both
+  */
+ SOC_SINGLE_TLV("Limiter1 Attack Threshold (AC Mode)", STA32X_L1ATRT, STA32X_LxA_SHIFT,
+-	       16, 0, sta32x_limiter_ac_attack_tlv),
++	       15, 0, sta32x_limiter_ac_attack_tlv),
+ SOC_SINGLE_TLV("Limiter2 Attack Threshold (AC Mode)", STA32X_L2ATRT, STA32X_LxA_SHIFT,
+-	       16, 0, sta32x_limiter_ac_attack_tlv),
++	       15, 0, sta32x_limiter_ac_attack_tlv),
+ SOC_SINGLE_TLV("Limiter1 Release Threshold (AC Mode)", STA32X_L1ATRT, STA32X_LxR_SHIFT,
+-	       16, 0, sta32x_limiter_ac_release_tlv),
++	       15, 0, sta32x_limiter_ac_release_tlv),
+ SOC_SINGLE_TLV("Limiter2 Release Threshold (AC Mode)", STA32X_L2ATRT, STA32X_LxR_SHIFT,
+-	       16, 0, sta32x_limiter_ac_release_tlv),
++	       15, 0, sta32x_limiter_ac_release_tlv),
+ SOC_SINGLE_TLV("Limiter1 Attack Threshold (DRC Mode)", STA32X_L1ATRT, STA32X_LxA_SHIFT,
+-	       16, 0, sta32x_limiter_drc_attack_tlv),
++	       15, 0, sta32x_limiter_drc_attack_tlv),
+ SOC_SINGLE_TLV("Limiter2 Attack Threshold (DRC Mode)", STA32X_L2ATRT, STA32X_LxA_SHIFT,
+-	       16, 0, sta32x_limiter_drc_attack_tlv),
++	       15, 0, sta32x_limiter_drc_attack_tlv),
+ SOC_SINGLE_TLV("Limiter1 Release Threshold (DRC Mode)", STA32X_L1ATRT, STA32X_LxR_SHIFT,
+-	       16, 0, sta32x_limiter_drc_release_tlv),
++	       15, 0, sta32x_limiter_drc_release_tlv),
+ SOC_SINGLE_TLV("Limiter2 Release Threshold (DRC Mode)", STA32X_L2ATRT, STA32X_LxR_SHIFT,
+-	       16, 0, sta32x_limiter_drc_release_tlv),
++	       15, 0, sta32x_limiter_drc_release_tlv),
+ 
+ BIQUAD_COEFS("Ch1 - Biquad 1", 0),
+ BIQUAD_COEFS("Ch1 - Biquad 2", 5),
 -- 
 2.53.0
 
