@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060318;
-	b=41gwn3+0ihTMhTHQ+JId1fHMYfGT3/HqKAl/9BqL7m71bOYVp6VYx1jOibCSFkUuMhsS
-	 CLcbCUaOA0OkUD+asS4OTJC3P4765cNZJwSUnY5a/MpRX8D3E5+tv5CcG4IRja9UNEg/o
-	 tPXVZd2HP/krxNgTV43FW52IMu584UNILL5FpHkfOIMBBlU2j1JV/NBnGAKJ+45w1MtPs
-	 xiNM/ayJ/EuE+jLw1FrCa3eFgcrM54sUO9OS4SiV0/m8KnPMfOIWe4RyhpjeRIQBe9K8V
-	 N5rzyPnhsun2IN8TILvUfD8AvjaMFyoar0/ac2b7BjJpIeVKAlfSMUzSU0omMlfqYaw==
+	t=1795060321;
+	b=qbwz/IDtndUUbS5JiOpHFUZI41Z7Ov/G7BxFVwKbtMfqi+9dLPKrDjE4Az7J543kyKae
+	 WPzN1nuVfnK+IfPUFdkFEcrfpGite4SOIQEhj/vF714uv7KYheaAHXtJiZe3OkJbs61iE
+	 7QoDqPwVLAzI6jEgfOSXALvhDG7A0VoOHGXqEiemWDUcSuwE2g7FT/oRP5wLKhLTNMiDr
+	 P4ZE/Yeuqk8adeZaDPrJDhETHqmR72MjwnciVE/KMTAjKQ2hRqA/H2V3AMJ9o3ia24fuI
+	 FlyhSmzAQKgfVQGahJ/RJuG2c795Ll5Zkb7WjXJilEcpdHN1aJJD/zg6jCD+m06Ky1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060318;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060321;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EZHrJrFmxRwajG5GiyO3T5m/LkRZzssOmj9xkVJiYzQ=;
-	b=y5a+P7YJl9gm0BYr2v4MbZPi94dc9DSuXKPTY9EeSJxQZyItBrX9gtMDIoi6pGzqQ3ux
-	 vzNF6sM0K1BzpyYoOeXgm6MRxDo+8HhgPPia5Idu9ryvlMxIs59uzMwTNVjBCDle6W+DM
-	 6CGI3cMO8mctA5aXUEJaMHRVMaAR2RF0QPWElbO6Ipa8kCuz3HcsjWKqopGda6+qDMkE5
-	 gTjNMPurrBl93oue0QxQc46KUvIKb1LRWgUcPlYXy6QLtLgfYKAtFBTIzDSn3TykjTyky
-	 r+FkeDrrqzLZS80YpdV01CzLz5GulEJraqTWG2bWiSkqWmx7tXLS9bKy5BeBISIFMvg==
+	bh=Y8eOEtcfAFZ8NSQdSlVNqjBzC6oskzwePxLl/l2iBys=;
+	b=Kpqt0n+8UPKoajrohXiALVfAzgdilhVwDmqAYggvFEu9fWfT+gZTE5rpRWGQ5mKhGRo2
+	 HzS8vdVgT8QxvzswRraU166CUXhqOpuquvpw4MMcLJ9dqMnWn5NGPV1EhKQNbuLH5fFsZ
+	 4u/L9XRRpZ6/wTcZD90cw/dbQLIH+goVpmoecGal2lXxCrBKbmC5ZmgiKsTj2ccbZaWeA
+	 qFpIHb9w0gSDAow0vq/apVjO8p54Jw28J3nPelILz91AwQJbcA+p8NqtYJk/fNpeV1ZRa
+	 Dei2uPcSDQPY+uVMTUvdPzIsPp/l3PQSeOo7HBVej3QNfb213naThP9N/MZLPGIghvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kFDF6Ho8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ao4fSS4O;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A1A606A320;
-	Thu, 19 Nov 2026 03:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F1E606A320;
+	Thu, 19 Nov 2026 03:52:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kFDF6Ho8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF54B1F000C4;
-	Thu, 19 Nov 2026 03:51:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ao4fSS4O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D3741F000C4;
+	Thu, 19 Nov 2026 03:52:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060318;
-	bh=EZHrJrFmxRwajG5GiyO3T5m/LkRZzssOmj9xkVJiYzQ=;
+	s=korg; t=1795060321;
+	bh=Y8eOEtcfAFZ8NSQdSlVNqjBzC6oskzwePxLl/l2iBys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kFDF6Ho8S3hL/z9CxdRBSc/D3jkoSA8DQeqySMa0p+esPYKH8I1nYfAczZEhHWOla
-	 4PaDhK3xZqcLH4V3gy5jRKdhDuVjUfxBMprmUhaBgOP4Xu7MuX7PAH0XZ+3UEk3ahi
-	 WpjOs8pMbpljjY3RP0SE9B/aGnrqGqNa90QglFxM=
+	b=Ao4fSS4O7crFtaPcPJTqlyxOeO8jD+6KkSrkUfLs9cYTiME+io2Jpfo4NVd51SKFX
+	 8v9kAsLNdv2bYXtuTPMa2RXGmkaPOUdBFANiSC/KIxmVGiuWK7HT98sPx29IJTNivC
+	 kxUCa863fXy9ECStZJxAfkBSMPmdocua0TZS/LLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Stancek <jstancek@redhat.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	R Nageswara Sastry <rnsastry@linux.ibm.com>,
-	Neal Gompa <neal@gompa.dev>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Luca Weiss <luca.weiss@fairphone.com>
-Subject: [PATCH 5.10 1115/1848] sign-file,extract-cert: avoid using deprecated ERR_get_error_line()
-Date: Wed, 18 Nov 2026 15:52:33 +0100
-Message-ID: <20261118150006.007528522@linuxfoundation.org>
+	Andrew Kanner <andrew.kanner@gmail.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Petr Vaganov <petrvaganoff@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 1106/1848] selinux: prevent KMSAN warning in selinux_inet_conn_request()
+Date: Wed, 18 Nov 2026 15:52:24 +0100
+Message-ID: <20261118150005.637953393@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,118 +69,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Stancek <jstancek@redhat.com>
+From: Andrew Kanner <andrew.kanner@gmail.com>
 
-commit 467d60eddf55588add232feda325da7215ddaf30 upstream.
+commit 1df83cbf23a27174aee6ea5e52462f03f7e48a10 upstream.
 
-ERR_get_error_line() is deprecated since OpenSSL 3.0.
+KMSAN reports the following issue:
+[   81.822503] =====================================================
+[   81.823222] BUG: KMSAN: uninit-value in selinux_inet_conn_request+0x2c8/0x4b0
+[   81.823891]  selinux_inet_conn_request+0x2c8/0x4b0
+[   81.824385]  security_inet_conn_request+0xc0/0x160
+[   81.824886]  tcp_v4_route_req+0x30e/0x490
+[   81.825343]  tcp_conn_request+0xdc8/0x3400
+[   81.825813]  tcp_v4_conn_request+0x134/0x190
+[   81.826292]  tcp_rcv_state_process+0x1f4/0x3b40
+[   81.826797]  tcp_v4_do_rcv+0x9ca/0xc30
+[   81.827236]  tcp_v4_rcv+0x3bf5/0x4180
+[   81.827670]  ip_protocol_deliver_rcu+0x822/0x1230
+[   81.828174]  ip_local_deliver_finish+0x259/0x370
+[   81.828667]  ip_local_deliver+0x1c0/0x450
+[   81.829105]  ip_sublist_rcv+0xdc1/0xf50
+[   81.829534]  ip_list_rcv+0x72e/0x790
+[   81.829941]  __netif_receive_skb_list_core+0x10d5/0x1180
+[   81.830499]  netif_receive_skb_list_internal+0xc41/0x1190
+[   81.831064]  napi_complete_done+0x2c4/0x8b0
+[   81.831532]  e1000_clean+0x12bf/0x4d90
+[   81.831983]  __napi_poll+0xa6/0x760
+[   81.832391]  net_rx_action+0x84c/0x1550
+[   81.832831]  __do_softirq+0x272/0xa6c
+[   81.833239]  __irq_exit_rcu+0xb7/0x1a0
+[   81.833654]  irq_exit_rcu+0x17/0x40
+[   81.834044]  common_interrupt+0x8d/0xa0
+[   81.834494]  asm_common_interrupt+0x2b/0x40
+[   81.834949]  default_idle+0x17/0x20
+[   81.835356]  arch_cpu_idle+0xd/0x20
+[   81.835766]  default_idle_call+0x43/0x70
+[   81.836210]  do_idle+0x258/0x800
+[   81.836581]  cpu_startup_entry+0x26/0x30
+[   81.837002]  __pfx_ap_starting+0x0/0x10
+[   81.837444]  secondary_startup_64_no_verify+0x17a/0x17b
+[   81.837979]
+[   81.838166] Local variable nlbl_type.i created at:
+[   81.838596]  selinux_inet_conn_request+0xe3/0x4b0
+[   81.839078]  security_inet_conn_request+0xc0/0x160
 
-Use ERR_peek_error_line() instead, and combine display_openssl_errors()
-and drain_openssl_errors() to a single function where parameter decides
-if it should consume errors silently.
+KMSAN warning is reproducible with:
+* netlabel_mgmt_protocount is 0 (e.g. netlbl_enabled() returns 0)
+* CONFIG_SECURITY_NETWORK_XFRM may be set or not
+* CONFIG_KMSAN=y
+* `ssh USER@HOSTNAME /bin/date`
 
-Signed-off-by: Jan Stancek <jstancek@redhat.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
-Reviewed-by: Neal Gompa <neal@gompa.dev>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+selinux_skb_peerlbl_sid() will call selinux_xfrm_skb_sid(), then fall
+to selinux_netlbl_skbuff_getsid() which will not initialize nlbl_type,
+but it will be passed to:
+
+    err = security_net_peersid_resolve(nlbl_sid,
+                                       nlbl_type, xfrm_sid, sid);
+
+and checked by KMSAN, although it will not be used inside
+security_net_peersid_resolve() (at least now), since this function
+will check either (xfrm_sid == SECSID_NULL) or (nlbl_sid ==
+SECSID_NULL) first and return before using uninitialized nlbl_type.
+
+Signed-off-by: Andrew Kanner <andrew.kanner@gmail.com>
+[PM: subject line tweak, removed 'fixes' tag as code is not broken]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Petr Vaganov <petrvaganoff@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/extract-cert.c |    4 ++--
- scripts/sign-file.c    |    6 +++---
- scripts/ssl-common.h   |   23 ++++++++---------------
- 3 files changed, 13 insertions(+), 20 deletions(-)
+ security/selinux/netlabel.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/scripts/extract-cert.c
-+++ b/scripts/extract-cert.c
-@@ -96,11 +96,11 @@ int main(int argc, char **argv)
- 		parms.cert = NULL;
+diff --git a/security/selinux/netlabel.c b/security/selinux/netlabel.c
+index 6a94b31b54721..e5af391023baf 100644
+--- a/security/selinux/netlabel.c
++++ b/security/selinux/netlabel.c
+@@ -195,6 +195,7 @@ int selinux_netlbl_skbuff_getsid(struct sk_buff *skb,
+ 	struct netlbl_lsm_secattr secattr;
  
- 		ENGINE_load_builtin_engines();
--		drain_openssl_errors();
-+		drain_openssl_errors(__LINE__, 1);
- 		e = ENGINE_by_id("pkcs11");
- 		ERR(!e, "Load PKCS#11 ENGINE");
- 		if (ENGINE_init(e))
--			drain_openssl_errors();
-+			drain_openssl_errors(__LINE__, 1);
- 		else
- 			ERR(1, "ENGINE_init");
- 		if (key_pass)
---- a/scripts/sign-file.c
-+++ b/scripts/sign-file.c
-@@ -114,11 +114,11 @@ static EVP_PKEY *read_private_key(const
- 		ENGINE *e;
- 
- 		ENGINE_load_builtin_engines();
--		drain_openssl_errors();
-+		drain_openssl_errors(__LINE__, 1);
- 		e = ENGINE_by_id("pkcs11");
- 		ERR(!e, "Load PKCS#11 ENGINE");
- 		if (ENGINE_init(e))
--			drain_openssl_errors();
-+			drain_openssl_errors(__LINE__, 1);
- 		else
- 			ERR(1, "ENGINE_init");
- 		if (key_pass)
-@@ -273,7 +273,7 @@ int main(int argc, char **argv)
- 
- 		/* Digest the module data. */
- 		OpenSSL_add_all_digests();
--		display_openssl_errors(__LINE__);
-+		drain_openssl_errors(__LINE__, 0);
- 		digest_algo = EVP_get_digestbyname(hash_algo);
- 		ERR(!digest_algo, "EVP_get_digestbyname");
- 
---- a/scripts/ssl-common.h
-+++ b/scripts/ssl-common.h
-@@ -3,7 +3,7 @@
-  * SSL helper functions shared by sign-file and extract-cert.
-  */
- 
--static void display_openssl_errors(int l)
-+static void drain_openssl_errors(int l, int silent)
- {
- 	const char *file;
- 	char buf[120];
-@@ -11,28 +11,21 @@ static void display_openssl_errors(int l
- 
- 	if (ERR_peek_error() == 0)
- 		return;
--	fprintf(stderr, "At main.c:%d:\n", l);
-+	if (!silent)
-+		fprintf(stderr, "At main.c:%d:\n", l);
- 
--	while ((e = ERR_get_error_line(&file, &line))) {
-+	while ((e = ERR_peek_error_line(&file, &line))) {
- 		ERR_error_string(e, buf);
--		fprintf(stderr, "- SSL %s: %s:%d\n", buf, file, line);
-+		if (!silent)
-+			fprintf(stderr, "- SSL %s: %s:%d\n", buf, file, line);
-+		ERR_get_error();
+ 	if (!netlbl_enabled()) {
++		*type = NETLBL_NLTYPE_NONE;
+ 		*sid = SECSID_NULL;
+ 		return 0;
  	}
- }
- 
--static void drain_openssl_errors(void)
--{
--	const char *file;
--	int line;
--
--	if (ERR_peek_error() == 0)
--		return;
--	while (ERR_get_error_line(&file, &line)) {}
--}
--
- #define ERR(cond, fmt, ...)				\
- 	do {						\
- 		bool __cond = (cond);			\
--		display_openssl_errors(__LINE__);	\
-+		drain_openssl_errors(__LINE__, 0);	\
- 		if (__cond) {				\
- 			errx(1, fmt, ## __VA_ARGS__);	\
- 		}					\
+-- 
+2.53.0
+
 
 
