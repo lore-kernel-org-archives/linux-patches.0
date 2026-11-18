@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041208;
-	b=5RG4giRU3LsD9bwWK/bmgITBv4SxCa1DftxQmLd9PJcjaqK/B4hS0yOnpbzKCVwJ7DfH
-	 bkFi0WvAuG5e2T+CdzqCS1Jl4EmqAdJsfpgHCxJxKyujiBx6QPADMFv91wNjVRIdzRAxy
-	 vesg1RUnqdwmhe7qrKgNBMFRtiaMLoPaYrtU8Y3KkLArK5GcOLL6q9CbFQXp7qAwYp7WX
-	 8oFmxVGsSaEmO8Ut1gBU/VAnsp8HI21U2s1pW48rnSQbf+p2LyzNfUBFTccDFXpBh9HVr
-	 sL5+JoQwKU8STucU6bNq1FSzQD1V7zydMcCbkIbpRNFTK0WzMluLjDjsocn8gEyK8Jg==
+	t=1795041211;
+	b=AWpN3yWJBECpBdBRZIoObukrcwtUyGOvsPkg+8QIjK7FBmrU6dLgtA++lEyR0eGFrKz8
+	 oMLcI911kZ8zPtxqvvOpVZJLNt5oFyGeBjlqt/VmxhxRCxoCoYgpO1SDOQqEoeVIc5dgA
+	 BT/qKH+BjORimqWpzgfYXD4G9ipB9UORmpbYfXg8OM4s37eoTWqXoeu1ddRu2jMB99i9z
+	 rLnyzCwGB3xDFckVKJxHh36BbzJ7a08NLz/+7XhVyyX0huT2UnW0cN+4hLFZ76B0Tncgl
+	 WzR2f0LWOumozHT9Hc5qFV9nLk2aLQpJUx6hvL3tmpvpsD28aL4+qztjGSmYR6um+QQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041208;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041211;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=di9sRJf1HlB370WRad9gLWedCkaDwSdSIciPJtDV/Mw=;
-	b=bGYW+p1tWooVVA4BGdnv6HSFcG5f23bo9mHfkVH6NmsmCscZPckCBbYudbiSGptl64/h
-	 iK0tcf8KOnkDHZOVg365g4pVaNYP4CQbq2u/S5HFh1fCoi4Ho7bJ5ddNz9p0q6Wv9no2s
-	 6GXYQ/SMG6qQEqI+JYXbkP2nOjfmYxy77GXf2czLfSsmYIbmX2kxBT6Zk5AymhAA71rq8
-	 pw1lNvrpWAsfW8PhHvg2UZTI3HWnZ4DmT9590uBWgCL9QLzvOPRv8kBjVSTyPKAWnlCe7
-	 yXJWmU8Jxmo9WUlAcg2OPMVrAnqwrC1Y5ePn7MNOT3dhUvxSvX1bkcZ15zCkGZq+eJg==
+	bh=YawC8zCAYkb3ggUYGPUcf9ioQkqQZAVcUpxLOVI3g9Q=;
+	b=f5ahHTJlk8KDKc9dQXvUUd84cgayXew5E8SMWqjK3yN8fNrHDZkulLo3FKVNE/yeSx9g
+	 xIGuvbRZXoT+e2/43GQWugZkWMDA7zwalnuNlLSwrtKezbgIiskmaft9UxFJj82GdjwZa
+	 /e84rI4VxcU6wtV4zgGmOejhmkMtvu3XUAITolDtnCUA4Ld+mfqQMKVgzmSiprFZz93MM
+	 r9IFmVAepDJo0ZlDXkFh4mbUaI9lQtDwKzS8F01cHe1OJXwuojlSXmG2NW+q8URkwSw0/
+	 2JAsLefNBN1ByscLLuJRx7/D+jeB2mH7wbRO3FIdrywirh1Ln1mo0az8LepKO23ptgQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UeXUuxPh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xNvu27oG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7462E606A320;
-	Wed, 18 Nov 2026 22:33:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 332BF606A320;
+	Wed, 18 Nov 2026 22:33:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UeXUuxPh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCC6E1F000C4;
-	Wed, 18 Nov 2026 22:33:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xNvu27oG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 882DA1F000C4;
+	Wed, 18 Nov 2026 22:33:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041208;
-	bh=di9sRJf1HlB370WRad9gLWedCkaDwSdSIciPJtDV/Mw=;
+	s=korg; t=1795041211;
+	bh=YawC8zCAYkb3ggUYGPUcf9ioQkqQZAVcUpxLOVI3g9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UeXUuxPh7Cgs+4PwZhoGQgnRm2vRl+MxRQw3O0WC3aTiAh+V00tFTQuWnhw2OEbPI
-	 fA+ZM4wwLBYOIg0FLXH5b2k9cu5zzebpDHRXDyS5uzaTbpqi2nUVLHQU3xUMFPevVF
-	 3jO/xP7idNWgfSUj9K4QwOA/tQmF/FS9dSWV4y1k=
+	b=xNvu27oGr+m29444WVpPzjAwjM9qyBLXNrvyup2Ow4ZPynDwCLESKOfvFX5PKJQ/e
+	 zJY75lCASDL/t4H4JlmJMiqBZvyNtDT+NcadG6+zg/hnAyJphE3zHZR4j5gpEdAQKH
+	 uwaChU5p/Ri0m3csL5w5q1QCCsIUuR8DHL45+G2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudeep Holla <sudeep.holla@kernel.org>,
-	Breno Leitao <leitao@debian.org>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Aloka Dixit <aloka.dixit@oss.qualcomm.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2732/3318] mailbox: pcc: Free the channel before unmapping the shared memory
-Date: Wed, 18 Nov 2026 15:55:54 +0100
-Message-ID: <20261118150442.770403967@linuxfoundation.org>
+Subject: [PATCH 6.6 2715/3318] wifi: mac80211: remove redundant null check in ieee80211_assign_beacon()
+Date: Wed, 18 Nov 2026 15:55:37 +0100
+Message-ID: <20261118150442.317622839@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,65 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Aloka Dixit <aloka.dixit@oss.qualcomm.com>
 
-[ Upstream commit 4ac21f3fac3e8584fd395c59044a8e99ac618572 ]
+[ Upstream commit 229cf0621950919c38a271ab3c07dfd41dd301d0 ]
 
-I am seeing a crash on PCC that is related to a an shared memory being
-unmapped before the IRQ is disabled, and the IRQ kicks in and hits the
-unmapped (NULL) address. This is a summary of what I see on my box:
+The else-if branch condition 'old && old->mbssid_ies' already
+guarantees 'old' is non-NULL. The inner 'old &&' in
+'if (old && old->rnr_ies)' is therefore redundant; remove it.
 
-	scmi_protocol scmi_dev.1: Message for 1 type 0 is not expected!
-	Unable to handle kernel NULL pointer dereference at virtual address 0000000000000004
-	 __handle_irq_event_percpu+0x1c4/0x9e0
-	 handle_irq_event+0x98/0x218
-	 handle_fasteoi_irq+0x230/0x750
-	 generic_handle_domain_irq+0xac/0x138
-	 gic_handle_irq+0x344/0x740
-	 call_on_irq_stack+0x30/0x48
-
-The trapping store is iowrite32(SCMI_SHMEM_FLAG_INTR_ENABLED,
-&shmem->header.flags), a write of 1 at offset 4 of a NULL base.
-
-But, back to the problem, pcc_mbox_free_channel() unmaps the shared
-memory and clears pchan->chan.shmem *before* freeing the IRQ (aka
-calling mbox_free_channel()).
-
-The interrupt is still live when the mapping goes away.
-
-Free the channel first, before the memory unmap. mbox_free_channel()
-calls pcc_shutdown(), which frees the platform interrupt, and then unmap
-shared memory.
-
-Fixes: 7f9e19f207be ("mailbox: pcc: Check before sending MCTP PCC response ACK")
-Reviewed-by: Sudeep Holla <sudeep.holla@kernel.org>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Signed-off-by: Aloka Dixit <aloka.dixit@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261002-csa_cca_fix-v1-2-b83a998aeb44@oss.qualcomm.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: baf0d4feed2f ("wifi: mac80211: fix mbssid/rnr allocation in beacon data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/pcc.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/mac80211/cfg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mailbox/pcc.c b/drivers/mailbox/pcc.c
-index 6efeadf89db2b..69e545468674c 100644
---- a/drivers/mailbox/pcc.c
-+++ b/drivers/mailbox/pcc.c
-@@ -422,12 +422,13 @@ void pcc_mbox_free_channel(struct pcc_mbox_chan *pchan)
- 		return;
- 	pchan_info = chan->con_priv;
- 	pcc_mbox_chan = &pchan_info->chan;
-+
-+	mbox_free_channel(chan);
-+
- 	if (pcc_mbox_chan->shmem) {
- 		iounmap(pcc_mbox_chan->shmem);
- 		pcc_mbox_chan->shmem = NULL;
- 	}
--
--	mbox_free_channel(chan);
- }
- EXPORT_SYMBOL_GPL(pcc_mbox_free_channel);
- 
+diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
+index c3a8f0faf0ee6..a6f53af5a8f09 100644
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -1164,7 +1164,7 @@ ieee80211_assign_beacon(struct ieee80211_sub_if_data *sdata,
+ 	} else if (old && old->mbssid_ies) {
+ 		mbssid = old->mbssid_ies;
+ 		size += struct_size(new->mbssid_ies, elem, mbssid->cnt);
+-		if (old && old->rnr_ies) {
++		if (old->rnr_ies) {
+ 			rnr = old->rnr_ies;
+ 			size += struct_size(new->rnr_ies, elem, rnr->cnt);
+ 		}
 -- 
 2.53.0
 
