@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020093;
-	b=kPmxOlTvbzrBrUfLzdiAjmd3giKCMFExZxeP2H1pw6Y+LdG1EHuttHYp/KG/OExD2TR3
-	 LdI6jFgtvOxFjObgmayarZZM91BhpVkyJzp3TX/3/Q8FE8O2EwUe32JCQ6ah4RgodrFzV
-	 Mb+urdsIcBGso42uUdF/ORyc1+3C9OGr2TRRlxgUmbOX2y0qGV8juy9p/Vx2XlNa9iJQg
-	 S4kFpWcmSWQvU0zh1tn1vETlgHWHtKaqiMeB8echHUlFHGiIjOycKY6G6JOL7LGEeY7Wg
-	 mrofcaBfab1HQhliAxoOwfZC08jOBsz8x32xBZBvK0zxQpzFm2dAXof00mwFFVAPing==
+	t=1795020096;
+	b=xlt/NYejrkH20kqcQcGmZyue7vgMmnQOP/CHb1KLsm0uCdfjYpTyGTvFc/3IyxeOv6uC
+	 E2VIAg5bEqs5sUjOtn0FWJzv4TSWdSaxO1bGs47eH3F35+bVKBDLzML3QYh0NcD5pcCSg
+	 Ki8Fzr/6FgFuqBxeaorSntMAzyihIgjq3B0AAO8QvvEdF4eMLEIz6UHrt8xBWPrKQjdzO
+	 a4W+4seeLkeMKEcYMeo6djt9Hl1cJ1UY/6VatiLYcu1IlT+b2G0ur5wGqVF9A/zRSpFSV
+	 5mXZyPx7jnASTUklMPlvltMAzuiZgBzyiP4IW4TZFts10RGcSGwL1Sji94RG9xIMcZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020093;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020096;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=D9Mr7KF9nIlHzv56Jv9yoS35oRGkn2rDw1dPZKi/qC0=;
-	b=4st+syFDb0VEMftkt52q/oIseINMZ6jAZkvEYbmjT2Epz44QvR2gxTuIc5aYvtWCLRMn
-	 gklzku9m2Olcv03/UEZDemxYdHLOm/e2m9n/dacRg19dVCGM260HMp2JKp803bdC640na
-	 Llh7nNIuVtXm5bidTeQivy8/h6Vi2QvphYjuKaDDf2P3yzf7d8RUUAXoJb0r6qJBmDPb5
-	 w0eBhq30ei97CWNTnkWmJT6/aUFMBBvNBG1GP7UB+YKYKuMKCZNProN9WtI4LNZ0lU+ob
-	 SHcPLxpy/JlRyIGGjnc9Tn2v6pePUyWNfsDG6hVRWkZ2D/uzMew0zRNJAEQeHJEV14w==
+	bh=EEYsYurgcWX332YPDNlQPyHh3E91nWJBrnEzvVCRemE=;
+	b=35GfEBu8miAnoa/n2WyGRqMwFjqSdwo0CSx/5WMUgQr2awlWlvn7Dhi8sTnad9mm+C+5
+	 rYi7OsUg4wDc9F6AKvQ9uZhgqqdBfMliqqVqcMWpOfJArgPbi10096YCaNL4whLKSVf8v
+	 xIhw+qjivt9nqJv9vbcc0skUAqN2X+uOUlQR0iuKJeIusKECSyAtD2KhYfTNg37Mmj9rC
+	 LuJuAyidjgJGIU7+MxMezyHn9za7dwvqpWPsobiN+ctMvHliEVVq9DK/u0q8Yr//Enw9P
+	 Fvd6JaxALrQ1tP+z/8U8/ITVv6ptkSvz8yOIgmVxs2khd45cv1J+YjP35dxCTsqhYuA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=14uKYdIR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JvFaB3tw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88FC606A33F;
-	Wed, 18 Nov 2026 16:41:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4F2606A333;
+	Wed, 18 Nov 2026 16:41:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=14uKYdIR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB0481F000C6;
-	Wed, 18 Nov 2026 16:41:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JvFaB3tw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80A581F000C6;
+	Wed, 18 Nov 2026 16:41:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020093;
-	bh=D9Mr7KF9nIlHzv56Jv9yoS35oRGkn2rDw1dPZKi/qC0=;
+	s=korg; t=1795020096;
+	bh=EEYsYurgcWX332YPDNlQPyHh3E91nWJBrnEzvVCRemE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=14uKYdIRGfV549xU3mwMH/QDHC8OX45ow6aDnTu/F1OpTgpV5a1ydnMpD1D5B+Rq5
-	 9XHfs2tfuOqXtuS/RRjMYsc7m0dJpErxvFKX+1+AokfDU4Z6b8gab6ovvzIaVh+1vV
-	 JWxvx5It9iahG42X75PZoyqBgjY0WONm6v56EGrw=
+	b=JvFaB3twxzpJhzETuDhHPdFmOq86d8Z9Hfl6FcaTpd+h99678lEFgHsXjd9hnTazD
+	 WPSVXSEBUj/7kUTN8Ujf5Oj2E9m8few78Tz4LIPMuNbbmvCRmeKgZwEpbwoi76RSPJ
+	 5x5Sx8SaEs8JAYc//CRo6ekWPtfs+znhfSgetvA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ronald Claveau <linux-kernel-dev@aliel.fr>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1792/2651] ASoC: mediatek: mt8196: fix APLL enable error handling
-Date: Wed, 18 Nov 2026 15:50:32 +0100
-Message-ID: <20261118150351.838507782@linuxfoundation.org>
+Subject: [PATCH 7.3 1828/2651] dt-bindings: thermal: amlogic: describe bus clock for t7-thermal
+Date: Wed, 18 Nov 2026 15:51:08 +0100
+Message-ID: <20261118150352.946545031@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,126 +69,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Ronald Claveau <linux-kernel-dev@aliel.fr>
 
-[ Upstream commit 23239cabb6d130c81d2c5389ed2dbdcfc239a939 ]
+[ Upstream commit 8195b945794ca3a917131b8a5368bb61e687c927 ]
 
-Propagate errors from the APLL mux and clock enable operations instead of
-ignoring them or returning success on failure.
+The t7 thermal sensor needs a bus clock, in addition to the existing
+functional clock, to gate register access to the sensor. This bus
+clock is specific to each sensor, unlike the functional clock which
+is shared between sensors. The current binding only describes a
+single unnamed clock and therefore cannot represent this hardware
+requirement, so add a second clock entry and clock-names for clarity.
+Make the second clock mandatory for the t7-thermal compatible only,
+via an additional if/then/else, to avoid breaking other Amlogic SoCs
+that still use a single clock. Update the t7 example to match.
 
-Clean up previously enabled clocks and disable the APLL tuner when a
-later clock operation fails, restoring the APLL mux state before
-returning the error.
-
-Fixes: 7384ecab34eb ("ASoC: mediatek: mt8196: support audio clock control")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260929061121.124001-3-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: b1c8ccdbd4e9 ("dt-bindings: thermal: amlogic: Add support for T7")
+Signed-off-by: Ronald Claveau <linux-kernel-dev@aliel.fr>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260923-fix-t7-thermal-clock-v2-1-bff7a09eb487@aliel.fr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8196/mt8196-afe-clk.c | 47 ++++++++++++++++------
- 1 file changed, 34 insertions(+), 13 deletions(-)
+ .../bindings/thermal/amlogic,thermal.yaml     | 29 +++++++++++++++++--
+ 1 file changed, 27 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8196/mt8196-afe-clk.c b/sound/soc/mediatek/mt8196/mt8196-afe-clk.c
-index 91ae440249492..1dc4210e58c71 100644
---- a/sound/soc/mediatek/mt8196/mt8196-afe-clk.c
-+++ b/sound/soc/mediatek/mt8196/mt8196-afe-clk.c
-@@ -314,15 +314,17 @@ int mt8196_apll1_enable(struct mtk_base_afe *afe)
- 	int ret;
+diff --git a/Documentation/devicetree/bindings/thermal/amlogic,thermal.yaml b/Documentation/devicetree/bindings/thermal/amlogic,thermal.yaml
+index 8cfa44dcda58c..e72cb39ac635d 100644
+--- a/Documentation/devicetree/bindings/thermal/amlogic,thermal.yaml
++++ b/Documentation/devicetree/bindings/thermal/amlogic,thermal.yaml
+@@ -32,7 +32,15 @@ properties:
+     maxItems: 1
  
- 	/* setting for APLL */
--	apll1_mux_setting(afe, true);
-+	ret = apll1_mux_setting(afe, true);
-+	if (ret)
-+		return ret;
- 
- 	ret = mt8196_afe_enable_top_cg(afe, MT8196_CG_APLL1_CK);
- 	if (ret)
--		goto err_clk_apll1;
-+		goto err_disable_mux;
- 
- 	ret = mt8196_afe_enable_top_cg(afe, MT8196_PDN_APLL_TUNER1);
- 	if (ret)
--		goto err_clk_apll1_tuner;
-+		goto err_disable_apll1_ck;
- 
- 	/* sel 44.1kHz:1, apll_div:7, upper bound:3 */
- 	regmap_update_bits(afe->regmap, AFE_APLL1_TUNER_CFG,
-@@ -336,14 +338,22 @@ int mt8196_apll1_enable(struct mtk_base_afe *afe)
- 			   0x1 << FREQ_TUNER_EN_SFT);
- 
- 	/* audio apll1 on */
--	mt8196_afe_enable_top_cg(afe, MT8196_AUDIO_APLL1_EN_ON);
-+	ret = mt8196_afe_enable_top_cg(afe, MT8196_AUDIO_APLL1_EN_ON);
-+	if (ret)
-+		goto err_disable_tuner;
- 
- 	return 0;
- 
--err_clk_apll1_tuner:
-+err_disable_tuner:
-+	regmap_update_bits(afe->regmap, AFE_APLL1_TUNER_CFG,
-+			   FREQ_TUNER_EN_MASK_SFT,
-+			   0x0);
- 	mt8196_afe_disable_top_cg(afe, MT8196_PDN_APLL_TUNER1);
--err_clk_apll1:
-+err_disable_apll1_ck:
- 	mt8196_afe_disable_top_cg(afe, MT8196_CG_APLL1_CK);
-+err_disable_mux:
-+	apll1_mux_setting(afe, false);
+   clocks:
+-    maxItems: 1
++    minItems: 1
++    items:
++      - description: Bus clock, gates register access to the sensor.
++      - description: Functional clock of the temperature sensor, shared between sensors.
 +
- 	return ret;
- }
++  clock-names:
++    items:
++      - const: bus
++      - const: core
  
-@@ -367,15 +377,17 @@ int mt8196_apll2_enable(struct mtk_base_afe *afe)
- 	int ret;
+   power-domains:
+     maxItems: 1
+@@ -72,6 +80,22 @@ allOf:
+     else:
+       required:
+         - amlogic,secure-monitor
++  - if:
++      properties:
++        compatible:
++          contains:
++            const: amlogic,t7-thermal
++    then:
++      properties:
++        clocks:
++          minItems: 2
++      required:
++        - clock-names
++    else:
++      properties:
++        clocks:
++          maxItems: 1
++        clock-names: false
  
- 	/* setting for APLL */
--	apll2_mux_setting(afe, true);
-+	ret = apll2_mux_setting(afe, true);
-+	if (ret)
-+		return ret;
+ unevaluatedProperties: false
  
- 	ret = mt8196_afe_enable_top_cg(afe, MT8196_CG_APLL2_CK);
- 	if (ret)
--		goto err_clk_apll2;
-+		goto err_disable_mux;
- 
- 	ret = mt8196_afe_enable_top_cg(afe, MT8196_PDN_APLL_TUNER2);
- 	if (ret)
--		goto err_clk_apll2_tuner;
-+		goto err_disable_apll2_ck;
- 
- 	/* sel 48kHz: 2, apll_div: 7, upper bound: 3*/
- 	regmap_update_bits(afe->regmap, AFE_APLL2_TUNER_CFG,
-@@ -389,14 +401,23 @@ int mt8196_apll2_enable(struct mtk_base_afe *afe)
- 			   0x1 << FREQ_TUNER_EN_SFT);
- 
- 	/* audio apll2 on */
--	mt8196_afe_enable_top_cg(afe, MT8196_AUDIO_APLL2_EN_ON);
-+	ret = mt8196_afe_enable_top_cg(afe, MT8196_AUDIO_APLL2_EN_ON);
-+	if (ret)
-+		goto err_disable_tuner2;
-+
- 	return 0;
- 
--err_clk_apll2_tuner:
-+err_disable_tuner2:
-+	regmap_update_bits(afe->regmap, AFE_APLL2_TUNER_CFG,
-+			   FREQ_TUNER_EN_MASK_SFT,
-+			   0x0);
- 	mt8196_afe_disable_top_cg(afe, MT8196_PDN_APLL_TUNER2);
--err_clk_apll2:
-+err_disable_apll2_ck:
- 	mt8196_afe_disable_top_cg(afe, MT8196_CG_APLL2_CK);
--	return 0;
-+err_disable_mux:
-+	apll2_mux_setting(afe, false);
-+
-+	return ret;
- }
- 
- void mt8196_apll2_disable(struct mtk_base_afe *afe)
+@@ -94,7 +118,8 @@ examples:
+         compatible = "amlogic,t7-thermal";
+         reg = <0x20000 0x50>;
+         interrupts = <GIC_SPI 31 IRQ_TYPE_LEVEL_HIGH>;
+-        clocks = <&clkc_periphs CLKID_TS>;
++        clocks = <&clkc_periphs CLKID_SYS_TS_A73>, <&clkc_periphs CLKID_TS>;
++        clock-names = "bus", "core";
+         #thermal-sensor-cells = <0>;
+         amlogic,secure-monitor = <&sm 1>;
+     };
 -- 
 2.53.0
 
