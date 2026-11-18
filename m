@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015417;
-	b=QPj6jDCUs3lao9/+rQSvgZJDdeduFiU3v960tfZJ1XAD/E8Ex50b1Pko3fat6pd/7Fg2
-	 O77QYEBX0LpQthdo+wmLg7Eg6iACZ6nS7seXpqcl4vl8jVFq3KOYu22lYZv9VjesmMjSu
-	 OKcSiV65VuovhI9+JVvL0SrovdeJ4wXztSsBRq5fGGL/COLB8j10rqDuzOuYmj17S7JPi
-	 cfAHMZ2J/cP6Os73s45hDejz+jKiOrAw3FU3qEo0cSW8FTmO6n4Ctwn+YVMFfy7CFMtDa
-	 r4PNMfBq8gjgpN2rVKYshJB4rgz/19XlpIFqgGvDw1sXMhDE0GeXKQK52H7taag40pw==
+	t=1795015420;
+	b=kGrR0yNRmvgZznsz8H/9kqQDTXWcUzT46e9suX6gkhcFMgdoT4JgnyISfDJoPXrbXPlG
+	 QjdZWySrhr8MzwlO+RDzV6h/GMXBAG1IBGECOFvN0ALSLrHcFv/6U/7tVbealMYejytiz
+	 rnGvrgI+vNR6Hg4S/mg49eoMDPV6MM3occMcCZQLKGUWLAVnjp9RgFQaTU8NWMfETF7IH
+	 NQr36z7QFh9fWckucrgewSnSjlHojN0HvvYZXL4XhNk39lklh/K3DM3l7n9MyhersfxwA
+	 e/cMiGKB581/bPTrkUto3VJIFH94m/PA8x5S7Poc6bs11uPHDkkE6BguWsbRriG0aYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015417;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015420;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=22bl9eMSECejthkaJZW79YVK1vr1b/UGb3HhZRRahCU=;
-	b=mof80eyOu8j/cmXwHh+MgNkxRT4hVLVJ/r6X3VbSdzLuMXbkPmgP3uDcCq9WceJNLJHJ
-	 c3fOttUNJKetjCzf9A0t618eVuJ+bSZO8J5YUGDEJyajp/VcpLWxbujGbm++lneGwgrR3
-	 amNR4CNomWKqgLkQmP3EUiWVOOMj+iKadKWFJXPB3q6pxFxkxIz7Y4wB2QUX1Xxk+lRrk
-	 e9+v0EgpbImBn5gbDMnKACORktrUVDDztZNS73aazQ+Gufx0REseGnuk8saIExeTd5bFu
-	 4rFoOD7sS/ONpYviZrNQ2S7O7pUurHEuukGkz3vWUqZOAyAZ/78sH/sOZ7R2AuIVNLA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=CFaE5P8qd+lQUrq75WpgQzWxwvp12StztUIbmfYYIP0=;
+	b=kjdAN1REViOCyL7PLBWep5YSt2qG/xe8trh6tnLwrKqM/nWHg9mL5NrXr5osnLi2l2yy
+	 t164S8dPOxejtFO8BX/BQcD7mnO1K31U94heP0Pt6dRMgi6FxJ5Gr24cMpL/60doU8GZ0
+	 8qZElCQAlPJgVeZeA7EAHiGWEzKnl9WtpGHy6GHoNfl2fSsYASu07wHFbhFMF+4uw3iX4
+	 gKu10yXKybZdrcaW+jRXPp9zokqRtcs3/wz/lVpApuhWMnMcN434gPNOVyX6hC2ERPWu2
+	 zlpf00d5JT0ZN6oCOXSZcfiMP3JwP5vWk/88jWkKmdErLAWdySe0mq6lxGbi45Avq7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hXMOUfNZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ngpCt3PA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC8F60A260C;
-	Wed, 18 Nov 2026 15:23:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D6B606A331;
+	Wed, 18 Nov 2026 15:23:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hXMOUfNZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA78D1F000C4;
-	Wed, 18 Nov 2026 15:23:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ngpCt3PA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7BD81F000C4;
+	Wed, 18 Nov 2026 15:23:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015417;
-	bh=22bl9eMSECejthkaJZW79YVK1vr1b/UGb3HhZRRahCU=;
+	s=korg; t=1795015420;
+	bh=CFaE5P8qd+lQUrq75WpgQzWxwvp12StztUIbmfYYIP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hXMOUfNZPDU3fwzx7B5H45CsxwBbuRX5PV5OQLIvFvc8Oalmbs96fGTkjhXoSELGN
-	 JUDn1JOL8joPPA+57p+SvGUdf1aj5YmMwkPQFxRW9TJQNW7XISolqL7ZnWUTKFhIZd
-	 +kG7X12olID+ax3yrHHFDKiWtYJiXCHDaRqklXQ4=
+	b=ngpCt3PAaNd9eGmVA+DUvugmbtqMIQykOPdHAEDCgBMPgA5FGAuEKDDqwP0TUFonH
+	 af/xsK1f7/jDAtU1GsV2n+f7BTyUgkfeNHWGYkJLjSLoLvl2FHTLYDu78iVDM/6wOB
+	 txHkhjZzx4VzsTA78zBKWEDleOmzRUaCdX0DxbRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Stephane Eranian <eranian@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Yafang Shao <laoar.shao@gmail.com>,
+	Changyuan Lyu <changyuanl@google.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0115/2651] perf jitdump: Validate debug entries on native (non-swap) path
-Date: Wed, 18 Nov 2026 15:22:35 +0100
-Message-ID: <20261118150252.019680293@linuxfoundation.org>
+Subject: [PATCH 7.3 0160/2651] fuse: fall back to copy_splice_read() on FOPEN_DIRECT_IO
+Date: Wed, 18 Nov 2026 15:23:20 +0100
+Message-ID: <20261118150253.614491684@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -64,87 +63,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Miklos Szeredi <mszeredi@redhat.com>
 
-[ Upstream commit 51e14e495f0cea061bbad33e7635f7fd857113ad ]
+[ Upstream commit 10bd6b32965265688fa277d166ab224de8e86eb2 ]
 
-The bounds-checking and nr_entry clamping added for the byte-swap path
-only runs when jd->needs_bswap is true.  On native-endian files, nr_entry
-passes through unvalidated to jit_repipe_debug_info(), which stores it
-as jd->nr_debug_entries.  Downstream, jit_process_debug_info() in
-genelf_debug.c iterates nr_debug_entries times via debug_entry_next(),
-which calls strlen() on each entry's name field — a crafted nr_entry
-causes OOB reads and writes.
+Yafang Shao reports:
 
-Add bounds-checked iteration in jit_repipe_debug_info() that validates
-each debug_entry fits in the payload and its name is NUL-terminated
-before calling debug_entry_next().  Clamp nr_debug_entries to the count
-of valid entries.
+  "After upgrading the kernel from 6.1.y to 6.18.y on production servers,
+  some containers failed to read lxcfs data. The root cause is that our
+  lxcfs is still at the old v3.0.4, which does not include commit 25982f5
+  ("Set the file size to 4k") [0].
 
-Fixes: 598b7c6919c7bbcc ("perf jit: add source line info support")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Cc: Stephane Eranian <eranian@google.com>
-Assisted-by: LLM
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+  Between 6.1.y and 6.18.y, the FUSE splice_read path was converted from
+  generic_file_splice_read() to filemap_splice_read() by commit
+  2cb1e08985e3 ("splice: Use filemap_splice_read() instead of
+  generic_file_splice_read()"). Unlike generic_file_splice_read(),
+  filemap_splice_read() strictly checks i_size and refuses to read from
+  zero-size files, which breaks virtual FUSE filesystems like the old
+  lxcfs."
+
+Fix by using copy_splice_read() for the FOPEN_DIRECT_IO case, just like the
+VFS does for DAX and O_DIRECT files.
+
+Reported-by: Yafang Shao <laoar.shao@gmail.com>
+Closes: https://lore.kernel.org/all/20260706025705.58301-1-laoar.shao@gmail.com/
+Reported-by: Changyuan Lyu <changyuanl@google.com>
+Closes: https://lore.kernel.org/all/20260901213412.1763253-1-changyuanl@google.com/
+Fixes: 2cb1e08985e3 ("splice: Use filemap_splice_read() instead of generic_file_splice_read()")
+Tested-and-acked-by: Yafang Shao <laoar.shao@gmail.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/jitdump.c | 27 ++++++++++++++++++++++-----
- 1 file changed, 22 insertions(+), 5 deletions(-)
+ fs/fuse/file.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
-index d3de307532d55..5a3ea2681fb37 100644
---- a/tools/perf/util/jitdump.c
-+++ b/tools/perf/util/jitdump.c
-@@ -694,8 +694,10 @@ static int jit_repipe_code_move(struct jit_buf_desc *jd, union jr_entry *jr)
+diff --git a/fs/fuse/file.c b/fs/fuse/file.c
+index 7e6eba6e7086f..f51551165e8fe 100644
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -1895,7 +1895,10 @@ static ssize_t fuse_splice_read(struct file *in, loff_t *ppos,
+ 	struct fuse_file *ff = in->private_data;
  
- static int jit_repipe_debug_info(struct jit_buf_desc *jd, union jr_entry *jr)
- {
--	void *data;
--	size_t sz;
-+	struct debug_entry *ent;
-+	void *data, *end;
-+	size_t sz, valid;
-+	uint64_t i;
- 
- 	if (!(jd && jr))
- 		return -1;
-@@ -715,10 +717,25 @@ static int jit_repipe_debug_info(struct jit_buf_desc *jd, union jr_entry *jr)
- 	jd->debug_data       = data;
- 
- 	/*
--	 * we must use nr_entry instead of size here because
--	 * we cannot distinguish actual entry from padding otherwise
-+	 * Clamp nr_debug_entries to entries that actually fit in the
-+	 * payload.  The byte-swap path already does this for cross-endian
-+	 * files; validate on the native path too, since downstream
-+	 * jit_process_debug_info() iterates via debug_entry_next() which
-+	 * calls strlen() on each entry's name field.
- 	 */
--	jd->nr_debug_entries = jr->info.nr_entry;
-+	end = data + sz;
-+	ent = data;
-+	valid = 0;
-+	for (i = 0; i < jr->info.nr_entry; i++) {
-+		if ((void *)ent + sizeof(*ent) > end)
-+			break;
-+		/* name must be NUL-terminated within the payload */
-+		if (!memchr(ent->name, '\0', (char *)end - ent->name))
-+			break;
-+		ent = debug_entry_next(ent);
-+		valid++;
-+	}
-+	jd->nr_debug_entries = valid;
- 
- 	return 0;
- }
+ 	/* FOPEN_DIRECT_IO overrides FOPEN_PASSTHROUGH */
+-	if (fuse_file_passthrough(ff) && !(ff->open_flags & FOPEN_DIRECT_IO))
++
++	if (ff->open_flags & FOPEN_DIRECT_IO)
++		return copy_splice_read(in, ppos, pipe, len, flags);
++	else if (fuse_file_passthrough(ff))
+ 		return fuse_passthrough_splice_read(in, ppos, pipe, len, flags);
+ 	else
+ 		return filemap_splice_read(in, ppos, pipe, len, flags);
 -- 
 2.53.0
 
