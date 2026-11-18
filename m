@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059508;
-	b=SjfoWes0fPwt+rx/Gr1Wj7IRFT8F0AwcLohnXgtsI0l2/mSqCzP5k7JiIlXEHN9u5NyQ
-	 BC6mxIzvSU0wKsY90dJp9pjbA17hxwn1YFjErzAzl61VV7vr/QcMYF7zenoUGSK5OMqp9
-	 YRcEEN2q6/oZwGbd1+NAHsPjdG8LD5S78aUn29XnUvcDnqZGSz/bP4wQYdK4D2QYuHsg/
-	 X4V85q9FKUUQayUgtsDbIk8mRUR0IEKVgRzCw06hHHt8WMNJ4vLiuwoseWUO484kwkYQy
-	 73ctua0qmcrMyMLxp2Mz+fvvVZNIVRXxqJoGT7U7X8VgRX9xhHAlXoPEbuxWweAre9w==
+	t=1795059511;
+	b=iFnoioe3wKRrak87Z1qvmS/23drtuupsuP5qXpGtp3H4eq+Dftf79nCdpt5Scub3P8Uk
+	 3OWcPvgHSyXtdtZgqvkY1mCjzdOq//7D/Y7fWh2rLW8mcf4LBMF6pwYyP1HUod0dSgg2R
+	 6/KFbsrynGk3OELoohKYiJ22WzLuEgFT/e2OeTXayioFDtJGnl5dnie554JsxYSHrP9FV
+	 yhr52dWaROIhgF8PwA8hJzGxxG1BZDuFGYVYTWDzeEIlLA38wicokiiM9SQYuXzvSNKp3
+	 +NMRdbAY6v/PXznobTa8Oh0Z1tKaKvCJE1Bx/BhXQK4eA3ltG9LTHYHD5cMCO57tUNg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059508;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059511;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1FHYXq3/zHmNT5gPfyYPoJOCXLuZ3nauVuXnF7JMTZ0=;
-	b=MUxyeS4N6ireDBVXuJOWWtB0f+aNxTEFPgiZ4EYRBCCjWgPLQurrFNbEh/Ssws1lMVDb
-	 Gks0yDvrTfW4fUDyoCHyvhQ1B2Ba/ERYFAzBTOic4O1DPLrND1Dh13PXeL1JAxOnAeTBz
-	 3VavuM6ewJnnEAZ0fJa5fIMsd4rmK6JHj+rjQLR8HfiLHRIEGP9lkctLCJqK7+zLPfhAR
-	 WH3mOC+0n0W9lPT/uae4H5w1O0iVUY1nTzwACqpxhnxxrfE/kmFsMwvcQfRv2HFePQW/Z
-	 VEkXITmL7s/w9gGbJDLX20RMwOddmoBZE4364vm3EA/bjtf9BpkOjO08uvABEZhwbsw==
+	bh=53J2EzP2PkYDp2zscHzn6TGPmXho99OL6Ps9BeL3LJ4=;
+	b=5SRA2klFiRRxTzD00YOb8dA8tYSDRQT0lPtxwxoWVAvJqxT1BKAl9Qx0mhXlwk1LX4sh
+	 l5ljYbrQEUXedzLoTdXFB0fTtocPwkRZGAnU1EFxm/QL7DPHvteUCTa1Jj1K2ycETHAaZ
+	 ExawC6uSQWa0VpFwBF8R3s/LIk4dZ64C/oP8huMpH7o1/l/0cciNGtYhcW5mNWqMTUJg8
+	 gVJTg3jzY/qPAHmVctXILamF8Tr6DCdGBcLGJNW/J4l+fF6lqCXFBer0kGw3fI+6B3T3j
+	 GLRDq1XWOtxgbI2djo37yxzO/qiKcUK9B1zHitEeVugMGzOq0JXi280CVE4NiajkMMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ynJYpETR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="J/HkZP+v";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4482606A320;
-	Thu, 19 Nov 2026 03:38:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6550F606A320;
+	Thu, 19 Nov 2026 03:38:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ynJYpETR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 032AF1F000C4;
-	Thu, 19 Nov 2026 03:38:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J/HkZP+v
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB7C41F000C5;
+	Thu, 19 Nov 2026 03:38:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059508;
-	bh=1FHYXq3/zHmNT5gPfyYPoJOCXLuZ3nauVuXnF7JMTZ0=;
+	s=korg; t=1795059511;
+	bh=53J2EzP2PkYDp2zscHzn6TGPmXho99OL6Ps9BeL3LJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ynJYpETR2HRBY8rgyXxFSW/yu8h4/cVn5kp031MF9Z8tFul7SdExps+b1IpgF4rc0
-	 OLU9GFFYEyR4RqfCc1WOUronLJB0zj11imf8B8vWCQ2bcfpcyOROrF+197/JvewrxX
-	 67K6T4RNl6Ahs+GJHOyn2D/vYxljCY9dvrpLaZ1U=
+	b=J/HkZP+vW70ivS0P+1Ia6tIqsnACA0gc/H3PNDRghXDbwXM7FqYdj6OndMeBECV+V
+	 cMynu/P4B9I3tBC6E3Ht45D2LUzco0hKw2KeFd6jgLlRfYx122VSXzvIz9zUf/MuDr
+	 6yPItH2RZaoqHqF6XE3TcbdSCNXs+9kuKHUVW1nE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f6c7e1f1809f235eeb90@syzkaller.appspotmail.com,
-	Wang Jianjian <wangjianjian3@huawei.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Olivier Moysan <olivier.moysan@foss.st.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0867/1848] nilfs2: ignore non-fatal signals during synchronous log write wait
-Date: Wed, 18 Nov 2026 15:48:25 +0100
-Message-ID: <20261118145952.761979351@linuxfoundation.org>
+Subject: [PATCH 5.10 0868/1848] ASoC: stm32: i2s: remove irqf_oneshot flag
+Date: Wed, 18 Nov 2026 15:48:26 +0100
+Message-ID: <20261118145952.799644076@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,123 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Olivier Moysan <olivier.moysan@foss.st.com>
 
-[ Upstream commit 7131aaa74bcc7c9da1f1d1c8724da75c775557a0 ]
+[ Upstream commit 7c0f8f1462c9edeaa202a2cbea1bde0960434b09 ]
 
-Based on a syzbot report, Wang Jianjian pointed out that following a
-successful directory operation in nilfs_rename(), a synchronous write
-requested within nilfs_transaction_commit(), triggered by a sync flag
-set by nilfs_commit_chunk(), could be interrupted by a user signal.
-This interruption leaves in-memory metadata updates intact while
-returning an error, causing inconsistency with the VFS dentry cache and
-ultimately triggering a kernel warning.
+The IRQF_ONESHOT flag allows to ensure that the interrupt is not
+unmasked after the hard interrupt context handler has been executed
+and the thread has been woken. The interrupt line is unmasked after
+the thread handler function has been executed.
 
-According to "signal(7)", local disks are not classified as "slow
-devices" (such as terminals, FIFOs, or pipes) and their I/O operations
-on disk devices are not interrupted by signals.  In kernel space,
-waiting for such disk I/O should therefore not be aborted by ordinary
-(non-fatal) signals.
+The STM32 I2S driver does not implement a threaded IRQ handler.
+So, the IRQF_ONESHOT flag is not useful in I2S driver.
+Remove this flag to allow the interrupt routine to be managed
+as a thread in RT mode.
 
-Suppress this issue by modifying nilfs_segctor_sync(), which waits for
-the log writer thread to complete synchronous writes, to catch only
-fatal signals via fatal_signal_pending() and return -EINTR rather than
--ERESTARTSYS.  To complement this change and prevent the wait loop from
-busy-looping when schedule() returns immediately due to a pending
-non-fatal signal, switch the wait state from TASK_INTERRUPTIBLE to
-TASK_KILLABLE.
-
-This serves as an effective interim stabilization measure without
-structural changes until a comprehensive fix for metadata consistency
-is implemented.
-
-Reported-by: syzbot+f6c7e1f1809f235eeb90@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f6c7e1f1809f235eeb90
-Fixes: 9ff05123e3bf ("nilfs2: segment constructor")
-Tested-by: syzbot+f6c7e1f1809f235eeb90@syzkaller.appspotmail.com
-Cc: Wang Jianjian <wangjianjian3@huawei.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-[ sashal: preserved the older return-code comment layout instead of upstream's reformatted lists ]
+Signed-off-by: Olivier Moysan <olivier.moysan@foss.st.com>
+Link: https://lore.kernel.org/r/20221110084406.287117-1-olivier.moysan@foss.st.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 1b207c85551f ("ASoC: stm: stm32_i2s: request IRQ after regmap initialization")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/ioctl.c    |  2 +-
- fs/nilfs2/recovery.c |  2 +-
- fs/nilfs2/segment.c  | 10 +++++-----
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ sound/soc/stm/stm32_i2s.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nilfs2/ioctl.c b/fs/nilfs2/ioctl.c
-index 9f10a9cec3e0a..e6db5b8190e3c 100644
---- a/fs/nilfs2/ioctl.c
-+++ b/fs/nilfs2/ioctl.c
-@@ -1011,7 +1011,7 @@ static int nilfs_ioctl_clean_segments(struct inode *inode, struct file *filp,
-  *
-  * %-ENOSPC - No space left on device (only in a panic state).
-  *
-- * %-ERESTARTSYS - Interrupted.
-+ * %-EINTR - Interrupted.
-  *
-  * %-ENOMEM - Insufficient memory available.
-  *
-diff --git a/fs/nilfs2/recovery.c b/fs/nilfs2/recovery.c
-index 33c4a97519de8..bf64a9eff4d15 100644
---- a/fs/nilfs2/recovery.c
-+++ b/fs/nilfs2/recovery.c
-@@ -750,7 +750,7 @@ static void nilfs_abort_roll_forward(struct the_nilfs *nilfs)
-  *
-  * %-ENOSPC - No space left on device (only in a panic state).
-  *
-- * %-ERESTARTSYS - Interrupted.
-+ * %-EINTR - Interrupted.
-  *
-  * %-ENOMEM - Insufficient memory available.
-  */
-diff --git a/fs/nilfs2/segment.c b/fs/nilfs2/segment.c
-index 18964331ee3d9..cc12f4dd2eee2 100644
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -2236,7 +2236,7 @@ static int nilfs_segctor_sync(struct nilfs_sc_info *sci)
- 	wake_up(&sci->sc_wait_daemon);
+diff --git a/sound/soc/stm/stm32_i2s.c b/sound/soc/stm/stm32_i2s.c
+index bc369d064e48a..7a2a0b6402528 100644
+--- a/sound/soc/stm/stm32_i2s.c
++++ b/sound/soc/stm/stm32_i2s.c
+@@ -854,7 +854,7 @@ static int stm32_i2s_parse_dt(struct platform_device *pdev,
+ 	if (irq < 0)
+ 		return irq;
  
- 	for (;;) {
--		set_current_state(TASK_INTERRUPTIBLE);
-+		set_current_state(TASK_KILLABLE);
- 
- 		/*
- 		 * Synchronize only while the log writer thread is alive.
-@@ -2250,11 +2250,11 @@ static int nilfs_segctor_sync(struct nilfs_sc_info *sci)
- 			err = wait_req.err;
- 			break;
- 		}
--		if (!signal_pending(current)) {
-+		if (!fatal_signal_pending(current)) {
- 			schedule();
- 			continue;
- 		}
--		err = -ERESTARTSYS;
-+		err = -EINTR;
- 		break;
- 	}
- 	finish_wait(&sci->sc_wait_request, &wait_req.wq);
-@@ -2295,7 +2295,7 @@ static void nilfs_segctor_wakeup(struct nilfs_sc_info *sci, int err, bool force)
-  *
-  * %-ENOSPC - No space left on device (only in a panic state).
-  *
-- * %-ERESTARTSYS - Interrupted.
-+ * %-EINTR - Interrupted.
-  *
-  * %-ENOMEM - Insufficient memory available.
-  */
-@@ -2332,7 +2332,7 @@ int nilfs_construct_segment(struct super_block *sb)
-  *
-  * %-ENOSPC - No space left on device (only in a panic state).
-  *
-- * %-ERESTARTSYS - Interrupted.
-+ * %-EINTR - Interrupted.
-  *
-  * %-ENOMEM - Insufficient memory available.
-  */
+-	ret = devm_request_irq(&pdev->dev, irq, stm32_i2s_isr, IRQF_ONESHOT,
++	ret = devm_request_irq(&pdev->dev, irq, stm32_i2s_isr, 0,
+ 			       dev_name(&pdev->dev), i2s);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "irq request returned %d\n", ret);
 -- 
 2.53.0
 
