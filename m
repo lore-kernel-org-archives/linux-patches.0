@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039787;
-	b=0IMizEXGAyQeUgy6g/uxhrryQye7Yk5OmoAIiRBouHL+HJ4xoKjI9XyEK7bVoLHoSKW/
-	 Fm3Uqsw3Ac5hEysxRhamL9DBbLcxEWF+ZgMfhMHG9AzyjZpPkKJigT0ZMaYUjiSdgwWHS
-	 C7TVMkJz3spZTHasvPC80wuJShtv2i+gwB4Ud1Z/9YMw179lJ4ekmNoSIjFQjLQAdcV2I
-	 jngTAvexl1HMjoUpNrhqnbJ63s3cl8hQ4atkWm8WwnLQzjd57JAi8qkrtJnnaQYXEIhp9
-	 EoQVBcTxxzgJBJnHRqs84d1XgTg8xOEw/M74xsDcZHdlM9F5MXCAeRg95yJ46unemSA==
+	t=1795039790;
+	b=tAtsH443PqaYBWlCYkVXd2H1Olk2PElrV3aw2koVOu+8+bfH2uBbdHv6LLZqvWfne3Te
+	 Bshx7sZjeORQVTlsW61afriYjKgBrBmFVeIowkopMgC1NxTrp6Q+9j1/Eat2+4OeW89kR
+	 XTwJcbnn+hmxbRawbD+6r7zMrJ4ErMGcfxS/sCmOOpYYhQJVs2emOOGpcbZ3LUkCzguMH
+	 Ceud/Ft8Rc7Ixaq7N3QebR9Vm2aJ0a2ly1lCbWTdrCXAjOuy5IvTuGFTXCYQet4emGox6
+	 /vRWQJmoWMH2KFbRdeQ34Yzm70HOhvEiYx4/49xVkxB9X4faVB3b3KUo/3E2Nn7L37g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039787;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039790;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FBeBWLUMyd8nntnfXYE3nvsMuqskWM2IOYi3bmt3yrk=;
-	b=e42EySeShp4gG02+5ovlP6ULTWem6y95+ckfUtHfPSdypbjWA3bA6tkj3hckwkQAhUxK
-	 xgCADpgjN+4CxJ82AY0yKIPL/3ZProxbVQDaLa2aQhcBvWawjYLmWKIebK++DlHiOjkps
-	 Lj/Ze1P/0szqlHiSHa9X8kEbvZla9J/XWMg2hgEWGb//CkEbr9w6pPB4IOBqwhRbPw47/
-	 g7l1wChmGzTCBmk2wJAQWlkMYeMT60u0T48r4knUcdimgI0P+/rQF1eT2fcgXkcKzuhyn
-	 DKVEVB/raATCW/TG/vLLCJkZ5mEP8k9ndAmTPtvG8PisrDqSkwK2lxICnSlYzOSF9tQ==
+	bh=EfpN1KzrfYTonjyVbMDtn00P/6xoQ0awnm3APs3DA6U=;
+	b=AQ66uvbjI1PsUTFHsnINb4iqETJ5KYteebcsTLeZPpXJhG3kbvUV2sdI+F5ABn+S3Gah
+	 CLdgGZvoSI1Vxu0Iv68UsodVBFm1SNQAC2ZavIqoxCVc9eLXYBB5zQ4PP8+oUtCL6330V
+	 ItQVZzekbkQoVVpo44tSMPTt+qE8Ss4FcYgSVDQTux/FPjUXLzF+Yl+jdC5kXzeuu1o18
+	 lbi+TLbOFcc8UHzrCe9xb35uEqvEqOLqEiBCGLu5yhpqt1+m0rmNQgtmRU8vqIDaHNUlv
+	 MFxXmxqx771BvzbeLTd84BOiYYKZ9IACGjtairp6nHqblWFXJOerBc/Xx9cW0nH6Gmg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I4CEiWwD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Y/qLxBVd";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA58D606A320;
-	Wed, 18 Nov 2026 22:09:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 482F8606A32A;
+	Wed, 18 Nov 2026 22:09:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I4CEiWwD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B54821F000C4;
-	Wed, 18 Nov 2026 22:09:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y/qLxBVd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 965391F000C4;
+	Wed, 18 Nov 2026 22:09:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039787;
-	bh=FBeBWLUMyd8nntnfXYE3nvsMuqskWM2IOYi3bmt3yrk=;
+	s=korg; t=1795039790;
+	bh=EfpN1KzrfYTonjyVbMDtn00P/6xoQ0awnm3APs3DA6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I4CEiWwDdvnHolHnxv4LHmQ2p8xe1cDhSkRHdDqRYg8ZPsSAJvlnPhXCYCwjW+Gjt
-	 RFfFUDfOBYxKZ8b4+ksh3hfUW0vXHf/h7iY6+dfLkfRpDLZy3+jFeY6u1PjUYxcQyL
-	 o11oTEr8shN88LYPugD8F1i2+m61HqirQYFXaUiA=
+	b=Y/qLxBVdUw18onTrtDwoU5xfG00WjhNmXHuRfNCIr+RAW+ZObClNktPCi4Ceik5qa
+	 06CQVGIMByE3XsiXUhA2JTZpBvuSs/OWx4cj43l5gME0/Sz1c3gsobz1e5kGIh/0tY
+	 p+AzsQkwqToToznTPKFO4IK0POQRmFNVj/z1RfjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2223/3318] RDMA/uverbs: Make CQ handle mandatory for WQ creation
-Date: Wed, 18 Nov 2026 15:47:25 +0100
-Message-ID: <20261118150428.580888462@linuxfoundation.org>
+Subject: [PATCH 6.6 2224/3318] media: i2c: ar0521: remove duplicate media entity cleanup
+Date: Wed, 18 Nov 2026 15:47:26 +0100
+Message-ID: <20261118150428.607664346@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,59 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit f7d28791433d373ecdab7b00f60ddb504e858e0a ]
+[ Upstream commit 069a0343581bfcaee44bc598e2b95be2e2789807 ]
 
-UVERBS_ATTR_CREATE_WQ_CQ_HANDLE is declared UA_OPTIONAL in the ioctl
-method definition, so the mandatory attribute bitmap does not enforce
-its presence.  When userspace omits it, uverbs_attr_get_obj() returns
-ERR_PTR(-ENOENT) and the handler stores that error pointer into
-wq_init_attr.cq without validation.
+The error path taken when ar0521_power_on() fails calls
+media_entity_cleanup() at the disable label and then falls through to
+the entity_cleanup label, where media_entity_cleanup() is called again.
 
-The bogus cq pointer is then passed to the driver's create_wq callback.
-In the mlx5 case, create_rq() calls to_mcq(init_attr->cq) which applies
-container_of to the ERR_PTR value, producing a near-NULL pointer.  The
-subsequent access in get_rq_ts_format() triggers a kernel NULL pointer
-dereference:
+There is no need to clean up the media entity twice. Remove the first
+call and let all error paths converge on the common entity_cleanup
+label.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000296
-  RIP: 0010:create_rq+0x32/0x550 [mlx5_ib]
-  Call Trace:
-   mlx5_ib_create_wq+0x14a/0x210 [mlx5_ib]
-   ib_uverbs_handler_UVERBS_METHOD_WQ_CREATE+0x1f0/0x320 [ib_uverbs]
-   ib_uverbs_run_method+0x296/0x320 [ib_uverbs]
-   ib_uverbs_cmd_verbs+0x1a0/0x260 [ib_uverbs]
-   ib_uverbs_ioctl+0xa8/0x120 [ib_uverbs]
+This issue was found by manual code inspection.
 
-A WQ without a CQ was never valid; the legacy write path always required
-one via uobj_get_obj_read() in ib_uverbs_ex_create_wq().  Declare the
-attribute UA_MANDATORY so the uverbs framework rejects the ioctl early
-when the CQ handle is missing, before the handler ever runs.
-
-Fixes: ef3bc084a8ed ("IB/uverbs: Introduce create/destroy WQ commands over ioctl")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Link: https://patch.msgid.link/20260911021557.2113-1-lirongqing@baidu.com
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 852b50aeed15 ("media: On Semi AR0521 sensor driver")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/uverbs_std_types_wq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/i2c/ar0521.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/uverbs_std_types_wq.c b/drivers/infiniband/core/uverbs_std_types_wq.c
-index 7ded8339346f3..c23f455231bf0 100644
---- a/drivers/infiniband/core/uverbs_std_types_wq.c
-+++ b/drivers/infiniband/core/uverbs_std_types_wq.c
-@@ -140,7 +140,7 @@ DECLARE_UVERBS_NAMED_METHOD(
- 	UVERBS_ATTR_IDR(UVERBS_ATTR_CREATE_WQ_CQ_HANDLE,
- 			UVERBS_OBJECT_CQ,
- 			UVERBS_ACCESS_READ,
--			UA_OPTIONAL),
-+			UA_MANDATORY),
- 	UVERBS_ATTR_FD(UVERBS_ATTR_CREATE_WQ_EVENT_FD,
- 		       UVERBS_OBJECT_ASYNC_EVENT,
- 		       UVERBS_ACCESS_READ,
+diff --git a/drivers/media/i2c/ar0521.c b/drivers/media/i2c/ar0521.c
+index 60ab433cafb11..5bbf776e20c21 100644
+--- a/drivers/media/i2c/ar0521.c
++++ b/drivers/media/i2c/ar0521.c
+@@ -1159,7 +1159,6 @@ static int ar0521_probe(struct i2c_client *client)
+ 
+ disable:
+ 	v4l2_async_unregister_subdev(&sensor->sd);
+-	media_entity_cleanup(&sensor->sd.entity);
+ free_ctrls:
+ 	v4l2_ctrl_handler_free(&sensor->ctrls.handler);
+ entity_cleanup:
 -- 
 2.53.0
 
