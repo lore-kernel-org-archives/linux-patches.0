@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061698;
-	b=StFiLbE/cW3pTrJB6rz2z03txo9EGck7LTxmG8PBvYcSSHv9xQVpiVAcMhDXRLL6r4aQ
-	 Nl23jLUo6VJ/7vOPuZ00B0Y+azF8EKEM/pP+hWi5M9wod3alB9Gk7TRSUAx+3bmlwkLzO
-	 Dy25dPW6Tju3CZ1vkkNqhx9h0Jis0TQBkKadoWVJ1TUuSiA9Fyx3fjYJNv8uJLXlGR0/p
-	 X+bniIQ7Wxa8IhOBmRdqhDDjozYCR9Pc5K1bQOayXYXauBKxlVMZLEd3Vl+aBsF74LI8q
-	 Ftem+1d7MJ7Ss8B6VGhwvPt6193lZILw0WNujOu/J7Zv0eleR20xikIv3fUUT4GE8sw==
+	t=1795061701;
+	b=t439i5KFQZJSLItpwaIIHfrdDoDniAZ7q5Y+ob+vRTmCDuG5bu8K8R0cafUjLwOs/DOR
+	 ZGc4C3VB+TSBqK82XvlYSBNUoGVbYtgm6pphauq5RLAu6X5kIs6ic5iY03bhA7I5WcV0+
+	 qAvRYf6AVPCYWhGe3Dpmib+SunV57J8zmB4LOHzu3OyHqMe8qE9oR8txeefBzcu9o6mDo
+	 GXdV/xCz4gzYD7mqlgvH0/V/COTCq011Y+sTUI3dT6RPGjGUWMyPe3wBqwJZKaKUA5/1+
+	 dJbysmKvxI+Pk+qHjNtGyKR5J71fX07Sa1vEGpLQ8jb8sghN0pEmZpwrS/F96+7O6lg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061698;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061701;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=p8bJlezZ/KqyXDCeKMP+P+Uk/QuauGhIyLpYdsin+lE=;
-	b=Tz4trTtoYjzSK7LpRHVDQC3SQnERB7JVMFB0wZCrMnjRPqW3HdK3tL5f3mA/VRe1rtlE
-	 QYSn3Xtgm+xwcBQS/EMLRkrYb/TUlZw1nKHt3974kBau/HeruIm0PyijTaS6p5r3abiGy
-	 xV7DOKhrXAw4Tqv3IAttdFzkj4B+HPnLpPOJX/IBll9BB7pDNcrmMV4uAK81i0q0X6YUK
-	 j8guCeFZuJ7gHswkK31aBLGLLR2trT8SAlUi3PVf5QrFP/UngRKnt/8npuWu07P1aUm7m
-	 21SL8b79+XQhMHVeEHiDVXIco5WUPnbA0oX01qIDX0kUqicfxHbWKwTMawYlGT0zaMQ==
+	bh=LijPKvN1px3IY4DwcpekjrPfFBhStdgAiVahAYH8vfg=;
+	b=wabsHyeSpKy+h1eyq17MH1FFdiDh1jmCYmIcupSjByugvx/jho5JdKAW4bfJl5AEwJ0p
+	 htz343mJwG/yNdYPN2kTt+QG6CnGLeT6WnD4Q66skeMNi9a8E/d68SMnlqw4O5ZSUd4tR
+	 6TidoBDd8VYjC77nUq8sq+s0ZhwTn9aUSry6RqD/ciA9ft5fPxXKgM5CtBrXhKyNzGHtW
+	 OCMxtBgEWM/vQyA/gPc2LhYsy76Rd3j6FsAjFsBSqLTkiNI4K2e1HmzkVlkwk1b9Lpmt9
+	 zdLd4M9fR2o7VfLQEltdUzC4RdwrzeMqZOIeqiv5L9G/ZAuckT7NU0pfmm2fxtt899Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ssqKQEOQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f665kxON;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A1C606A320;
-	Thu, 19 Nov 2026 04:14:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76400606A32A;
+	Thu, 19 Nov 2026 04:15:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ssqKQEOQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 044141F000C5;
-	Thu, 19 Nov 2026 04:14:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f665kxON
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85011F000C4;
+	Thu, 19 Nov 2026 04:15:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061698;
-	bh=p8bJlezZ/KqyXDCeKMP+P+Uk/QuauGhIyLpYdsin+lE=;
+	s=korg; t=1795061701;
+	bh=LijPKvN1px3IY4DwcpekjrPfFBhStdgAiVahAYH8vfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ssqKQEOQM0pFUdxg6IToyilzH/14Hd8Tk/usIHYfaqWPC4rBnljHdoX5NHc5+zCl/
-	 Ji6nz4V2IMUmDV6DcmmGiK0YD33/mcU4ZWVATaL8j5+gEobLcsGbrwV8YEST62BoL9
-	 /8xDAjfxIZ7mHg9I/30I/Iv/DuVFef792Vap1CHg=
+	b=f665kxONQaM7M+CihF4CqSfPlYMYNBnQpgv1/79ersX2nWX+g9NHEJoIYMrtkWIuV
+	 swyTgrub6aZezb+JaaXaD3uFqqowVQAxOnDntfSMd5R31V0WNZyyt/B42Kjc3d7hk+
+	 cjGyKKoQPnduRGMtPwDmcSj/NIHshRLHHFwHM6/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yogesh Gaur <yogeshgaur.83@gmail.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1595/1848] comedi: dt2814: validate the IRQ supplied by userspace
-Date: Wed, 18 Nov 2026 16:00:33 +0100
-Message-ID: <20261118150026.266843565@linuxfoundation.org>
+Subject: [PATCH 5.10 1640/1848] ASoC: codecs: wm_hubs: Fix definition of MIXINR to MIXOUTR volume control
+Date: Wed, 18 Nov 2026 16:01:18 +0100
+Message-ID: <20261118150028.299691078@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -67,52 +69,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yogesh Gaur <yogeshgaur.83@gmail.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 81026c2b3f9096cdfdfa02918f94865629fb7f90 ]
+[ Upstream commit 22bfcedd3febd6acc63ecf8bfd9638210e4b9a5e ]
 
-comedi boards are configured through the COMEDI_DEVCONFIG ioctl, so
-it->options[1] is a number chosen by userspace. dt2814 passes it to
-request_irq() without checking it first, which lets an interrupt owned by
-another irqdomain -- a PCI device's IO-APIC GSI, for instance -- be
-claimed for this board. When the owner of that interrupt is later
-released the descriptor is freed while this driver's handler is still
-installed on it.
+The Right Output Mixer Right Input Volume (MIXINR_MIXOUTR_VOL) is at
+bits 2:0 of Output Mixer6, not at bits 8:6, which hold the IN2LN volume
+(IN2LN_MIXOUTR_VOL).
 
-Every interrupt this board can assert is a legacy ISA one, so the ISA
-range is the right bound; it is also sufficient, because
-mp_chip_data->isa_irq is set only by alloc_isa_irq_from_domain() and
-mp_unmap_irq() returns early when it is set.
-
-Bound the value before requesting it, as das16m1.c already does. An
-out-of-range value is ignored rather than rejected, so the board still
-attaches without interrupt support, exactly as it does today when
-request_irq() fails.
-
-Fixes: a211ea977a41 ("Staging: comedi: add dt2814 driver")
-Assisted-by: LLM
-Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
-Link: https://patch.msgid.link/20260909104848.1763-4-yogeshgaur.83@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 942c435ba79f ("ASoC: Add WM8993 CODEC driver")
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/1ea1d115cea5b183dd51bba5cd9e38157b3482ee.1791959026.git.sammiee5311@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/comedi/drivers/dt2814.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/codecs/wm_hubs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/comedi/drivers/dt2814.c b/drivers/staging/comedi/drivers/dt2814.c
-index bcf4d5444fafa..174253f15645a 100644
---- a/drivers/staging/comedi/drivers/dt2814.c
-+++ b/drivers/staging/comedi/drivers/dt2814.c
-@@ -244,7 +244,8 @@ static int dt2814_attach(struct comedi_device *dev, struct comedi_devconfig *it)
- 	i = inb(dev->iobase + DT2814_DATA);
- 	i = inb(dev->iobase + DT2814_DATA);
+diff --git a/sound/soc/codecs/wm_hubs.c b/sound/soc/codecs/wm_hubs.c
+index 0c881846f485f..3b0cc340bfec9 100644
+--- a/sound/soc/codecs/wm_hubs.c
++++ b/sound/soc/codecs/wm_hubs.c
+@@ -426,7 +426,7 @@ SOC_SINGLE_TLV("Right Output Mixer IN2RP Volume",
+ SOC_SINGLE_TLV("Right Output Mixer Left Input Volume",
+ 	       WM8993_OUTPUT_MIXER6, 3, 7, 1, outmix_tlv),
+ SOC_SINGLE_TLV("Right Output Mixer Right Input Volume",
+-	       WM8993_OUTPUT_MIXER6, 6, 7, 1, outmix_tlv),
++	       WM8993_OUTPUT_MIXER6, 0, 7, 1, outmix_tlv),
+ SOC_SINGLE_TLV("Right Output Mixer DAC Volume",
+ 	       WM8993_OUTPUT_MIXER6, 9, 7, 1, outmix_tlv),
  
--	if (it->options[1]) {
-+	/* only ISA interrupts are valid on this board */
-+	if (it->options[1] >= 1 && it->options[1] <= 15) {
- 		ret = request_irq(it->options[1], dt2814_interrupt, 0,
- 				  dev->board_name, dev);
- 		if (ret == 0)
 -- 
 2.53.0
 
