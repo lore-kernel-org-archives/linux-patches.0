@@ -1,57 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052632;
-	b=yVjSPqVtEkt0vXZS2yOoqavGW2Uoh+lzMinr8GpqMcIpkFT4a2m0jTkrwa+0mK3ozNT0
-	 akholhqcwH7cL4K1CAvwXnpFhH5E8+L4ENfOkUK8I62jZVRIUZc1OcxgLuQgbwNWS1Jho
-	 XeUa2laPg3e2hyRp927wp1Rov9FOZJk1WPLOVT782MAlQBnsAS2Vjndvyj63iC8Z00ykj
-	 AAP8cRYacdO0/hnKrm2elOY2ksy08p72OTglQjdgnh/omCYcBPAspmdmK23jeHfhuTwNn
-	 +JSAxkL/jaRAh01//E0u5yhnj/YFLs+W/wbmFLWG0pk/qDPW40kJ6uBUKNYQ88XSq/A==
+	t=1795052635;
+	b=F5sMDTvq+2H1lfGj98nLGzt5jiFISMUCExUo662AWFP5XS7TT/0eQ268vw88CLOVF4WE
+	 U0Q1ObbIXoTLROUPA4aVd5pSsp9FamiClyhdv0vY0fvdY1IbDNSIf/VBiFKHjh5UPN9Gw
+	 a2+xXx5HNSAfIDtDP0Lfc4ntxgawfbbyCf3SB/qWddKbBqOhzxDLS2vOeT6342mivg6vl
+	 cXobuE07XeqGmQbgtKZmZGU04HkWZJpHCb+WbCKCVHI7DM2dffrw+0ZBpvsB3+gnkG+fa
+	 sCzBE7EpydTeiYBjzEaI84kbjfLus9xayrzVSgzwV96thOz/f17x8Ze5rH98pxsSssw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052632;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052635;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ICYf64ht0BKyKyQBvYPKgsQ/we+0Puib/iGeOqWXRCk=;
-	b=gdWejwAAkCBr/GwHsAJiuAl4gV+Vm0FyEwvlHTuXfnE6zxSxL9CLYIJbAhqEIU3Piz4h
-	 W9y2oHqhh4hqQ6Z8wU847G4qE/dGR9KwFooraI8aoDmoMt1j73tS4djn9P/iowvWld9CG
-	 Mc8HHU0v6Yattx8NSyHRaZiunIc53G101oIUeFlsDHfyEQQvEUV6dd1cY+na1pswrnDvY
-	 XcJgRyPiI18F9YLix3uQ/uRnfN3gU+knKvRo/xeHLkOeMpxwsWrxzoFC3ejSIeE0kYCA5
-	 MSE97wBrsnqnL91ZxtFzenj127Z54Tyn7HSr6xwl1A8/MMxcX6j6LxkBVqEmA/Ijw2g==
+	bh=BhgLH4qx3hxVo80Fz8FD5zgRzo3RjDkQlMEyj0xsKlk=;
+	b=DAHjdwFbORcQCEzz07EckfQrfyHk/CYAIJaFGTdHTzqrc/eJ6sbr5U5DuAearAdwO9wQ
+	 GQpBelIdfAM42vbTYNaAPTs32lWZq8fmo2EH5Iha1iVbor1hNhhMtpe2aSQ1CIJRi9Xdc
+	 S+K+giaPEDESBQQisysXg7Ia9MqWS0BX5k5zx0A+jzD+EI0Lb8raLhAukqAAPe3IAg9aM
+	 sOaWqrVPs3dXcVa4iTUQpon/RTbLuAJkVcQFalNXsz5TJUDTCs2UsaPvrEU1POSoEUAgS
+	 OkVYSiucFBnB9usMEpsUxEIu+gdFKIqGbTHCtepBLRtVpjMN0jTECMr3P9ROXYybyuw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oaUruzUF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HVvJCmWM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6652606A325;
-	Thu, 19 Nov 2026 01:43:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCCFE606A32A;
+	Thu, 19 Nov 2026 01:43:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oaUruzUF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 357D01F000C4;
-	Thu, 19 Nov 2026 01:43:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HVvJCmWM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 176211F000C4;
+	Thu, 19 Nov 2026 01:43:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052632;
-	bh=ICYf64ht0BKyKyQBvYPKgsQ/we+0Puib/iGeOqWXRCk=;
+	s=korg; t=1795052635;
+	bh=BhgLH4qx3hxVo80Fz8FD5zgRzo3RjDkQlMEyj0xsKlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oaUruzUFw0/cKCi4bOI76zYMlKIuVv6juuUgS+mjP5pjDekn8MdepdwKFAC4FMngn
-	 4BCtVGPsHL/gGI3mWQ7CBEcf3rutbqYvwYP5/dLQox25+Z5Itqp+V89p8b7wpp7LwF
-	 c8X2ogWnRLL6U/J1BalGTvHhZ5Yk7+KeqxU4v0Wg=
+	b=HVvJCmWMVt0ScUOGNPyBCugialDi3vGwRORtTR5KIogJ/e+gpVrEH3TOBJCK5H+dU
+	 88ereP/p3yj2t8mNamoXoHnq7rZ8iZ7nk5pZZSrfCPFgJXAtf3VAMtfeBQtRpojoCB
+	 hrDZuO7UfDs7OGcNVntGgzb7Y9aIhFneK6OW4a0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Liang <mliang@purestorage.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Akinbou Mita <akinobu.mita@gmail.com>,
-	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Leon Romanovsky <leon@kernel.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
+	Andrey Albershteyn <aalbersh@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0583/2214] fault-inject: fix dentry leak
-Date: Wed, 18 Nov 2026 15:37:39 +0100
-Message-ID: <20261118150034.243651962@linuxfoundation.org>
+Subject: [PATCH 5.15 0574/2214] fsverity: hoist statx reporting of fs-verity flag
+Date: Wed, 18 Nov 2026 15:37:30 +0100
+Message-ID: <20261118150033.919000783@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -73,159 +70,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Liang <mliang@purestorage.com>
+From: Andrey Albershteyn <aalbersh@kernel.org>
 
-[ Upstream commit ceb43516a9aae0d969a4ec5ab40d45bd09e64229 ]
+[ Upstream commit f9e450420da2624c93ce9585deebfabb87932774 ]
 
-fault_create_debugfs_attr() has always taken an extra dentry reference on
-the created directory (attr->dname = dget(dir)) so that fail_dump() could
-print the name via %pd from any context.  Nothing anywhere in the tree
-ever calls dput() on attr->dname.
+All filesystems, supporting fsverity, report this status by checking
+inode flag. Also, BTRFS was missing stat->attributes_mask, which is
+fixed now.
 
-For callers with a matching teardown, that unmatched reference causes one
-dentry plus its attached inode to leak per fault_create_debugfs_attr /
-debugfs_remove_recursive cycle.  simple_recursive_removal() drops
-debugfs's own +1 ref on the child dentry, but the dget()'d ref keeps its
-refcount at 1: the dentry ends up unhashed but pinned, and its inode is
-never freed.
-
-Boot-once callers (mm/failslab, block/blk-core, etc.) leak exactly once at
-init and never destroy the tree, so the impact there is bounded.  But
-per-lifecycle callers (drivers/nvme, drivers/infiniband/hw/hfi1,
-drivers/mmc, drivers/iommu/iommufd, drivers/media, drivers/misc,
-drivers/gpu/drm/msm, drivers/crypto, net/sunrpc) leak on every
-create/destroy cycle.
-
-We observed this in production: an NVMe/RDMA host repeatedly reconnecting
-to a target that rejected the CRTO Property Get went through ~50 nvme
-controller create/destroy cycles per second, and dentry and inode_cache
-grew by ~13k pinned objects per 240 s -- unrecoverable through
-drop_caches.  Byte math matched a per-cycle 1-dentry / 1-inode leak from
-the "fault_inject" directory dentry.
-
-Fix this by not holding any external reference in fault_attr.  Embed the
-directory name as a fixed-size char array (FAULT_ATTR_DNAME_LEN, 64 bytes)
-inside struct fault_attr, copied by strscpy() at
-fault_create_debugfs_attr() time.  fail_dump() prints it via %s.
-
-Advantages of an embedded array over kstrdup() + kfree() paired with a new
-destroy API:
-
-  - Zero API footprint.  No new export and no caller changes required:
-    callers already own their fault_attr's memory and free it when
-    they are done, and now that suffices.
-  - No allocation on the create path.
-  - fault_create_debugfs_attr() cannot fail from the name-copy step.
-  - No lifetime coupling between attr->dname and debugfs; the string
-    is valid for exactly as long as the containing struct.
-
-The 64-byte length accommodates every in-tree caller with generous
-headroom (the longest current name is "fail_dma_array_full", 19 chars).
-
-The user-visible fail_dump() format changes from "name %pd" to "name %s",
-but the printed content is identical -- %pd on the created directory
-renders the same string that was passed in as @name.
-
-drivers/infiniband/hw/hfi1/fault.c drops a now-invalid "attr.dname = NULL"
-statement; the surrounding kzalloc() already zero-initialises the array.
-
-Link: https://lore.kernel.org/20260821181527.3271414-1-mliang@purestorage.com
-Fixes: 6adc4a22f20b ("fault-inject: add ratelimit option")
-Signed-off-by: Michael Liang <mliang@purestorage.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Akinbou Mita <akinobu.mita@gmail.com>
-Cc: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: Leon Romanovsky <leon@kernel.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
+Fixes: 146054090b08 ("btrfs: initial fsverity support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Andrey Albershteyn <aalbersh@kernel.org>
+Acked-by: Eric Biggers <ebiggers@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Link: https://patch.msgid.link/20261002223705.2175542-7-aalbersh@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/fault.c |  1 -
- include/linux/fault-inject.h       | 10 ++++++++--
- lib/fault-inject.c                 |  7 +++++--
- 3 files changed, 13 insertions(+), 5 deletions(-)
+ fs/btrfs/inode.c | 3 ---
+ fs/ext4/inode.c  | 5 +----
+ fs/f2fs/file.c   | 5 +----
+ fs/stat.c        | 6 +++++-
+ 4 files changed, 7 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hfi1/fault.c b/drivers/infiniband/hw/hfi1/fault.c
-index e2e4f9f6fae23..93f2ec93235bc 100644
---- a/drivers/infiniband/hw/hfi1/fault.c
-+++ b/drivers/infiniband/hw/hfi1/fault.c
-@@ -227,7 +227,6 @@ int hfi1_fault_init_debugfs(struct hfi1_ibdev *ibd)
- 	ibd->fault->attr.interval = 1;
- 	ibd->fault->attr.require_end = ULONG_MAX;
- 	ibd->fault->attr.stacktrace_depth = 32;
--	ibd->fault->attr.dname = NULL;
- 	ibd->fault->attr.verbose = 0;
- 	ibd->fault->enable = false;
- 	ibd->fault->opcode = false;
-diff --git a/include/linux/fault-inject.h b/include/linux/fault-inject.h
-index e525f6957c49f..76a0b5e2c5951 100644
---- a/include/linux/fault-inject.h
-+++ b/include/linux/fault-inject.h
-@@ -9,6 +9,13 @@
- #include <linux/ratelimit.h>
- #include <linux/atomic.h>
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index 6ea8ba9f7f423..17f6b60b28a3a 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -9525,7 +9525,6 @@ static int btrfs_getattr(struct user_namespace *mnt_userns,
+ 	struct inode *inode = d_inode(path->dentry);
+ 	u32 blocksize = inode->i_sb->s_blocksize;
+ 	u32 bi_flags = BTRFS_I(inode)->flags;
+-	u32 bi_ro_flags = BTRFS_I(inode)->ro_flags;
  
-+/*
-+ * Length of the debugfs directory name embedded in struct fault_attr.
-+ * Chosen to accommodate every in-tree caller of fault_create_debugfs_attr()
-+ * (the longest is "fail_dma_array_full", 19 chars) with generous headroom.
-+ */
-+#define FAULT_ATTR_DNAME_LEN	64
+ 	stat->result_mask |= STATX_BTIME;
+ 	stat->btime.tv_sec = BTRFS_I(inode)->i_otime.tv_sec;
+@@ -9538,8 +9537,6 @@ static int btrfs_getattr(struct user_namespace *mnt_userns,
+ 		stat->attributes |= STATX_ATTR_IMMUTABLE;
+ 	if (bi_flags & BTRFS_INODE_NODUMP)
+ 		stat->attributes |= STATX_ATTR_NODUMP;
+-	if (bi_ro_flags & BTRFS_INODE_RO_VERITY)
+-		stat->attributes |= STATX_ATTR_VERITY;
+ 
+ 	stat->attributes_mask |= (STATX_ATTR_APPEND |
+ 				  STATX_ATTR_COMPRESSED |
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index f248bd14c8dc9..f1e83f321b78e 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -5677,15 +5677,12 @@ int ext4_getattr(struct user_namespace *mnt_userns, const struct path *path,
+ 		stat->attributes |= STATX_ATTR_IMMUTABLE;
+ 	if (flags & EXT4_NODUMP_FL)
+ 		stat->attributes |= STATX_ATTR_NODUMP;
+-	if (flags & EXT4_VERITY_FL)
+-		stat->attributes |= STATX_ATTR_VERITY;
+ 
+ 	stat->attributes_mask |= (STATX_ATTR_APPEND |
+ 				  STATX_ATTR_COMPRESSED |
+ 				  STATX_ATTR_ENCRYPTED |
+ 				  STATX_ATTR_IMMUTABLE |
+-				  STATX_ATTR_NODUMP |
+-				  STATX_ATTR_VERITY);
++				  STATX_ATTR_NODUMP);
+ 
+ 	generic_fillattr(mnt_userns, inode, stat);
+ 	return 0;
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 01f772b1604b1..892f19f67904f 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -836,15 +836,12 @@ int f2fs_getattr(struct user_namespace *mnt_userns, const struct path *path,
+ 		stat->attributes |= STATX_ATTR_IMMUTABLE;
+ 	if (flags & F2FS_NODUMP_FL)
+ 		stat->attributes |= STATX_ATTR_NODUMP;
+-	if (IS_VERITY(inode))
+-		stat->attributes |= STATX_ATTR_VERITY;
+ 
+ 	stat->attributes_mask |= (STATX_ATTR_COMPRESSED |
+ 				  STATX_ATTR_APPEND |
+ 				  STATX_ATTR_ENCRYPTED |
+ 				  STATX_ATTR_IMMUTABLE |
+-				  STATX_ATTR_NODUMP |
+-				  STATX_ATTR_VERITY);
++				  STATX_ATTR_NODUMP);
+ 
+ 	generic_fillattr(&init_user_ns, inode, stat);
+ 
+diff --git a/fs/stat.c b/fs/stat.c
+index 246d138ec0669..fdea43738d50b 100644
+--- a/fs/stat.c
++++ b/fs/stat.c
+@@ -115,8 +115,12 @@ int vfs_getattr_nosec(const struct path *path, struct kstat *stat,
+ 	if (IS_DAX(inode))
+ 		stat->attributes |= STATX_ATTR_DAX;
+ 
++	if (IS_VERITY(inode))
++		stat->attributes |= STATX_ATTR_VERITY;
 +
- /*
-  * For explanation of the elements of this struct, see
-  * Documentation/fault-injection/fault-injection.rst
-@@ -28,7 +35,7 @@ struct fault_attr {
+ 	stat->attributes_mask |= (STATX_ATTR_AUTOMOUNT |
+-				  STATX_ATTR_DAX);
++				  STATX_ATTR_DAX |
++				  STATX_ATTR_VERITY);
  
- 	unsigned long count;
- 	struct ratelimit_state ratelimit_state;
--	struct dentry *dname;
-+	char dname[FAULT_ATTR_DNAME_LEN];
- };
- 
- #define FAULT_ATTR_INITIALIZER {					\
-@@ -38,7 +45,6 @@ struct fault_attr {
- 		.stacktrace_depth = 32,					\
- 		.ratelimit_state = RATELIMIT_STATE_INIT_DISABLED,	\
- 		.verbose = 2,						\
--		.dname = NULL,						\
- 	}
- 
- #define DECLARE_FAULT_ATTR(name) struct fault_attr name = FAULT_ATTR_INITIALIZER
-diff --git a/lib/fault-inject.c b/lib/fault-inject.c
-index ce12621b42756..dda2a8b601800 100644
---- a/lib/fault-inject.c
-+++ b/lib/fault-inject.c
-@@ -4,6 +4,7 @@
- #include <linux/random.h>
- #include <linux/sched.h>
- #include <linux/stat.h>
-+#include <linux/string.h>
- #include <linux/types.h>
- #include <linux/fs.h>
- #include <linux/export.h>
-@@ -43,7 +44,7 @@ static void fail_dump(struct fault_attr *attr)
- {
- 	if (attr->verbose > 0 && __ratelimit(&attr->ratelimit_state)) {
- 		printk(KERN_NOTICE "FAULT_INJECTION: forcing a failure.\n"
--		       "name %pd, interval %lu, probability %lu, "
-+		       "name %s, interval %lu, probability %lu, "
- 		       "space %d, times %d\n", attr->dname,
- 		       attr->interval, attr->probability,
- 		       atomic_read(&attr->space),
-@@ -226,7 +227,9 @@ struct dentry *fault_create_debugfs_attr(const char *name,
- 	debugfs_create_ul("reject-end", mode, dir, &attr->reject_end);
- #endif /* CONFIG_FAULT_INJECTION_STACKTRACE_FILTER */
- 
--	attr->dname = dget(dir);
-+	if (strscpy(attr->dname, name, sizeof(attr->dname)) == -E2BIG)
-+		pr_warn("FAULT_INJECTION: name '%s' truncated to '%s'\n",
-+			name, attr->dname);
- 	return dir;
- }
- EXPORT_SYMBOL_GPL(fault_create_debugfs_attr);
+ 	mnt_userns = mnt_user_ns(path->mnt);
+ 	if (inode->i_op->getattr)
 -- 
 2.53.0
 
