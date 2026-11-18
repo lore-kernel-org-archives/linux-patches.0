@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027507;
-	b=h+160mh8R0kjJmw016AwMLI5iwZUo4Ia2B92WAbfw0KpcVr8CaKQikhMrc+d9eTGcuhn
-	 eiG6EJrhp19U+5Ss3Qfs6SmwvgHV9AQc27cD9kKDJp67X96xowByNm65txKxxWWfMB0AO
-	 Y/vAu1DJXnd/rbsqlqgzfl9k8h6vyPGTFMpWPCFDejfwZlYH5iMN8rZE/BoinUYDvnyS9
-	 AGKmDu6hfj1dU1tm0DxFNZDcf4r6p2jnx9dYe1UJqVLA3TUCXFVczfIEfzL8NxhxO7GWx
-	 zx7pkeAs1/H8D3E7EAVDNcNstxlFrmGSnRr61nR6IcIWhQuEm7T2cJwcznAMslJ05ww==
+	t=1795027510;
+	b=TsOidin6rLN6s9B4G3hSbGHTBXmzDX6lH5weoIUi1jtKIYn6ybL1+Y7PQXGrniBesLNN
+	 vy/AMiuGbxOJjfUSX5recLUblMcvMrfQ5jAaHZACQ3afLagauZuA8xOpAvqa/px05rixp
+	 0dsOqbINchLTNT7gNG5lNnM9NuvJUrmMl+7vWRk4VzIiEc7BYjKAInXGcNqtViqg9MW4z
+	 +UxJQnauNBVMnKBzFM+hEN5psC4/IIHWvnEGV9D3jHat+DnC/JGXdmpj+RnJCU8lFcEjz
+	 Q8MnfdxuopcazVKoIGthtEeaJUu6c8/Jq/WnC4sl+sY4A7FMd+saXvu1szW6KX1ssBQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027507;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027510;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=DtZSb8ZcCW3odAZt/4XqBIBJVLRhSDur34xHTGlaryE=;
-	b=lejWc8pflV80A2qrfvKQE2gA3n9q53wHr/BB45Lv3iGKLxRNCPpNsKtP3PIwREq3hio+
-	 tssnYMUODlcYLCvceKV8FaoNegp/bfTD8+hb6jmoZWHzBGoCbnb3o16AqD5mSBRuc6PGB
-	 xwTk1aYVwOQrlc+usXmSZDA/a/g42IOPP8EzT46fA5m3Yv8XqQ2HzpOVWDl8Cvq4eLM1w
-	 w1ErVM23CfYqxmS/rStm27J9trE38mzp3npqpBEIBLl/GUC2Nh4+AORz1oRm7uCGiBpR2
-	 iXrCiMDPLyaIJkE5SdET8EyLWI6ZGsauJOFwOA/FXOP9upbFuWHGYNsjaN1tZhm6vxg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=p9HVcQe+ZP+JOc6wcgE9wKP8isme8E2//sRlPTlPnKI=;
+	b=2DQuYdQWmBbBJCd4HGYM8TDfrPlULHrhXUjgmt8LaMc6meodVYQoJ5E933bMwsDPzbEI
+	 tOKbutiuxlyvePWFigPsI4oNl8jGHJW6mB7KQGurHbcibuzifg5GJFNzWouFe8o+ck5e+
+	 h55lpTVPOf5uoGaR4PfKrQaT9dVJAbN3KQuT9GUHC386H0TZ0JLe5TjL9ajJZ5xWPxaGw
+	 PAjX4RIRqHpiWu7Mq4sABCcUykEuqIYlqIZqtwia5ImScpzN0cmqSY6Zm23p/GVvWgL8x
+	 IkvUOuaVtg3yy1XbGdr6PKkF878/pD+f4aNgBXzUvWGQxeGJhBJ8SFvVaZX3blhCMrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BRCUV7bE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZhPb61pY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339DD60A260B;
-	Wed, 18 Nov 2026 18:45:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 043AD60A2611;
+	Wed, 18 Nov 2026 18:45:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BRCUV7bE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B1C1F000C4;
-	Wed, 18 Nov 2026 18:45:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZhPb61pY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B0BC1F000C4;
+	Wed, 18 Nov 2026 18:45:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027507;
-	bh=DtZSb8ZcCW3odAZt/4XqBIBJVLRhSDur34xHTGlaryE=;
+	s=korg; t=1795027509;
+	bh=p9HVcQe+ZP+JOc6wcgE9wKP8isme8E2//sRlPTlPnKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BRCUV7bEgYLHrJ+l3OeJQIzZ+dpOCY529jWEKMJPqWNWibMeoUBRcR8PrVsZYDkI4
-	 52YHnhs97qru5D+EC1iTGG6spTfk3NyYtfPM2Kb+YF4fYXOYiXDM6uaPeLsQts+JCv
-	 3U1WMVE6q0ruxwloS97u1InfWvauFYI5LtXY+nek=
+	b=ZhPb61pYCefEd+ZawbuFXHTJcDs6rlW1YbX7Rq87z34IsDXG7QZ9R+OTxnzxMzGQr
+	 H0dPE8ILDXUmj4r2Jnidf3NVZAYN3W3pe9Jk3t3mFA/PMD2+eQ+73Vvq5zbXVyKIKf
+	 Um2tVW76e+1UInK0fIc/L6w9d3oWqFtSf7nCgmaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anirudh Virdi <avirdi@redhat.com>,
-	=?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
-	Daniel Machon <daniel.machon@microchip.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1813/2151] net: qede: initialize extack in qede_flow_spec_to_rule()
-Date: Wed, 18 Nov 2026 15:59:08 +0100
-Message-ID: <20261118150227.851088257@linuxfoundation.org>
+Subject: [PATCH 6.18 1814/2151] net: phy: realtek: restore RTL8211F RGMII delays on resume
+Date: Wed, 18 Nov 2026 15:59:09 +0100
+Message-ID: <20261118150227.887843820@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -64,78 +63,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anirudh Virdi <avirdi@redhat.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 106e562966a02f61917c2e0b83909aa2b088447f ]
+[ Upstream commit 20c0c677362468b0af23e26e5fdb871ea911bc25 ]
 
-qede_flow_spec_to_rule() declares a netlink_ext_ack on the stack
-without initializing it. qede_parse_flow_attr() and
-qede_flow_spec_validate() only set extack._msg on error paths via
-NL_SET_ERR_MSG_MOD(), so on a successful parse the err_out block
-reads an uninitialized pointer. If that garbage happens to be
-non-NULL, DP_NOTICE("%s", extack._msg) dereferences it inside
-vsnprintf, causing a page fault and kernel panic.
+RTL8211F and RTL8211F-VD both use rtl8211f_config_rgmii_delay() during
+initialization and share rtl821x_resume(). The RTL8211F-VD loses its
+RGMII TX and RX delay enable bits across a software power-down, but the
+shared resume path only clears BMCR_PDOWN and waits for the receive clock
+to stabilize.
 
-This manifests when configuring ethtool ntuple flow rules (ethtool -U
-flow-type tcp4/udp4) on kernels built with CONFIG_INIT_STACK_NONE=y.
-With CONFIG_INIT_STACK_ALL_ZERO=y the bug is masked because the
-compiler zero-initializes extack, making _msg NULL.
+On a BeagleV Ahead configured for rgmii-id, carrier and the negotiated
+speed return after an interface close/open, but the receive path does not
+work. At 100 Mbit/s no frames were received. At 1000 Mbit/s all 11
+observed frames had CRC errors.
 
-Reproduced on RHEL 9.8 (kernel-5.14.0-687.47.1.el9_8) and mainline
-(v7.3-rc6) with the following reproducer:
+Reapply the RGMII delay configuration after the existing resume delay.
 
-  IFACE=ens2f0
-  ip link set $IFACE up
-  ethtool -K $IFACE ntuple on
-  for i in $(seq 1 100); do
-    ethtool -U $IFACE flow-type udp4 src-ip 192.168.2.$i action -1
-  done
+Tested on a BeagleV Ahead with an RTL8211F-VD at 100 and 1000 Mbit/s,
+including close/open without a link partner.
 
-The loop panics reliably after 10-15 iterations with:
-
-  BUG: unable to handle page fault
-  RIP: string+0x49/0xd0
-  Call Trace:
-   vsnprintf
-   qede_flow_spec_to_rule+0x2b6/0x4b0 [qede]
-   qede_add_cls_rule
-   ethtool_set_rxnfc
-
-Zero-initialize extack so _msg is NULL unless explicitly set by an
-error path.
-
-Fixes: eb705d734525 ("net: qede: use faked extack in qede_flow_spec_to_rule()")
-Signed-off-by: Anirudh Virdi <avirdi@redhat.com>
-Reviewed-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261013105451.201211-1-avirdi@redhat.com
+Fixes: bb726b753f75 ("net: phy: realtek: add support for RTL8211F(D)(I)-VD-CG")
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20261015045001.83986-1-kmehltretter@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qede/qede_filter.c | 2 +-
+ drivers/net/phy/realtek/realtek_main.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qede/qede_filter.c b/drivers/net/ethernet/qlogic/qede/qede_filter.c
-index 7e341e026489c..7808b0c918e64 100644
---- a/drivers/net/ethernet/qlogic/qede/qede_filter.c
-+++ b/drivers/net/ethernet/qlogic/qede/qede_filter.c
-@@ -1991,8 +1991,8 @@ static int qede_flow_spec_to_rule(struct qede_dev *edev,
- 				  struct ethtool_rx_flow_spec *fs)
- {
- 	struct ethtool_rx_flow_spec_input input = {};
-+	struct netlink_ext_ack extack = {};
- 	struct ethtool_rx_flow_rule *flow;
--	struct netlink_ext_ack extack;
- 	__be16 proto;
- 	int err;
+diff --git a/drivers/net/phy/realtek/realtek_main.c b/drivers/net/phy/realtek/realtek_main.c
+index ef8c3b23bee88..cc8606dd2bf01 100644
+--- a/drivers/net/phy/realtek/realtek_main.c
++++ b/drivers/net/phy/realtek/realtek_main.c
+@@ -772,7 +772,7 @@ static int rtl821x_resume(struct phy_device *phydev)
  
+ 	msleep(20);
+ 
+-	return 0;
++	return rtl8211f_config_rgmii_delay(phydev);
+ }
+ 
+ static int rtl8211f_resume(struct phy_device *phydev)
 -- 
 2.53.0
 
