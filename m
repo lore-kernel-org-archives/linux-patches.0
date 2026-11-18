@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052814;
-	b=R5BCPFqB3rSFNgpnlFMF3jC13tpANeKrwG6uIS9qO48wATcfjVmpBXotQEQWsWzOq1uS
-	 BY5IO/E36NcIr3y7cGLeJ4GLsn+kJrLIoX7lKd5RMYOqc2UVsIIwXVnfQ5lHrmN//Nj/g
-	 1pD6JkxF1QYCODOlyirFZokuvdcHBVQAnzJUy+/42CRHIII2PhM8HbXVVVloBYxLxnZEb
-	 e0njN8iqbB/61VyqooK7IetSW4dwKXiXq+BtAdqH9t4iyHLVfIQDczwykOzZXNybt9osn
-	 OWoxFGmrQdpfc358s4QIS9w8juFbBUlK5zBC2HBLEqrp1WuVVjm07+Z5l8O1MMb9Z0Q==
+	t=1795052817;
+	b=TIVJvtBdp6VHX1vWdkMAkEyZleF7k6xxPP6IdCPPbJe/m3uYOjouo5AzIVwNs76tM1TB
+	 yUvNdRe5T/cX8zEF654HpstELA3kJxAGOqjqmsY0d4+yNyil4owW9anut97YOS0uIlglC
+	 4oYhF0ltP6wPo2Xp0WgPdaHBmLtpaZxvQMc2fkC5G/zo0sFPXN2cq9zea4nbjprg3VtqG
+	 pofKFxOKVYaHF3zbku2d0Qq9S0HWf2SPcRELUAzC5Bj6O9mnHJCyi41sG9Lguww+rApoc
+	 hnAryH+QYNZvLxu3UgbqrsLZSJQYg4N2RMWon37oCwpeiFcrSQ7CNTHnR+ihS+TWo5w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052814;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052817;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VXPdRpfKuGWN4NPid/Lq4ZdhrSeGM31CXuKgG8goYX4=;
-	b=aQ4Le5AziaRwt7X5RhJwIlwz4Q1NAR6n1R8zCLcqsEuVAmzyltzt9ewGPfKWthLb4DMG
-	 UpOCd0xSATdhbgmEeG4cPRJvFTvL55NiMRxchKF5JfMg8I3PzJB/AJLO1MGgw0Wnb7Hvy
-	 u0pyUWvfb4O7CIb4532wCsTB6JS1nEF54aZoYQFhq50UtJHGZ4dyPlk7wT9e2prdKh9g9
-	 YhHSF7lu5MjWmDlbUjsdOwdWXmGRq2foyqtWMnuSL4ujINxVu2/RArd8LN7Db2aUsV5Ug
-	 PDZIgWJb2I5ZVR9NYZo9tk23fefvIGNsPUHnuI8qV0+UWuBBobBz6C9iv6JnViHfgJA==
+	bh=sJFB35apyc0YHepiCTSbdApTjit9Osis5RK60FU9V/Y=;
+	b=HXLal9xKIDRKiO7wNId4yIt+3oagyr23ljT9yiv3vWvmMxI/UZdY2J2/jI96L/irU5vz
+	 50AnFVYUn0a0BZZO9L5KUF/uPtW63yI+QHfr9l84FEiUIaqXwxrr0lF10ADFCvkrsg6oq
+	 BewmGrBzMeDmqs+GpIa4wN2T1ruxkS0+o6L0UPCpueYv3K/mru1HWEZyIFvdgBkgVL5tB
+	 QrHVIdxvouoDs9OLcBhyWfOqdvjodC9x0cL5bwGjjPE4R7vHLadyddKu75DQxY34YFkK8
+	 yTSx19k5WlZKo+FpLxpPtTMkI+nQpeJEsx4r4LPpCwSH74HnjXLW2JBfNEqReeYb8nw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iWwdv2IL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DAHDtmuI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A577606A31C;
-	Thu, 19 Nov 2026 01:46:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FEC8606A320;
+	Thu, 19 Nov 2026 01:46:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iWwdv2IL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC7A01F000C4;
-	Thu, 19 Nov 2026 01:46:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DAHDtmuI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2B231F000C4;
+	Thu, 19 Nov 2026 01:46:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052814;
-	bh=VXPdRpfKuGWN4NPid/Lq4ZdhrSeGM31CXuKgG8goYX4=;
+	s=korg; t=1795052817;
+	bh=sJFB35apyc0YHepiCTSbdApTjit9Osis5RK60FU9V/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iWwdv2ILIJKd7kTSKMnDkLXbQOb1xZ5W++sQVMQt2qAFFeDY9yMkat1K93fXtNWVc
-	 0C6GiW87Rp2MGfSjJhlBCobtc9NrcxD9coac34Ea6Q+bjv0l0NjR1V+RCCQ7Nqceh6
-	 +M0bsenJx05vA7ooP2NNSa15Zvdg5hiLAgMz3wy4=
+	b=DAHDtmuI28pv2mxYsxPNFG/FHPruqJC70KHXuee0kLY1yvJswoVbTpHU/FfmLoleo
+	 U7cfjCAmKXVMsQ1XNou/H95HbXER9yoSQz8+Fea93pu7XwcF4dEkS9Y9GRqpkL64T7
+	 TEG+2UC+uiVHacUtWim7DFa0l4M903MC8h4y1z0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Tingjie Zhong <catme0w@live.cn>,
-	Helge Deller <deller@gmx.de>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Cen Zhang (Microsoft)" <cenzhang@linux.microsoft.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0681/2214] fbdev: bitblit: Fix glyph clipping when fbcon pans
-Date: Wed, 18 Nov 2026 15:39:17 +0100
-Message-ID: <20261118150039.013015636@linuxfoundation.org>
+Subject: [PATCH 5.15 0699/2214] posix-cpu-timers: Fix pid refcount leak in do_cpu_nanosleep() signal path
+Date: Wed, 18 Nov 2026 15:39:35 +0100
+Message-ID: <20261118150039.771680205@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,71 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tingjie Zhong <catme0w@live.cn>
+From: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
 
-[ Upstream commit 06fccf840640d8f6b0e08a1756f8d2f0435b4cbe ]
+[ Upstream commit 8ccd731b63a0183ca2b0e18f3ca15864b3f37eda ]
 
-Commit 3637d34b35b2 ("fbdev: Add bounds checking in bit_putcs to fix
-vmalloc-out-of-bounds") made bit_putcs() clip glyphs to var.yres. When
-fbcon scrolls by panning, it draws text rows up to var.yres_virtual,
-so after the first pan most new text is not drawn until the next full
-redraw. This affects fbdev drivers that set FBINFO_HWACCEL_YPAN or
-FBINFO_HWACCEL_YWRAP, such as vesafb with the ypan option, when
-CONFIG_FRAMEBUFFER_CONSOLE_LEGACY_ACCELERATION=y.
+do_cpu_nanosleep() sleeps on a temporary k_itimer whose reference on the
+target's struct pid is taken by posix_cpu_timer_create() and dropped by
+posix_cpu_timer_del(). When a signal ends the sleep, the timer is
+disarmed with posix_cpu_timer_set(), but posix_cpu_timer_del() is only
+called for a result of 0 or TIMER_RETRY. If the target thread or process
+has exited in the meantime, timer_lock_sighand() finds no task,
+posix_cpu_timer_set() returns -ESRCH and the pid reference is leaked.
 
-Clip to GETVYRES() instead, which fbcon_ud.c and fbcon_ccw.c already
-use as the drawing area height. When fbcon does not pan, GETVYRES()
-returns var.yres, keeping the existing bound. When fbcon pans, it
-returns var.yres_virtual, which the framebuffer memory must cover
-anyway for panning to work.
+An unprivileged user can trigger this: sleep on the CPU clock of a
+thread, let that thread exit, then signal the sleeper. Each round leaks
+one struct pid. Repeating it exhausts unreclaimable slab memory
+within minutes:
 
-Fixes: 3637d34b35b2 ("fbdev: Add bounds checking in bit_putcs to fix vmalloc-out-of-bounds")
-Reported-by: Thomas Zimmermann <tzimmermann@suse.de>
-Closes: https://lore.kernel.org/linux-fbdev/b8b52ffd-ecec-4fba-b432-ba32135c2f99@suse.de/
-Tested-by: Thomas Zimmermann <tzimmermann@suse.de>
+  Out of memory: Killed process 150 (poc) total-vm:789292kB, anon-rss:484kB
+  Kernel panic - not syncing: System is deadlocked on memory
+
+Fix this by also calling posix_cpu_timer_del() on -ESRCH. With the
+target gone, the deletion is safe. It finds no task either and only
+drops the pid reference.
+
+Fixes: e26d70d271ee ("posix-timers: Cleanup reaped target handling")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Tingjie Zhong <catme0w@live.cn>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Link: https://patch.msgid.link/20261012235149.66531-1-cenzhang@linux.microsoft.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/bitblit.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ kernel/time/posix-cpu-timers.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/video/fbdev/core/bitblit.c b/drivers/video/fbdev/core/bitblit.c
-index d2e1e63117b26..dc165b62e7f0a 100644
---- a/drivers/video/fbdev/core/bitblit.c
-+++ b/drivers/video/fbdev/core/bitblit.c
-@@ -18,6 +18,7 @@
- #include <linux/console.h>
- #include <asm/types.h>
- #include "fbcon.h"
-+#include "fbcon_rotate.h"
- 
- /*
-  * Accelerated handlers.
-@@ -151,7 +152,9 @@ static void bit_putcs(struct vc_data *vc, struct fb_info *info,
- 		      const unsigned short *s, int count, int yy, int xx,
- 		      int fg, int bg)
- {
-+	struct fbcon_par *par = info->fbcon_par;
- 	struct fb_image image;
-+	u32 vyres = GETVYRES(par->p, info);
- 	u32 width = DIV_ROUND_UP(vc->vc_font.width, 8);
- 	u32 cellsize = width * vc->vc_font.height;
- 	u32 maxcnt = info->pixmap.size/cellsize;
-@@ -168,10 +171,10 @@ static void bit_putcs(struct vc_data *vc, struct fb_info *info,
- 	image.height = vc->vc_font.height;
- 	image.depth = 1;
- 
--	if (image.dy >= info->var.yres)
-+	if (image.dy >= vyres)
- 		return;
- 
--	image.height = min(image.height, info->var.yres - image.dy);
-+	image.height = min(image.height, vyres - image.dy);
- 
- 	if (attribute) {
- 		buf = kmalloc(cellsize, GFP_ATOMIC);
+diff --git a/kernel/time/posix-cpu-timers.c b/kernel/time/posix-cpu-timers.c
+index 52deada50891a..fcf95de6fca3f 100644
+--- a/kernel/time/posix-cpu-timers.c
++++ b/kernel/time/posix-cpu-timers.c
+@@ -1601,8 +1601,8 @@ static int do_cpu_nanosleep(const clockid_t which_clock, int flags,
+ 		 */
+ 		expires = cpu_timer_getexpires(&timer.it.cpu);
+ 		error = posix_cpu_timer_set(&timer, 0, &zero_it, &it);
+-		if (!error) {
+-			/* Timer is now unarmed, deletion can not fail. */
++		if (error != TIMER_RETRY) {
++			/* Unarmed or target gone (-ESRCH), deletion can not fail. */
+ 			posix_cpu_timer_del(&timer);
+ 		} else {
+ 			while (error == TIMER_RETRY) {
 -- 
 2.53.0
 
