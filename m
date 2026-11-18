@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043195;
-	b=fTABP3efqr3hlBHfpqE1YO3viHd0Po18WFszS/suB6osMa7JF8f3zKV6PIg8ifhtbuSv
-	 nFS7T5Nfy7UX5jZtvZnEx0z4fd7htGCtw94NY8in7kcGgq3VJGPT94cdOS7q8iq1OwuFY
-	 5Z1TL4HOHPoTeP53edNyzc0SpWmLojEzuxy/egXLSfbU8ZmEw4VmInZHl4+ab+7YwjlO1
-	 fbCLLm3LFV3cpNF1NwQr3sLfyoPBhVQ5eAFJ/dN+1pdmHO/z0gNigj7Zi1HIh+FbJsmaT
-	 xmz854gmo3zr32O8XUqPDcbERa/DhSTyTainGHn2rEYIQL22YSbRO10K58uuhiV2nNA==
+	t=1795043197;
+	b=Jbjbpjde/QFcym67qtlgzPMkxlbdDdTCXPltBPmWQHzMZ4NGu20CE32JN1bF9L9g/k9+
+	 76QBtpnQOZz4zVPdGgl3pAI1lRVOXBCEMvms7t0qwM7xVrOL8+Co3tDHnYFN7LA/GgyYJ
+	 83pcCSwFkwsYUXRHurUQ3/8aGwKLPXTszOo2+JdMYZ7rdd6hOQDUAGfcjlMUtD4EdItMk
+	 4z3noKuGxkue1DKjMB3j/4QUz3RD+PrXTyfvLytiwd6QOYkFgvqhPalvpWOfaaXXaUz4E
+	 +kwMm5OikNeaj6tZ2Hu7rnhPs5PVCHYxLzVVtA7K6ApftnOMplCrOGr4WkUZPRId8CQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043195;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043197;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XiucSZeRAPtv3PICvy0U00J10F87YsaiCNaD9yhR6Oo=;
-	b=uGIeTDIZ5l3Py8Zfnq2oj0XLlnhlmU1tcDtt1Ixlab4TQ0oeHtlpWj+1L4pmuWaZjp5A
-	 CTMdZ91llYKKCWaWZDziRmRCHFOlC/PXEsZfRjMYyddNfhOpOy8BCD4ApGc99v4/D9ngk
-	 C2IJpuPnXdeIw+m96DSIDyzdlQo2UhvrNBnXYrU6ncEY03QDSQGJaIok/dMemlNKzm9cu
-	 Tms1iIDGXzhgsD6hJqi/ab75yRaqj5XDe8KMdyMYlpfnTMPGGUy3hbYPrURWcBmzwiskZ
-	 wLwbUsVDeR36bQeaKYzbKfKT8IukPpgDcF4cXMGrfAfblyqV8I5itK95ltLhNeJLr1Q==
+	bh=o5pD/hb9B0+LI3SKoOgobNaRFAqC7fP4Kgeqq5dwncs=;
+	b=4iW1rBae0+WOPXsH7OhqGaI9yk4DfuG30uy9aFC4/QhAKO0qIuK3QOfkx0WkNufg9wh0
+	 Q1FwapsKuTlROk/fCOZAelGNpH/SDXemKNVqR/X1fmkRgDGS5gwdh++vYf6fuhQuJnv1a
+	 8FkSgKqpw5G8p7QAkZe4c8vgDYqL2L/s3f4T+FfEVkEQVaFIjommX0ZpPUmbbAMSlcEj3
+	 Du6gsZSNJl2zkN7lyCcPhXsFO/4dbHXUTe2oq61N/9QZbdZqdA34EdsqhGEyXvaehfv62
+	 g5i6PB1TeuC04QUm5RTG8UqpZSq6dRA/VhpcaEPTN7Ftw5rEN2E8M2vXRS/7ZqVIBYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DOQdxI2D;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZB9LLyCm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BE79606A325;
-	Wed, 18 Nov 2026 23:06:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A64606A31C;
+	Wed, 18 Nov 2026 23:06:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DOQdxI2D
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42EE21F000C5;
-	Wed, 18 Nov 2026 23:06:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZB9LLyCm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 087311F000C4;
+	Wed, 18 Nov 2026 23:06:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043194;
-	bh=XiucSZeRAPtv3PICvy0U00J10F87YsaiCNaD9yhR6Oo=;
+	s=korg; t=1795043197;
+	bh=o5pD/hb9B0+LI3SKoOgobNaRFAqC7fP4Kgeqq5dwncs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DOQdxI2DJwqGFJA80K7dzPQA8GPz5Unly6BpTK02g05yuhTOfVugA0LBMyGaMSGiE
-	 JRUDN2KHwW6GpCxP9bc/UE/Bo6zl7I93f9CEYdJb1HRInJp6HldwCJPROB1MQS0BbJ
-	 lwtBtsxl1zA4x1uFxoQnE0FNXWwZb0xhuPZ0G5Ao=
+	b=ZB9LLyCmrTPHiE3Ai0SCoM/QabfsXTuvqk49NHSznYEwZbT/qeIH9r/YxkF4r1Uh3
+	 yJNElsLwmtmljAJiGzQrM0V9YwDCkk9JFxhbxZsi4qbJXvw9GJQdwfxqGHLzvnb/aG
+	 aOFMACKnFZGJjgavXpHtxMAEwsGzQAZV/lx4zjwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
+	syzbot+e9a1f5e196de6663631b@syzkaller.appspotmail.com,
+	Rituparna Warwatkar <rwarwatkar@gmail.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0124/2857] driver core: attribute_container: Unwind device_add() on attr failure
-Date: Wed, 18 Nov 2026 15:19:18 +0100
-Message-ID: <20261118150205.812752825@linuxfoundation.org>
+Subject: [PATCH 6.1 0125/2857] media: dvb-core: fix feed leak on failed DMX_ADD_PID
+Date: Wed, 18 Nov 2026 15:19:19 +0100
+Message-ID: <20261118150205.849676936@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,44 +69,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Rituparna Warwatkar <rwarwatkar@gmail.com>
 
-[ Upstream commit 8cfe7ad274bb42c4653b645267410d4a3a23db98 ]
+[ Upstream commit 9fa26c971ca310dd10a3bc0014f2fc7ea7167bba ]
 
-attribute_container_add_class_device() first calls device_add() and then
-creates the container attributes. If attribute_container_add_attrs() fails,
-the helper returns the error with the class device still registered.
+dvb_dmxdev_add_pid() allocates a new dmxdev_feed, links it into
+filter->feed.ts and, when the filter is already running, immediately
+starts the feed.
 
-Callers use an error from this helper as a failed add and do not call
-device_del() on that path. Undo the successful device_add() before
-returning the attribute creation error.
+If starting the feed fails, the newly allocated feed remains on the
+list. Subsequent restart and rollback paths may then operate on this
+stale entry, leaving feed resources allocated and causing leaks in
+drivers that allocate resources from ->start_feed() and release them
+from ->stop_feed().
 
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Link: https://patch.msgid.link/20260608172717.88657-1-dbgh9129@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Remove the feed from the list and free it when
+dvb_dmxdev_start_feed() fails.
+
+Reported-by: syzbot+e9a1f5e196de6663631b@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e9a1f5e196de6663631b
+Signed-off-by: Rituparna Warwatkar <rwarwatkar@gmail.com>
+Link: https://patch.msgid.link/20260714141059.63582-1-rwarwatkar@gmail.com
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Message-ID: <20260714141059.63582-1-rwarwatkar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/attribute_container.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/media/dvb-core/dmxdev.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/base/attribute_container.c b/drivers/base/attribute_container.c
-index 01ef796c2055a..aa93a0756e16a 100644
---- a/drivers/base/attribute_container.c
-+++ b/drivers/base/attribute_container.c
-@@ -455,7 +455,12 @@ attribute_container_add_class_device(struct device *classdev)
+diff --git a/drivers/media/dvb-core/dmxdev.c b/drivers/media/dvb-core/dmxdev.c
+index a67cce02d1577..93fc040cfaddf 100644
+--- a/drivers/media/dvb-core/dmxdev.c
++++ b/drivers/media/dvb-core/dmxdev.c
+@@ -870,6 +870,7 @@ static int dvb_dmxdev_add_pid(struct dmxdev *dmxdev,
+ 			      struct dmxdev_filter *filter, u16 pid)
+ {
+ 	struct dmxdev_feed *feed;
++	int ret;
  
- 	if (error)
- 		return error;
--	return attribute_container_add_attrs(classdev);
-+
-+	error = attribute_container_add_attrs(classdev);
-+	if (error)
-+		device_del(classdev);
-+
-+	return error;
+ 	if ((filter->type != DMXDEV_TYPE_PES) ||
+ 	    (filter->state < DMXDEV_STATE_SET))
+@@ -887,8 +888,14 @@ static int dvb_dmxdev_add_pid(struct dmxdev *dmxdev,
+ 	feed->pid = pid;
+ 	list_add(&feed->next, &filter->feed.ts);
+ 
+-	if (filter->state >= DMXDEV_STATE_GO)
+-		return dvb_dmxdev_start_feed(dmxdev, filter, feed);
++	if (filter->state >= DMXDEV_STATE_GO) {
++		ret = dvb_dmxdev_start_feed(dmxdev, filter, feed);
++		if (ret < 0) {
++			list_del(&feed->next);
++			kfree(feed);
++			return ret;
++		}
++	}
+ 
+ 	return 0;
  }
- 
- /**
 -- 
 2.53.0
 
