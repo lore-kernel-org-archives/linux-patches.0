@@ -1,82 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028404;
-	b=xNMHDQHwSJemtNrP/mrrAGeiT2tBwNjuFWABrc6xskf+oxfaD7ZFOpMaYlu+yrMMFC6/
-	 3DRwYgug4+WWjKB00Emq08cAaVBS20+4/+IuYQm9UiaOhu0vz+RGiBoVweJJeOxHBcrT+
-	 ctKd1SeFlZ6wv1EZzbI43LAWXS49ewxpr5gIG59y+56Bzcgtjap2x6oeq5K4sIWlISAYy
-	 R8zODOzFhFc0nE4ZTsBIl93vyFGJPK8pZGNTG2dztfwO0aLk9fqA66CQTaPHC34+H91Di
-	 +zsqNBeTAMv2vzL+KARE1VCvi8nc+cS5IPibalfbQYs+le94UTNrhsAq1AnylxUJs/g==
+	t=1795028407;
+	b=1+u0uDtdM+1blRWEYr4AsMgsjUgqUEuuL6oEKrjjgyC7tqX+crh20RFGvBoly18FvvLe
+	 p/Fa8CIFr40u0tJaEGUN6E92pc8z7YigCso5KmFPSc73J4LqrHZVcjJPEzHttCQWhc5QE
+	 XWk4eYigw5Oc7+yBtgVgwAhoXht/hfYfnElatLsiy+hDDI5J1T7RQyZcM9GRpe0rzo2wB
+	 sxd779V0bTptRSYclDNgSaCnI5RWN+f8sml4TIrH6jIJevjfYILGwr/5SssqD1ar3/byW
+	 7RjW+GikTcIHleEVio/DnZ0gP4ekjDhtgmVg9WIPMkik8fzyivcucaAQzfmXr6t/gfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028404;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028407;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CZQ2HGQsb7G7oIaCV3C0DBbXNiRmPUKjf+l2NcQRg38=;
-	b=yb6sOvBIqyB19Mm1B72o3CZ2MVikkcL45ceU+OBKLnrIIj63R6ebHvKHfIQN0BzurwBV
-	 FCDVp7MvkmOk6fQdY3jnAcs+gwHxF1ZI//RY11PGbDtz/6R4eF0lW38vq+tzeessi+839
-	 I3PLgtitO+qQ9L8dxJr00plT5VOuDsr8hU7lyzErilASdF4mGKBRcD8oUfn0facDTQGeC
-	 HsDWVdDUj+L9kHupfhk5qdOD0bmwKOCO2QRQxtvLqZlECBpss7wV28qXTLQSWI9DKZhjW
-	 D1QYM3X249wz0f7OiOO+sHoP6q0etxaQmeBZKggY3o2JA/Tm67gMAbbyYFLnQzAfVdw==
+	bh=FYYNTGUgaUIZZNeealoTo6NE5VBcX0jdtmYVPtCMN3o=;
+	b=ja73IitmGA7kSeU7G2+by1obDQnfG1H9ecntUw5awzB0z0ngZKKtyQIKFTCMIsa5pGY6
+	 DvPW23udQf3KqtIOcNoR5ivpwxHUrisCPvi//FgOqsm+wH59RqqUtMYiHV95sBuLPWtcQ
+	 5lC0vaDrdIwJXwahX2xlSamABghVQ3FUdizmuGMU9eLsmoBIUlKDMTIxyGuMjjsCyj4aq
+	 LjE4p4UdIGDbFbI4LxTD/GDpF7n/2zGHd8ya4gSzhDwWQfw/tVhoXvGANn4jnJsSwbSNF
+	 A199F637XehPyg7jDcIbvVtywrEKgYcd+D1iZiNhBAy/4+bksboxlhdI2qbFWYs3Xvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GoljiTOO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yNf8cZxa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E5E606A31C;
-	Wed, 18 Nov 2026 19:00:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66109606A32A;
+	Wed, 18 Nov 2026 19:00:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GoljiTOO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED51D1F000C4;
-	Wed, 18 Nov 2026 19:00:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yNf8cZxa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0486D1F000C4;
+	Wed, 18 Nov 2026 19:00:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028403;
-	bh=CZQ2HGQsb7G7oIaCV3C0DBbXNiRmPUKjf+l2NcQRg38=;
+	s=korg; t=1795028406;
+	bh=FYYNTGUgaUIZZNeealoTo6NE5VBcX0jdtmYVPtCMN3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GoljiTOOuqaPxqUIDnMNT+7Pai7Z//UtGizT6vLrFzseLEzvCt2wpdxmZ3y0tZOH4
-	 A8sVpb3uT6nJJ1gCFULyM4s+H0VkfHbNUM0DgqhQI4JS12U0CEq5L37rHMaC0Ionfa
-	 hyYZ1U84fxKbh6OcZLkAsambyu2U6aNp0VGjIUUY=
+	b=yNf8cZxanao4l5f+5rSohOe3geOsNJUh+v9jcx4xcbF55KR4oe+nLpsY0jK8h3AHE
+	 y/iOCH1jpPwXoYx9Nwg9M4ZS1fs1XNKt1UWXJGNHIwUyCK4HcnUAzGwqJomwgO1yQ2
+	 PF8pjsMJxIO2FBjUXTOVI210lRPHmgfxJoC28iSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Dennis Zhou <dennis@kernel.org>,
-	Tejun Heo <tj@kernel.org>,
-	Christoph Lameter <cl@linux.com>,
-	Martin Liu <liumartin@google.com>,
-	David Rientjes <rientjes@google.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	SeongJae Park <sj@kernel.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Sweet Tea Dorminy <sweettea-kernel@dorminy.me>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	"Liam R . Howlett" <liam.howlett@oracle.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Wei Yang <richard.weiyang@gmail.com>,
-	David Hildenbrand <david@redhat.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Yu Zhao <yuzhao@google.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Mateusz Guzik <mjguzik@gmail.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Aboorva Devarajan <aboorvad@linux.ibm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Dmitrii Chervov <fary.ru@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2130/2151] mm: fix OOM killer inaccuracy on large many-core systems
-Date: Wed, 18 Nov 2026 16:04:25 +0100
-Message-ID: <20261118150239.274509514@linuxfoundation.org>
+Subject: [PATCH 6.18 2092/2151] zloop: remove a duplicate call to zloop_get_block_size
+Date: Wed, 18 Nov 2026 16:03:47 +0100
+Message-ID: <20261118150237.907849282@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -98,194 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 5898aa8f9a0b42fe1f65c7364010ab15ec5c38bf ]
+[ Upstream commit 0835f4909553e78a97d1ac59ed6eb776b4f78c92 ]
 
-Use the precise, albeit slower, precise RSS counter sums for the OOM
-killer task selection and console dumps.  The approximated value is too
-imprecise on large many-core systems.
+The sequential zone path has two calls to zloop_get_block_size, one
+conditional on not having a block size, and one unconditionally.
 
-The following rss tracking issues were noted by Sweet Tea Dorminy [1],
-which lead to picking wrong tasks as OOM kill target:
+Remove the latter as the block size only needs to be queried once.
 
-  Recently, several internal services had an RSS usage regression as part of a
-  kernel upgrade. Previously, they were on a pre-6.2 kernel and were able to
-  read RSS statistics in a backup watchdog process to monitor and decide if
-  they'd overrun their memory budget. Now, however, a representative service
-  with five threads, expected to use about a hundred MB of memory, on a 250-cpu
-  machine had memory usage tens of megabytes different from the expected amount
-  -- this constituted a significant percentage of inaccuracy, causing the
-  watchdog to act.
-
-  This was a result of commit f1a7941243c1 ("mm: convert mm's rss stats
-  into percpu_counter") [1].  Previously, the memory error was bounded by
-  64*nr_threads pages, a very livable megabyte. Now, however, as a result of
-  scheduler decisions moving the threads around the CPUs, the memory error could
-  be as large as a gigabyte.
-
-  This is a really tremendous inaccuracy for any few-threaded program on a
-  large machine and impedes monitoring significantly. These stat counters are
-  also used to make OOM killing decisions, so this additional inaccuracy could
-  make a big difference in OOM situations -- either resulting in the wrong
-  process being killed, or in less memory being returned from an OOM-kill than
-  expected.
-
-Here is a (possibly incomplete) list of the prior approaches that were
-used or proposed, along with their downside:
-
-1) Per-thread rss tracking: large error on many-thread processes.
-
-2) Per-CPU counters: up to 12% slower for short-lived processes and 9%
-   increased system time in make test workloads [1]. Moreover, the
-   inaccuracy increases with O(n^2) with the number of CPUs.
-
-3) Per-NUMA-node counters: requires atomics on fast-path (overhead),
-   error is high with systems that have lots of NUMA nodes (32 times
-   the number of NUMA nodes).
-
-commit 82241a83cd15 ("mm: fix the inaccurate memory statistics issue for
-users") introduced get_mm_counter_sum() for precise proc memory status
-queries for some proc files.
-
-The simple fix proposed here is to do the precise per-cpu counters sum
-every time a counter value needs to be read.  This applies to the OOM
-killer task selection, oom task console dumps (printk).
-
-This change increases the latency introduced when the OOM killer executes
-in favor of doing a more precise OOM target task selection.  Effectively,
-the OOM killer iterates on all tasks, for all relevant page types, for
-which the precise sum iterates on all possible CPUs.
-
-As a reference, here is the execution time of the OOM killer before/after
-the change:
-
-AMD EPYC 9654 96-Core (2 sockets)
-Within a KVM, configured with 256 logical cpus.
-
-                                  |  before  |  after   |
-----------------------------------|----------|----------|
-nr_processes=40                   |  0.3 ms  |   0.5 ms |
-nr_processes=10000                |  3.0 ms  |  80.0 ms |
-
-Link: https://lkml.kernel.org/r/20260114143642.47333-1-mathieu.desnoyers@efficios.com
-Fixes: f1a7941243c1 ("mm: convert mm's rss stats into percpu_counter")
-Link: https://lore.kernel.org/lkml/20250331223516.7810-2-sweettea-kernel@dorminy.me/ # [1]
-Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Suggested-by: Michal Hocko <mhocko@suse.com>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Acked-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: "Paul E. McKenney" <paulmck@kernel.org>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Dennis Zhou <dennis@kernel.org>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: Christoph Lameter <cl@linux.com>
-Cc: Martin Liu <liumartin@google.com>
-Cc: David Rientjes <rientjes@google.com>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: SeongJae Park <sj@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: "Liam R . Howlett" <liam.howlett@oracle.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Wei Yang <richard.weiyang@gmail.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Yu Zhao <yuzhao@google.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Mateusz Guzik <mjguzik@gmail.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Aboorva Devarajan <aboorvad@linux.ibm.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-
-[ Backported without changes ]
-Signed-off-by: Dmitrii Chervov <fary.ru@gmail.com>
+Fixes: eb0570c7df23 ("block: new zoned loop block device driver")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20261029150353.2503201-2-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/mm.h |  7 +++++++
- mm/oom_kill.c      | 22 +++++++++++-----------
- 2 files changed, 18 insertions(+), 11 deletions(-)
+ drivers/block/zloop.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/include/linux/mm.h b/include/linux/mm.h
-index 2c0503bbcc190..bc5771e26e1db 100644
---- a/include/linux/mm.h
-+++ b/include/linux/mm.h
-@@ -2843,6 +2843,13 @@ static inline unsigned long get_mm_rss(struct mm_struct *mm)
- 		get_mm_counter(mm, MM_SHMEMPAGES);
- }
+diff --git a/drivers/block/zloop.c b/drivers/block/zloop.c
+index bbb6de58d916c..b1ec6d6a30242 100644
+--- a/drivers/block/zloop.c
++++ b/drivers/block/zloop.c
+@@ -887,8 +887,6 @@ static int zloop_init_zone(struct zloop_device *zlo, struct zloop_options *opts,
+ 			return ret;
+ 	}
  
-+static inline unsigned long get_mm_rss_sum(struct mm_struct *mm)
-+{
-+	return get_mm_counter_sum(mm, MM_FILEPAGES) +
-+		get_mm_counter_sum(mm, MM_ANONPAGES) +
-+		get_mm_counter_sum(mm, MM_SHMEMPAGES);
-+}
-+
- static inline unsigned long get_mm_hiwater_rss(struct mm_struct *mm)
- {
- 	return max(mm->hiwater_rss, get_mm_rss(mm));
-diff --git a/mm/oom_kill.c b/mm/oom_kill.c
-index c145b0feecc1f..e6a69fa0b7b21 100644
---- a/mm/oom_kill.c
-+++ b/mm/oom_kill.c
-@@ -228,7 +228,7 @@ long oom_badness(struct task_struct *p, unsigned long totalpages)
- 	 * The baseline for the badness score is the proportion of RAM that each
- 	 * task's rss, pagetable and swap space use.
- 	 */
--	points = get_mm_rss(p->mm) + get_mm_counter(p->mm, MM_SWAPENTS) +
-+	points = get_mm_rss_sum(p->mm) + get_mm_counter_sum(p->mm, MM_SWAPENTS) +
- 		mm_pgtables_bytes(p->mm) / PAGE_SIZE;
- 	task_unlock(p);
- 
-@@ -402,10 +402,10 @@ static int dump_task(struct task_struct *p, void *arg)
- 
- 	pr_info("[%7d] %5d %5d %8lu %8lu %8lu %8lu %9lu %8ld %8lu         %5hd %s\n",
- 		task->pid, from_kuid(&init_user_ns, task_uid(task)),
--		task->tgid, task->mm->total_vm, get_mm_rss(task->mm),
--		get_mm_counter(task->mm, MM_ANONPAGES), get_mm_counter(task->mm, MM_FILEPAGES),
--		get_mm_counter(task->mm, MM_SHMEMPAGES), mm_pgtables_bytes(task->mm),
--		get_mm_counter(task->mm, MM_SWAPENTS),
-+		task->tgid, task->mm->total_vm, get_mm_rss_sum(task->mm),
-+		get_mm_counter_sum(task->mm, MM_ANONPAGES), get_mm_counter_sum(task->mm, MM_FILEPAGES),
-+		get_mm_counter_sum(task->mm, MM_SHMEMPAGES), mm_pgtables_bytes(task->mm),
-+		get_mm_counter_sum(task->mm, MM_SWAPENTS),
- 		task->signal->oom_score_adj, task->comm);
- 	task_unlock(task);
- 
-@@ -603,9 +603,9 @@ static bool oom_reap_task_mm(struct task_struct *tsk, struct mm_struct *mm)
- 
- 	pr_info("oom_reaper: reaped process %d (%s), now anon-rss:%lukB, file-rss:%lukB, shmem-rss:%lukB\n",
- 			task_pid_nr(tsk), tsk->comm,
--			K(get_mm_counter(mm, MM_ANONPAGES)),
--			K(get_mm_counter(mm, MM_FILEPAGES)),
--			K(get_mm_counter(mm, MM_SHMEMPAGES)));
-+			K(get_mm_counter_sum(mm, MM_ANONPAGES)),
-+			K(get_mm_counter_sum(mm, MM_FILEPAGES)),
-+			K(get_mm_counter_sum(mm, MM_SHMEMPAGES)));
- out_finish:
- 	trace_finish_task_reaping(tsk->pid);
- out_unlock:
-@@ -959,9 +959,9 @@ static void __oom_kill_process(struct task_struct *victim, const char *message)
- 	mark_oom_victim(victim);
- 	pr_err("%s: Killed process %d (%s) total-vm:%lukB, anon-rss:%lukB, file-rss:%lukB, shmem-rss:%lukB, UID:%u pgtables:%lukB oom_score_adj:%hd\n",
- 		message, task_pid_nr(victim), victim->comm, K(mm->total_vm),
--		K(get_mm_counter(mm, MM_ANONPAGES)),
--		K(get_mm_counter(mm, MM_FILEPAGES)),
--		K(get_mm_counter(mm, MM_SHMEMPAGES)),
-+		K(get_mm_counter_sum(mm, MM_ANONPAGES)),
-+		K(get_mm_counter_sum(mm, MM_FILEPAGES)),
-+		K(get_mm_counter_sum(mm, MM_SHMEMPAGES)),
- 		from_kuid(&init_user_ns, task_uid(victim)),
- 		mm_pgtables_bytes(mm) >> 10, victim->signal->oom_score_adj);
- 	task_unlock(victim);
+-	zloop_get_block_size(zlo, zone);
+-
+ 	mutex_lock(&zone->lock);
+ 	ret = zloop_update_seq_zone(zlo, zone_no);
+ 	mutex_unlock(&zone->lock);
 -- 
 2.53.0
 
