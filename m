@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048533;
-	b=ozSJpDKv40jXsckSbEclb3Pbw2fNBXSDLyDkKPzhYOcL/X9ocK8lYNyI52cmSayVHZJ4
-	 Kd8LlsxoLo3y40KbdP4K+f1t72ST8eN6FkJ6xDD1qxpPpsiuEg5PjNLC9cNwwD2FKL+DV
-	 fIadoJF/Nswg0KcreNS6KglgA4ezIUgltMKs0xdQZxvJqgqUr4KcOqGVfDyrIvkFvQK7l
-	 jojkkhiSLQ7awEK8aMLFWQSMYWeWC6RCPiL/Fr8KvLQsbCLCwkQRuV9XiaFFo2HF4QAav
-	 irrlZ7J1TGTi8swpnyQmezfFqnO50OsOq6XvCscpPPDSIp2kSbrAG3E++wrkgycpkQQ==
+	t=1795048536;
+	b=nzlzo8qHjgfRxvtF9B0BiUSTlmmsqfEj8IRg9BYPbWhwcTdWkZejks8q+JeH2PeuqMhH
+	 OFNvIIOqDmoLCF3aLSEg59uLkJQzaFLLefA4sUsDPTaX7pdRLpGd+lxj9YxOrtGi4mO6+
+	 s8Ue8GNI5OGcwEkFN9NGIrtRX7qnWAlRoKzhpf85XXl7uY3KuAFZWdogy4qsoMcNiyheL
+	 pD/xE0g0YaKvtsLwZFCQDVNTE4/Ea9XVOSrBgGV1yUQN4V8WwU/3muvmD1pR5dKYN2bCS
+	 BORC/Yf1Irc5o9CA+o0umNCmxBw9LSdOUGsC5EreB07XggPi7ZHhRZow4Wg/h0aYENg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048533;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048536;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LOBB2BL/MOAL8rfjKE33ZeeGMyMpkqoarghzN/cnntU=;
-	b=05RBgjoakUXa4NZvH/o+aKfQQzjwMqpY3jRIZxyL9yMlyoSZWyKuvKBu7QV9x1l76tI7
-	 4RHrz/Oib2YHAjDkBJN3XW9/5yy8nIhTMlNhcGlC59/viq7nVXRromQW+k5j+1zrEY7D4
-	 kNDeRhqk1kOhGYbfDLpQhdrPYwr+zpuEX4f1lryBwJ7TzPDxtUT2YLHw/FoD47QPznKu/
-	 eTN0gihyK/X0fQi6z9TCO3F0OHqlehLzHS4mW1Cq2/ILqP6n/yGpZiq+WjgWYChM+QPMc
-	 78r0cAUUKuVnSHhamSTNNJc38VQ3MQHNaimiptHmHmca0Ns1vqS4mio5pp0L6k8FSmA==
+	bh=g9a8qSOUXTBL3zHGbvZ/HWl6kpwwu5+s/XrRx5nBpSU=;
+	b=ZHIty7X7Fohk+Eefl0ObHPmES0f+fSMuZnjeW04T+iyV3xulSwp7dPg+0wQ/VvnZ6KB4
+	 bw+eKkrSzlzK0go52fP+lBM4hidK64DIc/+G7u/6dFQZ+I1G/X6D+JggPQL4jnsQL24Rw
+	 GEZWBcvT7T3YMzOkbNCtaRhpF0cb/C5fRQ4gt44YYwiyE0fjrk092hAeWZF7BAKwiLFJ3
+	 0k1aLv+SqfIe/R2cKWS9iOP7k2NdABFpGRFZ2g2w26g/lHzaxsvvzBnV1Kea/bGVmgsvW
+	 oSWsUp44pbEHwkS/4fRk/FbeMdG6qTBmGVsW2i4cB2byCpOdEBgvyJdWouzGT43WA1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Ggt/AfB3";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=biA0Dg+5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36391606A31C;
-	Thu, 19 Nov 2026 00:35:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4570A606A31C;
+	Thu, 19 Nov 2026 00:35:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ggt/AfB3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 447DB1F000C4;
-	Thu, 19 Nov 2026 00:35:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=biA0Dg+5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9709E1F000C4;
+	Thu, 19 Nov 2026 00:35:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048533;
-	bh=LOBB2BL/MOAL8rfjKE33ZeeGMyMpkqoarghzN/cnntU=;
+	s=korg; t=1795048536;
+	bh=g9a8qSOUXTBL3zHGbvZ/HWl6kpwwu5+s/XrRx5nBpSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ggt/AfB3c1WYLz6iWxiBOufx+fj9XwNhb6pU2Bxzw7nYv4jk1ETnqa9n9Zi3o/YK8
-	 BSIXhEMIL9OgJasRT9kwtFWDm7vWfLvLUNCSRnYNzSBZ1gXgGJ2HjV50VUW4HjBdAd
-	 bxpOndAhGHOnupE47XBGZlujmHzHOsTDnf6yd644=
+	b=biA0Dg+5mKT3U7NUJ5T/XrUhZLTkHrdEmFSU0CNJssy3dsAPu/9YrDv6gLRdb1Ma7
+	 GUmtVwjhURuMTcsP2pScS7HYO0HBFt+n5v1AnW0ApE8VnHCFrVrnSllYdfC7vemBlU
+	 6oSLoXGV75/zI0va6lmebDM2yq2NBI2lLS3CMz8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Lee Jones <lee@kernel.org>,
+	Laurent Vivier <laurent@vivier.eu>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Stan Johnson <userm57@yahoo.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1991/2857] leds: pca9532: Check i2c_smbus_read_byte_data() return value
-Date: Wed, 18 Nov 2026 15:50:25 +0100
-Message-ID: <20261118150313.061002087@linuxfoundation.org>
+Subject: [PATCH 6.1 2027/2857] swim: Check drive ready bit
+Date: Wed, 18 Nov 2026 15:51:01 +0100
+Message-ID: <20261118150314.388426889@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,56 +70,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit 1b75f038e5f71ed32ce6593b5763f9776ec58a25 ]
+[ Upstream commit abae04f5bed924590e98fe1519566a6e0144e6b5 ]
 
-Coverity report INTEGER_OVERFLOW (tainted_data_return ->
-cast_underflow -> overflow) in pca9532_getled().
-pca9532_getled() stored the return value of i2c_smbus_read_byte_data()
-into a char and used it directly to compute the LED state without
-checking for an error. i2c_smbus_read_byte_data() returns a negative
-error code on failure. On an I2C read error the negative value was
-assigned to an unsigned type, triggering an integer underflow/overflow,
-and a meaningless LED state was returned to the caller.
+The drive provides a readiness signal that has to be tested before
+certain commands are issued to the drive. Rename the SEEK_COMPLETE flag
+as READY because that's how it's known in the documentation as well as
+the mkLinux source code.
 
-Read the value into an int, check for the error, and fall back to
-PCA9532_OFF while emitting a warning when the read fails.
+Poll for that signal after stepping the heads and also after switching
+to MFM mode, as that's what mkLinux does. Check for readiness when
+stepping because testing shows that some drives require this.
 
-Fixes: 28c5fe99016d ("leds: pca9532: Extend pca9532 device tree support")
-Assisted-by: VeroCoder:vero-1 [cli]
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260727-led-fix-v1-1-d635c5037109@nxp.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Tested-by: Stan Johnson <userm57@yahoo.com>
+Link: https://patch.msgid.link/8d6fc833c719de2248b64ee521418b1032b1e509.1788513997.git.fthain@linux-m68k.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-pca9532.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/block/swim.c | 29 ++++++++++++++++++++++-------
+ 1 file changed, 22 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/leds/leds-pca9532.c b/drivers/leds/leds-pca9532.c
-index b518b40099677..64aeaeee1587c 100644
---- a/drivers/leds/leds-pca9532.c
-+++ b/drivers/leds/leds-pca9532.c
-@@ -259,12 +259,15 @@ static enum pca9532_state pca9532_getled(struct pca9532_led *led)
- 	struct i2c_client *client = led->client;
- 	struct pca9532_data *data = i2c_get_clientdata(client);
- 	u8 maxleds = data->chip_info->num_leds;
--	char reg;
--	enum pca9532_state ret;
-+	int reg;
-+	enum pca9532_state ret = PCA9532_OFF;
+diff --git a/drivers/block/swim.c b/drivers/block/swim.c
+index 09829960ebd63..d75897d473c6f 100644
+--- a/drivers/block/swim.c
++++ b/drivers/block/swim.c
+@@ -117,7 +117,7 @@ struct iwm {
+ #define TACHO		0x103
+ #define READ_DATA_1	0x104
+ #define GCR_MODE	0x105
+-#define SEEK_COMPLETE	0x106
++#define READY		0x106
+ #define TWOMEG_MEDIA	0x107
  
- 	mutex_lock(&data->update_lock);
- 	reg = i2c_smbus_read_byte_data(client, LED_REG(maxleds, led->id));
--	ret = (reg & LED_MASK(led->id)) >> LED_SHIFT(led->id);
-+	if (reg >= 0)
-+		ret = (reg & LED_MASK(led->id)) >> LED_SHIFT(led->id);
-+	else
-+		dev_warn(&client->dev, "failed to read LED register: %d\n", reg);
- 	mutex_unlock(&data->update_lock);
- 	return ret;
+ /* Bits in handshake register */
+@@ -314,6 +314,14 @@ static inline bool swim_readbit(struct swim __iomem *base, int bit)
+ #define swim_readbit_timeout(base, bit, val, timeout_us) \
+ 	poll_timeout_us(, swim_readbit(base, bit) == val, 1000, timeout_us, false)
+ 
++#define swim_READY_timeout(base) \
++({ \
++	int ret = swim_readbit_timeout(base, READY, true, 1000 * 1000); \
++	if (ret) \
++		printk(KERN_DEBUG "%s: drive not ready\n", __func__); \
++	ret; \
++})
++
+ static inline void swim_drive(struct swim __iomem *base,
+ 			      enum drive_location location)
+ {
+@@ -352,8 +360,6 @@ static inline void swim_eject(struct swim __iomem *base)
+ 
+ static inline void swim_head(struct swim __iomem *base, enum head head)
+ {
+-	/* wait drive is ready */
+-
+ 	if (head == UPPER_HEAD)
+ 		swim_select(base, READ_DATA_1);
+ 	else if (head == LOWER_HEAD)
+@@ -388,20 +394,25 @@ static inline int swim_track00(struct swim __iomem *base)
+ 
+ static inline int swim_seek(struct swim __iomem *base, int step)
+ {
+-	if (step == 0)
+-		return 0;
+-
+ 	if (step < 0) {
+ 		swim_action(base, SEEK_NEGATIVE);
+ 		step = -step;
+-	} else
++	} else if (step > 0)
+ 		swim_action(base, SEEK_POSITIVE);
+ 
++	swim_READY_timeout(base);
++
++	if (step == 0)
++		return 0;
++
+ 	for ( ; step > 0; step--) {
+ 		if (swim_step(base))
+ 			return -1;
+ 	}
+ 
++	msleep(30);
++	swim_READY_timeout(base);
++
+ 	return 0;
  }
+ 
+@@ -483,6 +494,8 @@ static blk_status_t floppy_read_sectors(struct floppy_state *fs,
+ 
+ 
+ 	swim_drive(base, fs->location);
++	swim_READY_timeout(base);
++
+ 	for (i = req_sector; i < req_sector + sectors_nb; i++) {
+ 		int x;
+ 		track = i / fs->secpercyl;
+@@ -608,6 +621,8 @@ static int floppy_open(struct block_device *bdev, fmode_t mode)
+ 
+ 	swim_motor(base, ON);
+ 	swim_action(base, SETMFM);
++	msleep(30);
++	swim_READY_timeout(base);
+ 
+ 	set_capacity(fs->disk, fs->total_secs);
+ 
 -- 
 2.53.0
 
