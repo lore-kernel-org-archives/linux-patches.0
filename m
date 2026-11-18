@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030191;
-	b=eNIQv3dD6Fb0ERvjccT92Y9nnINMl7lqGd2iYYCVLEW8wsX8RAFXh95QihvNrDeHnJgZ
-	 Uv44Cu1RuDufm10cfiKJvcDZpCZsHoURZI8QJ5dUv3Y9YcyImoDKQpE9KQFTp/S+CTaL0
-	 6ubu2FAkVeHY7KhvB1SyJomU+wO5nuwTvjvwzTQALFeH9yKuupOuu2Hw8QnPueqY5VmU/
-	 rUAhM03ULoSQKp0Pnz4PC8KZrIhPxWuoN1kuquZ0ILdyeKN2HwXpKyn0Vkt0GNTOnbNeL
-	 LLzThGcoBBO7US08HSVyfwFSb3A8+JhQsNfq7eAq0OhGRbSYzzB6m7b0if/mfsZxuJQ==
+	t=1795030194;
+	b=KnKFGqUVoO5TeBK1856v2Oea9MHPsmr3pIRui8/sgTHAHBjppuRLgE8k1YyvnhKFIVvI
+	 d7soSi1eLEV1UOZEexp6RatH4R1aQwhgqEILmVsVurC9sO6DKAfCKG6I2I6M9z9NGS5Wy
+	 EnBPtRMhvwERCGs6WlHaZ2getrkh2dmk9fMoo68krH67CtrhWkD0MLivbuoBghApl02zQ
+	 zgkeZ0cwXoQW31qUyVpD8vnFmVPLWq58Q29Zu8gq4iP7mhF2PPr6f1bf27RoiiQxl+gl/
+	 BntmoEZdE0b2FPNzBB+0UzEDl+8vo55yQ46BOrVJCb8UvRh1WP61Uy8xLJ6/GFsb7fw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030191;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030194;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WIl/+spZ58RQkDpnyMvGHZCbn7n9tlnNaq5zTHZUtKk=;
-	b=0DwMN3Js6WYTAw21UjMOYbGTOfGMZhBC8ep7ylJxbeI0UJFKeHhMDiP+OEaTJvZZyj2j
-	 2njPG1obuBWqLmMusYSYzaKUEZg5KTTbYQ9Qd+jQWfodbQp+t4mMoTf7sQeJ53wUvlAI4
-	 t0ZS8mw19l6XlXOdj+4M+aEODZplQEHBroeHDrU1BS1rPCWdu90O09Bn/ohQZThQMT3Z+
-	 gkID6iki/7HwfiZ8LgzB9u623Yay8vLyCm0c5OZFhqGEQ5PVAcXFZmLxaQ/Pq4mcZqz7+
-	 fT+R3KGlasMKQ8r5v1LYBVMK65ILHPHrF5qF+3WKPw0SH9f0C7kVPbrlld8yRD0JSgA==
+	bh=ornd6BeZGrcpnuMyDi7euTqfJDJSh+fspLpzDaDUd3s=;
+	b=P4jWK4QFmvhDEb0TS+EFFEXB4dS/SdL/Pb9tlgk1FMtKFFReIWQOLlFdncrPK1r/pKeB
+	 iSoFWoGxgbpagqmUrcWTzA/yI5nGisn0nTq9MD++e9BpAS2VOt6APX8WEkbWbDkrqjShl
+	 8aImuTxFYWj70BwN3IiZvFGzjZH01SjtEPdFIcRpHqzCz3ZzhbpBVVqi836vggPgpGxLQ
+	 wDXQY52mOTjnylAhZ72/x6WDnoOSU/fjbIbNXR6rGctTa6C+ZQIZ9mCBND5AnbDaiTvLc
+	 vHqnTjRweG7/jl6WNNV1OnqC5aQIFFRRYIopkjXZVD16iGvkhDOU6LlI7vz+6FqyXAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=loo9U3iI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cnxj1fmE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A1C606A32C;
-	Wed, 18 Nov 2026 19:29:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B39606A32C;
+	Wed, 18 Nov 2026 19:29:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=loo9U3iI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691211F000C4;
-	Wed, 18 Nov 2026 19:29:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cnxj1fmE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416E61F000C4;
+	Wed, 18 Nov 2026 19:29:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030191;
-	bh=WIl/+spZ58RQkDpnyMvGHZCbn7n9tlnNaq5zTHZUtKk=;
+	s=korg; t=1795030193;
+	bh=ornd6BeZGrcpnuMyDi7euTqfJDJSh+fspLpzDaDUd3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=loo9U3iIKhtvxTy3fMj0JU0D97dn+ZWjd+isQvT02JITAltlF1Fvcd6FVOSIvLf7s
-	 fH93afSL85CnzCSgY0vcVAVtqcOY+gh1W9KXIAtWi9PLSro++ERf+ziXbrSCgbBbHV
-	 ZHf2Jyn1v+UhwXqDA17sOW38Fs/Uva79c2FE7tYE=
+	b=Cnxj1fmE6S1CXhDDmaL5kPMNFLlvPQC9TE+rTA3ZtfVxFHJxSEfckbLQuwNj1BEVm
+	 BcuLdhCvL/r9HZIhCbx6jlrwE8is0tQ7aeV528v83XdV4V9TQsBIPgAXQqt6KPMlYm
+	 phk3d58XP490Fps6KpYMndgKCLtEGKHuHc4lEmrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0618/1756] ARM: dts: gemini: Use a level-high interrupt for TVE200
-Date: Wed, 18 Nov 2026 15:45:45 +0100
-Message-ID: <20261118150033.517983715@linuxfoundation.org>
+Subject: [PATCH 6.12 0619/1756] PCI: aardvark: Disable PHY on probe failures
+Date: Wed, 18 Nov 2026 15:45:46 +0100
+Message-ID: <20261118150033.553666583@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -67,41 +69,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 5bf1bb010712bba28eda926ed453db3cab91381a ]
+[ Upstream commit 28cc5bc5a6c6cffbe7ba27c0acbfbe06747fa173 ]
 
-TVE200's interrupt is configured as rising-edge. On the D-Link DIR-685,
-this can stop interrupt delivery after the first vertical interrupt,
-causing vblank and page-flip timeouts and delaying framebuffer console
-startup.
+advk_pcie_setup_phy() initializes and powers on the PHY before the
+emulated bridge and IRQ domains are created.  If any of those later
+initialization steps or pci_host_probe() fails, probe returns without
+powering off or exiting the PHY.
 
-The vertical interrupt can remain pending after acknowledgment. Use
-level-high triggering so the pending condition is delivered again
-without requiring another edge.
+Replace the direct returns with staged cleanup labels.  Remove IRQ
+domains in reverse order, release the emulated bridge allocation only
+after successful initialization, and disable the PHY on every failure
+after advk_pcie_setup_phy() succeeds.  A setup_phy() failure still
+returns directly, so its partial internal cleanup is not repeated.
 
-Fixes: d2b85241a9f5 ("ARM: dts: Add TVE200 to the Gemini SoC DTSI")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Message-ID: <20260921-gemini-tve200-fix-v1-2-8be03ac2a8f7@kernel.org>
+Fixes: 366697018c9a ("PCI: aardvark: Add PHY support")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260910221725.91980-1-mhun512@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/gemini/gemini.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/controller/pci-aardvark.c | 31 ++++++++++++++++-----------
+ 1 file changed, 18 insertions(+), 13 deletions(-)
 
-diff --git a/arch/arm/boot/dts/gemini/gemini.dtsi b/arch/arm/boot/dts/gemini/gemini.dtsi
-index befe322bd7de9..c95faa197bcf1 100644
---- a/arch/arm/boot/dts/gemini/gemini.dtsi
-+++ b/arch/arm/boot/dts/gemini/gemini.dtsi
-@@ -428,7 +428,7 @@ dma-controller@67000000 {
- 		display-controller@6a000000 {
- 			compatible = "cortina,gemini-tvc", "faraday,tve200";
- 			reg = <0x6a000000 0x1000>;
--			interrupts = <13 IRQ_TYPE_EDGE_RISING>;
-+			interrupts = <13 IRQ_TYPE_LEVEL_HIGH>;
- 			resets = <&syscon GEMINI_RESET_TVC>;
- 			clocks = <&syscon GEMINI_CLK_GATE_TVC>,
- 				 <&syscon GEMINI_CLK_TVC>;
+diff --git a/drivers/pci/controller/pci-aardvark.c b/drivers/pci/controller/pci-aardvark.c
+index a598a98247ce9..e65fe2ca2515d 100644
+--- a/drivers/pci/controller/pci-aardvark.c
++++ b/drivers/pci/controller/pci-aardvark.c
+@@ -1881,28 +1881,25 @@ static int advk_pcie_probe(struct platform_device *pdev)
+ 	ret = advk_sw_pci_bridge_init(pcie);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to register emulated root PCI bridge\n");
+-		return ret;
++		goto err_disable_phy;
+ 	}
+ 
+ 	ret = advk_pcie_init_irq_domain(pcie);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to initialize irq\n");
+-		return ret;
++		goto err_cleanup_bridge;
+ 	}
+ 
+ 	ret = advk_pcie_init_msi_irq_domain(pcie);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to initialize irq\n");
+-		advk_pcie_remove_irq_domain(pcie);
+-		return ret;
++		goto err_remove_irq_domain;
+ 	}
+ 
+ 	ret = advk_pcie_init_rp_irq_domain(pcie);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to initialize irq\n");
+-		advk_pcie_remove_msi_irq_domain(pcie);
+-		advk_pcie_remove_irq_domain(pcie);
+-		return ret;
++		goto err_remove_msi_irq_domain;
+ 	}
+ 
+ 	bridge->sysdata = pcie;
+@@ -1910,14 +1907,22 @@ static int advk_pcie_probe(struct platform_device *pdev)
+ 	bridge->map_irq = advk_pcie_map_irq;
+ 
+ 	ret = pci_host_probe(bridge);
+-	if (ret < 0) {
+-		advk_pcie_remove_rp_irq_domain(pcie);
+-		advk_pcie_remove_msi_irq_domain(pcie);
+-		advk_pcie_remove_irq_domain(pcie);
+-		return ret;
+-	}
++	if (ret < 0)
++		goto err_remove_rp_irq_domain;
+ 
+ 	return 0;
++
++err_remove_rp_irq_domain:
++	advk_pcie_remove_rp_irq_domain(pcie);
++err_remove_msi_irq_domain:
++	advk_pcie_remove_msi_irq_domain(pcie);
++err_remove_irq_domain:
++	advk_pcie_remove_irq_domain(pcie);
++err_cleanup_bridge:
++	pci_bridge_emul_cleanup(&pcie->bridge);
++err_disable_phy:
++	advk_pcie_disable_phy(pcie);
++	return ret;
+ }
+ 
+ static void advk_pcie_remove(struct platform_device *pdev)
 -- 
 2.53.0
 
