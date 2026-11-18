@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050706;
-	b=hGVhKMk5eLOEWLiCZG4DrSlg+zAYIn3WyQToEupU/wb9OrAikMvMyOBJCGJr9minfHZs
-	 XtbpV43kA5vCZNTBuPr4fEncV6qgm36K1smBd9R3sZetuQ7w04ugT27kLswjPEqC9HAGv
-	 myIaPGfEX8gQUbU20FBwbjyTCEy21nnvJh8nNgmug/np+qzbcey9lRXgZcuH+XGZ23SPc
-	 HQAQ6akE0O6Nk5HDz+6OZFfCWzhpc+WETYeW0LdPTUCCL3w2ta8b8L8gSlqqYWs5ViG8b
-	 GQYcsmm9D4vGjRnmoxXnOJm8e8s6l8RhdRHnUWdbdH2oyzlcCGuVq3nitefUxQMa1jg==
+	t=1795050709;
+	b=TcYy1lDF83plHpRN5W6fYqJ5G6W40wNyqEcccO4k4un5Ryu5TAHGRY3WafyEms/bqpIp
+	 W4CJcozgoWa1BpXNpMpIgio4PiwiFYb0D4yWPwnkqBU6BQLfmYEbJIT9o6smOsSCFvKGH
+	 IMlPqx+0PTb1LeLe8EsjQ6mrFNQPBvtVzHcsuqFzL9t+2yx1rPMrXOmUQzcGClvVgdymY
+	 zSUeN4RkW2Wvw/IBvz/fcKpR7pJiQ6OSnsVq5CIu18e2lzK/RPqXlk84d0lrRbcdikPd+
+	 tZNFUHPT2dIaw+tC+uEipdgNmOB5iMdlaR4pboOrIj/+lE1QUcDuMInns+2GGPX6AuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050706;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050709;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Go1ZxZbd27JewLI/b6ADO37Gr+a8rdnRfpj0TxP2F8E=;
-	b=FDrJlm7joz1+KRvA4N1+YL6dc3SChNpEsM+PEyb33bJpPc4ofrdRUiGvCgxrcG01S2/n
-	 t/oXagzgH4SKkPje3xIUery/SGph6KioWWmBby80x7XGtR9CHd3seFVgPtQ49i+NX5xBO
-	 2zuk/mtZaek9marP0tDydy5e+C98WpQ4epgenbHDItkAMxJ6YGXp5Vbk+zz+bkMAA01eF
-	 PQ2nqXwQRK0tSDwUW0PsHwCyejKKW8UuKt3Afm4MKbSUzEE3HzFi3nopF/imXRgr0Xjqg
-	 LH/RxajhipB+mNz5ZWXFlupTyYbP94RHPuT9DZkDGeL/k6R70WfP/+LF53TONMDlU1w==
+	bh=JXedTscR5gzAge79rn6KIrynCGzN35bytgcsGn26xwQ=;
+	b=gZ39D0GXL7gHOE9oQjGd62gJma6UfMIxLGwroXGrD2MnHBUdeWrW3M4TdER7RXRoBtQX
+	 R/lDSIyV2EyCjuPLCA8dibEERVEwPKl3RSDQgalTOx53y+XUGG6T1D3KMdTbDdoFYM2X+
+	 aqHySMlRYs0PX33OBDNdUXBsd8tilBN5z6pD9B8ztrkpoKgNTdHbZ8e3z7S3eLQVAWMQu
+	 v6dp0c5FX13triz+cv3EVlazuSUjjvo4s5lch//h57Nv32jJYNVz5lihFfFLGcNN6PUcn
+	 H2N06+67visqpWmKCaTXKSoe2wHxCi8aQc5aD9OgXNtQB8LbGrFsTvh/XiEUAVmLirA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0UezwDZ7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eVuY3x4F;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8A1606A31C;
-	Thu, 19 Nov 2026 01:11:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16C58606A31C;
+	Thu, 19 Nov 2026 01:11:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0UezwDZ7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 837B31F000C4;
-	Thu, 19 Nov 2026 01:11:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eVuY3x4F
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 658BF1F000C4;
+	Thu, 19 Nov 2026 01:11:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050706;
-	bh=Go1ZxZbd27JewLI/b6ADO37Gr+a8rdnRfpj0TxP2F8E=;
+	s=korg; t=1795050708;
+	bh=JXedTscR5gzAge79rn6KIrynCGzN35bytgcsGn26xwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0UezwDZ7mMvllcQ48UTvzA+bCi9eWCttkNVlT7zIBbg2/RTQjQY4IPSjeJsWjLABM
-	 jO81Hr52k5bbvpY0ZeyLkJ31qTR1DA/unfDbYWuXFumDE//1TqfrEKpi3KyT9nIRdS
-	 GVXGqEYV7zfuGVi2YrIC2yGMpSYGW0fO40m+qziU=
+	b=eVuY3x4FNpZM7pHqQslPcrbbpfJn7y0b12r/Tw9j136KyKFYxzDXGSXczOEutcHGr
+	 F0gmxDE/HAxycvlJUGKUBZa+/CPFEB5mhhlxQQJsTiLKExGg0W2EF80paNBxj1tJp5
+	 NG7KR2llMuK5sn03eJ8lJPcp3IkFcPjJ3ZcoMkjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Yang <yangfeng@kylinos.cn>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Mahe Tardy <mahe.tardy@gmail.com>,
-	Ihor Solodrai <ihor.solodrai@linux.dev>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2762/2857] bpf: Fix out-of-bounds btf->types write for split BTF
-Date: Wed, 18 Nov 2026 16:03:16 +0100
-Message-ID: <20261118150341.053208447@linuxfoundation.org>
+Subject: [PATCH 6.1 2753/2857] net: lan966x: do not inject uninitialised bytes past skb->len
+Date: Wed, 18 Nov 2026 16:03:07 +0100
+Message-ID: <20261118150340.734970898@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,70 +68,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feng Yang <yangfeng@kylinos.cn>
+From: Daniel Machon <daniel.machon@microchip.com>
 
-[ Upstream commit 6c476d2b73056ed151c3f8b884c627c75999ed7c ]
+[ Upstream commit b4a7180558eb3cd8affa1e240b22171425bdfcb4 ]
 
-btf_add_type() stores the types of a BTF in btf->types[], which can hold at
-most BTF_MAX_TYPE entries.  The types of a split BTF get IDs start_id ..
-start_id + nr_types - 1, so only BTF_MAX_TYPE - start_id of them fit, but
-neither the limit check nor the size used to grow the array accounts for
-start_id: the check is an equality test against BTF_MAX_TYPE
-('start_id + btf->types_size == BTF_MAX_TYPE') and the new size is clamped
-to BTF_MAX_TYPE.
+lan966x_port_ifh_xmit() writes the frame to the injection FIFO one
+32-bit word at a time, and pads frames shorter than 60 bytes with zero
+words.
 
-The check therefore only fires if the array happens to grow to exactly
-BTF_MAX_TYPE - start_id entries.  Otherwise, if the module has more than
-BTF_MAX_TYPE types, the array is filled up to BTF_MAX_TYPE entries.  The
-next type that needs to be added reallocates the array to the same size,
-after which btf->types_size no longer equals btf->nr_types and the growth
-path is not taken anymore, so every following type is written past the end
-of the array:
+Before this patch, the last word is loaded whole even when skb->len is
+not a multiple of four, so 1 to 3 bytes past the end of the frame are
+read. For a frame shorter than 60 bytes those bytes are also
+transmitted, as VLD_BYTES marks the whole last word valid and the
+padding starts at the next word.
 
-  BUG: unable to handle page fault for address: ffffc90006200000
-  RIP: 0010:btf_add_type+0x74/0x270
-  Call Trace:
-   btf_check_all_metas
-   btf_parse_module
+Write the trailing bytes from a zeroed word. The number of words written
+and VLD_BYTES are unchanged.
 
-Bound both the array size and the limit check by BTF_MAX_TYPE - start_id.
-Base BTF (start_id == 0) is unaffected.
+Found by an AI code review agent. Reproduced on a lan9668 board with
+register injection, by sending a
+57 byte frame and capturing it on the link partner: byte 57 of the
+padded frame was not zero. With the fix all padding bytes are zero.
 
-Fixes: 951bb64621b8 ("bpf: Add in-kernel split BTF support")
-Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Reviewed-by: Mahe Tardy <mahe.tardy@gmail.com>
-Acked-by: Ihor Solodrai <ihor.solodrai@linux.dev>
-Link: https://patch.msgid.link/20261028031933.277550-1-yangfeng59949@163.com
+Fixes: d28d6d2e37d1 ("net: lan966x: add port module support")
+Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20261026-lan966x-inject-tail-bytes-v1-1-51d599a48313@microchip.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ .../ethernet/microchip/lan966x/lan966x_main.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index 11ea48f12bb1d..d3934136af85a 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -1549,15 +1549,16 @@ static int btf_add_type(struct btf_verifier_env *env, struct btf_type *t)
- 		/* Expand 'types' array */
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
+index 4a85cd5ebcce0..d0aca28eb364b 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
+@@ -250,9 +250,8 @@ static int lan966x_port_ifh_xmit(struct sk_buff *skb,
+ 		lan_wr((__force u32)ifh[i], lan966x, QS_INJ_WR(grp));
+ 	}
  
- 		struct btf_type **new_types;
--		u32 expand_by, new_size;
-+		u32 expand_by, new_size, max_size;
+-	/* Write frame */
+-	count = DIV_ROUND_UP(skb->len, 4);
+-	last = skb->len % 4;
++	/* Write the whole words of the frame */
++	count = skb->len / 4;
+ 	for (i = 0; i < count; ++i) {
+ 		/* Wait until the fifo is ready */
+ 		err = lan966x_port_inj_ready(lan966x, grp);
+@@ -262,6 +261,20 @@ static int lan966x_port_ifh_xmit(struct sk_buff *skb,
+ 		lan_wr(((u32 *)skb->data)[i], lan966x, QS_INJ_WR(grp));
+ 	}
  
--		if (btf->start_id + btf->types_size == BTF_MAX_TYPE) {
-+		if (btf->start_id + btf->types_size >= BTF_MAX_TYPE) {
- 			btf_verifier_log(env, "Exceeded max num of types");
- 			return -E2BIG;
- 		}
- 
-+		max_size = BTF_MAX_TYPE - btf->start_id;
- 		expand_by = max_t(u32, btf->types_size >> 2, 16);
--		new_size = min_t(u32, BTF_MAX_TYPE,
-+		new_size = min_t(u32, max_size,
- 				 btf->types_size + expand_by);
- 
- 		new_types = kvcalloc(new_size, sizeof(*new_types),
++	/* Write the last 1 to 3 bytes, zero padded to a whole word */
++	last = skb->len % 4;
++	if (last) {
++		/* Wait until the fifo is ready */
++		err = lan966x_port_inj_ready(lan966x, grp);
++		if (err)
++			goto err;
++
++		val = 0;
++		memcpy(&val, skb->data + count * 4, last);
++		lan_wr(val, lan966x, QS_INJ_WR(grp));
++		++i;
++	}
++
+ 	/* Add padding */
+ 	while (i < (LAN966X_BUFFER_MIN_SZ / 4)) {
+ 		/* Wait until the fifo is ready */
 -- 
 2.53.0
 
