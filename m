@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021074;
-	b=LF5llknRlgTDLWBkLtrudrj0uyuXEFtta4gFAskEu4Aj6xvqUIwYgU31G2jV9ZoWhPvT
-	 yIhD03eKp9o6nfXrmH6YiVC//m2kaoEPr0Gvyzl/G82cCvQZ3sR08k8AQVU0Vwru5SAez
-	 HG9W46Lq7WGA1a6vY4Hu4E0ODOQqthTvNL1/D4YKEgwCqd2j7rWYpvrW9rMSB+DjT7c+Z
-	 7qeDg+d9DQFC6kJ9UKc2C983L8cMb9iNx/t+WwheQiPuhtwbbEntKKujjJuprHnTfIGas
-	 0aTtFiFSmKwKT86iNFA+yTVD5PZmDBLLc3ZR+f4GUDnMQUiuzyFaja3/INEo5dvVrzw==
+	t=1795021077;
+	b=AJ6IFgBzpNWGlM9X2Dx10IGeGwMOYwkbUawcMp8KpAsS+u+OPFsqbqC9ACMywCfGnui7
+	 zP0z6XWdd6srd0IIlsQR2OwgUmxA9M/QdYoK5mTbSvGjp/m5iRu98z0d7jGxIjjf7UHZK
+	 +tzk6vUFHCNHrG3Y0XFuFAVwguzVIe8Du0YubIHatYms176YoBMTo+dzO77sLUu1Twv2d
+	 JzVtH7cu/yhvuL7jdbhWts01vG1aJ04KT22KwdrEJloEvGe7nBi/1CPovYXK0hNrlKAT3
+	 Z+VUZfInGo6DbPdKflFNajQ1hpt87ULKaCvly2laHgtWM5igrZtRtl4AbRrE1lTDxnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021074;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021077;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ttWzRkkzWrTvt0ZB5CQSLtjtG7gBLPkAWUgLAk61f58=;
-	b=tR3k5c516+LQHY8Q8vleIhR0gL3CHUAskXwGouLevGv8ubZuWPmIhqs+rQMDuNKKMngC
-	 dVzvtUzFuzmQ+5RjRQLGWAxnHpSGIkCHTtIqsfem9cevhoZfkVAjrtRctgDa5H4IE5CZt
-	 EZgi8f8ayEEA6fknDqScKPNMUCVWsFHY6INVn4ERzcbmmbRqSwH03hGXZewjIwD4PvH8f
-	 u/gR5Dmbt5pqQHT2fqOBeDSZwyUN+dXfA1D7CjpbBxd3Gyr8Be1tLKjnatAp80vFNY1yd
-	 wmOlmPiUSkfVhv8/yaZ755I1FmqnAPHcjUwF0gVDNAsUDrlgmwskJOx3xBF7h7wXsxg==
+	bh=PZtQQS3a1bDJW5NlF1rmNmKVBvI4DfkOyHkb/jv5HLI=;
+	b=Pu45RK/5+BE+Xp//dsbPf1EJFEbmGbvIWcHg4FXhbfRzaQQQgpwLQ6Fuzc0O3smr8tkb
+	 SYDmaERNQ9/jnZBJ1IAEVCa2D41/NZGJhWrgLSZwYNu5ZeFnRjpDqGmsm4/VoTvB9kGKw
+	 hXMk3OpwaH4FmaxLt0ziE63iqRpmL++YwTz5cyvPly2GkVDJU+C+8vFAZ2OlrsxqhaGNx
+	 NrkgIC7zG20rALSN8lQrVoP7RjpoalDFoLTAsLBEjx7MR3rVM566AH6E4puiRhwpwgRsg
+	 Fm5NZlQPz/d3F2N1jWtzX13B1J4RsKW2+u4lKx/HMmtBEA3TtUd6JMjn8gp7Z/IVBMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PR5G3LJW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZX55FOnl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99648606A31C;
-	Wed, 18 Nov 2026 16:57:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F25C606A32A;
+	Wed, 18 Nov 2026 16:57:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PR5G3LJW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0F001F000C4;
-	Wed, 18 Nov 2026 16:57:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZX55FOnl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A86DB1F000C4;
+	Wed, 18 Nov 2026 16:57:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021074;
-	bh=ttWzRkkzWrTvt0ZB5CQSLtjtG7gBLPkAWUgLAk61f58=;
+	s=korg; t=1795021077;
+	bh=PZtQQS3a1bDJW5NlF1rmNmKVBvI4DfkOyHkb/jv5HLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PR5G3LJWJTesS/+6H7fK6BU+zkbpapHhB2uD8J9hbO3IsyRzoiZ1MJrgkxVP7Qtnp
-	 pIjKJn40P22OQacnEdSGE+2qVmcwdK7fLG2gOKEVntwDZWlLWXdpLj7o4H8krBVndp
-	 6jlE7KZj83zQgMGS95d2AjtUY/RUldFiMZ7udH40=
+	b=ZX55FOnlF4Agtw4K08A6W0FkKNfQdXcMyYmmOBwCk+WVOWkVP6jjDfbyCFSxYIe99
+	 4Gy6rMmh/guLBbIrJJJUKI0b0m15zxeXfO9Mr+nzYs1/zHn82yFYlvbH/rzm7NXSrc
+	 y+nYGlRIuCmMf0Kybq6JliPnuTdqUfbzy9pinGS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Koichiro Den <den@valinux.co.jp>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2177/2651] PCI: rcar-gen4: Add missing PM ops
-Date: Wed, 18 Nov 2026 15:56:57 +0100
-Message-ID: <20261118150404.166510629@linuxfoundation.org>
+Subject: [PATCH 7.3 2178/2651] ALSA: aloop: Keep shared timer callbacks alive through close
+Date: Wed, 18 Nov 2026 15:56:58 +0100
+Message-ID: <20261118150404.198685637@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,105 +68,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marek.vasut+renesas@mailbox.org>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 6b8c12d354dfa9c80d82eea8c0c45d331a28be11 ]
+[ Upstream commit a7d4d780f34b9e43eefab6a7e6c9f4101f2c144e ]
 
-The R-Car Gen4 PCIe controller is part of a power domain. On R-Car S4
-and V4H, this is an always-on power domain which is not shut down in
-suspend. On R-Car V4M, this is a dedicated A2PCIPHY power domain,
-which is shut down during suspend, and the controller loses state,
-which prevents the PCIe from working after resume.
+The shared sound-timer callback must finish using the selected PCM
+runtimes before a close can detach them. loopback_snd_timer_period_elapsed()
+saves the active substreams under cable->lock, then drops the lock before
+calling snd_pcm_period_elapsed() or snd_pcm_stop_xrun(). The sound-timer
+backend has no per-stream close drain, and free_cable() keeps the timer
+open when the paired endpoint remains attached.
 
-Fix this by adding generic suspend/resume noirq ops for the controller,
-which tear the link down on suspend, and restart it on resume. Use the
-same PM ops on all of R-Car Gen4 to gracefully suspend and resume the
-PCIe link on V4H and S4 too.
+With both directions running on a shared sound timer, playback can be
+dropped and closed while a notification is pending. Capture keeps the
+timer alive, allowing this order:
 
-Test case which demonstrates the problem on R-Car V4M:
+  Timer callback                       Playback owner
+  --------------                       --------------
+  select playback under cable->lock
+  unlock; delay notification
+                                       DROP; HW_FREE -> OPEN
+                                       close: snd_pcm_drop(); unlock
+                                       free_cable(); peer stays alive
+  snd_pcm_period_elapsed()
+    lock stream; cache runtime
+                                       snd_pcm_detach_substream()
+                                         free runtime and its fasync
+    read runtime->fasync
 
-  $ hexdump -vC /sys/bus/pci/devices/0000:00:00.0/config > /tmp/pre
-  $ echo s2idle > /sys/power/mem_sleep
-  $ echo platform > /sys/power/pm_test
-  $ echo mem > /sys/power/state
-  $ hexdump -vC /sys/bus/pci/devices/0000:00:00.0/config > /tmp/post
-  $ diff -Naru /tmp/pre /tmp/post
-  ...
-  -00000000  12 19 32 00 07 05 10 00  00 00 04 06 00 00 01 00
-  +00000000  12 19 32 00 07 05 10 00  00 00 00 ff 00 00 80 00
-                                            ^^^^^
-                                      Class 0604->00ff
+The stream lock taken by snd_pcm_drop() cannot protect a notification
+that starts after it returns, and detach does not take it. The callback
+can therefore read runtime->fasync after the runtime has been freed, and
+an escaped notification can also reach a replacement runtime if the same
+substream slot is reopened before the notification resumes.
 
-Fixes: 0270dbe4f891 ("arm64: dts: renesas: r8a779h0: Add PCIe Host and Endpoint nodes")
-Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Koichiro Den <den@valinux.co.jp>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20261004011851.866833-1-marek.vasut+renesas@mailbox.org
+Take the existing cable->stop_count reference under cable->lock when
+selecting the targets and release it after the PCM callbacks finish,
+including the XRUN path. free_cable() already removes the closing
+endpoint under that lock and waits for stop_count before returning, so
+runtime detach and slot reuse cannot overtake the notification.
+
+Fixes: 26c53379f98d ("ALSA: aloop: Support selection of snd_timer instead of jiffies")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Assisted-by: LLM
+Link: https://patch.msgid.link/pm-pmb-275c4399f517e09d7188-v2-2f64c1328529ef7a8fec@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-rcar-gen4.c | 27 +++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ sound/drivers/aloop.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-rcar-gen4.c b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-index 241adcd727894..964b45f8f9b7c 100644
---- a/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-+++ b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-@@ -524,6 +524,8 @@ static int rcar_gen4_add_dw_pcie_rp(struct rcar_gen4_pcie *rcar)
- 		return -ENODEV;
+diff --git a/sound/drivers/aloop.c b/sound/drivers/aloop.c
+index ba690bdd93736..4d05accb838ca 100644
+--- a/sound/drivers/aloop.c
++++ b/sound/drivers/aloop.c
+@@ -100,7 +100,7 @@ struct loopback_ops {
+ struct loopback_cable {
+ 	spinlock_t lock;
+ 	struct loopback_pcm *streams[2];
+-	/* in-flight peer stops running outside cable->lock */
++	/* in-flight PCM callbacks running outside cable->lock */
+ 	struct snd_refcount stop_count;
+ 	struct snd_pcm_hardware hw;
+ 	/* flags */
+@@ -876,6 +876,8 @@ static void loopback_snd_timer_period_elapsed(struct loopback_cable *cable,
+ 		valid_runtime = (running & (1 << SNDRV_PCM_STREAM_PLAYBACK)) ?
+ 			dpcm_play->substream->runtime :
+ 			dpcm_capt->substream->runtime;
++		/* Keep runtimes alive through the PCM callbacks. */
++		snd_refcount_get(&cable->stop_count);
  
- 	pp->num_vectors = MAX_MSI_IRQS;
-+	/* Reserve an iATU window for the generic PME_Turn_Off implementation. */
-+	pp->use_atu_msg = true;
- 	pp->ops = &rcar_gen4_pcie_host_ops;
+ 		/* resolution is only valid for SNDRV_TIMER_EVENT_TICK events */
+ 		if (event == SNDRV_TIMER_EVENT_TICK) {
+@@ -911,13 +913,16 @@ static void loopback_snd_timer_period_elapsed(struct loopback_cable *cable,
+ 			snd_pcm_stop_xrun(substream_play);
+ 		if (substream_capt)
+ 			snd_pcm_stop_xrun(substream_capt);
+-		return;
++		goto exit;
+ 	}
  
- 	return dw_pcie_host_init(pp);
-@@ -903,6 +905,26 @@ static int rcar_gen4_pcie_ltssm_control(struct rcar_gen4_pcie *rcar, bool enable
- 	return 0;
+ 	if (substream_play)
+ 		snd_pcm_period_elapsed(substream_play);
+ 	if (substream_capt)
+ 		snd_pcm_period_elapsed(substream_capt);
++
++exit:
++	snd_refcount_put(&cable->stop_count);
  }
  
-+static int rcar_gen4_pcie_suspend_noirq(struct device *dev)
-+{
-+	struct rcar_gen4_pcie *rcar = dev_get_drvdata(dev);
-+
-+	if (rcar->drvdata->mode != DW_PCIE_RC_TYPE)
-+		return 0;
-+
-+	return dw_pcie_suspend_noirq(&rcar->dw);
-+}
-+
-+static int rcar_gen4_pcie_resume_noirq(struct device *dev)
-+{
-+	struct rcar_gen4_pcie *rcar = dev_get_drvdata(dev);
-+
-+	if (rcar->drvdata->mode != DW_PCIE_RC_TYPE)
-+		return 0;
-+
-+	return dw_pcie_resume_noirq(&rcar->dw);
-+}
-+
- static struct rcar_gen4_pcie_drvdata drvdata_r8a779f0_pcie = {
- 	.ltssm_control = r8a779f0_pcie_ltssm_control,
- 	.mode = DW_PCIE_RC_TYPE,
-@@ -946,10 +968,15 @@ static const struct of_device_id rcar_gen4_pcie_of_match[] = {
- };
- MODULE_DEVICE_TABLE(of, rcar_gen4_pcie_of_match);
+ static void loopback_snd_timer_function(struct snd_timer_instance *timeri,
+@@ -1177,7 +1182,7 @@ static void free_cable(struct snd_pcm_substream *substream)
+ 		other_alive = cable->streams[!substream->stream];
+ 	}
  
-+static DEFINE_NOIRQ_DEV_PM_OPS(rcar_gen4_pcie_pm_ops,
-+			       rcar_gen4_pcie_suspend_noirq,
-+			       rcar_gen4_pcie_resume_noirq);
-+
- static struct platform_driver rcar_gen4_pcie_driver = {
- 	.driver = {
- 		.name = "pcie-rcar-gen4",
- 		.of_match_table = rcar_gen4_pcie_of_match,
-+		.pm = pm_sleep_ptr(&rcar_gen4_pcie_pm_ops),
- 		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
- 	},
- 	.probe = rcar_gen4_pcie_probe,
+-	/* Pair with the stop_count increment in loopback_check_format(). */
++	/* Wait for PCM callbacks running outside cable->lock. */
+ 	snd_refcount_sync(&cable->stop_count);
+ 	if (other_alive)
+ 		return;
 -- 
 2.53.0
 
