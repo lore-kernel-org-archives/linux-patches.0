@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015823;
-	b=AmV73xsUFzAiKFAnN0EH5Oi5UBTxqoxvQtEaYIoLrD07WNA3cEtCsv7ED7AMnvrKjrkp
-	 XyuRXrm9hciV2Cw+/vYEaZfBQQU67bTJRPUw7XwzQTFaFyriGUndZq2ObsRq8deWZqC8f
-	 /GpQsv9HR6DpKZ+ub5ZEIMHXkC4bUAadQc8njbdxeieu8puyNhSsRK4c7jRSU6oFQkf10
-	 b07yDX8mCEI2UxiuQY++vAigWm4tzw/VSJTFvqAWX/ExcFD8H1UOPrPi/a7jALC6W4D0C
-	 DaOX5peU8KPvSn5DNF91qnwOmwZThL7Y7dvXFlQLBHnbvkWO7wEKWubSwwDb5N45gIQ==
+	t=1795015825;
+	b=l8rO8fK4D8Kexukr761mX881rxZvDRv1PeqW9DeqaRyvG8pKSF0ZOABHmbpffZ2vQIhc
+	 RExr0bZGMMG4s0Z7KmW2W6lf4DASM6mfEDNUh4VAI5vuFwvUZSX7azwAeMLB/meXPJlBO
+	 CyMfWRXVMc+NXDUXuEWsznPu8hmycR9jlQI2Ktn7/ZeRX6RObdyHd8QoskImvMnBsNMCH
+	 DWXTUq6PMd4BVQiHg9e2SsqkZSKvq+IJpUWjWb6277FijapOKVwneojIFtJWFe4azEEqW
+	 NbmOYuJMNvGD7ASG1sTW3NF9ZLVlpNpd73zg8TUZWhLz2bhe59yM7R/2w80aY9a2WHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015823;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015825;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fjtidhRH/Byl7GrTiCi2Bv3XgSRXyK005fV9dcxDNNM=;
-	b=wfuo2gcmA03PgaCi5dBZZ4cUex0GZEfP6dlhOmA7rNYmGygx60YcZgQ0WBpiSYqxkjkX
-	 aaBbBv0FiPNszgsArO5mKllrIrdckGCYkHKJlsJYO/cyiZTAalkukNbDaARhv+cvNMA7k
-	 oas/09VBpVY6/1gnQal9g+V916AVUn3bd8bA5l7kiBLnuVUKoG1m8CzrdMjIpCown1l5F
-	 w7i/zqI0tLO+hT/+8BGXuMl2XvyquDuUDV7e43hBB71c2mZoLHBb//25xB9Tg4C5b3Usn
-	 eDbt05snZ2pks0rsNPPf7Z2gFdb8mY8eW0nf386OI65aUd89B8FKRxNgkdS6Kk1ZebA==
+	bh=v0hNhA9tpst+KkeR9Xg5wXUq3YrtqzFU8vQao17co9M=;
+	b=LoEsZzAassBssqZh+njGw3+hzoewUsyY4FncamNS7Xq1pxEyxSqRt76hn9QqbmXvRTET
+	 wDKqZU2qQLWtZNCE/uUBSBh2SeFk+RxCou9lKt6WbLPtrxLvrRuJIjqGTRkyouI92W8OG
+	 D7eh5uYHE71NCCouvuw7MG/DVEFZQN0UaNYyI9jKIwkhEXi5kszfPVPsFZCr8yDPnGW0c
+	 4pi7lIcN7/f0z2x+ZeV99AyEed5kUVN8x5b9y/eACtfTEQ8vSvx6v1ZjviVsvtQgbrOhh
+	 LajT9fDAiLwA5NqSiOxir8FRtfYl4ChjeipA+O4k+ufVQ3xM4Grxxc2O05A9tXk92tg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c2mqnjJ5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K3UOMwlY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE97F606A330;
-	Wed, 18 Nov 2026 15:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE30D60A2603;
+	Wed, 18 Nov 2026 15:30:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c2mqnjJ5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 516021F000C4;
-	Wed, 18 Nov 2026 15:30:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K3UOMwlY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C1281F000C4;
+	Wed, 18 Nov 2026 15:30:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015822;
-	bh=fjtidhRH/Byl7GrTiCi2Bv3XgSRXyK005fV9dcxDNNM=;
+	s=korg; t=1795015825;
+	bh=v0hNhA9tpst+KkeR9Xg5wXUq3YrtqzFU8vQao17co9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c2mqnjJ5k30SBBZmB1CZ9t5IruKYaxAiPxxv79VnlqWAAj+ojjPuDWDcz7J7yRoue
-	 Mc9ppcv4ofDhgXGiFLdQKAcQPphYuAK+7hjuv2oHma11DhJSZN6OuO0nmw/eRUd87h
-	 GBlU/qC7tMt7WyJkQ43Anf320UZGF1jmzMdQsb1Q=
+	b=K3UOMwlYoukPmJVDAPWNuu+Y5c7dYsmZH0XVWacS0Dy4QlGU0pDsfGjkwhVd4Hhld
+	 YrG0S61PIyMyLKhD1tLv0Jk+2YjUCDAN8RsoS4F3ZxYO9+Q83ejNa1MJ7uxYEP2n4W
+	 MkciL87Xqryg5+PYfe7VHz+67YaqdZY/cfTHcKv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Hongling Zeng <zenghongling@kylinos.cn>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0311/2651] ACPI: utils: Adjust message printing macros for ACPI objects
-Date: Wed, 18 Nov 2026 15:25:51 +0100
-Message-ID: <20261118150259.085313197@linuxfoundation.org>
+Subject: [PATCH 7.3 0294/2651] dmaengine: sun6i-dma: Fix use-after-free in error handling paths
+Date: Wed, 18 Nov 2026 15:25:34 +0100
+Message-ID: <20261118150258.490641658@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,83 +70,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Hongling Zeng <zenghongling@kylinos.cn>
 
-[ Upstream commit 78ddbfaa72d68acc98cd5ba12eca071d452702c4 ]
+[ Upstream commit f472919f4c0650d7fb22bb230eacaada0c6ee951 ]
 
-The majority of acpi_handle_<level>() macros use neither pr_fmt() nor
-dev_fmt() and acpi_handle_debug() uses pr_fmt() like dev_fmt(), but
-only if dynamic debug is compiled in.
+In error handling paths, the for loop frees v_lli in the loop body,
+then accesses v_lli->v_lli_next and v_lli->p_lli_next in the
+increment expression, which is use-after-free.
 
-For more consistency, redefine all of the macros in question to use
-dev_fmt() because they are more similar to the analogous dev_*()
-family of macros than to the pr_*() ones and make all of them use it
-in the same way.
+Fix by refactoring the cleanup into a helper function sun6i_dma_free_desc()
+that saves both the next virtual and physical pointers before freeing the
+current node, preventing the use-after-free.
 
-While at it, rephrase the comment documenting those macros for more
-clarity.
-
-Fixes: 45fef5b88d1f ("ACPI: add dynamic_debug support")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/2300525.irdbgypaU6@rafael.j.wysocki
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 555859308723 ("dmaengine: sun6i: Add driver for the Allwinner A31 DMA controller")
+Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
+Suggested-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260727061142.44195-1-zenghongling@kylinos.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/acpi.h | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ drivers/dma/sun6i-dma.c | 31 ++++++++++++++++---------------
+ 1 file changed, 16 insertions(+), 15 deletions(-)
 
-diff --git a/include/linux/acpi.h b/include/linux/acpi.h
-index ddacac8120947..f7e3efd328f79 100644
---- a/include/linux/acpi.h
-+++ b/include/linux/acpi.h
-@@ -1305,34 +1305,34 @@ void __acpi_handle_debug(struct _ddebug *descriptor, acpi_handle handle, const c
- #endif
+diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
+index 7704b016aed8c..738f2547a1b95 100644
+--- a/drivers/dma/sun6i-dma.c
++++ b/drivers/dma/sun6i-dma.c
+@@ -408,16 +408,12 @@ static inline void sun6i_dma_dump_lli(struct sun6i_vchan *vchan,
+ 		v_lli->len, v_lli->para, v_lli->p_lli_next);
+ }
  
- /*
-- * acpi_handle_<level>: Print message with ACPI prefix and object path
-+ * acpi_handle_<level> - Print a message with ACPI prefix and object path
-  *
-- * These interfaces acquire the global namespace mutex to obtain an object
-- * path.  In interrupt context, it shows the object path as <n/a>.
-+ * In thread context, the global namespace mutex is acquired to obtain the
-+ * object path.  In interrupt context, the object path is shown as <n/a>.
-  */
- #define acpi_handle_emerg(handle, fmt, ...)				\
--	acpi_handle_printk(KERN_EMERG, handle, fmt, ##__VA_ARGS__)
-+	acpi_handle_printk(KERN_EMERG, handle, dev_fmt(fmt), ##__VA_ARGS__)
- #define acpi_handle_alert(handle, fmt, ...)				\
--	acpi_handle_printk(KERN_ALERT, handle, fmt, ##__VA_ARGS__)
-+	acpi_handle_printk(KERN_ALERT, handle, dev_fmt(fmt), ##__VA_ARGS__)
- #define acpi_handle_crit(handle, fmt, ...)				\
--	acpi_handle_printk(KERN_CRIT, handle, fmt, ##__VA_ARGS__)
-+	acpi_handle_printk(KERN_CRIT, handle, dev_fmt(fmt), ##__VA_ARGS__)
- #define acpi_handle_err(handle, fmt, ...)				\
--	acpi_handle_printk(KERN_ERR, handle, fmt, ##__VA_ARGS__)
-+	acpi_handle_printk(KERN_ERR, handle, dev_fmt(fmt), ##__VA_ARGS__)
- #define acpi_handle_warn(handle, fmt, ...)				\
--	acpi_handle_printk(KERN_WARNING, handle, fmt, ##__VA_ARGS__)
-+	acpi_handle_printk(KERN_WARNING, handle, dev_fmt(fmt), ##__VA_ARGS__)
- #define acpi_handle_notice(handle, fmt, ...)				\
--	acpi_handle_printk(KERN_NOTICE, handle, fmt, ##__VA_ARGS__)
-+	acpi_handle_printk(KERN_NOTICE, handle, dev_fmt(fmt), ##__VA_ARGS__)
- #define acpi_handle_info(handle, fmt, ...)				\
--	acpi_handle_printk(KERN_INFO, handle, fmt, ##__VA_ARGS__)
-+	acpi_handle_printk(KERN_INFO, handle, dev_fmt(fmt), ##__VA_ARGS__)
+-static void sun6i_dma_free_desc(struct virt_dma_desc *vd)
++static void sun6i_dma_free_desc(struct sun6i_dma_dev *sdev,
++				struct sun6i_desc *txd)
+ {
+-	struct sun6i_desc *txd = to_sun6i_desc(&vd->tx);
+-	struct sun6i_dma_dev *sdev = to_sun6i_dma_dev(vd->tx.chan->device);
+ 	struct sun6i_dma_lli *v_lli, *v_next;
+ 	dma_addr_t p_lli, p_next;
  
- #if defined(DEBUG)
- #define acpi_handle_debug(handle, fmt, ...)				\
--	acpi_handle_printk(KERN_DEBUG, handle, fmt, ##__VA_ARGS__)
-+	acpi_handle_printk(KERN_DEBUG, handle, dev_fmt(fmt), ##__VA_ARGS__)
- #else
- #if defined(CONFIG_DYNAMIC_DEBUG)
- #define acpi_handle_debug(handle, fmt, ...)				\
- 	_dynamic_func_call(fmt, __acpi_handle_debug,			\
--			   handle, pr_fmt(fmt), ##__VA_ARGS__)
-+			   handle, dev_fmt(fmt), ##__VA_ARGS__)
- #else
- #define acpi_handle_debug(handle, fmt, ...)				\
- ({									\
+-	if (unlikely(!txd))
+-		return;
+-
+ 	p_lli = txd->p_lli;
+ 	v_lli = txd->v_lli;
+ 
+@@ -434,6 +430,17 @@ static void sun6i_dma_free_desc(struct virt_dma_desc *vd)
+ 	kfree(txd);
+ }
+ 
++static void sun6i_dma_free_desc_virt(struct virt_dma_desc *vd)
++{
++	struct sun6i_desc *txd = to_sun6i_desc(&vd->tx);
++	struct sun6i_dma_dev *sdev = to_sun6i_dma_dev(vd->tx.chan->device);
++
++	if (unlikely(!txd))
++		return;
++
++	sun6i_dma_free_desc(sdev, txd);
++}
++
+ static int sun6i_dma_start_desc(struct sun6i_vchan *vchan)
+ {
+ 	struct sun6i_dma_dev *sdev = to_sun6i_dma_dev(vchan->vc.chan.device);
+@@ -790,10 +797,7 @@ static struct dma_async_tx_descriptor *sun6i_dma_prep_slave_sg(
+ 	return vchan_tx_prep(&vchan->vc, &txd->vd, flags);
+ 
+ err_lli_free:
+-	for (p_lli = txd->p_lli, v_lli = txd->v_lli; v_lli;
+-	     p_lli = v_lli->p_lli_next, v_lli = v_lli->v_lli_next)
+-		dma_pool_free(sdev->pool, v_lli, p_lli);
+-	kfree(txd);
++	sun6i_dma_free_desc(sdev, txd);
+ 	return NULL;
+ }
+ 
+@@ -871,10 +875,7 @@ static struct dma_async_tx_descriptor *sun6i_dma_prep_dma_cyclic(
+ 	return vchan_tx_prep(&vchan->vc, &txd->vd, flags);
+ 
+ err_lli_free:
+-	for (p_lli = txd->p_lli, v_lli = txd->v_lli; v_lli;
+-	     p_lli = v_lli->p_lli_next, v_lli = v_lli->v_lli_next)
+-		dma_pool_free(sdev->pool, v_lli, p_lli);
+-	kfree(txd);
++	sun6i_dma_free_desc(sdev, txd);
+ 	return NULL;
+ }
+ 
+@@ -1429,7 +1430,7 @@ static int sun6i_dma_probe(struct platform_device *pdev)
+ 		struct sun6i_vchan *vchan = &sdc->vchans[i];
+ 
+ 		INIT_LIST_HEAD(&vchan->node);
+-		vchan->vc.desc_free = sun6i_dma_free_desc;
++		vchan->vc.desc_free = sun6i_dma_free_desc_virt;
+ 		vchan_init(&vchan->vc, &sdc->slave);
+ 	}
+ 
 -- 
 2.53.0
 
