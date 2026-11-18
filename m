@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042274;
-	b=gyrr1nKZze76RWtgduySxzs0X6JleZUh3u8Ko5fnToXD3QVRZl84YJ4DWd29E1/6j6gG
-	 mCNQuXw79QJaWAmI9DeOFY714FrsBv+OAZX4N1NcTA54n9SCzlDhQsyDzoHPBMcYMdvAj
-	 RP66zwo/shRZMWesEYeJj0mTx4JWAnA3diDrRDHfRovd8ExeZDsSC4cNEzfXxi1TFvQge
-	 dsqeBrUrr7GqTLfk4ITnmj3OUhXoJzwToYo9bj17+Cz80HA2NCo//KD8GN/kyBIrQFXva
-	 TPlQeo7gIpNAQdVC/NKgpQ86a/wgPvbOxemrD9oCNogd2qgL3i+NUUXVTZKNfCDrnXw==
+	t=1795042277;
+	b=nvh1yxtyaBgZ++rLsL7BSq87opImIjniVr76HUZlWCu75+qp7XHLCHGDNmnXSelQ/jzH
+	 8fWxJZDme9iMwnO/qbrknZkBYGUvQ5FVBaVMvtJri4MFLoY88xLqTQo74qaMULt8k0osC
+	 os3PW53xkAu7R24YE6dTSy+ivJfOEmhNtBT30Sa3Pcq9FPrvAGfao5piNGIk2PZdH5e8P
+	 LDIVxw4sieRl0ckE8d5pFh3Fefcs1GMd+Aw4EBJExK+DT6mCu/9qsNm6WQs1Vipo/mgth
+	 hJ/BLHtc8DmTh0Bydg094TDIBbeAGPhJqZaBsz8OwK1m2mjZr1dPCH5ZvRUpMyv056A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042274;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042277;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=i2gEFKqFs9BjcSB26FHN4G99p4ELDR5ri15e2h9aN10=;
-	b=tSAnvpYDEbiih5yyEPxRuIuCuGtn47myCDgYXCIjTlGdIYfpcMN/ZhP9VAeJZsJYmcg7
-	 nEc/BYCfmAFC3yYstO+x+VSeQi1po8V5+TC19EBwpRO7FPjKqieoS9jxdFtlxnsHjlTI5
-	 lvDPaS4dJK/2xX53ZUF4XCpaWZgG82i0WJQ3PNLzWg9T28C2bEC6STCkiLlonjhcZy/7r
-	 F8LrxQvYPXVU0UBEcsyI1vC8v2sRSXFu6SB+yIgQaJy5m8zTVxp9s8CFkiBAeE45ekrHG
-	 /NHTF+ENRHwsMN5jjy7CAkR0zUDP1Ynx4nfTopCVIwX1v2qdYhhcjLSbjqvTvSS78KA==
+	bh=EY8OsDb7KhcPdXju1GGVA71n219BnUfiUGDry1VoTJs=;
+	b=yQresZ1d6nQ4EEHxsoVFNAjf9mo/XFwEqFhyAr+6INdvcGdltb/hJ6OjmmV1fEoxSDuM
+	 8InUW1/3c1WoPi58g70MlLlXgpf2eOc2ZEJxd8tdeCShxGvbWul7dHscjwAYiuh8cb4Qc
+	 mW8jdQ9aE+uEOnbmijetzyFNYw66n+dGE9xFnCOwtuVIr5bn4B4CzN/QmcRh5TfDJBJ7K
+	 Fmj0hYnKD7Vc+2lgUC3vkNjyqziwi7M3hyP2FWoSdTGAE2R6YOWW3oK5zlUbTc34QZwU+
+	 qWDxn+MjhWiNfFB1wNm5mdrC+02YGuvD0iLFCM6I2grn6LV0gcjmIKxom2iOohNUBgQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NuqG2TOp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="V/GxjFS2";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65628606A325;
-	Wed, 18 Nov 2026 22:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F2B606A31C;
+	Wed, 18 Nov 2026 22:51:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NuqG2TOp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B63161F000C4;
-	Wed, 18 Nov 2026 22:51:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V/GxjFS2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C1D71F000C4;
+	Wed, 18 Nov 2026 22:51:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042274;
-	bh=i2gEFKqFs9BjcSB26FHN4G99p4ELDR5ri15e2h9aN10=;
+	s=korg; t=1795042276;
+	bh=EY8OsDb7KhcPdXju1GGVA71n219BnUfiUGDry1VoTJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NuqG2TOpX97f0RBloRlerviSn+UpqIs/1KTKf3ETwGpESCdK/zxNC8uWiwlNDaKmB
-	 cnc8lbq+vucYXi/ntrANHztyfpOE11V724OI7qXHBjBg/5iTHDcmkeE06gUslwh13u
-	 FCWnTdtfyV6qQivS+Ba8cEwp9NJHsGCBqpAE/dC8=
+	b=V/GxjFS2+7HzIlOJOipwVj2m2HPk5op+2SCiWxg9axmg7rq5An6gxF4D44BiJ/Jsx
+	 qTB8xZBSbKE3q2xo1scrA/0tT5VNx2MCIGfmj3/q7AvAR9/XPETTF/te+s17aWHXr+
+	 FEnAqLH5HYEh6YUzqKT7LdQKyXmVu++2hb8j0IhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anil Kaushik <anilkaushikwireless@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Binbin Deng <18983559317@163.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3110/3318] gtp: hold RCU for the device lookup when adding a PDP context
-Date: Wed, 18 Nov 2026 16:02:12 +0100
-Message-ID: <20261118150453.271849754@linuxfoundation.org>
+Subject: [PATCH 6.6 3072/3318] octeontx2: Fix use-after-free of qos node in delete path
+Date: Wed, 18 Nov 2026 16:01:34 +0100
+Message-ID: <20261118150452.260393903@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,51 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anil Kaushik <anilkaushikwireless@gmail.com>
+From: Binbin Deng <18983559317@163.com>
 
-[ Upstream commit fe3e1a42fb7eb18d8c55d714b50a3d51f8cd6ffe ]
+[ Upstream commit dcaa6219648955f7a8160313f1685321dbd1bf28 ]
 
-gtp_genl_new_pdp() calls gtp_find_dev(), which looks the device up with
-dev_get_by_index_rcu(). Since commit e2d1baca2b33 ("gtp: remove useless
-rcu_read_lock()"), this only runs under the rtnl lock, and kernels with
-CONFIG_PROVE_RCU_LIST warn:
+hash_del_rcu() only unlinks the node; a reader that already holds the
+bucket iterator still uses the node.  The immediate kfree() has no
+grace period, so a concurrent transmit on a socket whose skb priority
+carries the deleted classid reads node->classid / node->qid from freed
+memory (use-after-free in the softirq transmit path).
 
-  WARNING: suspicious RCU usage
-  net/core/dev.c:1047 RCU-list traversed in non-reader section!!
-  ...
-   dev_get_by_index_rcu
-   gtp_find_dev
-   gtp_genl_new_pdp
+Fix this by calling synchronize_net() before the node is freed, as
+mlx5e does.
 
-Hold the RCU read lock around the lookup only: gtp_pdp_add() allocates
-with GFP_KERNEL, and the rtnl lock keeps the device alive afterwards.
+Found during a static-analysis-assisted audit: candidate sites were
+surfaced by a Coccinelle rule, and the reader/writer paths were
+confirmed by LLM-assisted (GLM-5.3) code inspection.  The issue was
+not observed at runtime; it is identified by code inspection only.
 
-Found with the gtp selftest on a debug kernel.
-
-Fixes: e2d1baca2b33 ("gtp: remove useless rcu_read_lock()")
-Signed-off-by: Anil Kaushik <anilkaushikwireless@gmail.com>
-Link: https://patch.msgid.link/20261016093225.1036375-3-anilkaushikwireless@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 5e6808b4c68d ("octeontx2-pf: Add support for HTB offload")
+Signed-off-by: Binbin Deng <18983559317@163.com>
+Reviewed-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Link: https://patch.msgid.link/20261014064204.291688-1-18983559317@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/gtp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/marvell/octeontx2/nic/qos.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
-index bb9f284aac455..6e6942d1e2c70 100644
---- a/drivers/net/gtp.c
-+++ b/drivers/net/gtp.c
-@@ -1497,7 +1497,10 @@ static int gtp_genl_new_pdp(struct sk_buff *skb, struct genl_info *info)
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/qos.c b/drivers/net/ethernet/marvell/octeontx2/nic/qos.c
+index ded8e49745193..4e6be1b644dae 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/qos.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/qos.c
+@@ -331,6 +331,8 @@ static void otx2_qos_sw_node_delete(struct otx2_nic *pfvf,
+ 		otx2_qos_update_tx_netdev_queues(pfvf);
+ 	}
  
- 	rtnl_lock();
- 
-+	/* the rtnl lock keeps the device alive once found */
-+	rcu_read_lock();
- 	gtp = gtp_find_dev(sock_net(skb->sk), info->attrs);
-+	rcu_read_unlock();
- 	if (!gtp) {
- 		err = -ENODEV;
- 		goto out_unlock;
++	synchronize_net();
++
+ 	list_del(&node->list);
+ 	kfree(node);
+ }
 -- 
 2.53.0
 
