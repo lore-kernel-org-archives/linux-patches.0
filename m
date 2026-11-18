@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017380;
-	b=WITPTqw4Ms1jtYC9V64J6rNi9yzcdpL4kGx/LrK3cPGCSXWYMWVWJ+01cNqtHzzW/a6X
-	 LntSNm92COVj3K6TlBLbuL0cZAfNiRNGMHdEtaz9CcYp/+6gfKtSLws31v43BoeWhGXsq
-	 hKtHFssFH45t6Neyf0vXfuP2tiCOHA9JlOMnUoXGWElLTSXFsWReUq1O4N7NE7IJxxb+C
-	 otYHcefbMna55h5SQSEn3fAgGcb+/MIlJQUbmx0yieZFpedcVrR7IqLuKyye6bJKg3jU4
-	 phXg4wuvHL2xgAhvGvdAa0RdO/1i2ifbwpASnl5bpi1KNRdJJ4Wli5iEzb7ufKvQBRg==
+	t=1795017383;
+	b=K37RNwxWbnt3NL1iU2BDg36dnPFhjuToFjwm9BjkgSKTYYTDRCY3WFuxXU2ANixBgsLD
+	 iKEcNQlKnaHbP65k5E/+AGMmQu3QFmu18eCf+eZSslhrNxeSoBXroI9RNexgAVJ9gh/s0
+	 /lRWPz/h7TEREOKSXtYJXdN+ZqAOvNjxQoeKMaTNYi6Sy3MwUyhIibBuhbG1PvmyBE6X3
+	 hC0+5yt8ZVHDtL9ePciN6kB/whmWMeeeR4Pms8WT7t2ZacJtJPjp3U3NKZtOHMSF6bBtH
+	 1PZePbphu+X5YeguYmdCuArAqMqG6xopQuVfaTgOfxMu2b9zo8k+wCeMDMqJ5RdjWfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017380;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017383;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=wJkMAghAXrNnrqyNqcVmR8NhrBfPcs4W3Bclv91VPUQ=;
-	b=JgZxrAVjeL2VfQBXi+K1xxKaNaJZ+sCOkIPJCxDJqXmHcroTy3UpavtNVzuNEXmgCsO9
-	 IGR1ulYIN+lR0+K3uNqxNDX7wD89meEWCgaK0evL+3nFqIht+GA9d1nhdAtS1mLUusy7t
-	 Z4SHFo8TwM4i/WIpwWzQY4lN0fYDxu8D09UO0QGKYPlnGqyw6FW6bCvMFzkdrWjhOSoo8
-	 9i1NBl2s7881wH73u69UrBMjfK0E/ppOYDkfPJAf/tQYZV2eiRlFiO2g5rUkQUbntxNGm
-	 Skb0J6q5a22Wz/u6c6aoh89KgItXRnAG/lLNDWKx6TFz+i+QByW5ZUyEcnUoHlOOsqg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=5hId6e0WZtZ8gOma9JW7RIev4A1x31a3+u2zUUUyL/Y=;
+	b=w6laSBaxYQqsB7dPWO9dsg9FBnmW4fQs/k4lWYqeapNqql+CP86GozBH9wxLDkmGIAtP
+	 LT4DcuDqHX/rj7xjp45/dt64eMDIaDfS1X9R1fdrA75a2pxs7Woa4ny8y6iMwRINwq+2+
+	 wEBMPc4exAWkOtOLA+bWLDSsncssZwDsO8npRBFMBa4QbWajGaqLtyA0slBLtD4Bz/cU0
+	 2V2O65QSEzAQWJ4qoiVNEJBxc/+jjO7VIHv+bod/lTWPDCy5Rp0DU62OPIYfyXZ1q/d8Z
+	 L2EAsEWS4r4TcHENHdZuwAk/R+EqNJ12aRAHorTrrsgrzROj5j2mYt2pT+P2jI4Xd6A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2YZAD+zA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H4a54yu8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F904606A32A;
-	Wed, 18 Nov 2026 15:56:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B4160A2601;
+	Wed, 18 Nov 2026 15:56:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2YZAD+zA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E30EB1F000CB;
-	Wed, 18 Nov 2026 15:56:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H4a54yu8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A72C51F000CC;
+	Wed, 18 Nov 2026 15:56:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017380;
-	bh=wJkMAghAXrNnrqyNqcVmR8NhrBfPcs4W3Bclv91VPUQ=;
+	s=korg; t=1795017383;
+	bh=5hId6e0WZtZ8gOma9JW7RIev4A1x31a3+u2zUUUyL/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2YZAD+zAxpmIGXXG6yW3JmHc9ek2giYWUdcMXBg38eeHJ84rhd9erJT1H6HZ5sG4M
-	 ub5KmZDG125gUeP45OD6saxdyzExk5Jd18Axybkd2zYrTWHa62th7Xf+i9jqDESoXk
-	 JC2hwA1H1uK7Q3LW/K7Z1kgpuiuDjKCDZmu1RjG0=
+	b=H4a54yu8oMBTigJd9BxXoAVa5j35elDO8cj5e5wqJcBqQaLGgcI+uaYGTS5znoPIR
+	 S0KxVzXZZtNOveLs7bBtQ6EZKuvMycse60xfs1i1gMGmxvT3fzQoQ/otNk2jiD/Iuq
+	 SF9oTOHiedQqGHgeaP768/F9mTsKuP7z9Sm3nQ/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	"Michael J. Ruhl" <michael.j.ruhl@intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Breno Leitao <leitao@debian.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0827/2651] platform/x86/intel/pmt: complete pcidev to device update
-Date: Wed, 18 Nov 2026 15:34:27 +0100
-Message-ID: <20261118150317.661402017@linuxfoundation.org>
+Subject: [PATCH 7.3 0863/2651] ACPICA: Fix memory leak in acpi_ds_create_field()
+Date: Wed, 18 Nov 2026 15:35:03 +0100
+Message-ID: <20261118150318.929435996@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,105 +62,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael J. Ruhl <michael.j.ruhl@intel.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit b86e5062cb881f6e5c1ddb8913c1357a9508f6db ]
+[ Upstream commit dbb3d99ee95c32711950850ddd33eb22a6042eb2 ]
 
-The update that moved struct pci_dev usage to struct device is
-incomplete. Only telemetry endpoints are covered.
+acpi_ds_create_field() allocates internal_pcc_buffer for operation
+regions in the PCC address space.
 
-Other PMT features (crashlog) are now blocked from using the callback
-mechanism.
+The function runs once per field, so a second field on the
+same region overwrites the pointer and orphans the previous buffer.
 
-Change struct intel_pmt_entry pci_dev member to device.
+The matching ACPI_FREE() in acpi_ut_delete_internal_obj() only ever sees
+the last one.
 
-Update callback usage to use the intel_pmt_entry rather than the
-telemetry endpoint.
+An arm64 platform whose SSDT declares regions with multiple fields each
+leaks two buffers at boot, as detected by kmemleak:
 
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Fixes: 353042d54d82 ("platform/x86/intel/vsec: Switch exported helpers from pci_dev to device")
-Signed-off-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
-Link: https://patch.msgid.link/20260923181115.2514193-23-michael.j.ruhl@intel.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+  unreferenced object 0xffff000051e65400 (size 192):
+    comm "swapper/0", pid 1, jiffies 4294668436
+    backtrace (crc 0):
+      __kmalloc_noprof
+      acpi_ds_create_field
+      acpi_ds_load2_end_op
+      acpi_ds_exec_end_op
+      acpi_ps_parse_loop
+      acpi_ps_parse_aml
+      acpi_ns_load_table
+      acpi_load_tables
+      acpi_init
+
+Do not allocate a region if it was previously allocated before,
+preserving the current design, but, not leaking memory.
+
+Fixes: aa6ec56b574d ("ACPICA: ACPI 6.3: add PCC operation region support for AML interpreter")
+Link: https://github.com/open-acpica/acpica/commit/c71849d476bb5f97ca1867849e893368e12a69e6
+Signed-off-by: Breno Leitao <leitao@debian.org>
+[ rjw: Subject tweak, fixed the Fixes: tag ]
+Link: https://patch.msgid.link/20260925-acpica-pcc-field-leak-v2-1-e37008e715af@debian.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/pmt/class.c     | 5 ++---
- drivers/platform/x86/intel/pmt/class.h     | 3 +--
- drivers/platform/x86/intel/pmt/discovery.c | 2 +-
- 3 files changed, 4 insertions(+), 6 deletions(-)
+ drivers/acpi/acpica/dsfield.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/intel/pmt/class.c b/drivers/platform/x86/intel/pmt/class.c
-index c25892a511804..c4f73e4e126a2 100644
---- a/drivers/platform/x86/intel/pmt/class.c
-+++ b/drivers/platform/x86/intel/pmt/class.c
-@@ -100,7 +100,7 @@ intel_pmt_read(struct file *filp, struct kobject *kobj,
- 	if (count > entry->size - off)
- 		count = entry->size - off;
- 
--	count = pmt_telem_read_mmio(entry->ep->dev, entry->cb, entry->header.guid, buf,
-+	count = pmt_telem_read_mmio(entry->dev, entry->cb, entry->header.guid, buf,
- 				    entry->base, off, count);
- 
- 	return count;
-@@ -286,8 +286,6 @@ static int pmt_resolve_access_pci(struct intel_pmt_entry *entry,
- 		return -EINVAL;
+diff --git a/drivers/acpi/acpica/dsfield.c b/drivers/acpi/acpica/dsfield.c
+index d7d56cc600d31..f7e503bf57c87 100644
+--- a/drivers/acpi/acpica/dsfield.c
++++ b/drivers/acpi/acpica/dsfield.c
+@@ -522,7 +522,8 @@ acpi_ds_create_field(union acpi_parse_object *op,
  	}
  
--	entry->pcidev = pci_dev;
--
- 	return 0;
- }
- 
-@@ -365,6 +363,7 @@ static int intel_pmt_populate_entry(struct intel_pmt_entry *entry,
- 	entry->guid = header->guid;
- 	entry->size = header->size;
- 	entry->cb = ivdev->priv_data;
-+	entry->dev = ivdev->dev;
- 
- 	return 0;
- }
-diff --git a/drivers/platform/x86/intel/pmt/class.h b/drivers/platform/x86/intel/pmt/class.h
-index a0ece4fc3837d..258cb460e61c2 100644
---- a/drivers/platform/x86/intel/pmt/class.h
-+++ b/drivers/platform/x86/intel/pmt/class.h
-@@ -20,7 +20,6 @@
- #define GET_ADDRESS(v)		((v) & GENMASK(31, 3))
- 
- struct device;
--struct pci_dev;
- extern struct class intel_pmt_class;
- 
- struct telem_endpoint {
-@@ -42,7 +41,7 @@ struct intel_pmt_header {
- 
- struct intel_pmt_entry {
- 	struct telem_endpoint	*ep;
--	struct pci_dev		*pcidev;
-+	struct device		*dev;
- 	struct intel_pmt_header	header;
- 	u32			disc_header[PMT_DISC_DWORDS];
- 	struct bin_attribute	pmt_bin_attr;
-diff --git a/drivers/platform/x86/intel/pmt/discovery.c b/drivers/platform/x86/intel/pmt/discovery.c
-index c482368bfaaef..f4203d240f542 100644
---- a/drivers/platform/x86/intel/pmt/discovery.c
-+++ b/drivers/platform/x86/intel/pmt/discovery.c
-@@ -609,7 +609,7 @@ void intel_pmt_get_features(struct intel_pmt_entry *entry)
- 
- 	mutex_lock(&feature_list_lock);
- 	list_for_each_entry(feature, &pmt_feature_list, list) {
--		if (feature->priv->parent != entry->ep->dev)
-+		if (feature->priv->parent != entry->dev)
- 			continue;
- 
- 		pmt_get_features(entry, feature);
+ 	if (info.region_node->object->region.space_id ==
+-	    ACPI_ADR_SPACE_PLATFORM_COMM) {
++	    ACPI_ADR_SPACE_PLATFORM_COMM &&
++	    !region_node->object->field.internal_pcc_buffer) {
+ 		region_node->object->field.internal_pcc_buffer =
+ 		    ACPI_ALLOCATE_ZEROED(info.region_node->object->region.
+ 					 length);
 -- 
 2.53.0
 
