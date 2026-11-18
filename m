@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032151;
-	b=rZFMJZuBgoCvPgmdCcS3w6uywcLAYFEP6OywQ+RK0cp5zHvBNlZLDTX+GO/6SYpZx/dn
-	 /5Vlh40NFpc6e5LOcWNpGs+mW+6q/L+enw8Uhybcyue/kHZ0S2PUHTulxP9PrVn+Ee881
-	 qesK53ra11AuM6idYM8Hz83Od5vvIFxos2xEu85eFxIWTnRd2g7Tv0kKTCpaY1Wa1vj+w
-	 XR3ZWMgbq5cGpinYN62wl1DQFwEVPBPPlB/BNW5x8cVQZg/OBLrZF0n+T5NFzigt5sLYv
-	 mPtzDDX5dfmWO4sfIaZpqkYyorgTnXMkD2rgK66Wr5e3EOPumnsHhftj7icU4yhFQgg==
+	t=1795032154;
+	b=SEVKP4IUUI7ibLbgYyFYnybZSq2+0mejx9znlleVVDgXwfu7MvW7i30UFO+mnpGpadpQ
+	 zCYVvXXdlOMR3Jpm9Ofrr8Tm0NHhXMBmjpUSrARHlveTILDZK6qT13x2VSk0+4x0RYxLF
+	 0up7SEy27S4RhNxYwrWDPtOesChFKrNKaiFPMcCyyXOILF+/hEndpYbPQcWKrhkZrda3Z
+	 fgCXFHzTUfj6t4lHuFBDMTU3OrunBE4YEfB1dlRE5ghDtPL81YyPriq3hD018R2QY4WnY
+	 W3AHRk5+w9yFB1CduLDvoCz0lNOsGV18lxOZ41gZIs23dk+BlcGaoZ+z7XbemntqFfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032151;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032154;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MPIq8Q9B8ESFOaQ/scTlETd33feUJJuAlQ3I1dqcGoM=;
-	b=1tntzXnLfq3Lzdw/96pGRXZJyiIlpAqR1lJfpzgYHjrwg3nkxI5BMNGRhc+k0xjWQZ52
-	 40UVOu6s+jOZVfx1ZTfNt+NbgqtXkwvmyNvKofbiQ7r4x61/gpmSbZF4paJ9CQUzYth3u
-	 DP66GKmy8SN2dLToXO/Z+rgsFgOhP8pTXp6UL7eluv/3klPXoibC2ZcRDN8ji2delQNBg
-	 kMU1hMAqRdbJe9cJ68zD/zeszPD0mw0NlUkCp+1xSIx4TZpdZT6LCtoRVQ5/r4lZbPIOw
-	 klOJEjpag3wCa80vgtQd7BnSa6gyLOzGwLxkvOc2RsaEuMdcaAWKcpfAylYjyL7yOrQ==
+	bh=EgpMRrarpCsjlww6ctVRV97TM50VOpGDdm2m43ctGUU=;
+	b=HJE8u3+NqRcWK7h6Wavxh1EMMNKtaPqyrBCp0tnlnLZMDlUtT46mJdLXWr9UlkPeNbcu
+	 4j2mc0OmVpSWAJ2XKCLJYkyU2TtVULYVWbjVCSyo9LvE8HkJkxGqDh3zLjnp8qnkuuoBk
+	 dCqsmKdLC6W/i12OmI4W+ymxMrU03hpReHKbBCtqmba1Qkw1Nl2m5xDA2r8IBGz+F1F4x
+	 duMu0pvKGwDUtA1mjj+rUtv7/prcplgx4cPlxj0KHDyIvGl1wan6AFfRcd49xMYMQyXdH
+	 u+O7YOOuESD32UWmCX6skYeOIk0nElXbBbAHWP/a0FoEQzqSP0EvXNHHa2Lnpmui+rw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ts/kSueW";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cfsz3WC+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A393606A31C;
-	Wed, 18 Nov 2026 20:02:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61206606A320;
+	Wed, 18 Nov 2026 20:02:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ts/kSueW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE251F000C4;
-	Wed, 18 Nov 2026 20:02:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cfsz3WC+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7AA31F000C4;
+	Wed, 18 Nov 2026 20:02:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032151;
-	bh=MPIq8Q9B8ESFOaQ/scTlETd33feUJJuAlQ3I1dqcGoM=;
+	s=korg; t=1795032154;
+	bh=EgpMRrarpCsjlww6ctVRV97TM50VOpGDdm2m43ctGUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ts/kSueWt43JQVlttYI/lEvWpRjkxJVLas1cByC9NLHb1M/5BwSzU9OYhtrVFZTmc
-	 PLYTBV0RryBsN3Z22tlT5miwgNzuTLV4KNQvohqnUeIlhcb7WOYgtHyQpWUe1Ccjum
-	 q0tIwrp371lZ4osI9r8hIVCEUDvTrEHKkIwmRfwc=
+	b=cfsz3WC+LS9ulUwFbf7SMv+T47rehX2ZlSvrh95dNK4hAzTTzuMhTORy8aUlHJHrf
+	 XbIQf7+ouh4QKmbUGDgtpP1oRtPBFiqPf4VBknQ9QQMQfx/irYWuEYqBVKWL1JbQEl
+	 dQBCiMVp6Dp/oWckOpbIZDejZBTPEtvw1VsHo0FA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serhat Kumral <serhatkumral1@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1283/1756] IB/rdmavt: Fix error unwind path for qp_priv_init() in rvt_create_qp()
-Date: Wed, 18 Nov 2026 15:56:50 +0100
-Message-ID: <20261118150100.639652940@linuxfoundation.org>
+Subject: [PATCH 6.12 1310/1756] ASoC: mediatek: mt8195: Propagate IRQ lookup errors
+Date: Wed, 18 Nov 2026 15:57:17 +0100
+Message-ID: <20261118150101.630654970@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,39 +69,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Serhat Kumral <serhatkumral1@gmail.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit dd36137b218ad6f18ed15e6279412d7fc160980c ]
+[ Upstream commit 9d5dedb285fb61a40e04f337d9e06fc59c065857 ]
 
-If driver_f.qp_priv_init() fails, execution jumps to bail_rq_wq, which
-bypasses bail_qpn. Because alloc_qpn() has already succeeded at this point,
-the allocated QP number is left unreleased.
+Propagate the error returned by platform_get_irq() instead of
+replacing it with -ENXIO.
 
-Jump to bail_qpn instead to ensure the QPN is properly freed via
-rvt_free_qpn().
+This preserves errors such as -EPROBE_DEFER for proper handling
+by the caller.
 
-Fixes: 5190f052a3654 ("IB/hfi1: Allow the driver to initialize QP priv struct")
-Signed-off-by: Serhat Kumral <serhatkumral1@gmail.com>
-Link: https://patch.msgid.link/20261015102518.15780-1-serhatkumral1@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 6746cc858259 ("ASoC: mediatek: mt8195: add platform driver")
+Reviewed-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20261014112752.683032-12-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rdmavt/qp.c | 2 +-
+ sound/soc/mediatek/mt8195/mt8195-afe-pcm.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/sw/rdmavt/qp.c b/drivers/infiniband/sw/rdmavt/qp.c
-index 9cf139f0d0a18..320060b1c90b3 100644
---- a/drivers/infiniband/sw/rdmavt/qp.c
-+++ b/drivers/infiniband/sw/rdmavt/qp.c
-@@ -1175,7 +1175,7 @@ int rvt_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
- 		if (rdi->driver_f.qp_priv_init) {
- 			ret = rdi->driver_f.qp_priv_init(rdi, qp, init_attr);
- 			if (ret)
--				goto bail_rq_wq;
-+				goto bail_qpn;
- 		}
- 		break;
+diff --git a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
+index 592b5956342ca..543b4990c7bad 100644
+--- a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
++++ b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
+@@ -3134,7 +3134,7 @@ static int mt8195_afe_pcm_dev_probe(struct platform_device *pdev)
+ 	/* request irq */
+ 	irq_id = platform_get_irq(pdev, 0);
+ 	if (irq_id < 0)
+-		return -ENXIO;
++		return irq_id;
  
+ 	ret = devm_request_irq(dev, irq_id, mt8195_afe_irq_handler,
+ 			       IRQF_TRIGGER_NONE, "asys-isr", (void *)afe);
 -- 
 2.53.0
 
