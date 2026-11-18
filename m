@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035524;
-	b=fa0Jw8ytlE4/e3Cvqh/5mKBy5bGgH1kTKYAtxSQJbTyOdfbXSqif/41d76HaENd3ORTU
-	 DnFQ0CzymwB7UVqgYxI0ia9j7tiWdeaQYz2vqPkKLtVvpj4z1BRiHD4RKp1L+c8/AnbsO
-	 /jUj9rX1rm7BFT5//c93yGw8KCHBj7UveDWqbz7eJ4SDPv/iI0oJjftb5f18+qdDT8aBO
-	 8jkCZyY1Rnl+/BWh7Ot6EmnLVk2UpAPAgyr6smDMM2YpZVqbTCPc/Ix8IyhhN3PV7pr49
-	 GmT0v2angN+ig0iw8D2NrhSVbPs8wymFGal+YK8QLwpV0PDw+4VGR35D7MCHxFjXC6w==
+	t=1795035527;
+	b=cDV2hTa2jlsaqH8UJUWJV/dYc1AWjPWhkx1fhF8nviYe8W+RQKVkstjf5PxHsHC603g5
+	 OrJG9MkBaH1g+iFhYFKAwuQGfGLvqToGsyZkis58YQyybdt3xzlsIec71HIHjEhmrpL7z
+	 KHdNENuI2AUzGQLnWRZ3KG3nITcoPVnDzequsAljgU1E1JfLFmDD/5xJnwRdYLtXFwrTw
+	 GvBwfeS1gMsCu40/E/o2tHcJvidEaF8HJkLpvraTPJ2sCnDNuDJqbFEP3Uvxx/gRsxQei
+	 0zIF7jiVCGHcOpGQH5xKF0VPMAXTZCcdBOQNTOSuzTtS9deURKjY4dic311kqOXY2Hw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035524;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035527;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2/UUlZ6iye0J1X84dxQQuZc08nowOFq8nM8puJyD3l4=;
-	b=j2UvDqrmzSmHA6yw+MovJSeXRQ2RZ8Eh9ej3nZr/pfQ2udEKCjgMvWpN6ZMAvotoWe5F
-	 T9jy3vL5l6yUW6XGmQa91vnsms5pFQ3tFf8iGquF+m22gf9ACDr9XWs9H+SrpyzlMhfq6
-	 lv6KNlQFgsHkxbOZV1FBFEsEFuN0IR4sHh/1LrvsoFGCnCkp177f9JdKijbR1W0QSLFOZ
-	 ou4NED7Uy9tuXfiqu8hQIjbZ4AdOZY4CnCnGALJOV5G2/B547KOKNFhh8Ci9LHRjGfVUD
-	 GWXMTE+jVWXwY4F63raM5NrnVbM57Cypmc+EyJPRYDZhgLLJPjYCTzBOrblP5I6bwEw==
+	bh=8KS9MlDq+KGFsMd1cyzgIrSI2ah9ClnY6ssOBuSXGH4=;
+	b=BFcddfLZpOPxJK9EfE9wyB21bFL8rXdux7P6gL4S6s4JGBLaJ87DFZ4bjisRz2eb7uTJ
+	 8NNN2LZCDrkSLzJ5Ng8VrwBxQ0fljBfz/M8GdlQA9mI++ZWRsuw5nU0UyPqQyy1a7lPyz
+	 3Y6zuP642Xl0xCi2LiiCZjFYFQuNrAceZa4F/M2Q9rT5XRTj/hwdldNtRxWDgKDqYQcXU
+	 5QPciXnq3E4OgpKZyqCJkX2PqMp9devMIu0MZfd2/fM+c1BQse9JZ93x7b/NlwJj8xjh8
+	 QH2E0wtV3USGKnvN67SQKKepCVTQXpDT6uP4yZGSXRceP+yIEbpnErV55sYsjiGYypw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N6XLSSoT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kcYSDE7l;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669B6606A31C;
-	Wed, 18 Nov 2026 20:58:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C641606A31C;
+	Wed, 18 Nov 2026 20:58:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N6XLSSoT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85911F000C4;
-	Wed, 18 Nov 2026 20:58:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kcYSDE7l
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E0111F000C4;
+	Wed, 18 Nov 2026 20:58:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035524;
-	bh=2/UUlZ6iye0J1X84dxQQuZc08nowOFq8nM8puJyD3l4=;
+	s=korg; t=1795035527;
+	bh=8KS9MlDq+KGFsMd1cyzgIrSI2ah9ClnY6ssOBuSXGH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N6XLSSoTCHb0otjq55ZFcTl40zC3GUl7RUPErbHM+amssGWIissxZ1eQVfcXpp/ls
-	 nPKVJsfpDzUOXqiLvwSRvSQTR+LQ1z6UrqwhLIxazs7tAyQI3TpLbYMJ+WEH/iWT/i
-	 WgZiiYtZk9L9I+wrazNGAt6nn3JrMfPfcY15oB+M=
+	b=kcYSDE7l4zLPCZfLEvqDKP8Yka4szed7Xn+bfw2DsscoYMTfmOUHa1jhif5Y9pAtM
+	 dPHYsBbiHHtS7v9VvwrvlnRqFz3KOGp+lBnnlQws+vnJ/VKPApx5PnHfu3T3Q2JFey
+	 DGfBHKOYrji3RwS9eiabbIhcKp9X+oj5p7ulzmdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.6 0698/3318] nfsd: zero NFSv4 COMPOUND tag padding
-Date: Wed, 18 Nov 2026 15:22:00 +0100
-Message-ID: <20261118150339.286932548@linuxfoundation.org>
+	Gabor Tanz <gabor.tanz@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.6 0734/3318] HID: quirks: Always poll the Anne Pro 2 with product ID a292
+Date: Wed, 18 Nov 2026 15:22:36 +0100
+Message-ID: <20261118150340.575767489@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,42 +67,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Gabor Tanz <gabor.tanz@gmail.com>
 
-commit 3f1181cb09c85499286c7f462d93530b0ebcafcc upstream.
+commit cbc13a78a89d087252947d0a51048e576cfcb3ef upstream.
 
-nfs4svc_encode_compoundres() copies the tag bytes into reserved XDR space
-and skips directly to the aligned end of the field. xdr_reserve_space()
-rounds the reservation up but does not initialize the padding bytes.
+The wired Anne Pro 2 identifying as 04d9:a292 stops delivering keyboard
+input after a period of inactivity. Unplugging and reconnecting the
+keyboard restores input.
 
-A remote client can choose a tag length that is not a multiple of four,
-causing one to three stale bytes from the response page to be returned in
-the COMPOUND reply.
+Keeping ObinsKit running prevents the problem. A read-only userspace
+reader that keeps USB HID interface 1 open also prevents it, as does
+usbhid.quirks=0x04d9:0xa292:0x00000400 without either application running.
 
-Use xdr_encode_opaque_fixed() to copy the tag and clear its XDR padding.
+Commit ca28aff0e1dc ("HID: quirks: Always poll Obins Anne Pro 2
+keyboard") added HID_QUIRK_ALWAYS_POLL for product ID a293.
+The variant identifying as 04d9:a292 exhibits the same symptom.
+Apply the quirk to this product ID as well.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260915160049.3105481-1-qwe.aldo@gmail.com
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Gabor Tanz <gabor.tanz@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4xdr.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/hid/hid-ids.h    |    1 +
+ drivers/hid/hid-quirks.c |    1 +
+ 2 files changed, 2 insertions(+)
 
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -5539,8 +5539,7 @@ nfs4svc_encode_compoundres(struct svc_rq
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -704,6 +704,7 @@
+ #define USB_DEVICE_ID_HOLTEK_ALT_MOUSE_A081	0xa081
+ #define USB_DEVICE_ID_HOLTEK_ALT_MOUSE_A0C2	0xa0c2
+ #define USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A096	0xa096
++#define USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A292	0xa292
+ #define USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A293	0xa293
  
- 	*p++ = resp->cstate.status;
- 	*p++ = htonl(resp->taglen);
--	memcpy(p, resp->tag, resp->taglen);
--	p += XDR_QUADLEN(resp->taglen);
-+	p = xdr_encode_opaque_fixed(p, resp->tag, resp->taglen);
- 	*p++ = htonl(resp->opcnt);
- 
- 	nfsd4_sequence_done(resp);
+ #define USB_VENDOR_ID_IMATION		0x0718
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -102,6 +102,7 @@ static const struct hid_device_id hid_qu
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_HAPP, USB_DEVICE_ID_UGCI_FIGHTING), HID_QUIRK_BADPAD | HID_QUIRK_MULTI_INPUT },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_HAPP, USB_DEVICE_ID_UGCI_FLYING), HID_QUIRK_BADPAD | HID_QUIRK_MULTI_INPUT },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_HOLTEK_ALT, USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A096), HID_QUIRK_NO_INIT_REPORTS },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_HOLTEK_ALT, USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A292), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_HOLTEK_ALT, USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A293), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_HP, USB_PRODUCT_ID_HP_LOGITECH_OEM_USB_OPTICAL_MOUSE_0A4A), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_HP, USB_PRODUCT_ID_HP_ELITE_PRESENTER_MOUSE_464A), HID_QUIRK_MULTI_INPUT },
 
 
