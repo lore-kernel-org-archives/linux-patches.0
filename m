@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034393;
-	b=L8HbRoh9D9r4bzsMKmRjSjegfhsK/m4+1oKC0VZu+LGeP0b3xWJT8FmkoFqRC27Jr2cb
-	 CH9JwlA73EbR9SeQmLP1iavxoRuGnzBv6FElWq/acZ8WTgClC4EPrJLMfY6y9aq9Yel5t
-	 jCzg82cQu98FFujLYWrUkggKeYFP9cfWwjiwR9tke4lZhhB0r5/9FaAI9HZkvTaoFHG6O
-	 O8+6TFITFuJ6Fdum7EedhW898rNX0l45dzmXkCSxq/QLMMiVsHu6MIdbxRRRBme3vUdpJ
-	 ry67NPEyVaj/vlOSz1qoEYwmwtuj4RJMzj/tBUTljndJ2sTPQ70f2uouBX1i5or95qg==
+	t=1795034395;
+	b=R/DGYyu8aT0D6N8bIXOjOdETyAvW8mzfmk1yHtTpBfUAJ/eERyEHoCsdWHshz9nRzbB0
+	 rxM4M2OTy+mnoazGmwhll78rEbcwqqNihWjXa8r0jqx218LpOtDKHz/I1qQJ7T6oGwLvL
+	 fTkiLeRbka9ijWWLHiXO+KScYfaNCJ/oN0XJLcmr4x3WoDF+kONXJXkH6GE01OwR7ESor
+	 b4+kiP0tdQ0YizBPlPaitKgoO4SPioz3r3W/NxfsZFfW5uaM5BEEM95+1donTgmdfnAiM
+	 LcwBzgku5OPsw4olCrnUakRHVLhngNyA9NrQ/AzDqZRavd49exvC40kYvupElxlfkpg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034393;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034395;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/rYr4b9NEzLo8gBEtWkk+wvp61MX4ZZuCrnYlXyCGuk=;
-	b=nXcq/jyoFl7JEnYu3AlC/v2gR98zcD/uSQGF3mzXN2pRbD2mIngru/qso8j9Ljc2+XD3
-	 vw2mIhTwzH1vPmkIya9IcutPTt1upsOpTM9GGwavJ2kiab/V2T4Yn7ero5Fo2LdI5fXR9
-	 H2KyrlSqUueTEYxVIM90LXAq++mCKAIYkX+j7SQwgeanZCUaCbLU/yiS77y/HDMBWN0GX
-	 SwszSA8GcmZ1X3WfAg51iIsIwQkTROtUGSqNam/jbQ7b2OUvJ7224tNUqOLe3NX92qhdw
-	 gIz/6o3zhya6tmi2lX4j7KLwqjY9O73OPc+cGau1M0Kqenu2J3pgRDBpuQMnbe6j7FQ==
+	bh=9B0rFw2bvd5EFOT8bZU4ILfvNeM4FrlEwfow63NP5Nw=;
+	b=3xjr7NbpMMnceHXmnfxYQ6hgASjIxnz/HwJtp+byH7453bDt5JwaEVOClQwknwtStUyC
+	 ca7iF9+ZTyRL/xY+VDcqoedS3wo4TXvvJolhIAg04Cl93VqLJjRdZ00JCAGYQr1mxn2Ck
+	 9oAGd2Yl7t3GV31MN56kkf0mHOAxVReiO0XGnXkqaVq40wPIEP7iM6mNK6fVP4ObY+MKV
+	 dL/Yq1I2xyVBxfGQQfsC4IaFjKkV8EbjNDRvahsbY0YPAhhjUFFSqJ8NmgpD6VmbVV7gD
+	 akMIa3jOq8jwaTR97hDSzfnL3Dtc3BpwQUZ9Q0lUp64wylk1yZzQ1fBahsIzkWSK7sw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I6EM0QBJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IiDFSX4b;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F9F606A31C;
-	Wed, 18 Nov 2026 20:39:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B19606A31C;
+	Wed, 18 Nov 2026 20:39:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I6EM0QBJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 231FF1F000C5;
-	Wed, 18 Nov 2026 20:39:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IiDFSX4b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA3F11F000C4;
+	Wed, 18 Nov 2026 20:39:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034392;
-	bh=/rYr4b9NEzLo8gBEtWkk+wvp61MX4ZZuCrnYlXyCGuk=;
+	s=korg; t=1795034395;
+	bh=9B0rFw2bvd5EFOT8bZU4ILfvNeM4FrlEwfow63NP5Nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I6EM0QBJoZBfDuB1kpiaeOu7eH/1W6/6q1rEAOr5AOGL+M2og+M54DwET/excvDKn
-	 9hOUoKIfcVNiMeWMjhsQeiE4a4jHuwIJ0bEvV3wiJEZwRj+VFYbuGoYpFEIQHYNPf5
-	 IutKXa5gWXA/leDKdoPCUzgX8AXoP4ZlfpaO05fk=
+	b=IiDFSX4bz20I77vGq0Tf0/LgQecgF6tyj5XVvPJfyliubYxzxQinSAw4mG42LNlU3
+	 g++TKbwsRdINWXsDdhz8JhP2QGAaspQ512qrFOCKyXn2aRu8+ohU3gbP3kryqC8aa2
+	 IyW69mWz6NpM7dmN1HyLC/0rd6YZo61ie5hTvowk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matus Gajdos <matuszpd@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	syzbot+f26bc23e42eeb548dee1@syzkaller.appspotmail.com,
+	Rohinthan P <rokinthanp03@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0353/3318] ALSA: usb-audio: Add native DSD support for Cambridge Audio streamers
-Date: Wed, 18 Nov 2026 15:16:15 +0100
-Message-ID: <20261118150326.669690441@linuxfoundation.org>
+Subject: [PATCH 6.6 0354/3318] media: em28xx: use video_unregister_device for radio_dev
+Date: Wed, 18 Nov 2026 15:16:16 +0100
+Message-ID: <20261118150326.709714841@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,44 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matus Gajdos <matuszpd@gmail.com>
+From: Rohinthan P <rokinthanp03@gmail.com>
 
-[ Upstream commit 4e1462e7cd6a9b920f441842726cc2b9d232673e ]
+[ Upstream commit 2579cbe68005f46fc7f8f95364f6b101b07b9d1c ]
 
-The Cambridge Audio streamer advertises the UAC2 RAW_DATA format on
-altsetting 2 of its playback interface, but without the DSD_RAW quirk
-flag the driver exposes it only as a SPECIAL format that cannot be
-used.
+Commit 7c8bf63b7937 ("media: em28xx: use vb2_video_unregister_device")
+converted device unregistrations in em28xx to use
+vb2_video_unregister_device() instead of video_unregister_device().
 
-Add QUIRK_FLAG_DSD_RAW for the device (USB ID 22e8:ca10), so the
-altsetting is exposed as DSD_U32_BE, enabling native DSD64/128/256
-playback.
+However, radio devices do not have an associated videobuf2 queue
+(v4l2->radio_dev.queue is NULL). Calling vb2_video_unregister_device()
+on a radio device triggers a WARNING in vb2_video_unregister_device():
 
-Tested with: gst-launch-1.0 filesrc location=file.dsf ! \
-                            avdemux_dsf ! dsdconvert ! \
-                            alsasink device=hw:2,0
+    !vdev->queue
+    WARNING: drivers/media/common/videobuf2/videobuf2-v4l2.c:1264 at vb2_video_unregister_device+0x1f8/0x200
+    Call Trace:
+     em28xx_v4l2_init+0x1c39/0x3150 drivers/media/usb/em28xx/em28xx-video.c:3085
 
-Signed-off-by: Matus Gajdos <matuszpd@gmail.com>
-Link: https://patch.msgid.link/20261002125237.82188-1-matuszpd@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+As documented in vb2_video_unregister_device(), video_unregister_device()
+should be used instead when vdev->queue is NULL.
+
+Revert to calling video_unregister_device() for v4l2->radio_dev in both
+em28xx_v4l2_fini() and the em28xx_v4l2_init() error unwind path.
+
+Fixes: 7c8bf63b7937 ("media: em28xx: use vb2_video_unregister_device")
+Reported-by: syzbot+f26bc23e42eeb548dee1@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=f26bc23e42eeb548dee1
+Signed-off-by: Rohinthan P <rokinthanp03@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/usb/em28xx/em28xx-video.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index 598ca38be9676..5ae20ef3c6232 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2267,6 +2267,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_DSD_RAW),
- 	DEVICE_FLG(0x21b4, 0x0232, /* Ayre QX-5 Twenty */
- 		   QUIRK_FLAG_DSD_RAW),
-+	DEVICE_FLG(0x22e8, 0xca10, /* Cambridge Audio streamers */
-+		   QUIRK_FLAG_DSD_RAW),
- 	DEVICE_FLG(0x2522, 0x0007, /* LH Labs Geek Out HD Audio 1V5 */
- 		   QUIRK_FLAG_SET_IFACE_FIRST),
- 	DEVICE_FLG(0x262a, 0x9302, /* ddHiFi TC44C */
+diff --git a/drivers/media/usb/em28xx/em28xx-video.c b/drivers/media/usb/em28xx/em28xx-video.c
+index acc2fbadc609c..d2752b101e029 100644
+--- a/drivers/media/usb/em28xx/em28xx-video.c
++++ b/drivers/media/usb/em28xx/em28xx-video.c
+@@ -2243,7 +2243,7 @@ static int em28xx_v4l2_fini(struct em28xx *dev)
+ 	if (video_is_registered(&v4l2->radio_dev)) {
+ 		dev_info(&dev->intf->dev, "V4L2 device %s deregistered\n",
+ 			 video_device_node_name(&v4l2->radio_dev));
+-		vb2_video_unregister_device(&v4l2->radio_dev);
++		video_unregister_device(&v4l2->radio_dev);
+ 	}
+ 	if (video_is_registered(&v4l2->vbi_dev)) {
+ 		dev_info(&dev->intf->dev, "V4L2 device %s deregistered\n",
+@@ -2901,7 +2901,7 @@ static int em28xx_v4l2_init(struct em28xx *dev)
+ 		dev_info(&dev->intf->dev,
+ 			 "V4L2 device %s deregistered\n",
+ 			 video_device_node_name(&v4l2->radio_dev));
+-		vb2_video_unregister_device(&v4l2->radio_dev);
++		video_unregister_device(&v4l2->radio_dev);
+ 	}
+ 	if (video_is_registered(&v4l2->vbi_dev)) {
+ 		dev_info(&dev->intf->dev,
 -- 
 2.53.0
 
