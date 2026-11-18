@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053457;
-	b=pdfCrxHMK2g0Mwt40oRz9V8tiXKgsRM2nCbjA7Abizfn39zmfjlIvQKGxzvk1fI9JC4G
-	 qxyYC0yvCUdznKaOU0gZiWDO8n7axcX4QugaxDFP36KPadhecLRbofgiJ2j3ez685AM6F
-	 sXZzJCTXbgVEu8Ap66KukN9oPxQe24WqMyjtKgBAXpyOlgGtSdoR73n66rYZ0TgHVURVr
-	 bg2lw56GUyku/4WQHtg2bIQNNU/dCdiJjPotVjwhpTEQbSlq2RL/fL8NewrYECZkKjguP
-	 lHmFPbiIIVF+RxSipSzwoxqNUmmjErJXJb+PvsGTr9VqQX6O9V1REBrzythENCVtsyQ==
+	t=1795053459;
+	b=n8Ygbyx2uWTrbd1drKa75POdqnHl2mgFqPrBWcHGm403qec3rrecaQ5KAe1yZ6JHUtsa
+	 G/HvMLgUbtBHZkV5TREOCUzFzkWQr1NWACzelEILduS1FOW9Y1p/OSATTRmZIgGnZ0ek5
+	 NPM1x1GbjQd18dt8gLNAHJ3QuDTZBvIQrYC0TvJE0H+GxcJWyToI/n9b763HuP6GlaJhS
+	 kEV/ad5KGQ0wew3E7y8aqUl0xo72qimEEpu1BbAMvFSW06KRiBn/G0sAsfnZuEy/ptKft
+	 ydAXe8L6eVqKiTD0LRETCqbuwtu1oSI876WwJ68y2PSGOmUXPdUdXeqimrC+MuNNGzA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053457;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053459;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yWrMmqpwog0oTaDIlMAW7FGD2SlH9fo15NyjqUchaQ8=;
-	b=t2Q5w28S+4q6VJQpMahdHBaWM4CkKOt3ylJcVJTyShaRALcPzakme1gOLTNgqlz9qTFa
-	 LpADE36CTo+pd6sd1gjSe7csl+CQRXGWy9B0ihB3FPafpuWpztE4oRCKSXGVd+vuuiSTA
-	 P1KEDPhV02rkE8wlGEyFjzgPS2AYNU5zAJM3knNdL2tjP876zaAnUuSO49i9niIVAc1Da
-	 6hhKHW0gVWbl5kK/0MV8L9xxiLIw0IqazKUNWP33vjPjASMNnO5fohCvK7LuPFAkCEnJs
-	 gSBHIdkY1xRxnn+xSlrSMSoUn0ANiHMxBgC1VnOSzXhxeAkUfbm7XrYtHsdygjOzTDw==
+	bh=RPrSookcv4ClBCCepSTWmDCqpD/eSYQMFm6hp6w7x3E=;
+	b=O8OuKm13XST4o1NKJLHDDINBX7gKbsEjx73tQ2BKUP+Zg1wanx07mEZKp9a8pGpKLbpq
+	 XRuTGQ2gIpFa7I7Fcd3NvWf2mwjRQ47MES8d5D4TcZ8mOWgwXBadBJqLSEOCOeCiNtx4h
+	 Dx3SO7XFBMK7GiYaO+Y1IFRJQfcc0C4G/eNwB5qK8SPCgNZYD14IGmYMl8lEWgzApqDYK
+	 9Md4+o8h6kjR5dK9AG0/dyJqPALMUbM/GM7YtCwrU37FC6VgPJcBizzfKThWuIE8VaLZ5
+	 yeRtcrUcDu0JuW4G1m+x3YGaRtd8KJHclpGScBrAqHHmyorGJ2Q1aP3udOfIQoWkRlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hCiCEUr0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=htFbXmIZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 034D6606A31C;
-	Thu, 19 Nov 2026 01:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B413B606A31C;
+	Thu, 19 Nov 2026 01:57:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hCiCEUr0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B54B1F000C4;
-	Thu, 19 Nov 2026 01:57:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=htFbXmIZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16BB01F000C4;
+	Thu, 19 Nov 2026 01:57:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053456;
-	bh=yWrMmqpwog0oTaDIlMAW7FGD2SlH9fo15NyjqUchaQ8=;
+	s=korg; t=1795053459;
+	bh=RPrSookcv4ClBCCepSTWmDCqpD/eSYQMFm6hp6w7x3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hCiCEUr0JOVCB5UMi6mTD9Gx4uzyFiGB+9rN+iJ8MdHNXD1BdECYdH5P+lbwI4Zli
-	 iJy9jRKi824Nb7rdKg3HVZtuEeY3lKWoztWXTBrqgbHOGOLPt2hG1c5pYmjHS/ksXK
-	 IBkvJWtMsDYjGX1lhByFFszKoFt2fpNAwOYS73NU=
+	b=htFbXmIZjLMIJxFTkrFmD8BJXG8s5u/i2/KuMOB2DMIGQQWlLVNmNEvlwsd1shhRL
+	 3UsuvkunMZHoO48k0Mpnl705ChUsQp/trtq/KJ49CS9Gw6IMcYEruCi8nYVLYx5nne
+	 XVqJL9Qd27HYEEPCbXgs1u4T9ycU+PFEqp4EDcBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kaloz <kaloz@kernel.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Shao Mingyin <shao.mingyin@zte.com.cn>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0925/2214] MIPS: sgi-ip32: Leave MACE PCI control alone in config accesses
-Date: Wed, 18 Nov 2026 15:43:21 +0100
-Message-ID: <20261118150049.373077007@linuxfoundation.org>
+Subject: [PATCH 5.15 0926/2214] nvmet: bound the traddr and trsvcid configfs writes
+Date: Wed, 18 Nov 2026 15:43:22 +0100
+Message-ID: <20261118150049.409082781@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,102 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Kaloz <kaloz@kernel.org>
+From: Shao Mingyin <shao.mingyin@zte.com.cn>
 
-[ Upstream commit a55a7df2cf788234850d9053ecc25a5470175929 ]
+[ Upstream commit cf399d4abbeddc317f8160a79fefb4016c469862 ]
 
-mace_pci_read_config() clears the master abort interrupt enable in the
-MACE PCI control register around each config read. A register read
-followed by two register writes can hang CRIME 1.1 under DMA load.
+nvmet_addr_traddr_store() and nvmet_addr_trsvcid_store() reject a write
+only when count is larger than NVMF_TRADDR_SIZE (256) respectively
+NVMF_TRSVCID_SIZE (32).  A write of exactly that many characters is
+accepted, and the following
 
-Ack master aborts in the error register instead, and follow every
-write with a read so back-to-back accesses cannot form that sequence.
+	sscanf(page, "%s\n", port->disc_addr.traddr)
 
-Fixes: c990081bf87b ("[MIPS] Fix IP32 breakage")
+has no field width.  configfs terminates the buffer at page[count], so
+the scan writes 256 characters plus the trailing NUL, i.e. 257 bytes,
+into traddr[256].  The extra byte lands in the following tsas field of
+the discovery log entry, silently clearing the first TSAS byte (the
+RDMA queue type, or the TLS section type for TCP).  trsvcid has the
+same off-by-one with a 32-byte write; there the extra byte lands in
+the reserved bytes that follow trsvcid.
+
+Limit the scans to one byte less than the destination arrays.  The
+count checks can stay as they are so that a normal newline-terminated
+write is still accepted.
+
+Fixes: 9ba2a5cb8896 ("nvmet: filter newlines from user input")
 Cc: stable@vger.kernel.org
-Signed-off-by: Imre Kaloz <kaloz@kernel.org>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Shao Mingyin <shao.mingyin@zte.com.cn>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/pci/ops-mace.c | 26 +++++++++++++++++++-------
- arch/mips/pci/pci-ip32.c |  2 ++
- 2 files changed, 21 insertions(+), 7 deletions(-)
+ drivers/nvme/target/configfs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/mips/pci/ops-mace.c b/arch/mips/pci/ops-mace.c
-index 951d8070fb486..8827e5f2ea460 100644
---- a/arch/mips/pci/ops-mace.c
-+++ b/arch/mips/pci/ops-mace.c
-@@ -35,15 +35,27 @@ static inline int mkaddr(struct pci_bus *bus, unsigned int devfn,
- 		(reg & 0xfc);
+diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
+index 110d33900a001..7a7b9410161e9 100644
+--- a/drivers/nvme/target/configfs.c
++++ b/drivers/nvme/target/configfs.c
+@@ -141,7 +141,7 @@ static ssize_t nvmet_addr_traddr_store(struct config_item *item,
+ 	if (nvmet_is_port_enabled(port, __func__))
+ 		return -EACCES;
+ 
+-	if (sscanf(page, "%s\n", port->disc_addr.traddr) != 1)
++	if (sscanf(page, "%255s", port->disc_addr.traddr) != 1)
+ 		return -EINVAL;
+ 	return count;
  }
+@@ -215,7 +215,7 @@ static ssize_t nvmet_addr_trsvcid_store(struct config_item *item,
+ 	if (nvmet_is_port_enabled(port, __func__))
+ 		return -EACCES;
  
-+/*
-+ * On CRIME 1.1, a MACE PCI register read followed by two register writes
-+ * can hang the machine under DMA load, so every register write in this
-+ * file is followed by a read.  Config cycles to empty slots end in a
-+ * master abort; ack it with interrupts still off so the bridge error
-+ * interrupt does not report it.
-+ */
-+static void mace_pci_ack_abort(void)
-+{
-+	u32 error = mace->pci.error;
-+
-+	if (error & MACEPCI_ERROR_MASTER_ABORT) {
-+		mace->pci.error = error & ~MACEPCI_ERROR_MASTER_ABORT;
-+		mace->pci.error;
-+	}
-+}
- 
- static int
- mace_pci_read_config(struct pci_bus *bus, unsigned int devfn,
- 		     int reg, int size, u32 *val)
- {
--	u32 control = mace->pci.control;
--
--	/* disable master aborts interrupts during config read */
--	mace->pci.control = control & ~MACEPCI_CONTROL_MAR_INT;
- 	mace->pci.config_addr = mkaddr(bus, devfn, reg);
- 	switch (size) {
- 	case 1:
-@@ -56,9 +68,7 @@ mace_pci_read_config(struct pci_bus *bus, unsigned int devfn,
- 		*val = mace->pci.config_data.l;
- 		break;
- 	}
--	/* ack possible master abort */
--	mace->pci.error &= ~MACEPCI_ERROR_MASTER_ABORT;
--	mace->pci.control = control;
-+	mace_pci_ack_abort();
- 	/*
- 	 * someone forgot to set the ultra bit for the onboard
- 	 * scsi chips; we fake it here
-@@ -77,6 +87,7 @@ mace_pci_write_config(struct pci_bus *bus, unsigned int devfn,
- 		      int reg, int size, u32 val)
- {
- 	mace->pci.config_addr = mkaddr(bus, devfn, reg);
-+	mace->pci.error;
- 	switch (size) {
- 	case 1:
- 		mace->pci.config_data.b[(reg & 3) ^ 3] = val;
-@@ -88,6 +99,7 @@ mace_pci_write_config(struct pci_bus *bus, unsigned int devfn,
- 		mace->pci.config_data.l = val;
- 		break;
- 	}
-+	mace_pci_ack_abort();
- 
- 	DPRINTK("write%d: reg=%08x,val=%02x\n", size * 8, reg, val);
- 
-diff --git a/arch/mips/pci/pci-ip32.c b/arch/mips/pci/pci-ip32.c
-index 30aca6f76563d..41ec8453c865d 100644
---- a/arch/mips/pci/pci-ip32.c
-+++ b/arch/mips/pci/pci-ip32.c
-@@ -77,6 +77,8 @@ static irqreturn_t macepci_error(int irq, void *dev)
- 	}
- 
- 	mace->pci.error = flags;
-+	/* follow the write with a read, see mace_pci_ack_abort() */
-+	mace->pci.error;
- 
- 	return IRQ_HANDLED;
+-	if (sscanf(page, "%s\n", port->disc_addr.trsvcid) != 1)
++	if (sscanf(page, "%31s", port->disc_addr.trsvcid) != 1)
+ 		return -EINVAL;
+ 	return count;
  }
 -- 
 2.53.0
