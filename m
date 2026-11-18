@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059079;
-	b=jIpOjV+uOWJPinaM0e5qXe6mN+v4ZaXKsPc3PeEc678dBv74dvLgvH0yykQ5+VR6AirE
-	 zF/cGNTGy8IAP7tcYEcQKVepBi1IrBBw+ePiaaIniV4wHOn29xVlghoYaFPdc6S3aTFtX
-	 wQ47JhuE1+YLkiLHqDZ48MYKMAKO9AVVlSs27drfUdcjQvaQ1JrnyKBZxGlmz6VbxVYRu
-	 1ypfiMF0SIUdhFLkcMjknFJnhANsRXRglvZpX5IxfBEiI3m4oj8vj9vNOt1OsFv+oYPYa
-	 A33EAv6w4PRVdPKB6RqKTSBjOZbLHJrXcjRBTw2Ak1jK8mZSxeIueKkQAjxhElhd3Ig==
+	t=1795059082;
+	b=vcj7Dc4PsyJeyCWrEpqrgtHXxGDGWpzN/5n3XZjxFtai/xwlIUvPnCf/q/p6hUC2dImk
+	 OB64+sStyOFM2XLsmGS1bY3ryfCJrcOaRVPkAc/NgB1QiUJKNJRSIQUCDnWv2+kMaWm8b
+	 vrltPab3uBq7QS+KevRp3gB0YNjmrQqiOArIOVJIvXfxjI5ukuDbPxEtIjPhDJUfS71v+
+	 Dhx0BB3qGNB2KapmGWB2aOTmOcgEYayaCn+jb6uhMPfR1iXv/Oxyj5QZxY8DD0fK+Bfuk
+	 kC3gFNCeOVxZx6tHAL2blThc/qMcyO9eAqWYwPreXsi0cwH0bUX0zuAR72sXSZ1g6mA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059079;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059082;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uHS+3DNHWXv4kpMzKBIbgPNRGJGtE9X31EHCCbmcNOQ=;
-	b=VdT5B3+TuGxz+ZUus+DXwp9zc3aUIqumlJDlCvYJqld8W4vQIdkuJkE/mggSXLJpUz94
-	 C5KOS5asD2MzfKUaU2aG+vnXDb5BMN3m6AoprbBQUHdtfLiUujL+VPTDLK0it+WIzR6Dg
-	 znUSdfV3MqR1NXzxf5GD7QMWI9FMlaFPHSf4I1WcvJmexaKAwm8UlFBcze41jx7Xn/4T7
-	 b0P+9uBo7HhjvT6uEPxg4xeINAHchx5RUS+kZkRj45xyuLCM85hI2OCDT4Hxg4fXdmPwy
-	 Ijb98jC+A5UgNScocOQqMrQFSivB+X23WlWjennG/EIf+73RbJ0XsI6IuY+8tV73aFw==
+	bh=k0RpElcwTCrBrxfD49+l0xkkBW+LXOBgp4UVrDUGccY=;
+	b=wbOvDEPnm1DViFXSZRMH/u9pvjFVOQytsivkcW58nWL4BgQX70x17WLCgdjW3EnbfswA
+	 axBr50+g4Uc6DNZHUDwDV/+RMSy1zyd/zm5DOzHI2P0Jb9xlbl7SKT0sm7DDF1JliR2uC
+	 eocm202qVINupnRUo9zy4Da7VvXnBr4RLowlVHGH+7DiYGaTd/Dg35m9S/5di26HqfQKR
+	 CXSB0Wnow6PXao56YlDsFVxxi1qk3i7svnskodk5G9VJIjhCqeCLaeeVsnK3SLBWDQoNg
+	 vCn9UMofMgf9USx88oPNSoTvWEGNQ+qBJZfeedX01JG9Hw6GtVRXjdKowN/oKQwXDlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CgmcvyS+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PYKFHjNw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3AB260A2604;
-	Thu, 19 Nov 2026 03:31:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EDC6606A325;
+	Thu, 19 Nov 2026 03:31:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CgmcvyS+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B1091F000C4;
-	Thu, 19 Nov 2026 03:31:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PYKFHjNw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1AFF1F000C4;
+	Thu, 19 Nov 2026 03:31:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059079;
-	bh=uHS+3DNHWXv4kpMzKBIbgPNRGJGtE9X31EHCCbmcNOQ=;
+	s=korg; t=1795059082;
+	bh=k0RpElcwTCrBrxfD49+l0xkkBW+LXOBgp4UVrDUGccY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CgmcvyS+JPkP+ff7hRyEeDdTjTAHMTXwge68AxeCBr2592Y9pqAshnuKX4vVwUgjr
-	 88WmvRdz37DTvzfCBtU2ZzleWO8aQIt3cTBSW/Z7dUgiXvJTxEbtlfjWT4IUSwF9zu
-	 1P3JgPFYTKJjRhAoKiGCrJSBFKgxAeaLqOfNWifk=
+	b=PYKFHjNwff2x6OhTF8SOVhF5ukcLWvzfJ3CwjNyQhJ0PjQK9cp5P494e9ks1PBicA
+	 NUkpv0rYQw6F97JAOHRSrxiDhHvzwFMS3ptF8vxletZlZqxcSMyZh11CTJXpWz+c68
+	 pyFeMFoHdjH0dacx8FLHCTeviMKrZtFZeyVOp/hQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanglei Zhu <zhugl3@xiaopeng.com>,
-	Weibin Liu <liuwb@xiaopeng.com>,
-	Mark Brown <broonie@kernel.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0662/1848] spi: bcm-qspi: reject oversized dummy bytes in mspi exec_mem_op
-Date: Wed, 18 Nov 2026 15:45:00 +0100
-Message-ID: <20261118145943.469396150@linuxfoundation.org>
+Subject: [PATCH 5.10 0708/1848] ocfs2: do not index before the entry array when dividing an empty bucket
+Date: Wed, 18 Nov 2026 15:45:46 +0100
+Message-ID: <20261118145945.531017209@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,52 +71,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weibin Liu <liuwb@xiaopeng.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 9e44f0df3fff215d9033089e85980048c3ac132a ]
+[ Upstream commit 7133a0d0954c109f1764ebf8ab32d7e757a6c587 ]
 
-bcm_qspi_mspi_exec_mem_op() builds a local command buffer cmd[6]
-holding one opcode byte, up to four address bytes and one spare
-byte, and sets t[0].len = op->addr.nbytes + op->dummy.nbytes + 1.
-bcm_qspi_exec_mem_op() only validates op->addr.nbytes <= 4 and never
-bounds op->dummy.nbytes, which spi_mem_check_op() also leaves
-unrestricted. With addr.nbytes = 4 and dummy.nbytes >= 2 the length
-becomes 7 or more, so write_to_hw() reads past cmd[] on the kernel
-stack and pushes the leaked bytes into the hardware TXRAM.
+ocfs2_divide_xattr_bucket() appends an empty bucket carrying a sentinel
+hash when the source bucket has no divide position, taking that hash
+from xh_entries[start - 1].  ocfs2_xattr_find_divide_pos() returns count
+when every entry shares one hash, and its loop does not run at all for
+count < 2, so an empty bucket comes back with start == count == 0 and
+the read is xh_entries[-1].
 
-Reject operations whose dummy phase does not fit the remaining byte
-of cmd[] by requiring op->dummy.nbytes <= 1, so such transfers fall
-back to the generic SPI path instead of overrunning the buffer.
+That is outside the __counted_by_le(xh_count) bounds of xh_entries[] and
+lands on the header, so the value picked up is
+xh_count | xh_free_start << 16.  One above it is written into the new
+bucket's xh_entries[0] and committed, which leaves a bucket whose first
+hash does not follow the bucket before it.  ocfs2_xattr_bucket_find()
+binary searches on xh_entries[0], so the broken key hides the range the
+sentinel was meant to cover: getxattr() answers -ENODATA for an
+attribute that is stored, and an insert can go to the wrong bucket and
+leave two copies of a name.  The cross cluster divide hands the same
+value back as a tree record's e_cpos, which then claims a hash range it
+does not cover.
 
-Reviewed-by: Guanglei Zhu <zhugl3@xiaopeng.com>
-Fixes: 5f195ee7d830c ("spi: bcm-qspi: Implement the spi_mem interface")
-Cc: stable@vger.kernel.org # 4.18+
-Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
-Link: https://patch.msgid.link/20261015-bcm-qspi-dummy-bytes-v1-1-c319da3c2497@xiaopeng.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ Adapted for 5.10.y: this tree returns -ENOTSUPP instead of -EOPNOTSUPP. ]
-Signed-off-by: Guanglei Zhu <zhugl3@xiaopeng.com>
-Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
+Read xh_entries[0] instead.  The branch is only reached when every entry
+shares one hash, so for a non-empty bucket it holds the same value, and
+for an empty one it is the slot that carries the bucket key.
+
+An empty bucket reaches the divide from
+ocfs2_check_xattr_bucket_collision(), which reports no collision for
+one, through ocfs2_add_new_xattr_bucket() and
+ocfs2_extend_xattr_bucket().  It does not take a failed set to get
+there: a divide that finds no position is itself what leaves an empty
+sentinel bucket behind, and a later extend can pick it as the target.
+
+Link: https://lore.kernel.org/20261024151012.1059683-6-joseph.qi@linux.alibaba.com
+Fixes: 80bcaf3469b8 ("ocfs2/xattr: Proper hash collision handle in bucket division")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-bcm-qspi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ocfs2/xattr.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-bcm-qspi.c b/drivers/spi/spi-bcm-qspi.c
-index 898658ab1dcd4..a01748cf88e4e 100644
---- a/drivers/spi/spi-bcm-qspi.c
-+++ b/drivers/spi/spi-bcm-qspi.c
-@@ -1024,8 +1024,9 @@ static int bcm_qspi_exec_mem_op(struct spi_mem *mem,
- 	u32 addr = 0, len;
- 	u_char *buf;
+diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
+index 4e71a6e24cf90..3303930f62ac9 100644
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -4758,7 +4758,15 @@ static int ocfs2_divide_xattr_bucket(struct inode *inode,
+ 	start = ocfs2_xattr_find_divide_pos(xh);
  
-+	/* cmd[] holds 1 opcode + 4 address + 1 dummy byte at most */
- 	if (!op->data.nbytes || !op->addr.nbytes || op->addr.nbytes > 4 ||
--	    op->data.dir != SPI_MEM_DATA_IN)
-+	    op->dummy.nbytes > 1 || op->data.dir != SPI_MEM_DATA_IN)
- 		return -ENOTSUPP;
+ 	if (start == count) {
+-		xe = &xh->xh_entries[start-1];
++		/*
++		 * start == count means every entry shares one hash, so the
++		 * first of them carries it too.  An empty bucket has no
++		 * entries[start - 1], but its entries[0] still carries the
++		 * bucket key: either the hash ocfs2_xa_remove_entry()
++		 * deliberately leaves behind, or the sentinel a previous
++		 * divide wrote.
++		 */
++		xe = &xh->xh_entries[0];
  
- 	buf = op->data.buf.in;
+ 		/*
+ 		 * initialized a new empty bucket here.
 -- 
 2.53.0
 
