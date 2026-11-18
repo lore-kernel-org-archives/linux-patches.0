@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042457;
-	b=XteVukSZr56fW3MN1gPoa0t7RWKI3DDGAUVVgz5gk1d15+0zjcM8O4R2zBa+r6VJlI+d
-	 jyWgkXZLoFs8fwvgINTsJjEQXun9V0s6APK9FIXQrVPhm5BtuMN6xE+H70FQ5W4xP7sVR
-	 mK3zxzr4bfHxmmQaYbK9YAinTbZt+pqkHsBaZuXKcJyFqpXzIqCIZjo+aDb0dZ3d4XVox
-	 f4zIUnEfCEN6J6tIcX6EJppv5pHvlmfPyoXnpTnBqKbClcmI33t2+NxU2taG+mUZaFuSP
-	 d9bcMPyHDj2fY+k61jNnCZPFSC2eH1FzY4CDX6mH7H/53Mcq7Q6Uc8m3oNiFshMpb3A==
+	t=1795042459;
+	b=ySb2MkKiZaPdsal6X+2zY4OXxwSldmOK6xgeI+93PV2U5Fjdxkw2zNnYrcoULrBxOtz8
+	 sSKJgHE+ybuKnptnD5O6TOMsShW8hgBiFjzyP+LV6tqZ3/jg5ReLIs74aV49EWeLJxV5Q
+	 UV/nPE2xmIwIJQ7CWG/h1s0Md6B0QXa3fwOu0WSky99dLyw31jrVJlOVcO+F3zTbdHTx1
+	 aTY0XaoM9kLmYHSIXC5jUuv3ytEH12JxxGLtaFuYe/FqWyQHJRfxfEA/5CIvgyvESvKkS
+	 y0Zi/G2TdF2DvCBdWvhtb/93fUR8cQmvZDbhjgpY4RhzvANV1DB5/J2QoNaKVwbQNMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042457;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042459;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4kWpMAyJoV7i5COWG7dRosRv59nMep4Eho03MXrlnIc=;
-	b=CTJ9x3uLg9H49Yo2gXeOD7z6EhjZg7jmZShZSH0CGjFeOmlr5o7P1gZHG/wOgfOsxhRj
-	 uI3U9vPpxfHbMtDfzswaCeNU1WXJMvFkLyuU7eJcnWjglqDngvKMejpLR97D1Ar94WkyG
-	 m60Hbh5eR8VYKM3GJrKw1GcH0Hu9Ns6K5KYgJdgFCRGnH0KRSWeO3B9Vp1f+Gglk8tKF1
-	 FAKS1mhliO6nCvFcQFaepOjTpsI3CHVW0SKLA9NiaDNwQETF9dQqeEfdGxrofMO98Ynfb
-	 0pJxtYXHvcSMuJk2yWPbwspV606PX1qhSmtcZ3PihZv0kAYjCw/aChvwdrwSzGiy58w==
+	bh=LrTNwECBg5VXccxPWcHM/165s4qB5XwZJ8sxBAGMG9U=;
+	b=HvYDxxmZZ5odIzdla3MvQKehxgR/6md1etYBDZEl84wris9wDT48xLafywK4Z+6h7aVt
+	 s2oNNMEDzbHltZsOe8NdCbwALsMx7lFwIGE/8cR0nbjX8zcGiXApuqoZ2WIa55x5YB1TG
+	 /Iqu+W1ZClbGPjr8AK6x6GFrdxO0X1kRJhc3cfHztrc1AjtD9VL/U8T/Gy5TuAXEqVaKN
+	 kXSwes9WcQEaop46FxfMU72+24GIA3vVIbuYuAhFEqKARyH53ynnNIOLU+kUcPZTYapy7
+	 t5kRsx3dPkdh3sFndTJDAR1aZ6LOrVbxgQzkgr3/Avo6gMAUmC0MWTtpLFNjLpa5O+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=paPPyYya;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=06inYA6J;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D571606A320;
-	Wed, 18 Nov 2026 22:54:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9D31606A31C;
+	Wed, 18 Nov 2026 22:54:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=paPPyYya
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D8DA1F000C5;
-	Wed, 18 Nov 2026 22:54:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=06inYA6J
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CF821F000C4;
+	Wed, 18 Nov 2026 22:54:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042456;
-	bh=4kWpMAyJoV7i5COWG7dRosRv59nMep4Eho03MXrlnIc=;
+	s=korg; t=1795042459;
+	bh=LrTNwECBg5VXccxPWcHM/165s4qB5XwZJ8sxBAGMG9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=paPPyYyazwg0+Qer97sPpG51ZJ5byvx8+CFJdt5QCzfzwkLtc1YXBdZJ40bR3/uTc
-	 kZWvLMbDGPA5PbFN6apCvTwBUoK3wQcEXPNl+gd7hkqVgWFEodE4b0APH1qc63EWwj
-	 vPrZCmXmk8REKp9Te/f2Qy8MO+VZztowhhsZJWsE=
+	b=06inYA6JLGA9aGjYCCTeM4+m3/jYir1FTjfxO4gxkHkkf0GHzHuomU79nBAkXgQ7F
+	 D9JWskWopQ+C3EodTqSq2jvuoN+kgWgMSeniVDkCHlZP6bgIWO046C/eJeN/EFcFDk
+	 Xo8LpXUfSPsUUpzUddFA8ZuHPO6tLZdBPWTU1Re4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dudu Lu <phx0fer@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+	alex todadze <todadzealexi19@proton.me>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3177/3318] net/sched: taprio: unwind the netdevice notifier if register_qdisc() fails
-Date: Wed, 18 Nov 2026 16:03:19 +0100
-Message-ID: <20261118150455.135851767@linuxfoundation.org>
+Subject: [PATCH 6.6 3178/3318] net: stmmac: fix rx checksum offload with extended descriptors
+Date: Wed, 18 Nov 2026 16:03:20 +0100
+Message-ID: <20261118150455.162216045@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,71 +68,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dudu Lu <phx0fer@gmail.com>
+From: alex todadze <todadzealexi19@proton.me>
 
-[ Upstream commit c5234f89d7cb311880ef218cb7a969794a106678 ]
+[ Upstream commit 72ee27b97986f4d331fe1c26e4333f12738d982f ]
 
-taprio_module_init() registers taprio_device_notifier and then returns
-register_qdisc()'s error directly.  When register_qdisc() fails the
-notifier stays registered, but the loader's failure path frees the module
-image without ever calling the __exit function, so netdev_chain is left
-pointing at taprio_device_notifier.notifier_call -- a function pointer
-that lives in text that has just been freed.
+With extended descriptors, bit 0 of RDES0 is the Extended Status
+Available flag. enh_desc_get_rx_status() still reads it as the payload
+checksum error bit of the checksum offload table, so every IP frame that
+has extended status is reported as csum_none and its checksum is
+verified again in software.
 
-register_qdisc() has two failure returns: -EEXIST (duplicate .id) and
--EINVAL (malformed cl_ops).  taprio_class_ops satisfies every checked
-implication, so -EINVAL is unreachable and -EEXIST is the only reachable
-failure; it needs a pre-existing "taprio" entry in qdisc_base.  In-tree
-that is reachable only through bpf_qdisc_reg() (CONFIG_NET_SCH_BPF); a
-module calling the exported register_qdisc() reaches it as well.
+When extended status is available, take the result from RDES4 instead.
+A TCP, UDP or ICMP payload with no IP header error, no payload error and
+no checksum bypass is a good frame. Everything else keeps the status
+from RDES0. Since RDES4 now decides the checksum status, read it after
+the own bit with dma_rmb(). While at it, fix the IP payload type mask,
+which covered bits 6:2 instead of 2:0 and had no users.
 
-Once the notifier is left dangling, the next netdevice event that walks
-netdev_chain calls through the stale pointer:
+Tested on a Siflower SF19A2890 (GMAC 3.70) with the board as the iperf3
+endpoint. TCP receive goes from 326 to 378 Mbit/s with one stream and
+from 259 to 329 Mbit/s with four, and CPU use while receiving 200 Mbit/s
+drops from 26.6% to 21.5%. In stmmac_rx(), frames with a bad TCP, UDP or
+ICMP checksum, over IPv4 and IPv6 and including fragmented UDP, are
+still passed up as CHECKSUM_NONE and dropped by the stack.
 
-  BUG: KASAN: vmalloc-out-of-bounds in notifier_call_chain+0x650/0xb5c
-  Read of size 8 at addr ffff80001fc5ab08 by task ip/110
-   notifier_call_chain+0x650/0xb5c
-   raw_notifier_call_chain+0x34/0x64
-   call_netdevice_notifiers_info+0xa8/0x198
-   __dev_close_many+0xe0/0x800
-   ...
-  >ffff80001fc5ab00: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
-
-The shadow row is all f8 (KASAN_VMALLOC_INVALID): the read lands in
-vmalloc memory that was poisoned when the module image was freed, and the
-indirect call is unguarded because the only check, func_ptr_is_kernel_text(),
-is compiled out unless CONFIG_DEBUG_NOTIFIERS.
-
-Mirror the sibling sch_cbs.c and act_mirred.c, which unwind the notifier
-on this failure path.
-
-Fixes: 7b9eba7ba0c1 ("net/sched: taprio: fix picos_per_byte miscalculation")
-Signed-off-by: Dudu Lu <phx0fer@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261021155417.66254-1-phx0fer@gmail.com
+Fixes: c24602ef8664 ("stmmac: support extend descriptors")
+Signed-off-by: alex todadze <todadzealexi19@proton.me>
+Link: https://patch.msgid.link/20261020-stmmac-rx-csum-v2-1-330c8d0951ea@proton.me
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_taprio.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/stmicro/stmmac/descs.h   |  6 ++++-
+ .../net/ethernet/stmicro/stmmac/enh_desc.c    | 25 +++++++++++++++++--
+ drivers/net/ethernet/stmicro/stmmac/hwif.h    |  6 ++---
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c | 19 ++++++++++----
+ 4 files changed, 45 insertions(+), 11 deletions(-)
 
-diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
-index c845a07e0c6ec..95124fd0846db 100644
---- a/net/sched/sch_taprio.c
-+++ b/net/sched/sch_taprio.c
-@@ -2595,7 +2595,11 @@ static int __init taprio_module_init(void)
- 	if (err)
- 		return err;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/descs.h b/drivers/net/ethernet/stmicro/stmmac/descs.h
+index 49d6a866244f4..4fc5f69aeaa98 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/descs.h
++++ b/drivers/net/ethernet/stmicro/stmmac/descs.h
+@@ -123,7 +123,7 @@
+ #define	ETDES1_BUFFER2_SIZE_SHIFT	16
  
--	return register_qdisc(&taprio_qdisc_ops);
-+	err = register_qdisc(&taprio_qdisc_ops);
-+	if (err)
-+		unregister_netdevice_notifier(&taprio_device_notifier);
+ /* Extended Receive descriptor definitions */
+-#define	ERDES4_IP_PAYLOAD_TYPE_MASK	GENMASK(6, 2)
++#define	ERDES4_IP_PAYLOAD_TYPE_MASK	GENMASK(2, 0)
+ #define	ERDES4_IP_HDR_ERR		BIT(3)
+ #define	ERDES4_IP_PAYLOAD_ERR		BIT(4)
+ #define	ERDES4_IP_CSUM_BYPASSED		BIT(5)
+@@ -154,6 +154,10 @@
+ #define RDES_PTP_SIGNALING		0xa
+ #define RDES_PTP_PKT_RESERVED_TYPE	0xf
+ 
++#define RDES_EXT_PAYLOAD_UDP		0x1
++#define RDES_EXT_PAYLOAD_TCP		0x2
++#define RDES_EXT_PAYLOAD_ICMP		0x3
 +
-+	return err;
+ /* Basic descriptor structure for normal and alternate descriptors */
+ struct dma_desc {
+ 	__le32 des0;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/enh_desc.c b/drivers/net/ethernet/stmicro/stmmac/enh_desc.c
+index 937b7a0466fca..963579518405c 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/enh_desc.c
++++ b/drivers/net/ethernet/stmicro/stmmac/enh_desc.c
+@@ -114,8 +114,25 @@ static int enh_desc_coe_rdes0(int ipc_err, int type, int payload_err)
+ 	return ret;
  }
  
- static void __exit taprio_module_exit(void)
+-static void enh_desc_get_ext_status(struct stmmac_extra_stats *x,
+-				    struct dma_extended_desc *p)
++static int enh_desc_ext_rx_csum(u32 rdes0, u32 rdes4, int status)
++{
++	u32 type = FIELD_GET(ERDES4_IP_PAYLOAD_TYPE_MASK, rdes4);
++
++	if (status != csum_none || !(rdes0 & RDES0_FRAME_TYPE))
++		return status;
++	if (!(rdes4 & (ERDES4_IPV4_PKT_RCVD | ERDES4_IPV6_PKT_RCVD)) ||
++	    (rdes4 & (ERDES4_IP_HDR_ERR | ERDES4_IP_PAYLOAD_ERR |
++		      ERDES4_IP_CSUM_BYPASSED)))
++		return status;
++	if (type != RDES_EXT_PAYLOAD_UDP && type != RDES_EXT_PAYLOAD_TCP &&
++	    type != RDES_EXT_PAYLOAD_ICMP)
++		return status;
++
++	return good_frame;
++}
++
++static int enh_desc_get_ext_status(struct stmmac_extra_stats *x,
++				   struct dma_extended_desc *p, int status)
+ {
+ 	unsigned int rdes0 = le32_to_cpu(p->basic.des0);
+ 	unsigned int rdes4 = le32_to_cpu(p->des4);
+@@ -175,7 +192,11 @@ static void enh_desc_get_ext_status(struct stmmac_extra_stats *x,
+ 			x->l4_filter_match++;
+ 		if ((rdes4 & ERDES4_L3_L4_FILT_NO_MATCH_MASK) >> 26)
+ 			x->l3_l4_filter_no_match++;
++
++		status = enh_desc_ext_rx_csum(rdes0, rdes4, status);
+ 	}
++
++	return status;
+ }
+ 
+ static int enh_desc_get_rx_status(struct stmmac_extra_stats *x,
+diff --git a/drivers/net/ethernet/stmicro/stmmac/hwif.h b/drivers/net/ethernet/stmicro/stmmac/hwif.h
+index 699ec58a61d9e..710a8baa7b021 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/hwif.h
++++ b/drivers/net/ethernet/stmicro/stmmac/hwif.h
+@@ -68,8 +68,8 @@ struct stmmac_desc_ops {
+ 	/* Return the reception status looking at the RDES1 */
+ 	int (*rx_status)(struct stmmac_extra_stats *x,
+ 			 struct dma_desc *p);
+-	void (*rx_extended_status)(struct stmmac_extra_stats *x,
+-				   struct dma_extended_desc *p);
++	int (*rx_extended_status)(struct stmmac_extra_stats *x,
++				  struct dma_extended_desc *p, int status);
+ 	/* Set tx timestamp enable bit */
+ 	void (*enable_tx_timestamp) (struct dma_desc *p);
+ 	/* get tx timestamp status */
+@@ -128,7 +128,7 @@ struct stmmac_desc_ops {
+ #define stmmac_rx_status(__priv, __args...) \
+ 	stmmac_do_callback(__priv, desc, rx_status, __args)
+ #define stmmac_rx_extended_status(__priv, __args...) \
+-	stmmac_do_void_callback(__priv, desc, rx_extended_status, __args)
++	stmmac_do_callback(__priv, desc, rx_extended_status, __args)
+ #define stmmac_enable_tx_timestamp(__priv, __args...) \
+ 	stmmac_do_void_callback(__priv, desc, enable_tx_timestamp, __args)
+ #define stmmac_get_tx_timestamp_status(__priv, __args...) \
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index b46fcb9f23378..2e6623fa585af 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -5193,9 +5193,13 @@ static int stmmac_rx_zc(struct stmmac_priv *priv, int limit, u32 queue)
+ 		if (!buf->xdp)
+ 			break;
+ 
+-		if (priv->extend_desc)
+-			stmmac_rx_extended_status(priv, &priv->xstats,
+-						  rx_q->dma_erx + entry);
++		if (priv->extend_desc) {
++			/* Read the extended status after the own bit */
++			dma_rmb();
++			status = stmmac_rx_extended_status(priv, &priv->xstats,
++							   &rx_q->dma_erx[entry],
++							   status);
++		}
+ 		if (unlikely(status == discard_frame)) {
+ 			xsk_buff_free(buf->xdp);
+ 			buf->xdp = NULL;
+@@ -5387,8 +5391,13 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ 
+ 		prefetch(np);
+ 
+-		if (priv->extend_desc)
+-			stmmac_rx_extended_status(priv, &priv->xstats, rx_q->dma_erx + entry);
++		if (priv->extend_desc) {
++			/* Read the extended status after the own bit */
++			dma_rmb();
++			status = stmmac_rx_extended_status(priv, &priv->xstats,
++							   &rx_q->dma_erx[entry],
++							   status);
++		}
+ 		if (unlikely(status == discard_frame)) {
+ 			page_pool_recycle_direct(rx_q->page_pool, buf->page);
+ 			buf->page = NULL;
 -- 
 2.53.0
 
