@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018751;
-	b=1rLzY35ElpoE5B39qttFb1VRznkx4YuHfH88tTcs4x6UkxGGHZmNbe/doYnowMrc59Al
-	 FEovT+wtLd7pWclVnIUitUx/txIhd1Td21WW1iblcMEB473p+MYLzFg979btPUrKGw4Q0
-	 v0OWozrjBr+XrZQK2wZGdSaKios47TnLRcFUn0W1vbONEXI05Tm7GAFkaeeM20MBe6isk
-	 /Aq55MNNiK0zxNZfT6ifSjPPkXHqFnOBW4Ev7v1FGw+INLGPiM2FfPWdy8ET9dWxXjUqj
-	 C4XBNJEmmtaCHbzUxtGwkiaaK76s64Y46WOdYpSZj+/0qmsMGinW5Kegw+goVpjqWQA==
+	t=1795018754;
+	b=gOs0lf2exPtPonWnXcN/CJ+0PWIYAbV3z8mnILc7G82G6tAtq/aXk3xsYOYLQia1Nu0Z
+	 njpVwpcLZi9BI358flsfWZC4Wz74DGMHJbNXcaUIpsIcovtUZp7uwoGUAjjlZIip4WLGQ
+	 BLtQdrcSNSokPjt/LaW4ZtUPX3Kq2qjMnwJTLUCY27owGB5inx27jXDJCnKIvycfa3AP8
+	 SCWdKIYqUU0G6HknZXkAJvd2n8LkoBIc3ZIahlSIITrsYnyVRNGvEwYR1XuvlOmkiQBZA
+	 FQfnNrBiWoRXXgPwICoQtQnKjr3yhHFcYlQytfyCWpxE9XvqTE1bmkoRylyw+VEmlvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018751;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018754;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5w7h7qtZo9NfYVlteNshyzd7xWXrKioImy7bEbg3mq0=;
-	b=q6s6fM3x9xaNykOL6t7T4c1EYq5cCde+7BwOMhzwIbZEUilFc/lWJnXSAZexQMtK8qYe
-	 FZ2FH2vGSP3c0qsg5xBMUZgNd5RhFBSo5XWcMMCWsmcq7CgvymdJyDTjJBx9emd1BQwbi
-	 imwikvrKLK9zQcCpbxMtcDZtvA6h1sejsQmPUAjTZ9fgdiyEb2JgADR/8ln3+VJ/2o3aE
-	 zaCS4F9CiI6bIzbZ9CMIVGnYtjw6Zyf4DzkC7V/0UAsGQzKiTxOtqh4EdfGexgdS2jfIZ
-	 xd4jrHvlv4eXMIo8HRKcm7Hz3XedtPMOSmmEd0zaCKnZVkvD8uuYAhzHX7WmY2kf5VQ==
+	bh=tV3ccrhxKSyaMQYW7pEVe4GCRCXyMXMTHgY2/GRQEUs=;
+	b=rlTbN458KR4F45yj4hpqWUr+f/ktO2PUt/m/tY2RjleOCJTAgTmwPaD6eaR4yegulctN
+	 0Q2GW+JP1ykeFY8QlHiLkK+Unrher//q9DlJ1G/UlcsWvMNoPiPjyuiiAnSE71MrT2YR5
+	 +0AHEh+GV3UYaGUw4kkpGGlukWNSigmZozz2YCZAXhQteL78qTsW0FsguWXPNUTnYkZ9d
+	 QmCxKbjWockJtkhe0CjZbL2H/XgsYCbvP+5LoizY7T/0gkt0GHjiFGY1wW4urErLRhjgq
+	 QRCVWdbWLsDegxyIKz1A3+DaiKJsY8rSRTNJEDJ9kuCxOfLutpzxuQ1CmxuQTwYQ87Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2D9UqhxB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OmrIFjWr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B67E606A320;
-	Wed, 18 Nov 2026 16:19:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F021606A32C;
+	Wed, 18 Nov 2026 16:19:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2D9UqhxB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97CB91F000C4;
-	Wed, 18 Nov 2026 16:19:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OmrIFjWr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53DC91F000C4;
+	Wed, 18 Nov 2026 16:19:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018751;
-	bh=5w7h7qtZo9NfYVlteNshyzd7xWXrKioImy7bEbg3mq0=;
+	s=korg; t=1795018753;
+	bh=tV3ccrhxKSyaMQYW7pEVe4GCRCXyMXMTHgY2/GRQEUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2D9UqhxB/wWqncV3+ebuldpbG4A1rUEiD+aFRr+8tmCfRQJQh6eJs6gS8cA6YpodD
-	 yUEJe+/qpWuGio7nYnoOhv7GUwLfnmNNnWKie+wZH8ajfNUC9q5o+deNdjWTpmqtgM
-	 BpBLsJwcqEvkGT3vrqsxB+ybL8kaA2smug0sG36E=
+	b=OmrIFjWrVvz+ovaCjOdGaeHQL+DZWfLMWdkUKJLLhHw+rUX6eGJd0aRkzK3q1/Nsp
+	 +537HVt+snNnBHy+F/xy2VP+k8jAj4ul8CjBJLJNTph8bsJp+fSEw2KbhkUtXbLfhl
+	 eOHfesNeB4xFsp7UYXxFQfNh3zKJp2Ew4wTM4PY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dan Carpenter <error27@gmail.com>,
+	Christian Lamparter <chunkeey@gmail.com>,
+	Jeff Johnson <jjohnson@kernel.org>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1310/2651] wifi: b43legacy: debugfs: NUL terminate string in debugfs
-Date: Wed, 18 Nov 2026 15:42:30 +0100
-Message-ID: <20261118150335.135717744@linuxfoundation.org>
+Subject: [PATCH 7.3 1311/2651] wifi: carl9170: NUL terminate string in debugfs
+Date: Wed, 18 Nov 2026 15:42:31 +0100
+Message-ID: <20261118150335.169694411@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,38 +72,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit f94595252b318a9ae3c01d78b3bcd33b01b1c082 ]
+[ Upstream commit ece30e1daf6a9c95d6f9d0518534a0b9c8c7fd42 ]
 
-The "buf" buffer is PAGE_SIZE and allocated with kzalloc().  We store a
-string from the user in it and then pass it to sscanf() in the write
-functions such as tsf_write_file().  The buffer is only used to store a
-number so we never come close to filling up the whole PAGE_SIZE.  Reserve
-the last character of the page for a NUL terminator.
+The "buf" buffer comes from the user.  We use it to store a number or
+two so it doesn't need to be large.  It gets passed to sscanf() in the
+write functions such as carl9170_debugfs_erp_write().  Ensure that
+buffer is NUL terminated.
 
 This is debugfs so it's root only.
 
-Fixes: 75388acd0cd8 ("[B43LEGACY]: add mac80211-based driver for legacy BCM43xx devices")
+Fixes: 00c4da27a421 ("carl9170: firmware parser and debugfs code")
 Signed-off-by: Dan Carpenter <error27@gmail.com>
-Link: https://patch.msgid.link/909ea7a88658b5e7c183bf0fda31687a91d73818.1790839793.git.error27@gmail.com
+Acked-by: Christian Lamparter <chunkeey@gmail.com>
+Acked-by: Jeff Johnson <jjohnson@kernel.org>
+Link: https://patch.msgid.link/674270ab4aeefa1982362c0ea4132427e14f15eb.1790839793.git.error27@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/b43legacy/debugfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/carl9170/debug.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/b43legacy/debugfs.c b/drivers/net/wireless/broadcom/b43legacy/debugfs.c
-index a04d90d7307cf..7ce8bcf12f0a9 100644
---- a/drivers/net/wireless/broadcom/b43legacy/debugfs.c
-+++ b/drivers/net/wireless/broadcom/b43legacy/debugfs.c
-@@ -259,7 +259,7 @@ static ssize_t b43legacy_debugfs_write(struct file *file,
- 
+diff --git a/drivers/net/wireless/ath/carl9170/debug.c b/drivers/net/wireless/ath/carl9170/debug.c
+index 0498df2a21608..bc6c8e0b1d161 100644
+--- a/drivers/net/wireless/ath/carl9170/debug.c
++++ b/drivers/net/wireless/ath/carl9170/debug.c
+@@ -119,7 +119,7 @@ static ssize_t carl9170_debugfs_write(struct file *file,
  	if (!count)
  		return 0;
+ 
 -	if (count > PAGE_SIZE)
 +	if (count >= PAGE_SIZE)
  		return -E2BIG;
- 	dev = file->private_data;
- 	if (!dev)
+ 
+ 	ar = file->private_data;
+@@ -131,7 +131,7 @@ static ssize_t carl9170_debugfs_write(struct file *file,
+ 	if (!dfops->write)
+ 		return -ENOSYS;
+ 
+-	buf = vmalloc(count);
++	buf = vmalloc(count + 1);
+ 	if (!buf)
+ 		return -ENOMEM;
+ 
+@@ -139,6 +139,7 @@ static ssize_t carl9170_debugfs_write(struct file *file,
+ 		err = -EFAULT;
+ 		goto out_free;
+ 	}
++	buf[count] = '\0';
+ 
+ 	if (mutex_trylock(&ar->mutex) == 0) {
+ 		err = -EAGAIN;
 -- 
 2.53.0
 
