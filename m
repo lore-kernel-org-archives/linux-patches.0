@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043774;
-	b=CoBPAMAd2rdSkVRTS5SJY0wg4pX0AxETlX16YZgff5foNbSY/eMIJzUu2CTeO6eogT/h
-	 dHDpZAeoS6gYqv9OaYcSVG8qjleYfsObE8gcW621y+dyfS7SNW8ThOk2OV5zaifrqwwKd
-	 BnvgQWCZcRczPl7cY7DyoqbZpDrOLsTQvmUH5eqtOVWU+AWSk9TFW0HVlQ1C7ppy0MOX6
-	 G7lPMeFBGa0uHo93nwsy4MUDGvtVQbbsnxm7RgKBOnIg4mBSAsegSXDuSDDjLvj35wZpZ
-	 b5bG3xoF3reC8AeG2NnJRnKMtgXrmvsJ8kZcuAnEolHofIULfxAv8jq5/u9PkGA2FPQ==
+	t=1795043776;
+	b=OHJk28OafooIpo0GL2HAjI75VEyGKykxylhzvGkC7vdNpdO0ZEKcPFGg1b0WuDk0KQfo
+	 A+XalkgSyR9u+jqE5CBC+akrWDmXBP+VdthHXZJXZLcv/ILkRxknIlO7HgMCtg39cNvze
+	 CLzWxDkrNVSa2EVRjUJ5hEStRYg6XHNbvA8SnAs+JwXGEPV4VBbCYAGSx+El3lc+80wq/
+	 i/K5VXkR6DTSGP6IrS6vI4YH2yBU/9LlNdpzfZjW/h7NZXwJgMvq2vGpWBPZ1wRf+H/My
+	 MJzsiMbZOjCpuLW0M1vbzWwt5U1cUkx/G3YYWCAhCSIbyGMUbe9f8t5skwUz28xYPZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043774;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043776;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UqX/aUBsWdX13Y61piZid3rIiBX14nqeoSOxIUdXdEE=;
-	b=eVdPuWjxBFVy3nevapiC4ueDeFfXn3ehmhG1NMsH5xp3CFUtbsJEIiANdpA+BZ61X45i
-	 U9S2wqXoTeWNgZBfrPAKFMmsmf+e2dbB6UChl7WMtzLync2YE/WXHO4tEdpHTn67EdRa6
-	 80K2J67lrg+HIFPCym2jTSu0GZLiyqRAl+wvSpglVd4C9cM0cyhQbIAu0uy1Hx/ibn0EG
-	 JNmChiFMTijJLOJhQoXMUcogbl/pV5mBN2q3HgvZDtfpWq7A8rVlGyS+GVX4XRaE/PEX+
-	 lmkEJgEbOceM2myOMzuJqMKo+A/b7IbjtDswbHRD7MmFEVDrgUouDOMxm/zIrXQnQCg==
+	bh=Ni5v+i5OFHGg9hnu+hh0HzfT0wwuxEG9sB8PLcDDV68=;
+	b=NA5Cn7A++4/Duj3E9yiyX7b4rJFEIqIaNAFlDlDycqoFcbBjIcu1bzRfMwIdnmmnrH94
+	 FynkG4jwpVglCuqp7cjcSPbzLqlWFe++DkSxAU5ZpYISBZyPKpxLnJ46YNDyvveHUNiky
+	 KIbNG6XLjre60NLFD8HxeLxAnig2WSm5tFiWlZUOGjgcqcFHaBKnbPEgOHodne6n0xeiT
+	 BksWqQTMGimlvn2Ijf1y6vtfClNECodlmfjm3rbN16AU0tgezcWBOGrqBJ08952HI25b5
+	 /qDmgHymmfXXIGstGM2AV/lC2H732yTMvHTMXR0nQ8N2rEDKn6VmaX48rMGks0cNVPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w8W5sLO7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rfv84DAm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B95606A31C;
-	Wed, 18 Nov 2026 23:16:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD78606A31C;
+	Wed, 18 Nov 2026 23:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w8W5sLO7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5504C1F000C6;
-	Wed, 18 Nov 2026 23:16:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rfv84DAm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CCF91F000C4;
+	Wed, 18 Nov 2026 23:16:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043773;
-	bh=UqX/aUBsWdX13Y61piZid3rIiBX14nqeoSOxIUdXdEE=;
+	s=korg; t=1795043776;
+	bh=Ni5v+i5OFHGg9hnu+hh0HzfT0wwuxEG9sB8PLcDDV68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w8W5sLO7J5zMv9DrmU5C/ZuBSSBMphXoFgZfs2lxesUkJUAiDlIYDw632bFouZuxG
-	 +lbk2SwANnIklkLWzStvSWcPd0Jtxy1qx2J/5iiihOkOl20SGLCqiF+LT9pBYncI3+
-	 oYYj46UiUM1QMP29CxUMDJNDt3PLMzOuCEg1T0Fk=
+	b=Rfv84DAmy9ZyNFwqUqH5d9oDkPRPnH9W3P/vtBJcaItoaJPGLX05Os/6F0CaUJKGd
+	 ELzzkc/ywJckcUHtzRwPL3qW7k5MfEC8HmDtqFlb8JqyvwhksL/r6N4MBqen8trqdz
+	 EMBPo2NeO9Yx2z3+dJRwZd865oCP9Seqb2hAWlOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
-	Jan Kara <jack@suse.cz>,
+	Max Kellermann <max.kellermann@ionos.com>,
 	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0331/2857] jbd2: add prefix jbd2 for shrink_type
-Date: Wed, 18 Nov 2026 15:22:45 +0100
-Message-ID: <20261118150213.357424736@linuxfoundation.org>
+Subject: [PATCH 6.1 0332/2857] jbd2: check need_resched() when skipping busy checkpoint buffers
+Date: Wed, 18 Nov 2026 15:22:46 +0100
+Message-ID: <20261118150213.394892068@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,128 +70,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Bin <yebin10@huawei.com>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-[ Upstream commit 26770a717cac57041d9414725e3e01dd19b08dd2 ]
+[ Upstream commit f213e12ff5c9590b1034ae8da0e6d09665c772d0 ]
 
-As 'shrink_type' is exported. The module prefix 'jbd2' is added to
-distinguish from memory reclamation.
+journal_shrink_one_cp_list() skips busy checkpoint buffers when called
+with JBD2_SHRINK_BUSY_SKIP.  The continue statement on this path also
+skips the need_resched() check at the end of the loop body.
 
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
+Consequently, when a checkpoint list contains mostly busy buffers, the
+shrinker can walk the entire list while holding journal->j_list_lock,
+even when a reschedule has been requested.  Large checkpoint lists under
+memory pressure can therefore cause long lock hold times and leave other
+CPUs spinning on j_list_lock, resulting in soft lockups or RCU stalls.
+
+Route the busy-buffer path through the need_resched() check so that the
+shrinker can release j_list_lock and reschedule promptly, restoring
+parity with the clean-buffer path, which already checks need_resched().
+This does not change which checkpoint buffers are eligible for removal.
+
+Fixes: b98dba273a0e ("jbd2: remove journal_clean_one_cp_list()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
 Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://lore.kernel.org/r/20240407065355.1528580-3-yebin10@huawei.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260713102229.1598812-2-max.kellermann@ionos.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Stable-dep-of: f213e12ff5c9 ("jbd2: check need_resched() when skipping busy checkpoint buffers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jbd2/checkpoint.c | 22 +++++++++++-----------
- fs/jbd2/commit.c     |  2 +-
- include/linux/jbd2.h |  4 ++--
- 3 files changed, 14 insertions(+), 14 deletions(-)
+ fs/jbd2/checkpoint.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/fs/jbd2/checkpoint.c b/fs/jbd2/checkpoint.c
-index 9fcc68884e262..36c64cf44e005 100644
+index 36c64cf44e005..a888357a29964 100644
 --- a/fs/jbd2/checkpoint.c
 +++ b/fs/jbd2/checkpoint.c
-@@ -378,7 +378,7 @@ int jbd2_cleanup_journal_tail(journal_t *journal)
-  * Called with j_list_lock held.
-  */
- static unsigned long journal_shrink_one_cp_list(struct journal_head *jh,
--						enum shrink_type type,
-+						enum jbd2_shrink_type type,
- 						bool *released)
- {
- 	struct journal_head *last_jh;
-@@ -395,12 +395,12 @@ static unsigned long journal_shrink_one_cp_list(struct journal_head *jh,
- 		jh = next_jh;
- 		next_jh = jh->b_cpnext;
- 
--		if (type == SHRINK_DESTROY) {
-+		if (type == JBD2_SHRINK_DESTROY) {
- 			ret = __jbd2_journal_remove_checkpoint(jh);
- 		} else {
+@@ -401,7 +401,7 @@ static unsigned long journal_shrink_one_cp_list(struct journal_head *jh,
  			ret = jbd2_journal_try_remove_checkpoint(jh);
  			if (ret < 0) {
--				if (type == SHRINK_BUSY_SKIP)
-+				if (type == JBD2_SHRINK_BUSY_SKIP)
- 					continue;
+ 				if (type == JBD2_SHRINK_BUSY_SKIP)
+-					continue;
++					goto next;
  				break;
  			}
-@@ -470,7 +470,7 @@ unsigned long jbd2_journal_shrink_checkpoint_list(journal_t *journal,
- 		tid = transaction->t_tid;
- 
- 		freed = journal_shrink_one_cp_list(transaction->t_checkpoint_list,
--						   SHRINK_BUSY_SKIP, &released);
-+						   JBD2_SHRINK_BUSY_SKIP, &released);
- 		nr_freed += freed;
- 		(*nr_to_scan) -= min(*nr_to_scan, freed);
- 		if (*nr_to_scan == 0)
-@@ -503,20 +503,20 @@ unsigned long jbd2_journal_shrink_checkpoint_list(journal_t *journal,
-  * journal_clean_checkpoint_list
-  *
-  * Find all the written-back checkpoint buffers in the journal and release them.
-- * If 'type' is SHRINK_DESTROY, release all buffers unconditionally. If 'type'
-- * is SHRINK_BUSY_STOP, will stop release buffers if encounters a busy buffer.
-- * To avoid wasting CPU cycles scanning the buffer list in some cases, don't
-- * pass SHRINK_BUSY_SKIP 'type' for this function.
-+ * If 'type' is JBD2_SHRINK_DESTROY, release all buffers unconditionally. If
-+ * 'type' is JBD2_SHRINK_BUSY_STOP, will stop release buffers if encounters a
-+ * busy buffer. To avoid wasting CPU cycles scanning the buffer list in some
-+ * cases, don't pass JBD2_SHRINK_BUSY_SKIP 'type' for this function.
-  *
-  * Called with j_list_lock held.
-  */
- void __jbd2_journal_clean_checkpoint_list(journal_t *journal,
--					  enum shrink_type type)
-+					  enum jbd2_shrink_type type)
- {
- 	transaction_t *transaction, *last_transaction, *next_transaction;
- 	bool released;
- 
--	WARN_ON_ONCE(type == SHRINK_BUSY_SKIP);
-+	WARN_ON_ONCE(type == JBD2_SHRINK_BUSY_SKIP);
- 
- 	transaction = journal->j_checkpoint_transactions;
- 	if (!transaction)
-@@ -562,7 +562,7 @@ void jbd2_journal_destroy_checkpoint(journal_t *journal)
- 			spin_unlock(&journal->j_list_lock);
+ 		}
+@@ -412,6 +412,7 @@ static unsigned long journal_shrink_one_cp_list(struct journal_head *jh,
  			break;
  		}
--		__jbd2_journal_clean_checkpoint_list(journal, SHRINK_DESTROY);
-+		__jbd2_journal_clean_checkpoint_list(journal, JBD2_SHRINK_DESTROY);
- 		spin_unlock(&journal->j_list_lock);
- 		cond_resched();
- 	}
-diff --git a/fs/jbd2/commit.c b/fs/jbd2/commit.c
-index 33113c01f6fc6..5a45e31530264 100644
---- a/fs/jbd2/commit.c
-+++ b/fs/jbd2/commit.c
-@@ -535,7 +535,7 @@ void jbd2_journal_commit_transaction(journal_t *journal)
- 	 * frees some memory
- 	 */
- 	spin_lock(&journal->j_list_lock);
--	__jbd2_journal_clean_checkpoint_list(journal, SHRINK_BUSY_STOP);
-+	__jbd2_journal_clean_checkpoint_list(journal, JBD2_SHRINK_BUSY_STOP);
- 	spin_unlock(&journal->j_list_lock);
  
- 	jbd2_debug(3, "JBD2: commit phase 1\n");
-diff --git a/include/linux/jbd2.h b/include/linux/jbd2.h
-index e3d371565da85..a5cff8024f767 100644
---- a/include/linux/jbd2.h
-+++ b/include/linux/jbd2.h
-@@ -1443,9 +1443,9 @@ void jbd2_update_log_tail(journal_t *journal, tid_t tid, unsigned long block);
- extern void jbd2_journal_commit_transaction(journal_t *);
- 
- /* Checkpoint list management */
--enum shrink_type {SHRINK_DESTROY, SHRINK_BUSY_STOP, SHRINK_BUSY_SKIP};
-+enum jbd2_shrink_type {JBD2_SHRINK_DESTROY, JBD2_SHRINK_BUSY_STOP, JBD2_SHRINK_BUSY_SKIP};
- 
--void __jbd2_journal_clean_checkpoint_list(journal_t *journal, enum shrink_type type);
-+void __jbd2_journal_clean_checkpoint_list(journal_t *journal, enum jbd2_shrink_type type);
- unsigned long jbd2_journal_shrink_checkpoint_list(journal_t *journal, unsigned long *nr_to_scan);
- int __jbd2_journal_remove_checkpoint(struct journal_head *);
- int jbd2_journal_try_remove_checkpoint(struct journal_head *jh);
++next:
+ 		if (need_resched())
+ 			break;
+ 	} while (jh != last_jh);
 -- 
 2.53.0
 
