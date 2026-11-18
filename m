@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045227;
-	b=txj0ZN3YWhOGPOyMr280DAKQ6wKCzMX16ox4nGIvOhgkaptRaUyzgKfPWUdJYsti+8C3
-	 E6JojtVnG0xvzRmoVLNRbPNF6faru+90sQMuefkhNYLRRrx1ajR3bNeo7lusF3RAC0he9
-	 zxj68cRE4RtQKWyvedQ8RgDabV2VSC9G0Gn+mAlZtB4LPUBpZ930zoDQGthbs88PqH15V
-	 cQZ1gwnyjvPTqPqx2Ic8tpVRq5H8kXYzQIj+EIYTl6IcQklBSLvDKkeaeShJySy2qADHq
-	 YA+25iejajcMEsHlZ/qaQZUcXcIKrfT/4YfYBTi/qyms6kII1aUdlzQhUH55ipc6FDw==
+	t=1795045230;
+	b=baSdU0uqcH76MLDMRWgxH/XkiUfVOZgqC87UUlZ4gJRGgzZ/3UxB90mkjx/6NSWE/GVN
+	 uMa5AxgMnZjAb+EsV0RnaB4EL5fXnXeJdcunnv6x0NpGw5BeaFtGIlcyMF+t/x1nkybzZ
+	 EE1qvjVOg+qioawiwaMnGT0F5CKYMDyk9tVxs5nIINXHoA+nvPYysqiyE0N4oU7xfV95p
+	 fCcT/BtMyzLa51IR0baXMimGXSY9kqaBrBJj//DE4GUC6leJtBYGLDdKKVH8OA88V6KqL
+	 adBMXiPUmtZKSdNxWaDSCf7dsmBCElKiLqOzDpBUc+zWjAuttZFmrCiI82O+qIWGRYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045227;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045230;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1cPO2n0Sd66VtBKDOteKeRh4cnZm6l2FmQJnLbRdISE=;
-	b=DiV01pXzj5vsZYfahaxHL1m7CbzflT/lOV+13naSZJBwZS+f8XNnnJJcuCsfVUZMIYc1
-	 +uvHb8xe9nKbSl5fQd5/hP4aC3e15JfjKGzonlaqxEg+4Sl2t7f1VZQkt0WsiSIuYrgwz
-	 q/Ziak4dUFTM3M4CwxTKuzamkLAPe6c7ok2bDa+BwX2WqDyHsAfYxQ8beHX8xAbIuZNvp
-	 jsqpwFmmtekLdlUOCTPqWVjqae7Yn0WDJ52Sq3CxHPPYB3mmUJV5+w/RmQ/yc5Fe5Rz7D
-	 wIXZq/eOUie1bi3dGj4pGhnpXGl7NKQhD9WyPqtj6+uUiweBvgQSNzZuVwcD8ppIMXg==
+	bh=ddwoJIjjSBzkk3aqW9TQOantEhrjE1u8T1tjDNz+yIM=;
+	b=O/HDBrGm1QlAdPscA5LjWVrWyjrutigi3gLQixFCJli1Rup3ulAxsJ7HPjwwtZcwGLn5
+	 eVZNa2x5zXb7yh1HQm7QOEF97ljtIPDutkkzvqkhWDJjHD9gBjKpNd5+xeCR4IskyVVFl
+	 OEgu5VfKHXFyswqS+dW15GTUAu1zKUJGVCUOx34bz/gyr8p3pdPjfOXDRmsFfPDAvLa1x
+	 4Y9KB4fK/hlHTrXzLRNGm5dCH622vKl/VSdXJp19FK20S6JZE82Bw/LKwPGtZ9eBXAlo1
+	 zXZUtS5gKiTxmWXQMpx8+FACxHcxkcTcRCOVesybP++Zvaxblo+pnBqB8zs2CiCKPXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OkOHwC6d;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uQ8a1hLf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80810606A325;
-	Wed, 18 Nov 2026 23:40:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9B7606A31C;
+	Wed, 18 Nov 2026 23:40:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OkOHwC6d
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD8ED1F000C4;
-	Wed, 18 Nov 2026 23:40:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uQ8a1hLf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 960F41F000C5;
+	Wed, 18 Nov 2026 23:40:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045227;
-	bh=1cPO2n0Sd66VtBKDOteKeRh4cnZm6l2FmQJnLbRdISE=;
+	s=korg; t=1795045230;
+	bh=ddwoJIjjSBzkk3aqW9TQOantEhrjE1u8T1tjDNz+yIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OkOHwC6dvBHCgZR1CU5orx8HU+VTnk8e6DRsk0pXqODJRP2jAp/OOeybVq82wQIjd
-	 x6VNe8t2jdZ0tTJz4lOd54/+14kjK7K0OFY61J7WggcK1NKsgyAaj3rz+mS2tpQNot
-	 gPjRu/eNwZV02SmZDvi/Cvh4JIDm3qlW8y1Esj/c=
+	b=uQ8a1hLfJcuVzfxBovqn49TQ2d3k25ScS8TSlS4qMwpRcmQaXbKsV948GaAyoc4uC
+	 eUd/dwqJA41xhttL2haU7eHXkbqE9iLmZKQuwv7Nvxv8CL7gLOBiVdrs2/39ox+A+h
+	 kA1M6ffg3gNRG/1JkwPuCjXVEGPxhi2Z4Pt1GzM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ginger Li <ginger.jzllee@gmail.com>,
+	co+6a04efcebe0fc0ce@bugs.sh,
+	Kaho Jiang <kj2864@nyu.edu>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0849/2857] media: exynos4-is: Fix a race between s_stream(0) and the interrupt handler
-Date: Wed, 18 Nov 2026 15:31:23 +0100
-Message-ID: <20261118150232.141719163@linuxfoundation.org>
+Subject: [PATCH 6.1 0850/2857] media: em28xx: fix double free in em28xx_alloc_urbs
+Date: Wed, 18 Nov 2026 15:31:24 +0100
+Message-ID: <20261118150232.176410736@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,46 +69,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ginger Li <ginger.jzllee@gmail.com>
+From: Kaho Jiang <kj2864@nyu.edu>
 
-[ Upstream commit c65eb69f8170975802ddbede84420553eb681d62 ]
+[ Upstream commit fd427b8adae437cac78a2332241a03cac56e95c2 ]
 
-fimc_lite_subdev_s_stream(on = 0) sets ST_FLITE_OFF outside of the
-fimc->slock protected region, and only then stops the capture in the
-hardware.  flite_irq_handler() runs under fimc->slock and clears
-ST_FLITE_OFF, so an interrupt can be handled in between: the handler finds
-ST_FLITE_OFF already set, clears it and wakes up fimc->irq_queue before the
-capture has actually been stopped.  The wait_event_timeout() right after it
-then returns immediately and the driver continues as if the capture had
-stopped.
+When allocation of usb_bufs->buf[i] fails, em28xx_alloc_urbs()
+explicitly frees all items within usb_bufs->buf before calling
+em28xx_uninit_usb_xfer(), which also frees these items, causing them to be
+freed twice.
 
-Set ST_FLITE_OFF in the same critical section that stops the capture, as
-fimc_lite_stop_capture() already does.
+BUG: KASAN: double-free in usb_free_urb.part.0 (drivers/usb/core/urb.c:25 ./include/linux/kref.h:65 drivers/usb/core/urb.c:96)
+Free of addr ffff88802fd37c00 by task kworker/1:2/1182
+Workqueue: events request_module_async
+Call Trace:
+  kasan_report_invalid_free (mm/kasan/report.c:557)
+  check_slab_allocation (mm/kasan/common.c:235)
+  kfree (./include/linux/kasan.h:199 (discriminator 1) mm/slub.c:2693 (discriminator 1) mm/slub.c:6508 (discriminator 1) mm/slub.c:6801 (discriminator 1))
+  usb_free_urb.part.0 (drivers/usb/core/urb.c:25 ./include/linux/kref.h:65 drivers/usb/core/urb.c:96)
+  usb_free_urb (drivers/usb/core/urb.c:95)
+  em28xx_uninit_usb_xfer (drivers/media/usb/em28xx/em28xx-core.c:964)
+  em28xx_alloc_urbs (drivers/media/usb/em28xx/em28xx-core.c:1076)
+  em28xx_dvb_init (drivers/media/usb/em28xx/em28xx-dvb.c:1734 drivers/media/usb/em28xx/em28xx-dvb.c:1698)
+  em28xx_init_extension (drivers/media/usb/em28xx/em28xx-core.c:1248)
+  request_module_async (drivers/media/usb/em28xx/em28xx-cards.c:3685)
+  process_one_work (kernel/workqueue.c:3396)
+  worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
+  kthread (kernel/kthread.c:436)
+  ret_from_fork (arch/x86/kernel/process.c:158)
+  ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+  Allocated by task 1182:
+  kasan_save_stack (mm/kasan/common.c:57)
+  kasan_save_track (mm/kasan/common.c:78)
+  __kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
+  __kmalloc_noprof (./include/linux/kasan.h:263 mm/slub.c:5414 mm/slub.c:5439)
+  em28xx_alloc_urbs (./include/linux/slab.h:995 ./include/linux/slab.h:1312 drivers/media/usb/em28xx/em28xx-core.c:1081)
+  em28xx_dvb_init (drivers/media/usb/em28xx/em28xx-dvb.c:1734 drivers/media/usb/em28xx/em28xx-dvb.c:1698)
+  em28xx_init_extension (drivers/media/usb/em28xx/em28xx-core.c:1248)
+  request_module_async (drivers/media/usb/em28xx/em28xx-cards.c:3685)
+  process_one_work (kernel/workqueue.c:3396)
+  worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
+  kthread (kernel/kthread.c:436)
+  ret_from_fork (arch/x86/kernel/process.c:158)
+  ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+  Freed by task 1182:
+  kasan_save_stack (mm/kasan/common.c:57)
+  kasan_save_track (mm/kasan/common.c:78)
+  kasan_save_free_info (mm/kasan/generic.c:584)
+  __kasan_slab_free (mm/kasan/common.c:253 mm/kasan/common.c:285)
+  kfree (./include/linux/kasan.h:235 mm/slub.c:2748 mm/slub.c:6508 mm/slub.c:6801)
+  em28xx_alloc_urbs (drivers/media/usb/em28xx/em28xx-core.c:1084)
+  em28xx_dvb_init (drivers/media/usb/em28xx/em28xx-dvb.c:1734 drivers/media/usb/em28xx/em28xx-dvb.c:1698)
+  em28xx_init_extension (drivers/media/usb/em28xx/em28xx-core.c:1248)
+  request_module_async (drivers/media/usb/em28xx/em28xx-cards.c:3685)
+  process_one_work (kernel/workqueue.c:3396)
+  worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
+  kthread (kernel/kthread.c:436)
+  ret_from_fork (arch/x86/kernel/process.c:158)
+  ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
 
-Fixes: 6319d6a002be ("[media] fimc-lite: Add ISP FIFO output support")
+Remove the explicit cleanup loop and let em28xx_uninit_usb_xfer()
+handle the cleanup.
+
+Fixes: d571b592c6206 ("media: em28xx: don't use coherent buffer for DMA transfers")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ginger Li <ginger.jzllee@gmail.com>
+Reported-by: co+6a04efcebe0fc0ce@bugs.sh
+Assisted-by: LLM
+Signed-off-by: Kaho Jiang <kj2864@nyu.edu>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/samsung/exynos4-is/fimc-lite.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/media/usb/em28xx/em28xx-core.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/media/platform/samsung/exynos4-is/fimc-lite.c b/drivers/media/platform/samsung/exynos4-is/fimc-lite.c
-index e185a40305a8f..ee36c96ea80aa 100644
---- a/drivers/media/platform/samsung/exynos4-is/fimc-lite.c
-+++ b/drivers/media/platform/samsung/exynos4-is/fimc-lite.c
-@@ -1210,9 +1210,8 @@ static int fimc_lite_subdev_s_stream(struct v4l2_subdev *sd, int on)
- 			spin_unlock_irqrestore(&fimc->slock, flags);
- 		}
- 	} else {
--		set_bit(ST_FLITE_OFF, &fimc->state);
--
- 		spin_lock_irqsave(&fimc->slock, flags);
-+		set_bit(ST_FLITE_OFF, &fimc->state);
- 		flite_hw_capture_stop(fimc);
- 		spin_unlock_irqrestore(&fimc->slock, flags);
+diff --git a/drivers/media/usb/em28xx/em28xx-core.c b/drivers/media/usb/em28xx/em28xx-core.c
+index 560d525033ff2..5208f5813dc79 100644
+--- a/drivers/media/usb/em28xx/em28xx-core.c
++++ b/drivers/media/usb/em28xx/em28xx-core.c
+@@ -948,9 +948,6 @@ int em28xx_alloc_urbs(struct em28xx *dev, enum em28xx_mode mode, int xfer_bulk,
  
+ 		usb_bufs->buf[i] = kzalloc(sb_size, GFP_KERNEL);
+ 		if (!usb_bufs->buf[i]) {
+-			for (i--; i >= 0; i--)
+-				kfree(usb_bufs->buf[i]);
+-
+ 			em28xx_uninit_usb_xfer(dev, mode);
+ 			return -ENOMEM;
+ 		}
 -- 
 2.53.0
 
