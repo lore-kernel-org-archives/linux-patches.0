@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032512;
-	b=aAdTbLsDDa4tSh+BTrnpGks6mZkEa8sMcVvP7k0P5dOayujb4UASk23rrvRoPUa0HcT1
-	 EBz3chbv5LE/BqQNpdro4v0z27WcePltLyCIIRq4F/iWvWzKG+TGPczfo//o940ASHFEn
-	 77lfU9veS6Dfw8fkZyZW9O2qr45IEGMp8hZ9S72BpexIGJGUn8dfpkcdYSNbLMBoCwHoU
-	 S6LFflRrDQO8WozQVBwVyRZ+RKJnY+DYk6vBEZinhHr2Wb0a22Ic3U8B1mC5vkT+ZUHK7
-	 bxj30g/qG5OcABi+oBPB0zaf9npzvANrIQyFDGs1gK43JFUyQaAFBmfkvFEgvn0eNmg==
+	t=1795032515;
+	b=r0v/JZaanrKo9DGDwLFWC4G5/yjWfosvqbQz9EUnuOcnAvnwH1AgE0I+dEK+7F/W+WvD
+	 8R4tlDy56fl9qsOeWeONaee4Kt+7xy00eBQh8QYBtvTDLRxGFOPPGTDOsICWlmag7f5PR
+	 1Vw99dtSerQZrqQCKD3DmMb8rOTr+zmxT5fPmUrVk1fqHvi+M/ryQE0HaZN4EPdHCUeXV
+	 t58mMnuW2pCQh4WwzxRnp2OJYNjvAtShUTx/YoI0z2Y5DVlDiSpYD3A7/Vm8E7dyS3C5U
+	 4lT9fUFBxhXlqmgdqZNKVsZvoWaSroGR5RqWNfC1gI91CTnikDkZWDHB3AHUv7sO+hQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032512;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032515;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TxYFBBNoCSNxl/0EHEklpjkPKiB3WYezLKowoVGfTp4=;
-	b=I0K3cFU7sEW7n2Q2iBYQ01+w6KViNlAM5tKj/OYSgv0VAJ/77/3zkCaHCK9Bj7JMGNBS
-	 1355MhZpOWOsUMQlfFVWjEwNqbugp/RirjoLJuFNBpHKCZDzGlqe5arHR3nuYFB8f7Gnf
-	 wu7Eew2E0sKcntq9NilOnOSDMvOcV/OxTWTDcWBu/nQlYFJBlMQxrBF3c4l3ba9NwrOnI
-	 jS0bXn0mXK85irqm06AZxixT+J9/6lMfzVpnxXpYNFkxeXrQEooV2Qge0V7FEwyf+0CW1
-	 JuLzuGjwjrTKiOE7GRYrmLDV0S+fh/ouBB4yivjKolBqDsiXSvesaG/89nlAxjx8DjQ==
+	bh=GlM4XV6cYGSbEiT+Oj/ZS8G9ZaSTmC4kw6j35ffADUE=;
+	b=XIuCQfP7M8c3s0KGaWN+wZyNQsEou0Auu4p/hRhXPkrA2vhAnCCL2XKBrfyO6vvlX3F5
+	 X0fIfqCDGK9MDcfcg9w3nVm1kIkHzD4OW+Jg1WID52U6DpRSAaAvlGg8R21aAcpiPQvd2
+	 b6YBAy488dn6M/+0FIpMyPItL8dG1ilbjqr+Yrd7qraUTSqXP8hsUztFowvWPepQESlgp
+	 hSlRmtwRyyYKEom9gqFdw4ETWG9Dx71BWDvmk2n+N1f4tKMWJ/kN5sN21IMe+PTKI86UY
+	 02DPPyOopS/pFDpIcixWtG61S7xpMUF0ykr4I46uNWA8c8AOj5OlBzlOJUQAZxIYqPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UPrYKxY5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xc0DDYb1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A130606A332;
-	Wed, 18 Nov 2026 20:08:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3CC606A31C;
+	Wed, 18 Nov 2026 20:08:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UPrYKxY5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65A0B1F000C4;
-	Wed, 18 Nov 2026 20:08:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xc0DDYb1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 275161F000C4;
+	Wed, 18 Nov 2026 20:08:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032511;
-	bh=TxYFBBNoCSNxl/0EHEklpjkPKiB3WYezLKowoVGfTp4=;
+	s=korg; t=1795032514;
+	bh=GlM4XV6cYGSbEiT+Oj/ZS8G9ZaSTmC4kw6j35ffADUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UPrYKxY5y77UDIVrHUzrKPNGQwUfLNFVl+1c7NVnrdDpWGSmDCZa4DYIfNQsOFHJh
-	 7bf6xpOoTqr88K0WQXxWwcRP3QN7UPlQ4KzkSwtccHbZjFAD3n+zxvwiSKMuqXjUz8
-	 pCEBc5jueTKrF6gx5Ab7CLF49znF3B5ewwBUZDkI=
+	b=xc0DDYb1apfmsvb6ro+i/86TYqyxcPLEI3cq0JiXOrjZYXPmShMJpZlrF792Eenml
+	 Kv6HR8V2PWwqVbZzCT+ARen5Ud+IRpsvmkUI90qXHNmWS7gfw2/Ny3TmKiwGrh2PzF
+	 2ItPlM7wUQmunNAbXsu3Qbj24VbjV/XUkLM5fg7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
-	Qiliang Yuan <odys.yuan@gmail.com>,
-	Neal Cardwell <ncardwell@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Rishikesh Jethwani <rjethwani@purestorage.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1438/1756] tcp: tcp_metrics: use the socket netns, not the dst device netns
-Date: Wed, 18 Nov 2026 15:59:25 +0100
-Message-ID: <20261118150106.401089122@linuxfoundation.org>
+Subject: [PATCH 6.12 1439/1756] tls: device: protect async RX resync state during device-down
+Date: Wed, 18 Nov 2026 15:59:26 +0100
+Message-ID: <20261118150106.438176681@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,112 +68,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Rishikesh Jethwani <rjethwani@purestorage.com>
 
-[ Upstream commit 504bdcb8c1566a6f887f9accebe1aa99b502ae97 ]
+[ Upstream commit f89a228125238f8d4c7e2b8161e2a85fe35307b6 ]
 
-tcp_get_metrics(), __tcp_get_metrics_req() and tcpm_new() look up and
-create metrics entries in the netns of the cached dst device rather than
-in the netns of the socket.
+tls_device_rx_resync_new_rec() can run in process context with the
+socket lock held, but without an RCU read lock: from the strparser work
+item (tls_strp_work()) and from the receive paths (tls_rx_rec_wait(),
+tls_rx_rec_done()). The resync_async pointer belongs to the driver RX
+context, which tls_device_down() tears down from the netdev notifier
+without taking the socket lock; only the softirq entry to the parser is
+implicitly inside an RCU section.
 
-These usually match, but not after the device has been moved to another
-netns or unregistered: a socket can keep a stale dst in sk_dst_cache
-until it is checked again, and tcp_update_metrics() reads it with
-__sk_dst_get() without any dst_check(). Once dst_dev_put() has run, the
-dst device is blackhole_netdev and the entry is created in init_net.
-Before that, for instance for routes through nexthop objects whose
-cached dsts are released from a nested RCU callback, it is the netns the
-device has just been moved to.
+If the parser passes the TLS_RX_DEV_DEGRADED check before device-down
+sets it, tls_device_down() can complete synchronize_net() and delete the
+driver context before the parser accesses resync_async->req or its
+record log. In the asynchronous stage the parser also writes the record
+log, so this is a write to freed memory, not only a stale read. The RCU
+section in tls_device_resync_rx() starts after those accesses and
+therefore does not prevent the use-after-free.
 
-A TCP socket of netns A that enters TIME_WAIT in that window then
-creates or updates an entry carrying A's addresses and RTT in another
-netns, where TCP_METRICS_CMD_GET can dump it and where new connections
-to the same peer inherit those metrics.
+Found by code inspection; not reproduced. Hitting the window requires
+the parser to be preempted between the DEGRADED check and the
+resync_async access across the device-down grace period and the
+driver's teardown.
 
-The metrics belong to the netns of the socket, so use sock_net() for
-full sockets and request sockets, and pass it to tcpm_new().
-
-Kernel sockets that do not hold a netns reference can still reach
-tcp_time_wait() after tcp_net_metrics_exit_batch() has flushed the
-entries of their dismantling netns, and an entry created then would
-never be flushed and would keep a dangling tcpm_net. Make tcpm_new()
-refuse to create entries when check_net() fails. Its callers are in
-an RCU read-side section, and cleanup_net() waits for a grace period
-between the refcount reaching zero and the flush, so an entry added
-after a successful check is always seen by the flush.
-
-Fixes: 51c5d0c4b169 ("tcp: Maintain dynamic metrics in local cache.")
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Cc: Qiliang Yuan <odys.yuan@gmail.com>
-Reviewed-by: Neal Cardwell <ncardwell@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261016084802.2725187-1-edumazet@kernel.org
+Fixes: ed9b7646b06a ("net/tls: Add asynchronous resync")
+Signed-off-by: Rishikesh Jethwani <rjethwani@purestorage.com>
+Link: https://patch.msgid.link/20261013213517.2219663-1-rjethwani@purestorage.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_metrics.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ net/tls/tls_device.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
-index 10e86f1008e9d..ef81765a0831d 100644
---- a/net/ipv4/tcp_metrics.c
-+++ b/net/ipv4/tcp_metrics.c
-@@ -161,16 +161,26 @@ static void tcpm_check_stamp(struct tcp_metrics_block *tm,
- 	rcu_dereference_protected(p, lockdep_is_held(&tcp_metrics_lock))
+diff --git a/net/tls/tls_device.c b/net/tls/tls_device.c
+index 918dc6c4697b7..099cf5d093689 100644
+--- a/net/tls/tls_device.c
++++ b/net/tls/tls_device.c
+@@ -782,8 +782,15 @@ void tls_device_rx_resync_new_rec(struct sock *sk, u32 rcd_len, u32 seq)
  
- static struct tcp_metrics_block *tcpm_new(struct dst_entry *dst,
-+					  struct net *net,
- 					  struct inetpeer_addr *saddr,
- 					  struct inetpeer_addr *daddr,
- 					  unsigned int hash)
- {
- 	struct tcp_metrics_block *tm;
- 	bool reclaim = false;
--	struct net *net;
- 
- 	spin_lock_bh(&tcp_metrics_lock);
--	net = dst_dev_net_rcu(dst);
+ 	if (tls_ctx->rx_conf != TLS_HW)
+ 		return;
 +
-+	/* Do not add entries to a dismantling netns: they would not be
-+	 * flushed again. Callers are in an RCU read-side section, and
-+	 * cleanup_net() waits for a grace period after the netns refcount
-+	 * reached zero and before tcp_metrics_flush_all(NULL) runs, so an
-+	 * entry added after a successful check_net() is seen by the flush.
++	/* The parser also runs in process context, without an RCU read lock.
++	 * Protect the driver's resync_async state before checking the flags:
++	 * device-down sets DEGRADED and waits for synchronize_net() before
++	 * freeing it, without taking the socket lock.
 +	 */
-+	if (unlikely(!check_net(net))) {
-+		tm = NULL;
-+		goto out_unlock;
-+	}
++	rcu_read_lock();
+ 	if (unlikely(test_bit(TLS_RX_DEV_DEGRADED, &tls_ctx->flags)))
+-		return;
++		goto out;
  
- 	/* While waiting for the spin-lock the cache might have been populated
- 	 * with this entry and so we have to check again.
-@@ -273,7 +283,7 @@ static struct tcp_metrics_block *__tcp_get_metrics_req(struct request_sock *req,
- 		return NULL;
+ 	prot = &tls_ctx->prot_info;
+ 	rx_ctx = tls_offload_ctx_rx(tls_ctx);
+@@ -798,11 +805,11 @@ void tls_device_rx_resync_new_rec(struct sock *sk, u32 rcd_len, u32 seq)
+ 
+ 		if (likely(!is_req_pending) || req_seq != seq ||
+ 		    !atomic64_try_cmpxchg(&rx_ctx->resync_req, &resync_req, 0))
+-			return;
++			goto out;
+ 		break;
+ 	case TLS_OFFLOAD_SYNC_TYPE_CORE_NEXT_HINT:
+ 		if (likely(!rx_ctx->resync_nh_do_now))
+-			return;
++			goto out;
+ 
+ 		/* head of next rec is already in, note that the sock_inq will
+ 		 * include the currently parsed message when called from parser
+@@ -811,7 +818,7 @@ void tls_device_rx_resync_new_rec(struct sock *sk, u32 rcd_len, u32 seq)
+ 		if (sock_data > rcd_len) {
+ 			trace_tls_device_rx_resync_nh_delay(sk, sock_data,
+ 							    rcd_len);
+-			return;
++			goto out;
+ 		}
+ 
+ 		rx_ctx->resync_nh_do_now = 0;
+@@ -822,16 +829,18 @@ void tls_device_rx_resync_new_rec(struct sock *sk, u32 rcd_len, u32 seq)
+ 		resync_req = atomic64_read(&rx_ctx->resync_async->req);
+ 		is_req_pending = resync_req;
+ 		if (likely(!is_req_pending))
+-			return;
++			goto out;
+ 
+ 		if (!tls_device_rx_resync_async(rx_ctx->resync_async,
+ 						resync_req, &seq, &rcd_delta))
+-			return;
++			goto out;
+ 		tls_bigint_subtract(rcd_sn, rcd_delta);
+ 		break;
  	}
  
--	net = dst_dev_net_rcu(dst);
-+	net = sock_net(req_to_sk(req));
- 	hash ^= net_hash_mix(net);
- 	hash = hash_32(hash, tcp_metrics_hash_log);
+ 	tls_device_resync_rx(tls_ctx, sk, seq, rcd_sn);
++out:
++	rcu_read_unlock();
+ }
  
-@@ -318,7 +328,7 @@ static struct tcp_metrics_block *tcp_get_metrics(struct sock *sk,
- 	else
- 		return NULL;
- 
--	net = dst_dev_net_rcu(dst);
-+	net = sock_net(sk);
- 	hash ^= net_hash_mix(net);
- 	hash = hash_32(hash, tcp_metrics_hash_log);
- 
-@@ -326,7 +336,7 @@ static struct tcp_metrics_block *tcp_get_metrics(struct sock *sk,
- 	if (tm == TCP_METRICS_RECLAIM_PTR)
- 		tm = NULL;
- 	if (!tm && create)
--		tm = tcpm_new(dst, &saddr, &daddr, hash);
-+		tm = tcpm_new(dst, net, &saddr, &daddr, hash);
- 	else
- 		tcpm_check_stamp(tm, dst);
- 
+ static void tls_device_core_ctrl_rx_resync(struct tls_context *tls_ctx,
 -- 
 2.53.0
 
