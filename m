@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057374;
-	b=OsEIzpME0aj+fktVYif1Ud2VWx/0zDvUCWlwWyaR7mcPPhrQxqKrwVms54tI7nSg0jAR
-	 gpSZWC3cqDJaE3mbKWPIrwPhRjVL7qW20CVl1fx0nsIwUJ9gcyRNII8PNXVjMOCvO+nQc
-	 hliMSQx9wn2azOo0ToltDM++MUvnUZxUWg/MehS2i29Bhk3Qxi9xfDhXR9Su4LDAl7QTg
-	 ZbZF3HdyfsGYMBYs1XIM64ZYUmQ18TjFMhX3CbmGlDXqPCMZ9A9pcGGe9xrL+tyBdGiUJ
-	 fS0eQWr8Y+G544wjpacBQwkB594xeSciQEiJVTTuTqi8RiXl7vp7JA3oRr6CsLkZuJw==
+	t=1795057377;
+	b=09+XpqYd+i0bTItetqfY/cOpyBoR6McmD8/G7stabJs/EFVrfkqXLpUeiSbRudI1gyuA
+	 LkWcv9W/P0+mkPdhXywGSevOyvcqwVsc6cwJ4o1Z5y9qCIcUKOglOBKWLNnelsHpfg4Hb
+	 AIuMxQ4EBEoR6eNcgbHlP6FrckSamYx7wgu11b0ftqh2DzPLCrF/6TxrMB4O3g/G2SXhz
+	 oBMUkyck3yxRL71HydqYefT40fEwQrmkfMvLtXsSJscrRd5+fRq7qagynl/AVOy1PNwSN
+	 Zgm+ccLVHpc3inzoQgSqM0b8IBS+cP5cdBuztZjKcbK/H8vnDwDQTjZIHj55GObzhig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057374;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057377;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hF4h8urGYHyhdoRyL2VI/iC/udu8jKhvkfG3J7XvhKk=;
-	b=sDNUAuGyHdUkglHI7Ph+vwVBXWZoB+W3cbwg3LUmItYQrjnSASMrr+GK19XOOroTz/Wn
-	 dxrrKHNtQw4x/69ipKTjDzPcpW4n6adXVGwIESaszti4Zd3D9fXyuzClQiHZHEy9VNkUj
-	 gY9oT6kEyUlr5fxn+tT1wV8Pn15lYT+HEQg+QyJ/5h8EoulmNsSpMvfSWMEtyjznmHulo
-	 2F+W0Sz94I2iYuJ9qpr27gPxeS751B8gj36J2EizZUjtO1kEu5vZ/8p+SJivhdg85ko4K
-	 6H+VRjruIDNf9W8ZJUg5y6IX7Aw92g7LK/BLqCvhNu/Ay7CdOlXu6QGXPA7IX8RJPzA==
+	bh=oKzVVxQB7AwyHW6vccLxPwQjNbKtrtRZ90FrHYl2sK4=;
+	b=mkGxnqSTCw/fvLaSMykRy/5QfJwkjnPn9I/2hbHxj2ZOywghF3XWW81PJAubND+uXA4j
+	 Mr+E9+IUd0DoChnF4vsfA+dBjRaPI1Rh7Fhas5LUgiROXlWC6B5ExDEjgsSbvEXvfnSTK
+	 TjrS9s0Wh9PXBlVZXrWyT/FP7Zp77svivyc097F+UB3dcjiInc2cfGfbiOBJ9qYutWazu
+	 EHLQbz2hOZUYehhhnmD3CZKusKtCRQSmFUikWh+40XuWKnbRg1bI3WCZo5marguaZyCT8
+	 ref3jpijWNRd+f0F+yQ3Mj0rK4KtL7fSi0p67Ta8c4+8iP5vsTLDQPjWU7bPnqsT2Eg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lFroV04p;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HnsFqyG8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D969F606A33D;
-	Thu, 19 Nov 2026 03:02:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC1F60A260B;
+	Thu, 19 Nov 2026 03:02:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lFroV04p
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E612D1F000C4;
-	Thu, 19 Nov 2026 03:02:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HnsFqyG8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2E041F000C4;
+	Thu, 19 Nov 2026 03:02:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057374;
-	bh=hF4h8urGYHyhdoRyL2VI/iC/udu8jKhvkfG3J7XvhKk=;
+	s=korg; t=1795057377;
+	bh=oKzVVxQB7AwyHW6vccLxPwQjNbKtrtRZ90FrHYl2sK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lFroV04pVq3xR4Mg1/SeTDI1hlZsBf1mdQ14amjJbXAXj9rkAfY3Ou8gM6rIbmaQo
-	 CranXwkoTA+2i/1o8/0l6BnWry3KxeGIIrGdp7Ail9WKer17pXAg/eZkHGMl5bmu8e
-	 Jvs4kKLSihCCDAUzkR8Qj4IDlQKOGqLVS2SBLOaA=
+	b=HnsFqyG8V/Eyrx2p7Hl1YHDygnb23xhM3YbIbArBtzTnCxmy/JHrJ5w2C684egB4y
+	 6KfT+t2BUNvws/4i0u1hSxACAZ2zXa8+cKR4huYj/9b86ULzoj9eSm0dto9Xci9FZY
+	 cRSZe4oOaY9NIv/voQLcCxfOQf1NDebdZbX/4Bns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0109/1848] iommu/qcom: Check pm_runtime_resume_and_get() return in probe
-Date: Wed, 18 Nov 2026 15:35:47 +0100
-Message-ID: <20261118145915.594140615@linuxfoundation.org>
+Subject: [PATCH 5.10 0110/1848] iommu/qcom: Publish pgtbl_ops before releasing init_mutex
+Date: Wed, 18 Nov 2026 15:35:48 +0100
+Message-ID: <20261118145915.629335065@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,48 +71,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 
-[ Upstream commit e910315ae08a23bc953daed10b1c518abac1df49 ]
+[ Upstream commit a05b67cd45ad09a19f41b2d37255da714512e0ca ]
 
-The SMMU_INTR_SEL_NS register write in qcom_iommu_device_probe() uses
-pm_runtime_get_sync() without checking the return value. If runtime
-resume fails the subsequent writel_relaxed() would access hardware with
-clocks potentially disabled.
+qcom_domain->pgtbl_ops was assigned after mutex_unlock(). Another thread
+calling qcom_iommu_init_domain() would see qcom_domain->iommu already set
+(domain fully initialized) and skip re-initialization under the mutex.
+If it then called qcom_iommu_map() before the first thread set pgtbl_ops,
+it would observe a NULL ops pointer and return -ENODEV for valid mappings.
 
-Switch to pm_runtime_resume_and_get() which handles the usage-count
-cleanup on failure, check the return value, and unwind the already
-registered iommu device on error.
+Move the assignment to before mutex_unlock() so that once the mutex is
+released the domain is fully visible to concurrent operations.
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu/qcom_iommu.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-index f59b53805dd03..cfcebc87a978e 100644
+index cfcebc87a978e..01152fc75c632 100644
 --- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
 +++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-@@ -875,13 +875,17 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
- 	bus_set_iommu(&platform_bus_type, &qcom_iommu_ops);
- 
- 	if (qcom_iommu->local_base) {
--		pm_runtime_get_sync(dev);
-+		ret = pm_runtime_resume_and_get(dev);
-+		if (ret)
-+			goto err_iommu_unregister;
- 		writel_relaxed(0xffffffff, qcom_iommu->local_base + SMMU_INTR_SEL_NS);
- 		pm_runtime_put_sync(dev);
+@@ -322,13 +322,12 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
+ 		ctx->domain = domain;
  	}
  
- 	return 0;
+-	mutex_unlock(&qcom_domain->init_mutex);
+-
+ 	/* Publish page table ops for map/unmap */
+ 	qcom_domain->pgtbl_ops = pgtbl_ops;
  
-+err_iommu_unregister:
-+	iommu_device_unregister(&qcom_iommu->iommu);
- err_sysfs_remove:
- 	iommu_device_sysfs_remove(&qcom_iommu->iommu);
- err_pm_disable:
+-	return 0;
++	mutex_unlock(&qcom_domain->init_mutex);
+ 
++	return 0;
+ out_clear_iommu:
+ 	qcom_domain->iommu = NULL;
+ out_unlock:
 -- 
 2.53.0
 
