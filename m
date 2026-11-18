@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021558;
-	b=rdMyeP6c09O90XYvufZ00GijcTo9Z2VJsXGzd9JuJeK6Ut64p9vPQW8fiTa8Zq0wxa9i
-	 o8uBUMrq7+RrTM6Zmn/nxk9Qj8rPozKCCVn+qC11ZH14oraQVGIz3/ELpgvlid/XwO9YD
-	 EV4iaViagq/A5FcSRixYiEjRUfVDmFFNVMdCUhC/Sm5rlfc6YuvbCv+On8Y/t4Sr+8ZpD
-	 M3zzr5JRqEG48FagLwpQSSQRkHJigk8a+OBTOJ/3pLBfY6+heoWSTlaaQubmIv2MWtOPd
-	 bDAL4tJwTMfNNPMfJ+5IjdZ9kLYNTgiNm0SHW2//05i5x5CSwVFdV0xukSK47hl/qJw==
+	t=1795021561;
+	b=md9uR4pSNvjMMXP99gOVpFNEnF2vD7JaupnFvaSHnMmdqQhFhDWBhIt0V2TSxrEMH6sY
+	 38s2F0gN11KEOMg59qVMAlaYLv5K0SLliHlt01cT3WFjjbZwFJdmXD/ipCsg+Urofi/xL
+	 dES3tjfBkGY71CbxuUwq08e1xgY0NC3AcdEo89ln1xuVM2TD163yMQCgRALT4e/RLYE/P
+	 8FfvKiWSBD0bSP87S7UhvCiX0vBgdUS5vBD2hQTJ1XV1WEdxH72Bfupbv7t1gUqFyuMWX
+	 olYsPoBqnggLnyEMSqQJ6ulj0AVFizWP4Yreroe0Wz3CXQCM+UJ8FSfhaUwDk8rX0HQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021558;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021561;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=F2oQBDprIMwvtXzxEK2Jy//Oa6FxM+/UznOMOaO6JqE=;
-	b=XK+AC7rRn2pOmu/js677Pvi45vIZd8woUskjk0O+eExfCeXaaikUxiDQHMIrXdhTsfAM
-	 UnZ2sC4XYzsc8TJiqo9YL19PmeIQnjelFO+M+kvfvW1WL5DQZD7BB2V/YnW3a5IAHoiwW
-	 5uzOI1o9Rr+78oVPCDd/DP05KAkUt72IOTv+gvocZx5YZPOZhA3oOwKxTcZMEFLrDBNYY
-	 uC6UNzSlTt7xh/RgsguHiqhQpZB7+yRZsbkn+qncXAcmNMA0aOf6SWMFCq63mKvMSPX0C
-	 KBwzF6NbTl/P/KlrVyqmOoareljR4qQEzh0FO8APhhhvfcPNoKSgZh+Dy8RIRETI4KA==
+	bh=38WPhL7wq3q5Cq4jMeNLCTGtUyi+tBbJJU63MS7q9nU=;
+	b=uuAVokq5dtwYvcOm0HNbkAoaK+3N+LSJgTLAYeUPoHqg4KUhGgtDcVkesRwKRicA2+a4
+	 fgFMoufxW/odgSkgH56HhmmSXuErLbgVxRhPpr94G7z8LFoqJ8oG28El2PKMLj0bcJXU9
+	 r1GFn++TLWbrecUS7BnvBy7KUcE/CN5SkUSW2826imoQVTaxRBW0+YY4mbEoSHbA5eHSW
+	 3CRRP+iH5sZYoCoRfI+/hDu4BMEgv6wihle20LUUxu6aV/tYPIQ5TYXbfGB8MEmR2UulQ
+	 MQjajbHFI3i/FN6Viym6w2mCpgdLtFgqaof9Y9k/lk2v3lvQH/jbj3AnwIiqWRypCYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J8zNE1Ul;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T4Qk77oB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0E6606A31C;
-	Wed, 18 Nov 2026 17:05:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C10F606A31C;
+	Wed, 18 Nov 2026 17:06:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J8zNE1Ul
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A4531F000C5;
-	Wed, 18 Nov 2026 17:05:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T4Qk77oB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C25D51F000C5;
+	Wed, 18 Nov 2026 17:06:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021558;
-	bh=F2oQBDprIMwvtXzxEK2Jy//Oa6FxM+/UznOMOaO6JqE=;
+	s=korg; t=1795021561;
+	bh=38WPhL7wq3q5Cq4jMeNLCTGtUyi+tBbJJU63MS7q9nU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J8zNE1UlkzBCkdkLiJWKBiDEp2zRufr4ddF4gUkkmFau1qmLyCrH0zTzHfyymSnW9
-	 PHep6C2PeZBOyXYeX0PEX4ZVCWDdmbVp2S9pXL9+xPHPB2+bkiF1zSMGjnJ+CeRXqX
-	 UbQqakQllyq/FrHPOdZMPvqZaa2ROWHJ3zXG5uxw=
+	b=T4Qk77oBS3lOjiTVtJU8R9efb5f3GOGbBi7aFULUPzJrr8fStzrLFFC9BtIFYA1am
+	 DMmjYBeV91/8f0wPWefa/c+Sds/66VfFGrtfvZuTEcjKc7xyrFmtmh9UTCJzDuEGVH
+	 /CbD+zT3lQyqcz3iAze+NEWgkBleYTogWTLNWPWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hang Nan <2122295973@qq.com>,
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
 	Baolin Liu <liubaolin@kylinos.cn>,
 	Hyunchul Lee <hyc.lee@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2349/2651] ntfs: reject index blocks with a too small entries offset
-Date: Wed, 18 Nov 2026 15:59:49 +0100
-Message-ID: <20261118150409.626048786@linuxfoundation.org>
+Subject: [PATCH 7.3 2350/2651] ntfs: fix u16 truncation of the update sequence array count check
+Date: Wed, 18 Nov 2026 15:59:50 +0100
+Message-ID: <20261118150409.658693497@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,88 +70,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hang Nan <2122295973@qq.com>
+From: Zhan Xusheng <zhanxusheng@xiaomi.com>
 
-[ Upstream commit 20e14268ef410cbabff54a79405813a8b9ce8e89 ]
+[ Upstream commit b713b69cf79ef52b1737a1a6c09df2522ff875af ]
 
-Index blocks read from the volume are checked for a plausible header, but
-nothing keeps a block from placing its entries closer to the header than
-ntfs_ib_alloc() does when it creates one.  The allocation adds the update
-sequence array, one entry per 512-byte sector plus the terminator, to the
-index header and aligns the result to 8 bytes, so the first entry of a
-4096-byte block starts at offset 40, while a corrupt block may declare 16.
+ntfs_check_restart_page_header() bounds the on-disk system page size by
+recomputing the update sequence array count from it:
 
-ntfs_ib_copy_tail() then copies the entries that follow the median entry
-from the source block into a freshly allocated destination.  The tail is
-sized as index_length minus entries_offset and the median entry, both from
-the source, while the destination only has allocated_size minus the
-canonical offset of room.  With the values above the tail is 4040 bytes
-and the destination holds 4032, so the last 8 bytes are written past the
-end of the new allocation, with contents taken from the mounted image.
+	u16 ra_ofs, usa_count, usa_ofs, usa_end = 0;
+	...
+	usa_count = 1 + (logfile_system_page_size >> NTFS_BLOCK_SIZE_BITS);
+	if (usa_count != le16_to_cpu(rp->usa_count))
+		return false;
 
-Reject such a block when it is read: entries_offset must not be smaller
-than the canonical offset for the block size.  Derive it from block_size
-rather than from the block's own usa_count, which post_read_mst_fixup()
-treats as "not protected" when it does not match the block size, and use
-the same helper in ntfs_ib_alloc() so both stay in sync.
+The right hand side is computed in u32 but stored in a u16, so the count
+wraps once the system page size reaches 0x2000000.  An image claiming any
+larger power of two passes the check by also claiming usa_count == 1.
 
-Fixes: 0a8ac0c1fa0b ("ntfs: update directory operations")
-Signed-off-by: Hang Nan <2122295973@qq.com>
+Nothing else limits the value, so ntfs_check_and_load_restart_page() goes
+on to kvzalloc() up to 2 GiB for the restart page and copy that many bytes
+a page at a time.  The size is only rejected afterwards, by the
+(size >> NTFS_BLOCK_SIZE_BITS) != usa_count test in post_read_mst_fixup().
+
+Compute the count in a u32 so the existing check rejects an over-large
+system page size instead of being defeated by the truncation.  This adds
+no new limit: the array holds one u16 per protected sector plus the update
+sequence number and must end within the first sector, which caps usa_count
+at 240 and the system page size at 64 KiB.
+
+Widen ra_ofs and usa_ofs as well, as ntfs_check_restart_area() already
+does: both are loaded from __le16 on-disk fields and every comparison is
+against a non-negative value, so no result changes.
+
+Fixes: 1e9ea7e04472 ("Revert "fs: Remove NTFS classic"")
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
 Reviewed-by: Baolin Liu <liubaolin@kylinos.cn>
 Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/index.c | 22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ fs/ntfs/logfile.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ntfs/index.c b/fs/ntfs/index.c
-index 03de4c97c1620..9a23d0786959b 100644
---- a/fs/ntfs/index.c
-+++ b/fs/ntfs/index.c
-@@ -489,6 +489,14 @@ static struct index_entry *ntfs_ie_dup_novcn(struct index_entry *ie)
- 	return dup;
- }
+diff --git a/fs/ntfs/logfile.c b/fs/ntfs/logfile.c
+index ce38ce87f8fc8..2f27ae7a3927f 100644
+--- a/fs/ntfs/logfile.c
++++ b/fs/ntfs/logfile.c
+@@ -27,7 +27,7 @@ static bool ntfs_check_restart_page_header(struct inode *vi,
+ 		struct restart_page_header *rp, s64 pos)
+ {
+ 	u32 logfile_system_page_size, logfile_log_page_size;
+-	u16 ra_ofs, usa_count, usa_ofs, usa_end = 0;
++	u32 ra_ofs, usa_count, usa_ofs, usa_end = 0;
+ 	bool have_usa = true;
  
-+/* Offset of the first entry in an index block created by ntfs_ib_alloc(). */
-+static u32 ntfs_ib_canonical_entries_offset(u32 block_size)
-+{
-+	u32 usa_count = block_size / NTFS_BLOCK_SIZE + 1;
-+
-+	return (sizeof(struct index_header) + usa_count * 2 + 7) & ~7;
-+}
-+
- /*
-  * Check the consistency of an index block
-  *
-@@ -548,6 +556,16 @@ int ntfs_index_block_inconsistent(struct ntfs_volume *vol,
- 					   offsetof(struct index_block, index),
- 					   inum))
- 		return -EIO;
-+
-+	if (le32_to_cpu(ib->index.entries_offset) <
-+	    ntfs_ib_canonical_entries_offset(block_size)) {
-+		ntfs_error(sb,
-+			   "Index block: entries offset %u is below the minimum for a %u-byte block: vcn %lld inode %llu\n",
-+			   le32_to_cpu(ib->index.entries_offset), block_size,
-+			   vcn, inum);
-+		return -EIO;
-+	}
-+
- 	if (ntfs_index_entries_inconsistent(vol, &ib->index, cr, inum))
- 		return -EIO;
- 	return 0;
-@@ -960,8 +978,8 @@ static struct index_block *ntfs_ib_alloc(s64 ib_vcn, u32 ib_size,
- 	*(__le16 *)((char *)ib + le16_to_cpu(ib->usa_ofs)) = cpu_to_le16(1);
- 	ib->lsn = 0;
- 	ib->index_block_vcn = cpu_to_le64(ib_vcn);
--	ib->index.entries_offset = cpu_to_le32((ih_size +
--				le16_to_cpu(ib->usa_count) * 2 + 7) & ~7);
-+	ib->index.entries_offset =
-+		cpu_to_le32(ntfs_ib_canonical_entries_offset(ib_size));
- 	ib->index.index_length = 0;
- 	ib->index.allocated_size = cpu_to_le32(ib_size -
- 			(sizeof(struct index_block) - ih_size));
+ 	ntfs_debug("Entering.");
 -- 
 2.53.0
 
