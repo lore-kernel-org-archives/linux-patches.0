@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025069;
-	b=CLp6nYDu+PhPp8SaOG15ZSEQVY77TZy03rEyktE/h4UJA7OpMU3OV2eWSbSC4qPzNfN7
-	 wqBijO6XamNzW781YFkEmcZiC7gtO12iz7mm3mZbJrE+cVKXQ0GvZsGykX55XCXNjhTI6
-	 eWlHh50VQ+B+idEN6ZTPLMm8OxVBXQBRrQ7Zo7HWCM/yvvwqnAA/zTK0sKR86MWWkosAC
-	 E0kC1qjBD/ZLtsKLi/RjvBG9mSDD3kQKJYG1nu9Td5Nr7sobjzbzYnyGBE23hJZAJM5gb
-	 iG8pladqVj3mai5eITR/QIefeCG2MDOWwQtxTN7amrhkHIFboPLCBM7yQZAuGgSKKRA==
+	t=1795025072;
+	b=luEY56xihy4q3tAxcyTmonfN64LrZ/MQOWcr8EA302fHq322oclleuZX59Xw717RkTxQ
+	 +q4WxV3V3ZQBkkAt20JioC1LGaH/jVsMbt1eSpInM0/NReboRuWof+sJJoB/COHRb8Go6
+	 aa4Xwdc+tNPS9ggG+y2LfraW2Bcbh9hlveBXRp1cALA468B3aiNgORQAImyPBrjZYqqLX
+	 Hi46tJgCpG+Wj6HOAnpZiBee9K2j+e4sbS2jkDZQ15yPiLlwYdHmTMytiNf1D6LwS6QAF
+	 U6Ggk1RfeBE+DTrHwQ2Q26eLl9NX3nkR6BTs/Qx+QiquM27uCJdU2D1EyodY6crMm6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025069;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025072;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=P16k+frDzJxuv+jTZhPT9RWWIzf/bI/Yi5+1AJXmtiE=;
-	b=4HNc4/fOSieeI2lEP2aD/+AgtXqwJa06UlNjXXyfFbIDbYu1kj9lOuu+0e1eBBEMriD7
-	 goUtkmwkF3gYjVLC1vJuf05maztzSVd12ipJZubFmguPHGKGXKl4SR+KXQ0Hnw3kOfLdE
-	 1hjpKU3xyaGMIED3vefKvop31EkrSpNTyygRkc1FtzuzIhPuCrPn8RcDAfp/7pKp2N1V0
-	 gDhqoOZCs15IiyX/9fa64VrtUBTjWP668zFlVwExUgWSdrbsYp81loLm7Y5JI1wQa1L3n
-	 pCoIbUvo8UWxcZJkkv82klelci1mlknV4kjQD2zVpGzy/O9I+81jTpFg7KzPaI/Wh5w==
+	bh=4naktgheYw0SxxAK+2gmfrwVr2oNXg5x9s2FGklJ8tc=;
+	b=lKJu35R9vYMEwPGPV6CNGYd51e6O9sZ6c9EqiWHj56RIRedIhRDK5wQ14f4XwKz8I8RE
+	 K6fnt5JCXHVmSCt2/HM/oADsgSvIgBJyEtQA6cO4g/eivKbxN7WDU+R2rNfAkjo2EpioH
+	 WkRuG7DaArVQGEie51UQx3QmOR10wIwv0kA4ZqGU2WXzqvDHHTGyg/OPFItX/MP3zpCUp
+	 DLbQG1Q7VFSt9QPgf1TDViMv0lp2oLCbchvl2PrufE9/OSPGXopftkT3mgb5oVdh8lAbT
+	 WBoJEEorMaVvHOPAkmqqPaReZu2i5xUo4YKiDeflWC8VWza7mrpSnCDxK04YP2q+zqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VG243IZH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PvzqqzEn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A456606A334;
-	Wed, 18 Nov 2026 18:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B24E606A31C;
+	Wed, 18 Nov 2026 18:04:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VG243IZH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B34A71F000C4;
-	Wed, 18 Nov 2026 18:04:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PvzqqzEn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A7EF1F000C4;
+	Wed, 18 Nov 2026 18:04:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025069;
-	bh=P16k+frDzJxuv+jTZhPT9RWWIzf/bI/Yi5+1AJXmtiE=;
+	s=korg; t=1795025072;
+	bh=4naktgheYw0SxxAK+2gmfrwVr2oNXg5x9s2FGklJ8tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VG243IZHfSE9CvUC/DNzrXo9mPbhqA5wytlz7C6pknPRoHIKP1Fqy8FDOJKqTwhhq
-	 KUz7qWiMsRvTwp9APq9qhBXwYOpR+kHMkS3DFqafWttNaOAv2brMmyPxomvUe1HTVJ
-	 q1DFUVJzrs80e6E9PRa/Px9R6yffr4cr+EKgEeu0=
+	b=PvzqqzEn5l/EF+hxGFJWFGiJJSk9a2h/b7H7n20sy1Gnd+tuzK3qJ2lImMLaG2Xpa
+	 ejmURELvCjBLRUjXz2lyiT3kZV5ZJMDbEOupUB9cLStIYMb5ltwuIe0bHvTh/tKoOh
+	 f0KumuvZjZaXuL9vJFlSbSxCelIrFgVyNZtPwJ7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Markus Schneider-Pargmann (TI)" <msp@baylibre.com>,
 	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0949/2151] arm64: dts: ti: k3-am62d2-evm: Fix wkup R5F memory region size
-Date: Wed, 18 Nov 2026 15:44:44 +0100
-Message-ID: <20261118150157.036761336@linuxfoundation.org>
+Subject: [PATCH 6.18 0950/2151] arm64: dts: ti: k3-am62a7-sk: Fix wkup R5F memory region size
+Date: Wed, 18 Nov 2026 15:44:45 +0100
+Message-ID: <20261118150157.068481610@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -72,7 +72,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Markus Schneider-Pargmann (TI) <msp@baylibre.com>
 
-[ Upstream commit 5dd0e5b9d5f67276ff291f30da9bf5a17a46c48e ]
+[ Upstream commit 8d36eb58c06b867f29a8df2f39f7fe6718c726af ]
 
 The wkup_r5fss0_core0_memory_region was reserved with only
 0x0f00000 but the MCU SDK linker for the wkup R5F firmware on
@@ -92,30 +92,30 @@ section end address reaches 0x9e700000, so the region should end there:
     0x9e700000 - 0x9c900000 = 0x1e00000
 
 Link: https://github.com/TexasInstruments/mcupsdk-core-k3/blob/k3_main/examples/drivers/ipc/ipc_rpmsg_echo_linux/am62ax-sk/r5fss0-0_freertos/ti-arm-clang/linker.cmd
-Fixes: 1544bca2f188 ("arm64: dts: ti: Add support for AM62D2-EVM")
+Fixes: 77c29ebe76d8 ("arm64: dts: ti: k3-am62a7-sk: Enable IPC with remote processors")
 Reviewed-by: Bryan Brattlof <bb@ti.com>
 Reviewed-by: Kendall Willis <k-willis@ti.com>
 Signed-off-by: Markus Schneider-Pargmann (TI) <msp@baylibre.com>
-Link: https://patch.msgid.link/20260918-topic-am62a-ioddr-dt-v6-19-v9-2-40972ef1f663@baylibre.com
+Link: https://patch.msgid.link/20260918-topic-am62a-ioddr-dt-v6-19-v9-3-40972ef1f663@baylibre.com
 Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62d2-evm.dts | 2 +-
+ arch/arm64/boot/dts/ti/k3-am62a7-sk.dts | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am62d2-evm.dts b/arch/arm64/boot/dts/ti/k3-am62d2-evm.dts
-index 9a74df221f2ad..f8df5e2d767fd 100644
---- a/arch/arm64/boot/dts/ti/k3-am62d2-evm.dts
-+++ b/arch/arm64/boot/dts/ti/k3-am62d2-evm.dts
-@@ -67,7 +67,7 @@ wkup_r5fss0_core0_dma_memory_region: memory@9c800000 {
+diff --git a/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts b/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
+index 17ae6f0ceecfc..fdefeaedad916 100644
+--- a/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
++++ b/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
+@@ -61,7 +61,7 @@ wkup_r5fss0_core0_dma_memory_region: memory@9c800000 {
  
  		wkup_r5fss0_core0_memory_region: memory@9c900000 {
  			compatible = "shared-dma-pool";
 -			reg = <0x00 0x9c900000 0x00 0xf00000>;
 +			reg = <0x00 0x9c900000 0x00 0x1e00000>;
  			no-map;
- 			bootph-pre-ram;
  		};
+ 
 -- 
 2.53.0
 
