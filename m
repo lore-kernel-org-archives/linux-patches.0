@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048800;
-	b=aAvMNGHIT8r2MWTg+s81YC3s5b3Oefr4d/b4ObKdar6sOuT1eMBy3xGS4PhXCdwovcP7
-	 oqtrmtgLz3NIpgigLPM6M0UfGp+SvLVbX+5/qhpfuru5KsJhwL69zj77NmtnFQrdl752D
-	 +rfrXOsToAKDgVCH+mwXyRRSuYUf9JmCizQ+N2rTCm4GWCWfZzu137XINyCq4f7LB5MXY
-	 cAP1L8ISg+8buurLsUXSjdxuCHH7EHOpIbsF3Qe7MR5qDnnSedCGBfKwRANlnWQiAfazD
-	 5ve3l7iOtXw94w8J+sa/Tencj/xdjbkevhBv6Zog5YgOf3bZM9lCSyFGR1Uq8y/6pZg==
+	t=1795048802;
+	b=KMYdl/qC9fLoNiDJ8Ke/xkvG/gunnNy0iRhTmY8p7/OpH4mN3gqSkskdM7Rzc4q3a+pn
+	 MvxRRtxzJSg6TbA/jLHmOskWSFtcWLVR9F+Uw8tlkDJeoV84dxP3vi6KaywowyEzjjMGL
+	 Rbn4955jtE6Ruj0q7AjPJNoC8lpgNGEw6rgyDhhnV5qgRCJmVaL0OWkx1IE/4BP4zg04j
+	 QE4Ly3tBTeOFDdplnWOKL/RAGjVieoTpH6K2wjOtK4JAbrGU/AV1duOpydkZ8+a/fLkzv
+	 h8OZBSXrtMHBtRkVcMkfhqvIsAMJz9nhKg76HQ4nsWcSUPzNHcdJtbUWKRBm8nW8xFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048800;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048802;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JBUEXfGIerEivXTIvqvmhQNtmrd1+d8t/X2gjoxruFo=;
-	b=UGRwvs7+icNxGunyfBqTLIibiccezEOT/mls8sIQUt4S1DeEa4HhdyqSnHDHakRx//SR
-	 h2LzXtM3+qv2YncbMIE6Iow4gech5xSU1r43pDxmzWw1NU408WgM1ZGviTrLYP4JQ4BTK
-	 e9AGaQ47LzM5k+TKng2r0sUQ9VV+snyGdI+lNEpkMgSd9081c7aikdcVpiUUIFfuIuy+c
-	 BzWWak9G9xgq5NjFClbQy7Ba13m2tQAuxc0VYIO4diiFjRWVPMVPgBK4e8s8YhoqwlPBE
-	 rxfkTJW1/+IEZ5+2UF88DCxH/9LocU6/2uqgOR/5F/6gkb4CWXtz0JK88BY4Lpf9hRw==
+	bh=M49+LQH33HoNirQEdWaKEoKmNabqeom+W4geLns9bWk=;
+	b=Mn0m1UuSPC1dDLAG3iY+TE+H4a5bpdM4BpDoChpBsnj1FgiT7IhVy/zWn1YV6JLsIWvT
+	 WKK9qfC3OBhgSQ2faLWrT9soYvFmgsvzqp6DYiXXOuQYeXA4jy3RviXw056YxnWGW8O1h
+	 wB38hIG721j1ges3iiJ+gn7F5G1DdhBNmvqWVBiqCcSPe24DIIF8ruIkmU5jL0Hxzi9cu
+	 gfO0XzxY4HEMZuCCuA+64ytyJbM9U8RcdQqSzKNOnEj2FCQnKePniaKEucAl2LqZl1Mf4
+	 YGqlviy0OE49eg6gXCCLAsyH2khtnjDl1a46I9GchNY4Yi/PzPqPMdILrWD2ZiF8sQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t41x0IOj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EmdUzBtM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D0C606A325;
-	Thu, 19 Nov 2026 00:40:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5EA7606A320;
+	Thu, 19 Nov 2026 00:40:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t41x0IOj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90EE41F000C4;
-	Thu, 19 Nov 2026 00:39:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EmdUzBtM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578561F000C4;
+	Thu, 19 Nov 2026 00:40:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048800;
-	bh=JBUEXfGIerEivXTIvqvmhQNtmrd1+d8t/X2gjoxruFo=;
+	s=korg; t=1795048802;
+	bh=M49+LQH33HoNirQEdWaKEoKmNabqeom+W4geLns9bWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t41x0IOjHbvodamiceOW6AwoLRSrJNxCTf/gZvFDyvJHYapvgUYhUgX7mbm+FOOA+
-	 Ib7O3bbx8seODyAL8WVGKPMw676OokMqfRr5tgHmYs3sMxLJwYPoDaUOS/bBb2mQM+
-	 Ptt7IpJXKBZbb0nNmS9cDQWR6ln6AKVDrcfrpcb4=
+	b=EmdUzBtMqaVjUgcmBDdRfmg3Qet2D9ugFIMxtWGpjW/2kCJn27O7XLTOm1aZzRBiz
+	 3a9WRPYxKNWiE3RUn/MK7pw8FgPVPtA/vCeVbVLP/90/DM68E5a3IuV5O9CdlDliJ0
+	 dKVmy+oCe7venG+Fs+eSvtTMR97fxJ/nlK0/QZ78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ginger Li <ginger.jzllee@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Orgad Shaneh <orgads@gmail.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2083/2857] wifi: mac80211: Fix a race when expiring a mesh path
-Date: Wed, 18 Nov 2026 15:51:57 +0100
-Message-ID: <20261118150316.407419502@linuxfoundation.org>
+Subject: [PATCH 6.1 2074/2857] MIPS: Octeon: size the swiotlb for a modular OHCI platform driver
+Date: Wed, 18 Nov 2026 15:51:48 +0100
+Message-ID: <20261118150316.089100477@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,78 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ginger Li <ginger.jzllee@gmail.com>
+From: Orgad Shaneh <orgads@gmail.com>
 
-[ Upstream commit 6571b6a24cc37c650a1815b1c320e30db5de466f ]
+[ Upstream commit f1dd1f0c8d595a019be503d40060d25721313b4a ]
 
-My static analyzer identified a potential issue in 'net/mac80211/mesh_pathtbl.c':
-mpath_expired() reads mpath->flags and mpath->exp_time without holding
-mpath->state_lock, while mesh_path_fix_nexthop() and the other writers update
-both fields under that lock.  In mpath_lookup() and
-__mesh_path_lookup_by_idx() the unlocked check is followed by taking the lock
-and clearing MESH_PATH_ACTIVE, so the check and the update are not atomic:
+plat_swiotlb_setup() raises the swiotlb to 64 MB on OCTEON II with
+memory above 4 GB, because that OHCI can only DMA to 32 bits. The test
+is "#ifdef CONFIG_USB_OHCI_HCD_PLATFORM", which is false when the driver
+is a module - the usual way to build it - so the bump is silently
+skipped.
 
-CPU0 (mpath_lookup)                    CPU1 (mesh_path_fix_nexthop)
-  mpath_expired() reads the stale
-  flags/exp_time and returns true
-                                        spin_lock_bh(&mpath->state_lock)
-                                        mpath->exp_time = 0;
-                                        mpath->flags = FIXED|SN_VALID;
-                                        mesh_path_activate(mpath);
-                                        spin_unlock_bh(&mpath->state_lock)
-  spin_lock_bh(&mpath->state_lock)
-  mpath->flags &= ~MESH_PATH_ACTIVE;
-  spin_unlock_bh(&mpath->state_lock)
+What is left depends on the rest of the function: with PCI enabled the
+"memory past the BAR1 hole" branch happens to ask for the same 64 MB,
+but with CONFIG_PCI off - which is normal on these SoCs when no PCI
+devices are wired - swiotlbsize stays at the PAGE_SIZE it was
+initialised to. A full- or low-speed device on an OCTEON II board with
+more than 4 GB of RAM then has no bounce buffer to speak of.
 
-A path which mesh_path_fix_nexthop() has just set up as MESH_PATH_FIXED and
-MESH_PATH_ACTIVE then has MESH_PATH_ACTIVE cleared again, and forwarding to
-that destination silently stops.
+Use IS_ENABLED() so a modular OHCI gets the same sizing as a built-in
+one. Seen on a CN6635 board with 8 GB of RAM and
+CONFIG_USB_OHCI_HCD_PLATFORM=m.
 
-Take mpath->state_lock before evaluating mpath_expired() so that the check and
-the clearing of MESH_PATH_ACTIVE are atomic with respect to the writers.
-
-Fixes: 60854fd94573 ("mac80211: mesh: convert path table to rhashtable")
-Signed-off-by: Ginger Li <ginger.jzllee@gmail.com>
-Link: https://patch.msgid.link/20260922054253.11976-1-ginger.jzllee@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: a8667d706dfa ("MIPS: OCTEON: dma-octeon: fix OHCI USB config check")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mesh_pathtbl.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ arch/mips/cavium-octeon/dma-octeon.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/mesh_pathtbl.c b/net/mac80211/mesh_pathtbl.c
-index 0a4641f06bb1f..a5ea7bc2065b9 100644
---- a/net/mac80211/mesh_pathtbl.c
-+++ b/net/mac80211/mesh_pathtbl.c
-@@ -210,9 +210,10 @@ static struct mesh_path *mpath_lookup(struct mesh_table *tbl, const u8 *dst,
- 
- 	mpath = rhashtable_lookup(&tbl->rhead, dst, mesh_rht_params);
- 
--	if (mpath && mpath_expired(mpath)) {
-+	if (mpath) {
- 		spin_lock_bh(&mpath->state_lock);
--		mpath->flags &= ~MESH_PATH_ACTIVE;
-+		if (mpath_expired(mpath))
-+			mpath->flags &= ~MESH_PATH_ACTIVE;
- 		spin_unlock_bh(&mpath->state_lock);
+diff --git a/arch/mips/cavium-octeon/dma-octeon.c b/arch/mips/cavium-octeon/dma-octeon.c
+index 9fbba6a8fa4c5..c049632fbcc33 100644
+--- a/arch/mips/cavium-octeon/dma-octeon.c
++++ b/arch/mips/cavium-octeon/dma-octeon.c
+@@ -228,7 +228,7 @@ void __init plat_swiotlb_setup(void)
+ 		swiotlbsize = 64 * (1<<20);
  	}
- 	return mpath;
-@@ -253,11 +254,11 @@ __mesh_path_lookup_by_idx(struct mesh_table *tbl, int idx)
- 	if (!mpath)
- 		return NULL;
- 
--	if (mpath_expired(mpath)) {
--		spin_lock_bh(&mpath->state_lock);
-+	spin_lock_bh(&mpath->state_lock);
-+	if (mpath_expired(mpath))
- 		mpath->flags &= ~MESH_PATH_ACTIVE;
--		spin_unlock_bh(&mpath->state_lock);
--	}
-+	spin_unlock_bh(&mpath->state_lock);
-+
- 	return mpath;
- }
- 
+ #endif
+-#ifdef CONFIG_USB_OHCI_HCD_PLATFORM
++#if IS_ENABLED(CONFIG_USB_OHCI_HCD_PLATFORM)
+ 	/* OCTEON II ohci is only 32-bit. */
+ 	if (OCTEON_IS_OCTEON2() && max_addr >= 0x100000000ul)
+ 		swiotlbsize = 64 * (1<<20);
 -- 
 2.53.0
 
