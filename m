@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058964;
-	b=Ror5Hk//melUmfNCFDZVbVLMJeZmH3oVdEt8qDJRn20LnP2eEKsQl/e0LkiUZIYFf8w2
-	 TAInWW7HMBSsqNDtrtDningqBjX1OLtILRCXJRBqAlsXjRfWdj5VP0jZaeWFlACTwFj8c
-	 WtL66xK3IDya/y0fddB6TmORKIWLBSBHEGhPTkbC3gT0Kqb5mUH5Hmy+XXSn/k+Nk632b
-	 T3r665hvoq60JeR/J4HI0JA6jT1cJNX0xbAfxteeCbXfXJcku2jmbZLxJsI79lCeFhvW/
-	 yUejng5cXWgfjrsJm8bjJ5s3eK+y2XUG+GYYr6wfdN1OT01k180qiTZbZFm1zad0ptQ==
+	t=1795058967;
+	b=Sjqzryj5CMZb+k6HazxYJShgYYl1TFDHpIMnBdhMT20Q5jSNw2twpF6fpURW0E6KOtj9
+	 wnj/4RPOOceZxqe6YzD+zWDvJmVwbr7XrV9zhkKtlCuGKzhQzljRURkVHsPaeT5V6hnR+
+	 qkQXKBmOhVtTcqc40I9iyfD7b1z9nZQcMbR0cy70Nr7Okh6/k0x9RMEJhbzhebr2X/ec3
+	 9TGRBoOh2Wv3VXio0/ZwlZuGQ7I2M/31FjwpoxlGVnCmz4klzYgHMd5i34UhBMWptIA72
+	 d4XhtsVR663V7GTCxQFnl5GOL4vSkOKoq5lSItqZEMpOwb9ZGJqoCCEzsDqvv5M9fgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058964;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058967;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sEQH1xhOoxOaG16pNTUOdPtTSmcRRsTb9KipikJsakc=;
-	b=FUWxXQyCzaGbVm2xrZmvy7nJGIKaF0eht0hMH822G4acZLBlNxREiEvrR0rKXtrK3JS/
-	 5/DWUgoCpzGUMVaJtI+SMPSreVhKedT9WcQh7I7EdQCXUPq3bWLhAYIbk7EGjI2kV5XcZ
-	 8Wlk9mOucjUyfZOOwTelvMqI/Yx2c49zA9/m4aWyIyX6PgP+1UBVgMnyQEVJggLb83wz+
-	 q9R9Dq1f722xZFUuCIQZmlQoXJ216jIGB6TbyA4D+vTlRYsyf0vOsjWWwjZmbp42YD0JB
-	 rgG87LHHdxPEZISw5qwp//DTb1mJ5P/jOtsIzJ7HCMLCQuUrXWJRhDRe6L8BQtA5XCA==
+	bh=J0YPnO2SsxCfKpbgHuOdDR5rStzAoKGFrCRNY44bIWw=;
+	b=T4NxOUmDZDBR9XC2vziLpkAOj2p9YnF/PA653MO5ZRMy/2FP+x3B7CWP/E50ATOIqw9U
+	 3Ml2Xl11Cr0Jix8kEtOfB+CVg95lcmFy5rkn6fbPJhXb6kNr/7sZUzAu1AbK8MVoE3dhz
+	 cXH6VALCDwwP/s1elAtPpq4ztNZPoJYrpKOA0SAXemQyuUcMjDehYjUvX1Px/GLDLnZOO
+	 C2xp/cflGFibVC8uaESwg7iKlUlwvfezJhe/FF5Y2tKQomhzjtLhwNMDeI2ifdE0Zspp1
+	 ViW9RVOX890EI/t68TgcH1dLeafn632L16V6cxnFC7A5Lo3gi6bER2HGIYbcI0Lsyzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y6fudvrF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Pd2/N8JQ";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32FAF606A325;
-	Thu, 19 Nov 2026 03:29:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16088606A32A;
+	Thu, 19 Nov 2026 03:29:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y6fudvrF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C9371F000C4;
-	Thu, 19 Nov 2026 03:29:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Pd2/N8JQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE9E1F000C5;
+	Thu, 19 Nov 2026 03:29:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058964;
-	bh=sEQH1xhOoxOaG16pNTUOdPtTSmcRRsTb9KipikJsakc=;
+	s=korg; t=1795058966;
+	bh=J0YPnO2SsxCfKpbgHuOdDR5rStzAoKGFrCRNY44bIWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y6fudvrFAUA0OVdgxo7WGr1wki5Wo7p3BnG6OXOrSNyLwfQZy4L8pga2YCyNX4gCs
-	 JQppdGbBPzgeJiLeRv0iliWNQ3zbjCXdHrjJU+TNGpk5Iunzy+W6bumIiobt+e02yx
-	 lz1Q5qMizV+nQbtWPXmDsiz7WnQpqSbuZpLm7Cr8=
+	b=Pd2/N8JQkXEJ1mkPOVZ4L5IM+eMFsz8/0aMuI5PLyzOxTLVhLxKI0TwBfMbBO/NaD
+	 WKzFb/4btUXpt0koNGHW+/Rhs1oeiRSaBrLv0lnv5sWOj0CEQOUVQGgGWaWZ2Ypfka
+	 pWyJI7LYK7Fmi5NfRLZbxAR0B3yYlAog99C3iSyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Schoenebeck <linux_oss@crudebyte.com>,
-	Michael Bommarito <michael.bommarito@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Zhao Zhang <zzhan461@ucr.edu>,
+	Ren Wei <n05ec@lzu.edu.cn>,
 	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0674/1848] 9p/trans_virtio: reject mount tags longer than NAME_MAX at probe
-Date: Wed, 18 Nov 2026 15:45:12 +0100
-Message-ID: <20261118145944.065805025@linuxfoundation.org>
+Subject: [PATCH 5.10 0675/1848] 9p: fix caches_show() out-of-bounds write
+Date: Wed, 18 Nov 2026 15:45:13 +0100
+Message-ID: <20261118145944.102630041@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,53 +72,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Zhao Zhang <zzhan461@ucr.edu>
 
-[ Upstream commit 5bfef2b6dafe83fe2d8d210d54093a8f48cfc97e ]
+[ Upstream commit 2acd800de8827b7cdce8cb5c2c63b8e8608ec8e3 ]
 
-p9_virtio_probe() reads a 16-bit mount tag length (tag_len) from the
-device config and kzalloc()s tag_len + 1 bytes for chan->tag with no
-upper bound. A malicious or compromised host can present a tag of up to
-65535 bytes; that tag is later copied into the single-page sysfs buffer
-by p9_mount_tag_show() (memcpy(buf, chan->tag, tag_len + 1)), a
-host-controlled out-of-bounds write of up to ~64 KiB past the PAGE_SIZE
-attribute buffer.
+The sysfs show handler for /sys/fs/9p/caches appends cache tags with
+snprintf(buf + count, limit, ...) and then advances count and limit by
+the return value. This is incorrect for truncation because snprintf()
+returns the full would-have-been length, not the number of bytes stored.
 
-Reject an overlong tag at probe time. A 9p mount tag is a name-like
-identifier, so bound it by NAME_MAX (255): that limit is independent of
-the sysfs/seq_file page size and is far above any legitimate mount tag,
-which keeps p9_mount_tag_show() safe at the root without hard-coding a
-seq_file implementation detail.
+Once the accumulated output exceeds PAGE_SIZE, count can advance past
+the sysfs buffer and limit can become negative. A later iteration then
+passes an out-of-bounds destination pointer and an oversized size_t
+into snprintf(), leading to an out-of-bounds write.
 
-Fixes: 179a5bc4b8cb ("net/9p: use memcpy() instead of snprintf() in p9_mount_tag_show()")
+Use sysfs_emit_at() for the append instead. It follows the sysfs buffer
+contract and returns the number of bytes actually stored, so the offset
+remains bounded even when the output is truncated.
+
+Fixes: 86db0c32f16c ("9p: fix /sys/fs/9p/caches overwriting itself")
 Cc: stable@vger.kernel.org
-Suggested-by: Christian Schoenebeck <linux_oss@crudebyte.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
-Message-ID: <20260627211012.4042372-1-michael.bommarito@gmail.com>
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Assisted-by: Codex:GPT-5.4
+Signed-off-by: Zhao Zhang <zzhan461@ucr.edu>
+Co-authored-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Message-ID: <abfb65f4800634dafb08238bba20cb48797e796f.1781908090.git.zzhan461@ucr.edu>
 Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_virtio.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/9p/v9fs.c | 16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
-diff --git a/net/9p/trans_virtio.c b/net/9p/trans_virtio.c
-index 36b5f72e2165c..fbfeb82ed632f 100644
---- a/net/9p/trans_virtio.c
-+++ b/net/9p/trans_virtio.c
-@@ -589,6 +589,11 @@ static int p9_virtio_probe(struct virtio_device *vdev)
- 		err = -EINVAL;
- 		goto out_free_vq;
+diff --git a/fs/9p/v9fs.c b/fs/9p/v9fs.c
+index 1dd8a735bf7f6..4364f58e47dc7 100644
+--- a/fs/9p/v9fs.c
++++ b/fs/9p/v9fs.c
+@@ -19,6 +19,7 @@
+ #include <linux/idr.h>
+ #include <linux/slab.h>
+ #include <linux/seq_file.h>
++#include <linux/sysfs.h>
+ #include <net/9p/9p.h>
+ #include <net/9p/client.h>
+ #include <net/9p/transport.h>
+@@ -552,21 +553,14 @@ static ssize_t caches_show(struct kobject *kobj,
+ 			   struct kobj_attribute *attr,
+ 			   char *buf)
+ {
+-	ssize_t n = 0, count = 0, limit = PAGE_SIZE;
++	ssize_t count = 0;
+ 	struct v9fs_session_info *v9ses;
+ 
+ 	spin_lock(&v9fs_sessionlist_lock);
+ 	list_for_each_entry(v9ses, &v9fs_sessionlist, slist) {
+-		if (v9ses->cachetag) {
+-			n = snprintf(buf + count, limit, "%s\n", v9ses->cachetag);
+-			if (n < 0) {
+-				count = n;
+-				break;
+-			}
+-
+-			count += n;
+-			limit -= n;
+-		}
++		if (v9ses->cachetag)
++			count += sysfs_emit_at(buf, count, "%s\n",
++					       v9ses->cachetag);
  	}
-+	if (tag_len > NAME_MAX) {
-+		dev_err(&vdev->dev, "mount tag too long (%u bytes)\n", tag_len);
-+		err = -EINVAL;
-+		goto out_free_vq;
-+	}
- 	tag = kzalloc(tag_len + 1, GFP_KERNEL);
- 	if (!tag) {
- 		err = -ENOMEM;
+ 
+ 	spin_unlock(&v9fs_sessionlist_lock);
 -- 
 2.53.0
 
