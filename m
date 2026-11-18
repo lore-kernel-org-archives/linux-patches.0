@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022595;
-	b=vEDnbAjTZd2AvN+I35PNnFkSRQoPW78XuL1bS5rCTaPoD1vJmRpiEjBUTotVBqQzDwT+
-	 bNnVF/fXN/bmCvYytLGKjIhkaGgX2ZtqjLGZQBsu3YClz9rMwOl3QPcu6PZHdCyQPs3VA
-	 KJgy0GxQxfTlViFxJ5xLfLQF+gC/YGXEQIQb6mcUg7n389QUV3k+Jltaq0Es+Dw1OsfON
-	 2e+1zF/hehYlJcmZuWRfYNEn9B5pNTvEzuGar9TKeOJnv4ndpUQbz6k+XlhXUgUSHlv/0
-	 Spjf6W4kVzfRNjkj1BXrZj7SUUNt/pl84B7207MoTJD+aF6XCiN9izpP3jFptsuofgg==
+	t=1795022598;
+	b=gkxyx+qdXJ0xmk/++B7ZGmwN1pu4EWeIoL3wt7NoM9uS3QAHjEYlOfMztFgJ0TieQ0oz
+	 /Amx4XKg3XJ3L+dslMTdfUR0hXrC021rJMZoEg2mvWFLurbjgz5oUV7/vXlRhNqrWIoNd
+	 Qr7OEjjykMKfGBys5rh/v656+N/6IuRtPpP3uk+zS5UkgfKzI4VH24B74NjK8ssTltlsf
+	 zYba+wE/IJUTxb86jQecUCPYqgUAQ5caWv5VGziXclDN0w9A4cdGGXjenEnRwh9njjeRj
+	 WgKBXiQJEg3oCwX7wI82ATz6LS3j6802LGxIRRHWIEGom3rT+DrVKEHmj/C0vk4NEyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022595;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022598;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cONEhnU80wwZ/4zAdjOsXMTHnbADB+vLb0XEQ/7zKxc=;
-	b=5XmuYraLUhimmFLloh+7UBmZCtiIfe8zikRPBMAGPrg+p7qYYCDhU7Y6x12hFquAwo0L
-	 +25ySPUfvIM7ElQnoI7Lu6stueL1STBnNFAj37jYkRYP6Ghu7SMjBthcICT16elnivF/y
-	 ORSlwSyAUyyMhiiHfheJpVwg0rfwfdFaEi352iIahcTfHuYkNen8je0/gyOG1rgmC98tz
-	 d6NYL5pCUm4bZvGnyNkXyuUqt7oy61YMmTgcWKlB+nXWLkOg6D3hcunvu0AWw+93zyqHr
-	 Jv4gtwT27w5BDb/7mv+lrS+Wzw/j84K0+bcsqWZdkcSXnntfjW88oqgIDP3nTfe/p7g==
+	bh=zS+yITgD9px4VWIFy1OO9OT34qOE5buI/SuyZ7PDaSU=;
+	b=hiBglDKVZXszED9e54snMLYwTtYamnAGDhL0uYpbuIxjyQAQeKkviCM+5u/wKRrRYBME
+	 oo+jAv2MlPvNT2xwzZbf5rthtlAyXvThhT3SVxdSiRqF/55RioMHf0b7GAyqlDJUoprPi
+	 kbPB3rDRww4H+iv9SfYPf3JekHq/kfbvZI0gGvYZoSM6tzOibEnm4JqXHVgqDIwVb/0Rl
+	 yH0Gp61+M7kh354OA4e41bbblGcddlYiLoM0nSW8GnjkafKYy6qkAvfPhZnHX/ITDdCYs
+	 IdB3ryIVhn3LybbO4SG49X9N055BeXLslhX9IyIW8LgdnYah5t3qBiGHK7vNWlaFflQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EL534oyn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=exKeHfSS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C41606A31C;
-	Wed, 18 Nov 2026 17:23:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E5E606A31C;
+	Wed, 18 Nov 2026 17:23:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EL534oyn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5648D1F000C4;
-	Wed, 18 Nov 2026 17:23:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=exKeHfSS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AD6D1F000C4;
+	Wed, 18 Nov 2026 17:23:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022594;
-	bh=cONEhnU80wwZ/4zAdjOsXMTHnbADB+vLb0XEQ/7zKxc=;
+	s=korg; t=1795022597;
+	bh=zS+yITgD9px4VWIFy1OO9OT34qOE5buI/SuyZ7PDaSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EL534oynxa4VdMGBKYKQsMB33mOyI/2eld55mNg/WqixfmcCXaBLHjEQMcf9OmwKI
-	 LUXzxo6Xfn43xGKg7K6kAPa1PXJal6AzBJ1h50nagv9ocGVe5nEuNnc07NoGQ+qTE9
-	 RvYNj3Cl15W4TktJ6sgAHy9/q42qKV+6wS6tdFRU=
+	b=exKeHfSSzP4IUl7sReHOnMafajcFVq37yXRoKU7ojscdM8PWdyOHJpew/017CsuI/
+	 rSNjYUEkWMzKXASDhmA2AP78TjPGnTfRDjuj4MeiDOCpDzz7q3GQOWb8o+thjKXzDd
+	 E7c2y9+F1/PHMRLal5Ke6k/eQUsCteTAQYRIluZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prike Liang <Prike.Liang@amd.com>,
-	Vitaly Prosyak <vitaly.prosyak@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Daejun Park <daejun7.park@samsung.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0069/2151] drm/amdgpu/userq: wait for GPU reset before mapping or unmapping queues
-Date: Wed, 18 Nov 2026 15:30:04 +0100
-Message-ID: <20261118150124.276474730@linuxfoundation.org>
+Subject: [PATCH 6.18 0070/2151] xfs: refuse a pNFS LAYOUTCOMMIT of a range without blocks
+Date: Wed, 18 Nov 2026 15:30:05 +0100
+Message-ID: <20261118150124.312500982@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,74 +69,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prike Liang <Prike.Liang@amd.com>
+From: Daejun Park <daejun7.park@samsung.com>
 
-[ Upstream commit 623507b8f4fe24851b2f1cb2c177f8ae3c8584b8 ]
+[ Upstream commit bcf0b7f18ad11e1d410e82ffef678705eff0a317 ]
 
-The user queue map and unmap helpers talk to the MES, but only the
-create path holds reset_domain->sem around them. The eviction, restore,
-destroy and suspend paths can submit to the MES while a GPU reset is in
-progress:
+A client can commit a hole in a LAYOUTCOMMIT, because nfsd does not
+check the extents against its layouts. xfs_iomap_write_unwritten() then
+allocates written blocks there. A large hole overruns the block
+reservation and shuts XFS down. A small one exposes stale data.
 
-  WARNING: amdgpu_device.c:928 at amdgpu_device_skip_hw_access+0x73/0x90 [amdgpu]
-  Workqueue: events amdgpu_eviction_fence_suspend_worker [amdgpu]
-  Call Trace:
-   amdgpu_mm_wdoorbell64+0x20/0x70 [amdgpu]
-   mes_v11_0_ring_set_wptr+0x71/0x80 [amdgpu]
-   amdgpu_ring_commit+0x5b/0xa0 [amdgpu]
-   mes_v11_0_submit_pkt_and_poll_completion.constprop.0+0x207/0x520 [amdgpu]
-   mes_v11_0_remove_hw_queue+0xd9/0x100 [amdgpu]
-   mes_userq_unmap+0xc3/0x140 [amdgpu]
-   amdgpu_userq_unmap_helper+0x67/0x280 [amdgpu]
-   amdgpu_userq_evict+0x52/0xf0 [amdgpu]
-   amdgpu_eviction_fence_suspend_worker+0x55/0xe0 [amdgpu]
+Refuse such a range with -EIO, using XFS_BMAPI_CONVERT_ONLY.
 
-Take the semaphore for read in the helpers instead, around both the MES
-call and the queue state check and update. The reset changes the queue
-state from amdgpu_userq_pre_reset()/post_reset(), so every caller now
-waits for a running reset and acts on the state it left behind.
-
-Signed-off-by: Prike Liang <Prike.Liang@amd.com>
-Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit e6a8b8588f43bd4d7054ac47cccc35f56ad2df90)
+Link: https://lore.kernel.org/r/20261014130834.GB15773@lst.de
+Fixes: 527851124d10 ("xfs: implement pNFS export operations")
 Cc: stable@vger.kernel.org
-[ sashal: left amdgpu_userq_create() unchanged because the outer reset semaphore lock was already absent ]
+Signed-off-by: Daejun Park <daejun7.park@samsung.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+[ sashal: Moved the completion-call change to the existing address-space operations code because ioend handling had not been split into a separate file. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/xfs/xfs_aops.c  |  2 +-
+ fs/xfs/xfs_file.c  |  2 +-
+ fs/xfs/xfs_iomap.c | 20 +++++++++++++++++---
+ fs/xfs/xfs_iomap.h |  3 ++-
+ fs/xfs/xfs_pnfs.c  |  9 ++++++++-
+ 5 files changed, 29 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
-index a0bf7c82b83b6..0b3502f3f1e23 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
-@@ -27,6 +27,7 @@
- #include <linux/pm_runtime.h>
+diff --git a/fs/xfs/xfs_aops.c b/fs/xfs/xfs_aops.c
+index 4c9afca35fefa..03f432a7938c4 100644
+--- a/fs/xfs/xfs_aops.c
++++ b/fs/xfs/xfs_aops.c
+@@ -156,7 +156,7 @@ xfs_end_ioend(
+ 	else if (ioend->io_flags & IOMAP_IOEND_SHARED)
+ 		error = xfs_reflink_end_cow(ip, offset, size);
+ 	else if (ioend->io_flags & IOMAP_IOEND_UNWRITTEN)
+-		error = xfs_iomap_write_unwritten(ip, offset, size, false);
++		error = xfs_iomap_write_unwritten(ip, offset, size, false, 0);
  
- #include "amdgpu.h"
-+#include "amdgpu_reset.h"
- #include "amdgpu_vm.h"
- #include "amdgpu_userq.h"
- #include "amdgpu_userq_fence.h"
-@@ -148,6 +149,8 @@ amdgpu_userq_unmap_helper(struct amdgpu_userq_mgr *uq_mgr,
- 		adev->userq_funcs[queue->queue_type];
- 	int r = 0;
+ 	if (!error &&
+ 	    !(ioend->io_flags & IOMAP_IOEND_DIRECT) &&
+diff --git a/fs/xfs/xfs_file.c b/fs/xfs/xfs_file.c
+index 2702fef2c90cd..e00b6c2b7af06 100644
+--- a/fs/xfs/xfs_file.c
++++ b/fs/xfs/xfs_file.c
+@@ -584,7 +584,7 @@ xfs_dio_write_end_io(
+ 	 * they are converted.
+ 	 */
+ 	if (flags & IOMAP_DIO_UNWRITTEN) {
+-		error = xfs_iomap_write_unwritten(ip, offset, size, true);
++		error = xfs_iomap_write_unwritten(ip, offset, size, true, 0);
+ 		goto out;
+ 	}
  
-+	/* The reset changes the queue state and the MES is unusable meanwhile */
-+	guard(rwsem_read)(&adev->reset_domain->sem);
- 	if ((queue->state == AMDGPU_USERQ_STATE_MAPPED) ||
- 		(queue->state == AMDGPU_USERQ_STATE_PREEMPTED)) {
- 		r = userq_funcs->unmap(uq_mgr, queue);
-@@ -168,6 +171,8 @@ amdgpu_userq_map_helper(struct amdgpu_userq_mgr *uq_mgr,
- 		adev->userq_funcs[queue->queue_type];
- 	int r = 0;
+diff --git a/fs/xfs/xfs_iomap.c b/fs/xfs/xfs_iomap.c
+index c7dea4242e8bf..b235dac8f79dc 100644
+--- a/fs/xfs/xfs_iomap.c
++++ b/fs/xfs/xfs_iomap.c
+@@ -619,7 +619,8 @@ xfs_iomap_write_unwritten(
+ 	xfs_inode_t	*ip,
+ 	xfs_off_t	offset,
+ 	xfs_off_t	count,
+-	bool		update_isize)
++	bool		update_isize,
++	uint32_t	bmapi_flags)
+ {
+ 	xfs_mount_t	*mp = ip->i_mount;
+ 	xfs_fileoff_t	offset_fsb;
+@@ -681,8 +682,21 @@ xfs_iomap_write_unwritten(
+ 		 */
+ 		nimaps = 1;
+ 		error = xfs_bmapi_write(tp, ip, offset_fsb, count_fsb,
+-					XFS_BMAPI_CONVERT, resblks, &imap,
+-					&nimaps);
++					XFS_BMAPI_CONVERT | bmapi_flags,
++					resblks, &imap, &nimaps);
++		if (error == -ENOSR && (bmapi_flags & XFS_BMAPI_CONVERT_ONLY)) {
++			/*
++			 * Nothing was mapped: the rest of the range starts
++			 * with a hole or a delalloc extent. Nothing was
++			 * changed either, but xfs_iext_count_extend() may
++			 * have logged the inode, and cancelling a dirty
++			 * transaction shuts the filesystem down. Commit it,
++			 * as xfs_alloc_file_space() does on -ENOSR.
++			 */
++			error = xfs_trans_commit(tp);
++			xfs_iunlock(ip, XFS_ILOCK_EXCL);
++			return error ? error : -EIO;
++		}
+ 		if (error)
+ 			goto error_on_bmapi_transaction;
  
-+	/* The reset changes the queue state and the MES is unusable meanwhile */
-+	guard(rwsem_read)(&adev->reset_domain->sem);
- 	if (queue->state == AMDGPU_USERQ_STATE_UNMAPPED) {
- 		r = userq_funcs->map(uq_mgr, queue);
- 		if (r) {
+diff --git a/fs/xfs/xfs_iomap.h b/fs/xfs/xfs_iomap.h
+index ebcce7d494468..7d9fc86fd5567 100644
+--- a/fs/xfs/xfs_iomap.h
++++ b/fs/xfs/xfs_iomap.h
+@@ -15,7 +15,8 @@ struct xfs_zone_alloc_ctx;
+ int xfs_iomap_write_direct(struct xfs_inode *ip, xfs_fileoff_t offset_fsb,
+ 		xfs_fileoff_t count_fsb, unsigned int flags,
+ 		struct xfs_bmbt_irec *imap, u64 *sequence);
+-int xfs_iomap_write_unwritten(struct xfs_inode *, xfs_off_t, xfs_off_t, bool);
++int xfs_iomap_write_unwritten(struct xfs_inode *ip, xfs_off_t offset,
++		xfs_off_t count, bool update_isize, uint32_t bmapi_flags);
+ xfs_fileoff_t xfs_iomap_eof_align_last_fsb(struct xfs_inode *ip,
+ 		xfs_fileoff_t end_fsb);
+ 
+diff --git a/fs/xfs/xfs_pnfs.c b/fs/xfs/xfs_pnfs.c
+index 298fdc9e9f1c3..1409ef8ce2be9 100644
+--- a/fs/xfs/xfs_pnfs.c
++++ b/fs/xfs/xfs_pnfs.c
+@@ -324,7 +324,14 @@ xfs_fs_commit_blocks(
+ 					(end - 1) >> PAGE_SHIFT);
+ 		WARN_ON_ONCE(error);
+ 
+-		error = xfs_iomap_write_unwritten(ip, start, length, false);
++		/*
++		 * A client may only write to blocks that a layout handed out,
++		 * and xfs_fs_map_blocks() allocates blocks for any hole in a
++		 * write layout, so refuse to allocate blocks for a hole or a
++		 * delalloc extent in the committed range.
++		 */
++		error = xfs_iomap_write_unwritten(ip, start, length, false,
++				XFS_BMAPI_CONVERT_ONLY);
+ 		if (error)
+ 			goto out_drop_iolock;
+ 	}
 -- 
 2.53.0
 
