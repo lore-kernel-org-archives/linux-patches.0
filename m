@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043341;
-	b=zpUdZSeSeo23iFOcJ7iDNwhZXQO/iHRinBziA6sQuUcc0lJjCaYhlbouD5VShsL+t4QO
-	 1IwQe62XMzhLbsdGbILuh8fSatbE8LFGqdfgUXRrMV9NeEj5NE+H+lK6mhkdjJUywxVAL
-	 mZqi2Leg/S0e7HgDjewf6od2uunLDfhVrduf49CYKoSa6qBYS/81c8JnWAFvVviW47dzw
-	 No8dXJmtbH93ywjoHG7Tcht6qg38ZDzr/zBikcFHI8gEDjIqP1Tl4kietUscsrwuxQvVH
-	 juE6GUe+LnLPPw9QnYbBMbcceLvwcFdieIW7IuenguIR+r9yhycAI+C2Eqgt7NDIzYQ==
+	t=1795043344;
+	b=JV/G2oMkNTg/+fDljb5frSSbf6fzCCwYJIKrbfF2E/PoJ1stZdjio+1D0hcZhGaJRJ8w
+	 /PiXDaXqLOb0mnnJwLcp4Y7eE//HTN1K5rqlpek4U3PzNOqDjg8OzP1rvLOggcuA+zQZf
+	 wGofS9AmRIHEzZZOW4drHrt1TmgC/aWU0WgIdHpW0mLUVaMtFcXg9bS2hcw957Ss5XGeE
+	 yWHv6BA9a3yH38lqKELyhJUQzUlSmQGWsI0p8agAAeZ3lBnHFvUjfGTPmkGd2JvaZ/ABm
+	 fnqp2+Fxgz9LdEDskcN2VIOOlX4+pymrg/2z3lYShxJsS3DhcqWiDFBT8OqNzAdFLNw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043341;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043344;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iRX/LyPiAUDTXfXFBrHhJQJiXDpzQcELd75dORWWwEs=;
-	b=4thyNnZeH3iNUVCTpA9rwLk81aYL0Gozp3ctcH/vcE7eXcZyrv1GQGJIoxVB0sRfxsse
-	 kxAvZ8/QLkBYQbgKMQGZqoeyeYO2raUUFAdbTuSfUttqzetoJXaHxschgWIQb9StswffD
-	 Aks/QyJY91/f4WfolM8h5OnLXM3805euHZurRkbQMSwPjPKMPJMkkBC4/ASncF4PbsoSG
-	 FVEqu2hzUZzJDkGvCi/XQKruINWrMnu7rQlFlog8a60s9vqxw46IDHPr4OjRK+8PXdeyR
-	 QHN5ElCaoSgSPe5DTPCYeaETb9o0cG1vXfjtZ7Ge9UCT7vJLlzDoDgraxrA6fNyOTYw==
+	bh=NS4BOHwQ6wmVBYa921YGNQ1JDco89lyQUoC0qKEfmLI=;
+	b=ictTWswqsyD2Y/ErkRmdQqvv+PBcUiq2f+QP5D+FNtjzi4oSRhViUW9WS0RLNQMXiX8g
+	 sEBIyQbpX/aQQP0iwbQXDdFZaKKwxMLfVOKwKfyNzRgYd1KHlNqva0Y0GqJOPb4M5L9Vb
+	 qEmhjig+5JZmmaF4htrVHhVO0xkGCF7EYGEEu3FJgaDIUm7I3xQGiMe6cvNOp38qV3c6i
+	 2TP3Qs6FHb36bW/8aKVtJMJ4Ycbzhb2iC7IH7e2WwUk8k1P2jLw3hFhY5Jr5u5o53No5K
+	 wk5hcs0VkhX22Ab5LeTK0zRXA6iHcYp5wj0AG7ZZdu7PcI9+aWF8uDPvFrPdgpxj9tw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OsTPMEuL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B5vgIX4Z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A48CD606A331;
-	Wed, 18 Nov 2026 23:09:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D34606A32A;
+	Wed, 18 Nov 2026 23:09:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OsTPMEuL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04F871F000C4;
-	Wed, 18 Nov 2026 23:09:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B5vgIX4Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D079C1F000C4;
+	Wed, 18 Nov 2026 23:09:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043341;
-	bh=iRX/LyPiAUDTXfXFBrHhJQJiXDpzQcELd75dORWWwEs=;
+	s=korg; t=1795043344;
+	bh=NS4BOHwQ6wmVBYa921YGNQ1JDco89lyQUoC0qKEfmLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OsTPMEuLSPUpJ84Zy8mfXwx2/O8DBRPhFLlvgLKcL6i17QjsDaHfcdKtH4zgwHscc
-	 lsou3/dY5VsdVf5V+BOR03UGMa+g9c8BtGze8O+sG6RklEaVfT3Vv7pEYKG/OFlj3w
-	 i9kyctVhjkWy64DrSSkt+q5kur6LM5qXUL1o1lqU=
+	b=B5vgIX4Z7HLJwW+vKnKtcGOOKCqG4pKrcrHhBVRCnmlrOrh5Fjj24LexAYbsgQwvr
+	 tSCZFTr1wXjqI5GgST5BUjAhVI6WivDHjdkroX+BKGAjDOUbCR0YfWNdcf9YyFDTEz
+	 jOWEIHMVsfIm3pXKf8wVrfQjH5V0cCu2addev3BQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Bauer <mail@david-bauer.net>,
-	Felix Fietkau <nbd@nbd.name>,
+	syzbot+905d785c4923bea2c1db@syzkaller.appspotmail.com,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0176/2857] wifi: mt76: mt7915: configure noise floor reporting on reset
-Date: Wed, 18 Nov 2026 15:20:10 +0100
-Message-ID: <20261118150207.689809036@linuxfoundation.org>
+Subject: [PATCH 6.1 0150/2857] ntfs3: fix info-leak in ntfs_rename()
+Date: Wed, 18 Nov 2026 15:19:44 +0100
+Message-ID: <20261118150206.749299805@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,60 +69,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Bauer <mail@david-bauer.net>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit a92cd5dd792a63a5d8a72142835382d4edbe9933 ]
+[ Upstream commit 2fa56613b25d0c983ef3ff6d3e865d4254280abe ]
 
-When performing a full system recovery of the MCU on a dual-phy
-platform, band 0 (usually 2.4GHz) stops reading correct noise floor
-data.
+Hard to say about copy_to_user_iter(), but at least the first splat
+looks correct. At the end of fill_name_de(), data layout is:
 
-This is due to noise floor reporting only being configured correctly
-for the second device PHY.
+struct NTFS_DE *e = buf;
+...
 
-Configure the respective registers correctly after restarting the MCU
-firmware to fix reported noise-floor values.
+    |<- data_size + sizeof(struct NTFS_DE) ->|<- XXX ->|
+buf |-----------------------------------------------------------
+    |<- ALIGN(data_size, 8) + sizeof(struct NTFS_DE) ->|   ;; e->size
 
-Signed-off-by: David Bauer <mail@david-bauer.net>
-Link: https://patch.msgid.link/20260516144944.2574053-1-mail@david-bauer.net
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+If 'buf' was allocated with kmalloc(), XXX remains uninitialized and
+passed as such to memcpy() called from hdr_insert_de().
+
+So using kzalloc() for all buffers passed to fill_name_de() looks
+the simplest and most safe solution. OTOH if someone would have
+said that an overhead of PAGE_SIZE'd memset() is too large, more
+fine-granted solution is to memset() XXX only.
+
+Reported-by: syzbot+905d785c4923bea2c1db@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=905d785c4923bea2c1db
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/mac.c | 9 +++++++--
+ fs/ntfs3/namei.c | 9 +++++++--
  1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
-index 035e0b9c1fa9a..c4d7126e05c89 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
-@@ -1322,6 +1322,7 @@ mt7915_mac_restart(struct mt7915_dev *dev)
- 	struct mt7915_phy *phy2;
- 	struct mt76_phy *ext_phy;
- 	struct mt76_dev *mdev = &dev->mt76;
-+	bool run_main, run_ext;
- 	int i, ret;
+diff --git a/fs/ntfs3/namei.c b/fs/ntfs3/namei.c
+index 1adbc4af6aba8..25c833ca7a6e0 100644
+--- a/fs/ntfs3/namei.c
++++ b/fs/ntfs3/namei.c
+@@ -20,7 +20,7 @@ int fill_name_de(struct ntfs_sb_info *sbi, void *buf, const struct qstr *name,
+ {
+ 	int err;
+ 	struct NTFS_DE *e = buf;
+-	u16 data_size;
++	u16 data_size, real_size, aligned_size;
+ 	struct ATTR_FILE_NAME *fname = (struct ATTR_FILE_NAME *)(e + 1);
  
- 	ext_phy = dev->mt76.phys[MT_BAND1];
-@@ -1404,13 +1405,17 @@ mt7915_mac_restart(struct mt7915_dev *dev)
- 	mt7915_init_txpower(dev, &dev->mphy.sband_5g.sband);
- 	ret = mt7915_txbf_init(dev);
+ #ifndef CONFIG_NTFS3_64BIT_CLUSTER
+@@ -51,7 +51,12 @@ int fill_name_de(struct ntfs_sb_info *sbi, void *buf, const struct qstr *name,
+ 	fname->type = FILE_NAME_POSIX;
+ 	data_size = fname_full_size(fname);
  
--	if (test_bit(MT76_STATE_RUNNING, &dev->mphy.state)) {
-+	run_main = test_and_clear_bit(MT76_STATE_RUNNING, &dev->mphy.state);
-+	run_ext = ext_phy &&
-+		  test_and_clear_bit(MT76_STATE_RUNNING, &ext_phy->state);
+-	e->size = cpu_to_le16(ALIGN(data_size, 8) + sizeof(struct NTFS_DE));
++	real_size = data_size + sizeof(struct NTFS_DE);
++	aligned_size = ALIGN(data_size, 8) + sizeof(struct NTFS_DE);
++	if (aligned_size > real_size)
++		memset((char *)buf + real_size, 0, aligned_size - real_size);
 +
-+	if (run_main) {
- 		ret = mt7915_run(dev->mphy.hw);
- 		if (ret)
- 			goto out;
- 	}
- 
--	if (ext_phy && test_bit(MT76_STATE_RUNNING, &ext_phy->state)) {
-+	if (run_ext) {
- 		ret = mt7915_run(ext_phy->hw);
- 		if (ret)
- 			goto out;
++	e->size = cpu_to_le16(aligned_size);
+ 	e->key_size = cpu_to_le16(data_size);
+ 	e->flags = 0;
+ 	e->res = 0;
 -- 
 2.53.0
 
