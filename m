@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061989;
-	b=NmMRx56KgYXAlev45KfzcE/fLlqISlZJWundTgNYhoyAT7p5Ima4wHjxMiO4pzlEJk+H
-	 /nKZzt22zUclPr6TCIDKnMPB0VBTEO6SFwEOHDipLRhNokisxiwfkfWEw5YKO+LnlAa37
-	 uLhu8z4l52dYBPVqr73nUv7xskivHfVQXAt0yevP0DV3hNoZckXSDhrfpXWJpvsRUus7l
-	 sG+Jk3k/O9KAMXVdIOMBGpeyIhTJ4zb6vFuLuoQn/iqXpAIO/Im22Uf9l6qZYf0ZhzcEs
-	 rR9XqEB3eC86ZOPfGGALuZgZMaKylJNWtpH/9cY5AzrPNByNvURwOsg/jA8t8pxMJcg==
+	t=1795061992;
+	b=lnxm+/Hv6TOJbGhmCTqIjm5dv3OmT6AOB706dT4ddZgmBP+Kf1rKaz5FGEx8oXT+oZJB
+	 KWhXcv2jxbDegNG4fBkxrbIMengUCokVKHDojzYOsGuH5/Q53mO/eT09CIM7tYBWaQ0ru
+	 G0XvLjNWlIw2iWYq/l+Jtm3WPN8hdSrxrNevE3q0L/AiNsUpvvZfvwWaAq3uWiknOQRHP
+	 KXKLrYrGhs6H7SLEbLbPPyKUot7GxoejYvYz/Jc/w+36ESd2yRGNZsZusE+RPj+8LSLIF
+	 N7m5hNaoIZBGUDr4k9//0qayO6gGK5lKizU3MaQitlNZXJ9/3021XzOfRG1Fhz/vNJw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061989;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061992;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6xjGarqZGaMq8AueJeN4JXnMdqhT1nStKBhmX3yMFrE=;
-	b=aSIyoTNX5Fx3eG1zNHC6ptouCwOB9icjsZk/X+4FDcxLGCK6eu0Vt0RAmIKM8mKmNadz
-	 1xrtVER6SQCVsOSiALkW5PfgsiD/q0IwZOrAv7HwGhQeHVyJUKGsyFJXyfhwfte+JIROW
-	 Lc72miG8L6726IRKPabrs499GKgvT53o04YBQL8HDSyKwWJQ9DTb4Bf5hT5alZvVSBc/M
-	 0Z3mny8NXbWomcTMfFCPcurj4S3CumgK8QzeX7WT43hzjbH0+1pTi1smC9lu7eckINf6h
-	 rIHDxxbgwaHAt2bwRYFCcZkdNJWjFFEsUm2gm3Tj1h8hbMsL6uS+HM8fYCjALBrnasw==
+	bh=yQ4Gjzx+C7itv6H1FV/B19vqxxhJUyXgeNLbFE/ALTM=;
+	b=GsROtHHGUch8qCHghCWeY9Zji/OL9KK5LCNz5gaMvPMHPof3ZWRmuu8NYHwwkllRDfzQ
+	 6NL0q/1Za4W6Fv0qhB7nlwQrGGsqsY4NL00BTYvfgZDraaCBaTG3+PTiz5wVcizsCowYn
+	 3sDqe7NrZk97SY4OXAPAVDG1eQ6g6mEdjEvWkGuKcZLn+m/zv4F9EicHxtY3b+BwA+vsb
+	 +xtvK0Nzggz8algCK0lFsWntQyIAzw+w8xx8XNEpWn8tJT9Gro4a+NXYOxF9shvXEYCoB
+	 AJ5kQXlAbFToyzwR7byiYttPdx04qCFoPRJOTCcyxfursc9VeZvq2fI4Hr2PJzOgP1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mnJsTeeS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=THGstUD0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CEF7606A325;
-	Thu, 19 Nov 2026 04:19:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C0A6606A32F;
+	Thu, 19 Nov 2026 04:19:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mnJsTeeS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE36C1F000C4;
-	Thu, 19 Nov 2026 04:19:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=THGstUD0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A613B1F000C4;
+	Thu, 19 Nov 2026 04:19:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061989;
-	bh=6xjGarqZGaMq8AueJeN4JXnMdqhT1nStKBhmX3yMFrE=;
+	s=korg; t=1795061992;
+	bh=yQ4Gjzx+C7itv6H1FV/B19vqxxhJUyXgeNLbFE/ALTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mnJsTeeSb2wqBf59qxWEbbwnsh3JN0WyiZoWaHVDIBUbpFOd/SwYgbMavjel++KS9
-	 +nsn2xFuaBu3SOjlWaJLW2GiWE99BsZJjxiwPHH+41iT9E/t8smgzn95aWzu0oSKyQ
-	 7e/e4DE240B1VH5GFJOIZcTy48NNMCKjr6QpsKnc=
+	b=THGstUD0Lh3VTTQngl0wcl69UvcbBeztSDzb7LY9i2hJ1yQ4xNZrDkNz9fdltuESl
+	 RWW7MK2u2aq7/lZsivjbModUyv2+3MBTkXJVUbKCLPmWPcFDDNYr4iljSPh8HGyOnA
+	 dyHMhfjE/dly1+sXdcNCMqoODk8wOrTl2UZ4ijSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
-	Mark Brown <broonie@kernel.org>,
+	Shannon Nelson <snelson@pensando.io>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1750/1848] ASoC: wm8994: fix MCLK index used for setting MCLK rate
-Date: Wed, 18 Nov 2026 16:03:08 +0100
-Message-ID: <20261118150032.741218883@linuxfoundation.org>
+Subject: [PATCH 5.10 1751/1848] ionic: remove some unnecessary oom messages
+Date: Wed, 18 Nov 2026 16:03:09 +0100
+Message-ID: <20261118150032.775990898@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,60 +68,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Shannon Nelson <snelson@pensando.io>
 
-[ Upstream commit 7916b55b100973b5fb5b974e8f7c8ae9f3ac1d2e ]
+[ Upstream commit c0c682eeb8ccb11c05c29c34820224b7556cdf19 ]
 
-wm8994_set_dai_sysclk() passes the AIF index (dai->id - 1) to
-wm8994_set_mclk_rate(), which uses it to index the MCLK clocks and
-their cached rates. As a result, selecting MCLK2 as the AIF1 clock
-source sets and reads back the rate of MCLK1 instead, and the rate
-of MCLK1 is then stored as the MCLK2 rate.
+Remove memory allocation fail messages where the OOM stack
+trace will make it obvious which allocation request failed.
 
-On the Exynos4412 Trats2 board, where MCLK1 is a fixed 24MHz clock and
-MCLK2 a 32768Hz clock used when the codec is idle, this gives:
-
- wm8994-codec wm8994-codec: AIF1 using MCLK2 at 24000000Hz
-
-so the driver assumes a 12MHz SYSCLK while it actually runs at 32kHz.
-This skips the 128fs AIF clock ratio setup for low SYSCLK rates and
-makes the mic detection rate configuration use the wrong clock rate.
-
-Pass the MCLK index matching the selected clock source instead.
-
-Fixes: 419e2f508336 ("ASoC: wm8994: Add support for setting MCLK clock rate")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Reviewed-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
-Link: https://patch.msgid.link/20261021101750.3297770-4-m.szyprowski@samsung.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Shannon Nelson <snelson@pensando.io>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: d90d1a768b3b ("ionic: fix port_info use-after-free on firmware recovery")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8994.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/pensando/ionic/ionic_dev.c  | 2 +-
+ drivers/net/ethernet/pensando/ionic/ionic_lif.c  | 8 +++-----
+ drivers/net/ethernet/pensando/ionic/ionic_main.c | 4 +---
+ 3 files changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
-index efc883a07e94b..3e27166192cd5 100644
---- a/sound/soc/codecs/wm8994.c
-+++ b/sound/soc/codecs/wm8994.c
-@@ -2542,7 +2542,7 @@ static int wm8994_set_dai_sysclk(struct snd_soc_dai *dai,
- 	case WM8994_SYSCLK_MCLK1:
- 		wm8994->sysclk[dai->id - 1] = WM8994_SYSCLK_MCLK1;
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_dev.c b/drivers/net/ethernet/pensando/ionic/ionic_dev.c
+index b5f681918f6ee..4fc7af836a061 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_dev.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_dev.c
+@@ -142,7 +142,7 @@ int ionic_heartbeat_check(struct ionic *ionic)
  
--		ret = wm8994_set_mclk_rate(wm8994, dai->id - 1, &freq);
-+		ret = wm8994_set_mclk_rate(wm8994, WM8994_MCLK1, &freq);
- 		if (ret < 0)
- 			return ret;
+ 			work = kzalloc(sizeof(*work), GFP_ATOMIC);
+ 			if (!work) {
+-				dev_err(ionic->dev, "%s OOM\n", __func__);
++				dev_err(ionic->dev, "LIF reset trigger dropped\n");
+ 			} else {
+ 				work->type = IONIC_DW_TYPE_LIF_RESET;
+ 				if (fw_status & IONIC_FW_STS_F_RUNNING &&
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_lif.c b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
+index f0c48f20d086d..ea6e7a7ddf822 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_lif.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
+@@ -855,7 +855,7 @@ static bool ionic_notifyq_service(struct ionic_cq *cq,
+ 	case IONIC_EVENT_RESET:
+ 		work = kzalloc(sizeof(*work), GFP_ATOMIC);
+ 		if (!work) {
+-			netdev_err(lif->netdev, "%s OOM\n", __func__);
++			netdev_err(lif->netdev, "Reset event dropped\n");
+ 		} else {
+ 			work->type = IONIC_DW_TYPE_LIF_RESET;
+ 			ionic_lif_deferred_enqueue(&lif->deferred, work);
+@@ -1064,10 +1064,8 @@ static int ionic_lif_addr(struct ionic_lif *lif, const u8 *addr, bool add,
  
-@@ -2555,7 +2555,7 @@ static int wm8994_set_dai_sysclk(struct snd_soc_dai *dai,
- 		/* TODO: Set GPIO AF */
- 		wm8994->sysclk[dai->id - 1] = WM8994_SYSCLK_MCLK2;
+ 	if (!can_sleep) {
+ 		work = kzalloc(sizeof(*work), GFP_ATOMIC);
+-		if (!work) {
+-			netdev_err(lif->netdev, "%s OOM\n", __func__);
++		if (!work)
+ 			return -ENOMEM;
+-		}
+ 		work->type = add ? IONIC_DW_TYPE_RX_ADDR_ADD :
+ 				   IONIC_DW_TYPE_RX_ADDR_DEL;
+ 		memcpy(work->addr, addr, ETH_ALEN);
+@@ -1200,7 +1198,7 @@ static void ionic_set_rx_mode(struct net_device *netdev, bool can_sleep)
+ 		if (!can_sleep) {
+ 			work = kzalloc(sizeof(*work), GFP_ATOMIC);
+ 			if (!work) {
+-				netdev_err(lif->netdev, "%s OOM\n", __func__);
++				netdev_err(lif->netdev, "rxmode change dropped\n");
+ 				return;
+ 			}
+ 			work->type = IONIC_DW_TYPE_RX_MODE;
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_main.c b/drivers/net/ethernet/pensando/ionic/ionic_main.c
+index 694e710244e69..28617afecf287 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_main.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_main.c
+@@ -513,10 +513,8 @@ int ionic_port_init(struct ionic *ionic)
+ 						     idev->port_info_sz,
+ 						     &idev->port_info_pa,
+ 						     GFP_KERNEL);
+-		if (!idev->port_info) {
+-			dev_err(ionic->dev, "Failed to allocate port info\n");
++		if (!idev->port_info)
+ 			return -ENOMEM;
+-		}
+ 	}
  
--		ret = wm8994_set_mclk_rate(wm8994, dai->id - 1, &freq);
-+		ret = wm8994_set_mclk_rate(wm8994, WM8994_MCLK2, &freq);
- 		if (ret < 0)
- 			return ret;
- 
+ 	sz = min(sizeof(ident->port.config), sizeof(idev->dev_cmd_regs->data));
 -- 
 2.53.0
 
