@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057668;
-	b=DDbNoFUhsSBO+KWP/x17i2R/aDYeoShHBkMiXb44v0mK+hOP2xc0brpqCfNm9BphvEVX
-	 V1e9j8wgWyXLJBHShY0YEhc50D/T8WI9sjzHhYHpxGLqNGkcUideOIOOdvi+6k7eBqnjA
-	 f9fdEBktuTc/WRjQNYLxOcO+6P0lS1+oDIueTiDSzZTqF9wovNOBhPX/nVAoftALXtBc9
-	 1VHzT9SWMbR1a6ZDmnbReKYbza0cli/BKBe/j/S4CClLfUphNoCdcFm42sHbcbxF+luCO
-	 /PsBe0itUugyOGz7p20IWRvoQnU4dHSG91WAxtc8h3378EVkqUsk8UnnWskg1/3DHnQ==
+	t=1795057671;
+	b=wXd1QD8zl2o+Ygx54Jmc0J22A73NxSvF/1gLdsRLm8QgmoiFV9ubTiXPT3u9HAcXvrtR
+	 lpSVtCbhSBVcTHgFdDII2ft8uK+zthy2NIaQljt4EznR7KQYktDLYP+EmvyX6lp0bqjgE
+	 eRH8P6P4dkqWtDQh7E1a3xkYFuiNFgRR8ABqT3Ie1eaERJycnN2KIY2EuIdjQVYf+s+HH
+	 yeAfBlL4096BHLZtDD3K+zWQfOtyRJMG/QbVpuiUtbNJYD+El9M+ivBBWewmF4EGFjUxY
+	 fSYfXt0l6PxsyiAhSh2Tlvosh3RByPVIeH1+2m/8P5+g4IbdZY+NeSPrB1YngPwTdeA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057668;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057671;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PfjNgt9EsS6aeAxqlECrDRKmIc5sJTc4Hg2ptWpibJo=;
-	b=3EVVW5LsFUTyzNKYsbJm5i9C0GqbRahGRF3kKLk05gTP4kiogqjBLZk1WjcCFiLZgdCR
-	 OlkizDhcYJXVH+XYGWHEJlLJqEROTDaW/7RsF7MPDtIRuZqvYScEjvvMI7s25ZqjWpU7U
-	 IzBbXwzzY5FUq5L3QqPsH3ADM7ZBmR77PdjG+fHxNFG/vEU3dO0u4pCmqMKY8PDwifYcD
-	 0FkQBD0lkbgEewbyRcOSRqTnQcuKKqY4X/BG1GgR2u4VlADsVoHPapNA2254X5R8PKytm
-	 Rq5n9h5/iBPO9xqgCYHxfR7xbkwrTHv7nDhA3nP6j8hnXOqyJ6zk5hsL3vcA+aYMAVg==
+	bh=4ai8n7oiqSw/Aa+9Fk1repUGKu1o8K71+CrY3i6JS1c=;
+	b=TMPnAPfkWA5Xj+x7OJz81BeOfPtDmVCzVBeg7R3lX1MGnWrDVXJkbkwgXLcSmpImqPGq
+	 S+zV6rAfEKetm25+ikAtY04xIeLT+J2UMcgTYl8oIttveQpzh3LRs9d8TvRVJQQ0tXvSg
+	 92K/nT62AyUVb+geyiNE5UhIpFGVuIFK+y25WcfxzMFefbSeEHHsrTLlNnUf54WgNdUZQ
+	 oW30QTujHVB7y5A32Gty3csPM7UzdneBHuJDGNsul/tIEc2r7NatPb0HQSETVZNlNpnst
+	 ZldzD82XU2dMM2PtMWcMFTwhbg0qJb0i7YzFCoh04btzXG6UQpltGvwB9LBqip68UOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0UmxUxlk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1JeRl4MT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D544B606A31C;
-	Thu, 19 Nov 2026 03:07:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACEDC606A33F;
+	Thu, 19 Nov 2026 03:07:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0UmxUxlk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A1251F000C4;
-	Thu, 19 Nov 2026 03:07:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1JeRl4MT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A6D71F000C4;
+	Thu, 19 Nov 2026 03:07:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057668;
-	bh=PfjNgt9EsS6aeAxqlECrDRKmIc5sJTc4Hg2ptWpibJo=;
+	s=korg; t=1795057671;
+	bh=4ai8n7oiqSw/Aa+9Fk1repUGKu1o8K71+CrY3i6JS1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0UmxUxlkondvLoPwGbbzVPFYF0Y9l7LHWP+OJzOfXRYKRfToCYvn3B8hp/7nERp0f
-	 ef3tSV5YNYx5pneVOJXrB4ZfkKDNhP+teW1eUKjbb5xpxyU5exUJ5Sfgy4GiUc0szv
-	 TpeCC5P8hHpQ1IkJM9f23U1h8RTS6781vOszph9I=
+	b=1JeRl4MTToeALzmHbnr8KkRw3lScplZNvJEL4esRWvvp+Uj8TzqCI4Rr8BeUXYfSc
+	 kqjE+dmR+U92jaf/vUvnB83yKxQz4q0jMKJ2N4ohTXy+cStNi6e0JJiTvZ4IO/WK0d
+	 Gxu1BcFD9IoJ/AW/ke5rUHJWcCV9ZYQmkZDOqLg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+25860fb17af97289@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 5.10 0211/1848] libceph: bound mon_command ack decode to front len
-Date: Wed, 18 Nov 2026 15:37:29 +0100
-Message-ID: <20261118145920.864607631@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 5.10 0212/1848] media: cx88: Disable PCI device on MPEG initialization failure
+Date: Wed, 18 Nov 2026 15:37:30 +0100
+Message-ID: <20261118145920.908888940@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,70 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 62b41a16d8603d4d809fda212f15c3e9c783a82b upstream.
+commit 80494a83223bc972145c23890b083d20651512bd upstream.
 
-handle_command_ack() bounds the decode with msg->front_alloc_len, the size
-of the reply buffer, instead of msg->front.iov_len, the number of bytes the
-monitor sent.  mon_alloc_msg() routes every CEPH_MSG_MON_COMMAND_ACK to
-get_generic_reply(), which returns the preallocated ->reply of whichever
-generic request carries the same tid, so the buffer keeps its fixed size
-however short the reply is.  An ack with hdr.front_len below sizeof(struct
-ceph_mon_request_header) + sizeof(u32), including 0, still passes
-ceph_decode_need(), and ceph_decode_32() returns four bytes that were never
-received: uninitialized slab memory, stale bytes of an earlier message, or
-bytes the peer planted by sending a reply that lands in the same buffer and
-is then rejected.  The read stays within the allocation, so KASAN does not
-flag it.
+cx8802_init_common() enables the PCI device, then returns directly if
+DMA mask setup or IRQ registration fails. cx8802_probe() frees the
+device and drops the shared core reference without disabling PCI.
 
-req->result reaches userspace through ceph_monc_do_statfs(),
-ceph_monc_get_version() and ceph_monc_blocklist_add(); rbd hands it back
-from write() on /sys/bus/rbd/add_single_major, and rbd_get_client() passes
-it to ERR_PTR() unchecked, which faults:
+Disable the PCI device on both post-enable failures. Preserve -EIO for
+a DMA mask failure and the original request_irq() error. Do not call
+the full fini helper because the IRQ was not successfully requested.
+The successful probe and normal removal paths are unchanged.
 
-  rbd: failed to get latest osdmap: -186318427
-  BUG: unable to handle page fault for address: fffffbfffe9ca034
-  Oops: Oops: 0000 [#1] SMP KASAN NOPTI
-  RIP: 0010:do_rbd_add (drivers/block/rbd.c:7105)
-  Call Trace:
-   ...
-   kernfs_fop_write_iter (fs/kernfs/file.c:345)
-   vfs_write (fs/read_write.c:595 fs/read_write.c:687)
-   ksys_write (fs/read_write.c:739)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:61 arch/x86/entry/syscall_64.c:84)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-  Kernel panic - not syncing: Fatal exception
+These missing error-path disables are present in the initial Git import.
 
-Use msg->front.iov_len, matching handle_subscribe_ack(),
-handle_statfs_reply(), handle_get_version_reply() and handle_auth_reply().
-A well-formed ack has front.iov_len >= 22 and is unaffected; a short one
-takes the existing bad: path.  This applies commit d3c32939fa0e ("libceph:
-bound get_version reply decode to front len") to the last decode-side
-use of front_alloc_len in this file.
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
 
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Fixes: 6305a3b41515 ("libceph: support for blacklisting clients")
-Reported-by: co+25860fb17af97289@bugs.sh
-Assisted-by: Cursor
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Assisted-by: OpenAI:GPT-5.6
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/mon_client.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/pci/cx88/cx88-mpeg.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/net/ceph/mon_client.c
-+++ b/net/ceph/mon_client.c
-@@ -870,7 +870,7 @@ static void handle_command_ack(struct ce
- {
- 	struct ceph_mon_generic_request *req;
- 	void *p = msg->front.iov_base;
--	void *const end = p + msg->front_alloc_len;
-+	void *const end = p + msg->front.iov_len;
- 	u64 tid = le64_to_cpu(msg->hdr.tid);
+--- a/drivers/media/pci/cx88/cx88-mpeg.c
++++ b/drivers/media/pci/cx88/cx88-mpeg.c
+@@ -392,7 +392,8 @@ static int cx8802_init_common(struct cx8
+ 	err = pci_set_dma_mask(dev->pci, DMA_BIT_MASK(32));
+ 	if (err) {
+ 		pr_err("Oops: no 32bit PCI DMA ???\n");
+-		return -EIO;
++		err = -EIO;
++		goto fail_disable_device;
+ 	}
  
- 	dout("%s msg %p tid %llu\n", __func__, msg, tid);
+ 	dev->pci_rev = dev->pci->revision;
+@@ -413,13 +414,17 @@ static int cx8802_init_common(struct cx8
+ 			  IRQF_SHARED, dev->core->name, dev);
+ 	if (err < 0) {
+ 		pr_err("can't get IRQ %d\n", dev->pci->irq);
+-		return err;
++		goto fail_disable_device;
+ 	}
+ 	cx_set(MO_PCI_INTMSK, core->pci_irqmask);
+ 
+ 	/* everything worked */
+ 	pci_set_drvdata(dev->pci, dev);
+ 	return 0;
++
++fail_disable_device:
++	pci_disable_device(dev->pci);
++	return err;
+ }
+ 
+ static void cx8802_fini_common(struct cx8802_dev *dev)
 
 
