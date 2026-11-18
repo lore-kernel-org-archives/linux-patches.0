@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015778;
-	b=5fHtrkddkitHls3F4NkEZXm9yV3L+N1wkdx2LkdDDvdxeVeWKhFeGymS/bVHAbH+ndW8
-	 uYC4Nt5esqKZhfMm1b0Acgcp07Q9T4Wr2EcP7DnfnBqh11pwopkdUs0aQokrD4CD4+CL4
-	 PNnCpxU4uYSdLwOMZeHNhJBLmKUJ52J7XoRq79lizbhAr1/qqG/ollWhOlA4i95/tHFLx
-	 upXPYv1d7yfd31pPFMevuWPUJEWOxes6bGDe5jVu2W7C4LwgLd16tVhZg7iIl3POMv/EO
-	 +K2CNvWqW+LptqEiPwDMa2+47Avqu7rtGD7OhGlBoEaRpwETQ+Z80IiCU10DKjfRxQg==
+	t=1795015780;
+	b=kKsk4f9rEScLKAS86EGo+THxsUcS/BmbzJTmsCH7cqwg04eLprPM4xKbpVQQ6TEbtpzr
+	 1m2ArwJugjPDBOMxXA7kxP5cwJHNBZg4SvQZWJK97W/dtAMHO7OfffJfug3NbtVRgp09W
+	 mocN4bflejLIYNSpZ472Owg9rE1abX5MpfgivIOmSdkX82c9uoMS2uFvAUjUmPaTLPEuk
+	 BHvEVmeTpxz73QBHTqRGDxAAjlSN9YlAsSVXT+dRGKxqH0xnLP2f9+W6x3uAaBCQGdRZU
+	 6k9D6LYmGCGOSPPQqPzJoLlP/wwOEfP4DFs5RQUxCoax17t7wWw3JQRFcbXwl8LhEsg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015778;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015780;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=qsN2POL9JlywxyCZZCZGlmRQ8Icev+AeyFHgOZrLnpo=;
-	b=j/mIbfs8ywZztu8lUP6UgBInJIGHbCLD3n4W+qa5WAQFcWuuzg7ko07sAeD6rNuSFXeV
-	 PyUqMbNIfZkylzFw/0h2Xf0wzURaVOV67TRBoRwRKJZocEJIBtuf/p0SGl4Z7BuzibCiJ
-	 EApdUlZecdfKrObcunQ2Ed7sjYFt+qh+QY6IhRl0BxmF8d8DmXujzVymYnuLkZyIi/vu2
-	 CDotioXDjUwSnB4/5KhGYJGKGvVPH718Lz+IzxU6y/yWrcj5g/dGqG1KbSW2SyOm0FdiJ
-	 BNWBIXhTNdvNI4/Rkora3aADT+Cve2dS8YgcHdESjSVP7zSYhoZoPFADExJye0SWHYw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=0JcdPDFbh3YTbgBCDetL00LdfPp2EqeT+M56HFQZrcY=;
+	b=Bo0ZrCHINMatUEbTfFmRMcD10yqOVSN7/sJa7ZWN0Yq0s4sYxsdctlLaJhx+/QKMzaV3
+	 v75HN1FDOnp+d6exYmdrr7nwSrxI31qYSbh5iYzHK0EaCrDya8qHZyLE9Idag3aM7orb3
+	 ttbz999wMK/QhXI58PHH39c6fgF1/6nxYcM/S9sCavrFxJ+BquenfkbnDWp/zzfn6u39N
+	 7675W/dLJ4zehllpzmG6qtsDSkHohN3vnECPO3JiytROeZmwnWdCEQnva39F3jgx6iKBL
+	 c4jAsnphEvpmARIwqPUyxWfTe0etSpW21I9pm8oSX7QW53Tbvf9+y3jkZn0tvEUXl8w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LXpfSICR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="l2jZ/pew";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A231606A320;
-	Wed, 18 Nov 2026 15:29:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED15606A320;
+	Wed, 18 Nov 2026 15:29:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LXpfSICR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55A9A1F000C4;
-	Wed, 18 Nov 2026 15:29:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l2jZ/pew
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B7651F000C5;
+	Wed, 18 Nov 2026 15:29:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015777;
-	bh=qsN2POL9JlywxyCZZCZGlmRQ8Icev+AeyFHgOZrLnpo=;
+	s=korg; t=1795015780;
+	bh=0JcdPDFbh3YTbgBCDetL00LdfPp2EqeT+M56HFQZrcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LXpfSICRve49lMoKa1DKGXEIyWrkz0flJVFpPno9/f+eqwIr2k5qMTVfBRn6jQURi
-	 6uqB2b10l6YT/WXX4/QGSOMZsqqtLNhjfwYOaJO+o8/iA8mLVrVQLfa+EuopE4H0Hu
-	 ybX1XrN7XRI3l0yIEa/E11w3bKpLcMErQIjuNOd4=
+	b=l2jZ/pew4wC9Bjg+3soUHnDqe9c8CYirx/TFKScwTer42RQUnqz25gT/IhHE4SL7l
+	 P0/t7GXxUJ2MNTN+5ssMKXTOIL0ZIY7w5DjbxZDU/ohyMZTExPARve9kY5IPxJTwKE
+	 Dtr0wmEtnb4XdALKHerptkeRHPua9DJXZ95p4Z3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junhui Liu <junhui.liu@pigmoral.tech>,
-	Yixun Lan <dlan@kernel.org>,
+	Keguang Zhang <keguang.zhang@gmail.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0252/2651] riscv: dts: spacemit: k3: Drop guest properties from M-level IMSIC
-Date: Wed, 18 Nov 2026 15:24:52 +0100
-Message-ID: <20261118150256.930952360@linuxfoundation.org>
+Subject: [PATCH 7.3 0253/2651] pwm: loongson: Reload PWM configuration through counter reset
+Date: Wed, 18 Nov 2026 15:24:53 +0100
+Message-ID: <20261118150256.967593798@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,60 +62,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Junhui Liu <junhui.liu@pigmoral.tech>
+From: Keguang Zhang <keguang.zhang@gmail.com>
 
-[ Upstream commit 01e2f07c44fc46180bdb10e70506f8acf44a53dd ]
+[ Upstream commit 0de9b836a3bc1cd30578ae2c4463d09afd85ed3d ]
 
-The mimsic node describes the machine-level IMSIC, whose MMIO region is
-0x10000 (64 KiB) for all 8 harts. However, the node also specifies
-riscv,guest-index-bits = <6>, and per the AIA specification the
-per-hart stride is 2^(guest-index-bits + 12) bytes when guest interrupt
-files exist, i.e. 2^(6 + 12) = 256 KiB per hart and 2 MiB for all 8
-harts. The described region cannot hold even a single hart's files, so
-the node contradicts itself. OpenSBI enforces exactly this constraint in
-imsic_data_check() and rejects the node with -EINVAL, preventing the
-M-level IMSIC from initializing:
+The Loongson PWM controller latches the LOW and PERIOD registers only at
+the start of each PWM period. After disabling and re-enabling the PWM,
+the controller resumes from the previous counter value and completes the
+current period before re-latching the updated LOW and PERIOD values.
 
-  fdt_driver_init_by_offset: interrupt-controller@f1000000 (riscv,imsics) init failed: -3
-  init_coldboot: irqchip init failed (error -3)
+Reset the PWM counter when disabling the PWM and release it when
+enabling the PWM so that the updated LOW and PERIOD values are latched
+before the PWM starts running again.
 
-Moreover, guest interrupt files exist to act as the supervisor-level
-interrupt files of virtual harts; there is no machine-level counterpart.
-riscv,num-guest-ids is equally meaningless for the machine-level IMSIC.
-
-Drop both "riscv,guest-index-bits" and "riscv,num-guest-ids" properties
-from the mimsic node so the node matches the actual hardware layout.
-
-Fixes: 56f37e391a62 ("riscv: dts: spacemit: add initial support for K3 SoC")
-Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
-Reviewed-by: Yixun Lan <dlan@kernel.org>
-Link: https://patch.msgid.link/20260729-k3-mimsic-fix-v1-1-368c0aec04b9@pigmoral.tech
-Signed-off-by: Yixun Lan <dlan@kernel.org>
+Fixes: 2b62c89448dd ("pwm: Add Loongson PWM controller support")
+Signed-off-by: Keguang Zhang <keguang.zhang@gmail.com>
+Link: https://patch.msgid.link/20260715-pwm-loongson-fix-v3-2-0aab2847eaa7@gmail.com
+[ukleinek: Note LOW refers to the register currently named
+LOONGSON_PWM_REG_DUTY. That name is wrong, the fix is still under
+discussion.]
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/boot/dts/spacemit/k3.dtsi | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/pwm/pwm-loongson.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
-index f9c2ffedeae80..86ccfb82e295c 100644
---- a/arch/riscv/boot/dts/spacemit/k3.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
-@@ -1287,9 +1287,7 @@ mimsic: interrupt-controller@f1000000 {
- 					      <&cpu4_intc 11>, <&cpu5_intc 11>,
- 					      <&cpu6_intc 11>, <&cpu7_intc 11>;
- 			msi-controller;
--			riscv,guest-index-bits = <6>;
- 			riscv,hart-index-bits = <4>;
--			riscv,num-guest-ids = <511>;
- 			riscv,num-ids = <511>;
- 			status = "reserved";
- 		};
+diff --git a/drivers/pwm/pwm-loongson.c b/drivers/pwm/pwm-loongson.c
+index f2fb35b7af2b3..98c809bde2b30 100644
+--- a/drivers/pwm/pwm-loongson.c
++++ b/drivers/pwm/pwm-loongson.c
+@@ -99,6 +99,7 @@ static void pwm_loongson_disable(struct pwm_chip *chip, struct pwm_device *pwm)
+ 	struct pwm_loongson_ddata *ddata = to_pwm_loongson_ddata(chip);
+ 
+ 	val = pwm_loongson_readl(ddata, LOONGSON_PWM_REG_CTRL);
++	val |= LOONGSON_PWM_CTRL_REG_RST;
+ 	val &= ~LOONGSON_PWM_CTRL_REG_EN;
+ 	pwm_loongson_writel(ddata, val, LOONGSON_PWM_REG_CTRL);
+ }
+@@ -109,6 +110,7 @@ static int pwm_loongson_enable(struct pwm_chip *chip, struct pwm_device *pwm)
+ 	struct pwm_loongson_ddata *ddata = to_pwm_loongson_ddata(chip);
+ 
+ 	val = pwm_loongson_readl(ddata, LOONGSON_PWM_REG_CTRL);
++	val &= ~LOONGSON_PWM_CTRL_REG_RST;
+ 	val |= LOONGSON_PWM_CTRL_REG_EN;
+ 	pwm_loongson_writel(ddata, val, LOONGSON_PWM_REG_CTRL);
+ 
 -- 
 2.53.0
 
