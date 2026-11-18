@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047817;
-	b=snx2/QD/wF3Y+bPE8bdD6+lSqtKXTRWhdaXhsMVdwXUHtG6qY4GegJy9fN8JB397EWN7
-	 kYD05jLSlxI3RfVilzvtTnuEqcocWunAn73JHZlKFeUjGcsy0ccfXMRhpdvQjo9kOD5f0
-	 wUZIqvIol6EcKrEOD0pZGP+sS40s53UeIxiCED0FztRARUfWhgInDfC/xxPiG6mKIm2Lt
-	 rJmAqfqQIwXUlZOpAu4poq0WhoAR3YNucR/J+9euH5crffQFN3ZpRUNdtt4p7ALU2/n/y
-	 C3LrAlSItifGOyO5J+xNyfn7tfLeSYvSO/0p0dM7sLcTHEYieuMd2cX85S2CTheo0JQ==
+	t=1795047820;
+	b=T5RzlLp5sqR6QSJaB/y4eDfs8vGnsyjjQ8QxFmxNQrI9r0MBB7GVbziyUR2WqBwgLkks
+	 FkoPKx0Y+VGwxHjeXTff2RFuarV8dTxWVNx4lv40X7+xRJUWiOuO6tXVVdYE6jeSQydjC
+	 +07ErNwnXtI8DVqDFPTiyTMcT3WxM0fH+2fICf0IIC6BW7bhy04KFv4NN8Gmt++WVCa74
+	 AU5xMdDDesYrMl5mvfiB1+ncsnL+AKVx1/uoEFDcuJUpB4fTiXiuhUuNy9X9dMay56Er2
+	 4kWOCPluX2Z8DT+Z00wslsqxALj6S1JePNRWWmAJ9jVxXYfjSoxTeaSmSEdjhPYWCWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047817;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047820;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1wWPSLwetmgwl1DbYQIViAWuYGEFrYiR6wGWT25cCXk=;
-	b=vwMpAr0n/54mn6NISpI0P8gwzPFipJOCbtKQETQjZtDCxFgRWOi3qXYvMsXF4wsZYK25
-	 DxoWt4rD6s9+gTgd62v5zk/hxp2Q4gl3hcpJUx1bFa1oz6gahPf+KbdB/tpCa1QYgmpIM
-	 2jNfoIRpvf65Xhqi5pD9pj7pj9zLDXqxn8KnBqjGXuN8A/qp65WRaRbMnh/vxePuzvSEJ
-	 lLK6D+eheDQoUZ+WtyTwadNCqddCJ9viPQQ6Z1YmquxFwmfbg/yA9Xfu+mS/J46fcdKJt
-	 CVwvE/yQPIRYrGdu6P38CQKNk1rOPg3hrQMUj10gguB4m9zKMHyfL0Ug321zpIY3HIQ==
+	bh=U5BncKFQH4Z8xTJGxoQydo4nNcfIVvFKVPH5czoBhRQ=;
+	b=5EgqEhiui5bXQCK2bpG50uHDmkI6Q3ewINIIsVMItqxF2X0PEhpNNI4mqo6e/qvawG3o
+	 GSzM6KyFH1VGg+WUaEYXaHi0Ca7T5JKBxoTz/UuT+/4dRMF9h01mRp2vrTreW/2rS1Fur
+	 LX14hPIiL7JU8sM1IByNV+vPe3CZl46ojTURQP3uOSo3ZsAlialBUkjPWnpQf3/WyDYxm
+	 GVgjj6cPp8hwwbKu5CU1FOye0YnnndVPjnQVXaus6cvz914t8wI0Mhvg7z+jdw6vDOYii
+	 LuVIP/jGOsl6jwnz9lBjz0DBGt3AbW1phtt6k5MRW5qx46gvjssjgMMoIf9FN2O/GhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zGXmwlwK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OtLSfnum;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9CE606A325;
-	Thu, 19 Nov 2026 00:23:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 363AE606A320;
+	Thu, 19 Nov 2026 00:23:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zGXmwlwK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9CF31F000C4;
-	Thu, 19 Nov 2026 00:23:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OtLSfnum
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8671B1F000C4;
+	Thu, 19 Nov 2026 00:23:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047817;
-	bh=1wWPSLwetmgwl1DbYQIViAWuYGEFrYiR6wGWT25cCXk=;
+	s=korg; t=1795047820;
+	bh=U5BncKFQH4Z8xTJGxoQydo4nNcfIVvFKVPH5czoBhRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zGXmwlwKazmMrGL74fT6hvmd9y5SOcExGDorrokDlWOoQD6dMpOKe89OG/bd4rIF2
-	 hL4BkozEX70WiWR//XObTw7ODdx+290WuOpnAB8rCtwu0QJWnlqtBWCFFHrOJDVWmm
-	 eIhck/PoTz7A28s0NneaVj+dPBK9k1iHPLvHIAKU=
+	b=OtLSfnum44/G9LGMPGz64kf3QIKpV9GW25ypaeQUPb8ZJu47RqVVrKGJ/qC9kF9dy
+	 TwSZSctNBPiNOCW/IYPeuAizl4h/K4rOkf1y6+/4oOfE9gER+2twKQnSzHc/5DKWLw
+	 3nWMY0VD37sdESUlFNbP4UGuRJfFTbbx1+im7z70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Adi Nata <adinata.softwareengineer@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1733/2857] spi: sh-msiof: propagate setup runtime-PM errors
-Date: Wed, 18 Nov 2026 15:46:07 +0100
-Message-ID: <20261118150303.713626598@linuxfoundation.org>
+Subject: [PATCH 6.1 1734/2857] iio: humidity: hts221: report available values via read_avail()
+Date: Wed, 18 Nov 2026 15:46:08 +0100
+Message-ID: <20261118150303.747338578@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,48 +69,195 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Adi Nata <adinata.softwareengineer@gmail.com>
 
-[ Upstream commit 152867998da9f331d6235d76aae1c7e1650708a9 ]
+[ Upstream commit 003e99cf33e344a380ba10b3e04ccb862f3d9dc3 ]
 
-sh_msiof_spi_setup() ignores pm_runtime_get_sync() before programming
-native chip-select registers and marking the configuration initialized.
+Replace the custom oversampling_ratio_available sysfs attributes with
+the standard IIO read_avail() callback. This lets the IIO core create
+and format *_available attributes and exposes the lists to
+in-kernel consumers.
 
-Use the checked runtime-PM helper and return failure before register
-access.
+As a consequence, the incorrectly named
+in_humidity_oversampling_ratio_available attribute is replaced by the
+standard in_humidityrelative_oversampling_ratio_available name for the
+IIO_HUMIDITYRELATIVE channel. The temperature oversampling and sampling
+frequency available attribute names are unchanged.
 
-Fixes: 7ff0b53c4051 ("spi: sh-msiof: Avoid writing to registers from spi_master.setup()")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260830140133.24156-1-pengpeng@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: e4a70e3e7d84 ("iio: humidity: add support to hts221 rh/temp combo device")
+Signed-off-by: Adi Nata <adinata.softwareengineer@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-sh-msiof.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/iio/humidity/hts221_core.c | 106 +++++++++++------------------
+ 1 file changed, 40 insertions(+), 66 deletions(-)
 
-diff --git a/drivers/spi/spi-sh-msiof.c b/drivers/spi/spi-sh-msiof.c
-index aaeafa4cdaec9..7722bba03e3db 100644
---- a/drivers/spi/spi-sh-msiof.c
-+++ b/drivers/spi/spi-sh-msiof.c
-@@ -559,6 +559,7 @@ static int sh_msiof_spi_setup(struct spi_device *spi)
- 	struct sh_msiof_spi_priv *p =
- 		spi_controller_get_devdata(spi->controller);
- 	u32 clr, set, tmp;
-+	int ret;
+diff --git a/drivers/iio/humidity/hts221_core.c b/drivers/iio/humidity/hts221_core.c
+index 517158307d8c2..d28b1805d739f 100644
+--- a/drivers/iio/humidity/hts221_core.c
++++ b/drivers/iio/humidity/hts221_core.c
+@@ -10,7 +10,6 @@
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/device.h>
+-#include <linux/iio/sysfs.h>
+ #include <linux/delay.h>
+ #include <linux/pm.h>
+ #include <linux/regmap.h>
+@@ -48,7 +47,7 @@ struct hts221_odr {
+ struct hts221_avg {
+ 	u8 addr;
+ 	u8 mask;
+-	u16 avg_avl[HTS221_AVG_DEPTH];
++	int avg_avl[HTS221_AVG_DEPTH];
+ };
  
- 	if (spi->cs_gpiod || spi_controller_is_slave(p->ctlr))
- 		return 0;
-@@ -574,7 +575,9 @@ static int sh_msiof_spi_setup(struct spi_device *spi)
- 		clr |= SIMDR1_SYNCAC;
- 	else
- 		set |= SIMDR1_SYNCAC;
--	pm_runtime_get_sync(&p->pdev->dev);
-+	ret = pm_runtime_resume_and_get(&p->pdev->dev);
-+	if (ret < 0)
-+		return ret;
- 	tmp = sh_msiof_read(p, SITMDR1) & ~clr;
- 	sh_msiof_write(p, SITMDR1, tmp | set | SIMDR1_TRMD | SITMDR1_PCON);
- 	tmp = sh_msiof_read(p, SIRMDR1) & ~clr;
+ static const struct hts221_odr hts221_odr_table[] = {
+@@ -57,6 +56,8 @@ static const struct hts221_odr hts221_odr_table[] = {
+ 	{ 13, 0x03 },	/* 12.5Hz */
+ };
+ 
++static const int hts221_odr_avail[] = { 1, 7, 13 };
++
+ static const struct hts221_avg hts221_avg_list[] = {
+ 	{
+ 		.addr = 0x10,
+@@ -96,7 +97,11 @@ static const struct iio_chan_spec hts221_channels[] = {
+ 				      BIT(IIO_CHAN_INFO_OFFSET) |
+ 				      BIT(IIO_CHAN_INFO_SCALE) |
+ 				      BIT(IIO_CHAN_INFO_OVERSAMPLING_RATIO),
++		.info_mask_separate_available =
++				BIT(IIO_CHAN_INFO_OVERSAMPLING_RATIO),
+ 		.info_mask_shared_by_all = BIT(IIO_CHAN_INFO_SAMP_FREQ),
++		.info_mask_shared_by_all_available =
++				BIT(IIO_CHAN_INFO_SAMP_FREQ),
+ 		.scan_index = 0,
+ 		.scan_type = {
+ 			.sign = 's',
+@@ -112,7 +117,11 @@ static const struct iio_chan_spec hts221_channels[] = {
+ 				      BIT(IIO_CHAN_INFO_OFFSET) |
+ 				      BIT(IIO_CHAN_INFO_SCALE) |
+ 				      BIT(IIO_CHAN_INFO_OVERSAMPLING_RATIO),
++		.info_mask_separate_available =
++				BIT(IIO_CHAN_INFO_OVERSAMPLING_RATIO),
+ 		.info_mask_shared_by_all = BIT(IIO_CHAN_INFO_SAMP_FREQ),
++		.info_mask_shared_by_all_available =
++				BIT(IIO_CHAN_INFO_SAMP_FREQ),
+ 		.scan_index = 1,
+ 		.scan_type = {
+ 			.sign = 's',
+@@ -191,53 +200,35 @@ static int hts221_update_avg(struct hts221_hw *hw,
+ 	return 0;
+ }
+ 
+-static ssize_t hts221_sysfs_sampling_freq(struct device *dev,
+-					  struct device_attribute *attr,
+-					  char *buf)
+-{
+-	int i;
+-	ssize_t len = 0;
+-
+-	for (i = 0; i < ARRAY_SIZE(hts221_odr_table); i++)
+-		len += scnprintf(buf + len, PAGE_SIZE - len, "%d ",
+-				 hts221_odr_table[i].hz);
+-	buf[len - 1] = '\n';
+-
+-	return len;
+-}
+-
+-static ssize_t
+-hts221_sysfs_rh_oversampling_avail(struct device *dev,
+-				   struct device_attribute *attr,
+-				   char *buf)
+-{
+-	const struct hts221_avg *avg = &hts221_avg_list[HTS221_SENSOR_H];
+-	ssize_t len = 0;
+-	int i;
+-
+-	for (i = 0; i < ARRAY_SIZE(avg->avg_avl); i++)
+-		len += scnprintf(buf + len, PAGE_SIZE - len, "%d ",
+-				 avg->avg_avl[i]);
+-	buf[len - 1] = '\n';
+-
+-	return len;
+-}
+-
+-static ssize_t
+-hts221_sysfs_temp_oversampling_avail(struct device *dev,
+-				     struct device_attribute *attr,
+-				     char *buf)
++static int hts221_read_avail(struct iio_dev *indio_dev,
++			     struct iio_chan_spec const *chan,
++			     const int **vals, int *type, int *length,
++			     long mask)
+ {
+-	const struct hts221_avg *avg = &hts221_avg_list[HTS221_SENSOR_T];
+-	ssize_t len = 0;
+-	int i;
+-
+-	for (i = 0; i < ARRAY_SIZE(avg->avg_avl); i++)
+-		len += scnprintf(buf + len, PAGE_SIZE - len, "%d ",
+-				 avg->avg_avl[i]);
+-	buf[len - 1] = '\n';
+-
+-	return len;
++	switch (mask) {
++	case IIO_CHAN_INFO_OVERSAMPLING_RATIO:
++		switch (chan->type) {
++		case IIO_HUMIDITYRELATIVE:
++			*vals = hts221_avg_list[HTS221_SENSOR_H].avg_avl;
++			*length = ARRAY_SIZE(hts221_avg_list[HTS221_SENSOR_H].avg_avl);
++			break;
++		case IIO_TEMP:
++			*vals = hts221_avg_list[HTS221_SENSOR_T].avg_avl;
++			*length = ARRAY_SIZE(hts221_avg_list[HTS221_SENSOR_T].avg_avl);
++			break;
++		default:
++			return -EINVAL;
++		}
++		*type = IIO_VAL_INT;
++		return IIO_AVAIL_LIST;
++	case IIO_CHAN_INFO_SAMP_FREQ:
++		*vals = hts221_odr_avail;
++		*type = IIO_VAL_INT;
++		*length = ARRAY_SIZE(hts221_odr_avail);
++		return IIO_AVAIL_LIST;
++	default:
++		return -EINVAL;
++	}
+ }
+ 
+ int hts221_set_enable(struct hts221_hw *hw, bool enable)
+@@ -521,27 +512,10 @@ static int hts221_validate_trigger(struct iio_dev *iio_dev,
+ 	return hw->trig == trig ? 0 : -EINVAL;
+ }
+ 
+-static IIO_DEVICE_ATTR(in_humidity_oversampling_ratio_available, S_IRUGO,
+-		       hts221_sysfs_rh_oversampling_avail, NULL, 0);
+-static IIO_DEVICE_ATTR(in_temp_oversampling_ratio_available, S_IRUGO,
+-		       hts221_sysfs_temp_oversampling_avail, NULL, 0);
+-static IIO_DEV_ATTR_SAMP_FREQ_AVAIL(hts221_sysfs_sampling_freq);
+-
+-static struct attribute *hts221_attributes[] = {
+-	&iio_dev_attr_sampling_frequency_available.dev_attr.attr,
+-	&iio_dev_attr_in_humidity_oversampling_ratio_available.dev_attr.attr,
+-	&iio_dev_attr_in_temp_oversampling_ratio_available.dev_attr.attr,
+-	NULL,
+-};
+-
+-static const struct attribute_group hts221_attribute_group = {
+-	.attrs = hts221_attributes,
+-};
+-
+ static const struct iio_info hts221_info = {
+-	.attrs = &hts221_attribute_group,
+ 	.read_raw = hts221_read_raw,
+ 	.write_raw = hts221_write_raw,
++	.read_avail = hts221_read_avail,
+ 	.validate_trigger = hts221_validate_trigger,
+ };
+ 
 -- 
 2.53.0
 
