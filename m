@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021113;
-	b=jVUkD1ZPrgCp9QxSDBKrw7EQ4Nwda6LftZ9KJWkB/nkx3tO4izO7wy3JOZSgPyN+L2Sh
-	 tTehvWb9uy9U3284BE9b4v2dIybUCmLZJZC4mjO1/EOIqiNmXp6SKMJudz1vqqap2VUT7
-	 NHWldjbBVBUw609s3EB4hNH1s6nFPl7muh1Q6VsWYGCfDCKWsbMc0K5b/8MoMrsMFQifO
-	 Ns4QwpfNdcYnzbC8fqOxkTNt/NluzMPURcah8I8mF+tPUkZzJzCAIwl+XOgpEDG/K1hzk
-	 jzLV6L2Yy+fs26WUXmIOLaFsIsE41iigLYfH6hqpQMzWV+Povr0yxQzn0wQfHGQ64Fw==
+	t=1795021115;
+	b=ZHxbqwuqSFvXyrUaJKmNOTbcjFa8Xd9sRFOoGCmDUZDUHYgKHTO8Fsl+WnS3/HyXuJp7
+	 pCNL4Q8TIET0VBmpKQd/8Hu8BkM9PY4LjXJY5bOskoxmST90J8s9iH8K1CDYg5ZQ7PG5I
+	 cGkdYb0D5scT8RSluaJ6dwmpwbYDBKh6BqPE8Be4MW9QSpBix6jp21eW84ML6uhCw3ENA
+	 XQ9EFmIZqLswuJIerT/m+SPz9FwYbBWu8uXJveXoJ9ZV95NsB13trOZsn42kY5GN7t0yF
+	 W4l4kXKUaP7+XOWLAi8hXWrJkVBBgKiVuhDsvKtoyllzIqm5edP6vYXyJzIpZr4mPvA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021113;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021115;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=a5DiMEF+DcZwbkuSAGSvZjuO2N1899RIj4KVGeZpUw0=;
-	b=f9VwU30MTU5q+TlvYhBoEbdu8+6g2cHRD34iBUiJFKf0scpUrfvT7E3/rz4q+YvgnKr7
-	 OKAIcMk1ek03Ilpe7tb6/mC1TSlw/I8ayC9XNFWDTB42nU2LcV7NI9s7Ns0wH24+OrXhQ
-	 ygVZByaAneTMjDhyA8wiaZLAve9XTryrl5/qLnq73LYFmBQRRh1IVjb55ksn3l/hQRJgK
-	 n0dr5/Yanu4BH4TvQV30cUfwRRYvLGOJxQaivZGwaG3223JzFtZnDwtS5e5V30Z4V881W
-	 wloDXP+6aC6kYIBmHmO+yFg5dWe88Zdecpuv1TJ2iVqKdvWJogunE0ElpM5bfnh26ow==
+	bh=Hh1o+O8bF1z60p9bo+JWIfMscRwCo+oEtyp/zAldn20=;
+	b=mOvy4Y5837mtrg6U4hjblh3toZVQrPzrfqktScSECo9N9V/MlY4H9Hd3YzWf6brvqiIZ
+	 lJwzd6hSt0vuLI/N32jYqFV4usoFcd8EsYLAt+NA5sRHCfGvHGXHj9dPb6PeujrGadDHx
+	 GR/FU7umwo2Z1qFoYKBfS8dP/rmJa4b2eKj8rQ7v/CyYpRNPbT9eXoBdwNcUQsapm7vn6
+	 Hpa5ovP3WzQTMUU6MUHvLJKvb+lNFtU+Y6jMA3JiDGnYmxuHaC/wCru8UakzbjB7T+xhy
+	 a1pvbbgQ6tDHGoTrgRWcEfcg1hcJULiV20lHSK/ShXPlh3HergKvMH3cbpWYXpoIvXg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eqBzKtMb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=js640cgE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C44606A332;
-	Wed, 18 Nov 2026 16:58:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2578606A320;
+	Wed, 18 Nov 2026 16:58:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eqBzKtMb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 575131F000C7;
-	Wed, 18 Nov 2026 16:58:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=js640cgE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B991F000C4;
+	Wed, 18 Nov 2026 16:58:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021112;
-	bh=a5DiMEF+DcZwbkuSAGSvZjuO2N1899RIj4KVGeZpUw0=;
+	s=korg; t=1795021115;
+	bh=Hh1o+O8bF1z60p9bo+JWIfMscRwCo+oEtyp/zAldn20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eqBzKtMbTY6aQxaHcm/OIQwv8jO843kSXO9GwGQn7SqRu5ZrBOFKV+fBodzQaZEP8
-	 EhDZp9iJBBWvuJQBBz0Kz+l3K8hDIehDYpRf47Kn2gqQNYjJG0XyQcJVyFnwg/hRtN
-	 tHAYrh39WDk8yz3Ypi6eeru3gDkqgRYOGwFTNZxs=
+	b=js640cgEmM/ilV1G3k9nGr5Ee2n2TDYea7w1yzg2K4q9k8mYLLUCGSM8CAjGGztnI
+	 YhKjR5mC8mJ9v9bmXlfKF7DQOS487mfJR9IKjwWCVB5yaTN96AKAYa3AVFzDhQbze+
+	 VoQ4ZwMi9gVcHHfoAp21PmxtAXLRpvdOtxbPN02E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guopeng Zhang <zhangguopeng@kylinos.cn>,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
+	"Sashiko (gemini)" <sashiko-bot@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2184/2651] cgroup/cpuset: Consolidate isolated_cpus_can_update() into prstate_housekeeping_conflict()
-Date: Wed, 18 Nov 2026 15:57:04 +0100
-Message-ID: <20261118150404.391802012@linuxfoundation.org>
+Subject: [PATCH 7.3 2193/2651] net/sched: act_api: reject duplicate actions in a batch
+Date: Wed, 18 Nov 2026 15:57:13 +0100
+Message-ID: <20261118150404.693456584@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,278 +69,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 53bbfb33b1f4fd669c5bffcb7670c4099ecbb225 ]
+[ Upstream commit f67b3ed1308d7a282e2d6202d61af052ab0da39e ]
 
-The isolated_cpus_can_update() and prstate_housekeeping_conflict() are
-checking different aspects of upcoming cpumask changes that may conflict
-with the current setting of the housekeeping cpumasks. There are places
-where both are called together. There are also places where only one
-of them is called. That inconsistency can contribute to missing check
-where invalid cpumask changes may be allowed to move forward.
+tca_action_gd() builds actions[] with one tcf_action_get_1() per nested
+TCA_ACT_TAB entry.  Each successful lookup takes its own reference to the
+resolved action, so repeated TCA_ACT_INDEX entries in one request yield
+the same pointer in multiple slots.
 
-Fix that by consolidating isolated_cpus_can_update() into
-prstate_housekeeping_conflict() and call prstate_housekeeping_conflict()
-in all the places where either one of them or both are called. The
-exception is the validate_partition() function where the
-prstate_housekeeping_conflict() call is removed. It is because
-validate_partition() is called only from partition_cpus_change()
-where prstate_housekeeping_conflict() will be called from either
-remote_cpus_update() or update_parent_effective_cpumask() with
-partcmd_update if not for partition invalidatation or disablement.
+For RTM_DELACTION, tcf_action_delete() then consumes two references per
+slot: one in tcf_action_put() and one in tcf_idr_delete_index().  A
+duplicate therefore drives the refcount to zero mid-walk -- the delete
+frees the action and removes its IDR slot -- and the next slot calls
+tcf_action_put() on the freed action:
 
-Now prstate_housekeeping_conflict() will be called in the following
-locations:
- - when a partition is enabled in remote_partition_enable() or in
-   update_parent_effective_cpumask() with partcmd_enable*.
- - when a cpumask is updated in remote_cpus_update() or in
-   update_parent_effective_cpumask() with partcmd_update.
- - when a partition state changes from root to isolated or vice versa
-   in update_prstate().
+  refcount_t: underflow; use-after-free.
+  WARNING: lib/refcount.c:87 at refcount_dec_not_one
+   refcount_dec_and_mutex_lock
+   __tcf_action_put
+   tca_action_gd
 
-Fixes: 4a74e418881f ("cgroup/cpuset: Check partition conflict with housekeeping setup")
-Fixes: 103b08709e8a ("cgroup/cpuset: Fail if isolated and nohz_full don't leave any housekeeping")
-Reviewed-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
-Signed-off-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Three duplicate entries are enough.  Reject a repeated action while a
+delete batch is built, dropping the reference the extra lookup took, and
+return -EINVAL.  RTM_GETACTION balances its own references and keeps
+accepting duplicate entries.
+
+Conditions to recreate the bug:
+  tc actions add action gact index 100
+  tc actions delete action gact index 100 action gact index 100 \
+                     action gact index 100
+
+Fixes: 16af6067392c ("net: sched: implement reference counted action release")
+Reported-by: Sashiko (gemini) <sashiko-bot@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260824153903.4143642-1-victor@mojatatu.com
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/QDISC-K1TH.v1.r3.20261012134653-1@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c | 148 +++++++++++++++++++++--------------------
- 1 file changed, 77 insertions(+), 71 deletions(-)
+ net/sched/act_api.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index f4a6259e9838a..b763d9a182ba4 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -1378,65 +1378,87 @@ static void partition_xcpus_del(int old_prs, struct cpuset *parent,
- }
- 
- /*
-- * isolated_cpus_can_update - check for isolated & nohz_full conflicts
-- * @add_cpus: cpu mask for cpus that are going to be isolated
-- * @del_cpus: cpu mask for cpus that are no longer isolated, can be NULL
-- * Return: false if there is conflict, true otherwise
-- *
-- * If nohz_full is enabled and we have isolated CPUs, their combination must
-- * still leave housekeeping CPUs.
-+ * prstate_housekeeping_conflict - check for partition & housekeeping conflicts
-+ * @new_prs: new partition root state to be checked
-+ * @parent_prs: Parent partition root state
-+ * @add_cpus: additional CPUs to be added to current cpuset
-+ * @del_cpus: CPUs to be removed from current cpuset, can be NULL
-+ * Return: true if there is conflict, false otherwise
-  *
-- * TBD: Should consider merging this function into
-- *      prstate_housekeeping_conflict().
-+ * There are two different housekeeping conflicts to be checked:
-+ * 1) If new_prs is PRS_ROOT, none of the @add_cpus can be a boot-time isolated
-+ *    CPU. IOW, the whole @add_cpus must be a subset of HK_TYPE_DOMAIN_BOOT.
-+ * 2) If nohz_full is enabled and we have isolated CPUs, their combination must
-+ *    still leave housekeeping CPUs. This check is only needed if new_prs
-+ *    differs from parent_prs and one of them is PRS_ISOLATED.
-  */
--static bool isolated_cpus_can_update(struct cpumask *add_cpus,
--				     struct cpumask *del_cpus)
-+static bool prstate_housekeeping_conflict(int new_prs, int parent_prs,
-+					  struct cpumask *add_cpus,
-+					  struct cpumask *del_cpus)
+diff --git a/net/sched/act_api.c b/net/sched/act_api.c
+index 9eb1dec14cb15..42b5e40b52d09 100644
+--- a/net/sched/act_api.c
++++ b/net/sched/act_api.c
+@@ -2025,7 +2025,7 @@ static int
+ tca_action_gd(struct net *net, struct nlattr *nla, struct nlmsghdr *n,
+ 	      u32 portid, int event, struct netlink_ext_ack *extack)
  {
- 	cpumask_var_t full_hk_cpus;
--	int res = true;
-+	int res;
- 
--	if (!housekeeping_enabled(HK_TYPE_KERNEL_NOISE))
--		return true;
-+	WARN_ON_ONCE(parent_prs <= 0);
-+	if (!new_prs)
-+		return false;
-+
-+	/*
-+	 * For a currently invalid partition root state, do the check assuming
-+	 * that it may be converted back to valid.
-+	 *
-+	 * There are code paths where an invalid partition may be reverted back
-+	 * to a valid partition but we still need to run the housekeeping check
-+	 * before the conversion happens to make sure the switch is valid. We
-+	 * can either do the negative to positive PRS switch individually in all
-+	 * these code paths or do it here which I think will make the code a bit
-+	 * easier to read.
-+	 */
-+	if (new_prs < 0)
-+		new_prs = -new_prs;
- 
--	if (del_cpus && cpumask_weight_and(del_cpus,
--			housekeeping_cpumask(HK_TYPE_KERNEL_NOISE)))
-+	if (housekeeping_enabled(HK_TYPE_DOMAIN_BOOT) && (new_prs == PRS_ROOT) &&
-+	    !cpumask_subset(add_cpus, housekeeping_cpumask(HK_TYPE_DOMAIN_BOOT)))
- 		return true;
- 
--	if (!alloc_cpumask_var(&full_hk_cpus, GFP_KERNEL))
-+	/*
-+	 * Exit 2nd check early and return false if
-+	 * 1) there is no boot time isolated nohz_full CPU
-+	 * 2) parent and child has the same partition state
-+	 * 3) new_prs is PRS_ROOT, parent_prs is PRS_ISOLATED and no CPU will
-+	 *    be returned back to the parent.
-+	 */
-+	if (!housekeeping_enabled(HK_TYPE_KERNEL_NOISE) ||
-+	    (new_prs == parent_prs) ||
-+	    ((new_prs == PRS_ROOT) && (!del_cpus || cpumask_empty(del_cpus))))
-+		return false;
-+
-+	/*
-+	 * Now make sure that @add_cpus contains new CPUs to be isolated and
-+	 * @del_cpus contains isolated CPUs to be un-isolated.
-+	 * With the guards above, @add_cpus can't be NULL after the swap.
-+	 */
-+	if (parent_prs == PRS_ISOLATED)
-+		swap(add_cpus, del_cpus);
-+
-+	if (del_cpus &&
-+	   (cpumask_first_and_and(del_cpus, housekeeping_cpumask(HK_TYPE_KERNEL_NOISE),
-+				   cpu_active_mask) < nr_cpu_ids))
- 		return false;
- 
-+	if (!alloc_cpumask_var(&full_hk_cpus, GFP_KERNEL))
-+		return true;
-+
- 	cpumask_and(full_hk_cpus, housekeeping_cpumask(HK_TYPE_KERNEL_NOISE),
- 		    housekeeping_cpumask(HK_TYPE_DOMAIN));
- 	cpumask_andnot(full_hk_cpus, full_hk_cpus, isolated_cpus);
- 	cpumask_and(full_hk_cpus, full_hk_cpus, cpu_active_mask);
--	if (!cpumask_weight_andnot(full_hk_cpus, add_cpus))
--		res = false;
-+	res = !cpumask_weight_andnot(full_hk_cpus, add_cpus);
- 
- 	free_cpumask_var(full_hk_cpus);
- 	return res;
- }
- 
--/*
-- * prstate_housekeeping_conflict - check for partition & housekeeping conflicts
-- * @prstate: partition root state to be checked
-- * @new_cpus: cpu mask
-- * Return: true if there is conflict, false otherwise
-- *
-- * CPUs outside of HK_TYPE_DOMAIN_BOOT, if defined, can only be used in an
-- * isolated partition.
-- */
--static bool prstate_housekeeping_conflict(int prstate, struct cpumask *new_cpus)
--{
--	if (!housekeeping_enabled(HK_TYPE_DOMAIN_BOOT))
--		return false;
--
--	if ((prstate != PRS_ISOLATED) &&
--	    !cpumask_subset(new_cpus, housekeeping_cpumask(HK_TYPE_DOMAIN_BOOT)))
--		return true;
--
--	return false;
--}
--
- /*
-  * cpuset_update_sd_hk_unlock - Rebuild sched domains, update HK & unlock
-  *
-@@ -1618,9 +1640,7 @@ static int remote_partition_enable(struct cpuset *cs, int new_prs,
- 		return PERR_INVCPUS;
- 	if (cpumask_intersects(tmp->new_cpus, subpartitions_cpus))
- 		return PERR_NOCPUS;
--	if (((new_prs == PRS_ISOLATED) &&
--	     !isolated_cpus_can_update(tmp->new_cpus, NULL)) ||
--	    prstate_housekeeping_conflict(new_prs, tmp->new_cpus))
-+	if (prstate_housekeeping_conflict(new_prs, PRS_ROOT, tmp->new_cpus, NULL))
- 		return PERR_HKEEPING;
- 
- 	spin_lock_irq(&callback_lock);
-@@ -1722,8 +1742,8 @@ static void remote_cpus_update(struct cpuset *cs, struct cpumask *xcpus,
- 		else if (cpumask_intersects(tmp->addmask, subpartitions_cpus) ||
- 			 cpumask_subset(top_cpuset.effective_cpus, tmp->addmask))
- 			WRITE_ONCE(cs->prs_err, PERR_NOCPUS);
--		else if ((prs == PRS_ISOLATED) &&
--			 !isolated_cpus_can_update(tmp->addmask, tmp->delmask))
-+		else if (prstate_housekeeping_conflict(prs, PRS_ROOT,
-+						       tmp->addmask, tmp->delmask))
- 			WRITE_ONCE(cs->prs_err, PERR_HKEEPING);
- 		if (cs->prs_err)
- 			goto invalidate;
-@@ -1865,11 +1885,7 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
- 		if (cpumask_empty(xcpus))
- 			return PERR_INVCPUS;
- 
--		if (prstate_housekeeping_conflict(new_prs, xcpus))
--			return PERR_HKEEPING;
--
--		if ((new_prs == PRS_ISOLATED) && (new_prs != parent_prs) &&
--		    !isolated_cpus_can_update(xcpus, NULL))
-+		if (prstate_housekeeping_conflict(new_prs, parent_prs, xcpus, NULL))
- 			return PERR_HKEEPING;
- 
- 		if (tasks_nocpu_error(parent, cs, xcpus))
-@@ -1942,20 +1958,12 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
+-	int i, ret;
++	int i, j, ret;
+ 	struct nlattr *tb[TCA_ACT_MAX_PRIO + 1];
+ 	struct tc_action *act;
+ 	size_t attr_size = 0;
+@@ -2050,6 +2050,25 @@ tca_action_gd(struct net *net, struct nlattr *nla, struct nlmsghdr *n,
+ 			ret = PTR_ERR(act);
+ 			goto err;
  		}
- 
- 		/*
--		 * TBD: Invalidate a currently valid child root partition may
--		 * still break isolated_cpus_can_update() rule if parent is an
--		 * isolated partition.
-+		 * Check for housekeeping conflicts
- 		 */
--		if (is_partition_valid(cs) && (old_prs != parent_prs)) {
--			if ((parent_prs == PRS_ROOT) &&
--			    /* Adding to parent means removing isolated CPUs */
--			    !isolated_cpus_can_update(tmp->delmask, tmp->addmask))
--				part_error = PERR_HKEEPING;
--			if ((parent_prs == PRS_ISOLATED) &&
--			    /* Adding to parent means adding isolated CPUs */
--			    !isolated_cpus_can_update(tmp->addmask, tmp->delmask))
--				part_error = PERR_HKEEPING;
--		}
-+		if (is_partition_valid(cs) &&
-+		    prstate_housekeeping_conflict(old_prs, parent_prs,
-+						  tmp->delmask, tmp->addmask))
-+			part_error = PERR_HKEEPING;
- 
- 		/*
- 		 * The new CPUs to be removed from parent's effective CPUs
-@@ -2481,10 +2489,6 @@ static enum prs_errcode validate_partition(struct cpuset *cs, struct cpuset *tri
- 	if (cpumask_empty(trialcs->effective_xcpus))
- 		return PERR_INVCPUS;
- 
--	if (prstate_housekeeping_conflict(trialcs->partition_root_state,
--					  trialcs->effective_xcpus))
--		return PERR_HKEEPING;
--
- 	if (tasks_nocpu_error(parent, cs, trialcs->effective_xcpus))
- 		return PERR_NOCPUS;
- 
-@@ -2501,7 +2505,7 @@ static enum prs_errcode validate_partition(struct cpuset *cs, struct cpuset *tri
-  * CPU modifications may cause a partition to be disabled or require state updates.
-  */
- static void partition_cpus_change(struct cpuset *cs, struct cpuset *trialcs,
--					struct tmpmasks *tmp)
-+				  struct tmpmasks *tmp)
- {
- 	enum prs_errcode prs_err;
- 
-@@ -3058,13 +3062,15 @@ static int update_prstate(struct cpuset *cs, int new_prs)
- 			err = remote_partition_enable(cs, new_prs, &tmpmask);
- 		}
- 	} else if (old_prs && new_prs) {
-+		int parent_prs = is_remote_partition(cs)
-+				 ? PRS_ROOT : parent->partition_root_state;
 +
- 		/*
- 		 * A change in load balance state only, no change in cpumasks.
- 		 * Need to update isolated_cpus.
- 		 */
--		if (((new_prs == PRS_ISOLATED) &&
--		     !isolated_cpus_can_update(cs->effective_xcpus, NULL)) ||
--		    prstate_housekeeping_conflict(new_prs, cs->effective_xcpus))
-+		if (prstate_housekeeping_conflict(new_prs, parent_prs,
-+						  cs->effective_xcpus, NULL))
- 			err = PERR_HKEEPING;
- 		else
- 			isolcpus_updated = true;
++		/* A delete consumes two references per slot (tcf_action_put()
++		 * and tcf_idr_delete_index()) but each entry takes one, so a
++		 * repeated action would hit zero mid-walk.  GET balances its
++		 * own references and keeps accepting duplicates.
++		 */
++		if (event == RTM_DELACTION) {
++			for (j = 0; j < i - 1; j++) {
++				if (actions[j] != act)
++					continue;
++
++				tcf_action_put(act);
++				NL_SET_ERR_MSG(extack,
++					       "Duplicate TC action in a delete batch");
++				ret = -EINVAL;
++				goto err;
++			}
++		}
++
+ 		attr_size += tcf_action_fill_size(act);
+ 		actions[i - 1] = act;
+ 	}
 -- 
 2.53.0
 
