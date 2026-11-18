@@ -1,59 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040959;
-	b=s9QIqUw+xw/BZ6+f5hgEw+tf6+e0ey6zGsZ0QUzoXoYMvlD1YIo/cNFMAfYq6Bl2HR7Q
-	 Ie1s4fOzKRCbk39dtmXUhxnfomkU2LLLoJ+d6aMYnQCM2F4R9ldwLJ0wNT28f7On/hieK
-	 whshJ1G6+243b+tREfq/D5cU9ntfTcCl0Vm8fFsEi6ImjSee2+yCzLI9uXpCSvayw8w4K
-	 IlA87aNoanCPcdloNNRE7/+lsRQCqfISW942lt8vQ5Gu8uO3tPnkZGM5rXQyTKXSlgvZ1
-	 OXQYj+8GQ+DYZVunhFBnGopR39VxdBfGkQSpspiyvkG1Tmw72aLBHoAYevw+n0Qdpmw==
+	t=1795040961;
+	b=Qq6q6I7fkNVhrxEgtF/tD+Lb2hnXOxeLkTPe8AdAElbmnl1LTq/WGhjY4IR5vM6o9hs4
+	 2BZ9KFmgwmVBQjF9a6tLpDu5ugWL4dIsiezUhMVtGoANnatUzdkLrMyQsQkuTEBJ0cXV3
+	 ttGRqzZXXYXpSJ1GkCnjEhya+4Yz2qb091GDFDQAWHPp+oJ0Hwaggy1XI6kmYhZ1+gejb
+	 3KiQZptk9QyQTwodbv5lA9uAgP1YPDfIB+V3f0/iSA6pmaSyGuEAYCyuDc+tifxtsk7EM
+	 JeBTns7Txaq0bmqFnHOzz8P35tKRGoRMbfpDqiYYBwT8EpcbK8CGTyH4UQGkE//p1tw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040959;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040961;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vgDOFitq8ycXMu/2lS+T00E7fCjkBeac9GQRtPXRuEQ=;
-	b=N2vE1+FuoM90oKGRTiFfumpTwu8rF4Vi3ImzP34tbWEShpI5dLQgKXT+UKAvnzaooXzQ
-	 gC8A0T60T74goGVWskwk3siB22OnsmnmtGK2cz3X4sCo0dvMRSF8Z8xZL76hsf1w+BR02
-	 lENqrF5NRK1BGE0wI0v8SmLlaaieL/M4EtYXjBSoGdtgn05rN+ywjXaftuixRtz//gS6h
-	 kVQ1BdOfiHkD7jWc3qym5L/s8xaSsD6PKSXHnzAojQzNC2gEDezjoWCLKBDP0lv4Nlqwu
-	 5pQef0HiyVtgswVGP5zoWPQPsNN3Izymd4InJVSXVlHRUY5HaPVq//6uxiBDthqzfkA==
+	bh=nuv03KycM93LU5lJXXg/NKeUrrud0H53CpamAgJua1M=;
+	b=mhkApZYePd+lMxVJSmMJcdXI46IZ+utnvkklIBJgyihxJvhjd07f7MKL1vOdorBQWIBa
+	 sFgmJQj9RJrFwvlTq1PD/lpsiuaP1Q9aM0zdZZAEfq8yP763JB+MaRtCf1TndmOM9lNjN
+	 berYHErSEZybZ297KaRnLDO3HTibxjeJXXBi4UhAor987X4n8Thz1VakwWTkx9vTJzmt0
+	 nUWRcnYv+vYfXSGv1rdRoENtSoJYaPWdWjLpoZ2V23g1Xa1wYLBYVErADcEXh3HZugI5b
+	 LHChKt/8LvKvX31gJuMQWQobX2yJcAGHybZUcIeXa4wuH5Fa3gvfFrquWUQ8jlUBB0g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kH4w2VWB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2mq4ZliY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 032BA606A320;
-	Wed, 18 Nov 2026 22:29:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA5D606A32C;
+	Wed, 18 Nov 2026 22:29:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kH4w2VWB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 604421F000C5;
-	Wed, 18 Nov 2026 22:29:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2mq4ZliY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC5B1F000C4;
+	Wed, 18 Nov 2026 22:29:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040958;
-	bh=vgDOFitq8ycXMu/2lS+T00E7fCjkBeac9GQRtPXRuEQ=;
+	s=korg; t=1795040961;
+	bh=nuv03KycM93LU5lJXXg/NKeUrrud0H53CpamAgJua1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kH4w2VWByc1+7hh3lF2C0260Y5yhOpt/1rhhNeMjVJeR6aOkJickQP9ISuqlEujPZ
-	 MyEyX/CxqV5izDXOsctRkukAoP3XkPVs+cTFC4ltcFsO+aj69vuh/80GGZXYAuYxTg
-	 tiNVL/PsfIqu+KSR1g4xdOmkYRGG0c9D2T5n1buQ=
+	b=2mq4ZliYwUMhNVXWqe+kIcXdXasYgWX87YuoF5HfNzN3/DdRxf4kYdjKFDYEBnPlw
+	 yNxQ5XcwRfgNyRPhQaehGmbBh1Olg9BwOn4cMEPqJln5PaK+HUZXOkW4f22hNXgmUi
+	 qtTRrvKB1fSuNB2CxFaU2MQO5Gro2gOOtHKBhak8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Florian Schmaus <florian.schmaus@codasip.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	ZhengYuan Huang <gality369@gmail.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
+	Heiher <r@hev.cc>,
+	Roman Penyaev <rpenyaev@suse.de>,
+	Shuah Khan <shuah@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2643/3318] ocfs2: fix deadlock in inline-data truncate transactions
-Date: Wed, 18 Nov 2026 15:54:25 +0100
-Message-ID: <20261118150440.356926253@linuxfoundation.org>
+Subject: [PATCH 6.6 2644/3318] selftests/epoll: fix race condition in multi-waiter wakeup tests
+Date: Wed, 18 Nov 2026 15:54:26 +0100
+Message-ID: <20261118150440.384904143@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -75,305 +72,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Florian Schmaus <florian.schmaus@codasip.com>
 
-[ Upstream commit c204bf5ac3eeb66648904d0374d6f7b84d843aac ]
+[ Upstream commit 4238e66c82b6ee888a768cb298c85083b4566726 ]
 
-Updating an inode xattr can cause an ABBA deadlock with inline file
-truncation:
+In tests with multiple concurrent waiters on edge-triggered epoll
+instances where an emitter writes to multiple sockets (epoll16, epoll56,
+epoll58):
 
-  ocfs2_truncate_file()
-    down_write(&oi->ip_alloc_sem)
-    ocfs2_truncate_inline()
-      ocfs2_start_trans()
+When the emitter performs its first write(), ep_poll_callback() fires and
+wakes up both waiters because one waiter uses epoll_wait() and the other
+one uses poll().  This translates to different wait queues, ep->wq for
+epoll and ep->poll_wait for poll/select, which are both awoken by the
+kernel because of that single write.  Next, both waiter threads invoke
+epoll_wait(), but since there is only one event, only one epoll_wait()
+will return non-zero because of the edge-triggered mode being used (in
+level-triggered mode, the kernel would re-queue the event because of
+remaining unread data).
 
-  ocfs2_xattr_set()
-    ocfs2_start_trans()
-    ocfs2_xattr_ibody_set()
-      down_write(&oi->ip_alloc_sem)
+Since the second waiter sees an empty ready list, it does not increment
+ctx.count and the test fails spuriously with ctx.count == 1 instead of 2.
 
-The xattr set path starts the merged transaction before the inode-body
-xattr helper acquires ip_alloc_sem, reversing the ip_alloc_sem ->
-transaction order used by the allocation and truncate paths.  The
-transaction merge in commit 85db90e77806 ("ocfs2/xattr: Merge xattr set
-transaction.") introduced this ordering.
+  Emitter (CPU 0)      Thread 0 (CPU 1)        Thread 1 (CPU 2)
+  ===============      ================        ================
+                       epoll_wait(e0, -1)      poll(e0, -1)
+                       [on e0->wq]             [on e0->poll_wait]
 
-Fix it by acquiring ip_alloc_sem once in ocfs2_xattr_set(), before xattr
-preparation, allocation reservations and ocfs2_start_trans(), and removing
-the per-helper acquisition from ocfs2_xattr_ibody_find(),
-ocfs2_xattr_ibody_set() and ocfs2_xattr_create_index_block().  These
-helpers now assert via lockdep that the caller holds ip_alloc_sem.
+  write(sfd[1])
+       |
+       +--(Kernel wakes BOTH e0->wq and e0->poll_wait via callback)--+
+       |                                                             |
+       |               wakes up                wakes up              |
+       |               epoll_wait() reaps e1   poll() returns 1      |
+       |               (e1 removed via ET)     (wants event)         |
+       |               e0->rdllist is EMPTY          |               |
+       |               count++ (count = 1)           v               |
+       |                                       epoll_wait(e0, 0)     |
+       |                                       sees EMPTY list!      |
+       |                                       returns 0!            |
+       |                                       thread exits          |
+       v                                                             |
+  write(sfd[3])                                                      |
+  (event arrives too late!)                                          v
+                           EXPECT_EQ(count, 2)  <-- SPURIOUS FAILURE!
 
-ocfs2_xattr_set_handle(), which only sets initial ACL or security xattrs
-on unpublished inodes inside the create transaction, takes ip_alloc_sem
-under a dedicated lockdep subclass so that the assertions hold without
-creating a transaction -> ip_alloc_sem cycle against the ip_alloc_sem ->
-transaction order.  The inode is unpublished, so the acquisition can never
-contend.
+Introduce waiter_entry1ap_loop() to retry poll() if the initial
+epoll_wait(..., 0) yielded no events.  This ensures the thread waits for
+the subsequent write rather than failing immediately.  Apply this helper
+in epoll16, epoll56, and for both waiter threads in epoll58.
 
-This keeps the established ip_alloc_sem -> transaction order and makes the
-locking unconditional, so lockdep can verify a single plain ordering
-instead of conditional acquisitions.
-
-Link: https://lore.kernel.org/20260826112659.246574-1-joseph.qi@linux.alibaba.com
-Fixes: 85db90e77806 ("ocfs2/xattr: Merge xattr set transaction.")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Link: https://lore.kernel.org/20260828-selftest-epoll-fix-race-v2-1-953ab57fd60a@codasip.com
+Fixes: f2728fe80cef ("selftests: add epoll selftests")
+Signed-off-by: Florian Schmaus <florian.schmaus@codasip.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: ZhengYuan Huang <gality369@gmail.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Heiher <r@hev.cc>
+Cc: Roman Penyaev <rpenyaev@suse.de>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/xattr.c | 79 ++++++++++++++++++++++++++++++++----------------
- 1 file changed, 53 insertions(+), 26 deletions(-)
+ .../filesystems/epoll/epoll_wakeup_test.c     | 32 +++++++++++++------
+ 1 file changed, 22 insertions(+), 10 deletions(-)
 
-diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
-index baa6593f85b8e..9752fcfff1091 100644
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -2912,6 +2912,9 @@ static int ocfs2_xattr_has_space_inline(struct inode *inode,
-  *
-  * Find extended attribute in inode block and
-  * fill search info into struct ocfs2_xattr_search.
-+ *
-+ * The inline free-space check races with truncate and allocation, so
-+ * callers must hold ip_alloc_sem for writing.
-  */
- static int ocfs2_xattr_ibody_find(struct inode *inode,
- 				  int name_index,
-@@ -2923,13 +2926,13 @@ static int ocfs2_xattr_ibody_find(struct inode *inode,
- 	int ret;
- 	int has_space = 0;
- 
-+	lockdep_assert_held_write(&oi->ip_alloc_sem);
-+
- 	if (inode->i_sb->s_blocksize == OCFS2_MIN_BLOCKSIZE)
- 		return 0;
- 
- 	if (!(oi->ip_dyn_features & OCFS2_INLINE_XATTR_FL)) {
--		down_read(&oi->ip_alloc_sem);
- 		has_space = ocfs2_xattr_has_space_inline(inode, di);
--		up_read(&oi->ip_alloc_sem);
- 		if (!has_space)
- 			return 0;
- 	}
-@@ -3008,6 +3011,7 @@ static int ocfs2_xattr_ibody_init(struct inode *inode,
-  *
-  * Set, replace or remove an extended attribute into inode block.
-  *
-+ * Callers must hold ip_alloc_sem for writing.
-  */
- static int ocfs2_xattr_ibody_set(struct inode *inode,
- 				 struct ocfs2_xattr_info *xi,
-@@ -3018,16 +3022,17 @@ static int ocfs2_xattr_ibody_set(struct inode *inode,
- 	struct ocfs2_inode_info *oi = OCFS2_I(inode);
- 	struct ocfs2_xa_loc loc;
- 
-+	lockdep_assert_held_write(&oi->ip_alloc_sem);
-+
- 	if (inode->i_sb->s_blocksize == OCFS2_MIN_BLOCKSIZE)
- 		return -ENOSPC;
- 
--	down_write(&oi->ip_alloc_sem);
- 	if (!(oi->ip_dyn_features & OCFS2_INLINE_XATTR_FL)) {
- 		ret = ocfs2_xattr_ibody_init(inode, xs->inode_bh, ctxt);
- 		if (ret) {
- 			if (ret != -ENOSPC)
- 				mlog_errno(ret);
--			goto out;
-+			return ret;
- 		}
- 	}
- 
-@@ -3037,13 +3042,10 @@ static int ocfs2_xattr_ibody_set(struct inode *inode,
- 	if (ret) {
- 		if (ret != -ENOSPC)
- 			mlog_errno(ret);
--		goto out;
-+		return ret;
- 	}
- 	xs->here = loc.xl_entry;
- 
--out:
--	up_write(&oi->ip_alloc_sem);
--
- 	return ret;
+diff --git a/tools/testing/selftests/filesystems/epoll/epoll_wakeup_test.c b/tools/testing/selftests/filesystems/epoll/epoll_wakeup_test.c
+index 65ede506305c8..9805aa3a22754 100644
+--- a/tools/testing/selftests/filesystems/epoll/epoll_wakeup_test.c
++++ b/tools/testing/selftests/filesystems/epoll/epoll_wakeup_test.c
+@@ -74,6 +74,24 @@ static void *waiter_entry1ap(void *data)
+ 	return NULL;
  }
  
-@@ -3701,6 +3703,18 @@ static int __ocfs2_xattr_set_handle(struct inode *inode,
- 	return ret;
- }
- 
-+/*
-+ * ip_alloc_sem subclass for inodes being initialized before publication.
-+ * ocfs2_xattr_set_handle() runs inside the create transaction, so taking
-+ * ip_alloc_sem there adds a transaction -> ip_alloc_sem order that would
-+ * form a lockdep cycle with the ip_alloc_sem -> transaction order used
-+ * elsewhere, if not for this separate subclass.  The inode is unpublished
-+ * so the acquisition can never contend.
-+ */
-+enum {
-+	OCFS2_IP_ALLOC_SEM_UNPUBLISHED = 1,
-+};
++static void *waiter_entry1ap_loop(void *data)
++{
++	struct pollfd pfd;
++	struct epoll_event e;
++	struct epoll_mtcontext *ctx = data;
 +
- /*
-  * This helper is only for setting initial ACL or security xattrs on an inode
-  * that is still unpublished, unhashed, and unattached to a dentry.
-@@ -3762,6 +3776,13 @@ int ocfs2_xattr_set_handle(handle_t *handle,
- 	xis.inode_bh = xbs.inode_bh = di_bh;
- 	di = (struct ocfs2_dinode *)di_bh->b_data;
- 
-+	/*
-+	 * The inode is unpublished and cannot contend, but take the
-+	 * semaphore anyway so the helpers' lockdep assertions hold.
-+	 */
-+	down_write_nested(&OCFS2_I(inode)->ip_alloc_sem,
-+			  OCFS2_IP_ALLOC_SEM_UNPUBLISHED);
++	pfd.fd = ctx->efd[0];
++	pfd.events = POLLIN;
++	while (poll(&pfd, 1, 2000) > 0) {
++		if (epoll_wait(ctx->efd[0], &e, 1, 0) > 0) {
++			__sync_fetch_and_add(&ctx->count, 1);
++			break;
++		}
++	}
 +
- 	ret = ocfs2_xattr_ibody_find(inode, name_index, name, &xis);
- 	if (ret)
- 		goto cleanup;
-@@ -3774,6 +3795,7 @@ int ocfs2_xattr_set_handle(handle_t *handle,
- 	ret = __ocfs2_xattr_set_handle(inode, di, &xi, &xis, &xbs, &ctxt);
- 
- cleanup:
-+	up_write(&OCFS2_I(inode)->ip_alloc_sem);
- 	brelse(xbs.xattr_bh);
- 	ocfs2_xattr_bucket_free(xbs.bucket);
- 
-@@ -3842,30 +3864,38 @@ int ocfs2_xattr_set(struct inode *inode,
- 	di = (struct ocfs2_dinode *)di_bh->b_data;
- 
- 	down_write(&OCFS2_I(inode)->ip_xattr_sem);
-+	/*
-+	 * The allocation and truncate paths take ip_alloc_sem before
-+	 * starting a transaction, so take it here before xattr
-+	 * preparation, allocation reservations and ocfs2_start_trans()
-+	 * to keep that order.  The xattr helpers below no longer take
-+	 * it themselves.
-+	 */
-+	down_write(&OCFS2_I(inode)->ip_alloc_sem);
- 	/*
- 	 * Scan inode and external block to find the same name
- 	 * extended attribute and collect search information.
- 	 */
- 	ret = ocfs2_xattr_ibody_find(inode, name_index, name, &xis);
- 	if (ret)
--		goto cleanup;
-+		goto out_free_ac;
- 	if (xis.not_found) {
- 		ret = ocfs2_xattr_block_find(inode, name_index, name, &xbs);
- 		if (ret)
--			goto cleanup;
-+			goto out_free_ac;
- 	}
- 
- 	if (xis.not_found && xbs.not_found) {
- 		ret = -ENODATA;
- 		if (flags & XATTR_REPLACE)
--			goto cleanup;
-+			goto out_free_ac;
- 		ret = 0;
- 		if (!value)
--			goto cleanup;
-+			goto out_free_ac;
- 	} else {
- 		ret = -EEXIST;
- 		if (flags & XATTR_CREATE)
--			goto cleanup;
-+			goto out_free_ac;
- 	}
- 
- 	/* Check whether the value is refcounted and do some preparation. */
-@@ -3876,7 +3906,7 @@ int ocfs2_xattr_set(struct inode *inode,
- 						   &ref_meta, &ref_credits);
- 		if (ret) {
- 			mlog_errno(ret);
--			goto cleanup;
-+			goto out_free_ac;
- 		}
- 	}
- 
-@@ -3887,7 +3917,7 @@ int ocfs2_xattr_set(struct inode *inode,
- 		if (ret < 0) {
- 			inode_unlock(tl_inode);
- 			mlog_errno(ret);
--			goto cleanup;
-+			goto out_free_ac;
- 		}
- 	}
- 	inode_unlock(tl_inode);
-@@ -3896,7 +3926,7 @@ int ocfs2_xattr_set(struct inode *inode,
- 					&xbs, &ctxt, ref_meta, &credits);
- 	if (ret) {
- 		mlog_errno(ret);
--		goto cleanup;
-+		goto out_free_ac;
- 	}
- 
- 	/* we need to update inode's ctime field, so add credit for it. */
-@@ -3914,6 +3944,7 @@ int ocfs2_xattr_set(struct inode *inode,
- 	ocfs2_commit_trans(osb, ctxt.handle);
- 
- out_free_ac:
-+	up_write(&OCFS2_I(inode)->ip_alloc_sem);
- 	if (ctxt.data_ac)
- 		ocfs2_free_alloc_context(ctxt.data_ac);
- 	if (ctxt.meta_ac)
-@@ -3922,7 +3953,6 @@ int ocfs2_xattr_set(struct inode *inode,
- 		ocfs2_schedule_truncate_log_flush(osb, 1);
- 	ocfs2_run_deallocs(osb, &ctxt.dealloc);
- 
--cleanup:
- 	if (ref_tree)
- 		ocfs2_unlock_refcount_tree(osb, ref_tree, 1);
- 	up_write(&OCFS2_I(inode)->ip_xattr_sem);
-@@ -4632,6 +4662,10 @@ static void ocfs2_xattr_update_xattr_search(struct inode *inode,
- 	xs->here = xs->header->xh_entries;
- }
- 
-+/*
-+ * Caller must hold ip_alloc_sem for writing, since a new xattr block
-+ * is allocated and the xattr block header is rewritten.
-+ */
- static int ocfs2_xattr_create_index_block(struct inode *inode,
- 					  struct ocfs2_xattr_info *xi,
- 					  struct ocfs2_xattr_search *xs,
-@@ -4648,19 +4682,14 @@ static int ocfs2_xattr_create_index_block(struct inode *inode,
- 	struct ocfs2_xattr_tree_root *xr;
- 	u16 xb_flags = le16_to_cpu(xb->xb_flags);
- 
-+	lockdep_assert_held_write(&oi->ip_alloc_sem);
++	return NULL;
++}
 +
- 	trace_ocfs2_xattr_create_index_block_begin(
- 				(unsigned long long)xb_bh->b_blocknr);
+ static void *waiter_entry1o(void *data)
+ {
+ 	struct epoll_event e;
+@@ -809,7 +827,7 @@ TEST(epoll16)
+ 	ASSERT_EQ(epoll_ctl(ctx.efd[0], EPOLL_CTL_ADD, ctx.sfd[2], events), 0);
  
- 	BUG_ON(xb_flags & OCFS2_XATTR_INDEXED);
- 	BUG_ON(!xs->bucket);
+ 	ctx.main = pthread_self();
+-	ASSERT_EQ(pthread_create(&ctx.waiter, NULL, waiter_entry1ap, &ctx), 0);
++	ASSERT_EQ(pthread_create(&ctx.waiter, NULL, waiter_entry1ap_loop, &ctx), 0);
+ 	ASSERT_EQ(pthread_create(&emitter, NULL, emitter_entry2, &ctx), 0);
  
--	/*
--	 * XXX:
--	 * We can use this lock for now, and maybe move to a dedicated mutex
--	 * if performance becomes a problem later.
--	 */
--	down_write(&oi->ip_alloc_sem);
--
- 	ret = ocfs2_journal_access_xb(handle, INODE_CACHE(inode), xb_bh,
- 				      OCFS2_JOURNAL_ACCESS_WRITE);
- 	if (ret) {
-@@ -4722,8 +4751,6 @@ static int ocfs2_xattr_create_index_block(struct inode *inode,
- 	ocfs2_journal_dirty(handle, xb_bh);
+ 	if (epoll_wait(ctx.efd[0], events, 1, -1) > 0)
+@@ -2925,7 +2943,7 @@ TEST(epoll56)
+ 	ASSERT_EQ(epoll_ctl(ctx.efd[0], EPOLL_CTL_ADD, ctx.efd[2], &e), 0);
  
- out:
--	up_write(&oi->ip_alloc_sem);
--
- 	return ret;
- }
+ 	ctx.main = pthread_self();
+-	ASSERT_EQ(pthread_create(&ctx.waiter, NULL, waiter_entry1ap, &ctx), 0);
++	ASSERT_EQ(pthread_create(&ctx.waiter, NULL, waiter_entry1ap_loop, &ctx), 0);
+ 	ASSERT_EQ(pthread_create(&emitter, NULL, emitter_entry2, &ctx), 0);
  
+ 	if (epoll_wait(ctx.efd[0], &e, 1, -1) > 0)
+@@ -3030,7 +3048,6 @@ TEST(epoll57)
+ TEST(epoll58)
+ {
+ 	pthread_t emitter;
+-	struct pollfd pfd;
+ 	struct epoll_event e;
+ 	struct epoll_mtcontext ctx = { 0 };
+ 
+@@ -3061,15 +3078,10 @@ TEST(epoll58)
+ 	ASSERT_EQ(epoll_ctl(ctx.efd[0], EPOLL_CTL_ADD, ctx.efd[2], &e), 0);
+ 
+ 	ctx.main = pthread_self();
+-	ASSERT_EQ(pthread_create(&ctx.waiter, NULL, waiter_entry1ap, &ctx), 0);
++	ASSERT_EQ(pthread_create(&ctx.waiter, NULL, waiter_entry1ap_loop, &ctx), 0);
+ 	ASSERT_EQ(pthread_create(&emitter, NULL, emitter_entry2, &ctx), 0);
+ 
+-	pfd.fd = ctx.efd[0];
+-	pfd.events = POLLIN;
+-	if (poll(&pfd, 1, -1) > 0) {
+-		if (epoll_wait(ctx.efd[0], &e, 1, 0) > 0)
+-			__sync_fetch_and_add(&ctx.count, 1);
+-	}
++	waiter_entry1ap_loop(&ctx);
+ 
+ 	ASSERT_EQ(pthread_join(ctx.waiter, NULL), 0);
+ 	EXPECT_EQ(ctx.count, 2);
 -- 
 2.53.0
 
