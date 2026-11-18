@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040427;
-	b=vFsy0WgdvBl+WOObhSPVcrd8fWDScMqj8GjhWjhxnbyEI13116/UAzUKohlj+z5XfO3Q
-	 Ew7ng7dgSNnypeX5Wc8Df0dZ53R6GE6bP3sQ9VD4yZfJfOPderOnuANXD520T4YMnzReN
-	 4Wu0g6ymXcJc1jAC2aprMYUiwPFdBYZHkuKLAfsA1zhjZB/y+Tw7qvNtV/0Nj9NsO4JDI
-	 sj8Iyk7tIGLPcnptf/uANQIR3vJ6i5FygogLmzfKdmmrw+Sxsngd8YthnghP4UHDVftwx
-	 fn1vN+15Tc8f26dy8y1ubBQfL6+1ZAzn633Za6zLzu9Ri8QqO6SzI4wYe2x6csbWgsA==
+	t=1795040430;
+	b=G2ZDePzsD6Gr0CAytm2qn+nnfORJusJIJmUbTiVoN4ZRqtIQUdbMj+x6rzEqxQcqtyXe
+	 khAyeGv/LAjDO2QYoNOCM8MX6gls2G7UTpc0QvMrSk7d1GCO+EffCBLfcjveucLywaVhv
+	 Rc6HLgbrTMEr8JtU9t1hSRWMFz3BCc5pm2UHHxL/RB2M/a/3OG4FN8pIyP9Kpq4vIPibd
+	 hsQVIWr1vikHncWi2drxx8CcqA8Hgf7nztw6B43ozh7ZnI6U2SwdMO88+F6KMB7aLjymK
+	 LOfImI8QYTcsFEpZNPP+sQ5TU3ICfL7onMQbFdpGb1oLsHkQmxFjrlq0bAq2lCUkLOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040427;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040430;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JYNTKxx2ZFfIaGU6+Hyb7PnpWQJFwxJRhDBVpeTNeTk=;
-	b=aGGeji7oC7T44DNr6BTKvJCE41isgFg8DrA22rYQDjvHQU8BbA0pnKEA/fkyW78AK+Ju
-	 6BV4BT0v1v/Z9UMndF7K34MJJsq0cFjqEkckccD0ZMnikN8/iNt15+3h+9bGODFMLn2Gb
-	 vnyTTM43vLyYVFRSvAJwiv/2EhodXUEKvKH+ACsEw3Y3RdHvy7tQGEsEvxP7NUuWoSmNu
-	 jAMdOwC9WOcd5Le1iYJgJdnfiJ5cKr2vgqyexQMAXEE3ndymYWDn7vE63apkXAva/U6lX
-	 cI7J9u+ji4Wt9DtXCMOLQ6rTum9q9YLjcn8RkGrtHmLvphtedPuGiyBwiqw50Kar7XQ==
+	bh=7y57aRAK7yFWdrvDIQEOrErd5U7sfXVfsSA5moq1m9U=;
+	b=4+lgxw1VBi9V/O98nGqWmNoYmj164tdGHB8iCQbwJmP3lWR7mtzt2A15xsyAVL6Azq8b
+	 29jdMzt7d+kb2Oyp0egTuHOU8uAw8EBPNrRZdlhX6ZPobLxtHXFtj/nUZifQl9wouiT/B
+	 0Q1NgIlXWzbzYhTpKWzDQYxvxdl2biVbNxJkYzMtDmG0Bm/IOZDdjHZwl/S7iQhn4AycC
+	 A4BaVooIM7eYsIjdn0an/RWrugzU3q/6tvIIGkGgl1D5EHimVZ6AkMZf1yLfwUzF29Eyt
+	 ohQp1rw7Fz0J13llQlCiqLxV2H6sJpJFMXRTmbt2KghHVFqiMHT5ontLw42FQ5hTOTw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BblKAEcR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SkSX2mHx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0C0606A325;
-	Wed, 18 Nov 2026 22:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335E6606A31C;
+	Wed, 18 Nov 2026 22:20:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BblKAEcR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF2C71F000C4;
-	Wed, 18 Nov 2026 22:20:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SkSX2mHx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A90B1F000C4;
+	Wed, 18 Nov 2026 22:20:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040427;
-	bh=JYNTKxx2ZFfIaGU6+Hyb7PnpWQJFwxJRhDBVpeTNeTk=;
+	s=korg; t=1795040430;
+	bh=7y57aRAK7yFWdrvDIQEOrErd5U7sfXVfsSA5moq1m9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BblKAEcRNDqK7QtMwXU66urCk5m9gRevFXAdDS0F3Lojj1uL3HJXy4uswAwp/YQ4E
-	 JmwFD+mZw2Mv9cH+698je44VNSARX7zkY3Pfp0jqz3tm8VXu5v3N5AZbS8KrHBn+aY
-	 T5X2sm3MSQktZfeT/lsGWDZP4so6CJltSbMyE/aU=
+	b=SkSX2mHxoWFFsCahk+LbY2FQFBtYtZtztKGItGZhcdsw7aI50YVRpBYzN1py8I1oI
+	 ekYlTHiFbEzRlI9aHKjgEEk5a+VxHON9Oy+xVWeeJrq2apNXB6k2X6rp3kw/Bkyexa
+	 FEiEmHSnWqVspRW97XCms7yDd+F/QLGEXGZle15A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yishai Hadas <yishaih@nvidia.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2402/3318] RDMA/mlx5: Set SRQ event handler before xarray insertion
-Date: Wed, 18 Nov 2026 15:50:24 +0100
-Message-ID: <20261118150433.567202586@linuxfoundation.org>
+Subject: [PATCH 6.6 2447/3318] RDMA/bnxt_re: Detect wrong sge_len passed for inline
+Date: Wed, 18 Nov 2026 15:51:09 +0100
+Message-ID: <20261118150434.854015258@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,46 +69,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yishai Hadas <yishaih@nvidia.com>
+From: Selvin Xavier <selvin.xavier@broadcom.com>
 
-[ Upstream commit d2aa15620e98dc4c6516944397ebea03b7a62b90 ]
+[ Upstream commit 81551ece0864c346080d241719d458c93f0e7fc9 ]
 
-mlx5_cmd_create_srq() stores the SRQ into the xarray before
-srq->msrq.event was assigned. A firmware SRQ event arriving in that
-window calls through a NULL pointer.
+Avoid handling wrong sge_len by adding extra check
+to see if the passed length is more than the inline
+size supported.
 
-Move the assignment before mlx5_cmd_create_srq().
-
-Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
-Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
-Link: https://patch.msgid.link/20260915140933.40580-12-yishaih@nvidia.com
+Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/srq.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/srq.c b/drivers/infiniband/hw/mlx5/srq.c
-index bcb6b324af506..38def085ee267 100644
---- a/drivers/infiniband/hw/mlx5/srq.c
-+++ b/drivers/infiniband/hw/mlx5/srq.c
-@@ -284,6 +284,7 @@ int mlx5_ib_create_srq(struct ib_srq *ib_srq,
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+index db5571af5c759..1c20e964b0fe2 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -2628,8 +2628,9 @@ static int bnxt_re_copy_inline_data(struct bnxt_re_dev *rdev,
+ 				wr->sg_list[i].addr;
+ 		sge_len = wr->sg_list[i].length;
  
- 	in.pd = to_mpd(ib_srq->pd)->pdn;
- 	in.db_record = srq->db.dma;
-+	srq->msrq.event = mlx5_ib_srq_event;
- 	err = mlx5_cmd_create_srq(dev, &srq->msrq, &in);
- 	kvfree(in.pas);
- 	if (err) {
-@@ -292,8 +293,6 @@ int mlx5_ib_create_srq(struct ib_srq *ib_srq,
- 	}
- 
- 	mlx5_ib_dbg(dev, "create SRQ with srqn 0x%x\n", srq->msrq.srqn);
--
--	srq->msrq.event = mlx5_ib_srq_event;
- 	srq->ibsrq.ext.xrc.srq_num = srq->msrq.srqn;
- 
- 	if (udata) {
+-		if ((sge_len + wqe->inline_len) >
+-		    BNXT_QPLIB_SWQE_MAX_INLINE_LENGTH) {
++		if (sge_len > BNXT_QPLIB_SWQE_MAX_INLINE_LENGTH ||
++		    ((sge_len + wqe->inline_len) >
++		    BNXT_QPLIB_SWQE_MAX_INLINE_LENGTH)) {
+ 			ibdev_err(&rdev->ibdev,
+ 				  "Inline data size requested > supported value");
+ 			return -EINVAL;
 -- 
 2.53.0
 
