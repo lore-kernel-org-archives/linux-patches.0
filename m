@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025349;
-	b=GFrpBS9E+HTCXsUuSXbQzllZ5uFOrQxJAI6COdK3NvzLQL9DviaVYMnPp+hWky1YHVuk
-	 27yq8hWAQpI19W2tB4L2iUSHUvZhSmM1V6RPPEQIwvF1BHa8SVV8TVaN0StidqhLhYOyU
-	 IjN7YCW72w2iYLyiLvJZI8A/1Z/mJyB2dg6MsjxiDx+ktlzknRFWmxNdFU1vVH2WiMX/i
-	 PhYfQ2SRFJkqaDWYO/SqOnDbdZCl/szA5rzfyzIfUkInJtDYOUvpfRjt3pGN4Z3OuRwKX
-	 saI7cacp3ZbVhcmrqacKsDWoMi0/mK/zwag60NVf7MnLFNrJllIH6P6dR+ShlUy02Fg==
+	t=1795025351;
+	b=HrSyxzbP/FBVkWLpM+5y/2anljcNonikYaV3ZC1MTElbTjDZW9RVOTO1mAqSBADtHdbq
+	 dTvNvNlBqwsEQWhjbyuY0LtfaF1aby+uZYTLmEYKlksaATotnYQE/olt0nHOkwh3TljTY
+	 RyEgbcHXYjRZZlYOqgxBB73WyOBxQto88HcbxFHP8dX6SbSC/WZ+6Wrlmufffz831lFEI
+	 8ig6pOodrjz0ingpyzDKH280watgZ2SOeVSrkbBYQuJ7PxaxYjj8vN+3+w6KOEzTvD/Bv
+	 vUJGt4CH3N1xZu69hzYML9e+x8qMV4WtjeGcO5WM3nQ9ou3LvuuzmZZM7Pt5BAXwCLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025349;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025351;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bndL4HAYoKGiwpQ8+HtTtBYT6LB7Y2pkwG7prDvWLM0=;
-	b=P8ZjjQtyQuA9OMJeDHcHUM81xcesV+JacHkIgJFEELwx1hp3CZX4Bb0FMGV7098LQYBK
-	 JPPk6R8NuulWgXIBNC8RduZDEtONXrdO1tka65WAatS9rgvBPu+p6AfxzGdBxDkVyKGue
-	 BoHscUh5VRSNwxbumwVwIQa9kczg6awR4Nl4lBsWykg4Yj9yXkPi/tNXncuWJi+K2fpod
-	 y/XR6RmUoV5mdK8kaoHSs3aCLcRzO2smixuShvOvfEt2Nn7pdEwcb96UxT5PMDF6+PLwc
-	 xuLiQ6USmaRUc8mIol09OJNAq1qY9oKCTPh9wqPyChK8VWdNhC4wfeukRUFLhCluTlQ==
+	bh=RCxqo1d1NxaqPVQctYHl+i/0AdF5vjgcqYToXgnKTQo=;
+	b=GVVf/o66k572BXLAFLq91Yr3Y1KEcM7tjGE5lvNvztqspegbyB2uII/O2aJjcWRvSoMo
+	 aGEkxpV/UfIGQeOHKl0+nJGMOHJ4A2DZgM1iWQRQlgJg1Q4QMDNplVdQVQZNF07Wj2MFI
+	 Zh/UubtaXFb1Kj14IMR1QS/093qLGNEePSv01fZ2pjXbg13MknkboJavTj3aiyegyx3bs
+	 rsYT72Y/c9eenaGP2LrQsTDJOPOqCLR2HmnJLzf8UvqKtdP4yTVWYe9LJ/hJkjOEwZV/e
+	 QwPteOGqbIdmq8CpmFeYzeAZBOW945NBSXYgaa7G/Yl3i+4INtjWtz0Ebnw6Ayp/N5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kiNp3JFR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Jofwe/Yz";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085B3606A33E;
-	Wed, 18 Nov 2026 18:09:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB23606A330;
+	Wed, 18 Nov 2026 18:09:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kiNp3JFR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 645B41F000C9;
-	Wed, 18 Nov 2026 18:09:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jofwe/Yz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B1E31F000C4;
+	Wed, 18 Nov 2026 18:09:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025348;
-	bh=bndL4HAYoKGiwpQ8+HtTtBYT6LB7Y2pkwG7prDvWLM0=;
+	s=korg; t=1795025351;
+	bh=RCxqo1d1NxaqPVQctYHl+i/0AdF5vjgcqYToXgnKTQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kiNp3JFR2PyFYhixqXRWyS75k+68WmSKNC2qddBlm5CoegBjHrId5GzlaJkN9lglq
-	 RRKWNd6W47HlwczbiTvUM2Qia964iniTQtfcjhIZXUtd/adS9QK+3QxPcmznln0BLl
-	 zQpEFlyxPclEX6O4AJu4NpRIYPilcqE7sAv1izsk=
+	b=Jofwe/Yzq9UHvsjQPdj0HZa6pPU/NCGgld+d1563xOV3z/vXm1lLiAg6eFJUVWtSh
+	 Y7d7H5rRlyYZydaiJX6FOCvVqoiVcmPQdGFi7wpsbvg00DTow0ScWzLGy+enxbGXqL
+	 KH3LzbFputuoE18imSiXhARedm7bS4ebKUalc5F8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Elfring <Markus.Elfring@web.de>,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Will Deacon <will@kernel.org>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1047/2151] perf/dwc_pcie: Fix PCI device reference leak in probe
-Date: Wed, 18 Nov 2026 15:46:22 +0100
-Message-ID: <20261118150200.467562677@linuxfoundation.org>
+Subject: [PATCH 6.18 1048/2151] spi: fsl: switch to managed controller allocation
+Date: Wed, 18 Nov 2026 15:46:23 +0100
+Message-ID: <20261118150200.502244611@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,66 +68,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 3a4067658363e34bf4e1d7039e5b52951fcb4012 ]
+[ Upstream commit 6afe041c2ce9068b2b6c64eddb5537911752050c ]
 
-pci_get_domain_bus_and_slot() returns a referenced PCI device. When the
-subsequent RAS DES capability lookup fails, dwc_pcie_pmu_probe() returns
--ENODEV without releasing that reference. Repeated failed probes can
-therefore keep the PCI device allocated after removal.
+Switch to device managed controller allocation to simplify error
+handling and to avoid having to take another reference during
+deregistration.
 
-Declare the looked-up device with __free(pci_dev_put), so the temporary
-reference is released on every return path. Keeping the reference scoped
-to the whole probe also covers all later uses of the device during
-initialization.
-
-This issue was found by a static analysis checker and confirmed by manual
-source review.
-
-Fixes: 7f35b429802a ("perf/dwc_pcie: fix duplicate pci_dev devices")
-Suggested-by: Markus Elfring <Markus.Elfring@web.de>
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260429091333.165363-12-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: af1d882d421d ("spi: fsl: unmap immr_spi_cs on remove")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/dwc_pcie_pmu.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/spi/spi-fsl-spi.c | 14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/perf/dwc_pcie_pmu.c b/drivers/perf/dwc_pcie_pmu.c
-index 22f73ac894e95..904e6cd01bf88 100644
---- a/drivers/perf/dwc_pcie_pmu.c
-+++ b/drivers/perf/dwc_pcie_pmu.c
-@@ -694,16 +694,16 @@ static struct notifier_block dwc_pcie_pmu_nb = {
+diff --git a/drivers/spi/spi-fsl-spi.c b/drivers/spi/spi-fsl-spi.c
+index a516abbb6f67a..dbe30664c1829 100644
+--- a/drivers/spi/spi-fsl-spi.c
++++ b/drivers/spi/spi-fsl-spi.c
+@@ -535,7 +535,7 @@ static struct spi_controller *fsl_spi_probe(struct device *dev,
+ 	u32 regval;
+ 	int ret = 0;
  
- static int dwc_pcie_pmu_probe(struct platform_device *plat_dev)
- {
--	struct pci_dev *pdev;
-+	u32 sbdf = plat_dev->id;
-+	struct pci_dev *pdev __free(pci_dev_put) =
-+		pci_get_domain_bus_and_slot(sbdf >> 16,
-+					    PCI_BUS_NUM(sbdf & 0xffff),
-+					    sbdf & 0xff);
- 	struct dwc_pcie_pmu *pcie_pmu;
- 	char *name;
--	u32 sbdf;
- 	u16 vsec;
- 	int ret;
+-	host = spi_alloc_host(dev, sizeof(struct mpc8xxx_spi));
++	host = devm_spi_alloc_host(dev, sizeof(struct mpc8xxx_spi));
+ 	if (host == NULL) {
+ 		ret = -ENOMEM;
+ 		goto err;
+@@ -559,7 +559,7 @@ static struct spi_controller *fsl_spi_probe(struct device *dev,
  
--	sbdf = plat_dev->id;
--	pdev = pci_get_domain_bus_and_slot(sbdf >> 16, PCI_BUS_NUM(sbdf & 0xffff),
--					   sbdf & 0xff);
- 	if (!pdev) {
- 		pr_err("No pdev found for the sbdf 0x%x\n", sbdf);
- 		return -ENODEV;
-@@ -713,7 +713,6 @@ static int dwc_pcie_pmu_probe(struct platform_device *plat_dev)
- 	if (!vsec)
- 		return -ENODEV;
+ 	ret = fsl_spi_cpm_init(mpc8xxx_spi);
+ 	if (ret)
+-		goto err_cpm_init;
++		goto err;
  
--	pci_dev_put(pdev);
- 	name = devm_kasprintf(&plat_dev->dev, GFP_KERNEL, "dwc_rootport_%x", sbdf);
- 	if (!name)
- 		return -ENOMEM;
+ 	mpc8xxx_spi->reg_base = devm_ioremap_resource(dev, mem);
+ 	if (IS_ERR(mpc8xxx_spi->reg_base)) {
+@@ -625,8 +625,6 @@ static struct spi_controller *fsl_spi_probe(struct device *dev,
+ 
+ err_probe:
+ 	fsl_spi_cpm_free(mpc8xxx_spi);
+-err_cpm_init:
+-	spi_controller_put(host);
+ err:
+ 	return ERR_PTR(ret);
+ }
+@@ -705,13 +703,9 @@ static void of_fsl_spi_remove(struct platform_device *ofdev)
+ 	struct spi_controller *host = platform_get_drvdata(ofdev);
+ 	struct mpc8xxx_spi *mpc8xxx_spi = spi_controller_get_devdata(host);
+ 
+-	spi_controller_get(host);
+-
+ 	spi_unregister_controller(host);
+ 
+ 	fsl_spi_cpm_free(mpc8xxx_spi);
+-
+-	spi_controller_put(host);
+ }
+ 
+ static struct platform_driver of_fsl_spi_driver = {
+@@ -757,13 +751,9 @@ static void plat_mpc8xxx_spi_remove(struct platform_device *pdev)
+ 	struct spi_controller *host = platform_get_drvdata(pdev);
+ 	struct mpc8xxx_spi *mpc8xxx_spi = spi_controller_get_devdata(host);
+ 
+-	spi_controller_get(host);
+-
+ 	spi_unregister_controller(host);
+ 
+ 	fsl_spi_cpm_free(mpc8xxx_spi);
+-
+-	spi_controller_put(host);
+ }
+ 
+ MODULE_ALIAS("platform:mpc8xxx_spi");
 -- 
 2.53.0
 
