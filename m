@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047212;
-	b=t7jj6vqAsbq/4qUvyvMiXJvfmX8cyTYfyxYlAyThD3s196cuG/zwI94d/2mo2eDdvFV+
-	 puzBm4TUpHEdsd4WGql3Nu8S2qQz3Crhx+ALJ50u55toMx8ac0dr2Gds3Y8gLX2Etj5VM
-	 RA3L4mAL1JxKvD9S+AZs+nN8ZPF0qedTK/BDeYuQHS/FPaCpOlO9MrvUTLROfX8YvC4a0
-	 cl4fLLZLccmY9lyYRg/bKVq1HVLbmahe+IfuLShIdIPgqAjcvkR70hMMreXvyT5bFdXhf
-	 xH4Oxp/B0T7cXjKCSMW/zpvKV4hLcQ3hGiYz561JRIHD3s/GfChLaeH9w5I5W+CgCLg==
+	t=1795047215;
+	b=VviWMWDmvGGyXi312qESIE7ALdQiT2fFJ2k2ZAU24OJNoF3qx4e/6D9pvNpiF7GWLJws
+	 4HKGuu99Pr7PC6czynt88iJ5y5OFdVM+xr6IxUP7qRtUeca4J73ob2LOZU+lWYQSnkVan
+	 rDAMZI74xFqKJJzQCuZgMij8ZHfIWgbCkfJpRx7sWdVbfQB40Wxehc+jVXsvIIBv4BohI
+	 uCNxgIS201Q0+XPQbIYrpaBykAprxfxZM75CLE+0kc0oljN9/gwgT6a/yrTQuA/9H3rQy
+	 iTUc9nwUf4Qw3Ip1O77On6YO+jSDvZKCnaBocK62XAb0Qw299eANxlai2nzrTT9OJCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047212;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047215;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Hno1pfSewexB9qsWdAsz7M0lAowuxNMPOjEJ/sjMpVA=;
-	b=FOWIEAtmr6HUWgo3a+Um7fJazOuSA+ayXRLoB5KEod1lWvXB7bsxqcUp0gOC9q5AIcyd
-	 5WnmBDVnC9Uj4pn08+1nYWiEIGrSnXesjO41uIpPAjQcb8S5gP69SK3k/9UdZGB9Aek59
-	 bC/niCly8cBsjQhjvx3KkBpfwIFiTmVDOkb42sy0QmIoU7heE+qZH2zYv6WRtMwOUZJui
-	 3OGfQwxcZ7b21lJ6Dq8Jf0AiOJm8ozLiJSxnFaFrRCvmBoMeCe6YcSruInYNytNpl+Q6e
-	 B1rVl7orTcqAWSzM0cvdMyz4MWXB7IL2AtpTvTp93PsmKgF2IAO+buqi6//hoOHnaQg==
+	bh=S0T38U8YtJzlpvzBACXVWbHG056fIMho24JD0E8qQKE=;
+	b=NsXos6j5D6ysBeflot/InfgDUQ8oFH2rorTolZEtg62MicgMipqVtphFBtOfFYe57D+Y
+	 /pzWr/qwIn73ce+cdAZnyBkr3LKd+nvM36tGBJDrEEGVgivV78K+qOAthqewx/JDZOtRS
+	 LAGoz+ZL6z6dmgMIcMcB0sijAzmrOz3uA6TDfZerEnfxh1k/UyhUH9bKqbyWn2IqJV2Yk
+	 Oz+6TiAmbXgJc9jYn+29zlBgTJnWvQjjW/Kn+K5DfCBf3l3jivpzsp2Sw41AgmJ1jqPQw
+	 3nJqCCsQXogauRxRyAOje5j4RZrb3bIj9sfMrAiCMi7GEphfclx702nhemBemM6A/bw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tvgDTfgS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YLAuhQ74;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C5960A2606;
-	Thu, 19 Nov 2026 00:13:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18039606A339;
+	Thu, 19 Nov 2026 00:13:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tvgDTfgS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF7C1F000C4;
-	Thu, 19 Nov 2026 00:13:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YLAuhQ74
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FF481F000C4;
+	Thu, 19 Nov 2026 00:13:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047211;
-	bh=Hno1pfSewexB9qsWdAsz7M0lAowuxNMPOjEJ/sjMpVA=;
+	s=korg; t=1795047214;
+	bh=S0T38U8YtJzlpvzBACXVWbHG056fIMho24JD0E8qQKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tvgDTfgSPrUCdJVge72ScSl9ejqxaLoEbTXnXdW8iuItQOM39S6XbJ2P+kSdekpU3
-	 dvabrrYO7XrpBkEKcF3/NP3m8x1NZlpihG39cHtjr6+q+AH8jMGzNkc+H9WqrwPy5U
-	 xGPg1fG72K+7+oMKXXHm4egBe0hP6eHKwjCek1Ns=
+	b=YLAuhQ74EIwbjHESL0fibTArB1hR3fgFCE5BlaOv6H9aGmpHhFv62G+mpOwt0SA6x
+	 wCQu5KOOXJbjTQVJN3IOBL3fjE4GMfikCEl6BE0ldRFzVEEvPRPzcQEY+rKyEqCbSg
+	 yK+3gl7FNsK/YtDecTAnFFOegHPZM5kRc9/FT6wM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Ambrozewicz <aambrozewicz@nvidia.com>,
-	Kent Gibson <warthog618@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Breno Leitao <leitao@debian.org>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1559/2857] gpiolib: cdev: dont set GPIOD_FLAG_IS_OUT
-Date: Wed, 18 Nov 2026 15:43:13 +0100
-Message-ID: <20261118150257.515637799@linuxfoundation.org>
+Subject: [PATCH 6.1 1560/2857] ACPI: APEI: accumulate the queued flag across error sections
+Date: Wed, 18 Nov 2026 15:43:14 +0100
+Message-ID: <20261118150257.559656210@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,87 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Ambrozewicz <aambrozewicz@nvidia.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 974d2712cb15014019595799b3ed68fef5fe9695 ]
+[ Upstream commit f341307a14895e5da056fb419a31ef7fb534ab18 ]
 
-When a line is requested or reconfigured through the v2 uAPI,
-gpio_v2_line_config_flags_to_desc_flags() copies the requested
-configuration into the descriptor flags, GPIOD_FLAG_IS_OUT included,
-before gpiod_direction_input_nonotify() or
-gpiod_direction_output_nonotify() asks the driver for the direction.
-If the driver refuses, for instance with -EOPNOTSUPP from
-.direction_input() for a line that can only be an output, the ioctl
-fails but the flag keeps the refused direction. gpiod_free_commit()
-does not touch GPIOD_FLAG_IS_OUT, so this outlives the failed request,
-and GPIO_V2_GET_LINEINFO_IOCTL reports the line as an input while the
-hardware still drives it, until a request without direction flags
-makes gpiod_request_commit() read the direction back from the driver:
+ghes_do_proc() walks every error section of a CPER record, and
+ghes_handle_arm_hw_error() walks every error-info entry of an ARM
+processor section.  Both assign to "queued" instead of OR-ing into it,
+so only the last iteration counts: a later section or entry that queues
+no memory-failure work clears the flag an earlier one set.
 
-  GPIO_V2_GET_LINE_IOCTL, line 0, input:         -EOPNOTSUPP
-  GPIO_V2_GET_LINEINFO_IOCTL, line 0:            input
-  GPIO_V2_GET_LINE_IOCTL, line 0, no direction:  ok
-  GPIO_V2_GET_LINEINFO_IOCTL, line 0:            output
+Instead of reassigning the variable at every time, just do an `OR`, so,
+if there was a single match, it will return "queued" as set.
 
-GPIO_V2_LINE_SET_CONFIG_IOCTL updates the flags in the same order.
-There the line stays requested, and since commit 92ac7de3175e
-("gpiolib: don't allow setting values on input lines")
-GPIO_V2_LINE_SET_VALUES_IOCTL on it then fails with -EPERM, though the
-line is still an output. A line whose driver refuses to make it an
-output is likewise reported as one.
+The comment above the check says "If no memory failure
+work is queued", which is the semantics this patch implements. I.e, only
+SIGBUS if there are queue was not handled at all. If we want to SIGBUS
+if any event was not handled/queued at all, we will need something more
+sophisticated.
 
-gpiod_direction_input_nonotify() and gpiod_direction_output_nonotify()
-set or clear GPIOD_FLAG_IS_OUT themselves once the driver has accepted
-the direction, emulated open drain and open source included, and
-nothing between the copy and those calls reads the flag. Leave it to
-them, as the v1 uAPI already does.
-
-The other flags that the helper copies stay as they are. Active low,
-drive and bias are what gpiod_direction_*() applies, drive and bias
-possibly before the driver refuses the direction; edges and event
-clock are the character device's own. None of them is read back from
-the driver, so there is no earlier state that is more accurate to go
-back to. A failed request releases the line, which clears them, and a
-failed reconfiguration leaves the line, like the lines before it, with
-what was applied up to the failure.
-
-Reproduced under QEMU with a test GPIO chip whose line 0 refuses input
-and line 1 refuses output: both refused requests and both refused
-reconfigurations leave the line info with the refused direction, and
-setting the value of the reconfigured output fails with -EPERM. With
-this change the line info shows the direction of the hardware in all
-four cases and setting the value works. First seen on real hardware
-with v6.12.
-
-Fixes: 3c0d9c635ae2 ("gpiolib: cdev: support GPIO_V2_GET_LINE_IOCTL and GPIO_V2_LINE_GET_VALUES_IOCTL")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Adrian Ambrozewicz <aambrozewicz@nvidia.com>
-Reviewed-by: Kent Gibson <warthog618@gmail.com>
-Link: https://patch.msgid.link/20261016-gpiolib-cdev-direction-v2-1-aambrozewicz@nvidia.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-[ sashal: adapted GPIOD_FLAG_IS_OUT and &flags references to FLAG_IS_OUT and flagsp ]
+Fixes: 7f17b4a121d0 ("ACPI: APEI: Kick the memory_failure() queue for synchronous errors")
+Fixes: ccb5ecdc2dde ("ACPI: APEI: fix synchronous external aborts in user-mode")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Link: https://patch.msgid.link/20260925-ghes-queued-accumulate-v1-1-df50553957d4@debian.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+[ sashal: Adjusted patch context to match the older ghes_do_proc() implementation. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-cdev.c | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/acpi/apei/ghes.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib-cdev.c b/drivers/gpio/gpiolib-cdev.c
-index 5d4646f0baacd..c3ca14d4b22cf 100644
---- a/drivers/gpio/gpiolib-cdev.c
-+++ b/drivers/gpio/gpiolib-cdev.c
-@@ -1375,11 +1375,6 @@ static void gpio_v2_line_config_flags_to_desc_flags(u64 flags,
- 	assign_bit(FLAG_ACTIVE_LOW, flagsp,
- 		   flags & GPIO_V2_LINE_FLAG_ACTIVE_LOW);
+diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
+index fff97db7779ef..517ed5f77008f 100644
+--- a/drivers/acpi/apei/ghes.c
++++ b/drivers/acpi/apei/ghes.c
+@@ -529,7 +529,7 @@ static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata,
+ 		 * and don't filter out 'corrected' error here.
+ 		 */
+ 		if (is_cache && has_pa) {
+-			queued = ghes_do_memory_failure(err_info->physical_fault_addr, flags);
++			queued |= ghes_do_memory_failure(err_info->physical_fault_addr, flags);
+ 			p += err_info->length;
+ 			continue;
+ 		}
+@@ -671,13 +671,13 @@ static bool ghes_do_proc(struct ghes *ghes,
+ 			ghes_edac_report_mem_error(sev, mem_err);
  
--	if (flags & GPIO_V2_LINE_FLAG_OUTPUT)
--		set_bit(FLAG_IS_OUT, flagsp);
--	else if (flags & GPIO_V2_LINE_FLAG_INPUT)
--		clear_bit(FLAG_IS_OUT, flagsp);
--
- 	assign_bit(FLAG_EDGE_RISING, flagsp,
- 		   flags & GPIO_V2_LINE_FLAG_EDGE_RISING);
- 	assign_bit(FLAG_EDGE_FALLING, flagsp,
+ 			arch_apei_report_mem_error(sev, mem_err);
+-			queued = ghes_handle_memory_failure(gdata, sev, sync);
++			queued |= ghes_handle_memory_failure(gdata, sev, sync);
+ 		}
+ 		else if (guid_equal(sec_type, &CPER_SEC_PCIE)) {
+ 			ghes_handle_aer(gdata);
+ 		}
+ 		else if (guid_equal(sec_type, &CPER_SEC_PROC_ARM)) {
+-			queued = ghes_handle_arm_hw_error(gdata, sev, sync);
++			queued |= ghes_handle_arm_hw_error(gdata, sev, sync);
+ 		} else {
+ 			void *err = acpi_hest_get_payload(gdata);
+ 
 -- 
 2.53.0
 
