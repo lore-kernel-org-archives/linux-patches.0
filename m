@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015924;
-	b=UkoUJypaFAkNd2NAFtJSY7oK3WomQTQzH4dmgCypEaKYzwTV1KNbpXPPL6/VJmQZLKMS
-	 cyuh7I9yX57/Ld9uX1ibOyWRYh2eQ+uKYuM0a/R+iMnX6oJBkcVYcZh4bej4S0/n+YX/R
-	 nFYEBlWQG6qFZGgHjyD8P3qQLJV6+lvY4vBwINUWhDT7pkQAlDZeAOr8/55y2lGgv2SHV
-	 x6L2x+IknWo2Lv0rIuSDgEEkB7O77O8RlHe9EdEvgNknSPTGICOHu0qmZF+Uz6XS/XaU0
-	 buaN7rJPq5AwRAKJUMfEpMDJp1vZq3A7lDesGPLbHJtRfY85DbacUX+MkgFAlfA3nrA==
+	t=1795015927;
+	b=qziJnl96+FdmudxdeEvE5E250+E0xfcCSZ6Y18jH6V+MtJ9HwbqbcXZQB1S0UCCOvprz
+	 Zw8e/NiLYDljalttG0p7cWaYFNjDJIY+KjGxZRojzbDXX8H+F4RgnuC0GoUCHeKgJYS68
+	 IFV4fdkOjFd6ZUufaTROW9O2iZMBXwGymiCUECtk7+IofOBuWZdTAY6yEDkARcw9lraJ8
+	 dMAoZSDyKNN0z0+vsj6jODyzhMyVRH2vxvTo3/2C/s52gvNMuTkx/SW0i1l+QMkv/83pn
+	 MCDmrA+SF75vQfttpwp0bQUXJ3lIOb+bGaJW0wj3oIwDKnE/6mqY+5kvLDZN4WOjnBA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015924;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015927;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2RpRUZkfaIqPIQRndUGz4c2x9kMKpu2JI4uoctNrpRQ=;
-	b=huTFXJzeww8ePXhCtSelAi9wTMqSlTW0VQiEvGOsNzMKINdALQrGZDlK+tb7bk2cfDpL
-	 BbjBbhMslwdTLZsfyTV5WiCFrDTkhE7vKCL7WaLaWPW4KqaXyMPMPrxtvc92gMW1g9tbI
-	 ZTrNjZIzsLnAhlxMe+UtU8qxcLIPu+y2bQeTImIGaZu7U7r4ufoXx7UN+usZIwVRKaJvV
-	 WlI8K4TUGpnBgeGTly7ZkRE8QQEFoJyDOGmiMHvhRgUZjRzNJ9RMmPWFbaBc4ybWs5jBL
-	 MJP2PCjES7KYgjqfW6VZuIS74m4BsbYCTs1wimUS8efHxcBlsUqiqb1cS+pFxYrTkfg==
+	bh=wz9+vxvkriGQMWe6kQXEMGJhQUIBGKVrBEcHoVMxcqY=;
+	b=H3sH8QMzg6APrnY4M1gJDl+RNvuws8UX9B1k7T+bBz1AEy3FUtD2skFLawtHWtlj6er2
+	 noiluLnRJauGGShAs4wm4vPYW0hKyPtpXvDIGM8ZPM/Hv/VaK7dc2LTJEaHiypT4I+JeR
+	 fLQvlw7LAThkoSZQvoAdeK1CkJwF0SzakThmrrJo2jwu1shqJ5LXLeeltCBSde5Urc1sv
+	 qbw1TMIrTWFW9WfRD0I37iiW1qA4zoB5uCmpB0IjvAELXybpTydiXSrwLwrQ0kWNnrfu+
+	 plgo1K/gaMNaGli6wCmseVxUDdZU3TKWIDhq0jjFsaIhRgDaOVL8c77xReQL7DPtEZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P8geRAap;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=boHZCb9n;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D38606A31C;
-	Wed, 18 Nov 2026 15:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83898606A31C;
+	Wed, 18 Nov 2026 15:32:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P8geRAap
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185B41F000C4;
-	Wed, 18 Nov 2026 15:32:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=boHZCb9n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5FAD1F000C4;
+	Wed, 18 Nov 2026 15:32:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015924;
-	bh=2RpRUZkfaIqPIQRndUGz4c2x9kMKpu2JI4uoctNrpRQ=;
+	s=korg; t=1795015927;
+	bh=wz9+vxvkriGQMWe6kQXEMGJhQUIBGKVrBEcHoVMxcqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P8geRAapJRDOXFsmdWqhOAYqXMuaDMA/OBKlKZTxc55xTDCVH6SG2VV7WND2Z2WV7
-	 vWM5f7ec6YgEBrAr9iZBiCWuTT+z/iMpiei3xdrkgwkoIldlLJjZyecR9aUip8/FKX
-	 BM8AIRKvWnm/uXyXh/uBEDhFqknUjBQGKHbF8qB4=
+	b=boHZCb9nfc7wXewoa6+fWHnewj/k79fJie6oVaPt+MPZ2hxPoqn1v59nfda9etDaT
+	 74TQ9rJEpeJATHGUYfPldzlR/6LDuILSlN9XdO0D6iRoAyctkm4GpcqlbmPtPuQmtw
+	 tqmfzLOrXt2xetKw7l2yngGhFjsp1IUQJDS5rtXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Mehdi Djait <mehdi.djait@linux.intel.com>,
+	Salah Triki <salah.triki@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0347/2651] iio: accel: kionix-kx022a: Fix IPOL macro name
-Date: Wed, 18 Nov 2026 15:26:27 +0100
-Message-ID: <20261118150300.332185927@linuxfoundation.org>
+Subject: [PATCH 7.3 0348/2651] iio: imu: adis16400: Check return value of spi_setup()
+Date: Wed, 18 Nov 2026 15:26:28 +0100
+Message-ID: <20261118150300.366450215@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,40 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Salah Triki <salah.triki@gmail.com>
 
-[ Upstream commit 4a4b0d75622f7d911c96045b328fe2e88be05072 ]
+[ Upstream commit a7c07602e00596a45de8a4a700af96392953ed38 ]
 
-The "interrupt polarity high"-macro for KX022A variant is defined as:
-"#define KX022A_MASK_IPOL KX022A_MASK_IPOL1"
+In adis16400_initial_setup(), the return value of spi_setup() was ignored.
+If SPI configuration fails, the driver would proceed with the
+initialization anyway, leading to undefined behavior or silent failures
+during device setup.
 
-However, the KX022A_MASK_IPOL1 is not defined anywhere, so actually
-using the KX022A_IPOL_HIGH would produce a compile error.
+Check the return value of spi_setup() and return the error code immediately
+if it fails.
 
-Fix the define by using correct mask.
-
-Fixes: 7c1d1677b322 ("iio: accel: Support Kionix/ROHM KX022A accelerometer")
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Reviewed-by: Mehdi Djait <mehdi.djait@linux.intel.com>
+Fixes: cd888a17f95f ("staging:iio:adis16400: Use adis library")
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/kionix-kx022a.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/imu/adis16400.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/accel/kionix-kx022a.h b/drivers/iio/accel/kionix-kx022a.h
-index 0ed54f5842235..a2d122c1e2347 100644
---- a/drivers/iio/accel/kionix-kx022a.h
-+++ b/drivers/iio/accel/kionix-kx022a.h
-@@ -65,7 +65,7 @@
- #define KX022A_MASK_IEN		BIT(5)
- #define KX022A_MASK_IPOL	BIT(4)
- #define KX022A_IPOL_LOW		0
--#define KX022A_IPOL_HIGH	KX022A_MASK_IPOL1
-+#define KX022A_IPOL_HIGH	KX022A_MASK_IPOL
- #define KX022A_MASK_ITYP	BIT(3)
- #define KX022A_ITYP_PULSE	KX022A_MASK_ITYP
- #define KX022A_ITYP_LEVEL	0
+diff --git a/drivers/iio/imu/adis16400.c b/drivers/iio/imu/adis16400.c
+index 512a8da63cdcb..79f2974d37771 100644
+--- a/drivers/iio/imu/adis16400.c
++++ b/drivers/iio/imu/adis16400.c
+@@ -420,7 +420,10 @@ static int adis16400_initial_setup(struct iio_dev *indio_dev)
+ 	else
+ 		st->adis.spi->max_speed_hz = ADIS16400_SPI_FAST;
+ 	st->adis.spi->mode = SPI_MODE_3;
+-	spi_setup(st->adis.spi);
++
++	ret = spi_setup(st->adis.spi);
++	if (ret)
++		return ret;
+ 
+ 	ret = __adis_initial_startup(&st->adis);
+ 	if (ret)
 -- 
 2.53.0
 
