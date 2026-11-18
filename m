@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060313;
-	b=lAXjr9I8XRvbLUJ0rj/FcwzZPdLtdJgJ129zlbkH/2UWkfXR0Wg0NGNeqHVnfwWWMoPA
-	 rGvBuUws/hwqbCawoiKlQQiVcT5yPURUTAQzhXo8bP5bdN/tCUUIxscaCbJGnrEHaktaf
-	 li4XLADmJTEug+Dvxke2ZJfesnGlz4ebq/UJfuoCPctddyfKj2+Okuk8NI1N7vgzuS0a3
-	 TV9k3k4Uz6cMYYlcjvYWBqy1nCDN15b6Jps9kheSyW9Q8Ak0j5DHfnHSucCYfhjXfSVzu
-	 SQDpu9sELqDAP3eR196L1aPCqjvVTnMLhYgR1oTJ5uayD6NZ2cm9rPVSwCrcZ2jnufw==
+	t=1795060315;
+	b=WpL/YfthwM06wqIE+/4OZ1TuFkCtPp7C/6ljHbhU5qKnAeo2ss8bYfYKQbp41KAF3AuG
+	 oSKwPXerSRqO5Y+rEo3Ns+gloRD4KYXauXCyHItgeTgp4AnRnInnuaYsWKhdHcnr/pWUg
+	 QlMZhA/e/SQ3FzmAJP2GXPu/NhF3FlsZ5Xa7x21ydO8b0FWzH5QsIec9Ka2R0pm6IBshn
+	 80qL7rM41WlCPvhcZ/obAaMR2prgSBYLfrVhEbHiCd4sNMReQ79+VRI8/r1f/R+GAe3nH
+	 UA35lDqPZnecJhmuitAcg0vkVvFgdBqnxsFF+jcZ2G3DoJSWpvjBi/3tpP49zygSRXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060313;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060315;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GJHEKCLuJbTTeoLiNwQs006YPkZSRGS1NZKFnC1L3bc=;
-	b=rqMzbdH0PVJjySrQ8D5gjj09ag0SresiZ3Cd3omR8zTewMYAAasg0msPMhVuZUtlMqpw
-	 Sj46CBOUmVfCCwN2fAO7glmOq5ccR+KodpB2+I6GW8AoMAZEiGu5tyur4mWJl+e8NcI6/
-	 AEClqYSyJnAIBeQR136rOwbUQrpYL/Hc4my+q3jstdc8jcbkADXvkDynzQ8neanuVXNnU
-	 QujwEqj6sQwf08Vu32N0bTqXu88A1aw39560zFuU39WO86P23zwdPF1jT291bTZybLfiC
-	 r9hGUjwwR/WOTG0JNotTYodLOPULQnOYymlIzTkn1qiryFUWfbU1Mqp8GTTKqeaOxNg==
+	bh=ZjRY91cB0zqFe4c6gmddhs/XdMKqSMa8bbobPuQQK2Y=;
+	b=YtS/jgJqii52VEH6W2P/e+Dbwn+HTC3H+nsiGaOl2KnbdSs8+j72u6/o7pd3ZV1y7Zyb
+	 6ZSzllu24I/D0q/49ToCR+AtEKPxL33sXDBl8CunrXQc/ZN3QS6ejjNdA55ob/ol0j6kb
+	 ClJEuC9n+yIU4cSGCrnJb4ITQvuPjPDyD20fvo+A5Z5bbfwscd8kgtlgr/x1iVoWU5VlV
+	 CqcAGMR5cM61KHG94W3cXfh8ucfzwFms1lFF7TZobjs+weoFlbrQevw9jvf+z1QKqgq42
+	 Fr9njc4gSHpSWT3ZDz9/r+vvnXN10MYmvCE8T/xgzuAU4v3g8pNf9Ds6tDh1IbrASxw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t4LAjnD7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wnWsNiVs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3036606A320;
-	Thu, 19 Nov 2026 03:51:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987AD606A325;
+	Thu, 19 Nov 2026 03:51:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t4LAjnD7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 445A91F000C8;
-	Thu, 19 Nov 2026 03:51:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wnWsNiVs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01C001F000C4;
+	Thu, 19 Nov 2026 03:51:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060312;
-	bh=GJHEKCLuJbTTeoLiNwQs006YPkZSRGS1NZKFnC1L3bc=;
+	s=korg; t=1795060315;
+	bh=ZjRY91cB0zqFe4c6gmddhs/XdMKqSMa8bbobPuQQK2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t4LAjnD7EZcDIUNpAiv2Xg27DEDu/NaOAkml7Ie5wjHFH8wUVbUQWQYAWISN1s9OF
-	 STi1V7/Sha0z8QYPQuDBXA+P1Lcv/O0POAalHDQMBUUeGdbw9tuaWkKostDv8nn5ih
-	 CfrvJj8VBoflNXh5284KJ4QH8Tfdz6pugD4ONQwo=
+	b=wnWsNiVsjVFdnkC582kNO91iFJA/ukQl+MRbnrsMITJYtQ52k6/mCBWNpXFetF6vH
+	 2qoUU+RT5dJa6YPRNimuCR4H3WVIq99M6yRm6Y+2tko8v1n+Nxm2Igfc3DvduVsXFK
+	 Mvaq4ZxK5Ckez1RnQlb5YenchrnnaTqpyTj/VV5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Goergens <matthias.goergens@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1113/1848] udf: dont use eloc after the end of the unallocated space table
-Date: Wed, 18 Nov 2026 15:52:31 +0100
-Message-ID: <20261118150005.926925384@linuxfoundation.org>
+	Jan Stancek <jstancek@redhat.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	R Nageswara Sastry <rnsastry@linux.ibm.com>,
+	Neal Gompa <neal@gompa.dev>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH 5.10 1114/1848] sign-file,extract-cert: move common SSL helper functions to a header
+Date: Wed, 18 Nov 2026 15:52:32 +0100
+Message-ID: <20261118150005.963586993@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,68 +71,187 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Goergens <matthias.goergens@gmail.com>
+From: Jan Stancek <jstancek@redhat.com>
 
-[ Upstream commit 94401199df90e1c2a50c6e4b73618ac5a4ba83ba ]
+commit 300e6d4116f956b035281ec94297dc4dc8d4e1d3 upstream.
 
-When udf_next_aext() returns 0, its eloc, elen and etype outputs hold
-no defined value.  Two walks of the unallocated space table still use
-eloc after the walk has reached the end of the table.
+Couple error handling helpers are repeated in both tools, so
+move them to a common header.
 
-udf_table_prealloc_blocks() looks for a free extent starting at
-first_block and decides whether it found one by comparing eloc with
-first_block after the walk.  If the table's list ends in a continuation
-descriptor that leads to an empty allocation extent, eloc is then the
-block of that allocation extent, which is in use, and if that is
-first_block, the block is handed out as preallocation.  Once
-udf_discard_prealloc() no longer frees the wrong block, this is what
-still makes fsx in generic/091 and generic/263 read back bad data on a
-table, in about one run in four.  Only take the extent if the walk
-stopped at it.
-
-When udf_table_free_blocks() cannot merge the freed blocks into an
-existing extent, it appends a new one and sets only its block number,
-so the partition reference comes from whatever eloc held after the
-walk, and with long allocation descriptors it is written to disk.  For
-a table without extents, eloc was never set.  Take the partition
-reference from the freed blocks instead.  Short allocation descriptors
-do not store the partition reference, which is why this half remains a
-latent long-descriptor fix rather than a reproduced failure.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
-Link: https://patch.msgid.link/fd9ca4c4ba98c00c012ec861f6c0bc08a3b1d07b.1793349907.git.matthias.goergens@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
-[ sashal: Replaced ret > 0 with etype != -1 to match udf_next_aext() returning the extent type directly. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Jan Stancek <jstancek@redhat.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[luca.weiss@fairphone.com: Backport to 5.15]
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/balloc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ MAINTAINERS            |    1 +
+ scripts/extract-cert.c |   37 ++-----------------------------------
+ scripts/sign-file.c    |   37 ++-----------------------------------
+ scripts/ssl-common.h   |   39 +++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 44 insertions(+), 70 deletions(-)
 
-diff --git a/fs/udf/balloc.c b/fs/udf/balloc.c
-index 0bbe86da3d133..267365573bf7e 100644
---- a/fs/udf/balloc.c
-+++ b/fs/udf/balloc.c
-@@ -473,6 +473,7 @@ static void udf_table_free_blocks(struct super_block *sb,
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4103,6 +4103,7 @@ F:	Documentation/admin-guide/module-sign
+ F:	certs/
+ F:	scripts/extract-cert.c
+ F:	scripts/sign-file.c
++F:	scripts/ssl-common.h
  
- 		int adsize;
+ CFAG12864B LCD DRIVER
+ M:	Miguel Ojeda Sandonis <miguel.ojeda.sandonis@gmail.com>
+--- a/scripts/extract-cert.c
++++ b/scripts/extract-cert.c
+@@ -23,6 +23,8 @@
+ #include <openssl/err.h>
+ #include <openssl/engine.h>
  
-+		eloc.partitionReferenceNum = bloc->partitionReferenceNum;
- 		eloc.logicalBlockNum = start;
- 		elen = EXT_RECORDED_ALLOCATED |
- 			(count << sb->s_blocksize_bits);
-@@ -545,7 +546,7 @@ static int udf_table_prealloc_blocks(struct super_block *sb,
- 		; /* empty loop body */
- 	}
++#include "ssl-common.h"
++
+ /*
+  * OpenSSL 3.0 deprecates the OpenSSL's ENGINE API.
+  *
+@@ -40,41 +42,6 @@ void format(void)
+ 	exit(2);
+ }
  
--	if (first_block == eloc.logicalBlockNum) {
-+	if (etype != -1 && first_block == eloc.logicalBlockNum) {
- 		epos.offset -= adsize;
+-static void display_openssl_errors(int l)
+-{
+-	const char *file;
+-	char buf[120];
+-	int e, line;
+-
+-	if (ERR_peek_error() == 0)
+-		return;
+-	fprintf(stderr, "At main.c:%d:\n", l);
+-
+-	while ((e = ERR_get_error_line(&file, &line))) {
+-		ERR_error_string(e, buf);
+-		fprintf(stderr, "- SSL %s: %s:%d\n", buf, file, line);
+-	}
+-}
+-
+-static void drain_openssl_errors(void)
+-{
+-	const char *file;
+-	int line;
+-
+-	if (ERR_peek_error() == 0)
+-		return;
+-	while (ERR_get_error_line(&file, &line)) {}
+-}
+-
+-#define ERR(cond, fmt, ...)				\
+-	do {						\
+-		bool __cond = (cond);			\
+-		display_openssl_errors(__LINE__);	\
+-		if (__cond) {				\
+-			err(1, fmt, ## __VA_ARGS__);	\
+-		}					\
+-	} while(0)
+-
+ static const char *key_pass;
+ static BIO *wb;
+ static char *cert_dst;
+--- a/scripts/sign-file.c
++++ b/scripts/sign-file.c
+@@ -29,6 +29,8 @@
+ #include <openssl/err.h>
+ #include <openssl/engine.h>
  
- 		alloc_count = (elen >> sb->s_blocksize_bits);
--- 
-2.53.0
-
++#include "ssl-common.h"
++
+ /*
+  * OpenSSL 3.0 deprecates the OpenSSL's ENGINE API.
+  *
+@@ -83,41 +85,6 @@ void format(void)
+ 	exit(2);
+ }
+ 
+-static void display_openssl_errors(int l)
+-{
+-	const char *file;
+-	char buf[120];
+-	int e, line;
+-
+-	if (ERR_peek_error() == 0)
+-		return;
+-	fprintf(stderr, "At main.c:%d:\n", l);
+-
+-	while ((e = ERR_get_error_line(&file, &line))) {
+-		ERR_error_string(e, buf);
+-		fprintf(stderr, "- SSL %s: %s:%d\n", buf, file, line);
+-	}
+-}
+-
+-static void drain_openssl_errors(void)
+-{
+-	const char *file;
+-	int line;
+-
+-	if (ERR_peek_error() == 0)
+-		return;
+-	while (ERR_get_error_line(&file, &line)) {}
+-}
+-
+-#define ERR(cond, fmt, ...)				\
+-	do {						\
+-		bool __cond = (cond);			\
+-		display_openssl_errors(__LINE__);	\
+-		if (__cond) {				\
+-			err(1, fmt, ## __VA_ARGS__);	\
+-		}					\
+-	} while(0)
+-
+ static const char *key_pass;
+ 
+ static int pem_pw_cb(char *buf, int len, int w, void *v)
+--- /dev/null
++++ b/scripts/ssl-common.h
+@@ -0,0 +1,39 @@
++/* SPDX-License-Identifier: LGPL-2.1+ */
++/*
++ * SSL helper functions shared by sign-file and extract-cert.
++ */
++
++static void display_openssl_errors(int l)
++{
++	const char *file;
++	char buf[120];
++	int e, line;
++
++	if (ERR_peek_error() == 0)
++		return;
++	fprintf(stderr, "At main.c:%d:\n", l);
++
++	while ((e = ERR_get_error_line(&file, &line))) {
++		ERR_error_string(e, buf);
++		fprintf(stderr, "- SSL %s: %s:%d\n", buf, file, line);
++	}
++}
++
++static void drain_openssl_errors(void)
++{
++	const char *file;
++	int line;
++
++	if (ERR_peek_error() == 0)
++		return;
++	while (ERR_get_error_line(&file, &line)) {}
++}
++
++#define ERR(cond, fmt, ...)				\
++	do {						\
++		bool __cond = (cond);			\
++		display_openssl_errors(__LINE__);	\
++		if (__cond) {				\
++			errx(1, fmt, ## __VA_ARGS__);	\
++		}					\
++	} while (0)
 
 
