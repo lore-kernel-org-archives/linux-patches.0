@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043125;
-	b=Ub01O3/GSBRdqIPK5SP090N++3w/IRyy2hCpytuzvainXfJczaDdlEbDKHxvn5iAxxCe
-	 G6QTvx16RhQPopuCmkAXUaVXKQQ/GBUnA+GwalPKOjmohEoxoPpjrf876303e30PtM4Dy
-	 D69iflfJaCcUw0KS/0kCSTfubzUogLAH9pwernlScnOg1TShDzv+QKod0WTexq3IxamcO
-	 TUXVu7eYg8iy+wKCKRcKdtEh8kjhb0qOnYnkqxML7MnLz5OBi6PrAxCryRt6VmkULNle+
-	 7Yt6mgWpGGA4C8DQL+CLxnrmh0WChzraWORZJqhIV/XZW1FYv0LZPYhClqodhmoY8Aw==
+	t=1795043127;
+	b=Y/86Bo1oqU2ezWL8Px5Zfh2HYsp3sD23I4plYjh0NJe+dgVtxtEVrjj+D4HGUb9DD9s8
+	 3VvSnTDVKxvWyl3JPRV6Qc04CYvlOuzAshfTEEsvebW+XYFL5Gim7ESYfbpMYKCU0HLhP
+	 p1xvgt8Jz3DS74vR5RvBZLdR43rPaYOt5OxGNKFpqHUxQFN/lUxvxvK+M0j1B5mTS1Blq
+	 UbzRnw7uZt9siRTVboBDzSxjbaB93wxSLqbklROBCEp+PMZQ9UFhRFQT0DnJVYl51yXvw
+	 jMm7JqYLnBfl81JPIy2CVNqVeUzMUM5n/3seoNq7Tf2MvNTHzZOdKwcmgRwvhudOVvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043125;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043127;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=u1NeLMNHyPTZUn1WMv8NnWU+Lxav7y51WgsOfu7hSiQ=;
-	b=fhaLQNsD5KzqTvmFp5uRzTKKQYVLNeFKa5vDwPCzl/E+2XHKVMgha3U3a23T5B+i8B/3
-	 xEBv5JkI7ycMMx7PglBFHTcu/VKjKB47/VOF8RF6DY3nIimNlo5Ip2oIcSXold7FgCCuh
-	 gGrkmhufOITbhxn2o0Cvl7t2/JoJuyxN6y5s6Tj3x1AtRYm4eRy++MM2TJcHM0xRWgFVV
-	 5YydpqKx29ZlKNnedUmJSm4Z+p/fW/NjS4gVuD0Do1V0cKVNrfKkQDKumv+c/CxquFvNF
-	 5uw4JdZOuXrD4qeRVnsGxDhgapIGWn7eJKRLwpFF5liPxfQDTlGNfRDbA7sZvajBXCg==
+	bh=mMe36E6PQ6hA5Dzzm6cSOkv6ZTuplKd22EOhmhbfGdg=;
+	b=LcSNqmkW/UIsVJQ7EYB74e6a5PpcTyACR/37bZcjKLk385GD3Qz+OcrChh0KuTe/LMYg
+	 /JjzmpBut+4g8ahaKC+g36A4mtc0OvtDhSV/bPl+vRDqfAKGpLjBEmVxufntMAxEkPrEh
+	 tS0VCg/eGzL1AyauChYhwHWLPBU17gmbgHEUsYL3X9Qx2TWuiSPgsua5yM8xVbEmT3dP4
+	 gExltqDX3hNsGNz+JH7ZGxzZN2+qWLf6H4Hw/eXQjKrS/059Y5NiN6VOOp58EBmT2ylwX
+	 hZ8STuIDnQMMp1fhw35/ZpL1z4o+4RLOFZtiP9pYxe58sZya9lrXOdMXrnpr3pGkbNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iRHWg14c;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="oDGZRX/t";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7F4606A31C;
-	Wed, 18 Nov 2026 23:05:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE6DB606A31C;
+	Wed, 18 Nov 2026 23:05:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iRHWg14c
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 859F01F000C4;
-	Wed, 18 Nov 2026 23:05:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oDGZRX/t
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49DDE1F000C5;
+	Wed, 18 Nov 2026 23:05:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043125;
-	bh=u1NeLMNHyPTZUn1WMv8NnWU+Lxav7y51WgsOfu7hSiQ=;
+	s=korg; t=1795043127;
+	bh=mMe36E6PQ6hA5Dzzm6cSOkv6ZTuplKd22EOhmhbfGdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iRHWg14cqykSRzV+8uaFimXVoB5gWe0qh9HIN/JcFA1mFaOeAQY4b88Eg62iWzjX3
-	 BwugKQNkx731JRBnbgSfDvHN1M6UvSepgLJEoub4SgACGIy+E8+B1AAAtOqkep/YXx
-	 uUIcOJLeAz6p7QqvlwZfmYX15K2KajWuto5YDYeM=
+	b=oDGZRX/tiBbYbaeLUqkqoZQ08WV02IUn9dgSHp8r0SlqbNs8D6yB55BYR+kmewppm
+	 ZPeBXTu872mRAXknxbt/pVl80ginlyaN+awsFosAMPSelauRRz3oUImt42OiQ1u3Bv
+	 lW62kK5zsKxGRqUdi0Omlx7eG76uyEFf1wQHykJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xixin Liu <liuxixin@kylinos.cn>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0062/2857] nvme: zns: cap zone report nr_zones by DMA buffer size
-Date: Wed, 18 Nov 2026 15:18:16 +0100
-Message-ID: <20261118150203.537184138@linuxfoundation.org>
+Subject: [PATCH 6.1 0098/2857] media: cec: tegra_cec: dont break off msg on NACK
+Date: Wed, 18 Nov 2026 15:18:52 +0100
+Message-ID: <20261118150204.785734813@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,58 +69,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xixin Liu <liuxixin@kylinos.cn>
+From: Hans Verkuil <hverkuil+cisco@kernel.org>
 
-[ Upstream commit 09c9062d4f62199a634a45e2bb9e6e8e572cc78c ]
+[ Upstream commit be627f257ce283c95fd2988080dc0db3a20d0d2a ]
 
-With Partial Report (PR=1), the Number of Zones (NZ) field in the report
-header must equal the number of zone descriptors fully transferred in the
-DMA buffer (ZNS Command Set Specification Rev 1.2, section 3.4.2).
+The Tegra CEC hardware has a bug where, if the first attempt
+to transmit a message is NACKed so the transmit is aborted,
+then the second attempt can contain corrupt data.
 
-nvme_ns_report_zones() does not cap the parse loop by max_in_buf derived
-from buflen.  Cap nz with min3() over the device-reported count, nr_zones -
-zone_idx, and max_in_buf.
+Ensure that the full message is always transmitted to avoid hitting
+this bug.
 
-Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+I suspect some internal state is not reset in the case of aborting
+a message due to a NACK.
+
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reviewed-by: Mikko Perttunen <mperttunen@nvidia.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/zns.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/media/cec/platform/tegra/tegra_cec.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/zns.c b/drivers/nvme/host/zns.c
-index 12316ab51bda6..18cb12931af71 100644
---- a/drivers/nvme/host/zns.c
-+++ b/drivers/nvme/host/zns.c
-@@ -180,7 +180,7 @@ int nvme_ns_report_zones(struct nvme_ns *ns, sector_t sector,
- 	struct nvme_zone_report *report;
- 	struct nvme_command c = { };
- 	int ret, zone_idx = 0;
--	unsigned int nz, i;
-+	unsigned int max_in_buf, nz, i;
- 	size_t buflen;
+diff --git a/drivers/media/cec/platform/tegra/tegra_cec.c b/drivers/media/cec/platform/tegra/tegra_cec.c
+index 43fe54f792b65..c30df776bf8a5 100644
+--- a/drivers/media/cec/platform/tegra/tegra_cec.c
++++ b/drivers/media/cec/platform/tegra/tegra_cec.c
+@@ -243,7 +243,18 @@ static int tegra_cec_adap_enable(struct cec_adapter *adap, bool enable)
+ 		  TEGRA_CEC_INT_MASK_RX_REGISTER_FULL |
+ 		  TEGRA_CEC_INT_MASK_RX_START_BIT_DETECTED);
  
- 	if (ns->head->ids.csi != NVME_CSI_ZNS)
-@@ -190,6 +190,9 @@ int nvme_ns_report_zones(struct nvme_ns *ns, sector_t sector,
- 	if (!report)
- 		return -ENOMEM;
- 
-+	max_in_buf = (buflen - sizeof(struct nvme_zone_report)) /
-+		sizeof(struct nvme_zone_descriptor);
-+
- 	c.zmr.opcode = nvme_cmd_zone_mgmt_recv;
- 	c.zmr.nsid = cpu_to_le32(ns->head->ns_id);
- 	c.zmr.numd = cpu_to_le32(nvme_bytes_to_numd(buflen));
-@@ -209,7 +212,8 @@ int nvme_ns_report_zones(struct nvme_ns *ns, sector_t sector,
- 			goto out_free;
- 		}
- 
--		nz = min((unsigned int)le64_to_cpu(report->nr_zones), nr_zones);
-+		nz = min3((unsigned int)le64_to_cpu(report->nr_zones),
-+			  nr_zones - zone_idx, max_in_buf);
- 		if (!nz)
- 			break;
+-	cec_write(cec, TEGRA_CEC_HW_CONTROL, TEGRA_CEC_HWCTRL_TX_RX_MODE);
++	/*
++	 * TX_NAK_MODE ensures that the whole message is transmitted even
++	 * if each byte is NACKed. Without this flag the retransmit of the
++	 * messages after a NACK can be corrupt. This is a bug in the hardware.
++	 *
++	 * While less efficient, in practice you rarely transmit messages
++	 * that can be NACKed, with the exception of POLL messages which
++	 * are just one byte anyway.
++	 */
++	cec_write(cec, TEGRA_CEC_HW_CONTROL,
++		  TEGRA_CEC_HWCTRL_TX_RX_MODE |
++		  TEGRA_CEC_HWCTRL_TX_NAK_MODE);
+ 	return 0;
+ }
  
 -- 
 2.53.0
