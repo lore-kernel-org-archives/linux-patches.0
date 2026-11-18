@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047925;
-	b=Q3RmdQ5SW609A/AXpm+QVkflyzOCsNSmktCFea/Hf7MeB3ZK5MYsP0tEYtRo3DvoE4Kr
-	 8xiUtc134mK5FeKhG8Ui7LWVk/a3cuIqDfDyi4OdJzxDDsVqzhacQPPWL6nDT9y56w6y/
-	 iU1XQ/HKSGMqbiZVzxSKd96KSiU8Sju6ThtlE8adw0OJiom5+rDp1C5TNC2fqbnGq/mbq
-	 +kn3d/gVK5Pwyb+K1utxWX+P/e3h11HawUdLM+1VWJZ1puPn4ISrUYrNs0kIAlqANl10W
-	 egLesDHZkH9x+XyALvkqvsYhP7T1pir/YvRmNnR2UIrIPty69ki627BcIbL1aEUkBrg==
+	t=1795047928;
+	b=QnU2H6jL91j+Gsc9+BsGv147mff78lmotujU41bgr+uGpcpcZpoLkmFTPRhdUi6e+eGy
+	 hY8tIDIMpJ73t4TmLZ2MfklTLUpNnA0rv8W8UnFwibHVTfH73PQ5NGI5uRs0Lou+rTTXT
+	 89x7rN0eyfobpJhyoou0msdC6RIR5woX+1hP6aBIplTWpx4oI8b6v5XB410SHoObjfLri
+	 R1vfNMu45DqqQM6BgTqrmCMMH3W5d3KeTbT1LWd9QRcxL0YNdywGzFzM0FvM4lq3TaNuc
+	 e+3pAVERhgVGAH5JHnk7u22TedGj+Q8rnkfJaqRYLpQxNh+T3zBHSeBfdoCMfDMKzbQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047925;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047928;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2MXCxmjLkrsCSUF81bK1xhf4hfxgKqTL/5NU3rwY1uQ=;
-	b=W/leCnAb+UafKKO6lILvv0ctlnRMKcV/mf2Nv/PoZc1l7zpFx+MGQMe0NKgPzAhMX/G7
-	 7jos0XRsFCgLsoBo7a/FGyDETozXINHChbTnZnK1fI68F1nz6Ns/WFsDxS6qcqMmSnOfn
-	 iS4hwtvUGUFJwK2dvATTLEXMvycFares2DfNtveS5zP3B3sYTLiMCY3ZaKaOroHDmiX7g
-	 b+ozPqxh1AYKJQtHHiELCm8MaxG9Jsq46Rd6/tM9G3NzQ6eVC2RCn0pFidk9nZyZYLJjk
-	 HoYSTbCnGYZj7X5b+Trqn6/x4i80ArYZD8QWNTSTbGQ9KtLu1fAyIblDstijQa6BVzQ==
+	bh=9V8mDhUJuomHhixGX6zfauL7zMnDKds41FtoT8Wgykw=;
+	b=aM66aTTlo/NmdYSluvSD4zjX0BJ0P+IgFKspt/z7d8nzjP2ARGpFIwVFXTT/HnLnehi9
+	 2/Zemx4y4gzJGbItLLYkcbNKPfRQV2KPVpnDZNgZq3vq2WLsNr5BTGrEMdHLFPekMWuhh
+	 FlFIZpddV0l4f2LQsNb866OS5mgNOjMG//mhoRWd0DE4vrKMaA2YPYGmNCYP6lV19eEoy
+	 4dqOkrKTorteGM01gd6LOAYLxqgb9gXJZ5RE0a3JG1oVGf3Xyr/DCdvhk4HiavnUi8FFk
+	 xiehhauvs+6wWhRcWl3SedXkHcbMjByni/grq6nMqHcdd0Q0ZuCbcNIOvVN68qwhw2A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uxty0cQ6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gvrE6hEZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E74606A330;
-	Thu, 19 Nov 2026 00:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAFA9606A320;
+	Thu, 19 Nov 2026 00:25:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uxty0cQ6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B5C61F000C5;
-	Thu, 19 Nov 2026 00:25:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gvrE6hEZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6C1C1F000C9;
+	Thu, 19 Nov 2026 00:25:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047925;
-	bh=2MXCxmjLkrsCSUF81bK1xhf4hfxgKqTL/5NU3rwY1uQ=;
+	s=korg; t=1795047928;
+	bh=9V8mDhUJuomHhixGX6zfauL7zMnDKds41FtoT8Wgykw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uxty0cQ62raHO0KEjXAjRBVeXgcJhg/sNsO3eznazVEThjVwfEc0fMaBQFZGDCjwo
-	 mdYnN+lKRyfPwyqEpsuT4qBDc1eR/Ez0llFPlE39EdpKp9B9Cy4ukUof36qVm6MUWd
-	 fWC2Rv3SxT2PTqeG1iVG/Q9aenBffudbQ33rL370=
+	b=gvrE6hEZ8g9NYhG4tBSQjVpYpC+0e9k0eQOyctBEluYukXq1tf82OPe3CxoKSfa+2
+	 s4a7uhDflmYZTtEJmOr6UyU3yQ8pWXRwNxEW/E0P09swgjEaw8IaMvOlk9FohYs/M7
+	 KOf4VHEhz2mLn/z4Hsdkht9DDcwJgusMHoYuzCec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+229d761b8a110e6de517@syzkaller.appspotmail.com,
 	Karl Mehltretter <kmehltretter@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1810/2857] irqchip/gic-v3-its: Dont WARN on LPI free allocation failure
-Date: Wed, 18 Nov 2026 15:47:24 +0100
-Message-ID: <20261118150306.418661688@linuxfoundation.org>
+Subject: [PATCH 6.1 1811/2857] virtio_ccw: fix synchronize_cbs() after interrupt fallback
+Date: Wed, 18 Nov 2026 15:47:25 +0100
+Message-ID: <20261118150306.453944461@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,51 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 135d9e67f7ab4f261c2157ee2de1f93a4de39a41 ]
+[ Upstream commit 6e484b870b71eb6acb3fa7a10b8e71098e242033 ]
 
-free_lpi_range() cannot give LPIs back to the allocator without
-allocating a struct lpi_range to describe the freed range, so it
-returns -ENOMEM (its only failure mode) when that allocation fails,
-and its_lpi_free() turns this into a WARN_ON().
+virtio_ccw_synchronize_cbs() assumes the device uses adapter interrupts
+when vcdev->airq_info is not NULL. If registering adapter indicators
+fails, virtio_ccw_find_vqs() falls back to classic interrupts but can
+leave airq_info set.
 
-syzbot triggers the WARN_ON() by injecting a slab allocation failure
-on device teardown, which with panic_on_warn becomes a panic:
+With VIRTIO_HARDEN_NOTIFICATION enabled,
+virtio_ccw_int_handler() invokes callbacks under vcdev->irq_lock.
+synchronize_cbs() instead takes the indicator area lock, so it does
+not synchronize with those callbacks.
 
-  WARNING: drivers/irqchip/irq-gic-v3-its.c:2251 at its_msi_teardown+0x3a4/0x424
-   its_msi_teardown+0x3a4/0x424
-   msi_remove_device_irq_domain+0x16c/0x27c
-   msi_device_data_release+0x38/0x9c
+Use vcdev->is_thinint, which the fallback clears, to select the lock.
+Keep the airq_info check because is_thinint can be set before the
+first find_vqs() call, when airq_info is still NULL.
 
-The failure is transient and the consequence benign: the freed range
-is simply never returned to the allocator. This does not warrant a
-WARN_ON() backtrace, so log a rate-limited error instead.
-
-Fixes: 880cb3cddd16 ("irqchip/gic-v3-its: Refactor LPI allocator")
-Reported-by: syzbot+229d761b8a110e6de517@syzkaller.appspotmail.com
+Fixes: 3a232277c1ac ("virtio-ccw: implement synchronize_cbs()")
+Assisted-by: LLM
 Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Assisted-by: Claude:claude-fable-5
-Link: https://patch.msgid.link/20260811095532.48454-1-kmehltretter@gmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=229d761b8a110e6de517
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260908053817.26065-2-kmehltretter@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/s390/virtio/virtio_ccw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index b9138eda000b4..d1e0c4af03c6c 100644
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -2172,7 +2172,8 @@ static unsigned long *its_lpi_alloc(int nr_irqs, u32 *base, int *nr_ids)
+diff --git a/drivers/s390/virtio/virtio_ccw.c b/drivers/s390/virtio/virtio_ccw.c
+index 630db9f4d9f5e..80f3e7636b53e 100644
+--- a/drivers/s390/virtio/virtio_ccw.c
++++ b/drivers/s390/virtio/virtio_ccw.c
+@@ -999,7 +999,7 @@ static void virtio_ccw_synchronize_cbs(struct virtio_device *vdev)
+ 	struct virtio_ccw_device *vcdev = to_vc_device(vdev);
+ 	struct airq_info *info = vcdev->airq_info;
  
- static void its_lpi_free(unsigned long *bitmap, u32 base, u32 nr_ids)
- {
--	WARN_ON(free_lpi_range(base, nr_ids));
-+	if (free_lpi_range(base, nr_ids))
-+		pr_err_ratelimited("ITS: failed to free LPI range %u:%u\n", base, nr_ids);
- 	bitmap_free(bitmap);
- }
- 
+-	if (info) {
++	if (vcdev->is_thinint && info) {
+ 		/*
+ 		 * This device uses adapter interrupts: synchronize with
+ 		 * vring_interrupt() called by virtio_airq_handler()
 -- 
 2.53.0
 
