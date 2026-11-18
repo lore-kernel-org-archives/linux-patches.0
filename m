@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047322;
-	b=b26QLGc0DVpWKKYnNae65Y0KEIA2q7MQEJV3/C9qTmLWT3Bd3/iYeU4Rn/V4WmcKZ5i9
-	 1x0lQmsaT++ztXc7D3eRlLzTmnhewrRyU5moMhFND+iKrnTjLIZbznnunFIkh6C3D92on
-	 To8TXeO4Mcv0gWGSY4cHTEaE2jcdHPk/+PaioKU4wehMFoQChfJOlhpjlgLWNbPeYdhtQ
-	 IfxZ8UH5T4wVZFuIvKeHvGTvAm1FqBKpE5PMoQjmEp75umvnLgEjHbmpVig14alc5IFau
-	 w0bkmRJNuRkVwMIXVZPrlXrni8yShtSfX2NbBqaMZxBeDhJt3NQ9vlExzdnIKRVSBMQ==
+	t=1795047325;
+	b=ez0euZgAeOvamDKJ8WC+ujn15MmuNsszYyW4yS6go2xGSP0UH2vhu4r6uXMBP+LnTwAc
+	 x2+M3bOsIdjp0Iq7WfUHK+5yehEv7Bw594qZf7ESkKNN+KfqgxAaybr9fgi6VNl1hV+uK
+	 wadV0ZNvn/y9e3Faleeg75fltqq99bxL18+bp8Vhxnas4wsG5Ix/zn7W3eNtr4dtutUXC
+	 qatLbHYXbHa/YTUYpHfbLWDhzQHEB8A6tzBjLByf+jGBNT3KAAc6TUMfMU8fHYOL6EymA
+	 ooWtizhusaXmeJaBfBu3LLeVyNkkoPUf55TSEx6xRMZ1a/pC1VgiPVxm8zlTpV5qRwA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047322;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047325;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=n1JnLMBpLX45S+VoWdG4UQlg3+cINIW30VI1xMaNV20=;
-	b=nLCFNWBlSzjcI8aar4um/oJVa+zuky3An/vRSO3ifdmuBhi4/210/2r4v2xlN3H/veV2
-	 AcRE46NwQCKHf3Xtur6B33KN5esjSk8VeCVEnsyW/wbWUocu/5yK7enynM2dBz3Iplq9f
-	 OAkoeHlIMBQ/zjgSXdHjdn7Nps6z2nmVW0/iytcoU+hfPHfiZD8pr/CYeHLcnp8uqr5pT
-	 i/nDIhu7RZssT+CfjXC8bFVoXPzKqAYNgR3xEnWx6lNuPZKOat12t0z2/bVJgRUuKJtYn
-	 lYSgsmZdA/ejDhCj30nQou7XLL2YXYV/h+uyh6y6hOHHyp/yGaiD/eETUTz0ukcgKag==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=qS2zDCCyLU/ZxzIzVRe4o1biUooI8m4dpKw7dXmGQeY=;
+	b=bW9FvIIFSYI1jXYEFsd5s2vw0U2J0e76CjeO71yFlGbqOpcnwJoWd+4s7QeEiokoBrIC
+	 9rwJHlTU2rjvaIJ5n9x6U27ePDcSpIp+3LHcURskeMQH5AUPeDwTyvgbbVRjnF3zTFoep
+	 CxdJL14+V6tPjqdeD+EAbnZax3wCv0jzy9gqDLMWB1ZXVZbQKX/UF1xf6UkRV66KjxhZw
+	 QDyHcHOBjJi7QnolCFKEwKO7y1os5Ow2Qx0p12mRDdHHHr/2i4PERf7ReSXYZZk3smTEj
+	 7/EbELjUTLr0kSl6gFLlGYIej49gW/XUk0AtT7LpfFW/LTx9bmCrHJAaW6tDX13zM0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qOViJoPB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=prFixPXg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67B35606A32C;
-	Thu, 19 Nov 2026 00:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D08606A330;
+	Thu, 19 Nov 2026 00:15:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qOViJoPB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B51261F000C4;
-	Thu, 19 Nov 2026 00:15:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=prFixPXg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 986D41F000C4;
+	Thu, 19 Nov 2026 00:15:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047322;
-	bh=n1JnLMBpLX45S+VoWdG4UQlg3+cINIW30VI1xMaNV20=;
+	s=korg; t=1795047325;
+	bh=qS2zDCCyLU/ZxzIzVRe4o1biUooI8m4dpKw7dXmGQeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qOViJoPBteE5xjkIUMJ0H+DB7x61gaAL6UgtEjljS8I/+1sBvCv+5HCAkGDD8bE3D
-	 nnSCOaP7JQTkUMP5K2XkBruIEqwQkoWnIfYoQpZYqncvhizXGaYwlf1M9jmOg/aCyI
-	 WLffPiU/yRBBpvcWqnvAvITANh+JvfjkZKA2oeNc=
+	b=prFixPXgwlB4DkB/mKFAvyXlF+PeRGvVDLli/wGmR+svzTNNFBxrdpcv39OWBI0R5
+	 DoN8imZ0hvOWCVEgUUg5GkMmu+yDQzdBteMnKFkD1R5u5B8eOLMZtQ7XI09QDmhG3K
+	 A8Mgyv7fHKy+LUPuIyEfCe4pbVfjG+X2crhVsBgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1556/2857] media: serial_ir: Fix race condition where timer can be re-armed
-Date: Wed, 18 Nov 2026 15:43:10 +0100
-Message-ID: <20261118150257.409191534@linuxfoundation.org>
+Subject: [PATCH 6.1 1557/2857] drm/ttm: return an error when kmapping a BO without pages
+Date: Wed, 18 Nov 2026 15:43:11 +0100
+Message-ID: <20261118150257.443500206@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -62,40 +63,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Young <sean@mess.org>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit d74ac4016ba64cb3b20f395511d0b18025ca0ba9 ]
+[ Upstream commit fd485d47437ba1700dd47205a63b9f389a00aa36 ]
 
-Ensure the timer cannot be re-armed.
+ttm_tt objects for imported sg tables (ttm_bo_type_sg, set up by
+ttm_sg_tt_init() with TTM_TT_FLAG_EXTERNAL) only have DMA addresses and
+no pages array. ttm_bo_kmap() and ttm_bo_vmap() still dereference
+ttm->pages for them, so a driver that tries to CPU map such a BO oopses
+instead of getting an error:
 
-Fixes: 2940c7e49775 ("[media] serial_ir: generate timeout")
-Signed-off-by: Sean Young <sean@mess.org>
+  BUG: kernel NULL pointer dereference, address: 0000000000000000
+  RIP: 0010:ttm_bo_kmap+0x26c/0x300 [ttm]
+  Call Trace:
+   amdgpu_bo_kmap+0x89/0xb0 [amdgpu]
+   amdgpu_userq_fence_read_wptr+0x116/0x170 [amdgpu]
+   amdgpu_userq_signal_ioctl+0x3fe/0xbb0 [amdgpu]
+
+Return -EINVAL in that case, like ttm_bo_kmap_try_from_panic() already
+checks for a missing pages array.
+
+Fixes: 75a57669cbc8 ("drm/ttm: add ttm_sg_tt_init")
 Cc: stable@vger.kernel.org
-Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ sashal: adjusted context for the existing del_timer_sync() call instead of timer_delete_sync() ]
+Suggested-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Signed-off-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
+Link: https://patch.msgid.link/20261009103419.4122940-1-Jesse.Zhang@amd.com
+[ sashal: Applied the return-value documentation changes to header comments instead of comments beside the implementations. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/serial_ir.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/ttm/ttm_bo_util.c | 7 +++++++
+ include/drm/ttm/ttm_bo_api.h      | 4 ++--
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/rc/serial_ir.c b/drivers/media/rc/serial_ir.c
-index 96ae0294ac102..dac341c68b2bb 100644
---- a/drivers/media/rc/serial_ir.c
-+++ b/drivers/media/rc/serial_ir.c
-@@ -797,7 +797,7 @@ static int __init serial_ir_init_module(void)
+diff --git a/drivers/gpu/drm/ttm/ttm_bo_util.c b/drivers/gpu/drm/ttm/ttm_bo_util.c
+index 7f97c97b49bd2..02d07f4c29b5c 100644
+--- a/drivers/gpu/drm/ttm/ttm_bo_util.c
++++ b/drivers/gpu/drm/ttm/ttm_bo_util.c
+@@ -335,6 +335,10 @@ static int ttm_bo_kmap_ttm(struct ttm_buffer_object *bo,
+ 	if (ret)
+ 		return ret;
  
- static void __exit serial_ir_exit_module(void)
- {
--	del_timer_sync(&serial_ir.timeout_timer);
-+	timer_shutdown_sync(&serial_ir.timeout_timer);
- 	serial_ir_exit();
- }
++	/* Imported sg tables only come with DMA addresses, no pages to map. */
++	if (!ttm->pages)
++		return -EINVAL;
++
+ 	if (num_pages == 1 && ttm->caching == ttm_cached &&
+ 	    !(man->use_tt && (ttm->page_flags & TTM_TT_FLAG_DECRYPTED))) {
+ 		/*
+@@ -455,6 +459,9 @@ int ttm_bo_vmap(struct ttm_buffer_object *bo, struct iosys_map *map)
+ 		if (ret)
+ 			return ret;
+ 
++		if (!ttm->pages)
++			return -EINVAL;
++
+ 		/*
+ 		 * We need to use vmap to get the desired page protection
+ 		 * or to make the buffer object look contiguous.
+diff --git a/include/drm/ttm/ttm_bo_api.h b/include/drm/ttm/ttm_bo_api.h
+index 44a538ee5e2a6..7da454640c991 100644
+--- a/include/drm/ttm/ttm_bo_api.h
++++ b/include/drm/ttm/ttm_bo_api.h
+@@ -360,7 +360,7 @@ static inline void *ttm_kmap_obj_virtual(struct ttm_bo_kmap_obj *map,
+  *
+  * Returns
+  * -ENOMEM: Out of memory.
+- * -EINVAL: Invalid range.
++ * -EINVAL: Invalid range or the BO has no pages to map.
+  */
+ int ttm_bo_kmap(struct ttm_buffer_object *bo, unsigned long start_page,
+ 		unsigned long num_pages, struct ttm_bo_kmap_obj *map);
+@@ -386,7 +386,7 @@ void ttm_bo_kunmap(struct ttm_bo_kmap_obj *map);
+  *
+  * Returns
+  * -ENOMEM: Out of memory.
+- * -EINVAL: Invalid range.
++ * -EINVAL: Invalid range or the BO has no pages to map.
+  */
+ int ttm_bo_vmap(struct ttm_buffer_object *bo, struct iosys_map *map);
  
 -- 
 2.53.0
