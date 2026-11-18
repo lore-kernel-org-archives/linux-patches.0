@@ -1,52 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027861;
-	b=RcRPjme2/VD/VMd/y7KJ38B1gnnxUPnn9UNcfnH8gF7IKHoX9+AJN4Q2UAdLYvwVALf5
-	 WMpLpCk+vqXoewXG85QcYl+FEhPcJb0SZFWvr0piFFonB6XfSc8DgPAE4LQC+y8l4lYxf
-	 WQnW8IT8pi+yfQm3jv/DmD0pa9mkDPne6ox2OgXbHI3IyRw7Mj1Q3VrTivEXiIVOk73DH
-	 dkwOmR2gDrHqLvRMtbO1ozMEvhxbiaPUxWnKjbdo4KO3sfbRGOfzbrttchJPWnI7Uwo/M
-	 IlEMyEpvekAhlxHPX358wwH5TpJyWCvdcgysodhtoYQvCdMZkFF2CXdeDFI6BCuUmZg==
+	t=1795027864;
+	b=qA1tlL/oYIj0I2K+1LhSgzpKIcytJI7VpvpjfWGSoAH3Q3PS8cHDQ/o0Bj3OJHxt73KX
+	 KD8rY81TrZ625j6390nQ5ram+qOvducMds5sZsVGbCcTfFhFSD68wmr6jBy3dVuIIln9S
+	 NSNhuAP/3FDyWHhQROdrivSGOQI1BlaQjHAf9MIK/w5BSLHF3WMSPgdboaixlZQYm4OyV
+	 8KrkWhhzYt1e25MTVwHsojxZKX3rx4CMKaaKNnl2+yzRRxjCvq45jNUllAZI7pf/BgnMC
+	 Oy180Ah2N6sI4MlBC0BhQzhLHCrawwFrTdfvg7JKoGHxqZ2FsxtHau9y0+I95pBsNGQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027861;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027864;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nERrcJhu/40eZWTtHKukaF+LHFdio8+JsSK5OKbqE/0=;
-	b=cZhtMQzgQYeQdbTNAmyS1/GhVhXePrTXOmW1YdmWhwggjZLX0bM/6i1bVcTsVM/S97D+
-	 4xoKRgjPG6N+1dbx2gyQFfvYx8yn3fchRePUwM46bZNID4fslBWObj+aJlVTGjcivH6K6
-	 4taqwNure31CDVJ7INZVgDs/B91jXJIdNX+oCMnulgu72exITgmlKMliYgU3I/kC2FbKG
-	 R5Gv0hNybhP9PBxnjBMfWPo5a0m7khN+PJ6WMgUHoLAOIT6Bc/e1SU2vvAKcXOoIqg/mt
-	 urYY0RBxwwj+Pekfar2eUf5GVOWeWtkHuxzWRC8uG5c4vVIyDAl+7Ic6dWQCXXLTuQw==
+	bh=a0ysMmdOgwd7pgtuHlCRoe1A8N4vifXOjdG6K0ZJhuU=;
+	b=Ni52O9ntmGA91kbeyxWy0RCMu34Ss1HAbG5DU8eILuin3EbZBxk9LVPObv5uMha5Oc7k
+	 JaBSwcIEdg02hiBUYO8hWH6FaPRId37pGR7sCbIeMxOzTFOxBVNNA2O/0YXhcIhxSaNIW
+	 9TmGnGuX0paA5+RWrnPfwh25g02QFFJwVLhKggJ41ptOkupFJnVUwNBmAYdAENHIFh05d
+	 qE6ioLi/XcRutfx1fgPunv4a/Ufvun9kRRS2R+CO0SnJHHamzdW1d9t7BBNYnXXnNcFSh
+	 yEnDip7LHykkmHT9duW/KIJUVKrB5SBREH9KOVqUribFjtkYC9G1ZZ2MU1TE63I0ALA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RLOkMQz2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FCahEqbs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A22E0606A320;
-	Wed, 18 Nov 2026 18:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9D7606A31C;
+	Wed, 18 Nov 2026 18:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RLOkMQz2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F21D01F000C4;
-	Wed, 18 Nov 2026 18:51:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FCahEqbs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0AD71F000C4;
+	Wed, 18 Nov 2026 18:51:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027861;
-	bh=nERrcJhu/40eZWTtHKukaF+LHFdio8+JsSK5OKbqE/0=;
+	s=korg; t=1795027864;
+	bh=a0ysMmdOgwd7pgtuHlCRoe1A8N4vifXOjdG6K0ZJhuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RLOkMQz2yCG/bHt7axckgsWzeELw/19zBDtxbuUeQh37PXMJ5Z67wUrHYwNZBAA8y
-	 DYWOQNqrVkECrbUWx7jEXGgJ50Qyv7MJ/n1x4750f+ozkPThoQUfdNkpWdcfEFxTQz
-	 rVTia+SiJjMefUrIKKqsNymdW4nU9TtlJtMh5jGo=
+	b=FCahEqbsF08IhNxGNieEYr0u+/l1R+elT5s4tZQVd81pUHoLYQo+rRS+3QNRvLDGd
+	 eSNCi7dsgDWOmKpV7zOA4pD0Mhz/Byi9UdcZ3ZeC9dKo6QUxcCj/uAXSwARkwYJFtK
+	 Oyc98/q4dJTY2p6YPnIfNQxikNGuH55a84ypv6Ps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkman <daniel@iogearbox.net>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Jan Kiszka <jan.kiszka@siemens.com>,
+	Kieran Bingham <kbingham@kernel.org>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1912/2151] cpuidle: haltpoll: Only define guest_halt_poll_ns tracepoint when used
-Date: Wed, 18 Nov 2026 16:00:47 +0100
-Message-ID: <20261118150231.435236385@linuxfoundation.org>
+Subject: [PATCH 6.18 1939/2151] scripts/gdb/radix-tree: add lx-radix-tree-command
+Date: Wed, 18 Nov 2026 16:01:14 +0100
+Message-ID: <20261118150232.405693820@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,48 +76,213 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-[ Upstream commit 107b87efc8fcd6a597f1b534f116385620770e56 ]
+[ Upstream commit caa71919a622e3f7d290d4f17ae538b15f5cb6d3 ]
 
-Tracepoints that are defined take up around 5K each, even if they are not
-used. When a tracepoint is used only in code when a specific config is
-enabled, their definition must also be only defined when the same config
-is enabled otherwise it wastes memory.
+Patch series "scripts/gdb/symbols: make BPF debug info available to GDB",
+v2.
 
-The tracepoint guest_halt_poll_ns is only used when CONFIG_CPU_IDLE_GOV_HALTPOLL
-is enabled. Guard the definition of that tracepoint with the same config.
+This series greatly simplifies debugging BPF progs when using QEMU gdbstub
+by providing symbol names, sizes, and line numbers to GDB.
 
-Link: https://patch.msgid.link/20261022153359.2433474b@gandalf.local.home
-Fixes: 0da11bf0cab90 ("cpuidle: haltpoll: Add trace points for guest_halt_poll_ns grow/shrink")
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Patch 1 adds radix tree iteration, which is necessary for parsing
+prog_idr.  Patch 2 is the actual implementation; its description contains
+some details on how to use this.
+
+This patch (of 2):
+
+Add a function and a command to iterate over radix tree contents.
+Duplicate the C implementation in Python, but drop support for tagging.
+
+Link: https://lkml.kernel.org/r/20251106124600.86736-1-iii@linux.ibm.com
+Link: https://lkml.kernel.org/r/20251106124600.86736-2-iii@linux.ibm.com
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: Andrii Nakryiko <andrii@kernel.org>
+Cc: Daniel Borkman <daniel@iogearbox.net>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Jan Kiszka <jan.kiszka@siemens.com>
+Cc: Kieran Bingham <kbingham@kernel.org>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 66d190b072b4 ("scripts/gdb: fix radix tree lookup pointer handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/power.h | 3 +++
- 1 file changed, 3 insertions(+)
+ scripts/gdb/linux/radixtree.py | 139 +++++++++++++++++++++++++++++++--
+ 1 file changed, 132 insertions(+), 7 deletions(-)
 
-diff --git a/include/trace/events/power.h b/include/trace/events/power.h
-index 82904291c2b81..20c97e71bd0e9 100644
---- a/include/trace/events/power.h
-+++ b/include/trace/events/power.h
-@@ -496,6 +496,7 @@ DEFINE_EVENT(dev_pm_qos_request, dev_pm_qos_remove_request,
- 	TP_ARGS(name, type, new_value)
- );
+diff --git a/scripts/gdb/linux/radixtree.py b/scripts/gdb/linux/radixtree.py
+index 074543ac763d2..bc2954e45c327 100644
+--- a/scripts/gdb/linux/radixtree.py
++++ b/scripts/gdb/linux/radixtree.py
+@@ -30,13 +30,16 @@ def entry_to_node(node):
+ def node_maxindex(node):
+     return (constants.LX_RADIX_TREE_MAP_SIZE << node['shift']) - 1
  
-+#ifdef CONFIG_CPU_IDLE_GOV_HALTPOLL
- TRACE_EVENT(guest_halt_poll_ns,
+-def lookup(root, index):
++def resolve_root(root):
++    if root.type == radix_tree_root_type.get_type():
++        return root
+     if root.type == radix_tree_root_type.get_type().pointer():
+-        node = root.dereference()
+-    elif root.type != radix_tree_root_type.get_type():
+-        raise gdb.GdbError("must be {} not {}"
+-                           .format(radix_tree_root_type.get_type(), root.type))
++        return root.dereference()
++    raise gdb.GdbError("must be {} not {}"
++                       .format(radix_tree_root_type.get_type(), root.type))
  
- 	TP_PROTO(bool grow, unsigned int new, unsigned int old),
-@@ -524,6 +525,8 @@ TRACE_EVENT(guest_halt_poll_ns,
- 	trace_guest_halt_poll_ns(true, new, old)
- #define trace_guest_halt_poll_ns_shrink(new, old) \
- 	trace_guest_halt_poll_ns(false, new, old)
-+#endif /* CONFIG_CPU_IDLE_GOV_HALTPOLL */
++def lookup(root, index):
++    root = resolve_root(root)
+     node = root['xa_head']
+     if node == 0:
+         return None
+@@ -71,14 +74,120 @@ def lookup(root, index):
+ 
+     return node
+ 
+-class LxRadixTree(gdb.Function):
++def descend(parent, index):
++    offset = (index >> int(parent["shift"])) & constants.LX_RADIX_TREE_MAP_MASK
++    return offset, parent["slots"][offset]
 +
- #endif /* _TRACE_POWER_H */
++def load_root(root):
++    node = root["xa_head"]
++    nodep = node
++
++    if is_internal_node(node):
++        node = entry_to_node(node)
++        maxindex = node_maxindex(node)
++        return int(node["shift"]) + constants.LX_RADIX_TREE_MAP_SHIFT, \
++               nodep, maxindex
++
++    return 0, nodep, 0
++
++class RadixTreeIter:
++    def __init__(self, start):
++        self.index = 0
++        self.next_index = start
++        self.node = None
++
++def xa_mk_internal(v):
++    return (v << 2) | 2
++
++LX_XA_RETRY_ENTRY = xa_mk_internal(256)
++LX_RADIX_TREE_RETRY = LX_XA_RETRY_ENTRY
++
++def next_chunk(root, iter):
++    mask = (1 << (utils.get_ulong_type().sizeof * 8)) - 1
++
++    index = iter.next_index
++    if index == 0 and iter.index != 0:
++        return None
++
++    restart = True
++    while restart:
++        restart = False
++
++        _, child, maxindex = load_root(root)
++        if index > maxindex:
++            return None
++        if not child:
++            return None
++
++        if not is_internal_node(child):
++            iter.index = index
++            iter.next_index = (maxindex + 1) & mask
++            iter.node = None
++            return root["xa_head"].address
++
++        while True:
++            node = entry_to_node(child)
++            offset, child = descend(node, index)
++
++            if not child:
++                while True:
++                    offset += 1
++                    if offset >= constants.LX_RADIX_TREE_MAP_SIZE:
++                        break
++                    slot = node["slots"][offset]
++                    if slot:
++                        break
++                index &= ~node_maxindex(node)
++                index = (index + (offset << int(node["shift"]))) & mask
++                if index == 0:
++                    return None
++                if offset == constants.LX_RADIX_TREE_MAP_SIZE:
++                    restart = True
++                    break
++                child = node["slots"][offset]
++
++            if not child:
++                restart = True
++                break
++            if child == LX_XA_RETRY_ENTRY:
++                break
++            if not node["shift"] or not is_internal_node(child):
++                break
++
++    iter.index = (index & ~node_maxindex(node)) | offset
++    iter.next_index = ((index | node_maxindex(node)) + 1) & mask
++    iter.node = node
++
++    return node["slots"][offset].address
++
++def next_slot(slot, iter):
++    mask = (1 << (utils.get_ulong_type().sizeof * 8)) - 1
++    for _ in range(iter.next_index - iter.index - 1):
++        slot += 1
++        iter.index = (iter.index + 1) & mask
++        if slot.dereference():
++            return slot
++    return None
++
++def for_each_slot(root, start=0):
++    iter = RadixTreeIter(start)
++    slot = None
++    while True:
++        if not slot:
++            slot = next_chunk(root, iter)
++            if not slot:
++                break
++        yield iter.index, slot
++        slot = next_slot(slot, iter)
++
++class LxRadixTreeLookup(gdb.Function):
+     """ Lookup and return a node from a RadixTree.
  
- /* This part must be outside protection */
+ $lx_radix_tree_lookup(root_node [, index]): Return the node at the given index.
+ If index is omitted, the root node is dereference and returned."""
+ 
+     def __init__(self):
+-        super(LxRadixTree, self).__init__("lx_radix_tree_lookup")
++        super(LxRadixTreeLookup, self).__init__("lx_radix_tree_lookup")
+ 
+     def invoke(self, root, index=0):
+         result = lookup(root, index)
+@@ -87,4 +196,20 @@ If index is omitted, the root node is dereference and returned."""
+ 
+         return result
+ 
++class LxRadixTree(gdb.Command):
++    """Show all values stored in a RadixTree."""
++
++    def __init__(self):
++        super(LxRadixTree, self).__init__("lx-radix-tree", gdb.COMMAND_DATA,
++                                          gdb.COMPLETE_NONE)
++
++    def invoke(self, argument, from_tty):
++        args = gdb.string_to_argv(argument)
++        if len(args) != 1:
++            raise gdb.GdbError("Usage: lx-radix-tree ROOT")
++        root = gdb.parse_and_eval(args[0])
++        for index, slot in for_each_slot(root):
++            gdb.write("[{}] = {}\n".format(index, slot.dereference()))
++
+ LxRadixTree()
++LxRadixTreeLookup()
 -- 
 2.53.0
 
