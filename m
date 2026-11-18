@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050887;
-	b=l91sZudSN76UpQ/qKQyIaQuNsXrimscJtJT9ceIYQ3urGY+y21puUJTOQdh0BBxSNCEh
-	 k3JliTcZkpVqr3ebmOHH9AQYOYpv3tl8S1Ta9smfFyBHYyFn+Aos/Nh14vwSLo9EvVSSM
-	 9vRQnqp/vV8M+iVvnclI99DwzUn08951jBugOE6Q7d3UX6s3x+GeGGzodbZLYSM8JAEKc
-	 g3KBHu1L19+XFPUnMAaM00RdnzQGVVI5yBxuh4GH5hlqhwMTl/zW2ZefyiODFE0bR2r4f
-	 oeXMvklrXp9eadMW3HAKES6t6GrLXTiYUC8xzYr9OZfoQVCCbmiFqTpPItcDxjvej6w==
+	t=1795050890;
+	b=zBS6l9sNJpk5PW6TG2qvW9PCgzhU85Bbx1GSDObBxgjVXS2XY2V1+zyw1sbn7fP0ktvM
+	 +p9n20tewcfkEk/ooBWeYeEIAN45cG2g4deaoyBEbEO0mawud1qp87LnefcOssF1u05nu
+	 YmPc+Yq8x/XYxszACAtvlbUbEzXXJ1exuLmzCrHHDx+tg+8EaqH+BzDVdEVAcOBA6CiiR
+	 EyGhazFITOKgvTrOMfHdUvwDLWpewF6SKIjqacd/aLLy5jaNjkOsXmxwTISrKftRT7eW/
+	 LeulEUil5U6bLN87e0H8xJWaS6hYqkOB8h+w4Ki/8WIs4C2+w4/40Bw/XlyyTGyF4Lw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050887;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050890;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oSH3lShm4GkIpF7UFs9tQJ62mHfv4ytyb8SCWFHl0UU=;
-	b=NWf5rJedCE7hwc7w2ZHYDAzTQog3Iz0YWg6v7tVu52G55s8qmwyODA3QqWT94GfgsWlX
-	 axvjWAN6S78x5qtuVFRGvtZVXk0TLdBYZFnbV6qX7r45VRXNh4XEcwK/RgBYzLbxHM0x1
-	 +oXYrhCV6J6vZ87iaQWQ3dCIda2zMLAULiKh2r83WENDlzDTEH/N3mMiR6b6k1JC85UoT
-	 7aXSvkYjJpkYpUgIit+UA1NXPlCMVSRn4JQtNHB39D2qpOlBTTFSgpaw7XWVboUqDL+23
-	 Oy6+YXJ7Pg5mbb6y0jYCdgJomxyVqQqmaq1krIvEKR7YSY24HgvEJXzkOCdYU2jQDcQ==
+	bh=IGuuhyYcF6P4jAKRwSvoCpKLG5GMrcrpz38HcMRRliA=;
+	b=WMHFOaT/dqk5tBzGUs8DsFEP74GxGY6IRTUuMlWCNzlgna3/BF/1T0uxA+x87hLRpyJH
+	 udtTPnMv/hnCZuNcJKQ4Bl40HhoI0De6CzQyIP8xSMlKsjatZmv6PeNUwEyaTJtx53t2x
+	 GWB+UoTq9sTXdsYxaUqbukvsJCrDr73We7AYPpr9Pu04w+Tq11MeOtkgMFzX7JGUK12Uy
+	 jT/lZtEzh38yAVn7GdDKhiqPOSQHFFmzAx23PUwzmyjEZ86uulEeVizrLvbSIIZy091av
+	 mHJ2n2vNiHmhUREMwGHDaS1RCCG7MY0b5p/iXDnWqeZY4knoA8QYGcQaSqOLM/8q8cg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GBnKISVT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lovURnqn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A72606A320;
-	Thu, 19 Nov 2026 01:14:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89128606A325;
+	Thu, 19 Nov 2026 01:14:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GBnKISVT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 100421F000C4;
-	Thu, 19 Nov 2026 01:14:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lovURnqn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E37DA1F000C4;
+	Thu, 19 Nov 2026 01:14:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050887;
-	bh=oSH3lShm4GkIpF7UFs9tQJ62mHfv4ytyb8SCWFHl0UU=;
+	s=korg; t=1795050890;
+	bh=IGuuhyYcF6P4jAKRwSvoCpKLG5GMrcrpz38HcMRRliA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GBnKISVTRzbuoMW71ySCX7MuRFi5mTOk0AtfscpcgsX813awg9QEycwm9FQ1N8J5d
-	 P/TvI3GELYL4FRwLA+zAdH/Z9rqb2aTr2RMj4deat2a3yHXG7vcNmQqH5MGTWU0DiW
-	 3aaXad4J2VtRfKlycWNuBg3SJP32NZYoUoX8KoTw=
+	b=lovURnqnZKfeAWATdl/eLA0usBmq0Dh6rg3QHkrOcpRBS1Z48ctHg8Kq/2v/D6mBx
+	 ou1RM96vBe4iJU4yPiJC54aqmmuJFNfVQ7OnMOlRIsUG3qlCAJvhKSwCErPJS5uxcs
+	 /Eo0o1z2+QIkD9wQSxNL9rMe8zSkqznHCLB1pdOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bin Yu <byu@xidian.edu.cn>,
-	Cheng Wen <wencheng@xidian.edu.cn>,
-	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 0014/2214] ALSA: line6: Clear prev_fbuf on capture buffer release
-Date: Wed, 18 Nov 2026 15:28:10 +0100
-Message-ID: <20261118150010.715063325@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Luxing Yin <root@tr0jan.top>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Ting-Han Hou <ue081723@gmail.com>
+Subject: [PATCH 5.15 0015/2214] net: gso: limit recursive IP-in-IP segmentation
+Date: Wed, 18 Nov 2026 15:28:11 +0100
+Message-ID: <20261118150010.757402331@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,77 +71,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-commit aa118c8f61d59387961d58ffae831c5259a9f222 upstream.
+commit 006c8b834aed8b02bd8fb9fb05e9e7ead37d1763 upstream.
 
-A KASAN slab-use-after-free read was reported in submit_audio_out_urb()
-when generating an impulse test signal:
+IP-in-IP GSO can re-enter inet_gso_segment() or ipv6_gso_segment()
+for each nested IP header. encap_level tracks header bytes, not callback
+depth, so a deep chain can exhaust the kernel stack. Making
+inet_gso_segment() stackable introduced unbounded IPv4 nesting; IPIP
+GSO/TSO later made the path reachable. The IPv6 stackable path was
+introduced separately and uses the same guard.
 
-  BUG: KASAN: slab-use-after-free in create_impulse_test_signal sound/usb/line6/playback.c:76 [inline]
-  BUG: KASAN: slab-use-after-free in submit_audio_out_urb+0x1848/0x1b20 sound/usb/line6/playback.c:249
-  Read of size 2 at addr ffff888008d74870 by task syz.2.3214/7785
+Count IPv4 and IPv6 GSO handler entries in skb_gso_cb, initialized once
+per top-level GSO operation and preserved across GRE/UDP context changes.
+Use the existing IP_TUNNEL_RECURSION_LIMIT for both handlers. The first
+five entries pass, and the sixth returns -EINVAL before dispatching
+another GSO callback.
 
-  Allocated by task 11:
-   kmem_cache_alloc_noprof+0x2f0/0x390 mm/slub.c:4144
-   line6_buffer_acquire+0x1a1/0x220 sound/usb/line6/pcm.c:158
-   line6_pcm_acquire+0xb6/0x230 sound/usb/line6/pcm.c:329
-   line6_startup_work+0x3c/0x50 sound/usb/line6/driver.c:728
-
-  Freed by task 7785:
-   kfree+0xf8/0x390 mm/slub.c:6566
-   line6_buffer_release sound/usb/line6/pcm.c:176 [inline]
-   line6_buffer_release+0xa5/0xf0 sound/usb/line6/pcm.c:170
-   __line6_pcm_release sound/usb/line6/pcm.c:305 [inline]
-   line6_pcm_release+0x5a/0x80 sound/usb/line6/pcm.c:313
-   snd_toneport_monitor_put+0x11b/0x190 sound/usb/line6/toneport.c:183
-
-line6pcm->prev_fbuf points into the capture PCM stream buffer
-(line6pcm->in.buffer), which is updated during audio_in_callback() to
-feed rate synchronization, software monitoring, and impulse test signal
-generation on playback side.
-
-When all capture streams are closed, line6_buffer_release() frees
-pstr->buffer with kfree().  However, it does not clear line6pcm->prev_fbuf.
-If playback is subsequently started (e.g. via impulse test signal
-volume control snd_line6_impulse_volume_put()), submit_audio_out_urb()
-dereferences the stale pointer line6pcm->prev_fbuf under in.lock,
-resulting in a slab-use-after-free read.
-
-Clear prev_fbuf and prev_fsize in line6_buffer_release() when releasing
-the capture stream buffer under in.lock, ensuring that no stale buffer
-pointer can be accessed by submit_audio_out_urb().
-
-Fixes: 63e20df1e5b2 ("ALSA: line6: Reorganize PCM stream handling")
+Fixes: 3347c9602955 ("ipv4: gso: make inet_gso_segment() stackable")
 Cc: stable@vger.kernel.org
-Co-developed-by: Bin Yu <byu@xidian.edu.cn>
-Signed-off-by: Bin Yu <byu@xidian.edu.cn>
-Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
-Link: https://patch.msgid.link/20261013063554.571-1-25031212351@stu.xidian.edu.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reported-by: Vega <vega@nebusec.ai>
+Closes: https://lore.kernel.org/all/cover.1790157745.git.zihanx@nebusec.ai/
+Assisted-by: LLM
+Co-developed-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260924051521.32568-2-zihanx@nebusec.ai
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ Ting-Han: this tree predates include/net/gso.h and net/core/gso.c, so
+  the skb_gso_cb change and gso_recursion_inc_test() go into
+  include/linux/skbuff.h and the reset into __skb_gso_segment() in
+  net/core/dev.c. IP_TUNNEL_RECURSION_LIMIT was added upstream by
+  6f1a9140ecda ("net: add xmit recursion limit to tunnel xmit
+  functions"), which is not in this tree, so define it (same value, 5)
+  in ip_tunnels.h ]
+Signed-off-by: Ting-Han Hou <ue081723@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/line6/pcm.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ include/linux/skbuff.h   |    8 ++++++++
+ include/net/ip_tunnels.h |    3 +++
+ net/core/dev.c           |    1 +
+ net/ipv4/af_inet.c       |    3 +++
+ net/ipv6/ip6_offload.c   |    4 ++++
+ 5 files changed, 19 insertions(+)
 
---- a/sound/usb/line6/pcm.c
-+++ b/sound/usb/line6/pcm.c
-@@ -173,6 +173,14 @@ static void line6_buffer_release(struct
- 	clear_bit(type, &pstr->opened);
- 	if (!pstr->opened) {
- 		line6_wait_clear_audio_urbs(line6pcm, pstr);
-+		if (pstr == &line6pcm->in) {
-+			/* prev_fbuf points into the capture buffer we are about
-+			 * to free; drop it while no capture URB is in flight.
-+			 */
-+			guard(spinlock_irqsave)(&line6pcm->in.lock);
-+			line6pcm->prev_fbuf = NULL;
-+			line6pcm->prev_fsize = 0;
-+		}
- 		kfree(pstr->buffer);
- 		pstr->buffer = NULL;
- 	}
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -4657,10 +4657,18 @@ struct skb_gso_cb {
+ 	int	encap_level;
+ 	__wsum	csum;
+ 	__u16	csum_start;
++	/* Number of IPv4/IPv6 GSO handler entries for this packet. */
++	u8	recursion_counter;
+ };
+ #define SKB_GSO_CB_OFFSET	32
+ #define SKB_GSO_CB(skb) ((struct skb_gso_cb *)((skb)->cb + SKB_GSO_CB_OFFSET))
+ 
++static inline bool gso_recursion_inc_test(struct sk_buff *skb,
++					  unsigned int limit)
++{
++	return ++SKB_GSO_CB(skb)->recursion_counter > limit;
++}
++
+ static inline int skb_tnl_header_len(const struct sk_buff *inner_skb)
+ {
+ 	return (skb_mac_header(inner_skb) - inner_skb->head) -
+--- a/include/net/ip_tunnels.h
++++ b/include/net/ip_tunnels.h
+@@ -24,6 +24,9 @@
+ #include <net/ip6_route.h>
+ #endif
+ 
++/* Maximum nesting depth for recursive IP tunnel processing */
++#define IP_TUNNEL_RECURSION_LIMIT	5
++
+ /* Keep error state on tunnel for 30 sec */
+ #define IPTUNNEL_ERR_TIMEO	(30*HZ)
+ 
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -3475,6 +3475,7 @@ struct sk_buff *__skb_gso_segment(struct
+ 
+ 	SKB_GSO_CB(skb)->mac_offset = skb_headroom(skb);
+ 	SKB_GSO_CB(skb)->encap_level = 0;
++	SKB_GSO_CB(skb)->recursion_counter = 0;
+ 
+ 	skb_reset_mac_header(skb);
+ 	skb_reset_mac_len(skb);
+--- a/net/ipv4/af_inet.c
++++ b/net/ipv4/af_inet.c
+@@ -1358,6 +1358,9 @@ struct sk_buff *inet_gso_segment(struct
+ 	int id;
+ 
+ 	skb_reset_network_header(skb);
++	if (unlikely(gso_recursion_inc_test(skb,
++					   IP_TUNNEL_RECURSION_LIMIT)))
++		goto out;
+ 	nhoff = skb_network_header(skb) - skb_mac_header(skb);
+ 	if (unlikely(!pskb_may_pull(skb, sizeof(*iph))))
+ 		goto out;
+--- a/net/ipv6/ip6_offload.c
++++ b/net/ipv6/ip6_offload.c
+@@ -16,6 +16,7 @@
+ #include <net/tcp.h>
+ #include <net/udp.h>
+ #include <net/gro.h>
++#include <net/ip_tunnels.h>
+ 
+ #include "ip6_offload.h"
+ 
+@@ -87,6 +88,9 @@ static struct sk_buff *ipv6_gso_segment(
+ 	bool gso_partial;
+ 
+ 	skb_reset_network_header(skb);
++	if (unlikely(gso_recursion_inc_test(skb,
++					   IP_TUNNEL_RECURSION_LIMIT)))
++		goto out;
+ 	nhoff = skb_network_header(skb) - skb_mac_header(skb);
+ 	if (unlikely(!pskb_may_pull(skb, sizeof(*ipv6h))))
+ 		goto out;
 
 
