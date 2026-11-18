@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027459;
-	b=NPiSxhj7uyq1Hwa2KQMXPWxWKpRzK882YSXpzMkUCiROj4BRuq3ipRLpFF66EKfH8jIg
-	 oLZPmeKYix3BvcQluHyYaVVFtd5bErfMv9qHwXj7ZYMaRm3Mzgx5uinaizG8Hv9jKEpF8
-	 KLMxHx+WfXgs+pw5V2MYuOxa7WqmA7Ha1lvEHNJLeOb0AHLCTOH9hiK7+/h++cWa2eYq2
-	 3nKyefhBzHmM/UQkCpbnrgQr0hN6nMDPuGvmG+fZgBhxgHChZXvOCG86KWkdazea0HFY+
-	 1pUGssKlTu0xbYqUwNWZ1kL6bZlBCLT5l8iCwhx/vKnJzOb+qnSVHjioJPMfNOHwJng==
+	t=1795027462;
+	b=SJ6PdRhyCPOuGCY6iaE+vidX9Te4aK+XoVMG0i2YuqaVKSwmOsRBSZCs5l1yBLp7jwPg
+	 zC8H4iyG6IGWZMIBzNKxk7H6jlMqmnaH8O+98rt4UZvs1AWwR6iDMFDbRBj3YBuWo+66k
+	 8gnWnYex7hLJMGrLmeDYKU9uSPE0UTPvtQkLeW0XhC4hrBrfCHUFZRHwexWO2/TKe/zJz
+	 joBbjP2FZs+7PcCze43qVXxgRfZdMClSsD/BH3sLIXEqC4ngCOG0IYK1jtBe5+O/+vyOf
+	 LC40s1JqmW0rowKvH31uH5TeLah/SCwXulIx9PrXmhmvloPtLj4oopJJaKLm1jD0pbw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027459;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027462;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BSztF9Q2Qr6lMYCpKv0ZqYY/3kLzH4ODm4qGBZGzAWI=;
-	b=4cbfPV0nTLBQNIp80F4XDldDLpde3zmu9cIsWxzTzKEPTvlpCYZRgOD1lr0x8YWrpEaq
-	 ZN5ZN9GRfhloNiMjK+9+b4nT0oz/SAsWdjMfCY9o2oUn4yaUq3rG3JoXe39jQg25qGRwz
-	 y6WGiSm1lCdRBVviXNrTcJFpvqOZsdknr5dI1lRDDV+L7qlhVyU5qyIU3DdBAIxs2j1nl
-	 Le6XwaZ8JYHNPvyHi+CpXgTcflrZDaSGanW+YER6Gamla3Hs0OzNpb/fwev6vYxVQQPZi
-	 H38K89CPScwdbrVt7CsioBC53RhTsee6G/ezQHVWvMm0WKiVhYfdoFweBktlDTbPdsg==
+	bh=9889g8u8DkD5CDN27Bv3Vk1cd49iJpNMODz560dlKwU=;
+	b=aR0QY97itHxACvXOG/KnFZg3AvD/6uXS5SRhoOiMBo/EW7y1yzyzsKiMCYaTiF6eM/Xx
+	 t8ZmPOCJ1gG8g/28ikUa3t3H27h+sa9/FcfPPt+ltHHq3WA0rlrBWjRVPLbgJRKuhu8eq
+	 9hpe20RdS3BVyrkGpVIEEVEtgn5XV3aVxjgtDTx3eI4y8GaNOFULaJs7I4gynXwZkEILU
+	 RHo3obakomEl9M5wZFZODRIZd5fwSGxtBR95wXSZyDJaYHFsV3Ctu28xTl7pn4vtWMLKD
+	 l/q1topdcTcYc9VTYRrFh5Oanmi/noG4RQs3PIeODtYF7wglImtEk2JCGwUYkD+gJXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hjw3jaUT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Soo1NBPC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473CB60A2602;
-	Wed, 18 Nov 2026 18:44:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 209E860A2611;
+	Wed, 18 Nov 2026 18:44:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hjw3jaUT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A21F91F000C7;
-	Wed, 18 Nov 2026 18:44:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Soo1NBPC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70AA11F000C9;
+	Wed, 18 Nov 2026 18:44:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027459;
-	bh=BSztF9Q2Qr6lMYCpKv0ZqYY/3kLzH4ODm4qGBZGzAWI=;
+	s=korg; t=1795027462;
+	bh=9889g8u8DkD5CDN27Bv3Vk1cd49iJpNMODz560dlKwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hjw3jaUTZ0WfY3Kk0G+tvIhHmCPOHwBvECBq5tfecR7YWFKvrbjrjX1kbzfOkpE3i
-	 1Y2Am0geIuvAFJjNC3fFrll3ZquWc9DoRmJsK7EWCN1nPceJbX/8M1PyAQwH19A4kH
-	 bwmTDcj059OsKrlbvODDeVuKSS71HiLEHOsiXDDc=
+	b=Soo1NBPCuIqHkwvQBczUL7uVCFjqDeOm/4rf3xbVbhvZNW6DnY29QdgecDowrfdU+
+	 vgjcEP0UR3Fo6LeljGC8gz8gdtXg08fvQa++9jW8PYZEts4CYcCd5ql8EgeNQMnKpa
+	 Onpjr17dyadetDHCQWLJ7T3KtwTHb3Geo+WvoO80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Yongzhao Chen <yongzhao.derek@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Sunny Tiwari <sunnytiwari@google.com>,
+	Jacob Moroni <jmoroni@google.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1797/2151] net: phy: qca83xx: read resolved QCA8337 link status
-Date: Wed, 18 Nov 2026 15:58:52 +0100
-Message-ID: <20261118150227.270625724@linuxfoundation.org>
+Subject: [PATCH 6.18 1798/2151] RDMA/irdma: Bound in-flight CQP ops across deferred completions
+Date: Wed, 18 Nov 2026 15:58:53 +0100
+Message-ID: <20261118150227.307555225@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,127 +69,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongzhao Chen <yongzhao.derek@gmail.com>
+From: Sunny Tiwari <sunnytiwari@google.com>
 
-[ Upstream commit 42a91cbfc7a3ab99d05cb2ed0de5a24b9652cfed ]
+[ Upstream commit c3e8e9451e6f1b69f685b75e0fbf14f3d0fb2539 ]
 
-After a QCA8337 SmartSpeed downshift, genphy_read_status() can report
-1000 Mbit/s from the advertised modes when the PHY is running at
-100 Mbit/s. On a Redmi AX5400 running downstream OpenWrt Linux 6.18.52,
-this caused qca8k to program the user-port MAC for 1000 Mbit/s and
-traffic failed. An earlier prototype that read the resolved speed
-from the PHY restored traffic.
+On IRDMA_GEN_3+ devices, CQP operations can complete in two stages:
+Stage-1 on the CCQ acknowledges receipt and moves an entry from
+cqp->ooo_avail to cqp->ooo_pnd, while Stage-2 signals final completion
+via an AEQ event or a subsequent CCQ CQE.
 
-Wrap genphy_read_status() and use at803x_read_specific_status() to
-replace its speed and duplex result when an autonegotiated link comes
-up. Resolve pause for the resulting duplex. Until the PHY reports a
-resolved speed and duplex, report the link as down so that the next
-poll reads them again, as marvell_read_status_page_an() does. In that
-case also clear the duplex, master/slave state and link partner modes
-that genphy_read_status() read for an up link. QCA8337's register
-layout matches the helper (data sheet 80-Y0619-3 Rev. D, pages
-327-328).
+In irdma_sc_ccq_get_cqe_info(), Stage-1 processing advances
+cqp->sq_ring.tail so the SQ descriptor slot can be reused once consumed
+by hardware, whereas cqp->completed_ops is only incremented on Stage-2.
+Because irdma_cqp_ring_full() only checks cqp->sq_ring, a burst of
+backlogged commands in dev->cqp_cmd_head allows irdma_process_bh() to
+submit more concurrent in-flight CQP commands than the maximum supported
+limit (cqp->sq_size - 1) while earlier commands await Stage-2. This
+causes CQP completions to be lost and synchronous waiters to time out
+with -ETIMEDOUT (-110).
 
-Keep the generic master/slave read order and the early return for a
-steady autonegotiated link. This avoids additional reads of the
-clear-on-read idle error count in MII_STAT1000. Forced mode continues
-to use BMCR. Report the MDI-X state read at link-up and invalidate it
-when the link goes down or autonegotiation is disabled. Clear
-mdix_ctrl because this driver does not implement MDI-X configuration.
+Fix this by:
+  - Updating irdma_cqp_ring_full() to bound total in-flight CQP
+    operations (cqp->requested_ops - cqp->completed_ops) to
+    (cqp->sq_size - 1).
+  - Calling irdma_process_bh() at the end of irdma_process_ae_def_cmpl()
+    so backlogged commands are drained after Stage-2 AEQ completions
+    increment cqp->completed_ops and free in-flight capacity.
 
-The QCA8327 entries keep genphy_read_status(). The AR8327 data sheet
-(MKG-15791 Rev. 1.0) lists the QCA8327-A PHY ID and documents the same
-PHY-specific status layout, with SmartSpeed enabled after a hardware
-reset, so those PHYs may have the same problem. That is untested on
-QCA8327 hardware, so limit this change to QCA8337.
-
-Fixes: b3591c2a3661 ("net: dsa: qca8k: Switch to PHYLINK instead of PHYLIB")
-Suggested-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Yongzhao Chen <yongzhao.derek@gmail.com>
-Assisted-by: LLM
-Link: https://patch.msgid.link/20261013190339.51909-1-yongzhao.derek@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: c7db0abe5f2b ("RDMA/irdma: Add GEN3 CQP support with deferred completions")
+Assisted-by: Gemini
+Signed-off-by: Sunny Tiwari <sunnytiwari@google.com>
+Link: https://patch.msgid.link/20261017052856.3570063-1-sunnytiwari@google.com
+Reviewed-by: Jacob Moroni <jmoroni@google.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/qcom/qca83xx.c | 58 ++++++++++++++++++++++++++++++++++
- 1 file changed, 58 insertions(+)
+ drivers/infiniband/hw/irdma/ctrl.c | 6 +++++-
+ drivers/infiniband/hw/irdma/hw.c   | 1 +
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/qcom/qca83xx.c b/drivers/net/phy/qcom/qca83xx.c
-index bc70ed8efd86a..2c4d085bacdba 100644
---- a/drivers/net/phy/qcom/qca83xx.c
-+++ b/drivers/net/phy/qcom/qca83xx.c
-@@ -92,6 +92,63 @@ static int qca83xx_probe(struct phy_device *phydev)
- 	return 0;
+diff --git a/drivers/infiniband/hw/irdma/ctrl.c b/drivers/infiniband/hw/irdma/ctrl.c
+index 7e56d5e618962..a7c574c907ad9 100644
+--- a/drivers/infiniband/hw/irdma/ctrl.c
++++ b/drivers/infiniband/hw/irdma/ctrl.c
+@@ -5406,7 +5406,11 @@ int irdma_sc_static_hmc_pages_allocated(struct irdma_sc_cqp *cqp, u64 scratch,
+  */
+ static bool irdma_cqp_ring_full(struct irdma_sc_cqp *cqp)
+ {
+-	return IRDMA_RING_FULL_ERR(cqp->sq_ring);
++	u64 in_flight = cqp->requested_ops -
++			atomic64_read(&cqp->completed_ops);
++
++	return IRDMA_RING_FULL_ERR(cqp->sq_ring) ||
++	       in_flight >= (cqp->sq_size - 1);
  }
  
-+static int qca8337_read_status(struct phy_device *phydev)
-+{
-+	struct at803x_ss_mask ss_mask = {
-+		.speed_mask = AT803X_SS_SPEED_MASK,
-+		.speed_shift = __bf_shf(AT803X_SS_SPEED_MASK),
-+	};
-+	int ret, old_link = phydev->link;
-+
-+	ret = genphy_read_status(phydev);
-+	if (ret)
-+		return ret;
-+
-+	/* Keep the state resolved at link-up while the link stays up */
-+	if (phydev->autoneg == AUTONEG_ENABLE && old_link && phydev->link)
-+		goto out;
-+
-+	phydev->mdix = ETH_TP_MDI_INVALID;
-+
-+	/* genphy_read_status() derives speed and duplex from the
-+	 * advertisements, which is wrong after a SmartSpeed downshift.
-+	 * Use what the PHY resolved instead.
-+	 */
-+	if (phydev->autoneg == AUTONEG_ENABLE && phydev->autoneg_complete &&
-+	    phydev->link) {
-+		phydev->speed = SPEED_UNKNOWN;
-+		phydev->duplex = DUPLEX_UNKNOWN;
-+		phydev->pause = false;
-+		phydev->asym_pause = false;
-+
-+		ret = at803x_read_specific_status(phydev, ss_mask);
-+		if (ret)
-+			return ret;
-+
-+		/* Report the link down until speed and duplex are resolved,
-+		 * so that the next poll reads them again. Also clear what
-+		 * genphy_read_status() read for an up link, as the
-+		 * PHY_HALTED path of the state machine does.
-+		 */
-+		if (phydev->speed == SPEED_UNKNOWN ||
-+		    phydev->duplex == DUPLEX_UNKNOWN) {
-+			phydev->link = 0;
-+			phydev->duplex = DUPLEX_UNKNOWN;
-+			phydev->mdix = ETH_TP_MDI_INVALID;
-+			phydev->master_slave_state = MASTER_SLAVE_STATE_UNKNOWN;
-+			linkmode_zero(phydev->lp_advertising);
-+		} else {
-+			phy_resolve_aneg_pause(phydev);
-+		}
-+	}
-+
-+out:
-+	/* MDI-X configuration is not implemented */
-+	phydev->mdix_ctrl = ETH_TP_MDI_INVALID;
-+
-+	return 0;
-+}
-+
- static int qca83xx_config_init(struct phy_device *phydev)
- {
- 	u8 switch_revision;
-@@ -220,6 +277,7 @@ static struct phy_driver qca83xx_driver[] = {
- 	.flags			= PHY_IS_INTERNAL,
- 	.config_init		= qca83xx_config_init,
- 	.soft_reset		= genphy_soft_reset,
-+	.read_status		= qca8337_read_status,
- 	.get_sset_count		= qca83xx_get_sset_count,
- 	.get_strings		= qca83xx_get_strings,
- 	.get_stats		= qca83xx_get_stats,
+ /**
+diff --git a/drivers/infiniband/hw/irdma/hw.c b/drivers/infiniband/hw/irdma/hw.c
+index 1baffb595898c..7d01f68bdf4f5 100644
+--- a/drivers/infiniband/hw/irdma/hw.c
++++ b/drivers/infiniband/hw/irdma/hw.c
+@@ -197,6 +197,7 @@ static void irdma_process_ae_def_cmpl(struct irdma_pci_f *rf,
+ 		irdma_sc_cqp_def_cmpl_ae_handler(&rf->sc_dev, info, false,
+ 						 &scratch, &sw_def_info);
+ 	}
++	irdma_process_bh(&rf->sc_dev);
+ }
+ 
+ /**
 -- 
 2.53.0
 
