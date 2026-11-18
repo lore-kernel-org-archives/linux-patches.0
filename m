@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056102;
-	b=MKqB/rFE8mWS21GXmkvOBhom7EdRvg0A97+B4p6xNWe8fsJuR/xT0dTxQF3C5nw0Dfyn
-	 eR7AFB1Ztlpor668JChGR1M0g8noKeV5/1HDdcIhXKWrwZJ2zpwTsU7+0BmJov71ziMla
-	 rkF88YmypVq+QRge1XmRinYdJA7CQD/xJBxicli9RXAJr4AqKBFOQPCtQp5TPjeDA3y+F
-	 f/lGItEc5VAZlFfmVoVBZtuM63Ssgzg17gZFjevr589aQ0QQspPFqAO38vhT0lgNU3vs6
-	 yFGsgShjmyS6gbbJ2aA/d0Et0rkClxTT+BvaRUxNyrP/GL4wAAxmonCe8dIWq/t7pSA==
+	t=1795056105;
+	b=OYFt0Rk7vRxlblb6HG4ZzWi0x81QwV3pBeVJ6hePcbPLtlq2UV4x3kJ7ns0Fvz4kfkQu
+	 BpFa1pGruQrCRl4GndkFSIBqtw0fsYhMSs5ooTK6uuDAQFtup7TBIi4Uut/YVQYgmkYCJ
+	 XHrZcZZPiHw5KST4X67bKDLpx+EXGtTKQn7xTGWLOIGJF6A+YysK/YGb1cns45rjzko/6
+	 lrivhxBPhzcODk0yIiy6B1zDE72YJvSXaG4DieWJnSKOcnv5ZAzURRnZ/Roulp3Cf72Wf
+	 MqRfpel/Md+JhjChz9/HbUos8j0J2N2xRlCQyddRW9Y5Wh1iZP+3dZIGz54/5CBUOJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056102;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056105;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Uc+P1MM9y3t0dlqLYZIFW1UVl4y/L1usRzqh/uFjaLY=;
-	b=P2nuHnEKCjQWadzPWyY6q3uM8tQ5Z8c3OU8OhcEQye84nPnSUa1EGruk7ndjhelp4KWt
-	 tX0N38KHhFAlgz4X6eIVr4JUR+MN/QH5JJOaZI8u60F/ccopvxm8xDvINSeqQcFh0d2lv
-	 DIxfEPsjRLbAG7vMdbapwKYWJxG8wHwEBKb5+CIsTVcf0e1FXvHkKmMwI+QBGvkLiWlyZ
-	 NW1oCRsJYh5VA+KKoahQu3Izp3CkXk8JbjNGHVyY11jx9PvydVvKz39Fjh0U5+xkxoKSe
-	 eD8icxFo05phZBFgpmHPvh+xS/RTkO2n5ELh/nnM5Rw+slzPZ+D4D7zJRx8+B3dsm1g==
+	bh=uSp//ih1H40auEYl1f+33dlwRJ1Q2hwfgSrjIWdlwns=;
+	b=YBxjFqv2TqJ1iwPtyXVv2TNvnFs+F4VMaKduS5wmOWmVGBDigdZlFNVX0hgQJftLELEP
+	 SucreaX8VizLpZqxh9AWOlZo6bQ0bKBgS8TojZcd8IcZTu4opgGZIcVqCjkltEUdyNyAy
+	 yyP+Q1Mweocm0YD7J9EA4Uyjvb4vlh9oyKDJzKTUfV+mSUlthpsoGElHguon6rUVqwCTR
+	 x+hhkv/I+qs4R9XqTY+L4CF2jWqy8cL+VLzPFNgPtlkMpSlFlofl+dQbnsfwzdbD2MyTl
+	 xYsdTNNW38Gclxlom4SRprMw+i2nIHCuVtqZHquCR5MOTaO5Lw0+JoWzeTXDMw4VQTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C9SZ1pfQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WY7VYfdQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A9CE606A320;
-	Thu, 19 Nov 2026 02:41:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416C0606A31C;
+	Thu, 19 Nov 2026 02:41:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C9SZ1pfQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9AAC1F000C4;
-	Thu, 19 Nov 2026 02:41:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WY7VYfdQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EE2A1F000C4;
+	Thu, 19 Nov 2026 02:41:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056102;
-	bh=Uc+P1MM9y3t0dlqLYZIFW1UVl4y/L1usRzqh/uFjaLY=;
+	s=korg; t=1795056105;
+	bh=uSp//ih1H40auEYl1f+33dlwRJ1Q2hwfgSrjIWdlwns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C9SZ1pfQ7anTy5FnKUicBeC66p5j6OQmRTkz8NtVpHd68uhlp6OqnR6DEU+lAxX7o
-	 Y2//xsixsTAVriYfXDuoiKqs49VOJIujqhtApcqnnVsB0AjuFeMPhq1DaZlguiAcYQ
-	 4PTOIDbSc81DTh5Vz3SySXwFTH40Rd0gAVp0O1Gc=
+	b=WY7VYfdQ/86oUtihF52RNza59/7pG5EGlxQNlNv+YOzsTF1zUN1oRieVLTkmcO6AG
+	 PBMGDfNFyvN64L2vCzLhTBBYD/ddOqfQqZfv9nOm0ucsg/6ukagAQmFmG+oTcNERjx
+	 V0L28X3PS2foAVu14AHZe6J0jPOg/rpzJf6vo0rg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tapio Reijonen <tapio.reijonen@vaisala.com>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1869/2214] serial: max310x: dont clobber the TX break bit in set_termios
-Date: Wed, 18 Nov 2026 15:59:05 +0100
-Message-ID: <20261118150126.064346130@linuxfoundation.org>
+Subject: [PATCH 5.15 1870/2214] net: alacritech: fix dma_free_coherent() in error path
+Date: Wed, 18 Nov 2026 15:59:06 +0100
+Message-ID: <20261118150126.100780740@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,77 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tapio Reijonen <tapio.reijonen@vaisala.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 3b2de448ec0332c1cb8c38b4c5ff0c8e860befbc ]
+[ Upstream commit 05b5019b01fb9443b09ae4ed34af1135a80a84c8 ]
 
-A TX break asserted with TIOCSBRK ends early, with no error reported,
-as soon as any termios change lands on the port: a break is a state
-that must hold until TIOCCBRK, but max310x_set_termios() overwrites
-the whole LCR register, and LCR also carries the TX break bit that
-break_ctl() drives. No concurrency is required - a baud or parity
-change from the same process ends the break just as well, and
-break-led protocols lose their break with nothing in the logs.
+In slic_init_stat_queue(), a series of coherent buffers is allocated
+with the length size. The size is then stored in stq->mem_size for
+normal deallocation. However, in the error path, stq->mem_size is also
+used but is not initialized. This error may leave the freed buffers
+mapped, leaking a resource and allowing the device to access freed
+memory.
 
-Update only the LCR bits that are derived from termios and leave the
-TX break and RTS pin control bits untouched. Since nothing clears a
-break when a port is closed with the break still asserted - the tty
-core sends no break-off on release, and the unconditional write here
-was the accidental recovery - clear TXBREAK in startup(), the same way
-8250 does.
+Change the length in error path to size.
 
-Fixes: f65444187a66 ("serial: New serial driver MAX310X")
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Tapio Reijonen <tapio.reijonen@vaisala.com>
-Link: https://patch.msgid.link/20261008-max310x-rs485-sw-delay-v8-1-6ba881f81e1f@vaisala.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 60c140df15db ("net: ethernet: slicoss: add slicoss gigabit ethernet driver")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20261006140912.50828-2-fourier.thomas@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/max310x.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/alacritech/slicoss.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/max310x.c b/drivers/tty/serial/max310x.c
-index 8e7aa24da2327..387ab54e5af6b 100644
---- a/drivers/tty/serial/max310x.c
-+++ b/drivers/tty/serial/max310x.c
-@@ -152,6 +152,8 @@
- #define MAX310X_LCR_FORCEPARITY_BIT	(1 << 5) /* 9-bit multidrop parity */
- #define MAX310X_LCR_TXBREAK_BIT		(1 << 6) /* TX break enable */
- #define MAX310X_LCR_RTS_BIT		(1 << 7) /* RTS pin control */
-+/* LCR bits owned by termios; TX break and RTS are driven elsewhere */
-+#define MAX310X_LCR_TERMIOS_MASK	GENMASK(5, 0)
+diff --git a/drivers/net/ethernet/alacritech/slicoss.c b/drivers/net/ethernet/alacritech/slicoss.c
+index 1fc9a1cd3ef8f..7135b8f40c644 100644
+--- a/drivers/net/ethernet/alacritech/slicoss.c
++++ b/drivers/net/ethernet/alacritech/slicoss.c
+@@ -813,7 +813,7 @@ static int slic_init_stat_queue(struct slic_device *sdev)
  
- /* IRDA register bits */
- #define MAX310X_IRDA_IRDAEN_BIT		(1 << 0) /* IRDA mode enable */
-@@ -940,8 +942,12 @@ static void max310x_set_termios(struct uart_port *port,
- 	if (termios->c_cflag & CSTOPB)
- 		lcr |= MAX310X_LCR_STOPLEN_BIT; /* 2 stops */
- 
--	/* Update LCR register */
--	max310x_port_write(port, MAX310X_LCR_REG, lcr);
-+	/*
-+	 * Update LCR register. Leave the TX break bit alone: it is driven by
-+	 * break_ctl(), and a whole-register write here would end a break in
-+	 * progress.
-+	 */
-+	max310x_port_update(port, MAX310X_LCR_REG, MAX310X_LCR_TERMIOS_MASK, lcr);
- 
- 	/* Set read status mask */
- 	port->read_status_mask = MAX310X_LSR_RXOVR_BIT;
-@@ -1061,6 +1067,13 @@ static int max310x_startup(struct uart_port *port)
- 
- 	s->devtype->power(port, 1);
- 
-+	/*
-+	 * Clear a latched break: nothing clears TXBREAK when a port is
-+	 * closed with a break still asserted, and set_termios() no longer
-+	 * rewrites it.
-+	 */
-+	max310x_port_update(port, MAX310X_LCR_REG, MAX310X_LCR_TXBREAK_BIT, 0);
-+
- 	/* Configure MODE1 register */
- 	max310x_port_update(port, MAX310X_MODE1_REG,
- 			    MAX310X_MODE1_TRNSCVCTRL_BIT, 0);
+ free_descs:
+ 	while (i--) {
+-		dma_free_coherent(&sdev->pdev->dev, stq->mem_size,
++		dma_free_coherent(&sdev->pdev->dev, size,
+ 				  stq->descs[i] - stq->addr_offset[i],
+ 				  stq->paddr[i] - stq->addr_offset[i]);
+ 	}
 -- 
 2.53.0
 
