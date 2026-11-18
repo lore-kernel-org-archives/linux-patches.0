@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039951;
-	b=bcSsquJCjHMmWvrS89MOflez8vX2lXvNUdexuCC4uXa7xnx1z7zorOZrcadFTOj4hQtx
-	 nnM2EWj190D2FiBapo/9lIQWhlx8emcdcDqR/+L4tuEFcX63jc7cHr4M4vIn47SjQzE7w
-	 FRp/MGAsFq6e+KPsn5G6V7YEG3W+U84XnWjaY7r9Td3HPdn6JxxPCL239IjpTVMxTQJEV
-	 zEn9lb9c8Ud4rVG9h71duFfDufzVD/OvL+RCktnxIYoccRhOQMrrlgn+WJp/0FlyefOPR
-	 x6YxwbejmfZT236KAZ5xFObn6PyRKOFeRpmdIzo5pqWOD6nE2zG5VdfPAC5pZnB2jFA==
+	t=1795039954;
+	b=d6esG83tcFGWFRglr0js+Cssi0UKs+fXL+Pq8lqArppcPixZ9Zd8YlHQVoxuqopPMmb+
+	 UfFeu+O+pJj8ZnCpN8SmPLMHfSCx3jLwZ+u3ueM2Biw5UWZP4pK323RPIpjPlVn8LEL5I
+	 SxvTu6B+1xaJnYOU30O4ssLk9x2M2n9Mib+S+7gg/EOd5rIIYlQ5doXLSq1w/mRN1pI4V
+	 wj5hG/3fWt+c/SohtoeFpO5nYyUoQjfCubBevSQKq6GepiGCiWEoLP8lC7kf6POOoSf/E
+	 HyFsXbDFMCM92TLuWPRr4Djq/YmjlWpQOjWuNd8IBsCmcQsByozkf0EVUfuEz+82/eQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039951;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039954;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pvYZxiPGr9YNm4nNZkUX6rvpCp013tOqGsPwcdRCqCU=;
-	b=n+mp4yK2bgxHYmwuhL6SlyWxCWDhOCxSQNM786LEAkGBBwzT9kYBTAql4zxVq+BjzG31
-	 m7MiKzfxrn8tu0pjnro2n0Px0BZHMhBi9BVb7JZcIqjO6e/8P/ADeTRf3tEpiDmmMDZZX
-	 DUpuIiZ2cP1u+uC5tFgE74HSq3REUnseQsvGoY4p14BSqekdKnNzYBRC92cB3X66exYKs
-	 GeipigGG6JTMJyxq3RiG+7Qtze4zJIk/as6PrYloijPN+YznwU320TzkVbyPAvYfbTRiU
-	 wFHf2vewnpj0ykzNf281Z9UKjpMJSojr90HZ+pkP/+C7Ipy8hME2XWUl4c/Zz6yBvtg==
+	bh=RolVt10ChfzYEYtrm3NrNifa5YVYY/ulpq9AwnlKbOg=;
+	b=g3dTd32D6VAgmHg3kMI2/Zy+hoJx9h/HmlvubKVN9lzyd4BAzjYseZL2gzvnXRGP4tMY
+	 KmKXjQ9mEatlFUxtreJzKPgaj2jGBhdjwp0CNZKvC94mXTgO8nDd+egmfbyymMC0HOZtI
+	 BCPs1skX9Vf31FL+h3QiMLPy5HEGVcOx3lpFdmPi5/YkViTs+9TIOJf1PCvnTYOd8gPDp
+	 vDGfpCdliwZU1N+58rd9DJ8DkRiwAjNz/agoMfB5Bx4zVxGPDaa7Y/d0nqIeuRSl8Rnzm
+	 StEL0wXIjOeaD1ianTNxr/Y6Ous5mUMklDzS00iLHYBLpm/cqF0DiC5dnNR1oUZ2GPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bzC+VL7C;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bg4zvR9k;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A991606A31C;
-	Wed, 18 Nov 2026 22:12:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEDD6606A320;
+	Wed, 18 Nov 2026 22:12:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bzC+VL7C
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39AF91F000C4;
-	Wed, 18 Nov 2026 22:12:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bg4zvR9k
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10E8F1F000C4;
+	Wed, 18 Nov 2026 22:12:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039950;
-	bh=pvYZxiPGr9YNm4nNZkUX6rvpCp013tOqGsPwcdRCqCU=;
+	s=korg; t=1795039953;
+	bh=RolVt10ChfzYEYtrm3NrNifa5YVYY/ulpq9AwnlKbOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bzC+VL7C7j57CniJNso96YXPykmKDtsz3V8mooeYnJK5h2jptEJ6EmRFZoselM2Bg
-	 M1fjt4FficdikH4dUcxW44qtgCi394EDQ9QooQVB30vppzVDfdqEKcndpBxRt6IYlu
-	 bhUc7y23I2tSef+PQWq1bm0x/6ki5QkoO32vGtk0=
+	b=bg4zvR9klAKOqHnfKMAjDY2HR5vbKpvkVsS0DZr+5ymHirrovuxc26llYofYkFIgv
+	 JxcC0OzIVUys5MqZ6DASs4tZzdnKOrTiz5dQ3y0Ons80g4N7/tdrTA9b10ePHqpoAI
+	 Tk4/uiM++B95/+HHjP1uehCV9hWDY/UfqY+iNlLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Lee Jones <lee@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2284/3318] leds: pca9532: Check i2c_smbus_read_byte_data() return value
-Date: Wed, 18 Nov 2026 15:48:26 +0100
-Message-ID: <20261118150430.280925242@linuxfoundation.org>
+Subject: [PATCH 6.6 2285/3318] perf build: Check the version of the compiler that is used
+Date: Wed, 18 Nov 2026 15:48:27 +0100
+Message-ID: <20261118150430.308240812@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,56 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 1b75f038e5f71ed32ce6593b5763f9776ec58a25 ]
+[ Upstream commit 4f4387a07f601988e44fc6a4f4663aa1ff264f94 ]
 
-Coverity report INTEGER_OVERFLOW (tainted_data_return ->
-cast_underflow -> overflow) in pca9532_getled().
-pca9532_getled() stored the return value of i2c_smbus_read_byte_data()
-into a char and used it directly to compute the LED state without
-checking for an error. i2c_smbus_read_byte_data() returns a negative
-error code on failure. On an I2C read error the negative value was
-assigned to an unsigned type, triggering an integer underflow/overflow,
-and a meaningless LED state was returned to the caller.
+The flex and bison flags are adjusted for clang older than 13.0.0, which
+doesn't grok -Wno-unused-but-set-variable. The test is reached because
+CC_NO_CLANG says CC is clang, but the version comes from $(CLANG), which
+defaults to plain "clang" and needn't be the compiler in use:
 
-Read the value into an int, check for the error, and fall back to
-PCA9532_OFF while emitting a warning when the read fails.
+  $ make CC=clang-19 CLANG=clang-12
+  version from $(CLANG) -> 12.0.0, flag stripped
+  version from $(CC)    -> 19.1.7, flag kept
 
-Fixes: 28c5fe99016d ("leds: pca9532: Extend pca9532 device tree support")
-Assisted-by: VeroCoder:vero-1 [cli]
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260727-led-fix-v1-1-d635c5037109@nxp.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Dropping the flag lets the warnings it suppresses in the generated flex
+and bison code through, and those are errors under -Werror.
+
+Ask $(CC) instead, as that is what compiles the code.
+
+Fixes: 878460e8d0ff84a0 ("perf build: Remove -Wno-unused-but-set-variable from the flex flags when building with clang < 13.0.0")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Assisted-by: Antigravity:gemini-3.1-pro
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-pca9532.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ tools/perf/util/Build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/leds/leds-pca9532.c b/drivers/leds/leds-pca9532.c
-index 34eab5f547fc6..0fea8f3ea798c 100644
---- a/drivers/leds/leds-pca9532.c
-+++ b/drivers/leds/leds-pca9532.c
-@@ -257,12 +257,15 @@ static enum pca9532_state pca9532_getled(struct pca9532_led *led)
- 	struct i2c_client *client = led->client;
- 	struct pca9532_data *data = i2c_get_clientdata(client);
- 	u8 maxleds = data->chip_info->num_leds;
--	char reg;
--	enum pca9532_state ret;
-+	int reg;
-+	enum pca9532_state ret = PCA9532_OFF;
+diff --git a/tools/perf/util/Build b/tools/perf/util/Build
+index 6d657c9927f7d..f67ef7ccc0e65 100644
+--- a/tools/perf/util/Build
++++ b/tools/perf/util/Build
+@@ -305,7 +305,7 @@ bison_flags := -DYYENABLE_NLS=0 -Wno-unused-but-set-variable
  
- 	mutex_lock(&data->update_lock);
- 	reg = i2c_smbus_read_byte_data(client, LED_REG(maxleds, led->id));
--	ret = (reg & LED_MASK(led->id)) >> LED_SHIFT(led->id);
-+	if (reg >= 0)
-+		ret = (reg & LED_MASK(led->id)) >> LED_SHIFT(led->id);
-+	else
-+		dev_warn(&client->dev, "failed to read LED register: %d\n", reg);
- 	mutex_unlock(&data->update_lock);
- 	return ret;
- }
+ # Old clangs don't grok -Wno-unused-but-set-variable, remove it
+ ifeq ($(CC_NO_CLANG), 0)
+-  CLANG_VERSION := $(shell $(CLANG) --version | head -1 | sed 's/.*clang version \([[:digit:]]\+.[[:digit:]]\+.[[:digit:]]\+\).*/\1/g')
++  CLANG_VERSION := $(shell $(CC) --version | head -1 | sed 's/.*clang version \([[:digit:]]\+.[[:digit:]]\+.[[:digit:]]\+\).*/\1/g')
+   ifeq ($(call version-lt3,$(CLANG_VERSION),13.0.0),1)
+     bison_flags := $(subst -Wno-unused-but-set-variable,,$(bison_flags))
+     flex_flags := $(subst -Wno-unused-but-set-variable,,$(flex_flags))
 -- 
 2.53.0
 
