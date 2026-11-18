@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021986;
-	b=v256gp2PSZhYISBFTqkCE4ifTPffbRaCx6HNcFEbywRuRU7u3vulmSpFPN3LWSAZIIZo
-	 6asvEzi+m3jW0ymUY06LnrVcoUjcgaFV5Su38+ZCJvt8OviaTKqt20ICkTnAKIKp7iOjC
-	 fs25jfme3rRWf4ZNlEtxbGT/o7y2PP1hN1gHqGIqWlBq5fdbFdxk900C0Bh1fDm56IS6Y
-	 r6LX6QbUeHKYWXD7+wiQbWm0tiTxfKbD+LXc3KE0FYCM3VKVsweqgWP8QGUiQdPUQ5L1m
-	 RqnP5Dedc/JyggHoLbWSM1BbV9s6Kn0vAknZ+lnzm41MXqGjNisZLDG8dgVw4lbAm6w==
+	t=1795021989;
+	b=O7Z7eqgCoFe10OM1psuCV/0x69uLjbaHs596sd1CuXUWR+eCzcf3LhhZ0099gB9GRQ+B
+	 xdbsgBz3O/ZD9NazCpoS2+b5mS2H2j9OLlGFZ81TJTGs3gmAnlwscHPIzmB6xAWPnb68j
+	 jNQ0p8lGskFz5YU84mABF2Lk0rbjgwny6tGWoZdn3taogW42pYRr+gelmblXIeejKD+Cf
+	 AeE60eSMDXtHg89IRinSyt5xqzAXAGo57tH28i8OXnDLVMoUbXN/Frn0o6wafPyOPHdr2
+	 XumfqkFSpsi6HhFBUsjoFwlaOB43PmzarIQ0ufYxbnhVltUDY0m35Nk1Qe8SqptyIjw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021986;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021989;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5HFNPBt2aNYJaKhYy+WdD/MHi227nST+OKDYDJYGsZ0=;
-	b=5dVp6QWutiEK1gI4ubpcPCtPN9qC6IpAFh9FSNa6dlA/dBW6fTgABruq/l6Bni91S0uQ
-	 jzUvQfjfgJ7dHNymWMfA23DaT9y3aMTDpTH8AoyfAOFrW895vbOAmPy4hIYH52kzIpYyw
-	 JR/7H38Eb2P0u5ZgvvX9p5U1qV11owvmuuwVjx3xFg9NCVhh90xL8Uz14sfoRksk1KjZc
-	 RlgK8CTKeBSFIH9t2z0Yl1NnvmpX2NxonVQQxQ697fPY6WXT6xlocoaz8F91bs3hpHYdf
-	 i0G5Ia4mIBjrV+gn1gI6pc5zsGMaWG98lsoy/YD13Zfr2gp0/pxFlLg97gFD5TMy+Ug==
+	bh=KKWla56vDVS3gLGCmAdBTNeZvqEmCt+VNV08Zj4pxvE=;
+	b=kQY31hDNp+dafcWGlr8hnzyVl3C07ygHomYAfJSmMXBmju1cFD4eGuMpyVRqGuo3HD7U
+	 f1KFly2T7Fg/3vLXvLswu4aYkPkj5dU5kfqGLaCDs3zjDGNOBZI74g4Ponvi2WWHXxluF
+	 gtuF6VDD0Y8wYK2xS/7xuEOopjV1n1GnCS/EdcVtrEvn5afOxiQq2hlOPSkG1LVSD8YBt
+	 1Gl+dtbwvxDeiOXnzs7CKoJuONvO5TbdTrIaSNwDbKkBtvnKu//LqWMzM338Wai+ymuJi
+	 LYRFg9lEUyJNrVwzL9QeOakiG0IBE78lBOXhpCS6+PFl2QD6cFcsWZQgjcWF4y2JpTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t5Vj1Uaw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wjtjLAzP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D6B606A31C;
-	Wed, 18 Nov 2026 17:13:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E41606A31C;
+	Wed, 18 Nov 2026 17:13:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t5Vj1Uaw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17F7D1F000C4;
-	Wed, 18 Nov 2026 17:13:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wjtjLAzP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36D21F000C4;
+	Wed, 18 Nov 2026 17:13:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021986;
-	bh=5HFNPBt2aNYJaKhYy+WdD/MHi227nST+OKDYDJYGsZ0=;
+	s=korg; t=1795021989;
+	bh=KKWla56vDVS3gLGCmAdBTNeZvqEmCt+VNV08Zj4pxvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t5Vj1UawwixACsmTZlHpY3DxU2YGYDrdoC0G+qdSHjG+kdDg82qiFBw7+SpndjRHO
-	 cAeWA8fNIkLJEbCSg/1H1RFwxyW5fCtzgcBhXqiCanwx35hYfQ6KHVMw98mKWMYPOK
-	 rWvOBIPX0BsJsaIwDEyeLs27zzIropT/oQrLROhs=
+	b=wjtjLAzPtTdhdOdmQhkRTe3ORJzdQg/tQlZ8X4KHwfYmOmnn3j+3lizNEUv5uGbVS
+	 v/yN0n3j3sviqWy+YxouNphWeH6AMAY2+Z9aDjn7DrxfE8gOimwNyQVgyzbGFBTueH
+	 UH2RLy3WVmkcnxWa370gPBZQ9ymbA0Y6nOnd4daE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Machon <daniel.machon@microchip.com>,
+	Dudu Lu <phx0fer@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2503/2651] net: microchip: fdma: fix DCB corruption under sustained load
-Date: Wed, 18 Nov 2026 16:02:23 +0100
-Message-ID: <20261118150414.897687683@linuxfoundation.org>
+Subject: [PATCH 7.3 2504/2651] net-sysfs: reject a one-entry RPS flow table
+Date: Wed, 18 Nov 2026 16:02:24 +0100
+Message-ID: <20261118150414.926810942@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,100 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Machon <daniel.machon@microchip.com>
+From: Dudu Lu <phx0fer@gmail.com>
 
-[ Upstream commit 573a6d4c7a21e34d7a2174b8d3c7ca67a5e850b6 ]
+[ Upstream commit 24927bdf0f62f63470a065c21d80fff7e4e9f207 ]
 
-__fdma_dcb_add() prepares a DCB and links it into a channel's chain by
-writing its address to the NEXT_PTR of the current last DCB. The FDMA
-may be processing the chain while this happens.
+store_rps_dev_flow_table_cnt() accepts rps_flow_cnt == 1.  For count == 1
+the round-up loop leaves mask == 0, which is stored as log == 0 in the
+tag (tag_ptr |= ilog2(mask) + 1).  get_rps_cpu() then calls
+rfs_slot() -> hash_32(hash, rps_tag_to_log(tag_ptr)) with log == 0:
 
-Before this patch, the link is written before the new DCB's own nextptr
-and info fields, so the FDMA can follow it to a DCB that hasn't been fully
-prepared yet. Under sustained load this stalls the FDMA.
+  include/linux/hash.h:68
+	return __hash_32(val) >> (32 - bits);   /* bits == 0 -> shift by 32 */
 
-Prepare the new DCB fully before linking it, and update the previous
-DCB's NEXT_PTR using the two-step sequence from the datasheet (poison
-the LSB and flush, then clear it) so the FDMA never observes a
-partially-updated pointer.
+The shift by 32 is undefined and yields the full 32-bit hash, which is
+used to index the one-entry rps_dev_flow[] table unchecked:
 
-Reported by a customer running iperf3 --bidir against a lan969x board.
+  UBSAN: shift-out-of-bounds in ./include/linux/hash.h:68:24
+  shift exponent 32 is too large for 32-bit type 'unsigned int'
+   __ubsan_handle_shift_out_of_bounds+0x11c/0x208
+   get_rps_cpu+0x12fc/0x1344
+   netif_rx_internal+0x1e0/0x4d4
 
-Reproduced on lan969x with iperf3, throughput collapsing to zero:
+rps_dev_flow[] is then read (rflow->cpu) and written (last_qtail) out of
+bounds on the packet path.  Require at least two entries.
 
-  [  5]   1.00-2.00   sec  73.9 MBytes   620 Mbits/sec    0    305 KBytes
-  [  5]   2.00-3.00   sec  73.9 MBytes   620 Mbits/sec    0    305 KBytes
-  [  5]   3.00-4.00   sec  13.9 MBytes   116 Mbits/sec    2   1.41 KBytes
-  [  5]   4.00-5.00   sec  0.00 Bytes  0.00 bits/sec    1   1.41 KBytes
-  [  5]   5.00-6.00   sec  0.00 Bytes  0.00 bits/sec    0   1.41 KBytes
-  [  5]   6.00-7.00   sec  0.00 Bytes  0.00 bits/sec    1   1.41 KBytes
-
-The race is timing-dependent: across three reproductions the stall
-appeared anywhere from ~400s to ~3000s into the run.
-
-Fixes: 30e48a75df9c ("net: microchip: add FDMA library")
-Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261026-microchip-fdma-dcb-corruption-v1-1-36dab6caca07@microchip.com
+Fixes: f3483c8e1da6 ("net: rfs: hash function change")
+Signed-off-by: Dudu Lu <phx0fer@gmail.com>
+Link: https://patch.msgid.link/20261021155522.67521-1-phx0fer@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/microchip/fdma/fdma_api.c    | 30 ++++++++++++++++---
- 1 file changed, 26 insertions(+), 4 deletions(-)
+ net/core/net-sysfs.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/ethernet/microchip/fdma/fdma_api.c b/drivers/net/ethernet/microchip/fdma/fdma_api.c
-index 6dfe36f58d67a..a85dcb492829d 100644
---- a/drivers/net/ethernet/microchip/fdma/fdma_api.c
-+++ b/drivers/net/ethernet/microchip/fdma/fdma_api.c
-@@ -43,9 +43,19 @@ int __fdma_dcb_add(struct fdma *fdma, int dcb_idx, u64 info, u64 status,
- 				u64 *dataptr))
- {
- 	struct fdma_dcb *dcb = fdma_dcb_get(fdma, dcb_idx);
-+	struct fdma_dcb *prev = fdma->last_dcb;
- 	u64 nextptr;
- 	int i, err;
+diff --git a/net/core/net-sysfs.c b/net/core/net-sysfs.c
+index 352173df75785..2b3dab9611c07 100644
+--- a/net/core/net-sysfs.c
++++ b/net/core/net-sysfs.c
+@@ -1088,6 +1088,13 @@ static ssize_t store_rps_dev_flow_table_cnt(struct netdev_rx_queue *queue,
+ 		while ((mask | (mask >> 1)) != mask)
+ 			mask |= (mask >> 1);
  
-+	/* Per the FDMA datasheet, adding a DCB to an active channel takes
-+	 * three steps:
-+	 * 1) Write NEXT_PTR of the current last DCB with the LSB forced to
-+	 *    FDMA_DCB_INVALID_DATA, and flush that write.
-+	 * 2) Clear the LSB to complete the link.
-+	 * 3) Reload the channel (FDMA_CH_RELOAD); this is done by the caller
-+	 *    once the chain has been extended.
-+	 */
-+
- 	for (i = 0; i < fdma->n_dbs; i++) {
- 		err = __fdma_db_add(fdma, dcb_idx, i, status, db_cb);
- 		if (unlikely(err))
-@@ -56,13 +66,25 @@ int __fdma_dcb_add(struct fdma *fdma, int dcb_idx, u64 info, u64 status,
- 	if (unlikely(err))
- 		return err;
- 
--	fdma->last_dcb->nextptr = cpu_to_le64(nextptr);
--
--	fdma->last_dcb = dcb;
--
- 	dcb->nextptr = cpu_to_le64(FDMA_DCB_INVALID_DATA);
- 	dcb->info = cpu_to_le64(info);
- 
-+	/* On the first DCB of fdma_dcbs_init() prev is the DCB itself;
-+	 * don't link it to itself.
-+	 */
-+	if (prev != dcb) {
-+		/* Write NEXT_PTR of the current last DCB with the LSB forced
-+		 * to FDMA_DCB_INVALID_DATA, and flush that write.
++		/* Require at least two entries. A one-entry table rounds up
++		 * to mask == 0, which encodes log == 0 in the tag.
++		 * get_rps_cpu() then computes hash_32(hash, 0), a shift by 32.
 +		 */
-+		prev->nextptr = cpu_to_le64(nextptr | FDMA_DCB_INVALID_DATA);
-+		dma_wmb();
++		if (!mask)
++			return -EINVAL;
 +
-+		/* Clear the LSB to complete the link. */
-+		prev->nextptr = cpu_to_le64(nextptr);
-+	}
-+
-+	fdma->last_dcb = dcb;
-+
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(__fdma_dcb_add);
+ 		/* Do not accept too large tables. */
+ 		if (mask > (INT_MAX / sizeof(*table) - 1))
+ 			return -EINVAL;
 -- 
 2.53.0
 
