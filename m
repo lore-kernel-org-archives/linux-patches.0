@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022836;
-	b=WjnzM54lan5ymnV814ZGzRK2yrrGrZALZzA6DtFLt7o/PixcFZTy6aZM2eBt+OpXKOcG
-	 uCm6oGWCa0uM0IxKIY5O1zUeQKhFY9lyqpOJ7hc1/fqVMvd56EOyByS2RyXkZIlkKJvaz
-	 pGFLW1i17Em5makTRWrsYPS9JWzyIyC0fk5p/h2Amf0lboXETLZXKzJq3j0GdNsnib/C+
-	 AwMnNfqALOUJ2OJ0v2uDTgD9FfwPuuZ8I8G1u062A7Xeg3OdjgmpNbS/hsDmt6Ju6sLFU
-	 1Xr0f1Fny4aqytpn0+SNdUeV5klliKGODHVbddJtU10Cy9Nc1f8fFmF6QN/OrAIkEgA==
+	t=1795022838;
+	b=NC7cl+Vow0bdar7FWF0YSjW9zMHWpG6SZhnhWUzgDehlgHCUYAdrKlG/oheuHVvfp9pW
+	 bei68qj1t5f3lO/hIei/oBjGXoFoG2bThJ+/BNfWYN1T9tEjP/6HAzQQ4JT1/foKWkuFH
+	 RgA/y7AK0JS3TOFPLzjB5XdzMPBYBEzryCsaIF5vbAJKoCJmfJ2cLUOdRi2xV9amQz5Rx
+	 Cff2d/FAuGZ1IPlZKNeV2m7hOMqEPghskUcf/MzUFVrbkPFuSRXCiJeVhGZ/w+0goFIdE
+	 VtfKxtkodCAx01ca9qm06kxVxWvs8VzG1/uPyvJyYzTBLiZtjXG+Ev3TcFtL33/TZkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022836;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022838;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GjHNiCg43+yTrs+Datpa0E0LihSUyaU60qmiWVtCsfg=;
-	b=WWZP1fnuRqFIkCVCw7KGxXAfqklMYSjcNqEg1Z0JQLDmg5eeSyt4NoKQu96Jz2wrK3C+
-	 4DykIVLWmwaVe4Wn/grZ0SQ5xsjFZJWCtEViaMkCX0jE9erX8YZUyP0kfUmlFGsKnyPI+
-	 opsMwf1HpDUvF8z6X3pCgFA63XzNNIf2uk4D7H5OQrjRCKnWMA26tnFl86h9efKnTqdSm
-	 4KM5ycDgWd95iLvd3RJAEDt58YDZOwlTCfC1HoZvzHgIPNn+X4s7SXQhoc/i6bchxoesH
-	 JwyHLeS05AQDO0gFKYodknfmmeJvDVPFUe/ScYuDCNP8eAyeD3oZEziixmVHMSP6rFA==
+	bh=Aud5+sQ0G041zgrBjgrjQPYAjtxRgEmeEbMKKnaQiVk=;
+	b=ujSTUXenR990gbYUbFKZJkg84cVZrJ6qk+eSaTqn096KiInMTiPa37N/2rt9BnKMAmsk
+	 TrgoNdMSJSBCJ+syDxJ1huPcIa/NT/Pw10dJLhG/yQ5IPCrtAYymoXm0vPKInOS/Hmml4
+	 GYk3io4Z2obUYrf0oJnsH3ZL3W1ze142rtI6880BIWkB9BQb6lJOWiP5CgMVWFwJNM81Z
+	 72VSJIkoCPnUz8QUtm2NrN7dOhK0RU9io61G7X3Khh8qvyiekZBrG8hOL2OuZy/94bvha
+	 mjn47XZACVtCEPlxv5l8aBi+e/4F9vfqlm/xbJS/nRLDOVHCAT5i4foClU/9t/hqsrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZIcF8vvj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z3+5XJ1t;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E07606A334;
-	Wed, 18 Nov 2026 17:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F87606B3D7;
+	Wed, 18 Nov 2026 17:27:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZIcF8vvj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 753E01F000C4;
-	Wed, 18 Nov 2026 17:27:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z3+5XJ1t
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B90B1F000C5;
+	Wed, 18 Nov 2026 17:27:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022836;
-	bh=GjHNiCg43+yTrs+Datpa0E0LihSUyaU60qmiWVtCsfg=;
+	s=korg; t=1795022838;
+	bh=Aud5+sQ0G041zgrBjgrjQPYAjtxRgEmeEbMKKnaQiVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZIcF8vvjzBiLIv7cLsZtyn1RMUKeW8IhOBrjNjVaX+g/+yXcW+7+8b5vWDTq0WjcA
-	 tJ8yozKNpllQkVwTsQEmteDyJeFWJ+ZixhHmbDRI1jXhWwxcpRtothR6J/8VK9jBea
-	 pQTh/vldvIgp5hItK+iT5Z79ueKJuzdV0gxws5/4=
+	b=Z3+5XJ1tjsMAzipriRE4Nt0ZECJMlsB5Hf17jus2rE3pOttYj7RpdmDGIZVtnXf6y
+	 nrbi0c7KZ2jS1Zfv1BTPq8v9o5/JqzQsK+khUPHsIfR7EOIK8uw/TfsSNjKdDv5HEF
+	 H0kNLDsE4mNWN4Ma8Chq6jhP5AkEC5j71QftSoME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Rosen Penev <rosenp@gmail.com>,
 	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0155/2151] ARM: dts: armada-388-helios4: fix vmmc property name
-Date: Wed, 18 Nov 2026 15:31:30 +0100
-Message-ID: <20261118150127.403490313@linuxfoundation.org>
+Subject: [PATCH 6.18 0156/2151] ARM: dts: helios4: fix vbus-supply for USB2 PHY
+Date: Wed, 18 Nov 2026 15:31:31 +0100
+Message-ID: <20261118150127.439482982@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,15 +70,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 008e9faadef8c0aaa9b8a3ff05a2126e3c5b08b7 ]
+[ Upstream commit a132798a133e76a7bb575ba95b2b64eadd245438 ]
 
-The sdhci@d8000 node references the 3.3V regulator through a bare
-"vmmc" property, which is not part of the mmc controller DT
-binding. The binding requires supply properties in the form
-"vmmc-supply", so the current entry is ignored by the driver.
-
-Rename the property to "vmmc-supply" so the fixed regulator is
-correctly wired up as the card power supply.
+The usb-nop-xceiv binding and driver use "vbus-supply"; the driver
+acquires the VBUS regulator via devm_regulator_get_exclusive("vbus")
+(phy-generic.c). The stale "vbus-regulator" name is never read by
+the driver and dtbs_check rejects it as an unknown property. Rename
+the property so reg_5p0v_usb is honored.
 
 Fixes: ced8025b569e ("ARM: dts: armada388-helios4")
 Assisted-by: opencode:big-pickle
@@ -90,18 +88,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm/boot/dts/marvell/armada-388-helios4.dts b/arch/arm/boot/dts/marvell/armada-388-helios4.dts
-index f5ae4bea1211f..0545452a983fc 100644
+index 0545452a983fc..1ed6ddf1719a7 100644
 --- a/arch/arm/boot/dts/marvell/armada-388-helios4.dts
 +++ b/arch/arm/boot/dts/marvell/armada-388-helios4.dts
-@@ -269,7 +269,7 @@ sdhci@d8000 {
- 					     &helios_sdhci_cd_pins>;
- 				pinctrl-names = "default";
- 				status = "okay";
--				vmmc = <&reg_3p3v>;
-+				vmmc-supply = <&reg_3p3v>;
- 				wp-inverted;
- 			};
+@@ -140,7 +140,7 @@ fan2: j17-pwm {
  
+ 	usb2_phy: usb2-phy {
+ 		compatible = "usb-nop-xceiv";
+-		vbus-regulator = <&reg_5p0v_usb>;
++		vbus-supply = <&reg_5p0v_usb>;
+ 	};
+ 
+ 	usb3_phy: usb3-phy {
 -- 
 2.53.0
 
