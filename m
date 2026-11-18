@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052719;
-	b=GgI+887+4Tmc2xQf2LeNf0FhdO7gInjyNS5Rxi9JL6lXFB2VLnuz9F+IsOsAZ99xVk2+
-	 +XEeQdWL/QrMtr1K9cPbwJUSjMB6sCmNBE7bBNd+IqrCmE+TpzRUlQpdfahjtoW0+VXoC
-	 fA5WdqfeziiLq8Ob9lJGugjvomTXUa3Cp/EdMhXMWBhEwOWNWHnZ71MhkIjcRe9D1I4dX
-	 y/r4hBpK8ap/SRC0sf5JHkb699Kb1/dFpV83oMk/31u0od7i1hIRPi07XPN6VwK7kt8Oj
-	 sXByMURB/kbiuhyG7vCQy6tA8QBqwkTIGgh8hgZ+S64Yd8aOsZr42vDmhKOneMRh4bA==
+	t=1795052722;
+	b=YUbE0eiZuycXt+VsLBnuC51O+q95H+pISrgXWkKsu5Z7vbvOBSuffo2B86ANS7gtEqhQ
+	 QbUr5KI7hV2/lCdfd1MKbbffM3LIiU2kgSra1wMRmlntdlMHcRsnR73554sNvkVzK9jYd
+	 6WlxcXY8MDBT+BCMXLOZAK13AcTKBAF2WxUSDpVBvjC3OAi0E9c4oAfoucN2d2vELSSd6
+	 qHq7lfpg3ifEkJlvkD5YnTdCLoqFyEBzUKgCIoU9BYJR/O24zQUTtKNcpHsvhkM0rqezz
+	 NFsOvGCdDWJJ89nDQRh8qlkA29Zrf/ESlVrlSKk7jPRogNDckLYjA/HXbN/7SUXjo4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052719;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052722;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TyjdTO1JS6qwWxElaOHx6GJpFoKFCYOmHFNJSj9Q920=;
-	b=ikxCXIMdvwY5UtMIDbbFgcfG1746hB9HLpmjdrFvlV8TLxvrW+ZksBhe7fagsK5958qC
-	 PoC48AGSdxja9ZKtZnqGMMzc3GVERJ3Vci7IGH45s2qMG/aRZqenGSbCOsI9ZgZ7iuPgh
-	 qja1cK/KSfoyl4JvRIF92LbAn2qn9I4UaPsIfE/o+vt/Q/zWJVNEHRFSNOG+BWNMKAjhU
-	 BYL75owSn+dubiSS/pfvZWO00eqFEVpLHCHQsn0cNYi9bM4PL02mRvp/JWJ5lR8ZnK/tb
-	 SU7Wskf6fFsgFQ/qvk3SHjjwK+BeAPYmpw+RLqtfWkD2Gk8PymXPsYrB1KNvBuDx72w==
+	bh=Y/SSPKQwyIXbpkQuabm3giff0TUHP0cgZIkQzT2jnAs=;
+	b=pxDbHuFRA8me7s4x7iLQIcp5swnoFM4AMDqRUCBMwvgE+9B4r+SPcshVU3Yh+V0ydKPQ
+	 7g1BrO6zTHdY2SXxL5gwcQIYDG3OwchdJDN03Lg4WsFE3JNiAtbb0E7spzZgyGYCYDw17
+	 bGd0o8154gSQNMECiUw4eAXbsz/nwP/SytGy3948/JtpSj4yShQ2ssi9xqN1H8TPuZc4g
+	 XX5nunB2VygTgo3TQ+s7k9yHP5IpnboJyCnivozzmHgKTA6X6sX1YBn2lBbavec8yCx0r
+	 Z5udw5asDuKNzF/eK2VR4TNdORhUsf+BZVSthZrAXXKDa5kJJomNj2npGZRkpYSgU6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RBntk9t5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sFaSfUEy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AFE2606A32C;
-	Thu, 19 Nov 2026 01:45:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C52606A332;
+	Thu, 19 Nov 2026 01:45:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RBntk9t5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 876901F000C4;
-	Thu, 19 Nov 2026 01:45:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sFaSfUEy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 711731F000C4;
+	Thu, 19 Nov 2026 01:45:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052719;
-	bh=TyjdTO1JS6qwWxElaOHx6GJpFoKFCYOmHFNJSj9Q920=;
+	s=korg; t=1795052722;
+	bh=Y/SSPKQwyIXbpkQuabm3giff0TUHP0cgZIkQzT2jnAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RBntk9t5Q0RvSJSXdinM9b3Lom//AE/CXDFJpc45GGkXV2laANpmcjLD+prxOk45C
-	 TFXTJ9V6ytVlbqLNQOqqBLp0F79VxZlTLW32QULJzeDbJAXkqcwXt4vJmdrEZb4c7E
-	 3bp7+TOC4yJ1zdMq+MUwycSrAHHx5kA0MmePzbYg=
+	b=sFaSfUEy0brgt1g4V+WV6eVt6gZ1a4gVfYml8cYbexXrAuHwez1vMRZ5lwulfNII8
+	 gY7mcaU7b0Dt57zOGRVopT9jcDcxh/7T8+4bwRvecTYsOUHhiqA6lp5A7ok6UxPd1Q
+	 tUvrHKGBOgAUCKFkopg8xeqEVoVK6oc7DNWCS7Ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Turner <mattst88@gmail.com>,
-	Magnus Lindholm <linmag7@gmail.com>,
+	Nikita Maksimov <nickstogramm@yandex.ru>,
+	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0663/2214] alpha: invalidate the local context in flush_icache_user_page()
-Date: Wed, 18 Nov 2026 15:38:59 +0100
-Message-ID: <20261118150038.317641924@linuxfoundation.org>
+Subject: [PATCH 5.15 0664/2214] ALSA: hda/via: Apply runtime PM workaround for ASUS X55A
+Date: Wed, 18 Nov 2026 15:39:00 +0100
+Message-ID: <20261118150038.395285746@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,57 +69,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Magnus Lindholm <linmag7@gmail.com>
+From: Vasiliy Kovalev <kovalev@altlinux.org>
 
-[ Upstream commit 4244c555ac440a445cc168f860b2677099d761f9 ]
+[ Upstream commit f6e8d5ebde5ceb7d3c0eef6e9e4d82862b503ade ]
 
-flush_icache_user_page() has the same caller-CPU omission that the
-previous patch fixed in flush_tlb_mm(): when the target mm is not the
-calling CPU's active_mm nothing happens locally, and smp_call_function()
-handles only the other CPUs, so this CPU may later reuse the old ASN
-together with the translations it still holds.
+ASUS X55A requires the same workaround like other machines with
+VT1802, otherwise it loses the codec power on a few nodes and the
+sound stays silent.
 
-This matters here in particular because the function exists for
-operating on another process's mappings: the comment above it describes
-setting breakpoints through ptrace, and access_remote_vm() reaches it
-through copy_to_user_page(). The calling CPU is therefore often running
-something other than the target mm.
-
-As in flush_tlb_mm(), the uniprocessor implementation in
-asm/cacheflush.h already has the missing case.
-
-No imb() is needed, here or in ipi_flush_icache_page(). Alpha's
-user-space I-cache flush works by allocating a new ASN rather than by
-invalidating the I-cache: the entries stay, but they are tagged with the
-old ASN and can no longer match. An imb() is only required when the ASN
-space wraps and numbers are reused, and __get_new_mm_context() already
-does one in that case.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Reviewed-by: Matt Turner <mattst88@gmail.com>
-Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
-Link: https://lore.kernel.org/r/20261010142533.974797-9-linmag7@gmail.com
-Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
+Link: https://bugzilla.altlinux.org/45606
+Cc: <stable@vger.kernel.org>
+Tested-by: Nikita Maksimov <nickstogramm@yandex.ru>
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Link: https://patch.msgid.link/20261017101257.215166-1-kovalev@altlinux.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/alpha/kernel/smp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/pci/hda/patch_via.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/alpha/kernel/smp.c b/arch/alpha/kernel/smp.c
-index 8a72f6fa71388..8a712076436f0 100644
---- a/arch/alpha/kernel/smp.c
-+++ b/arch/alpha/kernel/smp.c
-@@ -768,6 +768,9 @@ flush_icache_user_page(struct vm_area_struct *vma, struct page *page,
- 			preempt_enable();
- 			return;
- 		}
-+	} else {
-+		/* smp_call_function() does not call back into this CPU.  */
-+		flush_tlb_other(mm);
- 	}
- 
- 	smp_call_function(ipi_flush_icache_page, mm, 1);
+diff --git a/sound/pci/hda/patch_via.c b/sound/pci/hda/patch_via.c
+index 29abc96dc146c..99e5b4734aa40 100644
+--- a/sound/pci/hda/patch_via.c
++++ b/sound/pci/hda/patch_via.c
+@@ -1046,6 +1046,7 @@ static const struct hda_fixup via_fixups[] = {
+ static const struct snd_pci_quirk vt2002p_fixups[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x13f7, "Asus B23E", VIA_FIXUP_POWER_SAVE),
+ 	SND_PCI_QUIRK(0x1043, 0x1487, "Asus G75", VIA_FIXUP_ASUS_G75),
++	SND_PCI_QUIRK(0x1043, 0x1c33, "Asus X55A", VIA_FIXUP_POWER_SAVE),
+ 	SND_PCI_QUIRK(0x1043, 0x8532, "Asus X202E", VIA_FIXUP_INTMIC_BOOST),
+ 	SND_PCI_QUIRK_VENDOR(0x1558, "Clevo", VIA_FIXUP_POWER_SAVE),
+ 	{}
 -- 
 2.53.0
 
