@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058373;
-	b=D2iHQvV6GwP1HoI0shfxBP7kqGHKf+fGx8XTJc+zLKOjWOJOPEmKHWdVFgAo9gtRNsRu
-	 NL/HWmrN8oDZb1GW0FGtw0ysI6RECfduykmWZ9R89/7h/IJd25/gQzIay77pAvpvCRCo7
-	 3kT56SuknQ1Nzntc77F9hUfIPdzrfrLWXCbMvw+g1o012G55YarU9qKAnMTLcLRJhVMei
-	 cpcWcqZ8AUZjFRcbgzbaywCtx5ImQ/qllFU13LhXlr2uCVm9UoBhUR0wGrFnFT59QPnFn
-	 bfgewjzIOj8KXYM96i4avBiTIoXoRIEl8Iyih1hud9996ZwwcB2RQ157rnXWbWpHzIg==
+	t=1795058376;
+	b=PnVMOl704WvUi+bvMNnq8bctgE9gweqc51uTrUmAAFpX7DTQuT7Z4m41eNXHJg8VuqtG
+	 WHCvT8w5JJlXhbAgT+y2Smz9eNXPw6sN7I+VJvMPWH9p3A6pDcQZx8QQe3C65HOeFF5IA
+	 2N626ecgIPG626A8qVjBOzeCo6Oqphgo6lkmUTpTc1E9lDpVRWwEEjIjANlp7d82qWkUN
+	 W9KNDmN5wLA33cVWkqXbT95O1nTOMneQRG8tCDIBnyUyOCItSMB/25sQ+Xe2fDUZVSxNK
+	 EOOHIngub/+XH71+riK+Z9Ofk72mOMoFXTt/cgHj9AHWWnDKlBAXGgyLRJEwuLLotlA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058373;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058376;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ARhRrvZvwp0tBltKcmgmMFsIF2zmgGJP84C3Mg81zf4=;
-	b=Mwu/2wCyb1Q8BsthYczO6rmaXnDnCvePHjrDvLifJy/sy4pRDkQzjnWSjAz2h2yBoZNM
-	 Dd5pu/Kva6vpxjYobVQCrziNpAPsE68SieWCUAMCtnyvdvsYbdpS3tT2bsIvUZ8e+CsVm
-	 jRQWfjdZxSyoOMe1olkP4F2YcHueBZ4Pxvgle3LqD7CTOk8MdShxjrqnhS7Ao3+EWcAZ/
-	 nMGJzTNa0qtLbvoplzoQ2dKRuZns7MSnvvv+nqgPvUcRvFn6WEdyI3JG0To1eiczTrbqK
-	 /vIm2+TzCO/d8jC2++gC/zo8r84bCmeiGIpm5PzadDobWClma/TFoH318ODnS7LKUHA==
+	bh=XvL3sFK5k3m+uiC+9aFN27F0KcPIsj7CL4L/EJ4tWGE=;
+	b=qCPc3BgqJAx/OiINXFFxUAipPTy4LqIFsLvujK5ocvq/V7koTS4YfOEdIgvVtBUxCWzD
+	 izR9fvC2URjEf4j95OAdWbvbg2C+fETyEDk5TYLDKVx10Ju+OATltDLqcIWaabxfBbHJC
+	 RU7hZfAqBUDzb1fyIRxpfQq80Hb6CPXqUMWDoDozAA4CIaXVTJPnQQfSJ0YCtl3Go+o7B
+	 OwfrUGo0ZRkirvQJHpP5aRGg0rQllMnS0CP3/E2dLZrXBPpdUt7hYwZTGMrA5eticTGQd
+	 5UDh/mee/1VuvqHJAhW/+1/t0Sr4gGGnVXXh9mqOuWdvv39Aon+zx/xgP6aOV5CRFlQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m53qqKgI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YuNCvPhi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABB8606A325;
-	Thu, 19 Nov 2026 03:19:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 505AA606A31C;
+	Thu, 19 Nov 2026 03:19:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m53qqKgI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C08931F000C4;
-	Thu, 19 Nov 2026 03:19:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YuNCvPhi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E6A71F000C4;
+	Thu, 19 Nov 2026 03:19:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058373;
-	bh=ARhRrvZvwp0tBltKcmgmMFsIF2zmgGJP84C3Mg81zf4=;
+	s=korg; t=1795058376;
+	bh=XvL3sFK5k3m+uiC+9aFN27F0KcPIsj7CL4L/EJ4tWGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m53qqKgIvzNAWqaOH5vDbRJah3bk3OvKl3F8QxU67VQ4ff0nBAj+XXTUy4jDWOJ0z
-	 ZtET9Dtip8IbzbZzgl7EgOlPSwXiP+zHAYUeEbn7sCuXXrcdv3SGDvm9Hd4+AsgjvT
-	 36j3wbbJCQT2cZJzv06g4+o4SHP1lRhM3iEE6mhQ=
+	b=YuNCvPhi+jDmvH31TfpGieaygkucgiv2OzmmbQvCp616yFSyGlkROsssm/jNe0Oro
+	 usVH8Bznvxv8Mk1ehQpJOPy2qBAWuazHeU7LOT7JEa5BTBh9E3ohvvnI0AQe32hPEh
+	 voBvj/ZLt5vo3fizUeqzvTebQlBHjIUGCSBWowSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Thorsten Blum <blum@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0462/1848] hwrng: ba431 - fix reported byte count
-Date: Wed, 18 Nov 2026 15:41:40 +0100
-Message-ID: <20261118145933.751788770@linuxfoundation.org>
+Subject: [PATCH 5.10 0463/1848] hwrng: core - reject unknown RNG names
+Date: Wed, 18 Nov 2026 15:41:41 +0100
+Message-ID: <20261118145933.785735794@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,35 +71,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Thorsten Blum <blum@kernel.org>
 
-[ Upstream commit 7e638679883ceff5b6e7b6dcad09c21a105e941f ]
+[ Upstream commit 7e7be8815143751c20260f80cb4e7fe14dd24b74 ]
 
-Use the size of the buffer element instead of the pointer size to report
-the number of bytes read. Since data is a u32 pointer and sizeof(data)
-is 8 bytes on 64-bit systems, using the pointer size reports twice the
-number of bytes actually read.
+In rng_current_store(), err is 0 after successfully locking rng_mutex,
+and if the requested RNG name cannot be found, the function reports
+success even though the current RNG was not changed.
 
-Fixes: 0289e9be5dc2 ("hwrng: ba431 - add support for BA431 hwrng")
+Set err = -ENODEV before searching the RNG list to reject unknown names.
+
+Fixes: 142a27f0a731 ("hwrng: core - Reset user selected rng by writing "" to rng_current")
 Cc: stable@vger.kernel.org
 Signed-off-by: Thorsten Blum <blum@kernel.org>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/ba431-rng.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/char/hw_random/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/char/hw_random/ba431-rng.c b/drivers/char/hw_random/ba431-rng.c
-index 410b50b05e210..d3f771d0a7916 100644
---- a/drivers/char/hw_random/ba431-rng.c
-+++ b/drivers/char/hw_random/ba431-rng.c
-@@ -148,7 +148,7 @@ static int ba431_trng_read(struct hwrng *rng, void *buf, size_t max, bool wait)
- 		}
- 	}
- 
--	n *= sizeof(data);
-+	n *= sizeof(*data);
- 	return (n || !wait) ? n : -EIO;
- }
- 
+diff --git a/drivers/char/hw_random/core.c b/drivers/char/hw_random/core.c
+index 6e2c1ba18012a..8f35019ea58e4 100644
+--- a/drivers/char/hw_random/core.c
++++ b/drivers/char/hw_random/core.c
+@@ -343,6 +343,7 @@ static ssize_t hwrng_attr_current_store(struct device *dev,
+ 	if (sysfs_streq(buf, "")) {
+ 		err = enable_best_rng();
+ 	} else {
++		err = -ENODEV;
+ 		list_for_each_entry(rng, &rng_list, list) {
+ 			if (sysfs_streq(rng->name, buf)) {
+ 				cur_rng_set_by_user = 1;
 -- 
 2.53.0
 
