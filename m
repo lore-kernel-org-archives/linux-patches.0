@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027767;
-	b=sxUeoK+nKJ5i96OudIti/ykv2d4gBpQ95H6A7atxuYry0bK0Hbf5g+vgYWP9l9iCpZkl
-	 8AaweHTRtdH7DYQv0y2yq7eEXtbM+DyR4aoncRayeZLxf+4melBwnuhUjMjDAuA6UmnJr
-	 1jw0vlkrsVsjwHMFDx+JzTPj934f0rHZaEpJmeeaMrHi9hsYMrJeK9tAyUO6YCek/M3Nl
-	 EwVdJ3Fj9hF9sFH29pcBzrdV3ldFwFnEYyluWuLlMl0q364W4/V2N5xPr82QzlOqcGLk4
-	 XLN4ayGzBWcwg3fmGG3GWSxxBJHv1L4BDGdakHluIBZVahDw88eBqFYT/WwtAqwElyw==
+	t=1795027770;
+	b=O5jC2qPuWprqSaYlVOlUJGva83keqlWRqsm9bvi//wtwHUwea52kAgh1cj5Acx8V50Cq
+	 ybKsXbbymcVfpWbdtRlHTX/rAiDFeADj8u9xZF46U9E/I5pdEahI3+Gy+py3TAjto5EXB
+	 J6oM0FSCBxXKE3hUAdBcJAJp+U1zxE0DvQflUnibDwl5wLkaiwtSucwWa0cRyvqaBgvXJ
+	 MBBTqQPrxhlMkbw8bOmUZRwYY3SUuI8gLgbsgc13MOWEfTFZVwmF8LIren1reB6C9xxne
+	 OsxYMEH8VtMsSxyHeh4G2qvWDi/2pnm/TPk8qZAy2TW2DoTlWFOspdGLzVCbbjyPN9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027767;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027770;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q433UYxyJUGxUNZUPWsBjKiS1O2M8Kj9Mk2TSCMXbz0=;
-	b=ng2VoxlOB3EH0aDjpOgv1P8k7miAB1C77eAL7WcisA+tkQWvyaHrBoQvI//yzcDcK6Sm
-	 DuOqgbQ6onMgeb2BGx66C1Ebaty4y1XPpeZ2jSK4bf7kf7BnqaYwaYE9vwo8r69CN8Ebm
-	 C2efeRKIZRRWzlzvwFNqKToQLi43LP7H7OQm93yBfbvyyxdTDBM2DCesxPG66Z2wb2cym
-	 8j+KOb1gEQQuQc41JqteO8a/2IsxuTOGk5QTCVfX9HFNGW7B+cx8Wx76oP+iXEeaiUeP2
-	 4hntwGT3UghLoH9Pg64ePFRHIVvQE6R6SSx6ZVdxMPtO8ro5OEk5GOolJAm12iT7XyQ==
+	bh=az5eA0gR15bdMi1NpnRbL/hV8jiXxlN54z29olSISsE=;
+	b=ndaZZQkWjzg2oQy7MlQ6dODLIuDgoOaRo9g+sBwpUGCJctBM6UUqAhTlYgCLlTAFEv+G
+	 FBiQ3Gg5OqTuWGJEvxIiTBuGMAnXzxn+yACQhTcf7dQu2fF5dNgPbdwwOb2kUa4LR2xxy
+	 O/hjuihvxJnSuTuj6+2L1M/aOuiaj4zNUNqE4Mpp0DlTaEU5mWG6pEXkn3oAnU2PFirEY
+	 98O2uO3EU8A8Q4V4150NyzP0RGumvEbkl/gwHnsSOtGzmFbqBGiWva0w9//6OYCI5ifEL
+	 dp67B+I0NEEsOXxCuSIBoUmKDd7pKtUvJNwfbnF2ejnbmemXxhLq/KHb7Lytk2AOH4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ntCIZ2Uj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ptHhSSme;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF9F606A32F;
-	Wed, 18 Nov 2026 18:49:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6585A606A335;
+	Wed, 18 Nov 2026 18:49:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ntCIZ2Uj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 945801F000C4;
-	Wed, 18 Nov 2026 18:49:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ptHhSSme
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C1D11F000C4;
+	Wed, 18 Nov 2026 18:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027767;
-	bh=Q433UYxyJUGxUNZUPWsBjKiS1O2M8Kj9Mk2TSCMXbz0=;
+	s=korg; t=1795027770;
+	bh=az5eA0gR15bdMi1NpnRbL/hV8jiXxlN54z29olSISsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ntCIZ2UjLIOyBe+kbkEKxIkMv8A2rckETIj8iV+STNc/r21nIuSLflJ0VeVKdtU+L
-	 v2srRd28B+P92Rz+TtHfFJYYpqQTzZKfiyxvleCGHbgwRuxaTFFZAs/qCfetrzEhWI
-	 WuSVTeon+jPa9WAyJo8orAg0M31xZTtE1yKqPRMY=
+	b=ptHhSSmec7rdcY8kESb7eKKm6jYYJC8vZB/0gZCSmtOy2b/Eirub/6mEn2dUeqiEr
+	 tLFPE5B8+MppF0WdSHQWO1br41kQ8PH7wUtz7i/r+VsQGWQOmgQJtSDuE6isjFU8cM
+	 mHmESMEJy1Vm+OFGEsMIijTuncTGGYyocs9iAlCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anil Kaushik <anilkaushikwireless@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Avi Weiss <thnkslprpt@gmail.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1869/2151] gtp: set a valid genl command in PDP context get and dump replies
-Date: Wed, 18 Nov 2026 16:00:04 +0100
-Message-ID: <20261118150229.881745151@linuxfoundation.org>
+Subject: [PATCH 6.18 1905/2151] signal: skip blocked signals in dequeue_synchronous_signal()
+Date: Wed, 18 Nov 2026 16:00:40 +0100
+Message-ID: <20261118150231.186962595@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,52 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anil Kaushik <anilkaushikwireless@gmail.com>
+From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit 758d8928d2c5d6703da827577cef86d643155236 ]
+[ Upstream commit 4bd3a0e8e53decd614853fbb487a268f139f679e ]
 
-gtp_genl_fill_info() stamps the reply with the command its callers pass
-in. gtp_genl_get_pdp() and gtp_genl_dump_pdp() pass nlmsg_type, which in
-a genl message is the dynamically assigned family id rather than a
-GTP_CMD_* value, so replies to a PDP context get or dump carry a
-meaningless command number.
+dequeue_synchronous_signal() checks whether an unblocked
+synchronous signal is pending, but its queue scan can select a
+different blocked entry with a positive si_code. This can deliver
+a signal while it is still blocked.
 
-libgtpnl ignores the command and is unaffected, but parsers that check
-it (for example the ynl tooling) treat the reply as an unknown command
-and discard it. Pass GTP_CMD_GETPDP, as gtp_tunnel_notify() already
-passes a real command on the notification path. No uapi change.
+Check the blocked mask for each queued entry. Forced faults
+are unblocked when necessary by force_sig_info_to_task(), and the
+existing pending bookkeeping is unchanged.
 
-Fixes: 459aa660eb1d ("gtp: add initial driver for datapath of GPRS Tunneling Protocol (GTP-U)")
-Signed-off-by: Anil Kaushik <anilkaushikwireless@gmail.com>
-Link: https://patch.msgid.link/20261016093225.1036375-2-anilkaushikwireless@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 7146db3317c6 ("signal: Better detection of synchronous signals")
+Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Link: https://patch.msgid.link/20261020181101.1605736-1-thnkslprpt@gmail.com
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/gtp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/signal.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
-index 184cb367bbe13..ecc9e0f088caa 100644
---- a/drivers/net/gtp.c
-+++ b/drivers/net/gtp.c
-@@ -2279,7 +2279,7 @@ static int gtp_genl_get_pdp(struct sk_buff *skb, struct genl_info *info)
- 	}
+diff --git a/kernel/signal.c b/kernel/signal.c
+index 636cbaa26d52a..8fb8e03f39557 100644
+--- a/kernel/signal.c
++++ b/kernel/signal.c
+@@ -702,12 +702,13 @@ static int dequeue_synchronous_signal(kernel_siginfo_t *info)
+ 		return 0;
  
- 	err = gtp_genl_fill_info(skb2, NETLINK_CB(skb).portid, info->snd_seq,
--				 0, info->nlhdr->nlmsg_type, pctx);
-+				 0, GTP_CMD_GETPDP, pctx);
- 	if (err < 0)
- 		goto err_unlock_free;
- 
-@@ -2326,7 +2326,7 @@ static int gtp_genl_dump_pdp(struct sk_buff *skb,
- 					    NETLINK_CB(cb->skb).portid,
- 					    cb->nlh->nlmsg_seq,
- 					    NLM_F_MULTI,
--					    cb->nlh->nlmsg_type, pctx)) {
-+					    GTP_CMD_GETPDP, pctx)) {
- 					cb->args[0] = i;
- 					cb->args[1] = j;
- 					cb->args[2] = (unsigned long)gtp;
+ 	/*
+-	 * Return the first synchronous signal in the queue.
++	 * Return the first unblocked synchronous signal in the queue.
+ 	 */
+ 	list_for_each_entry(q, &pending->list, list) {
+ 		/* Synchronous signals have a positive si_code */
+ 		if ((q->info.si_code > SI_USER) &&
+-		    (sigmask(q->info.si_signo) & SYNCHRONOUS_MASK)) {
++		    (sigmask(q->info.si_signo) & SYNCHRONOUS_MASK) &&
++		    !sigismember(&tsk->blocked, q->info.si_signo)) {
+ 			sync = q;
+ 			goto next;
+ 		}
 -- 
 2.53.0
 
