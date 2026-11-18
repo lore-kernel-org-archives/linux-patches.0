@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041487;
-	b=hHZxDibCRhCYIC2MuCIVQdyrpA9d3BJZK8UZWtNtVYvyRADeOmv7VddxicfD7g1PlWlH
-	 LRoJ/3KPZYYOvVCpyKXDxBQ/INfjoz/FX5Mk3U6aSuJoYgBxZoyIdJNkAw/pGgCrUQIY4
-	 S9pRILPvC7M2MVYhLPd40Q6EaFh06k7j04G783EF9u/+3eTy15bP5NpDLcbJ1YIg3VTrz
-	 x6H6RWTUl1kmlbpHX+7D0v+mjFAdvyxjccKQ4tv3ylkveYQQWPBZUzBQMsZTPCfdOva1s
-	 rzPgEbxmB8kfDL21idtQsPpOMUw3VJFWPsTPHQsnu3TDQ9E2dWIozem0yxTD+Iv+pSQ==
+	t=1795041490;
+	b=eLT+6ZLdeftKx7zpSsRsAeXuyXMHGUhMPcLMoUsIA6j3D9oOqIGwnb4ezQyOxC5TseSg
+	 NR0USoV/dWOom43WXCy9ZVCoIzrZQ8LZGPqonUVw7R7GmZNfiwbE4tbJhjCgvx+UOpykJ
+	 SUBV9yxpa/7bv5oFDfSaE2CCgL1wQXFdLUTS1J3Vl7BuRNUJCv68zRAfprpnf0zSou+vj
+	 rNXswWrg95p5wEmqSYZ9ZZTz8QFpTnnqNTlw8FTao7N/Pfj/bsYoeVN4PQSgRXacNJCAE
+	 46isUvMurMRVyW56gjoXklWP6FnCWM9E/aUpjwEAaAuqjlqZYWOYKd2mdtY9zI5ApXQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041487;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041490;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z35m/iIB9ou3bm9d/3EmTy/bOFuIw/RDyO+1LzyX73c=;
-	b=tgyrXGPxgIvb+skgk2hd9lnYGJsi7RoyCuY9ckDPh+aGE6JhKeKA3Y2ITQwJb+ZCBiAs
-	 G7xHFr4IwaBbHBVgn+7vfHE5ENzcH18zIEDe9/t+sXOkc4mDxOMWfmU+K/ey6jGtWCMUR
-	 2TP3pyFyRQo69NMkB8Sk+UFkbd8YO2STMcbgM7qMxEoUcssP4rVGGqkIx6kmo+yrrazDk
-	 A2J6+fP+1wjiut0wX9eg7r2LEHauRQD+6iiEdLDU+4PnsQ8CI3TLF8WnKNrk2dhAgcj1A
-	 laqjH/aow64+9S2CoP/+syOVutWcDGuo8JjtqrifT8uLiNwGfccab15ZyYv3iWF8eRQ==
+	bh=JdDv6dL0+Ui/Xikn0ktd0Rj+RBNZoDHW0yarmnT+t2c=;
+	b=mhtgGAX/zHJssq5qKr5eZhp3YqTaYf0xPw1iMh7tkri4PJ570F/bxCVmU+ya/EomR9Nt
+	 D33PFRKw1fVlDytdc4l1CUu/gdQoqJu8otNT8JZBMkzbaiRyw3wdjZlYrYQO4qMdADz7M
+	 gLK5iDoGcREu+D2+eqjfOj2xX6HrUCK7sWfQ19v77R4Vp2KwSiM4WNt/jBx+lxfnK7Lcs
+	 VeD3GYvMb58XM5ZWW7ffdAMRZP3YA6HJx9gFA1gH0e180CNEx9/YLFWDdGYwmjm9pte3K
+	 UgpHuX6mnWJ/9n4u6qbIVIxxdiZ/jedC6vOc/ddE+mKHF6QpGfN9Z92cUMd269m9M0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AZcSC7qq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qIELXuPo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8B1606A6EC;
-	Wed, 18 Nov 2026 22:38:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E7960A2627;
+	Wed, 18 Nov 2026 22:38:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AZcSC7qq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 246911F000C4;
-	Wed, 18 Nov 2026 22:38:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qIELXuPo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4BAC1F000C8;
+	Wed, 18 Nov 2026 22:38:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041487;
-	bh=Z35m/iIB9ou3bm9d/3EmTy/bOFuIw/RDyO+1LzyX73c=;
+	s=korg; t=1795041490;
+	bh=JdDv6dL0+Ui/Xikn0ktd0Rj+RBNZoDHW0yarmnT+t2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AZcSC7qqjSeV6mbQa1Zr3fUEn6ehKnnTIQdzvMJwpBTt1lsJX9ACCqxIOxkUjT5fW
-	 UD2P/xjberSdf8lzN210ZC3FHzm+62kr76vZXOUA7poZuyiLgFQoQR3h9de6clbNOX
-	 zFEky6mZiSXAxgEV/Ek745E0aUdYqsKcuRn6aQ6k=
+	b=qIELXuPoXgzDfUXUGLK3eSRUBmg55ErireO7F4Z/MtmTkDV1wK9a9wt/iWUqMcXlO
+	 pty4G8iabLlJaJq3te6RH/gInPOLun97Rkw6mYP7g5mIWSkYWM9pM1JwUHHRd4t4Al
+	 uSgW5Xyyd7D32pn/Q8UVYFChoAzYlbjvai6guj5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2804/3318] clk: qcom: mmcc-sdm660: Fix MDSS AHB clock HWCG register offset
-Date: Wed, 18 Nov 2026 15:57:06 +0100
-Message-ID: <20261118150444.791726405@linuxfoundation.org>
+Subject: [PATCH 6.6 2831/3318] ASoC: atmel-i2s: use optional API for muxclk
+Date: Wed, 18 Nov 2026 15:57:33 +0100
+Message-ID: <20261118150445.562116687@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,44 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@oss.qualcomm.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit c5f338329a2d0d60f7874aa7a1addaa0e4e75a3b ]
+[ Upstream commit be952abd69c1f2c845e42e72147751e4c910cd81 ]
 
-The MDSS AHB clock HWCG bit resides in the same register as the branch
-enable and halt status bits, at offset 0x2308. The current HWCG register
-offset of 0x8a004 exceeds the regmap maximum of 0x40000, so regmap rejects
-the read in clk_branch_in_hwcg_mode(). Since the read error is ignored,
-the helper uses an uninitialized value to decide whether to skip the
-halt status check.
+The muxclk is an optional clock according to the device tree
+binding.
 
-Correct the HWCG register offset so the helper reads the actual hardware
-clock gating state.
+Use devm_clk_get_optional() to handle the optional muxclk instead of
+handling the missing clock explicitly.
 
-Fixes: 5db3ae8b33de ("clk: qcom: Add SDM660 Multimedia Clock Controller (MMCC) driver")
-Assisted-by: LLM
-Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260916-clk-qcom-mmcc-sdm660-fix-mdss-ahb-hwcg-offset-v1-1-30dcf09d907c@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+When muxclk is not available, devm_clk_get_optional() returns NULL.
+clk_set_parent() returns 0 when passed NULL, preserving the existing
+behavior.
+
+Unlike the existing code, errors other than -EPROBE_DEFER are now
+returned instead of being silently ignored.
+
+Fixes: b543e467d1a9 ("ASoC: atmel-i2s: add driver for the new Atmel I2S controller")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20261002043856.97295-3-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/mmcc-sdm660.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/atmel/atmel-i2s.c | 16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/clk/qcom/mmcc-sdm660.c b/drivers/clk/qcom/mmcc-sdm660.c
-index 4d187d6aba734..fc2fc74d1c01d 100644
---- a/drivers/clk/qcom/mmcc-sdm660.c
-+++ b/drivers/clk/qcom/mmcc-sdm660.c
-@@ -2022,7 +2022,7 @@ static struct clk_branch csiphy_ahb2crif_clk = {
- static struct clk_branch mdss_ahb_clk = {
- 	.halt_reg = 0x2308,
- 	.halt_check = BRANCH_HALT,
--	.hwcg_reg = 0x8a004,
-+	.hwcg_reg = 0x2308,
- 	.hwcg_bit = 1,
- 	.clkr = {
- 		.enable_reg = 0x2308,
+diff --git a/sound/soc/atmel/atmel-i2s.c b/sound/soc/atmel/atmel-i2s.c
+index e26d6cf864dec..d6ac5a2d067b6 100644
+--- a/sound/soc/atmel/atmel-i2s.c
++++ b/sound/soc/atmel/atmel-i2s.c
+@@ -585,21 +585,15 @@ static int atmel_i2s_sama5d2_mck_init(struct atmel_i2s_dev *dev,
+ 				      struct device_node *np)
+ {
+ 	struct clk *muxclk;
+-	int err;
+ 
+ 	if (!dev->gclk)
+ 		return 0;
+ 
+-	/* muxclk is optional, so we return error for probe defer only */
+-	muxclk = devm_clk_get(dev->dev, "muxclk");
+-	if (IS_ERR(muxclk)) {
+-		err = PTR_ERR(muxclk);
+-		if (err == -EPROBE_DEFER)
+-			return -EPROBE_DEFER;
+-		dev_dbg(dev->dev,
+-			"failed to get the I2S clock control: %d\n", err);
+-		return 0;
+-	}
++	/* muxclk is optional */
++	muxclk = devm_clk_get_optional(dev->dev, "muxclk");
++	if (IS_ERR(muxclk))
++		return dev_err_probe(dev->dev, PTR_ERR(muxclk),
++				     "failed to get the I2S clock control\n");
+ 
+ 	return clk_set_parent(muxclk, dev->gclk);
+ }
 -- 
 2.53.0
 
