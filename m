@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027392;
-	b=Q9J8pI+C1shothz6P5Ghiy6yiisIZlpuY84PAhPv7rf7Jh4NT7Si4njHV0WoQ+FKJ3co
-	 DAvN2R7+MuL33jIKJXshEKa9Du2HCpTHUe22tdkq8SgDkbEpG36Y7K+f0TM42vef/ODSd
-	 9GsZfamAmhP3XuMjhewgNbpcHjIfk6Xzut7PycHX+ddTfO45gXPQ6XlNea0iORiHff0Pi
-	 3SRqhL+efg17pMjbpYQ9FDZmXFqhGREIttMl/fJ98bZTQY+CyRbguq6VyFj4NkyUqBT5q
-	 6OLZ3SlNWh8Yrl+6YFnP2NK04izsVP1SXcWpDKfJaW6bGFfkU0pe32rWJbwd81MdXnw==
+	t=1795027394;
+	b=r+fPEnN7WldKSyS9gD800lIMZZKcHfm2IWvmJ+QKv21V8OWJ8mkz++fFV6A+CIpZXd8L
+	 hOZK4FD4VT4NPmYG5MNvlK8cgCXHysFwPzPhZMGIdY/7xOq0H91fOmTx9hPxRYsFCq0+P
+	 PE+gMvMzoqNMQmVBwwfqeRMCB9AuJ7OX5ikfVVWwv9Ic+UWXpyq701IcK671EDGiBDv9X
+	 l5LOQ96X6iOCeLYe2S75h+Y4w0OD8TXozy85SZ3kbcvAIW1YLeosG8K5noRWujCyGwbwV
+	 LFuW4dukuXNC8Whvj0HGTCc//sWSUEXeAMom46fF2O1RZ+C4nsPBPHUmL6erFo3n55g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027392;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027394;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Wd+mBB8I6Am2FQfrPMuDssVldQi49nOsk/75XgktnWk=;
-	b=uz2C69EJhBD+AtAc5IMThj9XUc1gRGoUuRhuX1LExgnVw+Trn+hMdKybYBjyoqWNW3SN
-	 rKxEh7058edh+OCMIjRbDAqG9+8XTK5UnZlrBXvdp2acEZzjWmQIAHYriNNuq3QrSymWj
-	 liUQNO1TTpmj68sxwPe3joVG6IhXwojNw91GrgAJmNim3Te+7pajRZnieCosLvzCzh7ZP
-	 RWV57kO6t9MTdQkltIi+3M8WdTk5mu9YlTzzpmTXcCmybZIzfaE2/AxlliB6sj2uJnp0L
-	 oOsDUVpZ/tb69pyCg9qrXF1dzCiEcEalAnAzMm9RSBR3mGmLY+lNC/bvYn4X5lHTV8w==
+	bh=qmutZbNS1ruEAQWfNmOhawPv+0lV+ClRRl1+PmDEo0w=;
+	b=s2r1umq4/qRzuuoZuIPL0Hg7KY1yY7zMXn+Ap+EmTaL67+GAQijkPkgw4AuuZDNW2XEc
+	 piSNXJG84nGjeIq8x1qOHunq7YrTK51j4tQq5KH+X79SECxAFqvu8zwDDcuthbh/BncHd
+	 1ix9Srvw8t4KJj/U0HTmop/0Km9Gs4WQuDE+NgHPeysuHdSndGlhLXyR4JDknot4DJOAz
+	 p7R61Yq9syM7Q9LtMr9exWAfAolcfVUwK80ypPBDYQB3h15mPcqrXHazaMZL3ILR48K1c
+	 zNvknwJXskI7L7sQyi+rPnuD7LSBXUEJeGePc4o2f+wMrux3dIebekAbMM8AaCFZTjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U7QTp3qX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rEMzdPBx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E743360A2626;
-	Wed, 18 Nov 2026 18:43:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B6760A2619;
+	Wed, 18 Nov 2026 18:43:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U7QTp3qX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1E51F000C6;
-	Wed, 18 Nov 2026 18:43:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rEMzdPBx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13A961F000C5;
+	Wed, 18 Nov 2026 18:43:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027391;
-	bh=Wd+mBB8I6Am2FQfrPMuDssVldQi49nOsk/75XgktnWk=;
+	s=korg; t=1795027394;
+	bh=qmutZbNS1ruEAQWfNmOhawPv+0lV+ClRRl1+PmDEo0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U7QTp3qXHPCywn72ky8qe+tNo/BJMVVIQx9pudARjLhzcHLTvm2a4eCOQlVvT6Ey5
-	 Y8OwUwTN3VJqgNbYGOS+0Zprx9Y4nlfudLzlsuCBcrp4Dz1lMWb9xJW7t08HjJWhVU
-	 y30f6GPLcM7rY7J+PYIDnJ76GwsxOCeezaofbjCc=
+	b=rEMzdPBx55tfymP/h5+MlYpwcjuqv/4dy7yLsBNm3E0vsrAkuXO6qZLswD9/cDB6w
+	 W4HvaPtva/CGmPM2dOeoMwtqAKCQm0wKnX6t4e456w9fgJRG84GM36ULeH2Gsr9hNq
+	 fosh+jg2Z9UZ9iGXd9jZU0Iwwz1Od7oHXhyJTYRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
+	Shuangfeng He <huangya90@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1736/2151] bpf: Dont take a program with a target program for an iterator
-Date: Wed, 18 Nov 2026 15:57:51 +0100
-Message-ID: <20261118150225.103052269@linuxfoundation.org>
+Subject: [PATCH 6.18 1772/2151] netfilter: flowtable: use the vlan id, not the full tci, in the tuple key
+Date: Wed, 18 Nov 2026 15:58:27 +0100
+Message-ID: <20261118150226.383917999@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -67,55 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Shuangfeng He <huangya90@gmail.com>
 
-[ Upstream commit b83bacf2161d0f8583e3f1e9c90402638992ad82 ]
+[ Upstream commit c203ecf905745d979de5df28fa657121f2e9342d ]
 
-bpf_iter_prog_supported() goes by the name of the attach function.  Commit
-7cc639dc45c5 ("bpf: Don't take an extension for an iterator program")
-keeps out extensions, for which that is the name of a function of another
-program.  A tracing program with BPF_TRACE_ITER that is loaded with
-attach_prog_fd gets there as well: unlike for BPF_TRACE_RAW_TP,
-bpf_check_attach_target() does not mind the target program.
+nf_flow_tuple_encap() stores the skb vlan tag in the encap tuple id
+using skb_vlan_tag_get(), which returns the unmasked TCI including
+the 3 PCP priority bits. The flowtable entry, however, is programmed
+by nf_dev_path_info() with vlan_dev_vlan_id(), a plain 12-bit VID.
 
-If the function is called like that of an iterator target, bpf_iter_bpf_map
-for example, its id in the BTF of the program is cached as the id of the
-target, even if the load fails later.  Programs of that target which are
-loaded already cannot be attached any more.  And the program itself can be
-attached as an iterator of that target, with a context that the verifier
-has taken from the prototype of that function:
+When a NIC delivers RX vlan offload skbs with a non-zero priority
+(an RTL9617C EPON ONU was observed handing over vid 818 skbs with
+tci 0x6332, PCP 3), the runtime lookup key never matches the
+programmed entry, so every packet misses the flow table and
+software flow offload is silently defeated.
 
-  BUG: KASAN: stack-out-of-bounds in bpf_prog_66d4234e2e50f5b6_ts26_forged+0x12a/0x20b
-  Read of size 8 at addr ffffc90000d9fc48 by task ts26/104
+Mask both parse sites to the 12-bit VID so the lookup key matches
+for any priority. The in-header variant has the same problem for
+frames received with PCP != 0 on a non-offload path.
 
-Refuse every program that has a target program.  That covers extensions.
+The egress side is unaffected: nf_flow_encap_push() restores tags
+from the programmed tuple id, which never carried priority bits.
 
-Fixes: 15d83c4d7cef ("bpf: Allow loading of a bpf_iter program")
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017230950.802052-2-alexei.starovoitov@gmail.com
+Measured on an RTL9617C ONU (PPPoE over VLAN 818 WAN, NATed 6-flow
+download over a 1G EPON line), before -> after:
+
+  download throughput      377 Mbps -> 936 Mbps
+  CPU0 %soft at that rate    91.5%  ->  70.9%
+
+Fixes: 4cd91f7c290f ("netfilter: flowtable: add vlan support")
+Signed-off-by: Shuangfeng He <huangya90@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/bpf_iter.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/netfilter/nf_flow_table_ip.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/bpf_iter.c b/kernel/bpf/bpf_iter.c
-index 1bb5fe0783a97..dd6d90ee6151d 100644
---- a/kernel/bpf/bpf_iter.c
-+++ b/kernel/bpf/bpf_iter.c
-@@ -352,10 +352,10 @@ int bpf_iter_prog_supported(struct bpf_prog *prog)
- 	int prefix_len = strlen(prefix);
+diff --git a/net/netfilter/nf_flow_table_ip.c b/net/netfilter/nf_flow_table_ip.c
+index 1be506a175af1..041d928b0bee0 100644
+--- a/net/netfilter/nf_flow_table_ip.c
++++ b/net/netfilter/nf_flow_table_ip.c
+@@ -150,14 +150,14 @@ static void nf_flow_tuple_encap(struct sk_buff *skb,
+ 	int i = 0;
  
- 	/*
--	 * The attach function of an extension is a subprogram of the iterator
--	 * program that it extends, whatever its name is.
-+	 * The attach function of a program that has a target program is a
-+	 * function of that program, whatever its name is.
- 	 */
--	if (prog->type == BPF_PROG_TYPE_EXT)
-+	if (prog->aux->dst_prog)
- 		return -EINVAL;
- 
- 	if (strncmp(attach_fname, prefix, prefix_len))
+ 	if (skb_vlan_tag_present(skb)) {
+-		tuple->encap[i].id = skb_vlan_tag_get(skb);
++		tuple->encap[i].id = skb_vlan_tag_get_id(skb);
+ 		tuple->encap[i].proto = skb->vlan_proto;
+ 		i++;
+ 	}
+ 	switch (skb->protocol) {
+ 	case htons(ETH_P_8021Q):
+ 		veth = (struct vlan_ethhdr *)skb_mac_header(skb);
+-		tuple->encap[i].id = ntohs(veth->h_vlan_TCI);
++		tuple->encap[i].id = ntohs(veth->h_vlan_TCI) & VLAN_VID_MASK;
+ 		tuple->encap[i].proto = skb->protocol;
+ 		break;
+ 	case htons(ETH_P_PPP_SES):
 -- 
 2.53.0
 
