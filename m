@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031417;
-	b=V3mpEktfynUzDPieeVjTuquQZF81/WJnEZzU9GQ22Ykghfvuqd9DyJCcN6fHwHaXQf7Y
-	 PuvBz1KVXuI3ug6NQy8Gc+7Vtu+FmTTumZyn7a0m6H5sU9RVvPTzI13Ke4uZ8ZDiwuCW9
-	 Dw8SShtvv2K2f2KSCZXYeukH4rwYqtEo/YR3S+DNa9ltnVllDpnnyY28dWihwkq2vOXkt
-	 exXu5TWoEfM6PUW/NNsd65ksyZ03Yix1jSBDlzc9JrQAi6SxpBp439N020gqnyN0gJKNW
-	 mqBU+KpAumqB9PO1Nr6zSPwuLgOWnfdGwi5SEjxB+ikX4Z6F0eVAfQ8rynHhiyyrnVw==
+	t=1795031419;
+	b=XGBDucDTUkEkzr6adacjtuld9B+rP9Btk6KmHTRQ6aAz6iurGs+0dqmrtXvxtrxNhFTx
+	 I4qZMiX+ghv5rHSSG0vVdrmLGGxZwXxR4W7JNoMWxtYPMYzEHlSwG63qAjotZZcblgQ4z
+	 RZu2x9qm2gZeDTQcXiSykyLAwvrjkZKjFLYWGt4iyMRx+HpHI1hHtn9RcmHU8xn0bMvdP
+	 ijSq55vafeMKiLBEVaBvZ81DUSONq4V/IOIMhZsDvpGV82rXgdVm26hpGNxfpAtJDX5xf
+	 GLRKkRNm5ernnmmH46x1D6D5W0RjFZn/Lq1DVQFa+0PvdvAXShzMMHmNrPQiwLNeDNg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031417;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031419;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dzATMRrzuk2KjPOc6mMe3mEk5mSGqjlPnJt2eXNnu50=;
-	b=rzm9gglTXJD6VdRUnINpFjN09Yrpg2kIojKM/o+bYo0sYheiNj5o5f1NkvPTBlFLiV4n
-	 6szX7VszOoXBD432jioEtBj9akIvLlWYgA+bFC//Rwp3HvCn1x4ZnwXX23weFVr7CUzrh
-	 42SE4PzLvp0PjD/bPQx+EnDukZeSSkzePbB+JafUqyX/ixFwNaY19BSf400u1h4/QbVAO
-	 ZqOQHFgur3OlFHeczxBqHLLTS6y+EYlUo6ZJKiYtibWR/+Jxggas2l3ROiIBYAIFF0+vX
-	 fE+p5b01yWfk7NvAyzfO7ErwAasgvDKmXnAh+mXKPDkCnpSAPrcDq7V3I0zKqArQFqQ==
+	bh=Gi5kQAsdxUA4yMiWumF26yYgGVwp4N/KH7/xg80Gojs=;
+	b=EIYduZvGwI7qU8A3cFMrtSHxbnz5hbbfLrusLPLWLRNketG1pllipGAKQ9IyE1K9nHMG
+	 +vVWgYW5W6Gy/O9IdEsbPDTDak37PJmCLLGbAd4cwcG6K9vQheaEtTW8wmWLIyVEipn9w
+	 ZmbBwbjlSU2d32iL30Eg/BmrkYCZtcdJDlJCcTODCE47UUpx4fRWrLGPRs3pMT6hLvqre
+	 Go3pTdxYqi5ML0wX/mOM7RCm43G7fWxp9NpV2oQlJnhTzFVM2KaoVPBjBSS5uFZ2kKVU9
+	 FLYonPJmpE1Mu5xptdBSjHdu0CYst8edbknEEBFszYsweXOnKl7kGy0GrRfwmTNzF7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0xHAU98J;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u6zXfiW7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47CD5606A320;
-	Wed, 18 Nov 2026 19:50:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51B6606A320;
+	Wed, 18 Nov 2026 19:50:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0xHAU98J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67E611F000C4;
-	Wed, 18 Nov 2026 19:50:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u6zXfiW7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BA081F000C4;
+	Wed, 18 Nov 2026 19:50:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031416;
-	bh=dzATMRrzuk2KjPOc6mMe3mEk5mSGqjlPnJt2eXNnu50=;
+	s=korg; t=1795031419;
+	bh=Gi5kQAsdxUA4yMiWumF26yYgGVwp4N/KH7/xg80Gojs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0xHAU98JhxCThyiiNef6KHM9fePakQ0nM/vbAH6O9HvlPK85m5W/xTbjeOwY4Cebs
-	 BN9O+xiYirkl22cbFngTrPTJriMuMQKQ4plaO6+q9NeTkgGmKTXYyKVzD8/sJNpl7x
-	 c8Swjp8X0MnuCTZKvRAjTTqsrrSIC+7CveMkcrt4=
+	b=u6zXfiW7VhJPd8poByWl1NTobKAtFbv5Zo39srafDo8+lTAZqk/m7qe2pAt7+6UAf
+	 ESspMM85i93DD5DxM5ZWPEAC9KN8MKYQJeaXHcvedwORWO2Y+9xEKXI8ZL3YGPVdlT
+	 o0I7sFA82Hj9KQSs+TA7k8eOkI0Nj56fAeo/4OKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1050/1756] mailbox: qcom-ipcc: remove stray disable_irq_wake() call
-Date: Wed, 18 Nov 2026 15:52:57 +0100
-Message-ID: <20261118150052.009208362@linuxfoundation.org>
+Subject: [PATCH 6.12 1015/1756] ALSA: caiaq: Fix races at MIDI URB and trigger accesses
+Date: Wed, 18 Nov 2026 15:52:22 +0100
+Message-ID: <20261118150050.542207919@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,46 +68,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 134ef0278d4e48bcc325a7699250dfe861c11953 ]
+[ Upstream commit 52b1213e2a086f2828500ab9c8bac45b213429bb ]
 
-Commit afaf2ba5b430 ("mailbox: qcom-ipcc: Support interrupt wake up
-from suspend") replaced enable_irq_wake() with IRQF_NO_SUSPEND on the
-IRQ request, but left the paired disable_irq_wake() in remove()
-behind.
+URB completion and rawmidi trigger callbacks can race with each other,
+which may put the state inconsistent, causing double submissions, etc.
 
-disable_irq_wake() decrements the IRQ's wake_depth. With no matching
-enable_irq_wake() left to increment it, wake_depth stays at 0 and
-irq_set_irq_wake() reports:
+Guard both with a new spinlock for avoiding the races.
 
-  WARN(1, "Unbalanced IRQ %d wake disable\n", irq)
-
-on every unbind. Since there is no enable_irq_wake() to pair it with,
-remove the stray disable_irq_wake() call; IRQF_NO_SUSPEND already
-provides the intended wake behaviour.
-
-Fixes: afaf2ba5b430 ("mailbox: qcom-ipcc: Support interrupt wake up from suspend")
-Signed-off-by: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Fixes: f3f80a9205da ("ALSA: caiaq - Fix Oops with MIDI")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://patch.msgid.link/20261008192553.300025-7-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/qcom-ipcc.c | 1 -
- 1 file changed, 1 deletion(-)
+ sound/usb/caiaq/device.c | 1 +
+ sound/usb/caiaq/device.h | 3 ++-
+ sound/usb/caiaq/midi.c   | 2 ++
+ 3 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
-index 9e7c82c7af0a4..c619dfb24cd0e 100644
---- a/drivers/mailbox/qcom-ipcc.c
-+++ b/drivers/mailbox/qcom-ipcc.c
-@@ -341,7 +341,6 @@ static void qcom_ipcc_remove(struct platform_device *pdev)
+diff --git a/sound/usb/caiaq/device.c b/sound/usb/caiaq/device.c
+index 993858d18b680..5e89047c9d9cc 100644
+--- a/sound/usb/caiaq/device.c
++++ b/sound/usb/caiaq/device.c
+@@ -448,6 +448,7 @@ static int create_card(struct usb_device *usb_dev,
+ 	cdev->chip.usb_id = USB_ID(le16_to_cpu(usb_dev->descriptor.idVendor),
+ 				  le16_to_cpu(usb_dev->descriptor.idProduct));
+ 	spin_lock_init(&cdev->spinlock);
++	spin_lock_init(&cdev->midi_lock);
+ 	mutex_init(&cdev->ep1_out_mutex);
+ 
+ 	*cardp = card;
+diff --git a/sound/usb/caiaq/device.h b/sound/usb/caiaq/device.h
+index 822d872c8ad1a..7b15cbffdec1f 100644
+--- a/sound/usb/caiaq/device.h
++++ b/sound/usb/caiaq/device.h
+@@ -74,7 +74,8 @@ struct snd_usb_caiaqdev {
+ 	unsigned char midi_out_buf[EP1_BUFSIZE];
+ 
+ 	struct caiaq_device_spec spec;
+-	spinlock_t spinlock;
++	spinlock_t spinlock;	/* for PCM audio */
++	spinlock_t midi_lock;	/* midi_x_stream, midi_out_active */
+ 	wait_queue_head_t ep1_wait_queue;
+ 	wait_queue_head_t prepare_wait_queue;
+ 	int spec_received, audio_parm_answer;
+diff --git a/sound/usb/caiaq/midi.c b/sound/usb/caiaq/midi.c
+index 18529484c8dcc..b7d7d24937a74 100644
+--- a/sound/usb/caiaq/midi.c
++++ b/sound/usb/caiaq/midi.c
+@@ -79,6 +79,7 @@ static void snd_usb_caiaq_midi_output_trigger(struct snd_rawmidi_substream *subs
  {
- 	struct qcom_ipcc *ipcc = platform_get_drvdata(pdev);
+ 	struct snd_usb_caiaqdev *cdev = substream->rmidi->private_data;
  
--	disable_irq_wake(ipcc->irq);
- 	irq_domain_remove(ipcc->irq_domain);
- }
++	guard(spinlock_irqsave)(&cdev->midi_lock);
+ 	if (up) {
+ 		cdev->midi_out_substream = substream;
+ 		if (!cdev->midi_out_active)
+@@ -151,6 +152,7 @@ void snd_usb_caiaq_midi_output_done(struct urb* urb)
+ {
+ 	struct snd_usb_caiaqdev *cdev = urb->context;
  
++	guard(spinlock_irqsave)(&cdev->midi_lock);
+ 	cdev->midi_out_active = 0;
+ 	if (urb->status != 0)
+ 		return;
 -- 
 2.53.0
 
