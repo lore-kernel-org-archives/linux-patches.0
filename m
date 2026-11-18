@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027669;
-	b=apEWn/22ly1IUvNuSImMd2c6QKR04ihWdy5sCQU2ZXCZ0F/iqCBbB4JYOowkJpsdowkj
-	 OUcQlJxNW954tr5jV0/O3oXybARiBR10PXbSXrx865jEzS72FLAr5EH5e/FAKS2a/zb11
-	 Rde4ApxtdzliUp6fOU1Tm2z2aMzSnT5KvhGsFzdnD98VzWH4yuVhTMoRyjDfqX16spLsT
-	 AEGTvlurCzYnYqoLLfvKIs7uXL0kYflR9A/iRnjA9MBD/l63nSidcHRpc2/Q/hkQUpNm8
-	 OTkyh59NDn3z5I847p3zF6xyC054tTNrQWh3lba94SXX204yX48YeIYgzvT+qyX+jUA==
+	t=1795027672;
+	b=lbSBa7jBxRf+xP1WXv7BT8RzHW1sgPP7Iki9ngfd7L0SGlbVkIz9r0siYWhd0/7BQ/OQ
+	 BaPgyLJObFQHLnbtSE6vWI2XAV5nU8OCJloXR4CRnczET+YH87g+7Sfm7wv1XCC+KniQh
+	 zN31xiq25+KygSfOYtfMd+FmwE7HUmJeMn9Hz1U11qjVmD/70YAzWuqyL0X1MIxy0fih0
+	 r7CyziCN+pTPRyzRoYX03T9XskBi5h2TwdKSN9i2OwgfbgWuVxxqweeIfOPYw2u6kQFBb
+	 iJeu3IyyAJh1g82qqdCCm3O9L8mR6SNO2B00FQyh+GSndcLHWqhcgAEZqNJVb9Y/F8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027669;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027672;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RhbRcumjZ96wFPywBvGkycJpLaupHkF3F5S0H3aG+e4=;
-	b=Jb6SFqWYmOEOK9L/uLTlRZuYE93Ts52xcfaxOHqXUvK/6xg8fkHTNV/xzljNrh9TVqR6
-	 eYiR2EXwTPu3wDcaUT+nhp7Ho1GmGN70dgHhlp1Bwxu6Es+pp3jn0CLu829R6LkPNYOgq
-	 4HH0lcTPNgvxE9VHEN++5OzrW9pXeDO3QbN6mwoZuFpfWlZRTqPFmvaRS+eWnKkxd6XI8
-	 hCwKVeLpnDNliH8M51vB/k403+MvAUaPbE4JXHMLIcVBFPSf07G34tWeLu5tgju1zGxHL
-	 lRFcBtE8fQqB86YE2qOi7eudjNNi7kG+r3QBfYNAFsf67o/i8eDHNBIiAru8ayGehvg==
+	bh=PcCl7eTnMS7wXEaIItkNDZt7ElBqaTf+ji+kdf4CSgQ=;
+	b=qFdIGU6l4GuEQcEp7hXxKfSrpEMyLVXuyzl4Y8dYjQ3QgeLBbxq+Uyn0AdAujQn8AsBU
+	 9geIZefnlgZaT8tb7AdkP4mB0IhJcVccrYqhrrqHV1u6itzXCw6XD5duw44L8C1aBQk4K
+	 GQXaoFscz/C6uJkeYoieBQpfpB4UV8Ygq8Kf8d26O6TpjdIxFwACtxd+tiN0nnL4VyJ9j
+	 0NIC3q0UVyxladCPGZJOAATGstaQYD3pNvG3AOmdy4UWDF3/oL5ooshjIJZORaDqJoA/Q
+	 0Q1VlQrznDJFjq6KLNdLY9o4cxFg4eEdy5f2GPDih6LIUiIhexviuVUa/MLm9XltVkA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LwSF620W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VQoNL0VS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 130C960A260B;
-	Wed, 18 Nov 2026 18:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D0560A260B;
+	Wed, 18 Nov 2026 18:47:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LwSF620W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64ACC1F000C4;
-	Wed, 18 Nov 2026 18:47:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VQoNL0VS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D8CF1F000C6;
+	Wed, 18 Nov 2026 18:47:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027668;
-	bh=RhbRcumjZ96wFPywBvGkycJpLaupHkF3F5S0H3aG+e4=;
+	s=korg; t=1795027671;
+	bh=PcCl7eTnMS7wXEaIItkNDZt7ElBqaTf+ji+kdf4CSgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LwSF620WZrHGrlkD6krmVoZFmoxy4NChbDfxJNMfbVaiKHRmQXtsCcyjTUIO9DTo8
-	 DWXDC948x07JuZNiGUdOPdu+d+P/QETBfNA39thhg1OFlOBK3g5dFfcLvSn8SZxly9
-	 7R92lrNrGXNydpkADJRDEYxqH+FjSFl7Qgso8PTI=
+	b=VQoNL0VSwVP+BXHsVxRLq+RVAkozd+Z2cV070agpba1+LywZdkNcP4FWd7puzSw0E
+	 vxJwGnqeJtJmS0MVm/um7qxmeeO1srOKcSS+t/grrcTAIubd49vl6f9P7hRRh9cQMr
+	 EpxnxSJmkXkUuZYZbp0FUODBwsQMbPjvy/bcAzLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1830/2151] net: stmmac: Track the TX DMA threshold per queue
-Date: Wed, 18 Nov 2026 15:59:25 +0100
-Message-ID: <20261118150228.468489337@linuxfoundation.org>
+Subject: [PATCH 6.18 1821/2151] net: bcmasp: fix network filter lookup and wake filter pair allocation
+Date: Wed, 18 Nov 2026 15:59:16 +0100
+Message-ID: <20261118150228.140179880@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,138 +68,229 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit 9dd53418781900f02897c805eed397555cf98417 ]
+[ Upstream commit fa1459375794f14fb65039cd19c9398d759b491e ]
 
-Commit 3a6c12a0c6c3 ("net: stmmac: bump tc when get underflow error from
-DMA descriptor") made dwmac4 raise the DMA threshold of the queues that
-report TX underflows. This is done by incrementing a module global
-parameter 'tc' by 64 on each underflow.
+In bcmasp_netfilt_get_init(), when looking up an existing filter (!init)
+for a specified location, if the filter at loc was not claimed, the
+previous loop continued searching higher indices and could return an
+arbitrary unrelated filter belonging to the port. This caused flow get or
+delete operations on an empty rule location to return or delete an
+unintended filter.
 
-This leads to inconsistent TX DMA thresholds between queues and causes
-issues on platforms with multiple stmmac controllers, as 'tc' is shared
-by all of them. Once 'tc' goes over 256 the bumping stops, and queues
-that did not underflow before are left at the initial threshold.
+Fix this by checking only the requested location on lookup and rejecting
+RX_CLS_LOC_ANY when !init. In addition, harden wake filter allocation
+and release by ensuring wake filter pair searches stay on even boundaries
+where both entries are free, checking that loc + 1 is free for positioned
+wake filters, and validating parity and bounds on release.
 
-On the Renesas RZ/V2H platform, which has two dwmac4 controllers, we
-observed sporadic iperf3 TCP TX failures:
-
-  iperf3 -c <server> -t5 --bind-dev end1
-  ...
-  [  5]   0.00-5.00   sec  1.00 MBytes  1.68 Mbits/sec   87       sender
-  [  5]   0.00-5.00   sec   768 KBytes  1.26 Mbits/sec            receiver
-
-This happens because the TX queues of end1 were underflowing on a large
-fraction of the packets, but the DMA TX threshold was never raised from
-the default of 64 bytes. The threshold was not raised because end0
-had underflowed first and had already pushed 'tc' past 256. Which
-controller is affected depends on which one underflows first.
-
-To fix this, make the TX DMA threshold per queue instead of global.
-Each time an underflow happens on a queue, its TX DMA threshold gets
-incremented, without affecting other queues or controllers. With this
-change, 'tc' is only used as the initial value, and the RX threshold
-is no longer bumped together with the TX one, as TX underflows have
-nothing to do with the RX side.
-
-Fixes: 3a6c12a0c6c3 ("net: stmmac: bump tc when get underflow error from DMA descriptor")
-Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20261013114503.57487-2-ovidiu.panait.rb@renesas.com
+Fixes: c5d511c49587 ("net: bcmasp: Add support for wake on net filters")
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20261013204439.3494046-7-florian.fainelli@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac.h  |  1 +
- .../net/ethernet/stmicro/stmmac/stmmac_main.c | 33 +++++++++++--------
- 2 files changed, 21 insertions(+), 13 deletions(-)
+ drivers/net/ethernet/broadcom/asp2/bcmasp.c | 121 +++++++++++---------
+ 1 file changed, 70 insertions(+), 51 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-index 21b473c8d2a90..61e182278d156 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-@@ -255,6 +255,7 @@ struct stmmac_priv {
- 	bool sph_capable;
- 	u32 sarc_type;
- 	u32 rx_riwt[MTL_MAX_RX_QUEUES];
-+	u32 tx_threshold[MTL_MAX_TX_QUEUES];
- 	int hwts_rx_en;
- 
- 	void __iomem *ioaddr;
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 23aed6c1cb22a..4a811a1d586a0 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -2399,7 +2399,6 @@ static void stmmac_dma_operation_mode(struct stmmac_priv *priv)
- 	}
- 
- 	if (priv->plat->force_thresh_dma_mode) {
--		txmode = tc;
- 		rxmode = tc;
- 	} else if (priv->plat->force_sf_dma_mode || priv->plat->tx_coe) {
- 		/*
-@@ -2413,7 +2412,6 @@ static void stmmac_dma_operation_mode(struct stmmac_priv *priv)
- 		rxmode = SF_DMA_MODE;
- 		priv->xstats.threshold = SF_DMA_MODE;
- 	} else {
--		txmode = tc;
- 		rxmode = SF_DMA_MODE;
- 	}
- 
-@@ -2442,8 +2440,11 @@ static void stmmac_dma_operation_mode(struct stmmac_priv *priv)
- 	for (chan = 0; chan < tx_channels_count; chan++) {
- 		qmode = priv->plat->tx_queues_cfg[chan].mode_to_use;
- 
--		stmmac_dma_tx_mode(priv, priv->ioaddr, txmode, chan,
--				txfifosz, qmode);
-+		if (txmode == SF_DMA_MODE)
-+			priv->tx_threshold[chan] = SF_DMA_MODE;
-+
-+		stmmac_dma_tx_mode(priv, priv->ioaddr, priv->tx_threshold[chan],
-+				   chan, txfifosz, qmode);
- 	}
+diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp.c b/drivers/net/ethernet/broadcom/asp2/bcmasp.c
+index 1fdf0822c8a02..42f35a47bfa06 100644
+--- a/drivers/net/ethernet/broadcom/asp2/bcmasp.c
++++ b/drivers/net/ethernet/broadcom/asp2/bcmasp.c
+@@ -511,6 +511,13 @@ static int bcmasp_netfilt_wr_to_hw(struct bcmasp_priv *priv,
+ 	return 0;
  }
  
-@@ -2622,17 +2623,20 @@ static bool stmmac_xdp_xmit_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
- 
- static void stmmac_bump_dma_threshold(struct stmmac_priv *priv, u32 chan)
++static bool bcmasp_netfilt_is_companion(struct bcmasp_priv *priv, int i)
++{
++	return i > 0 && (i % 2) &&
++	       priv->net_filters[i].wake_filter &&
++	       priv->net_filters[i - 1].wake_filter;
++}
++
+ void bcmasp_netfilt_suspend(struct bcmasp_intf *intf)
  {
--	if (unlikely(priv->xstats.threshold != SF_DMA_MODE) && tc <= 256) {
--		tc += 64;
-+	u32 thresh = priv->tx_threshold[chan];
+ 	struct bcmasp_priv *priv = intf->parent;
+@@ -524,9 +531,7 @@ void bcmasp_netfilt_suspend(struct bcmasp_intf *intf)
+ 		    priv->net_filters[i].port != intf->port)
+ 			continue;
  
--		if (priv->plat->force_thresh_dma_mode)
--			stmmac_set_dma_operation_mode(priv, tc, tc, chan);
--		else
--			stmmac_set_dma_operation_mode(priv, tc, SF_DMA_MODE,
--						      chan);
-+	if (unlikely(thresh == SF_DMA_MODE) || thresh > 256)
-+		return;
+-		if (i > 0 && (i % 2) &&
+-		    priv->net_filters[i].wake_filter &&
+-		    priv->net_filters[i - 1].wake_filter)
++		if (bcmasp_netfilt_is_companion(priv, i))
+ 			continue;
  
--		priv->xstats.threshold = tc;
--	}
-+	thresh += 64;
+ 		ret = bcmasp_netfilt_wr_to_hw(priv, &priv->net_filters[i]);
+@@ -556,9 +561,7 @@ int bcmasp_netfilt_get_all_active(struct bcmasp_intf *intf, u32 *rule_locs,
+ 		    priv->net_filters[i].port != intf->port)
+ 			continue;
+ 
+-		if (i > 0 && (i % 2) &&
+-		    priv->net_filters[i].wake_filter &&
+-		    priv->net_filters[i - 1].wake_filter)
++		if (bcmasp_netfilt_is_companion(priv, i))
+ 			continue;
+ 
+ 		if (j == *rule_cnt)
+@@ -583,9 +586,7 @@ int bcmasp_netfilt_get_active(struct bcmasp_intf *intf)
+ 			continue;
+ 
+ 		/* Skip over a wake filter pair */
+-		if (i > 0 && (i % 2) &&
+-		    priv->net_filters[i].wake_filter &&
+-		    priv->net_filters[i - 1].wake_filter)
++		if (bcmasp_netfilt_is_companion(priv, i))
+ 			continue;
+ 
+ 		cnt++;
+@@ -607,6 +608,9 @@ bool bcmasp_netfilt_check_dup(struct bcmasp_intf *intf,
+ 		    priv->net_filters[i].port != intf->port)
+ 			continue;
+ 
++		if (bcmasp_netfilt_is_companion(priv, i))
++			continue;
 +
-+	if (priv->plat->force_thresh_dma_mode)
-+		stmmac_set_dma_operation_mode(priv, thresh, tc, chan);
-+	else
-+		stmmac_set_dma_operation_mode(priv, thresh, SF_DMA_MODE, chan);
-+
-+	priv->tx_threshold[chan] = thresh;
-+	priv->xstats.threshold = thresh;
+ 		cur = &priv->net_filters[i].fs;
+ 
+ 		if (cur->flow_type != fs->flow_type ||
+@@ -659,7 +663,7 @@ bool bcmasp_netfilt_check_dup(struct bcmasp_intf *intf,
  }
  
- /**
-@@ -7723,6 +7727,9 @@ int stmmac_dvr_probe(struct device *device,
+ /* If no network filter found, return open filter.
+- * If no more open filters return NULL
++ * If no more open filters return error.
+  */
+ struct bcmasp_net_filter *bcmasp_netfilt_get_init(struct bcmasp_intf *intf,
+ 						  u32 loc, bool wake_filter,
+@@ -669,45 +673,55 @@ struct bcmasp_net_filter *bcmasp_netfilt_get_init(struct bcmasp_intf *intf,
+ 	struct bcmasp_priv *priv = intf->parent;
+ 	int i, open_index = -1;
  
- 	priv->xstats.threshold = tc;
- 
-+	for (i = 0; i < MTL_MAX_TX_QUEUES; i++)
-+		priv->tx_threshold[i] = tc;
+-	/* Check whether we exceed the filter table capacity */
++	if (!init) {
++		if (loc == RX_CLS_LOC_ANY || loc >= priv->num_net_filters)
++			return ERR_PTR(-EINVAL);
 +
- 	/* Initialize RSS */
- 	rxq = priv->plat->rx_queues_to_use;
- 	netdev_rss_key_fill(priv->rss.key, sizeof(priv->rss.key));
++		if (priv->net_filters[loc].claimed &&
++		    priv->net_filters[loc].port == intf->port &&
++		    !bcmasp_netfilt_is_companion(priv, loc))
++			return &priv->net_filters[loc];
++
++		return ERR_PTR(-ENOENT);
++	}
++
+ 	if (loc != RX_CLS_LOC_ANY && loc >= priv->num_net_filters)
+ 		return ERR_PTR(-EINVAL);
+ 
+ 	/* If the filter location is busy (already claimed) and we are initializing
+ 	 * the filter (insertion), return a busy error code.
+ 	 */
+-	if (loc != RX_CLS_LOC_ANY && init && priv->net_filters[loc].claimed)
+-		return ERR_PTR(-EBUSY);
+-
+-	/* We need two filters for wake-up, so we cannot use an odd filter */
+-	if (wake_filter && loc != RX_CLS_LOC_ANY && (loc % 2))
+-		return ERR_PTR(-EINVAL);
+-
+-	/* Initialize the loop index based on the desired location or from 0 */
+-	i = loc == RX_CLS_LOC_ANY ? 0 : loc;
+-
+-	for ( ; i < priv->num_net_filters; i++) {
+-		/* Found matching network filter */
+-		if (!init &&
+-		    priv->net_filters[i].claimed &&
+-		    priv->net_filters[i].hw_index == i &&
+-		    priv->net_filters[i].port == intf->port)
+-			return &priv->net_filters[i];
+-
+-		/* If we don't need a new filter or new filter already found */
+-		if (!init || open_index >= 0)
+-			continue;
+-
+-		/* Wake filter conslidates two filters to cover more bytes
+-		 * Wake filter is open if...
+-		 * 1. It is an even filter
+-		 * 2. The current and next filter is not claimed
+-		 */
+-		if (wake_filter && !(i % 2) && !priv->net_filters[i].claimed &&
+-		    !priv->net_filters[i + 1].claimed)
+-			open_index = i;
+-		else if (!priv->net_filters[i].claimed)
+-			open_index = i;
++	if (loc != RX_CLS_LOC_ANY) {
++		if (priv->net_filters[loc].claimed)
++			return ERR_PTR(-EBUSY);
++
++		/* We need two filters for wake-up, so we cannot use an odd filter */
++		if (wake_filter) {
++			if ((loc % 2) || loc + 1 >= priv->num_net_filters)
++				return ERR_PTR(-EINVAL);
++			if (priv->net_filters[loc + 1].claimed)
++				return ERR_PTR(-EBUSY);
++		}
++		open_index = loc;
++	} else {
++		for (i = 0; i < priv->num_net_filters; i++) {
++			/* Wake filter consolidates two filters to cover more bytes.
++			 * Wake filter is open if:
++			 * 1. It is an even filter
++			 * 2. The current and next filter is not claimed
++			 */
++			if (wake_filter) {
++				if (!(i % 2) && (i + 1 < priv->num_net_filters) &&
++				    !priv->net_filters[i].claimed &&
++				    !priv->net_filters[i + 1].claimed) {
++					open_index = i;
++					break;
++				}
++			} else if (!priv->net_filters[i].claimed) {
++				open_index = i;
++				break;
++			}
++		}
+ 	}
+ 
+ 	if (open_index >= 0) {
+@@ -716,16 +730,20 @@ struct bcmasp_net_filter *bcmasp_netfilt_get_init(struct bcmasp_intf *intf,
+ 		nfilter->port = intf->port;
+ 		nfilter->ch = intf->channel + priv->tx_chan_offset;
+ 		nfilter->hw_index = open_index;
+-	}
+ 
+-	if (wake_filter && open_index >= 0) {
+-		/* Claim next filter */
+-		priv->net_filters[open_index + 1].claimed = true;
+-		priv->net_filters[open_index + 1].wake_filter = true;
+-		nfilter->wake_filter = true;
++		if (wake_filter) {
++			/* Claim next filter */
++			priv->net_filters[open_index + 1].claimed = true;
++			priv->net_filters[open_index + 1].wake_filter = true;
++			priv->net_filters[open_index + 1].hw_index = open_index + 1;
++			priv->net_filters[open_index + 1].port = intf->port;
++			priv->net_filters[open_index + 1].ch = intf->channel +
++							       priv->tx_chan_offset;
++			nfilter->wake_filter = true;
++		}
+ 	}
+ 
+-	return nfilter ? nfilter : ERR_PTR(-EINVAL);
++	return nfilter ? nfilter : ERR_PTR(-ENOSPC);
+ }
+ 
+ void bcmasp_netfilt_release(struct bcmasp_intf *intf,
+@@ -733,7 +751,8 @@ void bcmasp_netfilt_release(struct bcmasp_intf *intf,
+ {
+ 	struct bcmasp_priv *priv = intf->parent;
+ 
+-	if (nfilt->wake_filter) {
++	if (nfilt->wake_filter && !(nfilt->hw_index % 2) &&
++	    nfilt->hw_index + 1 < priv->num_net_filters) {
+ 		memset(&priv->net_filters[nfilt->hw_index + 1], 0,
+ 		       sizeof(struct bcmasp_net_filter));
+ 	}
 -- 
 2.53.0
 
