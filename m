@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032548;
-	b=ReyVmNIb9vyO4lisS9Wf6usBwWuqeHRrHKYmCAC5pC+gCXY5prZZTFwSy4F31eqG/Utc
-	 er3wPyq4sqNi1m8mnpMYpSweajnlzrZOtPwOS9keNHtDJ8Yey30J+qV9BdJlV/Bv0/XPB
-	 yMEqfLRY4wiis/PCCT4XBfJFVT+wbyTNWeIZdMkH4JtlwDORgT1vaugfg4H7+6d1ajuS0
-	 4NaDRWufX7GRaikwYHnpw+c6KOn5gamoXJox49IsmV+zPqQDlwzceRJfr2JxxMmD6MG7A
-	 hKkzq3/s1vb+R7o9B1jETusJeYVostC2joEJJ3MmbWCZS/JD1e0RHgfdc2ub/nFiIyg==
+	t=1795032551;
+	b=iUkYlOGLgWTVvFJAkBKM0YA2LIOQx444wSqSGl4Wp4H2wbnV4AS2QHgRPRM02hwWtIJI
+	 Dw4zNYdQTwmGbYl4/qrkIm1wZBam4NFmcHtVgl3qNr18MYxogpvZRBywYkzehEt6/KkCT
+	 i8CRF74YujaNULfVgI5PL5m5BWi1Kzy5g8DygL8hSPLWha1unwuTbbCQ+JZTZ8OBcF619
+	 Tg/y/UPLXEKZrK8SWQdqGBnCjS32BUWqDApiLulg3+iFch6W58cV4AhO+pidMwYS2oKXN
+	 6Vg/zIDOSXYkFjomsxJB+FtXtRZMS8Od4XbougRyJzAoiMPzTVpe/nOQK4uDNWow1nw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032548;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032551;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Vzte/R9S8Qt/Qr1NyfEYIVG1BdIvKoqogpa56wI2844=;
-	b=NPbR1d8mnDUm0dZ4cfr2tEpXWK+p1HOK2gZNZR6ymvnhjlCqmsMmdqOtniCVZnIPCU/E
-	 FAza+eg4a36D0eOQSaZ86TxPE2Ph47ys4EZDJ0lsVdilowj1r1SRnpFb5WhPh74SEV/aY
-	 TUT7Hvyu1TsDHP1JxuWm6lIRDr6Mbj0uWeHlJAPPzE108bEat0JOuja+cydTVv8ML//2R
-	 jM7HC8IWj3EtT82YS/IPebuVHRKxsPjb2Ho7B6FoFvWvDUHnFAByntrLYrnZ7cVElUydQ
-	 i23L2+/xszLS5pgPKOnZFZdW9JsB3equo1vigN5Kirkt9yZth8B4SdKHSjuBNfk5wGQ==
+	bh=BD+JGBhjZqnqrhNT3TH0WLKDN27gz5pI2yGdrNEMfGk=;
+	b=w/hp4EvL+2XLdvJwm8k8J2nFWoIJ39Tpe7vCKL9jslAutPIybJtjMNDn+tvxm9IOyBLG
+	 rPND+sh4O54siuQAy81jzXZ5q0enMXOoiuLuivFWaMZBem4LtHjmPqa3uwigzsEMT98/F
+	 TUxOlYwHr54wRq8blcpwOdC7lq6VlcZKfIbI373w2Fxh35/PA/uJcAxlkjSaQ1qsEL86A
+	 ctm2T+q004343J8jthghL8cUyUScv6wUzDE6g3wMNYXzID/r6IJ4X4UEdh3SmQiHYvli4
+	 XogvStNDKr9x+NYhKvpRv5Lx//ef/m12Xx9gyvXE03VGX3cPabNNzhJKjdCTF/+o8Sg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RqZF0GHX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h7lgzZVz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E36F60A260B;
-	Wed, 18 Nov 2026 20:09:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1697060A2607;
+	Wed, 18 Nov 2026 20:09:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RqZF0GHX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7236A1F000CC;
-	Wed, 18 Nov 2026 20:09:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h7lgzZVz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 667261F000C4;
+	Wed, 18 Nov 2026 20:09:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032548;
-	bh=Vzte/R9S8Qt/Qr1NyfEYIVG1BdIvKoqogpa56wI2844=;
+	s=korg; t=1795032550;
+	bh=BD+JGBhjZqnqrhNT3TH0WLKDN27gz5pI2yGdrNEMfGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RqZF0GHXDM7rc7VbJzH1T1i9D/AhyuifsNNrIxJDzoQyO695gSyEc8APd49UrrTW5
-	 Qn8sGTcuEhgBzYtpkQQMLJqUxuF6rbPZ3i1bLvQlPJiqcOs/eG23UPeLV52nsGj8xP
-	 wsmcdj+j4TZ3+8dRBOJSEWVLY+xQxxnMRKnU/dxg=
+	b=h7lgzZVzNWf7T8tcY1k9966J87kPfcPh5OI5iFqOI18g2p9kqjw8YyxnHf8kcnCR7
+	 /xVbbgvhg1yJ2nUK0be6DPkyy8bQCD9TCy8hNxL8zznZYK6e4tJte0bsm5HBZ0fiD4
+	 yNMuuCcMrCH7O07cfYRBPlfla3zrdobbswyM7bCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Jijie Shao <shaojijie@huawei.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1449/1756] net: phy: realtek: restore RTL8211F RGMII delays on resume
-Date: Wed, 18 Nov 2026 15:59:36 +0100
-Message-ID: <20261118150106.794563710@linuxfoundation.org>
+Subject: [PATCH 6.12 1450/1756] net: hix5hd2: serialize timeout recovery with interface teardown
+Date: Wed, 18 Nov 2026 15:59:37 +0100
+Message-ID: <20261118150106.831147862@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,49 +70,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 20c0c677362468b0af23e26e5fdb871ea911bc25 ]
+[ Upstream commit 87cce46329a811ea3fe108ac721e0a2400d0a3bb ]
 
-RTL8211F and RTL8211F-VD both use rtl8211f_config_rgmii_delay() during
-initialization and share rtl821x_resume(). The RTL8211F-VD loses its
-RGMII TX and RX delay enable bits across a software power-down, but the
-shared resume path only clears BMCR_PDOWN and waits for the receive clock
-to stabilize.
+The timeout worker calls the driver's close and open methods without
+RTNL or a running-state check. A timeout queued before an interface is
+closed can call close again after ndo_stop has disabled NAPI. The second
+napi_disable() can then wait indefinitely. The worker can also race with
+an ongoing close.
 
-On a BeagleV Ahead configured for rgmii-id, carrier and the negotiated
-speed return after an interface close/open, but the receive path does not
-work. At 100 Mbit/s no frames were received. At 1000 Mbit/s all 11
-observed frames had CRC errors.
+Take RTNL and skip recovery when the interface is no longer running.
+Use the netdev core close and open helpers so a failed reopen leaves the
+interface down, rather than leaving it marked running with NAPI disabled.
 
-Reapply the RGMII delay configuration after the existing resume delay.
+After unregister_netdev() has stopped the watchdog, drain the worker
+before releasing its MDIO and descriptor resources. This wait is outside
+RTNL, allowing an already queued worker to take RTNL, observe the down
+state, and finish.
 
-Tested on a BeagleV Ahead with an RTL8211F-VD at 100 and 1000 Mbit/s,
-including close/open without a link partner.
+This issue was identified as part of our ongoing research while
+reviewing kernel code.
 
-Fixes: bb726b753f75 ("net: phy: realtek: add support for RTL8211F(D)(I)-VD-CG")
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20261015045001.83986-1-kmehltretter@gmail.com
+Fixes: 57c5bc9ad7d7 ("net: hisilicon: add hix5hd2 mac driver")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Jijie Shao <shaojijie@huawei.com>
+Link: https://patch.msgid.link/179203116093.2621539.3718842986255459438.G202@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/realtek/realtek_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/hisilicon/hix5hd2_gmac.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/phy/realtek/realtek_main.c b/drivers/net/phy/realtek/realtek_main.c
-index 72afa280c939f..c166be011f9f1 100644
---- a/drivers/net/phy/realtek/realtek_main.c
-+++ b/drivers/net/phy/realtek/realtek_main.c
-@@ -586,7 +586,7 @@ static int rtl821x_resume(struct phy_device *phydev)
+diff --git a/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c b/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c
+index cc1d04d05e4b3..907709becf75e 100644
+--- a/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c
++++ b/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c
+@@ -12,6 +12,7 @@
+ #include <linux/of_net.h>
+ #include <linux/of_mdio.h>
+ #include <linux/reset.h>
++#include <linux/rtnetlink.h>
+ #include <linux/clk.h>
+ #include <linux/circ_buf.h>
  
- 	msleep(20);
+@@ -890,8 +891,13 @@ static void hix5hd2_tx_timeout_task(struct work_struct *work)
+ 	struct hix5hd2_priv *priv;
  
--	return 0;
-+	return rtl8211f_config_rgmii_delay(phydev);
+ 	priv = container_of(work, struct hix5hd2_priv, tx_timeout_task);
+-	hix5hd2_net_close(priv->netdev);
+-	hix5hd2_net_open(priv->netdev);
++
++	rtnl_lock();
++	if (netif_running(priv->netdev)) {
++		dev_close(priv->netdev);
++		dev_open(priv->netdev, NULL);
++	}
++	rtnl_unlock();
  }
  
- static int rtl8211f_led_hw_is_supported(struct phy_device *phydev, u8 index,
+ static void hix5hd2_net_timeout(struct net_device *dev, unsigned int txqueue)
+@@ -1283,6 +1289,7 @@ static void hix5hd2_dev_remove(struct platform_device *pdev)
+ 	struct hix5hd2_priv *priv = netdev_priv(ndev);
+ 
+ 	unregister_netdev(ndev);
++	cancel_work_sync(&priv->tx_timeout_task);
+ 	mdiobus_unregister(priv->bus);
+ 	mdiobus_free(priv->bus);
+ 
+@@ -1290,7 +1297,6 @@ static void hix5hd2_dev_remove(struct platform_device *pdev)
+ 		hix5hd2_destroy_sg_desc_queue(priv);
+ 	hix5hd2_destroy_hw_desc_queue(priv);
+ 	of_node_put(priv->phy_node);
+-	cancel_work_sync(&priv->tx_timeout_task);
+ 	free_netdev(ndev);
+ }
+ 
 -- 
 2.53.0
 
