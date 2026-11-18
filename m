@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037964;
-	b=EfMQ1NQ09j56lJOhRUJfTEb6UqtAzMiCFK+zUYxQx2abWBTIyu1lgHDjer+Tu1l9XUpK
-	 Fp37PVprmFBqVTgMyRPQCnZM4RCo19fD4ELGNYdiE/l0u3BVGIl6YGKt1oF18Nh9uBAfY
-	 PsOU5QkX+mKP2+2e/+Xgk3W9F68i00HKn/hzasVXDaXyUo6PJJkWj3MUkELCjRzYoSd7c
-	 ok7CWoYOwDPNsSLoJBrqXgjWd+XdsHiraliGL6stOTejUsN+TBQV4Bf2JwB0oLce/GGde
-	 LssutnPUt48mVfSS6e9lrY4hHydq0k4M7EekuntFwF3WWFkKpbZkSi4jtJhwDhOfM6Q==
+	t=1795037967;
+	b=B4sWB/sr0qUwtnzlk/1WE17Gp2ATwCU1yxEFGLZHWDz1ddzmGCS1U1n90z+RMR7dUMtz
+	 YreD+kiOVVQy9zDt9YTAAf23al4x9FeadPXGRlkrFkBigHhbOY8mgMwE2fYRJZvcDX3x2
+	 3X/8nwBGMkAmgCQMa7/19pRPn/TlHza0CpAIRlJ2FhXbPlmBP3C+JDU8JOwcwrvG6YGbT
+	 DH6SpY15vV5ziSlbY0Wws9JHfAtwG541l7ltoP5FtO24XPWRbGJ2mr4WwOAUWWwNLAvVx
+	 j+4iSHRkKvXiiVwsXFaSy33ypDW/1DIBO5H+dDoPZwPFKGVvU8XxAkKjNeI4Nn9u32Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037964;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037967;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e2F9yKBbwY/5ua+ulxNy70Ht6KS35rDcdJymhrhh6HM=;
-	b=cL3JJST8hsBsfHBAqhDb2kaTDUZR9qO57JE+k/ALt94+bo/3m0OOU4eWMiX7qmI4cpai
-	 fr+ihMJapKKqdReKhk5iLSGKaujv5BJ+0+XupgzpdBVT6ynQzir/3+OA35w8RDD1cEmCn
-	 HqOaBvdFw/ANec1VrtTunB+BQ19a8bZCiuiYrQunrEKdQS8AJIzH34BRotUFX/AjFPzBU
-	 DVyOvrt9e8I7/fe6C87hU8zjbWLDjPNqpjrNDs9KBLt3ghGERThQufDo1O1o/tKwXybRt
-	 xISDs547I0jo65NUN5sbIWEVkYnJ6caoKIn9L3r17IjGUGRbA3xlB/P5s4bCPvPK1uA==
+	bh=F6b8tMLzbmUiYw3TDP6buGfddiyfnZ3E91Zk+ARRn6Q=;
+	b=JPw47+S6IOfVyyV9ZW9eXYAcPqlUUkfGyA9S5mXF5AOoQMkZM9zbCrodXSp3Fed3cutH
+	 NcO3MO5y3BaNxtCzDGVkq/ku5eMoeWZUvsB7774gwnL+1dU63WnQVJjfHxqzOsKLfxhHx
+	 ZdgQAcKdXUTPxI929CQvkB/jaHASRiuN0Ynbr8dpAn4vMXoqTAyc1T81rk5vZG3Y1ls/c
+	 aAHUbw6GT3sBhDNDPJz9qBWwz1SfbwSeMkdpe9BidQBiGXPo85UY4Q8oKeiFGkaD9pAXH
+	 vtebrjTV4eYtG1gimoKU4dwSJ4ptNbQ5oQz29o+L8wzQs/9dSYKyaHdein+Byht8eDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="JF/ZsN6F";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZR3F1uCV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58BA3606A31C;
-	Wed, 18 Nov 2026 21:39:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6716B606A32C;
+	Wed, 18 Nov 2026 21:39:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JF/ZsN6F
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1EC51F000C4;
-	Wed, 18 Nov 2026 21:39:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZR3F1uCV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72C8E1F000C4;
+	Wed, 18 Nov 2026 21:39:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037964;
-	bh=e2F9yKBbwY/5ua+ulxNy70Ht6KS35rDcdJymhrhh6HM=;
+	s=korg; t=1795037967;
+	bh=F6b8tMLzbmUiYw3TDP6buGfddiyfnZ3E91Zk+ARRn6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JF/ZsN6F/fwo4Rig7B9F2sqr4Id4MZ4Xi5VM2YzhATnYA+rj6q4sfzrtT/QLEoCRc
-	 0wFapL5ipZjxzl+/3LtrzM7R8i7mprfGFYKDZEPuQZ/dnfUd18RB99+FTkPGT0o6hR
-	 aUQ4vczJ1zwUV7RxmObsOQ6SxiLOfXpMjQBreKRc=
+	b=ZR3F1uCVdC1ptPlLeZfW6Y8Gg5219lzuxfK/1oEEzE2d95UFveQ7cOdRgO44oE0pN
+	 hbj8Evo9mViWtvbhPv0312JVLz40BqDLQJNW8DcSoEOx/CmsIGDJKl4JVjgmHko8yp
+	 9h+ngUzNNjjRmBl16btXw2qqTOIEFpGdYKDJoqHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Valentin Caron <valentin.caron@foss.st.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Igor Velkov <iav@iav.lv>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1579/3318] perf cs-etm: fix a compilation issue in cs_etm_decoder__set_tid()
-Date: Wed, 18 Nov 2026 15:36:41 +0100
-Message-ID: <20261118150408.487539816@linuxfoundation.org>
+Subject: [PATCH 6.6 1580/3318] genirq/kexec: Do not take the bus lock of an interrupt chip on the crash path
+Date: Wed, 18 Nov 2026 15:36:42 +0100
+Message-ID: <20261118150408.517827796@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,43 +68,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valentin Caron <valentin.caron@foss.st.com>
+From: Igor Velkov <iav@iav.lv>
 
-When compiling coresight tool with the command:
-make -C tools/perf CORESIGHT=1 all
+commit 717862eac6eff0eea8ac30a0c0de0bed84922aab upstream.
 
-The following build issue occurs:
-util/cs-etm-decoder/cs-etm-decoder.c:551:15: error: too many arguments to
-function 'cs_etm_decoder__buffer_packet'
-  551 |         ret = cs_etm_decoder__buffer_packet(etmq, packet_queue,
-      |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+machine_kexec_mask_interrupts() calls irq_set_irqchip_state() for every
+started interrupt. That function takes the bus lock of the chip and
+desc->lock, and syncs the chip when it drops them. On the crash path
+interrupts are off and the other CPUs are stopped, so a chip whose bus
+transfer is completed by an interrupt never returns from the sync.
 
-Fix this by removing the parameter "etmq" from function call to match its
-declaration:
-cs_etm_decoder__buffer_packet(struct cs_etm_packet_queue *packet_queue,
-			      const u8 trace_chan_id,
-			      enum cs_etm_sample_type sample_type)
+On RK3399 boards with an RK808 PMIC the RTC alarm interrupt belongs to
+the regmap-irq chip of the RK808, which sits on I2C. rk808_irq_chip sets
+init_ack_masked, so regmap_irq_sync_unlock() writes the ack register on
+every unlock, and the I2C controller needs its own interrupt to finish
+the transfer. A panic with a crash kernel loaded prints
 
-Fixes: 99d324594165 ("perf cs-etm: Queue context packets for frontend")
-Signed-off-by: Valentin Caron <valentin.caron@foss.st.com>
+  SMP: stopping secondary CPUs
+
+and then nothing until the watchdog resets the board.
+
+machine_kexec_mask_interrupts() takes neither lock for the other
+operations on the descriptor. Move the search for the chip that
+implements irq_set_irqchip_state() into __irq_set_irqchip_state(), which
+takes no locks, and call it from machine_kexec_mask_interrupts().
+
+Fixes: 78fd584cdec0 ("arm64: kdump: implement machine_crash_shutdown()")
+Suggested-by: Thomas Gleixner <tglx@kernel.org>
+Signed-off-by: Igor Velkov <iav@iav.lv>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20261015-kexec-irq-bus-lock-v2-1-2af15f0757b6@iav.lv
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/cs-etm-decoder/cs-etm-decoder.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kernel/machine_kexec.c |  2 +-
+ include/linux/interrupt.h         |  1 +
+ kernel/irq/manage.c               | 49 ++++++++++++++++---------------
+ 3 files changed, 27 insertions(+), 25 deletions(-)
 
-diff --git a/tools/perf/util/cs-etm-decoder/cs-etm-decoder.c b/tools/perf/util/cs-etm-decoder/cs-etm-decoder.c
-index 277da9f767b9d..caacab8c92e26 100644
---- a/tools/perf/util/cs-etm-decoder/cs-etm-decoder.c
-+++ b/tools/perf/util/cs-etm-decoder/cs-etm-decoder.c
-@@ -548,7 +548,7 @@ cs_etm_decoder__set_tid(struct cs_etm_queue *etmq,
- 				elem->context.exception_level, tid))
- 		return OCSD_RESP_FATAL_SYS_ERR;
+diff --git a/arch/arm64/kernel/machine_kexec.c b/arch/arm64/kernel/machine_kexec.c
+index 9307a1421d67e..ece524271b964 100644
+--- a/arch/arm64/kernel/machine_kexec.c
++++ b/arch/arm64/kernel/machine_kexec.c
+@@ -235,7 +235,7 @@ static void machine_kexec_mask_interrupts(void)
+ 		 * First try to remove the active state. If this
+ 		 * fails, try to EOI the interrupt.
+ 		 */
+-		ret = irq_set_irqchip_state(i, IRQCHIP_STATE_ACTIVE, false);
++		ret = __irq_set_irqchip_state(desc, IRQCHIP_STATE_ACTIVE, false);
  
--	ret = cs_etm_decoder__buffer_packet(etmq, packet_queue, trace_chan_id,
-+	ret = cs_etm_decoder__buffer_packet(packet_queue, trace_chan_id,
- 					    CS_ETM_CONTEXT);
- 	if (ret != OCSD_RESP_CONT && ret != OCSD_RESP_WAIT)
- 		return ret;
+ 		if (ret && irqd_irq_inprogress(&desc->irq_data) &&
+ 		    chip->irq_eoi)
+diff --git a/include/linux/interrupt.h b/include/linux/interrupt.h
+index a42191c6a0e87..2d1dd4a86e49c 100644
+--- a/include/linux/interrupt.h
++++ b/include/linux/interrupt.h
+@@ -507,6 +507,7 @@ extern int irq_get_irqchip_state(unsigned int irq, enum irqchip_irq_state which,
+ 				 bool *state);
+ extern int irq_set_irqchip_state(unsigned int irq, enum irqchip_irq_state which,
+ 				 bool state);
++extern int __irq_set_irqchip_state(struct irq_desc *desc, enum irqchip_irq_state which, bool val);
+ 
+ #ifdef CONFIG_IRQ_FORCED_THREADING
+ # ifdef CONFIG_PREEMPT_RT
+diff --git a/kernel/irq/manage.c b/kernel/irq/manage.c
+index 4b976a8fc0698..a67e40c8ce62d 100644
+--- a/kernel/irq/manage.c
++++ b/kernel/irq/manage.c
+@@ -2864,6 +2864,28 @@ int irq_get_irqchip_state(unsigned int irq, enum irqchip_irq_state which,
+ }
+ EXPORT_SYMBOL_GPL(irq_get_irqchip_state);
+ 
++int __irq_set_irqchip_state(struct irq_desc *desc, enum irqchip_irq_state which, bool val)
++{
++	struct irq_data *data = irq_desc_get_irq_data(desc);
++	struct irq_chip *chip;
++
++	do {
++		chip = irq_data_get_irq_chip(data);
++
++		if (WARN_ON_ONCE(!chip))
++			return -ENODEV;
++
++		if (chip->irq_set_irqchip_state)
++			break;
++
++		data = irqd_get_parent_data(data);
++	} while (data);
++
++	if (data)
++		return chip->irq_set_irqchip_state(data, which, val);
++	return -EINVAL;
++}
++
+ /**
+  *	irq_set_irqchip_state - set the state of a forwarded interrupt.
+  *	@irq: Interrupt line that is forwarded to a VM
+@@ -2880,36 +2902,15 @@ int irq_set_irqchip_state(unsigned int irq, enum irqchip_irq_state which,
+ 			  bool val)
+ {
+ 	struct irq_desc *desc;
+-	struct irq_data *data;
+-	struct irq_chip *chip;
+ 	unsigned long flags;
+-	int err = -EINVAL;
++	int err;
+ 
+ 	desc = irq_get_desc_buslock(irq, &flags, 0);
+ 	if (!desc)
+-		return err;
+-
+-	data = irq_desc_get_irq_data(desc);
+-
+-	do {
+-		chip = irq_data_get_irq_chip(data);
+-		if (WARN_ON_ONCE(!chip)) {
+-			err = -ENODEV;
+-			goto out_unlock;
+-		}
+-		if (chip->irq_set_irqchip_state)
+-			break;
+-#ifdef CONFIG_IRQ_DOMAIN_HIERARCHY
+-		data = data->parent_data;
+-#else
+-		data = NULL;
+-#endif
+-	} while (data);
++		return -EINVAL;
+ 
+-	if (data)
+-		err = chip->irq_set_irqchip_state(data, which, val);
++	err = __irq_set_irqchip_state(desc, which, val);
+ 
+-out_unlock:
+ 	irq_put_desc_busunlock(desc, flags);
+ 	return err;
+ }
 -- 
 2.53.0
 
