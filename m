@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050741;
-	b=zBRFNi//ygl4OVEJCjuRo+cnhvlERiiOnm7oGcyRyaYzdDospfNOOTkFZuKS6eYTOFrn
-	 ji0UJbhNhXDyU0jz09tLVFVGCQF6f4+a6ieS05XcYcvlcfMj36iXKcESJL9Wx4JyFh99D
-	 GleYjB/2+FCySD55USJXenx7+leoETD/vfVgl76GXdd78+KE4BnDl3pQTkxuDk2TDpr7B
-	 oywWt++6GBmqoB5SBDIN3OToTBpuuDXFXA53+Q86i0Qzti+q0iA+Ux14fEhSDN+kvduJ7
-	 pQxR7SdDIEMwjNg0at8LrIJofkNVC2wMh7KNKuiwysUg3cU9LEBR8PIYyUqH5TM20Tw==
+	t=1795050744;
+	b=DaRCafXxa28+tx9orXd75y5xI5Clmx6i5rE66rRV1aCt2ZdqFInmDFW1/4j4IXc2cJDh
+	 xo1qujwO9rFS92UnLpMP1mR4ExL3khgslBjh10CB85+ZjDyTfX+nCJ7eQMqq47uFdsHUI
+	 sO7fL2TfPiNpLF0yIhZIi9yGZs4Q8XXDfx1vCR1vcNLKIRo86nCu8QGnt2FWlok86FJva
+	 eRPpLYLI7dfR9J4YYWorFNuRBCymssmBGZPf0RkCxOCj9wJtcc18It//yDSoz5bZ/mX2t
+	 k15iuYCrgsCx4dp+F5CW3RD5FA9vTN0jRSg1Llli0zF87nlq8rx18nBaAIOWe7IT2hw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050741;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050744;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZaVSg9FGJb1IaP2cjGkVx05FMQArOl1+WMJLwPBM1Qo=;
-	b=JJ8J0Ppnvieop4gllicxyqTAEzYyI2OECq2oKeJjFLCVSzKOr7E4F8CSRkwm2K1dcfe+
-	 wwrowtUUTS86KplbXlLbd/pzc7f8sh2IkcQ2gSftDnfnGbbyZhx2x2p9EdETgrM4JzJmd
-	 Iod0kpTky5Xqy7HgxqMlESIQFK597y3K0r+BcM0QTk1ew+h7trdzY826C3sRPYjcdGraA
-	 nwheARwNwqRCtL3w/DqaOvPPJhaFIrP0qZ55z1hkVWXrGd/b2QO+7nQZIxNSJt1jjOQ+0
-	 PgvVRug2wOvEfA4lzYkASRTUrwZch1vIwfo9LtucTDqRp0t5yu2KG7Pqk+l1s+rlA7w==
+	bh=sBiIgbcOkL/6ccX0/M5NRtbug6Jr3/Gh4dY9pF8SwzI=;
+	b=l1UGznHNde1CBlKOX1JmcPgJ0reyBhv1weF1PZClDA6KP/ceokh3OF9ypFqxXOpI8/AX
+	 rb7VytKQVX/qvh55klxtlexjRgP6yv8/m3OjER607APiSZj8GomNW1OP1Z0C2ipiOfbmq
+	 jz6TQa+LPlC0Z2EM/UnzJdHcgcJqer0HcuDRLO7981C/cLDUoSzpol0tmwcakgBC0ZdSN
+	 fJ2ADFVq+J1jPpcXlpXYDLGGOxxTOlLwl0ydve/c/i+036qWJy9BqOqmoS3xz4U6Q3Mtd
+	 bL7HNr4vi62octsqK9Vj3F2ThsIG86EiFe1PQwTTpE6TVdgSp7yjCdqiTfBRkqxuGHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rqO0uHVB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qgoicUEL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE4F606A33B;
-	Thu, 19 Nov 2026 01:12:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F6B606A330;
+	Thu, 19 Nov 2026 01:12:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rqO0uHVB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A8911F000C4;
-	Thu, 19 Nov 2026 01:12:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qgoicUEL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA4D01F000C7;
+	Thu, 19 Nov 2026 01:12:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050741;
-	bh=ZaVSg9FGJb1IaP2cjGkVx05FMQArOl1+WMJLwPBM1Qo=;
+	s=korg; t=1795050744;
+	bh=sBiIgbcOkL/6ccX0/M5NRtbug6Jr3/Gh4dY9pF8SwzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rqO0uHVB8P7Pceq7gW5e7+ffwDhBHQO6VbJVeUDaTY/gdiOVLnU1Co17LSisAtdmS
-	 nioU3cvJqDC8d/k+BJAmE8mVyvdwY9i541wNa210w377ZM1vgCrm9WxVlFKMYC2Keb
-	 M9h5WwLq7UqkMjUzTGZIcTC2+2J3RPtSppoXx5TE=
+	b=qgoicUELE4GQO1t0/LMxdTtKrqOARFH3Cu+vmoehdTdVZeN1Jw/4SatatSLKVsK4t
+	 5fZYw8K0eTxH0fNpE5T8jlAm+nQotOMkhMAA4XgTZCeE+EotFD1Y03RcamTVeBmgsh
+	 21T8eI1QQVpbOnWW7DIgcFJBmWvd/ivVezmuQYLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2799/2857] block: dont lose the status of a failed flush request
-Date: Wed, 18 Nov 2026 16:03:53 +0100
-Message-ID: <20261118150342.369593299@linuxfoundation.org>
+Subject: [PATCH 6.1 2817/2857] eth: bnxt: hand XDP frags over to the copybreak skb
+Date: Wed, 18 Nov 2026 16:04:11 +0100
+Message-ID: <20261118150343.027584140@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,49 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 67c43ceaa29e9b904216651697adf20445b219fc ]
+[ Upstream commit 364b88b54fc260d22ee318bae862c2d7d8c31dc6 ]
 
-flush_end_io() stores the status in fq->rq_status for whoever drops the
-last reference to finish the flush sequence. blk_mq_put_rq_ref() calls
-it with BLK_STS_OK from tag iterators and the timeout handler and
-overwrites an error the real completion stored. With two extra
-references, reading /sys/block/<disk>/inflight is enough for that, a
-failed flush completes everything waiting on it with success and fsync()
-lies to the application.
+With a multi-buffer XDP program attached, a packet only has agg
+buffers if it filled its head buffer, which in page mode holds most
+of a page. The program can still move the start of the packet forward
+with bpf_xdp_adjust_head() and leave at most rx_copybreak bytes in the
+head. bnxt_rx_pkt() then copies the head into a new skb, puts the head
+page back on the ring, and calls bnxt_xdp_build_skb() on the copy.
+bnxt_xdp_build_skb() only sets nr_frags and the skb's length
+accounting, because it expects an skb built around the head page,
+sharing its shinfo with the xdp_buff. The copy ends up with nr_frags
+set but no frag descriptors, and the stack later reads and releases
+whatever its frags array happens to contain. The real frags leak.
 
-Only store a status that is an error.
+Copy the frag descriptors to the new skb in bnxt_copy_xdp(), so that
+bnxt_xdp_build_skb() finds the frags where it expects them. The frags
+now belong to the skb, and the head page goes back on the ring as
+before.
 
-Fixes: 2e315dc07df0 ("blk-mq: grab rq->refcount before calling ->fn in blk_mq_tagset_busy_iter")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20261028164415.1262013-6-axboe@kernel.dk
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Pointed out in LLM review of the first patch of the series.
+Confirmed by reading the code, the unfixed kernel was not run with
+the reproducer below.
+Tested on a BCM57504 at MTU 9000 with rx-copybreak raised to 1024
+and a frags-capable XDP program moving the start of multi-buffer
+frames 3000B forward with bpf_xdp_adjust_head(), receiving 8000B
+ICMPv6 echo requests (a head and two agg buffers each). All 60k
+frames took the copybreak path with frags attached, the sampled skbs
+reached GRO with len=4998 data_len=4492 nr_frags=2, and were freed by
+the stack with the page pools' inflight count staying flat, no KASAN
+or DEBUG_PAGEALLOC splats.
+
+Fixes: 1dc4c557bfed ("bnxt: adding bnxt_xdp_build_skb to build skb from multibuffer xdp_buff")
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20261027234940.1267225-6-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-flush.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/block/blk-flush.c b/block/blk-flush.c
-index 53202eff545ef..0d09cd35888f4 100644
---- a/block/blk-flush.c
-+++ b/block/blk-flush.c
-@@ -230,7 +230,13 @@ static enum rq_end_io_ret flush_end_io(struct request *flush_rq,
- 	spin_lock_irqsave(&fq->mq_flush_lock, flags);
- 
- 	if (!req_ref_put_and_test(flush_rq)) {
--		fq->rq_status = error;
-+		/*
-+		 * Remember the status of the flush for whoever drops the last
-+		 * reference. blk_mq_put_rq_ref() gets here with BLK_STS_OK and
-+		 * must not wipe it out.
-+		 */
-+		if (error != BLK_STS_OK)
-+			fq->rq_status = error;
- 		spin_unlock_irqrestore(&fq->mq_flush_lock, flags);
- 		return RQ_END_IO_NONE;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index bbb7b77a6b753..3519dd4c3d911 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -1304,6 +1304,14 @@ static struct sk_buff *bnxt_copy_xdp(struct bnxt_napi *bnapi,
+ 		__skb_pull(skb, metasize);
  	}
+ 
++	if (unlikely(xdp_buff_has_frags(xdp))) {
++		struct skb_shared_info *sinfo;
++
++		sinfo = xdp_get_shared_info_from_buff(xdp);
++		memcpy(skb_shinfo(skb)->frags, sinfo->frags,
++		       sinfo->nr_frags * sizeof(skb_frag_t));
++	}
++
+ 	return skb;
+ }
+ 
 -- 
 2.53.0
 
