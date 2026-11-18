@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054183;
-	b=sDYVxjwFsw65RuC7VjmRitVmW6YpG5itWso/4fH6TJIpdoCoftr6PGYpU0mFQ1BexYax
-	 CvJzcSv+TTxrUhRWqCLd8+ZPcPgusa9YzkPTkq9klNdexelhLGKOvRw6YabdoFxYnNkE9
-	 oagMWNGRkcRjww7gyVYV75OA39WN0SuLkisLuAJhD5q5fs2BKsB1t/KgdpeYVLq6LlCzO
-	 2jiJXC4i40qWULqYVLnznmJ2wYkHttMsPNeP80bBd4ftQ7X4WoOKHUQFWVcIq3X064DhD
-	 AzMiZfib5zrwCYT21dgGdvmM+zGQDtF0sJcc0vcovZBQP+TfIOw9w60GZRSpAZ87fug==
+	t=1795054186;
+	b=VN/FeYQ9aVeDoMQ5NWYDUXneJbUugP27ZwhEU+fcdyFTUcgyNouNNJg6gEzLZM7bIVk4
+	 YGXAYdvDtePAYLZylM373ZmJWJY5QhuNJ9ZgIfwbJjlfRWgAbD3N6CgRjgTADaiWmPf9c
+	 vks+WFhcbtYIUerCDEiUNvJkcL+56/M4dmRCb3hIpg7018gywtlev61GiSrgZ8c7ZQMHs
+	 WQPfG976GzOJDYRZFy/cp4pSLG11h0Phckqr2z0ZYGGo58a2QfqY8wD6LLmPlkv304ERX
+	 nDc8fQ4lgBevSvBrMXh49/n6HCgil/v8rH6flN/gJ7+0nl/ZK5YFL4NPudLzyFonqDg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054183;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054186;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xLjJLjxtn/E1cTO/v5hO2MuRTo4rA04i2C/u0rskXdA=;
-	b=QeGrZxJn6CgfuTiEUGEPk70n+Itt7de8y1wn0FN3GORK7StoxQ5kT8uTkO9uv2uZQYIh
-	 yDceQ0sh3Fp6js25N+FopR2ZgqdrQ8HLEt4zyFtjNdUco9B0OR0iDXHSUAcq3YDNJYpXz
-	 /eZCiDwKca0S8EaTNoZJp49hYG0GYwfzQsua0elYtBWr8RslhD57GDU/1CShiQVvSBacH
-	 /1JNFPmGM71CjPSo4cSboyejGxm0HaZUBMgtlpyjqVc+4ZayE5apcNW5k2V/5Y6/nAJtg
-	 4gz+dxH3DQE8AqVxr4RAVbsJrNWod+IlttrJl1tX8B6NRARcwmOtqhhIXtonn5CxfNg==
+	bh=S3oMlQt0vO1V+yY0Olat33UsaN6ZIt3JjZ104xQ+gE4=;
+	b=WUyB9DJVNerJNyvllpE/H5hJF9dm+fau4EsEMHYIfXDGtVksjbTaCxWLW7CtpJdaEBRP
+	 QRpHW4ZVG9J8GhXPB94SXpKJbks+QklcykRGwsBIekMI5oGkilU+ixSKSSzeF43CvNPVJ
+	 L53FRWmUO8DnKN7j3MhcZ/NhfBcG7zPHV5MN36xxLBD3S6VRkFjCMqiF4xMbPQuL5DpEB
+	 TI9ww8DfHgDF4EJrdkdjqGUwcq2JyBXkAVxZkT0pbrGU2w5D1eZbOS2yWX3XqzeW/TqFt
+	 UC+peokbCbNw4FbsmdHO9ph0Ey5SjJ1gbTx7c3iUR2xzR8Yq2Pi+YoQL0ZHM6T8JbXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MvhxLyPI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lOlU2NlH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE900606A320;
-	Thu, 19 Nov 2026 02:09:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6047D606A320;
+	Thu, 19 Nov 2026 02:09:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MvhxLyPI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDA561F000C4;
-	Thu, 19 Nov 2026 02:09:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lOlU2NlH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B722F1F000C4;
+	Thu, 19 Nov 2026 02:09:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054183;
-	bh=xLjJLjxtn/E1cTO/v5hO2MuRTo4rA04i2C/u0rskXdA=;
+	s=korg; t=1795054186;
+	bh=S3oMlQt0vO1V+yY0Olat33UsaN6ZIt3JjZ104xQ+gE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MvhxLyPI2WouyUGod3AEfp+SJ24m+pbn5t0TwUQPDfeTasMvlHi9Y0cZA940AV/xo
-	 mi+ev5oGrzxjbN+aeiVtDgDmoWudbaLp9pi6nXvgFNrhmy68aYk4uXH1QzIdrEezUB
-	 j6qYJkfSr9ZYB7uGwaoEdpGfyyisXS2UGXG6fPM4=
+	b=lOlU2NlHaPpXotlZPGQQfqn9BK5RiOWPZryh9cuYg//YA9cJvDK2qk3oOUdjoCzcG
+	 V8FTFFc8GvsdGyJHxGndb0FvzW+bAMC6ZRmBAw2jfjM8axYoXJGCND6RUqTZGNkk3r
+	 +jae4KUhFNa6UUqnQw0ApSJgFuHJeRKjxsT3MkEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <niklas.cassel@wdc.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Adrian Ambrozewicz <aambrozewicz@nvidia.com>,
+	Kent Gibson <warthog618@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1184/2214] ata: ahci: print the lpm policy on boot
-Date: Wed, 18 Nov 2026 15:47:40 +0100
-Message-ID: <20261118150059.298213548@linuxfoundation.org>
+Subject: [PATCH 5.15 1158/2214] gpiolib: cdev: dont set GPIOD_FLAG_IS_OUT
+Date: Wed, 18 Nov 2026 15:47:14 +0100
+Message-ID: <20261118150058.346771967@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,143 +69,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <niklas.cassel@wdc.com>
+From: Adrian Ambrozewicz <aambrozewicz@nvidia.com>
 
-[ Upstream commit affccb16c117d188eb09495cbdea149cecbf00b9 ]
+[ Upstream commit 974d2712cb15014019595799b3ed68fef5fe9695 ]
 
-The target LPM policy can be set using either a Kconfig or a kernel module
-parameter.
+When a line is requested or reconfigured through the v2 uAPI,
+gpio_v2_line_config_flags_to_desc_flags() copies the requested
+configuration into the descriptor flags, GPIOD_FLAG_IS_OUT included,
+before gpiod_direction_input_nonotify() or
+gpiod_direction_output_nonotify() asks the driver for the direction.
+If the driver refuses, for instance with -EOPNOTSUPP from
+.direction_input() for a line that can only be an output, the ioctl
+fails but the flag keeps the refused direction. gpiod_free_commit()
+does not touch GPIOD_FLAG_IS_OUT, so this outlives the failed request,
+and GPIO_V2_GET_LINEINFO_IOCTL reports the line as an input while the
+hardware still drives it, until a request without direction flags
+makes gpiod_request_commit() read the direction back from the driver:
 
-However, if the board type is set to anything but board_ahci_low_power,
-then the LPM policy will overridden and set to ATA_LPM_UNKNOWN.
+  GPIO_V2_GET_LINE_IOCTL, line 0, input:         -EOPNOTSUPP
+  GPIO_V2_GET_LINEINFO_IOCTL, line 0:            input
+  GPIO_V2_GET_LINE_IOCTL, line 0, no direction:  ok
+  GPIO_V2_GET_LINEINFO_IOCTL, line 0:            output
 
-Additionally, if the default suspend is suspend to idle, depending on the
-hardware capabilities of the HBA, ahci_update_initial_lpm_policy() might
-override the LPM policy to either ATA_LPM_MIN_POWER_WITH_PARTIAL or
-ATA_LPM_MIN_POWER.
+GPIO_V2_LINE_SET_CONFIG_IOCTL updates the flags in the same order.
+There the line stays requested, and since commit 92ac7de3175e
+("gpiolib: don't allow setting values on input lines")
+GPIO_V2_LINE_SET_VALUES_IOCTL on it then fails with -EPERM, though the
+line is still an output. A line whose driver refuses to make it an
+output is likewise reported as one.
 
-All this means that it is very hard to know which LPM policy a user will
-actually be using on a given system.
+gpiod_direction_input_nonotify() and gpiod_direction_output_nonotify()
+set or clear GPIOD_FLAG_IS_OUT themselves once the driver has accepted
+the direction, emulated open drain and open source included, and
+nothing between the copy and those calls reads the flag. Leave it to
+them, as the v1 uAPI already does.
 
-In order to make it easier to debug LPM related issues, print the LPM
-policy on boot.
+The other flags that the helper copies stay as they are. Active low,
+drive and bias are what gpiod_direction_*() applies, drive and bias
+possibly before the driver refuses the direction; edges and event
+clock are the character device's own. None of them is read back from
+the driver, so there is no earlier state that is more accurate to go
+back to. A failed request releases the line, which clears them, and a
+failed reconfiguration leaves the line, like the lines before it, with
+what was applied up to the failure.
 
-One common LPM related issue is that the device fails to link up.
-Because of that, we cannot add this print to ata_dev_configure(), as that
-function is only called after a successful link up. Instead, add the info
-using ata_port_desc(), with the help of a new ata_port_desc_misc() helper.
-The port description is printed once per port during boot.
+Reproduced under QEMU with a test GPIO chip whose line 0 refuses input
+and line 1 refuses output: both refused requests and both refused
+reconfigurations leave the line info with the refused direction, and
+setting the value of the reconfigured output fails with -EPERM. With
+this change the line info shows the direction of the hardware in all
+four cases and setting the value works. First seen on real hardware
+with v6.12.
 
-Before changes:
-ata1: SATA max UDMA/133 abar m524288@0xa5780000 port 0xa5780100 irq 170
-ata2: SATA max UDMA/133 abar m524288@0xa5780000 port 0xa5780180 irq 170
-
-After changes:
-ata1: SATA max UDMA/133 abar m524288@0xa5780000 port 0xa5780100 irq 170 lpm-pol 4
-ata2: SATA max UDMA/133 abar m524288@0xa5780000 port 0xa5780180 irq 170 lpm-pol 4
-
-Signed-off-by: Niklas Cassel <niklas.cassel@wdc.com>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Stable-dep-of: 34a4a34431ed ("ata: libahci: Free the IRQs when activating a multi-IRQ host fails")
+Fixes: 3c0d9c635ae2 ("gpiolib: cdev: support GPIO_V2_GET_LINE_IOCTL and GPIO_V2_LINE_GET_VALUES_IOCTL")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Adrian Ambrozewicz <aambrozewicz@nvidia.com>
+Reviewed-by: Kent Gibson <warthog618@gmail.com>
+Link: https://patch.msgid.link/20261016-gpiolib-cdev-direction-v2-1-aambrozewicz@nvidia.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+[ sashal: Adapted flag handling to FLAG_* names and direct descriptor access through flagsp. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libahci.c     |  2 +-
- drivers/ata/libata-core.c |  2 +-
- drivers/ata/libata-sff.c  | 10 +++++-----
- drivers/ata/pata_cs5520.c |  2 +-
- include/linux/libata.h    |  5 +++++
- 5 files changed, 13 insertions(+), 8 deletions(-)
+ drivers/gpio/gpiolib-cdev.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/ata/libahci.c b/drivers/ata/libahci.c
-index f6af0683a6520..a30e17265e873 100644
---- a/drivers/ata/libahci.c
-+++ b/drivers/ata/libahci.c
-@@ -2594,7 +2594,7 @@ static int ahci_host_activate_multi_irqs(struct ata_host *host,
+diff --git a/drivers/gpio/gpiolib-cdev.c b/drivers/gpio/gpiolib-cdev.c
+index b1e4571401c9a..8894206de3dca 100644
+--- a/drivers/gpio/gpiolib-cdev.c
++++ b/drivers/gpio/gpiolib-cdev.c
+@@ -1054,11 +1054,6 @@ static void gpio_v2_line_config_flags_to_desc_flags(u64 flags,
+ 	assign_bit(FLAG_ACTIVE_LOW, flagsp,
+ 		   flags & GPIO_V2_LINE_FLAG_ACTIVE_LOW);
  
- 		if (rc)
- 			return rc;
--		ata_port_desc(host->ports[i], "irq %d", irq);
-+		ata_port_desc_misc(host->ports[i], irq);
- 	}
- 
- 	return ata_host_register(host, sht);
-diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
-index acc78416be8ee..00fafdbafe6e8 100644
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -5911,7 +5911,7 @@ int ata_host_activate(struct ata_host *host, int irq,
- 		return rc;
- 
- 	for (i = 0; i < host->n_ports; i++)
--		ata_port_desc(host->ports[i], "irq %d", irq);
-+		ata_port_desc_misc(host->ports[i], irq);
- 
- 	rc = ata_host_register(host, sht);
- 	/* if failed, just free the IRQ and leave ports alone */
-diff --git a/drivers/ata/libata-sff.c b/drivers/ata/libata-sff.c
-index ab1fe23810707..5cf8086943256 100644
---- a/drivers/ata/libata-sff.c
-+++ b/drivers/ata/libata-sff.c
-@@ -2405,7 +2405,7 @@ int ata_pci_sff_activate_host(struct ata_host *host,
- 		for (i = 0; i < 2; i++) {
- 			if (ata_port_is_dummy(host->ports[i]))
- 				continue;
--			ata_port_desc(host->ports[i], "irq %d", pdev->irq);
-+			ata_port_desc_misc(host->ports[i], pdev->irq);
- 		}
- 	} else if (legacy_mode) {
- 		if (!ata_port_is_dummy(host->ports[0])) {
-@@ -2415,8 +2415,8 @@ int ata_pci_sff_activate_host(struct ata_host *host,
- 			if (rc)
- 				goto out;
- 
--			ata_port_desc(host->ports[0], "irq %d",
--				      ATA_PRIMARY_IRQ(pdev));
-+			ata_port_desc_misc(host->ports[0],
-+					   ATA_PRIMARY_IRQ(pdev));
- 		}
- 
- 		if (!ata_port_is_dummy(host->ports[1])) {
-@@ -2426,8 +2426,8 @@ int ata_pci_sff_activate_host(struct ata_host *host,
- 			if (rc)
- 				goto out;
- 
--			ata_port_desc(host->ports[1], "irq %d",
--				      ATA_SECONDARY_IRQ(pdev));
-+			ata_port_desc_misc(host->ports[1],
-+					   ATA_SECONDARY_IRQ(pdev));
- 		}
- 	}
- 
-diff --git a/drivers/ata/pata_cs5520.c b/drivers/ata/pata_cs5520.c
-index 247c147026243..3c813246794c4 100644
---- a/drivers/ata/pata_cs5520.c
-+++ b/drivers/ata/pata_cs5520.c
-@@ -212,7 +212,7 @@ static int cs5520_init_one(struct pci_dev *pdev, const struct pci_device_id *id)
- 		if (rc)
- 			return rc;
- 
--		ata_port_desc(ap, "irq %d", irq[i]);
-+		ata_port_desc_misc(ap, irq[i]);
- 	}
- 
- 	return ata_host_register(host, &cs5520_sht);
-diff --git a/include/linux/libata.h b/include/linux/libata.h
-index 3069064dc269c..e7645df2f3063 100644
---- a/include/linux/libata.h
-+++ b/include/linux/libata.h
-@@ -1565,6 +1565,11 @@ void ata_port_desc(struct ata_port *ap, const char *fmt, ...);
- extern void ata_port_pbar_desc(struct ata_port *ap, int bar, ssize_t offset,
- 			       const char *name);
- #endif
-+static inline void ata_port_desc_misc(struct ata_port *ap, int irq)
-+{
-+	ata_port_desc(ap, "irq %d", irq);
-+	ata_port_desc(ap, "lpm-pol %d", ap->target_lpm_policy);
-+}
- 
- static inline bool ata_tag_internal(unsigned int tag)
- {
+-	if (flags & GPIO_V2_LINE_FLAG_OUTPUT)
+-		set_bit(FLAG_IS_OUT, flagsp);
+-	else if (flags & GPIO_V2_LINE_FLAG_INPUT)
+-		clear_bit(FLAG_IS_OUT, flagsp);
+-
+ 	assign_bit(FLAG_EDGE_RISING, flagsp,
+ 		   flags & GPIO_V2_LINE_FLAG_EDGE_RISING);
+ 	assign_bit(FLAG_EDGE_FALLING, flagsp,
 -- 
 2.53.0
 
