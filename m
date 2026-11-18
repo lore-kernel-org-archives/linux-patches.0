@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061847;
-	b=zDK1pZr7wj0GxILmpyTM2PGMCdFeMH8YTXsjcfkRZ39TTylfNoVhgYxUWwynmg8tnfCI
-	 1qEZZuc67Rtf8vIzuyYs/Jcx/R6SHsankZ+at7y3Rppt5sPwiFGm0ptjgnqrSc1byu7ix
-	 Wc8qlgcRVWZctImREfHi2HhKfWFESrJZgR2Koo4oJkhJjpO+2QMAWUunrPBh15q+f00+k
-	 BlTlmKgeRuUlh+vfHVjt9ChpDNRCtZ6F5pcbcvtgbNZAPTa9XrsIcCj9jtAQottcTW0Lz
-	 QO2o86wAb3tW5Nm6Cz2Jd+kzVMBhSDhFrdc2YoPn0Ua/kUa8UnQTY7H6iyK8g+m9pMA==
+	t=1795061849;
+	b=zg9rz+fJwehmsP1avIe119fUaeUHLELN/lq0gVgn8NtIf34jXMgWGBIR3f8YRZFn7AH2
+	 Q8w9JoaNxBjLhXSggMauhm7OZLrVJ2EHHHGGUHtZAgZ8AF1QgXEDbUHegmYjXr37uuuf4
+	 erI+DiBGzfhquhewLpAa01Dnfn2jdb1bP4G8iCOyZLKtV1IAfMp3UMHWbusvG+OaZhGpI
+	 OXNNh7G/ymo45O9om65CM7zD5xZwNh4YeiYs7ZO2lHWzxQbzMC3kfHw+MEbs+oAPudIKE
+	 061p02x3XfO9eMCvp+RkWsqR2UAdQAG+8IvAOAG/uBbTgcUsoVCE6ZahnZ3UYe6UcbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061847;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061849;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wnJ3gkBVP3mGdaqzFzBV4LOfqPvoinSIg+/rUx4ZArU=;
-	b=166ahZl9wXbeckRq6XRorKsfb3Mvk1avzL6qyRlcMX2JhJIvrI7Adkr1hRi7gDMoU5zg
-	 OXNydJdmMgFkL+kHYRXKUh+iE4w7H034XH/XurXyTZFiUcALznSjWSqYITjlb4cWAX7Nq
-	 BmTSQF9GivN/dRn0NoMRFKb8LO9A0jBoDDdzYAdXq3A0RF2TkgxzrFtD0RXmD5fmyMvR9
-	 eUMaR3gzWOJdRkDGy5Y4UkwXB4fwo2ExQmSg78Pwif8rmTczTwDA4/nKZSQsQalnvPolA
-	 1r6DtTYkOGmlOLsD4JmyiXvkwG6MPFiarZ81qo4/dAS3y6L+7ikqn0v0/9KnJAlD6hw==
+	bh=ca1ZQCpat86vjGBhccYSa9EC/MdOY7wpurQwkc16pPg=;
+	b=xTjamMnFhv4Oe+g0lPibXM8ZgAv5XQ/3tu89KbzoTH1t4bHwayKd05bJeuqUXZVVZg8z
+	 XO0U022UB75/KvEudgpBCXSXZ4XyeIiKOIMJAr2qGSjzCY1Fkdd75zT18ml+MfSv2asIN
+	 u1CHmtEVwQqHsZcpby5215HtYTdCHruy5lpW264/bLUdwYTONLaoUYsARl8Z0mq9DEd/u
+	 wfPM+tYfNgLZMNIIXxM/rOyjsRW5CyXfdP4xDUf/H2MPwiG2fbhcyPcgCneGL6meYeLvG
+	 nh4TgFUEtXWJ8GtSdS7tb3K6jmnWDYGx5rfYFgoEbcPVuUdmSJ9pOdLMTmDCLjmjlSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="zdpLn/ys";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IHa+D7Eq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03581606A325;
-	Thu, 19 Nov 2026 04:17:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFDBA606A32A;
+	Thu, 19 Nov 2026 04:17:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zdpLn/ys
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51CE51F000C7;
-	Thu, 19 Nov 2026 04:17:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IHa+D7Eq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D4421F000C4;
+	Thu, 19 Nov 2026 04:17:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061846;
-	bh=wnJ3gkBVP3mGdaqzFzBV4LOfqPvoinSIg+/rUx4ZArU=;
+	s=korg; t=1795061849;
+	bh=ca1ZQCpat86vjGBhccYSa9EC/MdOY7wpurQwkc16pPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zdpLn/ysXC5slbTEA1jiC+twpxV1lCF3MZIWcj0leysda8rdQFMpXWLQJFr5vZHoc
-	 vIpFzZ6ScDmBIThmg1essAi5ViRfyh0GLqBlVYYsMR+rb6L9wOqzg5aD2z3bigfISb
-	 EXiZXQ12zdKj0WGNEfAEOZWvGzAGhrMiZyQOq7Bo=
+	b=IHa+D7EqJts9q1EnD0aC926t899o5eY4oOLKW4boYapMpQsUK9kEYWZ1bCbIj6UWz
+	 iSkignssyu8xbxvaWXIrA9esjxBpxAqw0VEFCXCGNTrC1Tc3xdSOyeBNJi4iZwRm8+
+	 dYCr5dAXJY7HYiAApDSkJvXUO730aYIwrfQ44e1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Vega <vega@nebusec.ai>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1700/1848] bpf: Dont take an extension for an iterator program
-Date: Wed, 18 Nov 2026 16:02:18 +0100
-Message-ID: <20261118150030.915812310@linuxfoundation.org>
+Subject: [PATCH 5.10 1701/1848] netfilter: conntrack: fix unlikely UaF in gc worker
+Date: Wed, 18 Nov 2026 16:02:19 +0100
+Message-ID: <20261118150030.950852209@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,54 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 7cc639dc45c5d3b69acb2a2fc834e9eec51e0214 ]
+[ Upstream commit 9836164821a46af07428bb2a5e14137bf0c7bd6e ]
 
-An extension inherits the expected_attach_type of the program it extends.
-If that is BPF_TRACE_ITER, check_attach_btf_id() hands the extension to
-bpf_iter_prog_supported(), which goes by the name of the attach function.
-For an extension that is the name of the subprogram it replaces, so the
-load fails with -EINVAL, unless that subprogram is called like the function
-of a target, bpf_iter_bpf_map_elem for example.
+When early-drop scan is enabled, gc_worker() reads tmp->ct_net, resolves
+cnet with nf_ct_pernet(), and reads cnet->count with RCU read lock held but
+before acquiring a reference to tmp.
 
-Then the extension gets the context of that target.  If the subprogram
-has as many arguments, it can use the key and the value as buffers, but
-how far it reaches is noted in the extension, where the test of the
-iterator link does not look: it reads and writes behind the elements of
-the map.  And the id of the subprogram in the BTF of the program is cached
-as the id of the target, so that programs of that target which are loaded
-already cannot be attached.
+Its unlikely but possible that the worker gets preempted before reading
+cnet->count while nf_conntrack_cleanup_net_list manages to unlink all
+conntracks and returns in the mean time.
+This allows for the pernet memory to get free'd.
 
-Refuse all extensions here.
+On resume, use after free would occur when the worker reads cnet->count.
 
-Fixes: 15d83c4d7cef ("bpf: Allow loading of a bpf_iter program")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-27-alexei.starovoitov@gmail.com
+This can be solved either via another synchronize_rcu() in
+nf_conntrack_cleanup_net_list or via cheaper flush_work().  If work
+wasn't running no race can happen as next call cannot observe
+already-unlinked conntrack objects.
+
+This is an LLM finding with no reproducer, but it appears to be correct.
+
+Fixes: c6dd940b1f74 ("netfilter: allow early drop of assured conntracks")
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/bpf_iter.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/netfilter/nf_conntrack_core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/kernel/bpf/bpf_iter.c b/kernel/bpf/bpf_iter.c
-index e8957e911de31..73e9b584275ee 100644
---- a/kernel/bpf/bpf_iter.c
-+++ b/kernel/bpf/bpf_iter.c
-@@ -321,6 +321,13 @@ bool bpf_iter_prog_supported(struct bpf_prog *prog)
- 	int prefix_len = strlen(prefix);
- 	bool supported = false;
+diff --git a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
+index e2330c3456b03..5c5112b5bc3a7 100644
+--- a/net/netfilter/nf_conntrack_core.c
++++ b/net/netfilter/nf_conntrack_core.c
+@@ -2457,6 +2457,11 @@ void nf_conntrack_cleanup_net_list(struct list_head *net_exit_list)
+ 		goto i_see_dead_people;
+ 	}
  
-+	/*
-+	 * The attach function of an extension is a subprogram of the iterator
-+	 * program that it extends, whatever its name is.
++	/* must wait for current scan loop, worker also looks at
++	 * struct nf_conntrack_net, which is about to be free'd.
 +	 */
-+	if (prog->type == BPF_PROG_TYPE_EXT)
-+		return -EINVAL;
++	flush_work(&conntrack_gc_work.dwork.work);
 +
- 	if (strncmp(attach_fname, prefix, prefix_len))
- 		return false;
- 
+ 	list_for_each_entry(net, net_exit_list, exit_list) {
+ 		nf_conntrack_proto_pernet_fini(net);
+ 		nf_conntrack_ecache_pernet_fini(net);
 -- 
 2.53.0
 
