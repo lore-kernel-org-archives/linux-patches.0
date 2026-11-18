@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015875;
-	b=AQ/+9UjZqv6OXlbTgLBqn9ZDOx11ol+XCj2i3T4HlNRhJ6LZZ78U3wq5q+1woobTGCcd
-	 CYNJ35v7Y1cZ8VdiiB7lGjfTRQ/eHPlYGZdTwCXH63G1GU+pLVN9tugahshuTWms9cFWA
-	 79uOrEZ8MTCz1BKystAMaz2n9kqVyTXDWAnwolW5nPIJ1Ip20mQZldVhmkL3ARVtq32Mn
-	 dEklwKlzO0cbDcCJMEjEEHehCIxok1Tybclt3H9eT82xOLOO9bMy1Yz2Snek+cY5iSyHU
-	 th9lrTV0e+ksQZ0baZB6gYmP9CwNNjh5bHJCI1h4IWdVHElBIAth0zPyFwcSoy/uIaw==
+	t=1795015878;
+	b=ufTXPjA6LuZ4WfBHLTi2sJ23L5ueklvYLosuVemTOiLbiVcDIdgQkprAojicWVa5cpnA
+	 5RYZq+ndVBqJmP/h9tw77vb6bW1gsAvIcJK37sP5ehf2mcTCRpnS0E+h5wx0RSIIwjU0e
+	 eWHDww6sznswv0ZG6lMCL4Py10HwCbdMBxZwrgLDduKMTwkZhWeCDxppPMvbsLtUqpMCU
+	 /HVopvpQvhbC4/TpWNBcYcpaeeY9t/eN4YmKFWLb9QfY1jFxU22hxja1rw/xbS0dk0lWN
+	 d5YMEkdthPX1bJA/+1cD8umqZAgXrkpzBTeblWsQySpYsue07nwDqnFalwkaoaUTkKQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015875;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015878;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=I8xYEEWHcEowwikh4ur6TkIWsxMBU0ioQq02oJKG4Uw=;
-	b=XhH6RHj04vB9lOiUJiunvdYuiLXRKIA+XIusK40X9Y/u5MRtc5Hi4cbe/HGPaJj4gSGr
-	 efWitnhdeqPIxKh3nKTwsDHW2PSLrsHfrLq+tYTQ8Jf1pA26yM73wEtyBeDXNDNlA6XWF
-	 Md4oQKMtim+qbKV5rcBQpdPAplJwn6xCBPddc2CLRwoq1TvDZcVQkdPjd38531xysKwLM
-	 YMvFcxLOWTnvS5pe/qvy4y/+rRhNN0HEGgnY0sidc8dChU/x2znowI640VWcHP8FakMHe
-	 x1LEFEkxmmbdKvgRtOPdoF7BAJGWNfYXvB1Iq7BSzspYcFIYPIOq3MYSiQ6ln3XK3dw==
+	bh=bMQZTc1qmBWUKebNo4/VeQ9fywjWvD8qNJrGJCBgXso=;
+	b=b10j9xtKH/CA3OJ5VVGZKA77vxh4TKkDEgdq95d4o+aoMjUHLrMwWKPsFKNh/QdEMzvc
+	 GZwcomqpCDiX1gMLG2oeFXPiTrwrM4yWdcbFDFG09LrZ/vpXiOVOLb8dsCg/cLSmknrNw
+	 TKZihWHfj8O0cRanOTluDFCWvRDDwIpYvJEtY0CHVzZMdRZ9MZz+JDAJus54cuhvuYJ0Z
+	 oPBRwd6IdqsKpBgfZuGAOtejFAGGUG5dlP8ybOMj2M7pmMH+c0wqvde5vn8XgOaGaehr/
+	 bCypWBRkDNtjQn0vhTFGGYDeup6OuL+p4lBQZEsIiS/ou4uAdmKU9f9+6m2xRbi0Ugg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EoBsq0Vl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d8Td16Iq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93761606A31C;
-	Wed, 18 Nov 2026 15:31:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55DF2606A31C;
+	Wed, 18 Nov 2026 15:31:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EoBsq0Vl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1D9B1F000C5;
-	Wed, 18 Nov 2026 15:31:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d8Td16Iq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACC191F000C4;
+	Wed, 18 Nov 2026 15:31:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015875;
-	bh=I8xYEEWHcEowwikh4ur6TkIWsxMBU0ioQq02oJKG4Uw=;
+	s=korg; t=1795015878;
+	bh=bMQZTc1qmBWUKebNo4/VeQ9fywjWvD8qNJrGJCBgXso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EoBsq0VlFQWwUnwiPhPGqzCRXlccuZhW9037fDQxsCys3LOX8VY+ML39CiYrodBsC
-	 p9/ooiMOOeFPDGEqczzVzFDxKni0oQwsT1oKQOY0I5cOi5AwiJOvHr6eOJOQA1vrOA
-	 ZQsUWNdPrGQAf5XCYHPOz9NC7ItANJh3hzZ8jqrY=
+	b=d8Td16IqFsgaxXDD2+iXcGZB5T4Q/yckJSjPaeCePItTBzfFR9Wu4Lwm2rTKYihCL
+	 QN2GmSQBlKq/MqxI4GdIMAYLL3al83raerXbo6YYFYv9gawPOPF3vFxa6zM20fRUyI
+	 UzHHcVZL3xdb8v0kkpmUkFc/fpHtSp16A08mPi1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henrik Grimler <henrik.grimler@axis.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Linmao Li <lilinmao@kylinos.cn>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0328/2651] dt-bindings: power: bq27xxx: bq27z561: allow interrupts property
-Date: Wed, 18 Nov 2026 15:26:08 +0100
-Message-ID: <20261118150259.668590267@linuxfoundation.org>
+Subject: [PATCH 7.3 0329/2651] power: supply: bq2515x: Propagate charge-enable read errors
+Date: Wed, 18 Nov 2026 15:26:09 +0100
+Message-ID: <20261118150259.704113283@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,36 +68,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henrik Grimler <henrik.grimler@axis.com>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit c3a6ff174c98f2c7ea213765ff6969140c381e90 ]
+[ Upstream commit 4a35810a847411c466a15d1737d11e8e818dc197 ]
 
-According to the technical reference manual for bq27z561 it has
-support for an interrupt on an INT pin. Remove it from the list of
-devices without interrupt support to better describe the hardware.
+bq2515x_get_charge_disable() returns bool even though reading the
+charger-disable state can fail. A negative error is therefore converted to
+true, so POWER_SUPPLY_PROP_STATUS reports NOT_CHARGING with success instead
+of propagating the failure. The GPIO read is not checked for errors either.
 
-Fixes: b4f7a727c29c ("dt-bindings: power: supply: bq27xxx: document optional interrupt")
-Signed-off-by: Henrik Grimler <henrik.grimler@axis.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260818-bq27z746-v2-1-0371e206665f@axis.com
+Return an int from the helper, check both reads, and only convert a valid
+charger-disable state to the charging-status boolean.
+
+Fixes: 44908459275e ("power: supply: bq25150 introduce the bq25150")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Link: https://patch.msgid.link/20260824084217.670213-1-lilinmao@kylinos.cn
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/power/supply/bq27xxx.yaml | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/power/supply/bq2515x_charger.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/power/supply/bq27xxx.yaml b/Documentation/devicetree/bindings/power/supply/bq27xxx.yaml
-index bc05400186cf1..d985ae6325994 100644
---- a/Documentation/devicetree/bindings/power/supply/bq27xxx.yaml
-+++ b/Documentation/devicetree/bindings/power/supply/bq27xxx.yaml
-@@ -91,7 +91,6 @@ allOf:
-               - ti,bq27742
-               - ti,bq27545
-               - ti,bq27411
--              - ti,bq27z561
-               - ti,bq28z610
-               - ti,bq34z100
-               - ti,bq78z100
+diff --git a/drivers/power/supply/bq2515x_charger.c b/drivers/power/supply/bq2515x_charger.c
+index 0208358ebbe4c..c2b17562cf8bb 100644
+--- a/drivers/power/supply/bq2515x_charger.c
++++ b/drivers/power/supply/bq2515x_charger.c
+@@ -420,7 +420,7 @@ static int bq2515x_get_battery_current_now(struct bq2515x_device *bq2515x)
+ 							BQ2515X_ICHG_DIVISOR);
+ }
+ 
+-static bool bq2515x_get_charge_disable(struct bq2515x_device *bq2515x)
++static int bq2515x_get_charge_disable(struct bq2515x_device *bq2515x)
+ {
+ 	int ret;
+ 	int ce_pin;
+@@ -428,6 +428,8 @@ static bool bq2515x_get_charge_disable(struct bq2515x_device *bq2515x)
+ 	int charger_disable;
+ 
+ 	ce_pin = gpiod_get_value_cansleep(bq2515x->ce_gpio);
++	if (ce_pin < 0)
++		return ce_pin;
+ 
+ 	ret = regmap_read(bq2515x->regmap, BQ2515X_ICCTRL2, &icctrl2);
+ 	if (ret)
+@@ -435,10 +437,7 @@ static bool bq2515x_get_charge_disable(struct bq2515x_device *bq2515x)
+ 
+ 	charger_disable = icctrl2 & BQ2515X_CHARGER_DISABLE;
+ 
+-	if (charger_disable || ce_pin)
+-		return true;
+-
+-	return false;
++	return charger_disable || ce_pin;
+ }
+ 
+ static int bq2515x_set_charge_disable(struct bq2515x_device *bq2515x, int val)
+@@ -615,7 +614,11 @@ static int bq2515x_charging_status(struct bq2515x_device *bq2515x,
+ 	else
+ 		status1_no_fault = false;
+ 
+-	ce_status = (!bq2515x_get_charge_disable(bq2515x));
++	ret = bq2515x_get_charge_disable(bq2515x);
++	if (ret < 0)
++		return ret;
++
++	ce_status = !ret;
+ 
+ 	/*
+ 	 * If there are no faults and charging is enabled, then status is
 -- 
 2.53.0
 
