@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022517;
-	b=Fwk25b7YXADXFlm1nLoyWbdFhW70KkUANVpE6LHWEcrbp4yjH+hR7JgxWSHT1Pb/fUQ9
-	 Ox+1aUYkCT7rHeXqdWYgjhFfnHFV+FwE894sXv+V1wxbj0kktKMYVILWmWFzDjVl4J/pi
-	 lC7GGhPQIjd469DNqLaJxpZZu30XlY20evapaYCSiqf4fVhIY/8XEJs/NtbdLDSpS5e+S
-	 fyKYrh29h3GU8v6DM4N0SHsM3d42eQzsSX36edFZFhwadXuseh9alA+IpdKECco2rZACM
-	 qcSBma0OCNgcHwoUz7j5i6XwslAwXHUlmTfV3Eqnf1uSvmsTJy0q6WeX65gEms9LbMA==
+	t=1795022519;
+	b=h2U8+GMrcDIe29p5NyhzvM9ZKZFXEETgzPPEUM2tPu1oD1snrT84YR+u159iA0ImLwA1
+	 /8gN/0cZplySVomo1j3zZnymK26nXL3R0cUOnaW8gqFrE6RmR6iIo+y02dzMX9WIt2iVw
+	 H1UiavARWkVbkV/PB3RaSfQk/o8umv7zPbbGf/5UVBWab93OoOsYhLKsIcMmjKK2uCPv3
+	 VKZNks1ETjM+xAvMGmSqqxWc6eGvWhR8aVHubRltAd6sS+f4G01X3ZOArlj09m+aadEFR
+	 Dtg3hwdVLwrhFkYPtFGFIoVsdlG+xWvj4sjcZqM+GLw0t1hCWgNz/oIixG1F4ks2hnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022517;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022519;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fpXJiIAvCQYOxO8qSIXrxP/fWWrZoWCq5LdHd80toT4=;
-	b=h7JIETpgvxr0UVuzf6mgVOyLBX3nzV4Z9RtR61DBE2rY52WcxyWnI94Xk+ZFBQtmovOF
-	 9R2fNQiKoDYED93shsCuBBLwIBFvBfL2Jz5hEnWvlIBA/lLQttkdXSMJYzC/+Px2O5a0j
-	 qT6EGu7VCT7VSw+21FgCekwz4OR2SqXXU6/jI4GZKYuTdmzHcZe37Ir11xweCayCSsydO
-	 98JU5rD5KRQ3PnrVj5xfCTXRjUg98oWyJQ0drbBqtqCCjfhvMfGY0YESIMUBV5ypDtRA/
-	 dBjU9Tf6WnlRiJA19SudUm8UMno9GEU6oRM/JDvhIbwzkQZPi0K9Bh2V9PYCEaZE5sg==
+	bh=cylHTxcyzaXTV4D4nOjrXhxF15iurNs9B7/mRy5Tzj4=;
+	b=HQ5iL4/yCeglHG4VYU8fmXvXPoKUhs01UPi2BrjdhqIkjjuDhIRy51m8ICliHhLUFOSf
+	 kwWWcB7XMk+XVhVxY+/cgIujr9ze6zIJS3wgZuhzzRx/Cy2KLi4bXaQN/KFVwKhnOBujj
+	 RTrgVdTsrU3ALTnGNhKXLIwBvWYT30UH7bo/itfquUI3k6NnPgWvgmVWMTS7h1oZ6/vQ7
+	 Vba5sp2tlEuJhipxP1vWFIbeVb4l17iYwcoLgM18QWyBsxdNVwkQeXD+ZKMepkbrOzeC8
+	 TZ1pC9tR1BiRR+H/2scl9APzOwJON5IohjvDAkr1QFPhbt1jLSu+7yuDt3bRy9gCKtA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rEKJWvp+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=usdJHE5K;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F0C1606A325;
-	Wed, 18 Nov 2026 17:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFAF606A32F;
+	Wed, 18 Nov 2026 17:21:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rEKJWvp+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DC2C1F000CE;
-	Wed, 18 Nov 2026 17:21:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=usdJHE5K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 306661F000CE;
+	Wed, 18 Nov 2026 17:21:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022517;
-	bh=fpXJiIAvCQYOxO8qSIXrxP/fWWrZoWCq5LdHd80toT4=;
+	s=korg; t=1795022519;
+	bh=cylHTxcyzaXTV4D4nOjrXhxF15iurNs9B7/mRy5Tzj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rEKJWvp+Mixi+LhuaG5ohVl0phrcsz8/B7qdDYXp40/0NOoW2YNX6y0+CcnK8x+QI
-	 9jLwlmURJP9Ic7Bl/fyAuDMqp6HLBY+YLceVpwVQIHRpiKLq/0MdlQ1wg2kLVSV/pJ
-	 nkVhElI6A2tyC7GgupB4Ty4Z64KjYNVJvVaUvRts=
+	b=usdJHE5KJyPPyfTr6YJnIjqF6Mo6/E0CMOcx71/sClbsOqkvb62IfPMfy+EjkwAMO
+	 31C7ClWwicRnlY3rK+DaMnsGiA84/zs6YBN8x0kV03U1mjqdG2JJzTtrlto7vP+8hO
+	 Jd35zArMItMHSdiq0hFaTJKxEosEemH6vGxpbKNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Georgia Garcia <georgia.garcia@canonical.com>,
 	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0040/2151] apparmor: constify aa_profile parameters on read-only compute paths
-Date: Wed, 18 Nov 2026 15:29:35 +0100
-Message-ID: <20261118150123.158328294@linuxfoundation.org>
+Subject: [PATCH 6.18 0041/2151] apparmor: fix profile leak when a policy load fails
+Date: Wed, 18 Nov 2026 15:29:36 +0100
+Message-ID: <20261118150123.194772291@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -67,286 +68,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Johansen <john.johansen@canonical.com>
+From: Georgia Garcia <georgia.garcia@canonical.com>
 
-[ Upstream commit 08066bcdeed037a99c47f7c8456cf30ee3055048 ]
+[ Upstream commit ce94927fa4173fcc1eca27bdc65a140064c8f1e6 ]
 
-A number of functions take a struct aa_profile * argument that is only
-ever read from: they compute DFA matches or apply the profile's mode
-flags without modifying the profile, taking a reference on it, or
-touching its embedded label. Mark those parameters const struct
-aa_profile * to document intent and let the compiler enforce it.
+The error paths of aa_replace_profiles() and aa_unpack() do not break
+the refcount cycle between label and proxy. They just aa_put_profile()
+the new profiles, which drops the label refcount from 2 to 1, and the
+proxy keeps the profile alive. Every failed atomic policy load
+(e.g. "profile can not be replaced", or a later profile in the blob
+failing to unpack) leaks every new profile in the set, along with its
+proxy, rules and its loaddata reference.
 
-The converted functions are the permission "compute" path plus a few
-pure readers:
-  - aa_apply_modes_to_perms(), aa_profile_match_label()
-  - AUDIT_MODE()
-  - aa_label_match() and its match_component()/label_compound_match()/
-    label_components_match() helpers (label.c)
-  - match_component()/label_compound_match()/label_components_match()/
-    label_match()/change_profile_perms()/aa_xattrs_match() (domain.c)
-  - match_iface()/match_addr_iface()/match_addr_iface_label()/
-    skb_match_to_sk()/skb_match_to_cmd() (af_inet.c)
-  - aa_profile_capget(), path_flags(), profile_query_cb()
+The leak is usually not visible from userspace, because the raw_data
+directory for a failed load is not created, but it becomes visible
+when the blob is deduplicated onto an existing loaddata, which then
+keeps its policy/raw_data/<rev> directory forever.
 
-The remaining aa_profile * parameters cannot be made const: the audit
-path stores &profile->label into the owned, refcounted
-apparmor_audit_data.subj_label/peer fields, and the domain/lifecycle
-paths take references on the profile's embedded label
-(aa_get_label()/aa_get_newest_label()/aa_get_profile()) or write
-profile fields.
+Add aa_put_unpublished_profile(), which drops the profile's own proxy
+before putting the profile, and use it on those error paths. The
+proxy of an unpacked profile is always freshly allocated and not
+referenced by anything else before the profile is published, so
+putting it is safe.
 
-No functional change.
-
+Fixes: 637f688dc3dc ("apparmor: switch from profiles to using labels on contexts")
+Cc: stable@vger.kernel.org
+Signed-off-by: Georgia Garcia <georgia.garcia@canonical.com>
 Signed-off-by: John Johansen <john.johansen@canonical.com>
-Assisted-by: Claude:claude-opus-4.8
-Stable-dep-of: ce94927fa417 ("apparmor: fix profile leak when a policy load fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/apparmorfs.c         |  3 ++-
- security/apparmor/capability.c         |  2 +-
- security/apparmor/domain.c             | 16 ++++++++--------
- security/apparmor/include/capability.h |  2 +-
- security/apparmor/include/label.h      |  2 +-
- security/apparmor/include/perms.h      |  4 ++--
- security/apparmor/include/policy.h     |  2 +-
- security/apparmor/label.c              | 10 +++++-----
- security/apparmor/lib.c                |  5 +++--
- security/apparmor/mount.c              |  2 +-
- 10 files changed, 25 insertions(+), 23 deletions(-)
+ security/apparmor/include/policy.h | 20 ++++++++++++++++++++
+ security/apparmor/policy.c         |  3 +++
+ security/apparmor/policy_unpack.c  |  4 +++-
+ 3 files changed, 26 insertions(+), 1 deletion(-)
 
-diff --git a/security/apparmor/apparmorfs.c b/security/apparmor/apparmorfs.c
-index 4dfca0c6e938d..7db41581b7b21 100644
---- a/security/apparmor/apparmorfs.c
-+++ b/security/apparmor/apparmorfs.c
-@@ -690,7 +690,8 @@ static const struct file_operations aa_fs_ns_revision_fops = {
- 	.release	= ns_revision_release,
- };
- 
--static void profile_query_cb(struct aa_profile *profile, struct aa_perms *perms,
-+static void profile_query_cb(const struct aa_profile *profile,
-+			     struct aa_perms *perms,
- 			     const char *match_str, size_t match_len)
- {
- 	struct aa_ruleset *rules = profile->label.rules[0];
-diff --git a/security/apparmor/capability.c b/security/apparmor/capability.c
-index b9ea6bc45c1a7..2f3c6c84358de 100644
---- a/security/apparmor/capability.c
-+++ b/security/apparmor/capability.c
-@@ -191,7 +191,7 @@ int aa_capable(const struct cred *subj_cred, struct aa_label *label,
- 	return error;
- }
- 
--kernel_cap_t aa_profile_capget(struct aa_profile *profile)
-+kernel_cap_t aa_profile_capget(const struct aa_profile *profile)
- {
- 	struct aa_ruleset *rules = profile->label.rules[0];
- 	aa_state_t state;
-diff --git a/security/apparmor/domain.c b/security/apparmor/domain.c
-index 57e886b8ef461..1bfd36d8dfde2 100644
---- a/security/apparmor/domain.c
-+++ b/security/apparmor/domain.c
-@@ -90,8 +90,8 @@ static int may_change_ptraced_domain(const struct cred *to_cred,
-  * If a subns profile is not to be matched should be prescreened with
-  * visibility test.
-  */
--static inline aa_state_t match_component(struct aa_profile *profile,
--					 struct aa_profile *tp,
-+static inline aa_state_t match_component(const struct aa_profile *profile,
-+					 const struct aa_profile *tp,
- 					 bool stack, aa_state_t state)
- {
- 	struct aa_ruleset *rules = profile->label.rules[0];
-@@ -126,7 +126,7 @@ static inline aa_state_t match_component(struct aa_profile *profile,
-  * @perms should be preinitialized with allperms OR a previous permission
-  *        check to be stacked.
-  */
--static int label_compound_match(struct aa_profile *profile,
-+static int label_compound_match(const struct aa_profile *profile,
- 				struct aa_label *label, bool stack,
- 				aa_state_t state, bool inview, u32 request,
- 				struct aa_perms *perms)
-@@ -188,7 +188,7 @@ static int label_compound_match(struct aa_profile *profile,
-  * @perms should be preinitialized with allperms OR a previous permission
-  *        check to be stacked.
-  */
--static int label_components_match(struct aa_profile *profile,
-+static int label_components_match(const struct aa_profile *profile,
- 				  struct aa_label *label, bool stack,
- 				  aa_state_t start, bool inview, u32 request,
- 				  struct aa_perms *perms)
-@@ -252,7 +252,7 @@ static int label_components_match(struct aa_profile *profile,
-  *
-  * Returns: the state the match finished in, may be the none matching state
-  */
--static int label_match(struct aa_profile *profile, struct aa_label *label,
-+static int label_match(const struct aa_profile *profile, struct aa_label *label,
- 		       bool stack, aa_state_t state, bool inview, u32 request,
- 		       struct aa_perms *perms)
- {
-@@ -286,7 +286,7 @@ static int label_match(struct aa_profile *profile, struct aa_label *label,
-  * currently only matches full label A//&B//&C or individual components A, B, C
-  * not arbitrary combinations. Eg. A//&B, C
-  */
--static int change_profile_perms(struct aa_profile *profile,
-+static int change_profile_perms(const struct aa_profile *profile,
- 				struct aa_label *target, bool stack,
- 				u32 request, aa_state_t start,
- 				struct aa_perms *perms)
-@@ -310,7 +310,7 @@ static int change_profile_perms(struct aa_profile *profile,
-  * Returns: number of extended attributes that matched, or < 0 on error
-  */
- static int aa_xattrs_match(const struct path *path,
--			   struct aa_profile *profile, aa_state_t state)
-+			   const struct aa_profile *profile, aa_state_t state)
- {
- 	AA_BUG(!path);
- 	AA_BUG(!profile);
-@@ -318,7 +318,7 @@ static int aa_xattrs_match(const struct path *path,
- 	int i;
- 	struct dentry *d;
- 	char *value = NULL;
--	struct aa_attachment *attach = &profile->attach;
-+	const struct aa_attachment *attach = &profile->attach;
- 	int size, value_size = 0, ret = attach->xattr_count;
- 
- 	if (!attach->xattr_count)
-diff --git a/security/apparmor/include/capability.h b/security/apparmor/include/capability.h
-index 1ddcec2d1160d..ec4bf70e3410b 100644
---- a/security/apparmor/include/capability.h
-+++ b/security/apparmor/include/capability.h
-@@ -36,7 +36,7 @@ struct aa_caps {
- 
- extern struct aa_sfs_entry aa_sfs_entry_caps[];
- 
--kernel_cap_t aa_profile_capget(struct aa_profile *profile);
-+kernel_cap_t aa_profile_capget(const struct aa_profile *profile);
- int aa_capable(const struct cred *subj_cred, struct aa_label *label,
- 	       int cap, unsigned int opts);
- 
-diff --git a/security/apparmor/include/label.h b/security/apparmor/include/label.h
-index 75c49e713a749..42fcff72e1899 100644
---- a/security/apparmor/include/label.h
-+++ b/security/apparmor/include/label.h
-@@ -346,7 +346,7 @@ static inline const char *aa_label_str_split(const char *str)
- 
- struct aa_perms;
- struct aa_ruleset;
--int aa_label_match(struct aa_profile *profile, struct aa_ruleset *rules,
-+int aa_label_match(const struct aa_profile *profile, struct aa_ruleset *rules,
- 		   struct aa_label *label, aa_state_t state, bool subns,
- 		   u32 request, struct aa_perms *perms);
- 
-diff --git a/security/apparmor/include/perms.h b/security/apparmor/include/perms.h
-index 695d9b0572d4f..5cc0b3c0225a9 100644
---- a/security/apparmor/include/perms.h
-+++ b/security/apparmor/include/perms.h
-@@ -206,11 +206,11 @@ void aa_audit_perm_names(struct audit_buffer *ab, const char * const *names,
- 			 u32 mask);
- void aa_audit_perm_mask(struct audit_buffer *ab, u32 mask, const char *chrs,
- 			u32 chrsmask, const char * const *names, u32 namesmask);
--void aa_apply_modes_to_perms(struct aa_profile *profile,
-+void aa_apply_modes_to_perms(const struct aa_profile *profile,
- 			     struct aa_perms *perms);
- void aa_perms_accum(struct aa_perms *accum, const struct aa_perms *addend);
- void aa_perms_accum_raw(struct aa_perms *accum, const struct aa_perms *addend);
--void aa_profile_match_label(struct aa_profile *profile,
-+void aa_profile_match_label(const struct aa_profile *profile,
- 			    struct aa_ruleset *rules, struct aa_label *label,
- 			    int type, u32 request, struct aa_perms *perms);
- int aa_check_perms(struct aa_profile *profile, const struct aa_perms *perms,
 diff --git a/security/apparmor/include/policy.h b/security/apparmor/include/policy.h
-index 2eaa1bee31bc0..69e6c93d2ff04 100644
+index 69e6c93d2ff04..50dcf0147ae2b 100644
 --- a/security/apparmor/include/policy.h
 +++ b/security/apparmor/include/policy.h
-@@ -408,7 +408,7 @@ static inline void aa_put_profile(struct aa_profile *p)
+@@ -408,6 +408,26 @@ static inline void aa_put_profile(struct aa_profile *p)
  		kref_put(&p->label.count.count, aa_label_kref);
  }
  
--static inline int AUDIT_MODE(struct aa_profile *profile)
-+static inline int AUDIT_MODE(const struct aa_profile *profile)
++/**
++ * aa_put_unpublished_profile - put a profile that was never made visible
++ * @p: profile  (MAYBE NULL)
++ *
++ * A newly allocated profile and its proxy reference each other
++ * (proxy->label holds a label refcount). That cycle is normally broken
++ * when the profile is replaced or removed, which redirects the proxy.
++ * A profile that is discarded before being added to the policy tree
++ * never goes through either path, so break the cycle here, otherwise
++ * the profile, its proxy and its rawdata are leaked.
++ */
++static inline void aa_put_unpublished_profile(struct aa_profile *p)
++{
++	if (p && p->label.proxy) {
++		aa_put_proxy(p->label.proxy);
++		p->label.proxy = NULL;
++	}
++	aa_put_profile(p);
++}
++
+ static inline int AUDIT_MODE(const struct aa_profile *profile)
  {
  	if (aa_g_audit != AUDIT_NORMAL)
- 		return aa_g_audit;
-diff --git a/security/apparmor/label.c b/security/apparmor/label.c
-index 667f20363ebf1..d0610e9d7961a 100644
---- a/security/apparmor/label.c
-+++ b/security/apparmor/label.c
-@@ -1253,9 +1253,9 @@ struct aa_label *aa_label_merge(struct aa_label *a, struct aa_label *b,
-  * If a subns profile is not to be matched should be prescreened with
-  * visibility test.
-  */
--static inline aa_state_t match_component(struct aa_profile *profile,
-+static inline aa_state_t match_component(const struct aa_profile *profile,
- 					 struct aa_ruleset *rules,
--					 struct aa_profile *tp,
-+					 const struct aa_profile *tp,
- 					 aa_state_t state)
- {
- 	const char *ns_name;
-@@ -1287,7 +1287,7 @@ static inline aa_state_t match_component(struct aa_profile *profile,
-  * @perms should be preinitialized with allperms OR a previous permission
-  *        check to be stacked.
-  */
--static int label_compound_match(struct aa_profile *profile,
-+static int label_compound_match(const struct aa_profile *profile,
- 				struct aa_ruleset *rules,
- 				struct aa_label *label,
- 				aa_state_t state, bool inview, u32 request,
-@@ -1343,7 +1343,7 @@ static int label_compound_match(struct aa_profile *profile,
-  * @perms should be preinitialized with allperms OR a previous permission
-  *        check to be stacked.
-  */
--static int label_components_match(struct aa_profile *profile,
-+static int label_components_match(const struct aa_profile *profile,
- 				  struct aa_ruleset *rules,
- 				  struct aa_label *label, aa_state_t start,
- 				  bool inview, u32 request,
-@@ -1402,7 +1402,7 @@ static int label_components_match(struct aa_profile *profile,
-  *
-  * Returns: the state the match finished in, may be the none matching state
-  */
--int aa_label_match(struct aa_profile *profile, struct aa_ruleset *rules,
-+int aa_label_match(const struct aa_profile *profile, struct aa_ruleset *rules,
- 		   struct aa_label *label, aa_state_t state, bool inview,
- 		   u32 request, struct aa_perms *perms)
- {
-diff --git a/security/apparmor/lib.c b/security/apparmor/lib.c
-index 3b982770c4ceb..3a65dc82fd8eb 100644
---- a/security/apparmor/lib.c
-+++ b/security/apparmor/lib.c
-@@ -358,7 +358,8 @@ void aa_audit_perm_mask(struct audit_buffer *ab, u32 mask, const char *chrs,
-  *
-  * TODO: split into profile and ns based flags for when accumulating perms
-  */
--void aa_apply_modes_to_perms(struct aa_profile *profile, struct aa_perms *perms)
-+void aa_apply_modes_to_perms(const struct aa_profile *profile,
-+			     struct aa_perms *perms)
- {
- 	switch (AUDIT_MODE(profile)) {
- 	case AUDIT_ALL:
-@@ -383,7 +384,7 @@ void aa_apply_modes_to_perms(struct aa_profile *profile, struct aa_perms *perms)
- 		perms->prompt = ALL_PERMS_MASK;
- }
+diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
+index 230d8428b4d31..e582df9327037 100644
+--- a/security/apparmor/policy.c
++++ b/security/apparmor/policy.c
+@@ -1434,6 +1434,9 @@ ssize_t aa_replace_profiles(struct aa_ns *policy_ns, struct aa_label *label,
+ 	}
+ 	list_for_each_entry_safe(ent, tmp, &lh, list) {
+ 		list_del_init(&ent->list);
++		/* new was never added to the policy tree */
++		aa_put_unpublished_profile(ent->new);
++		ent->new = NULL;
+ 		aa_load_ent_free(ent);
+ 	}
  
--void aa_profile_match_label(struct aa_profile *profile,
-+void aa_profile_match_label(const struct aa_profile *profile,
- 			    struct aa_ruleset *rules,
- 			    struct aa_label *label,
- 			    int type, u32 request, struct aa_perms *perms)
-diff --git a/security/apparmor/mount.c b/security/apparmor/mount.c
-index 31f792817643c..f2cf3ec853e7d 100644
---- a/security/apparmor/mount.c
-+++ b/security/apparmor/mount.c
-@@ -278,7 +278,7 @@ static int do_match_mnt(struct aa_policydb *policy, aa_state_t start,
- }
+diff --git a/security/apparmor/policy_unpack.c b/security/apparmor/policy_unpack.c
+index 8dc2adedc7ae1..3e16612d2284e 100644
+--- a/security/apparmor/policy_unpack.c
++++ b/security/apparmor/policy_unpack.c
+@@ -1556,11 +1556,13 @@ int aa_unpack(struct aa_loaddata *udata, struct list_head *lh,
  
+ fail_profile:
+ 	kfree(ns_name);
+-	aa_put_profile(profile);
++	aa_put_unpublished_profile(profile);
  
--static int path_flags(struct aa_profile *profile, const struct path *path)
-+static int path_flags(const struct aa_profile *profile, const struct path *path)
- {
- 	AA_BUG(!profile);
- 	AA_BUG(!path);
+ fail:
+ 	list_for_each_entry_safe(ent, tmp, lh, list) {
+ 		list_del_init(&ent->list);
++		aa_put_unpublished_profile(ent->new);
++		ent->new = NULL;
+ 		aa_load_ent_free(ent);
+ 	}
+ 
 -- 
 2.53.0
 
