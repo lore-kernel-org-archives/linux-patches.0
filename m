@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034957;
-	b=z2rYvD4XeJZLSmbeHP75KOVZq7WXl9TaN0GvJElaJIOGryT5pkTxmzWyhbsdMoSbfJMa
-	 K1BmzQDQ3mRQ37ZKqvjMCQLRIMG8W8cofTpj4olezUh2nrLmEgOoJlHQ7KAiJDJPh9REB
-	 cpVehlPf2wfQHbeIGFG0nH1hdethvYSYkeH4IBptQdDu8WdDwP37Aed6HGGSRtOeL5vCV
-	 AB1m1gNcw5aPTX+enF9xsZ7A5PryXFt8PtbBvOKI6BGA8xD3hafAo/H0fKvm3TUa6Nn27
-	 AR/tTRo+O1O5G9udBmVKgRp++qwL1L1LNlfTXQ0aMm2bDzcuURo0RnJTPMYkysOVn8w==
+	t=1795034960;
+	b=K5vtDgfld2JXJfLcHemczu1h0kPnthLy1CY19shMzfzh9nrB+2g4zsSjkijCW3r/3k41
+	 Wc2YXfZlPaalFKitHskwX9RxeQVJBFyEivVIricwnKw9QM4Lr8fKDSzlIBplM7qreyzsF
+	 5Vv0Tpl5PDlPPygqY3erQWwA/EkLgBm8a0Fr8urgimeswsKf6LqFKonrrTA9iRo/FjWuc
+	 pxWUkmAiVQitdIGhzEaQ4UU2bt9c6vkivtbzQjwzGLLLiV5uGztAncTiw+u/q43zLuTeL
+	 2bYpNwHc7evoreS8nlTIs75LsGmAHMHDs0GSsIZYCb6YHYbsJtKZrCbX3zbg+BESYLw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034957;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034960;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/slQqpOeieyl/w3xdzLSzovw100wGIkA5607j92AjpU=;
-	b=Dk5eNqnPgu2MrLDQZmgTclSoB+bzBMzbiYrjtEqezSYQgzJpWp5EbKsw8S6qv1vUg+v/
-	 7jzlrP84Pp+638O5QSjaM8waJxrVNWFT9UTXN28+Z2aGdmSBApiMFbyby7lMBWivmP455
-	 xC3ctvyoK2KhweXSl5Eut7BKKkchWB4p5opP/em7UOk5mVe93dXEO9oI3X8ZuE6+jcbfK
-	 4ywmDnZfNfk67JADUewVWEB05VbCR9KLvf38SSHiC6MSBx1aiLjloRWhdjYpUO57Udbw8
-	 rF94zGcWqlFDuR/3V73wJrkxAQaqrel1i5c/1idbM6fKvy6AQhPif/wt2kfZ19oS3pA==
+	bh=KeepdwhWr+wJl4ki247rTTweuny6fLIzW6Z76X0D504=;
+	b=U1jaEGi4Snc7qfFanOuWEsrDZOnLyvWTOIxlGlLHseXJuw/P2iUtHGfHBXLyvJnVdouG
+	 6Wo/xN3ce1e/a5HAfiHqUnNhE9so5hEiai/S9tI+gP3PE2RPdmKlWT6DP9WpLf3bPT0hd
+	 wgNPPTkQVLlXUs6A0ux1t/gePquTQQNtVOyD/sBrQPlpgIJftJDmHBrkfvZ+Ti4Rmj2uN
+	 c3buAS5U1KINLm3Bc66kCVust+aQnTXOJ78LTWm0j3qKO/zTcFlRU2ax5WND+qGIyWmEX
+	 tDNvRfgjx07aDkczK7nmlb/l2JPz7Q+R4HC+0o0kNNig8Hj6KNjA3hG413Q7MQqZzwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qB6c9q7f;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XOkgt4bS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B860606A31C;
-	Wed, 18 Nov 2026 20:49:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370F9606A31C;
+	Wed, 18 Nov 2026 20:49:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qB6c9q7f
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C1681F000C4;
-	Wed, 18 Nov 2026 20:49:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XOkgt4bS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43CD51F000C4;
+	Wed, 18 Nov 2026 20:49:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034957;
-	bh=/slQqpOeieyl/w3xdzLSzovw100wGIkA5607j92AjpU=;
+	s=korg; t=1795034959;
+	bh=KeepdwhWr+wJl4ki247rTTweuny6fLIzW6Z76X0D504=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qB6c9q7fYmXZT7tTN4aFjUFwfomk7bu66OFD0reiyQLu3XogbrnT1Avh90uf59PXJ
-	 Cz3QZ3miLbxBN6rYa5yb3yAhwFZHk1gaUIuMWGGd8O4Y7yfM7WaO3J7dV0ep2iT0jY
-	 Yo/yIGh91u892Iy/PSQyBy2LkCNokvAciglfP0h8=
+	b=XOkgt4bSsC9OZUcNo3JLG0RBhife2SHWnAKQsCc73gPcdTY6txOtY6zSudoSvarh7
+	 taqb8Xp47N+GyVXaS/Mjw/uPmpHiK1MisdX/vBB8VDJbmGPWLsVAE5fSHX7R+pJll9
+	 BwFwsuLFjbH7H9lL6aTKIVDP87HjPveh/wsG3GhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sashiko (gemini)" <sashiko-bot@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 0555/3318] net/sched: sch_teql: fix slaves_lock IRQ deadlock
-Date: Wed, 18 Nov 2026 15:19:37 +0100
-Message-ID: <20261118150333.975512824@linuxfoundation.org>
+	EJ Campbell <ejc3@meta.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 0538/3318] x86/kvm: Dont consume async #PF flags on a kernel #PF in NMI context
+Date: Wed, 18 Nov 2026 15:19:20 +0100
+Message-ID: <20261118150333.399867781@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,250 +68,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: EJ Campbell <ejc3@meta.com>
 
-commit 8b2043279dae25483fe1f2d926e76d41ab95c398 upstream.
+[ Upstream commit 81d99abe2bd81379abfb595e403bbbee6fbfc624 ]
 
-This is a followup of commit e5b811fe7931 ("net/sched: sch_teql:
-Introduce slaves_lock to avoid race condition and UAF") as reported by
-Sashiko.
+An async #PF "page not present" event arrives through the #PF vector,
+and its reason sits in the per-CPU apf_reason.flags until
+__kvm_handle_async_pf() reads and clears it. If an NMI arrives after
+the event is injected and before the #PF handler reads the flags, and
+the NMI handler itself takes a #PF, that fault reads and clears the
+flags belonging to the #PF it interrupted. It then finds interrupts
+disabled in the NMI context it interrupted, and panics:
 
-The issue: master->slaves_lock serializes the master's ring of slave
-qdiscs.  The control paths -- teql_dequeue(), teql_destroy() and
-teql_qdisc_init() -- take it with spin_lock_bh(), while
-teql_master_xmit() (the master's ndo_start_xmit) takes it with plain
-spin_lock().
+  Kernel panic - not syncing: Host injected async #PF in interrupt
+disabled region
+  Call Trace:
+   <NMI>
+   panic+0x52/0x60
+   __kvm_handle_async_pf+0xb0/0xb0
+   exc_page_fault+0x71/0xb0
+   asm_exc_page_fault+0x27/0x30
+  RIP: 0010:__get_user_nocheck_8+0x6/0x20
+   perf_callchain_user+0x147/0x1a0
+   get_perf_callchain+0x12d/0x1c0
+   ...
+   perf_event_nmi_handler+0x26/0x50
+   exc_nmi+0xe8/0x110
+  RIP: 0010:asm_exc_page_fault+0x0/0x30
+   </NMI>
 
-netpoll_send_skb() wraps the transmit in local_irq_save(), and
-__netpoll_send_skb() asserts lockdep_assert_irqs_disabled(), so
-teql_master_xmit() reached from netconsole always acquires slaves_lock
-with hard IRQs disabled.  On PREEMPT_RT spinlock_t is an rtmutex, and
-Documentation/locking/locktypes.rst names
+The last RIP line shows the NMI landing on the first instruction of
+the #PF entry. perf with user call chains takes such a fault: the
+sampling NMI walks the user stack with __get_user(), which faults when
+a saved frame pointer is not a valid user address or the walk runs off
+the top of the stack. The same window exists when KVM, running as an
+L1 hypervisor with DELIVERY_AS_PF_VMEXIT, reads the flags itself after
+a #PF VM-exit.
 
-	local_irq_disable();
-	spin_lock(&lock);
+The NMI entry code saves and restores CR2 for this nesting, but not the
+async #PF reason. Andy Lutomirski described the race, with perf as the
+example, when async #PF delivery was reworked in 2020 [1]. Saving and
+clearing the flags across the NMI, next to CR2, was discussed there but
+not merged.
 
-as a sequence that breaks there because the rtmutex requires a fully
-preemptible context.  This is reachable without any panic: the nbcon
-printer thread calls netconsole's write_thread() callback on every
-message.  The usual remedy -- folding the IRQ disable into the lock with
-spin_lock_irqsave() -- is unavailable because the local_irq_save() is
-netpoll's, not ours.
+Since that rework, Linux has stopped setting KVM_ASYNC_PF_SEND_ALWAYS,
+so the host delivers "page not present" only for user mode faults and
+a kernel-mode fault in NMI context (including kernel-mode #MC and #DB)
+cannot be an async page fault.  In that case, return without touching
+the flags so that the interrupted handler finds them intact.
 
-On non-RT the same asymmetry leaves slaves_lock acquirable with hard IRQs
-disabled on one path and held with hard IRQs enabled on another.  That is
-only exploitable during the panic console flush (netconsole is
-CON_NBCON_ATOMIC_UNSAFE, so console_is_usable() admits its write_atomic()
-only from nbcon_atomic_flush_unsafe(), which panic() alone calls), and
-even then an IRQ-saving lock does not help if the holder oopsed inside the
-section or was stopped by panic_other_cpus_shutdown().  So the non-RT half
-is hardening; the PREEMPT_RT half is the bug.
+Tested on v7.3-rc5 in a 4-vCPU, 2 GiB guest restored from a snapshot
+whose memory is served on demand through userfaultfd, so that reading
+it back takes async #PFs, while every thread samples hardware cycles
+with user call chains and points its frame pointer at an unmapped page.
+Without this patch the guest panicked as above in 3 of 3 runs. With it,
+the guest survived 3 of 3 runs of 60 seconds, and the host counted
+148,441 to 153,334 kvm_async_pf_not_present events in the first 20
+seconds of each. On 6.18.50 the results were the same: the guest
+panicked without the patch and survived with it.
 
-The Fix: take slaves_lock as a raw spinlock with IRQs saved at every
-site.  Since skb_queue_purge() takes the queue's spinlock_t and may not
-nest inside a raw lock on PREEMPT_RT, move its call in teql_destroy()
-outside the raw section; dat->q is the dying qdisc's own queue and was
-never serialized by slaves_lock, so the move is behaviour-neutral.
-
-The new critical sections contain only RCU pointer assignments and
-netdev_get_tx_queue(); skb_queue_purge(), netif_wake_queue() and
-dev_reset_queue() are all outside them.  teql_destroy()'s ring walk is
-O(slaves), two pointer loads and a compare per iteration, so even a large
-ring is microseconds with IRQs off.  Keeping the purge conditional rather
-than dropping it outright is the conservative call for a backport.
-
-Some context: commit 6301f6a34ed8 ("net/sched: sch_teql: move
-rcu_read_lock()/spin_lock() from _bh variants") hardened the parent
-fix; together they addressed the master->slaves resurrection
-use-after-free and the xmit-side BH warning but left the reverse
-direction -- a hard IRQ re-entering xmit while a control path holds the
-lock -- unaddressed.
-
-Conditions to recreate the bug:
-- CONFIG_PREEMPT_RT, CONFIG_NET_SCH_TEQL, CONFIG_DUMMY and
-  CONFIG_NETCONSOLE.
-- Run `ip link add dev teqlslave0 type dummy`, bring teqlslave0 up, attach
-  it with `tc qdisc add dev teqlslave0 root teql0`, and bring teql0 up.
-- Configure a netconsole target on teql0 with explicit local and remote
-  IP addresses and a remote MAC address, then emit a console message.
-  The nbcon printer thread reaches teql_master_xmit() with hard IRQs
-  disabled by netpoll; taking slaves_lock as a spinlock_t is invalid on
-  PREEMPT_RT. No panic or concurrent qdisc change is required.
-- Reachable by an admin with CAP_NET_ADMIN; teql devices exist only in the
-  initial netns (no per-netns ops), so a user namespace does not suffice.
-
-Fixes: e5b811fe7931 ("net/sched: sch_teql: Introduce slaves_lock to avoid race condition and UAF")
-Reported-by: Sashiko (gemini) <sashiko-bot@kernel.org>
-Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260630150922.238714-1-jhs%40mojatatu.com
-Link: https://lore.kernel.org/netdev/20260630150922.238714-1-jhs@mojatatu.com/
-Cc: stable@vger.kernel.org
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/QDISC-Y0BY.v2.r0.20261024060625-1@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/all/ed71d0967113a35f670a9625a058b8e6e0b2f104.1583547991.git.luto@kernel.org/ [1]
+Link: https://lore.kernel.org/all/20211126123145.2772-1-jiangshanlai@gmail.com/ [2]
+Cc: stable@vger.kernel.org # v5.9+
+Signed-off-by: EJ Campbell <ejc3@meta.com>
+Link: https://patch.msgid.link/CADkxfh-uQTca_6jB1JPDq1MsKffF_UKGQR339oQSJNcoV75GNQ@mail.gmail.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_teql.c |   45 ++++++++++++++++++++++++++++-----------------
- 1 file changed, 28 insertions(+), 17 deletions(-)
+ arch/x86/kernel/kvm.c | 32 +++++++++++++++++++++++++++++---
+ 1 file changed, 29 insertions(+), 3 deletions(-)
 
---- a/net/sched/sch_teql.c
-+++ b/net/sched/sch_teql.c
-@@ -53,7 +53,7 @@ struct teql_master {
- 	struct Qdisc_ops qops;
- 	struct net_device *dev;
- 	struct Qdisc __rcu	*slaves;
--	spinlock_t		slaves_lock; /* serializes writes to ->slaves */
-+	raw_spinlock_t		slaves_lock; /* serializes writes to ->slaves */
- 	struct list_head master_list;
- 	unsigned long	tx_bytes;
- 	unsigned long	tx_packets;
-@@ -92,6 +92,7 @@ teql_dequeue(struct Qdisc *sch)
- {
- 	struct teql_sched_data *dat = qdisc_priv(sch);
- 	struct netdev_queue *dat_queue;
-+	unsigned long flags;
- 	struct sk_buff *skb;
- 	struct Qdisc *q;
- 
-@@ -102,9 +103,9 @@ teql_dequeue(struct Qdisc *sch)
- 	if (skb == NULL) {
- 		struct net_device *m = qdisc_dev(q);
- 		if (m) {
--			spin_lock_bh(&dat->m->slaves_lock);
-+			raw_spin_lock_irqsave(&dat->m->slaves_lock, flags);
- 			rcu_assign_pointer(dat->m->slaves, sch);
--			spin_unlock_bh(&dat->m->slaves_lock);
-+			raw_spin_unlock_irqrestore(&dat->m->slaves_lock, flags);
- 			netif_wake_queue(m);
- 		}
- 	} else {
-@@ -137,11 +138,13 @@ teql_destroy(struct Qdisc *sch)
- 	struct teql_master *master = dat->m;
- 	struct netdev_queue *txq = NULL;
- 	bool reset_master_queue = false;
-+	unsigned long flags;
-+	bool purge = false;
- 
- 	if (!master)
- 		return;
- 
--	spin_lock_bh(&master->slaves_lock);
-+	raw_spin_lock_irqsave(&master->slaves_lock, flags);
- 	prev = rcu_dereference_protected(master->slaves,
- 					 lockdep_is_held(&master->slaves_lock));
- 	if (prev) {
-@@ -169,12 +172,18 @@ teql_destroy(struct Qdisc *sch)
- 					reset_master_queue = true;
- 				}
- 			}
--			skb_queue_purge(&dat->q);
-+			purge = true;
- 			break;
- 		} while (prev != rcu_dereference_protected(master->slaves,
- 							   lockdep_is_held(&master->slaves_lock)));
- 	}
--	spin_unlock_bh(&master->slaves_lock);
-+	raw_spin_unlock_irqrestore(&master->slaves_lock, flags);
-+
-+	/* skb_queue_purge() takes the queue's spinlock_t, which cannot nest
-+	 * inside a raw lock on PREEMPT_RT; purge after the raw section.
-+	 */
-+	if (purge)
-+		skb_queue_purge(&dat->q);
- 
- 	if (reset_master_queue)
- 		dev_reset_queue(master->dev, txq, NULL);
-@@ -187,6 +196,7 @@ static int teql_qdisc_init(struct Qdisc
- 	struct teql_master *m = (struct teql_master *)sch->ops;
- 	struct teql_sched_data *q = qdisc_priv(sch);
- 	struct Qdisc *first;
-+	unsigned long flags;
- 
- 	if (dev->hard_header_len > m->dev->hard_header_len)
- 		return -EINVAL;
-@@ -203,7 +213,7 @@ static int teql_qdisc_init(struct Qdisc
- 
- 	skb_queue_head_init(&q->q);
- 
--	spin_lock_bh(&m->slaves_lock);
-+	raw_spin_lock_irqsave(&m->slaves_lock, flags);
- 	first = rcu_dereference_protected(m->slaves, lockdep_is_held(&m->slaves_lock));
- 	if (first) {
- 		if (m->dev->flags & IFF_UP) {
-@@ -214,7 +224,7 @@ static int teql_qdisc_init(struct Qdisc
- 			    (m->dev->flags & IFF_MULTICAST &&
- 			     !(dev->flags & IFF_MULTICAST)) ||
- 			    dev->mtu < m->dev->mtu) {
--				spin_unlock_bh(&m->slaves_lock);
-+				raw_spin_unlock_irqrestore(&m->slaves_lock, flags);
- 				return -EINVAL;
- 			}
- 		} else {
-@@ -237,7 +247,7 @@ static int teql_qdisc_init(struct Qdisc
- 		m->dev->mtu = dev->mtu;
- 		m->dev->flags = (m->dev->flags&~FMASK)|(dev->flags&FMASK);
- 	}
--	spin_unlock_bh(&m->slaves_lock);
-+	raw_spin_unlock_irqrestore(&m->slaves_lock, flags);
- 	return 0;
+diff --git a/arch/x86/kernel/kvm.c b/arch/x86/kernel/kvm.c
+index 20059d236ff7f..efe769fab5c66 100644
+--- a/arch/x86/kernel/kvm.c
++++ b/arch/x86/kernel/kvm.c
+@@ -254,11 +254,39 @@ noinstr u32 kvm_read_and_reset_apf_flags(void)
  }
+ EXPORT_SYMBOL_GPL(kvm_read_and_reset_apf_flags);
  
-@@ -302,11 +312,12 @@ static inline int teql_resolve(struct sk
- static netdev_tx_t teql_master_xmit(struct sk_buff *skb, struct net_device *dev)
++static __always_inline bool kvm_apf_reason_pending(void)
++{
++	return __this_cpu_read(async_pf_enabled) &&
++	       __this_cpu_read(apf_reason.flags);
++}
++
+ noinstr bool __kvm_handle_async_pf(struct pt_regs *regs, u32 token)
  {
- 	struct teql_master *master = netdev_priv(dev);
--	struct Qdisc *start, *q;
--	int busy;
--	int nores;
- 	int subq = skb_get_queue_mapping(skb);
- 	struct sk_buff *skb_res = NULL;
-+	struct Qdisc *start, *q;
-+	unsigned long flags;
-+	int nores;
-+	int busy;
+-	u32 flags = kvm_read_and_reset_apf_flags();
+ 	irqentry_state_t state;
++	u32 flags;
++
++	if (!kvm_apf_reason_pending())
++		return false;
++
++	/*
++	 * The guest does not enable KVM_ASYNC_PF_SEND_ALWAYS, so the host
++	 * delivers async #PF only to user mode (or as a #PF VM-exit, which KVM
++	 * reads itself). A #PF from kernel mode can still arrive between that
++	 * delivery and the read of the reason flags, inside an NMI that
++	 * interrupted it, for instance perf reading user memory for a call
++	 * chain. Such a fault is not async, so leave the async PF flags
++	 * untouched for the outer handler.  Outside NMI context, on the other
++	 * hand, async PF flags on a kernel-mode fault mean the host is broken.
++	 */
++	if (!user_mode(regs)) {
++		if (likely(in_nmi()))
++			return false;
++		state = irqentry_enter(regs);
++		instrumentation_begin();
++		panic("Host injected async #PF in kernel mode\n");
++	}
  
- restart:
- 	nores = 0;
-@@ -342,13 +353,13 @@ restart:
- 				    netdev_start_xmit(skb, slave, slave_txq, false) ==
- 				    NETDEV_TX_OK) {
- 					__netif_tx_unlock(slave_txq);
--					spin_lock(&master->slaves_lock);
-+					raw_spin_lock_irqsave(&master->slaves_lock, flags);
- 					if (rcu_dereference_protected(master->slaves,
- 								      lockdep_is_held(&master->slaves_lock)) == q)
- 						rcu_assign_pointer(master->slaves,
- 								   rcu_dereference_protected(NEXT_SLAVE(q),
- 											     lockdep_is_held(&master->slaves_lock)));
--					spin_unlock(&master->slaves_lock);
-+					raw_spin_unlock_irqrestore(&master->slaves_lock, flags);
- 					netif_wake_queue(dev);
- 					master->tx_packets++;
- 					master->tx_bytes += length;
-@@ -361,13 +372,13 @@ restart:
- 				busy = 1;
- 			break;
- 		case 1:
--			spin_lock(&master->slaves_lock);
-+			raw_spin_lock_irqsave(&master->slaves_lock, flags);
- 			if (rcu_dereference_protected(master->slaves,
- 						      lockdep_is_held(&master->slaves_lock)) == q)
- 				rcu_assign_pointer(master->slaves,
- 						   rcu_dereference_protected(NEXT_SLAVE(q),
- 									     lockdep_is_held(&master->slaves_lock)));
--			spin_unlock(&master->slaves_lock);
-+			raw_spin_unlock_irqrestore(&master->slaves_lock, flags);
- 			rcu_read_unlock();
- 			return NETDEV_TX_OK;
- 		default:
-@@ -489,7 +500,7 @@ static __init void teql_master_setup(str
- 	struct teql_master *master = netdev_priv(dev);
- 	struct Qdisc_ops *ops = &master->qops;
++	flags = kvm_read_and_reset_apf_flags();
+ 	if (!flags)
+ 		return false;
  
--	spin_lock_init(&master->slaves_lock);
-+	raw_spin_lock_init(&master->slaves_lock);
- 	master->dev	= dev;
- 	ops->priv_size  = sizeof(struct teql_sched_data);
+@@ -274,8 +302,6 @@ noinstr bool __kvm_handle_async_pf(struct pt_regs *regs, u32 token)
+ 		panic("Host injected async #PF in interrupt disabled region\n");
  
+ 	if (flags & KVM_PV_REASON_PAGE_NOT_PRESENT) {
+-		if (unlikely(!(user_mode(regs))))
+-			panic("Host injected async #PF in kernel mode\n");
+ 		/* Page is swapped out by the host. */
+ 		kvm_async_pf_task_wait_schedule(token);
+ 	} else {
+-- 
+2.53.0
+
 
 
