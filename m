@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026521;
-	b=FPtn6bvgJsINiYDPC3U4AbsVwgGN7KxYO/jP7NF34NTeq9aMDpp4fykrVKaLjOAsIrS4
-	 03K4etCq35vTHd5ezlJHdFsR3Zb803aM6UjT8yGUFmVTGODDFnHIc1J1+WkvuTnxv8q8C
-	 WzaKp/q7usbnAYEPwx15WC1qZkshjt+FABbaDsBeE2fQDPJ/YiEi1w305zgbuwYwti7/F
-	 duSp7o1/rDrY6QTv/nYxe3Yb7ZmV7/D+H2Fc+E7UobuJu978L+Z8OM40ODUdcLbiC3y+X
-	 7v4qnQhUMhu0TF9rGZOiQFzEwrjKsXOvk9/LeTr+czJceH4QGZkP7Jpxd7cUrdvuqqw==
+	t=1795026524;
+	b=ULi1UZ6Rx5pmj1Z0lWCU1vQvW4IP54t8j/TYt4UNoP7clhemW0yNKmfruDUG8m5ewfdp
+	 hBkTlDVnoEOh3zkOrtdgR0imdjDS3v5NRVp16RY0F5U1hWdSaMKSYRe07aHnFZMIXCh9p
+	 YkETmUBBAa2nCO2Pl9JDfYB8CsxPXW7/U7fRwlN1kas7mzMN41Plthiai0HUdJ8s1Sfv6
+	 DnQnAQ8DUpSc4zEK67v2w+lmFLBFd1HvhwZj0DgoFsssFxwvo7UcM9jPFufZcqN31x+Yl
+	 CgW9k2WrQTaiZzgLw58vm0okv7/P7tmBnf+uGlYz4nLEnh1jcURLGbXGT5SIPHJuYRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026521;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026524;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HzOuP1lutZIK1ReEOnlpJQYBFX5yAG1uqBJHNEma1QY=;
-	b=PsKVRHgX7oDEUxVULFenQRVUmwNsf0/mZ9bdaKJHZ8v7G6r8As7D9lcYRQlv0jUbA/QU
-	 yw5ZSTdkYLeLZFwQt0Jkp0j6UybnLOBEGK6cJ33b/00AgLknAaf+j3rskpisrb6W89Ptc
-	 m14raT2J1K9nQ7kWAwrw7cRlQvJc2yWgqGAQlS8uG7flEXf5rSNDRP/O5z86+H8hC5tNd
-	 v/jMh4WIGtlQFYiZJnXfAmZgqiQynn2k82DqsfQDxRi3a+eMKz4XwgNO30Tfx2rAjDHmP
-	 uYTJ+nds2nCFjF0Sa2DL5PPNk/U1R5KhvntT5CIvNwueIT8Deao1fNuRLcgpV5F52cQ==
+	bh=yAb2vZ6woyGSS8Yqq0CvViALA+Kv3hMcg0khBEPjEmY=;
+	b=oHyNV2dFbNx04+7AWNSkDO5rh8WIOt+71L2OIenVhFAJXy9ZJy2ZouHctuoJ+cAstd//
+	 f3qZQRoBHWnHCFQLUmbIVgTSoOTyMvygFYPqo2aCcuTMRf2KfO1XSC2lQA2JupBWvHQOy
+	 jNMcy0CgTp/Iaxqi5TrAdmqQ/LAtpJdZtlw/7DoW3EHEtNbeAmUZqu1wqxojMjBLxopp+
+	 33GxUGAg7VYsQH1PbcrsbS9ozb5NI0z6Dpv8WhG5S0pr6HOXtfjdXVIZjRvK8rwQqMglh
+	 CQeBi1+07h4Xcf0LJnnBuoTGJX9P4FdEfk9x7E95p2v7YXrzrSDCEEDfY2y9f/E2h/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gMezlPdD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QtlxLrfw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ACE2606A31C;
-	Wed, 18 Nov 2026 18:28:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 660E1606A31C;
+	Wed, 18 Nov 2026 18:28:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gMezlPdD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D89561F000C4;
-	Wed, 18 Nov 2026 18:28:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QtlxLrfw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7BE01F000C4;
+	Wed, 18 Nov 2026 18:28:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026521;
-	bh=HzOuP1lutZIK1ReEOnlpJQYBFX5yAG1uqBJHNEma1QY=;
+	s=korg; t=1795026524;
+	bh=yAb2vZ6woyGSS8Yqq0CvViALA+Kv3hMcg0khBEPjEmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gMezlPdD/iNX3d+SPx5xkuz4ea91f/eIIkg0c0JvT4YOaLoFHI7k8OCNN292Ggf9g
-	 cJniuxeBSZC6xT052QtoRLU65pZ/K9bof6pilOHeLTYWduYotv0aYoQIiybuhL5Oki
-	 aQlHZYyBj3E6u56P/jClWT6FJoRJ6TVXkVF/kIgg=
+	b=QtlxLrfwhysa7D+KN1AdT2yxJxCsiCp72G5JF/qnSfTd8pc5oeuuxY4z8mlspJqf2
+	 JAEHfEJWqvhAV3tFHzbw2I5gt7W/clD3x7tWbYSXvaauREmLypplc36jCk8lE2WEPE
+	 L3QvXZaSBBPYjSriBfhvtpN0t/xbP04LCZnMIbFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Linkai Gong <gonglinkai@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1463/2151] spi: spi-qpic-snand: skip BBM copy on regular raw reads
-Date: Wed, 18 Nov 2026 15:53:18 +0100
-Message-ID: <20261118150215.196842849@linuxfoundation.org>
+Subject: [PATCH 6.18 1424/2151] char: scx200_gpio: check cdev_add() return value
+Date: Wed, 18 Nov 2026 15:52:39 +0100
+Message-ID: <20261118150213.827494242@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,71 +67,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Linkai Gong <gonglinkai@kylinos.cn>
 
-[ Upstream commit 2da46f1e9b980a38bc6afd417322ca4963725e16 ]
+[ Upstream commit fe26c195c265c033e474d015061a0183c7a02193 ]
 
-Trying to read the raw flash contents with nanddump, the second byte
-of the OOB area contains 0xff instead of the real data in the flash.
-This happens because the qcom_spi_read_last_cw() function unconditionally
-copies the bad block marker into the second byte of the output buffer.
+cdev_add() can fail. The driver currently ignores the return value and
+reports probe success even when the cdev was not registered, leaving a
+chrdev region allocated with no working file operations.
 
-Add a new flag to the controller's private data structure, and set it
-when only the first two bytes of the OOB area being read in raw mode.
-Also change the bad block copying code to run only when the flag is set.
+Check the return value, emit an error, and unwind the chrdev region and
+platform device on failure.
 
-This ensures that the SPI NAND framework still can read the BBM bytes,
-but on regular raw read, the output does not contain the duplicated
-marker byte.
-
-Fixes: 7304d1909080 ("spi: spi-qpic: add driver for QCOM SPI NAND flash Interface")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Link: https://patch.msgid.link/20261005-qpic-snand-skip-bbm-copy-v1-1-04f6aeda4044@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 635adb6cd25c ("[PATCH] scx200_gpio: use 1 cdev for N minors, not N for N")
+Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
+Link: https://patch.msgid.link/20260803015450.2050900-1-gonglinkai@kylinos.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-qpic-snand.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/char/scx200_gpio.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
-index 9ac01f53c83b8..4b2e192457938 100644
---- a/drivers/spi/spi-qpic-snand.c
-+++ b/drivers/spi/spi-qpic-snand.c
-@@ -111,6 +111,7 @@ struct qpic_spi_nand {
- 	__le32 addr2;
- 	__le32 cmd;
- 	u32 num_cw;
-+	bool bbm_read;
- 	bool oob_rw;
- 	bool page_rw;
- 	bool raw_rw;
-@@ -433,6 +434,16 @@ static int qcom_spi_ecc_prepare_io_req_pipelined(struct nand_device *nand,
- 	if (req->mode == MTD_OPS_RAW)
- 		snandc->qspi->raw_rw = true;
+diff --git a/drivers/char/scx200_gpio.c b/drivers/char/scx200_gpio.c
+index 700e6affea6f7..3ec17832e9c9d 100644
+--- a/drivers/char/scx200_gpio.c
++++ b/drivers/char/scx200_gpio.c
+@@ -107,10 +107,16 @@ static int __init scx200_gpio_init(void)
+ 	}
  
-+	/*
-+	 * Try to detect when the SPI NAND framework reads the first
-+	 * two bytes of the OOB area searching for bad block marker
-+	 * bytes.
-+	 */
-+	snandc->qspi->bbm_read = req->mode == MTD_OPS_RAW &&
-+				 req->type == NAND_PAGE_READ &&
-+				 req->dataoffs == 0 && req->datalen == 0 &&
-+				 req->ooboffs == 0 && req->ooblen == 2;
-+
- 	return 0;
- }
+ 	cdev_init(&scx200_gpio_cdev, &scx200_gpio_fileops);
+-	cdev_add(&scx200_gpio_cdev, devid, MAX_PINS);
++	rc = cdev_add(&scx200_gpio_cdev, devid, MAX_PINS);
++	if (rc) {
++		dev_err(&pdev->dev, "cdev_add err: %d\n", rc);
++		goto undo_chrdev_region;
++	}
  
-@@ -637,7 +648,8 @@ static int qcom_spi_read_last_cw(struct qcom_nand_controller *snandc,
- 	 * This can be removed once single-byte bad block marker support
- 	 * gets implemented in the SPINAND code.
- 	 */
--	snandc->data_buffer[bbpos + 1] = snandc->data_buffer[bbpos];
-+	if (snandc->qspi->bbm_read)
-+		snandc->data_buffer[bbpos + 1] = snandc->data_buffer[bbpos];
+ 	return 0; /* succeed */
  
- 	memcpy(op->data.buf.in, snandc->data_buffer + bbpos, op->data.nbytes);
- 
++undo_chrdev_region:
++	unregister_chrdev_region(devid, MAX_PINS);
+ undo_platform_device_add:
+ 	platform_device_del(pdev);
+ undo_malloc:
 -- 
 2.53.0
 
