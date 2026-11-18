@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024581;
-	b=xr2O25f7sUQ3d/I1Y5dxVGrJzVWKyjlHTZ+zAN731JKdGhzX4WreFgtKrLt1LUO1rA8Y
-	 eOFa0Bdovf1lQhLwHcVw90JQ5HI5HqHhhg/vguXoY/5DYIZd2otuucMyh0foc4vHu1zO5
-	 Xx1qs406fHIwhpo/qkXiPFJzUUuw2r4JA1MnxhwCJIHC5xaKxw+KTkFw6SFo2L0sc2RHj
-	 iHqcRiqJehbnRHM8EcLoUzuRaOZT2j+HTF17sbeHj5P6tdrJnuLdkCqudFY0h36u7SoGD
-	 K4EYEH0QVufGgPcTiY4zQSIdWSpXSRbk49q9QrmoGj8GMfkg7vy28OqSMb91YDWSnRw==
+	t=1795024584;
+	b=izzf+aPoxrbSc50JihSYZ88nEYcFCXL4Ey8j8qk3cCp1srEcGAPaE5mHEto/0yugK3E4
+	 BWRZAQZQwBO5bpXiO0kLptr1R6p5B5sZhoSgshL/1pk9mwb6lYFuBFC9uKGwSf+F9YLXI
+	 cUc+nWI9W6ipkjy1mLKFItGuCyz7euS1oVboFfn4U40MQ1vERHQqGthX7Voifi04W2eLk
+	 0aYZPkdUl5Xb9YA7CxiMOaR8BaZJQvWXOXr+/xMQSSCcBLye3ccTc28o7ZRnXU0eyNeIA
+	 IifvDgv2Q7eauML1lbShg4v3uKb/bwNZ3cAQP/BytHpL0x9SDnuyGkv5iJEtarsKY/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024581;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024584;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TL8sJPMCAPCHbAQpUVgtiwHt3bL7/VWagDVocDNX4Zg=;
-	b=P5CWPPPALEVuy79hKSdE3i3MsIgOJRJFA67CZkyWz22kTaDl3fgDI8G7Q1T8ExC44kPH
-	 tzDIqDF11/JxfFzD0D+OwxRnVMUUl98unyeAOYhSoetsFsjMy0tgt59dHMEmvhXS+f8Ii
-	 mnbST3l9LD15nv+pBHCQqeaejdQGz8zXSx9d5BJzfDnvRMU0TLtQX825xyIfn0dDPv1od
-	 oGsn9jdtgr8CmwJCGMenhWbtyTDsar0zZ3o2pP9NC6fhP0joLCSntjj4Mk1NSOG5VoFiD
-	 FMOOQaBVYgx+vVWtn9TLMZ3AY+SIOcxgo4+x/s4a3zJzxxN5XgLmQyiTmTLwqdDKAiA==
+	bh=sfQRjR3CrBIbgoQjhcN5Fuizp9d5VInrf1n6rT0QzZo=;
+	b=MzmTz2Ry4Mf3xbGKEYSGWAJDFsDK284jn7BmlRb5D9mO4VLBHA5b1erLcJhPji93iAyZ
+	 mi9Rm3uKEqSg39EWNh6FjZk0QMtM3r05g42LDuWWY/3Wlqe8MzowspD+wDrDeGprJ3Ctz
+	 gxfyWYXUBMkmewZLJlBw+vI11Zu5sBUiOt7yxlyR7617yCnSKANIHiXgH1/2FnBG3rHCW
+	 fXBUl9VdaEpfboRsEU7Vuj4WyY4BJdkz1O0VDkJPHjS7GTO3llMfN7EHCa5VxVH7KdH07
+	 W5J74/ETbN7NeynLZ7BFi3ZTG+Elt1Fu+DubRiqBw3irX6FUBk3XjGjYX3hffpgbm6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="yR/9m1nv";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="RO/nl1Di";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8BE606A325;
-	Wed, 18 Nov 2026 17:56:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08244606A320;
+	Wed, 18 Nov 2026 17:56:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yR/9m1nv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 845401F000C5;
-	Wed, 18 Nov 2026 17:56:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RO/nl1Di
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DBDF1F000C6;
+	Wed, 18 Nov 2026 17:56:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024581;
-	bh=TL8sJPMCAPCHbAQpUVgtiwHt3bL7/VWagDVocDNX4Zg=;
+	s=korg; t=1795024583;
+	bh=sfQRjR3CrBIbgoQjhcN5Fuizp9d5VInrf1n6rT0QzZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yR/9m1nvtsUYAb8f/0UQtv6oz0R813m+QBkmfiV3lO+w5agMMZs5zHxtm6pnPV4kf
-	 dxuWsGHtuL/IeRbqqqeUonbEPrsP+970KnD8U4R67LGjYT1N74Hyu9O1mf7paCpBFi
-	 MOmamIlM0GaF1ZvDEziuMQ/oZF5+MfAM9U+Lptg8=
+	b=RO/nl1DiRaH1qu3lkAoPijV627nKqr/mZ268gg9LV5OJa4gO3BEuk4Vu4vUatG4id
+	 3rCuY7/RvugacnzkHbQtatZxq87rXJ89U8iG6Qjzw+5i0Mzz6m2hdxmH7kRPD2giAV
+	 bb5OSoFJ4MGYWqC8gw1dv6eSBNLu76UGdGeMgCSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 6.18 0774/2151] kbuild: keep .modinfo when vmlinux is linked with --gc-sections
-Date: Wed, 18 Nov 2026 15:41:49 +0100
-Message-ID: <20261118150150.329277894@linuxfoundation.org>
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 0775/2151] netfilter: synproxy: fix reset of ct seqadj when reopening a connection
+Date: Wed, 18 Nov 2026 15:41:50 +0100
+Message-ID: <20261118150150.361882812@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -67,62 +68,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-[ Upstream commit a98db7418797bc27bef53c861b97ac748f598414 ]
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-Builds with CONFIG_LD_DEAD_CODE_DATA_ELIMINATION=y, such as arm
-allmodconfig, now fail while extracting modules.builtin.modinfo:
+[ Upstream commit a8708aa9fe1095ca7859cb3f102b6a3fa0fb98bd ]
 
-  arm-linux-gnueabihf-objcopy: vmlinux.unstripped: can't dump section
-  '.modinfo' - it does not exist: file format not recognized
-  /bin/sh: 1: cannot open modules.builtin.modinfo: No such file
+SYNPROXY is resetting conntrack seqadj when a closed connection is
+re-opened, but it was using nf_ct_seqadj_init() which is a no-op for a
+zero offset.
 
-or, with LLVM:
+This patch introduces nf_ct_seqadj_reset() which sets the offset values
+directly to zero and avoid setting IPS_SEQ_ADJUST_BIT flag, it changes
+SYNPROXY code to use it when needed.
 
-  llvm-objcopy: error: 'vmlinux.unstripped': section '.modinfo' not
-  found
-
-Nothing references the MODULE_INFO() strings, so --gc-sections
-discards every .modinfo input section and vmlinux.unstripped ends up
-with no .modinfo data. This is not new: ever since
-modules.builtin.modinfo started being extracted from
-vmlinux.unstripped, these builds have silently produced an empty
-file, losing the modinfo of every built-in module. An arm
-multi_v7_defconfig build with LD_DEAD_CODE_DATA_ELIMINATION on current
-mainline yields a 0 byte modules.builtin.modinfo. The switch to
---dump-section only turned that into a build error.
-
-Wrap the input section in KEEP() so that the linker retains it. The
-output section is still (INFO), so nothing is allocated for it. With
-the same arm config, modules.builtin.modinfo now has 14119 entries,
-and on x86_64 defconfig, where nothing is garbage collected, it is
-byte-identical before and after this change.
-
-Found by KernelCI builds of the linus-next tree.
-
-Fixes: 39cfd5b12160 ("kbuild: extract modules.builtin.modinfo from vmlinux.unstripped")
-Fixes: 5fe4dd596641 ("kbuild: do not allocate .modinfo in vmlinux")
-Assisted-by: LLM
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Link: https://patch.msgid.link/20260927161227.1179863-1-sashal@kernel.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: 48b1de4c110a ("netfilter: add SYNPROXY core/target")
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/asm-generic/vmlinux.lds.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/netfilter/nf_conntrack_seqadj.h |  1 +
+ net/netfilter/nf_conntrack_seqadj.c         | 17 +++++++++++++++++
+ net/netfilter/nf_synproxy_core.c            |  4 ++--
+ 3 files changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
-index 3c62b1ef31800..52b57b7e133e3 100644
---- a/include/asm-generic/vmlinux.lds.h
-+++ b/include/asm-generic/vmlinux.lds.h
-@@ -838,7 +838,7 @@ defined(CONFIG_AUTOFDO_CLANG) || defined(CONFIG_PROPELLER_CLANG)
- 		.shstrtab 0 : { *(.shstrtab) }
+diff --git a/include/net/netfilter/nf_conntrack_seqadj.h b/include/net/netfilter/nf_conntrack_seqadj.h
+index 883c414b768ee..0f5bbb14a25aa 100644
+--- a/include/net/netfilter/nf_conntrack_seqadj.h
++++ b/include/net/netfilter/nf_conntrack_seqadj.h
+@@ -33,6 +33,7 @@ static inline struct nf_conn_seqadj *nfct_seqadj_ext_add(struct nf_conn *ct)
  
- #define MODINFO								\
--		.modinfo (INFO) : { *(.modinfo) }
-+		.modinfo (INFO) : { KEEP(*(.modinfo)) }
+ int nf_ct_seqadj_init(struct nf_conn *ct, enum ip_conntrack_info ctinfo,
+ 		      s32 off);
++void nf_ct_seqadj_reset(struct nf_conn *ct, enum ip_conntrack_info ctinfo);
+ int nf_ct_seqadj_set(struct nf_conn *ct, enum ip_conntrack_info ctinfo,
+ 		     __be32 seq, s32 off);
+ void nf_ct_tcp_seqadj_set(struct sk_buff *skb, struct nf_conn *ct,
+diff --git a/net/netfilter/nf_conntrack_seqadj.c b/net/netfilter/nf_conntrack_seqadj.c
+index b7e99f34dfce8..8dba6a0d5dc21 100644
+--- a/net/netfilter/nf_conntrack_seqadj.c
++++ b/net/netfilter/nf_conntrack_seqadj.c
+@@ -29,6 +29,23 @@ int nf_ct_seqadj_init(struct nf_conn *ct, enum ip_conntrack_info ctinfo,
+ }
+ EXPORT_SYMBOL_GPL(nf_ct_seqadj_init);
  
- #ifdef CONFIG_GENERIC_BUG
- #define BUG_TABLE							\
++void nf_ct_seqadj_reset(struct nf_conn *ct, enum ip_conntrack_info ctinfo)
++{
++	struct nf_conn_seqadj *seqadj = nfct_seqadj(ct);
++	enum ip_conntrack_dir dir = CTINFO2DIR(ctinfo);
++	struct nf_ct_seqadj *this_way;
++
++	if (unlikely(!seqadj))
++		return;
++
++	spin_lock_bh(&ct->lock);
++	this_way = &seqadj->seq[dir];
++	this_way->offset_before	 = 0;
++	this_way->offset_after	 = 0;
++	spin_unlock_bh(&ct->lock);
++}
++EXPORT_SYMBOL_GPL(nf_ct_seqadj_reset);
++
+ int nf_ct_seqadj_set(struct nf_conn *ct, enum ip_conntrack_info ctinfo,
+ 		     __be32 seq, s32 off)
+ {
+diff --git a/net/netfilter/nf_synproxy_core.c b/net/netfilter/nf_synproxy_core.c
+index 69f84c44801dc..309bee4e1ed65 100644
+--- a/net/netfilter/nf_synproxy_core.c
++++ b/net/netfilter/nf_synproxy_core.c
+@@ -685,7 +685,7 @@ ipv4_synproxy_hook(void *priv, struct sk_buff *skb,
+ 		 * adjustments, they will get initialized once the connection is
+ 		 * reestablished.
+ 		 */
+-		nf_ct_seqadj_init(ct, ctinfo, 0);
++		nf_ct_seqadj_reset(ct, ctinfo);
+ 		synproxy->tsoff = 0;
+ 		this_cpu_inc(snet->stats->conn_reopened);
+ 		fallthrough;
+@@ -1115,7 +1115,7 @@ ipv6_synproxy_hook(void *priv, struct sk_buff *skb,
+ 		 * adjustments, they will get initialized once the connection is
+ 		 * reestablished.
+ 		 */
+-		nf_ct_seqadj_init(ct, ctinfo, 0);
++		nf_ct_seqadj_reset(ct, ctinfo);
+ 		synproxy->tsoff = 0;
+ 		this_cpu_inc(snet->stats->conn_reopened);
+ 		fallthrough;
 -- 
 2.53.0
 
