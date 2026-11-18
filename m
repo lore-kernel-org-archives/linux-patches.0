@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048001;
-	b=HRt8Sg8bwC6T/l2CMNKPKvHtaWRqWs0ps8zDV1l5Y9H0+3eLRgA03IPrWbbLa9B2N/eo
-	 GlpkVRdMjz+l7ZFNOiK8AfaKXI/e+qqvbAqTVJcj+s5+5Xx40GOQETh+3N2jfNWere0SO
-	 YfkBt9NnLG0wDllyXh6d6hiD6TpJSOq0l61lRB2w3GScBNDfFOdhFExmRVIy+wTb1dz9g
-	 hOTwaLDGhM5E+AQoNnQTuvOR7IPEWK9MgEZjmU5thfsQmSO78XizVmR4gc8Kk8vYqgySF
-	 T2U9FomPXRALHIljQ2mQz83EcDbnykAY32nNbVAihLu0JEjnanbrsKRIqBF5l9NcWIQ==
+	t=1795048004;
+	b=04ft+SpvfFBSCg/k7l7hq8WSUYKEu4o+0gCS72giMcdwojSN0YvE01D4gbKfPQuVtIMg
+	 POJoVpmu9IG7kSpo4ejpfeFmXSk3pGW0/h0KdjIY8d/5VB9Opx9bEiYUGo6vN5izaqtFY
+	 9AHorXOzERviH3IIj1uH8TIe/wUe12MzQtPtIlqtpLhDkCYQs4SmpQrgKqUcp9miYSZND
+	 c8c0tU7ysQkpHs1Jyp8gYsysCl12kEFbyptlZnKuhZ8Md3o8otF4tFCFjKJhuMJkUPZmx
+	 /x+yLKiQOzG9ENcEdN61f9GLYip2SdCwHQtaISFrHoHAlBb2QGtJs2bqoF/e7o1Qk8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048001;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048004;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sfmIkr29u80p1BPkaU+QUGr0kASLqJQN9jrB0excDzU=;
-	b=2W53aLW2qCnxXQveDZyi1r2cO+8VASqlhG9zDjgVvXNZGQ5jPbZRxQg6qFZwex9ibDzA
-	 0ZNd2+nKjlxVI6zDSOn3MfeVvP0HJOXePA1UfE0e44ctUUxTPVEL/E/qXHGuU2Np3oElO
-	 mP0+Z+/RsRVqiocpVnqYct+TJJOQaiiEhbiT7Nv5Zp96QZlrO9SyyhmeoZEWZi9tw8Clp
-	 C56t3fBubhIUjirj0v4N2XuBm6JsYvwQXLvB+CTJ4zbdBlvxAHxMlLkN7L2W26hTwbbcY
-	 FiijP9LPoNs3qPzlD7V1qXRhbKW7ZDFlpVIwVL7mADEiSfgBthO7xkcZFiG8H4aY0dg==
+	bh=Jk809x2GeIQxnlpSJ9BYzU1XLG89FFaJS3sqQEnGoZg=;
+	b=rTSY0AUnID2gM/jFSYGvKAuKJ6yciNNgw9PyIXWit/e9TfJyH9Oikl7oJv4L4MJKp4qQ
+	 2Smbfq7rR8utUS75FVyjNXLPOKvNjkqOwEEllkUvwTpZEAExHYtqhm1B1CwNppB5uY4Yk
+	 IOxd3E1mUYXANRhWeyTuaWUZ3hmVUm0LjxMsqkCe2yWH2Jcm0nJHtKT619YkAlLBV5v4V
+	 xnrW2BVTDn1LyCZjMoQ5pITz7HPtl1golmbKIIuQCcP0E7Ps6Ukvc3nZ70oB4a1ILcjKW
+	 EU9in6bYP6AZoeyvnmIctnhaeHGgz9WFHvIU7o/6qVc4dGmWUP/BZe28r2NCn4ofq7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xIb6q+XJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Jtws0/dz";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF65606A325;
-	Thu, 19 Nov 2026 00:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D503606A31C;
+	Thu, 19 Nov 2026 00:26:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xIb6q+XJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C9511F000C4;
-	Thu, 19 Nov 2026 00:26:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jtws0/dz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B9AB1F000C4;
+	Thu, 19 Nov 2026 00:26:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048001;
-	bh=sfmIkr29u80p1BPkaU+QUGr0kASLqJQN9jrB0excDzU=;
+	s=korg; t=1795048003;
+	bh=Jk809x2GeIQxnlpSJ9BYzU1XLG89FFaJS3sqQEnGoZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xIb6q+XJNVe7qrskRtkE+jWDhkSyjY2BR/HgKL25Ormfqp8fe0NnefaQfAXY9oEns
-	 VVMlsQBp6kvvgEHTOS6kjPOBboJVam10W/kWUf0wrCdiIG14DQSn4zwWcRrkggPRrW
-	 fcJUPJJaClt+kIeEDuX8lxICX7xmYZoqtOVp/DfM=
+	b=Jtws0/dzhq2e7aP3ABgWoH7Q4r/vMMizj7McaxKamaKhWNtVt+5wyjfP4txXJ3EDI
+	 9V+sTmTQifxhCCumVIzBfDwOW5PySKWOVYXBAcn+/QYPHR57vdiKl3OsuzKPCZZDjG
+	 GSTmVTTJqD1jz9p+Qwqmt6jes8CAAFRHh35TyA2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Nicolas Escande <nico.escande@gmail.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1839/2857] wifi: ath11k: fix locking problem in ath11k_dp_rx_tid_del_func()
-Date: Wed, 18 Nov 2026 15:47:53 +0100
-Message-ID: <20261118150307.465150109@linuxfoundation.org>
+Subject: [PATCH 6.1 1840/2857] power: supply: mp2629: Use the full batt_impedance_compensation name in the ABI document
+Date: Wed, 18 Nov 2026 15:47:54 +0100
+Message-ID: <20261118150307.502880145@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,98 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Escande <nico.escande@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit c7555d47b1d051e0406474349deccf74b491ae01 ]
+[ Upstream commit 1101833121a447999309a01f03d5b35bc1652e09 ]
 
-In this function, we iterate over dp->reo_cmd_cache_flush_list using
-list_for_each_entry_safe(), under dp->reo_cmd_lock for concurrent access,
-and for each expired entries we :
-  - drop the lock
-  - call ath11k_dp_reo_cache_flush()
-  - kfree() the entry
-  - retake the lock to keep on iterating
+drivers/power/supply/mp2629_charger.c creates the attribute with
+DEVICE_ATTR_RW(batt_impedance_compensation). The ABI file documents it
+under the truncated name batt_impedance_compen, which does not exist in
+sysfs.
 
-list_for_each_entry_safe() protects us from deleting the entry during
-iteration but doesn't protect for concurrent access. So another thread can
-take the lock and modify the list in between and crash like below.
+Use the full name.
 
-To fix the issue, move all entries that needs to be freed to a local list
-while under the lock and then iterate over the list to free the entries
-without holding the lock.
-
-	BUG: Unable to handle kernel paging request at virtual address 00000010ddbeef8c
-	Call trace:
-	ath11k_dp_rx_tid_del_func+0x164/0x3c8
-	ath11k_dp_process_reo_status+0x1d4/0x2fc
-	ath11k_dp_service_srng+0x334/0x338
-	ath11k_pcic_ext_grp_napi_poll+0x30/0xc0
-	__napi_poll+0x34/0x184
-	napi_threaded_poll+0xb4/0x1d8
-	kthread+0xdc/0xe0
-	ret_from_fork+0x10/0x20
-
-Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.9.0.1-01977-QCAHKSWPL_SILICONZ-1
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Suggested-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260813-ath11k-locking-v2-1-f4113a0bd0f4@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: fe27f04e0cdc ("power: supply: mp2629: Add impedance compensation config")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260905101849.42830-1-kmehltretter@gmail.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/dp_rx.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ Documentation/ABI/testing/sysfs-class-power-mp2629 | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
-index 413b24275a848..8d6733a947613 100644
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -772,6 +772,9 @@ static void ath11k_dp_rx_tid_del_func(struct ath11k_dp *dp, void *ctx,
- 	struct ath11k_base *ab = dp->ab;
- 	struct dp_rx_tid *rx_tid = ctx;
- 	struct dp_reo_cache_flush_elem *elem, *tmp;
-+	struct list_head flush_list;
-+
-+	INIT_LIST_HEAD(&flush_list);
- 
- 	if (status == HAL_REO_CMD_DRAIN) {
- 		goto free_desc;
-@@ -793,23 +796,25 @@ static void ath11k_dp_rx_tid_del_func(struct ath11k_dp *dp, void *ctx,
- 	list_add_tail(&elem->list, &dp->reo_cmd_cache_flush_list);
- 	dp->reo_cmd_cache_flush_count++;
- 
--	/* Flush and invalidate aged REO desc from HW cache */
-+	/* identify aged REO desc that needs removal */
- 	list_for_each_entry_safe(elem, tmp, &dp->reo_cmd_cache_flush_list,
- 				 list) {
- 		if (dp->reo_cmd_cache_flush_count > DP_REO_DESC_FREE_THRESHOLD ||
- 		    time_after(jiffies, elem->ts +
- 			       msecs_to_jiffies(DP_REO_DESC_FREE_TIMEOUT_MS))) {
--			list_del(&elem->list);
-+			list_move_tail(&elem->list, &flush_list);
- 			dp->reo_cmd_cache_flush_count--;
--			spin_unlock_bh(&dp->reo_cmd_lock);
--
--			ath11k_dp_reo_cache_flush(ab, &elem->data);
--			kfree(elem);
--			spin_lock_bh(&dp->reo_cmd_lock);
- 		}
- 	}
- 	spin_unlock_bh(&dp->reo_cmd_lock);
- 
-+	/* remove aged REO desc from HW */
-+	list_for_each_entry_safe(elem, tmp, &flush_list, list) {
-+		ath11k_dp_reo_cache_flush(ab, &elem->data);
-+		list_del(&elem->list);
-+		kfree(elem);
-+	}
-+
- 	return;
- free_desc:
- 	dma_unmap_single(ab->dev, rx_tid->paddr, rx_tid->size,
+diff --git a/Documentation/ABI/testing/sysfs-class-power-mp2629 b/Documentation/ABI/testing/sysfs-class-power-mp2629
+index 914d67caac0d7..a85f926ce9c26 100644
+--- a/Documentation/ABI/testing/sysfs-class-power-mp2629
++++ b/Documentation/ABI/testing/sysfs-class-power-mp2629
+@@ -1,4 +1,4 @@
+-What:		/sys/class/power_supply/mp2629_battery/batt_impedance_compen
++What:		/sys/class/power_supply/mp2629_battery/batt_impedance_compensation
+ Date:		April 2020
+ KernelVersion:	5.7
+ Description:
 -- 
 2.53.0
 
