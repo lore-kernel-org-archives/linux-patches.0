@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052918;
-	b=LcC+NIDtx3nOR/uQn2Eu3nV85vhXP4zMPcBCmJoEDqEoQV9sYgTyKXKvbJ6lHtuJWeDU
-	 SXz9G1PbSg94HcUBTSxVR6RZ7ih6/mDkXCtIYLgzJupAi0yu5dem5QrKEyGCF5QDqrDWI
-	 uGKFrxgzQukzcZJq10VdmgQGQ7XJoAYplB+HJSuRU9orPbu3q1vCDC4ASb3TqxTEaicHK
-	 aRW4ovR85idadgFiWyiJZzzna3fycQqGyWETv/jvQQS6SfLFC0NNL87QfrfV4hmWqfjRu
-	 gpcQey0grfBaCTXd6MY20paH7Rcfqe05nURISM0RJ0dltyNUmnJjYqj1VinWxTtJmCA==
+	t=1795052921;
+	b=KqY9sO4xjLOkA0owZ6c+aUSSVxIBjazpiK0h6yGddiNATxyx74Isrvkw+t3WcemdGyp4
+	 l5JTzbZpBuVyzcEUJucIDUw5CJzjrlFa32Zy3CMY8BSqb5DSOKpJlnkvUra4vM9Fzc7L1
+	 QicgXwnnyw2vPY7YbCpPAnFwyHjfMoK8sVhlvx8+mdXWE+Tt9Tul7V/Vmex+HDODJDXpA
+	 hlfvfzMZODROaMtp738s0DSTYlveUoFWgN23hwFXIXK7ZtdhBwnC5hpX2lyxrAvXaXesJ
+	 DJFlC0BfZdf52yHTZSh7OqINzJuzcWDOIpU+REwjULT43lfegL0B05zzjVUC6vBwU5g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052918;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052921;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Uk+KMFBq3Y+wXOotpzDGQztZC25HCxrhg8R4EP1isL8=;
-	b=oo8WEpH8/G2x5O6MzRuPeEidiH11vrxNmOyrh3nbLk3KS4eHvNwQf7+0YTtrWQH/Lw57
-	 xPiUZmboj0IpfstkiYYVplhDC0ybr783m72XZmqFJO5jjB3FPLeTbRKsBqsfGjtqpf0n7
-	 bY+YU21Q1CTXn9C9qRwmWM50V+zQ6L55SX27Uf6UqAUq+cBSjYiWjJdFkFb8l6CaHftxx
-	 ukXMd2hNj0FW+2yoJaxvGeF4/Sh6aSzOV3qEOoj1udwUUnEjUDTiZLV3avDcwoScT5R0V
-	 1bezcHUyQsnV7P7dxYfIVLUbwklaegS/+8Mb6fCqDcexdDd7oqch3Wx0+fCc+Dmtl3w==
+	bh=iuuzqlagqTiRek1R86FMJ1l1VXjArpPSXot6D7Gx8Lo=;
+	b=R0G0jFwrMQjFa3gkIXlX79+OCOuzVEv6EdNGbA8N7aB5Osejld/2wqXRw38DXxSBw8Wi
+	 q1sr1COIMeo+sUnL5ms6IDEVgDuiKQeGNGPQ2v3daTsxA5vn4MTfJ+wulN3lfQZq3+trD
+	 +OBw9mrLQbtTr1DKfjNvPc2QxJJZjCKIPLsiHpUd0gIYPClwdWJ6vVamzq7o1ZzMFcz6Q
+	 vk4nR6+mBFwulY0EXd07lbdB8CEhlkSOtr7LWmiddwtLlj7jPHjmLB6DhRvjDpIquVGH4
+	 Aov7WgpYSWDf20+3hlIKayD4olzQnmLjZE9vt/nlAwUD7WUo480i1ybWMRoZS2bEBDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xJjIhDft;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WwgYqhNt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3197606A330;
-	Thu, 19 Nov 2026 01:48:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3568C606A320;
+	Thu, 19 Nov 2026 01:48:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xJjIhDft
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD3BE1F000C4;
-	Thu, 19 Nov 2026 01:48:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WwgYqhNt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C5C01F000C4;
+	Thu, 19 Nov 2026 01:48:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052918;
-	bh=Uk+KMFBq3Y+wXOotpzDGQztZC25HCxrhg8R4EP1isL8=;
+	s=korg; t=1795052921;
+	bh=iuuzqlagqTiRek1R86FMJ1l1VXjArpPSXot6D7Gx8Lo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xJjIhDftxSvtJmJ86cDKpipWCFBulHNZXH9/iOjDj5sfIuLuDvAgrr+XDbiAn99N8
-	 7/Me0odNfs+Br5Repp7cz1w/poiGDcchbOOB+40jWJg3AiJQDWb3aUWJKhzhk2hV21
-	 N0I6GOlJcx2XzizPN4DbqRfHx1jKXUS4UKBlIgkI=
+	b=WwgYqhNt4euXxrIHqd2rrrHQewIbpRpUkdzP95f0Nubd3meT9cASzD6SjS4uSenB8
+	 zXwlGlk0Er0LmDKVBW6GZd0VKoZ1Bgbwg+4AuVOs7mKydnXeMfsDAcY2/CbUENE0WD
+	 SNbkwP4tedueRCoD7ONgEWOgOW7lQukdDlhtr+Es=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Jiale Yao <yaojiale02@163.com>,
+	Magnus Lindholm <linmag7@gmail.com>,
+	Matt Turner <mattst88@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0731/2214] drm/amdkfd: validate SRAT subtables before parsing
-Date: Wed, 18 Nov 2026 15:40:07 +0100
-Message-ID: <20261118150041.081984131@linuxfoundation.org>
+Subject: [PATCH 5.15 0685/2214] alpha: determine tininess after rounding in the FP emulation
+Date: Wed, 18 Nov 2026 15:39:21 +0100
+Message-ID: <20261118150039.150721273@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,102 +68,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Matt Turner <mattst88@gmail.com>
 
-[ Upstream commit 9866cb13ba4d39aa8fed34b765d4aecabe04f02e ]
+[ Upstream commit b74843b38da8f1186fd7d447646c835b47096a15 ]
 
-The KFD SRAT walker reads the first subtable length without checking
-that a header is present and trusts subsequent lengths when accessing
-CPU and generic affinity records. Invalid firmware lengths can therefore
-cause out-of-bounds reads.
+IEEE 754 lets an architecture determine tininess of a floating-point
+result either before or after rounding, but requires the same choice for
+every operation.  Alpha determines it after rounding, and stdlib's
+tst-tininess confirms the hardware does so for the results it produces
+itself.
 
-Validate the table header, every generic subtable range, and each
-supported typed record before reading its fields.
+The soft-fp emulation has no notion of the distinction and always
+determines tininess before rounding, so a result that the hardware would
+not consider tiny is reported as underflowing whenever the instruction
+happens to trap for software completion.  The two paths then disagree on
+the same machine.  A multiply of the largest subnormal double by
+1 + 2^-52 rounds up to the smallest normal and raises no underflow when
+the operands are normal, but raises it when an operand is subnormal and
+the instruction traps:
 
-Fixes: ddec8d3be0f8 ("drm/amdkfd: add ACPI SRAT parsing for topology")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit d76b655c98e8cc9e791b31502ad274f47dee2aae)
-Cc: stable@vger.kernel.org
+  glibc math testsuite, test-float32x-float64-mul:
+    Failure: mul_double (0x3.ffffffffffffcp-1024, 0x1.0000000000001p+0):
+    Exception "Underflow" set
+
+Add _FP_TININESS_AFTER_ROUNDING, as glibc's copy of soft-fp has, and set
+it for alpha.  It determines tininess by rounding a copy of the result as
+if the exponent range were unbounded, which is what the definition asks
+for.  A plain check of whether the rounded result came out normal is not
+equivalent: it differs for values that are still tiny once rounded with
+an unbounded exponent range but reach the smallest normal on the coarser
+subnormal grid.  That plain check is what the hardware itself does (it
+decides tininess from the delivered result), and it is why a divide such
+as -0x4p-128 / 0x1.000002p+0 in FE_DOWNWARD delivers -0x1p-126 and raises
+nothing although the result is tiny after rounding.  Such cases do not
+trap, so the emulation never sees them; where it does get control, it
+follows the definition rather than reproducing that deviation, which is
+what glibc's soft-fp does as well.
+
+The macro defaults to zero, so powerpc, sh and sparc keep determining
+tininess before rounding as they do now.
+
+Cc: stable@vger.kernel.org # 5.15+
+Reviewed-by: Magnus Lindholm <linmag7@gmail.com>
+Tested-by: Magnus Lindholm <linmag7@gmail.com>
+Link: https://lore.kernel.org/r/20260803-alpha-fp-exceptions-v1-3-c99d75608e60@gmail.com
+Signed-off-by: Matt Turner <mattst88@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_crat.c | 35 ++++++++++++++++++---------
- 1 file changed, 24 insertions(+), 11 deletions(-)
+ arch/alpha/include/asm/sfp-machine.h |  4 ++++
+ include/math-emu/op-common.h         | 23 +++++++++++++++++++++--
+ include/math-emu/soft-fp.h           |  8 ++++++++
+ 3 files changed, 33 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_crat.c b/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
-index e574aa32a111d..1c1010ae24529 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
-@@ -1893,27 +1893,33 @@ static void kfd_find_numa_node_in_srat(struct kfd_dev *kdev)
- 		return;
- 	}
+diff --git a/arch/alpha/include/asm/sfp-machine.h b/arch/alpha/include/asm/sfp-machine.h
+index 5fe63afbd474f..bff1ad963c689 100644
+--- a/arch/alpha/include/asm/sfp-machine.h
++++ b/arch/alpha/include/asm/sfp-machine.h
+@@ -59,6 +59,10 @@
+     R##_c = FP_CLS_NAN;						\
+   } while (0)
  
-+	if (table_header->length < sizeof(struct acpi_table_srat))
-+		goto invalid_srat;
++/* Alpha determines tininess after rounding, so the emulation must do the
++   same as the hardware does for the results it produces itself.  */
++#define _FP_TININESS_AFTER_ROUNDING	1
 +
- 	table_end = (unsigned long)table_header + table_header->length;
+ /* Obtain the current rounding mode. */
+ #define FP_ROUNDMODE	mode
+ #define FP_RND_NEAREST	(FPCR_DYN_NORMAL >> FPCR_DYN_SHIFT)
+diff --git a/include/math-emu/op-common.h b/include/math-emu/op-common.h
+index 4b57bbba588af..a30746d7a91fd 100644
+--- a/include/math-emu/op-common.h
++++ b/include/math-emu/op-common.h
+@@ -135,6 +135,24 @@ do {								\
+     else							\
+       {								\
+ 	/* we've got a denormalized number */			\
++	int _FP_PACK_CANONICAL_is_tiny = 1;			\
++	if (_FP_TININESS_AFTER_ROUNDING && X##_e == 0)		\
++	  {							\
++	    /* Architectures that detect tininess after rounding	\
++	       only signal underflow if the result is still		\
++	       subnormal once rounded as if the exponent range	\
++	       were unbounded.  Round a copy to find out.  */	\
++	    FP_DECL_##fs(_FP_PACK_CANONICAL_T);			\
++	    /* The class field is not used by the rounding below,	\
++	       and is unused entirely where this block is dead.  */	\
++	    (void)_FP_PACK_CANONICAL_T##_c;			\
++	    _FP_FRAC_COPY_##wc(_FP_PACK_CANONICAL_T, X);	\
++	    _FP_PACK_CANONICAL_T##_s = X##_s;			\
++	    _FP_PACK_CANONICAL_T##_e = X##_e;			\
++	    _FP_ROUND(wc, _FP_PACK_CANONICAL_T);		\
++	    if (_FP_FRAC_OVERP_##wc(fs, _FP_PACK_CANONICAL_T))	\
++	      _FP_PACK_CANONICAL_is_tiny = 0;			\
++	  }							\
+ 	X##_e = -X##_e + 1;					\
+ 	if (X##_e <= _FP_WFRACBITS_##fs)			\
+ 	  {							\
+@@ -161,8 +179,9 @@ do {								\
+ 		    _FP_FRAC_SRL_##wc(X, _FP_WORKBITS);		\
+ 		  }						\
+ 	      }							\
+-	    if ((FP_CUR_EXCEPTIONS & FP_EX_INEXACT) ||		\
+-		(FP_TRAPPING_EXCEPTIONS & FP_EX_UNDERFLOW))	\
++	    if (_FP_PACK_CANONICAL_is_tiny			\
++		&& ((FP_CUR_EXCEPTIONS & FP_EX_INEXACT) ||	\
++		    (FP_TRAPPING_EXCEPTIONS & FP_EX_UNDERFLOW)))	\
+ 		FP_SET_EXCEPTION(FP_EX_UNDERFLOW);		\
+ 	  }							\
+ 	else							\
+diff --git a/include/math-emu/soft-fp.h b/include/math-emu/soft-fp.h
+index 5650c16283830..02ada0a9fca16 100644
+--- a/include/math-emu/soft-fp.h
++++ b/include/math-emu/soft-fp.h
+@@ -31,6 +31,14 @@
+ #include <endian.h>
+ #endif
  
- 	/* Parse all entries looking for a match. */
- 	sub_header = (struct acpi_subtable_header *)
- 			((unsigned long)table_header +
- 			sizeof(struct acpi_table_srat));
--	subtable_len = sub_header->length;
- 
--	while (((unsigned long)sub_header) + subtable_len  < table_end) {
--		/*
--		 * If length is 0, break from this loop to avoid
--		 * infinite loop.
--		 */
--		if (subtable_len == 0) {
--			pr_err("SRAT invalid zero length\n");
--			break;
--		}
-+	while ((unsigned long)sub_header < table_end) {
-+		unsigned long start = (unsigned long)sub_header;
++/* Whether the architecture determines tininess of a floating-point
++   result after rounding rather than before it.  IEEE 754 permits either
++   but requires the same choice for every operation, so this has to agree
++   with what the hardware does for the results it produces itself.  */
++#ifndef _FP_TININESS_AFTER_ROUNDING
++#define _FP_TININESS_AFTER_ROUNDING	0
++#endif
 +
-+		if (table_end - start < sizeof(*sub_header))
-+			goto invalid_srat;
-+
-+		subtable_len = sub_header->length;
-+		if (subtable_len < sizeof(*sub_header) ||
-+		    subtable_len > table_end - start)
-+			goto invalid_srat;
- 
- 		switch (sub_header->type) {
- 		case ACPI_SRAT_TYPE_CPU_AFFINITY:
- 			cpu = (struct acpi_srat_cpu_affinity *)sub_header;
-+			if (subtable_len < sizeof(*cpu))
-+				goto invalid_srat;
-+
- 			pxm = *((u32 *)cpu->proximity_domain_hi) << 8 |
- 					cpu->proximity_domain_lo;
- 			if (pxm > max_pxm)
-@@ -1921,6 +1927,9 @@ static void kfd_find_numa_node_in_srat(struct kfd_dev *kdev)
- 			break;
- 		case ACPI_SRAT_TYPE_GENERIC_AFFINITY:
- 			gpu = (struct acpi_srat_generic_affinity *)sub_header;
-+			if (subtable_len < sizeof(*gpu))
-+				goto invalid_srat;
-+
- 			bdf = *((u16 *)(&gpu->device_handle[0])) << 16 |
- 					*((u16 *)(&gpu->device_handle[2]));
- 			if (bdf == pci_id) {
-@@ -1937,9 +1946,13 @@ static void kfd_find_numa_node_in_srat(struct kfd_dev *kdev)
- 
- 		sub_header = (struct acpi_subtable_header *)
- 				((unsigned long)sub_header + subtable_len);
--		subtable_len = sub_header->length;
- 	}
- 
-+	goto out;
-+
-+invalid_srat:
-+	pr_err("SRAT contains an invalid subtable\n");
-+out:
- 	acpi_put_table(table_header);
- 
- 	/* Workaround bad cpu-gpu binding case */
+ #define _FP_WORKBITS		3
+ #define _FP_WORK_LSB		((_FP_W_TYPE)1 << 3)
+ #define _FP_WORK_ROUND		((_FP_W_TYPE)1 << 2)
 -- 
 2.53.0
 
