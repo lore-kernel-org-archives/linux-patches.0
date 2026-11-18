@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034054;
-	b=Qn2HS9T15K4XiXTdC+H8poqqK77AMfTAt4EcvIi5PsrxpPwHFx7WiusNXZRml3TpJbuy
-	 BHM+yapJ6xyiDIF/xhSO1sXh8vm2VXdkL+4fdDelcnnpu7MOEz7U4So4fcfFhrSEnbpe4
-	 AzZQ9ufHbyC/iMkbBB51XU4cB/fpK7nksGOQIh0JY3GcEx4oWFcpzla4iUX9s+nA0GRX6
-	 pXc5B9ER87VWBu1UnQebBCtwGrBnTfVtx5eVdrMl+TdnneFnk9QMsluykmQkfxEvlZhNk
-	 sNzDtLKoMxyyvcPBpTtYiSHrk6dT+7DYjClTIumihkjYMcuxB02vNxYghriT6nKc2fg==
+	t=1795034056;
+	b=2BzMNwqG6i3AJT4heNz/j4VT++Den4I+jkQx70OjojeU6IoZUwF97o94E9g065LPvT4g
+	 2C3EuuCug+FK2DKMXfACb3rhkoQsf++TNF00P8l3VmkVrcVmdrCixU+jeVJVELRDL/9KK
+	 Of/iQkAlUA8Znzy6BIQn06rp22txFEft/MiNw2wPusAgvfX9zP//Oguk8lUJm7EdebRL+
+	 y2A10TCuk/1Bap8SvUS1U5MHapPhkV6YEVkk3+44CYipqkloB0vkZDVb2RPi7LZslue0H
+	 BMBIJ1bAEH4/83Wh6UlouxZeuNxppbJOt216/Vz1DHFYtgmnH4iQH+nWiHaweHYofVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034054;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034056;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eOVw6z2LvBjPt1inLtLNV7fdFtEepBhV52kAr08l4zs=;
-	b=ohEFM4yDRkny91IeyMAkgkTyfW5069D3yXCmEgo6T5UovYwdX/WFkhuJyFIW3TocJ4xB
-	 9XQt2OaQb5zhR6WVYDfsXBNWSHG4dWFO7C2ILBQ11Ytvv1LFec2euVII/CxzlX9Geat9g
-	 TaG7PiTnRgt/9gri1wM+jejWfZ1PP+Zn2qfSl82aBwy9Ed+cmgVeFCchd42ZoOKiLGHh1
-	 eH+NqjKh1h8gZGKGqUvWWDr7Zyut5BOgiA8mHJBKIV+SFutwgilzvok8iYPNwwTn/sqH9
-	 CLz8aPMQAiIvqGPA24xgpPUCr5PYTzlG+5CxAP4qg2ziXP2W7Oj3DUZ3TdOLRz5OYsg==
+	bh=/DKcYo34q0GN+MQ7kOImvbqYJO8ejPZLlerH2U1yzrc=;
+	b=gjmnJrLDH3OXBwfW0o3jju86Mr4MHEs2EUozmcGZSoITZmU4aX/BNZyuG/KZiRZgLOgv
+	 kmeUs0XSGbO8WtDAa1O9PLYOorgSDogWEZQm6532gnBCDv1w+QrLnXpaimNRtJvrSg+jB
+	 mADr/IXeJAS4KKj/xI0et8JpB83LdXO2DXbChd1y78p4UuO+KtauNeFn9tJMUV2bZMn0h
+	 pzv+CSl+7r8+i1flN6TW9gXTBBS19Vz1ovKSKdZnVGLKLtaXIgBRUVtV1R3ZrJWoBMEJh
+	 P2o459H72NBEKmWLtrN1M3XI9Y6Q/62GykIjpyMeNNKwHNxOMFGNlrGZkDKF9xdUOhA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="dZIlT/5G";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EI0rMN5d;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F28606A31C;
-	Wed, 18 Nov 2026 20:34:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A6E606A32A;
+	Wed, 18 Nov 2026 20:34:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dZIlT/5G
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CCDC1F000C4;
-	Wed, 18 Nov 2026 20:34:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EI0rMN5d
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C4691F000C4;
+	Wed, 18 Nov 2026 20:34:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034053;
-	bh=eOVw6z2LvBjPt1inLtLNV7fdFtEepBhV52kAr08l4zs=;
+	s=korg; t=1795034056;
+	bh=/DKcYo34q0GN+MQ7kOImvbqYJO8ejPZLlerH2U1yzrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dZIlT/5GSB764kKqk03/yvLoNqkHyfXp9rzlyOwoKnYrwYBiFN44mn30RDvvrNp56
-	 w67ZR8z/li9x5CAdqiQZHbELe5VHlbHQqeas6Qm7cOw7vKIJ+1M6cM6T3X+XLaLMOJ
-	 +akIlPsWxkuJxkw28qKSXc3DPee2C2sRJVqtxOs8=
+	b=EI0rMN5d2PE6f8dRhneazo2JqNZBiHwdwEjjYd0KZTftBPz/b6NyINXdSAKoO2GMb
+	 Ymk+F3bxFi6b74CQWADBV0FYMALz5sMCcFgwnD9nFxK8zOvtGUGnQqoToWJtiuoq4Y
+	 74hIrnUnkr2hIt/o+qlA/57ld+0sZTghSJPMZ+80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Reichel <sre@kernel.org>,
-	Praveen Talari <praveen.talari@oss.qualcomm.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0232/3318] opp: Use clk_get_optional() to avoid leaving opp_table->clk as an error pointer
-Date: Wed, 18 Nov 2026 15:14:14 +0100
-Message-ID: <20261118150322.035959990@linuxfoundation.org>
+Subject: [PATCH 6.6 0233/3318] soundwire: dmi-quirks: Disable ghost Realtek on Asus Zenbook Duo
+Date: Wed, 18 Nov 2026 15:14:15 +0100
+Message-ID: <20261118150322.075441900@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,140 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Praveen Talari <praveen.talari@oss.qualcomm.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 84f05af0975c9f9c8ffee0361d6f7cbb1f289231 ]
+[ Upstream commit ca02ffd4975ca5249abf0cfb750a495d23b453ee ]
 
-_update_opp_table_clk() uses clk_get(dev, NULL) to acquire the
-device's clock. On platforms where the perf domain device has no
-Linux clock and is instead managed entirely by firmware via
-devm_pm_opp_of_add_table() (through
-of_genpd_add_provider_simple()/onecell()), clk_get() returns
--ENOENT. That case is treated as valid (the OPP table can still
-have entries sourced from firmware), but opp_table->clk is left
-holding ERR_PTR(-ENOENT) rather than being reset to NULL:
+The Asus Zenbook Duo also has a Realtek device in the ACPI that
+doesn't exist in the physical hardware. This confuses the machine
+driver into attempting to create DAI links for the device. Add a
+quirk to remove this device.
 
-	opp_table->clk = clk_get(dev, NULL);
-	ret = PTR_ERR_OR_ZERO(opp_table->clk);
-	...
-	if (ret == -ENOENT) {
-		opp_table->clk_count = 1;
-		return opp_table;   /* opp_table->clk is still ERR_PTR(-ENOENT) */
-	}
-
-Consumers that only check IS_ERR(opp_table->clk) treat this as a
-valid clk and pass it straight into the clk consumer API. In
-particular, dev_pm_opp_set_rate() calls
-clk_round_rate(opp_table->clk, target_freq), and clk_round_rate()
-only guards against a NULL clk, so it dereferences the error pointer
-to read clk->exclusive_count and crashes:
-
-  Unable to handle kernel NULL pointer dereference at virtual
-  address 000000000000002e
-  ...
-  pc : clk_round_rate+0x3c/0x188
-  ...
-  Call trace:
-   clk_round_rate+0x3c/0x188 (P)
-   dev_pm_opp_set_rate+0x114/0x33c
-
-Rather than teaching every clk consumer API to special-case
-ERR_PTR(-ENOENT), fix it at the source: use clk_get_optional()
-instead of clk_get() in _update_opp_table_clk(), which already
-translates -ENOENT into a NULL clk. This documents that the clock is
-genuinely optional for such devices, and keeps opp_table->clk holding
-either a valid clk or NULL, never a lingering -ENOENT error pointer.
-_opp_config_clk_single() is only wired up via opp_table->config_clks
-when a clk was actually found, and every other opp_table->clk
-consumer already tolerates NULL through the standard clk API (which
-treats a NULL clk as a no-op), so no other call site needs to change.
-
-Suggested-by: Sebastian Reichel <sre@kernel.org>
-Reviewed-by: Sebastian Reichel <sre@kernel.org>
-Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
+Link: https://patch.msgid.link/20260720095741.3592825-1-ckeepax@opensource.cirrus.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/opp/core.c | 54 +++++++++++++++++++++-------------------------
- 1 file changed, 24 insertions(+), 30 deletions(-)
+ drivers/soundwire/dmi-quirks.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/opp/core.c b/drivers/opp/core.c
-index 02db807adad42..a6155ae09d485 100644
---- a/drivers/opp/core.c
-+++ b/drivers/opp/core.c
-@@ -1485,8 +1485,6 @@ static struct opp_table *_update_opp_table_clk(struct device *dev,
- 					       struct opp_table *opp_table,
- 					       bool getclk)
- {
--	int ret;
--
- 	/*
- 	 * Return early if we don't need to get clk or we have already done it
- 	 * earlier.
-@@ -1495,39 +1493,35 @@ static struct opp_table *_update_opp_table_clk(struct device *dev,
- 	    opp_table->clks)
- 		return opp_table;
- 
--	/* Find clk for the device */
--	opp_table->clk = clk_get(dev, NULL);
-+	/*
-+	 * There are few platforms which don't want the OPP core to manage
-+	 * device's clock settings. In such cases neither the platform
-+	 * provides the clks explicitly to us, nor the DT contains a valid
-+	 * clk entry. The OPP nodes in DT may still contain "opp-hz" property
-+	 * though, which we need to parse and allow the platform to find an
-+	 * OPP based on freq later on.
-+	 *
-+	 * This is a simple solution to take care of such corner cases, i.e.
-+	 * make the clk_count 1, which lets us allocate space for frequency
-+	 * in opp->rates and also parse the entries in DT. Use
-+	 * clk_get_optional() instead of clk_get() so opp_table->clk stays
-+	 * NULL for such devices, instead of holding an ERR_PTR(-ENOENT) that
-+	 * consumers must remember to special-case.
-+	 */
-+	opp_table->clk = clk_get_optional(dev, NULL);
- 
--	ret = PTR_ERR_OR_ZERO(opp_table->clk);
--	if (!ret) {
--		opp_table->config_clks = _opp_config_clk_single;
--		opp_table->clk_count = 1;
--		return opp_table;
-+	if (IS_ERR(opp_table->clk)) {
-+		dev_pm_opp_put_opp_table(opp_table);
-+		dev_err_probe(dev, PTR_ERR(opp_table->clk), "Couldn't find clock\n");
-+		return ERR_CAST(opp_table->clk);
- 	}
- 
--	if (ret == -ENOENT) {
--		/*
--		 * There are few platforms which don't want the OPP core to
--		 * manage device's clock settings. In such cases neither the
--		 * platform provides the clks explicitly to us, nor the DT
--		 * contains a valid clk entry. The OPP nodes in DT may still
--		 * contain "opp-hz" property though, which we need to parse and
--		 * allow the platform to find an OPP based on freq later on.
--		 *
--		 * This is a simple solution to take care of such corner cases,
--		 * i.e. make the clk_count 1, which lets us allocate space for
--		 * frequency in opp->rates and also parse the entries in DT.
--		 */
--		opp_table->clk_count = 1;
--
--		dev_dbg(dev, "%s: Couldn't find clock: %d\n", __func__, ret);
--		return opp_table;
--	}
-+	if (opp_table->clk)
-+		opp_table->config_clks = _opp_config_clk_single;
- 
--	dev_pm_opp_put_opp_table(opp_table);
--	dev_err_probe(dev, ret, "Couldn't find clock\n");
-+	opp_table->clk_count = 1;
- 
--	return ERR_PTR(ret);
-+	return opp_table;
- }
- 
- /*
+diff --git a/drivers/soundwire/dmi-quirks.c b/drivers/soundwire/dmi-quirks.c
+index 62cee6e2179da..f738e547a1f30 100644
+--- a/drivers/soundwire/dmi-quirks.c
++++ b/drivers/soundwire/dmi-quirks.c
+@@ -200,6 +200,13 @@ static const struct dmi_system_id adr_remap_quirk_table[] = {
+ 		},
+ 		.driver_data = (void *)ghost_realtek,
+ 	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUS"),
++			DMI_MATCH(DMI_BOARD_NAME, "UX8407AA"),
++		},
++		.driver_data = (void *)ghost_realtek,
++	},
+ 	{
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
 -- 
 2.53.0
 
