@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059433;
-	b=E25RyclylEz0RoJWN7QmaLViF0r/TVZQHInXuI5QCvvonjDNDHox5yaJsQLb/JOmjtR+
-	 tW8XSBnJ8PZGCG/yqAhmvXwOJM2GV+VsVXUTtkW5aFdnls3tKMU0BI1jmxYaakYTo+N/H
-	 WyDSsQZAPvyBxNigW0pnTXn5KpPhBGK4fDqCvP3r/FbfIyKgqdI8GLd6jSkvmX6hK42ZH
-	 Wow6mhj/SknxNoWqr9itvU8CpTC97DKfW20IqsrQIcRhJvICnsfPf6HFmmo6ozmYM2tji
-	 i8UrZX1hc7MJkuETOKz1/VtTLsjijofCqC/OxLPmt5uE2tghuuXN8e0lXwvykgMc+/Q==
+	t=1795059437;
+	b=ZM1VMQMv/odWIlM1h6uKgpWmNvdjY8dP2T7ROmmEcPli6jGJec42U+HdUkffJ2dFr4fU
+	 9w/g3hKn3E1CjC8mWypSTS/epz1mqGtKvA1DLADlwuw4nzaxYJhUJps4jJl9LZfrxDJ75
+	 dxUZejSoBShnIeryJOyGrAxReyN5QagZfBen5wc8F9z+dKGemTC0FAUzhMxHJivG822KI
+	 JeJEqu59ec0XAeNiueX6ghCj46INGb7kSL6tmP++qEHNfn+T6og3tEsrMC0+znOJ9VZur
+	 mTrq9b+RxDpt70IoSN9rRTg4pDkUtzooB3lfw/3AZF/1SHqcrCwmfZUZmQPQux2cxKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059433;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059437;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+7hFoy+lf/vqSkjPYcEZdpGra8/vuQbMFP/TqOScacI=;
-	b=dyR5LLnYdjPhfxmAfuMFXjMcZy7i28J8c+x4zn7vHTRBRUaTdY2L5exQBjLanPTBRXo1
-	 zXeryfpHS8wmjedVIzvGvEsUIQnF0LkDVRAKQkl5Geg20lcPt4x638WiF/tRKMva90qoy
-	 J9athVwS5Oz5/0o7ymbThKjcTqUd+yq5fjDLf4zBiDbGO+S0czeT0BfWssZASRoGrydRf
-	 yx1dzP4unMZKoSZjflWe9BntUxgJiUlkoyohrZG1X2yL3z9w9c9PyUocLYu8gf5o3IVSX
-	 ugCAEaQVm9YolEV+dSsJ5D/j/YosbHP9FoT7bzUOE5N9445CyvL32J5mozTJqzUjNOA==
+	bh=6Z35+6lirR+QcYn+cjHTxmjxjqCdbbRiTUjflAZHSKo=;
+	b=bt34TL6eOpRCRWjq6SQ2NEyHmfG1PuxcsGyH+WWDXNbI78B6S5bUfaZiXpLlqqpSbxT3
+	 oEr3FRmfyMQIMCLffRYN/WFhnUH7ip/C5JOb833/3Q11qVlMw2SnJ21tPcUS1psOxUOec
+	 20gubHtod7K7MT5IyLC7lf2SEtBwmVt5TjL8RS/PDBUx02tF5tkV6cBMityqh+Ppv/41g
+	 F3qBfFT52gxiZqshX6CqoH5QWTaemAbn8I0EtnjPwA+tCfqGcZVYzxkcg967pTC2d9xAi
+	 WKjN68bOw16Y8/Lm3diKk1lTtxZGdYS/OXkwjpRvSDvjnr1tlgKTTdIfMDcJZRAVl2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HRIfa++8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="u/aWrDHK";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39B9606A320;
-	Thu, 19 Nov 2026 03:37:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0131D606A320;
+	Thu, 19 Nov 2026 03:37:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HRIfa++8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 259C51F000C4;
-	Thu, 19 Nov 2026 03:37:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u/aWrDHK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 091031F000C4;
+	Thu, 19 Nov 2026 03:37:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059433;
-	bh=+7hFoy+lf/vqSkjPYcEZdpGra8/vuQbMFP/TqOScacI=;
+	s=korg; t=1795059436;
+	bh=6Z35+6lirR+QcYn+cjHTxmjxjqCdbbRiTUjflAZHSKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HRIfa++8x31KsEtZ1VCz0dVW3cb/LHFFCpWtToeemhhWs+LClvoQE05LD3+1Fequ8
-	 aQYpa2xqWEFkQNQaLYxl18/bTOdzBw+3zjCf8YSm66CWMNtdy6F85NGU66Ga9R2Zzv
-	 9xFiUWNG/ytgpbd2EGADyRfntAqr7KQi4ksfdWgg=
+	b=u/aWrDHKOJ9d9jhC8aNy9tKpzK5iVQ86Jh6AAAFPPYHDTrelRd4cKs2n574qvLRCb
+	 TpPmvOSH2Xh1+yZxSW1c9TGQ398Ckc8o9j18qx+dB4hGheQT96iCqtIJa3U6MZ3Vff
+	 aJfDoB0mX03OpSG7BGAkYBAV1WebM15XMYfJmEVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	David Lee <david.lee@trailofbits.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Vaibhav Nagare <vnagare@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0838/1848] netfilter: nf_reject: initialize IPCB at inet ingress
-Date: Wed, 18 Nov 2026 15:47:56 +0100
-Message-ID: <20261118145951.736456113@linuxfoundation.org>
+Subject: [PATCH 5.10 0839/1848] bnxt_en: dont leave an XDP program installed when the open fails
+Date: Wed, 18 Nov 2026 15:47:57 +0100
+Message-ID: <20261118145951.771605919@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,79 +69,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Vaibhav Nagare <vnagare@redhat.com>
 
-[ Upstream commit 73a73d442f9986353fe284bd1b504d0313d0f153 ]
+[ Upstream commit 78731b46967e3e7102b5cd5062bef185f3404b5c ]
 
-The inet ingress hook runs before ip_rcv_core() and ip6_rcv_core(), so
-neither IPCB nor IP6CB has been initialized when nft_reject_inet passes
-a packet to nf_send_unreach() or nf_send_unreach6(). skb->cb can
-therefore retain metadata from an earlier protocol layer.
+bnxt_xdp_set() stores the new program and drops the reference on the old
+one before reopening the NIC.  If bnxt_open_nic() then fails, ndo_bpf()
+returns an error with the new program still in bp->xdp_prog.  The caller
+treats the error as "nothing was installed" and drops its own reference,
+so bp->xdp_prog is left pointing at a freed program and the next XDP
+update dereferences it:
 
-For IPv4, icmp_send() treats IPCB(skb)->opt as parsed IPv4 options.
-Stale option offsets can make __ip_options_echo() copy an
-attacker-controlled length into its 40-byte reply option buffer and
-overflow the stack. On an unpatched v7.2-rc5 kernel, the IPv4
-reproducer produced:
+  BUG: unable to handle page fault for address: ff78ecc80ddd1038
+  RIP: 0010:__bpf_prog_put+0x5/0x80
+  Call Trace:
+   bnxt_xdp_set+0xad/0x1b0 [bnxt_en]
+   dev_xdp_propagate+0x36/0xa0
+   bond_xdp_set+0xeb/0x2d0 [bonding]
+   dev_xdp_install+0x1b1/0x350
+   bpf_xdp_link_update+0xc5/0x1b0
+   link_update+0x104/0x1e0
+   __sys_bpf+0x662/0xcf0
 
-  BUG: KASAN: stack-out-of-bounds in __ip_options_echo()
-  Write of size 255
+Seen on a 6.12 based kernel after bnxt_alloc_mem() failed an order-4
+allocation on a fragmented host:
 
-For IPv6, icmpv6_send() consumes IP6CB(skb) as parsed IPv6 metadata. It
-always uses iif for source selection and, when MIP6 is enabled, uses
-dsthao as an extension-header offset. These fields must not be stale.
+  bnxt_en 0000:a0:00.1 ens4f1np1: nic open fail (rc: fffffff4)
+  bond1: (slave ens4f1np1): Error -12 calling ndo_bpf
 
-For NF_INET_INGRESS, clear the address-family-specific control block and
-restore its input interface before constructing the ICMP error.  This
-matches similar initialization normally performed by ip_rcv_core() and
-ip6_rcv_core().
+Bonding is not required to hit this; a plain XDP attach on a bnxt
+interface takes the same path.
 
-Fixes: 117ca1f8920c ("netfilter: nft_reject_inet: allow to use reject from inet ingress")
+Restore the previous program when an attach or a replace fails, and
+recompute the page-mode and XDP TX ring configuration from it.  The
+configuration matters because bnxt_init_one_rx_ring() only assigns
+rxr->xdp_prog in page mode, and __bnxt_set_rx_skb_mode() derives
+dev->max_mtu from the installed program.  Release the old program only
+once the change has been committed.
+
+A detach is not undone.  dev_xdp_detach_link() clears the core's record
+of the program even when the driver returns an error, so putting the
+program back would leave the driver running a program the core has
+already dropped.  If the reopen fails during a detach, bnxt_xdp_set()
+therefore returns 0 with the device closed; bnxt_open_nic() has already
+logged the failure.
+
+Found in a crash dump; the change was not tested on hardware.
+
+Fixes: c6d30e8391b8 ("bnxt_en: Add basic XDP support.")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6-sol Codex:gpt-5.5-cyber
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Co-developed-by: David Lee <david.lee@trailofbits.com>
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-[ sashal: Adjusted IPv4 patch context to preserve the existing one-argument nf_reject_verify_csum(proto) call. ]
+Signed-off-by: Vaibhav Nagare <vnagare@redhat.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261012072802.2153706-1-vnagare@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ sashal: reused existing inline configuration through an apply_cfg label instead of introducing bnxt_xdp_apply_cfg() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/nf_reject_ipv4.c | 5 +++++
- net/ipv6/netfilter/nf_reject_ipv6.c | 5 +++++
- 2 files changed, 10 insertions(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c | 25 +++++++++++++++----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
 
-diff --git a/net/ipv4/netfilter/nf_reject_ipv4.c b/net/ipv4/netfilter/nf_reject_ipv4.c
-index 48dcb2f0794fd..db2c4bbc641db 100644
---- a/net/ipv4/netfilter/nf_reject_ipv4.c
-+++ b/net/ipv4/netfilter/nf_reject_ipv4.c
-@@ -198,6 +198,11 @@ void nf_send_unreach(struct sk_buff *skb_in, int code, int hook)
- 	if (!skb_valid_dst(skb_in) && nf_reject_fill_skb_dst(skb_in) < 0)
- 		return;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
+index dc9afaa14da8f..2853386b89646 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
+@@ -268,6 +268,7 @@ static int bnxt_xdp_set(struct bnxt *bp, struct bpf_prog *prog)
+ 	struct net_device *dev = bp->dev;
+ 	int tx_xdp = 0, rc, tc;
+ 	struct bpf_prog *old;
++	int old_tx_xdp;
  
-+	if (hook == NF_INET_INGRESS) {
-+		memset(IPCB(skb_in), 0, sizeof(*IPCB(skb_in)));
-+		IPCB(skb_in)->iif = skb_in->skb_iif;
+ 	if (prog && bp->dev->mtu > BNXT_MAX_PAGE_MODE_MTU) {
+ 		netdev_warn(dev, "MTU %d larger than largest XDP supported MTU %d.\n",
+@@ -293,11 +294,12 @@ static int bnxt_xdp_set(struct bnxt *bp, struct bpf_prog *prog)
+ 	if (netif_running(dev))
+ 		bnxt_close_nic(bp, true, false);
+ 
++	old_tx_xdp = bp->tx_nr_rings_xdp;
+ 	old = xchg(&bp->xdp_prog, prog);
+-	if (old)
+-		bpf_prog_put(old);
+ 
+-	if (prog) {
++apply_cfg:
++	tc = netdev_get_num_tc(dev) ? : 1;
++	if (bp->xdp_prog) {
+ 		bnxt_set_rx_skb_mode(bp, true);
+ 	} else {
+ 		int rx, tx;
+@@ -315,8 +317,21 @@ static int bnxt_xdp_set(struct bnxt *bp, struct bpf_prog *prog)
+ 	bnxt_set_tpa_flags(bp);
+ 	bnxt_set_ring_params(bp);
+ 
+-	if (netif_running(dev))
+-		return bnxt_open_nic(bp, true, false);
++	if (rc)
++		return rc;
++
++	if (netif_running(dev)) {
++		rc = bnxt_open_nic(bp, true, false);
++		/* a detach cannot be undone, only an attach */
++		if (rc && prog) {
++			WRITE_ONCE(bp->xdp_prog, old);
++			tx_xdp = old_tx_xdp;
++			goto apply_cfg;
++		}
 +	}
 +
- 	if (skb_csum_unnecessary(skb_in) || !nf_reject_verify_csum(proto)) {
- 		icmp_send(skb_in, ICMP_DEST_UNREACH, code, 0);
- 		return;
-diff --git a/net/ipv6/netfilter/nf_reject_ipv6.c b/net/ipv6/netfilter/nf_reject_ipv6.c
-index 4d8cfb7ae6e3e..a538f878ba332 100644
---- a/net/ipv6/netfilter/nf_reject_ipv6.c
-+++ b/net/ipv6/netfilter/nf_reject_ipv6.c
-@@ -263,6 +263,11 @@ void nf_send_unreach6(struct net *net, struct sk_buff *skb_in,
- 	if (hooknum == NF_INET_LOCAL_OUT && skb_in->dev == NULL)
- 		skb_in->dev = net->loopback_dev;
++	if (old)
++		bpf_prog_put(old);
  
-+	if (hooknum == NF_INET_INGRESS) {
-+		memset(IP6CB(skb_in), 0, sizeof(*IP6CB(skb_in)));
-+		IP6CB(skb_in)->iif = skb_in->skb_iif;
-+	}
-+
- 	if (!skb_valid_dst(skb_in) && nf_reject6_fill_skb_dst(skb_in) < 0)
- 		return;
- 
+ 	return 0;
+ }
 -- 
 2.53.0
 
