@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056291;
-	b=UNTHze6fAPX9ZEP/cyjwAEanfin4DyUDWN5/aHF0C82/Dg1IHEQP382HmpuXDmfNO9Iy
-	 4ulcLYZaYc3jrUDYZiLB4lfYLY/wWnai3k5eZTIM7PFQxIbTNvu46AcD7nXV03pZy1/hV
-	 +MvXac/rfTu/beOwhM45V0N6WNtBIeYjWOF/yPXdtCO1jVSXiJ28MrfKF8d1TI7PUKCdi
-	 L5gTJQ7Wev1bSt9whLeOJQ/GoiEKw69Uu9Tc4fraostbHm3MrEFxa5yZ4l5y4Xz78DTLu
-	 v7uIsdwc1r50NBdgopuD8IXsSa/jkCRzjxvs900PoGwE8OsG74tw00cszTT9ETuKC6A==
+	t=1795056294;
+	b=vxEhiYcRDh/ICnP+AqXbwP8gTXG5qu9FsBS+QRtptDjWOiUDcGNdFB+Kdr47jqHYSEr2
+	 SBKzWaOTDvn2Pkn/dk/YmArg5yYf/62PTX3qaLIMQe+lkr913yY6RJlSndF4ZhtjSTgfW
+	 /BmpkKmfpvw7sb42fKOFyV6U9NPuVkI6++YGkFyFfdkMSfoNCECgASniPOBWREQlpr0xS
+	 QRDeshXoAGjaRJ98EY3f1zF1kzJ7i3vQyYi4u62Cy91XPdsQ2jNtFgUdRyj8UJn4TGojo
+	 y8x9/875B8T6tx9VXeqNQJdBO0J2Af1JDe6VSIzr3E6LBhLesWj9BfRA4TqWn7ytbUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056291;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056294;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YT9PAFepTOd3J03JpptjbuNa3eFfMOmkYYqUSdXQJB4=;
-	b=yDg18dYaLCdT2RYKcCME89sk48WHVf3aQeU9KxILIlG0WiI/qPwM4dorm3iR2Ypoh0sV
-	 kdtcWmth4WlL0TrO6FoJNLitkXrmbiKgE1UwiWSTIZuCkCApncTIYFKOfQLwEdsspaA3x
-	 SrfkUiQgo4PsJhqCZUSNxrhUNcoNCqJW3SUVPqJNxM9E34X5+llUYFEgT52SopNpzehoY
-	 h7siACk9zqzLywmXDArEb4YOxiFzIR3iIyblnAWnX//JtFLUuZxSyo3NC0fm3zQm55Y3p
-	 UQuOCiX/KAy79r7bm91asTDZCbsyF4LcOZPDysUj42vW+hhrg/hxmm6DDsnbg/i7rFQ==
+	bh=qBCZQpYyyhdhIKuzf7vndwE2H2l1ojyxiqCfBkeP7sM=;
+	b=ETpAlBZ26Ola3p5T7CS8Dhm/EeROSNdojeW4jVjbbrmVCH/vgBD6eQzed6Pl8aSOk7tA
+	 xzrcltB6GaaXafyoN5hN4sPXoOmuubtj/mjuXJsBtHbv5g3/njuXdmlAJ1mMouaUYX6qQ
+	 Q5m+qC1WqO3JIIiPVQWuliLBW0KEWEIMUQD7yClOJ2LsAV5Q1tlIqQx1kSDS5Kg4y7GJw
+	 0E6bYY4MunV/OrcGsJ0zud6on+eZqzlCqXAAf2o9/F70JFZtdJ7badNL6XqvhI28qfFjF
+	 T41O7dKtiI6P0cVY6zD8CZjQ0WxFN9zTIXxX885C1wRGi1GH5mEXVvxjNFYDX3VLrIg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hfVi9qqj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ubjPh8xK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5B37606A325;
-	Thu, 19 Nov 2026 02:44:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5816B606A31C;
+	Thu, 19 Nov 2026 02:44:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hfVi9qqj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D13661F000C6;
-	Thu, 19 Nov 2026 02:44:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ubjPh8xK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A99291F000C4;
+	Thu, 19 Nov 2026 02:44:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056291;
-	bh=YT9PAFepTOd3J03JpptjbuNa3eFfMOmkYYqUSdXQJB4=;
+	s=korg; t=1795056294;
+	bh=qBCZQpYyyhdhIKuzf7vndwE2H2l1ojyxiqCfBkeP7sM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hfVi9qqjTig+4RpPW4mNZXxvbHWF/3naHh1cUlaLNmxyhsAbvnV7UaVKFcq7ksQKV
-	 2cvtLdBrnPxZGIQJJwBq1fe3UHLBMnTXni4YTxJVOn2nnyNHxLcbcRK40JqzGyEVda
-	 BVU/eGcnDaMARzyivb4nHK9cQ1v0EFIFKJ9vay/E=
+	b=ubjPh8xKkHfChUtZjslW2b3w6c8x8GYFNqDwtAlryOXd8UfY2EnurhlhyPSpK2gab
+	 n1VPo0SbEgXYflwTO6gY08DXeGdhJV0UztO2PI81PMO9NQPCuzg664Nuk9D6dHh/e4
+	 6YDUe6uOV/YtgjVAZQpHjijHKFH7wWYriD/iFA/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Alex Williamson <alex@shazbot.org>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1934/2214] PCI: Fix out-of-bounds MMIO read in nvme_disable_and_flr()
-Date: Wed, 18 Nov 2026 16:00:10 +0100
-Message-ID: <20261118150128.366796919@linuxfoundation.org>
+Subject: [PATCH 5.15 1935/2214] Bluetooth: L2CAP: hold chan in l2cap_ecred_conn_rsp()
+Date: Wed, 18 Nov 2026 16:00:11 +0100
+Message-ID: <20261118150128.403399545@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,43 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 6aaa3f42e3410ea8e26c857477260159f724cb1d ]
+[ Upstream commit b508a2a2d846ccc4c8f691e4e3dfca6f97dfe85a ]
 
-In nvme_disable_and_flr(), the PCI bar is mapped using
-NVME_REG_CC + sizeof(cfg) which is (0x14 + 4 = 0x18 bytes)
+l2cap_chan_del() calls l2cap_chan_put() to drop the conn->chan_l
+reference.  If this was the last reference, UAF follows.
 
-However, the function later reads the controller status from
-NVME_REG_CSTS - offset 0x1C, which is outside the mapped 0x18 byte
-boundary. This violates the API contract.
+l2cap_ecred_conn_rsp() iterates chan_l list and calls l2cap_chan_del()
+on some members, without holding chan reference.
 
-Fix this by increasing the mapping size to include NVME_REG_CSTS. Also
-change sizeof(cfg) to sizeof(u32) to make the intent clearer.
+Fix by holding refcount while using chan after l2cap_chan_del().
 
-Fixes: ffb0863426eb9 ("PCI: Disable Samsung SM961/PM961 NVMe before FLR")
-Signed-off-by: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Alex Williamson <alex@shazbot.org>
-Link: https://patch.msgid.link/20260903164615.5744-1-raizudeen.kerneldev@gmail.com
+Since orig is looked up by dcid provided by remote, it's also possible
+orig == chan, so reference needs to be held also after orig use.
+
+Fixes: 41c2713b204e ("Bluetooth: L2CAP: Fix possible crash on l2cap_ecred_conn_rsp")
+Assisted-by: deepseek-v4-flash
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/quirks.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/l2cap_core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 6afeb2bcea285..9b5542df0f138 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -3957,7 +3957,7 @@ static int nvme_disable_and_flr(struct pci_dev *dev, bool probe)
- 	if (probe)
- 		return 0;
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index a25a134087861..3d6bfe6c000e9 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -6385,12 +6385,14 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
+ 		    chan->state == BT_CONNECTED)
+ 			continue;
  
--	bar = pci_iomap(dev, 0, NVME_REG_CC + sizeof(cfg));
-+	bar = pci_iomap(dev, 0, NVME_REG_CSTS + sizeof(u32));
- 	if (!bar)
- 		return -ENOTTY;
++		l2cap_chan_hold(chan);
+ 		l2cap_chan_lock(chan);
  
+ 		/* Check that there is a dcid for each pending channel */
+ 		if (cmd_len < sizeof(dcid)) {
+ 			l2cap_chan_del(chan, ECONNREFUSED);
+ 			l2cap_chan_unlock(chan);
++			l2cap_chan_put(chan);
+ 			continue;
+ 		}
+ 
+@@ -6429,6 +6431,8 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
+ 				__set_chan_timer(orig, 0);
+ 				l2cap_chan_unlock(orig);
+ 			}
++
++			l2cap_chan_put(chan);
+ 			continue;
+ 		}
+ 
+@@ -6474,6 +6478,7 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
+ 		}
+ 
+ 		l2cap_chan_unlock(chan);
++		l2cap_chan_put(chan);
+ 	}
+ 
+ 	mutex_unlock(&conn->chan_lock);
 -- 
 2.53.0
 
