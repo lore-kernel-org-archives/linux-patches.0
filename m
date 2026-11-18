@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039712;
-	b=EY4okx+dKXf8xBTeVJYWftWHaPRyVNujSPibgWs5ZsSAS+p6L9PdVRu/ErXKyXwK4z3G
-	 MlM4Ps3mOPsTzJXHv03bPfMfOAIA/r7m/TGrqnh8H5gwoKWOBddqHGJobPKXcuplrDzIO
-	 0LoXjD0fjKJOkUK5GvZerSaki5CTicFi8CCYj6wAGXf5qhMwFA6MBBpLhKy/sl0TTsPf2
-	 lyVh7+t9kHQUIy+lp85HUlp8IoP3+FBQFDGmXHOxMQcsMqyKvti2AU+9fasqGYqNE+BQd
-	 2nM+77BI3vGsJEjrM+Ebx0TCcSX8Wi36gr8fP8+JPv1Lxrd4+krtU5oSKLyLG6frHkg==
+	t=1795039715;
+	b=rW5xJAx+ZM5hRWUvtL8djvl2u4JAeso1Bb/AOWYSfN1Lx+4qMBEtzdF7TYDRGaNMufhV
+	 aKDm1r/Fgb+LRA7qKLvipw1VTo34u7KkAwfR5FpG4knJbad6pVRnyFlZenPXz/9VxJxBr
+	 2jRVObGDI7bzmaK30zknjyMMgEmJXN2DSuH9UDo0/8Gf/K9BnXAwAQqF5DIMj39L43CS+
+	 dkPHn9JnBLJzeoeMAQ28jiAsjPYdUS2MR0iit4JfDeYq7TMj8u4+O2igDxQNNowZV543j
+	 x779dUc/giDf9fLY+7WpxQkjMtf+JjrklqMjLwW/GvnnbpodZFQ/QEm3nhrNJxXLdgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039712;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039715;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=222Wf+EluFyX2SXDVxUXOG5eOkduPfDLXVsoUMZa9hI=;
-	b=wZlk2E0FrLESO/nsGmvo0jP8W6INFkXpQ/MOZ9lPJ1AA7NXZxlAUKZ6PAF6c3u9PNS7m
-	 xgJG0JilmKexWaZ8UPrxZc2XMLiEzN/AJEPVTn3SlG9pz5gDliSwn49VDw7BaIwHeWTL+
-	 yn4SOpgW8xhSC218JhwRVx6nA76fXt/lvyEpAZFz1io+UKnIrk1nFfCQ9OtLBjqqHM2B6
-	 0EEormqS7jZesjS4TuMxXvWtG7tRrrAFwYUGH1NK4ul6cPtm7SVSipIEuhCKGKFganPoD
-	 6hlLALYa78tXpnd6ogWxDnxWHiFkBA/H2XdoPv1JcO+gb4Tgj40v7R52YiNCb8x7SPg==
+	bh=ShMd49TrxL4QKmkg+a46BWuZ82nxqXsaIC/0CjEwIsQ=;
+	b=hVfcDHA/f2H0JYfdY0cwCBqVDgyzvJjXFacuhZHE4vUk4pZuA5VuQXdKGTGyhzrFWdFw
+	 0f/qCnKJvoy6xFx//Eos6ORdetNS7wN1iw4DFnJOCCZ3n0gwrzuIL0JYApjNstQG+ev/a
+	 3pr4F7QAqUYfLvaIREh7PeAaNsrXnaaBSC1x7Oa9EFiE3+EoO2FLE9y0PTY7pMq2qOJjv
+	 r8nrRQr8YRhSB3avEnJMHuA+ChxotR+D33pFL/utg3JRnI/tuEx+OHxMjFdEW2TLf51Z2
+	 7fZScXEcSfs+KVSO39UJY7KHdDF45RP1vj9onUVliZ+ek7kouYaAaB+Ks3AnoApQZPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vzBMXsjJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cKMykuos;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F936606A31C;
-	Wed, 18 Nov 2026 22:08:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7478B606A325;
+	Wed, 18 Nov 2026 22:08:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vzBMXsjJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E22E01F000C4;
-	Wed, 18 Nov 2026 22:08:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cKMykuos
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31DA1F000C4;
+	Wed, 18 Nov 2026 22:08:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039712;
-	bh=222Wf+EluFyX2SXDVxUXOG5eOkduPfDLXVsoUMZa9hI=;
+	s=korg; t=1795039715;
+	bh=ShMd49TrxL4QKmkg+a46BWuZ82nxqXsaIC/0CjEwIsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vzBMXsjJiyGF+Ot8oCHubvAcYThemBFrkJTnV9SA8Z2ywrtxTLb9rBByhlQ+k0yHG
-	 NDZn6LzPMjcGz0lP0xD4JX83qr0MZjlwoOBrS2HEACDmYI9zDwssWDVlGDQnIAdkSq
-	 c5r+wuf5Sr9TD5YDxjivRlSHcx36EB5WIhhORXQE=
+	b=cKMykuosk7PVFpek8FWQPoX3ykX/LZX5Ey0o7JMn01mTRmaDtH2yln7tLkPrnUxNB
+	 6rhCap8aC855Coy5YBYuAlzai8gLT2UQQknaVG88ntDLA2zz+wAUe28b7+A5ls5MR2
+	 fCy41/7jTnF2Qzq08HBVmfy2qrg5TBqVInl0G8i4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2199/3318] regulator: fixed: add support for under-voltage IRQ
-Date: Wed, 18 Nov 2026 15:47:01 +0100
-Message-ID: <20261118150427.905071885@linuxfoundation.org>
+Subject: [PATCH 6.6 2200/3318] regulator: Unify "negative error number" terminology in comments
+Date: Wed, 18 Nov 2026 15:47:02 +0100
+Message-ID: <20261118150427.934228015@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,108 +69,208 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit ecb6f1f456144e9ade5a492192287decbeef4cfe ]
+[ Upstream commit 98ce82a52886edd5197e903cb2b56f21bf3b0781 ]
 
-Add interrupt support for under-voltage notification. This functionality
-can be used on systems capable to detect under-voltage state and having
-enough capacity to let the SoC do some emergency preparation.
+Previous commits cleaning up kerneldoc used the term "negative error
+number" to refer to error condition return values. Update remaining
+instances of other terminology such as "error code" or "errno" as
+well so the whole regulator subsystem is unified.
 
-This change enforce default policy to shutdown system as soon as
-interrupt is triggered.
-
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://lore.kernel.org/r/20231025084614.3092295-6-o.rempel@pengutronix.de
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Reported-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20240829085131.1361701-11-wenst@chromium.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 51d6888b51e0 ("regulator: qcom-rpmh: Fix the return value in rpmh_regulator_vrm_get_optimum_mode() kernel-doc")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/fixed.c | 50 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 50 insertions(+)
+ drivers/regulator/core.c                |  2 +-
+ drivers/regulator/devres.c              | 18 +++++++++---------
+ drivers/regulator/fixed.c               |  2 +-
+ drivers/regulator/irq_helpers.c         |  2 +-
+ drivers/regulator/max77802-regulator.c  |  4 ++--
+ drivers/regulator/qcom-rpmh-regulator.c |  6 +++---
+ drivers/regulator/qcom_smd-regulator.c  |  2 +-
+ 7 files changed, 18 insertions(+), 18 deletions(-)
 
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 372208ce19fcf..07c097a1206a5 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -3403,7 +3403,7 @@ EXPORT_SYMBOL_GPL(regulator_get_regmap);
+  * for example.
+  *
+  * On success, the output parameters @vsel_reg and @vsel_mask are filled in
+- * and 0 is returned, otherwise a negative errno is returned.
++ * and 0 is returned, otherwise a negative error number is returned.
+  */
+ int regulator_get_hardware_vsel_register(struct regulator *regulator,
+ 					 unsigned *vsel_reg,
+diff --git a/drivers/regulator/devres.c b/drivers/regulator/devres.c
+index 7111c46e9de13..1b893cdd1aad6 100644
+--- a/drivers/regulator/devres.c
++++ b/drivers/regulator/devres.c
+@@ -163,7 +163,7 @@ EXPORT_SYMBOL_GPL(devm_regulator_get_optional);
+  * In cases where the supply is not strictly required, callers can check for
+  * -ENODEV error and handle it accordingly.
+  *
+- * Returns: voltage in microvolts on success, or an error code on failure.
++ * Returns: voltage in microvolts on success, or an negative error number on failure.
+  */
+ int devm_regulator_get_enable_read_voltage(struct device *dev, const char *id)
+ {
+@@ -174,8 +174,8 @@ int devm_regulator_get_enable_read_voltage(struct device *dev, const char *id)
+ 	 * Since we need a real voltage, we use devm_regulator_get_optional()
+ 	 * rather than getting a dummy regulator with devm_regulator_get() and
+ 	 * then letting regulator_get_voltage() fail with -EINVAL. This way, the
+-	 * caller can handle the -ENODEV error code if needed instead of the
+-	 * ambiguous -EINVAL.
++	 * caller can handle the -ENODEV negative error number if needed instead
++	 * of the ambiguous -EINVAL.
+ 	 */
+ 	r = devm_regulator_get_optional(dev, id);
+ 	if (IS_ERR(r))
+@@ -276,7 +276,7 @@ static int _devm_regulator_bulk_get(struct device *dev, int num_consumers,
+  * @num_consumers: number of consumers to register
+  * @consumers:     configuration of consumers; clients are stored here.
+  *
+- * @return 0 on success, an errno on failure.
++ * @return 0 on success, a negative error number on failure.
+  *
+  * This helper function allows drivers to get several regulator
+  * consumers in one operation with management, the regulators will
+@@ -299,7 +299,7 @@ EXPORT_SYMBOL_GPL(devm_regulator_bulk_get);
+  * @num_consumers: number of consumers to register
+  * @consumers:     configuration of consumers; clients are stored here.
+  *
+- * @return 0 on success, an errno on failure.
++ * @return 0 on success, a negative error number on failure.
+  *
+  * This helper function allows drivers to exclusively get several
+  * regulator consumers in one operation with management, the regulators
+@@ -326,7 +326,7 @@ EXPORT_SYMBOL_GPL(devm_regulator_bulk_get_exclusive);
+  * This is a convenience function to allow bulk regulator configuration
+  * to be stored "static const" in files.
+  *
+- * Return: 0 on success, an errno on failure.
++ * Return: 0 on success, a negative error number on failure.
+  */
+ int devm_regulator_bulk_get_const(struct device *dev, int num_consumers,
+ 				  const struct regulator_bulk_data *in_consumers,
+@@ -393,7 +393,7 @@ static void devm_regulator_bulk_disable(void *res)
+  * @num_consumers: number of consumers to register
+  * @id:            list of supply names or regulator IDs
+  *
+- * @return 0 on success, an errno on failure.
++ * @return 0 on success, a negative error number on failure.
+  *
+  * This helper function allows drivers to get several regulator
+  * consumers in one operation with management, the regulators will
+@@ -574,7 +574,7 @@ static void devm_regulator_unregister_supply_alias(struct device *dev,
+  *             lookup the supply
+  * @num_id:    number of aliases to register
+  *
+- * @return 0 on success, an errno on failure.
++ * @return 0 on success, a negative error number on failure.
+  *
+  * This helper function allows drivers to register several supply
+  * aliases in one operation, the aliases will be automatically
+@@ -726,7 +726,7 @@ static void regulator_irq_helper_drop(void *res)
+  *			IRQ.
+  * @rdev_amount:	Amount of regulators associated with this IRQ.
+  *
+- * Return: handle to irq_helper or an ERR_PTR() encoded error code.
++ * Return: handle to irq_helper or an ERR_PTR() encoded negative error number.
+  */
+ void *devm_regulator_irq_helper(struct device *dev,
+ 				const struct regulator_irq_desc *d, int irq,
 diff --git a/drivers/regulator/fixed.c b/drivers/regulator/fixed.c
-index 8a92257668458..c1906c743a57f 100644
+index c1906c743a57f..d135f9b324358 100644
 --- a/drivers/regulator/fixed.c
 +++ b/drivers/regulator/fixed.c
-@@ -20,6 +20,7 @@
- #include <linux/platform_device.h>
- #include <linux/pm_domain.h>
- #include <linux/pm_opp.h>
-+#include <linux/reboot.h>
- #include <linux/regulator/driver.h>
- #include <linux/regulator/fixed.h>
- #include <linux/gpio/consumer.h>
-@@ -30,6 +31,8 @@
- #include <linux/clk.h>
- #include <linux/string.h>
- 
-+/* Default time in millisecond to wait for emergency shutdown */
-+#define FV_DEF_EMERG_SHUTDWN_TMO	10
- 
- struct fixed_voltage_data {
- 	struct regulator_desc desc;
-@@ -106,6 +109,49 @@ static int reg_is_enabled(struct regulator_dev *rdev)
- 	return priv->enable_counter > 0;
- }
- 
-+static irqreturn_t reg_fixed_under_voltage_irq_handler(int irq, void *data)
-+{
-+	struct fixed_voltage_data *priv = data;
-+	struct regulator_dev *rdev = priv->dev;
-+
-+	regulator_notifier_call_chain(rdev, REGULATOR_EVENT_UNDER_VOLTAGE,
-+				      NULL);
-+
-+	return IRQ_HANDLED;
-+}
-+
-+/**
-+ * reg_fixed_get_irqs - Get and register the optional IRQ for fixed voltage
-+ *                      regulator.
-+ * @dev: Pointer to the device structure.
-+ * @priv: Pointer to fixed_voltage_data structure containing private data.
-+ *
-+ * This function tries to get the IRQ from the device firmware node.
-+ * If it's an optional IRQ and not found, it returns 0.
-+ * Otherwise, it attempts to request the threaded IRQ.
-+ *
-+ * Return: 0 on success, or error code on failure.
-+ */
-+static int reg_fixed_get_irqs(struct device *dev,
-+			      struct fixed_voltage_data *priv)
-+{
-+	int ret;
-+
-+	ret = fwnode_irq_get(dev_fwnode(dev), 0);
-+	/* This is optional IRQ. If not found we will get -EINVAL */
-+	if (ret == -EINVAL)
-+		return 0;
-+	if (ret < 0)
-+		return dev_err_probe(dev, ret, "Failed to get IRQ\n");
-+
-+	ret = devm_request_threaded_irq(dev, ret, NULL,
-+					reg_fixed_under_voltage_irq_handler,
-+					IRQF_ONESHOT, "under-voltage", priv);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Failed to request IRQ\n");
-+
-+	return 0;
-+}
- 
- /**
-  * of_get_fixed_voltage_config - extract fixed_voltage_config structure info
-@@ -299,6 +345,10 @@ static int reg_fixed_voltage_probe(struct platform_device *pdev)
- 	dev_dbg(&pdev->dev, "%s supplying %duV\n", drvdata->desc.name,
- 		drvdata->desc.fixed_uV);
- 
-+	ret = reg_fixed_get_irqs(dev, drvdata);
-+	if (ret)
-+		return ret;
-+
- 	return 0;
- }
- 
+@@ -130,7 +130,7 @@ static irqreturn_t reg_fixed_under_voltage_irq_handler(int irq, void *data)
+  * If it's an optional IRQ and not found, it returns 0.
+  * Otherwise, it attempts to request the threaded IRQ.
+  *
+- * Return: 0 on success, or error code on failure.
++ * Return: 0 on success, or a negative error number on failure.
+  */
+ static int reg_fixed_get_irqs(struct device *dev,
+ 			      struct fixed_voltage_data *priv)
+diff --git a/drivers/regulator/irq_helpers.c b/drivers/regulator/irq_helpers.c
+index 5ab1a0befe12f..ba07a7016a272 100644
+--- a/drivers/regulator/irq_helpers.c
++++ b/drivers/regulator/irq_helpers.c
+@@ -333,7 +333,7 @@ static void init_rdev_errors(struct regulator_irq *h)
+  *			IRQ.
+  * @rdev_amount:	Amount of regulators associated with this IRQ.
+  *
+- * Return: handle to irq_helper or an ERR_PTR() encoded error code.
++ * Return: handle to irq_helper or an ERR_PTR() encoded negative error number.
+  */
+ void *regulator_irq_helper(struct device *dev,
+ 			   const struct regulator_irq_desc *d, int irq,
+diff --git a/drivers/regulator/max77802-regulator.c b/drivers/regulator/max77802-regulator.c
+index 69eb6abd25514..b2e87642bec41 100644
+--- a/drivers/regulator/max77802-regulator.c
++++ b/drivers/regulator/max77802-regulator.c
+@@ -160,8 +160,8 @@ static unsigned max77802_get_mode(struct regulator_dev *rdev)
+  * Enable Control Logic3 by PWRREQ (LDO 3)
+  *
+  * If setting the regulator mode fails, the function only warns but does
+- * not return an error code to avoid the regulator core to stop setting
+- * the operating mode for the remaining regulators.
++ * not return a negative error number to avoid the regulator core to stop
++ * setting the operating mode for the remaining regulators.
+  */
+ static int max77802_set_suspend_mode(struct regulator_dev *rdev,
+ 				     unsigned int mode)
+diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
+index 4bdab1abf7ede..49de3d4fe63d7 100644
+--- a/drivers/regulator/qcom-rpmh-regulator.c
++++ b/drivers/regulator/qcom-rpmh-regulator.c
+@@ -157,7 +157,7 @@ struct rpmh_vreg_init_data {
+  * @wait_for_ack:	Boolean indicating if execution must wait until the
+  *			request has been acknowledged as complete
+  *
+- * Return: 0 on success, errno on failure
++ * Return: 0 on success, or a negative error number on failure
+  */
+ static int rpmh_regulator_send_request(struct rpmh_vreg *vreg,
+ 			struct tcs_cmd *cmd, bool wait_for_ack)
+@@ -316,7 +316,7 @@ static unsigned int rpmh_regulator_vrm_get_mode(struct regulator_dev *rdev)
+  * This function is used in the regulator_ops for VRM type RPMh regulator
+  * devices.
+  *
+- * Return: 0 on success, errno on failure
++ * Return: 0 on success, or a negative error number on failure
+  */
+ static unsigned int rpmh_regulator_vrm_get_optimum_mode(
+ 	struct regulator_dev *rdev, int input_uV, int output_uV, int load_uA)
+@@ -408,7 +408,7 @@ static const struct regulator_ops rpmh_regulator_xob_ops = {
+  * @pmic_rpmh_data:	Pointer to a null-terminated array of rpmh-regulator
+  *			resources defined for the top level PMIC device
+  *
+- * Return: 0 on success, errno on failure
++ * Return: 0 on success, or a negative error number on failure
+  */
+ static int rpmh_regulator_init_vreg(struct rpmh_vreg *vreg, struct device *dev,
+ 			struct device_node *node, const char *pmic_id,
+diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
+index f53ada076252d..8cfaf7b6f170e 100644
+--- a/drivers/regulator/qcom_smd-regulator.c
++++ b/drivers/regulator/qcom_smd-regulator.c
+@@ -1353,7 +1353,7 @@ MODULE_DEVICE_TABLE(of, rpm_of_match);
+  * @pmic_rpm_data:	Pointer to a null-terminated array of qcom_smd-regulator
+  *			resources defined for the top level PMIC device
+  *
+- * Return: 0 on success, errno on failure
++ * Return: 0 on success, or a negative error number on failure
+  */
+ static int rpm_regulator_init_vreg(struct qcom_rpm_reg *vreg, struct device *dev,
+ 				   struct device_node *node, struct qcom_smd_rpm *rpm,
 -- 
 2.53.0
 
