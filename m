@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021883;
-	b=uzs9TRfen1nR/NV5NavwnWbqnE0U5x66FxoOQpZjEx0YwliyALQk3KRpvRaKd2G3R4g6
-	 EzO3yo/WScIUGMKkKZ6xZzuJ27FG1UJEnfMtFyLk6LDytUImJ7wk6bbfsAZZKkUf9aTtd
-	 i97yjmQ5Al0PSYQXjp3Qy2HK1v+trG1ooOjTsczPBtTZibiqEuYOUaKSP5TYLTBxniwae
-	 pybFwWy/SJQfspy1ayjdtuizU+rEDCFXIefkBUZDa0O7K7YRT6YYy1+O8bpOcuPkiIphF
-	 rkaunr/UlsLXBHMf4wkO9NceiGBn6o0QABJ2sp0WEyJz7jV9Gz9oXoDu+RPIRLsLlBw==
+	t=1795021886;
+	b=L8cY8+vx3bRj5hoVP2oz2Qe1z1+gEFjodrdyf37DQ0bQqqiRkgBryGqScMZF/8Xs0k1Z
+	 cOnwswUdCHXURlpHXypiqvjpuJuW1tdb/DwRDsxQZ1nwYe12IUftCnnK5sKu4IrOV17oI
+	 MXJJ11QjTsgsNwpyoNl8zoHpBQEdRW5AKht/bmpRVkjDemSPRbJcEpPh1lzb9xP3ShuTJ
+	 PL2DJBc6Ya8BgDPUq61OJfiriuDKPgRd927POvBLL+3zGcbJAF62g0u85RT73CCNtkZly
+	 S82wxeopo/7s0SL5oldtqfoU3Nv4X1ldfFVapRtrRMpSzYZnnw//uej0d27yzpwAs2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021883;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021886;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BptWKzM72etuDo5SW6Tc6Y/DUxb1TkkLSI2s3io+jt0=;
-	b=R6e3WchvH7+3AK4JyaCRbgtDu13GW9ljtL5eWLQ+NKz4Rfe/9f8fKGLFuwYqafS6i4W+
-	 PsRqyxkIrpR5N3MIQNcGXorBRwswo1Eh0HBZRRCC3vW8kUE8c1zcpqkEbEdV8Zef/FTBC
-	 ozLZPSyupqSUK3X4HhsqBd0V5OD/VpzwoSxbpWZiZV0Q90i/Pdme6CO0I9FaZeFH9rOmM
-	 RysHmLjDmZkkD50V2R12BlFnZB9rnPrnAEWJg2/d6iXJnI/+YjLvUm2x6f29nOszYNO/Y
-	 mqNiP0E6sRuk859ocaHE7UM4slulsFmvVq4dsSy7K8Eno2IBReXxK0fLMlKVToxbtYg==
+	bh=BU6qqoAnNCbPA4oXYPYz87IaVNDOoLhE8J6pf/eCtVk=;
+	b=Eb9bo9OZyqpKJqHWnbNeJc95h+R31sigxtSx5UVUL2G6cb8uQXim1iaIyN0f6roFf3RG
+	 mAIHuXK2i4ATL/XqZBeiO0HlOXs0jMlYwXRyvXcSCRANCfHFEVYO9uCYIDbo4YIrUSv4Y
+	 1usYm/5eZ20tkwsf6AHPK9lZJERbFgZ+6RfisnPI+gKDS+eRNrgRUWeCT5T6lnPVfHwDY
+	 KIGdU5MV+4rbGISwt7zXIr/Q3E43hL5WvsyDI1dTMBq67ejUypArKmeiORq/D6Aao/hm+
+	 9CB7NQxzeHuITMmaea1+FvF7XJwNAdFJ/LTRyHzuaLqS/xG3z2O1tpl962qonErrwkQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dY921yIU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rf2Ez273;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B53CB606A31C;
-	Wed, 18 Nov 2026 17:11:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B07B9606A320;
+	Wed, 18 Nov 2026 17:11:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dY921yIU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A5691F000C5;
-	Wed, 18 Nov 2026 17:11:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rf2Ez273
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C40C71F000C4;
+	Wed, 18 Nov 2026 17:11:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021883;
-	bh=BptWKzM72etuDo5SW6Tc6Y/DUxb1TkkLSI2s3io+jt0=;
+	s=korg; t=1795021886;
+	bh=BU6qqoAnNCbPA4oXYPYz87IaVNDOoLhE8J6pf/eCtVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dY921yIUnVOyOpYrvWWKKKq5QqAdx0v8HzRTOMwArZGKNTRPxkAS5MhlFx+w12RxY
-	 59JtgpQ0V84k4OdWgZJUFk0ckjfKnslZnHkgRL5VKLgDPo5PqY+3/cvVfOItElvrGf
-	 7pfCig53DJW8U922AepXFXMwOiO9VTHSJpJ7Y4Gg=
+	b=Rf2Ez273HyJ+qiT+uoA6erglMXpZ3+hR9PVxgztJbOg2JTuZ3KEEhjx4peZzGmcPt
+	 w5EFThw1cnnMVDuD4DPBQ09Wws2XDrKm9iaiMxFhq32m3e68b88JPzqnI93KwUKF3/
+	 ypn1hcfbhxCE7Fe7tgg5pQaX6H9toCtlJKpyqDMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Bridges <icb@fastmail.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2466/2651] ksmbd: fix SMB2 CREATE response buffer overflow in compound requests
-Date: Wed, 18 Nov 2026 16:01:46 +0100
-Message-ID: <20261118150413.796727609@linuxfoundation.org>
+Subject: [PATCH 7.3 2449/2651] ipmr: clear skb->cb[] in reg_vif_xmit()
+Date: Wed, 18 Nov 2026 16:01:29 +0100
+Message-ID: <20261118150413.287892705@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,82 +70,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Bridges <icb@fastmail.org>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit d1557d8324c8f757229619f96f8227f7674bdd9e ]
+[ Upstream commit 389952e8776a4663044df2ae3e8987a9e81964cf ]
 
-A CREATE response that carries an AAPL create context can reach
-create_rsp_size (572 bytes for SMB 3.1.1). Commit 713c31a3a225
-("ksmbd: fix SMB2 CREATE response buffer overflow") makes
-smb2_allocate_rsp_buf() reserve that much, but only for the first
-command of a compound. A CREATE later in the compound is guarded by
-is_chained_smb2_message() instead, which reserves only
-MAX_CIFS_SMALL_BUFFER_SIZE (448 bytes) for the next response. smb2_open()
-then appends the create contexts without checking the space left.
+reg_vif_xmit() hands the skb to ipmr_cache_report() as an
+IGMPMSG_WHOLEPKT report. When the mroute socket has IP_PKTINFO
+enabled, ipmr_cache_report() calls ipv4_pktinfo_prepare() on the
+original skb, which reads skb->cb[] as IPCB.
 
-That check also uses the unpadded length of the response so far.
-init_chained_smb2_rsp() pads the previous response to 8 bytes before the
-next command runs, so the next response can start up to 7 bytes later
-than the check assumes.
+By the time the pimreg device transmits the packet, skb->cb[] is not
+IPCB anymore: qdisc_pkt_len_init() overwrites IPCB(skb)->iif with
+qdisc_skb_cb(skb)->pkt_len, and any qdisc installed on the device or a
+tc BPF program writing skb->cb[] fills the area holding the IP options
+and IPCB(skb)->flags.
 
-When a CREATE follows a command that fills the response buffer, such as
-QUERY_DIRECTORY, it writes its create contexts past the end of the
-buffer. The AAPL context is written last.
+For locally generated packets routed out pimreg (they carry an rtable
+dst), the mroute socket can therefore receive a bogus ipi_ifindex
+(the packet length), and the l3mdev slave test in
+ipv4_pktinfo_prepare() is driven by stale qdisc data.
 
-  BUG: KASAN: slab-out-of-bounds in create_aapl_rsp_buf+0x31/0x6e0 [ksmbd]
-  Call Trace:
-   create_aapl_rsp_buf+0x31/0x6e0 [ksmbd]
-   smb2_open+0x4fa8/0xd900 [ksmbd]
-   handle_ksmbd_work+0x88c/0x1cb0 [ksmbd]
+Clear IPCB before building the report, as done for IPv6 in
+commit 238164201431 ("ip6mr: clear skb->cb[] in reg_vif_xmit()").
+The skb is freed right after, so nothing else depends on its control
+block.
 
-When the next command is a CREATE, reserve create_rsp_size, as
-smb2_allocate_rsp_buf() does for a single CREATE, and check the reserve
-against the 8-byte aligned offset where the next response starts.
-
-Fixes: 8f1b796ff113 ("ksmbd: add AAPL kAAPL_SERVER_QUERY create context support")
-Signed-off-by: Ian Bridges <icb@fastmail.org>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: bb7403655b3c ("ipmr: support IP_PKTINFO on cache report IGMP msg")
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20261025111337.142787-1-edumazet@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ net/ipv4/ipmr.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 55aa09a07aed4..d43ea48fcaf31 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -694,6 +694,9 @@ bool is_chained_smb2_message(struct ksmbd_work *work)
- 	hdr = ksmbd_req_buf_next(work);
- 	next_cmd = le32_to_cpu(hdr->NextCommand);
- 	if (next_cmd > 0) {
-+		size_t next_rsp_sz = MAX_CIFS_SMALL_BUFFER_SIZE;
-+		struct smb2_hdr *next_hdr;
-+
- 		if ((u64)work->next_smb2_rcv_hdr_off + next_cmd +
- 			__SMB2_HEADER_STRUCTURE_SIZE >
- 		    get_rfc1002_len(work->request_buf)) {
-@@ -702,8 +705,19 @@ bool is_chained_smb2_message(struct ksmbd_work *work)
- 			return false;
- 		}
+diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
+index f51014b37178b..5bfbb8d88bf4c 100644
+--- a/net/ipv4/ipmr.c
++++ b/net/ipv4/ipmr.c
+@@ -554,6 +554,11 @@ static netdev_tx_t reg_vif_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	DEV_STATS_ADD(dev, tx_bytes, skb->len);
+ 	DEV_STATS_INC(dev, tx_packets);
  
--		if ((u64)get_rfc1002_len(work->response_buf) + MAX_CIFS_SMALL_BUFFER_SIZE >
--		    work->response_sz) {
-+		/*
-+		 * The next response starts at the 8-byte aligned end of this one.
-+		 * smb2_open() appends create contexts without checking the space
-+		 * left, so reserve the largest CREATE response for a chained
-+		 * CREATE, as smb2_allocate_rsp_buf() does for a single one.
-+		 */
-+		next_hdr = (struct smb2_hdr *)((char *)hdr + next_cmd);
-+		if (le16_to_cpu(next_hdr->Command) == SMB2_CREATE_HE)
-+			next_rsp_sz = max_t(size_t, next_rsp_sz,
-+					    work->conn->vals->create_rsp_size);
++	/* skb->cb[] holds qdisc/tc state at this point, not IPCB.
++	 * ipmr_cache_report() reads it as IPCB to build IP_PKTINFO.
++	 */
++	memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
 +
-+		if ((u64)ALIGN(get_rfc1002_len(work->response_buf), 8) +
-+		    next_rsp_sz > work->response_sz) {
- 			pr_err("next response offset exceeds response buffer size\n");
- 			return false;
- 		}
+ 	/* Pairs with WRITE_ONCE() in vif_add() and vif_delete() */
+ 	ipmr_cache_report(mrt, skb, READ_ONCE(mrt->mroute_reg_vif_num),
+ 			  IGMPMSG_WHOLEPKT);
 -- 
 2.53.0
 
