@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053046;
-	b=FL8WKoDGyhtjgS1DXQr2wFCrth6kHNeVHYoHi3ACNYXyLsPBl47Y9Lxs52wo8gBe8R8J
-	 OGt4X+L8NzOjOjFDqA86e0pWMBsrJYp8TchlWhPVTVmQc+hvOdyBWSRhEn9eTi9ZnMrSQ
-	 87ULSaZb2hWtfWJIzeXeFNEuvBSzw5kVCyddZlC7ctqxNzosTqz0WBfJDc84zkkXtSlYd
-	 +kjl2tGEA7kr+i93bgM60dcKM7XTVNv+N1xFw+nr1VSidV42o1IEnD5on2dMWyBXOh6FV
-	 q4+kIg08WkV+8D8Yrovst9HwmxFhqkjnG/SAMDRmgnyRzFoRs0zmuwRr7gLF7cOu+/Q==
+	t=1795053049;
+	b=G3qkR+2Cnp/cexzT1n6pB+i+Nv0qCYcZlZzU0PjDb1zD+yqpMv0oM5KgqzYMxxqkxVTq
+	 WHtUhNKB5kKTHGGZHOcecG0Bf4z2Wc/IxF1AOcxc8ouT9z/CdB/c/IODh0Om03Iwykhz6
+	 NDgpFnTgaqN62ORU7juh4LFrQ+fjer/wEgQbaeVa/1qD4OlL9OzteZSnQEjdo3ISi+VIQ
+	 kUP5G6aMs/UUjZvPjRC0EW4Jvq4yqMBJNgxLL0+C8imiT2V7dgQS+i+PNMESA+Zwblfap
+	 bW51fOyh37CvBvKDVcqB4IYwWfbA7EgAbjAmQE2hdJWtZY8HjoWvD66ramP2h4TbsAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053046;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053049;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=k0EuJhmVVR2t20ZOprlJzZvqIB6CJjqwYt02H0bmThM=;
-	b=m9PLEtnXJgBzUn+XbND0foOXsVyTNZzbmpP9NRPwxCa/P48gwPT6/JiEZzyk7x9zYg3y
-	 HuvJ46lKRG/vRxCzLJho6BzsocTJa9YFfKP2zGF4FW4jS6zyg8czuKrnaXb2T9qtQnTzc
-	 myLZS3jkh4/9XWfCcP80Ebk9h3VPQT3CrpLO8zYn6vuiJ8tStvF0O2GHWjS+ZzxxCiMLj
-	 gsxskAubgvej8utLHyBJy+UZ/xMO5BXLO67xkIsvqaDi/OrtA3cxDxztcpIT87R58vHbB
-	 c/iFWGe1Lkf3qROANn6B6jSWPKcaiGc28/I7QP79fREymHjNI8ENeuCMznbeZ+UX/qA==
+	bh=MTBYkE1juwS8PM2krRA5uaRPwPLdk3jGYUCqKVZWrZ8=;
+	b=pX6YvMN/5eFt/zq/Lb23Y8Qu1vO9BxguQk0ntxQ89ygcvMAJ9cztH2CwDIdODwh9n77a
+	 IF37RFKkxuArsiaTy/grMCrz346ZFDdMxUfkp96wheGVSFn+Bh6wKlPGq9Qwass4BgbsQ
+	 4pKmB0OPsmPwYp3YA01iTy3E5fhmtsCJqA/Vjgy9F9vSLq9B6ihHnuXCoAOhhoOLzFQO3
+	 kKvqduVaKz+kNuD2Oq6Tx35WXAjzQ8Xz+cb1Nr/1Ndk7ZAJ/cdaWpenthrV3Vkx2pbGc1
+	 WXACW6K6SDyNa6vj250BgXLusl9EOx4wi6cLy+Mwh8MUMejjeIxlO7l20+4xIgk4QtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mqgGLtCc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FoZhhfC1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7185D606A31C;
-	Thu, 19 Nov 2026 01:50:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA53606A31C;
+	Thu, 19 Nov 2026 01:50:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mqgGLtCc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2A2E1F000C4;
-	Thu, 19 Nov 2026 01:50:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FoZhhfC1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84BE01F000C4;
+	Thu, 19 Nov 2026 01:50:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053046;
-	bh=k0EuJhmVVR2t20ZOprlJzZvqIB6CJjqwYt02H0bmThM=;
+	s=korg; t=1795053049;
+	bh=MTBYkE1juwS8PM2krRA5uaRPwPLdk3jGYUCqKVZWrZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mqgGLtCcwDfZBAGl/qmcZnhYa5Q/CDG/SB2g8CJ39cF3mB8Wty3ytVMoARqUBo/M6
-	 wgHOcAyzPNqiPlMxL5z/ada/fRNyS0mt3sXSoNnbcSmnDUzywUXzwM1OgvRJAUQyON
-	 ILLFTcdyury03p+eckFvRCUebKCBRE9E9WwXZsx8=
+	b=FoZhhfC1wSURcjJpbin5Es31F26VB8iiEbBDToveoMW4UDm6xDtizBhS+WiCLrPPj
+	 jaLYVLWj0WD7v5PwDs53TjPh9hlMk4Mm5P5oW83cOepkz9jdetlhaAr6jf9tY9rDD3
+	 +wuQDUOi+jZwNNEJAZe2pL70v8E1+IhlVq2L54qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>,
+	Benjamin Coddington <bcodding@hammerspace.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0778/2214] xfs: improve dirent bounds checking in scrub and repair
-Date: Wed, 18 Nov 2026 15:40:54 +0100
-Message-ID: <20261118150042.762684985@linuxfoundation.org>
+Subject: [PATCH 5.15 0779/2214] NFSv4/pnfs: bound the CB_NOTIFY_DEVICEID array count before allocating
+Date: Wed, 18 Nov 2026 15:40:55 +0100
+Message-ID: <20261118150042.797077255@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,128 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Benjamin Coddington <ben.coddington@hammerspace.com>
 
-[ Upstream commit 5d470234d04dae6fe2ca2cf4b9ef277b78c7e05a ]
+[ Upstream commit 32f0967ea296d447925465c98e7eec71d4e2f755 ]
 
-LOLLM complains that we don't do enough bounds checking of the directory
-entries in directory blocks when we're looking for errors or trying to
-salvage entries.  Let's improve that with more detailed checks.
+decode_devicenotify_args() hands the server's notification count
+straight to kmalloc_objs() as the array length, without checking it
+against the message that carried it.  Bound it the way nfs4xdr.c bounds
+an attribute length, against xdr_stream_remaining().
 
-Cc: stable@vger.kernel.org # v4.16
-Fixes: ce92d29ddf9908 ("xfs: directory scrubber must walk through data block to offset")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ sashal: inlined checks in the existing xchk_dir_rec() loop because the upstream directory-walking helpers are absent ]
+Fixes: 1be5683b03a7 ("pnfs: CB_NOTIFY_DEVICEID")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+[ sashal: adjusted context for kmalloc_array() instead of kmalloc_objs() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/scrub/dir.c | 61 +++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 55 insertions(+), 6 deletions(-)
+ fs/nfs/callback_xdr.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/fs/xfs/scrub/dir.c b/fs/xfs/scrub/dir.c
-index 200a63f58fe7c..7119eb0bb7d78 100644
---- a/fs/xfs/scrub/dir.c
-+++ b/fs/xfs/scrub/dir.c
-@@ -219,6 +219,7 @@ xchk_dir_rec(
- 	xfs_dahash_t			hash;
- 	struct xfs_dir3_icleaf_hdr	hdr;
- 	unsigned int			tag;
-+	bool				foundit = false;
- 	int				error;
+diff --git a/fs/nfs/callback_xdr.c b/fs/nfs/callback_xdr.c
+index 6501459af0e57..29e43101b7158 100644
+--- a/fs/nfs/callback_xdr.c
++++ b/fs/nfs/callback_xdr.c
+@@ -272,6 +272,13 @@ __be32 decode_devicenotify_args(struct svc_rqst *rqstp,
+ 	if (n == 0)
+ 		goto out;
  
- 	ASSERT(blk->magic == XFS_DIR2_LEAF1_MAGIC ||
-@@ -263,28 +264,68 @@ xchk_dir_rec(
- 	dent = bp->b_addr + off;
- 
- 	/* Make sure we got a real directory entry. */
--	iter_off = geo->data_entry_offset;
- 	end = xfs_dir3_data_end_offset(geo, bp->b_addr);
- 	if (!end) {
- 		xchk_fblock_set_corrupt(ds->sc, XFS_DATA_FORK, rec_bno);
- 		goto out_relse;
- 	}
--	for (;;) {
-+	iter_off = geo->data_entry_offset;
-+	while (iter_off < end) {
- 		struct xfs_dir2_data_entry	*dep = bp->b_addr + iter_off;
- 		struct xfs_dir2_data_unused	*dup = bp->b_addr + iter_off;
-+		unsigned int			advance;
- 
--		if (iter_off >= end) {
-+		/* must have freetag */
-+		advance = offsetof(typeof(*dup), length);
-+		if (iter_off + advance >= end) {
- 			xchk_fblock_set_corrupt(ds->sc, XFS_DATA_FORK, rec_bno);
- 			goto out_relse;
- 		}
- 
- 		if (be16_to_cpu(dup->freetag) == XFS_DIR2_DATA_FREE_TAG) {
--			iter_off += be16_to_cpu(dup->length);
-+			if (iter_off + sizeof(*dup) > end) {
-+				xchk_fblock_set_corrupt(ds->sc, XFS_DATA_FORK,
-+						rec_bno);
-+				goto out_relse;
-+			}
-+
-+			advance = round_up(be16_to_cpu(dup->length),
-+					XFS_DIR2_DATA_ALIGN);
-+			if (!advance || iter_off + advance > end) {
-+				xchk_fblock_set_corrupt(ds->sc, XFS_DATA_FORK,
-+						rec_bno);
-+				goto out_relse;
-+			}
-+
-+			iter_off += advance;
- 			continue;
- 		}
--		if (dep == dent)
-+
-+		/* must have namelen */
-+		advance = offsetof(typeof(*dep), name);
-+		if (iter_off + advance >= end) {
-+			xchk_fblock_set_corrupt(ds->sc, XFS_DATA_FORK, rec_bno);
-+			goto out_relse;
-+		}
-+
-+		/* Don't walk off the end of the block. */
-+		advance = xfs_dir2_data_entsize(mp, dep->namelen);
-+		if (!advance || iter_off + advance > end) {
-+			xchk_fblock_set_corrupt(ds->sc, XFS_DATA_FORK, rec_bno);
-+			goto out_relse;
-+		}
-+
-+		if (dep == dent) {
-+			foundit = true;
- 			break;
--		iter_off += xfs_dir2_data_entsize(mp, dep->namelen);
-+		}
-+		iter_off += advance;
++	/* sanity check the count against the remaining stream */
++	if (n > xdr_stream_remaining(xdr) /
++		((4 * sizeof(uint32_t)) + NFS4_DEVICEID4_SIZE)) {
++		status = htonl(NFS4ERR_BADXDR);
++		goto out;
 +	}
 +
-+	/* Hash tree must point to the exact dirent */
-+	if (!foundit) {
-+		xchk_fblock_set_corrupt(ds->sc, XFS_DATA_FORK, rec_bno);
-+		goto out_relse;
- 	}
- 
- 	/* Retrieve the entry, sanity check it, and compare hashes. */
-@@ -297,6 +338,14 @@ xchk_dir_rec(
- 		xchk_fblock_set_corrupt(ds->sc, XFS_DATA_FORK, rec_bno);
- 		goto out_relse;
- 	}
-+
-+	/* Name must not overflow end of block */
-+	if ((char *)dent->name + dent->namelen >
-+	    (char *)bp->b_addr + BBTOB(bp->b_length)) {
-+		xchk_fblock_set_corrupt(ds->sc, XFS_DATA_FORK, rec_bno);
-+		goto out_relse;
-+	}
-+
- 	calc_hash = xfs_da_hashname(dent->name, dent->namelen);
- 	if (calc_hash != hash)
- 		xchk_fblock_set_corrupt(ds->sc, XFS_DATA_FORK, rec_bno);
+ 	args->devs = kmalloc_array(n, sizeof(*args->devs), GFP_KERNEL);
+ 	if (!args->devs) {
+ 		status = htonl(NFS4ERR_DELAY);
 -- 
 2.53.0
 
