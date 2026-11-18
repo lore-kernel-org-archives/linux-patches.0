@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057989;
-	b=C28TSdPsbDRcul8F+uMNweNxUpb9QTeHOug+XIAj4Rgs+WGRhu5NE4HTo1mrZf1XgYt5
-	 0qVX3/hMxhmpjOi6uYyV5eOcn1u6TGEtePCOPZRuQY96tZOcYr1KNujE4/dm9+kWBdFuC
-	 WHjbg40/Sa0IExR6kuwy3c0DyRvbgXM+J3Ltbn6VPN7dOyQv7jrBuTUQA/vAQo+nkYDo3
-	 6H1/F9zfd8TAtnwdS2aADS9oKbHWpbN3hBEG1jyT87RPOMlcsOBz9Fj+Bknnpw5NkiDja
-	 JrcipHueUe90HTSHLPPBq9unlw8furMJin5Hw4so7EuOdLJEmoHeXmtbA8com8d1+Fg==
+	t=1795057992;
+	b=FK74qde9lGH0qd0hDirotwmtxZ1CLXec2mJRF+QC2cCFvI30+jHiAe6+mQ/dQh/dJ/d2
+	 F5QZKSsQZu/o5vRqKIOfQr9bEEMcId48AUPZuZ799ujFEZXAor1u5S5fi0/QJb/0BDy41
+	 klgHrX9GtNGIWyBCu14RP+HrMbePvGg6uc24PSC2D73e7MPQnk4lLX4+lWIFj011SJ68P
+	 Xaeicygo3LplKlc1HbW0fx0ZGifhlMHHhBDFj4/TMs/ZnfzHjznWfgN1WDdl/nPBT2Scx
+	 AcjY/2f6kPuLRK7Tq3O6fpHC8zoU+8lAVXkvEoHl2bU6TWPMOT/ojS8gFB+KhhCgy3Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057989;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057992;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=l0O2+4/OQS+bQ8VxkO6LnzN4fCXdY8rRfcjgGD5+W/8=;
-	b=cOID/UQShevZAPcTTXmgWkFmsQV6XmCnw0GxpSUD7W00+znb7PXuT5XCipHw8b7V1puP
-	 7nYoSC7Y3wK5aeH6jugcaxKhip8DPi3fIOaNp59GjfeMBibR1lTashdWFl6FH6t0iOguV
-	 eX0LtudSWttsp6T491F1D9WonHesVWfzbJjcZPnhs1RRk8HYfd+5r+OEnlk67k0d5zt/N
-	 m8/j4qAbjbU7mglxnBCt9Q7M5N0hgYHh7TyaJoB6ReV2rE4BPNOD3S3dDvQNs+6XHCTK2
-	 g4JreM+7gFLX/m7DYfVwrNdPZNRsZ2Jia4SSlQi2gfbe2hph6+xcDEuQtcUoRW3T6Tg==
+	bh=7tzTCvxo+RBSPmDNFJOvnOS3AakgqGIPfgmIOoiimak=;
+	b=cI4VaRI79j5nvqgNZ179maJdqrEYe4KH7tWvS/UZRRuX3tLNpHCeaODxSxhcT45aM1Y4
+	 ePt+C98DURc5nrbksVK4mtJAy14NZL0IbvI/lnIumitm5EKAR5EVwwBbfy7BE8Mlbu+/F
+	 sc/ad10pBG8TkzhFxNwta96MSEaZiS999AWGrVFysX096rzFkHdWuStWQ207YeIllfehd
+	 0J+/kAnI3TB14CC/obIyUEUSX7sNlZzqWoWfUWcq8IPnhU2+P8aETOAV7clfflwytSko/
+	 4GFhp5YpHf9p1ikiH453rKx26KX37ZpxE793rm2exLj9a2C2ZyR0Yt5viRNOhQCtA6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=COs1M9Oq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BO6B5KSg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B27E606A31C;
-	Thu, 19 Nov 2026 03:13:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 222AE606A320;
+	Thu, 19 Nov 2026 03:13:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=COs1M9Oq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97AFB1F000C4;
-	Thu, 19 Nov 2026 03:13:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BO6B5KSg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E6791F000C4;
+	Thu, 19 Nov 2026 03:13:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057989;
-	bh=l0O2+4/OQS+bQ8VxkO6LnzN4fCXdY8rRfcjgGD5+W/8=;
+	s=korg; t=1795057992;
+	bh=7tzTCvxo+RBSPmDNFJOvnOS3AakgqGIPfgmIOoiimak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=COs1M9OqhS+mXf9SVKa/BtXP88SF0+qHunQqYnnfP81vBkDDaq+riFKGUOoWgDDD1
-	 J1hgql76R5tCB9Ydxf/HIHnQ+SOrRbNX8jEshX0U2VShh+Ar5voMCYI6LOSCeNPVss
-	 f2uhE3eoDyOZpkue9HCQYRLJSamlVWR6J54Em/xo=
+	b=BO6B5KSgB+xWWiy563RPAW9sdg58RPys32EB65b37+AFU+18KdvATqGJbb3CSgLFk
+	 DkhdHj7V8Iz+YW7kZtgEuPyWijWm9t77U8V1c10ZYI21SIOsibvTkK6/sy+cFORUGQ
+	 WtQvAgZm/ahmEWBWQjpLrCEEwiY2A7lQvdJQyIX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Liu <bird@lzu.edu.cn>,
-	Yucheng Lu <kanolyc@gmail.com>,
-	Yuhang Zheng <z1652074432@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
+	Antonio Quartulli <antonio@mandelbit.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0326/1848] net/sched: cls_flower: avoid stale mask references after delete
-Date: Wed, 18 Nov 2026 15:39:24 +0100
-Message-ID: <20261118145925.764593817@linuxfoundation.org>
+Subject: [PATCH 5.10 0327/1848] net/sched: fix packet reordering on requeue
+Date: Wed, 18 Nov 2026 15:39:25 +0100
+Message-ID: <20261118145925.796462662@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,211 +70,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuhang Zheng <z1652074432@gmail.com>
+From: Antonio Quartulli <antonio@mandelbit.com>
 
-[ Upstream commit 58f7989da6e715ce834ac861b7ba6ae9f9bdb098 ]
+[ Upstream commit 14368b9aa1017fee35d2589be7b17e0485c0f93e ]
 
-Flower releases a mask reference when a filter is removed from the
-classifier. The filter object can remain alive while dump, walk, or
-hardware reoffload paths hold a reference to it. Those paths can then
-dereference f->mask after the mask has already been released.
+dev_requeue_skb() appends requeued skbs to the tail of q->gso_skb, while
+dequeue_skb() takes them back one at a time from the head. If the driver
+returns NETDEV_TX_BUSY again for the first of them, it moves behind the
+skbs still parked there and is sent after them.
 
-Keep the mask reference until the filter reference count reaches zero.
-Release the mask synchronously from the final __fl_put() while the caller
-still holds the tcf_proto reference, and leave the existing RCU work to
-free the mask. This keeps the mask available to every reader that still
-holds the filter.
+This showed up as heavy TCP reordering while benchmarking over veth,
+which returns NETDEV_TX_BUSY whenever its ring is full since
+commit dc82a33297fc ("veth: apply qdisc backpressure on full ptr_ring to reduce TX drops").
 
-The filter is still removed from the classifier indexes immediately.
-Therefore, a deleted filter can temporarily retain an otherwise empty
-mask; fl_delete() uses the handle IDR, rather than the mask list, to
-determine whether the classifier has become empty.
+Requeue the skbs at the head of gso_skb, keeping their order. With 4 TCP
+streams over a veth pair with a pfifo qdisc, this removes about 1.3M
+out-of-order segments and 15-37k retransmits per 15 seconds, and raises
+throughput from about 40 to 76 Gbit/s.
 
-Failed mask assignment can leave fnew->mask as an error or borrowed
-pointer without an owned mask reference. Clear it before the common
-failure path so the final put cannot release an unowned reference.
-
-This fix does not add fields, snapshots, or per-filter memory.
-
-Fixes: 92149190067d ("net: sched: flower: set unlocked flag for flower proto ops")
+Fixes: a53851e2c321 ("net: sched: explicit locking in gso_cpu fallback")
+Fixes: 9540d977618c ("net: sched: fix skb leak in dev_requeue_skb()")
 Cc: stable@vger.kernel.org
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Tested-by: Yucheng Lu <kanolyc@gmail.com>
-Signed-off-by: Yuhang Zheng <z1652074432@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Link: https://patch.msgid.link/20261012010720.2248662-2-n05ec@lzu.edu.cn
+Signed-off-by: Antonio Quartulli <antonio@mandelbit.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
+Link: https://patch.msgid.link/20261026153113.3275494-1-antonio@mandelbit.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: adapted error cleanup to use the existing errout label instead of unbind_filter ]
+[ sashal: Adjusted dev_requeue_skb() context to preserve the existing unlock-and-reschedule sequence. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_flower.c | 49 ++++++++++++++++++++++++------------------
- 1 file changed, 28 insertions(+), 21 deletions(-)
+ net/sched/sch_generic.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/cls_flower.c b/net/sched/cls_flower.c
-index 7c8fd0c12588d..0a5d6c1638040 100644
---- a/net/sched/cls_flower.c
-+++ b/net/sched/cls_flower.c
-@@ -498,15 +498,22 @@ static void fl_hw_update_stats(struct tcf_proto *tp, struct cls_fl_filter *f,
- 			      cls_flower.stats.used_hw_stats_valid);
- }
+diff --git a/net/sched/sch_generic.c b/net/sched/sch_generic.c
+index 43ef80f11a9d7..af066995f811a 100644
+--- a/net/sched/sch_generic.c
++++ b/net/sched/sch_generic.c
+@@ -139,8 +139,11 @@ static inline void qdisc_enqueue_skb_bad_txq(struct Qdisc *q,
  
--static void __fl_put(struct cls_fl_filter *f)
-+static bool __fl_put(struct tcf_proto *tp, struct cls_fl_filter *f)
+ static inline void dev_requeue_skb(struct sk_buff *skb, struct Qdisc *q)
  {
-+	bool last = false;
++	struct sk_buff_head requeue;
+ 	spinlock_t *lock = NULL;
+ 
++	__skb_queue_head_init(&requeue);
 +
- 	if (!refcount_dec_and_test(&f->refcnt))
--		return;
-+		return false;
-+
-+	if (f->mask)
-+		last = fl_mask_put(fl_head_dereference(tp), f->mask);
+ 	if (q->flags & TCQ_F_NOLOCK) {
+ 		lock = qdisc_lock(q);
+ 		spin_lock(lock);
+@@ -149,7 +152,7 @@ static inline void dev_requeue_skb(struct sk_buff *skb, struct Qdisc *q)
+ 	while (skb) {
+ 		struct sk_buff *next = skb->next;
  
- 	if (tcf_exts_get_net(&f->exts))
- 		tcf_queue_work(&f->rwork, fl_destroy_filter_work);
- 	else
- 		__fl_destroy_filter(f);
-+
-+	return last;
- }
+-		__skb_queue_tail(&q->gso_skb, skb);
++		__skb_queue_tail(&requeue, skb);
  
- static struct cls_fl_filter *__fl_get(struct cls_fl_head *head, u32 handle)
-@@ -543,11 +550,10 @@ static int __fl_delete(struct tcf_proto *tp, struct cls_fl_filter *f,
- 	list_del_rcu(&f->list);
- 	spin_unlock(&tp->lock);
+ 		/* it's still part of the queue */
+ 		if (qdisc_is_percpu_stats(q)) {
+@@ -164,6 +167,12 @@ static inline void dev_requeue_skb(struct sk_buff *skb, struct Qdisc *q)
  
--	*last = fl_mask_put(head, f->mask);
- 	if (!tc_skip_hw(f->flags))
- 		fl_hw_destroy_filter(tp, f, rtnl_held, extack);
- 	tcf_unbind_filter(tp, &f->res);
--	__fl_put(f);
-+	*last = __fl_put(tp, f);
- 
- 	return 0;
- }
-@@ -588,7 +594,7 @@ static void fl_put(struct tcf_proto *tp, void *arg)
- {
- 	struct cls_fl_filter *f = arg;
- 
--	__fl_put(f);
-+	__fl_put(tp, f);
- }
- 
- static void *fl_get(struct tcf_proto *tp, u32 handle)
-@@ -2042,12 +2048,14 @@ static int fl_change(struct net *net, struct sk_buff *in_skb,
- 		goto errout;
- 
- 	err = fl_check_assign_mask(head, fnew, fold, mask);
--	if (err)
-+	if (err) {
-+		fnew->mask = NULL;
- 		goto errout;
-+	}
- 
- 	err = fl_ht_insert_unique(fnew, fold, &in_ht);
- 	if (err)
--		goto errout_mask;
-+		goto errout;
- 
- 	if (!tc_skip_hw(fnew->flags)) {
- 		err = fl_hw_replace_filter(tp, fnew, rtnl_held, extack);
-@@ -2099,7 +2107,6 @@ static int fl_change(struct net *net, struct sk_buff *in_skb,
- 
- 		spin_unlock(&tp->lock);
- 
--		fl_mask_put(head, fold->mask);
- 		if (!tc_skip_hw(fold->flags))
- 			fl_hw_destroy_filter(tp, fold, rtnl_held, NULL);
- 		tcf_unbind_filter(tp, &fold->res);
-@@ -2107,7 +2114,7 @@ static int fl_change(struct net *net, struct sk_buff *in_skb,
- 		 * after this.
- 		 */
- 		refcount_dec(&fold->refcnt);
--		__fl_put(fold);
-+		__fl_put(tp, fold);
- 	} else {
- 		if (handle) {
- 			/* user specifies a handle and it doesn't exist */
-@@ -2152,17 +2159,15 @@ static int fl_change(struct net *net, struct sk_buff *in_skb,
- 	if (in_ht)
- 		rhashtable_remove_fast(&fnew->mask->ht, &fnew->ht_node,
- 				       fnew->mask->filter_ht_params);
--errout_mask:
--	fl_mask_put(head, fnew->mask);
- errout:
--	__fl_put(fnew);
-+	__fl_put(tp, fnew);
- errout_tb:
- 	kfree(tb);
- errout_mask_alloc:
- 	tcf_queue_work(&mask->rwork, fl_uninit_mask_free_work);
- errout_fold:
- 	if (fold)
--		__fl_put(fold);
-+		__fl_put(tp, fold);
- 	return err;
- }
- 
-@@ -2175,8 +2180,10 @@ static int fl_delete(struct tcf_proto *tp, void *arg, bool *last,
- 	int err = 0;
- 
- 	err = __fl_delete(tp, f, &last_on_mask, rtnl_held, extack);
--	*last = list_empty(&head->masks);
--	__fl_put(f);
-+	spin_lock(&tp->lock);
-+	*last = idr_is_empty(&head->handle_idr);
-+	spin_unlock(&tp->lock);
-+	__fl_put(tp, f);
- 
- 	return err;
- }
-@@ -2198,12 +2205,12 @@ static void fl_walk(struct tcf_proto *tp, struct tcf_walker *arg,
- 		rcu_read_unlock();
- 
- 		if (arg->fn(tp, f, arg) < 0) {
--			__fl_put(f);
-+			__fl_put(tp, f);
- 			arg->stop = 1;
- 			rcu_read_lock();
- 			break;
- 		}
--		__fl_put(f);
-+		__fl_put(tp, f);
- 		arg->count++;
- 		rcu_read_lock();
+ 		skb = next;
  	}
-@@ -2254,7 +2261,7 @@ static int fl_reoffload(struct tcf_proto *tp, bool add, flow_setup_cb_t *cb,
- 		cls_flower.rule =
- 			flow_rule_alloc(tcf_exts_num_actions(&f->exts));
- 		if (!cls_flower.rule) {
--			__fl_put(f);
-+			__fl_put(tp, f);
- 			return -ENOMEM;
- 		}
- 
-@@ -2272,7 +2279,7 @@ static int fl_reoffload(struct tcf_proto *tp, bool add, flow_setup_cb_t *cb,
- 			kfree(cls_flower.rule);
- 			if (tc_skip_sw(f->flags)) {
- 				NL_SET_ERR_MSG_MOD(extack, "Failed to setup flow action");
--				__fl_put(f);
-+				__fl_put(tp, f);
- 				return err;
- 			}
- 			goto next_flow;
-@@ -2288,11 +2295,11 @@ static int fl_reoffload(struct tcf_proto *tp, bool add, flow_setup_cb_t *cb,
- 		kfree(cls_flower.rule);
- 
- 		if (err) {
--			__fl_put(f);
-+			__fl_put(tp, f);
- 			return err;
- 		}
- next_flow:
--		__fl_put(f);
-+		__fl_put(tp, f);
- 	}
- 
- 	return 0;
++
++	/* the skbs may come from the head of gso_skb, so put them back there:
++	 * appending them would let the ones still parked overtake them
++	 */
++	skb_queue_splice(&requeue, &q->gso_skb);
++
+ 	if (lock)
+ 		spin_unlock(lock);
+ 	__netif_schedule(q);
 -- 
 2.53.0
 
