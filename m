@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045917;
-	b=GuHG2026xuO9rfoF/U9a7Fyt5U/tVT+U0Rzu753R7HEnhzBI/3sZSQZ5J6Tb0c278Nnl
-	 VMScpaq2aEHkfsy0Xbi1D9nK/1CrRgrnNHpaOoolVraMHrSBAyfMMrBDbD+LVuuQQnq38
-	 PowKd7JIxfYNrF0M3VCXM4kUy8SA8BEpVV4InScNGmhg+n5vLLjXNBLx9dVNx3/k8VAFE
-	 YRQZLyK/rozWb5vui4ZtiqrLKdt//LGyOKjCt/sly0dCYHnYGz0FR+I3R38ca7zOZ8k9m
-	 UyGLt6Ps3hB7JiwqCkgdRA2Z7nK3VP+IdQlb0xz7Zigl7KqM137k0MEp8/9ixxuOUow==
+	t=1795045920;
+	b=tkUxw8aK7ja4JzSsH428VY/aojdBsYLzA0cuZ+syWERjvXENSDOPQVUOpoSsTSs2SnCp
+	 ghl66nlesG243W2YTypzikRyerENUql8GlNWaz512hh9L4c0qo92+ahLQokDB1yGrmV6A
+	 bfm/0jpB5YesktOnNuYWLcg+pFIJ5xc95AGNOvS2mdiFc4fmhXsc8BG4wQKU1oF96j2b2
+	 Vuuv1rzjTdHgnIW2VYfYHllx0ny7VNMUMAFbtGVwdjjvGQKG4r58W/gEYFK6RyzzwYuui
+	 nOeUjcmUQdtffosdYjpOhpa4KEyXm1eNlZ3lSg6kc8htdrIckKpbc490IrMWtvEYtNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045917;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045920;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LT3Kh1PTtMwsetUVXklzyC7LT28quVvBprg2kguFK4o=;
-	b=zprhsRxHP8pLQdvuHgbZxPltRFUCQqaujSg6FkZ5vSgG56MUKxE191/Wq5KDIZl4mQLA
-	 UN8dLQrk+H5Nb2b/u0xpev/6bs3alNRqGqH2y5I0KxbhQKB3r00E+1RG64yWlsV0LhpCg
-	 ItgV9nF5yNOvee/CdPrNdoZycVooInVOFeh0nvS+FW+tXQQrA86ePzSXWofIIZ7ApDcOu
-	 cksoBMcuihkL3PoLh4LF5r+tc0iaN4YHXvzT3ACi81F6kJlEjKKvXYJWJ0bGu2vMXsekV
-	 Bnx5ifAMJukS55RcvbCe/KbP2I/DgSVCAMcFeoxd/VqANbiofSHZtWyeBQ4oqIM1Pww==
+	bh=JO41x79heyV9fHNa30QW3Uxucns60YJc+Z5OMZuOwcc=;
+	b=M7i5wnG8sVNV4iXDjd1vo+DkC0GJnNvP6M2dpSBK6PVFBFKCVjGIAdbQZ2aRPpN22FTQ
+	 Qwd9bycIFFcrt0gW4WpQcmRdkfqnZOlicZXJUpwBMlH+OHldj5sN4AHho7JKHiZBhmRWV
+	 rO9aWnZeIcA2nHoZAFxpOxcLfQ3tAZiPmLTWfIRQlPTHCsKYw+RQ53PCN3X4+hvekMG57
+	 XjLPacaH5RxxGEB+KdzULtenlUov/fbzaYzjgwqug5G127JtF52ZEL5FbbsbRz9bMNkeH
+	 rRHiDLoM7KFClWJ7sQ/gLalDfMjKHTvojicPGHVdfD7EwdNrEymsbWkEMIUQnAuOCpg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tnoVTMR5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qyS1Gywq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBAE8606A31C;
-	Wed, 18 Nov 2026 23:51:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9433606A325;
+	Wed, 18 Nov 2026 23:52:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tnoVTMR5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 346701F000C4;
-	Wed, 18 Nov 2026 23:51:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qyS1Gywq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0689C1F000C4;
+	Wed, 18 Nov 2026 23:51:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045917;
-	bh=LT3Kh1PTtMwsetUVXklzyC7LT28quVvBprg2kguFK4o=;
+	s=korg; t=1795045920;
+	bh=JO41x79heyV9fHNa30QW3Uxucns60YJc+Z5OMZuOwcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tnoVTMR5Q0gESKP+rQdNRikTxo0xBwuv7NGl2qScTUiAlNBmJxeKDA1S0WShC93C7
-	 XZaNrOyuQiitq0V5S7gIfiYNwSlCgMXjRm4PDl7TaLQA4wdfXmOOeUOKx7fP6/YhZe
-	 zB5MkywnsFc7lbI7o/RRABXu6yZbwbWFNmYDux7Q=
+	b=qyS1Gywq1BT+eeEzdAN7jl7pls7tSR6jEjsMqh0Zm31tV6vbSuUBb1MxI4CJHkWZ4
+	 7m8/w5V87u0MeY4kdFlbuJej3rPAN9FocEzIqMNQyDJvJG3ujYpaXPkgqk3eu7LKtq
+	 t1aW0XYZoYvRj104ueqamZ0wAvPTW4ZKSidr9FJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wyatt Feng <bronzed_45_vested@icloud.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Kyle Zeng <kylebot@openai.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Neal Cardwell <ncardwell@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Georgia Garcia <georgia.garcia@canonical.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1095/2857] tcp: fix reordering addition overflow in MTU probing
-Date: Wed, 18 Nov 2026 15:35:29 +0100
-Message-ID: <20261118150241.049658869@linuxfoundation.org>
+Subject: [PATCH 6.1 1096/2857] apparmor: remove fs entries created by a failed policy load
+Date: Wed, 18 Nov 2026 15:35:30 +0100
+Message-ID: <20261118150241.089282556@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -74,58 +68,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Georgia Garcia <georgia.garcia@canonical.com>
 
-[ Upstream commit c1df9c0c0536393de43310f84ca4f8b217271a00 ]
+[ Upstream commit 6ec46f8f1977d218bf2494ce276152b2d01424af ]
 
-Commit efb8763d7bbb ("net: ipv4: bound TCP reordering sysctl writes and
-MTU probe sizes") widened size_needed and the MSS multiplication, but
-tp->reordering + 1 is still evaluated as u32. RTAX_REORDERING accepts
-an unrestricted u32, and tcp_init_metrics() can install U32_MAX.
+aa_replace_profiles() creates the raw_data/<rev> directory for the
+loaddata and the profile directories for new profiles before the last
+checks that can fail. When one of those checks fails, the fail path
+releases the ns lock without removing what this load created.
 
-In that case the extra-data requirement becomes zero. A write queue
-with probe_size - 1 data bytes and a FIN satisfies the sequence-space
-check. The coalescing walk can pass the queue head to
-tcp_skb_can_collapse(), and tcp_clone_payload() can produce an skb
-whose advertised payload exceeds the data in its fragments. Local
-delivery followed by TCP_ZEROCOPY_RECEIVE can then walk beyond the
-fragment array. KASAN reports a slab-out-of-bounds read in
-can_map_frag().
+The raw_data directory is named after the current ns revision, and the
+revision is only bumped by a successful load. The stale directory is
+only removed once the loaddata's last profile reference is dropped, from
+a workqueue. Until then, every load fails to create raw_data/<rev> with
+-EEXIST. If the new profiles are never freed, which is the case when
+their dents are left behind pinning the proxy, that never happens and no
+policy can be loaded until reboot.
 
-Cast reordering before incrementing it so the arithmetic handles the
-entire u32 metric range. For U32_MAX, the required size exceeds the
-32-bit queue and window limits, so the existing checks skip the probe.
-The calculation is unchanged for all other reordering values.
+While still holding the ns lock in the fail path, remove the profile
+directories of the new profiles and, if this load created it, the
+raw_data directory.
 
-Fixes: efb8763d7bbb ("net: ipv4: bound TCP reordering sysctl writes and MTU probe sizes")
+Fixes: 5d5182cae401 ("apparmor: move to per loaddata files, instead of replicating in profiles")
 Cc: stable@vger.kernel.org
-Cc: Wyatt Feng <bronzed_45_vested@icloud.com>
-Cc: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Neal Cardwell <ncardwell@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20261028160226.2170244-1-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Georgia Garcia <georgia.garcia@canonical.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_output.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/apparmor/policy.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index 5117de7afc24f..f0a4ce8f3dd1c 100644
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -2376,7 +2376,7 @@ static int tcp_mtu_probe(struct sock *sk)
- 	mss_now = tcp_current_mss(sk);
- 	probe_size = tcp_mtu_to_mss(sk, (icsk->icsk_mtup.search_high +
- 				    icsk->icsk_mtup.search_low) >> 1);
--	size_needed = probe_size + (tp->reordering + 1) * (u64)tp->mss_cache;
-+	size_needed = probe_size + ((u64)tp->reordering + 1) * tp->mss_cache;
- 	interval = icsk->icsk_mtup.search_high - icsk->icsk_mtup.search_low;
- 	/* When misfortune happens, we are reprobing actively,
- 	 * and then reprobe timer has expired. We stick with current
+diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
+index 13d3041200cba..c129f13fdeec6 100644
+--- a/security/apparmor/policy.c
++++ b/security/apparmor/policy.c
+@@ -974,6 +974,7 @@ ssize_t aa_replace_profiles(struct aa_ns *policy_ns, struct aa_label *label,
+ 	struct aa_loaddata *rawdata_ent;
+ 	const char *op;
+ 	ssize_t count, error;
++	bool rawdata_created = false;
+ 	LIST_HEAD(lh);
+ 
+ 	op = mask & AA_MAY_REPLACE_POLICY ? OP_PROF_REPL : OP_PROF_LOAD;
+@@ -1095,6 +1096,7 @@ ssize_t aa_replace_profiles(struct aa_ns *policy_ns, struct aa_label *label,
+ 			ent = NULL;
+ 			goto fail_lock;
+ 		}
++		rawdata_created = true;
+ 	}
+ 	list_for_each_entry(ent, &lh, list) {
+ 		if (!ent->old) {
+@@ -1175,6 +1177,18 @@ ssize_t aa_replace_profiles(struct aa_ns *policy_ns, struct aa_label *label,
+ 	return udata_sz;
+ 
+ fail_lock:
++	/*
++	 * Remove fs entries created by this load. Nothing else references
++	 * them yet, and leaving them behind would leak the new profiles
++	 * (their dents pin the proxy) and make the next load at the same,
++	 * unbumped ns revision fail with -EEXIST on its raw_data dir.
++	 */
++	list_for_each_entry(tmp, &lh, list) {
++		if (!tmp->old)
++			__aafs_profile_rmdir(tmp->new);
++	}
++	if (rawdata_created)
++		__aa_fs_remove_rawdata(udata);
+ 	mutex_unlock(&ns->lock);
+ 
+ 	/* audit cause of failure */
 -- 
 2.53.0
 
