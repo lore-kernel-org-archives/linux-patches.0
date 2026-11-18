@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023899;
-	b=3uYWa0vk8hPo3gRpawVHBJ6KXvdXdeneYAx0GdUBEmjhq0rwNK87CZSOvfQBJIyVqReo
-	 3SZMzce62cQZKc05rmjFBbgxcFzOmVtrdJilmThA8/X6oDGOcTlBVJJ0U7bSAp0fBA5cS
-	 B8F7csxFTssfJ5zyH4fY/3ScufMyE8YvJV5U9iv4L0bIyABLiMiwraxCnR3ORhK72X3HK
-	 S1ihO07H+uIgkxo/5HCZH+OoNop/htMIjPq13GehJLygJvA+kimm03iUpicrZejcBtJqf
-	 uuMs4sk5MKOShkOeKlL9EARvRNzi1l1XKzL6JIoQywpLgXV9t8A9L4u7fEhsu2YR1Jg==
+	t=1795023902;
+	b=hsAwiLBM9Bo2JcEqn/ZSg55N6+K0VWHnQdCOfm/1+WQXNbnaV8H4K85HeY1MbLQiKRlW
+	 F1VMDOgO3km7YgfpgtjgzRS9UFYXs7o1a9vrGiA8enYkwzFoKXOjgZxGHenCbmJScz++7
+	 9BlgtjBpUUsuPttHDgtcjvhqFumqFmU+HFXYQ+sh1hdJ4U648/nZ+eqIT+VqCwOvADN5q
+	 DgnTu2RWHaQP0cUHEvqzJY21Vs1veEUApM6FauM91EJKBP0ea7BadJ1+Mnnzl+xYP2pUv
+	 GyeAssHuJgbu+M9u0gSGcrt8vadGr1VzmpUh9JbQUqk6nynACvLdUiVavvjP6/5Jtfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023899;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023902;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bfW3HaPd/C+Oh6KJj/M98sX1Ii98mUCn0dMYyEJu/4Q=;
-	b=JAr7TiIufO6zTc/bNVwzKp5nXiUhoU9288bjrYWdsa/P6bfPPKft+XSRpythhSRs/NXL
-	 JaFq6OF9DCvFArkGBakrNUwlEZ6JAjI/kcW/a3QFAyMfTVSc61gLkEEPbq4H4fHj2tTVc
-	 awgTxDrmLJ7tTo9UsY5YViv7zkN9bq/bKsDsv923R+YJ7IEYTdxGBTJ/mMWRdhdjFeEbL
-	 KRD+ExiAp/rg8B7aIdry51qkmzPcvdDNlSYOzIA2ebtlMnzDo5uRonX8pG99Uj4z4faFH
-	 bd9wmk2dKsMZDbjjvTLLLRd8xr0vh8vlNi5a1K7AEeVYs7/Px8WD0L9sPG59Rech7gg==
+	bh=F8OywP8uvJ1Ot7SG0Cj2+KRvuyjvxZBGIsTyEK7K7qw=;
+	b=Ia3W07w4vHqLIuSvcpwm+nCLswHMbNl6RLkSHeJlFpXgbph+5AR0b0KLgHjQHYqcOOtO
+	 8Wji/xm4S4B3bNt+2cjdREQ7D7IEg03U8vUN4HLDqQJrafJmhlbVPkEPR/ZrgIP2UzSn+
+	 bSBBVLNznDwZnkaYxbya781JxlDU+FCpjx1icSpGMVLECuxwLOTMl2xXnO5103+1oL/Hq
+	 OEyDxxYxT29F8/meUv1Vt1IuUUW1ctBJe6yytg1ULCnaak6+sY8Y8rkrKcQA/f7w0jbqb
+	 gjmJlWCID4rOYQRCp8g0CyY981WN2qwgR0ernE9KWSq8IjiuxXBcgo7WI81hBt/NkQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gtgIeUaR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="JeRT/KI6";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10CC8606A325;
-	Wed, 18 Nov 2026 17:44:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2EC2606A32C;
+	Wed, 18 Nov 2026 17:45:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gtgIeUaR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 622BA1F000C4;
-	Wed, 18 Nov 2026 17:44:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JeRT/KI6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 405CB1F000C4;
+	Wed, 18 Nov 2026 17:45:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023898;
-	bh=bfW3HaPd/C+Oh6KJj/M98sX1Ii98mUCn0dMYyEJu/4Q=;
+	s=korg; t=1795023901;
+	bh=F8OywP8uvJ1Ot7SG0Cj2+KRvuyjvxZBGIsTyEK7K7qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gtgIeUaR13rTIf+FxH+NbCN1bfofipQhs199NENqyXSWA+d3xtQboE1isKtvj326/
-	 aftt7uRgev7rFQPU3pnorGPk0JiRLv8aQ49EzNOsnSfRZ6IrQGwqNfFsDHjfSA48G2
-	 QFZyXam2TBGUup35tbNXrkAkLMxvFQVrdHO2xujs=
+	b=JeRT/KI6raCDSuAJl6VIrMzQkmL5eMTYVSNybyOiU7eYIgRRXGP3zt57OlMqWtLvn
+	 y+MYArJFWrXh+m8KgvAsEgt1d4w/ylcdGfD6CeO8rPDLGAzMxg5LGTs+b9LjA0W++M
+	 1prSUF0/sE7T4o1QB+MIEMxkgh4EbsXl/DEoFleY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Terry Bowman <terry.bowman@amd.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Dan Williams <dan.j.williams@intel.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0516/2151] cxl/port: Move dport probe operations to a driver event
-Date: Wed, 18 Nov 2026 15:37:31 +0100
-Message-ID: <20261118150140.845608317@linuxfoundation.org>
+Subject: [PATCH 6.18 0534/2151] ASoC: ab8500: Remove the nonfunctional sidetone apply control
+Date: Wed, 18 Nov 2026 15:37:49 +0100
+Message-ID: <20261118150141.461613319@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,514 +68,231 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 3864cb60dad5a6c1bd9f444740cf541a1d8cda99 ]
+[ Upstream commit ec75e653b70ce26ea68187c2069722baa80efadb ]
 
-In preparation for adding more register setup to the cxl_port_add_dport()
-path (for RAS register mapping), move the dport creation event to a driver
-callback. This achieves two goals, it puts driver operations logically
-where they belong, in a driver, and it obviates the gymnastics of
-DECLARE_TESTABLE() which just makes a mess of grepping for CXL symbols.
+After the coefficient controls were removed, writing "Apply FIR"
+programs 128 zero coefficients and reports that the sidetone filter is
+configured. The associated ANC configuration DAPM pins are also now
+unreachable dead infrastructure.
 
-In other words, a driver callback is less of an ongoing maintenance burden
-than this DECLARE_TESTABLE arrangement that does not scale and diminishes
-the grep-ability of the codebase.
+Remove the misleading status/apply control, its private state, and the
+obsolete configuration-only DAPM pins. Keep the direct sidetone reset
+and remaining hardware controls.
 
-cxl_port_add_dport() moves mostly unmodified from drivers/cxl/core/port.c.
-The only deliberate change is that it now assumes that the device_lock is
-held on entry and the driver is attached (just like cxl_port_probe()).
-
-Reviewed-by: Terry Bowman <terry.bowman@amd.com>
-Tested-by: Terry Bowman <terry.bowman@amd.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Link: https://patch.msgid.link/20260131000403.2135324-6-dan.j.williams@intel.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Stable-dep-of: 0de71a1ab211 ("cxl/core: Fix dport use-after-free via the einj_inject debugfs file")
+Fixes: e366ce8b22ec ("ASoC: codecs: ab8500: Remove suspicious code")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260831-ab8500-codec-fixes-v1-5-f85024e717e3@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 0d46182a1be7 ("ASoC: ab8500: Skip digital microphone support on AB8505")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/hdm.c               |  6 +--
- drivers/cxl/core/pci.c               |  8 ++--
- drivers/cxl/core/port.c              | 68 ++++++++--------------------
- drivers/cxl/cxl.h                    | 31 +++++--------
- drivers/cxl/port.c                   | 50 ++++++++++++++++++++
- tools/testing/cxl/Kbuild             |  2 +
- tools/testing/cxl/cxl_core_exports.c | 22 ---------
- tools/testing/cxl/exports.h          | 13 ------
- tools/testing/cxl/test/mock.c        | 24 +++-------
- 9 files changed, 98 insertions(+), 126 deletions(-)
- delete mode 100644 tools/testing/cxl/exports.h
+ sound/soc/codecs/ab8500-codec.c | 114 --------------------------------
+ 1 file changed, 114 deletions(-)
 
-diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
-index c43b14533ffe0..2361245f2869e 100644
---- a/drivers/cxl/core/hdm.c
-+++ b/drivers/cxl/core/hdm.c
-@@ -1248,12 +1248,12 @@ static int devm_cxl_enumerate_decoders(struct cxl_hdm *cxlhdm,
- }
- 
- /**
-- * __devm_cxl_switch_port_decoders_setup - allocate and setup switch decoders
-+ * devm_cxl_switch_port_decoders_setup - allocate and setup switch decoders
-  * @port: CXL port context
-  *
-  * Return 0 or -errno on error
+diff --git a/sound/soc/codecs/ab8500-codec.c b/sound/soc/codecs/ab8500-codec.c
+index 167f021c7ecbc..11142d15df450 100644
+--- a/sound/soc/codecs/ab8500-codec.c
++++ b/sound/soc/codecs/ab8500-codec.c
+@@ -14,17 +14,14 @@
+  *         for ST-Ericsson.
   */
--int __devm_cxl_switch_port_decoders_setup(struct cxl_port *port)
-+int devm_cxl_switch_port_decoders_setup(struct cxl_port *port)
- {
- 	struct cxl_hdm *cxlhdm;
  
-@@ -1277,7 +1277,7 @@ int __devm_cxl_switch_port_decoders_setup(struct cxl_port *port)
- 	dev_err(&port->dev, "HDM decoder capability not found\n");
- 	return -ENXIO;
- }
--EXPORT_SYMBOL_NS_GPL(__devm_cxl_switch_port_decoders_setup, "CXL");
-+EXPORT_SYMBOL_NS_GPL(devm_cxl_switch_port_decoders_setup, "CXL");
+-#include <linux/cleanup.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/device.h>
+ #include <linux/slab.h>
+ #include <linux/moduleparam.h>
+ #include <linux/init.h>
+-#include <linux/delay.h>
+ #include <linux/pm.h>
+ #include <linux/platform_device.h>
+-#include <linux/mutex.h>
+ #include <linux/mfd/abx500/ab8500.h>
+ #include <linux/mfd/abx500.h>
+ #include <linux/mfd/abx500/ab8500-sysctrl.h>
+@@ -54,32 +51,9 @@
+ /* Macrocell register definitions */
+ #define AB8500_GPIO_DIR4_REG			0x13 /* Bank AB8500_MISC */
  
- /**
-  * devm_cxl_endpoint_decoders_setup - allocate and setup endpoint decoders
-diff --git a/drivers/cxl/core/pci.c b/drivers/cxl/core/pci.c
-index e1c2e30069fcc..e54991c74e6b3 100644
---- a/drivers/cxl/core/pci.c
-+++ b/drivers/cxl/core/pci.c
-@@ -41,14 +41,14 @@ static int pci_get_port_num(struct pci_dev *pdev)
- }
- 
- /**
-- * __devm_cxl_add_dport_by_dev - allocate a dport by dport device
-+ * devm_cxl_add_dport_by_dev - allocate a dport by dport device
-  * @port: cxl_port that hosts the dport
-  * @dport_dev: 'struct device' of the dport
-  *
-  * Returns the allocated dport on success or ERR_PTR() of -errno on error
-  */
--struct cxl_dport *__devm_cxl_add_dport_by_dev(struct cxl_port *port,
--					      struct device *dport_dev)
-+struct cxl_dport *devm_cxl_add_dport_by_dev(struct cxl_port *port,
-+					    struct device *dport_dev)
- {
- 	struct cxl_register_map map;
- 	struct pci_dev *pdev;
-@@ -69,7 +69,7 @@ struct cxl_dport *__devm_cxl_add_dport_by_dev(struct cxl_port *port,
- 	device_lock_assert(&port->dev);
- 	return devm_cxl_add_dport(port, dport_dev, port_num, map.resource);
- }
--EXPORT_SYMBOL_NS_GPL(__devm_cxl_add_dport_by_dev, "CXL");
-+EXPORT_SYMBOL_NS_GPL(devm_cxl_add_dport_by_dev, "CXL");
- 
- struct cxl_walk_context {
- 	struct pci_bus *bus;
-diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
-index 441c49bb8e595..1d34ade204a18 100644
---- a/drivers/cxl/core/port.c
-+++ b/drivers/cxl/core/port.c
-@@ -792,7 +792,7 @@ static int cxl_setup_comp_regs(struct device *host, struct cxl_register_map *map
- 	return cxl_setup_regs(map);
- }
- 
--static int cxl_port_setup_regs(struct cxl_port *port,
-+int cxl_port_setup_regs(struct cxl_port *port,
- 			resource_size_t component_reg_phys)
- {
- 	if (dev_is_platform(port->uport_dev))
-@@ -800,6 +800,7 @@ static int cxl_port_setup_regs(struct cxl_port *port,
- 	return cxl_setup_comp_regs(&port->dev, &port->reg_map,
- 				   component_reg_phys);
- }
-+EXPORT_SYMBOL_NS_GPL(cxl_port_setup_regs, "CXL");
- 
- static int cxl_dport_setup_regs(struct device *host, struct cxl_dport *dport,
- 				resource_size_t component_reg_phys)
-@@ -1684,6 +1685,13 @@ static int update_decoder_targets(struct device *dev, void *data)
- 	return 0;
- }
- 
-+void cxl_port_update_decoder_targets(struct cxl_port *port,
-+				     struct cxl_dport *dport)
-+{
-+	device_for_each_child(&port->dev, dport, update_decoder_targets);
-+}
-+EXPORT_SYMBOL_NS_GPL(cxl_port_update_decoder_targets, "CXL");
-+
- static bool dport_exists(struct cxl_port *port, struct device *dport_dev)
- {
- 	struct cxl_dport *dport = cxl_find_dport_by_dev(port, dport_dev);
-@@ -1697,15 +1705,10 @@ static bool dport_exists(struct cxl_port *port, struct device *dport_dev)
- 	return false;
- }
- 
--/* note this implicitly casts the group back to its @port */
--DEFINE_FREE(cxl_port_release_dr_group, struct cxl_port *,
--	    if (_T) devres_release_group(&_T->dev, _T))
+-/* Nr of FIR/IIR-coeff banks in ANC-block */
+-#define AB8500_NR_OF_ANC_COEFF_BANKS		2
 -
--static struct cxl_dport *cxl_port_add_dport(struct cxl_port *port,
--					    struct device *dport_dev)
-+static struct cxl_dport *probe_dport(struct cxl_port *port,
-+				     struct device *dport_dev)
- {
--	struct cxl_dport *dport;
--	int rc;
-+	struct cxl_driver *drv;
- 
- 	device_lock_assert(&port->dev);
- 	if (!port->dev.driver)
-@@ -1714,43 +1717,12 @@ static struct cxl_dport *cxl_port_add_dport(struct cxl_port *port,
- 	if (dport_exists(port, dport_dev))
- 		return ERR_PTR(-EBUSY);
- 
--	/* Temp group for all "first dport" and "per dport" setup actions */
--	void *port_dr_group __free(cxl_port_release_dr_group) =
--		devres_open_group(&port->dev, port, GFP_KERNEL);
--	if (!port_dr_group)
--		return ERR_PTR(-ENOMEM);
+-/* Minimum duration to keep ANC IIR Init bit high or
+-low before proceeding with the configuration sequence */
+-#define AB8500_ANC_SM_DELAY			2000
 -
--	if (port->nr_dports == 0) {
--		/*
--		 * Some host bridges are known to not have component regsisters
--		 * available until a root port has trained CXL. Perform that
--		 * setup now.
--		 */
--		rc = cxl_port_setup_regs(port, port->component_reg_phys);
--		if (rc)
--			return ERR_PTR(rc);
+-/* Sidetone states */
+-static const char * const enum_sid_state[] = {
+-	"Unconfigured",
+-	"Apply FIR",
+-	"FIR is configured",
+-};
+-enum sid_state {
+-	SID_UNCONFIGURED = 0,
+-	SID_APPLY_FIR = 1,
+-	SID_FIR_CONFIGURED = 2,
+-};
 -
--		rc = devm_cxl_switch_port_decoders_setup(port);
--		if (rc)
--			return ERR_PTR(rc);
--	}
+ /* Private data for AB8500 device-driver */
+ struct ab8500_codec_drvdata {
+ 	struct regmap *regmap;
+-	struct mutex ctrl_lock;
 -
--	dport = devm_cxl_add_dport_by_dev(port, dport_dev);
--	if (IS_ERR(dport))
--		return dport;
--
--	/* This group was only needed for early exit above */
--	devres_remove_group(&port->dev, no_free_ptr(port_dr_group));
--
--	cxl_switch_parse_cdat(dport);
--
--	/* New dport added, update the decoder targets */
--	device_for_each_child(&port->dev, dport, update_decoder_targets);
--
--	dev_dbg(&port->dev, "dport%d:%s added\n", dport->port_id,
--		dev_name(dport_dev));
-+	drv = container_of(port->dev.driver, struct cxl_driver, drv);
-+	if (!drv->add_dport)
-+		return ERR_PTR(-ENXIO);
- 
--	return dport;
-+	/* see cxl_port_add_dport() */
-+	return drv->add_dport(port, dport_dev);
- }
- 
- static struct cxl_dport *devm_cxl_create_port(struct device *ep_dev,
-@@ -1797,7 +1769,7 @@ static struct cxl_dport *devm_cxl_create_port(struct device *ep_dev,
- 	}
- 
- 	guard(device)(&port->dev);
--	return cxl_port_add_dport(port, dport_dev);
-+	return probe_dport(port, dport_dev);
- }
- 
- static int add_port_attach_ep(struct cxl_memdev *cxlmd,
-@@ -1829,7 +1801,7 @@ static int add_port_attach_ep(struct cxl_memdev *cxlmd,
- 	scoped_guard(device, &parent_port->dev) {
- 		parent_dport = cxl_find_dport_by_dev(parent_port, dparent);
- 		if (!parent_dport) {
--			parent_dport = cxl_port_add_dport(parent_port, dparent);
-+			parent_dport = probe_dport(parent_port, dparent);
- 			if (IS_ERR(parent_dport))
- 				return PTR_ERR(parent_dport);
- 		}
-@@ -1865,7 +1837,7 @@ static struct cxl_dport *find_or_add_dport(struct cxl_port *port,
- 	device_lock_assert(&port->dev);
- 	dport = cxl_find_dport_by_dev(port, dport_dev);
- 	if (!dport) {
--		dport = cxl_port_add_dport(port, dport_dev);
-+		dport = probe_dport(port, dport_dev);
- 		if (IS_ERR(dport))
- 			return dport;
- 
-diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
-index 561359c2d7dc0..2d3b6875270d5 100644
---- a/drivers/cxl/cxl.h
-+++ b/drivers/cxl/cxl.h
-@@ -833,8 +833,11 @@ struct cxl_endpoint_dvsec_info {
+-	/* Sidetone */
+-	enum sid_state sid_status;
  };
  
- int devm_cxl_switch_port_decoders_setup(struct cxl_port *port);
--int __devm_cxl_switch_port_decoders_setup(struct cxl_port *port);
- int devm_cxl_endpoint_decoders_setup(struct cxl_port *port);
-+void cxl_port_update_decoder_targets(struct cxl_port *port,
-+				     struct cxl_dport *dport);
-+int cxl_port_setup_regs(struct cxl_port *port,
-+			resource_size_t component_reg_phys);
+ static inline const char *amic_micbias_str(enum amic_micbias micbias)
+@@ -642,9 +616,6 @@ static const struct snd_soc_dapm_widget ab8500_dapm_widgets[] = {
+ 			NULL, 0),
+ 	/* Acoustical Noise Cancellation path */
  
- struct cxl_dev_state;
- int cxl_dvsec_rr_decode(struct cxl_dev_state *cxlds,
-@@ -844,10 +847,18 @@ bool is_cxl_region(struct device *dev);
+-	SND_SOC_DAPM_INPUT("ANC Configure Input"),
+-	SND_SOC_DAPM_OUTPUT("ANC Configure Output"),
+-
+ 	SND_SOC_DAPM_MUX("ANC Source",
+ 			SND_SOC_NOPM, 0, 0,
+ 			dapm_anc_in_select),
+@@ -687,10 +658,6 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
+ 	{"Main Supply", NULL, "Audio Power"},
+ 	{"Main Supply", NULL, "Audio Analog Power"},
  
- extern const struct bus_type cxl_bus_type;
+-	/* ANC Configure */
+-	{"ANC Configure Input", NULL, "Main Supply"},
+-	{"ANC Configure Output", NULL, "ANC Configure Input"},
+-
+ 	/* Powerup charge pump if DA1/2 is in use */
  
-+/*
-+ * Note, add_dport() is expressly for the cxl_port driver. TODO: investigate a
-+ * type-safe driver model where probe()/remove() take the type of object implied
-+ * by @id and the add_dport() op only defined for the CXL_DEVICE_PORT driver
-+ * template.
-+ */
- struct cxl_driver {
- 	const char *name;
- 	int (*probe)(struct device *dev);
- 	void (*remove)(struct device *dev);
-+	struct cxl_dport *(*add_dport)(struct cxl_port *port,
-+				       struct device *dport_dev);
- 	struct device_driver drv;
- 	int id;
+ 	{"DA_IN1", NULL, "ab8500_0p"},
+@@ -972,75 +939,6 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes_mic2_vamicx[] = {
+ 	{"MIC2 V-AMICx Enable", NULL, "V-AMIC2"},
  };
-@@ -932,8 +943,6 @@ void cxl_coordinates_combine(struct access_coordinate *out,
- bool cxl_endpoint_decoder_reset_detected(struct cxl_port *port);
- struct cxl_dport *devm_cxl_add_dport_by_dev(struct cxl_port *port,
- 					    struct device *dport_dev);
--struct cxl_dport *__devm_cxl_add_dport_by_dev(struct cxl_port *port,
--					      struct device *dport_dev);
- 
- /*
-  * Unit test builds overrides this to __weak, find the 'strong' version
-@@ -945,20 +954,4 @@ struct cxl_dport *__devm_cxl_add_dport_by_dev(struct cxl_port *port,
- 
- u16 cxl_gpf_get_dvsec(struct device *dev);
  
 -/*
-- * Declaration for functions that are mocked by cxl_test that are called by
-- * cxl_core. The respective functions are defined as __foo() and called by
-- * cxl_core as foo(). The macros below ensures that those functions would
-- * exist as foo(). See tools/testing/cxl/cxl_core_exports.c and
-- * tools/testing/cxl/exports.h for setting up the mock functions. The dance
-- * is done to avoid a circular dependency where cxl_core calls a function that
-- * ends up being a mock function and goes to * cxl_test where it calls a
-- * cxl_core function.
+- * Control-events
 - */
--#ifndef CXL_TEST_ENABLE
--#define DECLARE_TESTABLE(x) __##x
--#define devm_cxl_add_dport_by_dev DECLARE_TESTABLE(devm_cxl_add_dport_by_dev)
--#define devm_cxl_switch_port_decoders_setup DECLARE_TESTABLE(devm_cxl_switch_port_decoders_setup)
--#endif
 -
- #endif /* __CXL_H__ */
-diff --git a/drivers/cxl/port.c b/drivers/cxl/port.c
-index 51c8f2f84717a..913c469e067a1 100644
---- a/drivers/cxl/port.c
-+++ b/drivers/cxl/port.c
-@@ -151,9 +151,59 @@ static const struct attribute_group *cxl_port_attribute_groups[] = {
- 	NULL,
+-static int sid_status_control_get(struct snd_kcontrol *kcontrol,
+-		struct snd_ctl_elem_value *ucontrol)
+-{
+-	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
+-	struct ab8500_codec_drvdata *drvdata = dev_get_drvdata(component->dev);
+-
+-	guard(mutex)(&drvdata->ctrl_lock);
+-	ucontrol->value.enumerated.item[0] = drvdata->sid_status;
+-
+-	return 0;
+-}
+-
+-/* Write sidetone FIR-coefficients configuration sequence */
+-static int sid_status_control_put(struct snd_kcontrol *kcontrol,
+-				struct snd_ctl_elem_value *ucontrol)
+-{
+-	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
+-	struct ab8500_codec_drvdata *drvdata = dev_get_drvdata(component->dev);
+-	unsigned int param, sidconf;
+-	int status = 1;
+-
+-	dev_dbg(component->dev, "%s: Enter\n", __func__);
+-
+-	if (ucontrol->value.enumerated.item[0] != SID_APPLY_FIR) {
+-		dev_err(component->dev,
+-			"%s: ERROR: This control supports '%s' only!\n",
+-			__func__, enum_sid_state[SID_APPLY_FIR]);
+-		return -EIO;
+-	}
+-
+-	guard(mutex)(&drvdata->ctrl_lock);
+-
+-	sidconf = snd_soc_component_read(component, AB8500_SIDFIRCONF);
+-	if (((sidconf & BIT(AB8500_SIDFIRCONF_FIRSIDBUSY)) != 0)) {
+-		if ((sidconf & BIT(AB8500_SIDFIRCONF_ENFIRSIDS)) == 0) {
+-			dev_err(component->dev, "%s: Sidetone busy while off!\n",
+-				__func__);
+-			status = -EPERM;
+-		} else {
+-			status = -EBUSY;
+-		}
+-		dev_dbg(component->dev, "%s: Exit\n", __func__);
+-		return status;
+-	}
+-
+-	snd_soc_component_write(component, AB8500_SIDFIRADR, 0);
+-
+-	for (param = 0; param < AB8500_SID_FIR_COEFFS; param++) {
+-		snd_soc_component_write(component, AB8500_SIDFIRCOEF1, 0);
+-		snd_soc_component_write(component, AB8500_SIDFIRCOEF2, 0);
+-	}
+-
+-	snd_soc_component_update_bits(component, AB8500_SIDFIRADR,
+-		BIT(AB8500_SIDFIRADR_FIRSIDSET),
+-		BIT(AB8500_SIDFIRADR_FIRSIDSET));
+-	snd_soc_component_update_bits(component, AB8500_SIDFIRADR,
+-		BIT(AB8500_SIDFIRADR_FIRSIDSET), 0);
+-
+-	drvdata->sid_status = SID_FIR_CONFIGURED;
+-
+-	dev_dbg(component->dev, "%s: Exit\n", __func__);
+-
+-	return status;
+-}
+-
+ /*
+  * Controls - Non-DAPM ASoC
+  */
+@@ -1324,9 +1222,6 @@ static SOC_ENUM_SINGLE_DECL(soc_enum_bfifomast,
+ 			AB8500_FIFOCONF3, AB8500_FIFOCONF3_BFIFOMAST_SHIFT,
+ 			enum_slavemaster);
+ 
+-/* Sidetone */
+-static SOC_ENUM_SINGLE_EXT_DECL(soc_enum_sidstate, enum_sid_state);
+-
+ /* ANC */
+ 
+ static struct snd_kcontrol_new ab8500_ctrls[] = {
+@@ -1617,8 +1512,6 @@ static struct snd_kcontrol_new ab8500_ctrls[] = {
+ 		AB8500_ANC_WARP_DELAY_MIN, AB8500_ANC_WARP_DELAY_MAX, 0),
+ 
+ 	/* Sidetone */
+-	SOC_ENUM_EXT("Sidetone Status", soc_enum_sidstate,
+-		sid_status_control_get, sid_status_control_put),
+ 	SOC_SINGLE_STROBE("Sidetone Reset",
+ 		AB8500_SIDFIRADR, AB8500_SIDFIRADR_FIRSIDSET, 0),
  };
+@@ -2145,10 +2038,8 @@ static void ab8500_codec_of_probe(struct device *dev, struct device_node *np,
  
-+/* note this implicitly casts the group back to its @port */
-+DEFINE_FREE(cxl_port_release_dr_group, struct cxl_port *,
-+	    if (_T) devres_release_group(&_T->dev, _T))
-+
-+static struct cxl_dport *cxl_port_add_dport(struct cxl_port *port,
-+					    struct device *dport_dev)
-+{
-+	struct cxl_dport *dport;
-+	int rc;
-+
-+	/* Temp group for all "first dport" and "per dport" setup actions */
-+	void *port_dr_group __free(cxl_port_release_dr_group) =
-+		devres_open_group(&port->dev, port, GFP_KERNEL);
-+	if (!port_dr_group)
-+		return ERR_PTR(-ENOMEM);
-+
-+	if (port->nr_dports == 0) {
-+		/*
-+		 * Some host bridges are known to not have component regsisters
-+		 * available until a root port has trained CXL. Perform that
-+		 * setup now.
-+		 */
-+		rc = cxl_port_setup_regs(port, port->component_reg_phys);
-+		if (rc)
-+			return ERR_PTR(rc);
-+
-+		rc = devm_cxl_switch_port_decoders_setup(port);
-+		if (rc)
-+			return ERR_PTR(rc);
-+	}
-+
-+	dport = devm_cxl_add_dport_by_dev(port, dport_dev);
-+	if (IS_ERR(dport))
-+		return dport;
-+
-+	/* This group was only needed for early exit above */
-+	devres_remove_group(&port->dev, no_free_ptr(port_dr_group));
-+
-+	cxl_switch_parse_cdat(dport);
-+
-+	/* New dport added, update the decoder targets */
-+	cxl_port_update_decoder_targets(port, dport);
-+
-+	dev_dbg(&port->dev, "dport%d:%s added\n", dport->port_id,
-+		dev_name(dport_dev));
-+
-+	return dport;
-+}
-+
- static struct cxl_driver cxl_port_driver = {
- 	.name = "cxl_port",
- 	.probe = cxl_port_probe,
-+	.add_dport = cxl_port_add_dport,
- 	.id = CXL_DEVICE_PORT,
- 	.drv = {
- 		.dev_groups = cxl_port_attribute_groups,
-diff --git a/tools/testing/cxl/Kbuild b/tools/testing/cxl/Kbuild
-index f1ed9c46acd2d..af261431aef5b 100644
---- a/tools/testing/cxl/Kbuild
-+++ b/tools/testing/cxl/Kbuild
-@@ -12,6 +12,8 @@ ldflags-y += --wrap=cxl_endpoint_parse_cdat
- ldflags-y += --wrap=cxl_dport_init_ras_reporting
- ldflags-y += --wrap=devm_cxl_endpoint_decoders_setup
- ldflags-y += --wrap=hmat_get_extended_linear_cache_size
-+ldflags-y += --wrap=devm_cxl_add_dport_by_dev
-+ldflags-y += --wrap=devm_cxl_switch_port_decoders_setup
- 
- DRIVERS := ../../../drivers
- CXL_SRC := $(DRIVERS)/cxl
-diff --git a/tools/testing/cxl/cxl_core_exports.c b/tools/testing/cxl/cxl_core_exports.c
-index 6754de35598d5..f088792a8925f 100644
---- a/tools/testing/cxl/cxl_core_exports.c
-+++ b/tools/testing/cxl/cxl_core_exports.c
-@@ -2,28 +2,6 @@
- /* Copyright(c) 2022 Intel Corporation. All rights reserved. */
- 
- #include "cxl.h"
--#include "exports.h"
- 
- /* Exporting of cxl_core symbols that are only used by cxl_test */
- EXPORT_SYMBOL_NS_GPL(cxl_num_decoders_committed, "CXL");
--
--cxl_add_dport_by_dev_fn _devm_cxl_add_dport_by_dev =
--	__devm_cxl_add_dport_by_dev;
--EXPORT_SYMBOL_NS_GPL(_devm_cxl_add_dport_by_dev, "CXL");
--
--struct cxl_dport *devm_cxl_add_dport_by_dev(struct cxl_port *port,
--					    struct device *dport_dev)
--{
--	return _devm_cxl_add_dport_by_dev(port, dport_dev);
--}
--EXPORT_SYMBOL_NS_GPL(devm_cxl_add_dport_by_dev, "CXL");
--
--cxl_switch_decoders_setup_fn _devm_cxl_switch_port_decoders_setup =
--	__devm_cxl_switch_port_decoders_setup;
--EXPORT_SYMBOL_NS_GPL(_devm_cxl_switch_port_decoders_setup, "CXL");
--
--int devm_cxl_switch_port_decoders_setup(struct cxl_port *port)
--{
--	return _devm_cxl_switch_port_decoders_setup(port);
--}
--EXPORT_SYMBOL_NS_GPL(devm_cxl_switch_port_decoders_setup, "CXL");
-diff --git a/tools/testing/cxl/exports.h b/tools/testing/cxl/exports.h
-deleted file mode 100644
-index 7ebee7c0bd67e..0000000000000
---- a/tools/testing/cxl/exports.h
-+++ /dev/null
-@@ -1,13 +0,0 @@
--/* SPDX-License-Identifier: GPL-2.0 */
--/* Copyright(c) 2025 Intel Corporation */
--#ifndef __MOCK_CXL_EXPORTS_H_
--#define __MOCK_CXL_EXPORTS_H_
--
--typedef struct cxl_dport *(*cxl_add_dport_by_dev_fn)(struct cxl_port *port,
--							  struct device *dport_dev);
--extern cxl_add_dport_by_dev_fn _devm_cxl_add_dport_by_dev;
--
--typedef int(*cxl_switch_decoders_setup_fn)(struct cxl_port *port);
--extern cxl_switch_decoders_setup_fn _devm_cxl_switch_port_decoders_setup;
--
--#endif
-diff --git a/tools/testing/cxl/test/mock.c b/tools/testing/cxl/test/mock.c
-index bff5853717f02..4762d8c40a8b8 100644
---- a/tools/testing/cxl/test/mock.c
-+++ b/tools/testing/cxl/test/mock.c
-@@ -10,21 +10,12 @@
- #include <cxlmem.h>
- #include <cxlpci.h>
- #include "mock.h"
--#include "../exports.h"
- 
- static LIST_HEAD(mock);
- 
--static struct cxl_dport *
--redirect_devm_cxl_add_dport_by_dev(struct cxl_port *port,
--				   struct device *dport_dev);
--static int redirect_devm_cxl_switch_port_decoders_setup(struct cxl_port *port);
--
- void register_cxl_mock_ops(struct cxl_mock_ops *ops)
+ static int ab8500_codec_probe(struct snd_soc_component *component)
  {
- 	list_add_rcu(&ops->list, &mock);
--	_devm_cxl_add_dport_by_dev = redirect_devm_cxl_add_dport_by_dev;
--	_devm_cxl_switch_port_decoders_setup =
--		redirect_devm_cxl_switch_port_decoders_setup;
+-	struct snd_soc_dapm_context *dapm = snd_soc_component_to_dapm(component);
+ 	struct device *dev = component->dev;
+ 	struct device_node *np = dev->of_node;
+-	struct ab8500_codec_drvdata *drvdata = dev_get_drvdata(dev);
+ 	struct ab8500_codec_platform_data codec_pdata;
+ 	int status;
+ 
+@@ -2181,10 +2072,6 @@ static int ab8500_codec_probe(struct snd_soc_component *component)
+ 	snd_soc_component_write(component, AB8500_SHORTCIRCONF,
+ 		      BIT(AB8500_SHORTCIRCONF_HSZCDDIS));
+ 
+-	snd_soc_dapm_disable_pin(dapm, "ANC Configure Input");
+-
+-	mutex_init(&drvdata->ctrl_lock);
+-
+ 	return status;
  }
- EXPORT_SYMBOL_GPL(register_cxl_mock_ops);
  
-@@ -32,9 +23,6 @@ DEFINE_STATIC_SRCU(cxl_mock_srcu);
+@@ -2213,7 +2100,6 @@ static int ab8500_codec_driver_probe(struct platform_device *pdev)
+ 			GFP_KERNEL);
+ 	if (!drvdata)
+ 		return -ENOMEM;
+-	drvdata->sid_status = SID_UNCONFIGURED;
+ 	dev_set_drvdata(&pdev->dev, drvdata);
  
- void unregister_cxl_mock_ops(struct cxl_mock_ops *ops)
- {
--	_devm_cxl_switch_port_decoders_setup =
--		__devm_cxl_switch_port_decoders_setup;
--	_devm_cxl_add_dport_by_dev = __devm_cxl_add_dport_by_dev;
- 	list_del_rcu(&ops->list);
- 	synchronize_srcu(&cxl_mock_srcu);
- }
-@@ -163,7 +151,7 @@ __wrap_nvdimm_bus_register(struct device *dev,
- }
- EXPORT_SYMBOL_GPL(__wrap_nvdimm_bus_register);
- 
--int redirect_devm_cxl_switch_port_decoders_setup(struct cxl_port *port)
-+int __wrap_devm_cxl_switch_port_decoders_setup(struct cxl_port *port)
- {
- 	int rc, index;
- 	struct cxl_mock_ops *ops = get_cxl_mock_ops(&index);
-@@ -171,11 +159,12 @@ int redirect_devm_cxl_switch_port_decoders_setup(struct cxl_port *port)
- 	if (ops && ops->is_mock_port(port->uport_dev))
- 		rc = ops->devm_cxl_switch_port_decoders_setup(port);
- 	else
--		rc = __devm_cxl_switch_port_decoders_setup(port);
-+		rc = devm_cxl_switch_port_decoders_setup(port);
- 	put_cxl_mock_ops(index);
- 
- 	return rc;
- }
-+EXPORT_SYMBOL_NS_GPL(__wrap_devm_cxl_switch_port_decoders_setup, "CXL");
- 
- int __wrap_devm_cxl_endpoint_decoders_setup(struct cxl_port *port)
- {
-@@ -289,8 +278,8 @@ void __wrap_cxl_dport_init_ras_reporting(struct cxl_dport *dport, struct device
- }
- EXPORT_SYMBOL_NS_GPL(__wrap_cxl_dport_init_ras_reporting, "CXL");
- 
--struct cxl_dport *redirect_devm_cxl_add_dport_by_dev(struct cxl_port *port,
--						     struct device *dport_dev)
-+struct cxl_dport *__wrap_devm_cxl_add_dport_by_dev(struct cxl_port *port,
-+						   struct device *dport_dev)
- {
- 	int index;
- 	struct cxl_mock_ops *ops = get_cxl_mock_ops(&index);
-@@ -299,11 +288,12 @@ struct cxl_dport *redirect_devm_cxl_add_dport_by_dev(struct cxl_port *port,
- 	if (ops && ops->is_mock_port(port->uport_dev))
- 		dport = ops->devm_cxl_add_dport_by_dev(port, dport_dev);
- 	else
--		dport = __devm_cxl_add_dport_by_dev(port, dport_dev);
-+		dport = devm_cxl_add_dport_by_dev(port, dport_dev);
- 	put_cxl_mock_ops(index);
- 
- 	return dport;
- }
-+EXPORT_SYMBOL_NS_GPL(__wrap_devm_cxl_add_dport_by_dev, "CXL");
- 
- MODULE_LICENSE("GPL v2");
- MODULE_DESCRIPTION("cxl_test: emulation module");
+ 	drvdata->regmap = devm_regmap_init(&pdev->dev, NULL, &pdev->dev,
 -- 
 2.53.0
 
