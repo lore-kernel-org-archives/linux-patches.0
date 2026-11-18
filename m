@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052138;
-	b=eVOTlupcKz5P6ZKX2/SdZEufNbP3kUN2kV0EGnh0Q21TiL34xoA5qhXmWu9zMnne1mgr
-	 HGBh9DkGilbl+ozEZs9yY9yN2XOr2A3g0H6Rzq6ga0bWzMH1mkbRc7DY9fORFjFalxNod
-	 JbxvjQXHsoZtQ3c0LDGK5cVN8iV7QORzn92Wga/JxpjzP//AVxnms1gX8w9+yDDVKxlTN
-	 qGIsFrXl1IxtNnUUSZlNVITaprStn+ecBuWA5dBGbymortAepDdfNOjZCw1qULhO7yXl/
-	 iyT3BzfEZNtWubJdWk8KuaVf2vawINn8u26La/aLYj4zbyOwlJqmdKKCZEraEIykhUQ==
+	t=1795052140;
+	b=T0Yg2WKKTpsP9HNYQqPAH7zL43SMUwM70fbu+3eAK+CftvlPopXUHKeMKG/tUU2Y+HPp
+	 5MUPH3zB8KDTQt1fvbML4iGfv+YV+Q0ZfEWsDGoY3HSNS+cjCKrUk5YCwZq9/H/8S+yRi
+	 AaOXHJwaieSiRZ9plGqFbWylUwav+yhmr/ZkilxnaE+HD2KEOE8fWX8PhyLfvLmSDcNzb
+	 QVTpRkvNyXdJ+bXz/nWdxKTUEm++LllGbiYa+cx7PH8BGR6ILkwY9RAjLfPK7DIdJS1aF
+	 ShThDYBBtZIdVnFf2J6xefJKAuFHWZ7qjdfI1r4fSaAEqDtQbAn1lt+kJmUUoEjaTdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052138;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052140;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=emcXGEoVq8nnAOwTSk61Zq2HCIusv1ETi/GHRDsXpq8=;
-	b=j+weVpLGCZkwAD4zgsSlEJvTW2/2SrL5jQemc7TsTlN5mc8mrrsFW+amfRtvNQd/Kxpl
-	 VQg6WzBCvCdP+K1K8sOzbJvICRZeus+dtnkNqkHkq6dj0BExTl+OxoAjWMxg9Sxxggy4Y
-	 H3XVekg4NS5UiccRyZb1agHQzJDDx6n0dTTpuIrhh3pCvvTRrJQQ+sHYYdKujvUfvzFPV
-	 bihDRCdr8yBg0hqxhPcPkVKYajBxdM1YqqhXF4QQ4vGFyQyzu7PaWwxdIY3hg8X18Ik2+
-	 4qmWAZQ4nLLwTKR0WKqtPotUFo6aR5uCZeX1kWdM0rVcwt7i89lY/iIgMPY4DkFK9bA==
+	bh=cbM6dmqIfHlo8mW4fnv9HaM8VEi/P5AEUyQViVJBXYE=;
+	b=QsTbczV1gKnvYrqrVWNvbiGpugSmlgS7+B3QizOcdGc5CjuJOcSHqbRzBj25ErLcvAHM
+	 jLpSaq8eBkibIFckL4pnCP62bkstmwZ8sT8VjRUZeraOVZ5KWKL+DZ+E2FddDUeEe+lZ9
+	 LUDoj8re+i5G899B7G9M5n2kJAx6d+du4IcPBvH05lismhFirzuCRW+z1UCdlMQTHKM4E
+	 wigQLrYxKGx7oWpbJOh4zda8ZR9w6VX/3xLhyY8+tNmOPrNWtE5R1v+kfffHa8LcDv7F1
+	 JKA2ZlO4nTlcigthS0eUkGYfwVCGTIG0RuWYDJju4RquOM9xRICQcnosAM/bECFc+dw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="xH/cL7Rg";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GipLVxVD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1193F606A31C;
-	Thu, 19 Nov 2026 01:35:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACDE4606A31C;
+	Thu, 19 Nov 2026 01:35:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xH/cL7Rg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3634A1F000C4;
-	Thu, 19 Nov 2026 01:35:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GipLVxVD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08B981F000C4;
+	Thu, 19 Nov 2026 01:35:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052137;
-	bh=emcXGEoVq8nnAOwTSk61Zq2HCIusv1ETi/GHRDsXpq8=;
+	s=korg; t=1795052140;
+	bh=cbM6dmqIfHlo8mW4fnv9HaM8VEi/P5AEUyQViVJBXYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xH/cL7Rgodw9zD91XS4C0uwFsXzQwQ4Wb2pKu6O/eZ/sDyEG+8kinJd05qMg9wg+e
-	 6JQJH9o+Dx+/cTdBdFSxGFsex9oOJB9LgYQgm7jwSuxgo6KQV//kMXe9Gs3wIXL+IY
-	 tRb7d0oO9JUZvKn4w6gwSZZf5DfSbnpGLLJZVhNM=
+	b=GipLVxVD9boMG8ery1WgzCoxixLfsMXwk20i65XhomR+cYXk39QBDRcUkXjEdW/IO
+	 /cCIlX30IvBsuyfKoV6/l7gl1ZMRnh6xuP8V+oI5GAcxGh9ko1wMUIOrCqTF8vt2CB
+	 lSV6vSY3ZDafPeTTKGybZa352Y0hBLSbmPrBsAO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Michael Walle <mwalle@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0455/2214] mtd: spi-nor: sfdp: check the length of the xSPI Profile 1.0 table
-Date: Wed, 18 Nov 2026 15:35:31 +0100
-Message-ID: <20261118150029.383794231@linuxfoundation.org>
+Subject: [PATCH 5.15 0456/2214] fs_pin: publish pins with RCU list helpers
+Date: Wed, 18 Nov 2026 15:35:32 +0100
+Message-ID: <20261118150029.425052935@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,58 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit b9f34a95a81021fa1f3c9cb8cfd458e66824cad6 ]
+[ Upstream commit 8d01d6b4c17c406f37a9b6edac93dfb858af30d0 ]
 
-The spi_nor_parse_profile1() sizes its buffer from the table length the
-flash reports in the SFDP parameter header. But it then reads DWORD1,
-DWORD4 and DWORD5 without ever checking the table is that long.
+pin_insert() initializes a pin before adding it under pin_lock.  The kill
+paths read the list heads under RCU without taking that lock.  Plain hlist
+insertion does not publish the earlier initialization to those readers.
 
-So if a flash reports a length of one, the buffer is only four bytes
-while DWORD4 and DWORD5 sit at byte offsets 12 and 16. With a length of
-zero kmalloc() returns ZERO_SIZE_PTR rather than an error, so the NULL
-check doesn't catch it and the first read dereferences it. And the value
-doesn't just get thrown away. It ends up as the dummy cycle count for
-8D-8D-8D fast reads.
+KCSAN weak-memory checking reported acct_on() callback initialization
+racing with pin_kill() after the superblock-list publication.  The
+corresponding LKMM model permits the stale read with plain publication;
+the RCU release/acquire pair forbids it.
 
-To fix this, reject a table that's too short for the highest DWORD the
-parser reads, the way spi_nor_parse_4bait() already does. The table is
-optional, so this isn't fatal. The spi_nor_parse_sfdp() warns and
-carries on.
+Use the RCU hlist add and dereference helpers for both pin lists.
 
-Fixes: fb27f198971a ("mtd: spi-nor: sfdp: parse xSPI Profile 1.0 table")
+Fixes: 2798d4ce6160 ("acct: get rid of acct_lock for acct->count")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Signed-off-by: Michael Walle <mwalle@kernel.org>
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260903002100.34822-1-kmehltretter@gmail.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/spi-nor/sfdp.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/fs_pin.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mtd/spi-nor/sfdp.c b/drivers/mtd/spi-nor/sfdp.c
-index c787fdacf0a11..d11914f236f13 100644
---- a/drivers/mtd/spi-nor/sfdp.c
-+++ b/drivers/mtd/spi-nor/sfdp.c
-@@ -1114,6 +1114,7 @@ static int spi_nor_parse_4bait(struct spi_nor *nor,
- #define PROFILE1_DWORD5_DUMMY_166MHZ		GENMASK(31, 27)
- #define PROFILE1_DWORD5_DUMMY_133MHZ		GENMASK(21, 17)
- #define PROFILE1_DWORD5_DUMMY_100MHZ		GENMASK(11, 7)
-+#define SFDP_PROFILE1_DWORD_MIN			5
+diff --git a/fs/fs_pin.c b/fs/fs_pin.c
+index 47ef3c71ce907..1a508f2167e0a 100644
+--- a/fs/fs_pin.c
++++ b/fs/fs_pin.c
+@@ -1,5 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0
+ #include <linux/fs.h>
++#include <linux/rculist.h>
+ #include <linux/sched.h>
+ #include <linux/slab.h>
+ #include "internal.h"
+@@ -22,8 +23,8 @@ void pin_remove(struct fs_pin *pin)
+ void pin_insert(struct fs_pin *pin, struct vfsmount *m)
+ {
+ 	spin_lock(&pin_lock);
+-	hlist_add_head(&pin->s_list, &m->mnt_sb->s_pins);
+-	hlist_add_head(&pin->m_list, &real_mount(m)->mnt_pins);
++	hlist_add_head_rcu(&pin->s_list, &m->mnt_sb->s_pins);
++	hlist_add_head_rcu(&pin->m_list, &real_mount(m)->mnt_pins);
+ 	spin_unlock(&pin_lock);
+ }
  
- /**
-  * spi_nor_parse_profile1() - parse the xSPI Profile 1.0 table
-@@ -1131,6 +1132,9 @@ static int spi_nor_parse_profile1(struct spi_nor *nor,
- 	int ret;
- 	u8 dummy, opcode;
- 
-+	if (profile1_header->length < SFDP_PROFILE1_DWORD_MIN)
-+		return -EINVAL;
-+
- 	len = profile1_header->length * sizeof(*dwords);
- 	dwords = kmalloc(len, GFP_KERNEL);
- 	if (!dwords)
+@@ -73,7 +74,7 @@ void mnt_pin_kill(struct mount *m)
+ 	while (1) {
+ 		struct hlist_node *p;
+ 		rcu_read_lock();
+-		p = READ_ONCE(m->mnt_pins.first);
++		p = rcu_dereference(hlist_first_rcu(&m->mnt_pins));
+ 		if (!p) {
+ 			rcu_read_unlock();
+ 			break;
+@@ -87,7 +88,7 @@ void group_pin_kill(struct hlist_head *p)
+ 	while (1) {
+ 		struct hlist_node *q;
+ 		rcu_read_lock();
+-		q = READ_ONCE(p->first);
++		q = rcu_dereference(hlist_first_rcu(p));
+ 		if (!q) {
+ 			rcu_read_unlock();
+ 			break;
 -- 
 2.53.0
 
