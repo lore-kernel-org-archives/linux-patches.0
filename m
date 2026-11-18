@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032968;
-	b=Umo7HYAr7AyYZ2XXHQyWJ18ixQTQpntYC38P4LKlUeQNfMPQdBcVu+LLs4NguIJvEJFU
-	 myI3xQi5M5nv0hJKsabMPKtVFlzfzqEFwT3cfJLEPCth0zwHOe/TUWNu2lS/G798AhUGc
-	 smcvyny7lbPQykzJhVMofesAcAMC35REjd1NnbMvPtfaZPoy10XSZp87vNP+NofN47bvt
-	 AULhH3hN4jGSiYpb3uX8DgeKg+g2M2+5vuR+9MC2TJcC++k8JJEqLo33FOXkPTz5gc0Dd
-	 L8ReRTBYcPhWopHLij2kxpKDQbY9WHg9E1m1ShP3DG2DyU4fyX78CTUiIs1HkUkLHSw==
+	t=1795032971;
+	b=YoHWeAw3Iv58qKwQnTK93CFYIbiaSPweIfbe140AhxoQP+sapkmvXkM+F3I3DOS5QWqm
+	 OuwSuO611eGc7Iqrtcq+19GdGMsHdeuMcn3Ai3aoctIfT2eoS+Yg7Qbt5urFk3PekXF+l
+	 uk/6Z6KC8CT3XYXEckdJm8CBH+ITFpHy2+SbhoTch6hVgyJW8f7gTEnOVRN9l9CGASV/U
+	 gGlpyGnGmhWUAI0cayd7VtGFgpTy1x0sJlK/ElDlDoIF/8G74UVAHZpS++314QwEr7kxV
+	 fuqKZbEl6OvTZtRy7pE8wbHrSqe87BogKu8TJBUV/HGcHlDWk/cWF64Z/FR1eotpckg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032968;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032971;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ajLEohxiGQw4HFZ88OZj7oXp+FeqYpSUtAIHm4SIjLE=;
-	b=hM/Ol9xYXHhjoW4QqVARN+DraX0+gQ0frwioC+A4jDSyNFKdHDkmIWr6xunWv0gsO5Ca
-	 CvnA4YIqy0qijErZt/enjBXyusG5gx7/+QTaWbMz1YLHrUBXtFtHF6jD8/4wrO5Ywdj4i
-	 /e1qFoutgV+PGEIrrlOVtSEWQHy1H65BFNQTz1kYyHHz+6o4+sTHjzRehvIgbGBIH8k/x
-	 lK6E5XrjRruwLQDzc6B6aJJAp9PO7kRtgbxYROjPHAUGCrL1SDId/nZrl4mcK5oDBKgKn
-	 MX1LWpGHMLKofOZsU0Gbs8J41irRJ7feZ4qV1h1wBOd0Jn5YBycHlyEVH1rgCq75R9g==
+	bh=qWbd5ioPwbQXNJNi3C1ZUG6AyJPbq0RDqjhZuoysr2s=;
+	b=GTuDKdChjiyedYr+gKdCJD1vlKGePbiOsRSlia7+Ix6FiPX+OP0Q5wNdjPS7thY5kTZ6
+	 3EQJJRu30WsC4EUoWXXLj6N+1ySsFmcKX9M3wMaCg+L1TyPuO/dvXKVqGoFPJIIaWsnlh
+	 skjHCbv96jas8ZcOxPR9ZPYRSQOHsV+4clEOGQ5dE5d8uRgj00CVoY9S5lPc7Ri64g/V1
+	 AvtAn/SKRQYG1iAdwxGlRtDC67tyYQ9K/dRxSHBZA38UzHxI7fxzcwnOy7qNDIZqM9K6a
+	 lY5lSk1RGjbM2/u23/5JzZwUBkcfaEOByNPIZysWmlECf5YEN+6cpb8ZDjRVuRhpZtA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VMFn4pM7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xEJuSwcR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31CCE606A31C;
-	Wed, 18 Nov 2026 20:16:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F66606A325;
+	Wed, 18 Nov 2026 20:16:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VMFn4pM7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C98E1F000C4;
-	Wed, 18 Nov 2026 20:16:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xEJuSwcR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578C51F000C4;
+	Wed, 18 Nov 2026 20:16:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032968;
-	bh=ajLEohxiGQw4HFZ88OZj7oXp+FeqYpSUtAIHm4SIjLE=;
+	s=korg; t=1795032970;
+	bh=qWbd5ioPwbQXNJNi3C1ZUG6AyJPbq0RDqjhZuoysr2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VMFn4pM7/i/5BRdCOaM3Fqp9FKJEripLsYYZUWmPo4tXAx98xSPKSXbzsSSGQr4rx
-	 8gaK/comryDpzDPVknJwRr8Cm2+0CB6dwrIGcSzjZ8vd/dra2VO7zarlrOBpDABbj0
-	 3HA883jAOordDNTHU8JA0WisH1NHVCOEfsCIOdn4=
+	b=xEJuSwcR8e0RyofOLnwlPHQYtO3zaQNvRwpYSi/SCVd7mKCnUEwsg6H9+LIWWac8n
+	 2JEXzQc18lo4NgUM6qU3ZRwOTz2W6y+9ks87QZHAr0uY6XeMlVv+HvQBninsfqRXWV
+	 aqQCKIZ4OgWM54M0IRF8gHakPCd43/PZJNiI6jok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sally Marcher <me@gry.sh>,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1598/1756] ALSA: usb-audio: Add correct datainterval in the quirks-table for Microbook II
-Date: Wed, 18 Nov 2026 16:02:05 +0100
-Message-ID: <20261118150113.525602512@linuxfoundation.org>
+Subject: [PATCH 6.12 1560/1756] ALSA: ump: Drain sequencer callbacks before freeing their client
+Date: Wed, 18 Nov 2026 16:01:27 +0100
+Message-ID: <20261118150111.517658636@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,45 +68,208 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sally Marcher <me@gry.sh>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit a09c2f3b267e47767b8937f65930567edbb88d44 ]
+[ Upstream commit 9b30046de03acb3b3f2135d45af6be7ee0b565b6 ]
 
-This patch fixes playback issues on the Microbook II.
-The correct value was in the older driver for this device
-(https://github.com/manuel-rhdt/snd-microbookii/blob/dd304c097bb6a9d52276ac29c6969fa02bc7674a/audio.c#L914).
+seq_ump_client_free() cancels group_notify_work while the endpoint still
+publishes seq_ops and seq_client. A received Function Block update can
+enter the sequencer callback after cancellation and queue the work again.
+Even disabling the work cannot protect a callback that already loaded
+seq_client and then resumes after the client has been freed.
 
-Datainterval needs to be set explicitly.
+A USB UMP endpoint can continue receiving while its sequencer binding
+is removed. The following order uses the same endpoint and client:
 
-Fixes: a634090a0f24 ("ALSA: usb-audio: Add quirk for MOTU MicroBook II")
-Signed-off-by: Sally Marcher <me@gry.sh>
-Link: https://lore.kernel.org/d5dfd044-69f6-4fc3-9884-6599d88afb55@student.tugraz.at
+  Sequencer binding removal             UMP input completion
+  -------------------------             --------------------
+  cancel_work_sync()
+                                        load seq_ops and seq_client
+  delete sequencer client
+  clear endpoint binding
+  kfree(client)
+                                        schedule group_notify_work
+                                        read client->seq_client
+
+Cover all calls through seq_ops with SRCU in the UMP core. Withdraw the
+operations pointer and wait for those callbacks before canceling work
+and deleting the client. No producer can then queue work after the final
+cancellation, and both the client and callback code remain available
+until the last in-flight callback returns.
+
+Publish seq_ops with release/acquire ordering so the separately stored
+seq_client is initialized before any callback uses it. Use SRCU because
+sequencer notification delivery can sleep; no callback needs to change
+its existing execution context or allocation behavior.
+
+Fixes: 4a16a3af0571 ("ALSA: seq: ump: Handle FB info update")
+Assisted-by: LLM
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/pm-pmb-00625126b81966d1bf1d-v2-915f6bbabe1fd458c3ab@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks-table.h | 2 ++
- 1 file changed, 2 insertions(+)
+ include/sound/ump.h             |  5 +++
+ sound/core/seq/seq_ump_client.c |  5 +--
+ sound/core/ump.c                | 59 ++++++++++++++++++++++++++++-----
+ 3 files changed, 59 insertions(+), 10 deletions(-)
 
-diff --git a/sound/usb/quirks-table.h b/sound/usb/quirks-table.h
-index 5dcbd85a25112..9e7f29d099818 100644
---- a/sound/usb/quirks-table.h
-+++ b/sound/usb/quirks-table.h
-@@ -2753,6 +2753,7 @@ YAMAHA_DEVICE(0x7010, "UB99"),
- 					.rates = SNDRV_PCM_RATE_96000,
- 					.ep_attr = USB_ENDPOINT_XFER_ISOC |
- 						   USB_ENDPOINT_SYNC_ASYNC,
-+					.datainterval = 1,
- 					.rate_min = 96000,
- 					.rate_max = 96000,
- 					.nr_rates = 1,
-@@ -2775,6 +2776,7 @@ YAMAHA_DEVICE(0x7010, "UB99"),
- 					.rates = SNDRV_PCM_RATE_96000,
- 					.ep_attr = USB_ENDPOINT_XFER_ISOC |
- 						   USB_ENDPOINT_SYNC_ASYNC,
-+					.datainterval = 1,
- 					.rate_min = 96000,
- 					.rate_max = 96000,
- 					.nr_rates = 1,
+diff --git a/include/sound/ump.h b/include/sound/ump.h
+index 73f97f88e2ed7..387143783a9b5 100644
+--- a/include/sound/ump.h
++++ b/include/sound/ump.h
+@@ -66,6 +66,7 @@ struct snd_ump_endpoint {
+ 
+ #if IS_ENABLED(CONFIG_SND_SEQUENCER)
+ 	struct snd_seq_device *seq_dev;
++	/* Published after seq_client; calls are covered by UMP core SRCU. */
+ 	const struct snd_seq_ump_ops *seq_ops;
+ 	void *seq_client;
+ #endif
+@@ -126,6 +127,10 @@ int snd_ump_receive_ump_val(struct snd_ump_endpoint *ump, u32 val);
+ int snd_ump_switch_protocol(struct snd_ump_endpoint *ump, unsigned int protocol);
+ void snd_ump_update_group_attrs(struct snd_ump_endpoint *ump);
+ 
++#if IS_ENABLED(CONFIG_SND_SEQUENCER)
++void snd_ump_detach_seq(struct snd_ump_endpoint *ump);
++#endif
++
+ /*
+  * Some definitions for UMP
+  */
+diff --git a/sound/core/seq/seq_ump_client.c b/sound/core/seq/seq_ump_client.c
+index ad794c22cc420..73b9af190d585 100644
+--- a/sound/core/seq/seq_ump_client.c
++++ b/sound/core/seq/seq_ump_client.c
+@@ -346,12 +346,12 @@ static int create_ump_endpoint_port(struct seq_ump_client *client)
+ /* release the client resources */
+ static void seq_ump_client_free(struct seq_ump_client *client)
+ {
++	snd_ump_detach_seq(client->ump);
+ 	cancel_work_sync(&client->group_notify_work);
+ 
+ 	if (client->seq_client >= 0)
+ 		snd_seq_delete_kernel_client(client->seq_client);
+ 
+-	client->ump->seq_ops = NULL;
+ 	client->ump->seq_client = NULL;
+ 
+ 	kfree(client);
+@@ -518,7 +518,8 @@ static int snd_seq_ump_probe(struct device *_dev)
+ 	snd_seq_kernel_client_put(cptr);
+ 
+ 	ump->seq_client = client;
+-	ump->seq_ops = &seq_ump_ops;
++	/* Publish the initialized client before callbacks can observe seq_ops. */
++	smp_store_release(&ump->seq_ops, &seq_ump_ops);
+ 	return 0;
+ 
+  error:
+diff --git a/sound/core/ump.c b/sound/core/ump.c
+index 8ee4350d5ed6e..6bd04270baefa 100644
+--- a/sound/core/ump.c
++++ b/sound/core/ump.c
+@@ -8,6 +8,7 @@
+ #include <linux/module.h>
+ #include <linux/export.h>
+ #include <linux/mm.h>
++#include <linux/srcu.h>
+ #include <sound/core.h>
+ #include <sound/rawmidi.h>
+ #include <sound/ump.h>
+@@ -18,6 +19,31 @@
+ #define ump_info(ump, fmt, args...)	dev_info((ump)->core.dev, fmt, ##args)
+ #define ump_dbg(ump, fmt, args...)	dev_dbg((ump)->core.dev, fmt, ##args)
+ 
++#if IS_ENABLED(CONFIG_SND_SEQUENCER)
++DEFINE_STATIC_SRCU(ump_seq_srcu);
++
++static const struct snd_seq_ump_ops *seq_ops_load(struct snd_ump_endpoint *ump)
++{
++	/* Pair with publication after seq_client has been initialized. */
++	return smp_load_acquire(&ump->seq_ops);
++}
++
++/**
++ * snd_ump_detach_seq - stop callbacks to a sequencer binding
++ * @ump: UMP endpoint
++ *
++ * Withdraw the binding and wait for all callbacks already in progress.
++ * The caller can then drain binding work and free the sequencer client.
++ * Must not be called from one of the binding callbacks.
++ */
++void snd_ump_detach_seq(struct snd_ump_endpoint *ump)
++{
++	WRITE_ONCE(ump->seq_ops, NULL);
++	synchronize_srcu(&ump_seq_srcu);
++}
++EXPORT_SYMBOL_GPL(snd_ump_detach_seq);
++#endif
++
+ static int snd_ump_dev_register(struct snd_rawmidi *rmidi);
+ static int snd_ump_dev_unregister(struct snd_rawmidi *rmidi);
+ static long snd_ump_ioctl(struct snd_rawmidi *rmidi, unsigned int cmd,
+@@ -348,8 +374,13 @@ int snd_ump_receive(struct snd_ump_endpoint *ump, const u32 *buffer, int count)
+ 			continue;
+ 		ump_handle_stream_msg(ump, ump->input_buf, n);
+ #if IS_ENABLED(CONFIG_SND_SEQUENCER)
+-		if (ump->seq_ops)
+-			ump->seq_ops->input_receive(ump, ump->input_buf, n);
++		scoped_guard(srcu, &ump_seq_srcu) {
++			const struct snd_seq_ump_ops *ops;
++
++			ops = seq_ops_load(ump);
++			if (ops)
++				ops->input_receive(ump, ump->input_buf, n);
++		}
+ #endif
+ 		process_legacy_input(ump, ump->input_buf, n);
+ 	}
+@@ -699,8 +730,12 @@ static void choose_default_protocol(struct snd_ump_endpoint *ump)
+ static void seq_notify_ep_change(struct snd_ump_endpoint *ump)
+ {
+ #if IS_ENABLED(CONFIG_SND_SEQUENCER)
+-	if (ump->parsed && ump->seq_ops && ump->seq_ops->notify_ep_change)
+-		ump->seq_ops->notify_ep_change(ump);
++	const struct snd_seq_ump_ops *ops;
++
++	guard(srcu)(&ump_seq_srcu);
++	ops = seq_ops_load(ump);
++	if (ump->parsed && ops && ops->notify_ep_change)
++		ops->notify_ep_change(ump);
+ #endif
+ }
+ 
+@@ -797,8 +832,12 @@ static int ump_handle_product_id_msg(struct snd_ump_endpoint *ump,
+ static void seq_notify_protocol(struct snd_ump_endpoint *ump)
+ {
+ #if IS_ENABLED(CONFIG_SND_SEQUENCER)
+-	if (ump->seq_ops && ump->seq_ops->switch_protocol)
+-		ump->seq_ops->switch_protocol(ump);
++	const struct snd_seq_ump_ops *ops;
++
++	guard(srcu)(&ump_seq_srcu);
++	ops = seq_ops_load(ump);
++	if (ops && ops->switch_protocol)
++		ops->switch_protocol(ump);
+ #endif /* CONFIG_SND_SEQUENCER */
+ }
+ 
+@@ -893,8 +932,12 @@ static void seq_notify_fb_change(struct snd_ump_endpoint *ump,
+ 				 struct snd_ump_block *fb)
+ {
+ #if IS_ENABLED(CONFIG_SND_SEQUENCER)
+-	if (ump->seq_ops && ump->seq_ops->notify_fb_change)
+-		ump->seq_ops->notify_fb_change(ump, fb);
++	const struct snd_seq_ump_ops *ops;
++
++	guard(srcu)(&ump_seq_srcu);
++	ops = seq_ops_load(ump);
++	if (ops && ops->notify_fb_change)
++		ops->notify_fb_change(ump, fb);
+ #endif
+ }
+ 
 -- 
 2.53.0
 
