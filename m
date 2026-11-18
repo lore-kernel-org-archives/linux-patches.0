@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046209;
-	b=FJQJOU5V2H7kJeUM90IiMY72JdZKJcAl7OdnE/iDj4yttJb4m0VsjOkuwnoys6AmJUFl
-	 mA71u8Cnc2HR//nvVj5LezZ0fwjIdE/7lay1O+mGhZB96zlqLXDgdXOsYGVBde6cjdCJl
-	 oBUs7D12itGB5Q0Bh0B3gYA026NjV81a3IMolrXXx1OGCjyKCHLwjbRntBkKSnbdxbHz2
-	 xu34E//wsL8uELrgZctT4GVIZGvxzNY2hkPU6RT7uk+Rv2Q7PrQOsvtkzzYTNoGmmS+Bi
-	 W3gCeSdMJoV0fn2VdZla3jz9Ct+GWGGrEZkQrnXxNEaS3JkfnmzP/EjgD+9co8Xl81Q==
+	t=1795046212;
+	b=QxTzD758g8bgAxQRWHEVhGsKN2X+mEj5uyZb0YDDIEnF/Xjr0BcNnG+PznEJBT6G8JdC
+	 9ZaOtXIdQ3offLBJxnvQSu+JpXDpoj1vjaq39qGXNNZfduZJdMmViClq18xLnNTuhAB2q
+	 e7LXap9i2g6wBacsRn2jGYI4ry7rVOXhj9Fdff3PeNOeruVk+UnfYaVNgJgsrgrOjAiUV
+	 31jHBtcCwLSX+pAPwTolRfUmbGWQmP7Le9+C1ZaEwlzfmIOWm+m0xHSNKlICjNhqUSCF6
+	 YayT6XPuNgnsOoFAMi+M9PppGrIzILqUZPnNtbP/ETsmaLl4X1CgrLhwMzI9jhOMIeg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046209;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046212;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ccRqTVVdWGZY02zgv/iaO24TkzpX4jKfVloZNIb3PoU=;
-	b=zwcxJywVlD86mwvy66sh8EX9Fco5lvv00lxFwrRqdi/JeVUMCIlyn1voB4AlvvkRbnlr
-	 T4Hv5MNkVCIOkLZrGXvG2CUavz8xrStoIlP8ZwNp5ig7QKjFZ9uGuHxuiWOWlcQ/L0rYk
-	 C5iEg+CI+mQNXpQVVR/xHkpZd9JDxh6QBepxse2rE7v35crOLX29wtOns50SG3ozvk5Ic
-	 MayLucHr/pqZnMXAZPvUymqxzI0cib9qPPLo/gPapvyYuViAHCRs+Q2vqm4TelXOxH0l4
-	 GnHRl1HARz0PQ3EIiBilw0WxxGSNiD7zjQItx/fOiY5Ly8mcVVJCJwrG3qvrondIiNQ==
+	bh=EMwNqfXPnHhkJQyWjSc5ovJvikmM79pEdT41/Rp2z80=;
+	b=uAeUTLzC+OWufltd2Ra5qpmaYABKAzDdbaU93bh8WSpvSFLecXzpG5YctokPCc+inAir
+	 UwcJjSuQ1BzAkeXOYLh0JTtXOOlX6/QccGyOicPQOlBHO0utEQiwJ8PjPROvXgXOVyeIR
+	 buHKISgVKT5y9WXEXnwcGMZx+jhC5AycXufa1ENionFDSbjZeNMVDm57XFXYe1cOY23yg
+	 BAr0z1kPpZHQb1u4HFDuLc6JP7+Mz0EUAJlnKEZj3IZmYWkzALzwpENup24nO+o/m8oYq
+	 YjyL0ci9Grlr1VZfYIjaMiRZqMPMEhxwSxtAOmFCNeVC31Az9xU/QJCv268LbHZ1W3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HbzLa6UO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eR+rHAqg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362AF606A325;
-	Wed, 18 Nov 2026 23:56:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1366606A325;
+	Wed, 18 Nov 2026 23:56:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HbzLa6UO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 898CC1F000C8;
-	Wed, 18 Nov 2026 23:56:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eR+rHAqg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5130E1F000C4;
+	Wed, 18 Nov 2026 23:56:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046209;
-	bh=ccRqTVVdWGZY02zgv/iaO24TkzpX4jKfVloZNIb3PoU=;
+	s=korg; t=1795046211;
+	bh=EMwNqfXPnHhkJQyWjSc5ovJvikmM79pEdT41/Rp2z80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HbzLa6UOyJ+PwdcCA6e74pjEvU0DBc1SImbF9lgZ72CxTRa6wzxV2NxMBPG8V0Yni
-	 +lerPlzhLGFNE9bQMpyfx7mWKLxtJvhMnwCGutgfmLFO+1Lzr8iEOC01jovVdfbblQ
-	 Fv4wTisFt8bpClBLZvhSygwRlr8IfSbEEoVAGL2Y=
+	b=eR+rHAqgsE124DckmsgV2OEtoisdp49E4dmTodWqrap1NzHC9AoOOPjFIbPBcxU0r
+	 PlZE92aOSa368QcsHehUfZw4jwluRohFIA28/Xcpa/JdXuXSjKJ02c1A4VAYOddmJ3
+	 sWOHuVSwW7W4Bz1JlR8PD/bPmeeL6EmC2dRjyLw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Kazinsky <a.kazinsky@ideco.ru>,
-	Johannes Berg <johannes.berg@intel.com>,
+	kernel test robot <lkp@intel.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1198/2857] wifi: rsi: Skip TX aggregation setup for non-QoS frames
-Date: Wed, 18 Nov 2026 15:37:12 +0100
-Message-ID: <20261118150244.750765899@linuxfoundation.org>
+Subject: [PATCH 6.1 1163/2857] mtd: rawnand: ndfc: fix gcc uninitialized var
+Date: Wed, 18 Nov 2026 15:36:37 +0100
+Message-ID: <20261118150243.464242807@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,44 +69,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Kazinsky <a.kazinsky@ideco.ru>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 71f756a4c064b0312f46617c20893ecc17c332e4 ]
+[ Upstream commit cceca8cb776b03e83985578f84bd730c30d57f70 ]
 
-When transmitting a non-QoS unicast frame to a station in AP mode,
-rsi_core_xmit() assigns IEEE80211_NONQOS_TID (16) to tid. The station
-lookup succeeds, allowing tid to index start_tx_aggr[], which has only
-IEEE80211_NUM_TIDS (16) elements. This causes an out-of-bounds read and,
-if the value read is zero, an out-of-bounds write.
+Now that this can be built with COMPILE_TEST, an unassigned variable was
+found. Set to 0 to fix the W=1 error under GCC.
 
-Only access the aggregation state for tids below IEEE80211_NUM_TIDS,
-excluding the non-QoS sentinel from TX aggregation setup.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 19844c0a9a19 ("rsi: data and managemet path changes for AP mode")
-Cc: stable@vger.kernel.org
-Signed-off-by: Alex Kazinsky <a.kazinsky@ideco.ru>
-Link: https://patch.msgid.link/20261015072010.742369-1-a.kazinsky@ideco.ru
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202606141301.iyVdFgl7-lkp@intel.com/
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/rsi/rsi_91x_core.c | 2 +-
+ drivers/mtd/nand/raw/ndfc.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/rsi/rsi_91x_core.c b/drivers/net/wireless/rsi/rsi_91x_core.c
-index ead4d4e043280..3281fc94e1078 100644
---- a/drivers/net/wireless/rsi/rsi_91x_core.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_core.c
-@@ -458,7 +458,7 @@ void rsi_core_xmit(struct rsi_common *common, struct sk_buff *skb)
- 			tx_params->sta_id = 0;
- 		}
+diff --git a/drivers/mtd/nand/raw/ndfc.c b/drivers/mtd/nand/raw/ndfc.c
+index 7dfb7b2f2f3cf..47f6ef0c5d9bd 100644
+--- a/drivers/mtd/nand/raw/ndfc.c
++++ b/drivers/mtd/nand/raw/ndfc.c
+@@ -187,7 +187,7 @@ static int ndfc_probe(struct platform_device *ofdev)
+ 	const __be32 *reg;
+ 	u32 ccr;
+ 	u32 cs;
+-	int err, len;
++	int err, len = 0;
  
--		if (rsta) {
-+		if (rsta && tid < IEEE80211_NUM_TIDS) {
- 			/* Start aggregation if not done for this tid */
- 			if (!rsta->start_tx_aggr[tid]) {
- 				rsta->start_tx_aggr[tid] = true;
+ 	/* Read the reg property to get the chip select */
+ 	reg = of_get_property(ofdev->dev.of_node, "reg", &len);
 -- 
 2.53.0
 
