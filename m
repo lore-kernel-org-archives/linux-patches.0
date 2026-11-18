@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034166;
-	b=Ob2qFdJMCPIWLReDYcW3oryGL83ksTi8bfKreGzDtJM2RFDmqUdPbxKlRoGgjYjvW7w/
-	 rQb231Qae845+rE4b2azkVCyi+0YoybTn0turFlNOowVWY6x22UjHD6KKHoqCQskhC/of
-	 6SB06ok+PmyEKgvPNoc/fT34llLXmXYKb8FzqP05nMDe0dKa9hz8S1uBP5QFSpKBEMR8a
-	 XIg1GuRbmF1wz/psROZuwvgn6I2gcvl3oLPY8YBMVFpQ9geuXukFTQSCEw/NC0mOWzs0Q
-	 AKDxFyIkbV/yIXACF1UXTMOeja74l7Z3Hoq7oArbjxi3emiAI5PawYa6civDiOmLKQg==
+	t=1795034168;
+	b=K+RegxjSv3Dr9dSP69tSlLin5jyWWQsluRetc0Kac6QHXOw8Gcwa7TnmpIG1eQCiveQG
+	 WqQj4orhb+HwBWXXZIM1CEAD5uFypxqTfv/6kI8MNej9xa5trkqhIrB+fyhW4MrfcH/l5
+	 H9meCNRfuVKIeIiCaCrC9G+rPe0x7TYY4ntNzqRPozDL7MbuEZ9HxaJI8FNrfulKnur77
+	 lSU3hkRVXKVKV5DhU7S3KAiTIh7uooJabyQ1LstPRY1ZGMVZmOAEf3Ar5MW4ZR4kPMbpR
+	 2lKkAnKlO6+jdy4GqPw5cvtHhLcYAyiL9MjXPZ+doGpgbvgXPBjrREzGevEwR+hSL3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034166;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034168;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=k8nkzINpEGKqvu2g4jcbTJoWgRlw6ad2BntXTuxH72U=;
-	b=X8OVob/Lhw0kdSw29EXItt+q3Cm4BnuwE0qsj9nzdlzPFwv3bGBmQb9BN9zcuuf3dR6d
-	 nn5+qJSH3hU8C+rXFjsCTNBed+TKoe4dQZ2EgxzA1XDd0Jr/6Pc3D/i/k7Ivqazkzp+4d
-	 GL6efOC1qYZXDAHN8/WjjexD4xWbkxfpXEUB5iuSo1NPvxN+2bO2ReXJZ8OZy6soLvX9u
-	 XEYPca6B3hPkOEg/8VHQP1yiqSBdw2upgdM7apKXt7AMJ+s1PiqqQSbnlDtix+V/HayAM
-	 tN39gn6GUJDtLNzUJK6QnVPgORxDhWLs6gIqNZDOuYwAd+9eFIWbBN1DFFnKs6mNBkg==
+	bh=oT5e66hY1iVdV6fDbA/mLqraR+ld3P4GaMzocIjl4GM=;
+	b=wyAQgfe9YrYOV+8LnLBDBmtrx9e8sjx5tLVgIPMHkAahrBasqROjycnjhHfXMoNlTOi7
+	 ewjROB2E8Io0dRtfkN2Ah8sAZbeLdIFEDzrAZ8Ya/1uymVq9493uXYnTG2gLTR+SRgm/3
+	 JezhyJRcA/Lt8JJQaB5J+U677HRknpkuV5ncjcKkCbnXxBj31ToIrQxiQ3Rb/Jzcu9akJ
+	 +6xLBrE6y1kTRXWLFtkoWgKkWT1Wv2nVlV4I2XT9ynbhXe0qKqXltn+05cr8p+huyi44U
+	 3aPVu/BR9WzyFgjL4QAf2rxY/H6nwIFmm4tgm/Vjmn74MWHprbWSzDXBiarbLbWuxMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H4cSIO0W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="IGPEC4/K";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D437606A337;
-	Wed, 18 Nov 2026 20:36:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C132460A2628;
+	Wed, 18 Nov 2026 20:36:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H4cSIO0W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65B531F000C8;
-	Wed, 18 Nov 2026 20:36:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IGPEC4/K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22D6C1F000C7;
+	Wed, 18 Nov 2026 20:36:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034165;
-	bh=k8nkzINpEGKqvu2g4jcbTJoWgRlw6ad2BntXTuxH72U=;
+	s=korg; t=1795034168;
+	bh=oT5e66hY1iVdV6fDbA/mLqraR+ld3P4GaMzocIjl4GM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H4cSIO0W/doPAk8KDa2jVEf+lICc2vJLT1C/F+9HzA3MYoYV6lk32ZAJq9+569Qwr
-	 EUyUmvPZuiNLToz3F5H+n6NsKffVUnM9LiyNkRtiTXG22PTi/pI/TfUbte7qb55lHg
-	 h8SUb84UHyGYTC0FJro2kTKMxNbygJYOYRo6kLkM=
+	b=IGPEC4/KI0BPRb3Hc8B+Ad3rbfqwPhvtmse84vwX4uJFw+Csu4HWQqobEMLdDai0W
+	 PBqewY+QlD3kSSRDStIUk5Yrkc18e2WhXCJa7rBxtT5lxpDN0pQpTiAmohHyFaiS0G
+	 JWt0ZHgE8D9Ivty68wFYwgzxp//I/HsJbnZtRl1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arash Golgol <arash.golgol@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0273/3318] regulator: fan53555: Add support for FAN53555BUC23X type
-Date: Wed, 18 Nov 2026 15:14:55 +0100
-Message-ID: <20261118150323.653608336@linuxfoundation.org>
+Subject: [PATCH 6.6 0274/3318] soundwire: dmi-quirks: Disable ghost Realtek on Asus ROG Zephyrus Duo
+Date: Wed, 18 Nov 2026 15:14:56 +0100
+Message-ID: <20261118150323.690243182@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,53 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arash Golgol <arash.golgol@gmail.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit e739acbe05b06de78ef7089470f122432f651faa ]
+[ Upstream commit 5b08a3afd2995e5312c4c47ffea9d21b651e8e13 ]
 
-FAN53555BUC23X has the ID 0 and REV 0xc, starts at 600mV and
-increments in 12.5mV steps.
+The Asus ROG Zephyrus Duo also has a Realtek device in the ACPI that
+doesn't exist in the physical hardware. This confuses the machine
+driver into attempting to create DAI links for the device. Add a
+quirk to remove this device.
 
-Per the datasheet, the FAN53555BUC23X (23 option) is grouped with
-the 00 and 13 options for soft-start timing (t_SS = 300us typ.),
-so the existing enable_time = 400 is reused here as well.
-
-This variant is found on the ASUS Tinker Edge R (RK3399Pro) as the
-supply regulator for both vdd_gpu and vdd_cpu_b. Verified across
-the full GPU OPP table with the userspace devfreq governor.
-
-Signed-off-by: Arash Golgol <arash.golgol@gmail.com>
-Link: https://patch.msgid.link/20260812125054.19111-1-arash.golgol@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Suggested-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260807121425.1952003-1-ckeepax@opensource.cirrus.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/fan53555.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/soundwire/dmi-quirks.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/regulator/fan53555.c b/drivers/regulator/fan53555.c
-index 8912f5be72707..cabf0ad7d93b7 100644
---- a/drivers/regulator/fan53555.c
-+++ b/drivers/regulator/fan53555.c
-@@ -113,6 +113,7 @@ enum {
- enum {
- 	FAN53555_CHIP_REV_00 = 0x3,
- 	FAN53555_CHIP_REV_13 = 0xf,
-+	FAN53555_CHIP_REV_23 = 0xc,
- };
- 
- enum {
-@@ -305,6 +306,11 @@ static int fan53555_voltages_setup_fairchild(struct fan53555_device_info *di)
- 			di->vsel_step = 10000;
- 			di->enable_time = 400;
- 			break;
-+		case FAN53555_CHIP_REV_23:
-+			di->vsel_min = 600000;
-+			di->vsel_step = 12500;
-+			di->enable_time = 400;
-+			break;
- 		default:
- 			dev_err(di->dev,
- 				"Chip ID %d with rev %d not supported!\n",
+diff --git a/drivers/soundwire/dmi-quirks.c b/drivers/soundwire/dmi-quirks.c
+index f738e547a1f30..768255dd12db6 100644
+--- a/drivers/soundwire/dmi-quirks.c
++++ b/drivers/soundwire/dmi-quirks.c
+@@ -193,6 +193,13 @@ static const struct dmi_system_id adr_remap_quirk_table[] = {
+ 		},
+ 		.driver_data = (void *)ghost_realtek,
+ 	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUS"),
++			DMI_MATCH(DMI_BOARD_NAME, "GX651AR"),
++		},
++		.driver_data = (void *)ghost_realtek,
++	},
+ 	{
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "ASUS"),
 -- 
 2.53.0
 
