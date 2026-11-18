@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055046;
-	b=pBjC2w/1PBj+kP5GqRPh7L/Wdep3B3Xa/C6rbLuY9O3TLingMIT6YR2zK/Xev9YkzRpZ
-	 hgbLxrE0BpGrTkIkJhR9r0Cqu4mwRGtaaku2L9Ol+on+Y+rVF25uZrKZAErk7WAyx2joX
-	 5UZuwHwdr6etRqn+c64Tjoy5VKVagIkfUQWMtrmc6u3ptau9AwKJVCqAQNpL83YPYejmQ
-	 JKjs/FSKugerDc8KGIB+bQajnPjYqfBwknouBAzhaP7RzViLyEZ9wYbcTB9Qa0wkIYVi8
-	 TL+ShTiC4/f24DcWObpdtZs1bpH8vRTPVuTRLBPnYJJgbei5oOVKZJl00EEu4zpGJBQ==
+	t=1795055048;
+	b=2epb4cW6xQFYRXJ4yMAYS0sBmEqYw7ilOhegQMSuMynveqBWGFWH4UWb6qm8LiQbCcUy
+	 bNBEuZwFdDqFDaqYODArPyPreBJRWBLW1vmg5AQMzCk167J1jb6c6SVtVsPMtn/OsrHMt
+	 ZFYplVQLimbQUDBvWx/PXQhdRl6gkSVRn7TmEgAqdUlMbCyoREUBQersyjGEuFo2Hb31m
+	 lUa56ag+gUoZ/+HOqLtGDE3uYqbrIdLc/qginPPKM5SY2wBPHTZgLWJ1RsaWUt9KK8YqW
+	 MqaZlFLymaJexUVyVFtprCbMCkQIL6rJGzdTRKDe1zy9sJQUbcO+06KIi2QqXHrXzRg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055046;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055048;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4uNuxwzlklm8BayCPAuB8CuH6NWtqZG1bmh4Ezs+lSM=;
-	b=M6jdZ6C+EKwkajwP696gR/TQz7nMaVVIacmekIWpu8IdW/0GEG7fZWSkMxx77N/Zq1cE
-	 LgNRSxBNlvxWqe0Gyn5z05eQNT023gnBS7TPPx4ivbAIAakhCHBWWU1yaDKeoMkcBgLD/
-	 W7Qx4iuuKB5sLSwnTh4nBhsOjfZrGL5Cd0DOjMA1Z+iz9V6OU0uLSMb4tZmqsWz/DTfLZ
-	 oBgF0x/6gGRuuJueS8/4LQ9iMBdWAubJyp6ZlTu+Ppdj2tPJMfUERhBXWXYkTINNbnt2I
-	 sdWWkXsUcnvJeIulneT/LV4yXh/HNJaHsi9fSmpV+16q5TQNTUDZYNOQT8HbMFpr3pg==
+	bh=ib02HL8B2CIBGbxFonnL2gSWzHgvjX2yG0OQ1kWcIQ8=;
+	b=y74BjBzPqvzbLzv0flPqHzXTrveV7xbJntn82WwiFuLYbeHys5Ha0PNZGdXerxCmTxXF
+	 d+lleffOEbYqo6sM2UD/ahzQvXH7h+cOb6gmdS1trCFjhpryglBb648o4loWA8Zwuy+ln
+	 AZBTuI0tuK4Q5uQsVsAdwdxj75t9X2SCx6dhldbkGFPyx6WcHq/SDWtvbzS+fJvZaSWKT
+	 kP1QmtM+TlY4FgFc1NZflK5mbEljq8P1Dtbxa464VYQPRlqPHajJMBe5mMu3qHoe+xZSS
+	 dAcvticv7EycSfYMSfd0XbMz3FRTkHhXiXrJwDq8JruJKdvRWd2Lmtms6wmVZ+q4r2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Da72pWfl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T89QfORp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02AE6606A32A;
-	Thu, 19 Nov 2026 02:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82BA2606A31C;
+	Thu, 19 Nov 2026 02:24:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Da72pWfl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C5371F000C4;
-	Thu, 19 Nov 2026 02:24:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T89QfORp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3DD81F000C4;
+	Thu, 19 Nov 2026 02:24:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055045;
-	bh=4uNuxwzlklm8BayCPAuB8CuH6NWtqZG1bmh4Ezs+lSM=;
+	s=korg; t=1795055048;
+	bh=ib02HL8B2CIBGbxFonnL2gSWzHgvjX2yG0OQ1kWcIQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Da72pWflmvGXCwagTKfwWHyajliWz9XmEXbdoqNVbF4pr/45P56Bey7JNKx7/v1jm
-	 /Ph5CWaa6UzKosPtoUN7Q3wypu80rnERvXYV5o158p8kttcPCVwFkWGP+yknM4o9Hj
-	 OZvoKlgDrkzVv2PRkZJbBWGUfFEtA+DrIwh6kHus=
+	b=T89QfORpuDHtmHgiYfCH24vKurey8sR1eSySXbXQUQvk6ls14JePgi6OLrs8g5Lq6
+	 QcZOE4Hv2NODzYJMo02vo3WRet3zB47GGHrrtn4Mjm3jiAfnUqMwMnTkXT5VL/S1tC
+	 p/Dg7ra7VxpeM81trzM4Wj4J1dtTmAW2YrWAEwNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1464/2214] regulator: ab8500: Fix AB8505 VANA voltage selectors
-Date: Wed, 18 Nov 2026 15:52:20 +0100
-Message-ID: <20261118150109.735675641@linuxfoundation.org>
+Subject: [PATCH 5.15 1491/2214] ata: libata-scsi: Fix ata_scsi_hotplug() reference in kernel-doc
+Date: Wed, 18 Nov 2026 15:52:47 +0100
+Message-ID: <20261118150111.018437036@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,49 +69,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit dfdfda2a95843706428a9d95ab546cb10983e684 ]
+[ Upstream commit 5915ab523e33057224a0240e27b88c6c2798b919 ]
 
-The AB8505 VANA voltage table assumes selector 0 represents 1.05 V
-and all eight selectors increase linearly. Selector 0 actually
-represents 1.2 V. Selectors 1 through 6 cover 1.05 V through
-1.175 V, and selector 7 represents 1.225 V.
+The ata_scsi_remove_dev() comment misspells its caller as
+ata_eh_scsi_hotplug(). The caller is ata_scsi_hotplug(). Correct the
+reference, which predates libata's move from drivers/scsi to
+drivers/ata.
 
-Correct the table so each selector reports and programs the documented
-voltage.
-
-Reference: AB8505 User Manual, DM00046744 Rev 3, p. 257
-
-Fixes: 8a3b1b8703fe ("regulator: ab8500: Add voltage selection for AUDIO and ANA on AB8505")
+Fixes: 580b2102327a ("[PATCH] libata-hp: implement SCSI part of hotplug")
 Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260901-ux500-dts-snowball-regulator-v2-1-fe88b01829bf@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20260912101215.86413-1-kmehltretter@gmail.com
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/ab8500.c | 2 +-
+ drivers/ata/libata-scsi.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/ab8500.c b/drivers/regulator/ab8500.c
-index 23a401734a987..d603d7b9f6821 100644
---- a/drivers/regulator/ab8500.c
-+++ b/drivers/regulator/ab8500.c
-@@ -265,13 +265,13 @@ static const unsigned int fixed_2050000_voltage[] = {
- };
- 
- static const unsigned int ldo_vana_voltages[] = {
-+	1200000,
- 	1050000,
- 	1075000,
- 	1100000,
- 	1125000,
- 	1150000,
- 	1175000,
--	1200000,
- 	1225000,
- };
- 
+diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
+index 81ed39f68c148..231e1d2faa2fe 100644
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -4413,7 +4413,7 @@ int ata_scsi_offline_dev(struct ata_device *dev)
+  *	ata_scsi_remove_dev - remove attached SCSI device
+  *	@dev: ATA device to remove attached SCSI device for
+  *
+- *	This function is called from ata_eh_scsi_hotplug() and
++ *	This function is called from ata_scsi_hotplug() and
+  *	responsible for removing the SCSI device attached to @dev.
+  *
+  *	LOCKING:
 -- 
 2.53.0
 
