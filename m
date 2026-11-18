@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039671;
-	b=Vj8XUug2uETWkjff060P53Mx07+pHD+0OjFvCFoPi7GVvlo7CtOX069gqKHeNh1+emiq
-	 iBxjDhqRsd2YeE7dZV+wCjRZVt2nT8nm9wznvXt2eU8d2rQS1yZ+VySObZ1ItBphXZqIt
-	 XxqBaQ918kKhiiaaKL2+VQ7ATA6G4+2OyX3QoCE6tumSWRUWGTcrGtmmih1pzjb39+Mva
-	 pIO/tQjiVbG1KXj0D0CFBNiaQvYB4q6Z71He8fQ0yWrctMY06Y4pWyHXFgDJfqCbcmiyw
-	 JBTj7PhnN4MXonwukFsm0Z/hPkp08n9DjJJaeryIj5YKJQIZNslFohwaPOb7t2ZWegg==
+	t=1795039674;
+	b=fZRzBw+wjJMGyXM29/bwBQo4v/hMLEbui6fk1MR0NkPatojRwCaRnqpfgF4+w/cfOQPx
+	 r8MptRzAB/T4jUrTtfuY7zEeVm0JG9zntHIsFfTyVk9A5D8LA6PlDvg9vVEHA8opk+b3U
+	 2IU1psIjEacn4ixnNHxedUoa9lFOZj06w0tjAXGyR2DskAOoZwxPDkQ6xOccHmLRGlr2K
+	 wcTF/jTWYeToL3toaoCW6zIb2csHitoRvbKRqN5aYg74tzBZE6vPZK2Q9DxAMy9niyzCH
+	 c6Vs0jCbChLZ5ekFv4c/R5s4TCUelJOMkh+7FobvX+kXIQAzBO1Lmp6Xzd/VmYkPC5g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039671;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039674;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zz516gfF0rD/6C/le2M0AEpoGFmivEZTIZTvTnN3quo=;
-	b=moa8mAGUbkvhqQdTnBQ3KxgD1m5vRHl/BwkoxxFuDldKR4lFOl3RJ9rbonxMEquVOgr4
-	 PeMR5ttkhP5gjum9bplny7bCb9ID4lqtIJ9qTG/0ldi8bD7p5gu1u8KlFKwawU8Ex/TEK
-	 pIsqmzIrPhkLmaK3kxfmQ3n5BU/SNzzTxcXAThFLMqed6w8bABG6OlQdLF7UP9mq9vlko
-	 HV6cmtkrCXrizASnQ8Y6aNWPJMb0RDN6W95abklzNutlIrLJpdoJMeFAYopO4NgFXQfFH
-	 /qAH4rK+rc3gBReqaDo3rYo1BTutGR86kQLHRV5P/XHrRGzz0HWJShgwH+MrEKwnsbw==
+	bh=QT8xw7Ood6PMZZERmbkNNoWgmvq+FBJswY6kpt5IpXk=;
+	b=qZXSiwpuHYtlFKTI3UFj21Z0J42XbWMzjYT6y3SK1rSk97wREnMFg5E3mqtEVZEyUl1P
+	 XJzy6bT4M8voZbDQvhlvx/9C6PleCSXJZBGfs+Bu0WwTh3ng17ES50XiJljR0mhBE0kZ/
+	 pfURlEakxAYA0f3QMbTzCjf56PTxgE5aRvGZjtt3MSn9S3M3qMzVapiD9TPEHpqp9B+AH
+	 VNrdkSnqBQMDwUX8BSvpnCg/tZnM+hxQaS1d0jCUarO71mPp26Vx+EAH48suBp38aT2HH
+	 rO4Tu7PgTdwlYMf9C4II0Fkou9D1UsN6eM36bQOG3SNko9c53uxvAlstSS9UODBmFYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yiyOqD3Y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X3EVE+Xn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A63C60A2602;
-	Wed, 18 Nov 2026 22:07:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A87606A32A;
+	Wed, 18 Nov 2026 22:07:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yiyOqD3Y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 277591F00934;
-	Wed, 18 Nov 2026 22:07:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X3EVE+Xn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E19581F000CC;
+	Wed, 18 Nov 2026 22:07:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039670;
-	bh=zz516gfF0rD/6C/le2M0AEpoGFmivEZTIZTvTnN3quo=;
+	s=korg; t=1795039673;
+	bh=QT8xw7Ood6PMZZERmbkNNoWgmvq+FBJswY6kpt5IpXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yiyOqD3YpZQhXIWr35mjN7BHBkJ83JbX3bhOp1e1lT55TCdpuPv8DpfGJDu5TUVKX
-	 3I26hNzG+mwWKKgn4A8jMTkOHohY9bs9Z7Pr+IFWX2krpVpRws3sNa96LesQ+aLemk
-	 zOfAFCbn6ZG5/P4XGKeS2Fnn/OPz3Ey/Z/jFuWaY=
+	b=X3EVE+XnxqqKxhSVD0Hj/kDvnw1C30bIlsdp3Kc+ULIBXuYi2SLE6kuw0Os0MtSwJ
+	 TC3Ven5QuIxbMxZI13BRW9OzQxSWgOyLLI3Q1Ozv+y6jbRDTBPg4Un721NbLDe5CbQ
+	 vmKZ9VG1givp+TSYdHkdytEfgY4XHqM0DkqkyMa4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xueqin Luo <luoxueqin@kylinos.cn>,
-	Christian Loehle <christian.loehle@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	syzbot+5f4b29d9fe710a964482@syzkaller.appspotmail.com,
+	"Jiangong.Han" <jiangong.han@windriver.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2181/3318] cpuidle: teo: Do not return a disabled idle state
-Date: Wed, 18 Nov 2026 15:46:43 +0100
-Message-ID: <20261118150427.396239818@linuxfoundation.org>
+Subject: [PATCH 6.6 2143/3318] USB: usbmon: fix null-ptr-deref in mon_bus_remove() when mon_bus_init() fails
+Date: Wed, 18 Nov 2026 15:46:05 +0100
+Message-ID: <20261118150426.341951798@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,55 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xueqin Luo <luoxueqin@kylinos.cn>
+From: Jiangong.Han <jiangong.han@windriver.com>
 
-[ Upstream commit 60d5fca628f94f8f23398ad62d80aa284dae6571 ]
+[ Upstream commit 0c6cae0f56239e3274b30dbe5b362cd297ccacc7 ]
 
-If idle state 0 is disabled and none of the enabled idle states satisfies
-the PM QoS latency constraint, constraint_idx in teo_select() stays at its
-initial value of 0, because the loop that updates it starts at state 1,
-and so the candidate state index is capped at state 0, which is disabled,
-and that state is returned to the caller.
+When mon_bus_init() fails to allocate the mon_bus struct, it returns
+without setting ubus->mon_bus, so mbus->mon_bus remains NULL.
+mon_bus_add() intentionally ignores this failure because the USB core
+does not require monitoring to be established for normal operation.
+However, when the HCD is later removed, usb_remove_hcd() fires the
+USB_BUS_REMOVE notifier which calls mon_bus_remove(), it dereferences
+ubus->mon_bus without checking for NULL, causing a null-ptr deference.
 
-The cpuidle core does not validate the returned state index against the
-per-state disable flags, so the CPU ends up entering the disabled state 0.
+Fix this by adding a NULL check for mbus at the top of mon_bus_remove().
+If mon_bus_init() failed, ubus->mon_bus is NULL, meaning the bus was
+never tracked by the monitor, so there is nothing to clean up and
+returning early is correct.
 
-To address this, ensure that constraint_idx is at least equal to the index
-of the first enabled idle state (idx0), so that the candidate state is
-never capped to a disabled one.
-
-Fixes: c410a9a142f1 ("cpuidle: teo: Change the main idle state selection logic")
-Signed-off-by: Xueqin Luo <luoxueqin@kylinos.cn>
-Reviewed-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://patch.msgid.link/20260828032457.2317326-1-luoxueqin@kylinos.cn
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reported-by: syzbot+5f4b29d9fe710a964482@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5f4b29d9fe710a964482
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Jiangong.Han <jiangong.han@windriver.com>
+Link: https://patch.msgid.link/20260801095128.46322-1-jiangong.han@windriver.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpuidle/governors/teo.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/usb/mon/mon_main.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/cpuidle/governors/teo.c b/drivers/cpuidle/governors/teo.c
-index 3a06ac29316d7..f91068b0a8747 100644
---- a/drivers/cpuidle/governors/teo.c
-+++ b/drivers/cpuidle/governors/teo.c
-@@ -553,6 +553,17 @@ static int teo_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
- 		}
- 	}
+diff --git a/drivers/usb/mon/mon_main.c b/drivers/usb/mon/mon_main.c
+index 9812d102a005f..6882d8938a546 100644
+--- a/drivers/usb/mon/mon_main.c
++++ b/drivers/usb/mon/mon_main.c
+@@ -210,6 +210,9 @@ static void mon_bus_remove(struct usb_bus *ubus)
+ {
+ 	struct mon_bus *mbus = ubus->mon_bus;
  
-+	/*
-+	 * If the latency constraint does not allow any of the enabled idle
-+	 * states to be used, the candidate state index will be capped to 0
-+	 * by the check below, but state 0 may be disabled.  To prevent the
-+	 * selection of a disabled state in that case, ensure that
-+	 * constraint_idx is at least equal to the index of the first
-+	 * enabled idle state.
-+	 */
-+	if (constraint_idx < idx0)
-+		constraint_idx = idx0;
++	if (mbus == NULL)
++		return;
 +
- 	/*
- 	 * If there is a latency constraint, it may be necessary to select an
- 	 * idle state shallower than the current candidate one.
+ 	mutex_lock(&mon_lock);
+ 	list_del(&mbus->bus_link);
+ 	if (mbus->text_inited)
 -- 
 2.53.0
 
