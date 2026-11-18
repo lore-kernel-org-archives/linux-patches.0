@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051446;
-	b=rp6OUStxb7MY9eVJ/UXIi3jzKfQZuQWquf4oz87ltAfdB/TU6N8N6J5Z9WCsFExfn7Ya
-	 4EojXekkTrvhs0QCsZlbmZqtYsMeDIa6LGHcTU5MFlthZUJRAvDCuJtiSKHfCQl9DZp5A
-	 rcQMYeUzQAT1LNcUqwA/Gxfwj2aG6m54V9xi1SSl4yjUCUsgPR5PKeIStl+L6sWvFAlz4
-	 Qwx05BVDhRhtN7FXcfvd0GacIoDgLIGygYle42U1i9ejbI1QMFGhgXeviiNC6zTmbbJM6
-	 eITQFpJD76b5VxEsARzEjSbVam4sbW1+5vrFc3Tdk7TLba60eXsryBDMipJ8hvuZ47A==
+	t=1795051449;
+	b=oAU0Zuk0qxExiRMlprbQ5raE66EPhasWIfliQzgorRktdXKHjVpEZhiuDtAnWh1TBGOD
+	 VRSFMjwDHZ3eBi7oSb7gFEVeDTOWJ65Ma/iMXNuTVZHw88S65b1oRVUM/ptzoXA8mAOkB
+	 wAzkl6P2t50p/jnbkuFgnaEkE5rvO9FnpL5abRXQhVgklhvez7IqxT4N7vk+HG5lzkY9v
+	 OU6U4gt9cYtMq1ULl24G08b8GYUFnGeER5gcDRr6oVn2aSGBPWurkJFyL11PUcWboLSCu
+	 Tca9Cj826J5SJA7gav/UjX/CYvFJySGRwZOfzMN9zY8X/fufA/zDg0P+JscgKKyL2nQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051446;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051449;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=DdN8yNXzHC8ft5W4uqypifshmmshFDrACqEbOAAfCOA=;
-	b=3435PsdXE7bZ7QR4FY464NCFen0DNepQZtBMCqlBiarMdlsEwfXrv8ktVpfHReV1f+SM
-	 KbYLdmC1uPXVBwT14Uex6QJFvb0l0BWJIlJkLHuUFRypdJAfbHjG8Y3LjlIa0meLk8DEQ
-	 3n3aos4DQMWLcy8r1Gby01DQD3q6XaOjePLZKDvsNrsy4z7U2xoG3eP6/xcHCGvP7RSPj
-	 heX6SkAx08xugANT0ucC4jHNSPuPcsH4+9TBmXnOabXaa/h0V/IHAwZVacYFVLTXJctVZ
-	 biHaFiPNLqDjeIB0Mwpb6y6tStfiPN5wQjUPgekF8LlYFuF83LQjUoIDI3zxdQli17Q==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Xa3d0LuJxiteGq92X2vX5Iyyb4fG8Jji94NNccqn8/Q=;
+	b=nuWamonL9QUg6RuTkeg/+P1Cq09v0osXRsIaz2qpEGk97iJUbQGL+zS6ux1IAnR7I5x5
+	 M334896vIrBxbOLjba8/DVkR7OWduWHRRvzi6NrNbmE/lmzUex8AXebJnHmJVwD5a1JHg
+	 xu6jk1XpC0HUMj8/6+dNOutIU8FUaSOWQsS+lbS/MGCtX09T3xiAxfyRDyid7QPqKCKrw
+	 pnVJ3OAcngTon3enbcHUTdQh06/14lKM97WA6v8mnGceQVdJCVn8vJMgXHRw6ckFAosHO
+	 j/0Gn/WHbBlgE9QXz+/9KrmjKejwyvd4Az7ZNsSAlccM3ZD5H01mgbhGi0jOWqNAE/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BotcLGnY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="KxTdG6N/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB44606A32A;
-	Thu, 19 Nov 2026 01:24:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C49EB606A325;
+	Thu, 19 Nov 2026 01:24:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BotcLGnY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3F8A1F000C4;
-	Thu, 19 Nov 2026 01:24:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KxTdG6N/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD46B1F000C4;
+	Thu, 19 Nov 2026 01:24:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051446;
-	bh=DdN8yNXzHC8ft5W4uqypifshmmshFDrACqEbOAAfCOA=;
+	s=korg; t=1795051449;
+	bh=Xa3d0LuJxiteGq92X2vX5Iyyb4fG8Jji94NNccqn8/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BotcLGnY1weSK41ZL2Rewwiqvi+ECZuaBwxHl/dCQEjtBCPrzdPLIRSAB7DOx0CEa
-	 h9Cn7Eajc6wBhMB5QJx1h7RxH9ilOZnOtFtFrl1JL6UaEFHb+e4kcSLjzfi7un2VRG
-	 AT7L1VCvDug2pE7otHMAQRRvZnQ+YRqNPv4q9wY0=
+	b=KxTdG6N/CSmO+d5G9Slsb3D/qDzhhzPbi0F8zEmOckPDMNQPuhTGHcRmpJMY15eG8
+	 Xitxfhr/0epcCDiPAPWxtrG4Wi3JfEontSFvnQaeDHcUH4IxVzAiOtc7ln5/+7XzPF
+	 uFGd2CXZtgQThjSgvN1751ImVqcbOksg+7t76cNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carl Quist <equalizerjr@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	liulhong617 <liulhong617@gmail.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0177/2214] ALSA: hda/realtek: Enable mute LED on HP Laptop 15-dy0xxx
-Date: Wed, 18 Nov 2026 15:30:53 +0100
-Message-ID: <20261118150017.134056274@linuxfoundation.org>
+Subject: [PATCH 5.15 0178/2214] arm64: mm: fix accidental linear mapping of no-map reserved memory
+Date: Wed, 18 Nov 2026 15:30:54 +0100
+Message-ID: <20261118150017.172504984@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,57 +62,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carl Quist <equalizerjr@gmail.com>
+From: liulhong617 <liulhong617@gmail.com>
 
-[ Upstream commit eb2b516900f2cff6c931a0d664a625ee93855779 ]
+[ Upstream commit 7ace06a01efaba1ec585630aa4c98ac39b38452a ]
 
-The mute LED on the HP Laptop 15-dy0xxx (PCI SSID 103c:864f, Realtek
-ALC236) does not work, because the machine has no entry in the quirk
-table. No fixup is applied, so no mute LED classdev is registered and
-nothing ever drives the LED.
+When reserved-memory regions with the "no-map" property are not
+page-aligned, the kernel may accidentally map them into the linear
+mapping, contradicting the no-map semantics.
 
-The LED is controlled by COEF index 0x07, bit 0. This was verified on
-the hardware with hda-verb: setting the bit lights the mute LED and
-clearing it turns the LED off.
+The root cause is a mismatch between /proc/iomem's address boundaries
+and the actual page table mapping boundaries:
 
-  hda-verb /dev/snd/hwC0D0 0x20 SET_COEF_INDEX 0x07
-  hda-verb /dev/snd/hwC0D0 0x20 SET_PROC_COEF 0x1     # LED on
-  hda-verb /dev/snd/hwC0D0 0x20 SET_PROC_COEF 0x200   # LED off
+1. /proc/iomem derives its ranges from memblock via
+   memblock_region_reserved_base_pfn/memblock_region_reserved_end_pfn,
+   which perform PFN rounding so the displayed boundaries are
+   page-aligned. This gives the impression that the no-map region
+   occupies whole pages.
 
-That is exactly what ALC236_FIXUP_HP_MUTE_LED_COEFBIT2 configures, and
-the closely related HP Laptop 15-dw0xxx (103c:85f0) already uses it.
-Bit 9 (0x200) is set by default on this board and is preserved by the
-fixup's read-modify-write.
+2. However, memblock_mark_nomap() splits memblock.memory regions at
+   exact byte boundaries (memblock_isolate_range preserves raw DT
+   base/size with no alignment). When for_each_mem_range iterates the
+   non-NOMAP regions adjacent to a no-map region, it returns start/end
+   values that are NOT page-aligned — they are the precise byte
+   boundaries from the memblock split.
 
-Tested on an HP Laptop 15-dy0xxx (SKU 7FU54UA#ABA, board 864F,
-BIOS F.40).
+3. These sub-page-aligned values are passed to
+   __create_pgd_mapping_locked(), which does:
+     phys &= PAGE_MASK;
+     addr = virt & PAGE_MASK;
+     end = PAGE_ALIGN(virt + size);
+   The downward rounding of phys via PAGE_MASK extends the mapped
+   range backward into the adjacent no-map region, effectively
+   including no-map memory in the linear mapping.
 
-Signed-off-by: Carl Quist <equalizerjr@gmail.com>
-Link: https://lore.kernel.org/CAOtcGaxXndKxTK5MVSEcmF-LUy+V51K7fhE=qvLA+VvW5ZyCNA@mail.gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+For example, with 64K pages, reserved_region@A2000000 (base=0xA2000000,
+size=0x8000, no-map) causes for_each_mem_range to return
+start=0xA2008000 for the next mappable region. After phys &= PAGE_MASK,
+the actual mapping starts at 0xA2000000 — the entire no-map region is
+incorrectly mapped.
+
+Fix this by rounding the mappable range inward to PAGE_SIZE boundaries
+before passing it to __map_memblock: start is rounded UP and end is
+rounded DOWN. This ensures the mapped area never overlaps with adjacent
+no-map regions. The cost is at most one page of unmapped gap at each
+boundary, which is preferable to violating no-map semantics.
+
+Signed-off-by: liulhong617 <liulhong617@gmail.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/mm/mmu.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 207aad871e320..96277713335cf 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9332,6 +9332,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x85de, "HP Envy x360 13-ar0xxx", ALC285_FIXUP_HP_ENVY_X360),
- 	SND_PCI_QUIRK(0x103c, 0x860f, "HP ZBook 15 G6", ALC285_FIXUP_HP_GPIO_AMP_INIT),
- 	SND_PCI_QUIRK(0x103c, 0x861f, "HP Elite Dragonfly G1", ALC285_FIXUP_HP_GPIO_AMP_INIT),
-+	SND_PCI_QUIRK(0x103c, 0x864f, "HP Laptop 15-dy0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x869d, "HP", ALC236_FIXUP_HP_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x86c1, "HP Laptop 15-da3001TU", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x86c7, "HP Envy AiO 32", ALC274_FIXUP_HP_ENVY_GPIO),
+diff --git a/arch/arm64/mm/mmu.c b/arch/arm64/mm/mmu.c
+index 8e5fcfc282bcd..8e66ccc582c67 100644
+--- a/arch/arm64/mm/mmu.c
++++ b/arch/arm64/mm/mmu.c
+@@ -551,6 +551,20 @@ static void __init map_mem(pgd_t *pgdp)
+ 	for_each_mem_range(i, &start, &end) {
+ 		if (start >= end)
+ 			break;
++		/*
++		 * for_each_mem_range may return sub-page-aligned boundaries
++		 * after memblock_mark_nomap() splits regions at byte precision.
++		 * __create_pgd_mapping_locked aligns phys down to PAGE_MASK,
++		 * which could accidentally map no-map memory on the boundary.
++		 * Round the mappable range inward: start UP, end DOWN, so
++		 * that the mapped area never overlaps with adjacent no-map
++		 * regions. The cost is at most one page of unmapped gap at
++		 * each boundary.
++		 */
++		start = PAGE_ALIGN(start);
++		end = end & PAGE_MASK;
++		if (start >= end)
++			continue;
+ 		/*
+ 		 * The linear map must allow allocation tags reading/writing
+ 		 * if MTE is present. Otherwise, it has the same attributes as
 -- 
 2.53.0
 
