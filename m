@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041347;
-	b=wXry3HOB29bGT147QVxezqGLLCqxZqiJVrWTSOgQ7pyejw4yU77RRwq4KouJQOyhecIL
-	 heh5mbFAnE/AY9GE8JDzjUfGKSn6D5XAJsrxgqRjBTyCr59aV9Of9D621Fp+BqvX32an6
-	 vDJ3ghFo1YijMz0zy41JdRPMZRrqFFbXo8RrLiLVZ9hXupU71Fd4jDHniBy8DpaKr7Pnl
-	 zNSQbrneOk84/pgxFcMgX4M9HHhQxcXkioFKQbkygNoZ1FZ9MbTOHc2warZiVRvkXslCN
-	 9udVSTV9nor9PZIlz+7hkF9Ls4mDISgENH5YQTVHcokBo9le3zcfwHboMPkNFqN1Bug==
+	t=1795041350;
+	b=tMWmpcXekOkOcGgGl07W8h0+C685CdsjqIx22eLEFNKy89UamYE+53czFMoCbxTB1bMb
+	 8njT50xipZR/vdeeiL+oEWSmaz2shh3v/HJQAHaRnWjFk6Sx8RnPWedncyKmRWRjAdKjg
+	 qkMGjOOA7OgeLdRp53naoZNXBYDSpO1vhSkSmFt89dkhTBrnY3oTd9J3Mg+hNWdcCa3qY
+	 oFLrHK3M5Xi0rm+gKlKDchxcTwURbVoqy2f/8q0Bfn0YI1aVE8SL7dcNSm+lVITGp5vzn
+	 ZdDcHSUPBP2IHzeNfwpa2YucL94cfGZaclMp75Pwy6483JItPWvxlUOxbrSv4HBXqvA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041347;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041350;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nQKGzf4u+ZcxIkOjlaHS5XocWfiQStzwR6GYRjRbcs4=;
-	b=EphjOlHdBpNuQJ8WoRbby1FAQ49k4bE6QmLa/KPIwth9Y9v1gjxAU6MZAC4CgSBK8xFP
-	 N50L4DzudD/PBIGN+ddYJb1Smn+SdkQXdmyFseSjrTArIyCZBV2QkO1pt9ZH7aQboLQRa
-	 wG+derPMQxYP6fBxQr1Epn2D28fInOoiHXMTJ+/nsbR045VcnadXA1HCWhTwDrS+BkYbf
-	 12B5dv6Bqg6OmzAFqwmz0z2zYF8PVGiZcR63fBhNpxk8O/j3P3gfVFl2edKsBEKaHlzBV
-	 MNDFR/XWquPNWKJ+i8FXo1ecUecyXvaVNDDetWytN2sEQUE+ZjePvUJwx5PJTH8tqyw==
+	bh=nRptr3WNXzJ+xvybCLHBH7mj+j8UUE5F5bJl3KyAYMM=;
+	b=T7YB4QhNOTzvvNnH/iDd0hTUXcS56CnVxkCc2NZz694qBU/na1ZskxfCbHu2me14pkyf
+	 ZP8egoPQwS6mG77bTN9i9PHercW1XgfqzPYxmQa7B989Z7fJGAZn1lNenURuvsxxlLPaJ
+	 2NLqYpQRbvLAnYhCG7kgYduaKb6SoTBoUINLvwUX6twTXzLOSJs1JfWbJ5z2P2K6RgciO
+	 75xpOIt7lFySVazPrYA1L+8nZzKHTj6oiHtYtlmtuTk/m9HX78obf+XDipfy9vA1xBFSO
+	 qsQRsKblfF2we903TQborG/aBHkML2xCpICnMeM9/CghN/XvTXzKWpjm9LS8WDzHVCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="F92L/wsO";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="wGP6/Ene";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49217606A325;
-	Wed, 18 Nov 2026 22:35:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43201606A31C;
+	Wed, 18 Nov 2026 22:35:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F92L/wsO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A08BF1F000C4;
-	Wed, 18 Nov 2026 22:35:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wGP6/Ene
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5024A1F000C4;
+	Wed, 18 Nov 2026 22:35:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041347;
-	bh=nQKGzf4u+ZcxIkOjlaHS5XocWfiQStzwR6GYRjRbcs4=;
+	s=korg; t=1795041349;
+	bh=nRptr3WNXzJ+xvybCLHBH7mj+j8UUE5F5bJl3KyAYMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F92L/wsOEOXQJcHO7E5g+Brj0fCD2sAtyAsb2VD4gXH5FeVgwjiGRaBio/2KHUjn3
-	 SDQ5u7OVwspB9yFVJquI0I7VZZy/mIcVdbpduio7TQd42l8z7Lc7tSpd0FtiSzjPbI
-	 IjEc3gbXnSro3swZXO+QRtwuXZXpOV73Y0XkY0bY=
+	b=wGP6/Ene4GfGTnMsoXZZdZsuwI8vfngsEwyt+hrUeDWd0wgrmCvsYPTwBplqcyrSy
+	 yZqUa9hmg0xQr3PxGEeNgzKqqKbl11sTvJwo3/PDrt04l8i5uLXVDZ9MLYSm4NrM2B
+	 4b4Gnk7M6HjY+7SM5xkoZnZgYG6C3MSANyWLwst4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Tapio Reijonen <tapio.reijonen@vaisala.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2781/3318] tcp_cubic: fix divide by zero and endless loop on bad module params
-Date: Wed, 18 Nov 2026 15:56:43 +0100
-Message-ID: <20261118150444.131379029@linuxfoundation.org>
+Subject: [PATCH 6.6 2782/3318] serial: max310x: dont clobber the TX break bit in set_termios
+Date: Wed, 18 Nov 2026 15:56:44 +0100
+Message-ID: <20261118150444.159012050@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,68 +67,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Tapio Reijonen <tapio.reijonen@vaisala.com>
 
-[ Upstream commit 7d52b5d16afc1cf8484ae321658e217a80e3ff4d ]
+[ Upstream commit 3b2de448ec0332c1cb8c38b4c5ff0c8e860befbc ]
 
-beta_scale and cube_factor are computed once at module init, and
-beta == 1024 or bic_scale == 0 is a divide by zero right there. Other
-out of range values give garbage: negative beta can make beta_scale 0,
-and bic_scale * 10 can overflow. Reject them. Read beta once, as it
-can be written through sysfs before the init function runs.
+A TX break asserted with TIOCSBRK ends early, with no error reported,
+as soon as any termios change lands on the port: a break is a state
+that must hold until TIOCCBRK, but max310x_set_termios() overwrites
+the whole LCR register, and LCR also carries the TX break bit that
+break_ctl() drives. No concurrency is required - a baud or parity
+change from the same process ends the break just as well, and
+break-led protocols lose their break with nothing in the logs.
 
-A small beta also gives a small beta_scale, and (cwnd * beta_scale) >> 3
-truncates to 0 for a tiny cwnd, so the TCP friendliness loop never
-ends. Rather than testing delta on every ACK, make sure beta_scale is
-at least 8 at init, so delta is >= 1 within the cwnd < 1 million
-packets limit this code is designed for. This slows the TCP friendly
-estimate for beta < 512, a backoff harder than Reno's 0.5, which is
-not a setting anyone should use.
+Update only the LCR bits that are derived from termios and leave the
+TX break and RTS pin control bits untouched. Since nothing clears a
+break when a port is closed with the break still asserted - the tty
+core sends no break-off on release, and the unconditional write here
+was the accidental recovery - clear TXBREAK in startup(), the same way
+8250 does.
 
-Fixes: df3271f3361b ("[TCP] BIC: CUBIC window growth (2.0)")
-Suggested-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20261008092641.140777-4-jiayuan.chen@linux.dev
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: f65444187a66 ("serial: New serial driver MAX310X")
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Tapio Reijonen <tapio.reijonen@vaisala.com>
+Link: https://patch.msgid.link/20261008-max310x-rs485-sw-delay-v8-1-6ba881f81e1f@vaisala.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_cubic.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/tty/serial/max310x.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/tcp_cubic.c b/net/ipv4/tcp_cubic.c
-index 5ff7be13deb6b..64910dd2ba9bf 100644
---- a/net/ipv4/tcp_cubic.c
-+++ b/net/ipv4/tcp_cubic.c
-@@ -507,16 +507,26 @@ static const struct btf_kfunc_id_set tcp_cubic_kfunc_set = {
+diff --git a/drivers/tty/serial/max310x.c b/drivers/tty/serial/max310x.c
+index 1cee4e1f31224..1b40dc2c66f36 100644
+--- a/drivers/tty/serial/max310x.c
++++ b/drivers/tty/serial/max310x.c
+@@ -154,6 +154,8 @@
+ #define MAX310X_LCR_FORCEPARITY_BIT	(1 << 5) /* 9-bit multidrop parity */
+ #define MAX310X_LCR_TXBREAK_BIT		(1 << 6) /* TX break enable */
+ #define MAX310X_LCR_RTS_BIT		(1 << 7) /* RTS pin control */
++/* LCR bits owned by termios; TX break and RTS are driven elsewhere */
++#define MAX310X_LCR_TERMIOS_MASK	GENMASK(5, 0)
  
- static int __init cubictcp_register(void)
- {
-+	int b = READ_ONCE(beta);
- 	int ret;
+ /* IRDA register bits */
+ #define MAX310X_IRDA_IRDAEN_BIT		(1 << 0) /* IRDA mode enable */
+@@ -959,8 +961,12 @@ static void max310x_set_termios(struct uart_port *port,
+ 	if (termios->c_cflag & CSTOPB)
+ 		lcr |= MAX310X_LCR_STOPLEN_BIT; /* 2 stops */
  
- 	BUILD_BUG_ON(sizeof(struct bictcp) > ICSK_CA_PRIV_SIZE);
+-	/* Update LCR register */
+-	max310x_port_write(port, MAX310X_LCR_REG, lcr);
++	/*
++	 * Update LCR register. Leave the TX break bit alone: it is driven by
++	 * break_ctl(), and a whole-register write here would end a break in
++	 * progress.
++	 */
++	max310x_port_update(port, MAX310X_LCR_REG, MAX310X_LCR_TERMIOS_MASK, lcr);
  
-+	if (b < 0 || b >= BICTCP_BETA_SCALE ||
-+	    bic_scale <= 0 || bic_scale > INT_MAX / 10) {
-+		pr_err("tcp_cubic: invalid beta %d or bic_scale %d\n",
-+		       b, bic_scale);
-+		return -EINVAL;
-+	}
+ 	/* Set read status mask */
+ 	port->read_status_mask = MAX310X_LSR_RXOVR_BIT;
+@@ -1077,6 +1083,13 @@ static int max310x_startup(struct uart_port *port)
+ 
+ 	s->devtype->power(port, 1);
+ 
++	/*
++	 * Clear a latched break: nothing clears TXBREAK when a port is
++	 * closed with a break still asserted, and set_termios() no longer
++	 * rewrites it.
++	 */
++	max310x_port_update(port, MAX310X_LCR_REG, MAX310X_LCR_TXBREAK_BIT, 0);
 +
- 	/* Precompute a bunch of the scaling factors that are used per-packet
- 	 * based on SRTT of 100ms
- 	 */
- 
--	beta_scale = 8*(BICTCP_BETA_SCALE+beta) / 3
--		/ (BICTCP_BETA_SCALE - beta);
-+	beta_scale = 8 * (BICTCP_BETA_SCALE + b) / 3
-+		/ (BICTCP_BETA_SCALE - b);
-+	/* bictcp_update() needs (cwnd * beta_scale) >> 3 to be >= 1 */
-+	beta_scale = max(beta_scale, 8U);
- 
- 	cube_rtt_scale = (bic_scale * 10);	/* 1024*c/rtt */
- 
+ 	/* Configure MODE1 register */
+ 	max310x_port_update(port, MAX310X_MODE1_REG,
+ 			    MAX310X_MODE1_TRNSCVCTRL_BIT, 0);
 -- 
 2.53.0
 
