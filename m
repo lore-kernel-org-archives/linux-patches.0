@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061948;
-	b=U/PDBOHc5pmPm7l2Ztfas7Kp+XMtWgHn1sYpjutaaEH9NgiXcTR4lhHOh8cyuRQlJiwt
-	 woD5cDf4MF1/cHz2ZXhub0e65LzAyIsTjLyeiyEXVWOyZqHSyRYJNemiw05kluiaxZL3V
-	 +n05THF4UrvQEX1tUMcxjQpZHiT8HBfm+A6KBkgg0lsrVhIxyCOYNJ3ZYcIu5jlvN69Yz
-	 k6yudVQajdptHYUabyNzuUETV6U6clgP4439IdoFXo0eXzpkTXOEckcaOK3FP+RP2QHM0
-	 dy2jXe3rzdBoQaM9AsDBbMCI7/SLtkzYCg9FMn16QvBR0BBv91lN2NohcoJ9hvqC3qg==
+	t=1795061951;
+	b=AZgrqlIOAIAXuNceiWENvcyXCy2785TmyF9j1RnlwjBVAeWI9E/uiAXrQOMtlDky0hVm
+	 YfLBXTIuoFB1q3kOMYq4WOg5fpU/e08lxNpI33WucXVwfJnm6uyPawJHg7P9G/gCLflUF
+	 kA6CX8Kz7xn3JKIT8M39nk1mVJDqTmvF3u6ufH8am6r7fLtlfVVdVgrQ+5HX/luOkbfhR
+	 U5Yj4a/LYTacnaT6mewVETgBc4tMQgiKk61KLi+ZZyHBV1PkW77yp0oCkajaNXPiZ1DZt
+	 cjUrJAeMQAKJwv2Qp03EWic5f1TkW9EcfbVs0vfgP+r53RBj0AunYzyKZFOuvqyk7dQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061948;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061951;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qBkXV1+BQdi1kpRinGjGKBEWgTZ9exej0sFiAq3Fj/E=;
-	b=dhcszdcoonMb37gQ6LdhdmSJHX62+sIWvgcMAOFXSGMb6Q6oGT2hs4Eux5Avs90cM0um
-	 8bZ2v+8oY/in6S8MyIAXy4qQuNrWu1curlyswZ3DSK+8ucsM+g+KEYabUvo8Yw6RJEFGH
-	 HHSyzdckj+jQguZA7GAIoARtlOBuSisnFDr5wmJ2ksIl4O/rHbMGdMbau0MMySb+dSi7K
-	 LEgDfXpabKuzfijA782VhVIijdRDNAXjWktsrbZdDmc6NSzezIgZqtGFvODhVfPubwM9C
-	 p3Ixmib+g7uS2DNFFMENtHW+wd+0UMlNS8mRvMQCM3Bz76vWWSaBRgIjAWljuPhgI2A==
+	bh=/6ONosKxhXrQtoRhFotFFaaCUq7B92HXIZwLIzN/k18=;
+	b=w0HJQQeXZv2s8KF2zSKyBr6EYhxh4Z7nPJHoOp2azfGeVcMcLHu0Y10EWYo1m5pP5Fpk
+	 XAw3oQJtY0NDya705/OQ9/KmvYI+U7XAK5PynffDRhRuArkukmBXxmM64P36cmErMcVq4
+	 aN2uaosAT4/XWM9p+cvA4azhGd4pzEpbw4gBus1w2ORDC2xQSUuYQwMcVtvyLTy6b535L
+	 mxEkDVCqDadttS3Tls4Dmy4UT6VcMQaMUKnzZKNG5mXKq8+/fg+ZH2VeR0W+/9LJZWyPM
+	 V6yKysm3jBn+oqMuRvWmQp6FRAnBihe8OFl78HBuIZpWKj8LBeCYJWuGzlrAtiFtOYg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cUtDTC7K;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h7ZBB5bZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16A98606A320;
-	Thu, 19 Nov 2026 04:19:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EBE6606A320;
+	Thu, 19 Nov 2026 04:19:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cUtDTC7K
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 680271F000C4;
-	Thu, 19 Nov 2026 04:19:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h7ZBB5bZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B7F91F000C4;
+	Thu, 19 Nov 2026 04:19:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061947;
-	bh=qBkXV1+BQdi1kpRinGjGKBEWgTZ9exej0sFiAq3Fj/E=;
+	s=korg; t=1795061950;
+	bh=/6ONosKxhXrQtoRhFotFFaaCUq7B92HXIZwLIzN/k18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cUtDTC7KIdbX5xVBpGL/mtczZjISG5ckZSp2+FEy5N8HXUdJ/kIuM78L8N/lOsEWy
-	 XsiZsQ8KTcGUtK2BDc9BpOSQYFQrW0YUkKXU0gZMw0L9dhzIAl/Obw6jZokLVPkI8D
-	 qBkhLuOJLP2i5PnkGSt/C80Guf3hfHUiBKQJVaWM=
+	b=h7ZBB5bZAFJm/nOHIb5kP9jcxla9M8usBy6CPOXEz1HdKxTgdGodWP5/v4+U2VNV7
+	 DvooaiJmz2vMYsZlCr7gY+7N20gos6IkLbj4vvhuY0CanGrFBmrIj4ZL7j2EofS3Lm
+	 odxxA7QfwKXaiDGfpBiiSReVagOdQ5eOPe5Y5Sxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Li RongQing <lirongqing@baidu.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1684/1848] net: core: add dev_get_tstats64 as a ndo_get_stats64 implementation
-Date: Wed, 18 Nov 2026 16:02:02 +0100
-Message-ID: <20261118150030.263952121@linuxfoundation.org>
+Subject: [PATCH 5.10 1729/1848] RDMA/mlx5: Fix CQ resize destination index mask
+Date: Wed, 18 Nov 2026 16:02:47 +0100
+Message-ID: <20261118150031.969877952@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,63 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit a18394269fc87276963e8d965c730900178d7e4b ]
+[ Upstream commit 0fe31052d948a3a993bb2f58cd5886f7ec279ea7 ]
 
-It's a frequent pattern to use netdev->stats for the less frequently
-accessed counters and per-cpu counters for the frequently accessed
-counters (rx/tx bytes/packets). Add a default ndo_get_stats64()
-implementation for this use case.
+In copy_resize_cqes, the destination CQE index is computed as
+(i + 1) & cq->resize_buf->nent, but resize_buf->nent is produced by
+roundup_pow_of_two(), so it is a power of two with exactly one bit set.
+Masking with a single-bit value can only yield 0 or nent itself. The
+buffer has nent entries, so valid indices are 0 .. nent - 1 and nent is
+one past the last slot; whenever the masked result is nent the following
+memcpy writes one entry out of bounds.
 
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 95a5c641fc7b ("usbnet: fix smp_processor_id() use in preemptible context")
+Use (nent - 1) as the wrap mask instead. For a power-of-two nent,
+(i + 1) & (nent - 1) is the correct modulo-nent reduction, keeping the
+index within [0, nent - 1]. This matches get_sw_cqe(), which addresses
+the CQ buffer via n & cq->ibcq.cqe, where cq->ibcq.cqe == entries - 1 is
+exactly the nent - 1 wrap mask.
+
+Fixes: bde51583f49b ("IB/mlx5: Add support for resize CQ")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Link: https://patch.msgid.link/20261019050503.2313-1-lirongqing@baidu.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netdevice.h |  1 +
- net/core/dev.c            | 15 +++++++++++++++
- 2 files changed, 16 insertions(+)
+ drivers/infiniband/hw/mlx5/cq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index d3a2234c736c3..55be695d50532 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -4613,6 +4613,7 @@ void netdev_stats_to_stats64(struct rtnl_link_stats64 *stats64,
- 			     const struct net_device_stats *netdev_stats);
- void dev_fetch_sw_netstats(struct rtnl_link_stats64 *s,
- 			   const struct pcpu_sw_netstats __percpu *netstats);
-+void dev_get_tstats64(struct net_device *dev, struct rtnl_link_stats64 *s);
+diff --git a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c
+index c505017a289ba..2d7cc91e2c0f8 100644
+--- a/drivers/infiniband/hw/mlx5/cq.c
++++ b/drivers/infiniband/hw/mlx5/cq.c
+@@ -1215,7 +1215,7 @@ static int copy_resize_cqes(struct mlx5_ib_cq *cq)
  
- extern int		netdev_max_backlog;
- extern int		netdev_tstamp_prequeue;
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 8d286a64d2c8f..835a22a760ca0 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -10450,6 +10450,21 @@ void dev_fetch_sw_netstats(struct rtnl_link_stats64 *s,
- }
- EXPORT_SYMBOL_GPL(dev_fetch_sw_netstats);
- 
-+/**
-+ *	dev_get_tstats64 - ndo_get_stats64 implementation
-+ *	@dev: device to get statistics from
-+ *	@s: place to store stats
-+ *
-+ *	Populate @s from dev->stats and dev->tstats. Can be used as
-+ *	ndo_get_stats64() callback.
-+ */
-+void dev_get_tstats64(struct net_device *dev, struct rtnl_link_stats64 *s)
-+{
-+	netdev_stats_to_stats64(s, &dev->stats);
-+	dev_fetch_sw_netstats(s, dev->tstats);
-+}
-+EXPORT_SYMBOL_GPL(dev_get_tstats64);
-+
- struct netdev_queue *dev_ingress_queue_create(struct net_device *dev)
- {
- 	struct netdev_queue *queue = dev_ingress_queue(dev);
+ 	while (get_cqe_opcode(scqe64) != MLX5_CQE_RESIZE_CQ) {
+ 		dcqe = mlx5_frag_buf_get_wqe(&cq->resize_buf->fbc,
+-					     (i + 1) & cq->resize_buf->nent);
++					     (i + 1) & (cq->resize_buf->nent - 1));
+ 		dcqe64 = dsize == 64 ? dcqe : dcqe + 64;
+ 		sw_own = sw_ownership_bit(i + 1, cq->resize_buf->nent);
+ 		memcpy(dcqe, scqe, dsize);
 -- 
 2.53.0
 
