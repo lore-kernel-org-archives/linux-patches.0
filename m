@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022233;
-	b=KIjg2kUSWc/1ZGAuhmNPB/1rRJbZz94yyAZCNYW73S76WEKDHNynF0KpUhktbvCjPqFh
-	 6SfUHU8qTySdGxbxuGh4jkdhVfW/AV80UuA5h7Ov6kndxBeQRqvL8ES9bTiDjgglop7OC
-	 XVOf45GWji5QwR91SBLsWsJ4bEX/Q3X7B3tKGiEuIX2S88Jj9hjpBE4RGutpRfYfiUwe7
-	 3I9xNNduDpoEgmbU/c1+xg2nnROzXqE8FNcfwceNCmyoecdzs4tWV/L31xeRtRLCGg4Xq
-	 1QUtdqTglrR8dAfgTczhdycp1dksdyzOG2bDq5Wp+Cj+r2raT4z3c7/+w8dhJvvvbLg==
+	t=1795022236;
+	b=2Jw2ocSDFLkoCZSMzCfWer6VMS5Zq0U0TWG+XKL/1Dw5fNULnZNe9pFldfrce/LMUnY1
+	 6pdtZ1Sf94NgeYBio21b7cHCAgbaHsoytxnygNfhTYhzswIQgsBUeU82xWAJM8aIjtWav
+	 lGojYoyHC44Ywh62apHVY7n+cvNMivuvng/qekwP05bmIFLoU5cpeE/rqbE1XzL9X1GC/
+	 oP9pVq1BTuEMdz5n6bguxDGjM6wa777Jxje/Ku9SUsNCQTch6UHPknUMW7qYYfHEImRqW
+	 0+nyGfZhp4gLpQE2V8aPbaE9TZKMpWBkTfIWwZbgRRNm4MJzfjuYuFPoJ7B1W/qVGzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022233;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022236;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eEuOoi2C5B46xUHkuuwlDQNhC2ajSM9w/jEZNpncaVc=;
-	b=PvHB8VHAPzUWKm2PtHLue+XmnIIGw5t7BRVKhwinXgh9U7Bh3M9HnvIlQE3j27bK7Lc5
-	 0dzDUpgFqZFkh5e5L/DCP3ekYp7UnyrWza++wB9MUaKV8L4BAnoleZvrLwI8Z14XpEO6U
-	 NQIN2myxqyZ19LXN4trHRKvJ5y8tnxhP+o7FdfRH8vszTRU/zdXlECQpS6faVH1dT9I6z
-	 yoju5YCwrVkQcUn7vRjX1zaRgg3hZpbaqs7bBngu8kJKReyyY5Zy3iOoDajISku2WJBRn
-	 bESkQ+gN3W6XyXw9IVWHpLwiaKkcQxXD8tSOVZAyLodlGs5n4pB2GvGDzrEKIQkWdpQ==
+	bh=qK3aPM/+2tRiRfJ/mvMgsM1uewSJ6EIQFfEP0VXTY64=;
+	b=DCqaUv3qte+sWiQggm/ruz1goi9pDYDXnAPqNK/63cTYCIlFFfZaoBK/C4Y7FcovWBMs
+	 OjXO3scbNZu/nk0IhDuB6U5WpGssSguOx+AtwSKvnpyVe4PII3aGBwfbfcZextTr+YxXp
+	 aXrrUQujYM0Av8j9rzz1EvzCL1JrJ8W1WvJzFfBReLobuP+yWGAijPYP0Ja5hFhw0mIpf
+	 a13jPjZ4XqF0SIjm+Q2G5jsu3ZQ1mmJ6twa4nz0RdaOY1Xsb4H8k6pgV8J950f/OMo8YS
+	 ljX309E148WeO6olpip/qM8XUpHJp2OGjx5WgCuPfAC5COhPDNSYKr73RC151HS6FIA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="V5ly/2sN";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tB1Vp9iU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942B9606A32F;
-	Wed, 18 Nov 2026 17:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC37606A32C;
+	Wed, 18 Nov 2026 17:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V5ly/2sN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A58471F000C5;
-	Wed, 18 Nov 2026 17:17:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tB1Vp9iU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 812571F000C6;
+	Wed, 18 Nov 2026 17:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022233;
-	bh=eEuOoi2C5B46xUHkuuwlDQNhC2ajSM9w/jEZNpncaVc=;
+	s=korg; t=1795022236;
+	bh=qK3aPM/+2tRiRfJ/mvMgsM1uewSJ6EIQFfEP0VXTY64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V5ly/2sNI8cCHofopgx8B1vMX3kx0tvGEmDyEc6oLFfuffjQQJKTuzzEXS+w8TH/l
-	 TlVnykH01VSdJ/wAW68y+LBAomSy7duaN3W36Ct9T7yCo2EmbsgMpZzppRfZZ3154M
-	 khbLptRTXmdUmBT7dl29VlPgr8TdMoOPVfBse6MQ=
+	b=tB1Vp9iUTxnVbN7iTv363dKyWt798VJX/rOEN63Ch7H1HuEpSChsqlxVtURKVpJbi
+	 ENFS2WOyRCrYcPq3Wh9rEI83fnMfL8nnrjhIy0m5rj+pI3N6AzVoSsXwsrPt/MOAAO
+	 WkAd1n+RlKkSCga4XdmVcqUI1h6nb+KrhbhEwx18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Josef Bacik <josef@toxicpanda.com>,
-	Hannes Reinecke <hare@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2590/2651] blk-mq: free the bitmaps of tags in the SRCU callback
-Date: Wed, 18 Nov 2026 16:03:50 +0100
-Message-ID: <20261118150417.517101336@linuxfoundation.org>
+Subject: [PATCH 7.3 2591/2651] block: apply the segment size to the integrity buffer
+Date: Wed, 18 Nov 2026 16:03:51 +0100
+Message-ID: <20261118150417.546097817@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,54 +71,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 10b249e9b05eed0c4c65b9b89dfc2cf33d68d19a ]
+[ Upstream commit 26edfdee11eb2afe08fb5f874edcdf0786d6b66c ]
 
-Commit ad0d05dbddc1 keeps struct blk_mq_tags and the requests until the
-iterators under tags_srcu are gone, but the two bitmaps they walk are
-still freed right away. When the number of hardware queues shrinks,
-blk_mq_tagset_busy_iter() may be about to walk tags that
-__blk_mq_update_nr_hw_queues() frees. sbitmap_free() clears the map
-pointer, so that's a NULL dereference or a use-after-free, depending on
-the timing.
+The integrity buffer is a single segment and must not exceed
+max_segment_size. max_integrity_io_size() applies that limit to the data
+size instead, which is off by a factor of 64 for 8 bytes of PI per 512
+bytes of data. A SCSI host that doesn't set a maximum segment size gets
+64KiB, lpfc and qla2xxx among them, so a DIX disk behind one of those
+does no IO above 64KiB.
 
-Free the bitmaps with the rest in the callback.
+Limit the buffer and derive the data size from that, which makes it 4MiB
+for that case.
 
-Fixes: ad0d05dbddc1 ("blk-mq: Defer freeing of tags page_list to SRCU callback")
+Fixes: ec7f31b2a2d3 ("block: make bio auto-integrity deadlock safe")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Link: https://patch.msgid.link/20261028164415.1262013-44-axboe@kernel.dk
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20261028164415.1262013-45-axboe@kernel.dk
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq-tag.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ include/linux/blkdev.h | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/block/blk-mq-tag.c b/block/blk-mq-tag.c
-index 6e01309226716..04805808ccf9b 100644
---- a/block/blk-mq-tag.c
-+++ b/block/blk-mq-tag.c
-@@ -611,17 +611,17 @@ static void blk_mq_free_tags_callback(struct rcu_head *head)
- 		kmemleak_free(page_address(page));
- 		__free_pages(page, page->private);
- 	}
-+	/* An iterator may walk the bitmaps for as long as it may see the tags */
-+	sbitmap_queue_free(&tags->bitmap_tags);
-+	sbitmap_queue_free(&tags->breserved_tags);
- 	kfree(tags);
+diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
+index c8bcd6c570bd4..b5d247474e777 100644
+--- a/include/linux/blkdev.h
++++ b/include/linux/blkdev.h
+@@ -1814,11 +1814,12 @@ static inline int bio_split_rw_at(struct bio *bio,
+  */
+ static inline unsigned int max_integrity_io_size(struct queue_limits *lim)
+ {
+-	u64 max_intervals;
++	unsigned int buf_size = min_t(unsigned int, lim->max_segment_size,
++				      BLK_INTEGRITY_MAX_SIZE);
+ 
+-	max_intervals = BLK_INTEGRITY_MAX_SIZE / lim->integrity.metadata_size;
+-	return min_t(u64, lim->max_segment_size,
+-		max_intervals << lim->integrity.interval_exp);
++	return min_t(u64, UINT_MAX,
++		(u64)(buf_size / lim->integrity.metadata_size) <<
++			lim->integrity.interval_exp);
  }
  
- void blk_mq_free_tags(struct blk_mq_tag_set *set, struct blk_mq_tags *tags)
- {
--	sbitmap_queue_free(&tags->bitmap_tags);
--	sbitmap_queue_free(&tags->breserved_tags);
--
- 	/* if tags pages is not allocated yet, free tags directly */
- 	if (list_empty(&tags->page_list)) {
--		kfree(tags);
-+		blk_mq_free_tags_callback(&tags->rcu_head);
- 		return;
- 	}
- 
+ #define DEFINE_IO_COMP_BATCH(name)	struct io_comp_batch name = { }
 -- 
 2.53.0
 
