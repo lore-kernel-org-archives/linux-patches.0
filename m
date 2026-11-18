@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052588;
-	b=vUQid7FJGK1hXQKCXCJYp7sRxzARZ35tTZACtCm9MMFcvx8OhktsFPaXbqm8GgigAqaj
-	 RejHvIJQub5KddQ1RucPQJz4+xUXUuJEtdFBu94AbdnjQpUSgiMuHtllrUBUsDgBLyQ/Y
-	 tzTGhQYlvTMIa6fk/UOHrLUCywF5lU7ifWa1EBcPAVaPE3qfH44rSMGrDcWNJ8MIKQVP6
-	 uvW2K7EDo3FCkyDWMN8o3AFk3jMfhjVo2scCArgOcqjqOnKiktOLJve1HlKZxhLLi9DO6
-	 +1TBPGyS8sHpQek/2K0wOG96YX/y2DGdmk2Cu9xTqdd5WcGaMCZvqc9AesHDgKwLFCQ==
+	t=1795052591;
+	b=BZ2ROoDdTOo2uxLasgMQFtXk1C0xUcTf28X6B2OP2HGBwhO8wE1ApvFNHXLyTJ6TlZQF
+	 dI7zIQkytBboHPSdn+gzpdqnAHqNV/A+wLXODx3AQ6d0R8kmWwJ+HI5zWFsKZvqCQ+WlN
+	 sSCpT6Kk6TVqdM8BmR44rpgvJvBsJrvDDtizPeFlkzBKCL6uAmCLN3L2yTVaFzJKQ5bKw
+	 JOM9NdmmsABOJz4EDy1AE/nEMCfWQRPVeWOIq5+f84Oc7KfjKc/gU4HkrfljO/3jz36DF
+	 pZXZXOGUcKtyMEDXD1PEcUHP7i3+Fj+N8rJXxlObTtWM/n6AlFUgzxahltAbdiaWQ0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052588;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052591;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cixfLsjCqhob+ux3vJVta+ju9QeGmhg4yagk1Yjwed8=;
-	b=NfaiWbOrQl/ieWaL4dwLvavuU8PuKh22FscZGG1Ne+aDvU+463B3mdjH3Ccz3rmCseEW
-	 BynRt+jF40hvO0ga9kwTVNx672Y8UZ3+0ooyV5xJMxDqAuVwUtRZMF6Cw7GtY7hlBOdso
-	 npnbc/5w9u3LD97LvVVYXBkPkmzchKn/wTlHsaL32g0W/QQgLGjFUSMu85axhI6Jh4+5D
-	 O7jpMaj3dzqcDanZ+xkPcIwVMH1/UnUCpsbC7VwZxRUnt6uCbdjEivhHcxXHYKKreXTTH
-	 KUDdqbtP7b2ftH/FSGXGLE30uaq+f/RqD48C4ZrL9k0Gdm+w8xzN3WsNTP8E8i75BGQ==
+	bh=d7Yo5bdFgldaT/7wPZVsKWorzW9Nzr1mghT9Gm/1lvA=;
+	b=DBBrzML9wsQT9+rTG029U6u9kskI/rY7fc74fCx0G7i+6R6Nj7xPtJiwMfcsZQJCIocO
+	 e2S7hn0Bkom/vgsZMlyRQN6iJXYJhdSomPKKwfiXocQ7F7QbuVoy8WTHhS4lHaD+fbJ/K
+	 kvIanstldtZ2+JEjac4usc6g3TQf3GNvPWQBXw8cNZx/3H4dO9dIC2DAwQ22/PbhX6am5
+	 KLwjkQcNGYOyhRW9KpK3WlagEA4tXJrdzrs6oThXCv4n9CHt8XgAfpLU0KmH/Hy0lmt0W
+	 zAXY0bJoiaXyGDTZGZ9Dho/Qc1wNEA3/3iJ3gHGmOzUeuEDrW+BQnJaPFP0sFb/eV2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YgQ6Ffvu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fzLBQVtm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A96606A325;
-	Thu, 19 Nov 2026 01:43:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5E5606A32F;
+	Thu, 19 Nov 2026 01:43:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YgQ6Ffvu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D87F1F000C4;
-	Thu, 19 Nov 2026 01:43:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fzLBQVtm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C6FF1F000C4;
+	Thu, 19 Nov 2026 01:43:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052588;
-	bh=cixfLsjCqhob+ux3vJVta+ju9QeGmhg4yagk1Yjwed8=;
+	s=korg; t=1795052591;
+	bh=d7Yo5bdFgldaT/7wPZVsKWorzW9Nzr1mghT9Gm/1lvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YgQ6FfvuomZtUD8MgqaPqMS6hBrw8sGZK70zH9yQuT7xoPn3E9ko9OBmyQRkPs07X
-	 wHANWhHZftDTw4Yw892eSnE4ny/yn+6NDpoaxpxZhgvPzJGmgYjOVzbtr7FdaWf4Td
-	 4hCxkyKwe8q38xuNGMWEq7FnThqFG8JuEBdddLgY=
+	b=fzLBQVtmAOhqW0dbDjqjuugRsYBe3ifHGjyzVE6NzqbmNeKqQRmqvD1bxNtkUkmUS
+	 JJ0ElJxewzfwQGuTW3GvqC8TD24rmSnAQdD15/oonUb1F7I3NZYNGN16JxaPuN7NuJ
+	 0zuvtahzRzUaQT+WprReD6pFdudHQuBCjyO2TY68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0615/2214] dm-snapshot: fix crash if dm_io_client_create fails
-Date: Wed, 18 Nov 2026 15:38:11 +0100
-Message-ID: <20261118150035.996130460@linuxfoundation.org>
+Subject: [PATCH 5.15 0616/2214] arm64/efi: Clear PTE_WRITE when applying EFI_MEMORY_RO
+Date: Wed, 18 Nov 2026 15:38:12 +0100
+Message-ID: <20261118150036.031496982@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,41 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 829c4d21148a205eca864429e06530319e1f92d5 ]
+[ Upstream commit 215d7b6622733603751f546b9faf9b84b0c281d4 ]
 
-If dm_io_client_create() fails, it stores error into the ps->io_client
-variable. The code would try to free it later with
-dm_io_client_destroy(ps->io_client), causing an invalid pointer
-dereference. Fix this by setting ps->io_client = NULL.
+set_permissions() sets PTE_RDONLY for regions that the Memory Attributes
+Table describes as read-only, but leaves PTE_WRITE set.  PTE_WRITE is
+the DBM bit, so when hardware dirty state management is enabled
+(TCR_EL1.HD), such a descriptor is writable-clean rather than read-only,
+and a write by the firmware will be permitted by the hardware (which
+marks the entry dirty) instead of faulting.
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Assisted-by: Claude:claude-opus-5
+Clear PTE_WRITE as well, as pte_wrprotect() does.
+
 Cc: stable@vger.kernel.org
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-snap-persistent.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/arm64/kernel/efi.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/md/dm-snap-persistent.c b/drivers/md/dm-snap-persistent.c
-index 3bb5cff5d6fc3..4100bb4c6e8d4 100644
---- a/drivers/md/dm-snap-persistent.c
-+++ b/drivers/md/dm-snap-persistent.c
-@@ -322,8 +322,11 @@ static int read_header(struct pstore *ps, int *new_snapshot)
- 	}
+diff --git a/arch/arm64/kernel/efi.c b/arch/arm64/kernel/efi.c
+index 9669f3fa2aefe..0ab04aa73bf2f 100644
+--- a/arch/arm64/kernel/efi.c
++++ b/arch/arm64/kernel/efi.c
+@@ -101,8 +101,14 @@ static int __init set_permissions(pte_t *ptep, unsigned long addr, void *data)
+ 	efi_memory_desc_t *md = data;
+ 	pte_t pte = READ_ONCE(*ptep);
  
- 	ps->io_client = dm_io_client_create();
--	if (IS_ERR(ps->io_client))
--		return PTR_ERR(ps->io_client);
-+	if (IS_ERR(ps->io_client)) {
-+		r = PTR_ERR(ps->io_client);
-+		ps->io_client = NULL;
-+		return r;
-+	}
- 
- 	r = alloc_area(ps);
- 	if (r)
++	/*
++	 * Clear PTE_WRITE as well: it doubles as the DBM bit, and leaving it
++	 * set would permit the hardware to make the mapping writable again
++	 * when TCR_EL1.HD is set.
++	 */
+ 	if (md->attribute & EFI_MEMORY_RO)
+-		pte = set_pte_bit(pte, __pgprot(PTE_RDONLY));
++		pte = set_pte_bit(clear_pte_bit(pte, __pgprot(PTE_WRITE)),
++				  __pgprot(PTE_RDONLY));
+ 	if (md->attribute & EFI_MEMORY_XP)
+ 		pte = set_pte_bit(pte, __pgprot(PTE_PXN));
+ 	set_pte(ptep, pte);
 -- 
 2.53.0
 
