@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054105;
-	b=kUCloeum4Nio0fKa0RIRRRMfZDQh8JB/4L+62yeaKuvGjSd37Q+6iCXjr5j3x6kh62qQ
-	 HKk4x1WdRdM6xFSnC182Veb59ikQE/rAIS9ZAWVYSjFdwKpVZ3/0caLcczdiGopNE0nPz
-	 rWSWR5J4Clu2BqXDJ0Ful5S25UieFSqnzR/Wz2AbuLOoKGmOJewbj8QeSFbfsIJ7jnjfa
-	 vUD8FuVIM/Ni4Y7i9Xs76hjDVCYyL4byjboXNTMRoSAXoBosAz4ZUW9ySlTHzkpwbggjN
-	 +7puyQBthjtVgBWGA62qgIgyYPWbLxTFtavU7Mbe39/MeqsCkElm1UATEmdE6F/2ccQ==
+	t=1795054108;
+	b=dSo71xGkMUvXCvBCvC7XDz86bRShpMZv/60bHht6TBBSdKYzNwh7L9+tmXQBgFDFWusJ
+	 zYYxjJztB3lrugvlY3IZNT+aabAfyUBkU4cHvJD+mVcivkaQLR4HLsFoxWFTwIFcDtvTh
+	 y4LICQppEECpqfyCX0ibzQDkExfx9QsVQk6Qvxsvdv0v2wLGs5US++FVPCWjm1FppZZpL
+	 ijqb3C2pH+nsaJkhbeRvvxguHfJO67w4DMrXG78je0oRgv2Q7JEGYrBXyvU5wcfR/B+et
+	 o11oQF49Dsd+j3CnaXA84Sl0BUL6htwbDVjzxwdixZbKKRM0DeJ2hLEuq88DhL5q8JQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054105;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054108;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=t3BU1IyHyTzIQ47QrC01AEfdZzN1fivPt8tZ28DB3WM=;
-	b=oSAb8eq/wOGebDXw0CL3XIyTjm6/0bK6qB2BiG8SaXvecK8JaqhKyGmeldktV9ZmYx2C
-	 UUnrD48DxqaCVB23NEK4z6KKd6+rVmdovdZ5fI0srs7Dgja7m6BhKKSF+M2nMKDYZowm9
-	 RYn17IuFKc0FWlKn9rR2PTGATsyCXNf1tCgdlIgj0gmfijuVdnXN9Q8dt8G3XBlCF0+6T
-	 2GNdpspLpZto5Vl5kb8zQvhbPFTgB86rP8jfZkU7faAiljsvjdlu7bmzmyyerptujp1zC
-	 2iyV4VfFJso5VY2KSelZ1zb54GpbgO5GyTFap5kZ4ZWMjy6Tj56WNI7xnzvbtk+dOGA==
+	bh=35zCbA2ekWChZFWsoTu7FxXHdGRuN4pza/v5557CVdw=;
+	b=o3dlYw38mPE+04t5S91xWhQa5FS1P2v9EwpAncViRPVbHEBWVgTBlBRMQ/+AcE6ERPS2
+	 gC8rti78AfZcdAZpXnSYmOflhBnT74Z7O7vJJZg5plmEmy0mTQbQgNZlSMo/BJxR8cyE9
+	 0aUI8yubIcBhPrv3sCZJlt9C2sfTUS9r277syKlgwOWjm8VXN0kMZNk65pBV9qvPrL4ua
+	 yrIu5wBtR7ojMPSjoxrB/2/je3Wi5SdKY2YcuHYhkpiM96bAKLIOCMCFhMlF5FCb1Sdq4
+	 NrTtwiAJ3sqbHJ/7or+S7Otg6V7BvWTdl5S00m0vKLeHkZRRqoJddKQRvDmh3vT5iZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EOsMe0CR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q1Zkq3xN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50162606A31C;
-	Thu, 19 Nov 2026 02:08:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F9E606A31C;
+	Thu, 19 Nov 2026 02:08:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EOsMe0CR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A20D41F000C4;
-	Thu, 19 Nov 2026 02:08:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q1Zkq3xN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780DF1F000C4;
+	Thu, 19 Nov 2026 02:08:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054105;
-	bh=t3BU1IyHyTzIQ47QrC01AEfdZzN1fivPt8tZ28DB3WM=;
+	s=korg; t=1795054108;
+	bh=35zCbA2ekWChZFWsoTu7FxXHdGRuN4pza/v5557CVdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EOsMe0CR2dwasU0i+mleYOqzX5bdyB5C71+aezoiPIF3752WERpCw3MIlbCeCaow0
-	 t6Iwdu9KdABpD9XcJwyOGUY6kaaFuQ1/ADpK4SsWSs1p3H/nzZoq7Gx0m8TtZVmd0f
-	 H8mLKL1Y8fi3VSULwQvm10rJLmdYVAcunyo3jcak=
+	b=q1Zkq3xNBZbl+T29Ci/neWfLUvPaBoO8YdZN+DLktB0HJdsTFdHecKjjE3iBolsEV
+	 mHA4Gj9FqIkVXmVWOIpfvHxRT0XIYkgMWBKVJDbIcQffWEUpyh12Ziz/hHa9J3v8ca
+	 WYIgcojGfOuLQfqf91ClGXz9sGW0nFJmgKpgbSvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lino Sanfilippo <LinoSanfilippo@gmx.de>,
+	Georgia Garcia <georgia.garcia@canonical.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1154/2214] serial: amba-pl011: remove redundant code in rs485_config
-Date: Wed, 18 Nov 2026 15:47:10 +0100
-Message-ID: <20261118150058.145764532@linuxfoundation.org>
+Subject: [PATCH 5.15 1114/2214] apparmor: fix refcount leak in aa_get_newest_profile()
+Date: Wed, 18 Nov 2026 15:46:30 +0100
+Message-ID: <20261118150056.695853361@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,64 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lino Sanfilippo <LinoSanfilippo@gmx.de>
+From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit a9efa452486ed59b38f15c2287d3e7e129f6e7fc ]
+[ Upstream commit 33ed50716251d5b2875706c40d0c8082d46be0b1 ]
 
-In uart_set_rs485_config() the serial core already
+The labels_profile() macro is evaluating its argument twice
 
-- ensures that only one of both options RTS on send or RTS after send is
-  set
+  #define labels_profile(X) ((X)->vec[(X)->size - 1])
 
-- nullifies the padding field of the passed serial_rs485 struct
+unfortunately aa_get_newest_profile() passes
+   aa_get_newest_label(&p->label)
+so every call to aa_get_newest_profile results in 2 refcounts
+being taken with one being leaked.
 
-- clamps the RTS delays
+There is no need for labels_profile() to be a macro. Convert it to
+an inline fn, which ensures all uses are passing the correct struct
+and removes the double evaluation.
 
-- assigns the passed serial_rs485 struct to the uart port
-
-So remove these tasks from the code of the drivers rs485_config() function
-to avoid redundancy.
-
-Signed-off-by: Lino Sanfilippo <LinoSanfilippo@gmx.de>
-Link: https://lore.kernel.org/r/20220410104642.32195-3-LinoSanfilippo@gmx.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 97f85204275a ("serial: amba-pl011: keep transmitter enabled when disabling RS485")
+Fixes: 637f688dc3dc ("apparmor: switch from profiles to using labels on contexts")
+Cc: stable@vger.kernel.org
+Reported-by: Georgia Garcia <georgia.garcia@canonical.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
+[ sashal: Adjusted header context because the adjacent labels_view() macro is absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/amba-pl011.c | 16 +---------------
- 1 file changed, 1 insertion(+), 15 deletions(-)
+ security/apparmor/include/label.h | 6 +++++-
+ security/apparmor/label.c         | 1 -
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
-index a5340c5e11b10..7b21907cd14dd 100644
---- a/drivers/tty/serial/amba-pl011.c
-+++ b/drivers/tty/serial/amba-pl011.c
-@@ -2241,25 +2241,11 @@ static int pl011_rs485_config(struct uart_port *port,
- 	struct uart_amba_port *uap =
- 		container_of(port, struct uart_amba_port, port);
+diff --git a/security/apparmor/include/label.h b/security/apparmor/include/label.h
+index a987bd117d88d..e7e0f3e0435fc 100644
+--- a/security/apparmor/include/label.h
++++ b/security/apparmor/include/label.h
+@@ -148,7 +148,11 @@ do {							\
+ #define __label_make_stale(X) ((X)->flags |= FLAG_STALE)
+ #define labels_ns(X) (vec_ns(&((X)->vec[0]), (X)->size))
+ #define labels_set(X) (&labels_ns(X)->labels)
+-#define labels_profile(X) ((X)->vec[(X)->size - 1])
++
++static inline struct aa_profile *labels_profile(const struct aa_label *label)
++{
++	return label->vec[label->size - 1];
++}
  
--	/* pick sane settings if the user hasn't */
--	if (!(rs485->flags & SER_RS485_RTS_ON_SEND) ==
--	    !(rs485->flags & SER_RS485_RTS_AFTER_SEND)) {
--		rs485->flags |= SER_RS485_RTS_ON_SEND;
--		rs485->flags &= ~SER_RS485_RTS_AFTER_SEND;
--	}
--	/* clamp the delays to [0, 100ms] */
--	rs485->delay_rts_before_send = min(rs485->delay_rts_before_send, 100U);
--	rs485->delay_rts_after_send = min(rs485->delay_rts_after_send, 100U);
--	memset(rs485->padding, 0, sizeof(rs485->padding));
--
- 	if (port->rs485.flags & SER_RS485_ENABLED)
- 		pl011_rs485_tx_stop(uap);
  
--	/* Set new configuration */
--	port->rs485 = *rs485;
--
- 	/* Make sure auto RTS is disabled */
--	if (port->rs485.flags & SER_RS485_ENABLED) {
-+	if (rs485->flags & SER_RS485_ENABLED) {
- 		u32 cr = pl011_read(uap, REG_CR);
- 
- 		cr &= ~UART011_CR_RTSEN;
+ int aa_label_next_confined(struct aa_label *l, int i);
+diff --git a/security/apparmor/label.c b/security/apparmor/label.c
+index c675a11d8a551..f14802e2c2264 100644
+--- a/security/apparmor/label.c
++++ b/security/apparmor/label.c
+@@ -377,7 +377,6 @@ void aa_label_kref(struct kref *kref)
+ 		label_free_switch(label);
+ 		return;
+ 	}
+-	/* TODO: update labels_profile macro so it works here */
+ 	AA_BUG(label_isprofile(label) &&
+ 	       on_list_rcu(&label->vec[0]->base.profiles));
+ 	AA_BUG(label_isprofile(label) &&
 -- 
 2.53.0
 
