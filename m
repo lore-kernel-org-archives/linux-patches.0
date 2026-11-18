@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042981;
-	b=fi4ddG/27AYwpRI++b0/kzpUQpfh+8b7siJQ1wOB0T0wVVKWyIN9KXeYdjP7NCWX9xiW
-	 R2Tlo1H9zi/631I2AQfnMJuG3OL5SEWGkc99k8VXfU2qpb8Hd6a/iIqC9cqgjXvU3artq
-	 0im4AAHaLi3UtLn1U4fT1U5EwpOz1Uj94b7cm/6kYS5y1wqjkK7LNCyWn0vL5iYPBiaeL
-	 ci9uuO/gM/8LF0LbxrE2TjeLpJaIb/PpeHe0qSrrNV5WHeTPh3a3yi3ftjup1rj4HTXmH
-	 BjnkDAaBEBh9MJuuTYCIB6RuMRQ9VebAl6yO0q+miHArbpLnt3bOnOMflzsRJout+UA==
+	t=1795042984;
+	b=2Q6GjNf5aSfe93MxbGZD1WI6/WQCrLN3NLfP/1RpJNVOeExtYWb011QUC/+XLP9p0Z23
+	 Z03KzE89s4MA2kYaspcay3/stFzj9ywy/dA+saKDu5Lq77p/SedBb+Ak7bM3LvRiKl8KR
+	 roaUA0J97TgA7ZE5XCrsFuAfYs0DucBW4qDuhCmn3IGTV1rgL529wAOKZU4l484IzGi6B
+	 WE4PAHv5GHtTmKIW5xWWhFe2DPCkuSYoneIF5j8PJxUS4TR1k/Zc0kOiUTMsrUyJZdLht
+	 ET1shgh4UcL8nkO3QILFPCL2JYW55mlyj+hKhE0z4MHFGFt6P18DpWeuontoNXu5jpQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042981;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042984;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WMShDaW6S5i7718CIV+b8FvHDIXmjuRtcqg3UF3SqoQ=;
-	b=F7hDxG8/sHKgJU1zgBn47wZAfJGSymrzXgP1dCsEAFay2ohX9JfMeWxgLFw8B1feqYEa
-	 K/Q1kxJkodYNccAjQ0tlZGtDW9OSDOtAuldUKqbAO9JgG+T1g1U8qy1lgRHmS+2bGBlIA
-	 em+mGxYA/hNQgvoZclKE4Kk+YledwgjWmPSB+uFqpSOWs9wWbCERfTT/chflQSqz9RBFU
-	 ps2NOUhrJ04ui0Tn0RYh6VIKun+jbKHawe3t7aH9x9hMzlM8Qvo3tvqaW9jkaA/n/9Df0
-	 fhmlJkH34aTSQZJsg5V00WWNPGV/HD86ARd3GSo/wIgdZOdD2x8m5NaYIa89/Dl15+g==
+	bh=B7l1qGGnHudp7/QC5JKs3IWUJKdlonHgEdwVf5Uauec=;
+	b=DmClHRrP/fHrxepbgQ5OXpRnjygP3wTvQF/dG3J8jiwEYH1+ORMeATKEVa4WZqYAZzyn
+	 HcJL9ARpFyF3lY5fTAsq/3ei76P4ZErrrlC5ahRZZ9b4uciTuNmU4GmqyBOn9Zagte7fj
+	 5l845NDsRpOA0keFgBPY6H/e/63AKs8GrosaShAwESSKoPwO7hVzURvGdIotBTl12VvQw
+	 SwIcq/ZA4BQpxlt8Oawd0YBD9ymstCaKRtqRv7rW5KfrLFQBEg5iRE/EqdcUldkDtWM7x
+	 79SF4qv9gCmipr0AvacoOcAqSdToBlTPvpJdOabiK9yBvFNVHiRlGFri8+qYFnWkPmg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rTR33GEu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HMsDVlB0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551EA606A31C;
-	Wed, 18 Nov 2026 23:03:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CDCC606A31C;
+	Wed, 18 Nov 2026 23:03:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rTR33GEu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DB8F1F000C6;
-	Wed, 18 Nov 2026 23:03:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HMsDVlB0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53D131F000C6;
+	Wed, 18 Nov 2026 23:03:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042981;
-	bh=WMShDaW6S5i7718CIV+b8FvHDIXmjuRtcqg3UF3SqoQ=;
+	s=korg; t=1795042983;
+	bh=B7l1qGGnHudp7/QC5JKs3IWUJKdlonHgEdwVf5Uauec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rTR33GEuhosG4Y9+W7IoeBmwkD+U6HYhkpqerhijvqxC1MF88uIJRZDWSTl8uEzn8
-	 SoGJZTHslz7GyQxgLk5lvNCLYFRT7zhFGbxkqgFxkbGJhzvDnTZnwMqGHcidljntqv
-	 7RnrmwSLCBVzPBUABuDJUiU9FAAdYMPktGuvbLyU=
+	b=HMsDVlB0uGrYVmqgCINCBNAP00ExB/Rak6O0PS9AI6LSZoxN490qAemhzrvh9VBgY
+	 StLhYpdfPtsCfHbOvH2hSFIZD563j+WKDa+lMz53SLuHxsjtuErRbKkg4CP0BNTW9V
+	 NE4pcHZFHyfXCMsE6GCdMagHr5p8ArxsRtvcVUkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Florian Westphal <fw@strlen.de>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0047/2857] netfilter: ebtables: bound num_counters like nentries in do_replace()
-Date: Wed, 18 Nov 2026 15:18:01 +0100
-Message-ID: <20261118150203.017710679@linuxfoundation.org>
+Subject: [PATCH 6.1 0048/2857] soundwire: dmi-quirks: Disable ghost Realtek on Asus Expertbook
+Date: Wed, 18 Nov 2026 15:18:02 +0100
+Message-ID: <20261118150203.053635210@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,75 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 43ae85af154b27f9a0ff602f7a01e3a7583ffdab ]
+[ Upstream commit 90af3209742db61a7f9d7d054a16165818cfc6d8 ]
 
-do_replace_finish() allocates the counter buffer before it is validated:
+The Asus Expertbook B9406CAA also has a Realtek device in the ACPI that
+doesn't exist in the physical hardware. This confuses the machine driver
+into attempting to create DAI links for the device. Add a quirk to
+remove this device.
 
-   counterstmp = vmalloc_array(repl->num_counters, sizeof(*counterstmp));
-
-do_replace() only checks num_counters against INT_MAX / sizeof(struct
-ebt_counter), so vmalloc_array() can be asked for up to 134217726 * 16 =
-2147483616 bytes (~2 GiB).
-
-num_counters must in fact equal nentries: do_replace_finish() later
-rejects the request when repl->num_counters != t->private->nentries.
-get_counters() folds the per-CPU counters back into one entry per rule,
-so what userspace gets is bounded by nentries, never by nentries *
-nr_cpus. Apply the same upper bound used for nentries (MAX_EBT_ENTRIES)
-to the incoming num_counters so the over-sized allocation can no longer
-be requested.
-
-The allocation is still kept outside the ebt_mutex, since vmalloc() may
-sleep and trigger reclaim; only the bound is tightened.
-
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Closes: https://github.com/thesofproject/linux/issues/5828
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260630081132.3294488-1-ckeepax@opensource.cirrus.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/netfilter/ebtables.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/soundwire/dmi-quirks.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/bridge/netfilter/ebtables.c b/net/bridge/netfilter/ebtables.c
-index b1846d5c879a5..93dc1f11b2bed 100644
---- a/net/bridge/netfilter/ebtables.c
-+++ b/net/bridge/netfilter/ebtables.c
-@@ -39,6 +39,8 @@
- #define COUNTER_OFFSET(n) (SMP_ALIGN(n * sizeof(struct ebt_counter)))
- #define COUNTER_BASE(c, n, cpu) ((struct ebt_counter *)(((char *)c) + \
- 				 COUNTER_OFFSET(n) * cpu))
-+#define MAX_EBT_ENTRIES (((INT_MAX - sizeof(struct ebt_table_info)) / \
-+			 NR_CPUS - SMP_CACHE_BYTES) / sizeof(struct ebt_counter))
- 
- struct ebt_pernet {
- 	struct list_head tables;
-@@ -1126,10 +1128,9 @@ static int do_replace(struct net *net, sockptr_t arg, unsigned int len)
- 		return -EINVAL;
- 
- 	/* overflow check */
--	if (tmp.nentries >= ((INT_MAX - sizeof(struct ebt_table_info)) /
--			NR_CPUS - SMP_CACHE_BYTES) / sizeof(struct ebt_counter))
-+	if (tmp.nentries >= MAX_EBT_ENTRIES)
- 		return -ENOMEM;
--	if (tmp.num_counters >= INT_MAX / sizeof(struct ebt_counter))
-+	if (tmp.num_counters >= MAX_EBT_ENTRIES)
- 		return -ENOMEM;
- 
- 	tmp.name[sizeof(tmp.name) - 1] = 0;
-@@ -2269,10 +2270,9 @@ static int compat_copy_ebt_replace_from_user(struct ebt_replace *repl,
- 	if (tmp.entries_size == 0)
- 		return -EINVAL;
- 
--	if (tmp.nentries >= ((INT_MAX - sizeof(struct ebt_table_info)) /
--			NR_CPUS - SMP_CACHE_BYTES) / sizeof(struct ebt_counter))
-+	if (tmp.nentries >= MAX_EBT_ENTRIES)
- 		return -ENOMEM;
--	if (tmp.num_counters >= INT_MAX / sizeof(struct ebt_counter))
-+	if (tmp.num_counters >= MAX_EBT_ENTRIES)
- 		return -ENOMEM;
- 
- 	memcpy(repl, &tmp, offsetof(struct ebt_replace, hook_entry));
+diff --git a/drivers/soundwire/dmi-quirks.c b/drivers/soundwire/dmi-quirks.c
+index 32a46a2d90f7c..2a98fc8c104d6 100644
+--- a/drivers/soundwire/dmi-quirks.c
++++ b/drivers/soundwire/dmi-quirks.c
+@@ -178,6 +178,13 @@ static const struct dmi_system_id adr_remap_quirk_table[] = {
+ 		.driver_data = (void *)hp_omen_16,
+ 	},
+ 	/* PTL devices */
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUS"),
++			DMI_MATCH(DMI_BOARD_NAME, "B9406CAA"),
++		},
++		.driver_data = (void *)ghost_realtek,
++	},
+ 	{
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "ASUS"),
 -- 
 2.53.0
 
