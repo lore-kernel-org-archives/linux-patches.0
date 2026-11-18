@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051517;
-	b=TGSt0/DVUwAa3zUczDTFi0mvEY+oM7aHbwmE0DGY9QcT2dmZZLjQ/9UU3dBXfA2odePD
-	 r2SnTR7VRsb4erUUcKzlS2WBX/BFNpk9EIrYhq1J65l8+iDybPQExSr3b58oG96NDRD3I
-	 ReWEPuFddfo0h+dM6Lvw/dymZ7su56Z8DE9ZOubjNtAPXXKQOOD8VzP1BCLwKgtXaB0up
-	 ts8vuhjNAOglGKDJ8VemaPnd4mnFHqyaXsWXSHrPc4rfauw5PZ4a5/9tCx2Zh/g3CbCoc
-	 wn+AkVLozTzA8Yancnv2uaSYdu1m99RDjhJlAslI72SiOvwlxlwViabWxPGdphURkCQ==
+	t=1795051519;
+	b=xblhzC2+bM8qWH4mJjgVuav8UOOY0G6JrhxjVV+Dz1qboyWd2zLgN1QO8LhP+fIlIjLS
+	 gyCHwG7QepdihtfxyGOeESrSAKLbwm4y3HtJP14Nse4LmVeum2fTng4tZtJAVFhe4ncnw
+	 N8C7i2XWVoheQqrfvWnGrxwnNsJ7KEjv76YU2aWe8biVZQZHL7PlkPH/2bbJ8+i7KjsJt
+	 r4wXKV4AgU7un1fMg9m3AKww4R62UzNtKG9CbfMsfB4EhVqe+qFRp1zCcKWDaO8wg8T9Y
+	 8xInsRQyC+ekH5biUT3YG3AT8AfzB1qVEPFQeQJP44tPN4+WaK8DwodkRyN8EOWP8Bw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051517;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051519;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=K092MN8EYMq2sf/CQEOrUEdds/87ZDMpJ10SpAxamD8=;
-	b=fKSKUKAwXDo+XVz9IfVXf5lZbvodfLjkKyMnYF51SMVvd7/bzcz0ZbaDPTwaDCe9ZjY4
-	 rRhERb1T//rbd+cyjZ9HhMNdf+UW7WdfrCcuTa2I5WTpa5K+hHV98GMMkac2AzxnL4E+M
-	 2UzQKtFO9jlGV6DVqkKtUnUlDTwhhsRTle7VeUtxU4Qqy629J7HXRHiqVMvlscYNR5zpB
-	 f0o65iKCOMW0Oqubt9KXeWfIXlXnPwKMhIJx9Tyxl4GUCikTMNpvPA34ybZaxX1kFGDe4
-	 TTaB8+rU+rb+Vbq+FhXODCP2EUP/uDe2bsspV/7MSG8NBrrp6SHP550IzNYv7EkufZA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=CsiJDxzAGU120sEZf0P1ZfYRGvSykTGqbE/UAYmV85s=;
+	b=iqVMNeSdHM7Q2yxnWVUVahk1xBwH9joMhgbMk0/MvKuA4p+HAAjR5Tnn8nbIva/LGirz
+	 uu/rUHOu7oOI6+TBKSeqSmamlXE8oYSGYTlhHtWlhPAktZz+WWWy5hPgG931N6vldAyEW
+	 J38yviWu/HM6YutElv5wn6xMFAFD8s1NAtzsgnJxO4QDmeO6zhYIJZC8GC3MdNz59YLw/
+	 Xntj6zWncDSVW9CgpFUvaGRp+CbDTQ/gW7hvNkx+Zgi+C3/xo+mFOY+hqDHhcQWJuwbZx
+	 MKu4UW6J+QOsLMCROWxvYsaZvAQDX+423TQwuhVWwhBGfN85k0WB8+YNyiItOsGii9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tV1jda77;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PCADmRLD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D157606A31C;
-	Thu, 19 Nov 2026 01:25:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5CD9606A31C;
+	Thu, 19 Nov 2026 01:25:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tV1jda77
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C27B1F000C5;
-	Thu, 19 Nov 2026 01:25:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PCADmRLD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33D701F000C5;
+	Thu, 19 Nov 2026 01:25:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051516;
-	bh=K092MN8EYMq2sf/CQEOrUEdds/87ZDMpJ10SpAxamD8=;
+	s=korg; t=1795051519;
+	bh=CsiJDxzAGU120sEZf0P1ZfYRGvSykTGqbE/UAYmV85s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tV1jda77MBsLYq3vkaQE3mh/2F4IzeOZsNkTBLVuUFjMZWL1bR3XdQ6X9CchxeW5B
-	 4lh5wKGbznemsRMKBWiy6ErlGbsnitQgsnO1rp0SC+ID0CCSb6gAngyXJ5tTCMMTp5
-	 VLjDUvXj9MVHkZNzqSQndoDoRfytTYwKXAxLwdvA=
+	b=PCADmRLDHKuTbTslyWKzsl7xo2eNtgCM0QA2yRAQzd075YZPPjPVxN3fFwD51xR0U
+	 tgGu72h5Xk9hqEOdSsQGPl6PJzUsQvEm6Osf6ISNvzVgXfGA8xO8Wqu9vN8Looj3Cg
+	 2j+egpsgRCyKd77fOBCgr543nmfbfI9HfThmjMMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Federico=20Valent=C3=ADn=20Andrade?= <fandrade@frba.utn.edu.ar>,
-	Takashi Iwai <tiwai@suse.de>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0236/2214] ALSA: usb-audio: Skip mixer creation on M-Audio Venom
-Date: Wed, 18 Nov 2026 15:31:52 +0100
-Message-ID: <20261118150019.646106644@linuxfoundation.org>
+Subject: [PATCH 5.15 0210/2214] ksmbd: handle empty QUERY_ALLOCATED_RANGES output
+Date: Wed, 18 Nov 2026 15:31:26 +0100
+Message-ID: <20261118150018.589151875@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,73 +61,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Federico Valentín Andrade <fandrade@frba.utn.edu.ar>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 4c0ec35e011309bd7091053ad5bbc01420967a66 ]
+[ Upstream commit 7f07791522a251e2be087d11ae9cd51eb3408f1d ]
 
-The M-Audio Venom (0763:2084) does not answer any GET_CUR request
-of its feature units, hanging up the USB microcontroller and
-"responding" with timeouts. So the mixer building lasts around 47
-seconds, and the device does not stream at all.
+FSCTL_QUERY_ALLOCATED_RANGES can be issued with a valid input buffer but
+without room for an output range.  Do not reject the request before
+looking at the file layout.  If the query would produce a range, return
+STATUS_BUFFER_TOO_SMALL.  If it produces no ranges, return success with an
+empty output.
 
-The same GET_CUR requests issued through libusb (with no kernel
-driver bound) complete correctly and blazingly fast. So it seems
-to only happen during the initial probe.
-
-I defined an explicit composite quirk to bypass the mixer creation,
-as it is not needed (the synth already comes with volume controls).
-
-With both this and the device flag applied, the synth works
-flawlessly.
-
-Signed-off-by: Federico Valentín Andrade <fandrade@frba.utn.edu.ar>
-Link: https://patch.msgid.link/20260824140211.17003-3-fandrade@frba.utn.edu.ar
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks-table.h | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ fs/ksmbd/smb2pdu.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/sound/usb/quirks-table.h b/sound/usb/quirks-table.h
-index 40de1c6fafb8b..941d9bef67e4b 100644
---- a/sound/usb/quirks-table.h
-+++ b/sound/usb/quirks-table.h
-@@ -2435,6 +2435,28 @@ YAMAHA_DEVICE(0x7010, "UB99"),
- 		}
- 	}
- },
-+{
-+	/*
-+	 * M-Audio Venom
-+	 *
-+	 * The AudioControl interface times out on every GET_CUR request,
-+	 * which adds around 47 seconds to the card registration and
-+	 * freezes the device, blocking streaming.
-+	 * Using an explicit composite quirk to skip the mixer entirely.
-+	 */
-+	USB_DEVICE_VENDOR_SPEC(0x0763, 0x2084),
-+	QUIRK_DRIVER_INFO {
-+		.vendor_name = "M-Audio",
-+		.product_name = "Venom",
-+		QUIRK_DATA_COMPOSITE {
-+			{ QUIRK_DATA_IGNORE(0) },
-+			{ QUIRK_DATA_STANDARD_AUDIO(1) },
-+			{ QUIRK_DATA_STANDARD_AUDIO(2) },
-+			{ QUIRK_DATA_STANDARD_MIDI(3) },
-+			QUIRK_COMPOSITE_END
-+		}
-+	}
-+},
+diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
+index bd51c02c24ca7..66f3bc4ddd2bf 100644
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -7626,8 +7626,6 @@ static int fsctl_query_allocated_ranges(struct ksmbd_work *work, u64 id,
+ 	int ret = 0;
  
- /* Casio devices */
- {
+ 	*out_count = 0;
+-	if (in_count == 0)
+-		return -EINVAL;
+ 
+ 	start = le64_to_cpu(qar_req->file_offset);
+ 	length = le64_to_cpu(qar_req->length);
+@@ -7639,8 +7637,18 @@ static int fsctl_query_allocated_ranges(struct ksmbd_work *work, u64 id,
+ 	if (!fp)
+ 		return -ENOENT;
+ 
+-	ret = ksmbd_vfs_fqar_lseek(fp, start, length,
+-				   qar_rsp, in_count, out_count);
++	if (!in_count) {
++		struct file_allocated_range_buffer range;
++
++		ret = ksmbd_vfs_fqar_lseek(fp, start, length, &range, 1,
++					   out_count);
++		if (!ret && *out_count)
++			ret = -ENOSPC;
++		*out_count = 0;
++	} else {
++		ret = ksmbd_vfs_fqar_lseek(fp, start, length,
++					   qar_rsp, in_count, out_count);
++	}
+ 	if (ret && ret != -E2BIG)
+ 		*out_count = 0;
+ 
 -- 
 2.53.0
 
