@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018310;
-	b=u5FH2aMlOGwGYmgg2KzusWIMQbPVMdDfCcnFPHSHj21F990xAvMoLqxpf3428shWvY8Q
-	 ONqX3d7C2Cu1/bDMPZpO8XF1rdGFnBU7EcKN5e6VO778yy1P0HlclHtruxMT1XEE73602
-	 YJZVIzsYGt0ODPnOTIsh6Besnq5IMjZ3JcvTma+t/8eTbOuplbhmKYxSWMxdGRSOcBQNE
-	 IW/igTfShOrWVYCmp1WeBWgCtkDbsQpijuAnjAlU3UVXoMxR24OtIwGzo9r2ow9glkVpm
-	 35tSzH88n+Z75HIzukNO/uRC1Vu16BecQTE98Z2fN8Nn3nH6Hfu7y2n3FPpXKCV9XNg==
+	t=1795018313;
+	b=W6m1iGiqm2whFpBqGw+5ZOFZewpsQiq0etbnOp4bIsXXnvKm2EhiP2C82+XkiSk1Kn2t
+	 i2jOnmg6JSBc7IV/pXU957orxZ0U6zVi5oiPeofl10Qa5VXcgvyYHna+mnCJzkJ+u+wU1
+	 MIx1PgzMaVmK43BrJDLy3bvaL5bUFRfjBsgTjI3ihCJz2zNMRLTkY1KlNXTRJbUX+jdh9
+	 5d/8FoHpvRz63wTpHJtprmqHdWtPxVF4lds4QUrg8J9uvU/Q1MPgQ/nu8PzrS5yUdbu3i
+	 GYz4/mBN19UKDf3HQG4xUaHuEWdaF4hVc3LHACDcYyLuGQqOUdZtp88xE4z0p5k9yYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018310;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018313;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rg4xKcPvhJUx2XoJapDZE/DXrxIJLh9bOZnkBnfJ0Ug=;
-	b=4YRPekmLR/sbV3PlbNydHtFa8ZFaYtFBZIyNx5/XXgJZzmKDoibAUIzi883ZIKpAna1p
-	 zrsiz+OnHgN0PdoojO6lbgubSSNSB/+DYy6t5O/bTxwKqmSzkPdt2W100cGRC1fYq3VqX
-	 6QVMkQzjbzL51WhmfBJPo0Ic0/Rf4BBovXCOLoYBPUa8le6/RdrZd2ci8J5qUHn5P44bl
-	 Jwtz1gi3irNiSipjXcxC3/xFU5EucCvgHNoAq3VOFY177luh2srKPkqhcz+3nXk1pdxqF
-	 DCvDeMNROx1VvmPyfyZRLwFNo5+PNZsMfgBQVDautN3J/P9ic7+3MnstwfPiZzcfR9w==
+	bh=VeTpcSwDHTIrRH5upYu04emytQaAvEZwatXZXFW2dAk=;
+	b=RuDhlLY11kz0dT42tjVkpSRChUAIkf2jr12cgSaqm+vI9iFF5RKWh78lcY4tmDsHytpi
+	 7LXNp5MMN5O9D4zGfwxSlgQll16WVFPD+UyvdbvZEItEEzo+qs1IeWgnNIFqrp/4RV1Z3
+	 degXEQ2OtU687QiSy3edruGMyuLsfOxHGJyvHYjHlGQ/oR4x0W/Xh35znKNCKtSzlozys
+	 p8ck/21y7CpTtki+VdJ36l6jI4VhzkNE2AXicJw+hEu5eV3ilLDiTvDPigYdSrbCpvrZX
+	 /T872x03U65fHF6a6k0kcjquAMyU8mV77IlaVqUc6FmknYMzGncq7z13+qP2GYWYnag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e9jXdixU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zg8NPCJW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A00606A320;
-	Wed, 18 Nov 2026 16:11:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB66606A31C;
+	Wed, 18 Nov 2026 16:11:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e9jXdixU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 339221F000C4;
-	Wed, 18 Nov 2026 16:11:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zg8NPCJW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C8081F000C4;
+	Wed, 18 Nov 2026 16:11:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018310;
-	bh=rg4xKcPvhJUx2XoJapDZE/DXrxIJLh9bOZnkBnfJ0Ug=;
+	s=korg; t=1795018313;
+	bh=VeTpcSwDHTIrRH5upYu04emytQaAvEZwatXZXFW2dAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e9jXdixU00mOGnWEcq2z3uw+3mY1cgG5MKsI/voezK59Z84Xg6sEd9Zf9ZSRDI2f6
-	 a0edbEgeWJHo3gNzoOrpKdG/zAAcw3obTwruU4uk3zvxj41H6VzwpoDDSIPyLAwhl7
-	 KByN37NEfmhmTh+MmlaxTTlKJzMiBpA2lf1zuxXQ=
+	b=zg8NPCJWH7AIN9D9hs5aG5zs/60F9TKZKoLBqhUb8aSC8vZFTdgsjT03SGwjeDhe/
+	 CS/NNW8SYMKm9+3nuFDKxIYhAzXvkqfQUMHsttdtS1vmnJsss0mXSMcKDVkBjKCHVI
+	 Jsv6sbNL5O4FqKXRObinejiBw7KP82WUNQ/eEbrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joonhoe Kim <26rote@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Mike Leach <mike.leach@arm.com>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1195/2651] drm/msm/dpu: compute the CRTC bandwidth from the state being checked
-Date: Wed, 18 Nov 2026 15:40:35 +0100
-Message-ID: <20261118150331.019255342@linuxfoundation.org>
+Subject: [PATCH 7.3 1196/2651] coresight: etm4x: Prohibit TRCSEQSTR modifications while tracing enabled
+Date: Wed, 18 Nov 2026 15:40:36 +0100
+Message-ID: <20261118150331.054503430@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,87 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joonhoe Kim <26rote@gmail.com>
+From: Yeoreum Yun <yeoreum.yun@arm.com>
 
-[ Upstream commit 480ba24aa34031c898d0a711405664cd947bbee4 ]
+[ Upstream commit a373952d86cf5d1efac5acff4f1d85fe66094d47 ]
 
-_dpu_core_perf_calc_bw() is called with the new CRTC state but sums
-plane_fetch_bw over drm_atomic_crtc_for_each_plane(), i.e. the planes
-of the committed state. When the CRTC is re-enabled (DPMS on, system
-resume) the committed state has no planes attached, so the check
-computes bw_ctl = 0 and the display runs without an average bandwidth
-vote on the MDP path until some later commit changes a plane -- which
-may not happen for a long time on a static screen such as a lock
-screen.
+TRCSEQSTR can be changed by the ETM while a session is active. Its value
+therefore needs to be preserved when a sysfs session is disabled so that
+users can read the current sequence state after the session ends.
 
-Seen on a Lenovo TB323FU (SM8850) through the interconnect and DPU
-tracepoints: after DPMS off/on or s2idle, dpu_perf_crtc_update reported
-bw_ctl=0 and qnm_mdp was left at avg_bw=0 (peak 800000) instead of the
-3728793 kBps voted before, until the next mode change.
+This means that any changes made to TRCSEQSTR while the sysfs-session is
+active would be lost when the session is disabled.
 
-Iterate the plane states of the CRTC state being checked instead.
-drm_atomic_crtc_state_for_each_plane_state() falls back to the current
-plane state for planes that are not part of the commit, so the result
-is unchanged for commits that do touch the planes.
+Copy the TRCSEQSTR value when disabling a sysfs session, and prohibit
+modifying seq_state while the session is active.
 
-With this, bw_ctl is 3728793600 right after DPMS on and after resume.
-Only tested on this device.
-
-Fixes: c33b7c0389e1 ("drm/msm/dpu: add support for clk and bw scaling for display")
-Assisted-by: LLM
-Signed-off-by: Joonhoe Kim <26rote@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/757683/
-Link: https://lore.kernel.org/r/20261002130656.50577-1-26rote@gmail.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Suggested-by: Mike Leach <mike.leach@arm.com>
+Reviewed-by: Mike Leach <mike.leach@arm.com>
+Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20261003-separate_etm_cfg_v2-v13-1-5d8a29aead95@arm.com
+Stable-dep-of: b2131cff7224 ("coresight: etm4x: fix inconsistencies with sysfs configuration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 17 ++++++-----------
- 1 file changed, 6 insertions(+), 11 deletions(-)
+ drivers/hwtracing/coresight/coresight-etm4x-core.c  | 4 ++++
+ drivers/hwtracing/coresight/coresight-etm4x-sysfs.c | 2 ++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-index fea173e374648..9fa55904dba1a 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-@@ -54,24 +54,19 @@ u64 dpu_core_perf_adjusted_mode_clk(u64 mode_clk_rate,
- /**
-  * _dpu_core_perf_calc_bw() - to calculate BW per crtc
-  * @perf_cfg: performance configuration
-- * @crtc: pointer to a crtc
-+ * @state: the CRTC state
-  * Return: returns aggregated BW for all planes in crtc.
-  */
- static u64 _dpu_core_perf_calc_bw(const struct dpu_perf_cfg *perf_cfg,
--		struct drm_crtc *crtc)
-+		struct drm_crtc_state *state)
- {
- 	struct drm_plane *plane;
--	struct dpu_plane_state *pstate;
-+	const struct drm_plane_state *plane_state;
- 	u64 crtc_plane_bw = 0;
- 	u32 bw_factor;
- 
--	drm_atomic_crtc_for_each_plane(plane, crtc) {
--		pstate = to_dpu_plane_state(plane->state);
--		if (!pstate)
--			continue;
--
--		crtc_plane_bw += pstate->plane_fetch_bw;
--	}
-+	drm_atomic_crtc_state_for_each_plane_state(plane, plane_state, state)
-+		crtc_plane_bw += to_dpu_plane_state(plane_state)->plane_fetch_bw;
- 
- 	bw_factor = perf_cfg->bw_inefficiency_factor;
- 	if (bw_factor) {
-@@ -131,7 +126,7 @@ static void _dpu_core_perf_calc_crtc(const struct dpu_core_perf *core_perf,
- 		return;
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+index 2247ad55d4442..9ca03a5913a30 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+@@ -1073,6 +1073,10 @@ static void etm4_disable_hw(struct etmv4_drvdata *drvdata)
+ 			etm4x_relaxed_read32(csa, TRCCNTVRn(i));
  	}
  
--	perf->bw_ctl = _dpu_core_perf_calc_bw(perf_cfg, crtc);
-+	perf->bw_ctl = _dpu_core_perf_calc_bw(perf_cfg, state);
- 	perf->max_per_pipe_ib = perf_cfg->min_dram_ib;
- 	perf->core_clk_rate = _dpu_core_perf_calc_clk(perf_cfg, crtc, state);
- 	DRM_DEBUG_ATOMIC(
++	/* read back the sequence state */
++	if (drvdata->nrseqstate)
++		config->seq_state = etm4x_relaxed_read32(csa, TRCSEQSTR);
++
+ 	coresight_disclaim_device_unlocked(csdev);
+ 	etm4_cs_lock(drvdata, csa);
+ 
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c b/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
+index cc6cdd3ae29d5..4945d577ceabf 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
+@@ -1435,6 +1435,8 @@ static ssize_t seq_state_store(struct device *dev,
+ 
+ 	if (kstrtoul(buf, 16, &val))
+ 		return -EINVAL;
++	if (IS_ERR_OR_NULL(drvdata->csdev) || coresight_get_mode(drvdata->csdev))
++		return -EBUSY;
+ 	if (val >= drvdata->nrseqstate)
+ 		return -EINVAL;
+ 
 -- 
 2.53.0
 
