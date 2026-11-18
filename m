@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039693;
-	b=HmaJqc98t/EUoB7AsI46XL1jbRH06RILpOmw8KLTOvJdyqh1H3M6juMu7WYYF+DDbLnX
-	 /Y7qKCy3kNWzrCE/WFKC3PMpRBLlOU+l2YcDHx59XmUNG/ZFHWw4XHmE6YnnlrkPvkOL1
-	 p6DX91wp8kQppQlQfvSlspPem1yyT5Qx6YKs5c9UWCBuduWjrhyDC9315hd624hrYKt4L
-	 1hfRotrpqzQwZGtdAJMemwzVZzBiMNLB5I2NKKfzO3Mcn5HqPKbf/9VOQhikXIuVETwD6
-	 7IDLMmrRsiLi0DUYbTAaR+0pjxdq0id3LLvIVa5w/EXkaqwwHiT1YLz0VgCdmFfcUjQ==
+	t=1795039696;
+	b=h7i0msBi0GQwuewBdcV68kNAT+gjM2q2v86Y+gMvhtmvicK/glr+6q0zTyKQheVZjBZ1
+	 pycEvbWWG5eiXZgLWKjwBQb5GNLDj1wcerNv6DiPNAt4VT4T0BDzGvpnyDeyJhoESQbGy
+	 eD/dMzNKxlQGQUT+wss763f/qyWaU4OoacaS0vdNVHXLAnwFuwf6Ojf58iQCeZ8CUZjfC
+	 HmdzfQvSWaPzcstnfkFbvHS7w9cW+XmxDzsJk6yOgkWA1O4QFeaOwKZhFGGbDzh1XEyI1
+	 UvCylnPJ1X8aniDW0kk6jCVa3EqNsfizpRYXSvgnwfiDLnfXiYLwTXegV6IAqYq4jiA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039693;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039696;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=G7k/qiQrbhbDEf50przYdEIAZnajniWz2y5FUZWFRqU=;
-	b=phLzSbX3Ww8WrDygSjtoH8FYv/JgTYbOChGWjqQl1YfPgY1s8Y4I1yqLDcLCJxyul/oC
-	 eIsFRhwbPtB73zUaZ6fNvnDtSbLy83aZnH7yrtsiHKhfCvOgp4kpu91dySubpbZaQeB6Z
-	 ehxEg6GuYL8zVe4V8epTaoFoY3KB9HxH8BcLIEINiSdmeU9wmZViHBj6qmPa8xXVDdZvf
-	 d+PDq9/ubScya/EGydK6TQj1tYXs7nI9GVDjf7pr6Pe39GG1LxfVW2RV3bKsGht8tns17
-	 0oApC2LuYw0qhllchrvlSgqgP8OQTiHKbNcbFRO6f2jZmU6CM+sI35epI5RseRD/W4A==
+	bh=gagqSsbjPGHCzXSEsx6WxEdnbMKPk11VS6V63oaqtUc=;
+	b=Qg4JZ/OP82jVeXH+edbw7OXmH8J3sWXle7YmO+0J91f3AfuApAaSEz/WZX4z/a57IXEK
+	 5jIJ29DLrKhq/DYHovAHYQiLf/wgmknr3VhamVtEreHUkn0dLsKmrt3F2al2O0eiOdMDh
+	 YgOJvTXz/T76Gl2yy7HKvOtDe5wsBgrab2mIBK1cWtXu5anHUBEQNwWiqFTUi/luXhmrl
+	 O5p24oA6v1qUgjwUR+awnwksOn+HxD6j4CcbZSD5tPsGnyFLE2pTl5iKc4t9crmzJo5OA
+	 3XmNLDsKAu5x7txBJBPxbuc6mMkHI1jIfgrd5s8mGrLDi49j18eutpDGAj4M8gJ5cIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IQ9z+ig0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jzxGcIh1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520AA606A325;
-	Wed, 18 Nov 2026 22:08:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37DD8606A330;
+	Wed, 18 Nov 2026 22:08:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IQ9z+ig0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A76201F000C4;
-	Wed, 18 Nov 2026 22:08:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jzxGcIh1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7766E1F000C4;
+	Wed, 18 Nov 2026 22:08:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039693;
-	bh=G7k/qiQrbhbDEf50przYdEIAZnajniWz2y5FUZWFRqU=;
+	s=korg; t=1795039696;
+	bh=gagqSsbjPGHCzXSEsx6WxEdnbMKPk11VS6V63oaqtUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IQ9z+ig0dhTK5M6Xphhsetq3TdYpARyPcUVy8F6V6UxxTI48Om+Wmlndgqpx0iQxn
-	 wXEa4LgT3x0MevHiQ/t1BdDCSKhpEL2WSDr/mhnRsHFSQjQm/+LmgmM2trIfgZYHIR
-	 vFwCicYqzdbV2TrfieneNbezVzwoVX3Q74cmEMzs=
+	b=jzxGcIh1tt1pLn4GXS13bNvR4Y4Y4RTmS+OkUHpS2YSlOK3X53YxdugnhnotZT6VZ
+	 236fLM//Bd9MUK96Sph0Nhd/wk1Vc6Ww34hu4ST0v4Me4D7sPASYIKNoeNS+rPgcGK
+	 9sYrM76klm5ESyUg+bNcSX/2GxT9ybFl6t4PydNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Karl Mehltretter <kmehltretter@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2192/3318] spi: Fix the return value in spi_new_ancillary_device() kernel-doc
-Date: Wed, 18 Nov 2026 15:46:54 +0100
-Message-ID: <20261118150427.708717221@linuxfoundation.org>
+Subject: [PATCH 6.6 2193/3318] ata: libata-scsi: Fix ata_scsi_hotplug() reference in kernel-doc
+Date: Wed, 18 Nov 2026 15:46:55 +0100
+Message-ID: <20261118150427.737324129@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,35 +71,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 3742867ce96539100ed5f4c754f04273d8aa00d7 ]
+[ Upstream commit 5915ab523e33057224a0240e27b88c6c2798b919 ]
 
-spi_new_ancillary_device() returns the new struct spi_device, or an
-ERR_PTR() on failure, but its kernel-doc says "0 on success; negative
-errno on failure", which was never true. Describe the pointer.
+The ata_scsi_remove_dev() comment misspells its caller as
+ata_eh_scsi_hotplug(). The caller is ata_scsi_hotplug(). Correct the
+reference, which predates libata's move from drivers/scsi to
+drivers/ata.
 
-Fixes: 0c79378c0199 ("spi: add ancillary device support")
+Fixes: 580b2102327a ("[PATCH] libata-hp: implement SCSI part of hotplug")
 Assisted-by: LLM
 Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260911230211.11755-1-kmehltretter@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20260912101215.86413-1-kmehltretter@gmail.com
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi.c | 2 +-
+ drivers/ata/libata-scsi.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
-index 9a011544d1544..9681b05e0d5b6 100644
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -2423,7 +2423,7 @@ static void of_register_spi_devices(struct spi_controller *ctlr) { }
+diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
+index 5f8548a4f3a8f..b9c6d953af8e6 100644
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -4651,7 +4651,7 @@ int ata_scsi_offline_dev(struct ata_device *dev)
+  *	ata_scsi_remove_dev - remove attached SCSI device
+  *	@dev: ATA device to remove attached SCSI device for
   *
-  * This may only be called from main SPI device's probe routine.
+- *	This function is called from ata_eh_scsi_hotplug() and
++ *	This function is called from ata_scsi_hotplug() and
+  *	responsible for removing the SCSI device attached to @dev.
   *
-- * Return: 0 on success; negative errno on failure
-+ * Return: the new device on success; an ERR_PTR() on failure
-  */
- struct spi_device *spi_new_ancillary_device(struct spi_device *spi,
- 					     u8 chip_select)
+  *	LOCKING:
 -- 
 2.53.0
 
