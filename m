@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052722;
-	b=YUbE0eiZuycXt+VsLBnuC51O+q95H+pISrgXWkKsu5Z7vbvOBSuffo2B86ANS7gtEqhQ
-	 QbUr5KI7hV2/lCdfd1MKbbffM3LIiU2kgSra1wMRmlntdlMHcRsnR73554sNvkVzK9jYd
-	 6WlxcXY8MDBT+BCMXLOZAK13AcTKBAF2WxUSDpVBvjC3OAi0E9c4oAfoucN2d2vELSSd6
-	 qHq7lfpg3ifEkJlvkD5YnTdCLoqFyEBzUKgCIoU9BYJR/O24zQUTtKNcpHsvhkM0rqezz
-	 NFsOvGCdDWJJ89nDQRh8qlkA29Zrf/ESlVrlSKk7jPRogNDckLYjA/HXbN/7SUXjo4w==
+	t=1795052725;
+	b=txehW5mfTtAme5vCk51Jb6DkNinPDsk0DbdVtCXHMoNDKA6660JBT2JU+tUFavJtoNhb
+	 Io8ZS8rjxIn047siI+fo+MCo1+9522rmcy6y4LBb25dmsIUjursxmsgltgTevqsSXofE0
+	 yh5YyqPl9TkG9Xph2wsI6/m9pwvvWpTZM0AY4Fb/WHi6eGGmpcAiiroSAsTFPu/AeH4gQ
+	 oY0DWD5+0VeSuBfpNnkc3kiCODy6tDMmYCVGVr/+Jr2Y7ICnqQQAIp71Yyr7fe5RIMQif
+	 g7khzc1vxHLuck5IMsY/HNdINJiKIH4Qi7YYOatZJCm9fThxbnarEARvUgObbtfsaUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052722;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052725;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y/SSPKQwyIXbpkQuabm3giff0TUHP0cgZIkQzT2jnAs=;
-	b=pxDbHuFRA8me7s4x7iLQIcp5swnoFM4AMDqRUCBMwvgE+9B4r+SPcshVU3Yh+V0ydKPQ
-	 7g1BrO6zTHdY2SXxL5gwcQIYDG3OwchdJDN03Lg4WsFE3JNiAtbb0E7spzZgyGYCYDw17
-	 bGd0o8154gSQNMECiUw4eAXbsz/nwP/SytGy3948/JtpSj4yShQ2ssi9xqN1H8TPuZc4g
-	 XX5nunB2VygTgo3TQ+s7k9yHP5IpnboJyCnivozzmHgKTA6X6sX1YBn2lBbavec8yCx0r
-	 Z5udw5asDuKNzF/eK2VR4TNdORhUsf+BZVSthZrAXXKDa5kJJomNj2npGZRkpYSgU6w==
+	bh=m7nKuc5jKfpWzrTREc/5jc3BiQy5SO0DQFnkbE+C+gU=;
+	b=34jofDeXKE80Y46xD+D7JP3q6hHNfubP/r7DgCgLog5zCtMe6kAjszdGfuf5qyfU/Odw
+	 Uscqj+luGhlFGfohrGbwFgIo9t6E3Hj2HTfWMj+a+KSCizDFph/lyeLmy5T3u37gEdwyR
+	 9tlsVOkjE0WeeLYImMxXmlN46zCNh1y1OIdFgEdmuTyRV1nMgr7Og8sCH4f5JeaPhidmg
+	 9jqny3Yr9IjWLGyKOiLkUgDWN9uG6I8OhuganCj9dLgw0471K0V4Ll3YSkZu8LLW6fYAP
+	 xAQYei/1wM4PnHNUCmIQlkqcULzYUssiQ2HPFcmKRjcoLbo/P5K1nP5GUx6YKeaPAYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sFaSfUEy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CKZ94Ia4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C52606A332;
-	Thu, 19 Nov 2026 01:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11888606A320;
+	Thu, 19 Nov 2026 01:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sFaSfUEy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 711731F000C4;
-	Thu, 19 Nov 2026 01:45:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CKZ94Ia4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E0E81F000C4;
+	Thu, 19 Nov 2026 01:45:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052722;
-	bh=Y/SSPKQwyIXbpkQuabm3giff0TUHP0cgZIkQzT2jnAs=;
+	s=korg; t=1795052724;
+	bh=m7nKuc5jKfpWzrTREc/5jc3BiQy5SO0DQFnkbE+C+gU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sFaSfUEy0brgt1g4V+WV6eVt6gZ1a4gVfYml8cYbexXrAuHwez1vMRZ5lwulfNII8
-	 gY7mcaU7b0Dt57zOGRVopT9jcDcxh/7T8+4bwRvecTYsOUHhiqA6lp5A7ok6UxPd1Q
-	 tUvrHKGBOgAUCKFkopg8xeqEVoVK6oc7DNWCS7Ok=
+	b=CKZ94Ia4shlMhB1kDaVS0Pee0qZgG2Lfpe3EoCSNMt7DabTS+a5LJbKhUwF+hfYKt
+	 epTlno1DSO0BXXME6/YrjYJDVjzHCAG/IwcemaH4Reh2EWNCOFNo8Gqpu1sukQutVI
+	 j43oPqgkVt4Tpc7NKKtDjOpT0GSz0GjUnK9p/oBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Maksimov <nickstogramm@yandex.ru>,
-	Vasiliy Kovalev <kovalev@altlinux.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	syzbot+0f98b0c0bdeaab2dc2fd@syzkaller.appspotmail.com,
+	Sanan Hasanov <sanan.hasanov@ucf.edu>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0664/2214] ALSA: hda/via: Apply runtime PM workaround for ASUS X55A
-Date: Wed, 18 Nov 2026 15:39:00 +0100
-Message-ID: <20261118150038.395285746@linuxfoundation.org>
+Subject: [PATCH 5.15 0665/2214] hwmon: (corsair-cpro) Make wait_input_report_lock IRQ safe
+Date: Wed, 18 Nov 2026 15:39:01 +0100
+Message-ID: <20261118150038.450632484@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,37 +69,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasiliy Kovalev <kovalev@altlinux.org>
+From: Sanan Hasanov <sanan.hasanov@ucf.edu>
 
-[ Upstream commit f6e8d5ebde5ceb7d3c0eef6e9e4d82862b503ade ]
+[ Upstream commit e4fdc82f55cf0e3d5df5c88278da5baa76a109d1 ]
 
-ASUS X55A requires the same workaround like other machines with
-VT1802, otherwise it loses the codec power on a few nodes and the
-sound stays silent.
+ccp_raw_event() is the HID ->raw_event() callback and takes
+wait_input_report_lock with a plain spin_lock(). This callback can run
+in very different contexts depending on the transport: from process
+context (e.g. uhid, via a write() to /dev/uhid) with softirqs and
+interrupts enabled, and from URB completion, which is softirq context
+for HCDs using HCD_BH and hard interrupt context for HCDs that do not
+(e.g. OHCI, UHCI).
 
-Link: https://bugzilla.altlinux.org/45606
-Cc: <stable@vger.kernel.org>
-Tested-by: Nikita Maksimov <nickstogramm@yandex.ru>
-Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
-Link: https://patch.msgid.link/20261017101257.215166-1-kovalev@altlinux.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Taking the lock from process context with softirqs enabled while the
+same lock is also taken from softirq context can deadlock if the
+softirq interrupts the lock holder on the same CPU. Lockdep reports:
+
+  WARNING: inconsistent lock state
+  inconsistent {SOFTIRQ-ON-W} -> {IN-SOFTIRQ-W} usage.
+  ...
+   spin_lock include/linux/spinlock.h:347 [inline]
+   ccp_raw_event+0x51/0x110 drivers/hwmon/corsair-cpro.c:161
+   __hid_input_report+0x41c/0x580 drivers/hid/hid-core.c:2175
+   hid_irq_in+0x492/0x710 drivers/hid/usbhid/hid-core.c:287
+   __usb_hcd_giveback_urb+0x378/0x540 drivers/usb/core/hcd.c:1657
+   dummy_timer+0xa91/0x4cc0 drivers/usb/gadget/udc/dummy_hcd.c:2023
+
+For the same reason, the spin_lock_bh() in send_usb_cmd() is not
+sufficient when ccp_raw_event() is called from hard interrupt context.
+
+Use spin_lock_irqsave() in ccp_raw_event(), since it may be called with
+interrupts already disabled, and spin_lock_irq() in send_usb_cmd(),
+which always runs in process context.
+
+Fixes: d02abd57e794 ("hwmon: (corsair-cpro) Protect ccp->wait_input_report with a spinlock")
+Reported-by: syzbot+0f98b0c0bdeaab2dc2fd@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=0f98b0c0bdeaab2dc2fd
+Cc: stable@vger.kernel.org
+Signed-off-by: Sanan Hasanov <sanan.hasanov@ucf.edu>
+Link: https://patch.msgid.link/20261008205310.30832-1-sanan.hasanou@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_via.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hwmon/corsair-cpro.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/sound/pci/hda/patch_via.c b/sound/pci/hda/patch_via.c
-index 29abc96dc146c..99e5b4734aa40 100644
---- a/sound/pci/hda/patch_via.c
-+++ b/sound/pci/hda/patch_via.c
-@@ -1046,6 +1046,7 @@ static const struct hda_fixup via_fixups[] = {
- static const struct snd_pci_quirk vt2002p_fixups[] = {
- 	SND_PCI_QUIRK(0x1043, 0x13f7, "Asus B23E", VIA_FIXUP_POWER_SAVE),
- 	SND_PCI_QUIRK(0x1043, 0x1487, "Asus G75", VIA_FIXUP_ASUS_G75),
-+	SND_PCI_QUIRK(0x1043, 0x1c33, "Asus X55A", VIA_FIXUP_POWER_SAVE),
- 	SND_PCI_QUIRK(0x1043, 0x8532, "Asus X202E", VIA_FIXUP_INTMIC_BOOST),
- 	SND_PCI_QUIRK_VENDOR(0x1558, "Clevo", VIA_FIXUP_POWER_SAVE),
- 	{}
+diff --git a/drivers/hwmon/corsair-cpro.c b/drivers/hwmon/corsair-cpro.c
+index 62f9372f2d355..e0cf92896bc66 100644
+--- a/drivers/hwmon/corsair-cpro.c
++++ b/drivers/hwmon/corsair-cpro.c
+@@ -128,9 +128,9 @@ static int send_usb_cmd(struct ccp_device *ccp, u8 command, u8 byte1, u8 byte2,
+ 	 * the raw event parsing and marked the ccp->wait_input_report
+ 	 * completion as done.
+ 	 */
+-	spin_lock_bh(&ccp->wait_input_report_lock);
++	spin_lock_irq(&ccp->wait_input_report_lock);
+ 	reinit_completion(&ccp->wait_input_report);
+-	spin_unlock_bh(&ccp->wait_input_report_lock);
++	spin_unlock_irq(&ccp->wait_input_report_lock);
+ 
+ 	ret = hid_hw_output_report(ccp->hdev, ccp->cmd_buffer, OUT_BUFFER_SIZE);
+ 	if (ret < 0)
+@@ -149,15 +149,16 @@ static int send_usb_cmd(struct ccp_device *ccp, u8 command, u8 byte1, u8 byte2,
+ static int ccp_raw_event(struct hid_device *hdev, struct hid_report *report, u8 *data, int size)
+ {
+ 	struct ccp_device *ccp = hid_get_drvdata(hdev);
++	unsigned long flags;
+ 
+ 	/* only copy buffer when requested */
+-	spin_lock(&ccp->wait_input_report_lock);
++	spin_lock_irqsave(&ccp->wait_input_report_lock, flags);
+ 	if (!completion_done(&ccp->wait_input_report)) {
+ 		memcpy(ccp->buffer, data, min(IN_BUFFER_SIZE, size));
+ 		ccp->buffer_recv_size = size;
+ 		complete_all(&ccp->wait_input_report);
+ 	}
+-	spin_unlock(&ccp->wait_input_report_lock);
++	spin_unlock_irqrestore(&ccp->wait_input_report_lock, flags);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
