@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045013;
-	b=eBLonyTsLh17aaSUdBUd0WQRjTN41yyrOKLnPRdfwhG4yw8HuOCnRmXTxoARQU2CySuY
-	 3TfOPCiVjYPkJablswrhEsJcIo/rR4ztr6037uVoWrdF5e2wv0F/o4UGn4I8EW7ib+l6A
-	 yH0SNjK9GcY07gFfxg1Y7uHWWYJ+1JE5BKKvSo5zwaBY/siYUlgwKAGkjRXUOqIXEF5Tj
-	 8UANm3sbEoAsTvT7toDWeG0F9L2sI+VzSsBQLpzsGu2C6xbZRBn9kLniv0RRAUqNkDJpf
-	 BoDCUQ9qzFr92kmTBJn3dp0/ewsc/iRKdhe7IrCqnpJTfa/tXOELpBxwxI5nnbpPF9A==
+	t=1795045016;
+	b=bvfHlqYaSIC0sFY15F3CCWaHe3A2kpjPtS12mcL3E5h8zHhaqt6eeQ2LIoCMtqWdltWN
+	 wSMwJgnA2EuXpZC3z2H0nWkD6AaFWabRR1Jw+LGkP/Dnt/rMfY8kgP7fxRYieOT+qp0lK
+	 42HEQFneCRESTt/IFOstGXU+4fjEt0H7OfhGvc1GCoNkl/QZR3orxIxG4XmrIf72DpgDy
+	 nyv5ueSwoQgoWTrNeOENV4JIZ+I7A4R12vob0Q4AeTyjq0/sZUu8eDVvDOzYcgLkrgq9G
+	 VB39LryviP50xZLwwPs4YyZCGorbHv073II/tVZuW+h8wZbaueWFI0b0MedNOcN51jw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045013;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045016;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=y6SgZtvGStUu6uMbWrq90wr901zNk4xnRrwQMmyYf6g=;
-	b=rZ4E5Iw1b0123tMyn1QomhpfP0scDRonteGjQXBThk421BAKP0TSVkQLTClhD9gXrw79
-	 5/L3JCetcZflk8t4nXMnoTd26DljijQNMzUjwjv+lc87h/dcz8UsHkoURbO3g3m9NYIBl
-	 sOmhUAK8XiChUXzhyCV/S6AwwlkNahFDbyVdJYMMxrdegKfaCL21lSD7ZSE2hzUlOFRbn
-	 kDTLMeXilBpldfVj/cl+MTCiAG2w+3p84sDadPKWMAa90U8SA/7Bftil+EZ/I7w+iwCmE
-	 dImyvu1UIQV3RF62ee+IrIsV/cyRxAf1hb0AzTjrkVJQhXSg5gsapIsz17RFrRmiqVw==
+	bh=JIrCanlmgNzLQ/w/7Hst9zF49+TPmay3QC3CZG85SjA=;
+	b=q/CzM4e4otieaEX5tKXx8FQ3DGI6Yw0FGx1z8OHmbvIyq00QkVxcf9tY4snFAjrGYgOe
+	 rK7hshcegu+yEjKolVruq2kLrofpyCAfvqdmbzd8sG1wDGXlRL8IhVNSPhb3pKUXY4i63
+	 nmTTeVq6V7ciqrryKDP9uQndj8mzeL1BLRWtUMhpyGEbK7j/v06q8UfWLKQg9gdTsTXL8
+	 JP9eBv873TPrCiaXb0wVWP8bw6QiRohTdOmlz/FEoXpQWsskZZyqLROZXhyrbz+z2weEw
+	 pLOsxZgpLlTALYjm+xD3xELpoupSRjzpgeWNxoJtBuwWRnSNMYKurGuJqyimVHDLa5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YNPEcL5r;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZoKR1qnm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6C8606A320;
-	Wed, 18 Nov 2026 23:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC74606A320;
+	Wed, 18 Nov 2026 23:36:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YNPEcL5r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91CE21F000C4;
-	Wed, 18 Nov 2026 23:36:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZoKR1qnm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E1FE1F000C4;
+	Wed, 18 Nov 2026 23:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045013;
-	bh=y6SgZtvGStUu6uMbWrq90wr901zNk4xnRrwQMmyYf6g=;
+	s=korg; t=1795045015;
+	bh=JIrCanlmgNzLQ/w/7Hst9zF49+TPmay3QC3CZG85SjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YNPEcL5rzHaZJMIt4VTnr34hSugJgUAmhriNBpc+kYKvh0guku8PnvXFPRiE5liYg
-	 d6nnvwBS9G13jw3GAadUGSx6CvfWpDOjxL/ThCG9jxDKFl7PuYcojK6ofsXS7RmECP
-	 ah8INaFEIbtuuTf0IY3ZiO6S46p48+TQsmhWFKcU=
+	b=ZoKR1qnmSJZMaYlTHYSFm9HX54CoiRof+H++ANjaLq7Gr/pOBrMMFjQMhrh+a6LYh
+	 Nqv9rwao7KchYohctGRNeL3yglhN8xB1Oy1EMJhv15/S+xNpBdxqeUg34/eALW8cJI
+	 +d1uKLZo9ABZLD97FsFKMdjfrhxeDrES0tF552Qw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	syzbot+45ef5a8d661162757547@syzkaller.appspotmail.com,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0770/2857] ata: ahci_st: Assert the power down reset in the probe() error path
-Date: Wed, 18 Nov 2026 15:30:04 +0100
-Message-ID: <20261118150229.291281220@linuxfoundation.org>
+Subject: [PATCH 6.1 0771/2857] ntfs3: bound index head insertions by buffer capacity
+Date: Wed, 18 Nov 2026 15:30:05 +0100
+Message-ID: <20261118150229.329469347@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,131 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit 91e0a7452d7a81e924a499b23f30f3bf85fddbd2 ]
+[ Upstream commit 2f497d23652ff23da07b08cfb4b4a1c2a87f1892 ]
 
-st_ahci_probe_resets() deasserts the "pwr-dwn" reset, but the probe()
-error path of st_ahci_probe() only releases the host resources, so the
-SATA IP is left powered up when probe() fails after
-st_ahci_probe_resets() has succeeded, e.g. when
-ahci_platform_enable_resources() fails.
+hdr_insert_head() shifts the existing index entries by ins_bytes without
+checking that the resulting used size fits within hdr->total. A directory
+index root larger than the newly allocated index buffer can therefore make
+the memmove write beyond the buffer.
 
-The reset is asserted by st_ahci_host_stop(), however ->host_stop() is
-only called through the ata_host_stop() devres action registered by
-ata_host_start(), so it does not cover any failure happening before the
-host has been started.
+Reject insertions whose size would exceed the index header capacity and
+make both split callers unwind the new node when that happens.
 
-Factor the assert out into st_ahci_assert_pwrdwn() and call it when
-either ahci_platform_enable_resources() or ahci_platform_init_host()
-fails. The "pwr-dwn" reset control is an exclusive one, so asserting it
-once more from st_ahci_host_stop() is harmless.
-
-No functional change intended for ->host_stop() and st_ahci_suspend().
-
-Fixes: 76884cb2f7da ("ahci: st: Add support for ST's SATA IP")
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Reported-by: syzbot+45ef5a8d661162757547@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=45ef5a8d661162757547
 Cc: stable@vger.kernel.org
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20260915084127.692494-10-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/ahci_st.c | 51 +++++++++++++++++++++++++------------------
- 1 file changed, 30 insertions(+), 21 deletions(-)
+ fs/ntfs3/index.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ata/ahci_st.c b/drivers/ata/ahci_st.c
-index 8da0b769fc0d3..96a92db2b83fc 100644
---- a/drivers/ata/ahci_st.c
-+++ b/drivers/ata/ahci_st.c
-@@ -84,18 +84,27 @@ static int st_ahci_deassert_resets(struct ahci_host_priv *hpriv,
- 	return 0;
- }
+diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
+index 875de16166e63..05e4c2fee712d 100644
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -595,6 +595,8 @@ static const struct NTFS_DE *hdr_insert_head(struct INDEX_HDR *hdr,
  
--static void st_ahci_host_stop(struct ata_host *host)
-+static int st_ahci_assert_pwrdwn(struct ahci_host_priv *hpriv,
-+				 struct device *dev)
- {
--	struct ahci_host_priv *hpriv = host->private_data;
- 	struct st_ahci_drv_data *drv_data = hpriv->plat_data;
--	struct device *dev = host->dev;
- 	int err;
+ 	if (!e)
+ 		return NULL;
++	if (size_add(used, ins_bytes) > le32_to_cpu(hdr->total))
++		return NULL;
  
--	if (drv_data->pwr) {
--		err = reset_control_assert(drv_data->pwr);
--		if (err)
--			dev_err(dev, "unable to pwrdwn\n");
--	}
-+	if (!drv_data->pwr)
-+		return 0;
-+
-+	err = reset_control_assert(drv_data->pwr);
-+	if (err)
-+		dev_err(dev, "unable to pwrdwn\n");
-+
-+	return err;
-+}
-+
-+static void st_ahci_host_stop(struct ata_host *host)
-+{
-+	struct ahci_host_priv *hpriv = host->private_data;
-+
-+	st_ahci_assert_pwrdwn(hpriv, host->dev);
+ 	/* Now we just make room for the inserted entries and jam it in. */
+ 	to_move = used - le32_to_cpu(hdr->de_off);
+@@ -1797,7 +1799,10 @@ static int indx_insert_into_root(struct ntfs_index *indx, struct ntfs_inode *ni,
+ 	}
  
- 	ahci_platform_disable_resources(hpriv);
- }
-@@ -160,18 +169,23 @@ static int st_ahci_probe(struct platform_device *pdev)
+ 	/* Copy root entries into new buffer. */
+-	hdr_insert_head(hdr, re, to_move);
++	if (!hdr_insert_head(hdr, re, to_move)) {
++		err = -EINVAL;
++		goto out_put_n;
++	}
  
- 	err = ahci_platform_enable_resources(hpriv);
- 	if (err)
--		return err;
-+		goto assert_pwrdwn;
+ 	/* Update bitmap attribute. */
+ 	indx_mark_used(indx, ni, new_vbn >> indx->idx2vbn_bits);
+@@ -1949,7 +1954,11 @@ indx_insert_into_buffer(struct ntfs_index *indx, struct ntfs_inode *ni,
+ 	/* Copy all the entries <= sp into the new buffer. */
+ 	de_t = hdr_first_de(hdr1);
+ 	to_copy = PtrOffset(de_t, sp);
+-	hdr_insert_head(hdr2, de_t, to_copy);
++	if (!hdr_insert_head(hdr2, de_t, to_copy)) {
++		err = -EINVAL;
++		put_indx_node(n2);
++		goto out;
++	}
  
- 	st_ahci_configure_oob(hpriv->mmio);
- 
- 	err = ahci_platform_init_host(pdev, hpriv, &st_ahci_port_info,
- 				      &ahci_platform_sht);
--	if (err) {
--		ahci_platform_disable_resources(hpriv);
--		return err;
--	}
-+	if (err)
-+		goto disable_resources;
- 
- 	return 0;
-+
-+disable_resources:
-+	ahci_platform_disable_resources(hpriv);
-+assert_pwrdwn:
-+	st_ahci_assert_pwrdwn(hpriv, &pdev->dev);
-+
-+	return err;
- }
- 
- #ifdef CONFIG_PM_SLEEP
-@@ -179,20 +193,15 @@ static int st_ahci_suspend(struct device *dev)
- {
- 	struct ata_host *host = dev_get_drvdata(dev);
- 	struct ahci_host_priv *hpriv = host->private_data;
--	struct st_ahci_drv_data *drv_data = hpriv->plat_data;
- 	int err;
- 
- 	err = ahci_platform_suspend_host(dev);
- 	if (err)
- 		return err;
- 
--	if (drv_data->pwr) {
--		err = reset_control_assert(drv_data->pwr);
--		if (err) {
--			dev_err(dev, "unable to pwrdwn");
--			return err;
--		}
--	}
-+	err = st_ahci_assert_pwrdwn(hpriv, dev);
-+	if (err)
-+		return err;
- 
- 	ahci_platform_disable_resources(hpriv);
- 
+ 	/* Remove all entries (sp including) from hdr1. */
+ 	used = used1 - to_copy - sp_size;
 -- 
 2.53.0
 
