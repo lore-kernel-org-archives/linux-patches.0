@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037961;
-	b=IJGRRV6u1dpN3UdoM1GfZYdhKE7A2hEWvsVGYywQyrSGqrSC5tvLmQd7qvuetRMrigVQ
-	 iLSvFFmhDmeZyvHR9V7WxNR7+Fl4/JzJHF47JnEK3gjS6J3JHdz2cq1lEDC6TDJ0zg8YH
-	 S/mRO+ZJOchO6kNt6tTwZTIe6XJ+96dMcdoInGASjp5lhd9dfO8wS0OAmLSBi+SU9ZaxC
-	 /FVkfmKnN2W71vCosX530nLulmfdSlR/MJ+WxBgzSLZM85V8/LbMQ7f7igrypD6dO3goO
-	 ld2+AXIin+IR3x4hRKNRkxjma8Aq5CdJZL7WcsY0uvH8oprhoOMG50diAKisLoujn3w==
+	t=1795037964;
+	b=EfMQ1NQ09j56lJOhRUJfTEb6UqtAzMiCFK+zUYxQx2abWBTIyu1lgHDjer+Tu1l9XUpK
+	 Fp37PVprmFBqVTgMyRPQCnZM4RCo19fD4ELGNYdiE/l0u3BVGIl6YGKt1oF18Nh9uBAfY
+	 PsOU5QkX+mKP2+2e/+Xgk3W9F68i00HKn/hzasVXDaXyUo6PJJkWj3MUkELCjRzYoSd7c
+	 ok7CWoYOwDPNsSLoJBrqXgjWd+XdsHiraliGL6stOTejUsN+TBQV4Bf2JwB0oLce/GGde
+	 LssutnPUt48mVfSS6e9lrY4hHydq0k4M7EekuntFwF3WWFkKpbZkSi4jtJhwDhOfM6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037961;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037964;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EatHtv+dOnlLSbDftOuckMRI1ZC7Ki2DRWiuEyy2okk=;
-	b=UD6QV3oEMDmQ7pcAlKxXo1u2DaG9JIRoJ2Gf4LjNj2m/c18ZD7gsBFnU9WQQqJLE+CjD
-	 IKwRKtfjUSHt+0yXria0e6EJAWzB9SW1XUupiF2MqEZwMmT0JV7KmcdpzRUQM4TBHYXKt
-	 9Z5beefpEb5J07ryX4wdp5FtJBcnt5R3/AnseA5OgN6I/ugVw0Yy6/NK18q5k1EI2BYY9
-	 p6nIakY3BbNopoD/Vw7B/BQQzchUC0BxsG9T5TolC2epHWhYT/u76CxE7qKqBYLp64aFS
-	 GynLss7H13IUQhFl3APC7gJN0B0uajTB/O+SxlvyS1UFzpb+BJQUE+hsSjljCOdyd5g==
+	bh=e2F9yKBbwY/5ua+ulxNy70Ht6KS35rDcdJymhrhh6HM=;
+	b=cL3JJST8hsBsfHBAqhDb2kaTDUZR9qO57JE+k/ALt94+bo/3m0OOU4eWMiX7qmI4cpai
+	 fr+ihMJapKKqdReKhk5iLSGKaujv5BJ+0+XupgzpdBVT6ynQzir/3+OA35w8RDD1cEmCn
+	 HqOaBvdFw/ANec1VrtTunB+BQ19a8bZCiuiYrQunrEKdQS8AJIzH34BRotUFX/AjFPzBU
+	 DVyOvrt9e8I7/fe6C87hU8zjbWLDjPNqpjrNDs9KBLt3ghGERThQufDo1O1o/tKwXybRt
+	 xISDs547I0jo65NUN5sbIWEVkYnJ6caoKIn9L3r17IjGUGRbA3xlB/P5s4bCPvPK1uA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1HzCIE4x;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="JF/ZsN6F";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D71606A320;
-	Wed, 18 Nov 2026 21:39:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58BA3606A31C;
+	Wed, 18 Nov 2026 21:39:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1HzCIE4x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB1811F000C4;
-	Wed, 18 Nov 2026 21:39:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JF/ZsN6F
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1EC51F000C4;
+	Wed, 18 Nov 2026 21:39:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037961;
-	bh=EatHtv+dOnlLSbDftOuckMRI1ZC7Ki2DRWiuEyy2okk=;
+	s=korg; t=1795037964;
+	bh=e2F9yKBbwY/5ua+ulxNy70Ht6KS35rDcdJymhrhh6HM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1HzCIE4xI96pJgNtEWIOxpRuWTiGpz7gMkWI1nzyGZy0GK4anAeTiDZeP8PkfrkCg
-	 k6Kjt4RQj9nO0Ql2J0aBME93qKy1miQtgg3tPqNlJw1Sb6drQ2wsYE1j1GRegh+qq2
-	 YWzDqvopOYMrgabJTRyoEmtTrxj0WGu87WVabbFg=
+	b=JF/ZsN6F/fwo4Rig7B9F2sqr4Id4MZ4Xi5VM2YzhATnYA+rj6q4sfzrtT/QLEoCRc
+	 0wFapL5ipZjxzl+/3LtrzM7R8i7mprfGFYKDZEPuQZ/dnfUd18RB99+FTkPGT0o6hR
+	 aUQ4vczJ1zwUV7RxmObsOQ6SxiLOfXpMjQBreKRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Gongyi <zhaogongyi@bytedance.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Valentin Caron <valentin.caron@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1578/3318] ata: libata-scsi: reject data-in commands with a data-out buffer
-Date: Wed, 18 Nov 2026 15:36:40 +0100
-Message-ID: <20261118150408.457767697@linuxfoundation.org>
+Subject: [PATCH 6.6 1579/3318] perf cs-etm: fix a compilation issue in cs_etm_decoder__set_tid()
+Date: Wed, 18 Nov 2026 15:36:41 +0100
+Message-ID: <20261118150408.487539816@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,92 +67,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Gongyi <zhaogongyi@bytedance.com>
+From: Valentin Caron <valentin.caron@foss.st.com>
 
-[ Upstream commit a4845f077415ef32fe672c841e2fc58ae9e28273 ]
+When compiling coresight tool with the command:
+make -C tools/perf CORESIGHT=1 all
 
-SG_IO can submit a data-in SCSI command with DMA_TO_DEVICE. The
-scatterlist can then contain pages pinned without write access.
-ata_scsi_rbuf_fill() writes simulated replies to that scatterlist;
-in the reported case, the copy tried to write the shared zero page
-and faulted in the kernel.
+The following build issue occurs:
+util/cs-etm-decoder/cs-etm-decoder.c:551:15: error: too many arguments to
+function 'cs_etm_decoder__buffer_packet'
+  551 |         ret = cs_etm_decoder__buffer_packet(etmq, packet_queue,
+      |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The same mismatch can affect SG_IO commands translated by libata.
-ZBC IN and GET PHYSICAL ELEMENT STATUS completion handlers can modify
-the receive buffer even if the drive aborts the command. For ATAPI,
-the successful INQUIRY completion also rewrites the buffer in
-atapi_fixup_inquiry().
+Fix this by removing the parameter "etmq" from function call to match its
+declaration:
+cs_etm_decoder__buffer_packet(struct cs_etm_packet_queue *packet_queue,
+			      const u8 trace_chan_id,
+			      enum cs_etm_sample_type sample_type)
 
-Reject these mismatched commands before the buffer is written or the
-command is issued. Report ABORTED COMMAND / DATA IN BUFFER ERROR because
-the CDB itself can be valid; the supplied transfer direction is wrong.
-
-Backport notes: Use the older five-argument ata_scsi_set_sense()
-interface and spell DATA IN BUFFER ERROR as ASC/ASCQ 0x4b/0x0a.
-The older ata_scsi_rbuf_fill() takes struct ata_scsi_args;
-get the device and command from args, and reject before copying.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://lore.kernel.org/r/20261104130638.37882-1-zhaogongyi@bytedance.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhao Gongyi <zhaogongyi@bytedance.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Fixes: 99d324594165 ("perf cs-etm: Queue context packets for frontend")
+Signed-off-by: Valentin Caron <valentin.caron@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ tools/perf/util/cs-etm-decoder/cs-etm-decoder.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index ebbed8bb5e8e3..5f8548a4f3a8f 100644
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -1836,6 +1836,18 @@ static int ata_scsi_translate(struct ata_device *dev, struct scsi_cmnd *cmd,
- 	if (xlat_func(qc))
- 		goto done;
+diff --git a/tools/perf/util/cs-etm-decoder/cs-etm-decoder.c b/tools/perf/util/cs-etm-decoder/cs-etm-decoder.c
+index 277da9f767b9d..caacab8c92e26 100644
+--- a/tools/perf/util/cs-etm-decoder/cs-etm-decoder.c
++++ b/tools/perf/util/cs-etm-decoder/cs-etm-decoder.c
+@@ -548,7 +548,7 @@ cs_etm_decoder__set_tid(struct cs_etm_queue *etmq,
+ 				elem->context.exception_level, tid))
+ 		return OCSD_RESP_FATAL_SYS_ERR;
  
-+	/*
-+	 * A data-out request may contain pages pinned without write access.
-+	 * Reject a translated data-in command before issuing it, since its
-+	 * completion handler may write to the buffer even if the device fails.
-+	 */
-+	if (unlikely(cmd->sc_data_direction == DMA_TO_DEVICE &&
-+		     ata_is_data(qc->tf.protocol) &&
-+		     !(qc->tf.flags & ATA_TFLAG_WRITE))) {
-+		ata_scsi_set_sense(dev, cmd, ABORTED_COMMAND, 0x4b, 0x0a);
-+		goto done;
-+	}
-+
- 	return ata_scsi_qc_issue(ap, qc);
- 
- done:
-@@ -1872,6 +1884,12 @@ static void ata_scsi_rbuf_fill(struct ata_scsi_args *args,
- 	struct scsi_cmnd *cmd = args->cmd;
- 	unsigned long flags;
- 
-+	/* A data-out request may contain pages pinned without write access. */
-+	if (cmd->sc_data_direction == DMA_TO_DEVICE) {
-+		ata_scsi_set_sense(args->dev, cmd, ABORTED_COMMAND, 0x4b, 0x0a);
-+		return;
-+	}
-+
- 	spin_lock_irqsave(&ata_scsi_rbuf_lock, flags);
- 
- 	memset(ata_scsi_rbuf, 0, ATA_SCSI_RBUF_SIZE);
-@@ -2747,6 +2765,13 @@ static unsigned int atapi_xlat(struct ata_queued_cmd *qc)
- 
- 	qc->complete_fn = atapi_qc_complete;
- 
-+	/* atapi_fixup_inquiry() writes to the buffer on successful completion. */
-+	if (scmd->sc_data_direction == DMA_TO_DEVICE &&
-+	    scmd->cmnd[0] == INQUIRY) {
-+		ata_scsi_set_sense(dev, scmd, ABORTED_COMMAND, 0x4b, 0x0a);
-+		return 1;
-+	}
-+
- 	qc->tf.flags |= ATA_TFLAG_ISADDR | ATA_TFLAG_DEVICE;
- 	if (scmd->sc_data_direction == DMA_TO_DEVICE) {
- 		qc->tf.flags |= ATA_TFLAG_WRITE;
+-	ret = cs_etm_decoder__buffer_packet(etmq, packet_queue, trace_chan_id,
++	ret = cs_etm_decoder__buffer_packet(packet_queue, trace_chan_id,
+ 					    CS_ETM_CONTEXT);
+ 	if (ret != OCSD_RESP_CONT && ret != OCSD_RESP_WAIT)
+ 		return ret;
 -- 
 2.53.0
 
