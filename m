@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029618;
-	b=LhXsToZ2S/Ynt0AsP2SAeApe0oyJGHNPkDRsIzyigV9voukoAzZnoYK9yYIondkfvc0U
-	 gZ9WtpTOxxn50syz2mXXLifUj17S5Al2JUTrrpPz5TzYNlX+1793G8pRJNJFLEVcIDTSp
-	 HdX6Wa7GkdK4IHgAdHJMoPIOr+fm3rTfiwjdj/RRMfbqCLCna5Rux9TO5/jkf3vlpiFPC
-	 qFwkJPF6C0ZymeV0fkuiLSrh52nBYWAf06P5mn9p+PT7BXmjodxL34AipZqci2XpFWle2
-	 9Nf/HijGbL6plTXDzAhyJNM8cEPFD/RyTWtaB8wTokL2M5YixbeHbxaGf2MCvsp1xZQ==
+	t=1795029621;
+	b=FUKtKopu4sNtrr65njOeqFL2mEDmZZHXsFHQk8B2ni+jQzsw7jpbXbSfQCEa4stL1Pf7
+	 Uux79Awo3qPWDt40F5fL15Pw8TiyoVNMy97rDFoO3lvNdBrzMabqVTk5ixDI0ttm0YsJC
+	 sexayVmaMuGqnM9PIOznLCzisoY1BzPJMw0fxAn/iXqrQ8YihyJqCKA/c5+CycL8t1iS3
+	 vci8PiZLUOVmrzuMcMeZxgEmpdkT6LQjTLV55QoJCbApEAMW247sSNcqRRLFFUvljon6F
+	 0FqwFchYUmVAB79XvUJ7kAQ4XShy68RBBZAGF3Z8/LcT3XiZ8TNm+an9CCgPIasgK7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029618;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029621;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MqVf2osESPKwDIeQsz20/32/CCi4/5vJwjSpod5gO6o=;
-	b=Z5YnHPvlpejcorYd24di8wcgvFjsFIVbAz1xgZsJxRFd+PWACpKkAkQdXQaeN2wktmGs
-	 ohSeLMm0lcSBOzq0xGp81/Mm1bq0iz/M0qCL8dqExiXQxgZJlrJLcnCoH0QQEQlKoWMyw
-	 sftjppSo/vRl25g0H6aiyLHN97pBYQkPnkePGRFD6HD1suRSgqWg6fO+GRSPi9mhH/wop
-	 676SvjJF4BH81oKRo1vZAl2ksYlZDTvnfrqZNhSdkex4ef8BmCeZCz7jijPLGTgHk8qI/
-	 4RHGD+RB8+QHO05ZjHn4TYId4m2ld4XCy+ZDrGWTT+s68VzybpV/LoOWmtHLqsnMx/Q==
+	bh=ZnvjAIjWJXbtJzRoW7gGPrZ/Ij7p2MzACsMOsj0ojzI=;
+	b=I5bJCu1WyU7OzUn1q5eEc9Azep1UUPBeYOnosn5lI7dPQ4Kfy9YJ5Wr2vgQwqc0GtDu0
+	 GlzHxwiWKf57i+4urGFvu+Lcb2p5Nn+XgV8F3YHnWlVFfmboPTvFcLKJKj1zyhdynW9Ef
+	 FC2PkQOg5waUZeQ6Agz08q6V5j426aqNjrJcv2FW5N72aksVYC+spxPvnSnX2e5WYE7TK
+	 0Kd/BD1WX+oT4P7YDCn3KsdlZVOfcWIVSitW0DA35ALsHHGIgXLVWBSt6a9qgZy67kzZv
+	 M0QrrsbK9wd/15o07JQolZMQxxIAgmFsc7QTOVqj+IXx8Daw5vZ0Y+O7ywywOeYXoRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="kd/A4/Bm";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=frwwXhhB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92418606A333;
-	Wed, 18 Nov 2026 19:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8F5606A31C;
+	Wed, 18 Nov 2026 19:20:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kd/A4/Bm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E85F51F000C5;
-	Wed, 18 Nov 2026 19:20:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=frwwXhhB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAA071F000C4;
+	Wed, 18 Nov 2026 19:20:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029618;
-	bh=MqVf2osESPKwDIeQsz20/32/CCi4/5vJwjSpod5gO6o=;
+	s=korg; t=1795029621;
+	bh=ZnvjAIjWJXbtJzRoW7gGPrZ/Ij7p2MzACsMOsj0ojzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kd/A4/BmhgfFM6wGlOJZyNNSwS0JOj25u39IsHFnlBHSXKMrZRCnUDqsC88lNq1+7
-	 +YWuw/OSIieNYtDKbtTneWjyOUlw8B9/zgAcOZr69hD6Q+oAyMRCuGh0bNBKBxpExR
-	 xlsh+YGnFjBqODfRmoejFNvg0rkxkjNWZ4Nyxij8=
+	b=frwwXhhBwdU/aeRYBBE7Bk1vpobWljbQj2tVyfnWGafSeeIF1Rk528rrS+D2mBrex
+	 CazvambtNv4zLovtLd6Z4roJasAPbAzJuO5ZWbXHNy1TfkEo9IoAZ2CXhwtcah9yDu
+	 berSfVAKqU/e39Xz54X4tJRzTE0PCTLeinKgKl50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Brian Masney <bmasney@redhat.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0377/1756] clk: mediatek: reset: Fix device registration kernel-doc
-Date: Wed, 18 Nov 2026 15:41:44 +0100
-Message-ID: <20261118150023.475485957@linuxfoundation.org>
+Subject: [PATCH 6.12 0413/1756] media: i2c: ar0521: remove duplicate media entity cleanup
+Date: Wed, 18 Nov 2026 15:42:20 +0100
+Message-ID: <20261118150025.181120514@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,47 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 8d5fa37307ac1f0612cf17ac0ccabcc258cc1526 ]
+[ Upstream commit 069a0343581bfcaee44bc598e2b95be2e2789807 ]
 
-The comment for mtk_register_reset_controller_with_dev() names the
-older helper and documents np rather than dev. The new helper takes
-a struct device and obtains its device node internally.
+The error path taken when ar0521_power_on() fails calls
+media_entity_cleanup() at the disable label and then falls through to
+the entity_cleanup label, where media_entity_cleanup() is called again.
 
-Use the actual function and parameter names and clarify that failures
-return negative error codes.
+There is no need to clean up the media entity twice. Remove the first
+call and let all error paths converge on the common entity_cleanup
+label.
 
-Fixes: 761bc64003e3 ("clk: mediatek: reset: Add new register reset function with device")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+This issue was found by manual code inspection.
+
+Fixes: 852b50aeed15 ("media: On Semi AR0521 sensor driver")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/reset.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/media/i2c/ar0521.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/clk/mediatek/reset.h b/drivers/clk/mediatek/reset.h
-index 562ffd290a224..b09cdcab0c4ba 100644
---- a/drivers/clk/mediatek/reset.h
-+++ b/drivers/clk/mediatek/reset.h
-@@ -60,11 +60,11 @@ struct mtk_clk_rst_data {
- };
+diff --git a/drivers/media/i2c/ar0521.c b/drivers/media/i2c/ar0521.c
+index 24873149096c1..ca5bc1894bc40 100644
+--- a/drivers/media/i2c/ar0521.c
++++ b/drivers/media/i2c/ar0521.c
+@@ -1140,7 +1140,6 @@ static int ar0521_probe(struct i2c_client *client)
  
- /**
-- * mtk_register_reset_controller - Register mediatek clock reset controller with device
-- * @np: Pointer to device.
-+ * mtk_register_reset_controller_with_dev - Register a MediaTek reset controller
-+ * @dev: Device used to manage the reset controller resources.
-  * @desc: Constant pointer to description of clock reset.
-  *
-- * Return: 0 on success and errorno otherwise.
-+ * Return: 0 on success, negative errno otherwise.
-  */
- int mtk_register_reset_controller_with_dev(struct device *dev,
- 					   const struct mtk_clk_rst_desc *desc);
+ disable:
+ 	v4l2_async_unregister_subdev(&sensor->sd);
+-	media_entity_cleanup(&sensor->sd.entity);
+ free_ctrls:
+ 	v4l2_ctrl_handler_free(&sensor->ctrls.handler);
+ entity_cleanup:
 -- 
 2.53.0
 
