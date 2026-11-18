@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020695;
-	b=epFTcFZohWt0YyTU6DUEw5Jtz7M5T7d8dxou0OSkYWLiCs/ttWAgLJf4/E8bBr0yA7m7
-	 ICQ+hB3qvY3fPkUMoyIVChju1/KQz1qlip4Ud4HDkbBMzffLHMRq16ZyrLR9k91YZFxcQ
-	 LN+dZPjxt+7jo9g3P1Nx80OyCa5yH2bvrYyrR+XaVUEsZDMIvaFeXBtcl40X5Qu0PScOz
-	 /2Ui+wkxVfM8gtcBh07XmfsN4IGFzC034n2L/1Z/Ye+XR8e8NCW1+vGF95yuLmFzP+Yke
-	 dFT9G82ZhJl1bRTosDOqKxj6DbLoR3lvkvEIzt1tmNlXlhUnn8IX6oHSPqcTiNtMUgg==
+	t=1795020697;
+	b=emGRN7fvdI2xWq4GVXQRM0uFraLKohPuT3GWju/2DDyJFYa/K+3z28Pa+EooEyOoJS1r
+	 W7E/u5Hn1l9Q5czm0D+fECi0JlDOWuI4sI7D8BE+HwhYygEsWFtYh+YYan2dxJmcpCJWo
+	 UTwiaPnuKkL3kBDx+DtYPBWe1UQPEdPRSEB1a3rDmQ5Hip2EVCfT5yf6GjPahmmh9BTDg
+	 aSkndf9uCfRsBK/vjP0B+tTVp//yplv8gn6uYzV5l53fuFYWho4OMasdRMvRQKqam2jWG
+	 J6xiupoNZBfvBihj1LqkvBAE88QifAOk+cy9o9ohqkutIAJ5+KKEJtM6cCnUjG0jE8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020695;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020697;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hYN1zKBW0krv16u/hrIPEj7NmLSwU9rTlVfM2nsr7X0=;
-	b=o2Ec5+zbJGms6huVWkSeCEEzTxfLGJdnhUgVLyX674mRuetlP04KVHFMfZWT9OMPfqLc
-	 /h57TLX/2UqtPOBtBRQhNL6AEbQiYzfhaJD/r5R0CV20j52QmczgXOvC+eOL2+jRtM4Pl
-	 /83FIsPVNuI71aEmnHTB3g5br9Jm0djX4kKtZv40bP4Fy3LAMHqKb5c//BDUXKBVCnNUb
-	 jQGc9i3lfSjXUPu7utp3K9LmI4ADvIsDRv9l4OskBaS/YatsRHTvsQAFClWBjtToGG2vf
-	 +7NZM4oziLjMkquKgqO5IAxWZv5wkmU9fs92qspLxeVIs+4e76mAatKQqpOhzI9phsw==
+	bh=q2X2am8YbacmMNTQv46X5ROn1Ww72DOz6Lau0qPMHBo=;
+	b=KU0fJhWp9fVlaKLt9+tzZuPtFCZOxnS2lBmiHAh6Xl79o7/wPOp7BrwFvlFnbrtYsrlQ
+	 fPYuuUmFIeIv2XKJWy4Z0imeJv0JT1WRMBT+31mlGhdwbSQTudKPhUcXMT9rq1N1uzxyT
+	 rSX1zHe/kyVzJUTYt/6zOemqoNHemOYXWiSVVY49qpM2xI46vkK7Aom3KkG4LIomWTeDq
+	 nCXiW5CCqLPTnPZ51zmr6qLhtGs5/u/Ewcnh7tmFUlH4j80zPXtB2qKjTBd8dL/hPEEj+
+	 hWvj27ghi99+PquOQJd5QtYY+a+U1yKrQpQAqTD4E8P/7u57INimdTzzm+gMJjJDm2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KA9CG8MA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dq+rou7x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1089E60A2604;
-	Wed, 18 Nov 2026 16:51:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF9C60A260A;
+	Wed, 18 Nov 2026 16:51:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KA9CG8MA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 662FD1F000C8;
-	Wed, 18 Nov 2026 16:51:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dq+rou7x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22FD81F000C8;
+	Wed, 18 Nov 2026 16:51:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020694;
-	bh=hYN1zKBW0krv16u/hrIPEj7NmLSwU9rTlVfM2nsr7X0=;
+	s=korg; t=1795020697;
+	bh=q2X2am8YbacmMNTQv46X5ROn1Ww72DOz6Lau0qPMHBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KA9CG8MAxO/CDQ+OFSCpM/ncTxY3cDd8yu/EIMuqS7TaaQdjMlN7gF7j0xvqpVnkQ
-	 7RHQyc996cCT29AvvI7lMi1tMJvtoexzD+CGV0te+pt89HQ5ACyTckiqAoJlA25TUn
-	 vFYFMMk0zWvV30FHHItkAIf/dxl8dFfRoPDNTtVI=
+	b=Dq+rou7xUYy7NV+3EIKB/bvZR5PKjhy4CuhPKDSZLbmK3eyWwXVVeSTa+bgMErvET
+	 dDhRfFtZfyZ3xnoSLEFo7w18DvKqd+vU1sViTcWI6J3Z4XN8kCyUjvlsiV8B3OZfuS
+	 BuY79wle0WQ82RIXSLq4xek6ZUeSfssBmJXPRugE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ju Nan <junan76@163.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Qiliang Yuan <odys.yuan@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2042/2651] pinctrl: stm32: Fix the unit of the hwspinlock timeout
-Date: Wed, 18 Nov 2026 15:54:42 +0100
-Message-ID: <20261118150359.610464945@linuxfoundation.org>
+Subject: [PATCH 7.3 2043/2651] selftests/bpf: Expect at least one kprobe miss in missed/perf_kprobe
+Date: Wed, 18 Nov 2026 15:54:43 +0100
+Message-ID: <20261118150359.640227005@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,107 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ju Nan <junan76@163.com>
+From: Qiliang Yuan <odys.yuan@gmail.com>
 
-[ Upstream commit 544b3f8042dd7c18baa48dcb1a393ff8b6742322 ]
+[ Upstream commit 34d527e513c9a3f3a00f1ddf03fe06f493da14d0 ]
 
-HWSPNLCK_TIMEOUT is passed to hwspin_lock_timeout_in_atomic(), whose
-timeout argument is in milliseconds, not microseconds:
+missed_kprobe attaches test1 to bpf_fentry_test1 and test2 to
+bpf_kfunc_common_test, which test1 calls. test_missed_perf_kprobe()
+expects the kprobe of test2 to miss exactly one run, the one test1
+triggers, since kprobes don't nest.
 
-  atomic_delay += HWSPINLOCK_RETRY_DELAY_US;
-  if (atomic_delay > to * 1000)
-          return -ETIMEDOUT;
+The test is not serial, and the kprobe on bpf_fentry_test1 is global.
+Any other test that does bpf_prog_test_run() on a fentry/fexit program
+calls bpf_fentry_test1() and thereby fires test1, which calls
+bpf_kfunc_common_test() from kprobe context. The kprobe of test2 then
+counts an extra miss, and the test reads 2 instead of 1.
 
-The hwspinlock core documents this explicitly:
+Expect at least one miss, as missed_kprobe_recursion does since commit
+08a7078feacf ("selftests/bpf: Improve missed_kprobe_recursion test
+robustness").
 
-  If the mode is HWLOCK_IN_ATOMIC (called from an atomic context) the
-  timeout is handled with busy-waiting delays, hence shall not exceed
-  few msecs.
-
-Fixes: 290a9f937e5a ("pinctrl: stm32: use the hwspin_lock_timeout_in_atomic() API")
-Signed-off-by: Ju Nan <junan76@163.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Fixes: 01e4ae474e39 ("selftests/bpf: Add test for missed counts of perf event link kprobe")
+Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20261009-selftests-bpf-missed-perf-kprobe-v1-1-c9d0f75f6f99@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/stm32/pinctrl-stm32.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/missed.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
-index 6ebb8ea260d1b..241684cd383b5 100644
---- a/drivers/pinctrl/stm32/pinctrl-stm32.c
-+++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
-@@ -87,7 +87,7 @@
- #define gpio_range_to_bank(chip) \
- 		container_of(chip, struct stm32_gpio_bank, range)
+diff --git a/tools/testing/selftests/bpf/prog_tests/missed.c b/tools/testing/selftests/bpf/prog_tests/missed.c
+index 0b8f1aa5a3e74..b5fb0267e944a 100644
+--- a/tools/testing/selftests/bpf/prog_tests/missed.c
++++ b/tools/testing/selftests/bpf/prog_tests/missed.c
+@@ -36,7 +36,7 @@ static void test_missed_perf_kprobe(void)
  
--#define HWSPNLCK_TIMEOUT	1000 /* usec */
-+#define HWSPNLCK_TIMEOUT_MS	1
+ 	ASSERT_EQ(info.type, BPF_LINK_TYPE_PERF_EVENT, "info.type");
+ 	ASSERT_EQ(info.perf_event.type, BPF_PERF_EVENT_KPROBE, "info.perf_event.type");
+-	ASSERT_EQ(info.perf_event.kprobe.missed, 1, "info.perf_event.kprobe.missed");
++	ASSERT_GE(info.perf_event.kprobe.missed, 1, "info.perf_event.kprobe.missed");
  
- static const char * const stm32_gpio_functions[] = {
- 	"gpio", "af0", "af1",
-@@ -609,7 +609,7 @@ static int stm32_gpio_domain_activate(struct irq_domain *d,
- 
- 	if (pctl->hwlock) {
- 		ret = hwspin_lock_timeout_in_atomic(pctl->hwlock,
--						    HWSPNLCK_TIMEOUT);
-+						    HWSPNLCK_TIMEOUT_MS);
- 		if (ret) {
- 			dev_err(pctl->dev, "Can't get hwspinlock\n");
- 			return ret;
-@@ -946,7 +946,7 @@ static int stm32_pmx_set_mode(struct stm32_gpio_bank *bank,
- 
- 	if (pctl->hwlock) {
- 		err = hwspin_lock_timeout_in_atomic(pctl->hwlock,
--						    HWSPNLCK_TIMEOUT);
-+						    HWSPNLCK_TIMEOUT_MS);
- 		if (err) {
- 			dev_err(pctl->dev, "Can't get hwspinlock\n");
- 			goto unlock;
-@@ -1089,7 +1089,7 @@ static int stm32_pconf_set_driving(struct stm32_gpio_bank *bank,
- 
- 	if (pctl->hwlock) {
- 		err = hwspin_lock_timeout_in_atomic(pctl->hwlock,
--						    HWSPNLCK_TIMEOUT);
-+						    HWSPNLCK_TIMEOUT_MS);
- 		if (err) {
- 			dev_err(pctl->dev, "Can't get hwspinlock\n");
- 			goto unlock;
-@@ -1135,7 +1135,7 @@ static int stm32_pconf_set_speed(struct stm32_gpio_bank *bank,
- 
- 	if (pctl->hwlock) {
- 		err = hwspin_lock_timeout_in_atomic(pctl->hwlock,
--						    HWSPNLCK_TIMEOUT);
-+						    HWSPNLCK_TIMEOUT_MS);
- 		if (err) {
- 			dev_err(pctl->dev, "Can't get hwspinlock\n");
- 			goto unlock;
-@@ -1181,7 +1181,7 @@ static int stm32_pconf_set_bias(struct stm32_gpio_bank *bank,
- 
- 	if (pctl->hwlock) {
- 		err = hwspin_lock_timeout_in_atomic(pctl->hwlock,
--						    HWSPNLCK_TIMEOUT);
-+						    HWSPNLCK_TIMEOUT_MS);
- 		if (err) {
- 			dev_err(pctl->dev, "Can't get hwspinlock\n");
- 			goto unlock;
-@@ -1242,7 +1242,7 @@ static int stm32_pconf_set_advcfgr(struct stm32_gpio_bank *bank, int offset, u32
- 	spin_lock_irqsave(&bank->lock, flags);
- 
- 	if (pctl->hwlock) {
--		err = hwspin_lock_timeout_in_atomic(pctl->hwlock, HWSPNLCK_TIMEOUT);
-+		err = hwspin_lock_timeout_in_atomic(pctl->hwlock, HWSPNLCK_TIMEOUT_MS);
- 		if (err) {
- 			dev_err(pctl->dev, "Can't get hwspinlock\n");
- 			goto unlock;
-@@ -1320,7 +1320,7 @@ stm32_pconf_set_skew_delay(struct stm32_gpio_bank *bank, int offset, u32 delay,
- 	spin_lock_irqsave(&bank->lock, flags);
- 
- 	if (pctl->hwlock) {
--		err = hwspin_lock_timeout_in_atomic(pctl->hwlock, HWSPNLCK_TIMEOUT);
-+		err = hwspin_lock_timeout_in_atomic(pctl->hwlock, HWSPNLCK_TIMEOUT_MS);
- 		if (err) {
- 			dev_err(pctl->dev, "Can't get hwspinlock\n");
- 			goto unlock;
+ cleanup:
+ 	missed_kprobe__destroy(skel);
 -- 
 2.53.0
 
