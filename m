@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046442;
-	b=SqBlLvXnrZkRICOEJgPTyct0eFn68FTgc44RYUVaU/OPFv+EMxqSPKopseBTfVXXt6s+
-	 P9Ni/eTD8ul/DY8duS5xuvh0HCFp6lLAsM7T82K412GCLpIrvCM8MjKp+LhstzlNaCO/I
-	 cMM51JgUtm9ML0vWgT9L8KcRfyvpe8M+ceSYya540iN6KxW+EDcCbAMeQ6Z9+PvkgH28f
-	 U/xV6tlAGwa2xsp//+ef0imwXeweIBryfHUXZFhCihei67MMsOBBLtLWTUnGBWVUaOf3Y
-	 f0aSqeZQ98w9L0sHxR0hU6esJ7C7qcAJq537bU1lnH8hPI1NbbVgCIuDpWmyTBVfAkw==
+	t=1795046445;
+	b=NVjWNN8Oix2eGZ0CnGvpRnOxg3LaHUg2wSVJ/H7YeK3qJi4Th+6qMr807+WqSSwosHi3
+	 JT0kMKMs6m1Xdv3zmoCu3X8Q3J1js/qJcktY0sS0ZXgUkKJSFT99L2FzGRCv4RNbqtvwT
+	 cw1qY9etVtiny+7FmWrTHv7HEASbPdrzFwD6YsIfAAFgQa95tEw5hpzIdsMTNHCKD5FqF
+	 WwiWGYhZ7ck8kt3WG56C/cviSvfjUara6Ztg7m5XM4BPAwtFAugomwZ0KqSoPnsxFZLOz
+	 6kv3tL2wN+Mh/aLK0+qem0p/PZP8DfGj/E12/oEBhW+XTw9FFlMOzVXXZQINvNfP9JA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046442;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046445;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PcW+tfyceLYxupes7ccUH86xXd/tCLmm9/KAw9v3ObQ=;
-	b=2Z6KovUTPjPTaL1BnaFcyNLv8UBxKkxfRkiF9xY4DAKUrp46RRe6vaLBikDYXnIQVUdw
-	 blqvfNr20+UjHLKG9soWvyTFXzAKNs4zJNdNS90vl8OnvOY2v3J0x6BajYG6aXQJsNohB
-	 40YeW08Puwp6h3azHB0xak67lOgxSPNmfrlkaEPJFkl0ezmoHdw2H0R3GLH+gaCaBODLs
-	 I+/+XTDXeArSlFO6BPlq66GuT7uua/WxdS5qXWV+fSXwsw08WMaKymMifS/WVsX6FR6YI
-	 0OOP4DP7+Z2wWSFDjM32xLRj3OW4qkw7cWZp0zG8DdzQYx8TuS1q/45x+mxGJIrWLgg==
+	bh=YCWZdzBUMVJLHJiJbMwrB2tq9KjsQzDVEWvX0slitwQ=;
+	b=Z/pHnuL8Zcw8x74xT5cUK2Tph47LHDfGIBPAJ8QYvNPO+34nT8eQGBwZdKCl4jpHt9w3
+	 gL6L3OpsxqvNo7tjkzXr1K4Cpyr9NhIS5gkbaQmCtz8PoKoy3sKvsNSDim4zkqxVkz+cD
+	 nOpuC6IZqPuV/tVQbrUhP1HxSNgXhcU0Eh6Z5K+6bQWig8CmM90MoL9nikFdfsJMQiKWj
+	 9VoPZDAdmBimtw1nRxbbgOkbmgymW910aFpriNF+x2aU7FhUm7zn9n7pv9FLH3bPgqaPw
+	 ABNdih1OWhQczHpZoMim3MSMlvSDnCs2upp50HctCuxSGjW3KsFG1aDs1GWrc7NIgSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hfyEKQZ4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1QhIOTzu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E195606A330;
-	Thu, 19 Nov 2026 00:00:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A93606A320;
+	Thu, 19 Nov 2026 00:00:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hfyEKQZ4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D39C1F000C5;
-	Thu, 19 Nov 2026 00:00:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1QhIOTzu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65BB41F000C4;
+	Thu, 19 Nov 2026 00:00:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046442;
-	bh=PcW+tfyceLYxupes7ccUH86xXd/tCLmm9/KAw9v3ObQ=;
+	s=korg; t=1795046445;
+	bh=YCWZdzBUMVJLHJiJbMwrB2tq9KjsQzDVEWvX0slitwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hfyEKQZ44bFEPWQJWmK61xvvWgrBqBKDSLz+OZYJ0lYUweKJYlMVE/XQBTbdb0csz
-	 KKRWb3/K1Fk776Su4f5J5pSlWR2aiEYWoDCjOlHNG/Ue81ciOsHuuEyb9P4hLJV+Nc
-	 uiZoel9GhnK7yNpWcWQqpf75MHNg6ZQ+HX9+3Nfw=
+	b=1QhIOTzuU7QHCse/IrPqHGEImFx7YMAiyPqn/j2h83uGWvjTLIamAFz9rNOfyZkgF
+	 Vd63JwrSr+Vdd0+Q9TQm68bEycLQjvuhKlLvYQXOjY9i81/ipXP6hNnWfJ4phcdgjV
+	 U36Ho+vrZbEiSfI4YOFAjuOqdrGc/Pyziz+FLp4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
+	ChunYuZhiQiang <chunyuzhiqiang@yinhe.ht>,
+	Vincent Mailhol <mailhol@kernel.org>,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1281/2857] can: proc: skip stats calculation after reset in can_stat_update()
-Date: Wed, 18 Nov 2026 15:38:35 +0100
-Message-ID: <20261118150247.628532556@linuxfoundation.org>
+Subject: [PATCH 6.1 1282/2857] can: dev: can_fill_info(): dont wake up controller if interface is down
+Date: Wed, 18 Nov 2026 15:38:36 +0100
+Message-ID: <20261118150247.661625951@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,80 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: ChunYuZhiQiang <chunyuzhiqiang@yinhe.ht>
 
-[ Upstream commit 01b19ed9fa031a649f3dd103ebe6e0102602e542 ]
+[ Upstream commit 75332c410c8190d61499001c5516af977ca426c3 ]
 
-Commit 80b5f90158d1 ("can: statistics: use atomic access in hot path")
-introduced local snapshots of the statistics counters at the beginning
-of can_stat_update(). When can_init_stats() resets the statistics, these
-stale pre-reset snapshots are still used for the following total/current
-/max calculations and overwrite the freshly reset values. Additionally a
-jiffies tick between the snapshot and the reset could trigger a second
-can_init_stats() call.
+If the interface is down, the CAN controller might be powered down and
+its clocks gated. Don't call do_get_berr_counter() to read the bus error
+counters if the interface is down, and adjust can_get_size() to match.
 
-Merge the reset conditions into a single check and skip the calculation
-for the current interval when the statistics have been reset.
+This removes one trigger for a synchronous external abort seen on
+i.MX8QXP when "ip link show" is run on a flexcan interface that was
+never brought up. The underlying cause is platform-specific: on i.MX8QXP
+the CAN clocks are gated through the SCU LPCG and the subsystem shares
+the IMX_SC_R_CAN_0 power domain, and there is a window after
+pm_runtime_resume_and_get() returns where the clock has not reached the
+module yet. This patch avoids the netlink query path while the interface
+is down, but does not root-cause the LPCG window itself.
 
-Fixes: 80b5f90158d1 ("can: statistics: use atomic access in hot path")
+As a result, IFLA_CAN_BERR_COUNTER is no longer reported for down
+interfaces. Userspace must treat the attribute as optional.
+
+The issue was triggered on an i.MX8QXP board by running "ip link show"
+without ever bringing the interface up:
+
+    Internal error: synchronous external abort: 0000000096000210
+
+    pc : flexcan_read_le+0x0/0x18
+    lr : flexcan_get_berr_counter+0x4c/0x8c
+    Call trace:
+     flexcan_read_le+0x0/0x18
+     flexcan_get_berr_counter+0x4c/0x8c
+     can_fill_info+0x1f8/0x434
+     rtnl_fill_ifinfo+0x8fc/0xbb4
+     rtnl_dump_ifinfo+0x364/0x448
+
+This is the same class of problem fixed for m_can in
+commit 91a55c72a821 ("can: m_can: m_can_get_berr_counter(): don't
+wake up controller if interface is down").
+
+Fixes: ec56acfef2af1 ("can: flexcan: flexcan_get_berr_counter(): switch on clocks before accessing ecr register")
 Cc: stable@vger.kernel.org
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20261027-can-rx-lock-v12-6-eb5afc2d8b9b@hartkopp.net
+Signed-off-by: ChunYuZhiQiang <chunyuzhiqiang@yinhe.ht>
+Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
+Link: https://patch.msgid.link/20261027065012.191348-1-chunyuzhiqiang@yinhe.ht
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/proc.c | 30 ++++++++++++------------------
- 1 file changed, 12 insertions(+), 18 deletions(-)
+ drivers/net/can/dev/netlink.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/can/proc.c b/net/can/proc.c
-index 0f2cbc5816831..42145a157335d 100644
---- a/net/can/proc.c
-+++ b/net/can/proc.c
-@@ -149,25 +149,18 @@ void can_stat_update(struct timer_list *t)
- 	long tx_frames_delta = atomic_long_xchg(&pkg_stats->tx_frames_delta, 0);
- 	long matches_delta = atomic_long_xchg(&pkg_stats->matches_delta, 0);
+diff --git a/drivers/net/can/dev/netlink.c b/drivers/net/can/dev/netlink.c
+index 69dfb77672389..e07b6e818a490 100644
+--- a/drivers/net/can/dev/netlink.c
++++ b/drivers/net/can/dev/netlink.c
+@@ -419,7 +419,7 @@ static size_t can_get_size(const struct net_device *dev)
+ 	size += nla_total_size(sizeof(u32));			/* IFLA_CAN_STATE */
+ 	size += nla_total_size(sizeof(struct can_ctrlmode));	/* IFLA_CAN_CTRLMODE */
+ 	size += nla_total_size(sizeof(u32));			/* IFLA_CAN_RESTART_MS */
+-	if (priv->do_get_berr_counter)				/* IFLA_CAN_BERR_COUNTER */
++	if (priv->do_get_berr_counter && netif_running(dev))	/* IFLA_CAN_BERR_COUNTER */
+ 		size += nla_total_size(sizeof(struct can_berr_counter));
+ 	if (priv->data_bittiming.bitrate)			/* IFLA_CAN_DATA_BITTIMING */
+ 		size += nla_total_size(sizeof(struct can_bittiming));
+@@ -539,7 +539,7 @@ static int can_fill_info(struct sk_buff *skb, const struct net_device *dev)
+ 	    nla_put(skb, IFLA_CAN_CTRLMODE, sizeof(cm), &cm) ||
+ 	    nla_put_u32(skb, IFLA_CAN_RESTART_MS, priv->restart_ms) ||
  
--	/* restart counting in timer context on user request */
--	if (user_reset)
--		can_init_stats(net);
--
--	/* restart counting on jiffies overflow */
--	if (j < pkg_stats->jiffies_init)
--		can_init_stats(net);
--
--	/* prevent overflow in calc_rate() */
--	if (rx_frames > (LONG_MAX / HZ))
--		can_init_stats(net);
--
--	/* prevent overflow in calc_rate() */
--	if (tx_frames > (LONG_MAX / HZ))
--		can_init_stats(net);
--
--	/* matches overflow - very improbable */
--	if (matches > (LONG_MAX / 100))
-+	/*
-+	 * Restart counting in timer context on user request, on jiffies
-+	 * overflow or to prevent overflows in calc_rate() and in the
-+	 * match ratio calculation. The local snapshots are stale after
-+	 * the reset, so skip the calculation for this interval.
-+	 */
-+	if (user_reset || j < pkg_stats->jiffies_init ||
-+	    rx_frames > (LONG_MAX / HZ) || tx_frames > (LONG_MAX / HZ) ||
-+	    matches > (LONG_MAX / 100)) {
- 		can_init_stats(net);
-+		goto out;
-+	}
+-	    (priv->do_get_berr_counter &&
++	    (priv->do_get_berr_counter && netif_running(dev) &&
+ 	     !priv->do_get_berr_counter(dev, &bec) &&
+ 	     nla_put(skb, IFLA_CAN_BERR_COUNTER, sizeof(bec), &bec)) ||
  
- 	/* calc total values */
- 	if (rx_frames)
-@@ -196,6 +189,7 @@ void can_stat_update(struct timer_list *t)
- 	if (pkg_stats->max_rx_match_ratio < pkg_stats->current_rx_match_ratio)
- 		pkg_stats->max_rx_match_ratio = pkg_stats->current_rx_match_ratio;
- 
-+out:
- 	/* restart timer (one second) */
- 	mod_timer(&net->can.stattimer, round_jiffies(jiffies + HZ));
- }
 -- 
 2.53.0
 
