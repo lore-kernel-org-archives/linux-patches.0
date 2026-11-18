@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033273;
-	b=2ogQhO3li9ANkgsvtRPP/rWR+3ChdWDL12OcQ8GYvYChBKWqViboO+Y/B5ce9V0eNyfT
-	 YyBta57keyyfb3ASrkMqnqZeQ4NGOeFUCyRA+/XRTZ714VDezKl0zOzLABly99Sr5WKau
-	 p0erfHGkN3OOz7lPp9yWLqdE3pzYdobQycr1JiF/qMwyFUXH8qysQnloeC0IRSvBrOguN
-	 SdaAVEKYbJcoHYMiNQ2xlJxKE8cA5LwodHxhE+GmVavk6K33ttfcqaGiYOV/p++rBgINP
-	 i+KQsG1t1fXa79qZ5BmdmCWOI1gDd9iEgwHeGw7hhq2q8wQFoMi3uL0oXZIlLuAkJQw==
+	t=1795033276;
+	b=Gs3SECCx28P3Y6TE6f4Rp+KUY2GIkh7AWyUkYIAjJmOMsaVHREjzfujDBdaIFpBhKStt
+	 D3KJZ+HDg6UNtgwSp8XlICUHNtoj8Dldql8DBUYuiroJeOpVoCRI+dPqsYBsTqFQi02G6
+	 /JXfUe7q31Jz6GnpHrI22eufrtVkEMnXDLMHa66JnFFNXBOb+nUWVniVr+rhuKBU0q+PU
+	 WzNVb44iZwd0NDtsXWxiWfq5TxB0y+YBpn11ArbyAFrT25WI0tVetb71ZfAFQIt9M22gc
+	 FN+izXmxBsun1HAUPuDT4+wTzLI7E1htz/1ShyELEtiFnD95m4g4mTCtjwKRl5uK6jA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033273;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033276;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d1LQJzWhe7X3UEL8J4FUxeFygbxJqVbqjqmbiN6DwZY=;
-	b=2vf7tdlrWWVUU7wueLVYJwF7uFZq03yJfcgOPD4tjfYnvBHIGHevuZO4yLGTXCOptDNT
-	 A/f+uCI9377JrJNtkBgmKR0YLF0x+AVRr9QUZpgIFxV/YN1IpfpMLk7c7sLad8LgPxfX2
-	 5DhWx6N835bO6HqpeFPH+t813NiAl93r1EQeT2aUpaOwk7VMKbUM99vlxca+uVdJFlx2G
-	 PbEDJ4y4i3ipieVnVvE8eRkLbVrbdYOHWhtYbQ19k3Hgpc2iP37mUTFK7CB3tyy/M+hzR
-	 neg7Ti/dnme3A0XGACyne7FvklMhH2l3x2y6bLc34A+gV/ht+W3gTU2lqsudQM9M82Q==
+	bh=2ab9vX+XqFwRvYeWqZAIyvRQXGXppqqCIkz6EEFgdPU=;
+	b=qnTBzfN/xglnlTK6zN+HBbgoaf9oprtgCOz2HkW46oGDlt3HAz31UXpdc7p00BjR3UVL
+	 nezm6fMDnrAbkiXYYzD6/wZ8MgPnIp4gFBR4iyAvZkyOY5vVQfl+OWdwiMnzrcBamG3MM
+	 5tM10raw467cLUBnZwHLzdaQlLV6Mn3z7FHLTrYZmLQ6CRgeQyL6DKDydiEySEZmRNmrV
+	 P2dFxlRmH/LiDTE/xtCdFE4fqSRML3Tzn1Dlt7K2r/JyknQ3pSd+olUJhoq3WID8f9/UR
+	 u4UcYk4rTG1KyahRJDoeaSxSGjBnlcwLmi2XbNvihuVHTzHe/i7cPESUT3ZG6ynH0Eg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DYdQXPT5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OyPYgdvf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8AB5606A330;
-	Wed, 18 Nov 2026 20:21:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54AFC60A260A;
+	Wed, 18 Nov 2026 20:21:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DYdQXPT5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC361F000C4;
-	Wed, 18 Nov 2026 20:21:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OyPYgdvf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B43C71F000C6;
+	Wed, 18 Nov 2026 20:21:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033273;
-	bh=d1LQJzWhe7X3UEL8J4FUxeFygbxJqVbqjqmbiN6DwZY=;
+	s=korg; t=1795033276;
+	bh=2ab9vX+XqFwRvYeWqZAIyvRQXGXppqqCIkz6EEFgdPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DYdQXPT5+ZXLxvQ57PecD+CrTOoqAdxxuOab7/apX1X4/HTnCAgkZ3OzZRCMv1jUc
-	 IfaqZUp2v6RWRnM6FjpMKDb/p/uSPg/wcOz0SERIyesxgLu1xZ00dAo8BARzxwEe+0
-	 GBAzpaK+UdwX+EISD7FoxWcRi37E++9Og3nSttcQ=
+	b=OyPYgdvfpc6VparWVIuKV6kfMbQLWTTUYoVZhDmBfpz+m9fhZ3vUdvzqTi9IcLkFT
+	 p+icdGPZPJGr6CYfTOjdTTa8eA9eDmrAhkUCxSLkSxjPvdyqKkdzcLyw4Wo9yqsdyW
+	 jQViPMXEiFMu1e/WNzJP8MHYDKfa6ZR38d+sahxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiao Liang <shaw.leon@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tong Liu <lyutoon@gmail.com>,
+	Qi Tang <tpluszz77@gmail.com>,
+	Zhiyu Zhang <zhiyuzhang999@gmail.com>,
+	Bradley Morgan <brads@mainlining.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1710/1756] tun: drop batched packets while the device is down
-Date: Wed, 18 Nov 2026 16:03:57 +0100
-Message-ID: <20261118150117.699111691@linuxfoundation.org>
+Subject: [PATCH 6.12 1711/1756] watch_queue: keep info_id separate from rcu_head
+Date: Wed, 18 Nov 2026 16:03:58 +0100
+Message-ID: <20261118150117.735864430@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,45 +71,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiao Liang <shaw.leon@gmail.com>
+From: Zhiyu Zhang <zhiyuzhang999@gmail.com>
 
-[ Upstream commit 8f44631ba02afe9fff2f0a0fb66560ab19df87fd ]
+[ Upstream commit 53d72818f9e2aeb03a6053544ee6efa4eb2a3988 ]
 
-tun_sendmsg() handles TUN_MSG_PTR batches from vhost-net by calling
-tun_xdp_one() instead of tun_get_user(). But this path does not check
-IFF_UP, allowing packets from a guest to be injected into the host
-receive path while the device is administratively down.
+struct watch overlays info_id with rcu_head. A notification poster reads
+info_id under rcu_read_lock(), but a concurrent final put can enqueue the
+watch with call_rcu(). Enqueueing the callback writes rcu_head before the
+grace period has elapsed, so it can corrupt info_id while the object
+remains legally visible to the reader.
 
-Check IFF_UP in tun_xdp_one() before running XDP or building an skb.
-Drop the packet when the device is down, matching tun_get_user().
+__post_watch_notification() then merges that value into the notification
+info word without masking it. Pointer bits can corrupt WATCH_INFO_LENGTH
+and make post_one_notification() copy beyond the posting task's stack
+record.
 
-Fixes: 043d222f93ab ("tuntap: accept an array of XDP buffs through sendmsg()")
-Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20261027101830.85327-1-shaw.leon@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Give info_id storage separate from rcu_head so RCU enqueueing cannot modify
+it. Place it after the kref, which uses existing tail padding on x86-64.
+Mask info_id with WATCH_INFO_ID at the point of use as an additional
+invariant check.
+
+An unprivileged shell and keyctl reproducer was run for 30 seconds in QEMU.
+The vulnerable baseline produced malformed notification lengths, while this
+change completed with 288631 key notifications and no malformed record.
+
+Fixes: c73be61cede5 ("pipe: Add general notification queue support")
+Reported-by: Tong Liu <lyutoon@gmail.com>
+Reported-by: Qi Tang <tpluszz77@gmail.com>
+Reported-by: Zhiyu Zhang <zhiyuzhang999@gmail.com>
+Closes: https://lore.kernel.org/lkml/CALf2hKveij_sHgANY9Aktm1dPa4wfKjKNkHyp9yPbjORWFXagA@mail.gmail.com/
+Link: https://lore.kernel.org/netdev/CALf2hKvp0NPVLwr=a3+jUHtPohxbra8gox+aYAfWathJnn-J+Q@mail.gmail.com/
+Signed-off-by: Zhiyu Zhang <zhiyuzhang999@gmail.com>
+Link: https://patch.msgid.link/20261029054136.1174216-1-zhiyuzhang999@gmail.com
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ include/linux/watch_queue.h | 6 ++----
+ kernel/watch_queue.c        | 2 +-
+ 2 files changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index 479108e87e3d8..461b02721aab9 100644
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -2483,6 +2483,12 @@ static int tun_xdp_one(struct tun_struct *tun,
- 		return -EINVAL;
- 	}
+diff --git a/include/linux/watch_queue.h b/include/linux/watch_queue.h
+index 429c7b6afeada..b87e1babb5f03 100644
+--- a/include/linux/watch_queue.h
++++ b/include/linux/watch_queue.h
+@@ -52,10 +52,7 @@ struct watch_queue {
+  * Representation of a watch on an object.
+  */
+ struct watch {
+-	union {
+-		struct rcu_head	rcu;
+-		u32		info_id;	/* ID to be OR'd in to info field */
+-	};
++	struct rcu_head		rcu;
+ 	struct watch_queue __rcu *queue;	/* Queue to post events to */
+ 	struct hlist_node	queue_node;	/* Link in queue->watches */
+ 	struct watch_list __rcu	*watch_list;
+@@ -64,6 +61,7 @@ struct watch {
+ 	void			*private;	/* Private data for the watched object */
+ 	u64			id;		/* Internal identifier */
+ 	struct kref		usage;		/* Object usage count */
++	u32			info_id;	/* ID to be OR'd in to info field */
+ };
  
-+	if (unlikely(!(READ_ONCE(tun->dev->flags) & IFF_UP))) {
-+		put_page(virt_to_head_page(xdp->data));
-+		dev_core_stats_rx_dropped_inc(tun->dev);
-+		return -EIO;
-+	}
-+
- 	xdp_prog = rcu_dereference(tun->xdp_prog);
- 	if (xdp_prog) {
- 		if (gso->gso_type) {
+ /*
+diff --git a/kernel/watch_queue.c b/kernel/watch_queue.c
+index 8f809cc60c036..8914bd27d751c 100644
+--- a/kernel/watch_queue.c
++++ b/kernel/watch_queue.c
+@@ -212,7 +212,7 @@ void __post_watch_notification(struct watch_list *wlist,
+ 		if (watch->id != id)
+ 			continue;
+ 		n->info &= ~WATCH_INFO_ID;
+-		n->info |= watch->info_id;
++		n->info |= watch->info_id & WATCH_INFO_ID;
+ 
+ 		wqueue = rcu_dereference(watch->queue);
+ 		wf = rcu_dereference(wqueue->filter);
 -- 
 2.53.0
 
