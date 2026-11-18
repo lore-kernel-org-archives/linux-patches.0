@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052425;
-	b=y1Kn8Vw6r7MBbZnIf2QeTBVuZbUf1Y0zA3o2uIkQio7Mtpci+AavkTwul+Qa+tPEHIYE
-	 4oXn0lJo6msom1GzSP8CmnNyBp3q0/n4TwXvYZq2EhNeYFiOGZX7/WskEESjlP9wSTdZY
-	 ovL4JaFZXHaZ28ss8rj1qUpI55/LIwO7dLLUkr6dlP9+dL1q6FeFzY4AGaJyTNKMJ8daG
-	 swsTN3c6sHTnNowfqeqWRYY7JC80sCVVrfL5YNHr0zLjzMPA2jo92KVgB8ifq7NWseXUv
-	 cHuulVjZjMS0OAc+POUUfnE+at6IJNPIwWcKc4ESouK8jJRuoHHhi7wTw94HQnI/fdQ==
+	t=1795052428;
+	b=UsmOS/OIZ1b0IvTTIo3FwcBHQyzalGjGvSqRG9F2a2O4OEOAG/Sgu0Xv5X/dGC0mxgzO
+	 YbnbIQ4kMYwMHbxdbywuggBxMnqmhKk1UVKTUzfb7WxEk3JTZNZF3TV0+WoOO19mBs2T5
+	 MSBX4PfTNy9hmQsDRuk6Iaejh3T0SeUdZsYrNL/mMKu8PBamwQL3lbVdQjIUOo/ErGaD3
+	 kdtZAz56IwRNbyysOpOrOIKjhNaElyM3YU5HKfQZ2XaFMkUPr7xFNqm6QT7VB/e15zKE3
+	 YxGcsUSavYCq321kbpS5PWE5NhrswQmdUeS1W2fymH1vFjR1x4wVcuTZWGx1kPg4GHw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052425;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052428;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7wuQ1S53NnDspB77Vg68s3IoZVwIW7prWeM4ypuII30=;
-	b=dSR93rMnXavtnOriLViKclE/jimtz5jp43x64Y1pQthrBIHq+68d6i5veMS3asq4mNJ2
-	 3jyGf+JuR1SqCvJW0MWDGjWvERgl1mU7+F0UuQD7/dADzaI3vs2LJIJZ/aXj/UMZmJx1q
-	 WvpBmCzhKPMePTCBMmG/FnZHDoB0IyxZSa4/zEnrT2ok4BBRvlwmWoahrv5QGqiw4ssEO
-	 dxQ+FisXNKFAFQ1ws3UI39oCopXdPh/nXDGXFWW6e4E3uFJEQLAgrGNyLpdCQhX5jJtPU
-	 iGdHe4bqAzj+MeQWbHQhd6zot+JEZyV9tzznMI6ixVS0xoOL8Ru0iqG8TJXv9OXICSw==
+	bh=PsO20nzX5RC66s2Ubi/Vy0+0pVPNJZxIrzdJh9ljYsg=;
+	b=NdNdyDoLwAYZ3d7XW6NnQIWg90yn/+X5mDzJWFHpMIU0/jVt4zm7FGzUDCo4qj1tJhs1
+	 mRrGBx88crIJ0RWvzMLnpioIpXHNpp4RIR+Skw1Fjkt62Xjk6cKK7VMYIn1V9CMIu8z76
+	 1ozi3nvdv09sgxRg6WaaOqZOYB7SXmDgFDpxL+XQb2JiUMEmn+inaQTjhOs6eNn7FR+6r
+	 PhbQU2cvI/W5OSsiEfiiqH/gLidCEgNEW4uCpLCsrX0Iut1J3z8C0q1ol8e71HHX72Ikm
+	 079TM+fXZCUyh1lPqq4MdlSG4TGWlAdn/gfWcEzC5L/uQKam3Z5CpnVsGXmamEVRBjw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QepqrLeT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qNCC2uNX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DEF1606A325;
-	Thu, 19 Nov 2026 01:40:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11555606A320;
+	Thu, 19 Nov 2026 01:40:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QepqrLeT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C15A1F000C4;
-	Thu, 19 Nov 2026 01:40:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qNCC2uNX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61BE11F000C4;
+	Thu, 19 Nov 2026 01:40:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052425;
-	bh=7wuQ1S53NnDspB77Vg68s3IoZVwIW7prWeM4ypuII30=;
+	s=korg; t=1795052427;
+	bh=PsO20nzX5RC66s2Ubi/Vy0+0pVPNJZxIrzdJh9ljYsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QepqrLeTBFpMx0aRPIofQakx+MqO0DrZUHd4qCD8K8uqjOOI/yTe1V/Q3//W+RYW1
-	 P1QilEB6nfF2fhg3Ul4qcfXGhjOJu9+816BYqLEePrRp06N5hwbkgzkOuHkvGVF3Iv
-	 /8uvl1BG0VY995+ESyNemJir3TiRCPxA+27drASQ=
+	b=qNCC2uNX9+ABH9hSQPGnsFfddhlPeb9+1GX4D8SWkffEBLKbHHPRhzP94c0lKnHw4
+	 bKslr9t6yhZ6+IMSjQd5CAd25O03w6w6eWESK2UNLLIXDW9cVPPLT0GJPfzolyHfn/
+	 CNcuxINGlJc2KPnAAqYOsVoBUZm9b/cN1ZF8PRI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+6a04efcebe0fc0ce@bugs.sh,
-	Kaho Jiang <kj2864@nyu.edu>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0558/2214] media: em28xx: fix double free in em28xx_alloc_urbs
-Date: Wed, 18 Nov 2026 15:37:14 +0100
-Message-ID: <20261118150033.332450921@linuxfoundation.org>
+Subject: [PATCH 5.15 0559/2214] dm-writecache: report I/O error if flush failed
+Date: Wed, 18 Nov 2026 15:37:15 +0100
+Message-ID: <20261118150033.373118102@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,92 +67,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaho Jiang <kj2864@nyu.edu>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit fd427b8adae437cac78a2332241a03cac56e95c2 ]
+[ Upstream commit 78a6afc2999d26e5a30a56db77db34c22b88f5d5 ]
 
-When allocation of usb_bufs->buf[i] fails, em28xx_alloc_urbs()
-explicitly frees all items within usb_bufs->buf before calling
-em28xx_uninit_usb_xfer(), which also frees these items, causing them to be
-freed twice.
+There was a bug that if writecache_flush fails due to I/O error, the
+error is not reported in the FUA bio. This commit fixes it.
 
-BUG: KASAN: double-free in usb_free_urb.part.0 (drivers/usb/core/urb.c:25 ./include/linux/kref.h:65 drivers/usb/core/urb.c:96)
-Free of addr ffff88802fd37c00 by task kworker/1:2/1182
-Workqueue: events request_module_async
-Call Trace:
-  kasan_report_invalid_free (mm/kasan/report.c:557)
-  check_slab_allocation (mm/kasan/common.c:235)
-  kfree (./include/linux/kasan.h:199 (discriminator 1) mm/slub.c:2693 (discriminator 1) mm/slub.c:6508 (discriminator 1) mm/slub.c:6801 (discriminator 1))
-  usb_free_urb.part.0 (drivers/usb/core/urb.c:25 ./include/linux/kref.h:65 drivers/usb/core/urb.c:96)
-  usb_free_urb (drivers/usb/core/urb.c:95)
-  em28xx_uninit_usb_xfer (drivers/media/usb/em28xx/em28xx-core.c:964)
-  em28xx_alloc_urbs (drivers/media/usb/em28xx/em28xx-core.c:1076)
-  em28xx_dvb_init (drivers/media/usb/em28xx/em28xx-dvb.c:1734 drivers/media/usb/em28xx/em28xx-dvb.c:1698)
-  em28xx_init_extension (drivers/media/usb/em28xx/em28xx-core.c:1248)
-  request_module_async (drivers/media/usb/em28xx/em28xx-cards.c:3685)
-  process_one_work (kernel/workqueue.c:3396)
-  worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
-  kthread (kernel/kthread.c:436)
-  ret_from_fork (arch/x86/kernel/process.c:158)
-  ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-  Allocated by task 1182:
-  kasan_save_stack (mm/kasan/common.c:57)
-  kasan_save_track (mm/kasan/common.c:78)
-  __kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
-  __kmalloc_noprof (./include/linux/kasan.h:263 mm/slub.c:5414 mm/slub.c:5439)
-  em28xx_alloc_urbs (./include/linux/slab.h:995 ./include/linux/slab.h:1312 drivers/media/usb/em28xx/em28xx-core.c:1081)
-  em28xx_dvb_init (drivers/media/usb/em28xx/em28xx-dvb.c:1734 drivers/media/usb/em28xx/em28xx-dvb.c:1698)
-  em28xx_init_extension (drivers/media/usb/em28xx/em28xx-core.c:1248)
-  request_module_async (drivers/media/usb/em28xx/em28xx-cards.c:3685)
-  process_one_work (kernel/workqueue.c:3396)
-  worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
-  kthread (kernel/kthread.c:436)
-  ret_from_fork (arch/x86/kernel/process.c:158)
-  ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-  Freed by task 1182:
-  kasan_save_stack (mm/kasan/common.c:57)
-  kasan_save_track (mm/kasan/common.c:78)
-  kasan_save_free_info (mm/kasan/generic.c:584)
-  __kasan_slab_free (mm/kasan/common.c:253 mm/kasan/common.c:285)
-  kfree (./include/linux/kasan.h:235 mm/slub.c:2748 mm/slub.c:6508 mm/slub.c:6801)
-  em28xx_alloc_urbs (drivers/media/usb/em28xx/em28xx-core.c:1084)
-  em28xx_dvb_init (drivers/media/usb/em28xx/em28xx-dvb.c:1734 drivers/media/usb/em28xx/em28xx-dvb.c:1698)
-  em28xx_init_extension (drivers/media/usb/em28xx/em28xx-core.c:1248)
-  request_module_async (drivers/media/usb/em28xx/em28xx-cards.c:3685)
-  process_one_work (kernel/workqueue.c:3396)
-  worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
-  kthread (kernel/kthread.c:436)
-  ret_from_fork (arch/x86/kernel/process.c:158)
-  ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-
-Remove the explicit cleanup loop and let em28xx_uninit_usb_xfer()
-handle the cleanup.
-
-Fixes: d571b592c6206 ("media: em28xx: don't use coherent buffer for DMA transfers")
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Assisted-by: opencode:big-pickle
 Cc: stable@vger.kernel.org
-Reported-by: co+6a04efcebe0fc0ce@bugs.sh
-Assisted-by: LLM
-Signed-off-by: Kaho Jiang <kj2864@nyu.edu>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: 48debafe4f2f ("dm: add writecache target")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/em28xx/em28xx-core.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/md/dm-writecache.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/usb/em28xx/em28xx-core.c b/drivers/media/usb/em28xx/em28xx-core.c
-index ea541b75a7a44..d01399b81cefe 100644
---- a/drivers/media/usb/em28xx/em28xx-core.c
-+++ b/drivers/media/usb/em28xx/em28xx-core.c
-@@ -958,9 +958,6 @@ int em28xx_alloc_urbs(struct em28xx *dev, enum em28xx_mode mode, int xfer_bulk,
- 
- 		usb_bufs->buf[i] = kzalloc(sb_size, GFP_KERNEL);
- 		if (!usb_bufs->buf[i]) {
--			for (i--; i >= 0; i--)
--				kfree(usb_bufs->buf[i]);
--
- 			em28xx_uninit_usb_xfer(dev, mode);
- 			return -ENOMEM;
+diff --git a/drivers/md/dm-writecache.c b/drivers/md/dm-writecache.c
+index dfb55fe09ce13..8d0aa6f90e94e 100644
+--- a/drivers/md/dm-writecache.c
++++ b/drivers/md/dm-writecache.c
+@@ -1481,10 +1481,13 @@ static enum wc_map_op writecache_map_write(struct dm_writecache *wc, struct bio
  		}
+ 	} while (bio->bi_iter.bi_size);
+ 
+-	if (unlikely(bio->bi_opf & REQ_FUA || wc->uncommitted_blocks >= wc->autocommit_blocks))
++	if (unlikely(bio->bi_opf & REQ_FUA || wc->uncommitted_blocks >= wc->autocommit_blocks)) {
+ 		writecache_flush(wc);
+-	else
++		if (writecache_has_error(wc))
++			bio->bi_status = BLK_STS_IOERR;
++	} else {
+ 		writecache_schedule_autocommit(wc);
++	}
+ 
+ 	return WC_MAP_SUBMIT;
+ }
 -- 
 2.53.0
 
