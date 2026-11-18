@@ -1,57 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029224;
-	b=wznkF2uRmPa/IEYIj2eGrZVMmmgjDCYou/8HBz3shbUQuSV7P0j2VLPGo+uw5+ZWzt8P
-	 W9GoO/v+tvtk/j+LG4pco+eZd8rRo9/ZjGr9Qa3ESCUBGZ/tGGaoYMZrCApkOX7MVCVlZ
-	 7OJl+btdoh+/st4fJ3wgA1D9hsiB6ZdFJCBJxlBqtz1ooYmvvY28culpksbeLSJyDtJC2
-	 vr5bzuck3O2VThlclKYoKhy7aorBoVkkfhaoeaxDb7biMENFmH3YPMyvWyFD25pyirhOc
-	 X0KMrhxKlWhlVtEClwgoZiBqmRVthO7kDTN7WsplW2KEP2dHz9JYxpOzdw1rS7Lx0jA==
+	t=1795029226;
+	b=GxdTKnZ5afaqOV6e+2tMmZfNVKGKWXBhCcKhf0zcW3CLdcHoiw/ava4aPfo+G5BzeYZE
+	 aOA0aT7/bMetfnc/XPyR0svlCegDh0yQnkJ4M5qdy2ZgJFNd7MaHYXPtxMZCBXhKOGGeg
+	 JEiGaL7UfSzkbRGKHiAHUIny/tt22hlhBwF88ac+31ds7QH+9f6zEbwYum4Q3XMfPx+he
+	 MXi7uBYDryuLrLgzfe5Ag43kcPcX3mqiypwL7CzXmEmLzkmxgqZ/N5aYDBRtCElOBc2j8
+	 7f1RVtdyjlSRqoCRzMOiWYwyYy/CEhl7kZW5U3nrHgytkU5rpal/9EIJc2a5Q+cE9mw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029224;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029226;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7F12I5QOodouw7Z2lShL5aHDrDsRB6vmxxsjGsRFAHE=;
-	b=r97d+Uf7KZVn9p5IqhnRIDmrq56SpsdgoLlvGFPP4UP+68LZ7mcuXo/htjnx4ZMxE/lA
-	 TXJNwl5wHkXx/UN8hjMprs7PZewXIaSSBWczDgSn6Fd3zuhuEsXsnD5wKAdgKnzmLIdId
-	 SBFsRC1UVZIPf9adAARaCiQi1mK91vhexxdIkomwbMVC0zEKiy0UfYc/PHkhXEmRuPkPJ
-	 Mym2EWLrGW5kaK7u27x/MvimRVRB+CFNc3W5VZJOYwOyA+g0vQtv/szYzvs/bqeCCWIKZ
-	 sLeVfo7ezKFzAoFgGZpax12ormPhFqPRRz3vaFzp0fg2kuIS22m2DuYr4wXJkDpkdBA==
+	bh=DJqqbiP70CXB0OxwrW5JPzDsn6dQIEAL7ilv7cRA4u4=;
+	b=mtPmteuM7wMYZQxuelJnkXJchXqaa8V9g8c94Wpibbv1DGw39g9AYFUPnlHU749ykuTt
+	 1/IT1CQGml+TBY9eG52dAk3Cm7AgxlhUUqGoQvB6kd3ZcxcCFJHRHol5QSBKN2VeW8qUK
+	 ImAYTvDkRGTUc3BUYy5kWjePBKNC1hgnOSESySi4u4UvXX3JhdVANouWxSqQdVOYKsjL2
+	 vc+E05cZUqwDe7F6RnjbCXyaxwe5EiFB7p/7Zj7UgjDwC1qptKA5u70piY1l7z5xcS006
+	 nVUhNs1wizAD/bVg+Cf+zPCW37dMKe3VqoiBgWfJ+noaJHKMVIhK6NsoqIRDrpVu+OA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rG1k5IF0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XtNTpuYJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05261606A31C;
-	Wed, 18 Nov 2026 19:13:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D41606A31C;
+	Wed, 18 Nov 2026 19:13:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rG1k5IF0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BD8F1F000C4;
-	Wed, 18 Nov 2026 19:13:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XtNTpuYJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 352271F000C4;
+	Wed, 18 Nov 2026 19:13:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029223;
-	bh=7F12I5QOodouw7Z2lShL5aHDrDsRB6vmxxsjGsRFAHE=;
+	s=korg; t=1795029226;
+	bh=DJqqbiP70CXB0OxwrW5JPzDsn6dQIEAL7ilv7cRA4u4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rG1k5IF03CgqvN0e1g95WPhhHMcEejDTf2UzMwLxnnbQeUt3O9uClN+l32erKlKM+
-	 k4khUwXS1HI8D4zhkXxifT7zjlbU2Jxn5e9CJkTlV8UotdbO7n1IxCTSDvjsoTcxnx
-	 5bzl7Csh4NhPRjBtqp3ShSJiWy19xWd5Ho5l2rdQ=
+	b=XtNTpuYJt5H9BPJ0brm/CHfe3ebDoIPoqDWnLqebjBS3r+kjQjwqlkHBb0yLuCNqQ
+	 FTac/5FoISVShNA5yNvc+GYJHV7UzbOcR9cuFdeGqsUyIh0Eel38Ee5fUgtb7fRVPy
+	 KDEdJYWYc8bMxWFBS088F7C07ou9ogtA7ND8tHc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Golla Nagendra <nagendra.golla@amd.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0267/1756] perf btf: Make the sigtrap test helper to find a member by name widely available
-Date: Wed, 18 Nov 2026 15:39:54 +0100
-Message-ID: <20261118150018.971106024@linuxfoundation.org>
+Subject: [PATCH 6.12 0276/1756] dmaengine: zynqmp_dma: Fix chan probe/remove error handling
+Date: Wed, 18 Nov 2026 15:40:03 +0100
+Message-ID: <20261118150019.413954885@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -73,145 +69,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Golla Nagendra <nagendra.golla@amd.com>
 
-[ Upstream commit dcf900429d1e7c9b528e3e4682d0255003ab7be3 ]
+[ Upstream commit 0266dac57019201a14a81245d22750ab221d6c66 ]
 
-By introducing a tools/perf/util/btf.c to collect utilities not yet
-available via libbpf, the first being a way to find a member by name
-once we get the type_id for the struct.
+Keep the real platform_get_irq() error by returning ret directly, stage
+IRQ setup via a local ret variable, and assign chan->irq only after
+devm_request_irq() succeeds.
 
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: 024b219744a9 ("perf trace: Add upper bound checks for augmented BTF struct printing")
+Initialize chan->irq to -1 and initialize chan->common.device_node
+before it may be touched by teardown. In channel remove, free IRQ only
+for valid IRQ numbers and delete the channel node only when it is linked.
+
+Register the channel node only after successful IRQ setup. On channel
+probe failure in zynqmp_dma_probe(), route cleanup through the existing
+free_chan_resources teardown path.
+
+Fixes: b0cc417c1637 ("dmaengine: Add Xilinx zynqmp dma engine driver support")
+Signed-off-by: Golla Nagendra <nagendra.golla@amd.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260814045616.1661199-4-nagendra.golla@amd.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/sigtrap.c | 20 +++-----------------
- tools/perf/util/Build      |  1 +
- tools/perf/util/btf.c      | 27 +++++++++++++++++++++++++++
- tools/perf/util/btf.h      | 10 ++++++++++
- 4 files changed, 41 insertions(+), 17 deletions(-)
- create mode 100644 tools/perf/util/btf.c
- create mode 100644 tools/perf/util/btf.h
+ drivers/dma/xilinx/zynqmp_dma.c | 28 +++++++++++++++++-----------
+ 1 file changed, 17 insertions(+), 11 deletions(-)
 
-diff --git a/tools/perf/tests/sigtrap.c b/tools/perf/tests/sigtrap.c
-index e6fd934b027a3..a67c756f90b8d 100644
---- a/tools/perf/tests/sigtrap.c
-+++ b/tools/perf/tests/sigtrap.c
-@@ -56,6 +56,7 @@ static struct perf_event_attr make_event_attr(void)
+diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_dma.c
+index 9ae46f1198fe6..e8661f7b755a4 100644
+--- a/drivers/dma/xilinx/zynqmp_dma.c
++++ b/drivers/dma/xilinx/zynqmp_dma.c
+@@ -205,7 +205,7 @@ struct zynqmp_dma_desc_sw {
+  * @desc_pool_p: Physical allocated descriptor base
+  * @desc_free_cnt: Descriptor available count
+  * @dev: The dma device
+- * @irq: Channel IRQ
++ * @irq: Linux IRQ number, or -1 when not registered
+  * @is_dmacoherent: Tells whether dma operations are coherent or not
+  * @tasklet: Cleanup work after irq
+  * @idle : Channel status;
+@@ -887,10 +887,11 @@ static void zynqmp_dma_chan_remove(struct zynqmp_dma_chan *chan)
+ 	if (!chan)
+ 		return;
  
- #ifdef HAVE_BPF_SKEL
- #include <bpf/btf.h>
-+#include <util/btf.h>
- 
- static struct btf *btf;
- 
-@@ -73,21 +74,6 @@ static void btf__exit(void)
- 	btf = NULL;
+-	if (chan->irq)
++	if (chan->irq >= 0)
+ 		devm_free_irq(chan->zdev->dev, chan->irq, chan);
+ 	tasklet_kill(&chan->tasklet);
+-	list_del(&chan->common.device_node);
++	if (!list_empty(&chan->common.device_node))
++		list_del(&chan->common.device_node);
  }
  
--static const struct btf_member *__btf_type__find_member_by_name(int type_id, const char *member_name)
--{
--	const struct btf_type *t = btf__type_by_id(btf, type_id);
--	const struct btf_member *m;
--	int i;
--
--	for (i = 0, m = btf_members(t); i < btf_vlen(t); i++, m++) {
--		const char *current_member_name = btf__name_by_offset(btf, m->name_off);
--		if (!strcmp(current_member_name, member_name))
--			return m;
--	}
--
--	return NULL;
--}
--
- static bool attr_has_sigtrap(void)
- {
- 	int id;
-@@ -101,7 +87,7 @@ static bool attr_has_sigtrap(void)
- 	if (id < 0)
- 		return false;
+ /**
+@@ -906,13 +907,14 @@ static int zynqmp_dma_chan_probe(struct zynqmp_dma_device *zdev,
+ 	struct zynqmp_dma_chan *chan;
+ 	struct device_node *node = pdev->dev.of_node;
+ 	const struct zynqmp_dma_config *match_data;
+-	int err;
++	int err, ret;
  
--	return __btf_type__find_member_by_name(id, "sigtrap") != NULL;
-+	return __btf_type__find_member_by_name(btf, id, "sigtrap") != NULL;
+ 	chan = devm_kzalloc(zdev->dev, sizeof(*chan), GFP_KERNEL);
+ 	if (!chan)
+ 		return -ENOMEM;
+ 	chan->dev = zdev->dev;
+ 	chan->zdev = zdev;
++	chan->irq = -1;
+ 
+ 	chan->regs = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(chan->regs))
+@@ -945,22 +947,26 @@ static int zynqmp_dma_chan_probe(struct zynqmp_dma_device *zdev,
+ 	INIT_LIST_HEAD(&chan->pending_list);
+ 	INIT_LIST_HEAD(&chan->done_list);
+ 	INIT_LIST_HEAD(&chan->free_list);
++	INIT_LIST_HEAD(&chan->common.device_node);
+ 
+ 	dma_cookie_init(&chan->common);
+ 	chan->common.device = &zdev->common;
+-	list_add_tail(&chan->common.device_node, &zdev->common.channels);
+-
+ 	zynqmp_dma_init(chan);
+-	chan->irq = platform_get_irq(pdev, 0);
+-	if (chan->irq < 0)
+-		return -ENXIO;
+-	err = devm_request_irq(&pdev->dev, chan->irq, zynqmp_dma_irq_handler, 0,
++	ret = platform_get_irq(pdev, 0);
++	if (ret < 0)
++		return ret;
++
++	err = devm_request_irq(&pdev->dev, ret, zynqmp_dma_irq_handler, 0,
+ 			       "zynqmp-dma", chan);
+ 	if (err)
+ 		return err;
+ 
++	chan->irq = ret;
++
+ 	chan->desc_size = sizeof(struct zynqmp_dma_desc_ll);
+ 	chan->idle = true;
++	list_add_tail(&chan->common.device_node, &zdev->common.channels);
++
+ 	return 0;
  }
  
- static bool kernel_with_sleepable_spinlocks(void)
-@@ -119,7 +105,7 @@ static bool kernel_with_sleepable_spinlocks(void)
- 		return false;
+@@ -1125,7 +1131,7 @@ static int zynqmp_dma_probe(struct platform_device *pdev)
+ 	ret = zynqmp_dma_chan_probe(zdev, pdev);
+ 	if (ret) {
+ 		dev_err_probe(&pdev->dev, ret, "Probing channel failed\n");
+-		goto err_disable_pm;
++		goto free_chan_resources;
+ 	}
  
- 	// Only RT has a "lock" member for "struct spinlock"
--	member = __btf_type__find_member_by_name(id, "lock");
-+	member = __btf_type__find_member_by_name(btf, id, "lock");
- 	if (member == NULL)
- 		return false;
- 
-diff --git a/tools/perf/util/Build b/tools/perf/util/Build
-index 5cc89ec8584bc..7659db6039367 100644
---- a/tools/perf/util/Build
-+++ b/tools/perf/util/Build
-@@ -167,6 +167,7 @@ perf-util-$(CONFIG_PERF_BPF_SKEL) += bpf_off_cpu.o
- perf-util-$(CONFIG_PERF_BPF_SKEL) += bpf-filter.o
- perf-util-$(CONFIG_PERF_BPF_SKEL) += bpf-filter-flex.o
- perf-util-$(CONFIG_PERF_BPF_SKEL) += bpf-filter-bison.o
-+perf-util-$(CONFIG_PERF_BPF_SKEL) += btf.o
- 
- ifeq ($(CONFIG_LIBTRACEEVENT),y)
-   perf-util-$(CONFIG_PERF_BPF_SKEL) += bpf_lock_contention.o
-diff --git a/tools/perf/util/btf.c b/tools/perf/util/btf.c
-new file mode 100644
-index 0000000000000..bb163fe87767c
---- /dev/null
-+++ b/tools/perf/util/btf.c
-@@ -0,0 +1,27 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Arnaldo Carvalho de Melo <acme@redhat.com>
-+ *
-+ * Copyright (C) 2024, Red Hat, Inc
-+ */
-+
-+#include <bpf/btf.h>
-+#include <util/btf.h>
-+#include <string.h>
-+
-+const struct btf_member *__btf_type__find_member_by_name(struct btf *btf,
-+							 int type_id, const char *member_name)
-+{
-+	const struct btf_type *t = btf__type_by_id(btf, type_id);
-+	const struct btf_member *m;
-+	int i;
-+
-+	for (i = 0, m = btf_members(t); i < btf_vlen(t); i++, m++) {
-+		const char *current_member_name = btf__name_by_offset(btf, m->name_off);
-+
-+		if (!strcmp(current_member_name, member_name))
-+			return m;
-+	}
-+
-+	return NULL;
-+}
-diff --git a/tools/perf/util/btf.h b/tools/perf/util/btf.h
-new file mode 100644
-index 0000000000000..05e6e5bf23d62
---- /dev/null
-+++ b/tools/perf/util/btf.h
-@@ -0,0 +1,10 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+#ifndef __PERF_UTIL_BTF
-+#define __PERF_UTIL_BTF 1
-+
-+struct btf;
-+struct btf_member;
-+
-+const struct btf_member *__btf_type__find_member_by_name(struct btf *btf,
-+							 int type_id, const char *member_name);
-+#endif // __PERF_UTIL_BTF
+ 	p->dst_addr_widths = BIT(zdev->chan->bus_width / 8);
 -- 
 2.53.0
 
