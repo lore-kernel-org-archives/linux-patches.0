@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026002;
-	b=MfH9UVmMNlomPEKGymrprkmcZ0v+weRm3sqSGJXyDKqL7+QQ+GcAqLzCTc0PAlbwgk5/
-	 769XLRGycEAoiMlAV7RbFETda9eqmkgpVnrRGRYoRxuPZ9YAxBAszjYS1YBgjk6eZJ92I
-	 6e7k1NS0PhWq2cd6tkvpCNioo/sXTCk93GlR8iOhlVQM5dHXM1zV0VkXrTYM5yzbYTxJT
-	 zB3q5FWw3nZC59XZUj2rKkLxeVzR96K9fz/27vD5aqbjjx9W8Wcthzmgr7cJKgFnTXDOc
-	 yXQVUWYd+4bccof2r1YP5r/5EZIdQFPSOEeCP1feUKT7VBp6nERjwHTTcb6UHc3HzFQ==
+	t=1795026005;
+	b=sZETa+xg5qCpKwf4VcfAkT7l2gAZEPjObShmvbDe8FWdacBTDn+LU3geWUpb4pC0v3Vy
+	 f/KFyV1H2N8Ds+IrHBjtSZfdfnxubcRfFSE0FGWuQJvHEoBKfQJ5NqGyukLPCcnMEjman
+	 MxBAsUQeYzSOPTPE0F/E/+fkTd45R6mu0e3lDHQs50wLPz5hYbTHGIfju1wn34hpokTLK
+	 dOPjrVrMVKCRJ1LcLGFw4Fct+dBmDhwVvv3p+6aTLyiv2aZBt4mpnIDVKHE526sgOYyqH
+	 EoDxznupfOygJFGgsi2pE5SnhjmMsAXFDzmMABnBT28eXmauOmRhVRJLbKz8NPhw3uA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026002;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026005;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f/Q+vcih9E+280g/7SoXOPBGkDcReUn9lsJGY/4zf8g=;
-	b=U4LfFxz9vBZAYeJJZ5IH5ItDXqiotBjYYUmTyaC6NeLnXMo9FE4QlecGrSmdQhoYy6hv
-	 cpV9wod/D313wRHXV79gBARInebXFJLCALXSLxl+Obw+yvr5qMvzZk2YxhV9mNViyhTCh
-	 xwz3u6xie0qFJWiyTfx2MWfnDS/IyBxtREm+S+VSNrD4AanElnSVOXaYUJvZnU7GfL96q
-	 sBPpnrbqdAL1k6yXBJaMWjB1KGMX48cmglJgI4EfVFi0TGCEQg0F6RC22U94S0YPkP7+l
-	 BLPMkWrUrTpN4KdtSyomChQNFn7KFUmgSqdqJBvZ7V8YxaotBkpJzUoaXVLrUPxB3uQ==
+	bh=Mzpqijy0DvIX8um6gd3EzBO3Gm2y6SLYAPpAq3y4Y54=;
+	b=W8J1lobpDTE04k2Ns3uND2EL6pbvyOi1rv74G5irpdVF9Any3sKOiejutAnVucuifHzZ
+	 8PbgEfQ5jqTWBkY+aKctgNaLU4IqJWnP6ESA86rV54J4tnf2U29OSgV4xjbMmHnsAxQk/
+	 yTM36zPxeNII9isbBhOw43dXn9nwIBE0aw6OCbxwhWH95paAq9xnpYDkeg36kilg38+cX
+	 GUKFXPtaUrPQFxv0Etn7B09qmANWMJx02LYaphOOpHopqUZslo+EGbziw7mQUN3/uUa2q
+	 t/268tqeQkUBzwuz6wsB20ncihD0dWoeqMNCczsDrSx4j3ACvysEnjzIQ5r6d+lU64w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kjz2zLtr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QI6vUkFV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD654606A320;
-	Wed, 18 Nov 2026 18:20:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E9D606A320;
+	Wed, 18 Nov 2026 18:20:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kjz2zLtr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FBEF1F000C4;
-	Wed, 18 Nov 2026 18:20:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QI6vUkFV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DF5D1F000C4;
+	Wed, 18 Nov 2026 18:20:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026002;
-	bh=f/Q+vcih9E+280g/7SoXOPBGkDcReUn9lsJGY/4zf8g=;
+	s=korg; t=1795026005;
+	bh=Mzpqijy0DvIX8um6gd3EzBO3Gm2y6SLYAPpAq3y4Y54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kjz2zLtrlR6E8t5MkDMKP5rw4YEVJNwmdHmSuFD6uy+Iza/XVeBDVBr6NlKX6xIDX
-	 0gMXUQbOkcXVL7mVYB9RiUBVDuchzLA2+595d+EZisSYlUOVA/HY9NGso1wo8Ye8RW
-	 mndi1e7ZmfXXmcLIbDESn89aHAw5iMHXlcoi5dAk=
+	b=QI6vUkFVXv1O9e3UA0uGwM4QtOI8sWg+x1cDuTMAwBV20YUMxeiP1lzfPtU4K6c+d
+	 OETU094OVJej8aauwZuXEv2doRBMwuRVOfXMmZaiKavKPc534utW8wmx1GimPakEB9
+	 O30dPkdJilUWmGHFO2fK4Z/KaVA1fXnwpUPfRTkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Beulich <jbeulich@suse.com>,
-	Jason Andryuk <jason.andryuk@amd.com>,
-	Juergen Gross <jgross@suse.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1279/2151] x86/PVH: dont truncate initrd address/size
-Date: Wed, 18 Nov 2026 15:50:14 +0100
-Message-ID: <20261118150208.714859668@linuxfoundation.org>
+Subject: [PATCH 6.18 1280/2151] gpu: buddy: Drop the stale @p line from the gpu_buddy_print() kernel-doc
+Date: Wed, 18 Nov 2026 15:50:15 +0100
+Message-ID: <20261118150208.752032286@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,40 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Beulich <jbeulich@suse.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit fcc43d1d6bf5fbd41e1e308b17187f9b759df56a ]
+[ Upstream commit b7027ff72c2fd4f7697a00b854c882445e9150b5 ]
 
-Consuming merely the lower halves of the provided values isn't very
-useful. (While generally loaders try to place it below 4G, especially
-when it's huge it may not fit there.)
+gpu_buddy_print() takes only the allocator since commit ba110db8e1bc
+("gpu: Move DRM buddy allocator one level up (part two)"), but the
+kernel-doc still describes a printer argument and kernel-doc warns about
+the excess parameter on every docs build.
 
-Fixes: 7243b93345f7 ("xen/pvh: Bootstrap PVH guest")
-Signed-off-by: Jan Beulich <jbeulich@suse.com>
-Reviewed-by: Jason Andryuk <jason.andryuk@amd.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Drop the line.
 
-Message-ID: <9698d810-6664-4a9d-a847-18ad124261e0@suse.com>
+Fixes: ba110db8e1bc ("gpu: Move DRM buddy allocator one level up (part two)")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
+Signed-off-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
+Link: https://patch.msgid.link/20260907012125.21209-1-kmehltretter@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/platform/pvh/enlighten.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/buddy.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/x86/platform/pvh/enlighten.c b/arch/x86/platform/pvh/enlighten.c
-index b7dcc9c992f32..0ee804f88eed7 100644
---- a/arch/x86/platform/pvh/enlighten.c
-+++ b/arch/x86/platform/pvh/enlighten.c
-@@ -84,7 +84,9 @@ static void __init init_pvh_bootparams(bool xen_guest)
- 		struct hvm_modlist_entry *modaddr =
- 			__va(pvh_start_info.modlist_paddr);
- 		pvh_bootparams.hdr.ramdisk_image = modaddr->paddr;
-+		pvh_bootparams.ext_ramdisk_image = modaddr->paddr >> 32;
- 		pvh_bootparams.hdr.ramdisk_size = modaddr->size;
-+		pvh_bootparams.ext_ramdisk_size = modaddr->size >> 32;
- 	}
- 
- 	/*
+diff --git a/drivers/gpu/buddy.c b/drivers/gpu/buddy.c
+index bf5920bd22580..158f54e82547b 100644
+--- a/drivers/gpu/buddy.c
++++ b/drivers/gpu/buddy.c
+@@ -1291,7 +1291,6 @@ EXPORT_SYMBOL(gpu_buddy_block_print);
+  * gpu_buddy_print - print allocator state
+  *
+  * @mm: GPU buddy manager
+- * @p: GPU printer to use
+  */
+ void gpu_buddy_print(struct gpu_buddy *mm)
+ {
 -- 
 2.53.0
 
