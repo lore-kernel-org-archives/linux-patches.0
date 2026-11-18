@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032199;
-	b=jsEFkADmA8z0s7JXCx022moHcA1edgjSYkV5LqhFp7l8vKDieWC6weZwvelhthUmN7v8
-	 gb4y3/iKzexkWWQ0smtDvGetpAwalpO3sQtyICrGeJzro9Mc19BhVKIynsTjfsaD+O8h9
-	 TZUWaLDE/28lde5oVvxVuRWLFMAa5J9xQYNfUZ6SQaXQC6rgg7ihUIvQpQl6jBeHf9UPJ
-	 /09IzK9I36OTaNtk+rLl9imaWTb691w9BMX1sy6zxJQ3X2RtDEFoeH2gL4HxinJm5Hky+
-	 pfUVtrG+kOTbVEu9S+miEaT0bD6CMGjCqwd0D6womq2FqZCWRwg5j7LLcGWyb7Y09sQ==
+	t=1795032201;
+	b=qqUtnACP1JzlB3iGLdh3tPY60Dy26PAgRLmZrWk1uW82bj9PfpB7VXXR+Hl4jiqacqSr
+	 YNH93KbBOqT2iGYeuVm0EaaL/b2XCObN87/HR4AzGB3XulOtxik7Oho3+xd/BDFYIHlxm
+	 YJFfSWCrnuC2pRYitdOeCZ0bXbfTRsa3yKQ/7+rtc/q8HlK0PL/NseOHbQdC0aYgcAqQE
+	 aB4dpmINx7BNDpw8BKXrUjGRAX79Ph77JzwYOrrgVM/Q2VA6GOEqEqS8HpGPsF2bhzyVl
+	 7aYZcCvrEfJugAA8ubFSMOQlhzKWkqQJXmUt5ZBckZnMsPZYAeyfNrh01aoJL9o2i1g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032199;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032201;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VFFXkAtTNklfwwqr0kB2pVyGxUkRFhp3HarRb2Cn5uo=;
-	b=yMhpG/OIpeJPdil2Uf/clwd0pJCJAE+PTkt7lMWbCDL7zRZOcxRafaK1v+63haddPy4G
-	 O6tW67+u8cyLfvAI+lafPtfmCIBhLErPqAAzkUU+3lqXPj/D+4Z1b9VXgA6mkSMtkWbCT
-	 s8wWdon9CdGfp9p3fEmIyj4TRe6yiFNDiQYTYTwYHXa8+EkAgWXkOMTIc3yZSz/7dtA3c
-	 2wOjIFziy8HaPYdMICAq9oUWLQAyGIdWezLaCQElbUsWGwTKt/ExADGXSsKcmjvB6yXr0
-	 U86y50c54ILJ/QnsIa4Ig5lOXDWQRihHFZm5KF0WGYdOeZiKuldm9WNifVEo6p8PTyg==
+	bh=eH2YJI8rRbtUgs7Rrwz5AStvEr4G7R0ByIXDtNDuBR4=;
+	b=UTyLNwbyEvpDru265Z3yRagTl5aUxcxN1jeiDsUeYuZS0rEsE2q+xY6+P678w/cIhL3Y
+	 QyQkIktJTlM/PoQiQjTU8cP8Oo5V3cVbXsplzRh8ENxXejJTh2HmDOWdWvwr4ut7tbblf
+	 0kn+c77GQv1M1rzXeiAr0480wz2M+9wcAYPtwql8fpE6iETIIw3JHMB14QtPw/W7h9Xq5
+	 IW0LQC8VFjg7G9myAWW4gDhGGLFFRpjhBG/dMZH19EoS/XOhsgDVTVvT9h2zfhgILU41s
+	 6Lfx3bE9/pogSZ0qDzWRkBb4JX6qiUQNSOEjLBBXVzMkm4VqE2vnC8WWhIq0IlNKARA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZmU+lO2y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xCtdtprb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7402606A320;
-	Wed, 18 Nov 2026 20:03:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A4E5606A31C;
+	Wed, 18 Nov 2026 20:03:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZmU+lO2y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D0821F000C8;
-	Wed, 18 Nov 2026 20:03:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xCtdtprb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F33581F000C4;
+	Wed, 18 Nov 2026 20:03:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032198;
-	bh=VFFXkAtTNklfwwqr0kB2pVyGxUkRFhp3HarRb2Cn5uo=;
+	s=korg; t=1795032201;
+	bh=eH2YJI8rRbtUgs7Rrwz5AStvEr4G7R0ByIXDtNDuBR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZmU+lO2yONVzRiUUw7hcyu1xeYL/4ecdkDn7UNmcGsA9Y/InVbGcu2ZaDr8WqsP99
-	 ELxKFJxnO2wg+tJMTUYpqa2zvP0N80v867Tz5QtXs5g5oeE/NT+80ON/gU8eL1vz7x
-	 0x2UlkU3+ag0S0srWFIeSDOsysBiQ9gYIjB1UNmA=
+	b=xCtdtprbyH16IStPYKlfJIYYaI70ENq0S7IPY7ZfEeLn0xhCBQQJ+iNe//9zlFqAW
+	 5wsuDxCmRq33ZCQyGQj4pIFxnH5CrrnFASEOvqLMXB9rQZqQ9/2kurdhHTOVT8K0Cf
+	 saLiRtdomBy1zcKx7a2QeSu5wy74xQcHPf4J645w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Alexey Klimov <alexey.klimov@linaro.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1286/1756] ASoC: Intel: avs: Prevent module info underflow
-Date: Wed, 18 Nov 2026 15:56:53 +0100
-Message-ID: <20261118150100.753945775@linuxfoundation.org>
+Subject: [PATCH 6.12 1287/1756] ASoC: qcom: sdm845: add handling of secondary MI2S clock
+Date: Wed, 18 Nov 2026 15:56:54 +0100
+Message-ID: <20261118150100.790302449@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,46 +68,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Alexey Klimov <alexey.klimov@linaro.org>
 
-[ Upstream commit 05c2975b4267246219e7aead0467626107e204e9 ]
+[ Upstream commit 8bfb66c75cdace542dabe87841152614fd5b8d91 ]
 
-Typically modules information is first initialized when loading the base
-AudioDSP base firmware and then expanded when loadable DSP modules are
-requested by platform-components, see avs_component_load_libraries().
+Add handling of clock related to secondary MI2S_RX in startup, shutdown
+and hw params routines. The handing of MI2S_TX and SEC_MI2S clock is
+already there so this requires only placing SECONDARY_MI2S_RX in the
+correct switch-case choices.
 
-While theoretically not possible in a production scenario, there is no
-reason to continue the IDAs preparation if an event caused the newly
-obtained module information to be smaller or equal than the existing
-information.
-
-Fixes: c1a427e8da93 ("ASoC: Intel: avs: Firmware resources management utilities")
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20261015190240.729793-4-cezary.rojewski@intel.com
+Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+Link: https://patch.msgid.link/20241205023344.2232529-3-alexey.klimov@linaro.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: cef5d087d681 ("ASoC: qcom: sdm845: Disable the quaternary MI2S bit clock on shutdown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/avs/utils.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/soc/qcom/sdm845.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/intel/avs/utils.c b/sound/soc/intel/avs/utils.c
-index 81f9b67d8e293..05d7142a49246 100644
---- a/sound/soc/intel/avs/utils.c
-+++ b/sound/soc/intel/avs/utils.c
-@@ -118,9 +118,11 @@ avs_module_ida_alloc(struct avs_dev *adev, struct avs_mods_info *newinfo, bool p
- 	int i;
+diff --git a/sound/soc/qcom/sdm845.c b/sound/soc/qcom/sdm845.c
+index 314ff68506d9f..a233b80049ee7 100644
+--- a/sound/soc/qcom/sdm845.c
++++ b/sound/soc/qcom/sdm845.c
+@@ -219,6 +219,7 @@ static int sdm845_snd_hw_params(struct snd_pcm_substream *substream,
+ 		ret = sdm845_slim_snd_hw_params(substream, params);
+ 		break;
+ 	case QUATERNARY_MI2S_RX:
++	case SECONDARY_MI2S_RX:
+ 		break;
+ 	default:
+ 		pr_err("%s: invalid dai id 0x%x\n", __func__, cpu_dai->id);
+@@ -360,6 +361,7 @@ static int sdm845_snd_startup(struct snd_pcm_substream *substream)
+ 		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+ 		break;
  
- 	if (!purge && oldinfo) {
--		if (oldinfo->count >= newinfo->count)
--			dev_warn(adev->dev, "refreshing %d modules info with %d\n",
-+		if (oldinfo->count >= newinfo->count) {
-+			dev_warn(adev->dev, "modules info underflow, old: %d, new: %d\n",
- 				 oldinfo->count, newinfo->count);
-+			return -EPROTO;
-+		}
- 		tocopy_count = oldinfo->count;
- 	}
++	case SECONDARY_MI2S_RX:
+ 	case SECONDARY_MI2S_TX:
+ 		codec_dai_fmt |= SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_I2S;
+ 		if (++(data->sec_mi2s_clk_count) == 1) {
+@@ -375,8 +377,6 @@ static int sdm845_snd_startup(struct snd_pcm_substream *substream)
+ 			Q6AFE_LPASS_CLK_ID_QUAD_MI2S_IBIT,
+ 			MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+ 		snd_soc_dai_set_fmt(cpu_dai, fmt);
+-
+-
+ 		break;
  
+ 	case QUATERNARY_TDM_RX_0:
+@@ -445,6 +445,7 @@ static void  sdm845_snd_shutdown(struct snd_pcm_substream *substream)
+ 		}
+ 		break;
+ 
++	case SECONDARY_MI2S_RX:
+ 	case SECONDARY_MI2S_TX:
+ 		if (--(data->sec_mi2s_clk_count) == 0) {
+ 			snd_soc_dai_set_sysclk(cpu_dai,
 -- 
 2.53.0
 
