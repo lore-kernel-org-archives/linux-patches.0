@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034445;
-	b=TkQYcdBx8wDM6eedQETQHWfze5JYuwUUgyJU0Y2YzqoMIY6Z0QORYh08YAUnoahBsqjh
-	 a4SewsQIDYbaR8EonmlOuZwWSHDzxWyjNhXTpBfIrTMwjZCG6+/ICSAgwfVX+o7XY9Ued
-	 w0s6EYt317Qc0RHVaUDx2p7HsCjTyntO+9QvzVybd6nAdp4mNy/mxzlg8f9YKXpQ69754
-	 GY7ihhLZghwf7SQp8gsXJLPedWKvCH1cA+O6ucS/Ay9u6eJrl3Zwgi9V7FNmomNA8Upw2
-	 +d+emomtqnuPEgX4W6EFSR9Um8PsSQw3JKxt26fIJ9a6w8b1RFvapDKV16WSuCZ/c6Q==
+	t=1795034449;
+	b=SHKXcJJaDdNJHalQmWnqVS2mqahBxukvtyqxRv82iV46yAb1+cfOMhMfPfQCKzfXVSjM
+	 PkqXVIg7kBtVbjUFreljnCYdKEmSwLQMUxFAyyp9/iWiu/2K9Pv2pEbiQ7w3vi6/l24Hc
+	 bl7vgWeTy9Xmg/FZcOYIyIgkqUKtALzXhJ/GMwoOCGOpYCVz8uF7RgEchsxNXb20NzakU
+	 wLTdvbQiICuPZRIQIsOow7+aGKuj09xhG2Rf5G88FbGzyfBeD77ZT7/HlzeEO51Yh7X2H
+	 bf2zA738mgEUjUAQ43JasM9tkteU95j4By29YmcDn8pPsABi/2SkqgglqwD9iwIXRbg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034445;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034449;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uXmZGmufmuvkuA7TcJ6Xusc/xLl0va/7Tf5xCmdC/m8=;
-	b=NvvvLowDXnpfM+0KnTCJ/Nt5oVN5wIgDUJdaPo5tdVPJuWEF3JKYuqnWlESv4rwJytaI
-	 u+yV0fGMZZgEk3XvJJLiJJl8muxlucUQcKBOThpuz2AuLmLEltLialr70lbFC/a9i1mdj
-	 Ua+GCqv6FRFf1gyDrrww/DgzRPrOPVBAehsMD8R1aKGxl0EejDJkJjtmSCJqw44BXnE+T
-	 8AalfV3I82FlRP1Ty9iqZ7ZgQ8Q/gWKiWnV0wyijOtTlPnpzNyBjgraP+LPI6L8VV0byl
-	 ebqw7jVrQ/F2dCgriuv4NTjcX58kqg0nKIUnHGRmc9tYnX9dzu/z2739rN2SPArDI3w==
+	bh=J7oJMtD/4jju50IKkQSc7B1rgUQPNFjyfxfw5n+oXho=;
+	b=MandeatyxEUb2Ui8sIpMYqXotrAAqIV7JZ+X1w6I0RU8KCiJLJMvmsE1vdZsiaGz050M
+	 RTFFUu8mGnaK3kAv7nZHjgUxuws5U45KF9qbcCGb50D9GZ/Ae6pBfE44ycj/h/UPjWs4u
+	 FQypy4+zRPUKZDlzma0jkaqBxRxnZi+6uhhWRX9o1OGKGGl4p5DEyZVjSZFUCQOQlY8FN
+	 euVARyhU5ITh1kVS7CR4zj+g/rcP20PWsukkFfEzrfZ4gGeCE8DauvHqeQr/yQaeAxHp+
+	 +kjFBz7sgrnrsJQVOLFDdqqF4YKmxqb4xQRslSqbNeOzSR57dtpGt6VeKIBBLWld7tg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hev0Lp9x;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OJBT1V3U;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA771606A330;
-	Wed, 18 Nov 2026 20:40:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F06606A31C;
+	Wed, 18 Nov 2026 20:40:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hev0Lp9x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B9921F000C4;
-	Wed, 18 Nov 2026 20:40:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OJBT1V3U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3BCA1F000C4;
+	Wed, 18 Nov 2026 20:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034445;
-	bh=uXmZGmufmuvkuA7TcJ6Xusc/xLl0va/7Tf5xCmdC/m8=;
+	s=korg; t=1795034448;
+	bh=J7oJMtD/4jju50IKkQSc7B1rgUQPNFjyfxfw5n+oXho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hev0Lp9xZKOxi5A/VDUE0aojmfMFUejZdsdxk8yH4XfV9i9wJcVR35EPmRYJEt47W
-	 NTsPPh1E+l0ojT+egWcYAsZID39ln3+In4xf09BWkcMOzj6/ybUkIZNxQKiI3D30yN
-	 zORQvujIPkxDYtVUy7wEE43ASZTXzlIRhKMs/4Ss=
+	b=OJBT1V3UfNM00hlLkUL6MOhVAIn55sexis2Hx/cBD0SG5Dx7Du9iSWbxogPEQb1IQ
+	 1LfIf6yAfED2g9XM+gDK1ZwuAPHUd6ulM9JGPq8kyrgET6u0tLcPyk2E1EpQgv2qN0
+	 m8G/ibCd4Zg3vFD6wMam+nQWh/WJE+NPjvjfZF90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Giorgi Kobakhia <gkobakhi@asu.edu>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.6 0370/3318] udf: fix return value for non-recorded-allocated extents in udf_map_block()
-Date: Wed, 18 Nov 2026 15:16:32 +0100
-Message-ID: <20261118150327.301274073@linuxfoundation.org>
+	Bui Viet Dung <dungvn2345@gmail.com>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 0371/3318] wwan: wwan_hwsim: Pin module for debugfs file operations
+Date: Wed, 18 Nov 2026 15:16:33 +0100
+Message-ID: <20261118150327.337601991@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,53 +68,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giorgi Kobakhia <gkobakhi@asu.edu>
+From: Bui Viet Dung <dungvn2345@gmail.com>
 
-commit 0f242ca0878896df30292f4922700a32e8fdd039 upstream.
+commit a388f17e23b7e305cb306aafd73bb10d6b8ca452 upstream.
 
-When someone creates a corrupted UDF filesystem where symlink contains
-other extent type than EXT_RECORDED_ALLOCATED, it can leads to a crash
-like:
+An open debugfs file retains its file_operations pointer in the
+debugfs proxy state. However, wwan_hwsim_debugfs_portdestroy_fops,
+wwan_hwsim_debugfs_portcreate_fops, wwan_hwsim_debugfs_devdestroy_fops,
+and wwan_hwsim_debugfs_devcreate_fops in wwan_hwsim.c have no
+.owner set to THIS_MODULE.
 
- Oops: general protection fault
- KASAN: maybe wild-memory-access
- RIP: 0010:page_get_link (fs/namei.c:6503)
- Call Trace:
-  vfs_readlink (fs/namei.c:6419)
-  do_readlinkat (fs/stat.c:583)
-  __x64_sys_readlink (fs/stat.c:605 fs/stat.c:602 fs/stat.c:602)
+As a result, full_proxy_open_regular() calls fops_get() which succeeds
+without taking a reference to the wwan_hwsim module. When a userspace
+process opens any of these debugfs files, a subsequent module unload
+(rmmod wwan_hwsim) can succeed while the file descriptor remains open.
 
-This is because in this case udf_map_block() fails to convert return
-value of inode_bmap() from 1 to 0. Returned '1' propagates through
-udf_bread() all the way up to __page_get_link() where it ends up being
-treated as a folio pointer with obvious results.
+When the userspace process subsequently closes the descriptor,
+full_proxy_release() accesses the already unmapped file_operations
+structure, triggering a kernel oops in full_proxy_release():
 
-Move the reset to 0 line outside the if, so udf_map_block() returns either
-0 or -errno, even if the extent type is not EXT_RECORDED_ALLOCATED.
+  BUG: unable to handle page fault for address: fffffbfff84f90ef
+  Oops: 0000 [#2] SMP KASAN NOPTI
+  RIP: 0010:full_proxy_release+0x8e/0x140
+  Call Trace:
+   <TASK>
+   __fput+0x357/0xaa0
+   fput_close_sync+0xe6/0x1a0
+   file_close_fd_locked+0x17e/0x2f0
+   do_close+0x33/0x70
+   __x64_sys_close+0x44/0x80
+   do_syscall_64+0xc3/0x590
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+   </TASK>
 
-Fixes: c226964ec786 ("udf: refactor inode_bmap() to handle error")
+The issue was discovered via manual code audit of wwan_hwsim.c and
+reproduced on a Linux 7.3-rc6 test VM with CONFIG_WWAN_HWSIM=m.
+
+Set .owner = THIS_MODULE on all four debugfs file_operations structures
+in wwan_hwsim.c so that debugfs pins the module until close has
+completed.
+
+Fixes: 9ee23f48f670 ("wwan_hwsim: add debugfs management interface")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Tested-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Giorgi Kobakhia <gkobakhi@asu.edu>
-Link: https://patch.msgid.link/20260928200445.18722-1-gkobakhi@asu.edu
-Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Bui Viet Dung <dungvn2345@gmail.com>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261008130753.313875-1-dungvn2345@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/inode.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wwan/wwan_hwsim.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/udf/inode.c
-+++ b/fs/udf/inode.c
-@@ -441,8 +441,8 @@ static int udf_map_block(struct inode *i
- 			map->pblk = udf_get_lb_pblock(inode->i_sb, &eloc,
- 							offset);
- 			map->oflags |= UDF_BLK_MAPPED;
--			ret = 0;
- 		}
-+		ret = 0;
- out_read:
- 		up_read(&iinfo->i_data_sem);
- 		brelse(epos.bh);
+--- a/drivers/net/wwan/wwan_hwsim.c
++++ b/drivers/net/wwan/wwan_hwsim.c
+@@ -378,6 +378,7 @@ static ssize_t wwan_hwsim_debugfs_portde
+ }
+ 
+ static const struct file_operations wwan_hwsim_debugfs_portdestroy_fops = {
++	.owner = THIS_MODULE,
+ 	.write = wwan_hwsim_debugfs_portdestroy_write,
+ 	.open = simple_open,
+ 	.llseek = noop_llseek,
+@@ -402,6 +403,7 @@ static ssize_t wwan_hwsim_debugfs_portcr
+ }
+ 
+ static const struct file_operations wwan_hwsim_debugfs_portcreate_fops = {
++	.owner = THIS_MODULE,
+ 	.write = wwan_hwsim_debugfs_portcreate_write,
+ 	.open = simple_open,
+ 	.llseek = noop_llseek,
+@@ -423,6 +425,7 @@ static ssize_t wwan_hwsim_debugfs_devdes
+ }
+ 
+ static const struct file_operations wwan_hwsim_debugfs_devdestroy_fops = {
++	.owner = THIS_MODULE,
+ 	.write = wwan_hwsim_debugfs_devdestroy_write,
+ 	.open = simple_open,
+ 	.llseek = noop_llseek,
+@@ -446,6 +449,7 @@ static ssize_t wwan_hwsim_debugfs_devcre
+ }
+ 
+ static const struct file_operations wwan_hwsim_debugfs_devcreate_fops = {
++	.owner = THIS_MODULE,
+ 	.write = wwan_hwsim_debugfs_devcreate_write,
+ 	.open = simple_open,
+ 	.llseek = noop_llseek,
 
 
