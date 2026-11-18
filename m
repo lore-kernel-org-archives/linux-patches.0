@@ -1,52 +1,63 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050678;
-	b=jJlEqrAVYhaLXp2Dj/hGEBGJRJggGuvmVZic96hMys2VCL73oArU3nIzZBpfKr/6AsWM
-	 PLEg5hLZ9HAh55JrEk/yw5qX8TLW9zdbY4xiVcfX/DvwR/4HgbvUVCmBnQqWXbXbuHoLz
-	 ZWPtMkXSISuB7yHOd8yNQ6xhMTVV6xgz7YWyEPV7kR22/m5p90/9nLBiwFspFpIN975K6
-	 guIBKHePNjR2w6okIyoXM1ctLwjTntK1S+Q9xFNTJYkoakaiaSovt8MamPfWH04Y5Z6bM
-	 h/lLDoG6X0vyK6YzvdoW6AbiuKaypqYtYRA9JZIyHhg5GzufVDUqb36JeaUHMOqpwoA==
+	t=1795050681;
+	b=30LWU//cthy7GSJYxd2RabpE/SeI3vi6jUHJLwm9Uu2qMRLZZqOk53+OLZr0VP5WfEI5
+	 h0NxANtq5j55R+pxKsbwrlM62HZhcaEoYkJTwBrkH22cQcl7OUD0PUZUCUaLxcHP4+kqY
+	 wCS1vAOc4G6IBzvcyBZ9wzqmhwszJ35gVFaJ/ER5yvAU2fVub3Lhx6+2gxDZCEdhKMYiU
+	 DY1g7wihIr2y11AeRw9ux3kPOpXuO+gDwKsXFd1ZNliG5imxrBmH6v4Vribdub7NXgbVG
+	 YWV2+JcU8tRIJg4TjlFVQ4U4RV3z4qnZR9LFnMbDbQcH2cZZ4UD/PfsXNea2u1zjwqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050678;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050681;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Tewg7IE65hNrQt8w/SLgglqC692X/FTPY/gCBw7WbK0=;
-	b=hHAOSLSgDZmyNwHw3dIiFYXv8vKpsuPIcEwm4JaaI7AfTW2f02OmbkFUW2NqnFSnqk25
-	 j3ieIm4czq03kWxSQUSWHFW6pC9IkymdsmnN/5DeGcVWLaNvbXBZhGraVoVgWpE+J5CT3
-	 6/2TkRYz8AAVATcfelSpVZYHPc6fqghOj22tF2ydwTEPWE1NrxZY1v9tbbrlmcKz+E86r
-	 v8vYqlWzLQMVuM1f/OnC/uBdicy6mM7E4vb4lkMMgcx1q01r+ePnG1zYQnTtDfXH9wqRp
-	 QwsaPFAgbek9PmrbPJi8rntsuoeOZ+SfgDGGVrPZ2Y3qD/+RwOJdtPjuZ6o1E8qL6/w==
+	bh=OpZk/1hb9pkCLc7CsK9S42WuJjga0zrgCLK4SU6iijA=;
+	b=EcAdGJDrWveCtAPJ/z61RiTzhZdV7qifPecKC6imkhx3yCK6ahniw6vxMsJar4LePbzd
+	 9AilbjLFbpSISQjOi/mwdVNYlFD16eHelLolikUF684pGAXZu5Rag9yCpbwjiKep4woWm
+	 JDzeg8u7P//PayXAGhsRnvvIq5n1eWyBUmTm/a0E05Jd501oZ/UFH36S41QvRvYlvRetB
+	 0tZpARlhGqG9k8ooVRLi8IKiQs2BAYKSSvvl77/hzT2Cv+ZRtAnZ/Cli/2hZ39hwPdV0c
+	 HAA1jKbh5KlaEwn4CXXs4mO80QgWeZx64MScBAW07nF3ogqqkwqFahWfd72Zvb4Z61w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=odkgGqxN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=APzS0k0s;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F274A606A325;
-	Thu, 19 Nov 2026 01:11:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B6B606A31C;
+	Thu, 19 Nov 2026 01:11:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=odkgGqxN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB09F1F000CA;
-	Thu, 19 Nov 2026 01:11:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=APzS0k0s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E4FC1F000C4;
+	Thu, 19 Nov 2026 01:11:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050677;
-	bh=Tewg7IE65hNrQt8w/SLgglqC692X/FTPY/gCBw7WbK0=;
+	s=korg; t=1795050681;
+	bh=OpZk/1hb9pkCLc7CsK9S42WuJjga0zrgCLK4SU6iijA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=odkgGqxNeFk33WollCFr9ja4igkVYti5K9tbFNzmyJqCiL+wwWpHgaP36avXtsMmt
-	 Y1qmxRxW4lUS9qRjrOL3zR+JN9oKya6z0D3vOzXrDoDWOGNMpOTGybUXQz6sX5JNZo
-	 m+F5qKCecg51luMhETjNn+NSVGvkQs019Dt8BHsc=
+	b=APzS0k0spMxFGfdowOke88cSllNggL9w31YFsrQ/+RCywL8ZYOEFdcr/4zubZOPnY
+	 HHp5JovFwvIrNJjCFvIUwHO0jQSJC+NP+Hh2F4/uV/c9qlTOhr0daX5EVC8lS5Kp4o
+	 HWo5iN+qT40BL2fa8d5v/FpxHIZEX4kA5KLOd63Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Probst <markus.probst@posteo.de>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Paul Moses <p@1g4.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@intel.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2792/2857] rtc: s35390a: Fix alarm not disabling
-Date: Wed, 18 Nov 2026 16:03:46 +0100
-Message-ID: <20261118150342.127161730@linuxfoundation.org>
+Subject: [PATCH 6.1 2757/2857] perf mmap: Use the head selected by read_init
+Date: Wed, 18 Nov 2026 16:03:11 +0100
+Message-ID: <20261118150340.875626275@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,68 +79,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Markus Probst <markus.probst@posteo.de>
+From: Paul Moses <p@1g4.org>
 
-[ Upstream commit d93f29e41089bbb14637289fe77bdd72b71e9ac5 ]
+[ Upstream commit 022c64992af554cfd8c564bff86100fb5ed98678 ]
 
-Implement alarm_irq_enable callback.
+perf_mmap__push() reads the producer head before calling
+perf_mmap__read_init(), which reads it again to select the range to
+copy.
 
-Fixes: 542dd33a4925 ("drivers/rtc/rtc-s35390a.c: add wakealarm support for rtc-s35390A rtc chip")
-Signed-off-by: Markus Probst <markus.probst@posteo.de>
-Link: https://patch.msgid.link/20260930-rtc_s35390a_int1-v10-3-e7b1cbc50a7b@posteo.de
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+If the producer advances between those reads, push() copies through the
+newer head but stores the earlier head in prev. The next drain starts at
+that earlier position and can write the same records to perf.data again.
+
+Use the head selected by read_init(): end for forward buffers and start
+for overwrite buffers. Save it before the copy loop advances start so
+prev matches the range that was copied.
+
+Fixes: 8872481bd04850b1 ("perf mmap: Introduce perf_mmap__read_init()")
+Signed-off-by: Paul Moses <p@1g4.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@intel.com>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-s35390a.c | 29 ++++++++++++++++++++++++-----
- 1 file changed, 24 insertions(+), 5 deletions(-)
+ tools/perf/util/mmap.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-s35390a.c b/drivers/rtc/rtc-s35390a.c
-index 2509beac5009d..c10765959d101 100644
---- a/drivers/rtc/rtc-s35390a.c
-+++ b/drivers/rtc/rtc-s35390a.c
-@@ -273,6 +273,24 @@ static int s35390a_rtc_read_time(struct device *dev, struct rtc_time *tm)
- 	return 0;
- }
- 
-+static int s35390a_rtc_alarm_irq_enable(struct device *dev, unsigned int enabled)
-+{
-+	struct s35390a *s35390a = dev_get_drvdata(dev);
-+	u8 sts;
-+	int err;
-+
-+	if (enabled)
-+		sts = S35390A_INT2_MODE_ALARM;
-+	else
-+		sts = S35390A_INT2_MODE_NOINTR;
-+
-+	err = s35390a_set_reg(s35390a, S35390A_CMD_STATUS2, &sts, sizeof(sts));
-+	if (err < 0)
-+		return err;
-+
-+	return 0;
-+}
-+
- static int s35390a_rtc_set_alarm(struct device *dev, struct rtc_wkalrm *alm)
+diff --git a/tools/perf/util/mmap.c b/tools/perf/util/mmap.c
+index a4dff881be39b..bbb1633ff0019 100644
+--- a/tools/perf/util/mmap.c
++++ b/tools/perf/util/mmap.c
+@@ -324,7 +324,7 @@ int mmap__mmap(struct mmap *map, struct mmap_params *mp, int fd, struct perf_cpu
+ int perf_mmap__push(struct mmap *md, void *to,
+ 		    int push(struct mmap *map, void *to, void *buf, size_t size))
  {
- 	struct i2c_client *client = to_i2c_client(dev);
-@@ -413,11 +431,12 @@ static int s35390a_rtc_ioctl(struct device *dev, unsigned int cmd,
- }
+-	u64 head = perf_mmap__read_head(&md->core);
++	u64 head;
+ 	unsigned char *data = md->core.base + page_size;
+ 	unsigned long size;
+ 	void *buf;
+@@ -334,6 +334,7 @@ int perf_mmap__push(struct mmap *md, void *to,
+ 	if (rc < 0)
+ 		return (rc == -EAGAIN) ? 1 : -1;
  
- static const struct rtc_class_ops s35390a_rtc_ops = {
--	.read_time	= s35390a_rtc_read_time,
--	.set_time	= s35390a_rtc_set_time,
--	.set_alarm	= s35390a_rtc_set_alarm,
--	.read_alarm	= s35390a_rtc_read_alarm,
--	.ioctl          = s35390a_rtc_ioctl,
-+	.read_time		= s35390a_rtc_read_time,
-+	.set_time		= s35390a_rtc_set_time,
-+	.set_alarm		= s35390a_rtc_set_alarm,
-+	.read_alarm		= s35390a_rtc_read_alarm,
-+	.alarm_irq_enable	= s35390a_rtc_alarm_irq_enable,
-+	.ioctl			= s35390a_rtc_ioctl,
- };
++	head = md->core.overwrite ? md->core.start : md->core.end;
+ 	size = md->core.end - md->core.start;
  
- static int s35390a_probe(struct i2c_client *client)
+ 	if ((md->core.start & md->core.mask) + size != (md->core.end & md->core.mask)) {
 -- 
 2.53.0
 
