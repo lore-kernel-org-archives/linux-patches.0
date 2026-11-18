@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049759;
-	b=iN9g6OI5zAu/vPgy/NErCXYmCGstDJK4KyUaSuvwgpBwBO0GDUXuFn89iYQkHREbxgsn
-	 JZkNsiFhbIt8qPqdhNi0D3M4tTeZabLgg0wrIQWKprBpZyZ19BSXC3Cmoh1SQESHRKXR6
-	 itLE4kBb+BQluaF9dFtKQAFF49fJz0dzAIJcqzU6u7Py8r9zKMCArpC3RzxyRIwEnE0cJ
-	 mm3o5ZB1V0TxJHeoPnQxgqbrhKSEG4ifWG6SIj0WsdoBJjz2zlQeDZoc/nwWwF8nBqdoj
-	 BQ3eQZDgQHDgc8bNPmvGF/iTygUaH+PB6hh4E+1aW53YPiB3O4vblha81wOoPFCz+Rw==
+	t=1795049762;
+	b=AVtPJvZA4gd1A0CX84CV/DBAyWGGvsZSNeH+vsSPuWvQzP8HtbygOIVdZsqO78SrqcAC
+	 Gh6n5exjJcMo/h+pKXroNz0etKFGZnWJy6DhN+OjucSZ+fYfT2ocd8qk2mubY6D0ozH4a
+	 6FGIBbc040tv9ZwvMMhFr8HuGaxPdr0W0QOdPgLQJIvNwy3ynQIsVqr+yASeLyhVNdf7S
+	 Mom9EqHtYrhYRfToUsCZiudfz8I2h9h/4XAR3u00zLZCiqusnE2zXvCzTpH7Izy0B61pJ
+	 Sqj5WYidF/GT6eouD65gyzljURKJ2A1lypqtwQL3jPLK33Py4ZpPXHpeZMFqE7Mi3mg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049759;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049762;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Gt4RXbW4ep+9RcHeVC2Dv76QX3ms9ClQ9kl4btaPzhM=;
-	b=eqVamxJvAdhZiNokeZTDG4B2D5iVjBt9E0+inQ+8eg95ZMjxZGD2kp+D2woECy91rUXC
-	 aVGtTDOSDPtkgavAwJjxbhny3sJ/0heBBQmijN7z7Fthv/haPjR0Q0k3ud0xX5wuJYqh+
-	 n6g6fXK0aFhYCWRf9lCSyj8oePmuwL2HlYvSBlZm0cCryIYY7oKk1DMW7hBuqkAwLSwz/
-	 6ljwDDID7MJNNpz5IFKKXTJIVw+hv+E0JanseM+e+xHjgzDulqLRel7Jiq7O/7T6rN7av
-	 9aKeuADK7Fnzwa4VfJMFtMCN01uY0BzG1jC/XclsggHdVxYvJgcabJKMl813sbwpceg==
+	bh=jBamTwRdKTTOkNcrZPEerL9Q1S7EAJR0TkknnVr/yqc=;
+	b=g8ZckjjGo73jbzjOvqE+52uhZkuiSGfrjAH/1rnJaLme8mm+d6Pe6wxOK09WJbmfY9h5
+	 JgO76PR8TDOzeH7f8UKhBAoMTWuszueMs4kgOosqjqRFMatu4D90ISlDbb+5wNVsMWb56
+	 G2+1Z8nmrkPt8OhM6Kz+8KNJyxhmruXgj2ydSYF9I/4jvvF5/kX0CPt0czdgR50tKisYX
+	 Tfki0OIcM3VV47HDuglU9M2UfvOQwISxH0s55sup2Bu2MN7yEaimQUkCib2Rzx0oJhZO6
+	 u6TqYD8LYwPWm63ql0/zXM0tHgEzHxWGNH4NPcfMlOJaTckBrwqcybqB0klsAT8y5NQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="e4/vjVj1";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=apbCaSQj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C61606A320;
-	Thu, 19 Nov 2026 00:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90CA9606A325;
+	Thu, 19 Nov 2026 00:56:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e4/vjVj1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C56C1F000C6;
-	Thu, 19 Nov 2026 00:55:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=apbCaSQj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C8071F000C4;
+	Thu, 19 Nov 2026 00:56:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049759;
-	bh=Gt4RXbW4ep+9RcHeVC2Dv76QX3ms9ClQ9kl4btaPzhM=;
+	s=korg; t=1795049762;
+	bh=jBamTwRdKTTOkNcrZPEerL9Q1S7EAJR0TkknnVr/yqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e4/vjVj1eBcvkvSTK6TF9qORUIg2QGKzwQUWx1AthdNiiErM4WmsnPrvGYGwTFY2T
-	 mOZyIUpiwJI4CxTk2xAtNULoSedDfA8/woUTq+/kNWWfKjYAAJ7doVEqfnJH7enxKi
-	 PAbcVFIf0bH4iA+VQq64H+LDKnLSB1fh/WroRTh8=
+	b=apbCaSQjNYEr57kH/hYCFA85cWXZ/loW3dGHEz2OsORegkU3R8ZT0ww/yo7X0Zikq
+	 UNZ9GZNniRkrkMx0kgygwB3qrJmypGIufmlKh0viQTLUw5AMW0irmSH8rxgQtPZJKP
+	 BMDtSEXG75VCGb+Acdcrn56UzGXgzpIZXWzv94Io=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2449/2857] sh: sh7785lcr: Register the PCA9564 controller as I2C bus 0
-Date: Wed, 18 Nov 2026 15:58:03 +0100
-Message-ID: <20261118150329.747375684@linuxfoundation.org>
+Subject: [PATCH 6.1 2467/2857] ASoC: codecs: wm8990: Fix definition of right input PGA controls
+Date: Wed, 18 Nov 2026 15:58:21 +0100
+Message-ID: <20261118150330.392978410@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,49 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 3b8386ffc0c33b6b5a6a8e64e1487c1adec57dc9 ]
+[ Upstream commit 5bd6d05197affaf5a2d7fae0e06e7373fd839b7c ]
 
-Before commit 44454baa7ca7 ("i2c: Dynamically assign adapter id if it
-wasn't explictly specified"), a negative ID was replaced by zero, and
-I2C bus zero was instantiated. Since that commit, a negative ID is passed
-verbatim, instantiating an I2C bus with a dynamic number. As SH boards
-still use i2c_register_board_info(0, ...) to register I2C devices, they
-rely on the I2C bus being bus zero.
+The right input PGA boost (R12MNBST, R34MNBST) and routing (R12MNB,
+R34MNB) bits are in Input Mixer4 (R42), not in Input Mixer3 (R41),
+where these controls write the left channel bits.
 
-The SH7785LCR is the only SH board whose I2C adapter has a negative ID
-and its PCA9564 controller becomes i2c-1, causing registration of the
-R2025S/D RTC to fail and hwclock not detecting /dev/rtc0.
-
-Set the platform device ID to 0 so that the adapter is registered as
-bus zero again.
-
-Fixes: 44454baa7ca7 ("i2c: Dynamically assign adapter id if it wasn't explictly specified")
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Assisted-by: LLM
-Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Fixes: f10485e79882 ("[ALSA] ASoC: Add WM8990 driver")
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/818cf8d7ae81fa46c67cd5b4d01291a63f44c9a1.1791959026.git.sammiee5311@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sh/boards/board-sh7785lcr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/wm8990.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/sh/boards/board-sh7785lcr.c b/arch/sh/boards/board-sh7785lcr.c
-index 77dad1e511b46..05e2678dfc678 100644
---- a/arch/sh/boards/board-sh7785lcr.c
-+++ b/arch/sh/boards/board-sh7785lcr.c
-@@ -256,7 +256,7 @@ static struct i2c_pca9564_pf_platform_data i2c_platform_data = {
+diff --git a/sound/soc/codecs/wm8990.c b/sound/soc/codecs/wm8990.c
+index 589af286f133f..7ab849f41ad67 100644
+--- a/sound/soc/codecs/wm8990.c
++++ b/sound/soc/codecs/wm8990.c
+@@ -97,8 +97,8 @@ static const struct snd_kcontrol_new wm8990_snd_controls[] = {
+ SOC_SINGLE("LIN12 PGA Boost", WM8990_INPUT_MIXER3, WM8990_L12MNBST_BIT, 1, 0),
+ SOC_SINGLE("LIN34 PGA Boost", WM8990_INPUT_MIXER3, WM8990_L34MNBST_BIT, 1, 0),
+ /* INMIXR */
+-SOC_SINGLE("RIN12 PGA Boost", WM8990_INPUT_MIXER3, WM8990_R12MNBST_BIT, 1, 0),
+-SOC_SINGLE("RIN34 PGA Boost", WM8990_INPUT_MIXER3, WM8990_R34MNBST_BIT, 1, 0),
++SOC_SINGLE("RIN12 PGA Boost", WM8990_INPUT_MIXER4, WM8990_R12MNBST_BIT, 1, 0),
++SOC_SINGLE("RIN34 PGA Boost", WM8990_INPUT_MIXER4, WM8990_R34MNBST_BIT, 1, 0),
  
- static struct platform_device i2c_device = {
- 	.name		= "i2c-pca-platform",
--	.id		= -1,
-+	.id		= 0,
- 	.dev		= {
- 		.platform_data	= &i2c_platform_data,
- 	},
+ /* LOMIX */
+ SOC_SINGLE_TLV("LOMIX LIN3 Bypass Volume", WM8990_OUTPUT_MIXER3,
+@@ -377,9 +377,9 @@ SOC_DAPM_SINGLE_TLV("Record Right Volume", WM8990_INPUT_MIXER4,
+ 	WM8990_RDBVOL_SHIFT, WM8990_RDBVOL_MASK, 0, in_mix_tlv),
+ SOC_DAPM_SINGLE_TLV("RIN2 Volume", WM8990_INPUT_MIXER6, WM8990_RI2BVOL_SHIFT,
+ 	7, 0, in_mix_tlv),
+-SOC_DAPM_SINGLE("RINPGA12 Switch", WM8990_INPUT_MIXER3, WM8990_L12MNB_BIT,
++SOC_DAPM_SINGLE("RINPGA12 Switch", WM8990_INPUT_MIXER4, WM8990_R12MNB_BIT,
+ 	1, 0),
+-SOC_DAPM_SINGLE("RINPGA34 Switch", WM8990_INPUT_MIXER3, WM8990_L34MNB_BIT,
++SOC_DAPM_SINGLE("RINPGA34 Switch", WM8990_INPUT_MIXER4, WM8990_R34MNB_BIT,
+ 	1, 0),
+ };
+ 
 -- 
 2.53.0
 
