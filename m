@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022239;
-	b=lzbLD3XB9GX4Ge66LdsGeY/Ah+E16d6PDrmr8NRVdI8ENvSqEntr/K2RXs2SAR63vnBm
-	 kfjpzY3QPLjCG45uiIruy1LoZXoSGNt/pD9+4C+/lda7cdjWgb79WBpVzjsJdF0488+yV
-	 midCNTXifIl4Xtt+8DNk0p/kvjZAsH/ycLFeCL0CwVwfFdmIEDW0LbQkTHu56CRyKiX+k
-	 FEo0RI1nDLV0gW4xL1K7tyDO9gVg5uV68pQmHue43lYm6aWLB02YCGygRxeE3iCAWLDEX
-	 GGRwkeQkoHDP3WNBUr5wfnpYu4poyoEGA2lv+d+3gDfYwu5jcpzYQCNMwc/qOS29QMw==
+	t=1795022241;
+	b=Gx1o3FsUnEUKb73J0jQoL4gsaoBISnwpPC0QrLV6peqyifBq3KOeskib+RL9+tDnv8GH
+	 BJMTphxy6uS7cNIsnUtcEKFEi7LuxhlmDo6gUz6LeJoX9uQQ6WzqnQBwvCB9KFp1Z2IlR
+	 Qyt4LVhqqlu6Upu0dc5Gv18vMQsrgiijP0H0Gz6edvr5r2toJOh35ufwsvIB+qCITj6S4
+	 kdWeh1or1u+aY8ZBKozwS0QT6w8uxJgQefK158sDsrMadpXxYpciVZ8ule8K27QnLfxTq
+	 f0h5Marzyng9SUifhgm8e6iKNweby7f/HFFikM2sb+43S90q2cKp4DMK/pAOcvbcC2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022239;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022241;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=NNsUrz6JaPgg0KF6xhk5YatfT/K3bLElLTBkhDUrERY=;
-	b=sLA5WFfDQyfi7UHU1irQoeCUGrOBgQc5lfxnDPT6fbb7IL56Fnjx+bjaXa9JCIhFBUmy
-	 BocqRd2OagicDMYAEYVPGJtIzw9e6r2iPSS0ZtcJPsrtUOg8sv6/8IgpPJFLPrEErniIt
-	 vnGD6uK5i3ZKNwt7Na/35QRJ+WZvWnIQvd56f4Y5bAONNXP6xT6I6I8uhMSeUCIEKcJfq
-	 CQBo03zz8GFpyyTkRc3AUkVN0ciaTSt4eSJLXcfBhbKjLUVrOvIPJKkn5fpO3SOPj3MLN
-	 g8xU8Qrft58b2xoqFXgqy2OisRWGdMU9Jz+64oDBOafUmO0a0uiECCGUxW7dKBwE3Xw==
+	bh=vcpGagi84JJhzbwvmOrz+n65Xt8fecPVPUKr3oypDOA=;
+	b=r7v2k1oyGLBT1YX4b6nCsho9maQol6PE6iJpdwhtNwWcmX7VIbIMFoEdk8sVHtJT9fh7
+	 ptskNTk6a5Z9ZDAU9tHEE6PtJxYQhp5h+u8zMTMCSSgbGkjcHsXzMJWObcS0DAak4ED99
+	 hfHV2QePM2PtwQAI3K75CzqYsQTe1jj8YyUgXtJKaQWa2R1deyHiHe1jkppuXfhqoU60F
+	 c6WeWua5NGkjRg0K4MGfv06txIt92XnXDmLXX6nH+943CD2oOFAGsr5F1RIf8b4fStHdA
+	 ePhAIXhsEyCVp/+uvIcSkFHvbs7QTnFKOFQccg+r/fHXvERDHrqyb9YiEgbJjKb+tAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uQtd6JmI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tBZ+DsRT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0599D606A31C;
-	Wed, 18 Nov 2026 17:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB768606A320;
+	Wed, 18 Nov 2026 17:17:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uQtd6JmI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F1881F000C4;
-	Wed, 18 Nov 2026 17:17:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tBZ+DsRT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2363C1F000C4;
+	Wed, 18 Nov 2026 17:17:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022238;
-	bh=NNsUrz6JaPgg0KF6xhk5YatfT/K3bLElLTBkhDUrERY=;
+	s=korg; t=1795022241;
+	bh=vcpGagi84JJhzbwvmOrz+n65Xt8fecPVPUKr3oypDOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uQtd6JmIWxBiXOo3R2QT0M5b3LR8+P9Lq12f7gI9U9FnKMeNESOckMtHHADhpgKTP
-	 1VpDm5t9xaRYW3KxYYyW9fC2Yi72wjmhREDFMeY3w+iSIyVvhxEWKvhC8qpYlmB/zR
-	 8bIR4LUAKrSFCSa7jGL1PSU/uvTnxZqo8oYLDyd8=
+	b=tBZ+DsRTCoZ/lnLlVqOTzIHXcbcKMMw7v19S3L7/4nrCzICmEjmrdEKDNSzu2Bj4g
+	 3Ed7tv67xLuaC5zJUkfCVMyfWYX4PO7EHgxk9jB4jZRPMvTciLnxrTmCNeDY1OvT0t
+	 zz4lVYPnQNRDaqupyVB4hF1LBdXQ8jDqqUL7kkWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -47,9 +47,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2592/2651] drbd: stop the start_resync timer of a dying device
-Date: Wed, 18 Nov 2026 16:03:52 +0100
-Message-ID: <20261118150417.574394481@linuxfoundation.org>
+Subject: [PATCH 7.3 2593/2651] drbd: take req_lock to skip the initial sync as peer
+Date: Wed, 18 Nov 2026 16:03:53 +0100
+Message-ID: <20261118150417.605183904@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -74,36 +74,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit a439d3fe3ec2bfe0b4ccb77973ae97949bcf46ec ]
+[ Upstream commit bf7fff620c890a7ee0b444f1c7e9f0d1263a30ac ]
 
-start_resync_timer gets armed for up to a second and nothing ever
-deletes it, so drbd_destroy_device() can free the device with the timer
-pending. Shut it down where request_timer is shut down.
+_drbd_set_state() must be called with req_lock held. drbd_adm_new_c_uuid()
+does, receive_uuids() on the peer doesn't, so a concurrent state change
+gets lost: the device is Secondary again, or its failed disk UpToDate,
+while the work for the lost change is already queued.
 
-Fixes: 370a43e7982d ("drbd: Work on the Ahead -> SyncSource transition")
+Fixes: b411b3637fa7 ("The DRBD driver")
 Cc: Philipp Reisner <philipp.reisner@linbit.com>
 Cc: Lars Ellenberg <lars.ellenberg@linbit.com>
 Cc: "Christoph Böhmwalder" <christoph.boehmwalder@linbit.com>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261028164415.1262013-13-axboe@kernel.dk
+Link: https://patch.msgid.link/20261028164415.1262013-15-axboe@kernel.dk
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/drbd/drbd_main.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/block/drbd/drbd_receiver.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/block/drbd/drbd_main.c b/drivers/block/drbd/drbd_main.c
-index a2a841c892011..099dff1ea2565 100644
---- a/drivers/block/drbd/drbd_main.c
-+++ b/drivers/block/drbd/drbd_main.c
-@@ -2163,6 +2163,7 @@ void drbd_destroy_device(struct kref *kref)
- 	struct drbd_peer_device *peer_device, *tmp_peer_device;
- 
- 	timer_shutdown_sync(&device->request_timer);
-+	timer_shutdown_sync(&device->start_resync_timer);
- 
- 	/* paranoia asserts */
- 	D_ASSERT(device, device->open_cnt == 0);
+diff --git a/drivers/block/drbd/drbd_receiver.c b/drivers/block/drbd/drbd_receiver.c
+index 2135c14354a85..a405ccdf919e4 100644
+--- a/drivers/block/drbd/drbd_receiver.c
++++ b/drivers/block/drbd/drbd_receiver.c
+@@ -4096,8 +4096,10 @@ static int receive_uuids(struct drbd_connection *connection, struct packet_info
+ 					BM_LOCKED_TEST_ALLOWED, NULL);
+ 			_drbd_uuid_set(device, UI_CURRENT, p_uuid[UI_CURRENT]);
+ 			_drbd_uuid_set(device, UI_BITMAP, 0);
++			spin_lock_irq(&device->resource->req_lock);
+ 			_drbd_set_state(_NS2(device, disk, D_UP_TO_DATE, pdsk, D_UP_TO_DATE),
+ 					CS_VERBOSE, NULL);
++			spin_unlock_irq(&device->resource->req_lock);
+ 			drbd_md_sync(device);
+ 			updated_uuids = 1;
+ 		}
 -- 
 2.53.0
 
