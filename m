@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015046;
-	b=p+jnMwNKUvcApcwfR4Ypw7igvQ3fYLV+QrKChzj5ypTXkFfk49TbFatHtOqxG6f3a3V+
-	 /E9Upl0am1iQ8Y8seH3du6vAhNNwm67HdAFGL0othlxd4jkoL2RG4BgsV/4tYnCFADaOC
-	 MNvmV6iLSQiNaAmPLt2d4PUELfAyCgUgPpg3aXOH7Mirf7FFcuY0zidDqTfkVF90ZMbod
-	 OMjR1Ae+h/jt7CheS/cNafhRU2PBIAwDLVNoJuIsxvKSzALzQg/bWis0us7urlG4jThos
-	 nwCV7diiON+I0ed7AqpmiJPvVwsAu1jssCfnnU121PCzHCtDvVuVUwOBVO4iS/JPtnQ==
+	t=1795015049;
+	b=aVaVI5NwzcIkYt80N3YnI9hkd5NbnNkfTa66kOMZbmhCCHbqQwgDkHDKR4qmW4CfyYvK
+	 LYCYCiA8a6FLZsP7uTKcrD94O1vn3VqkAnx5DPOHu6skaSwzXIHSjcG9G29sRzUEhxTV0
+	 nwQdusP5n9+kf+mz3a70r8WdbC2R5CpDPqccS+MU0XzTEhlx49pEvNp1/jwAYa5Uyh/za
+	 BpGwqPVVbC+zRzpDUXJNVUWsaXnFbz8HBVvKrWX1dgoXwWabSwuQjd5kx6iKYCHmbjQmG
+	 SETPVbjaWknGRLuC5q3XKM1sdHvq4lt9LXr4hZsc5ZbkzZKSzsgueVP6VqwoNpPQxkw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015046;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015049;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nuwRnq/L43ruRdZSdXvRCfsUIMPuQkSfKvHuTWWjRgg=;
-	b=jPnC2w8xv6F/qZZNQl+f0wNtKUUxgouU4rc5yUhaybIKxJrDgZCmjSRbvJCpyIQTrMyZ
-	 vpON9pA5HaHY/KZEYBX+ZStq4/1+UKhe2Lt+0WMCjUKkAWWRXuHI/jWrTfw8V5yMi3Z9M
-	 KIl86dLs0rc8WECAOUOwJyjjzNRX6PU1m9PoeoqWS8V6mTrY6xfiExW12MGugs4x0afZY
-	 Vy/dj5nS7xsWQQzEYXBlOskdeJ4oMHhVKkQkEhMw2/dTRUxMTLRvF9Y9sEcJnCyD3VSux
-	 XzImlKHTKZeeVWVibx0teCcDBvSkxwQEzieQilEm1TaDUJaAWxC6UrmI5rmTHAcuFIA==
+	bh=WwaoMgoh7kXWb62lfpBmrAADR8QG4nF3cj/2ch63P10=;
+	b=mac/TWCV6cLQK3wRPzlQYsKkId/aAOVG9cUh7Q189hTQXe+WiHUn1UkQtbE2HxBVsEMN
+	 wY5Wd6VijgKuAyvj5gmAy7H1STLVnInE2q2zdGygqcnJWNeDq5mqmb7vqO2i7q8qEnw6o
+	 wX4Wgh22tv4nfYZwj4QPfP1g8w7e7ILKRg4a8IWQar8QCLWi7iFW7gUYDDwQuNXE9ftcz
+	 NsCLV9G6XWwkn3vdBztxuGL+HeeYh9JE5wV4o7C9R2zVl23UeaptltJ7UtUvV6JIS0D3C
+	 tkmtDpx9WviwxcatNgtXO2k4D/4C3ZwBawO3M+cRIksvDq5c/pe6M9n509Wl5sVXBEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kriPBBU2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LNpYndvI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC8A8606A31C;
-	Wed, 18 Nov 2026 15:17:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B78606A31C;
+	Wed, 18 Nov 2026 15:17:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kriPBBU2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15B6F1F000C4;
-	Wed, 18 Nov 2026 15:17:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LNpYndvI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7E5F1F000C6;
+	Wed, 18 Nov 2026 15:17:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015046;
-	bh=nuwRnq/L43ruRdZSdXvRCfsUIMPuQkSfKvHuTWWjRgg=;
+	s=korg; t=1795015049;
+	bh=WwaoMgoh7kXWb62lfpBmrAADR8QG4nF3cj/2ch63P10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kriPBBU271l+YygvOzzs5HhRvn7iCJ7olOQiWroOjQrekWDo/UTtl43yPHIAK/a6U
-	 nsFr5S3DeMWB+C8C4qHdOLN4zRiV165wCgJAqqVSIjIdD8hJ/s0wiVJAAaf4bHeVC0
-	 +DAg9kNpy4xWiDq2JXOW4sNkhShNHDeCn6FV3Iq8=
+	b=LNpYndvIJ2HdoM71ipKhAI2JI1XUpbQHQ0KI6Z5dIfHQuU3OJt4B5Bs900DVpJO/n
+	 MWnaJVtKw+5c1OD/4u4ZsMurCc+neW2C+qh+z8Or3wE1yDQfqaFeOXujYTkj1S/M1N
+	 +CSW/OiN0jqJ2RVi+mldZXcUfHmAgDO3vJvFvSQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Calvin Owens <calvin@wbinvd.org>,
+	Boris Burkov <boris@bur.io>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0026/2651] Revert "drm/amd/display: Allocate DCN32/1 dmub memory to GTT"
-Date: Wed, 18 Nov 2026 15:21:06 +0100
-Message-ID: <20261118150248.922098601@linuxfoundation.org>
+Subject: [PATCH 7.3 0035/2651] btrfs: remove on-stack paddrs[] array usage
+Date: Wed, 18 Nov 2026 15:21:15 +0100
+Message-ID: <20261118150249.236732929@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,108 +69,256 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Calvin Owens <calvin@wbinvd.org>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 5b3717a14ef602c961a4abeb2ce8039f0394bebb ]
+[ Upstream commit f41f4dcddea1b9eb41fc3a5491b2a8dd1f7c21ff ]
 
-After commit a637a140ab860310 ("drm/amd/display: Allocate DCN32/1 dmub
-memory to GTT"), a machine with a Radeon RX 7900 shows random garbage on
-the screen. It reproduces sporadically, but at times it is so bad the
-machine is more or less unusable.
+Since the bs > ps support, we have to handle cases where a data block is
+inside several discontiguous pages.
 
-The garbage is always horizontal bars extending across the entire
-screen, always approximately 200 pixels tall on a 3840x2160 screen,
-for what looks like a single frame. The bars are mostly black, but will
-sometimes exhibit striping and periodic artifacts which smell like
-non-framebuffer data is being rendered to the screen.
+Thus we need a local paddrs[] array to assemble a data block for bs > ps
+cases.
 
-It took some patience on the "good" side, but I was able to nail it down
-to commit a637a140ab860310818a14fb4d37e39e51a06be4 with this bisect:
+However to handle all possible bs/ps combinations, we have to declare
+such array using the max block size vs page size, no matter the current
+block size and page size.
 
-  bad: [cee9395acd8043be0644b25c34bfa86623f2b935] Linux 7.3-rc1
-  good: [8d3ae59288f1e7d58d76558a6ee96d533bc5019f] Linux 7.2
-  good: [55ab7e14222e5f0b0fd9f7711ca391d2924b35e3] Merge tag 'for-7.3/block-20260819' of git://git.kernel.org/pub/scm/linux/kernel/git/axboe/linux
-  bad: [df51bdc5e80dae43cab81f6cc641e98638303c88] Merge tag 'mtd/for-7.3' of git://git.kernel.org/pub/scm/linux/kernel/git/mtd/linux
-  bad: [29daacacf4cd84e6917f09de6a99fb170071c14c] Merge tag 'drm-rust-next-2026-08-08' of https://gitlab.freedesktop.org/drm/rust/kernel into drm-next
-  good: [fff648aec5e2790d117a0ec5c849a284d9d33d70] drm/amdgpu: include amdgpu_video_codecs.h only where needed
-  bad: [336e0cd576817ac64a4b394ca2b3680029f3e37f] Revert "drm/amdgpu: fix aperture mapping leak"
-  bad: [789f7486a384ca58b9d7a76abba5efa0e80e8dab] drm/amd/display: Test plane colorop helper walkers
-  good: [e0e426f10ad653c5e9dd33fb4a76d55f06101992] drm/amd/display: Test helper_check_state rejects
-  bad: [982b2a43682b55e7d9800000f2592832ff2865ba] drm/amdgpu: Fix IP block NULL check during soft reset
-  bad: [9102b39fa924dcc3dc75a3137bfa9633c40b88c0] drm/amdgpu/userq: fix indefinite fence wait during GPU reset
-  bad: [b23470a026afe64de5c1df4ad181587b49c22923] drm/amd/display: Exit LS for ISHARP before coefficient write
-  bad: [f02b2e47355e9d381a7f34acc997e1c47879ca21] drm/amd/display: Add KUnit test for wb jobs
-  bad: [c6a13d145cc811b19c8a0620f25868cf7d5700c0] drm/amd/display: remove unused dcn42 socbb values
-  good: [1d8327353de6f1f34063840f362c208c84064f54] drm/amd/display: Fix VABC Init and OLED Support
-  bad: [a637a140ab860310818a14fb4d37e39e51a06be4] drm/amd/display: Allocate DCN32/1 dmub memory to GTT
-  first 'bad' commit: [a637a140ab860310818a14fb4d37e39e51a06be4] drm/amd/display: Allocate DCN32/1 dmub memory to GTT
+This adds 128 bytes on-stack memory usage for several call sites, and
+also introduced several duplicated helpers to calculate checksum for a
+data block:
 
-Sure enough, reverting a637a140ab860310818a14fb4d37e39e51a06be4 on top
-of v7.3 completely and totally eliminates the problem for me.
+- btrfs_calculate_block_csum_folio()
+- btrfs_calculate_block_csum_pages()
+- btrfs_check_block_csum()
 
-Mikhail has separately reported this regression:
+The differences are mostly in how the data is passed.
+The first one accepts a contiguous paddr range.
+The second one accepts an array of paddrs[].
+The last one is just a simple wrapper of the first one.
 
-  https://lore.kernel.org/all/20260829010525.29935-1-mikhail.v.gavrilov@gmail.com/
+However the most common interface to iterate a data block is through
+bio, and we have already converted most callers to use the bio based
+interface, e.g. btrfs_bio_data_csum_ok() and btrfs_csum_one_bio_block().
 
-...but it seems to be much more consistent for me than for Mikhail, it's
-never taken more than 30 minutes even when the machine is completely
-idle. I've also never been able to reproduce any artifact one single
-time without commit a637a140, despite a lot of effort.
+Convert the remaining two call sites to address the remaining paddrs[]
+usage:
 
-I'm not sure reverting this is the right way forward, since presumably
-this would re-regress the timing issue Fangzhi alluded to in the
-original commit. But nobody has proposed anything concrete yet... so
-let's start the discussion here.
+- btrfs_calculate_block_csum_pages() inside verify_bio_data_sectors()
+  This can be switched to btrfs_csum_one_bio_block().
 
-I'm happy to help test other better ideas as well :)
+  This removes the 128 bytes on-stack memory usage.
 
-Fixes: a637a140ab86 ("drm/amd/display: Allocate DCN32/1 dmub memory to GTT")
-Closes: https://lore.kernel.org/all/20260829010525.29935-1-mikhail.v.gavrilov@gmail.com/
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5714
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Calvin Owens <calvin@wbinvd.org>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 899489d2e2aa854cf5e933677d6561dfcbb94529)
-Cc: stable@vger.kernel.org
+- btrfs_calculate_block_csum_pages() inside verify_one_sector()
+  This call site doesn't use on-stack memory for paddrs[], but reuses
+  the existing btrfs_raid_bio::bio_paddrs[] or
+  btrfs_raid_bio::stripe_paddrs[].
+
+  So implement a local version called calculate_block_csum_paddrs().
+
+Now there is no fixed on-stack paddrs[] usage anymore.
+
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: d00b85308abe ("btrfs: raid56: do not verify the content if there is no data checksum")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_dmub.c    | 11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ fs/btrfs/btrfs_inode.h |  6 ----
+ fs/btrfs/inode.c       | 75 ------------------------------------------
+ fs/btrfs/raid56.c      | 46 +++++++++++++++-----------
+ 3 files changed, 27 insertions(+), 100 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_dmub.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_dmub.c
-index 9ff25bc8ee5ae..870534b7cf46d 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_dmub.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_dmub.c
-@@ -511,7 +511,6 @@ int dm_dmub_sw_init(struct amdgpu_device *adev)
- 		DMUB_WINDOW_MEMORY_TYPE_FB,		/* DMUB_WINDOW_CURSOR_OFFLOAD */
- 	};
- 	int r;
--	int mem_domain = AMDGPU_GEM_DOMAIN_GTT;
+diff --git a/fs/btrfs/btrfs_inode.h b/fs/btrfs/btrfs_inode.h
+index e137a99151bd0..89e5e9c0c904f 100644
+--- a/fs/btrfs/btrfs_inode.h
++++ b/fs/btrfs/btrfs_inode.h
+@@ -507,12 +507,6 @@ static inline void btrfs_set_inode_mapping_order(struct btrfs_inode *inode)
+ 				      inode->root->fs_info->block_max_order);
+ }
  
- 	switch (amdgpu_ip_version(adev, DCE_HWIP, 0)) {
- 	case IP_VERSION(2, 1, 0):
-@@ -648,19 +647,13 @@ int dm_dmub_sw_init(struct amdgpu_device *adev)
- 		return -EINVAL;
- 	}
+-void btrfs_calculate_block_csum_folio(struct btrfs_fs_info *fs_info,
+-				      const phys_addr_t paddr, u8 *dest);
+-void btrfs_calculate_block_csum_pages(struct btrfs_fs_info *fs_info,
+-				      const phys_addr_t paddrs[], u8 *dest);
+-int btrfs_check_block_csum(struct btrfs_fs_info *fs_info, phys_addr_t paddr, u8 *csum,
+-			   const u8 * const csum_expected);
+ bool btrfs_bio_data_csum_ok(struct btrfs_bio *bbio, const struct bvec_iter *orig_iter,
+ 			    struct btrfs_device *dev);
+ void btrfs_csum_one_bio_block(struct btrfs_fs_info *fs_info, struct bio *bio,
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index c8479ffc8d1df..c2a720f74d56d 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -3471,81 +3471,6 @@ int btrfs_finish_ordered_io(struct btrfs_ordered_extent *ordered)
+ 	return btrfs_finish_one_ordered(ordered);
+ }
  
--	/* Limit to allocate dmub to GTT on DCN32/1
--	 * TODO: Other asics with GDDR7 may have worse latency
--	 */
--	if (dmub_asic != DMUB_ASIC_DCN32 &&
--	    dmub_asic != DMUB_ASIC_DCN321)
--		mem_domain |= AMDGPU_GEM_DOMAIN_VRAM;
+-/*
+- * Calculate the checksum of an fs block at physical memory address @paddr,
+- * and save the result to @dest.
+- *
+- * The folio containing @paddr must be large enough to contain a full fs block.
+- */
+-void btrfs_calculate_block_csum_folio(struct btrfs_fs_info *fs_info,
+-				      const phys_addr_t paddr, u8 *dest)
+-{
+-	struct folio *folio = page_folio(phys_to_page(paddr));
+-	const u32 blocksize = fs_info->sectorsize;
+-	const u32 step = min(blocksize, PAGE_SIZE);
+-	const u32 nr_steps = blocksize / step;
+-	phys_addr_t paddrs[BTRFS_MAX_BLOCKSIZE / PAGE_SIZE];
 -
- 	/*
- 	 * Allocate a framebuffer based on the total size of all the regions.
- 	 * TODO: Move this into GART.
- 	 */
- 	r = amdgpu_bo_create_kernel(adev, region_info.fb_size, PAGE_SIZE,
--				    mem_domain,
-+				    AMDGPU_GEM_DOMAIN_VRAM |
-+				    AMDGPU_GEM_DOMAIN_GTT,
- 				    &adev->dm.dmub_bo,
- 				    &adev->dm.dmub_bo_gpu_addr,
- 				    &adev->dm.dmub_bo_cpu_addr);
+-	/* The full block must be inside the folio. */
+-	ASSERT(offset_in_folio(folio, paddr) + blocksize <= folio_size(folio));
+-
+-	for (int i = 0; i < nr_steps; i++) {
+-		u32 pindex = offset_in_folio(folio, paddr + i * step) >> PAGE_SHIFT;
+-
+-		/*
+-		 * For bs <= ps cases, we will only run the loop once, so the offset
+-		 * inside the page will only added to paddrs[0].
+-		 *
+-		 * For bs > ps cases, the block must be page aligned, thus offset
+-		 * inside the page will always be 0.
+-		 */
+-		paddrs[i] = page_to_phys(folio_page(folio, pindex)) + offset_in_page(paddr);
+-	}
+-	return btrfs_calculate_block_csum_pages(fs_info, paddrs, dest);
+-}
+-
+-/*
+- * Calculate the checksum of a fs block backed by multiple noncontiguous pages
+- * at @paddrs[] and save the result to @dest.
+- *
+- * The folio containing @paddr must be large enough to contain a full fs block.
+- */
+-void btrfs_calculate_block_csum_pages(struct btrfs_fs_info *fs_info,
+-				      const phys_addr_t paddrs[], u8 *dest)
+-{
+-	const u32 blocksize = fs_info->sectorsize;
+-	const u32 step = min(blocksize, PAGE_SIZE);
+-	const u32 nr_steps = blocksize / step;
+-	struct btrfs_csum_ctx csum;
+-
+-	btrfs_csum_init(&csum, fs_info->csum_type);
+-	for (int i = 0; i < nr_steps; i++) {
+-		const phys_addr_t paddr = paddrs[i];
+-		void *kaddr;
+-
+-		ASSERT(offset_in_page(paddr) + step <= PAGE_SIZE);
+-		kaddr = kmap_local_page(phys_to_page(paddr)) + offset_in_page(paddr);
+-		btrfs_csum_update(&csum, kaddr, step);
+-		kunmap_local(kaddr);
+-	}
+-	btrfs_csum_final(&csum, dest);
+-}
+-
+-/*
+- * Verify the checksum for a single sector without any extra action that depend
+- * on the type of I/O.
+- *
+- * @kaddr must be a properly kmapped address.
+- */
+-int btrfs_check_block_csum(struct btrfs_fs_info *fs_info, phys_addr_t paddr, u8 *csum,
+-			   const u8 * const csum_expected)
+-{
+-	btrfs_calculate_block_csum_folio(fs_info, paddr, csum);
+-	if (unlikely(memcmp(csum, csum_expected, fs_info->csum_size) != 0))
+-		return -EIO;
+-	return 0;
+-}
+-
+ /* Generate data checksum for a single fs block, pointed to by @orig_iter. */
+ void btrfs_csum_one_bio_block(struct btrfs_fs_info *fs_info, struct bio *bio,
+ 			      const struct bvec_iter *orig_iter, u8 *csum)
+diff --git a/fs/btrfs/raid56.c b/fs/btrfs/raid56.c
+index 1ee52a9dcee36..a5d0ef09d92ab 100644
+--- a/fs/btrfs/raid56.c
++++ b/fs/btrfs/raid56.c
+@@ -1652,12 +1652,7 @@ static void verify_bio_data_sectors(struct btrfs_raid_bio *rbio,
+ 				    struct bio *bio)
+ {
+ 	struct btrfs_fs_info *fs_info = rbio->bioc->fs_info;
+-	const u32 step = min(fs_info->sectorsize, PAGE_SIZE);
+-	const u32 nr_steps = rbio->sector_nsteps;
+ 	int total_sector_nr = get_bio_sector_nr(rbio, bio);
+-	u32 offset = 0;
+-	phys_addr_t paddrs[BTRFS_MAX_BLOCKSIZE / PAGE_SIZE];
+-	phys_addr_t paddr;
+ 
+ 	/* No data csum for the whole stripe, no need to verify. */
+ 	if (!rbio->csum_bitmap || !rbio->csum_buf)
+@@ -1667,28 +1662,20 @@ static void verify_bio_data_sectors(struct btrfs_raid_bio *rbio,
+ 	if (total_sector_nr >= rbio->nr_data * rbio->stripe_nsectors)
+ 		return;
+ 
+-	btrfs_bio_for_each_block_all(paddr, bio, step) {
++	for (struct bvec_iter iter = init_bvec_iter_for_bio(bio);
++	     iter.bi_size;
++	     bio_advance_iter(bio, &iter, fs_info->sectorsize), total_sector_nr++) {
+ 		u8 csum_buf[BTRFS_CSUM_SIZE];
+ 		u8 *expected_csum;
+ 
+-		paddrs[(offset / step) % nr_steps] = paddr;
+-		offset += step;
+-
+-		/* Not yet covering the full fs block, continue to the next step. */
+-		if (!IS_ALIGNED(offset, fs_info->sectorsize))
+-			continue;
+-
+ 		/* No csum for this sector, skip to the next sector. */
+-		if (!test_bit(total_sector_nr, rbio->csum_bitmap)) {
+-			total_sector_nr++;
++		if (!test_bit(total_sector_nr, rbio->csum_bitmap))
+ 			continue;
+-		}
+ 
+ 		expected_csum = rbio->csum_buf + total_sector_nr * fs_info->csum_size;
+-		btrfs_calculate_block_csum_pages(fs_info, paddrs, csum_buf);
++		btrfs_csum_one_bio_block(fs_info, bio, &iter, csum_buf);
+ 		if (unlikely(memcmp(csum_buf, expected_csum, fs_info->csum_size) != 0))
+ 			set_bit(total_sector_nr, rbio->error_bitmap);
+-		total_sector_nr++;
+ 	}
+ }
+ 
+@@ -1879,6 +1866,27 @@ void raid56_parity_write(struct bio *bio, struct btrfs_io_context *bioc)
+ 	start_async_work(rbio, rmw_rbio_work);
+ }
+ 
++static void calculate_block_csum_paddrs(struct btrfs_fs_info *fs_info,
++					const phys_addr_t paddrs[], u8 *dest)
++{
++	const u32 blocksize = fs_info->sectorsize;
++	const u32 step = min(blocksize, PAGE_SIZE);
++	const u32 nr_steps = blocksize / step;
++	struct btrfs_csum_ctx csum;
++
++	btrfs_csum_init(&csum, fs_info->csum_type);
++	for (int i = 0; i < nr_steps; i++) {
++		const phys_addr_t paddr = paddrs[i];
++		void *kaddr;
++
++		ASSERT(offset_in_page(paddr) + step <= PAGE_SIZE);
++		kaddr = kmap_local_page(phys_to_page(paddr)) + offset_in_page(paddr);
++		btrfs_csum_update(&csum, kaddr, step);
++		kunmap_local(kaddr);
++	}
++	btrfs_csum_final(&csum, dest);
++}
++
+ static int verify_one_sector(struct btrfs_raid_bio *rbio,
+ 			     int stripe_nr, int sector_nr)
+ {
+@@ -1906,7 +1914,7 @@ static int verify_one_sector(struct btrfs_raid_bio *rbio,
+ 	csum_expected = rbio->csum_buf +
+ 			(stripe_nr * rbio->stripe_nsectors + sector_nr) *
+ 			fs_info->csum_size;
+-	btrfs_calculate_block_csum_pages(fs_info, paddrs, csum_buf);
++	calculate_block_csum_paddrs(fs_info, paddrs, csum_buf);
+ 	if (unlikely(memcmp(csum_buf, csum_expected, fs_info->csum_size) != 0))
+ 		return -EIO;
+ 	return 0;
 -- 
 2.53.0
 
