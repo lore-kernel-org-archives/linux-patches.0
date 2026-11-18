@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053087;
-	b=Akvo6Mn2YYwGujdqZiehODB/CD3Tx6xpn5+OBrjpwiCTnpJHdFrrtwM029JZPFywaHHT
-	 VLC6FnGwWQ1Hz1wgBvP9CxX+JBwIIGzf5ioVJt8NF4NpYnWmG7JopakGgKQtvHaJga1SN
-	 mYINmqc++nb67fcMsj35J/5mwD4dZ3g9ONtuvvRJutyRB9cwzZGjes41O5yOQDlYc3K2P
-	 aNlmIQW0hnQCn2Z4OrW1llq2bOXZ797S2kwGTaqEc0RVEw2jgM8IiD+rS6r8onQHThhaT
-	 af4PPkH/xAFyNVF1ZtIGw53tdF/mvCqf+vr+fdRIAAd6qiybAVatkZ+B2syHLHSFSmA==
+	t=1795053090;
+	b=c2tbOf0yIAWm/dSa0T5vSyHohQI1vHelL4CUv8M+wwkVK+SNSnGv4yw2iLZ9eP/vLGxZ
+	 TyrpW4BtS+9f349hD4bhnPhuN4J+i8Kc3cVjqz9kGxmyq+dy8aReLj/7Ak9FiC0DGjCBb
+	 ppNv26U4f8Kn+cIZnrCVvgqG2xoDKOf89kLS6rrx2TeDl0NX3qve6rRVNzpMN7pKHmvMQ
+	 8YJpe3NdO+fGfRp4imqrjEAjmRJciQH5pWx7oXQ4J7QOzyDjbzM+XzTCB//OblrqIPseW
+	 2LOnnhLwl5OSzko1wv0ReYabDOnaHLT45KB+tOVkQmHork/jNakYuUMvTDqa5/iVEwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053087;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053090;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xc9eR9DzPOAZi5ujRB3gZQ5gT+j83ST53YbaHnue3PU=;
-	b=fYBO30yo307G6gwO6mndbs0rFnh9BhglJWhen6+DA1e563YBGaTwZpm0p1r9/1v4zNz1
-	 h1vGIIdMgTV4ZC7QiCDmkQdWn1VzL1XOZCG7RTbDPR6pKJaAWyWaDOBYBBsYf+QUiS/gx
-	 VjxyEN7gawW0y5tfzCKDj5ZzfJgMyd0V2Z8TYDtoIB/e/1xGx0MIp01lye6u82ZVNN5Lo
-	 VyvJxlPolyyrvBneZeUEy5dgKlPrDfIg5zZ7kcmyDk6mRRpEud8iKM3CzqZlB8hUrwm8T
-	 TzDzq2+Y2ip6DZ+bcKSNEj59hs1CBJuLg0xuyiYtZOU5d6kVsbgSmnxeS+9FJoXYw+g==
+	bh=xEuGVAVBOaisnKGwv6BJqfQUhqrpBoGe8gRxv7M41hQ=;
+	b=zhBP2btu+wVcknuyEsE8OdZZGxsJCUPIGK2ZYdvKuHOc+eIkceZH2Tx9JKHhasP/COtH
+	 KOH21yWC3GimidFZECANQb1TOjZLM7tVT6gRCQ6YAD/PNRa/e4hwDJQPI6r1jVUMfrZMJ
+	 ObpHcG+YW4C80mbWUHlhxMzwGP6igQ5VDG98zCHmWxU6aZCK7vQD8BRo4cFWlZGAcKk3V
+	 b25jBMMZ3mIFS67Lgl9mYq5Ua8BlgRaGvm4J6d3hRKFH5nbjC2ua80rchx7YlqXxkwgBe
+	 YlZp3wf0OvU/PrKOIXoiQVXTv9kxffYx0bxlr9anpsYQtW8LYG6sxrDMedN+tvn9fhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GAJn40OV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c2r4ny9A;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D17606A325;
-	Thu, 19 Nov 2026 01:51:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB21606A320;
+	Thu, 19 Nov 2026 01:51:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GAJn40OV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0BA81F000C4;
-	Thu, 19 Nov 2026 01:51:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c2r4ny9A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CAE41F000C4;
+	Thu, 19 Nov 2026 01:51:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053087;
-	bh=xc9eR9DzPOAZi5ujRB3gZQ5gT+j83ST53YbaHnue3PU=;
+	s=korg; t=1795053090;
+	bh=xEuGVAVBOaisnKGwv6BJqfQUhqrpBoGe8gRxv7M41hQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GAJn40OV0X1VczRrotzyQICqyYqGLoypsg/Eq0ACEIIN3NQfrkandsyH8hDIJg32E
-	 djmS77LLcz4FFi6K7J3z8fWXkjvfrisiGgQOeh+iwVDLo4fADW8OlTskYP3S9Hm2gX
-	 M3mflPCni0XYHQPxNqoBcBusJ/4ufOVACtgoxTxQ=
+	b=c2r4ny9Acd6Y7qmmB94+QqR9qYJfKZcbkYP3F0r8d+oNr87PGCdU8Z/ApkXLvp83M
+	 pBZ4Ymq9PKU8wK9XwYclkaPw2xMug5jFRMh0zpVN6Zj4CKprBiYglvo9rRNcuFTc2g
+	 pZnrVSM7kLrRlNP3lQz3mYOtt38NttpRWFzYlgT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Christoph Hellwig <hch@lst.de>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Sumit Gupta <sumitg@nvidia.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0796/2214] raid6: add missing vzeroupper to AVX-512 code
-Date: Wed, 18 Nov 2026 15:41:12 +0100
-Message-ID: <20261118150043.366500175@linuxfoundation.org>
+Subject: [PATCH 5.15 0797/2214] ACPI: CPPC: Validate FFH register fields before hardware access
+Date: Wed, 18 Nov 2026 15:41:13 +0100
+Message-ID: <20261118150043.420451539@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,99 +69,159 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Christian Loehle <christian.loehle@arm.com>
 
-commit b82cf9e49c1be7cf1fd8e1bd806b0cdd25ab8127 upstream.
+commit 6b016c5c96448c0a5f09328d37f66562d154a5e5 upstream.
 
-Since the AVX-512 optimized RAID6 code uses ZMM registers, execute
-vzeroupper before returning from it.  This is needed to avoid degrading
-the performance of any later SSE code that may happen to be executed.
+The x86 CPPC FFH accessors construct masks and shift values using the
+firmware's Bit Width and Bit Offset without checking that the field fits
+in an MSR. A zero-width field or a field extending beyond bit 63 can
+therefore cause an invalid shift. The safe MSR accessors only handle an
+access fault, not invalid field arithmetic after a successful read.
 
-Link: https://lore.kernel.org/20260831212316.213896-1-ebiggers@kernel.org
-Fixes: e0a491c12968 ("lib/raid6: Add AVX512 optimized gen_syndrome functions")
-Fixes: 13c520b2993c ("lib/raid6: Add AVX512 optimized recovery functions")
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: <stable@vger.kernel.org>
+Also, the 64-bit GAS address is implicitly narrowed to the 32-bit MSR
+number. A descriptor with nonzero upper address bits can access a different
+MSR from the one described by firmware.
+
+The arm64 AMU counter readers have the same unchecked field arithmetic.
+Validate the field bounds before reading a counter, including both
+descriptors in the paired counter path.
+
+Dispatch FFH accesses before decoding the GAS Access Size in the common
+read and write paths. Otherwise, a large access_width can trigger an
+invalid shift in GET_BIT_WIDTH() before the architecture validates its
+register. That field has architecture-specific FFH semantics and is not
+needed by the generic memory/port accessor on this path.
+
+Validate x86 MSR addresses and share the field-bounds checks between
+related accessors within each architecture.
+
+Fixes: a6cbcdd5ab5f ("ACPI / CPPC: Add support for functional fixed hardware address")
+Fixes: 68c5debcc06d ("arm64: implement CPPC FFH support using AMUs")
+Fixes: f489c948028b ("ACPI: CPPC: Fix access width used for PCC registers")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Christian Loehle <christian.loehle@arm.com>
+Tested-by: Sumit Gupta <sumitg@nvidia.com>
+Link: https://patch.msgid.link/20260916162805.1039247-17-christian.loehle@arm.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Christian Loehle <christian.loehle@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/raid6/avx512.c       | 6 ++++++
- lib/raid6/recov_avx512.c | 2 ++
- 2 files changed, 8 insertions(+)
+ arch/arm64/kernel/topology.c    |  9 +++++++++
+ arch/x86/kernel/acpi/cppc_msr.c | 15 +++++++++++++++
+ drivers/acpi/cppc_acpi.c        | 10 ++++++----
+ 3 files changed, 30 insertions(+), 4 deletions(-)
 
-diff --git a/lib/raid6/avx512.c b/lib/raid6/avx512.c
-index bb684d144ee2c..1d7eab3723aee 100644
---- a/lib/raid6/avx512.c
-+++ b/lib/raid6/avx512.c
-@@ -95,6 +95,7 @@ static void raid6_avx5121_gen_syndrome(int disks, size_t bytes, void **ptrs)
- 	}
- 
- 	asm volatile("sfence" : : : "memory");
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
+diff --git a/arch/arm64/kernel/topology.c b/arch/arm64/kernel/topology.c
+index b142254d8c0fb..5feda5b55d454 100644
+--- a/arch/arm64/kernel/topology.c
++++ b/arch/arm64/kernel/topology.c
+@@ -332,10 +332,19 @@ bool cpc_ffh_supported(void)
+ 	return true;
  }
  
-@@ -154,6 +155,7 @@ static void raid6_avx5121_xor_syndrome(int disks, int start, int stop,
- 	}
++static bool cpc_ffh_reg_valid(const struct cpc_reg *reg)
++{
++	return reg->bit_width && reg->bit_width <= 64 &&
++	       reg->bit_offset <= 64 - reg->bit_width;
++}
++
+ int cpc_read_ffh(int cpu, struct cpc_reg *reg, u64 *val)
+ {
+ 	int ret = -EOPNOTSUPP;
  
- 	asm volatile("sfence" : : : "memory");
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
++	if (!cpc_ffh_reg_valid(reg))
++		return -EINVAL;
++
+ 	switch ((u64)reg->address) {
+ 	case 0x0:
+ 		ret = counters_read_on_cpu(cpu, cpu_read_corecnt, val);
+diff --git a/arch/x86/kernel/acpi/cppc_msr.c b/arch/x86/kernel/acpi/cppc_msr.c
+index b961de569e7e5..37543b21ce94d 100644
+--- a/arch/x86/kernel/acpi/cppc_msr.c
++++ b/arch/x86/kernel/acpi/cppc_msr.c
+@@ -4,6 +4,8 @@
+  * Copyright (c) 2016, Intel Corporation.
+  */
+ 
++#include <linux/limits.h>
++
+ #include <acpi/cppc_acpi.h>
+ #include <asm/msr.h>
+ 
+@@ -14,10 +16,20 @@ bool cpc_ffh_supported(void)
+ 	return true;
  }
  
-@@ -227,6 +229,7 @@ static void raid6_avx5122_gen_syndrome(int disks, size_t bytes, void **ptrs)
++static bool cpc_ffh_reg_valid(const struct cpc_reg *reg)
++{
++	return reg->address <= U32_MAX && reg->bit_width &&
++	       reg->bit_width <= 64 &&
++	       reg->bit_offset <= 64 - reg->bit_width;
++}
++
+ int cpc_read_ffh(int cpunum, struct cpc_reg *reg, u64 *val)
+ {
+ 	int err;
+ 
++	if (!cpc_ffh_reg_valid(reg))
++		return -EINVAL;
++
+ 	err = rdmsrl_safe_on_cpu(cpunum, reg->address, val);
+ 	if (!err) {
+ 		u64 mask = GENMASK_ULL(reg->bit_offset + reg->bit_width - 1,
+@@ -34,6 +46,9 @@ int cpc_write_ffh(int cpunum, struct cpc_reg *reg, u64 val)
+ 	u64 rd_val;
+ 	int err;
+ 
++	if (!cpc_ffh_reg_valid(reg))
++		return -EINVAL;
++
+ 	err = rdmsrl_safe_on_cpu(cpunum, reg->address, &rd_val);
+ 	if (!err) {
+ 		u64 mask = GENMASK_ULL(reg->bit_offset + reg->bit_width - 1,
+diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
+index 30c8799b1a6a8..c51183c2fd6f3 100644
+--- a/drivers/acpi/cppc_acpi.c
++++ b/drivers/acpi/cppc_acpi.c
+@@ -967,6 +967,9 @@ static int cpc_read(int cpu, struct cpc_register_resource *reg_res, u64 *val)
  	}
  
- 	asm volatile("sfence" : : : "memory");
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
- }
+ 	*val = 0;
++	if (reg->space_id == ACPI_ADR_SPACE_FIXED_HARDWARE)
++		return cpc_read_ffh(cpu, reg, val);
++
+ 	size = GET_BIT_WIDTH(reg);
  
-@@ -311,6 +314,7 @@ static void raid6_avx5122_xor_syndrome(int disks, int start, int stop,
+ 	if (reg->space_id == ACPI_ADR_SPACE_PLATFORM_COMM && pcc_ss_id >= 0) {
+@@ -979,8 +982,6 @@ static int cpc_read(int cpu, struct cpc_register_resource *reg_res, u64 *val)
  	}
+ 	else if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY)
+ 		vaddr = reg_res->sys_mem_vaddr;
+-	else if (reg->space_id == ACPI_ADR_SPACE_FIXED_HARDWARE)
+-		return cpc_read_ffh(cpu, reg, val);
+ 	else
+ 		return acpi_os_read_memory((acpi_physical_address)reg->address,
+ 				val, size);
+@@ -1026,6 +1027,9 @@ static int cpc_write(int cpu, struct cpc_register_resource *reg_res, u64 val)
+ 	struct cpc_desc *cpc_desc;
+ 	unsigned long flags;
  
- 	asm volatile("sfence" : : : "memory");
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
- }
++	if (reg->space_id == ACPI_ADR_SPACE_FIXED_HARDWARE)
++		return cpc_write_ffh(cpu, reg, val);
++
+ 	size = GET_BIT_WIDTH(reg);
  
-@@ -417,6 +421,7 @@ static void raid6_avx5124_gen_syndrome(int disks, size_t bytes, void **ptrs)
+ 	if (reg->space_id == ACPI_ADR_SPACE_PLATFORM_COMM && pcc_ss_id >= 0) {
+@@ -1038,8 +1042,6 @@ static int cpc_write(int cpu, struct cpc_register_resource *reg_res, u64 val)
  	}
- 
- 	asm volatile("sfence" : : : "memory");
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
- }
- 
-@@ -550,6 +555,7 @@ static void raid6_avx5124_xor_syndrome(int disks, int start, int stop,
- 			       "m" (q[d+128]), "m" (q[d+192]));
- 	}
- 	asm volatile("sfence" : : : "memory");
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
- }
- const struct raid6_calls raid6_avx512x4 = {
-diff --git a/lib/raid6/recov_avx512.c b/lib/raid6/recov_avx512.c
-index fd9e15bf3f30f..c8a152d9ab6da 100644
---- a/lib/raid6/recov_avx512.c
-+++ b/lib/raid6/recov_avx512.c
-@@ -221,6 +221,7 @@ static void raid6_2data_recov_avx512(int disks, size_t bytes, int faila,
- #endif
- 	}
- 
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
- }
- 
-@@ -363,6 +364,7 @@ static void raid6_datap_recov_avx512(int disks, size_t bytes, int faila,
- #endif
- 	}
- 
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
- }
- 
+ 	else if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY)
+ 		vaddr = reg_res->sys_mem_vaddr;
+-	else if (reg->space_id == ACPI_ADR_SPACE_FIXED_HARDWARE)
+-		return cpc_write_ffh(cpu, reg, val);
+ 	else
+ 		return acpi_os_write_memory((acpi_physical_address)reg->address,
+ 				val, size);
 -- 
 2.53.0
 
