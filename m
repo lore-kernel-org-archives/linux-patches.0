@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051772;
-	b=QIjYWFUSiKLoRAqVMwfawSjWeCs8mJsAjdz85krN6hcJ9VqsjLFtbFCDk03o2eQ5EbYu
-	 QNivxbyyXGIfshKn5Xs8wS8qSJzg3N4dvId8dHf6i1XiyQc4CWB+IQQHaIVrfMH3lYjQi
-	 g9KYzFxar5G1lY3LgxKMGvVizRbdA/fW/lkyGmvghz+EItdqZypv6VvpD+X2xH/LLybu+
-	 SwWOnEZwaLoIaNq9slV6q/IkmA93I4sNK3T9oCStSVkltQin/bHoee9kxEkxUKKtcRKLh
-	 psB21Q5QveOoY/azQLAG3lex3QpSUIgaWnHD6Y1XWlsukyZYPSr0eh/CTYPcHp2TYVw==
+	t=1795051775;
+	b=B2AwAYmQN14841Jk/QgShW28JiTJYG0banfureYV9zOWNSx/sSdZmN7sYjPmG/X+ldwl
+	 x9dbcItBPc58PZlqKP67DahXMP/aHfJgPVbtEZ8mIhSrXZS5uAM/I/YNTabltvUDz9AZD
+	 FNa2RcQzKQh6cXsgzxyRNE06syecV5CMeWL+WPy2ZiwOma7VFAKpuu2lqa00gnI0zjsDa
+	 gH7wm4uWEQOazvbda0U07fkTfnqXHmjIFe1c0daBHs2MoauCS31NDR9NdxvaicFA8O+VK
+	 Ca8svZgPf8SB2UVVChGRADSxTX6kGdIB3Kgg/HmXe+Yt1+f2JTFCMpvDeGqKgyr35DA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051772;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051775;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2HwPJ+VZdXnmlDbvLmDuhpsW4Of7eYYxzmat+XI2GN8=;
-	b=KP9jMJKL1mHT9X8XCyRkoqBAUA+IlAJf42FPVUo0XxOyk+gcU0ac+tlMnDO+swS5nSnn
-	 43ERu4dloxVDXF5+tes8h0nLnbcxfa6FXdSnb4Ole+5IOlLZ/hsYL7VVNQDKMXZ1EJlG5
-	 ckY/fQLCidMqMNagG36OeLdcMpvPfrXgEOmexJxYUG3p4brXCK8GXI2eye6sgKHfoiz9f
-	 1b2B47I7mvsBo7WARecZvyXHbWEil4QViTAKP5Z5VoWKyBU65CiI+kdQxZDh1PMhWwFn3
-	 a27GNVRAm7qAmLjdbqvyjGVAAM7TxhHrvCEWzxn1SfC3jC0rPMJ6r0vdWTq+Xtje/DA==
+	bh=hahuC3NwrCk8AWMDb/KgcBO/bS+Hy2CusT5nV2z+To8=;
+	b=WhwOy7nbKYM2n5wFQBGlx4MGxl37No9KfrhZOsbqz/K64XHw05vCaxRKFBeOLLbXP9SL
+	 mXcKUcFnBeeMUz3+l0bG7lKohYQFOMoaQxJQNp7qARHxdq2UNNizX2sKTjGbeGXSlRc4l
+	 xeYT293gHnelbNhNJSHGRzi+mij65nCFViXgwEDNN5p6pwyP+G7PrciUtjpWBsZiiWmia
+	 0b22vjmRwqUghnbpXFzZaalOxEDw+0rXkBP+BK6DgN8azWLnCmY/TEdHrUBl3DuHW4VIM
+	 bU+1hrVgHPGs3hdQgEBHiDghNref/uuxAek4nhgmORZ+P5UFUzjbgIaoNGJuyJTIVoQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SIXqMunn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VOlqGKIv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54ABF606A32F;
-	Thu, 19 Nov 2026 01:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B9A606A325;
+	Thu, 19 Nov 2026 01:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SIXqMunn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB95F1F000C5;
-	Thu, 19 Nov 2026 01:29:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VOlqGKIv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76C001F000C4;
+	Thu, 19 Nov 2026 01:29:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051772;
-	bh=2HwPJ+VZdXnmlDbvLmDuhpsW4Of7eYYxzmat+XI2GN8=;
+	s=korg; t=1795051775;
+	bh=hahuC3NwrCk8AWMDb/KgcBO/bS+Hy2CusT5nV2z+To8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SIXqMunnokTdr8EkohfaXWNeW+PRRKNPGUuh/gfCG3f0QSwj8wfhsFf0bMBtBRAx3
-	 vV6Y0zsuxMEBnpiZqJMpc+bg8Yr8NWg/Wy6fq4HbjRoxmNJ9KuJO6BZKFpZSHyaaS4
-	 JwNI6ZT8UrjCsDVDrVpgEhE2eaOffV62quLRenLA=
+	b=VOlqGKIvgb1WIy0RiFeFb67HctKVz75FAP1Ss1xxgPT/2H7ftDetL1GNhF/3IN5hz
+	 P6sVED+DiB4PCOYeEuUqNVefJPCZXIrn38+CQoEpNVdIjjcxC4RlFCiXHuJavkcnAo
+	 CYo1oZVdkYfYuU3WSO+91k50q2FKw+GJxysoHPpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 5.15 0328/2214] ovl: read the nlink xattr of every indexed non-dir
-Date: Wed, 18 Nov 2026 15:33:24 +0100
-Message-ID: <20261118150023.445038506@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 5.15 0311/2214] media: cx23885: unregister DVB bus when SP2 CI setup fails
+Date: Wed, 18 Nov 2026 15:33:07 +0100
+Message-ID: <20261118150022.592190895@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,148 +68,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit eb644ed5c6d9afdb1554c41cef1f39d150fbc554 upstream.
+commit 22f552ff726a82a086be4ef02ce5099a0e8624b6 upstream.
 
-With nfs_export=on, data written through a file handle to a lower file,
-i.e. a file that exists only in a lower layer of the overlay, can be
-lost on the next mount. A lookup of the file by name then returns -EIO.
-Also, a file with one name reports st_nlink 2 once it has been copied to
-the upper layer. After such a file is removed, its file handle can still
-open it until the next mount.
+The DVBSKY S950C, DVBSKY T980C and TechnoTrend CT2-4500 CI paths register
+the DVB bus before attaching their SP2 CI client. If that client cannot be
+created, bound, or pinned, the current error path removes the I2C frontend
+components and only deallocates the frontend list, leaving the registered
+DVB adapter behind. Removing an I2C demod before unregistering the DVB bus
+can also expose the use-after-free ordering fixed for the normal remove
+path.
 
-Before a lower file is changed for the first time, overlayfs copies it
-to the writable upper layer. This is called copy up.
+Unregister the DVB bus immediately when SP2 CI setup fails, before the
+existing I2C client cleanup. The bus helper empties the frontend list, so
+the later frontend deallocation has nothing left to release. Keep failures
+from vb2_dvb_register_bus() on the existing cleanup path. Also release an
+unbound SP2 client and propagate the actual I2C creation or CI registration
+error.
 
-The index directory is $workdir/index, where $workdir is the directory
-given by the workdir= option. Each entry is named after the file handle
-of a lower inode, so that overlayfs can get from the handle to the
-copied up inode.
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
 
-With nfs_export=on, copy up indexes every non-directory: it copies the
-file to an entry in the index directory and then hard links that entry
-into the upper directory. The index entry is an extra link to the upper
-inode, so overlayfs stores the link count that users should see in the
-overlay.nlink xattr.
-
-A file can also be opened by handle, either by an NFS client or by a
-process with CAP_DAC_READ_SEARCH calling open_by_handle_at(). If the
-file is not in the dcache, its overlay dentry is disconnected, i.e. it
-has no parent yet. Copy up then creates the index entry but no hard link
-in the upper directory. The index entry has i_nlink 1 and holds the only
-copy of the data written to the file.
-
-ovl_get_nlink() reads the stored count. Its caller passes a default,
-which the function returns if there is no stored count. If the lower
-inode has i_nlink 1, the function returns the default without reading
-the xattr. That was correct as long as only lower files with multiple
-links were indexed.
-
-On the next mount, ovl_verify_index() looks for orphans, i.e. index
-entries of files whose last name was removed. For an index entry with
-i_nlink 1, it passes a default of 0 to ovl_get_nlink() and treats a
-result of 0 as an orphan. Here the lower inode also has i_nlink 1, so
-the result is the default. ovl_indexdir_cleanup() then replaces the
-entry with a whiteout, which in the index marks a file as deleted. The
-written data is lost.
-
-A lookup by name then returns -EIO, because a whiteout as the index
-entry of a lower file that still exists is a bad index.
-
-ovl_get_inode() gets the wrong count the same way. Its default is the
-i_nlink of the upper inode, which includes the index entry, so a copied
-up file with one name reports st_nlink 2.
-
-When that name is removed, the count drops to 1 rather than 0.
-ovl_nlink_end() replaces the index entry with a whiteout only at a count
-of 0, so the entry stays, and the handle of the removed file still opens
-it.
-
-Reproduced by writing through open_by_handle_at() to an uncached lower
-file with one link. After a remount the data was lost, and the name
-returned EIO.
-
-Fix this by adding an argument to ovl_get_nlink() that says whether the
-caller found an index entry, and by skipping the xattr only if the
-caller found none.
-
-Known gaps:
-- An index entry that a kernel without this patch left behind for a
-  removed file now stays, and the handle of that file keeps working. The
-  entry has i_nlink 1 and a stored count of 1, just like the entry of a
-  file that was only written by handle. Without this patch, the next
-  mount treated it as an orphan.
-
-Fixes: fbd2d2074bde ("ovl: index all non-dir on copy up for NFS export")
+Fixes: 2b0aac3011bc ("[media] cx23885: move CI/MAC registration to a separate function")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Assisted-by: OpenAI:GPT-5.6
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/inode.c     |   14 +++++++++++---
- fs/overlayfs/namei.c     |    2 +-
- fs/overlayfs/overlayfs.h |    2 +-
- 3 files changed, 13 insertions(+), 5 deletions(-)
+ drivers/media/pci/cx23885/cx23885-dvb.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/fs/overlayfs/inode.c
-+++ b/fs/overlayfs/inode.c
-@@ -903,7 +903,7 @@ int ovl_set_nlink_lower(struct dentry *d
+--- a/drivers/media/pci/cx23885/cx23885-dvb.c
++++ b/drivers/media/pci/cx23885/cx23885-dvb.c
+@@ -1160,8 +1160,12 @@ static int dvb_register_ci_mac(struct cx
+ 		info.platform_data = &sp2_config;
+ 		request_module(info.type);
+ 		client_ci = i2c_new_client_device(&i2c_bus->i2c_adap, &info);
+-		if (!i2c_client_has_driver(client_ci))
++		if (IS_ERR(client_ci))
++			return PTR_ERR(client_ci);
++		if (!client_ci->dev.driver) {
++			i2c_unregister_device(client_ci);
+ 			return -ENODEV;
++		}
+ 		if (!try_module_get(client_ci->dev.driver->owner)) {
+ 			i2c_unregister_device(client_ci);
+ 			return -ENODEV;
+@@ -1204,7 +1208,7 @@ static int dvb_register(struct cx23885_t
+ 	int (*p_set_voltage)(struct dvb_frontend *fe,
+ 			     enum fe_sec_voltage voltage) = NULL;
+ 	int mfe_shared = 0; /* bus not shared by default */
+-	int ret;
++	int ret = -EINVAL;
+ 
+ 	/* Get the first frontend */
+ 	fe0 = vb2_dvb_get_frontend(&port->frontends, 1);
+@@ -2586,8 +2590,10 @@ static int dvb_register(struct cx23885_t
+ 		goto frontend_detach;
+ 
+ 	ret = dvb_register_ci_mac(port);
+-	if (ret)
++	if (ret) {
++		vb2_dvb_unregister_bus(&port->frontends);
+ 		goto frontend_detach;
++	}
+ 
+ 	return 0;
+ 
+@@ -2618,7 +2624,7 @@ frontend_detach:
+ 
+ 	port->gate_ctrl = NULL;
+ 	vb2_dvb_dealloc_frontends(&port->frontends);
+-	return -EINVAL;
++	return ret;
  }
  
- unsigned int ovl_get_nlink(struct ovl_fs *ofs, struct dentry *lowerdentry,
--			   struct dentry *upperdentry,
-+			   struct dentry *upperdentry, bool indexed,
- 			   unsigned int fallback)
- {
- 	int nlink_diff;
-@@ -911,7 +911,15 @@ unsigned int ovl_get_nlink(struct ovl_fs
- 	char buf[13];
- 	int err;
- 
--	if (!lowerdentry || !upperdentry || d_inode(lowerdentry)->i_nlink == 1)
-+	if (!lowerdentry || !upperdentry)
-+		return fallback;
-+
-+	/*
-+	 * A lower inode with one link is not indexed on copy up, unless all
-+	 * files are indexed for NFS export.  If the caller found an index entry,
-+	 * then the xattr holds the union nlink, whatever the lower nlink is.
-+	 */
-+	if (!indexed && d_inode(lowerdentry)->i_nlink == 1)
- 		return fallback;
- 
- 	err = ovl_getxattr(ofs, upperdentry, OVL_XATTR_NLINK,
-@@ -1162,7 +1170,7 @@ struct inode *ovl_get_inode(struct super
- 		/* Recalculate nlink for non-dir due to indexing */
- 		if (!is_dir)
- 			nlink = ovl_get_nlink(ofs, lowerdentry, upperdentry,
--					      nlink);
-+					      oip->index, nlink);
- 		set_nlink(inode, nlink);
- 		ino = key->i_ino;
- 	} else {
---- a/fs/overlayfs/namei.c
-+++ b/fs/overlayfs/namei.c
-@@ -593,7 +593,7 @@ int ovl_verify_index(struct ovl_fs *ofs,
- 		if (err)
- 			goto fail;
- 
--		if (ovl_get_nlink(ofs, origin.dentry, index, 0) == 0)
-+		if (ovl_get_nlink(ofs, origin.dentry, index, true, 0) == 0)
- 			goto orphan;
- 	}
- 
---- a/fs/overlayfs/overlayfs.h
-+++ b/fs/overlayfs/overlayfs.h
-@@ -516,7 +516,7 @@ static inline bool ovl_dir_is_real(struc
- int ovl_set_nlink_upper(struct dentry *dentry);
- int ovl_set_nlink_lower(struct dentry *dentry);
- unsigned int ovl_get_nlink(struct ovl_fs *ofs, struct dentry *lowerdentry,
--			   struct dentry *upperdentry,
-+			   struct dentry *upperdentry, bool indexed,
- 			   unsigned int fallback);
- int ovl_setattr(struct user_namespace *mnt_userns, struct dentry *dentry,
- 		struct iattr *attr);
+ int cx23885_dvb_register(struct cx23885_tsport *port)
 
 
