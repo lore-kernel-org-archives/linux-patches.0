@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027098;
-	b=l7/Wv9/w5xPBU7ts3ik/E8GNU9igJU8Dq4IYNdNj69aEuvG2ZliuD+VXiGGZ96jBDSf/
-	 8D5dposf/X/jVRSxAz9BDpKvQj4kr1JR6vS6qScuv5mn2TuPVnGXhL4oUWNDiR490itia
-	 6vYMoM1KEDOLsjt1KPUYpSMhmVKHv877yt6w0+XEbzW83dRLCW+8S1QUXNhtlvoXIoFjs
-	 YX8XXsziVeQtspoPj9yA/RsV23vRkWIRLxfhr6PkICp0ibxwqErOVEOYhPjkuxEk3gl/R
-	 INDTFZzx0o9GYEqqtvTQOIETNPn3Na0AYNLE3USPVdorLgvn5CHaVy2ZX6kx1TBaWTQ==
+	t=1795027101;
+	b=j9jffn3wO1QBRCH7EoQestT3RksUQx0AnwOd8CbtrieirAxjtN0nFNML7boeKmOPaoj9
+	 lVlsPkYK1w2J0qFNge/A2PnJypkNzw7rPoeO/Ub4IFqdI2nHMytDO5h3UsaNR0AbuayEo
+	 6xi422I5/1/Wx4C+RIUSQA5j5zKFlQ9aV0MJH/i6FW28W1cuZtIBXS+lR5io8xEQcdLOA
+	 rw1dJ9IZwosZu/SFwGNxOmoCahzOow8HTyXLOPi0R9XE/OEmCjJs97QR/z8IGbQ8Bl6Dc
+	 wHkLZYtjwDzO7jdxxoey7ND5MtavH5xIwmyIGcqCN/IIbttxK+hdIDYH00W3h92BfLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027098;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027101;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+ST+ccO4ETHFmL6ExrvI9IfSzPXlCYWhgiGB/9BVJzI=;
-	b=1C9b/dpTmsns1048QpzTKrD9nqCh0Nwb3XKGV4T84O7XuyH0PK4akoQJW8z6GKE+RuDU
-	 EQxrFa+2KOy+SM7waia3+kj9wAvYJs1Tc+v0kBbFPMaMZO/0RDM58UjEtUcr2HBCUTjvh
-	 AYZopU9ixkKAFa2fCMzAB7TaufJ7OeosbXhfWNvgZZjl6z6kM2NS7QC3vXfbv7a3obDbB
-	 e9dlgUNSpcHHQKliPaxW7lW38gSqvUFSqBzbqnIGbKKoUcjiNCY3IQUBMjg/rBjpZAgI3
-	 geOaQ++/l1zvYSCfJrVYh6yF7hjRahu6J3BJXiUb/K2D44RR5/Tt1MjwXm07+IJBULA==
+	bh=JoSoB6cdn1BxSBeLSWxQz+gvx/z1fA7g2ZQpndHOmjU=;
+	b=U2L0iEnBrfusuLIXJRRFx7a4SHIYh5arjy/0hj3mYwATn6gEqZmHGwSK+K9N/BttA5z2
+	 MIRG/L3AyD7P1+kV2RB2QIBJTB3NH5UYdvcJFBKlE3ZVOLuKYlpjlAlR2ObhPohIZp59f
+	 Ez+QZj/uNJmsyFeNR2IvvD5PQUxYvjg/wgQXFCY0rytds/15VthSKa/uoJ5TH0guycJ7l
+	 FOOYlMNTqWp1+ge0eMH/2O2zrijfcK2m6DyeLkjeb4msV2UrRjFcUzA2wZBizZ+H0R4XW
+	 tfv2B062OliF3ou+xSHDgVOgTu07VAB0DGErBql+8QnLMeZ/WF5G1P7gwaGZ8nGdjvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EuSm0Qua;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gOEcafcS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4324B606A31C;
-	Wed, 18 Nov 2026 18:38:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06125606A325;
+	Wed, 18 Nov 2026 18:38:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EuSm0Qua
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 939C41F000C4;
-	Wed, 18 Nov 2026 18:38:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gOEcafcS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D4FB1F000C5;
+	Wed, 18 Nov 2026 18:38:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027098;
-	bh=+ST+ccO4ETHFmL6ExrvI9IfSzPXlCYWhgiGB/9BVJzI=;
+	s=korg; t=1795027100;
+	bh=JoSoB6cdn1BxSBeLSWxQz+gvx/z1fA7g2ZQpndHOmjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EuSm0Qua8oiMNCw+91Unnuhs6b0GJWyLWhBxP577fjFj7I7SLVhbpbtzx0y6RO5uZ
-	 y2sWWag2+xqW/C6/kEFcE5Gh/DwcGkt7ttVcjD7cmU38fxAnkSDC8HGhjFnSvchjyW
-	 hf9UhE3y49nhmZrrTdgDa1A3h6zgF03fLZ6z+coE=
+	b=gOEcafcS9G7TqeV/Xw/E9FPblzc2C9Q7b/TdBKShkZmIPh4ujS//iAUFgvlYlWcJR
+	 mIMUpq4gqRZdb0nNEYQeBfI+o+26jfRxVLqa38A3nRvkV9kzZIm67pGSE10FjWBo7P
+	 7FWW9O42qdoqsRVREQ32prNMu3iN5rPaxL7rNqs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasilij Markin <vasilij.kernel@tototo.si>,
-	Lukas Wunner <lukas@wunner.de>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1669/2151] drm/appletbdrm: Add suspend and resume support
-Date: Wed, 18 Nov 2026 15:56:44 +0100
-Message-ID: <20261118150222.636464349@linuxfoundation.org>
+Subject: [PATCH 6.18 1670/2151] ALSA: vmaster: Protect follower lookup and setup
+Date: Wed, 18 Nov 2026 15:56:45 +0100
+Message-ID: <20261118150222.671061293@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,102 +68,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasilij Markin <vasilij.kernel@tototo.si>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 6f6a6b9ae0b481b97dac141ae86becdf7bd0b471 ]
+[ Upstream commit db2db2dec96e24d067cc5692ac5eec35830ee8d9 ]
 
-The driver has no USB power management callbacks, so the USB core
-unbinds it before system suspend and binds it again on resume. The DRM
-device is unregistered and registered again on every suspend and resume
-cycle, userspace driving the Touch Bar through it (such as tiny-dfr)
-loses its device, and the Touch Bar stays dark after resume.
+A control selected by snd_ctl_add_followers() must remain alive until
+_snd_ctl_add_follower() has copied it and installed its wrapper. The
+lookup returns a raw pointer without retaining the control, and neither
+the short-lived list lookup lock nor the fast lookup protects later use.
 
-Implement suspend and resume with drm_mode_config_helper_suspend() and
-drm_mode_config_helper_resume(), so the device stays registered and the
-last committed state is restored on resume. If the device was reset
-while suspended, repeat the probe-time handshake first.
+If a kernel client adds followers to a live virtual master while another
+client removes or replaces a published follower, the following order is
+possible, with the card and master kept alive:
 
-Fixes: 0670c2f56e45 ("drm/tiny: add driver for Apple Touch Bars in x86 Macs")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Vasilij Markin <vasilij.kernel@tototo.si>
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Link: https://patch.msgid.link/20261015-appletbdrm-pm-v3-1-47377176619a@tototo.si
+  Follower setup                      Control removal
+  snd_ctl_add_followers()
+    snd_ctl_find_id_mixer()
+      return follower
+                                      snd_ctl_remove()
+                                        down_write(controls_rwsem)
+                                        __snd_ctl_remove()
+                                          unlink follower
+                                          snd_ctl_free_one(follower)
+                                        up_write(controls_rwsem)
+    _snd_ctl_add_follower()
+      read follower->count
+
+Removal completes after lookup returns and before setup reads the
+control. Since setup holds neither controls_rwsem nor a reference, the
+count read and subsequent control copies can access freed memory.
+
+Hold controls_rwsem for writing across the lookup and follower setup.
+This prevents removal or replacement from freeing the selected control
+until wrapper installation is complete. Write ownership also excludes
+control callbacks while setup changes the callback and private fields.
+
+KASAN report as below:
+
+    BUG: KASAN: slab-use-after-free in _snd_ctl_add_follower+0x452/0x520
+    Read of size 4 at addr ffff888107957d50 by task loadmodule/491
+
+    CPU: 3 UID: 0 PID: 491 Comm: loadmodule Tainted: G           O        7.2.0-rc6-pmb-bt-functional-v1+ #1 PREEMPT(lazy)
+    Tainted: [O]=OOT_MODULE
+    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x93/0xd0
+     print_report+0xce/0x630
+     ? _snd_ctl_add_follower+0x452/0x520
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __virt_addr_valid+0x20d/0x410
+     ? _snd_ctl_add_follower+0x452/0x520
+     kasan_report+0xe0/0x110
+     ? _snd_ctl_add_follower+0x452/0x520
+     _snd_ctl_add_follower+0x452/0x520
+     snd_ctl_add_followers+0x153/0x2b0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_snd_ctl_add_followers+0x10/0x10
+     ? __might_fault+0x135/0x190
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __might_fault+0x14e/0x190
+     ? __pfx_fixture_write+0x10/0x10 [pmbd_vmaster_fixture]
+     fixture_write+0x174/0x1f0 [pmbd_vmaster_fixture]
+     ? __pfx_fixture_write+0x10/0x10 [pmbd_vmaster_fixture]
+     ? __pfx___might_resched+0x10/0x10
+     proc_reg_write+0x1fb/0x2d0
+     vfs_write+0x25a/0x1010
+     ? __pfx_proc_reg_write+0x10/0x10
+     ? kmem_cache_free+0x242/0x580
+     ? __pfx_vfs_write+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? putname+0x93/0xe0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? do_sys_openat2+0x12a/0x1b0
+     ? __pfx_do_sys_openat2+0x10/0x10
+     ksys_write+0x111/0x200
+     ? __pfx_ksys_write+0x10/0x10
+     ? irqentry_exit+0xbe/0x820
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+    RIP: 0033:0x7f0b835a9687
+    Code: 48 89 fa 4c 89 df e8 58 b3 00 00 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b> c3 0f 1f 80 00 00 00 00 83 e2 39 83 fa 08 75 de e8 23 ff ff ff
+    RSP: 002b:00007ffc82ea0360 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
+    RAX: ffffffffffffffda RBX: 00007f0b83517780 RCX: 00007f0b835a9687
+    RDX: 0000000000000005 RSI: 0000564f8a21d074 RDI: 0000000000000003
+    RBP: 0000000000000003 R08: 0000000000000000 R09: 0000000000000000
+    R10: 0000000000000000 R11: 0000000000000202 R12: 0000000000000000
+    R13: 00007ffc82ea04f0 R14: 00007f0b83755000 R15: 0000564f8a21ed78
+     </TASK>
+
+    Allocated by task 485:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     __kasan_kmalloc+0xaa/0xb0
+     __kmalloc_noprof+0x2d7/0x770
+     snd_ctl_new+0x51/0x190
+     snd_ctl_new1+0x13c/0x650
+     0xffffffffc04011b5
+     do_one_initcall+0xf3/0x4e0
+     do_init_module+0x281/0x8e0
+     load_module+0x658c/0x7cc0
+     init_module_from_file+0x15b/0x180
+     idempotent_init_module+0x22d/0x770
+     __x64_sys_finit_module+0xd2/0x160
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    Freed by task 492:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     kasan_save_free_info+0x3b/0x60
+     __kasan_slab_free+0x5f/0x80
+     kfree+0x307/0x580
+     __snd_ctl_remove+0x2ac/0x3d0
+     snd_ctl_remove+0x46/0x70
+     fixture_write+0x1ae/0x1f0 [pmbd_vmaster_fixture]
+     proc_reg_write+0x1fb/0x2d0
+     vfs_write+0x25a/0x1010
+     ksys_write+0x111/0x200
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    The buggy address belongs to the object at ffff888107957d00
+     which belongs to the cache kmalloc-192 of size 192
+    The buggy address is located 80 bytes inside of
+     freed 192-byte region [ffff888107957d00, ffff888107957dc0)
+
+    The buggy address belongs to the physical page:
+    page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x107957
+    flags: 0x200000000000000(node=0|zone=2)
+    page_type: f5(slab)
+    raw: 0200000000000000 ffff8881000423c0 dead000000000100 dead000000000122
+    raw: 0000000000000000 0000000000100010 00000000f5000000 0000000000000000
+    page dumped because: kasan: bad access detected
+
+    Memory state around the buggy address:
+     ffff888107957c00: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+     ffff888107957c80: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+    >ffff888107957d00: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                                                     ^
+     ffff888107957d80: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+     ffff888107957e00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+    ==================================================================
+
+Fixes: ae07eb9bf23e ("ALSA: vmaster: Add snd_ctl_add_followers() helper")
+Assisted-by: LLM
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/pm-pmb-6c0b7e841529ddd0b21a-v2-b53dbcd593a7a4bd9582@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tiny/appletbdrm.c | 46 +++++++++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
+ sound/core/vmaster.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/tiny/appletbdrm.c b/drivers/gpu/drm/tiny/appletbdrm.c
-index f596e9637a7ba..9ad1a9b895224 100644
---- a/drivers/gpu/drm/tiny/appletbdrm.c
-+++ b/drivers/gpu/drm/tiny/appletbdrm.c
-@@ -30,6 +30,7 @@
- #include <drm/drm_gem_atomic_helper.h>
- #include <drm/drm_gem_framebuffer_helper.h>
- #include <drm/drm_gem_shmem_helper.h>
-+#include <drm/drm_modeset_helper.h>
- #include <drm/drm_plane.h>
- #include <drm/drm_print.h>
- #include <drm/drm_probe_helper.h>
-@@ -814,6 +815,48 @@ static void appletbdrm_shutdown(struct usb_interface *intf)
- 	drm_atomic_helper_shutdown(&adev->drm);
- }
+diff --git a/sound/core/vmaster.c b/sound/core/vmaster.c
+index f8d5b96d6e312..a06fdd3ac40f6 100644
+--- a/sound/core/vmaster.c
++++ b/sound/core/vmaster.c
+@@ -288,6 +288,8 @@ EXPORT_SYMBOL(_snd_ctl_add_follower);
+  *
+  * Adds the multiple follower kcontrols with the given names.
+  * Returns 0 for success or a negative error code.
++ *
++ * Note that this function takes card->controls_rwsem lock internally.
+  */
+ int snd_ctl_add_followers(struct snd_card *card, struct snd_kcontrol *master,
+ 			  const char * const *list)
+@@ -295,6 +297,7 @@ int snd_ctl_add_followers(struct snd_card *card, struct snd_kcontrol *master,
+ 	struct snd_kcontrol *follower;
+ 	int err;
  
-+static int appletbdrm_suspend(struct usb_interface *intf, pm_message_t message)
-+{
-+	struct appletbdrm_device *adev = usb_get_intfdata(intf);
-+
-+	return drm_mode_config_helper_suspend(&adev->drm);
-+}
-+
-+static int appletbdrm_resume(struct usb_interface *intf)
-+{
-+	struct appletbdrm_device *adev = usb_get_intfdata(intf);
-+
-+	return drm_mode_config_helper_resume(&adev->drm);
-+}
-+
-+static int appletbdrm_reset_resume(struct usb_interface *intf)
-+{
-+	struct appletbdrm_device *adev = usb_get_intfdata(intf);
-+	struct drm_device *drm = &adev->drm;
-+	int ret, resume_ret;
-+
-+	/*
-+	 * A reset puts the device back into its initial state, where it
-+	 * expects the same handshake as during probe. Resume the DRM side
-+	 * even if the handshake fails, so that the state saved on suspend
-+	 * is released.
-+	 */
-+	ret = appletbdrm_get_information(adev);
-+	if (ret) {
-+		drm_err(drm, "Failed to get display information\n");
-+		goto resume;
-+	}
-+
-+	ret = appletbdrm_signal_readiness(adev);
-+	if (ret)
-+		drm_err(drm, "Failed to signal readiness\n");
-+
-+resume:
-+	resume_ret = drm_mode_config_helper_resume(drm);
-+
-+	return ret ? ret : resume_ret;
-+}
-+
- static const struct usb_device_id appletbdrm_usb_id_table[] = {
- 	{ USB_DEVICE_INTERFACE_CLASS(0x05ac, 0x8302, USB_CLASS_AUDIO_VIDEO) },
- 	{}
-@@ -825,6 +868,9 @@ static struct usb_driver appletbdrm_usb_driver = {
- 	.probe		= appletbdrm_probe,
- 	.disconnect	= appletbdrm_disconnect,
- 	.shutdown	= appletbdrm_shutdown,
-+	.suspend	= appletbdrm_suspend,
-+	.resume		= appletbdrm_resume,
-+	.reset_resume	= appletbdrm_reset_resume,
- 	.id_table	= appletbdrm_usb_id_table,
- };
- module_usb_driver(appletbdrm_usb_driver);
++	guard(rwsem_write)(&card->controls_rwsem);
+ 	for (; *list; list++) {
+ 		follower = snd_ctl_find_id_mixer(card, *list);
+ 		if (follower) {
 -- 
 2.53.0
 
