@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037110;
-	b=hBSXwn099/Z8ny2YcfO1XgohzkwkUfmgKur7qYYOWxq9kFXRAQnu13HzwmnvQU+r1QTD
-	 Zbql5oEP0mERjTBVf8umUlXNMoxqoIxfhL5MIsP5aG6bgAet7L+wptH+PwkXrpDQFyw7W
-	 Rh5CfrS8Ma6PVx0to0F2/ImqEkcaaipJAOAMz5nPD3x2nyZfdshxmQz4ge0ysZ9YS18kd
-	 B+pN9sHx9oPC59oEtNarz3OpwciHF3SB+xfqYr+7W4x8ak/cVPUWOJTJ1OwA3KUhf5b4d
-	 3Uf+Ghu2S1q6HuKQRB6Ktf7lTwHl61DvKnEM3K2ODvJ7fW8ufC2ymMTDwYaqLK5u5Vg==
+	t=1795037113;
+	b=HjDTTrPXJRECf+1N15zryGKf4Za4mmynu6zwioulvk2y1utEdiFgcbejCaa5DwCCdMtA
+	 XSUWoU0nFWa9UJXwlyOnC77tZd4AQZTo3gZykm8gYB12N5JRGb3ke8CgI68OeODz57Sb7
+	 mnKXzaWj/08e8UlTSb+lvnK8jyPdjNOMzBlMhx3XDf8ApqfK3sQTMpVINk57mFq3dfqhs
+	 onj+KFsM1SZKMzlxQNSmCninb90lTxsflFw6YwJTo32p3cA3kIr+L5dp/jM4NqbE3PbQ8
+	 ll4KyUXAuDu3LGUg3x5WAOiqJYwfWn1zBW3+SsoEIaroj0YxiCuuBAoUXNP3P66cJPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037110;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037113;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cxLoJSvgF7VwEfKh4rDRsBNfDEiCYQE4nzRTDfHlSBg=;
-	b=qe1vo/OjwdA/aZhFqhVE6XQOFm66u7W6J7B5ZfYjaUWhDbt+1HP+wz0JJExOyR7Z6+Et
-	 rBPw5VVSjDMUaRIOZu1c1z4KqtX5ZbfFcxnQS8wsxatpiFFQusI9O1BlmcX7D3s9JMsdM
-	 Ek6I+YPMyXScQy1VWfYfJc7RDLGCQhxsVxIAl+R9zNhVOj4H96F8hWXmTFTtXInd7cmg8
-	 RcX/S73HxPIihzbiZGoY6B1UPI5yZ19hj/b5RgMYV9TYIf9RMNYlC8JBYp3YnEwkfCgdW
-	 9FsrcTmuNb0r3/G/KGUE7cV4A2aMXuSLQSZb9yD8d1M13PL46sn3mEMNU19uCuAoHkg==
+	bh=37EnuxxR7pn7PLjmyImqt5BglxFK4slieZscV3jfSpU=;
+	b=BMiCcKHXs/bJa6ownIEwzz6y50ByoMR3NeTEarmRnVlFnonh6MnX07DG26QaKJFMy4mx
+	 ugndC2o8ToLnF0HWoFY5UG2mR35nuMk3lUrsutSxSbmd9OjJ2wCAvSfn8zN6rlYX2tTJ5
+	 HJSiHcO4AZqkJop3x53JomtDJOHVnRfFpNjnKdk9DPdyGPhjMzivbxmsDdKGqBzPqkB6A
+	 NXm3wZCuv2iB3o+OCG4zFW+kUROYS2uNI2Zf9uB7LDEoxbeMrHu5ItmuMHVt6CsXvn/dR
+	 19lktN6fkO4s0tZT1XlxG8+LGgxOJRNTKr5KZqpsM3XYmGW54i9wOlQUcvlkkUDaxFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vOJJ3XOu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wjnWVKk+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 782EA606A320;
-	Wed, 18 Nov 2026 21:25:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA69606A31C;
+	Wed, 18 Nov 2026 21:25:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vOJJ3XOu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C494B1F000C4;
-	Wed, 18 Nov 2026 21:25:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wjnWVKk+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91F551F000C4;
+	Wed, 18 Nov 2026 21:25:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037110;
-	bh=cxLoJSvgF7VwEfKh4rDRsBNfDEiCYQE4nzRTDfHlSBg=;
+	s=korg; t=1795037113;
+	bh=37EnuxxR7pn7PLjmyImqt5BglxFK4slieZscV3jfSpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vOJJ3XOuOw5E0e3h5Cr9Bs4zLF0HR97yqwDBqD45Mvz3BsKaHYQSU0M88VcRdicfZ
-	 8XJ9t0NYYKYz0TAhWR+RJ1mfpO6+WJodOrf20nNcjybyknX40WzBHT+RiNdXT1yHoa
-	 UVjJbrTdtp122YE3lPvnp3NN6rlUeN+9Rrb1afAI=
+	b=wjnWVKk+BLTxBCt02kLQ9NB7ae9tymHF9ToA317OF5iok1lRB1+hXdGQSYAK3VDsa
+	 Sz/662dK41Cu+vJiKBJx7y57Fksy/KvP37BPc5BuDJwRy464AnZEDbLzOAj8l4gjYZ
+	 9WbEPbVGi/tUug36SRtS2kEerG/W0UZBSvyuGobw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Johansen <john.johansen@canonical.com>,
+	Abdifatah Suruur <suruurism@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1298/3318] apparmor: on failed load ensure profile files are removed before parent
-Date: Wed, 18 Nov 2026 15:32:00 +0100
-Message-ID: <20261118150359.205481712@linuxfoundation.org>
+Subject: [PATCH 6.6 1299/3318] smb: client: validate the data area in SMB2_read()
+Date: Wed, 18 Nov 2026 15:32:01 +0100
+Message-ID: <20261118150359.236508321@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,45 +69,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Johansen <john.johansen@canonical.com>
+From: Abdifatah Suruur <suruurism@gmail.com>
 
-[ Upstream commit 97ba44a2aa4c7ab011a93ce94cb595200fe4ea4f ]
+[ Upstream commit 2ec9cdf469dd32bcf33073aeb30c08e9356e0ca1 ]
 
-The load interface does not guarantee the order profiles are loaded.
-When a parent is loaded after its child, and the load fails, the
-current code will issue a warning, and leak a dentry.
+SMB2_read() copies le32_to_cpu(rsp->DataLength) bytes from
+(char *)rsp + rsp->DataOffset without checking that the range lies
+within the response actually received. A READ response with
+DataOffset == 0 makes smb2_get_data_area_len() zero the data length, so
+smb2_check_message() accepts a frame as short as the fixed response,
+while SMB2_read() still uses the server-supplied DataLength, capped only
+by CIFS_MAX_MSGSIZE and the caller's length.
 
-For the loaded set of profiles, ensure that on failure list is ordered
-is traversed in reverse so any children processed after their parent
-is freed first. We do not need to deal with the cases where the
-children are processed before their parent, because either a parent
-outside the list already exists or a dummy parent outside of the list
-is created, and the list walk will not put those parents before their
-children.
+A malicious server can answer the synchronous read used by the
+mfsymlinks (or SFU) symlink parser with an 81-byte READ response
+carrying DataOffset 0 and DataLength 1067, making the client copy 1067
+bytes from a 448-byte receive object (KASAN slab-out-of-bounds; up to
+16 KiB in the general case).
 
-Fixes: 6ec46f8f1977d ("apparmor: remove fs entries created by a failed policy load")
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Clamp a zero (or header-overlapping) DataOffset to read_rsp_size, as
+handle_read_data() does for the asynchronous path, and reject the
+response unless DataOffset + DataLength fits within rsp_iov.iov_len.
+The SMB1 helper was fixed the same way in 5be5bdda5863.
+
+Fixes: d8e050398d23 ("CIFS: Add readpage support for SMB2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Abdifatah Suruur <suruurism@gmail.com>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+[ sashal: replaced the unavailable smb_EIO2() tracing helper call with rc = -EIO ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/policy.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/smb/client/smb2pdu.c | 23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
-index a6ce3f29480fc..79e7c7cb26b33 100644
---- a/security/apparmor/policy.c
-+++ b/security/apparmor/policy.c
-@@ -1356,8 +1356,10 @@ ssize_t aa_replace_profiles(struct aa_ns *policy_ns, struct aa_label *label,
- 	 * them yet, and leaving them behind would leak the new profiles
- 	 * (their dents pin the proxy) and make the next load at the same,
- 	 * unbumped ns revision fail with -EEXIST on its raw_data dir.
-+	 * ensure children (which are at the end of the list are removed
-+	 * before their parent
- 	 */
--	list_for_each_entry(tmp, &lh, list) {
-+	list_for_each_entry_reverse(tmp, &lh, list) {
- 		if (!tmp->old)
- 			__aafs_profile_rmdir(tmp->new);
+diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
+index 1d8e491bb205c..dbc7e4936b4c0 100644
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -4749,6 +4749,7 @@ SMB2_read(const unsigned int xid, struct cifs_io_parms *io_parms,
+ 	struct kvec iov[1];
+ 	struct kvec rsp_iov;
+ 	unsigned int total_len;
++	u16 data_offset;
+ 	int flags = CIFS_LOG_ERROR;
+ 	struct cifs_ses *ses = io_parms->tcon->ses;
+ 
+@@ -4806,8 +4807,28 @@ SMB2_read(const unsigned int xid, struct cifs_io_parms *io_parms,
+ 		*nbytes = 0;
  	}
+ 
++	data_offset = rsp->DataOffset;
++	if (data_offset < io_parms->server->vals->read_rsp_size) {
++		/*
++		 * win2k8 sometimes sends an offset of 0 when the read is beyond
++		 * the EOF.  Treat it as if the data starts just after the header,
++		 * as handle_read_data() does.
++		 */
++		cifs_dbg(FYI, "data offset %u inside read response header\n",
++			 data_offset);
++		data_offset = io_parms->server->vals->read_rsp_size;
++	}
++
++	/* The data area must lie within the response actually received */
++	if (*nbytes && (size_t)data_offset + *nbytes > rsp_iov.iov_len) {
++		cifs_dbg(FYI, "bad data offset %u length %u for response of %zu\n",
++			 data_offset, *nbytes, rsp_iov.iov_len);
++		rc = -EIO;
++		*nbytes = 0;
++	}
++
+ 	if (*buf) {
+-		memcpy(*buf, (char *)rsp + rsp->DataOffset, *nbytes);
++		memcpy(*buf, (char *)rsp + data_offset, *nbytes);
+ 		free_rsp_buf(resp_buftype, rsp_iov.iov_base);
+ 	} else if (resp_buftype != CIFS_NO_BUFFER) {
+ 		*buf = rsp_iov.iov_base;
 -- 
 2.53.0
 
