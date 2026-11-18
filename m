@@ -1,58 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058791;
-	b=BsPuwRz9LNoiznESNoORRFcQ9nxwpBvFJ8MiAkjT/aLj72EcxRJxWM5EWO9im5VXfxTF
-	 84iQLS8PKjA4wWWFssHONygz3gJbiRUQWOzxXtuV9Et+v0DxQyou37uSZT5v8I+3pWjgb
-	 8rD5nFe33/AfvM73dfdzMD+8bDBHRox1slW6Hu+tYu/Ra9WXf5QBafViAgsE0YGTQtPKa
-	 8GO6tprM6486oJ/4C+dtwEQGEN+WmcBNqr7Tad7Igt7Xg//IG+AglDGda/fiCYQrZfpzV
-	 dmVxYjEsrkrXlv7l+P7B6cnX0LW0w08KS6Tr4oeMegmWG5WxuEHyZlqg98D3Oqo7zOw==
+	t=1795058794;
+	b=gV5xOXO9Gdtp4MdwyhEbH8cvAsJb3vYCsp0+Ka1JZeV1UCsxtudMb3U4mW8t2kaSf3HA
+	 sNKG0kTlbmuJLvN9D5SsCwAFodXQ5v5Eiq56reAQDToK8hJpVyidHkFrm1xfhd+JlR0fR
+	 8UaiHw81zQKIK2G3R6Oin9NhnGxaVxZBvhvzrZWNXP3PI0Uw4DoQz/kyMr/kSga098WMl
+	 lprz7gePnPVCPiWJd4bKVsbsZgveh5czgIUO/I3WNAXOn+fMqviRC3iOjaFNB8yIQMBYE
+	 NapAKSC+qe2p+EWDMRW6Vowl0/vCZr+3zDfth/p82cyZoiVtpkgnzeD3NHyM3eEZz6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058791;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058794;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3e4ZKrOKs5gtGXOsNYzntQT2T0+vMcCncY7wfIefqUU=;
-	b=A0Up9/zurED9y8pWJTb6G2UCI9IpODuN4EB1dSJB6/LwApm1jlKcweWiwBw7APlmRPRj
-	 jU5+vWj18YVb0yE3DYCdNR+dvQOOQb51MiSIWtcFVYCwXGNk+1owN7G6UfQwDbjEtGO8I
-	 KGE+YZ5sA3gDlInLj2G58/boBnsP5P/HEKKsLFyLKjwkY1JHMEKvKuC3MiqyKlX5Z64xU
-	 b8hYvoBJOAGdGnlRRzweTU1yQJqdle3GYf6XW0bkliMowKZFwUnabLg108colMqsh2vXx
-	 M8lVmKGeQNi1XB9UQaD70+M6mZRtb45/SEQhgupShJk9enqaw0Zh3DrSS/xSTtdukOQ==
+	bh=mmTksT6SU+PvwMAfXtgh5iR4xcspa+txk03JDXbkaMU=;
+	b=aSgI+LjZfMdjWiaH8TloVY5hITtNxGQPxZe9qR7ILwTeMPh8CCjQdu0/X0siq8W2V33K
+	 s2bHl7dgogtRkvNJiMseLAh/l07VPhwwxePzf74Clvc90rg90zK1CzkhIGZFMjajbLcoa
+	 EyTu/j9MAZJdtnYsvVfp7zyt41yxE7zozMuxqReCsQdm73ekpd/YPvKh7b5BlgDDD2k+v
+	 HGRaadDBBJA68eMKMBkiCRb8Y5PZ+zuQqyApkZDPqUAjEmTgySfF7p9jc5LFRDbvY8FdX
+	 0uVR8xkg6fTmAITJrs4UY1vNFw4bMbsJYtkSUzT1JKDmSppuqZzVuObUtM6SNfLFwlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MAlwGZaq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YzQygOy9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6279C606A326;
-	Thu, 19 Nov 2026 03:26:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 254A5606A31C;
+	Thu, 19 Nov 2026 03:26:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MAlwGZaq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43821F000C4;
-	Thu, 19 Nov 2026 03:26:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YzQygOy9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 781EA1F000C4;
+	Thu, 19 Nov 2026 03:26:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058791;
-	bh=3e4ZKrOKs5gtGXOsNYzntQT2T0+vMcCncY7wfIefqUU=;
+	s=korg; t=1795058794;
+	bh=mmTksT6SU+PvwMAfXtgh5iR4xcspa+txk03JDXbkaMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MAlwGZaq90Nqyiy0XDpajOo9OcCLRqVHL6/TDeB5Uvo6l0yLDo0ENGnlOlIwhv9uE
-	 FtoMBBl+GoMmQmyNE2/LJGiKO9PKVvVcxsUw/d0zwsWL8L6yA6JaHG7bFH0El978GA
-	 TcAH/KUdqjoAmL1ivIF63csxAV34BqKusGo/cLRM=
+	b=YzQygOy9lPs0BRsgwF8hQ8QYjBI1LtSshR9hBVfOFtwadyUX6SyBFxp2k797p/US4
+	 PbbVgM35BNOcIUBTHH68vQWFQBnEWowTTVhM1KedM7PdixnhOq9zwX/O5dxhP9x697
+	 gj06BpwcMw0XU4qZvM2bm12wgEGeqHyLgJ2+TzaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
+	Xiubo Li <xiubo.li@clyso.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0611/1848] rxrpc: Fix update of call->tx_pending without holding lock
-Date: Wed, 18 Nov 2026 15:44:09 +0100
-Message-ID: <20261118145940.886122017@linuxfoundation.org>
+Subject: [PATCH 5.10 0576/1848] libceph: only set read_from_replica on read requests
+Date: Wed, 18 Nov 2026 15:43:34 +0100
+Message-ID: <20261118145939.268979186@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -74,226 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Xiubo Li <xiubo.li@clyso.com>
 
-[ Upstream commit 7801c42c3bb737cfb06194a383873fcad8daacf5 ]
+[ Upstream commit d6c7a5fcd08873c45a2dcd645a0690fd1443af50 ]
 
-Currently, rxrpc_send_data() updates call->tx_pending just before it
-returns - but it won't be holding the call->user_mutex when it does this if
-a wait was interrupted by a signal.  This would allow a parallel sendmsg()
-to race.
+ceph_osdc_alloc_request() ORs the mount option's read_from_replica
+flag into r_flags for every request, writes included.  The flag is
+meant for reads: calc_target() skips the replica choice for any
+request that has CEPH_OSD_FLAG_WRITE, and the OSDs only know
+BALANCE_READS on read ops.  Sending it on writes is at best ignored;
+with read_from_replica=balance a buffered write that fell back to
+ceph_sync_write() after losing BUFFER to a revoke failed with -EIO,
+while the same run without the option works fine.
 
-Further, both the callers of rxrpc_send_data() call it with the lock held,
-and then it returns an indication through the parameter list to say whether
-it has dropped the lock or not - after which the callers both just drop the
-lock if it's still held.
+Gate the flag on CEPH_OSD_FLAG_READ.
 
-Fix this by:
-
- (1) Moving the release of call->user_mutex down into rxrpc_send_data() and
-     get rid of the indicator parameter.  This makes it easier to see where
-     the lock is held.
-
- (2) After waiting, if the attempt to reacquire the mutex is interrupted,
-     just return directly there rather than going to out_unlock
-
- (3) Restricting the txb variable to inside the buffering loop and leaving
-     ->tx_pending set until we've queued the buffer.
-
-Note that there's a slight change in behaviour in that wait_for_space
-failure now doesn't check for completion because it doesn't hold the call
-user_mutex.  The caller, however, should re-issue the send and pick up any
-error at a second attempt.
-
-Fixes: b0f571ecd794 ("rxrpc: Fix locking in rxrpc's sendmsg")
-Closes: https://sashiko.dev/#/patchset/20260702144919.172295-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Eric Dumazet <edumazet@google.com>
-cc: "David S. Miller" <davem@davemloft.net>
-cc: Jakub Kicinski <kuba@kernel.org>
-cc: Paolo Abeni <pabeni@redhat.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261006133011.531806-4-dhowells@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ sashal: adapted rxrpc_txbuf handling to the existing sk_buff-based send path ]
+Cc: stable@vger.kernel.org
+Fixes: 22d2cfdffa5b ("libceph: move away from global osd_req_flags")
+Assisted-by: Cursor
+Signed-off-by: Xiubo Li <xiubo.li@clyso.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rxrpc/sendmsg.c | 57 ++++++++++++++++++++++-----------------------
- 1 file changed, 28 insertions(+), 29 deletions(-)
+ net/ceph/osd_client.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/rxrpc/sendmsg.c b/net/rxrpc/sendmsg.c
-index 0b24d09637252..b6ea5369309de 100644
---- a/net/rxrpc/sendmsg.c
-+++ b/net/rxrpc/sendmsg.c
-@@ -287,11 +287,10 @@ static int rxrpc_queue_packet(struct rxrpc_sock *rx, struct rxrpc_call *call,
- static int rxrpc_send_data(struct rxrpc_sock *rx,
- 			   struct rxrpc_call *call,
- 			   struct msghdr *msg, size_t len,
--			   rxrpc_notify_end_tx_t notify_end_tx,
--			   bool *_dropped_lock)
-+			   rxrpc_notify_end_tx_t notify_end_tx)
-+	__releases(&call->user_mutex)
- {
- 	struct rxrpc_skb_priv *sp;
--	struct sk_buff *skb;
- 	struct sock *sk = &rx->sk;
- 	enum rxrpc_call_state state;
- 	long timeo;
-@@ -325,11 +324,9 @@ static int rxrpc_send_data(struct rxrpc_sock *rx,
- 			goto maybe_error;
- 	}
+diff --git a/net/ceph/osd_client.c b/net/ceph/osd_client.c
+index 92d379c60da5c..819d29dba0a08 100644
+--- a/net/ceph/osd_client.c
++++ b/net/ceph/osd_client.c
+@@ -1094,7 +1094,9 @@ struct ceph_osd_request *ceph_osdc_new_request(struct ceph_osd_client *osdc,
+ 	req->r_base_oloc.pool = layout->pool_id;
+ 	req->r_base_oloc.pool_ns = ceph_try_get_string(layout->pool_ns);
+ 	ceph_oid_printf(&req->r_base_oid, "%llx.%08llx", vino.ino, objnum);
+-	req->r_flags = flags | osdc->client->options->read_from_replica;
++	req->r_flags = flags;
++	if (flags & CEPH_OSD_FLAG_READ)
++		req->r_flags |= osdc->client->options->read_from_replica;
  
--	skb = call->tx_pending;
--	call->tx_pending = NULL;
--	rxrpc_see_skb(skb, rxrpc_skb_seen);
--
- 	do {
-+		struct sk_buff *skb = call->tx_pending;
-+
- 		/* Check to see if there's a ping ACK to reply to. */
- 		if (call->ackr_reason == RXRPC_ACK_PING_RESPONSE)
- 			rxrpc_send_ack_packet(call, false, NULL);
-@@ -386,6 +383,9 @@ static int rxrpc_send_data(struct rxrpc_sock *rx,
- 			       sp->remain);
- 
- 			skb->ip_summed = CHECKSUM_UNNECESSARY;
-+			call->tx_pending = skb;
-+		} else {
-+			rxrpc_see_skb(skb, rxrpc_skb_seen);
- 		}
- 
- 		_debug("append");
-@@ -449,13 +449,13 @@ static int rxrpc_send_data(struct rxrpc_sock *rx,
- 			ret = call->security->secure_packet(
- 				call, skb, skb->mark, skb->head);
- 			if (ret < 0)
--				goto out;
-+				goto out_unlock;
- 
- 			ret = rxrpc_queue_packet(rx, call, skb,
- 						 !msg_data_left(msg) && !more,
- 						 notify_end_tx);
- 			/* Should check for failure here */
--			skb = NULL;
-+			call->tx_pending = NULL;
- 		}
- 	} while (msg_data_left(msg) > 0);
- 
-@@ -467,45 +467,46 @@ static int rxrpc_send_data(struct rxrpc_sock *rx,
- 			ret = call->error;
- 		read_unlock_bh(&call->state_lock);
- 	}
--out:
--	call->tx_pending = skb;
-+out_unlock:
-+	mutex_unlock(&call->user_mutex);
- 	_leave(" = %d", ret);
- 	return ret;
- 
- call_terminated:
--	rxrpc_free_skb(skb, rxrpc_skb_freed);
--	_leave(" = %d", call->error);
--	return call->error;
-+	ret = call->error;
-+	goto out_unlock;
- 
- maybe_error:
- 	if (copied)
- 		goto success;
--	goto out;
-+	goto out_unlock;
- 
- efault:
- 	ret = -EFAULT;
--	goto out;
-+	goto out_unlock;
- 
- wait_for_space:
- 	ret = -EAGAIN;
- 	if (msg->msg_flags & MSG_DONTWAIT)
- 		goto maybe_error;
- 	mutex_unlock(&call->user_mutex);
--	*_dropped_lock = true;
-+
- 	ret = rxrpc_wait_for_tx_window(rx, call, &timeo,
- 				       msg->msg_flags & MSG_WAITALL);
- 	if (ret < 0)
--		goto maybe_error;
-+		goto out_nolock;
- 	if (call->interruptibility == RXRPC_INTERRUPTIBLE) {
- 		if (mutex_lock_interruptible(&call->user_mutex) < 0) {
- 			ret = sock_intr_errno(timeo);
--			goto maybe_error;
-+			goto out_nolock;
- 		}
- 	} else {
- 		mutex_lock(&call->user_mutex);
- 	}
--	*_dropped_lock = false;
- 	goto reload;
-+out_nolock:
-+	_leave(" = %d [intr]", ret);
-+	return copied ?: ret;
- }
- 
- /*
-@@ -667,7 +668,6 @@ int rxrpc_do_sendmsg(struct rxrpc_sock *rx, struct msghdr *msg, size_t len)
- 	enum rxrpc_call_state state;
- 	struct rxrpc_call *call;
- 	unsigned long now, j;
--	bool dropped_lock = false;
- 	int ret;
- 
- 	struct rxrpc_send_params p = {
-@@ -777,12 +777,12 @@ int rxrpc_do_sendmsg(struct rxrpc_sock *rx, struct msghdr *msg, size_t len)
- 	} else if (p.command != RXRPC_CMD_SEND_DATA) {
- 		ret = -EINVAL;
- 	} else {
--		ret = rxrpc_send_data(rx, call, msg, len, NULL, &dropped_lock);
-+		ret = rxrpc_send_data(rx, call, msg, len, NULL);
-+		goto error_put;
- 	}
- 
- out_put_unlock:
--	if (!dropped_lock)
--		mutex_unlock(&call->user_mutex);
-+	mutex_unlock(&call->user_mutex);
- error_put:
- 	rxrpc_put_call(call, rxrpc_call_put);
- 	_leave(" = %d", ret);
-@@ -810,7 +810,6 @@ int rxrpc_kernel_send_data(struct socket *sock, struct rxrpc_call *call,
- 			   struct msghdr *msg, size_t len,
- 			   rxrpc_notify_end_tx_t notify_end_tx)
- {
--	bool dropped_lock = false;
- 	int ret;
- 
- 	_enter("{%d,%s},", call->debug_id, rxrpc_call_states[call->state]);
-@@ -828,8 +827,8 @@ int rxrpc_kernel_send_data(struct socket *sock, struct rxrpc_call *call,
- 	case RXRPC_CALL_SERVER_ACK_REQUEST:
- 	case RXRPC_CALL_SERVER_SEND_REPLY:
- 		ret = rxrpc_send_data(rxrpc_sk(sock->sk), call, msg, len,
--				      notify_end_tx, &dropped_lock);
--		break;
-+				      notify_end_tx);
-+		goto out;
- 	case RXRPC_CALL_COMPLETE:
- 		read_lock_bh(&call->state_lock);
- 		ret = call->error;
-@@ -842,8 +841,8 @@ int rxrpc_kernel_send_data(struct socket *sock, struct rxrpc_call *call,
- 		break;
- 	}
- 
--	if (!dropped_lock)
--		mutex_unlock(&call->user_mutex);
-+	mutex_unlock(&call->user_mutex);
-+out:
- 	_leave(" = %d", ret);
- 	return ret;
- }
+ 	req->r_snapid = vino.snap;
+ 	if (flags & CEPH_OSD_FLAG_WRITE)
 -- 
 2.53.0
 
