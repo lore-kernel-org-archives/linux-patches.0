@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024116;
-	b=pSlP7uchTW46dYd+kDHlP/d7gDXFMXoml2qqSS5sb5W4xnsKocg0NMO9GL1toH8iQKRU
-	 Nhi1EgFU4dQ5py+3Fg4wAqvjx3i3Ljf/t0RrZ6ID+3sgl1oa+5IkjbEgJoObEJJBR1GcG
-	 f+sTG20tG3LiHDNwPZR26z9t7VrEJ8tYSzHRjih/NudAMd0xQ+n7PM2tMen+vjYKFGQg8
-	 Bjeg1Pu28WTOizLS8TVS0rM3DKh8ld3bsBzgOM0MYhbKNDSpaQCu8iXv84FwKN0FeMh5h
-	 8J+jDNRBEZjwfjR0oGdO7fnHA78+2yNpH+TRefPRuNBGxXxNkaekNlsP4SUfd7QWWTA==
+	t=1795024119;
+	b=vDoEk0S2WVRHbuZCIVhkQEbku8VIMmkjfHuvdOxwPyHQVLfdpUreS0pVxDhptObYu7gS
+	 kO8Kv2Uanrien/g42Y74GIwfK5eADu2tsR/luiCXxc07LdTNzabQCKANgeO8Y6T476RjT
+	 bZo8E0a7rswjxYjO6M/LjiQKckCuuh+wQgT5eh1Kc+Z2KUCGifCu+NPk6dineZBW+OVD9
+	 TqbIhDYV1vS9XXmOG8hkiA4wPX6etb+nWZsQyBiC1suo9ycCSemCIep+iB2GnSUsMZzOi
+	 Yli7LEudL5nriXFRpQJ+/trNNEU96QqlHptYtHC1j0oOCjV1OmOiLK+qLv+nDaghk4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024116;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024119;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=y5Hcr5ggJVYC4yZs3iX/+nqn94yFFhmyKsX+tq5pqLo=;
-	b=IBvwYfXdXcp1WZKCOqdz9bBlQX3HqqhrlkzhPdV/bEffKFIQMbhY0zBgghPd/TqrwlGM
-	 FL78AM5f3EBNrzH9BUw+bbnhKI6PETJ+nDtZjb++pKHbzSYxVU6N1qJsh5+QfgYdbIr1g
-	 +8bLPHi49jl4g1JIgMo5JBiaji4LssH5eNP3XaD83GEnQ5FVh5s3leBZI2VzvteVhUDKW
-	 avVHDynP5zrwVUAua0VOm8n0rbdtiyson4Zj/dSg09XnnK82cpz1jPXkMIgeiwz4mCVSO
-	 /FlE4jkTHERjp3ZTXsLJWYNz9PKHYw1gg6CcHtuxraoU0faU9J0tHWGp1xtwc/DpI7Q==
+	bh=EsrpMaZFrK6IAn/JbzD7jw9NtwBIJYX76tfPu5Wv0qQ=;
+	b=2+gVJLtR4FM4YtBDkHFI158geT7fFywF30uJa6dKg4lasMBrXCtlcsvNjMrjWN35/upX
+	 65343WQwIxBRUc+mFG9dNCXSVaslvydABSP4j8Q3lJR60tZWmsCDnDDENgxMZJpLyDgE9
+	 uS5xsmt7hxASc4L682WxJQkdzVRxGB96/3Rn/IEvL5WdfHXpq5ko33XJM9dlcTLjQaPiy
+	 89Wz6sQJbbVWUkpxmWNJZ82vP9FkrcetDirJecp9FtPycA/0KETCXSUzJ/ex9vqn8Qfxl
+	 RMNqASZYv7Gn7szFZ6uFCD1+Non2zNoUKFHuk86/DCOD+3BBffzUH914MBqXb8SdlBw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SUt1kj8p;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Td22ZgbQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA58606A31C;
-	Wed, 18 Nov 2026 17:48:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 759B0606A320;
+	Wed, 18 Nov 2026 17:48:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SUt1kj8p
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE86C1F000C4;
-	Wed, 18 Nov 2026 17:48:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Td22ZgbQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C73CC1F000C4;
+	Wed, 18 Nov 2026 17:48:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024116;
-	bh=y5Hcr5ggJVYC4yZs3iX/+nqn94yFFhmyKsX+tq5pqLo=;
+	s=korg; t=1795024119;
+	bh=EsrpMaZFrK6IAn/JbzD7jw9NtwBIJYX76tfPu5Wv0qQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SUt1kj8pNFoLOjEH7Dh9EDXU7v68IGT+DS1Lygdob/dIAuIdW/IJkGuGh7UiEbfZI
-	 X/Pm5icHnOZYPdnj1e1emT+wrY9dZWpycKOx1rjeEA7lHPGUrXvnZhxmTIP8zEViwi
-	 n2PXh0AiDb1CbwcGTeNg3RWh5otzc5RA8o7HBXqs=
+	b=Td22ZgbQ5e2myO/HSuh/jfb61AzMTGzE3xkDikDbk/qrSjFgTAfzTuITVhbsmjxaC
+	 WmWieLbSub+if6HlA8pjwEUI23X4sbjxCkgvdilChPHRmeDOZysrc1nrbgKt8XlnFc
+	 YKKqetW3WFyXqlXuw8cVOvDQRVx3azrLpT9L4lHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mauricio Faria de Oliveira <mfo@igalia.com>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0612/2151] x86/asm: Group inline string functions
-Date: Wed, 18 Nov 2026 15:39:07 +0100
-Message-ID: <20261118150144.217156250@linuxfoundation.org>
+Subject: [PATCH 6.18 0613/2151] x86/pvh: Really inline memcmp() and memset() to fix unbootable VMs
+Date: Wed, 18 Nov 2026 15:39:08 +0100
+Message-ID: <20261118150144.251802306@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,88 +71,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Mauricio Faria de Oliveira <mfo@igalia.com>
 
-[ Upstream commit 85f11c17b261772cddc4606f98f6c604aded4607 ]
+[ Upstream commit b24bc9dec9c89d01ccb675a55cda6831dc048ce9 ]
 
-Group the __inline string functions in the same header.
+Even with __builtin the compiler may decide to use the out of line function
+instead of the inline implementation.
 
-Use <asm/shared/string.h> since __inline_memcmp() must remain there for use
-by arch/x86/boot/string.c.
+The existing code is broken with gcc-14/15 but not gcc-12/13 (Ubuntu 25.10)
+and vmlinux no longer boots with CONFIG_PVH if CONFIG_KASAN_GENERIC is set.
+The instrumented out of line function performs a memory access to a region not
+yet initialized by KASAN, as it is still in the PVH kernel entry point.
 
-No functional changes.
+For testing purposes, if the size argument in cpuid_base_hypervisor() is
+reduced from 12 to 8 the compiler decides to use the inline implementation.
+In xen_prepare_pvh(), it (still) decides to use the inline implementation
+(at least in these compiler versions), but it is not guaranteed to remain.
 
+Switch the builtin to the inline implementation to address this.
+
+  [ bp: Massage commit message. ]
+
+Fixes: 416a33c9afce ("x86/cpu: fix unbootable VMs by inlining memcmp() in hypervisor_cpuid_base()")
+Fixes: fbe5a6dfe492 ("xen, pvh: fix unbootable VMs by inlining memset() in xen_prepare_pvh()")
 Signed-off-by: Mauricio Faria de Oliveira <mfo@igalia.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://patch.msgid.link/20260921-pvh-kasan-inline-v10-3-08da47943d8e@igalia.com
-Stable-dep-of: b24bc9dec9c8 ("x86/pvh: Really inline memcmp() and memset() to fix unbootable VMs")
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://patch.msgid.link/20260921-pvh-kasan-inline-v10-4-08da47943d8e@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/shared/string.h | 21 +++++++++++++++++++++
- arch/x86/include/asm/string.h        | 21 +--------------------
- 2 files changed, 22 insertions(+), 20 deletions(-)
+ arch/x86/include/asm/cpuid/api.h  | 2 +-
+ arch/x86/platform/pvh/enlighten.c | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/include/asm/shared/string.h b/arch/x86/include/asm/shared/string.h
-index 6291653fe629b..6bef90d62a211 100644
---- a/arch/x86/include/asm/shared/string.h
-+++ b/arch/x86/include/asm/shared/string.h
-@@ -2,6 +2,27 @@
- #ifndef _ASM_X86_SHARED_STRING_H
- #define _ASM_X86_SHARED_STRING_H
+diff --git a/arch/x86/include/asm/cpuid/api.h b/arch/x86/include/asm/cpuid/api.h
+index ea1d9fe438a4f..b9a86643cbafa 100644
+--- a/arch/x86/include/asm/cpuid/api.h
++++ b/arch/x86/include/asm/cpuid/api.h
+@@ -204,7 +204,7 @@ static inline u32 cpuid_base_hypervisor(const char *sig, u32 leaves)
+ 		 * from PVH early boot code before instrumentation is set up
+ 		 * and memcmp() itself may be instrumented.
+ 		 */
+-		if (!__builtin_memcmp(sig, signature, 12) &&
++		if (!__inline_memcmp(sig, signature, 12) &&
+ 		    (leaves == 0 || ((eax - base) >= leaves)))
+ 			return base;
+ 	}
+diff --git a/arch/x86/platform/pvh/enlighten.c b/arch/x86/platform/pvh/enlighten.c
+index 2263885d16bad..b7dcc9c992f32 100644
+--- a/arch/x86/platform/pvh/enlighten.c
++++ b/arch/x86/platform/pvh/enlighten.c
+@@ -8,6 +8,7 @@
+ #include <asm/hypervisor.h>
+ #include <asm/e820/api.h>
+ #include <asm/x86_init.h>
++#include <asm/string.h>
  
-+static __always_inline void *__inline_memcpy(void *to, const void *from, size_t len)
-+{
-+	void *ret = to;
-+
-+	asm volatile("rep movsb"
-+		     : "+D" (to), "+S" (from), "+c" (len)
-+		     : : "memory");
-+	return ret;
-+}
-+
-+static __always_inline void *__inline_memset(void *s, int v, size_t n)
-+{
-+	void *ret = s;
-+
-+	asm volatile("rep stosb"
-+		     : "+D" (s), "+c" (n)
-+		     : "a" ((uint8_t)v)
-+		     : "memory");
-+	return ret;
-+}
-+
- /*
-  * Returns:	0 (equal)
-  * 		1 (not equal)
-diff --git a/arch/x86/include/asm/string.h b/arch/x86/include/asm/string.h
-index 9cb5aae7fba9f..dbf59f0d4cca7 100644
---- a/arch/x86/include/asm/string.h
-+++ b/arch/x86/include/asm/string.h
-@@ -8,25 +8,6 @@
- # include <asm/string_64.h>
- #endif
+ #include <asm/xen/interface.h>
  
--static __always_inline void *__inline_memcpy(void *to, const void *from, size_t len)
--{
--	void *ret = to;
--
--	asm volatile("rep movsb"
--		     : "+D" (to), "+S" (from), "+c" (len)
--		     : : "memory");
--	return ret;
--}
--
--static __always_inline void *__inline_memset(void *s, int v, size_t n)
--{
--	void *ret = s;
--
--	asm volatile("rep stosb"
--		     : "+D" (s), "+c" (n)
--		     : "a" ((uint8_t)v)
--		     : "memory");
--	return ret;
--}
-+#include <asm/shared/string.h>
+@@ -134,7 +135,7 @@ void __init xen_prepare_pvh(void)
+ 	 * This must not compile to "call memset" because memset() may be
+ 	 * instrumented.
+ 	 */
+-	__builtin_memset(&pvh_bootparams, 0, sizeof(pvh_bootparams));
++	__inline_memset(&pvh_bootparams, 0, sizeof(pvh_bootparams));
  
- #endif /* _ASM_X86_STRING_H */
+ 	hypervisor_specific_init(xen_guest);
+ 
 -- 
 2.53.0
 
