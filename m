@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031838;
-	b=caALopOV8qxQa/C+Gl+C3aRJIvhHD1T9IHSSXWn5CKjD+GTecJe6yzSEiW5HDxQqwWRH
-	 Ep68NFKYotSClVTcl073S6SSahjf3vZfty+6bC/+fToDKOZSVaRnR/ZupbaszsiAu6xHI
-	 oHkdKTDlIHSlvO88JBMj0DOVmu3EoxPb2fR1L5CTivzDFAoaZKfHPx0wS6VovhX8HK1kB
-	 g+RaD9HZtAKgNe203IK2eZmpAPxxQqYv2C5Od4/P0BEjmemAtxxDfqmkoHv8NlGFOmZP8
-	 fZKqPpwB2r3z9Y4GwjuA+kABs5rQnz9muDURbY+EUknhquEZYnWTjxdbWW6IPYQFiPQ==
+	t=1795031841;
+	b=v4Qd99FS/ojztzRJZe0nO4XiY7A/JgfiPPPMrGjBn5N3Z8fTclEp6iiebwoQnmFsqBFT
+	 BHzEJn2K9cZumze11Qbd2OAwkmtpa3GDMevigU/3eKgByASViUGVdwsW3ekqvXbaxRtVP
+	 fFYZ6jsOJo3qalSSUaGEbjBxZvW6J8rOb6RaCd7PiLi2qY71ZSMsJWIChbKgl9Nx4EoNJ
+	 ZK4ALXw0M8ybWlgS3ceJxjGEFjaMFL117/ZzIS+gtUKulWXufkmBFo+zzdyr8giZqzJAj
+	 pGcIeX86+XrO9ngKi/mY72xwKpAOtVHxCh48ADFsIdI2UvpTuUwFiJrLrXYT2cerz5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031838;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031841;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HizwdUSCHV5Zd4pv2R+Rl8s9dt+vo9fwmRW7HxnxMb0=;
-	b=sk0ciJTQ5HM9cdgpOVyVAUAOnJB24ztTNxljQym5mV9lljaL5QVT3cAC9t6qJZI9lIEj
-	 F07++vdZ06DlsiF4c7UnvVaaGVKV4qTLjoxzFOpqwmknKnPCH146oLgLsozD6m95UYKK6
-	 UFojN8V4+H86jC6xW5ZCDrBunjijp05JhKckhd0PYxxI4hluu8w3J0XYgbyjSQOVdL3oQ
-	 mM3ggbZv+WPYty2Cj2uO8GsLNzp0aCgJFFNisxcirtB19VmdKdVZJFltnmC/xLnvgjM4K
-	 bWkhMzoeqIY7sCs0jwd89PUtvEp47U+VR6ct7vPdcnthtQmgABPZr6RQu8u5rjUdsVA==
+	bh=dhKxr3U7xqufemyuKToHyhtof8/JCFtpj17AigqTH7E=;
+	b=HtcQCjo8x1sei5c7d0xCL1kFtabTEyehbI1/AoXPF8GuCwQT0pOuNnSA0AtymX7Y4jX/
+	 Knox6VdS/fallyAXmY5Mg/amy8dtvX1JGBv5zvIebFM+2xStioVSezTAH1A2V1m8xz+9r
+	 Dej+PxQpaywX/gOJsdbnPO1FK+W+82pnu38lLL8h1Xh24sEHvzyytc85YanOQo+h6KPEH
+	 VaKMiH9HIiuL8moGBFnxfrlYzSwABuqaOkZ30lqNuu7+NRzHYjMq8NrlKY/n7TpNF76EP
+	 xFPOMGYIib/Zc18JFXhd2G3Bs4QLZiHGAyXwofUfz2VejVOM8PxqqbX06lXpGpF07Zg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=th2USZlL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="kgK/KEFX";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28180606A325;
-	Wed, 18 Nov 2026 19:57:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85EFA606A31C;
+	Wed, 18 Nov 2026 19:57:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=th2USZlL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 407A61F000C4;
-	Wed, 18 Nov 2026 19:57:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kgK/KEFX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB4C21F000C4;
+	Wed, 18 Nov 2026 19:57:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031838;
-	bh=HizwdUSCHV5Zd4pv2R+Rl8s9dt+vo9fwmRW7HxnxMb0=;
+	s=korg; t=1795031841;
+	bh=dhKxr3U7xqufemyuKToHyhtof8/JCFtpj17AigqTH7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=th2USZlLRuRbF/u/mkvZjxtU+qp3xjDqfrwQWjb5X4ZWBLEzKSxnN5s4LMVmkm6Ot
-	 O1dqV46kLV3Td2FMWxJjOxkx8IIr5ZxB5Vf120CMXMtAcVsa5utJdj8dkyLzW5L1JQ
-	 mWKAc/GfwuIyxA4qDOW4ROO4cyY9JvZaYSyy6Yj4=
+	b=kgK/KEFX52lTOsvXjfhv4M65XhzkrFVFCgrAF2T70POG5OPQnO2NokHV2VeaTWug5
+	 k2g8MkCImj4Cp+rGm+jQXUBrp7JFjtLtSMi2Sx+eR2GZrrQx/h5JYKIOKDBkRG5M5B
+	 uOG7BXXpAWYdtjF1cT/VahV+i3q2TmeRePepCP60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1200/1756] ASoC: codecs: wm8985: Fix definition of ADC 128x Oversampling control
-Date: Wed, 18 Nov 2026 15:55:27 +0100
-Message-ID: <20261118150057.613314267@linuxfoundation.org>
+Subject: [PATCH 6.12 1201/1756] ASoC: codecs: wm8994: Fix definition of WM8958 noise gate hold time controls
+Date: Wed, 18 Nov 2026 15:55:28 +0100
+Message-ID: <20261118150057.652028315@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,35 +71,48 @@ Content-Transfer-Encoding: 8bit
 
 From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit a747ec6e12cf7a71e42567a479af18b930890d9d ]
+[ Upstream commit 291d81d628f3453026b029507a26b856056e4fdc ]
 
-ADC 128x oversampling (ADCOSR128) is at bit 3 of ADC Control, not at
-bit 8, which is the high pass filter enable (HPFEN).
+The noise gate hold time (NG_HLD) is at bits 6:5 of each WM8958 DAC
+noise gate register, not at bits 3:1, which hold the threshold
+(NG_THR).
 
-Fixes: 6d6f8b832705 ("ASoC: WM8985: Initial driver")
+Fixes: 1ddc07d0f13a ("ASoC: Add WM8958 noise gate support")
 Assisted-by: Claude:claude-opus-5-5
 Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
 Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/00ae032401aaad740b61d664c861b72d2e5ed520.1791959026.git.sammiee5311@gmail.com
+Link: https://patch.msgid.link/8acff0f7314eef9eb3d290ca7855a87052d7e706.1791959026.git.sammiee5311@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8985.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/wm8994.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/wm8985.c b/sound/soc/codecs/wm8985.c
-index 8606e0752a604..351c649e42fd9 100644
---- a/sound/soc/codecs/wm8985.c
-+++ b/sound/soc/codecs/wm8985.c
-@@ -327,7 +327,7 @@ static const struct snd_kcontrol_new wm8985_common_snd_controls[] = {
- 		8, 1, 0, pga_boost_tlv),
+diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
+index e3f0c68b26782..0f02d134ba178 100644
+--- a/sound/soc/codecs/wm8994.c
++++ b/sound/soc/codecs/wm8994.c
+@@ -700,17 +700,17 @@ static const char *wm8958_ng_text[] = {
  
- 	SOC_DOUBLE("ADC Inversion Switch", WM8985_ADC_CONTROL, 0, 1, 1, 0),
--	SOC_SINGLE("ADC 128x Oversampling Switch", WM8985_ADC_CONTROL, 8, 1, 0),
-+	SOC_SINGLE("ADC 128x Oversampling Switch", WM8985_ADC_CONTROL, 3, 1, 0),
+ static SOC_ENUM_SINGLE_DECL(wm8958_aif1dac1_ng_hold,
+ 			    WM8958_AIF1_DAC1_NOISE_GATE,
+-			    WM8958_AIF1DAC1_NG_THR_SHIFT,
++			    WM8958_AIF1DAC1_NG_HLD_SHIFT,
+ 			    wm8958_ng_text);
  
- 	SOC_DOUBLE_R_TLV("Playback Volume", WM8985_LEFT_DAC_DIGITAL_VOL,
- 		WM8985_RIGHT_DAC_DIGITAL_VOL, 0, 255, 0, dac_tlv),
+ static SOC_ENUM_SINGLE_DECL(wm8958_aif1dac2_ng_hold,
+ 			    WM8958_AIF1_DAC2_NOISE_GATE,
+-			    WM8958_AIF1DAC2_NG_THR_SHIFT,
++			    WM8958_AIF1DAC2_NG_HLD_SHIFT,
+ 			    wm8958_ng_text);
+ 
+ static SOC_ENUM_SINGLE_DECL(wm8958_aif2dac_ng_hold,
+ 			    WM8958_AIF2_DAC_NOISE_GATE,
+-			    WM8958_AIF2DAC_NG_THR_SHIFT,
++			    WM8958_AIF2DAC_NG_HLD_SHIFT,
+ 			    wm8958_ng_text);
+ 
+ static const struct snd_kcontrol_new wm8958_snd_controls[] = {
 -- 
 2.53.0
 
