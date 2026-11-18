@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035849;
-	b=np1BubkMg3DpZoFs2b2AEj1MapKezaXsNiARADnvjopBxvnezuO4tGbwagwEaKnN2z2M
-	 pe5cElqOH7Av1mDh/jswGJOJp9tx7eItuj+p+IkgyANysUr1p3X5WvqzVcr7MSlmR5MMw
-	 joMeqiM2Qr55lCg7amo6pyktfbtSqrICWS8uSemon8LL1PFy/fzxsjMt0xCSCb4JBizBx
-	 /8g4JvpdWn+22zv6oCPY3Cf0KVyEGlqv+ZUPkfB/Nmiaf0pXMgvBNnm2pfAolYZdhr7q4
-	 7pL/fZQTQZsREy1KpGs+1KO6U7MgBr0cK6uPGyn6w1d9vGLWCnQ/DwN4AxMTMTdOgww==
+	t=1795035852;
+	b=EX0BhpQAGgevHwWBDjKtFzZx+H4RBQLspytV/fXVOUbtB3UjqxYJckHABL5zWtDyfbGM
+	 zPKz9Xym7+awBgKfKpSIa01IFAkiGyvNuZ42/9EjwAj/dr4uIu5cfMxpgRiSPDpmRUR0e
+	 McI8eB80b1dH3dR/kULmktPWj5byPVAzZNFCr0ZClOrKAa9VBOHhCnNIrqY173uioFquE
+	 DiTsRew4rDr3BFmORaGZuFvbjsL6Bag1XJfwHYdfAkR5lwfHpfQ32REgaoqRdbDhq60m/
+	 gJZ4LDpfKd7HQcZUA7NOk2vke8txj1QfXQspOXz3lB9Y2KypYv7r1PWZoexWbR5EoWw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035849;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035852;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=N/+pqrx9jJHhewlUJXwkB+D+PJ37zjog03IfZmjkItM=;
-	b=zs0EcriqOiizslm+xikdSJK23pV0cOuLJLMjwNvPPLu3/cXHEcPqQ1jdAioeuy89jhJo
-	 dEISqneJNgzzboW8byBxGwALA42s5lf1f6d4w3ExjUZcd0V1mKAl2PnShm54WXN0SS8Hg
-	 FPC//Q9Mm6zma5DA0Q2e7pvEPqZH3WsXLU6XmxXiAOxdjqNFr4Z2jGOtR1eFw0+Yh2G05
-	 qUlmH+yy9Yfk6r3keoZLgQ2d5ZwVV9j8zhw6d5zSu83ZMxN0ltNNEH5oSN+3DhiOHZ8CW
-	 zrKjuFNF40Lk5xQdoxctXmv/CfKPnuSgoZaG2JzbRwBmalOXAcrqtkSRtUjCebZSjnw==
+	bh=AwvHlLxGVJHv5+UV1Y0vJGQvp6wTmpv2IuG2Rhi3yco=;
+	b=5UXkq8go9CSuaYP/Cl5cTAQr+J8eBgqmaHSEKXKBlLiyudo5xvuxCcap9vYlsT8xV3jC
+	 XObtltffIRiPGfIIscT22uHiHSjJRRszt2SnkFZ0Dz8v5kNo1oE8ZqWs0EDNBfHZEjwpQ
+	 mkz6eXkh2/4oLvVqvhTEYaTnVTntvXkSxv3aZaNXrGu+mig/EVnbeLuNSeGhDOv10fPgZ
+	 CKRDOcTllWRYo35lkvPmO/20viAEIKhkdP88LuTPGL5d3NXNiXpXfJ7JlrCztewihjQks
+	 eYWduJCrJ30zZvoydsgJxCjirXfm6WW1dki6kE4O6OoHf3RewFNDggsm/OWLOsnCeGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qHwC3HJW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FmF8885j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4107E606A922;
-	Wed, 18 Nov 2026 21:04:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E74606BE1C;
+	Wed, 18 Nov 2026 21:04:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qHwC3HJW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 924AC1F000C5;
-	Wed, 18 Nov 2026 21:04:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FmF8885j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 497F71F000C4;
+	Wed, 18 Nov 2026 21:04:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035849;
-	bh=N/+pqrx9jJHhewlUJXwkB+D+PJ37zjog03IfZmjkItM=;
+	s=korg; t=1795035851;
+	bh=AwvHlLxGVJHv5+UV1Y0vJGQvp6wTmpv2IuG2Rhi3yco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qHwC3HJWa5QA0Qt+PyC69T+0PteuvuhsTgOy4XwcJ32JEL98WHzHkqxpRXiB8yB0t
-	 tOaBYxNQ2cW40wxZxZWdD5AGqmlMGysVR1VymnrBrClkSeJmLzgFEKrF3qPsSSI7Qa
-	 BeX//xis4lGqrsNrGudsf6lv4BYxljn0UOxlxVrE=
+	b=FmF8885jeTkbaakclMvu2BIjQgsNL5OI5McG8s3jAPNWw6ff479z7OYCJFQt+ApmT
+	 yif7OXW4QC8kFC+x5orcdFB97BoXnnXNkQDMeQOmXYzHvtGN1PEH/SyM+anTd0DXCD
+	 z+y9TviHyBjl7Cy7T8HHtOB1/LLKrKpig5f+/iLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Hilliard <james.hilliard1@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Linkai Gong <gonglinkai@kylinos.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0850/3318] mtd: rawnand: sunxi: reject ECC maximization on small pages
-Date: Wed, 18 Nov 2026 15:24:32 +0100
-Message-ID: <20261118150344.718517869@linuxfoundation.org>
+Subject: [PATCH 6.6 0833/3318] media: i2c: tc358743: add missing color-space strings
+Date: Wed, 18 Nov 2026 15:24:15 +0100
+Message-ID: <20261118150344.128006209@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,48 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Hilliard <james.hilliard1@gmail.com>
+From: Linkai Gong <gonglinkai@kylinos.cn>
 
-[ Upstream commit a3c84084a73e170374b7dd493947efdef4ee57bc ]
+[ Upstream commit cb37e83f1bbdf0964ed0a9524ce45a0694f98205 ]
 
-When nand-ecc-maximize is set, the driver selects a 1024-byte ECC step
-and divides the available OOB bytes by the resulting number of steps. A
-NAND with a smaller page therefore produces zero steps and a division by
-zero.
+VI_STATUS3 S_V_COLOR is four bits, so the index after the shift
+is 0-15. input_color_space[] only has 14 entries. Add the two
+reserved values so log_status() cannot walk off the table.
 
-The older controllers also provide a 512-byte ECC block mode, but the
-hardware documentation describes that as an ECC block size within NAND
-pages whose supported sizes start at 1024 bytes. It does not document a
-512-byte NAND page mode.
-
-Reject pages smaller than 1024 bytes before deriving the step count. This
-prevents the division by zero at the point where the incompatible
-maximized geometry is selected without changing explicitly configured
-512-byte ECC block handling.
-
-Fixes: 4796d8655915 ("mtd: nand: sunxi: Support ECC maximization")
+Fixes: d32d98642de6 ("[media] Driver for Toshiba TC358743 HDMI to CSI-2 bridge")
 Cc: stable@vger.kernel.org
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/sunxi_nand.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/i2c/tc358743.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/nand/raw/sunxi_nand.c b/drivers/mtd/nand/raw/sunxi_nand.c
-index 8d31cb0133acc..ca90d5c42dc4f 100644
---- a/drivers/mtd/nand/raw/sunxi_nand.c
-+++ b/drivers/mtd/nand/raw/sunxi_nand.c
-@@ -1631,6 +1631,9 @@ static int sunxi_nand_hw_ecc_ctrl_init(struct nand_chip *nand,
- 	if (nanddev->ecc.user_conf.flags & NAND_ECC_MAXIMIZE_STRENGTH) {
- 		int bytes;
+diff --git a/drivers/media/i2c/tc358743.c b/drivers/media/i2c/tc358743.c
+index 4b6ad85cf261d..e8af64ed03a7f 100644
+--- a/drivers/media/i2c/tc358743.c
++++ b/drivers/media/i2c/tc358743.c
+@@ -1266,7 +1266,8 @@ static int tc358743_log_status(struct v4l2_subdev *sd)
+ 	static const char * const input_color_space[] = {
+ 		"RGB", "YCbCr 601", "opRGB", "YCbCr 709", "NA (4)",
+ 		"xvYCC 601", "NA(6)", "xvYCC 709", "NA(8)", "sYCC601",
+-		"NA(10)", "NA(11)", "NA(12)", "opYCC 601"};
++		"NA(10)", "NA(11)", "NA(12)", "opYCC 601", "NA(14)",
++		"NA(15)"};
  
-+		if (mtd->writesize < 1024)
-+			return -EINVAL;
-+
- 		ecc->size = 1024;
- 		nsectors = mtd->writesize / ecc->size;
- 
+ 	v4l2_info(sd, "-----Chip status-----\n");
+ 	v4l2_info(sd, "Chip ID: 0x%02x\n",
 -- 
 2.53.0
 
