@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018294;
-	b=dLnF0DN1qzh/fKdj7PZjsVx0McrPU73Ub/XMddr4i30tn9ZgYqnIGxukz6cmjjN8ZvS7
-	 Rh99LJf7JbhR710J9Ud8EOG0qEsl+6BBSinTyhrAn1xS1Fxt5QNlVwJT6aBO+3p0UNfIW
-	 rOYY/LeXnZ7IT/q8FiBwNtL0RoxHbHCSdEHrS/8lSXL99UWEyAw2CgMszJFa18EoCSGJg
-	 S2BDX8Wcmas5QINj2dphmfz91Zmli9GRmw0TEJAp6KsbBwLVo+gj1KbtDN6e65QBvWo1v
-	 vQYQEtyNsaLm187yvRonb28sDkxe8yFIlX4MBQFq+LklPdofkt7Ls+JM/qLeZTeekdA==
+	t=1795018297;
+	b=15c63B4LL9Ly6My6umpouTpuzcHE4P+l0j1C7vlhhNHqmAao3enA2G8iQKYLJaQ0gh88
+	 2fSq2i0tZkRmsqiGrcRx35FCxrSlG5lO4xnDwAW5EEEX4sYZF+acDYvJSP9Yer0fib0QB
+	 1tlf1ji+RIGQTTpCcczos6E82K1xge3g7oaBJ8XRsk24wrQuG8ILImVPl0m21EMDqRBoW
+	 hcfylOsvtTfCfpE3PZjKlRR6hjmicMsMcQhxnXfx7zDtLBOYK5U1nukCH+NVB8Ebw+3yE
+	 A4W6DYDmMlRefjD7M4BeUjGnb1xixAq2ED5SrtNPalqCUY/NZk88pfM7SyMkA64O/8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018294;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018297;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=L8h83HIS0EaocBkDOtUSlV/6pmwAsGZQv1X5LgjuLHo=;
-	b=E1Xkq3HCP0/5XoA+A4UY00OFebIJl8thy7NqQUkWrmhUJTI4lV731kwP5U3CQo1d2hwd
-	 xJ3dLym/pSuTGR78S9HObIwlfEqVqQmLVqD9DTBYaFd+JiBu+WjsUGHet7olzGM2P/CtY
-	 6Tcep4w1cuuFZDZn3wyFI9/JxFj7N7QUVWGfVra90rgs0HtHBVhAkOMo7TGXjBzvcYnYU
-	 qokzND8+dJ11zcKSKfZXwk02moMfjmiDM+zPdX5C9yYKbgumL5KEqtzIsaVJqKl+XZNqR
-	 c0j0NrFn+qZASC/5f6uLS9d642afgE9FZUzA3EcNXLms7YyS1wVhK7J9Ihxvfiw3+4Q==
+	bh=2zRj+NrlhBzDmGuiJpNNEO/yLaHbgckYJB/3IPQCML4=;
+	b=JRQWwTOGGuSB5pELKPk+iTcai60X6wHQD+ZFJvVwGPV5SDfA5HYu/GILuv86DoWHbwbN
+	 m7vSNWscqpVsiR85mYRBlikM57gp6y819Gjnmm+c72iMXZun8tCIVjE6Lvbokl4lfsDZB
+	 +t9SRlnyVL2T4JxyOWlMHzyfuSAhe6yALzZ6NNBqf5BPkdhZebQzUv9DsHOCyU7x4yeTe
+	 PCj+D/1rArF3LiOhl4nmyb/Ima7RFUl6LEyulZa1PxaeDCnFyy36vjGWJXnSX7rwWZCPs
+	 FfqJdJ//8ZKmcqfwfr/fNdacaTLo+JGH22NSF1nXAkEgNdqDz7p6AL9VdU12CRvmaRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dlsKYEMl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zg2um1bb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A0A606A334;
-	Wed, 18 Nov 2026 16:11:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC74606A320;
+	Wed, 18 Nov 2026 16:11:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dlsKYEMl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F87F1F000C5;
-	Wed, 18 Nov 2026 16:11:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zg2um1bb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9FB1F000C4;
+	Wed, 18 Nov 2026 16:11:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018294;
-	bh=L8h83HIS0EaocBkDOtUSlV/6pmwAsGZQv1X5LgjuLHo=;
+	s=korg; t=1795018296;
+	bh=2zRj+NrlhBzDmGuiJpNNEO/yLaHbgckYJB/3IPQCML4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dlsKYEMl2gSiZnljVLcAyNoMrv3gJ6Q1atvBEQpGIwGEEKGys9RLX21FOBd4sikS/
-	 EaFW3jqkFB7fsGZeZx0A0TKBQzNvraZuC9d6FfdF9Onvst7dhzGR/t2vgdfMKNLEW5
-	 9O3Pyf6/mtmB7Etno2R2/oy00IU98lvq9D8etWU4=
+	b=Zg2um1bbD+62NFbjQlc/u8g9qy61vqZXFBuTKwB88EgWElEredcP5YvPE//AvG0T7
+	 YjcgrhFlNJWX59HtEEPOhfxL4ljGqlIjcs3rw5QqKYC+4x+GdYrnNKxFlZOqioLDOe
+	 p1DRCcArDhUdtkr1PQ6GHCuQ6cJIl81Wm4FiSYvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Velkov <iav@iav.lv>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
+	Igor Velkov <iav@iav.lv>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1190/2651] arm64: dts: amlogic: meson-sm1-odroid-hc4: mux the SPI NOR HOLD# and WP# pins
-Date: Wed, 18 Nov 2026 15:40:30 +0100
-Message-ID: <20261118150330.841848048@linuxfoundation.org>
+Subject: [PATCH 7.3 1191/2651] arm64: dts: amlogic: meson-sm1-odroid-hc4: run the SPI NOR at 40 MHz
+Date: Wed, 18 Nov 2026 15:40:31 +0100
+Message-ID: <20261118150330.875261015@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,68 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Igor Velkov <iav@iav.lv>
 
-[ Upstream commit 0b825126590879812321cdab53786fcd906f7761 ]
+[ Upstream commit b44e2be772f866985cafdf90355285069ea68495 ]
 
-The SPI NOR flash uses six lines, but nor_pins covers only four: data,
-clock and chip select. Nothing claims HOLD# (BOOT_3) and WP# (BOOT_7),
-so they keep the boot ROM setting. After a boot from SPI they are in
-the nor function and the flash works. After a boot from SD with the
-button under the board, they stay eMMC data lines pulled low, and
-spi-nor reports "unrecognized JEDEC id bytes: 00 00 00 00 00 00".
+At 104 MHz, reads return corrupted data: bit 0 of the first byte of a
+transfer flips from 0 to 1 part of the time. The same byte read as the
+second byte of a transfer was correct in all 100 reads. One 4 KiB block
+read 200 times came back wrong 157 times. Writes are unaffected.
 
-Add them as a separate group in meson-g12-common.dtsi rather than to
-nor_pins: whether HOLD# and WP# reach the SoC depends on the board. The
-HC4 has eMMC disabled and takes both groups.
+flashcp verifies while it writes, so a bootloader update erases blocks
+it should skip and can abort halfway, with the flash half written.
 
-Tested on ODROID-HC4: with BOOT_3 and BOOT_7 set back to eMMC with
-pull-down and spifc rebound, the flash fails as above without this
-patch and probes as a 16 MiB mtd0 with it.
+The Hardkernel vendor device tree for this board uses 40 MHz. At 40 MHz
+the same tests pass: 200 block reads with no mismatch, and 14 flashcp
+runs with no block erased.
+
+Tested on ODROID-HC4 with an XT25F128B.
 
 Fixes: 7178f340e929 ("arm64: dts: meson-sm1-odroid-hc4: add spifc node to ODROID-HC4")
 Assisted-by: LLM
-Signed-off-by: Igor Velkov <iav@iav.lv>
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20261002-hc4-spi-nor-v2-1-8366a4f91049@iav.lv
+Signed-off-by: Igor Velkov <iav@iav.lv>
+Link: https://patch.msgid.link/20261002-hc4-spi-nor-v2-2-8366a4f91049@iav.lv
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi    | 9 +++++++++
  arch/arm64/boot/dts/amlogic/meson-sm1-odroid-hc4.dts | 2 +-
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi b/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi
-index 00609d2da6743..3135566df8803 100644
---- a/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi
-@@ -615,6 +615,15 @@ mux {
- 						};
- 					};
- 
-+					nor_hold_wp_pins: nor-hold-wp {
-+						mux {
-+							groups = "nor_hold",
-+							       "nor_wp";
-+							function = "nor";
-+							bias-disable;
-+						};
-+					};
-+
- 					pdm_din0_a_pins: pdm-din0-a {
- 						mux {
- 							groups = "pdm_din0_a";
 diff --git a/arch/arm64/boot/dts/amlogic/meson-sm1-odroid-hc4.dts b/arch/arm64/boot/dts/amlogic/meson-sm1-odroid-hc4.dts
-index 3ece30a0a1fff..c4b93d6619f25 100644
+index c4b93d6619f25..5f15c2299509b 100644
 --- a/arch/arm64/boot/dts/amlogic/meson-sm1-odroid-hc4.dts
 +++ b/arch/arm64/boot/dts/amlogic/meson-sm1-odroid-hc4.dts
-@@ -126,7 +126,7 @@ &sd_emmc_c {
+@@ -134,7 +134,7 @@ flash@0 {
+ 		#size-cells = <1>;
+ 		compatible = "jedec,spi-nor";
+ 		reg = <0>;
+-		spi-max-frequency = <104000000>;
++		spi-max-frequency = <40000000>;
+ 	};
+ };
  
- &spifc {
- 	status = "okay";
--	pinctrl-0 = <&nor_pins>;
-+	pinctrl-0 = <&nor_pins>, <&nor_hold_wp_pins>;
- 	pinctrl-names = "default";
- 
- 	flash@0 {
 -- 
 2.53.0
 
