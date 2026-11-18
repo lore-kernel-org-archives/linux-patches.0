@@ -1,55 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053385;
-	b=Bmbhnkqmyc0fjnSG/I0X+wXEEAJDndWtm1Dot0F9+fCAzlA9GMhSjVlEQyXMir3nKNIm
-	 5nzV8+JoI56+IEUP/z+4jL7RjW26q2m6bzHxa8Lw9VIw/u2kwKfvAP7wPjM8og5XASC2z
-	 sQhly8ApKV2G3FCsOVSr50xoFimpaWhW8K7nxRFt62o8lRI5fP9eGscbX+vlHDHbc7ekf
-	 Sfi1QRBKZ87cZZuc47hIbZTl5ZQaaLlIVVTZO7tt20LnikQN8mXxUQ7IRHOXFegUbG8ZP
-	 m88IWoZzGUxwlKdP0la3qBugynNJqC7OzYTzWh+MnsRlbdMu/LnD1arKxSP+/XVFIqw==
+	t=1795053388;
+	b=IKJYx5s+yvLJSIO9LEabnH26GKgq3VfIRE5QBsU2oueoIzyzSp3i6qyAn9zPpvYxhQmN
+	 2/jgM6jvPrv9oN8ee9e0noJmmjnXIyLlASadQSKkyE3enNuVXLywmHKOE6MIC4ZnRwT0m
+	 AFh2uAGU1Z8abuz6xi2GV5GsMKWKdLaPEsQHXGj9YjMJ2awiHzG6BeHfFY7mzMS69iO6T
+	 jQaniOUOqhoFGovbhHYbhM7VG5LoKihKALlxizdwhYhz5tvrT0nantvVFa9DDkXl7/wgA
+	 b/G0qyqX5X4g69fRlhdF3NH3na5tpDaKxYvn/agPLcsfcWYqb9WXQ3mFtH0MZzFI+3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053385;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053388;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3eIG/6Vxo9gSzvcTzjxxBskPYORQeWL6THN1SCZ/1io=;
-	b=Zy1eqF+gsOgoEdclWT7vritpW1j1zyfycsacAVIBagYQTKLHMWvUP2EJc6CF6Sgtirg7
-	 7Tg7XaYkH69tI7tHreyatCy/Jd3WWlpP/sYECLjjgl8VqZ6r7TItYk7TgZuAQM13emweV
-	 PJMChZuQUM+XnUwlqWv7t/p0TEAfht5spUIXZtSp3kafOon1ra7jqcnnmt+ljVHIC/4YU
-	 Q163a8IB+d9icFbFuuy6QU70grxMNxLxeTyfnCTNfPh8LmkjBZYEa4nXrXrlayknQaEHW
-	 m/2EvyPfRnW6yi6yFazV07NIHDryneEafpaP0YgGtaxa02rm5AJmGWzwGkfy5gwIo/g==
+	bh=w2dQjT3vNd9S+IgqtXKPcehyp62QoxwSxj5KsQ/62qs=;
+	b=MEknOZQQsJPDpiNsQn+x8oBzKhUgO1xAunUllDByDIQb/a2lJsfZFMeYTX/DWoeD8ZQ3
+	 d2WE1NKQzQ/mlcklfMESmofe6vTXYK9O1t0Xcknu6IjBcYA6nffKp84IK/s9bKsFz4paH
+	 q0uqQpMdBS8IhYR4DJzu/UCcVtRp8dSXpW9OzP5hgM5+vUpbhsWkjdH5kVRXfH5r0FYQt
+	 TGSyj8z2bSGqEuB+L7sxz9ZoPZAnPNK0rIK1hRRLUcRgJfHM5R/6FGbH5INWyEkYGOcuJ
+	 T02pB78ATbV76V/hhvcVaUC0Mph8wkvZICtO6CTDwqT68YAw2XSEgyLxqB5PN4xfbIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0vcLvy1v;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZQXiFj7X;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74442606A320;
-	Thu, 19 Nov 2026 01:56:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13EAE606A32A;
+	Thu, 19 Nov 2026 01:56:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0vcLvy1v
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D181F000C4;
-	Thu, 19 Nov 2026 01:56:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZQXiFj7X
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C27E1F000C4;
+	Thu, 19 Nov 2026 01:56:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053385;
-	bh=3eIG/6Vxo9gSzvcTzjxxBskPYORQeWL6THN1SCZ/1io=;
+	s=korg; t=1795053387;
+	bh=w2dQjT3vNd9S+IgqtXKPcehyp62QoxwSxj5KsQ/62qs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0vcLvy1vOs9rKunNT9/Ck+7RshYE7nnRr0EO4RY26jcJ4NqG1xEFUge4+Z5vtbhL+
-	 gofayviXB9mHxJPN4+CjGzOWOw7e5XC6SY5Jv1MrV0iFtXGLdpzM11kDaxarjB7hGk
-	 VFL2ucpl3guS9Ovxl7VgBLWiImwReGOSBs7IzVwQ=
+	b=ZQXiFj7XDbEffHJoj4JisDGToF/9uD+10wil1xSb9Wqs2FVoax4qT/wxTXzmD8qsA
+	 LxNMRdQH4PnA7LhJATUlcVWmTr5LFZWCzODu/TdaYW4HtMmoF1uQ4Jp1fbJQT9k0dp
+	 YewiI1Lb9OMCaWXvXDd/iZtKDQcV2I5WfkAkI3aA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
 	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Qi Zheng <qi.zheng@linux.dev>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Dev Jain <dev.jain@arm.com>,
 	Muchun Song <muchun.song@linux.dev>,
+	Pedro Falcato <pfalcato@suse.de>,
+	SJ Park <sj@kernel.org>,
 	Muhammad Usama Anjum <usama.anjum@arm.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0902/2214] mm/gup: fix out-of-bounds write for nr_pages == 0 in GUP-fast
-Date: Wed, 18 Nov 2026 15:42:58 +0100
-Message-ID: <20261118150048.361361076@linuxfoundation.org>
+Subject: [PATCH 5.15 0903/2214] mm/mmu_gather: fix flushing ranges with 4 GiB or larger
+Date: Wed, 18 Nov 2026 15:42:59 +0100
+Message-ID: <20261118150048.400221330@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -71,48 +76,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 1dfe4b276c23189394afb42d114ee8a54cc3aff2 ]
+[ Upstream commit 64ae7959a1df8af8eec504e31df2ec9670424a4e ]
 
-With nr_pages == 0, GUP-fast still enters its page table walk and can
-write past the caller's page array. The old end <= start check caught
-empty ranges, but was replaced with an overflow check.
+__tlb_adjust_range() takes the size of the range which has to be flushed
+as an unsigned int. Its callers, tlb_flush_{pte,pmd,pud,p4d}_range(), get
+and pass an unsigned long. Consequently, a range that is 4 GiB or larger
+gets truncated, possibly to 0.
 
-Users such as OrangeFS can pass a zero page count derived from a
-userspace-supplied length. So let's return zero for nr_pages == 0 before
-starting the walk, just like GUP-slow.
+On arm64 with hugetlb, a 64k kernel can have 16 GiB hugetlb folios
+mapped contiguously at the PMD level and flush them when unmapping, and a
+16k kernel can flush 64 GiB PUDs through tlb_unshare_pmd_ptdesc(). So
+at least these two scenarios are affected.
 
-Fix generated by an LLM and sent by Chris Mason in private.
+Fix it by flushing the proper range instead of the truncated one by
+properly using "unsigned long" for range_size.
 
-Fixes: c28b1fc70390 ("mm/gup: reorganize internal_get_user_pages_fast()")
+Fix generated by an LLM and sent by Josef Bacik in private.
+
+Fixes: b528e4b6405b ("mm/hugetlb: add tlb_remove_hugetlb_entry for handling hugetlb pages")
+Fixes: 8ce720d5bd91 ("mm/hugetlb: fix excessive IPI broadcasts when unsharing PMD tables using mmu_gather")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-[ david: simplify description ]
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Acked-by: Muchun Song <muchun.song@linux.dev>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+[ david: use two-tab indent, simplify description ]
+Reviewed-by: Qi Zheng <qi.zheng@linux.dev>
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Tested-by: Gregory Price (Meta) <gourry@gourry.net>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Reviewed-by: SJ Park <sj@kernel.org>
 Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-21-d6437171ecc3@kernel.org
+Link: https://patch.msgid.link/20261031-fixes_core-v3-27-d6437171ecc3@kernel.org
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/gup.c | 3 +++
- 1 file changed, 3 insertions(+)
+ include/asm-generic/tlb.h | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/mm/gup.c b/mm/gup.c
-index 118c474471850..c1508281c2f93 100644
---- a/mm/gup.c
-+++ b/mm/gup.c
-@@ -2888,6 +2888,9 @@ static int internal_get_user_pages_fast(unsigned long start,
- 				       FOLL_FAST_ONLY | FOLL_NOFAULT)))
- 		return -EINVAL;
+diff --git a/include/asm-generic/tlb.h b/include/asm-generic/tlb.h
+index c4989227b4102..75f94288d413c 100644
+--- a/include/asm-generic/tlb.h
++++ b/include/asm-generic/tlb.h
+@@ -324,8 +324,7 @@ struct mmu_gather {
+ void tlb_flush_mmu(struct mmu_gather *tlb);
  
-+	if (unlikely(!nr_pages))
-+		return 0;
-+
- 	if (gup_flags & FOLL_PIN)
- 		mm_set_has_pinned_flag(&current->mm->flags);
- 
+ static inline void __tlb_adjust_range(struct mmu_gather *tlb,
+-				      unsigned long address,
+-				      unsigned int range_size)
++		unsigned long address, unsigned long range_size)
+ {
+ 	tlb->start = min(tlb->start, address);
+ 	tlb->end = max(tlb->end, address + range_size);
 -- 
 2.53.0
 
