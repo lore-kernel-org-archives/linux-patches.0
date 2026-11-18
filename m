@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058717;
-	b=VpvoNqtBrhdhjKxdeqCejJJTMeLFcdWulD6Wp+kv+rL4SYXId2RnZMMFV5Y2ftZiE1bs
-	 9UEuQNCmqUFmccGIOw8e2oAEEvnuAXJqCQWV6HOxZ1PJ0jQFvbYczsxAJCwmdumX1KMxI
-	 0emRv63e+DUfkTGRvIFWkWorL0aje2HCoEl5e7Yh/OF+EVzIfGOqW/cIVNc+KVpO5CPOL
-	 CVZIDb7eAetDibOQUhwZ2GLUi5M1jtXCiR1aX95Lqk0QBai+UXnS7Q1BLgbo0o74hmtkq
-	 6mKRb3cHHhjp2tNedSc8VwGjWNoFFHftFFUNBrSTU7NIJ35R6ZckLuFwYFwXaWywf7Q==
+	t=1795058720;
+	b=VRyCtNEOCO1UkrAqFkfkuHJzZwIv09cV/XsP2drQWepGrqZ30hbITWmr3xpjxqmt1kkX
+	 +/zvb+l58c8cIwCWkgQQi/Hllb19sZKh/dD+eDNB3bqAL5bLHm4V3MQ6uC619LCgeuJtT
+	 YAbl8phgoi2IpI/HwU9MxBdGytA3jT65LyGjGmEHG8Y5ELrxZ+0yAgleMmIVMiN+PU/aU
+	 LnbMx0xIvVTAK0lWb4iCMwym7BsO/JmxZvLYutBLXVyCkMOOgcRYh/0vyaHLkJF1vpfB6
+	 7xavJZwqQdpCzGQx+GD79Gql2fOOh5ltIamqbl6DrJYtk+8Qnwm6Cu8Q+xG0G3FtLvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058717;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058720;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=R5FPIZt9eDQqMr1Ik5Ya0qmk37EL41SF7d/nK4Vbppg=;
-	b=mkYUyQlRtLuuLFexFv+H0LVgQIHzrMdjmY3DqNeKHmlnZ0J9RoEsxemjJ+pKobErk6im
-	 ehNspUAxnK5WZwTG+vzRDyGfk4IoF1d0OXg2X6giL+gdhumWUz+2XSsv14VoJ00b77R/r
-	 LlY4QqQ41RaT6Zawb5g6wMLKbi/ieLhXRlisaQui5z+fCTx8L2NTQORGdmuwFQ5m6M4Po
-	 dTGbDXKsG3qFUzeHt4z14JmKavcZy849Y+5MsMR2fmQVwDiKXhOlCREKSji5ztyEqgOOb
-	 A81gjIJ66hiVbNULDRgPWJmZWL6S6ZqwNRqFPml6EQ0EL+EWRlgRQYfQGVBj2ITUsWw==
+	bh=tph0wTiEu2sJvRYkL37u7pD88FZfPJ0N18nerKh0PLw=;
+	b=4+lCjQjgmrEKwP16LXb/I3DcMWG97qZP3A3XZlQKOd9BTtYnZderr29QJh7of7FXFfgq
+	 wase3wz3Tpjsr1ULB/JAOf/f/WbShNxTPcFX1zQ2fmaFc3/Dqp8sUga4iNIYz47tMNLH2
+	 ZXozrNNq8Fdzv5U0zE1kxohcCFj08Yu3Ayzvw1BUWtcJ7Xhtu3bxK/hTtl+tI1Cr5i4S2
+	 kyyCGdOi3D+lUZ30U+eGKQOOb8hFVdFTmxOFYk0Dk1WLazXxwLd3p79GKJaIWurYooWah
+	 bjNjNSwkolfJZRz+gKmrb49cUClYKK8SVo+kDAO+ET/Gs7fmLUzlOG0HyxTSOJCCYaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bsl3TMgn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lr+yPtgl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1CF606A320;
-	Thu, 19 Nov 2026 03:25:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A187606A320;
+	Thu, 19 Nov 2026 03:25:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bsl3TMgn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D05E1F000C4;
-	Thu, 19 Nov 2026 03:25:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lr+yPtgl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EF011F000C4;
+	Thu, 19 Nov 2026 03:25:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058717;
-	bh=R5FPIZt9eDQqMr1Ik5Ya0qmk37EL41SF7d/nK4Vbppg=;
+	s=korg; t=1795058719;
+	bh=tph0wTiEu2sJvRYkL37u7pD88FZfPJ0N18nerKh0PLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bsl3TMgnrJiV7ghE2+mtBiiON5kKQ4MqoA6hb9U9c5Jyz/nnbYNHVuHmtf6C8eyBP
-	 QuGIlxSAxhXQ9tJy3C3J/wQo+NfSoENQZTphy+nE4teSsLVW4S8IbG7BBq+gnx2Whs
-	 FYJPQlNwfVIAp32ja6pydh0ZL0ckeS94Y6xwS1HM=
+	b=Lr+yPtglevozPhYu2rODHmmtA/o9QiB3pJUTwhdKOYcuXve+Ttjq8EXGk1Clr598P
+	 ikDBT/8u5E/MuWW8IF1NqlBOAtUbv/1Zm/LwDmEFK+G4dP+DdxHI8XftDGH87yyf9v
+	 zB7feis8i9JJ4SLwGvrAMHYJBFFwTTrzKdIcf8sw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Val Packett <val@packett.cool>,
-	Mark Brown <broonie@kernel.org>,
+	Wei Jie Law <law.wei.jie@gt.tech.gov.sg>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0586/1848] ASoC: qcom: qdsp6: q6afe: fix clk vote response type mismatch
-Date: Wed, 18 Nov 2026 15:43:44 +0100
-Message-ID: <20261118145939.969120158@linuxfoundation.org>
+Subject: [PATCH 5.10 0587/1848] net: usb: pegasus: check rx pkt_len against the received length
+Date: Wed, 18 Nov 2026 15:43:45 +0100
+Message-ID: <20261118145940.023537059@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,88 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Val Packett <val@packett.cool>
+From: Wei Jie Law <law.wei.jie@gt.tech.gov.sg>
 
-[ Upstream commit f3c7bee984aa0ba2b48a44e16a6f3ec2c27f851e ]
+[ Upstream commit efee699f6de06611234ef9b0abd52db1340e5452 ]
 
-The response sent by the firmware when requesting a clock vote (opcode
-AFE_CMD_RSP_REMOTE_LPASS_CORE_HW_VOTE_REQUEST) does not actually have
-the same opcode + status payload as APR_BASIC_RSP_RESULT. Rather, it
-returns one single u32 which is the client_handle that must be used in
-future unvote requests for the same clock.
+read_bulk_callback() takes the frame length from the device, from the
+receive header on the 0x8513 and from the trailing status bytes on the
+other chips, and only checks it against PEGASUS_MTU before passing that
+many bytes up the stack. In two cases the stack then uses bytes that the
+device did not send:
 
-As a result of this type confusion, the status returned by the callback
-to q6afe_vote_lpass_core_hw was actually an out-of-bounds read. It was
-only interpreted as success (0) most of the time due to luck, but there
-are some reports of random errors such as:
+- A device that sends a short transfer but claims a long frame gets the
+  stale or uninitialized remainder of the receive skb delivered as
+  packet data.
 
-[   20.961100] qcom-q6afe aprsvc:service:4:4: AFE failed to vote (3)
-[   20.961131] Failed to prepare clk 'core': -110
+- A device that claims a frame shorter than an Ethernet header gets
+  past the check as well. eth_type_trans() takes pkt_type from h_dest
+  and the protocol from h_proto without checking skb->len. If the
+  transfer is also short, those come from bytes left in the skb by an
+  earlier transfer, or from uninitialized memory.
 
-Fix by correctly interpreting the response as a single u32, and actually
-store it as the client_handle to ensure unvote would work correctly.
+Drop frames shorter than ETH_HLEN, and frames whose claimed length, plus
+the 0x8513 header, does not fit in the bytes actually received, and
+count them as length errors. urb->actual_length never exceeds the
+PEGASUS_MTU sized transfer buffer, so this also covers the existing
+PEGASUS_MTU check. Valid Ethernet frames are at least 60 bytes long
+without the FCS, so they are not affected.
 
+Found by code review with LLM assistance. With an emulated USB device,
+a 101-byte transfer claiming a 1500-byte frame was passed up as a
+1500-byte packet before this change and is dropped after it, and
+frames claiming 0, 4 and 13 bytes were passed up and are now dropped
+and counted in rx_length_errors. The extra bytes happened to be zero
+in the first test, so disclosure of actual kernel data was not
+demonstrated.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/5976946.DvuYhMxLoT@antlia/
-Fixes: 55e07531d922 ("ASoC: q6dsp: q6afe: add lpass hw voting support")
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Signed-off-by: Val Packett <val@packett.cool>
-Link: https://patch.msgid.link/20261016063536.598610-1-val@packett.cool
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Wei Jie Law <law.wei.jie@gt.tech.gov.sg>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261021020310.34045-3-law.wei.jie@gt.tech.gov.sg
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/q6afe.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/net/usb/pegasus.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/qcom/qdsp6/q6afe.c b/sound/soc/qcom/qdsp6/q6afe.c
-index 7be495336446b..f27a2ebb3d3f4 100644
---- a/sound/soc/qcom/qdsp6/q6afe.c
-+++ b/sound/soc/qcom/qdsp6/q6afe.c
-@@ -367,6 +367,7 @@ struct q6afe {
- 	struct q6core_svc_api_info ainfo;
- 	struct mutex lock;
- 	struct aprv2_ibasic_rsp_result_t result;
-+	uint32_t vote_result;
- 	wait_queue_head_t wait;
- 	struct list_head port_list;
- 	spinlock_t port_list_lock;
-@@ -867,13 +868,14 @@ static int q6afe_callback(struct apr_device *adev, struct apr_resp_pkt *data)
- 	struct aprv2_ibasic_rsp_result_t *res;
- 	struct apr_hdr *hdr = &data->hdr;
- 	struct q6afe_port *port;
-+	uint32_t *vote_res;
- 
- 	if (!data->payload_size)
- 		return 0;
- 
--	res = data->payload;
- 	switch (hdr->opcode) {
- 	case APR_BASIC_RSP_RESULT: {
-+		res = data->payload;
- 		if (res->status) {
- 			dev_err(afe->dev, "cmd = 0x%x returned error = 0x%x\n",
- 				res->opcode, res->status);
-@@ -900,8 +902,10 @@ static int q6afe_callback(struct apr_device *adev, struct apr_resp_pkt *data)
+diff --git a/drivers/net/usb/pegasus.c b/drivers/net/usb/pegasus.c
+index d6258e6cdd255..7da3317a71923 100644
+--- a/drivers/net/usb/pegasus.c
++++ b/drivers/net/usb/pegasus.c
+@@ -556,11 +556,17 @@ static void read_bulk_callback(struct urb *urb)
  	}
- 		break;
- 	case AFE_CMD_RSP_REMOTE_LPASS_CORE_HW_VOTE_REQUEST:
-+		vote_res = data->payload;
- 		afe->result.opcode = hdr->opcode;
--		afe->result.status = res->status;
-+		afe->result.status = 0;
-+		afe->vote_result = *vote_res;
- 		wake_up(&afe->wait);
- 		break;
- 	default:
-@@ -1714,6 +1718,8 @@ int q6afe_vote_lpass_core_hw(struct device *dev, uint32_t hw_block_id,
- 			       AFE_CMD_RSP_REMOTE_LPASS_CORE_HW_VOTE_REQUEST);
- 	if (ret)
- 		dev_err(afe->dev, "AFE failed to vote (%d)\n", hw_block_id);
-+	else
-+		*client_handle = afe->vote_result;
  
+ 	/*
+-	 * If the packet is unreasonably long, quietly drop it rather than
+-	 * kernel panicing by calling skb_put.
++	 * Drop frames shorter than an Ethernet header, because
++	 * eth_type_trans() reads the header whatever the length, and frames
++	 * longer than what was actually received. Passing either up would
++	 * expose stale buffer contents, and skb_put() could panic on the
++	 * latter. count is at most PEGASUS_MTU.
+ 	 */
+-	if (pkt_len > PEGASUS_MTU - rx_offset)
++	if (pkt_len < ETH_HLEN || pkt_len + rx_offset > count) {
++		net->stats.rx_errors++;
++		net->stats.rx_length_errors++;
+ 		goto goon;
++	}
  
- 	kfree(pkt);
+ 	/*
+ 	 * at this point we are sure pegasus->rx_skb != NULL
 -- 
 2.53.0
 
