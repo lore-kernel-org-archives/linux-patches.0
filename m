@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051696;
-	b=kPgKnJrJbJk0K4WOpBvXXDRbC2ms9wUUCWkKqvfhfXZicuRGScN3OERs0BmfE3IxkDH+
-	 NjcOCvkyNO/TIXHrCRAG615d5Dpe3xsu68aX6tQK70WcXPfRifrd4A0Da+GF/oygcoUun
-	 T3y4S9Oi1atJB71suki8GuNp/qXk9q432Qa9tyr4LP8LeU87WVFWIpME64w+ZsDZTQYJD
-	 LwehKgMpo4IaUuTaKskrtoQNoKX5Lsw5HTTEBYIGZAkDVt9cUubgQ44zJry6FlfMEJjZO
-	 VAE0uThFT1qD/8qJubOp04pPacTOPmeYmFUFCJUz8+StK35FYNZL0BrgDT3qiq/bZkQ==
+	t=1795051699;
+	b=e0nJB3QW4nghIcvsAko4gBD2vtUumUJuVI6ar6223zp7eTZwm5AcVIGmcEnkOuNNolvR
+	 AP55IrS2XaxlZAGq2nqP1HR79E77r/R3RP8xJx8UnjXJOoR6ocYncp1+tBS7/RDeghqY2
+	 9fF4p75VlopTOPfnxLq8v/vqtlhqn63bAmOt1wX5Pg6JBVPclwvOFPks3YZlmnn+uOlJx
+	 OSKEu1Gns1W1BV6eNuEvek801a7YJn58hl1bLBRMeskqq9tcW29NBBw6UnmzHRsgPkz3a
+	 gyrTOAWEJtVqBdBIffeD/Oi/ro/X+xd4WRG+4/XcqB37rVYZXhUnp2gCR1+dHN3rw+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051696;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051699;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ja5RLB/UQ4Jh9INZUj8+eqQoy3sdwbIB6hvjTLUvW7I=;
-	b=ygr8Hod7Bi2JGEuo1o0Cb5C4knn5trc/P9eVXaXxPb9jZFBnCWyg/5jEzE3PUkmysLDq
-	 NA3dMu9lSU8pdXs01Yz82D8qOD2RFWVv4knSHci+62qn/rjL1v+KnNmHY8R430XWm+xZC
-	 p9B2wtBfeXQxjXmq382fH5RtVBw009rP9LPrcv0o0A/2/MXrqjoBq3wvB6Mz2Zl4igIjA
-	 21sbAoHMt9oZilqid7meTPeISkfWwgQf1Ept69UQ7aRfjMhkAFaDRLccvsOhOmZ/N4CSN
-	 Wcoxg0maarL/xDfyoKT6FTS8LsVAefjhWvLTsAbw5z1/DXLj0eKV+jUFkwZemtHjLlg==
+	bh=PkK+nZ8cFVRa56DpX91SkZ2OVf9s4xGJCudXKz6r9pI=;
+	b=ON8nhDQr2QccQjw7PAr0J4ehIcUmMUSyAGeaOJyBKVQXkIA0PBA2SqT+PC7+SPhdWtf/
+	 jx0AKreeM+mWpAKG+4zRJZwBQ1+/X8k1HxqzKeZGlpFu7HctJHrOhv97KCcV7zsXS4BPd
+	 4l2D0RUCgiOTT43jbkPiZL1pRxYZO9U15OFX5iZUoh56eLzhnKQm1U0lzEaChKDydrFZx
+	 jEDTfAQBII5HYVpEkEVFMvh3HUp1CbtS9/Zubp0NjmDFNDjviSoBO/j+Du1cFph3k6glu
+	 6tXqi2VJtMgulrwRTNSHMDJQdEoeIlmTn26y9PNt1I/F5nZRh6I+Q9rsYnrv7HQDCBA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vm5xN8H0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fALLimJD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBFE0606A32C;
-	Thu, 19 Nov 2026 01:28:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B555B606A320;
+	Thu, 19 Nov 2026 01:28:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vm5xN8H0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D0611F000C4;
-	Thu, 19 Nov 2026 01:28:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fALLimJD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12E231F000C4;
+	Thu, 19 Nov 2026 01:28:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051696;
-	bh=ja5RLB/UQ4Jh9INZUj8+eqQoy3sdwbIB6hvjTLUvW7I=;
+	s=korg; t=1795051699;
+	bh=PkK+nZ8cFVRa56DpX91SkZ2OVf9s4xGJCudXKz6r9pI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vm5xN8H0bNm7q9xjsBN0P7RkHch63pHcwtYlddwm5GYXf9otu1EgHUDBCt8pOzu+s
-	 Wbez26BI4xpVKs4OKTHknFs6FQyZEajX3ju46o79ijQ6pLiFujY2sD/93z+lEgqSKn
-	 Ff9xdRpW3SsEU4Wez3tTdSMl8+F/XKxk4SCdxwBs=
+	b=fALLimJDh2MJuirF2Mm54NJ4AFTwT3f3JdukO3COMCkf1xyaNwe8THzLJq1CQoULV
+	 mj3gRoNk5a4HBK5xVtqGq5QZm7Q0UXISeSWEXzCLRcbM+9Ltxnw3nfQwD/7Th/iiUe
+	 S7TMugUqzGUdcrkx9zdKDc7W7Rqi/QY5bPaeegjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9bfac891bdd42eb708fc@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Sean Young <sean@mess.org>
-Subject: [PATCH 5.15 0298/2214] media: imon: fix use-after-free in display_close via dev_dbg
-Date: Wed, 18 Nov 2026 15:32:54 +0100
-Message-ID: <20261118150022.115656584@linuxfoundation.org>
+	Binbin Deng <18983559317@163.com>,
+	John Johansen <john.johansen@canonical.com>
+Subject: [PATCH 5.15 0299/2214] apparmor: fix a use-after-free in aa_lookupn_ns()
+Date: Wed, 18 Nov 2026 15:32:55 +0100
+Message-ID: <20261118150022.153621483@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,59 +67,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Binbin Deng <18983559317@163.com>
 
-commit 118a3590a4080c71c565265b05b3f92e814d7647 upstream.
+commit f292873ceb4bd3a1a0f75f884361cd556e457692 upstream.
 
-ictx->dev is a raw pointer to the usb_interface's embedded device.
-On disconnect, usb_disconnect() can drop the last reference on the
-interface and free it while a userspace fd for /dev/lcd0 is still
-open. When that fd is later closed, display_close() dereferences
-the now-freed ictx->dev via dev_dbg(), causing a use-after-free.
+aa_lookupn_ns() takes a reference on the namespace it finds with
+aa_get_ns(), which is kref_get() on the reference count that the
+namespace is released through, without checking whether the namespace
+is still in use.  A concurrent removal of a ":"-prefixed namespace
+looks the same namespace up and only then takes the parent lock to
+remove it, so the last reference can be dropped between the lookup and
+the aa_get_ns() call: the reference count then reports the increment on
+a zero count and the kernel classifies the following use of the object
+as a use-after-free.  A user with CAP_MAC_ADMIN can trigger this by
+writing a ":<name>" removal and a ":<name>/<profile>" removal to
+/sys/kernel/security/apparmor/.remove concurrently.
 
-Remove the dev_dbg() calls that dereference ictx->dev in
-display_close() and free_imon_context(), rather than taking a
-reference on the device.
+refcount_t: addition on 0; use-after-free.
+WARNING: lib/refcount.c:25 at refcount_warn_saturate+0xc0/0xe0, CPU#6
+Call Trace:
+ <TASK>
+ aa_lookupn_ns+0xa9/0xc0
+ aa_remove_profiles+0x4fb/0x730
+ ? __kvmalloc_node_noprof+0x219/0x5c0
+ ? __pfx_aa_remove_profiles+0x10/0x10
+ ? aa_loaddata_alloc+0x65/0x1f0
+ ? _copy_from_user+0x2d/0x80
+ ? aa_loaddata_alloc+0x111/0x1f0
+ profile_remove+0x2ee/0x4a0
+ vfs_write+0x21e/0xcf0
+ ? rcu_core+0x29c/0x1740
+ ? timerqueue_linked_add+0x1f4/0x3d0
+ ? __pfx_vfs_write+0x10/0x10
+ ? mutex_lock+0x81/0xe0
+ ? __pfx_mutex_lock+0x10/0x10
+ ? __pfx_rcu_core+0x10/0x10
+ ? __pfx_hrtimer_update_next_event+0x10/0x10
+ ? mutex_unlock+0x7b/0xd0
+ ? fdget_pos+0x24d/0x4b0
+ ksys_write+0xf7/0x1c0
+ ? __pfx_ksys_write+0x10/0x10
+ ? restore_fpregs_from_fpstate+0x37/0xc0
+ do_syscall_64+0xf9/0x540
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ </TASK>
 
-Fixes: 21677cfc562a ("V4L/DVB: ir-core: add imon driver")
+Fix by rejecting a namespace whose reference count is zero.
+
+Fixes: 3664268f19ea0 ("apparmor: add namespace lookup fns()")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+9bfac891bdd42eb708fc@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9bfac891bdd42eb708fc
-Link: https://lore.kernel.org/all/20260918054851.26083-1-kartikey406@gmail.com/T/ [v1]
-Link: https://lore.kernel.org/all/20260928121230.35359-1-kartikey406@gmail.com/T/ [v2]
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Binbin Deng <18983559317@163.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/imon.c |    5 -----
- 1 file changed, 5 deletions(-)
+ security/apparmor/include/policy_ns.h |   16 ++++++++++++++++
+ security/apparmor/policy_ns.c         |    2 +-
+ 2 files changed, 17 insertions(+), 1 deletion(-)
 
---- a/drivers/media/rc/imon.c
-+++ b/drivers/media/rc/imon.c
-@@ -497,16 +497,12 @@ MODULE_PARM_DESC(pad_thresh, "Threshold
- 
- static void free_imon_context(struct imon_context *ictx)
- {
--	struct device *dev = ictx->dev;
--
- 	usb_free_urb(ictx->tx_urb);
- 	WARN_ON(ictx->dev_present_intf0);
- 	usb_free_urb(ictx->rx_urb_intf0);
- 	WARN_ON(ictx->dev_present_intf1);
- 	usb_free_urb(ictx->rx_urb_intf1);
- 	kfree_rcu(ictx, rcu);
--
--	dev_dbg(dev, "%s: iMON context freed\n", __func__);
+--- a/security/apparmor/include/policy_ns.h
++++ b/security/apparmor/include/policy_ns.h
+@@ -120,6 +120,22 @@ static inline struct aa_ns *aa_get_ns(st
  }
  
- /*
-@@ -582,7 +578,6 @@ static int display_close(struct inode *i
- 		retval = -EIO;
- 	} else {
- 		ictx->display_isopen = false;
--		dev_dbg(ictx->dev, "display port closed\n");
- 	}
+ /**
++ * aa_get_ns_not0 - increment references count on @ns found via lookup
++ * @ns: namespace to increment reference count of (MAYBE NULL)
++ *
++ * Returns: pointer to @ns, if @ns is NULL returns NULL,
++ *          NULL if @ns is being freed
++ * Requires: @ns must be held with valid refcount when called
++ */
++static inline struct aa_ns *aa_get_ns_not0(struct aa_ns *ns)
++{
++	if (ns && aa_get_profile_not0(ns->unconfined))
++		return ns;
++
++	return NULL;
++}
++
++/**
+  * aa_put_ns - decrement refcount on @ns
+  * @ns: namespace to put reference of
+  *
+--- a/security/apparmor/policy_ns.c
++++ b/security/apparmor/policy_ns.c
+@@ -233,7 +233,7 @@ struct aa_ns *aa_lookupn_ns(struct aa_ns
+ 	struct aa_ns *ns = NULL;
  
- 	mutex_unlock(&ictx->lock);
+ 	rcu_read_lock();
+-	ns = aa_get_ns(__aa_lookupn_ns(view, name, n));
++	ns = aa_get_ns_not0(__aa_lookupn_ns(view, name, n));
+ 	rcu_read_unlock();
+ 
+ 	return ns;
 
 
