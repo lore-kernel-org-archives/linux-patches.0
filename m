@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061328;
-	b=C2OO0KBLPbkfnmO8v2Zy11V2rAuAJnsdc7QwHG2iMle6013w643w1DdTHu38ABx5UGjV
-	 FTvGGJ4VLME1QPuGVmUH4XtOJtAPGyjN+uNQC7vxV940PvwbBTzBUPvnw+U5LrBtMQEmi
-	 8y1aq2lvlRYgCbibF68zDnoazBVpdmXr6udHSDGkxXyc0iQa5rftAkJD5vlbnNzToovou
-	 wI47GhZlymy6uE7XA25tAoazhTY9N4B4I0WIg+uVaG1cfIL/vkkMjOW04eEThiTuPJSEv
-	 mtutFytl7rs2LB5SpeOAYuwKgMHm8GdejN8W17ODZa+ZzrCYGDhFW496Cf8JFedxhNw==
+	t=1795061330;
+	b=3v8xbPwCx10xnGWicbxrNrkKbN+Yqkscayj8PQz/rZBh8DkAgmqRWYXaFBr6GisFmeiE
+	 6SCYhSLBRKphWuS2glAme9TzAEM9ZEsM2wOo5zM5I6EU7KL7pPV1QWoYsdf8Ex+w2ODh7
+	 MUcy4Ef2IfShlX7M47akhUUDj8fFSuv8h+dsxaXqdwp73ADSH4MzrZfEQbGzy+DKI3xXa
+	 9ursEAo46Ac78E+2eF7tGsmnHQ5k+slxaQYV3yym+PJR/7oM2aut412qpXotMhKPK1GhR
+	 mGxWqzfkmDIPrsk3Y2O7c56EA9Wkuv8ROqx3230a4vM6xwzBlzntmrR+R5wF3PPHUSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061328;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061330;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fQ4HDgzxI6Md5XShgWfn/oftpLr6NhcbSbxL/VhiY6Q=;
-	b=tYwczRl5NnRndobm5e+fKinToxHwPjr1SYtbN3bf+Eaetaz+6tmIjER4R5UWJQlIE77o
-	 cjeRwaMPHVykn1yBM7dM1e0gMYZG/3NxHfFGS+euuS2ieT89C74GDc0JfGsI4hUYdohMl
-	 9fMCfDrSZ0SOx2EXFV7c7XViDwqYVRNYfBZ92/D9d+Tw/2QAS1ziujrKjhbwLBfwreSka
-	 WaK5tJTO7qMpJKwzoVhMVks0xGI0j8170lSbd9CpiRGYKkB3H+eVY3zEOA3KQlwjy1lcU
-	 a5BBPpRb7Ux+aL1fsM0/8Ae24r75bClYdirgB4MsuD9xWwNya06z6gKaNJFP0jzjrEg==
+	bh=yJKtID7ZynQosSzyZYjAdLjg/HJ83/nxZSm3lTJ+o1Y=;
+	b=ftbKialag+Yg1b15JKgBunvLjnnGVYC8BrlBE9uAc2p8BJEAIeoJYD0F0oazVNHWIMkI
+	 0B7L3nOoZBKZxAbo6irwehbFhd5pXGCvel0Accf3NWyCW/ccRV1SbW9lj+JNBPfJti6d0
+	 oXwx/YO96s3GuOnBq1rJkuJtTeO0GYYPeSMvqzCJ2R8PUiBktevawhpTSMY6+DvFP8SLR
+	 KPhSWSXWRRHxYg+0J6ekgwjQsP7drGbd1WC4RBmTIpRaqds+lGyhCmAUuVnbmgBmDQi5P
+	 G2QtFPYbQ1Ehd6jHlz6X6TLs8E+2Nl9dhKf5ZnDqj/8i2xWcQO1LoO5mBaxUhGSeevw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qe7GK4Q+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GLAzVur9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 276B6606A325;
-	Thu, 19 Nov 2026 04:08:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD89606A325;
+	Thu, 19 Nov 2026 04:08:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qe7GK4Q+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7583D1F000C4;
-	Thu, 19 Nov 2026 04:08:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GLAzVur9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F4C11F000C4;
+	Thu, 19 Nov 2026 04:08:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061328;
-	bh=fQ4HDgzxI6Md5XShgWfn/oftpLr6NhcbSbxL/VhiY6Q=;
+	s=korg; t=1795061330;
+	bh=yJKtID7ZynQosSzyZYjAdLjg/HJ83/nxZSm3lTJ+o1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qe7GK4Q+kFGNoiswG8sfBuQGK0Dxz1GhLx753Ly9OmAuefCMiYMhwZ4B8SqGHtlOT
-	 Jsm2HZXt5bM0wd8tB9r3eOGCKiB3SuMBh6aEDD6TsPIFfN2j8nY92wgsNSe81gncfg
-	 chyCSJfr38fFWOriCGO1xxLVFJHr3HPlz17rgWYA=
+	b=GLAzVur9IYK32Iepo678kmBaJvnPhPeKb2JB2OqfvbX5un/JNtOEStK+DkTDPN2Fu
+	 lMwMaeml5h1/32IhIk3xB9RgRzmuI7GHw0TTHE0kF7w5CT0QU1q7MiI9PE5/DUI8KN
+	 ly8Vy/Z0EHIhQl/GZZjEIYP+hP136Izdm1nOoxKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Lee Jones <lee.jones@linaro.org>,
+	sashiko-bot@kernel.org,
+	Frank Li <Frank.Li@nxp.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1461/1848] mfd/power: ab8500: Push data to power supply code
-Date: Wed, 18 Nov 2026 15:58:19 +0100
-Message-ID: <20261118150020.519542055@linuxfoundation.org>
+Subject: [PATCH 5.10 1507/1848] dmaengine: ste_dma40: Validate memcpy configuration
+Date: Wed, 18 Nov 2026 15:59:05 +0100
+Message-ID: <20261118150022.416988789@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,351 +70,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 417c0fc24dd4dbd60d94fa8deb36bf1176930e06 ]
+[ Upstream commit 0ac4a90c4805b41013044fdefff051ae59a54302 ]
 
-The global definition of platform data for the battery
-management code has no utility after the OF conversion,
-move the <linux/mfd/abx500/ab8500-bm.h> to be a local
-file in drivers/power/supply and stop defining the
-platform data in drivers/power/supply/ab8500_bmdata.c
-and broadcast to the kernel only to have it assigned
-as platform data to the MFD cells and then picked back
-into the same subsystem that defined it in the first
-place. This kills off a layer of indirection.
+d40_config_memcpy() builds a default memcpy configuration without passing
+it through d40_validate_conf(). A dev_type supplied through the
+memcpy-channels device tree property can therefore bypass the bounds
+checks added for client configurations.
 
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Acked-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Signed-off-by: Lee Jones <lee.jones@linaro.org>
-Stable-dep-of: 1098c619ce75 ("power: supply: ab8500_charger: Handle detection errors")
+The generic DMA direction enum assigns zero to DMA_MEM_TO_MEM, unlike
+DMA40's old private enum. Allow memory-to-memory directions in the
+validator so checking the generated configuration does not reject all
+memcpy channels.
+
+Validate the generated memcpy configuration before deriving logical
+channel registers or allocating the channel.
+
+Fixes: 2c2b62d5d911 ("dmaengine: ste_dma40: Replace ST-E's home-brew DMA direction defs with generic ones")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/dmaengine/20260819225008.5F9651F000E9@smtp.kernel.org/
+Assisted-by: LLM
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-24-89f595e8851d@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/ab8500-core.c                     | 17 +++++----
- .../power/supply}/ab8500-bm.h                 | 19 ++--------
- drivers/power/supply/ab8500_bmdata.c          |  3 +-
- drivers/power/supply/ab8500_btemp.c           | 35 +++----------------
- drivers/power/supply/ab8500_charger.c         | 10 ++----
- drivers/power/supply/ab8500_fg.c              | 10 ++----
- drivers/power/supply/abx500_chargalg.c        | 10 ++----
- drivers/power/supply/pm2301_charger.c         |  2 +-
- 8 files changed, 27 insertions(+), 79 deletions(-)
- rename {include/linux/mfd/abx500 => drivers/power/supply}/ab8500-bm.h (96%)
+ drivers/dma/ste_dma40.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/ab8500-core.c b/drivers/mfd/ab8500-core.c
-index e9f4b1e732900..e27830e0d2f3d 100644
---- a/drivers/mfd/ab8500-core.c
-+++ b/drivers/mfd/ab8500-core.c
-@@ -19,7 +19,6 @@
- #include <linux/mfd/core.h>
- #include <linux/mfd/abx500.h>
- #include <linux/mfd/abx500/ab8500.h>
--#include <linux/mfd/abx500/ab8500-bm.h>
- #include <linux/mfd/dbx500-prcmu.h>
- #include <linux/regulator/ab8500.h>
- #include <linux/of.h>
-@@ -604,14 +603,14 @@ int ab8500_suspend(struct ab8500 *ab8500)
- }
+diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+index 991e72f6831f7..ad4ae1b44c6d2 100644
+--- a/drivers/dma/ste_dma40.c
++++ b/drivers/dma/ste_dma40.c
+@@ -1767,7 +1767,8 @@ static int d40_validate_conf(struct d40_chan *d40c,
+ 	    d40c->base->gen_dmac.num_event_groups)
+ 		invalid_dev_type = true;
  
- static const struct mfd_cell ab8500_bm_devs[] = {
--	MFD_CELL_OF("ab8500-charger", NULL, &ab8500_bm_data,
--		    sizeof(ab8500_bm_data), 0, "stericsson,ab8500-charger"),
--	MFD_CELL_OF("ab8500-btemp", NULL, &ab8500_bm_data,
--		    sizeof(ab8500_bm_data), 0, "stericsson,ab8500-btemp"),
--	MFD_CELL_OF("ab8500-fg", NULL, &ab8500_bm_data,
--		    sizeof(ab8500_bm_data), 0, "stericsson,ab8500-fg"),
--	MFD_CELL_OF("ab8500-chargalg", NULL, &ab8500_bm_data,
--		    sizeof(ab8500_bm_data), 0, "stericsson,ab8500-chargalg"),
-+	MFD_CELL_OF("ab8500-charger", NULL, NULL, 0, 0,
-+		    "stericsson,ab8500-charger"),
-+	MFD_CELL_OF("ab8500-btemp", NULL, NULL, 0, 0,
-+		    "stericsson,ab8500-btemp"),
-+	MFD_CELL_OF("ab8500-fg", NULL, NULL, 0, 0,
-+		    "stericsson,ab8500-fg"),
-+	MFD_CELL_OF("ab8500-chargalg", NULL, NULL, 0, 0,
-+		    "stericsson,ab8500-chargalg"),
- };
- 
- static const struct mfd_cell ab8500_devs[] = {
-diff --git a/include/linux/mfd/abx500/ab8500-bm.h b/drivers/power/supply/ab8500-bm.h
-similarity index 96%
-rename from include/linux/mfd/abx500/ab8500-bm.h
-rename to drivers/power/supply/ab8500-bm.h
-index 903e94c189d8a..a1b31c971a458 100644
---- a/include/linux/mfd/abx500/ab8500-bm.h
-+++ b/drivers/power/supply/ab8500-bm.h
-@@ -1,12 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0-only */
--/*
-- * Copyright ST-Ericsson 2012.
-- *
-- * Author: Arun Murthy <arun.murthy@stericsson.com>
-- */
- 
--#ifndef _AB8500_BM_H
--#define _AB8500_BM_H
-+#ifndef _AB8500_CHARGER_H_
-+#define _AB8500_CHARGER_H_
- 
- #include <linux/kernel.h>
- #include <linux/mfd/abx500.h>
-@@ -453,16 +448,11 @@ struct ab8500_bm_data {
- };
- 
- struct ab8500_btemp;
--struct ab8500_gpadc;
- struct ab8500_fg;
- 
--#ifdef CONFIG_AB8500_BM
- extern struct abx500_bm_data ab8500_bm_data;
- 
- void ab8500_charger_usb_state_changed(u8 bm_usb_state, u16 mA);
--struct ab8500_btemp *ab8500_btemp_get(void);
--int ab8500_btemp_get_batctrl_temp(struct ab8500_btemp *btemp);
--int ab8500_btemp_get_temp(struct ab8500_btemp *btemp);
- struct ab8500_fg *ab8500_fg_get(void);
- int ab8500_fg_inst_curr_blocking(struct ab8500_fg *dev);
- int ab8500_fg_inst_curr_start(struct ab8500_fg *di);
-@@ -470,7 +460,4 @@ int ab8500_fg_inst_curr_finalize(struct ab8500_fg *di, int *res);
- int ab8500_fg_inst_curr_started(struct ab8500_fg *di);
- int ab8500_fg_inst_curr_done(struct ab8500_fg *di);
- 
--#else
--static struct abx500_bm_data ab8500_bm_data;
--#endif
--#endif /* _AB8500_BM_H */
-+#endif /* _AB8500_CHARGER_H_ */
-diff --git a/drivers/power/supply/ab8500_bmdata.c b/drivers/power/supply/ab8500_bmdata.c
-index f6a66979cbb52..c2b8c0bb77e27 100644
---- a/drivers/power/supply/ab8500_bmdata.c
-+++ b/drivers/power/supply/ab8500_bmdata.c
-@@ -4,7 +4,8 @@
- #include <linux/of.h>
- #include <linux/mfd/abx500.h>
- #include <linux/mfd/abx500/ab8500.h>
--#include <linux/mfd/abx500/ab8500-bm.h>
-+
-+#include "ab8500-bm.h"
- 
- /*
-  * These are the defined batteries that uses a NTC and ID resistor placed
-diff --git a/drivers/power/supply/ab8500_btemp.c b/drivers/power/supply/ab8500_btemp.c
-index da197f55b1f25..43d05c7277ad4 100644
---- a/drivers/power/supply/ab8500_btemp.c
-+++ b/drivers/power/supply/ab8500_btemp.c
-@@ -25,9 +25,10 @@
- #include <linux/mfd/core.h>
- #include <linux/mfd/abx500.h>
- #include <linux/mfd/abx500/ab8500.h>
--#include <linux/mfd/abx500/ab8500-bm.h>
- #include <linux/iio/consumer.h>
- 
-+#include "ab8500-bm.h"
-+
- #define VTVOUT_V			1800
- 
- #define BTEMP_THERMAL_LOW_LIMIT		-10
-@@ -119,16 +120,6 @@ static enum power_supply_property ab8500_btemp_props[] = {
- 
- static LIST_HEAD(ab8500_btemp_list);
- 
--/**
-- * ab8500_btemp_get() - returns a reference to the primary AB8500 BTEMP
-- * (i.e. the first BTEMP in the instance list)
-- */
--struct ab8500_btemp *ab8500_btemp_get(void)
--{
--	return list_first_entry(&ab8500_btemp_list, struct ab8500_btemp, node);
--}
--EXPORT_SYMBOL(ab8500_btemp_get);
--
- /**
-  * ab8500_btemp_batctrl_volt_to_res() - convert batctrl voltage to resistance
-  * @di:		pointer to the ab8500_btemp structure
-@@ -754,7 +745,7 @@ static void ab8500_btemp_periodic(struct ab8500_btemp *di,
-  *
-  * Returns battery temperature
-  */
--int ab8500_btemp_get_temp(struct ab8500_btemp *di)
-+static int ab8500_btemp_get_temp(struct ab8500_btemp *di)
- {
- 	int temp = di->bat_temp;
- 
-@@ -780,19 +771,6 @@ int ab8500_btemp_get_temp(struct ab8500_btemp *di)
- 
- 	return temp * 10;
- }
--EXPORT_SYMBOL(ab8500_btemp_get_temp);
--
--/**
-- * ab8500_btemp_get_batctrl_temp() - get the temperature
-- * @btemp:      pointer to the btemp structure
-- *
-- * Returns the batctrl temperature in millidegrees
-- */
--int ab8500_btemp_get_batctrl_temp(struct ab8500_btemp *btemp)
--{
--	return btemp->bat_temp * 1000;
--}
--EXPORT_SYMBOL(ab8500_btemp_get_batctrl_temp);
- 
- /**
-  * ab8500_btemp_get_property() - get the btemp properties
-@@ -979,7 +957,6 @@ static const struct power_supply_desc ab8500_btemp_desc = {
- static int ab8500_btemp_probe(struct platform_device *pdev)
- {
- 	struct device_node *np = pdev->dev.of_node;
--	struct abx500_bm_data *plat = pdev->dev.platform_data;
- 	struct power_supply_config psy_cfg = {};
- 	struct device *dev = &pdev->dev;
- 	struct ab8500_btemp *di;
-@@ -990,11 +967,7 @@ static int ab8500_btemp_probe(struct platform_device *pdev)
- 	if (!di)
- 		return -ENOMEM;
- 
--	if (!plat) {
--		dev_err(dev, "no battery management data supplied\n");
--		return -EINVAL;
--	}
--	di->bm = plat;
-+	di->bm = &ab8500_bm_data;
- 
- 	ret = ab8500_bm_of_probe(dev, np, di->bm);
- 	if (ret) {
-diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
-index c6eb90b870878..6e236ae3c045e 100644
---- a/drivers/power/supply/ab8500_charger.c
-+++ b/drivers/power/supply/ab8500_charger.c
-@@ -28,12 +28,13 @@
- #include <linux/mfd/core.h>
- #include <linux/mfd/abx500/ab8500.h>
- #include <linux/mfd/abx500.h>
--#include <linux/mfd/abx500/ab8500-bm.h>
- #include <linux/mfd/abx500/ux500_chargalg.h>
- #include <linux/usb/otg.h>
- #include <linux/mutex.h>
- #include <linux/iio/consumer.h>
- 
-+#include "ab8500-bm.h"
-+
- /* Charger constants */
- #define NO_PW_CONN			0
- #define AC_PW_CONN			1
-@@ -3360,7 +3361,6 @@ static const struct power_supply_desc ab8500_usb_chg_desc = {
- static int ab8500_charger_probe(struct platform_device *pdev)
- {
- 	struct device_node *np = pdev->dev.of_node;
--	struct abx500_bm_data *plat = pdev->dev.platform_data;
- 	struct power_supply_config ac_psy_cfg = {}, usb_psy_cfg = {};
- 	struct ab8500_charger *di;
- 	int irq, i, charger_status, ret = 0, ch_stat;
-@@ -3370,11 +3370,7 @@ static int ab8500_charger_probe(struct platform_device *pdev)
- 	if (!di)
- 		return -ENOMEM;
- 
--	if (!plat) {
--		dev_err(dev, "no battery management data supplied\n");
--		return -EINVAL;
--	}
--	di->bm = plat;
-+	di->bm = &ab8500_bm_data;
- 
- 	ret = ab8500_bm_of_probe(dev, np, di->bm);
- 	if (ret) {
-diff --git a/drivers/power/supply/ab8500_fg.c b/drivers/power/supply/ab8500_fg.c
-index df416afd3225a..d7cb00841caae 100644
---- a/drivers/power/supply/ab8500_fg.c
-+++ b/drivers/power/supply/ab8500_fg.c
-@@ -31,10 +31,11 @@
- #include <linux/mfd/core.h>
- #include <linux/mfd/abx500.h>
- #include <linux/mfd/abx500/ab8500.h>
--#include <linux/mfd/abx500/ab8500-bm.h>
- #include <linux/iio/consumer.h>
- #include <linux/kernel.h>
- 
-+#include "ab8500-bm.h"
-+
- #define MILLI_TO_MICRO			1000
- #define FG_LSB_IN_MA			1627
- #define QLSB_NANO_AMP_HOURS_X10		1071
-@@ -3033,7 +3034,6 @@ static const struct power_supply_desc ab8500_fg_desc = {
- static int ab8500_fg_probe(struct platform_device *pdev)
- {
- 	struct device_node *np = pdev->dev.of_node;
--	struct abx500_bm_data *plat = pdev->dev.platform_data;
- 	struct power_supply_config psy_cfg = {};
- 	struct device *dev = &pdev->dev;
- 	struct ab8500_fg *di;
-@@ -3044,11 +3044,7 @@ static int ab8500_fg_probe(struct platform_device *pdev)
- 	if (!di)
- 		return -ENOMEM;
- 
--	if (!plat) {
--		dev_err(dev, "no battery management data supplied\n");
--		return -EINVAL;
--	}
--	di->bm = plat;
-+	di->bm = &ab8500_bm_data;
- 
- 	ret = ab8500_bm_of_probe(dev, np, di->bm);
- 	if (ret) {
-diff --git a/drivers/power/supply/abx500_chargalg.c b/drivers/power/supply/abx500_chargalg.c
-index 591ddd2987a3f..5b28d58041b4b 100644
---- a/drivers/power/supply/abx500_chargalg.c
-+++ b/drivers/power/supply/abx500_chargalg.c
-@@ -29,9 +29,10 @@
- #include <linux/mfd/abx500.h>
- #include <linux/mfd/abx500/ab8500.h>
- #include <linux/mfd/abx500/ux500_chargalg.h>
--#include <linux/mfd/abx500/ab8500-bm.h>
- #include <linux/notifier.h>
- 
-+#include "ab8500-bm.h"
-+
- /* Watchdog kick interval */
- #define CHG_WD_INTERVAL			(6 * HZ)
- 
-@@ -1980,7 +1981,6 @@ static const struct power_supply_desc abx500_chargalg_desc = {
- static int abx500_chargalg_probe(struct platform_device *pdev)
- {
- 	struct device_node *np = pdev->dev.of_node;
--	struct abx500_bm_data *plat = pdev->dev.platform_data;
- 	struct power_supply_config psy_cfg = {};
- 	struct abx500_chargalg *di;
- 	int ret = 0;
-@@ -1991,11 +1991,7 @@ static int abx500_chargalg_probe(struct platform_device *pdev)
- 		return -ENOMEM;
+-	if (!conf->dir) {
++	if (conf->dir != DMA_MEM_TO_MEM &&
++	    !is_slave_direction(conf->dir)) {
+ 		chan_err(d40c, "Invalid direction.\n");
+ 		res = -EINVAL;
  	}
+@@ -2062,12 +2063,17 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
+ static int d40_config_memcpy(struct d40_chan *d40c)
+ {
+ 	dma_cap_mask_t cap = d40c->chan.device->cap_mask;
++	int ret;
  
--	if (!plat) {
--		dev_err(&pdev->dev, "no battery management data supplied\n");
--		return -EINVAL;
--	}
--	di->bm = plat;
-+	di->bm = &ab8500_bm_data;
+ 	if (dma_has_cap(DMA_MEMCPY, cap) && !dma_has_cap(DMA_SLAVE, cap)) {
+ 		d40c->dma_cfg = dma40_memcpy_conf_log;
+ 		d40c->dma_cfg.dev_type =
+ 			d40c->base->plat_data->memcpy_channels[d40c->chan.chan_id];
  
- 	ret = ab8500_bm_of_probe(&pdev->dev, np, di->bm);
- 	if (ret) {
-diff --git a/drivers/power/supply/pm2301_charger.c b/drivers/power/supply/pm2301_charger.c
-index 34f168f62178d..e18a09b112a90 100644
---- a/drivers/power/supply/pm2301_charger.c
-+++ b/drivers/power/supply/pm2301_charger.c
-@@ -18,13 +18,13 @@
- #include <linux/i2c.h>
- #include <linux/workqueue.h>
- #include <linux/mfd/abx500/ab8500.h>
--#include <linux/mfd/abx500/ab8500-bm.h>
- #include <linux/mfd/abx500/ux500_chargalg.h>
- #include <linux/pm2301_charger.h>
- #include <linux/gpio.h>
- #include <linux/pm_runtime.h>
- #include <linux/pm.h>
++		ret = d40_validate_conf(d40c, &d40c->dma_cfg);
++		if (ret)
++			return ret;
++
+ 		d40_log_cfg(&d40c->dma_cfg,
+ 			    &d40c->log_def.lcsp1, &d40c->log_def.lcsp3);
  
-+#include "ab8500-bm.h"
- #include "pm2301_charger.h"
+@@ -2075,6 +2081,10 @@ static int d40_config_memcpy(struct d40_chan *d40c)
+ 		   dma_has_cap(DMA_SLAVE, cap)) {
+ 		d40c->dma_cfg = dma40_memcpy_conf_phy;
  
- #define to_pm2xxx_charger_ac_device_info(x) container_of((x), \
++		ret = d40_validate_conf(d40c, &d40c->dma_cfg);
++		if (ret)
++			return ret;
++
+ 		/* Generate interrupt at end of transfer or relink. */
+ 		d40c->dst_def_cfg |= BIT(D40_SREG_CFG_TIM_POS);
+ 
 -- 
 2.53.0
 
