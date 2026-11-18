@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048805;
-	b=b7xdCQyvLogMQNFxVl0TN3/eaatlf4xpULqZjwRgtGWwtblb3535Ebvq2R5IS3bdEUS+
-	 X2D5OotqwEm7nafU4SWeh/Ms+pid6KJVOt6rD3On9Bo6FxvuYVInBnEXm14cgQpMDpfa7
-	 k7y/QN+4xXHDBdyW+rSe9kPEqVi5oH7EVRIpK2lzzcXj98EwCPmkypyLQ4Mc4hBjio2uh
-	 rQ3Ub8J5dUVt2rIL+L39aLJmjpnOiFFJSWGAcjflXuYY0BNwtgjWhee4AP4O3Vgw8sOgk
-	 FbCL8UOCwzbM+uqhs3JWkM1+ISs5LTZeiyvOsTA53JJpBA5h2IDzts27fSszkg+V2Cg==
+	t=1795048808;
+	b=PJR0+wnAISeAWZfwqJRF+913mxCtRS1gWHNMxgyxN0I8JAJCVz1rRNxbIIBaJwMVov/H
+	 zmOQVAah2NgC3HkeQrdnZ8jB+DOcNMWcN9WVt1LmyJthe+TJ0H9np9qiZwraUYMDjJ4Pl
+	 RlyepNAUVIjkJlelnzdEiUmuAj3M+H/OtqlhSet/dYDoDRRNr1LsIuQ10Ku0FQsu5Ax+j
+	 yFaSt6E88tIHWLfkJNUrvZtOEJSjqOj1byAOjJf9YMikL0pKkpmF7uvb7od778rhc+Krp
+	 JmHEPOGGuu4+miDiNJtwjADzQHTAI8ECdRlmycSOKAYsFcJsDOBvmOAtO6wGC+p+lrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048805;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048808;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IGKEiqH+m+mzu6jdhbvtnRVn+UB8F+0LplaUTWvlj30=;
-	b=UR5CXOletM0idP+/WuS/nZtxombkiCX1KgmuoYrOhxausIWBYZdwBHrQL6WAn4yqRyRZ
-	 PPe3DURxXCZNY1ZFPWEEHTb0jikkuWWAdHvtskgnWIQpahXypqweI7ouYhvDT0+I24fdE
-	 2JSEzWaKelEwH/BGhwQJ358UIvY7NfxBCFxz3AOcl1DJHF7/xzRVqfLSjjD2uEuJMkU6B
-	 CptqddTFxGheGqFSI46E+3DtZ2kutQK2CIvSZjaPjC0HcsK+Gbcfp05vWgwjd6iofsJnK
-	 9Qrv/rzkO+G6r+i7M3Lm91ipWwKTFUexS3KBue1765HC5nr86tcxVnmHeR5ZplFzMHg==
+	bh=56B0LjO/qKWphMjvpUKGUZnCfsNKxP1bb6fFYbCcQLE=;
+	b=sogwCUQo/mUW7eHqRoky57+4X2jBdLJMwbOCZOXwcF6CVWNi645pS4N38wM5oiHCy4iq
+	 sc4QMm0xHKKD6JkCAAy8KflNw4DZ2UKoIxYxuHdSQjlIR1JhD9vbyEi2Fa6ttNihLGHul
+	 7PEPI5pWJyAx3YEzCxD1uIUihuSgfCkJEIU1/kAFHzW0Wej6/5fZHz7Y3l/FPKV2hK5EV
+	 KYMTyVryuRkVlln84DxNTeotVfaucqcJ5PTWc9X7UgHOUBxz1CyZcgIQMrXQ68rjQB8oh
+	 jGAiCc2hEGojPGTfc745taX6RlCsuxkJEz2P2xwU+1/ullmxv8s+8Avlvy7xA5x2iaA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U+cXVMeY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZlCIor5+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A163606A325;
-	Thu, 19 Nov 2026 00:40:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4FE606A32F;
+	Thu, 19 Nov 2026 00:40:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U+cXVMeY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF2A41F000C4;
-	Thu, 19 Nov 2026 00:40:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZlCIor5+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF0FD1F000C4;
+	Thu, 19 Nov 2026 00:40:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048805;
-	bh=IGKEiqH+m+mzu6jdhbvtnRVn+UB8F+0LplaUTWvlj30=;
+	s=korg; t=1795048808;
+	bh=56B0LjO/qKWphMjvpUKGUZnCfsNKxP1bb6fFYbCcQLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U+cXVMeYCLkepTsjRnd1wIn1OLgMOC1NK92S5A2+1L/aOjAuNzr7O/EmTTdCHMj9S
-	 tUywfsoND8bUGf9lf5hneScNhkBS1+ixNlg4gPqCZ7s4I7QiOoDTim0aRLlaChVEHS
-	 RdCK/Vq4SW4NNUu4/hNsR0RMY27kVCRmEk/O3hww=
+	b=ZlCIor5+5gL2bFAuWvF7+4rCvfraWdTK3YZ9Le1Gmuigm8vcq69/wSkOl5VWMDdUd
+	 f3AzL4CYM3pKJJv/99BqQZeYlPOsyOxoS2CKHVIJt8cWbR1H7GkaoWD+bm0MzziII/
+	 fy6ToV/5z9Vg5f0drGID38i4ZdwsvA9HqlMVphqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2119/2857] fs/ntfs3: fix slab-out-of-bounds write in attr_insert_range()
-Date: Wed, 18 Nov 2026 15:52:33 +0100
-Message-ID: <20261118150317.702398234@linuxfoundation.org>
+Subject: [PATCH 6.1 2128/2857] RDMA/bnxt_re: Fix the PD and DPI table size
+Date: Wed, 18 Nov 2026 15:52:42 +0100
+Message-ID: <20261118150318.022650625@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,58 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei (Microsoft) <xmei5@asu.edu>
+From: Selvin Xavier <selvin.xavier@broadcom.com>
 
-[ Upstream commit bf9a6578e03b065335836e025356b4b9170b9449 ]
+[ Upstream commit aa6c2ef821a6ba7f3fd58cfcc031b2d16f3811c6 ]
 
-When fallocate(FALLOC_FL_INSERT_RANGE) grows a still-resident ntfs3
-attribute, attr_insert_range() shifts the inline data using the insert
-length 'bytes' as both the destination offset and the copy size:
+The PD and DPI bitmaps were sized as max >> 3 (bytes),
+but bitmap ops (set_bit(), clear_bit(), find_first_bit(),
+test_and_set_bit()) operate on whole unsigned long words,
+so whenever max isn't a multiple of BITS_PER_LONG,
+the buffer under-allocates and the top word's bitops
+read/write past the end of the kmalloc()'d buffer.
+Most exposed on the DPI table, since dpit->max comes from the
+firmware-reported dev_attr->max_dpi with no alignment guarantee.
 
-  memmove(data + bytes, data, bytes);
+Fix the size of both allocations with
+BITS_TO_LONGS(max) * sizeof(unsigned long).
 
-Both are wrong: the shift must start at the insertion point 'vbo' and
-move only the data past it (data_size - vbo). When bytes > data_size the
-memmove runs off the end of the data_size + bytes buffer and overflows
-the adjacent slab object.
-
-Since vbo < data_size is already enforced above, the reworked offsets stay
-within the data_size + bytes buffer and cannot under/overflow.
-
-  BUG: KASAN: slab-out-of-bounds in attr_insert_range (fs/ntfs3/attrib.c:2581)
-  Write of size 512 at addr ffff8880135e8b10 by task exploit/142
-   ...
-   __asan_memmove (mm/kasan/shadow.c:95)
-   attr_insert_range (fs/ntfs3/attrib.c:2581)
-   ntfs_fallocate (fs/ntfs3/file.c:618)
-   vfs_fallocate (fs/open.c:338)
-   __x64_sys_fallocate (fs/open.c:362)
-   ...
-
-Fixes: 9256ec35359f ("fs/ntfs3: Refactoring attr_insert_range to restore after errors")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/attrib.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/bnxt_re/qplib_res.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
-index 0ec6d8406a74c..503b38bd350b7 100644
---- a/fs/ntfs3/attrib.c
-+++ b/fs/ntfs3/attrib.c
-@@ -2414,8 +2414,8 @@ int attr_insert_range(struct ntfs_inode *ni, u64 vbo, u64 bytes)
- 			/* Still resident. */
- 			char *data = Add2Ptr(attr_b, attr_b->res.data_off);
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
+index 5a85bede4df3d..a9d15a297ff8d 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
+@@ -45,6 +45,7 @@
+ #include <linux/dma-mapping.h>
+ #include <linux/if_vlan.h>
+ #include <linux/vmalloc.h>
++#include <linux/bitops.h>
+ #include <rdma/ib_verbs.h>
+ #include <rdma/iter.h>
  
--			memmove(data + bytes, data, bytes);
--			memset(data, 0, bytes);
-+			memmove(data + vbo + bytes, data + vbo, data_size - vbo);
-+			memset(data + vbo, 0, bytes);
- 			goto done;
- 		}
+@@ -671,9 +672,9 @@ static int bnxt_qplib_alloc_pd_tbl(struct bnxt_qplib_res *res,
+ {
+ 	u32 bytes;
  
+-	bytes = max >> 3;
++	bytes = BITS_TO_LONGS(max) * sizeof(unsigned long);
+ 	if (!bytes)
+-		bytes = 1;
++		bytes = sizeof(unsigned long);
+ 	pdt->tbl = kmalloc(bytes, GFP_KERNEL);
+ 	if (!pdt->tbl)
+ 		return -ENOMEM;
+@@ -778,9 +779,9 @@ static int bnxt_qplib_alloc_dpi_tbl(struct bnxt_qplib_res     *res,
+ 	if (!dpit->app_tbl)
+ 		goto unmap_io;
+ 
+-	bytes = dpit->max >> 3;
++	bytes = BITS_TO_LONGS(dpit->max) * sizeof(unsigned long);
+ 	if (!bytes)
+-		bytes = 1;
++		bytes = sizeof(unsigned long);
+ 
+ 	dpit->tbl = kmalloc(bytes, GFP_KERNEL);
+ 	if (!dpit->tbl) {
 -- 
 2.53.0
 
