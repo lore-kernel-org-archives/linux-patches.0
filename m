@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050065;
-	b=4bA+HwGjCjU/f2CU0QetbCFcb908pKFVu3YdEBEP/wO+G1s4CV+CiaApZOUSgjbCkacJ
-	 KgULRTSKUgDHs5EUJi+jVUPldAKFL4/mMCR6qTKxD0rMvWymSeSwqpV2UPG8Bzztrgfxb
-	 KLqIZA2J9V9on99JDoIvlEUV1CEmsHK9lZekL85/Dkl5j+TN87tEHp7WVm6GEIb8h4UmE
-	 scH3wZ5aP1AsNVMhprUMIZVKxJmWieTKczy+BFuPsKN/YBjtotMAuSL1q0DtpWuFP0fiI
-	 USvt97C9fnIiNMnPImV76U1roIo3QjnuJ33134caAfeawvEmgPENqLpiCp0aihN6W4Q==
+	t=1795050069;
+	b=JA97n9jl4yeQr8ZNtO6ml/4HqyuP85xl8CzisRhZh/CaKVwH1YCs25nt6KV3Wgaswe1p
+	 F4ihBRtGrbKeg8TBKmRRfNk3LeUR+ZqmpIJwFsy8mYIXsgKxXebBzpWPVoGpQKuOYxyIB
+	 YdHswqE0JYONPFtzZJanmFOFLPWj5b8rsf/xaIYnPam8ExLTi8tPGG3Brv11sZ3DUkoeb
+	 4mt6U7tCdqo5RjCzsnbaumAISHtaYwVykMn3QmsUIxAgtiGrWbtqLDx+iDpXZKYDJ+K55
+	 aUiDyYqAb7QzEQUPZtr6Gtaxl4sspY8XsPGYfQKB11jLRNScSVBjfKughJgwjlW/6kA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050065;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050069;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XRG1gu4gUkpd5hlROYN/vbogTkycR4+bVimsLp7o/tA=;
-	b=rnSzCqn+JHe4bL4xrP0I7wxamBq4+t+eZmofwfN2YARSi2q/s6wIzzFEfuRR59lWeGD/
-	 q4ng5PtWQQl3l//CelgbkErDji5Uc1tVzxuRlaevzG94ZihiQtey9WAEsAOFYteyYVbYI
-	 LM41a0I66Q1vWUavB6Usbb81lI/nn/dfhY5P7Ku1t9hSjUg5L80B1jaVuEkWHUwIaIpaE
-	 l3/fLHRKvinYTPAUdqvdyPNYNpcXdbBr+TYq52Q7dhaxwJ0evlp061BocJV+HMaW1ui+q
-	 +J44DFLww3+fQXLAXMukQVwn2DbPAiQ3rUdquyyx41fRaEjDWQss6I+jRSns7KcObmQ==
+	bh=s+iWx9U3XHjub2amBvHseFPw58SpdLYuru7L3TXnNew=;
+	b=dhuasX3qMu0zm6EwTfM9j76LcEu5QvxCLKOKr8U6+W5bnJDHv1uu/k5wRMYH1VhHz6Co
+	 R8d44NhqOG3gE7mRG8SgXnOv/uc+FZhIJcolM4kLvC9oqVpR8+kVYg7iyqtZ6IC+f2Rec
+	 /VKnX9y3aEx/prOS2jzbLpVemwWWwam7P6qPNuW+ySoGml7zypkkhwrE27lrIXfBqXDWI
+	 gKQg0IcSGM3GSMZYIjgKlqOYUozCLQMgFb766gpjtpnY1adITnFKfIgfUsDliEv8UCRDe
+	 dRRGtfQvXaTTBYAjlpr3mmC+85TEK+I9hFMf3BNP8birBI20yEkjD6BYLzNVFqoUxqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=alpkOfF8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OsN9Lv2W;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3955606A31C;
-	Thu, 19 Nov 2026 01:01:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02AEC606A331;
+	Thu, 19 Nov 2026 01:01:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=alpkOfF8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D93B1F000C4;
-	Thu, 19 Nov 2026 01:01:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OsN9Lv2W
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 596AF1F000C5;
+	Thu, 19 Nov 2026 01:01:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050065;
-	bh=XRG1gu4gUkpd5hlROYN/vbogTkycR4+bVimsLp7o/tA=;
+	s=korg; t=1795050068;
+	bh=s+iWx9U3XHjub2amBvHseFPw58SpdLYuru7L3TXnNew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=alpkOfF8oP/nXHkkasnc2BO2+pW5hWG1PX9gQ54Bhj1P+4dDkDF5JZ32Wo3ZlIbMa
-	 aU2LMfJqchnxPl8IWFDxc+gv1P1/mxnUR2A9hTcHr/rHrbw+XTJKF8r/t1KcPdmJN2
-	 K3dcayAmxsGmCrMYyd8KQl54pjDkaqhN0Xvh9GjU=
+	b=OsN9Lv2W+tNEou7tI5YYBbnCOoBR9lJxreCMcfB2cWfj5z6fwXrvJ8zxXsd3Q/YCx
+	 sss9QCCLQkTqvCdhkHxGJIEzdokSTTs1nJpOZbkoJrAPvsPCzM06SD7vQR7lpXqF26
+	 ciFyMaG5FBS8JmylM0NPDfY1tlQW/edXoQSVaW+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrice Derepas <fabrice.derepas@canonical.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+	Abraham Zukor <abe@maticrobots.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2574/2857] ima: reject a kexec buffer whose declared size exceeds the buffer
-Date: Wed, 18 Nov 2026 16:00:08 +0100
-Message-ID: <20261118150334.166998644@linuxfoundation.org>
+Subject: [PATCH 6.1 2539/2857] spi: tegra114: initialize native chip selects inactive
+Date: Wed, 18 Nov 2026 15:59:33 +0100
+Message-ID: <20261118150332.944970448@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,59 +68,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabrice Derepas <fabrice.derepas@canonical.com>
+From: Abraham Zukor <abe@maticrobots.com>
 
-[ Upstream commit ceb24c7052cc4649e3b52a51a7cca7dfe4896cec ]
+[ Upstream commit f8334fdfd858c27f090ce597806794e4a08c9f4f ]
 
-ima_restore_measurement_list() parses the measurement list persisted across
-kexec.  It computes the parse end directly from the blob:
+tegra_spi_probe() initializes SPI_COMMAND1 with only SPI_M_S, leaving
+CS_POL_INACTIVE clear for every chip select. This drives every native
+active-low chip select low until tegra_spi_setup() runs for that device.
 
-	bufendp = buf + khdr->buffer_size;
+SPI children are registered and probed one at a time. A synchronous
+probe of an earlier child can therefore transfer while a later child's
+chip select is still asserted. On a Tegra234 system with active-low
+devices on CS0 and CS1, this caused both devices to be selected when the
+CS1 device probed first. Its initialization then intermittently failed.
+A logic analyzer showed CS0 remained low throughout the CS1 transfer and
+went high only after the CS1 probe failed.
 
-khdr->buffer_size is a u64 read straight from the persisted buffer.  The
-only length checks in the function are size >= sizeof(*khdr), version == 1
-and count -- none relates buffer_size to size, the actual buffer size the
-caller (ima_load_kexec_buffer()) obtained from the ima-kexec-buffer region.
-ima_parse_buf() bounds every field read to bufendp, so a blob whose
-internal buffer_size exceeds the real size makes the parse loop read past
-the end of the buffer (CWE-125).
+Walk the controller's device tree children before SPI_COMMAND1 is
+written and set CS_POL_INACTIVE for each valid chip select without
+spi-cs-high. That way the line is already deasserted when the first
+child transfers and does not change level when setup runs.
 
-The buffer's memory range is validated against addressable RAM by
-commit cbf9c4b9617b ("of: check previous kernel's ima-kexec-buffer
-against memory bounds") and commit c5489d04337b ("x86/kexec: add a
-sanity check on previous kernel's ima kexec buffer"), but the blob's
-own declared size is never clamped to it.  Reject a buffer_size larger
-than size before the loop.
+Disabled children are walked too. The core only registers available
+children, so tegra_spi_setup() never runs for a disabled one and probe
+is the only chance to park its chip select at the level its hardware
+needs.
 
-This is on the boot-time kexec-restore path (__init) and the buffer comes
-from the previous kernel, so triggering it requires control of the
-persisted buffer; it is an out-of-bounds read only.
+If an enabled child shares a chip select with disabled ones, its
+polarity takes priority. If only disabled children use a chip select
+and they disagree, warn and leave the line inactive high.
 
-Fixes: 94c3aac567a9 ("ima: on soft reboot, restore the measurement list")
-Assisted-by: copilot-cli:claude-opus-4-6 frama-c
-Signed-off-by: Fabrice Derepas <fabrice.derepas@canonical.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Fixes: f333a331adfa ("spi/tegra114: add spi driver")
+Assisted-by: Claude:Opus-5
+Signed-off-by: Abraham Zukor <abe@maticrobots.com>
+Link: https://patch.msgid.link/20261010195503.623287-1-abe@maticrobots.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/ima/ima_template.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/spi/spi-tegra114.c | 49 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 49 insertions(+)
 
-diff --git a/security/integrity/ima/ima_template.c b/security/integrity/ima/ima_template.c
-index 04c49f05cb74f..0a802072490a3 100644
---- a/security/integrity/ima/ima_template.c
-+++ b/security/integrity/ima/ima_template.c
-@@ -449,6 +449,11 @@ int ima_restore_measurement_list(loff_t size, void *buf)
- 		return -EINVAL;
- 	}
+diff --git a/drivers/spi/spi-tegra114.c b/drivers/spi/spi-tegra114.c
+index 2489a2dbf0be3..f95453b29d315 100644
+--- a/drivers/spi/spi-tegra114.c
++++ b/drivers/spi/spi-tegra114.c
+@@ -1306,6 +1306,9 @@ static int tegra_spi_probe(struct platform_device *pdev)
+ 	struct resource		*r;
+ 	int ret, spi_irq;
+ 	int bus_num;
++	u32 conflicting_cs;
++	u32 enabled_child_cs_polarity = 0, disabled_child_cs_low = 0, disabled_child_cs_high = 0;
++	u32 enabled_cs_mask = 0;
  
-+	if (khdr->buffer_size > size) {
-+		pr_err("attempting to restore a corrupted measurement list");
-+		return -EINVAL;
+ 	master = spi_alloc_master(&pdev->dev, sizeof(*tspi));
+ 	if (!master) {
+@@ -1406,6 +1409,52 @@ static int tegra_spi_probe(struct platform_device *pdev)
+ 	udelay(2);
+ 	reset_control_deassert(tspi->rst);
+ 	tspi->def_command1_reg  = SPI_M_S;
++
++	/*
++	 * SPI_COMMAND1 is written before any child is registered, so a chip
++	 * select with CS_POL_INACTIVE clear stays asserted until
++	 * tegra_spi_setup() runs for that device. Program the level the
++	 * device tree asks for up front instead.
++	 *
++	 * Disabled children are included deliberately. The core never
++	 * registers them, so this is the only chance to park their chip
++	 * select at the level their hardware needs. An enabled child on the
++	 * same CS takes priority.
++	 */
++	for_each_child_of_node_scoped(pdev->dev.of_node, np) {
++		u32 cs;
++		u32 polarity_bitmask;
++		u32 cs_polarity = 0;
++
++		if (of_property_read_u32(np, "reg", &cs))
++			continue;
++
++		if (cs >= MAX_CHIP_SELECT)
++			continue;
++
++		polarity_bitmask = SPI_CS_POL_INACTIVE(cs);
++		if (!of_property_read_bool(np, "spi-cs-high"))
++			cs_polarity = polarity_bitmask;
++
++		if (of_device_is_available(np)) {
++			enabled_cs_mask |= polarity_bitmask;
++			enabled_child_cs_polarity |= cs_polarity;
++		} else {
++			if (cs_polarity)
++				disabled_child_cs_low |= polarity_bitmask;
++			else
++				disabled_child_cs_high |= polarity_bitmask;
++		}
++	}
++	conflicting_cs = disabled_child_cs_low & disabled_child_cs_high & ~enabled_cs_mask;
++	for (u32 cs = 0; cs < MAX_CHIP_SELECT; cs++) {
++		if (SPI_CS_POL_INACTIVE(cs) & conflicting_cs)
++			dev_warn(&pdev->dev,
++				 "Conflicting CS polarity on disabled nodes at cs %u\n", cs);
 +	}
 +
- 	bitmap_zero(hdr_mask, HDR__LAST);
- 	bitmap_set(hdr_mask, HDR_PCR, 1);
- 	bitmap_set(hdr_mask, HDR_DIGEST, 1);
++	tspi->def_command1_reg |= enabled_child_cs_polarity |
++		(disabled_child_cs_low & ~enabled_cs_mask);
+ 	tegra_spi_writel(tspi, tspi->def_command1_reg, SPI_COMMAND1);
+ 	tspi->spi_cs_timing1 = tegra_spi_readl(tspi, SPI_CS_TIMING1);
+ 	tspi->spi_cs_timing2 = tegra_spi_readl(tspi, SPI_CS_TIMING2);
 -- 
 2.53.0
 
