@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020021;
-	b=37E1Xo5ywndR0ROm85kg9v/Wz4xJrXxTwMKGdQtAjiw7hksubfISRSN32+7j4kR1SZse
-	 iuUASEVQsreS6HxXoWGHK1fWjxUHavQSu6ZpkYO4/dJ/0+ixcC3953GGcq0IWK88Dfn8g
-	 AUeR12aFwaiwX1+QSFuiDt62nXAPn7tIf92JjsKIRlugSEI7hkEjX+auTd8yqDyLzN9w/
-	 SldRdHGd/EsYsEowxCVUJdr+pbpvYAjFJfocuP+s7TLyEn86sLTztrgdwVipXoJWoaZVQ
-	 eHt1l7krSMVH4alrAQBI5him7YSz1dMnTbulsfOTmytJdsVhp6VALVOK6EoR7T+J6TQ==
+	t=1795020024;
+	b=WYY7kFUF8Rx5TrcVmwkOT1DaDH3mJHZZLe+G5cgBlzWImFhkx0TXxGLdqnJudoGS5XUy
+	 yEJourm29RBw/nTHwrlTOgF9aXSs4XNIKfF11eZLwPNPYNtN19y7t80XsZfXg3ja5Lh0n
+	 eCHC4B+h2wrOuanHkylyJmRLssa6NV8gBcQlnNQ62txQKmlQjspOy4wwYnUZLcwbOTqNo
+	 Lj0C4pXlvcB9GOt49fusrMmW1LhqXipr5W5ig6vQkHwS/HYlHESnz7DBdivM0kYUtZqNt
+	 1ySPbUMpf2d4E/Nia0pGJ8HNYESJNRd5x/ebqz5iVSWJzwoKeoSoMOd7pDdutMtDlFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020021;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020024;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=M5bZp5DS4LRaB/q7woM6OzuACgelwu8w3k0SgZ7r0Yg=;
-	b=Sxjj/0EjUVnwLYWw7MGMu2nKhRjiLiPt7EbQu7fq+BTvk9YrG/cUpKbIfdxOecjuR784
-	 4d9Ps+K5iwJ9ZmvTm+2rZ/F+m+FDv5qeY5tvLGFLMMu1AAlET+j20Ac8vxNIUnnmCMCXs
-	 aLsEYZZ03TOFcSPm6TVzaUo4eVwJqWVIuGZ07xF2/GtZHwvAxNzYWkzea4BsnPqfxsDm/
-	 5azOMcPALcYnE1qSuShZeJBeZiL0R836CPMBR1j/YvPz1XmjxDFr8Eo3Aa7dMxTTV4BAm
-	 tdsn4VJ04UeRgTYb0/0+daxloZPOm0CZDP9oEw0jB+GFpskH/lWNmNAWFG5It9KW5zg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=hCJVHLQSCyEmhB6ELHQ8yjjQHeqQrq6kt+djO3nrQg0=;
+	b=28Vi8NE9POdd0z/mf2CbXqNT3KfyWhgLPqpNqWM8nTwkTPjfZO9i2YErYFoef4ooUyAx
+	 81ajUI01i5aG5IQfChjyzj/SgvjIlHbDEHno5XHHJYABijNG3HwCJQKw99Pm2QNGFXs/2
+	 a/allLjzLhENVPsJbZKTFch34yh2Yx/zaLodUni0rBGNjcBOpti7V8XqFpnLFj+o/Fhg1
+	 aojeOlL63ZhZdHVLhlSP6IHkKr2hSIAg6DSUfyQDi55TS1k1V4YAHoeOouS4eqDmzDyyr
+	 P/g55d+8u6MrfuepM6VBtuB27MJYm6Z4WWVmRZUbUf4lhAwVjc/P0Xjs2q6NH6P89Ug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=knv9yeo9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rs4eEXD2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37AC8606A32C;
-	Wed, 18 Nov 2026 16:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F13606A32A;
+	Wed, 18 Nov 2026 16:40:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=knv9yeo9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A801F000C8;
-	Wed, 18 Nov 2026 16:40:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rs4eEXD2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9891F000C4;
+	Wed, 18 Nov 2026 16:40:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020021;
-	bh=M5bZp5DS4LRaB/q7woM6OzuACgelwu8w3k0SgZ7r0Yg=;
+	s=korg; t=1795020023;
+	bh=hCJVHLQSCyEmhB6ELHQ8yjjQHeqQrq6kt+djO3nrQg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=knv9yeo9MBc918L7hNCYCEitwWacDDiMuY56pA4bHVE9KgdhsLFXDBCxNA4FdGOCx
-	 LnlA5/bAE5mP3uIkatEA/ssFd7Ps8O33tsvrQghHMDxgqUA/+e3CU7MDjEJ1cx55+u
-	 nJ8VyNvLch7QLwawYWYneKW+xtwsb4LyKdZnYJ7I=
+	b=rs4eEXD2/Y6J61rIAAGrqfOV9mRrYGFazfJDHJVoG/+qRGEINOTj7s2+vGHgLycIN
+	 93QeEl/XvmM2FYL6yuWWLrUFGfBUUi8rePli8cznt0Zr5xNLZi9scl67NDjnvrWVrR
+	 h+NDZLC6ZjUjXRedPMgskETN7XK4Rw90VNg7sQXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Jonathan Santos <Jonathan.Santos@analog.com>,
-	Mark Brown <broonie@kernel.org>,
+	Shuvam Pandey <shuvampandey1@gmail.com>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1804/2651] spi: axi-spi-engine: fix stale SYNC IRQ pending in trigger_enable
-Date: Wed, 18 Nov 2026 15:50:44 +0100
-Message-ID: <20261118150352.218217686@linuxfoundation.org>
+Subject: [PATCH 7.3 1805/2651] accel/qaic: Protect perf stats BO state with bo->lock
+Date: Wed, 18 Nov 2026 15:50:45 +0100
+Message-ID: <20261118150352.247880560@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,53 +62,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonathan Santos <Jonathan.Santos@analog.com>
+From: Shuvam Pandey <shuvampandey1@gmail.com>
 
-[ Upstream commit 18febc10a3538b9baa2f6e4481b434f20fdbd93c ]
+[ Upstream commit 1c50c57717c013ca63363eecb4154049cc727767 ]
 
-spi_engine_trigger_enable() sends SYNC(1) and polls SYNC_ID, it never
-clears the INT_PENDING[SYNC] bit afterward. This leaves a stale pending
-interrupt that can fire spuriously when INT_SYNC is later enabled.
+qaic_perf_stats_bo_ioctl() validates each BO by checking bo->sliced and
+bo->dbc before returning its perf stats. These fields are changed by the
+detach paths while holding bo->lock, but the perf stats ioctl reads them
+without that lock.
 
-Simillarly to the fix on spi_engine_setup(), clear INT_PENDING[SYNC]
-after polling the SYNC_ID.
+A concurrent detach can clear bo->dbc and mark the BO unsliced while the
+perf stats ioctl is validating the BO. Take bo->lock while checking the
+BO state and copying the per-BO stats into the temporary result buffer.
 
-Fixes: 8fc13b822c74 ("spi: axi-spi-engine: don't repeat mode config for offload")
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Signed-off-by: Jonathan Santos <Jonathan.Santos@analog.com>
-Link: https://patch.msgid.link/8d3f421e07b6114aae55f964825dba6ac9151cf5.1791361360.git.Jonathan.Santos@analog.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 4ddf4ddfceb4 ("accel/qaic: Ensure entry belongs to DBC in qaic_perf_stats_bo_ioctl()")
+Signed-off-by: Shuvam Pandey <shuvampandey1@gmail.com>
+Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Link: https://patch.msgid.link/6a115824.a0bed9bd.3c0137.9edf@mx.google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-axi-spi-engine.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/accel/qaic/qaic_data.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/spi/spi-axi-spi-engine.c b/drivers/spi/spi-axi-spi-engine.c
-index 87c05cb064ccf..ead5b295e680a 100644
---- a/drivers/spi/spi-axi-spi-engine.c
-+++ b/drivers/spi/spi-axi-spi-engine.c
-@@ -1036,7 +1036,13 @@ static int spi_engine_trigger_enable(struct spi_offload *offload)
- 		spi_engine->base + SPI_ENGINE_REG_CMD_FIFO);
+diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
+index 4d55531bf1c9e..ee35e13091b30 100644
+--- a/drivers/accel/qaic/qaic_data.c
++++ b/drivers/accel/qaic/qaic_data.c
+@@ -1840,15 +1840,16 @@ int qaic_perf_stats_bo_ioctl(struct drm_device *dev, void *data, struct drm_file
+ 			goto free_ent;
+ 		}
+ 		bo = to_qaic_bo(obj);
++		ret = mutex_lock_interruptible(&bo->lock);
++		if (ret)
++			goto put_obj;
+ 		if (!bo->sliced) {
+-			drm_gem_object_put(obj);
+ 			ret = -EINVAL;
+-			goto free_ent;
++			goto unlock_bo;
+ 		}
+ 		if (bo->dbc->id != args->hdr.dbc_id) {
+-			drm_gem_object_put(obj);
+ 			ret = -EINVAL;
+-			goto free_ent;
++			goto unlock_bo;
+ 		}
+ 		/*
+ 		 * perf stats ioctl is called before wait ioctl is complete then
+@@ -1864,7 +1865,12 @@ int qaic_perf_stats_bo_ioctl(struct drm_device *dev, void *data, struct drm_file
+ 						    bo->perf_stats.req_received_ts), 1000);
+ 		ent[i].queue_level_before = bo->perf_stats.queue_level_before;
+ 		ent[i].num_queue_element = bo->total_slice_nents;
++unlock_bo:
++		mutex_unlock(&bo->lock);
++put_obj:
+ 		drm_gem_object_put(obj);
++		if (ret)
++			goto free_ent;
+ 	}
  
- 	ret = readl_relaxed_poll_timeout(spi_engine->base + SPI_ENGINE_REG_SYNC_ID,
--					 reg, reg == 1, 1, 1000);
-+					 reg, reg == 1, 1, 1 * USEC_PER_MSEC);
-+
-+	/* Clear the stale SYNC pending bit so it doesn't fire when the IRQ is later enabled */
-+	writel_relaxed(SPI_ENGINE_INT_SYNC, spi_engine->base + SPI_ENGINE_REG_INT_PENDING);
-+	/* Read back to flush posted write. */
-+	readl_relaxed(spi_engine->base + SPI_ENGINE_REG_INT_PENDING);
-+
- 	if (ret)
- 		return ret;
- 
+ 	if (copy_to_user(u64_to_user_ptr(args->data), ent, args->hdr.count * sizeof(*ent)))
 -- 
 2.53.0
 
