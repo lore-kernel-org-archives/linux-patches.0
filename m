@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054801;
-	b=5TKfTzBs9EjLmDcDfzOCK0toy/543+rQK3N4EOwudsqlQ9Y5oakvzXAgxLv6XmMw4tR8
-	 Uegda7uh7iit/VhZqv8M0veLc3OLBU49HbdY9M+eFA15Y8rMOjL7LXHjycB4Nr/C7ahn7
-	 jL8QEM/wAqvQaHqATRMsityEvp7g+oNDQesWfVTgnKdUbbI6jx11QZ7QhX3s4S3h7bc0V
-	 BJw7XHyPgxZktv08i9w815k0Wi/d1rMeaS2y8CyjGRKZ63B31Ap0cbO2CyYF8YMUxJFrm
-	 wPmMAt0g8KHUBC//HEPJjwNhGibTrxNfw2Z+g9cyccRTg3zv42XbiLgkpQTY/vbuYHg==
+	t=1795054804;
+	b=UcWgMMQ/rVu+pduKlTfR40nM6TisgrIstWsBrcTbT7JArSq/C03bGQjG6tkzAmjVjk6a
+	 8iNbj+2dNi4xnU1oSbnygfo2u31Y0W8Ebr0PIhU1c1OJ6FTrPoe7FuqinhD+JPD2JAdBH
+	 J1sQ2pIwqz5BWTGlFHz5Myo6yOBl0c6XujHeW35CBtxWa4JFqP42NSJdFLxE5o8X9L6C3
+	 GTj4TdNSQPp9UpcqNikNdDrrSJm4FfLs7vgCOjyWPp5tAHHBLx7QHB9r1t3j94SfrzQrt
+	 XATSmcyZfLl5g17zmb8m3ag2HgnxRnybplgC7o3FEjWHfg5/yOAitncz9wjjGJY+l8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054801;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054804;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gMqybR0tFCDOdvJJJPPbHJjXzW2jA39zH1bBx1WvBm0=;
-	b=DZWP8M2iDkq9NyX1p5LqFyn/i14UGNUqF59I4hNx81/90173NqiMi9btz2rbR23FgBh/
-	 lAquHSh/xiYQL/y0+YCBiKcsFvdvkrePJLkQJxOFxidiO3h1SSpQXlOHPZA4fo5WH9J8I
-	 GkzE0JDoS47EwwcvhUt0osbbO+Y6dBSDtfThnMqYWv+fUrkvAlBJ7ze/EAdcms4iCUFkm
-	 SvI5T6zzLLko+sIqgoqWbHRHGbh7baxaFdjReqq+5ukM44ij4jUOrV+nhQzf51u7O1V64
-	 KrFUD4dQkADBO7cjiC4iUgGinF9PJFdrghbban9rchi5L0grPqWM8aPCKIVEDFniD6Q==
+	bh=P8SHfBpQ2JyF+r2lNdH2hj0ep4MjF5D8edR2pV0ZQJ0=;
+	b=IZbHPNy8+u+AHjb+VLaqcpIuI3h7fTzdE2IKGUxHNLua6Yjqz2JaKHKKGxmag+QBLuvO
+	 +lTGV5y5Ik5qcz2oMhG1h5ygFpcbtTx7ZxCft4tcztgp+vxSB430XBmIdkjkC/zcILuui
+	 nzXKdYPHfaBaSPoZrhWIAX4J6wTFghmPPMjf03zJfsZYh72PUpZAspVaqCLOk+2I5Yb4h
+	 ABqvpBRSDv1WN+6gOfkK5jpSVrcmQsi9LIXjVL8C6p3vymR8YJ6TO2QvzcCUZD9hFNuzk
+	 AUZdgSRV0R9sU0/a/E2+ntXqPMfBnjcIYcAwidOCPohTbc7hdXKA8Q43F3TROIDeybQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D62vcl5C;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XOoybOkv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920DF606A320;
-	Thu, 19 Nov 2026 02:20:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DBF5606A31C;
+	Thu, 19 Nov 2026 02:20:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D62vcl5C
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B91AB1F000C4;
-	Thu, 19 Nov 2026 02:20:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XOoybOkv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 809161F000C4;
+	Thu, 19 Nov 2026 02:20:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054801;
-	bh=gMqybR0tFCDOdvJJJPPbHJjXzW2jA39zH1bBx1WvBm0=;
+	s=korg; t=1795054804;
+	bh=P8SHfBpQ2JyF+r2lNdH2hj0ep4MjF5D8edR2pV0ZQJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D62vcl5CpytCdNuFttdts4JXZ3eDAdHxiaCVWgu1UKYySZ/pJdHvCHTg5n65AptPw
-	 8M4dJ0rrfg+LdOQsari9zaT78yaATUhkdOZcMehZGjxKr6v/VFiZURn2Lzh6t0B+Th
-	 7VKW2jxi+UZAZP9WLmUHSH1h0+wX2aGw+RGqXmGQ=
+	b=XOoybOkvZBqcqjpQEtUqVCInU+mEXi9ON7B6cbcaOrGRP1BpePW72+c8HaNYs11ZE
+	 wjZElMUu5nD7AMZm7TVy3IOBXpwLlXcwUnmbBppKndYVB9tvC6iFrXpguApU2WIjZA
+	 m4MPkny/ex5oKqE83aixbLGlNNN9yXwllkzs4eAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Aring <aahringo@redhat.com>,
-	Danila Chernetsov <listdansp@mail.ru>,
-	David Teigland <teigland@redhat.com>,
+	Maxime Ripard <maxime@cerno.tech>,
+	Samuel Holland <samuel@sholland.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1377/2214] dlm: validate lock modes in recovery messages
-Date: Wed, 18 Nov 2026 15:50:53 +0100
-Message-ID: <20261118150106.476790550@linuxfoundation.org>
+Subject: [PATCH 5.15 1404/2214] dmaengine: sun6i: Do not use virt_to_phys
+Date: Wed, 18 Nov 2026 15:51:20 +0100
+Message-ID: <20261118150107.445150877@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,56 +69,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danila Chernetsov <listdansp@mail.ru>
+From: Samuel Holland <samuel@sholland.org>
 
-[ Upstream commit 7bf1aca6d626944091a5cb218b4e487547edff0a ]
+[ Upstream commit 9aa48806edb8c37e82532dbc6098b03f6bd4245e ]
 
-The DLM recovery path restores lock state from rcom_lock messages
-received from remote nodes. The lock modes in these messages are
-copied directly into the local lkb state without validating that they
-are within the valid DLM lock mode range.
+This breaks on RISC-V, because dma_pool_alloc returns addresses which
+are not in the linear map. Instead, plumb through the physical address
+which is already known anyway.
 
-The rest of the DLM code assumes that lkb_rqmode and lkb_grmode
-contain valid lock modes. In particular, LVB callback handling in
-dlm_may_skip_callback() uses lock modes as indexes into the
-dlm_lvb_operations array:
-
-    dlm_lvb_operations[prev_mode + 1][mode + 1]
-
-An invalid lock mode received during recovery could therefore result in
-an out-of-bounds read during subsequent LVB callback processing.
-
-Validate rl_rqmode and rl_grmode before storing them into the local LKB
-state. This preserves the lock mode invariant required by the rest of
-the DLM code.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: e7fd41792fc0 ("[DLM] The core of the DLM for GFS2/CLVM")
-Acked-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
+Acked-by: Maxime Ripard <maxime@cerno.tech>
+Signed-off-by: Samuel Holland <samuel@sholland.org>
+Link: https://lore.kernel.org/r/20220424172759.33383-3-samuel@sholland.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: f472919f4c06 ("dmaengine: sun6i-dma: Fix use-after-free in error handling paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dlm/lock.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/dma/sun6i-dma.c | 38 +++++++++++++++++++-------------------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
 
-diff --git a/fs/dlm/lock.c b/fs/dlm/lock.c
-index 0bf22cc598122..7b9b4c61e8955 100644
---- a/fs/dlm/lock.c
-+++ b/fs/dlm/lock.c
-@@ -5596,6 +5596,10 @@ static int receive_rcom_lock_args(struct dlm_ls *ls, struct dlm_lkb *lkb,
+diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
+index a075f33c1c61a..4f331c30f83ed 100644
+--- a/drivers/dma/sun6i-dma.c
++++ b/drivers/dma/sun6i-dma.c
+@@ -241,9 +241,7 @@ static inline void sun6i_dma_dump_com_regs(struct sun6i_dma_dev *sdev)
+ static inline void sun6i_dma_dump_chan_regs(struct sun6i_dma_dev *sdev,
+ 					    struct sun6i_pchan *pchan)
  {
- 	struct rcom_lock *rl = (struct rcom_lock *) rc->rc_buf;
+-	phys_addr_t reg = virt_to_phys(pchan->base);
+-
+-	dev_dbg(sdev->slave.dev, "Chan %d reg: %pa\n"
++	dev_dbg(sdev->slave.dev, "Chan %d reg:\n"
+ 		"\t___en(%04x): \t0x%08x\n"
+ 		"\tpause(%04x): \t0x%08x\n"
+ 		"\tstart(%04x): \t0x%08x\n"
+@@ -252,7 +250,7 @@ static inline void sun6i_dma_dump_chan_regs(struct sun6i_dma_dev *sdev,
+ 		"\t__dst(%04x): \t0x%08x\n"
+ 		"\tcount(%04x): \t0x%08x\n"
+ 		"\t_para(%04x): \t0x%08x\n\n",
+-		pchan->idx, &reg,
++		pchan->idx,
+ 		DMA_CHAN_ENABLE,
+ 		readl(pchan->base + DMA_CHAN_ENABLE),
+ 		DMA_CHAN_PAUSE,
+@@ -387,17 +385,16 @@ static void *sun6i_dma_lli_add(struct sun6i_dma_lli *prev,
+ }
  
-+	if (rl->rl_rqmode < DLM_LOCK_IV || rl->rl_rqmode > DLM_LOCK_EX ||
-+	    rl->rl_grmode < DLM_LOCK_IV || rl->rl_grmode > DLM_LOCK_EX)
-+		return -EINVAL;
-+
- 	lkb->lkb_nodeid = le32_to_cpu(rc->rc_header.h_nodeid);
- 	lkb->lkb_ownpid = le32_to_cpu(rl->rl_ownpid);
- 	lkb->lkb_remid = le32_to_cpu(rl->rl_lkid);
+ static inline void sun6i_dma_dump_lli(struct sun6i_vchan *vchan,
+-				      struct sun6i_dma_lli *lli)
++				      struct sun6i_dma_lli *v_lli,
++				      dma_addr_t p_lli)
+ {
+-	phys_addr_t p_lli = virt_to_phys(lli);
+-
+ 	dev_dbg(chan2dev(&vchan->vc.chan),
+-		"\n\tdesc:   p - %pa v - 0x%p\n"
++		"\n\tdesc:\tp - %pad v - 0x%p\n"
+ 		"\t\tc - 0x%08x s - 0x%08x d - 0x%08x\n"
+ 		"\t\tl - 0x%08x p - 0x%08x n - 0x%08x\n",
+-		&p_lli, lli,
+-		lli->cfg, lli->src, lli->dst,
+-		lli->len, lli->para, lli->p_lli_next);
++		&p_lli, v_lli,
++		v_lli->cfg, v_lli->src, v_lli->dst,
++		v_lli->len, v_lli->para, v_lli->p_lli_next);
+ }
+ 
+ static void sun6i_dma_free_desc(struct virt_dma_desc *vd)
+@@ -447,7 +444,7 @@ static int sun6i_dma_start_desc(struct sun6i_vchan *vchan)
+ 	pchan->desc = to_sun6i_desc(&desc->tx);
+ 	pchan->done = NULL;
+ 
+-	sun6i_dma_dump_lli(vchan, pchan->desc->v_lli);
++	sun6i_dma_dump_lli(vchan, pchan->desc->v_lli, pchan->desc->p_lli);
+ 
+ 	irq_reg = pchan->idx / DMA_IRQ_CHAN_NR;
+ 	irq_offset = pchan->idx % DMA_IRQ_CHAN_NR;
+@@ -672,7 +669,7 @@ static struct dma_async_tx_descriptor *sun6i_dma_prep_dma_memcpy(
+ 
+ 	sun6i_dma_lli_add(NULL, v_lli, p_lli, txd);
+ 
+-	sun6i_dma_dump_lli(vchan, v_lli);
++	sun6i_dma_dump_lli(vchan, v_lli, p_lli);
+ 
+ 	return vchan_tx_prep(&vchan->vc, &txd->vd, flags);
+ 
+@@ -748,14 +745,16 @@ static struct dma_async_tx_descriptor *sun6i_dma_prep_slave_sg(
+ 	}
+ 
+ 	dev_dbg(chan2dev(chan), "First: %pad\n", &txd->p_lli);
+-	for (prev = txd->v_lli; prev; prev = prev->v_lli_next)
+-		sun6i_dma_dump_lli(vchan, prev);
++	for (p_lli = txd->p_lli, v_lli = txd->v_lli; v_lli;
++	     p_lli = v_lli->p_lli_next, v_lli = v_lli->v_lli_next)
++		sun6i_dma_dump_lli(vchan, v_lli, p_lli);
+ 
+ 	return vchan_tx_prep(&vchan->vc, &txd->vd, flags);
+ 
+ err_lli_free:
+-	for (prev = txd->v_lli; prev; prev = prev->v_lli_next)
+-		dma_pool_free(sdev->pool, prev, virt_to_phys(prev));
++	for (p_lli = txd->p_lli, v_lli = txd->v_lli; v_lli;
++	     p_lli = v_lli->p_lli_next, v_lli = v_lli->v_lli_next)
++		dma_pool_free(sdev->pool, v_lli, p_lli);
+ 	kfree(txd);
+ 	return NULL;
+ }
+@@ -822,8 +821,9 @@ static struct dma_async_tx_descriptor *sun6i_dma_prep_dma_cyclic(
+ 	return vchan_tx_prep(&vchan->vc, &txd->vd, flags);
+ 
+ err_lli_free:
+-	for (prev = txd->v_lli; prev; prev = prev->v_lli_next)
+-		dma_pool_free(sdev->pool, prev, virt_to_phys(prev));
++	for (p_lli = txd->p_lli, v_lli = txd->v_lli; v_lli;
++	     p_lli = v_lli->p_lli_next, v_lli = v_lli->v_lli_next)
++		dma_pool_free(sdev->pool, v_lli, p_lli);
+ 	kfree(txd);
+ 	return NULL;
+ }
 -- 
 2.53.0
 
