@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016773;
-	b=oI7nahTjKkLS1tvHbS9vpZstI+k9LGP0B2Csk0YpbXEYqnrC1c9UvCTCyv9fiuq127ES
-	 I8GRwu1clHSO/MJBlVvvdaihjwW0cm4GayVAkE/zj/GO8RX0im64wHiK7XFJyLoQ0IAZ9
-	 sljfEG6nA6TtWgQA7DZ48FbHqlBcLh37pJpZVVQP7s1jGws1dXhj4lRXnNc01wp8en2Ih
-	 17Y5sDuvOzpifFVVzA12t9KkRDUSzg6dlPeuCztAwQWJrdUs0BBNF1M4Ta0cXTBMk/xo/
-	 GeZ9FMNq8YCWZKS3M7v09U2eZqCi3PP2rytCTf8ylkVNWV8mxiL+Qvk6VV9cUQe+qLA==
+	t=1795016776;
+	b=cqoEqIixIqRxDDzYZ4eglw1paQYqf3hmvB7z4ApVgxZqwPgAmmwyApZZCf6gGxCRvBCL
+	 KzScJuOnVghPHXR6Q5nbWCsdHNAHWtIikjqrdOndqsKyOE05NAqk0z9bE8ou8breunSK0
+	 xiJg8+HImneeMtdi9huWtIbwlCNAAieBs+DYNre7exvFqvGcv0nE/PQO8xopLvJ+fjwFu
+	 VRu2bKtkGoNwHaojRQupJRB5oyjZ6EKalLLbkwJfzUeJGiIIJQg91hwDjDWqAVJTJ83GX
+	 ZERLgRg1T/9z9tUZC5vCVGJI9aPLdpnSDcNLnkB44b3Q33+Y2CoeGwVtliVggSc2wAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016773;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016776;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=t4fPdIxTKhscMaBGXOc7EPdIxal0JaT6vWYbTVIsv2A=;
-	b=SvAMjnYRJXvUUMFxdfbrqINQQh9CfaujJEjDampLtnrdDrN2XiBMjnm1YVQmmR6F8D1I
-	 B7dXMd+K9BBMwajKf/512H+n9/1mcCBkpqKS+5E5zYtzTcMLYyrEqqDm4sjpOvxux+PEU
-	 1r0tCw/4wNgearIWoE7Z1lcwi8bkOK1x1syj4gfwhXcu7whU9TKQ1xSrkyOm6gsnMRtq8
-	 rc5eDsOT2d4vFrU7U1+ispM4IAnk6gqqhlvWRAVJLwX5J+tp/kP6ppkRayE0UAMBIYPFq
-	 tLlfp5um4YHW9ktgyrS6ibe5kkn2S+Rpm+HYNSnoesKjYt90KEpXtBT7i21T5v2S3uw==
+	bh=pgHQ3Unch+KWvw9EmbJUcqkyZAa9/XoYjS4YjIW8dP0=;
+	b=ebTdJPomiSnspz2XTRys4MCp5CUCAt9xiSPkhUOOj7Ol8Frbg5wtfwIIuprlmquPL1JA
+	 n0VUXi5UvmIHe1EEGBNg3YHGRiNXEvDGlhN9tsrdmEji4X2pkxDg2hbuOnEdJq0jAqU4G
+	 s32kMD18usfF/Kgxhbziln0Ob4fGEmDTfnNanlGFlLlUHVq8l2M72sVNdx7uNPHqlqXm7
+	 912BITbVrLiK6Lyz+eoz2UqsvJkAmgDOGiIg9mTzAk+xDRqDpTRYVOcQxiNziACX4xlxn
+	 QcUAGgK/MhwVZgeN+hj7DXWBdqzoSs/sOTZM4AVcMf27O4rXwfvvz/NCzbdx2V27DaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D5XHnHe+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e78yN527;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2391606A325;
-	Wed, 18 Nov 2026 15:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B15606A320;
+	Wed, 18 Nov 2026 15:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D5XHnHe+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B3E1F000C4;
-	Wed, 18 Nov 2026 15:46:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e78yN527
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 113871F000C5;
+	Wed, 18 Nov 2026 15:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016773;
-	bh=t4fPdIxTKhscMaBGXOc7EPdIxal0JaT6vWYbTVIsv2A=;
+	s=korg; t=1795016776;
+	bh=pgHQ3Unch+KWvw9EmbJUcqkyZAa9/XoYjS4YjIW8dP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D5XHnHe+xEPZThPIWeuS5knQXe45J/0W1wR2CU0NUhBT/PFq9zciQCmAYYVMKXNzz
-	 gXsHJndc5kCli/P/mgaaagmBc3qfDVNz4HPL99HYuB9h480SfSHk1Nw3zYyeRfk3Wn
-	 GZeDkOa8fFpdJJ2b05cHWQjoMCEuIudwrddvhvPI=
+	b=e78yN527piD7El69m67Vh712LQWHDntdJF02tu5P5aHS4vHx9gg0PHGrizn31nTSV
+	 Vstqt30lxihBlfW+5cbKOyzc1DTlBuCFTcN8YTjTUzE7dnYlaNbS4WER/J4Lq2eFTx
+	 BU0TsXA+TbwU9XCrdR0QwhkDYPU/zG5D/pE/OYBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Nguyen <congnt264@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0646/2651] leds: lm3692x: Fix regulator/gpio leak and wrong enabled state on last write failure
-Date: Wed, 18 Nov 2026 15:31:26 +0100
-Message-ID: <20261118150310.937303971@linuxfoundation.org>
+Subject: [PATCH 7.3 0608/2651] fs/ntfs3: fix valid_size not being updated in attr_allocate_frame()
+Date: Wed, 18 Nov 2026 15:30:48 +0100
+Message-ID: <20261118150309.608989054@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,46 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Nguyen <congnt264@gmail.com>
+From: Zhan Xusheng <zhanxusheng1024@gmail.com>
 
-[ Upstream commit 145ca6bca2cc5fd8d9c7af216df58a9c75c0e84c ]
+[ Upstream commit a1972501ffb15313f7ae598989bb2cd32829e625 ]
 
-Every write in lm3692x_leds_enable() checks its return and jumps to
-out: on failure -- except the last one, which falls through and sets
-led->enabled = true regardless of whether it actually succeeded. Leaks
-the regulator on a failing probe, and short-circuits later
-brightness_set() calls without retrying.
+At the end of attr_allocate_frame() the on-disk valid_size is meant to be
+updated to the value passed in via @new_valid:
 
-Route it through out: like every other write here, and only set
-enabled = true once it succeeds.
+	valid_size = le64_to_cpu(attr_b->nres.valid_size);
+	if (new_valid != valid_size) {
+		attr_b->nres.valid_size = cpu_to_le64(valid_size);
+		mi_b->dirty = true;
+	}
 
-Fixes: 260718b3a35d ("leds: lm3692x: Disable chip on brightness 0")
-Assisted-by: Claude:claude-opus-4
-Signed-off-by: Cong Nguyen <congnt264@gmail.com>
-Link: https://patch.msgid.link/20260915034515.4147981-1-congnt264@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+but it writes back the old valid_size that was just read instead of
+new_valid, so the field is never actually changed even though the record
+is marked dirty -- the intended update is a no-op.
+
+ni_update_parent() spells the same read-compare-write out correctly a few
+hundred lines away, storing the newly derived value:
+
+	valid_le = cpu_to_le64(new_valid);
+	if (valid_le != attr->nres.valid_size) {
+		attr->nres.valid_size = valid_le;
+
+In practice that path, reached from ni_write_inode(), re-derives
+nres.valid_size from ni->i_valid on inode write-back, which normally masks
+this, so the visible impact is limited.  The assignment here is still
+wrong though; store @new_valid as intended.
+
+Fixes: be71b5cba2e6 ("fs/ntfs3: Add attrib operations")
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-lm3692x.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/ntfs3/attrib.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/leds/leds-lm3692x.c b/drivers/leds/leds-lm3692x.c
-index 8d2678dc9e4fd..9c58d54c57830 100644
---- a/drivers/leds/leds-lm3692x.c
-+++ b/drivers/leds/leds-lm3692x.c
-@@ -276,9 +276,11 @@ static int lm3692x_leds_enable(struct lm3692x_led *led)
+diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
+index fd2640878e6a5..d9f538c31e6ee 100644
+--- a/fs/ntfs3/attrib.c
++++ b/fs/ntfs3/attrib.c
+@@ -2010,7 +2010,7 @@ int attr_allocate_frame(struct ntfs_inode *ni, CLST frame, size_t compr_size,
  
- 	ret = regmap_update_bits(led->regmap, LM3692X_EN, LM3692X_ENABLE_MASK,
- 				 enable_state | LM3692X_DEVICE_EN);
-+	if (ret)
-+		goto out;
- 
- 	led->enabled = true;
--	return ret;
-+	return 0;
- out:
- 	dev_err(&led->client->dev, "Fail writing initialization values\n");
- 
+ 		valid_size = le64_to_cpu(attr_b->nres.valid_size);
+ 		if (new_valid != valid_size) {
+-			attr_b->nres.valid_size = cpu_to_le64(valid_size);
++			attr_b->nres.valid_size = cpu_to_le64(new_valid);
+ 			mi_b->dirty = true;
+ 		}
+ 	}
 -- 
 2.53.0
 
