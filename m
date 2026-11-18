@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036272;
-	b=1oeStw99Psfs3S8DTnfCi/xjA5InWHyL99VkIfLEwqF58tRAk6+3v/0ZEz1pparP0J+L
-	 PD7pKbOnM3c9oddM+fLA/MmwyZuERe+vzHmKw0lkvIfKIjR0Ec008Yv7I7/ozLG+u1W7o
-	 BTQuiDCau/UYIwJBacRn/EyKwE2QlCSNPIWmuclC5FbcTta6szJ3tCYewRRbrajh9KPeL
-	 bYhwRQrxgFXS/vtvotnglonOIUaR5PyQgok0bKejdpsRlSKbiR4clGkvCVuxahCLG+Bzf
-	 i590jEC1wp65STmsBdxkjWOZ4kWquVWeDxZaLjWN/SfmsmJWzZXGac1niRkc8z5ppRA==
+	t=1795036275;
+	b=R+fcFkhzIZiW+bzE3cyGGHwiTGweB9M9Vo7FPvGcpl4vu54JdmekzK4B5tqSv9LbkRBs
+	 whpIuTzyMh3b96po9wKGshpHSKzI7Jt3kTOvCp32KBiIcskD5SGn6jDc1h6XrtHpLz8F8
+	 R38ZNo+nkP7V/cSNLd08O0Agl6SYmOm6rcC59FbXL401r79CfE+X79CiZ4O5XqgDKTWX2
+	 dLCOCVjMRhjwcXUGYAQ5pLm7RZJ1V0Tbx5ppuqpB8STEFuQr9CAp/5CiC0x/P8XIVDRqn
+	 RsZJ0b5+Doeuq9lniUrrQzYqfdw+D9A2eFupLRbKbUimRB/DcGWIkgipbnbgMn4SiLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036272;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036275;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Wb3dBVZB3IeedYQ3Ctdl3WZW/NyX6n0fxRVZv6IVxL8=;
-	b=VKR7NzYPepTbRCY31dOnFLZZdmIyv2X+6ORl91okYHG2ouJXjmCzrCnbYeb3Hj6chuKX
-	 jd6gzvbLG83LVjlFi4rr6Cep2G54I4Gm4k3of/nuNlbTqns0Atutp252Q2hE/43jyESmZ
-	 I5O+YfZyRsfU7r9eo6rZ+7FXrt7N1Mv93EWDJIq/XNG7w7kFQe1rX9aSpg777y7/LM3D5
-	 rrGwzoEB0lY0KCuD5/mj/hJF8l4aHUv5WtD4atLMVLil6nRMHe3GLlyL/GQoNdq17YDgY
-	 N215x0ScvIGjt+k0wKCersqquLzDCcYlxXunIlieFN6pmJdpCp8P2/oYwMYaBWNGy1w==
+	bh=LtURPgn5lytlD9DGtWG62IBSuPWVIZ60sZYR24s9iBs=;
+	b=momjhJG9z+nqxc/V+6Ijak0CojlS0zGJ6w0vG17ynuOxyvyssSPAiKKBZXOZ2RaHyKWR
+	 MMRHxbOK38B4RgzqG+y1Rz/wOEbreRWb0WwF9twBPq26STqaC3rXRYfaRIT/RU3aSDSGF
+	 tbmx2tk7i9IU6lPUP7Je1QLs5DO/NAFU05/MJ5pmw/t+bju3lzGIzV6laQrCoNt/RPgiU
+	 +Y5/P2SmfMhEV+Fs7VW2XG8D+KQ+VDBLmuqV29AAKGUaQg5q1h0PcwA/UkBWzxeBYLnK/
+	 Ny0S4bUANxQMHkMYQuV7Yk7+LqHul1a8Xi4+Xjb3fxCUNFt05olxrkuT3BviBAownbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Pb0J+ZFg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A44ygU1W;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99DD2606A325;
-	Wed, 18 Nov 2026 21:11:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B834606A339;
+	Wed, 18 Nov 2026 21:11:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Pb0J+ZFg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E75A91F000C4;
-	Wed, 18 Nov 2026 21:11:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A44ygU1W
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C315B1F000C5;
+	Wed, 18 Nov 2026 21:11:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036272;
-	bh=Wb3dBVZB3IeedYQ3Ctdl3WZW/NyX6n0fxRVZv6IVxL8=;
+	s=korg; t=1795036275;
+	bh=LtURPgn5lytlD9DGtWG62IBSuPWVIZ60sZYR24s9iBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pb0J+ZFgYIefeOjNvJjXp71e5XChpc7Rm4mWS+9SlWYYFBti7Af8w3jxRzKBT+EBh
-	 i/ShMPlMJxorotR7lz647twQHLFeex0N0Erp4Hs78Hj3JdanyC/qIJsTzYjnM0Ai2N
-	 bf9x44sjxWAMjslxDUtSxjOGs9w4VcxpFIZTwUYc=
+	b=A44ygU1W8+9uW1R+RTr6ufiL6nQS4aOSFC2DdQDtx39O4jKJWhFGXfiNcPtNRltZb
+	 edf0gpn8xi9f5jTMxaMcD4XhTb6Z4koyaGtUJeE8ADVHGBBFE/Mg0AWo832ENU6GBO
+	 eAukuzpCdRBmyxk2K/NGcSUsbwZmiyF155/QAN9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0999/3318] media: mtk-jpeg: Fix runtime PM leak in mtk_jpegdec_worker()
-Date: Wed, 18 Nov 2026 15:27:01 +0100
-Message-ID: <20261118150349.823321055@linuxfoundation.org>
+Subject: [PATCH 6.6 1000/3318] media: mtk-jpeg: Fix runtime PM leak in mtk_jpegenc_worker()
+Date: Wed, 18 Nov 2026 15:27:02 +0100
+Message-ID: <20261118150349.858134806@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,17 +71,19 @@ Content-Transfer-Encoding: 8bit
 
 From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit befd4506174addc5e85641b4ef304c9247b48c55 ]
+[ Upstream commit 7ec8fd17f3a8059dcf94101065a35d0136031794 ]
 
 pm_runtime_get_sync() leaves the device's runtime PM usage count
-incremented even when it fails.  mtk_jpegdec_worker() jumps to
-dec_end on that failure, which does not call pm_runtime_put(), so
-the reference taken by the failed resume is leaked.
+incremented even when it fails, and a failed clk_prepare_enable()
+drops the reference as well.  mtk_jpegenc_worker() jumps to enc_end
+in both cases, which does not call pm_runtime_put(), so the
+reference taken by the successful resume is leaked.
 
-Use pm_runtime_resume_and_get() instead, which drops the reference
-again when resuming the device fails.
+Use pm_runtime_resume_and_get() for the resume failure and release
+the reference explicitly when the clock cannot be enabled, as
+mtk_jpegdec_worker() already does.
 
-Fixes: dedc21500334 ("media: mtk-jpegdec: add jpeg decode worker interface")
+Fixes: 5fb1c2361e56 ("mtk-jpegenc: add jpeg encode worker interface")
 Cc: stable@vger.kernel.org
 Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
@@ -89,22 +91,30 @@ Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-index 077089e134506..ddc74a0da6522 100644
+index ddc74a0da6522..5a1ae5cd44b95 100644
 --- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
 +++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-@@ -1744,7 +1744,7 @@ static void mtk_jpegdec_worker(struct work_struct *work)
- 	jpeg_dst_buf->frame_num = ctx->total_frame_num;
+@@ -1634,7 +1634,7 @@ static void mtk_jpegenc_worker(struct work_struct *work)
+ 	v4l2_m2m_buf_copy_metadata(src_buf, dst_buf, true);
  
- 	mtk_jpegdec_set_hw_param(ctx, hw_id, src_buf, dst_buf);
+ 	mtk_jpegenc_set_hw_param(ctx, hw_id, src_buf, dst_buf);
 -	ret = pm_runtime_get_sync(comp_jpeg[hw_id]->dev);
 +	ret = pm_runtime_resume_and_get(comp_jpeg[hw_id]->dev);
  	if (ret < 0) {
  		dev_err(jpeg->dev, "%s : %d, pm_runtime_get_sync fail !!!\n",
  			__func__, __LINE__);
+@@ -1645,6 +1645,7 @@ static void mtk_jpegenc_worker(struct work_struct *work)
+ 	if (ret) {
+ 		dev_err(jpeg->dev, "%s : %d, jpegenc clk_prepare_enable fail\n",
+ 			__func__, __LINE__);
++		pm_runtime_put(comp_jpeg[hw_id]->dev);
+ 		goto enc_end;
+ 	}
+ 
 -- 
 2.53.0
 
