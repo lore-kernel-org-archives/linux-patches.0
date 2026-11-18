@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015664;
-	b=fQD6YplOpcp5Kj5wwFxlbLrCFuFT2QczSw1Sil4bcVoza+GM2Zgx56iuez2E43ZUlAuH
-	 ZvQ+vvX6kEfH89rp+C/WQlkJGZKhv7R8SkB+/nWrniROvZcTWcwC4ptE4TXwNJdTDetZZ
-	 ujNrelHeVrpG4sImG7G5aYU29eggYcsDvdYLe5P0OAza8t/V7awowqalIUxXD8UL/fWlM
-	 OegCbfqiaAQgkdRBZW0vqkwLMYt2HSp8R48adlnObceIeTp3k/TFyeLjDzomTOmms8g3z
-	 EuFMBGyCtR0Quxvs/QziROvfz6T16XHhKUtGhu9Lkoud9YLBKDc9frhiooxux/axAuw==
+	t=1795015668;
+	b=AYR1QSifR6+BMHb2VFmfdiw0HPnbzcsOd3YJZaqa9LgNJKRWFIlNy+sChfKTx4b/EiVQ
+	 Mb/i0ljDw4J1/CS/Ft/a/X3+D2QWlUcUczL0GIQygK5Zr2AYqO5pIdETtWAze3lljMWJM
+	 ernqF2YFhnxwIH9VPDH6cKrhxeUFrcXQfi0j8zNNZqXY77WP/RXNVSPZSqNvUP9d8GPez
+	 O3jvoGSt+Lekvmg4HKJzud86HCMMMwPJIaKh8K/uaa3+W4QS4PSSBn6LHA5l1jMHgg5yB
+	 GrWhapEpALl+vUEkeZwambqOuzPE8/PCUwudIxMRuRGzamCc9rpY2NuZm1wKckjcztA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015664;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015668;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sQ5hBq4QUkxaQAXKPCKnSknNv4YnY0QU7SBfkqFzZ7o=;
-	b=AuRRvR7ADXYMgnBMCG07CZrFmaXwFg+OWUq3K+wRgUdgJsX639UicQTcl+OH+/Xx8eAl
-	 i9uqjMNzo6whzfURZlpw3IWHGgOia9E7c8I+saXFw+IhC5l9qlr3hSl5P4V/GqQrD9S9w
-	 ZkOZrDtJiz17KS/7tC6X3hZoUDVlLk4TJicLoW9DpYqVWNMytqyy86m5dYSa6s54z2fCx
-	 NYtiJ7+l76HfzhdJKgYuOBwPH24O3ayPQH2lEZyhMNLFDQqqyeq83J4d5OjtJLM5pR/a1
-	 WzLHsInkIbD5o4ef26nF8aEhWQnmMT+blbPQGvzPGoWi8kzMnnh+cd/fSCyVwZsV64Q==
+	bh=mfrca/XdGJMlMs8nRUO7hC2qIBv8jYfIvc70ZmDjLdU=;
+	b=WIM9g3N11P11zaXpzSQmdC5GLnL8ojxMhgfoFsF9oJgESRa4s+LUA8PyOAYbrRkVEA9f
+	 wtQEmj1AMyZr27C+ygvrggTqQ0ufzRRv6nTg2IX8PSJc8v0PTYyxoxTgbqxTVXov5g6SR
+	 kYZTXUTVQ/akBjvpU65+/wOfzo3tQXH+UqgEDQSxy1PfXq2QD5se4W3zAaYu0CIs2Qhaw
+	 0zBYO6XXBBviQf3xfh3OOH0sVczPHiA9Ft/bneBnN0oH8XLz+iptI2KvMeYeg9r5MM6TN
+	 AilYErTP8GiXOdpyH4N0/fqmUWXT5HAdRLIridMg1t+zv2HQhZVXxHlOBfuKHn+CL6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p1QwJcLZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nDVNUMAn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A9960A2619;
-	Wed, 18 Nov 2026 15:27:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1BF860A2601;
+	Wed, 18 Nov 2026 15:27:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p1QwJcLZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C41E1F000C5;
-	Wed, 18 Nov 2026 15:27:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nDVNUMAn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E30591F000C5;
+	Wed, 18 Nov 2026 15:27:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015664;
-	bh=sQ5hBq4QUkxaQAXKPCKnSknNv4YnY0QU7SBfkqFzZ7o=;
+	s=korg; t=1795015667;
+	bh=mfrca/XdGJMlMs8nRUO7hC2qIBv8jYfIvc70ZmDjLdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p1QwJcLZDhtIQGj6Aze+JxGnvmBQRVyj5f3zk2E0ZLLVLOL0pZpEKuBAlNcYHpOcy
-	 RwwDk45oqBWUZGTz5/NeW8gO7eZSu5Mr1G33UB90F1O5k4u6byb4k8JwbXBANbLbru
-	 d5QzXWHvuTdjvpLyL9HS/90Z01sHrwfqDdNgj+h0=
+	b=nDVNUMAnII1LYI+5lqtH+i2r8PycaA/Hs+d+aA1Eo3XJFf4MrvaR0Liao8xh8/9uJ
+	 F+pUHjebzC8hibYASXBvBIVVu6JgTrQAdXXWmtrTPQ7Luplve1LFScUmPdjvOvwjkQ
+	 duOqmYFU7yXGm1q0oBK8tj6vC67d/+d5pB/beBcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregor Herburger <gregor.herburger@linutronix.de>,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Li RongQing <lirongqing@baidu.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0203/2651] arm64: dts: broadcom: bcm2712-d-rpi-5-b: add compatible
-Date: Wed, 18 Nov 2026 15:24:03 +0100
-Message-ID: <20261118150255.169778404@linuxfoundation.org>
+Subject: [PATCH 7.3 0248/2651] RDMA/nldev: Put the device when dellink fails
+Date: Wed, 18 Nov 2026 15:24:48 +0100
+Message-ID: <20261118150256.787466136@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,50 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregor Herburger <gregor.herburger@linutronix.de>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit ef76568f51914937d22e5efd05874bd42f478903 ]
+[ Upstream commit 0ff7fcd6aac16dd149ad322687a10c8ea7d806b2 ]
 
-The bcm2712 found on the Raspberry Pi 5 is available in the d Stepping
-and in a c Stepping. There are two separate dts files. The
-bcm2712-rpi-5-b.dts for the c Stepping and the bcm2712-d-rpi-5-b.dts for
-the d Stepping. The d stepping does not set its own compatible/model
-string but uses "raspberrypi,5-model-b" through its include.
+nldev_dellink() takes a device reference through
+ib_device_get_by_index() and normally hands it over to
+ib_unregister_device_and_put(). The error path of the ->dellink
+callback returns without releasing it, so the reference is leaked.
 
-These two steppings are not compatible. Booting with the wrong dtb file
-causes a crash at boot.
+Once that happens, any later unregistration of the device blocks
+forever, because disable_device() drops its own reference and then
+waits for the refcount to drain. No in-tree driver returns an error
+from ->dellink today, so the leak is currently latent.
 
-Add a compatibles string "raspberrypi,5-model-b-d0" together with a
-"bcm2712-d0" string to allow us to distinguish between those two
-steppings.
+Put the device before returning the error.
 
-Fixes: 44839e2ac8ec ("arm64: dts: broadcom: Add DT for D-step version of BCM2712")
-Signed-off-by: Gregor Herburger <gregor.herburger@linutronix.de>
-Reviewed-by: Stefan Wahren <wahrenst@gmx.net>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260810-bcm2712-d-stepping-compatible-v4-2-73f74479539c@linutronix.de
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Fixes: a60e3f3d6fba ("RDMA/nldev: Add dellink function pointer")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Link: https://patch.msgid.link/20260903082550.2257-1-lirongqing@baidu.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/broadcom/bcm2712-d-rpi-5-b.dts | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/infiniband/core/nldev.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/broadcom/bcm2712-d-rpi-5-b.dts b/arch/arm64/boot/dts/broadcom/bcm2712-d-rpi-5-b.dts
-index 127be0fc27c22..ae4b7c587dbc5 100644
---- a/arch/arm64/boot/dts/broadcom/bcm2712-d-rpi-5-b.dts
-+++ b/arch/arm64/boot/dts/broadcom/bcm2712-d-rpi-5-b.dts
-@@ -3,6 +3,11 @@
+diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
+index 4e8fbee347454..3f715a1faaeca 100644
+--- a/drivers/infiniband/core/nldev.c
++++ b/drivers/infiniband/core/nldev.c
+@@ -1895,8 +1895,10 @@ static int nldev_dellink(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 		mutex_lock(&nldev_dellink_mutex);
+ 		err = device->link_ops->dellink(device);
+ 		mutex_unlock(&nldev_dellink_mutex);
+-		if (err)
++		if (err) {
++			ib_device_put(device);
+ 			return err;
++		}
+ 	}
  
- #include "bcm2712-rpi-5-b.dts"
- 
-+/ {
-+	compatible = "raspberrypi,5-model-b-d0", "brcm,bcm2712-d0";
-+	model = "Raspberry Pi 5 d0 Stepping";
-+};
-+
- &gio_aon {
- 	brcm,gpio-bank-widths = <15 6>;
- 
+ 	ib_unregister_device_and_put(device);
 -- 
 2.53.0
 
