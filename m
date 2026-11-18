@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041485;
-	b=3cvYjc2Z2fqKUFcJB9hxNNTCs6Uf6R/+Wu7zsgIV+EJ/8EL5am5aaXqut9nkhKL1TU8H
-	 KPLtYSl6jg+tUcMwkOL0TIgCesWl/KpkF6v1+P2kSEQhcYvbBC/LQJQj8SqEbpVPLDfOO
-	 Ogc4FVB9okIhy00YWh2meAXOnB1ocIxaQm0xye0a1Xrgl2iDl7OR0ZlT4LzWe1uAaFRG/
-	 dWOqXTR+tvYzrJvBKx8yfDAE+p9GkK0FEaBiQJe9WAI4OhvqK5ObxT4JAnEhtsyynmXnf
-	 dOCzYIc6/aEwrS2PBAw8G7I/Rgs8M9PcsbPcgztyedssJ9y0UHyeIuAZL166g9rEzOg==
+	t=1795041487;
+	b=hHZxDibCRhCYIC2MuCIVQdyrpA9d3BJZK8UZWtNtVYvyRADeOmv7VddxicfD7g1PlWlH
+	 LRoJ/3KPZYYOvVCpyKXDxBQ/INfjoz/FX5Mk3U6aSuJoYgBxZoyIdJNkAw/pGgCrUQIY4
+	 S9pRILPvC7M2MVYhLPd40Q6EaFh06k7j04G783EF9u/+3eTy15bP5NpDLcbJ1YIg3VTrz
+	 x6H6RWTUl1kmlbpHX+7D0v+mjFAdvyxjccKQ4tv3ylkveYQQWPBZUzBQMsZTPCfdOva1s
+	 rzPgEbxmB8kfDL21idtQsPpOMUw3VJFWPsTPHQsnu3TDQ9E2dWIozem0yxTD+Iv+pSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041485;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041487;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+NogD+UPcrtZlzb+XjQVE06EbpPFRTxQvPA/KkRMGN4=;
-	b=bjvseKIEyJKyLl5ZYcGFFam1CScVr3pQiMXYhE99XH6rPp7d56o1Nujqy+UpblGuN8d4
-	 Ec00CxIa63K3yqyF6wC6/sdrcHb8GSmqiLWm2iIpOqDmnkNkfgD83OdJauINjLrpnMqZN
-	 VPHJjezu4jZIROhPjeNgSY/RaFJR4/ht86G3Ey02tkmbZHPkYiHVYOqB+tXbYJIBBbIdY
-	 t1cgjruNkSJIOEEj4MvmCbahb4eLsIrMTHmKQDDjKAC6xLZsDhVrRTD+QhKj3qggclNN+
-	 yEkSl6qgXNcEmrOXKiRUA3ymqSGLNJXzBzaCoHk4W1aI8ARMi0KdYokpUkT6w9+wjhQ==
+	bh=Z35m/iIB9ou3bm9d/3EmTy/bOFuIw/RDyO+1LzyX73c=;
+	b=tgyrXGPxgIvb+skgk2hd9lnYGJsi7RoyCuY9ckDPh+aGE6JhKeKA3Y2ITQwJb+ZCBiAs
+	 G7xHFr4IwaBbHBVgn+7vfHE5ENzcH18zIEDe9/t+sXOkc4mDxOMWfmU+K/ey6jGtWCMUR
+	 2TP3pyFyRQo69NMkB8Sk+UFkbd8YO2STMcbgM7qMxEoUcssP4rVGGqkIx6kmo+yrrazDk
+	 A2J6+fP+1wjiut0wX9eg7r2LEHauRQD+6iiEdLDU+4PnsQ8CI3TLF8WnKNrk2dhAgcj1A
+	 laqjH/aow64+9S2CoP/+syOVutWcDGuo8JjtqrifT8uLiNwGfccab15ZyYv3iWF8eRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ORj6M9zY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AZcSC7qq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72504606A332;
-	Wed, 18 Nov 2026 22:38:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8B1606A6EC;
+	Wed, 18 Nov 2026 22:38:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ORj6M9zY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7470B1F000C6;
-	Wed, 18 Nov 2026 22:38:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AZcSC7qq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 246911F000C4;
+	Wed, 18 Nov 2026 22:38:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041485;
-	bh=+NogD+UPcrtZlzb+XjQVE06EbpPFRTxQvPA/KkRMGN4=;
+	s=korg; t=1795041487;
+	bh=Z35m/iIB9ou3bm9d/3EmTy/bOFuIw/RDyO+1LzyX73c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ORj6M9zYLgqS3mmM7Yso0/Gf7GR03UdCv+b+FnEMYhG+24oUoMuhz8cqoO+4QXGRQ
-	 uXRfX0MiFI1Rcml3BKifIpPCiqIG7PJV/oy0AT+ZPQMKoc/KSKKwaBUfAtGN1t7s1k
-	 3oB9RJskWS8TbPNqYLRtABWT0PW/1V6nHkUZhNqw=
+	b=AZcSC7qqjSeV6mbQa1Zr3fUEn6ehKnnTIQdzvMJwpBTt1lsJX9ACCqxIOxkUjT5fW
+	 UD2P/xjberSdf8lzN210ZC3FHzm+62kr76vZXOUA7poZuyiLgFQoQR3h9de6clbNOX
+	 zFEky6mZiSXAxgEV/Ek745E0aUdYqsKcuRn6aQ6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2830/3318] ASoC: atmel-i2s: fix MCK generator error handling
-Date: Wed, 18 Nov 2026 15:57:32 +0100
-Message-ID: <20261118150445.532836451@linuxfoundation.org>
+Subject: [PATCH 6.6 2804/3318] clk: qcom: mmcc-sdm660: Fix MDSS AHB clock HWCG register offset
+Date: Wed, 18 Nov 2026 15:57:06 +0100
+Message-ID: <20261118150444.791726405@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,54 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Abel Vesa <abel.vesa@oss.qualcomm.com>
 
-[ Upstream commit 2e2da92de9bffd2cdbb9a2558fe60de7f1bb09e3 ]
+[ Upstream commit c5f338329a2d0d60f7874aa7a1addaa0e4e75a3b ]
 
-Disable the gclk and reset the MCK configuration when an error occurs
-while enabling the MCK generator.
+The MDSS AHB clock HWCG bit resides in the same register as the branch
+enable and halt status bits, at offset 0x2308. The current HWCG register
+offset of 0x8a004 exceeds the regmap maximum of 0x40000, so regmap rejects
+the read in clk_branch_in_hwcg_mode(). Since the read error is ignored,
+the helper uses an uninitialized value to decide whether to skip the
+halt status check.
 
-This prevents the gclk from remaining enabled after a failed clock
-configuration.
+Correct the HWCG register offset so the helper reads the actual hardware
+clock gating state.
 
-Fixes: 73ad0df57290 ("ASoC: atmel-i2s: Remove unnecessary audio PLL clock (aclk)")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20261002043856.97295-2-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 5db3ae8b33de ("clk: qcom: Add SDM660 Multimedia Clock Controller (MMCC) driver")
+Assisted-by: LLM
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260916-clk-qcom-mmcc-sdm660-fix-mdss-ahb-hwcg-offset-v1-1-30dcf09d907c@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/atmel/atmel-i2s.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/clk/qcom/mmcc-sdm660.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/atmel/atmel-i2s.c b/sound/soc/atmel/atmel-i2s.c
-index 6c20c643f3218..e26d6cf864dec 100644
---- a/sound/soc/atmel/atmel-i2s.c
-+++ b/sound/soc/atmel/atmel-i2s.c
-@@ -466,11 +466,21 @@ static int atmel_i2s_switch_mck_generator(struct atmel_i2s_dev *dev,
- 	mr |= ATMEL_I2SC_MR_IMCKMODE_I2SMCK;
- 	ret = regmap_update_bits(dev->regmap, ATMEL_I2SC_MR, mr_mask, mr);
- 	if (ret)
--		return ret;
-+		goto err_disable_gclk;
- 
- 	/* Finally enable the I2S Master Clock generator. */
--	return regmap_write(dev->regmap, ATMEL_I2SC_CR,
--			    ATMEL_I2SC_CR_CKEN);
-+	ret = regmap_write(dev->regmap, ATMEL_I2SC_CR, ATMEL_I2SC_CR_CKEN);
-+	if (ret)
-+		goto err_reset_mr;
-+
-+	return 0;
-+
-+err_reset_mr:
-+	regmap_update_bits(dev->regmap, ATMEL_I2SC_MR, mr_mask, 0);
-+err_disable_gclk:
-+	clk_disable_unprepare(dev->gclk);
-+
-+	return ret;
- }
- 
- static int atmel_i2s_trigger(struct snd_pcm_substream *substream, int cmd,
+diff --git a/drivers/clk/qcom/mmcc-sdm660.c b/drivers/clk/qcom/mmcc-sdm660.c
+index 4d187d6aba734..fc2fc74d1c01d 100644
+--- a/drivers/clk/qcom/mmcc-sdm660.c
++++ b/drivers/clk/qcom/mmcc-sdm660.c
+@@ -2022,7 +2022,7 @@ static struct clk_branch csiphy_ahb2crif_clk = {
+ static struct clk_branch mdss_ahb_clk = {
+ 	.halt_reg = 0x2308,
+ 	.halt_check = BRANCH_HALT,
+-	.hwcg_reg = 0x8a004,
++	.hwcg_reg = 0x2308,
+ 	.hwcg_bit = 1,
+ 	.clkr = {
+ 		.enable_reg = 0x2308,
 -- 
 2.53.0
 
