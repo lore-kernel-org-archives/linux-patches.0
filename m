@@ -1,52 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060603;
-	b=NUUQ7WjSCSahatthfu7THX9Ct4Arr8RoCG2vH+jm9H8iCYIjsY2CBLayuSMRaVyx8QX3
-	 GDnKHB0m2AclqPrW/ZqRvd/JI5oSKTli2D9MlSG30aISRATbesWwPnFsjxfBORdN0gNP7
-	 eH+ZU/IFY5eFQxZv5BpBtJVDExf1rLSpCbIoeTe3++ItSjUjtAoelaJsTHVRvMKHvRBjc
-	 vjSyQw1irRUA/scGImbHwlRVjfBnFHpm/R0MEnieY6KhNu9y/hb8UNUQ47aX7uflpUkKR
-	 dj9MpdejwecbadlSK7GwXz5qoCkawke54rM6bGVko8AMAxDTOPFe0YIjyqK/2VsplYA==
+	t=1795060606;
+	b=cg5Bu4sJdBHcWtGYSraxngM4oIo25Z0spva2LrwI5Skgw1UaY0vZSbJRxxJawk7IpO8Y
+	 0TdTXgyLQWX4cAW8711Ap6bVsLtaeZTFY1kQazI9lSlH9Edtk22XLj3j5ez5lHnkzcH3+
+	 suGX+rux6C8FjAY0gBwfbjjqeJcRrsiwLSsOQPSd6M/KXue9GW+Chq1xA/a+XbSCCqH20
+	 FaCvT+KsC1PStABkjB72T4LeEhYsGJPMSk9YF5MJMWMnCo/BFyPz7elYYJePSVEfmpZxi
+	 h1pSb6Dl0W9VsEOVL18oZ0LA+evdcS1kFvISUeC5fltsx1UYQOtHEfCs3/7V4miSjRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060603;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060606;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=gdQq/vD+KqV3CN85J9UEtEkSX3eWhg+WXqFfvAa7HsU=;
-	b=4REawauxaDrFbb52eFRH773x2XLocYfU7UtiD1PfbW3uG72V6467zMIaX1xwzkPqm502
-	 pMQtPax+nc6AdWvnHyG+cEkFOELI7C+CQRu6A7i89Ni2JroCFC0JEKRzXLTRHYgSYHcPA
-	 pzzpb9y4hfUS8aCmftYHctXx2XDsa/cl27yUBmhZFwGfuzaZD5DEWbBX8nLoW850dmoDd
-	 PrE1ShdC2yTbwjjk5/nP/5XLff7NCqn0ZEOjKc8Itiuvcxk8srhJO2WUkQGnM34WnsPee
-	 KaqSX7JOGHV8K+RLl+/iId02NlUy7PjSLK1Ok8TSfwJfzQHlG5BuuteHpt8o02zwn8Q==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=gn2L56coisp7qcfZf49C10nwb1T0zFtsZpVybIjSasM=;
+	b=XLrzAgdDGNE/DPgGUCjgRV658RIwTamLvy0Icp2ghnqamK3trQtWKwPkKinfHbTWx/BU
+	 goCX+X+RBsZCUIPropJAfeS28ueVDy8aRMP5LP41uUFRj//4UBRBYZ+PWrjm+O4BUocNb
+	 72iSGkdQdH6N0XJe0nPNyPfqFIuw0yf6MAkt7yKWpc/RGHdOlPmI9BAGbMwHZJvcz2r+z
+	 qMQfGp9J7ND7TmfgmBZlslol5jfSUnlZOB5jO6VLBulW3EwxT5jxO7f1y3BoJWOyWOQKt
+	 W4D3QL8whLWeWwCf2kpl69TQx6adIszfOrby5StjJRFGIi1sJeaWDCRlYjnxoe0h9ag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rg3FNyxE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y62UiDbB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94114606A320;
-	Thu, 19 Nov 2026 03:56:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C742606A325;
+	Thu, 19 Nov 2026 03:56:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rg3FNyxE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA6391F000C4;
-	Thu, 19 Nov 2026 03:56:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y62UiDbB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BAA1F000C4;
+	Thu, 19 Nov 2026 03:56:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060603;
-	bh=gdQq/vD+KqV3CN85J9UEtEkSX3eWhg+WXqFfvAa7HsU=;
+	s=korg; t=1795060606;
+	bh=gn2L56coisp7qcfZf49C10nwb1T0zFtsZpVybIjSasM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rg3FNyxE42LgGm/gNGbIddXT8SMNtNOO08q3wl4ypuXEcYdEp3RUMBX5Xk7QPjKDA
-	 Ixoj51JZn4x5EIJvDnCF2U34mYaJxJScm4VEONLpRc0JordM/2khVSEf5xsWX2qD/y
-	 xgz0hixqG02voDPfGHkYg0h4QRzuXXF58/tSGnaE=
+	b=Y62UiDbBOpOxwGUWRNz399jVoze0htBrsQOUIxO1JvZnwSfDrrHRJn7l4ca2JDeSt
+	 JN1D4RMJRnkHPF5v7b2z9DDOTWjiLJQR5Q0eh2Dspa8kfL41X5a1hrXBb/CACwNzHU
+	 WOaFzQX8dSCdOu4hfzbLfkXQMsXjf0g09jgT/JbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nora Schiffer <nora.schiffer@ew.tq-group.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	=?UTF-8?q?J=C3=A9r=C3=B4me=20Glisse?= <jglisse@redhat.com>,
+	Ralph Campbell <rcampbell@nvidia.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1241/1848] ARM: dts: imx7-tqma7: correctly specify PMIC voltage constraints
-Date: Wed, 18 Nov 2026 15:54:39 +0100
-Message-ID: <20261118150011.791772309@linuxfoundation.org>
+Subject: [PATCH 5.10 1259/1848] mm/gup_benchmark: rename to mm/gup_test
+Date: Wed, 18 Nov 2026 15:54:57 +0100
+Message-ID: <20261118150012.438132729@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -62,133 +67,396 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nora Schiffer <nora.schiffer@ew.tq-group.com>
+From: John Hubbard <jhubbard@nvidia.com>
 
-[ Upstream commit f322f8f68c2c3291633ead663effa3b25c18f7b1 ]
+[ Upstream commit 9c84f229268fa229e250b7225611d0eb7094fea0 ]
 
-regulator-(min|max)-microvolt refer to the supported voltages according
-to board design, not the possible range of the regulators themselves.
-Update the configuration for the TQMa7x's PMIC and also add a comment
-regarding the PMIC's VCC_SD switching feature.
+Patch series "selftests/vm: gup_test, hmm-tests, assorted improvements", v3.
 
-Fixes: a80a1af6ec8a ("ARM: dts: tq imx7 common board support")
-Signed-off-by: Nora Schiffer <nora.schiffer@ew.tq-group.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Summary: This series provides two main things, and a number of smaller
+supporting goodies.  The two main points are:
+
+1) Add a new sub-test to gup_test, which in turn is a renamed version
+   of gup_benchmark.  This sub-test allows nicer testing of dump_pages(),
+   at least on user-space pages.
+
+   For quite a while, I was doing a quick hack to gup_test.c whenever I
+   wanted to try out changes to dump_page().  Then Matthew Wilcox asked me
+   what I meant when I said "I used my dump_page() unit test", and I
+   realized that it might be nice to check in a polished up version of
+   that.
+
+   Details about how it works and how to use it are in the commit
+   description for patch #6 ("selftests/vm: gup_test: introduce the
+   dump_pages() sub-test").
+
+2) Fixes a limitation of hmm-tests: these tests are incredibly useful,
+   but only if people actually build and run them.  And it turns out that
+   libhugetlbfs is a little too effective at throwing a wrench in the
+   works, there.  So I've added a little configuration check that removes
+   just two of the 21 hmm-tests, if libhugetlbfs is not available.
+
+   Further details in the commit description of patch #8
+   ("selftests/vm: hmm-tests: remove the libhugetlbfs dependency").
+
+Other smaller things that this series does:
+
+a) Remove code duplication by creating gup_test.h.
+
+b) Clear up the sub-test organization, and their invocation within
+   run_vmtests.sh.
+
+c) Other minor assorted improvements.
+
+[1] v2 is here:
+https://lore.kernel.org/linux-doc/20200929212747.251804-1-jhubbard@nvidia.com/
+
+[2] https://lore.kernel.org/r/CAHk-=wgh-TMPHLY3jueHX7Y2fWh3D+nMBqVS__AZm6-oorquWA@mail.gmail.com
+
+This patch (of 9):
+
+Rename nearly every "gup_benchmark" reference and file name to "gup_test".
+The one exception is for the actual gup benchmark test itself.
+
+The current code already does a *little* bit more than benchmarking, and
+definitely covers more than get_user_pages_fast().  More importantly,
+however, subsequent patches are about to add some functionality that is
+non-benchmark related.
+
+Closely related changes:
+
+* Kconfig: in addition to renaming the options from GUP_BENCHMARK to
+  GUP_TEST, update the help text to reflect that it's no longer a
+  benchmark-only test.
+
+Link: https://lkml.kernel.org/r/20201026064021.3545418-1-jhubbard@nvidia.com
+Link: https://lkml.kernel.org/r/20201026064021.3545418-2-jhubbard@nvidia.com
+Signed-off-by: John Hubbard <jhubbard@nvidia.com>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Jérôme Glisse <jglisse@redhat.com>
+Cc: Ralph Campbell <rcampbell@nvidia.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Stable-dep-of: 44817a536aaa ("mm/gup_test: safely calculate GUP batch size")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx7-tqma7.dtsi | 40 ++++++++++++++++++-------------
- 1 file changed, 23 insertions(+), 17 deletions(-)
+ Documentation/core-api/pin_user_pages.rst     |  6 ++--
+ arch/s390/configs/debug_defconfig             |  2 +-
+ arch/s390/configs/defconfig                   |  2 +-
+ mm/Kconfig                                    | 15 +++++---
+ mm/Makefile                                   |  2 +-
+ mm/{gup_benchmark.c => gup_test.c}            | 36 +++++++++----------
+ tools/testing/selftests/vm/.gitignore         |  2 +-
+ tools/testing/selftests/vm/Makefile           |  2 +-
+ tools/testing/selftests/vm/config             |  2 +-
+ .../vm/{gup_benchmark.c => gup_test.c}        | 16 ++++-----
+ tools/testing/selftests/vm/run_vmtests        |  8 ++---
+ 11 files changed, 49 insertions(+), 44 deletions(-)
+ rename mm/{gup_benchmark.c => gup_test.c} (81%)
+ rename tools/testing/selftests/vm/{gup_benchmark.c => gup_test.c} (85%)
 
-diff --git a/arch/arm/boot/dts/imx7-tqma7.dtsi b/arch/arm/boot/dts/imx7-tqma7.dtsi
-index 22d0eaa4cef79..9fe4819fd34c9 100644
---- a/arch/arm/boot/dts/imx7-tqma7.dtsi
-+++ b/arch/arm/boot/dts/imx7-tqma7.dtsi
-@@ -43,8 +43,8 @@ pfuze3000: pmic@8 {
+diff --git a/Documentation/core-api/pin_user_pages.rst b/Documentation/core-api/pin_user_pages.rst
+index 7ca8c7bac6502..eae972b232243 100644
+--- a/Documentation/core-api/pin_user_pages.rst
++++ b/Documentation/core-api/pin_user_pages.rst
+@@ -221,12 +221,12 @@ Unit testing
+ ============
+ This file::
  
- 		regulators {
- 			sw1a_reg: sw1a {
--				regulator-min-microvolt = <700000>;
--				regulator-max-microvolt = <3300000>;
-+				regulator-min-microvolt = <1000000>;
-+				regulator-max-microvolt = <1225000>;
- 				regulator-boot-on;
- 				regulator-always-on;
- 				regulator-ramp-delay = <6250>;
-@@ -52,34 +52,33 @@ sw1a_reg: sw1a {
+- tools/testing/selftests/vm/gup_benchmark.c
++ tools/testing/selftests/vm/gup_test.c
  
- 			/* use sw1c_reg to align with pfuze100/pfuze200 */
- 			sw1c_reg: sw1b {
--				regulator-min-microvolt = <700000>;
--				regulator-max-microvolt = <1475000>;
-+				regulator-min-microvolt = <1000000>;
-+				regulator-max-microvolt = <1000000>;
- 				regulator-boot-on;
- 				regulator-always-on;
- 				regulator-ramp-delay = <6250>;
- 			};
+ has the following new calls to exercise the new pin*() wrapper functions:
  
- 			sw2_reg: sw2 {
--				regulator-min-microvolt = <1500000>;
--				regulator-max-microvolt = <1850000>;
-+				regulator-min-microvolt = <1800000>;
-+				regulator-max-microvolt = <1800000>;
- 				regulator-boot-on;
- 				regulator-always-on;
- 			};
+-* PIN_FAST_BENCHMARK (./gup_benchmark -a)
+-* PIN_BENCHMARK (./gup_benchmark -b)
++* PIN_FAST_BENCHMARK (./gup_test -a)
++* PIN_BENCHMARK (./gup_test -b)
  
- 			sw3a_reg: sw3 {
--				regulator-min-microvolt = <900000>;
--				regulator-max-microvolt = <1650000>;
-+				regulator-min-microvolt = <1350000>;
-+				regulator-max-microvolt = <1350000>;
- 				regulator-boot-on;
- 				regulator-always-on;
- 			};
+ You can monitor how many total dma-pinned pages have been acquired and released
+ since the system was booted, via two new /proc/vmstat entries: ::
+diff --git a/arch/s390/configs/debug_defconfig b/arch/s390/configs/debug_defconfig
+index fe6f529ac82cf..3601c28d15260 100644
+--- a/arch/s390/configs/debug_defconfig
++++ b/arch/s390/configs/debug_defconfig
+@@ -102,7 +102,7 @@ CONFIG_ZSMALLOC_STAT=y
+ CONFIG_DEFERRED_STRUCT_PAGE_INIT=y
+ CONFIG_IDLE_PAGE_TRACKING=y
+ CONFIG_PERCPU_STATS=y
+-CONFIG_GUP_BENCHMARK=y
++CONFIG_GUP_TEST=y
+ CONFIG_NET=y
+ CONFIG_PACKET=y
+ CONFIG_PACKET_DIAG=m
+diff --git a/arch/s390/configs/defconfig b/arch/s390/configs/defconfig
+index 17d5df2c1eff3..e2171a0088094 100644
+--- a/arch/s390/configs/defconfig
++++ b/arch/s390/configs/defconfig
+@@ -95,7 +95,7 @@ CONFIG_ZSMALLOC_STAT=y
+ CONFIG_DEFERRED_STRUCT_PAGE_INIT=y
+ CONFIG_IDLE_PAGE_TRACKING=y
+ CONFIG_PERCPU_STATS=y
+-CONFIG_GUP_BENCHMARK=y
++CONFIG_GUP_TEST=y
+ CONFIG_NET=y
+ CONFIG_PACKET=y
+ CONFIG_PACKET_DIAG=m
+diff --git a/mm/Kconfig b/mm/Kconfig
+index 8c49d09da2141..1494da7e9099f 100644
+--- a/mm/Kconfig
++++ b/mm/Kconfig
+@@ -821,13 +821,18 @@ config PERCPU_STATS
+ 	  information includes global and per chunk statistics, which can
+ 	  be used to help understand percpu memory usage.
  
- 			swbst_reg: swbst {
--				regulator-min-microvolt = <5000000>;
--				regulator-max-microvolt = <5150000>;
-+				/* Not connected and left unconfigured */
- 			};
+-config GUP_BENCHMARK
+-	bool "Enable infrastructure for get_user_pages() and related calls benchmarking"
++config GUP_TEST
++	bool "Enable infrastructure for get_user_pages()-related unit tests"
+ 	help
+-	  Provides /sys/kernel/debug/gup_benchmark that helps with testing
+-	  performance of get_user_pages() and related calls.
++	  Provides /sys/kernel/debug/gup_test, which in turn provides a way
++	  to make ioctl calls that can launch kernel-based unit tests for
++	  the get_user_pages*() and pin_user_pages*() family of API calls.
  
- 			snvs_reg: vsnvs {
--				regulator-min-microvolt = <1000000>;
-+				regulator-min-microvolt = <3000000>;
- 				regulator-max-microvolt = <3000000>;
- 				regulator-boot-on;
- 				regulator-always-on;
-@@ -92,18 +91,25 @@ vref_reg: vrefddr {
+-	  See tools/testing/selftests/vm/gup_benchmark.c
++	  These tests include benchmark testing of the _fast variants of
++	  get_user_pages*() and pin_user_pages*(), as well as smoke tests of
++	  the non-_fast variants.
++
++	  See tools/testing/selftests/vm/gup_test.c
  
- 			vgen1_reg: vldo1 {
- 				regulator-min-microvolt = <1800000>;
--				regulator-max-microvolt = <3300000>;
-+				regulator-max-microvolt = <1800000>;
- 				regulator-always-on;
- 			};
+ config GUP_GET_PTE_LOW_HIGH
+ 	bool
+diff --git a/mm/Makefile b/mm/Makefile
+index d73aed0fc99c1..069f216e109ea 100644
+--- a/mm/Makefile
++++ b/mm/Makefile
+@@ -90,7 +90,7 @@ obj-$(CONFIG_PAGE_COUNTER) += page_counter.o
+ obj-$(CONFIG_MEMCG) += memcontrol.o vmpressure.o
+ obj-$(CONFIG_MEMCG_SWAP) += swap_cgroup.o
+ obj-$(CONFIG_CGROUP_HUGETLB) += hugetlb_cgroup.o
+-obj-$(CONFIG_GUP_BENCHMARK) += gup_benchmark.o
++obj-$(CONFIG_GUP_TEST) += gup_test.o
+ obj-$(CONFIG_MEMORY_FAILURE) += memory-failure.o
+ obj-$(CONFIG_HWPOISON_INJECT) += hwpoison-inject.o
+ obj-$(CONFIG_DEBUG_KMEMLEAK) += kmemleak.o
+diff --git a/mm/gup_benchmark.c b/mm/gup_test.c
+similarity index 81%
+rename from mm/gup_benchmark.c
+rename to mm/gup_test.c
+index 8b3e5b5cd8fa5..59472ea6aa394 100644
+--- a/mm/gup_benchmark.c
++++ b/mm/gup_test.c
+@@ -5,13 +5,13 @@
+ #include <linux/ktime.h>
+ #include <linux/debugfs.h>
  
- 			vgen2_reg: vldo2 {
--				regulator-min-microvolt = <800000>;
--				regulator-max-microvolt = <1550000>;
-+				regulator-min-microvolt = <1500000>;
-+				regulator-max-microvolt = <1500000>;
- 				regulator-always-on;
- 			};
+-#define GUP_FAST_BENCHMARK	_IOWR('g', 1, struct gup_benchmark)
+-#define GUP_BENCHMARK		_IOWR('g', 2, struct gup_benchmark)
+-#define PIN_FAST_BENCHMARK	_IOWR('g', 3, struct gup_benchmark)
+-#define PIN_BENCHMARK		_IOWR('g', 4, struct gup_benchmark)
+-#define PIN_LONGTERM_BENCHMARK	_IOWR('g', 5, struct gup_benchmark)
++#define GUP_FAST_BENCHMARK	_IOWR('g', 1, struct gup_test)
++#define GUP_BENCHMARK		_IOWR('g', 2, struct gup_test)
++#define PIN_FAST_BENCHMARK	_IOWR('g', 3, struct gup_test)
++#define PIN_BENCHMARK		_IOWR('g', 4, struct gup_test)
++#define PIN_LONGTERM_BENCHMARK	_IOWR('g', 5, struct gup_test)
  
- 			vgen3_reg: vccsd {
--				regulator-min-microvolt = <2850000>;
-+				/*
-+				 * Specified values refer to 3.3V operation; voltage for 1.8V
-+				 * operation is derived from this.
-+				 *
-+				 * The base board should usually mux GPIO1_IO08 to SD1_VSELECT for
-+				 * automatic switching of SD card IO voltage.
-+				 */
-+				regulator-min-microvolt = <3300000>;
- 				regulator-max-microvolt = <3300000>;
- 				regulator-always-on;
- 			};
-@@ -115,13 +121,13 @@ vgen4_reg: v33 {
- 			};
+-struct gup_benchmark {
++struct gup_test {
+ 	__u64 get_delta_usec;
+ 	__u64 put_delta_usec;
+ 	__u64 addr;
+@@ -56,7 +56,7 @@ static void verify_dma_pinned(unsigned int cmd, struct page **pages,
+ 			if (WARN(!page_maybe_dma_pinned(page),
+ 				 "pages[%lu] is NOT dma-pinned\n", i)) {
  
- 			vgen5_reg: vldo3 {
--				regulator-min-microvolt = <1800000>;
-+				regulator-min-microvolt = <3300000>;
- 				regulator-max-microvolt = <3300000>;
- 				regulator-always-on;
- 			};
+-				dump_page(page, "gup_benchmark failure");
++				dump_page(page, "gup_test failure");
+ 				break;
+ 			}
+ 		}
+@@ -64,8 +64,8 @@ static void verify_dma_pinned(unsigned int cmd, struct page **pages,
+ 	}
+ }
  
- 			vgen6_reg: vldo4 {
--				regulator-min-microvolt = <1800000>;
-+				regulator-min-microvolt = <3300000>;
- 				regulator-max-microvolt = <3300000>;
- 				regulator-always-on;
- 			};
+-static int __gup_benchmark_ioctl(unsigned int cmd,
+-		struct gup_benchmark *gup)
++static int __gup_test_ioctl(unsigned int cmd,
++		struct gup_test *gup)
+ {
+ 	ktime_t start_time, end_time;
+ 	unsigned long i, nr_pages, addr, next;
+@@ -164,10 +164,10 @@ static int __gup_benchmark_ioctl(unsigned int cmd,
+ 	return ret;
+ }
+ 
+-static long gup_benchmark_ioctl(struct file *filep, unsigned int cmd,
++static long gup_test_ioctl(struct file *filep, unsigned int cmd,
+ 		unsigned long arg)
+ {
+-	struct gup_benchmark gup;
++	struct gup_test gup;
+ 	int ret;
+ 
+ 	switch (cmd) {
+@@ -184,7 +184,7 @@ static long gup_benchmark_ioctl(struct file *filep, unsigned int cmd,
+ 	if (copy_from_user(&gup, (void __user *)arg, sizeof(gup)))
+ 		return -EFAULT;
+ 
+-	ret = __gup_benchmark_ioctl(cmd, &gup);
++	ret = __gup_test_ioctl(cmd, &gup);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -194,17 +194,17 @@ static long gup_benchmark_ioctl(struct file *filep, unsigned int cmd,
+ 	return 0;
+ }
+ 
+-static const struct file_operations gup_benchmark_fops = {
++static const struct file_operations gup_test_fops = {
+ 	.open = nonseekable_open,
+-	.unlocked_ioctl = gup_benchmark_ioctl,
++	.unlocked_ioctl = gup_test_ioctl,
+ };
+ 
+-static int gup_benchmark_init(void)
++static int gup_test_init(void)
+ {
+-	debugfs_create_file_unsafe("gup_benchmark", 0600, NULL, NULL,
+-				   &gup_benchmark_fops);
++	debugfs_create_file_unsafe("gup_test", 0600, NULL, NULL,
++				   &gup_test_fops);
+ 
+ 	return 0;
+ }
+ 
+-late_initcall(gup_benchmark_init);
++late_initcall(gup_test_init);
+diff --git a/tools/testing/selftests/vm/.gitignore b/tools/testing/selftests/vm/.gitignore
+index 849e8226395aa..2c8ddcf41c0e3 100644
+--- a/tools/testing/selftests/vm/.gitignore
++++ b/tools/testing/selftests/vm/.gitignore
+@@ -15,7 +15,7 @@ userfaultfd
+ mlock-intersect-test
+ mlock-random-test
+ virtual_address_range
+-gup_benchmark
++gup_test
+ va_128TBswitch
+ map_fixed_noreplace
+ write_to_hugetlbfs
+diff --git a/tools/testing/selftests/vm/Makefile b/tools/testing/selftests/vm/Makefile
+index d8479552e2224..2ed4f1eabc741 100644
+--- a/tools/testing/selftests/vm/Makefile
++++ b/tools/testing/selftests/vm/Makefile
+@@ -23,7 +23,7 @@ MAKEFLAGS += --no-builtin-rules
+ CFLAGS = -Wall -I ../../../../usr/include $(EXTRA_CFLAGS)
+ LDLIBS = -lrt
+ TEST_GEN_FILES = compaction_test
+-TEST_GEN_FILES += gup_benchmark
++TEST_GEN_FILES += gup_test
+ TEST_GEN_FILES += hmm-tests
+ TEST_GEN_FILES += hugepage-mmap
+ TEST_GEN_FILES += hugepage-shm
+diff --git a/tools/testing/selftests/vm/config b/tools/testing/selftests/vm/config
+index 69dd0d1aa30b2..60e82da0de850 100644
+--- a/tools/testing/selftests/vm/config
++++ b/tools/testing/selftests/vm/config
+@@ -3,4 +3,4 @@ CONFIG_USERFAULTFD=y
+ CONFIG_TEST_VMALLOC=m
+ CONFIG_DEVICE_PRIVATE=y
+ CONFIG_TEST_HMM=m
+-CONFIG_GUP_BENCHMARK=y
++CONFIG_GUP_TEST=y
+diff --git a/tools/testing/selftests/vm/gup_benchmark.c b/tools/testing/selftests/vm/gup_test.c
+similarity index 85%
+rename from tools/testing/selftests/vm/gup_benchmark.c
+rename to tools/testing/selftests/vm/gup_test.c
+index 1d4359341e44c..00b4731f535eb 100644
+--- a/tools/testing/selftests/vm/gup_benchmark.c
++++ b/tools/testing/selftests/vm/gup_test.c
+@@ -14,18 +14,18 @@
+ #define MB (1UL << 20)
+ #define PAGE_SIZE sysconf(_SC_PAGESIZE)
+ 
+-#define GUP_FAST_BENCHMARK	_IOWR('g', 1, struct gup_benchmark)
+-#define GUP_BENCHMARK		_IOWR('g', 2, struct gup_benchmark)
++#define GUP_FAST_BENCHMARK	_IOWR('g', 1, struct gup_test)
++#define GUP_BENCHMARK		_IOWR('g', 2, struct gup_test)
+ 
+ /* Similar to above, but use FOLL_PIN instead of FOLL_GET. */
+-#define PIN_FAST_BENCHMARK	_IOWR('g', 3, struct gup_benchmark)
+-#define PIN_BENCHMARK		_IOWR('g', 4, struct gup_benchmark)
+-#define PIN_LONGTERM_BENCHMARK	_IOWR('g', 5, struct gup_benchmark)
++#define PIN_FAST_BENCHMARK	_IOWR('g', 3, struct gup_test)
++#define PIN_BENCHMARK		_IOWR('g', 4, struct gup_test)
++#define PIN_LONGTERM_BENCHMARK	_IOWR('g', 5, struct gup_test)
+ 
+ /* Just the flags we need, copied from mm.h: */
+ #define FOLL_WRITE	0x01	/* check pte is writable */
+ 
+-struct gup_benchmark {
++struct gup_test {
+ 	__u64 get_delta_usec;
+ 	__u64 put_delta_usec;
+ 	__u64 addr;
+@@ -37,7 +37,7 @@ struct gup_benchmark {
+ 
+ int main(int argc, char **argv)
+ {
+-	struct gup_benchmark gup;
++	struct gup_test gup;
+ 	unsigned long size = 128 * MB;
+ 	int i, fd, filed, opt, nr_pages = 1, thp = -1, repeats = 1, write = 0;
+ 	int cmd = GUP_FAST_BENCHMARK, flags = MAP_PRIVATE;
+@@ -104,7 +104,7 @@ int main(int argc, char **argv)
+ 	if (write)
+ 		gup.flags |= FOLL_WRITE;
+ 
+-	fd = open("/sys/kernel/debug/gup_benchmark", O_RDWR);
++	fd = open("/sys/kernel/debug/gup_test", O_RDWR);
+ 	if (fd == -1) {
+ 		perror("open");
+ 		exit(1);
+diff --git a/tools/testing/selftests/vm/run_vmtests b/tools/testing/selftests/vm/run_vmtests
+index a3f4f30f0a2e8..d1843d5f3c308 100755
+--- a/tools/testing/selftests/vm/run_vmtests
++++ b/tools/testing/selftests/vm/run_vmtests
+@@ -124,9 +124,9 @@ else
+ fi
+ 
+ echo "--------------------------------------------"
+-echo "running 'gup_benchmark -U' (normal/slow gup)"
++echo "running 'gup_test -U' (normal/slow gup)"
+ echo "--------------------------------------------"
+-./gup_benchmark -U
++./gup_test -U
+ if [ $? -ne 0 ]; then
+ 	echo "[FAIL]"
+ 	exitcode=1
+@@ -135,9 +135,9 @@ else
+ fi
+ 
+ echo "------------------------------------------"
+-echo "running gup_benchmark -b (pin_user_pages)"
++echo "running gup_test -b (pin_user_pages)"
+ echo "------------------------------------------"
+-./gup_benchmark -b
++./gup_test -b
+ if [ $? -ne 0 ]; then
+ 	echo "[FAIL]"
+ 	exitcode=1
 -- 
 2.53.0
 
