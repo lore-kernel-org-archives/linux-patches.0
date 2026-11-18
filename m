@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035169;
-	b=4dNdQvq8qfdwCu3pRRoX3A8A+A6gmuN3lVDLoBh7JsFDYiBUgKIEw+PCA8I+kgI1Ii1L
-	 tmA2lCAW0uagAtJubBM1lsneEU7DLJ6i9nmVCIJHCCUNNuRuQVPEr8CriKS+4C0YlRyZQ
-	 JA1wNORWhEe7E8LIAeZgjlW3Q73Z950vsKbbdveBf6OWTswLM087L+hG9ITbBTgRUTLtn
-	 eE8K66Nr44F1zxAMMimwiPX6EedeGiuGd9cfL3XGaOkusXL2KlRsihLP4H2R5GXJk8NNJ
-	 u0KIO95enfxFDHbhPeilIZN9KlZURnIaYYUKRklv03pt8yhYRDac7BcCftqARpQrLNw==
+	t=1795035171;
+	b=LnzlOBwhd+DX/o56NF5//F1y7w6/oJEuMab1p+LiewSCfq/eqC6OT104J3ToEFSuqsaw
+	 aWBtbBO4jcXgxeE0RVSAdjQ9K+gcbfhEsL6QWyzwpo/jOFhZDYmy8Hkhd7Bo6oNihrpp1
+	 UrmjEXP8OIEG769e27yZdyCtCqm1p4ZMwbMlt2hc1qJIQcJFVQNUg45HdHhbz8u/FZXsc
+	 lQpDOXFtd8/zokP6umk75pJB5mbrzZtKklpp7GPCj2S7f7e2b3SRwsl35oYrxJeYCPhlb
+	 SKCnn7ymnkFDogpaLkcuWu5e/+036mDF9DMREllN8YDrovReMbQtBuIczgARpW9xTIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035169;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035171;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=4DtAtaHtzQ3JKT+PlUXPLzD2Du5di3j4zTwck3AulEE=;
-	b=Ovh+NLKSoVML3w9RUZDYaCtImAdqBjf7mBtbStuRh3IKfzFwCWslMKOpVky7+3GQ4jbF
-	 +7zHOKn369TYXm3tszBRWMSJWj699k6jUgY41WnYm/7+etbZBzKZ5L2RFm+GUXloenewL
-	 t91Np0u5juqN4Vm9kYqAASteKs5zDOhYydHmEiAk+t5O8qhqNQ0DtaAgGxEQWKRDC7Ha/
-	 Kvaekkip1tutIv134QMbM19JKf7mv+PfwsOLr7DfqrrcQHXMsfPYOQqEosgXxkW1f/2Z9
-	 mlRzhMvHcwfqyAs2i3nb8deqd3IKbnCGq+CNeGj1bd5AeZLgva4gRtiUd7jk2Pu0gUg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=enu8SOfE1MfRXqi/cgdeZKWCtHuc+STXKSpInRb+Xi0=;
+	b=KmETk8zH1TtpJQDgFns1HAnpf3mhkDBiwQIaQD7WTcbTAckqGQHXvQq8T0bN9kW9JPWt
+	 xOGCmkO6Mihai3xieV/KnBnD3Nul3YKGvNmbmHRURmONIQq4ZPv9tlESjGio13HOPtOPe
+	 xb/Vo7DnpXOo3KbVnJ75DmI/1lhih/8u8JRBqD97pUK2sbHB7xMqDLCX1Cv0ddxMSCvRf
+	 J4m2rV0BXH9HRAgwiuH48NqpaPEPCLvO8k0DcEl06phveOswQ+68yoGpL5N5jbj80Resv
+	 3kf9QQFAWS4vXQzTt3EFWJEVRFOkYlxf74l8DtP442ZpHLJNSCWo3js7LveQT+znUOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B5dIO5cE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jYnyiCkh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2988D606A320;
-	Wed, 18 Nov 2026 20:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A6960A2601;
+	Wed, 18 Nov 2026 20:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B5dIO5cE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FEAC1F000C4;
-	Wed, 18 Nov 2026 20:52:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jYnyiCkh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 074E81F000CA;
+	Wed, 18 Nov 2026 20:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035168;
-	bh=4DtAtaHtzQ3JKT+PlUXPLzD2Du5di3j4zTwck3AulEE=;
+	s=korg; t=1795035171;
+	bh=enu8SOfE1MfRXqi/cgdeZKWCtHuc+STXKSpInRb+Xi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B5dIO5cE+UkgcFXMvp32t1u7cPx3W3zPiWUZn9OvYzpyIo2svkgUWqo6NU0Zvq0Bp
-	 wtNKfnJoyNVcnOu3st70q2e+3Dad5TWHJ/FGoiAgoE07JOE5GfOjmkR/R8IWbzs1l8
-	 rS7GXEfgc3wUJZ8DgjF0xJod0FBvGFT99eODEg2Q=
+	b=jYnyiCkh4vveu0fHiCC0yHwnDKwcUskIy1A4XfdQb1jy4AQsxeLftNB+oudR1zFsL
+	 k62aiJ/6CkAj+8rpY+oXlhRxnTNURKt7GqEc57MV2rPMOD4dajd85TJU+Fy/46L7zo
+	 P2F3V7O6zBJjjXskTkWSiTMivVfhTahPolpdQ7u0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9bfac891bdd42eb708fc@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Sean Young <sean@mess.org>
-Subject: [PATCH 6.6 0593/3318] media: imon: fix use-after-free in display_close via dev_dbg
-Date: Wed, 18 Nov 2026 15:20:15 +0100
-Message-ID: <20261118150335.410079241@linuxfoundation.org>
+	Nickolai Zeldovich <nickolai@csail.mit.edu>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Tejun Heo <tj@kernel.org>,
+	Bradley Morgan <brads@mainlining.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Thierry Reding <treding@nvidia.com>
+Subject: [PATCH 6.6 0629/3318] resource: report a devm_request_resource() conflict under the lock
+Date: Wed, 18 Nov 2026 15:20:51 +0100
+Message-ID: <20261118150336.742156755@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,65 +66,104 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Nickolai Zeldovich <nickolai@csail.mit.edu>
 
-commit 118a3590a4080c71c565265b05b3f92e814d7647 upstream.
+commit d2f7bdfdeac8137e942b32e0badc40e181127d7b upstream.
 
-ictx->dev is a raw pointer to the usb_interface's embedded device.
-On disconnect, usb_disconnect() can drop the last reference on the
-interface and free it while a userspace fd for /dev/lcd0 is still
-open. When that fd is later closed, display_close() dereferences
-the now-freed ictx->dev via dev_dbg(), causing a use-after-free.
+devm_request_resource() calls request_resource_conflict(), which takes
+resource_lock, tries to insert the new resource and returns a pointer to
+the conflicting resource after dropping the lock.  The error message is
+then formatted from that pointer: conflict->name and the %pR argument
+read the name, start, end, flags and desc of a resource that nothing
+pins any more.  The owner of the conflicting resource may call
+release_resource() and free it the moment the lock is dropped.
 
-Remove the dev_dbg() calls that dereference ictx->dev in
-display_close() and free_imon_context(), rather than taking a
-reference on the device.
+The conflicting resource normally belongs to another device.  With two
+devices whose drivers claim overlapping regions (two PCI host bridges
+whose "ranges" windows overlap, two instances of a controller on the
+same aperture, or a stale claim an administrator is replacing), the
+following interleaving reads freed memory:
 
-Fixes: 21677cfc562a ("V4L/DVB: ir-core: add imon driver")
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+9bfac891bdd42eb708fc@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9bfac891bdd42eb708fc
-Link: https://lore.kernel.org/all/20260918054851.26083-1-kartikey406@gmail.com/T/ [v1]
-Link: https://lore.kernel.org/all/20260928121230.35359-1-kartikey406@gmail.com/T/ [v2]
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Signed-off-by: Sean Young <sean@mess.org>
+  CPU 0: driver B probe                  CPU 1: driver A unbind
+  devm_request_resource(devB, root, resB)
+    request_resource_conflict()
+      write_lock(&resource_lock)
+      __request_resource() -> resA
+      write_unlock(&resource_lock)
+                                         devres_release_all(devA)
+                                           devm_resource_release()
+                                             release_resource(resA)
+                                         put_device() -> kfree(resA)
+    dev_err(..., resA->name, resA)        use after free
+
+Both halves are reachable from userspace on any kernel: a write to the
+"unbind" file of the driver that holds the region and a write to the
+"bind" file of the driver that wants it.  One in-tree path is
+drivers/pci/bus.c devm_request_pci_bus_resources(), called from host
+bridge probe for every bridge window; the windows are the embedded
+struct resource of kzalloc'ed resource_entry objects that
+pci_free_resource_list() frees when the other bridge is released.
+In the common case the "resource collision" message is garbled; with
+the slab object poisoned (CONFIG_SLUB_DEBUG) or reused, formatting
+conflict->name oopses, and KASAN reports a slab-use-after-free read in
+devm_request_resource().  All of this happens in a probe that is
+already failing with -EBUSY.  The window is a few hundred instructions
+wide and exists only when two devices actually collide, so the race
+has not been observed outside of analysis.
+
+Do the same here: take resource_lock, insert with __request_resource()
+and print the diagnostic while the lock still keeps the conflicting
+resource in the tree, then drop the lock.  The return values and the
+devres handling are unchanged.
+
+The change was built for x86_64 and RISC-V; the resource KUnit tests
+pass on both.
+
+Found by formal verification of kernel/resource.c against the kernel
+binary.
+
+Link: https://lore.kernel.org/20261016140043.790048-1-nickolai@csail.mit.edu
+Fixes: 8d38821cbcf5 ("resources: Add device-managed request/release_resource()")
+Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Acked-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Assisted-by: LLM
+Cc: Bjorn Helgaas <bhelgaas@google.com>
+Cc: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Cc: Thierry Reding <treding@nvidia.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/imon.c |    5 -----
- 1 file changed, 5 deletions(-)
+ kernel/resource.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/media/rc/imon.c
-+++ b/drivers/media/rc/imon.c
-@@ -497,16 +497,12 @@ MODULE_PARM_DESC(pad_thresh, "Threshold
+--- a/kernel/resource.c
++++ b/kernel/resource.c
+@@ -1547,10 +1547,15 @@ int devm_request_resource(struct device
  
- static void free_imon_context(struct imon_context *ictx)
- {
--	struct device *dev = ictx->dev;
--
- 	usb_free_urb(ictx->tx_urb);
- 	WARN_ON(ictx->dev_present_intf0);
- 	usb_free_urb(ictx->rx_urb_intf0);
- 	WARN_ON(ictx->dev_present_intf1);
- 	usb_free_urb(ictx->rx_urb_intf1);
- 	kfree_rcu(ictx, rcu);
--
--	dev_dbg(dev, "%s: iMON context freed\n", __func__);
- }
+ 	*ptr = new;
  
- /*
-@@ -582,7 +578,6 @@ static int display_close(struct inode *i
- 		retval = -EIO;
- 	} else {
- 		ictx->display_isopen = false;
--		dev_dbg(ictx->dev, "display port closed\n");
+-	conflict = request_resource_conflict(root, new);
+-	if (conflict) {
++	/* Report a conflict while the lock still keeps it in the tree. */
++	write_lock(&resource_lock);
++	conflict = __request_resource(root, new);
++	if (conflict)
+ 		dev_err(dev, "resource collision: %pR conflicts with %s %pR\n",
+ 			new, conflict->name, conflict);
++	write_unlock(&resource_lock);
++
++	if (conflict) {
+ 		devres_free(ptr);
+ 		return -EBUSY;
  	}
- 
- 	mutex_unlock(&ictx->lock);
 
 
