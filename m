@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025945;
-	b=HYevwp+FsI9ivPhQtg+UCLJsa+oUzbROHsT6e4Svh657jdg3dFW4Q+F7fR7rmRuFKGza
-	 YSUml+IXK40BDdgSKBTxTGbIlb0NSg+WG/xATYWtcoy/vwwBzdDpBkQCq2iY6Lif6Apn8
-	 j5WpQSlW3QU4Nul9d+Fd2YHa1qJcS+dOqRhV+uvuOMyAs82CoMldvavZT/filBK3nYW/N
-	 /JqJDsO/J3mEyYjNZ5wwxVu72gjKyGpGCyOw2ucNk56rZtyBAjvodzs8XMUbWnxJnW3gp
-	 uq1jGA6P2vxl5+pHycBqgeD+ndsUcTkByvCR1v/ePqv7B8AUuyaItihdfBXoZHAXwcA==
+	t=1795025947;
+	b=ng9MXnVpxr1el8Eqk1cTsLJY24AvLaT6Q/duwLBYgzPBbCitQTen99THHiz4ODl9B9Z+
+	 Yv8VVqjEaVo8DHYvGTSq0mnGg/iHsu/syNPk8R8YO75I+zRGloq7iHn7boCRWXc/MSPU6
+	 qJRB62hk+XwpM2QKmqb51KkmMPIbpSw6lRtnkpihx19l4Izb+GKAafrWvoUe8sqBFnSUh
+	 bD4fpXPVvEBQNSKZRU9kUPJnDeBCtqdss8RpSJe4B99CXNG0n888lqgewcgSwMTYY4tkb
+	 E97uzdn8QnlEjOtXS9Gus/2a8uWpE7BnGqXtBySPBFGvLsmpyHbQIh1qZU/JHdq+9yA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025945;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025947;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=39v5iY3FPEEOE6YC+a53Yxd+UUEPVOv6n2T5S1Xz3HE=;
-	b=teqdct8wdqKuoZJ3FtFQ5XtOlx/hCWlSHaRWniMYpzxK0+gArgr+l/ad2tIunTJgQFe5
-	 POsoVZAFW9QCt3/fciHeGE4tFVdN/yEaSfWt4YAmW7hqnMC9nkTIkE4854FfGKgUt91G7
-	 TjT9luxgTrv8nCZnnG5ohreQ/y/I9YIkWaZBlyhENiqnxmw/IWN0ZzS0TdVy9BT3ZiSF5
-	 SO8w7EB2Xcl8PhzJb5/O/G0GCFnzIOcpLD1o76pIslQv7VX+AzWDdNpGreoyuLM9UitmQ
-	 KZrtqUOrh0svVxb4LhgYHYhYRanfqTY3bi6qsWEUwQKgNhRaiCN38VN0T9j1u7NUMew==
+	bh=m2I1dTPmsqk5qA54jVjZlFmYzUQc4+JclLVsg+9/nqs=;
+	b=emG813dea34C4aqFRTeas5OQkLYolcjvbZrzdXQbmZlh1YvBRee/VwcEaFBO93zihuxO
+	 2PL6qJX+Q+DIomOSsHja3QdSI0rxcVX2bAKqrDrlLlQO/TlJK3HuvHjljFIu0L7Z6R3hW
+	 rAcVCOmLpt79tTN87/uk39qG0cggET/FMzS76bW8t58X96Bp8n0JKtpTj756GqgLZGUH5
+	 +vFv6zalM8Zg3A3JR2lrMJZAUpU72Zb9U6yKUh7XnP4N3y7qphn/jOIB/hGHWtYoyKfeL
+	 BdJ+JZSp5oO53ECPrKUkk5nmrYS7YhUtDcxSgWToVDE+NULSCV+EuPjHQHkwLi7frzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TLmZjD6W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SJxRQB8+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED19606A31C;
-	Wed, 18 Nov 2026 18:19:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 437ED606A32F;
+	Wed, 18 Nov 2026 18:19:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TLmZjD6W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB8381F000C7;
-	Wed, 18 Nov 2026 18:19:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SJxRQB8+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9501C1F000C5;
+	Wed, 18 Nov 2026 18:19:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025944;
-	bh=39v5iY3FPEEOE6YC+a53Yxd+UUEPVOv6n2T5S1Xz3HE=;
+	s=korg; t=1795025947;
+	bh=m2I1dTPmsqk5qA54jVjZlFmYzUQc4+JclLVsg+9/nqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TLmZjD6WUpOH5rfdiTqLRzv4d7B5V7otaC5wR6LKQ0TBMhOEX2Z2e2DghIac4IDs2
-	 nMpw96Gnl29I9U/3eI6knNgMZpZMguiFGOQ5FcbRR4dZIgN7V32Lyuar5e73/Kx6Yg
-	 kefR3EoITfZHyQpMkRE68wLFovKnH1OcpU4yPpmM=
+	b=SJxRQB8+gwoWY6oU373l3thSXzXAB60bzYWUmP1xnq3UnAzFgs2iZF41gSpH5z/vj
+	 dMfMOjS2ZmTOoAwof4GySt8w0XWGXpnHUhVLxo8XqaiSNX6OtGHnF9R2bjxpLKI06A
+	 SJpWyPasbyS6rKNORvloeo7Gj+M6hE6C2leIdwGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Shenghao Ding <shenghao-ding@ti.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1260/2151] ALSA: pcmtest: Fix a bogus pointer read in snd_pcmtst_pcm_pointer()
-Date: Wed, 18 Nov 2026 15:49:55 +0100
-Message-ID: <20261118150208.052211131@linuxfoundation.org>
+Subject: [PATCH 6.18 1243/2151] ASoC: tas2781: Fix TAS2781/TAS5825 PPC version logic conflict
+Date: Wed, 18 Nov 2026 15:49:38 +0100
+Message-ID: <20261118150207.449232150@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,58 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Shenghao Ding <shenghao-ding@ti.com>
 
-[ Upstream commit 905a07c711baf184d01aebd3cf9028a89bcd8b7f ]
+[ Upstream commit 3a05cc2d739486fa3c63aa32e6653ce55dae4819 ]
 
-Sashiko reported a potential bogus value for a pcmtest driver when a
-concurrent call to PCM pointer is invoked while the pcmtest's timer
-callback is running: since the position is updated in the timer
-callback without locking, the following wrapping in inc_buf_pos()
-might be screwed up:
-	if (v_iter->buf_pos >= bytes)
-		v_iter->buf_pos %= bytes;
-Although it was reported as an OOB, the actual return is corrected
-inside buffer_size, so no corruption is expected in this scenario, but
-an error message could show a bogus value.
+Fix cross-team code conflict in shared PPC version check path, ensure
+TAS2781 and TAS5825 apply their respective correct firmware parsing
+routines, eliminate version matching misbehavior between the two models.
 
-Also, the whole state is read and modified locklessly in the timer
-callback, which can be racy against the pause operation, too.
+Fixes: f4ee43ae6ea8 ("ALSA: hda: Add TAS5825 support")
 
-For avoiding those races, simply put the PCM stream lock in the timer
-callback (while the snd_pcm_period_elapsed() must be changed to its
-*_under_stream_lock() variant for avoiding the deadlock).
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 315a3d57c64c ("ALSA: Implement the new Virtual PCM Test Driver")
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261007172051.13240-7-tiwai@suse.de
+Signed-off-by: Shenghao Ding <shenghao-ding@ti.com>
+Link: https://patch.msgid.link/20261002025230.1959-1-shenghao-ding@ti.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/drivers/pcmtest.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/codecs/tas2781-fmwlib.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/sound/drivers/pcmtest.c b/sound/drivers/pcmtest.c
-index 1b95826e8754e..29fe119630153 100644
---- a/sound/drivers/pcmtest.c
-+++ b/sound/drivers/pcmtest.c
-@@ -345,6 +345,7 @@ static void timer_timeout(struct timer_list *data)
- 	v_iter = timer_container_of(v_iter, data, timer_instance);
- 	substream = v_iter->substream;
- 
-+	guard(pcm_stream_lock_irqsave)(substream);
- 	if (v_iter->suspend)
- 		return;
- 
-@@ -358,7 +359,7 @@ static void timer_timeout(struct timer_list *data)
- 	v_iter->period_pos += v_iter->b_rw;
- 	if (v_iter->period_pos >= v_iter->period_bytes) {
- 		v_iter->period_pos %= v_iter->period_bytes;
--		snd_pcm_period_elapsed(substream);
-+		snd_pcm_period_elapsed_under_stream_lock(substream);
+diff --git a/sound/soc/codecs/tas2781-fmwlib.c b/sound/soc/codecs/tas2781-fmwlib.c
+index 2f6522f76df9b..8ffe2450d1352 100644
+--- a/sound/soc/codecs/tas2781-fmwlib.c
++++ b/sound/soc/codecs/tas2781-fmwlib.c
+@@ -1934,7 +1934,8 @@ static void dspbin_type_check(struct tasdevice_priv *tas_priv,
+ 			tas_priv->dspbin_typ = TASDEV_ALPHA;
  	}
+ 	if ((tas_priv->dspbin_typ != TASDEV_BASIC) &&
+-		(ppcver < PPC3_VERSION_TAS5825_BASE))
++		(ppcver < PPC3_VERSION_TAS5825_BASE ||
++		tas_priv->chip_id == TAS2781))
+ 		tas_priv->fw_parse_fct_param_address =
+ 			fw_parse_fct_param_address;
+ }
+@@ -1945,7 +1946,8 @@ static int dspfw_default_callback(struct tasdevice_priv *tas_priv,
+ 	int rc = 0;
  
- 	if (!v_iter->suspend)
+ 	if (drv_ver == 0x100) {
+-		if (ppcver >= PPC3_VERSION_TAS5825_BASE) {
++		if (ppcver >= PPC3_VERSION_TAS5825_BASE &&
++			tas_priv->chip_id == TAS5825) {
+ 			tas_priv->fw_parse_variable_header =
+ 				fw_parse_variable_header_kernel;
+ 			tas_priv->fw_parse_program_data =
 -- 
 2.53.0
 
