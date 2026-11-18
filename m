@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051432;
-	b=Fw23QJ+zniilj8PIOQSmTTxaZB8nciM3r4IXhnFtOh+GfUExZ2CA+PcL8xYqYPdi0DAA
-	 idFWRd0wPg0WcPFa/IDUBL9PGnCHRjr/kqYxbOhD9CyJxHtGHn51AgHtWEKQ58OkE5oNO
-	 fLfbZSKdazyXqgITpBFBt0QVGDLErsikq6kGLp2mN16KOBXcx202r8rB4jqcllpHSHii+
-	 t1RDu4O0a+Yx677X+shoZxfmuq81vMKC7A1Es2fk6Kbtq9Sqa+61HZT2BIUkOxGLMdWPn
-	 FNEqlHcQi238cl/1pqE+6WBnZgMs22wBx9gwLLJGjodlFQJLLPHmQTszfv57xAQsm9g==
+	t=1795051435;
+	b=lSdG9Zj9/RVknWBCdp/OZTvVIqn5u3fLc1aduEIKduFmD5oov8+yg6CMt3tvMngJbJXG
+	 jFF+31jVLcifSQo1ESnmZ9NiniDaH2LALjsSEEJVOGXtwU6QxU2jjt/JV02uLDwLSp+Cz
+	 OwASVZ7AC4Hy6qRvm9g/7Oiyv1tf6vm0uJ36xJhW0wb/XNKVNZnrSqmt+z9Yjp2ieGWVK
+	 Rx20DGhRU6FwylFAkyH6FYO21xJbG4BXtLMelK/2u5q4hUMNEV11ioT7xrow6VeMBb1ie
+	 n4KMs9M6SE4QOTxjYN9JkWcNWCcn7mTi7Lnrq7i9U6Si4IRWNQ/jI2Dd6MXWArXJc4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051432;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051435;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HZuqSs7thm+NG3C9w2DkZzAYjZvl9XAB71C6EKq5nXo=;
-	b=k+fMQ4lMJ1WX4ZQGVCp3Net8dcPKHwHLOrwmYwfeAKe40WjOXLfFvmFO62tSEbkRf6ng
-	 I0MsI06vJqNwHyz9o45f53lNVzQ1Lys8q58TyimhOgjyV2xVei6BY5B33MZg3vFaIa9N5
-	 xBO9bzPDEDtvJ7LdGwv4I8z+US7NGw1K3bOlN6YjPSQ/0HUXqNSAB6tD+3ddgy7LsLOFJ
-	 DjePl09mUMO/B15Ge/c2Lc7cPSuySxs8eLE9S4m8Ig8RaPv/Anq/3l3p5TI65n+2InJQw
-	 TBJweIki727ZXDIZ2aOQyeFz9yC8I3fnyh7h4v6l7BFbaF2sJmrp1htcDG2DDAwycmw==
+	bh=t/u39wHQ9Qzrv4B9M9mkOeWJHETeP2GFTRSThcZgW+g=;
+	b=YTQ33UmNPHpHH34XdwwFOfLe83iNbOCm/IEWYQ2RHffpcp2RLjDby39eQVYQCrhEUELD
+	 at0Ys9S+WPBSHPD0Ac4IJ1LydzqsonBvycIvRHaZHYgPHEAMekVT1znj+/agFMgLebmE4
+	 DkIqM7P76vLelnEgf582Kcufkb12GiuPQJFr4XIPSUHz3yD0c3J1fiqCLXko2YRXWXnWL
+	 IJSYzb8+LKpbsaQjlnhH6o1yH9oFdgNY7WJGPrM8pC08Kd3KEyNuWKV5XhVbOb2JCGs9d
+	 vgJKmUc+mVXGYe181DaRyb+2WQIkea4Et7OGpIkOhixCcmUy92IMYKplHoAlQ1Yo31g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sPl7RvrP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yGon2FnX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8CDF606A32A;
-	Thu, 19 Nov 2026 01:23:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC6A606A31C;
+	Thu, 19 Nov 2026 01:23:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sPl7RvrP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14DD61F000C5;
-	Thu, 19 Nov 2026 01:23:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yGon2FnX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D42651F000C4;
+	Thu, 19 Nov 2026 01:23:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051432;
-	bh=HZuqSs7thm+NG3C9w2DkZzAYjZvl9XAB71C6EKq5nXo=;
+	s=korg; t=1795051435;
+	bh=t/u39wHQ9Qzrv4B9M9mkOeWJHETeP2GFTRSThcZgW+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sPl7RvrPuKcWnOzkKPGrI0GXdtNLOjbHHEKOo/A0slOZDaPz+Zb+OoMYc9fVujxhx
-	 d3KxHdBKxnWDncnm11lCQAM6qKtAuHqA/IUb+e3w0+gkgfgg+ICeOq020VTYfdoGgB
-	 hn1ZR7fkPUCKIgh+qdcLuOLPTE7SgIvZzwL2y05I=
+	b=yGon2FnXvtkXhaZHF7YESxs1amsXSM0mgAqMRC03mGqBy85wxUAoyBWsEshpcciq0
+	 acHb21MqDYy8+dfCk3gR2f8F/RP+FzQJLyOTHkEIf5W+TDkOOPV4ulZHbGjXDkVXM0
+	 JC0AR6rJSWWvNBE8GKX2njHdgN/G+Ol+S1RBKXrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+10cd2d1efe8eeb604bee@syzkaller.appspotmail.com,
-	syzbot+5ebe7cd17e48b4293660@syzkaller.appspotmail.com,
-	Takashi Iwai <tiwai@suse.de>,
+	Yang Wen <anmuxixixi@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0205/2214] ALSA: hda/intel: Add sanity check for BAR0 size
-Date: Wed, 18 Nov 2026 15:31:21 +0100
-Message-ID: <20261118150018.411357343@linuxfoundation.org>
+Subject: [PATCH 5.15 0206/2214] exfat: keep FITRIM within the requested range
+Date: Wed, 18 Nov 2026 15:31:22 +0100
+Message-ID: <20261118150018.449181277@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,53 +68,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Yang Wen <anmuxixixi@gmail.com>
 
-[ Upstream commit 9895573b0185f922be4cf500a0f2e5b9560ab1c3 ]
+[ Upstream commit 2de727471b3b13409466a4af4f8824a86073bf4b ]
 
-The recent reports from syzkaller showed that we can bind any wild PCI
-device to HD-audio controller, and if PCI BAR of the device is too
-small, it may lead to a crash, as the driver believes as if the full
-register range were accessible.
+exfat_find_free_bitmap() searches the entire allocation bitmap and may
+wrap around to its beginning. exfat_trim_fs() does not verify that the
+returned cluster is still within the requested FITRIM range.
 
-For avoiding such a problem, add a safeguard before the actual probe
-to check the available BAR0 size.
+As a result, a partial FITRIM operation may discard free clusters outside
+the user-specified range and report a trimmed length larger than the
+requested length.
 
-Note that the threshold (0x200) is chosen to cover all needed
-registers at probing.  But this doesn't mean that it would cover fully
-for all features including the extended ones.
+Validate each returned cluster against the requested range and stop the
+search when it wraps around or passes the range end.
 
-Reported-by: syzbot+10cd2d1efe8eeb604bee@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=10cd2d1efe8eeb604bee
-Reported-by: syzbot+5ebe7cd17e48b4293660@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=5ebe7cd17e48b4293660
-Link: https://patch.msgid.link/20260813150354.763502-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Yang Wen <anmuxixixi@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_intel.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/exfat/balloc.c | 31 +++++++++++++++++++------------
+ 1 file changed, 19 insertions(+), 12 deletions(-)
 
-diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
-index c69f4e5989d4f..691fc4be1f022 100644
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -2125,6 +2125,15 @@ static int azx_probe(struct pci_dev *pci,
- 		dev_warn(&pci->dev, "dmic_detect option is deprecated, pass snd-intel-dspcfg.dsp_driver=1 option instead\n");
- 	}
+diff --git a/fs/exfat/balloc.c b/fs/exfat/balloc.c
+index 26808f0d3e9ff..0ebbfa55caca6 100644
+--- a/fs/exfat/balloc.c
++++ b/fs/exfat/balloc.c
+@@ -297,14 +297,27 @@ int exfat_trim_fs(struct inode *inode, struct fstrim_range *range)
+ 	mutex_lock(&sbi->bitmap_lock);
  
-+	/* A sanity check against wild device binding;
-+	 * here the range 0x200 is enough for the registers used at probe,
-+	 * but it doesn't mean covering all HD-audio registers
+ 	trim_begin = trim_end = exfat_find_free_bitmap(sb, clu_start);
+-	if (trim_begin == EXFAT_EOF_CLUSTER)
++	/*
++	 * exfat_find_free_bitmap() may wrap around to the beginning of
++	 * the bitmap. Reject a cluster outside the requested range.
 +	 */
-+	if (pci_resource_len(pci, 0) < 0x200) {
-+		dev_err(&pci->dev, "Too small PCI BAR0\n");
-+		return -EINVAL;
-+	}
++	if (trim_begin == EXFAT_EOF_CLUSTER ||
++		trim_begin < clu_start || trim_begin > clu_end)
+ 		goto unlock;
+ 
+-	next_free_clu = exfat_find_free_bitmap(sb, trim_end + 1);
+-	if (next_free_clu == EXFAT_EOF_CLUSTER)
+-		goto unlock;
++	for (;;) {
++		if (trim_end >= clu_end)
++			break;
 +
- 	err = snd_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
- 			   0, &card);
- 	if (err < 0) {
++		next_free_clu = exfat_find_free_bitmap(sb, trim_end + 1);
++		/*
++		 * Stop if the search wrapped around or moved beyond the requested
++		 * FITRIM range.
++		 */
++		if (next_free_clu == EXFAT_EOF_CLUSTER ||
++			next_free_clu <= trim_end || next_free_clu > clu_end)
++			break;
+ 
+-	do {
+ 		if (next_free_clu == trim_end + 1) {
+ 			/* extend trim range for continuous free cluster */
+ 			trim_end++;
+@@ -325,17 +338,11 @@ int exfat_trim_fs(struct inode *inode, struct fstrim_range *range)
+ 			trim_begin = trim_end = next_free_clu;
+ 		}
+ 
+-		if (next_free_clu >= clu_end)
+-			break;
+-
+ 		if (fatal_signal_pending(current)) {
+ 			err = -ERESTARTSYS;
+ 			goto unlock;
+ 		}
+-
+-		next_free_clu = exfat_find_free_bitmap(sb, next_free_clu + 1);
+-	} while (next_free_clu != EXFAT_EOF_CLUSTER &&
+-			next_free_clu > trim_end);
++	}
+ 
+ 	/* try to trim remainder */
+ 	count = trim_end - trim_begin + 1;
 -- 
 2.53.0
 
