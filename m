@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049905;
-	b=TRmoVYBuLk22dZKxlfn8sMovOIfIJOa4Q+uCBF6qogKjp5tZZ5z4OeG+vGT3FlpU4AdT
-	 /4ifR1bHb6TDA/EseBPdjwUugvjh57Vzt81WBzV+2YODXpHn7QGVqHgdJZLTXwpu6QyPe
-	 kO3M+Ibb1NEsGRCJ13N4Myv3yEmp8oHknSD/6H28ov6Mc1Hnx4mDWRFHBglQnSo3IMA+9
-	 tKzTb/GNiYRAvjpDXx+s0ZfpYxbqwfgF8GWKW3nS3IR/iMy98PV3RUZtXDPop1bP2ggOH
-	 1AfuGnhTkT8vbbGlQdPmPcJS/3off2tKHDp/lOCbm/+eyoOMA4kNjepI7WE5ywJCElQ==
+	t=1795049908;
+	b=lvnq7U2soAp4onS3Qo9SkMDXH3C+pWDfjKs7WCWOZ0BPQkht33LOjtF1YZ4p4NLwhWf3
+	 f0dVxGc/yXDBuLdKM2lPRdgob/oNn0+kdHff55WV347w0CwhjTtDEjODZVOXYme0TbWon
+	 34gSCZvuW5GGCyM44WRiOjDo4/AHPYDIdGiTQq8QMgGYoUvqL0oI0jVdxkMLffcLcWgkP
+	 bMHfTeaoSkYKN4bPfPiELtSJvEc+0aNYe0FvBvLpqeDI6hbB6mO3iGEgKGdfl1XM0FWmE
+	 cydyNai0gX9omT6bfp9DcbM8d+A8MOTznrg+yb/Sc4+fvMZGzFdIoDHZCCrO1knBD8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049905;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049908;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q3zIdIxjmqqxWF17vHmF834PZ54f2RptRh1Ky5Mgfe8=;
-	b=o01ZtAi3URvCt7imLXZMinKClyN2WJyDy9FJiEHpoo14+JBybteND+W39IQYNf7PU4bn
-	 37O+t1e4nYBHSWvXZsyh/WQsd0VZ/XYUtJofiwNgHhpUM1S1UaDB1jqOf5d3IQ4mwLrgC
-	 e3KGmAqjj16XbgO2kEMHyQ0+T59AmedNRzm5iBrdxftlugQSZWLuP5vYVRM9SnzD7SFhq
-	 IVaMDCeE8vaEsIKKXR6CNVkpxvdKcUHXp0kkjV9fgv8vfRx0o9B4evUTGrUV1YPrWAoKu
-	 Z090RdhyohG9hwYWpcjb79SILTD2cKopQ+kkFs84mnSAat8aO4geF57FH/IfRlJbtOg==
+	bh=ztwd7fRVqgOIx2st+WKpY+DTzjZsIjT3TdEdEUyww18=;
+	b=ke68vJ1i4SGczYidemcjuWrtS9TzEQmRLgBhTV3tQQW9AjWBlZgmjFjH5Gj1Z3mfsAgA
+	 zKoVcUhCKBD303CdzYJVLsPAwB0nv46gwRzMbh0Mh2/y53EUlF/HeUsBXc1yYvgAq2Q7I
+	 7RjxeFFQ7PPIuX4SLeItw7I5UUfIYJRTcyokufd4jMmKJAcpBQokZNLD0rfQkh55eV2qD
+	 l1SlxJPY3gou7EnBJwrBiSvlwBpwqwPjy7slDknXBJZdIALYqtnjbeMErU/bXWrEuWto6
+	 MMAKwor1rCBwXfleG43TYSCXUD65QLC+OT44yuQqjZKcIgAMlYC6lIJZjeWqNLvyaDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bMwR6WzB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="h8/+HAOm";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0883606A32A;
-	Thu, 19 Nov 2026 00:58:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E546F606A31C;
+	Thu, 19 Nov 2026 00:58:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bMwR6WzB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA721F000C4;
-	Thu, 19 Nov 2026 00:58:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h8/+HAOm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC3911F000C4;
+	Thu, 19 Nov 2026 00:58:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049904;
-	bh=Q3zIdIxjmqqxWF17vHmF834PZ54f2RptRh1Ky5Mgfe8=;
+	s=korg; t=1795049907;
+	bh=ztwd7fRVqgOIx2st+WKpY+DTzjZsIjT3TdEdEUyww18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bMwR6WzB+6TY5d+BJqs2/8ngjCN5RncJICCaaB9u6CmaQSaegu3rC8Oyt+nijAnDc
-	 TuxbAnp4udSQ38AgwbzoozYtIwwW7Ka98gWdGYK0KhCT82Qad672Lv3+/i3COIQ+Xg
-	 h8LrU0+/pB5TAvjIM2LReFON5LOsK9qKkhYIXXH4=
+	b=h8/+HAOmMdZIHubMIROwDoy7+QJMtrgLLqaK1OKrf16QBQv+WDcrFud5Z22eU5IFJ
+	 prusm/T7/g1Q9hqDJ+Y9zPeDQhDFznwDgSzt5qYlh/RmPy7GvNb0Gs7fxeXnRt5Dah
+	 2FZIc3dxs81oMkI9od4f+94FxsQem75nF78yZhYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hsin-Yi Wang <hsinyi@chromium.org>,
-	Mark-PK Tsai <mark-pk.tsai@mediatek.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
 	Marc Zyngier <maz@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2518/2857] irqchip/gic-v3-its: Use irq_domain_create_hierarchy()
-Date: Wed, 18 Nov 2026 15:59:12 +0100
-Message-ID: <20261118150332.207439651@linuxfoundation.org>
+Subject: [PATCH 6.1 2519/2857] irqchip/gic-v3-its: Split allocation from initialisation of its_node
+Date: Wed, 18 Nov 2026 15:59:13 +0100
+Message-ID: <20261118150332.243689052@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,59 +68,324 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 1e46e040decede1723a5b11f0689942134c29d9a ]
+[ Upstream commit 9585a495ac936049dba141e8f9d99159ca06d46a ]
 
-Use the irq_domain_create_hierarchy() helper to create the hierarchical
-domain, which both serves as documentation and avoids poking at
-irqdomain internals.
+In order to pave the way for more fancy quirk handling without making
+more of a mess of this terrible driver, split the allocation of the
+ITS descriptor (its_node) from the actual probing.
 
-Note that the domain host_data was first set to the struct its_node
-during allocation only to immediately be overwritten with the struct
-msi_domain_info.
+This will allow firmware-specific hooks to be added between these
+two points.
 
-Tested-by: Hsin-Yi Wang <hsinyi@chromium.org>
-Tested-by: Mark-PK Tsai <mark-pk.tsai@mediatek.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230213104302.17307-17-johan+linaro@kernel.org
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20231006125929.48591-4-lpieralisi@kernel.org
 Stable-dep-of: 32e056cc1d15 ("irqchip/gic-v3-its: Don't free a vPE table shared with another ITS")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/irqchip/irq-gic-v3-its.c | 149 ++++++++++++++++++-------------
+ 1 file changed, 89 insertions(+), 60 deletions(-)
 
 diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index 63ae7ab1ab975..3131c44fd8fd3 100644
+index 3131c44fd8fd3..2d09f9daba4ed 100644
 --- a/drivers/irqchip/irq-gic-v3-its.c
 +++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -4928,18 +4928,19 @@ static int its_init_domain(struct fwnode_handle *handle, struct its_node *its)
- 	if (!info)
- 		return -ENOMEM;
+@@ -4919,7 +4919,7 @@ static void __init __iomem *its_map_one(struct resource *res, int *err)
+ 	return NULL;
+ }
  
--	inner_domain = irq_domain_create_tree(handle, &its_domain_ops, its);
-+	info->ops = &its_msi_domain_ops;
-+	info->data = its;
-+
-+	inner_domain = irq_domain_create_hierarchy(its_parent,
-+						   its->msi_domain_flags, 0,
-+						   handle, &its_domain_ops,
-+						   info);
+-static int its_init_domain(struct fwnode_handle *handle, struct its_node *its)
++static int its_init_domain(struct its_node *its)
+ {
+ 	struct irq_domain *inner_domain;
+ 	struct msi_domain_info *info;
+@@ -4933,7 +4933,7 @@ static int its_init_domain(struct fwnode_handle *handle, struct its_node *its)
+ 
+ 	inner_domain = irq_domain_create_hierarchy(its_parent,
+ 						   its->msi_domain_flags, 0,
+-						   handle, &its_domain_ops,
++						   its->fwnode_handle, &its_domain_ops,
+ 						   info);
  	if (!inner_domain) {
  		kfree(info);
- 		return -ENOMEM;
- 	}
- 
--	inner_domain->parent = its_parent;
- 	irq_domain_update_bus_token(inner_domain, DOMAIN_BUS_NEXUS);
--	inner_domain->flags |= its->msi_domain_flags;
--	info->ops = &its_msi_domain_ops;
--	info->data = its;
--	inner_domain->host_data = info;
- 
+@@ -4984,8 +4984,7 @@ static int its_init_vpe_domain(void)
  	return 0;
  }
+ 
+-static int __init its_compute_its_list_map(struct resource *res,
+-					   void __iomem *its_base)
++static int __init its_compute_its_list_map(struct its_node *its)
+ {
+ 	int its_number;
+ 	u32 ctlr;
+@@ -4999,15 +4998,15 @@ static int __init its_compute_its_list_map(struct resource *res,
+ 	its_number = find_first_zero_bit(&its_list_map, GICv4_ITS_LIST_MAX);
+ 	if (its_number >= GICv4_ITS_LIST_MAX) {
+ 		pr_err("ITS@%pa: No ITSList entry available!\n",
+-		       &res->start);
++		       &its->phys_base);
+ 		return -EINVAL;
+ 	}
+ 
+-	ctlr = readl_relaxed(its_base + GITS_CTLR);
++	ctlr = readl_relaxed(its->base + GITS_CTLR);
+ 	ctlr &= ~GITS_CTLR_ITS_NUMBER;
+ 	ctlr |= its_number << GITS_CTLR_ITS_NUMBER_SHIFT;
+-	writel_relaxed(ctlr, its_base + GITS_CTLR);
+-	ctlr = readl_relaxed(its_base + GITS_CTLR);
++	writel_relaxed(ctlr, its->base + GITS_CTLR);
++	ctlr = readl_relaxed(its->base + GITS_CTLR);
+ 	if ((ctlr & GITS_CTLR_ITS_NUMBER) != (its_number << GITS_CTLR_ITS_NUMBER_SHIFT)) {
+ 		its_number = ctlr & GITS_CTLR_ITS_NUMBER;
+ 		its_number >>= GITS_CTLR_ITS_NUMBER_SHIFT;
+@@ -5015,75 +5014,50 @@ static int __init its_compute_its_list_map(struct resource *res,
+ 
+ 	if (test_and_set_bit(its_number, &its_list_map)) {
+ 		pr_err("ITS@%pa: Duplicate ITSList entry %d\n",
+-		       &res->start, its_number);
++		       &its->phys_base, its_number);
+ 		return -EINVAL;
+ 	}
+ 
+ 	return its_number;
+ }
+ 
+-static int __init its_probe_one(struct resource *res,
+-				struct fwnode_handle *handle, int numa_node)
++static int __init its_probe_one(struct its_node *its)
+ {
+-	struct its_node *its;
+-	void __iomem *its_base;
+-	u64 baser, tmp, typer;
++	u64 baser, tmp;
+ 	struct page *page;
+ 	u32 ctlr;
+ 	int err;
+ 
+-	its_base = its_map_one(res, &err);
+-	if (!its_base)
+-		return err;
+-
+-	pr_info("ITS %pR\n", res);
+-
+-	its = kzalloc(sizeof(*its), GFP_KERNEL);
+-	if (!its) {
+-		err = -ENOMEM;
+-		goto out_unmap;
+-	}
+-
+-	raw_spin_lock_init(&its->lock);
+-	mutex_init(&its->dev_alloc_lock);
+-	INIT_LIST_HEAD(&its->entry);
+-	INIT_LIST_HEAD(&its->its_device_list);
+-	typer = gic_read_typer(its_base + GITS_TYPER);
+-	its->typer = typer;
+-	its->base = its_base;
+-	its->phys_base = res->start;
+ 	if (is_v4(its)) {
+-		if (!(typer & GITS_TYPER_VMOVP)) {
+-			err = its_compute_its_list_map(res, its_base);
++		if (!(its->typer & GITS_TYPER_VMOVP)) {
++			err = its_compute_its_list_map(its);
+ 			if (err < 0)
+-				goto out_free_its;
++				goto out;
+ 
+ 			its->list_nr = err;
+ 
+ 			pr_info("ITS@%pa: Using ITS number %d\n",
+-				&res->start, err);
++				&its->phys_base, err);
+ 		} else {
+-			pr_info("ITS@%pa: Single VMOVP capable\n", &res->start);
++			pr_info("ITS@%pa: Single VMOVP capable\n", &its->phys_base);
+ 		}
+ 
+ 		if (is_v4_1(its)) {
+-			u32 svpet = FIELD_GET(GITS_TYPER_SVPET, typer);
++			u32 svpet = FIELD_GET(GITS_TYPER_SVPET, its->typer);
+ 
+-			its->sgir_base = ioremap(res->start + SZ_128K, SZ_64K);
++			its->sgir_base = ioremap(its->phys_base + SZ_128K, SZ_64K);
+ 			if (!its->sgir_base) {
+ 				err = -ENOMEM;
+-				goto out_free_its;
++				goto out;
+ 			}
+ 
+-			its->mpidr = readl_relaxed(its_base + GITS_MPIDR);
++			its->mpidr = readl_relaxed(its->base + GITS_MPIDR);
+ 
+ 			pr_info("ITS@%pa: Using GICv4.1 mode %08x %08x\n",
+-				&res->start, its->mpidr, svpet);
++				&its->phys_base, its->mpidr, svpet);
+ 		}
+ 	}
+ 
+-	its->numa_node = numa_node;
+-
+ 	page = alloc_pages_node(its->numa_node, GFP_KERNEL | __GFP_ZERO,
+ 				get_order(ITS_CMD_QUEUE_SZ));
+ 	if (!page) {
+@@ -5092,12 +5066,9 @@ static int __init its_probe_one(struct resource *res,
+ 	}
+ 	its->cmd_base = (void *)page_address(page);
+ 	its->cmd_write = its->cmd_base;
+-	its->fwnode_handle = handle;
+ 	its->get_msi_base = its_irq_get_msi_base;
+ 	its->msi_domain_flags = IRQ_DOMAIN_FLAG_MSI_REMAP;
+ 
+-	its_enable_quirks(its);
+-
+ 	err = its_alloc_tables(its);
+ 	if (err)
+ 		goto out_free_cmd;
+@@ -5138,7 +5109,7 @@ static int __init its_probe_one(struct resource *res,
+ 		ctlr |= GITS_CTLR_ImDe;
+ 	writel_relaxed(ctlr, its->base + GITS_CTLR);
+ 
+-	err = its_init_domain(handle, its);
++	err = its_init_domain(its);
+ 	if (err)
+ 		goto out_free_collection;
+ 
+@@ -5157,11 +5128,8 @@ static int __init its_probe_one(struct resource *res,
+ out_unmap_sgir:
+ 	if (its->sgir_base)
+ 		iounmap(its->sgir_base);
+-out_free_its:
+-	kfree(its);
+-out_unmap:
+-	iounmap(its_base);
+-	pr_err("ITS@%pa: failed probing (%d)\n", &res->start, err);
++out:
++	pr_err("ITS@%pa: failed probing (%d)\n", &its->phys_base, err);
+ 	return err;
+ }
+ 
+@@ -5322,10 +5290,53 @@ static const struct of_device_id its_device_id[] = {
+ 	{},
+ };
+ 
++static struct its_node __init *its_node_init(struct resource *res,
++					     struct fwnode_handle *handle, int numa_node)
++{
++	void __iomem *its_base;
++	struct its_node *its;
++	int err;
++
++	its_base = its_map_one(res, &err);
++	if (!its_base)
++		return NULL;
++
++	pr_info("ITS %pR\n", res);
++
++	its = kzalloc(sizeof(*its), GFP_KERNEL);
++	if (!its)
++		goto out_unmap;
++
++	raw_spin_lock_init(&its->lock);
++	mutex_init(&its->dev_alloc_lock);
++	INIT_LIST_HEAD(&its->entry);
++	INIT_LIST_HEAD(&its->its_device_list);
++
++	its->typer = gic_read_typer(its_base + GITS_TYPER);
++	its->base = its_base;
++	its->phys_base = res->start;
++
++	its->numa_node = numa_node;
++	its->fwnode_handle = handle;
++
++	return its;
++
++out_unmap:
++	iounmap(its_base);
++	return NULL;
++}
++
++static void its_node_destroy(struct its_node *its)
++{
++	iounmap(its->base);
++	kfree(its);
++}
++
+ static int __init its_of_probe(struct device_node *node)
+ {
+ 	struct device_node *np;
+ 	struct resource res;
++	int err;
+ 
+ 	/*
+ 	 * Make sure *all* the ITS are reset before we probe any, as
+@@ -5335,8 +5346,6 @@ static int __init its_of_probe(struct device_node *node)
+ 	 */
+ 	for (np = of_find_matching_node(node, its_device_id); np;
+ 	     np = of_find_matching_node(np, its_device_id)) {
+-		int err;
+-
+ 		if (!of_device_is_available(np) ||
+ 		    !of_property_read_bool(np, "msi-controller") ||
+ 		    of_address_to_resource(np, 0, &res))
+@@ -5349,6 +5358,8 @@ static int __init its_of_probe(struct device_node *node)
+ 
+ 	for (np = of_find_matching_node(node, its_device_id); np;
+ 	     np = of_find_matching_node(np, its_device_id)) {
++		struct its_node *its;
++
+ 		if (!of_device_is_available(np))
+ 			continue;
+ 		if (!of_property_read_bool(np, "msi-controller")) {
+@@ -5362,7 +5373,17 @@ static int __init its_of_probe(struct device_node *node)
+ 			continue;
+ 		}
+ 
+-		its_probe_one(&res, &np->fwnode, of_node_to_nid(np));
++
++		its = its_node_init(&res, &np->fwnode, of_node_to_nid(np));
++		if (!its)
++			return -ENOMEM;
++
++		its_enable_quirks(its);
++		err = its_probe_one(its);
++		if (err)  {
++			its_node_destroy(its);
++			return err;
++		}
+ 	}
+ 	return 0;
+ }
+@@ -5474,6 +5495,7 @@ static int __init gic_acpi_parse_madt_its(union acpi_subtable_headers *header,
+ {
+ 	struct acpi_madt_generic_translator *its_entry;
+ 	struct fwnode_handle *dom_handle;
++	struct its_node *its;
+ 	struct resource res;
+ 	int err;
+ 
+@@ -5498,11 +5520,18 @@ static int __init gic_acpi_parse_madt_its(union acpi_subtable_headers *header,
+ 		goto dom_err;
+ 	}
+ 
+-	err = its_probe_one(&res, dom_handle,
+-			acpi_get_its_numa_node(its_entry->translation_id));
++	its = its_node_init(&res, dom_handle,
++			    acpi_get_its_numa_node(its_entry->translation_id));
++	if (!its) {
++		err = -ENOMEM;
++		goto node_err;
++	}
++
++	err = its_probe_one(its);
+ 	if (!err)
+ 		return 0;
+ 
++node_err:
+ 	iort_deregister_domain_token(its_entry->translation_id);
+ dom_err:
+ 	irq_domain_free_fwnode(dom_handle);
 -- 
 2.53.0
 
