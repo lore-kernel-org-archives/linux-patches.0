@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018842;
-	b=hbXsc+cj9+LtWPaGqpS8f7XudFgeZQU0tmDDHgH0Qg10UBPCgQ0y4Jq2p5G8NYYzvkCp
-	 XXTlCh9SsLB9tEBdoR5hjTt2YFMUgCzwSgCNGmXAz+znvtAuHNeQYXsxhPSvcTSAF8PR/
-	 V5ojjb1STBA915pNHQFkxDra6K4MVNPIEbN/fHBVDrWXtwbcLsIjzTIl/cnDE4k3WPpK1
-	 Yr3D953ndJY0aab296+Xim3o0r14voLXKUiLYVCGg9Dha5bv4xjAZqV30Z4bDK0yxEY3/
-	 a1dsSDJLYi19MxvBbNd/1DmvfhDKbdkX62jhotx4vOnvrTO1P2sp4Wj6pfr/e8i7XoA==
+	t=1795018845;
+	b=iy9hMJ90JuSBQ/DDtZoOXwm90iztrHde2cpiO5rQoM8MzU6O7addnFmnGtEeUVe+51Kp
+	 98hZktw+Wd+GKW7BSFkgfqcNow2XoIpd9Stx6OIKX1WwQviX+TsGc0yc/3ECDXOqQTz0M
+	 5XBbv4X6xM5cH4SuYZZzRjAXrNPctpWfoWauRzQS4IqEOgRSnMxAI5Xup1PvCP+IWTREn
+	 pqM+bMQ+/goCmBWQmmATjFdyH3x7wUMvfz/2Y6pmTTVq0msCXXB6uynpgXy4BxzWkjjvZ
+	 9zIQ1UFhrsNA76gKKy2SISzj6jEJae9VtcNajxJJgjBxtL1uuwSfanj5uH3KFPwwCOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018842;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018845;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ij9R7bwOFSHGeJVlwCoQSm0AhUjVL2wM1tV1VWaEX7U=;
-	b=SmlP0Ti2r6BMKpf7gq2iXwXs/cE/l14dKPwkVKQWJ+4C9j6p4dCZV4DC7U/bs90DtzTg
-	 3Pf2Tma4xry0f8jqUxYtiBUvc2mKrTu7QTSS89g8gpCruv8jPl9sKqibCbZXoZMKLn1Yt
-	 ptkkyjVh9qlKWGDsFbhb2dXfzhKA9Rp8SApSB7EjPQWfT9kQf3irudWJdb1qomGd592LW
-	 As1qdvgj1fAZz0WBqmJvNRItHjN3qGjNnQdo4mSIVdwx+ZXnoYk6hDPXW83HTVQl2gyRn
-	 shhItWlNHZ9LEKgoUHQ4jly/5tT13Bd9Sd/AXY0JLrX6zftRE/9jKwi2MIsv096Zujg==
+	bh=3DDbqIy+n5lEPNolyV5msy0odsjaffA2rXsBZmiP+1A=;
+	b=Z7Cpp1r13hrN7TIDKqW+MKhz/ET+MrwliHc7YZPjsUDfKycMD9IbyrNF15Fmupluzjea
+	 JR4WlWBOVPYnVqDoXp360ErVX3sM1lytMQK5tHP+oy0PTqnatPgRBUgr97dJlfP5IUniQ
+	 +A/VRyOfvtKRwsRsGB0X32TcsjrBHA3IlCCsdFyWffOXQC7YzocBftCIr5rFLcHF/AuJ+
+	 lLHdoMF5kPxz4YVTb/9CW7UQpQfHZVOURFLN7QaJPpmw3yixFzmdRahz9JgJbAG078XL1
+	 QZsWGcR8Z/pSrVcnwBr+S9Os2uYeJeL34zsmjDLgYQxt1UXRb1tFXH5H7fThUZ+VO4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ivOQzq79;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="GHbxO/K+";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91BA606A325;
-	Wed, 18 Nov 2026 16:20:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1017606A31C;
+	Wed, 18 Nov 2026 16:20:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ivOQzq79
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 373E91F000C4;
-	Wed, 18 Nov 2026 16:20:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GHbxO/K+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 232AD1F000C9;
+	Wed, 18 Nov 2026 16:20:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018842;
-	bh=ij9R7bwOFSHGeJVlwCoQSm0AhUjVL2wM1tV1VWaEX7U=;
+	s=korg; t=1795018845;
+	bh=3DDbqIy+n5lEPNolyV5msy0odsjaffA2rXsBZmiP+1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ivOQzq79nJOJFkF/wGr3LdfyTjz1knYx1P3U14F9fNoNx+xtrD7aekedXOn36F+T9
-	 394HOiopYf5ht8mIleJYGDrufW7mWn39Wj/65stmObUOLxU4HlxXAfVb9k3SIa1QZW
-	 F98+StlY0H8+l6LQi1Z+FRkbMMKfHKr3WIbopaz8=
+	b=GHbxO/K+eTsYQung9yicwt2sGL9GW0j0rgmm8mhhpEUqjDnfe6DHt71rTF1EsivKb
+	 z1HH3PD0+G4Ufa1Q/VvBeMhjSpkqr1RMsFk0o6i7AhOyHfmxApAY8dNQ4tfXRJ12vc
+	 IfoWwO781bBBNAF1+SJOEyDbeuH3buYVMLcgL3hY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Bergantinos Corpas <rbergant@redhat.com>,
-	Prabhakar Pujeri <prabhakar.pujeri@dell.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Alexandre Courbot <acourbot@nvidia.com>,
+	Georgios Androutsopoulos <georgeandrout13@gmail.com>,
+	Yury Norov <ynorov@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1383/2651] NFS: return DENIED in decode_lock_denied if we cannot decode owner
-Date: Wed, 18 Nov 2026 15:43:43 +0100
-Message-ID: <20261118150337.809552847@linuxfoundation.org>
+Subject: [PATCH 7.3 1384/2651] rust: id_pool: document panics in `find_unused_id` and `release_id`
+Date: Wed, 18 Nov 2026 15:43:44 +0100
+Message-ID: <20261118150337.845172474@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,58 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roberto Bergantinos Corpas <rbergant@redhat.com>
+From: Georgios Androutsopoulos <georgeandrout13@gmail.com>
 
-[ Upstream commit 4fdfe2312cbed99b1438dcf20b348e72393f9633 ]
+[ Upstream commit 842c5beca0b369bb143b86d6ae63dbcd7c5f0988 ]
 
-After commit 43502f6e8d1e ("NFS: fix open_owner_id_maxsz and related
-fields.") we dramatically changed the size of the LOCK/LOCKT reply buffer
-from 164 to 52 bytes. This made visible a situation on a buggy NFS
-server that sent oversized denied responses which led to us returning
-EIO instead of DENIED.
+`find_unused_id()` calls `Bitmap::next_zero_bit()` and `release_id()`
+calls `Bitmap::clear_bit()`, both of which panic when
+`CONFIG_RUST_BITMAP_HARDENED` is enabled and the index is out of
+bounds. Neither `IdPool` method documents this.
 
-Now, apart from buggy server issue, this poses an interesting question:
-what if other implementations have legitimate but bigger than we expect
-lock owner response, especially now that we have reduced the size we
-allocate for it (20 bytes for the lock owner part).
+Add the missing `# Panics` sections and state the bounds requirement
+on `offset` and `id`.
 
-This change proposes to tackle that issue returning DENIED instead of
-EIO regardless of whether we manage to decode the owner or not:
-
-- At this point of decode_lock_denied we know there is an owner.
-- Server legitimately denied the lock request, with an owner that fits on
-  NFS4_OPAQUE_LIMIT but we returned EIO instead to userspace.
-- The owner data is decoded but actually never used, decode_lock path
-  simply retries, and decode_lockt turns it into 0 on file_lock and
-  returns it to userspace.
-- LOCK/LOCKT are the last operations on the compound so it's not relevant
-  if we didn't advance the pointer.
-- Also removes an inverted likely(!p) hint.
-
-Fixes: 43502f6e8d1e ("NFS: fix open_owner_id_maxsz and related fields.")
-Signed-off-by: Roberto Bergantinos Corpas <rbergant@redhat.com>
-Reviewed-by: Prabhakar Pujeri <prabhakar.pujeri@dell.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Fixes: 2cdae413cd3e ("rust: add dynamic ID pool abstraction for bitmap")
+Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
+Signed-off-by: Georgios Androutsopoulos <georgeandrout13@gmail.com>
+Signed-off-by: Yury Norov <ynorov@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4xdr.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ rust/kernel/id_pool.rs | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/nfs4xdr.c b/fs/nfs/nfs4xdr.c
-index fc049ce4ba8ac..9d0f7ad7525a7 100644
---- a/fs/nfs/nfs4xdr.c
-+++ b/fs/nfs/nfs4xdr.c
-@@ -5169,8 +5169,7 @@ static int decode_lock_denied(struct xdr_stream *xdr, struct file_lock *fl)
- 	p = xdr_decode_hyper(p, &clientid); /* read 8 bytes */
- 	namelen = be32_to_cpup(p); /* read 4 bytes */  /* have read all 32 bytes now */
- 	p = xdr_inline_decode(xdr, namelen); /* variable size field */
--	if (likely(!p))
--		return -EIO;
-+	/* We have an owner here, return DENIED */
- 	return -NFS4ERR_DENIED;
- }
+diff --git a/rust/kernel/id_pool.rs b/rust/kernel/id_pool.rs
+index 384753fe0e44a..c8b3465548027 100644
+--- a/rust/kernel/id_pool.rs
++++ b/rust/kernel/id_pool.rs
+@@ -224,7 +224,13 @@ pub fn grow(&mut self, mut resizer: PoolResizer) {
+     /// Finds an unused ID in the bitmap.
+     ///
+     /// Upon success, returns its index. Otherwise, returns [`None`]
+-    /// to indicate that a [`Self::grow_request`] is needed.
++    /// to indicate that a [`Self::grow_request`] is needed. `offset` must be
++    /// within bounds.
++    ///
++    /// # Panics
++    ///
++    /// Panics if `CONFIG_RUST_BITMAP_HARDENED` is enabled and `offset` is out
++    /// of bounds.
+     #[inline]
+     #[must_use]
+     pub fn find_unused_id(&mut self, offset: usize) -> Option<UnusedId<'_>> {
+@@ -236,6 +242,13 @@ pub fn find_unused_id(&mut self, offset: usize) -> Option<UnusedId<'_>> {
+     }
  
+     /// Releases an ID.
++    ///
++    /// The `id` must be within bounds.
++    ///
++    /// # Panics
++    ///
++    /// Panics if `CONFIG_RUST_BITMAP_HARDENED` is enabled and `id` is out of
++    /// bounds.
+     #[inline]
+     pub fn release_id(&mut self, id: usize) {
+         self.map.clear_bit(id);
 -- 
 2.53.0
 
