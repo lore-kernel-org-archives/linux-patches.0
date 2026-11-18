@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023376;
-	b=PxcTS7gs3r5pncKKdDFoETdT1CNo6jTMF+qOqC+dD1CnOzm4EcUc80Vd8Rlhv4lsT89q
-	 lFkZmqXJBKqYyapXjT1sGlsaGddD6w6m+WaBdf3A88dR816XozFIeUhOEe9Kj0c4RCbpo
-	 yiLh7GXlnRtSQP1QvVLRP7OVdyAt0C3tnLIKg1xSH71kfKthd2y7FwpnHr0LC9U1vvf5M
-	 JtkoSY0FARuasbeRRnxIZSwAP4uQZIbihhvYyqhVzTNFSi/hpaLhqrKn9gcI7mzjaAWqp
-	 I8ONnsHmC4DTFhvTm+gi4NHo0TWzUplH63/s6plpUIVfwWRlO/EnE8BEIiXhwzkPsKg==
+	t=1795023378;
+	b=2RUgwI2oYLn+TNyeiqF85hPJYb1i1zOV6x6rJwB5MXxBOmeVQ0NmcwkizQKpkKHVrkrD
+	 KR/IdqixjztGi8aYaIJl6zloRCgKywVXYjq/0HHWNGQle+1Lg9Z+YdOLBr79uR49iON45
+	 rKRyxdGKULNMfgJODLmzjMAt52W6ppLOSlyCXbUKvGRPi0n2wV4LYO0eKHZLfSnk6ZwX8
+	 7CNXOc+X9zwzgFdh8XR/AD3TF8lJZfVEwnxoJRjIiOl5ajFi0Yt0ojgTTnoVOdGwIu2H4
+	 XhhKoLTPrSkCQF5oQ2Il7c+KMUdTCpNGVBJJGdxe05poRaLTF2uoDZ/bU9h7Gi0zepg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023376;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023378;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=icY2jLil6SBHbePRdH6Ofbtu1wi1erArrCqweyKTF/c=;
-	b=WCdJxE1l1hZdR7GoW9arYtApF6C2G4FzAsbKMgMoWtzpfqC3i9AgthTTzzZdD8BTfoCd
-	 ZX9rNm6UELqd44MzxMuqRrOZ4AKWaf7T9fRB3STTtT+OeMxP1DXmu0YdN6yOiirXGzyz1
-	 qGG3M9/ipVx0DpAlyH40Nua5PsQVj0Z9Xwh/FZmwv2mknRS6cuSdqGdjDnMgtwrdMs75+
-	 Kg0+ybooDeOSXY3/iaEJwArejsjj9aBSBWe74jTx5nNZR61x7SOhs3ToEzjtrXOLwjH/I
-	 VPjRZQY7Pfves+RK+2U9+lKEGOdF3psJl0BAXCDA8yZnZr7hRMIH8lTh/ih+8cvdVMA==
+	bh=BZ7l3+VXDmjrSk9LcTwyQgU9rNTEHlm9KIcXkfcaqSI=;
+	b=hKXd+yaUeKYSfaoxohfl6s5uz4yfBhVjPMKG17o4U9a1rXl3d4NW/KAVSEbGSFovoF7R
+	 e+lFxubZjT8DazGRk1azzokHytKG/nwHMgMhdloDLe0M7oVFM4RiGt7A6xQ83YlAg+x2b
+	 isqjA7RVbBq78IITGqhoICtpHYx40ZhjpuF2iWwqQc+Pk3ImBGXTOYTgCsKOgH7z5E+V2
+	 fyCNzClVbgQCbQlr9s8TB/ci67k7kpYhilM26RA76pEQB/kLN1tD22oPyOgxkHTeW6OTe
+	 yFC4aUPSTG4k0N1+D9nEI2/QQxtus2Z+M6WL8ueUpB9zaChjuGe+K8I/qkxSzUyYUdg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hMO8hAqs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="jKO/rrSa";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B7660A262B;
-	Wed, 18 Nov 2026 17:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2E060A2636;
+	Wed, 18 Nov 2026 17:36:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hMO8hAqs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5443B1F000C9;
-	Wed, 18 Nov 2026 17:36:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jKO/rrSa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CB131F000CE;
+	Wed, 18 Nov 2026 17:36:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023375;
-	bh=icY2jLil6SBHbePRdH6Ofbtu1wi1erArrCqweyKTF/c=;
+	s=korg; t=1795023378;
+	bh=BZ7l3+VXDmjrSk9LcTwyQgU9rNTEHlm9KIcXkfcaqSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hMO8hAqs31Xd56Fxsgv9+Mvd+5dJ4kYWUPqjYPbMur2v5HJF567O2XmSd0Bk0bRcL
-	 IkJScJhgq7PJj9YeE6WBzI5+v7zMnQLApwtIQMko6NUCivze9Bp6O8AuDj1fORHYLn
-	 8tm7eMqX8fAyy2xvcSy7gscFCHr+WnpXdvP02IAw=
+	b=jKO/rrSa/FFREePkJRgXDFUCTk4w+JAdXZ6SKW9kg11/TkRYGyPpNIEUAL97S3XcR
+	 2I7e+4seZXX5RXZdikQdQSu5Foe0cLSsL8PY2z1SyIm27woRB6c+/amf//sr4QkuQd
+	 3ZY+g7aU8sCraAA4T5FFk8gVUaBW/mMoTt3aLYVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Yeh <justin.yeh@mediatek.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0348/2151] arm64: dts: mediatek: mt8188-geralt: Enlarge SCP core0 memory region
-Date: Wed, 18 Nov 2026 15:34:43 +0100
-Message-ID: <20261118150134.780848084@linuxfoundation.org>
+Subject: [PATCH 6.18 0349/2151] PCI: xgene: Use managed clock for PCIe controller
+Date: Wed, 18 Nov 2026 15:34:44 +0100
+Message-ID: <20261118150134.814649492@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,42 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Yeh <justin.yeh@mediatek.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit 868297e3ebcc5c9b0e7cada19c82b11068faf4bf ]
+[ Upstream commit b9022584ebbae81f7bbe4a61bd1df0d0a95e1a99 ]
 
-The SCP firmware in linux-firmware for this platform
-(mediatek/mt8188/scp_c0.img) supports MDP, which the mdp3-rdma node
-drives through scp_c0. On top of the segments it loads, the firmware
-allocates a 1 MiB DMA region at 0x50800000 at run time. That lies
-outside the 8 MiB reserved for SCP core0, so Linux is free to allocate
-over memory the firmware uses.
+xgene_pcie_init_port() obtains and enables the controller clock manually.
+When xgene_pcie_setup() or pci_host_probe() fails, probe returns without
+disabling, unpreparing, or releasing the clock. A failed enable also leaves
+the clk_get() reference unreleased.
 
-Enlarge the region to 9 MiB. apu_mem starts at 0x55000000, so no other
-reserved region has to move.
+Use devm_clk_get_enabled() so the clock is unwound automatically on probe
+failure and device removal.
 
-Fixes: e36be19823f0 ("arm64: dts: mediatek: mt8188-geralt: Enable first SCP core")
-Signed-off-by: Justin Yeh <justin.yeh@mediatek.com>
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: 5f6b6ccdbe1c ("PCI: xgene: Add APM X-Gene PCIe driver")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260802221146.573233-1-dbgh9129@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8188-geralt.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/controller/pci-xgene.c | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8188-geralt.dtsi b/arch/arm64/boot/dts/mediatek/mt8188-geralt.dtsi
-index 118d6b2ebd2c6..038ade1acdfdc 100644
---- a/arch/arm64/boot/dts/mediatek/mt8188-geralt.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8188-geralt.dtsi
-@@ -171,7 +171,7 @@ reserved_memory: reserved-memory {
+diff --git a/drivers/pci/controller/pci-xgene.c b/drivers/pci/controller/pci-xgene.c
+index 83c9a2930eeca..a5b8bbc04a221 100644
+--- a/drivers/pci/controller/pci-xgene.c
++++ b/drivers/pci/controller/pci-xgene.c
+@@ -320,18 +320,11 @@ static void xgene_pcie_linkup(struct xgene_pcie *port,
+ static int xgene_pcie_init_port(struct xgene_pcie *port)
+ {
+ 	struct device *dev = port->dev;
+-	int rc;
  
- 		scp_mem_reserved: memory@50000000 {
- 			compatible = "shared-dma-pool";
--			reg = <0 0x50000000 0 0x800000>;
-+			reg = <0 0x50000000 0 0x900000>;
- 			no-map;
- 		};
+-	port->clk = clk_get(dev, NULL);
++	port->clk = devm_clk_get_enabled(dev, NULL);
+ 	if (IS_ERR(port->clk)) {
+ 		dev_err(dev, "clock not available\n");
+-		return -ENODEV;
+-	}
+-
+-	rc = clk_prepare_enable(port->clk);
+-	if (rc) {
+-		dev_err(dev, "clock enable failed\n");
+-		return rc;
++		return PTR_ERR(port->clk);
+ 	}
  
+ 	return 0;
 -- 
 2.53.0
 
