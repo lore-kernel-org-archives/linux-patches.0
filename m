@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026894;
-	b=xZIgwv5KxMqvNcRKokgy00UOIiKi7EVDsxpJIOYNNUD3epL5D58JN+fIkDTmaL9GimJ2
-	 Rn3zsrTkd02NBGBqDhgsT2CaSoqEitsENX1C1Uebjpu9ebuAuhZqxbbzpKFBkHO5AFU5J
-	 fjmfTAiqDklvlggymarLEewHbhiyHGRZVj2b3UDuG8ju9GzA6YXGMtSBNa63ASGU6lwVg
-	 tpXS3tQxkPYBwWIKUEfBxV0oWw2ZRzHjzzSbIN9SnjNe/VlhbPrnzc4Gx2GC+/3WUmaMm
-	 ZwKCofkrqQQvioqsIWV0yYdkNhYrE/Zp8YO7UaFvM2rfYRTJkR3qfDKFbXDqgO3XUQA==
+	t=1795026896;
+	b=Igkfqs+672Dcny3UoKiOOPZf8MkEzT7bjoJ+4eKxKXl+VjGR47pZ7lNYb0M7DOGaj2LN
+	 R/XLDGgzOxPwr4p0K3NTLz2Hja7ttXQw4njsgYijpg9P1kbVgvQ1SeVexCmhoKf7XzEEM
+	 OYtx4F6D3yw3XskgdSuYmCIt+2O+oTH6nm9Ce/rCQ3F4AiRtsjJBb6wj621uDqlrQ8bHM
+	 +GUGkbn1OtBgv3v8CI4LonfJBBWZleB/Vh9OCJxH/wvuIcb26XTGcJ2j3Z3mgek48ltHZ
+	 63z67+jvYfzU4Lbq9QTn5Yp2by+DR75H9chQCky396O0G46Bxf2bA0Ko3FHtPiosCCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026894;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026896;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RxgqkUwO4YAYoLrnFjAFyNuvFfglHoYdkbLrbAyRPu0=;
-	b=MxSWLUAzYGz9eiM3DPsl6nVU3dZPsCHqWwV9pJqBMDzbYy/SIoCkFi7kRt/ucHFqvg2T
-	 ndrS4fE9T3kkNPONOyil4NoUo0qLyUGaQxoJkbj8ZMxFELsWTuXt994WMl9ShaWNIKaWn
-	 dmrTqiEJqB/4PsNAhQBLNz2v79Nc0VoPZbLZFoYkhD/+QGVVuR5yBUXu+k3TdOw/PSxGB
-	 abDk+tQ5YXjMYwRBauSLwgHUm+XS4JvWboTqy+GN1EIUq6+zDEbGR5UKRDl1KQ1Bt6bGi
-	 QZqubQiCVDCys5rXzPYVWZnjsNeDjfjexYHYtJdGb3eFwyHVwi51atz+QMAtsfFhl9w==
+	bh=B1oGBlJZA/emrNJx0iuiLGKArdFyOlU9O45o4/nibqc=;
+	b=ZDJRcyfqm2I+X5JxDQv6UOF9iepbXXZntbWwY9nQqroDPW8UCpNlfw03fN4F6/LGsgIf
+	 UCfZVxMzrGfygj32lgDCx7QBajVImfld9Pu3iyJ1uWQjnkxoVXanX4Mm2XyND66+1HXjh
+	 yXvq4pwIop/JFU+IyNS1NCKLhOK5xfQQ+TtHn/9o5rqIjPLTFz1RcFVipFnil6qZkRCHO
+	 tF6aSP1u1NZqVEQ+X//91vhCZ3hFrAx5wwVMAo8EEoj1ZxnaSZ6fIkETJNK/ApVEyW+L/
+	 K6AiHIXCvwQuRJ3P+npsO8Za47prROFP7KyIRHs3uo89KHYh58lCuRfdODI/f+809DQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J+BPplZQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=shwDcFoC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53412606A320;
-	Wed, 18 Nov 2026 18:34:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7CB1606A33F;
+	Wed, 18 Nov 2026 18:34:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J+BPplZQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CEA11F000C4;
-	Wed, 18 Nov 2026 18:34:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=shwDcFoC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 281A41F000C4;
+	Wed, 18 Nov 2026 18:34:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026893;
-	bh=RxgqkUwO4YAYoLrnFjAFyNuvFfglHoYdkbLrbAyRPu0=;
+	s=korg; t=1795026896;
+	bh=B1oGBlJZA/emrNJx0iuiLGKArdFyOlU9O45o4/nibqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J+BPplZQx7kabIC8gd5fEQ39b3BZ5+SJcIzT1KnHGc0ca8a2LEz9gkuQfTHMP4Vta
-	 EhvgwdRj4BcdPLZ89ueVglPzXEWFjii8GHrrOTF6yiSJB/w+7qbs+oGOQ8aBeDTBq7
-	 IiYUbm25StgnWKYQaxtRJP+YqF6GYyYMJ4ApEjMY=
+	b=shwDcFoCewDKMtLjKAIgvOBEVsrFQFOB/tL9uCYaSH44fkWp0nBuz5kjiRTWxTSxp
+	 XeTHTDs/n/El+TUcWWZOGnBsLdODVtyrwB4mGzI7DIWsWoichaJjue38I5la4h7D1K
+	 hd7bWeh3O9zFobiEH6rzWW4tQWcVGeJbTa2JUhig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Julian Sun <sunjunchao@bytedance.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1595/2151] block: reject NOWAIT buffered write fallback
-Date: Wed, 18 Nov 2026 15:55:30 +0100
-Message-ID: <20261118150219.983532804@linuxfoundation.org>
+Subject: [PATCH 6.18 1596/2151] block: take the inode lock for buffered write fallback
+Date: Wed, 18 Nov 2026 15:55:31 +0100
+Message-ID: <20261118150220.020876403@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,38 +70,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Julian Sun <sunjunchao@bytedance.com>
 
-[ Upstream commit a08bf4b9f87898628e70882430b8dd4260730dba ]
+[ Upstream commit 1b1be9ea4e34ccede1e7cf9ff2b6317328a5b6ad ]
 
-blkdev_write_iter() rejects NOWAIT buffered writes, but does not
-enforce this restriction when direct I/O falls back to buffered I/O.
-Successful fallback waits for writeback, violating NOWAIT semantics.
+Commit c0e473a0d226 ("block: fix race between set_blocksize and read
+paths") added shared inode locking around ordinary buffered writes,
+but missed the direct-I/O fallback path.
 
-Reject NOWAIT requests in blkdev_buffered_write() with -EAGAIN.
+Move the lock into blkdev_buffered_write() so both paths serialize
+with set_blocksize().
 
-Fixes: c35fc7a5abae ("block_dev: support RFW_NOWAIT on block device nodes")
+Also correct the comment claiming that this path takes invalidate_lock;
+it only takes i_rwsem.
+
+Fixes: c0e473a0d226 ("block: fix race between set_blocksize and read paths")
 Signed-off-by: Julian Sun <sunjunchao@bytedance.com>
-Link: https://patch.msgid.link/20261015091105.1315605-2-sunjunchao@bytedance.com
+Link: https://patch.msgid.link/20261015091105.1315605-3-sunjunchao@bytedance.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/fops.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ block/fops.c | 21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
 diff --git a/block/fops.c b/block/fops.c
-index 17cdecf39398c..c7cd9f89c352c 100644
+index c7cd9f89c352c..68b55d3c0876e 100644
 --- a/block/fops.c
 +++ b/block/fops.c
-@@ -757,6 +757,10 @@ blkdev_direct_write(struct kiocb *iocb, struct iov_iter *from)
+@@ -757,12 +757,22 @@ blkdev_direct_write(struct kiocb *iocb, struct iov_iter *from)
  
  static ssize_t blkdev_buffered_write(struct kiocb *iocb, struct iov_iter *from)
  {
-+	/* Buffered fallback waits for writeback, which NOWAIT cannot allow. */
-+	if (iocb->ki_flags & IOCB_NOWAIT)
-+		return -EAGAIN;
++	struct inode *inode = bdev_file_inode(iocb->ki_filp);
++	ssize_t ret;
 +
- 	return iomap_file_buffered_write(iocb, from, &blkdev_iomap_ops, NULL,
- 			NULL);
+ 	/* Buffered fallback waits for writeback, which NOWAIT cannot allow. */
+ 	if (iocb->ki_flags & IOCB_NOWAIT)
+ 		return -EAGAIN;
+ 
+-	return iomap_file_buffered_write(iocb, from, &blkdev_iomap_ops, NULL,
+-			NULL);
++	/*
++	 * Take i_rwsem to avoid racing with set_blocksize() changing
++	 * i_blkbits/folio order and truncating the page cache.
++	 */
++	inode_lock_shared(inode);
++	ret = iomap_file_buffered_write(iocb, from, &blkdev_iomap_ops, NULL,
++					NULL);
++	inode_unlock_shared(inode);
++	return ret;
  }
+ 
+ /*
+@@ -851,14 +861,7 @@ static ssize_t blkdev_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 			need_sync = true;
+ 		}
+ 	} else {
+-		/*
+-		 * Take i_rwsem and invalidate_lock to avoid racing with
+-		 * set_blocksize changing i_blkbits/folio order and punching
+-		 * out the pagecache.
+-		 */
+-		inode_lock_shared(bd_inode);
+ 		ret = blkdev_buffered_write(iocb, from);
+-		inode_unlock_shared(bd_inode);
+ 		need_sync = true;
+ 	}
+ 
 -- 
 2.53.0
 
