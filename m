@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025050;
-	b=hCrur4MjtuHVC20xvjbrjYrdGsUbAPytnOufkeU7P6yXjiGrEnvS2j/CpmclvG8EVR92
-	 T+MJNTQ7mgT3NgsPmwHkKlO5oYFTRVcIJqnI6/Tl/vlSQkLA7zZ4ZMZ+QlfE2IAFzXIzZ
-	 gwt1UivzXu3R06kCzgQNKSNylc5SBWcbstCDApGJSVIJSHl0QRU2yl19Ds9BUNdsmMNHW
-	 l4C64ASfboLHyHHINMvawR1Tw79OnlfqAAefiDhryJ5YhY6AkWtykVfPfm8XP5mTTPEuc
-	 10/m6e4O17t1gUYwDr6tC2MNF8oD+QPoDkOtk8mXrnsHlpoyPWyIUTI+phcNrQwX1SQ==
+	t=1795025053;
+	b=eGpcx2fImSXs20fIW99RQjAPJpsGpXsompL/E4cVK2x/EVCCU+ixjWaEXyUO93EfhVCF
+	 4r5L25dW9iUsDx/+p29oPd8gMioqNmavPv7DuQ/u3qwmAOZNTFE9d3hb0yRAsLhG7ltUp
+	 wMHmnAlsKk6gvQGVoc+1Z5wkGSTxBaecmHrl3rwVcODwts8ZWFd5q/tBt74vGjbAipFeb
+	 oTotFYCLRWv/Md7TYEt+OKh3GI90TZxrdRB2IDD2KVx3/c1yJ+jn7sKE7pZDixbfroZGM
+	 7kPKWJ4jNeQMo1w+dtrY0cwF1P7ypWyuvvZQ4ehY+7u5tfv52eliEBNQs062LS/84xQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025050;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025053;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=j07MgsO6Fws8H97dwaPJFwVljUSJ71LSVfNxXOU9F3Q=;
-	b=AfNnZR9TxUE0R6vGviSe+iMBB9mM4KNdoOVV2GR0KGaT+uizZuGCPmOdtr5i1+sLFuvD
-	 lIQa1cPKE/2ycUuWCnl/2+GrA7TlhjWgsWVTgxRILo4lYkIv+MtHr0tki/VW/F0HwTR3p
-	 nFy3Og0Oi3ISRfhM7sVV3746ZpnXrm38kkX8Y7uyNzUCDpB6oTWFk9cr6KK9lAKZkSQNS
-	 8Srous0NxGJz2kkIfMgDNhGEdUZCWvQUKyEwD3EwgZHxOnl106/GoyplAHv378scxRjYf
-	 EDQ4aNXeCrWjBastjf16dfupsHECSyQzk4U0WscaLW23Ioa3XbE1sJQqPsJYcQ937Zw==
+	bh=LppppZuqkoDHM9jhDXjtmHVz5rTSf9pOgLXy4uNDksY=;
+	b=0enb00OxgDep32TS6P80rorhHdIabKfEETazlGlyccOfoBhhZsa6wQwAYXtuAEBcF6Qb
+	 lSFtMnkfRJF0+GMdi4FznUYtM5UyKa6dCjbL0hWL5f7OVoDRGlWKOXjFLR8YPPGyLT1Ee
+	 ZKOXbpOyILUz45yY521yHGdSUlmJsAfpI2zycB5NjnIET/KuiICHWPTXsWfDPAp/uuQKE
+	 bISsgf+jXZMduZP3HUqjUP7zsPlMmZGiUlXsmnEKBllb8kojtHWecSsTqbBzzX5TjJGSk
+	 r42aV0qFVZbUK8x/Lj+CnbC8rJg+7f1a2jUY/VzYJ1A2Nk0G/aXqvt+FLZHEq6+M4bg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fEtdJRR1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nTXCus2H;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D942606A32A;
-	Wed, 18 Nov 2026 18:04:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3BC2606A320;
+	Wed, 18 Nov 2026 18:04:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fEtdJRR1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A40801F000C4;
-	Wed, 18 Nov 2026 18:04:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nTXCus2H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 580741F000C5;
+	Wed, 18 Nov 2026 18:04:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025050;
-	bh=j07MgsO6Fws8H97dwaPJFwVljUSJ71LSVfNxXOU9F3Q=;
+	s=korg; t=1795025052;
+	bh=LppppZuqkoDHM9jhDXjtmHVz5rTSf9pOgLXy4uNDksY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fEtdJRR1gRFmODQF4n9yeG4W2VJkTR5JcL5xnFbU1Jtt8EFHOSTDdN6qudboapjLJ
-	 B2qDBUwRdCMmsIJDnR+bI7QZ8QJF3pUDOiT4yZ5TwytUKKmXzld3EqLbSbbAn2L9Bx
-	 6SkPNF3BHOUVGrgRtAbG3pNAbkWgEAFq+F07NNN8=
+	b=nTXCus2H7aL6PqqkSi6X1bBZalcgQt6Dm5ArXdcqMoQBWVxp6fJhK2EFyrX0UhXIv
+	 ZvxoSpWPwDAw5h1A5wG0CYoOD9fJ+2GSoOm1VJgEcKVLrf8hG3DZOUV3Bk2Hrcy12W
+	 woWk4+/hdwIXaCJlkJeSrtI3IDSfAuF35ctEDv3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Mario Limonciello <superm1@kernel.org>,
+	Chuanhong Guo <gch981213@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0943/2151] cpufreq: amd-pstate: Propagate cppc_set_auto_sel() errors on mode change
-Date: Wed, 18 Nov 2026 15:44:38 +0100
-Message-ID: <20261118150156.825773224@linuxfoundation.org>
+Subject: [PATCH 6.18 0944/2151] pinctrl: mediatek: mt7629: fix the 2.4 GHz Wi-Fi pin mode array
+Date: Wed, 18 Nov 2026 15:44:39 +0100
+Message-ID: <20261118150156.861709808@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,56 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Chuanhong Guo <gch981213@gmail.com>
 
-[ Upstream commit 8de705037124dd1cd49bd8cae6536d63ec4e1807 ]
+[ Upstream commit 0b056aef31602cd10d2b35adc4746781b4fb8609 ]
 
-amd_pstate_change_mode_without_dvr_change() iterates over the online CPUs
-and calls cppc_set_auto_sel() to enable or disable hardware autonomous
-selection, but discards its return value and unconditionally returns 0.
+The wf0_2g group contains nine pins but only eight mux values.
+mtk_pinmux_set_mux() indexes the mode array once for each pin, reading
+past its end when configuring pin 78 (WF0_2G_HB6). This can select an
+unrelated mux value or fail with -EINVAL, preventing the Wi-Fi device
+from probing.
 
-If the firmware rejects the request, the failure is hidden: the cpufreq
-core records the mode transition as successful while the hardware stays in
-its previous autonomous-selection state.  The software mode and the actual
-hardware behaviour then disagree, breaking the expected frequency scaling.
+Add the missing mode 1 entry for WF0_2G_HB6.
 
-Check the return value of cppc_set_auto_sel() and propagate the first
-error to the caller so the sysfs write reports the failure.
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/bug/linux-d114a94a-655b-43a6-91b1-9484889726c9
-Fixes: 3ca7bc818d8c ("cpufreq: amd-pstate: Add guided mode control support via sysfs")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20260921190235.3651688-2-mario.limonciello@amd.com
-Signed-off-by: Mario Limonciello <superm1@kernel.org>
+Fixes: b44677375fee ("pinctrl: mediatek: add pinctrl support for MT7629 SoC")
+Signed-off-by: Chuanhong Guo <gch981213@gmail.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/pinctrl/mediatek/pinctrl-mt7629.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index 298eaec8df092..e78a8d5207153 100644
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -1567,6 +1567,7 @@ static int amd_pstate_unregister_driver(int dummy)
- static int amd_pstate_change_mode_without_dvr_change(int mode)
- {
- 	int cpu = 0;
-+	int ret;
+diff --git a/drivers/pinctrl/mediatek/pinctrl-mt7629.c b/drivers/pinctrl/mediatek/pinctrl-mt7629.c
+index cc0694881ac9d..6daf9e55b5947 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-mt7629.c
++++ b/drivers/pinctrl/mediatek/pinctrl-mt7629.c
+@@ -294,7 +294,7 @@ static int mt7629_pwm_1_funcs[] = { 2, };
  
- 	cppc_state = mode;
+ /* WF 2G */
+ static int mt7629_wf0_2g_pins[] = { 70, 71, 72, 73, 74, 75, 76, 77, 78, };
+-static int mt7629_wf0_2g_funcs[] = { 1, 1, 1, 1, 1, 1, 1, 1, };
++static int mt7629_wf0_2g_funcs[] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, };
  
-@@ -1574,7 +1575,9 @@ static int amd_pstate_change_mode_without_dvr_change(int mode)
- 		return 0;
- 
- 	for_each_online_cpu(cpu) {
--		cppc_set_auto_sel(cpu, (cppc_state == AMD_PSTATE_PASSIVE) ? 0 : 1);
-+		ret = cppc_set_auto_sel(cpu, (cppc_state == AMD_PSTATE_PASSIVE) ? 0 : 1);
-+		if (ret)
-+			return ret;
- 	}
- 
- 	return 0;
+ /* WF 5G */
+ static int mt7629_wf0_5g_pins[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, };
 -- 
 2.53.0
 
