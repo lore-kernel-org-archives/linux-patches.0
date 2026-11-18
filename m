@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043702;
-	b=r3F4M5i2ltWzG6U/NsdITluDlvTMN3HIuoWiPsje87DB3C1BNjddLlDMjtdbCPV0xwVZ
-	 jEDCckkmbo4BjvBopdr50UH/9G3PxJPV7LjiaCAgGotUehCdqe5FVsteD/6dn6fGUXIr/
-	 WldM0BTeApO4ioc42u/a5SqYFropXCiyqMd06YL6Tomrcq0B2l9et8r8W2z96YweDoTyl
-	 faZk6lJ1ohiJVMKphIvvzvqbzHv434NufOA6z+AykD0L/5Hm/W4uTHfhs7YUQrSTI5Xty
-	 F2Av1FJ7+1KEER/GrmJFVH9rlY+oaH33LzOCdDa8SBuGRPtI267h0nZ/5Fp/URzuMMA==
+	t=1795043705;
+	b=Pibr75Ms38EKibChBi90nfrRpurgkAkGRDc/7FCNhbPEpKmzdFIyj13C39Yfk/upyJKb
+	 MiCNJ7DHDDNXIx7B9t0TLEqJvvgfeQ8cNLKR0iLM70f2HxKFX2MBNNG4Y74b/+CeRYRvH
+	 oVPU/t3f8iU3oL6ZjVaz+16VVs+3Bjn//tZtNe7Nmsf9eO/Nb+E51zvQjEDvP+7HTP1v8
+	 CdDoNigUtYFtBzfSszdljWjP7h7jU8u9N/1aYUIRBpU3yzW3rUpesq0vc1GwGogZBN58W
+	 JeRvXYp1TgHPyf3XjA4Jolh+TCNXYnp0x75pv+4TENh2oBvFZ1DphZl30aNudwEuYKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043702;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043705;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=7aKwM8BdUVSCeUvhHuUhgebH1eBJthnufHy27rOV6vg=;
-	b=a/TpoNK0S2ajt6w5T3QkgDRh4MzfOZTi3WKB0C48Scw/rElkcsKRedFaUq5AUApSQFQf
-	 OHP7oLG/t/K/h/GJFCAmO7GIaNp8rj9CKfPIFYBPodayMcRZOPK9Jv8zYBN14qkFEqnW5
-	 ymHS9hGmbiXyVCZCsHYisJnxNpKPhX9rSNnxcm93WhS/4FbPgIzYCKD4lm0Qzl+PK8xqa
-	 9oOtLKsdPxl0/7+fcQu5Llo+tZtfuaCSTpRlpwcG6ntBZ1GgWGTMr3zS8M3UmezaV7wL0
-	 VHO8tlGzk+HPCeeahi/3eM+4Ogz2mBm1+6BKggoFwPp6c1yiyUs+DQIVVDmH6w0aFwg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=oGJG52iWlpSQgVrOEFz7/iPLr34mVfyIEMur3UhqDho=;
+	b=AIKZqTh+xyxCazR49DuEmDwwFBPEtY9UUKnNqsIM9dDQpQcOFxQJJFS9jXOpFJ3LXF3l
+	 YkTF92Fr/UFl/DiF4/sSxYW9MRUuLhX3G59pAQNDy5sZI67FCYJrc44zqt8GJj9WVusNu
+	 zunVCNU4HDTSCiOaKMKN0dh+VAzN6aootyu2WZgoLZwW+jiPGCCyDv398j8umCbhRcr38
+	 /tPYafZcG9XzSJQegyTLqx3ViGuFjQwMTpGQZnDJvidZQI/YcKkYQU8yRQGeHIVg70bde
+	 VhQGesFieVOl3g42NIM+teQq2KZTNfWn+qaT4CO4w2BRUgOHCj4GErOIyWVcu0ApyTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lHb68U4W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sDNUcIQ4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D9A606A334;
-	Wed, 18 Nov 2026 23:15:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030E6606A325;
+	Wed, 18 Nov 2026 23:15:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lHb68U4W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE66C1F000C4;
-	Wed, 18 Nov 2026 23:15:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sDNUcIQ4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B261F000C4;
+	Wed, 18 Nov 2026 23:15:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043702;
-	bh=7aKwM8BdUVSCeUvhHuUhgebH1eBJthnufHy27rOV6vg=;
+	s=korg; t=1795043704;
+	bh=oGJG52iWlpSQgVrOEFz7/iPLr34mVfyIEMur3UhqDho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lHb68U4WfqptTEv0FNl9OMVo3MSE2CqJN3BJ4jEUSQEXCN7icHrUbrELGLe0d+mnx
-	 WLRvJYJN8ovKWyvFfgoNHHJSdpZaFdHdEwvkm8rvYWA+BUcBHBkVubz49W118BbqRp
-	 fmX0WJotaFWfoH2tqen28W069BSxguCVwTbng4qo=
+	b=sDNUcIQ40zZlT0ioOheIRmLFMIuFNQOll6iw4vpOwdUsaEaYIq/1mW5p7M9Ys4yWL
+	 r3tVNI+17tcDOCIUlSzBYVEgdhjCRam6a1J5tEJZZACuHz466jZ6b4vFZNb4/KWtcr
+	 vCkNMjpiV6jThfph38hQEd6pT91nb/vVo8dRjahw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 0304/2857] blk-crypto: fix NULL deref and UAF in __blk_crypto_evict_key()
-Date: Wed, 18 Nov 2026 15:22:18 +0100
-Message-ID: <20261118150212.363848377@linuxfoundation.org>
+	Li Jun <lijun01@kylinos.cn>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0278/2857] tpm: tpm_tis_spi: fix nodef CR50 tpm_tis_spi_resume is null
+Date: Wed, 18 Nov 2026 15:21:52 +0100
+Message-ID: <20261118150211.432483123@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,106 +62,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baokun Li <libaokun@linux.alibaba.com>
+From: Li Jun <lijun01@kylinos.cn>
 
-commit c8c53d669d4e45b3a804013251a34387d7e11bfb upstream.
+[ Upstream commit b4d1adc70471d0752bba674552d19971ed9fa869 ]
 
-Sashiko reported a possible NULL pointer dereference, triggered by the
-following flow:
+if no define CONFIG_TCG_TIS_SPI_CR50 in config,
+the add of tpm_tis_spi_resume is null, this cause the tpm chip to
+fail to resume.
 
-  dm-inlinecrypt ctor            # first use of the fallback
-   ├─ blk_crypto_init_key()      # succeeds, ctx->key.size != 0
-   ├─ blk_crypto_start_using_key()
-   │   ├─ hw-wrapped key: -EOPNOTSUPP
-   │   │    # profile never allocated (NULL)
-   │   └─ raw key: fallback_start_using_mode()
-   │      └─ blk_crypto_fallback_init() fails
-   │         └─ kfree(profile)   # not NULLed
-   ├─ goto bad
-   └─ inlinecrypt_dtr()          # evicts whenever key.size is set
-      └─ blk_crypto_evict_key()
-         └─ blk_crypto_config_supported_natively() = false
-            └─ blk_crypto_fallback_evict_key()
-               └─ __blk_crypto_evict_key(blk_crypto_fallback_profile)
-                  └─ profile->num_slots # BOOM!!!
-
-This issue can be reproduced using the following commands:
-
-  dd if=/dev/zero of=/tmp/backing bs=1M count=64
-  LOOP=$(losetup -f --show /tmp/backing)
-  SZ=$(blockdev --getsz $LOOP)
-  KEY=$(head -c 64 /dev/urandom | od -An -tx1 | tr -d ' \n')
-  dmsetup create ic --table "0 $SZ inlinecrypt aes-xts-plain64 \
-    $KEY 0 $LOOP 0 1 keytype:hw-wrapped"
-
-And the following oops is triggered:
-
-  ==================================================================
-  blk-crypto: loop0: no support for wrapped keys
-  Oops: general protection fault, probably for non-canonical address
-        0xdffffc000000000b: 0000 [#1] SMP KASAN PTI
-  KASAN: null-ptr-deref in range [0x0000000000000058-0x000000000000005f]
-  CPU: 5 UID: 0 PID: 901 Comm: dmsetup 7.3.0-rc3 #1 PREEMPT(lazy)
-  RIP: 0010:__blk_crypto_evict_key+0x2e/0x3b0
-  Call Trace:
-   blk_crypto_evict_key+0x24c/0x320
-   inlinecrypt_dtr+0xf6/0x160
-   inlinecrypt_ctr+0x2d3/0xbd0
-   dm_table_add_target+0x661/0xf40
-   table_load+0x1c4/0x490
-   ctl_ioctl+0x32f/0x5f0
-   dm_ctl_ioctl+0xe/0x20
-  ==================================================================
-
-dm-inlinecrypt is the only caller that can evict a key that was never
-started, as fscrypt frees such a key without evicting it.
-
-Fix this by returning early from blk_crypto_fallback_evict_key() when
-tfms_inited[] is not set for the key's mode.  tfms_inited[] is only set
-after blk_crypto_fallback_init() has successfully initialized the
-profile, so the crash above is no longer reachable.
-
-The bug has been latent since commit c984ff1423ae ("blk-crypto:
-dynamically allocate fallback profile") was merged in v6.5, and only
-became actually triggerable when commit e7f57d2c47e2 ("dm-inlinecrypt:
-add target for inline block device encryption") was merged in v7.2.
-
-Fixes: c984ff1423ae ("blk-crypto: dynamically allocate fallback profile")
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://patch.msgid.link/sashiko-outbox-167341@kernel.org
-Suggested-by: Eric Biggers <ebiggers@kernel.org>
-Link: https://patch.msgid.link/20261014155131.GB322435@quark
-Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
-Reviewed-by: Eric Biggers <ebiggers@kernel.org>
-Link: https://patch.msgid.link/20261023081908.3505413-1-libaokun@linux.alibaba.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Li Jun <lijun01@kylinos.cn>
+Link: https://lore.kernel.org/r/20260812100914.3540149-1-lijun01@kylinos.cn
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-crypto-fallback.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/char/tpm/tpm_tis_spi.h | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/block/blk-crypto-fallback.c
-+++ b/block/blk-crypto-fallback.c
-@@ -529,6 +529,12 @@ bool blk_crypto_fallback_bio_prep(struct
- 
- int blk_crypto_fallback_evict_key(const struct blk_crypto_key *key)
- {
-+	/*
-+	 * Pairs with smp_store_release() in
-+	 * blk_crypto_fallback_start_using_mode()
-+	 */
-+	if (!smp_load_acquire(&tfms_inited[key->crypto_cfg.crypto_mode]))
-+		return 0;
- 	return __blk_crypto_evict_key(blk_crypto_fallback_profile, key);
+diff --git a/drivers/char/tpm/tpm_tis_spi.h b/drivers/char/tpm/tpm_tis_spi.h
+index d0f66f6f19318..ced416ecd92c2 100644
+--- a/drivers/char/tpm/tpm_tis_spi.h
++++ b/drivers/char/tpm/tpm_tis_spi.h
+@@ -40,8 +40,12 @@ static inline int cr50_spi_probe(struct spi_device *spi)
  }
+ #endif
  
+-#if defined(CONFIG_PM_SLEEP) && defined(CONFIG_TCG_TIS_SPI_CR50)
+-extern int tpm_tis_spi_resume(struct device *dev);
++#if defined(CONFIG_PM_SLEEP)
++	#if defined(CONFIG_TCG_TIS_SPI_CR50)
++		extern int tpm_tis_spi_resume(struct device *dev);
++	#else
++		#define  tpm_tis_spi_resume tpm_tis_resume
++	#endif
+ #else
+ #define tpm_tis_spi_resume	NULL
+ #endif
+-- 
+2.53.0
+
 
 
