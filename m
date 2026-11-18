@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015127;
-	b=DF2CD6NlUGqc7sWlfk0OHD4wyxwqHa+u7G5mYDHZrxcZrZDF5HAv0DPGiarrxFlbKGIB
-	 P2FoIKDd7xwLjUK/GeNEvDarhDAbN52cWl+x4WLv1Wpz/02FEMi2fu+VPj/wWGNTMeVr5
-	 dnttfCi3K7VaMM9RtiHPqUdjFkQf15gLGCk0dPQD2gOws5Nsn/QGLLrotof/0IvdN0NkW
-	 nmOIQEnHlPBMASV/HMjefYqbUgS+xjEsRfcb4vy29V9IUjhdhnYovQ5f/EeW6IuflXSmb
-	 VdLAmVshZW+1r6WJ4v9IpuFMHHUltAW9Ckykedlr0jXQp/7pc2D773ml5XTt9NeZe+A==
+	t=1795015130;
+	b=rk7NnUuGHo3dyc/YhoEL0100UUu12V4hItK8qBrlrUgHK6WGZhRlHPiyXXRg6RbG1+qz
+	 gqyXnKXSDofBwtqIz9T8BjG34/evvR4SLAVzIJm6tkbG+WKMKtaZsI8BL8WCyd410wFGi
+	 VCQ2RPTbT2tkSl2f8oIDfsFc27tJ3SMwTjbYzIY/Jfgtxz7zScyhvUcnQs/ecrYkDTeGY
+	 mR16ICUM3mgLHMZMNoqa+34W54eAjrgwBggiYYZj6H/BtDO4DdLnSs/ojY890vROuNpCx
+	 +tIzJp0vd34rTr8m5pZ69G2upBESZWL1vcfqwQYK37SoVLudBvFzFQrn/9jKzbz+jRw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015127;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015130;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2+kKrQL7BzXokAJ+ZiK20qBEeFAHDnvX+0pj0rmnhhg=;
-	b=Nlxl9W+RgyW2+WfLABMCBxr58X6GOBTjTXwdOzEamFQmH8jldjxWMWDX6dXpLm/YWzZI
-	 aAYDDsf14zrBtGT0BBegHroHyF5xUah7Qc9pXIBlHhs/NbcvMRXuLIKwbPOw6krPntKzb
-	 KYpBVETU6SiKyUN1nc5nwF16Ekw6z5N3hXHjPPfJkA8FBRxCUGIiGzCqEQ85KMT7QnaH2
-	 PMG0nlHlteEMjt8RdEH7p9BqJE2zQgx7iK8NXhJuYMwKNjaiiPDLH8v0da6MOHLraupG3
-	 zNnj/lQ4/vf4in9SR1RpXRME4frimQpUuApDWd+impUOt8Gw95K8EJajlYRwO5X0cfw==
+	bh=nQNifCnRMPHzW8Lb08qXm/+gbt4tAiXB5CT+2htTadA=;
+	b=V+zYlOoBmBq7SkXGKgJOxw75edwkbRwOIC7/NRd3SdeUSJscwNwL2NgLZIQONms0T1E7
+	 oUpdAr1sSIfBey2MgmvLTQE1HLgmi8aLMre4PpNscsQR1kPpiKWfX8GQ+NMUFngUK2BMw
+	 YWtVsjXyBPfw/DJtsIpddUfWCZJsAU2IOLS+SW+9PmgYJNE+n7WkAimMMB3CzsVm2y6bP
+	 i/KjMnebmLuR5hR8zQ9WaWt5TImtA+zw9m3ac2GojodlIUnhljdugjPXLjV3/VBz+zqB5
+	 x6PxsnmXeB+0j0FDIpswRvO9CFP629C09AXov9Pcw4fjinY6n8zmpoEyzjBgDZzJLhg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zJ4ifCbV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z4Br5Sxn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285BB60A2607;
-	Wed, 18 Nov 2026 15:18:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F150260A2626;
+	Wed, 18 Nov 2026 15:18:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zJ4ifCbV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CB551F000C5;
-	Wed, 18 Nov 2026 15:18:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z4Br5Sxn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F1E11F000CB;
+	Wed, 18 Nov 2026 15:18:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015127;
-	bh=2+kKrQL7BzXokAJ+ZiK20qBEeFAHDnvX+0pj0rmnhhg=;
+	s=korg; t=1795015129;
+	bh=nQNifCnRMPHzW8Lb08qXm/+gbt4tAiXB5CT+2htTadA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zJ4ifCbVpUYMAEWH0Y/pgZAcJnE5By69f4TGbSrXod0DAdSqBxSDhJU+rsW1aVjFs
-	 2/Od7Lx4csn3ARNHliZ+kS79Tl7JW57TIzvmLwKufREMiJ+FqALzx3UYVXivob2hdn
-	 4+w6Oyj5al4T45y+2+x6nS2AmGtuUAux6jKKNpxY=
+	b=z4Br5Sxn67bGTNliHHAjUGOWTT3hT19DyE1xzQxppEyFwvmMVaTeOHwBW+ymSv9Lo
+	 FNIw4RQPHb9PBdRZHhiVJ0PswcjpWtu8wvTUIwCri97YJMrjtSfuiYEyWuE+tzbStw
+	 L0vAMeDV/KHuqmpogM5w/tyb5DhrT/p4qCxWmpuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Icenowy Zheng <zhengxingda@iscas.ac.cn>,
 	Chen-Yu Tsai <wenst@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0061/2651] drm: verisilicon: fix cursor offset field update
-Date: Wed, 18 Nov 2026 15:21:41 +0100
-Message-ID: <20261118150250.138449955@linuxfoundation.org>
+Subject: [PATCH 7.3 0062/2651] drm/verisilicon: Switch to drm_fb_dma_get_addr() for framebuffer addresses
+Date: Wed, 18 Nov 2026 15:21:42 +0100
+Message-ID: <20261118150250.174633212@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,54 +68,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Icenowy Zheng <zhengxingda@iscas.ac.cn>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 6575bb5d0d3c7db0d7d293428ecc07cb38e46ecc ]
+[ Upstream commit 063019ac51afffda4ab3d658701b086caa0c8e9e ]
 
-The 4th argument of regmap_update_bits() expects a pre-shifted register
-value instead of the field value when it's used to set a single field,
-however I forgot this when writing the code setting the cursor X/Y
-offset fields, thus the write operation doesn't happen at all (because
-of the non-shifted values being masked by regmap_update_bits()).
+The verisilicon driver has a custom framebuffer address calculating
+helper that the common drm_fb_dma_get_addr() can substitute.
 
-Fix this problem so the cursor is correctly clipped.
+Differences from drm_fb_dma_get_addr():
 
-The framebuffer address is also clipped so the cursor offset problem was
-previously not discovered, and the framebuffer address deserves another
-fix for proper cursor behavior when it's clipped.
+- Uses drm_format_info_min_pitch() to calculate the horizontal offset;
+  however the driver does not support any of the blocked formats, so
+  this just ends up being the same as in drm_fb_dma_get_addr():
+  "cpp[plane] * y"
 
+- Uses clipped source coordinates instead of non-clipped coordinates
+  as in drm_fb_dma_get_addr();
+
+  For the primary plane this doesn't matter, since the primary plane
+  must match the output, i.e. it cannot be clipped. Also this driver
+  doesn't support scaling.
+
+  For the cursor plane this seems wrong, as the clipping seems to be
+  done by the hardware, and thus the buffer address should be unclipped.
+
+As such, it should be fine to use the common helper and drop the custom
+code.
+
+Tested-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
+Reviewed-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
 Fixes: 8c4ae2189125 ("drm: verisilicon: add support for cursor planes")
-Signed-off-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://patch.msgid.link/20260812154829.671777-1-zhengxingda@iscas.ac.cn
+Link: https://patch.msgid.link/20260813065127.341349-1-wenst@chromium.org
 Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/verisilicon/vs_cursor_plane.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/verisilicon/vs_cursor_plane.c |  4 +++-
+ drivers/gpu/drm/verisilicon/vs_plane.c        | 20 -------------------
+ drivers/gpu/drm/verisilicon/vs_plane.h        |  2 --
+ .../gpu/drm/verisilicon/vs_primary_plane.c    |  7 ++++++-
+ 4 files changed, 9 insertions(+), 24 deletions(-)
 
 diff --git a/drivers/gpu/drm/verisilicon/vs_cursor_plane.c b/drivers/gpu/drm/verisilicon/vs_cursor_plane.c
-index da456dced88aa..472d5d70b5cc9 100644
+index 472d5d70b5cc9..b1e71da48350e 100644
 --- a/drivers/gpu/drm/verisilicon/vs_cursor_plane.c
 +++ b/drivers/gpu/drm/verisilicon/vs_cursor_plane.c
-@@ -200,7 +200,7 @@ static void vs_cursor_plane_atomic_update(struct drm_plane *plane,
- 	} else {
- 		regmap_update_bits(dc->regs, VSDC_CURSOR_CONFIG(output),
- 				   VSDC_CURSOR_CONFIG_X_OFF_MASK,
--				   -state->crtc_x);
-+				   VSDC_CURSOR_CONFIG_X_OFF(-state->crtc_x));
- 		regmap_update_bits(dc->regs, VSDC_CURSOR_LOCATION(output),
- 				   VSDC_CURSOR_LOCATION_X_MASK, 0);
+@@ -13,6 +13,7 @@
+ #include <drm/drm_atomic_helper.h>
+ #include <drm/drm_blend.h>
+ #include <drm/drm_crtc.h>
++#include <drm/drm_fb_dma_helper.h>
+ #include <drm/drm_fourcc.h>
+ #include <drm/drm_framebuffer.h>
+ #include <drm/drm_gem_atomic_helper.h>
+@@ -177,7 +178,8 @@ static void vs_cursor_plane_atomic_update(struct drm_plane *plane,
+ 		break;
  	}
-@@ -214,7 +214,7 @@ static void vs_cursor_plane_atomic_update(struct drm_plane *plane,
- 	} else {
- 		regmap_update_bits(dc->regs, VSDC_CURSOR_CONFIG(output),
- 				   VSDC_CURSOR_CONFIG_Y_OFF_MASK,
--				   -state->crtc_y);
-+				   VSDC_CURSOR_CONFIG_Y_OFF(-state->crtc_y));
- 		regmap_update_bits(dc->regs, VSDC_CURSOR_LOCATION(output),
- 				   VSDC_CURSOR_LOCATION_Y_MASK, 0);
- 	}
+ 
+-	dma_addr = vs_fb_get_dma_addr(fb, &state->src);
++	/* hardware handles clipping as seen below */
++	dma_addr = drm_fb_dma_get_gem_addr(fb, state, 0);
+ 
+ 	regmap_write(dc->regs, VSDC_CURSOR_ADDRESS(output),
+ 		     lower_32_bits(dma_addr));
+diff --git a/drivers/gpu/drm/verisilicon/vs_plane.c b/drivers/gpu/drm/verisilicon/vs_plane.c
+index 7ddb9d2dcb83d..f189c0bba5b72 100644
+--- a/drivers/gpu/drm/verisilicon/vs_plane.c
++++ b/drivers/gpu/drm/verisilicon/vs_plane.c
+@@ -107,26 +107,6 @@ int drm_format_to_vs_format(u32 drm_format, struct vs_format *vs_format)
+ 	return 0;
+ }
+ 
+-dma_addr_t vs_fb_get_dma_addr(struct drm_framebuffer *fb,
+-			      const struct drm_rect *src_rect)
+-{
+-	struct drm_gem_dma_object *gem;
+-	dma_addr_t dma_addr;
+-
+-	/* Get the physical address of the buffer in memory */
+-	gem = drm_fb_dma_get_gem_obj(fb, 0);
+-
+-	/* Compute the start of the displayed memory */
+-	dma_addr = gem->dma_addr + fb->offsets[0];
+-
+-	/* Fixup framebuffer address for src coordinates */
+-	dma_addr += drm_format_info_min_pitch(fb->format, 0,
+-					      src_rect->x1 >> 16);
+-	dma_addr += (src_rect->y1 >> 16) * fb->pitches[0];
+-
+-	return dma_addr;
+-}
+-
+ struct drm_plane_state *vs_plane_duplicate_state(struct drm_plane *plane)
+ {
+ 	struct vs_plane_state *vs_state, *vs_state_old;
+diff --git a/drivers/gpu/drm/verisilicon/vs_plane.h b/drivers/gpu/drm/verisilicon/vs_plane.h
+index 32ed1d70f3b8c..e4f82f1fc6e91 100644
+--- a/drivers/gpu/drm/verisilicon/vs_plane.h
++++ b/drivers/gpu/drm/verisilicon/vs_plane.h
+@@ -75,8 +75,6 @@ static inline struct vs_plane_state *to_vs_plane_state(struct drm_plane_state *s
+ }
+ 
+ int drm_format_to_vs_format(u32 drm_format, struct vs_format *vs_format);
+-dma_addr_t vs_fb_get_dma_addr(struct drm_framebuffer *fb,
+-			      const struct drm_rect *src_rect);
+ 
+ struct drm_plane_state *vs_plane_duplicate_state(struct drm_plane *plane);
+ void vs_plane_destroy_state(struct drm_plane *plane,
+diff --git a/drivers/gpu/drm/verisilicon/vs_primary_plane.c b/drivers/gpu/drm/verisilicon/vs_primary_plane.c
+index 8e94491693019..d5a8d61e9a489 100644
+--- a/drivers/gpu/drm/verisilicon/vs_primary_plane.c
++++ b/drivers/gpu/drm/verisilicon/vs_primary_plane.c
+@@ -8,6 +8,7 @@
+ #include <drm/drm_atomic.h>
+ #include <drm/drm_atomic_helper.h>
+ #include <drm/drm_crtc.h>
++#include <drm/drm_fb_dma_helper.h>
+ #include <drm/drm_fourcc.h>
+ #include <drm/drm_framebuffer.h>
+ #include <drm/drm_gem_atomic_helper.h>
+@@ -126,7 +127,11 @@ static void vs_primary_plane_atomic_update(struct drm_plane *plane,
+ 			   VSDC_FB_CONFIG_UV_SWIZZLE_EN,
+ 			   vs_state->format.uv_swizzle);
+ 
+-	dma_addr = vs_fb_get_dma_addr(fb, &state->src);
++	/*
++	 * Primary plane cannot be moved, no clipping is involved,
++	 * so the non-clipped framebuffer address can be used.
++	 */
++	dma_addr = drm_fb_dma_get_gem_addr(fb, state, 0);
+ 
+ 	regmap_write(dc->regs, VSDC_FB_ADDRESS(output),
+ 		     lower_32_bits(dma_addr));
 -- 
 2.53.0
 
