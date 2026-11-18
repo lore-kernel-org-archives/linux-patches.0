@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019517;
-	b=XZRQ52VfZQapSYogTxQeIaC37ctwA7hcqbnuMWfibVRmohf/WeCVNCrDt5DB9vX1UbL+
-	 RvsQG9xZmFyKoUP0LriTcKuBBZQ7NWjy/SUQaQS4WOWb7wzNtRZksv8kpSeSMgy5871zt
-	 JHDKEkWu+tFzaofIl2tBDSAjA3uH2Q4GmD0Rjl/UDAizES+dIU5Zo1eHG1ivyevaAVO52
-	 JzgsA9G8bFe7qaX95AzDzI2/unzBhzzGGbmFVOafVDqJaQQ9tNidma2VzYQ5XD+JAo7RS
-	 jQgDulSkJUlRqHrNUSu9xZuO/Rj4cnPY1tzrpkTZSQ3kjlhPhN5lPXQdYps5dQ4gEeA==
+	t=1795019520;
+	b=MGzX3wj9IEjy3xbnCb59BJi8fvIgsUO1x1sv+JtaHfAh/uOSAmo7p3dvQIRhzmSk5bP+
+	 gTJw8WHsOvpREYRnbcCjnz0VctpppqCubTGqR+yq0g1YQ9o1tXogpnGZZdgwsDqP8s4hP
+	 /QBF7jdOEGfIzLWddbEvCZ80eLLrBHXWSIncmoDcrDfu5FXnmPos19jgtyIkS7tSFhdOz
+	 8zDBQV50a10uHfefCXyrqcC5Y/17ozxtjKuwMFB/Z4paD//kSUAPPvkiuYE9XtQ6PSBE3
+	 Fm5RoxUW5c5EBY72Gcerp65sgzhJLc1W9jHXY5zCzmGo0YlJalrI593Cmk65gCj8QUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019517;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019520;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rUKKcgc0PxpLTOLKD+BzEvmIGODWQjFenZ0o52h14Mk=;
-	b=vC60/C1M7fNhld/2eXhECVf8LkS5zYuw9EkeTcaAliYKHm8XkCy4Hge5qUCkldXlcBtZ
-	 CQj1w20ZxzCq48oZLuamriaqcKoaFTWshWduipQ+RvX5aXem1OnS7VZ7ywqFqv1Tn5ucc
-	 i5qGYRkoTI4GV+kdt7uv21oqS3HLw7Irw5oFYxl47C2vUqXp7Vo8TRhD1IQZi9AWatAWf
-	 3RTsa1jHdfqjQIDBx0vXKepH4Puyb1PGP1NnKbpRgXDXFTF0aAe/gK0J5la58uOzKfNMm
-	 N+xtnOBj/k5VC9qUbrs7txNMgalwUF7mgAHqvDO8d67pBQOTsJMe7wtyfjFuIHtQDSQ==
+	bh=Qsr5aWZP4fwilHG4EhztbHCLbBpvxDDmOjXyN++Z1ko=;
+	b=0HCqEHAT2/oL9HTVXAqGQb0OHUUA2/LTKsUWPuwnhmz7q6qrtsKJgw+tS1Y8RK78V/p3
+	 /rQza6jwvgi97xU263eH8dJ91P06Rag57T69/IDCPcOELCDmafpp3yCfkL0GKoXlwELwA
+	 ITEW6RN7EyKwABxx0Ui5Eeatul+J6czOROAc0lVkb65gk3B5vPojVYW1dRxsy7EYt/NNT
+	 LM4cIuN6TJDhWOnwdiTsIFT454wuTdm+H00CC5HVfgo8xn2yC9+qI2SMcZuqHilAciXdm
+	 glMZOn/prOQs3KrzUXCiBOSyo+LqFq7CbMHZKP/eip1C0sGXfg5d6JbXbdFkQ745sIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oHllQfem;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H1pJc4JG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44528606A33A;
-	Wed, 18 Nov 2026 16:31:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199AA606A33A;
+	Wed, 18 Nov 2026 16:32:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oHllQfem
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F3351F000C4;
-	Wed, 18 Nov 2026 16:31:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H1pJc4JG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AF801F000C6;
+	Wed, 18 Nov 2026 16:31:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019517;
-	bh=rUKKcgc0PxpLTOLKD+BzEvmIGODWQjFenZ0o52h14Mk=;
+	s=korg; t=1795019520;
+	bh=Qsr5aWZP4fwilHG4EhztbHCLbBpvxDDmOjXyN++Z1ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oHllQfemjexdXH2xrlDFKHfn3BavJkADRjVr+stJaYHl70Cs0qQgblgZTvKcxyfUh
-	 WMAVno720Sckux+XQgYWYyP/Dp6H3UVOyPok2G+OyqnizRasLsVy4U3ZbaL8ywr8nF
-	 QKZUNob4yhBJxwv0uByzTZWaxpCYWLXjGXMuLCPI=
+	b=H1pJc4JGhcqODtJwghs/tZN3qYehhheaLKSRsd3N90Cy2xImmTT2FHqLY0xzylQ/H
+	 gWItyPBxJF6voatTZoZgKrgxxw6x2w2q7Lbo55FBmFwS8UDodILjZ2vWUmS14d4mi9
+	 wXVb5HjFoycjla4oBGZ6n4BMEKj+HXS7N1wHc6eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mina Almasry <almasrymina@google.com>,
+	Kaifeng Wang <kaifengw@google.com>,
 	Stanislav Fomichev <sdf@fomichev.me>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Bobby Eshleman <bobbyeshleman@meta.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1625/2651] net: devmem: embed net_iov_area in binding
-Date: Wed, 18 Nov 2026 15:47:45 +0100
-Message-ID: <20261118150346.359811845@linuxfoundation.org>
+Subject: [PATCH 7.3 1626/2651] net: devmem: check uid and netns in net_devmem_get_binding()
+Date: Wed, 18 Nov 2026 15:47:46 +0100
+Message-ID: <20261118150346.396262824@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,249 +70,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislav Fomichev <sdf.kernel@gmail.com>
+From: Kaifeng Wang <kaifengw@google.com>
 
-[ Upstream commit 13648ba787223c88086b383beead242427e5747a ]
+[ Upstream commit 3a82195416fd71fdd6cb4ff80f611ec28073be16 ]
 
-After replacing the gen_pool with a binding-level freelist, devmem no
-longer needs a separate chunk owner object. There is only one
-net_iov_area for the binding, so store it directly in struct
-net_devmem_dmabuf_binding.
+NETDEV_CMD_BIND_TX is unprivileged, and dmabuf binding IDs are allocated
+from a single global xarray. Currently net_devmem_get_binding() looks up
+the binding by ID without checking whether the sending socket belongs to
+the same user or network namespace that created the binding.
 
-Derive the binding from net_iov_owner() with container_of(), matching the
-pattern used by io_uring zcrx. This removes the leftover
-dmabuf_genpool_chunk_owner wrapper and its allocation/free path.
+Record the creating netlink socket's network namespace and UID on the
+binding, and verify both in net_devmem_get_binding() before checking the
+route destination device. Return -EINVAL on mismatch so callers cannot
+distinguish non-existent IDs from bindings owned by other users.
 
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20260917181116.3319017-3-sdf@fomichev.me
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 3a82195416fd ("net: devmem: check uid and netns in net_devmem_get_binding()")
+Fixes: bd61848900bf ("net: devmem: Implement TX path")
+Signed-off-by: Kaifeng Wang <kaifengw@google.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/devmem.c | 61 ++++++++++++++---------------------------------
- net/core/devmem.h | 25 +++++--------------
- 2 files changed, 24 insertions(+), 62 deletions(-)
+ net/core/devmem.c      | 7 ++++++-
+ net/core/devmem.h      | 5 +++++
+ net/core/netdev-genl.c | 5 +++--
+ 3 files changed, 14 insertions(+), 3 deletions(-)
 
 diff --git a/net/core/devmem.c b/net/core/devmem.c
-index 2ac9d74010a9f..7cac0dab8ea87 100644
+index 7cac0dab8ea87..87f238020c911 100644
 --- a/net/core/devmem.c
 +++ b/net/core/devmem.c
-@@ -29,15 +29,6 @@ static DEFINE_XARRAY_FLAGS(net_devmem_dmabuf_bindings, XA_FLAGS_ALLOC1);
- 
- static const struct memory_provider_ops dmabuf_devmem_ops;
- 
--static void
--net_devmem_dmabuf_free_chunk_owner(struct dmabuf_genpool_chunk_owner *owner)
--{
--	if (owner) {
--		kvfree(owner->area.niovs);
--		kfree(owner);
--	}
--}
--
- static void net_devmem_dmabuf_binding_release(struct percpu_ref *ref)
- {
- 	struct net_devmem_dmabuf_binding *binding =
-@@ -52,12 +43,11 @@ void __net_devmem_dmabuf_binding_free(struct work_struct *wq)
- 	struct net_devmem_dmabuf_binding *binding = container_of(wq, typeof(*binding), unbind_w);
- 
- 	if (binding->freelist)
--		WARN(binding->free_count != binding->chunk_owner->area.num_niovs,
-+		WARN(binding->free_count != binding->area.num_niovs,
- 		     "destroying dmabuf binding with outstanding net_iovs: total=%zu, free=%zu",
--		     binding->chunk_owner->area.num_niovs,
--		     binding->free_count);
-+		     binding->area.num_niovs, binding->free_count);
- 
--	net_devmem_dmabuf_free_chunk_owner(binding->chunk_owner);
-+	kvfree(binding->area.niovs);
- 	dma_buf_unmap_attachment_unlocked(binding->attachment, binding->sgt,
- 					  binding->direction);
- 	dma_buf_detach(binding->dmabuf, binding->attachment);
-@@ -94,8 +84,7 @@ void net_devmem_free_dmabuf(struct net_iov *niov)
- 	struct net_devmem_dmabuf_binding *binding = net_devmem_iov_binding(niov);
- 
- 	spin_lock_bh(&binding->freelist_lock);
--	if (WARN_ON_ONCE(binding->free_count >=
--			 binding->chunk_owner->area.num_niovs)) {
-+	if (WARN_ON_ONCE(binding->free_count >= binding->area.num_niovs)) {
- 		spin_unlock_bh(&binding->freelist_lock);
- 		return;
- 	}
-@@ -175,13 +164,11 @@ net_devmem_bind_dmabuf(struct net_device *dev, void *vdev,
+@@ -161,6 +161,7 @@ net_devmem_bind_dmabuf(struct net_device *dev, void *vdev,
+ 		       enum dma_data_direction direction,
+ 		       unsigned int dmabuf_fd, unsigned int niov_shift,
+ 		       struct netdev_nl_sock *priv,
++		       const struct sock *nl_sk,
  		       struct netlink_ext_ack *extack)
  {
  	struct net_devmem_dmabuf_binding *binding;
--	struct dmabuf_genpool_chunk_owner *owner;
- 	size_t niov_size = 1UL << niov_shift;
- 	static u32 id_alloc_next;
- 	struct scatterlist *sg;
- 	struct dma_buf *dmabuf;
- 	unsigned int sg_idx;
--	size_t total_niovs;
- 	size_t niov_idx;
- 	size_t i;
- 	int err;
-@@ -241,16 +228,18 @@ net_devmem_bind_dmabuf(struct net_device *dev, void *vdev,
- 		goto err_unmap;
+@@ -191,6 +192,8 @@ net_devmem_bind_dmabuf(struct net_device *dev, void *vdev,
+ 
+ 	binding->dev = dev;
+ 	binding->vdev = vdev;
++	write_pnet(&binding->net, sock_net(nl_sk));
++	binding->uid = sk_uid(nl_sk);
+ 	binding->niov_shift = niov_shift;
+ 	xa_init_flags(&binding->bound_rxqs, XA_FLAGS_ALLOC);
+ 
+@@ -347,7 +350,9 @@ struct net_devmem_dmabuf_binding *net_devmem_get_binding(struct sock *sk,
+ 	int err = 0;
+ 
+ 	binding = net_devmem_lookup_dmabuf(dmabuf_id);
+-	if (!binding || !binding->tx_vec) {
++	if (!binding || !binding->tx_vec ||
++	    !net_eq(sock_net(sk), read_pnet(&binding->net)) ||
++	    !uid_eq(sk_uid(sk), binding->uid)) {
+ 		err = -EINVAL;
+ 		goto out_err;
  	}
- 
--	total_niovs = dmabuf->size >> niov_shift;
-+	binding->area.base_virtual = 0;
-+	binding->area.num_niovs = dmabuf->size >> niov_shift;
- 	if (direction == DMA_TO_DEVICE) {
--		binding->tx_vec = kvmalloc_objs(struct net_iov *, total_niovs);
-+		binding->tx_vec = kvmalloc_objs(struct net_iov *,
-+						binding->area.num_niovs);
- 		if (!binding->tx_vec) {
- 			err = -ENOMEM;
- 			goto err_unmap;
- 		}
- 	} else {
- 		spin_lock_init(&binding->freelist_lock);
--		binding->freelist = kvmalloc_array(total_niovs,
-+		binding->freelist = kvmalloc_array(binding->area.num_niovs,
- 						   sizeof(binding->freelist[0]),
- 						   GFP_KERNEL);
- 		if (!binding->freelist) {
-@@ -258,24 +247,13 @@ net_devmem_bind_dmabuf(struct net_device *dev, void *vdev,
- 			goto err_unmap;
- 		}
- 	}
--	owner = kzalloc_node(sizeof(*owner), GFP_KERNEL,
--			     dev_to_node(&dev->dev));
--	if (!owner) {
-+	binding->area.niovs = kvmalloc_objs(*binding->area.niovs,
-+					    binding->area.num_niovs);
-+	if (!binding->area.niovs) {
- 		err = -ENOMEM;
- 		goto err_free_freelist;
- 	}
- 
--	owner->area.base_virtual = 0;
--	owner->area.num_niovs = total_niovs;
--	owner->binding = binding;
--	owner->area.niovs = kvmalloc_objs(*owner->area.niovs,
--					  owner->area.num_niovs);
--	if (!owner->area.niovs) {
--		err = -ENOMEM;
--		goto err_free_owner;
--	}
--	binding->chunk_owner = owner;
--
- 	niov_idx = 0;
- 	for_each_sgtable_dma_sg(binding->sgt, sg, sg_idx) {
- 		dma_addr_t dma_addr = sg_dma_address(sg);
-@@ -289,13 +267,13 @@ net_devmem_bind_dmabuf(struct net_device *dev, void *vdev,
- 			NL_SET_ERR_MSG_FMT(extack,
- 					   "dmabuf sg entry (addr=%pad, len=%zu) not aligned to niov size %zu",
- 					   &dma_addr, len, niov_size);
--			goto err_free_chunk_owner;
-+			goto err_free_niovs;
- 		}
- 
- 		nr_niovs = len >> niov_shift;
- 		for (i = 0; i < nr_niovs; i++, niov_idx++) {
--			niov = &owner->area.niovs[niov_idx];
--			net_iov_init(niov, &owner->area, NET_IOV_DMABUF);
-+			niov = &binding->area.niovs[niov_idx];
-+			net_iov_init(niov, &binding->area, NET_IOV_DMABUF);
- 			page_pool_set_dma_addr_netmem(net_iov_to_netmem(niov),
- 						      dma_addr);
- 			if (direction == DMA_TO_DEVICE)
-@@ -310,17 +288,14 @@ net_devmem_bind_dmabuf(struct net_device *dev, void *vdev,
- 			      binding, xa_limit_32b, &id_alloc_next,
- 			      GFP_KERNEL);
- 	if (err < 0)
--		goto err_free_chunk_owner;
-+		goto err_free_niovs;
- 
- 	list_add(&binding->list, &priv->bindings);
- 
- 	return binding;
- 
--err_free_chunk_owner:
--	net_devmem_dmabuf_free_chunk_owner(binding->chunk_owner);
--	goto err_free_freelist;
--err_free_owner:
--	kfree(owner);
-+err_free_niovs:
-+	kvfree(binding->area.niovs);
- err_free_freelist:
- 	kvfree(binding->freelist);
- 	kvfree(binding->tx_vec);
 diff --git a/net/core/devmem.h b/net/core/devmem.h
-index db2eb6372aee9..6ed16b4b4687e 100644
+index 6ed16b4b4687e..71c7bd9d6e395 100644
 --- a/net/core/devmem.h
 +++ b/net/core/devmem.h
-@@ -14,9 +14,9 @@
+@@ -10,6 +10,7 @@
+ #ifndef _NET_DEVMEM_H
+ #define _NET_DEVMEM_H
+ 
++#include <net/net_namespace.h>
+ #include <net/netmem.h>
  #include <net/netdev_netlink.h>
  
- struct netlink_ext_ack;
--struct dmabuf_genpool_chunk_owner;
- 
- struct net_devmem_dmabuf_binding {
-+	struct net_iov_area area;
- 	struct dma_buf *dmabuf;
- 	struct dma_buf_attachment *attachment;
- 	struct sg_table *sgt;
-@@ -27,7 +27,6 @@ struct net_devmem_dmabuf_binding {
+@@ -27,6 +28,8 @@ struct net_devmem_dmabuf_binding {
  	 * dereferenced.
  	 */
  	void *vdev;
--	struct dmabuf_genpool_chunk_owner *chunk_owner;
++	possible_net_t net;
++	kuid_t uid;
  	/* Protect dev */
  	struct mutex lock;
  
-@@ -82,11 +81,6 @@ struct net_devmem_dmabuf_binding {
- };
- 
- #if defined(CONFIG_NET_DEVMEM)
--struct dmabuf_genpool_chunk_owner {
--	struct net_iov_area area;
--	struct net_devmem_dmabuf_binding *binding;
--};
--
- void __net_devmem_dmabuf_binding_free(struct work_struct *wq);
- struct net_devmem_dmabuf_binding *
- net_devmem_bind_dmabuf(struct net_device *dev, void *vdev,
-@@ -101,18 +95,11 @@ int net_devmem_bind_dmabuf_to_queue(struct net_device *dev, u32 rxq_idx,
- 				    struct net_devmem_dmabuf_binding *binding,
- 				    struct netlink_ext_ack *extack);
- 
--static inline struct dmabuf_genpool_chunk_owner *
--net_devmem_iov_to_chunk_owner(const struct net_iov *niov)
--{
--	struct net_iov_area *owner = net_iov_owner(niov);
--
--	return container_of(owner, struct dmabuf_genpool_chunk_owner, area);
--}
--
- static inline struct net_devmem_dmabuf_binding *
- net_devmem_iov_binding(const struct net_iov *niov)
+@@ -88,6 +91,7 @@ net_devmem_bind_dmabuf(struct net_device *dev, void *vdev,
+ 		       enum dma_data_direction direction,
+ 		       unsigned int dmabuf_fd, unsigned int niov_shift,
+ 		       struct netdev_nl_sock *priv,
++		       const struct sock *nl_sk,
+ 		       struct netlink_ext_ack *extack);
+ struct net_devmem_dmabuf_binding *net_devmem_lookup_dmabuf(u32 id);
+ void net_devmem_unbind_dmabuf(struct net_devmem_dmabuf_binding *binding);
+@@ -165,6 +169,7 @@ net_devmem_bind_dmabuf(struct net_device *dev, void *vdev,
+ 		       unsigned int dmabuf_fd,
+ 		       unsigned int niov_shift,
+ 		       struct netdev_nl_sock *priv,
++		       const struct sock *nl_sk,
+ 		       struct netlink_ext_ack *extack)
  {
--	return net_devmem_iov_to_chunk_owner(niov)->binding;
-+	return container_of(net_iov_owner(niov),
-+			    struct net_devmem_dmabuf_binding, area);
- }
+ 	return ERR_PTR(-EOPNOTSUPP);
+diff --git a/net/core/netdev-genl.c b/net/core/netdev-genl.c
+index 33b9f4eb9565a..847814e3df3fd 100644
+--- a/net/core/netdev-genl.c
++++ b/net/core/netdev-genl.c
+@@ -1094,7 +1094,7 @@ int netdev_nl_bind_rx_doit(struct sk_buff *skb, struct genl_info *info)
  
- static inline u32 net_devmem_iov_binding_id(const struct net_iov *niov)
-@@ -122,11 +109,11 @@ static inline u32 net_devmem_iov_binding_id(const struct net_iov *niov)
- 
- static inline unsigned long net_iov_virtual_addr(const struct net_iov *niov)
- {
--	struct dmabuf_genpool_chunk_owner *co =
--		net_devmem_iov_to_chunk_owner(niov);
-+	struct net_devmem_dmabuf_binding *binding =
-+		net_devmem_iov_binding(niov);
- 
- 	return net_iov_owner(niov)->base_virtual +
--	       ((unsigned long)net_iov_idx(niov) << co->binding->niov_shift);
-+	       ((unsigned long)net_iov_idx(niov) << binding->niov_shift);
- }
- 
- static inline bool
+ 	binding = net_devmem_bind_dmabuf(netdev, NULL, dma_dev, DMA_FROM_DEVICE,
+ 					 dmabuf_fd, niov_shift, priv,
+-					 info->extack);
++					 NETLINK_CB(skb).sk, info->extack);
+ 	if (IS_ERR(binding)) {
+ 		err = PTR_ERR(binding);
+ 		goto err_rxq_bitmap;
+@@ -1243,7 +1243,8 @@ int netdev_nl_bind_tx_doit(struct sk_buff *skb, struct genl_info *info)
+ 	binding = net_devmem_bind_dmabuf(bind_dev,
+ 					 bind_dev != netdev ? netdev : NULL,
+ 					 dma_dev, DMA_TO_DEVICE, dmabuf_fd,
+-					 PAGE_SHIFT, priv, info->extack);
++					 PAGE_SHIFT, priv, NETLINK_CB(skb).sk,
++					 info->extack);
+ 	if (IS_ERR(binding)) {
+ 		err = PTR_ERR(binding);
+ 		goto err_unlock_bind_dev;
 -- 
 2.53.0
 
