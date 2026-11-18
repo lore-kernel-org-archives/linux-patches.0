@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053638;
-	b=FNXRgIGbtgXfNa++SQe2tAAXkzwyKQP4pi7AM5JTDVIdi8R8NFJXrPQ4yUMcN35EvHX2
-	 Lh9NtHZiSckkoueUOAOu2+/KHehUcJuTpF2lnhYDjsdWtA4tcs0NXK4bNVNfgFa7mVvwL
-	 iebGh7FeH5MPiFmCdlYB5Fbfy8nBxvRrOmSIl5M9Ux3EgnuYlDG8xYLRD2ruIXVPU4Nq7
-	 1PtSg7UilYzv0zIoHJ7Q8gGqyKThvSa1GjHCXKhi48AHEb0bbTQaSsKuRfeZyBFaNDFiE
-	 zTWSce/V1v85zLN4Sgo3Tt7g0vlXQcpqtNI7u6azWBXx3XTAlE9l4JbeEUl0a+u2uAA==
+	t=1795053641;
+	b=UsI/4uD2Pvb8hUZEZskA1oHvfKDmm8CUacrCV9181BmDNBXG3WFz0lpXnLvUtPwGhv/S
+	 EM6yzhTiI0VDUOMmiv1ZL7cs+n7dGtLssqNRmg+Ft8FsyXj/ZMzSXFaKNHxTvFC4ZG6Mh
+	 GTrUWmsnkP6kdKP9FGEL0qQiAvJui8y07I14lDwXBLE9GdfIgrs9ACJoEFWCIMrsJFDS+
+	 0MZoCODU2QwTuuv988YpdX1KKOWZp6088Ob2UZVWZzCKZuc6en3mwhx8xl9NiOnBW1kET
+	 DhMyIq3GMNpoE1QlsSXCLyV3FRBhdXdQeu8oAZJbRFgBSgQ+r9NtjYIpBXrkuNF/HJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053638;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053641;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0q96qn5CREZB1ssRzuqQmU+syOSYRiMrEwd2Bk6meCI=;
-	b=aOwUm3A8+Uvc+gH+tjXCpjG80MSe9dcKORCV2lTadtbqJsMfK1EV0fgO/QNQI/ujCRQQ
-	 iamoNpG6dOaVPFwOngS71IQo6J8zJiZCkJcdv8OIg3PkbW5zf3QFvF8e1Ra6eucntP1aa
-	 YYr/E5s7itfByBsm5lqbE0GMKxNry+u1N1KiUoGCZ9sfVScqFuo9ZnGMTEUCGiUDSjLgP
-	 5B4FCgLbaP2QH+gdILRTU+UlSs4Lq27aKOMCx0BpM1RPQoZhguMYO9wRyxt5JY2KwbsTT
-	 V9nps413O4dgAM0VF2yT2OHnMcTxRJqBLYHAFV2nIhnDrWSkclKcP5DbkjGcPiXhq3g==
+	bh=ojNXWTd09BZ4uLT2HaZsAUSPkof/88SiF0iKWaPLvwI=;
+	b=Mks1ezde0DCCr2BQG970H2EaVTkBnU84LOnQLk/PaHa8eU9JrPUF30C/SGrRQvxOgjDK
+	 QDoyDUUZOfp8RMso/DWNEVluTHvxk0+8xV9bokd7CkRYP5/8reXR+NsANgjtvFz/z+q4I
+	 zV03tCHEnTVlB26B42hSK6nxz9wzEHkzgZqhMa2C0hHdpKBdXaOUHnzjEEWMV2IRsbZaT
+	 FA3z42aC7RV/voKYTapSas6xRHxlnV74DLJVTVKM33XdhB1cqN1PyD0Zxks7/xiV4iO6G
+	 4XW/ssfq8SD2ehhc54SKdEOH8HnszHftzYSZinsX4qMWVIsfAz3pa7vmUmQZLbfRysg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="O7c/IUmQ";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VF0rDwkQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05A97606A325;
-	Thu, 19 Nov 2026 02:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6235606A31C;
+	Thu, 19 Nov 2026 02:00:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O7c/IUmQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B4801F000C5;
-	Thu, 19 Nov 2026 02:00:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VF0rDwkQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E92F1F000C4;
+	Thu, 19 Nov 2026 02:00:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053637;
-	bh=0q96qn5CREZB1ssRzuqQmU+syOSYRiMrEwd2Bk6meCI=;
+	s=korg; t=1795053640;
+	bh=ojNXWTd09BZ4uLT2HaZsAUSPkof/88SiF0iKWaPLvwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O7c/IUmQM4QSNkJ4h+FTmdv6SIeMUPGMOeuE7nVMb5bHf1HswQLP6FZ62XsSINXYU
-	 ZOOGQTHwqCHqC8AIyoB9BAXBgQLPvGGpUjdt3GopURI7QA0NyQbHTAvN4a1N/OOsP7
-	 5y2CSAJI82Fs+oJp9kqJzhZdYgjuVn7P1qvkcGhA=
+	b=VF0rDwkQhvfnPBaXMdPvCPkvUt1NV4Ndvym9dXYXNDc/7SeN+Ul+FYNf+RnKMLi5s
+	 RIVAaIfkVRvPPMnjBhb2gmbVOytFWRr2S6kra/Y1tKm2QBjlYp2Q6SBSL4Qd/bJiEs
+	 Mo+56Jw3ZayvRBMNWkffKHvjtAiYzOWY5AsRAFXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaming Zhang <r772577952@gmail.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Esben Haabendal <esben@geanix.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0991/2214] gfs2: reject invalid inode sizes
-Date: Wed, 18 Nov 2026 15:44:27 +0100
-Message-ID: <20261118150052.009207881@linuxfoundation.org>
+Subject: [PATCH 5.15 0992/2214] iio: light: ltr501: Power down chip if request irq fails
+Date: Wed, 18 Nov 2026 15:44:28 +0100
+Message-ID: <20261118150052.054616920@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,74 +70,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaming Zhang <r772577952@gmail.com>
+From: Esben Haabendal <esben@geanix.com>
 
-[ Upstream commit 33ed0a0567e0abe66ea65e89dad2e35082890fbe ]
+[ Upstream commit 8a9bcd587d7d768e6c8e9fff88bb89645e412731 ]
 
-A corrupted GFS2 image can store a dinode size that is larger than what VFS
-i_size can represent. gfs2_dinode_in() reads the on-disk di_size as a u64 and
-writes it directly into inode->i_size. If the value is larger than S64_MAX, the
-incore i_size becomes negative. That negative value can bypass the existing
-stuffed inode size check:
+In case devm_request_threaded_irq() failed, we were leaving the chip
+powered instead of powering it down again. Power down the chip switching
+ALS and PS modes to standby.
 
-inode->i_size > gfs2_max_stuffed_size(ip)
-
-Later, gfs2_quotad may try to sync the quota file and unstuff the quota inode.
-gfs2_unstuffer_folio() reads the negative i_size into an unsigned length and
-passes it to memcpy(), turning it into a huge copy size and triggering a
-out-of-bound issue.
-
-Reject dinodes whose size exceeds sb->s_maxbytes before storing the value in
-inode->i_size. Also make the stuffed inode check use the raw on-disk size while
-it is still unsigned.
-
-Fixes: 70376c7ff312 ("gfs2: Always check inode size of inline inodes")
-Closes: https://lore.kernel.org/lkml/CANypQFaF6bvORKKbRALvEL0k_epFaneFiOQqco4gjdmKVbdURg@mail.gmail.com/
-Assisted-by: Codex:gpt-5.5-xhigh
+Fixes: 7ac702b3144b ("iio: ltr501: Add interrupt support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiaming Zhang <r772577952@gmail.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-[ sashal: adjusted context for direct inode->i_state access and existing dinode field assignments ]
+Acked-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Esben Haabendal <esben@geanix.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+[ sashal: adjusted context for the existing IRQ request failure logging block ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glops.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/iio/light/ltr501.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/gfs2/glops.c b/fs/gfs2/glops.c
-index 8a077de9ee0a4..67351df7b4b33 100644
---- a/fs/gfs2/glops.c
-+++ b/fs/gfs2/glops.c
-@@ -405,6 +405,7 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
- 	umode_t mode = be32_to_cpu(str->di_mode);
- 	struct inode *inode = &ip->i_inode;
- 	bool is_new = inode->i_state & I_NEW;
-+	u64 size;
- 
- 	if (unlikely(ip->i_no_addr != be64_to_cpu(str->di_num.no_addr))) {
- 		gfs2_consist_inode(ip);
-@@ -430,7 +431,12 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
- 	i_uid_write(inode, be32_to_cpu(str->di_uid));
- 	i_gid_write(inode, be32_to_cpu(str->di_gid));
- 	set_nlink(inode, be32_to_cpu(str->di_nlink));
--	i_size_write(inode, be64_to_cpu(str->di_size));
-+	size = be64_to_cpu(str->di_size);
-+	if (unlikely(size > inode->i_sb->s_maxbytes)) {
-+		gfs2_consist_inode(ip);
-+		return -EIO;
-+	}
-+	i_size_write(inode, size);
- 	gfs2_set_inode_blocks(inode, be64_to_cpu(str->di_blocks));
- 	atime.tv_sec = be64_to_cpu(str->di_atime);
- 	atime.tv_nsec = be32_to_cpu(str->di_atime_nsec);
-@@ -468,7 +474,7 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
- 	ip->i_depth = (u8)depth;
- 	ip->i_entries = be32_to_cpu(str->di_entries);
- 
--	if (gfs2_is_stuffed(ip) && inode->i_size > gfs2_max_stuffed_size(ip)) {
-+	if (gfs2_is_stuffed(ip) && size > gfs2_max_stuffed_size(ip)) {
- 		gfs2_consist_inode(ip);
- 		return -EIO;
- 	}
+diff --git a/drivers/iio/light/ltr501.c b/drivers/iio/light/ltr501.c
+index f0bd0ad34f222..a5275165d7fe2 100644
+--- a/drivers/iio/light/ltr501.c
++++ b/drivers/iio/light/ltr501.c
+@@ -1510,7 +1510,7 @@ static int ltr501_probe(struct i2c_client *client,
+ 		if (ret) {
+ 			dev_err(&client->dev, "request irq (%d) failed\n",
+ 				client->irq);
+-			return ret;
++			goto powerdown_on_error;
+ 		}
+ 	} else {
+ 		indio_dev->info = data->chip_info->info_no_irq;
 -- 
 2.53.0
 
