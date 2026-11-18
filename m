@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015530;
-	b=0wQTB2kcusncoKk42oiOlsbJTjBEBYWaxJkjSLTW9RNlTg+qOs7z+Bs6xb8Sqb0fqgxw
-	 DhQxBkDFRzVPQD7I5NeYETAcAaRxlsXYx00mdqvUzyEhmRlKjLopUfxNy3FMEjoczdsCG
-	 bo/3DJO1heUh/SUc0vWA2bxD5UozSUxnkdMbkhI5WJPMNDiflApdmXrbe0Y00qYnOHnWQ
-	 pqDUtGzxuA16FeC/PDC/KWHkaJNld9/ZjwRBA66DP5JuH9g2vWU+fJmSoKEb2sg5GX2Sn
-	 ++qQg5ByyDmwIdk1QeSjkgqVR2MuyUryfW6MukeN3GRDZBERSB3o3quGz2RQeiKniUQ==
+	t=1795015532;
+	b=T5hyHqqm1KixzH94cp+lo8GAjImtBJSLyl9ou8t6g4Imu8vVv254FqMWQrgBVoe8RC5g
+	 fmjFWYo37UbApWHkT6NJ8npv3LXv2Nur4RSc6iGYCPPDL96iJ3XG1r1e4XF2JrROI4kcj
+	 RrhWjdVJ9XzlAOtZNlawLDpzSsHOfKpBDARIC+vFnegyqkYoSChMUkf+GfpQxc5UPGaSH
+	 fWx21kyPPejQjtHDbBA4hsA/hbhDLuUGz/PNHM25yv+Sfp+uWDt5RntSNebJ/b8Q4ZtOp
+	 P6OmkfUnD3CUtY285hZCl1vSDlFK5zgOFoHsjfNtmnr3TNOYIdQADC2oKBZXA07YBHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015530;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015532;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pkR1LcMMQyldB+4zknmZuHgCLrLH5GVnwZ3q0NE7wGE=;
-	b=UjJQYW+DIACnTrXZmeo0zyOH28cbuhhhHFRlw2n7PpnrxxIPzFyOWGiBKfN2NAgWSPN7
-	 hlVa9g1IfIyVvutoKaHFIEXgwVToPHiCwm4sUngnkkZzsd+jrzhDHDF8a/QxJOsDhLpgS
-	 W9vSQz4iA4ExWkqhyn+hn1z7qqddcUm9HDzeXoAUoj3aI8RYZG+NBFzoz/ru45R3cLvot
-	 DlHO2R0milV2ZdTZzA2i9qGL9F5AXC50Yrm1cy0VyQSYLsYwXKEBHKe+bUHYLY/V6ewqZ
-	 m5yioP9yKRckmRRW5cJ1TBB4c52epgL2LfvwLChoY8NBhugoEYA1IugwCP4qLi7bcew==
+	bh=q1eCdfNBuBbyrmsRUC6hZojVCHsZ9Nrz/LDtpgaAxpE=;
+	b=LyIt9NT3IcYGDwuQWf4IYfxj+8+RN8yoY+SHD0pnaO7B8niueluNggMXGPo8xe3T/xqS
+	 W9wsVCWmkjc9Ipj64ir2bGPLYwaJ6VKl5bfOAKYiW5mENqDWTFxAjt1i8GOji6JKo1JrS
+	 Nil9jQBtg5MMxlFnjCQYb1qVYXIrBfQQbn0ABCYlnmOjfEmsQgCYnUCI5I95qV9G+R6ER
+	 /FtwUPx7/GBnNuvQMiplO93DOLzoceknFW6aFnsVdnNtKHRzpxqPY8lqa8vN7L8DbRjJT
+	 vL+17H5fDLrT99frMg0ijAW2ZQZc1DdxGUv0zlGidAdMsyGVZKgRecG4MWZoFfmQBvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Ud5vd6p/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UkIy1iwc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E839960A2610;
-	Wed, 18 Nov 2026 15:25:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E24760A2616;
+	Wed, 18 Nov 2026 15:25:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ud5vd6p/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34E8D1F000C4;
-	Wed, 18 Nov 2026 15:25:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UkIy1iwc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5F241F000C4;
+	Wed, 18 Nov 2026 15:25:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015529;
-	bh=pkR1LcMMQyldB+4zknmZuHgCLrLH5GVnwZ3q0NE7wGE=;
+	s=korg; t=1795015532;
+	bh=q1eCdfNBuBbyrmsRUC6hZojVCHsZ9Nrz/LDtpgaAxpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ud5vd6p/EHV1di6vW7eZRv/ItlXKx3pEs16vLLjxdHzVlbxpFGukWeziaTQVzzskd
-	 o6UoWmIs9qRnwt9V8D3P54uiwjJDzLPkaNIGk4IikXyl4jq02gr2yHNerYHNePlKpU
-	 sivHST7SmunQwapx01CjFaKlNkIUpxbK0435YW+M=
+	b=UkIy1iwcNdWxlR010rSwdcdzbDHJqnFd725c5Uhq5RyQqPTtHUkbv2AEKi8SVDWKD
+	 3Px5DAxLZI7W4IiTKlbsIUmRCdWQb2R7lDFmpAvqMW2pHkCcW2eB/V58MYY5rbQUE7
+	 ovJX72rbpTlyK6iJhoTBwvvU4yCx2uwaaQimKtJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	Lachlan Hodges <lachlan.hodges@morsemicro.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	Danila Chernetsov <listdansp@mail.ru>,
+	David Teigland <teigland@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0165/2651] wifi: mm81x: do not discard a failed firmware segment write
-Date: Wed, 18 Nov 2026 15:23:25 +0100
-Message-ID: <20261118150253.793561386@linuxfoundation.org>
+Subject: [PATCH 7.3 0166/2651] dlm: validate lock modes in recovery messages
+Date: Wed, 18 Nov 2026 15:23:26 +0100
+Message-ID: <20261118150253.825709224@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,40 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Danila Chernetsov <listdansp@mail.ru>
 
-[ Upstream commit dc1936211335eca00acca53d058dc94fbab02028 ]
+[ Upstream commit 7bf1aca6d626944091a5cb218b4e487547edff0a ]
 
-When mm81x_dm_write() fails while downloading a PT_LOAD segment,
-mm81x_fw_load_fw() sets ret to -EIO and breaks out of the loop.  The
-boot address write at the end of the function then overwrites ret, so a
-partially downloaded image is reported as loaded and the chip is
-triggered on it instead of the load being retried.
+The DLM recovery path restores lock state from rcom_lock messages
+received from remote nodes. The lock modes in these messages are
+copied directly into the local lkb state without validating that they
+are within the valid DLM lock mode range.
 
-Leave the function as soon as a segment fails.
+The rest of the DLM code assumes that lkb_rqmode and lkb_grmode
+contain valid lock modes. In particular, LVB callback handling in
+dlm_may_skip_callback() uses lock modes as indexes into the
+dlm_lvb_operations array:
 
-Fixes: b1906cea00b0 ("wifi: mm81x: add mm81x Wi-Fi HaLow driver")
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Link: https://patch.msgid.link/20260812060740.1275280-3-lilinmao@kylinos.cn
-Signed-off-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
+    dlm_lvb_operations[prev_mode + 1][mode + 1]
+
+An invalid lock mode received during recovery could therefore result in
+an out-of-bounds read during subsequent LVB callback processing.
+
+Validate rl_rqmode and rl_grmode before storing them into the local LKB
+state. This preserves the lock mode invariant required by the rest of
+the DLM code.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: e7fd41792fc0 ("[DLM] The core of the DLM for GFS2/CLVM")
+Acked-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/morsemicro/mm81x/fw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/dlm/lock.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/wireless/morsemicro/mm81x/fw.c b/drivers/net/wireless/morsemicro/mm81x/fw.c
-index d407b57f4c9cb..a2cb97cefc4e9 100644
---- a/drivers/net/wireless/morsemicro/mm81x/fw.c
-+++ b/drivers/net/wireless/morsemicro/mm81x/fw.c
-@@ -162,7 +162,7 @@ static int mm81x_fw_load_fw(struct mm81x *mors, const struct firmware *fw)
- 			mm81x_release_bus(mors);
- 			if (status) {
- 				ret = -EIO;
--				break;
-+				goto out_free;
- 			}
- 		}
- 	}
+diff --git a/fs/dlm/lock.c b/fs/dlm/lock.c
+index c381e10284465..3be1d6007e359 100644
+--- a/fs/dlm/lock.c
++++ b/fs/dlm/lock.c
+@@ -5529,6 +5529,10 @@ static int receive_rcom_lock_args(struct dlm_ls *ls, struct dlm_lkb *lkb,
+ {
+ 	struct rcom_lock *rl = (struct rcom_lock *) rc->rc_buf;
+ 
++	if (rl->rl_rqmode < DLM_LOCK_IV || rl->rl_rqmode > DLM_LOCK_EX ||
++	    rl->rl_grmode < DLM_LOCK_IV || rl->rl_grmode > DLM_LOCK_EX)
++		return -EINVAL;
++
+ 	lkb->lkb_nodeid = le32_to_cpu(rc->rc_header.h_nodeid);
+ 	lkb->lkb_ownpid = le32_to_cpu(rl->rl_ownpid);
+ 	lkb->lkb_remid = le32_to_cpu(rl->rl_lkid);
 -- 
 2.53.0
 
