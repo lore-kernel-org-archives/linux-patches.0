@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039566;
-	b=lvj7TNI6dU0BGfmSFXGDQw5dHSxCwtlvxEQwSuUWkSiW9nClGaFGikGtsSbzMM2wkAvg
-	 WaazGs3ha5i8SC9FPpzL3AwOlXjeLL5kPM36wKi169z137DNekoK91AyElgybfZirl13J
-	 Y43KUskDIZKygnINuL/6j5hTmYkSv6EnNePHTWa71D0lRWthdm7bCiz42qWHuOYBhkNU9
-	 jHvmfO1S17PmX2hAvtj8BnBmyQnfGKJAR9jvdulY0TlpGkCYv+1eJsCB6SBWGHoB/1Vhp
-	 XIEwk+FaHzdMi/YWpFnjhik9Csb+5pyqH4JfHexYua6jeTA0f+l/Suhqafto/xIsKzA==
+	t=1795039568;
+	b=w8PwzjVY+zr3eJ6ztS7Qjnhl7OOS5bGzEW8m5Y/n1PnivLHpW1qMLB6NWrYC1WzXR4f9
+	 gJmK/iUS4W2UJscgoznJdihUrbdG4hSExuloTboSeawROMsa9NyfFbfeu0sPPXK8joZqg
+	 K5j+oG0CnaxnlFASFmseLhB4XNNOy1iOluRaxUM6jOLYJ8NIFOyoyXM//saG6xGPeaCvB
+	 EQ8lapKbgXvrWIXC0IXOsAW8dWxX2iWuGntGKWYc4owUoqWB1jVrHo8gsiCtSTcbZ12Mv
+	 P3qpGGOKMW6Xj0zpe/Qh7Nz1JDN/XGy3LMVUaIBgEb1CSso/EjChdrw4gQb4Lns3Pnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039566;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039568;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=g1txaBVObk9QMbgrE95PtbdKfyCg01yNCoNud2GauTM=;
-	b=X1bYYjsYdyVKMoWKwhr7yFeyqQby6ddIQxS6mnDy1Wpr284AaGhCOgh3jm5jvyKqAw/v
-	 5o/QCFXBUM4Gf/OQtHTJiRTw0tRoVjh3K7P7+5nKOH91cqKy+uqV0CtPWNo51s35kkC4S
-	 MffoccbHyix9fjZCxVwI0f2VudgsSKcx/xK9wwoLeydOucI18L0UMIEySQ2f8v78bZ3dl
-	 VZl4yckLiD9zx0FJbqAJ5f5L8T9hnY3+g0hoWg3963IYh3tp84OUJ9UhH97bni+h31rEj
-	 QYmMl1U2wDiYzCR7W4yya649OdspYl478Hwa3ahlv4TXklaXSS7/gjFxUy+TtMqcV9w==
+	bh=l5DBtCT9pFS66jcsKsKtFVDCeETSMm5NCNR3xibho50=;
+	b=BYyAlHMDqqhcHouQFzXvrAzUGZwLDUc643KpW0dYScLA7PZfLGZV03Lrdkjwu3kI72IA
+	 FDWNkNFVpOdQV8PNi+KY35drb5XG2qNaOc+kYVgzHlzVK/9JDxaer608pi8BOof5jEV7A
+	 TKWiTVHFb2suFb5PKIKBjoXOHdCa++y19nELyX1M/JMTTF+kNn9z1F0i1icDlgAWgxK0v
+	 RSrIkbyjvyOaOuUnwH1gsPux1OdNaGP8ZgpruGPJpmtTtj/xnE0K4DX37aZRctxbbNq8r
+	 LY1FyPuKVW0Fo6BTsHe8EfB5hYdH7qzZRSZw2FXjH7EoH/+uHtNPUMLtc7A94g/vZZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F4TRXJbN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Fjeh7Lg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E64F6606A31C;
-	Wed, 18 Nov 2026 22:06:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB4D606A31C;
+	Wed, 18 Nov 2026 22:06:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F4TRXJbN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A7FD1F000C4;
-	Wed, 18 Nov 2026 22:06:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Fjeh7Lg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C2C51F000C4;
+	Wed, 18 Nov 2026 22:06:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039565;
-	bh=g1txaBVObk9QMbgrE95PtbdKfyCg01yNCoNud2GauTM=;
+	s=korg; t=1795039568;
+	bh=l5DBtCT9pFS66jcsKsKtFVDCeETSMm5NCNR3xibho50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F4TRXJbN5TnNun1kA0HlzsSS9aU5JJqmRGADX6SXKhG32FdIzMFpbUc5pjyJ1vzlN
-	 5jF7x0EaFMpFmM3lIBq25ZsyHlg+B1T18EOcFY42ZTEM1GHs9GTRcrbSBkfxrdv5/Z
-	 ktW/XAMG9PZqXYViYnm2emWjGIg84SxHndQPvSIw=
+	b=0Fjeh7LgSThgFf0DOcLbnf6CecUTPDmIOaeQW/D2+ZKeeFTXjC5gmF6FZ16YYCuSt
+	 ZpM2L1+/c6vvDpXGDQ4zPyr9Yejay/9EK4u9fjydAc6kKi3DTgj8wffh+gOJ+MhVLz
+	 zZjAFLNd/Eo/HwxX0lDCSosi3Y29srECtKXRiF5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2139/3318] kernfs: fix up the unlocked attribute reads on the creation paths
-Date: Wed, 18 Nov 2026 15:46:01 +0100
-Message-ID: <20261118150426.231674902@linuxfoundation.org>
+Subject: [PATCH 6.6 2148/3318] usb: musb: da8xx: depopulate OF children on remove
+Date: Wed, 18 Nov 2026 15:46:10 +0100
+Message-ID: <20261118150426.482100701@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,100 +67,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shakeel Butt <shakeel.butt@linux.dev>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 81bdc85b4c086502f4446a58eb5d25f29bb5e9f7 ]
+[ Upstream commit 4b30c89fb36924983be652bb24fc49e20390bf27 ]
 
-Two creation paths read a live node's attributes without holding
-kernfs_iattr_rwsem, which kernfs_iop_setattr() takes for writing.  They
-need different fixes.
+da8xx_probe() creates CPPI platform devices with of_platform_populate(),
+but da8xx_remove() unregisters only the separately created MUSB device and
+the generic PHY. The OF children therefore remain registered after the
+glue driver is unbound.
 
-kernfs_create_link() copies the target's ia_uid and then its ia_gid into
-the new link.  A chown of the target between the two reads leaves the
-link with the old uid and the new gid, an owner the target never had.
-Read both under the rwsem.
+Pair the successful population with of_platform_depopulate() during remove.
+Unregister the MUSB device first because it reuses the parent DT node but
+was not created by of_platform_populate().
 
-kernfs_new_node() reads the parent's mode and ia_gid for S_ISGID
-inheritance.  Either value is fine there: the node does not exist yet,
-so nothing orders a racing chmod or chown against the creation.  Taking
-the rwsem would only pick between two answers that are both right.  Mark
-the reads with READ_ONCE() instead.
-
-The pointer that leads to them is already fine: __kernfs_iattrs()
-publishes kernfs_node::iattr with try_cmpxchg(), and both sides read it
-with READ_ONCE(), like the rest of fs/kernfs.
-
-The Fixes tag is for the symlink half.  kernfs_create_link() has read
-the pair unlocked since it started copying the target's owner; only the
-name of the lock its writer takes has changed.  The READ_ONCE() markings
-are not a fix.
-
-Fixes: 488dee96bb62 ("kernfs: allow creating kernfs objects with arbitrary uid/gid")
-Acked-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
-Link: https://patch.msgid.link/20260905191613.3143937-5-shakeel.butt@linux.dev
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: d6299b6efbf6 ("usb: musb: Add support of CPPI 4.1 DMA controller to DA8xx")
+Assisted-by: Codex:gpt-5
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260813153353.42817-1-pengpeng@iscas.ac.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/kernfs/dir.c     | 12 +++++++++---
- fs/kernfs/symlink.c | 17 ++++++++++++++---
- 2 files changed, 23 insertions(+), 6 deletions(-)
+ drivers/usb/musb/da8xx.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/kernfs/dir.c b/fs/kernfs/dir.c
-index f6e2a4523f7e6..4ff5cc11789cf 100644
---- a/fs/kernfs/dir.c
-+++ b/fs/kernfs/dir.c
-@@ -685,13 +685,19 @@ struct kernfs_node *kernfs_new_node(struct kernfs_node *parent,
- {
- 	struct kernfs_node *kn;
+diff --git a/drivers/usb/musb/da8xx.c b/drivers/usb/musb/da8xx.c
+index a8d7224838cf6..78945b86c4082 100644
+--- a/drivers/usb/musb/da8xx.c
++++ b/drivers/usb/musb/da8xx.c
+@@ -585,6 +585,7 @@ static void da8xx_remove(struct platform_device *pdev)
+ 	struct da8xx_glue		*glue = platform_get_drvdata(pdev);
  
--	if (parent->mode & S_ISGID) {
-+	/*
-+	 * The mode and the gid below are read unlocked on purpose: they feed
-+	 * a node that does not exist yet, so nothing orders a racing chmod or
-+	 * chown against this creation.
-+	 */
-+	if (READ_ONCE(parent->mode) & S_ISGID) {
- 		/* this code block imitates inode_init_owner() for
- 		 * kernfs
- 		 */
-+		struct kernfs_iattrs *attrs = READ_ONCE(parent->iattr);
+ 	platform_device_unregister(glue->musb);
++	of_platform_depopulate(&pdev->dev);
+ 	usb_phy_generic_unregister(glue->usb_phy);
+ }
  
--		if (parent->iattr)
--			gid = parent->iattr->ia_gid;
-+		if (attrs)
-+			gid = READ_ONCE(attrs->ia_gid);
- 
- 		if (flags & KERNFS_DIR)
- 			mode |= S_ISGID;
-diff --git a/fs/kernfs/symlink.c b/fs/kernfs/symlink.c
-index 45371a70caa71..3d5fc22878936 100644
---- a/fs/kernfs/symlink.c
-+++ b/fs/kernfs/symlink.c
-@@ -31,9 +31,20 @@ struct kernfs_node *kernfs_create_link(struct kernfs_node *parent,
- 	kuid_t uid = GLOBAL_ROOT_UID;
- 	kgid_t gid = GLOBAL_ROOT_GID;
- 
--	if (target->iattr) {
--		uid = target->iattr->ia_uid;
--		gid = target->iattr->ia_gid;
-+	/*
-+	 * A symlink takes its owner from its target, so both fields have to
-+	 * come from the same moment: read them under kernfs_iattr_rwsem, or
-+	 * a chown of the target racing this could leave the link with the
-+	 * old uid and the new gid.  The section ends before kernfs_add_one()
-+	 * takes kernfs_rwsem.
-+	 */
-+	scoped_guard(rwsem_read, &kernfs_root(target)->kernfs_iattr_rwsem) {
-+		struct kernfs_iattrs *attrs = READ_ONCE(target->iattr);
-+
-+		if (attrs) {
-+			uid = attrs->ia_uid;
-+			gid = attrs->ia_gid;
-+		}
- 	}
- 
- 	kn = kernfs_new_node(parent, name, S_IFLNK|0777, uid, gid, KERNFS_LINK);
 -- 
 2.53.0
 
