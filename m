@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044743;
-	b=UHDTkIkFyZ+TZF/4yrOaPB2NS/es5/XQmVihw4RPQBxT08AwnzxRXReWNDKGS+k5nO9+
-	 Jzh8JLkySBk0C5SoafpycHrqfGkw5a7Zw5Y5+uIdaHmWV8XpIkx4QrY9kqP2OyUgR8/Nk
-	 K7stm+J0GR7Y95/LgyJ7SgYVwCFMwC3gH7ayxCN8Gwd7WxOcj2TCIroBSf4oX+XsvPJWT
-	 ZKnd/UAgxfPA8AwMzby2dHeYePFqYNzYihRjM2vEi4AsbnfZBtN4iqASq3OF1Xnir780H
-	 pRXvZCJ+SyQqfzbj4QAotVkhNqbmGb4oYoG5ysBvofY22tj1z5xLE6Pue1IEBuRhHGA==
+	t=1795044746;
+	b=WS8HHCWu2Qjye+HhO5OoMRc6R0Yxw1sTtWXPxp4JuAInj/0GHBJyCxxTrW3NbW0snUCZ
+	 ofhjS/mB6gYUn0yXHS8aLCyJ5l18u+lbQCXtFTGrTBNkbgkR4kCx0OcTXZ3H1oWez/0wV
+	 HE+0VzVNCOPgF1A9fUhZAm5TJMGsYP9g+Nmt54RaVHvCf4g5ANwF79ShB6tF7r3+EqBET
+	 uEsUydfcntMz/2DKEyaLVFjd9tvkUzoVmK5/0vp2aMYQAJNwgMf4bBLrmvr5H4XuoTexH
+	 0BZxdnwlb6HM1xGmLi/gwlqNVFlR0uVcsoTYjwSmX1775Obp6nHVaI6AkFhWbQ2p9IA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044743;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044746;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=n8rmG6oyJbkc+2JCkTZYzUPTjmvpwbDfD+YWAC5jYuE=;
-	b=pmAhVQaGKJ1/p5N7+jb3sYxS5m8pGDs6XgfZLW33kwIgxNntyRIbTC6TTTbAeUQe1QKl
-	 CxQH/IbnHGUyKJEY0WzDN5fOhWV03Yq+WFef5pMwyVG8Cm93a9E2RtjkzKbXJerepLrQa
-	 ikTLXGK9TIw82y96LBwXzmX301RjdFAzmwWfMDTET7OSd1Q827ymQagM0PzO2Pn949V59
-	 gfLEYNXimHHbgXODE4+BJvUAW0qh2xNV6ho+fAFDvYgG8TVNnGI8zOhX417zx0cZ5ystq
-	 bcTWHm12Okzo9eUY8k5WiWy3YvUMo6atMMGKgUK/Uod9z4IYxKFt6m3tO+R3H+UkZDA==
+	bh=R45pvSStZAG5wL0ULMgOPrcXt8IYlooywnmXlKs93Hw=;
+	b=MKypNwWeO6WTG7yYKSPZteyKECoXVNTnwgYjQVJXCkIbMduZ0bAwoyM94AFJK3/xcyYh
+	 eGwn7SNjFBwcVqnxzWMqm918ipC7h+3sNvdqq0oS0RGgBuj4AJIKCbaWYdMA56x5MxXV4
+	 dyPlGXOiRY9r2/pMZnJ1d2nNNGvmX47eKm3Bz4MNHUlBjSpngf9tZv185j1SrlSwZkm5U
+	 P15NYQS92083XaMzHdW887KTMOLdsnnEkR6EM86M/oPbX+OZG0kUUxEuuduQ8NoCLGxR8
+	 V7YoNsWLYCAVPzUvIvPD7q+p91meLDDQ7IXtGGqSDEf9JxisKCJpF/vnjoyUGOPtUQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ShehoEgB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WV7+BBSF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FFF9606A33F;
-	Wed, 18 Nov 2026 23:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5BE606A33D;
+	Wed, 18 Nov 2026 23:32:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ShehoEgB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2EC81F000C5;
-	Wed, 18 Nov 2026 23:32:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WV7+BBSF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A33E1F000CA;
+	Wed, 18 Nov 2026 23:32:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044743;
-	bh=n8rmG6oyJbkc+2JCkTZYzUPTjmvpwbDfD+YWAC5jYuE=;
+	s=korg; t=1795044745;
+	bh=R45pvSStZAG5wL0ULMgOPrcXt8IYlooywnmXlKs93Hw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ShehoEgBg7zGNjpe6q5rdyR129t4j5NNKpMfrVpl9f6ZpxNX0VzAiG4Pn3PiZRt3A
-	 cMI0mcZTGmYS/E/YiIrfOC6/BAQ85W2RG0auX1mG3mTAMTpDEeVn/PGAZ5is/lm40S
-	 MWgyZJCWgL09AMZPr4H3WYbdGalqisLK3whBKMns=
+	b=WV7+BBSFHIHnbvSPom9n0bEzg3ToJ/dUGZ3o0gd3Ljj4jBJLfpHjcaZGAxjH59v0n
+	 0qUvaSn2FvISC3QzhoqOAVbgxDY8ENL/GCpYEJoSdN8MVcYgkH8anIXsqun1XqcLCJ
+	 FFeOS/Ta3f0rBPHKr2KN5xlST+2f5GQS6p33ZRUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Zachariah Mithani (AploSec)" <zachariah@aplosai.com>,
+	Ian Bridges <icb@fastmail.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0673/2857] ksmbd: prevent share root removal through empty paths
-Date: Wed, 18 Nov 2026 15:28:27 +0100
-Message-ID: <20261118150225.795446705@linuxfoundation.org>
+Subject: [PATCH 6.1 0674/2857] ksmbd: fix out-of-bounds read when padding the final compound response
+Date: Wed, 18 Nov 2026 15:28:28 +0100
+Message-ID: <20261118150225.830029151@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,49 +68,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Ian Bridges <icb@fastmail.org>
 
-[ Upstream commit 9fd1fcbbf84986a7bcf601a2b90540899069d263 ]
+[ Upstream commit 714f27729121d59f103ca4dad7b0c2d1c125cd71 ]
 
-A FileLinkInformation request can supply "/" as the new link name.
-smb2_get_name() strips the trailing slash and passes an empty string to
-ksmbd_vfs_kern_path_start_removing().
+Compound response handling pads the last response of a compound to an
+8-byte boundary by growing the final iov and the RFC1002 length.
+smb2_allocate_rsp_buf() allocates exactly response_sz. A command can
+fill the response buffer to within 7 bytes of its end, for example a
+QUERY_INFO whose output is bounded only by the space left. The padding
+can then run past the allocation, and ksmbd_tcp_writev() reads those
+bytes when it sends the response.
 
-ksmbd_vfs_path_lookup() resolves an empty pathname as the configured share
-path, without LOOKUP_BENEATH. With ReplaceIfExists set, smb2_create_link()
-can therefore remove the share root from its parent before link creation
-fails. An authenticated client with a writable share and DELETE access to
-a file can trigger this if the share root is empty and the mapped user
-has write and search permission on its parent directory.
+  BUG: KASAN: slab-out-of-bounds in _copy_from_iter+0x744/0x10e0
+  Call Trace:
+   _copy_from_iter+0x744/0x10e0
+   tcp_sendmsg_locked+0x2290/0x3f80
+   ksmbd_tcp_writev+0x10c7/0x1ab0 [ksmbd]
 
-Return -EINVAL for empty pathnames when for_remove is set, before
-resolving the share path or acquiring removal resources. Ordinary lookups
-continue to accept empty pathnames for opening the share root.
+Allocate room for the padding when the request is a compound, as
+smb2_read() and smb2_read_pipe() do for their payloads. response_sz is
+unchanged, so commands still fill only up to it, and kvzalloc() zeroes
+the padding.
 
-Fixes: 74d7970febf7 ("ksmbd: fix racy issue from using ->d_parent and ->d_name")
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Reported-by: Zachariah Mithani (AploSec) <zachariah@aplosai.com>
+Signed-off-by: Ian Bridges <icb@fastmail.org>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ sashal: Moved the empty-name check from ksmbd_vfs_path_lookup() to smb2_create_link() because the lookup helper lacks for_remove. ]
+[ sashal: used GFP_KERNEL instead of KSMBD_DEFAULT_GFP in the response buffer allocation ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
 diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index ef70f17ac9303..6b24448a55e18 100644
+index 6b24448a55e18..2e9e4d7581c0b 100644
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -5841,7 +5841,8 @@ static int smb2_create_link(struct ksmbd_work *work,
- 	link_name = smb2_get_name(file_info->FileName,
- 				  le32_to_cpu(file_info->FileNameLength),
- 				  local_nls);
--	if (IS_ERR(link_name) || S_ISDIR(file_inode(filp)->i_mode)) {
-+	if (IS_ERR(link_name) || link_name[0] == '\0' ||
-+	    S_ISDIR(file_inode(filp)->i_mode)) {
- 		rc = -EINVAL;
- 		goto out;
+@@ -538,7 +538,7 @@ int smb2_allocate_rsp_buf(struct ksmbd_work *work)
+ 	struct smb2_hdr *hdr = smb_get_msg(work->request_buf);
+ 	size_t small_sz = MAX_CIFS_SMALL_BUFFER_SIZE;
+ 	size_t large_sz = small_sz + work->conn->vals->max_trans_size;
+-	size_t sz = small_sz;
++	size_t sz = small_sz, pad_sz = 0;
+ 	int cmd = le16_to_cpu(hdr->Command);
+ 
+ 	if (cmd == SMB2_IOCTL_HE || cmd == SMB2_QUERY_DIRECTORY_HE)
+@@ -560,10 +560,17 @@ int smb2_allocate_rsp_buf(struct ksmbd_work *work)
  	}
+ 
+ 	/* allocate large response buf for chained commands */
+-	if (le32_to_cpu(hdr->NextCommand) > 0)
++	if (le32_to_cpu(hdr->NextCommand) > 0) {
+ 		sz = large_sz;
++		/*
++		 * is_chained_smb2_message() pads the last response of a
++		 * compound to 8 bytes, which can take it past response_sz.
++		 * Leave room for the padding. kvzalloc() zeroes it.
++		 */
++		pad_sz = ALIGN(sz - sizeof(__be32), 8) - (sz - sizeof(__be32));
++	}
+ 
+-	work->response_buf = kvzalloc(sz, GFP_KERNEL);
++	work->response_buf = kvzalloc(sz + pad_sz, GFP_KERNEL);
+ 	if (!work->response_buf)
+ 		return -ENOMEM;
+ 
 -- 
 2.53.0
 
