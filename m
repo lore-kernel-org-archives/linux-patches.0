@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017527;
-	b=o31rTfw0tOJ/3R+pQegkr/c88Q123Jeo5zlXF/y8k68ceQg1jfIce95lO3GjVY1W4znr
-	 lN59R0aiAshCX3d05BbX3fAtv5dDaGkLzvm7T4gkKPInEIvr7lvZMHvG/Gfli/T+KronS
-	 YSu+nwUT+RsZlGTBPTmwLAyWJJCclEeSKxCCpdq9zQuxIOV3w8J+zvN371z3Mc9bK+pg7
-	 rax/DwLasGz0tefw4kdi4cvcO2cWKN1DrZ8KU6NtpmhjiE8pIrjVlHrpWKVPHtb8NaM7H
-	 xxcZLow5R2GxZbJQZ2GVQwvojE2iQUBkEMe2yl95ekkd8zkyV8EKKyN1rgO/QKlw5aA==
+	t=1795017530;
+	b=VHgojypu5Na18hv+Brb/6Mpyje0xvsHpO8TzQkE08D9WanpB1UIt+95VMpr4PIfVXIgd
+	 xs7E/38moQg6VaexOQh+XnmnppYO4Qc3ublhHGGSRR1cMvdJt8gVughMkCooav2evVnQo
+	 YfQ9uaUZN8IUoa+s5emGpeJXmjjZAEWwktcLTjW1wLEmrOX7HuUvbiwrSa2sWpWaXlRTD
+	 872j+2eaMilXEFIPSOx29olQ0m/mS2LBzLZ5nwJt5I+0Pej6RQ2Uevo7kzZpzLM/BoLvd
+	 FuKr0JWhpf6DaD2OSenMLJyZ8quGsF5RCJkqB8FypUmJ7eBer1HCmL+5O7vy76mlASQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017527;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017530;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cmEJpT15hPZoTYHAc5ngozoidJ0ArzN5lDn5bYzwzH4=;
-	b=dQiVvolYAvP7bCBfxFE3RjMs/T+zSP2/BCeYyRc1QubwhyBO0v9u4TzXCL1EiJLoAbRM
-	 I7an1x7LlF3OMsR/qmxh5tjlyYhhNfKjTBzxK4NB1NPs+5+4NHQUBjg7mjx+VP/+4a/lA
-	 86ykJVVIHg2thz9bDhlGj0ZwYqY0RotJ9d6JjidyNukvMJa7QhjvYrz5vdoZrUWo++R8R
-	 /jBQkEEhXbqUCwQy983/1jAC4GuDdtaGDdesID7AhnNEIR/Z4/IQL7yNOnqiHuSDB801p
-	 rVc7cebo6UVbIFlsVhSQqdbM/goLrixC1PNMPyGrABlc05av6Sx/KIp3JPXhpNzAUaw==
+	bh=VvL49JjKqtJv+1myDHyEsPtZKX0bKIy1laO7X31qyp0=;
+	b=Qpb9dCCFaJxMPX8yxX22GOfs17HI8qj/+ayXeImewMx9eyyfz+d7i4+VXS2Yw3q7+jY4
+	 DR7khVnr0VmywUw7hjFQXPz/cWvwnZ/l0Ptf9lNxBdbqIpBvFdxgw7P7/hCmmiq+MWK3S
+	 shQhP00XEIatZVf/CKZ1NhFWCma3ISVorVGikkWqt3wOGbpK1r/ph7w32ea/9KpUS4HB7
+	 lskAQBJ49LlEmk4TY2PnHr3pWJkr/jSYC4yrTDg222f9SSZyeHK5lBlcUJfutRZF1O1/o
+	 zwFcbzAmS5xfzj6jOCKFY/tfqqYgvXJS3gJuaoBXISjcsn1bSOcPfJxeB3zlhHjNFKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oKOW6nzI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n8cIv6kE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B996606A31C;
-	Wed, 18 Nov 2026 15:58:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22584606A320;
+	Wed, 18 Nov 2026 15:58:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oKOW6nzI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94AF51F000C4;
-	Wed, 18 Nov 2026 15:58:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n8cIv6kE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 704E01F000C4;
+	Wed, 18 Nov 2026 15:58:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017527;
-	bh=cmEJpT15hPZoTYHAc5ngozoidJ0ArzN5lDn5bYzwzH4=;
+	s=korg; t=1795017530;
+	bh=VvL49JjKqtJv+1myDHyEsPtZKX0bKIy1laO7X31qyp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oKOW6nzIrm8sMGAxs36hx2ijLxsqRJbFjfOVZgDDaaIE3MdSmetIKWExwBKvGOIkX
-	 20cV6j41ObSaLEz0DE0EMVYisZGwJJdGo3tyry0dbLQUu5gglEGePA6Pw1KJycLDng
-	 pHaPlOFTKUbo9Q7NMB+JqrlEpA0FMW6i7eNm/0bU=
+	b=n8cIv6kEktKo47onSJfEgVp8HYIXtteluoah+U+xYPXiaooO0MyxsBWZms6jpotCU
+	 8+MnEju1oCYOcSBA5/RRDoDiFdpDtnZA/RO4R3uwsZWxuLa0dlQA6s39VOCsGu1o6D
+	 GlLaIvpdVDhrpPyPLkPPIN98T5wBM/PRdhFvnJBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Huisong Li <lihuisong@huawei.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0875/2651] arm64: dts: qcom: lemans-evk: fix SerDes PHY regulator supplies
-Date: Wed, 18 Nov 2026 15:35:15 +0100
-Message-ID: <20261118150319.355763643@linuxfoundation.org>
+Subject: [PATCH 7.3 0866/2651] ACPI: PCC: Preserve shared memory signature in OpRegion handler
+Date: Wed, 18 Nov 2026 15:35:06 +0100
+Message-ID: <20261118150319.034855599@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,60 +69,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
+From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit 457cf65a7997e398d8d6cef08601b4ea61b58e38 ]
+[ Upstream commit 46c263c213876bdc2297ef61aa90f0b210ebac73 ]
 
-The SerDes PHY nodes were configured with 'phy-supply = <&vreg_l5a>',
-which was incorrect on two counts: vreg_l5a is not a supply the PHY
-requires, and only one rail was described whereas the hardware needs
-two.
+ACPI 6.3 introduced PCC OperationRegions. Section 5.5.2.4.7.3,
+"Declaring message fields within a PCC OperationRegion", states that,
+for all PCC subspace types, the PCC Operation Region pertains to the
+region of PCC subspace that succeeds the PCC signature. Its length
+therefore excludes the 4-byte signature.
 
-The PHY requires vdda-0p9 (vreg_l4a) and vdda-1p2 (vreg_l1c). Replace
-the incorrect phy-supply with these two named properties on both the
-base EVK node and the IFP mezzanine overlay.
+The PCC address space handler currently copies the OperationRegion
+buffer to and from the start of the shared memory. This overwrites or
+exposes the platform-populated signature and omits the final four bytes
+of the OperationRegion.
 
-Fixes: 71ee90ed1756 ("arm64: dts: qcom: lemans-evk: Enable 2.5G Ethernet interface")
-Signed-off-by: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Tested-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260804-b4-sgmiieth_serdes_regulator-v2-3-c4bc688177dd@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Offset the copies by the size of the signature and reject an
+OperationRegion that does not fit in the remaining shared memory.
+
+The example added by commit 77e2a04745ff ("ACPI: PCC: Implement
+OperationRegion handler for the PCC Type 3 subtype") incorrectly
+included the signature as an OperationRegion field. A Type 3
+OperationRegion containing a 100-byte communication area is declared
+as follows:
+
+OperationRegion (PFRM, PCC, 2, 0x70)
+Field (PFRM, ByteAcc, NoLock, Preserve)
+{
+    FLGS,   32,
+    LEN,    32,
+    CMD,    32,
+    DATA,   800
+}
+
+This contains three 32-bit fields followed by a 100-byte DATA field.
+The fields correspond to the Type 3 shared memory layout in ACPI 6.3,
+Table 14-372, after excluding its 4-byte signature.
+
+Fixes: 77e2a04745ff ("ACPI: PCC: Implement OperationRegion handler for the PCC Type 3 subtype")
+Reviewed-by: Huisong Li <lihuisong@huawei.com>
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Link: https://patch.msgid.link/20260922144302.3847593-3-sudeep.holla@kernel.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/lemans-evk-ifp-mezzanine.dtso | 3 ++-
- arch/arm64/boot/dts/qcom/lemans-evk.dts                | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/acpi/acpi_pcc.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/lemans-evk-ifp-mezzanine.dtso b/arch/arm64/boot/dts/qcom/lemans-evk-ifp-mezzanine.dtso
-index e42314c648579..e34639460a966 100644
---- a/arch/arm64/boot/dts/qcom/lemans-evk-ifp-mezzanine.dtso
-+++ b/arch/arm64/boot/dts/qcom/lemans-evk-ifp-mezzanine.dtso
-@@ -283,7 +283,8 @@ dev@0,1 {
- };
+diff --git a/drivers/acpi/acpi_pcc.c b/drivers/acpi/acpi_pcc.c
+index 438c671895112..9881c9ee293d1 100644
+--- a/drivers/acpi/acpi_pcc.c
++++ b/drivers/acpi/acpi_pcc.c
+@@ -28,6 +28,7 @@
+  * to PCC commands
+  */
+ #define PCC_CMD_WAIT_RETRIES_NUM	500ULL
++#define PCC_SIGNATURE_SIZE		sizeof(u32)
  
- &serdes1 {
--	phy-supply = <&vreg_l5a>;
-+	vdda-0p9-supply = <&vreg_l4a>;
-+	vdda-1p2-supply = <&vreg_l1c>;
+ struct pcc_data {
+ 	struct pcc_mbox_chan *pcc_chan;
+@@ -74,6 +75,14 @@ acpi_pcc_address_space_setup(acpi_handle region_handle, u32 function,
+ 	}
  
- 	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/lemans-evk.dts b/arch/arm64/boot/dts/qcom/lemans-evk.dts
-index a45485b54a5b7..301461e49ffe4 100644
---- a/arch/arm64/boot/dts/qcom/lemans-evk.dts
-+++ b/arch/arm64/boot/dts/qcom/lemans-evk.dts
-@@ -978,7 +978,8 @@ &sdhc {
- };
+ 	pcc_chan = data->pcc_chan;
++	if (pcc_chan->shmem_size < PCC_SIGNATURE_SIZE ||
++	    ctx->length > pcc_chan->shmem_size - PCC_SIGNATURE_SIZE) {
++		pr_err("PCC channel-%d shared memory is too small.\n",
++		       ctx->subspace_id);
++		ret = AE_AML_REGION_LIMIT;
++		goto err_free_channel;
++	}
++
+ 	if (!pcc_chan->mchan->mbox->txdone_irq) {
+ 		pr_err("This channel-%d does not support interrupt.\n",
+ 		       ctx->subspace_id);
+@@ -97,14 +106,17 @@ acpi_pcc_address_space_handler(u32 function, acpi_physical_address addr,
+ 			       u32 bits, acpi_integer *value,
+ 			       void *handler_context, void *region_context)
+ {
+-	int ret;
+ 	struct pcc_data *data = region_context;
++	void __iomem *pcc_opregion;
+ 	u64 usecs_lat;
++	int ret;
++
++	pcc_opregion = data->pcc_chan->shmem + PCC_SIGNATURE_SIZE;
  
- &serdes0 {
--	phy-supply = <&vreg_l5a>;
-+	vdda-0p9-supply = <&vreg_l4a>;
-+	vdda-1p2-supply = <&vreg_l1c>;
+ 	reinit_completion(&data->done);
  
- 	status = "okay";
- };
+-	/* Write to Shared Memory */
+-	memcpy_toio(data->pcc_chan->shmem, (void *)value, data->ctx.length);
++	/* Write to the PCC OperationRegion after the shared memory signature. */
++	memcpy_toio(pcc_opregion, (void *)value, data->ctx.length);
+ 
+ 	ret = mbox_send_message(data->pcc_chan->mchan, NULL);
+ 	if (ret < 0)
+@@ -125,7 +137,7 @@ acpi_pcc_address_space_handler(u32 function, acpi_physical_address addr,
+ 
+ 	mbox_chan_txdone(data->pcc_chan->mchan, ret);
+ 
+-	memcpy_fromio(value, data->pcc_chan->shmem, data->ctx.length);
++	memcpy_fromio(value, pcc_opregion, data->ctx.length);
+ 
+ 	return AE_OK;
+ }
 -- 
 2.53.0
 
