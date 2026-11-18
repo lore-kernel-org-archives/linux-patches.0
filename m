@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039175;
-	b=BxDqW3uKtxHe1TKftTCCINNSFs3uugC6wa25OHMC88ejGF3AD7X3lR1371vzpPq/9eox
-	 TnMclTfJB9U0J0t6ObxiNoolXGhUKoIjVkCP8UKjnociV2Q3WPJbw2kxv2XQ0DyXg6q2t
-	 uYP/Qtn7zqTeU6hqwDz752l4RjpRX6JU+mkWJSbbMe69kpoyZPZ8Vc7+N8Xe7d7rsqb0J
-	 aU9c8VlT+n7n1h2oOcaiemB3yZqbj53rqhZqLca1EClvmagzNU95dxxkLPbmH+ZZM/Rlm
-	 KdLS4i+w6jG6Lg+DDnDGkOhmmha76XN61NPfcZhB2NUYsvyVrpKxbejHZrz+TwEaXqg==
+	t=1795039178;
+	b=QIOS6Q2K3wcK4yRzJ7i2Y2AO2Pn97pnsz4w6ZGzlreWWbw8BtLGDvSdeqt8RqQE2BALX
+	 TR+HuxuebeP2Z8NCUKsubbfQ7PW1/lApHSoBVmQ0XKN8KCYPyLOzWWR8LRlOqPbN9adDY
+	 +G/nc6YQd6F+I+kO0QCL6fyjlYExFtnPU69ZBE1uAUvTmo1ZDJkySDuXEPa8kdXBMFROs
+	 iqk+8qJyi9jyZeSKdH66pM2wxZWgV9wM14djYB8czKKpH8VeN5kAYcKwtsoalKZ2crNUG
+	 ZHVYZZZYpvyDyOje2MkC9V+KcnSfKyJEzFHsAFncujct9CCV5qpsPJfCyjaIpa6pBYw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039175;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039178;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yEXRCG9OQZFL7Em2fgskH/vXybtsKb7+Kq5J474S6Ps=;
-	b=PBQ/erDEm+wayZv4BYoz0EyOWZnZ5Nk//uf/MDI7yNK5AwLl8lEh7BetlP4evvEWZc2m
-	 CR/4ZsiirCy6YCgWMtUSD28hKhHhzrnK1QuZsj8XnD9Xqx4ZEc+NCIOpwkgJWCFi8Ov7A
-	 E6VM5xg7FpJwMqmzvIfhSuxl4aSWX1dk+PwEnKfBuzK6vpEQhB2CvAA5xitXLKtotUSqI
-	 yF7SYPo64QFOWmG3VSSypuPccM9TCwoTm9nyCs8TNrlhpcwa4QUdz8GrOiPThGV3aZvqj
-	 5wX7tDjzu2KivnAxsiiZe9b9svi/gIK8r2kM6JqfrOeYXPfmml1U84F6pZNyuEkUmCg==
+	bh=857dF8gboFCzMSQNoi92XSizMXnCvbeqohTrBDB0A50=;
+	b=GfDwlObZ6LT9XP72G3oAfp9E77gzqNxOtKPiqC75PDMoy3B+HCYiRhPs3IKLAeo1kxrc
+	 70aLQq+bUmRdCB0evozIgTu4WE3cp28yTfnvu6unaqdOfuwJBTMQleZ3J2ZEMNOJRMz86
+	 mAqAfaujgloqWsRr2t6nZyDJcctidE4ibp3cq5deNsqcnAir3c5JdEykSQlXIUhBZdfZy
+	 yZBuGl3AuBz2NvP7CY+XsLlKv+PcljZJnPsHBXBGMpsdOsBFEYedDAvXJGOnU1tEKf39U
+	 xFDz/237OdXgPgp8tTKNVC89mmFSpExSTs+gErox0edy+H5CjwtZ6O7Pu3971mospDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vlCEqhpw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IgnKwGSo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681A2606A31C;
-	Wed, 18 Nov 2026 21:59:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A921606A320;
+	Wed, 18 Nov 2026 21:59:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vlCEqhpw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8EF01F000CA;
-	Wed, 18 Nov 2026 21:59:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IgnKwGSo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71CCF1F000C5;
+	Wed, 18 Nov 2026 21:59:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039175;
-	bh=yEXRCG9OQZFL7Em2fgskH/vXybtsKb7+Kq5J474S6Ps=;
+	s=korg; t=1795039178;
+	bh=857dF8gboFCzMSQNoi92XSizMXnCvbeqohTrBDB0A50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vlCEqhpw9jR0GRVlMvBOwg3wLgRu8TznGWPwLHwmc4mPAx0qCGpqZT9P8ApHQcpWY
-	 MlNiYT+jC0etPFwJUYP44xtRcn3Ak0UXT0TulZaRpmD1wDaNrVqDF4wp0pY1NnbdZZ
-	 ARUQu0VOEAtluT0L+qDeIuq9IdLwKWOQ96GNlyDU=
+	b=IgnKwGSoS5lmxpIQikAhAMtSXcWbyl8JfqiacFrv4bByNj+0wMXDZ7arU6xfBy8tu
+	 OTmzh3EqIIMbYHU5Qlrra1fBFXqBCowbzVK1vI+RN5jBjU/5CMSI0VHYA76uaDGa1l
+	 Bcml3B3m3OfSrFG6QuQpDS0lro19j2Rvq6pkqNKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Stephane Eranian <eranian@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2004/3318] perf jitdump: Validate code_size against total_size in code load
-Date: Wed, 18 Nov 2026 15:43:46 +0100
-Message-ID: <20261118150422.170145256@linuxfoundation.org>
+Subject: [PATCH 6.6 1965/3318] mm/shmem: fix accounting of swapin-error markers
+Date: Wed, 18 Nov 2026 15:43:07 +0100
+Message-ID: <20261118150421.039557897@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,63 +69,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit 06c7cf7a072fcd52e68471628c56630d2bdcc650 ]
+[ Upstream commit 66ce68a249f4ac56cd6968aa6d8ded20fb4b7d09 ]
 
-jit_repipe_code_load() reads code_size from the jitdump record and uses
-it to compute a pointer to the code blob:
+A failed swap read replaces the swap entry with a swapin-error marker in
+the page-cache and subtracts its pages from "alloced" and "swapped";
+however, it leaves their block charge in place.
 
-  code = (unsigned long)jr + jr->load.p.total_size - csize;
+Removing the marker during truncate then subtracts from "swapped" again.
+This can underflow the counters or make swapped reach zero while other
+pages remain swapped out, causing swapoff to loop without finding them.
 
-An oversized code_size underflows the pointer arithmetic, causing OOB
-reads into earlier heap memory.  Validate that code_size fits within the
-record (total_size - sizeof(jr->load)) before the pointer computation.
+When installing the marker, subtract only from "swapped" and let
+shmem_recalc_inode() reduce "alloced" and release the block charge.
 
-code_size is uint64_t but csize is int; values above INT_MAX wrap
-negative when narrowed into csize, which defeats the bounds check and
-sends the code pointer past the end of the record.  Reject those too.
+Make shmem_free_swap() report successful removal separately from the
+number of swap pages freed, so removing a swapin-error marker does not
+subtract from "swapped" again.
 
-Fixes: 9b07e27f88b9 ("perf inject: Add jitdump mmap injection support")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Cc: Stephane Eranian <eranian@google.com>
-Assisted-by: LLM
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+It's a bit confusing, but replacing a swapped out page by a swapin-error
+marker in shmem_set_folio_swapin_error() behaves as follows:
+
+Initially:
+	alloced=1, swapped=1, nrpages=0
+Calling shmem_recalc_inode(inode, 0, -1)
+	-> swapped = 0
+	-> freed =  1 - 0 - 0 = 1
+	-> alloced -= freed
+	-> alloced=0, swapped=0, block charge released
+
+Fixes: 6cec2b95dadf ("mm/shmem: fix infinite loop when swap in shmem error at swapoff time")
+Cc: stable@vger.kernel.org
+Tested-by: Gregory Price (Meta) <gourry@gourry.net>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Link: https://patch.msgid.link/20261029-fixes_shmem-v4-14-392fc715d8f6@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: Adapted multi-page softleaf_t swap handling to older swp_entry_t APIs for single-page entries. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/jitdump.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ mm/shmem.c | 33 +++++++++++++++++++--------------
+ 1 file changed, 19 insertions(+), 14 deletions(-)
 
-diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
-index a6bb6aa00c7bd..ed306582388fa 100644
---- a/tools/perf/util/jitdump.c
-+++ b/tools/perf/util/jitdump.c
-@@ -9,6 +9,7 @@
- #include <fcntl.h>
- #include <unistd.h>
- #include <inttypes.h>
-+#include <limits.h>
- #include <byteswap.h>
- #include <sys/stat.h>
- #include <sys/mman.h>
-@@ -450,6 +451,16 @@ static int jit_repipe_code_load(struct jit_buf_desc *jd, union jr_entry *jr)
- 	csize = jr->load.code_size;
- 	usize = jd->unwinding_mapped_size;
- 	addr  = jr->load.code_addr;
-+
-+	/* code blob lives at the end of the record, validate it fits */
-+	if (jr->load.p.total_size < sizeof(jr->load) ||
-+	    jr->load.code_size > jr->load.p.total_size - sizeof(jr->load) ||
-+	    jr->load.code_size > INT_MAX) {
-+		pr_warning("jitdump: invalid code_size %" PRIu64 " (total_size=%u) in code_load record\n",
-+			   (uint64_t)jr->load.code_size, jr->load.p.total_size);
-+		return -1;
+diff --git a/mm/shmem.c b/mm/shmem.c
+index 74517e446f63f..adb0215ba0b41 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -855,18 +855,24 @@ static void shmem_delete_from_page_cache(struct folio *folio, void *radswap)
+ }
+ 
+ /*
+- * Remove swap entry from page cache, free the swap and its page cache.
++ * Remove a swap entry or swapin-error marker at index.
++ * Return whether it was removed, counting freed swap pages in nr_swaps_freed.
+  */
+-static int shmem_free_swap(struct address_space *mapping,
+-			   pgoff_t index, void *radswap)
++static bool shmem_free_swap(struct address_space *mapping,
++		pgoff_t index, void *radswap, long *nr_swaps_freed)
+ {
++	const swp_entry_t swp = radix_to_swp_entry(radswap);
+ 	void *old;
+ 
+ 	old = xa_cmpxchg_irq(&mapping->i_pages, index, radswap, NULL, 0);
+ 	if (old != radswap)
+-		return -ENOENT;
+-	free_swap_and_cache(radix_to_swp_entry(radswap));
+-	return 0;
++		return false;
++	/* A swapin-error marker holds no swap slot, so just drop it. */
++	if (!non_swap_entry(swp)) {
++		free_swap_and_cache(swp);
++		(*nr_swaps_freed)++;
 +	}
-+
- 	sym   = (void *)((unsigned long)jr + sizeof(jr->load));
- 	code  = (unsigned long)jr + jr->load.p.total_size - csize;
- 	count = jr->load.code_index;
++	return true;
+ }
+ 
+ /*
+@@ -1019,8 +1025,8 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
+ 			if (xa_is_value(folio)) {
+ 				if (unfalloc)
+ 					continue;
+-				nr_swaps_freed += !shmem_free_swap(mapping,
+-							indices[i], folio);
++				shmem_free_swap(mapping, indices[i], folio,
++						&nr_swaps_freed);
+ 				continue;
+ 			}
+ 
+@@ -1088,12 +1094,12 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
+ 			if (xa_is_value(folio)) {
+ 				if (unfalloc)
+ 					continue;
+-				if (shmem_free_swap(mapping, indices[i], folio)) {
++				if (!shmem_free_swap(mapping, indices[i], folio,
++						     &nr_swaps_freed)) {
+ 					/* Swap was replaced by page: retry */
+ 					index = indices[i];
+ 					break;
+ 				}
+-				nr_swaps_freed++;
+ 				continue;
+ 			}
+ 
+@@ -1847,11 +1853,10 @@ static void shmem_set_folio_swapin_error(struct inode *inode, pgoff_t index,
+ 	folio_wait_writeback(folio);
+ 	delete_from_swap_cache(folio);
+ 	/*
+-	 * Don't treat swapin error folio as alloced. Otherwise inode->i_blocks
+-	 * won't be 0 when inode is released and thus trigger WARN_ON(i_blocks)
+-	 * in shmem_evict_inode().
++	 * Let shmem_recalc_inode() reduce alloced and release the block charge
++	 * for the freed swap pages.
+ 	 */
+-	shmem_recalc_inode(inode, -1, -1);
++	shmem_recalc_inode(inode, 0, -1);
+ 	swap_free(swap);
+ }
+ 
 -- 
 2.53.0
 
