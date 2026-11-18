@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029071;
-	b=ByJtoIiGdodEEmFxI/XEBqsrrOA6Zut73XUniVLKrP3VTSqpyiE7k9ox0aEIjco+aTF1
-	 7zbAqg9sG5KGdQ6LWrmuOCMBWfSgXq8dZQSCVrajXPILtnDq49a1+JuN7nkxlM/wiIM3b
-	 ph7JExYm/Ft3CxGbITyXJ0yPAGLfOffp2XRtvIvQg618OHBVOllfvGP69wv8FUC4Gx3Ii
-	 UxUgEpj85T3od+d5HWEaRKd9l42z6DD0kWo5Ch8noM31szkKmjw83dBa74lykX01ycnI8
-	 Bu041bdLPsbDPacDeFjmHKHZ0ZOTojtUyL9tLjHBaTiUFHoT2j6PUp1OPkPlGK/xgYA==
+	t=1795029075;
+	b=qrMwwOk+PKTWsLF9tBUajL5yJvu0nkI9IV6Mbz7ZO8mteM3Qo7t3Kjh6bD9maUU2k/+L
+	 2gDyMFu5r2KLChvCvyrKw9Xe71mFmMFZURrI2P8W/Up1K5MaKBB+dYlJpSzwFg8vxiAD2
+	 ZnUPK5qoNvJnxBYBnJlGsLnsO02epL4bK/1E4Vu4Ztj9Er+fp+QR2H2B0OXRbx1Dxs12Z
+	 nSE/QJbrWOy+6/Rqw3XH8WLig9773cMeMHYTc9o7B176fBp7zXpfh6RIdcGHMGEhoq3nL
+	 dbAzE5Z5EJWAnglNLiA7Yoj9QvTi36p9OxJBSGkauzNuKcs+vkcupV9e4b8tWMimXiA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029071;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029075;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IWr6xHgCwuaL4ShIPnbVjhtfzUTJOmpZc7fdGntctaQ=;
-	b=P+vt3ic76gddpTOvVFACuTTkyACzRMSgwWfnqHXq6q3+TgHttbjkZu46szuPMfuO+9mx
-	 /AiFnyK7Jjrl3tmkctVIcAhh59Ah7G1hz3OLMad+09XuCNBTL5srv7xyQF/CmUkX/0NDq
-	 +vc+swUwtXGAJqbxofrZbs+gO11si/vT0LH/+N8b4vXGzcDiQ59eRiGmh1MLVrP4Ostzj
-	 8UaS6pwrxkwCr1uUEp1vlw7fv89IajCm75g/cJOK+C2gSlCoGia696C8+TOgQOI46MOo7
-	 HiOf8NAoBHZJDkVVBZAMnJ2PJIlEi2k7u21BiBtGGfRq2flAZ++kQqNE7Vt9noKLn3A==
+	bh=lpTcVrLs7ica3pR4g9j2Zb7lwMhYuStweUk9TjHHKb8=;
+	b=YILoljRhr292GAOdxRMXGArq0VBPKdT4lF85G4tNSteRQQMzBt48MaImwLmJ0n4yiYbX
+	 TtY5f4h0UzZfLSmzlcbw4exidd86fefNAtsD0h5AwXO+bZYYlDW+1P+xjOfHj9larub6Y
+	 wHB11nmJKFXNTSiIdQmec8YsMZP0782i0UET9v/8ZoVMVQpAPkHv0FAVGnQhXFMjR627o
+	 btZ5ptsP+l6+U2Oap6Mg686yvUnTwX4vD3VGVbiB4OxAJFjcYDj17KulTz/Z7diytbPuu
+	 QzzNshPF0xiXIAxJnZfJlf1m6JhUscU2uhxuygWKyVHhU5OWv6KviAikTWzNCyKYHuA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wWxF26b+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SYVhDE4Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99024606A320;
-	Wed, 18 Nov 2026 19:11:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E98606A320;
+	Wed, 18 Nov 2026 19:11:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wWxF26b+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2EB01F000C4;
-	Wed, 18 Nov 2026 19:11:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SYVhDE4Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C94021F000C4;
+	Wed, 18 Nov 2026 19:11:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029071;
-	bh=IWr6xHgCwuaL4ShIPnbVjhtfzUTJOmpZc7fdGntctaQ=;
+	s=korg; t=1795029074;
+	bh=lpTcVrLs7ica3pR4g9j2Zb7lwMhYuStweUk9TjHHKb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wWxF26b+3yT7hmguY9liOhg+QtaJb+1ZcwzVDwYp0QgpQ/8D9RQvpjnXhduKhRGp/
-	 Fbn3T3Z1vUZiy8C8Bn4YLUDnIygRreVxRijVs8XcdvfDR0uJITuVDq+PzmkVDtLYBa
-	 dVJvJ2t7QCjdmWIkZyfqFCIEM09WOLjH/5EJm7iI=
+	b=SYVhDE4QYBEFAiM85Ew6Fhf7aINkZAnmXFhY7Hy2Z57mzOJ+FJ5AInskv/YFt+dYz
+	 p3lNgSvV/4LIUEweTMDboWLfQePd1tkkyUpqoNgtMH0AsJMUwAAgac8uqaM6DAYdkH
+	 xmCtpZ42x1OYCYdJ2lUni+gi1ixUUCM1tmzyWtKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0213/1756] dmaengine: fsl_raid: avoid free_q underflow in free_chan_resources
-Date: Wed, 18 Nov 2026 15:39:00 +0100
-Message-ID: <20261118150016.814992682@linuxfoundation.org>
+Subject: [PATCH 6.12 0222/1756] wifi: mac80211: drop encap offload frames with a tainted key
+Date: Wed, 18 Nov 2026 15:39:09 +0100
+Message-ID: <20261118150017.135204664@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,59 +67,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit d805aa5b6088b193debabaa80cc0991bfa2bd057 ]
+[ Upstream commit c8ddbe1e8c43f6d008591c50f8be8de39cdce267 ]
 
-fsl_re_free_chan_resources() loops alloc_count times calling
-list_first_entry() on free_q without checking whether the list still
-has entries. If descriptors remain un-acked or pending in submit_q /
-active_q / ack_q when the channel resources are freed, free_q becomes
-smaller than alloc_count and list_first_entry() returns the list head,
-causing list_del() to corrupt the list head and dereference a bogus
-pointer.
+When a key is tainted, which happens in some WoWLAN and extended
+key ID scenarios, frames that would use it should be dropped.
+Fix that for encapsulation offload frames.
 
-Walk free_q with list_for_each_entry_safe() until it is empty,
-decrementing alloc_count per freed descriptor, instead of relying on
-the alloc_count count.
-
-Fixes: ad80da658bbc ("dmaengine: Driver support for FSL RaidEngine device.")
-Assisted-by: opencode:hy3-free
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260718235227.385108-1-rosenp@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 50ff477a8639 ("mac80211: add 802.11 encapsulation offloading support")
+Link: https://patch.msgid.link/20260802105818.870b6ef31374.Ib87175b55b9fd94c16ba6d9cd816b7a09248df87@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/fsl_raid.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ net/mac80211/tx.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
-index 399b4d2a8bac1..5c4f1d0f0c115 100644
---- a/drivers/dma/fsl_raid.c
-+++ b/drivers/dma/fsl_raid.c
-@@ -613,18 +613,15 @@ static int fsl_re_alloc_chan_resources(struct dma_chan *chan)
- static void fsl_re_free_chan_resources(struct dma_chan *chan)
- {
- 	struct fsl_re_chan *re_chan;
--	struct fsl_re_desc *desc;
-+	struct fsl_re_desc *desc, *_desc;
- 
- 	re_chan = container_of(chan, struct fsl_re_chan, chan);
--	while (re_chan->alloc_count--) {
--		desc = list_first_entry(&re_chan->free_q,
--					struct fsl_re_desc,
--					node);
--
-+	list_for_each_entry_safe(desc, _desc, &re_chan->free_q, node) {
- 		list_del(&desc->node);
- 		dma_pool_free(re_chan->re_dev->cf_desc_pool, desc->cf_addr,
- 			      desc->cf_paddr);
- 		kfree(desc);
-+		re_chan->alloc_count--;
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index bcc3b16bc183e..b4ee237378612 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -606,7 +606,13 @@ ieee80211_select_key_8023(struct ieee80211_tx_data *tx)
+ 		tx->key = rcu_dereference(tx->sdata->deflink.default_multicast_key);
  	}
  
- 	if (!list_empty(&re_chan->free_q))
+-	if (tx->key && tx->key->flags & KEY_FLAG_UPLOADED_TO_HARDWARE)
++	if (!tx->key)
++		return TX_CONTINUE;
++
++	if (unlikely(tx->key->flags & KEY_FLAG_TAINTED))
++		return TX_DROP;
++
++	if (tx->key->flags & KEY_FLAG_UPLOADED_TO_HARDWARE)
+ 		info->control.hw_key = &tx->key->conf;
+ 
+ 	return TX_CONTINUE;
 -- 
 2.53.0
 
