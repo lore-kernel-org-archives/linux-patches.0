@@ -1,52 +1,70 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059567;
-	b=rabT32GN2Spi8CUiDNw1+u9HE/3vJh1SfNw4sNqyRyJoTWrgstF0Anuad/9gr2LAXe+H
-	 YNjSF/LH5sEIH6Mbqldh9YbfsmBFFM7iod/Ti60VOt8P9uEDchBu4vUbBvIAdwBMtFw5H
-	 e1gmLxQpMGaUxlSmO7bCnrZrUu8gQm1nRBqAZt3l0VkYE4Zv14tRNJq6e0zx0LNHlpleD
-	 p84lNOJg2TiOoAHpNxvRW670/bUQZJ0H2gPMImK/2OCt3Pm5Gt/tasAy4yeKul6HyByh4
-	 ltEJfEAK6MuEtur3odLs5fM5qTYK+AD+OvScIBZTiFWTMb6T8R5LEhzjf9Jcc9G5Kxg==
+	t=1795059571;
+	b=ideRtEmvdCRSIMDUbX2hiZ1Fhuo5rgYqmTLLaj4wHz2+M41tlfXe9pLmsHhj+0S88LM+
+	 ZNxl5SdQkcT/zsdjODV5dH822pN5C1b4TdeAFB+0o5yup0WCogET8QLWhvfqCnj82Z9gd
+	 R+Omex+iOoDzuBqmnjAvkoMJPsNG+wUBShDOVZnqZgKp09iGDrl6bcchh/Iu48MKAVhzY
+	 QOTBMdMgbQhuO2EzE59aCXxxWPTnGTBCO2X/9xFWNYNV4XDrri6IwW141IqNGryCrdZNh
+	 +4xMscKLlhfDDtLRoHImU/WInsqV4O4QyEYFvw0MpK/YSza9yg4JWBzRE72ehmo4HBA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059567;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059571;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7gPdKmNNso4sfjUyUyDMh2fiNJT4+IlluuWFvamrzE0=;
-	b=l5lbhPWQztXxhGnckk5wiCkRNTEr7mBHxLt3aBEjelERCdRe77GAnNOoP35EFBZc7+j1
-	 B3mAX5Q01h494MQYulznY5Qy3ldyPDvqeqrUIdIimZbe03z5atfns+dpC7L5pm0aCCMzp
-	 2mSSUEHakdnKSSlcAP9+6YnJmzrH4Wj+w8SZiM1IJE68Q1tzYJfeC5Gnk0rb1Gql6Jtnj
-	 pinV9V/tm6Ty2CJQsf6JP8dwKvSE8pnDDDZSxjFXFKN+JxvkH0TIFW++duMIwS2NAve/J
-	 VDtlQMPsZ2ZAG8kG6py1LYxqY9+3sAX1SA9xB+bo4ekkhWKtJsRkq+gWbwzAqOWMDnA==
+	bh=H5wcSs0PxyeiSA6GbBaTbKMIxMMXEFGtlNpu+clbIQc=;
+	b=00HuFbug5gQ1kDlOsvcMEUXxoyswblizttzXf0QLDFh/Vyh3pH+2Pz8LPed1UJDTOUEQ
+	 dCwmGawMZXMlVjXat9Zyh/NSg5Y4IJ4Pl1s3KrbkAgdDs99luWWAZbvBh+17qNnSOJprr
+	 S4kXlf3vK/I6VLepYRa601UmX7HXW3MDYEgcQ1mRMkCJIsypRHejDgEOzTwfZSHyFQb9K
+	 tc5b+xRle3UNX7htv3SW1kyToKXAhrZBgq3GN+x8UScQh0UW1fFbbmwiwmYDwbLUyo1UA
+	 eQR2Klbo2/HhEfW2VmJNlJud0zjKGOaMUE6SQBTETC5ISOT2pRxJDQCg9//QO9RR7cw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kh86RYqZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zsftni9x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3852606A32A;
-	Thu, 19 Nov 2026 03:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CEE3606A32F;
+	Thu, 19 Nov 2026 03:39:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kh86RYqZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 043801F000C4;
-	Thu, 19 Nov 2026 03:39:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zsftni9x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9FCC1F000C9;
+	Thu, 19 Nov 2026 03:39:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059567;
-	bh=7gPdKmNNso4sfjUyUyDMh2fiNJT4+IlluuWFvamrzE0=;
+	s=korg; t=1795059570;
+	bh=H5wcSs0PxyeiSA6GbBaTbKMIxMMXEFGtlNpu+clbIQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kh86RYqZlZH+PKuRO706hZsd+5QpuK3sbUmgcct5EzNnlmYvKYYAUHIfxfpyB9+0J
-	 VSwCAfE4HQNlz5/9m8Cvbf5IJySAlPD0gnNao3SuAVfEc14cpUoortUcfyBdScMnhM
-	 ieqKnkuk3dZMEYT5IbEz8qG1MqjO1CCLKN3AUuLo=
+	b=Zsftni9xRe8ArXEsmNLXOiGucsr8/J9ylTGMsHi+05ep5VtcepNwmefF1JNavphZi
+	 B1VRUjjwKydQnloL4iN+ffn22DN333v99xnn04+rLIK/ZaAP3sOW4wEC1EUBskmDx3
+	 QmBRgU4hENQe9CT2NqejC9n1vPYd+h01UxXzo4x8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sinan Turunc <enscrpt@pm.me>,
-	Takashi Iwai <tiwai@suse.de>,
+	Josef Bacik <josef@toxicpanda.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Chris Mason <mason@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Lance Yang <lance.yang@linux.dev>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Oscar Salvador <osalvador@suse.de>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Adam Litke <agl@us.ibm.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Rik van Riel <riel@surriel.com>,
+	Peter Xu <peterx@redhat.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	Mike Rapoport <rppt@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0847/1848] ALSA: usb-audio: Bound packet copies by the PCM buffer size
-Date: Wed, 18 Nov 2026 15:48:05 +0100
-Message-ID: <20261118145952.053651716@linuxfoundation.org>
+Subject: [PATCH 5.10 0848/1848] mm/hugetlb: unmap the page where the other VMA maps it
+Date: Wed, 18 Nov 2026 15:48:06 +0100
+Message-ID: <20261118145952.088703476@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,96 +86,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sinan Turunc <enscrpt@pm.me>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 06be918062adc1a5a76dc346803b136b20bdb5ae ]
+[ Upstream commit ae99c503eb362b42cd5d24d80bc6cba669acc4c2 ]
 
-retire_capture_urb() and prepare_playback_urb() assume that one USB
-packet never carries more data than the whole ALSA ring buffer. Nothing
-enforces that: the packet size comes from the device (wMaxPacketSize,
-and curpacksize == maxpacksize when the class-specific endpoint
-descriptor sets MaxPacketsOnly), while the PCM hardware constraints only
-require 64-byte periods, two periods and a period time of one data
-interval. An 8 kHz mono U8 stream on a 128-byte buffer is legal, and a
-full-speed device can send 1023-byte packets into it.
+If the owner of a MAP_PRIVATE hugetlb mapping fails to allocate a page
+for CoW, unmap_ref_private() unmaps the old page from all other private
+VMAs that have no reservation of their own.  It finds them by the offset
+in the file, but then zaps each of them at the address of the faulting
+VMA.  Nothing says that another VMA maps the offset at that address: a
+child can have moved its copy of the VMA with mremap(), and a second
+mapping of the file is wherever mmap() has put it.
 
-On the first oversized packet hwptr_done is wrapped once and stays
-beyond buffer_bytes (895 for 1023 bytes into 128). On the next packet
-the wrap arithmetic in the copy path computes
+So __unmap_hugepage_range() walks the page tables of the other mm at an
+address outside of iter_vma, where i_mmap_rwsem of this file protects
+nothing and where anything can be mapped, and the page stays mapped where
+it really is.
 
-    bytes1 = subs->buffer_bytes - oldptr
+All of the following was seen on v7.3-rc6+ (g6c377d19d4a5) in KVM guests,
+as a user without any privilege.  It takes a pool of 2 MiB pages with no
+free page that is not reserved, so that the allocation fails: the user
+can take or reserve what is free itself.
 
-with oldptr > buffer_bytes, so bytes1 wraps to about 4 GB and memcpy()
-runs off the end of the URB buffer and of the vmalloc'd DMA buffer:
+ - The child moves its VMA away.  The page is never unmapped, the
+   mapcount stays 2, and the owner goes round retry_avoidcopy in
+   hugetlb_wp() until the child is gone or a page becomes free.  SIGKILL
+   to the owner does not end it.  5 of 5 runs.
 
-  BUG: KASAN: slab-out-of-bounds in retire_capture_urb+0x251/0x870
-  Read of size 4294966529 at addr ffff88800c1e2800 by task vhci_rx/82
+ - The owner's mm has a second private mapping of the offset, made with
+   MAP_NORESERVE.  The owner zaps its own entry and reads zeroes where
+   its data was.  5 of 5 runs.
 
-and for playback, where copy_to_urb() has the same shape:
+ - The child moves its VMA away and maps a 1 GiB hugetlb page at the old
+   address, so this one takes a pool with a 1 GiB page as well.
+   huge_pte_offset() for the 2 MiB size steps through the PUD
+   leaf, so the "PMD table" is the 1 GiB page itself and its "page table
+   lock" is folio->private of that page, which holds 2.  Kernels with
+   lock debugging oops in __unmap_hugepage_range(), 7 of 7 runs.  Others
+   spin on that word for ever with preemption disabled, 5 of 5 runs:
 
-  BUG: KASAN: vmalloc-out-of-bounds in copy_to_urb.isra.0+0x188/0x430
-  Read of size 4294966529 at addr ffffc9000004537f by task vhci_rx/79
-   prepare_playback_urb+0x98a/0x1fc0
+     watchdog: BUG: soft lockup - CPU#0 stuck for 26s! [u_det3:130]
+     RIP: 0010:queued_spin_lock_slowpath+0x8a/0x290
+     RAX: 0000000000000002 RBX: ffffea0001000028
+     Call Trace:
+      __unmap_hugepage_range+0x154/0x6d0
+      unmap_hugepage_range+0xc1/0x140
+      hugetlb_wp+0x55c/0x700
+      hugetlb_fault+0x5f3/0x8f0
 
-Truncate an oversized capture packet to the buffer size, and stop
-filling a playback URB once it holds a whole buffer. With bytes <=
-buffer_bytes the single wrap of hwptr_done and the two-part memcpy()
-in both copy paths stay inside the buffer. A device whose packets do
-not fit the buffer at all was never going to play correctly anyway.
+   RCU stalls follow, and killing all tasks of the user changes nothing.
+   Four such owners, whose children share a single 1 GiB page, took down
+   the whole guest with its four CPUs, 2 of 2 runs: one reported soft
+   lockups on all four, the other gave no sign of life any more.
 
-Reproduced on 7.3-rc7 with a USB/IP device (dummy_hcd cannot carry
-isochronous data) advertising a UAC1 endpoint with MaxPacketsOnly and
-wMaxPacketSize 1023, and a PCM client using period_size 64, periods 2.
+   i_mmap_rwsem stays write locked.  With a MAP_PRIVATE mapping of a
+   hugetlbfs file that belongs to another user, and that the attacker
+   can only read, the next mmap() of that file by its owner sleeps
+   uninterruptibly in __mmap_region(), 4 of 4 runs.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sinan Turunc <enscrpt@pm.me>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261026223543.620-2-enscrpt@pm.me
-[ sashal: replaced missing subs->buffer_bytes with runtime->buffer_size * stride ]
+Compute the address from the offset for each VMA.  The tree walk returns
+only VMAs that cover pgoff, and vm_start, vm_end and vm_pgoff of a hugetlb
+VMA are aligned to the huge page size, as pgoff is, so the whole range
+lies inside iter_vma.  Its page tables can not go away there, since the
+VMA is unlinked from the file under i_mmap_rwsem first.
+
+With the right address the page is unmapped from all VMAs but the
+owner's, so the retry in hugetlb_wp() finds a mapcount of 1 and reuses the
+page.
+
+A child that has moved its copy of the VMA now loses the page, and gets
+SIGBUS when it faults on a missing page of that VMA.  That is what the
+comment above the function has always promised to those who do not own
+the reservation, and what already happens to a child that has left the
+VMA in place.
+
+The address has been wrong from the start, and the second case needs
+only mmap() and fork().  mremap() of hugetlb VMAs, which the other cases
+use, came with commit 550a7d60bd5e ("mm, hugepages: add mremap() support
+for hugepage backed vma") in v5.16.
+
+Original fix generated by an LLM and sent in private by Josef.
+
+[david@kernel.org: switch to vma_filebacked_address, add VM_WARN_ON_ONCE, refine comments]
+Link: https://lore.kernel.org/20261015-urgent_fixes-v1-4-42796911043b@kernel.org
+Fixes: 04f2cbe35699 ("hugetlb: guarantee that COW faults for a process that called mmap(MAP_PRIVATE) on hugetlbfs will succeed")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Chris Mason <mason@kernel.org>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: Adam Litke <agl@us.ibm.com>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Kiryl Shutsemau <kas@kernel.org>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: <stable@vger.kernel.org>
+[ sashal: adapted folio-based unmapping to page-based APIs with an inline calculation replacing vma_filebacked_address() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/pcm.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ mm/hugetlb.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/sound/usb/pcm.c b/sound/usb/pcm.c
-index 802ed1dbd23b0..82cfa3f75d530 100644
---- a/sound/usb/pcm.c
-+++ b/sound/usb/pcm.c
-@@ -1438,6 +1438,18 @@ static void retire_capture_urb(struct snd_usb_substream *subs,
- 			bytes -= adj;
- 			subs->stream_offset_adj -= adj;
- 		}
-+		/*
-+		 * A packet can be as large as the endpoint's maxpacksize, which
-+		 * the device chooses, while the ring buffer can be as small as
-+		 * two 64-byte periods. The hwptr_done wrap below handles one
-+		 * wrap only, so never take more than one buffer from a packet.
-+		 */
-+		if (unlikely(bytes > runtime->buffer_size * stride)) {
-+			dev_warn_ratelimited(&subs->dev->dev,
-+					     "%u-byte packet exceeds %lu-byte buffer, truncating\n",
-+					     bytes, runtime->buffer_size * stride);
-+			bytes = runtime->buffer_size * stride;
-+		}
- 		frames = bytes / stride;
- 		if (!subs->txfr_quirk)
- 			bytes = frames * stride;
-@@ -1614,6 +1626,14 @@ static void prepare_playback_urb(struct snd_usb_substream *subs,
- 		else
- 			counts = snd_usb_endpoint_next_packet_size(ep);
+diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+index da47b6d218e01..3fafdbb85eef1 100644
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -4067,6 +4067,8 @@ static void unmap_ref_private(struct mm_struct *mm, struct vm_area_struct *vma,
+ 	struct address_space *mapping;
+ 	pgoff_t pgoff;
  
++	VM_WARN_ON_ONCE(!PageAnon(page));
++
+ 	/*
+ 	 * vm_pgoff is in PAGE_SIZE units, hence the different calculation
+ 	 * from page cache lookup which is in HPAGE_SIZE units.
+@@ -4102,9 +4104,18 @@ static void unmap_ref_private(struct mm_struct *mm, struct vm_area_struct *vma,
+ 		 * could insert a zeroed page instead of the data existing
+ 		 * from the time of fork. This would look like data corruption
+ 		 */
+-		if (!is_vma_resv_set(iter_vma, HPAGE_RESV_OWNER))
+-			unmap_hugepage_range(iter_vma, address,
+-					     address + huge_page_size(h), page);
++		if (is_vma_resv_set(iter_vma, HPAGE_RESV_OWNER))
++			continue;
++
 +		/*
-+		 * Bound by the ring buffer as well as by the URB:
-+		 * copy_to_urb() wraps hwptr_done once, so one URB must
-+		 * never carry more than the whole buffer.
++		 * The address in other VMAs can differ. Even though our old
++		 * page is anon, we always operate on the underlying hugetlb
++		 * file.
 +		 */
-+		if ((frames + counts) * ep->stride > ctx->buffer_size ||
-+		    (frames + counts) * ep->stride > runtime->buffer_size * stride)
-+			break;
- 		/* set up descriptor */
- 		urb->iso_frame_desc[i].offset = frames * ep->stride;
- 		urb->iso_frame_desc[i].length = counts * ep->stride;
++		address = iter_vma->vm_start +
++			((pgoff - iter_vma->vm_pgoff) << PAGE_SHIFT);
++		unmap_hugepage_range(iter_vma, address,
++				     address + huge_page_size(h), page);
+ 	}
+ 	i_mmap_unlock_write(mapping);
+ }
 -- 
 2.53.0
 
