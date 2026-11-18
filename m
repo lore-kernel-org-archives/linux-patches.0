@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043186;
-	b=uPIqDh+FUCfb+S+3V2GeWv2IoWxpDTptWT0Q6Ywa3WUx2fSYfMV5LItpl2Ir2lgnv5F+
-	 YK4C9peC5K4p8wWvSiOUAB37PimxplQxBaatCepxvwwoEYhsRUZv3gheDOO6C76InGqpp
-	 G03eF8muW1A6XTzoSEBBUdt58eltqK1NG7TXSboKJ7gvbaN4N1fYTXPTeD6iL2/ZQpOMI
-	 MMxrr1+8WgVK/D84odf4iYJdrpwXFxZSEc9ko8/ViVbzmcL49xEuml4S5H5LSTkbo+2WO
-	 qTpBXIN83J6nWXnl7GIv4k8iTQlc2W0dt6jSOYs5CJnp+eGqC8enDK5OtISGwo0Oyew==
+	t=1795043189;
+	b=nvWTEeuGtLCex8z9VYdqdF2vGPqVYI/Tyi6L6treMOXmxSTU3tZuMWyM/Z2Vblte0ErB
+	 GIn2anad6H5OlAOZM7MJSOqw/BP/6caHs4Bkmw9e6VQ+UlaWsjG1tj8ro5/fnKuCSp9zY
+	 witjid5U48UJoG2UwYSPpuMz7VJm3W3iqRwfQ7KJIWttVKarx2PJVtYMIcLMByuTeDq7j
+	 Ycb2LV8O0LjwmGN0zDqjA6Fo9dbwq5qcBoS0BRtri1Hw9TLlektfatPhDSEmHjJvp2d3a
+	 7bODDlBLOoARr7ukobb7LXYv1GWgVmRIIiaDMKfyWmpR4YKR93UdOOojTMEx3LRY0ig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043186;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043189;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Lrv8FDkQESUr6MWmS53vAQlEhDK6Nl9uEXrojSB78Iw=;
-	b=ozRZx2RqLiaJE3hK416aS8JmKNXsSC6JRreMXawLK25PU7vOf5qPDXTJMuASFDN9mrJz
-	 talRIgighdtTw8D+QKDaMuWlzIpItEG6Gn78TQgf4jXS25ly4TjfqJLcglxBu3jTM5fyj
-	 Wsqi51vcgCCFIOlQMfyjPDSC8lbw7UcYa5SS6c4PAYYceL35Y6pRMwSKkmeNoX7/yDMzN
-	 9I4TXhvuSosLP8GXP3BKSKpR8tAMWrrm6KiZQQRd6F8L0rPlaY0ZoOconjXFV7ev7d0T8
-	 yv0OwsXXlsshQm4HgqQPup7X8ujKIxowryEjZEiqgSDotInPq8P5cwP141C9rTmNeng==
+	bh=9t2Ceyk/0nUTNHzMQbzcJMnhGmH0xZ5OVWh9RZgfuhU=;
+	b=OZD6ZzEE28uuLLaC1XRm5YW2GGCoM3RGVoz9SvCyH2HCPTZOsq8XmYiQR6AsY3xQj6+E
+	 rZXtIXVmLAx8Zh5yKRQZBzc0CaYbWZG63mtmPmKcKy10M60wXWug1dyYuVl2W1wFxBewk
+	 7cznYdSsa4VAY6ZukbXf3TG6PxWgmMvrS/P7Fgesn0Pp7czHHRqYRt4XHqnnc9YXD8ODs
+	 ZX3L2Kq1KOuQDpF8++7SWIgh57jWwP+WxYKVHbGLgJbHwbuz+nYRFKzhiL6eNhTt05bT+
+	 +pWroTRLjMtwMee2qdJWzZ6/vxxMef8buPB59F6a32auxSy4GZTaTYr9OEobDxZAMmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QojEJxV2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qhfCTs3+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C25E1606A32C;
-	Wed, 18 Nov 2026 23:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51CCA606A334;
+	Wed, 18 Nov 2026 23:06:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QojEJxV2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF5EA1F000C4;
-	Wed, 18 Nov 2026 23:06:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qhfCTs3+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7CDB1F000C4;
+	Wed, 18 Nov 2026 23:06:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043186;
-	bh=Lrv8FDkQESUr6MWmS53vAQlEhDK6Nl9uEXrojSB78Iw=;
+	s=korg; t=1795043189;
+	bh=9t2Ceyk/0nUTNHzMQbzcJMnhGmH0xZ5OVWh9RZgfuhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QojEJxV2lIPPQMI/+105Hia8oouE6ec/IhN0wzVRbZwhwqMdaDz5IHKvqoHHfGzsM
-	 wQhPHnp4shTMBf8AVptArrej5qXfCPw+TgRwJNx0GH0Gz8JFqmjg4hEpGnQsGi1gzQ
-	 /+VCsLvCBwLajU1+rXaRc00x0OE9Eh9Aa+/i/uwY=
+	b=qhfCTs3+bYHWx+2DymSj9zzNkfSybu1HQsEq37G9LzrOHqF2SegHn71GPF8tmNOOd
+	 hP7fyHsZR4UZIwtrffQNljr3bP8+YOJFYvOK7ugDhemRVNwWslGi/VCxvwyePKe79g
+	 oli7TY2a02OowMj4t4OjS4Pcz9bNs3bpRPEnzpds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Logan Gunthorpe <logang@deltatee.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Ian Abbott <abbotti@mev.co.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0122/2857] PCI: switchtec: Add Microchip PCI1008 device ID
-Date: Wed, 18 Nov 2026 15:19:16 +0100
-Message-ID: <20261118150205.739049306@linuxfoundation.org>
+Subject: [PATCH 6.1 0105/2857] comedi: ni_at_a2150: Fix sanity check in interrupt handler
+Date: Wed, 18 Nov 2026 15:18:59 +0100
+Message-ID: <20261118150205.045069185@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,36 +67,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Logan Gunthorpe <logang@deltatee.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-[ Upstream commit 0d8a6306c680ee534be131e360f0cafa2bada7be ]
+[ Upstream commit e7356cdc7077a4f30fc5232a18e9fc6a4d404581 ]
 
-Add the Microchip PCI1008 device ID to the core switchtec management
-driver's PCI ID table. Without it, the management endpoint on a PCI1008
-switch is not bound by this driver, preventing userspace tools from
-configuring or monitoring the switch and leaving NTB functionality
-unavailable.
+The driver requests an interrupt handler for the device before it is
+fully set up.
 
-Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260714212010.230606-3-logang@deltatee.com
+For safety, the interrupt handler checks the dev->attached flag to
+ensure the device is fully set up, but it currently does that after
+dereferencing various pointers which may be NULL if dev->attached is
+false.  Move the check to avoid the possible null pointer dereferences.
+
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20260618102949.26607-5-abbotti@mev.co.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/switch/switchtec.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/comedi/drivers/ni_at_a2150.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pci/switch/switchtec.c b/drivers/pci/switch/switchtec.c
-index 37c5ba40d959f..04e0a15bd0157 100644
---- a/drivers/pci/switch/switchtec.c
-+++ b/drivers/pci/switch/switchtec.c
-@@ -1875,6 +1875,7 @@ static const struct pci_device_id switchtec_pci_tbl[] = {
- 	SWITCHTEC_PCI100X_DEVICE(0x1004, SWITCHTEC_GEN4),  /* PCI1004 16XG4 */
- 	SWITCHTEC_PCI100X_DEVICE(0x1005, SWITCHTEC_GEN4),  /* PCI1005 16XG4 */
- 	SWITCHTEC_PCI100X_DEVICE(0x1006, SWITCHTEC_GEN4),  /* PCI1006 16XG4 */
-+	SWITCHTEC_PCI100X_DEVICE(0x1008, SWITCHTEC_GEN4),  /* PCI1008 16XG4 */
- 	{0}
- };
- MODULE_DEVICE_TABLE(pci, switchtec_pci_tbl);
+diff --git a/drivers/comedi/drivers/ni_at_a2150.c b/drivers/comedi/drivers/ni_at_a2150.c
+index df8d219e67234..cc106437de3c3 100644
+--- a/drivers/comedi/drivers/ni_at_a2150.c
++++ b/drivers/comedi/drivers/ni_at_a2150.c
+@@ -132,11 +132,11 @@ static irqreturn_t a2150_interrupt(int irq, void *d)
+ 	struct comedi_device *dev = d;
+ 	struct a2150_private *devpriv = dev->private;
+ 	struct comedi_isadma *dma = devpriv->dma;
+-	struct comedi_isadma_desc *desc = &dma->desc[0];
++	struct comedi_isadma_desc *desc;
+ 	struct comedi_subdevice *s = dev->read_subdev;
+-	struct comedi_async *async = s->async;
+-	struct comedi_cmd *cmd = &async->cmd;
+-	unsigned short *buf = desc->virt_addr;
++	struct comedi_async *async;
++	struct comedi_cmd *cmd;
++	unsigned short *buf;
+ 	unsigned int max_points, num_points, residue, leftover;
+ 	unsigned short dpnt;
+ 	int status;
+@@ -145,6 +145,11 @@ static irqreturn_t a2150_interrupt(int irq, void *d)
+ 	if (!dev->attached)
+ 		return IRQ_HANDLED;
+ 
++	desc = &dma->desc[0];
++	async = s->async;
++	cmd = &async->cmd;
++	buf = desc->virt_addr;
++
+ 	status = inw(dev->iobase + STATUS_REG);
+ 	if ((status & INTR_BIT) == 0)
+ 		return IRQ_NONE;
 -- 
 2.53.0
 
