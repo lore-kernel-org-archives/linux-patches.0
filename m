@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036985;
-	b=j+6ZeXkPRr5g8RugbfmIbnAZAG28hrRiwqugHnSUKF4BDguN4q4TWUxEo/IsqyvPYCKG
-	 RgkVCH1ZL8SpN3WPk7wmBu+3QlXf+oGXyYA6wsAZkuMpJ4iIyIjmQGMFFAi6dEYDVUzFr
-	 VYjbe5N7qw7iSC9+CoAg3t6WfkHkJ4uHNeJU3/cNu9W5kwogWq11ds4jGKJYlOmW8wFuK
-	 nT7WQx9JqvYXh1+4e8REzb6pjzEeHqTibvYVHSEnNbqBxxiJjO1hc5MPEoR9+sBnJcQhh
-	 56nP70UcL1jNE11Q+CISod/ujzYr32b+q57d+kd580Vtp/kF3whQMe6gFQapue6A9nA==
+	t=1795036988;
+	b=amLVKA/CamRkz0eCaco6+5OAwE4NM5vV1ClZcIbOap804c2Sw0mgMRK7TWaT/ihZgYQb
+	 LHeHJ0Bq27wUaoyVlWa7xRrCE9oo1oJg2gegIg/4KsYsZjx5igF9uC8d7bD20ynKkZe0N
+	 GFZm7eDg4hFJ/kfHgD7rIZQnhBncdy1UhlBLAMlJU50ceGazE6wlmuHi3+pGJ2D2R6afw
+	 BWT+NFFD/rULZMKbaU/yYAR6Th4k2Tpc8ZiUlQdVExRz7Ooj8okFs2aHqxZZODnhr7pkq
+	 n+D+Djh96+4P/tOojxOLI1GgehiRYHiVhE/SubFFKYbKnaB9cMms0GVryTzkTD11UuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036985;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036988;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8XcFNh/TYK1T9S04rXZdKnjVukCO2UPvdNGhZCA7Zns=;
-	b=RHiS9lQCedYkn+6XeOQK21Ks4Fow7WOzbcIn/HE2D0ch62QJcBj3oBRJrrC88PQEYByG
-	 Ap2Oja6LBPU3NskaDAvUjua5kqyMNuzfZhU0KlOHnYWYP81pj6n64LKNBGd7m3x4VicYw
-	 kp0Kl9Fvk1p50PsWPIM8hF6w0ePJ4IH0l9mJf/cEHvMFDkwqxXl9Jhiau+esPCwBBmyLG
-	 RN6HkeE1drjOR1fAtg2DhVNh4tIf3CMiHzr6wUX+zgc998nwGhjEtq4sHXgScDt1qHlzh
-	 QngjtjINwBSqEjFcCuhBQt1a5j3aH41z4NDF9YpZpUWd38GT/QaB2TrxFm0RQrDo2qQ==
+	bh=3AdsAa6w69/HCiqDoKyITBQ6019ddGs1JDeQ6wKLHrI=;
+	b=YI1wLcidJPHB623Wf9Cn1un31cLwayrsyWGOGrA8IL8Ux0Bkcav5BC6e56ZZj2ITF5IZ
+	 gNfv3w5sdWzPSsJ8AqhDOAwEoyDKwnrpuA1RIGyY17lFo2YNmjJFcC9UhdXVXdqSp9o6T
+	 FjIROzFwDGKHyxsAruj8T3h/Df/yGcs0e+KwKJvbzaJbbzlbmR0tQewHRNCYkySrmVnia
+	 itFslQG4vSISQ/IzHkNjszre1LTPzmYeaSiRROczwON0jUoxipjeByk7oGK6U7BWlBQq3
+	 ui6muih2JbwWWdkrfCaw8jGOXg1a8MiDRkNLkDNNeTaxsKmowW0RCqd2AKO9CWMksDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JQv1IaO0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wnx4qK7k;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5BFA606A31C;
-	Wed, 18 Nov 2026 21:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A9F60A2600;
+	Wed, 18 Nov 2026 21:23:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JQv1IaO0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F39071F000C4;
-	Wed, 18 Nov 2026 21:23:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wnx4qK7k
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D06C61F000C4;
+	Wed, 18 Nov 2026 21:23:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036985;
-	bh=8XcFNh/TYK1T9S04rXZdKnjVukCO2UPvdNGhZCA7Zns=;
+	s=korg; t=1795036988;
+	bh=3AdsAa6w69/HCiqDoKyITBQ6019ddGs1JDeQ6wKLHrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JQv1IaO0fHZZvQkCionLWLMnjk4tdKCwMcgrQKTvC3akNMBkaAfDUGv9itgXSPStN
-	 5mXbsNH9yXRH/r3YZI6VKz28RoSwLNr8o2uREdJonkDZaCH6/YllsQJrm6QflV040b
-	 m4utyeYUmqQHB2jwIF5K56bxtKJcvhdJsra9bhXA=
+	b=Wnx4qK7kv9KLjLBt2NRVqrp6siHKcyXwwH9JDNTlsa9iciBdhyx52b9UBOB0PVawB
+	 KITl1yzYx9m3zlCNRUkvcX5JZDE8M2wIh+hD4FIyP5SCDcEgA9IV1YGieVoD2bw5Gb
+	 /EYqkICcYryRV7UZOeR1Nc4/le7s0qwAXp7AZRqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1254/3318] ixgbe: reserve TX timestamp after skb preparation
-Date: Wed, 18 Nov 2026 15:31:16 +0100
-Message-ID: <20261118150357.820287293@linuxfoundation.org>
+Subject: [PATCH 6.6 1255/3318] ASoC: hdac_hda: Balance the runtime PM disable in codec remove
+Date: Wed, 18 Nov 2026 15:31:17 +0100
+Message-ID: <20261118150357.849193805@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,102 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit f75062536e2d45ee182828f0e47e0124be2fdc8d ]
+[ Upstream commit f26c0d5f91d918bb66cbbc8916f41836adb38346 ]
 
-ixgbe_xmit_frame_ring() takes an extra skb reference with skb_get()
-for the pending TX timestamp before preparing the skb for transmit.
-Several of the following steps may need to reallocate the skb head:
+hdac_hda_codec_remove() disables runtime PM of the codec device before
+releasing the HDA link and calling the codec driver's remove callback,
+so that no runtime resume can race with the teardown and access the
+link or the already freed codec driver data.
+snd_hda_codec_cleanup_for_unbind() then disables runtime PM again.
 
-- ixgbe_tso() calls skb_cow_head(), which reaches pskb_expand_head()
-  when the header is cloned (e.g. a packet tap holds a clone).
-- ixgbe_tx_csum() falls back to skb_checksum_help() for unsupported
-  checksum offsets, which can call pskb_expand_head() through
-  skb_ensure_writable().
-- With DCB and a software VLAN tag, skb_cow_head() is called to
-  rewrite the VLAN priority.
+On the next probe snd_hda_codec_register() enables runtime PM only once,
+leaving it disabled after the ASoC card or the codec driver has been
+unbound and bound again: the codec stays powered and runtime_status
+reads 'unsupported'.
 
-pskb_expand_head() used to BUG() on shared skbs. Since commit
-c7d8bc3dd511 ("net: skbuff: don't BUG() on bad arguments to
-pskb_expand_head()") it returns -EINVAL instead, so these packets
-are dropped (TSO, DCB) or sent with an unfinished checksum
-(skb_checksum_help() errors are ignored by ixgbe_tx_csum()).
+Re-enable runtime PM at the end of hdac_hda_codec_remove() to balance
+its own disable. The codec remains disabled until it is registered again.
 
-Reserve the TX timestamp right before ixgbe_tx_map(), after all skb
-preparation, as i40e and ice already do. The timestamp request
-remains covered on the FCoE path, and the cleanup on ixgbe_tx_map()
-failure is unchanged.
-
-Fixes: 891dc0821d20 ("ixgbe: Add ptp work item to poll for the Tx timestamp")
+Fixes: c3ec8ac82105 ("ASoC: hdac_hda: fix memleak on module unload")
 Cc: stable@vger.kernel.org
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Link: https://patch.msgid.link/20261026082035.335770-1-edumazet@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20261027083840.28813-4-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ixgbe/ixgbe_main.c | 40 +++++++++++--------
- 1 file changed, 23 insertions(+), 17 deletions(-)
+ sound/soc/codecs/hdac_hda.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-index 3f990136d05c1..8676c56b94c4d 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-@@ -8761,23 +8761,6 @@ netdev_tx_t ixgbe_xmit_frame_ring(struct sk_buff *skb,
+diff --git a/sound/soc/codecs/hdac_hda.c b/sound/soc/codecs/hdac_hda.c
+index c497354251cb2..dfa47be25ebc4 100644
+--- a/sound/soc/codecs/hdac_hda.c
++++ b/sound/soc/codecs/hdac_hda.c
+@@ -525,6 +525,7 @@ static void hdac_hda_codec_remove(struct snd_soc_component *component)
+ 		return;
  	}
- 	protocol = vlan_get_protocol(skb);
  
--	if (unlikely(skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP) &&
--	    adapter->ptp_clock) {
--		if (adapter->tstamp_config.tx_type == HWTSTAMP_TX_ON &&
--		    !test_and_set_bit_lock(__IXGBE_PTP_TX_IN_PROGRESS,
--					   &adapter->state)) {
--			skb_shinfo(skb)->tx_flags |= SKBTX_IN_PROGRESS;
--			tx_flags |= IXGBE_TX_FLAGS_TSTAMP;
--
--			/* schedule check for Tx timestamp */
--			adapter->ptp_tx_skb = skb_get(skb);
--			adapter->ptp_tx_start = jiffies;
--			schedule_work(&adapter->ptp_tx_work);
--		} else {
--			adapter->tx_hwtstamp_skipped++;
--		}
--	}
--
- #ifdef CONFIG_PCI_IOV
- 	/*
- 	 * Use the l2switch_enable flag - would be false if the DMA
-@@ -8842,6 +8825,29 @@ netdev_tx_t ixgbe_xmit_frame_ring(struct sk_buff *skb,
- #ifdef IXGBE_FCOE
- xmit_fcoe:
- #endif /* IXGBE_FCOE */
-+	/* Reserve the Tx timestamp only after all skb preparation:
-+	 * skb_get() makes the skb shared, and pskb_expand_head()
-+	 * (reached from skb_cow_head() or skb_checksum_help())
-+	 * refuses shared skbs.
-+	 */
-+	if (unlikely(skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP) &&
-+	    adapter->ptp_clock) {
-+		if (adapter->tstamp_config.tx_type == HWTSTAMP_TX_ON &&
-+		    !test_and_set_bit_lock(__IXGBE_PTP_TX_IN_PROGRESS,
-+					   &adapter->state)) {
-+			skb_shinfo(skb)->tx_flags |= SKBTX_IN_PROGRESS;
-+			tx_flags |= IXGBE_TX_FLAGS_TSTAMP;
-+			first->tx_flags |= IXGBE_TX_FLAGS_TSTAMP;
-+
-+			/* schedule check for Tx timestamp */
-+			adapter->ptp_tx_skb = skb_get(skb);
-+			adapter->ptp_tx_start = jiffies;
-+			schedule_work(&adapter->ptp_tx_work);
-+		} else {
-+			adapter->tx_hwtstamp_skipped++;
-+		}
-+	}
-+
- 	if (ixgbe_tx_map(tx_ring, first, hdr_len))
- 		goto cleanup_tx_timestamp;
++	/* prevent runtime PM callbacks while the link and the codec are torn down */
+ 	pm_runtime_disable(&hdev->dev);
+ 	snd_hdac_ext_bus_link_put(hdev->bus, hlink);
  
+@@ -532,6 +533,9 @@ static void hdac_hda_codec_remove(struct snd_soc_component *component)
+ 		codec->patch_ops.free(codec);
+ 
+ 	snd_hda_codec_cleanup_for_unbind(codec);
++
++	/* Balances the disable above, cleanup_for_unbind keeps runtime PM disabled */
++	pm_runtime_enable(&hdev->dev);
+ }
+ 
+ static const struct snd_soc_dapm_route hdac_hda_dapm_routes[] = {
 -- 
 2.53.0
 
