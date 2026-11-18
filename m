@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028445;
-	b=p+SCX1TFxuepTQPGmL4AaTBdhbw+sZwSXrs9mAbtII3rFjKEL3U/3GwfhVLSbs3zW9sm
-	 WVV7ZPF73GzApxhat4vj7VyCp21Q1KqZ8uA7kYlnQTNNYObIHUs8gY7RInN7miSZsruJ6
-	 LLN4+tjWax2kAtQ51Fb/cL47IvKbWPU4GDWqck010eolGe58uEOdxcuVamWouzIefSwfH
-	 S4z7hnVU/ClkgcE8GNmhxuz24GDVkurRc6gb9ZhP0Nek35FMGiJLzg9Dak5vHRqZ7fxH7
-	 qy4GPdeAj3cZAXbzCgJHVqVdqgz6bFx01w9iGH2LxbimiDiLUlKGuMJ4cF+UEWEtaNw==
+	t=1795028448;
+	b=y5ZgQDzhwDNg10q4eaOJbP1XZwEHo2tv4IW3PEtUlyNAFC2WRUFAqNG+Q7DRWR/ufi9U
+	 5dgO1XE87WmcOgy12lHCe2UvD3oAG9fbyKiLXgiieNJ7vqt9AEXi+XArNoL3jx9gu/AV1
+	 xgRxqtttQT4eoGeYI0t/YDVYGN/eKi/i7KTdDJ7eDR/dO4W6qboPOIQPA9GeiTcFNhpGJ
+	 9Ga156jYHNZj8PogD5jEoh25RG/1gi64To5Uarx3D2KZj/ilWLPnQT/F3VwRI42S6nomx
+	 pJfkAnlYDnEF+pwrjnsOs3+pXmvYQFx24jlth7etKwWo9JSvVdwTT0NKLJenq/ZNOpA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028445;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028448;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jTN5nnI2riZ7HdIn/5m9o4w99oVtul5ie6sjhuR2ZY8=;
-	b=Hpusd86l7NjDIo1r6+Q/mWvTgYVidSU6RdgpdYpZ2QB1rWtT8eWFIqAi3vL2GjbpQ1PI
-	 icWpzriHlJuBA2BbSnMGBVcOGO6JjWRsfDm/CT2LOiOIR/SxPlnameKzoxMmP5cqSNJ+D
-	 Pwqn7+M6F6Tm49zbMJphL2Nwi5ME0n3v2ojXTEqj8aMAMXT2AZ1DFyyzQk9buoFyJyL6S
-	 Jz87W992x+HgdQCubxvUlsosmX0vfin7vs+oW6QSP+FK6+q/bbWm9hcL3jwQUAqajoaD+
-	 ewBsNf2sfoUSAOt5S7pvP5pmmKNaoMa1WAZ0w+Pfy2i07ZoXPyyINbP76p7naJXCr+g==
+	bh=gj5PxAxr3793kaK0nfrAE0FIjnKZ/NR0uIaK2XQQ0sU=;
+	b=L2ilGCnwkwf+UqpIIHvVSPQOiHAmBq47ZlIz1Ex6PbJGY2QxzJIpsI6vqnits9sniAd8
+	 uf9vsGQhRpwXB/43VsnFt4iQw54Nw6IZHL565eT7OlUmKun5NqJw/dA6SRVRmXxMMuPHj
+	 19DP8JKnPP6bsuCKeGlBGJtziYGsHkEDCbD6zihpNR+WZ4q/0Ph1VkHQF3d63QAag/d/T
+	 d0eoupEg+NFlPd6GL37jYQbh/hNWPXb/nowaSJOrRUO8xQP4e5gRUhKYe8/vdBJ79Jk7k
+	 rgWsD9XygfV1FyIgyCzMxuAPjCGioxH5c1SS8+cssg1Yy7l+MeZnKEIaUmKsJ3ZsAEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AS+Q1J82;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bl2zcNM0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D37606A325;
-	Wed, 18 Nov 2026 19:00:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81663606A330;
+	Wed, 18 Nov 2026 19:00:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AS+Q1J82
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 237BE1F000C5;
-	Wed, 18 Nov 2026 19:00:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bl2zcNM0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB2BD1F000C4;
+	Wed, 18 Nov 2026 19:00:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028445;
-	bh=jTN5nnI2riZ7HdIn/5m9o4w99oVtul5ie6sjhuR2ZY8=;
+	s=korg; t=1795028448;
+	bh=gj5PxAxr3793kaK0nfrAE0FIjnKZ/NR0uIaK2XQQ0sU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AS+Q1J82R7hILXDONF6p/bHe6+nCsmVA79oc2ft8zcX3XhhamOi+/8gVJXXTZ6zq5
-	 1wEhAtjQNGwWbNeoCkW3gyH2Mme1rIfBIpvkmtfU2FTtShiEoVsFPtgcbspKgBHAjp
-	 gsXGUfjCkW29c3eOtYZHj8qEkSTs1QYN41DpgiCE=
+	b=Bl2zcNM01E3ghRa7/atG3WcFumQaccI9gMCf3E5MlCvJvceR0y1cJHKBlAJ27izbG
+	 Q6t/2Ie2Qr4aVa99nSBJv+Xl3gc5W5LDSes8G+9znG+0ANMIgpAtPdW3AKXuUxTvWv
+	 GZ00qL73ZAd+bvpncohz2rzmnfPQorFc0UV8GGd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,12 +44,13 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	sashiko-bot@kernel.org,
 	Alison Schofield <alison.schofield@intel.com>,
 	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Hanjun Guo <guohanjun@huawei.com>,
 	Dave Jiang <dave.jiang@intel.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.18 2148/2151] ACPI: extlog: Avoid populating software AER metadata from raw hardware buffer
-Date: Wed, 18 Nov 2026 16:04:43 +0100
-Message-ID: <20261118150239.917201525@linuxfoundation.org>
+Subject: [PATCH 6.18 2149/2151] ACPI: extlog: Validate PCIe error section length before payload access
+Date: Wed, 18 Nov 2026 16:04:44 +0100
+Message-ID: <20261118150239.954095208@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -73,78 +74,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Jiang <dave.jiang@intel.com>
 
-commit 31333d134afb13e3942867d48efbcf8d6b88c849 upstream.
+commit 5eefd849e26506170552e614496d094230650e78 upstream.
 
-extlog_print_pcie() casts pcie_err->aer_info straight to struct
-aer_capability_regs *. That struct embeds struct pcie_tlp_log, whose
-software-only header_len and flit fields sit at offset 84 - inside the
-96-byte aer_info buffer - so the cast fills them with raw firmware bytes.
-pcie_print_tlp_log() uses both to bound a loop over dw[], and a large
-header_len walks past the end of the array.
+extlog_print_pcie() reads pcie_err->validation_bits and device_id and
+copies the 96-byte aer_info buffer without checking that
+gdata->error_data_length is big enough for a struct cper_sec_pcie. The
+cper_estatus_check() call added earlier keeps the read inside the estatus
+block, but a short section still gets stale adjacent bytes treated as PCIe
+error data.
 
-Copy into a zeroed local struct, and only as far as aer_info maps onto it:
-the leading registers and the four Header Log DWORDs. Place the TLP Prefix
-Log separately, from the offset the hardware keeps it at. The rest stays
-zero, which covers header_len and flit and keeps the Root Error registers
-out of the prefix log, where pcie_print_tlp_log() would print them as
-end-to-end prefixes.
+Reject a section too small to hold the record before touching any field,
+and warn: a truncated section means firmware is emitting malformed records.
 
 Reported-by: sashiko-bot@kernel.org
 Closes: https://lore.kernel.org/linux-cxl/20260709165457.8BA181F000E9@smtp.kernel.org/
 Fixes: e778ffefa34d ("ACPI: extlog: Trace CPER PCI Express Error Section")
 Reviewed-by: Alison Schofield <alison.schofield@intel.com>
 Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260904172337.1409775-6-dave.jiang@intel.com
+Link: https://patch.msgid.link/20260904172337.1409775-7-dave.jiang@intel.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpi_extlog.c |   20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ drivers/acpi/acpi_extlog.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
 --- a/drivers/acpi/acpi_extlog.c
 +++ b/drivers/acpi/acpi_extlog.c
-@@ -137,7 +137,7 @@ static void extlog_print_pcie(struct cpe
- 			      int severity)
+@@ -134,7 +134,7 @@ static int print_extlog_rcd(const char *
+ }
+ 
+ static void extlog_print_pcie(struct cper_sec_pcie *pcie_err,
+-			      int severity)
++			      int severity, u32 len)
  {
  #ifdef ACPI_APEI_PCIEAER
--	struct aer_capability_regs *aer;
-+	struct aer_capability_regs aer_regs = {};
- 	struct pci_dev *pdev;
- 	unsigned int devfn;
- 	unsigned int bus;
-@@ -149,7 +149,21 @@ static void extlog_print_pcie(struct cpe
- 		return;
+ 	struct aer_capability_regs aer_regs = {};
+@@ -144,6 +144,12 @@ static void extlog_print_pcie(struct cpe
+ 	int aer_severity;
+ 	int domain;
  
- 	aer_severity = cper_severity_to_aer(severity);
--	aer = (struct aer_capability_regs *)pcie_err->aer_info;
++	if (len < sizeof(*pcie_err)) {
++		pr_warn_ratelimited(FW_WARN
++				    "PCIe error section too small (%u)\n", len);
++		return;
++	}
 +
-+	/*
-+	 * struct pcie_tlp_log is larger than the hardware layout, so aer_info
-+	 * only maps onto the struct up to the four Header Log DWORDs. Copy that
-+	 * much, then place the TLP Prefix Log from where the hardware keeps it.
-+	 * Everything else stays zero: nothing reads root_command, root_status or
-+	 * the error source IDs, and header_len and flit are software-only.
-+	 */
-+	memcpy(&aer_regs, pcie_err->aer_info,
-+	       offsetof(struct aer_capability_regs, header_log) +
-+	       PCIE_STD_NUM_TLP_HEADERLOG * sizeof(u32));
-+	memcpy(aer_regs.header_log.prefix,
-+	       pcie_err->aer_info + PCI_ERR_PREFIX_LOG,
-+	       sizeof(aer_regs.header_log.prefix));
-+
- 	domain = pcie_err->device_id.segment;
- 	bus = pcie_err->device_id.bus;
- 	devfn = PCI_DEVFN(pcie_err->device_id.device,
-@@ -158,7 +172,7 @@ static void extlog_print_pcie(struct cpe
- 	if (!pdev)
+ 	if (!(pcie_err->validation_bits & CPER_PCIE_VALID_DEVICE_ID &&
+ 	      pcie_err->validation_bits & CPER_PCIE_VALID_AER_INFO))
  		return;
+@@ -247,7 +253,8 @@ static int extlog_print(struct notifier_
+ 		} else if (guid_equal(sec_type, &CPER_SEC_PCIE)) {
+ 			struct cper_sec_pcie *pcie_err = acpi_hest_get_payload(gdata);
  
--	pci_print_aer(pdev, aer_severity, aer);
-+	pci_print_aer(pdev, aer_severity, &aer_regs);
- 	pci_dev_put(pdev);
- #endif
- }
+-			extlog_print_pcie(pcie_err, gdata->error_severity);
++			extlog_print_pcie(pcie_err, gdata->error_severity,
++					  gdata->error_data_length);
+ 		} else {
+ 			void *err = acpi_hest_get_payload(gdata);
+ 
 
 
