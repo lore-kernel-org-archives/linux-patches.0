@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053839;
-	b=kADW1DLY6BcTd79b7pifRyzY0YyWS1MUlvsGJ5Hp3SVIhCTzRmN1PkWsAhFmMlCXBZA3
-	 G1yg3SzAXGfy5SHhG3/1pZEPzwpPHS2QuG3M/IJjKX7BnZRiUHLNAZcw2D/1rXIEVlyQ3
-	 0WU/ZPzmcx5sB8ZSALsygc7RVhcpwJKLBPaMirGvNioHzzalMKlTnZgM0Q8XX9irDXGFJ
-	 1/GKrqqOPtgIGLWJ4y5YBQptFqqpEB+wvbTtX7yZqbuNMUWse5osAeJA14zFPajYIURtX
-	 lsQDgDmCWQ1sSCFcCZuuPxkVICtBRZToqlOY243jitoJC4gx6czqVET4fYvZU9vlXTw==
+	t=1795053842;
+	b=wP95NRVshhSRt7bNRuHnUEWQYOlMiWbghapIGR9EDJ7/5fOAt3kXXcEhuXlqwnOoTRkh
+	 z3PP4gfImqHnmRC69dBusbF0dqdXFpwNK+vuOQvDE8bjkbgdyT5CmfvDEnKxkjLnDcjU6
+	 xDoW6ZTcptGspKN2o62cXRwPobGMT3q17GDeBW279UgNpLS1x8SiqQCFnIrGbLn7+hqIL
+	 vx7lO7mqxqmR1FQnjEkvowXWHqDcdVTIrJVXf8YbnmypaOtsCAVNossPJKfY/S2grnQ1M
+	 UIdOjiw7kf/HdjLccpXecv+8YTD5dOj4WyTJZCgnuzTDK+m7jOauKmbL6hq59obBRfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053839;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053842;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NSozQIe08v69xYUAOhf27YlchlZP8HKMuhqxZ8Ymz9g=;
-	b=Fyqvl9TAA02fAJYjlYBq5ItgZ9c6QF46Wi/OBmoEUecZrP2dZ3nMhI4f7nzOPF7FtRnb
-	 wveii4X46TppmznmYSPrIYsWiA6ZN3qt9p4ziXScL4Shbbw+ISXoRbViqtUSHUrBkF4Yv
-	 fur0tyfe2i079Leks/NMNophVnZzZgfRjuWBplgHcl1GK/cH2tOILdhIkR4WD8pYCny0c
-	 HH/o/kxB8eDJ1eSD1uGpcLEdgGHO1hBIYcyqO2/D5hE7+JMeVAJpUN0MawYn7JyLc54Do
-	 oQvMwy+5C9S/9v+WgOvy7VupdXNYL0rvdeZFD7p8U7JLElXscoFJM6VZcNcvbPnysxA==
+	bh=wfVnAJboIehC2tEWHmMKharQSHKcwQN6LMVPTKA2geQ=;
+	b=WOGIuI9us+aQNTRKzc5ciisk1GcXl/xSHGJ5M7+/J7OvgrMtPM/WK6tgVgvZfFftBwRV
+	 YizRvxCE17mgwEIw3npDrlbyOZyoj27+DMjVmXFzuz+qLyDyT6D91sFj1mouILZ7/bGK7
+	 qe8sOs4z+lLS70qN5OixyjI8mbJvOc32FLnaI3vGr14sKil2FGzzIcgyCo/5/3sQ1o/Ie
+	 yfUJm91sbvdN7mIkQpvlx/PpZz2oP7qbS+IHNHjNOW5gfNORYNiDaopkwxD4p+xyTPfeV
+	 g0h9nkJ4iAtzHK7MyvMto5QlYi8eeB+5qGxezq7XtwM0/LmXjjAjsnxc49q5z2uMF1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G7ae+L32;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hj7FSn95;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C9C606A31C;
-	Thu, 19 Nov 2026 02:03:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10DDF606A320;
+	Thu, 19 Nov 2026 02:04:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G7ae+L32
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B27C21F000C4;
-	Thu, 19 Nov 2026 02:03:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hj7FSn95
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 662371F000C4;
+	Thu, 19 Nov 2026 02:04:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053839;
-	bh=NSozQIe08v69xYUAOhf27YlchlZP8HKMuhqxZ8Ymz9g=;
+	s=korg; t=1795053841;
+	bh=wfVnAJboIehC2tEWHmMKharQSHKcwQN6LMVPTKA2geQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G7ae+L32DLqGr1Le2kH6sFMOgZJ4FYpdhrtxHai4q7Xj+3pJY/MihmpC+2Nb9CnJi
-	 bh6snLL5uFSlY9zSWoSz/trM2Du6paJL2yLWVp24rwbv2fNAZ3fGfHsqyjqwKtrvwJ
-	 Xi6wZB7AX3u6TuGDfvDZlljNruVXxRLNZwQixVl0=
+	b=hj7FSn956hj17RBP+xvxpBHM8GDMGVEf2f1wxEnB7wrFzYWoGJtQ42R/yUypv6FlZ
+	 md2Ip2wgXGm+2e0VEgka1PRnPLg1FBzQ8yK7BULEMhgpfRG1/DNqQFetnNasIdzw5P
+	 BPQbdkq81zHe9iItNTYor7266v+LZ19SLa5ri/Fo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Jacob Chen <jacob-chen@iotwrt.com>,
-	Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
-	Michael Tretter <m.tretter@pengutronix.de>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Farhad Alemi <farhad.alemi@berkeley.edu>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1060/2214] media: rockchip: rga: fix clock cleanup
-Date: Wed, 18 Nov 2026 15:45:36 +0100
-Message-ID: <20261118150054.706395420@linuxfoundation.org>
+Subject: [PATCH 5.15 1025/2214] ALSA: control: Fix UAF in snd_ctl_elem_add() on card disconnect
+Date: Wed, 18 Nov 2026 15:45:01 +0100
+Message-ID: <20261118150053.353229943@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -71,45 +68,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 254f3337ce2575bf94f1fb40cc40fdbc70371116 ]
+[ Upstream commit d4febca239be3c91498762dd0535a87d4af1eabc ]
 
-Fix this smatch warning:
+A use-after-free can be triggered via SNDRV_CTL_IOCTL_ELEM_ADD when a
+USB audio card is disconnected while an ELEM_ADD ioctl is in flight.
 
-drivers/media/platform/rockchip/rga/rga.c:734 rga_enable_clocks() warn: 'rga->sclk' from clk_prepare_enable() not released on lines: 734.
+The reproducer parks the ioctl thread inside copy_from_user() using
+userfaultfd, then tears down the USB device.  Unlike every other
+ALSA control _user handler (ELEM_INFO, ELEM_READ, ELEM_WRITE, TLV_*),
+snd_ctl_elem_add_user() never calls snd_power_ref_and_wait(), so the
+parked thread holds no power reference.  snd_card_disconnect() therefore
+cannot observe it via snd_power_sync_ref() and proceeds unimpeded:
 
-The reason is that aclk should be disabled/unprepared before
-sclk, instead of the other way around.
+  1. card->shutdown is set to 1
+  2. device_del(&card->card_dev) drops the kobject reference on the
+     parent USB interface device (card->dev = &intf->dev)
+  3. The USB core drops its own reference and calls device_release(),
+     freeing the struct usb_interface, including the embedded struct
+     device that card->dev points to
 
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Cc: Jacob Chen <jacob-chen@iotwrt.com>
-Cc: Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>
-Reviewed-by: Michael Tretter <m.tretter@pengutronix.de>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Stable-dep-of: a875c43dd95e ("media: rockchip: rga: quiesce IRQ before releasing m2m state")
+When the userfaultfd is resolved and the thread resumes,
+snd_ctl_elem_add() acquires controls_rwsem without checking
+card->shutdown and calls __snd_ctl_add_replace().  Because the
+reproducer pre-registered the same control, the CTL_ADD_EXCLUSIVE
+path calls dev_err(card->dev, ...) on the freed USB interface:
+
+  KASAN: slab-use-after-free Read in __dev_printk
+
+Add a card->shutdown guard immediately after acquiring controls_rwsem
+in snd_ctl_elem_add().  At that point card->shutdown is guaranteed to
+be stable: snd_card_disconnect() sets it before freeing the parent
+device, and it never transitions back to 0.  A thread that acquired
+the lock before disconnect sees shutdown=0 and holds the write lock
+through the rest of the operation, preventing concurrent disconnect
+from proceeding past its own controls_rwsem-less shutdown=1 store
+(which happened earlier, outside the lock) from racing with dev_err().
+
+Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
+Cc: stable@vger.kernel.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260929125346.1478631-3-tiwai@suse.de
+[ sashal: adapted the direct error return to set err and goto unlock for explicit rwsem locking ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/rockchip/rga/rga.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/core/control.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/media/platform/rockchip/rga/rga.c b/drivers/media/platform/rockchip/rga/rga.c
-index bcbbd1408b368..02c2ea2b42a50 100644
---- a/drivers/media/platform/rockchip/rga/rga.c
-+++ b/drivers/media/platform/rockchip/rga/rga.c
-@@ -717,10 +717,10 @@ static int rga_enable_clocks(struct rockchip_rga *rga)
+diff --git a/sound/core/control.c b/sound/core/control.c
+index bce311cd5326b..3c06f426dadd0 100644
+--- a/sound/core/control.c
++++ b/sound/core/control.c
+@@ -1534,6 +1534,10 @@ static int snd_ctl_elem_add(struct snd_ctl_file *file,
+ 	alloc_size = compute_user_elem_size(private_size, count);
  
- 	return 0;
- 
--err_disable_sclk:
--	clk_disable_unprepare(rga->sclk);
- err_disable_aclk:
- 	clk_disable_unprepare(rga->aclk);
-+err_disable_sclk:
-+	clk_disable_unprepare(rga->sclk);
- 
- 	return ret;
- }
+ 	down_write(&card->controls_rwsem);
++	if (card->shutdown) {
++		err = -ENODEV;
++		goto unlock;
++	}
+ 	if (check_user_elem_overflow(card, alloc_size)) {
+ 		err = -ENOMEM;
+ 		goto unlock;
 -- 
 2.53.0
 
