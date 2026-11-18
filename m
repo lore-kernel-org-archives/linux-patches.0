@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033124;
-	b=MGQaNNSEHkkF4Kd+bHvf+nUI+CW0B7iOqmei91Ku5XQYhhrmrxHs0jCNv9ocEYT2XrZv
-	 IUFiPCesdooW//Z0KEoC0Q0qKJ7UglnRjnkodtdToKzmjV+CgrlnfamHo4yguerg6zdkt
-	 sIjzL3o1cFuSnht5obdHSkIB9jm3nnWMnVnl0esGtqSXhV5nFd15lHG5oWvGpadjKyRuV
-	 tdG2NnyK0/ro3BX7L5AtULL0nwb5YZIqJkucvr56Hbjdx1ukBfQKcRFyctuY3qdd8CnjK
-	 VcXx2SPlNjl2hCatbMIgpPbUX59+a2+xWd0SOJ+SxVFwV5/UybHRw6+IBQu1PE0mX6g==
+	t=1795033127;
+	b=X1okJlOiLyX9Mm2QyO4F5KvjAcY13ozee6wSUVHayhaD9JDT1RT1f8wQOp7OA5BB+LRT
+	 LqwSKOpRvkM0bviyoRiIHbE07pzQ6+1d3seKEwErFC7CbnrNhJyWArZ588vieJFAALLNi
+	 vcrTeubfRgkgWWmiAbEvs4us7NI+Rd21316vokMeEY+9Uic6QjK3h6BVSaIJHsNk/GJQT
+	 HalsqtYiA+Lfs1WTEVJbFi6xkrLJsTB08fEXrJmxXL3TYg1Fr0I59XNHUFlBvpIHAyxci
+	 ey5XnOqbj9WmyT4vi2zqHuihb2lfG9GNhzVi08ceFPX9Lj4J2fr1HcOGwkeqSzwcvqg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033124;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033127;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2+1wHUDYM4s4dUaFzdyKmjJfaepocaWLOpo/AF9ECXk=;
-	b=yIns1riCeZ1CGNfcWmE+QFqW2+mc9UKRLzXnvDnjxsbTKLjbWYpVigxIH63mwV55th49
-	 +sfXN+VZbvzbPJJCqAfTPWE6e3oPDrhkX2NFOj2t0Pr7f7+A2e05VPFcXuxrPd3xIJ7hc
-	 EAZUGiJRYA9Sclluf8ND7vZYc6b7kG+rhk+vo8h6iDKUP+m+pE59OJYdAjxhmKfVl/Ssh
-	 N/dbfq/We86SfN39l5abgRhyWjVy4rSHGrMvOVUakfhh7SY/ANS34xAQZQFlbsHL0VX9m
-	 oMkDrJ9gZ1cZ6FVPXgi4FECRKxI4U1e+U61X17TWfD13IpGf54ICaCJiDkvmeYZYypA==
+	bh=GqzoQBvm2H8U+j0EaKJQCxScNsNMnLEqHAS9I+Q/l/A=;
+	b=2aN0Fq4/Km40dQ9PUi99T5bn7GQ4eFbKAn1TQf/OiXCNuC9KQx5UCZjwo/iWV9zF3OF2
+	 +fPLAx/TFLdZNjGj+I7wqOX/rvoYDwlKtfxFBOLNxx/yKRH31pAcFyOAO4FHBNHBPYNb9
+	 NtcZ5Hn49d0GrTfu5UNLzPTHWejoPoqN9zur7tuU/LMIlP1RZgE3A0HFfVZLePpSPUuB5
+	 V6gtySjVnx8Dpb5aAJL3Yo1sUSHBxvTPIcO9mmgePTxNi9P00b8BpYpUghlt35czbjb+Z
+	 mD2ZvEPPX6UTSU76vdE8XdFfyvcfvKQpnUZPScP6TPBzbuu/KqETM8X4wNj4E9aGoVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jp2CBRtm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SdatAlB3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F4E606A330;
-	Wed, 18 Nov 2026 20:18:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766F2606A320;
+	Wed, 18 Nov 2026 20:18:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jp2CBRtm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 165EF1F000C5;
-	Wed, 18 Nov 2026 20:18:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SdatAlB3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCE601F000C4;
+	Wed, 18 Nov 2026 20:18:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033124;
-	bh=2+1wHUDYM4s4dUaFzdyKmjJfaepocaWLOpo/AF9ECXk=;
+	s=korg; t=1795033127;
+	bh=GqzoQBvm2H8U+j0EaKJQCxScNsNMnLEqHAS9I+Q/l/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jp2CBRtmbPhHob0L87cZ7yc5udmdKMrAvtvpD5C8azWtnB+8Sf1sVaNlD93pfla5R
-	 rSXDSiamHWfOg7551dviRYQ4sIo/XZ/FcYwMY0KusCp2h55Z8DKHHN+mAiTIftg0BV
-	 /q80pKlE15WYfPm3IyNw6TXlsT47GSG3gCl8dnfc=
+	b=SdatAlB3ZdHZJ5UbfZzB0JZFa63zyScrXmzUxmV3WaFX9rpBY32IIN5wvGQcyNw3v
+	 rK8uYp8ldB5gCy1L6t6Thr36pPWdRUx3K5J0Vdo0N4B8C+aPSdZW3FMLcPNrfjWZx5
+	 biv2ESIqyCzsFlxjQ3gfDRTY+GHVJ+0VbeL4GrVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
 	Nikolay Aleksandrov <razor@blackwall.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1657/1756] bridge: add bridge_flags_bit enum
-Date: Wed, 18 Nov 2026 16:03:04 +0100
-Message-ID: <20261118150115.683940135@linuxfoundation.org>
+Subject: [PATCH 6.12 1658/1756] net: bridge: use atomic ops to read/change p->flags (III)
+Date: Wed, 18 Nov 2026 16:03:05 +0100
+Message-ID: <20261118150115.723874397@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -72,115 +71,149 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 87020def2529ec26fc9077e889fa1c34f53f1f83 ]
+[ Upstream commit f76ae12b6ba3530590e151a18dca51d90c5d81d4 ]
 
-We want to use atomic operations for lockless p->flags changes
-and reads.
+Use test_bit(), clear_bit(), set_bit() in:
 
-Add definitions for bits in addition of masks so that we can use
-test_bit(), clear_bit() and set_bit() in subsequent patches.
+   net/bridge/br_multicast.c
+   net/bridge/br_netlink.c
+   net/bridge/br_stp.c
+   net/bridge/br_stp_bpdu.c
+   net/bridge/br_switchdev.c
+   net/bridge/br_vlan_options.c
 
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
 Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20260604141343.2124500-3-edumazet@google.com
+Link: https://patch.msgid.link/20260611203453.3067462-6-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: fcc00b15cb21 ("net: bridge: netlink: do not clear the vlan info dump error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/if_bridge.h | 78 ++++++++++++++++++++++++++-------------
- 1 file changed, 53 insertions(+), 25 deletions(-)
+ net/bridge/br_multicast.c    | 5 +++--
+ net/bridge/br_netlink.c      | 2 +-
+ net/bridge/br_stp.c          | 4 ++--
+ net/bridge/br_stp_bpdu.c     | 2 +-
+ net/bridge/br_switchdev.c    | 8 ++++----
+ net/bridge/br_vlan_options.c | 2 +-
+ 6 files changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/include/linux/if_bridge.h b/include/linux/if_bridge.h
-index ec9ffea1e46ed..75673b8bffcb8 100644
---- a/include/linux/if_bridge.h
-+++ b/include/linux/if_bridge.h
-@@ -36,32 +36,60 @@ struct br_ip_list {
- 	struct br_ip addr;
- };
+diff --git a/net/bridge/br_multicast.c b/net/bridge/br_multicast.c
+index 7d1b64df94c92..5dfe4732bbeb0 100644
+--- a/net/bridge/br_multicast.c
++++ b/net/bridge/br_multicast.c
+@@ -285,7 +285,7 @@ static bool br_port_group_equal(struct net_bridge_port_group *p,
+ 	if (p->key.port != port)
+ 		return false;
  
--#define BR_HAIRPIN_MODE		BIT(0)
--#define BR_BPDU_GUARD		BIT(1)
--#define BR_ROOT_BLOCK		BIT(2)
--#define BR_MULTICAST_FAST_LEAVE	BIT(3)
--#define BR_ADMIN_COST		BIT(4)
--#define BR_LEARNING		BIT(5)
--#define BR_FLOOD		BIT(6)
-+enum bridge_flags_bit {
-+	BR_HAIRPIN_MODE_BIT,
-+	BR_BPDU_GUARD_BIT,
-+	BR_ROOT_BLOCK_BIT,
-+	BR_MULTICAST_FAST_LEAVE_BIT,
-+	BR_ADMIN_COST_BIT,
-+	BR_LEARNING_BIT,
-+	BR_FLOOD_BIT,
-+	BR_PROMISC_BIT,
-+	BR_PROXYARP_BIT,
-+	BR_LEARNING_SYNC_BIT,
-+	BR_PROXYARP_WIFI_BIT,
-+	BR_MCAST_FLOOD_BIT,
-+	BR_MULTICAST_TO_UNICAST_BIT,
-+	BR_VLAN_TUNNEL_BIT,
-+	BR_BCAST_FLOOD_BIT,
-+	BR_NEIGH_SUPPRESS_BIT,
-+	BR_ISOLATED_BIT,
-+	BR_MRP_AWARE_BIT,
-+	BR_MRP_LOST_CONT_BIT,
-+	BR_MRP_LOST_IN_CONT_BIT,
-+	BR_TX_FWD_OFFLOAD_BIT,
-+	BR_PORT_LOCKED_BIT,
-+	BR_PORT_MAB_BIT,
-+	BR_NEIGH_VLAN_SUPPRESS_BIT,
-+	BR_NEIGH_FORWARD_GRAT_BIT,
-+};
-+
-+#define BR_HAIRPIN_MODE		BIT(BR_HAIRPIN_MODE_BIT)
-+#define BR_BPDU_GUARD		BIT(BR_BPDU_GUARD_BIT)
-+#define BR_ROOT_BLOCK		BIT(BR_ROOT_BLOCK_BIT)
-+#define BR_MULTICAST_FAST_LEAVE	BIT(BR_MULTICAST_FAST_LEAVE_BIT)
-+#define BR_ADMIN_COST		BIT(BR_ADMIN_COST_BIT)
-+#define BR_LEARNING		BIT(BR_LEARNING_BIT)
-+#define BR_FLOOD		BIT(BR_FLOOD_BIT)
- #define BR_AUTO_MASK		(BR_FLOOD | BR_LEARNING)
--#define BR_PROMISC		BIT(7)
--#define BR_PROXYARP		BIT(8)
--#define BR_LEARNING_SYNC	BIT(9)
--#define BR_PROXYARP_WIFI	BIT(10)
--#define BR_MCAST_FLOOD		BIT(11)
--#define BR_MULTICAST_TO_UNICAST	BIT(12)
--#define BR_VLAN_TUNNEL		BIT(13)
--#define BR_BCAST_FLOOD		BIT(14)
--#define BR_NEIGH_SUPPRESS	BIT(15)
--#define BR_ISOLATED		BIT(16)
--#define BR_MRP_AWARE		BIT(17)
--#define BR_MRP_LOST_CONT	BIT(18)
--#define BR_MRP_LOST_IN_CONT	BIT(19)
--#define BR_TX_FWD_OFFLOAD	BIT(20)
--#define BR_PORT_LOCKED		BIT(21)
--#define BR_PORT_MAB		BIT(22)
--#define BR_NEIGH_VLAN_SUPPRESS	BIT(23)
--#define BR_NEIGH_FORWARD_GRAT	BIT(24)
-+#define BR_PROMISC		BIT(BR_PROMISC_BIT)
-+#define BR_PROXYARP		BIT(BR_PROXYARP_BIT)
-+#define BR_LEARNING_SYNC	BIT(BR_LEARNING_SYNC_BIT)
-+#define BR_PROXYARP_WIFI	BIT(BR_PROXYARP_WIFI_BIT)
-+#define BR_MCAST_FLOOD		BIT(BR_MCAST_FLOOD_BIT)
-+#define BR_MULTICAST_TO_UNICAST	BIT(BR_MULTICAST_TO_UNICAST_BIT)
-+#define BR_VLAN_TUNNEL		BIT(BR_VLAN_TUNNEL_BIT)
-+#define BR_BCAST_FLOOD		BIT(BR_BCAST_FLOOD_BIT)
-+#define BR_NEIGH_SUPPRESS	BIT(BR_NEIGH_SUPPRESS_BIT)
-+#define BR_ISOLATED		BIT(BR_ISOLATED_BIT)
-+#define BR_MRP_AWARE		BIT(BR_MRP_AWARE_BIT)
-+#define BR_MRP_LOST_CONT	BIT(BR_MRP_LOST_CONT_BIT)
-+#define BR_MRP_LOST_IN_CONT	BIT(BR_MRP_LOST_IN_CONT_BIT)
-+#define BR_TX_FWD_OFFLOAD	BIT(BR_TX_FWD_OFFLOAD_BIT)
-+#define BR_PORT_LOCKED		BIT(BR_PORT_LOCKED_BIT)
-+#define BR_PORT_MAB		BIT(BR_PORT_MAB_BIT)
-+#define BR_NEIGH_VLAN_SUPPRESS	BIT(BR_NEIGH_VLAN_SUPPRESS_BIT)
-+#define BR_NEIGH_FORWARD_GRAT	BIT(BR_NEIGH_FORWARD_GRAT_BIT)
+-	if (!(port->flags & BR_MULTICAST_TO_UNICAST))
++	if (!test_bit(BR_MULTICAST_TO_UNICAST_BIT, &port->flags))
+ 		return true;
  
- #define BR_DEFAULT_AGEING_TIME	(300 * HZ)
+ 	return ether_addr_equal(src, p->eth_addr);
+@@ -3705,7 +3705,8 @@ br_multicast_leave_group(struct net_bridge_mcast *brmctx,
+ 	if (!mp)
+ 		goto out;
  
+-	if (pmctx && (pmctx->port->flags & BR_MULTICAST_FAST_LEAVE)) {
++	if (pmctx &&
++	    test_bit(BR_MULTICAST_FAST_LEAVE_BIT, &pmctx->port->flags)) {
+ 		struct net_bridge_port_group __rcu **pp;
+ 
+ 		for (pp = &mp->ports;
+diff --git a/net/bridge/br_netlink.c b/net/bridge/br_netlink.c
+index 6b97ae47f8552..deba331537fbe 100644
+--- a/net/bridge/br_netlink.c
++++ b/net/bridge/br_netlink.c
+@@ -534,7 +534,7 @@ static int br_fill_ifinfo(struct sk_buff *skb,
+ 		else
+ 			err = br_fill_ifvlaninfo(skb, vg);
+ 
+-		if (port && (port->flags & BR_VLAN_TUNNEL))
++		if (port && test_bit(BR_VLAN_TUNNEL_BIT, &port->flags))
+ 			err = br_fill_vlan_tunnel_info(skb, vg);
+ 		rcu_read_unlock();
+ 		if (err)
+diff --git a/net/bridge/br_stp.c b/net/bridge/br_stp.c
+index 4cfebf5fcdf54..95484b05b6c38 100644
+--- a/net/bridge/br_stp.c
++++ b/net/bridge/br_stp.c
+@@ -39,7 +39,7 @@ void br_set_state(struct net_bridge_port *p, unsigned int state)
+ 	/* Don't change the state of the ports if they are driven by a different
+ 	 * protocol.
+ 	 */
+-	if (p->flags & BR_MRP_AWARE)
++	if (test_bit(BR_MRP_AWARE_BIT, &p->flags))
+ 		return;
+ 
+ 	p->state = state;
+@@ -173,7 +173,7 @@ static void br_root_selection(struct net_bridge *br)
+ 		if (!br_should_become_root_port(p, root_port))
+ 			continue;
+ 
+-		if (p->flags & BR_ROOT_BLOCK)
++		if (test_bit(BR_ROOT_BLOCK_BIT, &p->flags))
+ 			br_root_port_block(br, p);
+ 		else
+ 			root_port = p->port_no;
+diff --git a/net/bridge/br_stp_bpdu.c b/net/bridge/br_stp_bpdu.c
+index e44e448b1157b..21d092f5acbb8 100644
+--- a/net/bridge/br_stp_bpdu.c
++++ b/net/bridge/br_stp_bpdu.c
+@@ -181,7 +181,7 @@ void br_stp_rcv(const struct stp_proto *proto, struct sk_buff *skb,
+ 	if (!ether_addr_equal(eth_hdr(skb)->h_dest, br->group_addr))
+ 		goto out;
+ 
+-	if (p->flags & BR_BPDU_GUARD) {
++	if (test_bit(BR_BPDU_GUARD_BIT, &p->flags)) {
+ 		br_notice(br, "BPDU received on blocked port %u(%s)\n",
+ 			  (unsigned int) p->port_no, p->dev->name);
+ 		br_stp_disable_port(p);
+diff --git a/net/bridge/br_switchdev.c b/net/bridge/br_switchdev.c
+index 40bb8e6989137..58ac99b08f2ec 100644
+--- a/net/bridge/br_switchdev.c
++++ b/net/bridge/br_switchdev.c
+@@ -20,7 +20,7 @@ static bool nbp_switchdev_can_offload_tx_fwd(const struct net_bridge_port *p,
+ 	if (br_multicast_igmp_type(skb))
+ 		return false;
+ 
+-	return (p->flags & BR_TX_FWD_OFFLOAD) &&
++	return test_bit(BR_TX_FWD_OFFLOAD_BIT, &p->flags) &&
+ 	       (p->hwdom != BR_INPUT_SKB_CB(skb)->src_hwdom);
+ }
+ 
+@@ -288,7 +288,7 @@ static int nbp_switchdev_add(struct net_bridge_port *p,
+ 		return err;
+ 
+ 	if (tx_fwd_offload) {
+-		p->flags |= BR_TX_FWD_OFFLOAD;
++		set_bit(BR_TX_FWD_OFFLOAD_BIT, &p->flags);
+ 		static_branch_inc(&br_switchdev_tx_fwd_offload);
+ 	}
+ 
+@@ -308,8 +308,8 @@ static void nbp_switchdev_del(struct net_bridge_port *p)
+ 	if (p->hwdom)
+ 		nbp_switchdev_hwdom_put(p);
+ 
+-	if (p->flags & BR_TX_FWD_OFFLOAD) {
+-		p->flags &= ~BR_TX_FWD_OFFLOAD;
++	if (test_bit(BR_TX_FWD_OFFLOAD_BIT, &p->flags)) {
++		clear_bit(BR_TX_FWD_OFFLOAD_BIT, &p->flags);
+ 		static_branch_dec(&br_switchdev_tx_fwd_offload);
+ 	}
+ }
+diff --git a/net/bridge/br_vlan_options.c b/net/bridge/br_vlan_options.c
+index 4a736e005bad7..8025d421b457a 100644
+--- a/net/bridge/br_vlan_options.c
++++ b/net/bridge/br_vlan_options.c
+@@ -148,7 +148,7 @@ static int br_vlan_modify_tunnel(const struct net_bridge_port *p,
+ 		NL_SET_ERR_MSG_MOD(extack, "Can't modify tunnel mapping of non-port vlans");
+ 		return -EINVAL;
+ 	}
+-	if (!(p->flags & BR_VLAN_TUNNEL)) {
++	if (!test_bit(BR_VLAN_TUNNEL_BIT, &p->flags)) {
+ 		NL_SET_ERR_MSG_MOD(extack, "Port doesn't have tunnel flag set");
+ 		return -EINVAL;
+ 	}
 -- 
 2.53.0
 
