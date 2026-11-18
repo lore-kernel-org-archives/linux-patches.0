@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043666;
-	b=3Qytx3DK+QicmhVNesjdEvJMJSSwwc8Ik2W0OEImKlbfA2TWVWngkKzMX7N4RYW0Co/m
-	 b66Im7PrKP8gDnjkao5iaAKlVsgXK1Bs9m2ZW7Ptd1M+QfZD549aZ1wCaEkFysWihFYmu
-	 xvVifF0+yfxZ3He2mHF67FVzWcsLxmlulspQ0AXXQBRJfTpy6sXGi6LU2pUg/aFeHzuP2
-	 ohQSNPMLoq/BaGnt7il2uLAthIFYpCAM3A7n4mTcT9gZpWY3vkMu8WueuTSMluu4DJLYi
-	 mG6oqBJalJEYkUDr7uqaqUTcf9nbxwiKKcCu0TUyF+njzWS1S89Ev2RZQU6GHwfhWYA==
+	t=1795043668;
+	b=TJuuAtfmQ/uV5q6GBr2J7/WqzS/5EvSLzvPBlZZv2OyQ5ANzBRKtPA+YRrgE7UU5f+o3
+	 BS+CxndGlxf/noSsoa3lEGfgHET1FrP8nqQJgIaItCTJ6XxpkIjtVI5JiGPI7e25ZyXLN
+	 8QFkZYVfG/J7iySTNjsMOLPbjoLf7Mu0i5Bgbkfn/8i7+ppax86NFNfPQLx/rO0IfQ+XQ
+	 UTIJ0snkVYV73sUfSKMVAZoOAjcch0P6+WZtuS30+2Ybwqj4u+leOa9/VAXrb65Y+zk0/
+	 ieFOybZit1LxpwQqt3g7izJ39hVzasgmk0w0Hvsz+M8preDe4VujGeOK3+JQSo2bAVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043666;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043668;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4T0ApBafvnsNGYgJDfQlMQy32yQskZYlVPUIRnn27/A=;
-	b=utB37KEkcwWMF+iYGj302JOY5vrUFslWoLnjM2wX9vcxdvPVMVM4V0bomPA1w+UlJ3F9
-	 W/ckZutt090Dmn/7ag1xKFA0fi0F5J4DsoryiiWZtDvPXRBGLqL7kyDv6rbIMNFhoPgYy
-	 GFhMNfFCbiJLbp7ULVVQHSXsqbpUeEh0SnJJfp70W+nYte+rCtYSlvg40hDv2EHFK8FEB
-	 zlU+mGx+93+p19M3ovrFZv9REUHbwu9iOX5ERPen/2eOYEsX7coijrPNuwMgMNGnJDYmQ
-	 2eR63n8OYkpBJGOVfNSlk5xDZgiTyv3XFXe+D/cR9JjfTroFqGumOQXGQ2FCAhaMK5A==
+	bh=OjUbdBSFGbl/oNC7dyhrGL9+jc4H+CMdNWA6PN13bS0=;
+	b=HHSylOU8ZnpjMMuP8UqsR1FfV5EtvvyO17TIm16dmRZ9drjl+b6MiqgAsUUu4sJenIln
+	 LM7OXwDtSHo1upPU61oNQTDwL4vZ4gzFo/Ed63GcxgjsBUrtqIAGFn4P0MyndomYSzigH
+	 VViOKIPFYNbWtSLt6Rx+0vxSE4/n23lK9UwJ8HrKXF1ogT6+XKWLapQUofpcupiUTMhuH
+	 yLMUIrmA2ecjtKLJrF7VgCVQvBWUZs62Q9om1xDII7DzEM85Be6mVqnsT60BUa0XlzGj2
+	 dZjv75h4zQ9Yd/r19jYrcafRAgOO8qh0bbce1VH9C0LkrX2DrOyWL3ULeOyJvlSq3ew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gYVg7hGS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hV1oeAyZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D8B606A320;
-	Wed, 18 Nov 2026 23:14:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18F9606A320;
+	Wed, 18 Nov 2026 23:14:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gYVg7hGS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A06C1F000C4;
-	Wed, 18 Nov 2026 23:14:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hV1oeAyZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F9CC1F000C4;
+	Wed, 18 Nov 2026 23:14:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043665;
-	bh=4T0ApBafvnsNGYgJDfQlMQy32yQskZYlVPUIRnn27/A=;
+	s=korg; t=1795043668;
+	bh=OjUbdBSFGbl/oNC7dyhrGL9+jc4H+CMdNWA6PN13bS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gYVg7hGS6yEkn/QZX/VuBVw2VL+D0/iJVeadqaHlf3a0uL1GsmQaJZxGfn8VBh86n
-	 I0jKZXarVQOA12Pr4+9QISFm2Xc4I6/hhqX46suJhx4jgVpdRtTvj9hvmrrqhrSNWD
-	 RNqd9y8tRe2XZsYeK7mlHFY1Yln9QUhJFIoPb6zY=
+	b=hV1oeAyZS3sekFcALO+wDYz2p18pptAC34NBsgy443H7DT0L8PTTN5PqCFpUWtZw0
+	 /GnKvfOx1nZjf5DRxuxNHOv81vqiWDtAjJ/JKMvhTwF9HFkgb5v6KgLP9pTG4x+egd
+	 yRyfjdo6+7/kALDqj+Jvb/3GFL56kfOHIsE55qxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomasz Bojanowski <tomasz@bojanowski.me>,
+	Luis Banha <luisbanha26@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0292/2857] ALSA: usb-audio: Add mixer mapping for MSI MAG B850M MORTAR WIFI
-Date: Wed, 18 Nov 2026 15:22:06 +0100
-Message-ID: <20261118150211.930992755@linuxfoundation.org>
+Subject: [PATCH 6.1 0293/2857] ALSA: hda/realtek: Add mute LED quirk for HP Pavilion 15-ec1xxx
+Date: Wed, 18 Nov 2026 15:22:07 +0100
+Message-ID: <20261118150211.966884134@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,44 +68,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomasz Bojanowski <tomasz@bojanowski.me>
+From: Luis Banha <luisbanha26@gmail.com>
 
-[ Upstream commit 7b457ae8cf711831f19d20963f5ed2fdf4842d3a ]
+[ Upstream commit 775aa96c310d59f3d15a6e5a9bd1796fd1ba95ec ]
 
-The USB audio device 0db0:cc78 (Realtek ALC4080) on the MSI MAG B850M
-MORTAR WIFI motherboard exposes all playback controls as "PCM", which
-makes it hard to tell the outputs apart.
+The mute LED on the HP Pavilion Gaming Laptop 15-ec1xxx (103c:87b2)
+does not work automatically. Add the ALC285_FIXUP_HP_MUTE_LED quirk
+to fix this behavior.
 
-Its mixer layout matches the one of the MSI MPG X570S Carbon Max Wifi
-(units 29, 30 and 32), so reuse msi_mpg_x570s_carbon_max_wifi_alc4080_map
-for this device too. With the mapping applied, the controls show up as
-"Speaker", "Front Headphone" and "IEC958".
-
-Tested with a patched snd-usb-audio module on a 7.2.7 kernel.
-
-Signed-off-by: Tomasz Bojanowski <tomasz@bojanowski.me>
-Link: https://patch.msgid.link/20260923184957.6687-1-tomasz@bojanowski.me
+Signed-off-by: Luis Banha <luisbanha26@gmail.com>
+Link: https://patch.msgid.link/20260921230105.16844-1-luisbanha26@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_maps.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/usb/mixer_maps.c b/sound/usb/mixer_maps.c
-index ace4ccad8f51c..a82b9c1d578d9 100644
---- a/sound/usb/mixer_maps.c
-+++ b/sound/usb/mixer_maps.c
-@@ -718,6 +718,10 @@ static const struct usbmix_ctl_map usbmix_ctl_maps[] = {
- 		.id = USB_ID(0x0db0, 0xa073),
- 		.map = msi_mpg_x570s_carbon_max_wifi_alc4080_map,
- 	},
-+	{	/* MSI MAG B850M MORTAR WIFI */
-+		.id = USB_ID(0x0db0, 0xcc78),
-+		.map = msi_mpg_x570s_carbon_max_wifi_alc4080_map,
-+	},
- 	{	/* MSI TRX40 */
- 		.id = USB_ID(0x0db0, 0x543d),
- 		.map = trx40_mobo_map,
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index f2450c59e661c..0d8ddcf43c66f 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9972,6 +9972,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8786, "HP OMEN 15", ALC285_FIXUP_HP_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8787, "HP OMEN 15", ALC285_FIXUP_HP_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8788, "HP OMEN 15", ALC285_FIXUP_HP_MUTE_LED),
++	SND_PCI_QUIRK(0x103c, 0x87b2, "HP Pavilion Gaming Laptop 15-ec1xxx", ALC285_FIXUP_HP_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87b7, "HP Laptop 14-fq0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x87c8, "HP", ALC287_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87cb, "HP Pavilion 15-eg0xxx", ALC287_FIXUP_HP_GPIO_LED),
 -- 
 2.53.0
 
