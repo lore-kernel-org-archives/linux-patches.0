@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057649;
-	b=u4fANOCCmwW2Dypv5r2PNFt1HprGRw18CEiueOcG4Es91yOZ6Cx3TP+HWQodwwubQtoS
-	 Jr9+1+O/2tXOvhcvAVupTuuxLrjhZFfP3ZzC+aV7lW1iBokD3W9OsD5ayL930zztMeEyz
-	 oLAFyryNQdWJbnLuLCMGdFMfBnwm6TFh2dXBwws9/kb5aBsDT1waGVZJgGWgOUEHU8QHF
-	 YoOiFYt6rbqynKbOfD5pB1gLdaMjBS5FjcYLkj6+wEjI1+x8Qud2bK9HQSsUF4zhRV5/W
-	 3a+c9zpVYk8oC1T4vTQ5IVAlyw4MWr7zrsfVkAHVBAVK9zMiNb5vWkqKjF5ZYvijq6A==
+	t=1795057652;
+	b=3Ig3xuLCIqaAGHSY7FuIyPoebFR/AYRmGmKq1WeG4ibPvJEpPk+jfJoseiFog9qInQ0u
+	 l7IUGYCAFpQ+/zrAealb1B+8AAYfwrhz3m9fSXRt3GgM+E3vVoSXTGQPhPzdeVk0iDx43
+	 7+iIpo34L53KmuDXn9UPFU46gY8QwOaTjh8+mZ1UzarLWRsYTzNHH/i+sLv5bscXnQvFG
+	 aVb2NWqnpzrZASnsypJJPy0kUlr0uYH4v8fZh4Yb1nNhGhKqEJIdtw+YS6L7s4LH1WhbS
+	 ROibT3I5fT3NfLP95ZXyHurU0xT7bvbLIM4wUS4NXv3XHbYVcfKpeEZHJm2/XzXQdBQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057649;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057652;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ocmmj4qfhZjxX+mGGB91TlmyG3dUkznI/d2iZblexcg=;
-	b=HS4S9NxNci6cTmADtAmfOhfyX59aWQXdJUQdRHXGbgLZt6ofbTFAAt+asrFBzcEupq9g
-	 jzuGNRCBi1yO+6YrYvF/K3GsZskAmTYbXQjoDNdl1p5cjKW8ygFFBWljqoc58vi/4sB8P
-	 XXD8FD78cUxyZYgDTw/AaUXZQahXW2XhnYgoERVS4k5CgmZ+qeiJ5VQYlZ2hrnhU/vIii
-	 VLwTZ3O+F3+7YFTp2IH4JJrS0VsRsKkrU2/qJg7RYzxETxcLa3/wpnuIm8AGLDrWd1ROU
-	 aKvplHsNHsn2iw17kvWbI4BB1q3DnN7hb4fTBZDWfOLz2twpr/HwwcPTcedKmp1mugA==
+	bh=loVx+lp5CJ3T3FGbo5l845fRt+vAHXHZqzoW//ciZYM=;
+	b=PEk5IrgkQUzYnALJIfwKC29MGbcs1LTh5qSgQOXGw/jLUyARLlgw4II4ke1MtJlz72Ct
+	 afADa3vC33LEVbQQo6ihaASPYN6qXEgB8FWswBstmJTkd5K3GrmJTSL0BFqpm/+3mb666
+	 6XTwTBlaxNhAQR1d3QzO+FtW0aXjmOta5uupCV+1GEj7Cf5yeFhkIseDgQSU9KlSetHvm
+	 DNpjqjiVEEIcRCePqsS5Stj85TgcYge/Fqnao81wdhWJXxzfvUiqiVha63T8KSMOPhDns
+	 NncyB6aqlM1rlRuHr+GmAqK5Mw9TLFBgePgI/9MSkCcplpOKijcNg6fpqVt2XeDGH5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a72nGHlZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Pty2sK13;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 454A6606A33D;
-	Thu, 19 Nov 2026 03:07:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 088FD606A320;
+	Thu, 19 Nov 2026 03:07:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a72nGHlZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A92A1F000C4;
-	Thu, 19 Nov 2026 03:07:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Pty2sK13
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 441B51F000C4;
+	Thu, 19 Nov 2026 03:07:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057649;
-	bh=Ocmmj4qfhZjxX+mGGB91TlmyG3dUkznI/d2iZblexcg=;
+	s=korg; t=1795057651;
+	bh=loVx+lp5CJ3T3FGbo5l845fRt+vAHXHZqzoW//ciZYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a72nGHlZCON+Q+C8o7T6bOSo2tbYw6dJ0phUt/TwseXrlW3I+Oo3SqDR8Uyrt7NAo
-	 DJOdnMGFdZaqas3Rk1x9kZ2Ywmusx9a5GvzQ6LP98n4ChFNHCQ4kF1SdZGq9VYhgKJ
-	 YYpGJeCfiVAV35WKF7WrkrrMoNcNB1piQbO8RXHY=
+	b=Pty2sK13lU5HY6OxgwXyRnc4fN4SwOwjQKotU86SaEFeXd+If2AZWiaAv6lciXBL0
+	 DbnlML0bFEKXnr4mbfzP5L+JTuaz5on7ynQRkiR1S0ejNMUJf+XLkr1TEKVIWGjioM
+	 g144ZrwTyVjhMvuD6q/V/nM0FTrRUCykKQzLKaNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+f26bc23e42eeb548dee1@syzkaller.appspotmail.com,
+	Rohinthan P <rokinthanp03@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0178/1848] ASoC: codec: max98926: fixup invert setup mask
-Date: Wed, 18 Nov 2026 15:36:56 +0100
-Message-ID: <20261118145918.972866062@linuxfoundation.org>
+Subject: [PATCH 5.10 0205/1848] media: em28xx: use video_unregister_device for radio_dev
+Date: Wed, 18 Nov 2026 15:37:23 +0100
+Message-ID: <20261118145920.467932017@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,58 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Rohinthan P <rokinthanp03@gmail.com>
 
-[ Upstream commit dd0ae9a2e19a24c532c9aa80a44f572b4907bcdf ]
+[ Upstream commit 2579cbe68005f46fc7f8f95364f6b101b07b9d1c ]
 
-invert might have both WCI/BCI mask, but regmap_update_bits() masks
-BCI only. It needs both mask. Fixup it.
+Commit 7c8bf63b7937 ("media: em28xx: use vb2_video_unregister_device")
+converted device unregistrations in em28xx to use
+vb2_video_unregister_device() instead of video_unregister_device().
 
-	static int max98926_dai_set_fmt(...)
-	{
-		...
-		switch (fmt & SND_SOC_DAIFMT_INV_MASK) {
-		case SND_SOC_DAIFMT_NB_NF:
-			break;
-		case SND_SOC_DAIFMT_NB_IF:
-=>			invert = MAX98926_DAI_WCI_MASK;
-			break;   ^^^^^^^^^^^^^^^^^^^^^
-		case SND_SOC_DAIFMT_IB_NF:
-=>			invert = MAX98926_DAI_BCI_MASK;
-			break;   ^^^^^^^^^^^^^^^^^^^^^
-		case SND_SOC_DAIFMT_IB_IF:
-=>			invert = MAX98926_DAI_BCI_MASK | MAX98926_DAI_WCI_MASK;
-			break;   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-		default:
-			...
-		}
-		...
-		regmap_update_bits(max98926->regmap, MAX98926_FORMAT,
-				MAX98926_DAI_BCI_MASK, invert);
-		...		^^^^^^^^^^^^^^^^^^^^^
-	}
+However, radio devices do not have an associated videobuf2 queue
+(v4l2->radio_dev.queue is NULL). Calling vb2_video_unregister_device()
+on a radio device triggers a WARNING in vb2_video_unregister_device():
 
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://patch.msgid.link/87wltomc97.wl-kuninori.morimoto.gx@renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+    !vdev->queue
+    WARNING: drivers/media/common/videobuf2/videobuf2-v4l2.c:1264 at vb2_video_unregister_device+0x1f8/0x200
+    Call Trace:
+     em28xx_v4l2_init+0x1c39/0x3150 drivers/media/usb/em28xx/em28xx-video.c:3085
+
+As documented in vb2_video_unregister_device(), video_unregister_device()
+should be used instead when vdev->queue is NULL.
+
+Revert to calling video_unregister_device() for v4l2->radio_dev in both
+em28xx_v4l2_fini() and the em28xx_v4l2_init() error unwind path.
+
+Fixes: 7c8bf63b7937 ("media: em28xx: use vb2_video_unregister_device")
+Reported-by: syzbot+f26bc23e42eeb548dee1@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=f26bc23e42eeb548dee1
+Signed-off-by: Rohinthan P <rokinthanp03@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/max98926.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/em28xx/em28xx-video.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/max98926.c b/sound/soc/codecs/max98926.c
-index c4dfa8ab1d494..bd9fb0c69794c 100644
---- a/sound/soc/codecs/max98926.c
-+++ b/sound/soc/codecs/max98926.c
-@@ -360,7 +360,7 @@ static int max98926_dai_set_fmt(struct snd_soc_dai *codec_dai,
- 	regmap_write(max98926->regmap,
- 			MAX98926_FORMAT, MAX98926_DAI_DLY_MASK);
- 	regmap_update_bits(max98926->regmap, MAX98926_FORMAT,
--			MAX98926_DAI_BCI_MASK, invert);
-+			MAX98926_DAI_BCI_MASK | MAX98926_DAI_WCI_MASK, invert);
- 	return 0;
- }
- 
+diff --git a/drivers/media/usb/em28xx/em28xx-video.c b/drivers/media/usb/em28xx/em28xx-video.c
+index a2cdde3bfe900..43aa5844855ac 100644
+--- a/drivers/media/usb/em28xx/em28xx-video.c
++++ b/drivers/media/usb/em28xx/em28xx-video.c
+@@ -2253,7 +2253,7 @@ static int em28xx_v4l2_fini(struct em28xx *dev)
+ 	if (video_is_registered(&v4l2->radio_dev)) {
+ 		dev_info(&dev->intf->dev, "V4L2 device %s deregistered\n",
+ 			 video_device_node_name(&v4l2->radio_dev));
+-		vb2_video_unregister_device(&v4l2->radio_dev);
++		video_unregister_device(&v4l2->radio_dev);
+ 	}
+ 	if (video_is_registered(&v4l2->vbi_dev)) {
+ 		dev_info(&dev->intf->dev, "V4L2 device %s deregistered\n",
+@@ -2911,7 +2911,7 @@ static int em28xx_v4l2_init(struct em28xx *dev)
+ 		dev_info(&dev->intf->dev,
+ 			 "V4L2 device %s deregistered\n",
+ 			 video_device_node_name(&v4l2->radio_dev));
+-		vb2_video_unregister_device(&v4l2->radio_dev);
++		video_unregister_device(&v4l2->radio_dev);
+ 	}
+ 	if (video_is_registered(&v4l2->vbi_dev)) {
+ 		dev_info(&dev->intf->dev,
 -- 
 2.53.0
 
