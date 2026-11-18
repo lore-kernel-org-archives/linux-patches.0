@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053539;
-	b=NMT5Pqd41Vdhp3ApuuGWmAdpJ+Fu1Z0JZrW0pQsG3FW42VpOyC8WtFMZg4zAP7htlRuX
-	 MgA0V6De7DDheVBtI1o+ljVPVT+NUcRmRiv+OuODFgYvcxUk55ZZ2iQwaELXR8oo7NYAL
-	 Ut/6nlqqLkN7X+Q3Hgqd+rJ0lArIICbxpZYIDUVI5KmvLIRgtE8L8qiXXV/fop0tE2uwu
-	 d00xWF4rPIGtk7FjNnVQXSGUAwH4s8sz4NjbLu/eeFn4k9OGLyyqrJubJQzBZEiVkf7bX
-	 fquun5GsU3SbFUYpgk9OFmh+lpHFiU5PE0FjpTIYkOHwV7zH+6GbUsnhkezjCspKxKA==
+	t=1795053542;
+	b=FqI3QnIxxI69GdZFOS7qnmETirGIhkwKeZ+VV8yrJX1HX4iNQsnzIE7pFFhu/p+YPUaA
+	 cDojbOftZvlXAaxVQJ9ZX56CHuEKa97WzqXF9yzCifDGa2xaI5NMwSzDeBq0DN3W9CilA
+	 JEZvBdnPz5AV2YOeMOtKRIaddbSmIhCQ/3VEk+T48hYsGakMIcw22MzQpm0nKnmG1YrPp
+	 lLMKQ5fezEg/nF+d6LM9KQlx9POIpjCFo9BHO0JiZA7FXet3q/5mNXRgr3aCq0767ZWwa
+	 w3LojxIEYrTaItIOZwhEeNLZEvMaYdF3qcYrJvwe1wuMDalm/7O9sk23VYd1njEkXxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053539;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053542;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rW5EfQFdcZrQGVe1c5d+V484DPL3vJMy1/e44GJ64ck=;
-	b=ifycQTnX2K6uto4snYtkCVcqhXZuPARIhEE2cLwgEEgDTEyOLXPoicDblDfKYo2FKkA6
-	 SnwduRPU5GYwu4bsn1eteKRiijz1xKFgSrLeMdudYdKg56U3VONUO9jv4CkjVFNhHrYZr
-	 UCaFyNhLPJjCKACnFDzu1p1JeFEZBAN2136qU6torgmqa+ngneKIQrIDgosRwfwHUkcmu
-	 6VevPSckqS25QC3TXardrXLlBs8iyVbEi/umf55S5/daVGW0n/Wp9wgO3dPBvjjwz3Cqy
-	 hTZlZxaYPvrjoJDvnB67i1/5aelxu0wuYJdrbudVWIXXzSux6EzGHCjhOn+chZXksug==
+	bh=mhdzjRW3EKWzOxqBp4E0pG65Rv3KhW73NbpUmQLxM5c=;
+	b=il82oR20zEAmIX+sgFOW1fLYFq3O/msR69AU8bv9qLCdPs9J5aD+Fg8HETF453UJjXdM
+	 wZP9oBiUw9oaaF9zkUAGx/GFI/uDbxDIqneVIRKkJC/C9orZyzGTVKndi/M6rYWu6VEtn
+	 YpH2fbaLOWU1M1bgo+ak7sK7AEENdZOOOCEZ2QgDt5aUT1pYtAgPbVhwkzExI+A4dIoKE
+	 UppuRmEB/d2xF13ftxLQBjtHbz3XyqtIKneDRqHhRsATergBD8yTLIJg8Ciq7eah3JfdK
+	 8TApGxCj3vfD/U5tqYQuKQLj797fkWx2u5L3c0nCoPffmx83DIje1CPCxBrpUKz2xrg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c4zPSgv+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XFWU5bOV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19917606A33B;
-	Thu, 19 Nov 2026 01:58:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0221606A325;
+	Thu, 19 Nov 2026 01:59:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c4zPSgv+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 686911F000C5;
-	Thu, 19 Nov 2026 01:58:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XFWU5bOV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 345351F000C5;
+	Thu, 19 Nov 2026 01:59:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053539;
-	bh=rW5EfQFdcZrQGVe1c5d+V484DPL3vJMy1/e44GJ64ck=;
+	s=korg; t=1795053541;
+	bh=mhdzjRW3EKWzOxqBp4E0pG65Rv3KhW73NbpUmQLxM5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c4zPSgv+bAL0dc8ZHLF+ZS3dtsSslTMyRIPotRG2ETbjF5GjDiYf3iZc4AFe5NwVI
-	 M/OGNmZMQWcnK/Ri2QuBP7opmc0WOATr26h5ACZVMzzByJlfwx9u6UPDFkgk05oPQV
-	 OJzmwPSLUhC3X0VKe9oQTLsd8rjd9idiZ+pN84Jw=
+	b=XFWU5bOVcFjTz6yk4eEY3kcyW7BqG9AkMrHLCR0hwbEMo3BPM+cxpCFToLlr764fd
+	 nnRGrxbxWFE9Pazbb2nahlQlM6916fKkbUOefpRx3IZl2FoBgchGNQx7YufEAnSM6W
+	 9EqA1Z67LsiX3WislyM4DO8tX989z9Ls71YQFrBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Zhenhao Wan <whi4ed0g@gmail.com>,
+	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0955/2214] iommu/amd: Force device table to maximum size
-Date: Wed, 18 Nov 2026 15:43:51 +0100
-Message-ID: <20261118150050.523514514@linuxfoundation.org>
+Subject: [PATCH 5.15 0956/2214] drm/nouveau/svm: drain fault handler before freeing svmm
+Date: Wed, 18 Nov 2026 15:43:52 +0100
+Message-ID: <20261118150050.559358103@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,150 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+From: Zhenhao Wan <whi4ed0g@gmail.com>
 
-commit 6e2213dae78b41976c60133eb10cf99e81916638 upstream.
+[ Upstream commit b46ddaf0823405f81e681eb26ec98508f3eb9a07 ]
 
-IOMMU can perform out-of-bounds read of the device table entry (DTE)
-that is adjacent to the last DTE and falls outside the device table.
-For example, if the device table can hold 0 to N-1 entries, then the
-IOMMU can be made to fetch the Nth entry, which falls outside the
-device table.
+The SVM fault handler nouveau_svm_fault() looks up each fault's
+nouveau_svmm under svm->mutex, caches it in the fault array, then drops
+svm->mutex and dereferences the svmm across blocking faults
+(mmu_interval_notifier_insert(), hmm_range_fault()).
 
-The device table is owned by the hypervisor (HV) and is assigned in 4KB
-pages that are contiguous in system physical address (SPA). If the
-out-of-bound DTE falls on a guest-owned page, then the guest can exploit
-this bug to setup malicious table walks to corrupt HV pages and/or bring
-down the system. Note that this bug does not manifest when the device
-table size is set to its maximum size of 2MB.
+nouveau_svmm is not refcounted. On DRM file close nouveau_svmm_fini() ->
+mmu_notifier_put() frees it asynchronously via call_srcu() without
+waiting for the handler, and mmget_not_zero() pins the mm, not the svmm.
+flush_work() on the fault buffer otherwise runs only at device removal
+and suspend, never on close, so a fault handled concurrently with a close
+can dereference a freed svmm.
 
-Therefore, force the device table size to the maximum 2MB on affected
-processors. These are CPU family 0x17 (Zen1/Zen2) through family 0x1a
-(Zen5/BRH).
+The instance is already unlinked by nouveau_svmm_part() earlier in the
+same close, so no new fault can resolve to it. Drain the handler in
+nouveau_svmm_fini() before the free, guarding the flush with a NULL check
+on drm->svm: on device teardown nouveau_svm_fini() runs first and frees
+drm->svm (NULL) after blocking the notify and flushing the buffer, so the
+handler is already drained; on per-client close drm->svm is alive and the
+flush runs.
 
-This is a mitigation for CVE-2024-21963.
-
-kdump copies the previous kernel's device table only when the size
-encoded in the IOMMU device-table register matches dev_table_size.
-A mixed rollout disagrees: the unpatched kernel uses the IVRS-derived
-size and the patched kernel uses 2MB, so copy_device_table() rejects
-the table and reinitializes translation. Kernels that both have this
-patch agree on 2MB and the copy succeeds. Update the production
-kernel and the crash kernel together.
-
-This kernel has one global device table. Only that size is forced
-to 2MB. Alias and rlookup sizes stay derived from the IVRS.
-
-This backport adds X86_FEATURE_ZEN6. Bit 3*32+6 is still
-X86_FEATURE_P3 here, so the new flag uses free bit 21*32+7.
-Family 0x1a models 0x50-0x5f, 0x80-0xaf, 0xc0-0xcf, and
-0xd8-0xef are Zen6 and are excluded from the workaround.
-This kernel has no X86_FEATURE_ZEN5. Other family 0x1a models
-stay unmarked and still take the 2MB device table.
-
-Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: eeaf06ac1a55 ("drm/nouveau/svm: initial support for shared virtual memory")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Assisted-by: Claude:claude-opus-5
+Cc: stable@vger.kernel.org
+Signed-off-by: Zhenhao Wan <whi4ed0g@gmail.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/20260814-nouveau-svm-svmm-uaf-v2-1-8e6590519f07@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/cpufeatures.h |  5 +++++
- arch/x86/kernel/cpu/amd.c          | 18 ++++++++++++++++++
- drivers/iommu/amd/init.c           | 23 ++++++++++++++++++++++-
- 3 files changed, 45 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/nouveau/nouveau_svm.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/arch/x86/include/asm/cpufeatures.h b/arch/x86/include/asm/cpufeatures.h
-index 060ae0d8387e7..a25b6d4838a69 100644
---- a/arch/x86/include/asm/cpufeatures.h
-+++ b/arch/x86/include/asm/cpufeatures.h
-@@ -439,6 +439,11 @@
- #define X86_FEATURE_CLEAR_BHB_HW	(21*32+ 3) /* "" BHI_DIS_S HW control enabled */
- #define X86_FEATURE_CLEAR_BHB_LOOP_ON_VMEXIT (21*32+ 4) /* "" Clear branch history at vmexit using SW loop */
- #define X86_FEATURE_INDIRECT_THUNK_ITS	(21*32 + 5) /* "" Use thunk for indirect branches in lower half of cacheline */
-+/*
-+ * Upstream defines X86_FEATURE_ZEN6 as (3*32+6). That bit is still
-+ * X86_FEATURE_P3 in this kernel, so use a free bit in this word.
-+ */
-+#define X86_FEATURE_ZEN6		(21*32+7) /* "" CPU based on Zen6 microarchitecture */
- 
- #define X86_FEATURE_TSA_SQ_NO          (21*32+11) /* "" AMD CPU not vulnerable to TSA-SQ */
- #define X86_FEATURE_TSA_L1_NO          (21*32+12) /* "" AMD CPU not vulnerable to TSA-L1 */
-diff --git a/arch/x86/kernel/cpu/amd.c b/arch/x86/kernel/cpu/amd.c
-index 2ad2c454b9829..3cb9ca970326e 100644
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -742,6 +742,24 @@ static void bsp_init_amd(struct cpuinfo_x86 *c)
- 		}
- 		break;
- 	}
-+	case 0x1a: {
-+		switch (c->x86_model) {
-+		case 0x50 ... 0x5f:
-+		case 0x80 ... 0xaf:
-+		case 0xc0 ... 0xcf:
-+		case 0xd8 ... 0xef:
-+			setup_force_cpu_cap(X86_FEATURE_ZEN6);
-+			break;
-+		default:
-+			/*
-+			 * Zen5 models in family 0x1a have no feature bit
-+			 * in this kernel. Leave them unmarked so the
-+			 * device-table workaround still applies.
-+			 */
-+			break;
-+		}
-+		break;
-+	}
- 	default:
- 		break;
- 	}
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index 103a3c3e91d33..fd5af64f18e0e 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -22,6 +22,7 @@
- #include <linux/kmemleak.h>
- #include <linux/mem_encrypt.h>
- #include <linux/iopoll.h>
-+#include <linux/sizes.h>
- #include <asm/pci-direct.h>
- #include <asm/iommu.h>
- #include <asm/apic.h>
-@@ -2757,6 +2758,21 @@ static void __init ivinfo_init(void *ivrs)
- 	amd_iommu_ivinfo = *((u32 *)(ivrs + IOMMU_IVINFO_OFFSET));
- }
- 
-+/*
-+ * Apply workaround for Zen1 to Zen5(BRH) generation of processors.
-+ * References: CVE-2024-21963
-+ */
-+static bool __init amd_iommu_force_max_dev_table(void)
-+{
-+	if (boot_cpu_data.x86 >= 0x17 && boot_cpu_data.x86 <= 0x1a) {
-+		if (cpu_feature_enabled(X86_FEATURE_ZEN6))
-+			return false;
-+		else
-+			return true;
-+	}
-+	return false;
-+}
+diff --git a/drivers/gpu/drm/nouveau/nouveau_svm.c b/drivers/gpu/drm/nouveau/nouveau_svm.c
+index 9985bfde015a6..4cbd5c4ce8267 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_svm.c
++++ b/drivers/gpu/drm/nouveau/nouveau_svm.c
+@@ -305,6 +305,19 @@ nouveau_svmm_fini(struct nouveau_svmm **psvmm)
+ {
+ 	struct nouveau_svmm *svmm = *psvmm;
+ 	if (svmm) {
++		struct nouveau_svm *svm = svmm->vmm->cli->drm->svm;
 +
- /*
-  * This is the hardware init function for AMD IOMMU in the system.
-  * This function is called either from amd_iommu_init or from the interrupt
-@@ -2824,7 +2840,12 @@ static int __init early_amd_iommu_init(void)
- 	if (ret)
- 		goto out;
- 
--	dev_table_size     = tbl_size(DEV_TABLE_ENTRY_SIZE);
-+	if (amd_iommu_force_max_dev_table()) {
-+		pr_info("Force device table to maximum size\n");
-+		dev_table_size = SZ_2M;
-+	} else {
-+		dev_table_size = tbl_size(DEV_TABLE_ENTRY_SIZE);
-+	}
- 	alias_table_size   = tbl_size(ALIAS_TABLE_ENTRY_SIZE);
- 	rlookup_table_size = tbl_size(RLOOKUP_TABLE_ENTRY_SIZE);
- 
++		/* The fault handler caches svmm pointers under svm->mutex and
++		 * dereferences them after dropping it, across blocking faults.
++		 * The instance is already unlinked (nouveau_svmm_part), so drain
++		 * the handler before the free to release any in-flight reference.
++		 *
++		 * On device teardown nouveau_svm_fini() ran first and freed
++		 * drm->svm (NULL) after draining the buffer; nothing to flush.
++		 */
++		if (svm)
++			flush_work(&svm->buffer[0].notify.work);
++
+ 		mutex_lock(&svmm->mutex);
+ 		svmm->vmm = NULL;
+ 		mutex_unlock(&svmm->mutex);
 -- 
 2.53.0
 
