@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057067;
-	b=w+rfVv3H04BBjsFGkyC1Y3LYOloj9y95H/W01zyQopoQsRuSVfF+WHzsXA6yMxCZ5qGF
-	 1saCHyvllZNewylEAz5VWaHB6UOY7hfrw0g1U7fPN8LiBNcUhZkw2Tk1js1kGFvO4CHZy
-	 fHu+NQStsk09EjVSQhR099AyHs6bwqUkgfgEpCFRy3l3AHqAEIZ1bQPmH4MuAw/g6I1gZ
-	 aeEzDF+Lmri0L0JR4ZFf1P0LeOdPswxzmd/dJAEOrZ2Fzwmgfv3Nomj3cf9kB/gLODYGG
-	 FTi92QfDIFh/OJhjV2p67jZSosbwFJBbsuF40m+h3zaWXDSbRj6fWGWxzz/rGggTqQQ==
+	t=1795057070;
+	b=tOJBNwvFBr+Ityphjn3wAx+3jDgTN8R9X+7M5N2/4WZc3I1wP34YjmNS65dePx2uXSsm
+	 IdMuw5GlIEQSu49+ekd5uUMXwp3k8WbSsaJjYq8JybJrLKMA+gPkPm2EMt4rXxr81Si8U
+	 uqD0o9Cwe4YYoHYEI81pCQLN3yaaVscpjjY6kWeBHcOKbrNihZQZjQWD9YsbbW6d0VvMP
+	 zDvLhaZ9Fs7nYgjrsYE/Zf//DqwBbiThfql7gjW6TqZK+YtfrmHQQL3+Le20jplzZDn+j
+	 rhSF16Lt2vA7ZjcjAfP/NuWfdFuzQu/QXZXGBv9wgBPwC17rEklX5P/XFVKX8pqpTSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057067;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057070;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eNidRqMuOW8Dz6bF8vnnvPzKYrLrDSo8XAGq0EhUeis=;
-	b=f5LdmFN2umxISLLoKC3oT3Tp2bEcpr4FVNMyQhvOgZE88T9DTkakHwmyOSq+f7WqN0du
-	 y9Fhfls/m+t6pHDlA2aytl3OX3WE3EdTD0SOOcjxFoO2o6ihnzTq54XXwnkcci2BMOI+u
-	 wZk1aPfbQSg3tgkrG3k9auyGrQX2h+Yon8XLUp3inW14ak96Ct7z5eP5Z79kjmTi/up4Y
-	 og2/4kY1k/wtcrQZT+q9CEq+5D9xPZZt1I/N0xXna5MhFELzL9gvbRSEk+VTtty9dxYZM
-	 L14AAqcL9XfAQH2jCp/PAIhHuEVVTJsJNM+DyarV6Fg0SWMS4crDRqjDjfxOLfoWXcw==
+	bh=D/3RFcxWGTR3A7NnI/EKH2hx5ZqBLkRBxjplQyE+074=;
+	b=kt4KD78aKHgxNdJLDsJbRfvFckeDegrjXW7eXMIlIkzHI4SwntpfEXDddjT0uSJyMOoI
+	 aZxQgqO2yR9nbq1n1NUQeDjCOzphN8VlW7PuXDn2CZZ/Y6ynsHNxpKXg3fQ3jSJZj563y
+	 NVLZQQYhtMcVpFeB5TVzb5qh8HCQlGk+hqAkp1DXS3RCZdWZDPtkkxRtTYleNPVMAkhgp
+	 KI1xqZ5UHfV79spbGDuvNJt4ttNhhHng7z0W1w1Uzv4FcV3O9PStiiU0wDwuLOtB678U1
+	 UBgAEodJpPM5uHYRaJX+WOTWJG3NqP39K4+3bxKuy5j1iWweriWUmb2sxdns5Jl7uYg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ljIewqMQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qXbG2g1w;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84B2D606A320;
-	Thu, 19 Nov 2026 02:57:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582C2606A32F;
+	Thu, 19 Nov 2026 02:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ljIewqMQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA4011F000C4;
-	Thu, 19 Nov 2026 02:57:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qXbG2g1w
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA0451F000C4;
+	Thu, 19 Nov 2026 02:57:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057067;
-	bh=eNidRqMuOW8Dz6bF8vnnvPzKYrLrDSo8XAGq0EhUeis=;
+	s=korg; t=1795057070;
+	bh=D/3RFcxWGTR3A7NnI/EKH2hx5ZqBLkRBxjplQyE+074=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ljIewqMQUVLTbTf00t+sRxzBKeB3c0psPjsv2lunOZjhZcdXsTOQ1rJoK7Rsae3rk
-	 xF1PecKNeI5ntIQglBT7Zy6/rQPhWUY8CFAnePo8n2cH4jhq2BqqgQnkm5hGVlFLtb
-	 5ZBjuAKU6242jvCwn3eovvimChbcncpoU6v2oWJQ=
+	b=qXbG2g1wbEbivs7fSpN5sXxrVBBFp9VPzDre3dUtcq/NfZw3mF/GOyss8VlGiDiRU
+	 e5YMpRjanCdpZY/5lav/kdlVLWcv+ZUoGfjtO5FnunomYSkcBVeTdYFRlyBNY22HQO
+	 +O2dIWWiRgkvE1v3jdYOnzHBejt2n90RBrZjPenY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Huang <sef1548@gmail.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2171/2214] rtc: s35390a: use u8 instead of char for register buffer
-Date: Wed, 18 Nov 2026 16:04:07 +0100
-Message-ID: <20261118150137.253614529@linuxfoundation.org>
+Subject: [PATCH 5.15 2172/2214] rtc: s35390a: fix typo in comment
+Date: Wed, 18 Nov 2026 16:04:08 +0100
+Message-ID: <20261118150137.288135090@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,115 +67,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nick Huang <sef1548@gmail.com>
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
 
-[ Upstream commit 73c4638a2864e69ff2251080ce874d360fd13056 ]
+[ Upstream commit 50ccdc31010ed623e68e496aebd4b1d3d8430664 ]
 
-The register buffer in s35390a_get_reg() was previously defined as
-`char *buf`. This is not ideal since register data represents raw
-binary values rather than textual data.
+Fix trivial typo
 
-Switch the type to `u8 *buf` to better reflect its intended usage and
-to avoid potential issues with sign extension when handling register
-values on platforms where `char` is signed by default.
-
-This change improves type safety and makes the code consistent with
-other RTC drivers that operate on raw register data.
-
-Signed-off-by: Nick Huang <sef1548@gmail.com>
-Link: https://patch.msgid.link/20250920174224.108795-1-sef1548@gmail.com
+Link: https://patch.msgid.link/20260624204223.1479003-1-alexandre.belloni@bootlin.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Stable-dep-of: 6199051016cd ("rtc: s35390a: Read 24-hour mode on access")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-s35390a.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/rtc/rtc-s35390a.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/rtc/rtc-s35390a.c b/drivers/rtc/rtc-s35390a.c
-index 782beb03a638c..a406e2d6b30c9 100644
+index a406e2d6b30c9..9ce9051bfadc4 100644
 --- a/drivers/rtc/rtc-s35390a.c
 +++ b/drivers/rtc/rtc-s35390a.c
-@@ -67,7 +67,7 @@ struct s35390a {
- 	int twentyfourhour;
- };
+@@ -315,7 +315,7 @@ static int s35390a_rtc_set_alarm(struct device *dev, struct rtc_wkalrm *alm)
+ 	else
+ 		sts = S35390A_INT2_MODE_NOINTR;
  
--static int s35390a_set_reg(struct s35390a *s35390a, int reg, char *buf, int len)
-+static int s35390a_set_reg(struct s35390a *s35390a, int reg, u8  *buf, int len)
- {
- 	struct i2c_client *client = s35390a->client[reg];
- 	struct i2c_msg msg[] = {
-@@ -84,7 +84,7 @@ static int s35390a_set_reg(struct s35390a *s35390a, int reg, char *buf, int len)
- 	return 0;
- }
- 
--static int s35390a_get_reg(struct s35390a *s35390a, int reg, char *buf, int len)
-+static int s35390a_get_reg(struct s35390a *s35390a, int reg, u8 *buf, int len)
- {
- 	struct i2c_client *client = s35390a->client[reg];
- 	struct i2c_msg msg[] = {
-@@ -169,7 +169,7 @@ static int s35390a_read_status(struct s35390a *s35390a, char *status1)
- 
- static int s35390a_disable_test_mode(struct s35390a *s35390a)
- {
--	char buf[1];
-+	u8 buf[1];
- 
- 	if (s35390a_get_reg(s35390a, S35390A_CMD_STATUS2, buf, sizeof(buf)) < 0)
- 		return -EIO;
-@@ -211,7 +211,7 @@ static int s35390a_rtc_set_time(struct device *dev, struct rtc_time *tm)
- 	struct i2c_client *client = to_i2c_client(dev);
- 	struct s35390a	*s35390a = i2c_get_clientdata(client);
- 	int i;
--	char buf[7], status;
-+	u8 buf[7], status;
- 
- 	dev_dbg(&client->dev, "%s: tm is secs=%d, mins=%d, hours=%d mday=%d, "
- 		"mon=%d, year=%d, wday=%d\n", __func__, tm->tm_sec,
-@@ -240,7 +240,7 @@ static int s35390a_rtc_read_time(struct device *dev, struct rtc_time *tm)
- {
- 	struct i2c_client *client = to_i2c_client(dev);
- 	struct s35390a *s35390a = i2c_get_clientdata(client);
--	char buf[7], status;
-+	u8 buf[7], status;
- 	int i, err;
- 
- 	if (s35390a_read_status(s35390a, &status) == 1)
-@@ -292,7 +292,7 @@ static int s35390a_rtc_set_alarm(struct device *dev, struct rtc_wkalrm *alm)
- {
- 	struct i2c_client *client = to_i2c_client(dev);
- 	struct s35390a *s35390a = i2c_get_clientdata(client);
--	char buf[3], sts = 0;
-+	u8 buf[3], sts = 0;
- 	int err, i;
- 
- 	dev_dbg(&client->dev, "%s: alm is secs=%d, mins=%d, hours=%d mday=%d, "\
-@@ -345,7 +345,7 @@ static int s35390a_rtc_read_alarm(struct device *dev, struct rtc_wkalrm *alm)
- {
- 	struct i2c_client *client = to_i2c_client(dev);
- 	struct s35390a *s35390a = i2c_get_clientdata(client);
--	char buf[3], sts;
-+	u8 buf[3], sts;
- 	int i, err;
- 
- 	err = s35390a_get_reg(s35390a, S35390A_CMD_STATUS2, &sts, sizeof(sts));
-@@ -402,7 +402,7 @@ static int s35390a_rtc_ioctl(struct device *dev, unsigned int cmd,
- {
- 	struct i2c_client *client = to_i2c_client(dev);
- 	struct s35390a *s35390a = i2c_get_clientdata(client);
--	char sts;
-+	u8 sts;
- 	int err;
- 
- 	switch (cmd) {
-@@ -443,7 +443,7 @@ static int s35390a_probe(struct i2c_client *client,
- 	unsigned int i;
- 	struct s35390a *s35390a;
- 	struct rtc_device *rtc;
--	char buf, status1;
-+	u8 buf, status1;
- 	struct device *dev = &client->dev;
- 
- 	if (!i2c_check_functionality(client->adapter, I2C_FUNC_I2C))
+-	/* set interupt mode*/
++	/* set interrupt mode*/
+ 	err = s35390a_set_reg(s35390a, S35390A_CMD_STATUS2, &sts, sizeof(sts));
+ 	if (err < 0)
+ 		return err;
 -- 
 2.53.0
 
