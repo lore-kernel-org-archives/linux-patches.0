@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042814;
-	b=Z3gzAiSJPLgRkGQyeMJQ3ODqrn/4B5XHfB5FNz0PP6PPbIThRhoq/Ky/Fa9IkNO35+Dy
-	 YNtJwPP57CfMR3pdiwsCCYsldo8IZ/7WAs+E+QlvijcTCtM8406iI4nrFWt+7qR6FtEMo
-	 tzEKo4XEE+s/gm/JgDTDaZtqdB69Uced5sdX6ijLmWE47X8HyXjgH7i7ewyTZgOAbJBwc
-	 M7Nqx4vuE9MbyX6BbZabrlqHQ8QzDA3yjxC4CLIvwjAtObhJWbXgULavnSnAV3RHvX22Y
-	 bX5mCKw1LDfjiuyktZ5gXDQD+Hozsk2xSz5Db7DvVIuEIJGB86/CzNb1dk+O6avFiXw==
+	t=1795042816;
+	b=KHKLk+7D2+oTuDCosLMseTOgd4yuHSlsP9Fqr6iROgnS0pfzZXs8WE/Coy6Ft27J9Oy1
+	 /6K/o8Ocv55NAC4qjj4cpgFO320s4cTtgxlspBQquk7aYNx3cHPNzceFPoQ+sD4S16Rmd
+	 XKC+l7Khg4IlAe28G/3lhw0MfSA/roahfSyPACXrMi2dWzuqgwJNvKx7KbB/H/tnJYfy2
+	 sGM1kNYaTKTaLqTIQu3aR1GjU7Ilnn179vGlIBfNbehCsM1hZmOFjKYCNCVOnd01IwY1z
+	 obMEP/AiuQB5b/5RBh1rjt5bER/yIJQduwZEzEG6s79KqJMuDBMfDdZ2hxtBL1mhlnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042814;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042816;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kG5hUXwh5SAYxp6zdjcN1oO124+VDaijCsqMMkczv58=;
-	b=azzHod1hK0lhkBPZBQtHYTpcX15yOqG0jyByHpMWsqw/3OjIZEuwmT9WAq2C2Svu0Hax
-	 FRgw6eoChIVOSooW67fEBQrNBSSqoNgTKmyzS5JmnCi9EXnV0PHITQu8DN3FUQVVjYkLZ
-	 D+i+XSvG3X1Z/mU3N2DxXo7L1Zng1A/1qq9f+WFx1UqhUzIxbDu5Rgf6OiKor9Z4VGfda
-	 TQiUrnBu5JMah5wRBYtgz5Xtowl5alRvpsCQmJJ37ZkwdutdtHEL54YS9lSi0rfkRc5+T
-	 uqB8WlLd0ZvrtStFkachIITcaJ4JANpSLcce8bOdsoF5o4xTqQaEvk9AaemwuqU8qdA==
+	bh=tGZOcbwUCBPvQfYIu7Z2x+X7KDLsbKPXbBmktWmLme4=;
+	b=vXlimFd+h90pgdcuU7wWEk+SgHXbgDOKpJL9LqggGy93bLI/adEd/pttNUIaWYv92xZq
+	 vJjRiSnx+cO6GcWHauJ0SkyFNU0z8QlxA0awzDnoO6kBtv4nBhVz4mHU1g7NaBQUNdlva
+	 dGxMa0lYdzEboInn8NpsDxim1p8WnIA84/0Jl/7p40LdWiNVhHZpUlchzdrQvOyASrfsc
+	 fqeOzUvQOQNJndvYNOlVzX7KFzGdCAnio+zr0gpGxhruzcHq2qhuamiI8hc8UiSQbznMH
+	 GIMy4h+R4Ux2KoAFUhgb6pWej9OM79csbJ5vjc5F53qNmRs97gnvUZqgteSESwhApcQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jNWKIVDI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HPxuVZeC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1F87606A336;
-	Wed, 18 Nov 2026 23:00:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79DC606A337;
+	Wed, 18 Nov 2026 23:00:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jNWKIVDI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9F3E1F000C4;
-	Wed, 18 Nov 2026 23:00:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HPxuVZeC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0C5A1F000C4;
+	Wed, 18 Nov 2026 23:00:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042813;
-	bh=kG5hUXwh5SAYxp6zdjcN1oO124+VDaijCsqMMkczv58=;
+	s=korg; t=1795042816;
+	bh=tGZOcbwUCBPvQfYIu7Z2x+X7KDLsbKPXbBmktWmLme4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jNWKIVDIFLq/kSY2SI/oqQMA4YvkGAV8fsvlQb4UzJohpvNdKK8twCMXfyRHUg6Kq
-	 4qeWO7pusle5S6SG+BBmsUqO6KB0fskqdqTpIeViyDtUrN0K8P2s10EJTVh7waeuMF
-	 u/IqViq8mIKlbaJbAFEsMTpH+thhSN3+fNJA88vg=
+	b=HPxuVZeCmBhrZZUaO/QK5RkKXgSYBMhkHpyhWXIwrzO5ZdmcW3lFkcuBgm7T8j8wP
+	 jY//MiJQrmwim4yB8hNbwSWNMZNWbep5/x/0pShchKa7Voik9faP1YwG6ASTBO8jZF
+	 xiqOpNUsC2K/kT3G+bHi/IG1wXQTVQ9nXwRF+TJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiao Liang <shaw.leon@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3287/3318] tun: drop batched packets while the device is down
-Date: Wed, 18 Nov 2026 16:05:09 +0100
-Message-ID: <20261118150458.216068141@linuxfoundation.org>
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Iuliana Prodan <iuliana.prodan@nxp.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 6.6 3305/3318] remoteproc: imx_dsp_rproc: Only reset carveout memory at RPROC_OFFLINE state
+Date: Wed, 18 Nov 2026 16:05:27 +0100
+Message-ID: <20261118150458.740925939@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,47 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiao Liang <shaw.leon@gmail.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 8f44631ba02afe9fff2f0a0fb66560ab19df87fd ]
+commit b490ddf27be28e64a39c08ae643d7b22561beaf6 upstream.
 
-tun_sendmsg() handles TUN_MSG_PTR batches from vhost-net by calling
-tun_xdp_one() instead of tun_get_user(). But this path does not check
-IFF_UP, allowing packets from a guest to be injected into the host
-receive path while the device is administratively down.
+Do not reset memory at suspend and resume stage, because some
+memory is used to save the software state for resume, if it is cleared,
+the resume operation can fail.
 
-Check IFF_UP in tun_xdp_one() before running XDP or building an skb.
-Drop the packet when the device is down, matching tun_get_user().
-
-Fixes: 043d222f93ab ("tuntap: accept an array of XDP buffs through sendmsg()")
-Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20261027101830.85327-1-shaw.leon@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c4c432dfb00f ("remoteproc: imx_dsp_rproc: Add support of recovery and coredump process")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
+Reviewed-by: Iuliana Prodan <iuliana.prodan@nxp.com>
+Link: https://lore.kernel.org/r/20251218071750.2692132-1-shengjiu.wang@nxp.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/tun.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/remoteproc/imx_dsp_rproc.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index 5403ff1da23da..c3349bcff7ab1 100644
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -2483,6 +2483,12 @@ static int tun_xdp_one(struct tun_struct *tun,
- 		return -EINVAL;
+--- a/drivers/remoteproc/imx_dsp_rproc.c
++++ b/drivers/remoteproc/imx_dsp_rproc.c
+@@ -939,9 +939,11 @@ static int imx_dsp_rproc_load(struct rpr
+ 	 * Clear buffers after pm rumtime for internal ocram is not
+ 	 * accessible if power and clock are not enabled.
+ 	 */
+-	list_for_each_entry(carveout, &rproc->carveouts, node) {
+-		if (carveout->va)
+-			memset(carveout->va, 0, carveout->len);
++	if (rproc->state == RPROC_OFFLINE) {
++		list_for_each_entry(carveout, &rproc->carveouts, node) {
++			if (carveout->va)
++				memset(carveout->va, 0, carveout->len);
++		}
  	}
  
-+	if (unlikely(!(READ_ONCE(tun->dev->flags) & IFF_UP))) {
-+		put_page(virt_to_head_page(xdp->data));
-+		dev_core_stats_rx_dropped_inc(tun->dev);
-+		return -EIO;
-+	}
-+
- 	xdp_prog = rcu_dereference(tun->xdp_prog);
- 	if (xdp_prog) {
- 		if (gso->gso_type) {
--- 
-2.53.0
-
+ 	ret = imx_dsp_rproc_elf_load_segments(rproc, fw);
 
 
