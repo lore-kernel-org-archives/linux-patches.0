@@ -1,61 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054613;
-	b=lJDIldryQED8/BNSvPrAch7lqbDNnIEmclP5hyaf3x1kqIVKByoOY6fWSCBrryBRh7b1
-	 6ujPUrY8jT2My6wpw3vQfK+IgAY3CxbsuALXuXTlAMWq5wUHR1ELO13h1OxgRtLe4pJ/j
-	 xhDwei/qd2RTBqEYDB19HqeS4BDpwWQ0pjgdMYI9EM05JuO2O7BctshQJXjM9ZAXawxxf
-	 eRoFfwSemLzcOFI4BTt6hE/iBNNdG4j2E2o1XddtYukqOB6nmqwadHd42pU1VM22UT+hV
-	 gaw3rN2IhIzcZXgjWJ4+l2Uo4/+rYFj/kPvld+9o3OivXg7IkZBN41SHOlOrPkASPDw==
+	t=1795054616;
+	b=sCzAwAyVPJxxQB1x7WqG9Vl50nbOKd2Ibojb19tUXzPm3/C39BjdUVJ4YLkLWh4cQG7L
+	 YXt3geeih01VCuJS3MEoZWxNZW35sagSLosyQ5LifPfReCwFkzUI9TjH2lcsW6vq83jmq
+	 ptVJrJpdJeDRsRhk5dJN2VFShogOrxjtlwGnDa5jVGiYoSnjbn6YbZnl6j2PsLlXloe/8
+	 g0GEyeyUB/pk27Yo3dLrQ3+K3m8/9vHz7cVQaTqcSJXUm68esiz/DeTW7xsAr8uW7xkun
+	 EITiwMeadme7q1z+7zjfGbn1M5vKWc2AdSrJNb/w4OVsEIHgjb+TPDDvX0Gc0YxQElw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054613;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054616;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3d0GjGdWpSEJJyW0HuVhgS+W41VxKzqJ3N81K/GLMQE=;
-	b=nOOxCwl7DjIJ3v9qFH4DaqcOLMYHEBIQnP8+5Pmfu3GcilCORnkVgQ/FY6nKSaq1NfxD
-	 PKJwD03zGxisxwp01CpJqhggtc8utyvzfe/3ts2tzsgP3PtmTH+KULy5iyi0ZpidJNnAq
-	 wXBKqLvLieDIPoEPcGWzKR71JRk5aJbo3wefrKEgSqeJ3/6Mx4hw5CFhZmazqwePiMJM2
-	 pew4O1Gt+MBo+FXA/V97s6tWVk0IKUMyPZd44myQpP5j76tuW8Qzc/VqsB92hFnKT0Abu
-	 l3sDBerOE/FBZ0avszYmvNwf064ZNwfiYR8GbVIvVZq0puEDmFmC9AGskKxe4UvMhjw==
+	bh=d2aiY1lkah1/DVC/1zL69zkDQBF+p2x7+TWDasu++HI=;
+	b=OcVCTr3Nu29vWLkcrK98MY5vHiAIxpZE5V4qql5pc3pABvkNMiK+btylJL3Dkp+MhiLo
+	 BtzEAW/lv0S+sg3rVKxtbIetoVahzy77YDanBwtV7hq0W0GK5w200x2/SjFKEUbU6CiJz
+	 zkInzM/zN9nRHJEr1oXDW5el8mlmliUtMqElxRSUq1kufB+SJqOP31oOZz69FN0KFvhhn
+	 Y3dVZK+RfaGy1P6VehmiREu2vfCjmL0REsdUOxD0twZux9ISEBIF6PYBLovhosMuBZzxS
+	 bLOX+r+EC7ZU8jrCnHMozLbuIPAE37XG5N3ZGhuuRkiDqsBaGBNiAWbnq+gkLikvSgg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zv4eUX0l;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dyM8FTgF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76434606A31C;
-	Thu, 19 Nov 2026 02:16:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C730606A330;
+	Thu, 19 Nov 2026 02:16:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zv4eUX0l
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD101F000C4;
-	Thu, 19 Nov 2026 02:16:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dyM8FTgF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85CB11F000C9;
+	Thu, 19 Nov 2026 02:16:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054613;
-	bh=3d0GjGdWpSEJJyW0HuVhgS+W41VxKzqJ3N81K/GLMQE=;
+	s=korg; t=1795054616;
+	bh=d2aiY1lkah1/DVC/1zL69zkDQBF+p2x7+TWDasu++HI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zv4eUX0l4ggM162yEKNjzeSk8XdGQeBgi/7O5zunWR6b9k0dx3Zux+P++AoLyyL60
-	 FacvDBHLb5Ri3xDzaqvoxAIMxzcQvtu0IEV6olX+R/+zcfZi1CnOcHZo6nXbYFaOnH
-	 qI9Py3Y+FXl+iJiTZMGx7E2UWQ5XJtQEdfNRUi1E=
+	b=dyM8FTgFjOI1YEr7UYKsXycKaVgAXEw0ME3rizvv7zFa8n6NOqESsMU10/XJ4Ybs0
+	 tXwFkbeAbqgEN60ySkqZ4CWwiC5+tTGTOsNzjDEJEVoyrzxBYK0I8A7HNOZfqrZvNX
+	 e1U89NfboSObycJk/+uyjV8o8s8CGGzvyLaGh1aA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Rik van Riel <riel@surriel.com>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	Barry Song <baohua@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Harry Yoo (Meta)" <harry@kernel.org>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	SJ Park <sj@kernel.org>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1287/2214] fork: take mmap_lock before copying mm_struct
-Date: Wed, 18 Nov 2026 15:49:23 +0100
-Message-ID: <20261118150103.060392377@linuxfoundation.org>
+Subject: [PATCH 5.15 1331/2214] spi: sh-msiof: SITMDR1/SIRMDR1 bitfield conversion
+Date: Wed, 18 Nov 2026 15:50:07 +0100
+Message-ID: <20261118150104.649821650@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -77,126 +68,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit ef694e2d210111cc08c52fd25da9ab130170bfa3 ]
+[ Upstream commit 6bae252a9452ca8496670230a7821c34450763a2 ]
 
-dup_mm() copies the parent's mm_struct before dup_mmap() takes the
-mmap_lock. A concurrent brk() can leave the child with a stale mm->brk
-and newer heap mappings, causing later brk() requests to fail.
+Convert MSIOF Transmit and Receive Mode Register 1 field accesses to use
+the FIELD_PREP() bitfield access macro.
 
-Other operations (e.g., PR_SET_MM) on the parent's mm_struct can similarly
-cause inconsistencies.
+This gets rid of explicit shifts.
 
-As a simple and robust fix, grab the parent's mmap_lock earlier. This
-way we don't need to update individual mm fields in dup_mmap() and
-keep missing ones. Stop updating the 4 existing members (total_vm, data_vm,
-exec_vm, stack_vm), as that is now no longer required.
-
-Keep releasing the parent's mmap_lock in dup_mmap(), before
-userfaultfd completion, to avoid moving the userfaultfd handling into the
-caller. This should get cleaned up later.
-
-Move uprobe_start_dup_mmap() to preserve the lock ordering.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Reported-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Rik van Riel <riel@surriel.com>
-Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Reviewed-by: Barry Song <baohua@kernel.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Reviewed-by: Harry Yoo (Meta) <harry@kernel.org>
-Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Reviewed-by: SJ Park <sj@kernel.org>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-2-d6437171ecc3@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: Adjusted caller cleanup to avoid a second uprobe release after dup_mmap() has already released it. ]
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/9685c54e752b8ef4256c9b281e9d8292e71d222e.1747401908.git.geert+renesas@glider.be
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 152867998da9 ("spi: sh-msiof: propagate setup runtime-PM errors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/fork.c | 29 +++++++++++++++--------------
- 1 file changed, 15 insertions(+), 14 deletions(-)
+ drivers/spi/spi-sh-msiof.c | 45 ++++++++++++++++++++------------------
+ 1 file changed, 24 insertions(+), 21 deletions(-)
 
-diff --git a/kernel/fork.c b/kernel/fork.c
-index 87c08297fbee6..1f7f0f9c821c8 100644
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -501,11 +501,7 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
- 	unsigned long charge;
- 	LIST_HEAD(uf);
+diff --git a/drivers/spi/spi-sh-msiof.c b/drivers/spi/spi-sh-msiof.c
+index b63e792f296e6..2dca03b9221a3 100644
+--- a/drivers/spi/spi-sh-msiof.c
++++ b/drivers/spi/spi-sh-msiof.c
+@@ -7,6 +7,7 @@
+  * Copyright (C) 2014-2017 Glider bvba
+  */
  
--	uprobe_start_dup_mmap();
--	if (mmap_write_lock_killable(oldmm)) {
--		retval = -EINTR;
--		goto fail_uprobe_end;
--	}
-+	mmap_assert_write_locked(oldmm);
- 	flush_cache_dup_mm(oldmm);
- 	uprobe_dup_mmap(oldmm, mm);
- 	/*
-@@ -516,11 +512,6 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
- 	/* No ordering required: file already has been exposed. */
- 	dup_mm_exe_file(mm, oldmm);
++#include <linux/bitfield.h>
+ #include <linux/bitmap.h>
+ #include <linux/clk.h>
+ #include <linux/completion.h>
+@@ -84,20 +85,19 @@ struct sh_msiof_spi_priv {
  
--	mm->total_vm = oldmm->total_vm;
--	mm->data_vm = oldmm->data_vm;
--	mm->exec_vm = oldmm->exec_vm;
--	mm->stack_vm = oldmm->stack_vm;
--
- 	rb_link = &mm->mm_rb.rb_node;
- 	rb_parent = NULL;
- 	pprev = &mm->mmap;
-@@ -628,7 +619,6 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
- 	flush_tlb_mm(oldmm);
- 	mmap_write_unlock(oldmm);
- 	dup_userfaultfd_complete(&uf);
--fail_uprobe_end:
- 	uprobe_end_dup_mmap();
- 	return retval;
- fail_nomem_anon_vma_fork:
-@@ -656,7 +646,7 @@ static inline void mm_free_pgd(struct mm_struct *mm)
- #else
- static int dup_mmap(struct mm_struct *mm, struct mm_struct *oldmm)
- {
--	mmap_write_lock(oldmm);
-+	mmap_assert_write_locked(oldmm);
- 	dup_mm_exe_file(mm, oldmm);
- 	mmap_write_unlock(oldmm);
- 	return 0;
-@@ -1467,10 +1457,18 @@ static struct mm_struct *dup_mm(struct task_struct *tsk,
- 	if (!mm)
- 		goto fail_nomem;
+ /* SITMDR1 and SIRMDR1 */
+ #define SIMDR1_TRMD		BIT(31)		/* Transfer Mode (1 = Master mode) */
+-#define SIMDR1_SYNCMD_MASK	GENMASK(29, 28)	/* SYNC Mode */
+-#define SIMDR1_SYNCMD_SPI	(2 << 28)	/*   Level mode/SPI */
+-#define SIMDR1_SYNCMD_LR	(3 << 28)	/*   L/R mode */
+-#define SIMDR1_SYNCAC_SHIFT	25		/* Sync Polarity (1 = Active-low) */
+-#define SIMDR1_BITLSB_SHIFT	24		/* MSB/LSB First (1 = LSB first) */
+-#define SIMDR1_DTDL_SHIFT	20		/* Data Pin Bit Delay for MSIOF_SYNC */
+-#define SIMDR1_SYNCDL_SHIFT	16		/* Frame Sync Signal Timing Delay */
+-#define SIMDR1_FLD_MASK		GENMASK(3, 2)	/* Frame Sync Signal Interval (0-3) */
+-#define SIMDR1_FLD_SHIFT	2
++#define SIMDR1_SYNCMD		GENMASK(29, 28)	/* SYNC Mode */
++#define SIMDR1_SYNCMD_SPI	2U		/*   Level mode/SPI */
++#define SIMDR1_SYNCMD_LR	3U		/*   L/R mode */
++#define SIMDR1_SYNCAC		BIT(25)		/* Sync Polarity (1 = Active-low) */
++#define SIMDR1_BITLSB		BIT(24)		/* MSB/LSB First (1 = LSB first) */
++#define SIMDR1_DTDL		GENMASK(22, 20)	/* Data Pin Bit Delay for MSIOF_SYNC */
++#define SIMDR1_SYNCDL		GENMASK(18, 16)	/* Frame Sync Signal Timing Delay */
++#define SIMDR1_FLD		GENMASK(3, 2)	/* Frame Sync Signal Interval (0-3) */
+ #define SIMDR1_XXSTP		BIT(0)		/* Transmission/Reception Stop on FIFO */
+ /* SITMDR1 */
+ #define SITMDR1_PCON		BIT(30)		/* Transfer Signal Connection */
+-#define SITMDR1_SYNCCH_MASK	GENMASK(27, 26)	/* Sync Signal Channel Select */
+-#define SITMDR1_SYNCCH_SHIFT	26		/* 0=MSIOF_SYNC, 1=MSIOF_SS1, 2=MSIOF_SS2 */
++#define SITMDR1_SYNCCH		GENMASK(27, 26)	/* Sync Signal Channel Select */
++						/* 0=MSIOF_SYNC, 1=MSIOF_SS1, 2=MSIOF_SS2 */
  
-+	uprobe_start_dup_mmap();
-+	if (mmap_write_lock_killable(oldmm)) {
-+		free_mm(mm);
-+		goto fail_uprobe;
-+	}
-+
- 	memcpy(mm, oldmm, sizeof(*mm));
+ /* SITMDR2 and SIRMDR2 */
+ #define SIMDR2_BITLEN1(i)	(((i) - 1) << 24) /* Data Size (8-32 bits) */
+@@ -341,8 +341,9 @@ static u32 sh_msiof_spi_get_dtdl_and_syncdl(struct sh_msiof_spi_priv *p)
+ 		return 0;
+ 	}
  
--	if (!mm_init(mm, tsk, mm->user_ns))
--		goto fail_nomem;
-+	if (!mm_init(mm, tsk, mm->user_ns)) {
-+		mmap_write_unlock(oldmm);
-+		goto fail_uprobe;
-+	}
+-	val = sh_msiof_get_delay_bit(p->info->dtdl) << SIMDR1_DTDL_SHIFT;
+-	val |= sh_msiof_get_delay_bit(p->info->syncdl) << SIMDR1_SYNCDL_SHIFT;
++	val = FIELD_PREP(SIMDR1_DTDL, sh_msiof_get_delay_bit(p->info->dtdl)) |
++	      FIELD_PREP(SIMDR1_SYNCDL,
++			 sh_msiof_get_delay_bit(p->info->syncdl));
  
- 	err = dup_mmap(mm, oldmm);
- 	if (err)
-@@ -1489,7 +1487,10 @@ static struct mm_struct *dup_mm(struct task_struct *tsk,
- 	mm->binfmt = NULL;
- 	mm_init_owner(mm, NULL);
- 	mmput(mm);
-+	return NULL;
- 
-+fail_uprobe:
-+	uprobe_end_dup_mmap();
- fail_nomem:
- 	return NULL;
+ 	return val;
  }
+@@ -361,16 +362,18 @@ static void sh_msiof_spi_set_pin_regs(struct sh_msiof_spi_priv *p, u32 ss,
+ 	 *    1    0         11     11    0    0
+ 	 *    1    1         11     11    1    1
+ 	 */
+-	tmp = SIMDR1_SYNCMD_SPI | 1 << SIMDR1_FLD_SHIFT | SIMDR1_XXSTP;
+-	tmp |= !cs_high << SIMDR1_SYNCAC_SHIFT;
+-	tmp |= lsb_first << SIMDR1_BITLSB_SHIFT;
++	tmp = FIELD_PREP(SIMDR1_SYNCMD, SIMDR1_SYNCMD_SPI) |
++	      FIELD_PREP(SIMDR1_FLD, 1) | SIMDR1_XXSTP |
++	      FIELD_PREP(SIMDR1_SYNCAC, !cs_high) |
++	      FIELD_PREP(SIMDR1_BITLSB, lsb_first);
+ 	tmp |= sh_msiof_spi_get_dtdl_and_syncdl(p);
+ 	if (spi_controller_is_slave(p->ctlr)) {
+ 		sh_msiof_write(p, SITMDR1, tmp | SITMDR1_PCON);
+ 	} else {
+ 		sh_msiof_write(p, SITMDR1,
+ 			       tmp | SIMDR1_TRMD | SITMDR1_PCON |
+-			       (ss < MAX_SS ? ss : 0) << SITMDR1_SYNCCH_SHIFT);
++			       FIELD_PREP(SITMDR1_SYNCCH,
++					  ss < MAX_SS ? ss : 0));
+ 	}
+ 	if (p->ctlr->flags & SPI_CONTROLLER_MUST_TX) {
+ 		/* These bits are reserved if RX needs TX */
+@@ -565,12 +568,12 @@ static int sh_msiof_spi_setup(struct spi_device *spi)
+ 		return 0;
+ 
+ 	/* Configure native chip select mode/polarity early */
+-	clr = SIMDR1_SYNCMD_MASK;
+-	set = SIMDR1_SYNCMD_SPI;
++	clr = SIMDR1_SYNCMD;
++	set = FIELD_PREP(SIMDR1_SYNCMD, SIMDR1_SYNCMD_SPI);
+ 	if (spi->mode & SPI_CS_HIGH)
+-		clr |= BIT(SIMDR1_SYNCAC_SHIFT);
++		clr |= SIMDR1_SYNCAC;
+ 	else
+-		set |= BIT(SIMDR1_SYNCAC_SHIFT);
++		set |= SIMDR1_SYNCAC;
+ 	pm_runtime_get_sync(&p->pdev->dev);
+ 	tmp = sh_msiof_read(p, SITMDR1) & ~clr;
+ 	sh_msiof_write(p, SITMDR1, tmp | set | SIMDR1_TRMD | SITMDR1_PCON);
 -- 
 2.53.0
 
