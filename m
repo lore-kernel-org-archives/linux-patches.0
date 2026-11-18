@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057568;
-	b=V16sWw06bArsThpzF8bjmuXI7T8JOrnyTvBmQ8KeZInyWcVd9H/iu9X+qNRVLgEDoYHh
-	 pb4zidvHHDQgVJV9waY4BwM8Xsw0fuP9LGmeZ2P9S/CGYH0YHSWERo7DnfS43lwpUaM/I
-	 +BBj5AkKJdDhTF6bZPAAzjkiy49JkCv2mnrsUgGLuTJaIfWO8MI6iIXb5h5pqUFeH8m/6
-	 XphJR/bmLRFz1c7Rxm5uLHGSt1h0GjPMxqMHR42QcXpgrPhTXngAU/fkP1lrenZv7Wu8k
-	 ghuB2iZeW0OzDd5Bc4HvHx4KQSByosZpk5VAbkIKV5lNTMsz0GRgXiCwqrUNyHWRDeg==
+	t=1795057571;
+	b=WymsSOiqp3wt2slfojgZHHJnVo3cQ9wx0g9ApDQq0NsIhcnHo6sT1U4TAt27T9NOE8BP
+	 gJHWTJtsiOs+Nq8pIELrvK6xPXFkU+pjBYjNsjE1PvzVmTRSSgCDGwRTpMRN0jCUSqvkF
+	 zugHMgExc5zowcNi4hTQROgvTtEyzKTf/W49Y3MVFdvMTe+DKB/r6KRuj0ab+yJWLyd56
+	 n/2bldbLUE4gb9FEf9yNqmEDehsAiygXmHcsx5q9i93t4fvpiD+GnIgNaZhLLK8Xm0mZ/
+	 aIqJbcJnKW7S4vZVuR8MO3ZJ3wgUBdaBrnl9qMpArrkIBL4ez4Du86y1F/QyW7nTNqQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057568;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057571;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rBFYhAuBnYGOWA0ivV7tUXEiaXPioc+BlaIQpDXHtPs=;
-	b=3R4Le7YfxGrA3hqdwh3GpyYGyBWg+ZwPiqANSG6O4eoPMj2H5Rrb/JbN3aHMNNFSHAcu
-	 7wZZmgckqPbQqslge8cPSw8mB4pR+Y09zqS9EiTedq8K6xlB4L1oCMxwieJ2XymiJyaKU
-	 LTeKlklbw2u1gyjMr0wBx82FoZmCSi8AXScn72fx1lMH/mxIL8vAjhU0IYKGaBEEeu0Ki
-	 z3pmhUzi+3on+NijTVV036Zse7g5/XWCKPQg9TjdmRrI9otx6+VeRpyjf7GbKQSLGV6hf
-	 /2HquGHbardFtau3rNa5UTPcmb9adxuh5hIXjms37naNwuLlDwBoijWON0tBoTw1jFg==
+	bh=0/BKQB8hvj7vlopmr6R6828N4G5KQuSjuA+E5EbkuZc=;
+	b=D6HYP8uaJz2eMoELjqN7IlpxZAA7ugtb/i93i+rbSUWQuycClwsPTcVqaLRF0RsA04Ld
+	 Rtq1iLBkkaVEHETkwkgSJtwTpN6Z+xmgIstuwNP1jjISFA5kRP7D2MAeYVPQxfuGAY+RG
+	 jvYUazL4Qh+Coow3KOzaPAdABQikpEwzVlwuhdANEPbqd57Q/2wPc+4Bn/UKNDUVyAdYT
+	 qGBByrEzKjuahdyaULny/wqni33/obCcGyUWi1AqnrcwakPN/WacJPmLZ1KjOe3IWrj1H
+	 tFNCwUmbLdUvtT64SaqPDTYadg+9gRNjKyvNrIP/82ns8sW9tgehhTZIstSsn53LdMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hG7Bl9jU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r0SaLoPU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4119D60A260B;
-	Thu, 19 Nov 2026 03:06:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6AE7606A337;
+	Thu, 19 Nov 2026 03:06:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hG7Bl9jU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 838C11F000C4;
-	Thu, 19 Nov 2026 03:06:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r0SaLoPU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4787F1F000C4;
+	Thu, 19 Nov 2026 03:06:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057568;
-	bh=rBFYhAuBnYGOWA0ivV7tUXEiaXPioc+BlaIQpDXHtPs=;
+	s=korg; t=1795057570;
+	bh=0/BKQB8hvj7vlopmr6R6828N4G5KQuSjuA+E5EbkuZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hG7Bl9jUep93BjtSj7L2orilO28eVO56D2hU4rbm/Lizo6cwuCyFj4CCmyFw6xVoH
-	 q3I95qqudtjB5ae00PuEQ5YmPo/aiCKorvcoKM20DDHcmoH9Ii97hu++ccVZOUyTa/
-	 zYSBKC6wX4Q0vAlcGAwzupEsaz3BJGEKIZI5zxYM=
+	b=r0SaLoPUz5Yf8w3ps5Rr4uwTAj20resNbxAAgUBYFzl0BkS3tvL2IBWZ+/pgRpjPg
+	 vVsWq83pfsz7HfqrwqXn7I2DS/gtqpyrF/UmVTK2B3GmvWl6JtvZH5Nuvo5K8IJ8Sn
+	 Qmrj5RBC6COQFdXyC27S2o6ArE80DU6TQbm+X1uE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Ma <mapengyu@gmail.com>,
+	Wahid Khan <wahidzk0091@gmail.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Zhang Lixu <lixu.zhang@intel.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0141/1848] HID: quirks: Add ALWAYS_POLL quirk for Beitong BTP-KP20D dongle
-Date: Wed, 18 Nov 2026 15:36:19 +0100
-Message-ID: <20261118145917.223485609@linuxfoundation.org>
+Subject: [PATCH 5.10 0142/1848] HID: intel-ish-hid: ignore post-init ENUM_DEVICES from firmware
+Date: Wed, 18 Nov 2026 15:36:20 +0100
+Message-ID: <20261118145917.254785154@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,52 +70,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Ma <mapengyu@gmail.com>
+From: Wahid Khan <wahidzk0091@gmail.com>
 
-[ Upstream commit bfff246b3a31cb45ec297ca5e2a77c1410b207ac ]
+[ Upstream commit f3f3f6df05226dfa220c4e603310dae94595060a ]
 
-The BTP-KP20D dongle in Direct/HID mode (20dd:5159) re-enumerates every
-few seconds because usbhid never submits its interrupt-IN URB: no HID
-driver binds to the vendor-specific report descriptor, so the device is
-never opened, and the firmware treats the idle endpoint as a lost link.
+Some ISH firmware versions (observed on Tiger Lake LP, 8086:a0fc,
+GUID {33AECD58-B679-4E54-9BD9-A04D34F0C226}) periodically re-send an
+unsolicited HOSTIF_DM_ENUM_DEVICES response roughly every 79 seconds.
 
-Add HID_QUIRK_ALWAYS_POLL to keep the interrupt-IN URB submitted from
-probe time.
+The current guard collapses two distinct cases into one condition:
 
-Signed-off-by: Aaron Ma <mapengyu@gmail.com>
+  if (!(response_flag) || init_done)  ->  bad packet + ish_hw_reset
+
+This incorrectly treats a valid post-init firmware announcement as a
+corrupted packet, triggering an ISH soft-reset and a full ISHTP
+re-initialisation cycle on each occurrence (~1100 times per day on
+affected hardware).
+
+Split the check: reject messages with no response flag as before, but
+simply discard valid ENUM_DEVICES messages that arrive after init is
+complete.
+
+Signed-off-by: Wahid Khan <wahidzk0091@gmail.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Tested-by: Zhang Lixu <lixu.zhang@intel.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h    | 3 +++
- drivers/hid/hid-quirks.c | 1 +
- 2 files changed, 4 insertions(+)
+ drivers/hid/intel-ish-hid/ishtp-hid-client.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 553b7d84e5a2e..6b7b6f55a9532 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -229,6 +229,9 @@
- #define USB_VENDOR_ID_BAANTO		0x2453
- #define USB_DEVICE_ID_BAANTO_MT_190W2	0x0100
+diff --git a/drivers/hid/intel-ish-hid/ishtp-hid-client.c b/drivers/hid/intel-ish-hid/ishtp-hid-client.c
+index 751eec63cea42..10b7494b7cd30 100644
+--- a/drivers/hid/intel-ish-hid/ishtp-hid-client.c
++++ b/drivers/hid/intel-ish-hid/ishtp-hid-client.c
+@@ -105,8 +105,7 @@ static void process_recv(struct ishtp_cl *hid_ishtp_cl, void *recv_buf,
  
-+#define USB_VENDOR_ID_BEITONG		0x20dd
-+#define USB_DEVICE_ID_BEITONG_KP20D	0x5159
-+
- #define USB_VENDOR_ID_BELKIN		0x050d
- #define USB_DEVICE_ID_FLIP_KVM		0x3201
- 
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index cb3fbbc35ce4c..dc3acf69388c5 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -45,6 +45,7 @@ static const struct hid_device_id hid_quirks[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ATEN, USB_DEVICE_ID_ATEN_CS682), HID_QUIRK_NOGET },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ATEN, USB_DEVICE_ID_ATEN_CS692), HID_QUIRK_NOGET },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ATEN, USB_DEVICE_ID_ATEN_UC100KM), HID_QUIRK_NOGET },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_BEITONG, USB_DEVICE_ID_BEITONG_KP20D), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_MULTI_TOUCH), HID_QUIRK_MULTI_INPUT },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_PIXART_USB_OPTICAL_MOUSE), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_PIXART_USB_OPTICAL_MOUSE2), HID_QUIRK_ALWAYS_POLL },
+ 		switch (recv_msg->hdr.command & CMD_MASK) {
+ 		case HOSTIF_DM_ENUM_DEVICES:
+-			if ((!(recv_msg->hdr.command & ~CMD_MASK) ||
+-					client_data->init_done)) {
++			if (!(recv_msg->hdr.command & ~CMD_MASK)) {
+ 				++client_data->bad_recv_cnt;
+ 				report_bad_packet(hid_ishtp_cl, recv_msg,
+ 						  cur_pos,
+@@ -114,6 +113,8 @@ static void process_recv(struct ishtp_cl *hid_ishtp_cl, void *recv_buf,
+ 				ish_hw_reset(ishtp_get_ishtp_device(hid_ishtp_cl));
+ 				break;
+ 			}
++			if (client_data->init_done)
++				break;
+ 			client_data->hid_dev_count = (unsigned int)*payload;
+ 			if (!client_data->hid_devices)
+ 				client_data->hid_devices = devm_kcalloc(
 -- 
 2.53.0
 
