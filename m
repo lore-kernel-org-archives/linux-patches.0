@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795062283;
-	b=pjj6rgxTZlWp3uiinStQcXJoJsE9o+WQOsemHOQWkR6YIEmtDHC5fQ5+4sDZSfkM3Yn0
-	 W820DxC32QURcV30GP3IxraGYTv2rou4lqEiDOC1GcgksZvhWxt2QNV3DawAVaID6T1u6
-	 rOcaNL8fVaVUnrlPYm71GFYk/rFblDdBbzZD16Qq5wK33DGfTBsqr4Q8GohvkVhs0s8pr
-	 LWpF8/pGa5nnX+v8JcFiB3vVnIXC/TC2IErnOQSuBZkFD27ohycty2leUvv9M+UseXyZy
-	 2cYqjk2zmokUAm6/v2sDs5Tth0GS7BLINhtNo0dhBPOBxfgLQfu+CONQSSbr64d/IQQ==
+	t=1795062285;
+	b=Ue4IXoYMWiix/o6zt2XAMJOAAxYBOxRVyBNec8knqKA9OMqkDg/Fv7taYLPN3nvNOiMB
+	 6Eaka2XD/LEbqQVm3/5FZ6PRXw7QknVPDWcR4cAtK1R24gSVVQ/JU0kBDAgEo0709A0KF
+	 eP8Ma6fVlgkCXGXT2fLzUinP65w4RV6p0Kr9sFPj+V3ugN8SnxnBkTx97QjA7+2TTFTDh
+	 og4GoqbGc5Tw8hivXGGd/NMo1PSl0XD2iLiXV4j9Mdj15/uAh5yvQEDjYDcQDlnWHD8yO
+	 KZYYf05Wt9sYm2DpfOAFtWJxwIXXYP9QSTaYb0yelONKjvwcp/9Fmjhm8TMSSWNfnQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795062283;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062285;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=u22ASmKEcm9dxyjMpucqboOa7T4zxjPfA7wEy1paBdw=;
-	b=s7P5CG3rksqKJxWdOQKGva76WaO2jpoH/HODqruhCeQd5jIA52IxT27hx53U8X1Qp+yj
-	 21IuK/wxpSYuJqvcu7+ZTW4pjit2Z0Y5NOrZHzS0qfCM8W567tYxcHX0ptIZZBIKO0bnU
-	 nrK1HVQ0yya/Qf62WynKFif3W00UzJw/98+DFw06IqY66LqNz8pbtCS7K1m9LIjmThjGj
-	 VPKvd2nzqRuLDMO8c0vzCwSb4YZKxshO9z2WuhEHnZr6dPuPx3ZBig6xFcmzyRYQr2TwU
-	 gsca6A/JaAHg+y7s2OuRXmAL6bp5CU+BoK3x3ohApSidvy0kR87IisHxy83Dm03uQvg==
+	bh=gUKqJFgVhFibLoyM0+uwD02unrSdCKOWXrij1LX3wpU=;
+	b=nhuHA8oyK5QtlWV2KxEiMzyUkMkeobcBrrPt3EBmOTljkKOE/tY+e+Fhy9ejTiVmh0PF
+	 tTA7QGUWxUw7PyAtIayIbkx8mT9CN+a4qooSGowCRUacPNYIf+LUrNnlFAJp3Bq5cmXrO
+	 9/KCubOIrJ4gKra0UQTh+rC2gI9CoaoYP4o/Cmtx1/SSiIdxzeIt4+QNhS7Jlq9HddyT2
+	 JxnR/6U1DzrlOzVSgnDgmGfyR3qaZLXcJ+aVgdR/Sbj8hQtiZpT59bzAnPvZdMSwin66H
+	 ma/UmSZiyS9vvCrW3hoFgcBX2Y/JT/uU872nq8hS/nJ15eA+M/YI+a+RtuzBL+dkDHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MIR4bHlf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RBF2P0f2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FE7606A325;
-	Thu, 19 Nov 2026 04:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A1B606A32A;
+	Thu, 19 Nov 2026 04:24:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MIR4bHlf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3091F000C4;
-	Thu, 19 Nov 2026 04:24:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RBF2P0f2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1586E1F000C4;
+	Thu, 19 Nov 2026 04:24:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795062282;
-	bh=u22ASmKEcm9dxyjMpucqboOa7T4zxjPfA7wEy1paBdw=;
+	s=korg; t=1795062285;
+	bh=gUKqJFgVhFibLoyM0+uwD02unrSdCKOWXrij1LX3wpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MIR4bHlfuRKrQ2VpqEYVq4WN3O3XNNOqOAbxSt6lvwNKXpR+kBUbimcSSUsTpQCdf
-	 XCtcBLdIiRZweJiMsK+FiJCiq62oy2HEwpmKU2ZilCyBMA7wTq5QtrnZweRCulxke3
-	 se5lzuPEazBtv8beIMV4GsIUIFtzYnLniqiHJ1BM=
+	b=RBF2P0f2JsUdQ2UN0VvaOKBB6vwad/MWB95HLTxjbHN2PYLQW0HmCzSYW9O5LJ1hJ
+	 1+KYHmJMl2/dqoFtASfdw9dCEDZuqTCpkhhu/vEQXgNRRtN9SCSprhu3vB9iBk1+oc
+	 LqXqr+2o78h+/GaiYrF3h2rI82VwuanofyqxPrMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Xiaoyan Li <lixiaoyan@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.10 1826/1848] selftests/net: fix typo in tcp_mmap
-Date: Wed, 18 Nov 2026 16:04:24 +0100
-Message-ID: <20261118150036.111931853@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	John Johansen <john.johansen@canonical.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 1817/1848] apparmor: Fix namespace reference leak in __aa_find_or_create_ns()
+Date: Wed, 18 Nov 2026 16:04:15 +0100
+Message-ID: <20261118150035.587326939@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,44 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 905a9eb5f636f3312964b162362e4d6ca4e37378 upstream.
+[ Upstream commit 8f1f7f664c1822af34c5465f9820b4e39146786b ]
 
-kernel test robot reported the following warning:
+When the namespace already exists, the reference taken by aa_get_ns() is
+overwritten with ERR_PTR(-EEXIST) without being released. The caller in
+apparmorfs.c clears ns on IS_ERR() and so cannot drop it either, leaking
+the reference on raced mkdir of an existing namespace.
 
-All warnings (new ones prefixed by >>):
+Release the reference before returning -EEXIST.
 
-   tcp_mmap.c: In function 'child_thread':
->> tcp_mmap.c:211:61: warning: 'lu' may be used uninitialized in this function [-Wmaybe-uninitialized]
-     211 |                         zc.length = min(chunk_size, FILE_SZ - lu);
-
-We want to read FILE_SZ bytes, so the correct expression
-should be (FILE_SZ - total)
-
-Fixes: 5c5945dc695c ("selftests/net: Add SHA256 computation over data sent in tcp_mmap")
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/oe-kbuild-all/202304042104.UFIuevBp-lkp@intel.com/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Xiaoyan Li <lixiaoyan@google.com>
-Cc: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20230405071556.1019623-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 73688d1ed0b8 ("apparmor: refactor prepare_ns() and make usable from different views")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/tcp_mmap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/apparmor/policy_ns.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/tools/testing/selftests/net/tcp_mmap.c
-+++ b/tools/testing/selftests/net/tcp_mmap.c
-@@ -206,7 +206,7 @@ void *child_thread(void *arg)
+diff --git a/security/apparmor/policy_ns.c b/security/apparmor/policy_ns.c
+index bb952451205e1..c32e008dc5b83 100644
+--- a/security/apparmor/policy_ns.c
++++ b/security/apparmor/policy_ns.c
+@@ -291,10 +291,12 @@ struct aa_ns *__aa_find_or_create_ns(struct aa_ns *parent, const char *name,
+ 	/* try and find the specified ns */
+ 	/* released by caller */
+ 	ns = aa_get_ns(__aa_find_ns(&parent->sub_ns, name));
+-	if (!ns)
++	if (!ns) {
+ 		ns = __aa_create_ns(parent, name, dir);
+-	else
++	} else {
++		aa_put_ns(ns);
+ 		ns = ERR_PTR(-EEXIST);
++	}
  
- 			memset(&zc, 0, sizeof(zc));
- 			zc.address = (__u64)((unsigned long)addr);
--			zc.length = min(chunk_size, FILE_SZ - lu);
-+			zc.length = min(chunk_size, FILE_SZ - total);
- 
- 			res = getsockopt(fd, IPPROTO_TCP, TCP_ZEROCOPY_RECEIVE,
- 					 &zc, &zc_len);
+ 	/* return ref */
+ 	return ns;
+-- 
+2.53.0
+
 
 
