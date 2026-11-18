@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033116;
-	b=SMrq8zbGRd6Osf1kD/g3gf10g2sw+ejT2wXcnHqknx55L20SWge48pCV6dKesF063UFM
-	 4nSquQO19JRn9vFg72OmF0Nd2sUC8J1HrK861IAMY5856ivaBIL57aaiBHRSub0NFpQRR
-	 FKZ66mP791RgJPSLLuX6ZgaftxrHpPUM94lMacbYRQJLlW8A8yC0virErKXpvBNzGQFE8
-	 lZp3diUXa03Ax/+qXwLJ/vWAnYUYvNItViTZf46eRrKYL1EFH2JoNcTTvvpUB3Emd25xk
-	 u+NlcyvZLI/6IkikwqKPUKb9Z44wNKOxnxBOO5tWtBVSzkgrUeflCEaqgYcP+Rju4jw==
+	t=1795033119;
+	b=17cFtkiI+brsi4WTDmaajZmtyqx69WzRvt+unQcxQuQBqS9DrdDA0XsrLjQqfC+e0pln
+	 swiT6hH/N8X3gsTIBuJpJ+T0UW0C3QzmKdjVclMobOykdQ2niY+KuA7S2T3LPTbJu1uxs
+	 NGC4HBD1au8ZXG/C5xbG5ds4EEPr95UGNRHysPyHg7qg49sOL5pHUYE32SXDJcy43S+IY
+	 9wpwARXqFj5FLbEwh2YU48dS2rvn6LNMIVN9KQoBb3FpjnCyRYD0qaN4Q9uf11+u2jBQr
+	 hh7pIe06uTrCLL8rpQwGQ8WUXe2bs8qF4MHje5MAR2l6BELpJjKqCor3li719mmmwkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033116;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033119;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RglKF2mVJcvOBQCChyVzuUJcS2nwfM/axoXbQc/7sEY=;
-	b=MjRTNMNqfMd+HG/MJb7MOiqb6jFSxo1m8yzNcIjeELMlgf7MOxiImzIKL/wKrR/aoen7
-	 l97TdjfCdAnbeKHCy0IAqdIgGZrPrMoqe/RghBScBn2NtinKh/Z/iXTRSfJBXNJY78+v1
-	 cBvrJJcU3pe7PYY0lk3Y7c4VcI4ilH1ttN/h24SIQstNbN0JxDhIhbBdUlcaNrusfC9Uw
-	 o9XqDscq4/eR/qQqzJ8Dod89ewR01FMu8NpT7WDgpySRVc2pwIgkOUAe2iHgAZfHjvaSv
-	 Jg7ywSGJZQ8IF/yESWf8swnPRKoQjJQoqK4uYoaxOeDRzUMLbUT1FE2y6SAdlOu3jtA==
+	bh=XCgTMBDcx7bnRQHY3gcs4lMqnhrNTw4ZNSysALe6f2s=;
+	b=aGkcWuT0/B324mbkxfaJupgoWou+peSt1HZ4zJdDS7KRsKYd06jxa+9Cv8S2/+L8fxQY
+	 zzXRTV4ULVPdBJsAMSDbTfTJeJJu2W7HqfCJ+cXsRgeBpOJ3D4Vkw/Gp4dKslsM04ku+k
+	 KQhIVj8zk7kOeJ+xfeONVT4OAvrGKQNe5F/S73snmTBcH0bMivbAeqQDmccZZF1uBoGo6
+	 1YqF0jXjPg/J+w7221iq/dCVVei1edWSYZRVxTm3CqmQykcLXHqIeL021sDsWGLQ+ra3g
+	 kuEUk4OHQc/qi31jxIpeNqA0CLE3NBN1Gk8lpvLjtcmWjzSZF8F/YUT2UgCeUxZ2tsA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YTsqWCB6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xnj8PYOC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6724F606A31C;
-	Wed, 18 Nov 2026 20:18:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438CB606A31C;
+	Wed, 18 Nov 2026 20:18:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YTsqWCB6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF31A1F000C4;
-	Wed, 18 Nov 2026 20:18:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xnj8PYOC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92ABA1F000C4;
+	Wed, 18 Nov 2026 20:18:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033116;
-	bh=RglKF2mVJcvOBQCChyVzuUJcS2nwfM/axoXbQc/7sEY=;
+	s=korg; t=1795033119;
+	bh=XCgTMBDcx7bnRQHY3gcs4lMqnhrNTw4ZNSysALe6f2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YTsqWCB6dChbyohq7rBIejmANX1x4CnzHcdtkWLe1Ke1ZQVktYg/RlZ4aP7RLOtxK
-	 Vykq/OH2QIejvZyDiRFP795zqDvpYjXzY7kxq7+YDAr4kVXyXD82cwTc8ZMmN5cbbn
-	 tQmAcsBiNPOUBTBWgrET9COPTJktlusj3LcfWBpE=
+	b=xnj8PYOCH3nt28pNNAT8MIlN2LZ/2M5619sMY5PLIQhPple8Z6MtHaxPVwVk+D8IP
+	 bW7FqtwyW60TAI+ZlZm8mtTX48uccG9sY1HsECbryFkOz46aI67npvFpPOCo4I9pF+
+	 P23zwYPYjS+b//RgGHuIZQuFCHXHbG5LyRjOYAik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karol Kolacinski <karol.kolacinski@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
-	Przemyslaw Korba <przemyslaw.korba@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Eric Woudstra <ericwouds@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1654/1756] ice: E822: keep Tx timestamps disabled during offset calibration
-Date: Wed, 18 Nov 2026 16:03:01 +0100
-Message-ID: <20261118150115.572659665@linuxfoundation.org>
+Subject: [PATCH 6.12 1655/1756] bridge: No DEV_PATH_BR_VLAN_UNTAG_HW for dsa foreign
+Date: Wed, 18 Nov 2026 16:03:02 +0100
+Message-ID: <20261118150115.608180698@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -72,172 +69,178 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karol Kolacinski <karol.kolacinski@intel.com>
+From: Eric Woudstra <ericwouds@gmail.com>
 
-[ Upstream commit 56af436b90acce7eaa7531189c827773983f7d07 ]
+[ Upstream commit 96450df197bda7de927b51372c13f1002d0e76e3 ]
 
-Do not clear the tx.calibrating flag immediately after starting the PHY
-timer in ice_ptp_port_phy_restart(). Instead, keep Tx timestamps
-disabled until the offset verification work (ice_ptp_wait_for_offsets)
-has confirmed that the Tx PHY offset is properly configured.
+In network setup as below:
 
-Previously, tx.calibrating was set to true, then immediately back to
-false right after ice_start_phy_timer_e82x() returned. This allowed Tx
-timestamp requests to be served during the window where offset
-verification was still pending. Timestamps produced during this window
-should have their valid bit cleared, but it is better to prevent requests
-until the driver has confirmed calibration is complete.
+             fastpath bypass
+ .----------------------------------------.
+/                                          \
+|                        IP - forwarding    |
+|                       /                \  v
+|                      /                  wan ...
+|                     /
+|                     |
+|                     |
+|                   brlan.1
+|                     |
+|    +-------------------------------+
+|    |           vlan 1              |
+|    |                               |
+|    |     brlan (vlan-filtering)    |
+|    |               +---------------+
+|    |               |  DSA-SWITCH   |
+|    |    vlan 1     |               |
+|    |      to       |               |
+|    |   untagged    1     vlan 1    |
+|    +---------------+---------------+
+.         /                   \
+ ----->wlan1                 lan0
+       .                       .
+       .                       ^
+       ^                     vlan 1 tagged packets
+     untagged packets
 
-Rename the tx.calibrating field to tx.disabled, and change where it is
-cleared. Only clear it in ice_ptp_wait_for_offsets(), and only after Tx
-offset configuration has completed successfully. This ensures that new Tx
-timestamp requests are only accepted after the PHY has properly calibrated
-the Tx offset.
+br_vlan_fill_forward_path_mode() sets DEV_PATH_BR_VLAN_UNTAG_HW when
+filling in from brlan.1 towards wlan1. But it should be set to
+DEV_PATH_BR_VLAN_UNTAG in this case. Using BR_VLFLAG_ADDED_BY_SWITCHDEV
+is not correct. The dsa switchdev adds it as a foreign port.
 
-If ice_start_phy_timer_e82x() fails, do not restore disabled to false.
-The device is in a state where timestamps cannot succeed properly anyways.
-A dev_err message is already logged on failure to start the timer at the
-end of the function.
+The same problem for all foreignly added dsa vlans on the bridge.
 
-Renaming the field improves clarity and will better reflect the nature of
-the flag in a future change that also applies disabling Tx timestamps in
-software in a following commit.
+First add the vlan, trying only native devices.
+If this fails, we know this may be a vlan from a foreign device.
 
-Log a debug message while offset calibration is still pending, including
-the specific Tx/Rx error codes to aid debugging stalled calibration.
-This path is expected on every routine link-up: ov_work is first queued
-with no delay and the vernier offset cannot be computed until at least
-one packet has been transmitted, so the first several invocations
-normally land here. Use dev_dbg() rather than a rate-limited warning to
-avoid emitting KERN_WARNING on every link-up during normal operation.
-Log a debug message when calibration completes successfully.
+Use BR_VLFLAG_TAGGING_BY_SWITCHDEV to make sure DEV_PATH_BR_VLAN_UNTAG_HW
+is set only when there if no foreign device involved.
 
-Note that sashiko review has previously complained that leaving the
-disabled flag set "permanently" disables Tx timestamps if vernier
-calibration never completes. This is true, but its important to realize
-that timestamps would still fail regardless of whether the flag is set.
-Until vernier calibration completes the device will not report valid
-timestamps regardless. Thus, keeping the calibrating flag set simply
-prevents new timestamp requests from software while it is known that the
-hardware will not complete them.
-
-Fixes: 3a7496234d17 ("ice: implement basic E822 PTP support")
-Signed-off-by: Karol Kolacinski <karol.kolacinski@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
-Signed-off-by: Przemyslaw Korba <przemyslaw.korba@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20261027-reduction-v1-3-81237c67a361@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Signed-off-by: Eric Woudstra <ericwouds@gmail.com>
+Link: https://patch.msgid.link/20260317110347.363875-1-ericwouds@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: fcc00b15cb21 ("net: bridge: netlink: do not clear the vlan info dump error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ptp.c | 37 +++++++++++++++++-------
- drivers/net/ethernet/intel/ice/ice_ptp.h |  6 ++--
- 2 files changed, 29 insertions(+), 14 deletions(-)
+ include/net/switchdev.h   |  1 +
+ net/bridge/br_private.h   | 10 ++++++++++
+ net/bridge/br_switchdev.c | 15 +++++++++++++++
+ net/bridge/br_vlan.c      |  7 ++++++-
+ net/switchdev/switchdev.c |  2 +-
+ 5 files changed, 33 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
-index 9587b807e6648..1d0e8d5fccb6b 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
-@@ -532,7 +532,7 @@ ice_ptp_is_tx_tracker_up(struct ice_ptp_tx *tx)
- {
- 	lockdep_assert_held(&tx->lock);
+diff --git a/include/net/switchdev.h b/include/net/switchdev.h
+index 8346b0d29542c..ee500706496b0 100644
+--- a/include/net/switchdev.h
++++ b/include/net/switchdev.h
+@@ -15,6 +15,7 @@
+ #define SWITCHDEV_F_NO_RECURSE		BIT(0)
+ #define SWITCHDEV_F_SKIP_EOPNOTSUPP	BIT(1)
+ #define SWITCHDEV_F_DEFER		BIT(2)
++#define SWITCHDEV_F_NO_FOREIGN		BIT(3)
  
--	return tx->init && !tx->calibrating;
-+	return tx->init && !tx->disabled;
- }
+ enum switchdev_attr_id {
+ 	SWITCHDEV_ATTR_ID_UNDEFINED,
+diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
+index d8e991df20643..22bd82aaca73f 100644
+--- a/net/bridge/br_private.h
++++ b/net/bridge/br_private.h
+@@ -182,6 +182,7 @@ enum {
+ 	BR_VLFLAG_MCAST_ENABLED = BIT(2),
+ 	BR_VLFLAG_GLOBAL_MCAST_ENABLED = BIT(3),
+ 	BR_VLFLAG_NEIGH_SUPPRESS_ENABLED = BIT(4),
++	BR_VLFLAG_TAGGING_BY_SWITCHDEV = BIT(5),
+ };
  
  /**
-@@ -1334,6 +1334,7 @@ static int ice_ptp_check_tx_fifo(struct ice_ptp_port *port)
- static void ice_ptp_wait_for_offsets(struct kthread_work *work)
- {
- 	struct ice_ptp_port *port;
-+	unsigned long flags;
- 	struct ice_pf *pf;
- 	struct ice_hw *hw;
- 	int tx_err;
-@@ -1354,9 +1355,26 @@ static void ice_ptp_wait_for_offsets(struct kthread_work *work)
- 	tx_err = ice_ptp_check_tx_fifo(port);
- 	if (!tx_err)
- 		tx_err = ice_phy_cfg_tx_offset_e82x(hw, port->port_num);
-+	if (!tx_err) {
-+		/* Tx offset has been configured, re-enable Tx timestamps */
-+		spin_lock_irqsave(&port->tx.lock, flags);
-+		if (port->tx.disabled) {
-+			port->tx.disabled = false;
-+			dev_dbg(ice_pf_to_dev(pf), "PTP Tx offset valid for port %u, Tx timestamps enabled\n",
-+				port->port_num);
-+		}
-+		spin_unlock_irqrestore(&port->tx.lock, flags);
-+	}
+@@ -2199,6 +2200,8 @@ void br_switchdev_mdb_notify(struct net_device *dev,
+ 			     int type);
+ int br_switchdev_port_vlan_add(struct net_device *dev, u16 vid, u16 flags,
+ 			       bool changed, struct netlink_ext_ack *extack);
++int br_switchdev_port_vlan_no_foreign_add(struct net_device *dev, u16 vid, u16 flags,
++					  bool changed, struct netlink_ext_ack *extack);
+ int br_switchdev_port_vlan_del(struct net_device *dev, u16 vid);
+ void br_switchdev_init(struct net_bridge *br);
+ 
+@@ -2282,6 +2285,13 @@ static inline int br_switchdev_port_vlan_add(struct net_device *dev, u16 vid,
+ 	return -EOPNOTSUPP;
+ }
+ 
++static inline int br_switchdev_port_vlan_no_foreign_add(struct net_device *dev, u16 vid,
++							u16 flags, bool changed,
++							struct netlink_ext_ack *extack)
++{
++	return -EOPNOTSUPP;
++}
 +
- 	rx_err = ice_phy_cfg_rx_offset_e82x(hw, port->port_num);
- 	if (tx_err || rx_err) {
--		/* Tx and/or Rx offset not yet configured, try again later */
-+		/* Tx and/or Rx offset not yet configured, try again later.
-+		 * This is expected during normal link-up: the vernier offset
-+		 * calibration cannot complete until at least one packet has
-+		 * been transmitted, so the first retries routinely land here.
-+		 */
-+		dev_dbg(ice_pf_to_dev(pf), "PTP offset not yet valid for port %u (tx_err=%d rx_err=%d)\n",
-+			port->port_num, tx_err, rx_err);
- 		kthread_queue_delayed_work(pf->ptp.kworker,
- 					   &port->ov_work,
- 					   msecs_to_jiffies(100));
-@@ -1435,11 +1453,9 @@ ice_ptp_port_phy_restart(struct ice_ptp_port *ptp_port)
- 		/* Start the PHY timer in Vernier mode */
- 		kthread_cancel_delayed_work_sync(&ptp_port->ov_work);
+ static inline int br_switchdev_port_vlan_del(struct net_device *dev, u16 vid)
+ {
+ 	return -EOPNOTSUPP;
+diff --git a/net/bridge/br_switchdev.c b/net/bridge/br_switchdev.c
+index f10bd6a233dcf..40bb8e6989137 100644
+--- a/net/bridge/br_switchdev.c
++++ b/net/bridge/br_switchdev.c
+@@ -190,6 +190,21 @@ int br_switchdev_port_vlan_add(struct net_device *dev, u16 vid, u16 flags,
+ 	return switchdev_port_obj_add(dev, &v.obj, extack);
+ }
  
--		/* temporarily disable Tx timestamps while calibrating
--		 * PHY offset
--		 */
-+		/* Disable Tx timestamps until PHY calibration completes */
- 		spin_lock_irqsave(&ptp_port->tx.lock, flags);
--		ptp_port->tx.calibrating = true;
-+		ptp_port->tx.disabled = true;
- 		spin_unlock_irqrestore(&ptp_port->tx.lock, flags);
- 		ptp_port->tx_fifo_busy_cnt = 0;
++int br_switchdev_port_vlan_no_foreign_add(struct net_device *dev, u16 vid, u16 flags,
++					  bool changed, struct netlink_ext_ack *extack)
++{
++	struct switchdev_obj_port_vlan v = {
++		.obj.orig_dev = dev,
++		.obj.id = SWITCHDEV_OBJ_ID_PORT_VLAN,
++		.obj.flags = SWITCHDEV_F_NO_FOREIGN,
++		.flags = flags,
++		.vid = vid,
++		.changed = changed,
++	};
++
++	return switchdev_port_obj_add(dev, &v.obj, extack);
++}
++
+ int br_switchdev_port_vlan_del(struct net_device *dev, u16 vid)
+ {
+ 	struct switchdev_obj_port_vlan v = {
+diff --git a/net/bridge/br_vlan.c b/net/bridge/br_vlan.c
+index a61211a09e1e8..234d36ced4bc0 100644
+--- a/net/bridge/br_vlan.c
++++ b/net/bridge/br_vlan.c
+@@ -109,6 +109,11 @@ static int __vlan_vid_add(struct net_device *dev, struct net_bridge *br,
+ 	/* Try switchdev op first. In case it is not supported, fallback to
+ 	 * 8021q add.
+ 	 */
++	err = br_switchdev_port_vlan_no_foreign_add(dev, v->vid, flags, false, extack);
++	if (err != -EOPNOTSUPP) {
++		v->priv_flags |= BR_VLFLAG_ADDED_BY_SWITCHDEV | BR_VLFLAG_TAGGING_BY_SWITCHDEV;
++		return err;
++	}
+ 	err = br_switchdev_port_vlan_add(dev, v->vid, flags, false, extack);
+ 	if (err == -EOPNOTSUPP)
+ 		return vlan_vid_add(dev, br->vlan_proto, v->vid);
+@@ -1489,7 +1494,7 @@ int br_vlan_fill_forward_path_mode(struct net_bridge *br,
  
-@@ -1448,11 +1464,10 @@ ice_ptp_port_phy_restart(struct ice_ptp_port *ptp_port)
- 		if (err)
- 			break;
+ 	if (path->bridge.vlan_mode == DEV_PATH_BR_VLAN_TAG)
+ 		path->bridge.vlan_mode = DEV_PATH_BR_VLAN_KEEP;
+-	else if (v->priv_flags & BR_VLFLAG_ADDED_BY_SWITCHDEV)
++	else if (v->priv_flags & BR_VLFLAG_TAGGING_BY_SWITCHDEV)
+ 		path->bridge.vlan_mode = DEV_PATH_BR_VLAN_UNTAG_HW;
+ 	else
+ 		path->bridge.vlan_mode = DEV_PATH_BR_VLAN_UNTAG;
+diff --git a/net/switchdev/switchdev.c b/net/switchdev/switchdev.c
+index 4d5fbacef496f..bf252d116ed38 100644
+--- a/net/switchdev/switchdev.c
++++ b/net/switchdev/switchdev.c
+@@ -760,7 +760,7 @@ static int __switchdev_handle_port_obj_add(struct net_device *dev,
+ 	/* Event is neither on a bridge nor a LAG. Check whether it is on an
+ 	 * interface that is in a bridge with us.
+ 	 */
+-	if (!foreign_dev_check_cb)
++	if (!foreign_dev_check_cb || port_obj_info->obj->flags & SWITCHDEV_F_NO_FOREIGN)
+ 		return err;
  
--		/* Enable Tx timestamps right away */
--		spin_lock_irqsave(&ptp_port->tx.lock, flags);
--		ptp_port->tx.calibrating = false;
--		spin_unlock_irqrestore(&ptp_port->tx.lock, flags);
--
-+		/* Do not clear disabled flag here. Tx timestamp requests
-+		 * remain disabled until ice_ptp_wait_for_offsets() has
-+		 * verified that the Tx offset calibration has completed.
-+		 */
- 		kthread_queue_delayed_work(pf->ptp.kworker, &ptp_port->ov_work,
- 					   0);
- 		break;
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.h b/drivers/net/ethernet/intel/ice/ice_ptp.h
-index ccc1eeb16f0e8..5842fdadf0942 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp.h
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp.h
-@@ -135,8 +135,8 @@ enum ice_tx_tstamp_work {
-  * @offset: offset into timestamp block to get the real index
-  * @len: length of the tstamps and in_use fields.
-  * @init: if true, the tracker is initialized;
-- * @calibrating: if true, the PHY is calibrating the Tx offset. During this
-- *               window, timestamps are temporarily disabled.
-+ * @disabled: set to true when new Tx timestamp requests are disabled, such as
-+ *            while the PHY Tx offset configuration has not yet completed.
-  * @has_ready_bitmap: if true, the hardware has a valid Tx timestamp ready
-  *                    bitmap register. If false, fall back to verifying new
-  *                    timestamp values against previously cached copy.
-@@ -151,7 +151,7 @@ struct ice_ptp_tx {
- 	u8 offset;
- 	u8 len;
- 	u8 init : 1;
--	u8 calibrating : 1;
-+	u8 disabled : 1;
- 	u8 has_ready_bitmap : 1;
- 	s8 last_ll_ts_idx_read;
- };
+ 	br = netdev_master_upper_dev_get(dev);
 -- 
 2.53.0
 
