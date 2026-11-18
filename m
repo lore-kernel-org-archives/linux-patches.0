@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025644;
-	b=YQuMw6r/GWFsNmdWGzVK8vIkGrUdi5760IP0oHXITnENMZYRUR+jGdlS203tNlu/XWKy
-	 MKOrlrsMGKSMTdUWNN/CepM8d4JGPtNxusupw8xLcd9kA9fZsgEn6EiUyhvUX8r/Lt0Np
-	 Yuc1N4/jU+C0W7iLPhfbVPehAUttpuqaaxs68dyGJTOtv4bXforb7gPUBTAdi4bRhX9la
-	 tyYKu5ftr3GHGHqf4MiKqiDiCbP/LH5W61sA7xpd/W6nzgvZRsEPkc28QGg7KsS69Tk+f
-	 iACDZdPqMqOkMyYvFv9AEBlYxoXi8/uo3GCs0UuKGK8S+0NE4JBLiYi7PfFuM2AWr3Q==
+	t=1795025646;
+	b=HtyEV6akpqvFI8kosjbcdErBKSJuonZ4bm1Rg9mevSsenmGVzz+utLqh98K7CN3p2acL
+	 i8n1ijPYTXHuKJbSWdAhk2QuwlHq/2qJAMBVizWL2suHzv1J10gVIRQaetdQDrs8SBCvA
+	 u/t7vnHRw8qDwrczqeAHT9+6/TdKg/SEdxhI+eHmLlJ0k+QT5E+ccaVGICdCvlRoXACkY
+	 GRgTYLA0hWViJ5/h1qbpiPjTznFkQ4P8hwJ8qUfFmcLw7JcnOSEmMJ0tq5ImA2R1yPDdw
+	 QTW8HtwZ72fF8LsFY2GEY+SmfqlBqsbOfolyR1tWyFRIYr5H2zBHbNjvy33n7vuw8Pg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025644;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025646;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Rl/DSCNXWO1e5wWnxXdbRwpGdZKEL0lu3Dps2IsGNwc=;
-	b=gmDvKpCfhiSxtHxDag/h+Nn0Psf/6ds5/n/nSveg6tOMZ6oeFS2aR2qWWVUfkAo+fPzw
-	 5KaNFCR3J/xTwIoLA8m4+Q/Tl2DLECEOHw6BxUOg/JdED1XVy4p7OpBnOS13dfMuZFWUj
-	 S/Lts93SHekZimZ9m74I3b2dLpWEhyQgO9Nh66H0wf0w4wljNmElJSv4hwt1RDwJ7xNU/
-	 rLwa08bZfreYbh1TrnpJTEoEwB3QjGv/etGygErh69wj4gkoPbzqYF6zx6UG9XLZW7uhg
-	 to2LEzK0w+qMGnXArqnrkPgl4NLZWZ5vdtM+eDsQ9DAQhokmYRqsV9NNy/A7T8cWpcQ==
+	bh=fFnqmQtj7XIAx0cIUPDNfA/54G4Yit6KwqD06aRWb3c=;
+	b=l9tu2BQhZyT0BPkdlBlL/Ue2IIkngGBYzNKJI67xg5blZJUK3jUUDyO/keltOpCsMmAL
+	 thVJGS9LdYCIULSv3/D4aobwfKEifNkbp8WsORHY2Yi2UENUQh5gwKgBvGgAG6IAtWz8/
+	 VvLdoyqD0+IXA+1V9LrPv40ZsfgCkq/TZ2wOXgbTXeCVJ+p+PCzjxMcHl3kaVZd4Dneec
+	 Mk2FClTN3tEH6B46oU6o45Efi9owbeN2jU8aPwax+IQTQ6t1YX8mPYDF/lKl709FT27Rc
+	 wErV85A/7tZcn8vj3CfkYDrR9Uw5MuaMArF1ZR9paQV6TB+lbZs84QNw4Mef4oyv78g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SA9amNe3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RitqmmpT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FFC8606A320;
-	Wed, 18 Nov 2026 18:14:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4436606A31C;
+	Wed, 18 Nov 2026 18:14:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SA9amNe3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9F61F000C4;
-	Wed, 18 Nov 2026 18:14:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RitqmmpT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 321371F000C4;
+	Wed, 18 Nov 2026 18:14:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025643;
-	bh=Rl/DSCNXWO1e5wWnxXdbRwpGdZKEL0lu3Dps2IsGNwc=;
+	s=korg; t=1795025646;
+	bh=fFnqmQtj7XIAx0cIUPDNfA/54G4Yit6KwqD06aRWb3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SA9amNe3ZylM8ioyltQMGpzwL5TkneggvZP2SXoidvoDy4KJAr+73jMtrRiAD5Mgf
-	 nBIlDxwnu2VeUSzICMQpO9pDQoFLKPipYXLhq0OmFakd92hO5vm4L77tGT+05wCknV
-	 M70F0p9LQTWPSRuEbxzDa8MpWZTlxdeCcGVXgsiM=
+	b=RitqmmpTLBp9oaKkwtpLNUYtDy+EUAAmMxllsXM2shITQCJsnV8q3g5f7k4EnjEbv
+	 lj7OoSLeZmh72XCFvS/vNx/qiEu8/3xpuDFTrknLApCt9OH4XB5D0NwuNWZa0yvyns
+	 RnCFjeaASP4Hu4JsgRmILeUWWl9rUmPBw9aMxSOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fuchs <fuchsfl@gmail.com>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Jie Zhang <quic_jiezh@quicinc.com>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1150/2151] sh: Fix built-in DTB build with generic rule
-Date: Wed, 18 Nov 2026 15:48:05 +0100
-Message-ID: <20261118150204.075576646@linuxfoundation.org>
+Subject: [PATCH 6.18 1111/2151] drm/msm/a6xx: Add support for Adreno 612
+Date: Wed, 18 Nov 2026 15:47:26 +0100
+Message-ID: <20261118150202.710402916@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,32 +70,331 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fuchs <fuchsfl@gmail.com>
+From: Jie Zhang <quic_jiezh@quicinc.com>
 
-[ Upstream commit 642c9b8ee61dd492eb75b347f9e5f0ce6bf24281 ]
+[ Upstream commit 15cc59ac954eb953252d5e98852569bf22ad5d8b ]
 
-Commit 21bcc49974c2 ("sh: Migrate to the generic rule for built-in DTB")
-selected GENERIC_BUILTIN_DTB and renamed the Kconfig symbols, but left
-arch/sh/boot/dts/Makefile using the old obj-y form. So convert them as
-well, to fix the build error when using CONFIG_BUILTIN_DTB.
+Add support for Adreno 612 GPU found in SM6150/QCS615 chipsets.
+A612 falls under ADRENO_6XX_GEN1 family and is a cut down version
+of A615 GPU.
 
-Fixes: 21bcc49974c2 ("sh: Migrate to the generic rule for built-in DTB")
-Signed-off-by: Florian Fuchs <fuchsfl@gmail.com>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+A612 has a new IP called Reduced Graphics Management Unit or RGMU
+which is a small state machine which helps to toggle GX GDSC
+(connected to CX rail) to implement IFPC feature. It doesn't support
+any other features of a full fledged GMU like clock control, resource
+voting to rpmh etc. So we need linux clock driver support like other
+gmu-wrapper implementations to control gpu core clock and gpu GX gdsc.
+This patch skips RGMU core initialization and act more like a
+gmu-wrapper case.
+
+Signed-off-by: Jie Zhang <quic_jiezh@quicinc.com>
+Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/686212/
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Stable-dep-of: e2f57c576f14 ("drm/msm/a6xx: check pm_runtime_resume_and_get during resume")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sh/boot/dts/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a6xx_catalog.c   | 16 ++++++++
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c       | 23 ++++++++++-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c       | 45 ++++++++++++++++-----
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c |  3 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c     |  1 +
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h     | 16 ++++++--
+ 6 files changed, 90 insertions(+), 14 deletions(-)
 
-diff --git a/arch/sh/boot/dts/Makefile b/arch/sh/boot/dts/Makefile
-index d109978a5eb9c..16e281b859ae2 100644
---- a/arch/sh/boot/dts/Makefile
-+++ b/arch/sh/boot/dts/Makefile
-@@ -1,2 +1,2 @@
- # SPDX-License-Identifier: GPL-2.0-only
--obj-$(CONFIG_BUILTIN_DTB) += $(addsuffix .dtb.o, $(CONFIG_BUILTIN_DTB_NAME))
-+dtb-y += $(addsuffix .dtb, $(CONFIG_BUILTIN_DTB_NAME))
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+index bbfee7fef6dc0..b4f9fa45e372f 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+@@ -703,6 +703,22 @@ static const struct adreno_info a6xx_gpus[] = {
+ 			{ 157, 3 },
+ 			{ 127, 4 },
+ 		),
++	}, {
++		.chip_ids = ADRENO_CHIP_IDS(0x06010200),
++		.family = ADRENO_6XX_GEN1,
++		.fw = {
++			[ADRENO_FW_SQE] = "a630_sqe.fw",
++			[ADRENO_FW_GMU] = "a612_rgmu.bin",
++		},
++		.gmem = (SZ_128K + SZ_4K),
++		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
++		.init = a6xx_gpu_init,
++		.a6xx = &(const struct a6xx_info) {
++			.hwcg = a612_hwcg,
++			.protect = &a630_protect,
++			.gmu_cgc_mode = 0x00000022,
++			.prim_fifo_threshold = 0x00080000,
++		},
+ 	}, {
+ 		.chip_ids = ADRENO_CHIP_IDS(0x06010500),
+ 		.family = ADRENO_6XX_GEN1,
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index 5e2df5250a50d..0085da1600ac6 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -350,12 +350,18 @@ static const struct a6xx_gmu_oob_bits a6xx_gmu_oob_bits[] = {
+ /* Trigger a OOB (out of band) request to the GMU */
+ int a6xx_gmu_set_oob(struct a6xx_gmu *gmu, enum a6xx_gmu_oob_state state)
+ {
++	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
++	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
+ 	int ret;
+ 	u32 val;
+ 	int request, ack;
+ 
+ 	WARN_ON_ONCE(!mutex_is_locked(&gmu->lock));
+ 
++	/* Skip OOB calls since RGMU is not enabled */
++	if (adreno_has_rgmu(adreno_gpu))
++		return 0;
++
+ 	if (state >= ARRAY_SIZE(a6xx_gmu_oob_bits))
+ 		return -EINVAL;
+ 
+@@ -395,10 +401,16 @@ int a6xx_gmu_set_oob(struct a6xx_gmu *gmu, enum a6xx_gmu_oob_state state)
+ /* Clear a pending OOB state in the GMU */
+ void a6xx_gmu_clear_oob(struct a6xx_gmu *gmu, enum a6xx_gmu_oob_state state)
+ {
++	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
++	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
+ 	int bit;
+ 
+ 	WARN_ON_ONCE(!mutex_is_locked(&gmu->lock));
+ 
++	/* Skip OOB calls since RGMU is not enabled */
++	if (adreno_has_rgmu(adreno_gpu))
++		return;
++
+ 	if (state >= ARRAY_SIZE(a6xx_gmu_oob_bits))
+ 		return;
+ 
+@@ -1878,7 +1890,8 @@ void a6xx_gmu_remove(struct a6xx_gpu *a6xx_gpu)
+ 	gmu->mmio = NULL;
+ 	gmu->rscc = NULL;
+ 
+-	if (!adreno_has_gmu_wrapper(adreno_gpu)) {
++	if (!adreno_has_gmu_wrapper(adreno_gpu) &&
++	    !adreno_has_rgmu(adreno_gpu)) {
+ 		a6xx_gmu_memory_free(gmu);
+ 
+ 		free_irq(gmu->gmu_irq, gmu);
+@@ -1948,6 +1961,13 @@ int a6xx_gmu_wrapper_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ 	/* Mark legacy for manual SPTPRAC control */
+ 	gmu->legacy = true;
+ 
++	/* RGMU requires clocks */
++	ret = devm_clk_bulk_get_all(gmu->dev, &gmu->clocks);
++	if (ret < 0)
++		goto err_clk;
++
++	gmu->nr_clocks = ret;
++
+ 	/* Map the GMU registers */
+ 	gmu->mmio = a6xx_gmu_get_mmio(pdev, "gmu", &start);
+ 	if (IS_ERR(gmu->mmio)) {
+@@ -1996,6 +2016,7 @@ int a6xx_gmu_wrapper_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ err_mmio:
+ 	iounmap(gmu->mmio);
+ 
++err_clk:
+ 	/* Drop reference taken in of_find_device_by_node */
+ 	put_device(gmu->dev);
+ 
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 62fa7252d7724..a2aae30f7d117 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -618,15 +618,26 @@ static void a6xx_set_hwcg(struct msm_gpu *gpu, bool state)
+ 
+ 	if (adreno_is_a630(adreno_gpu))
+ 		clock_cntl_on = 0x8aa8aa02;
+-	else if (adreno_is_a610(adreno_gpu))
++	else if (adreno_is_a610(adreno_gpu) || adreno_is_a612(adreno_gpu))
+ 		clock_cntl_on = 0xaaa8aa82;
+ 	else if (adreno_is_a702(adreno_gpu))
+ 		clock_cntl_on = 0xaaaaaa82;
+ 	else
+ 		clock_cntl_on = 0x8aa8aa82;
+ 
+-	cgc_delay = adreno_is_a615_family(adreno_gpu) ? 0x111 : 0x10111;
+-	cgc_hyst = adreno_is_a615_family(adreno_gpu) ? 0x555 : 0x5555;
++	if (adreno_is_a612(adreno_gpu))
++		cgc_delay = 0x11;
++	else if (adreno_is_a615_family(adreno_gpu))
++		cgc_delay = 0x111;
++	else
++		cgc_delay = 0x10111;
++
++	if (adreno_is_a612(adreno_gpu))
++		cgc_hyst = 0x55;
++	else if (adreno_is_a615_family(adreno_gpu))
++		cgc_hyst = 0x555;
++	else
++		cgc_hyst = 0x5555;
+ 
+ 	gmu_write(&a6xx_gpu->gmu, REG_A6XX_GPU_GMU_AO_GMU_CGC_MODE_CNTL,
+ 			state ? adreno_gpu->info->a6xx->gmu_cgc_mode : 0);
+@@ -720,6 +731,9 @@ static int a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
+ 		cfg->ubwc_swizzle = 0x7;
+ 	}
+ 
++	if (adreno_is_a612(gpu))
++		cfg->highest_bank_bit = 14;
++
+ 	if (adreno_is_a618(gpu))
+ 		cfg->highest_bank_bit = 14;
+ 
+@@ -1296,7 +1310,7 @@ static int hw_init(struct msm_gpu *gpu)
+ 		gpu_write(gpu, REG_A6XX_CP_LPAC_PROG_FIFO_SIZE, 0x00000020);
+ 
+ 	/* Setting the mem pool size */
+-	if (adreno_is_a610(adreno_gpu)) {
++	if (adreno_is_a610(adreno_gpu) || adreno_is_a612(adreno_gpu)) {
+ 		gpu_write(gpu, REG_A6XX_CP_MEM_POOL_SIZE, 48);
+ 		gpu_write(gpu, REG_A6XX_CP_MEM_POOL_DBG_ADDR, 47);
+ 	} else if (adreno_is_a702(adreno_gpu)) {
+@@ -1329,7 +1343,8 @@ static int hw_init(struct msm_gpu *gpu)
+ 	a6xx_set_ubwc_config(gpu);
+ 
+ 	/* Enable fault detection */
+-	if (adreno_is_a730(adreno_gpu) ||
++	if (adreno_is_a612(adreno_gpu) ||
++	    adreno_is_a730(adreno_gpu) ||
+ 	    adreno_is_a740_family(adreno_gpu))
+ 		gpu_write(gpu, REG_A6XX_RBBM_INTERFACE_HANG_INT_CNTL, (1 << 30) | 0xcfffff);
+ 	else if (adreno_is_a690(adreno_gpu))
+@@ -1584,7 +1599,7 @@ static void a6xx_recover(struct msm_gpu *gpu)
+ 	 */
+ 	gpu->active_submits = 0;
+ 
+-	if (adreno_has_gmu_wrapper(adreno_gpu)) {
++	if (adreno_has_gmu_wrapper(adreno_gpu) || adreno_has_rgmu(adreno_gpu)) {
+ 		/* Drain the outstanding traffic on memory buses */
+ 		a6xx_bus_clear_pending_transactions(adreno_gpu, true);
+ 
+@@ -2237,6 +2252,12 @@ static int a6xx_pm_resume(struct msm_gpu *gpu)
+ 	if (ret)
+ 		goto err_bulk_clk;
+ 
++	ret = clk_bulk_prepare_enable(gmu->nr_clocks, gmu->clocks);
++	if (ret) {
++		clk_bulk_disable_unprepare(gpu->nr_clocks, gpu->grp_clks);
++		goto err_bulk_clk;
++	}
++
+ 	if (adreno_is_a619_holi(adreno_gpu))
+ 		a6xx_sptprac_enable(gmu);
+ 
+@@ -2250,8 +2271,10 @@ static int a6xx_pm_resume(struct msm_gpu *gpu)
+ err_set_opp:
+ 	mutex_unlock(&a6xx_gpu->gmu.lock);
+ 
+-	if (!ret)
++	if (!ret) {
+ 		msm_devfreq_resume(gpu);
++		a6xx_llc_activate(a6xx_gpu);
++	}
+ 
+ 	return ret;
+ }
+@@ -2292,6 +2315,8 @@ static int a6xx_pm_suspend(struct msm_gpu *gpu)
+ 
+ 	trace_msm_gpu_suspend(0);
+ 
++	a6xx_llc_deactivate(a6xx_gpu);
++
+ 	msm_devfreq_suspend(gpu);
+ 
+ 	mutex_lock(&a6xx_gpu->gmu.lock);
+@@ -2303,6 +2328,7 @@ static int a6xx_pm_suspend(struct msm_gpu *gpu)
+ 		a6xx_sptprac_disable(gmu);
+ 
+ 	clk_bulk_disable_unprepare(gpu->nr_clocks, gpu->grp_clks);
++	clk_bulk_disable_unprepare(gmu->nr_clocks, gmu->clocks);
+ 
+ 	pm_runtime_put_sync(gmu->gxpd);
+ 	dev_pm_opp_set_opp(&gpu->pdev->dev, NULL);
+@@ -2681,7 +2707,8 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
+ 		ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs_a7xx, 4);
+ 	else if (is_a7xx)
+ 		ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs_a7xx, 1);
+-	else if (adreno_has_gmu_wrapper(adreno_gpu))
++	else if (adreno_has_gmu_wrapper(adreno_gpu) ||
++		 of_device_is_compatible(node, "qcom,adreno-rgmu"))
+ 		ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs_gmuwrapper, 1);
+ 	else
+ 		ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs, 1);
+@@ -2697,7 +2724,7 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
+ 	if (adreno_is_a618(adreno_gpu) || adreno_is_7c3(adreno_gpu))
+ 		priv->gpu_clamp_to_idle = true;
+ 
+-	if (adreno_has_gmu_wrapper(adreno_gpu))
++	if (adreno_has_gmu_wrapper(adreno_gpu) || adreno_has_rgmu(adreno_gpu))
+ 		ret = a6xx_gmu_wrapper_init(a6xx_gpu, node);
+ 	else
+ 		ret = a6xx_gmu_init(a6xx_gpu, node);
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+index cdd1a27ab8106..da07e01b1f0c3 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+@@ -1599,7 +1599,8 @@ struct msm_gpu_state *a6xx_gpu_state_get(struct msm_gpu *gpu)
+ 	/* Get the generic state from the adreno core */
+ 	adreno_gpu_state_get(gpu, &a6xx_state->base);
+ 
+-	if (!adreno_has_gmu_wrapper(adreno_gpu)) {
++	if (!adreno_has_gmu_wrapper(adreno_gpu) &&
++	    !adreno_has_rgmu(adreno_gpu)) {
+ 		a6xx_get_gmu_registers(gpu, a6xx_state);
+ 
+ 		a6xx_state->gmu_log = a6xx_snapshot_gmu_bo(a6xx_state, &a6xx_gpu->gmu.log);
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index ef9798492bcee..08c413c748b67 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -1195,6 +1195,7 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+ 
+ 	/* Only handle the core clock when GMU is not in use (or is absent). */
+ 	if (adreno_has_gmu_wrapper(adreno_gpu) ||
++	    adreno_has_rgmu(adreno_gpu) ||
+ 	    adreno_gpu->info->family < ADRENO_6XX_GEN1) {
+ 		/*
+ 		 * This can only be done before devm_pm_opp_of_add_table(), or
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+index 390fa6720d9b0..25ee6b277fe2d 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+@@ -392,6 +392,16 @@ static inline int adreno_is_a610(const struct adreno_gpu *gpu)
+ 	return adreno_is_revn(gpu, 610);
+ }
+ 
++static inline int adreno_is_a612(const struct adreno_gpu *gpu)
++{
++	return gpu->info->chip_ids[0] == 0x06010200;
++}
++
++static inline bool adreno_has_rgmu(const struct adreno_gpu *gpu)
++{
++	return adreno_is_a612(gpu);
++}
++
+ static inline int adreno_is_a618(const struct adreno_gpu *gpu)
+ {
+ 	return adreno_is_revn(gpu, 618);
+@@ -466,9 +476,9 @@ static inline int adreno_is_a610_family(const struct adreno_gpu *gpu)
+ {
+ 	if (WARN_ON_ONCE(!gpu->info))
+ 		return false;
+-
+-	/* TODO: A612 */
+-	return adreno_is_a610(gpu) || adreno_is_a702(gpu);
++	return adreno_is_a610(gpu) ||
++	       adreno_is_a612(gpu) ||
++	       adreno_is_a702(gpu);
+ }
+ 
+ /* TODO: 615/616 */
 -- 
 2.53.0
 
