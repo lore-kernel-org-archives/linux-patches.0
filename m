@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056589;
-	b=zaPuWgonxi3aQT5/Hz8gI7hlUX0k5Dd/4QkErjEXxzbhdK4NMNLgsRcpEwajU8lsk4Dm
-	 N5SY6c2PkX0sYJlxmnRQ/5vJE/sKxIHGYqZ8LyMXo49Rgwg6w3ulPYfVoWNIW7kqPj71T
-	 hnNTbVG4TWMT95yFQTg8Q5RC01lKzR4YfaErjkYYv7C+G2+DtYZa13Po3kWfjkxGh0ad1
-	 Px/B/s9yLOPB676ZOTtgFDPNnowHKq8RFiiZ/vzJ0crLo+7U+6tzGzL7I6AC79hU+tbMS
-	 OPgzKcV4H1EEQjPu51wgNERoV0E296Qnefqqo0nL/NeDsEewt0ARpsdW4j2zwf4atew==
+	t=1795056592;
+	b=CPVca7YZGrZZahF/OD2APXAmCTGgJavGWjsU7xDw9Xnj8dLZtTz89SFh0G3y1oJYQnfv
+	 raX/OaXYPlPERlDNbpf8Cz2S41wtbSier2SMIc9jCtXjvh+2ku40661YfsCBVZXV2BQsV
+	 NmzH9heEcJCQ9rqVpLq6260S2jIFO7SDEyhGeuDp7oxPQWp0TKiV6U87njuk5djt4/eZA
+	 C1UWO9D9j1Pf1rnaWDUCfmM1K0nvQV+P9Cep60GGVXeCotdscCu4+DjcYE1lebHC8z6id
+	 7EiWrz924GMSyWdbkjt2d94VQ6U4H4YYCCuWDFu0PL6y6LtxcVvhZqKfRbxHPdpheww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056589;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056592;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+xOksTeryO0ZXLsVT/lQmaX316wBcWa+QrTo/RIYZXY=;
-	b=qN+qYvNRHaThhtPWq4Phcl2GfaCN3WeglaekU0SQ4DnsIzt8hP/u1p8Jci3NY8pMD5Dz
-	 BQ8GSyhfm/LUsqM2qv+v+3xfXhKlhy5fNkcL10KMYbuJtw7sPhfsJwa3j23AF74QYDR8h
-	 X0u+WHC/xCvqN4RQ8Gb5/7++ngMEqV6j3R/m55PGzU8wf7U01q8gl5CjQJJegepwkhXbl
-	 +dud8+ip/c77PEywDin7WA1q0Hwh5t0rGjgFOgQ/YkbvmI4NV5c1WulTaKf3yDzPVaqvS
-	 QijfBtYdD/IYUK4kT9ZJUfdbdfD3PqKhqsdH2PqbUJFABBOzdzCaz/TGR57DcjNDlHQ==
+	bh=pvtJRYpbyJgU0OIbD+BpsIaKtfWydgexqPIpD+GVj08=;
+	b=mjxUImIEONUYMt1lzaNZmKrEt2sJMinqnpSB2EX87bACzFhgQrAig6BOvQrZNSvYQ70s
+	 lpMpUepIN0LZ3U5HrUWBI4L7tP3zX8eNJ1bDDuky6+AxHfjq+dA1Xyvr2l6DnheZKfDUu
+	 XX6mG4dOJWHSiGKzE2CQOGK+eHByj40VQZxA7bCUMJJCV8xCvmRaD9YCRWMEcLo0JbxjH
+	 NZmitLGdKi7PhFMZI3cLFj4OibFHqpEts7ac71lBXUDnop9KSCMkejrhJsQy3QC5FHv9k
+	 0TuyJCKuE4cwrnhFlI8NGCIKiwiWXLfuTQRESDgndfHRrq2jfObiHlxbNx+W+CkcQ9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tx46vjun;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=anue2JQR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32FD606A325;
-	Thu, 19 Nov 2026 02:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E01606A31C;
+	Thu, 19 Nov 2026 02:49:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tx46vjun
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 430D11F000C4;
-	Thu, 19 Nov 2026 02:49:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=anue2JQR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25C761F000C4;
+	Thu, 19 Nov 2026 02:49:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056588;
-	bh=+xOksTeryO0ZXLsVT/lQmaX316wBcWa+QrTo/RIYZXY=;
+	s=korg; t=1795056591;
+	bh=pvtJRYpbyJgU0OIbD+BpsIaKtfWydgexqPIpD+GVj08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tx46vjunXHPK4QXL2ZPzEuh2/A+ro+oEaUq0Nk4o+Lgjpo3m83/9o77iGKL/XFGRI
-	 N7tZ00QS5EWQukBU2FOb6ZKBoxkGJTPYPlNrcKhz/5vfhM/iBYyUvj4iqWdTnvpjxV
-	 9+kW6Zi9bTnyA+Xm4za8wYVs5QH1aqk9MF7CZULM=
+	b=anue2JQRs7uaYNXgD8esWr+fIExUTqddPGUULsvqGdRX0c08XPT0bvw9eFXuEuhps
+	 DnscR1SgSNKpsu9aGgaj3FfSbAMKTgMRGoIN8NZ4tMFGTcR2aOPVmnM7zTwkvAuMa8
+	 gqCqKHdOZtm6ZuOUrd9NmIBPKsYtj11Vze6ZehnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Velkov <iav@iav.lv>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Mikhail Zhilkin <csharper2005@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2034/2214] power: supply: gpio-charger: Report discharging without input power
-Date: Wed, 18 Nov 2026 16:01:50 +0100
-Message-ID: <20261118150132.118366761@linuxfoundation.org>
+Subject: [PATCH 5.15 2043/2214] dt-bindings: Add Sercomm (Suzhou) Corporation vendor prefix
+Date: Wed, 18 Nov 2026 16:01:59 +0100
+Message-ID: <20261118150132.441929156@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,45 +69,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Velkov <iav@iav.lv>
+From: Mikhail Zhilkin <csharper2005@gmail.com>
 
-[ Upstream commit f0f400459bf6a037e70768de623fff3f8920b8bb ]
+[ Upstream commit d217c4d968bb590e5aa1ff7d02f680c9ba5c1cec ]
 
-The status property follows only the charge-status GPIO. Without input
-power a charger such as the BQ24133 releases its open-drain STAT pin,
-and depending on the board the GPIO then reads as charging.
+Add "sercomm" vendor prefix for "Sercomm (Suzhou) Corporation".
 
-On Kobol Helios64 the board runs from its battery after a mains loss,
-and the charger reports online 0 with status "Charging".
+Company website:
+Link: https://www.sercomm.com/
 
-Report "Discharging" whenever the online GPIO is present and inactive.
-
-Fixes: df68c44c720a ("power: supply: gpio-charger: Add support for charger status.")
-Assisted-by: LLM
-Signed-off-by: Igor Velkov <iav@iav.lv>
-Link: https://patch.msgid.link/20261018-gpio-charger-offline-v2-1-482795f9e27c@iav.lv
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Mikhail Zhilkin <csharper2005@gmail.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20220516151637.885324-1-csharper2005@gmail.com
+Stable-dep-of: f4ba4f8cc8e8 ("dt-bindings: vendor-prefixes: Add Sensylink")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/gpio-charger.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/power/supply/gpio-charger.c b/drivers/power/supply/gpio-charger.c
-index 6139f736ecbe4..fba7b0616059c 100644
---- a/drivers/power/supply/gpio-charger.c
-+++ b/drivers/power/supply/gpio-charger.c
-@@ -100,7 +100,10 @@ static int gpio_charger_get_property(struct power_supply *psy,
- 		val->intval = gpiod_get_value_cansleep(gpio_charger->gpiod);
- 		break;
- 	case POWER_SUPPLY_PROP_STATUS:
--		if (gpiod_get_value_cansleep(gpio_charger->charge_status))
-+		/* Without input power the battery discharges, whatever the status pin says */
-+		if (gpio_charger->gpiod && !gpiod_get_value_cansleep(gpio_charger->gpiod))
-+			val->intval = POWER_SUPPLY_STATUS_DISCHARGING;
-+		else if (gpiod_get_value_cansleep(gpio_charger->charge_status))
- 			val->intval = POWER_SUPPLY_STATUS_CHARGING;
- 		else
- 			val->intval = POWER_SUPPLY_STATUS_NOT_CHARGING;
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index 5f4114bcb2e64..c538bd92b7af3 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -1064,6 +1064,8 @@ patternProperties:
+     description: Sensirion AG
+   "^sensortek,.*":
+     description: Sensortek Technology Corporation
++  "^sercomm,.*":
++    description: Sercomm (Suzhou) Corporation
+   "^sff,.*":
+     description: Small Form Factor Committee
+   "^sgd,.*":
 -- 
 2.53.0
 
