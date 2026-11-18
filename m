@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051958;
-	b=gNea/KbzvzXtcyEfQxVciN+psyuovusbrO6yFf576IcZjKCy6BJ9mA9pkbksnXO2xEoX
-	 WmAfmLLZ5PV3tQgpUDM9ZjczrPYoLciSchzz7r/JpnryOSdwrQnzMcbfUuygu5tNtVblc
-	 zkzeOyJdMp4DlwABc4sTFnJ83OdlwWPHH3uFsy6jnOhlg2D/jgwAxZfLMvYAKUz1GiAb9
-	 4FCxONQccm+eV53p6fbYsvaT2kBLypyGjnUAu+TyrtkL3e5GjlmmfcqleqgFZZsGKNQ0Z
-	 /lsDlhqKD124YicUlVRY5SKAt86mq/xkFSJOnBXzL8WJyGguTleNAVYu/kDV4txBQ5A==
+	t=1795051960;
+	b=Gouww5W2tVHcRmtKAHpqPc1zTjpJNc8muJ5mXn46ENrzG4MX/7pjcPl5Zqgnz+Ygi9Ix
+	 v4zrd/ZskxVMf4dZwG1uuevdbi524ruJ6rJHK+0XIRxSEEa6c3bz1u04ml4fL11s2k/Qd
+	 t0W9nBIpwU5c++WiiwUO/krM6OICWaEjGTjM/8KOBlLrO83Q4yzYGo8FhmFbton9T3ER8
+	 MftlonWpsWZRMMwN0vHSBnlYdrVdJ5JZHikeR6PiWFA2MO0Gm0ycNPl24g1bzXZf6i4/o
+	 C5NzsYRY5hCbA0yiHrufSSmWFxQT+Rarba3Dz4ALp1/3jmT/gKUaHNtSO7zgVmt/fdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051958;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051960;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mmpOiELadD7A2TQMFg3DtnlpTxCGRp1G7MuSJBAgnyU=;
-	b=IuYc1nMT/F1BdALHOTvXhGjKlvwbdehMdaEvFoFi6zML1xQ3gM2KUlQRjIMM5bbi8MWF
-	 yY7lpMxjjxhS5379GVlfWJlq8sCLea0jGGb0wMoPhxiw+tQ9C53F/d8Sbpq/OfQwu64ea
-	 Mk0nyJLHjwRZ8LvXIJsHLj/peUQMThDuDAIVDy2U3fwqE2DMrTgdIPVIwHwScUi+Rf3OC
-	 I++QkLSWqf+plsk1BQCHJevGWeLDZmpx49FYO6Jz8JhEWXILY7/e1MreA1Ogl5FuYQXjB
-	 KjzAdDoGJ+XJAexa/FPDKISd7OfTvFlRA/SatIE624jP5wlc+VGzLiHi1743CAkLHlg==
+	bh=L+83/+/kULK5u8N7zS0GnRbwBCV/WKfY1q6aS8Sd8mE=;
+	b=nVmRLnMVUSlDNuPRsN1v549Gb+OKKHT4xGuNTQCCG4g6zoVsx6ZJHL5FwvRJwHnGHsgs
+	 GULkF6dI9DENK4SFHMNrJH/nG7NjZr9sntN+QUnXmKmLxLNKSFEvfek9mDMtACEOGlrM0
+	 asQ62bHf6crioGhNlB1f2ddedioyv4s3BqHmY+l8qY6ty5hRgQa2rOjKEyTeIslcSKPtE
+	 11u30Q4xKIwkDYvqHJ7RJPQAkxeCsVL7JbnRUUNG9Lt60EIkm332E4mT6XO5Zhji7Q1TU
+	 C91zwHQ3+o9B6AbtBXp+KLGUDR8Ask95vdGCq/IHkUL8LI+JuCUUKh7HtRabv186Lkw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=giZy7zwA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Du8lT83X;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C909606A331;
-	Thu, 19 Nov 2026 01:32:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC65606A330;
+	Thu, 19 Nov 2026 01:32:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=giZy7zwA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 076021F000C4;
-	Thu, 19 Nov 2026 01:32:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Du8lT83X
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C51B41F000C4;
+	Thu, 19 Nov 2026 01:32:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051957;
-	bh=mmpOiELadD7A2TQMFg3DtnlpTxCGRp1G7MuSJBAgnyU=;
+	s=korg; t=1795051960;
+	bh=L+83/+/kULK5u8N7zS0GnRbwBCV/WKfY1q6aS8Sd8mE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=giZy7zwA62XAwh7AB36ZAvbeU4aNTtIDbNzumuX+G30jzryiogtr3jKhBrJYjHbMG
-	 2gEnVd3VZkoWmLlh8R0fA0LufA1y9xn3lvea+7BRGBLKVqNsI2CGpjJN9jypl8oNTx
-	 pnp4NbkpQS4g8BuF6G/fKcdAnX+sXZsbvsmAdzhk=
+	b=Du8lT83Xa38oj1Ljr88w54LZwAWAZExmM8B5Qav13zwaW/DextXEo0Rmqb6Ge7IPO
+	 ocbSwcRtYomfcXiQdw+BLErNSmUBNYBKFs6VGYCY0WRKb3LywQZEvy6JgQpl9fa5Rs
+	 tMHdWM3RZTwntjLf7NJaWRSEnCjfubiZOvvq+cjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zikang Gao <2715417602@qq.com>,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>,
+	owen kwan <owen@verialabs.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0392/2214] smb: client: do not pass a NULL buf to is_oplock_break()
-Date: Wed, 18 Nov 2026 15:34:28 +0100
-Message-ID: <20261118150026.350210470@linuxfoundation.org>
+Subject: [PATCH 5.15 0393/2214] net/sched: sch_teql: fix use-after-free on lower qdisc drop
+Date: Wed, 18 Nov 2026 15:34:29 +0100
+Message-ID: <20261118150026.386609755@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,87 +70,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zikang Gao <2715417602@qq.com>
+From: owen kwan <owen@verialabs.com>
 
-[ Upstream commit 2225ab306575e424b3dad2ee1be2521c89249d15 ]
+[ Upstream commit 782d6bb8f9b8e9d8591181662222bf74cd3ecf79 ]
 
-receive_encrypted_read() sets *num_mids = 1 and never writes the
-caller's bufs[]. Offload returns -1 with *num_mids = 0, so the
-demultiplex thread skips the frame. The inline decrypt path
-returns 0 even when smb2_find_mid() fails.
+The issue: teql_master_xmit() tests the slave's ndo_start_xmit() return
+value against NETDEV_TX_OK alone. A slave that consumes the skb but
+returns an error code (rc < NET_XMIT_MASK, e.g. NET_XMIT_DROP) is treated
+as if the skb were still owned, so the loop restores skb->dev and calls
+__skb_pull() on it. A VLAN slave returns the result of dev_queue_xmit()
+from its ndo_start_xmit() (propagated since cbbef5e18307), and when the
+lower qdisc drops the packet that value is NET_XMIT_DROP after the skb
+has been freed, giving a use-after-free in teql_master_xmit().
 
-cifs_demultiplex_thread() then treats mids[i] == NULL as an
-oplock break and calls is_oplock_break(bufs[i], server) with
-bufs[i] still NULL. smb2_is_valid_oplock_break() reads
-hdr.Command at offset 12 and oopses.
+The Fix: test for consumption with dev_xmit_complete(), which accepts
+NETDEV_TX_OK and every rc < NET_XMIT_MASK, matching other callers that
+need to distinguish consumed results from busy. Only NETDEV_TX_OK keeps
+the packet counted in tx_packets/tx_bytes and advances the slave; a
+consumed result that is neither a success nor NET_XMIT_CN ends the
+attempt and is charged to tx_dropped, so lower-qdisc drops are no longer
+reported as good transmits. NET_XMIT_CN is counted like success because
+it can accompany acceptance of the current packet: pfifo_head_drop drops
+the old head, enqueues the current skb and returns NET_XMIT_CN.
 
-A large encrypted READ whose MessageId does not match is enough
-to panic cifsd.
+Conditions to recreate the bug:
+With CONFIG_NET_SCH_TEQL,
+CONFIG_VLAN_8021Q and CONFIG_DUMMY enabled, add lkrdummy0 (dummy) and
+lkrvlan0 (VLAN id 37 on lkrdummy0); set a pfifo limit 0 root on lkrdummy0
+and a teql0 root on lkrvlan0; bring teql0 up with an address and send one
+UDP packet to it. The VLAN xmit returns NET_XMIT_DROP from the lower
+qdisc while holding a freed skb.
 
-    Oops: general protection fault, probably for non-canonical address
-    0xdffffc0000000001: 0000 [#1] SMP KASAN PTI
-    KASAN: null-ptr-deref in range
-    [0x0000000000000008-0x000000000000000f]
-    CPU: 0 PID: 100 Comm: cifsd
-    RIP: smb2_is_valid_oplock_break+0xc8/0x2270 [cifs]
-    cifs_demultiplex_thread
-    Kernel panic - not syncing: Fatal exception
-
-Return -1 when inline decrypt finds no mid, and skip
-is_oplock_break() plus the unknown-frame dump when bufs[i]
-is NULL. receive_encrypted_standard() already assigns
-bufs[*num_mids].
-
-Fixes: c42a6abe3012 ("CIFS: Add capability to decrypt big read responses")
-Assisted-by: LLM
-Signed-off-by: Zikang Gao <2715417602@qq.com>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Fixes: 572a9d7b6fc7 ("net: allow to propagate errors through ->ndo_hard_start_xmit()")
+Link: https://lore.kernel.org/netdev/179248763469.3135.1739559328868319628@kernel.org/
+Link: https://lore.kernel.org/netdev/20261023162821.GN708417@horms.kernel.org/
 Cc: stable@vger.kernel.org
-[ sashal: Added braces around the existing single-statement missing-MID branch. ]
+Signed-off-by: owen kwan <owen@verialabs.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/QDISC-Y0BY.v2.r0.20261024060625-2@mojatatu.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ sashal: Omitted rcu_read_unlock() because teql_master_xmit() has no corresponding RCU read lock. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/connect.c | 4 +++-
- fs/cifs/smb2ops.c | 5 +++--
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ net/sched/sch_teql.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/fs/cifs/connect.c b/fs/cifs/connect.c
-index a91d3f6ae5be6..98a3e25c107db 100644
---- a/fs/cifs/connect.c
-+++ b/fs/cifs/connect.c
-@@ -1089,12 +1089,14 @@ cifs_demultiplex_thread(void *p)
- 					mids[i]->callback(mids[i]);
+diff --git a/net/sched/sch_teql.c b/net/sched/sch_teql.c
+index 00ac4386627c7..9057d4f2ee5c6 100644
+--- a/net/sched/sch_teql.c
++++ b/net/sched/sch_teql.c
+@@ -311,19 +311,23 @@ static netdev_tx_t teql_master_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		case 0:
+ 			if (__netif_tx_trylock(slave_txq)) {
+ 				unsigned int length = qdisc_pkt_len(skb);
++				int rc = NETDEV_TX_BUSY;
  
- 				cifs_mid_q_entry_release(mids[i]);
--			} else if (server->ops->is_oplock_break &&
-+			} else if (bufs[i] && server->ops->is_oplock_break &&
- 				   server->ops->is_oplock_break(bufs[i],
- 								server)) {
- 				smb2_add_credits_from_hdr(bufs[i], server);
- 				cifs_dbg(FYI, "Received oplock break\n");
- 			} else {
-+				if (!bufs[i])
-+					continue;
- 				cifs_server_dbg(VFS, "No task to wake, unknown frame received! NumMids %d\n",
- 						atomic_read(&midCount));
- 				cifs_dump_mem("Received Data is: ", bufs[i],
-diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
-index 781fe599dda7e..348168c9b7617 100644
---- a/fs/cifs/smb2ops.c
-+++ b/fs/cifs/smb2ops.c
-@@ -5208,9 +5208,10 @@ receive_encrypted_read(struct TCP_Server_Info *server, struct mid_q_entry **mid,
- 		goto free_pages;
- 
- 	*mid = smb2_find_mid(server, buf);
--	if (*mid == NULL)
-+	if (*mid == NULL) {
- 		cifs_dbg(FYI, "mid not found\n");
--	else {
-+		rc = -1;
-+	} else {
- 		cifs_dbg(FYI, "mid found\n");
- 		(*mid)->decrypted = true;
- 		rc = handle_read_data(server, *mid, buf,
+ 				skb->dev = slave;
+-				if (!netif_xmit_frozen_or_stopped(slave_txq) &&
+-				    netdev_start_xmit(skb, slave, slave_txq, false) ==
+-				    NETDEV_TX_OK) {
+-					__netif_tx_unlock(slave_txq);
++				if (!netif_xmit_frozen_or_stopped(slave_txq))
++					rc = netdev_start_xmit(skb, slave, slave_txq, false);
++				__netif_tx_unlock(slave_txq);
++				if (dev_xmit_complete(rc)) {
++					if (rc != NETDEV_TX_OK && rc != NET_XMIT_CN) {
++						master->tx_dropped++;
++						return NETDEV_TX_OK;
++					}
+ 					master->slaves = NEXT_SLAVE(q);
+ 					netif_wake_queue(dev);
+ 					master->tx_packets++;
+ 					master->tx_bytes += length;
+ 					return NETDEV_TX_OK;
+ 				}
+-				__netif_tx_unlock(slave_txq);
+ 			}
+ 			if (netif_xmit_stopped(netdev_get_tx_queue(dev, 0)))
+ 				busy = 1;
 -- 
 2.53.0
 
