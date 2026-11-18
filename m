@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029032;
-	b=c6UoIayhDRq9mL5KsXg/N6nuNAulVV/G4L2K531w//hQekEUEIsJ4VFzB3OueMi+ve/H
-	 7LFnW4Gtem+viX+/AHg9QO1ZYfl94D9T9ZspbGskzax/b9sZSn9jUeql42vAWxClXtyU9
-	 VQMONQJMBYgf84JhB9JuwngI/KJRRffW/LtTsWRGvOrZ/fObSFzYMNvtRs4y53ysPJK4C
-	 gDbFcPlQkQXKabDlVDMEWmKpxsj/2REIGrHonuw7EoKhlHZeG0WAfa8AaJgBJGPG+dZP/
-	 LxpV8qUsqeWS8+R4DsGIZw1Pp5yb4vRebrzpGsXaktGBIS+j06rh/WsjJp5gYMle6UA==
+	t=1795029035;
+	b=ZG+taH6v7mt84omneab5XcIqCHZYSPgwW6im81NcG1fur48w0ntZ12a4GJGid8dGgN89
+	 CPZnEyRjkALlmPu6rcXUUUrn05tJxBso4K/+igkpl6V1w4wqH02hKU9+QhspAqO71d+sD
+	 KlBqf9PAtecCpnM01G2KEQa28oIil6Swhy7dWJaqXyOs5kFf0UeO7lNfw2AqkdIHjVIps
+	 iJduE5Nuh3liqBpXJyDv4kSe1fF9cpLQA9tohStx2yAbEEQW+fC9ciJq5sb2D5qSYghAQ
+	 dP7rO1q0LaP9xBqAa+nUgt94dtqUIVsLjLGgla2akCDGHrPZPJRMltuGUI6NSCcCF3w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029032;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029035;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eaQGNCHRheLMhioyV3RHB5jw9cGFpTECgIcdOq29Ef8=;
-	b=L2ZZI8DtdB3tGi8xxs/Etw+A041C5wImaP07peXg2HLwA7HctszvT01af3ywA3xgO2vo
-	 3ug5uTcf1ktR4nDGWscxUNWggzR8Xpnii8N5Y6gc2Gc2mzAg7TW3bW2oaw4oj4dzRB7ge
-	 qFZNL31kDIhmUKTA+D7QDHg6ef+ohMSBW/+MaTztVRGBWHuNs8R5u9Kkx0P6Pzw1bR02y
-	 jYr5ZzW+tBXssA0w539veuo9O2w2V/EfOAyY4jK/FSH0mZ3CPv960gwQBmdyJHXqSVo90
-	 DrLGs4dijGA8ah1oYe3WjvF9jrp9hj7qgVsIyD8yBfm+QKeuUY0p9h/mQ6TySzp+z6w==
+	bh=yLosPnvm0MXEft4/dfAEjcnRwRbG5Hi1kvZFAQjkqts=;
+	b=qL6mupA2pL58jHEh9jsBsy9lLAngZb8jkXfgqQcvJW70EWk6eHvxXcolUuNw6uoc1znw
+	 nk+jWQ4ik6yDi6se3fFABmi4/9VGdTrGyIZbCOjbkoL9uQF6AQDUuZD9t0oCAmmyHJIVz
+	 Lq3Zo72igU0VvOsH0ZZNp8thvJmqwnxAwkJGAj2FA5HJlqSn7ikcpkCayP17AkkQLU6xD
+	 rfjHYox1iwCq79VVitaR2W/ZEBH6xmix/FmBOOoqLXgX68kuQKJVJFaSQc7I6QrTX5X4+
+	 W7Svx+8mzRxy8MwzlO0mrXn2KrKxs9Q2bs5j58s0XM+93JBgdzwZm9feHbNmI26EnMA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DSSmcm81;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1bDuw6ID;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B31CD606A32C;
-	Wed, 18 Nov 2026 19:10:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D59D60A2617;
+	Wed, 18 Nov 2026 19:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DSSmcm81
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 184961F000C4;
-	Wed, 18 Nov 2026 19:10:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1bDuw6ID
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF14C1F000C4;
+	Wed, 18 Nov 2026 19:10:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029032;
-	bh=eaQGNCHRheLMhioyV3RHB5jw9cGFpTECgIcdOq29Ef8=;
+	s=korg; t=1795029035;
+	bh=yLosPnvm0MXEft4/dfAEjcnRwRbG5Hi1kvZFAQjkqts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DSSmcm81/8CK19LqSb/NAuJnJf4YHOVhckvZz6YXBC+aPzNYQXvr5C9wu/MiDckB5
-	 FvrvLxd0W4swYuLGE7yPa78AcUrhMza+vKsqJXw5Chtm1EGIJXz2fYUyhVUS0KvLjl
-	 RxLlYGu9kpB49VHDOE1eXOmbd3PVifNXYHU5f4Jc=
+	b=1bDuw6ID+yI3FhcV6ZHII9xx+y/GpspOJRGRR5BAfA3VzYDC7Xps7DRWJ2F59tU0v
+	 sRr+naZ1qsybC5Wn7+p2ZbTTuMOXNwVielUr9/RjdeITBeGfolrAklHdooO0LwluSc
+	 2EOdSZvjVIpT4uYdTQhOlDxp+MHdZmeb67nDhP4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Aring <aahringo@redhat.com>,
-	David Teigland <teigland@redhat.com>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0204/1756] dlm: fix variable key length lookup
-Date: Wed, 18 Nov 2026 15:38:51 +0100
-Message-ID: <20261118150016.485288838@linuxfoundation.org>
+Subject: [PATCH 6.12 0205/1756] remoteproc: imx_dsp_rproc: Add support of recovery and coredump process
+Date: Wed, 18 Nov 2026 15:38:52 +0100
+Message-ID: <20261118150016.522500521@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,108 +69,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Aring <aahringo@redhat.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit b4e6ae7ba711758c38d5eb7d5a7a0712273bdf6f ]
+[ Upstream commit c4c432dfb00fcb69d56cc9778f527cce71cec9bb ]
 
-Before commit 6c648035cbe7 ("dlm: switch to use rhashtable for rsbs")
-the rsb hashtable was dynamic key length. Accidentally it was changed to
-switch to static key length which can end in different results. We
-fixing this back to the original behaviour by adding the necessary
-functionality to rhashtable to handle the objects and lookups as dynamic
-key lengths.
+When enabled FW recovery, but is broken because software reset is missed
+in this recovery flow. So move software reset from
+imx_dsp_runtime_resume() to .load() and clear memory before loading
+firmware to make recovery work.
 
-Fixes: 6c648035cbe7 ("dlm: switch to use rhashtable for rsbs")
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
+Add call rproc_coredump_set_elf_info() to initialize the elf info for
+coredump, otherwise coredump will report error "ELF class is not set".
+
+Fixes: ec0e5549f358 ("remoteproc: imx_dsp_rproc: Add remoteproc driver for DSP on i.MX")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
+Link: https://lore.kernel.org/r/20250722075225.544319-1-shengjiu.wang@nxp.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Stable-dep-of: 13df1fa4f1a3 ("remoteproc: imx_dsp: Acquire runtime PM before adding carveouts")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dlm/config.c       | 30 ++++++++++++++++++++++++++++--
- fs/dlm/dlm_internal.h |  5 +++++
- fs/dlm/lock.c         |  6 ++++--
- 3 files changed, 37 insertions(+), 4 deletions(-)
+ drivers/remoteproc/imx_dsp_rproc.c | 45 +++++++++++++++++++-----------
+ 1 file changed, 29 insertions(+), 16 deletions(-)
 
-diff --git a/fs/dlm/config.c b/fs/dlm/config.c
-index eac96f1c1d742..a523df1a1a735 100644
---- a/fs/dlm/config.c
-+++ b/fs/dlm/config.c
-@@ -63,11 +63,37 @@ static void release_node(struct config_item *);
- static struct configfs_attribute *comm_attrs[];
- static struct configfs_attribute *node_attrs[];
- 
-+static u32 rsb_hashfn(const void *data, u32 len, u32 seed)
-+{
-+	const struct dlm_rsb_key *key = data;
-+
-+	return jhash(key->name, key->len, 0);
-+}
-+
-+static u32 rsb_obj_hashfn(const void *data, u32 len, u32 seed)
-+{
-+	const struct dlm_rsb *r = data;
-+
-+	return r->res_hash;
-+}
-+
-+static int rsb_obj_cmpfn(struct rhashtable_compare_arg *arg, const void *obj)
-+{
-+	const struct dlm_rsb_key *key = arg->key;
-+	const struct dlm_rsb *r = obj;
-+
-+	if (key->len != r->res_length)
-+		return -1;
-+
-+	return memcmp(&r->res_name, key->name, key->len);
-+}
-+
- const struct rhashtable_params dlm_rhash_rsb_params = {
- 	.nelem_hint = 3, /* start small */
--	.key_len = DLM_RESNAME_MAXLEN,
--	.key_offset = offsetof(struct dlm_rsb, res_name),
- 	.head_offset = offsetof(struct dlm_rsb, res_node),
-+	.hashfn = rsb_hashfn,
-+	.obj_hashfn = rsb_obj_hashfn,
-+	.obj_cmpfn = rsb_obj_cmpfn,
- 	.automatic_shrinking = true,
- };
- 
-diff --git a/fs/dlm/dlm_internal.h b/fs/dlm/dlm_internal.h
-index d534a4bc162bb..08b903fbce589 100644
---- a/fs/dlm/dlm_internal.h
-+++ b/fs/dlm/dlm_internal.h
-@@ -340,6 +340,11 @@ struct dlm_rsb {
- 	char			res_name[DLM_RESNAME_MAXLEN+1];
- };
- 
-+struct dlm_rsb_key {
-+	char name[DLM_RESNAME_MAXLEN];
-+	size_t len;
-+};
-+
- /* dlm_master_lookup() flags */
- 
- #define DLM_LU_RECOVER_DIR	1
-diff --git a/fs/dlm/lock.c b/fs/dlm/lock.c
-index 431534e956f0e..74af60296e099 100644
---- a/fs/dlm/lock.c
-+++ b/fs/dlm/lock.c
-@@ -625,12 +625,14 @@ static int get_rsb_struct(struct dlm_ls *ls, const void *name, int len,
- int dlm_search_rsb_tree(struct rhashtable *rhash, const void *name,
- 			unsigned int len, struct dlm_rsb **r_ret)
+diff --git a/drivers/remoteproc/imx_dsp_rproc.c b/drivers/remoteproc/imx_dsp_rproc.c
+index 427c200a175c3..af0b9d39a8eb3 100644
+--- a/drivers/remoteproc/imx_dsp_rproc.c
++++ b/drivers/remoteproc/imx_dsp_rproc.c
+@@ -680,7 +680,6 @@ static int imx_dsp_rproc_prepare(struct rproc *rproc)
  {
--	char key[DLM_RESNAME_MAXLEN] = {};
-+	struct dlm_rsb_key key = {
-+		.len = len,
-+	};
+ 	struct imx_dsp_rproc *priv = rproc->priv;
+ 	struct device *dev = rproc->dev.parent;
+-	struct rproc_mem_entry *carveout;
+ 	int ret;
  
- 	if (len > DLM_RESNAME_MAXLEN)
- 		return -EINVAL;
+ 	ret = imx_dsp_rproc_add_carveout(priv);
+@@ -691,15 +690,6 @@ static int imx_dsp_rproc_prepare(struct rproc *rproc)
  
--	memcpy(key, name, len);
-+	memcpy(key.name, name, len);
- 	*r_ret = rhashtable_lookup_fast(rhash, &key, dlm_rhash_rsb_params);
- 	if (*r_ret)
- 		return 0;
+ 	pm_runtime_get_sync(dev);
+ 
+-	/*
+-	 * Clear buffers after pm rumtime for internal ocram is not
+-	 * accessible if power and clock are not enabled.
+-	 */
+-	list_for_each_entry(carveout, &rproc->carveouts, node) {
+-		if (carveout->va)
+-			memset(carveout->va, 0, carveout->len);
+-	}
+-
+ 	return  0;
+ }
+ 
+@@ -928,13 +918,39 @@ static int imx_dsp_rproc_parse_fw(struct rproc *rproc, const struct firmware *fw
+ 	return 0;
+ }
+ 
++static int imx_dsp_rproc_load(struct rproc *rproc, const struct firmware *fw)
++{
++	struct imx_dsp_rproc *priv = rproc->priv;
++	const struct imx_dsp_rproc_dcfg *dsp_dcfg = priv->dsp_dcfg;
++	struct rproc_mem_entry *carveout;
++	int ret;
++
++	/* Reset DSP if needed */
++	if (dsp_dcfg->reset)
++		dsp_dcfg->reset(priv);
++	/*
++	 * Clear buffers after pm rumtime for internal ocram is not
++	 * accessible if power and clock are not enabled.
++	 */
++	list_for_each_entry(carveout, &rproc->carveouts, node) {
++		if (carveout->va)
++			memset(carveout->va, 0, carveout->len);
++	}
++
++	ret = imx_dsp_rproc_elf_load_segments(rproc, fw);
++	if (ret)
++		return ret;
++
++	return 0;
++}
++
+ static const struct rproc_ops imx_dsp_rproc_ops = {
+ 	.prepare	= imx_dsp_rproc_prepare,
+ 	.unprepare	= imx_dsp_rproc_unprepare,
+ 	.start		= imx_dsp_rproc_start,
+ 	.stop		= imx_dsp_rproc_stop,
+ 	.kick		= imx_dsp_rproc_kick,
+-	.load		= imx_dsp_rproc_elf_load_segments,
++	.load		= imx_dsp_rproc_load,
+ 	.parse_fw	= imx_dsp_rproc_parse_fw,
+ 	.find_loaded_rsc_table = rproc_elf_find_loaded_rsc_table,
+ 	.sanity_check	= rproc_elf_sanity_check,
+@@ -1085,6 +1101,8 @@ static int imx_dsp_rproc_probe(struct platform_device *pdev)
+ 		goto err_detach_domains;
+ 	}
+ 
++	rproc_coredump_set_elf_info(rproc, ELFCLASS32, EM_XTENSA);
++
+ 	pm_runtime_enable(dev);
+ 
+ 	return 0;
+@@ -1110,7 +1128,6 @@ static int imx_dsp_runtime_resume(struct device *dev)
+ {
+ 	struct rproc *rproc = dev_get_drvdata(dev);
+ 	struct imx_dsp_rproc *priv = rproc->priv;
+-	const struct imx_dsp_rproc_dcfg *dsp_dcfg = priv->dsp_dcfg;
+ 	int ret;
+ 
+ 	/*
+@@ -1131,10 +1148,6 @@ static int imx_dsp_runtime_resume(struct device *dev)
+ 		return ret;
+ 	}
+ 
+-	/* Reset DSP if needed */
+-	if (dsp_dcfg->reset)
+-		dsp_dcfg->reset(priv);
+-
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
