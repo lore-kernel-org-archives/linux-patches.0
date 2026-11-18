@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055108;
-	b=nSK9H7jbH+NQyWi8/swSDIajQiIIIc4CDUxm5WR5TYViCIx+ukNOZzttNu4EtCDMpSMX
-	 tn0SAcYVx2dX85+yOnFCP6iWt4TECGAixTgrA4O6URRirxITZKnCsJaz+3CtF421MX5Vg
-	 Gdv+MfD/LShUCRLc/JM0zWhu1pInK0uWq+Djsd/ObBiabpdQMjB2wH6NWpp8R5rvV/0CR
-	 MDqyI+0tZNIzCGnaY3pTvAqvmN9R5+62bwrPk8qG0mSSk+bhPP3b5BvOIJupx02v4mXZT
-	 Psm9eE8vSAUP1sCT1jqxnN99ZM9cHNwjIjnCL47jOBbJX1HG592BLSdMsiksSlRfVLA==
+	t=1795055110;
+	b=377efGpqS46BVpmV1iWeT5FPYTdhghXAYBb/7Dk21UH5nNaLQeXyP6uNe9oeE0DlGlel
+	 608AOe6qX8758e+e39OYvUV4hpLkdS6+azS8jJ2jSjqykBlTGB6TEDizNPqhBuUVHBsjc
+	 /pqUCuKKFbkRqQkA9S6UoAkRH7jA0LUWz4Pi+51PM0oBKs1KL+OeJtW3FsfxGWFjSo5Dr
+	 6T7P2iC+f34F3cCgbKewPIeZgGjiyIwPC1GRBi0WzSYJQ2KLuXdq8OzUaPMGSi6dAHTkR
+	 A8nPyLWZ5H+4l2YIlPJbOyBRsXaRuyxFu0vlGp47AiuZMvJIDLCxX/M6h2fXgqrSmhg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055108;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055110;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+taVC5L09WQsGWCWfNKSNkBny/dqKgHSTV4GHEuiiQw=;
-	b=V0n2QwjdtbpqG8hR7/GSS9rC6U4JYyPFl+ArpdyyljJV9Ryd1/v6Hr5K32oT7CIiR9Vd
-	 8wBTS7k0egCopVB39SZc2kXMRpA3SXjGxrRP/rL/PMDdk7fU8P+M9x+yd0CKpjAlXC2ta
-	 rLWHuxwdjG4/zC5Am+6UAg8vOA9HyrzIAOSPQhWEC9I0oKDo0Z8V/8gt4ellXJ1J6a73/
-	 glgM0uis5KwfBuxtuBRpn2iKIpSpr5bXqgO8U0ijXdZZRQE17OF8+Z2m68OG86KoFMnsX
-	 /hBJnh5h1X1IEiLkruYZ32rkGKnYGxkfFTioDQ/LV3+X1GN8esVbv3uqijLXoL0ypeQ==
+	bh=XR6uNW7AHbfTt3T2yCgKn669nLat6yuDhxBuDeSvqWg=;
+	b=eeKJvty5vlIXNH8bLIFNSfpPzgaZABa0KFZCSlrdvKB/dzedM0ZlZvzbObOHqKeIVfiv
+	 VsYjaov9L1YU9o7diTjrr6pRAurqkjZ9hX2sP9HMlekIV0ZkXsLW3tdIEIbD9GacB3Ynx
+	 x3lHM54W+ns6VPcBUKJReV7SQiUqQrMWCrKpjI3YRlBlADA6Vs7VZHl0KP1HRz2mNIyFe
+	 sd9ttXi7f/wHou47r2IejJfM3IbiouDxroTI07w98S7I/Ecy7dS+ZfY8jpgZrK5ptet8r
+	 g/AZZYlW9IktZUvbMb3EbW3U4/F/pUj4gRZ/8NRMb9c+kMUURWsnjmnbQJrRmp4Fjbw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xO9gqHad;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ECui2lNP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E33A606A320;
-	Thu, 19 Nov 2026 02:25:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B104606A320;
+	Thu, 19 Nov 2026 02:25:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xO9gqHad
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2549D1F000C4;
-	Thu, 19 Nov 2026 02:25:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ECui2lNP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E22661F000C4;
+	Thu, 19 Nov 2026 02:25:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055107;
-	bh=+taVC5L09WQsGWCWfNKSNkBny/dqKgHSTV4GHEuiiQw=;
+	s=korg; t=1795055110;
+	bh=XR6uNW7AHbfTt3T2yCgKn669nLat6yuDhxBuDeSvqWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xO9gqHadkIv6jFXp7koSJm/no+gpC6hSi926/azfi4RTIgfgw8zZ0eKbLClNugJP0
-	 xDnwSE87xa5dgM9H9/YMMiVYkn6DBq9SdHZTh+4xlIDI8n8NmM30oYat7TLzpKXW3P
-	 giVdkGW1XUxuF4h+39Azt68UMdytJDpMGdyJGlYA=
+	b=ECui2lNPJuqcYymKYuBt9W2ZTCqcT1HBuO2+yJ5DmT16KDx2yx/+Xv4CgqBbW3U0Y
+	 lu1Zvjuid+jaPcy9NUKTF3l2XQbg0/HgoXycqjFuFHkVGZXXtch0N7m11wNv7W2A9l
+	 cgfoKxH56NXmfbu0Wz9AwQJYcmEczQLBRodhrts8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Slavin Liu <bolin.liu@seu.edu.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1506/2214] RDMA/uverbs: Make CQ handle mandatory for WQ creation
-Date: Wed, 18 Nov 2026 15:53:02 +0100
-Message-ID: <20261118150112.226695124@linuxfoundation.org>
+Subject: [PATCH 5.15 1515/2214] ACPI: tables: handle failed initrd override mappings
+Date: Wed, 18 Nov 2026 15:53:11 +0100
+Message-ID: <20261118150112.641244796@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,59 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Slavin Liu <bolin.liu@seu.edu.cn>
 
-[ Upstream commit f7d28791433d373ecdab7b00f60ddb504e858e0a ]
+[ Upstream commit 047c834d939df75386cfc0603c7ddeaa23a349a4 ]
 
-UVERBS_ATTR_CREATE_WQ_CQ_HANDLE is declared UA_OPTIONAL in the ioctl
-method definition, so the mandatory attribute bitmap does not enforce
-its presence.  When userspace omits it, uverbs_attr_get_obj() returns
-ERR_PTR(-ENOENT) and the handler stores that error pointer into
-wq_init_attr.cq without validation.
+The runtime AML table-loading path can invoke initrd override after
+permanent mappings are enabled. Mapping bookkeeping can then fail.
 
-The bogus cq pointer is then passed to the driver's create_wq callback.
-In the mlx5 case, create_rq() calls to_mcq(init_attr->cq) which applies
-container_of to the ERR_PTR value, producing a near-NULL pointer.  The
-subsequent access in get_rq_ts_format() triggers a kernel NULL pointer
-dereference:
+Return AE_NO_MEMORY in that case to prevent a NULL pointer dereference
+when attempting to read the table length.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000296
-  RIP: 0010:create_rq+0x32/0x550 [mlx5_ib]
-  Call Trace:
-   mlx5_ib_create_wq+0x14a/0x210 [mlx5_ib]
-   ib_uverbs_handler_UVERBS_METHOD_WQ_CREATE+0x1f0/0x320 [ib_uverbs]
-   ib_uverbs_run_method+0x296/0x320 [ib_uverbs]
-   ib_uverbs_cmd_verbs+0x1a0/0x260 [ib_uverbs]
-   ib_uverbs_ioctl+0xa8/0x120 [ib_uverbs]
+Detected by static analysis and reviewed with AI-assisted source auditing.
 
-A WQ without a CQ was never valid; the legacy write path always required
-one via uobj_get_obj_read() in ib_uverbs_ex_create_wq().  Declare the
-attribute UA_MANDATORY so the uverbs framework rejects the ioctl early
-when the CQ handle is missing, before the handler ever runs.
-
-Fixes: ef3bc084a8ed ("IB/uverbs: Introduce create/destroy WQ commands over ioctl")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Link: https://patch.msgid.link/20260911021557.2113-1-lirongqing@baidu.com
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: b2a35003dfbc ("ACPI: Implement physical address table override")
+Assisted-by: LLM
+Signed-off-by: Slavin Liu <bolin.liu@seu.edu.cn>
+[ rjw: Added empty code line after conditional, changelog edits ]
+Link: https://patch.msgid.link/20260913125123.109803-1-bolin.liu@seu.edu.cn
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/uverbs_std_types_wq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/tables.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/infiniband/core/uverbs_std_types_wq.c b/drivers/infiniband/core/uverbs_std_types_wq.c
-index 7ded8339346f3..c23f455231bf0 100644
---- a/drivers/infiniband/core/uverbs_std_types_wq.c
-+++ b/drivers/infiniband/core/uverbs_std_types_wq.c
-@@ -140,7 +140,7 @@ DECLARE_UVERBS_NAMED_METHOD(
- 	UVERBS_ATTR_IDR(UVERBS_ATTR_CREATE_WQ_CQ_HANDLE,
- 			UVERBS_OBJECT_CQ,
- 			UVERBS_ACCESS_READ,
--			UA_OPTIONAL),
-+			UA_MANDATORY),
- 	UVERBS_ATTR_FD(UVERBS_ATTR_CREATE_WQ_EVENT_FD,
- 		       UVERBS_OBJECT_ASYNC_EVENT,
- 		       UVERBS_ACCESS_READ,
+diff --git a/drivers/acpi/tables.c b/drivers/acpi/tables.c
+index 71419eb16e09f..cef62b6aa8284 100644
+--- a/drivers/acpi/tables.c
++++ b/drivers/acpi/tables.c
+@@ -651,6 +651,9 @@ acpi_table_initrd_override(struct acpi_table_header *existing_table,
+ 	while (table_offset + ACPI_HEADER_SIZE <= all_tables_size) {
+ 		table = acpi_os_map_memory(acpi_tables_addr + table_offset,
+ 					   ACPI_HEADER_SIZE);
++		if (!table)
++			return AE_NO_MEMORY;
++
+ 		if (table_offset + table->length > all_tables_size) {
+ 			acpi_os_unmap_memory(table, ACPI_HEADER_SIZE);
+ 			WARN_ON(1);
 -- 
 2.53.0
 
