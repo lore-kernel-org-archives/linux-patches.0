@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050473;
-	b=yZcaDwzCR8Z7kurj7OUdp9yTDvJZTdDr7LyvLTCHMTqkZGbaoIQcHzW0aofvr4QCuonW
-	 QL2NmWBZXfzIj/PhTzGtHo5LmsIV2QGnhnEbWWhHUFEfAjVS+oWui3qQBO4XTH7c3S72L
-	 bAKESqUx0MNVy/WMnKjD3t2hoGfOpeGb73BQsTJiJUgCRTrLYSR68ouee5b5KmdtzAe2i
-	 jZO9Ztu5/6IGdsDGpnOmQ6HnZQkC8Gulmb4uwfDa8ZOHoSOXZmc1lOQ7F4ZfHWpi+q2us
-	 SpWdQYE+o04MHo5LmIO3aIB55LhLSH39rvNmpeqqSFs70hYuKL4jhQPeg23hR1JFs1Q==
+	t=1795050476;
+	b=gu+yU75WLfeTzok+HeLKpJYaKP6mKY0at+gJxQG5UHd2kLBiX2rLfJXjesxaBkyc+NCj
+	 ktpWAeqI8SBcmbW8goU5v1ZlsRA19+gZT+yhJloqO/kZYa6/VnLPDyGPyWSDr5iQwH906
+	 z4xd5Ndq/dzCxE5HyhdEdRdIt1ZJuy8CwnWuNi1GbUiMQptNEFTCtnBwQHvJUsOJcFHk7
+	 X/jNkgOblMhGPR88p0xkVf1RZG6xNhjkT8Sr3xbzcjOiEaNWPc9IQvnUBLJ08O9UAUIz0
+	 TNuTdtW3HcvXpt9fNJhCja73Wf1Zko2uc1w9FMBdpEavtjPMZpBM/yDKc1XMFiOpJSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050473;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050476;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hDIJaVhnGgNRPCcTQE/LivsvWKkQxLWdWYyQ19UmRG0=;
-	b=NSwtFz9Ej1J82zb5TBMwnyFZ302SSrwlCdx8LeS4LpJ7UtA3ZiGaErDurN1ZNRa3z30Z
-	 jZNvOQcwJg+32v83jJlGFk30/sLVyLp3rG6uT1/h6KZVpeACPzYJnAsULvi/zJAse3PYh
-	 FjspBlrwr1C3dvpxhN0i/IwjERPWhH9UE9hawfSQwd9Sv70PoEW238g8lEoVCMFbrqPF8
-	 eXb9vbMl7xDnylyJ9o7HFot1xjBfUt2AX/PlV7wNzok81ve//sbtqOrqoPnierl3ud7fY
-	 2h0/a+PHQu3txM7Y7FYwfYT6LZtAjWctrmiILs42VD8ZTpcMvdP889+RYMrPkFAPhEg==
+	bh=WOrb8CpH/tLlKT527vPuUb4s6IMadX8pBFCzt7G5fj4=;
+	b=1Tfkg+P1UG5kqhIAtOIESNhSd2/U56yB+xdEgdNbaPacov1jrxjbYaKJ2/Ql6hFWk8cD
+	 Fijn4/9mThJkEASKSVmAWzrioIsq3xrAHgoanhvUtZ5SUyyyuHxsI/T0Rhr6vT3DnPhmA
+	 Js9AsWtvALK3nGDhFfV88sfsVDA2neIpq5GhtMC5fhkYGNTtoYBr7T+SIOCbcCYp8vhgJ
+	 RlSWl4aY2w2IK05woUXoWgAm7GNulJoLqmhshn/POyLKZGvrEkWAaljmbMJ/TH95jiu1+
+	 gHEx9gLiP3bnOJy48LnIpmCOSKR4g5SgmSZ5IVUo3sKgu3/ECX2gr5uI8zaUEZ4kpbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="v/cI7Xdu";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N1JdUTI5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0B7606A32A;
-	Thu, 19 Nov 2026 01:07:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 236C3606A325;
+	Thu, 19 Nov 2026 01:07:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v/cI7Xdu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EF1B1F000C6;
-	Thu, 19 Nov 2026 01:07:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N1JdUTI5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31BAE1F000C4;
+	Thu, 19 Nov 2026 01:07:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050473;
-	bh=hDIJaVhnGgNRPCcTQE/LivsvWKkQxLWdWYyQ19UmRG0=;
+	s=korg; t=1795050475;
+	bh=WOrb8CpH/tLlKT527vPuUb4s6IMadX8pBFCzt7G5fj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v/cI7Xdudp7sCC2BceLX0FPOTv37Dw52jiiNV0a1oLt99aWE1nMBoptEA5bTnfyhg
-	 XzJ45kT1L8FzBWIjqWMoYarYPzQxCihPUtFl8p7qQxlXdJplRU4Lt9SXOQ0WA8p3xN
-	 /hkbXDJ9SCDhHoMqBLJyL2ibk9G7hBkBb4F1IHsw=
+	b=N1JdUTI5d2zxL6BBD/lh42oWxGmGvLDdM2AaokbWoL85yNfa+4FwrYUBw6hZQ0vRV
+	 jAHoQ81dygjbuSxgSx9sXq85He+aHxlW2fIbQiI3Uz0FFhp6Bvk5ybHybICL6GSSka
+	 ALDwNbVLuWd/97hnczDwCgOVXyZMVAPmpMqtXQ3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dudu Lu <phx0fer@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Daniel Wagner <dwagner@suse.de>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2721/2857] net/sched: etf: initialise the sock_exterr_skb before filling it
-Date: Wed, 18 Nov 2026 16:02:35 +0100
-Message-ID: <20261118150339.586468888@linuxfoundation.org>
+Subject: [PATCH 6.1 2722/2857] scsi: elx: libefc: Fix resource leak in efcport_init() error path
+Date: Wed, 18 Nov 2026 16:02:36 +0100
+Message-ID: <20261118150339.622118431@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,79 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dudu Lu <phx0fer@gmail.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 7076f684d5132e6a6145e1da2fa74771ecd052e5 ]
+[ Upstream commit b4bd078b78c248d4263a1da7033cbe7a74ce0e12 ]
 
-report_sock_error() clones the transmitted skb, overlays a
-struct sock_exterr_skb on its control block and fills in the seven
-struct sock_extended_err fields, but never clears addr_offset and port.
-skb_clone() copies cb[] verbatim, so the errqueue entry carries the TX
-skb's stale control block to the receive side, and the ipv4 error-queue
-reader trusts those bytes:
+efcport_init() creates efc->node_pool and efc->node_dma_pool before
+allocating efc->els_io_pool. When the latter allocation fails it returns
+-ENOMEM without releasing the node dma pool or the node pool, leaking
+both. The caller efct_efclib_config() only logs the error and
+efct_device_attach() failure path never calls efcport_destroy(), so the
+resources are never freed.
 
-  net/ipv4/ip_sockglue.c:556
-	sin->sin_addr.s_addr = *(__be32 *)(skb_network_header(skb) +
-					   serr->addr_offset);
-	sin->sin_port = serr->port;
+Destroy node_dma_pool and node_pool before returning from the
+els_io_pool allocation failure path.
 
-The gate that is supposed to guard that read only asks whether an
-address was requested at all:
-
-  net/ipv4/ip_sockglue.c:484
-	return serr->ee.ee_origin == SO_EE_ORIGIN_ICMP ||
-	       serr->ee.ee_origin == SO_EE_ORIGIN_LOCAL || serr->port;
-
-SO_EE_ORIGIN_TXTIME is neither ICMP nor LOCAL, so for sch_etf the gate is
-decided by serr->port alone -- by the stale byte pair.  When it is
-non-zero the reader dereferences skb_network_header() + addr_offset with
-an arbitrary offset.  On the TCP path cb[40..44) is not zero: the
-transmit path stored delivered_mstamp there (tcp_rate_skb_sent()), which
-is exactly where addr_offset/port sit in the arm64 struct layout.
-
-Reached with an unmodified 7.3-rc4 (arm64, KASAN, in-tree modules): a TCP
-socket enables TX-timestamp error reporting (SO_TXTIME with
-SOF_TXTIME_REPORT_ERRORS), a sch_etf qdisc drops the packet, and a
-recvmsg() reaches ip_recv_error():
-
-  BUG: KASAN: slab-out-of-bounds in ip_recv_error+0x970/0xa0c
-  Read of size 4 at addr ffff0000158ffdd5 by task A-227-A227-1_S2/113
-  ip_recv_error+0x970/0xa0c
-  inet_recv_error+0x94/0xdc
-  tcp_recvmsg+0x378/0x408
-  ...
-  The buggy address is located 149 bytes to the right of
-  allocated 704-byte region
-
-Zero the whole overlay rather than the two fields individually: the
-errqueue entry is handed to the receive side as a self-contained record,
-which is what every other producer in the tree already does (sch_etf was
-the only error-queue producer that cleared neither field).  This does not
-change what the in-tree selftest observes -- so_txtime.c reads only
-ee_origin/ee_errno/ee_code/ee_data/ee_info, never msg_name or sin_port.
-
-Fixes: 4b15c7075352 ("net/sched: Make etf report drops on error_queue")
-Signed-off-by: Dudu Lu <phx0fer@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261021155401.65997-1-phx0fer@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: d7b71fd2195e ("scsi: elx: libefc: Emulex FC discovery library APIs and definitions")
+Assisted-by: DeepSeek-V4.1-Flash
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Reviewed-by: Daniel Wagner <dwagner@suse.de>
+Link: https://patch.msgid.link/20261008185403.2791781-1-vulab@iscas.ac.cn
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_etf.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/elx/libefc/efclib.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/sched/sch_etf.c b/net/sched/sch_etf.c
-index 61d1f0e32cf35..025f15ae89151 100644
---- a/net/sched/sch_etf.c
-+++ b/net/sched/sch_etf.c
-@@ -147,6 +147,7 @@ static void report_sock_error(struct sk_buff *skb, u32 err, u8 code)
- 		return;
+diff --git a/drivers/scsi/elx/libefc/efclib.c b/drivers/scsi/elx/libefc/efclib.c
+index dd3e3d0a47614..ceec0e2a0266a 100644
+--- a/drivers/scsi/elx/libefc/efclib.c
++++ b/drivers/scsi/elx/libefc/efclib.c
+@@ -50,6 +50,8 @@ int efcport_init(struct efc *efc)
+ 						sizeof(struct efc_els_io_req));
+ 	if (!efc->els_io_pool) {
+ 		efc_log_err(efc, "Can't allocate els io pool\n");
++		dma_pool_destroy(efc->node_dma_pool);
++		mempool_destroy(efc->node_pool);
+ 		return -ENOMEM;
+ 	}
  
- 	serr = SKB_EXT_ERR(clone);
-+	memset(serr, 0, sizeof(*serr));
- 	serr->ee.ee_errno = err;
- 	serr->ee.ee_origin = SO_EE_ORIGIN_TXTIME;
- 	serr->ee.ee_type = 0;
 -- 
 2.53.0
 
