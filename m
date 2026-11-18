@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037320;
-	b=e+u20IfRTk7W3tiiaVQMrfb5M3137w47Cw65qrL1IlrriqdQgl1H2THX3fnVEPPbNWGw
-	 Y8puuT9Vu0GuQrWZABo+X9+inNua5ZKrU/NSX2O7TktItCurQ7a1UJvYnY7WdxzFrGa9v
-	 LmjVCpPUX4tk9HBLtdxAXQoPmLWYDyO841aXk1Ud2MO3a5FoHKO3t8Wxo4IJFkxazwQUi
-	 Pe8lbVNdWDeC7NUHjZABfqvTbSn2HBKrCBFSTpwr+UfacASRujjEZWy7Unp0XEQpN9wYH
-	 kTHjrepQngcHBgZW1cqbpUzCXAAxFKKViBZRHhlHjvscH8QpS/9dbVBrw8QC4kqzf0w==
+	t=1795037323;
+	b=lzkzza39fNRID3qgCz/pABKBIN1JT2tQu7WF68EMuIdUxknAkbFg8NHTBLxl5ptq6wdq
+	 QkFbx/1nGxvb1CzxkaoK+Z8ubO3+NV6nliH4ZYWnDptnGpYfK6LlK/Qlv01w8GAn41xjt
+	 Em5RDvBFKAPT81Dhr1oKHtgK/jsQZjS8IIgY7qDTlHpKqiSid3We1HvLOb5qubX5lXz+k
+	 TXdHj6mDtXpCjK03BwV8DspV4FWpUGqorvY1EOZ8cuxci1yj8HIs0JJPqn3qtr3+cFlmg
+	 j1lVJk1iuLEl5F4mvabybEPpRL2FbWOJ0yFhyf2ndtvRU6asdFO+zIe8HYA0WS1Pe2w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037320;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037323;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=K40jbtNKrGY11ax4Xc8PnB4e9peugsUw1IJYBkW3NG8=;
-	b=rzcvwvf9ShiTakFHg1+QhvkfFNUaYGTF36rA46hKIT0W/C7mO2DJbrpsL7N/t1oSBlbj
-	 uwktx7FcptOl+eH1KGnw6zQ7eH6GAcR3aIrBAHhREF9g92mK+kE/iSqpD/Vr9ExiCyauV
-	 DLnMRgdLy5I7RVGriWz0dk1fUl4+tvfHOcRLh/zC/RlK+zRX9Wh/o6Qnsg2Cmdg3auJMx
-	 aCYiqOUBnbnW7FqbZcjvwo+h+2t6Mp/WTVTii7eQnPunWKUr7oEDe5g0MHAm3mHZkydjj
-	 13yN5Za3y7Al9pLgarXO0KKbr0FaN3tK7YFGUrI89ku7kYgFbYjyD11iNMzwXYKgnuw==
+	bh=ClCBXCMZ1cTY3xyao+r37AliOJiruRbYWSAK7Rqi+nA=;
+	b=q8emAkDtQxAupBdA+4wFhNLRua+mmct+m0JC81rit8AV5wjoGWdymRCYTby8wk3N896w
+	 0u5fLrU/ZzoVk+GbdxDELkcFqbYtBIvtRolO8+kPk+qtodSeN65mSMQ5FhAspwLTQokvS
+	 LdlWFWuDFvLeFqkDAq5o0ZPY0rkZMNrXiZ5dR3iri0kUCyc+jRJjy77l0iiWvz69hc5hf
+	 MQPo9gipBlXH+zT4E7Bmk+LACAx5hT6raCB6re3PpAUkcvKHR+smGIKe1wLByQgKNlwSj
+	 dwmR1AoIz275bVaMfwVyeovAE4F/11kcDi35b0LPoUh2bxF8TEFnmzj/tk2V9Ztixqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mGFUOnjK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hacTt37r;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C0A3606A320;
-	Wed, 18 Nov 2026 21:28:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D677D606A325;
+	Wed, 18 Nov 2026 21:28:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mGFUOnjK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9C111F000C4;
-	Wed, 18 Nov 2026 21:28:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hacTt37r
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DEC61F000C4;
+	Wed, 18 Nov 2026 21:28:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037320;
-	bh=K40jbtNKrGY11ax4Xc8PnB4e9peugsUw1IJYBkW3NG8=;
+	s=korg; t=1795037323;
+	bh=ClCBXCMZ1cTY3xyao+r37AliOJiruRbYWSAK7Rqi+nA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mGFUOnjKwn/O71DBXgtqjyybfOcnpAoCcdahnJfsgQDgEPnUPF4jfMByDvkFkPFvT
-	 h1p7IC66znMbeNCMUB8xMXoo3V20JZRIjltDNwF5SBqJi64bt1RXoodTOqQukHAyT8
-	 eLsrHH5wrWF2X+pA7NvVyNOPHfcuo7oVbf2WN6Yk=
+	b=hacTt37rye4y7e+46d9bKX8Iw6rgV3hgXQxTkXNxkwQXvqdqKwqPftvmXtNun1nAN
+	 8FqYXvDu10qmq6hpMwp0JfHY58ErO/aqIbfn9L70aZ9Dlt7DWfwphp/yDJYY1ckH1D
+	 VA1eYXeqxwcRFtfPzgKc8u9CLpWmh+2q3Al5gWQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1337/3318] io_uring/cancel: drop sqd->lock while SQPOLL waits
-Date: Wed, 18 Nov 2026 15:32:39 +0100
-Message-ID: <20261118150400.468041434@linuxfoundation.org>
+Subject: [PATCH 6.6 1364/3318] mm/damon/core: filter out damos address filter-split failed region
+Date: Wed, 18 Nov 2026 15:33:06 +0100
+Message-ID: <20261118150401.399240027@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,79 +68,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: SJ Park <sj@kernel.org>
 
-Commit cb0306c52ffae083a86fb283de67875ae7a9500e upstream.
+[ Upstream commit bbeec2d8324d7aac438bb12dd2d22b184e0a8d43 ]
 
-An exiting SQPOLL thread calls io_uring_cancel_generic() with sqd->lock
-held, and keeps it across cond_resched() and the sleep until nothing is
-in flight anymore. A zero-copy send notification can't be canceled and
-stays pending as long as the peer doesn't read, so the lock is held for
-as long as a user cares to. io_ring_exit_work() needs it to park the
-thread, and so do IORING_REGISTER_IOWQ_AFF and IOWQ_MAX_WORKERS. With
-64 such rings sharing the thread, every iou_exit slot sleeps on the lock
-and no ring gets freed for anyone.
+When an address type DAMOS filter is configured, DAMOS tries to split the
+region for the filter range, and apply DAMOS action to the filter-in
+region.  The split operation (damon_split_region_at()) could fail from
+allocation failure under extreme memory pressure.  In the case, DAMOS
+action could be applied more or less than expected, ignoring the address
+filter.
 
-Drop the lock around cond_resched() and the sleep, like the main loop of
-the thread does. Each walk of ctx_list is still under one hold, and
-nothing is kept across the unlock. The thread drops its io-wq, frees its
-tctx and clears sqd->thread under one hold after the loop, so whoever
-holds the lock and finds sqd->thread set can still use them.
+The issue only rarely happens under extreme memory pressure.  No crash or
+leak happens.  Occasionally not applying the action to a few regions
+shouldn't be a real problem.  But applying the action to a region that the
+user has excluded via address filter could be a surprise depending on the
+use case.  It is only theoretical.  No such real case is found yet.
 
-Fixes: 63809137ebb5 ("io_uring: flush notifiers after sendzc")
-Signed-off-by: Chris Mason <mason@kernel.org>
-[axboe: adapted to the schedule_timeout() based loop]
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[axboe: io_uring_cancel_generic() is in io_uring.c in 6.6, and uses a
-schedule() based wait loop]
+Filter out the entire region if the split is failed.  Update
+damos_filter_match() signature to receive the error from split.  Also
+update kunit tests for the updated signature.
+
+The issue was discovered [1] by sashiko.
+
+Link: https://lore.kernel.org/20261020004119.106690-1-sj@kernel.org
+Link: https://lore.kernel.org/20260801203121.117449-1-sj@kernel.org [1]
+Fixes: ab9bda001b68 ("mm/damon/core: introduce address range type damos filter")
+Signed-off-by: SJ Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: <stable@vger.kernel.org> # 6.6.x
+Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
+ mm/damon/core-test.h | 11 ++++++-----
+ mm/damon/core.c      | 13 +++++++++----
+ 2 files changed, 15 insertions(+), 9 deletions(-)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index af349afeb4cb0..43860048d2bf3 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -3566,7 +3566,16 @@ __cold void io_uring_cancel_generic(bool cancel_all, struct io_sq_data *sqd)
- 		}
+diff --git a/mm/damon/core-test.h b/mm/damon/core-test.h
+index dd91b0eea61ff..1988b7dd29e96 100644
+--- a/mm/damon/core-test.h
++++ b/mm/damon/core-test.h
+@@ -461,6 +461,7 @@ static void damos_test_filter_out(struct kunit *test)
+ 	struct damon_target *t;
+ 	struct damon_region *r, *r2;
+ 	struct damos_filter *f;
++	int err;
  
- 		if (loop) {
-+			/*
-+			 * A request that runs in io-wq and doesn't end makes
-+			 * each round come here. Don't hold sqd->lock for that
-+			 * long either.
-+			 */
-+			if (sqd)
-+				mutex_unlock(&sqd->lock);
- 			cond_resched();
-+			if (sqd)
-+				mutex_lock(&sqd->lock);
- 			continue;
- 		}
+ 	f = damos_new_filter(DAMOS_FILTER_TYPE_ADDR, true);
+ 	if (!f)
+@@ -482,25 +483,25 @@ static void damos_test_filter_out(struct kunit *test)
+ 	damon_add_region(r, t);
  
-@@ -3584,8 +3593,20 @@ __cold void io_uring_cancel_generic(bool cancel_all, struct io_sq_data *sqd)
- 		 * avoids a race where a completion comes in before we did
- 		 * prepare_to_wait().
- 		 */
--		if (inflight == tctx_inflight(tctx, !cancel_all))
-+		if (inflight == tctx_inflight(tctx, !cancel_all)) {
-+			/*
-+			 * A zero-copy notification can't be canceled, and a
-+			 * peer that doesn't read keeps it pending. Don't hold
-+			 * sqd->lock while waiting for it, or whoever wants the
-+			 * lock sleeps as long. No ring is used across this,
-+			 * the next round walks ->ctx_list anew.
-+			 */
-+			if (sqd)
-+				mutex_unlock(&sqd->lock);
- 			schedule();
-+			if (sqd)
-+				mutex_lock(&sqd->lock);
-+		}
- end_wait:
- 		finish_wait(&tctx->wait, &wait);
- 	} while (1);
+ 	/* region in the range */
+-	KUNIT_EXPECT_TRUE(test, __damos_filter_out(NULL, t, r, f));
++	KUNIT_EXPECT_TRUE(test, __damos_filter_out(NULL, t, r, f, &err));
+ 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 1);
+ 
+ 	/* region before the range */
+ 	r->ar.start = DAMON_MIN_REGION * 1;
+ 	r->ar.end = DAMON_MIN_REGION * 2;
+-	KUNIT_EXPECT_FALSE(test, __damos_filter_out(NULL, t, r, f));
++	KUNIT_EXPECT_FALSE(test, __damos_filter_out(NULL, t, r, f, &err));
+ 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 1);
+ 
+ 	/* region after the range */
+ 	r->ar.start = DAMON_MIN_REGION * 6;
+ 	r->ar.end = DAMON_MIN_REGION * 8;
+-	KUNIT_EXPECT_FALSE(test, __damos_filter_out(NULL, t, r, f));
++	KUNIT_EXPECT_FALSE(test, __damos_filter_out(NULL, t, r, f, &err));
+ 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 1);
+ 
+ 	/* region started before the range */
+ 	r->ar.start = DAMON_MIN_REGION * 1;
+ 	r->ar.end = DAMON_MIN_REGION * 4;
+-	KUNIT_EXPECT_FALSE(test, __damos_filter_out(NULL, t, r, f));
++	KUNIT_EXPECT_FALSE(test, __damos_filter_out(NULL, t, r, f, &err));
+ 	/* filter should have split the region */
+ 	KUNIT_EXPECT_EQ(test, r->ar.start, DAMON_MIN_REGION * 1);
+ 	KUNIT_EXPECT_EQ(test, r->ar.end, DAMON_MIN_REGION * 2);
+@@ -515,7 +516,7 @@ static void damos_test_filter_out(struct kunit *test)
+ 	/* region started in the range */
+ 	r->ar.start = DAMON_MIN_REGION * 2;
+ 	r->ar.end = DAMON_MIN_REGION * 8;
+-	KUNIT_EXPECT_TRUE(test, __damos_filter_out(NULL, t, r, f));
++	KUNIT_EXPECT_TRUE(test, __damos_filter_out(NULL, t, r, f, &err));
+ 	/* filter should have split the region */
+ 	KUNIT_EXPECT_EQ(test, r->ar.start, DAMON_MIN_REGION * 2);
+ 	KUNIT_EXPECT_EQ(test, r->ar.end, DAMON_MIN_REGION * 6);
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 1209d4a67ecc6..2bc93326fb6ae 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -930,13 +930,14 @@ static void damos_update_stat(struct damos *s,
+ }
+ 
+ static bool __damos_filter_out(struct damon_ctx *ctx, struct damon_target *t,
+-		struct damon_region *r, struct damos_filter *filter)
++		struct damon_region *r, struct damos_filter *filter, int *err)
+ {
+ 	bool matched = false;
+ 	struct damon_target *ti;
+ 	int target_idx = 0;
+ 	unsigned long start, end;
+ 
++	*err = 0;
+ 	switch (filter->type) {
+ 	case DAMOS_FILTER_TYPE_TARGET:
+ 		damon_for_each_target(ti, ctx) {
+@@ -962,12 +963,13 @@ static bool __damos_filter_out(struct damon_ctx *ctx, struct damon_target *t,
+ 		}
+ 		/* start before the range and overlap */
+ 		if (r->ar.start < start) {
+-			damon_split_region_at(t, r, start - r->ar.start);
++			*err = damon_split_region_at(t, r,
++					start - r->ar.start);
+ 			matched = false;
+ 			break;
+ 		}
+ 		/* start inside the range */
+-		damon_split_region_at(t, r, end - r->ar.start);
++		*err = damon_split_region_at(t, r, end - r->ar.start);
+ 		matched = true;
+ 		break;
+ 	default:
+@@ -981,9 +983,12 @@ static bool damos_filter_out(struct damon_ctx *ctx, struct damon_target *t,
+ 		struct damon_region *r, struct damos *s)
+ {
+ 	struct damos_filter *filter;
++	bool matching;
++	int err;
+ 
+ 	damos_for_each_filter(filter, s) {
+-		if (__damos_filter_out(ctx, t, r, filter))
++		matching = __damos_filter_out(ctx, t, r, filter, &err);
++		if (matching || err)
+ 			return true;
+ 	}
+ 	return false;
 -- 
 2.53.0
 
