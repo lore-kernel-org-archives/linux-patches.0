@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025214;
-	b=1h+4ZaQ0v80J4N83PqkOpkFeht3q+o6DhkYFl0oiyAOt05ZhaG3Wsa/zTnQJGV7pbSyI
-	 8eTWyxxUJIECOKTKv6dDY3/3umkRhKsR5qmtcAjesYD2Fby4Ra4XAMkVCM+G5r6YGLjMP
-	 K6cCjaJYJovQPi8ezxA8NTFawGu2/El6+pCZwfZku+kZV9kD8k9omE4SyS56H65lqd4CO
-	 LNpYuRWKmKEg1XYQXas1LiFVuMmCdU1Z53945GciOPr+dEMdcDQ/185lu5dVwRf2dWIOc
-	 DptsvVSePaf0OpBQ2FQ8ZYXm+ucJxpalxWF8U+vpdL88Z4S5Uiet/r3yKBjRES0zr+A==
+	t=1795025217;
+	b=VQX6trI+D14zQrLyLWBjPW1jpnzSyF4WJkpgAkUzpU8pImHyifSyOQoRj4X4Q12x0KDh
+	 wE1pc/x/X3i0fK7TnbyDkWLPEeRdnxr1E1/D6qRo13UCs1QrrXIhSZJCyxYGko0qc5zt9
+	 euoUXz19pSvmN+Mjhyq5PqV5dTN9cvshn09lG3N7dvjivKjZyZynd/9+VKEB/J9oonf0A
+	 Ec7BCnrASzqFg094thMhWGBV+1cs2ONHyhUwxqtiEBoqiKeSaeLhHuS8v1O+4IBndWQed
+	 EUxg8lg1OswoVuj0rSyasG6z1+Dsty9ASZAY7pTnGoXObIGxa3N4kNRmvrBJ40uKRDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025214;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025217;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=y7wgN8x1UAZBGsuqd/0EJwqtYUm9sXQwRRwOCZ0w/zU=;
-	b=rPvT5L296UXwMh2Qp3QgoETwsw+bBorZSup6SryvSQe18KLzPfbgit0y1xKxnk5OmLVA
-	 P/rCpRoDx+y48quC+9QHpiikNKHaY0FjJNs4P4bBXi0JDm1wGPmLsFLJa8l0cO88J/Dj6
-	 4fLv2MOF9L+7LOq0lqF8hcLDjxZjlCNdjtsTRBoi8Iw0L7g67XLGwGXszJZt01+ZpYqAN
-	 ogREflB/pygDfG+xZaHnXInFoaoEA3jZKLHcOj+p4/2BnaZfSl5ZbOMiep2A+v/51Cu/6
-	 T6uMKawhDsyHNpfvMsUMVJdgweAHa+77URte9QJjDHVtMsU47hgm+tvbS75Nz5B4nhw==
+	bh=FnA33OEdL1tkyOIdIfN6rLttluWKXgAuO//o2JHPgGE=;
+	b=jJKLW3I5+HYqHELIpiOEbrrHTEdlmvXU/VUc4XgiLysRcXjSoxAy2+pAaXmHG3yHNAxR
+	 4m1zREEEJeRx5n5HjyxLssPs1Xn6PMS3pzEypy2SGzh3StdFNkH24NkMzeih6FqbD5cEx
+	 yyuYh3oQAUzyD1INnrLn1OnzSf7f4mlxFNP9BCt+QPz5Jw7aKbTwveld7LNb2OdME4/Wa
+	 wiSTYfYsqrp5U1W8W5RPnXDadL+wPw2y9XHSWv6gc1pV182YM4tAPTcqBe7O6Xf0kahDM
+	 i7l6iJSy/oL/ZcfviYzQoi5gPMWCFBrhS/5PZdMwiDLcUG/MynnjjXkqeFap5Yqy77g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kVFAi4wr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QovgW6ag;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B3E606A320;
-	Wed, 18 Nov 2026 18:06:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ABCD606A320;
+	Wed, 18 Nov 2026 18:06:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kVFAi4wr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5A471F000C4;
-	Wed, 18 Nov 2026 18:06:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QovgW6ag
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D2401F000C4;
+	Wed, 18 Nov 2026 18:06:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025214;
-	bh=y7wgN8x1UAZBGsuqd/0EJwqtYUm9sXQwRRwOCZ0w/zU=;
+	s=korg; t=1795025217;
+	bh=FnA33OEdL1tkyOIdIfN6rLttluWKXgAuO//o2JHPgGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kVFAi4wrcKuTKCO3oSfW2tYtPpnNmCMMrO+lZFtg9sRaTU7qBbEw8hwhE+c+arrfE
-	 xHSkfsfGItffoZjjN4xV6CSx1jj2Y8N3ddReqTL6SsnngpTuYnmF7+iMQxm5NCrUlR
-	 h5VP8/xoshNSp17yZnB+ntHZHfS56E16hrnoudos=
+	b=QovgW6agddZF8KbhOrrJ8w72cCgWShlxHlKtptBj+gzkxD5WqKy7a8km3kDZgHbwE
+	 gmDHkZEN+BWznWmzzI4TRoduIs6jpBKY+kxR8mP2BjDxPB8wF4WKUAaGje5ZE921hj
+	 c5GbSNjDm3Ryi3Un3o6obNO8ztQ7I/tI1NeR8dI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yubing <yubing.zhang@rock-chips.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
 	Igor Paunovic <royalnet026@gmail.com>
-Subject: [PATCH 6.18 1000/2151] phy: rockchip: usbdp: Support single-lane DP
-Date: Wed, 18 Nov 2026 15:45:35 +0100
-Message-ID: <20261118150158.871089435@linuxfoundation.org>
+Subject: [PATCH 6.18 1001/2151] phy: rockchip: usbdp: Drop DP HPD handling
+Date: Wed, 18 Nov 2026 15:45:36 +0100
+Message-ID: <20261118150158.904107711@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,183 +70,208 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yubing <yubing.zhang@rock-chips.com>
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit ae9b60ef1d626d1a4fdf8854f66d58f6ac56e37d ]
+[ Upstream commit 4fd2c13cbb11f5483a43cc789cb8de1c3bd23238 ]
 
-Implement support for using just a single DisplayPort line.
+Drop the HPD handling logic from the USBDP PHY. The registers involved
+require the display controller power domain being enabled and thus the
+HPD signal should be handled by the displayport controller itself.
+Apart from that the HPD handling as it is done here is incorrect and
+misses hotplug events happening after the USB-C connector (e.g. when
+a USB-C to HDMI adapter is involved and the HDMI cable is replugged).
 
-Signed-off-by: Zhang Yubing <yubing.zhang@rock-chips.com>
+Proper USB-C DP HPD support requires some restructuring of the DP
+controller driver, which will happen independent of this patch. The
+mainline kernel does not yet support USB-C DP AltMode on RK3588 and
+RK3576, so it is fine to drop this code without adding the counterpart
+in the DRM in an atomic change.
+
 Tested-by: Igor Paunovic <royalnet026@gmail.com> # Orange Pi 5 Plus
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260915-rockchip-usbdp-cleanup-v15-11-80e2c11d1ce8@collabora.com
+Link: https://patch.msgid.link/20260915-rockchip-usbdp-cleanup-part2-v15-1-8d507cb1174f@collabora.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Stable-dep-of: b1ca8de219ae ("phy: rockchip: usbdp: Properly handle TYPEC_STATE_SAFE and TYPEC_STATE_USB")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/rockchip/phy-rockchip-usbdp.c | 64 ++++++++++-------------
- 1 file changed, 27 insertions(+), 37 deletions(-)
+ drivers/phy/rockchip/phy-rockchip-usbdp.c | 85 +++--------------------
+ 1 file changed, 9 insertions(+), 76 deletions(-)
 
 diff --git a/drivers/phy/rockchip/phy-rockchip-usbdp.c b/drivers/phy/rockchip/phy-rockchip-usbdp.c
-index 16a41776b2f9f..c27336bae14f9 100644
+index c27336bae14f9..cde90d0c44430 100644
 --- a/drivers/phy/rockchip/phy-rockchip-usbdp.c
 +++ b/drivers/phy/rockchip/phy-rockchip-usbdp.c
-@@ -193,6 +193,7 @@ struct rk_udphy {
+@@ -127,7 +127,6 @@ struct rk_udphy_grf_cfg {
+ 
+ struct rk_udphy_vogrf_cfg {
+ 	/* vo-grf */
+-	struct rk_udphy_grf_reg hpd_trigger;
+ 	u32 dp_lane_reg;
+ };
+ 
+@@ -185,14 +184,11 @@ struct rk_udphy {
+ 	u32 dp_lane_sel[4];
+ 	u32 dp_aux_dout_sel;
+ 	u32 dp_aux_din_sel;
+-	bool dp_sink_hpd_sel;
+-	bool dp_sink_hpd_cfg;
+ 	unsigned int link_rate;
+ 	unsigned int lanes;
+ 	u8 bw;
  	int id;
  
- 	bool dp_in_use;
-+	int dp_lanes;
+-	bool dp_in_use;
+ 	int dp_lanes;
  
  	/* PHY const config */
- 	const struct rk_udphy_cfg *cfgs;
-@@ -534,6 +535,13 @@ static void rk_udphy_usb_bvalid_enable(struct rk_udphy *udphy, u8 enable)
-  * <0 1>                  dpln0         dpln1       usbrx         usbtx
-  * <2 3>                  usbrx         usbtx       dpln0         dpln1
-  * ---------------------------------------------------------------------------
-+ * if 1 lane for dp function, 2 lane for usb function, define rockchip,dp-lane-mux = <x>;
-+ * sample as follow:
-+ * ---------------------------------------------------------------------------
-+ *                        B11-B10       A2-A3       A11-A10       B2-B3
-+ * rockchip,dp-lane-mux   ln0(tx/rx)    ln1(tx)     ln2(tx/rx)    ln3(tx)
-+ * <0>                    dpln0         \           usbrx         usbtx
-+ * ---------------------------------------------------------------------------
-  */
- 
- static void rk_udphy_dplane_select(struct rk_udphy *udphy)
-@@ -541,18 +549,18 @@ static void rk_udphy_dplane_select(struct rk_udphy *udphy)
- 	const struct rk_udphy_cfg *cfg = udphy->cfgs;
- 	u32 value = 0;
- 
--	switch (udphy->mode) {
--	case UDPHY_MODE_DP:
--		value |= 2 << udphy->dp_lane_sel[2] * 2;
-+	switch (udphy->dp_lanes) {
-+	case 4:
- 		value |= 3 << udphy->dp_lane_sel[3] * 2;
-+		value |= 2 << udphy->dp_lane_sel[2] * 2;
- 		fallthrough;
- 
--	case UDPHY_MODE_DP_USB:
--		value |= 0 << udphy->dp_lane_sel[0] * 2;
-+	case 2:
- 		value |= 1 << udphy->dp_lane_sel[1] * 2;
--		break;
-+		fallthrough;
- 
--	case UDPHY_MODE_USB:
-+	case 1:
-+		value |= 0 << udphy->dp_lane_sel[0] * 2;
- 		break;
- 
- 	default:
-@@ -565,28 +573,6 @@ static void rk_udphy_dplane_select(struct rk_udphy *udphy)
- 		     FIELD_PREP(DP_AUX_DOUT_SEL, udphy->dp_aux_dout_sel) | value);
+@@ -589,19 +585,6 @@ static void rk_udphy_dplane_enable(struct rk_udphy *udphy, int dp_lanes)
+ 				   CMN_DP_CMN_RSTN, FIELD_PREP(CMN_DP_CMN_RSTN, 0x0));
  }
  
--static int rk_udphy_dplane_get(struct rk_udphy *udphy)
+-static void rk_udphy_dp_hpd_event_trigger(struct rk_udphy *udphy, bool hpd)
 -{
--	int dp_lanes;
+-	const struct rk_udphy_cfg *cfg = udphy->cfgs;
 -
--	switch (udphy->mode) {
--	case UDPHY_MODE_DP:
--		dp_lanes = 4;
--		break;
+-	udphy->dp_sink_hpd_sel = true;
+-	udphy->dp_sink_hpd_cfg = hpd;
 -
--	case UDPHY_MODE_DP_USB:
--		dp_lanes = 2;
--		break;
+-	if (!udphy->dp_in_use)
+-		return;
 -
--	case UDPHY_MODE_USB:
--	default:
--		dp_lanes = 0;
--		break;
--	}
--
--	return dp_lanes;
+-	rk_udphy_grfreg_write(udphy->vogrf, &cfg->vogrfcfg[udphy->id].hpd_trigger, hpd);
 -}
 -
- static void rk_udphy_dplane_enable(struct rk_udphy *udphy, int dp_lanes)
+ static void rk_udphy_mode_set(struct rk_udphy *udphy, u8 mode)
  {
- 	u32 val = 0;
-@@ -656,6 +642,7 @@ static void rk_udphy_set_typec_default_mapping(struct rk_udphy *udphy)
- 	}
- 
- 	rk_udphy_mode_set(udphy, UDPHY_MODE_DP_USB);
-+	udphy->dp_lanes = 2;
+ 	if (udphy->mode == mode)
+@@ -1013,29 +996,6 @@ static void rk_udphy_power_off(struct rk_udphy *udphy, u8 mode)
+ 		rk_udphy_disable(udphy);
  }
  
- static int rk_udphy_orien_sw_set(struct typec_switch_dev *sw,
-@@ -894,7 +881,7 @@ static int rk_udphy_parse_lane_mux_data(struct rk_udphy *udphy)
- 		return 0;
- 	}
- 
--	if (num_lanes != 2 && num_lanes != 4)
-+	if (num_lanes != 1 && num_lanes != 2 && num_lanes != 4)
- 		return dev_err_probe(udphy->dev, -EINVAL,
- 				     "invalid number of lane mux\n");
- 
-@@ -920,9 +907,11 @@ static int rk_udphy_parse_lane_mux_data(struct rk_udphy *udphy)
- 	}
- 
- 	udphy->mode = UDPHY_MODE_DP;
--	if (num_lanes == 2) {
-+	udphy->dp_lanes = num_lanes;
-+	if (num_lanes == 1 || num_lanes == 2) {
- 		udphy->mode |= UDPHY_MODE_USB;
--		udphy->flip = (udphy->lane_mux_sel[0] == PHY_LANE_MUX_DP);
-+		udphy->flip = (udphy->lane_mux_sel[0] == PHY_LANE_MUX_DP) ||
-+			      (udphy->lane_mux_sel[1] == PHY_LANE_MUX_DP);
- 	}
- 
- 	return 0;
-@@ -1050,18 +1039,17 @@ static int rk_udphy_dp_phy_exit(struct phy *phy)
+-static int rk_udphy_dp_phy_init(struct phy *phy)
+-{
+-	struct rk_udphy *udphy = phy_get_drvdata(phy);
+-
+-	mutex_lock(&udphy->mutex);
+-
+-	udphy->dp_in_use = true;
+-
+-	mutex_unlock(&udphy->mutex);
+-
+-	return 0;
+-}
+-
+-static int rk_udphy_dp_phy_exit(struct phy *phy)
+-{
+-	struct rk_udphy *udphy = phy_get_drvdata(phy);
+-
+-	mutex_lock(&udphy->mutex);
+-	udphy->dp_in_use = false;
+-	mutex_unlock(&udphy->mutex);
+-	return 0;
+-}
+-
  static int rk_udphy_dp_phy_power_on(struct phy *phy)
  {
  	struct rk_udphy *udphy = phy_get_drvdata(phy);
--	int ret, dp_lanes;
-+	int ret;
+@@ -1267,8 +1227,6 @@ static int rk_udphy_dp_phy_configure(struct phy *phy,
+ }
  
+ static const struct phy_ops rk_udphy_dp_phy_ops = {
+-	.init		= rk_udphy_dp_phy_init,
+-	.exit		= rk_udphy_dp_phy_exit,
+ 	.power_on	= rk_udphy_dp_phy_power_on,
+ 	.power_off	= rk_udphy_dp_phy_power_off,
+ 	.configure	= rk_udphy_dp_phy_configure,
+@@ -1322,6 +1280,14 @@ static int rk_udphy_typec_mux_set(struct typec_mux_dev *mux,
+ 	struct rk_udphy *udphy = typec_mux_get_drvdata(mux);
+ 	u8 mode;
+ 
++	/*
++	 * Ignore mux events not involving DP AltMode, because
++	 * the mode field is being reused, e.g. state->mode == 4
++	 * could be either TYPEC_MODE_USB4 or TYPEC_DP_STATE_C.
++	 */
++	if (!state->alt || state->alt->svid != USB_TYPEC_DP_SID)
++		return 0;
++
  	mutex_lock(&udphy->mutex);
  
--	dp_lanes = rk_udphy_dplane_get(udphy);
--	phy_set_bus_width(phy, dp_lanes);
-+	phy_set_bus_width(phy, udphy->dp_lanes);
- 
- 	ret = rk_udphy_power_on(udphy, UDPHY_MODE_DP);
- 	if (ret)
- 		goto unlock;
- 
--	rk_udphy_dplane_enable(udphy, dp_lanes);
-+	rk_udphy_dplane_enable(udphy, udphy->dp_lanes);
- 
- 	rk_udphy_dplane_select(udphy);
- 
-@@ -1344,6 +1332,7 @@ static int rk_udphy_typec_mux_set(struct typec_mux_dev *mux,
- 		udphy->lane_mux_sel[2] = PHY_LANE_MUX_DP;
- 		udphy->lane_mux_sel[3] = PHY_LANE_MUX_DP;
- 		mode = UDPHY_MODE_DP;
-+		udphy->dp_lanes = 4;
- 		break;
- 
- 	case TYPEC_DP_STATE_D:
-@@ -1360,6 +1349,7 @@ static int rk_udphy_typec_mux_set(struct typec_mux_dev *mux,
- 			udphy->lane_mux_sel[3] = PHY_LANE_MUX_DP;
- 		}
- 		mode = UDPHY_MODE_DP_USB;
-+		udphy->dp_lanes = 2;
+ 	switch (state->mode) {
+@@ -1353,22 +1319,7 @@ static int rk_udphy_typec_mux_set(struct typec_mux_dev *mux,
  		break;
  	}
  
-@@ -1504,7 +1494,7 @@ static int rk_udphy_probe(struct platform_device *pdev)
- 		ret = PTR_ERR(udphy->phy_dp);
- 		return dev_err_probe(dev, ret, "failed to create DP phy\n");
- 	}
--	phy_set_bus_width(udphy->phy_dp, rk_udphy_dplane_get(udphy));
-+	phy_set_bus_width(udphy->phy_dp, udphy->dp_lanes);
- 	udphy->phy_dp->attrs.max_link_rate = 8100;
- 	phy_set_drvdata(udphy->phy_dp, udphy);
+-	if (state->alt && state->alt->svid == USB_TYPEC_DP_SID) {
+-		struct typec_displayport_data *data = state->data;
+-
+-		if (!data) {
+-			rk_udphy_dp_hpd_event_trigger(udphy, false);
+-		} else if (data->status & DP_STATUS_IRQ_HPD) {
+-			rk_udphy_dp_hpd_event_trigger(udphy, false);
+-			usleep_range(750, 800);
+-			rk_udphy_dp_hpd_event_trigger(udphy, true);
+-		} else if (data->status & DP_STATUS_HPD_STATE) {
+-			rk_udphy_mode_set(udphy, mode);
+-			rk_udphy_dp_hpd_event_trigger(udphy, true);
+-		} else {
+-			rk_udphy_dp_hpd_event_trigger(udphy, false);
+-		}
+-	}
++	rk_udphy_mode_set(udphy, mode);
  
+ 	mutex_unlock(&udphy->mutex);
+ 	return 0;
+@@ -1507,20 +1458,6 @@ static int rk_udphy_probe(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-static int __maybe_unused rk_udphy_resume(struct device *dev)
+-{
+-	struct rk_udphy *udphy = dev_get_drvdata(dev);
+-
+-	if (udphy->dp_sink_hpd_sel)
+-		rk_udphy_dp_hpd_event_trigger(udphy, udphy->dp_sink_hpd_cfg);
+-
+-	return 0;
+-}
+-
+-static const struct dev_pm_ops rk_udphy_pm_ops = {
+-	SET_LATE_SYSTEM_SLEEP_PM_OPS(NULL, rk_udphy_resume)
+-};
+-
+ static const char * const rk_udphy_rst_list[] = {
+ 	"init", "cmn", "lane", "pcs_apb", "pma_apb"
+ };
+@@ -1544,7 +1481,6 @@ static const struct rk_udphy_cfg rk3576_udphy_cfgs = {
+ 	},
+ 	.vogrfcfg = {
+ 		{
+-			.hpd_trigger	= RK_UDPHY_GEN_GRF_REG(0x0000, 11, 10, 1, 3),
+ 			.dp_lane_reg    = 0x0000,
+ 		},
+ 	},
+@@ -1585,11 +1521,9 @@ static const struct rk_udphy_cfg rk3588_udphy_cfgs = {
+ 	},
+ 	.vogrfcfg = {
+ 		{
+-			.hpd_trigger	= RK_UDPHY_GEN_GRF_REG(0x0000, 11, 10, 1, 3),
+ 			.dp_lane_reg	= 0x0000,
+ 		},
+ 		{
+-			.hpd_trigger	= RK_UDPHY_GEN_GRF_REG(0x0008, 11, 10, 1, 3),
+ 			.dp_lane_reg	= 0x0008,
+ 		},
+ 	},
+@@ -1625,7 +1559,6 @@ static struct platform_driver rk_udphy_driver = {
+ 	.driver		= {
+ 		.name	= "rockchip-usbdp-phy",
+ 		.of_match_table = rk_udphy_dt_match,
+-		.pm = &rk_udphy_pm_ops,
+ 	},
+ };
+ module_platform_driver(rk_udphy_driver);
 -- 
 2.53.0
 
