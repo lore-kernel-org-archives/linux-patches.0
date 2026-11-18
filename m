@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015775;
-	b=yHT6KARt/gUrdAoNEvQYGadF4BogEGdemvmyfhOqhAZ3zmOqikL9NBOjlg0Ml1AJPNEF
-	 rV9FdS/bNoMBlH4w2mjTPYLJ49+22kq0Hq+iGVh2yEFbwl10dKAy3cZpUH/du2h92oovl
-	 HEeVwi7CUgNQXWQT2P2x8VeY3GlFtdh7xtCYYi6vCeEDOkFNdauYA7Gk5aBaR2LcUrR3C
-	 nx1guivdD2z4PmdLE6Rrpg9oqyTrkKqyZ7jxFKUYMnDyBZGEQl3wsaPSStCgfdnht9ny2
-	 KzyUA1mqi7d5KK0l6x1NUg1DdvD+f7/u3ximfsem9HmE2igGHFCvmd+EnEuR6f63whg==
+	t=1795015778;
+	b=5fHtrkddkitHls3F4NkEZXm9yV3L+N1wkdx2LkdDDvdxeVeWKhFeGymS/bVHAbH+ndW8
+	 uYC4Nt5esqKZhfMm1b0Acgcp07Q9T4Wr2EcP7DnfnBqh11pwopkdUs0aQokrD4CD4+CL4
+	 PNnCpxU4uYSdLwOMZeHNhJBLmKUJ52J7XoRq79lizbhAr1/qqG/ollWhOlA4i95/tHFLx
+	 upXPYv1d7yfd31pPFMevuWPUJEWOxes6bGDe5jVu2W7C4LwgLd16tVhZg7iIl3POMv/EO
+	 +K2CNvWqW+LptqEiPwDMa2+47Avqu7rtGD7OhGlBoEaRpwETQ+Z80IiCU10DKjfRxQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015775;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015778;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=byGTAGSApRM3QmOsu+563QZzIa22alxFx0mvAoHfcLc=;
-	b=ZrDdandDUj/bXVhnGh3cqTVCU2giH0l0snEkE46jkm+rZZv3WLAnN2jpcQEBqtzgL0p7
-	 1/YjohSwdg+MM6pi4L6zSQH4pJvczLDn7hvKqcxAboHd99ycm3lq14St3FtFnF9q+Y7gG
-	 wh6uSQCOMBUwOnp4i2ziS46tae5BAt0v1Y8qKRy6iRMiZHxILTuFbkezBSYKaypfc+3Qj
-	 qiDNGJC8c35kiayhcwzFUAUFubpHDBBdYZSVB8lc/2XU4kNyxdP/HKPqGtfWSb2ZHo0fa
-	 KM8wEcV8o+LWlTbNu3DvKmhXSxjQHKxMDAuyZLK6g3OHPMq1bATwZpYTIX6zvPQtmOQ==
+	bh=qsN2POL9JlywxyCZZCZGlmRQ8Icev+AeyFHgOZrLnpo=;
+	b=j/mIbfs8ywZztu8lUP6UgBInJIGHbCLD3n4W+qa5WAQFcWuuzg7ko07sAeD6rNuSFXeV
+	 PyUqMbNIfZkylzFw/0h2Xf0wzURaVOV67TRBoRwRKJZocEJIBtuf/p0SGl4Z7BuzibCiJ
+	 EApdUlZecdfKrObcunQ2Ed7sjYFt+qh+QY6IhRl0BxmF8d8DmXujzVymYnuLkZyIi/vu2
+	 CDotioXDjUwSnB4/5KhGYJGKGvVPH718Lz+IzxU6y/yWrcj5g/dGqG1KbSW2SyOm0FdiJ
+	 BNWBIXhTNdvNI4/Rkora3aADT+Cve2dS8YgcHdESjSVP7zSYhoZoPFADExJye0SWHYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GyLTMGzv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LXpfSICR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B6D606A31C;
-	Wed, 18 Nov 2026 15:29:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A231606A320;
+	Wed, 18 Nov 2026 15:29:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GyLTMGzv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A791F000C4;
-	Wed, 18 Nov 2026 15:29:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LXpfSICR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55A9A1F000C4;
+	Wed, 18 Nov 2026 15:29:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015775;
-	bh=byGTAGSApRM3QmOsu+563QZzIa22alxFx0mvAoHfcLc=;
+	s=korg; t=1795015777;
+	bh=qsN2POL9JlywxyCZZCZGlmRQ8Icev+AeyFHgOZrLnpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GyLTMGzvtFJVRZXA3O4GVCJiEEKOdr8ssi9FNeKEEqF+IwKk7nL6AEk1hq3bOx5t4
-	 7gBtWVNtIdL8GzC3KRsw2D2kvzyAQ9OqmOILFK+1wtS3KG56TWmh5Aubls9WRCzEE9
-	 sar0K6Kq0hHXBDhRYZvMAqFYtjp13np1b8qPO448=
+	b=LXpfSICRve49lMoKa1DKGXEIyWrkz0flJVFpPno9/f+eqwIr2k5qMTVfBRn6jQURi
+	 6uqB2b10l6YT/WXX4/QGSOMZsqqtLNhjfwYOaJO+o8/iA8mLVrVQLfa+EuopE4H0Hu
+	 ybX1XrN7XRI3l0yIEa/E11w3bKpLcMErQIjuNOd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Junhui Liu <junhui.liu@pigmoral.tech>,
+	Yixun Lan <dlan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0291/2651] ASoC: codecs: sma1307: validate setting firmware layout
-Date: Wed, 18 Nov 2026 15:25:31 +0100
-Message-ID: <20261118150258.383784761@linuxfoundation.org>
+Subject: [PATCH 7.3 0252/2651] riscv: dts: spacemit: k3: Drop guest properties from M-level IMSIC
+Date: Wed, 18 Nov 2026 15:24:52 +0100
+Message-ID: <20261118150256.930952360@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,65 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Junhui Liu <junhui.liu@pigmoral.tech>
 
-[ Upstream commit af0f4f7a042e39bf70fa7406351b26efead18dff ]
+[ Upstream commit 01e2f07c44fc46180bdb10e70506f8acf44a53dd ]
 
-sma1307_setting_loaded() checks a byte count against an element count, then
-reads an eight-int header and a fixed default table from the firmware. It
-also trusts the mode count while indexing a five-entry mode_set array.
+The mimsic node describes the machine-level IMSIC, whose MMIO region is
+0x10000 (64 KiB) for all 8 harts. However, the node also specifies
+riscv,guest-index-bits = <6>, and per the AIA specification the
+per-hart stride is 2^(guest-index-bits + 12) bytes when guest interrupt
+files exist, i.e. 2^(6 + 12) = 256 KiB per hart and 2 MiB for all 8
+harts. The described region cannot hold even a single hart's files, so
+the node contradicts itself. OpenSBI enforces exactly this constraint in
+imsic_data_check() and rejects the node with -EINVAL, preventing the
+M-level IMSIC from initializing:
 
-Validate the byte-to-int conversion, fixed header/default extent, mode
-count, and exact mode table layout before parsing the setting file.
+  fdt_driver_init_by_offset: interrupt-controller@f1000000 (riscv,imsics) init failed: -3
+  init_coldboot: irqchip init failed (error -3)
 
-Fixes: 576c57e6b4c1 ("ASoC: sma1307: Add driver for Iron Device SMA1307")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260830134428.9550-1-pengpeng@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Moreover, guest interrupt files exist to act as the supervisor-level
+interrupt files of virtual harts; there is no machine-level counterpart.
+riscv,num-guest-ids is equally meaningless for the machine-level IMSIC.
+
+Drop both "riscv,guest-index-bits" and "riscv,num-guest-ids" properties
+from the mimsic node so the node matches the actual hardware layout.
+
+Fixes: 56f37e391a62 ("riscv: dts: spacemit: add initial support for K3 SoC")
+Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
+Reviewed-by: Yixun Lan <dlan@kernel.org>
+Link: https://patch.msgid.link/20260729-k3-mimsic-fix-v1-1-368c0aec04b9@pigmoral.tech
+Signed-off-by: Yixun Lan <dlan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/sma1307.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ arch/riscv/boot/dts/spacemit/k3.dtsi | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/sound/soc/codecs/sma1307.c b/sound/soc/codecs/sma1307.c
-index adb369a29b9d3..653cbafee23ec 100644
---- a/sound/soc/codecs/sma1307.c
-+++ b/sound/soc/codecs/sma1307.c
-@@ -1701,7 +1701,9 @@ static void sma1307_setting_loaded(struct sma1307_priv *sma1307, const char *fil
- 			__func__, setting_file, ERR_PTR(ret));
- 		sma1307->set.status = false;
- 		return;
--	} else if ((fw->size) < SMA1307_SETTING_HEADER_SIZE) {
-+	} else if (fw->size % sizeof(int) ||
-+		   fw->size < (SMA1307_SETTING_HEADER_SIZE +
-+				       SMA1307_SETTING_DEFAULT_SIZE) * sizeof(int)) {
- 		dev_err(sma1307->dev, "%s: Invalid file\n", __func__);
- 		sma1307->set.status = false;
- 		return;
-@@ -1720,6 +1722,10 @@ static void sma1307_setting_loaded(struct sma1307_priv *sma1307, const char *fil
- 	sma1307->set.checksum = data[sma1307->set.header_size - 2];
- 	sma1307->set.num_mode = data[sma1307->set.header_size - 1];
- 	num_mode = sma1307->set.num_mode;
-+	if (num_mode < 0 || num_mode > ARRAY_SIZE(sma1307->set.mode_set)) {
-+		sma1307->set.status = false;
-+		return;
-+	}
- 	sma1307->set.header = devm_kmalloc_array(sma1307->dev,
- 						 sma1307->set.header_size,
- 						 sizeof(int),
-@@ -1755,7 +1761,11 @@ static void sma1307_setting_loaded(struct sma1307_priv *sma1307, const char *fil
- 
- 	/* MODE */
- 	offset = sma1307->set.header_size + sma1307->set.def_size;
--	sma1307->set.mode_size = DIV_ROUND_CLOSEST(size - offset, num_mode + 1);
-+	if ((size - offset) % (num_mode + 1)) {
-+		sma1307->set.status = false;
-+		return;
-+	}
-+	sma1307->set.mode_size = (size - offset) / (num_mode + 1);
- 	for (int i = 0; i < num_mode; i++) {
- 		sma1307->set.mode_set[i]
- 		    = devm_kzalloc(sma1307->dev,
+diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
+index f9c2ffedeae80..86ccfb82e295c 100644
+--- a/arch/riscv/boot/dts/spacemit/k3.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
+@@ -1287,9 +1287,7 @@ mimsic: interrupt-controller@f1000000 {
+ 					      <&cpu4_intc 11>, <&cpu5_intc 11>,
+ 					      <&cpu6_intc 11>, <&cpu7_intc 11>;
+ 			msi-controller;
+-			riscv,guest-index-bits = <6>;
+ 			riscv,hart-index-bits = <4>;
+-			riscv,num-guest-ids = <511>;
+ 			riscv,num-ids = <511>;
+ 			status = "reserved";
+ 		};
 -- 
 2.53.0
 
