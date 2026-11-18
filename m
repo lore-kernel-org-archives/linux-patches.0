@@ -1,54 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038899;
-	b=lxL7uNxbUCTl4E0HLBjFYQhIaPd+xck8GBDJMuOOkVegVHNNNuvTOCm4P1DNT+GrU+fu
-	 JHqRoH51AcOXuypdECcVmGLdlDhqONPzcRbPX9expAMslYuB+OSub/gs/xQc9zq9D84jF
-	 5UgglaMOVLSsbNyDda9THYiQz+J88KXus7J94IUqsj2O11TDF1mrpITREaekMC1fuDMXw
-	 KODoQ139sjHVok8VzeBujKiLzE9/ljPlrfccuEbG/71QF0kjhV2mPKD919mqlm6lVsRd9
-	 EJe1Sfa7HHrU7d4GYg26uem7Poe2kPfB6WCraZD/4KdnI4aNVFtc4lUdks/X+j6cgSA==
+	t=1795038902;
+	b=yTNl/BrCc0BnSf7TGEyi/d/Vjk3qTtgVRnSbyVnySgTDxyiUDBEP2FjP6koWCaDBBcPI
+	 e9KPHLri70e6x3+OLGL7vFY8mN9It1RNsBqhqGBCeuMCPD3U6QM/SAI8libdMif1VBFjH
+	 thDkhvyMRXGjcpsNE11WnfB8Q24qIg0/JSryGhXaLoK9h5sWdD72WnISA4FXHK1nv1NlF
+	 5iUAVAMGnpxJg3MKAKlZOvuwn+KrX6qRNLHaja7NU+9/eLlUSUxL4QV5t9EtpYNvYijGd
+	 CdPfpZto6v4KCS2yd1FfZISSnIstuOe1X1QQ3lMDL829oRRGHadIltIXtjQtjpFpPFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038899;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038902;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SeIzHnA5bgXvL/xQDnAxSVvgIYHNoEv6YBKJb7XiboY=;
-	b=c/MjtmeOHmboirVmd+bnBxNAHT+jyNvY4mT0l/rJecDRZ/B7MwkcwsDfa8v6c2TVbyN/
-	 81/IZY9+V8GMWej6flMvRsP8wL5kBnzwKf9PsR1DxtK2nazdbRcbV+BjOEVH2Gdgj/s6k
-	 q/1p/hyNui+hBNm7AlN1ZEE+Kk5WCHNG03GNGf3Gk6cNcalRZ6MuFkIUKXe6g64+JfZwB
-	 aoZo1ZAu/buCccH5lRnQDJc8zWKaN6sCT1LOfFK7GUFbYcBM49zFDxPO5XvJooffvk6aj
-	 +jNzWV8HgDZ1zRgmTcY0dJm+wZOVuhfGOdh6JQKvhxHWoLw4TG2Nb2Yaz4JF3qx4hxg==
+	bh=XqFKLHm5PL+ker5ClraibJtI1R0p/3F+wK+kFnnduTE=;
+	b=Ao+gjtly8wC3pKaQVCpBH7+MsOQw+fY1+bvOHqfVp2tE5VJbXpfa2K3/kqdlCJ3ySTIZ
+	 VB8acy0C3ccQoAJuotkkDC25R8okugq1ivv/BnKUgSrMSfevgyH9e4PmyTcA1Tj+xBh+J
+	 JhEFb490pKDHPE1wana/58KMZmI7Vv9q6Y3uL0v1zjEPbEBOLwjTnnyV+U9p+kuhE5k/g
+	 stb8J/QNkfkhtZ/x//fkPlqkrEQ4kG49xCtSNALrPP0QKgJfymvI0FEqxOsOEgd0c8dhN
+	 QNjB26mPnLk2fUttUAQEhjuvubtdTQrlcUXI9SrU2jkeWPB+u4OZ+5qWPH8JCyc2m3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eyLJzpOv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oWqPZ1vC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E870606A325;
-	Wed, 18 Nov 2026 21:54:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0071A606A31C;
+	Wed, 18 Nov 2026 21:55:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eyLJzpOv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A90531F000C4;
-	Wed, 18 Nov 2026 21:54:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oWqPZ1vC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5743B1F000C4;
+	Wed, 18 Nov 2026 21:55:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038899;
-	bh=SeIzHnA5bgXvL/xQDnAxSVvgIYHNoEv6YBKJb7XiboY=;
+	s=korg; t=1795038901;
+	bh=XqFKLHm5PL+ker5ClraibJtI1R0p/3F+wK+kFnnduTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eyLJzpOvQP11Usfzxs/q2gq9jW1Hlmh7vs+5Z/ammbEbUJEDXQ84YbKxOYscJ8Ft0
-	 H/y6ItbvG7fDxJYuJXeWXHgn9Tvd4TkqrrX2LkJz49fmyHWuhum+lgfGjg67HLf7qX
-	 86/SUVh4wub1fEQ/7+EQfiVzQuJE2ssnWTv4LEgU=
+	b=oWqPZ1vCUMpnDP9GJa6vBNstDdUuWz2g3fqEq2u8GcZ0Fee38XujRfysOpfRminMC
+	 i3v3nqwJlELAfqqs0nAa0WwXdiVxEaz9skxfGEHOG/Y+XEE4PGsXSNrf6oNO5GfwKV
+	 NV4XeIDVeUjtRIpKk7y9fhs6/s6bCX6sSdo4IT3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Kasten <jkasten@gmail.com>,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Eva Kurchatova <eva.kurchatova@virtuozzo.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Muchun Song <muchun.song@linux.dev>,
+	Oscar Salvador <osalvador@suse.de>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1906/3318] drm/amd/display: set allow_freesync before validating a new stream
-Date: Wed, 18 Nov 2026 15:42:08 +0100
-Message-ID: <20261118150419.186363125@linuxfoundation.org>
+Subject: [PATCH 6.6 1907/3318] hugetlbfs: enforce F_SEAL_EXEC in setattr
+Date: Wed, 18 Nov 2026 15:42:09 +0100
+Message-ID: <20261118150419.218393862@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,72 +74,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+From: Eva Kurchatova <eva.kurchatova@virtuozzo.com>
 
-[ Upstream commit ab18dd3061eb2d92e60c8bbf9a435c25962e449f ]
+[ Upstream commit b7f570e7cea761ec7eb4a3a9557a3a082d14e88c ]
 
-After resume from S3, DC enables SubVP on a single FreeSync display at
-a high refresh rate, although dcn32_allow_subvp_high_refresh_rate() is
-meant to keep SubVP off that configuration ("For single display cases,
-freesync must be disabled").  On an RX 7900 XTX driving a FreeSync TV
-at 3840x2160@120, amdgpu_dm_capabilities reports sub-viewport disabled
-after boot and enabled after "rtcwake -m mem", and the memory clock
-starts switching.  It stays that way until a later commit re-validates
-the state; a CRTC gamma change (toggling Night Light) turns SubVP off
-again.
+F_SEAL_EXEC is enforced by shmem_setattr(), but hugetlbfs_setattr() does
+not check it. As a result, fchmod() can change the execute bits of a
+sealed hugetlbfs memfd.
 
-The policy reads dc_stream_state::allow_freesync while the new state
-is validated, but amdgpu_dm sets that field only in
-amdgpu_dm_update_freesync_state_on_stream(), on the first flip after
-the commit.  A stream created by a modeset is therefore validated as
-if FreeSync were off.  On resume, dm_destroy_cached_state() drops the
-streams and forces a modeset, so the resumed state is validated
-without FreeSync.
+Use memfd_check_seals_mode() in hugetlbfs_setattr() to reject changes
+to execute bits when F_SEAL_EXEC is set.
 
-Set allow_freesync in amdgpu_dm_get_freesync_config_for_crtc(), which
-atomic check calls for every active CRTC and which already writes
-ignore_msa_timing_param to the stream.  It uses vrr_supported, the
-condition the flip-time value is derived from.  With this change the
-same TV keeps SubVP disabled across "rtcwake -m mem".
+This also fixes the memfd_test hugetlbfs SEAL-EXEC subtest, where
+fchmod() incorrectly succeeded after applying F_SEAL_EXEC.
 
-On this machine SubVP is also what exposes the single-frame scanout
-corruption reported in the thread linked below, so the FreeSync
-setting stopped working as a workaround after every suspend.
-
-Fixes: 87f0c16e0eeb ("drm/amd/display: Enable SubVP for high refresh rate displays")
-Link: https://lore.kernel.org/all/20260829010525.29935-1-mikhail.v.gavrilov@gmail.com/
-Link: https://gitlab.freedesktop.org/drm/amd/-/work_items/5714#note_3736349
-Tested-by: Josh Kasten <jkasten@gmail.com>
-Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 29793918b0eb63b6810b248a906f87dd79b70be5)
+Fixes: 6fd7353829ca ("mm/memfd: add F_SEAL_EXEC")
 Cc: stable@vger.kernel.org
-[ sashal: adjusted context for static get_freesync_config_for_crtc() instead of amdgpu_dm_get_freesync_config_for_crtc() ]
+Signed-off-by: Eva Kurchatova <eva.kurchatova@virtuozzo.com>
+Link: https://patch.msgid.link/20260629180247.2343229-1-eva.kurchatova@virtuozzo.com
+Acked-by: Pedro Falcato <pfalcato@suse.de>
+Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Tested-by: Gregory Price (Meta) <gourry@gourry.net>
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
+[ david: use common helper; fixup Fixes:; check only regular files ]
+Acked-by: Oscar Salvador <osalvador@suse.de>
+Link: https://patch.msgid.link/20261029-fixes_shmem-v4-5-392fc715d8f6@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: replaced memfd_check_seals_mode() with an inline F_SEAL_EXEC and execute-bit check ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/hugetlbfs/inode.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index d79f39dd21ac5..900ded67a55ee 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -9261,6 +9261,14 @@ static void get_freesync_config_for_crtc(
- 					vrefresh >= aconnector->min_vfreq &&
- 					vrefresh <= aconnector->max_vfreq;
+diff --git a/fs/hugetlbfs/inode.c b/fs/hugetlbfs/inode.c
+index 9bc9f04e4b7a6..96ba81081ed42 100644
+--- a/fs/hugetlbfs/inode.c
++++ b/fs/hugetlbfs/inode.c
+@@ -964,6 +964,12 @@ static int hugetlbfs_setattr(struct mnt_idmap *idmap,
+ 	if (error)
+ 		return error;
  
-+	/*
-+	 * DC reads allow_freesync while validating the new state, for example
-+	 * to keep SubVP off a single FreeSync display, but it is otherwise set
-+	 * only on the first flip after the commit.  Set it here, so that a
-+	 * stream created by this commit is not validated without it.
-+	 */
-+	new_crtc_state->stream->allow_freesync = new_crtc_state->vrr_supported;
++	if (S_ISREG(inode->i_mode) && (ia_valid & ATTR_MODE)) {
++		if ((info->seals & F_SEAL_EXEC) &&
++		    ((inode->i_mode ^ attr->ia_mode) & 0111))
++			return -EPERM;
++	}
 +
- 	if (new_crtc_state->vrr_supported) {
- 		new_crtc_state->stream->ignore_msa_timing_param = true;
- 		fs_vid_mode = new_crtc_state->freesync_config.state == VRR_STATE_ACTIVE_FIXED;
+ 	if (ia_valid & ATTR_SIZE) {
+ 		loff_t oldsize = inode->i_size;
+ 		loff_t newsize = attr->ia_size;
 -- 
 2.53.0
 
