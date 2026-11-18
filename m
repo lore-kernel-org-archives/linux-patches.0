@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033641;
-	b=ge0xIoKc+ZD+wNORNpIIQJNR5qPPl/GPYp5MIyMGuenoztR/Psp7lcyw/oP94OsMtI6x
-	 DA7fVaW8nsr0c/VF6n8lRMY302+/u2wql5A3zXrqiw9q4mGfxxaJFNDlJ7o4Jvux9BPMU
-	 xVimsopRKF8lb94dlk8BjMADFhD7nXDZld9CngX8RVvCKhU4aC/g4dhuWHF2f3VXL28IF
-	 wt38Q3Di7aumH6wTm9fDqsRmRhBdAAyHwLfoMZ48rO2edrcOcgtYpRNpoaAvtucM2t92E
-	 Qz+RjognedWE4cCLtWYLR2vUKtliXUqJaSMWO1rDYUVcw7oDlx7Dmozt3ztXUDucYhA==
+	t=1795033644;
+	b=TeCisqT2eu8xyPVIi1UyQkoOxXzRrQTiRYxzU1E1kpfIVHOS3dMid3jSi857DgO4E3N1
+	 9KSP4iO7BZ1mGxOqpHZLCRMWRcH8cvVPJo4nYP3grQvfCaWBkjik0gGZ17nY/Sls0jM+q
+	 NRRG1RYCvMja6s597YfuNDDnlQ0PzCRAWRJqJw/hBMEeQv37YtpU15GBg8kWBcdBOwlsn
+	 NLK6XPXLo1LMONEtZ3tP3vudswoAT6rouT+14nVQW9SM28VqfIU36HE/uobUZ9wxUVpyu
+	 4+BdDzCRCSNvdX6rZsycmN357txBCuRxPCFi2mB8V3Y4CRXxJOpoXoLgFTlRsmaprpw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033641;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033644;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3OSZ/UmbKd8/zbW9qR7b7+pWtlZT9K/SiEoS3ALxzmY=;
-	b=Tt67t9YbXOYDWW+OWK/XPZGtJixsZZW3gYCPXsuDeRDG90J8W/tdC6ZoTeGIlIHJds4N
-	 S/CphNug1RnqL3HdpURcFeV11KO7vyGs3MZ9VAQ/p8EW8R068AGpMW4IrE7DnbdAuHUg8
-	 GNemrQ6yK1kLRToCIto376tCr78VpGUUKcLmFpuq/uOsQQvERDVvLLdmWx6Ho1RrlNljg
-	 Bh2yJyVR0Zk/IeVHnmyyJKKYbs2LniAm9UjxUa2G5UnghvwgSjesbxgZl16/nMuDCBJqu
-	 3F0JCTztBbx2WZ9dgBQ4iGT5UgBb/DwNOTGQjGgfiFI3zFFVzHvxuBa9JpdJ6yjgUWA==
+	bh=YSWRuZ7iCXH3URI14JsR9YhwoAjU18sgPyiuv85qN7E=;
+	b=uaFMWQvuiKPJWNRZruRmfCPTwE67pRSmFf5us0Pr2quhBIC8rx2LhMkqfuxOwoL6n3HB
+	 boJ74hyemXJLgJln91ASDOq2Z0gFtGBxQNfunSbO+jZABE/HRS+4cFplZTLa3cvzz82SD
+	 FoNvFhE67VxWAoU8JdlsxRa+8Rb5GcWKafeNbLzQZA/mGDUCa7z9doSoaD2XP6qf6irG6
+	 FTzG5VuEEWy/OvL8LeY6MsSkE8EZQj6NT1CUPZn/uR2KWxMVdo1ifXQpwiPiMZWDEvRMi
+	 9NjmlRYK7AG3VuaJHb785E+f03y+XW+uQzpNfG0rHP35jabiXdxCUjw0Rt5ab5rZnKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IbwqMbBD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E+9RsETm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF49606A31C;
-	Wed, 18 Nov 2026 20:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64030606A31C;
+	Wed, 18 Nov 2026 20:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IbwqMbBD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029991F000C4;
-	Wed, 18 Nov 2026 20:27:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E+9RsETm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8BC51F000C4;
+	Wed, 18 Nov 2026 20:27:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033641;
-	bh=3OSZ/UmbKd8/zbW9qR7b7+pWtlZT9K/SiEoS3ALxzmY=;
+	s=korg; t=1795033644;
+	bh=YSWRuZ7iCXH3URI14JsR9YhwoAjU18sgPyiuv85qN7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IbwqMbBDU9TzLqYoKOgeS7F4a5hV3ltM8ufYJdvgX1J5W7M1BsPGoERC5HFSCs0ky
-	 ffXWQFSK/T0ofAUigQHQsTsmJX5a5Ng2PxASmVG+qh6J70zjGfiA5go6Ywe7ZL9cvh
-	 ob0UkN6YcmzALsLfrDjOQxMEzco8oTQhVNXdpPjU=
+	b=E+9RsETmobikDUM+KEAY0jZwNYAmrgOCCHG5PpN1kESrjvPnVkjaDjPT+CEyqIz+q
+	 6m3YULL5IzJ3iBUfAtRpf83D5Z5lrj2oCWBacSYSeKHJYktX2wHUMO0eEb7GqiiD/J
+	 BtWn+G9cnrxHQFifrZ7Wqs6bz7ZzUnziFffFBDgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
+	Ben Dooks <ben.dooks@codethink.co.uk>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0088/3318] mmc: block: reject invalid perdev_minors before division
-Date: Wed, 18 Nov 2026 15:11:50 +0100
-Message-ID: <20261118150316.771574706@linuxfoundation.org>
+Subject: [PATCH 6.6 0071/3318] mmc: cqhci: fix to missed endian conversions
+Date: Wed, 18 Nov 2026 15:11:33 +0100
+Message-ID: <20261118150316.166283839@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,44 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Ben Dooks <ben.dooks@codethink.co.uk>
 
-[ Upstream commit 5253aee00a4383cb0482d5e99bde48b8054ae2c0 ]
+[ Upstream commit 0aae2c73175821a71c0e20607f8e333be5b71940 ]
 
-The mmcblk.perdev_minors module parameter is parsed as a signed int and
-is used during mmc_blk_init() to compute the number of supported block
-devices.
+Fix two places where the wrong type or conversion of little-endian
+types to fix the following sparse warnings:
 
-Passing perdev_minors=0 makes the init path divide by zero when it
-computes max_devices. Negative values are invalid as well and would make
-max_devices negative before it is later used as an IDA limit.
+drivers/mmc/host/cqhci-core.c:487:15: warning: incorrect type in assignment (different base types)
+drivers/mmc/host/cqhci-core.c:487:15:    expected restricted __le32 [usertype]
+drivers/mmc/host/cqhci-core.c:487:15:    got int
+drivers/mmc/host/cqhci-core.c:566:19: warning: incorrect type in assignment (different base types)
+drivers/mmc/host/cqhci-core.c:566:19:    expected unsigned long long [usertype] *task_desc
+drivers/mmc/host/cqhci-core.c:566:19:    got restricted __le64 [usertype] *
 
-Reject non-positive perdev_minors values before registering any mmcblk
-resources.
-
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/core/block.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/mmc/host/cqhci-core.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/mmc/core/block.c b/drivers/mmc/core/block.c
-index f53f0bf4ae60c..3b1309b04aa69 100644
---- a/drivers/mmc/core/block.c
-+++ b/drivers/mmc/core/block.c
-@@ -3149,6 +3149,11 @@ static int __init mmc_blk_init(void)
+diff --git a/drivers/mmc/host/cqhci-core.c b/drivers/mmc/host/cqhci-core.c
+index fe7a4eac9595c..d942f3fe95abe 100644
+--- a/drivers/mmc/host/cqhci-core.c
++++ b/drivers/mmc/host/cqhci-core.c
+@@ -479,11 +479,11 @@ static void cqhci_set_tran_desc(u8 *desc, dma_addr_t addr, int len, bool end,
  {
- 	int res;
+ 	__le32 *attr = (__le32 __force *)desc;
  
-+	if (perdev_minors <= 0) {
-+		pr_err("mmcblk: invalid minors per device: %d\n", perdev_minors);
-+		return -EINVAL;
-+	}
-+
- 	res  = bus_register(&mmc_rpmb_bus_type);
- 	if (res < 0) {
- 		pr_err("mmcblk: could not register RPMB bus type\n");
+-	*attr = (CQHCI_VALID(1) |
+-		 CQHCI_END(end ? 1 : 0) |
+-		 CQHCI_INT(0) |
+-		 CQHCI_ACT(0x4) |
+-		 CQHCI_DAT_LENGTH(len));
++	*attr = cpu_to_le32((CQHCI_VALID(1) |
++			     CQHCI_END(end ? 1 : 0) |
++			     CQHCI_INT(0) |
++			     CQHCI_ACT(0x4) |
++			     CQHCI_DAT_LENGTH(len)));
+ 
+ 	if (dma64) {
+ 		__le64 *dataddr = (__le64 __force *)(desc + 4);
+@@ -532,7 +532,7 @@ static int cqhci_prep_tran_desc(struct mmc_request *mrq,
+ static void cqhci_prep_dcmd_desc(struct mmc_host *mmc,
+ 				   struct mmc_request *mrq)
+ {
+-	u64 *task_desc = NULL;
++	__le64 *task_desc = NULL;
+ 	u64 data = 0;
+ 	u8 resp_type;
+ 	u8 *desc;
+@@ -564,7 +564,7 @@ static void cqhci_prep_dcmd_desc(struct mmc_host *mmc,
+ 		 CQHCI_CMD_TIMING(timing) | CQHCI_RESP_TYPE(resp_type));
+ 	if (cq_host->ops->update_dcmd_desc)
+ 		cq_host->ops->update_dcmd_desc(mmc, mrq, &data);
+-	*task_desc |= data;
++	*task_desc |= cpu_to_le64(data);
+ 	desc = (u8 *)task_desc;
+ 	pr_debug("%s: cqhci: dcmd: cmd: %d timing: %d resp: %d\n",
+ 		 mmc_hostname(mmc), mrq->cmd->opcode, timing, resp_type);
 -- 
 2.53.0
 
