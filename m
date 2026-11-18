@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019065;
-	b=1El4fH/SW2NxVumyorSe2aFxIBU/lXidBMspFkvJF3jIwt1oLx0fvRIUlNLIgd8jCNwv
-	 /1MyugiQIoe9bhY1Zsa8qqmNoPeNOy524kKbZLdSrx3piDZX/3riT5TrtJJDz+lbmLu+O
-	 hZe/VM8GTU09hBTPQvZPp3xvtBZSdNj2mcan7GNz8B8Cu8tP3sWJbkylxY1MXatdpoCMp
-	 oZCju5+ZgidnrfwZ+nDsk696w6ymNPdfzXz/OZnHejqCZGRIwjXC4VI41tST5BWKjDC1w
-	 kkYDpD+LErdCZ5pOzCKbOHub2vN/eJOoJ2KhOTq929/SjiG/4ctE0SQwq7eaRe0CDaw==
+	t=1795019068;
+	b=Yv49LKLzAshepR/vTtBYVJsyeLsLhdFMJG2QCA2qohsER0KTU/EegxGv21ViPzXV1MR7
+	 eGydkLSEJcpsDOTxuzRaCBlFeFM8YuMdkjNuzZOF2C4kOZuSAG7P2KrkpTo7ufpB56Dwm
+	 e202vORd3e228rwQBwTbKf+q625OlxcNrbSUNNk8rY29WOo0MCzjePDnoC41VORc/C/x6
+	 Yi2/J3I4zpS1Gj+6m30M3nFPS6oJasBiOHHh3hs83pci3zJGCy2BZicN5qIrR+MAJg9tr
+	 9Rqy92gjNrYxTX503/d+H860K1qv6V5xYefIQlkQyg071KaZE5l3TSrF2gYRcsV6z9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019065;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019068;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jMFQ2mkcgRBfx77WtsfjzZFfJOfJGie0NUncheRCi5Y=;
-	b=jorPdhVKdVGrLLkoxolAZCEp8NMVPCAGnWDYO2Y7U7/WSs/Qoi8riAajRX1HbfpJeEtv
-	 8DCS4WT3VZ/cXdd1bc8krQoO2DDcPKWYeOXBqRos1Y7CohA/h/xnybLkkQMkOuZ5p/Cq0
-	 JVI0eLbe3+ppELy7Xr0J7R2DlolJwJi+yLQ/SuS1DlQ2oNKBZeG1lHp3tc7b0WW6xsHPx
-	 H/D0+Bt9d46klwQ59oXc+VD20th8OO8YYcba/BAp9PsWEwNtt+QiX7iO8E7MQtPofesR7
-	 taSy/07XpB3r+Q3HdXGaK33ULs6A6hbnnSQ04WGca7IzjexAiuIskZcLFMBzA1/9ubA==
+	bh=wZMo+iegmPGZaytJEU8dM1y+kq+6e9d+A5FDG0lFUdw=;
+	b=xVRFH3wfJ4LDt59NskUjDOzjVoAZUuyLe98r8c6d67Px50ULFjP4PRzJp5wh7XffoIzs
+	 edPmQ73reng5KK53UPCotaN4re5bQPqShu4E/nVBezQNVf/6QzT7owUioMCn7yXgeEFm0
+	 l56XvO5R0+AYt5dLKV7Z1kryAcuCLAVOLiP7zx8AzaxRAE/mfGDEWw407xNDv+JdeUDS4
+	 pDfjj+Hk5RmoRTUn+s/lDKBIWHGHowBmY1Wp8WOFzYF+/LSNrTuUHOoZHvsMqHvIRyM6Z
+	 2T89dhAxof6SkQj0bLMaiPnsOd6ohEb+YrG/b3WNUEtsPRAFeHO/EBV5dMRgtB7ENLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ua8L+kr7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N6Tzihph;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E4660A2617;
-	Wed, 18 Nov 2026 16:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC2460A2626;
+	Wed, 18 Nov 2026 16:24:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ua8L+kr7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 395551F000D0;
-	Wed, 18 Nov 2026 16:24:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N6Tzihph
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E43F41F000C4;
+	Wed, 18 Nov 2026 16:24:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019065;
-	bh=jMFQ2mkcgRBfx77WtsfjzZFfJOfJGie0NUncheRCi5Y=;
+	s=korg; t=1795019068;
+	bh=wZMo+iegmPGZaytJEU8dM1y+kq+6e9d+A5FDG0lFUdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ua8L+kr7IWPAF1HE6M1OT88W+f3L+z3BuXs3IadoQE+FbZ/RaujOOsFpP6940DtRV
-	 cQjpX9SvtedkV/0MuTS50iWO1aXFxQPh5f70NFMY7QT/k/gOrRfkjB26sSEW6wqpLM
-	 SgH6w/HQIGKrjETdZNgZMu+r77zYPx3j5AMMiAng=
+	b=N6TzihphdqrOGFgAUj1M6bBQoHPOlsKJmyRZ3iOolmxGxlemBPHIlgy0ITVhcG3it
+	 AxGOQyPjYzlSjD/dYRQ6PZV6VB+2ugzgOznOZWs4nk2T/fMIFGpUHkOoMQ5eC4mo+v
+	 fpa8qjcL1jQHszDuthPG72IqOBxppjNOYOTdNP8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Papa <pcristian292@gmail.com>,
+	Mahesh Saran <maheshsaran477@gmail.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1463/2651] wifi: mt76: feed the station RSSI average from the chain signals
-Date: Wed, 18 Nov 2026 15:45:03 +0100
-Message-ID: <20261118150340.702391208@linuxfoundation.org>
+Subject: [PATCH 7.3 1464/2651] wifi: mt76: mt7921: clear WM2 from MT7902 RX all_complete_mask
+Date: Wed, 18 Nov 2026 15:45:04 +0100
+Message-ID: <20261118150340.739725459@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,70 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Papa <pcristian292@gmail.com>
+From: Mahesh Saran <maheshsaran477@gmail.com>
 
-[ Upstream commit e1534fef1ae4df6e16401117394c26dbef84f361 ]
+[ Upstream commit 87b67aa8eb32cf89dab4c6df88d65e07fec46592 ]
 
-mt76_check_sta() adds status->signal of every received frame to the
-station's RSSI average, wcid->rssi, which mt76_get_min_avg_rssi() reads
-for the dynamic sensitivity of mt7603 and mt7615 and for the gain
-control of mt76x0 and mt76x2.
+MT7902 does not have an MCU_WA ring and sets wm2_complete_mask to 0.
+However, commit 83c65e82e5b2 ("wifi: mt76: connac2: apply new rx
+all_complete_mask") populated all_complete_mask in the shared irq_map
+template with MT_INT_RX_DONE_ALL, which includes MT_INT_RX_DONE_WM2.
 
-Since commit 4550fb9e9810 ("mt76: improve signal strength reporting"),
-drivers no longer set status->signal: mt76_rx_convert() computes it from
-the chain values when the frame is handed to mac80211, after
-mt76_check_sta() has run. Except on mt7921, which still sets it, the
-average is fed zeros. mt76_get_min_avg_rssi() then returns 0, so mt7603
-and mt7615 leave the sensitivity at its default, and mt76x0 and mt76x2
-fall back to -75 dBm for their gain settings.
+Because MT7902 duplicates irq_map but only clears wm2_complete_mask,
+its all_complete_mask still contains MT_INT_RX_DONE_WM2. This leaves
+the MT7902 RX interrupt configuration inconsistent: the aggregate RX
+completion mask includes WM2 even though the corresponding RX queue is
+not present on MT7902.
 
-Compute the signal from the chain values in mt76_check_sta() as well,
-as mt76_rx_convert() does. On mt7921, the average now follows the same
-combined value that mac80211 gets instead of the strongest chain.
+Clear MT_INT_RX_DONE_WM2 from all_complete_mask for MT7902 as well.
 
-Tested on a TP-Link Archer XR500v with one client, switching between
-the old and the new input every 30 seconds. On the MT7662E (mt76x2),
-the average the AGC works with was -75 dBm, its fallback, with the old
-input and -54 dBm with the new one, while iw reported -54 and -52 dBm
-for the station, and the AGC mostly used its low_gain 2 setting instead
-of 1. On the MT7603E, the station average was 0 with the old input and
--41 dBm with the new one, while iw reported -42 and -41 dBm. The mt7603
-sensitivity still stayed at its default: a separate bug keeps it from
-leaving 0.
-
-Fixes: 4550fb9e9810 ("mt76: improve signal strength reporting")
-Assisted-by: LLM
-Signed-off-by: Cristian Papa <pcristian292@gmail.com>
-Link: https://patch.msgid.link/20260924032639.28158-1-pcristian292@gmail.com
+Fixes: 83c65e82e5b2 ("wifi: mt76: connac2: apply new rx all_complete_mask")
+Signed-off-by: Mahesh Saran <maheshsaran477@gmail.com>
+Link: https://patch.msgid.link/20261006163553.11193-1-maheshsaran477@gmail.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mac80211.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7921/pci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
-index 9e6fab7b12229..a4d7f191ae07c 100644
---- a/drivers/net/wireless/mediatek/mt76/mac80211.c
-+++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
-@@ -1482,6 +1482,7 @@ mt76_check_sta(struct mt76_dev *dev, struct sk_buff *skb)
- 	struct ieee80211_hw *hw;
- 	struct mt76_wcid *wcid = status->wcid;
- 	u8 tidno = status->qos_ctl & IEEE80211_QOS_CTL_TID_MASK;
-+	int signal;
- 	bool ps;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/pci.c b/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
+index 56a914aaa81ea..f87c44f2a8b6c 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
+@@ -375,6 +375,7 @@ static int mt7921_pci_probe(struct pci_dev *pdev,
+ 		}
  
- 	hw = mt76_phy_hw(dev, status->phy_idx);
-@@ -1499,8 +1500,9 @@ mt76_check_sta(struct mt76_dev *dev, struct sk_buff *skb)
- 
- 	sta = container_of((void *)wcid, struct ieee80211_sta, drv_priv);
- 
--	if (status->signal <= 0)
--		ewma_signal_add(&wcid->rssi, -status->signal);
-+	signal = mt76_rx_signal(status->chains, status->chain_signal);
-+	if (signal <= 0 && signal > -128)
-+		ewma_signal_add(&wcid->rssi, -signal);
- 
- 	wcid->inactive_count = 0;
+ 		map->rx.wm2_complete_mask = 0;
++		map->rx.all_complete_mask &= ~MT_INT_RX_DONE_WM2;
+ 		dev->irq_map = map;
+ 	}
  
 -- 
 2.53.0
