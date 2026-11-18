@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042451;
-	b=heAQzb4yxToexEfbvEJfFE2bWIGY1S0bQE6/iGBGFrWz8+67bGzH0qytusfU2Sr1v71a
-	 clZ8UF/5u8TRxc1sgl5p/+cBoSVeKWJB7ueA5WPlqTRnUfLNsEGupAKZ5vNJEbHdPyk/d
-	 P3qOUtWIpDoGxbFQaR+D28i7j67fKtumqGfDitn9memj7ozjaz1xqzCM7vmF0FxLbh6wu
-	 0fxttNS2oxxC1pacW+boy4phfEDhaqhKvmklOl+lq/CqInWS3pbRHx3pDqxlL1G30jVil
-	 ZhF2zOTAHH38wkj8EwkmYn9thaSNyDq/vow6DqwYwCOmmz1LxifaR/6SKK5ig1IL7vg==
+	t=1795042454;
+	b=xfbUiZSXEGMULYLVSlvX9t5+XAnMbxoOxIumxaN9SNKRWryLl6SjanBFZHD9gSdiYoBI
+	 Lazzz0dZqM7UjIPtpzpZGNCI/4aqSC/Z5KoCyztNLpfqlgNLQbbwjGTg8L4xNWmdUmMXx
+	 QEYbLQw6NSKZ2R+Hm73YGvmFTLYRHAhn7vblZKwDtptccV+d2aPClxhLa4vl2iVt5VYx3
+	 8jXVePB2+zBfH+/a3ZVcSIGhH422EIJSWjpFsJ+dzjCHGJBK3K/Gi5E1yXiyJF3MTquvQ
+	 4yoZ2EiYS4zKbdETR9AOVjfnNDQR1nFwVFr6IjT5izxUH/+svnWKkucN66/e3e0PomQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042451;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042454;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q9q9dWRybe2FOxte0V5Rvye/hRM4svAIQxn+8eH1yLI=;
-	b=hbFKPAZFSOHwJpO58gikwSxQNk24JmZdq9VD4chWHT6BDkrK8Bjpx6GYpKUjRqIlBo/6
-	 Knu8Vl8iLBu3a4B//YXAsYscPRmy5VGsS58ZAhhW1OpyQ9Iaiz7K+E8kI5YrqqnLy2+jS
-	 i9zJ5shlssfb+uH1CfFKIdEXozTiiAiwqdnuQhkI1VVTq8mhExBb2u05wZXmGO7FeCn4g
-	 9eRLe7QmYhHfyDPS//N39210B6xSx5h7TPKd82WDBWBQyoX7scQP2cgsyS8WVjj+UoViQ
-	 EsE0xxw2702vgv6jjdvc7BHlRwe11nKyWEu1BWZqsmA+TKDIGOCcCo/N506iR1h75nw==
+	bh=SXbcFnk/9MS9LEEdzBgCWrfjVZkGvJDh1wa01NHCgvg=;
+	b=JhYxrHlyJnqJbj+3ASJluHOLaDCs0VDePPdra/1FFbzvlmeu8h2X7Kie2LHo5UP0XWao
+	 5L1BPIdeQ7owSBe5ogEGn6OkUKUyWC/ebpkNlm4lW867l8qhJpVGuxgMC2oC7G17bNVbl
+	 n6Yyuqbcmbll+J8AVfhT6KGFV08st0gTAs/BjBzpu1Uy6AgRvkHmlzcTX8bJEG+9/yfjY
+	 QAbRIBSnYY7IMxLSbsLZ63KiAmd6CA2CNrJAsV/1y4UYkCfRaxHBRLsJCNHSWCd3YAEEx
+	 qrMgU6+85ZgE8yQWqAPs9pU4giooCSQRe03rrjBjJ0uloX7k87xwW64Te2vl5kenT5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ETWeyeXR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iudT3tun;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77F4606A325;
-	Wed, 18 Nov 2026 22:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478E5606A31C;
+	Wed, 18 Nov 2026 22:54:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ETWeyeXR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B232D1F000C4;
-	Wed, 18 Nov 2026 22:54:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iudT3tun
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B7621F000C4;
+	Wed, 18 Nov 2026 22:54:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042451;
-	bh=Q9q9dWRybe2FOxte0V5Rvye/hRM4svAIQxn+8eH1yLI=;
+	s=korg; t=1795042453;
+	bh=SXbcFnk/9MS9LEEdzBgCWrfjVZkGvJDh1wa01NHCgvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ETWeyeXRZRKWhFd7NtovaAAl61uqFyEidkmYWR3hV7G9ZVe8RPzM47BHw+as8m9M2
-	 uXNRVvA9+d85zL37WQR0mHzs+QjIZ6fuopep4fm/Ww5H/UcWF2XDe/uwhyDakpkB8i
-	 eR9SeaptFIvozbnwedTiVu+x0lc9z8XX5psQqrD4=
+	b=iudT3tunh1ONQkR9+g6sbkyU6W3+coPSbNSTxg8kEkLSANkyh2/6K8WjMoKMLtmjn
+	 F5FW/aloS7Rw8Vi6mp2A1x10IzszfRA66oY8IYZVj8DB00K8rWPrFHZsPm9t24/S9R
+	 FfUGWX6br+fozDuH/Oy5E9vMWhGq1Gti9Zn+x6xg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dudu Lu <phx0fer@gmail.com>,
+	Alexandre Cassen <acassen@corp.free.fr>,
 	Simon Horman <horms@kernel.org>,
-	Daniel Machon <daniel.machon@microchip.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3175/3318] net/sched: gred: keep the qdisc lock while updating the table
-Date: Wed, 18 Nov 2026 16:03:17 +0100
-Message-ID: <20261118150455.075162233@linuxfoundation.org>
+Subject: [PATCH 6.6 3176/3318] net/sched: act_api: inherit filter offload flags only on new actions
+Date: Wed, 18 Nov 2026 16:03:18 +0100
+Message-ID: <20261118150455.106369702@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,80 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dudu Lu <phx0fer@gmail.com>
+From: Alexandre Cassen <acassen@corp.free.fr>
 
-[ Upstream commit 306f788134a21a3d60c1eb872d0ec0ce7c7e09bc ]
+[ Upstream commit 9463e8d8c6922a5aa87f7e4fe6deb4f16925d498 ]
 
-gred_change_table_def() publishes table->DPs/def/red_flags under
-sch_tree_lock(), drops the lock, and then keeps writing state the
-datapath reads without it:
+tcf_action_init() gives the skip_sw and skip_hw flags of a filter to the
+actions it binds. An action that another filter created gets them too,
+they then apply to every filter that uses this action. When a
+skip_sw filter reuses the action of a software filter, the software
+filter silently stops running it. This happens even when the filter add
+fails on a later action. A skip_hw filter likewise prevents a later
+filter without flags from reusing the action.
 
-  - gred_enable_rio_mode()/gred_disable_rio_mode()/gred_disable_wred_mode()
-    set/clear table->flags;
-  - the red_flags_changed loop writes table->tab[i]->red_flags;
-  - the shadowed-VQ loop frees table->tab[i] and clears the slot.
+Give the flags only to the actions that the filter creates. The mismatch
+check still rejects a filter that reuses an action with a flag that the
+filter does not have.
 
-gred_enqueue() and gred_dequeue() read those same fields (test_bit on
-table->flags, q->red_flags, t->tab[]/t->DPs) under the same root lock on
-another CPU, so the post-unlock writes race with the enqueue path:
+Discovered by manual code inspection after the Sashiko AI review [1] of
+a tunnel_key patch questioned how actions get the filter flags.
+Reproduced on netdevsim without kernel changes. The egress filter below
+runs in software only, since netdevsim offloads only ingress filters.
+Once the skip_sw filter reuses its drop action, the last command shows
+skip_sw on this action and the egress filter stops dropping packets:
 
-  BUG: KCSAN: data-race in gred_change_table_def [sch_gred] / gred_enqueue [sch_gred]
-  read (marked) to 0xffff000007ad3b00 of 8 bytes by task 110 on cpu 0:
-   gred_enqueue+0x88/0xc60 [sch_gred]
-   dev_qdisc_enqueue+0x4c/0x19c
-   __dev_queue_xmit+0x10a4/0x1ea4
+  ethtool -K eth0 hw-tc-offload on
+  tc qdisc add dev eth0 clsact
+  tc filter add dev eth0 egress protocol ip flower dst_ip 192.0.2.1 \
+     action gact drop index 1
+  tc filter add dev eth0 ingress protocol ip flower skip_sw \
+     dst_ip 192.0.2.2 action gact drop index 1
+  tc actions get action gact index 1
 
-The comment justifying the early unlock only covers the DP-vs-DPs check,
-which the shadowed-VQ free loop relies on; it does not cover the scalar
-mode bits and per-VQ red_flags written afterwards.  Move the unlock below
-those updates so everything the datapath reads is published under the
-lock that protects it.
+Tested with the reproducer and the tc-testing action, matchall and
+flower tests.
 
-Fixes: 6639607ed9de ("[PKT_SCHED]: GRED: Use a central table definition change procedure")
-Signed-off-by: Dudu Lu <phx0fer@gmail.com>
+Fixes: 34d35b4edbbe ("net/sched: act_api: deny mismatched skip_sw/skip_hw flags for actions created by classifiers")
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20261009051930.3619697-1-acassen%40corp.free.fr [1]
+Signed-off-by: Alexandre Cassen <acassen@corp.free.fr>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261021155434.66572-1-phx0fer@gmail.com
+Link: https://patch.msgid.link/20261021193222.1318333-2-acassen@corp.free.fr
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_gred.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ net/sched/act_api.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/sched/sch_gred.c b/net/sched/sch_gred.c
-index 4f44a268286fa..63c23af51b4a3 100644
---- a/net/sched/sch_gred.c
-+++ b/net/sched/sch_gred.c
-@@ -442,13 +442,6 @@ static int gred_change_table_def(struct Qdisc *sch, struct nlattr *dps,
- 	red_flags_changed = table->red_flags != sopt->flags;
- 	table->red_flags = sopt->flags;
- 
--	/*
--	 * Every entry point to GRED is synchronized with the above code
--	 * and the DP is checked against DPs, i.e. shadowed VQs can no
--	 * longer be found so we can unlock right here.
--	 */
--	sch_tree_unlock(sch);
--
- 	if (sopt->grio) {
- 		gred_enable_rio_mode(table);
- 		gred_disable_wred_mode(table);
-@@ -474,6 +467,15 @@ static int gred_change_table_def(struct Qdisc *sch, struct nlattr *dps,
- 		}
- 	}
- 
-+	/*
-+	 * Keep the lock until every field the datapath reads (the
-+	 * RIO/WRED mode bits, the per-VQ red_flags and the tab[] slots)
-+	 * has been updated: gred_enqueue()/gred_dequeue() read them under
-+	 * the same lock, so publishing them after the unlock races with
-+	 * the enqueue path.
-+	 */
-+	sch_tree_unlock(sch);
-+
- 	gred_offload(sch, TC_GRED_REPLACE);
- 	return 0;
- }
+diff --git a/net/sched/act_api.c b/net/sched/act_api.c
+index 94026b9ae4c00..12ba6ac27d4bb 100644
+--- a/net/sched/act_api.c
++++ b/net/sched/act_api.c
+@@ -1508,6 +1508,9 @@ int tcf_action_init(struct net *net, struct tcf_proto *tp, struct nlattr *nla,
+ 					err = -EINVAL;
+ 					goto err;
+ 				}
++				/* Other filters share an existing action */
++				if (init_res[i - 1] != ACT_P_CREATED)
++					continue;
+ 				if (skip_sw)
+ 					act->tcfa_flags |= TCA_ACT_FLAGS_SKIP_SW;
+ 				if (skip_hw)
 -- 
 2.53.0
 
