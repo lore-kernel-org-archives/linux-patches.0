@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048772;
-	b=H3oNSYJiRRgj//R8mzFiT6IL6KHcXMcr5ItOjS6F52OqDX5rAXhGGyyeQ43SNAuGv5Fs
-	 DmkCLOVKG5zYPJr3S1MAT0Hdg/hsHBuFYEsVmJq5PHPMbCsn/dYtK4/QL3q3t2HrV9ZZP
-	 7/Mphfx3YoAXS1fOET+WeyEt9onHJmigps4jUpxPyKXxNiqU8mYCfR1QSdXOrkvk2wIby
-	 yXw+p4jzDo9+aCtSwGVQBFddSEawqIZaFVGI1jvjoGbypaJbHqczzZDxrfYdEPweoFEqz
-	 8iYJJwE4H3Pkb+lN2WJyBy5pKxZkMVsy2M80DDEhLZqTqDrzxeXSbcI3E6MDg274aDw==
+	t=1795048775;
+	b=erC1Csx8ajc0zKLSiw6SbHWjvpDoxXHS6uzV++ETli/l0t9dshIVTAgMfJBGhkaT1C7k
+	 Y7W4T6AtCfcisyUh2yM4OBnfxRBxsO3UyDsJ6dUZ03hyMi4pl/o3G7uDP9XR0AJar/vwR
+	 S132WNoyrApKXMOmARKI23WsdTe8xU9Osqu2a/QF/ettNuJfnhv0fSNQAJuO6NF0D18Cb
+	 KSbX9oxMS85/bixTHh+wG4t/JuUQDNRrn+xGydPxrJc7+RyE9w0k0ArKkkSosRbe0cyCZ
+	 dIhhx4q3v4W0nveH8H0VzZV0qSM+urr0wjfAfPsBUa70+J0UqAmjpSZafVDAjfZx9bw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048772;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048775;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e0FmOQ0ptuRyT1kcFWwk2CM5bnYzYRblg4yvk7A+X+Y=;
-	b=5P80am9g8SaKWVCwhrniqho3NmR80+VF/bmFUY7YS+0w6ZDIy3bNrtsk4j3JvuyOxVV5
-	 T2q96QU4PF5qvTQGXy0yZPr0Ahua28RHFEModUaHuz0zBHdK4YTWUMQt8c7GVbu0dRtjq
-	 Mn6zFyJC81zuCwTG0266+MAl8smrHbkx091+ZOeEZv+KwBgSLtPMyMDL61SSSEjet/p6o
-	 R+5i1/k6HD10G0BYZ/B5WiJ4hTF60Yr48SkV8S+qeYbUG3Q5y+zGGcL+6zpnOZLiY28P1
-	 WBDoXubCcZ1cDDUCqUqig/vul462QdB4Zp8D7tW1xVal1BA8kg91YP5btvlovHmnG9w==
+	bh=P4clMwevR6uPQJWLtHOLlESBbEovbjJDSDbsCax+P1M=;
+	b=kiwhojl4SNXwZEePz1Qkkbb3AXq151DtV2nxk4veXMBn6y/MkNZ5tlOL2ZIn/mcpsU+e
+	 U/B4udzbb91f4mczK3AQx2WoH9y2diHaYMiXQX6t3sOAvgwcpzwj12R6VgB8esq5ylYYX
+	 GFGVVnDbqn+NQV/E7OfKM0CtuyqcjhyHOJ8aGlJNOun++6Hnsez7AZaV8sZ8Cz7DpUio5
+	 K2g5ukd4GLTS8WRyvsrhHC4ev1lAAwh13t0/LQAqHQewhvrbhrbjQ4WvJ/Ns9FbwZ3yIV
+	 Tj6CoBLipG48MW/OHITAz4N/VNd3wpM1sB1r8IWUiuoRVg2/LiZkS7aNOqKAJDchMFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=maDqKsey;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x1gO0tK9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A61606A31C;
-	Thu, 19 Nov 2026 00:39:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4C2606A320;
+	Thu, 19 Nov 2026 00:39:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=maDqKsey
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4CF51F000C4;
-	Thu, 19 Nov 2026 00:39:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x1gO0tK9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B22421F000C4;
+	Thu, 19 Nov 2026 00:39:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048772;
-	bh=e0FmOQ0ptuRyT1kcFWwk2CM5bnYzYRblg4yvk7A+X+Y=;
+	s=korg; t=1795048775;
+	bh=P4clMwevR6uPQJWLtHOLlESBbEovbjJDSDbsCax+P1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=maDqKseyg2LJ3BuzXzhA9FKCMTR3lvEDr1A/rklEoT60EqZYLm1UMGEy4YD+5FyQv
-	 fY/FXkc0M9BMduSghg9vFBuQDQcAn1fYmi1xjnpS2KnPq8yFTNaUNR809bQn0MuQb2
-	 ZX5f4o3qi49VGMudj2tgiB0BDiS+hnELbFCwTPnU=
+	b=x1gO0tK9qUUg+uKEdLfwre8uQjzK0/QYwpnW2wYi3OgKxMTfalRYxam0st6qbfcC5
+	 K28qNfvCUaV9JW3P3/VFUaiy+YuLDwJ99Ff/kg5gEut1DtCK7S49/7mPJ0C1E6y+0z
+	 QvBOhOVMG0LEzmFRMtPw3gNT9ihsKe8KwnQUhg40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2113/2857] ASoC: mediatek: mt8192: Propagate mt8192_afe_gpio_request() errors in ADDA DAI
-Date: Wed, 18 Nov 2026 15:52:27 +0100
-Message-ID: <20261118150317.488120581@linuxfoundation.org>
+Subject: [PATCH 6.1 2078/2857] netfilter: synproxy: fix reset of ct seqadj when reopening a connection
+Date: Wed, 18 Nov 2026 15:51:52 +0100
+Message-ID: <20261118150316.230546723@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,149 +68,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit eed9414a1b075e2df308e7222e3786981bd42b32 ]
+[ Upstream commit a8708aa9fe1095ca7859cb3f102b6a3fa0fb98bd ]
 
-Currently, DAPM event handlers in mt8192-dai-adda.c ignore the return
-value of mt8192_afe_gpio_request(). If GPIO configuration fails during
-PRE_PMU or POST_PMD events, the error is silently ignored.
+SYNPROXY is resetting conntrack seqadj when a closed connection is
+re-opened, but it was using nf_ct_seqadj_init() which is a no-op for a
+zero offset.
 
-Fix this by checking and propagating error codes from
-mt8192_afe_gpio_request() in all ADDA DAPM event handlers.
+This patch introduces nf_ct_seqadj_reset() which sets the offset values
+directly to zero and avoid setting IPS_SEQ_ADJUST_BIT flag, it changes
+SYNPROXY code to use it when needed.
 
-Fixes: 607ac4859564 ("ASoC: mediatek: mt8192: support adda in platform driver")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260918133912.133799-13-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 48b1de4c110a ("netfilter: add SYNPROXY core/target")
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8192/mt8192-dai-adda.c | 44 +++++++++++++++------
- 1 file changed, 32 insertions(+), 12 deletions(-)
+ include/net/netfilter/nf_conntrack_seqadj.h |  1 +
+ net/netfilter/nf_conntrack_seqadj.c         | 17 +++++++++++++++++
+ net/netfilter/nf_synproxy_core.c            |  4 ++--
+ 3 files changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8192/mt8192-dai-adda.c b/sound/soc/mediatek/mt8192/mt8192-dai-adda.c
-index f8c73e8624df2..9a709ff7e3c1f 100644
---- a/sound/soc/mediatek/mt8192/mt8192-dai-adda.c
-+++ b/sound/soc/mediatek/mt8192/mt8192-dai-adda.c
-@@ -302,13 +302,16 @@ static int mtk_adda_ul_event(struct snd_soc_dapm_widget *w,
- 	struct mtk_base_afe *afe = snd_soc_component_get_drvdata(cmpnt);
- 	struct mt8192_afe_private *afe_priv = afe->platform_priv;
- 	int mtkaif_dmic = afe_priv->mtkaif_dmic;
-+	int ret;
+diff --git a/include/net/netfilter/nf_conntrack_seqadj.h b/include/net/netfilter/nf_conntrack_seqadj.h
+index 883c414b768ee..0f5bbb14a25aa 100644
+--- a/include/net/netfilter/nf_conntrack_seqadj.h
++++ b/include/net/netfilter/nf_conntrack_seqadj.h
+@@ -33,6 +33,7 @@ static inline struct nf_conn_seqadj *nfct_seqadj_ext_add(struct nf_conn *ct)
  
- 	dev_info(afe->dev, "%s(), name %s, event 0x%x, mtkaif_dmic %d\n",
- 		 __func__, w->name, event, mtkaif_dmic);
+ int nf_ct_seqadj_init(struct nf_conn *ct, enum ip_conntrack_info ctinfo,
+ 		      s32 off);
++void nf_ct_seqadj_reset(struct nf_conn *ct, enum ip_conntrack_info ctinfo);
+ int nf_ct_seqadj_set(struct nf_conn *ct, enum ip_conntrack_info ctinfo,
+ 		     __be32 seq, s32 off);
+ void nf_ct_tcp_seqadj_set(struct sk_buff *skb, struct nf_conn *ct,
+diff --git a/net/netfilter/nf_conntrack_seqadj.c b/net/netfilter/nf_conntrack_seqadj.c
+index b7e99f34dfce8..8dba6a0d5dc21 100644
+--- a/net/netfilter/nf_conntrack_seqadj.c
++++ b/net/netfilter/nf_conntrack_seqadj.c
+@@ -29,6 +29,23 @@ int nf_ct_seqadj_init(struct nf_conn *ct, enum ip_conntrack_info ctinfo,
+ }
+ EXPORT_SYMBOL_GPL(nf_ct_seqadj_init);
  
- 	switch (event) {
- 	case SND_SOC_DAPM_PRE_PMU:
--		mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 1);
-+		ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 1);
-+		if (ret)
-+			return ret;
- 
- 		/* update setting to dmic */
- 		if (mtkaif_dmic) {
-@@ -326,7 +329,9 @@ static int mtk_adda_ul_event(struct snd_soc_dapm_widget *w,
- 	case SND_SOC_DAPM_POST_PMD:
- 		/* should delayed 1/fs(smallest is 8k) = 125us before afe off */
- 		usleep_range(125, 135);
--		mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 1);
-+		ret = mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 1);
-+		if (ret)
-+			return ret;
- 		break;
- 	default:
- 		break;
-@@ -344,6 +349,7 @@ static int mtk_adda_ch34_ul_event(struct snd_soc_dapm_widget *w,
- 	struct mt8192_afe_private *afe_priv = afe->platform_priv;
- 	int mtkaif_dmic = afe_priv->mtkaif_dmic_ch34;
- 	int mtkaif_adda6_only = afe_priv->mtkaif_adda6_only;
-+	int ret;
- 
- 	dev_info(afe->dev,
- 		 "%s(), name %s, event 0x%x, mtkaif_dmic %d, mtkaif_adda6_only %d\n",
-@@ -351,8 +357,10 @@ static int mtk_adda_ch34_ul_event(struct snd_soc_dapm_widget *w,
- 
- 	switch (event) {
- 	case SND_SOC_DAPM_PRE_PMU:
--		mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34,
--					1);
-+		ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34,
-+					      1);
-+		if (ret)
-+			return ret;
- 
- 		/* update setting to dmic */
- 		if (mtkaif_dmic) {
-@@ -382,8 +390,10 @@ static int mtk_adda_ch34_ul_event(struct snd_soc_dapm_widget *w,
- 	case SND_SOC_DAPM_POST_PMD:
- 		/* should delayed 1/fs(smallest is 8k) = 125us before afe off */
- 		usleep_range(125, 135);
--		mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA_CH34,
--					1);
-+		ret = mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA_CH34,
-+					      1);
-+		if (ret)
-+			return ret;
- 
- 		/* reset dmic */
- 		afe_priv->mtkaif_dmic_ch34 = 0;
-@@ -537,18 +547,23 @@ static int mtk_adda_dl_event(struct snd_soc_dapm_widget *w,
++void nf_ct_seqadj_reset(struct nf_conn *ct, enum ip_conntrack_info ctinfo)
++{
++	struct nf_conn_seqadj *seqadj = nfct_seqadj(ct);
++	enum ip_conntrack_dir dir = CTINFO2DIR(ctinfo);
++	struct nf_ct_seqadj *this_way;
++
++	if (unlikely(!seqadj))
++		return;
++
++	spin_lock_bh(&ct->lock);
++	this_way = &seqadj->seq[dir];
++	this_way->offset_before	 = 0;
++	this_way->offset_after	 = 0;
++	spin_unlock_bh(&ct->lock);
++}
++EXPORT_SYMBOL_GPL(nf_ct_seqadj_reset);
++
+ int nf_ct_seqadj_set(struct nf_conn *ct, enum ip_conntrack_info ctinfo,
+ 		     __be32 seq, s32 off)
  {
- 	struct snd_soc_component *cmpnt = snd_soc_dapm_to_component(w->dapm);
- 	struct mtk_base_afe *afe = snd_soc_component_get_drvdata(cmpnt);
-+	int ret;
- 
- 	dev_info(afe->dev, "%s(), name %s, event 0x%x\n",
- 		 __func__, w->name, event);
- 
- 	switch (event) {
- 	case SND_SOC_DAPM_PRE_PMU:
--		mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 0);
-+		ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 0);
-+		if (ret)
-+			return ret;
- 		break;
- 	case SND_SOC_DAPM_POST_PMD:
- 		/* should delayed 1/fs(smallest is 8k) = 125us before afe off */
- 		usleep_range(125, 135);
--		mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 0);
-+		ret = mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 0);
-+		if (ret)
-+			return ret;
- 		break;
- 	default:
- 		break;
-@@ -563,20 +578,25 @@ static int mtk_adda_ch34_dl_event(struct snd_soc_dapm_widget *w,
- {
- 	struct snd_soc_component *cmpnt = snd_soc_dapm_to_component(w->dapm);
- 	struct mtk_base_afe *afe = snd_soc_component_get_drvdata(cmpnt);
-+	int ret;
- 
- 	dev_info(afe->dev, "%s(), name %s, event 0x%x\n",
- 		 __func__, w->name, event);
- 
- 	switch (event) {
- 	case SND_SOC_DAPM_PRE_PMU:
--		mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34,
--					0);
-+		ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34,
-+					      0);
-+		if (ret)
-+			return ret;
- 		break;
- 	case SND_SOC_DAPM_POST_PMD:
- 		/* should delayed 1/fs(smallest is 8k) = 125us before afe off */
- 		usleep_range(125, 135);
--		mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA_CH34,
--					0);
-+		ret = mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA_CH34,
-+					      0);
-+		if (ret)
-+			return ret;
- 		break;
- 	default:
- 		break;
+diff --git a/net/netfilter/nf_synproxy_core.c b/net/netfilter/nf_synproxy_core.c
+index 35c38c3268a6a..4574bf40540b4 100644
+--- a/net/netfilter/nf_synproxy_core.c
++++ b/net/netfilter/nf_synproxy_core.c
+@@ -685,7 +685,7 @@ ipv4_synproxy_hook(void *priv, struct sk_buff *skb,
+ 		 * adjustments, they will get initialized once the connection is
+ 		 * reestablished.
+ 		 */
+-		nf_ct_seqadj_init(ct, ctinfo, 0);
++		nf_ct_seqadj_reset(ct, ctinfo);
+ 		synproxy->tsoff = 0;
+ 		this_cpu_inc(snet->stats->conn_reopened);
+ 		fallthrough;
+@@ -1115,7 +1115,7 @@ ipv6_synproxy_hook(void *priv, struct sk_buff *skb,
+ 		 * adjustments, they will get initialized once the connection is
+ 		 * reestablished.
+ 		 */
+-		nf_ct_seqadj_init(ct, ctinfo, 0);
++		nf_ct_seqadj_reset(ct, ctinfo);
+ 		synproxy->tsoff = 0;
+ 		this_cpu_inc(snet->stats->conn_reopened);
+ 		fallthrough;
 -- 
 2.53.0
 
