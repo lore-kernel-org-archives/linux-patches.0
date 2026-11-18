@@ -1,57 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042905;
-	b=dnNhTQorkPcSN7meYsGQHKVLrqmfFhAWY5sEtMYdLrk0Ie1r7YmgX3M6UXpQ7xXepMWZ
-	 JJ/umfssjxm1glDKScNYB0a8xiNIDDR85rs6zwBEZd0R10m8BveG2f4l20xVwIOkDm4Mz
-	 pLK9C/AphBbOQsSWUQpf9srLRF4tEPMQLjsqEhLDF0LPKILYlKjxT9yTFQ8PLKQsqJrF7
-	 9XaNc7Rt7BCwil7qTs8BK+AIoNs9Gk/dQRi3b1gQyQnJ+LSzwjRT5m+ILOTqRZB+5kYRM
-	 xnT69bTR2PiOnM0KL6HgVVrjrQQxmwZ55/H4IterdIDMoqqH8UisJ5V6XPT4vkgoe3Q==
+	t=1795042908;
+	b=N+OtN0NEnUYjInCUeTSs35wtFc7OtXPICopruOUob8vLJ8fMcLknntRNtbvtnUf+jd/+
+	 m8JzHhn8fZlmnsKccYmN8yx5kqanWMdwFEZqVdQtCD4VaDIJ31Io925AJf0yugv8JcOe0
+	 rKqysJ1Dbhcdu+1XugYuxJwO/BAH3LVJuBah9T5379qB/wvRR3NPaWpSP7JL3TEaYC4DE
+	 G3O4Syyu4+5LPPVI0NmYlpwm8StmpdZA56lkJmk9fDk8dnri18+dX237l8YwRQMucexxp
+	 HjC05GAkfaTAiyVkxSu1hKEUvI4YSxwXhdcwJSq4+B2WHUAV/cbVV+ScST3m8UNY90w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042905;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042908;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=2E3Qv+vU0BdD/JdqtCuiajceugLchm816K8Tdifkzb0=;
-	b=aRdx7xHwwVuFKt6xYMyKr43mhbvujvM/4jciRLpT9KryfQQRfSfR7qEq313sIsW34yJI
-	 ruDfJqLvgYnolmpvgOEswsxXBmlptNcYKBLCL8JIC2pd1YEPxwyXjSkETLD0KvxYduJGv
-	 LYyMdm99sm6mH+S4RUXn2LogBEd7UXDRfPFikLJXeymMUNUsU6z5abApfkmxWscpsdVv/
-	 yHNu+zbqyQ8zTS9Wjezs6BSw5iYB9Dq0yH/WHbkwy0XsG83Ysm6jKDWo4taY07WoJl4fs
-	 fkS0L98Lv1p6X5T5QgxiTn88IOyJOMxrB4+wCEp3Z3E3atcTrQk3bzmJwn7MShCASCA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=IW5fX8/rdP/qV3Tv5P2hF2lpBeWcWCkKUdrAYtV+RL0=;
+	b=tdQNBNCfGI/vM93/9QIZAN/RzGuHhaduseZaK4Aqea1D3x17/Mr0CcuZ29DDUK55e3pT
+	 wxyw1Sui8uaODtv/jA+g7WvIjMyqzRoZ2WgkUr8iW6qf9tgx/a5NwdfhkEgDO9irwlBdV
+	 o/azBDXqJzDVmLGy0ms00xgAslbz5SZe7WwgPdGkV4pRb802r+3HObqlMvwV2Tf4kUGq2
+	 zetHW+YDSxjBe/tFF4y1uA6aGeI2rOTGg82wPOJXOMbFFaNIbPPS2ZlduUvYMgEs7SQu/
+	 0gLmh2YOlqVmdPlHQUDzg+rO+jgAmpG4+TtLVduqJnK+h72OQldXHI6MEljGDyPBEWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hTh+XWHA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RUrlWzQ9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4645E606A320;
-	Wed, 18 Nov 2026 23:01:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C006606A31C;
+	Wed, 18 Nov 2026 23:01:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hTh+XWHA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04E01F000C4;
-	Wed, 18 Nov 2026 23:01:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RUrlWzQ9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D9AA1F000C4;
+	Wed, 18 Nov 2026 23:01:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042905;
-	bh=2E3Qv+vU0BdD/JdqtCuiajceugLchm816K8Tdifkzb0=;
+	s=korg; t=1795042908;
+	bh=IW5fX8/rdP/qV3Tv5P2hF2lpBeWcWCkKUdrAYtV+RL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hTh+XWHAcJFW+L5hmmzaCe7nolw/z6Aglw0Ghn0736Nq+3dTUIQKXzTuchdsBFBA3
-	 G12iW5ddSZaKAvBlBEbWgV5L3vDBEnv5w3AR0FXMCUF1xTxNC37csrUluLoFrM9Eov
-	 d/C+tOJK+WIUbtQjY6F6lN3TnhHv74RAjPVhIZgg=
+	b=RUrlWzQ9yAOLGa7HBAUzICBLa3XaMB6ysURJuNqCdyTFbmQkG+wObqBK3M7CItnyz
+	 nM4Pleh4F4K5/pEWR1HV81of8EM3pcp0eUGDbWLhQFC1Ct8XEA59oXd98K/xH91dIy
+	 HixMXPKOMS3jkyFlPQQDQBt+QbGjNaCMbDP6G7GY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Xu <weixugc@google.com>,
-	Zeng Jingxiang <linuszeng@tencent.com>,
-	Kairui Song <kasong@tencent.com>,
-	Chris Li <chrisl@kernel.org>,
-	"T.J. Mercier" <tjmercier@google.com>,
-	Yu Zhao <yuzhao@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Leno Hou <lenohou@gmail.com>
-Subject: [PATCH 6.1 0014/2857] mm/vmscan: wake up flushers conditionally to avoid cgroup OOM
-Date: Wed, 18 Nov 2026 15:17:28 +0100
-Message-ID: <20261118150201.824033771@linuxfoundation.org>
+	=?UTF-8?q?Kry=C5=A1tof=20=C4=8Cern=C3=BD?= <cleverline1mc@gmail.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0023/2857] w1: ds2482: add OF device match table
+Date: Wed, 18 Nov 2026 15:17:37 +0100
+Message-ID: <20261118150202.198333742@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,170 +62,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zeng Jingxiang <linuszeng@tencent.com>
+From: Kryštof Černý <cleverline1mc@gmail.com>
 
-commit 1bc542c6a0d1444559ab75823a89a94d244bf933 upstream.
+[ Upstream commit 53f33fd74d3993af0fbb5494b5be709f6ca6b712 ]
 
-Commit 14aa8b2d5c2e ("mm/mglru: don't sync disk for each aging cycle")
-removed the opportunity to wake up flushers during the MGLRU page
-reclamation process can lead to an increased likelihood of triggering OOM
-when encountering many dirty pages during reclamation on MGLRU.
+Add an of_device_id table and hook it into the i2c driver so the
+ds2482/ds2484 can be matched and auto-probed from Device Tree.
 
-This leads to premature OOM if there are too many dirty pages in cgroup:
-Killed
+This allows automatic module loading when instantiated via DT.
 
-dd invoked oom-killer: gfp_mask=0x101cca(GFP_HIGHUSER_MOVABLE|__GFP_WRITE),
-order=0, oom_score_adj=0
-
-Call Trace:
-  <TASK>
-  dump_stack_lvl+0x5f/0x80
-  dump_stack+0x14/0x20
-  dump_header+0x46/0x1b0
-  oom_kill_process+0x104/0x220
-  out_of_memory+0x112/0x5a0
-  mem_cgroup_out_of_memory+0x13b/0x150
-  try_charge_memcg+0x44f/0x5c0
-  charge_memcg+0x34/0x50
-  __mem_cgroup_charge+0x31/0x90
-  filemap_add_folio+0x4b/0xf0
-  __filemap_get_folio+0x1a4/0x5b0
-  ? srso_return_thunk+0x5/0x5f
-  ? __block_commit_write+0x82/0xb0
-  ext4_da_write_begin+0xe5/0x270
-  generic_perform_write+0x134/0x2b0
-  ext4_buffered_write_iter+0x57/0xd0
-  ext4_file_write_iter+0x76/0x7d0
-  ? selinux_file_permission+0x119/0x150
-  ? srso_return_thunk+0x5/0x5f
-  ? srso_return_thunk+0x5/0x5f
-  vfs_write+0x30c/0x440
-  ksys_write+0x65/0xe0
-  __x64_sys_write+0x1e/0x30
-  x64_sys_call+0x11c2/0x1d50
-  do_syscall_64+0x47/0x110
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
- memory: usage 308224kB, limit 308224kB, failcnt 2589
- swap: usage 0kB, limit 9007199254740988kB, failcnt 0
-
-  ...
-  file_dirty 303247360
-  file_writeback 0
-  ...
-
-oom-kill:constraint=CONSTRAINT_MEMCG,nodemask=(null),cpuset=test,
-mems_allowed=0,oom_memcg=/test,task_memcg=/test,task=dd,pid=4404,uid=0
-Memory cgroup out of memory: Killed process 4404 (dd) total-vm:10512kB,
-anon-rss:1152kB, file-rss:1824kB, shmem-rss:0kB, UID:0 pgtables:76kB
-oom_score_adj:0
-
-The flusher wake up was removed to decrease SSD wearing, but if we are
-seeing all dirty folios at the tail of an LRU, not waking up the flusher
-could lead to thrashing easily.  So wake it up when a memcg is about to
-OOM due to dirty caches.
-
-I did run the build kernel test[1] on V6, with -j16 1G memcg on my local
-branch:
-
-Without the patch(10 times):
-user 1449.394
-system 368.78 372.58 363.03 362.31 360.84 372.70 368.72 364.94 373.51
-366.58 (avg 367.399)
-real 164.883
-
-With the V6 patch(10 times):
-user 1447.525
-system 360.87 360.63 372.39 364.09 368.49 365.15 359.93 362.04 359.72
-354.60 (avg 362.79)
-real 164.514
-
-Test results show that this patch has about 1% performance improvement,
-which should be caused by noise.
-
-Link: https://lkml.kernel.org/r/20241026115714.1437435-1-jingxiangzeng.cas@gmail.com
-Link: https://lore.kernel.org/all/CACePvbV4L-gRN9UKKuUnksfVJjOTq_5Sti2-e=pb_w51kucLKQ@mail.gmail.com/ [1]
-Fixes: 14aa8b2d5c2e ("mm/mglru: don't sync disk for each aging cycle")
-Suggested-by: Wei Xu <weixugc@google.com>
-Signed-off-by: Zeng Jingxiang <linuszeng@tencent.com>
-Signed-off-by: Kairui Song <kasong@tencent.com>
-Reviewed-by: Wei Xu <weixugc@google.com>
-Tested-by: Chris Li <chrisl@kernel.org>
-Cc: T.J. Mercier <tjmercier@google.com>
-Cc: Yu Zhao <yuzhao@google.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Leno Hou <lenohou@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Kryštof Černý <cleverline1mc@gmail.com>
+Link: https://patch.msgid.link/20260612-w1-of-autoload-v1-1-74e8a17626e6@gmail.com
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/vmscan.c |   23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ drivers/w1/masters/ds2482.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -4748,6 +4748,7 @@ static bool sort_folio(struct lruvec *lr
- 		       int tier_idx)
- {
- 	bool success;
-+	bool dirty, writeback;
- 	int gen = folio_lru_gen(folio);
- 	int type = folio_is_file_lru(folio);
- 	int zone = folio_zonenum(folio);
-@@ -4797,9 +4798,17 @@ static bool sort_folio(struct lruvec *lr
- 		return true;
- 	}
+diff --git a/drivers/w1/masters/ds2482.c b/drivers/w1/masters/ds2482.c
+index ffb1ebb1d2b0c..8f13b45904e70 100644
+--- a/drivers/w1/masters/ds2482.c
++++ b/drivers/w1/masters/ds2482.c
+@@ -553,9 +553,17 @@ static const struct i2c_device_id ds2482_id[] = {
+ };
+ MODULE_DEVICE_TABLE(i2c, ds2482_id);
  
-+	dirty = folio_test_dirty(folio);
-+	writeback = folio_test_writeback(folio);
-+	if (type == LRU_GEN_FILE && dirty) {
-+		sc->nr.file_taken += delta;
-+		if (!writeback)
-+			sc->nr.unqueued_dirty += delta;
-+	}
++static const struct of_device_id ds2482_of_match[] = {
++	{ .compatible = "maxim,ds2482", },
++	{ .compatible = "maxim,ds2484", },
++	{ }
++};
++MODULE_DEVICE_TABLE(of, ds2482_of_match);
 +
- 	/* waiting for writeback */
--	if (folio_test_locked(folio) || folio_test_writeback(folio) ||
--	    (type == LRU_GEN_FILE && folio_test_dirty(folio))) {
-+	if (folio_test_locked(folio) || writeback ||
-+	    (type == LRU_GEN_FILE && dirty)) {
- 		gen = folio_inc_gen(lruvec, folio, true);
- 		list_move(&folio->lru, &lrugen->folios[gen][type][zone]);
- 		return true;
-@@ -4915,6 +4924,8 @@ static int scan_folios(struct lruvec *lr
- 	__count_memcg_events(memcg, PGREFILL, sorted);
- 	__count_vm_events(PGSCAN_ANON + type, isolated);
- 
-+	if (type == LRU_GEN_FILE)
-+		sc->nr.file_taken += isolated;
- 	/*
- 	 * There might not be eligible pages due to reclaim_idx, may_unmap and
- 	 * may_writepage. Check the remaining to prevent livelock if it's not
-@@ -5045,6 +5056,7 @@ static int evict_folios(struct lruvec *l
- 		return scanned;
- retry:
- 	reclaimed = shrink_folio_list(&list, pgdat, sc, &stat, false);
-+	sc->nr.unqueued_dirty += stat.nr_unqueued_dirty;
- 	sc->nr_reclaimed += reclaimed;
- 
- 	list_for_each_entry_safe_reverse(folio, next, &list, lru) {
-@@ -5243,6 +5255,13 @@ static void lru_gen_shrink_lruvec(struct
- 	if (sc->nr_reclaimed - reclaimed >= MIN_LRU_BATCH && !need_aging)
- 		sc->memcgs_need_aging = false;
- done:
-+	/*
-+	 *  If too many file cache in the coldest generation can't be evicted
-+	 *  due to being dirty, wake up the flusher.
-+	 */
-+	if (sc->nr.unqueued_dirty && sc->nr.unqueued_dirty == sc->nr.file_taken)
-+		wakeup_flusher_threads(WB_REASON_VMSCAN);
-+
- 	clear_mm_walk();
- 
- 	blk_finish_plug(&plug);
+ static struct i2c_driver ds2482_driver = {
+ 	.driver = {
+ 		.name	= "ds2482",
++		.of_match_table  = ds2482_of_match,
+ 	},
+ 	.probe		= ds2482_probe,
+ 	.remove		= ds2482_remove,
+-- 
+2.53.0
+
 
 
