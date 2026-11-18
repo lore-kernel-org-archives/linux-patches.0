@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048871;
-	b=mxbzjWVzLiLAk2qzaNC+l7ji3QD+YYFuQSps++x94I8XHdieX9a+3o6KT9rzZDUR7V6F
-	 XIBKtZkMA1J+GIy6TssDej46lT83v0ySAGExyr/O8yGHKEQcPZEYIa0pDfwVEK6zCjqs+
-	 gg/AJRYtRAH87JbqmV6tzgYATbFNLx0F+itguCO7oUtxmZ/3hsjbMZG0MkO5Q8Ftt/7+M
-	 VqOU21WuixAuYxXtSAhA+nLVotpqB9Dw51bRZG7tlEY9DjZd0stK7X2/gKjIT71b65xTC
-	 rTUVMH3Q77wr1xmunL/Ttn09nh6TET1tTS5lfFNMXWmBCLMXrPFBbBus89DOSsJAG8w==
+	t=1795048874;
+	b=zoPSnoDUgeSw1C2vBuGtft7vzTajvmLZxOHWvNBnvlHODc3XcMo5PbXnVYFRDO7sCGKY
+	 Ks67ck7/Y8z+PstqMCcZIE6vPByv6Q1yZpQNknLEMQy1frZgQTDOZLYxqBRuvVGrmL2DS
+	 pDIjaQeAtUUEhkN1bg9IWfBS2xNk7ZS+pgpfil3hfjQffR9y6qf6K9bCe5y5YkOV4aQhY
+	 qPGaHwDtsNju5DzLeEO+TFVOYIOGVa5eQXoviDsU+mN/cQOXXy8h/TsH/KrAoP9KlJT89
+	 ZAAUFgHRQSUWiKKUWVDeKhyqOgKrS50kWYgLVBlQqkXI5GbzclMYWIUCUVFimXpE8+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048871;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048874;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=ZNw0gbli3/KuYw0OeExPSUTp8cVeQdAjueD/VqiMJqU=;
-	b=MSTgVrPYK1CxsS1GOioArQGPDRvt0GJbz2kaQrUezlrtARwLzJAbMgA9iY92jkb/wEJ0
-	 NcadnqXK0X81LC+Kw2mSSO6MrFlqNjpcR48yVpifpUzMWq8ZGmHYxZKvsH8TOqyUT/pgk
-	 4tJGgIJJN9nDoxVcUJU5x72Cm2KJ+gWEBbVeApoKA+X3bsbVm8HICoQcogKtERbQqvDOZ
-	 y6faHgTXh27jt0CcFxnWmzMPyigUVVVaAEOAhzgib+iz9C2S+y5Zh23TUxW79MMZ9gt3v
-	 XZ3f15vPAJ9+yKPQY9rNP8n6IjtcywmsVmEPjLMeY8En3XWdiB59NMMFpmoRkvtQTqQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=Ewrvrn5zDbAllt0RR8dfHYARgvLiur6emsYKwwZc8Qw=;
+	b=3nntNoXP8Wf63sDQxa4vfsCNmZvISSr0r7jbo1LTPylXX6JEUiXaGvYTJyQSEXoLGE61
+	 TtLeMdiS3R07FOgy2ca3m7JAH/wQtxX034X+sRqCJnNHjMLgX7IwTaWk1jU7ewqUfwUkX
+	 hFZQlxDiFCxMRXC9kuO9Ontj+TUlSDJFz/0aGN1sm7xr6cki5RO22SybmnxtLw1/Hl5mT
+	 er2rKG+/8wQR14Doq1e9ALmMsjbM4OegFu9h2ojEgzVYZ1pa4L8NHkqi9hkc26o2aOzf5
+	 aNdOhPLD93n/2ULWjXhImW/9szncFrsrWYpyKYhGhbvzDXYIDYhEUpIo8Kyi/Iym+Zg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YRXQCSyo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WBrrSweg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85EB606A325;
-	Thu, 19 Nov 2026 00:41:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C03C606A31C;
+	Thu, 19 Nov 2026 00:41:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YRXQCSyo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85BD1F000C4;
-	Thu, 19 Nov 2026 00:41:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WBrrSweg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB70A1F000C4;
+	Thu, 19 Nov 2026 00:41:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048871;
-	bh=ZNw0gbli3/KuYw0OeExPSUTp8cVeQdAjueD/VqiMJqU=;
+	s=korg; t=1795048874;
+	bh=Ewrvrn5zDbAllt0RR8dfHYARgvLiur6emsYKwwZc8Qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YRXQCSyo9ZcsK7TPtPPv1HAPuP2UjTc0GuMMHfqOhroKVfu2Ev4L3qfgUcxq35c9Q
-	 5YWWmfq+1isO8Rd1PZrB4tl31BBJnbJzJufo0+h4AQ3PigsqcICHXIdnLg7pCfAwHz
-	 f0eNePnSFfBqjUIqbMufrfD2+acfKkra2A2j3uss=
+	b=WBrrSweg5ICtc0GpAnrQZbD4BdI00qcHvBAdX9sTHDbOnxoW50erBR3A5cGoLMe22
+	 TaBGP6xWNpoCPzZGmvjjD5AP6JBUP904ZFBrHNYJVI6YUPCmNTyaYFQSfVMeEvSDd6
+	 /rzFGHmFQ0xQPjs26pCbqy0WPaJVDSp377XMvzeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danish Khateeb <danishkhateeb03@gmail.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Icenowy Zheng <uwu@icenowy.me>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Andre Przywara <andre.przywara@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2148/2857] tools/nolibc: check for overflow in malloc()
-Date: Wed, 18 Nov 2026 15:53:02 +0100
-Message-ID: <20261118150318.734406511@linuxfoundation.org>
+Subject: [PATCH 6.1 2149/2857] dt-bindings: vendor-prefixes: add Source Parts and Lctech names
+Date: Wed, 18 Nov 2026 15:53:03 +0100
+Message-ID: <20261118150318.772194446@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -62,60 +64,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Danish Khateeb <danishkhateeb03@gmail.com>
+From: Icenowy Zheng <uwu@icenowy.me>
 
-[ Upstream commit 2111eb4273e7fda0815de85319653104f323c441 ]
+[ Upstream commit eef696356f58a4f5c17ec5d7cb1d495f75edf62e ]
 
-malloc() adds the size of its header to the requested size without
-checking for overflow. For a size within the header size of SIZE_MAX,
-the sum wraps around to a few bytes, and malloc() returns a single page
-instead of NULL.
+Source Parts Inc. [1] is a company that makes a series of SBCs, SoMs,
+etc under a brand called Popcorn Computer [2].
+Shenzen LC Technology [3] makes various boards and related products
+around IoT and AI technology. They used the "Cherry Pi" brand name before.
 
-calloc() checks its multiplication for overflow, but then passes the
-product to malloc(), so calloc(SIZE_MAX, 1) returns a single page too.
-So does realloc(ptr, SIZE_MAX).
+Add both companies' names to the vendor prefixes list.
 
-Such a size is usually a bug in the caller, for instance a length of -1
-used as a size_t, and returning a page instead of NULL can turn it into
-a heap overflow.
+[1] https://source.parts/
+[2] https://popcorncomputer.com/
+[3] http://www.chinalctech.com
 
-Fail with ENOMEM when adding the header overflows, as glibc does for
-sizes this large.
-
-Fixes: 0e0ff638400b ("tools/nolibc/stdlib: Implement `malloc()`, `calloc()`, `realloc()` and `free()`")
-Assisted-by: LLM
-Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
-Link: https://patch.msgid.link/20260926152414.251214-3-danishkhateeb03@gmail.com
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Signed-off-by: Andre Przywara <andre.przywara@arm.com>
+Link: https://lore.kernel.org/r/20230319212936.26649-4-andre.przywara@arm.com
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Stable-dep-of: 538f8ec6b9c7 ("dt-bindings: vendor-prefixes: Add Sophos")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/nolibc/stdlib.h | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/include/nolibc/stdlib.h b/tools/include/nolibc/stdlib.h
-index 059af4207c93c..10ce2ce39acd7 100644
---- a/tools/include/nolibc/stdlib.h
-+++ b/tools/include/nolibc/stdlib.h
-@@ -113,7 +113,11 @@ void *malloc(size_t len)
- {
- 	struct nolibc_heap *heap;
- 
--	len  = sizeof(*heap) + len;
-+	if (__builtin_expect(__builtin_add_overflow(len, sizeof(*heap), &len), 0)) {
-+		SET_ERRNO(ENOMEM);
-+		return NULL;
-+	}
-+
- 	heap = mmap(NULL, len, PROT_READ|PROT_WRITE, MAP_ANONYMOUS|MAP_PRIVATE,
- 		    -1, 0);
- 	if (__builtin_expect(heap == MAP_FAILED, 0))
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index b07d3671865d6..3746f6e01aa75 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -721,6 +721,8 @@ patternProperties:
+     description: Lantiq Semiconductor
+   "^lattice,.*":
+     description: Lattice Semiconductor
++  "^lctech,.*":
++    description: Shenzen LC Technology Co., Ltd.
+   "^leadtek,.*":
+     description: Shenzhen Leadtek Technology Co., Ltd.
+   "^leeco,.*":
+@@ -1245,6 +1247,8 @@ patternProperties:
+     description: Solomon Systech Limited
+   "^sony,.*":
+     description: Sony Corporation
++  "^sourceparts,.*":
++    description: Source Parts Inc.
+   "^spansion,.*":
+     description: Spansion Inc.
+   "^sparkfun,.*":
 -- 
 2.53.0
 
