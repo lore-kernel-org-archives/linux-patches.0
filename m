@@ -1,53 +1,63 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047228;
-	b=sbTvduSDWlopfV2oN9GmxZRlOHEYUV2t6FyOyT7w8DhYXdi3KWF5ktkqnobURYXYuufe
-	 vQEyxo3N8X7IyR7EYJxp4Q7tHybYlJNgx/F+qXQqH0YTfJrHU2ZiHkb2f1gXjjNFow226
-	 DvcSdidjiERaePoYQCIAO02qVPGdJZThEOi74+QxXwdwt6uY6Kz9LiZJpJJQmN8irv+hH
-	 audDRFnRB/ArZO5ZgLJ9XK7sTLmPSNQlpVdRPF3wZe8JKEWo49u1CFltrld61m+H/1wjp
-	 GKvjTaxoRUgBitbUhLpYAZ/xB32uhyBWM7QWASfbnL5nZ1hr96krj8jZiygS+79z8wQ==
+	t=1795047231;
+	b=Os8w7VSB+RWbc2PDF42M3Z62EkQjojgWn8/BlUGy5T8r5Bnk7K42ZkDmesy/EZ8oc6/r
+	 Fcp00ITdMX6UbcDdH/3ggusEg/DrdspDOo30UScYFbcgtvSofUodvjfWgG2FpR1V3ZYn8
+	 U8MaMbO8oYJGJN2eqAPttGcv0Z7BOT19/Yhb1BjDMfBOchS//CsidVy+d3YbfW/IR/Kjk
+	 LV8ztUjKV3rojbK+0GwCMAaQEydfwLqfa8E11E8EjEFCW7B2DF7zDnnirX/DK7HMZpx8h
+	 JtjMp96HTYxoMof0PS83271wchYQTTAbjFEswm/8eSKn7piIgo+gGsk9r1pWZjoJEOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047228;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047231;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xolkowR7qlUQG1M7cgVK4m0GFNLor2fe7bNZrwoh6qQ=;
-	b=b8kAx4GI4hCxAbDTipy5nqfoQxVLpXluDM3uqYRJvcqxZ3i58T7Q/h+gF8H1d2tnqBl9
-	 /EVT9TYFT9+/wir0He+MIIzzB44CDbGudUiRzg7klV+HUOUkYjDLq2cuKYB61ARRdZSmp
-	 5R/FGiDzw5XGazgcgWLwalTZe9ybW7CXWVub+iGed6+MdC9b56i1OPOaS+r1+zeCeM3PD
-	 L9MPPdZeKVKaheeiCwa/us/PsBhSDOO4jBi1Xeba/QUnwdUMpOv5IV8AtzaIcl8ilk4OB
-	 tuTpGCH21D/R4Kily6lQO8bzUym32KC9BkKPiLdqnwI+5RliGeVqDfdlTGjjiMHBa9w==
+	bh=UU35U0/T2f/9N/4rJtJtzfxj/rgKODg+OoeRXLWcr50=;
+	b=tSJVZjnn7S36m7IrxV0yBbo1TW9R8W/0ZfKgn/BtJDimD3dGTLsLNivb73bFg5Uq6jIu
+	 iA+aTnNGVKIo+z+jc9QA30CjoK5Dt/AQH7himfJPisjAMrzjN94a0Zn7SAN7rNY87LXLw
+	 XmEPoY4ap9zBIynFhFOcVPUaqdoWDZapEMC9k8/H0b/hZP4BV65KEZlty3I0A9Jnko4/1
+	 v5I1Eto6lvDEYbY9NyaPA2/2TjnY4gzc9a7DDJUfMMTFziILky/eslWbPpTaSviOt9AlV
+	 nshpT4pkTmjrwLYlqZHPaosDUWi4Mz7eb1KI8b33DVtxbGU3x7pfUp0U0yOZSCvQOUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KcmPs8+e;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kzQ6hZk6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3C6606A320;
-	Thu, 19 Nov 2026 00:13:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B0D606A31C;
+	Thu, 19 Nov 2026 00:13:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KcmPs8+e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D831F000C4;
-	Thu, 19 Nov 2026 00:13:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kzQ6hZk6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CAF21F000C4;
+	Thu, 19 Nov 2026 00:13:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047228;
-	bh=xolkowR7qlUQG1M7cgVK4m0GFNLor2fe7bNZrwoh6qQ=;
+	s=korg; t=1795047231;
+	bh=UU35U0/T2f/9N/4rJtJtzfxj/rgKODg+OoeRXLWcr50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KcmPs8+eDYC1zqTLjFE5uLZVGAxwNWecbsLdjNL9QWf4KjewGat5CGKWDn6KF3D4P
-	 6fUkkDgWo7FEVn9LikbnKX0KxXJRy74FsXoh7QGZMDH4EN1rFrt+UqLchbYq4wWi/W
-	 04Kkd4PhuJPl8eY6vp1SkcR9rOsz2aie4wbtl9rc=
+	b=kzQ6hZk6GzgQcAjhtcXIwIxwmXkT499vuWzasdzweCVwRWRubP9v4NMkpXJopH9hX
+	 UL8ys0Q56rYv3uvuXMDDzLUIXCHp1eqiD1Wj7GA6+Crr95PTz3wFWq2fI3h3mc57Gz
+	 7lbmcznIVJB+2D1fFRtr2Y9h2Vmdqgx2sK5nkp60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	shaos <shawnq1@163.com>,
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Xueyuan Chen <xueyuan.chen21@gmail.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Mike Rapoport <rppt@linux.vnet.ibm.com>,
+	Peter Xu <peterx@redhat.com>,
+	David Hildenbrand <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1565/2857] f2fs: release a removed xattr node in roll-forward recovery
-Date: Wed, 18 Nov 2026 15:43:19 +0100
-Message-ID: <20261118150257.734894086@linuxfoundation.org>
+Subject: [PATCH 6.1 1566/2857] mm/vma: avoid broken uffd merge on mremap
+Date: Wed, 18 Nov 2026 15:43:20 +0100
+Message-ID: <20261118150257.768969869@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,93 +79,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daeho Jeong <daehojeong@google.com>
+From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-[ Upstream commit f5924de8867c09206ba631b9faed63862ec00a10 ]
+[ Upstream commit 68cb098eadda190783f8f8bdf9fe764df59f7d32 ]
 
-When xattrs shrink enough to fit in the inline xattr area,
-write_all_xattrs() truncates the xattr node and clears i_xattr_nid. If
-the file is then fsynced without a checkpoint, only the inode block is
-written, with i_xattr_nid of 0.
+Userfaultfd often causes unexpected interactions within mm, and does so at
+the intersection of uffd, mremap() and VMA merging.
 
-Roll-forward recovery starts from the checkpointed inode, whose
-i_xattr_nid still points to the old xattr node.
-f2fs_recover_inline_xattr() copies only the inline xattr area, and
-f2fs_update_inode() writes the old i_xattr_nid back. So the inode keeps
-the stale xattr node:
+When an mremap of a VMA occurs, copy_vma_and_data() calls
+mremap_userfaultfd_prep() to notify uffd of this.
 
- - The node block is never released, and fsck reports "nonzero bytes in
-   xattr space after end of list".
- - If the inline xattr list ends exactly at the end of the inline area,
-   its terminator is read from the stale node, and the removed xattrs
-   come back after recovery.
+However, mremap_userfaultfd_prep() simply drops the UFFD context for the
+VMA if the user did not register it for remap, i.e. didn't specify the
+UFFD_FEATURE_EVENT_REMAP flag.
 
-When the fsynced inode has no xattr node but the checkpointed one has,
-release the old xattr node as truncate_node() does: check its block
-address, invalidate the block and drop its node cache, which may still
-be dirty.
+This is OK for the VMA itself, as upon page table move, move_ptes() clears
+UFFD page table flags, using vma_has_uffd_without_event_remap() to
+determine whether to do so.
 
-Fixes: 28cdce0459cc ("f2fs: recover inline xattr data in roll-forward process")
-Cc: stable@vger.kernel.org
-Signed-off-by: Daeho Jeong <daehojeong@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ sashal: adapted F2FS helper calls to the existing page-based APIs ]
+However, this doesn't account for merging with adjacent VMAs, whose page
+tables won't have received this treatment, and thus latent UFFD markers
+will be left around.
+
+Worse, it'll break UFFD for any VMAs it is merged with. This is very
+surprising behaviour for a user, who will then simply not receive UFFD
+events for VMAs they ought to.
+
+Resolve the issue by explicitly checking for this case via
+vma_has_uffd_without_event_remap() in vma_merge_copied_range(), the merge
+function explicitly designated for mremap() operations.
+
+Also update the userland VMA tests accordingly.
+
+Link: https://lore.kernel.org/20261020-uffd-remap-fix-v1-1-0f34fc181f0a@kernel.org
+Fixes: 3cfd22be0ad6 ("userfaultfd: clear flag if remap event not enabled")
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: shaos <shawnq1@163.com>
+Closes: https://lore.kernel.org/all/20261020110748.959870-1-shawnq1@163.com/
+Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Reviewed-by: Xueyuan Chen <xueyuan.chen21@gmail.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Cc: Mike Rapoport <rppt@linux.vnet.ibm.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: <stable@vger.kernel.org>
+[ sashal: Moved the merge guard from vma_merge_copied_range() into copy_vma(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/node.c | 39 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ mm/mmap.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
-index c85ec028baef7..4ef20021d4dc6 100644
---- a/fs/f2fs/node.c
-+++ b/fs/f2fs/node.c
-@@ -2775,6 +2775,45 @@ int f2fs_recover_inline_xattr(struct inode *inode, struct page *page)
- 	f2fs_wait_on_page_writeback(ipage, NODE, true, true);
- 	memcpy(dst_addr, src_addr, inline_size);
- update_inode:
-+	/*
-+	 * The xattr node of the checkpoint was removed before fsync, e.g. the
-+	 * xattrs became small enough to fit inline. Release it as well, or
-+	 * the inode keeps pointing to the stale xattrs.
-+	 */
-+	if (!ri->i_xattr_nid && F2FS_I(inode)->i_xattr_nid) {
-+		struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
-+		struct node_info ni;
-+		int err;
-+
-+		err = f2fs_get_node_info(sbi, F2FS_I(inode)->i_xattr_nid,
-+								&ni, false);
-+		if (err) {
-+			f2fs_put_page(ipage, 1);
-+			return err;
-+		}
-+
-+		if (ni.blk_addr != NEW_ADDR &&
-+		    !f2fs_is_valid_blkaddr(sbi, ni.blk_addr,
-+					   DATA_GENERIC_ENHANCE)) {
-+			f2fs_err(sbi,
-+				"nat entry is corrupted, run fsck to fix it, ino:%u, nid:%u, blkaddr:%u",
-+				ni.ino, ni.nid, ni.blk_addr);
-+			set_sbi_flag(sbi, SBI_NEED_FSCK);
-+			f2fs_handle_error(sbi, ERROR_INCONSISTENT_NAT);
-+			f2fs_put_page(ipage, 1);
-+			return -EFSCORRUPTED;
-+		}
-+
-+		f2fs_invalidate_blocks(sbi, ni.blk_addr);
-+		dec_valid_node_count(sbi, inode, false);
-+		set_node_addr(sbi, &ni, NULL_ADDR, false);
-+		/* drop the cached xattr node, which may be dirty */
-+		truncate_inode_pages_range(NODE_MAPPING(sbi),
-+				F2FS_BLK_TO_BYTES((loff_t)ni.nid),
-+				F2FS_BLK_END_BYTES((loff_t)ni.nid));
-+		f2fs_i_xnid_write(inode, 0);
-+	}
-+
- 	f2fs_update_inode(inode, ipage);
- 	f2fs_put_page(ipage, 1);
- 	return 0;
+diff --git a/mm/mmap.c b/mm/mmap.c
+index 17ec4d40edc11..471dbff3e11de 100644
+--- a/mm/mmap.c
++++ b/mm/mmap.c
+@@ -3414,6 +3414,9 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
+ 	if (can_self_merge && keep_source &&
+ 	    (addr == vma->vm_end || vma->vm_start == addr + len))
+ 		new_vma = NULL;
++	else if (vma_has_uffd_without_event_remap(vma))
++		/* If not registered for remap, uffd context will be cleared. */
++		new_vma = NULL;
+ 	else
+ 		new_vma = vma_merge(mm, prev, addr, addr + len, vma->vm_flags,
+ 				    vma->anon_vma, vma->vm_file, pgoff,
 -- 
 2.53.0
 
