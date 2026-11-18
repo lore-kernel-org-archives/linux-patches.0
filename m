@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025321;
-	b=2yHOOilhMIU6hP25k6rYZzzFYA1y/G+804sLnbV7m3l4LCiAo9Plo3YmPAkvg4rlqIr+
-	 DUfAqwiBGBKmXXU9qjqZ/vWUgZHRghUkTuEG0gS7lEAxoK25b824BRK3vVuvHO6ipyfTA
-	 xB7yrGRiXu4pgCAXTYZgkepKOBWssud1QjYPXn76nDNhBf74AvvcjE59qVOT0ezBgn64m
-	 1vNTkBl4lKhiuFEC8wwyAfMZ3sfKKj5ky7YQYXH1KLmAl62nl56H/9CAjmH89PbHK6Kp7
-	 cEHCEFZWIWOkLfyJRR21rBgf31ApqY2ON98a0ujYpK7BGRQJxAUpwKdKrEvXgPy7PZQ==
+	t=1795025324;
+	b=lvgLUmDnDqqGbTPQqdfsg5UNZszWNdvk+2NznxWyyaQDF2Xgg+Oc24vlvTxGvSdzW7ZV
+	 +d9f3KF1lOIiBW+qFCbkheoKb1XyH6iPUaQyd5nLF8jLx/wppLPhCrp79IUdLCsK2C0My
+	 vTW8v/CaW3YKXJ62BcmMqS4shFfOMPkleztn+6BJvmPWd2GouXHhP57wOgs7O4e7Fodgs
+	 5WP4f1DFplyD8M9lVayFQnA6Yxx2+JHpthQqTvV8xVnl2TFVqmhbOXKJFdOuyMurD8D0r
+	 c272DtM6gt37SPmFuMQ36XSBi8hmEo9ys/7qF+UW7CuhZv23KwgzgjEjrhHS/1bUxdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025321;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025324;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mdGZPT7bFDPk72iK1bWcYfxqeHV0dnjAWOFT3vXijbQ=;
-	b=k26G669ZBdiCjkeqwvvZyVj2mwWLZ2tZUEoWxe+dpS6ViGAzo32w1xAYsMd6SFT/tH9R
-	 SEOMSUvl7uFRw7q/h5EAsiasTPXA4cBCV0p08cCw7tKLpreR2oBXt+EbESqQPrMt/6qA1
-	 kXWSNoX5aYhoLVcN+AJ03w5dsm8TbS9cXawgzc3ybgMlVtFRFywhU6w2Chh9H7wW/MIRb
-	 rszg6iAim+fVjiUz3/2yC/+3y7P70x7eERpSByCcKAnuSb0tc2Kiwf2LdIVdnwiiolGU2
-	 GicsbVvu5m+0yqABP4XwO6yNHXuGYNRu/jEQI4BGn/ylMcMfD+HKukOEt/u1VY9giFg==
+	bh=F6cTc6fDrjjZmPRmWVsRcGcuNWZbmSmqceE2X08PgsY=;
+	b=d9eIk5oAaMS6jEOOnYb5fukUJfCmw2fcTM01cSMqa+eiFnQG2+zllRUORPWNMAwsxLmc
+	 /dU0yeinuNpRM5WyT4wZphWYMjkqcpnUUKPDjOxL9L0+VLcCCyPX4VWnhREHvZ3ApU1H6
+	 +qT7NyrY/jETeFbNXVTaHKd2FqnewxOkzx5itM0ZaW1umSLByVKDXJpv9y9IAw3/eVVe/
+	 6SSIsaU4AR95E6tOkRcvEbgvjf56Zn1a9WDR6SGv1S07nPmbNkTBHVKN/v43U+c1W1Ntf
+	 H1KZWdp67EztE8UsDhh4ArOWK2h6Msm82ja1zuXE2pUR2K2698uFe3rc1KmGS6Hadow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zSbXuZfn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cv+mw2Oy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D789606A332;
-	Wed, 18 Nov 2026 18:08:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C78606A337;
+	Wed, 18 Nov 2026 18:08:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zSbXuZfn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72DC11F000C5;
-	Wed, 18 Nov 2026 18:08:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cv+mw2Oy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 466DB1F000CA;
+	Wed, 18 Nov 2026 18:08:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025321;
-	bh=mdGZPT7bFDPk72iK1bWcYfxqeHV0dnjAWOFT3vXijbQ=;
+	s=korg; t=1795025323;
+	bh=F6cTc6fDrjjZmPRmWVsRcGcuNWZbmSmqceE2X08PgsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zSbXuZfnaknQq1dIbKp6jdEQk/4KYx4YjzT/pTElPednRhMdIO42DkpKN++6irtRg
-	 IGuRM8ldL/D5GY9jk+CVpCi5CBAX164JTJLj/hepKXXLZL/dBzLnOUmqElYLcxlCro
-	 E6IDwcIrSSsBTjuRNXZviQyGlWnvsrg4VyEqpak4=
+	b=cv+mw2OypV7Hx11Mb9B7zRPpEG5w6ieQ7H2p3IeGX/jXUIu1Wog4gTYuU52Wk65Dl
+	 crj7TaoKgmyN5aEbH9quf6LGgj0LaU8O6lZIJnMGXNL+78leX8gTVs+eD4nrX9mB7M
+	 N4nASNGLj4bUp3B6UJX9y51ftmPpOLFgQA8MSuZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot@kernel.org,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Dave Jiang <dave.jiang@intel.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1038/2151] perf/cxl: Program the requested event group on configurable counters
-Date: Wed, 18 Nov 2026 15:46:13 +0100
-Message-ID: <20261118150200.157200089@linuxfoundation.org>
+Subject: [PATCH 6.18 1039/2151] perf/cxl: Clear stale event fields before reprogramming a counter
+Date: Wed, 18 Nov 2026 15:46:14 +0100
+Message-ID: <20261118150200.191053675@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -72,59 +72,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit b22dcc11429866e07dc54299255e8ca13c26d38a ]
+[ Upstream commit 7406d6cf76b1dad53084f3988dc65ab967209344 ]
 
-cxl_pmu_get_event_idx() sets *counter_idx for a configurable counter but
-never *event_idx. hwc->event_base stays 0, so cxl_pmu_event_start()
-programs event group 0 no matter which group the user asked for.
+cxl_pmu_event_start() ORs the event group id, event mask, edge and invert
+selections into a configurable counter's config register without clearing
+them first, and cxl_pmu_event_stop() leaves them set. Reuse the counter for
+another event and the new selection lands on top of the old one, so the
+counter counts the wrong events with stale edge and invert behaviour.
 
-Return the matched capability's event_idx.
+Use FIELD_MODIFY() so each field is replaced rather than accumulated.
 
 Fixes: 5d7107c72796 ("perf: CXL Performance Monitoring Unit driver")
 Reported-by: sashiko-bot@kernel.org
 Closes: https://sashiko.dev/#/patchset/20260715191454.459673-1-dave@stgolabs.net?part=1
 Assisted-by: Claude:claude-opus-4-8
-Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Link: https://sashiko.dev/#/patchset/20260715191454.459673-1-dave@stgolabs.net?part=1
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/cxl_pmu.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/perf/cxl_pmu.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/perf/cxl_pmu.c b/drivers/perf/cxl_pmu.c
-index 39b46550a5109..eedc94616531a 100644
+index eedc94616531a..7a770278f6892 100644
 --- a/drivers/perf/cxl_pmu.c
 +++ b/drivers/perf/cxl_pmu.c
-@@ -513,7 +513,10 @@ static const struct attribute_group *cxl_pmu_attr_groups[] = {
- 	NULL
- };
+@@ -646,17 +646,17 @@ static void cxl_pmu_event_start(struct perf_event *event, int flags)
+ 	cfg |= FIELD_PREP(CXL_PMU_COUNTER_CFG_INT_ON_OVRFLW, 1);
+ 	cfg |= FIELD_PREP(CXL_PMU_COUNTER_CFG_FREEZE_ON_OVRFLW, 1);
+ 	cfg |= FIELD_PREP(CXL_PMU_COUNTER_CFG_ENABLE, 1);
+-	cfg |= FIELD_PREP(CXL_PMU_COUNTER_CFG_EDGE,
+-			  cxl_pmu_config1_get_edge(event) ? 1 : 0);
+-	cfg |= FIELD_PREP(CXL_PMU_COUNTER_CFG_INVERT,
+-			  cxl_pmu_config1_get_invert(event) ? 1 : 0);
++	FIELD_MODIFY(CXL_PMU_COUNTER_CFG_EDGE, &cfg,
++		     cxl_pmu_config1_get_edge(event) ? 1 : 0);
++	FIELD_MODIFY(CXL_PMU_COUNTER_CFG_INVERT, &cfg,
++		     cxl_pmu_config1_get_invert(event) ? 1 : 0);
  
--/* If counter_idx == NULL, don't try to allocate a counter. */
-+/*
-+ * If counter_idx == NULL, don't try to allocate a counter. Callers that
-+ * allocate pass both counter_idx and event_idx.
-+ */
- static int cxl_pmu_get_event_idx(struct perf_event *event, int *counter_idx,
- 				 int *event_idx)
- {
-@@ -541,7 +544,7 @@ static int cxl_pmu_get_event_idx(struct perf_event *event, int *counter_idx,
- 
- 	pmu_ev = cxl_pmu_find_config_counter_ev_cap(info, vid, gid, mask);
- 	if (!IS_ERR(pmu_ev)) {
--		if (!counter_idx)
-+		if (!counter_idx || !event_idx)
- 			return 0;
- 
- 		bitmap_andnot(configurable_and_free, info->conf_counter_bm,
-@@ -552,6 +555,7 @@ static int cxl_pmu_get_event_idx(struct perf_event *event, int *counter_idx,
- 			return -EINVAL;
- 
- 		*counter_idx = i;
-+		*event_idx = pmu_ev->event_idx;
- 		return 0;
+ 	/* Fixed purpose counters have next two fields RO */
+ 	if (test_bit(hwc->idx, info->conf_counter_bm)) {
+-		cfg |= FIELD_PREP(CXL_PMU_COUNTER_CFG_EVENT_GRP_ID_IDX_MSK,
+-				  hwc->event_base);
+-		cfg |= FIELD_PREP(CXL_PMU_COUNTER_CFG_EVENTS_MSK,
+-				  cxl_pmu_config_get_mask(event));
++		FIELD_MODIFY(CXL_PMU_COUNTER_CFG_EVENT_GRP_ID_IDX_MSK, &cfg,
++			     hwc->event_base);
++		FIELD_MODIFY(CXL_PMU_COUNTER_CFG_EVENTS_MSK, &cfg,
++			     cxl_pmu_config_get_mask(event));
  	}
- 
+ 	cfg &= ~CXL_PMU_COUNTER_CFG_THRESHOLD_MSK;
+ 	/*
 -- 
 2.53.0
 
