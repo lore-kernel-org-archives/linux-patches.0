@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034259;
-	b=bn7Yw4Baq2OAL1XqFlS/x4pdoPNGq3XP9mfVjMGeN0I4d1b9uDVx9PJ1R7L74Bywp9Sj
-	 2nFX3Db5SEaAtV+o4C3+Wy6+zgvf+/O5rDsm2GHIFp8C6+xyeSDw9kZS7UbchD4LcRPid
-	 38Ew61ut+pJlkA7p4u/23GGwNPm7WroNTcj+BxN3euFT/d4ShgtFx0lLzbfILF19scNJl
-	 xnVVUEMY7KRPEqcvOtwMaYqJ++Sk4epMK0GHzE/sNj2031N4yjIhsJgjZqC5NzXLzMbfM
-	 rRYUjJwTLu2LHItxA6LM6LkUOEk4/xugqfDc8MxSkXU2v5BRmtE3a/XzKqgXGbuJPDQ==
+	t=1795034262;
+	b=WWQdpYwJL4eusBZNxwrLbfPIURdc8nPfzKGw2esbTv2PMGekg8tic60AVaYYZs+JUURJ
+	 Ksp87KTGYPqrwuOOcguK3aWnYXAgxyJVsJgRDwGVRYkjFmzy1Qod7ZBVcRLPa6fpgV0jJ
+	 3Cst7Yw6u43ailn9F8vxfba2IClaQbDsVzakdQVfSwOutq5DmQmq1NTGjxbQwxgxWLFqC
+	 7t7xJniyOTLR2iQCJyDvwo0CipueX+7nVpqJVUgJoXOQl4n/cNlm3KlfpU8a0lwkIn4TE
+	 DAoSmgEMsQMCnqBrXn7BdVy+roWhy3Di406UlKTklM06J5l+X8VEodJsUliLhsYzUgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034259;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034262;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=u9sPK2f17BKX3H+AlrCHn7uO3YrSRGzV/69GgxqxyIY=;
-	b=CJ7uJxEN2PpE01ZiXSVwrUg0/RdtjNStlt8e229UNgz/nTWolummoO3uUK604FVp8OMU
-	 3IBgdVr/+10ACws4AHg5ViPtDpEQ6qAukbT8xUvhL5ITyIxyoaRgsliPl4VlPNi+cw9Cs
-	 ovqRqGzjw+EeErbrQhY0ByBLu5aiHfyx4nj0h/tseIxLJLtSe8EhKza9SdaOjUeLl6wzB
-	 M2IP+8EYaBpfXKxhJSbTsKQLK3winyN96bGQGbgIpDQoPkUoUEJqB2bG7klwzTzqaFKZc
-	 9M+PbPhGurY8jF8F3NHG0LONZqsG6njZFfTTJfj+fSbUXlcUsFBAMjWEZSf5bkPQ/CQ==
+	bh=zJWKS/63M1j0hfyMZ9LYl4wz4wBOka2tnCunqZYOAhY=;
+	b=GzMEz8lx08NsKDNSF8dUPJDoSXU7KUoQ6YY5MWNtsHR4CPlY6A/BNcrfYGmpV68XESJf
+	 6FdxndWH/QkB/MF9N7ReatbkNlc7Yn0+oTEqUDI59QEIfukvMjHv5xFYyzrabNXouRWoo
+	 ZjklsC0ZVcs/X7HaSIu7qs/c54S9b+FoDRQNVUOCBhnCFVNwGrbqwpRq9i+XfLRFVrrzH
+	 ir4/zaCfO6Ccz38jtUbT9M7AW0xZ8oAGAmAovNLla2nQmgi0I3NEEQRoOPj25ZVpROtkb
+	 PsX45MfmCQLSFlTLtoegh1JaW3wbwTzafL2pARYKG9/StbwHwbiRowdqyQWUwSdomLg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y2ts+tQm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S6pSAF9n;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC82606A33A;
-	Wed, 18 Nov 2026 20:37:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E08AA606A32C;
+	Wed, 18 Nov 2026 20:37:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y2ts+tQm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D39B1F000C5;
-	Wed, 18 Nov 2026 20:37:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S6pSAF9n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F3431F000C4;
+	Wed, 18 Nov 2026 20:37:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034258;
-	bh=u9sPK2f17BKX3H+AlrCHn7uO3YrSRGzV/69GgxqxyIY=;
+	s=korg; t=1795034261;
+	bh=zJWKS/63M1j0hfyMZ9LYl4wz4wBOka2tnCunqZYOAhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y2ts+tQm39K5AV3O1/gFFdKtgydACv4ddrV8c4Od+H5WxhPdPeoFt+vF0YSuPuNJg
-	 QxaQXX/sjAY5NSb8qom47yw1zHvK+ysr8Un6alaQ9XbTP5pSFYlJ+i7J3eMPQo7ME4
-	 vaawQxRUPxZWQ9iDeULRq7A0QQ3Ou1AEU/Qo5aqY=
+	b=S6pSAF9n1I/1M4FVOSGyIvsN0mnMWfexS2cUyjjfWnkamCh2lTpcultmnGKpVpSgW
+	 LlhMEC4R4GORcxm/ze1T+SRHTNVXj6R3QmqFU8jM8SHxrB9rHMONqH1WrzM6N5A8YQ
+	 Gw3Tn/plVQfEhMh1QYXVcmLvRdzLbjsxZZcCXUaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Gilles Risch <gilles.risch@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	David Hildenbrand <david@kernel.org>,
+	"Denis V. Lunev" <den@openvz.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0306/3318] drm/radeon: fix internal display on iMac11, 1 (RV770/DCE3.1)
-Date: Wed, 18 Nov 2026 15:15:28 +0100
-Message-ID: <20261118150324.951933189@linuxfoundation.org>
+Subject: [PATCH 6.6 0307/3318] virtio_balloon: warn on failed buffer add in tell_host()
+Date: Wed, 18 Nov 2026 15:15:29 +0100
+Message-ID: <20261118150324.987450884@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,99 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gilles Risch <gilles.risch@gmail.com>
+From: Denis V. Lunev <den@openvz.org>
 
-[ Upstream commit 275c3332585bbabcefad109a6978cc0cbecf2008 ]
+[ Upstream commit 198eda395067b56ee605de076f0519620f4e5d90 ]
 
-The Apple iMac11,1 (27-inch, Late 2009) uses a Mobility Radeon HD 4850
-(RV770/DCE3.1) with a 2560x1440 internal panel on an internal
-DisplayPort path. Without this fix the display stays dark under KMS.
+tell_host() ignores the return value of virtqueue_add_outbuf() and goes
+on to kick the queue and wait_event() for the host's ack. The comment
+claims "We should always be able to add one buffer to an empty queue",
+but that does not hold once the virtqueue has been broken (e.g. on
+device shutdown): the add then fails with -EIO and the following
+wait_event() would block forever on a buffer the host can never return.
 
-This machine suffers from the same issue as iMac10,1 and iMac11,2:
-Apple routes the internal display through Link B of the DIG encoder
-instead of Link A. Add iMac11,1 to the existing DMI quirk and move
-the Apple-specific encoder assignment into its own block, independent
-of the DCE version check.
+Warn and bail out on failure, mirroring virtballoon_free_page_report().
 
-Additionally, the 2560x1440 panel requires RADEON_PLL_USE_FRAC_FB_DIV
-and ATOM_ENCODER_CMD_DP_VIDEO_ON, limited to iMac11,1 via dmi_match()
-to avoid affecting other boards.
-
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Gilles Risch <gilles.risch@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Suggested-by: David Hildenbrand <david@kernel.org>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260624140846.2616797-5-den@openvz.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/atombios_crtc.c     |  5 ++++-
- drivers/gpu/drm/radeon/atombios_encoders.c | 23 ++++++++++++----------
- 2 files changed, 17 insertions(+), 11 deletions(-)
+ drivers/virtio/virtio_balloon.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/radeon/atombios_crtc.c b/drivers/gpu/drm/radeon/atombios_crtc.c
-index ade13173921b8..685a274d3eaed 100644
---- a/drivers/gpu/drm/radeon/atombios_crtc.c
-+++ b/drivers/gpu/drm/radeon/atombios_crtc.c
-@@ -24,6 +24,8 @@
-  *          Alex Deucher
-  */
+diff --git a/drivers/virtio/virtio_balloon.c b/drivers/virtio/virtio_balloon.c
+index b47db0e44eb52..34296c1c6bf1f 100644
+--- a/drivers/virtio/virtio_balloon.c
++++ b/drivers/virtio/virtio_balloon.c
+@@ -147,16 +147,18 @@ static void tell_host(struct virtio_balloon *vb, struct virtqueue *vq)
+ {
+ 	struct scatterlist sg;
+ 	unsigned int len;
++	int err;
  
-+#include <linux/dmi.h>
-+
- #include <drm/drm_fixed.h>
- #include <drm/drm_fourcc.h>
- #include <drm/drm_framebuffer.h>
-@@ -594,7 +596,8 @@ static u32 atombios_adjust_pll(struct drm_crtc *crtc,
- 		if (((rdev->family == CHIP_RS780) || (rdev->family == CHIP_RS880))
- 		    && !radeon_crtc->ss_enabled)
- 			radeon_crtc->pll_flags |= RADEON_PLL_USE_FRAC_FB_DIV;
--		if (ASIC_IS_DCE32(rdev) && mode->clock > 165000)
-+		if ((ASIC_IS_DCE32(rdev) || dmi_match(DMI_PRODUCT_NAME, "iMac11,1"))
-+		    && mode->clock > 165000)
- 			radeon_crtc->pll_flags |= RADEON_PLL_USE_FRAC_FB_DIV;
- 	} else {
- 		radeon_crtc->pll_flags |= RADEON_PLL_LEGACY;
-diff --git a/drivers/gpu/drm/radeon/atombios_encoders.c b/drivers/gpu/drm/radeon/atombios_encoders.c
-index 7ea76fdd714a9..3164a440ba476 100644
---- a/drivers/gpu/drm/radeon/atombios_encoders.c
-+++ b/drivers/gpu/drm/radeon/atombios_encoders.c
-@@ -1706,7 +1706,7 @@ radeon_atom_encoder_dpms_dig(struct drm_encoder *encoder, int mode)
- 		if (ENCODER_MODE_IS_DP(atombios_get_encoder_mode(encoder)) && connector) {
- 			/* DP_SET_POWER_D0 is set in radeon_dp_link_train */
- 			radeon_dp_link_train(encoder, connector);
--			if (ASIC_IS_DCE4(rdev))
-+			if (ASIC_IS_DCE4(rdev) || dmi_match(DMI_PRODUCT_NAME, "iMac11,1"))
- 				atombios_dig_encoder_setup(encoder, ATOM_ENCODER_CMD_DP_VIDEO_ON, 0);
- 		}
- 		if (radeon_encoder->devices & (ATOM_DEVICE_LCD_SUPPORT)) {
-@@ -2122,17 +2122,20 @@ int radeon_atom_pick_dig_encoder(struct drm_encoder *encoder, int fe_idx)
- 	}
+ 	sg_init_one(&sg, vb->pfns, sizeof(vb->pfns[0]) * vb->num_pfns);
  
- 	/*
--	 * On DCE32 any encoder can drive any block so usually just use crtc id,
--	 * but Apple thinks different at least on iMac10,1 and iMac11,2, so there use linkb,
--	 * otherwise the internal eDP panel will stay dark.
-+	 * Apple routes the internal eDP panel through Link B of the DIG encoder
-+	 * instead of Link A on the iMac10,1, iMac11,1 and iMac11,2.
-+	 * Use linkb to avoid a dark display.
- 	 */
--	if (ASIC_IS_DCE32(rdev)) {
--		if (dmi_match(DMI_PRODUCT_NAME, "iMac10,1") ||
--		    dmi_match(DMI_PRODUCT_NAME, "iMac11,2"))
--			enc_idx = (dig->linkb) ? 1 : 0;
--		else
--			enc_idx = radeon_crtc->crtc_id;
-+	if (dmi_match(DMI_PRODUCT_NAME, "iMac10,1") ||
-+	    dmi_match(DMI_PRODUCT_NAME, "iMac11,1") ||
-+	    dmi_match(DMI_PRODUCT_NAME, "iMac11,2")) {
-+		enc_idx = (dig->linkb) ? 1 : 0;
-+		goto assigned;
-+	}
+ 	/* We should always be able to add one buffer to an empty queue. */
+-	virtqueue_add_outbuf(vq, &sg, 1, vb, GFP_KERNEL);
++	err = virtqueue_add_outbuf(vq, &sg, 1, vb, GFP_KERNEL);
++	if (WARN_ON_ONCE(err))
++		return;
+ 	virtqueue_kick(vq);
  
-+	/* on DCE32 and encoder can driver any block so just crtc id */
-+	if (ASIC_IS_DCE32(rdev)) {
-+		enc_idx = radeon_crtc->crtc_id;
- 		goto assigned;
- 	}
+ 	/* When host has read buffer, this completes via balloon_ack */
+ 	wait_event(vb->acked, virtqueue_get_buf(vq, &len));
+-
+ }
  
+ static int virtballoon_free_page_report(struct page_reporting_dev_info *pr_dev_info,
 -- 
 2.53.0
 
