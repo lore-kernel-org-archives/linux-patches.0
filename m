@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022059;
-	b=AivF9HynBrec9GSfcLZmo6XkGdbbmwZw/NHbORfH7A09A2dxwKrHS8+YA5FfTbUjy6RC
-	 Vf/40rnqb9f3vQw1G2WIPj4N8P3P0d6s2sCgCwcISkyBWrGiS4oG1k8WCAYk/7iRpwWPL
-	 19nOVqsYhemw9FsshElMlU+3q/zNT8fOzvpfSEL9qmb7PQRHAxUuz+Fonb7IANEpVogON
-	 04BiZQehfcY7Fxcnt0po0N1pCD6hYM5QkbnPSuSKTnQ/+Itm6B3r6EFNB6HsZQ2Bq+mc9
-	 9eKDoTt6pSxqSEfmH1qOUbmT4BjlL/D8A135If9r4XIrJWINLPyw4OBVwkK2jwwUyTQ==
+	t=1795022062;
+	b=V2IKWq6mr6UmHMmqWOdBHX4Z7ROSlN7y68OmZwOVtzTCuKBUWgcwedjDeWrKdfFY1liS
+	 s9itb80XqTYcCIq+uTV4TxB/uoeuwoUJuqTJq9pCtG9Ud77MXwp7a7UdP+w+vczgMERIk
+	 bSjJ0wOP5Me1+Bfv8H3kHT9ZP9tpbdohsVMKP8n5HRLmvsLBCGsN/ZWVF3bLvTRgv2muC
+	 AZ/40m0rcWFJ6yc1yJlpzTS8cbJoZLjtyv0kGOuLbIPfLZhFZPMllY9KvBI71a07nMZ/3
+	 shabxwamt4eHyR7LQuUWiprUofSg0G9glmNHzEPqrJJNRdVirf42+NiqrTQvPfeg2wg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022059;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022062;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=J63VJ7fKqmdAedR2DovnSZ0g7SdSK1kl02KMKGCdWzs=;
-	b=lm+8D1FFEFOJrboARMomTOuM5pL67LYDtK4Qis4LZ5g3UienxGnK2vUC5WFf5Lh94Uz1
-	 bqHEEBfnsS+0bnVu56uX3yqcgAyRKilUX2TgqmBZd4hbnWtUrsygOdAbZHPbcCHK24o64
-	 RCw1Uu/KUM1hGvJKC+nbZOgW3iFgyp9ZWHQS30P44jCM8K1eca00hCHza35LabWAMphB8
-	 i47OoHqQuEHTOu21jZvfvQzlhYJgs7zJ+sJUf8TA9dbeMDKhSe0zZrKQUGGavlJwEDvOf
-	 /2o8XIXk/79prF++kIYllURezWphB1O9gHEYCEzOAB0HFoq4CldgwSDYDUXNNyVFEEw==
+	bh=HaJcE1qMmvVG7vONlTIeQ8dPV7CkhvOFygCx6/2EDP8=;
+	b=CFYnI+9Oe7CXzxsGNpcHNMcxVqcRciWZwvjHJqDcWkS6+Q8OZuUdYajvr6b8zuZAQ1iy
+	 xgPO2BWBUNMhNBFiGLl7CsA52N32UFRpTRClpabYiMjayeJMxgCrb7EbL1Uu+K7ckn6T8
+	 zQX/9dYiN0L6tB02aLAEHJNH+8jKKSCL0ZjCxV+N5L2MHAys579jGgrrlpB29Z7apvPr4
+	 trAeKEl8CQCwkKh/Y7dTr+Qt76bX8j2q0OZ0AE0c822AwMoPOwMiPjmjPhiJDlYMObQkj
+	 pCxXV07kQbmSRgxpN943H/DT93S9auNL4/nOg8O+d5v10gzNMuO7nfynGn8ObxSL7mw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jx57hQj0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cgKdoHzF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B91606A32A;
-	Wed, 18 Nov 2026 17:14:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169B4606A31C;
+	Wed, 18 Nov 2026 17:14:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jx57hQj0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AC901F000C4;
-	Wed, 18 Nov 2026 17:14:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cgKdoHzF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DD1B1F000C4;
+	Wed, 18 Nov 2026 17:14:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022058;
-	bh=J63VJ7fKqmdAedR2DovnSZ0g7SdSK1kl02KMKGCdWzs=;
+	s=korg; t=1795022061;
+	bh=HaJcE1qMmvVG7vONlTIeQ8dPV7CkhvOFygCx6/2EDP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jx57hQj04Y2pHVWug65ZRcHyNTRZaYqKnbT45kPBKqFJUqGcaGRQZPwYQD1qGQHcu
-	 fj/H7nw8kEyVJ7wZ37IdgRwxLBicBV5QyCDBTfp0tnaovqQZxZ/dCbml4/JQlU/qeW
-	 txX1ftIHoX+FVldgarwnm+H2TkAOnT6qKnaT+2Kg=
+	b=cgKdoHzFIQzpYG5DwxZTXmPlnzNGKj7D7iqj++8zbRMHc5arrtUYeynMaErzFguJr
+	 /ObwXS8i25RLJ4tlu66K1xd94exQnon3OLxxJ9hdiVuQJf9gQd1psDGd0VA3Ya2ce7
+	 T0508sLok2l4eGhVRJiogvtbEfexdkR0BW0r3/GY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avi Weiss <thnkslprpt@gmail.com>,
+	Laurence Oberman <loberman@redhat.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2526/2651] nvmet: prevent double-free after metadata SGL allocation failure
-Date: Wed, 18 Nov 2026 16:02:46 +0100
-Message-ID: <20261118150415.587724875@linuxfoundation.org>
+Subject: [PATCH 7.3 2527/2651] nvme-pci: fix early boot hang with nvme.quirks parameter
+Date: Wed, 18 Nov 2026 16:02:47 +0100
+Message-ID: <20261118150415.618436522@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,38 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avi Weiss <thnkslprpt@gmail.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit 2f61b9d1d54edf75a352c43eebe3804144b5d44e ]
+[ Upstream commit ed75528c095bc7760a3cf34a3f3e2ec7a59eb285 ]
 
-If metadata SGL allocation fails, nvmet_req_alloc_sgls() frees
-req->sg without clearing it. The RDMA error completion path later
-frees the same scatterlist again.
+Passing nvme.quirks on the kernel command line causes a silent boot
+hang when the NVMe driver is compiled as a built-in module.
 
-Use nvmet_req_free_sgls() instead so that the scatterlist pointers
-and counts are cleared before response cleanup.
+This happens because the parameter is currently registered using
+module_param_cb(). For built-in modules, this macro flags the parameter
+to be evaluated at initcall level -1. Consequently, quirks_param_set() is
+called before the memory allocators are initialized.
 
-Fixes: c6e3f13398123 ("nvmet: add metadata support for block devices")
-Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Fix this by replacing module_param_cb() with device_param_cb(). This
+defers the parameter parsing to initcall level 6, guaranteeing that
+the system memory allocators are fully functional before the quirk
+string is parsed and allocated.
+
+Fixes: 7bb8c40f5ad8 ("nvme: add support for dynamic quirk configuration via module parameter")
+Reviewed-by: Laurence Oberman <loberman@redhat.com>
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/core.c | 2 +-
+ drivers/nvme/host/pci.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
-index 1ece32e702f3d..8f791d5651bd3 100644
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -1362,7 +1362,7 @@ int nvmet_req_alloc_sgls(struct nvmet_req *req)
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index b7c5a18b899b9..eb74bd8838f2a 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -243,7 +243,7 @@ static struct kparam_string quirks_param_string = {
+ 	.string = quirks_param,
+ };
  
- 	return 0;
- out_free:
--	sgl_free(req->sg);
-+	nvmet_req_free_sgls(req);
- out:
- 	return -ENOMEM;
- }
+-module_param_cb(quirks, &quirks_param_ops, &quirks_param_string, 0444);
++device_param_cb(quirks, &quirks_param_ops, &quirks_param_string, 0444);
+ MODULE_PARM_DESC(quirks, "Enable/disable NVMe quirks by specifying "
+ 						"quirks=VID:DID:quirk_names");
+ 
 -- 
 2.53.0
 
