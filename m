@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055102;
-	b=be8/Zm/OL2NCLamaKpvmKx1CDaoZEaIph8mjRyRg3SfZeII+3Cxra72niqQs3NZXRgRC
-	 BkPJLczfSkW/ZRJwifYGdgGwe9lxNMZFeR1nSI3cj41AnshjBqDH5rYVnX42UjahR6/j8
-	 ASWbNXRWQOPR9qcyq50DpgrVAnLRR5HwrB+4XYosUEK8alPi8kXLDWv1hGbyYebgoMeN/
-	 zfesfwNoAYoiArT25wWYk4//3FELiyJtOb/6zHMLeRLJF4D7weF74utEq3nCPvDZuopvw
-	 m4JgGn4dZq7Qhmhewh5Tsurc83qoLZ+oiv15gRo7yH23OcHnBVvZAM6pQcbPm7SaJfQ==
+	t=1795055105;
+	b=cm8FeZoqGTmzLkE7K9/8oEb9gvnRNyTXr8ePQkz7czFlYbADrkPTxT5e4vlXWrldsbgN
+	 Mmcxpva0E57r5MpnK/IZyYSYTnR25xA6tRl3dsWFgH6N10Rh6UZM4rDAkhHNHqE+z4MKY
+	 TN5kaUykFC665utLDeDLZuG8L7R26rZnDn5sp3dImhGyPM4RAS920cw0zmRFahAZwqR13
+	 zqkMl7kNd7YZMQMK3KoZ+RzOPlYb3qHPU/sLcb8qC/anEp7GuGwPZXWChw43pM8SxnZrr
+	 87l2WMOCVPpLljNLdNmF6idQZjzQsKD/Fm9yO2GI1epOhlth6clvDWUODPPrsbzoFRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055102;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055105;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Om957BNSNALZpLJI/UBh1+Fl9qZFNwoKwMM3zDlAIO8=;
-	b=b/iKHsNQSv5A1dQnhgsyUvK414qkqpqhiof2Ha0GEYfpQBAf8n4q0H0/0LV2yjPz9WnO
-	 39aRb3ayoepmDXsZHoLO1xYB1lCD1be424jyIIpbmvCMnZAaCcpvTTIoRWL4aQTOK81PF
-	 TZnYOwb84hy7A6gq39jJYjVYAfkvdwWuQPIRU2KRHhgM5JcwGr4kUE+1DgmzS7kdAFrl8
-	 QYRNohYexa85LfiKKo3LASP5rvT5m3lmSlZd6i6Ip6jzAkzpoYEIu2wNFO1rHsUlevXtp
-	 udLSfM1NlSYTn0u+QMvGW0+yixd2x50TJ8zJb8GiyTedqaOj65mIcrugu9j8voHr3kw==
+	bh=4JUC2AZf5W5Tb2C68KvxaoQCUsG2JS0XRMoJtqxQI4Y=;
+	b=oYGmIDgXEJMjNT2fiMaCHHTIf/7666IbfaV0fMyJZKewW5d420xudaKmKeMvvoPdLXuc
+	 lSho/o+yt2ts6TipsL1E3GhBw4nrekGyuyf6wEh+NEXnfpPpVYrmVQ1cusJlFOHqZan/H
+	 QVjeHRtLiDLSYiRTu/jUsg/BIknJ8IdIwr5/9jTpUxCIQMNM42OuMN0DeUCT6uB8f5ta3
+	 DvlRAR0HJcEo0JttEFx2nQXUEQtfeQUK7Szi+3RfcKS7UI8BX4HQDe6mNL/mpjPsJTXK5
+	 bwxt88CstrQ2vrsN0/e51mTv79kVWQ+yYVURoNMMtjMWhrgMMrrkCEYoBEOli2gd8hQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="uujUlm0/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rtgrMLA9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15801606A31C;
-	Thu, 19 Nov 2026 02:25:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47F4606A31C;
+	Thu, 19 Nov 2026 02:25:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uujUlm0/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6680C1F000C4;
-	Thu, 19 Nov 2026 02:25:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rtgrMLA9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 410221F000C4;
+	Thu, 19 Nov 2026 02:25:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055101;
-	bh=Om957BNSNALZpLJI/UBh1+Fl9qZFNwoKwMM3zDlAIO8=;
+	s=korg; t=1795055104;
+	bh=4JUC2AZf5W5Tb2C68KvxaoQCUsG2JS0XRMoJtqxQI4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uujUlm0/9gxWXjpkZPjv4S4R351rAt86hffj+YVbVpvldl2WoEM7ICOzPYXOCn6Mc
-	 RtlFTN7MsdWrz/0H8CVBlTmd2K7s/MELRQqeS2ffGXKZcYgd6pEFCiJWxu8y5sy1km
-	 dposllZkKem1cYQfqcFgl7txLzu3QBUx5YXMNFAc=
+	b=rtgrMLA9iLpRChMkaQYA8jieafKxt/7z9z4nzIEma6vsovdj2I4zoxHZcz2PPrVqh
+	 oP7D7kmEsNbph+mCzz//8Wlp6ODGRVjMM5hhs0Eml6+qDxMxtAY8kYw/3//4UIFG75
+	 h2HONCg2tbqCP6C3yH99BpvkCpB2abF4BsDlqpyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Jia Wang <wangjia@ultrarisc.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1470/2214] regulator: ab8500: Propagate mode enable read errors
-Date: Wed, 18 Nov 2026 15:52:26 +0100
-Message-ID: <20261118150109.995223239@linuxfoundation.org>
+Subject: [PATCH 5.15 1461/2214] dmaengine: dw-axi-dmac: Fix LLI dump out-of-bounds access
+Date: Wed, 18 Nov 2026 15:52:17 +0100
+Message-ID: <20261118150109.508696544@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,63 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Jia Wang <wangjia@ultrarisc.com>
 
-[ Upstream commit 71ac8878573058e2b85210760ccaeaac90796c35 ]
+[ Upstream commit e6b49f8016ee8b642e8e495d1704342ee0b35d72 ]
 
-For regulators whose enable and mode share a state field, set_mode()
-first reads that field so changing the requested mode does not enable a
-disabled rail. A register read error is currently treated as true and
-the driver proceeds to write the new mode, potentially enabling a rail
-whose state is unknown.
+axi_chan_list_dump_lli() uses the channel-wide descs_allocated count to
+walk the hw_desc[] array of a single transaction. If multiple
+transactions have allocated LLIs, the channel count can exceed the
+transaction-local nr_hw_descs and make the DMA error path read past the
+end of hw_desc[].
 
-Return the read error without changing the register or cached mode.
+Use the descriptor-local nr_hw_descs count when dumping LLIs.
 
-References: AB8500 User Manual, UM0836 Rev 3, p. 227;
-AB8505 User Manual, DM00046744 Rev 3, p. 237
-
-Fixes: 438e695b87e0 ("regulator: ab8500: Get rid of is_enabled from struct ab8500_regulator_info")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260901-ux500-dts-snowball-regulator-v2-6-fe88b01829bf@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: ef6fb2d6f1ab ("dmaengine: dw-axi-dmac: simplify descriptor management")
+Signed-off-by: Jia Wang <wangjia@ultrarisc.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260902-dma-fix-v3-2-414c6449fbcc@ultrarisc.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/ab8500.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/regulator/ab8500.c b/drivers/regulator/ab8500.c
-index c00bd8bf1e058..3a7576e3f0706 100644
---- a/drivers/regulator/ab8500.c
-+++ b/drivers/regulator/ab8500.c
-@@ -433,7 +433,7 @@ static unsigned int ab8500_regulator_get_optimum_mode(
- static int ab8500_regulator_set_mode(struct regulator_dev *rdev,
- 				     unsigned int mode)
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+index 32faa698eab88..afae2f218bed1 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -1001,10 +1001,7 @@ static void axi_chan_dump_lli(struct axi_dma_chan *chan,
+ static void axi_chan_list_dump_lli(struct axi_dma_chan *chan,
+ 				   struct axi_dma_desc *desc_head)
  {
--	int ret = 0;
-+	int enabled, ret = 0;
- 	u8 bank, reg, mask, val;
- 	bool lp_mode_req = false;
- 	struct ab8500_regulator_info *info = rdev_get_drvdata(rdev);
-@@ -490,7 +490,17 @@ static int ab8500_regulator_set_mode(struct regulator_dev *rdev,
- 		goto out_unlock;
- 	}
+-	int count = atomic_read(&chan->descs_allocated);
+-	int i;
+-
+-	for (i = 0; i < count; i++)
++	for (unsigned int i = 0; i < desc_head->nr_hw_descs; i++)
+ 		axi_chan_dump_lli(chan, &desc_head->hw_desc[i]);
+ }
  
--	if (info->mode_mask || ab8500_regulator_is_enabled(rdev)) {
-+	if (info->mode_mask) {
-+		enabled = 1;
-+	} else {
-+		enabled = ab8500_regulator_is_enabled(rdev);
-+		if (enabled < 0) {
-+			ret = enabled;
-+			goto out_unlock;
-+		}
-+	}
-+
-+	if (enabled) {
- 		ret = abx500_mask_and_set_register_interruptible(info->dev,
- 			bank, reg, mask, val);
- 		if (ret < 0) {
 -- 
 2.53.0
 
