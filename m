@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026659;
-	b=Pz8r85vrvHp0XtK45h7nepmGechN0GYo0RAz3ICcQTff6928fMLPFmYyg0e80Pe58uq3
-	 1x0KGpV17xBa9SQyleotRIQ9qmM7cPLxP/C9XVwDTrcYXOq7y4EkxCksUCaZ+B4ldTnap
-	 yI1T0QJzbGi9wmBBJQjgfTR9u1xyAezvPpNPeRsHskmSjpeUmJRzSmiG+nhbxCBVYEzT/
-	 LiGKk3MKc3DBN2JkJsPqA5hdOwTotbzug0lHJLVvr25xsgxH6X65YQW31ghIlK7coJUSD
-	 jzkBCSRmpJvTGwl0X7eabCgI+pZyKOdRqoN49toGwGPk76eiPwlzgTdtyARxUvQ+g/w==
+	t=1795026662;
+	b=dH7W7iHUvrRIUAvqQfrl60MlA6elVKng7qlgY40mS8B9ObSmUYVM/qrYGcv9dklgxKPX
+	 hUXhR+AJdFnPrkwbbMBkz6vsTkUxO3gNZSPbxcSWQOdSaQMrUC5nuILmv84Xm4jl+/wWa
+	 ucqBbAOW3Q12T+3r5wBP5i03a1xcyRiI+7DBE5xy657zFpqAoHsK1KqiGebF6Qa1u5gHM
+	 EnuJiXnEyJDfjK5TjzfnSiICSjrBMm2Qy09Ca+OkAbGfbVWvtR8jZT4lj3CKHrL7IM4gv
+	 9cTsIRawd4ZSSIRGut7PNA18Sqr+tWGVLA/mpYh33c7I4n3OvPdZABH+tDQKFfsroWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026659;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026662;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sDr/Ab7Pv1CYWQH534vvTYLea4i1O1s/kUDNtY8/cNY=;
-	b=SE5SGEO1QV5FFkOmg3K85JDXGHmBKkgPZ/LueN4r4pIDnSQomkNtVyT3YcL32vJgS/yu
-	 h1eyGStyS0WeKHjCOYWCV/DlPxHPYsRzJX71dCpv51Ax42kzNDCj2MKASxAmbE/ifzsFl
-	 S6m6vtMtU3uybLUNgfMzW86B4If4NoihBXsqjRW9K18I+/Y8B80ly5EypvGe++64j1Xjc
-	 hX2M4ElisdthkUXxXmQurZpD6LceFU+NOzv5RzCBOQVrfhQ4OOMzwwFqsrLTt/0nhOM9v
-	 JIXT2YYbBG2v08iKVAT3r1IoKPcvfl2kvNAsUcVik4Mrj2EPoEBycAB2MDN9tdYtmkA==
+	bh=23BG8hDUlmg4jV59zY8Xk4XhvN9jqF+miwKxkUXAdL8=;
+	b=by36ycRljMTkhgT2+6fJ8E9H8a+HCT4Mv20571Z099/xNpVj0c4Oq9JVWV0WTL9QmHoN
+	 ch4apIYKmXaYCEllUb00rl/xwIJvC4av4Fx0361YFGkxSiJ1on67dCGhz0bZRr0SKRlfs
+	 meuRLZCi4FvnWgB1fQpeloS494cG0ZR4RhCPVmPpTNZQ+YTdlrliw31og8uS8cuwNDFgP
+	 Dp5InXAVBzznRE0Li6qBIBBe3SXr63BghcPQ7L97SNEAi1IULrdwzIP+tVhbpyYoqve3E
+	 SiXUVPkHo2ioXKd8tc0ftCW4fUb7Hh47tQ2RMLhzFfJcv7SigrzZF6gl7/VZgS2gUFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ZgyNRK/d";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J23sNGo0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCACA606A31C;
-	Wed, 18 Nov 2026 18:30:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36450606A31C;
+	Wed, 18 Nov 2026 18:31:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZgyNRK/d
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D687E1F000C5;
-	Wed, 18 Nov 2026 18:30:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J23sNGo0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B36951F000C4;
+	Wed, 18 Nov 2026 18:31:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026659;
-	bh=sDr/Ab7Pv1CYWQH534vvTYLea4i1O1s/kUDNtY8/cNY=;
+	s=korg; t=1795026662;
+	bh=23BG8hDUlmg4jV59zY8Xk4XhvN9jqF+miwKxkUXAdL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZgyNRK/dFwVr01R8iYI0Q+laegJEwNxW4A1uwiwvidpVCWBhMrrxnmIo0iu9s8dmj
-	 r9C/rIT1VHdGAtXuhLMJFjCAXYX+cZ453WYZwG3XY+RebA2pQjMcwxn0Fw5yxF1Rhz
-	 rXAXF6LjJXMRfg8q76zQWo+I0IvBUf2otlttfan4=
+	b=J23sNGo0gy83tOu3TCCSmGTiaNqax+g7dLTZI/YjX1Ti2xDkb8oGyQz3OE/xbONLA
+	 8YJw6McRiqZ74EW9TrWQ4m2jrWFJm63J+qFfcXnVu3hiAy6ySHUSK4nVt0jreI3nBp
+	 X9gg6o4aq/DfZI1zqNa8yqlh/0rJX5Pw8x2OnCHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	John Garry <john.garry@linux.dev>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	VEGA <vega@nebusec.ai>,
+	Kyungsik Lee <kyungsik.lee@lge.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1471/2151] scsi: scsi_debug: Fix a locking bug in resp_write_same()
-Date: Wed, 18 Nov 2026 15:53:26 +0100
-Message-ID: <20261118150215.475371558@linuxfoundation.org>
+Subject: [PATCH 6.18 1472/2151] lib: validate in-memory LZ4 chunk length
+Date: Wed, 18 Nov 2026 15:53:27 +0100
+Message-ID: <20261118150215.510654021@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,53 +70,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-[ Upstream commit 2f50ca3d46b4d5916874ba19612498c0a9c1f5f9 ]
+[ Upstream commit 138a84817df01eda67bb23032ab49c23fe2ffc16 ]
 
-If fetch_to_dev_buffer() fails in resp_write_same(), the function jumps
-to 'out' without releasing the data write lock acquired earlier via
-sdeb_data_write_lock(). Jump to 'unlock' instead so that
-sdeb_data_write_unlock() is called on the error path. This bug has been
-discovered by building the scsi_debug driver with Clang and modified
-lock context annotations. The modified lock context annotations are
-available in patch "scsi: scsi_debug: Improve lock context annotations".
+We found and validated an issue in lib/decompress_unlz4.c.  The bug is
+reachable by a root user through kexec_file_load() with a crafted external
+initrd.
 
-Fixes: 84f3a3c01d70 ("scsi: scsi_debug: Atomic write support")
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: John Garry <john.garry@linux.dev>
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/271ea11d3bc147d950a89419181f0c3f5a1ebf3b.1791924924.git.bvanassche@acm.org
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+unlz4() reads the compressed chunk length from an in-memory initrd and
+passes it to LZ4_decompress_safe().  It only checks the chunk length
+against the allocation size when the input is filled by a callback.
+
+Reject an in-memory chunk that extends past the remaining input before
+calling the LZ4 decoder.  This prevents malformed initrds from making
+the decoder read past the mapped archive.
+
+Link: https://lore.kernel.org/59c6555c27aa7ba18ee227f9f02c78d15a37605f.1789219453.git.zhilinz@nebusec.ai
+Fixes: e76e1fdfa8f8 ("lib: add support for LZ4-compressed kernel")
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: VEGA <vega@nebusec.ai>
+Assisted-by: LLM
+Cc: Kyungsik Lee <kyungsik.lee@lge.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_debug.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ lib/decompress_unlz4.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index 5acf24391ae67..bc0fe470f66fd 100644
---- a/drivers/scsi/scsi_debug.c
-+++ b/drivers/scsi/scsi_debug.c
-@@ -5286,7 +5286,7 @@ static int resp_write_same(struct scsi_cmnd *scp, u64 lba, u32 num,
- 
- 	if (-1 == ret) {
- 		ret = DID_ERROR << 16;
--		goto out;
-+		goto unlock;
- 	} else if (sdebug_verbose && !ndob && (ret < lb_size))
- 		sdev_printk(KERN_INFO, scp->device,
- 			    "%s: %s: lb size=%u, IO sent=%d bytes\n",
-@@ -5303,8 +5303,9 @@ static int resp_write_same(struct scsi_cmnd *scp, u64 lba, u32 num,
- 	/* If ZBC zone then bump its write pointer */
- 	if (sdebug_dev_is_zoned(devip))
- 		zbc_inc_wp(devip, lba, num);
--	sdeb_data_write_unlock(sip);
- 	ret = 0;
-+unlock:
-+	sdeb_data_write_unlock(sip);
- out:
- 	if (meta_data_locked)
- 		sdeb_meta_write_unlock(sip);
+diff --git a/lib/decompress_unlz4.c b/lib/decompress_unlz4.c
+index c0dbb3cea915e..86e9aaec04f6d 100644
+--- a/lib/decompress_unlz4.c
++++ b/lib/decompress_unlz4.c
+@@ -139,6 +139,10 @@ STATIC inline int INIT unlz4(u8 *input, long in_len,
+ 		if (!fill) {
+ 			inp += 4;
+ 			size -= 4;
++			if (chunksize > size) {
++				error("data corrupted");
++				goto exit_2;
++			}
+ 		} else {
+ 			if (chunksize > LZ4_compressBound(uncomp_chunksize)) {
+ 				error("chunk length is longer than allocated");
 -- 
 2.53.0
 
