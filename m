@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031185;
-	b=ntbEw+Dodrgis8X9+tRNRy0mshwSuiEG5I8x20xAhca3Jpt2MZ/Oq2ya6Jr01gt71j6j
-	 XM35rtjYtBqmy72qWXcH7NsrDPFePghviTZclvXEhNoE/VjI3bUgDXEhNpemSyy1BbqI1
-	 8w4/Yi1pD7HeiXafD+ZSTuyw70/gfJHvWqzpkQ+zf+NT5Gbxy1UoPNNbWoXKJHp6Pw0Sf
-	 TF2rF7VB+R64Y0/N0rWMswfXpObHXqzhAGHQkZVEK9emfE6yntIYIFXJca9HpPeZmhOlu
-	 zsNDBay2Cfg9lGfkowOcMx9P2M6DdjobH6l7miPJXeI+DTwrEtivb/LW35qAoepDZSQ==
+	t=1795031188;
+	b=x799Mc7kbbJjnOuzpBeJ5PdhhL+v5gOhLFNQFtKj319L7sPH7xMQK8+QkCUq2hW7lV2g
+	 UYWFYvxfZFGWGVhS3NHWsisLOEgP2YR0dK97/ZtD9/IcsfeGvdB0xavt1YsDziNPhy7Fq
+	 Wpm20psVwEXQ+Blf1ABcby7AvRHMn9jZs7Hv74Dd89cvTeyqf+ie44gYDlE63BJGj6UHp
+	 V/nudCcLtHZiU7NBILIo1IIKq1TpOCxHEnpmzYaB27hfozeOwRUTb+rBGe4VALv+R2ACy
+	 wBMoL+Rplvvqyj79r/9y5Vx+ITxTej6ug0fabKdI/j3aQiOsQSlTVq0OAH3xWzpfwvA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031185;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031188;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VkK4vmjwKgA6KWxoY0b95G6iVYcqokVh5KN75xSib9M=;
-	b=ZBBm3ZZ5kheCz53UvhALvUzZE8nZlfgUhjj4gEUd+zFuXuClUU8p8IO9zVtgpJ45kL9k
-	 D8qm3+OjbbjDISNIKRPHsbiVRHW6N1cJfy5s1wfw5pdYZdjlFoIy5mwGjXoJTYvwL75d9
-	 RY8vXVbfj4ToqHT6U4zJI4Q4kVl0Rdg8VrejNN4JYu3nYKK66LAPxHjl0W5xG0w+ZZ1rw
-	 xJyKkk/A6uKUisYYhhOiPpN1dG8D/obfOW3J2LQ0P2IMav1SoyOlClicf8ccF4MOO5Nxb
-	 JJLUU71V9i6QPXfInt69Ke17Ql2bgFLSjn61kk2rgEl6t+bGs/j3i7QZM4/BEU3LgXg==
+	bh=b0P7r60wl8nzHqjQEBQUh9NpByJGQkhgukPVH533yko=;
+	b=qF94qATL4/OJH2BIyucLosC/Bs6jW+J78pJHsmf/Oa8SJDQ2WpoOIckaZ9//dk08iu+Q
+	 0FJm59IT1UpV639bUcWw/xXFKb3KcPHNshSJRe61IezcbMT1OrnVXlzFaa8ASeoXi3csY
+	 sxH+bmJcGwTP5iDubDEnEMIzLi60M7QEsMhz7QP7X8BjKuqUVxFPfCauxY6aFxYjO1aQX
+	 tZyPK0GuU3IIpR+OqOqvg5m4iWa1sr7gOIhI1De20prlh7CME6oa/GEv2OCQjca4Bm12V
+	 79uuA0Deef9KgOYLxbHeB4HL6HyG3KOmpxZi4EO59jnJiZyuNiGjROmRLKHEEILgbew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O2OTodHo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="IPF/XIDO";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B181606A32A;
-	Wed, 18 Nov 2026 19:46:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0184B606A320;
+	Wed, 18 Nov 2026 19:46:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O2OTodHo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F2C1F000C8;
-	Wed, 18 Nov 2026 19:46:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IPF/XIDO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FD851F000CB;
+	Wed, 18 Nov 2026 19:46:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031185;
-	bh=VkK4vmjwKgA6KWxoY0b95G6iVYcqokVh5KN75xSib9M=;
+	s=korg; t=1795031187;
+	bh=b0P7r60wl8nzHqjQEBQUh9NpByJGQkhgukPVH533yko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O2OTodHo6Tlnjs0xpDK8rHCm7AxhoSfKHmygPV6PgXJhPls/y/K0aiJn/uJ0jHtqg
-	 0ESaFa4mrSd+9OXhuLiCrPcrPKqShL1DJqBR8AlqUhP2AqvoFK6Js+fsMN26yvX8pH
-	 QHfX4SaVPVD56FP5NHCONPDVlmY27cbNRm76kEgg=
+	b=IPF/XIDOxjuqgcyGrYzJ3Kj3g+6sy2BMynzEr8kbhI8xx+bQIzTkr8hMzPOQsy0HV
+	 epmVucDwzUXKETtIH6scpM0JyHUe3Y8JFo0vUDzIwfteSe8MGA1L4/aEp0DQ+O5NYw
+	 K4kbx4kSXcq6Ti9ZLEcBLk9KveHm+NaL3pevIudQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Bergantinos Corpas <rbergant@redhat.com>,
-	Prabhakar Pujeri <prabhakar.pujeri@dell.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	syzbot+c388db0347b7fc88fa7a@syzkaller.appspotmail.com,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0927/1756] NFS: return DENIED in decode_lock_denied if we cannot decode owner
-Date: Wed, 18 Nov 2026 15:50:54 +0100
-Message-ID: <20261118150046.865431266@linuxfoundation.org>
+Subject: [PATCH 6.12 0928/1756] nilfs2: fix link count underflow when removing corrupted directory
+Date: Wed, 18 Nov 2026 15:50:55 +0100
+Message-ID: <20261118150046.898996722@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,58 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roberto Bergantinos Corpas <rbergant@redhat.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 4fdfe2312cbed99b1438dcf20b348e72393f9633 ]
+[ Upstream commit 814f5a53b4724798795b15690ff3d1c1d9ac1eb6 ]
 
-After commit 43502f6e8d1e ("NFS: fix open_owner_id_maxsz and related
-fields.") we dramatically changed the size of the LOCK/LOCKT reply buffer
-from 164 to 52 bytes. This made visible a situation on a buggy NFS
-server that sent oversized denied responses which led to us returning
-EIO instead of DENIED.
+When removing an empty directory with a corrupted link count (e.g.,
+i_nlink is 1 due to filesystem corruption), nilfs_rmdir() calls
+drop_nlink() via nilfs_do_unlink() and then calls drop_nlink() again
+on the directory inode.  This second call causes an underflow of
+i_nlink, triggering a kernel WARNING in drop_nlink().
 
-Now, apart from buggy server issue, this poses an interesting question:
-what if other implementations have legitimate but bigger than we expect
-lock owner response, especially now that we have reduced the size we
-allocate for it (20 bytes for the lock owner part).
+Fix this issue by using clear_nlink() instead of drop_nlink() to
+finalize the link count reset for the target directory in nilfs_rmdir().
+Additionally, log a warning message when i_nlink is not 2 before
+removing an empty directory to notify about the link count inconsistency.
 
-This change proposes to tackle that issue returning DENIED instead of
-EIO regardless of whether we manage to decode the owner or not:
-
-- At this point of decode_lock_denied we know there is an owner.
-- Server legitimately denied the lock request, with an owner that fits on
-  NFS4_OPAQUE_LIMIT but we returned EIO instead to userspace.
-- The owner data is decoded but actually never used, decode_lock path
-  simply retries, and decode_lockt turns it into 0 on file_lock and
-  returns it to userspace.
-- LOCK/LOCKT are the last operations on the compound so it's not relevant
-  if we didn't advance the pointer.
-- Also removes an inverted likely(!p) hint.
-
-Fixes: 43502f6e8d1e ("NFS: fix open_owner_id_maxsz and related fields.")
-Signed-off-by: Roberto Bergantinos Corpas <rbergant@redhat.com>
-Reviewed-by: Prabhakar Pujeri <prabhakar.pujeri@dell.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Reported-by: syzbot+c388db0347b7fc88fa7a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c388db0347b7fc88fa7a
+Fixes: d25006523d0b ("nilfs2: pathname operations")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4xdr.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/nilfs2/namei.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/nfs4xdr.c b/fs/nfs/nfs4xdr.c
-index 71f45cc0ca74d..1fbe66b460b3f 100644
---- a/fs/nfs/nfs4xdr.c
-+++ b/fs/nfs/nfs4xdr.c
-@@ -5102,8 +5102,7 @@ static int decode_lock_denied(struct xdr_stream *xdr, struct file_lock *fl)
- 	p = xdr_decode_hyper(p, &clientid); /* read 8 bytes */
- 	namelen = be32_to_cpup(p); /* read 4 bytes */  /* have read all 32 bytes now */
- 	p = xdr_inline_decode(xdr, namelen); /* variable size field */
--	if (likely(!p))
--		return -EIO;
-+	/* We have an owner here, return DENIED */
- 	return -NFS4ERR_DENIED;
- }
+diff --git a/fs/nilfs2/namei.c b/fs/nilfs2/namei.c
+index e02fae6757f12..1e56f52a22376 100644
+--- a/fs/nilfs2/namei.c
++++ b/fs/nilfs2/namei.c
+@@ -341,10 +341,16 @@ static int nilfs_rmdir(struct inode *dir, struct dentry *dentry)
  
+ 	err = -ENOTEMPTY;
+ 	if (nilfs_empty_dir(inode)) {
++		if (unlikely(inode->i_nlink != 2))
++			nilfs_warn(dir->i_sb,
++				"inconsistent empty directory link count %u (ino=%llu)",
++				inode->i_nlink,
++				(unsigned long long)inode->i_ino);
++
+ 		err = nilfs_do_unlink(dir, dentry);
+ 		if (!err) {
+ 			inode->i_size = 0;
+-			drop_nlink(inode);
++			clear_nlink(inode);
+ 			nilfs_mark_inode_dirty(inode);
+ 			drop_nlink(dir);
+ 			nilfs_mark_inode_dirty(dir);
 -- 
 2.53.0
 
