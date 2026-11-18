@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060835;
-	b=BfKIa/r2KYE6iBcyasXJEQqDQ8vbB5rsfUVHW86ZUVCbZhREerptuyK+QvW6uHiefza7
-	 IpXRXOuOi6al+SYC8XpDyoEomvBa9ok6s+hspg0H0YeOblhUrl8k0NGAOfbKhRy7NmRCN
-	 OLfRrVze5HzmC3iyT4iIRrvionVEJTxbkO3iqq4weAYyshqeeg8BsiZJpr/jx/vmI93jM
-	 wAPb8sm5i3y2MkMR9EVvOXUK3ne4ywzwvdBqvRpdOuL7SMBOC8wmRb67tCQTeThgKQ8da
-	 sIY7weXi213e4Cwy2JakgPdawQUGNU4csop0iHZwdaOrU4HB9soYrHHb29DSRAA9zEg==
+	t=1795060838;
+	b=ii9a/AqlvwU4XF8CrYghwWCrFKpYpkFME5Q4i7Qa8Lfly3/wSuKwrQxgpyjY/D7c6/yb
+	 /+LKd6IvXmaLvIuEun3UzJS1BmDCuhc7IZvY8dGuLQILhHCDu5biw3dux1GGHz7A9jypN
+	 pSFjhLxL8inuDJdCTxfMulkFWZqeyDzA8CrCyz/JlHialMiWb5cGsPgdVeMKdw8rv8Gbh
+	 gq6pU91KS7qjYK4xRMvigbnkqok0DFI+GMW1/NbQ3zEjvV+VtI3W9TsartyzZKHubYwZW
+	 W9+rXXkjsLRHX+nfvUIvOXcD1C+gYyYLSe4k5uXTperR68mTAgW3pcFWi/RwsilixDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060835;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060838;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=78QVOaRpFLYmpGf9sjxJWZvwFi+UA06/M5TctUPDuiQ=;
-	b=RHEpe975tHSCjy/BYVbDKsOz+Ul3OwBDKXmf+NrBJoMnpRhrRzukui8F15HMZmyRqR0x
-	 wT8Uqsf433q1IZFZaOHb4tEEFIdmaEinRCm/8CbsVrnMTYwh57UMqcHoggRUpy+kvImHF
-	 T5GwByUHdI7r+kGxQJH0t8vbSZpK8QT4jeOVWoLQMjDnDESzUHVHu0VdJ89drMQc2fP2L
-	 8dkbgKIijNciw2LFidyqUo9IKViTzT8Cjd6oemWMPM3p9koWk/F75m16ENRNRTbJkpcrr
-	 ZN54gpdxabW7efeufT0jeSbE5FcLvr0sDpzD9s74kdcx2s0r+T45YyclHYqEY6aF9Tg==
+	bh=zrCWPWlzy6QnRT/tkN1XhMELtfzDDUMfvJWB8UGFIV0=;
+	b=Nuch+KC9LAEThjwhTK3n+9HB3NLQlYRjczAoo1q04fJX5wJZxYXjJWf7SKiYlsUK1RH/
+	 1aOlShlu9xg7d7PQpr9lTnjLhSBYevlZoQTJ5+82VNwDozt7QAHFg72eBubB5y9KPVqDz
+	 jlxsPhHkfKA4PurbuKASYCkJ7L6NzPY2Xj/mgrLVhYRvwnIFIgFuVi2w0FSO1LITvFoQL
+	 E76JneMfWS1O3GfPjCxDbCm2MliWt9/cI1ENXZKn0dTgvyMPpiS025JVSkCc99cK+85+P
+	 ih4uCIJfP13MiUtsI3grRFfYCpDG0XMd58qXwTmPSxqfzSz1bouP7y3wIl/74JnnSlQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="m/KbuyXY";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RbEEarzH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB9B2606A320;
-	Thu, 19 Nov 2026 04:00:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5DAF606A320;
+	Thu, 19 Nov 2026 04:00:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m/KbuyXY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 293DD1F000C4;
-	Thu, 19 Nov 2026 04:00:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RbEEarzH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E091A1F000C4;
+	Thu, 19 Nov 2026 04:00:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060835;
-	bh=78QVOaRpFLYmpGf9sjxJWZvwFi+UA06/M5TctUPDuiQ=;
+	s=korg; t=1795060838;
+	bh=zrCWPWlzy6QnRT/tkN1XhMELtfzDDUMfvJWB8UGFIV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m/KbuyXYOfkoe9jZuVNp83tx+p0V1XUYdeOiKKlfUE1fF/56T+sQ718RyGspgdu/C
-	 Y6RAUlQIq7jVL5D1D2zHAbFBCY/b+ZkTNuphjUkjhnqmClzMe8bfE20lxfo6ErVEUv
-	 ojCLCOTz+uape29VUbrrVPrqg8Uld2d35CtfvAiU=
+	b=RbEEarzH3C5DcD9+w5o/VW07dQZdzGCXXeEjblEelfx5RBZFFGzbYQQYQgKtCfY2F
+	 xBmVJA8771DMmKPpU4z5Phvp1Ot2sbtsr+Ip+Z4y3oPgwaBxsYRHhgjrrGPf6+1vFa
+	 YnNNntNBiMIp72JSXAiuBsicmARaotJsBQllETok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1342/1848] ASoC: adau17x1: return cache sync errors from resume
-Date: Wed, 18 Nov 2026 15:56:20 +0100
-Message-ID: <20261118150015.868008529@linuxfoundation.org>
+Subject: [PATCH 5.10 1343/1848] ASoC: ak4642: return cache sync errors from resume
+Date: Wed, 18 Nov 2026 15:56:21 +0100
+Message-ID: <20261118150015.903929304@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,9 +70,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 8ca84987c11d11e0ba60f202e3199b3b80c87721 ]
+[ Upstream commit 7142c34ed92fddca7038787b8695d22c661dc6ec ]
 
-adau17x1_resume() restores cached registers during component resume but
+ak4642_resume() restores cached registers during component resume but
 discards the regcache_sync() result and returns success. A failed replay
 can therefore leave the hardware register state stale without reaching
 the component error reporting path.
@@ -82,36 +82,34 @@ reports a negative callback result and retains the established
 best-effort resume state, so this adds observability without introducing
 rollback or retry semantics.
 
-The optional switch-mode callback remains ordered before the cache
-replay.
+The successful resume path is unchanged.
 
 The issue was found by a tool we developed.
 
-Fixes: 4101866c743a ("ASoC: Add ADAU1X61 and ADAU1X81 CODECs common code")
+Fixes: a3a83d9a7cb0 ("ASoC: Add ak4642/ak4643 codec support")
 Assisted-by: gpt 5
 Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260902013256.93072-2-pengpeng@iscas.ac.cn
+Link: https://patch.msgid.link/20260902013256.93072-3-pengpeng@iscas.ac.cn
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/adau17x1.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ sound/soc/codecs/ak4642.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/adau17x1.c b/sound/soc/codecs/adau17x1.c
-index 30e072c80ac17..c4d4835f09664 100644
---- a/sound/soc/codecs/adau17x1.c
-+++ b/sound/soc/codecs/adau17x1.c
-@@ -969,9 +969,7 @@ int adau17x1_resume(struct snd_soc_component *component)
- 	if (adau->switch_mode)
- 		adau->switch_mode(component->dev);
+diff --git a/sound/soc/codecs/ak4642.c b/sound/soc/codecs/ak4642.c
+index 3532370255140..2ae562c8142af 100644
+--- a/sound/soc/codecs/ak4642.c
++++ b/sound/soc/codecs/ak4642.c
+@@ -533,8 +533,7 @@ static int ak4642_resume(struct snd_soc_component *component)
+ 	struct regmap *regmap = dev_get_regmap(component->dev, NULL);
  
--	regcache_sync(adau->regmap);
--
+ 	regcache_cache_only(regmap, false);
+-	regcache_sync(regmap);
 -	return 0;
-+	return regcache_sync(adau->regmap);
++	return regcache_sync(regmap);
  }
- EXPORT_SYMBOL_GPL(adau17x1_resume);
- 
+ static int ak4642_probe(struct snd_soc_component *component)
+ {
 -- 
 2.53.0
 
