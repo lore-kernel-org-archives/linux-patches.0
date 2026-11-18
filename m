@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018313;
-	b=W6m1iGiqm2whFpBqGw+5ZOFZewpsQiq0etbnOp4bIsXXnvKm2EhiP2C82+XkiSk1Kn2t
-	 i2jOnmg6JSBc7IV/pXU957orxZ0U6zVi5oiPeofl10Qa5VXcgvyYHna+mnCJzkJ+u+wU1
-	 MIx1PgzMaVmK43BrJDLy3bvaL5bUFRfjBsgTjI3ihCJz2zNMRLTkY1KlNXTRJbUX+jdh9
-	 5d/8FoHpvRz63wTpHJtprmqHdWtPxVF4lds4QUrg8J9uvU/Q1MPgQ/nu8PzrS5yUdbu3i
-	 GYz4/mBN19UKDf3HQG4xUaHuEWdaF4hVc3LHACDcYyLuGQqOUdZtp88xE4z0p5k9yYA==
+	t=1795018316;
+	b=l+8A5LTtt7Q+xWrNzy6nguI4WfQctyDLMV789zlYuosTuk1N9YEUjFgbH5XgOvHwjjRI
+	 fHU4dWxwW4L8V7aHbGzQJXWKqOpoJgPFqlNeNpof+swLjc/X/50KQ/wi51CTq0TKFfDyM
+	 uGcNg6NufoQtAvAvaiJTZAX3nxN3FUUXETu7I4mmQ1yo1sBLHa63AUnsGs62PyVOGsyag
+	 orYY/J80ch86gKycDrYelHF/x41VrPB+itLDkFn37RkUcqtU0AH+R71dyFlr6IQytDEyj
+	 mq3ssWoPh2Sba9KByksE9Bd0dpsM4l/y8fImqr9IK6nW+7mZljW6I7dZEpFtGOheNkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018313;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018316;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VeTpcSwDHTIrRH5upYu04emytQaAvEZwatXZXFW2dAk=;
-	b=RuDhlLY11kz0dT42tjVkpSRChUAIkf2jr12cgSaqm+vI9iFF5RKWh78lcY4tmDsHytpi
-	 7LXNp5MMN5O9D4zGfwxSlgQll16WVFPD+UyvdbvZEItEEzo+qs1IeWgnNIFqrp/4RV1Z3
-	 degXEQ2OtU687QiSy3edruGMyuLsfOxHGJyvHYjHlGQ/oR4x0W/Xh35znKNCKtSzlozys
-	 p8ck/21y7CpTtki+VdJ36l6jI4VhzkNE2AXicJw+hEu5eV3ilLDiTvDPigYdSrbCpvrZX
-	 /T872x03U65fHF6a6k0kcjquAMyU8mV77IlaVqUc6FmknYMzGncq7z13+qP2GYWYnag==
+	bh=QiKBW3JwmidupF0FemGjs1M1D+GRKmn0Ut5DEKL5q1Y=;
+	b=Fh+zGHim9jvtsBOyBodLA/KYn7NKW7Lhl1n8CD2IL4j22wcnYAEkKL+SaOhvFlanYS1a
+	 NcxN1IxAfTiBWBgS0rWX9gvNRzI4387yBBhJ3KQ04a16bH5Gn6sAi5EnMI+xFSF5CpSe1
+	 oyipOWpw1qPXAO5DQxPy5Ng3fwTD29C6dIGHw6PK1TDrwoqsAKE9xWQrPOO9rBnO3yi9k
+	 9Jyh19ahTsCMPAhOP8Nb0XO379CehjKtzN+dJvWyqm+XxTID2he7rm2rVFBhd0EH3R0bD
+	 w80KBsGr73cqruOj+tu0XyK8LC4rr3ucXQg5aIB8rAvUyNCTgvY0bl3YIly8qItxfeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zg8NPCJW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ecmlS28T;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB66606A31C;
-	Wed, 18 Nov 2026 16:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73001606A320;
+	Wed, 18 Nov 2026 16:11:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zg8NPCJW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C8081F000C4;
-	Wed, 18 Nov 2026 16:11:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ecmlS28T
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C99861F000C4;
+	Wed, 18 Nov 2026 16:11:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018313;
-	bh=VeTpcSwDHTIrRH5upYu04emytQaAvEZwatXZXFW2dAk=;
+	s=korg; t=1795018316;
+	bh=QiKBW3JwmidupF0FemGjs1M1D+GRKmn0Ut5DEKL5q1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zg8NPCJWH7AIN9D9hs5aG5zs/60F9TKZKoLBqhUb8aSC8vZFTdgsjT03SGwjeDhe/
-	 CS/NNW8SYMKm9+3nuFDKxIYhAzXvkqfQUMHsttdtS1vmnJsss0mXSMcKDVkBjKCHVI
-	 Jsv6sbNL5O4FqKXRObinejiBw7KP82WUNQ/eEbrY=
+	b=ecmlS28ThWOaVbGi0N0i544EwVnQXWSCwPRpjlqnMBUrtC2wUggIljdvPSI3xnb/v
+	 NlOZwGELuTc+Y+xvcywYfajlVGfqXJlUThnr2NxHXZOnwDuYdJsBw8JFx0C9fY9XhK
+	 YRSPpnHJQzz0tL3gU4iA61t3tTmPlGwGARUuZQJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Leo Yan <leo.yan@arm.com>,
 	Mike Leach <mike.leach@arm.com>,
 	Yeoreum Yun <yeoreum.yun@arm.com>,
 	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1196/2651] coresight: etm4x: Prohibit TRCSEQSTR modifications while tracing enabled
-Date: Wed, 18 Nov 2026 15:40:36 +0100
-Message-ID: <20261118150331.054503430@linuxfoundation.org>
+Subject: [PATCH 7.3 1197/2651] coresight: etm4x: prohibit modifying cntr_val while session is enabled
+Date: Wed, 18 Nov 2026 15:40:37 +0100
+Message-ID: <20261118150331.090881833@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,58 +72,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Yeoreum Yun <yeoreum.yun@arm.com>
 
-[ Upstream commit a373952d86cf5d1efac5acff4f1d85fe66094d47 ]
+[ Upstream commit 76b21c25a5f7701ded1386952bb37a29d3ab69c8 ]
 
-TRCSEQSTR can be changed by the ETM while a session is active. Its value
-therefore needs to be preserved when a sysfs session is disabled so that
-users can read the current sequence state after the session ends.
+cntr_val is overwritten with the values read from the corresponding
+registers by etm4_disable_hw() when the session is disabled.
 
-This means that any changes made to TRCSEQSTR while the sysfs-session is
-active would be lost when the session is disabled.
+This means that any changes to these values made while the session is
+enabled would be lost when the session is disabled.
 
-Copy the TRCSEQSTR value when disabling a sysfs session, and prohibit
-modifying seq_state while the session is active.
+Therefore, prohibit modifying cntr_val while the session is enabled.
 
-Suggested-by: Mike Leach <mike.leach@arm.com>
+Tested-by: Leo Yan <leo.yan@arm.com>
 Reviewed-by: Mike Leach <mike.leach@arm.com>
 Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
 Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20261003-separate_etm_cfg_v2-v13-1-5d8a29aead95@arm.com
+Link: https://lore.kernel.org/r/20261003-separate_etm_cfg_v2-v13-2-5d8a29aead95@arm.com
 Stable-dep-of: b2131cff7224 ("coresight: etm4x: fix inconsistencies with sysfs configuration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-etm4x-core.c  | 4 ++++
- drivers/hwtracing/coresight/coresight-etm4x-sysfs.c | 2 ++
- 2 files changed, 6 insertions(+)
+ drivers/hwtracing/coresight/coresight-etm4x-sysfs.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-index 2247ad55d4442..9ca03a5913a30 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -1073,6 +1073,10 @@ static void etm4_disable_hw(struct etmv4_drvdata *drvdata)
- 			etm4x_relaxed_read32(csa, TRCCNTVRn(i));
- 	}
- 
-+	/* read back the sequence state */
-+	if (drvdata->nrseqstate)
-+		config->seq_state = etm4x_relaxed_read32(csa, TRCSEQSTR);
-+
- 	coresight_disclaim_device_unlocked(csdev);
- 	etm4_cs_lock(drvdata, csa);
- 
 diff --git a/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c b/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
-index cc6cdd3ae29d5..4945d577ceabf 100644
+index 4945d577ceabf..863bab9c2e27c 100644
 --- a/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
 +++ b/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
-@@ -1435,6 +1435,8 @@ static ssize_t seq_state_store(struct device *dev,
- 
- 	if (kstrtoul(buf, 16, &val))
+@@ -1615,6 +1615,9 @@ static ssize_t cntr_val_store(struct device *dev,
  		return -EINVAL;
-+	if (IS_ERR_OR_NULL(drvdata->csdev) || coresight_get_mode(drvdata->csdev))
+ 	if (val > ETM_CNTR_MAX_VAL)
+ 		return -EINVAL;
++	if (IS_ERR_OR_NULL(drvdata->csdev) ||
++	    coresight_get_mode(drvdata->csdev))
 +		return -EBUSY;
- 	if (val >= drvdata->nrseqstate)
- 		return -EINVAL;
  
+ 	raw_spin_lock(&drvdata->spinlock);
+ 	idx = config->cntr_idx;
 -- 
 2.53.0
 
