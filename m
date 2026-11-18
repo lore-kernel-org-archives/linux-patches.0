@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051955;
-	b=JWQPhOuw1tKwZRVxM4aPHkAGGs+Jar+UaXqxx0WCWnrVZlf1QYM9Eb93LcISAWSlOwss
-	 14wY1g8qV1q3yNEyUVlineuF1S2AhOHNM3D+AE5RI/oPIgzAajwsIwGFPaJio2CjR/NBZ
-	 O43NiCBivvZ4UE3mgPmYejX5TtR0fUeuA4Ww622a0SLaBvwCB8OJ6kerxx9lXARHBD0Pk
-	 3gM8blqKGJaJyowxX1Qd7s0a/Qb3G4Yu5uL8FtsHvFOo/TrnQ2QO0cceJOorzVL9SShOM
-	 gBwr3GpqHAy077+D8znyQSQSbj8NQLQRsLzVJjdJAYruRcq6jj9If+GmoYa63nryTpg==
+	t=1795051958;
+	b=gNea/KbzvzXtcyEfQxVciN+psyuovusbrO6yFf576IcZjKCy6BJ9mA9pkbksnXO2xEoX
+	 WmAfmLLZ5PV3tQgpUDM9ZjczrPYoLciSchzz7r/JpnryOSdwrQnzMcbfUuygu5tNtVblc
+	 zkzeOyJdMp4DlwABc4sTFnJ83OdlwWPHH3uFsy6jnOhlg2D/jgwAxZfLMvYAKUz1GiAb9
+	 4FCxONQccm+eV53p6fbYsvaT2kBLypyGjnUAu+TyrtkL3e5GjlmmfcqleqgFZZsGKNQ0Z
+	 /lsDlhqKD124YicUlVRY5SKAt86mq/xkFSJOnBXzL8WJyGguTleNAVYu/kDV4txBQ5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051955;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051958;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IPHglCYSxk1BGWQQ/i9iLgpXaxQ5rcY0TpJI/NhW9us=;
-	b=dgj+9Ctv4FgLFY0lYWFUZvobryk7eozblY6fphmWn2/UnHx/LZUUZghPXEO66U5S6wxI
-	 I41H/5G450xDCi1Y0G7uokwTVmvgagvev+fUtSu/t9kqLIJ0Vl5+jCAmEe9PjFARMPbX+
-	 EegjxpF6Q8SThWH/1YYK39yrb1U/UzLczmcCBA9tDUU8O7Tn6mKJRgi4shwcaZlTg+dAb
-	 /RAbUr+YRR8RM5T/tleJKi8RENDRsSY8FetFW+jAwH+HunXr9lEDXeAV5MsuQqrTyrMow
-	 qyUTPvZFiqbQdX6nIq4SCH0ciE9Ibf3T0zSs42eJQE299oYkcIHYUj0dGQCF3BNRScA==
+	bh=mmpOiELadD7A2TQMFg3DtnlpTxCGRp1G7MuSJBAgnyU=;
+	b=IuYc1nMT/F1BdALHOTvXhGjKlvwbdehMdaEvFoFi6zML1xQ3gM2KUlQRjIMM5bbi8MWF
+	 yY7lpMxjjxhS5379GVlfWJlq8sCLea0jGGb0wMoPhxiw+tQ9C53F/d8Sbpq/OfQwu64ea
+	 Mk0nyJLHjwRZ8LvXIJsHLj/peUQMThDuDAIVDy2U3fwqE2DMrTgdIPVIwHwScUi+Rf3OC
+	 I++QkLSWqf+plsk1BQCHJevGWeLDZmpx49FYO6Jz8JhEWXILY7/e1MreA1Ogl5FuYQXjB
+	 KjzAdDoGJ+XJAexa/FPDKISd7OfTvFlRA/SatIE624jP5wlc+VGzLiHi1743CAkLHlg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cx5XHDYK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=giZy7zwA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0385D606A331;
-	Thu, 19 Nov 2026 01:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C909606A331;
+	Thu, 19 Nov 2026 01:32:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cx5XHDYK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A1121F000C4;
-	Thu, 19 Nov 2026 01:32:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=giZy7zwA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 076021F000C4;
+	Thu, 19 Nov 2026 01:32:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051954;
-	bh=IPHglCYSxk1BGWQQ/i9iLgpXaxQ5rcY0TpJI/NhW9us=;
+	s=korg; t=1795051957;
+	bh=mmpOiELadD7A2TQMFg3DtnlpTxCGRp1G7MuSJBAgnyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cx5XHDYKheD5FemBflA+0s60ECO777nGmBcFelHYlNI5VAKVdCx2/lIuziUAFN3Lb
-	 9X6H9JnyyvaEy7YE80a1KOIyz3kMoL2xLzm9FFCkUXAOVujRi96rsFOUZrBORLbxva
-	 ZsDKUtH7wBctozMzXwbMp3NCAG8djhoJ0yHd2NVU=
+	b=giZy7zwA62XAwh7AB36ZAvbeU4aNTtIDbNzumuX+G30jzryiogtr3jKhBrJYjHbMG
+	 2gEnVd3VZkoWmLlh8R0fA0LufA1y9xn3lvea+7BRGBLKVqNsI2CGpjJN9jypl8oNTx
+	 pnp4NbkpQS4g8BuF6G/fKcdAnX+sXZsbvsmAdzhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Teodorescu <fane@google.com>,
-	Yosry Ahmed <yosry@kernel.org>,
-	Nikunj A Dadhania <nikunj@amd.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.15 0365/2214] KVM: SVM: Trigger new ASID allocation in both VMCBs on pCPU switch
-Date: Wed, 18 Nov 2026 15:34:01 +0100
-Message-ID: <20261118150025.267011126@linuxfoundation.org>
+	Zikang Gao <2715417602@qq.com>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 0392/2214] smb: client: do not pass a NULL buf to is_oplock_break()
+Date: Wed, 18 Nov 2026 15:34:28 +0100
+Message-ID: <20261118150026.350210470@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,106 +69,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yosry Ahmed <yosry@kernel.org>
+From: Zikang Gao <2715417602@qq.com>
 
-commit bf260dc9e7b8bfcd06c1a8e739797b1cf0917c72 upstream.
+[ Upstream commit 2225ab306575e424b3dad2ee1be2521c89249d15 ]
 
-When the pCPU where the VMCB was most recently used is switched, reset
-the ASID generation in both VMCBs, triggering new ASID allocation for
-the immediate VMRUN as well as the next VMRUN on the other VMCB.
+receive_encrypted_read() sets *num_mids = 1 and never writes the
+caller's bufs[]. Offload returns -1 with *num_mids = 0, so the
+demultiplex thread skips the frame. The inline decrypt path
+returns 0 even when smb2_find_mid() fails.
 
-The ASID is shared between vmcb01 and vmcb02, and gets flushed on every
-nested transition. However, since pCPU tracking is done per VMCB, it is
-possible for one VMCB to allocate a new ASID when migrated to a new
-pCPU, and then the other VMCB reuses that ASID on the old pCPU. This can
-result in the same ASID being used by multiple vCPUs on the old pCPU.
+cifs_demultiplex_thread() then treats mids[i] == NULL as an
+oplock break and calls is_oplock_break(bufs[i], server) with
+bufs[i] still NULL. smb2_is_valid_oplock_break() reads
+hdr.Command at offset 12 and oopses.
 
-Example scenario:
-- vCPU runs on pCPU A, vmcb01 is active, asid=1.
-- vCPU migrates to pCPU B, vmcb01 pCPU changes, new asid=2.
-- Another vCPU runs on pCPU A and allocates asid=2 as well.
-- vCPU migrates back to pCPU A, and then switches to vmcb02 before it
-  runs again with vmcb01.
-- No pCPU switch is detected for vmcb02, so VMRUN is done with asid=2.
-- Two vCPUs end up using asid=2 on the same pCPU.
+A large encrypted READ whose MessageId does not match is enough
+to panic cifsd.
 
-Keep the VMCB dirtying to the active VMCB only. Clean bits are tracked
-by a pCPU for each VMCB, so do not unnecessarily dirty a VMCB if its
-pCPU does not change.
+    Oops: general protection fault, probably for non-canonical address
+    0xdffffc0000000001: 0000 [#1] SMP KASAN PTI
+    KASAN: null-ptr-deref in range
+    [0x0000000000000008-0x000000000000000f]
+    CPU: 0 PID: 100 Comm: cifsd
+    RIP: smb2_is_valid_oplock_break+0xc8/0x2270 [cifs]
+    cifs_demultiplex_thread
+    Kernel panic - not syncing: Fatal exception
 
-Additionally, initialize the tracked pCPU for vmcb02 to -1 on nested
-enablement as hardening, so that a new ASID allocation is always
-triggered when nested is disabled and re-enabled.
+Return -1 when inline decrypt finds no mid, and skip
+is_oplock_break() plus the unknown-frame dump when bufs[i]
+is NULL. receive_encrypted_standard() already assigns
+bufs[*num_mids].
 
-No performance regression was noticed when overcommitting L1 vCPUs in L0
-(to force rescheduling), pinning L1 <-> L2 vCPUs, and running CPUID in a
-tight loop bouncing between 2 vCPUs in L2.
-
-An alternative (and perhaps more proper) fix would be tracking the ASID
-per-VMCB instead (e.g. [1]). However, that's a more involved change, and
-it would result in having different ASIDs for L1 and L2 without actually
-properly maintaining them. It would probably work because all TLB
-flushes target the current VMCB, and the other VMCB is always flushed on
-nested transitions, but the code ends up in an arguably more fragile
-state. Punt a proper clean fix to an incoming (and overdue) overhaul of
-SVM's ASID usage [2].
-
-[1] https://lore.kernel.org/lkml/20250205182402.2147495-2-yosry.ahmed@linux.dev
-[2] https://lore.kernel.org/kvm/20260728003557.1136583-1-yosry@kernel.org
-
+Fixes: c42a6abe3012 ("CIFS: Add capability to decrypt big read responses")
+Assisted-by: LLM
+Signed-off-by: Zikang Gao <2715417602@qq.com>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Cc: stable@vger.kernel.org
-Reported-by: Stefan Teodorescu <fane@google.com>
-Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Reviewed-by: Nikunj A Dadhania <nikunj@amd.com>
-Link: https://patch.msgid.link/20260903223258.486034-1-yosry@kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ sashal: Added braces around the existing single-statement missing-MID branch. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/nested.c |    1 +
- arch/x86/kvm/svm/svm.c    |   19 +++++++++++++++----
- 2 files changed, 16 insertions(+), 4 deletions(-)
+ fs/cifs/connect.c | 4 +++-
+ fs/cifs/smb2ops.c | 5 +++--
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -916,6 +916,7 @@ int svm_allocate_nested(struct vcpu_svm
- 		goto err_free_vmcb02;
- 	svm_vcpu_init_msrpm(&svm->vcpu, svm->nested.msrpm);
+diff --git a/fs/cifs/connect.c b/fs/cifs/connect.c
+index a91d3f6ae5be6..98a3e25c107db 100644
+--- a/fs/cifs/connect.c
++++ b/fs/cifs/connect.c
+@@ -1089,12 +1089,14 @@ cifs_demultiplex_thread(void *p)
+ 					mids[i]->callback(mids[i]);
  
-+	svm->nested.vmcb02.cpu = -1;
- 	svm->nested.initialized = true;
- 	return 0;
+ 				cifs_mid_q_entry_release(mids[i]);
+-			} else if (server->ops->is_oplock_break &&
++			} else if (bufs[i] && server->ops->is_oplock_break &&
+ 				   server->ops->is_oplock_break(bufs[i],
+ 								server)) {
+ 				smb2_add_credits_from_hdr(bufs[i], server);
+ 				cifs_dbg(FYI, "Received oplock break\n");
+ 			} else {
++				if (!bufs[i])
++					continue;
+ 				cifs_server_dbg(VFS, "No task to wake, unknown frame received! NumMids %d\n",
+ 						atomic_read(&midCount));
+ 				cifs_dump_mem("Received Data is: ", bufs[i],
+diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
+index 781fe599dda7e..348168c9b7617 100644
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -5208,9 +5208,10 @@ receive_encrypted_read(struct TCP_Server_Info *server, struct mid_q_entry **mid,
+ 		goto free_pages;
  
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -3416,14 +3416,25 @@ static void pre_svm_run(struct kvm_vcpu
- 	struct vcpu_svm *svm = to_svm(vcpu);
- 
- 	/*
--	 * If the previous vmrun of the vmcb occurred on a different physical
--	 * cpu, then mark the vmcb dirty and assign a new asid.  Hardware's
--	 * vmcb clean bits are per logical CPU, as are KVM's asid assignments.
-+	 * If the previous VMRUN of the VMCB occurred on a different physical
-+	 * cpu, then mark the VMCB dirty as hardware's clean bits are per pCPU.
-+	 *
-+	 * Reset the ASID generation in both VMCBs. This will lead to assigning
-+	 * a new ASID now, and then again when switching to the other VMCB.
-+	 * However, this is needed as the ASID is shared between the VMCBs, and
-+	 * otherwise it would be possible to use an ASID allocated on one pCPU
-+	 * on another, for example:
-+	 * - vCPU migrates from pCPU A to pCPU B, allocates a new ASID.
-+	 * - vCPU migrates back to pCPU A, and then switches the VMCB.
-+	 * - The new VMCB does not detect a pCPU change and runs on pCPU A with
-+	 *   the new ASID allocated on pCPU B, which is potentially used by
-+	 *   another vCPU/VM.
- 	 */
- 	if (unlikely(svm->current_vmcb->cpu != vcpu->cpu)) {
--		svm->current_vmcb->asid_generation = 0;
- 		vmcb_mark_all_dirty(svm->vmcb);
- 		svm->current_vmcb->cpu = vcpu->cpu;
-+		svm->vmcb01.asid_generation = 0;
-+		svm->nested.vmcb02.asid_generation = 0;
-         }
- 
- 	if (sev_guest(vcpu->kvm))
+ 	*mid = smb2_find_mid(server, buf);
+-	if (*mid == NULL)
++	if (*mid == NULL) {
+ 		cifs_dbg(FYI, "mid not found\n");
+-	else {
++		rc = -1;
++	} else {
+ 		cifs_dbg(FYI, "mid found\n");
+ 		(*mid)->decrypted = true;
+ 		rc = handle_read_data(server, *mid, buf,
+-- 
+2.53.0
+
 
 
