@@ -1,63 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022042;
-	b=LrjLM2iRKlDxKIhQ5eWuYJ4FFmGWbdYJiDBfIKjSdeUwV9B+erJI/Al7qnUeHzOsypC0
-	 +yxKajPCPWrILLfiux5aUFHb6u0KAInOXwVchgS5comwFq76KNo+6GKo4ZuFTzMOvJu7J
-	 vtc06Y4+EJ93hHM+ZuOOYD4ykaKbRq85RYx5CrJ6WRNgejGDT4DXwpTMKFt45w83/zd5A
-	 TTbW/avtQnr672Infp1Wkcqevh/EJpWPc3IFH28ODS7RkD2dRRXw+3ZTaxR17nT30h4ia
-	 tlKMBouyc4HmL9T/pTAuHK/5UYEYmsqKRG7TuCYIvAKgBC4mSU0nvkK4uBjtsgUfzMQ==
+	t=1795022045;
+	b=ti58yb0xo8NAjxHFcDAqTOMOmpezq55NPsPSod9ZZubWkaYJRy/tygHHA9eQP65B7sLv
+	 Rt6nG0hzxKoC9Bt8oqJg094QcPRMxVBTalfSMyDa81mlZ9k+v2iyXteigZ4pMN9ba25b6
+	 Ba4fzE6hA8H/GoEKLwmvSKYGUuQsplynC2higqxsOsRX+CQuFRN0vwxNG3+ssjW58F+z+
+	 AiWv3kGu9aeOdVw5rhfq1i2HqAdyh/1QONFnt54lde5fMxcmkoODBfcnABqMJiZyXfKgE
+	 GLVlgTHuoKSzdsl7VghVh9NSgxdVmg+c0MDLHNqfbaGIfXKkureio+o26PiLkbh4mPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022042;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022045;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=g/C/ZKsnwaoMhOnHf4yvfCPF/GmZbnAOGEnFJRnMS0s=;
-	b=pm9uQVDPM4uETV0quSV/yPdeDkVPju25qSy1pzmNXq/0Bym0kzmC97e74CP9SjbzHWew
-	 J+AKWaKKuSf66v2247v1gSuwt+0CtWMMvDkHDs2eyqFkUg1Y8Z6clwSioCUNSaks4fl+F
-	 QPQ9QuifpbDImNHgjH52Vi4Zcdy7yRF3tH/g78y3NmgaaUXT63Q0XZWa5xrhTHiyoyH2N
-	 70t2TzlHGbUV31uqYXbPa+rXB9Xo/jpL3zINaIjSbGTE3lXGx9fNFn/k4VTWItni5B2wc
-	 /tdk0gjbtOK8bjaMoOrC+GxpJvfs70TW1Y61nLs3CO2rB5HpM6aREhMMbALEqW0m13g==
+	bh=jo6kFYxAu8rdK33KDg34UxgJrmxC3VaD6vjWA9R1WvQ=;
+	b=eDp6nf27Zrj04qkqUSIAqemDvbyMxlh02BEMrhCPtTH5FVCdsSxTq4hOwIdlUS9XDlkW
+	 SXvz6YhB2UyI1fKa82f54NPgWAJ1HIAuYLkSqOsnjDY13RNUfWCMuApqg/xFjTLzPtdLV
+	 ZCgeDB2R8qMa7W7Lj3o3xDrcjQllnYjMsOKrn2FOQ7I2SH6Bph0E6bZih2g12dZFfK4Iz
+	 eSj+CQJEX0rMOjH+rSbGuydi/xCvuvUxfWg26n6kgw+b/uekjURF9Rq6iTzYVLsS5+PzJ
+	 Moynp77xjSy1ahHAaRNM5i6c0NkEO1DgiD1qnMjbmRiHbYZ0nt4fxodSZfVeetZEJ3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wllcA7ME;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oHN7MRE2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2C7606A325;
-	Wed, 18 Nov 2026 17:14:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D040606A31C;
+	Wed, 18 Nov 2026 17:14:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wllcA7ME
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D6331F000C4;
-	Wed, 18 Nov 2026 17:14:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oHN7MRE2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 260A61F000C4;
+	Wed, 18 Nov 2026 17:14:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022041;
-	bh=g/C/ZKsnwaoMhOnHf4yvfCPF/GmZbnAOGEnFJRnMS0s=;
+	s=korg; t=1795022044;
+	bh=jo6kFYxAu8rdK33KDg34UxgJrmxC3VaD6vjWA9R1WvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wllcA7MENIM20zqRpo8Hmia3PRWlncIpmUYGd8LjpbYNLRYQvoRhArTpk18FdoxSt
-	 MxHg7A3FCKSdGBt74gAMnOmFGkms1coctZfz8+BFS+3Ve28V42tTaNuNwCkADrrUYb
-	 UpUNy7LC8JA6bw1EE0IdraJVTRjlGv92434EDOco=
+	b=oHN7MRE2XC8IIwdVbSj5cPjZjrAt4AjWfT3lvJ2jd6MwTMycgbXSyZl2238/zVy02
+	 fzzM+GAJG9L6inbLzSUnQQCItgqIc718Pnm4F7q0rhX9ZWqNi8KuvQubM/e0wWLtVG
+	 9imAg7QWlgkrC9yH3zB8AVRiNdgXzc3ub3xNYJxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alessio Podda <aleph.pi.gh@gmail.com>,
-	Alireza Haghdoost <haghdoost@uber.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Michael Liang <mliang@purestorage.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Shimin Guo <shimin.guo@skydio.com>,
-	Tanushree Shah <tshah@linux.ibm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Rishikesh Jethwani <rjethwani@purestorage.com>,
+	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2494/2651] perf libdw: Optimize fallback logic for missing DWARF
-Date: Wed, 18 Nov 2026 16:02:14 +0100
-Message-ID: <20261118150414.624630562@linuxfoundation.org>
+Subject: [PATCH 7.3 2521/2651] tls: keep TX and RX hardware offload on the same device
+Date: Wed, 18 Nov 2026 16:02:41 +0100
+Message-ID: <20261118150415.439292834@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -79,526 +68,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Rishikesh Jethwani <rjethwani@purestorage.com>
 
-[ Upstream commit 62d7cdc8d58702feb31b320f1713642e3977d7f3 ]
+[ Upstream commit 1c8a70075235cd733095532a97f2405037c52a7b ]
 
-When libdw encounters a DWARF definition it cannot accurately un-inline
-or an address block natively missing structural line maps,
-dwfl_module_getsrc() returns NULL.
+After TX is offloaded on device A, a route change, or a change in the
+usable-slave set of an 802.3ad or balance-xor (layer3+4) bond, can make
+RX setup program device B. tls_device_attach() sees the existing TLS
+destructor and keeps ctx->netdev pointing at A. The RX driver state on B
+is then untracked: tls_dev_resync() and tls_dev_del() are invoked on A
+for a context it never created, and neither socket close nor
+NETDEV_DOWN on B calls tls_dev_del() for B, so the driver context leaks.
+The reverse setup order has the same problem.
 
-Previously, libdw__addr2line() returned -1 in both dwfl_module_getdwarf()
-and dwfl_module_getsrc() failure paths while addr2line() in srcline.c
-only stopped its fallback loop on ret > 0.
+Check the shared device binding under device_offload_lock before each
+tls_dev_add(). Permit the first attachment and a second direction on the
+same device. Reject a different device, including when the old binding
+was cleared by NETDEV_DOWN: the TLS destructor remains installed and
+tls_device_attach() cannot establish a new binding. Setup then falls
+back to software for the requested direction.
 
-This caused perf's addr2line_style loop to fall back to llvm, libbfd,
-and the cmd__addr2line() subprocess wrapper on every unmapped address or
-stripped DSO.
+The RX check precedes allocation and software setup. TX uses its existing
+resource unwind path without calling the driver. Document the shared
+binding and clarify that fallback is per direction.
 
-Update the addr2line_style pipeline return semantics consistently:
+This issue was discovered during code review and subsequently
+reproduced on hardware using mlx5 and TLS 1.2 AES-GCM-128.
 
-1. Backends return 0 to denote conclusively missing information
-   (e.g. valid ELF but no DWARF inside, or parsed DWARF with no mapped
-   lines), stopping the fallback loop.
+Changing the route between TX and RX setup installed the second
+direction on a different device. Driver traces showed successful adds
+on both devices, but both deletes at socket close targeted the first
+device, leaving an orphaned context on the second. Both setup orders
+reproduced the leak, even though all current core TLS context counters
+returned to zero. No crash was observed.
 
-2. Backends (and uncompiled stubs) return < 0 to denote initialization
-   or backend errors, instructing the loop to iterate to the next
-   configured fallback.
+With the fix, the same tests correctly fall back to software for the
+second direction and leave no orphaned hardware context.
 
-3. Backends return > 0 on successful source line resolution.
-
-Fixes: bf96e296d52d74a1 ("perf libdw: Fix Dwfl discovery with split files")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alessio Podda <aleph.pi.gh@gmail.com>
-Cc: Alireza Haghdoost <haghdoost@uber.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Michael Liang <mliang@purestorage.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Shimin Guo <shimin.guo@skydio.com>
-Cc: Tanushree Shah <tshah@linux.ibm.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 4799ac81e52a ("tls: Add rx inline crypto offload")
+Signed-off-by: Rishikesh Jethwani <rjethwani@purestorage.com>
+Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/addr2line.c        | 28 ++++++++++---
- tools/perf/util/dso.h              |  2 +-
- tools/perf/util/libbfd.c           |  6 +--
- tools/perf/util/libdw.c            | 25 ++++++++---
- tools/perf/util/libdw.h            |  5 ++-
- tools/perf/util/llvm-c-helpers.cpp | 66 +++++++++++++++++++-----------
- tools/perf/util/llvm.c             | 12 ++++--
- tools/perf/util/srcline.c          | 21 +++++++---
- 8 files changed, 115 insertions(+), 50 deletions(-)
+ Documentation/networking/tls-offload.rst | 16 ++++++++++------
+ net/tls/tls_device.c                     | 24 ++++++++++++++++++++++++
+ 2 files changed, 34 insertions(+), 6 deletions(-)
 
-diff --git a/tools/perf/util/addr2line.c b/tools/perf/util/addr2line.c
-index 6f64f6b424429..960dd48701bb8 100644
---- a/tools/perf/util/addr2line.c
-+++ b/tools/perf/util/addr2line.c
-@@ -298,6 +298,7 @@ int cmd__addr2line(const char *dso_name, u64 addr,
- 	struct io io = { .eof = false };
- 	enum cmd_a2l_style cmd_a2l_style;
- 	const char *current_dso_name;
-+	bool a2l_synced = false;
+diff --git a/Documentation/networking/tls-offload.rst b/Documentation/networking/tls-offload.rst
+index e5802bcd4d22d..cf0e599c06a12 100644
+--- a/Documentation/networking/tls-offload.rst
++++ b/Documentation/networking/tls-offload.rst
+@@ -71,12 +71,16 @@ During driver initialization device sets the ``NETIF_F_HW_TLS_RX`` and
+ pointer in the :c:member:`tlsdev_ops` member of the
+ :c:type:`struct net_device <net_device>`.
  
- 	mutex_lock(dso__lock(dso));
- 	current_dso_name = dso__symsrc_filename(dso) ?: dso_name;
-@@ -316,11 +317,14 @@ int cmd__addr2line(const char *dso_name, u64 addr,
- 	if (a2l == NULL) {
- 		if (!symbol_conf.addr2line_disable_warn)
- 			pr_warning("%s %s: addr2line_subprocess_init failed\n", __func__, dso_name);
-+		ret = -1;
- 		goto out_unlock;
- 	}
- 	cmd_a2l_style = cmd_addr2line_configure(a2l, dso_name);
--	if (cmd_a2l_style == BROKEN)
-+	if (cmd_a2l_style == BROKEN) {
-+		ret = -1;
- 		goto out_unlock;
-+	}
- 
- 	/*
- 	 * Take ownership of the a2l subprocess so we can safely perform
-@@ -344,6 +348,7 @@ int cmd__addr2line(const char *dso_name, u64 addr,
- 	if (written != len) {
- 		if (!symbol_conf.addr2line_disable_warn)
- 			pr_warning("%s %s: could not send request\n", __func__, dso_name);
-+		ret = -1;
- 		goto out;
- 	}
- 	io__init(&io, a2l->out, buf, sizeof(buf));
-@@ -353,6 +358,7 @@ int cmd__addr2line(const char *dso_name, u64 addr,
- 	case -1:
- 		if (!symbol_conf.addr2line_disable_warn)
- 			pr_warning("%s %s: could not read first record\n", __func__, dso_name);
-+		ret = -1;
- 		goto out;
- 	case 0:
- 		/*
-@@ -373,6 +379,7 @@ int cmd__addr2line(const char *dso_name, u64 addr,
- 			break;
- 		case 0:
- 			/* The sentinel as expected. */
-+			a2l_synced = true;
- 			break;
- 		default:
- 			if (!symbol_conf.addr2line_disable_warn)
-@@ -388,17 +395,23 @@ int cmd__addr2line(const char *dso_name, u64 addr,
- 
- 	if (file) {
- 		*file = strdup(record_filename);
--		ret = 1;
-+		if (!*file) {
-+			ret = -ENOMEM;
-+			goto out;
-+		}
- 	}
- 	if (line_nr)
- 		*line_nr = record_line_nr;
-+	ret = 1;
- 
- 	if (unwind_inlines) {
- 		if (node && inline_list__append_record(dso, node, sym,
- 						       record_function,
- 						       record_filename,
- 						       record_line_nr)) {
--			ret = 0;
-+			if (file && *file)
-+				zfree(file);
-+			ret = -ENOMEM;
- 			goto out;
- 		}
- 	}
-@@ -421,12 +434,17 @@ int cmd__addr2line(const char *dso_name, u64 addr,
- 						       record_function,
- 						       record_filename,
- 						       record_line_nr)) {
--				ret = 0;
-+				if (file && *file)
-+					zfree(file);
-+				inline_node__clear_frames(node);
-+				ret = -ENOMEM;
- 				goto out;
- 			}
- 			ret = 1; /* found at least one inline frame */
- 		}
- 	}
-+	if (record_status == 0)
-+		a2l_synced = true;
- 
- out:
- 	mutex_lock(dso__lock(dso));
-@@ -434,7 +452,7 @@ int cmd__addr2line(const char *dso_name, u64 addr,
- 	free(record_filename);
- 
- 	current_dso_name = dso__symsrc_filename(dso) ?: dso__long_name(dso);
--	if (!io.eof && dso__a2l(dso) == NULL && current_dso_name &&
-+	if (a2l_synced && !io.eof && dso__a2l(dso) == NULL && current_dso_name &&
- 	    !strcmp(current_dso_name, dso_name))
- 		dso__set_a2l(dso, a2l);
- 	else
-diff --git a/tools/perf/util/dso.h b/tools/perf/util/dso.h
-index e7d5f4bbf8949..9c4927f556c21 100644
---- a/tools/perf/util/dso.h
-+++ b/tools/perf/util/dso.h
-@@ -752,7 +752,7 @@ static inline const char *dso__symsrc_filename(const struct dso *dso)
- 	return RC_CHK_ACCESS(dso)->symsrc_filename;
- }
- 
--void dso__set_symsrc_filename(struct dso *dso, char *val);
-+void dso__set_symsrc_filename(struct dso *dso, char *val) EXCLUSIVE_LOCKS_REQUIRED(dso__lock(dso));
- 
- static inline void dso__free_symsrc_filename(struct dso *dso)
- {
-diff --git a/tools/perf/util/libbfd.c b/tools/perf/util/libbfd.c
-index 3636da74f9784..397fb4ad761fb 100644
---- a/tools/perf/util/libbfd.c
-+++ b/tools/perf/util/libbfd.c
-@@ -276,7 +276,7 @@ int libbfd__addr2line(const char *dso_name, u64 addr,
- 
- 		if (node && inline_list__append_dso_a2l(dso, node, sym)) {
- 			inline_node__clear_frames(node);
--			ret = 0;
-+			ret = -ENOMEM;
- 			goto out;
- 		}
- 
-@@ -290,7 +290,7 @@ int libbfd__addr2line(const char *dso_name, u64 addr,
- 			if (node != NULL) {
- 				if (inline_list__append_dso_a2l(dso, node, sym)) {
- 					inline_node__clear_frames(node);
--					ret = 0;
-+					ret = -ENOMEM;
- 					goto out;
- 				}
- 			}
-@@ -300,7 +300,7 @@ int libbfd__addr2line(const char *dso_name, u64 addr,
- 	if (file) {
- 		*file = a2l->filename ? strdup(a2l->filename) : NULL;
- 		if (!*file) {
--			/* Leave ret as 0 so that another addr2line is tried. */
-+			ret = a2l->filename ? -ENOMEM : 0;
- 			goto out;
- 		}
- 	}
-diff --git a/tools/perf/util/libdw.c b/tools/perf/util/libdw.c
-index c4504cceb313b..e660623338d51 100644
---- a/tools/perf/util/libdw.c
-+++ b/tools/perf/util/libdw.c
-@@ -7,6 +7,7 @@
- #include "callchain.h"
- #include <fcntl.h>
- #include <unistd.h>
-+#include <string.h>
- #include <elfutils/libdwfl.h>
- 
- static const Dwfl_Callbacks offline_callbacks = {
-@@ -175,10 +176,15 @@ int libdw__addr2line(u64 addr, char **file, unsigned int *line_nr,
- 	int lineno = 0;
- 	int ret = 0;
- 
-+	if (!dso__has_srcline(dso))
-+		return 0;
+-When TLS cryptographic connection state is installed on a ``ktls`` socket
+-(note that it is done twice, once for RX and once for TX direction,
+-and the two are completely independent), the kernel checks if the underlying
+-network device is offload-capable and attempts the offload. In case offload
+-fails the connection is handled entirely in software using the same mechanism
+-as if the offload was never tried.
++TLS cryptographic connection state is installed separately for RX and TX
++on a ``ktls`` socket. For each direction, the kernel checks if the underlying
++network device is offload-capable and attempts the offload. If offload fails,
++that direction is handled in software as if offload had never been tried.
 +
- 	mutex_lock(dso__lock(dso));
- 	dwfl = dso__libdw_dwfl(dso);
--	if (!dwfl)
-+	if (!dwfl) {
-+		ret = -1;
- 		goto out;
-+	}
++Both hardware directions share one device binding. Once one direction is
++offloaded, the other direction must use the same device. If a route change
++selects a different device, or ``NETDEV_DOWN`` has cleared the binding,
++hardware offload of the other direction is declined and it uses software
++instead.
  
- 	mod = dwfl_addrmodule(dwfl, addr);
- 	if (!mod) {
-@@ -192,14 +198,23 @@ int libdw__addr2line(u64 addr, char **file, unsigned int *line_nr,
- 	 * libdw.
- 	 */
- 	if (!dwfl_module_getdwarf(mod, &bias)) {
--		ret = -1;
-+		/*
-+		 * Free the Dwfl session so the mmap'd ELF binary is unmapped
-+		 * immediately, and mark the DSO as lacking srcline/DWARF info
-+		 * so neither libdw nor slower fallback backends (addr2line
-+		 * subprocess, libbfd) are repeatedly invoked on stripped DSOs.
-+		 */
-+		dso__free_libdw(dso);
-+		dso__set_has_srcline(dso, false);
-+		ret = 0;
- 		goto out;
- 	}
- 
- 	/* Find source line information for the address. */
- 	dwline = dwfl_module_getsrc(mod, addr + bias);
- 	if (!dwline) {
--		ret = -1;
-+		/* conclusively missing information -> abort fallbacks */
-+		ret = 0;
- 		goto out;
- 	}
- 
-@@ -228,7 +243,7 @@ int libdw__addr2line(u64 addr, char **file, unsigned int *line_nr,
- 				free(*file);
- 				*file = NULL;
- 			}
--			ret = 0;
-+			ret = -ENOMEM;
- 			goto out;
- 		}
- 
-@@ -245,7 +260,7 @@ int libdw__addr2line(u64 addr, char **file, unsigned int *line_nr,
- 				*file = NULL;
- 			}
- 			inline_node__clear_frames(node);
--			ret = 0;
-+			ret = args.err;
- 			goto out;
- 		}
- 	}
-diff --git a/tools/perf/util/libdw.h b/tools/perf/util/libdw.h
-index b120947374159..c8f319ce35df2 100644
---- a/tools/perf/util/libdw.h
-+++ b/tools/perf/util/libdw.h
-@@ -23,7 +23,8 @@ struct symbol;
-  * finds the source line information for the given address, and optionally
-  * resolves inline function call chains.
-  *
-- * Returns 1 on success (found), 0 on failure (not found).
-+ * Returns 1 on success (found), 0 when DWARF/line info is conclusively
-+ * missing, and < 0 on initialization or uncompiled error.
-  */
- int libdw__addr2line(u64 addr, char **file,
- 		     unsigned int *line_nr, struct dso *dso,
-@@ -47,7 +48,7 @@ static inline int libdw__addr2line(u64 addr __maybe_unused, char **file __maybe_
- 				   struct inline_node *node __maybe_unused,
- 				   struct symbol *sym __maybe_unused)
- {
--	return 0;
-+	return -1;
+ Offload request is performed via the :c:member:`tls_dev_add` callback of
+ :c:type:`struct tlsdev_ops <tlsdev_ops>`:
+diff --git a/net/tls/tls_device.c b/net/tls/tls_device.c
+index 69522aaeb7dc2..9f7bd589dfc32 100644
+--- a/net/tls/tls_device.c
++++ b/net/tls/tls_device.c
+@@ -1031,6 +1031,20 @@ int tls_device_decrypted(struct sock *sk, struct tls_context *tls_ctx)
+ 	return tls_device_reencrypt(sk, tls_ctx);
  }
  
- static inline void dso__free_libdw(struct dso *dso __maybe_unused)
-diff --git a/tools/perf/util/llvm-c-helpers.cpp b/tools/perf/util/llvm-c-helpers.cpp
-index 004081bd12c9c..d990166100f05 100644
---- a/tools/perf/util/llvm-c-helpers.cpp
-+++ b/tools/perf/util/llvm-c-helpers.cpp
-@@ -50,20 +50,20 @@ static LLVMSymbolizer *get_symbolizer()
- 	return instance;
- }
- 
--/* Returns 0 on error, 1 on success. */
-+/* Returns < 0 on error, 0 when line info is missing, 1 on success. */
- static int extract_file_and_line(const DILineInfo &line_info, char **file,
- 				 unsigned int *line)
- {
--	if (file) {
--		if (line_info.FileName == "<invalid>") {
--			/* Match the convention of libbfd. */
-+	if (line_info.FileName == "<invalid>") {
-+		if (file)
- 			*file = nullptr;
--		} else {
--			/* The caller expects to get something it can free(). */
--			*file = strdup(line_info.FileName.c_str());
--			if (*file == nullptr)
--				return 0;
--		}
-+		return 0;
-+	}
-+	if (file) {
-+		/* The caller expects to get something it can free(). */
-+		*file = strdup(line_info.FileName.c_str());
-+		if (*file == nullptr)
-+			return -ENOMEM;
- 	}
- 	if (line)
- 		*line = line_info.Line;
-@@ -86,30 +86,42 @@ int llvm_addr2line(const char *dso_name, u64 addr,
- 		Expected<DIInliningInfo> res_or_err =
- 			symbolizer->symbolizeInlinedCode(dso_name,
- 							 sectioned_addr);
--		if (!res_or_err)
--			return 0;
-+		if (!res_or_err) {
-+			consumeError(res_or_err.takeError());
-+			return -1;
-+		}
- 		unsigned num_frames = res_or_err->getNumberOfFrames();
- 		if (num_frames == 0)
- 			return 0;
- 
--		if (extract_file_and_line(res_or_err->getFrame(0),
--					  file, line) == 0)
--			return 0;
-+		int ret = extract_file_and_line(res_or_err->getFrame(0),
-+						file, line);
-+		if (ret <= 0)
-+			return ret;
- 
- 		*inline_frames = (llvm_a2l_frame *)calloc(
- 			num_frames, sizeof(**inline_frames));
--		if (*inline_frames == nullptr)
--			return 0;
-+		if (*inline_frames == nullptr) {
-+			if (file)
-+				zfree(file);
-+			return -ENOMEM;
-+		}
- 
- 		for (unsigned i = 0; i < num_frames; ++i) {
- 			const DILineInfo &src = res_or_err->getFrame(i);
- 
- 			llvm_a2l_frame &dst = (*inline_frames)[i];
--			if (src.FileName == "<invalid>")
--				/* Match the convention of libbfd. */
--				dst.filename = nullptr;
--			else
--				dst.filename = strdup(src.FileName.c_str());
-+			if (src.FileName == "<invalid>") {
-+				for (unsigned j = 0; j < i; ++j) {
-+					zfree(&(*inline_frames)[j].filename);
-+					zfree(&(*inline_frames)[j].funcname);
-+				}
-+				zfree(inline_frames);
-+				if (file)
-+					zfree(file);
-+				return 0;
-+			}
-+			dst.filename = strdup(src.FileName.c_str());
- 			dst.funcname = strdup(src.FunctionName.c_str());
- 			dst.line = src.Line;
- 
-@@ -120,7 +132,9 @@ int llvm_addr2line(const char *dso_name, u64 addr,
- 					zfree(&(*inline_frames)[j].funcname);
- 				}
- 				zfree(inline_frames);
--				return 0;
-+				if (file)
-+					zfree(file);
-+				return -ENOMEM;
- 			}
- 		}
- 
-@@ -131,8 +145,10 @@ int llvm_addr2line(const char *dso_name, u64 addr,
- 
- 		Expected<DILineInfo> res_or_err =
- 			symbolizer->symbolizeCode(dso_name, sectioned_addr);
--		if (!res_or_err)
--			return 0;
-+		if (!res_or_err) {
-+			consumeError(res_or_err.takeError());
-+			return -1;
-+		}
- 		return extract_file_and_line(*res_or_err, file, line);
- 	}
- }
-diff --git a/tools/perf/util/llvm.c b/tools/perf/util/llvm.c
-index dc66f6cc1db65..cdf26a31599ed 100644
---- a/tools/perf/util/llvm.c
-+++ b/tools/perf/util/llvm.c
-@@ -42,8 +42,11 @@ int llvm__addr2line(const char *dso_name __maybe_unused, u64 addr __maybe_unused
- 	int num_frames = llvm_addr2line(dso_name, addr, file, line,
- 					node && unwind_inlines, &inline_frames);
- 
--	if (num_frames == 0 || !inline_frames) {
--		/* Error, or we didn't want inlines. */
-+	if (num_frames <= 0 || !inline_frames) {
-+		/*
-+		 * Error (< 0 -> iterate fallbacks), missing line info (0), or
-+		 * we resolved lines without wanting inlines (1).
-+		 */
- 		return num_frames;
- 	}
- 
-@@ -58,8 +61,11 @@ int llvm__addr2line(const char *dso_name __maybe_unused, u64 addr __maybe_unused
- 						      inline_frames[i].line);
- 		}
- 		if (inline_list__append(inline_sym, srcline, node) != 0) {
-+			if (file)
-+				zfree(file);
-+			inline_node__clear_frames(node);
- 			free_llvm_inline_frames(inline_frames, num_frames);
--			return 0;
-+			return -1;
- 		}
- 	}
- 	free_llvm_inline_frames(inline_frames, num_frames);
-diff --git a/tools/perf/util/srcline.c b/tools/perf/util/srcline.c
-index a8d16106f6194..23951c35fb66a 100644
---- a/tools/perf/util/srcline.c
-+++ b/tools/perf/util/srcline.c
-@@ -181,9 +181,9 @@ static int addr2line(const char *dso_name, u64 addr, char **file, unsigned int *
- 			break;
- 		case A2L_STYLE_UNKNOWN:
- 		default:
--			break;
-+			return 0;
- 		}
--		if (ret > 0)
-+		if (ret >= 0)
- 			return ret;
- 	}
- 
-@@ -250,6 +250,10 @@ static struct inline_node *addr2inlines(const char *dso_name, u64 addr,
- 
- 	addr2line(dso_name, addr, /*file=*/NULL, /*line_nr=*/NULL, dso,
- 		  /*unwind_inlines=*/true, node, sym);
-+	if (!dso__has_srcline(dso) && list_empty(&node->val)) {
-+		inline_node__delete(node);
-+		return NULL;
-+	}
- 
- 	return node;
- }
-@@ -276,8 +280,8 @@ char *__get_srcline(struct dso *dso, u64 addr, struct symbol *sym,
- 	if (dso_name == NULL)
- 		goto out_err;
- 
--	if (!addr2line(dso_name, addr, &file, &line, dso,
--		       unwind_inlines, /*node=*/NULL, sym)) {
-+	if (addr2line(dso_name, addr, &file, &line, dso,
-+		       unwind_inlines, /*node=*/NULL, sym) <= 0) {
- 		free(dso_name);
- 		goto out_err;
- 	}
-@@ -302,6 +306,7 @@ char *__get_srcline(struct dso *dso, u64 addr, struct symbol *sym,
- 		dso__set_has_srcline(dso, false);
- 		dso__free_a2l(dso);
- 		dso__free_a2l_libbfd(dso);
-+		dso__free_libdw(dso);
- 	}
- 	mutex_unlock(dso__lock(dso));
- out:
-@@ -331,8 +336,8 @@ char *get_srcline_split(struct dso *dso, u64 addr, unsigned *line)
- 	if (dso_name == NULL)
- 		goto out_err;
- 
--	if (!addr2line(dso_name, addr, &file, line, dso, /*unwind_inlines=*/true,
--			/*node=*/NULL, /*sym=*/NULL)) {
-+	if (addr2line(dso_name, addr, &file, line, dso, /*unwind_inlines=*/true,
-+			/*node=*/NULL, /*sym=*/NULL) <= 0) {
- 		free(dso_name);
- 		goto out_err;
- 	}
-@@ -350,6 +355,7 @@ char *get_srcline_split(struct dso *dso, u64 addr, unsigned *line)
- 		dso__set_has_srcline(dso, false);
- 		dso__free_a2l(dso);
- 		dso__free_a2l_libbfd(dso);
-+		dso__free_libdw(dso);
- 	}
- 	mutex_unlock(dso__lock(dso));
- 
-@@ -448,6 +454,9 @@ struct inline_node *dso__parse_addr_inlines(struct dso *dso, u64 addr,
- 	char *dso_name;
- 	struct inline_node *node;
- 
-+	if (!dso__has_srcline(dso))
-+		return NULL;
++/* Both directions share ctx->netdev. A second direction must use that
++ * device; after NETDEV_DOWN clears it, no new direction can be offloaded.
++ */
++static bool tls_device_can_attach(struct tls_context *ctx, struct sock *sk,
++				  struct net_device *netdev)
++{
++	struct net_device *ctx_netdev;
 +
- 	dso_name = srcline_dso_name(dso);
- 	if (dso_name == NULL)
- 		return NULL;
++	ctx_netdev = rcu_dereference_protected(ctx->netdev,
++					       lockdep_is_held(&device_offload_lock));
++	return sk->sk_destruct != tls_device_sk_destruct ||
++	       ctx_netdev == netdev;
++}
++
+ static void tls_device_attach(struct tls_context *ctx, struct sock *sk,
+ 			      struct net_device *netdev)
+ {
+@@ -1166,6 +1180,11 @@ int tls_set_device_offload(struct sock *sk)
+ 		goto release_lock;
+ 	}
+ 
++	if (!tls_device_can_attach(ctx, sk, netdev)) {
++		rc = -EOPNOTSUPP;
++		goto release_lock;
++	}
++
+ 	ctx->priv_ctx_tx = offload_ctx;
+ 	rc = netdev->tlsdev_ops->tls_dev_add(netdev, sk, TLS_OFFLOAD_CTX_DIR_TX,
+ 					     &ctx->crypto_send.info,
+@@ -1236,6 +1255,11 @@ int tls_set_device_offload_rx(struct sock *sk, struct tls_context *ctx)
+ 		goto release_lock;
+ 	}
+ 
++	if (!tls_device_can_attach(ctx, sk, netdev)) {
++		rc = -EOPNOTSUPP;
++		goto release_lock;
++	}
++
+ 	context = kzalloc_obj(*context);
+ 	if (!context) {
+ 		rc = -ENOMEM;
 -- 
 2.53.0
 
