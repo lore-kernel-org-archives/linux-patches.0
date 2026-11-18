@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046428;
-	b=cGAgXyeYIKANUmNxd7OWGOCRSF7FFcxGPlTgjOQkqUM7aImBKWu4vHbpRQwjfxVtqaQx
-	 GULntV1xaiqU1oCqniQcSmWlmSbCxtZ9SoV/XgVT7pRDWIyY4JejyjGsBzIJvfHy26qF4
-	 oYkOJMvRQdYqzkiAGTqYptZ5xm/GNCVnmVH8ua6mS6Hh0iZRF49mVJRE+WmN3RCKwg4fr
-	 ghB2nnzivzaJnWaB0Fzh2iuiqLpQDCXL571RivX5zuKCQnDMH9QmzUc6NcY61fw32VrJk
-	 nbTiDGxtry4A800kAPGUvm+lxgYClxeZQLzf2gdNRtv0Vr/MxZec50DeGQ9QehZ7KeQ==
+	t=1795046430;
+	b=j0KN4jgWtyv7FbuW15l6Q1wnNNpEr2+BJEzJWuHKtdINp2ZCNXyWqK4a5pgc15GtFFRp
+	 kY/dtDn8se0zIFn0KIFnVtahvO6M6jWueAGpvIxXpTNOTVLMcSKSThvHcphgDAXpN1yZz
+	 cLOlNpOqGqrer9iJswS4FFtmkWaSw+9E3Ei705q5WLNjuOaxjqfd+Z+q+OwtVipudVY+n
+	 9C0q3SzCunJwMhfo2I3+bgT4oA9+Jehxg18zSkSjkVTOP6cVslSwpvrIAmHU1VMK8nxah
+	 Ec5oVJzsE/wguEk4hdK3+XTtAyzTn6Qy2STRv3/KX3YWs/+Z+Q1rh0YAQYy9fW0jqOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046428;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046430;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PzsyQpGBlYH/a979YoaqJs7bSK95Uzc2qSZB2gBw5+E=;
-	b=HQnSh1b+azcw3N1e0Kr6AJR5ShKEC0d10pJXmxC8uGeI48VG5kIvLAlkSdkQGkmNu9Eu
-	 sRQMMluJMZsrQtJgfFCDztHA97uOo7Q7iuZYOe/HRxA7/lquUPhVr9IuUv9aKWXsJE6wH
-	 GDYYRdKf7y62x/HALTPDK1taCHZlAwi78NBHv7Pwoif1X8XAU91BC6kiZyv3HplXJLsso
-	 d7TIcLo0fwrvMwlOLMBBci4rURlgqVOAE6MJIs+ug7cqE8lMwS4drwVbBWNctk5CMLZRf
-	 2/KpQtOUmzs2wOnOli2JZOqbVlzRwWdwpOG9sLvFXMATQjVPi0od+t0CH9btaq2pb7A==
+	bh=nWox2xw0xZ8J1jBOfQFC663YXF5/ktK4CzgxCs80mq8=;
+	b=EsNuGMgeRmZt7Ir0cqD1O/7Coi7zuU51ICtbWaoR8DxpDJyWfqtVPKhJWsQZNaztDDwt
+	 IqsdvFfC/NmaEj9JqBJ/AtaW+DUL/tTscgFF+wDC5oEximvWov6Sk2YoP79RBkkYTvvZA
+	 TM+1OA1m+0ZSDTw94HkpGfbcIIml1Un9IqUOQaWTy4ZrqqpVcMyakK1dI0/1gPyoJ+8/C
+	 n8U7SGiyoD03xb2u6oYalzfFwbV6y89oLhLiAnC7R/7Khv2m2YzXYecZPJpjky9c/UMPL
+	 Qv85vZSQUH+k6QJs71oJjf4AjzaRvY9GXidwKo8gYCo5waMfUcu3rMmCEefl7uwR+uA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RF2AlqFB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yreu0mlb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10066606A325;
-	Thu, 19 Nov 2026 00:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B09606A320;
+	Thu, 19 Nov 2026 00:00:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RF2AlqFB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60B941F000C4;
-	Thu, 19 Nov 2026 00:00:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yreu0mlb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 365561F000C4;
+	Thu, 19 Nov 2026 00:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046427;
-	bh=PzsyQpGBlYH/a979YoaqJs7bSK95Uzc2qSZB2gBw5+E=;
+	s=korg; t=1795046430;
+	bh=nWox2xw0xZ8J1jBOfQFC663YXF5/ktK4CzgxCs80mq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RF2AlqFBb9PSgOhRDPzdaDBTqdwn272u8h/O4B638g8k2DQegWZkiMnKz1d5sJsO5
-	 /uv4o62zXNIuMcmeAD+i96zso2gmdX0oINnRgJyOSHj7pypys64k3k7+3CPgwUsslQ
-	 TH+u3s1tF3sq6iGcSijUV9umRSjKujrY+1TYwXms=
+	b=Yreu0mlb86jeXVViFXqaOBZXKYGyXahx2pSvph2zf0r2P9YXTYEmRC5ihVE2IEpBa
+	 RkTe1yZCWtWtGWpFvQmAWJi/yregr1wbwgWBw/l6dQjjBoJZ56p2GBjvX4ksu+zFI4
+	 vXW4Togs4HbwUjxFkly0dvsHoI4imna/73VyQTU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	Carlos Maiolino <cem@kernel.org>,
+	Kaixuan Li <kaixuanli0131@gmail.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Quchaosheng <quchaosheng000406@163.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1276/2857] xfs: fix recovery of partial attr removals
-Date: Wed, 18 Nov 2026 15:38:30 +0100
-Message-ID: <20261118150247.457904740@linuxfoundation.org>
+Subject: [PATCH 6.1 1277/2857] can: isotp: check the frame type, not just the length
+Date: Wed, 18 Nov 2026 15:38:31 +0100
+Message-ID: <20261118150247.491915100@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,56 +70,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Kaixuan Li <kaixuanli0131@gmail.com>
 
-[ Upstream commit 30bb61651d2da5a502cf504bcdad16c093c1bb08 ]
+[ Upstream commit 933bf0fcb325e67b19c86c9c4da7f029878d5170 ]
 
-When running xfs/753 on parent pointer-enabled file systems with DEBUG
-enabled, log recovery will eventually crash after a few dozen iterations
-due to an ASSERT that XFS_ATTR_INCOMPLETE is not already set when
-xfs_attr3_leaf_setflag is called:
+isotp_rcv() separates Classic CAN from CAN FD by skb->len alone:
 
-XFS: Assertion failed: (entry->flags & XFS_ATTR_INCOMPLETE) == 0, file: fs/xfs/libxfs/xfs_attr_leaf.c, line: 3045
+	if (skb->len != so->ll.mtu)
+		return;
 
-This is because parent pointer use logged attributes, and the attribute
-intents do not track the work that has been done as the transaction
-rolls, and the recovery mechanism is to run the operation from scratch.
-Because of this various places check for XFS_DA_OP_RECOVERY skip work
-already done.  But while recovery tolerates an attribute already fully
-removed, it currently trips the above assert for an attribute that
-already has the INCOMPLETE bit set, but still exists.  Fix this by
-handling the case like all the others.
+	cf = (struct canfd_frame *)skb->data;
 
-Fixes: 1d08e11d04d2 ("xfs: Implement attr logging and replay")
-Cc: stable@vger.kernel.org # v5.19
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+A CAN XL frame with cxl->len 4 is CAN_MTU bytes, so it passes, and is then
+read as a canfd_frame whose len comes out of canxl_frame.flags: at least
+0x80.
+
+Of the paths that follow, only the flow control one uses that length
+without bounding it first, so check_pad() walks to 255 over a 16-byte
+frame and the caller reports EBADMSG on an unrelated socket.
+
+bcm_rx_handler(), j1939_can_recv(), can_can_gw_rcv() and raw_rcv() check
+the frame type here, and can_dropped_invalid_skb() switches on
+skb->protocol on the transmit side. isotp_rcv() is the gap.
+
+Fixes: fb08cba12b52 ("can: canxl: update CAN infrastructure for CAN XL frames")
+Signed-off-by: Kaixuan Li <kaixuanli0131@gmail.com>
+Reviewed-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Reviewed-by: Quchaosheng <quchaosheng000406@163.com>
+Link: https://patch.msgid.link/20260920035626.2581040-1-kaixuanli0131@gmail.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/libxfs/xfs_attr_leaf.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/can/isotp.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/fs/xfs/libxfs/xfs_attr_leaf.c b/fs/xfs/libxfs/xfs_attr_leaf.c
-index bdf4fe0146b7b..344e166cbf7ca 100644
---- a/fs/xfs/libxfs/xfs_attr_leaf.c
-+++ b/fs/xfs/libxfs/xfs_attr_leaf.c
-@@ -2931,7 +2931,14 @@ xfs_attr3_leaf_setflag(
- #endif
- 	entry = &xfs_attr3_leaf_entryp(leaf)[args->index];
+diff --git a/net/can/isotp.c b/net/can/isotp.c
+index 5a0ecbc4f6b94..f81543405f2ac 100644
+--- a/net/can/isotp.c
++++ b/net/can/isotp.c
+@@ -722,6 +722,14 @@ static void isotp_rcv(struct sk_buff *skb, void *data)
+ 	if (skb->len != so->ll.mtu)
+ 		return;
  
--	ASSERT((entry->flags & XFS_ATTR_INCOMPLETE) == 0);
-+	if (entry->flags & XFS_ATTR_INCOMPLETE) {
-+		if (!(args->op_flags & XFS_DA_OP_RECOVERY)) {
-+			ASSERT(args->op_flags & XFS_DA_OP_RECOVERY);
-+			return -EFSCORRUPTED;
-+		}
-+		return 0;
++	/* check for correct CAN CC/FD frame content */
++	if (so->ll.mtu == CAN_MTU) {
++		if (!can_is_can_skb(skb))
++			return;
++	} else if (!can_is_canfd_skb(skb)) {
++		return;
 +	}
 +
- 	entry->flags |= XFS_ATTR_INCOMPLETE;
- 	xfs_trans_log_buf(args->trans, bp,
- 			XFS_DA_LOGRANGE(leaf, entry, sizeof(*entry)));
+ 	cf = (struct canfd_frame *)skb->data;
+ 
+ 	/* if enabled: check reception of my configured extended address */
 -- 
 2.53.0
 
