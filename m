@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023606;
-	b=anYPqsmmFhFqey+0KcOS/9f5+YENqG1mmm5ut7wRY+f39m/hJriPl+cAv/mfDRXcIXuM
-	 iPlvzXk7G9MEd3ikyalaOpoQcjark/73m+4L9ElTvX/WxOw1Eo0Ixgn8wjfUNWIfRYQA0
-	 akzMWpPOcQoWlBmCcL5dtR7j0vAAIvtPUpeH+QDGoBcnYSMDaxY/q+6YOMqqWer22UaHg
-	 C3Jn1Mj1S4/+ShP68MtV3pW2wQhM6A/zTfDRI5JumTKXCiBz2wyqETzijqacKbsu7Dss9
-	 622BRz14NpywL0xYu+Jv1/gK4PycIfJ7aiXGug1vl6tGO9CrChgDrheDGB8kPC7HTFg==
+	t=1795023609;
+	b=wx+eZjOwlHPCi0lMQUgB1QLUaxU0zFLUbS6RC6/N/pDYNBW9tBxeAMP9o0FU4kJeHPQj
+	 zj4aYq1qGXdJdMLV7zzkZZhAikkJKWk8jHzRNEahXr8GUTaWT6D7VAYigCdjgBIC1/PGf
+	 iUSlxknano3lshKdEuzfI8s0OmsijTZhPCqby6KGxU3mMKnuUC8pu9n2hkNZ79hHqI4zF
+	 i9BqrT4SkBCg+1cFI/k5b4ucC6iC00bzRUlYBPaNctA2pcsOEreEG6LC3vnmMyvt9DJPZ
+	 9HK0vGfmFh2hY3L7ZUDLzH8QM3xOfbLCqJtgbIrXs2HWfksOB9npUeIiDhHvzgP58IQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023606;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023609;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/J7vbX+m1aC9wONWeqsOhA4ACqGayDATsRUB0nHafbQ=;
-	b=biF1gF2Jh2AwhW79FiENpCRuxrUkT6+/EJXrzz1E4iDpPlQtdi3kX6uS70u6YhZ34US+
-	 2FbuLZFRDV/I48tENyg0i+hCkIvw1xV4JSey1daE2D4pE4e+qaKfNYW3OPJN4xXpGIJ9R
-	 hb8zk8FC59C68Ct2gjq+A5/AmjwyGjwyNKCGVhWx+TkFFvPHlytYMKMfAcXI1JaApHLF4
-	 qVog/Uy8s5zMjwy7C6jSoDZSz54IpZGGbQzTHALlxe9EH5VghVNVXem9+iIGxcd7j+V9C
-	 8mZuVcjLOzEPdRz8j45/k+e5bTAevbjzy+mnJXMcVRHObbB4kYi0XsvAhZdGKdofLpQ==
+	bh=8M0nDIthW7gF5yv2FcXBHPzbZIqQY+IAcjUI6k02Ca0=;
+	b=BfU5x7+NSjaB614Q0Ztv4re2ycU2zodwWa09eb51LnplAIRWnuAPEOGnzSUoTSStFfW0
+	 /H7ywrtvH77s1PhIu4yTOUfF6Ng/CTNxM1bfgGIdVj2+bzQC32C9Si4D5lC/XqUopdmx/
+	 +eGwzORTAmDS5GCyFNS6/X7JSYcJtc21OKxvy6zHXSkgHtPUGIDsCbARy9saOB4PnJrMe
+	 SfJoF1i629O0tIXAb9VoSSAP7w99XCetK7Fa6tfkGBuhjkpitdoj+4m0i3qar6obozczo
+	 uZ5ozL3G3yrw/Fbvh1yKEtEoVabktooqcNJbOidCGLErokIFg3B2vIB01G7xZPdwBzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GoeW3Sgk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LkivBt8e;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D39606A337;
-	Wed, 18 Nov 2026 17:40:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F87606A320;
+	Wed, 18 Nov 2026 17:40:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GoeW3Sgk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C61C11F000CC;
-	Wed, 18 Nov 2026 17:40:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LkivBt8e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A3D61F000CE;
+	Wed, 18 Nov 2026 17:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023606;
-	bh=/J7vbX+m1aC9wONWeqsOhA4ACqGayDATsRUB0nHafbQ=;
+	s=korg; t=1795023609;
+	bh=8M0nDIthW7gF5yv2FcXBHPzbZIqQY+IAcjUI6k02Ca0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GoeW3SgkJC91iDhh96fbcUWZi7S6QYku6qOUIq/GYKxr0gP4+ky4VW6tOYJc7Mo/3
-	 rU1kmpzFXup1LDcRls0YzI/FZ3E7x0kYopnrz4p3QvxSM1T6OaRPkY1hyEu4mPoc7o
-	 irG6VvjbsJyq2vvDWBKhRB19wY1sosQD2nR+chpI=
+	b=LkivBt8etzsoqj5yGe57spmWMoPcsPfD85mpGqKM60fghNL9tbpG5kAzG/rSW/q9e
+	 +VfK569HiZdgX0lmO3Qb+yxUl1/rOV0phi7S/w9+suIRGDtN1nqsHRq9GX/mSnklC3
+	 5C2ehk5UiaglMOpTQE3g2Y7cGS24VUfFGjZpR284=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Liu <1298662399@qq.com>,
-	Lukasz Luba <lukasz.luba@arm.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	VEGA <vega@nebusec.ai>,
+	Jan Kara <jack@suse.cz>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0388/2151] memory: exynos5422-dmc: handle clock enable failures
-Date: Wed, 18 Nov 2026 15:35:23 +0100
-Message-ID: <20261118150136.204975426@linuxfoundation.org>
+Subject: [PATCH 6.18 0389/2151] gfs2: Fix journaled truncate range end offset
+Date: Wed, 18 Nov 2026 15:35:24 +0100
+Message-ID: <20261118150136.240562723@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,49 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Liu <1298662399@qq.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit cce46902ea9fcd585cd200fffa3166f63bc571f1 ]
+[ Upstream commit a52652efd8f985397e87669f505af83f06e335cf ]
 
-Check the return values of clk_prepare_enable() for fout_bpll and
-mout_bpll.
+The third argument to truncate_pagecache_range() is the inclusive end
+offset, but gfs2_journaled_truncate_range() passes the length of each
+chunk. A hole punch at an offset larger than its length therefore
+creates an inverted range.
 
-If enabling fout_bpll fails, propagate the error. If enabling mout_bpll
-fails, disable fout_bpll before returning. This keeps the clock enable
-count balanced on probe error paths.
+Commit 86066914edff ("gfs2: Don't support fallocate on jdata files")
+disables fallocate for jdata files.  Otherwise, the following bug
+could occur:
 
-Fixes: 6e7674c3c6df ("memory: Add DMC driver for Exynos5422")
-Signed-off-by: Jiawen Liu <1298662399@qq.com>
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-Link: https://patch.msgid.link/tencent_B0189529F550458590E3BA614EAB800FBF08@qq.com
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+The MM truncation path then underflows the unsigned partial-folio
+length and passes an oversized range to folio_zero_range(), triggering
+a BUG. Pass the last byte of the chunk so page-cache invalidation
+covers the intended range.
+
+Fixes: 4e56a6411fbc ("gfs2: Implement fallocate(FALLOC_FL_PUNCH_HOLE)")
+Reported-by: VEGA <vega@nebusec.ai>
+Assisted-by: LLM
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/memory/samsung/exynos5422-dmc.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/gfs2/bmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/memory/samsung/exynos5422-dmc.c b/drivers/memory/samsung/exynos5422-dmc.c
-index 788d49c688b1d..98c3195525831 100644
---- a/drivers/memory/samsung/exynos5422-dmc.c
-+++ b/drivers/memory/samsung/exynos5422-dmc.c
-@@ -1297,8 +1297,15 @@ static int exynos5_dmc_init_clks(struct exynos5_dmc *dmc)
- 	if (ret)
- 		return ret;
+diff --git a/fs/gfs2/bmap.c b/fs/gfs2/bmap.c
+index 836e260099c39..119e01c56d6a9 100644
+--- a/fs/gfs2/bmap.c
++++ b/fs/gfs2/bmap.c
+@@ -2413,7 +2413,7 @@ static int gfs2_journaled_truncate_range(struct inode *inode, loff_t offset,
+ 		if (offs && chunk > PAGE_SIZE)
+ 			chunk = offs + ((chunk - offs) & PAGE_MASK);
  
--	clk_prepare_enable(dmc->fout_bpll);
--	clk_prepare_enable(dmc->mout_bpll);
-+	ret = clk_prepare_enable(dmc->fout_bpll);
-+	if (ret)
-+		return ret;
-+
-+	ret = clk_prepare_enable(dmc->mout_bpll);
-+	if (ret) {
-+		clk_disable_unprepare(dmc->fout_bpll);
-+		return ret;
-+	}
+-		truncate_pagecache_range(inode, offset, chunk);
++		truncate_pagecache_range(inode, offset, offset + chunk - 1);
+ 		offset += chunk;
+ 		length -= chunk;
  
- 	/*
- 	 * Some bootloaders do not set clock routes correctly.
 -- 
 2.53.0
 
