@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056955;
-	b=vnY6Zvvmz+zSVEFHhO3ljn7uA+o8nmUc6pQGxf/KNnuJDXTCw3VsUM06N8nLZzd42F7+
-	 o2bJZ9NoV0+warmC4VK4+3oXsX2fOqS+vqCiLuWYrAhzrSFQNj+lqwXlfjtMotU/shSEQ
-	 erGElN04C+Qv5jRpjiVpzTOiJll8N4CrLfTIQJArZ0S2x/DJTj3IIOYzkc660j3f0xp1X
-	 HKuwJmdc/ExxiCMfy4VEZSeDZGvn+aKcp3uY0TxDBwYYaCo3QWl3qxGHP0tR/sZoy7ShE
-	 tGlC5P+XUf/zObqFz34YcwGOMM4FGq/PKaD+Zmqy5E+uDhjjKqNT4mmGq71hwwnWP2w==
+	t=1795056958;
+	b=KdBEEQTT0S8AqAk+mGR7ZulBiFcOUqbBjQ2rgkmRa2JyPQIgVTYHfqUUz4WOUAj8d9GE
+	 Y12yD4VAVUowdKIQTLSW3+LUOojgJbSpo+49lGS3q7dHUjgBSdZrE93pv+2p5cr/fgWBC
+	 Fg9jPrZuvbiXJXeilVRQ1sgzL79fJbBObeXgbzcnrTgL0mOpnxlHLH7/7LwygAd9vs15y
+	 TrVa2272UK3Hlv6brcuO0X+8XUircp+FhUMw0UFrzC81Kmdz2GAQ5JCN5xisMYLYUKMRz
+	 p8jRnMi+r8ZEEtaMbk3BfKlP91hQFZBwWgl4ZdDEYC/V14w8n856Yv7XM1Z8vXqot1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056955;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056958;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=j4hcUSGTZA6jJaqzT4eUp8HocKIbVx3Q6X6GdRR0Oa8=;
-	b=f2UHDL58V2Wc1D8O+zk2fxW4kvQCHS1RtJfYHUJEZYR2PIvG7fA2eSDLZ44IaSm1Msj0
-	 XSG37YwG0OmuqBO5yosgAjnpad+c+iD51vqB160kAHytPW2eYw64QGSruzmGUqWa2s7kd
-	 EPDUYUYWM07RFr6T28bKQru9eq5rzkwucWKeqMZb9nvuQ/m0PWLpRpS7Cwml5zcjGEOfO
-	 KfvABAljrB8R1bYftbtV4d37qvEUOAEXj53L0X/mdPBgmujoipNhxzo/ICQUFeLN34vdC
-	 WnZi3SJgIfNsnos3KYSogIdvV3XQzln2XAHOdVUhZYF+Y7+7Vss/OhZd2dahppe9oyw==
+	bh=vrwM5cWFZ4B3AWGX/esKdA/2S0HmdDZJif/q9oqdYSI=;
+	b=TgmhygRJh5dMFGh3r7pbeBH4vywW7RZdmzfCdMSlXevvszUa3UpETSWmKAS5TvyThRLl
+	 Sq9B+GtVCG5YZuqsWcJW9yqADXbsV0IhBszNfZIJ7QBc94VfyIIg0DKIYiutoMZJ69hCW
+	 sudQjQAHlXnWD/fhydJWLK1NiGeSh2IKBWaEH/jpDEZM0tzdED1V81ahKMi48nFvhNNmg
+	 EqzDn6chGTSbunnStIccFbwE7hwQjgvIehzOUjIhrkORJQ+v9fsdpce41OrlB4KzkPKRJ
+	 EXEruk+OxRnSlflIBozTjG5ewZ3kj901rXj8tsZe+49KudCYJR8AfXiFDdu9JzmjAUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S9zIKTwI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YRD1VZka;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F277606A31C;
-	Thu, 19 Nov 2026 02:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B840606A320;
+	Thu, 19 Nov 2026 02:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S9zIKTwI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95D761F000C4;
-	Thu, 19 Nov 2026 02:55:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YRD1VZka
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E8D21F000C4;
+	Thu, 19 Nov 2026 02:55:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056955;
-	bh=j4hcUSGTZA6jJaqzT4eUp8HocKIbVx3Q6X6GdRR0Oa8=;
+	s=korg; t=1795056957;
+	bh=vrwM5cWFZ4B3AWGX/esKdA/2S0HmdDZJif/q9oqdYSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S9zIKTwITHVyZRhUrx68QJ9SSWuLZ3ysG1kM/n+QtlhahHaA88oJHpSXovH8bEjAc
-	 95Ggl0Od0/BqgCZ+CQrDgyTkPf4Scy9tpAEqg9Nce7If/rnhcEN0D8/srxoXCX9svf
-	 r8j+9VYZSEUwCCw02Ai+6K1kbMFOq7FDDmdY5eyk=
+	b=YRD1VZkaCTrb89zNi8fJJAe5a294iCwm+2f41uKv2TYoDsJ+pMIQQmEz1Rb81kyQY
+	 kzrq2pUOf/DMBDR7L5njUpm1H9i2i/m0JGZVmp/aPZd1xp5T5EbbLJA+ChCMxyTP4x
+	 RghUQW6IYIcUv7pV5+6sN6sS2axGS4jbLRcnZIkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avi Weiss <thnkslprpt@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Bradley Morgan <brads@mainlining.org>,
+	Markus Probst <markus.probst@posteo.de>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2121/2214] profiling: fix sampling step on 64-bit big-endian systems
-Date: Wed, 18 Nov 2026 16:03:17 +0100
-Message-ID: <20261118150135.421661504@linuxfoundation.org>
+Subject: [PATCH 5.15 2166/2214] rtc: s35390a: Fix alarm not disabling
+Date: Wed, 18 Nov 2026 16:04:02 +0100
+Message-ID: <20261118150137.073058519@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,44 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avi Weiss <thnkslprpt@gmail.com>
+From: Markus Probst <markus.probst@posteo.de>
 
-[ Upstream commit b1d68946a08313895f352af5336623d29739c299 ]
+[ Upstream commit d93f29e41089bbb14637289fe77bdd72b71e9ac5 ]
 
-read_profile() stores the sampling step in an unsigned long but copies
-only four bytes to userspace.  On 64-bit big-endian systems (not common
-obviously), this copies the upper 32 bits and discards the rest, causing
-/proc/profile to report zero for normal shift values.
+Implement alarm_irq_enable callback.
 
-Cast to unsigned int so we get the correct 4 bytes, while keeping the
-shift calculation in unsigned long.
-
-A small C reproducer under qemu-s390x reproduced this and proved the fix
-works for prof_shift=2.
-
-Link: https://lore.kernel.org/20261020101225.917959-1-thnkslprpt@gmail.com
-Fixes: 2d186afd04d6 ("profiling: fix shift-out-of-bounds bugs")
-Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Fixes: 542dd33a4925 ("drivers/rtc/rtc-s35390a.c: add wakealarm support for rtc-s35390A rtc chip")
+Signed-off-by: Markus Probst <markus.probst@posteo.de>
+Link: https://patch.msgid.link/20260930-rtc_s35390a_int1-v10-3-e7b1cbc50a7b@posteo.de
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/profile.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rtc/rtc-s35390a.c | 29 ++++++++++++++++++++++++-----
+ 1 file changed, 24 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/profile.c b/kernel/profile.c
-index e9a1efe18caf1..671475fbbce88 100644
---- a/kernel/profile.c
-+++ b/kernel/profile.c
-@@ -462,7 +462,7 @@ read_profile(struct file *file, char __user *buf, size_t count, loff_t *ppos)
- 	unsigned long p = *ppos;
- 	ssize_t read;
- 	char *pnt;
--	unsigned long sample_step = 1UL << prof_shift;
-+	unsigned int sample_step = (unsigned int)(1UL << prof_shift);
+diff --git a/drivers/rtc/rtc-s35390a.c b/drivers/rtc/rtc-s35390a.c
+index 5e669b75b408a..2da889e94dac8 100644
+--- a/drivers/rtc/rtc-s35390a.c
++++ b/drivers/rtc/rtc-s35390a.c
+@@ -273,6 +273,24 @@ static int s35390a_rtc_read_time(struct device *dev, struct rtc_time *tm)
+ 	return 0;
+ }
  
- 	profile_flip_buffers();
- 	if (p >= (prof_len+1)*sizeof(unsigned int))
++static int s35390a_rtc_alarm_irq_enable(struct device *dev, unsigned int enabled)
++{
++	struct s35390a *s35390a = dev_get_drvdata(dev);
++	u8 sts;
++	int err;
++
++	if (enabled)
++		sts = S35390A_INT2_MODE_ALARM;
++	else
++		sts = S35390A_INT2_MODE_NOINTR;
++
++	err = s35390a_set_reg(s35390a, S35390A_CMD_STATUS2, &sts, sizeof(sts));
++	if (err < 0)
++		return err;
++
++	return 0;
++}
++
+ static int s35390a_rtc_set_alarm(struct device *dev, struct rtc_wkalrm *alm)
+ {
+ 	struct i2c_client *client = to_i2c_client(dev);
+@@ -416,11 +434,12 @@ static int s35390a_rtc_ioctl(struct device *dev, unsigned int cmd,
+ }
+ 
+ static const struct rtc_class_ops s35390a_rtc_ops = {
+-	.read_time	= s35390a_rtc_read_time,
+-	.set_time	= s35390a_rtc_set_time,
+-	.set_alarm	= s35390a_rtc_set_alarm,
+-	.read_alarm	= s35390a_rtc_read_alarm,
+-	.ioctl          = s35390a_rtc_ioctl,
++	.read_time		= s35390a_rtc_read_time,
++	.set_time		= s35390a_rtc_set_time,
++	.set_alarm		= s35390a_rtc_set_alarm,
++	.read_alarm		= s35390a_rtc_read_alarm,
++	.alarm_irq_enable	= s35390a_rtc_alarm_irq_enable,
++	.ioctl			= s35390a_rtc_ioctl,
+ };
+ 
+ static int s35390a_probe(struct i2c_client *client,
 -- 
 2.53.0
 
