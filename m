@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051048;
-	b=fsdYlA5tDJREzrQ70IMujg8AGDp5xrivZvLxq4zB22qKO3kj+2FAhK3giGhBX22o4HrQ
-	 U0PQt3wZvO0cQbjsq0mL14IQNHhR92WqSMQ6+flpephWEa0TfAXQ0E4j8v1/oagiPTHXg
-	 xWe7/PNAxxn2LLS0O1Grm8iqWt3+9Y/IZzz//6kIaX2pd9udyQwMp9FifmI5Od5BQZeDq
-	 eBCnFgCSOWeyJVYTNCWX1VdqDIJkbN0AEzF5c29iIzhS+xH0/Mqf9oC25TjkmdeR2F0MU
-	 e3TaueCsRNuSU3gKpKyJmCpZVtQE5DLXIrM7aNFUK0XS/i6KIzBAJiiyTF3FwX//2NA==
+	t=1795051051;
+	b=XALMhNeFcYTuqV+5VEMYJzMiCIBErnv3mRn8icnDka579+rBA4sODGEJ3/jhR2cORhiS
+	 iy+6c4GTdF5kUNO/MtGBO/V/aAf6o/G8E8C5+r1vos22hxa1yKBiCIPDgkgxTFOz6APtI
+	 qCUlakN5vfCyYDh0PcqKg2rW1GKGfZI2YvOppa9wzEMqVFzJ5Ha54w7DvUZEM0vduV2U2
+	 GQun1Wu9TQlo7pk7LrRof0bCSk+j2zjjeDBEFgN9aKHJSaMHUGF1X+i3M7w8hpShiutZu
+	 fO9iU/mYKi2PRsuD6PQf1cOzzbKTHrA7VmI9PuK8RQ0wNvrtg45sSwt6ixJqPhYDlcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051048;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051051;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qY1fidVMAIpM//MFIPvpnGXusKQON8JJZoB9mrL7JxA=;
-	b=I7nYTCIW+cStCLR7TXLRKt06pVZS7hNAbTF7Hc1k6pOHyJqNLyL0yBBoNoPaYwo3RIKg
-	 23RuIiKBcw5J2kfVTeZZN9i9tpni83QSdlWLxw558aVn9BKRmDtg11H9ouud1VdN7QaO5
-	 2Sh8YaeT/0Q2bo4+FVM8jk/B0zuukLRc4g6XLgJueRoDJSuSk/MtgGrs19Oh7OuKI9AxT
-	 htzfhaVX+L0NuwrBV9hME2Ur7t9Khf9EwmH7KQ7baQMClVQV4w2HRw9ufBJ1w+/WAUTg4
-	 fSZ7vDT8fKJxzLSDx5O/Ran9GAf6XTr4i5MOv1eUUePHZ+MaRwP52oXXfCxnRCbf72w==
+	bh=bieOWp3JkdagOxz0XG7e50bzhX/+i7eX8+IrxPUbNTM=;
+	b=gTBlNTodrkEIsW0zQZYmklPQgBl8G6qv0jyrIUqqOdHxRmiS1rJfaPEhzi0qzxSw5vm1
+	 tJwrawYU4ax8A5PxIznxJBrUjmk+lXvCuA5zHS+RNeowvXx2bLhJQ6NZI8xmqVF8Gsvdo
+	 TJKlDvQaIZCom9I621NB6COULUgEV2hgbDbNP/Wj7xqej6jkp0Bd7K37+UCY5aBiRd7MU
+	 ir0smNqGQg3TXLdLTMOZY4OGtStYRcikEdHkZ8ReBGsHsLp9DdVTYRhtSdRiUpP5fuZTo
+	 7n8oDl7uBWWUE0vZ7J9QZUP/4Z39wSTfhvhHE9FA+W+3JoH1WSB71z2jzVpBmc41qBA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VWANuDyb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fy2ibHQH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01128606A31C;
-	Thu, 19 Nov 2026 01:17:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCB0606A325;
+	Thu, 19 Nov 2026 01:17:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VWANuDyb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F6691F000C4;
-	Thu, 19 Nov 2026 01:17:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fy2ibHQH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 170641F000C4;
+	Thu, 19 Nov 2026 01:17:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051047;
-	bh=qY1fidVMAIpM//MFIPvpnGXusKQON8JJZoB9mrL7JxA=;
+	s=korg; t=1795051050;
+	bh=bieOWp3JkdagOxz0XG7e50bzhX/+i7eX8+IrxPUbNTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VWANuDybmjH5tolbj65fWbAN1sJZCxfbhR/5qlkeTnUWa0K/QmQGAObo96z9Aonyz
-	 WSbB8kHvEnRUDFXDk9gtq1m6fBYFUyFYwmkxJ4QHbUIumrVjc0tc+ZjkkV6NHSOVK/
-	 S51GITS18dTwdOpvrYkTec1QQ0tb4fzrG8sLxU5U=
+	b=fy2ibHQHNddx/bNMVYt5enJ37PVm2TvPCgPGNAk1XRia4f8GsNtzfbxmMgrOQF5ck
+	 IezqDE4fK435qxyrMpZK1Gukz8L6TyR2K0UppS+hP4xGRvmeQPJG9vFDzHQ+wrKAnK
+	 Sc96B6U+l8Sh33NyI6d3sUhYsDafOMFwJsjt4f94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Prostitis <prostitisgabriel@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0069/2214] USB: gadget: inode: fix mm lifetime handling
-Date: Wed, 18 Nov 2026 15:29:05 +0100
-Message-ID: <20261118150012.753898200@linuxfoundation.org>
+Subject: [PATCH 5.15 0070/2214] pinctrl: sx150x: add missing MODULE_DEVICE_TABLE()
+Date: Wed, 18 Nov 2026 15:29:06 +0100
+Message-ID: <20261118150012.792684624@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,80 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriel Prostitis <prostitisgabriel@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit a1c33c80e11ecd5c3310a38c4be324095dd85ac5 ]
+[ Upstream commit 5fe4b12c087db3e565f53b87f1dafdf2f0d1ee0f ]
 
-priv stores a pointer to the submitting task's mm_struct,
-but does not currently hold a reference to it while async
-requests are pending.
+The driver has a match table for the i2c bus wired into its driver
+structure, but the table is not exported with MODULE_DEVICE_TABLE().
 
-This can result in a use-after-free if the task exits before
-completion handling finishes.
+Add the missing MODULE_DEVICE_TABLE() entry so module alias information
+is generated for automatic module loading.
 
-Take a reference with mmgrab() when queuing the read request
-and release it with mmdrop() on request completion.
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the driver registration structure, and the missing module alias
+publication.
 
-Reported-by: Gabriel Prostitis <prostitisgabriel@gmail.com>
-Signed-off-by: Gabriel Prostitis <prostitisgabriel@gmail.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260601-mm-uaf-fix-v2-2-3c942a707bce@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/legacy/inode.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ drivers/pinctrl/pinctrl-sx150x.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/usb/gadget/legacy/inode.c b/drivers/usb/gadget/legacy/inode.c
-index b17122fa7931d..10d01e6c06b89 100644
---- a/drivers/usb/gadget/legacy/inode.c
-+++ b/drivers/usb/gadget/legacy/inode.c
-@@ -466,11 +466,17 @@ static void ep_user_copy_worker(struct work_struct *work)
- 	struct kiocb *iocb = priv->iocb;
- 	size_t ret;
+diff --git a/drivers/pinctrl/pinctrl-sx150x.c b/drivers/pinctrl/pinctrl-sx150x.c
+index 484a3b9e875c1..6998e24afc5c2 100644
+--- a/drivers/pinctrl/pinctrl-sx150x.c
++++ b/drivers/pinctrl/pinctrl-sx150x.c
+@@ -829,6 +829,7 @@ static const struct i2c_device_id sx150x_id[] = {
+ 	{"sx1509q", (kernel_ulong_t) &sx1509q_device_data },
+ 	{}
+ };
++MODULE_DEVICE_TABLE(i2c, sx150x_id);
  
--	kthread_use_mm(mm);
--	ret = copy_to_iter(priv->buf, priv->actual, &priv->to);
--	kthread_unuse_mm(mm);
--	if (!ret)
-+	if (mmget_not_zero(mm)) {
-+		kthread_use_mm(mm);
-+		ret = copy_to_iter(priv->buf, priv->actual, &priv->to);
-+		kthread_unuse_mm(mm);
-+		mmput(mm);
-+		if (!ret)
-+			ret = -EFAULT;
-+	} else {
- 		ret = -EFAULT;
-+	}
-+	mmdrop(mm);
- 
- 	/* completing the iocb can drop the ctx and mm, don't touch mm after */
- 	iocb->ki_complete(iocb, ret, ret);
-@@ -496,6 +502,7 @@ static void ep_aio_complete(struct usb_ep *ep, struct usb_request *req)
- 	 * complete the aio request immediately.
- 	 */
- 	if (priv->to_free == NULL || unlikely(req->actual == 0)) {
-+		mmdrop(priv->mm);
- 		kfree(req->buf);
- 		kfree(priv->to_free);
- 		kfree(priv);
-@@ -539,6 +546,7 @@ static ssize_t ep_aio(struct kiocb *iocb,
- 	priv->epdata = epdata;
- 	priv->actual = 0;
- 	priv->mm = current->mm; /* mm teardown waits for iocbs in exit_aio() */
-+	mmgrab(priv->mm);
- 
- 	/* each kiocb is coupled to one usb_request, but we can't
- 	 * allocate or submit those if the host disconnected.
-@@ -568,6 +576,7 @@ static ssize_t ep_aio(struct kiocb *iocb,
- 
- fail:
- 	spin_unlock_irq(&epdata->dev->lock);
-+	mmdrop(priv->mm);
- 	kfree(priv->to_free);
- 	kfree(priv);
- 	put_ep(epdata);
+ static const struct of_device_id sx150x_of_match[] = {
+ 	{ .compatible = "semtech,sx1501q", .data = &sx1501q_device_data },
 -- 
 2.53.0
 
