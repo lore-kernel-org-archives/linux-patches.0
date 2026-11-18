@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016446;
-	b=IPelbCQWudmLYM3wfNZhu0iM6fLqVcHB7+OwZHmbTLGmxP6ZB7v1t/Rk4UJlqCSn/RmB
-	 5P3Nd8C0IS9gghH/EEsCNrtB+mZQs52MA6BV8J/AmjTexGDNCk0M9zc8tClRIFi+ebP+n
-	 vC4kZFooVyhKoGDzeDhseao+PAAvqK6RrsODNVY6qAGu7CYqKrepEXWLTIAgaGrPwaX84
-	 pKlt6kxnHX4aUURIH3q5k732lMFOPWAy73XObzPoIaacRv0H4R/NHpsfoRABGiHTCS9TQ
-	 igw6yNBngqo6l6NBV4PIpnudFe/NVikaHdVP2PArAqtp6iitWdnAAjmhF3qDMnKvINQ==
+	t=1795016449;
+	b=K8CZTr8DqsAMs2GyyxK4CbAZZHztsKMuRnzFStru7iICbLG4MNiFsIQ8LrtsofJDIo9Z
+	 uJsFzs8cZG5u5jYxXbcCgdZhu556X+6V16DRq6PbmiK3sz4PVS76RouDmXZzH0seqtjyh
+	 sToDUTrK/aMP6kwmRy6Su8EgQsz6hAg0BzvE3dHjSGZvRGuQLdDBXL4uZMw8omEZs8Kjw
+	 sG/+jtb4uPpuQ4JPh62goC+hrqIQ11MY029cuRPqS1nALtKS1t7KIsJqVkmBPRaDp452y
+	 x8PlULg/4ykNgrzpveqwDD4F4CtWjoOEre4NAx09fCri+4rzFpSvLH8VEcQHfZWL7Ig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016446;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016449;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3lHOOEko9l1k2tEdXK+s9C8BRYz5yEtRCiT226TIzKY=;
-	b=Qt07USj6kKWlok4x5PMz3j9p4oxiUX2xMR0J0lKxgMsOxyFIc7PGg+LEd5cNf3yPpWKy
-	 22wXCCSOFpJWtxlEI7k1w2DlO/WChBObEucyuanW+1kSDSOwQJQYtu87+Qkl8IRDJrkVW
-	 8ERwxZnVVwjSNiy/TJFz02NSzDIr+ma9+e5CqqDO0y47jvv912dJosTbLGvykKa+gG7MY
-	 v7hX2ozIsyxTpXrF1GddQqjmi4LYhHFb2rJTmrCq5mGEd4TjVssQ1XzA1wT64ylTdXOnu
-	 9z5n4QMPVaazoYzr+H99yPlLbYvJsApFcEzBXIqK5YjaiTQ78ciKeeeBVlhmCwAcFIA==
+	bh=P4UvoBXpgd9hv4bPCCSNT4Peiln9+GjAhCOd58V9qHE=;
+	b=yyZpCypIRIMyJXA+OPjJH+nEdTJDKCVwcFTxm/O8TEr2Mc0dnLJt1uEmGLL4lekJhCR3
+	 CozADvzPMdJytQPdMyGrzXmbXVhHH2ciRR+1RE2SYkjFLoLRK7dimvULwUVefJR97DjgB
+	 u3zjXtWocbUuRzRO6RJcVvkIkvgkHDOQglFIrNxPSTKcxhnxfgczT+dCYByt3ZP+ZyHve
+	 fJLxX8TsFbSX0Uk3R0IfIIeAVd/0lZHeQJo0LsH+1x2H0pjgnkqEenlygHmft1WIK/xZt
+	 /udPIh6MMFA/+0ebbPqEIurt84rVdyRK8ZG0wR1SKEvDAr0pivcdKEElZILzna/yksg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IbXHGmdV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0DeHAq3R;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B31606A31C;
-	Wed, 18 Nov 2026 15:40:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70757606A320;
+	Wed, 18 Nov 2026 15:40:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IbXHGmdV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECD761F000C4;
-	Wed, 18 Nov 2026 15:40:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0DeHAq3R
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C22B51F000C4;
+	Wed, 18 Nov 2026 15:40:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016446;
-	bh=3lHOOEko9l1k2tEdXK+s9C8BRYz5yEtRCiT226TIzKY=;
+	s=korg; t=1795016449;
+	bh=P4UvoBXpgd9hv4bPCCSNT4Peiln9+GjAhCOd58V9qHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IbXHGmdVm1Pixt+AowgUdgaDa2A0UpMLfGTsymNGc5mFGvvmI5EK3KEASKRWL2Feg
-	 FoTbDO/qA1O8hnj3/N4WGgid2M/BZDkVCywKcKuXxutmKKL/UAvfho63Ukml5MF3sR
-	 gu27WRukqdKlAmBMA3Vfm/5l4UD92g3o7xMZVq9s=
+	b=0DeHAq3RxlYqjh6I9kuO1WZLXkRx2N9EFbnTO95lD0ZEqO941ll2iacQDLWDa0Vw5
+	 IW+ux3v9LyhqTIF809vIBt59gLLqqrbwRoVTaU2b2WAO57Ky/fPEgIza3xkKixNNc6
+	 lt+EKoeh2lyQJMBstvMqmUBcE877fu3RuvnxIrzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1f5a7de91d547763f4c8@syzkaller.appspotmail.com,
-	Yogesh Gaur <yogeshgaur.83@gmail.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0515/2651] md/raid5: dont BUG() on an inconsistent reshape state from the superblock
-Date: Wed, 18 Nov 2026 15:29:15 +0100
-Message-ID: <20261118150306.292822763@linuxfoundation.org>
+Subject: [PATCH 7.3 0533/2651] ASoC: mediatek: mt8189: Propagate TDM clock errors
+Date: Wed, 18 Nov 2026 15:29:33 +0100
+Message-ID: <20261118150306.952131239@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,86 +69,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yogesh Gaur <yogeshgaur.83@gmail.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 0669c7dbd1d375f279e607a24addc2f1dae2d4f3 ]
+[ Upstream commit 242d0280eabba05c085a51ad0a9c9a7a3afa7b03 ]
 
-raid5_run() branches on mddev->reshape_position. When it is MaxSector --
-no reshape in progress -- the else branch asserts that nothing else
-describes one:
+mtk_tdm_bck_en_event() and mtk_tdm_mck_en_event() currently ignore
+errors returned by the MCK enable and disable functions.
 
-	BUG_ON(mddev->level != mddev->new_level);
-	BUG_ON(mddev->layout != mddev->new_layout);
-	BUG_ON(mddev->chunk_sectors != mddev->new_chunk_sectors);
-	BUG_ON(mddev->delta_disks != 0);
+Propagate these errors.
 
-Nothing enforces that invariant. Both superblock validators copy the
-reshape fields straight off disk without cross-checking them against
-each other: super_1_validate() takes reshape_position, delta_disks,
-new_level, new_layout and new_chunk from the superblock whenever
-MD_FEATURE_RESHAPE_ACTIVE is set, and super_90_validate() does the same
-for minor version 91. A superblock that sets the reshape feature while
-leaving reshape_position at the MaxSector sentinel therefore reaches the
-else branch with a non-zero delta_disks, and assembling the array takes
-the machine down:
-
-  kernel BUG at drivers/md/raid5.c:8117!
-  Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-  RIP: 0010:raid5_run+0x11a7/0x1670 drivers/md/raid5.c:8117
-  Call Trace:
-   md_run+0xc2f/0x2510 drivers/md/md.c:6779
-   do_md_run+0x36/0x660 drivers/md/md.c:6880
-   array_state_store+0x9c5/0xcf0 drivers/md/md.c:4765
-   md_attr_store+0x1c5/0x330 drivers/md/md.c:6158
-   sysfs_kf_write+0xf2/0x150 fs/sysfs/file.c:145
-   kernfs_fop_write_iter+0x3e0/0x5f0 fs/kernfs/file.c:345
-
-This is reachable by anyone who can present an md superblock, so BUG()
-is the wrong response. Refuse to start the array instead, the way the
-reshape_position != MaxSector branch a few lines above already refuses a
-reshape it cannot resume. Nothing has been allocated at this point --
-the journal-and-bitmap check just above returns -EINVAL the same way --
-so there is nothing to unwind.
-
-Reported-by: syzbot+1f5a7de91d547763f4c8@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1f5a7de91d547763f4c8
-Fixes: 91adb56473fe ("md/raid5: refactor raid5 "run"")
-Assisted-by: LLM
-Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
-Link: https://patch.msgid.link/20260910131103.988-1-yogeshgaur.83@gmail.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Fixes: 9f202872ba04 ("ASoC: mediatek: mt8189: support TDM in platform driver")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/20260916050020.14575-12-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ sound/soc/mediatek/mt8189/mt8189-dai-tdm.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index bc5f4b048eeda..63e2bc9f329ed 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -8112,11 +8112,17 @@ static int raid5_run(struct mddev *mddev)
- 		}
- 		pr_debug("md/raid:%s: reshape will continue\n", mdname(mddev));
- 		/* OK, we should be able to continue; */
--	} else {
--		BUG_ON(mddev->level != mddev->new_level);
--		BUG_ON(mddev->layout != mddev->new_layout);
--		BUG_ON(mddev->chunk_sectors != mddev->new_chunk_sectors);
--		BUG_ON(mddev->delta_disks != 0);
-+	} else if (mddev->level != mddev->new_level ||
-+		   mddev->layout != mddev->new_layout ||
-+		   mddev->chunk_sectors != mddev->new_chunk_sectors ||
-+		   mddev->delta_disks != 0) {
-+		/* No reshape is in progress, but the array describes one.
-+		 * The superblock validators do not cross-check these against
-+		 * reshape_position, so this is reachable from disk.
-+		 */
-+		pr_warn("md/raid:%s: inconsistent reshape state - aborting.\n",
-+			mdname(mddev));
-+		return -EINVAL;
+diff --git a/sound/soc/mediatek/mt8189/mt8189-dai-tdm.c b/sound/soc/mediatek/mt8189/mt8189-dai-tdm.c
+index 5d68a55ccc45c..9aebd0320614e 100644
+--- a/sound/soc/mediatek/mt8189/mt8189-dai-tdm.c
++++ b/sound/soc/mediatek/mt8189/mt8189-dai-tdm.c
+@@ -261,22 +261,24 @@ static int mtk_tdm_bck_en_event(struct snd_soc_dapm_widget *w,
+ 	struct mt8189_afe_private *afe_priv = afe->platform_priv;
+ 	int dai_id = get_tdm_id_by_name(w->name);
+ 	struct mtk_afe_tdm_priv *tdm_priv = afe_priv->dai_priv[dai_id];
++	int ret;
+ 
+ 	dev_dbg(cmpnt->dev, "name %s, event 0x%x, dai_id %d, bck: %d\n",
+ 		w->name, event, dai_id, tdm_priv->bck_rate);
+ 
+ 	switch (event) {
+ 	case SND_SOC_DAPM_PRE_PMU:
+-		mt8189_mck_enable(afe, tdm_priv->bck_id, tdm_priv->bck_rate);
++		ret = mt8189_mck_enable(afe, tdm_priv->bck_id, tdm_priv->bck_rate);
+ 		break;
+ 	case SND_SOC_DAPM_POST_PMD:
+-		mt8189_mck_disable(afe, tdm_priv->bck_id);
++		ret = mt8189_mck_disable(afe, tdm_priv->bck_id);
+ 		break;
+ 	default:
++		ret = 0;
+ 		break;
  	}
  
- 	if (test_bit(MD_HAS_JOURNAL, &mddev->flags) &&
+-	return 0;
++	return ret;
+ }
+ 
+ static int mtk_tdm_mck_en_event(struct snd_soc_dapm_widget *w,
+@@ -288,23 +290,25 @@ static int mtk_tdm_mck_en_event(struct snd_soc_dapm_widget *w,
+ 	struct mt8189_afe_private *afe_priv = afe->platform_priv;
+ 	int dai_id = get_tdm_id_by_name(w->name);
+ 	struct mtk_afe_tdm_priv *tdm_priv = afe_priv->dai_priv[dai_id];
++	int ret;
+ 
+ 	dev_dbg(cmpnt->dev, "name %s, event 0x%x, dai_id %d, mclk %d\n",
+ 		w->name, event, dai_id, tdm_priv->mclk_rate);
+ 
+ 	switch (event) {
+ 	case SND_SOC_DAPM_PRE_PMU:
+-		mt8189_mck_enable(afe, tdm_priv->mclk_id, tdm_priv->mclk_rate);
++		ret = mt8189_mck_enable(afe, tdm_priv->mclk_id, tdm_priv->mclk_rate);
+ 		break;
+ 	case SND_SOC_DAPM_POST_PMD:
+ 		tdm_priv->mclk_rate = 0;
+-		mt8189_mck_disable(afe, tdm_priv->mclk_id);
++		ret = mt8189_mck_disable(afe, tdm_priv->mclk_id);
+ 		break;
+ 	default:
++		ret = 0;
+ 		break;
+ 	}
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static const struct snd_soc_dapm_widget mtk_dai_tdm_widgets[] = {
 -- 
 2.53.0
 
