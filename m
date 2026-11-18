@@ -1,56 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045656;
-	b=v8YBvkhumolLYKxAVw/IktyYTVGsrqFE/YEtKeW/PHCLo3l58XwNiNrLuI2VMlPfmAXk
-	 AMrhaSS7+O8dmzno5uIjYGpfmRknUHqYNu54EfxK7nFJA6WMPlwzIpWUbi3HVB7bPkZVF
-	 ufZgrSLUQPrtQJGi65NUt6D/4F7wmuHSE27t4aSI1Ry73+8fKuGmQ64RoVj7uWLyauvhr
-	 j/TVQNjOff3B9NXa73v6hvfLsOeLCvqr8h0Nv0YFwQUOEMu3aIYsfBcF16wX444Se5ivY
-	 uH0edwaT523YM5VM9Hni3iRxB5eUWLlryNU5uW4fOSdm41golMPbfJSkL8WMWLIHcSQ==
+	t=1795045659;
+	b=EdsK/Ezt9jX//Ku4BUfPPpipeix1tXmCpGtAkxOVEUyiLtNPiD0WsIoj3uwuYHmKbCJA
+	 +Rm9fm4+IjsWBOXLPCBL/6n4pifC+eydf9DiGtiRUN57Tp4JqBfEWmbYFdSQqTUXZxi2a
+	 gY9wNLUqOK+5vwIRZmvpfBmw25C3FUsycpEpdpyRuGme6GaI5ralYN/VfKmJAJLwdwJx0
+	 Xn4mzjrHegEgKDvjYNan/1jiy2xtvrMK6jEOLXQu9700XpCUJIk4zLj5IuKyp4sPh0Alk
+	 CdiP1Joh7mdwqK/rCkBCrHoPiu6NdA2jlYqW7eqBW+PmwtCXCb3QEjk7uihmPfZlAFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045656;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045659;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Kkn7dV2SGjJmsExwwTNHRV5WIBg13ewiMBBiUsuolXM=;
-	b=Y2+xolC4A0pKF6iT2LedjTcaiyOaHeG3psBU/oRcNlboAYvAGYrZCFwqwTtQVcBAAm4j
-	 WJgMWLKIRFIwJS6C1gNjnPYUyPOeJm3h9GOSmOe6QP5BFzyrsfcThcVdn7QTDQ0uuZSYS
-	 DEYYzS6IJ0Vifhh57DfS9Gee05eYx+rzNQRPLmH2Iwq1aSIrB3bnY1O/mvcoYAXFngpSr
-	 xtSqYX4jPzI7ra4YynDqfcjYDlK7++WNCVMfPpgp0mE4jgM32BTixUpm/hgQBVj9vkHhL
-	 iboDVKt98Vf1BBRU82QDeuz/l4SOnn2y7gujH/WUrGKq9Rv42pW+hLMai09Exx5hJsw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=bPAvuE6u9x0PNWpsBoGcpaxJRrLdj+mqiO+qYpwZrdk=;
+	b=dGF/etLaul8kWTO4WvsgpawYVIoFdEjF8iVEkjUairELUzhYKpFtYDajIxpi12EPbF35
+	 Nelfe2+IKTiAHzIhhhRuo5CdMdqLqng/tpKrVCNGRU81ucVcumbFfro1kponKI5pKLJd6
+	 jGwTeirByLYyuks9CKoLkWZykPOZyQQwEfqNp4A40W5+YO9VZA0SrIoZ9d7OnEYja+xUd
+	 Sa4wL33KBVKivEgQKshumLgtQfOhkLSVj1futvLHRLnSoro/4XjeI6GgLT+xOoCmxnsPz
+	 r4FksUr1gUNY0XT0a2/XVxMdt9N73e9jG/5VBGpYeyQitwkWpFbhCEpbd5kN8mZo4KA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GSN5teDi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EdKvWHA+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45DF0606A325;
-	Wed, 18 Nov 2026 23:47:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2173B606A32C;
+	Wed, 18 Nov 2026 23:47:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GSN5teDi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B79C1F000C4;
-	Wed, 18 Nov 2026 23:47:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EdKvWHA+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29AB91F000C4;
+	Wed, 18 Nov 2026 23:47:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045655;
-	bh=Kkn7dV2SGjJmsExwwTNHRV5WIBg13ewiMBBiUsuolXM=;
+	s=korg; t=1795045658;
+	bh=bPAvuE6u9x0PNWpsBoGcpaxJRrLdj+mqiO+qYpwZrdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GSN5teDitwzxt70vDRx6cvpOiDDoCsHAbMXiUcpiqWKg8bCu4aZfvEWaVA2/kq7/e
-	 s8qdh2Sunq2rrwRK5yNi8Kl6izqrA24aYpkZnF5edW8HTsJkjVHbexuki6paCW7jnz
-	 r+b5ktWcmqCHxqwlRBs4rgoixRF4hkIg7ClKNiH8=
+	b=EdKvWHA+byIVXW6EWl4xxn76nK2QtPy0kMRi4CRIJGZaWW6fDqLXYnsTnQyMP5CMH
+	 LNf+EcMCa6teAWyCu/Q2MUylxFbHUSh4T285wirdfRu42H3KkCJcx+ZhQ9eCGPKzFF
+	 o7grZbTYxXwRGPCPxGK1LFHwniylnyonp4cN7mm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Philip Yang <Philip.Yang@amd.com>,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
+	Keita Morisaki <kmta1236@gmail.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Roman Li <roman.li@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1002/2857] drm/amdgpu: reject ANONONLY userptrs that span multiple VMAs
-Date: Wed, 18 Nov 2026 15:33:56 +0100
-Message-ID: <20261118150237.676860510@linuxfoundation.org>
+Subject: [PATCH 6.1 1003/2857] drm/amd/display: Fix swap in median3() for DSC rate control
+Date: Wed, 18 Nov 2026 15:33:57 +0100
+Message-ID: <20261118150237.712511366@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -66,63 +64,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Keita Morisaki <kmta1236@gmail.com>
 
-[ Upstream commit d577b68a854d0f590f480777249b041507d0708c ]
+[ Upstream commit 7b23bf82ccbdb4cf0752f2b8686e7319a7ce497f ]
 
-For AMDGPU_GEM_USERPTR_ANONONLY, amdgpu_ttm_tt_get_user_pages() only
-checks the VMA at the start of the range for a backing file, and
-amdgpu_hmm_range_get_pages() then faults in the whole range, across any
-other VMAs. The check used to reject ranges ending beyond the first VMA
-(vma->vm_end < end), which got lost when the code moved to HMM.
+median3() is meant to return the median of three values, but its last
+compare-and-swap step swaps b and c instead of a and b. When c is
+smaller than both a and b, it returns max(a, b) instead of min(a, b).
+For example, median3(2, 3, 1) returns 3 instead of 2.
 
-An ANONONLY userptr over one page of file-backed memory is rejected
-with -EPERM, but one over an anonymous page followed by the same
-file-backed page is accepted.
+_do_calc_rc_params() always passes 0 as the first argument, and the
+second argument is never below 12. So whenever the third argument is
+negative, first_line_bpg_offset (and second_line_bpg_offset for 4:2:0)
+is set to the second argument instead of 0.
 
-Restore the check and reject ANONONLY userptrs that cross more than one
-VMA. The second userptr is now rejected too.
+Fix this by swapping a and b in the last step, as intended.
 
-v2: reject ranges spanning multiple VMAs instead of walking every VMA
-    (Christian)
-v3: cast num_pages to u64 to avoid an overflow (Christian)
+Note that this change does not affect valid DSC configurations. The
+third argument is negative only when bits per pixel exceeds the
+uncompressed rate of the colour format:
 
-Fixes: 6826cb3b92a3 ("drm/amdgpu: support userptr cross VMAs case with HMM")
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Philip Yang <Philip.Yang@amd.com>
-Cc: Felix Kuehling <Felix.Kuehling@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Acked-by: Felix Kuehling <felix.kuehling@amd.com>
+ - 3 * bpc for 4:4:4, 3 * bpc + 2 for RGB
+
+ - 2 * bpc for 4:2:2
+
+ - 1.5 * bpc for 4:2:0
+
+Fixes: 97bda0322b8a ("drm/amd/display: Add DSC support for Navi (v2)")
+Signed-off-by: Keita Morisaki <kmta1236@gmail.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Reviewed-by: Roman Li <roman.li@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 75d753ed4704d5efc72164d9e546b2a282e42ae2)
+(cherry picked from commit 1ddc4bc97a62fc89d9d3681413d9f977e1fa1a83)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dml/dsc/rc_calc_fpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-index 2ea823fdcd9f5..30861836b3c82 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-@@ -702,7 +702,8 @@ int amdgpu_ttm_tt_get_user_pages(struct amdgpu_bo *bo, struct page **pages,
- 		goto out_unlock;
- 	}
- 	if (unlikely((gtt->userflags & AMDGPU_GEM_USERPTR_ANONONLY) &&
--		vma->vm_file)) {
-+		     (vma->vm_file ||
-+		      vma->vm_end < start + (u64)ttm->num_pages * PAGE_SIZE))) {
- 		r = -EPERM;
- 		goto out_unlock;
- 	}
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dsc/rc_calc_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dsc/rc_calc_fpu.c
+index ef75eb7d5adc3..940de620e3308 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dsc/rc_calc_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dsc/rc_calc_fpu.c
+@@ -46,7 +46,7 @@ static int median3(int a, int b, int c)
+ 	if (b > c)
+ 		swap(b, c);
+ 	if (a > b)
+-		swap(b, c);
++		swap(a, b);
+ 
+ 	return b;
+ }
 -- 
 2.53.0
 
