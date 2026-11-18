@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019823;
-	b=lgK6DXuyqKyorJXScQJKPNXYSyM+rPrWPRRPu5hR6ZzGsKuZPE7CMb3x22GSE+8AERiD
-	 RWuH2YEZy3gHbIWo3ALG1cEZQ2rP/20iPHEidamVXRuRxL6BeXEkszvcyY96m9LvrzoqB
-	 qHmF2IyWYg4MSELfR+eNkNqW1ZQBCrNwXq6dJXoSoExYNqhWN/B6mg//DNapXt357lL3p
-	 3d2rZWmpgt4PrHex93PJF3VHybygxJkwc2ovCrdS298C/kcVCPYRZVAvUUIuJVGvpm8RU
-	 Ofa7F5hQFopadgIMqaJxtTJASbI0uJERQzpu/EAe4++wajuFC1ou+4MGXSMOc/w/ScQ==
+	t=1795019825;
+	b=5C+Km9nFsCV42AUiUWLHkpD0kEufegWS0ajhILmO5Nszv9GaywXNflyYlKODLiUmZmvI
+	 QEYtrPYipgLEEVzwXMWRXGtiwe5ntQKGlcad9qTrdUu5Oe1STCAP0e1HV2i3tbY17vBBQ
+	 3tg7ukdrQ3Wqy4yKy5hyASv8ZOVJYokw0V1uny7iScQEhbiWSOdfxWEyamIjLlp9i7thq
+	 tPwzEiGt1EazOt3TC1EXC2t2j/QGmjhXb5uQgKcP+6KiIdBVrQLDPMykl+KaLCsZKNz14
+	 9n/ayKaTvjp2mpdLN+fLADVlI/Ne4PVp0rdmHo+eqQ08eGxchvfuurTByY6fTEgY8RA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019823;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019825;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z8cEMCv1ZPsEOwlaFL4eF4eRSE2Fxro94KD+GxnUnQM=;
-	b=Ig6tYBOFOVsgMvvfitmbuwiGeMmO9eHfzlkwB+tz7/JTX/vrp/DCpB9VY61Ci9o5ODyy
-	 zJWz8S1GBkxJCD6X52cNW7GYk+26qxucQjV0P0TO3pdPF2Xj5svfEW5NNupMkXVGj5Q1m
-	 olkCEtUO1W6gRuG1j04VowNuO1AcsuY0xme7PvpyxNPXBKvsaRhUsgJCCqLvCFDeWO07G
-	 Wzzzg9hyq7JTR8iHw8grGhR1MWlGhEvqt2MBaXoBDIiYxBeBK4FiAfOPD7y/ZhVLHrIw7
-	 Ev9O1kgp45vQxG7Fj86q/FeGmvcdhxx0fnVKQAEZtkTDc4dykgmz2d4qY1kJ7HQ3M0A==
+	bh=cg9YlYlWs7Eqr8GYUait8Ax0loZ998VmH8pnhn/sDwA=;
+	b=cVLlRvr06LcwzB4S7Ij3KObNwmEBzpi8TzUmdk4ACdySwFzx5dXXWG+cmpYQLzE447kW
+	 19DqS1bdvUBmIiLgDQWOiC/Hq3vCnuxb/4+rt0XTEBAcftkDY7uHhF1RMg3GZKTfbScQ1
+	 +2KFeuz8WZxbp5wcd+vQWKERYRb8WaKC6lGGBqtJ5nETOOkgbbgLxVOx+OX3lLJYr2ddU
+	 Aqdwvyok6YAlpaPlb0AJS4WYug1xwyjfKXsqA0HVOqdX07DUpcOf8N4UQ94GRn6FJVQ8m
+	 xyMOLZQJHBQ0qPrFv7smT+tv5IhgYjVyHs5Fu+6X32uG2RAPs5f6oqFuGid/5fWoKSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HBp17eBC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IE3s2P1u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF7F60A2622;
-	Wed, 18 Nov 2026 16:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF739606A332;
+	Wed, 18 Nov 2026 16:37:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HBp17eBC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4989F1F000C7;
-	Wed, 18 Nov 2026 16:37:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IE3s2P1u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AB141F000C5;
+	Wed, 18 Nov 2026 16:37:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019822;
-	bh=Z8cEMCv1ZPsEOwlaFL4eF4eRSE2Fxro94KD+GxnUnQM=;
+	s=korg; t=1795019825;
+	bh=cg9YlYlWs7Eqr8GYUait8Ax0loZ998VmH8pnhn/sDwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HBp17eBCqqfuqPa+XmM9YgCdP8uvaiz3cUaQi9gV3qkMIvIbDltJWiej3r4vrhe4u
-	 j5fb8tDrlq56vwblBfCZ5bog+Q6r678dHSEwSXoqGeaYNMLA7OsRBLTNVlwG+blXdC
-	 yqKkGajoy/Bt5aOlKUFi2MdkTJ2/aZgO4WKPIlZ8=
+	b=IE3s2P1uhCe4KtlT+3/5W4gn6nJhoTGG0SkdNQHDfakprPDYxCNEdmnXkeoHsBEWl
+	 r4eqguA/hZfxAtwNMSo0sZHVDagmosi0vYp4NMrhH5MzgOIosrncRQIRwDxfINJH9z
+	 74tkQ5tt7fnuNJaDiWnnjInd6IbJr53FP0F+3HOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Georgi Djakov <djakov@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1732/2651] perf test attr: Source setup_python.sh instead of calling python
-Date: Wed, 18 Nov 2026 15:49:32 +0100
-Message-ID: <20261118150349.970582586@linuxfoundation.org>
+Subject: [PATCH 7.3 1733/2651] thermal/drivers/qcom-spmi-temp-alarm: Fix temp_map indexing
+Date: Wed, 18 Nov 2026 15:49:33 +0100
+Message-ID: <20261118150350.002824220@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,61 +68,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Georgi Djakov <djakov@kernel.org>
 
-[ Upstream commit 3b05843302202598a6d25f3e2543c8182e6a930c ]
+[ Upstream commit 51c262cf2aa9dfd97591e570d4e82af493ad1689 ]
 
-The "Perf attribute expectations test" (perf test 82) fails on machines
-that don't ship a bare 'python' binary, i.e. distributions that provide
-only python3 unless python-is-python3 or an equivalent is installed.
-Namhyung Kim hit this and posted the fix applied here in
-<asWLmvF-3YtoKJ7j@google.com>:
+Fix the following issue noticed when booting on the db845c-dragonboard:
 
-  /home/namhyung/project/linux/tools/perf/tests/shell/attr.sh: line 20: python: command not found
-  ---- end(-1) ----
-   82: Perf attribute expectations test : FAILED!
+BUG: KASAN: global-out-of-bounds in qpnp_tm_sync_thresholds+0x11c/0x180 [qcom_spmi_temp_alarm]
+Read of size 24 at addr ffffdd2495f01200 by task (udev-worker)/371
 
-attr.sh is the only shell test that still invokes python directly; do
-what the others do: source lib/setup_python.sh, which prefers python3,
-falls back to python and skips the test when no interpreter is found,
-then run $PYTHON.
+CPU: 3 UID: 0 PID: 371 Comm: (udev-worker) Not tainted 7.3.0-rc3 #116 PREEMPT
+Hardware name: Thundercomm Dragonboard 845c (DT)
+Call trace:
+ show_stack+0x18/0x24 (C)
+ dump_stack_lvl+0xa4/0xf4
+ print_report+0x1f4/0x5ac
+ kasan_report+0x84/0xcc
+ kasan_check_range+0xf0/0x1a4
+ memcpy+0x3c/0xa4
+ qpnp_tm_sync_thresholds+0x11c/0x180 [qcom_spmi_temp_alarm]
+ qpnp_tm_probe+0x3dc/0xae8 [qcom_spmi_temp_alarm]
+ platform_probe+0xc4/0x18c
+ really_probe+0x17c/0x4fc
+ ...
 
-Fixes: 8519e4f44c2af722 ("perf test: Add a shell wrapper for "Setup struct perf_event_attr"")
-Reported-by: Namhyung Kim <namhyung@kernel.org>
-Suggested-by: Namhyung Kim <namhyung@kernel.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/linux-perf-users/asWLmvF-3YtoKJ7j@google.com/
-Assisted-by: LLM
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+The buggy address belongs to the variable:
+ temp_map_gen1+0x60/0xc4 [qcom_spmi_temp_alarm]
+
+It looks like temp_map is a pointer to the complete temperature map.
+Indexing it directly advances the entire map, rather than selecting a
+threshold row.
+
+Fix this by dereferencing the temp_map before indexing it to select the
+requested threshold row.
+
+Fixes: 703f13285a6c ("thermal/drivers/qcom-spmi-temp-alarm: Add temp alarm data struct based on HW subtype")
+Fixes: 1f835c6a4c84 ("thermal/drivers/qcom-spmi-temp-alarm: Prepare to support additional Temp Alarm subtypes")
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Link: https://patch.msgid.link/20260928132823.1426513-1-djakov@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/attr.sh | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/tests/shell/attr.sh b/tools/perf/tests/shell/attr.sh
-index 307e1535795a3..ca3ca4a193971 100755
---- a/tools/perf/tests/shell/attr.sh
-+++ b/tools/perf/tests/shell/attr.sh
-@@ -4,6 +4,10 @@
+diff --git a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
+index fb003ca964546..911ebfd0cdeb6 100644
+--- a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
++++ b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
+@@ -345,8 +345,8 @@ static int qpnp_tm_update_critical_trip_temp(struct qpnp_tm_chip *chip,
+ 	}
  
- err=0
+ skip:
+-	memcpy(chip->temp_thresh_map, chip->data->temp_map[threshold],
+-		sizeof(chip->temp_thresh_map));
++	memcpy(chip->temp_thresh_map, (*chip->data->temp_map)[threshold],
++	       sizeof(chip->temp_thresh_map));
+ 	reg |= threshold;
+ 	if (disable_stage2_shutdown && !chip->require_stage2_shutdown)
+ 		reg |= SHUTDOWN_CTRL1_OVERRIDE_STAGE2;
+@@ -535,8 +535,8 @@ static int qpnp_tm_sync_thresholds(struct qpnp_tm_chip *chip)
+ 		return ret;
  
-+shelldir=$(dirname "$0")
-+# shellcheck source=lib/setup_python.sh
-+. "${shelldir}"/lib/setup_python.sh
-+
- cleanup() {
-   trap - EXIT TERM INT
+ 	threshold = reg & SHUTDOWN_CTRL1_THRESHOLD_MASK;
+-	memcpy(chip->temp_thresh_map, chip->data->temp_map[threshold],
+-		sizeof(chip->temp_thresh_map));
++	memcpy(chip->temp_thresh_map, (*chip->data->temp_map)[threshold],
++	       sizeof(chip->temp_thresh_map));
+ 
+ 	return ret;
  }
-@@ -17,7 +21,7 @@ trap trap_cleanup EXIT TERM INT
- 
- shelldir=$(dirname "$0")
- perf_path=$(which perf)
--python "${shelldir}"/lib/attr.py -d "${shelldir}"/attr -v -p "$perf_path"
-+$PYTHON "${shelldir}"/lib/attr.py -d "${shelldir}"/attr -v -p "$perf_path"
- err=$?
- cleanup
- exit $err
 -- 
 2.53.0
 
