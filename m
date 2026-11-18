@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021799;
-	b=O3mrek/nommBzFCn0kQUR7gbScgc7CerV9ziTcZAvWhbXvHb4w/L2js3f2ou+2Oim1HK
-	 4L8BJkzlu3i8RFGS56WqYBJb9/GB80xr237TvN0GofBh1/t1eY2JPNTF4x1GLuMTvhjBH
-	 owGcJjklDgzTCJyt+w3dkl0LGPczRfkuv+6vKr4Z3daso0VpglN5AULbVB7AfXJaytq4T
-	 rROUt9hYiO0V/2Sr+bsyvnzxal2NGrJLWlHnVUF9pFMteerpBh3yCEO5dbrawOEUC7dnu
-	 n4UOvCOoRwbAz/zFW4Y2smLoUHTm1UF71BU86YgsmV28R756nqzV/cDSFzddc5Q8l1w==
+	t=1795021803;
+	b=ix6Ij01OtA++AMLuqsPN7UUokP/By5J1G4kvCNkCP/Y34y03J5B2HIJsZP6tcS4/1vND
+	 SbsG9A2MbEjnLVY+Ke7GgTyKIbaHJTCycAUU9cg45LFvlkSWLlX7TixxscbliVF/we1v+
+	 mnwquM1f0U7tRLQ6BfW9Q1karyI4nipxELR6vDo6sZOahfuI79+IWBVGWNDpvLoFcWMON
+	 AFyIW/bgLLM0hp1MY6qvIUFkb+3Qv5Z3e9dVA8+DgOby28ecpoCKG7QNHS9UO3OdcAmyg
+	 pRtqOrVZmPB4WwO4TgKbIsmntRALKpg38cuRi5TpA6b6HUQdTTFwJ6XQuXDedy38kqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021799;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021803;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+U1XvkfynesrgZB/NWyy8Z7qU9naSXz1meItStHkaFk=;
-	b=K8zO5YymhNjZTC+6NlLE0phkxjb+tuzULOAGIvQ4MJzEFvgGez4EyjoJXkPGhrOsz+zB
-	 cfhQHcb7q67utSDhWp/b4VQ7pe1wfAiOBwmlViCM7QS7qqj0Yk2AhXzFIZlIL6ZDsr3TF
-	 kQKwCdcoMbDX5tUq3DZrpSoXPsIGWeKfwue7I9m14FTAJG7ywwVT7jddo9DZUbPhdpN4y
-	 wpyu2IrVruq4+hsEnsfuj1XSK0FfDQaWHkQKS2dW3O3OpD2ovCcbk+VnjvIi2NJApurUQ
-	 ed9tJyGYK6Ry+Ej9Cmote1loB0yssU+Uq+0kvdKKc9eFULSxV/zsuL2znuZaW+SpEzw==
+	bh=vUqe/YQx0RwzDL6fdLl36j+2r+Sm2rWRY6zGhTpvE9w=;
+	b=vf/v++pC7AB40q5VRwi4ofoCABdc6N4YuWcoN3aacu2Nce5BXQAId2PVeRxVrXkZkBpn
+	 HdIpk6nfOo4gNXc+fpD+fwDKmcJpo4HvuNCO9DdZCOau3j/+bC88XKNdDLNG8j4zZV+ge
+	 ZENS2PLopyfAfnA5Is1LYMQoVj3n1Et2kvBB2p+7JqbQnstguYVNzyiRLcrfnqJcf7cn8
+	 bpKNSv1CsRoVx5C/UzqLpvwFOp+9nhjJXzTUK9OI5BKphNVCMW91opaIEvzHzqn517GX0
+	 fNjX2OwVszg7ypNCDXhQ7qOKQ7YXB8sWZL0dyf4GwPeJugBEt/FIy0z6C8mPXMPOBYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lC1oZ7RX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Le3rU40y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD74F60A2604;
-	Wed, 18 Nov 2026 17:09:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17E7260A260A;
+	Wed, 18 Nov 2026 17:10:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lC1oZ7RX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CB3E1F000C4;
-	Wed, 18 Nov 2026 17:09:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Le3rU40y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0876B1F000C4;
+	Wed, 18 Nov 2026 17:10:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021799;
-	bh=+U1XvkfynesrgZB/NWyy8Z7qU9naSXz1meItStHkaFk=;
+	s=korg; t=1795021802;
+	bh=vUqe/YQx0RwzDL6fdLl36j+2r+Sm2rWRY6zGhTpvE9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lC1oZ7RXX9jJVKc5bB1Sbm5pmnNGHXUQiUUEaZ/ZoHZOHuQJxVJ0lilYzdgY3ebRx
-	 mTic8KsxTTq9+iCUqBSJscRJIbHhV9CnCW/rDf2lMB1KKqApU2MRU5+fPQAJHmCyba
-	 xSqndCo8sA7kO/QBIq9e8yx6uQPWiF78CzAvFkc8=
+	b=Le3rU40yD/qPGwMOtVEHBKVWPd2HEB+z4Lr9pdi7WxNaDd+MVg1hgYgMayjq3VMr6
+	 icok59DfX14L/bG7scTSBqfuqoYB73pB41/auBo8x6Nyhb5kvZjX+jQ7DRrTyOPWsv
+	 ncaGmFE0JOPUwx6xGovpijMwjGLqQvzPm30VITqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Hungyu Lin <dennylin0707@gmail.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2434/2651] PM: suspend: Do not call suspend_ops->begin()/end() for s2idle
-Date: Wed, 18 Nov 2026 16:01:14 +0100
-Message-ID: <20261118150412.818431327@linuxfoundation.org>
+Subject: [PATCH 7.3 2435/2651] thermal: Fix CPU mask truncation in power limit trace event
+Date: Wed, 18 Nov 2026 16:01:15 +0100
+Message-ID: <20261118150412.853481572@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,84 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-[ Upstream commit 4785d5faa935a828a04743c5a7d279baf454c723 ]
+[ Upstream commit 82c9c94f54a444a686e926c872dae4b198d1036f ]
 
-Commit 7602c0ec0bbf ("firmware: psci: Set
-pm_set_resume/suspend_via_firmware() for SYSTEM_SUSPEND") made
-psci_system_suspend_begin() call pm_set_suspend_via_firmware(), so that
-device drivers can prepare for the possible removal of the power before
-PSCI SYSTEM_SUSPEND.
+num_possible_cpus() counts CPUs, but CPU IDs need not be contiguous.
+Using it to size the thermal_power_cpu_limit bitmap can omit CPUs with
+higher IDs. For example, possible CPUs 0 and 64 produce an eight-byte
+bitmap on a 64-bit system, dropping CPU 64.
 
-Since then, on platforms where PSCI firmware supports SYSTEM_SUSPEND,
-pm_suspend_via_firmware() returns true during both s2ram and s2idle.
-This is inconsistent, since SYSTEM_SUSPEND is only invoked for s2ram.
+Use nr_cpumask_bits for both sizing and copying the bitmap.
 
-This was observed while investigating PCI-related suspend/resume issues
-on Renesas platforms (RZ/G3S, RZ/V2H), and was traced to
-platform_suspend_begin() falling back to suspend_ops->begin() (PSCI in
-this case) when there is no s2idle_ops->begin() callback:
-
-  platform_suspend_begin(PM_SUSPEND_TO_IDLE)
-    suspend_ops->begin()
-      psci_system_suspend_begin()
-        pm_set_suspend_via_firmware()
-
-platform_resume_end() falls back to suspend_ops->end() in the same way.
-
-Since s2idle has its own set of callbacks in s2idle_ops, make
-platform_suspend_begin() and platform_resume_end() only invoke those for
-s2idle, like the other platform_*() helpers do.
-
-Fixes: 7602c0ec0bbf ("firmware: psci: Set pm_set_resume/suspend_via_firmware() for SYSTEM_SUSPEND")
-Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
-Tested-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Link: https://patch.msgid.link/20261005111157.17256-1-ovidiu.panait.rb@renesas.com
-[ rjw: Added Fixes: tag ]
+Fixes: 6828a4711f99 ("thermal: add trace events to the power allocator governor")
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Link: https://patch.msgid.link/20261023060724.5691-1-dennylin0707@gmail.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/power/suspend.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ drivers/thermal/thermal_trace.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/power/suspend.c b/kernel/power/suspend.c
-index 57c44268698f7..32c055df02da7 100644
---- a/kernel/power/suspend.c
-+++ b/kernel/power/suspend.c
-@@ -306,20 +306,24 @@ static void platform_resume_finish(suspend_state_t state)
+diff --git a/drivers/thermal/thermal_trace.h b/drivers/thermal/thermal_trace.h
+index df8f4edd6068a..2f953fd8289dd 100644
+--- a/drivers/thermal/thermal_trace.h
++++ b/drivers/thermal/thermal_trace.h
+@@ -119,7 +119,7 @@ TRACE_EVENT(thermal_power_cpu_limit,
+ 	TP_ARGS(cpus, freq, cdev_state, power),
  
- static int platform_suspend_begin(suspend_state_t state)
- {
--	if (state == PM_SUSPEND_TO_IDLE && s2idle_ops && s2idle_ops->begin)
--		return s2idle_ops->begin();
--	else if (suspend_ops && suspend_ops->begin)
-+	if (state == PM_SUSPEND_TO_IDLE) {
-+		if (s2idle_ops && s2idle_ops->begin)
-+			return s2idle_ops->begin();
-+	} else if (suspend_ops && suspend_ops->begin) {
- 		return suspend_ops->begin(state);
--	else
--		return 0;
-+	}
-+
-+	return 0;
- }
+ 	TP_STRUCT__entry(
+-		__bitmask(cpumask, num_possible_cpus())
++		__bitmask(cpumask, nr_cpumask_bits)
+ 		__field(unsigned int,  freq      )
+ 		__field(unsigned long, cdev_state)
+ 		__field(u32,           power     )
+@@ -127,7 +127,7 @@ TRACE_EVENT(thermal_power_cpu_limit,
  
- static void platform_resume_end(suspend_state_t state)
- {
--	if (state == PM_SUSPEND_TO_IDLE && s2idle_ops && s2idle_ops->end)
--		s2idle_ops->end();
--	else if (suspend_ops && suspend_ops->end)
-+	if (state == PM_SUSPEND_TO_IDLE) {
-+		if (s2idle_ops && s2idle_ops->end)
-+			s2idle_ops->end();
-+	} else if (suspend_ops && suspend_ops->end) {
- 		suspend_ops->end();
-+	}
- }
- 
- static void platform_recover(suspend_state_t state)
+ 	TP_fast_assign(
+ 		__assign_bitmask(cpumask, cpumask_bits(cpus),
+-				num_possible_cpus());
++				nr_cpumask_bits);
+ 		__entry->freq = freq;
+ 		__entry->cdev_state = cdev_state;
+ 		__entry->power = power;
 -- 
 2.53.0
 
