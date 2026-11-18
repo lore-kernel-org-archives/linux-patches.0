@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052472;
-	b=pk8Y6MqG/EujkVgK6pfNhm3wfKDYkqb8p4117adXmXKuip5/IMS2O1TVGsYnEqtntKR2
-	 sja3f23f4ps/6XAIbg5yqMDvdX0e/MHbDTVwBEJmw4dj/IoyBN4F7OvNT6c39VgQXxLZ0
-	 bqM6NRQMngOl3VOUDVZf5ngVbuBVXn5SG2svFx7WQsLlQfUzxObCUMUjbFb8qqywL5L+e
-	 9YzPCRqg4BABt0UWsgZAwjV1VNgungBakP4tUtnsHdgwonwAJeUIkN7fruwATbc5kKyXm
-	 UfTrcqIr5tQ/LHXSvcL3zz377qhZR5T2AeOe8VbgTSWeznEjnW5ixb1mRTGlKeh214w==
+	t=1795052475;
+	b=LibPiFx3B+XBQKLbb+hLw2J3seCkB1RxszrBkYjH8qH6YRhx4x3IDpm2HUQkgWKeljig
+	 bEj4abUzunSm+15X9zEkZWB/ttoCWIHadyM7as64Lyt08u7IZuD/3p6d33IXmHTVArmCh
+	 6NVN9heyVTJzWtEF39mxbQUYm9uFFTmYPVtGUobPy8y0ymZsjdwJPCH3u+C0+yuczjjtH
+	 3PnV/PRsihIvIfCm133/QuaDCvpBN3UXK2ONKF3/Trqu8oavuc3UWZhozwy10njqPI6Rk
+	 pq2uwk7CDA/ZcLgB6ERCPg7UCEC1RnXNsBv1ZwtqhXqvvVxJfSzVSL1C44aGO3fFpUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052472;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052475;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EZtaLbNG8Z1O3C7KoJn3xV27myTuItVMTanyiRbLVtM=;
-	b=pEyHMqWzjflGf4bOzE1G1KyS5sT2q0fc/cH2LtifyQ8crEN08ZUZImzKtwlBwWL/7/kK
-	 bmsIQLA9pFHJzM4Kd8TDSBykF0Ctjd7hsUfaWoBVUuHw4llcOoRrU37D3vbnrOSVnIe29
-	 x0CuKvRfRYeqohumcnqaNJUbeKULwDWobg6l/a3nFLf//DOEtFEVDxniGy+uWF5hqj3O3
-	 5TN+lMX0vi6pgFuTQa05p+DIYtTbQj5Twjms0rfu66n00Jrb6yOxuSw01oKIK50y639d1
-	 I88CDuwnaYGy5bEwAAeD3o3VpuES8S6z419IXUfSuUlICVhNOLJxCjC7P5+DzbkqG0w==
+	bh=rZ1P/f14Xn870DGHBgFcOqt+Q8G3YTh+DT+WlGmvvKI=;
+	b=yxtCcH5BsdvonBvqI/GQy06juEH/3KbvHwNiUanoQebGX/y/3kaE17rxZLsjwCNlxY3L
+	 sc+GreBei19GCW/pjVOu/h5uRK+/E3u6PYogudB2reTfIp0pTNyjs0CjMdXS8ztmexSE2
+	 rPaFmf9GExbuPnSaOqyGP+hCaanX7hMI77aWIJHeTppZu2mtIaPAV677XXIYDiZueYGeF
+	 UGRCBHn6k2rKQoHHLbIdESFYyxT7j1n80t3Qi8mccsFuQX4FwJ2ijubeskChs7LLws93n
+	 2p9dG1YseL4/2ML5nUIT7LmiqNmcLavdzedBB3ZsJl5br41Sc6e3GhoYx8zIhikVdpg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TByLK6iz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=msBCXu1b;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33A36606A31C;
-	Thu, 19 Nov 2026 01:41:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCE5606A320;
+	Thu, 19 Nov 2026 01:41:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TByLK6iz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 848E51F000C4;
-	Thu, 19 Nov 2026 01:41:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=msBCXu1b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C0BA1F000C4;
+	Thu, 19 Nov 2026 01:41:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052472;
-	bh=EZtaLbNG8Z1O3C7KoJn3xV27myTuItVMTanyiRbLVtM=;
+	s=korg; t=1795052474;
+	bh=rZ1P/f14Xn870DGHBgFcOqt+Q8G3YTh+DT+WlGmvvKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TByLK6izUU/0PX+Zu/WA1ZiPeZcJl8TWTmb84/9/7zOszttiVOZwHyLssP82n251W
-	 s5c0AMUoGD+mBEBeOicGiIkNtMNi5DKUf95k+u8QCXoG/CrX6HMevuoQYeee7aMHwd
-	 ZX1C8YFWiCEOO9FgQE3zMAgEmhcaYZZ2HVWj4XXM=
+	b=msBCXu1bR/hoF4MBkPuvHhNFZCMKLbtSg8bGYZeOiwFY32SL7DpYPUDnDx2x250Ip
+	 wqj00+w7i1zpyJo6l3kImVMsfyK/sGBt1Zq9USPL78ZhGQ/D6OPuSYphHGVY+va69Y
+	 gJ6F/9gQaNRFJ+uhm0/QV6kLbvP/cC44SHBHL9GI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tharit Tangkijwanichakul <tharitt97@gmail.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0573/2214] media: hantro: Harden MPEG-2 control access against NULL
-Date: Wed, 18 Nov 2026 15:37:29 +0100
-Message-ID: <20261118150033.880313375@linuxfoundation.org>
+Subject: [PATCH 5.15 0527/2214] media: adv7180: Initialize mutex before ancillary clients
+Date: Wed, 18 Nov 2026 15:36:43 +0100
+Message-ID: <20261118150032.153794967@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,49 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tharit Tangkijwanichakul <tharitt97@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 2b685dba4226792933f45b1cbf8991e89ccd21ce ]
+[ Upstream commit 9d46d17a65e86010b1f5604e5cf61ce1e197f77a ]
 
-The MPEG-2 sequence and picture controls are validated
-before a job is queued, so hantro_get_ctrl() is not expected to return
-NULL in hantro_g1_mpeg2_dec_run(). The controls are nonetheless
-dereferenced unconditionally.
+The VPP ancillary-client error path unregisters the CSI client before
+destroying state->mutex. For I2P variants, the failure can occur before
+mutex_init(), so cleanup destroys an uninitialized mutex.
 
-Harden the invariant by checking the sequence and picture controls with
-WARN_ON().
+Initialize the mutex immediately after allocating the driver state, before
+creating any ancillary clients. This keeps every cleanup path matched with
+a completed mutex initialization.
 
-Found by code inspection.
+A QEMU x86_64 test using an i2c-stub bus instantiated an ADV7280 client
+at address 0x21 and occupied its VPP ancillary address 0x42. This forced
+i2c_new_ancillary_device() to return -EBUSY. An instrumentation oracle
+observed an uninitialized mutex on the buggy kernel and an initialized
+mutex on the fixed kernel. The failure was deliberately injected to
+exercise the error path; no natural crash was observed.
 
-Fixes: f329e21e9dad ("media: uapi: mpeg2: Split sequence and picture parameters")
+Fixes: 851a54effbd8 ("[media] adv7180: Add I2P support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tharit Tangkijwanichakul <tharitt97@gmail.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Assisted-by: LLM Codex
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/hantro/hantro_g1_mpeg2_dec.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/media/i2c/adv7180.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/media/hantro/hantro_g1_mpeg2_dec.c b/drivers/staging/media/hantro/hantro_g1_mpeg2_dec.c
-index 9aea331e1a3c9..ffdd385ba11fb 100644
---- a/drivers/staging/media/hantro/hantro_g1_mpeg2_dec.c
-+++ b/drivers/staging/media/hantro/hantro_g1_mpeg2_dec.c
-@@ -161,8 +161,13 @@ int hantro_g1_mpeg2_dec_run(struct hantro_ctx *ctx)
+diff --git a/drivers/media/i2c/adv7180.c b/drivers/media/i2c/adv7180.c
+index 930ab969cc742..8d02f71ee1998 100644
+--- a/drivers/media/i2c/adv7180.c
++++ b/drivers/media/i2c/adv7180.c
+@@ -1367,6 +1367,7 @@ static int adv7180_probe(struct i2c_client *client,
+ 	if (state == NULL)
+ 		return -ENOMEM;
  
- 	seq = hantro_get_ctrl(ctx,
- 			      V4L2_CID_STATELESS_MPEG2_SEQUENCE);
-+	if (WARN_ON(!seq))
-+		return -EINVAL;
-+
- 	pic = hantro_get_ctrl(ctx,
- 			      V4L2_CID_STATELESS_MPEG2_PICTURE);
-+	if (WARN_ON(!pic))
-+		return -EINVAL;
++	mutex_init(&state->mutex);
+ 	state->client = client;
+ 	state->field = V4L2_FIELD_ALTERNATE;
+ 	state->chip_info = (struct adv7180_chip_info *)id->driver_data;
+@@ -1407,7 +1408,6 @@ static int adv7180_probe(struct i2c_client *client,
+ 	}
  
- 	reg = G1_REG_DEC_AXI_RD_ID(0) |
- 	      G1_REG_DEC_TIMEOUT_E(1) |
+ 	state->irq = client->irq;
+-	mutex_init(&state->mutex);
+ 	state->curr_norm = V4L2_STD_NTSC;
+ 	if (state->chip_info->flags & ADV7180_FLAG_RESET_POWERED)
+ 		state->powered = true;
 -- 
 2.53.0
 
