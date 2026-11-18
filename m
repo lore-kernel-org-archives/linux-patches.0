@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033230;
-	b=JTErp9jET3psDeOVaXAFeydxy5tl7h8hMalAitCCYrVG982Fi3UVmoqCQRtoU7hKdFqL
-	 LtHG41P73x0wPULlFx1N72fSnkM8ALPy0c9ZY33Q44yQcSqdN+y8FpWYwPs40uKtq6OeT
-	 tbkAXgJ32jYi7RZgTbFDMjAGjQaa/0K4ECA7kq2/7NZ/E6SQmwyjir2zbXBfUyE2QQqp3
-	 cjUUBDhXQvqV9ohZooy4vO/0tVw5nETHqquXusjuJECAGedbKkv4k3sz8DMQJkAP1VhQU
-	 anQrSgN58IhUO8EHxkwVRqGq3ERb6rKXxhIB/d5Fx4SzLm1+oDFkGhFz8yRLVtqKQ0A==
+	t=1795033233;
+	b=Q+4wav2lrkdpSQKb/H84qUrFTCfQfQ40aMH4X78H5rJN3sbxyp8fBp78Z7q22pZlw0gq
+	 dUXZXCaW9eHf+sdeor7NU6pbdmdvQlH5FL8TPrHSCloE33IwvZEmGpmkhaJo87EzimxLt
+	 7VkYLfLsuTNbZnkdxJamSJu5V6v9khfw0KoPvE3e73HHiiBT+BWiZxfxIv5UhVfKwTh6b
+	 SMe1AQ1BBAv6wrRk46RFW2Sz3mB+8h8Ps4nXxkuGUL3ney8VF4akhGLOUC4NXJgKtjsI/
+	 Wd58nNKfMjW0jhWNSVlcETlGGJbMEN+v4Vi6IigtzGCPJA/Q0ud1ES1dIUBRjioJXow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033230;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033233;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MH7qgaWlW04RldR3R3LLhze+vQcCB7czwfpxchYgcQ0=;
-	b=B5O6wM1PI2Qto7QHlNTX9yhqHdX6WjjjT0fadw2gIlyOeXA+sO4HONzAjxlbTGi+O+jd
-	 O1vAqbahpZUTR3ziVcwdeEknBOf03xX+MEIvcRhAXzzWebBJWiudMC+4QhWxrJBlY6XsD
-	 TZdNUpLXkh6XQfVLhSgL5f2g3CLFAo/15mRbAvm6Vc+4IQ7efDB7ADbN/ogXP1zoeJ4av
-	 ZOn3fUnAQNSImTSfLia6at1aSlUYL+TJ4VeZy5SEA3KrxEkB+eKKn2Xcu63+hJ7H8vEo2
-	 sIDmG+0X9k1NfYNGtNUS446tQgqecLCauRlhu+Io3QHhPMGgdonj3yMY4SKlPoZuPrQ==
+	bh=6MoQ5tP1fGRtqd/dAQxlxv9gK9ZAfh1qnEyu9z368BQ=;
+	b=l5259g7+lLd33lLYIta3WDDBTukq0QRv1Rh0LNB5+cXxwwfNFU8kXT35wGhJySgtVzx+
+	 W4pvJlJpQuooBWX4VGOcuUgKXpxVF/kmtGgjUX5osrwjkF44QzRezSIQ6TvayuMsyMPgk
+	 a1fyqacZSnIOyjPqMPRDMd3ytDBeiMfCj2gPsImDYnkDOWS0vTNsofNIF1Al/fyKUc464
+	 3VGvnWMgFi6GyE5Ga7Cqy8ur2oaCaOFRchvKpGr9knnBqdp1SceS/84wrI8Rw2AsSBWep
+	 t2GHKvT4RQRFkIoWIXAw6F97hrenBT7igE5b6FryiZ4jBkSNu0MNuViojrWKsjohz7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dguEBywM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Z2Kgi4I;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03DAE606A335;
-	Wed, 18 Nov 2026 20:20:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51738606A320;
+	Wed, 18 Nov 2026 20:20:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dguEBywM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 574721F000C4;
-	Wed, 18 Nov 2026 20:20:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Z2Kgi4I
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37EB91F000C4;
+	Wed, 18 Nov 2026 20:20:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033229;
-	bh=MH7qgaWlW04RldR3R3LLhze+vQcCB7czwfpxchYgcQ0=;
+	s=korg; t=1795033232;
+	bh=6MoQ5tP1fGRtqd/dAQxlxv9gK9ZAfh1qnEyu9z368BQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dguEBywMIduVUnnbgPRfEPNiLq9t1VGf0/nZ85fUIeNWIHJLHWlnMGjCYONB0Wvjp
-	 kwSeDKe/CobTXH5+87AjhAMY9rT6Fe50+MUbwrl3k7hmIagzf0bjpTwRiz1fTAWI2l
-	 99Kf+uT8bDCApE9rQ7FVDZIDlc74ktcPJuZs6nb8=
+	b=2Z2Kgi4IR0LF3Xm/STG+pgp2vNl2rXBIvqbszShVHWoPi3j3rhGaMkxBVupUkyPm1
+	 XHiPNqSRdtjBH/pDDHOcq9Ouk+k//kE6snw9J/bzmM2zQOe/NW/n9sXskK6eoM+Lov
+	 eIkTI4Ivem+tSwK7jIw0mM3oU55Dae+AvsODcM8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Simon Horman <horms@kernel.org>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Joas Antonio dos Santos <joasantonio108@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1651/1756] net: bcmgenet: restore the Tx coalescing setting when the rings are rebuilt
-Date: Wed, 18 Nov 2026 16:02:58 +0100
-Message-ID: <20261118150115.463289789@linuxfoundation.org>
+Subject: [PATCH 6.12 1652/1756] net: dcb: initialize PFC value before calling getpfccfg
+Date: Wed, 18 Nov 2026 16:02:59 +0100
+Message-ID: <20261118150115.498719550@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,79 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: Joas Antonio dos Santos <joasantonio108@gmail.com>
 
-[ Upstream commit ff8a7c0c06762a2a2333fbd6148d637bbd3d5090 ]
+[ Upstream commit ca87a2dffbb550fc934647d5e8d1c4ae85590132 ]
 
-bcmgenet_set_coalesce() writes tx_max_coalesced_frames straight into
-DMA_MBUF_DONE_THRESH and keeps no copy of it, while
-bcmgenet_init_tx_ring() programs a fixed 1. An ifdown and ifup or a resume
-then puts the Tx coalescing back to one frame per interrupt.
+dcbnl_getpfccfg() and dcbnl_cee_fill() pass the address of an
+uninitialized stack u8 to the driver's getpfccfg() op and then put it
+into the netlink reply unconditionally.  The op returns void, so the
+core cannot tell whether the driver wrote the value.
 
-Rx keeps its value per ring and reapplies it on init. Do the same for Tx.
+i40e_dcbnl_get_pfc_cfg() and ice_dcbnl_get_pfc_cfg() return without
+writing *setting unless the DCBX agent is host managed and in CEE mode.
+Both drivers normally run with firmware managed DCBX
+(DCB_CAP_DCBX_LLD_MANAGED), and i40e with FW LLDP disabled runs host
+managed in IEEE mode, so on a DCB capable i40e/ice port the PFC values
+in DCB_CMD_PFC_GCFG and DCB_CMD_CEE_GET replies, and in the CEE part of
+RTNLGRP_DCB notifications, come from uninitialized stack.  The same u8
+is reused for all eight priorities, so this is one byte per reply.
 
-Fixes: 2f9130709d2c ("net: bcmgenet: Implement TX coalescing control knobs")
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20261022-nb-genet-fini-dma-net-v3-2-6e9fc89c0156@tipi-net.de
+dcb_doit() only requires CAP_NET_ADMIN for RTM_SETDCB, so the GET
+commands are available to unprivileged users.
+
+Set the value to 0 before each call, like the PG config path already
+presets its outputs to DCB_ATTR_VALUE_UNDEFINED.  0 is also what the
+reply contains today on kernels built with CONFIG_INIT_STACK_ALL_ZERO,
+so nothing changes for those.
+
+Found by code inspection, compile-tested only (W=1).  I don't have
+i40e/ice hardware to check the reply.
+
+Fixes: b94b013eb626 ("ice: Implement DCBNL support")
+Fixes: 5effa78e7c94 ("i40e: Add netlink callbacks support for software based DCB")
+Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
+Link: https://patch.msgid.link/179289284460.50470.572724041164324949@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet.c | 10 ++++++++--
- drivers/net/ethernet/broadcom/genet/bcmgenet.h |  1 +
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ net/dcb/dcbnl.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index 608dd03c6fe69..8be9b18ed7fa1 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -895,10 +895,13 @@ static int bcmgenet_set_coalesce(struct net_device *dev,
- 	/* Program all TX queues with the same values, as there is no
- 	 * ethtool knob to do coalescing on a per-queue basis
- 	 */
--	for (i = 0; i <= priv->hw_params->tx_queues; i++)
-+	for (i = 0; i <= priv->hw_params->tx_queues; i++) {
-+		priv->tx_rings[i].tx_max_coalesced_frames =
-+			ec->tx_max_coalesced_frames;
- 		bcmgenet_tdma_ring_writel(priv, i,
- 					  ec->tx_max_coalesced_frames,
- 					  DMA_MBUF_DONE_THRESH);
-+	}
+diff --git a/net/dcb/dcbnl.c b/net/dcb/dcbnl.c
+index 2e6b8c8fd2ded..1d82a9cbc2c4c 100644
+--- a/net/dcb/dcbnl.c
++++ b/net/dcb/dcbnl.c
+@@ -281,6 +281,7 @@ static int dcbnl_getpfccfg(struct net_device *netdev, struct nlmsghdr *nlh,
+ 		if (!getall && !data[i])
+ 			continue;
  
- 	for (i = 0; i <= priv->hw_params->rx_queues; i++)
- 		bcmgenet_set_ring_rx_coalesce(&priv->rx_rings[i], ec);
-@@ -2682,7 +2685,8 @@ static void bcmgenet_init_tx_ring(struct bcmgenet_priv *priv,
++		value = 0;
+ 		netdev->dcbnl_ops->getpfccfg(netdev, i - DCB_PFC_UP_ATTR_0,
+ 		                             &value);
+ 		ret = nla_put_u8(skb, i, value);
+@@ -1396,6 +1397,7 @@ static int dcbnl_cee_fill(struct sk_buff *skb, struct net_device *netdev)
+ 			goto nla_put_failure;
  
- 	bcmgenet_tdma_ring_writel(priv, index, 0, TDMA_PROD_INDEX);
- 	bcmgenet_tdma_ring_writel(priv, index, 0, TDMA_CONS_INDEX);
--	bcmgenet_tdma_ring_writel(priv, index, 1, DMA_MBUF_DONE_THRESH);
-+	bcmgenet_tdma_ring_writel(priv, index, ring->tx_max_coalesced_frames,
-+				  DMA_MBUF_DONE_THRESH);
- 	/* Disable rate control for now */
- 	bcmgenet_tdma_ring_writel(priv, index, flow_period_val,
- 				  TDMA_FLOW_PERIOD);
-@@ -4060,6 +4064,8 @@ static int bcmgenet_probe(struct platform_device *pdev)
- 		priv->rx_rings[i].index = i;
- 		priv->rx_rings[i].rx_max_coalesced_frames = 1;
- 	}
-+	for (i = 0; i <= priv->hw_params->tx_queues; i++)
-+		priv->tx_rings[i].tx_max_coalesced_frames = 1;
- 
- 	/* Initialize u64 stats seq counter for 32bit machines */
- 	for (i = 0; i <= GENET_MAX_MQ_CNT; i++) {
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.h b/drivers/net/ethernet/broadcom/genet/bcmgenet.h
-index 4f18193a6bd09..46d1a9340f154 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.h
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.h
-@@ -547,6 +547,7 @@ struct bcmgenet_tx_ring {
- 	unsigned int	prod_index;	/* Tx ring producer index SW copy */
- 	unsigned int	cb_ptr;		/* Tx ring initial CB ptr */
- 	unsigned int	end_ptr;	/* Tx ring end CB ptr */
-+	unsigned int	tx_max_coalesced_frames;
- 	struct bcmgenet_priv *priv;
- };
- 
+ 		for (i = DCB_PFC_UP_ATTR_0; i <= DCB_PFC_UP_ATTR_7; i++) {
++			value = 0;
+ 			ops->getpfccfg(netdev, i - DCB_PFC_UP_ATTR_0, &value);
+ 			if (nla_put_u8(skb, i, value))
+ 				goto nla_put_failure;
 -- 
 2.53.0
 
