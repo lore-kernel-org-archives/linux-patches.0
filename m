@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037986;
-	b=dOBJ4FPtVVzsbHAcQAig4ugOflFDe9X3bYhhD289zXcExAxrhYc/maVbu8PM4ccVIizh
-	 MSnKdYior02FF5vZpGR8ooAldW8T+pQf+BYNyy/pjLBTwHsyBitLmqRlzS+R1NTw1tuyh
-	 v7/vdFlNYv8INaYe/zdyrlgqhZEAcDmGNS0sg+dRftSawAwcDhxV40OzSRIQY2yJRHxfj
-	 4WP/6DPfiksQIbJV6tNuoOqmRx+9ez8MKIN4pGBWxVdigj9zwDL5xVVQjdwM3q8QwbPbB
-	 41YcxD6A3Of2KkA4qpjeOU74GkrplUMUl2RDSXyEl8v7rEdDyEY+3zAecbE9cjm2w2Q==
+	t=1795037989;
+	b=eBXPyNxVrx5JqMVJgHo/dW/AWyd8KWz851gwhMsOI55YIE32AjZWDM3+dEa2fJMxZQzw
+	 h300rDx3Te0totq7ELmO2cYHNgnLc6C98+arPyZzFEMGqYCrNobmURe1F7YtMgNfy8KhI
+	 8V1o1Z95FmbkbIUfJnh1w7iNhojtbSlvZMRGgGAidbCBqJKz4yKpQ79YcNpHt58SieBAw
+	 L52gsYeXPOyqGDCwJ6P0zOkh4jo1hJk1s5LuVhTtuuHVW5LvbjWh6LBbUt+b352LJp4ys
+	 Z1PBqp89+Txzuf60GJTYF90oTSdriuCYgyj0SXwzXS1m7XYzinYFanPOXTCLhxvmbaQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037986;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037989;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PrdCOfkAykBIV1bAYbMPbzVLSeqnxKDUJyFyuH7YkDc=;
-	b=lXlVblhW0MhYBHzpMuWf/Dpt2nc6hYQXHB2SiqtKiWZ+j0d2IDX+EyZDlG3qZBFqUS6D
-	 eHUg1Akeyviw/q4jsVuewt/tJM6Y0tWJvQKpZejqFqTsNoz7iYOaDkPz6YYr7VZpNG+tQ
-	 QZVTOGg07cE5PpHmJj6q+fUPmVEfkOuoau0DQaLgOLorwrmsZ+j3Pimt6bvzpXqzDin2U
-	 jl+/cM/6MAppC1HnA8TncadwEQA+ABVOCV0IX4pG7pwOZYEAY7yS5v8zJYJx1yNGK52PB
-	 9RRD01UsLU1Xg47QA9Hj4nzJ+AmwXWjh9Yyw19VVakNVBmLTvc/vk4yJnneit6ur41A==
+	bh=fSOhYya2nw3FDw3THGY9saEgavLSm7qsJqTrFVEY1Wo=;
+	b=A9cBOcSjMISZbco+VTpgAJaQ9LJmhgtvwqoHc1UNL6AeNjUTa23O8Ezq2NQYypKymCHs
+	 YPFCVXJiqN3cippnLB1EW+eN8ZO0q/Xf6GZCQ++80Tvr/TljDiWsjs11e6VEO/wal+YnC
+	 x2twmmMhtOBRS9mQ9THnMJmIAFSnQnzx4mgis33qyTgPS6fXAp8ZB6Eba14iO+kc426jm
+	 K4Nd+Qij+2ePi0XRP2tyXPTWoVS1nzfy5YZtEWdXU19yXr1ZbBm9vVB4eOgxkfIBX3K6L
+	 TM9o3iaqJjL7+v3VL8CTlY+u8bJDjFA/AZaYk9tS2TQ4a9XDay5xlBALjY9tuJNxYRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f4sHpz2n;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U1CiqtQW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D94E8606A320;
-	Wed, 18 Nov 2026 21:39:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB398606A325;
+	Wed, 18 Nov 2026 21:39:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f4sHpz2n
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E4C1F000C4;
-	Wed, 18 Nov 2026 21:39:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U1CiqtQW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 079D81F000C5;
+	Wed, 18 Nov 2026 21:39:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037986;
-	bh=PrdCOfkAykBIV1bAYbMPbzVLSeqnxKDUJyFyuH7YkDc=;
+	s=korg; t=1795037989;
+	bh=fSOhYya2nw3FDw3THGY9saEgavLSm7qsJqTrFVEY1Wo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f4sHpz2n37OvEhmc/i8rrifdzTLLBpbR6BpretlVv/krsCS9+xILKFBipJL5g54XG
-	 STQq9B0K46wlcAhWBE3ahRW+rMcrj40Cu5QlgM/zn5gbSlG+z0wovRk3Hj0VrCsm+I
-	 mK5jEww818/uToljfvJfgCqdB89KMtU9iBtevZMw=
+	b=U1CiqtQWv+IK9Ck2sbPNVGk2ZRdBxoyEl8uGNBq3lzMSJar/ka2fvGOSEOhmsYjyu
+	 WQ9PmMcQ8gtDLWCLn2guulergGbj0wZg+3e4UIxufNvlmamdmAZpqktOSpbMGUCQa4
+	 etiUoDBxkzGZqjDiZO8dfbqh9cKL60t4JpdBxENA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kaloz <kaloz@kernel.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1560/3318] MIPS: sgi-ip32: Leave MACE PCI control alone in config accesses
-Date: Wed, 18 Nov 2026 15:36:22 +0100
-Message-ID: <20261118150407.831626637@linuxfoundation.org>
+Subject: [PATCH 6.6 1587/3318] crypto: algif_skcipher - rewind rounded output bytes
+Date: Wed, 18 Nov 2026 15:36:49 +0100
+Message-ID: <20261118150408.743264091@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,103 +68,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Kaloz <kaloz@kernel.org>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit a55a7df2cf788234850d9053ecc25a5470175929 ]
+[ Upstream commit 2f90facc7b94934653eb7ebfadcc25d503b89196 ]
 
-mace_pci_read_config() clears the master abort interrupt enable in the
-MACE PCI control register around each config read. A register read
-followed by two register writes can hang CRIME 1.1 under DMA load.
+af_alg_get_rsgl() advances the receive iterator by the unrounded RX
+scatterlist length.  For a continuing skcipher request,
+_skcipher_recvmsg() then rounds its local length down to a whole chunksize
+without restoring the iterator.
 
-Ack master aborts in the error register instead, and follow every
-write with a read so back-to-back accesses cannot form that sequence.
+A later chunk starts after bytes which the provider never wrote, while the
+syscall returns only the processed length.  When copy_splice_read()
+supplies non-zeroed pages and publishes that return as a dense prefix, the
+gap exposes stale bytes from a previous page lifetime.
 
-Fixes: c990081bf87b ("[MIPS] Fix IP32 breakage")
+With unprivileged xts(aes), a 31-byte MSG_MORE request followed by one
+final byte advances a 47-byte destination while returning 32 bytes.  A
+hardened v7.2-rc5 image retained all 15 seeded stale bytes in 4,829 of
+4,829 records.  With init_on_alloc enabled, all 72,345 gap bytes observed
+were zero.
+
+Rewind the iterator by the tail excluded during rounding, before rejecting
+a zero processed length.  The crypto request uses only the rounded length;
+af_alg_free_resources() releases the entire RX list before another receive
+iteration.
+
+The fixed target-like kernel returned byte-identical dense 48-byte output
+in 4,771 of 4,771 rounds.  The unmodified kernel returned the vulnerable
+32-byte short record in 2,409 of 2,409 rounds.
+
+Fixes: e870456d8e7c ("crypto: algif_skcipher - overhaul memory management")
 Cc: stable@vger.kernel.org
-Signed-off-by: Imre Kaloz <kaloz@kernel.org>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Assisted-by: LLM
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+[ sashal: Adjusted patch context for the absent CRYPTO_SKCIPHER_REQ_NOTFINAL flag statement. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/pci/ops-mace.c | 26 +++++++++++++++++++-------
- arch/mips/pci/pci-ip32.c |  2 ++
- 2 files changed, 21 insertions(+), 7 deletions(-)
+ crypto/algif_skcipher.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/arch/mips/pci/ops-mace.c b/arch/mips/pci/ops-mace.c
-index 951d8070fb486..8827e5f2ea460 100644
---- a/arch/mips/pci/ops-mace.c
-+++ b/arch/mips/pci/ops-mace.c
-@@ -35,15 +35,27 @@ static inline int mkaddr(struct pci_bus *bus, unsigned int devfn,
- 		(reg & 0xfc);
- }
- 
-+/*
-+ * On CRIME 1.1, a MACE PCI register read followed by two register writes
-+ * can hang the machine under DMA load, so every register write in this
-+ * file is followed by a read.  Config cycles to empty slots end in a
-+ * master abort; ack it with interrupts still off so the bridge error
-+ * interrupt does not report it.
-+ */
-+static void mace_pci_ack_abort(void)
-+{
-+	u32 error = mace->pci.error;
+diff --git a/crypto/algif_skcipher.c b/crypto/algif_skcipher.c
+index 8729ef268d9d8..4fc077f31aa48 100644
+--- a/crypto/algif_skcipher.c
++++ b/crypto/algif_skcipher.c
+@@ -83,12 +83,15 @@ static int _skcipher_recvmsg(struct socket *sock, struct msghdr *msg,
+ 	 * full block size buffers.
+ 	 */
+ 	if (ctx->more || len < ctx->used) {
+-		if (len < bs) {
++		size_t excess = len % bs;
 +
-+	if (error & MACEPCI_ERROR_MASTER_ABORT) {
-+		mace->pci.error = error & ~MACEPCI_ERROR_MASTER_ABORT;
-+		mace->pci.error;
-+	}
-+}
- 
- static int
- mace_pci_read_config(struct pci_bus *bus, unsigned int devfn,
- 		     int reg, int size, u32 *val)
- {
--	u32 control = mace->pci.control;
++		len -= excess;
++		iov_iter_revert(&msg->msg_iter, excess);
++
++		if (!len) {
+ 			err = -EINVAL;
+ 			goto free;
+ 		}
 -
--	/* disable master aborts interrupts during config read */
--	mace->pci.control = control & ~MACEPCI_CONTROL_MAR_INT;
- 	mace->pci.config_addr = mkaddr(bus, devfn, reg);
- 	switch (size) {
- 	case 1:
-@@ -56,9 +68,7 @@ mace_pci_read_config(struct pci_bus *bus, unsigned int devfn,
- 		*val = mace->pci.config_data.l;
- 		break;
+-		len -= len % bs;
  	}
--	/* ack possible master abort */
--	mace->pci.error &= ~MACEPCI_ERROR_MASTER_ABORT;
--	mace->pci.control = control;
-+	mace_pci_ack_abort();
+ 
  	/*
- 	 * someone forgot to set the ultra bit for the onboard
- 	 * scsi chips; we fake it here
-@@ -77,6 +87,7 @@ mace_pci_write_config(struct pci_bus *bus, unsigned int devfn,
- 		      int reg, int size, u32 val)
- {
- 	mace->pci.config_addr = mkaddr(bus, devfn, reg);
-+	mace->pci.error;
- 	switch (size) {
- 	case 1:
- 		mace->pci.config_data.b[(reg & 3) ^ 3] = val;
-@@ -88,6 +99,7 @@ mace_pci_write_config(struct pci_bus *bus, unsigned int devfn,
- 		mace->pci.config_data.l = val;
- 		break;
- 	}
-+	mace_pci_ack_abort();
- 
- 	DPRINTK("write%d: reg=%08x,val=%02x\n", size * 8, reg, val);
- 
-diff --git a/arch/mips/pci/pci-ip32.c b/arch/mips/pci/pci-ip32.c
-index 30aca6f76563d..41ec8453c865d 100644
---- a/arch/mips/pci/pci-ip32.c
-+++ b/arch/mips/pci/pci-ip32.c
-@@ -77,6 +77,8 @@ static irqreturn_t macepci_error(int irq, void *dev)
- 	}
- 
- 	mace->pci.error = flags;
-+	/* follow the write with a read, see mace_pci_ack_abort() */
-+	mace->pci.error;
- 
- 	return IRQ_HANDLED;
- }
 -- 
 2.53.0
 
