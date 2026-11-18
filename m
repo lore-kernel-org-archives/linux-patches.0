@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039690;
-	b=SfV2aNnIgXSHg3gYwy4Payy3DOd661gAjraXhbcsP8VGs+LrOxVGVZVkq1KvzBp/rIa7
-	 I+G2HAPN6/Y1E4+rzIE4Yr3tL+DSktHxfvFIKYF8r77UjUsCYjT+7T4FFCfZoMiosnsPa
-	 UeNH/po6ufb/mPLMD1/XaRSI+p+rRWwkwpYJCH8lVcFv9AigrX45MbELrXJlBZaLGyKfJ
-	 w7ChiOh+QtqDq4eZEhI5gd71R+UMWELlRBcDPIlKfrCOFs+ZHGPr683BC2CJiGz+FUMPy
-	 A7lkh2+WYtZBfocCgDh5nmURMXmGo13exf6AgeKiiHeyIS8sFviwY/iLqdhZJfu2fxA==
+	t=1795039693;
+	b=HmaJqc98t/EUoB7AsI46XL1jbRH06RILpOmw8KLTOvJdyqh1H3M6juMu7WYYF+DDbLnX
+	 /Y7qKCy3kNWzrCE/WFKC3PMpRBLlOU+l2YcDHx59XmUNG/ZFHWw4XHmE6YnnlrkPvkOL1
+	 p6DX91wp8kQppQlQfvSlspPem1yyT5Qx6YKs5c9UWCBuduWjrhyDC9315hd624hrYKt4L
+	 1hfRotrpqzQwZGtdAJMemwzVZzBiMNLB5I2NKKfzO3Mcn5HqPKbf/9VOQhikXIuVETwD6
+	 7IDLMmrRsiLi0DUYbTAaR+0pjxdq0id3LLvIVa5w/EXkaqwwHiT1YLz0VgCdmFfcUjQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039690;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039693;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lCfkJrXK/gLmrVMSfywtJl8KyUJZVWMUeeboAb5Kb4g=;
-	b=ZTIWO9l6q1pjEFqbXOl6GG+mv/FHP5UTDp7qHWxKn1KGAn9VnhWZGExN72C0j2JvEE5W
-	 u+YNLSjf6k7ws+Q0VCShTiKSYfff2fHFWTSgRlHGtiFyu3iiY52H6o1JD6ZQMgbzRnEXm
-	 jBoFsEKJlapgwT9gzzY3TKusEO6Yr9P4SXz/sLceTD0NDgJYkv6sm2eNSQutUFA5w4vrV
-	 gj1CAhpN+ErZ3uxA3vhQhKUxQeAZ58g04PLwJnwLO8VRYC/FCgXV6vw+mpoIh15GlCfTU
-	 LOHTcZxBI+uvxenL5Y4QT3pHkoLW1pKynN70qseYLPcw64QVM/0siOJjZSAggHaTusg==
+	bh=G7k/qiQrbhbDEf50przYdEIAZnajniWz2y5FUZWFRqU=;
+	b=phLzSbX3Ww8WrDygSjtoH8FYv/JgTYbOChGWjqQl1YfPgY1s8Y4I1yqLDcLCJxyul/oC
+	 eIsFRhwbPtB73zUaZ6fNvnDtSbLy83aZnH7yrtsiHKhfCvOgp4kpu91dySubpbZaQeB6Z
+	 ehxEg6GuYL8zVe4V8epTaoFoY3KB9HxH8BcLIEINiSdmeU9wmZViHBj6qmPa8xXVDdZvf
+	 d+PDq9/ubScya/EGydK6TQj1tYXs7nI9GVDjf7pr6Pe39GG1LxfVW2RV3bKsGht8tns17
+	 0oApC2LuYw0qhllchrvlSgqgP8OQTiHKbNcbFRO6f2jZmU6CM+sI35epI5RseRD/W4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TQF11sMe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IQ9z+ig0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5D2606A31C;
-	Wed, 18 Nov 2026 22:08:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520AA606A325;
+	Wed, 18 Nov 2026 22:08:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TQF11sMe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB7DB1F000C4;
-	Wed, 18 Nov 2026 22:08:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IQ9z+ig0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A76201F000C4;
+	Wed, 18 Nov 2026 22:08:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039690;
-	bh=lCfkJrXK/gLmrVMSfywtJl8KyUJZVWMUeeboAb5Kb4g=;
+	s=korg; t=1795039693;
+	bh=G7k/qiQrbhbDEf50przYdEIAZnajniWz2y5FUZWFRqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TQF11sMeNyuHe3aqAaByM+/0lSsmoml2xLv/akSsjew97Q66PY/lWKtN3YfCkM+eO
-	 6eVrIO+4/+mCTFSrMQw0tbpMnGTL5P3LspXjGiB5QAilYPhpfmFyC/YfJb2uCC8zd2
-	 FnL5pZO8uv4eHtJFUZAWj6Pu+nSRCNuvzN4220ss=
+	b=IQ9z+ig0dhTK5M6Xphhsetq3TdYpARyPcUVy8F6V6UxxTI48Om+Wmlndgqpx0iQxn
+	 wXEa4LgT3x0MevHiQ/t1BdDCSKhpEL2WSDr/mhnRsHFSQjQm/+LmgmM2trIfgZYHIR
+	 vFwCicYqzdbV2TrfieneNbezVzwoVX3Q74cmEMzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Justin Yeh <justin.yeh@mediatek.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2183/3318] HID: i2c-hid: Unfollow the panel on shutdown
-Date: Wed, 18 Nov 2026 15:46:45 +0100
-Message-ID: <20261118150427.455628233@linuxfoundation.org>
+Subject: [PATCH 6.6 2192/3318] spi: Fix the return value in spi_new_ancillary_device() kernel-doc
+Date: Wed, 18 Nov 2026 15:46:54 +0100
+Message-ID: <20261118150427.708717221@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,53 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Yeh <justin.yeh@mediatek.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 59fc35a1edbfa5405122d749cf8843da131fd796 ]
+[ Upstream commit 3742867ce96539100ed5f4c754f04273d8aa00d7 ]
 
-i2c_hid_core_shutdown() sends SET_POWER(SLEEP) even for panel followers,
-but nothing in device_shutdown() guarantees whether the panel, and hence
-our own power, is still on by the time we get there.
+spi_new_ancillary_device() returns the new struct spi_device, or an
+ERR_PTR() on failure, but its kernel-doc says "0 on success; negative
+errno on failure", which was never true. Describe the pointer.
 
-Do what i2c_hid_core_remove() does and just unfollow the panel.
-drm_panel_remove_follower() calls panel_unpreparing() only while the
-panel is still prepared, which powers us down properly; if it is already
-unprepared no transfer is attempted at all. On MT8196 the panel is
-unprepared long before us, so this also drops the ~2s i2c bus timeout
-from every reboot.
-
-Fixes: 96a37bfd232a ("HID: i2c-hid: Support being a panel follower")
-Suggested-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Justin Yeh <justin.yeh@mediatek.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: 0c79378c0199 ("spi: add ancillary device support")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260911230211.11755-1-kmehltretter@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/i2c-hid/i2c-hid-core.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/spi/spi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index cbffeb7186a6f..9ad603bcaf596 100644
---- a/drivers/hid/i2c-hid/i2c-hid-core.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -1302,7 +1302,16 @@ void i2c_hid_core_shutdown(struct i2c_client *client)
- {
- 	struct i2c_hid *ihid = i2c_get_clientdata(client);
- 
--	i2c_hid_set_power(ihid, I2C_HID_PWR_SLEEP);
-+	/*
-+	 * Like in i2c_hid_core_remove(): if we're a follower, the act of
-+	 * unfollowing will cause us to be powered down. Otherwise we need to
-+	 * manually do it.
-+	 */
-+	if (ihid->is_panel_follower)
-+		drm_panel_remove_follower(&ihid->panel_follower);
-+	else
-+		i2c_hid_set_power(ihid, I2C_HID_PWR_SLEEP);
-+
- 	free_irq(client->irq, ihid);
- 
- 	i2c_hid_core_shutdown_tail(ihid);
+diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
+index 9a011544d1544..9681b05e0d5b6 100644
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -2423,7 +2423,7 @@ static void of_register_spi_devices(struct spi_controller *ctlr) { }
+  *
+  * This may only be called from main SPI device's probe routine.
+  *
+- * Return: 0 on success; negative errno on failure
++ * Return: the new device on success; an ERR_PTR() on failure
+  */
+ struct spi_device *spi_new_ancillary_device(struct spi_device *spi,
+ 					     u8 chip_select)
 -- 
 2.53.0
 
