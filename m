@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049888;
-	b=brXaO9mhz9fwgg7BX1qJ6IJLA5pkunPuVYxbUkDo7hDpFF8iHkhqfHBQWj0pmoMXL/Dd
-	 cbPNf/Bpp5FJAa+YNjRqLbiNzqCglloFc3mJ5yY7nR8GgarpTmO0zRLbN8CChj5DYxu3b
-	 61LvEhtTUepU2hh3V225TPH4FmiN4QOAbulQ94Byaa6sVsjLKmSj33az+WX/tdc1xbQ11
-	 UvMy39K/QRxiL3E39tiH4B8DEIPb2pwbXoJ5PjwdkEzc5ZJAW1V48nnZxKFjs9S/yxYi7
-	 KUc19n+ZbFKnO0WjNiZzZCdfcJyqTxb8jZnt3O1slfZRhk1Nq7Omj85VL6/msu6DjGQ==
+	t=1795049891;
+	b=Kn+EV5Pr7Rp/QOiG6O155TsWfCt5lOwjyBwgkvRdYOhoQ3vGZks5P9pcU2O2ZM3ebPZR
+	 Itpk+1bHyAWQCASFmlN/bI2NyGCfwxXIdZn0OvmfSNkXrQSk89Vo3lVuQLwjKGROQ4htg
+	 fIEwvQozQCdACtUypgsGLl71vC4a6btIjqKGOx62HZ8EaduM5I2IMgk8XLs1KDWp38xsr
+	 dqNjOhHmie6Ke/6YEqRg7lKpzGjs+CNCC33+0aFK1WzGzcMpS7ID0ebTZ7QQzTnmHOF9V
+	 VXNyXDo/ONmXodta0McxrKfTWceZbvpxS2dbHfeGDkzCJxg7It2P74jrhezuNA01BLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049888;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049891;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MMbeJScdZIw5wNf3Xnecraxbru+GPOJ6RbUvHi+g4gw=;
-	b=nZ5sm4NgYNu7ldzLD0IERYztmynczJGECEz7QMXoTP+/cwBqKGLqUy/lJRH4/lTlxkKt
-	 +PzbWyzggPX5aFP4+CNSYs/vPxkqCxyquSf0Ow/5rhuu3FEUVDiC/x0HSWtyTLwKUsviq
-	 LO4GDzwvtAfR1vvO45J1ZpHR7lINY9297FXkIacNAW+aTcorVW3q/VU8mj1wWmP6PVau4
-	 log+w5krhkZDGIYJ9j7MxSxFhk6IzQqTSnbMazJ0o0irXTURFky6lj9xpxO+ql8e14AUG
-	 ei8HYGXuyZOI4FgKeQi3ag2+Zzk81Bc+sJT/moCujFwjAQ25vp0dkK3qMjPnB6IwcmQ==
+	bh=WJ2f/h8r1Lb9LxAG/tjVJhVAkULfDBeiovhZYBvaiWI=;
+	b=lTIu327hF82lzoUny3Y2KB+g6Kns3iCt6stFBoVmxr9lv8aLPNat28WcVs4EyEMaTulu
+	 rZe62PcXxaSoqtfDUPO7l+TMZFgYkhjAP1wB706YDCUnwoNJf4R49awPAHvivoGn3RfKT
+	 j0MYfcrbMeplJyfC7RAjngULeYb48lc4tWIUat6aj8UWmxAOOiq7t3zJWGY8BkwWUlrUh
+	 aNlvj2gvtlC6FTxoTjO0En6uVk/3piYpYG8vfg51ZysoJTH1EV+w/9Tg6RNA2aXaHjs2+
+	 DqzNK7hhDTkxFK99yp/WAZsDw5b5IhKqP2pIux3uQzsgfVXA4QbeWNyuBo9+k4P3iwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qIYT7n23;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=REooDUhA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA47606A31C;
-	Thu, 19 Nov 2026 00:58:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24113606A31C;
+	Thu, 19 Nov 2026 00:58:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qIYT7n23
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 999041F000C4;
-	Thu, 19 Nov 2026 00:58:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=REooDUhA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 779861F000C4;
+	Thu, 19 Nov 2026 00:58:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049888;
-	bh=MMbeJScdZIw5wNf3Xnecraxbru+GPOJ6RbUvHi+g4gw=;
+	s=korg; t=1795049891;
+	bh=WJ2f/h8r1Lb9LxAG/tjVJhVAkULfDBeiovhZYBvaiWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qIYT7n23mOcNQLxN3td3L9jUvEESTVzEPkRfu7sGpr4b623Dwu4bHyBf1r0yHxkD2
-	 xF579vOEuJaiWgoc0ME8oMOXQgKt7/FkRbRhQ0PH1ilVQQk4PBYnx5Vo+32IJsWJ/c
-	 alnPu2CN2vavKQaqvVACz/rZEXPF7UBZPV3Tn0rM=
+	b=REooDUhAp15/wbMIxBtZ8eB+Pi+TMH+vk9mVE8REsBK2ZVxf2hEUQ1v09i0ixJEDZ
+	 eStI6/dzUn1fpGOPuCEtUk58tFWHrbJ5ZhsaPe3djctjkjlFxwrzBjRFzuTu++X83C
+	 V9IZhdDFlWFH9B+OHlgKjsjhPKVptuH7+fFFI56w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingui Yang <yangxingui@huawei.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Long Zhao <longzhao@ambarella.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2512/2857] scsi: libsas: Fix out-of-bounds memcpy() in sas_ssp_task_response()
-Date: Wed, 18 Nov 2026 15:59:06 +0100
-Message-ID: <20261118150331.985304432@linuxfoundation.org>
+Subject: [PATCH 6.1 2513/2857] dt-bindings: vendor-prefixes: add Ambarella
+Date: Wed, 18 Nov 2026 15:59:07 +0100
+Message-ID: <20261118150332.020470155@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,37 +71,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xingui Yang <yangxingui@huawei.com>
+From: Long Zhao <longzhao@ambarella.com>
 
-[ Upstream commit 4d7f9c3fdce773f6c69d17c1d4a05bd5e17f4b99 ]
+[ Upstream commit 5ef299ffb56531b3a4f2b311000da76beed403ee ]
 
-The min_t(int, ...) clamp of the device-provided sense_data_len turns
-negative for values >= 0x80000000 and is then used as the memcpy()
-length, reading and writing out of bounds. Compare as u32
-instead. Well-formed responses are unaffected.
+Document the Ambarella, Inc. vendor prefix so Ambarella DT bindings
+can be applied without waiting for the SoC series.
 
-Fixes: 366ca51f30de ("[SCSI] libsas: abstract STP task status into a function")
-Signed-off-by: Xingui Yang <yangxingui@huawei.com>
-Link: https://patch.msgid.link/20261009033238.1076098-2-yangxingui@huawei.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Signed-off-by: Long Zhao <longzhao@ambarella.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://patch.msgid.link/20261014-cv75-prefix-v1-1-fe95ed567880@ambarella.com
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/libsas/sas_task.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/scsi/libsas/sas_task.c b/drivers/scsi/libsas/sas_task.c
-index e9d291007817b..2080e5836179b 100644
---- a/drivers/scsi/libsas/sas_task.c
-+++ b/drivers/scsi/libsas/sas_task.c
-@@ -25,7 +25,7 @@ void sas_ssp_task_response(struct device *dev, struct sas_task *task,
- 	case SAS_DATAPRES_SENSE_DATA:
- 		tstat->stat = SAS_SAM_STAT_CHECK_CONDITION;
- 		tstat->buf_valid_size =
--			min_t(int, SAS_STATUS_BUF_SIZE,
-+			min_t(u32, SAS_STATUS_BUF_SIZE,
- 			      be32_to_cpu(iu->sense_data_len));
- 		memcpy(tstat->buf, iu->sense_data, tstat->buf_valid_size);
- 
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index b8fb542fa9d11..750a9154dc2a8 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -89,6 +89,8 @@ patternProperties:
+     description: Amarula Solutions
+   "^amazon,.*":
+     description: Amazon.com, Inc.
++  "^ambarella,.*":
++    description: Ambarella, Inc.
+   "^amcc,.*":
+     description: Applied Micro Circuits Corporation (APM, formally AMCC)
+   "^amd,.*":
 -- 
 2.53.0
 
