@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053833;
-	b=NZ78lKzD/jzqeiy16/faUg856gEChKSoPkfILSSiRcJmJOAIbkJ6aJDL9j81XnLiHwCj
-	 LGTQ1/04Fye87M98AoZ2PuaxxQ4RxJRqj5kvk9oDm8LcEpOlLd9Wjj7GHfsWOAUji26K6
-	 79p0GzjjqgbAgqeR+u/4sw4qP/0DWAwQSa5hIg+t6CoowKl5NzdEyOeGBEBQYt45DM94R
-	 e0MuEicaB6YJMj3ssSXFL+WvJcM52Q0y0vJpZNmInZReAAuocMhq/mty/BQWLkkA2ljFH
-	 GrYY5y28lIsTDQzKXT+ZkF5VQuyCL7bAtbwa3v/1nEPJ+0ZPXL3Ai6HMjQVd67tWIWg==
+	t=1795053836;
+	b=j1PDwpdHUvgigxujs1XCn1HSuWbqiAlg00EBik9lsENpM2FgVBuFg27FoH8yKFANprIx
+	 mJm3Fl3b162RW9H0VSyRGeSU5J2nFrgXqGlC3J1Xj8dPyVcP77TfMtzd2e/vv5531oGjx
+	 1OKtx0/sdXDRv79GU0Ffbt5QqGPyFPmKRX6KSJSOAytIt1yeC9xsgqXfQ1FcoplrA5Mb7
+	 3wIZaHGvfb07nYfZI+53lDoM7EYX5Rlrulygm9ZZl4GjyjuxDAWoAsOQXl1ZbieeTtmYN
+	 bq9oe1+wl4C7o/kZCIaJitulDG0FNHVSaJKrx9xMiZwOCAXqSyuR4f90aZ6JPsGxgfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053833;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053836;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/Pk+sb8qflD45+wr0Jr/G8RtwA8qhFVhMLaRPISJdns=;
-	b=3Zh71QdulP0whdX08aAfcE1EBaO69z+LcROu5U1pFHWFRk0hRrRa4eZKM7fZUn9tIq8f
-	 yZaUgVCyxWIKpW8d4212TVg4Dm3SnLB2M+LdPC3eRv+Q+Io09W+uyoz0XuUP/TjB9Q6uW
-	 DhJpsEOYsDXv/vymSUI7TSWW3SP2UioK4eXpZ9Cwmdj9YgMuXqdb6apU1pN0Xwe6IBt7a
-	 fhDeDKResyp4bXRUE2FYv0V1byI1xWcLbtNhmTyiINhxYBr4c33vDy5Ns9BRgUj5ZW+eg
-	 uQUVZoBrNeCe62tIX7diS/2qEzJ180a8SmxKKPUBMDd8j6poPKr2dOUifc8bYWB2Iew==
+	bh=zaXoWdpzAYvy+nluI2ZcHWJKdICd/mN/q9kpm4cBXjY=;
+	b=hHgcIvtiV58BL3FcsQxrCfOoIaCsvaVuQcgmd/N/UbIMHYEuZYixNBUEaRZ4cUXeO43o
+	 4X2lvcY7b4NkGLWgiaMMMDqtjOW8iPG/RTh8egpGWrVMjre2iWATTAcBL7IZ7s82ALSEF
+	 VQWNvkurbA7vI1t78kh+nvKrZqlTwAcnW3pxpoxNovcIRb2vL5psFKlIUadl86oflzXNV
+	 j+iYW8E9UZ6FmgZhMUvtTemdIWJoUvJDdTcF/b75J7RalBYHS4qVFlFQuTXUWGDZ6mYxa
+	 2rVt1NZ9K6k3IzkHYG7cdBTLY3wijUZwvfaHCpdaUsA2qwyc5u1mhJPKtOZyAIu/SWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x9ollYiO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FG4spaFc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88F0606A31C;
-	Thu, 19 Nov 2026 02:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9196606A31C;
+	Thu, 19 Nov 2026 02:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x9ollYiO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 280E21F000C4;
-	Thu, 19 Nov 2026 02:03:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FG4spaFc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBCE21F000C4;
+	Thu, 19 Nov 2026 02:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053833;
-	bh=/Pk+sb8qflD45+wr0Jr/G8RtwA8qhFVhMLaRPISJdns=;
+	s=korg; t=1795053836;
+	bh=zaXoWdpzAYvy+nluI2ZcHWJKdICd/mN/q9kpm4cBXjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x9ollYiOXA+z99oHFTNM9JC9PBWZBDtNzQsMok2hkquqpoiDInXzxtM8XAMyRhQoc
-	 vqT+K9lmGJ+NTX4dxvEvCtYmVILofHSFBGKE5WppBek23YO91g3XBbP9WiCKO86HRF
-	 +kbR9b35Rx8yccAv5l2NpxdW947TgjadaYonww6o=
+	b=FG4spaFc6Dv4epkekonQqKT3cW1CxRW2bJDizvh15pnN8jdP9z80mBwSxxT6KQZ5i
+	 klvJfgfDgSumZWSCfl7AABLK2WXq9gCLBP5xxb+3MmNbfjsJKcd1jIjSaT8GnoxbFe
+	 6lMGc9c82Fj6sqJ3Qk+NmMYmwtRvUt0B+jXHvgDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1058/2214] cxl/acpi: Check ACPI companion before use
-Date: Wed, 18 Nov 2026 15:45:34 +0100
-Message-ID: <20261118150054.633499026@linuxfoundation.org>
+Subject: [PATCH 5.15 1059/2214] KVM: arm64: Move IN_GUEST_MODE ahead of state being loaded
+Date: Wed, 18 Nov 2026 15:45:35 +0100
+Message-ID: <20261118150054.670363045@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,67 +68,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 371c2ad1624283b6c7a62a28199f5161d388a738 ]
+[ Upstream commit 22b6557ad05bf05c73246f62c19af3e04017270e ]
 
-Platform drivers can be forced to match devices outside their ID tables
-through driver_override.  cxl_acpi_probe() assumes that every bound device
-has an ACPI companion and dereferences adev->dev.bus without checking the
-result of ACPI_COMPANION().  Force-binding cxl_acpi to a platform device
-without a companion therefore causes a NULL pointer dereference.
+IN_GUEST_MODE is advertised too late, when state has already been moved
+onto CPU registers and cannot be observed by another CPU anymore.
 
-This was reproduced by setting the driver override for the pcspkr platform
-device to cxl_acpi and binding it through sysfs:
+Move the IN_GUEST_MODE publication ahead of the state being loaded, and
+immediately check for pending request. This ensures that there is no
+window of opportunity for another CPU to observe OUTSIDE_GUEST_MODE and
+yet for state to be loaded.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000280
-  #PF: supervisor read access in kernel mode
-  RIP: cxl_acpi_probe+0xf4/0x220
-  Call Trace:
-   platform_probe+0x4d/0x80
-   really_probe+0x106/0x370
-   device_driver_attach+0x4c/0xa0
-   bind_store+0xd0/0x100
+This also simplifies the "state rollback", which solely amounts to
+synchronising the timer when no irqchip is present.
 
-Commit 2b3a5dabe89e ("platform/surface: acpi-notify: Check ACPI
-companion before use") fixed the same force-binding issue in another
-platform driver.  Check the companion before setting up the CXL root and
-return -ENODEV when it is absent.
-
-Fixes: 7d4b5ca2e2cb ("cxl/acpi: Add downstream port data to cxl_port instances")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260926071605.3013893-1-yaojiale02@163.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-[ sashal: Adjusted cxl_acpi_probe() declaration context to preserve the required acpi_status status variable. ]
+Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
+Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
+Link: https://patch.msgid.link/20261015100539.1011760-4-maz@kernel.org
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+[ sashal: Omitted relocation of kvm_pmu_update_vcpu_events() because the helper is absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/acpi.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/arm64/kvm/arm.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/cxl/acpi.c b/drivers/cxl/acpi.c
-index 54e9d4d2cf5f5..f2203f14af2cd 100644
---- a/drivers/cxl/acpi.c
-+++ b/drivers/cxl/acpi.c
-@@ -377,11 +377,15 @@ static int add_root_nvdimm_bridge(struct device *match, void *data)
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index 6bff7fd323872..a621dd31d9213 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -836,28 +836,31 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
  
- static int cxl_acpi_probe(struct platform_device *pdev)
- {
--	int rc;
- 	acpi_status status;
-+	struct acpi_device *adev;
- 	struct cxl_port *root_port;
- 	struct device *host = &pdev->dev;
--	struct acpi_device *adev = ACPI_COMPANION(host);
-+	int rc;
+ 		local_irq_disable();
+ 
+-		kvm_vgic_flush_hwstate(vcpu);
+-
+ 		/*
+ 		 * Ensure we set mode to IN_GUEST_MODE after we disable
+ 		 * interrupts and before the final VCPU requests check.
+ 		 * See the comment in kvm_vcpu_exiting_guest_mode() and
+ 		 * Documentation/virt/kvm/vcpu-requests.rst
++		 *
++		 * Requests to self must be posted before this point, or
++		 * won't be taken into account until the next exit. No state
++		 * loading other than what happens at vcpu_load() time can
++		 * be done before we have checked for pending requests.
+ 		 */
+ 		smp_store_mb(vcpu->mode, IN_GUEST_MODE);
+ 
+ 		if (ret <= 0 || kvm_vcpu_exit_request(vcpu, &ret)) {
+-			isb(); /* Ensure work in x_flush_hwstate is committed */
+-			kvm_pmu_sync_hwstate(vcpu);
+ 			if (static_branch_unlikely(&userspace_irqchip_in_use))
+ 				kvm_timer_sync_user(vcpu);
+-			kvm_vgic_sync_hwstate(vcpu);
+ 			smp_store_release(&vcpu->mode, OUTSIDE_GUEST_MODE);
+ 			local_irq_enable();
+ 			preempt_enable();
+ 			continue;
+ 		}
+ 
++		/* From here onwards, we are commited to entering the guest */
++		kvm_vgic_flush_hwstate(vcpu);
 +
-+	adev = ACPI_COMPANION(host);
-+	if (!adev)
-+		return -ENODEV;
+ 		kvm_arm_setup_debug(vcpu);
  
- 	root_port = devm_cxl_add_port(host, host, CXL_RESOURCE_NONE, NULL);
- 	if (IS_ERR(root_port))
+ 		/**************************************************************
 -- 
 2.53.0
 
