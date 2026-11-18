@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031294;
-	b=eCZngF5MY2qaXaYIrae3BIzeYQK36PGc1YR4z+Zd87zj/dGa0NRfVSRaPVi1q0H8Holp
-	 Rij+6DBBwVFrZZ5R8cyyRYLt46NjrSaYyatYlal1+7+85MD+L5Ov4xml+ID8gQ+HM6cWv
-	 tiLgUA281dqSfVD0+91mD52c8Ce7HKcjktqNjuq/TDfKFI0rD/mSUyh2frZ4LOFAmns97
-	 avm7MfLxI1wB7Y8HLl8g0OHMcj/q+SEaAubrimwEvB/KlQzwwZJDG7yYliUiMxzeBB3Su
-	 kBx+5IDpfv/jw5LgalgAnzhar7fAxieFBu+xwWMw3mLPor60NRm9oKWdQkMAsBRZa8g==
+	t=1795031296;
+	b=s/7DCtDIS1DKQS13xqCn1//okwlv39YDYdFuw/Ps4gybWPN5ahykOX7L2WqkpOzKwyh9
+	 DJR6Lzp7h0boBblS2kq86uglq9ut2w4CyHcyJ4knWaBLhJs3qevlgdwX1gASmJIgLk0SF
+	 hTScOr7HhYC0IchPnvLZvwW+inOhFRMfZ4hJEUFesEzQ0T5V/CVB6FSIugo8gbf9XR5vp
+	 p70v6CJGHhloYhN5gRhFAQhNGnu9PbbkAQzxqBdf1wLkx/yQKDTN1yn6PPdGThW0/cxqP
+	 U89AFV0p53go0Xo4LvhRO5IKTnqVDlFlppvWdJ1RukrB5jrS+jUF0NBXN/fxtXRfnOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031294;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031296;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=3CYFicmw+McH+H+r+J/K6ct896XH6owaeuu5f6Nm5jU=;
-	b=GM+Ek0cfIMcAAwftT2i7T8dV/H0SPMy4w1k6ChAltqCL2n4QXkCnPH7eIIDcilgGM50E
-	 luibSKONhzOEnm8Nb5vqnZExFO64+lQ5p3CNL6Ab0lTGNjiWQlCfDXWao5JN7Q9Js9itA
-	 vRxQpTju6CIwCGOhK8S6FUjd8SULbnTpqnsTWQfSk8CFOOeyWrO+aq/pNdBN0/586nngA
-	 3zIyL+ERA8GSlNHZ5yTdYmXfhxtNLq7PGVnXAGAB9dSZQfbnZ9CAkNkslzJCPsWBhpKSn
-	 pwKqk/d0ULLw/9JhaRpYZbIzbp0mV3PEtqyc2nFKcJaHfNwQ57B11bc0nGA4+f1g1KQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Xkt2HYbaII29qfPJ6lnpnzeLJUb2RhGb9PJ/9cjuzUc=;
+	b=hV9LjJRqQueXB5lV5bxqFLnRUQQPwtni1xM3s4dQzvtr7QZn8Dml1005Szinc5LHEARj
+	 7hhzMo5SGQ/iIAHLbJzuWYfbXPGryB+Xw1t5J+oriiF9P9zj6IY+7elACWBI3GZRzVsNI
+	 M4paaAtSZhneTVcxMivRUEFVYzkj9IJh5HorA/VSNIq8Q9uJe1w594l/lH6zkzM2BgUOT
+	 C0Zyoi6UevFcadLnvyuOXlWCedD1e6+vOcAYjhRcHhnTWkNbR4fuX8z5X4d4ymIvEd/j2
+	 g6N7/490Uy/YxEPHlpSXMLzdwJB6ENa8gIEqwhzrE7nmI0/eeROLuxZZMDkeb2+G2sQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="1cjxJj/S";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fNMtCuI3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C33A606A330;
-	Wed, 18 Nov 2026 19:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24662606A32F;
+	Wed, 18 Nov 2026 19:48:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1cjxJj/S
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EBAD1F000C4;
-	Wed, 18 Nov 2026 19:48:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fNMtCuI3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D1601F000C4;
+	Wed, 18 Nov 2026 19:48:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031293;
-	bh=3CYFicmw+McH+H+r+J/K6ct896XH6owaeuu5f6Nm5jU=;
+	s=korg; t=1795031295;
+	bh=Xkt2HYbaII29qfPJ6lnpnzeLJUb2RhGb9PJ/9cjuzUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1cjxJj/Sqd3v7OalUARncSFzqDpMY6Qse2WlFxkjRtqY97X/7S83QMBlcqEYcrrn7
-	 nZrB2JJrjZV1Xbg9KXKobe0I7O+TnpVsRoaA8DncslhvhpoVCFrZ5ryMZnd3gO3cMB
-	 6/70UE4gXGWVIb6vtpHw/RMm2k9hbd7Bd26xHWzA=
+	b=fNMtCuI3PuiSiGoHyxIi6rUhGf4O6UTr8bI1TpQcc6Tut6VTNvCkDnWjkHWgnUNV3
+	 gcZbpfICG3N2cXj54+jbjUFABRVOICgP98LTinAKyV6fpZKuKpU/z8ZKE0ATzWcpXw
+	 QiwcxEz6osal+u4ydm3JhX7qP6iFSDCFgOofVX5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Leung <untilscour@protonmail.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	=?UTF-8?q?Micha=C5=82=20Kope=C4=87?= <michal@nozomi.space>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0970/1756] wifi: mt76: fix wcid->pktid corruption in mt76_wcid_cleanup()
-Date: Wed, 18 Nov 2026 15:51:37 +0100
-Message-ID: <20261118150048.743054481@linuxfoundation.org>
+Subject: [PATCH 6.12 1006/1756] ASoC: mediatek: common: Keep codec references until the card is bound
+Date: Wed, 18 Nov 2026 15:52:13 +0100
+Message-ID: <20261118150050.191329548@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -62,62 +62,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ryan Leung <untilscour@protonmail.com>
+From: Michał Kopeć <michal@nozomi.space>
 
-[ Upstream commit 158c1145fe7ddd82914011a00de7cc3262616b16 ]
+[ Upstream commit 6cb1f09e1f699d0c7f748057bc50d84a1e9e77fc ]
 
-mt76_wcid_cleanup() releases dev->status_lock before calling
-idr_destroy(&wcid->pktid) to tear down the pktid idr. Meanwhile,
-mt76_tx_status_skb_add() from tx.c can concurrently insert into
-that same idr during tx completion handling:
+mtk_soundcard_common_probe() drops the codec references parsed from the
+devicetree right after devm_snd_soc_register_card() returns. When a
+component is still missing, snd_soc_bind_card() queues the card for a
+later rebind and registration still returns success, so the card is not
+instantiated yet. The rebind reuses the same dai_link array, but with the
+codec references released both the codec name and of_node are unset, so
+it fails the dai link sanity check and the sound card never appears.
 
-	spin_lock_bh(&dev->status_lock);
+Release the references right away only when the card was instantiated
+or registration failed. Otherwise keep them for the rebind and release
+them when the device is unbound.
 
-	pid = idr_alloc(&wcid->pktid, skb, MT_PACKET_ID_FIRST,
-			MT_PACKET_ID_MASK, GFP_ATOMIC);
-
-Since idr_destroy() runs outside the lock, it can execute concurrently
-with idr_alloc() on the same idr, corrupting its internal data
-structures. Because idr nodes are freed through the generic slab
-allocator, this corruption can resurface later as an unrelated-looking
-crash anywhere in the kernel that happens to reuse the same freed
-memory.
-
-Fix this by calling idr_destroy() before releasing dev->status_lock,
-so that the table teardown and any concurrent insertion are mutually
-exclusive.
-
-Closes: https://github.com/openwrt/openwrt/issues/24594
-Fixes: bd1e3e7b693c ("mt76: introduce packet_id idr")
-Signed-off-by: Ryan Leung <untilscour@protonmail.com>
-Link: https://patch.msgid.link/20260820-mt76-pktid-idr-race-v1-1-451f176a6495@protonmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: bce93a162505 ("ASoC: mediatek: Add common machine soundcard driver probe mechanism")
+Signed-off-by: Michał Kopeć <michal@nozomi.space>
+Link: https://patch.msgid.link/20261003194501.832558-2-michal@nozomi.space
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mac80211.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ .../mediatek/common/mtk-soundcard-driver.c    | 23 +++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
-index 289c1a2815560..77708de932f30 100644
---- a/drivers/net/wireless/mediatek/mt76/mac80211.c
-+++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
-@@ -1641,9 +1641,8 @@ void mt76_wcid_cleanup(struct mt76_dev *dev, struct mt76_wcid *wcid)
+diff --git a/sound/soc/mediatek/common/mtk-soundcard-driver.c b/sound/soc/mediatek/common/mtk-soundcard-driver.c
+index 3bbf42c42805f..7a51574f9e8a8 100644
+--- a/sound/soc/mediatek/common/mtk-soundcard-driver.c
++++ b/sound/soc/mediatek/common/mtk-soundcard-driver.c
+@@ -139,6 +139,11 @@ void clean_card_reference(struct snd_soc_card *card)
+ }
+ EXPORT_SYMBOL_GPL(clean_card_reference);
  
- 	mt76_tx_status_lock(dev, &list);
- 	mt76_tx_status_skb_get(dev, wcid, -1, &list);
--	mt76_tx_status_unlock(dev, &list);
--
- 	idr_destroy(&wcid->pktid);
-+	mt76_tx_status_unlock(dev, &list);
++static void mtk_soundcard_put_card_reference(void *data)
++{
++	clean_card_reference(data);
++}
++
+ int mtk_soundcard_startup(struct snd_pcm_substream *substream,
+ 			  enum mtk_pcm_constraint_type ctype)
+ {
+@@ -319,8 +324,22 @@ int mtk_soundcard_common_probe(struct platform_device *pdev)
  
- 	spin_lock_bh(&phy->tx_lock);
+ 	ret = devm_snd_soc_register_card(&pdev->dev, card);
  
+-	if (!needs_legacy_probe)
+-		clean_card_reference(card);
++	/*
++	 * When a component is still missing, snd_soc_bind_card() queues the
++	 * card for a later rebind and returns success, so the card is not
++	 * instantiated yet. That rebind reuses this same dai_link array, so
++	 * the codec references parsed from the devicetree must be kept until
++	 * the device is unbound: dropping them leaves both name and of_node
++	 * unset and the rebind fails the dai link sanity check instead.
++	 */
++	if (!needs_legacy_probe) {
++		if (ret || snd_soc_card_is_instantiated(card))
++			clean_card_reference(card);
++		else
++			ret = devm_add_action_or_reset(&pdev->dev,
++						       mtk_soundcard_put_card_reference,
++						       card);
++	}
+ 
+ 	if (ret) {
+ 		dev_err_probe(&pdev->dev, ret, "Cannot register card\n");
 -- 
 2.53.0
 
