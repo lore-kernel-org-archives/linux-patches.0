@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015746;
-	b=OecJRInua5G4GCVVCZuuckzpjg+Kr7YZhUtq2uniuj5UiN0wEMidWT85PVHR9uXSOXBM
-	 E3DsJGV4n+5k8o4J7A8ie2oQ1N0oxUhZ+2ZsOe7mUXAhT8sB9I8tSlVGPeZtJOjeaMZX4
-	 /KJZbp8nUHEYHZlC6SpHnFgZXN4iRVRMjMdrCYipt2exCq/6LYKNzZnZqXgFD5wPHCxt/
-	 mCa1YVemObwq3t0RsLLBqiBUkkA3l1/QOChyUIDin+VTrFpo/PdwkBAvWRBWesCfmUsZz
-	 SKyB1UAFTM5HqbGKpAcjDQWfkwTpGBVMJ1YzS39RAtxgJ80qD6FEPCDrQ6y61jKSW/Q==
+	t=1795015749;
+	b=IQcCPA1Yi07lGVw9ejR8RE+nntqJpZN2sbuyKvZOUuJ4ViTtd9rhZykPDb4NZdZtiQEr
+	 kvuIXnpfQIY1kARXa/ohMZrqbgI8Ur2ECYUA79J+AAZl9lxBN0UgvlEJLGRdatLGRaQqN
+	 XpIovyzsiMUKhjkqQHM34doQs0tzpbCmqeq16liRJY2wC9qyzG48RDd2vDfrzeeH9EUi/
+	 GS1LNSuD/wegdqid9nBXYfIgycG6xBfEk97lOzxDhVMhBKZwNjhMR98wFpDEx8CyecU0P
+	 OndSNiQAMr5vcEYFCLfn53bj1ajrsEmTA2qwDyi/UQtttYICBt9eGv8X95ttBvadmvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015746;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015749;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Cfa58blc1z7FTlmr5wFhXziuoWSbolLf1qhG9L/koN8=;
-	b=n1bXISbdk9K2H5K7xGdraAj5b+O+jc5LTyP4ZyYMartV8oKsXOuCdgcevKy6JhJIhToy
-	 NDAWu3/U/VttymGj19LxkThcF6dg20lOTNE3kaQqMCuOXrepjuwedavRpAlqrmJHdgMe7
-	 VC/0SPWckwSpjQN/qxNpXtARDxMi80QpmwE0KivyDbpqCbDJrKrmPLxLBy6fBAuJL+8rT
-	 SnG4bj0C+d8i2//1+GtyvwEih2zLiQkQAi/vTHUUmbywbmAOjXyMutKafWET29NUKDbhg
-	 AmANWHvFBWS8829qKNAjxgwCjUaUV5r7UVVUMi+xF+7FSReVYRhMWMPfba+WNYF/r5g==
+	bh=eFJeA137oM2LSwO7+jPNURiQBk9rLicAzkPlMRkr/jA=;
+	b=Sx3oJO/am4Q23tExfbOqfBCRwwYkm3WERcls9A6DqKpi/JOFVzunA4v5oNvn7SuWTf9Y
+	 MMm+MsD2SUVtTGOc4dN2So/dqIHIwe1jwxrfzWXCz5/oWULZH2fKMnD1Vl5Nkq4znXAzD
+	 0ADYxWecGsRkJkRpbiTPU93Lz//miPxMLgmiyGFWp1GbrKCLT2s/0Rn8BRpzuKReO16n2
+	 +FbLVeh1cuafST0eZo8U3uH7O50tZg+oGXXgEPNh4X3dt240t/dppmIES5rVpxlJZee3V
+	 qER03zeQKfNPQhRPWrQYa8kNXiCPfpz1JSQRVvD0WkzpP6K2bnGOS/pn4lmQ7UcB2nQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pSdKdcTM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g0aLwUvY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9E8606A331;
-	Wed, 18 Nov 2026 15:29:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D09606A33E;
+	Wed, 18 Nov 2026 15:29:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pSdKdcTM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D58A61F000C9;
-	Wed, 18 Nov 2026 15:29:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g0aLwUvY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 930B31F000C8;
+	Wed, 18 Nov 2026 15:29:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015746;
-	bh=Cfa58blc1z7FTlmr5wFhXziuoWSbolLf1qhG9L/koN8=;
+	s=korg; t=1795015749;
+	bh=eFJeA137oM2LSwO7+jPNURiQBk9rLicAzkPlMRkr/jA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pSdKdcTMN1MXN1xpsrjI9H8v3qSQrZeoFvTCmJnlAWx89R9r61zNi3lEzsAv1xc1n
-	 zpTnGWwL/a3U3pFNGXp/GglXx+ikzbcl3maOH8PCsGmwD7sC0vfKCCKcp16VJAjyKq
-	 Llh5XMo6cfvRbWv9JHkvrO50jdfGnciyl0sMRnF0=
+	b=g0aLwUvYlsbuRFlGL3baWtfI3w14/tScIWanjnvqyXemy8mMkkRt2Q057xOQCzcMG
+	 EScsFGgJXVlsnvKV+6RNzpn1MGdrAr6qKDPtfRPDh9deyyBse1XMBsPm1gFC9TxB3/
+	 jQJHxrrr8FY5QrtyTS9dHr41IRmMSEGjsY+z8R08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yanhua Wu <yanhua1.wu@intel.com>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	Tony Luck <tony.luck@intel.com>,
+	Aaron Tomlin <atomlin@atomlin.com>,
+	Ian Rogers <irogers@google.com>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0282/2651] EDAC/i10nm: Fix Granite Rapids ADXL MC mapping
-Date: Wed, 18 Nov 2026 15:25:22 +0100
-Message-ID: <20261118150258.066724863@linuxfoundation.org>
+Subject: [PATCH 7.3 0283/2651] perf test: perf stat tests fails on s390
+Date: Wed, 18 Nov 2026 15:25:23 +0100
+Message-ID: <20261118150258.099540546@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,44 +71,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+From: Thomas Richter <tmricht@linux.ibm.com>
 
-[ Upstream commit ba71d9b4e9dd83c1614b3b5cec6c82a39d290f7e ]
+[ Upstream commit 454e049a3f6528a04f96afb4cbef1fcbb49c2d0f ]
 
-ADXL reports memory errors using memory-controller physical indices,
-while the EDAC driver identifies memory controllers using logical
-indices. On Granite Rapids systems, BIOS may disable some memory
-controllers, causing the physical and logical indices to differ.
+The test case 'perf stat tests' fails on s390 z/VM machines. The
+root cause is the unsupported CPU measurement facility on z/VM.
+Therefore the events cycles and instructions do not exist and
+are unsupported. This cause the subtest
+  Hide zero events stat test
+to fail.
 
-As a result, ADXL memory errors may be associated with the wrong memory
-controller, preventing EDAC from reporting errors for some DIMMs.
+Output before:
+ # perf test 116
+ 116: perf stat tests  : FAILED!
 
-Maintain a physical-to-logical MC mapping so that ADXL memory errors are
-decoded correctly regardless of the BIOS memory-controller
-configuration.
+ === Test Summary ===
+ Passed main tests : 0
+ Passed subtests   : 0
+ Skipped tests     : 0
+ Failed tests      : 1
+ List of failed tests:
+  116: perf stat tests
+ #
 
-Fixes: ba987eaaabf9 ("EDAC/i10nm: Add Intel Granite Rapids server support")
-Reported-by: Yanhua Wu <yanhua1.wu@intel.com>
-Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Link: https://patch.msgid.link/20260819025259.266201-1-qiuxu.zhuo@intel.com
+Output after:
+ # ./perf test 116
+ 116: perf stat tests  : Ok
+
+ === Test Summary ===
+ Passed main tests : 1
+ Passed subtests   : 0
+ Skipped tests     : 0
+ Failed tests      : 0
+ #
+
+Fixes: 64724095a33fbee8 ("perf stat: Add --hide-zero-events option to suppress zero-count events")
+Reviewed-by: Aaron Tomlin <atomlin@atomlin.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
+Cc: Aaron Tomlin <atomlin@atomlin.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/i10nm_base.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/perf/tests/shell/stat.sh | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/edac/i10nm_base.c b/drivers/edac/i10nm_base.c
-index 12e1949fcf44f..87e541c3bf4bb 100644
---- a/drivers/edac/i10nm_base.c
-+++ b/drivers/edac/i10nm_base.c
-@@ -479,6 +479,7 @@ static struct pci_dev *get_gnr_mdev(struct skx_dev *d, int logical_idx, int *phy
- 		if (mdev) {
- 			if (logical == logical_idx) {
- 				*physical_idx = i;
-+				skx_set_mc_mapping(d, i, logical_idx);
- 				return mdev;
- 			}
- 
+diff --git a/tools/perf/tests/shell/stat.sh b/tools/perf/tests/shell/stat.sh
+index 298ce454b45a1..1f5d4cc05807a 100755
+--- a/tools/perf/tests/shell/stat.sh
++++ b/tools/perf/tests/shell/stat.sh
+@@ -583,6 +583,11 @@ test_hide_zero_events_stat() {
+   # Check that --metric-only works with --hide-zero-events
+   if ! perf stat --hide-zero-events --metric-only -e instructions,cycles true > "${stat_output}" 2>&1
+   then
++    if grep -sq 'No supported events found' "${stat_output}"
++    then
++      echo "Hide zero events stat test [Skipped - events not supported]"
++      return
++    fi
+     echo "Hide zero events stat test [Failed - metric-only command failed]"
+     err=1
+     return
 -- 
 2.53.0
 
