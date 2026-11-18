@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031124;
-	b=l9ujQw2vBy+L4OfySWjQtAL9ayoPJZZsf+YOxIojsjdNIEkPtuhugDAFhg9cbEFiM2fR
-	 c9DzFkolL5rguIbxXZB2oJf4UpnAJXA/SGqUvm+oCh40XnzSgrRJ/OsHntJo4E+Loz8E2
-	 SRiWIgGRrxIcLMrdp6otEjek8Rvaz0HINytvW4DDTE5bGqSGB2BaX47wP0u/tbeiYt6YR
-	 sMhIQ3y0oEJm2ddgeYLEyqjfl75SDdFMUfc5ZjNqqraWxqs2iAebGCxcATyesyWAHwTqE
-	 4bubkkPNNoxqhgSNzr+w4O1REftgaqxnwc9fvVWfbAMvjELf6Qhnp3zpMODT2rZ8iWA==
+	t=1795031126;
+	b=oRl9nR9ZOTqnUJFYuMdq24nOHsdpckz4n4zP/yYBksHkPa4JHxKhI9um60fqTr6BteF5
+	 +rmf5sUqJ0xOqe8sVwqpN0p/PSDoNBUz+inrDlnHK0OtJhxfM94hMDjfxENh4h3vl1JBX
+	 AaBCmuM3JDIIMQgnI0xzKoB1GufDzCpMhugjsiHg3HU8TBpAASn5ddSVEsHLfAl3JJ7x6
+	 +9PQXxExhrV7vFyW1HUPPGNSQ9XLt6ntCjrcTC04l9KDdUIlqHQzWaCWO6JdIFoVRhZgj
+	 18wRNNEF/YXVQMCXg7xdOFoIdNHlwwpQ4P5hFQieyfKjvIDg753+18EP7otU0EWwa+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031124;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031126;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0gOACEkwvm1j448cWklq32a1fL+gBIfcAKl3HRAQuy4=;
-	b=qHcb6LR2DuElkjMq2V2AEsP6uPFZAi9CfK5BaC8IubTRuklaYVRt7XSV/MVbqJGTa8xF
-	 vzPA2xNacZHV3wSH12ijOnFOPpeeQTfisIVd7YT6wdRfFSMaTlLFh+O7QLC/LaYNC6Zzv
-	 In7sSa2RFeXRYWob5mG4BqGf/RTm9HHzfzBHzROrwnPWX9X/Bmv/PQ+1eCitY6Df6Jqpo
-	 4kPyq0UXEloUHFSom/whNcK+/8NRDDUpGVGaxmGTfcUyo3lYKgG4Hd6ZscFa2xY00s30G
-	 9oVATDn5ndIFXotT20q548d3xocfdCBQGaOgXWW5CQ4Bam3kpGekfhme/sBUygN9mQQ==
+	bh=JjjgR6LGYpJFbOX7BZrpi5O+FGxBDkEndEHCy+qnsGU=;
+	b=cq6mPcqERSZPPcwkzX8/GEh+GvA6G+uC1ioOUf/Sq7Xp8fbO2llTKvaUwVj35lVlTwqe
+	 Z5rgxDbPHQChsgfFwv22xqa/We21aycBWc4kX/WrsOu3drhb8AEa9OgV8V09w+6TarIXz
+	 SkTya3vXfNuYWFvmMmAmMSEmJx7JKaYpecnA5cGqGj6SpgHHvRTRDUdbw6Se6ym1Rua2m
+	 Tl/qTxDDhRaxMGgAGMqnmISP6yxin6LvN0aMmXPnCrKW8Q9Hl5WsXalW7XrtTCi1/4iL/
+	 UHT5hAKbel4aAafPD5tUzxWwsn8LbaVsCI9OpNfSvK7+VHuUFLQ1sjX/s/MOTVGAX6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j5xHxtwx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gXAYfbk9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A46D606A32F;
-	Wed, 18 Nov 2026 19:45:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D847F606A31C;
+	Wed, 18 Nov 2026 19:45:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j5xHxtwx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 707A91F000C4;
-	Wed, 18 Nov 2026 19:45:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gXAYfbk9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21EF31F000CE;
+	Wed, 18 Nov 2026 19:45:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031124;
-	bh=0gOACEkwvm1j448cWklq32a1fL+gBIfcAKl3HRAQuy4=;
+	s=korg; t=1795031126;
+	bh=JjjgR6LGYpJFbOX7BZrpi5O+FGxBDkEndEHCy+qnsGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j5xHxtwxMCXo92iSTf27L/AtTX0L+X3J+LSUZL4pV9wjaV13mhKePFV8Z8bQ9CgaS
-	 hMZ0JiC3GzonPwYbaWZFCzVa5fc6lMTxNO/9o5uM9gAcXpfCuQo7BrRyb/5N1Xb/kX
-	 jCQ4vU/5iSVqRXVgGWsMlUpXLDdumKAY8h503E3g=
+	b=gXAYfbk9Y8D+zwT+VG+Njy+cvFOu9RU5ZtFBIUmGeDCwEUZuw0C/eCwe4aX30FvN7
+	 LRcd7Ch3ZmHTu9gVx5g20Fi2k2n4hNCJ6FAVOYyb8CpZsKys/EdjW+DnpP1/vQpG4v
+	 EuHB/VCWEA1/d8iMzbgKMKWhqQmZOkIjxLcLqCGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0947/1756] pinctrl: sprd: free maps on DT map failure
-Date: Wed, 18 Nov 2026 15:51:14 +0100
-Message-ID: <20261118150047.780534662@linuxfoundation.org>
+Subject: [PATCH 6.12 0948/1756] wifi: mt76: mt7915: check default EEPROM firmware size before copying
+Date: Wed, 18 Nov 2026 15:51:15 +0100
+Message-ID: <20261118150047.816492206@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,41 +67,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit e873c665e503ebfb6dafaf9346c3956695686226 ]
+[ Upstream commit bce4aef211b3941af9ca297162406fc84f22ed5d ]
 
-sprd_dt_node_to_map() reserves map storage before adding mux and
-configuration entries.  If a later operation fails, the error path only
-frees the temporary configurations and leaves the map allocation reachable
-through the output pointer.
+mt7915_eeprom_load_default() copied mt7915_eeprom_size() bytes from the
+firmware blob after only checking that it was non-NULL. A truncated
+default bin caused an out-of-bounds read past the firmware buffer into
+the EEPROM image. Reject a blob smaller than the EEPROM size.
 
-Free the partially built map on failure.  The caller ignores the output
-parameters when the mapping callback returns an error, so they do not need
-to be reset after freeing the map.
-
-Fixes: 41d32cfce1ae ("pinctrl: sprd: Add Spreadtrum pin control driver")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Fixes: beed8bea8d74 ("mt76: mt7915: add mt7916 calibrated data support")
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/sprd/pinctrl-sprd.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/pinctrl/sprd/pinctrl-sprd.c b/drivers/pinctrl/sprd/pinctrl-sprd.c
-index c4a1d99dfed04..1db542731a1c7 100644
---- a/drivers/pinctrl/sprd/pinctrl-sprd.c
-+++ b/drivers/pinctrl/sprd/pinctrl-sprd.c
-@@ -329,6 +329,9 @@ static int sprd_dt_node_to_map(struct pinctrl_dev *pctldev,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
+index 14c0770229bc5..c636b082f0334 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
+@@ -111,6 +111,12 @@ mt7915_eeprom_load_default(struct mt7915_dev *dev)
+ 		goto out;
+ 	}
  
- out:
- 	kfree(configs);
-+	if (ret < 0)
-+		pinctrl_utils_free_map(pctldev, *map, *num_maps);
++	if (fw->size < mt7915_eeprom_size(dev)) {
++		dev_err(dev->mt76.dev, "Invalid default bin size\n");
++		ret = -EINVAL;
++		goto out;
++	}
 +
- 	return ret;
- }
+ 	memcpy(eeprom, fw->data, mt7915_eeprom_size(dev));
+ 	dev->flash_mode = true;
  
 -- 
 2.53.0
