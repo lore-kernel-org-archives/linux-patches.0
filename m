@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059314;
-	b=L+ufJm8sQDgGda0Yud8HTlBObO600Y3QQ9leb3CQbH34GyUzKDXQyzjpJGZ2DsYgI0dB
-	 +XYkrraqiGA3fbvDFdKIvNiZ+hd5dm7XmQRN72y6FGk+d/EKlAKqN2b3yZWwywTGQ0M+t
-	 F/pfj4snhe8StRqidbGgPlVWRZBWLpE427ULVC9m2O9JG+btrGGsKRdds1hDetP+Wz6qk
-	 iS4J4U0HxPYrCwK+BpvSc4+XQEyGr6ufNaAX+Tghxlum14fOZHcz8LB+9He9Ou+FID9uD
-	 4ITVoU/F6uVq+wGkWFcBhntUuAIxe5Ac5zS6ZprSvPnfH7qLCCwkpJf9AA0KcL6EcFg==
+	t=1795059317;
+	b=4JenqGQA/p9r46rMfgJ74Csf52T/O9DxcR5QKqppHoC1q1mJ6thLnqrRBBfGvmsTqf4y
+	 3t2vJV2f/5BHJvrJPrtnBHRGNZVwJMk7oMy4bfiyydnuv5VOzsJt4Z87oROxsfB0cld0b
+	 UNquntOZ6HZ91Wm7u+z7UUxgtTtwgBmkgoyNXTmdSyIkNd57AEalByOQL08GcQabi5HO1
+	 /4KxEw4b0boeSU738icr2OzjEa7qoK9ItMM5keYBAWNqfUUSQ6mfyNGBFVUfB8n8wYBYm
+	 7g6IMWGM4LrGeFS+lYZQFUFo2xYyYqWsP6o9PCY0S1XZ/NxKr9WGOJyob7aXy+kTQOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059314;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059317;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=U4Opy/otnTpHC/QMrCSw+og618aL7F9HMgpZA0w6su0=;
-	b=YQn4NB4a/MHHvInE71f/G9uM8YZnJVTQW0Ox/3P89wtPHpnR0ixTq7tCx/pdWkiWaTD8
-	 A/dzOQWpPRgytQSR+jjyAu3Sk6NXALBXEymEEsKOG7pk0jkEm2Bw49eod4VvQnMKUoRYP
-	 t+SBpEs4Dd0Xy2mgXEjSbN1Kt2XqlUN7gGEwsy/oSh2TxNInBdDBdXTil+4mJFrCMBzGQ
-	 UQwu9eeBe/XcRQDaa89SAYl+HijFmxlNVu6hxKoD9Sh+1I0mm3NUNM5twYAWpdBkdSL0V
-	 JWQbqFbCsEdCOvpCYaYR9sJHl5JqrapMXorEAC7kOZr5j8Fabse72OA28fUuK4f3hFQ==
+	bh=ppV7qXcevCGczBlyG5e+bQizZHxadILU+HPXXeQCxC4=;
+	b=ZYypvn2e33iZ6LgHDHsEv0CswfQTCLOyzlJ6vG+LzJYsLgB26/5btDiVLhPEG6m8L2Zt
+	 jr6hrjQK01Juf+mt/hT+7QBllU+BKfqrTNlNbs2dAtjGTUxeqCCLAR4wsBJIQZGPGxCRg
+	 WkTpQT3CLdCynj06plT8iN3xmD/ZTTFMgeoE5WlUjPR1gWkdRcbytXc0QU3208gT+mDDN
+	 jZ3PjtHJDP25UA/kiNTy6x/0Wz+2kvHFl24rEONQPr3Ep+kXKN969AXdtFq8ON1Qn7hdY
+	 zYHW+IbrvGM3XGMEZuGOT1iyiM94A9dSNMsCxYT+xRJd0KrfCq1uUuTpQwPg5yWlYHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qsp8qiFH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A4x5urFJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65BE1606A326;
-	Thu, 19 Nov 2026 03:35:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889CA606A325;
+	Thu, 19 Nov 2026 03:35:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qsp8qiFH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBD2E1F000C4;
-	Thu, 19 Nov 2026 03:35:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A4x5urFJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 789E71F000C4;
+	Thu, 19 Nov 2026 03:35:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059314;
-	bh=U4Opy/otnTpHC/QMrCSw+og618aL7F9HMgpZA0w6su0=;
+	s=korg; t=1795059317;
+	bh=ppV7qXcevCGczBlyG5e+bQizZHxadILU+HPXXeQCxC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qsp8qiFHttiv98ekIz4OPqfuTLBeYIZB+JgmjncfpGcCKv2+XYK1g1qzH2qrYdFhw
-	 5e04CU7z2mmZwbq++xExbcRX+o+3FmLdyYBYUIHjYdVilMnIA3qf7cXm/R8YTVFtfe
-	 TlweNUj1cYUqNNbC3AE/VjkUPVtifvfUwCXQDdDs=
+	b=A4x5urFJ9P/S3DF9Ly3PsU3+cOv5Ny7uErZcHoxG6IL79XbsyBFoOUpAmXXr6kpie
+	 oRaUoXQsiJP9m25S/2MfBAhgqeTIrLfImnBzC0Qf0TkUN9EFs1Hhl9UghddlQMzBm8
+	 Fdnzncyb2Dhx5hNJJWu+T7ZhLQjMkdmcDNroXWAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sven Eckelmann <sven@narfation.org>,
+	Kyrylo Biryuk <illofspeed@gmail.com>,
+	Marco Ziliani <rylos78@gmail.com>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0795/1848] batman-adv: tpmeter: fix u32 truncation of reported bytes
-Date: Wed, 18 Nov 2026 15:47:13 +0100
-Message-ID: <20261118145949.687756711@linuxfoundation.org>
+Subject: [PATCH 5.10 0756/1848] ata: libata-pmp: disable the SEMB port on Marvell 88SM9705
+Date: Wed, 18 Nov 2026 15:46:34 +0100
+Message-ID: <20261118145948.138691918@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,43 +69,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Marco Ziliani <rylos78@gmail.com>
 
-commit 1025b76d13288a311e8259a0eefde0854fa63c41 upstream.
+[ Upstream commit 6b67cdb463b006e57f15e3fe4ea03b00f0ac9ee5 ]
 
-When more than 4 GB are transferred by the throughput meter,
-batadv_tp_batctl_notify() will cut of the upper 32 bit of the u64 counter
-and thus under-report the actual transferred bytes.
+The Marvell 88SM9705 is a 1-to-5 SATA port multiplier with one
+additional SEMB (SATA Enclosure Management Bridge) port [1].  Ports
+0-4 are device ports and port 5 is the SEMB.  The number of fan-out
+ports in GSCR[2] is 6 when the SEMB is enabled and 5 when it is not,
+so on boards without the SEMB there is no link 5 and this quirk does
+nothing.  That includes the common 8-port PCIe cards that pair an
+88SE9215 with an 88SM9705, which report 5 ports.
 
-The data type of the temporary storage variable must therefore still
-continue to use u64.
+The SEMB port never answers SRST.  libata probes it like a device
+port, and every EH round on the PMP ends in a retry loop that lasts
+about a minute before EH gives up, then starts over:
 
+  ata19.15: Port Multiplier 1.2, 0x1b4b:0x9705 r160, 6 ports, feat 0x1/0x1f
+  ata19.05: hard resetting link
+  ata19.05: failed to resume link (SControl 0)
+  ata19.05: softreset failed (1st FIS failed)
+  ata19.05: hard resetting link
+  ...
+  ata20.05: reset failed, giving up
+
+Disk discovery waits for this, including disks on other controllers.
+
+libata.force only partly works around it.  The "disable" horkage
+only takes effect after IDENTIFY, which the SEMB link never reaches.
+"norst" on port 5 stops the retry loop, but the disks still come up
+about a minute later than with this change (see below).
+
+Treat port 5 the same way as port 4 of the Marvell 88SM4140 and mark
+the link ATA_LFLAG_DISABLED.
+
+Tested on a Synology DX1222 expansion unit (four 88SM9705 r160 behind
+a Marvell 88SE9235, passed through to a KVM guest, 6 disks), 7.4-rc1
+with and without this change, one boot each:
+
+                                    softreset  reset failed,  last disk
+                                    failed     giving up      attached
+  7.4-rc1, no libata.force          60         12             197 s
+  7.4-rc1, libata.force=N.05:norst   0          0              70 s
+  7.4-rc1 + this patch, no force     0          0              11 s
+
+The problem was first found on a Synology DX1215 with the same chain,
+where this change brought the disks up after about 20 s instead of
+about 200 s, including a disk on a separate AHCI controller.
+
+Each PMP still logs one "failed to resume link (SControl 0)" for port 5
+at probe time.
+
+Link: https://www.marvell.com/content/dam/marvell/en/public-collateral/storage/marvell-storage-88sm9705-functional-specifications-2015-06.pdf [1]
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/bug/linux-08bb3be4-6c6a-452d-b4e4-606940c6cfa5
-Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
-[ Context ]
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Tested-by: Kyrylo Biryuk <illofspeed@gmail.com>
+Signed-off-by: Marco Ziliani <rylos78@gmail.com>
+Link: https://lore.kernel.org/r/20261107-pmp-88sm9705-v2-1-18eed983d3db@gmail.com
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/tp_meter.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ata/libata-pmp.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
-index 3a1561f579198..7910e7a7f79fc 100644
---- a/net/batman-adv/tp_meter.c
-+++ b/net/batman-adv/tp_meter.c
-@@ -225,9 +225,9 @@ static void batadv_tp_batctl_notify(enum batadv_tp_meter_reason reason,
- 				    unsigned long start_time, u64 total_sent,
- 				    u32 cookie)
- {
-+	u64 total_bytes;
- 	u32 test_time;
- 	u8 result;
--	u32 total_bytes;
+diff --git a/drivers/ata/libata-pmp.c b/drivers/ata/libata-pmp.c
+index 452baa43d77ef..5fa06708eb6a0 100644
+--- a/drivers/ata/libata-pmp.c
++++ b/drivers/ata/libata-pmp.c
+@@ -471,6 +471,20 @@ static void sata_pmp_quirks(struct ata_port *ap)
+ 			if (link->pmp == 4)
+ 				link->flags |= ATA_LFLAG_DISABLED;
+ 		}
++	} else if (vendor == 0x1b4b && devid == 0x9705) {
++		/*
++		 * Marvell 88SM9705 quirks
++		 *
++		 * 1-to-5 PMP with an extra SEMB port.  It reports 6 ports and
++		 * port 5 is the SEMB, which never answers SRST: EH spends about
++		 * a minute per round retrying it, and disk discovery waits for
++		 * that.  Seen behind a Marvell 88SE9235 in the Synology DX1215
++		 * and DX1222.
++		 */
++		ata_for_each_link(link, ap, EDGE) {
++			if (link->pmp == 5)
++				link->flags |= ATA_LFLAG_DISABLED;
++		}
+ 	}
+ }
  
- 	if (!batadv_tp_is_error(reason)) {
- 		result = BATADV_TP_REASON_COMPLETE;
 -- 
 2.53.0
 
