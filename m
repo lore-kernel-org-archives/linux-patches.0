@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030009;
-	b=QFN6HVvXksbGV0TkKtkFRGT89kD5Mp2pi3rG0Af+DOtbTzWmCQLGFPPnwyO678gJPany
-	 qJkTXX8ATYhUTAW9kftKpf3kOXKU1AdNRHdxqh06a/B69AeYRx+WSLxxejNXnyXHMJQz8
-	 D6RazbxTXXdXZWb02r7xSwd5zEMNKd8AoKjfK/q7+Fj67+pxKTzO0pY3aDMltwo0n245O
-	 NkXWIL5ezIyf4HLrtyuEGr3Y+ujmhlZQu55f46g9C4YFmp7SaNyws+nvHeNprL1/NERCn
-	 wotLgcC8yLRyFDcqk9f7OBj1xbwoxiuub6jOddYmykBgokQluHshR09HKcZBcWsK/1g==
+	t=1795030012;
+	b=H+Hc35ruMMtAs6+d5VbSri7LT4LJQ07E+UaUeHJjo7qyP0TWm53c29dWSVdZqk5Vrv/Q
+	 p0vkU/wuhXWzmEKVeG0rRc+B3dsABsriKcrRv7IIhMs9uAU9a8H1INprEaHBWl3QtEL0O
+	 FJgCqjsBgGjv+GeqwhS0CS4bRkPcm4LDK0kmFJ/kDctVbKZPyKlsvpLH0ExFWrwYrjic+
+	 qZl2KZM9DskryHUKt0R2j7LpRcpl9M0BXUYF8vE7PbG5KTQb9DkIYlFPiJJTnPOAsdh+A
+	 2K/UFUgJqZqa5KRx0OwDcAFIvP7Ps34fC/kls0fokv9wWTQv+/uH1IALW4K7SqOEpgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030009;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030012;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=gMwOInc4eFfxqirNtyEfRjPuviHl9TWGVoCQqQo3gRQ=;
-	b=qjcZaELk0kPvzzeFgxN0uywOyTD8ExxT+3X+QDU5cke3iQ47vN6/d0ko+9xUU7MBKT1I
-	 VBVgyyJVlW68ciIObMNHyQ6pxCTnhekl8M0aBdvsJYdu4klHE1Z4qzlCD2JbjW5Xnh+pU
-	 MaqnnNTx8Jj8My4Ix2Fi0lflFB/NBA2Clor3xea11ixU9waALwfsUUmoOgIiyfvtxjL8v
-	 HINELZsZmB/y5aoxaSuYgV0/i3XNlmzUGDOqemU3YT9H1NC4sy+S6ZdfGFfNIfr3JhoFp
-	 bGAbqLFBRf1+57nUgBnibO7mYRy2Ce1c+C7WdVaPEA+jJW8hX1R9ZHc8ff5IhC+IqDQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=t8PIW8DFKK1kS478Z8XH5jADoCYNW+I2wprKX6NscnM=;
+	b=rq97DiJhO6YtcYtfFwHf+KHgp2mlyNZzUOELUu0aQJUIg9AmFOtIagkJOsx369o4NOxs
+	 zBG7PcJAO+gifTC/GTh9GPLOplLxJbzNzXLkQswYEtDhqP7B8ByOhjhsj1inEEi/5WaVD
+	 lGtfx2IUWLvxf9Pu5E3wkeUhYkZVeTkYQxakIHX93LzpKYWwFbBFbZ33uhcrWDdJaOz/L
+	 Dgw9iiXx5YzlmJVVZP4gvcncZU6HXdIJCJ4m1h8IrZ7ITclofBKv+mVeaJK14kESku4ZM
+	 IsM2+ZnyqlDwl1vkn25gPxnaT/mVKYsRISY92jOJfRtoAug43tNz78YFw0NlWnWof3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DvBpoZen;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QPmVeQZj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC1E606A31C;
-	Wed, 18 Nov 2026 19:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00FF4606A31C;
+	Wed, 18 Nov 2026 19:26:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DvBpoZen
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D83A1F000C5;
-	Wed, 18 Nov 2026 19:26:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QPmVeQZj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 595F81F000C5;
+	Wed, 18 Nov 2026 19:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030009;
-	bh=gMwOInc4eFfxqirNtyEfRjPuviHl9TWGVoCQqQo3gRQ=;
+	s=korg; t=1795030011;
+	bh=t8PIW8DFKK1kS478Z8XH5jADoCYNW+I2wprKX6NscnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DvBpoZen4h5teJT/pieaYgm3lJsAuzvUioiqkKlTZD+K24tOGG4Wi1G925wGrx38c
-	 x5NYagkvsokVOCzHAFuspLvFFeHVvzgFGq5BrtwPWNd05OrYUGI20EoQWk+P7t1/2f
-	 5HFJ29crAa5fI06t/hL+BuVsoQ5etMy0bV+xa3E4=
+	b=QPmVeQZjTE2EI7HTOb9Wu4cGyHEjP/BzJgcEHK0ePoylA9YE+hBm7icehP2f1JrnG
+	 F8jPo1hzxQcYrwq5dGM4NwFWHSZP5ZxmcULguBokf7MilEmcA8r+UjZ99hXpKaehUz
+	 EHoKYu5cBRK04ZXlWpMu11Kf2Q3zDOSge68GkfI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Danish Khateeb <danishkhateeb03@gmail.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0515/1756] crypto: ccp - kill v5 IRQ tasklet during teardown
-Date: Wed, 18 Nov 2026 15:44:02 +0100
-Message-ID: <20261118150029.677105370@linuxfoundation.org>
+Subject: [PATCH 6.12 0551/1756] tools/nolibc: fix WIFSIGNALED() for status 0
+Date: Wed, 18 Nov 2026 15:44:38 +0100
+Message-ID: <20261118150031.054070978@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -62,55 +62,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Danish Khateeb <danishkhateeb03@gmail.com>
 
-[ Upstream commit 67aefeccc4101a93627f36abbd049f191b54f903 ]
+[ Upstream commit 368fae47c6cae28a312c5dc86e5bdb8f9369fd26 ]
 
-On PCI devices using MSI-X, ccp5_irq_handler() schedules irq_tasklet.
-The teardown paths release the IRQ but do not drain a tasklet that was
-already queued, so it can access ccp after the device-managed allocation
-has been released.
+WIFSIGNALED() needs the subtraction to wrap around for status 0, so that
+only 1 to 0xff, a terminating signal with or without the core dump flag,
+pass the check. But status is an int, and 0 - 1 is -1, which is less
+than 0xff. A child that exits with 0 is therefore reported as both
+exited and killed, and a caller that tests WIFSIGNALED() first sees
+"killed by signal 0".
 
-Kill the tasklet after releasing the IRQ in both the initialization
-error path and ccp5_destroy().
+Make the subtraction unsigned, as musl does in the same macro.
 
-Fixes: 6263b51eb319 ("crypto: ccp - Change ISR handler method for a v5 CCP")
-
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 8c934d4822c7 ("tools/nolibc: add helpers for wait() signal exits")
+Assisted-by: LLM
+Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
+Link: https://patch.msgid.link/20260923205622.1123270-2-danishkhateeb03@gmail.com
+[Thomas: Drop stable@ Cc]
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccp/ccp-dev-v5.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ tools/include/nolibc/types.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/ccp/ccp-dev-v5.c b/drivers/crypto/ccp/ccp-dev-v5.c
-index 7b73332d6aa1a..4235be5df546a 100644
---- a/drivers/crypto/ccp/ccp-dev-v5.c
-+++ b/drivers/crypto/ccp/ccp-dev-v5.c
-@@ -995,6 +995,8 @@ static int ccp5_init(struct ccp_device *ccp)
+diff --git a/tools/include/nolibc/types.h b/tools/include/nolibc/types.h
+index 9d606c7138a86..30cc9fad57ecf 100644
+--- a/tools/include/nolibc/types.h
++++ b/tools/include/nolibc/types.h
+@@ -108,7 +108,7 @@
+ #define WEXITSTATUS(status) (((status) & 0xff00) >> 8)
+ #define WIFEXITED(status)   (((status) & 0x7f) == 0)
+ #define WTERMSIG(status)    ((status) & 0x7f)
+-#define WIFSIGNALED(status) ((status) - 1 < 0xff)
++#define WIFSIGNALED(status) ((status) - 1U < 0xff)
  
- e_irq:
- 	sp_free_ccp_irq(ccp->sp, ccp);
-+	if (ccp->use_tasklet)
-+		tasklet_kill(&ccp->irq_tasklet);
- 
- e_pool:
- 	for (i = 0; i < ccp->cmd_q_count; i++)
-@@ -1046,6 +1048,8 @@ static void ccp5_destroy(struct ccp_device *ccp)
- 			kthread_stop(ccp->cmd_q[i].kthread);
- 
- 	sp_free_ccp_irq(ccp->sp, ccp);
-+	if (ccp->use_tasklet)
-+		tasklet_kill(&ccp->irq_tasklet);
- 
- 	/* Flush the cmd and backlog queue */
- 	while (!list_empty(&ccp->cmd)) {
+ /* standard exit() codes */
+ #define EXIT_SUCCESS 0
 -- 
 2.53.0
 
