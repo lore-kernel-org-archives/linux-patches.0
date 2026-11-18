@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048132;
-	b=NCcd78kNDGtqn1gLuqHiEjLNw69Cu6DGhxogxWXJoPWJ4UdIVU9C+YdgsGLa4SjKnl3l
-	 eMEbQjVQUESPVCMuB0uGPI1b9sd8DSfHaa/haMnMSeWxSF3o+ylxbu95BOfpRHvTWl1T0
-	 xob27VC1LKyZQTr30jbQZXDK1QCz8X/F8il5YblRBzwx2HlL0vRVZC0hvKIyXg3X4pOZF
-	 oQx1MpChDekRCa5gn/+CeNj2HLH9NklGl8ngFvY0XPJywqoBsp3qPfWwt/Wa50WnTqR9K
-	 7vr499JugYiD3HpxmYMgmOqxk/6C78cnRSb2aG/fYNmbOPBqChFzFOtdv1ADNQHbv5A==
+	t=1795048135;
+	b=keaYNQaw8DgnvXjftJv05mX83xHUskOZtRzpXatg/MVUz98n0lCndWCIxqyGxCp+yl0+
+	 ggEQVEFUG1oGgd4UNIsxAPqneIT5/qFg3BxiUfreAZ7ft/KTqphf+tYonUitWccZAlSxb
+	 +2ae4WLJ6CQF0F8mlrZ65VZL7ItRcA5JP26sknKPe1x/gTjhjKwUmOYVSQkjlgeL5OCB1
+	 ewEQjAGoVoJwybGgK8tBHIcqiUjLXyCX5Tn6GorZ5Tv8kkKH+uNL6zFUG2VqRkTV+BKl1
+	 ZqaNGHpI5uTXQ/JySKkzkZ8wEPKcH9hirSRADm6l5tH5O1gI0IFyoAEYF43qJHFaLBQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048132;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048135;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JQi0H7xndWOIeRQSjBzupeAms7/c7TqLU7d+45847rs=;
-	b=msPl+j9RftoOaMjInwbYOj73gVRnfzzPWnRWY2FYI/O2IpZY0DLbNXZkNFX7E8F4doFk
-	 3LUyXolDjB0oYyyKSUaZWZeQYyMFbTX5lAuhsNb7pyG6w+5u9AFw0KAUUzVrwBNOHkoH7
-	 8D33+Egpmqz3zdzyM60afS+yEYYZSK5Idqx6BWXWU9nbIkEvQJSFdrVW+aJn1JCGL9osy
-	 Cxot21Fx9kMunqshbRzjyGcCVZUM8piqwDJrDSZM0KU2DiDVWz1sphpvrsvHTWI9kBdyI
-	 sYjlGSMEI4+TZ0t57KufU1KWaGAR6DsOrQ9tb8uBQ+2u4jSFVBus5J0S5FJCvk88pYw==
+	bh=zaupIa7SYs+pAq7KApY9Qpd7f3j1FTsH61SD2Orz2LM=;
+	b=G3kiNAAvtTRRWaNeQjXt3yM6LPg69A/dMiwh67zFO8HWnAt3yCx/QiBKSVlCWDduRMDo
+	 cS1wez/NZvj9Bl6NROR/byjvYeTpKLrNNxjTxpqpt+e8HOil4nNC0irRh7oNQ4U4M2TLg
+	 Kts2r4UAVnPnu3diQMlMycyt7GgCX4CwMJcQzZKJAk0aa3XIqNWJArCqwNU5+kPmpxpEC
+	 YH3mpUgJHgv82wO+lUSUS/wWz53sY+Hac6OFIH4taNwICuddufGnhJKEix8y6nMvGXtHA
+	 +YP4J7XE5P7lXo5T4BzN0vYGLaeNX6h1+mhyU7n5wMAWKoNCDe6HmmcKyeZ8DsZzmKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EobozPSw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SbBHllIj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FFB8606A31C;
-	Thu, 19 Nov 2026 00:28:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41F5F606A325;
+	Thu, 19 Nov 2026 00:28:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EobozPSw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6BF91F000C4;
-	Thu, 19 Nov 2026 00:28:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SbBHllIj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9141A1F000C4;
+	Thu, 19 Nov 2026 00:28:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048132;
-	bh=JQi0H7xndWOIeRQSjBzupeAms7/c7TqLU7d+45847rs=;
+	s=korg; t=1795048135;
+	bh=zaupIa7SYs+pAq7KApY9Qpd7f3j1FTsH61SD2Orz2LM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EobozPSwggqpvQPzNVjOZMYzwp+J61B2uQpmRSCuoDyd5wsxLsP86obFfVrbj4MCY
-	 mbuL98xnNFyNhEJ5j6cr1WPo2KCl9x5HUpjSWSvrjV6ugXntZOyVyi4JncCyat2BM9
-	 mW4bvKq7Rn3bLHJopjgajtIWBlBXZ4YENqhB5vjI=
+	b=SbBHllIjciIooyZzJklNpzLkqjlQaPKu0DKzuuwclnoqpkoBIQFiLIARDnYOEEPpw
+	 lIsV58XhVKDJzhCqnXRdBTgN5o8N+FcC4Wh74YhUg/+HlueV0WpXL+OvcVkYrjOpE9
+	 K6v/adDtfFzx4xk0rv2ACcWZN1+E2t9grWU9fx1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjan Kumar <ranjan.kumar@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	kernel test robot <lkp@intel.com>,
+	Babanpreet Singh <bbnpreetsingh@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1859/2857] scsi: mpi3mr: Rename log data save helper to reflect threaded/BH context
-Date: Wed, 18 Nov 2026 15:48:13 +0100
-Message-ID: <20261118150308.174696874@linuxfoundation.org>
+Subject: [PATCH 6.1 1886/2857] regulator: ab8500: Remove stale expand_register kernel-doc entry
+Date: Wed, 18 Nov 2026 15:48:40 +0100
+Message-ID: <20261118150309.135224095@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,85 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ranjan Kumar <ranjan.kumar@broadcom.com>
+From: Babanpreet Singh <bbnpreetsingh@gmail.com>
 
-[ Upstream commit d0d19250ed81907eac707be8221eb31e5b96b647 ]
+[ Upstream commit 0991f3b4624ed713d1d5eb56520c1c9b2deaab7a ]
 
-Log data events can be processed from BH and threaded contexts.  Rename
-the save helper to document its intended usage and improve readability
-of the event handling flow.
+Commit aeee55b76bfd ("regulator: ab8500: Remove unused embedded struct
+expand_register") deleted the expand_register member from struct
+ab8500_regulator_info and, in the same hunk, added an empty
+"@expand_register:" line to the kernel-doc block. That traded one W=1
+warning for another:
 
-Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
-Link: https://patch.msgid.link/20260116060719.32937-3-ranjan.kumar@broadcom.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: 77554f01187d ("scsi: mpi3mr: Fix out-of-bounds read of event data")
+  drivers/regulator/ab8500.c:196 Excess struct member 'expand_register'
+  description in 'ab8500_regulator_info'
+
+Drop the leftover line; the remaining @member entries all match the
+struct.
+
+No functional changes.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/r/202605160857.ZIE3nO9J-lkp@intel.com/
+Assisted-by: Claude:claude-opus-5 [kernel-doc]
+Signed-off-by: Babanpreet Singh <bbnpreetsingh@gmail.com>
+Link: https://patch.msgid.link/20260802013304.7-1-bbnpreetsingh@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: ac72c091a981 ("regulator: ab8500: Add AB8505 VAUX3 3.05 V setting")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr.h     | 2 +-
- drivers/scsi/mpi3mr/mpi3mr_app.c | 4 ++--
- drivers/scsi/mpi3mr/mpi3mr_os.c  | 7 ++++++-
- 3 files changed, 9 insertions(+), 4 deletions(-)
+ drivers/regulator/ab8500.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr.h b/drivers/scsi/mpi3mr/mpi3mr.h
-index bd7dbb1490b8e..d7e44b66331fb 100644
---- a/drivers/scsi/mpi3mr/mpi3mr.h
-+++ b/drivers/scsi/mpi3mr/mpi3mr.h
-@@ -1331,7 +1331,7 @@ void mpi3mr_pel_get_seqnum_complete(struct mpi3mr_ioc *mrioc,
- 	struct mpi3mr_drv_cmd *drv_cmd);
- int mpi3mr_pel_get_seqnum_post(struct mpi3mr_ioc *mrioc,
- 	struct mpi3mr_drv_cmd *drv_cmd);
--void mpi3mr_app_save_logdata(struct mpi3mr_ioc *mrioc, char *event_data,
-+void mpi3mr_app_save_logdata_th(struct mpi3mr_ioc *mrioc, char *event_data,
- 	u16 event_data_size);
- struct mpi3mr_enclosure_node *mpi3mr_enclosure_find_by_handle(
- 	struct mpi3mr_ioc *mrioc, u16 handle);
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_app.c b/drivers/scsi/mpi3mr/mpi3mr_app.c
-index 91cf32ba55256..4d856e1a58028 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_app.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_app.c
-@@ -1433,7 +1433,7 @@ static long mpi3mr_bsg_process_mpt_cmds(struct bsg_job *job, unsigned int *reply
- }
- 
- /**
-- * mpi3mr_app_save_logdata - Save Log Data events
-+ * mpi3mr_app_save_logdata_th - Save Log Data events
-  * @mrioc: Adapter instance reference
-  * @event_data: event data associated with log data event
-  * @event_data_size: event data size to copy
-@@ -1445,7 +1445,7 @@ static long mpi3mr_bsg_process_mpt_cmds(struct bsg_job *job, unsigned int *reply
-  *
-  * Return:Nothing
+diff --git a/drivers/regulator/ab8500.c b/drivers/regulator/ab8500.c
+index d603d7b9f6821..066ce04cbca4b 100644
+--- a/drivers/regulator/ab8500.c
++++ b/drivers/regulator/ab8500.c
+@@ -173,7 +173,6 @@ struct ab8500_shared_mode {
+  * @voltage_bank: bank to control regulator voltage
+  * @voltage_reg: register to control regulator voltage
+  * @voltage_mask: mask to control regulator voltage
+- * @expand_register: 
   */
--void mpi3mr_app_save_logdata(struct mpi3mr_ioc *mrioc, char *event_data,
-+void mpi3mr_app_save_logdata_th(struct mpi3mr_ioc *mrioc, char *event_data,
- 	u16 event_data_size)
- {
- 	u32 index = mrioc->logdata_buf_idx;
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
-index ef913e4432270..c1fd101fa7e59 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_os.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-@@ -1819,7 +1819,7 @@ static void mpi3mr_pcietopochg_evt_bh(struct mpi3mr_ioc *mrioc,
- static void mpi3mr_logdata_evt_bh(struct mpi3mr_ioc *mrioc,
- 	struct mpi3mr_fwevt *fwevt)
- {
--	mpi3mr_app_save_logdata(mrioc, fwevt->event_data,
-+	mpi3mr_app_save_logdata_th(mrioc, fwevt->event_data,
- 	    fwevt->event_data_size);
- }
- 
-@@ -2924,6 +2924,11 @@ void mpi3mr_os_handle_events(struct mpi3mr_ioc *mrioc,
- 	}
- 	case MPI3_EVENT_DEVICE_INFO_CHANGED:
- 	case MPI3_EVENT_LOG_DATA:
-+
-+		sz = event_reply->event_data_length * 4;
-+		mpi3mr_app_save_logdata_th(mrioc,
-+			(char *)event_reply->event_data, sz);
-+		break;
- 	case MPI3_EVENT_ENCL_DEVICE_STATUS_CHANGE:
- 	case MPI3_EVENT_ENCL_DEVICE_ADDED:
- 	{
+ struct ab8500_regulator_info {
+ 	struct device		*dev;
 -- 
 2.53.0
 
