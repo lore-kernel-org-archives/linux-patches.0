@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061319;
-	b=SOstqv6EsPGsiXhCe2LGDw8mBFgxSf++VA2dCskdmCjcvZYvGzpCxm7qLLKrTyuVCKdh
-	 L169X3eUD2CqJI9oy1iKThNdGxI9cYWufxCvwMj7xByu7OiOb+KkF2OxF/cL1rXHQ9yiP
-	 d1Q6BRdIZ7V9jFQ0aL+nyTnI8Ukft3FdHs+X8c1sX5vvmOJ4buWsnXOjnwdwRLfYdzrbI
-	 a37lcU/5bPKDh99efFbIfHY014VKpHGXcme6QbInD+xfXrA+iNfBQo3uc/N1wDxrPkKYo
-	 sR1P2DcYZ7Skq0O96cM+TbxuxxQYWFTInLNrG7kyBh9HjtvA5BLHVUc3MTlWAhLJJRA==
+	t=1795061322;
+	b=FsywEq7d3dSSC/ZVTPNPPBY0mCtYMFTvhpOmbHC3P1rSG3gUCR4QgMnSpu1qmoq/u7Yk
+	 Bp18dA1Ie+hAS53wZFyNm5RLz3OY5QyK1TvdUmpZXC/Etp6gBsP4kzM9sXr2Pos/RSAiM
+	 bdcee52smOVhZwxNc3ZOwV0wCOtsWV7N44BGHs2LBFmthFD02yti/T8bDDKG63+6FbKPY
+	 al9HevgYf9LQtbcBnBiWL9krhE3gIQ0pgLusLoPv29xwbXaTwwleKEnQkILs57qJvhpw/
+	 S1OVwPuKga6Ys70gyJ0VSnP2x6aenVT9Vsq3aXBBgnzx3sYFcKpZsivISZWhdIB39sw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061319;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061322;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ap1ZAg1EW5iw+uyBOPPj27rlPH/GZ1ywb+g1UNsosZk=;
-	b=K3/AKAT2++PbMc608z+M8T+KQn7IM3bsjwjDO4gGfpC5xJt2U7TtR38pT5coFeUZ31VT
-	 typ5kmwH4ODoas5IzZIWtCtFPY5ROLgJKEfXhTU60p6WS9MUuDTVxDtW7b2SqNlL4bz/w
-	 mmNMeyJNJFW2frGXueKoBOVdMFlMDHr+yMg8Kt8iRDB5i3LwvRDUB4qqbHNjE4XCAkQSP
-	 BTBKoeEL6A53AP3cG2mRhSJYKtZVnGedN/mYydIC2XY084XdINymtHSFvsiiXYAK9QrAt
-	 nHvk2xaintnCQLkC4UzgZI7I2Pfy0K9tC4UCnRFIXEPeqKJ5GrsTQVUwTLKyHabzVow==
+	bh=mqMwV2U9SzyAIWejmXJNwybkkAX7nbW3DrKSOSwjxD4=;
+	b=Jyyzm7NSKKTJJOtNna0r1e0gxV8T2ySRb+qztz43nUY0HPpMiMISpsqsUi7ZIpIB33Ij
+	 NMGRpNjyb0S0GnH7dhtU3xQQrmXj8Ovc7sZzWkMRXR7PCBmtueWtrWJNxPWCZFsbRC4Pb
+	 NHL9l6h+Ge3G9MygDdcK8ySY+8PS+Cd8aHDcQ7Bip4cd8jPRkB5mbVON25X0omxhbd5PR
+	 KMWmR4uxUw38otGF7ksPYVap/K2ofqfo8/yne9gGtbRn05KGl7B+0jbyyZTKTnDOLqgr6
+	 AmS4Xbgztu4YhLLKuJuzlr6EZytJN2IZBrz0P45GtIKIKtuceolf0wjwo8E+w1xsaNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ig7qdVFH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y7KPQlmK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D03606A320;
-	Thu, 19 Nov 2026 04:08:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51EA1606A320;
+	Thu, 19 Nov 2026 04:08:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ig7qdVFH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077131F000C4;
-	Thu, 19 Nov 2026 04:08:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y7KPQlmK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD391F000C4;
+	Thu, 19 Nov 2026 04:08:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061319;
-	bh=ap1ZAg1EW5iw+uyBOPPj27rlPH/GZ1ywb+g1UNsosZk=;
+	s=korg; t=1795061322;
+	bh=mqMwV2U9SzyAIWejmXJNwybkkAX7nbW3DrKSOSwjxD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ig7qdVFHl+AN1BZ0jInr1iYAkCNSKtncIS2sxx4XK51Xlzi2zImg/KKeQBD3KXice
-	 h8NEltWvvUvuQZKY4GGlXz9WjpjEGyF6yY16wOSv1W9N0GWIX6j2eQK7zuqkWVMl0Z
-	 H8OQ1bAO2wxFIYkGANZFuZDiWxqirTQmP4j+RLuA=
+	b=y7KPQlmK7f4SUu0esteGzyPqqpjQnKe1+ZOhzLuridfDQabjjUsn69JkHgwTCi5GJ
+	 G/6jkqXWZKxbVXBey+u6hPVICG4w2e7rrNvWR9TjfLzhXeyplfKp7mhicpJnl3GmeR
+	 LoaVSdWsxr2eUnrnzC86R+Es+mYN1vLrGpEtKx0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yaozhong Li <yaozhonguwl@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Xueqin Luo <luoxueqin@kylinos.cn>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1468/1848] arm64: dts: rockchip: disable unused i2s0 on rk3399-firefly
-Date: Wed, 18 Nov 2026 15:58:26 +0100
-Message-ID: <20261118150020.778645472@linuxfoundation.org>
+Subject: [PATCH 5.10 1469/1848] cpufreq: sparc-us2e: fix frequency table index copy-paste error
+Date: Wed, 18 Nov 2026 15:58:27 +0100
+Message-ID: <20261118150020.814101814@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,68 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yaozhong Li <yaozhonguwl@gmail.com>
+From: Xueqin Luo <luoxueqin@kylinos.cn>
 
-[ Upstream commit 9416a641cfe5b75dd9178c15960ee741c1091b45 ]
+[ Upstream commit e5b33fa47792375ca7fc49ccadee87d8e4b72929 ]
 
-The board file enables i2s0, but no sound card references it: the
-on-board RT5640 is wired to i2s1 and the S/PDIF transmitter has its own
-controller. Keeping it enabled starves the other controllers, due to the
-pl330 instance that serves the audio block only having six channels.
+In us2e_freq_cpu_init(), the last two frequency writes both use
+index [2] instead of [3] and [4] respectively, and the terminator
+uses [3] instead of [5].  This is a copy-paste error where the index
+was not incremented, causing the divider-6 and divider-8 entries to
+overwrite the already-written divider-4 entry.
 
-The i2s0 pin groups also lists GPIO4_A0, which carries SCLK_I2S_8CH_OUT,
-providing the MCLK the codec runs on.
+As a result, only three frequency steps (div 1, 2, and 4) are actually
+available to the cpufreq core, while the intended dividers 6 and 8 are
+silently lost.  The struct us2e_freq_percpu_info::table[6] has room for
+5 entries plus a terminator, matching the 5 hardware dividers.
 
-So add the pinmux for the MCLK signal to the i2s1 node.
+Fix the indices so all five frequency steps are correctly populated:
+table[0]=div1, table[1]=div2, table[2]=div4, table[3]=div6,
+table[4]=div8, table[5]=TABLE_END.
 
-The RT5640 and S/PDIF cards then register with no DMA errors, and a
-1 kHz tone measured through the codec's internal HPOL/HPOR loopback is
-unchanged (L 2135 -> 2138, R 2202 -> 2203), confirming that MCLK still
-reaches the codec.
-
-Fixes: 171582e00db1 ("arm64: dts: rockchip: add support for firefly-rk3399 board")
-Assisted-by: LLM
-Signed-off-by: Yaozhong Li <yaozhonguwl@gmail.com>
-Link: https://patch.msgid.link/20260921063431.103-3-yaozhonguwl@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Xueqin Luo <luoxueqin@kylinos.cn>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-firefly.dts | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/cpufreq/sparc-us2e-cpufreq.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-firefly.dts b/arch/arm64/boot/dts/rockchip/rk3399-firefly.dts
-index 07272ed3a7695..546948f8a0ba4 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-firefly.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-firefly.dts
-@@ -540,13 +540,9 @@ accelerometer@68 {
- 	};
- };
+diff --git a/drivers/cpufreq/sparc-us2e-cpufreq.c b/drivers/cpufreq/sparc-us2e-cpufreq.c
+index 92acbb25abb3a..bbf5b3522fa67 100644
+--- a/drivers/cpufreq/sparc-us2e-cpufreq.c
++++ b/drivers/cpufreq/sparc-us2e-cpufreq.c
+@@ -284,12 +284,11 @@ static int __init us2e_freq_cpu_init(struct cpufreq_policy *policy)
+ 	table[1].frequency = clock_tick / 2;
+ 	table[2].driver_data = 2;
+ 	table[2].frequency = clock_tick / 4;
+-	table[2].driver_data = 3;
+-	table[2].frequency = clock_tick / 6;
+-	table[2].driver_data = 4;
+-	table[2].frequency = clock_tick / 8;
+-	table[2].driver_data = 5;
+-	table[3].frequency = CPUFREQ_TABLE_END;
++	table[3].driver_data = 3;
++	table[3].frequency = clock_tick / 6;
++	table[4].driver_data = 4;
++	table[4].frequency = clock_tick / 8;
++	table[5].frequency = CPUFREQ_TABLE_END;
  
--&i2s0 {
--	rockchip,playback-channels = <8>;
--	rockchip,capture-channels = <8>;
--	status = "okay";
--};
--
- &i2s1 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&i2s_8ch_mclk_pin>, <&i2s1_2ch_bus>;
- 	rockchip,playback-channels = <2>;
- 	rockchip,capture-channels = <2>;
- 	status = "okay";
-@@ -595,6 +591,12 @@ ir_int: ir-int {
- 		};
- 	};
- 
-+	i2s1 {
-+		i2s_8ch_mclk_pin: i2s-8ch-mclk-pin {
-+			rockchip,pins = <4 RK_PA0 1 &pcfg_pull_none>;
-+		};
-+	};
-+
- 	lcd-panel {
- 		lcd_panel_reset: lcd-panel-reset {
- 			rockchip,pins = <4 RK_PD6 RK_FUNC_GPIO &pcfg_pull_up>;
+ 	policy->cpuinfo.transition_latency = 0;
+ 	policy->cur = clock_tick;
 -- 
 2.53.0
 
