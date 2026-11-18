@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028552;
-	b=RXvb4nYREJERzZ+42GQwkswxbXik0LSLOQSd1+f8ALZksiwIdCF6MZ1Va6WPT3eaZbiC
-	 Oh/gr8QucML6lLxycUJFTrXOK5rMCASLvDzGsNuWqcJywNa9vmxeRFi7AXwZ3hVxvGeLy
-	 M/tvsyP3LA8W57AjUqD5WyViLpyemJAG2OnzFORVIHsSgfJ8tD188r72+ygksi8NcPWgf
-	 iR0iZ1QZSfCk4TA7zNcEGmLBNitpX8SM5EhdufFveZXHtvgHEbXxw0qFIgrgNXP/qC+/l
-	 EQfL4F1KkCcDvjcyf3k3f+1dXrtWRn6tmqAqcRPpAIcLPWBVVBFkkATp8aBB72jMsnQ==
+	t=1795028555;
+	b=eSADwpVrc/fzGK+6BOh9er/JM0S2Dm99iTu/+w8B4VvlonszLin96N3Zea6oyn5/aZ1r
+	 OcwdaoaJKIyO7k5jWRFglF9nzXmBxVgpfeYlUrk2eIWuQH1xXVn2MRNF+f9pocFUsi6Ze
+	 1NQ6IGWui22Dvpqf9tNG6vEsicq/wBDDL+R6QZp3UzBcxICqpFTHrKhbLC3G0LjQB1t6V
+	 OBZH/9mSOehfhqnhg1MvQgeUqfunuZmqMbaZ69YyghxUTMMy7JcNDhToHdDXU1mw253Ex
+	 O1W2qzZIYmGrqjIHupfp42LVp03e1Cb9eT0YSExNotE1oNmUak96XqhJQBCut6rEahg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028552;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028555;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=LMxRLBqMdg+cAoOMjqKixWKi26koeQVnhwh/z05SACA=;
-	b=YmLurn19w3ynTd80OdX9cbmE18XSIadAlKMOwlB7i7sb+lbS3n3TFkVpmUi+a3jlOWIo
-	 /Iz0V/hQPYwPlML4mce3TW9GHWngaDh9pZSGDK8Agveaj5/Z1iBdUjzUG0akDHA5CfH5R
-	 fDmZafcAkVKmBg0tbaOmelDsspFT7Eg1xAFJ4j/fHXUZ/YtsSZaT5ssKUxQuZPkxkXqey
-	 Be7a7w11GQoUeJeFuX88ukOXwD2dYlZqF123sEt1UVuVVMaO0zGAgoSuZojdCnT0INTw/
-	 QVAxJ8HdGnSG1GnpvkUJ9JXG8H+0GwcRLakUFftEujE8gqmLwEX9xbRpBJGe0GDXc+g==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=4ufPD1WkW4CuiYly7tn1RpmW82jNYh44/oIC2rGzIUk=;
+	b=uyZTCR8UnO578DD+Y8ptGsavJwhwB41H3NXk5TFtAuuhioVFMVaoeUheQ2onpNZdMztG
+	 6b9UlzNycF8qjq+6kLG+o8vxu/wI2oxnLexnumeiZYC/BBuNsEwceC9EowEkNTb1osZi1
+	 QtIOqxApqsDda56fT/ZHOoV0Ecyu+fMdFxE2UGuxUK072CunGJGRDvhNL/A7s8cK+Rcrz
+	 FUCbGoJZTN3IQFB9SyPXUXVQe0p1z6HZCylt/zFJWjTSJeM5SFyPb9Rty5Lv95PMkKoKn
+	 S/lcy01CMwxQ7NFT3jVIGsoHCGDfoU6UZnPjHTZjVzgfkF5Hfq5Zuw3uMW2a4WgSGoQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GxHXylNN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ifmAWDky;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87BCB606A31C;
-	Wed, 18 Nov 2026 19:02:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CBC0606A31C;
+	Wed, 18 Nov 2026 19:02:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GxHXylNN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC0791F000C4;
-	Wed, 18 Nov 2026 19:02:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ifmAWDky
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADA271F000C4;
+	Wed, 18 Nov 2026 19:02:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028552;
-	bh=LMxRLBqMdg+cAoOMjqKixWKi26koeQVnhwh/z05SACA=;
+	s=korg; t=1795028555;
+	bh=4ufPD1WkW4CuiYly7tn1RpmW82jNYh44/oIC2rGzIUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GxHXylNNdy/2S/8RE1A+k9M1ZePvW490Gqe0nsuprbhbmEMbdt83ctBo7Kud6Q7uJ
-	 jjvKAEzT/prG9zaFCtiCdxKDNyOIa8w34PRJwcCSC8jUASK0uWQ7VN71n45eDnB0/S
-	 w1A5riBZ6xphnbgls0/8kP5lC61ZVHpYFrPFL2UE=
+	b=ifmAWDkyY78asD4FhXp0pVKvln3r5tpFZYNBw9ijEKySrdGCE5EEbcOhQ14CwDOfJ
+	 pD+Z4BqGpAVNrRn8th4dcB/aWuKAxcDZEYEPQqfu7cAarnRvm+AzrGCvC9O0a/mpER
+	 7VbR6AzE00aXZcj9+uLt7/OAzRE9w0UE/aWufR3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ciro Pedrini <ciro.pedrini@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0037/1756] platform/x86: hp-wmi: Add OMEN board 8A17 thermal profile support
-Date: Wed, 18 Nov 2026 15:36:04 +0100
-Message-ID: <20261118150009.321117283@linuxfoundation.org>
+Subject: [PATCH 6.12 0038/1756] inet: frags: bound the wmem charge of the socket completing a reassembly
+Date: Wed, 18 Nov 2026 15:36:05 +0100
+Message-ID: <20261118150009.359737785@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -62,66 +63,268 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ciro Pedrini <ciro.pedrini@gmail.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit d35a1ea827a2efaea7fb059ffafefae7c13b9556 ]
+[ Upstream commit b71c101bbb9814d163c00234d43c41f0a17907d4 ]
 
-The HP OMEN 17-ck1xxx (board 8A17) isn't in omen_thermal_profile_boards,
-so hp-wmi uses the generic thermal profile query. The firmware only
-stores that value and never acts on it, so the EC stays in its default
-mode and the CPU is held at 45 W whatever profile is selected.
+When a socket owned fragment completes a reassembly queue,
+inet_frag_reasm_prepare() and inet_frag_reasm_finish() charge the
+truesize of all other fragments to its sk_wmem_alloc. These fragments
+were orphaned when queued, and might have been sent by someone else,
+for instance padded TUN packets.
 
-The board uses the OMEN interface (mode byte at EC 0x95, thermal policy
-v1) and also needs the timed profile quirk: without it, the EC drops
-back to the default mode about two minutes after each profile change.
+Commit 3ae20e4697eb ("inet: frags: limit the truesize of a reassembly
+queue") bounds this charge to INT_MAX / 2 per queue, but a socket can
+complete several queues while the reassembled skbs are still alive,
+for instance held in a qdisc. sk_wmem_alloc can then go past INT_MAX,
+refcount_add() saturates it with a WARN, and the socket is leaked.
 
-Add 8A17 to omen_thermal_profile_boards and
-omen_timed_thermal_profile_boards.
+This is reachable from an unprivileged user/network namespace, by
+raising ipfrag_high_thresh.
 
-With this, all three profiles work and sustained package power under
-load goes from 45 W to 56-79 W.
+Refuse the reassembly if the charge would push sk_wmem_alloc above
+2 * sk_sndbuf, the bound ip_append_data() uses, plus 4MB of slack for
+fragments inflated by a refragmentation with a small MTU, and never
+above INT_MAX / 2. The cap matters for tun sockets, which use
+sk_sndbuf = INT_MAX, and whose skbs are still owned when act_ct or
+openvswitch reassemble them at ingress.
 
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Ciro Pedrini <ciro.pedrini@gmail.com>
-Link: https://patch.msgid.link/20260925205226.883724-1-ciro.pedrini@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-[ sashal: Adjusted context to match the shorter omen_thermal_profile_boards array. ]
+Several queues can complete at the same time on different cpus for
+the same socket, so the charge is reserved with a cmpxchg() loop in
+inet_frag_reasm_prepare(), before it modifies the queue, and settled
+in inet_frag_reasm_finish(). Move the size checks of ip_frag_reasm(),
+ip6_frag_reasm() and nf_ct_frag6_reasm() before
+inet_frag_reasm_prepare(), using the first fragment which becomes the
+head, so that a successful inet_frag_reasm_prepare() is always followed
+by inet_frag_reasm_finish(). All callers already kill the queue when
+inet_frag_reasm_prepare() returns NULL.
+
+Found by code inspection (AI review), not reproduced.
+
+Fixes: 18685451fc4e ("inet: inet_defrag: prevent sk release while still in use")
+Reported-by: Paolo Abeni <pabeni@redhat.com>
+Closes: https://lore.kernel.org/netdev/24feda7d-ae49-45af-9596-2cc5f149f28e@redhat.com/
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261104122927.1033747-1-edumazet@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/hp/hp-wmi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/inet_fragment.c                | 61 ++++++++++++++++++++++---
+ net/ipv4/ip_fragment.c                  | 13 ++++--
+ net/ipv6/netfilter/nf_conntrack_reasm.c | 13 ++++--
+ net/ipv6/reassembly.c                   | 13 ++++--
+ 4 files changed, 78 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/platform/x86/hp/hp-wmi.c b/drivers/platform/x86/hp/hp-wmi.c
-index d189da2205609..e20f1ba937c09 100644
---- a/drivers/platform/x86/hp/hp-wmi.c
-+++ b/drivers/platform/x86/hp/hp-wmi.c
-@@ -67,7 +67,7 @@ static const char * const omen_thermal_profile_boards[] = {
- 	"886B", "886C", "88C8", "88CB", "88D1", "88D2", "88F4", "88F5", "88F6",
- 	"88F7", "88FD", "88FE", "88FF",
- 	"8900", "8901", "8902", "8912", "8917", "8918", "8949", "894A", "89EB",
--	"8A15", "8A42",
-+	"8A15", "8A17", "8A42",
- 	"8BAD",
- };
+diff --git a/net/ipv4/inet_fragment.c b/net/ipv4/inet_fragment.c
+index 0224440720e12..8ecd70b4f20fc 100644
+--- a/net/ipv4/inet_fragment.c
++++ b/net/ipv4/inet_fragment.c
+@@ -17,6 +17,7 @@
+ #include <linux/rtnetlink.h>
+ #include <linux/slab.h>
+ #include <linux/rhashtable.h>
++#include <linux/sizes.h>
  
-@@ -85,7 +85,7 @@ static const char * const omen_thermal_profile_force_v0_boards[] = {
-  * "balanced" when reaching zero.
-  */
- static const char * const omen_timed_thermal_profile_boards[] = {
--	"8A15", "8A42",
-+	"8A15", "8A17", "8A42",
- 	"8BAD",
- };
+ #include <net/sock.h>
+ #include <net/inet_frag.h>
+@@ -512,6 +513,43 @@ int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
+ }
+ EXPORT_SYMBOL(inet_frag_queue_insert);
  
++/* When a socket owned fragment completes a queue, the truesize of all
++ * other fragments is charged to its sk_wmem_alloc, although they were
++ * orphaned when queued and possibly sent by someone else.
++ * Bound this like ip_append_data() bounds the memory a socket can
++ * allocate (2 * sk_sndbuf), plus slack for fragments inflated by a
++ * refragmentation using a small MTU. Otherwise, several reassembled skbs
++ * alive at the same time can saturate sk_wmem_alloc, and leak the socket.
++ *
++ * Several queues can complete at the same time for the same socket,
++ * and some sockets (tun) use sk_sndbuf = INT_MAX. The charge is reserved
++ * with a cmpxchg() loop, a refcount_t has no helper for this.
++ */
++#define INET_FRAG_WMEM_SLACK	SZ_4M
++
++static bool inet_frag_wmem_reserve(struct sock *sk, unsigned int charge)
++{
++	u64 limit = 2ULL * READ_ONCE(sk->sk_sndbuf) + INET_FRAG_WMEM_SLACK;
++	int old = refcount_read(&sk->sk_wmem_alloc);
++
++	limit = min_t(u64, limit, INET_FRAG_MAX_TRUESIZE);
++	do {
++		if (old <= 0 || (u64)old + charge > limit)
++			return false;
++	} while (!atomic_try_cmpxchg(&sk->sk_wmem_alloc.refs, &old,
++				     old + charge));
++
++	return true;
++}
++
++static void inet_frag_wmem_adjust(struct sock *sk, int delta)
++{
++	if (delta >= 0)
++		refcount_add(delta, &sk->sk_wmem_alloc);
++	else
++		WARN_ON_ONCE(refcount_sub_and_test(-delta, &sk->sk_wmem_alloc));
++}
++
+ void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
+ 			      struct sk_buff *parent)
+ {
+@@ -523,6 +561,11 @@ void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
+ 	int delta;
+ 
+ 	if (sk && is_skb_wmem(skb)) {
++		/* skb->truesize is already charged to sk, and is part of
++		 * q->truesize. inet_frag_reasm_finish() settles the charge.
++		 */
++		if (!inet_frag_wmem_reserve(sk, q->truesize - skb->truesize))
++			return NULL;
+ 		/* TX: skb->sk might have been passed as argument to
+ 		 * dst->output and must remain valid until tx completes.
+ 		 *
+@@ -600,17 +643,18 @@ void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
+ 
+ out_restore_sk:
+ 	if (orig_truesize) {
+-		int ts_delta = head->truesize - orig_truesize;
+-
+ 		/* if this reassembled skb is fragmented later,
+ 		 * fraglist skbs will get skb->sk assigned from head->sk,
+ 		 * and each frag skb will be released via sock_wfree.
+-		 *
+-		 * Update sk_wmem_alloc.
+ 		 */
+ 		head->sk = sk;
+ 		head->destructor = destructor;
+-		refcount_add(ts_delta, &sk->sk_wmem_alloc);
++		/* On failure, head stays in the queue and will be freed
++		 * with the queue: only charge its truesize.
++		 */
++		if (!nextp)
++			inet_frag_wmem_adjust(sk, (int)head->truesize -
++						  (int)q->truesize);
+ 	}
+ 
+ 	return nextp;
+@@ -621,7 +665,6 @@ void inet_frag_reasm_finish(struct inet_frag_queue *q, struct sk_buff *head,
+ 			    void *reasm_data, bool try_coalesce)
+ {
+ 	struct sock *sk = is_skb_wmem(head) ? head->sk : NULL;
+-	const unsigned int head_truesize = head->truesize;
+ 	struct sk_buff **nextp = reasm_data;
+ 	struct rb_node *rbn;
+ 	struct sk_buff *fp;
+@@ -686,8 +729,12 @@ void inet_frag_reasm_finish(struct inet_frag_queue *q, struct sk_buff *head,
+ 	head->tstamp = q->stamp;
+ 	head->tstamp_type = q->tstamp_type;
+ 
++	/* After inet_frag_reasm_prepare(), q->truesize is charged to sk.
++	 * sum_truesize also includes what it added (skb_unclone() and
++	 * frag_list clone).
++	 */
+ 	if (sk)
+-		refcount_add(sum_truesize - head_truesize, &sk->sk_wmem_alloc);
++		inet_frag_wmem_adjust(sk, sum_truesize - (int)q->truesize);
+ }
+ EXPORT_SYMBOL(inet_frag_reasm_finish);
+ 
+diff --git a/net/ipv4/ip_fragment.c b/net/ipv4/ip_fragment.c
+index 9cc55a0c64f7d..1fd7017300b3b 100644
+--- a/net/ipv4/ip_fragment.c
++++ b/net/ipv4/ip_fragment.c
+@@ -413,16 +413,19 @@ static int ip_frag_reasm(struct ipq *qp, struct sk_buff *skb,
+ 		goto out_fail;
+ 	}
+ 
++	/* Check the size on the first fragment, which will become the head:
++	 * inet_frag_reasm_finish() must follow inet_frag_reasm_prepare().
++	 */
++	len = ip_hdrlen(skb_rb_first(&qp->q.rb_fragments)) + qp->q.len;
++	err = -E2BIG;
++	if (len > 65535)
++		goto out_oversize;
++
+ 	/* Make the one we just received the head. */
+ 	reasm_data = inet_frag_reasm_prepare(&qp->q, skb, prev_tail);
+ 	if (!reasm_data)
+ 		goto out_nomem;
+ 
+-	len = ip_hdrlen(skb) + qp->q.len;
+-	err = -E2BIG;
+-	if (len > 65535)
+-		goto out_oversize;
+-
+ 	inet_frag_reasm_finish(&qp->q, skb, reasm_data,
+ 			       ip_frag_coalesce_ok(qp));
+ 
+diff --git a/net/ipv6/netfilter/nf_conntrack_reasm.c b/net/ipv6/netfilter/nf_conntrack_reasm.c
+index 60e8927329dde..8ccc0463bc21b 100644
+--- a/net/ipv6/netfilter/nf_conntrack_reasm.c
++++ b/net/ipv6/netfilter/nf_conntrack_reasm.c
+@@ -330,11 +330,10 @@ static int nf_ct_frag6_reasm(struct frag_queue *fq, struct sk_buff *skb,
+ 	if (unlikely(ecn == 0xff))
+ 		goto err;
+ 
+-	reasm_data = inet_frag_reasm_prepare(&fq->q, skb, prev_tail);
+-	if (!reasm_data)
+-		goto err;
+-
+-	payload_len = -skb_network_offset(skb) -
++	/* Check the size on the first fragment, which will become the head:
++	 * inet_frag_reasm_finish() must follow inet_frag_reasm_prepare().
++	 */
++	payload_len = -skb_network_offset(skb_rb_first(&fq->q.rb_fragments)) -
+ 		       sizeof(struct ipv6hdr) + fq->q.len -
+ 		       sizeof(struct frag_hdr);
+ 	if (payload_len > IPV6_MAXPLEN) {
+@@ -343,6 +342,10 @@ static int nf_ct_frag6_reasm(struct frag_queue *fq, struct sk_buff *skb,
+ 		goto err;
+ 	}
+ 
++	reasm_data = inet_frag_reasm_prepare(&fq->q, skb, prev_tail);
++	if (!reasm_data)
++		goto err;
++
+ 	/* We have to remove fragment header from datagram and to relocate
+ 	 * header in order to calculate ICV correctly. */
+ 	skb_network_header(skb)[fq->nhoffset] = skb_transport_header(skb)[0];
+diff --git a/net/ipv6/reassembly.c b/net/ipv6/reassembly.c
+index 29e15ff9d7c1e..34031424c9789 100644
+--- a/net/ipv6/reassembly.c
++++ b/net/ipv6/reassembly.c
+@@ -271,16 +271,19 @@ static int ip6_frag_reasm(struct frag_queue *fq, struct sk_buff *skb,
+ 	if (unlikely(ecn == 0xff))
+ 		goto out_fail;
+ 
+-	reasm_data = inet_frag_reasm_prepare(&fq->q, skb, prev_tail);
+-	if (!reasm_data)
+-		goto out_oom;
+-
+-	payload_len = -skb_network_offset(skb) -
++	/* Check the size on the first fragment, which will become the head:
++	 * inet_frag_reasm_finish() must follow inet_frag_reasm_prepare().
++	 */
++	payload_len = -skb_network_offset(skb_rb_first(&fq->q.rb_fragments)) -
+ 		       sizeof(struct ipv6hdr) + fq->q.len -
+ 		       sizeof(struct frag_hdr);
+ 	if (payload_len > IPV6_MAXPLEN)
+ 		goto out_oversize;
+ 
++	reasm_data = inet_frag_reasm_prepare(&fq->q, skb, prev_tail);
++	if (!reasm_data)
++		goto out_oom;
++
+ 	/* We have to remove fragment header from datagram and to relocate
+ 	 * header in order to calculate ICV correctly. */
+ 	nhoff = fq->nhoffset;
 -- 
 2.53.0
 
