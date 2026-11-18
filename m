@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047915;
-	b=4YA9aAy0i4Jq2KeJamZKLtCcDGqAHCXCg5X+uvXUoGD6jV0Vu+2oUevSaiCm8xXtSfps
-	 hI8hAQprIcl4oQYb83L9PegD+i32bZuEBnFTpnky7bNATGUwDJireMIx419pBrcNgISFz
-	 IWx0YZ0vN06DSWhKn+mMgGW2RDq5bk+eFAEhuTJgBL+cI9PFDm4n0k5WgUwiTeMtXpcOB
-	 HsypwevxholYkw7y8cR1zfSU6LWiuBuk9fxiE+8VCmN4F+u7pe5LRLCio7J+YFu2rDW3/
-	 hdo16/YVUMSDC8KVjM4jNNgIdt8+sRWYOZ/G/hlpmFNWxllQZpeAmULGxHiuSS5E8eA==
+	t=1795047920;
+	b=feIV9ZnQPGFwAxJIelS7obPWDLzdPsNoS6h3l+yyJhPOcpMt7kIan6PO8L58g1yn8nHB
+	 /V5vMv/JrfgBIn2wPvbJk+8C1BAGpr/QqtVhRkf1kuqEO66MnEV51ahARfGo5kQ+TRrkE
+	 tSnDhUvWBs5r5voaPItPxKyl8Iva7g+5lXIW0krXgKwih/GfG9o/Dz0iiQJx6FwEEJIID
+	 RNTWH+5hfuCWGntS1IB320aPJtrdw1GpZMXN6QlZPakctC2HR7cjmO3An9IGSqWC2qUWf
+	 bFKYGoCaLj1/sMV1W/nQxWeIsekbw1HyZzOhrgMgt6n4ATLxhaWVyu8U2RKe3bDEUdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047915;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047920;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=X3NWn49xHBOKNdIwpBtZnX3KPQC9A6ZIUeO785t3+Q8=;
-	b=O+hxZ5qkKBXa1+imRUrmtEl1ZpWyb+9EkkX8Rsm9gJ/4MSx6u0T38KMI+R04SFvBqz+P
-	 i1mWe3wg8G8nyY8nrRwJP1dXaKIpvCiPrsGQE1YrcKhOpO+ZnhLTqZghz/W5IW4SQZZv8
-	 bDAnmu/xeDwNXMVHPROmnU5of9c6BH533cmwVmOvmRFJZD8ggaaPscXpVmARSbRsgBS9D
-	 zQdge1I7NUVWALKNx4J/kmwH2RWlsDGV/CWNXzWR3Xy7I+7maXn2N5+Rf6SNs0STCIpu3
-	 /ZD8N8WSOrnDTvZXxC2SY7W9/pPiZVRJquK1CJTlXMHUrHvA1WjkeFABLOVxfguOqAA==
+	bh=Z4UHk7zwt6yIotejv9bH30qmMgZRoNox1Af/sFuztPw=;
+	b=xwkuKbKDSsYLkPBZX4Y6UAqNgg/66lpWadvOzh//wlIi0tMldCEGV6TrWIqdD8TxQwzU
+	 1h3ZX1ojX2nj59T1F58HvfrujP/usuXAZW1pMOT/gNAR3dapVOfUhvlGm7x0/mBw4uLxb
+	 9otYwqZlJ/2349efWkYPzAAyVVtKbPr46tksnr2CPJVu83vHwrX+/IOBDkPB5LcxaH7Ff
+	 88LJ7s5bbVgYx1oMoT/8Q3oyQDHPS/E/Duxr4W0KHOhn18KZiSDdvqGtNH1TGQRT8F465
+	 3gWFDvyLKXWovl//07B37FLlIGyU7q1jc3bJ3mOTLhcXg/rADgDmbikQRGnJ/3yACaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2EQ9jF5v;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dTy47Ymo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C92F1606A31C;
-	Thu, 19 Nov 2026 00:25:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27FF9606A31C;
+	Thu, 19 Nov 2026 00:25:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2EQ9jF5v
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5D2E1F000C4;
-	Thu, 19 Nov 2026 00:25:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dTy47Ymo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3AE81F000C4;
+	Thu, 19 Nov 2026 00:25:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047915;
-	bh=X3NWn49xHBOKNdIwpBtZnX3KPQC9A6ZIUeO785t3+Q8=;
+	s=korg; t=1795047919;
+	bh=Z4UHk7zwt6yIotejv9bH30qmMgZRoNox1Af/sFuztPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2EQ9jF5vN235kulSb/v9m9BEpjl5lOwIc9yvfQvpZ/BAhrG1CZi0zW7Kz7X/tCq5r
-	 vE6YN4nVm9c27dB8j8sOOALx6ENhhpFd5b4XX2Nc3cNuvbsNscm33PLA+XRd9ridPB
-	 rdsWW6QmZZy6yNJb43O/jFsA2Ltzozr0Ris28dA4=
+	b=dTy47YmoMyEh+S6U4bS1Ib2fRd8nSeZP196zAOIw6QRlQHgoVm4IfXycKuyRzgx/n
+	 EcKnR7msx8gu7xs7OezrbBscFw8rUPeCXloNAf4DNs3e6llGhjNmGlVC/KaA/4Led0
+	 5qRLAAfhs1yli/a5shbP+vnOJgIJ3q9NMYvexrX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	"Alexander A. Klimov" <grandmaster@al2klimov.de>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1808/2857] gpio: crystalcove: add missing MODULE_ALIAS()
-Date: Wed, 18 Nov 2026 15:47:22 +0100
-Message-ID: <20261118150306.351039978@linuxfoundation.org>
+Subject: [PATCH 6.1 1773/2857] microblaze: CCF: fix refcount leak
+Date: Wed, 18 Nov 2026 15:46:47 +0100
+Message-ID: <20261118150305.117272827@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,34 +68,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Alexander A. Klimov <grandmaster@al2klimov.de>
 
-[ Upstream commit 32c7f7f80e5f7f2764682fd456054478fc11c8d9 ]
+[ Upstream commit aeedf85beac51c7cd8f7bf4c918a0104dfdb8b78 ]
 
-The crystalcove GPIO driver lacks a MODULE_ALIAS() to allow it to be
-auto-loaded.
+Every value returned from of_clk_get() is supposed to be cleaned up
+via clk_put() once not needed anymore.
 
-Fix this by adding the missing platform alias.
-
-Fixes: 104fb1d5153c ("gpio: Add support for Intel Crystal Cove PMIC")
-Assisted-by: LLM
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Fixes: c1120542b99a ("microblaze: Add support for CCF")
+Signed-off-by: Alexander A. Klimov <grandmaster@al2klimov.de>
+Link: https://patch.msgid.link/20260526184105.18962-4-grandmaster@al2klimov.de
+Signed-off-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-crystalcove.c | 1 +
+ arch/microblaze/kernel/cpu/cpuinfo.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpio/gpio-crystalcove.c b/drivers/gpio/gpio-crystalcove.c
-index 25db014494a4d..636e4d3f990b1 100644
---- a/drivers/gpio/gpio-crystalcove.c
-+++ b/drivers/gpio/gpio-crystalcove.c
-@@ -395,3 +395,4 @@ module_platform_driver(crystalcove_gpio_driver);
- MODULE_AUTHOR("Yang, Bin <bin.yang@intel.com>");
- MODULE_DESCRIPTION("Intel Crystal Cove GPIO Driver");
- MODULE_LICENSE("GPL v2");
-+MODULE_ALIAS("platform:crystal_cove_gpio");
+diff --git a/arch/microblaze/kernel/cpu/cpuinfo.c b/arch/microblaze/kernel/cpu/cpuinfo.c
+index cd9b4450763b0..32c508e85408a 100644
+--- a/arch/microblaze/kernel/cpu/cpuinfo.c
++++ b/arch/microblaze/kernel/cpu/cpuinfo.c
+@@ -133,6 +133,7 @@ void __init setup_cpuinfo_clk(void)
+ 		cpuinfo.cpu_clock_freq = fcpu(cpu, "timebase-frequency");
+ 	} else {
+ 		cpuinfo.cpu_clock_freq = clk_get_rate(clk);
++		clk_put(clk);
+ 	}
+ 
+ 	if (!cpuinfo.cpu_clock_freq) {
 -- 
 2.53.0
 
