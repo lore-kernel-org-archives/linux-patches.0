@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036783;
-	b=j5+OXsp6mMasCtpzn0fmWJG2l2mJSUIhY9MxhFYJXWT7hNk85uxIm9+InGew1qE2vC17
-	 jzjgpplR15kVJzjV+RBndUc457lWPiCf66Gt/B9ko3xJSoQbu/7mW/2LNib0ivcteEsNE
-	 MTw8bt1Wbp+hhq9VhWcenL1muEPFh5Kidrcz7cU12M2ZiuYLI99jzsPmRDMNr1DifK8PJ
-	 mnYVjR6k7AnALZeptRG7i64DvoCb+BgQdUc781uDmL3Ko4KX2zsSSBONY1QvpzMhePqVq
-	 5l148OC+WaMzQXG7vVnd75HvHjiOwIHm4ZUXB/Sljkhd6Lolenl7u/f9U1SYr0hMGsw==
+	t=1795036786;
+	b=iQLpHkk+ASX0MjaeLw/3rvawAwx+LBu1oDs/RlHWqOU5JfdXRPpMrh49By+jbLXxRYqs
+	 wsgnbrrCu46Oc1JjaYwDTWjJuCs9IPMk6TEy0khwL02Awdo8BviCddSNIpRRvaItczoiE
+	 FeqYT5Uv0HJHd38mA28iJrR6X+vhN/cK1w9H/FEEdl92z2lJwP5+9lF1GUzrMtD7b2jQE
+	 helHcwhr0KnBuGxMcfdWVptMVq8g40LpOVmh9RqQG0gx5SOxu+9RUbq7gDn4dFSw+vGcJ
+	 aYx8YIMB36Hf+/9hqsdgv7SwOwwWXchKrokt+QQjdIhJ6QAO6SD4XSLLo+P+aD0ffrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036783;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036786;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=U01D8bgDVvtcLv5XcBHB+3KlQonVHTlFJoJVfz46H8E=;
-	b=ZmL2+1EUq5/SZGLBadBDBSyahUDRAc6Pep+c7b1Y+uRwMAtbETGJ/eLtMlV63aB7YYfS
-	 Uk4Zimkx3F3NuY4cHNgP/YjpYldjIvQCXrUe9vDdbXcLbWCjiEToOzvUKiUCJFjrqV/iG
-	 tqLia3GO8zesPFIFsUGfxgzwZcTcAK9ooB89rdh8D5UzDH15V2i3xk1LESU4YeTNYaAQp
-	 phyYbGpkUPMqJq4H+beZumR9fSt5ker7aZGRUbSsJzPoOfSbOpKWdT5+qiNAU+lVENkPl
-	 KmSeWA1RViPiEPe6PazlSdjNQ6Lxy/lK2Rd3UTXIRp9kG0ifZ5ICGbvAGUJb0Xqsr9Q==
+	bh=l1LNaXDJQbGlupXW6JD4SC8cP8jJYT3gHD675PTv0Ws=;
+	b=br+Zp3ha3HtfH9K7JUjw3R/9smzA1F6MHjMykzlsjnwkHja3/YyKKa0DvVDd8gJD44kx
+	 oAtS99kLSvSopjZOsguXa9F5A3zLZd01pEEFhjkc22rv54QIzh8WO+XL2N5GocdulIWyl
+	 d7cFnqYDIgsRxAv1xr3NGt+CM2he6ynskY/i2W6xoNPxhXwna9t5GBQulgm2SsyY+0JQ9
+	 5l4ZPQ+X8FnIGs98kGO2RRBxfgYATdpLqrdcOWygTVhlIaD+AOv/QYCk/jzVmj/PTWVlo
+	 idNtWXGYm5/xanNo/NQEyQSdPrUBmrrEls/QULQd+hOVQ5Ue760WkRJCqTDcKkrpJDA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EWoIrSuV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q9v69TI3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279F3606A320;
-	Wed, 18 Nov 2026 21:19:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD70606A31C;
+	Wed, 18 Nov 2026 21:19:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EWoIrSuV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7958B1F000C4;
-	Wed, 18 Nov 2026 21:19:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q9v69TI3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A1491F000C4;
+	Wed, 18 Nov 2026 21:19:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036783;
-	bh=U01D8bgDVvtcLv5XcBHB+3KlQonVHTlFJoJVfz46H8E=;
+	s=korg; t=1795036785;
+	bh=l1LNaXDJQbGlupXW6JD4SC8cP8jJYT3gHD675PTv0Ws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EWoIrSuV32fV7KGpOJHXy3r2actssnpxRQ/kBDJPtjAX94Y+k7tFc7UUM/ki7oWnw
-	 nsjCc+NUxA1rOrmEVPYC7QQ/sZvqWImWDfUXt5Vfl7ZM2fnjd1+fZ0uY9B5H8rLRAh
-	 W5lpbxlh2rc+jnICt65GsrgTEDc8B8G135YYjK2c=
+	b=q9v69TI3+i/4b6xDvko0Dk5sbAWe/hfQzOxZjaWyGrvyEPmDH462hP2p97kwR9v7K
+	 mMx/RrpN7Ou4YNdMaB+3iUc/GQ7R1QVhpoMSTZWs83KAHV+1NdZRCfowGp7b+Ibz4m
+	 YjtoxLzF4gYfDcvspeYoY4WoWUB+9vctRAyfvB1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+0f98b0c0bdeaab2dc2fd@syzkaller.appspotmail.com,
+	Sanan Hasanov <sanan.hasanov@ucf.edu>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1182/3318] net/smc: queue the copied chunk when smc_tx_sendmsg() faults
-Date: Wed, 18 Nov 2026 15:30:04 +0100
-Message-ID: <20261118150355.604938113@linuxfoundation.org>
+Subject: [PATCH 6.6 1156/3318] hwmon: (corsair-cpro) Make wait_input_report_lock IRQ safe
+Date: Wed, 18 Nov 2026 15:29:38 +0100
+Message-ID: <20261118150354.783990106@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,50 +69,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Sanan Hasanov <sanan.hasanov@ucf.edu>
 
-[ Upstream commit c0703534b223a5c6993e0f000fd1c3abe621fb65 ]
+[ Upstream commit e4fdc82f55cf0e3d5df5c88278da5baa76a109d1 ]
 
-When a send wraps the end of the send buffer, smc_tx_sendmsg() copies
-the data in two chunks. If memcpy_from_msg() faults on the second one,
-smc_tx_sendmsg() returns send_done, which already counts the first
-chunk, but leaves tx_curs_prep and sndbuf_space as they were. send()
-reports bytes the peer never receives, and the next send() overwrites
-them. Any caller can hit this on its own stream with a buffer whose
-tail is unreadable.
+ccp_raw_event() is the HID ->raw_event() callback and takes
+wait_input_report_lock with a plain spin_lock(). This callback can run
+in very different contexts depending on the transport: from process
+context (e.g. uhid, via a write() to /dev/uhid) with softirqs and
+interrupts enabled, and from URB completion, which is softirq context
+for HCDs using HCD_BH and hard interrupt context for HCDs that do not
+(e.g. OHCI, UHCI).
 
-On a fault in the second chunk, queue the first one. The next pass
-retries the rest and returns send_done if it faults again, so send()
-reports only what it queued, as TCP does.
+Taking the lock from process context with softirqs enabled while the
+same lock is also taken from softirq context can deadlock if the
+softirq interrupts the lock holder on the same CPU. Lockdep reports:
 
-Fixes: e6727f39004b ("smc: send data (through RDMA)")
+  WARNING: inconsistent lock state
+  inconsistent {SOFTIRQ-ON-W} -> {IN-SOFTIRQ-W} usage.
+  ...
+   spin_lock include/linux/spinlock.h:347 [inline]
+   ccp_raw_event+0x51/0x110 drivers/hwmon/corsair-cpro.c:161
+   __hid_input_report+0x41c/0x580 drivers/hid/hid-core.c:2175
+   hid_irq_in+0x492/0x710 drivers/hid/usbhid/hid-core.c:287
+   __usb_hcd_giveback_urb+0x378/0x540 drivers/usb/core/hcd.c:1657
+   dummy_timer+0xa91/0x4cc0 drivers/usb/gadget/udc/dummy_hcd.c:2023
+
+For the same reason, the spin_lock_bh() in send_usb_cmd() is not
+sufficient when ccp_raw_event() is called from hard interrupt context.
+
+Use spin_lock_irqsave() in ccp_raw_event(), since it may be called with
+interrupts already disabled, and spin_lock_irq() in send_usb_cmd(),
+which always runs in process context.
+
+Fixes: d02abd57e794 ("hwmon: (corsair-cpro) Protect ccp->wait_input_report with a spinlock")
+Reported-by: syzbot+0f98b0c0bdeaab2dc2fd@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=0f98b0c0bdeaab2dc2fd
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Link: https://patch.msgid.link/20261013-b4-disp-872a3689-v1-1-2a4c63b04761@proton.me
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sanan Hasanov <sanan.hasanov@ucf.edu>
+Link: https://patch.msgid.link/20261008205310.30832-1-sanan.hasanou@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_tx.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/hwmon/corsair-cpro.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/net/smc/smc_tx.c b/net/smc/smc_tx.c
-index 3b0ff3b589c70..ee6e345db0072 100644
---- a/net/smc/smc_tx.c
-+++ b/net/smc/smc_tx.c
-@@ -249,6 +249,13 @@ int smc_tx_sendmsg(struct smc_sock *smc, struct msghdr *msg, size_t len)
- 			rc = memcpy_from_msg(sndbuf_base + chunk_off,
- 					     msg, chunk_len);
- 			if (rc) {
-+				if (chunk) {
-+					/* send_done counts the first chunk:
-+					 * queue it and retry the rest
-+					 */
-+					copylen -= chunk_len;
-+					break;
-+				}
- 				smc_sndbuf_sync_sg_for_device(conn);
- 				if (send_done)
- 					return send_done;
+diff --git a/drivers/hwmon/corsair-cpro.c b/drivers/hwmon/corsair-cpro.c
+index 096e187082b80..197d7b6a00b7e 100644
+--- a/drivers/hwmon/corsair-cpro.c
++++ b/drivers/hwmon/corsair-cpro.c
+@@ -128,9 +128,9 @@ static int send_usb_cmd(struct ccp_device *ccp, u8 command, u8 byte1, u8 byte2,
+ 	 * the raw event parsing and marked the ccp->wait_input_report
+ 	 * completion as done.
+ 	 */
+-	spin_lock_bh(&ccp->wait_input_report_lock);
++	spin_lock_irq(&ccp->wait_input_report_lock);
+ 	reinit_completion(&ccp->wait_input_report);
+-	spin_unlock_bh(&ccp->wait_input_report_lock);
++	spin_unlock_irq(&ccp->wait_input_report_lock);
+ 
+ 	ret = hid_hw_output_report(ccp->hdev, ccp->cmd_buffer, OUT_BUFFER_SIZE);
+ 	if (ret < 0)
+@@ -149,15 +149,16 @@ static int send_usb_cmd(struct ccp_device *ccp, u8 command, u8 byte1, u8 byte2,
+ static int ccp_raw_event(struct hid_device *hdev, struct hid_report *report, u8 *data, int size)
+ {
+ 	struct ccp_device *ccp = hid_get_drvdata(hdev);
++	unsigned long flags;
+ 
+ 	/* only copy buffer when requested */
+-	spin_lock(&ccp->wait_input_report_lock);
++	spin_lock_irqsave(&ccp->wait_input_report_lock, flags);
+ 	if (!completion_done(&ccp->wait_input_report)) {
+ 		memcpy(ccp->buffer, data, min(IN_BUFFER_SIZE, size));
+ 		ccp->buffer_recv_size = size;
+ 		complete_all(&ccp->wait_input_report);
+ 	}
+-	spin_unlock(&ccp->wait_input_report_lock);
++	spin_unlock_irqrestore(&ccp->wait_input_report_lock, flags);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
