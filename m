@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038765;
-	b=Atg+qyQJNJjf6O4tai7HLTv61a6sYzx5q0HZ2EXeVFP3j9quOCpRVNLxZAo31HCZ2gom
-	 hTAJ+dFza4sk6oFlAvQ7Waqp0lg+IceezqtSxd99Sfio+xYEcl9WwzU6OVWVPR02UTzN4
-	 WLK8Ff0H8AWI1pmPGM/WA7NswoAlI5tJ1uXyQ9t3h1U4VIoy7WcxvXgN+pDnNHS/j/um/
-	 svUKIURcrDuzpfGvUef/ytWdqLBFFQiV8aKSORmvHPkwCu4gMB3KUDlsRzeYRr+0YnaY9
-	 iM18H1mKx8JV0ipdhb2z4u4TL6XRkoyuDdJRsqmkNg6/cG+nwoN0+YDCiP6IKtzqq6w==
+	t=1795038768;
+	b=UcpcguzBNr4wX93VBfw3d2Or0HZIQO6muybuOiEvzWO0pZAGTcZDYGdAc9hedjqVeqiV
+	 Zy9eyq/6iSyWu7SftVEM4Te3vLom135Lt2ADLZf2Z1/5XOzBmgK+x7HpV2nkSTj2831Fi
+	 ByV9Zw7nYP4GOJ4ZddvxVDJ6LRipG370KudsDRTBpM/Goi4qzjvc7tEFd/jJKJNNos3vr
+	 Szt/X5e4KN6phshtz4bl95IghIS+DELGop6ekstpmNGEVRR/0c2C3/s3+IXmwmMi1W7UN
+	 LJVJCR2X/RAv87p5CCRdV5Pn+3zuvBFLQ1LET9d/L+b8uY0GUtQ38yC/B9OB1NxFZxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038765;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038768;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wOMyojAk77BsHXNvnNX+dj4Cx4rAFaroE8IsE9Simyg=;
-	b=cH32KReh0i5kpU46CHr8dntV4/OJYh9rQMHRaUwcCCJmLTH6WG2Xu5CVZU5/cdtRWiOH
-	 Z/TUwqPOfg3OfXkG5DkbmVqDFkxAOnj/ZW62gDoEhEAv/c8JoxOZsb+5DjzGzZIRdNvET
-	 SplrLkfplX1BDIaVMKRfDx43/mQhYO2dw7MemoKodF+dpWUIQlcR4vKin3CLwrV8LgGdC
-	 +jMZ1jq5mWIWKe/mS6jtcUuy8C0NiH34yUsrxLDWR79wDNlxVlHQJL/TWkV4NdljmdN8q
-	 otPVhCgYRyU1fQ8T5asSOIeLlGz+w0i7JptnvRoAff30y/XMgNVu4yvthJymyNlt7vQ==
+	bh=yBqwtmyNw32lIWpEpKvwp8mfwgjB7YkUXJo7+KQ+ElE=;
+	b=Pc1EI7vTjEGRgV0UWtmHsKsd9injPUNen8WdBBJ3ob4jOCnAj1+/PML96q7eDmaPODEu
+	 laqsQzw7rk13GOeCmPtdYuWWP6mwDpRcU5kNQIizrl7X9l7TMCJmvEGXs4qvDzWOuAvq9
+	 0hwRU72lrJTg+7QxVVmIJtbScBynPk6VLNbZ4m1RzhUfHg9hWuCe+5fkz+1dZVmmPYBai
+	 lUdejzgLPboaM6oJbZQmcGBNTDiDoin67wFt2jY+AAhHmPJnakjfRpdiQhdGuCzo8oFVf
+	 VjvMI+05BzJdE9et8fu0AtGoa5NF55P4aiQq9t1R+QBdNhnEkNoDQBZekePaIglze4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kiyr4oRZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nFaXlEkI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3789D606A325;
-	Wed, 18 Nov 2026 21:52:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036C3606A320;
+	Wed, 18 Nov 2026 21:52:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kiyr4oRZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B281F000C4;
-	Wed, 18 Nov 2026 21:52:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nFaXlEkI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5730A1F000C4;
+	Wed, 18 Nov 2026 21:52:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038765;
-	bh=wOMyojAk77BsHXNvnNX+dj4Cx4rAFaroE8IsE9Simyg=;
+	s=korg; t=1795038767;
+	bh=yBqwtmyNw32lIWpEpKvwp8mfwgjB7YkUXJo7+KQ+ElE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kiyr4oRZcT2ieuqJ4HTQEIZSAkzrSkKR2VvVTfpQkYIlEiTpEN49iZkSJov4R0LTv
-	 0oVfrXSejg2802b1SVfItC0SmsF0U5e2pbl3Hw0MayTsTXmu6Zq1Lxe9zyT/uyt4f5
-	 Tfq64cbc3qN4/pzk6jqA2Y+vA8j/jYs7OY6dVJyY=
+	b=nFaXlEkIGSdQ//FNkTPAA0Aw3ucai0V+haak5NdJiSkt5nx/NfSbl+FxW3xCRT5TM
+	 UOqhdKLHn1k5RGUUKsMk68EtmRSLVcwFAACwyJSt1h4xQ0YVfYtPb+GsXmEoLAdetb
+	 ZNqMuXIOc4XkFRY2Fq+XayKL9qOaDaqW1JPA0EB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	David Howells <dhowells@redhat.com>,
+	Bill Wendling <morbo@google.com>,
+	Stefan Teodorescu <fane@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1858/3318] assoc_array: keep gcs cleanup out of the live tree on allocation failure
-Date: Wed, 18 Nov 2026 15:41:20 +0100
-Message-ID: <20261118150417.604543129@linuxfoundation.org>
+Subject: [PATCH 6.6 1859/3318] KVM: nSVM: Check validity of vmcs01 save area copied from SMRAM on RSM
+Date: Wed, 18 Nov 2026 15:41:21 +0100
+Message-ID: <20261118150417.635464319@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,85 +70,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 8afff2e4b90978b8203f9e3898995dcf86821b49 ]
+[ Upstream commit 053621535f014085c935879582dd3b65964a0dce ]
 
-assoc_array_gc() builds a copy of the tree.  Where the copy reaches a
-shortcut, it allocates the copy of the shortcut with kmalloc_flex(),
-fills it with memcpy(), links it into the new tree, and only then
-allocates the copy of the node after it.  The memcpy() leaves the new
-shortcut's next_node pointing at the old tree's node, so if that second
-allocation fails, the cleanup, assoc_array_destroy_subtree() on the new
-tree, follows the new shortcut into the old tree, and the BUG_ON() on
-the old node's back pointer fires.
+When doing RSM to L2, validate L1's state after copying it back into vmcb01
+from SMRAM, as SMRAM is carved out of guest memory, i.e. is writable by the
+guest.  Failure to validate L1's state is especially problematic for inputs
+to MMU context, as KVM can end up with impossible CR4 vs. EFER state.  E.g.
+without the recent hardening FNAME(walk_addr_generic), a guest can trigger:
 
-Allocate the node first, and the shortcut once the node exists, freeing
-the node again if the shortcut cannot be allocated.  A copied shortcut
-is then only linked into the new tree when the copy of its node is there
-to follow it.  Nothing else changes: with no allocation failing, the
-trees gc builds are the same as before.
+  ------------[ cut here ]------------
+  UBSAN: array-index-out-of-bounds in arch/x86/kvm/mmu/paging_tmpl.h:435:15
+  index 3 is out of range for type 'u32 [2]'
+  CPU: 3 UID: 0 PID: 92 Comm: CPU 1/KVM Not tainted 7.3.0-rc1 #2 PREEMPT(lazy)
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x5f/0x90
+   dump_stack+0x10/0x18
+   ubsan_epilogue+0x9/0x39
+   __ubsan_handle_out_of_bounds.cold+0x50/0x55
+   paging32_walk_addr_generic+0x889/0x970
+   paging32_page_fault+0x79/0xa60
+   kvm_mmu_do_page_fault+0x125/0x270
+   kvm_mmu_page_fault+0x88/0x7b0
+   npf_interception+0xc8/0x220 [kvm_amd]
+   svm_invoke_exit_handler+0x16d/0x1d0 [kvm_amd]
+   svm_handle_exit+0xb7/0x160 [kvm_amd]
+   vcpu_enter_guest+0x428/0x16a0
+   kvm_arch_vcpu_ioctl_run+0x479/0x920
+   kvm_vcpu_ioctl+0x316/0xb00
+   __x64_sys_ioctl+0xa3/0x100
+   x64_sys_call+0x281/0x23d0
+   do_syscall_64+0xba/0x550
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  RIP: 0033:0x79bb30deb04b
+   </TASK>
+  ---[ end trace ]---
 
-Found by a userspace test that makes each allocation of each operation
-fail in turn.
-
-Fixes: 3cb989501c26 ("Add a generic associative array implementation.")
-Assisted-by: LLM
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Tested-by: David Howells <dhowells@redhat.com>
-Reviewed-by: David Howells <dhowells@redhat.com>
-[ sashal: used kzalloc(sizeof()) instead of kzalloc_obj() ]
+Fixes: 37be407b2ce8 ("KVM: nSVM: Fix L1 state corruption upon return from SMM")
+Cc: stable@vger.kernel.org
+Reported-by: Bill Wendling <morbo@google.com>
+Reported-by: Stefan Teodorescu <fane@google.com>
+Tested-by: Stefan Teodorescu <fane@google.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20261022021046.295001-1-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+[ sashal: used __nested_vmcb_check_save() with validation failures routed through unmap_save ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/assoc_array.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ arch/x86/kvm/svm/nested.c | 23 ++++++++++++++++-------
+ arch/x86/kvm/svm/svm.c    |  2 ++
+ arch/x86/kvm/svm/svm.h    |  2 ++
+ 3 files changed, 20 insertions(+), 7 deletions(-)
 
-diff --git a/lib/assoc_array.c b/lib/assoc_array.c
-index 0a210e12d18e9..4ca7381c60001 100644
---- a/lib/assoc_array.c
-+++ b/lib/assoc_array.c
-@@ -1562,17 +1562,26 @@ int assoc_array_gc(struct assoc_array *array,
- 	cursor = array->root;
+diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
+index a4019175e39d7..3838bd506763c 100644
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -1618,6 +1618,21 @@ static void nested_copy_vmcb_cache_to_control(struct vmcb_control_area *dst,
+ 	/* 'clean' and 'hv_enlightenments' are not changed by KVM */
+ }
  
- descend:
--	/* If this point is a shortcut, then we need to duplicate it and
--	 * advance the target cursor.
-+	/* The node at this position is duplicated, and so is the shortcut in
-+	 * front of it if there is one.  The node is allocated first: the copy
-+	 * of the shortcut starts out pointing at the old node, and must not be
-+	 * in the new tree if the node cannot be allocated, or the cleanup
-+	 * would follow it into the old tree.
- 	 */
-+	new_n = kzalloc(sizeof(struct assoc_array_node), GFP_KERNEL);
-+	if (!new_n)
-+		goto enomem;
++bool nested_svm_check_vmcb01_save(struct kvm_vcpu *vcpu,
++				  struct vmcb_save_area *save)
++{
++	struct vmcb_save_area_cached save_cached;
 +
- 	if (assoc_array_ptr_is_shortcut(cursor)) {
- 		shortcut = assoc_array_ptr_to_shortcut(cursor);
- 		keylen = round_up(shortcut->skip_to_level, ASSOC_ARRAY_KEY_CHUNK_SIZE);
- 		keylen >>= ASSOC_ARRAY_KEY_CHUNK_SHIFT;
- 		new_s = kmalloc(struct_size(new_s, index_key, keylen),
- 				GFP_KERNEL);
--		if (!new_s)
-+		if (!new_s) {
-+			kfree(new_n);
- 			goto enomem;
-+		}
- 		pr_devel("dup shortcut %p -> %p\n", shortcut, new_s);
- 		memcpy(new_s, shortcut, struct_size(new_s, index_key, keylen));
- 		new_s->back_pointer = new_parent;
-@@ -1582,11 +1591,7 @@ int assoc_array_gc(struct assoc_array *array,
- 		cursor = shortcut->next_node;
- 	}
++	if (!(save->cr0 & X86_CR0_PG) ||
++	    !(save->cr0 & X86_CR0_PE) ||
++	    (save->rflags & X86_EFLAGS_VM) ||
++	    ((save->efer & EFER_LMA) && !(save->efer & EFER_LME)))
++		return false;
++
++	__nested_copy_vmcb_save_to_cache(&save_cached, save);
++	return __nested_vmcb_check_save(vcpu, &save_cached);
++}
++
+ static int svm_get_nested_state(struct kvm_vcpu *vcpu,
+ 				struct kvm_nested_state __user *user_kvm_nested_state,
+ 				u32 user_data_size)
+@@ -1694,7 +1709,6 @@ static int svm_set_nested_state(struct kvm_vcpu *vcpu,
+ 		&user_kvm_nested_state->data.svm[0];
+ 	struct vmcb_control_area *ctl;
+ 	struct vmcb_save_area *save;
+-	struct vmcb_save_area_cached save_cached;
+ 	struct vmcb_ctrl_area_cached ctl_cached;
+ 	unsigned long cr0;
+ 	int ret;
+@@ -1764,12 +1778,7 @@ static int svm_set_nested_state(struct kvm_vcpu *vcpu,
+ 	 * Validate host state saved from before VMRUN (see
+ 	 * nested_svm_check_permissions).
+ 	 */
+-	__nested_copy_vmcb_save_to_cache(&save_cached, save);
+-	if (!(save->cr0 & X86_CR0_PG) ||
+-	    !(save->cr0 & X86_CR0_PE) ||
+-	    (save->rflags & X86_EFLAGS_VM) ||
+-	    ((save->efer & EFER_LMA) && !(save->efer & EFER_LME)) ||
+-	    !__nested_vmcb_check_save(vcpu, &save_cached))
++	if (!nested_svm_check_vmcb01_save(vcpu, save))
+ 		goto out_free;
  
--	/* Duplicate the node at this position */
- 	node = assoc_array_ptr_to_node(cursor);
--	new_n = kzalloc(sizeof(struct assoc_array_node), GFP_KERNEL);
--	if (!new_n)
--		goto enomem;
- 	pr_devel("dup node %p -> %p\n", node, new_n);
- 	new_n->back_pointer = new_parent;
- 	new_n->parent_slot = node->parent_slot;
+ 
+diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
+index 26fe1b01b3e70..8899f3443e998 100644
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -4868,6 +4868,8 @@ static int svm_leave_smm(struct kvm_vcpu *vcpu, const union kvm_smram *smram)
+ 	 */
+ 
+ 	svm_copy_vmrun_state(&svm->vmcb01.ptr->save, map_save.hva + 0x400);
++	if (!nested_svm_check_vmcb01_save(vcpu, &svm->vmcb01.ptr->save))
++		goto unmap_save;
+ 
+ 	/*
+ 	 * Enter the nested guest now
+diff --git a/arch/x86/kvm/svm/svm.h b/arch/x86/kvm/svm/svm.h
+index ac32ea470696a..e41b61e470e8f 100644
+--- a/arch/x86/kvm/svm/svm.h
++++ b/arch/x86/kvm/svm/svm.h
+@@ -627,6 +627,8 @@ void nested_copy_vmcb_save_to_cache(struct vcpu_svm *svm,
+ 				    struct vmcb_save_area *save);
+ void nested_sync_control_from_vmcb02(struct vcpu_svm *svm);
+ void nested_vmcb02_compute_g_pat(struct vcpu_svm *svm);
++bool nested_svm_check_vmcb01_save(struct kvm_vcpu *vcpu,
++				  struct vmcb_save_area *save);
+ void svm_switch_vmcb(struct vcpu_svm *svm, struct kvm_vmcb_info *target_vmcb);
+ 
+ extern struct kvm_x86_nested_ops svm_nested_ops;
 -- 
 2.53.0
 
