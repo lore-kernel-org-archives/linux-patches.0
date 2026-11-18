@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029627;
-	b=wgeMy3Rzs6FId+UabXjtgktpYg84CXV8DF1Ev1FKf/T728Wvu6++SjCySTh80DqYKgqW
-	 44dwH3XWDlGbpkF00kwwaG6j/CDQq/WgsMvWEhqTFMppmyW2i1AfytWaBYBEqeqGgP/YY
-	 LukguBK52/bzqf3fG0qkfUJOnYqECl120ls24aNAr/jqpG1au3EjhPnsjnfbGrDZvcXVz
-	 h/siEi4KkCNIvjFN5OiBJUkFrLO3aJDwGze1V/yNpJXsQhSEfVmRLYPbeDOpZO1erooyv
-	 uKCB5LNxeA6HMWWeKvRjZjJ3tk4hF3IHeM5Bc3zzezs99OC5dFDl0hzX6F3hgwU0lvQ==
+	t=1795029630;
+	b=b0q/emm/9zrU4ymuZYzU9VL+f24KiscRzl4FMPYIiQ75nOJQCwWJWgBNjz9YQx5jNd2N
+	 e6IfzBkn//8rvdQ2UI7RyNwff9BKzUQ9xfm40d7wEjMy2n6vE/V+hSeNhkRQ4iPZOwN0w
+	 hM58sGcZ08AM5zy9PVWLaOq4khWgo3dl42RWF1cQzKpFrfhCUsHBTLwWmt6Q5nf4Q4OBX
+	 DCak/S/QBRDS+rOX0HmKGtam3Tx66IMisZpeU+HHuLWQFJdPEyFnQuTr0X6naotbQ36XH
+	 fUgyeTUIgKyaouWJ2U9vXYqC1qpWteb9uBG0B7Tuj4egJ2gwVdPr8knok+QogyTGDOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029627;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029630;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZYgAA1GDUQUMICrNoFAySd22xNMhkRtTzVx0QCinEi0=;
-	b=SvsGyKTKHOwV9tRydQI1P+sJGwqN1Byk/92tbouQNRQtnhhPLrH02w3PS0AMwklJDkTT
-	 7lq/1v/kfVV8xCVSrHYiU9MiLhAWCFpqh4r2icstPnOXTGwaGW3qBzEC34+LxuxDJmWtf
-	 6IUNdw+Oz99psWwEjMDCF0zNBRbibNd4h7GRfdhT3vjh6ov0Bp7ncXo08+G+fXQ5QCq5z
-	 u5Mp95fjI3or2O6SkmDYyEaLjHBa32GMbZXePOWQj3B0PiK43EUW4/V9kwHEyv7Jb1PVy
-	 +kcO2TVIwIqEsqbHXyEXaBeLNnO4tWz0KEDOsGHO34TL6oZtUp7r3ee0ZbleB1bjolw==
+	bh=BMJxYyFYZSMkTXeIEG8n0xAg9sT1Ygl8kEW650nRWMI=;
+	b=LHF5KT3/WDU3UJRUT3iPNOjuPsZfwZo3U2du2HdffSoQobKeahgQSwyB5ir/72MH3yZc
+	 a0SCihrFwud0OfHVAluZ9tk4U1xOM6pvk/mw6vWVxAphFbz2bM1hYzkdTZNj+Qz3HWnEE
+	 qhxA9vBQWbDba3bl8uKxHZbBA7dRQNCQFMpYDQIkOCTRga4rc+Z08j1B8UwO76DpabJmV
+	 iDK7pLQfza62bCnjXewRlcVQHDrDWAlfcz7kLXvGqaYlpqNXOQ9MqRlrQUtXgKJesJUmK
+	 gt7rPoBNy0w8ubQmylxwOFNvqqYN+su1XpiaZWOsIaFiC+eWNRuZ+rDizODB62OWiQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n3kMSWnK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DOZSOR+g;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 437E7606A320;
-	Wed, 18 Nov 2026 19:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 052FF606A334;
+	Wed, 18 Nov 2026 19:20:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n3kMSWnK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91DA71F000C4;
-	Wed, 18 Nov 2026 19:20:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DOZSOR+g
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B6C61F000C6;
+	Wed, 18 Nov 2026 19:20:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029627;
-	bh=ZYgAA1GDUQUMICrNoFAySd22xNMhkRtTzVx0QCinEi0=;
+	s=korg; t=1795029629;
+	bh=BMJxYyFYZSMkTXeIEG8n0xAg9sT1Ygl8kEW650nRWMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n3kMSWnKNr/DLt6p/lDlbauZek+hPr6OPyoo6JJs/ojIKoVgA81JkiyWaUg0UOvCk
-	 GhjggR0gBMDI6uUpS6HgHtMvpTbJEKBW3lMQNhfkte3s+kbKwBaAptyvhmSP3p93Zz
-	 0QiUvkKSiSLNrGDI6H4FcYOmN7Qwhb1DyPZ79JKw=
+	b=DOZSOR+grjxEmqLH+MF2ndflF81ClKKhPzWHf1UM6d2UCLnWCoKbtHCpU1WDBjLOd
+	 L5Y6uWJso/VDEtBvJTOuZ4w3zpLaAo8Hnx8mqCqdpR5cvDc88RpkvSboN/ukiKzoPf
+	 nAEZdoW8X2t6+p5MihatO0VeSbLwd/53Y0HbwlnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghao Zhang <hyz3367@gmail.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Rosen Penev <rosenp@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0415/1756] remoteproc: core: Set trace buffer name for diagnostics
-Date: Wed, 18 Nov 2026 15:42:22 +0100
-Message-ID: <20261118150025.248778406@linuxfoundation.org>
+Subject: [PATCH 6.12 0416/1756] dmaengine: mv_xor: kill tasklet on channel add error path
+Date: Wed, 18 Nov 2026 15:42:23 +0100
+Message-ID: <20261118150025.288906534@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,44 +69,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghao Zhang <hyz3367@gmail.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit e23eab619b0d2dd796618406ba25da62f4d539a2 ]
+[ Upstream commit bcb4d469b19d53dc21e4a1da12d4438e7489e150 ]
 
-rproc_trace_read() (in remoteproc_debugfs.c) prints the name of a
-trace buffer whose device address could not be resolved, but nothing
-ever assigns trace_mem.name, so that the diagnostics always prints
-an empty string:
+If request_irq() succeeds but a later step (self-test or device
+registration) fails, the error path at err_free_irq frees the IRQ
+but does not kill the tasklet.  A previously scheduled tasklet can
+still run after the channel is freed, accessing freed memory.
 
-	Trace  not available
+Add tasklet_kill() after free_irq() on the error path.
 
-Copy the generated "trace%d" name into the memory entry, so the
-diagnostics identifies the buffer failed to translate.
-
-Fixes: a987e6b91a5a ("remoteproc: fix trace buffer va initialization")
-Assisted-by: Claude-Code:glm-5.3
-Signed-off-by: Yonghao Zhang <hyz3367@gmail.com>
-Link: https://lore.kernel.org/r/20260911081810.740028-1-hyz3367@gmail.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Fixes: ff7b04796d98 ("dmaengine: DMA engine driver for Marvell XOR engine")
+Assisted-by: opencode:big-pickle
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260909234601.101883-1-rosenp@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/remoteproc_core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/dma/mv_xor.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-index 323d368d455c5..172e25241c834 100644
---- a/drivers/remoteproc/remoteproc_core.c
-+++ b/drivers/remoteproc/remoteproc_core.c
-@@ -579,6 +579,9 @@ static int rproc_handle_trace(struct rproc *rproc, void *ptr,
- 	/* create the debugfs entry */
- 	trace->tfile = rproc_create_trace_file(name, rproc, trace);
+diff --git a/drivers/dma/mv_xor.c b/drivers/dma/mv_xor.c
+index 33716794d50e2..c03b31a2b8453 100644
+--- a/drivers/dma/mv_xor.c
++++ b/drivers/dma/mv_xor.c
+@@ -1162,6 +1162,7 @@ mv_xor_channel_add(struct mv_xor_device *xordev,
  
-+	/* keep the name for the diagnostic in rproc_trace_read() */
-+	strscpy(trace->trace_mem.name, name, sizeof(trace->trace_mem.name));
-+
- 	list_add_tail(&trace->node, &rproc->traces);
- 
- 	rproc->num_traces++;
+ err_free_irq:
+ 	free_irq(mv_chan->irq, mv_chan);
++	tasklet_kill(&mv_chan->irq_tasklet);
+ err_free_dma:
+ 	dma_free_wc(&pdev->dev, MV_XOR_POOL_SIZE,
+ 			  mv_chan->dma_desc_pool_virt, mv_chan->dma_desc_pool);
 -- 
 2.53.0
 
