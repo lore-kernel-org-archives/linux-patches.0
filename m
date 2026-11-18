@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026790;
-	b=c8pt/oXdYOXdS3IHHbOIqLKLxZ7u6WTE2jWiGudCXC7CTrEkE+y4PZKR6pJotAaCYoXs
-	 Wq4tdtjojsDMdugJa0QTNWkaMNBH/tFvY3IUlqGeKDa3I5ku4+N9nLSvS49cBZliWHc5u
-	 1BAhMKw2x16XB8UQF/gLXerx/GsX200/GLed+CxqVM8lwr6Sugkyb6Bod6tetrZmrWDV7
-	 7PGwRWCwW6RnvuJ+6S3800aDZ2olcRg7fIsXu3wDVHcQykkBxgUtlDDRyZnkLsCigVFtU
-	 oRoHnTD4/bbLRoqtVRX7gIrSHDTmmLw+yAMWUrIhqevTf0KSicfqEtG7A4ZbWx6wyXw==
+	t=1795026793;
+	b=2d3/uA4/i4i2fMuk6IB/1aAf6rbnjFB1jYZMbLlkhXNj+YsPB/GuX20T4WXvGQKuxScV
+	 kqSxkBeqxbhjtJ3XjzTpnZq2KddfZIeWA/Pi/JcBZzBwf9ZFZimbD5Ere7wMsO9XL2aZh
+	 +HVXhQnH5f8xoVA3BsI0mko1t6xUdPd8+5n/RaQCQkSYpowiz/wwwet6bhZkMaiFufZ+T
+	 ATzrCzISBt7B3ohbjELlUwXyEZwSgqCLZMp7HKxoP1oWWOS/f72gNKKsz0wwypjJEFTdX
+	 FXqndkaF9hwa+kvDSxmV9yxAuPJT3uUs29CR1HgZjVaWuRJLDSzRVOlNOyd/16z3K6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026790;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026793;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hGg2AaP0tiqv5p6zk9tOFMUKrhqAWFV/e80IQfuWG3Q=;
-	b=RnRlIGtnK3B0+kXqDtPOsyL4SPFCcDIRcjt/GGQJb+OSaab07KDLGkuOQUE4T0LSYQTZ
-	 7R9DcPqsJfkdPBOmTyft8W+9IhGfYXfq5H+K67f+VmIuiczFHJb5iX1UqdLcXUK+DFdNV
-	 r/+6W4Cqf5UCZJkObbx4wu/oqmTPd5BSfoZcJD8sdmqiOGfERJWrwfngAmffv6fIITVT2
-	 Omhnpx14b7/n44+NqCm+KnJBS2eY9kXWLM0kRiPQwgpYcbb2r1r0soHY5mMYkY25Dyg4b
-	 YrQ6Aao9A1726fz9G2luRREFIwkHFba9huohKyUx+2P3oTmLTW7dZ52fueL2KiJiV6g==
+	bh=KDRNLjUdztS2Lp7p5oL4Y6u8ivgYC9yB7u2idvKS9ow=;
+	b=RmUft8FTHlNwvREGzIX3C6Tt6BXHHg35uf8uHWemBltOg8uCbcVqkyanHHQnx1Z3L/q1
+	 vRKDyySf+LW0+wbfaeqpDXEqoBe86x1S6QsU2VT+gCpP+k0hFUgq++qnZrSOzvAfvjlVy
+	 JyNXjT5pMCyUg6Dv2++gnvjfNEQQkYMhIk+NdJ6HA+nHRyIyh1YlYSJjfl/IIwfR6gzxC
+	 uX84jaTt8XsiUtu2G9ZFbygMLu7nDYd2C1zgReGnBT3kchynPFyiwIz+Qe/P0UD9Hf/O3
+	 QWFWVcM6XBI9f2/xXqP7foEu2+KAxZp3d2f2c6jRYjwYb+Uxx4IVxxu3/Fq7uOWyhOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Lz/rczb9";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s+fNSeiZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB00606A320;
-	Wed, 18 Nov 2026 18:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 602E1606A325;
+	Wed, 18 Nov 2026 18:33:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lz/rczb9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF1C91F000C4;
-	Wed, 18 Nov 2026 18:33:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s+fNSeiZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6CF01F000C4;
+	Wed, 18 Nov 2026 18:33:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026790;
-	bh=hGg2AaP0tiqv5p6zk9tOFMUKrhqAWFV/e80IQfuWG3Q=;
+	s=korg; t=1795026793;
+	bh=KDRNLjUdztS2Lp7p5oL4Y6u8ivgYC9yB7u2idvKS9ow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lz/rczb9VmhNbOGOZI0KFFsCLcEKU6wkD7/vsGO9iYdTCe7mqYNjg2fusWuqdJyn+
-	 XyafqZfil///EFYO8X9+7aMeV6wvWXensiPxLpLhdFFClBd2avejao71doiFDEhf+Q
-	 dBtt57rXQOPpA4L2M6pL1E21siwElxqgoXfo7arE=
+	b=s+fNSeiZfBjsGGJhgqGKVaEEykQLeExjF/CxKJbnxhKMN98l9Gu4CxrXe3CRaUSlu
+	 6N1d+SucEZ3EUCfAcYv7zfwDxmgdpDSZ3ukK/heyADT/Ozr77H9z6dY3Fev64WhNeI
+	 Izw1ckY1e9z/HH5xVn3mJJs4tAsIPTfFM/ppfR9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Atul Akella <atul.akella@gmail.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1518/2151] rpmsg: virtio: fix error handling in TX buffer wait
-Date: Wed, 18 Nov 2026 15:54:13 +0100
-Message-ID: <20261118150217.146169178@linuxfoundation.org>
+Subject: [PATCH 6.18 1509/2151] ASoC: codecs: wm8994: Fix definition of WM8958 noise gate hold time controls
+Date: Wed, 18 Nov 2026 15:54:04 +0100
+Message-ID: <20261118150216.828240172@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,54 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Atul Akella <atul.akella@gmail.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 7dd4cffdf4c2a496ccf783303a03d687a2127baf ]
+[ Upstream commit 291d81d628f3453026b029507a26b856056e4fdc ]
 
-The TX buffer wait loop in rpmsg_send_offchannel_raw() ignores the
-possibility of wait_event_interruptible_timeout() returning a
-negative value, which happens when the wait is interrupted by a
-signal. In that case the loop spins back around and re-arms the
-wait instead of propagating the signal, which can stall a task
-that is trying to be killed.
+The noise gate hold time (NG_HLD) is at bits 6:5 of each WM8958 DAC
+noise gate register, not at bits 3:1, which hold the threshold
+(NG_THR).
 
-Separately, on a genuine timeout (return value 0) the function
-returns -ERESTARTSYS, which is reserved for signal-interrupted
-syscalls that the kernel may restart. A timeout is not a signal
-and should not be treated as restartable; return -ETIMEDOUT
-instead.
-
-Handle both cases explicitly: return err directly when negative,
-and return -ETIMEDOUT on timeout.
-
-Fixes: bcabbccabffe ("rpmsg: add virtio-based remote processor messaging bus")
-Signed-off-by: Atul Akella <atul.akella@gmail.com>
-Link: https://lore.kernel.org/r/20261013160055.1362-1-atul.akella@gmail.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Fixes: 1ddc07d0f13a ("ASoC: Add WM8958 noise gate support")
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/8acff0f7314eef9eb3d290ca7855a87052d7e706.1791959026.git.sammiee5311@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rpmsg/virtio_rpmsg_bus.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ sound/soc/codecs/wm8994.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/rpmsg/virtio_rpmsg_bus.c b/drivers/rpmsg/virtio_rpmsg_bus.c
-index efc4ae029ecb9..7aa70d4efe706 100644
---- a/drivers/rpmsg/virtio_rpmsg_bus.c
-+++ b/drivers/rpmsg/virtio_rpmsg_bus.c
-@@ -535,10 +535,13 @@ static int rpmsg_send_offchannel_raw(struct rpmsg_device *rpdev,
- 					(msg = get_a_tx_buf(vrp)),
- 					msecs_to_jiffies(15000));
+diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
+index 80b1bb7e17749..13ef3d0c5053d 100644
+--- a/sound/soc/codecs/wm8994.c
++++ b/sound/soc/codecs/wm8994.c
+@@ -700,17 +700,17 @@ static const char *wm8958_ng_text[] = {
  
-+		if (err < 0)
-+			return err;
-+
- 		/* timeout ? */
- 		if (!err) {
- 			dev_err(dev, "timeout waiting for a tx buffer\n");
--			return -ERESTARTSYS;
-+			return -ETIMEDOUT;
- 		}
- 	}
+ static SOC_ENUM_SINGLE_DECL(wm8958_aif1dac1_ng_hold,
+ 			    WM8958_AIF1_DAC1_NOISE_GATE,
+-			    WM8958_AIF1DAC1_NG_THR_SHIFT,
++			    WM8958_AIF1DAC1_NG_HLD_SHIFT,
+ 			    wm8958_ng_text);
  
+ static SOC_ENUM_SINGLE_DECL(wm8958_aif1dac2_ng_hold,
+ 			    WM8958_AIF1_DAC2_NOISE_GATE,
+-			    WM8958_AIF1DAC2_NG_THR_SHIFT,
++			    WM8958_AIF1DAC2_NG_HLD_SHIFT,
+ 			    wm8958_ng_text);
+ 
+ static SOC_ENUM_SINGLE_DECL(wm8958_aif2dac_ng_hold,
+ 			    WM8958_AIF2_DAC_NOISE_GATE,
+-			    WM8958_AIF2DAC_NG_THR_SHIFT,
++			    WM8958_AIF2DAC_NG_HLD_SHIFT,
+ 			    wm8958_ng_text);
+ 
+ static const struct snd_kcontrol_new wm8958_snd_controls[] = {
 -- 
 2.53.0
 
