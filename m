@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021989;
-	b=O7Z7eqgCoFe10OM1psuCV/0x69uLjbaHs596sd1CuXUWR+eCzcf3LhhZ0099gB9GRQ+B
-	 xdbsgBz3O/ZD9NazCpoS2+b5mS2H2j9OLlGFZ81TJTGs3gmAnlwscHPIzmB6xAWPnb68j
-	 jNQ0p8lGskFz5YU84mABF2Lk0rbjgwny6tGWoZdn3taogW42pYRr+gelmblXIeejKD+Cf
-	 AeE60eSMDXtHg89IRinSyt5xqzAXAGo57tH28i8OXnDLVMoUbXN/Frn0o6wafPyOPHdr2
-	 XumfqkFSpsi6HhFBUsjoFwlaOB43PmzarIQ0ufYxbnhVltUDY0m35Nk1Qe8SqptyIjw==
+	t=1795021992;
+	b=GmcEodccwUq2lsw3MEa4nCtwsA0/Lu0BgVyhHTSvS8+KNFN2pTrFdaY8BCoFiaBGK6kL
+	 2K4MQ00OxftlS2ph0nVci70mJjrp9PT2Ur5/jyAJuPaKhdmBtqEYdwH17yYEBE8UJMULG
+	 p710oGCCAaRfOoL6Km0vlFNn1Eau3hjuu9sxs3qtYVbq9xAuMui0zxDAW2zB6mknO8NNz
+	 W7QYMYeyJNITdPmjnBR7y7/1sRNFCN1NrdYtX9LSsQCMuiaaM30Ri2qg0WalddUG58y5g
+	 fNJeqEcjLsHOfTqd7pVkqWjysPVY6Pm6O4wy/y2wCLa16Vgw7tyVZAimqiFSFk04vaA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021989;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021992;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KKWla56vDVS3gLGCmAdBTNeZvqEmCt+VNV08Zj4pxvE=;
-	b=kQY31hDNp+dafcWGlr8hnzyVl3C07ygHomYAfJSmMXBmju1cFD4eGuMpyVRqGuo3HD7U
-	 f1KFly2T7Fg/3vLXvLswu4aYkPkj5dU5kfqGLaCDs3zjDGNOBZI74g4Ponvi2WWHXxluF
-	 gtuF6VDD0Y8wYK2xS/7xuEOopjV1n1GnCS/EdcVtrEvn5afOxiQq2hlOPSkG1LVSD8YBt
-	 1Gl+dtbwvxDeiOXnzs7CKoJuONvO5TbdTrIaSNwDbKkBtvnKu//LqWMzM338Wai+ymuJi
-	 LYRFg9lEUyJNrVwzL9QeOakiG0IBE78lBOXhpCS6+PFl2QD6cFcsWZQgjcWF4y2JpTg==
+	bh=qAwepq4r9T3NGHXGJcTHOxDVloE0NNsIjySur+x+POE=;
+	b=43LDvw3p+Z+/Iob7t2HzVxc+8eGecTsvQqn5WHeqe/FgFPTuZC4MaoBelZFHUqYcZjjX
+	 6TBpCEOSMb1dFkdCUC8DlzJ1WTykSC530YlGcokkR+rmXFwtiCUOYI3UyQaJo4mALWcuf
+	 ggb5BNjD+ZpO0AFIi00g3gwP0YzYcQ41eR+xssjWVWK7+i27JISAbYzrjNA+b+TB76wR4
+	 nnER2m4HL7kIIhIjBMZeG+dMzuz/QKNNfoUhXhMLpu/vP1O3/otnhI3PADOE1Il1bkxuK
+	 XwtrawAcBOrSlfu5t8tMQN70PZYRbSDNx3V09nJIESK41mPqRlZJl4DrthlR2EQfcdg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wjtjLAzP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Jw/ekzYi";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E41606A31C;
-	Wed, 18 Nov 2026 17:13:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5884E606A31C;
+	Wed, 18 Nov 2026 17:13:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wjtjLAzP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36D21F000C4;
-	Wed, 18 Nov 2026 17:13:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jw/ekzYi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADD951F000C4;
+	Wed, 18 Nov 2026 17:13:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021989;
-	bh=KKWla56vDVS3gLGCmAdBTNeZvqEmCt+VNV08Zj4pxvE=;
+	s=korg; t=1795021992;
+	bh=qAwepq4r9T3NGHXGJcTHOxDVloE0NNsIjySur+x+POE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wjtjLAzPtTdhdOdmQhkRTe3ORJzdQg/tQlZ8X4KHwfYmOmnn3j+3lizNEUv5uGbVS
-	 v/yN0n3j3sviqWy+YxouNphWeH6AMAY2+Z9aDjn7DrxfE8gOimwNyQVgyzbGFBTueH
-	 UH2RLy3WVmkcnxWa370gPBZQ9ymbA0Y6nOnd4daE=
+	b=Jw/ekzYi9BRk+teXwyqf5c2eJ1KKkyoax+JfFiUf37zlJaELVToVkxTkOpQwZjdHg
+	 dFdUXKmtyA7I/xSIM9Pid3W7oX35Y8HocCn5npC2hSpX2upJJ36TQVb9gIyzBbslR3
+	 jcmyokz47hCmx2nTYZ+tIvvuTGXL92uUR7G4HbdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dudu Lu <phx0fer@gmail.com>,
+	Guikun Yang <yangguikun19@qq.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2504/2651] net-sysfs: reject a one-entry RPS flow table
-Date: Wed, 18 Nov 2026 16:02:24 +0100
-Message-ID: <20261118150414.926810942@linuxfoundation.org>
+Subject: [PATCH 7.3 2505/2651] devlink: region: fix snapshot id leak on kernel-allocated ids
+Date: Wed, 18 Nov 2026 16:02:25 +0100
+Message-ID: <20261118150414.959292266@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,57 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dudu Lu <phx0fer@gmail.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 24927bdf0f62f63470a065c21d80fff7e4e9f207 ]
+[ Upstream commit ef8f0a1d888e0280452792f6d4edad237c934a51 ]
 
-store_rps_dev_flow_table_cnt() accepts rps_flow_cnt == 1.  For count == 1
-the round-up loop leaves mask == 0, which is stored as log == 0 in the
-tag (tag_ptr |= ilog2(mask) + 1).  get_rps_cpu() then calls
-rfs_slot() -> hash_32(hash, rps_tag_to_log(tag_ptr)) with log == 0:
+When DEVLINK_CMD_REGION_NEW is issued without a snapshot id, the kernel
+allocates one with __devlink_region_snapshot_id_get(). That helper counts
+the caller as a user of the id, and the caller must release this hold
+once it is done.
 
-  include/linux/hash.h:68
-	return __hash_32(val) >> (32 - bits);   /* bits == 0 -> shift by 32 */
+devlink_nl_region_new_doit() never drops it. The refcount of the id goes
+1 (allocation) -> 2 (snapshot created) and stays at 2. When the snapshot
+is deleted the count only drops to 1, so the id is never erased from
+the snapshot_ids xarray. The id then stays in use for the lifetime of
+the devlink instance: requesting a snapshot with that explicit id fails
+with -EEXIST, and there is no snapshot left to delete to clean it up.
 
-The shift by 32 is undefined and yields the full 32-bit hash, which is
-used to index the one-entry rps_dev_flow[] table unchecked:
+Reproducer steps:
+  # devlink region new pci/0000:13:00.0/device-caps
+  pci/0000:13:00.0/device-caps: snapshot 0
+  # devlink region del pci/0000:13:00.0/device-caps snapshot 0
+  # devlink region new pci/0000:13:00.0/device-caps snapshot 0
+  kernel answers: File exists
 
-  UBSAN: shift-out-of-bounds in ./include/linux/hash.h:68:24
-  shift exponent 32 is too large for 32-bit type 'unsigned int'
-   __ubsan_handle_shift_out_of_bounds+0x11c/0x208
-   get_rps_cpu+0x12fc/0x1344
-   netif_rx_internal+0x1e0/0x4d4
+Drop the caller's reference right after the snapshot has been created,
+as the snapshot then holds its own.
 
-rps_dev_flow[] is then read (rflow->cpu) and written (last_qtail) out of
-bounds on the packet path.  Require at least two entries.
-
-Fixes: f3483c8e1da6 ("net: rfs: hash function change")
-Signed-off-by: Dudu Lu <phx0fer@gmail.com>
-Link: https://patch.msgid.link/20261021155522.67521-1-phx0fer@gmail.com
+Fixes: 043b3e22768d ("devlink: let kernel allocate region snapshot id")
+Reported-by: Guikun Yang <yangguikun19@qq.com>
+Closes: https://lore.kernel.org/netdev/tencent_BE912BA710539F285F9FCF28E854ABEFCD07@qq.com/
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Link: https://patch.msgid.link/20261026174403.512-1-fmancera@suse.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/net-sysfs.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/devlink/region.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/core/net-sysfs.c b/net/core/net-sysfs.c
-index 352173df75785..2b3dab9611c07 100644
---- a/net/core/net-sysfs.c
-+++ b/net/core/net-sysfs.c
-@@ -1088,6 +1088,13 @@ static ssize_t store_rps_dev_flow_table_cnt(struct netdev_rx_queue *queue,
- 		while ((mask | (mask >> 1)) != mask)
- 			mask |= (mask >> 1);
+diff --git a/net/devlink/region.c b/net/devlink/region.c
+index 537779bbff07a..c22016f23a4a4 100644
+--- a/net/devlink/region.c
++++ b/net/devlink/region.c
+@@ -719,6 +719,11 @@ int devlink_nl_region_new_doit(struct sk_buff *skb, struct genl_info *info)
+ 	if (!snapshot_id_attr) {
+ 		struct sk_buff *msg;
  
-+		/* Require at least two entries. A one-entry table rounds up
-+		 * to mask == 0, which encodes log == 0 in the tag.
-+		 * get_rps_cpu() then computes hash_32(hash, 0), a shift by 32.
++		/* Drop the allocation reference, the snapshot
++		 * now holds its own.
 +		 */
-+		if (!mask)
-+			return -EINVAL;
++		__devlink_snapshot_id_decrement(devlink, snapshot_id);
 +
- 		/* Do not accept too large tables. */
- 		if (mask > (INT_MAX / sizeof(*table) - 1))
- 			return -EINVAL;
+ 		snapshot = devlink_region_snapshot_get_by_id(region,
+ 							     snapshot_id);
+ 		if (WARN_ON(!snapshot)) {
 -- 
 2.53.0
 
