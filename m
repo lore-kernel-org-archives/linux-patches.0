@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036248;
-	b=CSuusfYV45UAXMU7fbK94h5rw8m8a/U5pjq72xpPZiZ6B1um1hYE3KFAc32Ql7DAPTTS
-	 W/AfkWstrz2O69wzq8dsadCsMXBGKNTH27Hd7WAgczilRCnEPZEjVMNIQuWhjH8PghR/S
-	 +7R+A4la23BH6LBVSDF0MmCV74QjzJnjWoYTpN0H45Trku5dB4Sf8b85jj6EtJFvWhwNb
-	 bY99O5rAcaijAM9LyRBRBHPlUJcfrvhcxx5wLBKpMWhe6uBNIoojjLaEAYeP0AbrhrAeP
-	 SK/0Y/zc/Pmiid3JaBWQz6+S2dYHdF428cuJOHt3K9hskKOsNhcTDWzgAC70TTxA0yA==
+	t=1795036251;
+	b=Kjo6BJ7kUZ4VaScTLTmxbDP+HzH2Br5nkPi5MPV8ikf6KllmZ0IZbeIGha69W0ieV5XX
+	 1enPGqo1Hf9mOT0arEEfqs/MmCpMxmWJK3ZtXweQDucoIcNzeVsUeY1rFbahtS4aellPB
+	 r27ogKZ1tayER0ltj8xSbQ0exQkuvPM1QyQPLFvi1M9Vd4LwERlRtw538RrTAYttBGBXG
+	 LSz5YbqP9FzRUxTdz5gil5neNKSlL9UYCVBd/C7n+/wst7lKtZRIOTOp5XfRVwmiR49nA
+	 liUVHiqQYKttsyGBUEzPohwctlRexCqZ5VFs/UkZOuoy0ABAH+IxfsgCKhdR3pHvGlA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036248;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036251;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Op6VOtjDPkNQ5lL0Q+SO5lH6Fjuw+Jyeov97kh9hOKs=;
-	b=WOHan2b/Z6FzJEoct10EAEiW918L1C4VWUf2yLX1P8bS73IBkn7rh4osMhd2IYJMaIkk
-	 96F2KVXs6A0EmjQAHYOqYvhM7vu/aPcoDQ28mEIwd1BHjbocBaGGRrShPJosjBbpfc/rq
-	 1rfgdyTXEA4uLhNoSQo1jdah9rvqoEOaq7d/hyYAi+7Pmby/K/qoZ/0EtZUtVIuZz80TZ
-	 qGbglPW29Py7UhiKeOj18pc/jrMXZQtsitCdjVz1hXw7dnolbaqJlS72o39MjdbVtkuOL
-	 E/MbJ+USLww7yEYcpvG6/He/UyDni/o68+2Dqdctqp1wwSgMVLA6QpO9bSI0Bx0fMQg==
+	bh=LM7WvsbS5vRJxRJXIIgBwlZZeGvReYlYfspIanf9aoM=;
+	b=4jo2x0aE1M0jZA4zwGSDqW2nRZ9fpyxhBDoOwFOA9E+aFHnPAqwcgtK+f4AE8GBJNzS6
+	 FEKQcdxqXe8kiFLtAAxdH6Hv3T8f9xeifiEL7Zr/mjbTaTaBHAAgZFqKtlIYCOaCGl9XI
+	 GkWf8mWz5yq3ew81beIvWHYnpXDU4FXoA6grHKBqGcYjhAzYCqgqhgx0b+X4MzAYHJ5mC
+	 QW4HXqWTHNsJDqZS2K334clZ0BoJBG6gXeuqC9BV6mew4Qu24QkTpvA/aA2InZCM50k1g
+	 wmdQOePznFfTT9QYpDVGyJFZFb07AwiLvh6u+OWqiTLsNTBcXuwwhtcig+cD6UobY9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OcpD+11A;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H9jDw1oU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B1A606A33E;
-	Wed, 18 Nov 2026 21:10:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC8AC606A332;
+	Wed, 18 Nov 2026 21:10:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OcpD+11A
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C1E1F000C6;
-	Wed, 18 Nov 2026 21:10:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H9jDw1oU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E14711F000C5;
+	Wed, 18 Nov 2026 21:10:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036248;
-	bh=Op6VOtjDPkNQ5lL0Q+SO5lH6Fjuw+Jyeov97kh9hOKs=;
+	s=korg; t=1795036251;
+	bh=LM7WvsbS5vRJxRJXIIgBwlZZeGvReYlYfspIanf9aoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OcpD+11A8VnfrgSDRM8T0LvBnSwl8KHcb1y+QI+onjSilL22EdR9c7Y7pxl/NyLH7
-	 fg8We8nA82ZbBjxvAXhrB3Qf8X6f5OHIJ6BsPvr3Uw1ZnzD1TYW/IzDWDiEz8aXS8o
-	 SNE64a/Y6vUaIpGVVgOZllIQJT2H5oQBhNKG53e8=
+	b=H9jDw1oUXMNHzKI5OFTc6mLEedmzUB/SbDeMDUcdlbCkwCw94MbMkNUS2XF9UgwH5
+	 bKVRhzhbaeWsBkoTj0JnRT06tysK3QWieofOwI0QeFemuAN2QCVGOSgHpWflskK+MY
+	 v18BFyN/C0eXnk8aXvoJ5uV+nm7ZbjejtGuizh2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Marc Zyngier <maz@kernel.org>,
+	Nas Chung <nas.chung@chipsnmedia.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0992/3318] KVM: arm64: vgic-v3: Roll back assignments from the new region
-Date: Wed, 18 Nov 2026 15:26:54 +0100
-Message-ID: <20261118150349.578594842@linuxfoundation.org>
+Subject: [PATCH 6.6 0993/3318] media: v4l2-common: Fix P010 format info
+Date: Wed, 18 Nov 2026 15:26:55 +0100
+Message-ID: <20261118150349.614724948@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,98 +69,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Nas Chung <nas.chung@chipsnmedia.com>
 
-[ Upstream commit a32c01324eb494dda811912eb847b0e907cd7270 ]
+[ Upstream commit 8761a87aff8259eab0add8a9428cee2c280fb6eb ]
 
-A failed REDIST_REGION write unregisters the redistributor iodevs of every
-vCPU processed before the failure. This includes vCPUs assigned to older
-regions. Their assignments remain cached, so a retry does not register the
-iodevs again.
+V4L2_PIX_FMT_P010 is a 10-bit 4:2:0 semi-planar format, but its
+v4l2_format_info() entry described a 4:2:2 layout with a half-width
+chroma plane. Correct bpp and vdiv to match P010's real layout,
+consistent with the other semi-planar formats.
 
-The vCPU whose registration fails has no assignment to roll back. For vCPUs
-processed earlier, limit rollback to those assigned to the new region. The
-region is removed on failure, so its free_index does not need restoring.
-
-Resetting assignments from older regions is unsafe because a vCPU can own
-one before kvm_for_each_vcpu() can see it. Rollback could then move
-free_index behind that live assignment.
-
-kvm_vgic_addr() holds slots_lock across the REDIST_REGION write. vCPU
-creation takes the same lock before assigning a redistributor. A concurrent
-vCPU cannot acquire an assignment from the new region before rollback
-completes. The lock also keeps rdreg valid across the config_lock drop
-required by MMIO-bus registration.
-
-Fixes: c011f4ea106b ("KVM: arm/arm64: Check vcpu redist base before registering an iodev")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260831081005.41346-3-kmehltretter@gmail.com
-[maz: moved helper into the sole caller]
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Fixes: 5374d8fb75f3 ("media: Add P010 video format")
+Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/vgic/vgic-mmio-v3.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/media/v4l2-core/v4l2-common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kvm/vgic/vgic-mmio-v3.c b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-index a58a2633bb676..33ff9fcfcfb08 100644
---- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-+++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-@@ -844,7 +844,8 @@ void vgic_unregister_redist_iodev(struct kvm_vcpu *vcpu)
- 	kvm_io_bus_unregister_dev(vcpu->kvm, KVM_MMIO_BUS, &rd_dev->dev);
- }
+diff --git a/drivers/media/v4l2-core/v4l2-common.c b/drivers/media/v4l2-core/v4l2-common.c
+index da6dc7e737ef1..e672b904a7c4a 100644
+--- a/drivers/media/v4l2-core/v4l2-common.c
++++ b/drivers/media/v4l2-core/v4l2-common.c
+@@ -275,7 +275,7 @@ const struct v4l2_format_info *v4l2_format_info(u32 format)
+ 		{ .format = V4L2_PIX_FMT_NV61,    .pixel_enc = V4L2_PIXEL_ENC_YUV, .mem_planes = 1, .comp_planes = 2, .bpp = { 1, 2, 0, 0 }, .bpp_div = { 1, 1, 1, 1 }, .hdiv = 2, .vdiv = 1 },
+ 		{ .format = V4L2_PIX_FMT_NV24,    .pixel_enc = V4L2_PIXEL_ENC_YUV, .mem_planes = 1, .comp_planes = 2, .bpp = { 1, 2, 0, 0 }, .bpp_div = { 1, 1, 1, 1 }, .hdiv = 1, .vdiv = 1 },
+ 		{ .format = V4L2_PIX_FMT_NV42,    .pixel_enc = V4L2_PIXEL_ENC_YUV, .mem_planes = 1, .comp_planes = 2, .bpp = { 1, 2, 0, 0 }, .bpp_div = { 1, 1, 1, 1 }, .hdiv = 1, .vdiv = 1 },
+-		{ .format = V4L2_PIX_FMT_P010,    .pixel_enc = V4L2_PIXEL_ENC_YUV, .mem_planes = 1, .comp_planes = 2, .bpp = { 2, 2, 0, 0 }, .bpp_div = { 1, 1, 1, 1 }, .hdiv = 2, .vdiv = 1 },
++		{ .format = V4L2_PIX_FMT_P010,    .pixel_enc = V4L2_PIXEL_ENC_YUV, .mem_planes = 1, .comp_planes = 2, .bpp = { 2, 4, 0, 0 }, .bpp_div = { 1, 1, 1, 1 }, .hdiv = 2, .vdiv = 2 },
+ 		{ .format = V4L2_PIX_FMT_P012,    .pixel_enc = V4L2_PIXEL_ENC_YUV, .mem_planes = 1, .comp_planes = 2, .bpp = { 2, 4, 0, 0 }, .bpp_div = { 1, 1, 1, 1 }, .hdiv = 2, .vdiv = 2 },
  
--static int vgic_register_all_redist_iodevs(struct kvm *kvm)
-+static int vgic_register_all_redist_iodevs(struct kvm *kvm,
-+					   struct vgic_redist_region *rdreg)
- {
- 	struct kvm_vcpu *vcpu;
- 	unsigned long c;
-@@ -862,7 +863,14 @@ static int vgic_register_all_redist_iodevs(struct kvm *kvm)
- 
- 		for (i = 0; i < c; i++) {
- 			vcpu = kvm_get_vcpu(kvm, i);
-+			if (vcpu->arch.vgic_cpu.rdreg != rdreg)
-+				continue;
-+
- 			vgic_unregister_redist_iodev(vcpu);
-+
-+			guard(mutex)(&vcpu->kvm->arch.config_lock);
-+			vcpu->arch.vgic_cpu.rdreg = NULL;
-+			vcpu->arch.vgic_cpu.rd_iodev.base_addr = VGIC_ADDR_UNDEF;
- 		}
- 	}
- 
-@@ -971,10 +979,13 @@ void vgic_v3_free_redist_region(struct kvm *kvm, struct vgic_redist_region *rdre
- 
- int vgic_v3_set_redist_base(struct kvm *kvm, u32 index, u64 addr, u32 count)
- {
-+	struct vgic_redist_region *rdreg;
- 	int ret;
- 
- 	mutex_lock(&kvm->arch.config_lock);
- 	ret = vgic_v3_alloc_redist_region(kvm, index, addr, count);
-+	if (!ret)
-+		rdreg = vgic_v3_rdist_region_from_index(kvm, index);
- 	mutex_unlock(&kvm->arch.config_lock);
- 	if (ret)
- 		return ret;
-@@ -983,12 +994,9 @@ int vgic_v3_set_redist_base(struct kvm *kvm, u32 index, u64 addr, u32 count)
- 	 * Register iodevs for each existing VCPU.  Adding more VCPUs
- 	 * afterwards will register the iodevs when needed.
- 	 */
--	ret = vgic_register_all_redist_iodevs(kvm);
-+	ret = vgic_register_all_redist_iodevs(kvm, rdreg);
- 	if (ret) {
--		struct vgic_redist_region *rdreg;
--
- 		mutex_lock(&kvm->arch.config_lock);
--		rdreg = vgic_v3_rdist_region_from_index(kvm, index);
- 		vgic_v3_free_redist_region(kvm, rdreg);
- 		mutex_unlock(&kvm->arch.config_lock);
- 		return ret;
+ 		{ .format = V4L2_PIX_FMT_YUV410,  .pixel_enc = V4L2_PIXEL_ENC_YUV, .mem_planes = 1, .comp_planes = 3, .bpp = { 1, 1, 1, 0 }, .bpp_div = { 1, 1, 1, 1 }, .hdiv = 4, .vdiv = 4 },
 -- 
 2.53.0
 
