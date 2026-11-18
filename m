@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060642;
-	b=RGrIS3mW6nelpjFZYTqqQ+YzYacdd01qa5DF4LPBD8iKjNjm58euXi05cikYVQ72Wzin
-	 5Rxt8Ig/VW08XTZV+IbI3dEB03cCjb/flEMwpcCYGZRztxUgvSVwUMK+FA7E8QpR2f98x
-	 NfEwE6PPA/Q9t4lnheTLY6M5HfRld7z9cs1pI6cmo0CNZqwM1LVHOUHI6VyyTYdEFIS/U
-	 aQts3WHgxVN2vVUeWDAXQKFlzGS2W2NTjT1cA0ULuXSbiXeXU5qF+XsxN95fAGnwkZsBK
-	 TJ94MSjidNMkBSeRowz7noZ2A5cXum/BwHNpRIOs5loc/iSvWP5wvr7KQeT7xI1Bi+w==
+	t=1795060645;
+	b=VEckA5UFzrqN0dGc+7Z5VliNgpixTRoGWg+I/+RBjZc8FJ1j46xnn5q1Nd2QR9z0ajVe
+	 /9VLNUZ+U6Qu+KuHTM53e7/UHGXLuWUZc+7nri/GNpTqB+PlKTO7UVVD9RwFE9EZXD3sX
+	 H9/OCUgiFP8aW0TMFZpGcGE7ZvKYeN61fjYYztZdiEQzDzjQTMr8uZDRSTeWyG2h9fwAZ
+	 c+218UaTUDoZKa/TE5jp8YNE7S+EMcWd3D/+Zn68hj4USnRLG/hbjSld94gUvc9RenumA
+	 JFrTkMf+sS7bn0q0DLw35s+OiiOCuWFl8AD7/qPu0ul/jdkIZiD2gVAyJxxMsrYVREA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060642;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060645;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qOW/7nnVI4YewiGCv9CoLv71KudVD0dbtdj+6AXYBUA=;
-	b=IWYxljvpidBoKnOSYCOoF1A7ySFOfWhHymuW4O681842tLyyw5S0sULjCaxq40LPXyJg
-	 EYF5tF9kIJluNyp36+I27EIR7mHe/kbWD5t4/c2fwVwpjwOfOqM1+jS5yhLu5UjgPdMpQ
-	 0fqgLrnhj4na60ZuxlrG+0zfUi7YiKBvHZlE40VxnWkziu39yGl+IlkeSAZvcpO2aWYWw
-	 IWlt3l4Scp8AObjtdoTF/AR08lqm9kTMMnLl8KCKizB9m0FwKBWR0X6R/86ppiqo0uycY
-	 YwcZvjFX3heo+SNEN9vi4r96Bl2pdiMtCvSpcuENcg5wWgqXcXPoRysRjHp+W7e4RlQ==
+	bh=B8/+K90Yg8rNwnA5td/+PwIt+ervjU2jzD4wrMJ/C/0=;
+	b=dFRXLefHQLq1yf0J3m5ckdtyeiL/YdFfNDtVmqMG2fyWMn2wQlMubEZsYcwU0GToRqwg
+	 hn8tJ/1OTz4xJfLd7Tep7UxqB82+B1xKBmlSq7Lal4Je0nOIEKmt87l1+7vCCX3IrYPGi
+	 wyw+CaCECUfETMKGSCIsj75ftFRo7w0XSXrzQDB7luIVB8I4iTUBL/LN5In7dOUjfjBKL
+	 pI9Z5nCqsJnngC2eKYKuWm4h/7P8Vecb9FgSCs33+v8tU/JfoPVsjwAvW15ABMEYzFzqM
+	 tQXH54RGghmZnbQRhcXinzyLM24Z5IR8zBs02GMybOXKGimj6rWFVleVU1K2C27WH9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EMqRA7kX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F2heUqHf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465EA606A330;
-	Thu, 19 Nov 2026 03:57:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FED606A320;
+	Thu, 19 Nov 2026 03:57:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EMqRA7kX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C0E21F000C4;
-	Thu, 19 Nov 2026 03:57:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F2heUqHf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AF5F1F000C4;
+	Thu, 19 Nov 2026 03:57:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060642;
-	bh=qOW/7nnVI4YewiGCv9CoLv71KudVD0dbtdj+6AXYBUA=;
+	s=korg; t=1795060644;
+	bh=B8/+K90Yg8rNwnA5td/+PwIt+ervjU2jzD4wrMJ/C/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EMqRA7kXIsOlAEf6TN6wWIKocZUUZxDIGQBzCPFCsepV6GiTZZoYSQIb+MijyGtpV
-	 WjH1wHlXQLC8w1Q0kBPieglYAo4FLHhfHFVvyiyUj4XMa0VSD/j/l5fap5PK7N0m/7
-	 FFj7UkmmKPcmlofQZICIohB3X1ZFbIvcCteTOwvI=
+	b=F2heUqHfl/XofVN7Kvora2LQjz207w/hJqWspEalmbuPM4QD9+ohwXADazVClyDjE
+	 Ns1jM4QUTqL2D104y2wbk015CU64PYmWhjJ2aelMvchejv4P04NzqVU28DC0z7MZcJ
+	 YuKz3V6toppOCjnbDJSIwQLefeNBOfKxC1jUiU9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1271/1848] ata: sata_dwc_460ex: Use devm_platform_*ioremap_resource() APIs
-Date: Wed, 18 Nov 2026 15:55:09 +0100
-Message-ID: <20261118150012.856688304@linuxfoundation.org>
+Subject: [PATCH 5.10 1272/1848] ata: sata_dwc_460ex: Use temporary variable for struct device
+Date: Wed, 18 Nov 2026 15:55:10 +0100
+Message-ID: <20261118150012.890506936@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,52 +70,149 @@ Content-Transfer-Encoding: 8bit
 
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit f713961de5057765bc663db72b7e540f27827750 ]
+[ Upstream commit f1550f27f8a92a4d29329aeeb28b743365abceae ]
 
-Use devm_platform_get_and_ioremap_resource() and
-devm_platform_ioremap_resource() APIs instead of their
-open coded analogues.
+Use temporary variable for struct device to make code neater.
 
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 Stable-dep-of: e137035fcd66 ("ata: sata_dwc_460ex: Don't enable interrupt if libATA core registration fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/sata_dwc_460ex.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/ata/sata_dwc_460ex.c | 37 ++++++++++++++++++------------------
+ 1 file changed, 19 insertions(+), 18 deletions(-)
 
 diff --git a/drivers/ata/sata_dwc_460ex.c b/drivers/ata/sata_dwc_460ex.c
-index 26c3b287ac1f6..296ced0098b75 100644
+index 296ced0098b75..28473059296c4 100644
 --- a/drivers/ata/sata_dwc_460ex.c
 +++ b/drivers/ata/sata_dwc_460ex.c
-@@ -241,7 +241,6 @@ static int sata_dwc_dma_init_old(struct platform_device *pdev,
- 				 struct sata_dwc_device *hsdev)
+@@ -219,9 +219,10 @@ static int sata_dwc_dma_get_channel_old(struct sata_dwc_device_port *hsdevp)
  {
- 	struct device_node *np = pdev->dev.of_node;
--	struct resource *res;
+ 	struct sata_dwc_device *hsdev = hsdevp->hsdev;
+ 	struct dw_dma_slave *dws = &sata_dwc_dma_dws;
++	struct device *dev = hsdev->dev;
+ 	dma_cap_mask_t mask;
  
- 	hsdev->dma = devm_kzalloc(&pdev->dev, sizeof(*hsdev->dma), GFP_KERNEL);
- 	if (!hsdev->dma)
-@@ -258,8 +257,7 @@ static int sata_dwc_dma_init_old(struct platform_device *pdev,
+-	dws->dma_dev = hsdev->dev;
++	dws->dma_dev = dev;
+ 
+ 	dma_cap_zero(mask);
+ 	dma_cap_set(DMA_SLAVE, mask);
+@@ -229,8 +230,7 @@ static int sata_dwc_dma_get_channel_old(struct sata_dwc_device_port *hsdevp)
+ 	/* Acquire DMA channel */
+ 	hsdevp->chan = dma_request_channel(mask, sata_dwc_dma_filter, hsdevp);
+ 	if (!hsdevp->chan) {
+-		dev_err(hsdev->dev, "%s: dma channel unavailable\n",
+-			 __func__);
++		dev_err(dev, "%s: dma channel unavailable\n", __func__);
+ 		return -EAGAIN;
  	}
  
- 	/* Get physical SATA DMA register base address */
--	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
--	hsdev->dma->regs = devm_ioremap_resource(&pdev->dev, res);
-+	hsdev->dma->regs = devm_platform_ioremap_resource(pdev, 1);
- 	if (IS_ERR(hsdev->dma->regs))
- 		return PTR_ERR(hsdev->dma->regs);
+@@ -240,19 +240,20 @@ static int sata_dwc_dma_get_channel_old(struct sata_dwc_device_port *hsdevp)
+ static int sata_dwc_dma_init_old(struct platform_device *pdev,
+ 				 struct sata_dwc_device *hsdev)
+ {
+-	struct device_node *np = pdev->dev.of_node;
++	struct device *dev = &pdev->dev;
++	struct device_node *np = dev->of_node;
  
-@@ -1214,8 +1212,7 @@ static int sata_dwc_probe(struct platform_device *ofdev)
- 	host->private_data = hsdev;
+-	hsdev->dma = devm_kzalloc(&pdev->dev, sizeof(*hsdev->dma), GFP_KERNEL);
++	hsdev->dma = devm_kzalloc(dev, sizeof(*hsdev->dma), GFP_KERNEL);
+ 	if (!hsdev->dma)
+ 		return -ENOMEM;
  
- 	/* Ioremap SATA registers */
--	res = platform_get_resource(ofdev, IORESOURCE_MEM, 0);
--	base = devm_ioremap_resource(&ofdev->dev, res);
-+	base = devm_platform_get_and_ioremap_resource(ofdev, 0, &res);
+-	hsdev->dma->dev = &pdev->dev;
++	hsdev->dma->dev = dev;
+ 	hsdev->dma->id = pdev->id;
+ 
+ 	/* Get SATA DMA interrupt number */
+ 	hsdev->dma->irq = irq_of_parse_and_map(np, 1);
+ 	if (hsdev->dma->irq == NO_IRQ) {
+-		dev_err(&pdev->dev, "no SATA DMA irq\n");
++		dev_err(dev, "no SATA DMA irq\n");
+ 		return -ENODEV;
+ 	}
+ 
+@@ -1191,6 +1192,8 @@ static const struct ata_port_info sata_dwc_port_info[] = {
+ 
+ static int sata_dwc_probe(struct platform_device *ofdev)
+ {
++	struct device *dev = &ofdev->dev;
++	struct device_node *np = dev->of_node;
+ 	struct sata_dwc_device *hsdev;
+ 	u32 idr, versionr;
+ 	char *ver = (char *)&versionr;
+@@ -1200,12 +1203,11 @@ static int sata_dwc_probe(struct platform_device *ofdev)
+ 	struct ata_host *host;
+ 	struct ata_port_info pi = sata_dwc_port_info[0];
+ 	const struct ata_port_info *ppi[] = { &pi, NULL };
+-	struct device_node *np = ofdev->dev.of_node;
+ 	struct resource *res;
+ 
+ 	/* Allocate DWC SATA device */
+-	host = ata_host_alloc_pinfo(&ofdev->dev, ppi, SATA_DWC_MAX_PORTS);
+-	hsdev = devm_kzalloc(&ofdev->dev, sizeof(*hsdev), GFP_KERNEL);
++	host = ata_host_alloc_pinfo(dev, ppi, SATA_DWC_MAX_PORTS);
++	hsdev = devm_kzalloc(dev, sizeof(*hsdev), GFP_KERNEL);
+ 	if (!host || !hsdev)
+ 		return -ENOMEM;
+ 
+@@ -1215,7 +1217,7 @@ static int sata_dwc_probe(struct platform_device *ofdev)
+ 	base = devm_platform_get_and_ioremap_resource(ofdev, 0, &res);
  	if (IS_ERR(base))
  		return PTR_ERR(base);
- 	dev_dbg(&ofdev->dev, "ioremap done for SATA register address\n");
+-	dev_dbg(&ofdev->dev, "ioremap done for SATA register address\n");
++	dev_dbg(dev, "ioremap done for SATA register address\n");
+ 
+ 	/* Synopsys DWC SATA specific Registers */
+ 	hsdev->sata_dwc_regs = base + SATA_DWC_REG_OFFSET;
+@@ -1229,16 +1231,15 @@ static int sata_dwc_probe(struct platform_device *ofdev)
+ 	/* Read the ID and Version Registers */
+ 	idr = sata_dwc_readl(&hsdev->sata_dwc_regs->idr);
+ 	versionr = sata_dwc_readl(&hsdev->sata_dwc_regs->versionr);
+-	dev_notice(&ofdev->dev, "id %d, controller version %c.%c%c\n",
+-		   idr, ver[0], ver[1], ver[2]);
++	dev_notice(dev, "id %d, controller version %c.%c%c\n", idr, ver[0], ver[1], ver[2]);
+ 
+ 	/* Save dev for later use in dev_xxx() routines */
+-	hsdev->dev = &ofdev->dev;
++	hsdev->dev = dev;
+ 
+ 	/* Get SATA interrupt number */
+ 	irq = irq_of_parse_and_map(np, 0);
+ 	if (irq == NO_IRQ) {
+-		dev_err(&ofdev->dev, "no SATA DMA irq\n");
++		dev_err(dev, "no SATA DMA irq\n");
+ 		return -ENODEV;
+ 	}
+ 
+@@ -1250,7 +1251,7 @@ static int sata_dwc_probe(struct platform_device *ofdev)
+ 	}
+ #endif
+ 
+-	hsdev->phy = devm_phy_optional_get(hsdev->dev, "sata-phy");
++	hsdev->phy = devm_phy_optional_get(dev, "sata-phy");
+ 	if (IS_ERR(hsdev->phy))
+ 		return PTR_ERR(hsdev->phy);
+ 
+@@ -1265,7 +1266,7 @@ static int sata_dwc_probe(struct platform_device *ofdev)
+ 	 */
+ 	err = ata_host_activate(host, irq, sata_dwc_isr, 0, &sata_dwc_sht);
+ 	if (err)
+-		dev_err(&ofdev->dev, "failed to activate host");
++		dev_err(dev, "failed to activate host");
+ 
+ 	/* Enable SATA Interrupts */
+ 	sata_dwc_enable_interrupts(hsdev);
+@@ -1291,7 +1292,7 @@ static int sata_dwc_remove(struct platform_device *ofdev)
+ 	sata_dwc_dma_exit_old(hsdev);
+ #endif
+ 
+-	dev_dbg(&ofdev->dev, "done\n");
++	dev_dbg(dev, "done\n");
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
