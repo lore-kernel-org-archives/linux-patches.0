@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020193;
-	b=F17EAlu99PaXhNn3FwGWJbLbt8bkJxdnHcmMfsethSLnSvOVCi6t6QSVvexRGPvK29a7
-	 3oda7oVRAvnIt+Zj0nO8gI9gAkj3STVreE7ruuZ6PGKwgwF3rSTGjjtoayxa63i6RBE5D
-	 gcr5fy3266k+5HBugvCw/XcVOJ9hUNldb1sgiS13829wq+olSE2Ze0cgw9sHiDY34P3ps
-	 PYzX5unt2OC3qYmI20iRbrzprkIACTW30LLuFJVjGGyUmaa3bfV14HJ9WD0H5mFLufxED
-	 xco9LAUcs3MFI6cHjK5smPN5h30nLk3DRfP90CQlTcSgCK29jlp2Sa5et/L9555ZtEQ==
+	t=1795020196;
+	b=4M42mpg7veOH0HbVuvuffYznhEcs8A15HO9YCVdiH6PoTtPGrYDh+EFYUWb5ArM7PxhT
+	 4QuwDV+qujw9RUMiGaeC2t4U4emgunc+/eSE+MiO83IcR7cqUM/BgjrU6mdj31yHvSiU0
+	 f//n/QMjsyPL1AfPTnsnDXgS7indchMmVW+Sf7Dyosv8kzm7n8KKiNjuaUKFICxtNeqq+
+	 A+W2h5KYRl1qg92jIscXgSHA5V+Cbp88ZW8Pa6ihjr3JD83N32Bif5819vOeXHqwD3VyB
+	 e01Cwmadcl92sGFL92QvNzcm7TY/7kHIgh/kFErfhILGZfKSDG1q3UgmgmLY9sdTiOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020193;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020196;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4TSXPoqivxjhMiYkxTAvUe4WYAbUjAmGfm7iXtulWQQ=;
-	b=OsO9SJxdfGC1nEE0lehLkndhUWkPAJd/1FNhiAcjBXpRe9bwRoOg+69vawuz0+0llTN6
-	 WdFsLTfVVRg/XXEmrl6uJOguhK04r0vW3cMAGc6BjpRRSZzaBGXEUPckEkyotVQmWIipR
-	 O4hshw5PjxrPW3JyHZ6BEpa/j914BcT/M7n9NLH6EIRxK+bBNFEuarTQTUVrvtAXtUhxY
-	 8y4aNuw3NCIZks0bxkboGXkJLdTnPyOSVCuIjMAehiIzJurGYFQJIVHLGDmVAZhOlxz90
-	 0nSY4tXaq35Nnj5PzsOunSnTEHtbaO2/NziW9zHRnVXV68SmDbHTJvvX3R3qub4m2kQ==
+	bh=9Yt2118Kh5AI7g7XJh+xMhGJspnDzm0+psvspIXaNsY=;
+	b=OUaXeeRcmpkP0H1eNocEe0YPTgAoVRe0exYMJ1ZBNFjpGF4wYcyqSgFDIF9vErDAWtIg
+	 2WZuwBmVpuJRAvLi92XThGHUccY5pbGws+EcUTbiof0rfAWsEN/+OkW4Y6Dqd61k3voHi
+	 gN+3o4G+gaNKRDpQh8j5B83Gr1OKiga846bx51gKNsWnLmAqasjREl40VC3xqrVAeXj1i
+	 kWKKC3yhpo6kTzThrtH46EpDP/K8ricsNzVzWwZmhrtYFG4oNJN+Vjy82ddX73ssM+WON
+	 EofWqzO779wwxX9DBbokO8Ui2lDX8gAI4Ghi6z/AkF2z5MN5ydeyBUHtC6cITR9GbCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="DCev/80V";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n1oJfuZ6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D89C606A320;
-	Wed, 18 Nov 2026 16:43:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ABF0606A334;
+	Wed, 18 Nov 2026 16:43:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DCev/80V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1DAE1F000C4;
-	Wed, 18 Nov 2026 16:43:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n1oJfuZ6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB4351F000C7;
+	Wed, 18 Nov 2026 16:43:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020193;
-	bh=4TSXPoqivxjhMiYkxTAvUe4WYAbUjAmGfm7iXtulWQQ=;
+	s=korg; t=1795020196;
+	bh=9Yt2118Kh5AI7g7XJh+xMhGJspnDzm0+psvspIXaNsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DCev/80Vh8P8P3d2h0BOWkTzhICIXr0GyyD2MBlhvAdex9Mr44VwYeVCZha4YnRsS
-	 ewv7tjy7zhPebtHwvYrHVhZMxsmZVbQKg6hISxDClKBBzb0TJmCz5TpnsaQ59fE9Zq
-	 iycp0510huNQ8YGLcf1nCsvoajWsT7ryho4FyOUc=
+	b=n1oJfuZ6UqpBsseKgYu0fTqaS+hfQeq3uRyMUD6Tzy+Dy099dbxN5ySdSOnX2PYPn
+	 kRrYIhxtLYvuxaciGO1VgOUOhdbCpeD/d3UpggtG67xbqhuqcLKle688lySvAUQFKZ
+	 B5ZxyrwOMlraTsUaPPXEwZQfLyUGy/KFjKoeQuWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Atul Akella <atul.akella@gmail.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Russell King <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1863/2651] rpmsg: virtio: fix error handling in TX buffer wait
-Date: Wed, 18 Nov 2026 15:51:43 +0100
-Message-ID: <20261118150354.056000086@linuxfoundation.org>
+Subject: [PATCH 7.3 1864/2651] ARM: 9486/1: set !LPAE MAX_PHYSMEM_BITS to 32 and remove supersection mappings
+Date: Wed, 18 Nov 2026 15:51:44 +0100
+Message-ID: <20261118150354.089934633@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,54 +69,433 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Atul Akella <atul.akella@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 7dd4cffdf4c2a496ccf783303a03d687a2127baf ]
+[ Upstream commit 787a3446cafee59e31deaec662d74f86bff38999 ]
 
-The TX buffer wait loop in rpmsg_send_offchannel_raw() ignores the
-possibility of wait_event_interruptible_timeout() returning a
-negative value, which happens when the wait is interrupted by a
-signal. In that case the loop spins back around and re-arms the
-wait instead of propagating the signal, which can stall a task
-that is trying to be killed.
+An ARM randconfig with CONFIG_GET_FREE_REGION=y and CONFIG_WERROR=y
+fails to build:
 
-Separately, on a genuine timeout (return value 0) the function
-returns -ERESTARTSYS, which is reserved for signal-interrupted
-syscalls that the kernel may restart. A timeout is not a signal
-and should not be treated as restartable; return -ETIMEDOUT
-instead.
+  include/linux/minmax.h:86:37: error: conversion from 'long long
+  unsigned int' to 'resource_size_t' {aka 'unsigned int'} changes
+  value from '68719476735' to '4294967295' [-Werror=overflow]
 
-Handle both cases explicitly: return err directly when negative,
-and return -ETIMEDOUT on timeout.
+Commit 14b80582c43e ("resource: Introduce alloc_free_mem_region()")
+made kernel/resource.c clamp against
+(1ULL << MAX_PHYSMEM_BITS) - 1.  resource_size_t is 32-bit without
+LPAE, but ARM's default MAX_PHYSMEM_BITS is 36.
 
-Fixes: bcabbccabffe ("rpmsg: add virtio-based remote processor messaging bus")
-Signed-off-by: Atul Akella <atul.akella@gmail.com>
-Link: https://lore.kernel.org/r/20261013160055.1362-1-atul.akella@gmail.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+That default was added by commit db57f88e4ccb ("ARM: 8411/1: Add
+default SPARSEMEM settings") because several platforms needed at
+least 36 physical address bits.  !LPAE could map addresses above
+32 bits only through supersections.
+
+CONFIG_IO_36, added by commit 23bdf86aa06e ("[ARM] 3377/2: add
+support for intel xsc3 core"), enabled these for XSC3 I/O.  IXP23xx
+placed static I/O mappings above 4GiB until its removal in 2012, and
+IOP13xx ioremap()ed its PCIe windows there until its removal in 2019.
+The only remaining XSC3 platform, PXA3xx, has nothing above 4GiB.
+
+Supersection address bits overlap the descriptor domain field, so
+IO_36 also renumbered the domains to make DOMAIN_IO zero.  Remove
+IO_36, the alternate domain numbering, and ioremap()'s supersection
+path.  Reject !LPAE ioremap ranges extending past 4GiB before
+phys_addr_t truncation, drop the now-unneeded high static-mapping
+exclusion, and reduce ioremap alignment from 16MiB to the 2MiB
+covered by a PMD's pair of sections.
+
+The other supersection user, create_36bit_mapping(), was added by
+commit 0b7cd62ecdc1 ("[ARM] 3017/1: Add support for 36-bit addresses
+to create_mapping()") for IXP2350 and carried IXP23xx's high static
+mappings.  Before this change, its only remaining call path was
+efi_create_mapping() -> create_mapping_late(), for an EFI runtime
+region above 4GiB.
+
+No real-world user of this !LPAE path is known.  AArch32 UEFI
+requires RAM described by its memory map to be identity-mapped
+during boot services, which a 32-bit virtual address space cannot
+provide above 4GiB.  Systems needing wider physical addressing are
+expected to use LPAE.
+
+Remove create_36bit_mapping() and the supersection definitions.  If
+firmware nevertheless advertises such a region on !LPAE,
+efi_create_mapping() rejects it before __pfn_to_phys() truncates its
+address to a low alias.  EFI runtime services remain disabled, but
+the kernel continues to boot.  LPAE kernels are unaffected.
+
+With no remaining !LPAE mappings above 4GiB, set MAX_PHYSMEM_BITS to
+32 for !LPAE and retain 36 for LPAE, where phys_addr_t is 64-bit.
+
+Assisted-by: Claude:claude-fable-5
+
+Link: https://lore.kernel.org/all/3c79d2dc-8fbd-40fc-8b2d-9d1b4f8ed34e@app.fastmail.com/
+Link: https://lore.kernel.org/all/CAK8P3a2MCdUbN0QSb+M3g5_6HjPsaQwtKxFjADMZWomdry4-Ww@mail.gmail.com/
+Fixes: 14b80582c43e ("resource: Introduce alloc_free_mem_region()")
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rpmsg/virtio_rpmsg_bus.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/arm/include/asm/domain.h               | 17 -----
+ arch/arm/include/asm/memory.h               |  4 +-
+ arch/arm/include/asm/pgtable-2level-hwdef.h |  1 -
+ arch/arm/include/asm/pgtable-2level.h       |  7 --
+ arch/arm/include/asm/sparsemem.h            |  4 ++
+ arch/arm/kernel/efi.c                       | 13 ++++
+ arch/arm/mm/Kconfig                         |  7 --
+ arch/arm/mm/ioremap.c                       | 53 ++------------
+ arch/arm/mm/mmu.c                           | 76 +--------------------
+ 9 files changed, 27 insertions(+), 155 deletions(-)
 
-diff --git a/drivers/rpmsg/virtio_rpmsg_bus.c b/drivers/rpmsg/virtio_rpmsg_bus.c
-index 1b8bb05924af7..a32772d6ccbc1 100644
---- a/drivers/rpmsg/virtio_rpmsg_bus.c
-+++ b/drivers/rpmsg/virtio_rpmsg_bus.c
-@@ -536,10 +536,13 @@ static int rpmsg_send_offchannel_raw(struct rpmsg_device *rpdev,
- 					(msg = get_a_tx_buf(vrp)),
- 					msecs_to_jiffies(15000));
+diff --git a/arch/arm/include/asm/domain.h b/arch/arm/include/asm/domain.h
+index d48859fdf32c5..f91c2a72b9dc6 100644
+--- a/arch/arm/include/asm/domain.h
++++ b/arch/arm/include/asm/domain.h
+@@ -18,27 +18,10 @@
+  *  DOMAIN_IO     - domain 2 includes all IO only
+  *  DOMAIN_USER   - domain 1 includes all user memory only
+  *  DOMAIN_KERNEL - domain 0 includes all kernel memory only
+- *
+- * The domain numbering depends on whether we support 36 physical
+- * address for I/O or not.  Addresses above the 32 bit boundary can
+- * only be mapped using supersections and supersections can only
+- * be set for domain 0.  We could just default to DOMAIN_IO as zero,
+- * but there may be systems with supersection support and no 36-bit
+- * addressing.  In such cases, we want to map system memory with
+- * supersections to reduce TLB misses and footprint.
+- *
+- * 36-bit addressing and supersections are only available on
+- * CPUs based on ARMv6+ or the Intel XSC3 core.
+  */
+-#ifndef CONFIG_IO_36
+ #define DOMAIN_KERNEL	0
+ #define DOMAIN_USER	1
+ #define DOMAIN_IO	2
+-#else
+-#define DOMAIN_KERNEL	2
+-#define DOMAIN_USER	1
+-#define DOMAIN_IO	0
+-#endif
+ #define DOMAIN_VECTORS	3
  
-+		if (err < 0)
-+			return err;
+ /*
+diff --git a/arch/arm/include/asm/memory.h b/arch/arm/include/asm/memory.h
+index 7c2fa7dcec6d4..e25749bfbf90b 100644
+--- a/arch/arm/include/asm/memory.h
++++ b/arch/arm/include/asm/memory.h
+@@ -89,9 +89,9 @@
+ 
+ #if !defined(CONFIG_SMP) && !defined(CONFIG_ARM_LPAE)
+ /*
+- * Allow 16MB-aligned ioremap pages
++ * Allow 2MB-aligned ioremap pages
+  */
+-#define IOREMAP_MAX_ORDER	24
++#define IOREMAP_MAX_ORDER	21
+ #endif
+ 
+ #define VECTORS_BASE		UL(0xffff0000)
+diff --git a/arch/arm/include/asm/pgtable-2level-hwdef.h b/arch/arm/include/asm/pgtable-2level-hwdef.h
+index 556937e1790ee..3fa254ac8a265 100644
+--- a/arch/arm/include/asm/pgtable-2level-hwdef.h
++++ b/arch/arm/include/asm/pgtable-2level-hwdef.h
+@@ -35,7 +35,6 @@
+ #define PMD_SECT_APX		(_AT(pmdval_t, 1) << 15)	/* v6 */
+ #define PMD_SECT_S		(_AT(pmdval_t, 1) << 16)	/* v6 */
+ #define PMD_SECT_nG		(_AT(pmdval_t, 1) << 17)	/* v6 */
+-#define PMD_SECT_SUPER		(_AT(pmdval_t, 1) << 18)	/* v6 */
+ #define PMD_SECT_AF		(_AT(pmdval_t, 0))
+ 
+ #define PMD_SECT_UNCACHED	(_AT(pmdval_t, 0))
+diff --git a/arch/arm/include/asm/pgtable-2level.h b/arch/arm/include/asm/pgtable-2level.h
+index 6b5392e20f411..7e1c08fdd0294 100644
+--- a/arch/arm/include/asm/pgtable-2level.h
++++ b/arch/arm/include/asm/pgtable-2level.h
+@@ -96,13 +96,6 @@
+ #define SECTION_SIZE		(1UL << SECTION_SHIFT)
+ #define SECTION_MASK		(~(SECTION_SIZE-1))
+ 
+-/*
+- * ARMv6 supersection address mask and size definitions.
+- */
+-#define SUPERSECTION_SHIFT	24
+-#define SUPERSECTION_SIZE	(1UL << SUPERSECTION_SHIFT)
+-#define SUPERSECTION_MASK	(~(SUPERSECTION_SIZE-1))
+-
+ #define USER_PTRS_PER_PGD	(TASK_SIZE / PGDIR_SIZE)
+ 
+ /*
+diff --git a/arch/arm/include/asm/sparsemem.h b/arch/arm/include/asm/sparsemem.h
+index 421e3415338ac..6b512be3a34a0 100644
+--- a/arch/arm/include/asm/sparsemem.h
++++ b/arch/arm/include/asm/sparsemem.h
+@@ -19,7 +19,11 @@
+  * These can be overridden in your mach/memory.h.
+  */
+ #if !defined(MAX_PHYSMEM_BITS) || !defined(SECTION_SIZE_BITS)
++#ifdef CONFIG_ARM_LPAE
+ #define MAX_PHYSMEM_BITS	36
++#else
++#define MAX_PHYSMEM_BITS	32
++#endif
+ #define SECTION_SIZE_BITS	28
+ #endif
+ 
+diff --git a/arch/arm/kernel/efi.c b/arch/arm/kernel/efi.c
+index 6f9ec7d28a710..c14275257a8ae 100644
+--- a/arch/arm/kernel/efi.c
++++ b/arch/arm/kernel/efi.c
+@@ -6,6 +6,7 @@
+ #include <linux/efi.h>
+ #include <linux/memblock.h>
+ #include <linux/screen_info.h>
++#include <linux/sizes.h>
+ 
+ #include <asm/efi.h>
+ #include <asm/mach/map.h>
+@@ -54,6 +55,18 @@ int __init efi_create_mapping(struct mm_struct *mm, efi_memory_desc_t *md)
+ 		.length		= md->num_pages * EFI_PAGE_SIZE,
+ 	};
+ 
++	/*
++	 * Non-LPAE page tables cannot map EFI runtime regions extending
++	 * beyond the 32-bit physical address space.
++	 */
++	if (!IS_ENABLED(CONFIG_ARM_LPAE) &&
++	    (md->phys_addr >= SZ_4G ||
++	     md->num_pages > (SZ_4G - md->phys_addr) / EFI_PAGE_SIZE)) {
++		pr_warn("EFI runtime region at 0x%llx exceeds 32-bit physical address space\n",
++			md->phys_addr);
++		return -ERANGE;
++	}
 +
- 		/* timeout ? */
- 		if (!err) {
- 			dev_err(dev, "timeout waiting for a tx buffer\n");
--			return -ERESTARTSYS;
-+			return -ETIMEDOUT;
- 		}
- 	}
+ 	/*
+ 	 * Order is important here: memory regions may have all of the
+ 	 * bits below set (and usually do), so we check them in order of
+diff --git a/arch/arm/mm/Kconfig b/arch/arm/mm/Kconfig
+index 6574659dfb61f..41d7b495ec45f 100644
+--- a/arch/arm/mm/Kconfig
++++ b/arch/arm/mm/Kconfig
+@@ -328,7 +328,6 @@ config CPU_XSC3
+ 	select CPU_PABRT_LEGACY
+ 	select CPU_THUMB_CAPABLE
+ 	select CPU_TLB_V4WBI if MMU
+-	select IO_36
  
+ # Marvell PJ1 (Mohawk)
+ config CPU_MOHAWK
+@@ -676,12 +675,6 @@ config CPU_V7M_NUM_IRQ
+ 
+ 	  If unsure, keep default value.
+ 
+-#
+-# CPU supports 36-bit I/O
+-#
+-config IO_36
+-	bool
+-
+ comment "Processor Features"
+ 
+ config ARM_LPAE
+diff --git a/arch/arm/mm/ioremap.c b/arch/arm/mm/ioremap.c
+index 27e64f782cb3d..539b6c2995af1 100644
+--- a/arch/arm/mm/ioremap.c
++++ b/arch/arm/mm/ioremap.c
+@@ -30,8 +30,6 @@
+ #include <linux/sizes.h>
+ #include <linux/memblock.h>
+ 
+-#include <asm/cp15.h>
+-#include <asm/cputype.h>
+ #include <asm/cacheflush.h>
+ #include <asm/early_ioremap.h>
+ #include <asm/mmu_context.h>
+@@ -236,39 +234,6 @@ remap_area_sections(unsigned long virt, unsigned long pfn,
+ 	return 0;
+ }
+ 
+-static int
+-remap_area_supersections(unsigned long virt, unsigned long pfn,
+-			 size_t size, const struct mem_type *type)
+-{
+-	unsigned long addr = virt, end = virt + size;
+-	pmd_t *pmd = pmd_off_k(addr);
+-
+-	/*
+-	 * Remove and free any PTE-based mapping, and
+-	 * sync the current kernel mapping.
+-	 */
+-	unmap_area_sections(virt, size);
+-	do {
+-		unsigned long super_pmd_val, i;
+-
+-		super_pmd_val = __pfn_to_phys(pfn) | type->prot_sect |
+-				PMD_SECT_SUPER;
+-		super_pmd_val |= ((pfn >> (32 - PAGE_SHIFT)) & 0xf) << 20;
+-
+-		for (i = 0; i < 8; i++) {
+-			pmd[0] = __pmd(super_pmd_val);
+-			pmd[1] = __pmd(super_pmd_val);
+-			flush_pmd_entry(pmd);
+-
+-			addr += PMD_SIZE;
+-			pmd += 2;
+-		}
+-
+-		pfn += SUPERSECTION_SIZE >> PAGE_SHIFT;
+-	} while (addr < end);
+-
+-	return 0;
+-}
+ #endif
+ 
+ static void __iomem * __arm_ioremap_pfn_caller(unsigned long pfn,
+@@ -278,15 +243,17 @@ static void __iomem * __arm_ioremap_pfn_caller(unsigned long pfn,
+ 	int err;
+ 	unsigned long addr;
+ 	struct vm_struct *area;
+-	phys_addr_t paddr = __pfn_to_phys(pfn);
++	phys_addr_t paddr;
+ 
+ #ifndef CONFIG_ARM_LPAE
+ 	/*
+-	 * High mappings must be supersection aligned
++	 * The physical range must not extend beyond the 32-bit
++	 * phys_addr_t
+ 	 */
+-	if (pfn >= 0x100000 && (paddr & ~SUPERSECTION_MASK))
++	if (((u64)pfn << PAGE_SHIFT) + offset + size > SZ_4G)
+ 		return NULL;
+ #endif
++	paddr = __pfn_to_phys(pfn);
+ 
+ 	type = get_mem_type(mtype);
+ 	if (!type)
+@@ -300,7 +267,7 @@ static void __iomem * __arm_ioremap_pfn_caller(unsigned long pfn,
+ 	/*
+ 	 * Try to reuse one of the static mapping whenever possible.
+ 	 */
+-	if (size && !(sizeof(phys_addr_t) == 4 && pfn >= 0x100000)) {
++	if (size) {
+ 		struct static_vm *svm;
+ 
+ 		svm = find_static_vm_paddr(paddr, size, mtype);
+@@ -326,13 +293,7 @@ static void __iomem * __arm_ioremap_pfn_caller(unsigned long pfn,
+ 	area->phys_addr = paddr;
+ 
+ #if !defined(CONFIG_SMP) && !defined(CONFIG_ARM_LPAE)
+-	if (DOMAIN_IO == 0 &&
+-	    (((cpu_architecture() >= CPU_ARCH_ARMv6) && (get_cr() & CR_XP)) ||
+-	       cpu_is_xsc3()) && pfn >= 0x100000 &&
+-	       !((paddr | size | addr) & ~SUPERSECTION_MASK)) {
+-		area->flags |= VM_ARM_SECTION_MAPPING;
+-		err = remap_area_supersections(addr, pfn, size, type);
+-	} else if (!((paddr | size | addr) & ~PMD_MASK)) {
++	if (!((paddr | size | addr) & ~PMD_MASK)) {
+ 		area->flags |= VM_ARM_SECTION_MAPPING;
+ 		err = remap_area_sections(addr, pfn, size, type);
+ 	} else
+diff --git a/arch/arm/mm/mmu.c b/arch/arm/mm/mmu.c
+index 23b87b5ef7f1b..5d0ae25298723 100644
+--- a/arch/arm/mm/mmu.c
++++ b/arch/arm/mm/mmu.c
+@@ -854,69 +854,6 @@ static void __init alloc_init_p4d(pgd_t *pgd, unsigned long addr,
+ 	} while (p4d++, addr = next, addr != end);
+ }
+ 
+-#ifndef CONFIG_ARM_LPAE
+-static void __init create_36bit_mapping(struct mm_struct *mm,
+-					struct map_desc *md,
+-					const struct mem_type *type,
+-					bool ng)
+-{
+-	unsigned long addr, length, end;
+-	phys_addr_t phys;
+-	pgd_t *pgd;
+-
+-	addr = md->virtual;
+-	phys = __pfn_to_phys(md->pfn);
+-	length = PAGE_ALIGN(md->length);
+-
+-	if (!(cpu_architecture() >= CPU_ARCH_ARMv6 || cpu_is_xsc3())) {
+-		pr_err("MM: CPU does not support supersection mapping for 0x%08llx at 0x%08lx\n",
+-		       (long long)__pfn_to_phys((u64)md->pfn), addr);
+-		return;
+-	}
+-
+-	/* N.B.	ARMv6 supersections are only defined to work with domain 0.
+-	 *	Since domain assignments can in fact be arbitrary, the
+-	 *	'domain == 0' check below is required to insure that ARMv6
+-	 *	supersections are only allocated for domain 0 regardless
+-	 *	of the actual domain assignments in use.
+-	 */
+-	if (type->domain) {
+-		pr_err("MM: invalid domain in supersection mapping for 0x%08llx at 0x%08lx\n",
+-		       (long long)__pfn_to_phys((u64)md->pfn), addr);
+-		return;
+-	}
+-
+-	if ((addr | length | __pfn_to_phys(md->pfn)) & ~SUPERSECTION_MASK) {
+-		pr_err("MM: cannot create mapping for 0x%08llx at 0x%08lx invalid alignment\n",
+-		       (long long)__pfn_to_phys((u64)md->pfn), addr);
+-		return;
+-	}
+-
+-	/*
+-	 * Shift bits [35:32] of address into bits [23:20] of PMD
+-	 * (See ARMv6 spec).
+-	 */
+-	phys |= (((md->pfn >> (32 - PAGE_SHIFT)) & 0xF) << 20);
+-
+-	pgd = pgd_offset(mm, addr);
+-	end = addr + length;
+-	do {
+-		p4d_t *p4d = p4d_offset(pgd, addr);
+-		pud_t *pud = pud_offset(p4d, addr);
+-		pmd_t *pmd = pmd_offset(pud, addr);
+-		int i;
+-
+-		for (i = 0; i < 16; i++)
+-			*pmd++ = __pmd(phys | type->prot_sect | PMD_SECT_SUPER |
+-				       (ng ? PMD_SECT_nG : 0));
+-
+-		addr += SUPERSECTION_SIZE;
+-		phys += SUPERSECTION_SIZE;
+-		pgd += SUPERSECTION_SIZE >> PGDIR_SHIFT;
+-	} while (addr != end);
+-}
+-#endif	/* !CONFIG_ARM_LPAE */
+-
+ static void __init __create_mapping(struct mm_struct *mm, struct map_desc *md,
+ 				    void *(*alloc)(unsigned long sz),
+ 				    bool ng)
+@@ -928,16 +865,6 @@ static void __init __create_mapping(struct mm_struct *mm, struct map_desc *md,
+ 
+ 	type = &mem_types[md->type];
+ 
+-#ifndef CONFIG_ARM_LPAE
+-	/*
+-	 * Catch 36-bit addresses
+-	 */
+-	if (md->pfn >= 0x100000) {
+-		create_36bit_mapping(mm, md, type, ng);
+-		return;
+-	}
+-#endif
+-
+ 	addr = md->virtual & PAGE_MASK;
+ 	phys = __pfn_to_phys(md->pfn);
+ 	length = PAGE_ALIGN(md->length + (md->virtual & ~PAGE_MASK));
+@@ -964,8 +891,7 @@ static void __init __create_mapping(struct mm_struct *mm, struct map_desc *md,
+  * Create the page directory entries and any necessary
+  * page tables for the mapping specified by `md'.  We
+  * are able to cope here with varying sizes and address
+- * offsets, and we take full advantage of sections and
+- * supersections.
++ * offsets, and we take full advantage of sections.
+  */
+ static void __init create_mapping(struct map_desc *md)
+ {
 -- 
 2.53.0
 
