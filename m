@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017717;
-	b=KnUlc0doqwhQS/1iSxahqawM5+u/T9tLDWeDUeHZpZO+k191S8XzYLGRexW9cMp1x6IS
-	 CFg5SNo4AyZVk+j9Iws6e/jAx/08K8varE3fBP57JnA10yFZxVEiDDtcrleCSM8HB45tA
-	 61CNh+qFwkDBMYPIF5CtB7HuTfQRMOUgCVB6xg4/8F8EvarMu/0TzSbHcEu6Wqb+kTtFt
-	 aBMQO6w763aBAE+Hh7r4L6/BFLevnVNR4mF6PNg+j1nJl0KsuNaSGAvGYivz7Kxsv5mhT
-	 tvdOYMQgmyyEWVut90w2XfompFo39A0630JCaGn/+sZD3LwUTBJnSLnZngaBbHJAP9g==
+	t=1795017720;
+	b=LZMTKibeBv16sDuHAGosPmwviAP3ZAMQdTwbriqYCfnDSKvfWtukw07KJeX+5dxetY+F
+	 1ow7Dz4v/1aRK+3h/Hw072d927DF1SdgCZZDlSTKJpsvL+nzBv9zrKw9fo+UdZSNMcQYS
+	 pyIHQpJM36i3aHTb//kq1Jht4kwTMty4hf58cD3LBkQ+GDTL9b73RBjpsgBMA00cAsBQw
+	 V/ObPRmvlXmky0oLfe5HjRTeas7LJfgWO2xXO2GCZrQ9EO4mGAQgAga7ABRtB/y6pIV5t
+	 0z7QM8cn3kIfzcM8U87U7LTr5P5PH9wlWzrVO/uDwC26yJ+mRizQZX56tvaAOdgeStw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017717;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017720;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=CYppjbzQJbmanKImHlupVJ/GGzIDVyNIeXZ6RhAAaLM=;
-	b=h/a7C+7LVrJTC7rr8unGSQu3owfQQ4sI4Jm3r8CJzk4qMHb+sDfPzEIOOaTv8FWah6oW
-	 LF0vr8RsLw+5VAJQwVCogXACEwTDmSQmC4hAzEWYzsFTdxAaA4V1TW8iLT4MlJv2KwnaI
-	 EE5t7XT5oMBAR1/Oi86T7BkI+fs0K5Xj2KafJuxdGCiB0ACEkUpf7i1n/kW0E7F3Uz0kK
-	 XEMwRcQE4iHym853BPmAkHkrEG+/e1zD1+F2ON1HNGlYKPsksrXsI7vNqBTjWKKMFajm+
-	 z0Vr5jRIxyhHGoPSsm0Yql8o84GctiJOCElO84LUYS55nQQ35br0OtuB8n8aooL3Dtg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=kYgAdRqTuul2i75eFx2HNZUuLA6T7j5neIBKpwJpFtA=;
+	b=RVn8/T8Rzm///k6+4y7htuPmUubGqqamfsJmmkPX7Y/qDzvkDGBNula5hErRfNFTGmeG
+	 ELVSJOW34jVaJTJnxE4K3QFYDZ5Ctm5u3Ofo69vyYUGZSIYoKJ9TZWw1FeCJ9G5o7gKDp
+	 /MYw83BbMZsgafikDp7QPIn279RrnqjrxPHZn7dH73fSlIdb3QtfBxW8kTF4gs5Vw1Q0H
+	 0HKmIEl0WmJ/HYx5vd7dfjapME46S/N4AIrw7S/u31jKFyxZXoB74UMEEv3hunCNRCocE
+	 lIhF0tbCaocdCAQdVLC2hhWa7rqfRPRSQXnrs9QODhRG5GP3ncZMwMGqqk6nqeS9AMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w+4qp9mn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uYOCSW9h;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA225606A31C;
-	Wed, 18 Nov 2026 16:01:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670BC606A31C;
+	Wed, 18 Nov 2026 16:02:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w+4qp9mn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 054B41F000C5;
-	Wed, 18 Nov 2026 16:01:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uYOCSW9h
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDA411F000C4;
+	Wed, 18 Nov 2026 16:01:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017717;
-	bh=CYppjbzQJbmanKImHlupVJ/GGzIDVyNIeXZ6RhAAaLM=;
+	s=korg; t=1795017720;
+	bh=kYgAdRqTuul2i75eFx2HNZUuLA6T7j5neIBKpwJpFtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w+4qp9mn29Hb6uVPKwKjri7s+dDUZozZm91IBr3wcPOtODElIR7gLp1K0UHVsLXJU
-	 l6CNg+Z+0CoUzfIokGhvQmMGMIfQa1MhLLqMuiMbamgljZd+ec9Nh5/n0PdzAv18vw
-	 otBk3WYx/KZdby7nhsJShYDuSzj+ap1fdWhsPNdU=
+	b=uYOCSW9hlBT6hp5rHWEmZt36s6MNn/e16e6z3mH3hahubTVJBOwsg8pAjqo1gwbqW
+	 /iSOCBWBRlTIrXnxPLciOnG9tvyEBgdoJplMdMvrKMg3yCbsjROhbbzJB85lfyPYVP
+	 FMV3F+lVL/gq48DKvYE4Vvi/AC2XDkgrJ0q5Djfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arka Mondal <arka@arkamondal.net>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0957/2651] iio: dac: ad5758: Fix the offset calculation
-Date: Wed, 18 Nov 2026 15:36:37 +0100
-Message-ID: <20261118150322.352986223@linuxfoundation.org>
+Subject: [PATCH 7.3 0984/2651] soc: ti: k3-ringacc: Correct ring API kernel-doc
+Date: Wed, 18 Nov 2026 15:37:04 +0100
+Message-ID: <20261118150323.325070515@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,55 +62,117 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arka Mondal <arka@arkamondal.net>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit a3b3580713f3ac5a32dc2874ee546828977a1d68 ]
+[ Upstream commit 45ea6911ad16859d4ce4f25780b0ebcf5660e43a ]
 
-The offset is a count of DAC codes, so the microamp or microvolt units
-of min and max cancel out and the final division by 1000 is wrong. For
-the +-20 mA range the driver reports -32 instead of -32768. For the
-+-5 V and +-10 V ranges min * (1 << 16) also overflows int, and the
-reported offset is 0.
+The ring accelerator header labels k3_ring_cfg as an enum, uses
+propname instead of property, and gives the DMA reset helper the
+ordinary reset helper's name. The DMA reset comment also omits occ,
+including the convention that zero requests a hardware occupancy read.
 
-Drop the division and do the multiplication in 64 bits.
+The proxy flag is parsed as a separate parameter, and the pop helpers
+describe pushing elements. Proxy access is supported in Message mode;
+the listed Credentials and Queue modes are not implemented. The phandle
+lookup returns encoded error pointers rather than integer error values.
 
-Fixes: 28d1a7ac2a0d ("iio: dac: Add AD5758 support")
-Signed-off-by: Arka Mondal <arka@arkamondal.net>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Match the declarations and document these argument and operation roles.
+
+Fixes: 3277e8aa2504 ("soc: ti: k3: add navss ringacc driver")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260923061658.20140-1-kmehltretter@gmail.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/dac/ad5758.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/linux/soc/ti/k3-ringacc.h | 26 ++++++++++++--------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/iio/dac/ad5758.c b/drivers/iio/dac/ad5758.c
-index 2a9e907b5eb8c..1e21ad2a050db 100644
---- a/drivers/iio/dac/ad5758.c
-+++ b/drivers/iio/dac/ad5758.c
-@@ -9,6 +9,7 @@
- #include <linux/bsearch.h>
- #include <linux/delay.h>
- #include <linux/kernel.h>
-+#include <linux/math64.h>
- #include <linux/module.h>
- #include <linux/property.h>
- #include <linux/spi/spi.h>
-@@ -540,7 +541,7 @@ static int ad5758_read_raw(struct iio_dev *indio_dev,
- 	case IIO_CHAN_INFO_OFFSET:
- 		min = st->out_range.min;
- 		max = st->out_range.max;
--		*val = ((min * (1 << 16)) / (max - min)) / 1000;
-+		*val = div_s64((s64)min * (1 << 16), max - min);
- 		return IIO_VAL_INT;
- 	default:
- 		return -EINVAL;
+diff --git a/include/linux/soc/ti/k3-ringacc.h b/include/linux/soc/ti/k3-ringacc.h
+index 39b022b925986..2de6031b94241 100644
+--- a/include/linux/soc/ti/k3-ringacc.h
++++ b/include/linux/soc/ti/k3-ringacc.h
+@@ -57,13 +57,13 @@ struct k3_ringacc;
+ struct k3_ring;
+ 
+ /**
+- * enum k3_ring_cfg - RA ring configuration structure
++ * struct k3_ring_cfg - RA ring configuration structure
+  *
+  * @size: Ring size, number of elements
+  * @elm_size: Ring element size
+  * @mode: Ring operational mode
+  * @flags: Ring configuration flags. Possible values:
+- *	 @K3_RINGACC_RING_SHARED: when set allows to request the same ring
++ *	 %K3_RINGACC_RING_SHARED: when set allows to request the same ring
+  *	 few times. It's usable when the same ring is used as Free Host PD ring
+  *	 for different flows, for example.
+  *	 Note: Locking should be done by consumer if required
+@@ -88,11 +88,10 @@ struct k3_ring_cfg {
+ /**
+  * of_k3_ringacc_get_by_phandle - find a RA by phandle property
+  * @np: device node
+- * @propname: property name containing phandle on RA node
++ * @property: property name containing phandle on RA node
+  *
+- * Returns pointer on the RA - struct k3_ringacc
+- * or -ENODEV if not found,
+- * or -EPROBE_DEFER if not yet registered
++ * Return: Pointer to the RA, or ERR_PTR(-ENODEV) if the phandle cannot
++ * be resolved, or ERR_PTR(-EPROBE_DEFER) if the RA is not yet registered.
+  */
+ struct k3_ringacc *of_k3_ringacc_get_by_phandle(struct device_node *np,
+ 						const char *property);
+@@ -103,10 +102,8 @@ struct k3_ringacc *of_k3_ringacc_get_by_phandle(struct device_node *np,
+  * k3_ringacc_request_ring - request ring from ringacc
+  * @ringacc: pointer on ringacc
+  * @id: ring id or K3_RINGACC_RING_ID_ANY for any general purpose ring
+- * @flags:
+- *	@K3_RINGACC_RING_USE_PROXY: if set - proxy will be allocated and
+- *		used to access ring memory. Sopported only for rings in
+- *		Message/Credentials/Queue mode.
++ * @flags: Set %K3_RINGACC_RING_USE_PROXY to allocate a proxy for
++ *	accessing ring memory in Message mode.
+  *
+  * Returns pointer on the Ring - struct k3_ring
+  * or NULL in case of failure.
+@@ -126,8 +123,9 @@ int k3_ringacc_request_rings_pair(struct k3_ringacc *ringacc,
+  */
+ void k3_ringacc_ring_reset(struct k3_ring *ring);
+ /**
+- * k3_ringacc_ring_reset - ring reset for DMA rings
++ * k3_ringacc_ring_reset_dma - ring reset for DMA rings
+  * @ring: pointer on Ring
++ * @occ: occupancy used by the DMA reset quirk, or zero to read it from hardware
+  *
+  * Resets ring internal state ((hw)occ, (hw)idx). Should be used for rings
+  * which are read by K3 UDMA, like TX or Free Host PD rings.
+@@ -217,8 +215,8 @@ int k3_ringacc_ring_push(struct k3_ring *ring, void *elem);
+  * @ring: pointer on ring
+  * @elem: pointer on ring element buffer
+  *
+- * Push one ring element from the ring head. Size of the ring element is
+- * determined by ring configuration &struct k3_ring_cfg elm_size..
++ * Pop one ring element from the ring head. Size of the ring element is
++ * determined by ring configuration &struct k3_ring_cfg elm_size.
+  *
+  * Returns 0 on success, errno otherwise.
+  */
+@@ -242,7 +240,7 @@ int k3_ringacc_ring_push_head(struct k3_ring *ring, void *elem);
+  * @ring: pointer on ring
+  * @elem: pointer on ring element buffer
+  *
+- * Push one ring element from the ring tail. Size of the ring element is
++ * Pop one ring element from the ring tail. Size of the ring element is
+  * determined by ring configuration &struct k3_ring_cfg elm_size.
+  *
+  * Returns 0 on success, errno otherwise.
 -- 
 2.53.0
 
