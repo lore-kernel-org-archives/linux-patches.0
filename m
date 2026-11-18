@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795062180;
-	b=jMhm4VoZNX12RMQUOVplXSYXdBaVYk6RMmwLN4j6iJuWyraI78IKuHz3aAqhl6iM5o47
-	 f+Rwp+4Uba29JcSkQjcQRdpkG1LPHa0uRr2P071f9jRG+Dv+Oiz3gWcsaWW2ys+oFggJQ
-	 jjXFO+Xdu3oaK4rYeuAQCXLx4WvxUVbVunaGmgGnv/40ho0SgLzWUDAjs+GaWappF24KG
-	 Lk7Lr2NzrDsJSxH8hXPUIbaU5v4IuvgMGcwc5lfGC2dGJs2Xmbt3CKohJCSM3R8dMuJh1
-	 fmbzmVYW/ZJmtvqXr1HurpUdVG9iRuOF9BftDkdL9hPdFDlKwpUelKBbChjnIVXb+9g==
+	t=1795062182;
+	b=Ht23yHAGDURvAZr7t/ZbOGm+70oEgvglTTwA1VtlxsKhRBD9o6U8ap/XenFqZfc2i61o
+	 epTkVD1G3IyKJO0zVQSjKCjPLnbeWE8wlgz6bwMG/zaJ10E4JZk0EPUK2htlf5HcM6EU9
+	 GICvOl0JbBVDWOM5/DxCy663wg9ZkWAY0C+az/WduwcXkGatGOkpYCapAVyp689Rm0Yaa
+	 SDSHTHClbvssaeVt2B6RDqDa+Dy/B4X+wpTFKn/UzL4dgYVNoLIdT5u2NTNMo2QIazfcZ
+	 hLDkbGgIcfDudXL55S1GpKNY8aUcSRnZKLy2vsawQidKjDBcHQUWWXsvwc1/xIt3Anw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795062180;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062182;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=W+LNF2GRNDfeHzykbYodA9LN4byn5nrtBb2un86WA6w=;
-	b=lBPIRIalid4lprIqq9YyNm8RIsUs3vCsSFhG3HPoy6EdnPDyVHve+34ITvBDBlo2/zXG
-	 ifTErJL3tLP/ocOlNXdNNxdWk4UrZg1gLFX/ltgEZZ549a8J+NYjabJLzdaeBRfyvRdKj
-	 3KO05rPT8G0PmvC3aiQxoSFTSX9zw+SaFLsL7JkzqSw7IpUgdYG5Qf7aLY616xiPAMv8N
-	 gKuZM1HtHdbp/EjyDN/GDG8AX1Ulp9URTUmS8DlELPOeGHyci0j4seahp3zmBfUaFjUS+
-	 Usq/1eINMMQAXsalXj9y8G2xPpAloCs5BAK/+lXwgxRhsiHJDOQ74KTrD2yAR45hI6Q==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=KT4P3G/mVMkgXXCXp0aFi2u/TAbju7p1BdybnmMEApg=;
+	b=gfm1TqAzHrNljkjKtrjtU7YZrmFd8z8Zr6PxQuugaargrYDJH/qg88UfSI0nAPqE+FSK
+	 w8lgRrsgBS204GXBNvzOQF5c65x8Pf13p32ETyKa+qm76kWhEpvYZM8IrP2E+l3ez0fPt
+	 gevozntL6rlVj9uPf9xRXE3bJUDSdOSP/8ohPck/Q/JCzkD1XZSSjXd40p9FYg3zAAUrE
+	 Zkt1rca1CAyM/JrXODbn6mcCj+Iw9ca6UqnikBc6Usm2sxbUIGDk32GVOW3nZxvAVzZG3
+	 UFtHS8PkiV/I/gpUA2ZjAd0CvQFC3ASagO5jEBwiOqgGyT9C+p16Ibn2sr/+8U4Kh5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=znz78h++;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nG9howss;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010B3606A32F;
-	Thu, 19 Nov 2026 04:23:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C226A606A32F;
+	Thu, 19 Nov 2026 04:23:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=znz78h++
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 595681F000CC;
-	Thu, 19 Nov 2026 04:22:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nG9howss
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20BF71F000C6;
+	Thu, 19 Nov 2026 04:23:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795062179;
-	bh=W+LNF2GRNDfeHzykbYodA9LN4byn5nrtBb2un86WA6w=;
+	s=korg; t=1795062182;
+	bh=KT4P3G/mVMkgXXCXp0aFi2u/TAbju7p1BdybnmMEApg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=znz78h++i17UygMf9d7bDqH/gIAJmlCCDD78erelNAJc3Nbqnc02yD6TfSUaDyB12
-	 fJ5fE/Sjybg0iQdYFZIjv7quT68sL1QAc7hDhOOVYeTMPBACJ9kSXDBjoPKk/wibeL
-	 mu4cJX2RyIZMRFtLpONJCZHMO4JmPmKyjfwX3jgI=
+	b=nG9howssuPuc+GyJ9ffF8LGyrKqoaRswCMvPVKnMnbd5zq7aGkDivAZB7gybo+gfG
+	 7+39Wnft/VHpLEqUox3BsROtVO58Kd1QPCyPyPgqvQQqFX8PG+8IJ3q4omc3R/9FD5
+	 oE+qsvj2NKlIg/0Ajl7ga5+me10uyWqrhVcgzeAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Maxime=20B=C3=A9lair?= <maxime.belair@canonical.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Dudu Lu <phx0fer@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1816/1848] apparmor: report a label allocation failure as -ENOMEM
-Date: Wed, 18 Nov 2026 16:04:14 +0100
-Message-ID: <20261118150035.528695934@linuxfoundation.org>
+Subject: [PATCH 5.10 1778/1848] net/sched: taprio: unwind the netdevice notifier if register_qdisc() fails
+Date: Wed, 18 Nov 2026 16:03:36 +0100
+Message-ID: <20261118150033.789500928@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -62,57 +63,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maxime Bélair <maxime.belair@canonical.com>
+From: Dudu Lu <phx0fer@gmail.com>
 
-[ Upstream commit 07aee062c6ecaa7199be583c83a1c74ae9885f03 ]
+[ Upstream commit c5234f89d7cb311880ef218cb7a969794a106678 ]
 
-aa_label_strn_parse() returns -ENOENT for every failure, so a caller
-cannot tell "no such profile" from "could not allocate a label".
+taprio_module_init() registers taprio_device_notifier and then returns
+register_qdisc()'s error directly.  When register_qdisc() fails the
+notifier stays registered, but the loader's failure path frees the module
+image without ever calling the __exit function, so netdev_chain is left
+pointing at taprio_device_notifier.notifier_call -- a function pointer
+that lives in text that has just been freed.
 
-Report an allocation failure as -ENOMEM.
+register_qdisc() has two failure returns: -EEXIST (duplicate .id) and
+-EINVAL (malformed cl_ops).  taprio_class_ops satisfies every checked
+implication, so -EINVAL is unreachable and -EEXIST is the only reachable
+failure; it needs a pre-existing "taprio" entry in qdisc_base.  In-tree
+that is reachable only through bpf_qdisc_reg() (CONFIG_NET_SCH_BPF); a
+module calling the exported register_qdisc() reaches it as well.
 
-Fixes: f1bd904175e8 ("apparmor: add the base fns() for domain labels")
-Signed-off-by: Maxime Bélair <maxime.belair@canonical.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Once the notifier is left dangling, the next netdevice event that walks
+netdev_chain calls through the stale pointer:
+
+  BUG: KASAN: vmalloc-out-of-bounds in notifier_call_chain+0x650/0xb5c
+  Read of size 8 at addr ffff80001fc5ab08 by task ip/110
+   notifier_call_chain+0x650/0xb5c
+   raw_notifier_call_chain+0x34/0x64
+   call_netdevice_notifiers_info+0xa8/0x198
+   __dev_close_many+0xe0/0x800
+   ...
+  >ffff80001fc5ab00: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+
+The shadow row is all f8 (KASAN_VMALLOC_INVALID): the read lands in
+vmalloc memory that was poisoned when the module image was freed, and the
+indirect call is unguarded because the only check, func_ptr_is_kernel_text(),
+is compiled out unless CONFIG_DEBUG_NOTIFIERS.
+
+Mirror the sibling sch_cbs.c and act_mirred.c, which unwind the notifier
+on this failure path.
+
+Fixes: 7b9eba7ba0c1 ("net/sched: taprio: fix picos_per_byte miscalculation")
+Signed-off-by: Dudu Lu <phx0fer@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261021155417.66254-1-phx0fer@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/label.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ net/sched/sch_taprio.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/security/apparmor/label.c b/security/apparmor/label.c
-index f14802e2c2264..9cee684ff9443 100644
---- a/security/apparmor/label.c
-+++ b/security/apparmor/label.c
-@@ -1950,12 +1950,18 @@ struct aa_label *aa_label_strn_parse(struct aa_label *base, const char *str,
- 		goto out;
- 	}
+diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
+index bb12b35d7191d..7fb36d37a086e 100644
+--- a/net/sched/sch_taprio.c
++++ b/net/sched/sch_taprio.c
+@@ -2023,7 +2023,11 @@ static int __init taprio_module_init(void)
+ 	if (err)
+ 		return err;
  
--	if (create)
-+	if (create) {
- 		label = aa_vec_find_or_create_label(vec, len, gfp);
--	else
-+		if (!label) {
-+			/* not absence: creating only fails on allocation */
-+			label = ERR_PTR(-ENOMEM);
-+			goto out;
-+		}
-+	} else {
- 		label = vec_find(vec, len);
--	if (!label)
--		goto fail;
-+		if (!label)
-+			goto fail;
-+	}
+-	return register_qdisc(&taprio_qdisc_ops);
++	err = register_qdisc(&taprio_qdisc_ops);
++	if (err)
++		unregister_netdevice_notifier(&taprio_device_notifier);
++
++	return err;
+ }
  
- out:
- 	/* use adjusted len from after vec_unique, not original */
+ static void __exit taprio_module_exit(void)
 -- 
 2.53.0
 
