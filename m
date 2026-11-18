@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018026;
-	b=Yv9860lQ0oiE0v1VW7R3uLzYv2R5HMWwVM/+SGPmgHaUe1TityEVfkRrbsqdoO2k1lqj
-	 q+yOge4aGIbbfA9I68p87zNQRIqMx2KaX7bHptGltpmclYNFGao+u6+JO8Nv3gwLrTkv+
-	 Cw9mctVpV80cL+XcqOPXthD6782WPJwoC2rlpgtKQdRk8sIl0sbueWdWdPATEUKthLTTm
-	 GsxEyVvTcGYN2TxMIrD7oPJqO8zB8xH1FsKn2oJPMgjD5TMkLXtaOIDR0pXkK3/p331D4
-	 GiWWX3Cy5S0sMeyqTk4DCPFhsfPllEVmAKQFqZRJ027dKKWgaZqU2vfIm1x84U+730w==
+	t=1795018029;
+	b=wa0+YbpU3tAUd8eZw7IOLkXYZkOUFkTwZEllGld1yOOqHbr6dfeJd8DRmz8DbIRLQwr5
+	 7YkeM4cqqfsGd1Jsn68d/sqKYWv+hyB0t0ajXOzNfgc4ztZqGWDg/K/4PwWlC/b7gzy/f
+	 EScYBP6Cp3RyxByi9b7TPD6vpQct7Lv6OuiUdiImaXxDf6OXuBehA4nYFwllXlZl7qBb/
+	 /KEFtsjOX+GjAYniOdcw9L47Hp261aSp1GSnREvJKzVCDgHOFddve3sHu5csCFOWjqnzw
+	 ufGSnQhA5Lv6eH9dXB8Ju8xLqyQR1bVcwAnG7rtYfAImH6sDrV+5V9T89NBoMnfxp1g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018026;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018029;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uDC2A6VvgbS/Arv6/AZcHIJTuFAgKHWKWKQbcF9KUck=;
-	b=Fz4bWbzK7Sw1SdWNASFZPU/SHV2A0xa1KLyvVA38L3pMH4jKGnutob6ZhihFsV/mLx8q
-	 VWGvVeS46DjcxBvR3rVvK0FDoS6VAIBXM4iSeKTWRi+r+/VME9V9J+UoKdjlQJUtGYOJJ
-	 iK+T2g+b24uMiOYZY99XfexJLY1sPaqT5b6GEhlwOkxZgA51arfT052l+Onvqu3sWAH1E
-	 /QwM1Ei8jb1FJ3IpLjihYYu83BtsFdNV7fUy11cjidvzI9iJMkm1VJ4WI4Na4Is3y0SfH
-	 vHWor+Q0/Tt2fByOEBCv0w4J3cramvUkWfyrQqIqYeaRD3q0SalLUnoCUX9ZwgpYERQ==
+	bh=9aao0JzUiN4BAa2or9xVtiwHzEn2Prbx/hanSe4YJ7o=;
+	b=AELLjLysn+u4It3WmErELhA4H4PwzToNHk9p0TBwMPwHng+iZcz6r8c7DwYmeBCA0K1S
+	 Fb7xhUjwG/B4KJ7Gn4DpIRCd5kMJ4nMJ3bCDIGpZTrqmp5KHbQwMrf/r/71B/ufn2b+Q0
+	 UC3oCDfpEgZ+aTgwzT9L3QtT42j1erHJUgo0tf++eBYbIFM48z/OcQ76bg4zeWJ7LWkLc
+	 RLuXVkvjujNpRQFHqdq51Mj7BcvEWkj2CYhR7rwe8ZaqOONeFgYO9oLyOJUCQ1GbK6rPk
+	 zfeAXvlWVujAY3LbW7e8Y72IL4nBxwvxtWyHSp+5lxkpM5XUCm8ITNjLkiiBXqW+i+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EF9nAEvp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nOeaZIqf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A662606A31C;
-	Wed, 18 Nov 2026 16:07:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F4D606A31C;
+	Wed, 18 Nov 2026 16:07:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EF9nAEvp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D08D11F000C5;
-	Wed, 18 Nov 2026 16:07:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nOeaZIqf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2A981F000C4;
+	Wed, 18 Nov 2026 16:07:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018026;
-	bh=uDC2A6VvgbS/Arv6/AZcHIJTuFAgKHWKWKQbcF9KUck=;
+	s=korg; t=1795018029;
+	bh=9aao0JzUiN4BAa2or9xVtiwHzEn2Prbx/hanSe4YJ7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EF9nAEvp4HBOqeWRFhwauPRUC7YhToijILRP9uR4kZ5kYO2tlnX0mE9q3x3HsKsEm
-	 EOn94X+kxwmH0vzlJ0r1zKKlXRM2CdpwB9O5lb3lGRYG6TR7svGw4vTIjTkjHIUQ6t
-	 D5xs9ryT8KILTQS94cqvd8K66BP+t025mQxI28uk=
+	b=nOeaZIqf5ftuMP5+bl7t07XxzMFv1i3jv6aNE8hBIkLwwgw23TPiYQ1dNrBB8Hx1c
+	 iW9PHs0eKt9W0uMvhtKUFS19d3wYxuJKvdBQItAY6DGB8+hkjw5jTgqxGp+2ZwDXgq
+	 DCgrwdBbYjkpFuKPKp9x8+VlbT8riEu8ySP1UJwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xilin Wu <sophon@radxa.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Lucas Costa <2000.costalucas@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1095/2651] drm/msm/dp: Initialize the debugfs connector pointer
-Date: Wed, 18 Nov 2026 15:38:55 +0100
-Message-ID: <20261118150327.419756783@linuxfoundation.org>
+Subject: [PATCH 7.3 1096/2651] staging: sm750fb: free cmap on framebuffer release
+Date: Wed, 18 Nov 2026 15:38:56 +0100
+Message-ID: <20261118150327.456199196@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,42 +68,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xilin Wu <sophon@radxa.com>
+From: Lucas Costa <2000.costalucas@gmail.com>
 
-[ Upstream commit c2f772ec52898a3f6967d17035da7b739465f81c ]
+[ Upstream commit b7c885194b81a0376d1fdb457eac40d21d6fb65f ]
 
-The debugfs cleanup removed the connector assignment from the debug
-context, but the video-pattern test files still dereference that pointer
-to check connector status. Reading those files can therefore dereference
-NULL.
+The cmap is allocated by lynxfb_set_fbinfo() but never freed, so it is
+leaked when the framebuffer is torn down.  This happens on every unbind,
+and on the register_framebuffer() error path in
+sm750fb_framebuffer_alloc().
 
-Store the supplied connector before creating the debugfs files.
+Add a lynxfb_unset_fbinfo() cleanup counterpart to lynxfb_set_fbinfo()
+which deallocates the cmap, and call it on teardown.  In the alloc error
+path it is only called once lynxfb_set_fbinfo() has succeeded, so the
+cmap is only freed when it was actually allocated.
 
-Fixes: ab8420418c2e ("drm/msm/dp: cleanup debugfs handling")
-
-Assisted-by: LLM
-Signed-off-by: Xilin Wu <sophon@radxa.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/757261/
-Link: https://lore.kernel.org/r/20260930-msm-dp-hdr10-v1-11-dbbf8b2b42bc@radxa.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Fixes: 81dee67e215b ("staging: sm750fb: add sm750 to staging")
+Suggested-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Lucas Costa <2000.costalucas@gmail.com>
+Link: https://patch.msgid.link/20260922142851.46724-1-2000.costalucas@gmail.com
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_debug.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/staging/sm750fb/sm750.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_debug.c b/drivers/gpu/drm/msm/dp/dp_debug.c
-index cf3838fcd154e..00fb1a7ba40ed 100644
---- a/drivers/gpu/drm/msm/dp/dp_debug.c
-+++ b/drivers/gpu/drm/msm/dp/dp_debug.c
-@@ -216,6 +216,7 @@ int msm_dp_debug_init(struct device *dev, struct msm_dp_panel *panel,
+diff --git a/drivers/staging/sm750fb/sm750.c b/drivers/staging/sm750fb/sm750.c
+index 8b93bfeb217bb..68b6d4fe79ca8 100644
+--- a/drivers/staging/sm750fb/sm750.c
++++ b/drivers/staging/sm750fb/sm750.c
+@@ -825,6 +825,11 @@ static int lynxfb_set_fbinfo(struct fb_info *info, int index)
+ 	return ret;
+ }
  
- 	debug->link = link;
- 	debug->panel = panel;
-+	debug->connector = connector;
++static void lynxfb_unset_fbinfo(struct fb_info *info)
++{
++	fb_dealloc_cmap(&info->cmap);
++}
++
+ /*	chip specific g_option configuration routine */
+ static void sm750fb_setup(struct sm750_dev *sm750_dev, char *src)
+ {
+@@ -910,6 +915,7 @@ static void sm750fb_framebuffer_release(struct sm750_dev *sm750_dev)
+ 	while (sm750_dev->fb_count) {
+ 		fb_info = sm750_dev->fbinfo[sm750_dev->fb_count - 1];
+ 		unregister_framebuffer(fb_info);
++		lynxfb_unset_fbinfo(fb_info);
+ 		framebuffer_release(fb_info);
+ 		sm750_dev->fb_count--;
+ 	}
+@@ -936,12 +942,14 @@ static int sm750fb_framebuffer_alloc(struct sm750_dev *sm750_dev, int fbidx)
  
- 	debugfs_create_file("dp_debug", 0444, root,
- 			debug, &msm_dp_debug_fops);
+ 	err = register_framebuffer(fb_info);
+ 	if (err < 0)
+-		goto release_fb;
++		goto unset_fb;
+ 
+ 	sm750_dev->fb_count++;
+ 
+ 	return 0;
+ 
++unset_fb:
++	lynxfb_unset_fbinfo(fb_info);
+ release_fb:
+ 	framebuffer_release(fb_info);
+ 	return err;
 -- 
 2.53.0
 
