@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032456;
-	b=SFlCCORxhu1drx7KkoPxzVEBxSR4cqdBr3qYMrC3VnltdgElD62o8YDyKswUlcTyV/Go
-	 2aJzH3r4rO696GJh7lIAFFirReebkiPbDCp8DUIKYzVWBg/XsdejUS9nHAVGIqoD201Yq
-	 weZCpbSa1mFYTX0COUwmWn1fO8r9EqE/kVb6N/tHBVEg0buhvRQoy64MgAXeSwgGor49B
-	 ZUfgPhU898eYVpmvOwYf2Qw+6Xqwkqo58QnHTnM0zQ/7PVGbFzmb20HqM3HGn2H/6x5Qu
-	 MPJNTVHoCdS6y+QZoSzFz9hYNnrW4UT8z/eIlO81yAIX9vLc4N8oPhcWl7eku5emdUA==
+	t=1795032458;
+	b=Pvsn2xxUfnuRx/f30dt1wny0W4wRfPkWk5I+wHyuiP9I9IY4rZd5iWJK+aAlTPiDayma
+	 50mfgsIJkz5Zzc8/E1ePglnNmfZI2o9gxt45pSIelIoh3thZoU5ZpyCo1txjuirFkOZrN
+	 QVmggRIIILImuaj2OyNIajTUq1T7CwdIsCncgcLiD1n6l5Qz2xxI7ybKofWkEVkXIs5bm
+	 Ozm03l/sMnl2YsJ+sunqtyNn/RCP3v/uPvqrP2IaSy6kM3vg+11T8DQPYtJuDLxZIIZSI
+	 Y7EQzxRYv+q4cxdlHELUSUaf9zs1UttF3EFKQDyHF0bcUxbZqBXR60bD51FTjPHxI3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032456;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032458;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pcHrWUFuooF/aD+i+aEt9pU8g6bYNRFT/tHW/fnBsNs=;
-	b=5tiH5uKATFUvb68IFWdUIAIXkHfXmyDcMdQsTUMba+bc9ZE/STWd4bozyNA15Y81rdW0
-	 fBlyIYHISDTMO0KYZ20iuk8ppTi3Cifn6TUQRm3fM+7nVWgUfdy1yXS4NuY6t4sQZzSSY
-	 Iyjxe4kc3lq/dn93rfwWoVFZUbfpYO/rhdRZmbbdNPGknxnCPSg23tjMj7eHXHMVp/bkF
-	 UJ5s1OhL7PMlBRoXMC/tQFQwdkKFs+hzFVTZR5/6Cc8z8zBe663NuHfKxfPOXAg09RQEB
-	 Kru4rXTywjtWQuJhktbc4cOBhm1HsOyaFR3PX4Wjtlcj0h+GogETgoIDVbSSfTU3TSw==
+	bh=iwJkH1TBduO0TO4r8ND0ymxd+sUau0GEISDHPN/YyDE=;
+	b=uwjOz32XsVVurzvABUc6ZQbpK4tP+e6/ppv33YA+N6GLUUFhHbC2QhQd2xFteb3p5FxL
+	 y5f52QGLbcwukvSi6rh5Qj7EM0430/KofCWKCFcamnBdoRZRSC/RII/JuJIXzFgXrxfOi
+	 yz4Xo39AUeXTm4f1CfDVJp1ezAmlqrX04aFWGMaUr1fzfNFIJwdVQtBaUyAyM09HPArv6
+	 xbWW90oMvsQNGR/X6zMjVrXS29y0LCVooWiqKtxxZwD9KNIVRISXhlDp9l/l0ptq931nJ
+	 i3fq0Bz22hAbQMzQf3ykhjZd74qTJfHjbUV7RNWSe34c9c9UdMXvV4QF5uDFiRe4mWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FHh6fRiY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lskaRvyR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E3B6073D83;
-	Wed, 18 Nov 2026 20:07:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABDE4606A330;
+	Wed, 18 Nov 2026 20:07:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FHh6fRiY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 587FC1F000C4;
-	Wed, 18 Nov 2026 20:07:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lskaRvyR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11E051F000CA;
+	Wed, 18 Nov 2026 20:07:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032455;
-	bh=pcHrWUFuooF/aD+i+aEt9pU8g6bYNRFT/tHW/fnBsNs=;
+	s=korg; t=1795032458;
+	bh=iwJkH1TBduO0TO4r8ND0ymxd+sUau0GEISDHPN/YyDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FHh6fRiYKkBPF7YMw0GWPKjekQToElixwFgXjkxAx+PTdff6ttl6GXiktVZ8TGEFo
-	 JERGj4t2m8xjgPD7rnxjgUO/EqrIB3Lj7evbDt3snSSOYfsBpRtyz396KnJsWBGt21
-	 7kjSRG2HthL3SbAAIcv8RKy3m9b1IVclMqB0W2Fs=
+	b=lskaRvyR0X+yaG1cBvWbyRcfjUG/GhWTUuGgXeTDfBC3SHu14K1AhCh3iQtnu+1NX
+	 uelEB8govf3bBY96+C0Iyqe6YtoFqser96o2hAgOhDLuLbPD7wqEtZi+/XT4w1Zp0f
+	 MrG/N+0opJY5P4vNNQxlxf1fDD5adcFnfuStf9xk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Florian Westphal <fw@strlen.de>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1376/1756] selftests: netfilter: fix return value in zone subtest
-Date: Wed, 18 Nov 2026 15:58:23 +0100
-Message-ID: <20261118150103.985834481@linuxfoundation.org>
+Subject: [PATCH 6.12 1377/1756] netfilter: nft_compat: restrict raw table targets/matches
+Date: Wed, 18 Nov 2026 15:58:24 +0100
+Message-ID: <20261118150104.022016858@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,103 +70,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit a20a01ae89813ef493dc416d69f2b2ad17afb54c ]
+[ Upstream commit ac364eb4d6d747b15df17e5fc9e442c318afaaac ]
 
-zone subtest prints FAIL, but did not set 'ret=1', so kselftest
-framework reports success.
+xt targets and matches declaring .table = "raw" (CT, NOTRACK) rely on
+only ever running in the legacy raw table's prerouting/output chains,
+ahead of conntrack. nft_compat_chain_validate_dependency() already
+enforces this kind of correspondence for "nat" by requiring the chain
+type to actually be NAT, but did nothing for "raw": a rule wrapping
+the CT target could be loaded into any hook and any priority via
+nft_compat, including after the real conntrack hook has already run.
 
-While at it, also fail when "nft -f" returns an error.
+The CT target attaches a conntrack template to the skb when none is
+set yet.
 
-Noticed thanks to a (broken) local patch that should have caused this
-selftest (resp. the kselftest framework) to report a failure.
+Require that a "raw" table dependency actually matches what xtables
+enforces via the implict/builtin table dependency.
 
-Fixes: 33b8aad21ac1 ("selftests: netfilter: add a vrf+conntrack testcase")
+Fixes: 0ca743a55991 ("netfilter: nf_tables: add compatibility layer for x_tables")
+Assisted-by: LLM
 Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/net/netfilter/conntrack_vrf.sh  | 25 ++++++++++++++++---
- 1 file changed, 22 insertions(+), 3 deletions(-)
+ net/netfilter/nft_compat.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/tools/testing/selftests/net/netfilter/conntrack_vrf.sh b/tools/testing/selftests/net/netfilter/conntrack_vrf.sh
-index e95ecb37c2b14..7c3642acf460f 100755
---- a/tools/testing/selftests/net/netfilter/conntrack_vrf.sh
-+++ b/tools/testing/selftests/net/netfilter/conntrack_vrf.sh
-@@ -95,7 +95,7 @@ busywait $BUSYWAIT_TIMEOUT listener_ready "$ns1"
- # as decided by the first iteration of the ruleset.
- test_ct_zone_in()
- {
--ip netns exec "$ns0" nft -f - <<EOF
-+if ! ip netns exec "$ns0" nft -f - <<EOF
- table testct {
- 	chain rawpre {
- 		type filter hook prerouting priority raw;
-@@ -116,6 +116,12 @@ table testct {
- 	}
- }
- EOF
-+	then
-+		echo "FAIL: cannot load testct nft ruleset"
-+		ret=1
-+		return
-+	fi
+diff --git a/net/netfilter/nft_compat.c b/net/netfilter/nft_compat.c
+index ba4d304a30141..2bac958f15266 100644
+--- a/net/netfilter/nft_compat.c
++++ b/net/netfilter/nft_compat.c
+@@ -14,6 +14,7 @@
+ #include <linux/netfilter/nf_tables.h>
+ #include <linux/netfilter/nf_tables_compat.h>
+ #include <linux/netfilter/x_tables.h>
++#include <linux/netfilter_ipv4.h>
+ #include <linux/netfilter_ipv4/ip_tables.h>
+ #include <linux/netfilter_ipv6/ip6_tables.h>
+ #include <linux/netfilter_bridge/ebtables.h>
+@@ -45,6 +46,20 @@ static int nft_compat_chain_validate_dependency(const struct nft_ctx *ctx,
+ 			type = NFT_CHAIN_T_NAT;
+ 		if (basechain->type->type != type)
+ 			return -EINVAL;
++	} else if (strcmp(tablename, "raw") == 0) {
++		/* iptables-nft emulates the legacy raw table, which only
++		 * ever has prerouting/output chains at this exact priority.
++		 */
++		if (ctx->family != NFPROTO_IPV4 &&
++		    ctx->family != NFPROTO_IPV6)
++			return -EINVAL;
 +
- 	ip netns exec "$ns1" ping -W 1 -c 1 -I veth0 "$IP0" > /dev/null
- 
- 	# should be in zone 1, not zone 2
-@@ -124,6 +130,7 @@ EOF
- 		echo "PASS: entry found in conntrack zone 1"
- 	else
- 		echo "FAIL: entry not found in conntrack zone 1"
-+		ret=1
- 		count=$(ip netns exec "$ns0" conntrack -L -s $IP1 -d $IP0 -p icmp --zone 2 2> /dev/null | wc -l)
- 		if [ "$count" -eq 1 ]; then
- 			echo "FAIL: entry found in zone 2 instead"
-@@ -148,7 +155,7 @@ test_masquerade_vrf()
- 
- 	ip netns exec "$ns0" conntrack -F 2>/dev/null
- 
--ip netns exec "$ns0" nft -f - <<EOF
-+if ! ip netns exec "$ns0" nft -f - <<EOF
- flush ruleset
- table ip nat {
- 	chain rawout {
-@@ -169,6 +176,12 @@ table ip nat {
- 	}
- }
- EOF
-+	then
-+		echo "FAIL: cannot load ip nat nft ruleset"
-+		ret=1
-+		return
-+	fi
++		if (basechain->ops.hooknum != NF_INET_PRE_ROUTING &&
++		    basechain->ops.hooknum != NF_INET_LOCAL_OUT)
++			return -EINVAL;
 +
- 	if ! ip netns exec "$ns0" ip vrf exec tvrf socat -u -4 STDIN TCP:"$IP1":55555 < /dev/null > /dev/null;then
- 		echo "FAIL: connect failure with masquerade + sport rewrite on vrf device"
- 		ret=1
-@@ -195,7 +208,7 @@ EOF
- test_masquerade_veth()
- {
- 	ip netns exec "$ns0" conntrack -F 2>/dev/null
--ip netns exec "$ns0" nft -f - <<EOF
-+if ! ip netns exec "$ns0" nft -f - <<EOF
- flush ruleset
- table ip nat {
- 	chain postrouting {
-@@ -204,6 +217,12 @@ table ip nat {
++		if (basechain->ops.priority != NF_IP_PRI_RAW)
++			return -EINVAL;
  	}
- }
- EOF
-+	then
-+		echo "FAIL: cannot load ip nat postrouting ruleset"
-+		ret=1
-+		return
-+	fi
-+
- 	if ! ip netns exec "$ns0" ip vrf exec tvrf socat -u -4 STDIN TCP:"$IP1":55555 < /dev/null > /dev/null;then
- 		echo "FAIL: connect failure with masquerade + sport rewrite on veth device"
- 		ret=1
+ 
+ 	return 0;
 -- 
 2.53.0
 
