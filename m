@@ -1,52 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032182;
-	b=47egjU8twcjN9mCstmXnEZQ1Gubf6WuUM0bvo3SnyThuNflhI2qfD6VYHAv4Q7/Igw/1
-	 F8jaWlEVe2ULEiyGgjBl9rszFpde8NTvHkDlhaiv4C3BFfld9P8x+RLR9NAuISDuuPgPQ
-	 ovmy6ikdTsiYPw052g6j22GdoXG7zw0Kdq4EBCVMWMPAsrjZsQeThHeF1ktprm5VOlKIt
-	 s6USzULX/XHlGlehWgQ/oTjxAn4RDCv7ApdXNgMYEqU6S4MXIarh7e2fuO0NPWI1eqxxR
-	 dtzy3yvdmZlHgzbsO1IDdvzhbQhqTUe1MksNv7oe+2rw8g9pQlolS0bb5E+5f6KpN2g==
+	t=1795032185;
+	b=KTDmL2DJrIPiOFcwL6vj40Bvtl10I/qcWuSAN3aZMNkkgeN3PLJnxuRsUvhxBmwWMLrO
+	 kn4CogPAmCNnE0UdVrpKTeFiqiEcuWf2/fBr4w7A06s++XzIteyG647lUxe8DllCvIkcN
+	 v6vcRzmJZME0eyDSrVWDSsvY5mlNF87/7/PQRE4ptTKPDEGjqtn9EHXb3+azjL1fvo1VZ
+	 qKSCOKa1emefQ9cW8ogs2zQzyE9CBZg2dsiRuHA87Uh9Al9szkBH4T2uOI2GVi3RtwBrR
+	 9KFYT2CDmvQm5/AxyQkyHxwWTx8hdU7dhf82G852yQBdQkrY69TgFwpxuAChgPbxJOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032182;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032185;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Moskcn3DPxQKZDRR2dhyP/c9zKNsnFz91fxml4yvYPM=;
-	b=VTkkTtMmLek1fs+gW8x2ECB7/bmLfHu6IGxVka9DX92vpKneCbEQAoeNWzu/T09qapyT
-	 R9edV3TZcCSVuc6p8PlOpx6FGMQlhyT1saLNwDcRd0eSnGkQKNAsrH1rF4h3ouNNKa4Lt
-	 rwUCUHHGVSLvTMqpgXaSOGIB+PkZOWQFK0v6j3yJf5/YYaImf80fFjBGp1zThzktOE+iD
-	 Xo9IU6vrKAtW1yxHix5Q0PzlPcNjnuX2u0gJnMpHw1kSRvid9PR7vIwmZlFZ7J8JQx+fK
-	 1R/XkO0x27Qzl3Qzms1aVT0xL5bihsphxutOXrBZagmGGtLpNv+nEv8wj7seD3qx2zg==
+	bh=+kOsUwp7yzTkpgfr5qtp3++vqYuo9T0exERldOlkDxg=;
+	b=cnsWJhWWKMo8/Cr4bPaIz+RbskvbFltqMrIX5J3SSqak4nnWDmYpED5LMOyuwyRp8f/G
+	 cBugEBiHWkFhe5Mu8JUAABgux4G/ejyt7RNnKuX6atjrfTeHKhQjdC1FGYTL7h6rIZnHf
+	 aBndMHrTNWjD+cmf1sosmJfAnBplm9xnwgy5QjCtcG7rxi7uvA2dslGFKafY9mjjcxndp
+	 h/AI13xW90yNd1T+A+8P8UZ14Q2mUjuu5OaDTJv1Ryl4X9PldoXuGokCoR0THCGCQB6CN
+	 myVsLUm7/TmKDAbsabSTPmm9Jv5AS2Sbv/mGK8rImjj3NCnMv/aTTMQR6jqIPs/BBkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nc1BHt0B;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T6xbEjT7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF840606A31C;
-	Wed, 18 Nov 2026 20:03:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45485606A31C;
+	Wed, 18 Nov 2026 20:03:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nc1BHt0B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA671F000C4;
-	Wed, 18 Nov 2026 20:03:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T6xbEjT7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27B41F000C4;
+	Wed, 18 Nov 2026 20:03:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032182;
-	bh=Moskcn3DPxQKZDRR2dhyP/c9zKNsnFz91fxml4yvYPM=;
+	s=korg; t=1795032185;
+	bh=+kOsUwp7yzTkpgfr5qtp3++vqYuo9T0exERldOlkDxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nc1BHt0Bn6PTUP1q9YamXMSMN/NguIRuaae92RVjLbJHbq0f5QUaoYkXIk87PvBds
-	 WNycucb1mFL+328Z2IdrUhNcQYfPp5S40umv7nx/9OMEXHvQNj9/EtrXy4++fC91Pi
-	 6cl48zcuDtq3Y8hydg3mgGV0Nk9cttsSYr8Nmz2c=
+	b=T6xbEjT7rJRv2OCaAPT2QMXsthHTjjXCH5nKYqq/+hFBt16KvWbDJ0PYxGhKuOJFl
+	 EB7sfhofHVUEfF8BWX5nVjAtdu/kTAoVa1odzhQusasa42ixJeNLIpWfhggUnTA/PY
+	 av6aGDiv/nDq4tUAjuC4AUg8sDetHKwp1s3a44eM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Moroni <jmoroni@google.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Dust Li <dust.li@linux.alibaba.com>,
+	Sidraya Jayagond <sidraya@linux.ibm.com>,
+	Mahanta Jambigi <mjambigi@linux.ibm.com>,
+	Tony Lu <tonylu@linux.alibaba.com>,
+	Wen Gu <guwen@linux.alibaba.com>,
+	Willy Tarreau <w@1wt.eu>,
+	Atharva Vartak <atharva.a.vartak@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1284/1756] RDMA/irdma: Fix FRWR IRDMAQPSQ_PBLADDR field population
-Date: Wed, 18 Nov 2026 15:56:51 +0100
-Message-ID: <20261118150100.678123780@linuxfoundation.org>
+Subject: [PATCH 6.12 1320/1756] net/smc: hold a reference on net_device returned by pnet_find_base_ndev()
+Date: Wed, 18 Nov 2026 15:57:27 +0100
+Message-ID: <20261118150101.983499968@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,48 +75,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Moroni <jmoroni@google.com>
+From: Atharva Vartak <atharva.a.vartak@gmail.com>
 
-[ Upstream commit 59df57262e6fa9e6f4aa76d6d324134777c702a0 ]
+[ Upstream commit e6435b2cc5fdf008cdb67ad9a811a266e8ac9c1e ]
 
-Previously, the IRDMAQPSQ_PBLADDR FRWR WQE field was being populated
-using a mask that was right-shifted, whereas it should have been the
-address being right-shifted.
+pnet_find_base_ndev() resolves the base net_device for stacked devices
+under RTNL, then drops the lock and returns the raw pointer without
+taking a reference.  All three callers dereference the pointer after
+RTNL has been released, creating a use-after-free window if the device
+is concurrently unregistered.
 
-This ended up working fine in many cases because the lowermost 12 bits
-are always zero (the addresses are page aligned) and the uppermost 12
-bits are usually zero too, but it could break for DMA addresses that
-are wider than 52 bits.
+Take a reference with netdev_hold() before dropping RTNL and add the
+matching netdev_put() in every return path of the three callers:
 
-Fix this by right-shifting the address instead of the mask, similar
-to how it was done in the original i40iw driver.
+  - smc_pnet_add_eth()
+  - smc_pnet_find_roce_by_pnetid()
+  - smc_pnet_find_ism_by_pnetid()
 
-Tested with NFS over RDMA with some added debug logs to ensure it
-was hitting both the direct (single page) path as well as multi
-page (< 512).
+Found by code analysis, confirmed with a proof-of-concept that triggers
+a KASAN slab-use-after-free report.
 
-Fixes: 3f49d6842569 ("RDMA/irdma: Implement HW Admin Queue OPs")
-Signed-off-by: Jacob Moroni <jmoroni@google.com>
-Link: https://patch.msgid.link/20261015161756.3078300-1-jmoroni@google.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 0afff91c6f5e ("net/smc: add pnetid support")
+Fixes: 1619f770589a ("net/smc: add pnetid support for SMC-D and ISM")
+Cc: "D. Wythe" <alibuda@linux.alibaba.com>
+Cc: Dust Li <dust.li@linux.alibaba.com>
+Cc: Sidraya Jayagond <sidraya@linux.ibm.com>
+Cc: Mahanta Jambigi <mjambigi@linux.ibm.com>
+Cc: Tony Lu <tonylu@linux.alibaba.com>
+Cc: Wen Gu <guwen@linux.alibaba.com>
+Cc: Willy Tarreau <w@1wt.eu>
+Signed-off-by: Atharva Vartak <atharva.a.vartak@gmail.com>
+Link: https://patch.msgid.link/20261007040009.137568-1-atharva.a.vartak@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/ctrl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/smc/smc_pnet.c | 29 ++++++++++++++++++++++-------
+ 1 file changed, 22 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/infiniband/hw/irdma/ctrl.c b/drivers/infiniband/hw/irdma/ctrl.c
-index 16dbb1d350425..9f9e6829a889c 100644
---- a/drivers/infiniband/hw/irdma/ctrl.c
-+++ b/drivers/infiniband/hw/irdma/ctrl.c
-@@ -1326,7 +1326,7 @@ int irdma_sc_mr_fast_register(struct irdma_sc_qp *qp,
- 			 info->first_pm_pbl_index >> 16);
- 	set_64bit_val(wqe, 8,
- 		      FIELD_PREP(IRDMAQPSQ_FIRSTPMPBLIDXHI, temp) |
--		      FIELD_PREP(IRDMAQPSQ_PBLADDR >> IRDMA_HW_PAGE_SHIFT, info->reg_addr_pa));
-+		      FIELD_PREP(IRDMAQPSQ_PBLADDR, info->reg_addr_pa >> IRDMA_HW_PAGE_SHIFT));
- 	set_64bit_val(wqe, 16,
- 		      info->total_len |
- 		      FIELD_PREP(IRDMAQPSQ_FIRSTPMPBLIDXLO, info->first_pm_pbl_index));
+diff --git a/net/smc/smc_pnet.c b/net/smc/smc_pnet.c
+index f2849e030004d..17455ec6010f4 100644
+--- a/net/smc/smc_pnet.c
++++ b/net/smc/smc_pnet.c
+@@ -30,7 +30,8 @@
+ #include "smc_core.h"
+ 
+ static struct net_device *__pnet_find_base_ndev(struct net_device *ndev);
+-static struct net_device *pnet_find_base_ndev(struct net_device *ndev);
++static struct net_device *pnet_find_base_ndev(struct net_device *ndev,
++					      netdevice_tracker *tracker);
+ 
+ static const struct nla_policy smc_pnet_policy[SMC_PNETID_MAX + 1] = {
+ 	[SMC_PNETID_NAME] = {
+@@ -348,6 +349,7 @@ static int smc_pnet_add_eth(struct smc_pnettable *pnettable, struct net *net,
+ 	struct smc_pnetentry *tmp_pe, *new_pe;
+ 	struct net_device *ndev, *base_ndev;
+ 	u8 ndev_pnetid[SMC_MAX_PNETID_LEN];
++	netdevice_tracker base_tracker;
+ 	bool new_netdev;
+ 	int rc;
+ 
+@@ -357,10 +359,13 @@ static int smc_pnet_add_eth(struct smc_pnettable *pnettable, struct net *net,
+ 	rc = -EEXIST;
+ 	ndev = dev_get_by_name(net, eth_name);	/* dev_hold() */
+ 	if (ndev) {
+-		base_ndev = pnet_find_base_ndev(ndev);
++		base_ndev = pnet_find_base_ndev(ndev, &base_tracker);
+ 		if (!smc_pnetid_by_dev_port(base_ndev->dev.parent,
+-					    base_ndev->dev_port, ndev_pnetid))
++					    base_ndev->dev_port, ndev_pnetid)) {
++			netdev_put(base_ndev, &base_tracker);
+ 			goto out_put;
++		}
++		netdev_put(base_ndev, &base_tracker);
+ 	}
+ 
+ 	/* add a new netdev entry to the pnet table if there isn't one */
+@@ -940,10 +945,13 @@ static struct net_device *__pnet_find_base_ndev(struct net_device *ndev)
+  * (for instance with bonding slaves), just the first device
+  * is used to reach a base device.
+  */
+-static struct net_device *pnet_find_base_ndev(struct net_device *ndev)
++static struct net_device *pnet_find_base_ndev(struct net_device *ndev,
++					      netdevice_tracker *tracker)
+ {
+ 	rtnl_lock();
+ 	ndev = __pnet_find_base_ndev(ndev);
++	/* keep ndev alive after dropping RTNL, callers must netdev_put() */
++	netdev_hold(ndev, tracker, GFP_KERNEL);
+ 	rtnl_unlock();
+ 	return ndev;
+ }
+@@ -1080,17 +1088,20 @@ static void smc_pnet_find_roce_by_pnetid(struct net_device *ndev,
+ {
+ 	u8 ndev_pnetid[SMC_MAX_PNETID_LEN];
+ 	struct net_device *base_ndev;
++	netdevice_tracker base_tracker;
+ 	struct net *net;
+ 
+-	base_ndev = pnet_find_base_ndev(ndev);
++	base_ndev = pnet_find_base_ndev(ndev, &base_tracker);
+ 	net = dev_net(ndev);
+ 	if (smc_pnetid_by_dev_port(base_ndev->dev.parent, base_ndev->dev_port,
+ 				   ndev_pnetid) &&
+ 	    smc_pnet_find_ndev_pnetid_by_table(base_ndev, ndev_pnetid) &&
+ 	    smc_pnet_find_ndev_pnetid_by_table(ndev, ndev_pnetid)) {
+ 		smc_pnet_find_rdma_dev(base_ndev, ini);
++		netdev_put(base_ndev, &base_tracker);
+ 		return; /* pnetid could not be determined */
+ 	}
++	netdev_put(base_ndev, &base_tracker);
+ 	_smc_pnet_find_roce_by_pnetid(ndev_pnetid, ini, NULL, net);
+ }
+ 
+@@ -1098,13 +1109,16 @@ static void smc_pnet_find_ism_by_pnetid(struct net_device *ndev,
+ 					struct smc_init_info *ini)
+ {
+ 	u8 ndev_pnetid[SMC_MAX_PNETID_LEN];
++	netdevice_tracker base_tracker;
+ 	struct smcd_dev *ismdev;
+ 
+-	ndev = pnet_find_base_ndev(ndev);
++	ndev = pnet_find_base_ndev(ndev, &base_tracker);
+ 	if (smc_pnetid_by_dev_port(ndev->dev.parent, ndev->dev_port,
+ 				   ndev_pnetid) &&
+-	    smc_pnet_find_ndev_pnetid_by_table(ndev, ndev_pnetid))
++	    smc_pnet_find_ndev_pnetid_by_table(ndev, ndev_pnetid)) {
++		netdev_put(ndev, &base_tracker);
+ 		return; /* pnetid could not be determined */
++	}
+ 
+ 	mutex_lock(&smcd_dev_list.mutex);
+ 	list_for_each_entry(ismdev, &smcd_dev_list.list, list) {
+@@ -1118,6 +1132,7 @@ static void smc_pnet_find_ism_by_pnetid(struct net_device *ndev,
+ 		}
+ 	}
+ 	mutex_unlock(&smcd_dev_list.mutex);
++	netdev_put(ndev, &base_tracker);
+ }
+ 
+ /* PNET table analysis for a given sock:
 -- 
 2.53.0
 
