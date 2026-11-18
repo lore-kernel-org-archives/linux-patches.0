@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021102;
-	b=MQhRdych3agrKsjIk3j2t7OL05pzJ1aQde439xSf3pZLFYJnrkRFmhqexf6QYlgl2RuE
-	 yhpD2hKrOUTHr6TdQ81qBHM1fjT0tfhTR20SyMoXnizAw1YIAaGFqwy3RJ3Wq/s02szlt
-	 5aqgSlLNuSQZuMCW4WchYiqmT9541HBy3IT+Le5of670MXWz+q1WpsIUqwM2bZtMEchOx
-	 UdQAUmbYTYKzvkwxnMdw4G2+AOdTHX6hrbq3WwiDbUqJMKgHZYKJcwWgVC6AAN/tMOc6L
-	 Qp7zfqavSATaEGg5uC1Z6AuIdMQdAFboPVmDr2uicwxHRrzYCFCfVdxX+3QEKkX7+4w==
+	t=1795021106;
+	b=pOb+7bNSU2YzzGUOKJiOD8q3F6fQHUDFcgTAgyvbBb1BkXbzACM1hJiWwJGWO48bbCGZ
+	 XgtGg+KQ8dDDQzlAdvKZVdxgNCCx1qqaXm0kESRLWOPKO0Qn3tj6dr+ccuIn08zNlN4Sz
+	 HJQRyE+P175Y2Geozq2I8YHeai9f4TcRoKgN7qNALI1Z+YzX27LsjcltEluOFXYpbybwk
+	 8RG0V0y0ZgPLGWpVEXb/gJTHF7mogS5vO7aDLCKuV4e9seJnP/QgiE2RcSn7+WlhfipyS
+	 m9eOC6kYEP/yZPO2KFhMxO2TRZG3NTG96n9veEpEPcqdg4pk+w3T8ZXHmxGLyWOlYmQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021102;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021106;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Zyz4a/on31oywtBlXmLSlu++L6KvkIXismKGU6AI24o=;
-	b=Yal2VKrk2HFwvRN7yIcBEJrNNELMu91XYW3op5/qo/1OgGellx+Daji6z36UffUp75sK
-	 yc900tjrRHSd8sz0Ny9P3GJeZdQ0J+ZdzAOodsBaQe9uEP3fqFsvKDoqVSbGx+zgoRJfl
-	 MhibesjOPsZ1WQL1TQIkxCWMXpqlAfLmMpLyECmqGKT15s2l4ba39aBlKBryKguNykwuA
-	 EeTsgN7xaGJLQH3UfYGU4UvDFnwJvtXRsjLjQ2m/0hnBI/zjfkSyLYBpT1T76tlZKkeBe
-	 V5Zlq84khgaAiwEqCZts29URTvI5x6hihPGAN/FLWzOMWG0NiGtuDDhu4bSM7m6JvpA==
+	bh=EwUz4ACb6pkfZQYWUpgpxZwlQBZIHfB7CoNCJPMvMaE=;
+	b=2M/rJ/PlRDfR1g4elHVCHDK3FWwMnJOitniOCPnAFS66fDjPWAZh20K09xXDcew+IC5s
+	 gFzPvKl5sDnqeAS3b5pAcnlFtfNaYaWTwzmUrjB7Fcma+jd2vkgzWmECc5F8nnm39VcK7
+	 /xny821KHajbVt7ju4oDQvjDvCMRBvSKRUpqfV+MwoTusQ3KWDzHNYRvTfOTvnABzuG2f
+	 fytdN3u7w5pNlWDurJkvsN19vXkbu3+Xrrfi61D5XizGovLC37Y2av7LKB0501lN64i6N
+	 aGTU/hSbUVGzcYFVIjrcaMvKOQ0YViQDwgffcS86NRDzbclrMYukxK2Oya8CRARxP/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="g/HeEGpy";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="0JijM/0N";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9D1606A320;
-	Wed, 18 Nov 2026 16:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B05606A31C;
+	Wed, 18 Nov 2026 16:58:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g/HeEGpy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15CF51F000C4;
-	Wed, 18 Nov 2026 16:58:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0JijM/0N
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB2E51F000C7;
+	Wed, 18 Nov 2026 16:58:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021102;
-	bh=Zyz4a/on31oywtBlXmLSlu++L6KvkIXismKGU6AI24o=;
+	s=korg; t=1795021106;
+	bh=EwUz4ACb6pkfZQYWUpgpxZwlQBZIHfB7CoNCJPMvMaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g/HeEGpyv1jEXn3ypttQFBI7ES7pg9PIYTsO34vfzqOOUYaJ7aRz7aO+pAjLXNo8o
-	 1OqBttMX0KvJl7gd21guqKwUWagY9bWPnWHd/ETsfd2USV/EZVoSPzayHZ3CHoDls5
-	 OAmWghri1tXGHwHiZR4Gf3OzNgHeVIQDPMI/hg78=
+	b=0JijM/0Nk9mMthUC16aDDIq/vNGZf9+q4HtV1kzzoj+gb/pK3Yyqpqzv5eb6nkx/T
+	 DuHkj5NcdywWr2EMtSF9mlyjSkQvDzlxgDJ1ezzOB+J5gbQu1MgNikE4E1+JvjvEv3
+	 WX7g26zxzdqdWZKD4QM0YjmgD1Qe9b/lx8bGpl74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Magnus Lindholm <linmag7@gmail.com>,
-	Ian Rogers <irogers@google.com>,
-	Matt Turner <mattst88@gmail.com>,
+	KaFai Wan <kafai.wan@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2147/2651] alpha: fix stale user_stack_pointer()
-Date: Wed, 18 Nov 2026 15:56:27 +0100
-Message-ID: <20261118150403.136887630@linuxfoundation.org>
+Subject: [PATCH 7.3 2148/2651] selftests/bpf: Fix stack arg pruning test JOIN log expectation
+Date: Wed, 18 Nov 2026 15:56:28 +0100
+Message-ID: <20261118150403.172028405@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,74 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Turner <mattst88@gmail.com>
+From: KaFai Wan <kafai.wan@linux.dev>
 
-[ Upstream commit bceba446fa2bc66a905ec0bbf6fd80e98701c1d1 ]
+[ Upstream commit 8342d47ad791d70a42ab9cf262bd477fb41fdff2 ]
 
-PALcode keeps the user stack pointer in the PCB, not the trap frame, so
-pt_regs->usp is only valid where entry code stores it: entSys,
-do_entArith() and do_entIF(). Interrupts, page faults and unaligned
-traps leave it stale, and ptrace and /proc/<pid>/syscall read it
-through user_stack_pointer().
+Commit f414d20879ae ("bpf: Save DFS postorder numbers for program
+instructions") changed bpf_compute_postorder() to use a real DFS, which
+changes the postorder of this test's instructions and thus the insn edge
+the arg track join at insn 10 is reported on:
 
-A user-mode pt_regs is at the top of its task's stack, so find the
-thread_info from it and use rdusp() for current or pcb.usp otherwise,
-as KSTK_ESP() and the regset code already do.
+  arg JOIN insn 8 -> 10 r1: _ + fp0-8 => fp0-8|fp0+0
+  arg JOIN insn 8 -> 10 sa0: _ + fp0-8 => fp0-8|fp0+0
 
-Fixes: 8a2857bc2b30 ("alpha: enable regset-based ptrace and core dumps")
-Assisted-by: Claude:claude-opus-5-5
-Reviewed-by: Magnus Lindholm <linmag7@gmail.com>
-Tested-by: Magnus Lindholm <linmag7@gmail.com>
-Acked-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Link: https://lore.kernel.org/r/20261018-alpha-perf-regs-v3-v3-1-52be85332c57@gmail.com
-Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
+Update the r1 and sa0 expectations to the new output.
+
+Fixes: f414d20879ae ("bpf: Save DFS postorder numbers for program instructions")
+Signed-off-by: KaFai Wan <kafai.wan@linux.dev>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261018005348.2195130-4-kafai.wan@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/alpha/include/asm/ptrace.h |  7 +------
- arch/alpha/kernel/ptrace.c      | 12 ++++++++++++
- 2 files changed, 13 insertions(+), 6 deletions(-)
+ tools/testing/selftests/bpf/progs/verifier_stack_arg.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/alpha/include/asm/ptrace.h b/arch/alpha/include/asm/ptrace.h
-index 8e0a589e2d15b..14e8b1a2ee024 100644
---- a/arch/alpha/include/asm/ptrace.h
-+++ b/arch/alpha/include/asm/ptrace.h
-@@ -24,11 +24,6 @@ static inline unsigned long regs_return_value(struct pt_regs *regs)
- 	return regs->r0;
- }
- 
--/* Helpers for working with the user stack pointer */
--static inline unsigned long user_stack_pointer(struct pt_regs *regs)
--{
--	/* Valid for user-mode regs */
--	return regs->usp;
--}
-+unsigned long user_stack_pointer(struct pt_regs *regs);
- 
- #endif
-diff --git a/arch/alpha/kernel/ptrace.c b/arch/alpha/kernel/ptrace.c
-index fc8f6cedbb286..0ba9a2da17ba2 100644
---- a/arch/alpha/kernel/ptrace.c
-+++ b/arch/alpha/kernel/ptrace.c
-@@ -405,6 +405,18 @@ ptrace_cancel_bpt(struct task_struct * child)
- 	return (nsaved != 0);
- }
- 
-+/*
-+ * PALcode keeps the user stack pointer in the PCB, not the trap frame.
-+ * A user-mode pt_regs sits at the top of its task's stack, so the
-+ * thread_info is at the base.
-+ */
-+unsigned long user_stack_pointer(struct pt_regs *regs)
-+{
-+	struct thread_info *ti = (void *)((unsigned long)regs & -THREAD_SIZE);
-+
-+	return ti == current_thread_info() ? rdusp() : ti->pcb.usp;
-+}
-+
- void user_enable_single_step(struct task_struct *child)
+diff --git a/tools/testing/selftests/bpf/progs/verifier_stack_arg.c b/tools/testing/selftests/bpf/progs/verifier_stack_arg.c
+index 7e0ce5db28a0d..14152dae2a8f0 100644
+--- a/tools/testing/selftests/bpf/progs/verifier_stack_arg.c
++++ b/tools/testing/selftests/bpf/progs/verifier_stack_arg.c
+@@ -116,8 +116,8 @@ SEC("tc")
+ __description("stack_arg: pruning with different stack arg types")
+ __failure __log_level(2)
+ __flag(BPF_F_TEST_STATE_FREQ)
+-__msg("arg JOIN insn 9 -> 10 r1: fp0-8 + _ => fp0-8|fp0+0")
+-__msg("arg JOIN insn 9 -> 10 sa0: fp0-8 + _ => fp0-8|fp0+0")
++__msg("arg JOIN insn 8 -> 10 r1: _ + fp0-8 => fp0-8|fp0+0")
++__msg("arg JOIN insn 8 -> 10 sa0: _ + fp0-8 => fp0-8|fp0+0")
+ __msg("R{{[0-9]}} invalid mem access 'scalar'")
+ __naked void stack_arg_pruning_type_mismatch(void)
  {
- 	/* Mark single stepping.  */
 -- 
 2.53.0
 
