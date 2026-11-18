@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024283;
-	b=y2233kVA5NE9ZmZScoi94dUDBku5ifqwSlYgRdGBwXdArMy67Lpzo+sPIRvWh6NBBoih
-	 nVpmqQNYb7Vit1odk3mcU1CwZm+pEvAWmDr8xa5FVrFe72UmkWrrdPXPhFrlfIJvoNeKm
-	 b60WLyXBRlLAxSSE4MjI4+2PpB4tqDRoRIjrk2VgislvRU7tcPkri4PkZ06oVPY0PeheI
-	 bKna+EHQtBqUcfJraZAmpkm/+SqXV3nj92ENiJyn0LosHn0g7WVW6wiXYKNBwYAZ3RsPy
-	 kGV0FrmIXSFRBZQQvsCFSDk8DK+jlFPshN/MCJYOzu8gcz24ORNhUxBRzn6gS8bOTTA==
+	t=1795024285;
+	b=YJTwmJA6hGztcAwN8ZzKQPlMBa4lMQ6WmxNimNH8dqP08gD1Vs+nMGdaXKeW5RORK0en
+	 wW5o/eyN9S5jmTec0wl6jNYY+Fjx+Tii9vCKsM6zgayKRTG4hu2qQpNQ8qr0Ka7l1KA79
+	 KjNAdXj96GPXDbmaRNI0hpzGrxZuzxfb3+YwhDUK5+gBkGbO/xUm6ki7BQo+K4hq4KtpF
+	 7DiN+6sxQbyEjOgwC7vQQDZ3kmwwbgy88Y/AgnmtK2Sc7WANNWzpfxGBcn/W2ZrgYl5XG
+	 6Aeo1yUMUGq6SPxQfq9XjTVnd854iWWwnsH3FD9cLCBQRJ514K/VsLvJn9cFgF8Cd1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024283;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024285;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0ntIps/DShshIakJ9MDbrk8LYPbMqxzRCsCwaZm+Ti0=;
-	b=u+bSPXeK8JQk6WcyOWGKjsb1FwENIT4bsf2NEdz/T0eb00og0+C+Ufnc7Ee74Y4UGLt/
-	 1FvYZd5hJi+hnfGTr/ih16xGtXX4HYHuJyAFM1vqI4V6VrjRemr91AVQTbYzVl93CPwmt
-	 KLL8XahQuldMtKHYJPywFt3qok5s400Pci1oD0MO695ghKYMx17x3qqK1RIuego4nSB8Z
-	 xFw4NhGCYoUUsWe59atV8Ab8fERdE62YheVIw8MTyg+pR/yHTyypFklqQcwDxMGELJCWj
-	 MJhaJ6lznVCd3dCcJVJBgmheR/Ceaiv6Th8LT/OtbYuVnJBNSuil9QZynmam3zzR9Mw==
+	bh=FgUk63BQhJWWLODEiafR+M/TcLDWjRdd0GknTfGR+s8=;
+	b=dE4RGz4O9hW3xowFQngu0txDwpVXwspE0TZKlrjV7FFHcTakUsQS2fTEoHUqoSRMR3T6
+	 rNX4xEcRWA1NQtAqT5xEEgfggfhovb/Xvubh/j9TyTrs8b84gHNUKuFUOme6djbHV3uiG
+	 ue2ZNPyZSzg81ZKvkb23Sj03QxlS1MMtLllOlhXLpXoHhFXqF4AIvNPxFd5N0y9x4YrH1
+	 pQUn3UPjcBvjQy1varq11UtdLyreq8T0uZzGvA2e5acB/kIEHydWMDd2KKFnhdfqIyJSt
+	 FEDz9MqtKYL0z/QT5HEW+lbYMHmy/7jgJ0IZasq6D/ukNHuCLbLc408/qGxMLCJ8o5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sIPbVkuX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="MNG/i7Aj";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4909D606A31C;
-	Wed, 18 Nov 2026 17:51:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8532606A320;
+	Wed, 18 Nov 2026 17:51:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sIPbVkuX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 207D21F000C4;
-	Wed, 18 Nov 2026 17:51:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MNG/i7Aj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04E2C1F000C5;
+	Wed, 18 Nov 2026 17:51:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024282;
-	bh=0ntIps/DShshIakJ9MDbrk8LYPbMqxzRCsCwaZm+Ti0=;
+	s=korg; t=1795024285;
+	bh=FgUk63BQhJWWLODEiafR+M/TcLDWjRdd0GknTfGR+s8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sIPbVkuX8eaRsje/QPxB7gxLGdCK+C+uD7bF8430bOytal2EPHW29eGhbF4CGanas
-	 RtMaYl92Ahhv8HEXeRs+ZzZMzWS/tMA7QeIn9Nya+0h+TBe04nMN5aGVmN3rP+hE77
-	 5IuRlP/HpVlO2WBntA2dGRs4OzdYK44hMZDAO8DU=
+	b=MNG/i7AjjH4r5QFvIBZIGiEjzFZFJa0GGF30k9gv3IHNYq/V0drdG2mYMyegyMmxW
+	 dDBKcq0J+WcCZ3hLsraeEjtoB/go0XoLv+/ySQXU/6QBrvhjW02WeYSlGMnDch4O/Y
+	 TTc2IOhkyhT26AvOzuCezwpwd1KQ2UVcmQPMY6tc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oualid Derouiche <oualid.derouiche@kontron.de>,
-	Frieder Schrempf <frieder.schrempf@kontron.de>,
-	Frank Li <Frank.Li@nxp.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Esteban Urrutia <esteuwu@proton.me>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0670/2151] arm64: dts: imx8mp-kontron: Fix LVDS clock frequency for DL device
-Date: Wed, 18 Nov 2026 15:40:05 +0100
-Message-ID: <20261118150146.224770045@linuxfoundation.org>
+Subject: [PATCH 6.18 0671/2151] clk: qcom: dispcc-sm8450: Fix disp_cc_mdss_mdp_clk_src ops
+Date: Wed, 18 Nov 2026 15:40:06 +0100
+Message-ID: <20261118150146.263026201@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,54 +69,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oualid Derouiche <oualid.derouiche@kontron.de>
+From: Esteban Urrutia <esteuwu@proton.me>
 
-[ Upstream commit a5f316e602d3f5852fe2f88226fe64c8a495f479 ]
+[ Upstream commit 8464e2284fec42d9fd05f3109d8b209d65864ece ]
 
-The panel needs a pixel clock of 50 MHz, which means the LDB
-serializer has to run at 50 MHz * 7 = 350 MHz. The LDB rate itself
-is set by the fsl-ldb driver, but VIDEO_PLL1 needs to be pinned to
-700 MHz, so that both the LDB clock (/2) and the pixel clock (/14)
-can be derived from it exactly.
+If the clock frequency is changed at registration time, a flicker will be
+visible at boot.
+Switching to clk_rcg2_shared_no_init_park_ops fixes this.
 
-Fixes: 946ab10e3f40 ("arm64: dts: Add support for Kontron OSM-S i.MX8MP SoM and BL carrier board")
-Signed-off-by: Oualid Derouiche <oualid.derouiche@kontron.de>
-Signed-off-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Fixes: 16fb89f92ec4 ("clk: qcom: Add support for Display Clock Controller on SM8450")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Esteban Urrutia <esteuwu@proton.me>
+Link: https://lore.kernel.org/r/20260713-sm8450-qol-dispcc-v3-1-56fd05822270@proton.me
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp-kontron-dl.dtso | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/clk/qcom/dispcc-sm8450.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-kontron-dl.dtso b/arch/arm64/boot/dts/freescale/imx8mp-kontron-dl.dtso
-index 7131e9a499ae1..7a7d7ea21110d 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-kontron-dl.dtso
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-kontron-dl.dtso
-@@ -6,6 +6,7 @@
- /dts-v1/;
- /plugin/;
- 
-+#include <dt-bindings/clock/imx8mp-clock.h>
- #include <dt-bindings/gpio/gpio.h>
- #include "imx8mp-pinfunc.h"
- 
-@@ -98,6 +99,16 @@ &ldb_lvds_ch0 {
- 
- &lvds_bridge {
- 	status = "okay";
-+	/*
-+	 * The video PLL clock frequency needs to be configured manually.
-+	 * The panel needs a LVDS clock of 50 MHz * 7 = 350 MHz.
-+	 * IMX8MP_CLK_MEDIA_LDB = IMX8MP_CLK_MEDIA_DISP2_PIX * 7
-+	 * IMX8MP_VIDEO_PLL1 = IMX8MP_CLK_MEDIA_LDB * 2
-+	 */
-+	assigned-clocks = <&clk IMX8MP_CLK_MEDIA_LDB>,
-+			  <&clk IMX8MP_VIDEO_PLL1>;
-+	assigned-clock-parents = <&clk IMX8MP_VIDEO_PLL1_OUT>;
-+	assigned-clock-rates = <0>, <700000000>;
+diff --git a/drivers/clk/qcom/dispcc-sm8450.c b/drivers/clk/qcom/dispcc-sm8450.c
+index 2e91332dd92ab..251b53dc08170 100644
+--- a/drivers/clk/qcom/dispcc-sm8450.c
++++ b/drivers/clk/qcom/dispcc-sm8450.c
+@@ -614,7 +614,7 @@ static struct clk_rcg2 disp_cc_mdss_mdp_clk_src = {
+ 		.parent_data = disp_cc_parent_data_5,
+ 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_5),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
  };
  
- /* redefine to remove touch controller GPIOs */
 -- 
 2.53.0
 
