@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034172;
-	b=pjqHlzvfVNz0pks7i2Gs0Rt0U/3E30gRTZz6pIbACtcoxsIVQY1guwDtMbLBQTStRuA3
-	 hac++F04xLbc3cVg9wM0mgpAmJ1VEqJYw6q2viJMBCq20dOfXDQ2uInlVK2QLRMutZ9m3
-	 /HraGFg3M4kTkShp6fSKOnSp29LpNDsLVllRiKNdWvI8gAeplt/IoXUkMUOOpL6ShvwzF
-	 D14MwjteN+jnBvz9+7PIHeGNjAZSoSUc9TCxxVCwfxEnGCkRpcIgXOucV6mZTrVaYauYx
-	 KJLYB7lWDHq4+zvVy5CezMMLEx9A6GnRDJqabN8zQCq25ue+ZFLtV2Q33SWtQ1TjwaQ==
+	t=1795034174;
+	b=2v1dQ5PNJ3m+Ows6Q93l2ZHgEQjHx6dbFHJsf5epjP7l8h19F90C/jvVDETsbr1pRihg
+	 0MaLtxEo2NEhxK/57bHbvNX3pI7TpTX0dz8idm/HXTD9ESPpG4C9qnfkeCy6o+RttABu7
+	 B+XTV5oyKih380IBV/Bh40SA2PvjPdCPPwbFhiAb05J0V03gA4ppNLXDgTrOLkpVgTMIS
+	 v1BfrlEB7Xl0Uv7GdVGau8H3qgrzANrExh48/fW5JnJmQFADxr20svR67/ODz0UTaHsag
+	 2JI03adZynov7hTjcxEmXuJP5EuNdP0QlmtYvVKKI4Lh+W18prLl7QSBge/FXlRv1hQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034172;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034174;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZfqSGBWCB0DwDN2vhA8/zVtQEbM/CcCOW/JQnmNVs+c=;
-	b=hPJ3vCG+HiWs7ZRgCfOsoIyqU31bgKHQMgXJ70hcTL92Z01RBEZLUPSKbF+cn1xYV67l
-	 smndqU58zkeI/I+Ehpo7tFsqCLeIdLVZ1WAxYxcoPllUSc805UlvF0gPm15WAGj1hZPuZ
-	 le1xXPmRB9RzX0pQqIsKAC1Z0AxQyIRIwBxwFuNV+wMQn4CH0eEj/tbI1YBDPin6pLOgf
-	 m+yl7DHjV/+/J6pOglSxkRDbi962fbWjjy7gsF/JijUKm4wIUX/kAAA8G88zRJk/+V83W
-	 PaUwjn1jfPtp/ICJWbyoEvxJqJ3KVZl2TPmHEYXwT+i1L6tKvVshftfUpNmzJY2jSXQ==
+	bh=lII/qKT9bn2Bb8/Wuw7Rqcl3eJJPBmGb5ylINnjiMAY=;
+	b=GAs408NNKf26IccZLqRonM8q5AHj34UH3k7ZuYQsQ8SEO5FafiSiXkQqbAIoQvXfb6B0
+	 OXdr/hS3QH9XjCjRq8H/G2qls9wB/mchyX1WJy7xeKfLtc7yMLer4UXu5uS+u/OZI60kl
+	 6rE1TDN8/TsqgSQd/MBzDX5dE9mUnM4JRuMCYGj5TjX9Dd+3lVHB9IxWpiD/FRvuzOL9t
+	 01/Haii0K7L7mH0NL/prpch/OYxbmTW6JOiYru76gLNad0YiASEW2/sOKiCgBxgL6Xcfx
+	 D1yaO8Nuezlovski7AlM7agkDnv/O1paLVgnQBD2dvddXgbexZVrKXBBXwUvMdnvlMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JZxCMeQx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EZsiQCKn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAACE60A2609;
-	Wed, 18 Nov 2026 20:36:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0AAB606A320;
+	Wed, 18 Nov 2026 20:36:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JZxCMeQx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6D1A1F000C5;
-	Wed, 18 Nov 2026 20:36:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EZsiQCKn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85C71F000C5;
+	Wed, 18 Nov 2026 20:36:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034171;
-	bh=ZfqSGBWCB0DwDN2vhA8/zVtQEbM/CcCOW/JQnmNVs+c=;
+	s=korg; t=1795034174;
+	bh=lII/qKT9bn2Bb8/Wuw7Rqcl3eJJPBmGb5ylINnjiMAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JZxCMeQx6IZr5LGtf6RcPmnpujN9yAmSXN5Tm7RtseoEc5yNsGemp7h8HCT48FDkw
-	 W9wMMEEdZT/5KMVBJSUp1V4iqpwS+cufi/R7cIXflOzbewcaliS7jJYWZZQvwmV53g
-	 g3nubbhnAbP2xH7wrZkzBuupRL7hcriy4nfOiMvQ=
+	b=EZsiQCKnGTMWR604IrhG3++Ku99C2oig1Koyzv8EkDqcs09Rjes8Zu1Lu33vo2BqC
+	 6xe/zQ5g5ViUxVy5uo8ehQ+WZ07CDDmK5y+H/1JZ+E0iDQIn9f8xfgvwuMnUZO+yAd
+	 AANoVlCtSLs+s071lZ9AKZajdaXbB/+U2WKNDnhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Changcheng <chenchangcheng@kylinos.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Michail Tatas <michail.tatas@gmail.com>,
+	Corey Minyard <corey@minyard.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0248/3318] Bluetooth: btrsi: Move set_bt_context after successful HCI registration
-Date: Wed, 18 Nov 2026 15:14:30 +0100
-Message-ID: <20261118150322.721343339@linuxfoundation.org>
+Subject: [PATCH 6.6 0275/3318] ipmi: Fix leak in __ipmi_bmc_register
+Date: Wed, 18 Nov 2026 15:14:57 +0100
+Message-ID: <20261118150323.729648989@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,65 +68,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Changcheng <chenchangcheng@kylinos.cn>
+From: Michail Tatas <michail.tatas@gmail.com>
 
-[ Upstream commit 290a3644609526f7ac12529cd1618042fa5a32db ]
+[ Upstream commit 18e633dd9674c8bf118ea8583bb5a531edc2728a ]
 
-In rsi_hci_attach(), ops->set_bt_context() stores the newly allocated
-h_adapter into common->bt_adapter before hci_alloc_dev() and
-hci_register_dev() are called. If either of these fails, h_adapter
-is freed but common->bt_adapter remains a non-NULL dangling pointer.
+In case that ida_alloc(&ipmi_bmc_ida,...) succeeds and then
+platform_device_register() fails, ipmi_bmc_ida is leaked.
+Fix by freeing the error path
 
-This causes a deterministically reachable use-after-free when the
-device operates in a BT+WiFi coexistence mode and CONFIG_RSI_COEX
-is enabled. The following software-only trigger paths exist:
-
-  1. SDIO driver .remove  (rsi_disconnect)
-  2. USB  driver .disconnect (rsi_disconnect)
-  3. SDIO driver .shutdown (rsi_shutdown)
-  4. Hibernation .freeze  (rsi_freeze)
-
-All four paths check:
-    if (IS_ENABLED(CONFIG_RSI_COEX) && coex_mode > 1 && bt_adapter)
-        rsi_bt_ops.detach(bt_adapter);  // use-after-free
-
-coex_mode is set during rsi_91x_init(), before rsi_hci_attach() is
-called, and is not cleared on attach failure. Since set_bt_context()
-already wrote bt_adapter before the failure, the deinit paths see a
-non-NULL dangling pointer and proceed to detach it.
-
-Fix this by moving set_bt_context() after hci_register_dev() succeeds.
-On failure paths bt_adapter stays NULL, and the deinit callers correctly
-skip the detach call.
-
-Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Michail Tatas <michail.tatas@gmail.com>
+Message-ID: <anUK_HOy_pCgvsBm@michalis-linux>
+Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btrsi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/char/ipmi/ipmi_msghandler.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/bluetooth/btrsi.c b/drivers/bluetooth/btrsi.c
-index 0c91d7635ac39..eb136488db093 100644
---- a/drivers/bluetooth/btrsi.c
-+++ b/drivers/bluetooth/btrsi.c
-@@ -117,7 +117,6 @@ static int rsi_hci_attach(void *priv, struct rsi_proto_ops *ops)
- 		return -ENOMEM;
- 
- 	h_adapter->priv = priv;
--	ops->set_bt_context(priv, h_adapter);
- 	h_adapter->proto_ops = ops;
- 
- 	hdev = hci_alloc_dev();
-@@ -146,6 +145,8 @@ static int rsi_hci_attach(void *priv, struct rsi_proto_ops *ops)
- 		goto err;
- 	}
- 
-+	ops->set_bt_context(priv, h_adapter);
-+
- 	return 0;
- err:
- 	h_adapter->hdev = NULL;
+diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghandler.c
+index 11e3012349c57..f0c8b4f1b551c 100644
+--- a/drivers/char/ipmi/ipmi_msghandler.c
++++ b/drivers/char/ipmi/ipmi_msghandler.c
+@@ -3257,6 +3257,7 @@ static int __ipmi_bmc_register(struct ipmi_smi *intf,
+ 	list_del(&intf->bmc_link);
+ 	mutex_unlock(&bmc->dyn_mutex);
+ 	intf->bmc = &intf->tmp_bmc;
++	ida_free(&ipmi_bmc_ida, bmc->pdev.id);
+ 	put_device(&bmc->pdev.dev);
+ 	goto out;
+ }
 -- 
 2.53.0
 
