@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055073;
-	b=1dlIBRP37Ct3s3UIlnIwRSA+Nnr+BpQ0XUptvLrY3vOBXjTn3RNtrcF2Y1R/4HfS8hZj
-	 kYT20tzTKPiloBYV3U4Qb4c3qUperMQV00p5ELbNmrHTlUCJKpIe6/stuJRe/SI4aYE7t
-	 R+VK5F+PvH/ukBt/zhi2YHezNYkMEd199EkKOFFQi1icVT8greL+uuvJAcjFQxu4f22fK
-	 aGbRgrkfLs3BWJCgSBQBOb/NrsgrjdwDpKGHLkZj6+Q19Y45iyIZWt3wKtlKU0uBHA2nH
-	 o4v6+5uE1lWcbKUtKA00d0A+usscqtEOjfE72aN7DH0EwAX6oisn1+eTXXDmxDKYM2w==
+	t=1795055076;
+	b=Dz8C5UTYHEkSYaYjv8Rl+GwFlAhH2rRpO9eLPw5WL32MQ0thQ5EHvewO9Ged/vyy1TsZ
+	 RSj2FbkQQ+tOY8xsU6o+aiX0zuRKAOxIhTG47Xir0j+WKrjiC42gXHM6uZtdhFgLg5fZI
+	 E7juuC2rOZzGD+u2tGlpy1qltSpUpZvBm22GbmkzVma0PI3Lv3VooM9L82FEE3Z5E0Fjz
+	 f5kHYoESkW5JMEDzwIkTziLOTyiD8c3E+tteMI12lH59THvDWVoF88XvRYIKcu80zLGhq
+	 SkwOXPB0mdNNzInWOLMOxnmqqCsWczmSsSNIujDp/770vKgBndrKMrej+o9Mkw0f51Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055073;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055076;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=STJF/+w0JnSKbgb/Rgtcif0kYkxtsYPuoEu94DZ72y0=;
-	b=PlJ4aEI/svBDxjbOVG0gfSLXIOOOKLGzXyp4vg8d/LQh+uPvDyIhpvdOT8+1bK5QrjJQ
-	 MOFTkP1FoGChUDeLlKNoDAAjrJOIU/6cZRP3kMd8pND21yHnkodm3Obm43lchpupCRXfT
-	 mZVHKhpecRquaXc5lHHUIqVVXEZ4RX1GnolUt1FqHXVde5WzaSAAC2zz9j86Ub0TgDI9l
-	 HB2OQp9IaXZnMkHzNlzYZIKmp+RiEgPm4yAosSwDxMZ7P4MScHn89nQrOCMvBt0plmaSr
-	 eNIE6YWTjb+tbRzsBzsCMcEEILowkuKRjYqAEqvUVWWTJekWOg6MdhJomquzellCBxA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=+miUAVw7L8OqifA3lCYTshtA6bv3uzQXlT+ROnaI4HY=;
+	b=gbTML3+UlGrKbRFkGSEdyY06MNnHefx0Hy+N6Vny9bK/LKILxjO/fUBExyH2hTGFfk6/
+	 3Zm13UxoLTTvR5rGZPzltEsqwnMGSkqcInNirFPimhNsBYZGiLcAj1ABSsPLptE1zFslo
+	 IT+SRKKDDo0NqnHp8NQ3r6d3Zc+FBZv1MRku2F2eo5gmcDJqabFfr61eqnktW3yOLrF0q
+	 zGvir+xvm3FJGGezZZ9rZXQ3pINyEwdTQrAD4MQpYfh55763280mb9Ix/ZzfrdEMcMycV
+	 /MKKSTMyG2SHFxV3rmCUEZpqr4RXb83M/0oZrTmWy/oZ/lIt37VH3Fs9u8rbeGqIpvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fvGYgc7D;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qp9mtaJB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F67606A320;
-	Thu, 19 Nov 2026 02:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF67606A325;
+	Thu, 19 Nov 2026 02:24:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fvGYgc7D
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2E071F000C4;
-	Thu, 19 Nov 2026 02:24:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qp9mtaJB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA5701F000C4;
+	Thu, 19 Nov 2026 02:24:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055073;
-	bh=STJF/+w0JnSKbgb/Rgtcif0kYkxtsYPuoEu94DZ72y0=;
+	s=korg; t=1795055076;
+	bh=+miUAVw7L8OqifA3lCYTshtA6bv3uzQXlT+ROnaI4HY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fvGYgc7DB+suaWqx6GYnexH/PAV1n3HQe0ylBzTRVT5IUGxnjK9x9Xqpm9h5GzFR8
-	 pRqvQsF1KErvq0DQQ+x4anrjUhq6/YEWSethUoY7LXLFuJXp834YgT6t+Joxha4Gjd
-	 5HchLjzs33poqQq6h+FmIXYILF6jOk/B1hmDbehw=
+	b=Qp9mtaJBQK8v/wMWhd13r235tbFbBkxXNY20vgkR1Mk9WNjgfpLoKO9yWOO2Q498x
+	 iNOUiWpTXKyjPL2Q5h4tCrwDBAoZRHY08R2OdWjmsKmVyKvAP3VJUUz+5V2nH0CkEg
+	 SR6evO5qzQ1d2kas6BxsRQzCmF+qEz0TMXfSugis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Michal Simek <michal.simek@amd.com>,
+	kernel test robot <lkp@intel.com>,
+	Babanpreet Singh <bbnpreetsingh@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1500/2214] microblaze: Pass -m{big,little}-endian through KBUILD_CPPFLAGS
-Date: Wed, 18 Nov 2026 15:52:56 +0100
-Message-ID: <20261118150111.725357344@linuxfoundation.org>
+Subject: [PATCH 5.15 1465/2214] regulator: ab8500: Remove stale expand_register kernel-doc entry
+Date: Wed, 18 Nov 2026 15:52:21 +0100
+Message-ID: <20261118150109.798536591@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,58 +63,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Babanpreet Singh <bbnpreetsingh@gmail.com>
 
-[ Upstream commit b9eababe8c0b9f71ce7f35f903879a7fcb6daebe ]
+[ Upstream commit 0991f3b4624ed713d1d5eb56520c1c9b2deaab7a ]
 
-These parameters are also necessary for preprocessed files which do not
-contain code. One example is arch/microblaze/kernel/vmlinux.lds.S which
-inspects __MICROBLAZEEL__ for the definition of 'jiffies_64'.
-As currently the endianness is not passed from the build system for this
-file, the preprocessor will instead use the default endianness of the
-toolchain. When a default big-endian toolchain is used to build a
-little-endian kernel, that kernel will hang during delay calibration
-as 'jiffies' never changes.
+Commit aeee55b76bfd ("regulator: ab8500: Remove unused embedded struct
+expand_register") deleted the expand_register member from struct
+ab8500_regulator_info and, in the same hunk, added an empty
+"@expand_register:" line to the kernel-doc block. That traded one W=1
+warning for another:
 
-Make sure all preprocessor invocations know about the correct endianness
-by passing it through KBUILD_CPPFLAGS. This will also be inherited by
-CFLAGS and AFLAGS.
+  drivers/regulator/ab8500.c:196 Excess struct member 'expand_register'
+  description in 'ab8500_regulator_info'
 
-Fixes: 02b08045a030 ("microblaze: Add support for little-endian Microblaze")
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://patch.msgid.link/20260914-kunit-microblaze-v2-2-7d5756e858f8@weissschuh.net
-Signed-off-by: Michal Simek <michal.simek@amd.com>
+Drop the leftover line; the remaining @member entries all match the
+struct.
+
+No functional changes.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/r/202605160857.ZIE3nO9J-lkp@intel.com/
+Assisted-by: Claude:claude-opus-5 [kernel-doc]
+Signed-off-by: Babanpreet Singh <bbnpreetsingh@gmail.com>
+Link: https://patch.msgid.link/20260802013304.7-1-bbnpreetsingh@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: ac72c091a981 ("regulator: ab8500: Add AB8505 VAUX3 3.05 V setting")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/microblaze/Makefile | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/regulator/ab8500.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/microblaze/Makefile b/arch/microblaze/Makefile
-index 9adc6b6434dfe..a46e259611b71 100644
---- a/arch/microblaze/Makefile
-+++ b/arch/microblaze/Makefile
-@@ -34,12 +34,10 @@ CPUFLAGS-$(CONFIG_XILINX_MICROBLAZE0_USE_BARREL) += -mxl-barrel-shift
- CPUFLAGS-$(CONFIG_XILINX_MICROBLAZE0_USE_PCMP_INSTR) += -mxl-pattern-compare
- 
- ifdef CONFIG_CPU_BIG_ENDIAN
--KBUILD_CFLAGS += -mbig-endian
--KBUILD_AFLAGS += -mbig-endian
-+KBUILD_CPPFLAGS += -mbig-endian
- KBUILD_LDFLAGS += -EB
- else
--KBUILD_CFLAGS += -mlittle-endian
--KBUILD_AFLAGS += -mlittle-endian
-+KBUILD_CPPFLAGS += -mlittle-endian
- KBUILD_LDFLAGS += -EL
- endif
- 
+diff --git a/drivers/regulator/ab8500.c b/drivers/regulator/ab8500.c
+index d603d7b9f6821..066ce04cbca4b 100644
+--- a/drivers/regulator/ab8500.c
++++ b/drivers/regulator/ab8500.c
+@@ -173,7 +173,6 @@ struct ab8500_shared_mode {
+  * @voltage_bank: bank to control regulator voltage
+  * @voltage_reg: register to control regulator voltage
+  * @voltage_mask: mask to control regulator voltage
+- * @expand_register: 
+  */
+ struct ab8500_regulator_info {
+ 	struct device		*dev;
 -- 
 2.53.0
 
