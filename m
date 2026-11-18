@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025410;
-	b=l4BHXOc/kfHy5SD5rSvDJS8gteAgA2+drjEfLEYEh8g2yixU/Js+NPK3WWUVZkx5PmZa
-	 wAzYIHOCsayD5RUe8PAm+RcHPIhrzrhSDwtNS6nA8Bj4Ym+w7lGL3xlXv9mW92b12RHpL
-	 nDb/sxMviv7lb4KnCe1pTJdmB8qpeiCXuUyQeyAxRLsIzVPATv+3YzK7uVgaysI7dguMt
-	 gKPgnYV52D4/Lh/QaJZ8O62hVlmE4NOUusRD3E0k3OTd3e3RzVjJBXXyQT6Pvui9TrdCS
-	 LLW6ByxmpiQvtyUEeVuSB9rAF9mls2Qy8hgYQRtMiksxe0XWOCsyKd68ckJFaJ4N5dQ==
+	t=1795025412;
+	b=AS6a1FdIzNRyZBu4u6ODYn5ttSADSVWk4PZMWB6NCkqiHigO/8KnjcGyyRK9s3NGn/7O
+	 i5/+rJ4N7Vk7FlxCV9VV35oSCjpjetoheSoZyrSCQIumRlf9jXSfebORRz8st4db+aoeY
+	 xYK2nLQTPV+AX9014h8pdEWavF0Mm9cYrWdoXNMKmR1kt2ZN2a3kTwVVkuQbOyKSydrqd
+	 o4FU7j63nluGBSmns340fGclXUAj6PipVtZOI+/JDhFr5lFT6LjBSXIjXOrEZ4En6xmFF
+	 Aq+LFDb1fVkR+FfdUC8fog/OyYG/mD9cHPBNSnu/a2AeC2wHhhfHduU5/7oo7dgkHqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025410;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025412;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MUMUteqVDoRkSYW87NgAUGh+uywSMUBAphUJaZU6zWA=;
-	b=OwRGcemlw4D8sSNp9QgzT64UakbM+z674S2hUwobfbf0cXJ307SbhSP2G8Bw+MMUTvdb
-	 7/k4yrlxVhYm95pGOYPotrTYF9YNfy0mBOrHFMJICurat0ogKX7FK5rPUdFGCGImevuZg
-	 X90XceWmhqgF0DbZsPdh0Wqz0lU2CjYRtVTsbo7yb6x6izLHC2jNXHFlQ2qLU6j3TgIbw
-	 +K0hswDf8pDZ5+1hiuLsX5omRz5nrnIwGfh0MDkHBxsGKrAmJNl1aA7OhkWF1rm1WiuuE
-	 1xgvlbtrW1QjTFn9ZjCpN8SX7iCpl84DCEVHEPIHjsA9LTaxFAP3MOIGFoaOEUOFYng==
+	bh=eKtF1XAV2nVen3TBWOKP2cYuvgJ3cTzJsl/7Whf0Q8U=;
+	b=0QS5Brym1FBrDoXD5obYJXYdiqq1X9bMC1obW6vLHPWBP1ksAAHLVl7EU1d6JkfxfdfO
+	 pgSXIMo+SHV6u32Qir+8zGbqN3o3DBtxf/MjM4KO8PDUycotHgxjJ7n0pNrgLsIoQLrOz
+	 J+23EniTy0LCZW8e6NbK4aoynkOiA4maVHG4SIuxO22v2Htoj60BoTW015Ba/qFKJjrMM
+	 6i4iWTxlgd1vfgt5RXSGNgLT6CZ9fQAo8rZGeal0UV35VOqDVSUpHaj0rzCfI6+tGyI0w
+	 +LAxDn1Kd+BZxMV3NKs+rs8D9opxf67a1nOGD0NpQZeXQBg2pvcIjC2Armw45A0390g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O7PQUFUN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=awle7WkA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B852606A31C;
-	Wed, 18 Nov 2026 18:10:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C304F606A320;
+	Wed, 18 Nov 2026 18:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O7PQUFUN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BE371F000C4;
-	Wed, 18 Nov 2026 18:10:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=awle7WkA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 264A01F000C4;
+	Wed, 18 Nov 2026 18:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025409;
-	bh=MUMUteqVDoRkSYW87NgAUGh+uywSMUBAphUJaZU6zWA=;
+	s=korg; t=1795025412;
+	bh=eKtF1XAV2nVen3TBWOKP2cYuvgJ3cTzJsl/7Whf0Q8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O7PQUFUNaz8pwwgWcnZpAWZj8PNIVOYpTyz0gVUTibKHZ+O0Dhr8ksKkj24rD8YLU
-	 FNa0ZthCBP0ofEn5ywM9w+q1KxUkgWUWSVHSJMBrd8pNME/6/MAJ5mrDVH6bc0g2Ps
-	 vLrHiRTB+pPt4mMLb6/07tSKWoyiwuWMZ7iLmBNE=
+	b=awle7WkAF8GXwoMaFUI/Enu03nAjuwnqQlHlfMUwpEdn7KZyYtDGLOhEwQ731vVMA
+	 AgBc5XM0mjC6C+M8F7yGsRUAnJpAZCZex9WYkM3BiF4IdDQlBQCNrOh7Wp8CUP/jpF
+	 59e2m3ffV4UqjdXWsDjLSqPo91VF1JiM8oRwMSmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Jiale Yao <yaojiale02@163.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1062/2151] power: supply: ab8500_fg: Avoid reserved AB8505 CCConf bit
-Date: Wed, 18 Nov 2026 15:46:37 +0100
-Message-ID: <20261118150200.982287636@linuxfoundation.org>
+Subject: [PATCH 6.18 1071/2151] ASoC: rt712-sdca: always cancel jack work on remove
+Date: Wed, 18 Nov 2026 15:46:46 +0100
+Message-ID: <20261118150201.302351068@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,69 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit edafb2e4642b72b0f86ce5990d5c29c116bb642b ]
+[ Upstream commit c7d07df95ee7ce7859e6c873a76d19ea9c64b6fd ]
 
-AB8500 defines CCConf bit 1 as CCDeepSleepEna, but AB8505 reserves
-bits 7:1 and only defines bit 0, CCPwrUpEna. The fuel-gauge driver
-currently writes both bits whenever it starts the coulomb counter.
+rt712_sdca_sdw_remove() cancels the jack work only when hw_init is true.
+rt712_sdca_update_status() clears hw_init when the SoundWire slave
+becomes unattached, but jack work may already have been queued by
+rt712_sdca_interrupt_callback() or the jack initialization path.
 
-The Samsung-GT-S7710-Skomer and related Samsung product trees use the
-same unconditional value in their fuel-gauge drivers, so they provide
-no AB8505 workaround to carry over. Select the value from the detected
-PMIC variant instead, retaining the deep-sleep enable bit on all
-existing non-AB8505 paths and avoiding the reserved bit on AB8505.
+A remove after that status update can therefore skip the cancellation and
+leave delayed work pending after the codec private data has been freed.
 
-Fixes: a982362c1723 ("mfd: Support for the AB8500 AB8505 variant")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260916-ab8500-charging-v1-15-e986ed321cc6@kernel.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+The work objects are initialized during probe, so cancel them
+unconditionally instead of relying on the mutable hw_init state.
+
+Fixes: 6c39710da75c ("ASoC: rt712-sdca: Add RT712 SDCA driver for Jack and Amp topology")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Link: https://patch.msgid.link/20260925145019.2290367-5-yaojiale02@163.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_fg.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ sound/soc/codecs/rt712-sdca-sdw.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/power/supply/ab8500_fg.c b/drivers/power/supply/ab8500_fg.c
-index 04c12ebdfebfa..8d90b078a9e90 100644
---- a/drivers/power/supply/ab8500_fg.c
-+++ b/drivers/power/supply/ab8500_fg.c
-@@ -451,6 +451,16 @@ static void ab8500_fg_fill_cap_sample(struct ab8500_fg *di, int sample)
- 	avg->avg = sample;
- }
+diff --git a/sound/soc/codecs/rt712-sdca-sdw.c b/sound/soc/codecs/rt712-sdca-sdw.c
+index ea07131edfa26..21d0ac6383d8d 100644
+--- a/sound/soc/codecs/rt712-sdca-sdw.c
++++ b/sound/soc/codecs/rt712-sdca-sdw.c
+@@ -378,10 +378,8 @@ static int rt712_sdca_sdw_remove(struct sdw_slave *slave)
+ {
+ 	struct rt712_sdca_priv *rt712 = dev_get_drvdata(&slave->dev);
  
-+static u8 ab8500_fg_cc_config(struct ab8500_fg *di)
-+{
-+	u8 config = CC_PWR_UP_ENA;
-+
-+	if (!is_ab8505(di->parent))
-+		config |= CC_DEEP_SLEEP_ENA;
-+
-+	return config;
-+}
-+
- /**
-  * ab8500_fg_coulomb_counter() - enable coulomb counter
-  * @di:		pointer to the ab8500_fg structure
-@@ -481,7 +491,7 @@ static int ab8500_fg_coulomb_counter(struct ab8500_fg *di, bool enable)
- 		/* Start the CC */
- 		ret = abx500_set_register_interruptible(di->dev, AB8500_RTC,
- 			AB8500_RTC_CC_CONF_REG,
--			(CC_DEEP_SLEEP_ENA | CC_PWR_UP_ENA));
-+			ab8500_fg_cc_config(di));
- 		if (ret)
- 			goto cc_err;
+-	if (rt712->hw_init) {
+-		cancel_delayed_work_sync(&rt712->jack_detect_work);
+-		cancel_delayed_work_sync(&rt712->jack_btn_check_work);
+-	}
++	cancel_delayed_work_sync(&rt712->jack_detect_work);
++	cancel_delayed_work_sync(&rt712->jack_btn_check_work);
  
-@@ -555,7 +565,7 @@ int ab8500_fg_inst_curr_start(struct ab8500_fg *di)
- 		/* Start the CC */
- 		ret = abx500_set_register_interruptible(di->dev, AB8500_RTC,
- 			AB8500_RTC_CC_CONF_REG,
--			(CC_DEEP_SLEEP_ENA | CC_PWR_UP_ENA));
-+			ab8500_fg_cc_config(di));
- 		if (ret)
- 			goto fail;
- 	} else {
+ 	pm_runtime_disable(&slave->dev);
+ 
 -- 
 2.53.0
 
