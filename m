@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016926;
-	b=dNpObuLe68ycOYbb97KMaAB7TZW/1PfkDr6r4eKtfBONc1VgAuuWNHw9zw3sWPE0VR/c
-	 I33tU8hofOC1PCOkk0Qnu+g5etGBU5j7PyKzKMOyW7jjp3iia+bkUdY+3tWl8uirVAUsA
-	 +VZQOvAprco11+7kQx/21zivPRtYdDIt7FSIyJhMz8dc5o02WKoD/4eRonrQuEWQFxag2
-	 4KuV3mBQzqMee6pkw7J8eAA+jIPSeFcp138X0Ae75IJIMgRsmiIc1QMyAlHQ7HENRdt41
-	 U3NjR7rpL5Z4N7oSd524odVZ3n2gLRxDGAOxwNXkAF3tDWkww9rg+ILqz/xTtzQwV9A==
+	t=1795016929;
+	b=FCRGigLKq4PPz7MKOr/7IDXGCNg/ucpBG1dKadF2gugssc0egfqyU/UP4dwFOtHlMQPs
+	 xUh1EpQZlRQTwY0DX992K7rHyjvR7DpCLkk3Ot+1W3TgV1SSmn2atnKfMjtQc5rdXzpUx
+	 pu6H76B0DRByDE+8MthO+I5Cnf1Cc5Ryq/2DlbVBWEr2OyWVGOz6Za7dI/xPg2limmBAZ
+	 sCZRRoWfW/esb4CvhmKjNI0KfPb6lJ0cNqQamUUIUB4lKfVg/V89jyxU8Ah7ig7mmS3HT
+	 /dV0uLxyDfomFDf1Mmz6NaOn8cfkBXnPtOl1+u+l94Lp7oFxQj6bjRbq2UFkJIWi2cA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016926;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016929;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VWDNwued9IzZcqLCOuxGyMps9xOmJuzlkoOVI9DCD5k=;
-	b=GyEqfN4m1bbRpZl4uu2UPdOko7rQnidkqWuC22XGdHESHxT90mDp+EkQlqSN/nDN5SqY
-	 JW8OmR+7exKI4PaHcQ0tmVNRCGHCdj18ukz7WYM00ofRz7i1JZZCoiNtdM9L+fRkZSGAF
-	 eSIaTximKbPnU54kKgR+gmd3y4tFUEGJwf/ZyXlppVdfqRwz04EbGs1dsV2AQBD1p+pjw
-	 Z4dpwm34hzeQsBaPBMlI/LR8dfa8MFWFzEwd0YfDNg3s0feDrpqgm7CjRODlzQg1g2nWc
-	 U7nUL+z02So0AkVyIXRSGPhuNPfttkYWoVIsH7ChX3xxn+eThFw653uYUSMpfc2734w==
+	bh=QFVejcbKCx2M2BnsOPmLdgUfY0lv1bCB4NHkIeFUGYI=;
+	b=JWm7c4oWRztZCI9efnFanrv9bsx6i36zU3xx0gLwQCbgn3etJrNnbQE2H3HVpsYpheRx
+	 Ir02Nhn8Nddx+E768dIu95jl4/2kPApQHlKxjr5uD6YIKkHyB0z76V7MgJQ9OG+RPryGq
+	 NqT2IZ8KEY6kYEU6kHuDAo8ejyn8WX9Ev/GpGur/2s6y+BCbTOtIvmxDoVJSsbUDf9SI1
+	 uRiYH36JuFwPsdQHjV6crkW+AI0VI6mLQHXz4T2lXgT9Uq4KODkcCB8dyaNALchpjXpwo
+	 n049ny/dIFzdmt7D3SIuAaPPEjhW2/YxtZDEJK7ODGtt+Mlrd3x3X3wWGFLrIWEIQFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ElXCiteP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XLkMxCXi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F7B606A32A;
-	Wed, 18 Nov 2026 15:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D413606A31C;
+	Wed, 18 Nov 2026 15:48:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ElXCiteP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09E0B1F000C6;
-	Wed, 18 Nov 2026 15:48:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XLkMxCXi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFD771F000C5;
+	Wed, 18 Nov 2026 15:48:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016926;
-	bh=VWDNwued9IzZcqLCOuxGyMps9xOmJuzlkoOVI9DCD5k=;
+	s=korg; t=1795016929;
+	bh=QFVejcbKCx2M2BnsOPmLdgUfY0lv1bCB4NHkIeFUGYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ElXCitePcqSAuFPnFpMYkxXFJpfhFhuK1UOAhmgtddgcaEyAVQXDlBG3tdRH4SVjK
-	 5jUxL9fgilSY5UrvXdP2BPg9mMl8dLM6XEYcaYl6XLAtRVIvoohuCR6KrtSo1cOigu
-	 YoQDaF1wEbdvptirw4p4pKrew9DJrcLqzHVELcKs=
+	b=XLkMxCXiCdl656FuUeTIbrJJWMEagu+ZtTNJiWdEdQt5+pRxU3QEVOWBnf8PWPI6m
+	 iBMSMMgS7PUAxIlzdcrrr/Siy/jNzTTWblVZTU9ARTfkLVgOGhKpvsee1D1/SdldYC
+	 PpruQ3Ni0PtQf3ipwqEPvgopZKEd3vMtetMiRl6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stan Johnson <userm57@yahoo.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0703/2651] swim: Dont disable drive after every sector
-Date: Wed, 18 Nov 2026 15:32:23 +0100
-Message-ID: <20261118150313.141028215@linuxfoundation.org>
+Subject: [PATCH 7.3 0704/2651] swim: Perform ISM/IWM mode switching according to specs
+Date: Wed, 18 Nov 2026 15:32:24 +0100
+Message-ID: <20261118150313.174232770@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,44 +72,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit 05a7c4b197279cfb3ec3df26146ce085a2438aec ]
+[ Upstream commit 52981bb358d1b5c38040b00f81e2cf973f9148ad ]
 
-This fixes multi-sector reads on a Sony drive. The Mitsubishi drive
-doesn't seem to care either way.
+The SWIM spec says, "MOTOREN must be low to switch modes" and "after
+switching from ISM to IWM, the very first command must be a clear L7".
+
+The ISM spec says, MOTOREN "must not be cleared until after the Action
+bit is cleared". Perform those operations in the correct sequence.
+
+When switching to ISM mode, the Mode register has to be selected with a
+particular sequence of bit flips. Set q7 low then q6 low then mtrOff.
 
 Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
 Signed-off-by: Finn Thain <fthain@linux-m68k.org>
 Tested-by: Stan Johnson <userm57@yahoo.com>
-Link: https://patch.msgid.link/fc511e72753ae18b6f021701aa00d480335b0caf.1788513996.git.fthain@linux-m68k.org
+Link: https://patch.msgid.link/75714ecc9a12d59511967dc9e24163dc8f3bbdd8.1788513996.git.fthain@linux-m68k.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/swim.c | 4 ----
- 1 file changed, 4 deletions(-)
+ drivers/block/swim.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/block/swim.c b/drivers/block/swim.c
-index 4ddb87977fe1f..3f92677ad127a 100644
+index 3f92677ad127a..190b2e1b5b0e1 100644
 --- a/drivers/block/swim.c
 +++ b/drivers/block/swim.c
-@@ -473,8 +473,6 @@ static inline int swim_read_sector(struct floppy_state *fs,
- 	short i;
+@@ -149,6 +149,7 @@ struct iwm {
+ #define ACTION		0x08
+ #define WRITE_MODE	0x10
+ #define HEDSEL		0x20
++#define ISM_SELECT	0x40
+ #define MOTON		0x80
  
- 	swim_track(fs, track);
--
--	swim_write(base, mode1, MOTON);
- 	swim_head(base, side);
- 	swim_write(base, mode0, side);
+ /*----------------------------------------------------------------------------*/
+@@ -223,18 +224,21 @@ extern int swim_read_sector_data(struct swim __iomem *base,
+ static DEFINE_MUTEX(swim_mutex);
+ static inline void set_swim_mode(struct swim __iomem *base, int enable)
+ {
+-	struct iwm __iomem *iwm_base;
++	struct iwm __iomem *iwm_base = (struct iwm __iomem *)base;
+ 	unsigned long flags;
  
-@@ -490,8 +488,6 @@ static inline int swim_read_sector(struct floppy_state *fs,
+ 	if (!enable) {
+-		swim_write(base, mode0, 0xf8);
++		swim_write(base, mode0, ACTION);
++		swim_write(base, mode0, ENBL1 | ENBL2 | MOTON);
++		swim_write(base, mode0, ISM_SELECT);
++		iwm_read(iwm_base, q7L);
+ 		return;
  	}
- 	local_irq_restore(flags);
  
--	swim_write(base, mode0, MOTON);
--
- 	if ((header.side != side)  || (header.track != track) ||
- 	     (header.sector != sector))
- 		return 0;
+-	iwm_base = (struct iwm __iomem *)base;
+ 	local_irq_save(flags);
+ 
+ 	iwm_read(iwm_base, q7L);
++	iwm_read(iwm_base, q6L);
+ 	iwm_read(iwm_base, mtrOff);
+ 	iwm_read(iwm_base, q6H);
+ 
 -- 
 2.53.0
 
