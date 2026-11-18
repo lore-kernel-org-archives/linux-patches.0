@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043322;
-	b=116T3ezpHmfoTwSAFuuSlRjce6dMYIm15hIFQwgQl3QBQxz/QqvfZpTb3R6oxc3XSret
-	 4CnuvlWEi9IURkuEIU5w4Z33jNBg20c/upGQTkbSg2tJQWUHFzlZYlEMfaaypMUfnOgxZ
-	 ru3qBj0GP/jTo98OcAHytI593QfAnHB1tq/ajZZewUO1LZph0dMs3IG3s/YlGsi/Rj/6O
-	 yoxFc/Wro9EEWShDdKRJUNRImQ5Kn2kGAXjhQ56gSCm8EH9Qdg/pM/7hlZRn+9WjGIPLy
-	 pWUJfMjBih6a9i4dTJ/ABYNT8DoVooiUjLKtAm3e36CzB8gOCS8KkHCkjoqRLsXovHA==
+	t=1795043325;
+	b=e5pezW1LcnMLBkaQy5wMt3smTuaJuFVn5Ux6q1sOoPKoOFMNJ29RpbulMrxDsTxapEvc
+	 9ToPeG2Vz356TSCHZLe9d6/sduyxCG/mri9CqQ0KYRH5oZUlFCJSjxunfc0zYX1p6ieZK
+	 7rzzW+jhe5mZlUFNf0AZ+f2somHz1eZ6DQrQRmwS9+uqAouvJgKDwAFghywsHuuSsDYQr
+	 WSpk0qlE9oMkBTkeHNGVBSmJwp06YKbAlAzMWuC2s+7rBtkZWD0K9azzJoiLAiR1z8MrS
+	 vNbVsmc747zWD1GXMiZs4orXNFSE10++1EiyiNdlOPOCias3r4FGh35oLs/i4SbnzXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043322;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043325;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ELP6ekmXeCLGjRhIp1nWOl+e/9e9vj6VDXJgg6DCaTg=;
-	b=deEFtPEoDzpkebrJ9FVaxhoqSkhiTv4bZwSULn5utme3nW1misWKdqRYx3e/15/ZagWA
-	 WplGWOjv2eSF0JpNEx9rIRCjZJ8Wp50Zw9XKIh1ciINGFhjUIOrp1FgcjKvT30+vlEQ2u
-	 i/b8LJhp4YE8inFI/8wuJCC7bM24e28inaJFMEs7liSHWSC1fCJbRhX5BVoYo66HU5c+m
-	 7wptHLEsCpk4ZjOJu0r11Jh9U+BAN6pTny0ga+uvr6KdNaZ9TCMpl0sElwGSTKq9tCmbs
-	 Hnv42SxKqbWwde3337bh18/HnD19mQSPnk5/Wsjs0ktSN3fxDO2Fr1k0gyO4JjlIMjA==
+	bh=z0AdsaXpwjSYmiCG/Ye5Sos0ynfxsRoxaQUtHXTn+xo=;
+	b=uSuWOr1TEYUa6B4mC+UJQ4leTrGTWOxaL2Ix9yRHGrzVdSM9cECbswLMcdLAG/l6GjUF
+	 AcYyP5KSBAOO0vpr/pmDkrEqADp/FBLdWmA+4hrO/2y4ZEJtMqHJEhpCrqYJuVttdL6yR
+	 ibQfb6u7n4s4yrlB0rCBSUwWK0/+IDaceo9oMn5+4ut4aeEIi+33lWcuuRMEzO0fplBK5
+	 DIcr00az2zrrilnx0EJcsfV4tGN1t4B4TMzW7SgTpVP7KhaxFP8YZukO14sKoPHuJbXet
+	 ImdZnWmxAY9w1CDFr1209Xr+pV4wr8cHJMzG08iAGCi6DxRYAW68MqA3ja9j7C0lFZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1m+W1EY2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1jRPTxwk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F51606A320;
-	Wed, 18 Nov 2026 23:08:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A103606A325;
+	Wed, 18 Nov 2026 23:08:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1m+W1EY2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C82AC1F000C4;
-	Wed, 18 Nov 2026 23:08:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1jRPTxwk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8212D1F000C4;
+	Wed, 18 Nov 2026 23:08:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043322;
-	bh=ELP6ekmXeCLGjRhIp1nWOl+e/9e9vj6VDXJgg6DCaTg=;
+	s=korg; t=1795043325;
+	bh=z0AdsaXpwjSYmiCG/Ye5Sos0ynfxsRoxaQUtHXTn+xo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1m+W1EY257YaQvVirLENBvvYU2xSjL2+StCsddoW4vXB77godjIE/hC7zhXI6mOwF
-	 Rzy/PWGpbvMArzSyLmUvsKjcOhGE20SHPePFxjbeYagOQ1VIQiSmMoyTtEn1kxCryM
-	 iXQZjCU0MLULPJLTTKQtkJNxL3bzQDMl5Zn+pEVY=
+	b=1jRPTxwkKcN2nS234Gls1Rp2rmIxwQYjQnlDZBaf7qT+4ndSvckEfj795cH+QSQUw
+	 b1F/Z2m02xsyJejjg5lWoFZtgfF9BNmY4+mHy6gUTQnQCgqQXEwIqVskK+5WUkgTuP
+	 POaub4rQyFG524sKrSx1vG0Xyg36+fNSqcLsbtco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+	Bob Song <songxiebing@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0169/2857] mfd: ipaq-micro: Fix out-of-bounds stack read in ipaq_micro_str
-Date: Wed, 18 Nov 2026 15:20:03 +0100
-Message-ID: <20261118150207.437904256@linuxfoundation.org>
+Subject: [PATCH 6.1 0170/2857] ALSA: hda/realtek: add missing error checks for COEF index reads in alc269
+Date: Wed, 18 Nov 2026 15:20:04 +0100
+Message-ID: <20261118150207.474095208@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,41 +68,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Bob Song <songxiebing@kylinos.cn>
 
-[ Upstream commit da3a98c941753255418616d249e5b40db0927c26 ]
+[ Upstream commit 5b106b40ed22098f2bc049efb645148d038444bd ]
 
-ipaq_micro_str() decodes a UTF-16LE string into an ASCII string.
-It copies characters to a stack buffer retstr, but fails to
-null-terminate it. When kstrdup() is called on retstr, it can read past
-the buffer into uninitialized stack memory, potentially leaking stack
-contents.
+alc_read_coef_idx() and alc_read_coefex_idx() can return -1 on error
+via snd_hda_codec_read(). Several codec initialization and shutdown
+functions save these return values and later write them back to
+hardware registers without checking for errors, potentially corrupting
+COEF register state on a read failure.
 
-Fix this by initializing retstr to zero.
+Add error checks in:
+- alc282_init() and alc282_shutup(): check coef78 before write-back
+- alc285_hp_init(): check coef38/coef0d/coef36 before update, check
+  val before write-back, and break polling loop on error
+- alc294_hp_init(): break polling loop on read error
 
-Reported-by: sashiko-bot@kernel.org
-Assisted-by: Antigravity:gemini-3.5-flash
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Link: https://patch.msgid.link/aintJF4X5tWDW-Ej@google.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Bob Song <songxiebing@kylinos.cn>
+Link: https://patch.msgid.link/20260730015302.253008-1-songxiebing@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/ipaq-micro.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c | 22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/mfd/ipaq-micro.c b/drivers/mfd/ipaq-micro.c
-index 4cd5ecc722112..d1f3b2b7989f6 100644
---- a/drivers/mfd/ipaq-micro.c
-+++ b/drivers/mfd/ipaq-micro.c
-@@ -224,7 +224,7 @@ static void ipaq_micro_eeprom_read(struct ipaq_micro *micro,
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index ce737b84729ca..3f74f485298cd 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -3427,7 +3427,8 @@ static void alc282_init(struct hda_codec *codec)
+ 		msleep(100);
  
- static char *ipaq_micro_str(u8 *wchar, u8 len)
- {
--	char retstr[256];
-+	char retstr[256] = { 0 };
- 	u8 i;
+ 	/* Headphone capless set to normal mode */
+-	alc_write_coef_idx(codec, 0x78, coef78);
++	if (coef78 != -1)
++		alc_write_coef_idx(codec, 0x78, coef78);
+ }
  
- 	for (i = 0; i < len / 2; i++)
+ static void alc282_shutup(struct hda_codec *codec)
+@@ -3464,7 +3465,8 @@ static void alc282_shutup(struct hda_codec *codec)
+ 
+ 	alc_auto_setup_eapd(codec, false);
+ 	alc_shutup_pins(codec);
+-	alc_write_coef_idx(codec, 0x78, coef78);
++	if (coef78 != -1)
++		alc_write_coef_idx(codec, 0x78, coef78);
+ }
+ 
+ static const struct coef_fw alc283_coefs[] = {
+@@ -3716,15 +3718,19 @@ static void alc285_hp_init(struct hda_codec *codec)
+ 
+ 	alc_write_coefex_idx(codec, 0x58, 0x00, 0xf888); /* HP depop procedure start */
+ 	val = alc_read_coefex_idx(codec, 0x58, 0x00);
+-	for (i = 0; i < 20 && val & 0x8000; i++) {
++	for (i = 0; i < 20 && val != -1 && val & 0x8000; i++) {
+ 		msleep(50);
+ 		val = alc_read_coefex_idx(codec, 0x58, 0x00);
+ 	} /* Wait for depop procedure finish  */
+ 
+-	alc_write_coefex_idx(codec, 0x58, 0x00, val); /* write back the result */
+-	alc_update_coef_idx(codec, 0x38, 1<<4, coef38);
+-	alc_update_coef_idx(codec, 0x0d, 0x110, coef0d);
+-	alc_update_coef_idx(codec, 0x36, 3<<13, coef36);
++	if (val != -1)
++		alc_write_coefex_idx(codec, 0x58, 0x00, val); /* write back the result */
++	if (coef38 != -1)
++		alc_update_coef_idx(codec, 0x38, 1<<4, coef38);
++	if (coef0d != -1)
++		alc_update_coef_idx(codec, 0x0d, 0x110, coef0d);
++	if (coef36 != -1)
++		alc_update_coef_idx(codec, 0x36, 3<<13, coef36);
+ 
+ 	msleep(50);
+ 	alc_update_coef_idx(codec, 0x4a, 1<<15, 0);
+@@ -3989,7 +3995,7 @@ static void alc294_hp_init(struct hda_codec *codec)
+ 
+ 	/* Wait for depop procedure finish  */
+ 	val = alc_read_coefex_idx(codec, 0x58, 0x01);
+-	for (i = 0; i < 20 && val & 0x0080; i++) {
++	for (i = 0; i < 20 && val != -1 && val & 0x0080; i++) {
+ 		msleep(50);
+ 		val = alc_read_coefex_idx(codec, 0x58, 0x01);
+ 	}
 -- 
 2.53.0
 
