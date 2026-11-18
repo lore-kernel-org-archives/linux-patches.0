@@ -1,57 +1,70 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038770;
-	b=yYwGZ+A3yLhOkrQM6rY4xI1SCV/mfiCI2SS346FiQY4RYLvK3rgoIfce352aBMwRhoZ4
-	 18evyOFbo/oo0ZGfpWAc83nX2SQ3pxcPxomtCqjxMtAjEEHYFN3EWfBKgUyoimECoWStE
-	 ohZhnSERpJT3Uy+pMSg24kMD2Cehi3jnveBcdflrBqYPWHvBR8tUDRgMRQMY3y9Io8tok
-	 LdEFJlQyztBgSCSAUzDwwWhuIW0iucMN6FLFC/+Dmc2f3n6mt2daUdBcc11E2SJbzYUJK
-	 BKWgFClGpD73bswVxHdIXlx3zTsX7I35WgDFiPc2P/WI7Pu/oKyhvUWOZ/YOrcACI7A==
+	t=1795038773;
+	b=xje1l4VpBpdvBbIjp4AOlI9zBUJd8W7Op6sg3NGfBOc8QUzoSV1aAZHMOaWPVC2I8krF
+	 pszA00C23YmB3gyyFTfh1ozM+PfLj/7URaszxeEssRMu3Z4apZcGh+9lDLCadf68A/rCr
+	 h53QJA0KTF2LK5t573ovf8wMkYcZDg72DCcle+iBZ520UCvSJ+gwxYKfxcM54+zSnA1mI
+	 F6/YXYMlySjet6FmU6Bd1Xw+tfEdwE5U/kTJBAdjsmzwg2EbDup6igJu6LAR0lGoIAFgU
+	 93QE1ui2FsckSnkC4CQ7Y+Zl4fNX8HiZzVT1mUwM7ALKZd54eF4I0l+/CoHE1XkB44w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038770;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038773;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eZaxZ4gaMT3Yxb3tv0lB4Out5Np6tGtVn12cpnn63wU=;
-	b=Ke7Lxpv2W1IfI/ElEVouBniAumgyQMrJwyboB/GeqD0aEr8FGVdaMNrv9x5UrGCklrJq
-	 QKtU14nSUGbuFxwsmPOBmEAibCZni7kSM74q/R8PFw+QTzZywDmgm78PAnrNToJevgw59
-	 aTASWhj46jsDqmIHDWDRpdy9IsPgo6T50adO/1+aZWRCVwu+/cR0EaEv1cD3lOtDSSzFi
-	 79QNk0KJUKh8h176TDQJxz+Ewe8gwL3CQy0ENlGPiCCfqvfVua9pvULwzxp8U4/kn9HzT
-	 FNQHf4kbiaQ8Z61VS6Rauscd9oI8IsPxXa3gFsUKrxdqRWLuNNotvBL5+m9SPJzxorw==
+	bh=ngxT+z8NfpErQxULv9m9GQy6PUkaWpg6U9i6/8MkAvY=;
+	b=Uw+g+zF2a3JXtq5grkRwRO85BY/n/VESjvWB6ex+CpLA+X7c46mRlAac+EMUrmndkJ+z
+	 JD8PbgeoQB50APyAqTVGF0vnQEEXzYSbH0dfaJxlOzwjVQrTSE/LqmJ4a9Iw4eHnnJsUP
+	 NJcO280Z88z2SXruOxYCYYFPGiu6FWSY7oanYGRSFchYOjpduQYzo15IeYlbxP/w/HjNv
+	 YemyXarV6kNJx6qSeUzvPsBnCNbb1JL21UFEWJtvehvhB8JXfJZYlOE82wYS0iBI2gaWB
+	 fA3pvofNNtlTOeU8fxY21wOTzTux2LCNJd+s1rlmADUVeyqJMiLn1LmE4iE+FL6l5TQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="PVXG/XSX";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lcO0FO+p;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D71606A31C;
-	Wed, 18 Nov 2026 21:52:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5FBD606A31C;
+	Wed, 18 Nov 2026 21:52:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PVXG/XSX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ADED1F000C4;
-	Wed, 18 Nov 2026 21:52:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lcO0FO+p
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E0E1F000C5;
+	Wed, 18 Nov 2026 21:52:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038770;
-	bh=eZaxZ4gaMT3Yxb3tv0lB4Out5Np6tGtVn12cpnn63wU=;
+	s=korg; t=1795038773;
+	bh=ngxT+z8NfpErQxULv9m9GQy6PUkaWpg6U9i6/8MkAvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PVXG/XSXx94wSex5D9+DcQKM9z34nsySyLIx2QbjrtviWHOuunBZYucOjF0K2ZabD
-	 GcOPNIHqT5eLijs4JU6MGQbI+4F5oMO99li+iUj+yblTZq+9lNYUaHgg1JhFY6l6Th
-	 IA9umETzOxJrsbcSrBSdI5JSgPwlto4tBPcWmDws=
+	b=lcO0FO+pjjeaYdDr+uG+o/HTb3EZsoVAl/4ow5HL+aML65ctOWVVulBqnYd7ptZAb
+	 JH/KCLdfzqEHGURTPq1JiKHoNfbHHibs9zqWkrO/uKeiFPXpKGMT0T//rGBWQgY01j
+	 Pnh7mYj1BK6zdruBN/pTK9PM1GRT77lqfOlAtVDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Florian Westphal <fw@strlen.de>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Wang Zhan <wang.zhan@smartx.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Chris Mason <mason@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Muchun Song <muchun.song@linux.dev>,
+	Oscar Salvador <osalvador@suse.de>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Adam Litke <agl@us.ibm.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Rik van Riel <riel@surriel.com>,
+	Peter Xu <peterx@redhat.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1860/3318] inet: frags: limit the truesize of a reassembly queue
-Date: Wed, 18 Nov 2026 15:41:22 +0100
-Message-ID: <20261118150417.673804061@linuxfoundation.org>
+Subject: [PATCH 6.6 1861/3318] mm/hugetlb: fix endless write fault on a leftover uffd bit
+Date: Wed, 18 Nov 2026 15:41:23 +0100
+Message-ID: <20261118150417.712753519@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -73,108 +86,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 3ae20e4697eb969104fe4b1e98a675f0100382b6 ]
+[ Upstream commit f61e1cf15fb44f9cf89d43d8ef01f926322bb1c4 ]
 
-The truesize of fragments in a reassembly queue is only bounded by
-the per netns ipfrag_high_thresh sysctl, which has no upper limit.
+hugetlb_fault() resolves the uffd bit on a write fault only if the VMA is
+registered for userfaultfd write protection, and hugetlb_wp() bails out
+for any entry with the uffd bit set assuming hugetlb_fault() has already
+resolved it.
 
-inet_frag_reasm_finish() sums the truesize of all fragments in an int.
-If this sum reaches 2^32, it wraps, and the final sk_wmem_alloc
-adjustment of the socket owning the reassembled skb can cancel its own
-reference, leading to a use-after-free of this socket.
+When a read-only hugetlb entry with the uffd bit set is mapped in a VMA
+that is not registered for uffd-wp, a write fault to it never makes
+progress. If the access comes from the kernel, e.g. read(2) from
+/dev/zero into such page, the task spins in the page fault handler,
+ignores SIGKILL and keeps holding the locks taken by the system call.
 
-This can be triggered from an unprivileged user/network namespace,
-raising ipfrag_high_thresh and using padded TUN packets, which keep
-a large truesize after being trimmed by ip_rcv_core().
+Such entries should not exist, but an unprivileged user can create them,
+for example with MADV_DONTNEED of a page protected with UFFDIO_RWPROTECT
+or with UFFDIO_COPY in MODE_WP racing with UFFDIO_UNREGISTER.
 
-Track the sum of the truesize of fragments in each queue, and refuse
-a fragment that would make it bigger than INT_MAX / 2. Callers kill
-the queue on this error. This bound is far above the needs of
-legitimate traffic.
+Clear the uffd bit when the VMA is not registered for uffd-wp and let the
+fault proceed to hugetlb_wp(), like do_wp_page() does for regular pages.
 
-Fixes: 18685451fc4e ("inet: inet_defrag: prevent sk release while still in use")
-Cc: stable@vger.kernel.org
-Reported-by: Kyle Zeng <kylebot@openai.com>
-Cc: Florian Westphal <fw@strlen.de>
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Tested-by: Wang Zhan <wang.zhan@smartx.com>
-Link: https://patch.msgid.link/20261030081225.2575462-1-edumazet@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ sashal: adjusted context for missing security-path checks and nf_reset_ct() in inet_frag_queue_insert() ]
+Note that a FOLL_FORCE write to a page protected with UFFDIO_RWPROTECT in
+a private VMA that was made PROT_NONE now drops the RWP protection of
+that page.
+
+Original fix generated by an LLM and sent in private by Josef.
+
+[rppt@kernel.org: massage commit message]
+[david@kernel.org: convert comment into a TODO]
+Link: https://lore.kernel.org/20261015-urgent_fixes-v1-6-42796911043b@kernel.org
+Fixes: 60d5b473d61b ("mm/hugetlb: fix uffd wr-protection for CoW optimization path")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Chris Mason <mason@kernel.org>
+Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: Adam Litke <agl@us.ibm.com>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Kiryl Shutsemau <kas@kernel.org>
+Cc: <stable@vger.kernel.org>
+[ sashal: adapted hugetlb fault handling to local variables and older UFFD-WP helpers for synchronous-only userfaultfd support ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/inet_frag.h  | 9 +++++++++
- net/ipv4/inet_fragment.c | 5 +++++
- 2 files changed, 14 insertions(+)
+ mm/hugetlb.c | 38 ++++++++++++++++++++++++--------------
+ 1 file changed, 24 insertions(+), 14 deletions(-)
 
-diff --git a/include/net/inet_frag.h b/include/net/inet_frag.h
-index 365925c9d2628..6aea2d1ac376f 100644
---- a/include/net/inet_frag.h
-+++ b/include/net/inet_frag.h
-@@ -79,6 +79,7 @@ struct frag_v6_compare_key {
-  * @tstamp_type: stamp has a mono delivery time (EDT)
-  * @flags: fragment queue flags
-  * @max_size: maximum received fragment size
-+ * @truesize: sum of the truesize of queued fragments
-  * @fqdir: pointer to struct fqdir
-  * @rcu: rcu head for freeing deferall
-  */
-@@ -100,6 +101,7 @@ struct inet_frag_queue {
- 	u8			tstamp_type;
- 	__u8			flags;
- 	u16			max_size;
-+	unsigned int		truesize;
- 	struct fqdir		*fqdir;
- 	struct rcu_head		rcu;
- };
-@@ -171,6 +173,13 @@ extern const u8 ip_frag_ecn_table[16];
- #define IPFRAG_OK	0
- #define IPFRAG_DUP	1
- #define IPFRAG_OVERLAP	2
-+#define IPFRAG_TOOBIG	4
+diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+index 175b0726c4aa5..8e1da134d2a75 100644
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -6226,23 +6226,33 @@ vm_fault_t hugetlb_fault(struct mm_struct *mm, struct vm_area_struct *vma,
+ 		goto out_ptl;
+ 
+ 	/* Handle userfault-wp first, before trying to lock more pages */
+-	if (userfaultfd_wp(vma) && huge_pte_uffd_wp(huge_ptep_get(ptep)) &&
++	if (huge_pte_uffd_wp(huge_ptep_get(ptep)) &&
+ 	    (flags & FAULT_FLAG_WRITE) && !huge_pte_write(entry)) {
+-		struct vm_fault vmf = {
+-			.vma = vma,
+-			.address = haddr,
+-			.real_address = address,
+-			.flags = flags,
+-		};
++		if (userfaultfd_wp(vma)) {
++			struct vm_fault vmf = {
++				.vma = vma,
++				.address = haddr,
++				.real_address = address,
++				.flags = flags,
++			};
+ 
+-		spin_unlock(ptl);
+-		if (pagecache_folio) {
+-			folio_unlock(pagecache_folio);
+-			folio_put(pagecache_folio);
++			spin_unlock(ptl);
++			if (pagecache_folio) {
++				folio_unlock(pagecache_folio);
++				folio_put(pagecache_folio);
++			}
++			hugetlb_vma_unlock_read(vma);
++			mutex_unlock(&hugetlb_fault_mutex_table[hash]);
++			return handle_userfault(&vmf, VM_UFFD_WP);
+ 		}
+-		hugetlb_vma_unlock_read(vma);
+-		mutex_unlock(&hugetlb_fault_mutex_table[hash]);
+-		return handle_userfault(&vmf, VM_UFFD_WP);
 +
-+/* Max sum of the truesize of fragments in a queue. This keeps the sums
-+ * done in inet_frag_reasm_prepare() and inet_frag_reasm_finish() well
-+ * below INT_MAX. Legitimate traffic stays far below this limit.
-+ */
-+#define INET_FRAG_MAX_TRUESIZE	(INT_MAX / 2)
- int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
- 			   int offset, int end);
- void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
-diff --git a/net/ipv4/inet_fragment.c b/net/ipv4/inet_fragment.c
-index 90709f2fdab88..c7be3060698ba 100644
---- a/net/ipv4/inet_fragment.c
-+++ b/net/ipv4/inet_fragment.c
-@@ -337,6 +337,7 @@ void inet_frag_queue_flush(struct inet_frag_queue *q,
- 	q->rb_fragments = RB_ROOT;
- 	q->fragments_tail = NULL;
- 	q->last_run_head = NULL;
-+	q->truesize = 0;
- }
- EXPORT_SYMBOL(inet_frag_queue_flush);
++		/*
++		 * TODO: fix all cases where uffd PTE bits remain in VMAs that
++		 * are no longer registered with uffd.
++		 */
++		entry = huge_pte_clear_uffd_wp(entry);
++		set_huge_pte_at(mm, haddr, ptep, entry, huge_page_size(h));
++		/* Fallthrough to CoW */
+ 	}
  
-@@ -441,6 +442,9 @@ int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
- {
- 	struct sk_buff *last = q->fragments_tail;
- 
-+	if (skb->truesize > INET_FRAG_MAX_TRUESIZE - q->truesize)
-+		return IPFRAG_TOOBIG;
-+
- 	/* An IP fragment is never a GSO packet, but an untrusted source
- 	 * (virtio_net_hdr) may have attached GSO metadata to it. Do not let
- 	 * that reach the reassembled skb, whose head keeps the first
-@@ -503,6 +507,7 @@ int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
- 
- 	FRAG_CB(skb)->ip_defrag_offset = offset;
- 
-+	q->truesize += skb->truesize;
- 	return IPFRAG_OK;
- }
- EXPORT_SYMBOL(inet_frag_queue_insert);
+ 	/*
 -- 
 2.53.0
 
