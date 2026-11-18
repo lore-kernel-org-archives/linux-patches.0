@@ -1,53 +1,63 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042933;
-	b=Y+2MfLOVtDpHW5zPNUT8cqooW4XoE+qd0pY0cAXtYM4/KhDM4EfsgbDaKAqoRUihLX0z
-	 knOeMaHuOREB83htTJEpnqPvpDPLXOax7PvztbyQuUciVGWj4665DE3MJm7LWpSfFU3NH
-	 m1Vl/vU6TGkGCMACeqxhegIM2mifKlvkJsFC4M1n+o2WtqNjI2iRy2W2R1BGDeKhA6pTx
-	 7lLUMFI1dwxTy1LlHuV31tErI9YIZWLYlDP1a18zXm9WwcLBbaM4RcJJgsICK5eQT0s2r
-	 NnjkM84aV1XOKgAZIiEblTd5sDt/k3DxhUmHlgect+bd3DlOmI6JMhDT5hSzpghYBIA==
+	t=1795042936;
+	b=wEL2wBdIfEPuOEZIHiTioYdjjUa54jGpkio+7xBryTxsxaVy0aHppOSbr3qgMLdJe8cs
+	 cC5QVAePxhZpQcM74F2gtkWrQdT1DQsT+w5asnPjDkjZVV2BRnHOXnT5igqE8r8B2WCOf
+	 X1cKeknnTiZQBpZxBF1cCxUwrdJG99H0FkbXbFuOmsdB4TlbhIOtFGRNWy8hF8McaQ01L
+	 2LZ8Og2PBTZgGHvmomrY/S+9hYoW6XeAJafQIeQvZsv+1oLEd4EgzaKLRoAFZNpJgmnQV
+	 hi//CQFkmbU6If9YP7GRMLZL3LFy6ZfwmIZMTyPzf6EYDqt6/3JpHRT4lmKnjE9FWBw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042933;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042936;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=87a601Fb1a2e79/wOt0y9lixD/lOHyINjfN00Ki0VkA=;
-	b=D2jR95BHSY7IVR3x8l+k047bSXqbcpp7hfp0ZWxIFyv3+pjYtENDou12gzKwAfezwrZX
-	 Qi3aPgg89hkRQX7Hpae19LxSI2vn8nQKEb0psm+9rx7Zs75Jsb4L92Mp2i30GugI1x5Ju
-	 5y9vxXaQ61TanXU6mN7gF3mzIJpWJECDN3RwpoJRuovm6Qv9EbAZer10r50rdUJmX2mL4
-	 s7X3LAI9r0or1Jag5mGZqUq1XPJ/9hsn9vbMkXLr6LJpXcC8SQso2DF45xre9JK3bhs4P
-	 AFK5CMJLGko00BFAHPaSpqzPFLKVpPDiUrhE6/1P1F97icafgIBwECDUk86izfjTpBg==
+	bh=etePr2VCXZ+zAzncTtMsFW6B/JufIhMoTIc0UJ7rKeE=;
+	b=oxiQZUXS0E3kxO4D7FMrC/gHUE1a5DgLQyjN+XQugUKfOb72WmxAbo8DBBy/ipm0QO1T
+	 3Qw5rDBacYS3gQoFA3nHeGAYn37oAfi1DtQzItO9rJld664PRXY0Flnl4TzhWPT72H9Dm
+	 uCCN3iNPZDRwfb0QLNaKXoki98wDTYkkJiDgjVCQ78uglsVA0rjzu/48sAPG3wBiGLFW7
+	 ZenvdSSoFSEaC2+REKSmg9EMhCgb6ceZ2QCUN5fXg972pe05UF7q57hCkC17Unjh9Hg8k
+	 AYtXXBsXaMAy6dHkuskOMY7ivUMcODnRYyITZ+QCy/aWDYAktvxz8T6dlvnauR8wz4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gg4NNSu7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hZIvqLaa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1BD606A336;
-	Wed, 18 Nov 2026 23:02:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576E5606A320;
+	Wed, 18 Nov 2026 23:02:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gg4NNSu7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 882C71F000C4;
-	Wed, 18 Nov 2026 23:02:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hZIvqLaa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 346FE1F000C4;
+	Wed, 18 Nov 2026 23:02:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042933;
-	bh=87a601Fb1a2e79/wOt0y9lixD/lOHyINjfN00Ki0VkA=;
+	s=korg; t=1795042935;
+	bh=etePr2VCXZ+zAzncTtMsFW6B/JufIhMoTIc0UJ7rKeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gg4NNSu7uk4QC7QsCSuaCpk2kMATtbqVddUsV9yK2m/9Siq9Xy2MmYPaz4eucv4hW
-	 xqS5ALIRfGKu4/nd7eQYexd9urNm97j0kAGp1h4PGFAFcJxNC2fFjPWlau06e8WrKn
-	 3NOAlInK8Ks7laxhANcYld+ZMbqcbI7Ow8fLME5I=
+	b=hZIvqLaaYHSrddr1075mNi7COIPRQzzyKfpf0fXosMjnQYOM+zN0ve9r7lskJfNaz
+	 +aUmRy+sQOAdwNvQS5OegqQXmCfCwwPdqKATJZ2uhCMXofsAlKLTgRBMYM7Xe2i5QX
+	 FS8q6JeCKmbTPXKQz7uQgUYo+qx1U3EpMTbicMkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zide Chen <zide.chen@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0032/2857] perf/x86/intel/uncore: Fix PCI PMU cleanup on setup failure
-Date: Wed, 18 Nov 2026 15:17:46 +0100
-Message-ID: <20261118150202.501281004@linuxfoundation.org>
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <baohua@kernel.org>,
+	Kairui Song <kasong@tencent.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	David Hildenbrand <david@kernel.org>,
+	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Wei Xu <weixugc@google.com>,
+	Yuanchu Xie <yuanchu@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Leno Hou <lenohou@gmail.com>
+Subject: [PATCH 6.1 0015/2857] mm: vmscan: fix dirty folios throttling on cgroup v1 for MGLRU
+Date: Wed, 18 Nov 2026 15:17:29 +0100
+Message-ID: <20261118150201.916675026@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,65 +79,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zide Chen <zide.chen@intel.com>
+From: Baolin Wang <baolin.wang@linux.alibaba.com>
 
-[ Upstream commit 003267cb94e21d762eb72d6977d84f44f1705bb7 ]
+commit 13b6b620910436c29dea398382e83c9499fd13e4 upstream.
 
-When uncore_pci_pmu_register() fails, pmu->boxes[die] is set to NULL
-before returning.  In the uncore_pci_remove() path, this causes
-uncore_pci_pmu_unregister() to be skipped entirely, leaking
-pmu->activeboxes.  In the uncore_bus_notify() path,
-uncore_pci_pmu_unregister() may still be called and must exit early
-when pmu->boxes[die] is NULL to avoid a NULL pointer dereference, and
-to ensure activeboxes is only decremented for a previously active box.
+The balance_dirty_pages() won't do the dirty folios throttling on
+cgroupv1.  See commit 9badce000e2c ("cgroup, writeback: don't enable
+cgroup writeback on traditional hierarchies").
 
-Additionally, since pci_get_drvdata() returns NULL on registration
-failure, uncore_pci_remove() can no longer treat NULL drvdata as an
-indicator of an auxiliary PCI device.  Remove the associated
-WARN_ON_ONCE().
+Moreover, after commit 6b0dfabb3555 ("fs: Remove aops->writepage"), we no
+longer attempt to write back filesystem folios through reclaim.
 
-Signed-off-by: Zide Chen <zide.chen@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Link: https://sashiko.dev/#/patchset/20260512233048.9577-1-zide.chen@intel.com?part=1
-Link: https://patch.msgid.link/20260611160033.66760-2-zide.chen@intel.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+On large memory systems, the flusher may not be able to write back quickly
+enough.  Consequently, MGLRU will encounter many folios that are already
+under writeback.  Since we cannot reclaim these dirty folios, the system
+may run out of memory and trigger the OOM killer.
+
+Hence, for cgroup v1, let's throttle reclaim after waking up the flusher,
+which is similar to commit 81a70c21d917 ("mm/cgroup/reclaim: fix dirty
+pages throttling on cgroup v1"), to avoid unnecessary OOM.
+
+The following test program can easily reproduce the OOM issue.  With this
+patch applied, the test passes successfully.
+
+$mkdir /sys/fs/cgroup/memory/test
+$echo 256M > /sys/fs/cgroup/memory/test/memory.limit_in_bytes
+$echo $$ > /sys/fs/cgroup/memory/test/cgroup.procs
+$dd if=/dev/zero of=/mnt/data.bin bs=1M count=800
+
+Link: https://lore.kernel.org/3445af0f09e8ca945492e052e82594f8c4f2e2f6.1774606060.git.baolin.wang@linux.alibaba.com
+Fixes: ac35a4902374 ("mm: multi-gen LRU: minimal implementation")
+Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Reviewed-by: Barry Song <baohua@kernel.org>
+Reviewed-by: Kairui Song <kasong@tencent.com>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Qi Zheng <zhengqi.arch@bytedance.com>
+Cc: Wei Xu <weixugc@google.com>
+Cc: Yuanchu Xie <yuanchu@google.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Leno Hou <lenohou@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/uncore.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ mm/vmscan.c |   16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/events/intel/uncore.c b/arch/x86/events/intel/uncore.c
-index 527e6d11af470..609a3a75b5deb 100644
---- a/arch/x86/events/intel/uncore.c
-+++ b/arch/x86/events/intel/uncore.c
-@@ -1151,6 +1151,7 @@ static int uncore_pci_pmu_register(struct pci_dev *pdev,
- 	/* First active box registers the pmu */
- 	ret = uncore_pmu_register(pmu);
- 	if (ret) {
-+		atomic_dec(&pmu->activeboxes);
- 		pmu->boxes[die] = NULL;
- 		uncore_box_exit(box);
- 		kfree(box);
-@@ -1216,6 +1217,9 @@ static void uncore_pci_pmu_unregister(struct intel_uncore_pmu *pmu, int die)
- {
- 	struct intel_uncore_box *box = pmu->boxes[die];
- 
-+	if (!box)
-+		return;
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -5259,8 +5259,22 @@ done:
+ 	 *  If too many file cache in the coldest generation can't be evicted
+ 	 *  due to being dirty, wake up the flusher.
+ 	 */
+-	if (sc->nr.unqueued_dirty && sc->nr.unqueued_dirty == sc->nr.file_taken)
++	if (sc->nr.unqueued_dirty && sc->nr.unqueued_dirty == sc->nr.file_taken) {
++		struct pglist_data *pgdat = lruvec_pgdat(lruvec);
 +
- 	pmu->boxes[die] = NULL;
- 	if (atomic_dec_return(&pmu->activeboxes) == 0)
- 		uncore_pmu_unregister(pmu);
-@@ -1240,7 +1244,6 @@ static void uncore_pci_remove(struct pci_dev *pdev)
- 				break;
- 			}
- 		}
--		WARN_ON_ONCE(i >= UNCORE_EXTRA_PCI_DEV_MAX);
- 		return;
- 	}
+ 		wakeup_flusher_threads(WB_REASON_VMSCAN);
++		/*
++		 * For cgroupv1 dirty throttling is achieved by waking up
++		 * the kernel flusher here and later waiting on folios
++		 * which are in writeback to finish (see shrink_folio_list()).
++		 *
++		 * Flusher may not be able to issue writeback quickly
++		 * enough for cgroupv1 writeback throttling to work
++		 * on a large system.
++		 */
++		if (!writeback_throttling_sane(sc))
++			reclaim_throttle(pgdat, VMSCAN_THROTTLE_WRITEBACK);
++	}
  
--- 
-2.53.0
-
+ 	clear_mm_walk();
+ 
 
 
