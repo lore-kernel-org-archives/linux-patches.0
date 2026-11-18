@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052786;
-	b=sNI3O+LkKXvqpLYWYPnMpA9GtnOM6Vskgugi0jR4EEV2Xm4yAG3jm61jb/ZTCh3jcKjJ
-	 rCzvrYuUgk0oB0PBJJ85umvVbzw7Xpqtd/nGU+ua1fLmBuZepnjpOfpRF7emKFS6tDqRu
-	 35tBDCbjobhuPFrR1z4l4eWUEQu0b+DZOYZ1gzk3ci8Zr3monSeTBkcPfIiy2+ANDroIu
-	 HFzqQ87Z+s3eJswKnAIECtu2gI/bF4TRzcqA2z7A0R5N/xicfcZf+yKhYO1q8v6sdh2r+
-	 eRPviTJTyAgk5tVKSUWGTSoN4T+BTThA9OKuDCfV8gp7TOSVUDcdNQ5m7oU6o4mXoRg==
+	t=1795052789;
+	b=4275BXq9t6B6GMEMuEZUSviNgz5B5iVzy7hyXNLkCQg18g3vUML2quCfv76ENXrCn5cB
+	 bR7T5YqiIQ55+bRDRVRRMMLPvV9gZBlZZ4KmbMzHjV+ANpiOO0bfELb+n0FxfDkfBO80I
+	 d0AhBuxoCsgrR2LhSpl6FN73rf37GvRmtDzuqpeAC7XC1jkpbQDVPSZg7lQjTbU0Ndaxs
+	 /WJN67Km2ow+tV6eEpaBynnaHadVXhgtsKbCy1pEzIHfZ5fw+eVn0RR9XUrG5uzasG04J
+	 9EHQclb0Ajonyq6uhXXaavAlh+348uh1rbyrCc5ZoN5HJ56BoZ9phE3PXYd6EDwlUHw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052786;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052789;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1yCEYXFp1d/j9gXnnnzFJGuuZabW9Y05EJN2rKyxX6M=;
-	b=yAhJjnrwm5oapDdOtSNBzdLiQtlBswGy2cq+55bjw6qTVpQtHRMz6RxenhMIIDX2gSKW
-	 pfaWRc2zs5fbaKESCXq1KFog6gvzp9iIq5/S0ro2yCc0u/q2EDYdMXoHOi9dgMVGEyNz/
-	 9wweYRUa/CmG1zDBucYHx2vQppdLngQnh88khAylvjPZ53lNHAyx7/zIO/L6NXRfcSRox
-	 caKh1LsiYUCKZG3AiBun1kkMy+OhfZCJBIRL29/YwasGRTScb7mcMqu7/7iksl5nSnp4N
-	 7/BMwD2s855Z+I+QCvuePTGNIa/6ZXo1waOcsgoi5sOJPc3kXMfd90cW88vfXw0eMrw==
+	bh=8gfuznA3hRGWnumoFstrcruBThSiWKroSSynffUpaQw=;
+	b=wBCPsQLUoL4CJrbGzuK+JIJFRtVuqJL28VTSsYU5L1LoskODI9mxBDZHYtbTrtFk9/VR
+	 0StgHBvDjOEnlWlmrys72motLOZRi7EH6cNUhP//ijc6pvTvvLby73oum4wLgE/eWs4QU
+	 dWP9fLG660RDGonAMqhPGloqVFismDKp++j12vN1RAqgkj73LRuFk4/IMZmx/qaY//dWP
+	 oP4t2fNnr5C1xEV0zZjwqf6V3RHaxSG0c5iAjMNWIJSOY9qxpusLIZC3CI4D2LagBDz8B
+	 DGuiAZEuN3e0sy3P5ix9iJ57CeeLF4bVH7RWTIE3nrN3h1l7sW8nu/14zQCvksbSwFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GohkAaN8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q8QGciVn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B7B606A31C;
-	Thu, 19 Nov 2026 01:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EF4C606A32A;
+	Thu, 19 Nov 2026 01:46:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GohkAaN8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D78421F000C4;
-	Thu, 19 Nov 2026 01:46:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q8QGciVn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA0391F000C4;
+	Thu, 19 Nov 2026 01:46:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052786;
-	bh=1yCEYXFp1d/j9gXnnnzFJGuuZabW9Y05EJN2rKyxX6M=;
+	s=korg; t=1795052789;
+	bh=8gfuznA3hRGWnumoFstrcruBThSiWKroSSynffUpaQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GohkAaN8NWpgcvMXjHms1BCdtvBfF1bcfjO3ND79PvssXsakR+ywzt7EfKT7AuezY
-	 RIg0kmziQKUoAL1qNjjzlXmlW7QUFEna4zEgvO0p8ZhwgZPbvNSH8kl+WpQFGnqhYM
-	 Ys5dctE8WpW1820Z5l9Yt6iIvmEQnsPRLQD1ck60=
+	b=Q8QGciVn/+hjI6hlKjBozE/e5xvPfZ0y5AL6EAjC7TPxqmSvwhFwQHW8XolHbRUVl
+	 PLs2qWWqtKbK3fXh62CG3arrTofhJvMAU97PrkOYGQMnGkg0JiIN4JFKQzuKlMN8eI
+	 0JMKkRLVWRj5kwJ81QWu6YfEN3ODGNPQL7y5O9vs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Sun <sunjunchao@bytedance.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Florian Fuchs <fuchsfl@gmail.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0689/2214] writeback: clear old wb dirty state after inode switches
-Date: Wed, 18 Nov 2026 15:39:25 +0100
-Message-ID: <20261118150039.294341844@linuxfoundation.org>
+Subject: [PATCH 5.15 0690/2214] sh: maple: Use the matching IRQ cookie when invoking free_irq()
+Date: Wed, 18 Nov 2026 15:39:26 +0100
+Message-ID: <20261118150039.330954931@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,46 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Sun <sunjunchao@bytedance.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit a396fe9f74ea367ae3fab2dcb70b24e83db9f0cb ]
+[ Upstream commit e3ef44e77b40e3cecfb34757ff3c15ecceea0309 ]
 
-Switching an inode to another wb updates the target wb's dirty-I/O state,
-but no longer checks whether the source wb's dirty-I/O lists became empty.
-The check was lost when inode_io_list_del_locked(inode, old_wb) was
-removed to support tracking clean attached inodes.
+The Maple DMA and VBLANK handlers are registered with
+&maple_unsupported_device as their dev_id. Passing NULL to free_irq()
+cannot find either action, so the handlers remain registered and the
+IRQ core warns.
 
-If the last dirty inode is moved, WB_has_dirty_io remains set on the old
-wb and its bandwidth contribution remains in bdi->tot_write_bandwidth.
-This can keep an empty wb scheduled for periodic writeback and overstate
-the total bandwidth used to distribute writeback work.
+Use the same cookie when freeing both handlers on the error paths.
 
-Call wb_io_lists_depopulated() on the old wb after the batch of inode
-switches, while its list_lock is still held. This clears the flag and
-removes the bandwidth contribution if its dirty-I/O lists are empty.
-
-Fixes: f3b6a6df38aa ("writeback, cgroup: keep list of inodes attached to bdi_writeback")
+Fixes: b3c69e248176 ("maple: more robust device detection.")
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Assisted-by: LLM
 Cc: stable@vger.kernel.org
-Signed-off-by: Julian Sun <sunjunchao@bytedance.com>
-Link: https://patch.msgid.link/20261016115230.3640770-3-sunjunchao@bytedance.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Tested-by: Florian Fuchs <fuchsfl@gmail.com>
+Reviewed-By: Florian Fuchs <fuchsfl@gmail.com>
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fs-writeback.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/sh/maple/maple.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
-index c6c2dad201564..acc639682c7d5 100644
---- a/fs/fs-writeback.c
-+++ b/fs/fs-writeback.c
-@@ -509,6 +509,7 @@ static void inode_switch_wbs_work_fn(struct work_struct *work)
- 		}
- 	}
+diff --git a/drivers/sh/maple/maple.c b/drivers/sh/maple/maple.c
+index e24e220e56eea..398043a4e8705 100644
+--- a/drivers/sh/maple/maple.c
++++ b/drivers/sh/maple/maple.c
+@@ -870,10 +870,10 @@ static int __init maple_bus_init(void)
+ 	kmem_cache_destroy(maple_queue_cache);
  
-+	wb_io_lists_depopulated(old_wb);
- 	spin_unlock(&new_wb->list_lock);
- 	spin_unlock(&old_wb->list_lock);
+ cleanup_bothirqs:
+-	free_irq(HW_EVENT_VSYNC, 0);
++	free_irq(HW_EVENT_VSYNC, &maple_unsupported_device);
  
+ cleanup_irq:
+-	free_irq(HW_EVENT_MAPLE_DMA, 0);
++	free_irq(HW_EVENT_MAPLE_DMA, &maple_unsupported_device);
+ 
+ cleanup_dma:
+ 	free_pages((unsigned long) maple_sendbuf, MAPLE_DMA_PAGES);
 -- 
 2.53.0
 
