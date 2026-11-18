@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053601;
-	b=RM3kizSqblLCc4yTdZ0Wyt/4IpElpiRwfgRnYAutpY0X0jx7oB16IpAIopqEy16shjdH
-	 GcvD53p10uDtb18Y2oytSMyvO/nPlEMgKoG+NoZ3HeR6PZ0jCVK0Mqe05IpNN/k6eu8PA
-	 u7ezvNEmeOzgw6aNpEMA7PPpWrAHH5p5PHxKbOrRJEXatHoUwfaxbRCoSsLzsZ/DKDXEB
-	 N/raNdcSbEc1umb2Qo1C3IV4kY1pp0waGEAmnI7XmHzCDNSyXIj8mfv6lg33RR2YnzIz5
-	 UcJhPtWhDTP1zQU/6lB6aVzg8woZdcT/zD2UVbl7ZpOnvxJkU9AVvWv0z8nqjTf/TcA==
+	t=1795053604;
+	b=xRWKer0XhiZ2/D/3W9L1imnMuWS6rrk6dK5+Az5Zl8iwyNoeiCTzECwJCGIyuGugFvVC
+	 3qwGqUynSZq5CJCdxZsncmyMaQdt4Op73M2QdG3e5pBU2XPPfolit9cDW+XX1/5FIp2Ma
+	 5Ep7neRnQ8RGRa8rmzt7+I5Liydo3FKAD3UVx7bgdI0axujaEuY0Fx8YAaCTWrF+UCFoj
+	 RqAaVXvT1oUes8Z3zPjC0uwi64ONjZEJxtJo+UbYxydLrMd77HcYRWYnH2QqERC3PVQIs
+	 aemV6yztvhPzm7LAgxoDNxP6YL0Lnz4Gpv7Ol+sBysHzrLou2g8CeB3g/dUe/zZ8BRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053601;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053604;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TqXPzY9VWn+TEN81C/9z2aeZpoZg+0yyC/pvpmvY2rE=;
-	b=ru4mdZ3NJM9CxEjykME8j1TCq2IipugTrstqqSoSJaX9+5XvIuD5GpOphAy0TNK2Tfwz
-	 XRSdohWLx9Nnel1zFQpU0PKmPefDcUUD5y3eBrJPoJpNrOf5TKV9VlhoNDCpPasDeFh6T
-	 EkXUrLa0nvQ+VhvGziLpNUOm5StnM5MevF2M/tZwfyObKCFffTK6vT+nWIjQ6qBkp2Tpc
-	 fjLfbobEvkvIZYU9ktyOCdoi0IpYK3nZIr5c8QzFFKOGDMKlwZHNokO0SnhfWa1UhDxTK
-	 ROnWV3eLE3bkp2CYdslvh1EU2ok9//q80OHWF2z6VJP3kKCspwJBBO3PMFU44rm7avg==
+	bh=c16NuBl2w48aOcHmEcvttehluGSCP02KfrLlxnfHaG0=;
+	b=wvXWaL+xRnon1J0iJVR/wxKAPfJdMqLMspIT6Delzzq1aIh3YCtMyPFNEocpJciSCSL7
+	 UGkZkluUkaXLSOclcUONewkUyd8y4J68gwY3cotxR0OJ7rBZwjc9x88qLvsQOKCA7R826
+	 qQMRScIsEC+YwA/cT0T4rtz25WJioMMf68FinhpYVIQXcSqXWsnFTqihZ2VZGZDJXqkPf
+	 qB7JJ/PiT1PQ6+jrH1ZRm0Wo15yFovhG8rBsw3zKZXqlDBDOxNE+LcCse1+k+vDrT8VYq
+	 Ac1xJjzjkAfpEzIdjAbbQgO2VMAvYzr9KGFJcqKCuTuquoxUUjab5cjIxXu+/hQ/4Eg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SXkGPQhS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZaxRdIEh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E6F606A31C;
-	Thu, 19 Nov 2026 02:00:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 395C8606A325;
+	Thu, 19 Nov 2026 02:00:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SXkGPQhS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B5B11F000C5;
-	Thu, 19 Nov 2026 01:59:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZaxRdIEh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F1921F000C4;
+	Thu, 19 Nov 2026 02:00:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053601;
-	bh=TqXPzY9VWn+TEN81C/9z2aeZpoZg+0yyC/pvpmvY2rE=;
+	s=korg; t=1795053604;
+	bh=c16NuBl2w48aOcHmEcvttehluGSCP02KfrLlxnfHaG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SXkGPQhS/iovdnXnPPVfFmQBJs1CdDFVySFy1etzKnOqCirpF7nxLmr2BDXjxKTBp
-	 3HWPwnEQFgU3VFfzWAXzn+JobeBOAcWbQqwyabT1/3f9Tc48YihzwM5Ivl9iquE5hg
-	 eEY8o7mnAsLTsAYARKzEO2bXDWF5ujZXoDXFW4H8=
+	b=ZaxRdIEhHklRaqO40dMz8aW29huHoN8xKBnglEgtcOKZ5ESdyHFxhYtp+ZwLMjo8p
+	 e67BQuAQDUf/CYGpCu7yBieUdZoiVrvDccQv1d3M+8lNpKWCGpxVcYoOQVGC2cs93v
+	 V+oetBqzu0xHs8WUnZmNvF7lp5ozhGqZpHT9SgHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Ming Qian <ming.qian@oss.nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0975/2214] wifi: mac80211: queue frames while off-channel
-Date: Wed, 18 Nov 2026 15:44:11 +0100
-Message-ID: <20261118150051.271731472@linuxfoundation.org>
+Subject: [PATCH 5.15 0976/2214] media: imx-jpeg: finish the job on device_run() error paths
+Date: Wed, 18 Nov 2026 15:44:12 +0100
+Message-ID: <20261118150051.303450585@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,144 +70,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislaw Gruszka <stf_xl@wp.pl>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit 13e51269b6656768dc595ed6025e4974f2026543 ]
+[ Upstream commit 30b35fd2b999e1b8c26f8191d974d20c8848d2d6 ]
 
-Drivers without FAST_XMIT and hardware scan support currently drop TX
-frames during software scanning while being off-channel. This happens
-in ieee80211_tx_h_check_assoc() before frames reach internal TX queue.
+mxc_jpeg_device_run() returns early through a shared "end" label on several
+error paths (no free slot, mxc_jpeg_alloc_slot_data() failure, or missing
+buffers or queue data), and none of them calls v4l2_m2m_job_finish().
+Since the delayed work is queued only after the hardware is started, those
+paths neither finish the job directly nor queue timeout work that could
+finish it later. The job is left with TRANS_RUNNING set, so the
+wait_event() in v4l2_m2m_cancel_job() (reached from v4l2_m2m_ctx_release()
+at close) waits indefinitely and the close hangs.
 
-Move the off-channel check to invoke_tx_handlers_late(), after
-ieee80211_queue_skb(). Frames can then remain queued and be transmitted
-when the interface returns on-channel. This how TX works currently when
-code goes via ieee80211_xmit_fast() path.
+mxc_jpeg_alloc_slot_data() uses dma_alloc_coherent(), so the failure path
+is reachable under memory pressure.
 
-Below is rt2x00 driver ping output example while scanning, before and
-after the fix. After the fix, packets are no longer lost. Some have
-increased latency, what is expected behavior.
+Return the src/dst buffers with VB2_BUF_STATE_ERROR and call
+v4l2_m2m_job_finish() on those paths: paths that have buffers use a
+"buf_finish" label; the no-buffer path uses "job_finish" directly. This
+mirrors the existing jpeg_parse_error path.
 
-BEFORE:
-64 bytes from 192.168.0.1: icmp_seq=29 ttl=64 time=3.61 ms
-64 bytes from 192.168.0.1: icmp_seq=31 ttl=64 time=3.33 ms # Missed 30
-64 bytes from 192.168.0.1: icmp_seq=32 ttl=64 time=4.03 ms
-64 bytes from 192.168.0.1: icmp_seq=34 ttl=64 time=3.10 ms # Missed 33
-64 bytes from 192.168.0.1: icmp_seq=36 ttl=64 time=3.04 ms # Missed 35
-64 bytes from 192.168.0.1: icmp_seq=38 ttl=64 time=3.05 ms # Missed 37
-64 bytes from 192.168.0.1: icmp_seq=40 ttl=64 time=4.14 ms # Missed 39
-64 bytes from 192.168.0.1: icmp_seq=41 ttl=64 time=4.50 ms
+This bug was found by static analysis.
 
-AFTER:
-64 bytes from 192.168.0.1: icmp_seq=29 ttl=64 time=3.40 ms
-64 bytes from 192.168.0.1: icmp_seq=30 ttl=64 time=6.10 ms
-64 bytes from 192.168.0.1: icmp_seq=31 ttl=64 time=4.69 ms
-64 bytes from 192.168.0.1: icmp_seq=32 ttl=64 time=4.49 ms
-64 bytes from 192.168.0.1: icmp_seq=33 ttl=64 time=148 ms
-64 bytes from 192.168.0.1: icmp_seq=34 ttl=64 time=6.83 ms
-64 bytes from 192.168.0.1: icmp_seq=35 ttl=64 time=8.66 ms
-64 bytes from 192.168.0.1: icmp_seq=36 ttl=64 time=13.0 ms
-64 bytes from 192.168.0.1: icmp_seq=37 ttl=64 time=4.78 ms
-64 bytes from 192.168.0.1: icmp_seq=38 ttl=64 time=3.85 ms
-
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Link: https://patch.msgid.link/20260908124651.2995-1-stf_xl@wp.pl
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ sashal: preserved the existing memset() initialization and out_free cleanup path in ieee80211_8023_xmit() ]
+Fixes: 2db16c6ed72c ("media: imx-jpeg: Add V4L2 driver for i.MX8 JPEG Encoder/Decoder")
+Cc: stable@vger.kernel.org
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Ming Qian <ming.qian@oss.nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ sashal: Adjusted mxc_jpeg_device_run() context to account for missing timeout work scheduling. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 50 ++++++++++++++++++++++++++---------------------
- 1 file changed, 28 insertions(+), 22 deletions(-)
+ drivers/media/platform/imx-jpeg/mxc-jpeg.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index a919d585b6b1b..6e5dde41e11e6 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -282,7 +282,6 @@ ieee80211_tx_h_dynamic_ps(struct ieee80211_tx_data *tx)
- static ieee80211_tx_result debug_noinline
- ieee80211_tx_h_check_assoc(struct ieee80211_tx_data *tx)
- {
--
- 	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)tx->skb->data;
- 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(tx->skb);
- 	bool assoc = false;
-@@ -290,23 +289,6 @@ ieee80211_tx_h_check_assoc(struct ieee80211_tx_data *tx)
- 	if (unlikely(info->flags & IEEE80211_TX_CTL_INJECTED))
- 		return TX_CONTINUE;
+diff --git a/drivers/media/platform/imx-jpeg/mxc-jpeg.c b/drivers/media/platform/imx-jpeg/mxc-jpeg.c
+index 2ab03444f742a..45097405bdc9f 100644
+--- a/drivers/media/platform/imx-jpeg/mxc-jpeg.c
++++ b/drivers/media/platform/imx-jpeg/mxc-jpeg.c
+@@ -999,15 +999,15 @@ static void mxc_jpeg_device_run(void *priv)
+ 	dst_buf = v4l2_m2m_next_dst_buf(ctx->fh.m2m_ctx);
+ 	if (!src_buf || !dst_buf) {
+ 		dev_err(dev, "Null src or dst buf\n");
+-		goto end;
++		goto job_finish;
+ 	}
  
--	if (unlikely(test_bit(SCAN_SW_SCANNING, &tx->local->scanning)) &&
--	    test_bit(SDATA_STATE_OFFCHANNEL, &tx->sdata->state) &&
--	    !ieee80211_is_probe_req(hdr->frame_control) &&
--	    !ieee80211_is_any_nullfunc(hdr->frame_control))
--		/*
--		 * When software scanning only nullfunc frames (to notify
--		 * the sleep state to the AP) and probe requests (for the
--		 * active scan) are allowed, all other frames should not be
--		 * sent and we should not get here, but if we do
--		 * nonetheless, drop them to avoid sending them
--		 * off-channel. See the link below and
--		 * ieee80211_start_scan() for more.
--		 *
--		 * http://article.gmane.org/gmane.linux.kernel.wireless.general/30089
--		 */
--		return TX_DROP;
--
- 	if (tx->sdata->vif.type == NL80211_IFTYPE_OCB)
- 		return TX_CONTINUE;
+ 	q_data_cap = mxc_jpeg_get_q_data(ctx, V4L2_BUF_TYPE_VIDEO_CAPTURE);
+ 	if (!q_data_cap)
+-		goto end;
++		goto buf_finish;
+ 	q_data_out = mxc_jpeg_get_q_data(ctx, V4L2_BUF_TYPE_VIDEO_OUTPUT);
+ 	if (!q_data_out)
+-		goto end;
++		goto buf_finish;
+ 	src_buf->sequence = q_data_out->sequence++;
+ 	dst_buf->sequence = q_data_cap->sequence++;
  
-@@ -791,6 +773,33 @@ ieee80211_tx_h_rate_ctrl(struct ieee80211_tx_data *tx)
- 	return TX_CONTINUE;
+@@ -1050,11 +1050,11 @@ static void mxc_jpeg_device_run(void *priv)
+ 	ctx->slot = mxc_get_free_slot(jpeg->slot_data, MXC_MAX_SLOTS);
+ 	if (ctx->slot >= MXC_MAX_SLOTS) {
+ 		dev_err(dev, "No more free slots\n");
+-		goto end;
++		goto buf_finish;
+ 	}
+ 	if (!mxc_jpeg_alloc_slot_data(jpeg, ctx->slot)) {
+ 		dev_err(dev, "Cannot allocate slot data\n");
+-		goto end;
++		goto buf_finish;
+ 	}
+ 
+ 	mxc_jpeg_enable_slot(reg, ctx->slot);
+@@ -1073,8 +1073,17 @@ static void mxc_jpeg_device_run(void *priv)
+ 					 &src_buf->vb2_buf, &dst_buf->vb2_buf);
+ 		mxc_jpeg_dec_mode_go(dev, reg);
+ 	}
+-end:
++
+ 	spin_unlock_irqrestore(&ctx->mxc_jpeg->hw_lock, flags);
++	return;
++buf_finish:
++	v4l2_m2m_src_buf_remove(ctx->fh.m2m_ctx);
++	v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx);
++	v4l2_m2m_buf_done(src_buf, VB2_BUF_STATE_ERROR);
++	v4l2_m2m_buf_done(dst_buf, VB2_BUF_STATE_ERROR);
++job_finish:
++	spin_unlock_irqrestore(&ctx->mxc_jpeg->hw_lock, flags);
++	v4l2_m2m_job_finish(jpeg->m2m_dev, ctx->fh.m2m_ctx);
  }
  
-+static ieee80211_tx_result debug_noinline
-+ieee80211_tx_h_check_offchannel(struct ieee80211_tx_data *tx)
-+{
-+	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)tx->skb->data;
-+	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(tx->skb);
-+
-+	if (unlikely(info->flags & IEEE80211_TX_CTL_INJECTED))
-+		return TX_CONTINUE;
-+
-+	if (unlikely(test_bit(SCAN_SW_SCANNING, &tx->local->scanning)) &&
-+	    test_bit(SDATA_STATE_OFFCHANNEL, &tx->sdata->state) &&
-+	    !ieee80211_is_probe_req(hdr->frame_control) &&
-+	    !ieee80211_is_any_nullfunc(hdr->frame_control)) {
-+		/*
-+		 * When software scanning only nullfunc frames (to notify
-+		 * the sleep state to the AP) and probe requests (for the
-+		 * active scan) are allowed, all other frames should not be
-+		 * sent and we should not get here, but if we do
-+		 * nonetheless, drop them to avoid sending them
-+		 * off-channel. See __ieee80211_start_scan() for more.
-+		 */
-+		return TX_DROP;
-+	}
-+
-+	return TX_CONTINUE;
-+}
-+
- static __le16 ieee80211_tx_next_seq(struct sta_info *sta, int tid)
- {
- 	u16 *seq = &sta->tid_seq[tid];
-@@ -1838,6 +1847,7 @@ static int invoke_tx_handlers_late(struct ieee80211_tx_data *tx)
- 		goto txh_done;
- 	}
- 
-+	CALL_TXH(ieee80211_tx_h_check_offchannel);
- 	CALL_TXH(ieee80211_tx_h_michael_mic_add);
- 	CALL_TXH(ieee80211_tx_h_sequence);
- 	CALL_TXH(ieee80211_tx_h_fragment);
-@@ -4477,10 +4487,6 @@ static void ieee80211_8023_xmit(struct ieee80211_sub_if_data *sdata,
- 		skb_get_hash(skb);
- 	}
- 
--	if (unlikely(test_bit(SCAN_SW_SCANNING, &local->scanning)) &&
--	    test_bit(SDATA_STATE_OFFCHANNEL, &sdata->state))
--		goto out_free;
--
- 	memset(info, 0, sizeof(*info));
- 
- 	ieee80211_aggr_check(sdata, sta, skb);
+ static int mxc_jpeg_decoder_cmd(struct file *file, void *priv,
 -- 
 2.53.0
 
