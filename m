@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042465;
-	b=3UwcmNRYxQQXzcYsF6jhSW359mrWWCbQ2VY1/rudznev2EXH5Uy3hRGS6xxRYI1FF2Lp
-	 9h81wqnWqNq4ExxcjkzA+eHJvnBEIjeMTkb3K+wPsRlX2aa7HFDEkUcpYSmaOlgdHwp4J
-	 oN+f+3cruoDB2c8+jp+1IXUL39ref+cWgbvf54cU3UK3/64Uor4Kd8LfKbHEPhymh93YZ
-	 DiRdS2Nrb2bzPOVxJohZ5caVnEssjvAjDR2I0wq/kX0hXE9gR/D0DezBXREH3w/0HR2kA
-	 wE93OqbXo0cSsKi/lfYwY6QrJ0nejIZ04GsWtuENS/YIpw0LXhO6Xhl7M93WFVZ0gaw==
+	t=1795042468;
+	b=hBnqmGeQa/25CGB9zaFzq+UXmi7lPYlwehfMAPIgfmULth/26oJfKQQDsuqPQKTI2ql4
+	 LbizeOq8Z3AlDhT+kziLjeswWf7x3MYc61X5O1irG3ffA2vBVFonIilq8wLGID/wn5Htt
+	 p6Ksxqd75b9h0imTWsu7iOVftiAaqCKWmvO0fnSW+wn/q+YRaBzpAn6CLuIpKmUtOkxDj
+	 YeG++BNoT8vXa9Iv/Q086C74K6E6tpkwivyYfUVrO39FrL/vTiarMgMUGYDJiMgItDeVb
+	 s4qAe2hwkgAG3LkVohbzKaLunAr0x5a45E4fLCgbJAYIGDtgToH5DvVlEcjGyvmMBsQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042465;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042468;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=j+DUPEI3R8xbfe5X1JMzi8KEmGhjySl5xKmKH9cd+zE=;
-	b=tQ0/5e3nECy2gbWP5nXknovdNAHmlsY28oz0QO9OMfjDdizzc104c9x3fowrCiSjfuEh
-	 p8vwOFgP5vV+XlJ4R1XQc+xCXLjzUcs+WElG02F9xB2zX6oy+suP3qcmXwJ58MjVLFHwN
-	 kR7GeTJl5+45LshPUpQE9Ro23I9jfYQpFmz5B8yVAcbN3TJPCGhfktnPCRNGbxi/W+RXk
-	 2La2ej+9bES7vEIoG5IkB4fFZs7Pdxnbb4UYG2qsIe799jKP/sl28OYtUiyPGGXW+bBbE
-	 ticZPQWm8pRjs8Rjr7AljpkuTvk5HbSfg9uz9EnP42AZ2NoftORZ4Ko6Rdxi//mBiQw==
+	bh=gDFivPtPRjHIvE4A7IL6Dt5c+7HO2wGj9V1SR1Pvi7U=;
+	b=NMdbOPx6P+S0GHho33axgkG6F5b8zLcCxMFQC/ze1YizjY3b5lj5P6/RLE+8cW/4p5RC
+	 tGOZVPgBDO+aVSPS/UckpoGwQMkWiREdw21bQLR1s/s+KTyDxOT0EkKqXsUhTLBTLbruO
+	 jAV8BFo+HobRzknU/a3brq0kcZeoDaTBfPBfD/QexK2qgGrYZw1cWDzKJ+j72XkOAkcFv
+	 ohq3snmucNcrphONhmmipaSP9cgIIVpVHffDeRr1xZCSSuCY2lyLwrHlwru4Z/+4oA8L0
+	 T8vzjqPdjRTFrmK136d/tby4pskInxHghVWX+Rq567GSblO2aRtI5qKfY9MqG+93h7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ztvVBA1q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AwxciQSE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80C5606A31C;
-	Wed, 18 Nov 2026 22:54:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A1A606A325;
+	Wed, 18 Nov 2026 22:54:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ztvVBA1q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD4181F000C4;
-	Wed, 18 Nov 2026 22:54:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AwxciQSE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A09E61F000C4;
+	Wed, 18 Nov 2026 22:54:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042465;
-	bh=j+DUPEI3R8xbfe5X1JMzi8KEmGhjySl5xKmKH9cd+zE=;
+	s=korg; t=1795042468;
+	bh=gDFivPtPRjHIvE4A7IL6Dt5c+7HO2wGj9V1SR1Pvi7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ztvVBA1qunBQyCDRaOzizl/HyQtM8K0dwWJYP0h9kFc5Dm8zJdtVLPZqhJUMHurKC
-	 8Dl1twdVoBBGST6+hv3eKe5F3TWQrHLvcTKlP1ATQxMI1JXmQ8Dd/EsUOQE/tHPuNX
-	 G+1qQw8nXmyxK7HHuYyXB0OlsyENHAuhjWM9K43M=
+	b=AwxciQSEEcpgalGQWPZYlhjZiw52kxfGsnucxKNrjL89k6598k5nUo6ffarrCnMEg
+	 lGRAI2UJg3VVVQCUgOlfARwUPgSHgUiceokTtSY8234R9VNZ4QFsePQ6dvaGTzoDT7
+	 2T2/Cynpq/ekqZmyMBdUmMKUHb5cbJP1uITHRJ0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
 	Jerome Brunet <jbrunet@baylibre.com>,
 	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3180/3318] clk: lmk04832: Handle reset GPIO lookup errors
-Date: Wed, 18 Nov 2026 16:03:22 +0100
-Message-ID: <20261118150455.217990985@linuxfoundation.org>
+Subject: [PATCH 6.6 3181/3318] clk: cdce925: Size the PLL child name buffer for any int
+Date: Wed, 18 Nov 2026 16:03:23 +0100
+Message-ID: <20261118150455.246283025@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,39 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit 5c7c0cbf81bba69695efa12e451f0f2ecd4b92a5 ]
+[ Upstream commit e9e6b4dc303dff637ef725aca4f4968d7600798b ]
 
-devm_gpiod_get_optional() may return -EPROBE_DEFER or other errors,
-but lmk04832_probe() currently ignores them.
+The PLL child node name is built from "PLL%d" in a 6 byte stack buffer.
+The PLL index is bounded by the chip's num_plls, at most 4, but GCC
+cannot see that bound and, with W=1, warns that the formatted string
+may not fit.
 
-Check the return value and propagate errors from the reset GPIO lookup.
+Make the buffer large enough to hold any int and use snprintf() with
+sizeof() so the size stays tied to the declaration.
 
-Fixes: 3bc61cfd6f4a ("clk: add support for the lmk04832")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20261006110501.57051-1-phucduc.bui@gmail.com
+Fixes: 19fbbbbcd3a3 ("Add TI CDCE925 I2C controlled clock synthesizer driver")
 Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://patch.msgid.link/20261014-cdce925-truncate-child-name-v1-1-00136be00c49@baylibre.com
 Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-lmk04832.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/clk/clk-cdce925.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/clk-lmk04832.c b/drivers/clk/clk-lmk04832.c
-index 99b271c1278a9..fe7618563ae5d 100644
---- a/drivers/clk/clk-lmk04832.c
-+++ b/drivers/clk/clk-lmk04832.c
-@@ -1417,6 +1417,9 @@ static int lmk04832_probe(struct spi_device *spi)
- 
- 	lmk->reset_gpio = devm_gpiod_get_optional(&spi->dev, "reset",
- 						  GPIOD_OUT_LOW);
-+	if (IS_ERR(lmk->reset_gpio))
-+		return dev_err_probe(lmk->dev, PTR_ERR(lmk->reset_gpio),
-+				     "failed to get reset GPIO\n");
- 
- 	lmk->dclk = devm_kcalloc(lmk->dev, info->num_channels >> 1,
- 				 sizeof(struct lmk_dclk), GFP_KERNEL);
+diff --git a/drivers/clk/clk-cdce925.c b/drivers/clk/clk-cdce925.c
+index cdee4958f26d0..77beafa9d9a96 100644
+--- a/drivers/clk/clk-cdce925.c
++++ b/drivers/clk/clk-cdce925.c
+@@ -642,7 +642,12 @@ static int cdce925_probe(struct i2c_client *client)
+ 	int i;
+ 	int err;
+ 	struct device_node *np_output;
+-	char child_name[6];
++	/*
++	 * The PLL number isn't a compile time constant so GCC can't infer
++	 * the number. Make the stack buffer large enough to hold any int
++	 * so Wformat-truncation does not complain.
++	 */
++	char child_name[15];
+ 	struct regmap_config config = {
+ 		.name = "configuration0",
+ 		.reg_bits = 8,
+@@ -714,7 +719,7 @@ static int cdce925_probe(struct i2c_client *client)
+ 			dev_err(&client->dev, "Failed register PLL %d\n", i);
+ 			goto error;
+ 		}
+-		sprintf(child_name, "PLL%d", i+1);
++		snprintf(child_name, sizeof(child_name), "PLL%d", i + 1);
+ 		np_output = of_get_child_by_name(node, child_name);
+ 		if (!np_output)
+ 			continue;
 -- 
 2.53.0
 
