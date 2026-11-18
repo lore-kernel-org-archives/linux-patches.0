@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033265;
-	b=D7Xp2M/Zsj9GyxCm9UVY9XTifFnrghloW9KP+8WylNQkIdv8t0ZBW0xuiAB46prE6Uhy
-	 IH68Gc9Qrc8jQVJy93wzJ61myQP6UWlT+z+uuQibXObgFLSR5jzvDgp1ooPI3b3mnc5fN
-	 DdEErCGIb5jeB1QDOOaUbvX+mahlhkq4FMjYU6AmG46iyjikPfRkJXwDMR0os14pArG0I
-	 0WUkBwBusuPN34IbeUiEToSbj69x5JRcU+yPRjmBsp8KD1SnjBtGtAPMuiiZsaHLuB4y8
-	 YEMlQFKh13pMABmpLxK6B9IozZn1IXmBl8SWUeCWPAb6eLdNTQUhuU5u9v7aWRXU3mA==
+	t=1795033268;
+	b=Mo49rysAPAfHU1JCIcTicZgZog51YfNQES8vHm9yseScg7R3M22PH7ddg8Dz+fxQAkFf
+	 jiTC/Iurq3sFfWjAAMijbUCsipkET2yMHJZ55dGcnvlrOGsluUBBEIyWZGzUid9DxjPau
+	 aOQbNQr9BPY2OVjdOvpXjDjP27eZZtJBTnpkLTbuGfw5tGFm8dDay8ppknM38iSTjQQZ9
+	 vLiPNzX/9xloXD4xI1qloLnA+jFXW0BtVxLUcVsbgNC1g3puyRfuIVuExS9ZuSHfcxqSp
+	 RCxKqrIbcVQta/pI61mB/+kYRjst6WbSa5ISNww7pvx5Oebdt3f2ZGkgwrffYZOC/hg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033265;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033268;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ph3qBCBC7nukCEFhpojeT66nQo39VIhdZ9MDTW49MXo=;
-	b=UvGAIUZRhspRzk4Ajc9t0b2rgrip6TzRR6DcPCbM348AiaNsHxz29f5UWALGR6MGtjkO
-	 7+PhWkm7hp9QI7Iw94AV+U4HWIWFMeNgoXOfvd6UHAKE+Ut7Q3/dSTZA5RwnmSxEDbBlm
-	 wsBxITX1a9+GCc5fu7YTSlfa3HABW0GsT9imlpPzOVRHc76PHz8JDvsqgvHpSw0hhhdru
-	 xKHlVDTTRy9HrXXuh9TG2ZhIU/jY/R9k6LCnziGQnpasqoFLGwi/mpeHJn+Md1ezvVyBV
-	 /aK3uHI4Wj++Qj9PlzZ8Gt5Zb5DLB+zyJFBTENf/EAOBFqpjHVFboaY5UoncZ7+IvFA==
+	bh=ICH339zJUdIaPQs3esKbkFlrOIaI3iq+9pAmbfEyrQA=;
+	b=zY3UHWtpuEguojkYzkZz/NvB2TS026ayhBaaZBPsNgnPmBMIeO/icXgfhbGVtgnPHz5Z
+	 lopQzkMDowhAxP2ptMXtZR8ZYXVpQgSNl5AV0aFhb8CnqH23kSvyuM7jfp3OyJrcQaxLb
+	 X4yl1i2GX63sbWlta69h+e6aazqFI4MDheGUvBxH6s9m/kfivROHSVwBBhbqv7qmj8gor
+	 7MZxuyRiT1f1idZWSrKIUbi0TgE5rLez+GiYdWrpcA6+ftp6Mf5e9v6jz71CXWXT5/yue
+	 90X5800jZRB87Z3LMb4Xnkh2i9oemoaR9aCwk7BbwoyvX4GO4LBLZEtQGh/QuMeN9BQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="T/K8izHN";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jWaDk3Qz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C610606A32C;
-	Wed, 18 Nov 2026 20:21:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32E5D606A32F;
+	Wed, 18 Nov 2026 20:21:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T/K8izHN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0FF51F000C6;
-	Wed, 18 Nov 2026 20:21:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jWaDk3Qz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8409A1F000C5;
+	Wed, 18 Nov 2026 20:21:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033265;
-	bh=ph3qBCBC7nukCEFhpojeT66nQo39VIhdZ9MDTW49MXo=;
+	s=korg; t=1795033268;
+	bh=ICH339zJUdIaPQs3esKbkFlrOIaI3iq+9pAmbfEyrQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T/K8izHNmO5mtEcsqnBUrIQSITfTCnYYKs87XeUnyLF3JjgD92xxs3pZ8j3cYmNr/
-	 YB6PJ18KV8TaoLE+eLPAQAYslK9n9octpYE/eTfNdXoqEYB+dfdWjDxTuzvb3HjYIY
-	 hN5d/35F9FByVRR6WJaKG+pHtUoZ36Yb1khb+fUw=
+	b=jWaDk3QzkVwAjUtRgf+Z/tKXhkzWLApQl1QD+SyPM3snM9QmyDAJL7A1RrAoL8TTF
+	 KF1159uDD9yxSsxq7WFW01YMSECSbv78jId9wx5BDZIczxrIlHQU2BfxwaIqvCDkXO
+	 Y7NU0RrdApWeOFnmXEpZ9FJxfxS1lQLZ75qyw6W4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jhonata Poma-Hansen <jhonata.poma@gmail.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1708/1756] netlink: check sk_rcvbuf before charging the dump skb
-Date: Wed, 18 Nov 2026 16:03:55 +0100
-Message-ID: <20261118150117.626254442@linuxfoundation.org>
+Subject: [PATCH 6.12 1709/1756] apparmor: advertise that sctp is being mediated
+Date: Wed, 18 Nov 2026 16:03:56 +0100
+Message-ID: <20261118150117.662505548@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,68 +67,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jhonata Poma-Hansen <jhonata.poma@gmail.com>
+From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit b45d37740cfb4bdfccef3fbd9fd970fd3224438f ]
+[ Upstream commit 35b8ab3f36ac0fcd8fc910da0bed889b6c75c426 ]
 
-Since commit ae8f160e7eb2 ("netlink: Fix wraparounds of
-sk->sk_rmem_alloc."), netlink_dump() charges the dump skb first and
-queues it only if sk_rmem_alloc is still below sk_rcvbuf. Commit
-a215b5723922 ("netlink: make sure we allow at least one dump skb")
-added an exception for an empty socket.
+Enable the test harness to detect that the kernel should be properly
+mediating sctp.
 
-A dump that starts while something else is still charged to a socket
-with a small receive buffer fails with ENOBUFS and stays running.
-Every recvmsg() retries it, fails again and sets sk_err, so a reader
-that peeks before reading, as libnl does, gets ENOBUFS on the read
-after each peek, never consumes the message at the head of the queue
-and spins forever.
-
-I hit this with "iw dev wlan0 scan" hanging at 100% CPU on an arm64
-board with a 6.6 based kernel (iw 5.19 sets SO_RCVBUF to 8KiB). A
-kprobe trace showed the scan dump starting while the NEW_SCAN_RESULTS
-notification iw had just read was still charged to its socket,
-because iw had preempted the sender before netlink_broadcast()
-returned.
-
-Check the limit before charging, as before ae8f160e7eb2, which also
-covers the empty socket. netlink_recvmsg() continues a dump only at
-or below half of sk_rcvbuf, so the skb is then always queued, and a
-dump goes over the limit by at most one skb. Refuse a skb that would
-take sk_rmem_alloc past INT_MAX, so the wraparound stays fixed.
-
-Reproduced on net in a KVM guest with a userspace reproducer and the
-selftest in the next patch; both pass with this fix.
-
-Fixes: ae8f160e7eb2 ("netlink: Fix wraparounds of sk->sk_rmem_alloc.")
-Signed-off-by: Jhonata Poma-Hansen <jhonata.poma@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261027-netlink-dump-livelock-v2-1-c4bb05352a33@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7a82f9a06459f ("apparmor: fix check SCTP bind, and connect permission checks")
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ security/apparmor/net.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index fb84eaa63d0ac..8977798d42322 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -2300,9 +2300,13 @@ static int netlink_dump(struct sock *sk, bool lock_taken)
- 	if (!skb)
- 		goto errout_skb;
+diff --git a/security/apparmor/net.c b/security/apparmor/net.c
+index 6e989184e4086..662a1b58d7d72 100644
+--- a/security/apparmor/net.c
++++ b/security/apparmor/net.c
+@@ -22,6 +22,7 @@
+ struct aa_sfs_entry aa_sfs_entry_network[] = {
+ 	AA_SFS_FILE_STRING("af_mask",	AA_SFS_AF_MASK),
+ 	AA_SFS_FILE_BOOLEAN("tcp-fast-open",		1),
++	AA_SFS_FILE_BOOLEAN("sctp",		1),
+ 	{ }
+ };
  
-+	/* Check the limit before charging the skb: netlink_recvmsg() continues
-+	 * the dump at or below half of sk_rcvbuf, and the skb must be queued
-+	 * then. Keep sk_rmem_alloc at or below INT_MAX.
-+	 */
- 	rcvbuf = READ_ONCE(sk->sk_rcvbuf);
- 	rmem = atomic_add_return(skb->truesize, &sk->sk_rmem_alloc);
--	if (rmem != skb->truesize && rmem >= rcvbuf) {
-+	if (rmem - skb->truesize >= rcvbuf || rmem > INT_MAX) {
- 		atomic_sub(skb->truesize, &sk->sk_rmem_alloc);
- 		goto errout_skb;
- 	}
 -- 
 2.53.0
 
