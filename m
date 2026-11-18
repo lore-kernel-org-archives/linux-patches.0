@@ -1,60 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021433;
-	b=SGLUB67KOxYUfDRx9jx1aImTSsy15JC5+MuYuyvFV+mh0lHq7roiJLX13HxLmi1q6l+Q
-	 HGLMCJu/2+cU5/gWYvwBcmeDpg9FruPT/XZktUvJ52uFAMEp5d0U+z4y0x1dA1w09nIjE
-	 9rCQlc+OKC7q0/itNQEJ5TwIxyq2qFCUpZgkBhYr9jtgCfa2p35wXXsNc+SO+1xrThdKp
-	 GBKqritmTeFiyppop8PxJ0uczxzxGcaF7ldBqn5WuTNULyI9kVttBzKAbP7JoQIMHpnhm
-	 I4O9ExZZEvRh22WtrYETn8VzCzmYMXdMHjERUrJyf42MBP9ZB0Cm/sywdaGIgXvJsAw==
+	t=1795021436;
+	b=0tVUb1hmTDA2xspy5gBHkn2/1bOW6Ft/gjjaBF+NYM4dQ5IRyirF3h+5NLCzqDvqCRVv
+	 m6LzTOKAQd6oo9wJ5cbeCi1c8hdmQg20KpzpF/sXctmDTtnPG1c8K3l2iWPkhhOFJe5t1
+	 +0/FjYOi4K6+LdxxCyzau1esEorvCV3Ym08CFkemdF5hxZwLJclg3P2CHSqzi0fcm3FDa
+	 h+D0stmHh9VoSnq/R0HFjLwsjEMFDaR3b+f2xNNXxtw1u0c9CybhoRRtmKq0b884xbET6
+	 OQZfrxmt+JUEs9E1WHT7cRTUXKg3esUFfz+LenamZUF4zEiDxgpTvT6BkGrOcn6WF7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021433;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021436;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Gi0eR4rURcw1GGBMFWVp+W0z0c+Lq1XseNb3UkNwWOA=;
-	b=Q2+oYAdBLKGPE+HXN8FsqiBiq3Sha2kydSw2fA8QuoVb0CF/7JQuTGki2yfnfRRZAaKe
-	 SYsf6bx4k0EYM+wxXJNmPqGHwEaf6wo2FWCPGE9gTrvIzbYSE4amHmyiPJ8BpzOD9mP5c
-	 AlSp9sw5L1vkf0OBRq+B7W0EzzsIZh+2/FoTao6ONqV+Et0HCkpa353EKTHeWDwZ/sHHW
-	 yPSOiIfTTAUh62J8DVlIpA1BI8LsglN5wdw7yhPX/uxJuifFd51ttTYrlOSJXsGKpciRP
-	 9YO8Lvw4zcRWBVb30r/GsxMZi4yIPE91dmKb6u1+zQjyLyaX3kaLaMZkVNFPRtA4kXA==
+	bh=1VXFjEx+NgDmaaSZ3vpv3Pa0MOfYVM3CJRkUI2FjucY=;
+	b=C2Gv84ijcF3OSqgMS7N1UWoAjLcKQNkYPxG1FHoS1HW9r2VVoyEkrRGmNTvkoPZVItcI
+	 bNce2AT3H09AaqKiF81R24q9dsduzlgWHEbTds+xgi7dR1/PJVG4I1DP3/di7tZ1YgIv4
+	 6oeMFvMdF1MPFaAdXBfXWT0KdZ4APJWaSg1vxNSaFpQO3GNx8bXWh1+NLBkaEOs/f19eE
+	 7XWKUniBmk1w4YKPy1tCvdd+r2lXA0LUxeKoadRy7xXK4O9g9GLHTmW0WHwJC0WuSNHGC
+	 pJ/dRAuSd39b3K76980TjnoXRIH59ZwC5of1pYzvx91jLo1JBYcuqEf84WuBHXBp15A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WNTsLUwz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=okalov0P;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B62560A2627;
-	Wed, 18 Nov 2026 17:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99E6606A320;
+	Wed, 18 Nov 2026 17:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WNTsLUwz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 668991F000C8;
-	Wed, 18 Nov 2026 17:03:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=okalov0P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 340C91F000C6;
+	Wed, 18 Nov 2026 17:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021432;
-	bh=Gi0eR4rURcw1GGBMFWVp+W0z0c+Lq1XseNb3UkNwWOA=;
+	s=korg; t=1795021435;
+	bh=1VXFjEx+NgDmaaSZ3vpv3Pa0MOfYVM3CJRkUI2FjucY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WNTsLUwzO4LVYTXH43mbJXc96hhW7Hq26SqDOTdDihncOZRwKkpQDQOFfQZ88zA50
-	 wkoeIsOI6JAeKikhTTDXmUE+s4FzCAFY9JRad8lK4+GRYAleuhO9RhCcL16L/EZ2zf
-	 i/8IzBo1vNMra10rpggIPT6+/VMb+tXWzovbIUqU=
+	b=okalov0PEPp3Z+Se11uGbxOs2K5p90AQcqg94x4EMYXc0oV0JULVYf/sbJNiT4XLx
+	 IpmlpexK92yo842C9xXVr9Qws/K5A/0mhUMSPVwC550sP+By8GlUWMNt3MKlcLr4nJ
+	 L1B7BZ9D4LSPJ7AxYusU4vVaAbOlq6p7xmZWq8RM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
+	Sasha Levin <sashal@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Kees Cook <kees@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Kurt Hackel <kurt.hackel@oracle.com>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	jjzuming@gmail.com,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2304/2651] ocfs2: initialize status waiters before publishing them
-Date: Wed, 18 Nov 2026 15:59:04 +0100
-Message-ID: <20261118150408.217627860@linuxfoundation.org>
+	Shuah Khan <shuah@kernel.org>,
+	Alexey Dobriyan <adobriyan@gmail.com>
+Subject: [PATCH 7.3 2305/2651] selftests/proc: proc-pid-vm: fix unused variable warning on non-x86
+Date: Wed, 18 Nov 2026 15:59:05 +0100
+Message-ID: <20261118150408.246618600@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -76,87 +69,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+[ Upstream commit c4d9005e7e1ee6ce277f47cf53d44fc5b90b287b ]
 
-[ Upstream commit f6bfa6c458288d72948af95391b205f3eb775721 ]
+g_vsyscall is only used by the x86_64 test, so clang builds for other
+architectures get:
 
-o2net_prep_nsw() publishes its stack waiter in nn_status_idr and
-nn_status_list under nn_lock, then initializes the wait queue and
-completion status after releasing the lock.  A concurrent disconnect can
-find that waiter through o2net_complete_nodes_nsw() and call wake_up()
-before the wait queue has a valid lock and list head.  The sender can also
-overwrite a completion status with its initial value.
+  proc-pid-vm.c:224:21: warning: unused variable 'g_vsyscall' [-Wunused-variable]
 
-Initialize the wait queue and status before publishing the waiter.
-nn_lock then orders publication against completion, and no reader can
-observe a partially initialized object.  Leave the IDR allocation and its
-failure handling unchanged.
+The vsyscall strings next to it had the same problem and were marked
+__maybe_unused for it. Move all of the vsyscall variables into the
+__x86_64__ block that uses them instead, and drop those annotations
+along with the local __maybe_unused fallback that was added for them.
 
-A controlled case-modified test kernel used a synthetic connection to
-enter the real send path and overlap publication with disconnect.  The
-candidate completion and wake-up code were unchanged.  Its Oops includes:
-
-  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-  RIP: 0010:__wake_up_common+0xa0/0x1f0
-  Call Trace:
-   <TASK>
-   __wake_up+0x36/0x60
-   o2net_complete_nsw_locked+0x222/0x370
-   o2net_set_nn_state+0x917/0xea0
-   o2net_disconnect_node+0xd0/0x190
-   o2net_validate_control_write+0x454/0x500
-   full_proxy_write+0x11f/0x180
-   vfs_write+0x25a/0x1010
-   ksys_write+0x111/0x200
-   do_syscall_64+0x114/0x620
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
-  Modules linked in:
-
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0066-v1-437a0422801b292a2879@gmail.com
-Fixes: 98211489d414 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://lore.kernel.org/20261012115330.3777115-1-sashal@kernel.org
+Fixes: 17415606f9d8 ("tools/testing/selftests/proc/proc-pid-vm.c: test with vsyscall in mind")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Suggested-by: Andrew Morton <akpm@linux-foundation.org>
 Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Kurt Hackel <kurt.hackel@oracle.com>
-Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
-Cc: <jjzuming@gmail.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Alexey Dobriyan <adobriyan@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/cluster/tcp.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ tools/testing/selftests/proc/proc-pid-vm.c | 14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
 
-diff --git a/fs/ocfs2/cluster/tcp.c b/fs/ocfs2/cluster/tcp.c
-index 0ba26bd2eba11..0eaf2c4a6989e 100644
---- a/fs/ocfs2/cluster/tcp.c
-+++ b/fs/ocfs2/cluster/tcp.c
-@@ -301,6 +301,11 @@ static int o2net_prep_nsw(struct o2net_node *nn, struct o2net_status_wait *nsw)
- {
- 	int ret;
+diff --git a/tools/testing/selftests/proc/proc-pid-vm.c b/tools/testing/selftests/proc/proc-pid-vm.c
+index 4e6a3e53f9757..98e882e568154 100644
+--- a/tools/testing/selftests/proc/proc-pid-vm.c
++++ b/tools/testing/selftests/proc/proc-pid-vm.c
+@@ -47,10 +47,6 @@
+ #include <sys/resource.h>
+ #include <linux/fs.h>
  
-+	/* Initialize all completion-visible state before publishing the waiter. */
-+	init_waitqueue_head(&nsw->ns_wq);
-+	nsw->ns_sys_status = O2NET_ERR_NONE;
-+	nsw->ns_status = 0;
-+
- 	spin_lock(&nn->nn_lock);
- 	ret = idr_alloc(&nn->nn_status_idr, nsw, 0, 0, GFP_ATOMIC);
- 	if (ret >= 0) {
-@@ -311,9 +316,6 @@ static int o2net_prep_nsw(struct o2net_node *nn, struct o2net_status_wait *nsw)
- 	if (ret < 0)
- 		return ret;
+-#ifndef __maybe_unused
+-#define __maybe_unused __attribute__((__unused__))
+-#endif
+-
+ #include "kselftest.h"
  
--	init_waitqueue_head(&nsw->ns_wq);
--	nsw->ns_sys_status = O2NET_ERR_NONE;
--	nsw->ns_status = 0;
- 	return 0;
+ static inline long sys_execveat(int dirfd, const char *pathname, char **argv, char **envp, int flags)
+@@ -214,7 +210,6 @@ static int make_exe(const uint8_t *payload, size_t len)
+ 
+ 	return fd1;
  }
+-#endif
  
+ /*
+  * 0: vsyscall VMA doesn't exist	vsyscall=none
+@@ -222,15 +217,14 @@ static int make_exe(const uint8_t *payload, size_t len)
+  * 2: vsyscall VMA is r-xp		vsyscall=emulate
+  */
+ static volatile int g_vsyscall;
+-static const char *str_vsyscall __maybe_unused;
++static const char *str_vsyscall;
+ 
+-static const char str_vsyscall_0[] __maybe_unused = "";
+-static const char str_vsyscall_1[] __maybe_unused =
++static const char str_vsyscall_0[] = "";
++static const char str_vsyscall_1[] =
+ "ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsyscall]\n";
+-static const char str_vsyscall_2[] __maybe_unused =
++static const char str_vsyscall_2[] =
+ "ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]\n";
+ 
+-#ifdef __x86_64__
+ static void sigaction_SIGSEGV(int _, siginfo_t *__, void *___)
+ {
+ 	_exit(g_vsyscall);
 -- 
 2.53.0
 
