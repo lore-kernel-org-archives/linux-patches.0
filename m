@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023273;
-	b=uxaJ7H1l7WnLE3rsiFNcZwAhH2bLtyXVW8sMm8wTU1lXhG2EDC1MtYbFzX1D//rpzGyu
-	 FZLBSiw/xgrcuf8Wn2uj00jUbLqXebyjrjLUfDovD2l70Bwuhu1Swd4AHpOykHWwox63e
-	 bi6MR9E+A5E4UEgf+/4Bm6eFr6DqyS5Y2s62jLgdgBIc2fQPSwi1AiAwVunXjReTgSs+I
-	 laETaJLl+p5ajJGHn1lGa9WUT8MWbleAOuSvmkUMIZNpuQCHLZ6aUXreNIlbADNVnYuwb
-	 MtLmOMoka7mwGqiCldA078PRalMZWaz6CXnVWSGGB53xTh+Qt/Yhhv2j7V17Qlla7yQ==
+	t=1795023276;
+	b=dRL/4fBwFn361ZhTINEJuZA5FKOW18OYXyveynmPxv0j3DqSE61qDhh/3T0O8FhR68F6
+	 r9bbBsc44anXYZJcT7rvPdMFmpyzf6lP9PQyA08QQGpQSewtbgDnYqwVnzDw11EGi3Dgo
+	 H5FvXoEkmxO4cypfnZfOL3PJY3zM4SGdVk/KiWXy7Ot4KWU1fjzcLJwSXpIoa6gMR2q8z
+	 eqMX8WY39Yub+NTF3ThnMh2YGbZHFnJ/ijhYYroMojLjNg5+Jzc0WccNadP3hGjmgma36
+	 rEwlzBo3VGZrPiJE6WVOMMQewAlAot0qZ7W6k8sfD2j81KSGSBqpgJXLcV+sYY9N+FQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023273;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023276;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f6NeLZ1AzdS8ZJSb0Q9pKOt6TMq2Xb6tn5GSsnwGLHM=;
-	b=De9UeNWYqySt5gS8aRK+3PSuKD3pvkjGOSElrGnRJDHCQ1DwP0IdncQ/u4RIL/7X9rr8
-	 E9t0i3DxPg/qaJ4gxPR5orgTF1LPvQ8Y4uKSgU+x/oa2+pXbLmMNH3snjayjeAJOSNLDa
-	 CPw+ZWpPW8TZpX1nD0Tp15PGYIh7DY8DPeJRzDjkh86vx8iR6iANCzapMJr83PCe7lPIK
-	 1iX9NWaNyQjGhmshPm2BSRDYsaWaHiiuptUHXHf8+jBWjxzlTBQhBXUKh74bNveXymIui
-	 IqK/xrXGSb0IEqz/CMDBVXXAshN/Ef8RAhWCcTKyYxFkudIqzbnPujmMs/l5kf9w63A==
+	bh=55bGGDT5k0Ro6GMhsqtggF5Wf1aZ4sR7wOXUp3rewGk=;
+	b=EecuLCADqQ54l13iHRwfkTLTxcHrIOnPIr6SXXeEmzfH4dydLy8jvbhDmFyok5E9k4aC
+	 uHuWh4LrcknNtN3B8lYKsODKCjnIYgB0NHN+8U3URBE/GY3blKikolM7XvdNsGU6ricXm
+	 RHPaWPJbcEXl+WzPm0KO4pAsrs53q/Ytu/zeLve4wqzU0ztcLBQ479JQnR4it+dRwEL0a
+	 5KG2T2pYJ3R+SHahvhpVHHWBZSlwk5V2JpoSv+orMqr1InMKdW9OnLacDokAhE8dcCaSg
+	 qyh5Mxwe6uRivvaRyVrs2NKU/6IRnbq0VflhHMvW2byitSPA41hfhDwAyFx73Y+KgHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g7QnyrL9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LKCB0p59;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88840606A325;
-	Wed, 18 Nov 2026 17:34:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067B1606A31C;
+	Wed, 18 Nov 2026 17:34:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g7QnyrL9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A2721F000C4;
-	Wed, 18 Nov 2026 17:34:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LKCB0p59
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 392031F000C4;
+	Wed, 18 Nov 2026 17:34:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023272;
-	bh=f6NeLZ1AzdS8ZJSb0Q9pKOt6TMq2Xb6tn5GSsnwGLHM=;
+	s=korg; t=1795023275;
+	bh=55bGGDT5k0Ro6GMhsqtggF5Wf1aZ4sR7wOXUp3rewGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g7QnyrL98zQTirsxHhpWOOQjPpriFIVxa237e3w3Qyqj4pZyVyUZpnaKnwEXslGVO
-	 zSummncq68RwzXilbeikeG2T5SRpwuXSFq0VbiYuypY2efbggYUW4VA15fSfzCfqZf
-	 cS6Hp8A5BPq8hYEGIJWh05BG629Q0Uer+lXNYs3I=
+	b=LKCB0p59QbNbHWUrieGKkWznn+LTiF3MIZv9uVIDwOkOZIowa2RqkiiKEPNpBVJPL
+	 Xqd5yyxbj+9FRXIa87U3xIkeLGAXddOGc1VQEjM1nyoTeDYd3NPRPZ8uF9SAnIQOjC
+	 TbPt0/m4GwhMdz36tKHpnsIJCzcqoS7I7xsqmRy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Peixin Xie <peixin.xie@linux.spacemit.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0311/2151] ACPI: scan: Stop calling acpi_bus_init_power() early
-Date: Wed, 18 Nov 2026 15:34:06 +0100
-Message-ID: <20261118150133.262276686@linuxfoundation.org>
+Subject: [PATCH 6.18 0294/2151] ASoC: sta32x: make power restoration transactional
+Date: Wed, 18 Nov 2026 15:33:49 +0100
+Message-ID: <20261118150132.618591064@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,270 +68,190 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 2f4ddf2bd1baf0ee3c8542ec6f382a3585cae607 ]
+[ Upstream commit 3e71dc4508bc84862dc3644e3b6a5b966bff22ad ]
 
-There is a problem, introduced by commit 9d9bcae47fd5 ("ACPI: delay
-enumeration of devices with a _DEP pointing to an INT3472 device")
-inadvertently, that devices with missing dependencies may be put
-into power state D0 prematurely [1].
+sta32x_set_bias_level() enables the codec supplies, restores the
+coefficient and register state, and then starts the watchdog. Register
+access errors in the mute and coefficient helpers and the cache replay
+are discarded, allowing DAPM to publish STANDBY for a partially restored
+codec.
 
-Namely, acpi_bus_init_power() called by acpi_bus_get_power_flags()
-during the early initialization of ACPI device objects, may discover
-that all of the power resources needed by the given device to be in
-power state D0 are initially on, so it will reference count those
-power resources and transition the device into D0.  Later, if
-acpi_bus_attach() running for that device notices that it has missing
-dependencies, the enumeration of it will be deferred and its
-power_manageable flag will be cleared, even though it is still in D0
-at that point.
+Propagate every operation in the local restore transaction, including
+the final standby-state write. Start the watchdog only after that write
+succeeds. On failure, hold reset, mark the cache dirty, disable the
+supplies and report a cleanup failure while preserving the primary
+error. The DAPM bias callback consumes the returned error independently
+of component resume handling.
 
-After the dependencies in question have been met, acpi_bus_attach()
-runs again for the device and now it calls acpi_bus_init_power() that
-takes additional references to the power resources used by the device
-in D0.  These additional references prevent the power resources from
-being turned off when the device goes into D3hot/D3cold.
-
-Another problem, related to the previous one, is that ACPI power state
-initialization may be carried out for devices whose parents are not
-ready for enumeration which may lead to initialization ordering issues.
-
-To address both, stop calling acpi_bus_init_power() from
-acpi_bus_get_power_flags(), but also take the initialization of
-PCI devices into account, which needs to be done because they
-are initialized and bound to their ACPI companions before
-acpi_bus_attach() is called for the latter.
-
-To that end, notice that acpi_power_up_if_adr_present() is used for
-powering-up PCI devices in D3cold before walking the bus in order to
-discover them and the initial ACPI power state of those devices needs
-to be known for this purpose, so add an acpi_bus_init_power() invocation
-to that function.  [The debug statement printed by it duplicates the
-debug statements printed during the acpi_bus_init_power() execution, so
-drop it.]
-
-Moreover, since the ACPI companions of PCI devices are associated with
-the corresponding PCI devices found on the bus before acpi_bus_attach()
-is called for them, it is not necessary or even useful to skip them in
-acpi_bus_attach() due to an ACPI status mismatch, so avoid doing that
-and complain if the ACPI status does not match the observed situation.
-
-Also use the ACPI power state tracking to decide whether or not
-the device's power state needs to be initialized in acpi_bus_attach()
-instead of using the "initialized" flag of the ACPI device object
-for this purpose, which is fragile and inconvenient, and clear the
-power_manageable flag on failure in acpi_bus_init_power() (additionally,
-poison the device ACPI power state as "invalid" if the initialization of
-it fails).  That allows the clearing of the power_manageable flag for
-devices with unmet dependencies to be dropped.
-
-While at it, add a debug message pringing statement to
-acpi_bus_init_power() to facilitate diagnostics.
-
-Fixes: 9d9bcae47fd5 ("ACPI: delay enumeration of devices with a _DEP pointing to an INT3472 device")
-Link: https://lore.kernel.org/linux-acpi/20260820-acpi-power-resource-ref-fix-v2-1-29818173ea13@linux.spacemit.com/ [1]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Tested-by: Peixin Xie <peixin.xie@linux.spacemit.com>
-Tested-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Link: https://patch.msgid.link/2295263.irdbgypaU6@rafael.j.wysocki
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 54dc6cabe684 ("ASoC: sta32x: preserve coefficient RAM")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260830141521.33246-1-pengpeng@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/device_pm.c | 62 ++++++++++++++++++++++++++++++++--------
- drivers/acpi/scan.c      | 40 +++++++++++++++++---------
- 2 files changed, 76 insertions(+), 26 deletions(-)
+ sound/soc/codecs/sta32x.c | 101 +++++++++++++++++++++++++++++---------
+ 1 file changed, 77 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/acpi/device_pm.c b/drivers/acpi/device_pm.c
-index 2b0d248f6394e..62bce1ae8c1d6 100644
---- a/drivers/acpi/device_pm.c
-+++ b/drivers/acpi/device_pm.c
-@@ -23,6 +23,8 @@
- #include "fan.h"
- #include "internal.h"
- 
-+#define ACPI_D_STATE_INVALID	ACPI_D_STATE_COUNT
-+
- /**
-  * acpi_power_state_string - String representation of ACPI device power state.
-  * @state: ACPI device power state to return the string representation of.
-@@ -293,24 +295,28 @@ int acpi_bus_set_power(acpi_handle handle, int state)
- }
- EXPORT_SYMBOL(acpi_bus_set_power);
- 
--int acpi_bus_init_power(struct acpi_device *device)
-+static int acpi_device_init_power(struct acpi_device *device)
+diff --git a/sound/soc/codecs/sta32x.c b/sound/soc/codecs/sta32x.c
+index bba45c813d4cb..32c818ed587aa 100644
+--- a/sound/soc/codecs/sta32x.c
++++ b/sound/soc/codecs/sta32x.c
+@@ -345,27 +345,48 @@ static int sta32x_sync_coef_shadow(struct snd_soc_component *component)
  {
- 	int state;
- 	int result;
+ 	struct sta32x_priv *sta32x = snd_soc_component_get_drvdata(component);
+ 	unsigned int cfud;
+-	int i;
++	int i, ret;
  
--	if (!device)
--		return -EINVAL;
--
--	device->power.state = ACPI_STATE_UNKNOWN;
--	if (!acpi_device_is_present(device)) {
--		device->flags.initialized = false;
--		return -ENXIO;
--	}
--
- 	result = acpi_device_get_power(device, &state);
- 	if (result)
- 		return result;
+ 	/* preserve reserved bits in STA32X_CFUD */
+-	regmap_read(sta32x->regmap, STA32X_CFUD, &cfud);
++	ret = regmap_read(sta32x->regmap, STA32X_CFUD, &cfud);
++	if (ret)
++		return ret;
++
+ 	cfud &= 0xf0;
  
-+	/*
-+	 * If the current power state of the device is D0 and it has a parent
-+	 * whose power state is not ignored, and the parent's power state
-+	 * initialization has failed, the parent's power state can be updated to
-+	 * D0 for consistency.
-+	 */
-+	if (!device->power.flags.ignore_parent && state == ACPI_STATE_D0) {
-+		struct acpi_device *parent = acpi_dev_parent(device);
+ 	for (i = 0; i < STA32X_COEF_COUNT; i++) {
+-		regmap_write(sta32x->regmap, STA32X_CFADDR2, i);
+-		regmap_write(sta32x->regmap, STA32X_B1CF1,
+-			     (sta32x->coef_shadow[i] >> 16) & 0xff);
+-		regmap_write(sta32x->regmap, STA32X_B1CF2,
+-			     (sta32x->coef_shadow[i] >> 8) & 0xff);
+-		regmap_write(sta32x->regmap, STA32X_B1CF3,
+-			     (sta32x->coef_shadow[i]) & 0xff);
++		ret = regmap_write(sta32x->regmap, STA32X_CFADDR2, i);
++		if (ret)
++			return ret;
 +
-+		if (parent && parent->power.state == ACPI_D_STATE_INVALID)
-+			parent->power.state = ACPI_STATE_D0;
-+	}
++		ret = regmap_write(sta32x->regmap, STA32X_B1CF1,
++				   (sta32x->coef_shadow[i] >> 16) & 0xff);
++		if (ret)
++			return ret;
 +
- 	if (state < ACPI_STATE_D3_COLD && device->power.flags.power_resources) {
- 		/* Reference count the power resources. */
- 		result = acpi_power_on_resources(device, state);
-@@ -340,9 +346,36 @@ int acpi_bus_init_power(struct acpi_device *device)
- 		state = ACPI_STATE_D0;
++		ret = regmap_write(sta32x->regmap, STA32X_B1CF2,
++				   (sta32x->coef_shadow[i] >> 8) & 0xff);
++		if (ret)
++			return ret;
++
++		ret = regmap_write(sta32x->regmap, STA32X_B1CF3,
++				   sta32x->coef_shadow[i] & 0xff);
++		if (ret)
++			return ret;
++
+ 		/*
+ 		 * chip documentation does not say if the bits are
+ 		 * self-clearing, so do it explicitly
+ 		 */
+-		regmap_write(sta32x->regmap, STA32X_CFUD, cfud);
+-		regmap_write(sta32x->regmap, STA32X_CFUD, cfud | 0x01);
++		ret = regmap_write(sta32x->regmap, STA32X_CFUD, cfud);
++		if (ret)
++			return ret;
++
++		ret = regmap_write(sta32x->regmap, STA32X_CFUD, cfud | 0x01);
++		if (ret)
++			return ret;
  	}
- 	device->power.state = state;
-+
-+	acpi_handle_debug(device->handle, "Initial power state: %s\n",
-+			  acpi_power_state_string(state));
 +
  	return 0;
  }
  
-+int acpi_bus_init_power(struct acpi_device *device)
-+{
-+	int result;
-+
-+	if (device->power.state != ACPI_STATE_UNKNOWN)
-+		return 0;
-+
-+	/*
-+	 * The ACPI device power state can be only initialized once.  If this
-+	 * fails, ACPI power management will not be used for the device going
-+	 * forward.
-+	 */
-+	result = acpi_device_init_power(device);
-+	if (result) {
-+		device->flags.power_manageable = 0;
-+		device->power.state = ACPI_D_STATE_INVALID;
-+		acpi_handle_info(device->handle,
-+				 "Initial power state undetermined, ACPI PM disabled\n");
-+	}
-+
-+	return result;
-+}
-+
- /**
-  * acpi_device_fix_up_power - Force device with missing _PSC into D0.
-  * @device: Device object whose power state is to be fixed up.
-@@ -464,8 +497,13 @@ static int acpi_power_up_if_adr_present(struct acpi_device *adev, void *not_used
- 	if (!(adev->flags.power_manageable && adev->pnp.type.bus_address))
- 		return 0;
+@@ -373,15 +394,24 @@ static int sta32x_cache_sync(struct snd_soc_component *component)
+ {
+ 	struct sta32x_priv *sta32x = snd_soc_component_get_drvdata(component);
+ 	unsigned int mute;
+-	int rc;
++	int restore_ret, ret;
  
--	acpi_handle_debug(adev->handle, "Power state: %s\n",
--			  acpi_power_state_string(adev->power.state));
-+	/*
-+	 * This is done during the PCI root initialization which occurs before
-+	 * acpi_bus_attach() is called for the device, so the ACPI power state
-+	 * of the device needs to be initialized here.
-+	 */
-+	if (acpi_bus_init_power(adev))
-+		return 0;
- 
- 	if (adev->power.state == ACPI_STATE_D3_COLD)
- 		return acpi_device_set_power(adev, ACPI_STATE_D0);
-diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
-index c382bed50d6cb..3893e44005f40 100644
---- a/drivers/acpi/scan.c
-+++ b/drivers/acpi/scan.c
-@@ -19,6 +19,7 @@
- #include <linux/kthread.h>
- #include <linux/dmi.h>
- #include <linux/dma-map-ops.h>
-+#include <linux/pci.h>
- #include <linux/platform_data/x86/apple.h>
- #include <linux/pgtable.h>
- #include <linux/crc32.h>
-@@ -1145,8 +1146,7 @@ static void acpi_bus_get_power_flags(struct acpi_device *device)
- 			device->power.states[ACPI_STATE_D3_COLD].flags.valid = 1;
- 	}
- 
--	if (acpi_bus_init_power(device))
--		device->flags.power_manageable = 0;
-+	device->power.state = ACPI_STATE_UNKNOWN;
+ 	/* mute during register sync */
+-	regmap_read(sta32x->regmap, STA32X_MMUTE, &mute);
+-	regmap_write(sta32x->regmap, STA32X_MMUTE, mute | STA32X_MMUTE_MMUTE);
+-	sta32x_sync_coef_shadow(component);
+-	rc = regcache_sync(sta32x->regmap);
+-	regmap_write(sta32x->regmap, STA32X_MMUTE, mute);
+-	return rc;
++	ret = regmap_read(sta32x->regmap, STA32X_MMUTE, &mute);
++	if (ret)
++		return ret;
++
++	ret = regmap_write(sta32x->regmap, STA32X_MMUTE,
++			   mute | STA32X_MMUTE_MMUTE);
++	if (ret)
++		return ret;
++
++	ret = sta32x_sync_coef_shadow(component);
++	if (!ret)
++		ret = regcache_sync(sta32x->regmap);
++
++	restore_ret = regmap_write(sta32x->regmap, STA32X_MMUTE, mute);
++	return ret ?: restore_ret;
  }
  
- static void acpi_bus_get_flags(struct acpi_device *device)
-@@ -2269,38 +2269,50 @@ static int acpi_scan_attach_handler(struct acpi_device *device)
- static int acpi_bus_attach(struct acpi_device *device, void *first_pass)
+ /* work around ESD issue where sta32x resets and loses all configuration */
+@@ -797,9 +827,9 @@ static int sta32x_startup_sequence(struct sta32x_priv *sta32x)
+ static int sta32x_set_bias_level(struct snd_soc_component *component,
+ 				 enum snd_soc_bias_level level)
  {
- 	bool skip = !first_pass && device->flags.visited;
-+	struct pci_dev *pci;
- 	acpi_handle ejd;
- 	int ret;
+-	int ret;
+ 	struct sta32x_priv *sta32x = snd_soc_component_get_drvdata(component);
+ 	struct snd_soc_dapm_context *dapm = snd_soc_component_to_dapm(component);
++	int cleanup_ret, ret;
  
- 	if (skip)
- 		goto ok;
+ 	dev_dbg(component->dev, "level = %d\n", level);
+ 	switch (level) {
+@@ -823,15 +853,28 @@ static int sta32x_set_bias_level(struct snd_soc_component *component,
+ 				return ret;
+ 			}
  
-+	device->flags.initialized = true;
+-			sta32x_startup_sequence(sta32x);
+-			sta32x_cache_sync(component);
++			ret = sta32x_startup_sequence(sta32x);
++			if (!ret)
++				ret = sta32x_cache_sync(component);
++			if (ret)
++				goto restore_failed;
 +
- 	if (ACPI_SUCCESS(acpi_bus_get_ejd(device->handle, &ejd)))
- 		register_dock_dependent_device(device, ejd);
++			ret = regmap_update_bits(sta32x->regmap, STA32X_CONFF,
++						 STA32X_CONFF_PWDN | STA32X_CONFF_EAPD,
++						 0);
++			if (ret)
++				goto restore_failed;
++
+ 			sta32x_watchdog_start(sta32x);
++			break;
+ 		}
  
- 	acpi_bus_get_status(device);
--	/* Skip devices that are not ready for enumeration (e.g. not present) */
--	if (!acpi_dev_ready_for_enumeration(device)) {
--		device->flags.initialized = false;
-+	/*
-+	 * If the given ACPI device object has been already associated with a
-+	 * PCI device found on the bus, its status is effectively "present and
-+	 * enabled", and dependencies are not tracked for PCI devices, so it is
-+	 * not necessary or even useful to check the device's readiness in that
-+	 * case.
-+	 */
-+	pci = acpi_dev_get_pci_dev(device);
-+	if (pci) {
-+		acpi_handle_debug(device->handle, "PCI companion %s found\n",
-+				  pci_name(pci));
-+
-+		if (!acpi_device_is_present(device))
-+			pci_info(pci, FW_BUG "ACPI status differs from reality\n");
-+
-+		pci_dev_put(pci);
-+	} else if (!acpi_dev_ready_for_enumeration(device)) {
-+		/* The device is not ready (e.g. not present), so skip it. */
- 		acpi_device_clear_enumerated(device);
--		device->flags.power_manageable = 0;
- 		return 0;
+ 		/* Power down */
+-		regmap_update_bits(sta32x->regmap, STA32X_CONFF,
+-				   STA32X_CONFF_PWDN | STA32X_CONFF_EAPD,
+-				   0);
++		ret = regmap_update_bits(sta32x->regmap, STA32X_CONFF,
++					 STA32X_CONFF_PWDN | STA32X_CONFF_EAPD,
++					 0);
++		if (ret)
++			return ret;
+ 
+ 		break;
+ 
+@@ -849,6 +892,16 @@ static int sta32x_set_bias_level(struct snd_soc_component *component,
+ 		break;
  	}
+ 	return 0;
 +
- 	if (device->handler)
- 		goto ok;
++restore_failed:
++	gpiod_set_value(sta32x->gpiod_nreset, 0);
++	regcache_mark_dirty(sta32x->regmap);
++	cleanup_ret = regulator_bulk_disable(ARRAY_SIZE(sta32x->supplies),
++					     sta32x->supplies);
++	if (cleanup_ret)
++		dev_warn(component->dev, "Failed to disable supplies: %d\n",
++			 cleanup_ret);
++	return ret;
+ }
  
- 	acpi_ec_register_opregions(device);
- 
--	if (!device->flags.initialized) {
--		device->flags.power_manageable =
--			device->power.states[ACPI_STATE_D0].flags.valid;
--		if (acpi_bus_init_power(device))
--			device->flags.power_manageable = 0;
-+	acpi_bus_init_power(device);
- 
--		device->flags.initialized = true;
--	} else if (device->flags.visited) {
-+	if (device->flags.visited)
- 		goto ok;
--	}
- 
- 	ret = acpi_scan_attach_handler(device);
- 	if (ret < 0)
+ static const struct snd_soc_dai_ops sta32x_dai_ops = {
 -- 
 2.53.0
 
