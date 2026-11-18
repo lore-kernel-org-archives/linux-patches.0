@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049375;
-	b=2UI7OLBuPcPdueWMstT8a+KQdnW3GmwreVK6ZTM7+nf4UmLzqZIocAb8cFDIkgJjzONq
-	 B3sF3n1CAd1d0yteTphN8TxNRamAwa2rvtGuZLOKnK6BiQh0StyHrY4N7nMTiyek1Qd25
-	 6JPF7Od46So1HWdP+M9RHqygRWTNLw7lgWfT+LTPjTSAsb/g8GUVvc94fsZt1dwbCTk61
-	 2J4TjiVeOossYQCY++7LR7BfBa9qHGLudZXIsblRHzHRNGZYIOiihwcRwWKLDiVl4Fb13
-	 ifZI2MNqpWgbzmkXmH0iVBM40JeOm6UgRmP2C7FBGGCtydN88yPRm3VuHQsKDR3rcYw==
+	t=1795049378;
+	b=coPCCH6fDBX0AR2L0NheoC1KgdIHS8A+DKHRolOsVobBKgDLJ/m9/U/TEkth/C+CB34Q
+	 7D8Vb1WR7ROfFRY3Ew2frCJ0gEoGtJpW36ROAQYfY8TJOIcnTmTsqepFmErwD2/so1Nvn
+	 YmUOUHGqL/U1fmxjaWOWy+OAzsG9DbHOxnuPfLA7z7yYvQKSb/uV50Uqh2xSLi+w8dTRc
+	 wg2ocj2yw0RZj1M6TGPOc2mo0NYNbMy+OKsMrI593Z1+n08hDgBK6CxywolJwBkxBNQyH
+	 /EIbWZTFRCMl6v52nPLqPCIwTBfVvzte8TqxiYpQHaRmwDPMrGFZwYbeu1qR45x0jfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049375;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049378;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pTuOf0sVeSoYGCtjSpKjyt59c8fdy9Tn1R4oj6PoHIQ=;
-	b=5m1TST5KhKArPItJprVrf3HzAV7hOJF17UReyxi6dQA0/qdiLsVjSyNUiTbi479Apnu8
-	 +HjvsB7KTyGfErt20bqDwrPup1YnXkzqznWtZWPb4xl3tVI5vDyWznEoT8Vuyr6S0jTLS
-	 V65fNiVz1q2XzHM1PU1AZSDxURp8+Za4UZqx/ACcR2u9Grpt8gB937WVF0qguTNWEQriz
-	 XGMDoxvu4jLN1KxYBWtGkPjdqw8aoM3VSmxJ+OExPLd6YgNIRpOmslFiMhNug9FjLBbGK
-	 3FXcWirU9pcpCKwwWkou9L/ocUJ5pB1+PMGMKeOVPcAjz00ZxyAFNleimiZLFZ6Q9Sw==
+	bh=175M3J6ChPkF/j7jzaWW3PxSf5FZudmLD1fVUITZKbc=;
+	b=RBl6cMqxuZqOKlJJ0kocpdeKjZORXbfktWSv4suZL6zJUUWv2w5c1HHsTE07TgDmYuoT
+	 uGMoI3vl0tq3rymDu2mNg1ruSFbtp6NKuBFlXl1ZKdys595qaRi2TcaPzUjkBqKTLVgOn
+	 XKMqRDvcL+ry/VRxyyWpEjGWYX34EVumdUEIl2nK1ZMwUh2Tog+U4nHtE9Nt57o05rQQx
+	 8Qhzt97TQXrPh2xAOP0CrbZQfI+mwgvSmDeiUtA3o9/mrrlznI0ejYF/QD4Bp9tE3+e7n
+	 sLkixhbtE04dQ/0R7fgWJ1lQi+dBsRlMhYpIPG9g+SAxCgmiUVu+4tUm4aIh6VkUa9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XJ4M4dkG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="UVtPTQI/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C089606A31C;
-	Thu, 19 Nov 2026 00:49:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30D83606A320;
+	Thu, 19 Nov 2026 00:49:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XJ4M4dkG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60EB21F000C4;
-	Thu, 19 Nov 2026 00:49:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UVtPTQI/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A7F91F000C4;
+	Thu, 19 Nov 2026 00:49:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049374;
-	bh=pTuOf0sVeSoYGCtjSpKjyt59c8fdy9Tn1R4oj6PoHIQ=;
+	s=korg; t=1795049377;
+	bh=175M3J6ChPkF/j7jzaWW3PxSf5FZudmLD1fVUITZKbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XJ4M4dkG2WzVjM3gljyNKVJvrv8qA+TlNI6tX3k+GOoD4BS/NV24FJ47owHpYg26O
-	 uxwWp8F2fqD3+/JZDsOtYp1UXA3HXRMypOpKeiLoYukTu1Q7hSOYp7ThGLa/CkzgA9
-	 w7n4enbDXt+xqQM/hPnsaZ/uNuo72vHaMYdSVeoU=
+	b=UVtPTQI/Eeaqm/TqotqmOGOhd5yd6nYm5n32uHJ+GCX3s2fJOu3gYKdfduCV1I9GH
+	 VPpg+KEXvyxB8k0RM6mei1SeRs/KLcDqAPQb6AO75jkV+N5yxJ18k2h4WCmpR5YoUj
+	 IJxHVG0csfA5EyubBz5rldewQLssekbDelk3XIyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Rosen Penev <rosenp@gmail.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2330/2857] crypto: talitos - Use platform_get_irq() to retrieve interrupt
-Date: Wed, 18 Nov 2026 15:56:04 +0100
-Message-ID: <20261118150325.429915217@linuxfoundation.org>
+Subject: [PATCH 6.1 2331/2857] crypto: talitos - init tasklets before requesting IRQs
+Date: Wed, 18 Nov 2026 15:56:05 +0100
+Message-ID: <20261118150325.467650783@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,121 +70,179 @@ Content-Transfer-Encoding: 8bit
 
 From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 4a1c7518cc31430b96458202b6a5b4064ff0cfa0 ]
+[ Upstream commit 666d66df25253070cb297cb920b0bcfcfe5eb871 ]
 
-Remove the need to call irq_dispose_mapping as needed by
-irq_of_parse_and_map().
+The talitos interrupt handlers schedule priv->done_task[] via
+tasklet_schedule(). Since the second IRQ support, probe has requested
+the IRQs before calling tasklet_init(), so an interrupt already pending
+when a line is requested, e.g. engine state left by the bootloader or
+a kexec'd kernel, would schedule a tasklet with a NULL callback.
 
-Simplify the function as a result. No need for gotos anymore.
+Look up the IRQ numbers and map the registers up front, so that
+-EPROBE_DEFER returns before anything is allocated and the done_task[]
+selection and reset_device() can see the secondary IRQ. Only request
+the IRQs once the channel fifos are allocated and init_device() has
+reset the engine. This matches remove(), which frees the IRQs before
+killing the tasklets.
 
-Add a missing free_irq.
+remove() frees every IRQ number that is > 0, so make sure that only
+requested lines are set when it runs from the probe error path: clear
+both numbers when probe fails before the request, and clear any line
+talitos_probe_irq() did not request. Previously a failed primary
+request in the two-IRQ case freed the never-requested secondary line.
 
+Fixes: c3e337f88a5b ("crypto: talitos - support for channel remap and 2nd IRQ")
+Assisted-by: LLM
 Signed-off-by: Rosen Penev <rosenp@gmail.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: 666d66df2525 ("crypto: talitos - init tasklets before requesting IRQs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/talitos.c | 30 +++++++++++++-----------------
- 1 file changed, 13 insertions(+), 17 deletions(-)
+ drivers/crypto/talitos.c | 54 ++++++++++++++++++++++++----------------
+ 1 file changed, 33 insertions(+), 21 deletions(-)
 
 diff --git a/drivers/crypto/talitos.c b/drivers/crypto/talitos.c
-index 5a4f2322b183e..096e5edc0b3b0 100644
+index 096e5edc0b3b0..ef67c4b5677fd 100644
 --- a/drivers/crypto/talitos.c
 +++ b/drivers/crypto/talitos.c
-@@ -192,7 +192,7 @@ static int reset_device(struct device *dev)
- 	       && --timeout)
- 		cpu_relax();
- 
--	if (priv->irq[1]) {
-+	if (priv->irq[1] > 0) {
- 		mcr = TALITOS_MCR_RCA1 | TALITOS_MCR_RCA3;
- 		setbits32(priv->reg + TALITOS_MCR, mcr);
- 	}
-@@ -3253,13 +3253,11 @@ static int talitos_remove(struct platform_device *ofdev)
- 		talitos_unregister_rng(dev);
- 
- 	for (i = 0; i < 2; i++)
--		if (priv->irq[i]) {
-+		if (priv->irq[i] > 0)
- 			free_irq(priv->irq[i], dev);
--			irq_dispose_mapping(priv->irq[i]);
--		}
- 
- 	tasklet_kill(&priv->done_task[0]);
--	if (priv->irq[1])
-+	if (priv->irq[1] > 0)
- 		tasklet_kill(&priv->done_task[1]);
- 
- 	return 0;
-@@ -3365,26 +3363,26 @@ static struct talitos_crypto_alg *talitos_alg_alloc(struct device *dev,
- static int talitos_probe_irq(struct platform_device *ofdev)
- {
- 	struct device *dev = &ofdev->dev;
--	struct device_node *np = ofdev->dev.of_node;
- 	struct talitos_private *priv = dev_get_drvdata(dev);
+@@ -3367,21 +3367,13 @@ static int talitos_probe_irq(struct platform_device *ofdev)
  	int err;
  	bool is_sec1 = has_ftr_sec1(priv);
  
--	priv->irq[0] = irq_of_parse_and_map(np, 0);
--	if (!priv->irq[0]) {
--		dev_err(dev, "failed to map irq\n");
--		return -EINVAL;
--	}
-+	priv->irq[0] = platform_get_irq(ofdev, 0);
-+	if (priv->irq[0] < 0)
-+		return priv->irq[0];
-+
+-	priv->irq[0] = platform_get_irq(ofdev, 0);
+-	if (priv->irq[0] < 0)
+-		return priv->irq[0];
+-
  	if (is_sec1) {
  		err = request_irq(priv->irq[0], talitos1_interrupt_4ch, 0,
  				  dev_driver_string(dev), dev);
  		goto primary_out;
  	}
  
--	priv->irq[1] = irq_of_parse_and_map(np, 1);
-+	priv->irq[1] = platform_get_irq_optional(ofdev, 1);
-+	if (priv->irq[1] == -EPROBE_DEFER)
-+		return priv->irq[1];
- 
- 	/* get the primary irq line */
--	if (!priv->irq[1]) {
-+	if (priv->irq[1] < 0) {
+-	priv->irq[1] = platform_get_irq_optional(ofdev, 1);
+-	if (priv->irq[1] == -EPROBE_DEFER)
+-		return priv->irq[1];
+-
+-	/* get the primary irq line */
++	/* single (or primary) irq line */
+ 	if (priv->irq[1] < 0) {
  		err = request_irq(priv->irq[0], talitos2_interrupt_4ch, 0,
  				  dev_driver_string(dev), dev);
+@@ -3393,7 +3385,7 @@ static int talitos_probe_irq(struct platform_device *ofdev)
+ 	if (err)
  		goto primary_out;
-@@ -3400,7 +3398,6 @@ static int talitos_probe_irq(struct platform_device *ofdev)
+ 
+-	/* get the secondary irq line */
++	/* secondary irq line */
+ 	err = request_irq(priv->irq[1], talitos2_interrupt_ch1_3, 0,
  			  dev_driver_string(dev), dev);
  	if (err) {
- 		dev_err(dev, "failed to request secondary irq\n");
--		irq_dispose_mapping(priv->irq[1]);
- 		priv->irq[1] = 0;
- 	}
- 
-@@ -3409,7 +3406,6 @@ static int talitos_probe_irq(struct platform_device *ofdev)
+@@ -3406,7 +3398,9 @@ static int talitos_probe_irq(struct platform_device *ofdev)
  primary_out:
  	if (err) {
  		dev_err(dev, "failed to request primary irq\n");
--		irq_dispose_mapping(priv->irq[0]);
++		/* neither line is requested, keep remove() from freeing them */
  		priv->irq[0] = 0;
++		priv->irq[1] = 0;
  	}
  
-@@ -3510,7 +3506,7 @@ static int talitos_probe(struct platform_device *ofdev)
+ 	return err;
+@@ -3418,12 +3412,27 @@ static int talitos_probe(struct platform_device *ofdev)
+ 	struct device_node *np = ofdev->dev.of_node;
+ 	struct talitos_private *priv;
+ 	unsigned int num_channels;
++	void __iomem *reg;
+ 	int i, err;
+ 	int stride;
++	int irq0;
++	int irq1;
+ 
+ 	if (of_property_read_u32(np, "fsl,num-channels", &num_channels))
+ 		return -EINVAL;
+ 
++	irq0 = platform_get_irq(ofdev, 0);
++	if (irq0 < 0)
++		return irq0;
++
++	irq1 = platform_get_irq_optional(ofdev, 1);
++	if (irq1 == -EPROBE_DEFER)
++		return irq1;
++
++	reg = devm_platform_ioremap_resource(ofdev, 0);
++	if (IS_ERR(reg))
++		return PTR_ERR(reg);
++
+ 	priv = devm_kzalloc(dev, struct_size(priv, chan, num_channels), GFP_KERNEL);
+ 	if (!priv)
+ 		return -ENOMEM;
+@@ -3438,12 +3447,7 @@ static int talitos_probe(struct platform_device *ofdev)
+ 
+ 	spin_lock_init(&priv->reg_lock);
+ 
+-	priv->reg = devm_platform_ioremap_resource(ofdev, 0);
+-	if (IS_ERR(priv->reg)) {
+-		dev_err(dev, "failed to of_iomap\n");
+-		err = PTR_ERR(priv->reg);
+-		goto err_out;
+-	}
++	priv->reg = reg;
+ 
+ 	/* get SEC version capabilities from device tree */
+ 	of_property_read_u32(np, "fsl,channel-fifo-len", &priv->chfifo_len);
+@@ -3494,9 +3498,7 @@ static int talitos_probe(struct platform_device *ofdev)
+ 		stride = TALITOS2_CH_STRIDE;
+ 	}
+ 
+-	err = talitos_probe_irq(ofdev);
+-	if (err)
+-		goto err_out;
++	priv->irq[0] = irq0;
+ 
+ 	if (has_ftr_sec1(priv)) {
+ 		if (priv->num_channels == 1)
+@@ -3506,6 +3508,7 @@ static int talitos_probe(struct platform_device *ofdev)
  			tasklet_init(&priv->done_task[0], talitos1_done_4ch,
  				     (unsigned long)dev);
  	} else {
--		if (priv->irq[1]) {
-+		if (priv->irq[1] > 0) {
++		priv->irq[1] = irq1;
+ 		if (priv->irq[1] > 0) {
  			tasklet_init(&priv->done_task[0], talitos2_done_ch0_2,
  				     (unsigned long)dev);
- 			tasklet_init(&priv->done_task[1], talitos2_done_ch1_3,
-@@ -3528,7 +3524,7 @@ static int talitos_probe(struct platform_device *ofdev)
+@@ -3537,7 +3540,7 @@ static int talitos_probe(struct platform_device *ofdev)
+ 		if (!priv->chan[i].fifo) {
+ 			dev_err(dev, "failed to allocate request fifo %d\n", i);
+ 			err = -ENOMEM;
+-			goto err_out;
++			goto err_noirq;
+ 		}
  
- 	for (i = 0; i < priv->num_channels; i++) {
- 		priv->chan[i].reg = priv->reg + stride * (i + 1);
--		if (!priv->irq[1] || !(i & 1))
-+		if (priv->irq[1] < 0 || !(i & 1))
- 			priv->chan[i].reg += TALITOS_CH_BASE_OFFSET;
+ 		atomic_set(&priv->chan[i].submit_count,
+@@ -3550,9 +3553,14 @@ static int talitos_probe(struct platform_device *ofdev)
+ 	err = init_device(dev);
+ 	if (err) {
+ 		dev_err(dev, "failed to initialize device\n");
+-		goto err_out;
++		goto err_noirq;
+ 	}
  
- 		spin_lock_init(&priv->chan[i].head_lock);
++	/* enable interrupts once the channel fifos and tasklets are set up */
++	err = talitos_probe_irq(ofdev);
++	if (err)
++		goto err_out;
++
+ 	/* register the RNG, if available */
+ 	if (hw_supports(dev, DESC_HDR_SEL0_RNG)) {
+ 		err = talitos_register_rng(dev);
+@@ -3610,6 +3618,10 @@ static int talitos_probe(struct platform_device *ofdev)
+ 
+ 	return 0;
+ 
++err_noirq:
++	/* the irq numbers are known, but the lines are not requested yet */
++	priv->irq[0] = 0;
++	priv->irq[1] = 0;
+ err_out:
+ 	talitos_remove(ofdev);
+ 
 -- 
 2.53.0
 
