@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034526;
-	b=wCXnfPS8IjRu1f1H9I5zgSHWjNK9bkcUO4oICVl7OBQyAyI6XpQYJ3d3QzR+w88Ee2JQ
-	 VPDhv27y5yeyullxQ6Hiyiy2eM2mqQ939Oct6cTF5Te1ZYIPl0ih6l9xDUOqmKPwUlguG
-	 bdufAqEZRMFm5n6BqT7YIpG/mtqkABX3tm8yeTNWMJKiLIU86tTftxVCIRL+zFv2ycRaZ
-	 E30OTf1gip/wxxHLrvimvKru01db4b0nBg04cMFlKMcYRKy1gGzIen78SNlz16x1xORhC
-	 1eO76B/rSWK/O6QeREUDbGuqp8fkpPAislczMzbf/S+U30M1vb8ouj9yUZdKMkBQLnA==
+	t=1795034529;
+	b=rhUeNTmPH6ycOuSr/Nhqx/b2QFKX4hsjVGA4mi63rSXWjO995Oj2qnlGQ8PmD5nXOCGw
+	 95vdiwInfX3bzOj2xW3vzaErxyYmvowwGLl7PZOWIKz0dIrQhlT2VQ/8mq9N5xS3CL8Nh
+	 O0rVk8EfZv7kkZepbRwEgnFjJV/vwdC1lS6d1JrYhZtUXCcD4V0MVSIDIt5DADacqPfOY
+	 ZbIw6Kjjsa02MQNW5Epdzd3R10faGAI7cPLCIgnF+u7UquUtEhVHk5P0F00BhI7IupzyE
+	 yAlaC0K5eNAHtT5aCjRrrPI4HgL9pKpmgX/3SVrDyScjyWT1BDn928KP/BAY/J24hWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034526;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034529;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=33JtkiGj4LpKaLPpPzCFhAz/eYjbKVNc6zIvC4gq0hA=;
-	b=yEId5aqlRM3DP/OSY+lqRYyq6C1n+UpmBGs5F0sB/6xp6MRMqGWcIQ2fzz7BSOSBrWXF
-	 qQa/hNfiE7Zsh7oAQ0IXIsfUivpvA0pYRSsUaJEJBh/ZP7azieRUlRowxlNAwueWjX/Uj
-	 5e++xpYxK15LLUSKagv/fVavl+NFx1fLVySP7c2Tabu/8Qvywr4Z3+V6I0oLhvyY4Jgxy
-	 ji1A7/KwkbcTn6hZF35NPGPb81epE8btabebI+HPw1wjPqe0oB+7Wi4Zy8S+nQwkl4tEh
-	 IgemUndVNcg4zBk/tdJT6M9azhYRdZWxfCDHKR9+Kigv6yFkEV/uqYIR4VBhd9nUKxQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=be/+nvS3vIjdv7z8eRJN+2iFfflgHpHd3hOgVB3lhKU=;
+	b=gRhnKVnsQHSuRSdYpVp2bZX0qXbNiPKBogJY3GTy4728M2ItWXD6dJ6FJgVTn1QRSK+V
+	 QRL7HovZXATful0d9+AUSDfWY8EsDR1z5ga6TEwueNw0oEq6JH7SKhFHbXBna203Jfw5o
+	 MGl9dNKOm3FM/cJn4SFFcPw0HXkaRiC3rgYmkZJzQVWZLant50QwHXjnPCJTzhDJqssqy
+	 4WWIwmTplomVsZ1m7qZdfFFAim8iSqezLO94DApE3vV8JOh/7Ya6Yxb3zkbKA9IdlQ2QH
+	 1anv1wa8Bq0JnQfZ7toDSAKZSGWd+A17O886kOnnGTZyTd95itrzJ3BrfI7mcgpasUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r5OrcYRH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=znJaCJ9V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD30606A31C;
-	Wed, 18 Nov 2026 20:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54272606A320;
+	Wed, 18 Nov 2026 20:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r5OrcYRH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F3A11F000C4;
-	Wed, 18 Nov 2026 20:42:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=znJaCJ9V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE4D11F000C4;
+	Wed, 18 Nov 2026 20:42:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034526;
-	bh=33JtkiGj4LpKaLPpPzCFhAz/eYjbKVNc6zIvC4gq0hA=;
+	s=korg; t=1795034529;
+	bh=be/+nvS3vIjdv7z8eRJN+2iFfflgHpHd3hOgVB3lhKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r5OrcYRHTAlLrNolgdTlyUsWXf5Wj/fC4Hgq4yE3n31/ihtQbACcvvdWrDvgVPgTZ
-	 FJp3Lg0zR1HWFsoSmcmaOjEsC7DXEe06HnJypnNIyGRDhufEdD1F44cCISQwieEm8S
-	 woFRZMPrNEe5ccVHoNXh86SQYuueJcy7nH0lpOAg=
+	b=znJaCJ9VBKx93nnl8jeUBwufKumLJBNNUKjxGm0lXZnk41dM3jqvQR2xWJhwnEJqH
+	 F+ZfZW6sKOuXlwC4J4frhTNwspvn34gkmZWg3cel5aMoqkFBJsU24VZnNk2Um6aEgW
+	 TXBrjRKOLemshRUUMXP26VgqFr4VmsjSek3gnXUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Maurer <mmaurer@google.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
+	=?UTF-8?q?Thi=C3=A9baud=20Weksteen?= <tweek@google.com>,
+	Aaron Tomlin <atomlin@atomlin.com>,
+	Petr Pavlu <petr.pavlu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0401/3318] module: Factor out elf_validity_cache_index_str
-Date: Wed, 18 Nov 2026 15:17:03 +0100
-Message-ID: <20261118150328.447525504@linuxfoundation.org>
+Subject: [PATCH 6.6 0402/3318] module: validate string table section types
+Date: Wed, 18 Nov 2026 15:17:04 +0100
+Message-ID: <20261118150328.486120286@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -63,94 +63,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Maurer <mmaurer@google.com>
+From: Thiébaud Weksteen <tweek@google.com>
 
-[ Upstream commit 0a9395334496d3be8bde491e46087540cb8f141d ]
+[ Upstream commit 9a5ff45689329835f874cefe5174e577d141d423 ]
 
-Pull out index validation for the symbol string section.
+In elf_validity_cache_sechdrs, section sizes and offsets are validated,
+unless the section type is SHT_NULL or SHT_NOBITS.
 
-Note that this does not validate the *contents* of the string table,
-only shape and presence of the section.
+Later, elf_validity_cache_secstrings and elf_validity_cache_index_str
+access the section name table (.shstrtab) and symbol string table
+(.strtab) headers without first ensuring that their types are
+SHT_STRTAB. If a section type is SHT_NULL or SHT_NOBITS, sh_offset has
+not been validated and may reference out-of-bounds memory when
+dereferenced in elf_validity_cache_secstrings or
+elf_validity_cache_strtab.
 
-Signed-off-by: Matthew Maurer <mmaurer@google.com>
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
-Stable-dep-of: 9a5ff4568932 ("module: validate string table section types")
+Validate that both string section headers are of type SHT_STRTAB before
+caching them.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Thiébaud Weksteen <tweek@google.com>
+Reviewed-by: Aaron Tomlin <atomlin@atomlin.com>
+Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/module/main.c | 37 ++++++++++++++++++++++++++++---------
- 1 file changed, 28 insertions(+), 9 deletions(-)
+ kernel/module/main.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
 diff --git a/kernel/module/main.c b/kernel/module/main.c
-index da90817c711dc..0127adf7d7d5a 100644
+index 0127adf7d7d5a..b0f4203d6f402 100644
 --- a/kernel/module/main.c
 +++ b/kernel/module/main.c
-@@ -2005,6 +2005,31 @@ static int elf_validity_cache_index_sym(struct load_info *info)
- 	return 0;
- }
+@@ -1819,6 +1819,7 @@ static int elf_validity_cache_sechdrs(struct load_info *info)
+  * Specifically checks:
+  *
+  * * Section name table index is inbounds of section headers
++ * * Section name table type is SHT_STRTAB
+  * * Section name table is not empty
+  * * Section name table is NUL terminated
+  * * All section name offsets are inbounds of the section
+@@ -1846,6 +1847,11 @@ static int elf_validity_cache_secstrings(struct load_info *info)
  
-+/**
-+ * elf_validity_cache_index_str() - Validate and cache strtab index
-+ * @info: Load info to cache strtab index in.
-+ *        Must have &load_info->sechdrs and &load_info->secstrings populated.
-+ *        Must have &load_info->index.sym populated.
-+ *
-+ * Looks at the symbol table's associated string table, makes sure it is
-+ * in-bounds, and caches it.
-+ *
-+ * Return: %0 if valid, %-ENOEXEC on failure.
-+ */
-+static int elf_validity_cache_index_str(struct load_info *info)
-+{
-+	unsigned int str_idx = info->sechdrs[info->index.sym].sh_link;
-+
-+	if (str_idx == SHN_UNDEF || str_idx >= info->hdr->e_shnum) {
-+		pr_err("Invalid ELF sh_link!=SHN_UNDEF(%d) or (sh_link(%d) >= hdr->e_shnum(%d)\n",
-+		       str_idx, str_idx, info->hdr->e_shnum);
+ 	strhdr = &info->sechdrs[info->hdr->e_shstrndx];
+ 
++	if (strhdr->sh_type != SHT_STRTAB) {
++		pr_err("Invalid ELF section name table type: %u\n", strhdr->sh_type);
 +		return -ENOEXEC;
 +	}
 +
-+	info->index.str = str_idx;
-+	return 0;
-+}
+ 	/*
+ 	 * The section name table must be NUL-terminated, as required
+ 	 * by the spec. This makes strcmp and pr_* calls that access
+@@ -2012,7 +2018,7 @@ static int elf_validity_cache_index_sym(struct load_info *info)
+  *        Must have &load_info->index.sym populated.
+  *
+  * Looks at the symbol table's associated string table, makes sure it is
+- * in-bounds, and caches it.
++ * in-bounds and of type SHT_STRTAB, and caches it.
+  *
+  * Return: %0 if valid, %-ENOEXEC on failure.
+  */
+@@ -2026,6 +2032,12 @@ static int elf_validity_cache_index_str(struct load_info *info)
+ 		return -ENOEXEC;
+ 	}
+ 
++	if (info->sechdrs[str_idx].sh_type != SHT_STRTAB) {
++		pr_err("Invalid ELF symbol string table type: %u\n",
++		       info->sechdrs[str_idx].sh_type);
++		return -ENOEXEC;
++	}
 +
- /*
-  * Check userspace passed ELF module against our expectations, and cache
-  * useful variables for further processing as we go.
-@@ -2028,7 +2053,6 @@ static int elf_validity_cache_index_sym(struct load_info *info)
- static int elf_validity_cache_copy(struct load_info *info, int flags)
- {
- 	int err;
--	int str_idx;
- 
- 	err = elf_validity_cache_sechdrs(info);
- 	if (err < 0)
-@@ -2045,16 +2069,11 @@ static int elf_validity_cache_copy(struct load_info *info, int flags)
- 	err = elf_validity_cache_index_sym(info);
- 	if (err < 0)
- 		return err;
--
--	str_idx = info->sechdrs[info->index.sym].sh_link;
--	if (str_idx == SHN_UNDEF || str_idx >= info->hdr->e_shnum) {
--		pr_err("Invalid ELF sh_link!=SHN_UNDEF(%d) or (sh_link(%d) >= hdr->e_shnum(%d)\n",
--				str_idx, str_idx, info->hdr->e_shnum);
--		return -ENOEXEC;
--	}
-+	err = elf_validity_cache_index_str(info);
-+	if (err < 0)
-+		return err;
- 
- 	/* Sets internal strings. */
--	info->index.str = str_idx;
- 	info->strtab = (char *)info->hdr + info->sechdrs[info->index.str].sh_offset;
- 
- 	/* This is temporary: point mod into copy of data. */
+ 	info->index.str = str_idx;
+ 	return 0;
+ }
 -- 
 2.53.0
 
