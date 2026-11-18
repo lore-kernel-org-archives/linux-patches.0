@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031101;
-	b=Fbdpj7Yx/Vmv67R4oxOHb0e1MMEAv4EmdiBTpuq75Mu908F8eN3OqchKChkQiBraiLPD
-	 G1mvu94L4xNA6hNPyEv6Wbx17bnvVLBCtzqjTFyBh4jBlL82CoEeAUoUQD7upnH+SyGCO
-	 cwxjuU+YYsKhq030UmZdxpFaCQyzvrMu1LsRO44SBb6k0WfFPX8bje/nZ7RiucnlJ6JFO
-	 aEuAj6M/mckTMRGOfjTphdOCSz+gx57IgeVsOqJATbEoDWe0aWq4vWkQFlVAKt1tclR1e
-	 mtgac/d3xNxLWZIeR7853zJF34j7/DcJCzppXTBPftbAgMBrJK23OHkpq6XyKHxnd+w==
+	t=1795031104;
+	b=fVeTtROohvmgoXL/ACPDj0DPsImrc/AOAskDTbX92GrNptSc+UPJBCiDIXMUfCydJYSL
+	 TA99bDOujEg84EM6h1v+7g2l5O1MfJ4C5c+wShQFjs18WQpwX8kLkUdGQ8EDuC5pBCsvH
+	 +y+zYdVbhhCsxW445SagzluY+LgT9GzIjv4uEqzk873pDor74rKST4kYLVXldSr+TiZuK
+	 fGalXQEjF0Q2L3tsozqsaglvzR1P/w8vmSbXjuhXtcyG/2ryMkDeXIZSKQXEWyui8q3NO
+	 eCNkAt+SzSC6O0Sdf67uznAXTNvqjYAbmkDyr/LiHHxWkKW1tRocr6LTSqIjQ+AW6Ig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031101;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031104;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/y4da/Nq/Qlt2B+nlpud1IaXAyH+408jXDrKzNIocPU=;
-	b=a3WsPjgYfmJTk5ySTWmx4oVbcsfqS6sQ2Y3sPXPobKEdfHIpr1ICC8Z8fSTJ0uwDipEr
-	 N1aiNsXkVe+egr3oAqZdCdki5O/YMdeLuRBRLNJscqsiNO+2OV5pyNrvNEVo1xjUYIvSh
-	 PZZwT14445cj2P0fpq97ibaVN32sRi5Omt03JEtP2f7zvA7m9WoucHRxS+EYQalqEePF5
-	 N71UCU3/02/A1KEqzwFIJOzqwmI2i2t5z+Dap6aNLthgH7QtJub9Ft+neM6jvcyJhq9xp
-	 MMY6kF465uJ3VKtZbLNrD5KlkXr9AG29whlJR7iAe1IDo9yQMqIGZ+9ZalJALKOpnUw==
+	bh=b2hmT9YG4+JPRqWK6FllebAgUIE5YuD8JHq/CmlUPis=;
+	b=zbMgPa/Ew4w+dMK98ISkgehALSk8IQJ4TAI/Yb4jxTe6/W1E3pNDd4mSeMZ6DdpoWFpH
+	 MenpPpQauvnlZQQKqAyaW8pDZhpbyVFMugl6JBYfuPZgc9q0jF7nW7U6utvr3TyiyAVM3
+	 61naXSMfuHCR0qPd72Gzd2tIdStZ+hSamYMXjF7rwsVkRjA6CRhaFIRQf6mwI+WbVopDx
+	 iFEo1rO+88Igd3ozD5Kt0UYnRRL0el3ifUh2z/O1daJfNw7piJ6EpdFfmRBo6RM37/DPi
+	 22Iu0KEngr2WhFhf3Hwf8r+5FCBAgmDPX23+9IaLRdhCvgAPnVbp+cf3PTeWX57K3vw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BCu5fYfW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lhrWA6Uu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB8A606A330;
-	Wed, 18 Nov 2026 19:45:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33F9606A32C;
+	Wed, 18 Nov 2026 19:45:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BCu5fYfW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A45A1F000C4;
-	Wed, 18 Nov 2026 19:45:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lhrWA6Uu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 047311F000C4;
+	Wed, 18 Nov 2026 19:45:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031101;
-	bh=/y4da/Nq/Qlt2B+nlpud1IaXAyH+408jXDrKzNIocPU=;
+	s=korg; t=1795031104;
+	bh=b2hmT9YG4+JPRqWK6FllebAgUIE5YuD8JHq/CmlUPis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BCu5fYfWiDUdObU2wezXRVwhD64ZI4ddCeRBfKEvZAHaLt6cDZBm87Eh37YeCX97P
-	 5h2ohPo8CRB/WenyFMKNgbXhcS5AZBol0DmsrZG/1bsbmzR99B2UivC7Zl7hYgXuhq
-	 uFUxnMTduegG0mq6WEWq/VWlJuyaL8OHMgDLxwkc=
+	b=lhrWA6UuXTa27kwqvWuNlTkUomTQLGtdYVtroc0FuL+rpW6+CLfHSqfJAqSeAKeaB
+	 bZX+P/cFZXhykS96qA/ckZSXLS3Z7qQFFKbYpvBsUWilQcLQCg/mn8E9T5qAVYISqS
+	 F2/X7Lpj7XYHAVClP/xW7v/Bw20Sg6fqzkr7LGds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wilson Felipe Pereira <wfelipe@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Jonas Rebmann <jre@pengutronix.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0940/1756] init/main: fix off-by-one in argv_init cleanup
-Date: Wed, 18 Nov 2026 15:51:07 +0100
-Message-ID: <20261118150047.446570119@linuxfoundation.org>
+Subject: [PATCH 6.12 0923/1756] spi: spi-sun4i: sun4i_spi_transfer_one(): fix transfers for SUN4I_FIFO_DEPTH
+Date: Wed, 18 Nov 2026 15:50:50 +0100
+Message-ID: <20261118150046.722101873@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,89 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wilson Felipe Pereira <wfelipe@google.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit b82ed0e3a1dafe41577b095318a3ea6c0eec6f46 ]
+[ Upstream commit f3ce7a3ca82bd9cda9ef61250aeff65fe6b44809 ]
 
-Patch series "init: fix array boundary bugs in boot parameter parsing".
+In commit 6d9fe44bd73d ("spi: sun4i: fix FIFO limit"), the TX-FIFO is
+filled max to SUN4I_FIFO_DEPTH - 1 (= 63) bytes to work around timeouts
+observed on A10s SoCs.
 
-This series fixes two distinct boundary logic edge-case bugs in
-`init/main.c` related to parsing boot command-line arguments and
-environment variables.  Both bugs have been present since the early git
-history (Linux-2.6.12-rc2).
+Commit 196737912da5 ("spi: sun4i: Allow transfers larger than FIFO
+size") added support for transfers larger than the FIFO size. But this
+commit only enabled the TX-FIFO empty interrupt for transfers larger
+than the FIFO (= 64) bytes.
 
-1. The first patch fixes an off-by-one error in `init_setup()` where
-   the final slot of the `argv_init` array was left uncleared. This
-   allowed a stale kernel parameter to leak into the `init` process's
-   user-space command line if exactly `MAX_INIT_ARGS` unknown
-   parameters were passed.
+This breaks transfers with exactly 64 bytes: the TX-FIFO is only filled
+with 63 bytes but the interrupt to refill the FIFO is not triggered. The
+problem can be reproduced with the following command:
 
-2. The second patch fixes a false-positive kernel panic in
-   `unknown_bootoption()`. If a user filled the environment variable
-   array up to its exact limit (32) and then attempted to overwrite
-   the final variable, the kernel would panic before evaluating
-   whether it was a harmless duplicate.
+| spidev_test -D /dev/spidev0.1 -S 64 -s 20000000 -I 1
+|
+| [ 7797.548745] spi_master spi0: spi0.1: timeout transferring 64 bytes@20000000Hz for 110(100)ms
+| [ 7797.557237] spidev spi0.1: SPI transfer failed: -110
+| [ 7797.562308] spi_master spi0: failed to transfer one message from queue
+| [ 7797.568936] spi_master spi0: noqueue transfer failed
 
-Exact QEMU reproduction steps for both edge cases are documented inside
-their respective commit descriptions.
+To fix the problem enable the TX-FIFO interrupt if the total TX length
+is larger than SUN4I_FIFO_DEPTH - 1 (= 63) bytes.
 
-This patch (of 2):
-
-When cleaning up argv_init in init_setup() and rdinit_setup(), the loop
-terminates one element early due to using '<' instead of '<='.  Since
-argv_init is sized MAX_INIT_ARGS+2, index MAX_INIT_ARGS is a valid element
-that should be cleared to NULL.
-
-If exactly MAX_INIT_ARGS unknown arguments are passed before 'init=', the
-uncleared argv_init[MAX_INIT_ARGS] can act as a ghost argument to
-/sbin/init or cause a spurious kernel panic when later appended to.
-
-To verify the argument leak, boot a VM into a shell with 32 unknown kernel
-arguments, the init parameter, and 31 user arguments:
-
-  STALE_ARGS=$(for i in {1..32}; do echo -n "stale$i "; done)
-  USER_ARGS=$(for i in {1..31}; do echo -n "user$i "; done)
-  qemu-system-x86_64 -kernel bzImage \
-      -append "$STALE_ARGS init=/bin/sh $USER_ARGS"
-
-Running `cat /proc/1/cmdline` inside the shell reveals that the 32nd
-kernel argument ('stale32') incorrectly leaked into the init process's
-command line.  This patch zeroes the final slot, cleanly terminating the
-array.
-
-Link: https://lore.kernel.org/20260818045357.4123784-1-wfelipe@google.com
-Link: https://lore.kernel.org/20260818045357.4123784-2-wfelipe@google.com
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Fixes: ffdfc40976dd ("[PATCH] Add rdinit parameter to pick early userspace init")
-Signed-off-by: Wilson Felipe Pereira <wfelipe@google.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 196737912da5 ("spi: sun4i: Allow transfers larger than FIFO size")
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Jonas Rebmann <jre@pengutronix.de>
+Link: https://patch.msgid.link/20260914-spi-sun4i-fixes-v3-1-9fe919d5cecf@pengutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- init/main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/spi/spi-sun4i.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/init/main.c b/init/main.c
-index bad880340de43..92397b5a3a6e3 100644
---- a/init/main.c
-+++ b/init/main.c
-@@ -570,7 +570,7 @@ static int __init init_setup(char *str)
- 	 * the shell think it should execute a script with such name.
- 	 * So we ignore all arguments entered _before_ init=... [MJ]
- 	 */
--	for (i = 1; i < MAX_INIT_ARGS; i++)
-+	for (i = 1; i <= MAX_INIT_ARGS; i++)
- 		argv_init[i] = NULL;
- 	return 1;
- }
-@@ -582,7 +582,7 @@ static int __init rdinit_setup(char *str)
+diff --git a/drivers/spi/spi-sun4i.c b/drivers/spi/spi-sun4i.c
+index 4e33e0cec1b21..406a28728fb2c 100644
+--- a/drivers/spi/spi-sun4i.c
++++ b/drivers/spi/spi-sun4i.c
+@@ -322,7 +322,7 @@ static int sun4i_spi_transfer_one(struct spi_controller *host,
+ 	sun4i_spi_enable_interrupt(sspi, SUN4I_INT_CTL_TC |
+ 					 SUN4I_INT_CTL_RF_F34);
+ 	/* Only enable Tx FIFO interrupt if we really need it */
+-	if (tx_len > SUN4I_FIFO_DEPTH)
++	if (tx_len > SUN4I_FIFO_DEPTH - 1)
+ 		sun4i_spi_enable_interrupt(sspi, SUN4I_INT_CTL_TF_E34);
  
- 	ramdisk_execute_command = str;
- 	/* See "auto" comment in init_setup */
--	for (i = 1; i < MAX_INIT_ARGS; i++)
-+	for (i = 1; i <= MAX_INIT_ARGS; i++)
- 		argv_init[i] = NULL;
- 	return 1;
- }
+ 	/* Start the transfer */
 -- 
 2.53.0
 
