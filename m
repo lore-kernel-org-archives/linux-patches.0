@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049591;
-	b=2Xh//g9dsGQFyWVsFi2IikqWkRxrrsGxXeiT/+QmzQu2Pzb0mkVzwSPCC77iZ/XFRunH
-	 l49M6Zptf0+d4MnX0CZn4EZ91o7hKM1ZpFdV3G9VY6tyQi1tCwR4o8x/0cNo5iFzQJQUp
-	 EyIrZS/UwwGCIvVRtrX16Dp1M21WuW4hi36No9Vvo7fnezXi9LbXpOnUDSN8PEX4t7Tv2
-	 CPtl4KsDG8Q7HDK6ujl/Afn8gHDqFJcqA9d96t/1COAzCOhTDunnBdZl+y1PvGB4N8eoo
-	 HH01RlPsijGyb8rad2/H1RKi7kg2w733o0724118V5XcF8jKxsqMHvlpeLgKJ/uE6bw==
+	t=1795049594;
+	b=acuQdoxp8cHjkNrotE2kCr6Ar4DXXUmbZqjdNgfd9y3d5q+ktXxQdAje8ZYaS6MzmpsZ
+	 gn146JFJu3XRHYfmGJZX/11Acbx/5OJHlpe9KS1shR0++g18SqW41/mQ4S3wFQ6+hxXR5
+	 vxRqkLRAynARo/uH4QDVgfzGXFI2LCk3RPWN9IYmNYvtneWMy541JQoYq/wvygMwpJUI4
+	 PHBUEs2WWW2L7h1+pG7QILk6QvgJVz328xTXlA6x22K1ZyTDz4ZGD7n+lmlPExglDOSIb
+	 lJ/brQhiAx2v1WegFoPMobPDICK9ilVriomtQ1Oy3mykzcYeabsj0MGzmvmPjEZk1Ew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049591;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049594;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JUJgA+vxYSEG+4/L9TGFYFayrn1H0qDN8+EY6cKege8=;
-	b=agw4tKlb5srh1eaIBj889kpU31FnWW0kX2vxANDngk87vuCB/U0DCV8QjYCVHVXDrzSF
-	 UGq0Ry8Jn8ZfJ5hBJioJi7XvtcEsXch2233ug96lt0YtDsAFKoPWWYyi69ErPOYr6Hjr+
-	 eIEhotqz0ojAVPaLU8dzpSeX+F4Joz2xgVymMlW1W+EAcgf2guy+SFyZEl7aVonitUo4H
-	 5uVszrSdjF8mxXc5QdWqWd9EueFVw+ZRtoAJmjG9PgiUHog1zg3xandHwtm+x760xK4J/
-	 +qNSoFLvSZGvRIRIyFNgz2oT7N4vREzf5Y5p1A7lKxQLEQxp3NSGvIJ99guzyTctRCg==
+	bh=Wp/b+/DawRnfpf2FSmBnYrsmwb086PA+LSRFaWPkZKY=;
+	b=z5cHtpsfm3Y6K10Y6CFCQekW6gZZvyRd5iM+TFkMjpyOeNJVllzwn+Ril9JVb8zTJea1
+	 47r9qnA+hoqFwV56N3gwxlfV/7HKZFTapl9z/rkVwFaQMQGjwksecwOS1lC45jH3vBX/a
+	 9MEsIN2qqA2Ur2C4lb1fsEHArK+o1R9gl6RFGkRvGxO2fqOgUjXK4A00K10hIayOT0a1z
+	 iojLvT+ZxDF3Sxg5NvyWImaR/MUk4PQKUKSh68hMGk433GM+wSowR+jaBWlyMbhnnaG+X
+	 pPwsA39Uua3mUrMz1Qr/J1pYlCvl6OoX9ZBqqcLgTkTKkApjidjw8ACTo+LjZsq0OJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vrcH09AR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m+KAQ48Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2B0606A31C;
-	Thu, 19 Nov 2026 00:53:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099D2606A31C;
+	Thu, 19 Nov 2026 00:53:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vrcH09AR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C3F91F000C4;
-	Thu, 19 Nov 2026 00:53:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m+KAQ48Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CE441F000C4;
+	Thu, 19 Nov 2026 00:53:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049591;
-	bh=JUJgA+vxYSEG+4/L9TGFYFayrn1H0qDN8+EY6cKege8=;
+	s=korg; t=1795049593;
+	bh=Wp/b+/DawRnfpf2FSmBnYrsmwb086PA+LSRFaWPkZKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vrcH09AR8KgYZX8ZS5031BY9VqY+XB0EzYjhvK6TDi1UgqilRI88ZB1XhrlnxwN2O
-	 W12GhUfZrLj2phpty6Yfks1GtBFPu9lW6qEeE6bbKKx5fCq/R7P0AlBoG1DPk9MSwv
-	 dNd+lBzMGw9odi0B4K2WruUUddYtGFMj7hh8KIh0=
+	b=m+KAQ48Q4SfafHWnMViTTRvOzIm5ExJxhPoQPVZAfWH3mrohufbiVGJfL9vGHHgH/
+	 02uIT1NNdfMTOqPlY1xG7vPiLzQHDFi7ZD0NWyxIL/s3YFdXNZKSLvPU7HJdJ4OVvl
+	 zwOX1ARPLI/PcjzBZfMBgAGGjxP8gBsOGC04ED0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Hannes Reinecke <hare@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Tal Zussman <tz2294@columbia.edu>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2365/2857] ACPI: PCI: pci_link: clear driver_data before free
-Date: Wed, 18 Nov 2026 15:56:39 +0100
-Message-ID: <20261118150326.672669253@linuxfoundation.org>
+Subject: [PATCH 6.1 2366/2857] block: honor IOCB_NOWAIT in the block device buffered read path
+Date: Wed, 18 Nov 2026 15:56:40 +0100
+Message-ID: <20261118150326.710056534@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,38 +71,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Tal Zussman <tz2294@columbia.edu>
 
-[ Upstream commit 691c33289b4d7a50b6fe1e03918bfbc21d4641c5 ]
+[ Upstream commit d16519a561f4ccc2cebbf52831435833cac1fec6 ]
 
-acpi_pci_link_remove() frees the link object without clearing the ACPI
-device's driver_data pointer. The ACPI device survives hot-removal and
-can later be retrieved by acpi_fetch_acpi_dev(), leaving callers with a
-dangling pointer.
+blkdev_read_iter() takes inode_lock_shared() unconditionally around
+filemap_read(). Unlike blkdev_write_iter(), it does not reject
+IOCB_NOWAIT for buffered I/O, so a non-blocking read, or the buffered
+tail of a short IOCB_NOWAIT direct read, blocks behind set_blocksize()
+holding i_rwsem across sync_blockdev().
 
-Clear driver_data before freeing the link.
+A preadv2(RWF_NOWAIT) issued while another thread changes the block
+size with a dirty page cache blocks for as long as sync_blockdev()
+takes, 4 to 6 seconds on a scsi_debug device with delay=5.
 
-Fixes: db89b4f0dbab ("ACPI: catch calls of acpi_driver_data on pointer of wrong type")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-[ rjw: Subject tweak ]
-Link: https://patch.msgid.link/20260925155846.2381956-1-yaojiale02@163.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Use inode_trylock_shared() for IOCB_NOWAIT and return the bytes the
+direct path already read, or -EAGAIN if none, when the lock is
+contended, preserving NOWAIT semantics.
+
+Fixes: c0e473a0d226 ("block: fix race between set_blocksize and read paths")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260802-blkdev-fixes-v1-0-a82fc549fd74%40columbia.edu?part=2
+Assisted-by: Claude:claude-fable-5
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Tal Zussman <tz2294@columbia.edu>
+Link: https://patch.msgid.link/20261009-blkdev-fixes-v6-4-307939c387df@columbia.edu
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/pci_link.c | 1 +
- 1 file changed, 1 insertion(+)
+ block/fops.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/pci_link.c b/drivers/acpi/pci_link.c
-index aa1038b8aec4a..b53d44bc523b8 100644
---- a/drivers/acpi/pci_link.c
-+++ b/drivers/acpi/pci_link.c
-@@ -778,6 +778,7 @@ static void acpi_pci_link_remove(struct acpi_device *device)
- 	list_del(&link->list);
- 	mutex_unlock(&acpi_link_lock);
- 
-+	device->driver_data = NULL;
- 	kfree(link);
- }
+diff --git a/block/fops.c b/block/fops.c
+index 2fc6ac6679ee6..9e62d4913b24a 100644
+--- a/block/fops.c
++++ b/block/fops.c
+@@ -664,7 +664,15 @@ static ssize_t blkdev_read_iter(struct kiocb *iocb, struct iov_iter *to)
+ 	 * Take i_rwsem and invalidate_lock to avoid racing with set_blocksize
+ 	 * changing i_blkbits/folio order and punching out the pagecache.
+ 	 */
+-	inode_lock_shared(bd_inode);
++	if (iocb->ki_flags & IOCB_NOWAIT) {
++		if (!inode_trylock_shared(bd_inode)) {
++			if (!ret)
++				ret = -EAGAIN;
++			goto reexpand;
++		}
++	} else {
++		inode_lock_shared(bd_inode);
++	}
+ 	ret = filemap_read(iocb, to, ret);
+ 	inode_unlock_shared(bd_inode);
  
 -- 
 2.53.0
