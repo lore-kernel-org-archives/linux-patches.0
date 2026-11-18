@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057131;
-	b=jyXCK0ApbrgLNi8oVHBGPi/IQ8U7sG8qoI7m5MQa5BE3gIGcP0nkeiDMRONS7bYHFT+i
-	 kfynLuHZxlyblLurR85SRsRXCPYVGl0s8F+kCrQHNl1ozjIrc/8M1PWNAFesnHNGBUgK6
-	 HE5UmPtSzQPYAmlGlP1nUT2KlnMgkzQ9BEkGQe5+U1wUf78De4EM5Kz3pZjSiw/ChBMZT
-	 aZ7C/pL9GyiILn5y2lMC0th8EWkBrVxqf18NPlS8j0IFwGsDlhkOLmiUO/v2nahzcv2wl
-	 /9lbVRAPOtuQH9eo6FZy/rYOo+OEPFXQMTUec6FKwjmM9ktQE9Z41hlntPv1/h4XKzA==
+	t=1795057134;
+	b=kl2Qf4VFT8xpOeUhzrCATNQcJETwhAKT6G/TproirtthLvZJ6hVPPJzZFt9RY0qQcleq
+	 0X81Vu4XQc5X+JJFs2n4UkGUGEYQtjlizH940sTfewycw/0gA2MGpStndDnYylsK2KxFH
+	 REqCWEyYzairmn9aD7UkaqrSKxCfJrPuv1stFAgUWpUSWysbr5+BSEWXxdWvVsrl5qGhJ
+	 J7eUH7vKkmhDcH6ROHdyRB8nwFM1z0kNRcfsoqklWJYzRqTbb+bMGqzNXBrGZ1CgMzpg1
+	 Yn+FP0jMU3azZ9kWlH2TQQu9yOIqol6COnQGyEmTIo5GvV0Gxa4WhRwEo8GYrLonmhQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057131;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057134;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=a4iYoG27R7C7/PR81vHBt83sb0Q1DjvzKDtaN4GKMss=;
-	b=IzE9Ptl6FwythmVnaAtti1bUgEwctIYWU4Mk0I+XHWUQzZXmToV7381TscWz+XGKnj9N
-	 9b95tCYmSFJEwhp/L+6rKtPPlcdH4N0ca+MjJwGID48r5gw9ymD5eLn1EeYiV2Pkc12fy
-	 HgRPcTqu4Zq3gMiaXU6MzbcRMRnRRDsAWqKerGHxSl724IqkcnKOgY846g8vM8o6oHLlp
-	 psIbvQgS5x7pdpFF81HdhiFxzKDF/2nNHulhrV+vsEPcxpYaeWW5nsF79lFPkMA/R4YIb
-	 14+veG9htTH/4CFgSB+uZp7+RQ5gnLyZOXiaKHrziZKMiGkdKkGcI7O81GnBcTf8luQ==
+	bh=NS4DYSp1WKx1sSoy0EH8evT35KxEe5kHbWNECDZf+5k=;
+	b=WL4UC7Tz39y2m9ShaNO87Z6g9EfiFUvpeGopBH19Dp+TYt7BfAevg101z2xcyPSMUFuO
+	 UJNyKzj8DaZTav7DMnmJh78Zo6SJNTnbv19lwmu/SNTxOiJTaj4JFIIijNsvMt13N+6+m
+	 SrpamaK1rbc+axfmjz8UdkxBC7M0iPVDhBJip8aXU6AotrjmuJ4mLtaGK8u9eG4LZxPVy
+	 yOwBSVL2YJm/j7Rea4wqvgOvK/YH+qtn30ukpEs8aDu4J/mgnLQcQVA/rVFADugsYTVj8
+	 mcPoCiWzJbXTTk0Lsxbc8GNJK0ojDV2tTN0H8joJ8FHrOjrEYueNFqqT5fKk4G4tQKQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HFBmpAes;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=axDLiEHh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534EC606A325;
-	Thu, 19 Nov 2026 02:58:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44292606A32F;
+	Thu, 19 Nov 2026 02:58:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HFBmpAes
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE0471F000C4;
-	Thu, 19 Nov 2026 02:58:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=axDLiEHh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FC7D1F000C4;
+	Thu, 19 Nov 2026 02:58:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057131;
-	bh=a4iYoG27R7C7/PR81vHBt83sb0Q1DjvzKDtaN4GKMss=;
+	s=korg; t=1795057134;
+	bh=NS4DYSp1WKx1sSoy0EH8evT35KxEe5kHbWNECDZf+5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HFBmpAesiYekM5wrWZXw/+ShnTkJ1nTTQBdFachPINyOVJQZ6kmTc9HnGSYco3u+E
-	 M0s3RBf17Gf4FKnLRC1xs1neCcNirZAPrGbohF5T6I2uWvHqqFX+IenAzjzpg3/Elj
-	 MBS1YR+TjCA9Hh68mOxzNE+WnuMBn8JeAQrUDxxQ=
+	b=axDLiEHh/f4OoYHC92sTVKBXIK9LDGG2PW5kuvpj2zsHA7a9NyGpbqKwMxl5XQqzG
+	 N5CQj91eXm6dcf3dH9xrA8pwQudh17RkBD6oAu2DQZLVyQkJ6KJjS656Yw3va80Je1
+	 voTG3SHB/ceJGNNfx1g9MG7yWbUFOo9ttwMe0dmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Airlie <airlied@redhat.com>,
-	Philipp Stanner <pstanner@redhat.com>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Kees Cook <keescook@chromium.org>,
-	Zack Rusin <zackr@vmware.com>,
-	Roman Demidov <roman.demidov.nn@gmail.com>
-Subject: [PATCH 5.10 0023/1848] string.h: add array-wrappers for (v)memdup_user()
-Date: Wed, 18 Nov 2026 15:34:21 +0100
-Message-ID: <20261118145912.038834989@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Chaitanya Kulkarni <chaitanya.kulkarni@wdc.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 0006/1848] nvme-tcp: fix error codes in nvme_tcp_setup_ctrl()
+Date: Wed, 18 Nov 2026 15:34:04 +0100
+Message-ID: <20261118145911.487942179@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,90 +70,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philipp Stanner <pstanner@redhat.com>
+From: Dan Carpenter <dan.carpenter@oracle.com>
 
-commit 313ebe47d75558511aa1237b6e35c663b5c0ec6f upstream.
+commit 522af60cb2f8e3658bda1902fb7f200dcf888a5c upstream.
 
-Currently, user array duplications are sometimes done without an
-overflow check. Sometimes the checks are done manually; sometimes the
-array size is calculated with array_size() and sometimes by calculating
-n * size directly in code.
+These error paths currently return success but they should return
+-EOPNOTSUPP.
 
-Introduce wrappers for arrays for memdup_user() and vmemdup_user() to
-provide a standardized and safe way for duplicating user arrays.
-
-This is both for new code as well as replacing usage of (v)memdup_user()
-in existing code that uses, e.g., n * size to calculate array sizes.
-
-Suggested-by: David Airlie <airlied@redhat.com>
-Signed-off-by: Philipp Stanner <pstanner@redhat.com>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Zack Rusin <zackr@vmware.com>
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230920123612.16914-3-pstanner@redhat.com
-Stable-dep-of: c833d6c7199c ("drm/amdgpu: Limit BO list entry count to prevent resource exhaustion")
-Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 73ffcefcfca0 ("nvme-tcp: check sgl supported by target")
+Fixes: 3f2304f8c6d6 ("nvme-tcp: add NVMe over TCP host driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+Reviewed-by: Chaitanya Kulkarni <chaitanya.kulkarni@wdc.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+[ Karl Mehltretter: Omit the SGL-check hunk because 5.10.y lacks
+  73ffcefcfca0 ("nvme-tcp: check sgl supported by target"). ]
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/string.h |   40 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
+ drivers/nvme/host/tcp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/include/linux/string.h
-+++ b/include/linux/string.h
-@@ -5,6 +5,8 @@
- #include <linux/compiler.h>	/* for inline */
- #include <linux/types.h>	/* for size_t */
- #include <linux/stddef.h>	/* for NULL */
-+#include <linux/err.h>		/* for ERR_PTR() */
-+#include <linux/overflow.h>	/* for check_mul_overflow() */
- #include <stdarg.h>
- #include <uapi/linux/string.h>
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index fd222eed9e019..d61a90b9bbb0b 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -2116,6 +2116,7 @@ static int nvme_tcp_setup_ctrl(struct nvme_ctrl *ctrl, bool new)
+ 		return ret;
  
-@@ -13,6 +15,44 @@ extern void *memdup_user(const void __us
- extern void *vmemdup_user(const void __user *, size_t);
- extern void *memdup_user_nul(const void __user *, size_t);
- 
-+/**
-+ * memdup_array_user - duplicate array from user space
-+ * @src: source address in user space
-+ * @n: number of array members to copy
-+ * @size: size of one array member
-+ *
-+ * Return: an ERR_PTR() on failure. Result is physically
-+ * contiguous, to be freed by kfree().
-+ */
-+static inline void *memdup_array_user(const void __user *src, size_t n, size_t size)
-+{
-+	size_t nbytes;
-+
-+	if (check_mul_overflow(n, size, &nbytes))
-+		return ERR_PTR(-EOVERFLOW);
-+
-+	return memdup_user(src, nbytes);
-+}
-+
-+/**
-+ * vmemdup_array_user - duplicate array from user space
-+ * @src: source address in user space
-+ * @n: number of array members to copy
-+ * @size: size of one array member
-+ *
-+ * Return: an ERR_PTR() on failure. Result may be not
-+ * physically contiguous. Use kvfree() to free.
-+ */
-+static inline void *vmemdup_array_user(const void __user *src, size_t n, size_t size)
-+{
-+	size_t nbytes;
-+
-+	if (check_mul_overflow(n, size, &nbytes))
-+		return ERR_PTR(-EOVERFLOW);
-+
-+	return vmemdup_user(src, nbytes);
-+}
-+
- /*
-  * Include machine specific inline routines
-  */
+ 	if (ctrl->icdoff) {
++		ret = -EOPNOTSUPP;
+ 		dev_err(ctrl->device, "icdoff is not supported!\n");
+ 		goto destroy_admin;
+ 	}
+-- 
+2.53.0
+
 
 
