@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033133;
-	b=Z0m6rhdx7AVuxRya2hSpTyGOFglP1X0OLu4o+2+svlcsqhEz4Mlt0vTWK50+cFSb2yTR
-	 U4pKWLdYY/oCon/xDgoUzzGoLBtN2qVKnlo7+SvNlxJJlbXBhyGjgie7yk3mUBLMlXuC+
-	 eR12k1ukOG+8ZNREJEG8Jvv+B29N5m8Kq6tQ1F9eZZ6oakdqJpHgPc6DkSgcGsmqFPBBR
-	 SuV1a41Cfz1P60hjbGXk9UIEaRKjSiLG3Y5UPn0+EhrN0/IkHc+Y8ibUYhhmuQskdhOoP
-	 HWkvwo3kI/hlTMdi8mGOkCZBd0246MtReR5vpk91Od9plbapv1JD6xqHimXqMT48AXQ==
+	t=1795033135;
+	b=muIMdTnoQi0sstnyEISYsLLK6+8ZHozGSy1G9iR5MMST6uG6sR9dmGpQhbt1SAksVqyt
+	 vl7DiXurHbro1Sj6eeAdH0x/sSpXumHZSb0GHvtXV+u1oMBTQq6FJMYARN4t5UGJpQ5NH
+	 zIp5RHanJRQ0AVRBrXXASqFW5jMUTQu3Xt+0QqvEU3xnOQ8yuI/aq3rGnltokcIG2U6qn
+	 cp+MtsyfRPaXSj0/aXpg585RO63g+btNa8gLR8GA5q8UGVDMc2njDl97iLdaP6xn3nuX1
+	 Vf8jdr4KxYOsr1h4kz9KAMLIgNDjpuCgi3UxYqqVHi3QBhmhC9w6WyYPqjYD+xkVmPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033133;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033135;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=h/exU+6/b3pJ0TT6FbdxNipwt4EMgDkHHj7UKah/BNc=;
-	b=RMm+xc6OBhQHq3bDp66HHkkPLmNNfSfMxloBl87qZDLul19HK0BelW79IND1wMxhVAbg
-	 bWVFpWkj6Vsz4qf38UXyVr2jpycdytZkHQK69zueX8lb1IqsNqjHvCFRjC4bKnURDuIUp
-	 5veddgM6xusZUeybwd7yCRsx3GG9ZaE4+iVx3qk9zEhi+w3w7ADv4iE7axNtl46mT7yH3
-	 4EmMqfpRtlpivhVgH67lVgaN7rinizB/sEoVw/t4m/EN9AL3BTAd66cnE+xVsQZzXziul
-	 LabJxcjqwRosl9YuHP1qfbutGCiXzgK0FJJ54/CC8MLmkBgFo+NRe+kayUwUsEf8vXg==
+	bh=tO0VrjpZEE7s7XABkwbI7N9LWu5B6qbN8MrdPnSME+Q=;
+	b=bWR/Q8VTMqfkeoAH3Q0iJTkz4HSuS1j5PGoAI+KLvkXuSOAf8UOr6fTpBrs7YiXuND76
+	 wDuWArPIF1WBzhhMQ0Bf6/aEpprRwulHKwFbF8PTx4AM0Bq3XSVmMrsZk+O0aZuP0uCek
+	 vWLuFf/4sstfmuQhH8D2mE27HVsvswC+2EbhbWwZ503NGb4gNteo9VI/vJqAQR23T9/tB
+	 AXYT9wQONKKVZy/nb/CQOux2JeGmO+Fnjn7kuZBxH0HedIXaNi8ks1IooHuMvoorS5+bG
+	 0TT4JxAQQuNKkEfyR117IAl/a1l9igPoFZHYIWHGRbiKwlK/9aIzjEZkmYCCJn+mnEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n7vREla+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c1WNmrzw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8369606A337;
-	Wed, 18 Nov 2026 20:18:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F5C606A31C;
+	Wed, 18 Nov 2026 20:18:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n7vREla+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49DDA1F000C9;
-	Wed, 18 Nov 2026 20:18:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c1WNmrzw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 078721F000C4;
+	Wed, 18 Nov 2026 20:18:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033132;
-	bh=h/exU+6/b3pJ0TT6FbdxNipwt4EMgDkHHj7UKah/BNc=;
+	s=korg; t=1795033135;
+	bh=tO0VrjpZEE7s7XABkwbI7N9LWu5B6qbN8MrdPnSME+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n7vREla+1G3y70Bcrph4P9T1ZWw9eqo5E5BI2ybBxruPZqKsXMpwA2f6DwAVnOrWa
-	 p7s1s1G9cwtET7LiiR5CbP2lLz+Tc++uImJz/+546FhHcTR4ofsPAZJtU7a4wk0Mq6
-	 Pxn6ZiXkeV+e63aBOjqTIcq8CjxoF9bxT27MT180=
+	b=c1WNmrzwZiKbZ5tglhp7sjl2pMkDkBAl6p28jIzheOUJB1WwObb5G1c2ZsHSHHf0c
+	 lMYRJAJTuqcimQs4fJlnQbzp+Qno89rVgIOxXZc75wIsIvD7uiDVrTSU0RWeT7tfCd
+	 pynkRYpMUB5+lofcKevnvUYZa9XoDFSbeUx411iA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joas Antonio dos Santos <joasantonio108@gmail.com>,
-	Guikun Yang <yangguikun19@qq.com>,
-	Jeremy Kerr <jk@codeconstruct.com.au>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Markus Probst <markus.probst@posteo.de>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1660/1756] net: mctp: free reassembly head skb when key_add fails on SOM
-Date: Wed, 18 Nov 2026 16:03:07 +0100
-Message-ID: <20261118150115.801066288@linuxfoundation.org>
+Subject: [PATCH 6.12 1661/1756] rtc: s35390a: Add missing newline to dev_err
+Date: Wed, 18 Nov 2026 16:03:08 +0100
+Message-ID: <20261118150115.838266308@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,61 +68,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joas Antonio dos Santos <joasantonio108@gmail.com>
+From: Markus Probst <markus.probst@posteo.de>
 
-[ Upstream commit d2bfe74a8fe219a86b86c1f126e1d722a5001790 ]
+[ Upstream commit a27b25bb9b422c8468cb6965b2d72b7b64187fd2 ]
 
-When a start-of-message fragment creates a new reassembly key on the
-broadcast/bind path, mctp_frag_queue() stores the skb as
-key->reasm_head before the key is made observable with mctp_key_add().
-
-If mctp_key_add() fails (a race with another SOM packet for the same
-source/dest/tag, or the receiving socket going away), the error path
-only drops the key reference via mctp_key_unref().  The final key
-destructor frees the key itself but not key->reasm_head, and since the
-key was never added to any list, neither the expiry worker nor socket
-teardown can reach it to release the queued fragment.  The skb is
-leaked.
-
-Free key->reasm_head on the key_add failure path before releasing the
-key.  Other teardown paths (__mctp_key_done_in(), EOM delivery) already
-clear reasm_head before the final unref, so this only affects the
-failure path.
-
-Fixes: 4a992bbd3650 ("mctp: Implement message fragmentation & reassembly")
-Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
-Reported-by: Guikun Yang <yangguikun19@qq.com>
-Closes: https://lore.kernel.org/all/tencent_43A65D51143E18518EA968DF9323694EFD08@qq.com/
-Acked-by: Jeremy Kerr <jk@codeconstruct.com.au>
-Link: https://patch.msgid.link/179287946888.17431.11219154409333681184@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 3bd32722c827d ("rtc: s35390a: improve irq handling")
+Signed-off-by: Markus Probst <markus.probst@posteo.de>
+Link: https://patch.msgid.link/20260930-rtc_s35390a_int1-v10-2-e7b1cbc50a7b@posteo.de
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mctp/route.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/rtc/rtc-s35390a.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mctp/route.c b/net/mctp/route.c
-index eb7c1166d11b6..10a5e53057548 100644
---- a/net/mctp/route.c
-+++ b/net/mctp/route.c
-@@ -496,8 +496,16 @@ static int mctp_route_input(struct mctp_route *route, struct sk_buff *skb)
- 			 * can do is drop.
- 			 */
- 			rc = mctp_key_add(key, msk);
--			if (!rc)
-+			if (!rc) {
- 				trace_mctp_key_acquire(key);
-+			} else {
-+				/* key_add failed: the key is not observable by
-+				 * any cleanup path, so free the fragment we
-+				 * just queued on it to avoid leaking the skb.
-+				 */
-+				kfree_skb(key->reasm_head);
-+				key->reasm_head = NULL;
-+			}
- 
- 			/* we don't need to release key->lock on exit, so
- 			 * clean up here and suppress the unlock via
+diff --git a/drivers/rtc/rtc-s35390a.c b/drivers/rtc/rtc-s35390a.c
+index e3dc18882f414..a680d2c354261 100644
+--- a/drivers/rtc/rtc-s35390a.c
++++ b/drivers/rtc/rtc-s35390a.c
+@@ -467,7 +467,7 @@ static int s35390a_probe(struct i2c_client *client)
+ 		buf = 0;
+ 		err = s35390a_set_reg(s35390a, S35390A_CMD_STATUS2, &buf, 1);
+ 		if (err < 0) {
+-			dev_err(dev, "error disabling alarm");
++			dev_err(dev, "error disabling alarm\n");
+ 			return err;
+ 		}
+ 	} else {
 -- 
 2.53.0
 
