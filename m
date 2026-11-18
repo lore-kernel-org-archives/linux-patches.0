@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024895;
-	b=MapS7lAM/4QmnWi112LFFfoIyLfZ4NM2omC5afj1uPL6ezmrAyOXm5IEWnH5QZisayAE
-	 48TkhNMzQaSGiE2MdVRVkRzKyud78Nmr6lgFt5NH1LKW5MlBpFT+ARD8E++FRziaYDR+g
-	 Izi0BF8fPdGb2BlgedeveslfP1HkKRZ0xOClxKi+Q4N05DAVf1rR5kJYqphUjS9iubAyG
-	 CCYvA+nYyoTOVToy1mfP0fOh+/lzg+nfAQphn8nANbULxmo7Juz/zH5llZ0AEG1AoMRlf
-	 AMmystDo2YkO1/VYXtcA5PSRM5ohOQidKqRe/0PIZqiyh1vbv8FaNtfJrsG4wgYhELA==
+	t=1795024898;
+	b=MDqko6ldkYzXhsaIakNI9xfh5hJajFKS18uuS1j1seuhYLD1ihSw8M6JEIfmqPlhWS2T
+	 THbeyLeixbr/OIAUjhrFYkajBRcy4Q53bHPk3e/4GohmXGLgcn4y8YT3WOlIDgG+60l/c
+	 8x4/3ezxRTKMDMXSz2w10l5Pixbj/i72Esdyyi9p1pfl9ZM+j5SZNRV6xCJp+VRt9mzjt
+	 /x4p5QU1Oo+VoGJw+gj7i/uvLomdcDEtWovc4h/zWK+bkNvDNBzTbGUC/nYejTZ/yPo81
+	 bfNGuMFqlajLyf5hKnAl0d2pEUcpihCd6uxyfkAyyOH5Wh7smPCNJ6vZttUzVLPmbSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024895;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024898;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dWlnhov4IRcQ0mPOAQ5/Uv5qRtNt8xy2eHttnqIGh8A=;
-	b=enVbbTziaekZPfmNSnfMO91aoyisluyOXYv6u98fnX40pz8IH8xQTJbR+92iDRoLRxr3
-	 ThO44XZRept+NnncyKiXISoknC1jyHEWZF8NXHvA8ZSuuauX9dtVAVzcwm0d/R0SQb/Sm
-	 CAvKMDJ6smAA/xuc384iSSoKzSfC4bd+W3x+RNSvQLPSrCyuaKasA8m9xZzM6n4rv9fQ2
-	 woYdYEr3aHqsMbX8nbP1LMpt0dt4Cta1pcHK7ok0XUyV9CQ5Tfvi0Uuynzpv3NBz+yjCx
-	 OMAYBNIYUYGU2jvp4YH2woB13NLhGlt1Z0gUGn6yCNORweX+szqCXlIzDGoKEhaoOAg==
+	bh=KifpRO37SU4IY2pVlcHUZwln6Y5V4LfGRjZlDxS1Z5s=;
+	b=lTfq5W2IPk0jEY9d9Uz54vHFx2Jq3YCi7kwvZCNL2G/Pdq2b9cKdQFm2JJ/pbmpkA1S6
+	 D6o18B8TImvpqfH53ITlhyc+g33atGfqQT0SNmAKm5rNCgGKHXAcw3+mhq2i7gfUBhC/G
+	 qy9rpyqCLjTGZlNBQUm21DpIjdJ1IVOB7fOcRaLAPuDc/P+KgbFQpRl0wM1jHadI4ydV1
+	 /QrfNj3OF2UnnFNtJwO7K5mNGUdBOQ8rXBs7fgslpW9Bc3qSlm/UO5UzpXh9IFyhdCbW3
+	 45CGyjA9UlROfUM5QWYbpij0bO8hne4tP8+TnqhNEm5N8IRVNK9YNGjqUgIH8E7WKvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OvB6ckM5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yEZwnf3+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF0EA606A320;
-	Wed, 18 Nov 2026 18:01:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 719A5606A31C;
+	Wed, 18 Nov 2026 18:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OvB6ckM5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0DEA1F000C4;
-	Wed, 18 Nov 2026 18:01:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yEZwnf3+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2D561F000C4;
+	Wed, 18 Nov 2026 18:01:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024895;
-	bh=dWlnhov4IRcQ0mPOAQ5/Uv5qRtNt8xy2eHttnqIGh8A=;
+	s=korg; t=1795024898;
+	bh=KifpRO37SU4IY2pVlcHUZwln6Y5V4LfGRjZlDxS1Z5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OvB6ckM5ZJaPMclQZyGnKAZwSYpl96aVy1AVlStr7kzZqz5X+W+HfXyqfVr/aqbnH
-	 gktA96bGDxnbydwFCFXzvkKrNxXm/RDmyLrvGC+H+icUerxhK/D0grgNlcdEWJFKaU
-	 0ccO/n+uf0sIzboUyO8zYh8vDKKTaVnA+7JQYyVA=
+	b=yEZwnf3+J8iY+04aaCxsLuk4r7CJRtcO25Z/7gOJp0rHrj/ORzY651wET2U4Mp1X/
+	 ddYx6b10FOV/pO0X1ydMZBalmlNTKhZZcpS0647zYZeLDeFYMKyIkJsv0rEyE55lbx
+	 o0daxLz2MzrLaoXn7bjTNOPwQp/KMsE9NyZt/iV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mostafa Saleh <smostafa@google.com>,
-	Eric Auger <eric.auger@redhat.com>,
-	Pranjal Shrivastava <praan@google.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
 	Abdifatah Suruur <suruurism@gmail.com>,
 	Alex Williamson <alex@shazbot.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0887/2151] vfio/platform: prevent read-only region mappings from becoming writable
-Date: Wed, 18 Nov 2026 15:43:42 +0100
-Message-ID: <20261118150154.623058411@linuxfoundation.org>
+Subject: [PATCH 6.18 0888/2151] vfio/fsl-mc: prevent read-only region mappings from becoming writable
+Date: Wed, 18 Nov 2026 15:43:43 +0100
+Message-ID: <20261118150154.659488262@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -73,9 +71,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Abdifatah Suruur <suruurism@gmail.com>
 
-[ Upstream commit 420bed9131dbbe37abe9d6b32af51219875811e0 ]
+[ Upstream commit 25fd8b27ee8d4f59cc2ad99cf67aef4570b82096 ]
 
-vfio_platform_mmap() rejects writable mappings of regions without the
+vfio_fsl_mc_mmap() rejects writable mappings of regions without the
 WRITE flag, but leaves VM_MAYWRITE set.  Userspace can map such a region
 read-only and then upgrade the mapping to writable with mprotect().
 
@@ -84,27 +82,26 @@ its read-only objects and as fixed in drm/vc4 (CVE-2026-68445),
 drm/panthor (CVE-2024-53071) and commit a5edadbae57e ("ptp: vmclock:
 prevent read-only mappings from becoming writable").
 
-Note this is defensive hardening: no in-tree platform driver currently
-publishes a region without the WRITE flag.  The guard costs nothing and
-keeps the mmap() interface honest if a read-only region ever appears.
+Note this is defensive hardening: the fsl-mc bus publishes all device
+regions with the WRITE flag set, so no device can currently reach the
+read-only path.  The guard costs nothing and keeps the mmap() interface
+honest if a read-only region ever appears.
 
-Fixes: fad4d5b1f042 ("vfio/platform: support MMAP of MMIO regions")
-Reviewed-by: Mostafa Saleh <smostafa@google.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Pranjal Shrivastava <praan@google.com>
+Fixes: 67247289688d4 ("vfio/fsl-mc: Allow userspace to MMAP fsl-mc device MMIO regions")
+Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
 Signed-off-by: Abdifatah Suruur <suruurism@gmail.com>
-Link: https://lore.kernel.org/r/20260929094848.7439-2-suruurism@gmail.com
+Link: https://lore.kernel.org/r/20260929094848.7439-3-suruurism@gmail.com
 Signed-off-by: Alex Williamson <alex@shazbot.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/platform/vfio_platform_common.c | 10 +++++++---
+ drivers/vfio/fsl-mc/vfio_fsl_mc.c | 10 +++++++---
  1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/vfio/platform/vfio_platform_common.c b/drivers/vfio/platform/vfio_platform_common.c
-index 3bf1043cd7957..bd7600c6b9de7 100644
---- a/drivers/vfio/platform/vfio_platform_common.c
-+++ b/drivers/vfio/platform/vfio_platform_common.c
-@@ -595,9 +595,13 @@ int vfio_platform_mmap(struct vfio_device *core_vdev, struct vm_area_struct *vma
+diff --git a/drivers/vfio/fsl-mc/vfio_fsl_mc.c b/drivers/vfio/fsl-mc/vfio_fsl_mc.c
+index 84cd0eb65c471..944d4f22c5c36 100644
+--- a/drivers/vfio/fsl-mc/vfio_fsl_mc.c
++++ b/drivers/vfio/fsl-mc/vfio_fsl_mc.c
+@@ -409,9 +409,13 @@ static int vfio_fsl_mc_mmap(struct vfio_device *core_vdev,
  			&& (vma->vm_flags & VM_READ))
  		return -EINVAL;
  
@@ -119,7 +116,7 @@ index 3bf1043cd7957..bd7600c6b9de7 100644
 +		vm_flags_clear(vma, VM_MAYWRITE);
 +	}
  
- 	vma->vm_private_data = vdev;
+ 	vma->vm_private_data = mc_dev;
  
 -- 
 2.53.0
