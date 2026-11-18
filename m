@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057343;
-	b=T03D7zzyc/L/qPTXPwe5MV0p8GRCO/FH5vJaYWAAEFZbuaEtjbRKVj7TM54/MbRYwJc8
-	 +Xj3SuFMTSBvJBvIhWy+X/L5QPEqVWp840QtL+WZeQ3mpibh+pFAVyf9EoTck87l5+c1f
-	 uaXqN7Z2PeSFUJ2eQTfTvVgDeEYejvEjIi+dkXrfddglhGp6b91KAFIRdqCHe/BfxUioc
-	 21zT9JGZVEI3whos9Ae015hntaQ5zLf7vJZ/AKnh1xbfPwuhStOAyBbHmAt71IzQh1SBW
-	 ynPDS+C4qyBzCJx4ABz1f9wnEG4MctgVINLQQJTwlu6QqikSVE0YpK7zGLksrWfJOiQ==
+	t=1795057346;
+	b=zIkB1cRa5IjET3swOIkGJsXZ0tZVH1aQnn0Pfm7fjGcGr96Sq9/NGHhwX8dcnYoJCaIU
+	 esQzO3f69L4R9qBIKl95p8/4aifRJ8f8T5zjJM1usp9xVgSJ7slwJ4TZc1KPWtjksWFtZ
+	 x0Du+YlOzt6acDcNClKChYbH+m1uNw7vMQ9he3CKwLvf7x6ltQirCqgP+ADl4KtZB7gZR
+	 4hIKTa206BoRtdflmwTMd1ii8WGDGg+Olzvh4IpD288BVICC/3m2dXChSxojs27EtBqy5
+	 x62qgeoS1XvHPQrUxmS6DjnGjgivRrh/RVnMJKTObnB9cZq+CuHuerkwy1kRKJYOqkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057343;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057346;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kfRQgBpIs++/Les/iVAuuUosErb4stZIXii0SUIj3K8=;
-	b=YSUk0TBaYxTIQahXTZUlZcK8Y82Ig1grLWSTRtcYVrcHpugWE0gH7Y4fAtkAFugIL7fp
-	 JTN5lrW5D7hHvHgHtqkIELdv5oZEvBvoroO2ThK6+3GSUq8ECwL5IH58FdqnwaHOLsFGC
-	 MIVeOC/32s/Yy7wD46IM+f5GHNgLGp8eXpziKY0u8CVH4mpR73HcDfIt4qli7WzvWUB4i
-	 +9DNjq4KamAKZU2GYhsiyXJ9C1cxArkb98BO2wvVmIB8IHALxsqlZsCaGi1RYlepXbAx9
-	 ouT98EZB0u4XpkpVlIzAKvPL4oyntCFIEJraDRfo1+5TXi2oiVfZfxIoOEXbDRr3SnA==
+	bh=/vaID3+tJb6LW1OdtcCmHW0lDdlO4mOjw49x8DXyXLg=;
+	b=ssCYkFpUFyipdGqTmIvINGZNjoVw9SsYTaoFWTboRveRv1KZcTIlNzNufqzeX9l7gLwJ
+	 9QW/Oh1wlmiOGdFLmRXTWGGKfyOqFIANCx2FVDCzuyT6lZifZBxMvAa2wrt1NMU27EbDo
+	 bJbWPgi30Lnu34if+ZGUmYdpb+xHqucse4D9XjCyAuv1zDwEH8hcWVzisyOiGdBS8VLQ7
+	 eBGy4N8V9Hvj/SiPuJnC2c5J1dwlLM/xOag60MrLX9QNFANEUcP23GCvANGqJ8DSgLcSh
+	 mOmy1qDl7Q+HXLEoIz1WejIe1OOmoeKDqIb8GRIeIA9qCGGdDmKvKZeYX3358jg4M5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ozLhNNF/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XgvycQxb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3A960A2622;
-	Thu, 19 Nov 2026 03:02:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A89E60A2622;
+	Thu, 19 Nov 2026 03:02:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ozLhNNF/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1071F000C4;
-	Thu, 19 Nov 2026 03:02:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XgvycQxb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E4F71F000C4;
+	Thu, 19 Nov 2026 03:02:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057343;
-	bh=kfRQgBpIs++/Les/iVAuuUosErb4stZIXii0SUIj3K8=;
+	s=korg; t=1795057346;
+	bh=/vaID3+tJb6LW1OdtcCmHW0lDdlO4mOjw49x8DXyXLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ozLhNNF/G0cR3Xcqh8GbIpsVvEXZZOQW45hHcbTKFt8EPm+DIrQlhSn3YpvUfwBp0
-	 nc2HRfE51qmyiiOyGKOV+q5meGW1jt4ESQGE6PuZGCMm931jljda3Zm6pZjkUQFJrk
-	 d6TrMKA3yqSGHr8Bt+/vt+DyrSh99Kw2KUpCsBwY=
+	b=XgvycQxbrPpiLf86kxIHS9bp3yqLGxKGobzep/Q1rLHqe9ozNKP/F9vztV5zGD7R9
+	 FNwitH0AbLthcgVevfDJpl8mgrVN+DzjK/dnaOvrQOoAdUVYh68fg8Vefmup0N1upG
+	 g22/lZyxFUynK7ZXMohc6GyCadTNL2L33pk6Dk9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0056/1848] media: cec: tegra: add missing MODULE_DEVICE_TABLE()
-Date: Wed, 18 Nov 2026 15:34:54 +0100
-Message-ID: <20261118145913.448815369@linuxfoundation.org>
+Subject: [PATCH 5.10 0057/1848] media: v4l2-tpg: reduce stack usage for kasan builds
+Date: Wed, 18 Nov 2026 15:34:55 +0100
+Message-ID: <20261118145913.488515883@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,39 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 8dcf23edaf4bdf22259f6a47cfddc8bb1467425c ]
+[ Upstream commit c49cdaafa443ccf861a72d3191121294742c28c7 ]
 
-The driver has an OF match table wired to .of_match_table, but does
-not export the table with MODULE_DEVICE_TABLE().
+tpg_fill_plane_buffer() is a rather complex function. While there is
+nothing wrong with it per se, I have run into corner cases with clang-22
+on s390 using KASAN that makes it run out of registers and blow the
+stack warning limit from excessive spills:
 
-Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
-information is generated for OF based module autoloading.
+drivers/media/common/v4l2-tpg/v4l2-tpg-core.c:2629:6: error: stack frame size (1560) exceeds limit (1536)
+      in 'tpg_fill_plane_buffer' [-Werror,-Wframe-larger-than]
+ 2629 | void tpg_fill_plane_buffer(struct tpg_data *tpg, v4l2_std_id std,
 
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the platform driver, and the missing module alias publication.
+Forcing the two largest callees out of line completely avoids the problem
+and prevents all the register spills, with the stack usage for each function
+going down to a few bytes for the local variables.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Arguably this is a problem caused by clang rather than the code, but
+a noinline_for_stack annotation is an easy workaround.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/cec/platform/tegra/tegra_cec.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/common/v4l2-tpg/v4l2-tpg-core.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/cec/platform/tegra/tegra_cec.c b/drivers/media/cec/platform/tegra/tegra_cec.c
-index 5e907395ca2e5..43fe54f792b65 100644
---- a/drivers/media/cec/platform/tegra/tegra_cec.c
-+++ b/drivers/media/cec/platform/tegra/tegra_cec.c
-@@ -460,6 +460,7 @@ static const struct of_device_id tegra_cec_of_match[] = {
- 	{ .compatible = "nvidia,tegra210-cec", },
- 	{},
- };
-+MODULE_DEVICE_TABLE(of, tegra_cec_of_match);
+diff --git a/drivers/media/common/v4l2-tpg/v4l2-tpg-core.c b/drivers/media/common/v4l2-tpg/v4l2-tpg-core.c
+index 533c8bb8fd886..fffbf6d6467c0 100644
+--- a/drivers/media/common/v4l2-tpg/v4l2-tpg-core.c
++++ b/drivers/media/common/v4l2-tpg/v4l2-tpg-core.c
+@@ -2340,9 +2340,11 @@ static void tpg_fill_params_extras(const struct tpg_data *tpg,
+ 			(params->is_60hz ? V4L2_FIELD_TOP : V4L2_FIELD_BOTTOM);
+ }
  
- static struct platform_driver tegra_cec_driver = {
- 	.driver = {
+-static void tpg_fill_plane_extras(const struct tpg_data *tpg,
+-				  const struct tpg_draw_params *params,
+-				  unsigned p, unsigned h, u8 *vbuf)
++/* noinline to work around clang KASAN issues */
++static noinline_for_stack void
++tpg_fill_plane_extras(const struct tpg_data *tpg,
++		      const struct tpg_draw_params *params,
++		      unsigned p, unsigned h, u8 *vbuf)
+ {
+ 	unsigned twopixsize = params->twopixsize;
+ 	unsigned img_width = params->img_width;
+@@ -2439,9 +2441,9 @@ static void tpg_fill_plane_extras(const struct tpg_data *tpg,
+ 	}
+ }
+ 
+-static void tpg_fill_plane_pattern(const struct tpg_data *tpg,
+-				   const struct tpg_draw_params *params,
+-				   unsigned p, unsigned h, u8 *vbuf)
++static noinline_for_stack void
++tpg_fill_plane_pattern(const struct tpg_data *tpg, const struct tpg_draw_params *params,
++		       unsigned p, unsigned h, u8 *vbuf)
+ {
+ 	unsigned twopixsize = params->twopixsize;
+ 	unsigned img_width = params->img_width;
 -- 
 2.53.0
 
