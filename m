@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056616;
-	b=goNoa15MwaAnwrZH7Czf3K/9/ozKiiDPMuCfV6ZkIIjXfpfapLXAQIf5060WjLfQYOKH
-	 +vHF6V5asHKOCnvE6Y+qs7q2vt3MWSnhrlhQxhaLMdPkU8uRBSUro7OlUoaITCpi97AaB
-	 LgMlu7xiT/Fr6qZ313Jewn4EIVkFp2LiiR2vIHcIatoZihEMO6fecECc+6K36AEOj/Q4f
-	 dgAhkkJr2XmUu4Z5UDWGZrp4TcTnT21CDZAFdy24k4hiBkouXnhTmVhn9iAOWEQCgq9mX
-	 9w5m8jtc47xelZ6yQbtqwCV2u0YL1WLLgGS+J1YZ1n8mHjbVYDKh6mqrFnvDWq7cCfg==
+	t=1795056619;
+	b=ygfnD3Vm4mCBfpZmXGNzfzxEkgn/GSftdknSx1iRJwt3dQX0rKZjO6m+J+OFzZSyqA/H
+	 VK24Dm9a7ZpMpUF3AWo1ErkMi3QA5+Jkuu4IcRAugH0a3zheSk2RImZURhqMWYmMC60BP
+	 9ikcPl0zEckik+GSeFp0r9km2Mrb2ThO03e2+m5eHNaFfUSvC0AJiGKEozXvNuUgIvm3P
+	 ue20Eic8Khzoer5aZmoEpJi2Xh8n9hl2wUXTCMHZ0qhKxF4Tb4fIzQUmUqhlNJaraFhP1
+	 bY57BwX5s3ohDrEkxETW4PxuIjLyPPzl79cttDpxzWQdQ7f5K59b7qJe1IKo52o89gw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056616;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056619;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=K2OmNi3sDZVhWkc3rL0kKvuGvF4MbCdFOwJxZIpmwb0=;
-	b=Wb9XXDQLDtF+DpQHo2OrkNdkwO23peCjZgU5N6JJWlL1/YUjcpxHedL30jJti3K9QbVl
-	 d0F3dKSvvISsrKMLZwnBEdrL1CgaOYXoQrLGJcNSBuop3A6ryKTJOhNLa9BO/iTovjmbI
-	 TsSmchEbaqWwK+CPfSMSSoLdKwqnKfPmr8H2DWDmnCTeX7sRcE34CR+2+uAsVzvoBLxBI
-	 PANaziqXOGczlH5ywkDFQHZR46l6ai0KjrgVA7VRQJgrNZAFTHx3v+WU892jm70ZIgypX
-	 oYzksehQU6XWaGhBt9wffW7Y8i/5vhDlOJFcQ5589VNfNzoz6NJOmkj9nncrPFk3cNQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=ZXhJ9UdKJWI9Km44YUrBWzEkqZ9fIm6NU3V8+YRFwAc=;
+	b=P0c6wjtrorV2/2vwHupfthGP3/EpPe5PoAYzrEsrDmEAaNYjddpgmSAv/0uDatsfuCCb
+	 cdlVK/1ucx8jZ1m2Q6m7T6Dja4/Sp6VRbhdyE9PsoKV/+4xudnciqdGYOnOLAco5jaU/3
+	 hNnt0O19QJtAbhRJA+f7Ne6ehIQW0xHHQm5Y9LZhMQyOBIE5OxtxC83ahvmt/HuwV8gQV
+	 KROZjh5SPom40mgFJY3rz/swJ3wkyhmGokPP8EfcwQTFEfGfj4wsuU/Mbid2O0yG5/ole
+	 nwhhl03OQxxM5EIoZlOESCF+36VxC25Vx/MNvCxEINarFkKlPPZ/K8xp6CcJI81wnXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e7AXsuQh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bBztsBPT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE46606A31C;
-	Thu, 19 Nov 2026 02:50:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AC96606A32A;
+	Thu, 19 Nov 2026 02:50:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e7AXsuQh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 403E31F000C4;
-	Thu, 19 Nov 2026 02:50:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bBztsBPT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1BAD1F000C4;
+	Thu, 19 Nov 2026 02:50:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056616;
-	bh=K2OmNi3sDZVhWkc3rL0kKvuGvF4MbCdFOwJxZIpmwb0=;
+	s=korg; t=1795056619;
+	bh=ZXhJ9UdKJWI9Km44YUrBWzEkqZ9fIm6NU3V8+YRFwAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e7AXsuQhzljiRL286cIOEbJRe1NOV8jY91c5ykddaskIA6I2jxU7ayXljSRBtSGFd
-	 TSVUs9C2r9dR2dXyt15a0z19z71IU5t/Ehmcuf14cbdDn0v3t8Eh+VR3RNMoCUYYGl
-	 wadqXsmrd1onpdv34iQHC0dWZA/CZ2gqgRIbTt4M=
+	b=bBztsBPTTwf4MzE7VRdvIAc9quKppYphkT4F/P5rr6Fpqth3ipgZqJ1yCfr7c5d2G
+	 /vZk771xmBTZjEvWIM+EpRwHic3cBR3FCn/14aUmMLNW9ZdBAu05b13CsuhHvfINGJ
+	 EAxZ1C93QB9pC+8fbUqotPMADzYSZMbO9P7T4TP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Dinh Nguyen <dinguyen@kernel.org>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2052/2214] nios2: ksyms: Declare __mulsi3 export
-Date: Wed, 18 Nov 2026 16:02:08 +0100
-Message-ID: <20261118150132.784872029@linuxfoundation.org>
+Subject: [PATCH 5.15 2035/2214] RDMA/core: Preserve the selected source GID on failed AH modification
+Date: Wed, 18 Nov 2026 16:01:51 +0100
+Message-ID: <20261118150132.155116624@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -64,51 +61,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 2180d11e06fb56fd13643ae59964f144896870be ]
+[ Upstream commit d01ee4c84193196b6e4be4caf1ff8fdcc441ed96 ]
 
-GCC may emit libcalls to __mulsi3(). As modpost is not aware that this
-function is provided through the linked in libgcc, it fails:
+When an address-handle modification fails, the core replaces its source-GID
+reference. The old address then loses the reference which keeps its source
+entry alive.
 
-ERROR: modpost: kernel/locking/test-ww_mutex.ko: symbol '__mulsi3' undefined!
-ERROR: modpost: kernel/time/test_udelay.ko: symbol '__mulsi3' undefined!
-ERROR: modpost: kernel/resource_kunit.ko: symbol '__mulsi3' undefined!
-ERROR: modpost: fs/fuse/virtiofs.ko: symbol '__mulsi3' undefined!
-etc.
-
-Make sure modpost can see the symbol from libgcc.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202610171933.J4bFOfL8-lkp@intel.com/
-Fixes: 2fc8483fdcde ("nios2: Build infrastructure")
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Acked-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
+Fixes: 1a1f460ff151 ("RDMA: Hold the sgid_attr inside the struct ib_ah/qp")
+Link: https://patch.msgid.link/20261015-ib-core-fixes-v1-1-60f6da3ddec3@nvidia.com
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/nios2/kernel/nios2_ksyms.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/core/verbs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/nios2/kernel/nios2_ksyms.c b/arch/nios2/kernel/nios2_ksyms.c
-index 54f7b23df1bf5..33aa76f2eca10 100644
---- a/arch/nios2/kernel/nios2_ksyms.c
-+++ b/arch/nios2/kernel/nios2_ksyms.c
-@@ -39,6 +39,7 @@ DECLARE_EXPORT(__udivsi3);
- DECLARE_EXPORT(__umoddi3);
- DECLARE_EXPORT(__umodsi3);
- DECLARE_EXPORT(__muldi3);
-+DECLARE_EXPORT(__mulsi3);
- DECLARE_EXPORT(__ucmpdi2);
- DECLARE_EXPORT(__lshrdi3);
- DECLARE_EXPORT(__ashldi3);
+diff --git a/drivers/infiniband/core/verbs.c b/drivers/infiniband/core/verbs.c
+index e18f1f211af05..c75055a616606 100644
+--- a/drivers/infiniband/core/verbs.c
++++ b/drivers/infiniband/core/verbs.c
+@@ -956,7 +956,8 @@ int rdma_modify_ah(struct ib_ah *ah, struct rdma_ah_attr *ah_attr)
+ 		ah->device->ops.modify_ah(ah, ah_attr) :
+ 		-EOPNOTSUPP;
+ 
+-	ah->sgid_attr = rdma_update_sgid_attr(ah_attr, ah->sgid_attr);
++	if (!ret)
++		ah->sgid_attr = rdma_update_sgid_attr(ah_attr, ah->sgid_attr);
+ 	rdma_unfill_sgid_attr(ah_attr, old_sgid_attr);
+ 	return ret;
+ }
 -- 
 2.53.0
 
