@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041233;
-	b=4OIsxj8PbFWXA+3NXde3mNi/LcRvZ62izY0porq5WuF9qSbuagYMXWY9II5ifQBC783q
-	 u2nfh/MoIXn4JLGjdIjAL2cPZNLnqlhVL2QuvWef8S3tglnkOueCHSNXzjQBAL4Cu3mf5
-	 pAyH60hIgAyUzQ4PWmKrdZODKf+kf56kRJC0AYJkekYEapV27SVglSPKm+fQylSenTb9e
-	 1d57oWtfe3a4W1SwhpHxIY7fW8E391Xctrl3C47z5WqnG5T/7PMin3fC9m4/O6pwo7Y4Z
-	 veF1F48uDIUyIhudER3IMg11geCxT4XpVXqm8cfrK7Vv9qsOMZ30MWqeJjo+ivYwMIw==
+	t=1795041236;
+	b=igq34nYehO2VMnbseC3cxl1TrKrpjqJ9y9I1gkexdX6wwC8V/8YuxhjEnkEiyYCKkxu1
+	 RgqLzdlOgSJs9zuoEmxH5meNIvpUNPV/se57A/bn7HB9jgDS013MCrfSZuQi3MfZRbM4Z
+	 J9SapXZauglVzxH/4ICemhgfnIkQBJQKgyLsBifzlqyLjLkoAL0EywLJsg0MPpReH+KU+
+	 oN8xKiCKMiO08pFq26SiMygEccwp0bub1diRV+NVLbe7kJjnAACv4bbbrAt7IkQn8/fza
+	 GC6Q3NEhm9fXrGt2nbmOeJ+IHffj0VzykyhftGWyljolbKa4y88o2nC9H4MxHxbgM6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041233;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041236;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=KMvEJM2K7b2OpO6K0zKUqu1Y48vOCxIeMNalOssNAO8=;
-	b=bAdDr991120CJ9eIiBJXG2KuKOfLUi7NNSN1SvmCxc2+fGErBA+xNYJoXHgEZfy2hwUV
-	 pnrqqO3MeF8T+gPU1WVbP+IQG39rsZZogaQ9LSl1Yf/jjoy8x7ex/1IaMRjK3N8JHUvxW
-	 YnhNq9ONhm7vyqEhOvrRHoojsqtt/wBcaXwvYOtzIj+C+ynukek4EUDWsgyzcQjRDu4Wc
-	 7Z4viEY8MPia/eMgk2nOJMNShIeVgnzlfF0FlrOnK9F89HomWU6TYE2ci2+ZkZO0h+Vwe
-	 h5u5uL9aybGzB5LvIS6Z2pQoz1+JxT5itIvAwAdedYrDOzD2IQOQ857Ad2urhhqJGrA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=kaTbMeq65PWL9DhFTfSkzkloG/yEDPSO5Hb1VRmfQ9U=;
+	b=X54PH5glGei/BoZ8fu7SEZsO7/krP8DBlYyUaSurjF4mmW74b3bPNy7oR+mFt0EbBle0
+	 LiJxImxrBlFDyt6hYvmDP3h7bzW/cyvTXlXumrhnMxp9wgG+nChFXgk4ruE7xEBscIR96
+	 0je+bt4NxLr0Nqky1xSpDWXh46XHvjIykdYb+yo6jY+uRHpMxDuEFGqiqCcADubK4myO7
+	 LDK8DNf54/mOTmxTdnbIBtgJD0oM5p+69YyK4DYP+kY2+p518lpreNyrjuStUICgPa0E1
+	 Ux21ABRg3tvCfH08ESzC1ueNgPSytw6e0NdDJXwVXCRH9l3Upm0L1iiFRSOZNd6ZhbQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VfjlGEfk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fjskMWKT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE038606A32A;
-	Wed, 18 Nov 2026 22:33:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F787606A31C;
+	Wed, 18 Nov 2026 22:33:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VfjlGEfk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AE3B1F000C4;
-	Wed, 18 Nov 2026 22:33:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fjskMWKT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E492A1F000C5;
+	Wed, 18 Nov 2026 22:33:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041233;
-	bh=KMvEJM2K7b2OpO6K0zKUqu1Y48vOCxIeMNalOssNAO8=;
+	s=korg; t=1795041236;
+	bh=kaTbMeq65PWL9DhFTfSkzkloG/yEDPSO5Hb1VRmfQ9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VfjlGEfkqGP5fqjnZhaHkBgV8SIZ80nlUGxkE8Y5B9Y4/0oQj/VQDpaqB8R9/SN0b
-	 /B4It6Y2bcWOxTWU6U+L1PPJ0QYyb+j6JzRxOPlQxI02/k6xvzQDTCiPQcRjfyiVIr
-	 tD5C5/T5EeGG9H3Ow0EX2JEnYbU7VL0p190lbdfI=
+	b=fjskMWKTAUCXqGZbsqy+Cnz2e2smZNu7Q1zXXR1gHddpt213oRkT3Ylozc8Qwqe5B
+	 uDeUG0uzqDA0ik4rzigk1q4ct4ath50qYYwaIS5KJ3+oUZ+R/rKBhJSjLisXyYlufb
+	 W6LGM8mj2O11sNLuO+WaLERa/TtD6QfNZdrmDRRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Steven Price <steven.price@arm.com>,
+	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2740/3318] dm-snapshot: make the chunk list sorted by the chunk number
-Date: Wed, 18 Nov 2026 15:56:02 +0100
-Message-ID: <20261118150442.986667583@linuxfoundation.org>
+Subject: [PATCH 6.6 2741/3318] drm/panfrost: Explicitly enable MMU interrupts at device init
+Date: Wed, 18 Nov 2026 15:56:03 +0100
+Message-ID: <20261118150443.012862141@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -61,79 +63,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Adrián Larumbe <adrian.larumbe@collabora.com>
 
-[ Upstream commit bbd6f974d0386036e560af332b6b8cdd17010a72 ]
+[ Upstream commit 8a597d099b8b2f25df655cbe8e30765013784fed ]
 
-Commit 8581b19eb2c5 ("dm-snapshot: fix 'scheduling while atomic' on
-real-time kernels") replaced hlist_bl_for_each_entry with
-hlist_for_each_entry, but the two iteration macros differ after the loop
-ends: hlist_bl_for_each_entry leaves "e" pointing at the last element,
-while hlist_for_each_entry() sets it to NULL.
+Because the device must be in a position to accept jobs between the time
+drm_dev_register() is called and autosuspend first kicks in, there's a very
+narrow window inbetween during which jobs targeting the tiler buffer
+object would time out, since the device's PM status is 'Active', but no MMU
+interrupts were enabled at device initialisation time.
 
-The result is that the list is no longer sorted by chunk number as it was
-intended to be. This bug doesn't cause data corruption because
-dm_lookup_exception walks the full list.
-
-Restore the invariant by tracking the list tail in the "prev" variable
-and appending after it with hlist_add_behind.
-
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Fixes: 8581b19eb2c5 ("dm-snapshot: fix 'scheduling while atomic' on real-time kernels")
-Assisted-by: Claude:claude-opus-5
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Fixes: 73e467f60acd ("drm/panfrost: Consolidate reset handling")
+Reviewed-by: Steven Price <steven.price@arm.com>
+Link: https://patch.msgid.link/20261012-claude-fixes-v15-7-bc0a6c498553@collabora.com
+Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-snap.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/panfrost/panfrost_mmu.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/dm-snap.c b/drivers/md/dm-snap.c
-index ebe5fa1566c8a..a34bddbf2721c 100644
---- a/drivers/md/dm-snap.c
-+++ b/drivers/md/dm-snap.c
-@@ -770,7 +770,7 @@ static void dm_insert_exception(struct dm_exception_table *eh,
- 				struct dm_exception *new_e)
- {
- 	struct hlist_head *l;
--	struct dm_exception *e = NULL;
-+	struct dm_exception *e = NULL, *prev = NULL;
+diff --git a/drivers/gpu/drm/panfrost/panfrost_mmu.c b/drivers/gpu/drm/panfrost/panfrost_mmu.c
+index 83fa384f6a24c..ce1cd73580f6b 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_mmu.c
++++ b/drivers/gpu/drm/panfrost/panfrost_mmu.c
+@@ -227,6 +227,12 @@ void panfrost_mmu_as_put(struct panfrost_device *pfdev, struct panfrost_mmu *mmu
+ 	WARN_ON(atomic_read(&mmu->as_count) < 0);
+ }
  
- 	l = &eh->table[exception_hash(eh, new_e->old_chunk)].head;
- 
-@@ -802,21 +802,23 @@ static void dm_insert_exception(struct dm_exception_table *eh,
- 
- 		if (new_e->old_chunk < e->old_chunk)
- 			break;
++static void panfrost_mmu_enable_interrupts(struct panfrost_device *pfdev)
++{
++	mmu_write(pfdev, MMU_INT_CLEAR, ~0);
++	mmu_write(pfdev, MMU_INT_MASK, ~0);
++}
 +
-+		prev = e;
+ void panfrost_mmu_reset(struct panfrost_device *pfdev)
+ {
+ 	struct panfrost_mmu *mmu, *mmu_tmp;
+@@ -244,8 +250,7 @@ void panfrost_mmu_reset(struct panfrost_device *pfdev)
+ 
+ 	spin_unlock(&pfdev->as_lock);
+ 
+-	mmu_write(pfdev, MMU_INT_CLEAR, ~0);
+-	mmu_write(pfdev, MMU_INT_MASK, ~0);
++	panfrost_mmu_enable_interrupts(pfdev);
+ }
+ 
+ static size_t get_pgsize(u64 addr, size_t size, size_t *count)
+@@ -774,6 +779,8 @@ int panfrost_mmu_init(struct panfrost_device *pfdev)
+ 		return err;
  	}
  
- out:
--	if (!e) {
-+	if (e && new_e->old_chunk < e->old_chunk) {
-+		/* Add before an existing exception */
-+		hlist_add_before(&new_e->hash_list, &e->hash_list);
-+	} else if (prev) {
-+		/* Add to l's tail: prev is the last exception in this slot */
-+		hlist_add_behind(&new_e->hash_list, &prev->hash_list);
-+	} else {
- 		/*
- 		 * Either the table doesn't support consecutive chunks or slot
- 		 * l is empty.
- 		 */
- 		hlist_add_head(&new_e->hash_list, l);
--	} else if (new_e->old_chunk < e->old_chunk) {
--		/* Add before an existing exception */
--		hlist_add_before(&new_e->hash_list, &e->hash_list);
--	} else {
--		/* Add to l's tail: e is the last exception in this slot */
--		hlist_add_behind(&new_e->hash_list, &e->hash_list);
- 	}
++	panfrost_mmu_enable_interrupts(pfdev);
++
+ 	return 0;
  }
  
 -- 
