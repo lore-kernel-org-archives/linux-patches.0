@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026582;
-	b=2gkEF5tc0vVpgtpjHCy0nBLIaPGMoua4QzLZG1Qk88DbwJSD9k5jZlxkS1y7w+whDRxV
-	 EZFho5vg69E28zwB31m2ip2Q0MyP6e1CTBVDEikc3txZhRPuqEBsg2lUN3hessEIaMRyY
-	 vCEPuQz7s4D//+CGMMFv9tg/RZjRA3oIb2h4ENw6D+2XS3bgkgdHGsvBFdQACbUaFIICH
-	 KQChEZMp+jM3rIBpFHWaziGrbC8JbdYkWkKU4I0XAcoarC1wZa2FjoIQ55UsebX6GhNaF
-	 KykFWKj3YGeTqp/gclJVNzmXPHXPy1ovFUWFRwSt0FZ4Q0m5WYV273cX9mK3ULadB/w==
+	t=1795026586;
+	b=VMg8/X0adUEEEhzfARekLhDnlBRlXhDsZVL5BuUfsEAL8G8NCe37LXONfmBlGW4T+YkW
+	 NuG4ieJ5CM8NwOJm8hcTB6GqADdUL0gYP1qEVKuEOzUGuyKUHGsLcJJiScJt6jIuQ2Pvn
+	 2633cogLTpNMLzBO84lPGn/i/ADkcofBxv4BgsAChZyrJVnwMWcuhxMY0x6zIBq9YZZdC
+	 VdFNidRLYKjYXrTnYgTlbzZuFNo1lxsw60CTP/mHFtCeNJTAofqPmcUmuUdlp/HP5qbtT
+	 0UG3XDnseL7fF25aUvAP4NZqarD7PHqpOpz4TXnl0GzN6Fn+r5A6y9ARBiBkNEsoliA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026582;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026586;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=a7QAN9LCG2qZ1mx+AGqwozRz40C17DHwBaZVE+hdvqE=;
-	b=a8l3fEz19rgVz1gJFH0fzdHAh1UXHxVHdpI4bYKadYK7/i3XLXbjlm/5UIY3dmHRux36
-	 7vClSelRKvVNhQeMnbAWkg0okFb1Nj7nojxzrWB/1qZLK+EtCFXjMhm4wgYFmsZnXkn5K
-	 XrvRzIQcMoqDsvXOe9ypkNfEnbetbF47lOet26xYgFE85SOU/fmelJl0j60pEq1N0hSNJ
-	 9aiVGmPJC+EW+FvQ+e+GE8yACssDgNOn+izp9BdDLw8Hdo4IZttBLJB98rln62a0RSazc
-	 dbNDX4VN2UEvr3R0/GwSB3I6Zni05w1aAbIJujNIlksf6u4QZgfv0IkSf7FKfYHu6Yg==
+	bh=8h+wv3FqBs6jRGvCkHrCBAcdRmTyr9tcX5fI8cmqcT0=;
+	b=f3aumCj+CinNQ8R8XQf4TzLkkJpl3EMcu6aNYwAUzs6kKAdWUqpxQ22v8pIJxQSlhyQY
+	 BzBo7ZB+HGo2kW1XamiseJKtfpJcxEbWFwezPwZx3hAigWm1RW0y0esqYRrRj3pLZBQuL
+	 0aYVbof89YGteuEd4bEga40x19bo/7WgJYwkvqr6k3Ge8NoSFA25ylXgly5lOl9HojUVz
+	 3JnJup3gPTWRMzJ3HHsc11AO08qR4rd0Ajj1v9q8XRjFWmYGYdbnQiPVGMH8cMlyR6vZI
+	 q1HnOBfsc10deFUzZ0hpO0DX5CY4gSrI5LMTP06r5EX4uvkJfCgLYVywa0EiBGY2BEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="P0W0t6/i";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WYQx5lys;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB19F606A31C;
-	Wed, 18 Nov 2026 18:29:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03873606A320;
+	Wed, 18 Nov 2026 18:29:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P0W0t6/i
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25E4F1F000C4;
-	Wed, 18 Nov 2026 18:29:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WYQx5lys
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 151271F000C4;
+	Wed, 18 Nov 2026 18:29:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026582;
-	bh=a7QAN9LCG2qZ1mx+AGqwozRz40C17DHwBaZVE+hdvqE=;
+	s=korg; t=1795026585;
+	bh=8h+wv3FqBs6jRGvCkHrCBAcdRmTyr9tcX5fI8cmqcT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P0W0t6/iBKQVeDgiv+H0R5yQ575GIjWhz7/N4SxDCO2M2Kvh79emrA+Z33zVkMQam
-	 U+cm2iU+9TtmuiMM0QjLzgAOkEf/q6upkS6tZdOm1AuZJNvWP2/Nn4BLGo4gy/+ZQd
-	 CZPer79yiZ20gHyneP+GmJQYLg7YuPh54VGPam/k=
+	b=WYQx5lyscv5i2IJFwKWxBJZCglK6cgkv06JmhvdVHK23oAxhmOlSaZb8M8aTImgCK
+	 vK3LAaU5cqJTPU+YnlTXkCqlqTeVK89nLQt0AEXlL7xgcC3LmFfOp8uBGu2/mWL35E
+	 JVISve1Yci4D1ID4oAjz/9CWgZACIlO0usXIfsyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	Pengpeng Hou <hppiscas@163.com>,
 	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1487/2151] thermal: ti-soc-thermal: Fix the return value in ti_bandgap_get_sensor_data() kernel-doc
-Date: Wed, 18 Nov 2026 15:53:42 +0100
-Message-ID: <20261118150216.048814401@linuxfoundation.org>
+Subject: [PATCH 6.18 1488/2151] thermal/drivers/rzg3e: Propagate reset assertion failure from suspend
+Date: Wed, 18 Nov 2026 15:53:43 +0100
+Message-ID: <20261118150216.083845522@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,45 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Pengpeng Hou <hppiscas@163.com>
 
-[ Upstream commit 82bb005cd9cf5a9df4cfe4a52db90346ac5fd17a ]
+[ Upstream commit 2dc1f296b5754dd2441fc8b6613a362a47f6b98f ]
 
-ti_bandgap_get_sensor_data() returns an ERR_PTR() if the bandgap
-instance or sensor ID is invalid. Otherwise it returns the stored sensor
-data, which can be NULL if no data has been set or the stored value has
-been cleared.
+rzg3e_thermal_suspend() powers off an active sensor and then ignores
+failure to assert its reset. System sleep can therefore continue without
+the clean reset state expected by resume.
 
-This mismatch was already present in omap_bandgap_get_sensor_data() when
-the driver was introduced in staging.
+Return the reset error and, when the sensor had been active, try to
+restore power before failing suspend. This is best-effort recovery:
+reset assertion failure may leave partial hardware state, so restoring
+power is not guaranteed to succeed. Preserve the original reset error.
 
-Document the validation errors while retaining NULL as a possible stored
-value.
+The issue was found by our static-analysis tool and manually reviewed.
 
-Fixes: 8feaf0ce1a04 ("staging: OMAP4+: thermal: introduce bandgap temperature sensor")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Fixes: dc67521c20b7 ("thermal/drivers/renesas/rzg3e: Fix add thermal driver for the Renesas RZ/G3E SoC")
+Assisted-by: gpt 5
+Signed-off-by: Pengpeng Hou <hppiscas@163.com>
 Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Link: https://patch.msgid.link/20260912062252.42762-1-kmehltretter@gmail.com
+Reviewed-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://patch.msgid.link/20261014031814.7230-1-hppiscas@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/ti-soc-thermal/ti-bandgap.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/thermal/renesas/rzg3e_thermal.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/thermal/ti-soc-thermal/ti-bandgap.c b/drivers/thermal/ti-soc-thermal/ti-bandgap.c
-index 507fe67eaffae..815ca0786c545 100644
---- a/drivers/thermal/ti-soc-thermal/ti-bandgap.c
-+++ b/drivers/thermal/ti-soc-thermal/ti-bandgap.c
-@@ -576,7 +576,8 @@ int ti_bandgap_set_sensor_data(struct ti_bandgap *bgp, int id, void *data)
-  * @bgp: pointer to bandgap instance
-  * @id: sensor id
-  *
-- * Return: data stored by set function with sensor id on success or NULL
-+ * Return: the stored sensor data, which may be %NULL, or an ERR_PTR()
-+ * if @bgp or @id is invalid.
-  */
- void *ti_bandgap_get_sensor_data(struct ti_bandgap *bgp, int id)
+diff --git a/drivers/thermal/renesas/rzg3e_thermal.c b/drivers/thermal/renesas/rzg3e_thermal.c
+index 94ac1935c64d4..057303a244c53 100644
+--- a/drivers/thermal/renesas/rzg3e_thermal.c
++++ b/drivers/thermal/renesas/rzg3e_thermal.c
+@@ -501,15 +501,19 @@ static int rzg3e_thermal_runtime_resume(struct device *dev)
+ static int rzg3e_thermal_suspend(struct device *dev)
  {
+ 	struct rzg3e_thermal_priv *priv = dev_get_drvdata(dev);
++	bool active = pm_runtime_active(dev);
++	int ret;
+ 
+ 	/* If device is active, power it off */
+-	if (pm_runtime_active(dev))
++	if (active)
+ 		rzg3e_thermal_power_off(priv);
+ 
+ 	/* Assert reset to ensure clean state after resume */
+-	reset_control_assert(priv->rstc);
++	ret = reset_control_assert(priv->rstc);
++	if (ret && active)
++		rzg3e_thermal_power_on(priv);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int rzg3e_thermal_resume(struct device *dev)
 -- 
 2.53.0
 
