@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025144;
-	b=xQMVLaEOSdLHLQbMS6KmP2gYd/x5necqtGVYi9e/sxGhf7eyG6RT+tOhRdhEprAJr3uz
-	 ZeAVp2dktVDtoeQCBEGb6Dl6C9WieBeCSNRccKhoybIkOjoJy/V6FwhANnFoLpHTbNkQh
-	 EEmHwxhJiUBd8tbYNcEOeIp+QOWcU109DlPcj72xSLMCanT/N74OObRkutGZ4ZZyqge4N
-	 fX/vub0p5ImLQwPLlDgagKhsLqg2gBFSf+aOzFtM++ZVGRNxnNv6FB/SxCbBYgvHLciFj
-	 VmzlqICfodZRpI59qFssGcSuan6cRVSVZH1KmaZQTSrPHrYjdvy9gTCrY0Baxhp7bzg==
+	t=1795025147;
+	b=XYjHNVQL9E//ozt2aN492jQ8g5L4LmAEmpPKAmTbhEe51J/1xXzFQDGeOo/5wrvbHd6C
+	 jIiqhpbyRskVcHSMaRTUByErouuz3qGWpPBRATSH61WFs8hALfuKGg+fjA5il1bTe1m0D
+	 ULj+S45a5/wpQyLlSqHfqLe+sqWvkSHz9YzNMYqK2S9Ik43hEav4oVtiWFHbCbfKYjC3s
+	 BTK2x/tdIn/sWUw6bUHG3AsWdvsaB65jmpY+gPgMIsygUPgRmcnyofHmRFwbVufMo137s
+	 JyGGye64lp/fn4oK40qMIKftj5krAaN8P5rPtTWas4b3ziQy/CZpEXzoxJfd63wIlVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025144;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025147;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1diUHlBKhqC3cPUPjdlWcYgZQn2cM6rCDdteNjrS2Po=;
-	b=AVvVDscHC9QtSvj1S+V83Hnoh0sbEXxL/3Nqp2Yr+CAgo9ciPC/nK7Z3yQx/C4tO3NV6
-	 XaxEMwiuthjr6pxf5V23JPNUvLWZucZoWcBKHGrAFDrPAiiCyMGJVBJEYz+robhs6rBh7
-	 vrbWVtMJVhqgb3sZDGDu4OfzADizph5kILC2v8lEFrdJvRn7lp64uKOHlL9DjX6v3Brwr
-	 CvnSrzoX438DdQn35+BF0JUZzmHO8FH+6gGCUEOAVHbNu7E/6F7Q4CMC6Mx27NicRGj4E
-	 5G+0IeNFG+aFJ8YRlTyaFGhDrv2l80IQfRkR3hAMnH3sNfkaod57h4cz19+1oNgpQFg==
+	bh=IV4L8m/fjW6is5LyZjmaGXIUH8HCOOhKxwh3B0vZJx8=;
+	b=MMKPF8TBJHMHkLUXOYMJEwH39woWiG4jDP8YL1f99wA3o7S+lX7XZHx5rWYyoETeJ75T
+	 9Z8i1XzsGArO6FNf2KYp5b5BXodY2XY0XrQPdMsSXW4VmwK3xnvQ2U5WWFzZpsFWaTaRJ
+	 0C890KhnRRWkMlCj+E9/BXPTQttDCSCHdY6JWoHPzX7ttzcXEDR53r+DW2kWORFjTuLFw
+	 RGwQFJNerwMmaLCLnHdvyFZqTc0s2U34I/tgQ901FYWCJWb59Jgsl5U+Y0Rw+vS8vxtXD
+	 BokWk1CvcoyoxrEPtXbGxGh3vkfRwZ5ah0x3oX/U+UqEgRijt0F0hMnAAJJwOHKUrIA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wh18mVwH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JkZoRdgu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8A9606A31C;
-	Wed, 18 Nov 2026 18:05:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126CD606A325;
+	Wed, 18 Nov 2026 18:05:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wh18mVwH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D6CB1F000CB;
-	Wed, 18 Nov 2026 18:05:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JkZoRdgu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C3FC1F000CB;
+	Wed, 18 Nov 2026 18:05:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025143;
-	bh=1diUHlBKhqC3cPUPjdlWcYgZQn2cM6rCDdteNjrS2Po=;
+	s=korg; t=1795025146;
+	bh=IV4L8m/fjW6is5LyZjmaGXIUH8HCOOhKxwh3B0vZJx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wh18mVwHOu1647HOy/R64Jxrh/m6pHBD+WuXrKKHaLmcBhHWFF6Or12wq27b6gwXK
-	 QyFUHQRxg4sA1aDhZPit6/pwaWdzZ+ckZzab5VMdfsscD6fZjFen0agAxJkk/IvBns
-	 /1mxgZMaIJaDoa0pKwjxXlupIZz2P7O1AIksPN+g=
+	b=JkZoRdguzVQaT9fxGy5TCVvHLRjvTs/GfDmP0+dL1XKWFy7DA9zCMfaOoeSNhNYXR
+	 R9RDRCKFvLRXug0AHnkbI2NO8xxKpUcAwyVadOjVLgmiuB8cPu+X+rfAGFCK/CzLVs
+	 YTB2Sl/R87uiOd0U7kFI3kEk0CNQWWzfnfbzVGgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yichong Chen <chenyichong@uniontech.com>,
+	Shuming Fan <shumingf@realtek.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0934/2151] debugfs: make debugfs_create_str() read-only
-Date: Wed, 18 Nov 2026 15:44:29 +0100
-Message-ID: <20261118150156.515191785@linuxfoundation.org>
+Subject: [PATCH 6.18 0935/2151] ASoC: rt712: avoid duplicate reset in io_init
+Date: Wed, 18 Nov 2026 15:44:30 +0100
+Message-ID: <20261118150156.549357718@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -67,142 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yichong Chen <chenyichong@uniontech.com>
+From: Shuming Fan <shumingf@realtek.com>
 
-[ Upstream commit 5ec78be9552035e1e71de218f968c03c44181bf0 ]
+[ Upstream commit 923ff8155ef6e83b73b852300d50f2053b969552 ]
 
-debugfs_create_str() supports replacing the backing string from userspace.
-Concurrent writers can race and free the same old string twice.
+The codec should be reset only once during io_init, regardless of
+whether the system performs a warm or cold reboot.
 
-All writable in-tree users have been converted to local file operations.
-Remove the generic write support from debugfs_create_str(), and refuse to
-create a file when the caller passes write permission bits.
-
-This makes unsupported writable use visible instead of silently creating a
-file with different permissions.
-
-Fixes: 86b5488121db ("debugfs: Add write support to debugfs_create_str()")
-Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
-Link: https://patch.msgid.link/20260807100053.1089834-4-chenyichong@uniontech.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4c9854ad3cdc ("ASoC: rt712-sdca: reset codec at io_init to fix silent headphone")
+Signed-off-by: Shuming Fan <shumingf@realtek.com>
+Link: https://patch.msgid.link/20261001090219.797880-1-shumingf@realtek.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/debugfs/file.c | 81 ++++++-----------------------------------------
- 1 file changed, 10 insertions(+), 71 deletions(-)
+ sound/soc/codecs/rt712-sdca.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/debugfs/file.c b/fs/debugfs/file.c
-index 880a8a9deacfe..4c2214621a077 100644
---- a/fs/debugfs/file.c
-+++ b/fs/debugfs/file.c
-@@ -1048,98 +1048,37 @@ ssize_t debugfs_read_file_str(struct file *file, char __user *user_buf,
- 	return ret;
- }
+diff --git a/sound/soc/codecs/rt712-sdca.c b/sound/soc/codecs/rt712-sdca.c
+index a799b8aab73aa..37845a454a000 100644
+--- a/sound/soc/codecs/rt712-sdca.c
++++ b/sound/soc/codecs/rt712-sdca.c
+@@ -1886,7 +1886,8 @@ int rt712_sdca_io_init(struct device *dev, struct sdw_slave *slave)
  
--static ssize_t debugfs_write_file_str(struct file *file, const char __user *user_buf,
--				      size_t count, loff_t *ppos)
--{
--	struct dentry *dentry = F_DENTRY(file);
--	char *old, *new = NULL;
--	int pos = *ppos;
--	int r;
--
--	r = debugfs_file_get(dentry);
--	if (unlikely(r))
--		return r;
--
--	old = *(char **)file->private_data;
--
--	/* only allow strict concatenation */
--	r = -EINVAL;
--	if (pos && pos != strlen(old))
--		goto error;
--
--	r = -E2BIG;
--	if (pos + count + 1 > PAGE_SIZE)
--		goto error;
--
--	r = -ENOMEM;
--	new = kmalloc(pos + count + 1, GFP_KERNEL);
--	if (!new)
--		goto error;
--
--	if (pos)
--		memcpy(new, old, pos);
--
--	r = -EFAULT;
--	if (copy_from_user(new + pos, user_buf, count))
--		goto error;
--
--	new[pos + count] = '\0';
--	strim(new);
--
--	rcu_assign_pointer(*(char __rcu **)file->private_data, new);
--	synchronize_rcu();
--	kfree(old);
--
--	debugfs_file_put(dentry);
--	return count;
--
--error:
--	kfree(new);
--	debugfs_file_put(dentry);
--	return r;
--}
--
- static const struct file_operations fops_str = {
- 	.read =		debugfs_read_file_str,
--	.write =	debugfs_write_file_str,
--	.open =		simple_open,
--	.llseek =	default_llseek,
--};
--
--static const struct file_operations fops_str_ro = {
--	.read =		debugfs_read_file_str,
--	.open =		simple_open,
--	.llseek =	default_llseek,
--};
--
--static const struct file_operations fops_str_wo = {
--	.write =	debugfs_write_file_str,
- 	.open =		simple_open,
- 	.llseek =	default_llseek,
- };
+ 	pm_runtime_get_noresume(&slave->dev);
  
- /**
-- * debugfs_create_str - create a debugfs file that is used to read and write a string value
-+ * debugfs_create_str - create a debugfs file that is used to read a string value
-  * @name: a pointer to a string containing the name of the file to create.
-  * @mode: the permission that the file should have
-  * @parent: a pointer to the parent dentry for this file.  This should be a
-  *          directory dentry if set.  If this parameter is %NULL, then the
-  *          file will be created in the root of the debugfs filesystem.
-- * @value: a pointer to the variable that the file should read to and write
-- *         from. This pointer and the string it points to must not be %NULL.
-+ * @value: a pointer to the variable that the file should read from. This
-+ *         pointer and the string it points to must not be %NULL.
-  *
-  * This function creates a file in debugfs with the given name that
-- * contains the value of the variable @value.  If the @mode variable is so
-- * set, it can be read from, and written to.
-+ * contains the value of the variable @value.  The file can be read from.
-+ * Writable files are not supported; if @mode contains write permission bits,
-+ * no file is created.
-  */
- void debugfs_create_str(const char *name, umode_t mode,
- 			struct dentry *parent, char **value)
- {
- 	if (WARN_ON(!value || !*value))
- 		return;
-+	if (WARN(mode & 0222,
-+		 "%s() does not support writable files\n", __func__))
-+		return;
+-	rt712_sdca_reset(rt712);
++	if (!rt712->first_hw_init)
++		rt712_sdca_reset(rt712);
  
--	debugfs_create_mode_unsafe(name, mode, parent, value, &fops_str,
--				   &fops_str_ro, &fops_str_wo);
-+	debugfs_create_file_unsafe(name, mode, parent, value, &fops_str);
- }
- EXPORT_SYMBOL_GPL(debugfs_create_str);
+ 	rt712_sdca_index_read(rt712, RT712_VENDOR_REG, RT712_JD_PRODUCT_NUM, &val);
+ 	rt712->hw_id = (val & 0xf000) >> 12;
+@@ -1915,7 +1916,7 @@ int rt712_sdca_io_init(struct device *dev, struct sdw_slave *slave)
+ 	 * if set_jack callback occurred early than io_init,
+ 	 * we set up the jack detection function now
+ 	 */
+-	if (rt712->hs_jack)
++	if (rt712->hs_jack && (!rt712->first_hw_init))
+ 		rt712_sdca_jack_init(rt712);
  
+ 	rt712_sdca_index_write(rt712, RT712_VENDOR_REG, RT712_SW_CONFIG1, 0x0001);
 -- 
 2.53.0
 
