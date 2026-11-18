@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061640;
-	b=YDY2TOmF0h48JSpb6ftvmazgl3mAGz2YLO9r0XQw80vnaW9vI8mzX0K9hnojD+m8yOJh
-	 kvLErws8JECkZ1OSc6RHblGUkepu39wmoYBGBjOcIcUamu806SA3hn/eWzTaM1hjDIea9
-	 yN2vp7zcHBRcEPUiTkmR1xwJ6h/8QLxMD5aBrXUfhWKWq4yJbey+lgl+lxlWbF0vLmiJm
-	 PXaa/HJiC0jdro7ClTZTLp2qVlorXXOPM1woUOPQ/3nEZRUAotdzdoySmLXRY/BwCpJwk
-	 l/FB0IS9z3lsHuqHbFvwOk7urUpvkuXEeZMh5HTehkgpxmOPZsgkQyNJBOo7qRckR1A==
+	t=1795061643;
+	b=xNvUOTKj2QOF9z4YpeJqmZcxdblGHsYSOFsYqngDrxcfGuM3UUJej6skmeg88ldz6Cik
+	 eDFv9Fnswo0NTAqTgUjpLmdNPRrrKIBI4EIIJ69mDh1ZSrTZp9dkN9mhXMfnEu19TbCkC
+	 nFp3mbY7+xTjL/hi03L10+Gx/gJm68hM/ceYYEQR2biwPfgJ/uUHkbR426CPIu9y7fC4i
+	 sKyhBdt5rCTKImabGy03gEymq9X+rt1wQ//bzaLFcVaxxwr/RVwrhXlXwp0NEYeRtG+j9
+	 XGicvkT+QGtmOsKYYAevmhuRMyTKNDu2RRLxsIHYDl9LF9Zi/GIqG5Dom8U+9TiNXeg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061640;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061643;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6lfYlIiQxMvAYnsL3fUAWLlcKyItXCgNgAkeQAtYm4o=;
-	b=QqgCVRuvAVmTwtCuYY2FhGVtazf5A1KcrwobKYtl5pINh6/wtw94YSvzEl3Oe+Kf3v5U
-	 0cVqsDv9PvpKZ6x3pIQ7fYsZlkEOCGNGa64MACKuuK8tNh4+XSNEnQf8GFK6CiVfSF6x4
-	 82g5ICCSh2rI3C/GAbEqIsaujEUUKqxxPvKlxyg9HpaZPCaKD4y2wocTMdibxSwRUSxxR
-	 mSOJhwPFYWUwztVJcLQ+XIbIoquXmpEHdYLAQNcGSEK0P3x6d7XJuFoAoqZlUZ+JVr3/O
-	 49UZQf5v1+n573wOUBnu/HdNVUspzPBG5exhIz/xotZ/N+85nvdLbANIucVleHfp93Q==
+	bh=TkbB0nG4bCJjfPJEfMofUzcx6HpH4il+wflr+Q37PgY=;
+	b=pkwX38u6q+P8x5qc8u3c3tZQ9GTtgtZjbBdUdvDAGMmTlAbndLtg+mPH42q9MNII+ZOt
+	 lVYxX7+/S1iFpYf/x7guJ6VUv3uRRl0EJdaR8MIZF/mKSbcg4LF6sCSGqC+LHrRjEH7ll
+	 fE2NBcFlVm65FRRvxL7+oi7gnWO0c7/xFlGX8CcLX8bjXR4K6N6AG+e1SUFaCFBkVWbr2
+	 NeamCE8wRsH/QgXI0XxxE++gPsbP3KhXwsT2pIDLQiN2ZwMEThSN3U5mghCp01krVnmfv
+	 qP6q7ld3GCV5SNLOTh9a54gINtlDIVmsDqBzn91gigqp+hXv2bHCUiez/6884jzdH9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0RY2wKuS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DYeL+2CK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DEB8606A32A;
-	Thu, 19 Nov 2026 04:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4DC606A320;
+	Thu, 19 Nov 2026 04:14:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0RY2wKuS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91F3B1F000C4;
-	Thu, 19 Nov 2026 04:13:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DYeL+2CK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A31D1F000C4;
+	Thu, 19 Nov 2026 04:14:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061640;
-	bh=6lfYlIiQxMvAYnsL3fUAWLlcKyItXCgNgAkeQAtYm4o=;
+	s=korg; t=1795061643;
+	bh=TkbB0nG4bCJjfPJEfMofUzcx6HpH4il+wflr+Q37PgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0RY2wKuSSBu3++DLcOk3A/LGmc8xVfSqVOxKQ+tFPnKpEbPKAiULZOZcu9lrjq0Yf
-	 X/fOoVnpJXwrZuwwXf7CM9Vt+E3G0WBYmaRS1bq7arsrt8EgKDRqLCT8iB/tMqillj
-	 ptj3IoLDQFWuvvRhMNBeGXxtU7pnapIuNWS/JKH0=
+	b=DYeL+2CKtutfTq5IxdrF/30O2cylXaZXM1B46Ai+tuK2636whUAyECGgRsfzolLmK
+	 VgAdImDrmsUjpYrgI1rsOx0iSs6zZK0PSV0ew2NxCgPFT13pJ7FXhuCasI1VW6o6ZZ
+	 IPW5kuiw733gOrr8ajL1bqK15LQSXHUp1gU/aSrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yogesh Gaur <yogeshgaur.83@gmail.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1598/1848] comedi: pcmuio: validate the IRQs supplied by userspace
-Date: Wed, 18 Nov 2026 16:00:36 +0100
-Message-ID: <20261118150026.371466265@linuxfoundation.org>
+Subject: [PATCH 5.10 1625/1848] ALSA: usb-audio: Use fixed control index for us16x08 mixer elements
+Date: Wed, 18 Nov 2026 16:01:03 +0100
+Message-ID: <20261118150027.590663045@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -67,66 +68,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yogesh Gaur <yogeshgaur.83@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 9c325b21bba99e597771137fc11b9427c86618d8 ]
+[ Upstream commit a68a688ce220f1b359bec53fa38d1504314dc70f ]
 
-comedi boards are configured through the COMEDI_DEVCONFIG ioctl, so
-it->options[1] is a number chosen by userspace. pcmuio passes it to
-request_irq() without checking it first, which lets an interrupt owned by
-another irqdomain -- a PCI device's IO-APIC GSI, for instance -- be
-claimed for this board. When the owner of that interrupt is later
-released the descriptor is freed while this driver's handler is still
-installed on it.
+The callbacks for us16x08 mixer elements assume that id.index points
+to the channel to be operated, and the assumption is correct for now.
+However, since the kctls are added via snd_usb_mixer_add_control() and
+it looks for the empty slot if the same control name is already
+present, in theory, the index can become more than the channel numbers
+(if a conflicting name really happens).
 
-Every interrupt this board can assert is a legacy ISA one, so the ISA
-range is the right bound; it is also sufficient, because
-mp_chip_data->isa_irq is set only by alloc_isa_irq_from_domain() and
-mp_unmap_irq() returns early when it is set.
+Since the mixer code in us16x08 doesn't need the search for an empty
+slot but requires the fixed index, this patch changes slightly how to
+assign the kcontrols.  Now, a new argument is added to
+snd_usb_mixer_add_list() in order to disable the empty slot search,
+and use it in us16x08's add_new_ctl() helper function, instead.
 
-Bound the value before requesting it, as das16m1.c already does. An
-out-of-range value is ignored rather than rejected, so the board still
-attaches without interrupt support, exactly as it does today when
-request_irq() fails.
-
-This board takes two interrupts, one per ASIC, so options[1] and
-options[2] both need the check. The existing options[2] == dev->irq case
-is left alone: it covers both ASICs sharing one interrupt and neither
-having one, and by then options[1] has already been validated.
-
-Fixes: 6baef150380d ("Staging: comedi: add pcmmio and pcmuio drivers")
-Assisted-by: LLM
-Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
-Link: https://patch.msgid.link/20260909104848.1763-7-yogeshgaur.83@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d2bb390a2081 ("ALSA: usb-audio: Tascam US-16x08 DSP mixer quirk")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://patch.msgid.link/20261014061406.162938-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/comedi/drivers/pcmuio.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ sound/usb/mixer.c         | 13 +++++++++----
+ sound/usb/mixer.h         |  5 +++--
+ sound/usb/mixer_quirks.c  |  2 +-
+ sound/usb/mixer_us16x08.c |  3 ++-
+ 4 files changed, 15 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/staging/comedi/drivers/pcmuio.c b/drivers/staging/comedi/drivers/pcmuio.c
-index ae12a70534151..9e3af643e8c44 100644
---- a/drivers/staging/comedi/drivers/pcmuio.c
-+++ b/drivers/staging/comedi/drivers/pcmuio.c
-@@ -546,7 +546,8 @@ static int pcmuio_attach(struct comedi_device *dev, struct comedi_devconfig *it)
+diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
+index 77e6a59dc9927..8329c5c9c886f 100644
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -576,20 +576,25 @@ static int check_matrix_bitmap(unsigned char *bmap,
  
- 	pcmuio_reset(dev);
+ /*
+  * add an alsa control element
+- * search and increment the index until an empty slot is found.
++ * when @look_for_empty is set, search and increment the index until an empty
++ * slot is found.
+  *
+  * if failed, give up and free the control instance.
+  */
  
--	if (it->options[1]) {
-+	/* only ISA interrupts are valid on this board */
-+	if (it->options[1] >= 1 && it->options[1] <= 15) {
- 		/* request the irq for the 1st asic */
- 		ret = request_irq(it->options[1], pcmuio_interrupt, 0,
- 				  dev->board_name, dev);
-@@ -558,7 +559,7 @@ static int pcmuio_attach(struct comedi_device *dev, struct comedi_devconfig *it)
- 		if (it->options[2] == dev->irq) {
- 			/* the same irq (or none) is used by both asics */
- 			devpriv->irq2 = it->options[2];
--		} else if (it->options[2]) {
-+		} else if (it->options[2] >= 1 && it->options[2] <= 15) {
- 			/* request the irq for the 2nd asic */
- 			ret = request_irq(it->options[2], pcmuio_interrupt, 0,
- 					  dev->board_name, dev);
+ int snd_usb_mixer_add_list(struct usb_mixer_elem_list *list,
+ 			   struct snd_kcontrol *kctl,
+-			   bool is_std_info)
++			   bool is_std_info,
++			   bool look_for_empty)
+ {
+ 	struct usb_mixer_interface *mixer = list->mixer;
+ 	int err;
+ 
+-	while (snd_ctl_find_id(mixer->chip->card, &kctl->id))
+-		kctl->id.index++;
++	if (look_for_empty) {
++		while (snd_ctl_find_id(mixer->chip->card, &kctl->id))
++			kctl->id.index++;
++	}
++
+ 	err = snd_ctl_add(mixer->chip->card, kctl);
+ 	if (err < 0) {
+ 		usb_audio_dbg(mixer->chip, "cannot add control (err = %d)\n",
+diff --git a/sound/usb/mixer.h b/sound/usb/mixer.h
+index 6d20ba7ee88fd..83cb46cd973cc 100644
+--- a/sound/usb/mixer.h
++++ b/sound/usb/mixer.h
+@@ -107,10 +107,11 @@ int snd_usb_mixer_set_ctl_value(struct usb_mixer_elem_info *cval,
+ 
+ int snd_usb_mixer_add_list(struct usb_mixer_elem_list *list,
+ 			   struct snd_kcontrol *kctl,
+-			   bool is_std_info);
++			   bool is_std_info,
++			   bool look_for_empty);
+ 
+ #define snd_usb_mixer_add_control(list, kctl) \
+-	snd_usb_mixer_add_list(list, kctl, true)
++	snd_usb_mixer_add_list(list, kctl, true, true)
+ 
+ void snd_usb_mixer_elem_init_std(struct usb_mixer_elem_list *list,
+ 				 struct usb_mixer_interface *mixer,
+diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
+index f1012c1b99fb2..fe78ae993014a 100644
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -162,7 +162,7 @@ static int add_single_ctl_with_resume(struct usb_mixer_interface *mixer,
+ 	}
+ 	kctl->private_free = snd_usb_mixer_elem_free;
+ 	/* don't use snd_usb_mixer_add_control() here, this is a special list element */
+-	return snd_usb_mixer_add_list(list, kctl, false);
++	return snd_usb_mixer_add_list(list, kctl, false, true);
+ }
+ 
+ /*
+diff --git a/sound/usb/mixer_us16x08.c b/sound/usb/mixer_us16x08.c
+index d8a8d90be58e1..757d5a7a3d490 100644
+--- a/sound/usb/mixer_us16x08.c
++++ b/sound/usb/mixer_us16x08.c
+@@ -1112,7 +1112,8 @@ static int add_new_ctl(struct usb_mixer_interface *mixer,
+ 
+ 	strlcpy(kctl->id.name, name, sizeof(kctl->id.name));
+ 
+-	err = snd_usb_mixer_add_control(&elem->head, kctl);
++	/* look_for_empty=false, as we want the fixed id.index as channel */
++	err = snd_usb_mixer_add_list(&elem->head, kctl, true, false);
+ 	if (err < 0)
+ 		return err;
+ 
 -- 
 2.53.0
 
