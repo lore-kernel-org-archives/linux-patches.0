@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061375;
-	b=uJqaF0UuzQmLBDjAOBXqieY505C/hBkI7wUHQGs0wi48RcQt4aVgMgK3qvlJkqRHSTJJ
-	 Bv2fHt285SESnlGp2zb20h8PaHeuT9IUSXUq5+HhdjH/EarAVslhAJI0wVwC+ZlYbsw+R
-	 Dz0ZEdkp3oD0bPZaR8oUSxcqFBGrKkKX7rQDJQE55e9wbr23HnAmlzwWBmyoi9I7R3n7/
-	 MBXCH9NyfU84Rdsby5nau0owIT/9MHAYSKZmULUJno0zIYg/gZSzwpx/NqGGcdO/gdFgy
-	 omITfjLZhQvRO9eZSj9kkswk5srS0AsiBxA+L042dKWTTqpcYj7Jk1xv19XzKREaXNg==
+	t=1795061377;
+	b=sWIYSS085aReTLwXqOfhry04/U65aY+892bUlMwS3tu5DfRoXexmmccQzUiBB/9jJtfA
+	 4res3+jzzHN3W/+LtSRSt4BAuO60lrB1hPB2JKnGq5TyOH0ENGnyPPv2E/4wTymgSLeM2
+	 fpXi55t96Nwxv+2+XFks2o+H2AfIo/DfQsUHU1NyvrIAgJ5yldmQm86hyJvmA92JkI5O8
+	 k6jjGM1AgSwuW6kaJ1miV5bSpo0L8z2K1cOV4DoYYl0ccYlKwp/+3ZuE/wfpSCE+iJWNX
+	 s9TPjUAXBZ6XIIpv5SO1bqBGtVabftzxbHUoeb0c+AKmQe0NZSBtROPs9+IVTAN4/Lw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061375;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061377;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Lmb8hNnOmBGHWy4mvpu3aR2NG4UI68Um3DFl/6HM+eU=;
-	b=dSuuW8rmVL38xzbDSw6sOGGB+zzMcv0W3m9MjR2rSO6bOdAFZGDTS9evSzcp3/SLHiae
-	 w46jQkie/DbAygcATTZhqemPuA5iz3jdB81wSVZXGgda1T5ucdxeIdBhQNrK9ppNTlXFW
-	 BsAoBq+zSjPtP5rXU+ScZJemTOhvpInTHQ9DqmSEJAMWmoYWUCgTi+8ULk7t9Sj+mGYBq
-	 dODgq/4x5GWYuBMXzg33vjDa+zIdLE17/Zs/qqhvVjFA3ugoFlXS/fVqkx40qrZmwvG0h
-	 fHfOKyPFvmdbByTgtGx5cXNuYaawvURnOgJSbfwn4qMM6Za5TKoB6HhQYvwO9mOJvZg==
+	bh=SLFzbsgcx9Qk/jdgRHPZNOBQ7n1DrEsygdlFD2hJLRE=;
+	b=QlJ/Zr+k8KNc/12GIgy00P1qPy7Q2irCyx19AZuAm4/VntUWUkaa4HFEX13iF0LL3iTg
+	 Es6elQEl3G38jvofi+wOwvgDUSrnF5KK29bC6AfEIOe+GDqfAoBAZqjzKWICqec/JPDcf
+	 PbEB5i3Zr6DdzImpYay6Upbl7gsoO/fXqfQPslofmKHJLjNdRkknGWL8AWTKWe//dBf6B
+	 vyQodq8b2/Hy9rB1O+ExBV8nWcyyL1x4Es9rObw8XPs9w1M6juEzWX7yMTE5onzuxG8Cl
+	 PpnQ2qOgOjjdOdvODZw1w8i7Cj8FiGyQYfS4CorVmbofMmhQchJLJr3sKpSrQUp0yiQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v06gbALS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dk09tf2z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5DB606A32A;
-	Thu, 19 Nov 2026 04:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDEBB606A32F;
+	Thu, 19 Nov 2026 04:09:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v06gbALS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A751F000C4;
-	Thu, 19 Nov 2026 04:09:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dk09tf2z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22F911F000C4;
+	Thu, 19 Nov 2026 04:09:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061375;
-	bh=Lmb8hNnOmBGHWy4mvpu3aR2NG4UI68Um3DFl/6HM+eU=;
+	s=korg; t=1795061377;
+	bh=SLFzbsgcx9Qk/jdgRHPZNOBQ7n1DrEsygdlFD2hJLRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v06gbALSNMgXjNEDhTLIevWf6dZ5e6S61HsOHB3mWn3W/xu1dI5R36NT9QR/fIXTw
-	 SNL07orFNGXMxBWSE3Bnkm+Ew0J6HVLUhaanqPJz9/IPxnOPveS7AhEo15f/4r03Wg
-	 fi49GbVaCQuQrMnUnw8hb0UkE6OA6v90TBUS/m4o=
+	b=dk09tf2z/KBerdDbepZLjC77iblay8xQKw0I8ekkmMnI4AY05FW7QqSSGu7xcKaLm
+	 1HLmuUMXttps/NVzxQB0oAvsXQgkI2gphE7+b7NDLiBixqrAI6uI0fA+ej2m+C7rhZ
+	 EWHrMK099ptmEKaNZl6oNELm5/+0eT07IDJRuBD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmed Naseef <naseefkm@gmail.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1530/1848] wifi: mt76: mt7615: read MT7663 temperature from the correct offset
-Date: Wed, 18 Nov 2026 15:59:28 +0100
-Message-ID: <20261118150023.438675790@linuxfoundation.org>
+Subject: [PATCH 5.10 1531/1848] ASoC: rockchip: rockchip_i2s: Handle runtime PM resume failures in set_fmt
+Date: Wed, 18 Nov 2026 15:59:29 +0100
+Message-ID: <20261118150023.474896308@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,48 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmed Naseef <naseefkm@gmail.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 40217d8e6cba433a6ccb8c73737dd38b54dcc26f ]
+[ Upstream commit e9eb1854d16136006c6fe94c927b54b2b264b429 ]
 
-On MT7663 the hwmon temp1_input attribute always reads 0.
+rockchip_i2s_set_fmt() calls pm_runtime_get_sync() before accessing
+hardware registers, but ignores its return value.
+If the runtime resume fails, the function continues to perform register
+accesses while the device state is undefined.
+Replace pm_runtime_get_sync() with pm_runtime_resume_and_get() and
+return early on failure to avoid unpowered register accesses.
 
-mt7615_mcu_parse_response() takes the temperature from the first dword of
-the THERMAL_CTRL response payload, but MT7663 firmware reports it in the
-second one. On a DASAN H660GM-A (MT7663E, N9 firmware 7663mp1827) the
-request and its response are:
-
-  request:  00 00 00 00
-  response: 00 00 00 00 2a 00 00 00
-
-0x2a is the reading, 42 degrees, while the driver returns the leading
-zero. mt7915 and mt7921 already pull sizeof(*rxd) + 4 for this command.
-
-Restrict the extra pull to MT7663, as no MT7615 or MT7622 hardware was
-available to check whether their firmware uses the same layout.
-
-Fixes: f40ac0f3d3c0 ("mt76: mt7615: introduce mt7663e support")
-Signed-off-by: Ahmed Naseef <naseefkm@gmail.com>
-Link: https://patch.msgid.link/20260819192911.1886457-1-naseefkm@gmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 53ca9b9777b9 ("ASoC: rockchip: i2s: Fix regmap_ops hang")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260903112739.373621-2-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7615/mcu.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/rockchip/rockchip_i2s.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-index 88e8157f6c960..6ed470050632c 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-@@ -195,6 +195,8 @@ int mt7615_mcu_parse_response(struct mt76_dev *mdev, int cmd,
- 		break;
- 	case MCU_EXT_CMD_GET_TEMP:
- 		skb_pull(skb, sizeof(*rxd));
-+		if (is_mt7663(mdev))
-+			skb_pull(skb, 4);
- 		ret = le32_to_cpu(*(__le32 *)skb->data);
- 		break;
- 	case MCU_EXT_CMD_RF_REG_ACCESS | MCU_QUERY_PREFIX:
+diff --git a/sound/soc/rockchip/rockchip_i2s.c b/sound/soc/rockchip/rockchip_i2s.c
+index 785baf98f9da2..d1894d5b382d4 100644
+--- a/sound/soc/rockchip/rockchip_i2s.c
++++ b/sound/soc/rockchip/rockchip_i2s.c
+@@ -188,7 +188,9 @@ static int rockchip_i2s_set_fmt(struct snd_soc_dai *cpu_dai,
+ 	unsigned int mask = 0, val = 0;
+ 	int ret = 0;
+ 
+-	pm_runtime_get_sync(cpu_dai->dev);
++	ret = pm_runtime_resume_and_get(cpu_dai->dev);
++	if (ret)
++		return ret;
+ 	mask = I2S_CKR_MSS_MASK;
+ 	switch (fmt & SND_SOC_DAIFMT_MASTER_MASK) {
+ 	case SND_SOC_DAIFMT_CBS_CFS:
 -- 
 2.53.0
 
