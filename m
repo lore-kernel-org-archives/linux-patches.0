@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020502;
-	b=gQSAqUrIE6lcwC9op9Xw8XZ6bKubHg2rp7dIc/OfNmGthaqHoK/ulbr/3k/W35qix8E0
-	 8CZ5WcoQ4udLpQcip19rH4FpR2NbbWR3WgP0FYKnP6C9d6j2WEKfcIH6NBx5hP6rquaOk
-	 FO1ztU/2B2cV0QpPO0f0EiasLu9lWfC2S1lODTg6GHXc14FMDVwNI2cnH9skB52EWV/0/
-	 LAwfaXwOs76piPZzCireLsgh2mHZKT/tORMXu7PAnOlAS431Vy86Q/u3xI831Shqh1JJK
-	 ucfaSZxt7XkobKXTeaEfmba62GUPupRDnwTA8KImS6lfeh+qeprAZMwGqXr6EYeuqhg==
+	t=1795020505;
+	b=JpsmifrFRNZSPYeHJN+fOtuit9uGM8xCkKUEJCS2skwval62xOANMxR876SebK4pdD+l
+	 JbzHkCOkXjPzOtFQ6gjCXDR2E0TgqzGXbtUS9XSUojTak/WXMPfUlRzWOpGiOchgaQOf3
+	 ZfXXxEfNZfd98snmINP3NPumoZoIn7auTG69sukN2OaZL8sQVNxHtfjzETQGzO4B9tfcL
+	 A871ErWL19zXpgLtSGrQdk+0DYjX0veWDjKuyqTdXTe49m689xsWiexk5iwS+lX2XnFKS
+	 rReoLhUiK2sqSDL1npuHfaLOQ6lH5PoZ+vZW92xxNBxMGAUR1QYPOVyTF3Vr7kivHHw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020502;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020505;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0K7vswElxDNgeJgFLawPwu2UwdtMUzGgLVM+FUTPJzw=;
-	b=pnls3wMgVUbQMgNcItBE5Cod5/LkP3Oxb6JR1Fe8xV5po5q3dnRNvehuIXVks+x9iTgP
-	 p/qB9Dd9UCOV40tSAx+hKXkDwD2/ok1Z6DY3TYrfhoNTYkP0Dpn/xIJV1ddXgXKkq4LlY
-	 2EFFaYY2E4tvcwRmV/zCj6TjqvCpj6s2xmE0eq1mog0qA1jdBivDyghTxRUHfq+h1YvWz
-	 jyjT3Wh4tQ/MX3Wqe9eXMBw4WEzAYIpQF33/D4609VToSmzAoeXj8I4pdJQAIatmQbd8W
-	 7lGmKJDaF1QZlnpoIDVbljqksVhkFeVBy5UeOJejrolkyDPX9c6duv4a+iwDUCGmd+A==
+	bh=eHBaNX7wF4GBH+8IjUQJOpAlFUflYMr5spKNfQuEOlU=;
+	b=Jd10AdAfWyBZLEBnALc3KbVSQsJa+CBSqgKTHqibhj0funMTxYFn4znObeT2MSDBOJyH
+	 +yzFx8a/Igr2CG6w8BXodym272jQsEHv/Zr0ialN0YiEY+zz8vARAvtbjWe6XY6KW+euV
+	 /e2jP6xxr6uU1Dt/hzE0lNZuZUxjtZAD+gS2CArYPOXZ3B3n1nY/ThE8Gnk1rhNa6GKKX
+	 9RvhvPXwexukuynkQI/D0Tm7rHpMXmhKMVKhOT972JvKHhRlZDcSWVFikqXUMq42COPsM
+	 HOw59qY8qrxgNtsjqdBK9lr6HPaJy7VzbyZjsGGKKlF85rqoVHAZTkROBY0YRvTwy7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gP6Ru+lT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xsnefMzB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F99B606A31C;
-	Wed, 18 Nov 2026 16:48:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CDA9606A333;
+	Wed, 18 Nov 2026 16:48:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gP6Ru+lT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4B711F000C5;
-	Wed, 18 Nov 2026 16:48:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xsnefMzB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94BD61F000C5;
+	Wed, 18 Nov 2026 16:48:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020502;
-	bh=0K7vswElxDNgeJgFLawPwu2UwdtMUzGgLVM+FUTPJzw=;
+	s=korg; t=1795020505;
+	bh=eHBaNX7wF4GBH+8IjUQJOpAlFUflYMr5spKNfQuEOlU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gP6Ru+lT++ybxU1qVdb4eyTaEVDRL/a3k3ntDIzRaC3w7vxslpixBtgkI1Hn5Qpzx
-	 D+u5YTg+Yvguhnjd7LzehRPrAYURsFSIdLReCNwYidtLbeVNgCXtDfgrKztd1zMqoU
-	 qt9m0zcufE6OzBP2x61NvfKVLM52fJrlakqu4H/k=
+	b=xsnefMzBGbOK0dzdj+S/BY3n+/cQIht9A8I7LroC+J/MuopwtrAVT+vslqjcXgwx4
+	 HYEmH2nh6JIyGeO69CvjHYP/twrITO9LahZ3zhzLAUcgpS5m/78V+8bKu0zxR/pv/L
+	 LKCGGOU9MQZDsPxc3In8QrBc4bNMhneYIVqyC93w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jackie Liu <liuyun01@kylinos.cn>,
-	Yun Lu <luyun@kylinos.cn>,
+	Qiliang Yuan <odys.yuan@gmail.com>,
 	Daniel Borkmann <daniel@iogearbox.net>,
+	"T.J. Mercier" <tjmercier@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1975/2651] selftests/bpf: Fix map fd leak in no-BTF wq test
-Date: Wed, 18 Nov 2026 15:53:35 +0100
-Message-ID: <20261118150357.539968024@linuxfoundation.org>
+Subject: [PATCH 7.3 1976/2651] selftests/bpf: Accept unnamed dma-bufs in the dmabuf_iter default test
+Date: Wed, 18 Nov 2026 15:53:36 +0100
+Message-ID: <20261118150357.570972872@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,48 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Lu <luyun@kylinos.cn>
+From: Qiliang Yuan <odys.yuan@gmail.com>
 
-[ Upstream commit d3c9ecb8765d4befbc46ee325c8d76efd523eece ]
+[ Upstream commit 653b8f14fdda385bd7c5b786f8dfdcc3e5599e27 ]
 
-bpf_map__reuse_fd() duplicates the supplied file descriptor instead of
-taking ownership of it. test_failure_map_no_btf() closes the original
-map_fd only when reuse fails, leaking it when reuse succeeds, including
-when the test passes. Destroying the skeleton closes its own descriptor
-but leaves the original descriptor and its map reference alive.
+The dmabuf_collector iterator prints the inode, size, name and exporter
+of every dma-buf in the system on separate lines, with an empty name for
+the buffers that have none. The default_iter subtest parses that output
+and looks for the two buffers it created.
 
-Close map_fd immediately after bpf_map__reuse_fd(), before checking its
-return value, to release the original descriptor on both success and
-failure. The skeleton retains its own descriptor for the subsequent
-program load.
+It requires a name for every buffer, and sscanf() finds none on the
+empty line of an unnamed one. On a system that has such a buffer, like
+one exported by udmabuf without a name, the subtest fails before it
+gets to its own buffers.
 
-Fixes: bca2b74ea9a8 ("selftests/bpf: Add more bpf_wq tests")
-Reported-by: Jackie Liu <liuyun01@kylinos.cn>
-Signed-off-by: Yun Lu <luyun@kylinos.cn>
+Take an empty name for a buffer without one.
+
+Fixes: ae5d2c59ecd7 ("selftests/bpf: Add test for dmabuf_iter")
+Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20261013030114.292157-1-luyun_611@163.com
+Reviewed-by: T.J. Mercier <tjmercier@google.com>
+Link: https://lore.kernel.org/bpf/20261009-selftests-bpf-dmabuf-iter-unnamed-v1-1-962ee94f7a5e@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/wq.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/dmabuf_iter.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/wq.c b/tools/testing/selftests/bpf/prog_tests/wq.c
-index 84831eecc935b..97926e35aaf26 100644
---- a/tools/testing/selftests/bpf/prog_tests/wq.c
-+++ b/tools/testing/selftests/bpf/prog_tests/wq.c
-@@ -64,10 +64,9 @@ static void test_failure_map_no_btf(void)
- 		goto out;
- 
- 	err = bpf_map__reuse_fd(skel->maps.array, map_fd);
--	if (!ASSERT_OK(err, "map reuse fd")) {
--		close(map_fd);
-+	close(map_fd);
-+	if (!ASSERT_OK(err, "map reuse fd"))
- 		goto out;
--	}
- 
- 	insns = bpf_program__insns(skel->progs.test_map_no_btf);
- 	if (!ASSERT_OK_PTR(insns, "insns ptr"))
+diff --git a/tools/testing/selftests/bpf/prog_tests/dmabuf_iter.c b/tools/testing/selftests/bpf/prog_tests/dmabuf_iter.c
+index fb2cea710db3e..1a5dc1adae735 100644
+--- a/tools/testing/selftests/bpf/prog_tests/dmabuf_iter.c
++++ b/tools/testing/selftests/bpf/prog_tests/dmabuf_iter.c
+@@ -188,8 +188,9 @@ static void subtest_dmabuf_iter_check_default_iter(struct dmabuf_iter *skel)
+ 			ASSERT_EQ(sscanf(line, "%ld", &bufinfo.size), 1,
+ 				  "read size");
+ 		} else if (f % FIELD_COUNT == NAME) {
+-			ASSERT_EQ(sscanf(line, "%s", bufinfo.name), 1,
+-				  "read name");
++			/* Keep an empty name for a buffer without one */
++			if (sscanf(line, "%s", bufinfo.name) != 1)
++				bufinfo.name[0] = '\0';
+ 		} else if (f % FIELD_COUNT == EXPORTER) {
+ 			ASSERT_EQ(sscanf(line, "%31s", bufinfo.exporter), 1,
+ 				  "read exporter");
 -- 
 2.53.0
 
