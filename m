@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019104;
-	b=rhbtXzF6Xkhipha3OMsHJBvxuUlID4K9LkB6C/YtGDejKIFK9edLJA7yMBDpk5os5WzS
-	 yZprjScNrTuJhsyFrWCL2UBbJKi0tYqrBf/qEHN19F4Bc2TIlkNgk8UGAUAdfNBywFba0
-	 +OxNAxZB0+pTFUc3NfQ3QZzr3D8sD6FosWNk4V1+Uo+v+0yGEshh2Sf9caZUg9YEskEkI
-	 XiUuT6/8jTt3hf0mL5hg1Uk37gmpNfeM4KifiPI2idJ6wxM99pIVcFgvp0I90R+CMVG0R
-	 jN3HZx4SRwj5HqvY3/MMKb4zY/pgzSuLiCQcktkcyQ3t5EepRk3rtGH5FUIwK9PqA9Q==
+	t=1795019107;
+	b=N8SQcXkEio9xPJxuDxhcDcoCaRnC+TEJQ+v09o4N6Rk6SHlegfA2yvLN0CqU06etSKvy
+	 pUI7wjt0CD0WrB9DR031vtuaveQ02vXvBWVSognDrCaW9cX9hE+hdtmEBFZi2a8zPkEd+
+	 9RASCY6pMsRMd163AUvTpkrV2SAnL8+lwGc4fCSam2kQxQqdMeunyb2LFCO7YvxfBI4j3
+	 TslFAWVKWhk1zE0dvDDpvlx/ootziXqzPT/RexS1QMezVSjLHhQwFmDT00NUTER84y/39
+	 NEJv1Kh+R4EtzH0FViYpERgaEyTrX3LcM3/P4sLjzP6qak1Cr99XHFD+p7ZmUyIeyJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019104;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019107;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=D1064iEg/gghqkW/YYn1el3R5zZY3swgl43o6QJ+F8o=;
-	b=BCEy8y1U1TIifEI4fBf/Vn3YG8RAfdDy8in825IHvhZ2hQdvT2fdd/rQC6ja7X6ZZpiC
-	 USLAnFkC/5ygvvjsZXflX12s+9fTIE9/jXYrDSwmMid1kuRrM+/PJQyEwXbMIFzFzHyhH
-	 uXjnuWmqIRy/KxsOWHV622oMrbq5IcDVeKiITNGC851f92BMMst5cbH/DqTpP4ZdYdrSu
-	 jVUFOcdudHD3xZe1jH8jlP9Ee8b46JcCdws9nBfrvs6HtsEeW1afykIVdu+Ca86LNC5qL
-	 Lu50+/iBZiSnjWFjV/OKVe1XLW63aqhwCLVT6fUm7Au00/DpGSLonC2SXXMZmahIhsQ==
+	bh=EOYMqOtk9OWYdq4v0yhLbZp3a+4d3GkYZB+6ykYsQ+Y=;
+	b=Ym7hphAvaGn6HJ+7QtHiEn5gyslCYG9hFwrO88MCAnYlZpcs+ECvELims1UDrSMHrD1u
+	 ZGsRlLF54mN+oQBg6769U8gCyHZTqlYMyMAZh31/r78LY/elUmZlOkg+GXtC2MN03Khsb
+	 MlFbzTvQNE/s/YROfv3/GJ/40xN8aqu0OOt/40FhX//LSSc6xp10nbMQ92sG6umL5PTPE
+	 /3qa967Q71jC/K6RfbGPusiZEtRgdyGz1BPlKlDn0xRFvZq5jLW6q4qWgI2NtuthlZJgy
+	 D9c1UHubFP28Wg8mr5166IVd+yHkzBhxqalWauq50IMCodIfrc7N33PcoeJLz9Fn2ow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gatRcOTH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sdoUjRMm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38AB60A260B;
-	Wed, 18 Nov 2026 16:25:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8469060A2602;
+	Wed, 18 Nov 2026 16:25:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gatRcOTH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1635A1F000C7;
-	Wed, 18 Nov 2026 16:25:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sdoUjRMm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D758D1F000C5;
+	Wed, 18 Nov 2026 16:25:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019104;
-	bh=D1064iEg/gghqkW/YYn1el3R5zZY3swgl43o6QJ+F8o=;
+	s=korg; t=1795019107;
+	bh=EOYMqOtk9OWYdq4v0yhLbZp3a+4d3GkYZB+6ykYsQ+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gatRcOTHQINee2N9Gt78zHsDQYypwRc6VPb6hzgvhV8uPEUNStcecwJkKbgCrM+Wd
-	 tQxRMydkzMyT+QLG+/J8D/ERQa0IHeIDdHicVIVrgjOJLxZFM2vXl0RCbxnHQ9tfAj
-	 3caVV1q8QQEfyNRBmQtO6pH4duwPbZIIrE8mfQMk=
+	b=sdoUjRMmrIyqyM4CwkjrW3sPPoclFvhaUr6xTzGZAmIxKsNM8MBbNJDHdUqOJGHyU
+	 mZ+N0aKL2Wosuw50iUw4sayQ2qlm4iF2ez4ew5dtJTBJ+5FjSVzKfAx1rRCPLTXTDA
+	 RxtbxpzuYm8kJY911g7g3sr2qKB4W+c1rmO5Bp78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
-	Mark Anthony Agarro <markanthonyagarro@gmail.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1440/2651] wifi: mt76: mt7925: honour mac80211s FIF_FCSFAIL instead of hardcoding drop_err
-Date: Wed, 18 Nov 2026 15:44:40 +0100
-Message-ID: <20261118150339.885462788@linuxfoundation.org>
+Subject: [PATCH 7.3 1476/2651] wifi: mt76: mt7996: pick the secondary link from links with driver state
+Date: Wed, 18 Nov 2026 15:45:16 +0100
+Message-ID: <20261118150341.165077589@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,102 +67,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Anthony Agarro <markanthonyagarro@gmail.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 31b53a9c4ada2ce49201ed0da0105819acfd86bf ]
+[ Upstream commit 53eadd11e92729976168d74f27345461a5e1ef46 ]
 
-mt7925_mcu_config_sniffer() hardcodes drop_err = 1, ignoring what
-mac80211 actually requested via configure_filter(). FIF_FCSFAIL is
-computed there but discarded instead of persisted.
+mt7996_mac_sta_init_link() takes the secondary link from
+sta->valid_links. On a station interface mac80211 creates driver state
+only for active links, since drv_change_sta_links() masks both link
+sets with vif->active_links. With three valid links of which links 0
+and 2 are active, seclink_id then points at link 1, which has no
+mt7996_sta_link. mt7996_tx_prepare_skb() maps odd TIDs to seclink_id,
+keeps the primary wcid for them and passes the inactive link id to
+mt7996_mac_write_txwi(), which finds no vif link and falls back to OMAC
+and WMM index 0.
 
-Persist the FCSFAIL bit on the phy in mt7925_configure_filter() and
-read it back in mt7925_mcu_config_sniffer() to derive drop_err, so the
-firmware sniffer only passes through unfiltered/marginal frames when a
-monitor listener actually requested them.
+Choose the secondary link among the links that have driver state and
+are valid, and choose it again whenever such a link is added, restored
+or removed. A removed secondary link now hands over to another
+remaining link instead of the primary one, and a secondary link that
+was promoted to primary gets a successor.
 
-mt7925_mcu_config_sniffer() is only reached from mt7925_change_chanctx(),
-which is itself only exercised on a monitor-mode chanctx, so this stays
-scoped to monitor mode.
-
-Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
-Tested-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Signed-off-by: Mark Anthony Agarro <markanthonyagarro@gmail.com>
-Link: https://patch.msgid.link/20260826091757.469953-1-markanthonyagarro@gmail.com
+Fixes: 85cd5534a3f2 ("wifi: mt76: mt7996: use correct link_id when filling TXD and TXP")
+Link: https://patch.msgid.link/20261006205936.669125-12-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/main.c   | 7 +++----
- drivers/net/wireless/mediatek/mt76/mt7925/mcu.c    | 2 +-
- drivers/net/wireless/mediatek/mt76/mt7925/mt7925.h | 5 +++++
- drivers/net/wireless/mediatek/mt76/mt792x.h        | 1 +
- 4 files changed, 10 insertions(+), 5 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7996/main.c  | 42 +++++++++++++------
+ 1 file changed, 30 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-index 4381e8c7559bd..0308bfc403d2e 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-@@ -856,11 +856,8 @@ static void mt7925_configure_filter(struct ieee80211_hw *hw,
- 				    unsigned int *total_flags,
- 				    u64 multicast)
- {
--#define MT7925_FILTER_FCSFAIL    BIT(2)
--#define MT7925_FILTER_CONTROL    BIT(5)
--#define MT7925_FILTER_OTHER_BSS  BIT(6)
--#define MT7925_FILTER_ENABLE     BIT(31)
- 	struct mt792x_dev *dev = mt792x_hw_dev(hw);
-+	struct mt792x_phy *phy = mt792x_hw_phy(hw);
- 	u32 flags = MT7925_FILTER_ENABLE;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+index 6ef399b7f72e1..f6e1bc73c7317 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+@@ -1140,6 +1140,32 @@ mt7996_sta_init_txq_wcid(struct ieee80211_sta *sta, int idx)
+ 	}
+ }
  
- #define MT7925_FILTER(_fif, _type) do {			\
-@@ -872,6 +869,8 @@ static void mt7925_configure_filter(struct ieee80211_hw *hw,
- 	MT7925_FILTER(FIF_CONTROL, CONTROL);
- 	MT7925_FILTER(FIF_OTHER_BSS, OTHER_BSS);
- 
-+	phy->rxfilter = flags;
++static u8
++mt7996_sta_seclink_get(struct mt7996_dev *dev, struct mt7996_sta *msta)
++{
++	struct mt7996_sta_link *msta_link;
++	unsigned int link_id;
 +
- 	mt792x_mutex_acquire(dev);
- 	mt7925_mcu_set_rxfilter(dev, flags, 0, 0);
- 	mt792x_mutex_release(dev);
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-index 1cfc209f9be5c..5b9c9d8d3b2cc 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-@@ -2356,7 +2356,7 @@ int mt7925_mcu_config_sniffer(struct mt792x_vif *vif,
- 			.len = cpu_to_le16(sizeof(req.tlv)),
- 			.control_ch = chandef->chan->hw_value,
- 			.center_ch = ieee80211_frequency_to_channel(freq1),
--			.drop_err = 1,
-+			.drop_err = !(vif->phy->rxfilter & MT7925_FILTER_FCSFAIL),
- 		},
- 	};
- 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mt7925.h b/drivers/net/wireless/mediatek/mt76/mt7925/mt7925.h
-index 33782d9ba9ed4..cc4270863ebd4 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mt7925.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mt7925.h
-@@ -7,6 +7,11 @@
- #include "../mt792x.h"
- #include "regs.h"
- 
-+#define MT7925_FILTER_FCSFAIL		BIT(2)
-+#define MT7925_FILTER_CONTROL		BIT(5)
-+#define MT7925_FILTER_OTHER_BSS	BIT(6)
-+#define MT7925_FILTER_ENABLE		BIT(31)
++	if (msta->deflink_id == IEEE80211_LINK_UNSPECIFIED)
++		return IEEE80211_LINK_UNSPECIFIED;
 +
- #define MT7925_BEACON_RATES_TBL		25
++	msta_link = mt7996_sta_link_protected(dev, msta, msta->seclink_id);
++	if (msta->seclink_id != msta->deflink_id && msta_link &&
++	    msta_link->wcid.link_valid)
++		return msta->seclink_id;
++
++	for (link_id = 0; link_id < ARRAY_SIZE(msta->link); link_id++) {
++		if (link_id == msta->deflink_id)
++			continue;
++
++		msta_link = mt7996_sta_link_protected(dev, msta, link_id);
++		if (msta_link && msta_link->wcid.link_valid)
++			return link_id;
++	}
++
++	return msta->deflink_id;
++}
++
+ static int
+ mt7996_mac_sta_init_link(struct mt7996_dev *dev,
+ 			 struct ieee80211_bss_conf *link_conf,
+@@ -1162,7 +1188,6 @@ mt7996_mac_sta_init_link(struct mt7996_dev *dev,
+ 	if (msta->deflink_id == IEEE80211_LINK_UNSPECIFIED) {
+ 		msta_link = &msta->deflink;
+ 		msta->deflink_id = link_id;
+-		msta->seclink_id = msta->deflink_id;
+ 		mt7996_sta_init_txq_wcid(sta, idx);
+ 	} else {
+ 		msta_link = kzalloc_obj(*msta_link);
+@@ -1170,11 +1195,6 @@ mt7996_mac_sta_init_link(struct mt7996_dev *dev,
+ 			mt76_wcid_mask_clear(dev->mt76.wcid_mask, idx);
+ 			return -ENOMEM;
+ 		}
+-
+-		if (msta->seclink_id == msta->deflink_id &&
+-		    (sta->valid_links & ~BIT(msta->deflink_id)))
+-			msta->seclink_id = __ffs(sta->valid_links &
+-						 ~BIT(msta->deflink_id));
+ 	}
  
- #define MT7925_TX_RING_SIZE		2048
-diff --git a/drivers/net/wireless/mediatek/mt76/mt792x.h b/drivers/net/wireless/mediatek/mt76/mt792x.h
-index 9722d840c1af9..49c7b69584800 100644
---- a/drivers/net/wireless/mediatek/mt76/mt792x.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt792x.h
-@@ -214,6 +214,7 @@ struct mt792x_phy {
- 	s16 coverage_class;
- 	u8 slottime;
+ 	INIT_LIST_HEAD(&msta_link->rc_list);
+@@ -1193,6 +1213,7 @@ mt7996_mac_sta_init_link(struct mt7996_dev *dev,
+ 	ewma_signal_init(&msta_link->wcid.rssi);
  
-+	u32 rxfilter;
- 	u32 rx_ampdu_ts;
- 	u32 ampdu_ref;
+ 	rcu_assign_pointer(msta->link[link_id], msta_link);
++	msta->seclink_id = mt7996_sta_seclink_get(dev, msta);
+ 
+ 	mt7996_mac_wtbl_update(dev, idx, MT_WTBL_UPDATE_ADM_COUNT_CLEAR);
+ 	mt7996_mcu_add_sta(dev, link_conf, link_sta, link, msta_link,
+@@ -1230,10 +1251,7 @@ void mt7996_mac_sta_remove_link(struct mt7996_dev *dev,
+ 
+ 		if (msta->deflink_id == link_id) {
+ 			msta->deflink_id = IEEE80211_LINK_UNSPECIFIED;
+-			if (msta->seclink_id == link_id) {
+-				/* no secondary link available */
+-				msta->seclink_id = msta->deflink_id;
+-			} else {
++			if (msta->seclink_id != link_id) {
+ 				struct mt7996_sta_link *msta_seclink;
+ 
+ 				/* switch to the secondary link */
+@@ -1246,10 +1264,9 @@ void mt7996_mac_sta_remove_link(struct mt7996_dev *dev,
+ 						msta_seclink->wcid.idx);
+ 				}
+ 			}
+-		} else if (msta->seclink_id == link_id) {
+-			msta->seclink_id = msta->deflink_id;
+ 		}
+ 		msta_link->wcid.link_valid = false;
++		msta->seclink_id = mt7996_sta_seclink_get(dev, msta);
+ 	}
+ 
+ 	if (flush) {
+@@ -1326,6 +1343,7 @@ mt7996_mac_sta_add_links(struct mt7996_dev *dev, struct ieee80211_vif *vif,
+ 		msta_link = mt76_dereference(msta->link[link_id], &dev->mt76);
+ 		if (msta_link) {
+ 			msta_link->wcid.link_valid = true;
++			msta->seclink_id = mt7996_sta_seclink_get(dev, msta);
+ 			continue;
+ 		}
  
 -- 
 2.53.0
