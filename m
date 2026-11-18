@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056138;
-	b=NCqmNQdlgffbnJXeJP6x2/xtZnx88pT9WpcGxT+Ll6IMyw2UFiadrZj+NEXmG00I7RO2
-	 tbg8dcSVw99oFj88Btz2x+Ygi8wJXHh1o4XZV10VA9Huwted8xY6CfnIfYeIW/4TbHNcX
-	 1QSTWhFnrgTEdBSJ0nutJ+S7LqoaMWYoeQnl8dJkdHI0I7AYF/5zYcdz+xwQD3EyaBFRx
-	 cqnr1wmyETnznrIIG0hfvyJ2ixcOgcmljI7IVV3ODec1jS5ENN4ttBJ77ps49kP/lu/CE
-	 x/i9MkxZCGM5a4PQrF7rA/k76c11+BYcDj0tlAcbGMNRYqTY01K7erhLTTdT0/r6dCA==
+	t=1795056141;
+	b=Q/VMQscUxkFdc/mFBv1z8873/xatewv1p1sYgWWZbPD1qfUUeJf6/dCsCTAePvbD4B2S
+	 P2t//8EVxLsOaQ8+8uNTMJD70otsEX8c/4EUFaiGiVXpFJLZcytKBNqRzlMTNYF9yvo9x
+	 QD6cdepabH7Qwf6qpHXnmr8Sw/fOSqa+kuIBr1AbVPDLRZAeXJflWvZBlWZBx1aTMT4HE
+	 yYRTWqGJFcy+bX/ex0He4GBNW5Kxa1f+ZTHlmGElAfbWnCXmWUGLnVmwGtHzlgt39gPps
+	 XAhp6E/l9zFvdM2Z8lzPAHDQ6B8As5M7hRHEq2ihT+13S79mCxZC4HJ3TyezhLxFGmg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056138;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056141;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DxzB7Yev1BYWJAi6Kz/u1Oqsumunn+ORQjvNkJFX6Y4=;
-	b=GGvBx8/UcfPYsY9LMq87lSjwYdPYGdbXAriMZz6lVPsGVmml+9F5KPByXM9wLrno4lun
-	 bJTyiYgXh6D1WZGI9BRclVxMjsgUOFMlbv7g/F7jZvnyZ909o92ccXsem3Hen5CLH8hRB
-	 aZU/qnsv1ZPE9mTt1Zdp0ZwTmpNhxQadqUr2neNsy/QAmQS1aaR9vI05Qv4uTs/Tcgwb7
-	 YaJ/EUeJ8iB6iCQ+llqZqHQi5+fSu6QtQJ0fbcu9MJ193RvCWmDHKbTE3woss7N37frpI
-	 8idGgsvBN5/WmjniJCvnua1zLmrN1NKoSwb4ntaWYCWh8Xf1ZyDsVMVAbXvr3UqUzbw==
+	bh=H6I7YDcmjnyc4b/bn3JgQDqgpEStKfvYwBnV8erZMPE=;
+	b=DbKs8xTe+jE7CNDeAc55F61VomdENbbJX42TMMDeECMAIq1JbPX+a/REmScEP2ZVSIwW
+	 kT8CLbbjjVQttY7+DpAAZeDSjYgv0jim9WiENwF6912iF+xr+xFHdDSZiOMeOaDcAXVl6
+	 hCJ5ah4XCKs7cTmaKyfH5Jizc5jx4jVC8zcxB0LyIKiULpHCg/JE8da86SKUB8AFUuWvc
+	 W+O6gZe2xrtTXh/oh3lizfwEFnwnAHf17cbjHVLmorihBUuyHGQBxlOUvYL4rBGaBng70
+	 xv9vdTH6tB5pFkeIR0Wjsh2tXSRwEGKo/l1+k1piYZ7KvG67TFk7nddViwqLalVP+RA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r4Rp4GEW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JoiTgrc5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D88A606A32F;
-	Thu, 19 Nov 2026 02:42:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 759F8606A31C;
+	Thu, 19 Nov 2026 02:42:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r4Rp4GEW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3B5C1F000C5;
-	Thu, 19 Nov 2026 02:42:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JoiTgrc5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5B141F000C4;
+	Thu, 19 Nov 2026 02:42:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056138;
-	bh=DxzB7Yev1BYWJAi6Kz/u1Oqsumunn+ORQjvNkJFX6Y4=;
+	s=korg; t=1795056141;
+	bh=H6I7YDcmjnyc4b/bn3JgQDqgpEStKfvYwBnV8erZMPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r4Rp4GEWY6l9MtRSj5iDOa61OZoiNiiEhsDVls+zU6z66x6V4A8Xed6GHYWcnSvKz
-	 6Mu0LxGRBehYjHnozd5rdqFHhT+OXdGb49yO1AzACxYvEvrWrWaOLA0cw2ub7twDij
-	 S1OnJZ8RJ1uCQAc+GBOx/Ah4cT7aLp/XhACviwPM=
+	b=JoiTgrc5PbIA7ql14yg+PvKGm790ZlOAc2Z4dbY9nNPYk6pGtdktT7cl/7qLRILUX
+	 sii0rzdnqSND5EiSnVnELKTMWyesIE0JzudG8NVxHJGPFWJ+Oc8iJ8FPabzZbO01By
+	 fRQr1PkCOZ3cFHGHr64apJQSTWR1J63F+JhPzIjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1881/2214] clk: qcom: mmcc-msm8996: Fix FD AHB clock register offset
-Date: Wed, 18 Nov 2026 15:59:17 +0100
-Message-ID: <20261118150126.500349006@linuxfoundation.org>
+Subject: [PATCH 5.15 1882/2214] clk: qcom: mmcc-sdm660: Fix MDSS AHB clock HWCG register offset
+Date: Wed, 18 Nov 2026 15:59:18 +0100
+Message-ID: <20261118150126.533754770@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -71,42 +71,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Abel Vesa <abel.vesa@oss.qualcomm.com>
 
-[ Upstream commit 7cb2d65286b817d8d7e26f454a9c374d65e87072 ]
+[ Upstream commit c5f338329a2d0d60f7874aa7a1addaa0e4e75a3b ]
 
-The FD AHB clock branch register is at offset 0x3b74, not 0x3ba74.
-The incorrect offset exceeds the regmap maximum of 0xb008, so regmap
-rejects accesses to it and the clock cannot be enabled.
+The MDSS AHB clock HWCG bit resides in the same register as the branch
+enable and halt status bits, at offset 0x2308. The current HWCG register
+offset of 0x8a004 exceeds the regmap maximum of 0x40000, so regmap rejects
+the read in clk_branch_in_hwcg_mode(). Since the read error is ignored,
+the helper uses an uninitialized value to decide whether to skip the
+halt status check.
 
-Correct both the enable and halt register offsets so the driver can
-enable the branch and check its status.
+Correct the HWCG register offset so the helper reads the actual hardware
+clock gating state.
 
+Fixes: 5db3ae8b33de ("clk: qcom: Add SDM660 Multimedia Clock Controller (MMCC) driver")
 Assisted-by: LLM
-Fixes: c252659770db ("clk: qcom: Add MSM8996 Multimedia Clock Controller (MMCC) driver")
 Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260916-clk-qcom-mmcc-msm8996-fix-fd-ahb-offset-v1-1-a575e1b9112c@oss.qualcomm.com
+Link: https://patch.msgid.link/20260916-clk-qcom-mmcc-sdm660-fix-mdss-ahb-hwcg-offset-v1-1-30dcf09d907c@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/mmcc-msm8996.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/mmcc-sdm660.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/mmcc-msm8996.c b/drivers/clk/qcom/mmcc-msm8996.c
-index 24843e4f2599d..e78d61032a1dc 100644
---- a/drivers/clk/qcom/mmcc-msm8996.c
-+++ b/drivers/clk/qcom/mmcc-msm8996.c
-@@ -2883,9 +2883,9 @@ static struct clk_branch fd_core_uar_clk = {
- };
- 
- static struct clk_branch fd_ahb_clk = {
--	.halt_reg = 0x3ba74,
-+	.halt_reg = 0x3b74,
+diff --git a/drivers/clk/qcom/mmcc-sdm660.c b/drivers/clk/qcom/mmcc-sdm660.c
+index 04e2b0801ee42..7a9d59727d3bc 100644
+--- a/drivers/clk/qcom/mmcc-sdm660.c
++++ b/drivers/clk/qcom/mmcc-sdm660.c
+@@ -2022,7 +2022,7 @@ static struct clk_branch csiphy_ahb2crif_clk = {
+ static struct clk_branch mdss_ahb_clk = {
+ 	.halt_reg = 0x2308,
+ 	.halt_check = BRANCH_HALT,
+-	.hwcg_reg = 0x8a004,
++	.hwcg_reg = 0x2308,
+ 	.hwcg_bit = 1,
  	.clkr = {
--		.enable_reg = 0x3ba74,
-+		.enable_reg = 0x3b74,
- 		.enable_mask = BIT(0),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "fd_ahb_clk",
+ 		.enable_reg = 0x2308,
 -- 
 2.53.0
 
