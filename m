@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025480;
-	b=uI/yiT6RpnF03fhfZa33hgL7hudGzf/i86N+jaBjyV0ZO+Lb+QN75wnTMGmdAmDVdNWt
-	 a3fl8ooGbn/933t+z8I46zoAMc0GSYbSjD2HBlSCROM7TkP5VoxxKkPjJx2BUZ0Jw3Rmb
-	 oBJ+6fEMX03ObsvUafQhwYLaTJ1b0K5nbw1CyrEm6vPMHIryOU3LwHBbasR1VdT7i2FEe
-	 pwNbfSnsTZlVo69FuiKZig0Db87Yn5JhPyb+kp+TgVjfrDiHBE6n88rjS3Njm87Tx2DwW
-	 RwYsEW8ZPtSk/yqhON4IOcKX2meHWUcabZ/yYABTQpDk0ufYF9MXJ/++ycGWJFZtx/w==
+	t=1795025483;
+	b=RUpUpNFLsr53gF/Tcjg5EtoQq8Xx/iPZOsb/LXNad802L1IWuAPsgJgk/spfVDo5qz+w
+	 Ms9x7ZOz9Dy3CDDi1CxQq7J2SZTFU6WtWYL/zvQTKDtt26kpRqP54t6OZjzZ8/YSWN78m
+	 H8zXbLHIrfzBY0aO+1oJ1L3S+oeLMX6ZiiNjUdQpVu/QrsXKr1fJczTF16GZMOsCqdgLb
+	 Ao3YdqRQH0JgyLO6Tm+nzfYPklewYTlm24d95YunRrGFJ+/dVIMY3KV8kdjGDfSK+COFW
+	 67f0GLzRK7u9wMHTPMjvf6FU6pVdtSyXXom7T0mxfjaUATSvh88EoSKWYO65QIvKWRg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025480;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025483;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z3dplA3Rzj3e2z2Yl/GIzQjKvEpry0i11kI18OupZ3o=;
-	b=Q5HdnhXeCMMhkKnBMxxWSBSNVJbDQvGvR2WUHMc3KYqqEM8SzbbEvMyp+wKBgjCSAoX0
-	 AgDbAhINiTwFLzCgMvLc4RMqc74GfzwO1kPp6zuUYjvfSYAsXK81rCsaDAfGRPXQSA/LJ
-	 PFmwA1B4xfClVgCGOPSKMGEW4MSzaDMMkrm0A/HxlVn718MQIIjARln+RB5bfjmQUhPuB
-	 HiBjdBNqoFtuTQG0dt1IWkjpHQeqSr88ojGYYZZIXrLyHfWHlz+EvaIeaqAqbM2fUzLXs
-	 xBinO3D+mzufQE+mrQRnc+Hq9WKit9B9i+0FZM1xZ24Jy7gfeNtHZg4+M0xpQVWVSXw==
+	bh=p3B7+/+zajn/jJf/reK6OiIOsp05zESrN3cqlswlHeU=;
+	b=KUijzSYfjQLXtRSQmnGphSyKvnpkuWIWFP380oIRUnNC7enIkYLbhXI4u2Fgs16aq9ar
+	 ad/kLBX4Z289lsw8UBVzZehgDcgwSWjbpPSlg4KOa7cfysJ/CzKt0nD6X3OfAOOSFEe5Y
+	 IEqld9uHeLkZ3pXIjVzFlu/NC3ANAe62Jqxu5tXs39634eoPDGxrdxZk5z4KNfK6Inm8B
+	 uhYMUraJcjlk3h1RweKkm3LDCW4jMHjQzkgHMbOQ62nrAjcMUt//HG6X89XzzIIT83ix8
+	 IZoW8+4qrtP1SZb5QUNSEN46689/jiubOOP0yDwZ5dm3EIzf+SoL1zoIyQphuiLZxuw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QI6FqtHA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wl0r61ED;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A757F606A32C;
-	Wed, 18 Nov 2026 18:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4294B606A330;
+	Wed, 18 Nov 2026 18:11:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QI6FqtHA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B77DE1F000C4;
-	Wed, 18 Nov 2026 18:11:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wl0r61ED
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9240B1F000C4;
+	Wed, 18 Nov 2026 18:11:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025480;
-	bh=Z3dplA3Rzj3e2z2Yl/GIzQjKvEpry0i11kI18OupZ3o=;
+	s=korg; t=1795025483;
+	bh=p3B7+/+zajn/jJf/reK6OiIOsp05zESrN3cqlswlHeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QI6FqtHA/8V0j6hbcwyXi+NDDSFrs+KI2EaQxRPpA67iPmdbn4WZXeUSDRrXBFEoL
-	 PHay0pQfV7P9gNBZ58nXyLFzHcNdo1AuVLv9eFRnoC5Yx5YYU21PplNmYL4Pnea7gx
-	 5RWxqBKUcATXl2gIG3FYy69pVw8O0BMlyJEWRwsI=
+	b=Wl0r61ED/auevTphg1bmM7Xb0sWGEyIfgMDode38p0Oj6YVduHMu/HDOKokWsrzUc
+	 DtOY4xUHkfEO/XHeZ9E+BHibgsK/SAFitYFcFVx/cO5mJ4rU6xpmAMvMkZGjCaPVyM
+	 ju9KyzRutsBFhg1e8TmzUoBAdA5NbyL70pCxhupc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yibo Tan <lhfff@tju.edu.cn>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1093/2151] soc: qcom: pmic_pdcharger_ulog: prevent work requeue during remove
-Date: Wed, 18 Nov 2026 15:47:08 +0100
-Message-ID: <20261118150202.091190274@linuxfoundation.org>
+Subject: [PATCH 6.18 1094/2151] ASoC: codecs: es8375: use devm_clk_get_optional() for mclk
+Date: Wed, 18 Nov 2026 15:47:09 +0100
+Message-ID: <20261118150202.123198981@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,58 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yibo Tan <lhfff@tju.edu.cn>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 66894a1c51366cc2d5c498178105dfe3bcccc1e4 ]
+[ Upstream commit 58e7bca5cf264e910ad9199cfc40246e0a2834f4 ]
 
-pmic_pdcharger_ulog_rpmsg_remove() cancels the delayed worker while the
-RPMsg endpoint can still deliver callbacks. The RPMsg core invokes the
-driver remove callback before destroying the endpoint, so a response
-callback can run after cancel_delayed_work_sync() returns and queue the
-worker again.
+es8375_read_device_properities() gets "mclk" with devm_clk_get() and
+then tests the result for NULL to print "assuming static mclk". A
+missing clock makes devm_clk_get() return -ENOENT, so the probe fails
+before that test can match.
 
-Device cleanup then frees the devm-allocated pmic_pdcharger_ulog while the
-requeued delayed work still embeds and dereferences that object. KASAN
-reports a slab-use-after-free in pmic_pdcharger_ulog_work().
+The binding does not require clocks, its example has none, and
+everest,mclk-src lets the codec run from SCLK instead of MCLK. Use
+devm_clk_get_optional(), as es8311, es8316, es8323, es8326 and es8389
+do for the same clock.
 
-Use disable_delayed_work_sync() to drain the worker and reject queue
-attempts that race with removal.
+Found with an experimental clang warning about NULL tests on functions
+that return error pointers. Tested only in QEMU with i2c-stub in place
+of the codec, not on real hardware.
 
-The issue was reproduced in four of four runs with the real target driver,
-RPMsg bus removal, endpoint teardown, workqueue code and devres cleanup.
-The test provider delivered a valid response in the window between the
-driver remove callback and endpoint destruction. With this change, the
-same late callback occurred in four of four runs without a KASAN report,
-warning, Oops or panic.
-
-The reproducer uses a test RPMsg provider to control the teardown timing.
-No unprivileged trigger or physical Qualcomm-device result is claimed.
-
-Fixes: 086fdb48bc65 ("soc: qcom: add ADSP PDCharger ULOG driver")
-Assisted-by: Codex:GPT-5
-Signed-off-by: Yibo Tan <lhfff@tju.edu.cn>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260912161210.1683266-1-lhfff@tju.edu.cn
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: de2b3119f9f7 ("ASoC: codecs: add support for ES8375")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20261003190738.77564-1-kmehltretter@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/pmic_pdcharger_ulog.c | 2 +-
+ sound/soc/codecs/es8375.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/pmic_pdcharger_ulog.c b/drivers/soc/qcom/pmic_pdcharger_ulog.c
-index 39f412bbf2c1e..06cd9c4411c2f 100644
---- a/drivers/soc/qcom/pmic_pdcharger_ulog.c
-+++ b/drivers/soc/qcom/pmic_pdcharger_ulog.c
-@@ -143,7 +143,7 @@ static void pmic_pdcharger_ulog_rpmsg_remove(struct rpmsg_device *rpdev)
- {
- 	struct pmic_pdcharger_ulog *pg = dev_get_drvdata(&rpdev->dev);
+diff --git a/sound/soc/codecs/es8375.c b/sound/soc/codecs/es8375.c
+index c235f91929b31..7c09b51aa24f8 100644
+--- a/sound/soc/codecs/es8375.c
++++ b/sound/soc/codecs/es8375.c
+@@ -667,7 +667,7 @@ static int es8375_read_device_properities(struct device *dev, struct es8375_priv
+ 		return ret;
+ 	}
  
--	cancel_delayed_work_sync(&pg->ulog_work);
-+	disable_delayed_work_sync(&pg->ulog_work);
- }
+-	es8375->mclk = devm_clk_get(dev, "mclk");
++	es8375->mclk = devm_clk_get_optional(dev, "mclk");
+ 	if (IS_ERR(es8375->mclk))
+ 		return dev_err_probe(dev, PTR_ERR(es8375->mclk), "unable to get mclk\n");
  
- static const struct rpmsg_device_id pmic_pdcharger_ulog_rpmsg_id_match[] = {
 -- 
 2.53.0
 
