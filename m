@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048561;
-	b=3BfYk4/YXnhFRmmo5aNmVGYPUQdSqaoSeHa5WnVVXMjGItKhtMMAvYoa3dTPbX3Y6YR3
-	 jHvCrwcJ2udNRKcLiRmERjzTsD2f3bEp9Uu/HSFtz3kHGA6LhE3P3RSkdjMmI6PXWwiDZ
-	 MJpbvBwTRFeD642zbSNzmelprgcIZIGJdrMmM0EeuKaZkYclVrv1rh+UDcA9YVqwiuEMW
-	 YfLQBGlhYyVZO07QEyVWSvCUMIGnbJXIRlBB3CSRZe4qZ/jZhXkNwMM9RNdd77to4PPRA
-	 9QbY1+CzuvzM4JCAWuf3gQG3u7WBIUSCeva3fXoUVuhejaRC2Ue9xQBesBFj82nJnDg==
+	t=1795048563;
+	b=XHc3caOMgLOm+1qHgIYkKo3ustiimfZZrfEhiqz6T2o6rm73y2RivATVtyTmschpqPm0
+	 eJcXBnM+CDMrnceX2X0z/k0l6EaxCrUpMbCAWtqCG26QWUxMpH51M42nDr1HfYFxfLPIb
+	 AFzapMkWKUMTviJgcCD4Ti8MovgbKVn88cUyI3Bho2k9I4p8dFTlgC7WErZUspPgvykKx
+	 2ET4TAdtWBvRQUdu8jbwSKEZZNdXLqaPmI3v5kSPgU6lSjzJddwbUKBlwDJcxxcoXbdG2
+	 DlEFij0xlwgpP9+Lvpp1eGRiDyeolANVtDvb3snHrpyf8bgGI83uJLHeNM1U/vx4O/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048561;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048563;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YgaV1yNXUO+11iA9jLwYj20Tc8E2akGZ2gowjjnPS0E=;
-	b=5bC5mhrDwD9HxV4S2EYmsiZ2ZFZ3K+VmYwDAVhat1KCol9q4T/UjPijIz/4qpzF3eAuw
-	 t2fTm/80AwSHuHWrUGmmGaKqoXgJcYWXyDsngy7h8eNUNYOS6e/xMxSyPAsv12ctFUqkl
-	 wf97b5UcqX2pzPPKYFdiazQ8biM1GixzVjTJTOARMDDSjC4OsMk/jBsXY2DzFSv5Ht3O2
-	 kh7mN8d+cEgKridGSniG84VVp+7s2FxN4JloWkJfQ4EwwfW3EV8RekNrv6PZlKNx6oNac
-	 drdgZVs/LzS62y1lyVjSJjy1IIhl6XzH5gZffmKvMP8rQ/V2JFom3UD1D0OJOHVkPpQ==
+	bh=0QUu/a8nMivPry0I8TJNc9fIj4pyvbMhf6OtNpj9POg=;
+	b=CjcFiYmVa9lly7TgtILwYQs/j8WJEpjWRjOvi+aiKEZFad9xakXNEkjAb36lNWt7CIIK
+	 2gayI/GIT9uTh5U0xJUT15hofoWtaIwwC4YkM+aOcoeYfNDKyACXn91BNmrFUQlyadXnE
+	 q1ZqHSbpaqfIMztqyS5K1jNUDTyep1tK9FFYjmfhTHQYMMTV+Js/8POVXshyh/JOXFHti
+	 zXTiYX7r9keG69o17HW0fnyGsvV6JnvUxUji6CC9jhxA1BkliR0RienVF6kqzrmEtEjs1
+	 plEbdvXWgYTf79JdoFd1fg1YtDO6MV5litA+Y4RZcem6KFPLctcRcmsitUVcU/xSApA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U5i6G6Y+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eQJtQzdo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FFC3606A325;
-	Thu, 19 Nov 2026 00:36:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D66B7606A320;
+	Thu, 19 Nov 2026 00:36:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U5i6G6Y+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 964611F000C4;
-	Thu, 19 Nov 2026 00:36:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eQJtQzdo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 380101F000C4;
+	Thu, 19 Nov 2026 00:36:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048561;
-	bh=YgaV1yNXUO+11iA9jLwYj20Tc8E2akGZ2gowjjnPS0E=;
+	s=korg; t=1795048563;
+	bh=0QUu/a8nMivPry0I8TJNc9fIj4pyvbMhf6OtNpj9POg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U5i6G6Y+fzJW7NzhOIOWAlppc82XIZhkKlWuRNQuX4Zlgz1jP3eegOYKaxWlB3NtF
-	 y4kxJvi4zr8VjG+lDxYOUKdNwZp8MGeVqkjkItmmo4YsGYkMAvFrTVVbNbzW5dMT+Z
-	 5gCnM+yFGANpuA+Fqekyl++6uBgTiImYZ4Ai0IYY=
+	b=eQJtQzdowwk+8IhGV6aZkeFQDISKqhwDULyHu/NsyKUehhQybmWxmO3Pg+dOvRaCj
+	 eYlfDt+WE2C37Sa/t4AMo0ZRcBylxKQmQgXdoFcSRPlR0bkI+XOp509RsSEqxkqGfo
+	 uTgTvL1wsRNsUwHTHlzX04ej4uSQ/RlzFDEG62H4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Kees Cook <kees@kernel.org>,
+	Icenowy Zheng <uwu@icenowy.me>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1987/2857] pstore: dont leave an ERR_PTR in the ramoops zone pointer
-Date: Wed, 18 Nov 2026 15:50:21 +0100
-Message-ID: <20261118150312.920766858@linuxfoundation.org>
+Subject: [PATCH 6.1 2032/2857] dt-bindings: vendor-prefixes: add Genesys Logic
+Date: Wed, 18 Nov 2026 15:51:06 +0100
+Message-ID: <20261118150314.570282499@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,40 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Icenowy Zheng <uwu@icenowy.me>
 
-[ Upstream commit 70fec428c845216da98041b1ae9f16a8f54b3d68 ]
+[ Upstream commit 38cea8e31e9ef143187135d714aed4d7bd18463c ]
 
-ramoops_init_prz() stores the result of persistent_ram_new() in *prz and
-returns the error without clearing it when initialization fails.
-ramoops_probe() then cleans up through ramoops_free_przs(), which hands
-*prz to persistent_ram_free(); that treats the ERR_PTR as a valid zone
-and dereferences it, crashing the kernel.
+Genesys Logic, Inc. is a manufacturer for interface chips, especially
+USB hubs.
 
-Clear *prz before returning so that cleanup sees a NULL zone.
+https://www.genesyslogic.com.tw/
 
-Fixes: b5d38e9bf1b0c ("pstore/ram: Add console messages handling")
-Assisted-by: LLM
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Link: https://patch.msgid.link/20260921202317.70595-2-parri.andrea@gmail.com
-Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20221206055228.306074-2-uwu@icenowy.me
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: aa906abf611c ("dt-bindings: vendor-prefixes: add Free Mobile")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/ram.c | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/pstore/ram.c b/fs/pstore/ram.c
-index e15b4631364a8..1e28b1fdcde16 100644
---- a/fs/pstore/ram.c
-+++ b/fs/pstore/ram.c
-@@ -590,6 +590,7 @@ static int ramoops_init_prz(const char *name,
- 	if (IS_ERR(*prz)) {
- 		int err = PTR_ERR(*prz);
- 
-+		*prz = NULL;
- 		dev_err(dev, "failed to request %s mem region (0x%zx@0x%llx): %d\n",
- 			name, sz, (unsigned long long)*paddr, err);
- 		return err;
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index e6e01951d51c0..a806202b80a78 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -490,6 +490,8 @@ patternProperties:
+     description: GE Fanuc Intelligent Platforms Embedded Systems, Inc.
+   "^gemei,.*":
+     description: Gemei Digital Technology Co., Ltd.
++  "^genesys,.*":
++    description: Genesys Logic, Inc.
+   "^geniatech,.*":
+     description: Geniatech, Inc.
+   "^giantec,.*":
 -- 
 2.53.0
 
