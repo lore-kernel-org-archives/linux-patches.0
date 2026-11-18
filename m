@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028643;
-	b=g3Uqw5G+xV6CtGboyHev6GLoJ0BE/WlBxOI2TwuzHhyjgML0mlBqbu1uo7KrYTGHb+g1
-	 euYnJ25wGa6sXym51LKnjkP9nG/owoYVvIcPGF6bvVL+Y2e4/bnzgwUM4TUerxZRp2DBO
-	 AIJJAPNLyXP8+qRaQLExaEl3lAKCjyRj7KaDILaaLqRgxmc34usD0a3ZLYWBylHrHK5FS
-	 piD0YUqiZfAoMrLn5AXiuzkQA+0aBPvQuEkKEqYR4FAJHDq96OIL3kxXgEc/olYTJXVZe
-	 K6ii5jzPSBsmt5dlbyAZ7l/3yEYBctwhqK+StbzlaX851vWrBo+84AbKa7pAc/LwrRA==
+	t=1795028645;
+	b=v7eeCJ0GOV+LNK93lEsYqzgy7Gs3ds4GrvxZCtkcGLXnWRT7xng5aoZnZcuHh7pBtDmC
+	 D6np7ouedi2gnvl5vRE0a/52Q7mo5VK68764T6Hn9nEplPE4O2asntEfJ48dPC6rtpIsA
+	 gNs3JL8Pv+Rg0Y44PSwFn//GB78ziOtA1WJS59eXEQh6Ocp3TvbF4ez89wzh5pPYxg2NX
+	 8FqKdJVWjv+lCXRSK3HgS/0njIBXVMeNZZomgpJNleMo+0MpZ5kc794gHrMLW0xHFnnuu
+	 nYTy7fMmyKLgO758H81MO8Y8kaCTuyexKIxu+PyXdEXmLECeoRXdV46Mw6a8CVVvONA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028643;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028645;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gpM9KQ9ouDcE5YAfOs+ViSi1z1zoz7lcDC+DtXo0OPI=;
-	b=RCcj5BlTMBNrThLmJBhnWqD9cJXKzg/nOf+QATeBgorVVbzY0BIdZXgtpXvJzRIi9dCH
-	 0NqC5sEjAsm4x3qO69Kd8iwqp12lUEpV7FUhYucCdQABgqa39nlV+v9X2HcoV2crgUEOd
-	 oh3tqQAt4oVnPxnkdLS9PE2nOSkEvPJfXugqMFhBHiZjTwZ45+yhtCnQNRxaeqaA8/yos
-	 AVWwax/Oa4trAqvO+xqaITiawx0rw3V0Ft2EL6IB1+/augTT4uTigQlOOurUZLYzIJQlZ
-	 uuGU92YoCi1VFbNirystQgsWkmQI6cDNK/HWs70lEZcOsDFGnkc9USd//DoEW3MLZGw==
+	bh=x/xQ/DiXwaFg/KnCQ0FBw0t+o3BUTNztJrFDSGMfhh0=;
+	b=Djb+92gJ+n1fDnS9Lu6fKqph70x+vc8ckmGfNDkOi6bnBozg7zX3jciOcuJEK3W2OS9L
+	 vj9Kh02uJ+udtWIyxAoPzUgvTIaLkwFKFkdb9Iw6aWfw/rModLCP6ura01uDqXhfL5ucd
+	 Z4ztLCtyJ3sPKHUjtt67ZKPqLay7EI3iNwB0nS0lwDLdSRQWymWpCHGtmAVEQKsz5P39+
+	 OAgHHbx8gX+Yyt0K/vVnrm/1vo76I9Pf1+KBO9w9ls+ZWUcHWrSUVGr2ZxeOAF46MaS3H
+	 kcCsQ7yC3Ps01BCn1LTHuYssoCiELAiMAH8cIkB15qUPIJl4nQ8u0yUK3L9M4gqjhkA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=09uff5Dz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oljg2eNU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB91606A325;
-	Wed, 18 Nov 2026 19:04:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90F4606A337;
+	Wed, 18 Nov 2026 19:04:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=09uff5Dz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 769E81F000C4;
-	Wed, 18 Nov 2026 19:04:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oljg2eNU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 200501F000CE;
+	Wed, 18 Nov 2026 19:04:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028642;
-	bh=gpM9KQ9ouDcE5YAfOs+ViSi1z1zoz7lcDC+DtXo0OPI=;
+	s=korg; t=1795028645;
+	bh=x/xQ/DiXwaFg/KnCQ0FBw0t+o3BUTNztJrFDSGMfhh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=09uff5DznC1+cfJObRM9GxzFIbksWSThmX9/lrtPPjaaRVc3sNauKYf9vvRqLepSV
-	 5lwaBYCpqQ7Fn9FhFlEz7jfxdPFmAvXV/VeYa7VTIfu0u9I4Xkl/gZKvbHT82eAram
-	 9QguyoeC/KfiqByogBbYrS2OghtX+CYrJ9E5Lgeo=
+	b=Oljg2eNU/wbzM1zyHNwBdo6hGE2B+UIDwFev/B93JrLesYPFaVR2iqyN78MJ2q3pp
+	 aBKICWtodocZUfMxb3tko5dcjUNxnLijTdY4zDpbBxQDXASD5M3rRMlEIYyxneKaVP
+	 Jk4gPSv/KISOMOXBIRckrLYpe8gol6eDIXSrwaMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Vega <vega@nebusec.ai>,
+	Darong Lu <zzyy19904204639@163.com>,
+	Ren Wei <weir@nebusec.ai>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0025/1756] hwmon: chipcap2: disable device after hwmon teardown
-Date: Wed, 18 Nov 2026 15:35:52 +0100
-Message-ID: <20261118150008.893002259@linuxfoundation.org>
+Subject: [PATCH 6.12 0026/1756] libceph: initialize CRUSH choose argument weights
+Date: Wed, 18 Nov 2026 15:35:53 +0100
+Message-ID: <20261118150008.925812735@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,77 +71,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Darong Lu <zzyy19904204639@163.com>
 
-[ Upstream commit 4724ac5556ce63f01a3f5d61fc7fcc20f4ddef3f ]
+[ Upstream commit c3a995ff0782587789333c621e1f6bd5e574371e ]
 
-cc2_remove() disables the device while the device-managed hwmon device is
-still registered. A concurrent sysfs callback can then enable the device
-after it has been disabled during removal.
+Initialize the CRUSH choose argument weight-set array before decoding so
+entries start in a defined state while the decoder fills them.
 
-Register a device-managed disable action before registering the hwmon
-device, so devres unregisters the hwmon device before disabling the
-physical device.
-
-Fixes: 3af350929e75 ("hwmon: Add support for Amphenol ChipCap 2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://patch.msgid.link/20261014-chipcap2_locks-v3-6-27ebfc2c5b9e@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 5cf9c4a9959b ("libceph, crush: per-pool crush_choose_arg_map for crush_do_rule()")
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: LLM
+Signed-off-by: Darong Lu <zzyy19904204639@163.com>
+Signed-off-by: Ren Wei <weir@nebusec.ai>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+[ sashal: replaced kzalloc_objs() with kcalloc() using an explicit element size ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/chipcap2.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ net/ceph/osdmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/chipcap2.c b/drivers/hwmon/chipcap2.c
-index 0f7711ca6feb7..6a69c7699594b 100644
---- a/drivers/hwmon/chipcap2.c
-+++ b/drivers/hwmon/chipcap2.c
-@@ -166,6 +166,11 @@ static void cc2_disable(struct cc2_data *data)
- 	data->regulator_enabled = false;
- }
+diff --git a/net/ceph/osdmap.c b/net/ceph/osdmap.c
+index 803514a1bc7ce..fdb8c398f5ecd 100644
+--- a/net/ceph/osdmap.c
++++ b/net/ceph/osdmap.c
+@@ -320,7 +320,7 @@ static int decode_choose_arg(void **p, void *end, struct crush_choose_arg *arg)
+ 	if (arg->weight_set_size) {
+ 		u32 i;
  
-+static void cc2_disable_action(void *data)
-+{
-+	cc2_disable(data);
-+}
-+
- static int cc2_cmd_response_diagnostic(struct device *dev, u8 status)
- {
- 	int resp;
-@@ -747,6 +752,10 @@ static int cc2_probe(struct i2c_client *client)
- 	if (ret)
- 		return dev_err_probe(dev, ret, "Failed to get IRQs\n");
- 
-+	ret = devm_add_action_or_reset(dev, cc2_disable_action, data);
-+	if (ret)
-+		return ret;
-+
- 	ret = cc2_request_data_ready(data, dev);
- 	if (ret)
- 		return dev_err_probe(dev, ret, "Failed to request ready irq\n");
-@@ -781,13 +790,6 @@ static int cc2_probe(struct i2c_client *client)
- 	return 0;
- }
- 
--static void cc2_remove(struct i2c_client *client)
--{
--	struct cc2_data *data = i2c_get_clientdata(client);
--
--	cc2_disable(data);
--}
--
- static const struct i2c_device_id cc2_id[] = {
- 	{ "cc2d23" },
- 	{ "cc2d23s" },
-@@ -820,7 +822,6 @@ static struct i2c_driver cc2_driver = {
- 		.of_match_table = cc2_of_match,
- 	},
- 	.probe		= cc2_probe,
--	.remove		= cc2_remove,
- 	.id_table = cc2_id,
- };
- module_i2c_driver(cc2_driver);
+-		arg->weight_set = kmalloc_array(arg->weight_set_size,
++		arg->weight_set = kcalloc(arg->weight_set_size,
+ 						sizeof(*arg->weight_set),
+ 						GFP_NOIO);
+ 		if (!arg->weight_set)
 -- 
 2.53.0
 
