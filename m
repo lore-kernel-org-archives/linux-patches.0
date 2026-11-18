@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057443;
-	b=FiXfAMM/HFx/9unDBlotW3tist60BxwdHSxVnHuTq+un20X40VmI2LVU8GEP3DHJ01IT
-	 Sab5qG8Oy8VKi1ksmUjykvnaFLZ22E3HE4vQ89irgKaoFpm4HTjkvRR0SUPWI/7C6tmpl
-	 Wv9eS/M03yw8gell7eUht2FH1me+tLBXMR7FHa+QSLCbypBmZnXG0InMEQKQWEap/GkUq
-	 NbpKa744GBUPjF+jH0jmkU8bu0BQJRmwXPlJpPDJ4TrSgU1JPW0GuaWLSryngwcjoX9HX
-	 i4pRqwaarWp+KGeuFo4juDWV99tvoNFJ2Wi6A3Oyq/AmEcZ03uRD/Dm6gZEBfyBMdSQ==
+	t=1795057446;
+	b=O0JvIobIaFECMCMHxw8zj2RjhjCo3IDTKkMlwNwQiFo+tylrSg8aM2XGpBQ3qIcBTCXA
+	 WYTaZGELb/aWJSRFQvTtyckVaOiisLrmNDWNlLk7wJQKlvP4PvwYEJWlvWIgsiXBUIyPZ
+	 xLv40I8KS/WYnhYCh9zsiihDT5oskCFpLGn8VCyHEATO8j0HpXJggyo3kZGr8EMMGeI1G
+	 MtCY/v/Xu9Kb2dYAqjRJs09Vd0I7YwCMke3fcRra6kkE72WHdRlvZ3OOzLecYnXEyvABG
+	 ctcRFmo1xbJ0PChNzmzZApQcqfDaN8/G5+6O5EF8m0lJRSgcNu84ZZilkEWOlrTMM0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057443;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057446;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kcqK4Tk3CHmoI7avAew7tn8wtvSy3xlLzt6oNKSmyjc=;
-	b=WLwMEhbPbzB8fPYhqri8Je+wBQZfd8JxyqLzd/30RYscOI0AH4Q5TUqhcAvrRBqRgvwo
-	 4RSiUHr/vPbIoqKTYEvWmasQJgkWu0hkSApa192XnNfxZhXuOLvhEPuIC1cNAS+CVNkid
-	 bo0nkqofqqcDL4bfR3lbF5Pq9fpBI1jFbEiEF0gPciKBGvS+0XoT1WJ3OjJTzNoFCwpQD
-	 t8UHGaTBI03DMPVmQ2eU3t/qYNWfLBU5m7LUYSkE7YNwwK4XjJ58JxX2Blj+QukuCu4vu
-	 J5sISHELuXinvaNcNzD+zE5dVFeN0P/THguRSmPdFdKGehUl9CJSEJMAAwnMCvH3Gug==
+	bh=FqkyiTdY/VsAvHf1kCxXLMQbXvM6FywBKqQI9su+ed4=;
+	b=dH6YdwSZIs5kY8Cy0M3KBSg74cgiosLV/lUJuQoYzKWZUhxR6SBO1UsRiJTrSaInubmF
+	 Qhm6kyzIgJQLuBPPtEvBHYkTsjGUWkW/5IEberkgY1oN8BrOBqVy8KX/vX7m5peb44Ciz
+	 MUBb1HXiX8lW46ywuy2CrZACgcMilyTmhNTC4tVJ5VimsYE72v/yt4UYVHW0dEwNykLHB
+	 ojjff1wIlVEazXSNqj31UZ9PfJr83n/9d//cdiCJvtW3AnSiRMn6W+Bnif6F8S7qAR2kM
+	 31rM4FWiyrzc4+v5hyrzcVRVFlFcX0YLtIiEb1dlshn8CntXQlQUJUs+oQotq9avH5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Te/clXjv";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C0k0cj6W;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A04A606A333;
-	Thu, 19 Nov 2026 03:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE0260A2606;
+	Thu, 19 Nov 2026 03:04:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Te/clXjv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0C3F1F000C4;
-	Thu, 19 Nov 2026 03:04:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C0k0cj6W
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1E501F000C4;
+	Thu, 19 Nov 2026 03:04:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057443;
-	bh=kcqK4Tk3CHmoI7avAew7tn8wtvSy3xlLzt6oNKSmyjc=;
+	s=korg; t=1795057446;
+	bh=FqkyiTdY/VsAvHf1kCxXLMQbXvM6FywBKqQI9su+ed4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Te/clXjv+etQ/E71wHc/sntCbLrh3LaBFESMoqdUSkco3JIMxjpyyb5Gl/vhck2WB
-	 86G9nR0vxqPrYdFNuwUcL7S79kevAnwt6KOl1qtUe/AUmc41gCAw6TArvSkTStl4E3
-	 tmZfXK2sjrfF5m9MipewnUo9eVpEh9x8t5P80Mt0=
+	b=C0k0cj6WQar5Rae0FuY+ZezQD8Ft0ftQTA00gVw3IQgvWFLEF30WuE/wcQt7wccFo
+	 AyXd5odMHdbMtWk9V/SlGvk1PxafzjVkuxkE02wOo9OLFjkRpnjkvbEBEtYVAu4eof
+	 XpIeFe+hYTfrea5+B0Yw3Qdga46QFKXfwsmF543U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Song <songxiebing@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	sashiko-bot@kernel.org,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0131/1848] ALSA: hda/realtek: add missing NULL check for codec->bus->pci
-Date: Wed, 18 Nov 2026 15:36:09 +0100
-Message-ID: <20261118145916.631880392@linuxfoundation.org>
+Subject: [PATCH 5.10 0132/1848] mfd: ipaq-micro: Fix out-of-bounds stack read in ipaq_micro_str
+Date: Wed, 18 Nov 2026 15:36:10 +0100
+Message-ID: <20261118145916.685023699@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,34 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bob Song <songxiebing@kylinos.cn>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 3b36ac93739e7b119a30affaee9c2dd41f24efbb ]
+[ Upstream commit da3a98c941753255418616d249e5b40db0927c26 ]
 
-In alc269_probe(), codec->bus->pci is dereferenced without a NULL check
-for the ALC236 vendor ID case. Add the missing check, consistent with
-the existing pattern used elsewhere in the same function.
+ipaq_micro_str() decodes a UTF-16LE string into an ASCII string.
+It copies characters to a stack buffer retstr, but fails to
+null-terminate it. When kstrdup() is called on retstr, it can read past
+the buffer into uninitialized stack memory, potentially leaking stack
+contents.
 
-Signed-off-by: Bob Song <songxiebing@kylinos.cn>
-Link: https://patch.msgid.link/20260730015302.253008-2-songxiebing@kylinos.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fix this by initializing retstr to zero.
+
+Reported-by: sashiko-bot@kernel.org
+Assisted-by: Antigravity:gemini-3.5-flash
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://patch.msgid.link/aintJF4X5tWDW-Ej@google.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mfd/ipaq-micro.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index ea10ee4de2f5d..acbe56e95f42d 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10398,6 +10398,7 @@ static int patch_alc269(struct hda_codec *codec)
- 		spec->init_hook = alc256_init;
- 		spec->gen.mixer_nid = 0; /* ALC256 does not have any loopback mixer path */
- 		if (codec->core.vendor_id == 0x10ec0236 &&
-+		    codec->bus->pci &&
- 		    codec->bus->pci->vendor != PCI_VENDOR_ID_AMD)
- 			spec->en_3kpull_low = false;
- 		break;
+diff --git a/drivers/mfd/ipaq-micro.c b/drivers/mfd/ipaq-micro.c
+index 4cd5ecc722112..d1f3b2b7989f6 100644
+--- a/drivers/mfd/ipaq-micro.c
++++ b/drivers/mfd/ipaq-micro.c
+@@ -224,7 +224,7 @@ static void ipaq_micro_eeprom_read(struct ipaq_micro *micro,
+ 
+ static char *ipaq_micro_str(u8 *wchar, u8 len)
+ {
+-	char retstr[256];
++	char retstr[256] = { 0 };
+ 	u8 i;
+ 
+ 	for (i = 0; i < len / 2; i++)
 -- 
 2.53.0
 
