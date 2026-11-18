@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037724;
-	b=r93EaY+DTjwE3Iq5cGDTtVJ3E/U4QwWDRcRyBrTA3rizJpLqZMChzQKBY6sybSQxo8oV
-	 ElzfFfuFOdYebEYWM5H6/gjmzENa4b7S7kPCah/mtvBzF3hx8kGv09v66W4WnCWckh40p
-	 qfNJngLO29bzMC4Ggw5J74CRpm4MsWWUg6KO5ci3vfYp3xCy+pNs/+tCSenmOeCV2Zpzh
-	 7GASJRh31r/Hqn2K7E0VKvvp10WWr5ROcbRHSv8X8ApP9y3YPOfE58QfsKP1Ja5g/UAKO
-	 vHGsaxQtHBKrknEMYxyIpP2FI4pYoE6SLDo/g7ALr42n4ozr3fW/GZOe9nNXWVfhSng==
+	t=1795037727;
+	b=W7+AFC7vBF0Gpp3SIx1sGNdUana6r/WtCsQVlEDOhFiXAywSfvCz0ZVxrPK98zHHIv3S
+	 N5EGsZQsdtZm3DY+IT687fMiVRiJq1zApd57t5E10KlM0ca/twdi0hfrZVVzYZ3H4H+7Z
+	 k08U7W/3+9PBX08mX5g+15YhfvSHcDu2Fwp8zX1XbB4LUKF3EWppn/lq1tIl+DdYCSMmo
+	 QknGSRU5YYSaGqf0YuR24tmoWmMYPMZdL1jpH2gnclf68E1B7o38gpFW1SKlB0GIIAIB2
+	 s3VlHEfNecESJEYGg68Oo9fdloCzxLEsi5OzWNBa3FPlkSq41ioLD0pynzfdL4AMhJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037724;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037727;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Je3XGhhbnkdzgZdPiCf/0dSuMbdYnY+36z5sVhjkzHk=;
-	b=ee2XJMPrpe7ut6aq0lVId+CvwVA+9Ed8tXWL+ab9dLm291/+lPRZLJ1F/BbLTUJsA8U+
-	 rQFJzXmceMEV0jIHIlIHFpEF2ay0qIcJOTyR68Ik/a8a/IR0wm4L2+KMfd8ULRFTosTb+
-	 nWwVRZ5gxOJOMEFO9uZHHfUxA74b156DYED6Bewtc31pgF7aixWz/CWKewbxvqfVeBTyk
-	 KSz/WWZi6K4rXRQSnZI6Ny+EEqv4XD8XSeft+nxjj7rvna6Lj0sQzjujSeL2jLcfic+Wq
-	 Q53u0CZ4mg3Tqnf65zGpBhh/L0e8m9DefTAIzR8eaPUDUNcu5E8oruUpsBjtJYOorbA==
+	bh=VoD7sleK1n2dsJ/As1DqzBbYBZevfNRcbIr6/v2fHzg=;
+	b=4wXfumEwpZFkcwCnMpVoi4llSJRg2yoIAM061bBVTOejgrwUqyjyK+zBZltr4+br/vZv
+	 HmtiiJaIuU1mrM7w01yiKHgtgC4qpTmXoVCFvrhz2haeoh4t7g/HDG6VEqOKktAW3yPH8
+	 WrkWRculjIXERBWg9bDXpddvgLAAfm5klKrAJUON3e8CuzuxbqjGeLFwbyLMdQxoTXole
+	 d+1d8nuBbzhob03TaJds7MPn05z88lYrvKMwgUkN5pIJGFUDn3DSfTPtFQALDaxy2RBKu
+	 Ciaanq15G9nNVcVFbJsYTzuZ/XuKVhNC5Sx6iaXhb7bkl9MyU/TpcapAiJ+Zu+4rwtA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="HTUX/VKd";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fu4yxFip;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C4C606A320;
-	Wed, 18 Nov 2026 21:35:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C71606A320;
+	Wed, 18 Nov 2026 21:35:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HTUX/VKd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE75D1F000C4;
-	Wed, 18 Nov 2026 21:35:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fu4yxFip
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BF501F000C4;
+	Wed, 18 Nov 2026 21:35:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037724;
-	bh=Je3XGhhbnkdzgZdPiCf/0dSuMbdYnY+36z5sVhjkzHk=;
+	s=korg; t=1795037727;
+	bh=VoD7sleK1n2dsJ/As1DqzBbYBZevfNRcbIr6/v2fHzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HTUX/VKd93NLFBo6MMT56ohS40QnmOLa6QBdNMfhWK+hgtt7qdL2Y4zaKqYVMJ/DO
-	 XSWex7eB8A7ZM+lzYQENRxO1nuSq7pOdQJalvuZcfvapDNnVxS4f2zy/cx75fCSVo2
-	 2eBib2AkCWz2aCxz5f8tM/hI9/AdMOHVchvy3jSY=
+	b=fu4yxFipAUxM0L8NBzs8Bz3jkKi1bVl/AnwmXe1fGiFioWu5Xt87TewUhE4p/YFTP
+	 s3Sx1SAFt/bBnsVu0WGwB0puiDxhvr28CqKlXJOfN3AD0capgFKtE6RwSXv6BuH9E/
+	 gy1cDE0H69gA8yDnJgWaSVbnPSRve9vTOhNmLbL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Woodhouse <dwmw2@infradead.org>,
-	Stefan Teodorescu <fane@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Esben Haabendal <esben@geanix.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1470/3318] KVM: nVMX: Process each host MSR entry at most once when unwinding failed VM-Entry
-Date: Wed, 18 Nov 2026 15:34:52 +0100
-Message-ID: <20261118150404.996601398@linuxfoundation.org>
+Subject: [PATCH 6.6 1497/3318] drm/bridge: nwl-dsi: Cleanup endpoint mux control selection
+Date: Wed, 18 Nov 2026 15:35:19 +0100
+Message-ID: <20261118150405.822837047@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,50 +68,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Esben Haabendal <esben@geanix.com>
 
-[ Upstream commit c33ef9d334059f7cb167569ed7b4779752fe4425 ]
+[ Upstream commit 8dad0ebd822f54102aadc6ca4f0f8777112d175d ]
 
-Add a missing "break" in the inner for-loop of the open coded mess that
-unwinds MSRs back to the pre-VM-Enter state when VMLAUNCH/VMRESUME VM-Fails
-due to a consistency check that is caught by hardware but missed by KVM.
-I.e. move on to the next MSR in the VM-Entry load list after performing a
-write using a value found in the VM-Exit load list.  Processing *every*
-matching entry in the VM-Exit load list makes the processing quadratic,
-which is problematic if the load lists are full of MSRs that are expensive
-to emulate.  E.g. writing APIC_BASE triggers kvm_recalculate_apic_map() and
-a whole pile of unnecessary work.
+Using the endpoint define values makes it more clear that the argument to
+mux_control_try_select() must be valid state integers, and not something
+that looks like a boolean.
 
-Functionally, arbitrarily restoring the value of the first matching entry
-is "fine", because none of this is architecturally correct: the load lists
-are never supposed to have been used in the first place.  In practice, it's
-likely a moot point as no well-behaved VMM will have multiple, diverging
-entries in the load lists.
+The endpoint value is kept, as it will be used in a following patch that
+changes behavior slightly based on which endpoint is selected.
 
-Fixes: bd18bffca353 ("KVM: nVMX: restore host state in nested_vmx_vmexit for VMFail")
 Cc: stable@vger.kernel.org
-Cc: David Woodhouse <dwmw2@infradead.org>
-Reported-by: Stefan Teodorescu <fane@google.com>
-Suggested-by: Stefan Teodorescu <fane@google.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20261027185917.1478906-1-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Signed-off-by: Esben Haabendal <esben@geanix.com>
+Link: https://patch.msgid.link/20261027-nwl-dsi-fixes-v5-1-b6d1d3d2d356@geanix.com
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/vmx/nested.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/bridge/nwl-dsi.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
-index 38cfd4f968034..afff667c8ad9f 100644
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -4841,6 +4841,7 @@ static void nested_vmx_restore_host_state(struct kvm_vcpu *vcpu)
- 					__func__, j, h.index, h.value);
- 				goto vmabort;
- 			}
-+			break;
+diff --git a/drivers/gpu/drm/bridge/nwl-dsi.c b/drivers/gpu/drm/bridge/nwl-dsi.c
+index 8d54091ec66e4..f92e1808f069c 100644
+--- a/drivers/gpu/drm/bridge/nwl-dsi.c
++++ b/drivers/gpu/drm/bridge/nwl-dsi.c
+@@ -110,6 +110,8 @@ struct nwl_dsi {
+ 	int error;
+ 
+ 	struct nwl_dsi_transfer *xfer;
++
++	unsigned int endpoint;
+ };
+ 
+ static const struct regmap_config nwl_dsi_regmap_config = {
+@@ -1089,13 +1091,12 @@ static int nwl_dsi_parse_dt(struct nwl_dsi *dsi)
+ static int nwl_dsi_select_input(struct nwl_dsi *dsi)
+ {
+ 	struct device_node *remote;
+-	u32 use_dcss = 1;
+ 	int ret;
+ 
+ 	remote = of_graph_get_remote_node(dsi->dev->of_node, 0,
+ 					  NWL_DSI_ENDPOINT_LCDIF);
+ 	if (remote) {
+-		use_dcss = 0;
++		dsi->endpoint = NWL_DSI_ENDPOINT_LCDIF;
+ 	} else {
+ 		remote = of_graph_get_remote_node(dsi->dev->of_node, 0,
+ 						  NWL_DSI_ENDPOINT_DCSS);
+@@ -1104,11 +1105,12 @@ static int nwl_dsi_select_input(struct nwl_dsi *dsi)
+ 				      "No valid input endpoint found\n");
+ 			return -EINVAL;
  		}
++		dsi->endpoint = NWL_DSI_ENDPOINT_DCSS;
  	}
+ 
+ 	DRM_DEV_INFO(dsi->dev, "Using %s as input source\n",
+-		     (use_dcss) ? "DCSS" : "LCDIF");
+-	ret = mux_control_try_select(dsi->mux, use_dcss);
++		     (dsi->endpoint == NWL_DSI_ENDPOINT_DCSS) ? "DCSS" : "LCDIF");
++	ret = mux_control_try_select(dsi->mux, dsi->endpoint);
+ 	if (ret < 0)
+ 		DRM_DEV_ERROR(dsi->dev, "Failed to select input: %d\n", ret);
  
 -- 
 2.53.0
