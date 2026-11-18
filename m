@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057780;
-	b=g0zn+2BDoK9x3u1CN+1lVPZtt5dw9cIFOPL2M3NLCveIV0wAB9KOJuGxbEWbpsFzKCM3
-	 Fmhj8eOuIRvMRmafjtPNrLVGXxHnpspOUyAf0f1jypPHtuDBM43lZacR+EtxeAo+zNGfN
-	 pz3GcNJzg7hbb0kxT3EYmEyggATBq0aKZf5ppv5koT74Zydrrx1AnviqRQJrxlBaGY5at
-	 OXoz58Mk+Vz402CrQ1kEZ3iMoo1EV2odZfiAy9lRW6TmoMtC57McaFAjY9gczypNTNLFt
-	 kWA5oo9J00iGH7d/Ahxi8uwjaAjg3fKqL07DPzHqIEHdyKkPd9fNQCYbGH6P+wtzNUA==
+	t=1795057783;
+	b=u2diONFN1jP/dHhH151igb95rTq/GzgcXoJTj9runiVhGctvNllHV2JCcv4qhRTBzVZB
+	 BPFWNa/7XakV1rvE+RrZhZlv1FbL5O58oXgHxwgOHwabqfqfWY5XEi172HV1EPaxoOvjU
+	 Vg5/pup/G4QxNR3s8ctXXdpgJfpnOtU/gpnwXH6wISaqoJS1YQd5leFxKzf1Vnw68YpRP
+	 IntRe2deNuUgGLhYkFRDNb6okTSKwqIa/IRkdZfCOKWjI/ZtYxzcpMFOcWdYQyPRPNbtn
+	 w9ssKYvYxQjuUi7Om3nZlibXAE83U9MkwUj0F/jpl8xw6LgK9d/PO5K1FX4QezZn4YQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057780;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057783;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=n4PJqBLawDDU8e/j/P05a/1MXorWPKi8bBcxvZ5F3sg=;
-	b=gzbnh9Uliey/2QNBP1952+5EPcKth+zk9M/bCHcYcmvIBIbBsIenXwjpfhlbxX6h+574
-	 DUMKFXV94SdAzrFy1y/UcaQb91rC8rxfa8z1eb3WDeS7gpkO3z15w0tAo2LjGKy2Fhb/z
-	 zXsF7TqZAblv46//qJrfAkSQxrs5/LpN7fqRcmSh1xLBcSf03AOSiuaZ+iLiui+u0Ku87
-	 Wy7072s+2BJrs6Xxa+f/MrmWWe4KyIEj9VdmpIZJ4rqemC6zHxyACxG31jtpfvp0IAMbE
-	 sqIhUxJ6J7g8BJixiZY9w0QAmm+6j9Jduk9hZ5o+8L6hhiFD5E+DbIuKaf38QBWf4hg==
+	bh=eeADiqY/BG0CJPO8RK5dcdOe0a2fT2DswgPz1N71xBE=;
+	b=a5wEXtvcnY4unKgaoOnBlHIjiFFHa85W6MgFb1BCgcNnmpzX/XK3iMAm97viJKjpw3Vt
+	 ZjLv1CIE2RsX4ZKqGs+McPdIj0736gKZwBUda2cQ5ohoy0PZNiIzatYgC5KpoILOJ1kqX
+	 j2bTQ6AYm0PoZCkb7hV4kb2eaEeY+EmwDpQZIsT5Sq0Avv3+kUmk30Wkx2BXkL77GxcoA
+	 s0YhxCFTwpf7c288aOVTEPynidbg5x9BQo3y6tpIKEDslRTj/NQ+eTRnP4YGwGwqDMMKv
+	 vCqXny9FeC+2bvykjkPyKYsPFXEZxOksCunwi+Rm9KafeAVVXtn3YJkjUlj1EpQ/jDg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iSRp67PH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B0gVzbAR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45A63606A32A;
-	Thu, 19 Nov 2026 03:09:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F56606A325;
+	Thu, 19 Nov 2026 03:09:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iSRp67PH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A49F1F000C4;
-	Thu, 19 Nov 2026 03:09:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B0gVzbAR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53F731F000C4;
+	Thu, 19 Nov 2026 03:09:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057780;
-	bh=n4PJqBLawDDU8e/j/P05a/1MXorWPKi8bBcxvZ5F3sg=;
+	s=korg; t=1795057782;
+	bh=eeADiqY/BG0CJPO8RK5dcdOe0a2fT2DswgPz1N71xBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iSRp67PHpEyO5e0Osf9xnkKcqgI0HbtMaBE2//TYBNMtKU/s4K5lBD/6mwvUf6QRe
-	 k8a+xAItwyK4jxK/lIksz88N+O7j809qyNqGlugDE/GnVh52BDnIzUztGgNZUB3JXc
-	 aXDtF8+mIe3hB55FrVC4i2rJwdbKfun6ivqH8yGw=
+	b=B0gVzbARvGeCQB+byc58P1klIzFQFZRDAAsMFqKjjGKNmapa9IRm7JwhPOGpbqWWd
+	 w/Gdgmu7gHGSULfLNtOWWcgjJvX0hzeAThEsZrBdzFkA77DUxCn1QEcByyG+Dsfueu
+	 NsltsftOQvt2DN7xf4k1L0FGNR3jhKKv4lKuWWIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yibo Tan <lhfff@tju.edu.cn>,
+	co+ed9902f2e44184d9@bugs.sh,
+	Xiang Mei <xmei5@asu.edu>,
 	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.10 0250/1848] fbdev: atmel_lcdfb: Prevent FIFO work after removal
-Date: Wed, 18 Nov 2026 15:38:08 +0100
-Message-ID: <20261118145922.473490238@linuxfoundation.org>
+Subject: [PATCH 5.10 0251/1848] fbdev: udlfb: dont rebuild the mode list while the framebuffer is in use
+Date: Wed, 18 Nov 2026 15:38:09 +0100
+Message-ID: <20261118145922.521075892@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -67,85 +68,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yibo Tan <lhfff@tju.edu.cn>
+From: Xiang Mei <xmei5@asu.edu>
 
-commit 20b3b97cf89cb381bf07516090d99399cc9b91fd upstream.
+commit ac9cfa552102b8e80e88c2872e80dc9cb5f07dda upstream.
 
-The LCD controller IRQ schedules sinfo->task to recover from a FIFO
-underflow.  Probe currently requests the IRQ before initializing the
-work, so an early interrupt can schedule an uninitialized work item.
+dlfb_setup_modes() frees info->modelist with fb_destroy_modelist() and
+rebuilds it, but fbcon holds raw pointers into that list in
+fb_display[i].mode and nothing un-publishes them the way
+do_unregister_framebuffer() and store_modes() do with
+fbcon_delete_modelist(). The function does refuse to install a new mode
+while the framebuffer has users (dlfb->fb_count != 0), but only after the
+list is already destroyed. Reached from the 0666 "edid" sysfs attribute,
+an unprivileged write to /sys/class/graphics/fb0/edid therefore fails with
+-EINVAL and still leaves every fb_display[i].mode dangling; the next
+console switch reads the freed fb_videomode in fb_videomode_to_var().
 
-The probe error path and remove path cancel the work before freeing the
-IRQ.  A FIFO-underflow interrupt can schedule the work again after that
-cancellation.  framebuffer_release() may then free sinfo while the work
-is still pending.
+Test fb_count before touching the list. fbcon takes a reference through
+fbcon_open(), so that condition covers exactly the states in which
+fb_display[] points into the list, and the errno returned to userspace is
+unchanged.
 
-KASAN reported a use-after-free in atmel_lcdfb_task() when an underflow
-interrupt occurred during removal.  With the IRQ freed before the work
-was cancelled, the same test completed without a kernel diagnostic.
+  BUG: KASAN: slab-use-after-free in fb_videomode_to_var (drivers/video/fbdev/core/modedb.c:905)
+  Read of size 4 at addr ffff8880107b449c by task kworker/1:1/47
+  Workqueue: events console_callback
+  Call Trace:
+   fb_videomode_to_var (drivers/video/fbdev/core/modedb.c:905)
+   display_to_var (drivers/video/fbdev/core/fbcon.c:998)
+   fbcon_switch (drivers/video/fbdev/core/fbcon.c:2182)
+   redraw_screen (drivers/tty/vt/vt.c:994)
+   complete_change_console (drivers/tty/vt/vt_ioctl.c:1141)
+   console_callback (drivers/tty/vt/vt.c:3358)
+   process_one_work (kernel/workqueue.c:3396)
+   worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
+   kthread (kernel/kthread.c:436)
+   ret_from_fork (arch/x86/kernel/process.c:158)
+   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+  ...
+  The buggy address is located 28 bytes inside of
+   freed 96-byte region [ffff8880107b4480, ffff8880107b44e0)
 
-Initialize the work before requesting the IRQ.  In both cleanup paths,
-free the IRQ before cancelling the work so that it cannot be scheduled
-again after cancellation.
-
-Fixes: d22579b83735 ("atmel_lcdfb: FIFO underflow management")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:GPT-5
-Signed-off-by: Yibo Tan <lhfff@tju.edu.cn>
+Fixes: 7d9485e2c53c ("Staging: udlfb: Add functions to expose sysfs metrics and controls")
+Reported-by: co+ed9902f2e44184d9@bugs.sh
+Closes: https://lore.kernel.org/all/1jSCSNaDKmuUG7h40rTsSl1rMaSwdlJef4rp%40bugs.sh/
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://lore.kernel.org/all/1jSCSNaDKmuUG7h40rTsSl1rMaSwdlJef4rp%40bugs.sh/
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/atmel_lcdfb.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/video/fbdev/udlfb.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/video/fbdev/atmel_lcdfb.c
-+++ b/drivers/video/fbdev/atmel_lcdfb.c
-@@ -1171,6 +1171,9 @@ static int __init atmel_lcdfb_probe(stru
- 	/* Initialize PWM for contrast or backlight ("off") */
- 	init_contrast(sinfo);
- 
-+	/* Some LCDC recovery operations require process context. */
-+	INIT_WORK(&sinfo->task, atmel_lcdfb_task);
-+
- 	/* interrupt */
- 	ret = request_irq(sinfo->irq_base, atmel_lcdfb_interrupt, 0, pdev->name, info);
- 	if (ret) {
-@@ -1178,10 +1181,6 @@ static int __init atmel_lcdfb_probe(stru
- 		goto unmap_mmio;
+--- a/drivers/video/fbdev/udlfb.c
++++ b/drivers/video/fbdev/udlfb.c
+@@ -1335,6 +1335,11 @@ static int dlfb_setup_modes(struct dlfb_
+ 		goto error;
  	}
  
--	/* Some operations on the LCDC might sleep and
--	 * require a preemptible task context */
--	INIT_WORK(&sinfo->task, atmel_lcdfb_task);
--
- 	ret = atmel_lcdfb_init_fbinfo(sinfo);
- 	if (ret < 0) {
- 		dev_err(dev, "init fbinfo failed: %d\n", ret);
-@@ -1217,8 +1216,8 @@ reset_drvdata:
- 	dev_set_drvdata(dev, NULL);
- 	fb_dealloc_cmap(&info->cmap);
- unregister_irqs:
--	cancel_work_sync(&sinfo->task);
- 	free_irq(sinfo->irq_base, info);
-+	cancel_work_sync(&sinfo->task);
- unmap_mmio:
- 	exit_backlight(sinfo);
- 	iounmap(sinfo->mmio);
-@@ -1255,6 +1254,7 @@ static int __exit atmel_lcdfb_remove(str
- 		return 0;
- 	sinfo = info->par;
++	if (dlfb->fb_count) {
++		result = -EINVAL;
++		goto error;
++	}
++
+ 	fb_destroy_modelist(&info->modelist);
+ 	memset(&info->monspecs, 0, sizeof(info->monspecs));
  
-+	free_irq(sinfo->irq_base, info);
- 	cancel_work_sync(&sinfo->task);
- 	exit_backlight(sinfo);
- 	atmel_lcdfb_power_control(sinfo, 0);
-@@ -1263,7 +1263,6 @@ static int __exit atmel_lcdfb_remove(str
- 	clk_put(sinfo->lcdc_clk);
- 	clk_put(sinfo->bus_clk);
- 	fb_dealloc_cmap(&info->cmap);
--	free_irq(sinfo->irq_base, info);
- 	iounmap(sinfo->mmio);
-  	release_mem_region(info->fix.mmio_start, info->fix.mmio_len);
- 	if (platform_get_resource(pdev, IORESOURCE_MEM, 1)) {
 
 
