@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020842;
-	b=d8eFCRD6fwpyrhaXkrXs9HgC2IP++JdAi/KQhKdMXxxvxiceUuWt/P8fKOZekt16tZnq
-	 F64dVwK1L2bswhCNVPS+ONu/IJxuskEhdkkmI6vsbvCCnlJpkczeM4wup1s6BVu8MxL5y
-	 EQ3YlD6czaQ0dBBdj9k7+rPh/B/5YNhs/56qhPYfBy2VnwWioe+wBGx6XI9kiaE9t/1O1
-	 /3+TgP/c5yYblTbKV8X0j13+ffUlQyE7QJCIT97Xk4qzk9cq7wn8nyuPjpnfAqPEBJEV4
-	 VFzESLXv2YrSX7SPFvaCguvuB6Y4Ik3+VgEhj5xi6A7vqHr4gDFGq4EAwhKSJ2ciRrQ==
+	t=1795020845;
+	b=J47qWSxgouV+rQsZ0XTmoaXNVMq0TZxaWJ9uWsek+FGUvgYgNkGRWtP89dnAKZWCskIN
+	 e0PYOvlN8hQFcJ4w29qAHx2MN4Pbytyvx/UMnjB9/FLG4FG1kguY/AAv3LhKG5eL6jQmU
+	 /Dbvash0hHVpsF36Pvx3Th+3wG5kQZF2D3oWr24sRezcxaJYvevTgPoKnjEqNPsJQwTgP
+	 CQeTsa+BNnVdliSPt1MrmHzYe0wV0HTwUuNg0tzNHOE037mngevKCTkojIP2VX6gNG6zQ
+	 jQgPMo0a11kXn7iQs7hksW7S0J0E3NtDYAqKW8IKRN4GXiw0mpDQEMsQ0m7Z0R8zLvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020842;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020845;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=a6tbzX5/TqRlB8NhcvC8GeViWAPUFkVZVEOorF43II8=;
-	b=w1YDnY+AfxVjdQexaRusxbhDhvvIqauCj1YcFbB2mWBjeXo2PhwE5dP3TL7qxoHd6evl
-	 xLakj9JSiC78nwE8/36tltJatFf6jCyEYgZJErcMeRw49d1mev8346wOtheVUzZp/8QMG
-	 RAl93rR9j6OKeW/7HZYxbdB137RAg/KPG5//eXzIYVrGJ7f0OeC3s6o6DmR9KjPRCvuqL
-	 VabTvwzms+LTqu2QJNO9NzqneI8GXrbqHIt6NCe1GZ1X204WWPYuEOiRjgmXitqSSp3LC
-	 KdayfClh+jj8o7atCM6xEFbxkMkJ42OBunhhKl6lx+V6vgOdvMyQXTYwZ6KWAuoUHqw==
+	bh=JavGiplzlYbuyqYVJAVgbJlwQmrSBqpDhO8R2Wj3xTE=;
+	b=WnxjDg+uf/qLzygF33EIsjMVYTwxBS5mKGN2WtJD9Re1zk+rbW57zHxsTG3FrxnV2+hR
+	 2HiUNp44htyvFP4dnJ8+g/5laLGa4bhFJbg16TXISRDHa2HLNsoJeHvmVv/CiFKxH2TAq
+	 X0vNOTxl+9wqHe73sV8UcBS5I9qphS1okMTvBT6/WA2/+5uHpOctHEeYtkDYH023TKDnN
+	 C19PejvO6hLgwfUxibyc01OIGKObxLSe6C1IwK+RFPCGptFNepWBRbYerPcu24ytIkcsa
+	 O1QWR8zEYc9ShuzAoQph5DDVSjksU2J3sBTJD4vGPUrgTACZipLBle3DQfSdoElQzvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OuOKF56t;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G0VHyCkp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D692606A335;
-	Wed, 18 Nov 2026 16:54:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5416A606A335;
+	Wed, 18 Nov 2026 16:54:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OuOKF56t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1A521F000C4;
-	Wed, 18 Nov 2026 16:54:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G0VHyCkp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ADA91F000C4;
+	Wed, 18 Nov 2026 16:54:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020842;
-	bh=a6tbzX5/TqRlB8NhcvC8GeViWAPUFkVZVEOorF43II8=;
+	s=korg; t=1795020844;
+	bh=JavGiplzlYbuyqYVJAVgbJlwQmrSBqpDhO8R2Wj3xTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OuOKF56tlFYxOyFbD1mCOp3A2fpCGY70+knaYX2lEZqiZ8Jqf6i4Lmm0jGAj+HHQS
-	 +mKg8e1rgOZZOID3OuFVOQTMarPNHsbs8rlUvXzp2ZfQgtEaPKG9mh4ur7mgwvjpCb
-	 mxjAU3fBFTuJoi0rLLJ6DnnyWQce2ZOPm5lgej+U=
+	b=G0VHyCkpYZfGROrP2JVQFW8i6gfpP7TgEo/HJvbae9a8umpjLph8uAJ4Z3QbQUMIj
+	 rzylhjSg/a16PnRh1uFAOMP2FBBIPsOxnyVF+3Y2ewpJUyuyKJpwsAOaQayNffrroa
+	 WRm4R0m2qQRMkRmM+7GTRCa8LEchz7XSHeSDStwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2093/2651] bpf: Reject sleepable programs for task_vma iterator
-Date: Wed, 18 Nov 2026 15:55:33 +0100
-Message-ID: <20261118150401.369205164@linuxfoundation.org>
+Subject: [PATCH 7.3 2094/2651] bpf: Forbid sleeping in bpf_find_vma() callbacks
+Date: Wed, 18 Nov 2026 15:55:34 +0100
+Message-ID: <20261118150401.398028339@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,147 +70,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit dfcd1765911223df60845e288ad392d5237f47a3 ]
+[ Upstream commit c6dc0a288d4e787c578d7ab0464b9c943ad88ecc ]
 
-A sleepable "iter.s/task_vma" program can be attached, but its ->show()
-callback runs with the mmap_lock of the iterated mm held for read. As soon
-as the program runs, bpf_iter_run_prog() calls might_fault(), and any
-bpf_copy_from_user() or bpf_copy_from_user_task() it does may really fault
-or take mmap_lock again. With lockdep this is reported as recursive
-locking of mmap_lock. Without lockdep, a fault on the reader's own mm, or
-access_process_vm() on the iterated mm, has to take mmap_lock for read
-again. If a writer queued up in the meantime that blocks behind the
-writer, which in turn waits for the read lock the iterator already holds,
-and the read() hangs:
+A sleepable program can call bpf_find_vma() and use a sleepable helper
+such as bpf_copy_from_user() or bpf_copy_from_user_task() in the
+callback. The verifier accepts this, but bpf_find_vma() runs the callback
+with the mmap_lock of the mm held for read. If the user copy faults on
+that mm, the fault handler has to take mmap_lock again. Lockdep reports
+recursive locking, and if a writer queued up in between, the fault blocks
+behind the writer, which waits for the read lock the helper already
+holds:
 
-    reader (iter.s/task_vma)        other thread of the same mm
-    task_vma_seq_get_next()
-      mmap_read_lock(mm)
+    sleepable prog                  other thread of the same mm
+    bpf_find_vma(current, ...)
+      mmap_read_trylock(mm)
                                     mmap_write_lock(mm)  <- waits
-    bpf prog: copy_from_user()
-      page fault
-        mmap_read_lock(mm)          <- queued behind the writer
+      callback: copy_from_user()
+        page fault
+          mmap_read_lock(mm)        <- queued behind the writer
 
-The reader waits killable, so the hang lasts until it gets a fatal signal.
+This is the same problem as with sleepable task_vma iterator programs.
+The verifier checks synchronous callbacks in the caller's context, so
+in_sleepable_context() is true in the callback of a sleepable program.
 
-bpf_iter_link_attach() allows sleepable programs for the targets that set
-BPF_ITER_RESCHED, and task_vma sets it because cond_resched() between VMAs
-is fine with mmap_lock held. Rescheduling between objects and running a
-sleepable program inside ->show() are different properties, though, and
-task_vma only has the first one. The open-coded task_vma iterator does not
-have this problem since it hands out a snapshot of the VMA and holds no
-lock when it returns to the program.
+Verify the callback like a hash map for_each callback, as running in an
+RCU read-side critical section where sleeping is not allowed, and actually
+hold rcu_read_lock() around it, so that global functions the callback
+calls, which are then verified for a non-sleepable context, see the RCU
+protection they are verified with.
 
-The vma handed to the program is only stable under mmap_lock, so the lock
-can't be dropped around ->show(). Add a feature flag BPF_ITER_NOSLEEP for
-targets which can't run sleepable programs although they can reschedule,
-and set it for task_vma.
+Non-sleepable programs already run the callback under RCU, nothing changes
+for them. A sleepable program whose bpf_find_vma() callback calls any
+helper, kfunc or global function that may sleep is now rejected by the
+verifier, including ones that would be harmless under mmap_lock as they
+don't touch user memory.
 
-The check at attach time is not enough. BPF_LINK_UPDATE replaces the
-program of a link, and bpf_iter_link_replace() only compares the type, the
-attach type and the BTF id of the two programs, which are the same for a
-sleepable and a non-sleepable one. Do the check there as well. That also
-closes this way around the existing rule: so far a sleepable program could
-be put on a link of a target that doesn't set BPF_ITER_RESCHED, like the
-hash map element iterator, which runs it under rcu_read_lock().
-
-BPF_LINK_CREATE of a sleepable program for the task_vma target, and
-BPF_LINK_UPDATE to one, now fail with -EINVAL, also for programs that
-don't touch user memory and have been working since sleepable iterator
-programs exist. The programs can still be loaded. They have to be
-loaded as non-sleepable programs, or use the open-coded iterator.
-
-Fixes: b77fb25dcb34 ("bpf: Add support for bpf iterator programs to use sleepable helpers")
+Fixes: 7c7e3d31e785 ("bpf: Introduce helper bpf_find_vma")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-6-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261017163745.3341787-7-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h    |  3 ++-
- kernel/bpf/bpf_iter.c  | 17 ++++++++++++++---
- kernel/bpf/task_iter.c |  6 +++++-
- 3 files changed, 21 insertions(+), 5 deletions(-)
+ kernel/bpf/task_iter.c | 6 ++++++
+ kernel/bpf/verifier.c  | 2 ++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index 86f7b70bbd9a1..5f39502e4a57b 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -3019,7 +3019,8 @@ typedef const struct bpf_func_proto *
- 			     const struct bpf_prog *prog);
- 
- enum bpf_iter_feature {
--	BPF_ITER_RESCHED	= BIT(0),
-+	BPF_ITER_RESCHED	= BIT(0),	/* may cond_resched() between objects */
-+	BPF_ITER_NOSLEEP	= BIT(1),	/* ->show() can't run sleepable progs */
- };
- 
- #define BPF_ITER_CTX_ARG_MAX 2
-diff --git a/kernel/bpf/bpf_iter.c b/kernel/bpf/bpf_iter.c
-index b40eb404adab9..fc3a75684ef7f 100644
---- a/kernel/bpf/bpf_iter.c
-+++ b/kernel/bpf/bpf_iter.c
-@@ -72,6 +72,15 @@ static inline bool bpf_iter_target_support_resched(const struct bpf_iter_target_
- 	return tinfo->reg_info->feature & BPF_ITER_RESCHED;
- }
- 
-+/* Only allow sleepable program for resched-able iterator that can run one */
-+static bool bpf_iter_target_support_prog(const struct bpf_iter_target_info *tinfo,
-+					 const struct bpf_prog *prog)
-+{
-+	return !prog->sleepable ||
-+	       (bpf_iter_target_support_resched(tinfo) &&
-+		!(tinfo->reg_info->feature & BPF_ITER_NOSLEEP));
-+}
-+
- static bool bpf_iter_support_resched(struct seq_file *seq)
- {
- 	struct bpf_iter_priv_data *iter_priv;
-@@ -409,6 +418,8 @@ static int bpf_iter_link_replace(struct bpf_link *link,
- 				 struct bpf_prog *new_prog,
- 				 struct bpf_prog *old_prog)
- {
-+	struct bpf_iter_link *iter_link =
-+		container_of(link, struct bpf_iter_link, link);
- 	int ret = 0;
- 
- 	mutex_lock(&link_mutex);
-@@ -419,7 +430,8 @@ static int bpf_iter_link_replace(struct bpf_link *link,
- 
- 	if (link->prog->type != new_prog->type ||
- 	    link->prog->expected_attach_type != new_prog->expected_attach_type ||
--	    link->prog->aux->attach_btf_id != new_prog->aux->attach_btf_id) {
-+	    link->prog->aux->attach_btf_id != new_prog->aux->attach_btf_id ||
-+	    !bpf_iter_target_support_prog(iter_link->tinfo, new_prog)) {
- 		ret = -EINVAL;
- 		goto out_unlock;
- 	}
-@@ -544,8 +556,7 @@ int bpf_iter_link_attach(const union bpf_attr *attr, bpfptr_t uattr,
- 	if (!tinfo)
- 		return -ENOENT;
- 
--	/* Only allow sleepable program for resched-able iterator */
--	if (prog->sleepable && !bpf_iter_target_support_resched(tinfo))
-+	if (!bpf_iter_target_support_prog(tinfo, prog))
- 		return -EINVAL;
- 
- 	link = kzalloc_obj(*link, GFP_USER | __GFP_NOWARN);
 diff --git a/kernel/bpf/task_iter.c b/kernel/bpf/task_iter.c
-index 13e1aabe6f886..cf2bf388e1817 100644
+index cf2bf388e1817..2fa6b8dae8c4f 100644
 --- a/kernel/bpf/task_iter.c
 +++ b/kernel/bpf/task_iter.c
-@@ -737,7 +737,11 @@ static const struct bpf_iter_seq_info task_vma_seq_info = {
- static struct bpf_iter_reg task_vma_reg_info = {
- 	.target			= "task_vma",
- 	.attach_target		= bpf_iter_attach_task,
--	.feature		= BPF_ITER_RESCHED,
-+	/*
-+	 * ->show() runs with the mmap_lock of the iterated mm held, which a
-+	 * sleepable program takes again when it faults on user memory.
-+	 */
-+	.feature		= BPF_ITER_RESCHED | BPF_ITER_NOSLEEP,
- 	.ctx_arg_info_size	= 2,
- 	.ctx_arg_info		= {
- 		{ offsetof(struct bpf_iter__task_vma, task),
+@@ -810,8 +810,14 @@ BPF_CALL_5(bpf_find_vma, struct task_struct *, task, u64, start,
+ 	vma = find_vma(mm, start);
+ 
+ 	if (vma && vma->vm_start <= start && vma->vm_end > start) {
++		/*
++		 * The callback must not sleep while mmap_lock is held, and the
++		 * verifier checks it as an RCU read-side critical section.
++		 */
++		rcu_read_lock();
+ 		callback_fn((u64)(long)task, (u64)(long)vma,
+ 			    (u64)(long)callback_ctx, 0, 0);
++		rcu_read_unlock();
+ 		ret = 0;
+ 	}
+ 	bpf_mmap_unlock_mm(work, mm);
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 2cb34276313cf..1dea0faaffcc3 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -10271,6 +10271,8 @@ static int set_find_vma_callback_state(struct bpf_verifier_env *env,
+ 	bpf_mark_reg_not_init(env, &callee->regs[BPF_REG_4]);
+ 	bpf_mark_reg_not_init(env, &callee->regs[BPF_REG_5]);
+ 	callee->in_callback_fn = true;
++	/* bpf_find_vma() runs the callback under mmap_lock and RCU. */
++	callee->in_rcu_callback_fn = true;
+ 	callee->callback_ret_range = retval_range(0, 1);
+ 	return 0;
+ }
 -- 
 2.53.0
 
