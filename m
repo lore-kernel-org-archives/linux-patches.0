@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053154;
-	b=zfRTEcomabw5egEbvZ6ESTb85W8buwgTkpyrXAA09KfZjY9M1hbOJg17l3L70G4Y0nXz
-	 hPWBo6d//1uZw8nsp+pejMqlm32ZegtXwMdhivpf9IR9EM6klu69PxRkvrI3OtNmOfwR/
-	 +dgOSZDX4AUnxLa5gPqLfS6dMKruywdgo1lpm1PVJmWta5PINXqPKAhRg+mzibRWRYUa+
-	 JyNLWMZHQjKpUm6fzZwbfeIoF4D5fpBLyuXyUg/yCPoWIlIwi0trFXK2/rKMiavuV/7b8
-	 ZzC+v5nLYuVb51P/vzhdvWXa4q1jcJZZsIWn3Hn6MfXH9MiUyeXnvY8/wU4zREGS8Sg==
+	t=1795053156;
+	b=yFDQ6qNuxnKZRmBk8HY+xW5UH1bAZT6858IGmbi5+giVa5fsfZtJO/IAKgA1X5SePBXG
+	 BJFs3nQe/B2bsexcUfin8QjLy2xG/TmRNs2RH5vxtUeHVs5VtlJLlc1RH6q2rNYQlrRnZ
+	 ZHxPNsn3zoti76jI2TLZTnWtKfcYzrr49z36+A+nWO5p90ea5HFmRekE+QaGFSe4FNMv7
+	 vQGOPdFidsa5KqA6Gf9xvLF7h3RR0uUnaV9fVxjxOdnB0FxXrOInXThXvci4adQ/UOiYO
+	 NQAQQ0WSucTpkZSxhWxqWQWyKJ8njzXgWHz9Wx/cQHEIAfzKMF9SxEo7jqXbYAraBZw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053154;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053156;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=3ZUPnPNtU23AyOwG7Z5pjzgDwu3VxOjeQ6ZbWzfKYsY=;
-	b=V4/BDbTSldMRYaowvWXOFJL2c4OM4F7Nixll5CByLwgVlqTnOoWs0Rg/ztaJ/SthNbDm
-	 0vQlRffxfvH4kK45MAQl09mbpF5KEHAuK7CzCOx2A4nyewtQZmGQ7P5za3+mHUP2v4Bj6
-	 3HME1FR+3NAXVmahBDACS8r9DxXvC8rSYICZRLqq85h4v0dv39MmKwSecaQn6gYiqxgI2
-	 pl1VeZ7dIZSo5pzXfuVcBR3C02ZQC0wm0RfXrZVs0gcbCZSxL79GENly1/O3NBlyqiy8V
-	 LlC6KNkLTtLiVuABJG5w1K85TM+mbXAPXZHJH/HrRgQfTLyHcLFdZjDvqKVKhian37w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=y9PwJA1W7mfoiFr6VWR6bTDwa1uDyLGH+vYYWc0Xrxs=;
+	b=T03qcckmzAHeq+hcB+05EMEKsiP7tgsnD8MRMs/j/y3JfG82b6E8g775pCQjeVP/y34M
+	 AhnDFFabUtdK5P7TZzD3U/yL7awTnoqIbM6MndlL00CpJmLlYMd/KB26R4lhgpxANTHJN
+	 ZbnaGYATBiGNUzM2DYBvQxP+VfcP/CYabEmxkBkNZOpN5O8e+W8BVbMXxmFF1QiwajXE0
+	 wrMxmZFXI0MuUlXAUSoYksQOQfel6uFVB5Quc9s9JO5nilwS7kxUuqtSFuFijxqKdOtgW
+	 hIKN0Ib1oZDdyz1hjh1m+64C5hymd23zvrT47ee8fj1YhbxA0HE0L6vfkJAc0X6F3vg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iZTYWqdX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZWMW5vUh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3817606A32F;
-	Thu, 19 Nov 2026 01:52:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A4B606A31C;
+	Thu, 19 Nov 2026 01:52:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iZTYWqdX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EA4B1F000C4;
-	Thu, 19 Nov 2026 01:52:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZWMW5vUh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 305381F000C4;
+	Thu, 19 Nov 2026 01:52:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053153;
-	bh=3ZUPnPNtU23AyOwG7Z5pjzgDwu3VxOjeQ6ZbWzfKYsY=;
+	s=korg; t=1795053156;
+	bh=y9PwJA1W7mfoiFr6VWR6bTDwa1uDyLGH+vYYWc0Xrxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iZTYWqdXh8QllWOv1mT/okwuqmPyk6C10OYqXyP8UWvX0r35sQYLLjqoKdNAujoWG
-	 z7uucnonBrzje335n3mSk7ROU+w/LUeUidHzODNWY3UqdWAvMHfbIB4AvOPkHxljpy
-	 Fzawg215wJyegYkfyyl9do3339aczmRKaY7nhTdg=
+	b=ZWMW5vUhMYuUsjzptydmYJwka9t9pH2gTYdaQEqI9st1HWUk5cd5Jn8wO7Xhnil5e
+	 PX78rXCGY0u9x9ZMZI1hCyY27htmcxGrmJrvEiwC11e7dGwiMiP3NYtmit7pTNQbOm
+	 uyDHGEXCvHTe2DHrgbWpL2kUf0qE3IXbqqnegNRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0817/2214] pwm: tiehrpwm: Clear period on disable to allow reconfiguration
-Date: Wed, 18 Nov 2026 15:41:33 +0100
-Message-ID: <20261118150044.245087808@linuxfoundation.org>
+Subject: [PATCH 5.15 0818/2214] ALSA: usb-audio: Dont try to submit URBs after disconnection
+Date: Wed, 18 Nov 2026 15:41:34 +0100
+Message-ID: <20261118150044.293492531@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,55 +62,105 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit e74b9a7ee50071aad25d3989bf985292f90b0c6e ]
+commit ab574d1629552b6831cd91b926b38092c15d6142 upstream.
 
-Both channels share one period register, so ehrpwm_pwm_config() rejects a
-period differing from the sibling's period_cycles[]. That value was cleared
-only in .free(), not in .disable(), so a stopped channel kept blocking the
-sibling from switching to a new frequency. Clear it in .disable() too.
+USB-audio driver can still submit URBs while the device is being
+disconnected, and it may result in spurious error messages like:
+  usb 1-2: cannot submit urb (err = -19)
+  usb 1-2: Unable to submit urb #0: -19 at snd_usb_queue_pending_output_urbs
+  usb 1-2: cannot submit urb 0, error -19: no device
+Although those are harmless, they are just ugly.
 
-Testcase:
+This patch tries to avoid spewing such error messages when the device
+is already at the disconnected state.  It also skips the superfluous
+xfer notification, too.
 
-  cd /sys/class/pwm/pwmchip0; echo 0 > export; echo 1 > export
-  for p in pwm0 pwm1; do
-    echo 1000000 > $p/period; echo 500000 > $p/duty_cycle
-    echo 1 > $p/enable; echo 0 > $p/enable; echo 2000000 > $p/period
-  done
-  echo 1 > pwm0/enable	# before: -EINVAL, after: succeeds
-
-Fixes: 01b2d4536f02 ("pwm: pwm-tiehrpwm: Fix conflicting channel period setting")
-Cc: stable@vger.kernel.org
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Link: https://patch.msgid.link/20260929120806.2790355-1-alexander.sverdlin@siemens.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Link: https://lore.kernel.org/r/20230828101924.27107-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-tiehrpwm.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/usb/endpoint.c | 40 +++++++++++++++++++++++++++-------------
+ 1 file changed, 27 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/pwm/pwm-tiehrpwm.c b/drivers/pwm/pwm-tiehrpwm.c
-index 3fef7d7987736..9a6e30e56e6ee 100644
---- a/drivers/pwm/pwm-tiehrpwm.c
-+++ b/drivers/pwm/pwm-tiehrpwm.c
-@@ -386,6 +386,9 @@ static void ehrpwm_pwm_disable(struct pwm_chip *chip, struct pwm_device *pwm)
+diff --git a/sound/usb/endpoint.c b/sound/usb/endpoint.c
+index 5219111b79e58..d9025aa7fdf6b 100644
+--- a/sound/usb/endpoint.c
++++ b/sound/usb/endpoint.c
+@@ -519,13 +519,18 @@ int snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
+ 			return -EPIPE;
+ 		}
  
- 	/* Disable clock on PWM disable */
- 	pm_runtime_put_sync(chip->dev);
-+
-+	/* A disabled channel must not constrain the sibling's period */
-+	pc->period_cycles[pwm->hwpwm] = 0;
- }
+-		err = usb_submit_urb(ctx->urb, GFP_ATOMIC);
++		if (!atomic_read(&ep->chip->shutdown))
++			err = usb_submit_urb(ctx->urb, GFP_ATOMIC);
++		else
++			err = -ENODEV;
+ 		if (err < 0) {
+-			usb_audio_err(ep->chip,
+-				      "Unable to submit urb #%d: %d at %s\n",
+-				      ctx->index, err, __func__);
+-			if (!in_stream_lock)
+-				notify_xrun(ep);
++			if (!atomic_read(&ep->chip->shutdown)) {
++				usb_audio_err(ep->chip,
++					      "Unable to submit urb #%d: %d at %s\n",
++					      ctx->index, err, __func__);
++				if (!in_stream_lock)
++					notify_xrun(ep);
++			}
+ 			return -EPIPE;
+ 		}
  
- static void ehrpwm_pwm_free(struct pwm_chip *chip, struct pwm_device *pwm)
+@@ -592,12 +597,17 @@ static void snd_complete_urb(struct urb *urb)
+ 		prepare_inbound_urb(ep, ctx);
+ 	}
+ 
+-	err = usb_submit_urb(urb, GFP_ATOMIC);
++	if (!atomic_read(&ep->chip->shutdown))
++		err = usb_submit_urb(urb, GFP_ATOMIC);
++	else
++		err = -ENODEV;
+ 	if (err == 0)
+ 		return;
+ 
+-	usb_audio_err(ep->chip, "cannot submit urb (err = %d)\n", err);
+-	notify_xrun(ep);
++	if (!atomic_read(&ep->chip->shutdown)) {
++		usb_audio_err(ep->chip, "cannot submit urb (err = %d)\n", err);
++		notify_xrun(ep);
++	}
+ 
+ exit_clear:
+ 	clear_bit(ctx->index, &ep->active_mask);
+@@ -1641,11 +1651,15 @@ int snd_usb_endpoint_start(struct snd_usb_endpoint *ep)
+ 			goto __error;
+ 		}
+ 
+-		err = usb_submit_urb(urb, GFP_ATOMIC);
++		if (!atomic_read(&ep->chip->shutdown))
++			err = usb_submit_urb(urb, GFP_ATOMIC);
++		else
++			err = -ENODEV;
+ 		if (err < 0) {
+-			usb_audio_err(ep->chip,
+-				"cannot submit urb %d, error %d: %s\n",
+-				i, err, usb_error_string(err));
++			if (!atomic_read(&ep->chip->shutdown))
++				usb_audio_err(ep->chip,
++					      "cannot submit urb %d, error %d: %s\n",
++					      i, err, usb_error_string(err));
+ 			goto __error;
+ 		}
+ 		set_bit(i, &ep->active_mask);
 -- 
 2.53.0
 
