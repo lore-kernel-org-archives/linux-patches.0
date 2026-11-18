@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049513;
-	b=LfzkWnSv3BNyYgF8KYP00wvM2ZwIqe2+FLhAcePmVy3ifmr4leWHU1rZwTRdh6mYrWJn
-	 QLpC+dUNWcfbxSpOHcH7oi1isiXwRvA2pBjkJzPXGAHuc3+XevLZuiUEROsYmhiF3KorI
-	 /PjBzP3NuOZ8rwI1DFYgZkkpjOxgSur5W3taQN8VlLwJydKAjVZZbUVDtBk0vGqHjOf4Q
-	 3amlf7rupEmI1FqGoHXLxX5TDbwMlhLYn7B9gaC4jlr7Aem7h9rjpEwiXk5PLcvd4tmhf
-	 ndUWi/GXD/vSvCHjx4pYFBm9ZyDBJ+hH2fpFdIXA2SDRw1hXDZ2ERGegoNorh9iPTJA==
+	t=1795049516;
+	b=4zQdBtAM9ZxlGPlyy1NVdcvR4q1ZKP2mSZhn46bGfsWmgNAGNm+4YoSre+1Sghk4aKny
+	 5RIs1NqG7dKYt973ULZeY+tIOMge3MzB1jPnoem4QwReXlf6wbGdsHfPh8SmpJkv6Y0kM
+	 NsBkd66UqS7Kc4XQ15JxI635txCo3xfg3MBFBFNhDbWQPBQACyJC9YnYx/PvdkYXSfooj
+	 0mhUp0HdMU0Co07+mHbFd4cQ6hPkgPUFrIBNMYTHbWHWCuojuPqQ+o89I72pD9W/qqGQT
+	 7tIw/xmX8lAFjiKiuPCzVST8cztktmMA7sNmL+B6OjcYmyhiDpmcI6aD48U9vGqQT4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049513;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049516;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Wgh5qZqg1lkJ63qpHoKesJTDN+cMQvcMJtJVk+RwKDM=;
-	b=XceeoeTlWX27yQkf9GeFGnBeRNkz92uUYsGcP7Dy/Yn7Sno0RuSUkoD3qMMkJEQSL9wh
-	 Qf3vYIJLmL/MEL6WvXthjZ90WHx0zfjGSLAG1ns2s6GcbU+gVuUWnUZoBoM9Pcr+ZkOMw
-	 d8TJQOFiakPJ1Z7axsC10Hpr1S7mUPvkZaMFOcIDxDW3T8AZmNu9iZPT3b3MiWCq64U4g
-	 XcDbHpEPf1XkxDRrTGa7BFXYe91chWOLYYeeFnDKylVDZEFeYTGgLN/pclDpxxlfjO9uN
-	 ln0PWH0nEgvcHviM7oPRkPeESKVnkGz+N4Ewjw12MU60kMU04sJa6b4d+hXfvMBps5g==
+	bh=WOOT2tNWk+/0AjxndcBZb240LnUuYmRkU0pAFPrx3oo=;
+	b=UeciStPxQmo6WM7m0sX+kyGSsQyX80QOYlQQaiEi2k1pO+jvOu/E+P6bVFCa9uYXmcYr
+	 bArBOdQqqkbUkerDxCbDgH4PNDpQfbtIhCTs9wgBBSy+ivh+wH5cfhblk5mW/R/UTiAnY
+	 5heAJ9lCBvJ2UOtneHIWzNhpbXy/lWVgV9rO9ydkOCzHmqv4QMNf0BRJlxJp2f5Cfr2R/
+	 fuQR7qj0YmHw4z4pplzb++Qve5Ak/Z8gW6hTJGnu+R1PxyJVYgBg+lb20o+KgdUMB64y2
+	 UZYZes3Td4RMnqiXQjPizKgC9EzT5lNz/6fsY8nYLsRMpB8vNvjG0LrN1kz+o7BVA9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=trF5OxUW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EizG4oJo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81B4606A31C;
-	Thu, 19 Nov 2026 00:51:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C845606A320;
+	Thu, 19 Nov 2026 00:51:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=trF5OxUW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01A6D1F000C4;
-	Thu, 19 Nov 2026 00:51:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EizG4oJo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD93B1F000C4;
+	Thu, 19 Nov 2026 00:51:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049513;
-	bh=Wgh5qZqg1lkJ63qpHoKesJTDN+cMQvcMJtJVk+RwKDM=;
+	s=korg; t=1795049516;
+	bh=WOOT2tNWk+/0AjxndcBZb240LnUuYmRkU0pAFPrx3oo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=trF5OxUWigm3Nk9WINknpQjuvArw/PtzMrcMZLWOPxtOPnaW6XscagdYxd1eyEuLD
-	 m1i9R0OqSIxAd5M6hV22uSH/3Ow/9+5ZBOxUPYMQljx72gmZDfSRVEFODm7w4vKjym
-	 fM4zIR78RPmoXzI79hDFbvVCf++/HQNUqQgaHTKU=
+	b=EizG4oJoZqqhU8PpVwkSRoYQNmqQW1XuYkSKQzK8GuZxBNU1n8QLRC5iIg0cqwuB3
+	 f0qEyrSkNbUKuaaNMa1NgukLiEyZwcLued1DX33od2UQYGcRNPJUUnhrJqmF591OlL
+	 if8JuUmLYf1s4aHJ7w2dkSo202yVxfGT0r5xU0go=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prathamesh Deshpande <prathameshdeshpande7@gmail.com>,
-	Chenguang Zhao <zhaochenguang@kylinos.cn>,
-	Leon Romanovsky <leon@kernel.org>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2361/2857] RDMA/mlx5: Cancel deferred page-fault EQ work before teardown
-Date: Wed, 18 Nov 2026 15:56:35 +0100
-Message-ID: <20261118150326.532089978@linuxfoundation.org>
+Subject: [PATCH 6.1 2379/2857] mtd: rawnand: pl353: fix clk reference leak in pl35x_nfc_setup_interface()
+Date: Wed, 18 Nov 2026 15:56:53 +0100
+Message-ID: <20261118150327.186499847@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,40 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit aea64024ac37d29e99b82b315a56a9145dc0bc23 ]
+[ Upstream commit 1ce45f0e74d60e8279ed380c97047e6c351aee1b ]
 
-Page-fault EQ work can remain queued after the notifier is disabled.
-Destroying the EQ before cancelling that work can let the worker access
-freed EQ memory.
+pl35x_nfc_setup_interface() obtains a reference to the SMC "memclk" with
+of_clk_get_by_name() and only uses it to read the clock rate. The
+reference is never released: the function has many early return paths
+and no clk_put() call anywhere, so the clock reference is leaked.
 
-Cancel the deferred work before destroying the EQ.
+The hook is invoked repeatedly by the NAND core (nand_reset(),
+nand_setup_interface() and the NAND_DATA_IFACE_CHECK_ONLY mode probing
+loops), so the reference count keeps growing.
 
-Fixes: d5d284b829a6 ("{net,IB}/mlx5: Move Page fault EQ and ODP logic to RDMA")
-Signed-off-by: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
-Link: https://patch.msgid.link/20261007234216.2765-1-prathameshdeshpande7@gmail.com
-Reviewed-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Release the clock reference with clk_put() as soon as its rate has been
+read.
+
+Fixes: 08d8c62164a3 ("mtd: rawnand: pl353: Add support for the ARM PL353 SMC NAND controller")
+Assisted-by: DeepSeek-V4.1-Flash
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/odp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/nand/raw/pl35x-nand-controller.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/hw/mlx5/odp.c b/drivers/infiniband/hw/mlx5/odp.c
-index d2ef2ff88ccdf..b396050f165e5 100644
---- a/drivers/infiniband/hw/mlx5/odp.c
-+++ b/drivers/infiniband/hw/mlx5/odp.c
-@@ -1602,8 +1602,8 @@ mlx5_ib_odp_destroy_eq(struct mlx5_ib_dev *dev, struct mlx5_ib_pf_eq *eq)
- 	if (!eq->core)
- 		return 0;
- 	mlx5_eq_disable(dev->mdev, eq->core, &eq->irq_nb);
--	err = mlx5_eq_destroy_generic(dev->mdev, eq->core);
- 	cancel_work_sync(&eq->work);
-+	err = mlx5_eq_destroy_generic(dev->mdev, eq->core);
- 	destroy_workqueue(eq->wq);
- 	mempool_destroy(eq->pool);
+diff --git a/drivers/mtd/nand/raw/pl35x-nand-controller.c b/drivers/mtd/nand/raw/pl35x-nand-controller.c
+index 48886a89ea28c..d1c1c7b21586f 100644
+--- a/drivers/mtd/nand/raw/pl35x-nand-controller.c
++++ b/drivers/mtd/nand/raw/pl35x-nand-controller.c
+@@ -809,6 +809,7 @@ static int pl35x_nfc_setup_interface(struct nand_chip *chip, int cs,
+ 	 * macro to convert from one to the other.
+ 	 */
+ 	period_ns = NSEC_PER_SEC / clk_get_rate(mclk);
++	clk_put(mclk);
  
+ 	/*
+ 	 * PL35X SMC needs one extra read cycle in SDR Mode 5. This is not
 -- 
 2.53.0
 
