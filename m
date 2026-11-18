@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019582;
-	b=MqGSN+x5q2+qatc728M1uBzU6MJZAWdFrLmjBNOAWAe80vtNp0N5XmBH5g6d5um8sLOY
-	 HehS6uya4qvYmevAGus/PLmnjioy9r87N5sZVBU8aGldqyyJPstABZAGeLBkQsXXA7rh+
-	 5dAuNLb0jV5OtepvVgEH8CZAgl18zVNu0sMPpy0uMI601cGTFlVKYlrmgOAbi3L3o6hqP
-	 zOJC5UIUKrvlw6VqkQWadQJK8BAUxIpKxep6fKn/ZnhPhnoxab4fC/yThnfj0M5TyL4V1
-	 +rtvDFmUMbWzM6cgeKM7Z7tmnQBi+lfozJ+RUhZNwxqYb/rTPQx2nTVeKwSxpxPqeCg==
+	t=1795019585;
+	b=ZYaj7CWnRcLw3A2jof2+r+yqnnm39J9Y42r485oEaEJTGtB6r1fCx2nF+lpGlXopyVyP
+	 6E/MAE7XKgZYPVh6RSD0uWpyJXDCguZ+AqwYzkY+0AmGhyb20fBEUOOuJ2v323Q9il+Bw
+	 8bCqrVrcvvKtHANEbhbUBnvMvt0FDou1KsoG2xm2mNPKCB/YJQ9EQBi5gwX7kTLiPli63
+	 DglG7t+5VtDHOJQ+STpvLiUwvHfSYurGUFmougRiCc/jmoRuim1v1UoJYVsyVi9AEN7/t
+	 ssYaL7VfBBubCCu4ma+/nnXO4YsMFVNC/XKvRZ81riW5C1/yBMcmTXal882I9qWlI8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019582;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019585;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FGUjlz7Gxp5mmTBT6LO+FMFnIiHZkw1FMpsqH0v5MeM=;
-	b=MOSfElcAGk1jlgDjHrpFHj1ccSNKfhUXB46yZ1+gil1gc6W5yp98pc3RuEgcdtX/O46Q
-	 liQb6yXAb9p9FuEfPniy9aRgSyYLTw0zfvnOuCSr5BfCyxWAbzsZCxgTZsU8+4dfXZPUt
-	 nhBXTurolqEBHs6hBwPM+q4vnjVMiCFTNb9c5zXe3y7CGo7tVCUFtmV7Ibdx2RXu0nPmp
-	 IYehNI39XAcKSKmipDQgexnigfWbihX88/L3PeNHFJcMs4lEnEWmyn4L2SHXx+jwYRB0Z
-	 DxSiGnrSSqRlDRqHYF8b3tTkPlEBLIH6sHdpUk9Ie8l1+yBatHnGn7QnGz81QerM0lg==
+	bh=1cnRLLmjiqaef0bM1P/0uaj0gWf+MO6Q02IxhNgdoQw=;
+	b=sehTaJk8TostzOpser3foOKAQlxu85nIP+u/euY/M1LjFMZZoYu9EbtyBLJ5yMDGKULd
+	 yMWmYkv56lF21HQrruOOGAZjiCQDdVoVbrMSNs/so8wAwi1r3sOZm5PtA2Vlm/A7+/anM
+	 QJuk0gS6MIWr9XFcg1NH2qiEHzcBb0J7W/8DpW4aJohhdfLDEpRtLJaltn5p3evA0YqQl
+	 7YUSIqrr7I6S0bSjxmzdFC22SF0LVo3eUtRLQnF/JGeQQe5nnV4tjJQQh8H4fTkwVbH8R
+	 lvi5/qncqSLWFnb0znSK1+V9vZpncFEwfQstocoDF3DOH0oQ6bHbbAwLEQO6DYU3tjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MjgdLZZf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SeXj31qj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F31B606A325;
-	Wed, 18 Nov 2026 16:33:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59E25606A33B;
+	Wed, 18 Nov 2026 16:33:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MjgdLZZf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9C341F000C9;
-	Wed, 18 Nov 2026 16:33:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SeXj31qj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B79381F000C7;
+	Wed, 18 Nov 2026 16:33:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019582;
-	bh=FGUjlz7Gxp5mmTBT6LO+FMFnIiHZkw1FMpsqH0v5MeM=;
+	s=korg; t=1795019585;
+	bh=1cnRLLmjiqaef0bM1P/0uaj0gWf+MO6Q02IxhNgdoQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MjgdLZZfRD/XRCjo6UBfntDhIpkblhzYU/XsZnsDUUcJVuU9CbB+SsBkFAVQ1VpI7
-	 JdRcPKV+GlKtukyxlm+d8POuTI/gqrm98k+WFcUJoi+W9c3INooBN/c01hQTFhT/Cz
-	 YPaMKxgr8XpF//tFw46gR4KEcVToK8aEq9VsAC5Q=
+	b=SeXj31qjkOeeP9YHaH6lEbOm8FGWsytLmNvmNXNZBChcxKkyWTqBF8FQBTUViPxLJ
+	 XFA3aVFIniNbIwDaZ9xmrC6dXRBmEofXWvd9m243JvgKEQSXZX4QvvIxiE4xKW52XT
+	 V48aicEOj4bUarM+ACNk8MQcP2ow8fGaXmu8xzvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
 	Hannes Reinecke <hare@kernel.org>,
-	John Garry <john.garry@linux.dev>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Tal Zussman <tz2294@columbia.edu>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1646/2651] block: dont fall back to buffered I/O for atomic writes
-Date: Wed, 18 Nov 2026 15:48:06 +0100
-Message-ID: <20261118150347.059699537@linuxfoundation.org>
+Subject: [PATCH 7.3 1647/2651] block: unpin all pages of a bvec in bio_iov_iter_align_down()
+Date: Wed, 18 Nov 2026 15:48:07 +0100
+Message-ID: <20261118150347.091026340@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -73,52 +73,118 @@ Content-Transfer-Encoding: 8bit
 
 From: Tal Zussman <tz2294@columbia.edu>
 
-[ Upstream commit 9fd1afea19fa7c4ba438a1d162739e0832073a4c ]
+[ Upstream commit b91a661514f3a3ce5add42fc1f2eb17b61eacaca ]
 
-blkdev_direct_write() turns an -EBUSY from page cache invalidation into
-a 0 return, so an IOCB_ATOMIC write is retried in full through
-blkdev_buffered_write(), with no atomicity guarantee.
+bio_iov_iter_align_down() drops trailing bvecs with unpin_user_page(),
+but a bvec built by iov_iter_extract_bvecs() can span several pages of
+one folio, each with its own pin. All but the first pin leak.
 
-Skip the buffered fallback in blkdev_write_iter() for IOCB_ATOMIC, as
-it already does for IOCB_NOWAIT, so the -EBUSY case returns -EAGAIN and
-the caller retries, matching __iomap_dio_rw().
+The partially trimmed bvec has the same problem. Shrinking bv_len does
+not release the pins for the pages cut off by the trim, and
+__bio_release_pages() only unpins the pages bv_len still covers at
+completion.
 
-ext4 has the same fallback and only warns in it. For block devices the
-fallback can be skipped before any I/O is submitted, so fail early
-instead.
+Both issues occur only with a logical block size above PAGE_SIZE and a
+large folio backing the user buffer. On a device with a 64K logical
+block size, an O_DIRECT pwritev() from a hugetlb mapping that ends 16K
+past a block boundary leaks one huge page per call, whether the
+remainder is its own bvec or the tail of a larger one.
 
-Fixes: caf336f81b3a ("block: Add fops atomic write support")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260802-blkdev-fixes-v1-0-a82fc549fd74%40columbia.edu?part=2
+Unpin all pages of a dropped bvec with bvec_unpin(), and unpin the
+pages trimmed off the last bvec as well. Move bvec_unpin() up and split
+its page count into a helper so both sites share it.
+
+Fixes: 20a0e6276edb ("block: align the bio after building it")
 Assisted-by: Claude:claude-fable-5
 Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: John Garry <john.garry@linux.dev>
+Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Tal Zussman <tz2294@columbia.edu>
-Link: https://patch.msgid.link/20261009-blkdev-fixes-v6-6-307939c387df@columbia.edu
+Link: https://patch.msgid.link/20261009-blkdev-fixes-v6-8-307939c387df@columbia.edu
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/fops.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ block/bio.c | 39 +++++++++++++++++++++++++++------------
+ 1 file changed, 27 insertions(+), 12 deletions(-)
 
-diff --git a/block/fops.c b/block/fops.c
-index a5af145bd0116..562cc52af5aa2 100644
---- a/block/fops.c
-+++ b/block/fops.c
-@@ -787,10 +787,11 @@ static ssize_t blkdev_write_iter(struct kiocb *iocb, struct iov_iter *from)
- 	if (iocb->ki_flags & IOCB_DIRECT) {
- 		ret = blkdev_direct_write(iocb, from);
- 		if (ret >= 0 && iov_iter_count(from)) {
--			if (iocb->ki_flags & IOCB_NOWAIT) {
-+			if (iocb->ki_flags & (IOCB_NOWAIT | IOCB_ATOMIC)) {
- 				/*
- 				 * The buffered fallback blocks on i_rwsem and
--				 * on writeback of the data it copied: return
-+				 * on writeback of the data it copied, and
-+				 * can't provide torn-write protection: return
- 				 * the short direct write instead and let the
- 				 * caller retry. The bytes already written
- 				 * still need a flush if REQ_FUA was not set.
+diff --git a/block/bio.c b/block/bio.c
+index 0f1aa1d6c638a..d4ed8a135e8f6 100644
+--- a/block/bio.c
++++ b/block/bio.c
+@@ -1197,6 +1197,21 @@ bool bio_iov_iter_set(struct bio *bio, const struct iov_iter *iter)
+ 	return true;
+ }
+ 
++static unsigned int bvec_nr_pages(const struct bio_vec *bv)
++{
++	return (bv->bv_offset + bv->bv_len - 1) / PAGE_SIZE -
++		bv->bv_offset / PAGE_SIZE + 1;
++}
++
++static void bvec_unpin(struct bio_vec *bv, bool mark_dirty)
++{
++	struct folio *folio = bvec_folio(bv);
++
++	if (mark_dirty)
++		folio_mark_dirty_lock(folio);
++	unpin_user_folio(folio, bvec_nr_pages(bv));
++}
++
+ /*
+  * Aligns the bio size to the len_align_mask, releasing excessive bio vecs that
+  * __bio_iov_iter_get_pages may have inserted, and reverts the trimmed length
+@@ -1206,6 +1221,7 @@ static int bio_iov_iter_align_down(struct bio *bio, struct iov_iter *iter,
+ 				   struct bio_vec *bv, unsigned len_align_mask)
+ {
+ 	size_t nbytes = bio->bi_iter.bi_size & len_align_mask;
++	unsigned int npages;
+ 
+ 	if (!nbytes)
+ 		return 0;
+@@ -1214,14 +1230,24 @@ static int bio_iov_iter_align_down(struct bio *bio, struct iov_iter *iter,
+ 	bio->bi_iter.bi_size -= nbytes;
+ 	while (nbytes >= bv->bv_len) {
+ 		if (bio_flagged(bio, BIO_PAGE_PINNED))
+-			unpin_user_page(bv->bv_page);
++			bvec_unpin(bv, false);
+ 
+ 		if (!--bio->bi_vcnt)
+ 			return -EFAULT;
+ 		nbytes -= bv->bv_len;
+ 		bv--;
+ 	}
++
++	/*
++	 * __bio_release_pages() only unpins the pages still covered by
++	 * the trimmed bv_len. Count the pages spanned before and after
++	 * the trim and unpin the difference.
++	 */
++	npages = bvec_nr_pages(bv);
+ 	bv->bv_len -= nbytes;
++	npages -= bvec_nr_pages(bv);
++	if (npages && bio_flagged(bio, BIO_PAGE_PINNED))
++		unpin_user_folio(bvec_folio(bv), npages);
+ 	return 0;
+ }
+ 
+@@ -1499,17 +1525,6 @@ int bio_iov_iter_bounce(struct bio *bio, struct iov_iter *iter, size_t maxlen,
+ 	return bio_iov_iter_bounce_read(bio, iter, maxlen, minsize);
+ }
+ 
+-static void bvec_unpin(struct bio_vec *bv, bool mark_dirty)
+-{
+-	struct folio *folio = bvec_folio(bv);
+-	size_t nr_pages = (bv->bv_offset + bv->bv_len - 1) / PAGE_SIZE -
+-			bv->bv_offset / PAGE_SIZE + 1;
+-
+-	if (mark_dirty)
+-		folio_mark_dirty_lock(folio);
+-	unpin_user_folio(folio, nr_pages);
+-}
+-
+ static void bio_iov_iter_unbounce_read(struct bio *bio, bool is_error,
+ 		bool mark_dirty)
+ {
 -- 
 2.53.0
 
