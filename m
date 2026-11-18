@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054033;
-	b=2+ymua+daOoCxRu+GbwGuSf6TmhTQYJt0LyByGQHHcc0Itzyl80EyXrzEeJFP1yJeli8
-	 tFAf8K7QZyi0wd1kgvnbYft9KTsXD0no8QRdsm6m3Nj6nMg9paxcE197ekXOJ1NXF5GZ8
-	 OXpiWb4B/EApMnVFAz2if9L0LDRBsheYvbs+QDYHF5lP4/3ndZqK1h2guP9IarBlliIyR
-	 XHkxjc+j8ncplBf9K++p2eeH5EbBAENkQPfOF0x/ZKxqewgiNGfG8t0yur2PV0vEdaCy1
-	 c3MRj/qUqrTMFZeYp1ZZZLdzTkFlhCGzkQtAWWJRBZCj96cdslGcYOAD9NuctVua0Yg==
+	t=1795054035;
+	b=tVHX4u7CTq8fI0jWCmMVGVeSjAKDllrSmVkLhzI7ZVht3WXCEHmCczUdrMKMPmt3p8Ni
+	 /tlP4v880pMwnVwnw0CFGpeJs9yjDbbmibkct4zk9qdg9zCpQwON1H73F7+6S2zrqID6y
+	 uUynVS/yw2QFaWbj+yAoHOaJHQ2nAWvSst15SPVx2bUMM3o2f5vFM8SmznxGPxMMCmMjq
+	 AZUr2JaFbGWg/O6KHmlhEotSFgHbpW9NhxUB1pLdAxUke3TpBFN+9j6UiyRxSFKpxQy9Z
+	 /57zrCzQuwbvO2kF5PnRvZ0VC2AtnbohyEBGA9YcMgO3xi5dDsFNiZAMc8/0vEJAgsQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054033;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054035;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=pg0aoc//DLPIxsLH/eWQVjC4hMX5NKcenzjq+pmAdyk=;
-	b=bKLxgAts/OGCYknYP1DhdFqB+MFrkXEmJw7fnL20yrTyI0fRTYI7OHfDT5HY+dXLuqcv
-	 TrCqQCpxe2JzNIACQkQpWDIeqzgp7Tbwmds7dLKSjEdrcCWuPuSTKsrkC/++p1uGe1CCt
-	 OThAOJfSmbonwbSoNVfeE32pQElfdmTuXajPS9RFpflgbzexEnnaF0b24sYwmH/qWvKOL
-	 C+wJZ+Jgh6FyVcDrMq6cN2zAmvOjpIfa7mAhupnabBHdCY2G4I4zTI/BV3+Fug8SsBkd6
-	 A04pN3h6dNG+xFf10ZiFHIOHnHChtYlMeQYQ4Np18azd1Ucw3UDDmbbI3X7+Fom8scw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=qpKH6l0q+O5H+59+dLBrbB+ZGtSekZme6nz6CKUPYDw=;
+	b=qphVI9MPITnKoBvCFE4RbnAOnqC43zPv9gAOWI9U9NtGWCb8NCg75eTpkPTXIQ1bB0Ow
+	 viC0e5TK+vMZ6lC+SHLp/LPYONtRBOIbi3mCqnB56NyLRteRUuAvKKnU68EJZ9Ne/T1Rb
+	 JKaM+SjOoXLF78G068PM+BSt6u5vNieh31Ric/7wPL07uM6wb5MMv7o3a7rO3wz46v7qh
+	 Tc1fotVrijgR3873ALqGuZzWO6tbeeFwKzQHlojokEo61lAN5U9QVhsRkcpPZ9Y1atCri
+	 0XnCv+JuZlibkHf5Qrsya3mk0iAkW9JsG154jlgqBEm4VZOWCJmh7SaZxvJYMYeiBeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bCZWUIbF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="f/S5SFGZ";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 134B1606A320;
-	Thu, 19 Nov 2026 02:07:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80316606A320;
+	Thu, 19 Nov 2026 02:07:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bCZWUIbF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1742D1F000C4;
-	Thu, 19 Nov 2026 02:07:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f/S5SFGZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D480F1F000C4;
+	Thu, 19 Nov 2026 02:07:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054032;
-	bh=pg0aoc//DLPIxsLH/eWQVjC4hMX5NKcenzjq+pmAdyk=;
+	s=korg; t=1795054035;
+	bh=qpKH6l0q+O5H+59+dLBrbB+ZGtSekZme6nz6CKUPYDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bCZWUIbFQwwkJADN+UOBRV+mY9sqYOwrMK7Is7zT9YgfHG8mql5g/w9m6c0zE3K92
-	 Avat3e/vbnikHGWb+DI7sxklHFduNAfjDKeE17tP+iAMuvCQ9fYNSSWBEYqjaGBmcS
-	 iRF3GpBqY/Q9tb+rcebc7Xhvgd6BQV+nbfYCTlZM=
+	b=f/S5SFGZt7EXMSCTy1To3CTVo86SbUS/A9+l0QnNEg5qbI1puEujL/qibLVMvECnE
+	 t9PI4Ok325CJ127ciZtlp1EsVVyYthApnvvugzWdyDsiunydBFuNWBD5/VYE9Oi007
+	 vH8d0e8WXjGcDV5LxxgA0AhXK6Yk+EcdyL9TrTfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Robert Foss <robert.foss@linaro.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1131/2214] media: camss: vfe: Dont call hw_version() before its dependencies are met
-Date: Wed, 18 Nov 2026 15:46:47 +0100
-Message-ID: <20261118150057.302168620@linuxfoundation.org>
+Subject: [PATCH 5.15 1132/2214] ceph: fix 32-bit overflow in readdir reply count check
+Date: Wed, 18 Nov 2026 15:46:48 +0100
+Message-ID: <20261118150057.336765665@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -65,52 +63,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Robert Foss <robert.foss@linaro.org>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit 745b475e7e10ae1e8c538e5db89494411ee1c22b ]
+[ Upstream commit 52913831ba56efceaafd80b501d68fa00f79bde6 ]
 
-vfe->ops->hw_version(vfe) is being called before vfe->base has been
-assigned, and before the hardware has been powered up.
+parse_reply_info_readdir() checks how many entries are in a readdir
+reply by computing the end pointer of the decoded array. That pointer
+addition can wrap on 32-bit kernels and let an oversized count pass the
+check. For example, a count of 0x40000000 with 156-byte entries wraps
+to a zero offset, so the decoder can write past the preallocated buffer.
 
-Fixes: b10b5334528a9 ("media: camss: vfe: Don't read hardware version needlessly")
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Check the count against the number of entries that fit in the allocation
+before publishing dir_nr. Reject oversized replies through the existing
+error path.
+
+Cc: stable@vger.kernel.org
+Fixes: 54008399dc0c ("ceph: preallocate buffer for readdir reply")
+Assisted-by: LLM
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+[ sashal: adjusted error-path context to match pr_err() without WARN_ON(1) ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/camss/camss-vfe.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ceph/mds_client.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-index 142bda014d4da..ba56403297797 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-@@ -644,6 +644,8 @@ static int vfe_get(struct vfe_device *vfe)
- 		vfe_reset_output_maps(vfe);
+diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
+index d1bac25eb3e72..e5040a67a14f7 100644
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -363,10 +363,8 @@ static int parse_reply_info_readdir(void **p, void *end,
+ 		goto done;
  
- 		vfe_init_outputs(vfe);
-+
-+		vfe->ops->hw_version(vfe);
- 	} else {
- 		ret = vfe_check_clock_rates(vfe);
- 		if (ret < 0)
-@@ -1339,7 +1341,6 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
- 		return -EINVAL;
+ 	BUG_ON(!info->dir_entries);
+-	if ((unsigned long)(info->dir_entries + num) >
+-	    (unsigned long)info->dir_entries + info->dir_buf_size) {
++	if (num > info->dir_buf_size / sizeof(*info->dir_entries)) {
+ 		pr_err("dir contents are larger than expected\n");
+-		WARN_ON(1);
+ 		goto bad;
  	}
- 	vfe->ops->subdev_init(dev, vfe);
--	vfe->ops->hw_version(vfe);
- 
- 	/* Memory */
  
 -- 
 2.53.0
