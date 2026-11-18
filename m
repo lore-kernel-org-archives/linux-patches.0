@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041148;
-	b=uNt4bkveWEGTiIAo2Zbl3MNJHprTMZqcEnXobM1o0cDsZ8IPl4WD9A4oIkOthEj5Z1dr
-	 uLFiKE+mGuauNlifyZ6esCOwN46BiLMmyWy+GY6qEqFKd05Py43PjNC5ald441tO+OggW
-	 FbetHdtwkzD0seMfs8j/CRMgjKnD5vBWqu+f8ub7Lw63M1zW3QMjpglyJcDt4IQdJeorK
-	 KNQ9lFXIf6U736E5+/ifVGdnu4CmBY6NiJxc96BGptgWveNK1Ni4BOxLsHqMxJBNFM5Z2
-	 W7HHDq309Ua2YVSwtwMn0ksbCUogbFBapwhicNz73NkU9euCQI9VQejHSCKamSu4z0w==
+	t=1795041151;
+	b=34cYkq2mpjSTz1grbhufjh0WYz+ZHgq0prGte+o1wGEGUKu/Zgx16r+s8SNEkc1d6zNN
+	 9lVMBA4mvEt3r6PkjX78hO0x+V3fNc20U+Rrs2Sp1bCjLhKAhcrFBw6co9aSPsbUuT4NK
+	 SGrjlJTIt0wtcoNHnlE2yYOUcH/OGvHCR2JvW8DRtyIeE5fIsriuqQmyN3Pbw0wyj1C5B
+	 xazA8LC3Argh4H/PfbrxT5AA3N2BUYB0Z4HYoEFD9zF8UAFVapA0B4gjtnZVIUJYP0p/T
+	 qX5Zq7geuc8/NB61H6t4Dw3LtyauvoW6aODXpyky5ceK3Ht+LTRM8IdU1FfjleCQr2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041148;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041151;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qmfx+Iy67Ri5cON8kSSXwk9pqOCH0orLJkHY6DXCr5Y=;
-	b=2VB79o9KxvW6XeRraM8nPdNQGVmtEJeOOkEapIPRDwzcOh4ry+GwwK6n+NfRZXrRObes
-	 mhIu0WcPk/eor/zMG9+aFRqVMunizbghebZXo/fw58kI5ug76aOPPmqiAY28Io1/0l2xG
-	 xPEsnnH5w9Uky6Hjn4711pTYk+4noiA5LRllGQuq6V6AGfQoo4R75fGK5pPvaKAlwFAFl
-	 aVAJ+DSNLbl13TdOXbjX+kTwXCe1IzxXg9iqgzWJlUcwfM5HrbSBW4uzC6sdJhj8lEe0b
-	 wWIU8R5dh7MDwyubS1AeAHv/tTrh6N25bqBNyZv/z+x3kQA1Jp1fjI0l75zZZTHU+5A==
+	bh=VEn7fN7NVe2tet+bg22B3q4sFgfYGdRfTCBxbTux6xw=;
+	b=RsDwbL39HUAGvRyqqki57qJosFo4sfK9GrnNpZsxqVwoXvwdoEF49/6imIjnbHmBQb9F
+	 7YiyuoE6RWFzBPng1NhsfgEw57wya9zCZU3WcbdxsJlIrKgO3I6Es7tVEO5rGuqeKQ1/i
+	 tM3EB8S1mPTz2ZfZTc3dK9BIYgLjM6SKpey9sDio2Jeue50LM5ryZUukaBVDNoTVrYJVW
+	 zM37ycKj76XF38K7wFimm0J7TmRFLaH2zyIOGiIZCZJXB6EnrozDBIngwqVEtqDsAKUPB
+	 SZHylQgH6+a5K+ESgP/5QE93ZS7TlZ5sQGnQ/4z+utkRq891DP0v2DjNHhADOXAEDCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=brPRffp8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VnFgKblA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B2C606A320;
-	Wed, 18 Nov 2026 22:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24576606A31C;
+	Wed, 18 Nov 2026 22:32:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=brPRffp8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B881F000C4;
-	Wed, 18 Nov 2026 22:32:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VnFgKblA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 753CA1F000C4;
+	Wed, 18 Nov 2026 22:32:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041148;
-	bh=qmfx+Iy67Ri5cON8kSSXwk9pqOCH0orLJkHY6DXCr5Y=;
+	s=korg; t=1795041151;
+	bh=VEn7fN7NVe2tet+bg22B3q4sFgfYGdRfTCBxbTux6xw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=brPRffp8+eibNiMn55vXIongNnzVa/af/zmH49g+qvtL75+toYp+ImZ/E9WDdNlId
-	 ArkVerHprfT/6XHheub14aIl8CYqQni/XxFpXjQhoHZG80+pQTHF3huq4LzYIXgnIr
-	 cadLaEaeEQ+4fCzgQNLyaP12f8d84fGDdj/zrsxM=
+	b=VnFgKblAjp9KEt3eTm7TQcTyiPIuH2Cj725gubJO9D0G/bm1dlUIwq/qbMAPZcWzk
+	 QtHzt1Xj23P+FleQLdCZmG4tOIhJphGNx2Su3hcg2f1OlbmHan33BNxmFoOQ0xr6jL
+	 Tt22RWqpdbD2K9dT4KbFmfNlwf+vTsZLgSWoVBlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Felix Fietkau <nbd@nbd.name>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2673/3318] wifi: mt76: mt7615: validate MCU response lengths
-Date: Wed, 18 Nov 2026 15:54:55 +0100
-Message-ID: <20261118150441.193229465@linuxfoundation.org>
+Subject: [PATCH 6.6 2709/3318] ALSA: hda: intel: Cancel delayed work at shutdown, too
+Date: Wed, 18 Nov 2026 15:55:31 +0100
+Message-ID: <20261118150442.158093042@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,74 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 356735fc612ea54062eb741ea15fa4ff7df4fc36 ]
+[ Upstream commit b83b78df0e53d9dd872d24e49a99658815b12770 ]
 
-mt7615_mcu_parse_response() reads the common response header before
-checking its size and then consumes command-specific fields after unchecked
-skb_pull() calls. A short firmware response can therefore be read beyond
-its current extent.
+The shutdown procedure needs to cancel the delayed probe work in case
+where the probe work stalls or is slow but still possible to
+reactivated.
 
-Validate the common header and each command-specific payload before reading
-it.
-
-Fixes: 0e6a29e477f3 ("mt76: mt7615: add support to read temperature from mcu")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260830131049.2097-1-pengpeng@iscas.ac.cn
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: c0f1886de7e1 ("ALSA: hda: intel: Allow repeatedly probing on codec configuration errors")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://patch.msgid.link/20261008192553.300025-2-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7615/mcu.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ sound/pci/hda/hda_intel.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-index 20f2854d134d1..81372cfaee9ab 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-@@ -145,6 +145,9 @@ int mt7615_mcu_parse_response(struct mt76_dev *mdev, int cmd,
- 	}
+diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
+index 553f23133e145..abef69c82a645 100644
+--- a/sound/pci/hda/hda_intel.c
++++ b/sound/pci/hda/hda_intel.c
+@@ -2465,12 +2465,17 @@ static void azx_remove(struct pci_dev *pci)
+ static void azx_shutdown(struct pci_dev *pci)
+ {
+ 	struct snd_card *card = pci_get_drvdata(pci);
++	struct hda_intel *hda;
+ 	struct azx *chip;
  
- 	rxd = (struct mt7615_mcu_rxd *)skb->data;
-+	if (skb->len < sizeof(*rxd))
-+		return -EMSGSIZE;
-+
- 	if (seq != rxd->seq)
- 		return -EAGAIN;
+ 	if (!card)
+ 		return;
+ 	chip = card->private_data;
+-	if (chip && chip->running)
++	if (!chip)
++		return;
++	hda = container_of(chip, struct hda_intel, chip);
++	cancel_delayed_work_sync(&hda->probe_work);
++	if (chip->running)
+ 		__azx_shutdown_chip(chip, true);
+ }
  
-@@ -152,11 +155,15 @@ int mt7615_mcu_parse_response(struct mt76_dev *mdev, int cmd,
- 		skb_pull(skb, sizeof(*rxd) - 4);
- 		ret = *skb->data;
- 	} else if (cmd == MCU_EXT_CMD(THERMAL_CTRL)) {
-+		if (skb->len < sizeof(*rxd) + (is_mt7663(mdev) ? 8 : 4))
-+			return -EMSGSIZE;
- 		skb_pull(skb, sizeof(*rxd));
- 		if (is_mt7663(mdev))
- 			skb_pull(skb, 4);
- 		ret = le32_to_cpu(*(__le32 *)skb->data);
- 	} else if (cmd == MCU_EXT_QUERY(RF_REG_ACCESS)) {
-+		if (skb->len < sizeof(*rxd) + 8 + sizeof(__le32))
-+			return -EMSGSIZE;
- 		skb_pull(skb, sizeof(*rxd));
- 		ret = le32_to_cpu(*(__le32 *)&skb->data[8]);
- 	} else if (cmd == MCU_UNI_CMD(DEV_INFO_UPDATE) ||
-@@ -167,12 +174,16 @@ int mt7615_mcu_parse_response(struct mt76_dev *mdev, int cmd,
- 		   cmd == MCU_UNI_CMD(SUSPEND)) {
- 		struct mt76_connac_mcu_uni_event *event;
- 
-+		if (skb->len < sizeof(*rxd) + sizeof(*event))
-+			return -EMSGSIZE;
- 		skb_pull(skb, sizeof(*rxd));
- 		event = (struct mt76_connac_mcu_uni_event *)skb->data;
- 		ret = le32_to_cpu(event->status);
- 	} else if (cmd == MCU_CE_QUERY(REG_READ)) {
- 		struct mt76_connac_mcu_reg_event *event;
- 
-+		if (skb->len < sizeof(*rxd) + sizeof(*event))
-+			return -EMSGSIZE;
- 		skb_pull(skb, sizeof(*rxd));
- 		event = (struct mt76_connac_mcu_reg_event *)skb->data;
- 		ret = (int)le32_to_cpu(event->val);
 -- 
 2.53.0
 
