@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035677;
-	b=x1Q1OZ/gBf2Boe/kwJph+ErFpZnRVR4Najp28nd3+DOMKOuXIy6xWlDmnvq7ph0sLcWY
-	 7o2+3//tAtpl4F8rufIRRDaWX6oumqNNurgsp8Hm0OE9QgzpjASTmghfQyGY3wXoPWzpd
-	 IAoNhfsqXOs4hkZ1nXuOWSa4O+5tQqaTFKFkDwh6xH+W1mMjmfhv7GkKXxnVlbAt2WDiI
-	 vOV4flg9OsLo03liVE3hT1wK4IoYJCGnT9+N6saKxiN2qu6nO/IIjoVJpHAvZIcG2ncc+
-	 U2IokZ+BKyITD70YIFD66rmLFGe1fcP/8a3x07+NJxq39ohPLJ6JcIX90rhUOtOVrPA==
+	t=1795035680;
+	b=5VvBea8DKlDQ4VmsK+RnxScWCDq0T/kOUmuOzblZ6JdtiTIpNvzFdcskMAQM4cEDC0C0
+	 kvNkeRCfXqwZNS3jqNqjXXUvhPIbNK4JWC50+N0A+3cWTXaM0fIubVhMtAqdaHlguiP8r
+	 9nCBilM6OcTk8gJ5I6jbWc3HYXjSA5sEWdr5X1TNxRnGk4reZi1HT4+MQ/gCR9YkjnjwX
+	 fUqP+6WXorRjcGcbWX0RlgQ5Z0IIR+3FbO00GU7vNXbYJz7zwuMgludBEdFcpuZA+SQLk
+	 Cvb4GdwaVIL2Ve1Zi54rucNCbGW3HWO0+QTR/sySo7D9PeAKLrNBrr8ncj04jb4wuDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035677;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035680;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AuwYlVLI9vUvJOg6EJyFfVQACZ1I/uvUNf+S32RT+/E=;
-	b=Nvrtzgq1Qo+KbkWeyWFoTTDZ8YljsHY17CXAgy6gMqQYdm9M2pKjgYFqnqykXtQcWnsV
-	 cWu7/DAUWvYq7etgl6CwcMTpCh9CsTQZQT/7BCCdJ/o2xuutaj5KQK7SzUF5TgUmGRPFF
-	 b2Ev+sdl+XkfBHARjUOqOWgB+p4I5TLn8CZHvbY3JsI/uZes6AH1/i1XE9ZQqX3nAizsC
-	 ae7vaKIseAoXBFEguHYiJbaIYaPiUKxjKIkBkLOaePM4Iu255utf0ButFqHvivTL5RbNi
-	 t76hKGnCle/vQlK3b3Ux3DeEl6R1bZ1JFDJ1vNjCh3pd8Rt2r7et9dBtzjliEzUVMEg==
+	bh=E0hpFCWJKCQiC9nH2fNb2edDH4S2WPbfN9uXZEqqGDE=;
+	b=k0LZUtrx1tMPW80QNMppnX8uENWc6e6j8l8mjgbqiVi+prR1OBKNSHQvev9aDdG/dY9S
+	 hskaKStm+MVe8c6yAlWgqvllPucu9RJk4RQmJ3+4ni1Wm1TxnV8WnXU+oaeP7/sQz8ovk
+	 lt9rDJAAJ3/Ia/N93DERJON6AouF7SQgUmlBTCryZEb5H6cznZEz895qx1S8kY3jvplby
+	 PWi5wajVVWcHzoDIhHqQhZIx5Jp/sibIubpTxyA3x9ydgHHZcrGKEOx17KSQB4EVuHYb4
+	 wgRld5TvSzmLWx8jMzFZshSB01uN7aTYyeJaaVG1bWajgHJMHprDWAy+5VgNjgz210g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I7XUq4aZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0j9wOfl7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767C160A2610;
-	Wed, 18 Nov 2026 21:01:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB7160A2612;
+	Wed, 18 Nov 2026 21:01:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I7XUq4aZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B53901F000C4;
-	Wed, 18 Nov 2026 21:01:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0j9wOfl7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8378D1F000C4;
+	Wed, 18 Nov 2026 21:01:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035677;
-	bh=AuwYlVLI9vUvJOg6EJyFfVQACZ1I/uvUNf+S32RT+/E=;
+	s=korg; t=1795035680;
+	bh=E0hpFCWJKCQiC9nH2fNb2edDH4S2WPbfN9uXZEqqGDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I7XUq4aZ6o8R77TQb8ldMDNIoENGMB4FyRK/9m6ynbC2RgVJ7aR1RO6mZgOQVJMku
-	 NKvblPxAcyqId6rMZRW2lUIuJC+trV5tTyCXNov1c3I9N7B4dCItYQYW6ho2CyPWh7
-	 KYxz0UCybDE843ISowyok+0caYIhhhqq7ANi354U=
+	b=0j9wOfl740AI0jJSjazu7xN2yZVURgWhsaxNb7zQNC8BY8EXNnlBDiL/e3M4NX2eC
+	 zq7I2vZe9cOWyK68KezGyH7gkjhagfXUfzR1MMwyd8vcqatIpFohBAk9oee7AdWjec
+	 /voAowhATl2zggqyNMGOHTCxoC9Ktcgmm3uFZOKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chris Mason <mason@kernel.org>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 0748/3318] io_uring/rsrc: charge buffer arrays and nodes to memcg
-Date: Wed, 18 Nov 2026 15:22:50 +0100
-Message-ID: <20261118150341.073326241@linuxfoundation.org>
+Subject: [PATCH 6.6 0749/3318] io_uring: charge tctx nodes and personalities
+Date: Wed, 18 Nov 2026 15:22:51 +0100
+Message-ID: <20261118150341.104723106@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,49 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Mason <mason@kernel.org>
 
-Commit 075d5837bafc317e796548f721b8fbf7add6821d upstream.
+Commit 0b34e7b20a48710b6f53716bf7030920b69fdbdd upstream.
 
-The io_mapped_ubuf of a registered buffer has one bio_vec per page,
-unless the pages coalesce into huge pages. Huge pages only count against
-RLIMIT_MEMLOCK once per ring, so a buffer that maps the same 2MB folio
-over and over in a way that defeats coalescing gets a full bvec array
-per registration while only the one folio counts as locked. 1GB of that
-registered in 100 slots took several times a 64MB memory.max, with 2.6MB
-charged.
+The io_tctx_node allocated the first time a task touches a ring, and
+the XArray nodes behind tctx->xa and ctx->personalities, are plain
+GFP_KERNEL. tctx->xa is indexed by the ring pointer, so nearly every
+entry needs nodes of its own, and a task gets one entry per ring it has
+used. 642 threads on 4000 rings held 2.3GB with 59MB charged against a
+64MB memory.max.
 
-Allocate the io_mapped_ubuf and the io_rsrc_node with
-GFP_KERNEL_ACCOUNT. An object reused from the ring caches stays charged
-to whoever allocated it first, same as the io_kiocb cache.
+Allocate the node with GFP_KERNEL_ACCOUNT and set XA_FLAGS_ACCOUNT on
+both XArrays.
 
-Fixes: de2939388be5 ("io_uring: improve registered buffer accounting for huge pages")
+Fixes: 0f2122045b94 ("io_uring: don't rely on weak ->files references")
 Signed-off-by: Chris Mason <mason@kernel.org>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[axboe: 6.6 predates the rsrc node rework, charge the imu kvmalloc() and
-the node kzalloc() instead]
+[axboe: 6.6 has kmalloc() for the node, inline in
+__io_uring_add_tctx_node()]
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/rsrc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ io_uring/io_uring.c |    2 +-
+ io_uring/tctx.c     |    4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/io_uring/rsrc.c
-+++ b/io_uring/rsrc.c
-@@ -203,7 +203,7 @@ struct io_rsrc_node *io_rsrc_node_alloc(
- 	if (entry) {
- 		ref_node = container_of(entry, struct io_rsrc_node, cache);
- 	} else {
--		ref_node = kzalloc(sizeof(*ref_node), GFP_KERNEL);
-+		ref_node = kzalloc(sizeof(*ref_node), GFP_KERNEL_ACCOUNT);
- 		if (!ref_node)
- 			return NULL;
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -319,7 +319,7 @@ static __cold struct io_ring_ctx *io_rin
+ 	io_alloc_cache_init(&ctx->netmsg_cache, IO_ALLOC_CACHE_MAX,
+ 			    sizeof(struct io_async_msghdr));
+ 	init_completion(&ctx->ref_comp);
+-	xa_init_flags(&ctx->personalities, XA_FLAGS_ALLOC1);
++	xa_init_flags(&ctx->personalities, XA_FLAGS_ALLOC1 | XA_FLAGS_ACCOUNT);
+ 	mutex_init(&ctx->uring_lock);
+ 	init_waitqueue_head(&ctx->cq_wait);
+ 	init_waitqueue_head(&ctx->poll_wq);
+--- a/io_uring/tctx.c
++++ b/io_uring/tctx.c
+@@ -93,7 +93,7 @@ __cold int io_uring_alloc_task_context(s
+ 		return ret;
  	}
-@@ -923,7 +923,7 @@ static int io_sqe_buffer_register(struct
+ 
+-	xa_init(&tctx->xa);
++	xa_init_flags(&tctx->xa, XA_FLAGS_ACCOUNT);
+ 	init_waitqueue_head(&tctx->wait);
+ 	atomic_set(&tctx->in_cancel, 0);
+ 	atomic_set(&tctx->inflight_tracked, 0);
+@@ -125,7 +125,7 @@ int __io_uring_add_tctx_node(struct io_r
  		}
  	}
- 
--	imu = kvmalloc(struct_size(imu, bvec, nr_pages), GFP_KERNEL);
-+	imu = kvmalloc(struct_size(imu, bvec, nr_pages), GFP_KERNEL_ACCOUNT);
- 	if (!imu)
- 		goto done;
- 
+ 	if (!xa_load(&tctx->xa, (unsigned long)ctx)) {
+-		node = kmalloc(sizeof(*node), GFP_KERNEL);
++		node = kmalloc(sizeof(*node), GFP_KERNEL_ACCOUNT);
+ 		if (!node)
+ 			return -ENOMEM;
+ 		node->ctx = ctx;
 
 
