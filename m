@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052286;
-	b=Y/EeNjK9/w6BeLb1+qRJUar5jZXU3lDNnQkQBN5vfYY24piUXAeM3TZ0h57vDCVDP6fi
-	 EVx8pv3fVEhPPOTcsXsbSSE5XUazMXH7XdYzx1DOHlp+NhVJzFiTxBzBAqCqM4GzD+5kD
-	 MNknLH6PCrqw3wDXXcsZFvvyWzYyjQa3pbXR0p68tHcr9cBQ2K6dFxmMcpyfK9ZR1e/7s
-	 cg648TscbJ3dsKumzCAD9PQcsJGGgwTpfhJ7qKPMvF8kxudR39uLtJBZWWKdM5YK00YDY
-	 qNfft9SuiJU43euIYMn0AWpd9RVBSdWde0ZZlnF5F14wT023ENI4Rcc4r9Y6kgp0vag==
+	t=1795052288;
+	b=Eeuvuaa7Czk0R0pl9kB1QemNqgRSgwQ3DQ7YIrjXTYBBNcs8wWIg9PeXMaS0WdJmiSGX
+	 LycCEY4I/8vn0WM3qzFmOh5b0roWgsRrdB0yWK94ZlhP7kmYhEfwd7N5f7y2lFi21ITBe
+	 FHyYMbXz6FZ9vSGHKQ5ZkYFdbgo3Tm+7iRRPbe5x8HaypL0yrfTM2a4srcV3ZYOVpwb3A
+	 8TxW+wGVoPhVLpzS8XKng55RMMbF8g2KcrjM1KIVcMs6b9YEKUQwIs1+BvvGetIW/DFvY
+	 tHRxxfRbg9lzu6sJu59xngj2LBT7iKJ/ctzzk9JyA/D1yjXgpKUkJy5YjBJ1Copsj1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052286;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052288;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XcW9DkNJazaMh++at0DwGb81O/l2PjtkZjXoB+EUBnQ=;
-	b=QSCXxIF1xgebgFNGOywrORIJnYb6VTGNG/4ZyrEhgo3aE3qIDcnuhFyjwxqpsX7MIDa1
-	 LRx3eUOtMkqNd2xQ8ZTpyAu1/vfidwpK7fmT2XIGqXND+QTHyCxo9g1VpFk1hnS8fH3B6
-	 /Rbus09ImcluB5DI4E7ZuUtU7sUbkw2H7Gym1kTRokls8jqNxjlrKFiDqjxUTPh7yqApf
-	 7pcYVFogzJVyIYXRCTk7DSOPX1X1wh+hog5cTu+7Q+AetN/SEz21Um2dT+7KgRJVTfIxz
-	 YMMOToyI3KgNH8wjuZJ56jM543Nkur6WbIIz0dHDh0FEqObllEPfTzrpYut2Y2VJK1Q==
+	bh=xoXXrlGWX6wyDK3CMfQEdpoYd0lVY/bgn8JJRjGhhsg=;
+	b=QktXA7HACI9O0naeEuAIvZ4OG7z2vhdX1CndaY1yF0LMQIyPiWWc4Yjr3UddA6hsL0S7
+	 nPu1WNPYD3qz0u0AXx6hI0GCl1dLIij1eKo361mVOh/iKMfCv0T2vJd6GYf4VsRPD6mSa
+	 FB4d9dta19WYNtw72NJXygJyJr6u6WQ2a2uGsKZ9OTPoo31Mm2XGE0Up3ZtYAM844eyzB
+	 8Gwl+Tf9It3oLNGPcFmCfJoNadjZifWZeWub3FOwraB/AhhTXWnUlmCGP9TTc+XnBGVz+
+	 xxVDot/XFM/3uYJINMvXlJVXQaOE5cGmJhME1Z7sLIuZ/HzafkSmgb73HlklH8dpRVA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dMeMTpRe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zeKAdlLn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48097606A320;
-	Thu, 19 Nov 2026 01:38:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9BEB606A320;
+	Thu, 19 Nov 2026 01:38:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dMeMTpRe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A82A1F000C4;
-	Thu, 19 Nov 2026 01:38:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zeKAdlLn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 362971F000C4;
+	Thu, 19 Nov 2026 01:38:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052285;
-	bh=XcW9DkNJazaMh++at0DwGb81O/l2PjtkZjXoB+EUBnQ=;
+	s=korg; t=1795052288;
+	bh=xoXXrlGWX6wyDK3CMfQEdpoYd0lVY/bgn8JJRjGhhsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dMeMTpReKqs3yywnJCXlQ49Nc1vDru0G+wPH7BZzmi78CjqRcHOgMsgJgrDN0alac
-	 bbzHHmDtL+0Rlr5eZpfF/p6JaaARhBQ2WWl7Uv/BNyc2WxC38nOEXBGu3cOAradEQV
-	 qipTj0eFOO66RURjJbGJwk5PrMpU+sREQZHZoFLg=
+	b=zeKAdlLn3WCjwonNdmcSOj3ZHqmppE1Gxjqv+YklCVSLcqQ+tT7e7zEgpnoeSYyqS
+	 IKy866ZBjotZs2wZRlJMTn4chYinzJDRXbeZhr/ryQ2+jLe5hKdiqMyKRfqMFlhwWn
+	 E+0YExHts4OwyiR6O6q39WH5Sprbem1bXE/e7quQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Hilliard <james.hilliard1@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Shehryar Ahmad <shehryar.amd@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0472/2214] mtd: rawnand: sunxi: reject ECC maximization on small pages
-Date: Wed, 18 Nov 2026 15:35:48 +0100
-Message-ID: <20261118150030.068296479@linuxfoundation.org>
+Subject: [PATCH 5.15 0508/2214] iio: accel: adis16201: fix channel order for buffer mode
+Date: Wed, 18 Nov 2026 15:36:24 +0100
+Message-ID: <20261118150031.451376226@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,48 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Hilliard <james.hilliard1@gmail.com>
+From: Shehryar Ahmad <shehryar.amd@gmail.com>
 
-[ Upstream commit a3c84084a73e170374b7dd493947efdef4ee57bc ]
+[ Upstream commit a4b9f1137b76faab6891ce0bd3f5c02dda7c392d ]
 
-When nand-ecc-maximize is set, the driver selects a 1024-byte ECC step
-and divides the available OOB bytes by the resulting number of steps. A
-NAND with a smaller page therefore produces zero steps and a division by
-zero.
+Reshuffle adis16201_channels to ascending scan_index order to avoid data
+corruption during IIO core demultiplexing since the ADIS driver builds
+the buffer in channel array order, while the IIO core demultiplexes it
+in scan_index order.
 
-The older controllers also provide a 512-byte ECC block mode, but the
-hardware documentation describes that as an ECC block size within NAND
-pages whose supported sizes start at 1024 bytes. It does not document a
-512-byte NAND page mode.
+This changes the raw buffer byte layout for existing adis16201 users
+reading buffered data directly.
 
-Reject pages smaller than 1024 bytes before deriving the step count. This
-prevents the division by zero at the point where the incompatible
-maximized geometry is selected without changing explicitly configured
-512-byte ECC block handling.
-
-Fixes: 4796d8655915 ("mtd: nand: sunxi: Support ECC maximization")
+Fixes: 591298e54cea ("Staging: iio: accel: adis16201: Move adis16201 driver out of staging")
 Cc: stable@vger.kernel.org
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Shehryar Ahmad <shehryar.amd@gmail.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/sunxi_nand.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/iio/accel/adis16201.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/sunxi_nand.c b/drivers/mtd/nand/raw/sunxi_nand.c
-index aa59b884206e0..624403ccba113 100644
---- a/drivers/mtd/nand/raw/sunxi_nand.c
-+++ b/drivers/mtd/nand/raw/sunxi_nand.c
-@@ -1642,6 +1642,9 @@ static int sunxi_nand_hw_ecc_ctrl_init(struct nand_chip *nand,
- 	if (nanddev->ecc.user_conf.flags & NAND_ECC_MAXIMIZE_STRENGTH) {
- 		int bytes;
+diff --git a/drivers/iio/accel/adis16201.c b/drivers/iio/accel/adis16201.c
+index f063226a42f37..a41c861ff8c02 100644
+--- a/drivers/iio/accel/adis16201.c
++++ b/drivers/iio/accel/adis16201.c
+@@ -202,19 +202,19 @@ static int adis16201_write_raw(struct iio_dev *indio_dev,
+ }
  
-+		if (mtd->writesize < 1024)
-+			return -EINVAL;
-+
- 		ecc->size = 1024;
- 		nsectors = mtd->writesize / ecc->size;
+ static const struct iio_chan_spec adis16201_channels[] = {
+-	ADIS_SUPPLY_CHAN(ADIS16201_SUPPLY_OUT_REG, ADIS16201_SCAN_SUPPLY, 0,
+-			 12),
+-	ADIS_TEMP_CHAN(ADIS16201_TEMP_OUT_REG, ADIS16201_SCAN_TEMP, 0, 12),
+ 	ADIS_ACCEL_CHAN(X, ADIS16201_XACCL_OUT_REG, ADIS16201_SCAN_ACC_X,
+ 			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 14),
+ 	ADIS_ACCEL_CHAN(Y, ADIS16201_YACCL_OUT_REG, ADIS16201_SCAN_ACC_Y,
+ 			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 14),
+-	ADIS_AUX_ADC_CHAN(ADIS16201_AUX_ADC_REG, ADIS16201_SCAN_AUX_ADC, 0, 12),
+ 	ADIS_INCLI_CHAN(X, ADIS16201_XINCL_OUT_REG, ADIS16201_SCAN_INCLI_X,
+ 			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 12),
+ 	ADIS_INCLI_CHAN(Y, ADIS16201_YINCL_OUT_REG, ADIS16201_SCAN_INCLI_Y,
+ 			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 12),
+-	IIO_CHAN_SOFT_TIMESTAMP(7)
++	ADIS_SUPPLY_CHAN(ADIS16201_SUPPLY_OUT_REG, ADIS16201_SCAN_SUPPLY, 0,
++			 12),
++	ADIS_AUX_ADC_CHAN(ADIS16201_AUX_ADC_REG, ADIS16201_SCAN_AUX_ADC, 0, 12),
++	ADIS_TEMP_CHAN(ADIS16201_TEMP_OUT_REG, ADIS16201_SCAN_TEMP, 0, 12),
++	IIO_CHAN_SOFT_TIMESTAMP(7),
+ };
  
+ static const struct iio_info adis16201_info = {
 -- 
 2.53.0
 
