@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046741;
-	b=4cKplH+TPyr0tsPr6ZAJR9T5qG6VClKyRmcVoNvMG8CSndrMgwTv7q2FlFMGZITcLaGG
-	 X/JYfq/QPkyXd9mz6PRFmubSDVCWSlgmPVW5b5jpJNmB2qBpAVlumIJ0R+pr2WeEgrANz
-	 4Fh3VTwww/lnEpGoCDRIpKHttF/s2UNY/5v5QGQIGB9Igtv6qcP0MvOXRsxqZkABqt9V0
-	 4RkzPTu8nMK0gI4tbfwVOUhNCQCnXVLgYhwhwiDZDkZ4vxhuJY9h+GXHycJVhNLd277eY
-	 62M7XMSGnDiK2uxlcgNcXKwmk2YI4fI9wehfvJFkNChHqdc3mv+8cuhsSEQH8H9wyBA==
+	t=1795046744;
+	b=Vha4n8ZoCEp79bMJeMYG9hrdiCbWPASkq3Lg5Z4gUCiLdbNsPHh10qXoJilzrHqGSeTj
+	 r/R9hqemvcX4qLjsuAfF1OfBO4pDCfjeK+WJYUr043U0HEa/cc7J2dO5yOzhIBQ67/zl4
+	 7UV8LOS+iwTaEyDzyyLDzCM2NAj9vBa3ukia+h4jJbYkj4MISRb48OtucoGBWVOV+CRVW
+	 o0IqjlCjY0znTK1TLqTf2/ywB4H1pwdp1cvBp+t0xK7IQg99MBdirZFn6uicsw2YvMHhi
+	 0tdWXUEeiQHuSSuuu3uE7yqwI6G0Cfc07i3W5LF5hfs4Yw4gjmeKXezu71bF20soaXw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046741;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046744;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Shq+csHcoo43V2GIu4J29o/5gJAprcU07Ktn58OzzXA=;
-	b=uSsKqn/6aA1nu3ZY+UEMQSo6gdMichVbzW4iSB/yHtX2yBQxFlqO9CIH7aZzS/r5KO8K
-	 FaKe9bQpWD5Ss/jkxGMP1Bh0SdL21g5Re5o8+giC1Yz2znQTW4SGWUWFvkMBY4zbEMLzV
-	 CUo7CNZTjYDPlPvFkREkJ9ngchZR7gexofJoTOAUdtLd63faWoIiCb6faVREXdp6LJnI4
-	 +eBnjBBCQI3phzbgnj2LBSWnLpMvr88t3etRP9GIiRFK+qqt6QW7saLy9U0bz/2fn3Z99
-	 0OVyz+NJ/qdDZHzUkeIsupsN7ODlo2m5cuX1B4EYZ5bbcwmoFLt4Y5aZyXsQM26DCgQ==
+	bh=ePCEBQLRMufPiFX1pg3Xf41xfhcA4OQKfZvFW0JAnyM=;
+	b=cGqhbGokUegoK0b/BiQ8eAJNDhE4GEeCIILNXr1jxfQmyxVvp20TM9B/mmUoahaEew/a
+	 MelyfKmISP7o/lJlKA0qmx1y2XwL8V/JR3WBhB0icmLsSi1Eiw8rFma21iVqEOVBwUoW3
+	 MitMhbS6BYYExyZeLtCYNTU7mS5M+WVajGbktCD/lL3CW+9bb1iuyX0kVL1IrOllr1vcu
+	 xvukB2q9DL7MyGP+QKKg4xyRK9fCmBTe4t86dk5y1NSr5Y9qeKkWxDTSVHJeGqQlHcA2a
+	 iKd0dbaIyYN8EM+4J/oP+kcPf0Pt7iGwGN1OiOkqDU0KjSEK0ex6O/LaiFqtjG/v5Pg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iDfAQTUz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XKEtHiPl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B11D8606A32C;
-	Thu, 19 Nov 2026 00:05:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DAE660A260A;
+	Thu, 19 Nov 2026 00:05:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iDfAQTUz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 111D61F000C4;
-	Thu, 19 Nov 2026 00:05:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XKEtHiPl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6FBD1F000C4;
+	Thu, 19 Nov 2026 00:05:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046741;
-	bh=Shq+csHcoo43V2GIu4J29o/5gJAprcU07Ktn58OzzXA=;
+	s=korg; t=1795046744;
+	bh=ePCEBQLRMufPiFX1pg3Xf41xfhcA4OQKfZvFW0JAnyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iDfAQTUzBuFFvOwWa5rEQez+6w6P0jKJFQNRsYdA7sh7se1+sx8WapaJfoQLe0cdF
-	 BnM4KGGXHsvyN6HWiuiFjn23ODBhJtyQbbriKX+NuYwnnoLnYbvBYitDvplZsIjoib
-	 8p1dCdgckxdeIryasTEiphyVIi2AjsAjoEmPlJXE=
+	b=XKEtHiPlMBglPv0Prsy+BGRm7zwATkuRfgD2ZkaJR8bPnu7mDHQoDYN1ewf0XMSRC
+	 ZjMtVeUWvBfQLwLh4k7kDwhs32EjCM/Wq2YyeSMH1qHbFfl4oTv2XUfmY16klNw1wI
+	 Qpqjq1to+JOVZl8Wa4b/JAwKTcL1ahv/dOHmr3/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Nathan Rebello <nathan.c.rebello.27@dartmouth.edu>,
-	Seungjin Bae <eeodqql09@gmail.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Kyle Zeng <kylebot@openai.com>,
+	David Lee <david.lee@trailofbits.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1390/2857] usb: typec: ucsi: ccg: Validate altmode index in GET_CURRENT_CAM response
-Date: Wed, 18 Nov 2026 15:40:24 +0100
-Message-ID: <20261118150251.413984951@linuxfoundation.org>
+Subject: [PATCH 6.1 1391/2857] sctp: hold shkey across socket migration
+Date: Wed, 18 Nov 2026 15:40:25 +0100
+Message-ID: <20261118150251.445685166@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,101 +70,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seungjin Bae <eeodqql09@gmail.com>
+From: David Lee <david.lee@trailofbits.com>
 
-[ Upstream commit 02ee864e8d2142c5648998944c3306ea6a763c26 ]
+[ Upstream commit ad1320865b1826ffa2e81e37c49535751e81335c ]
 
-When the PPM reports more than one DisplayPort alternate mode for a
-connector, ucsi_ccg_update_altmodes() merges them into a single entry
-in uc->updated[] and sets uc->has_multiple_dp. In that case,
-ucsi_ccg_update_get_current_cam_cmd() rewrites the response of the
-GET_CURRENT_CAM command. The response is a single byte holding the
-index of the currently active alternate mode, and it is provided by
-the PPM firmware.
+sctp_sock_migrate() transfers queued DATA skbs from the old socket to the
+new one. skb_orphan() invokes sctp_wfree() during that transfer and drops
+the skb-owned shared-key reference.
 
-The function uses this byte directly as an index into uc->orig[], and
-then uses the linked_idx read from that entry as the translated index
-into uc->updated[]. Both arrays have UCSI_MAX_ALTMODES entries, but
-neither index is checked against that size.
+If userspace has removed that key from the association, this can be the
+final reference. The following sctp_set_owner_w() then dereferences the
+freed chunk->shkey while trying to take the new owner reference.
 
-If a malicious or buggy PPM reports a value of UCSI_MAX_ALTMODES or
-larger, e.g. 0xFF, uc->orig[cam].linked_idx reads over the end of
-uc->orig[]. The byte read from there is then used as the index for
-writing cam into uc->updated[new_cam].active_idx, so the out-of-bounds
-read is followed by an out-of-bounds write. This happens without any
-userspace action, since the UCSI core issues GET_CURRENT_CAM on its own
-when handling connector changes.
+Take a temporary shared-key reference before orphaning the skb and release
+it after the new owner has taken its reference. This preserves the selected
+authentication key throughout the ownership transfer.
 
-Fix this by rejecting responses whose index is out of range, printing an
-error and returning -EPROTO, so that the caller cannot accept this.
-Also check linked_idx before using it as an index, so that the write into
-uc->updated[] is always within bounds.
+Bug found and triaged by OpenAI Security Research and
+validated by Trail of Bits.
 
-The response is now only processed when the command completed without
-an error. ucsi_sync_control_common() only reads the response when the
-CCI reports command completion, so otherwise the buffer is not filled
-and must not be mistaken for an invalid index.
-
-This bug was found with a Python script that traces where firmware input
-is used.
-
-Fixes: 170a6726d0e2 ("usb: typec: ucsi: add support for separate DP altmode devices")
-Cc: stable <stable@kernel.org>
-Reported-by: Nathan Rebello <nathan.c.rebello.27@dartmouth.edu>
-Assisted-by: LLM
-Signed-off-by: Seungjin Bae <eeodqql09@gmail.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20261003215520.611083-2-eeodqql09@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ sashal: adapted error propagation to ucsi_ccg_read() instead of ucsi_ccg_sync_control() ]
+Fixes: 1b1e0bc99474 ("sctp: add refcnt support for sh_key")
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20261009074244.3718-2-juny24602@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 52ffeaa358d1 ("sctp: re-point retained control chunks on association migration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi_ccg.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ net/sctp/socket.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi_ccg.c b/drivers/usb/typec/ucsi/ucsi_ccg.c
-index 20f7f87a92f2c..1ee2f4d9de4b5 100644
---- a/drivers/usb/typec/ucsi/ucsi_ccg.c
-+++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
-@@ -356,14 +356,28 @@ static int ucsi_ccg_init(struct ucsi_ccg *uc)
- 	return -ETIMEDOUT;
- }
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index e9e13ba9ae4c7..04c3b8a8d2dd2 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -147,9 +147,19 @@ static inline void sctp_set_owner_w(struct sctp_chunk *chunk)
  
--static void ucsi_ccg_update_get_current_cam_cmd(struct ucsi_ccg *uc, u8 *data)
-+static int ucsi_ccg_update_get_current_cam_cmd(struct ucsi_ccg *uc, u8 *data)
+ static void sctp_clear_owner_w(struct sctp_chunk *chunk)
  {
- 	u8 cam, new_cam;
- 
- 	cam = data[0];
-+	if (cam >= UCSI_MAX_ALTMODES) {
-+		dev_err(uc->dev, "PPM returned invalid alternate mode index %u\n",
-+			cam);
-+		return -EPROTO;
-+	}
-+
- 	new_cam = uc->orig[cam].linked_idx;
-+	if (new_cam >= UCSI_MAX_ALTMODES) {
-+		dev_err(uc->dev, "invalid linked alternate mode index %u for %u\n",
-+			new_cam, cam);
-+		return -EPROTO;
-+	}
-+
- 	uc->updated[new_cam].active_idx = cam;
- 	data[0] = new_cam;
-+
-+	return 0;
++	/* Keep the shkey alive until the new owner takes its reference. */
++	if (chunk->shkey)
++		sctp_auth_shkey_hold(chunk->shkey);
+ 	skb_orphan(chunk->skb);
  }
  
- static bool ucsi_ccg_update_altmodes(struct ucsi *ucsi,
-@@ -547,7 +561,7 @@ static int ucsi_ccg_read(struct ucsi *ucsi, unsigned int offset,
- 	switch (UCSI_COMMAND(uc->last_cmd_sent)) {
- 	case UCSI_GET_CURRENT_CAM:
- 		if (uc->has_multiple_dp)
--			ucsi_ccg_update_get_current_cam_cmd(uc, (u8 *)val);
-+			ret = ucsi_ccg_update_get_current_cam_cmd(uc, (u8 *)val);
- 		break;
- 	case UCSI_GET_ALTERNATE_MODES:
- 		if (UCSI_ALTMODE_RECIPIENT(uc->last_cmd_sent) ==
++static void sctp_set_owner_w_migrate(struct sctp_chunk *chunk)
++{
++	sctp_set_owner_w(chunk);
++	if (chunk->shkey)
++		sctp_auth_shkey_release(chunk->shkey);
++}
++
+ #define traverse_and_process()	\
+ do {				\
+ 	msg = chunk->msg;	\
+@@ -9692,7 +9702,7 @@ static int sctp_sock_migrate(struct sock *oldsk, struct sock *newsk,
+ 	lock_sock_nested(newsk, SINGLE_DEPTH_NESTING);
+ 	sctp_for_each_tx_datachunk(assoc, true, sctp_clear_owner_w);
+ 	sctp_assoc_migrate(assoc, newsk);
+-	sctp_for_each_tx_datachunk(assoc, false, sctp_set_owner_w);
++	sctp_for_each_tx_datachunk(assoc, false, sctp_set_owner_w_migrate);
+ 
+ 	/* If the association on the newsk is already closed before accept()
+ 	 * is called, set RCV_SHUTDOWN flag.
 -- 
 2.53.0
 
