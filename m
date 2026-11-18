@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058041;
-	b=E5JurxdtwbnRkO37KBqJAQP67mHfU0oSCiKbBiTqz4fXpQP0geWd9emLtkVIT5nUrFNL
-	 0qzYpCACb58XQOKCRjxceQhCAqPwJBYfQCOH0r8sLkg/mQoYcvoOGMsbV7fHLJ8KvWbVw
-	 d7ByHHLtLIYHY2n+SkXsNTKli/ONCiRPUOfRHJFePOP0bSzj+fWBGH2zH0zOPbddK9Ebl
-	 rbB3zrlSsgGjkFDguQ+z0IBpqHm0BF2KUqekuNrDbX54J5fVsov5wn/Mv1VoIcUkIXpEl
-	 K5UXlu4Ngrl10W5NQpejT9UmEkN1jtq6n5oWeyDOowvTntB0fkYNMc8ffx7O7deENCg==
+	t=1795058044;
+	b=3kOvZC8U0R2Y/CMI+4gm3Q2HK1eVt8URnhww+buMXhEnrcG//lyJCbmWx4vKKi/v8uCl
+	 h0bJb2B4xc5dDVnNykyikcAtENAf3DDF6u41+dpy+2uvtc+Z8DSxS6LH5vfL+tAUyguID
+	 RoiQyQQFgPE9ZolM/3jF1AdJiW+jfi5eHOzKGM2IOSbzRRiKRZuKdH4jTql+hr7ixQDVV
+	 75ubPGdGttcTVuWyVx+8GkU6DwVvorMX8U2tRGfS+YeQeyGRT9lnJOc8J94mYcdZBLusB
+	 is4zhvbEz87HWX9V6JX5mDJ06vaNHNWxrY5dNQmhBP7OKwybtyvDFprWq4yAU+8qMLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058041;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058044;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jqECQ6tOddDt4zToX+NIWQ1WBbgJtSpL5XY8rWENEZw=;
-	b=SZ0kOyBpWAettF6TU5XbQSIlMQFuu1x8LnpUwkuhbNuFqjI91nEpn/R9D+lsJ+7Q+5UA
-	 ncqeu0J+zz4k5PVF6Vyi0OBlqPQS48Nf8u6yR7i3nOUKNmWrYyUly32OrxasxY0GXNDm6
-	 KHc6uHClu5f0pz72ERsG6TAure5MWloNLBqpbxhoxZb5zJh6h5tmasuZGZ4jdrGDnMAq6
-	 pOYE4RYsmtptlgdyFCa13nwBtTbOm7l4mMaWG2fDMXO6SSAVmLOr+BkImC6EGV90k0+u1
-	 As4bv4ibjBe12TfBnjatPrl494UWg+oKWol9e1En8s/S+0TP51IU6zH0lPLNy+ArsGg==
+	bh=StrQkEuMCrhgJWlJLGNUAt+wkGgkfsWl092PNjXRq+M=;
+	b=QKeFnYAGtw1+/hWkcoLgjaeeOZse5EcTPVE9cP24bjCGj9T8V/yY9yUAmI7lZUs6dLGz
+	 Jp2e1/UAwTDPLyTaKe84dH8VOleUfnUnX8BWffdOTPiulvRQJj5iY3+QFNR9+FnHiieEZ
+	 5XA21qfw/16hV8Fj4+RoM4WkhKAsGfA8s4Io0D/JUf3NQx47seFZ1CiLwCif2QBHKgg1M
+	 XOXWIplrMZxuvtRUVlkDcQg+P4P5G4N6BUTsSeESmASCHVHxmItBNjLHyNSHd1GgavRra
+	 o5N1mMpSty83024gDoLO6crFI9O/mqA5r3RfnYANjs+zDAy8NN9tE+LUodcItdlvf/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JkhWQ2qi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0XnlQtfw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A46606A320;
-	Thu, 19 Nov 2026 03:14:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF6D606A320;
+	Thu, 19 Nov 2026 03:14:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JkhWQ2qi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB8891F000C4;
-	Thu, 19 Nov 2026 03:14:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0XnlQtfw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA3AD1F000C4;
+	Thu, 19 Nov 2026 03:14:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058041;
-	bh=jqECQ6tOddDt4zToX+NIWQ1WBbgJtSpL5XY8rWENEZw=;
+	s=korg; t=1795058044;
+	bh=StrQkEuMCrhgJWlJLGNUAt+wkGgkfsWl092PNjXRq+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JkhWQ2qitXb6jVHrcdp41eBcM5o9olPNbyg9pct+XSsWNrICh1nuO53cDK1Y3Bg05
-	 P0ZkzVC7BQcBySqwhexP4PDCts01sH2z3mQnCs1VQJwEPT8RGaiFRute4TuxpMJnKl
-	 AwC8rYLYBFnt2DYtmesU6JP3ycAiH6jhSe4s+aa0=
+	b=0XnlQtfwhptCRcTXsBa/3nNVk+5kyAauxeWvXI89BbGyvRGv44+RRRtUTlSPK+n2/
+	 hus5geV6eVdFRsff+orXMIpTGacNGd5DSZdZyfD57SmTrqpU3mBgAmUQoIZqq5GfXH
+	 ZAelo+fLUwGe/izpRTxtFXt2Trzj3MxvXrFmE/AA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamie Lenehan <lenehan@twibble.org>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0343/1848] scsi: dc395x: sync the waiting_timer before freeing the host
-Date: Wed, 18 Nov 2026 15:39:41 +0100
-Message-ID: <20261118145926.925141554@linuxfoundation.org>
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Oleg Keri <okerixx@gmail.com>
+Subject: [PATCH 5.10 0344/1848] phy: core: Fix race-condition between _of_phy_get() and try_module_get()
+Date: Wed, 18 Nov 2026 15:39:42 +0100
+Message-ID: <20261118145926.979471892@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,65 +71,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-[ Upstream commit 0b1a79f2791a06f139dce5450e487307cf0e241f ]
+[ Upstream commit 090055ee629523092688da42428558ba56d4272f ]
 
-The waiting_timer callback re-arms itself and takes the host lock.
-adapter_uninit() currently stops it with timer_delete(), which does not
-wait for a callback already running on another CPU. The final
-scsi_host_put() that frees the host (and the host lock the callback
-dereferences) runs right after adapter_uninit(), so a concurrent or just
-re-armed callback can fire after the free, leaving a potential
-use-after-free window.
+Sashiko asked during a patch review if the existing usage pattern had a
+race condition; specifically in of_phy_get() if it was possible between
+returning from _of_phy_get() and running try_module_get() that a module
+might be unbound leading to use-after-free.
 
-Replace timer_delete() with timer_shutdown_sync() at the top of
-adapter_uninit(), before the host-lock section: the timer is dequeued,
-a running callback is waited for and rearming is blocked before the chip
-is halted, so it cannot fire at all once the adapter has ceased to
-function. Waiting outside the lock avoids the self-deadlock that would
-result from syncing a callback blocked on the lock we still hold.
+Looking at the code this appears to be so, there is no linkage between the
+phy and module under a synchronisation primitive.
 
-No shutdown is needed for selto_timer because it has no reachable armer
-or callback.
+Using the phy_provider_mutex in phy_get() will ensure there is a link between
+the returned phy pointer and the module_get() bumping the module reference
+count.
 
-This issue was found by an in-house static analysis tool.
+Amend phy_get(), of_phy_get() and devm_of_phy_get_by_index() to fix the
+same usage pattern.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+phy_provider_unregister() must take the phy_provider_mutex so amending
+phy_get()/of_phy_get() to take that same mutex guarantees there is no
+use-after-free.
+
+Fixes: ff764963479a1 ("drivers: phy: add generic PHY framework")
 Cc: stable@vger.kernel.org
-Cc: Jamie Lenehan <lenehan@twibble.org>
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260911020544.42966-1-fanwu01@zju.edu.cn
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-[ sashal: Replaced unavailable timer_shutdown_sync() with timer_delete_sync(). ]
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Tested-by: Oleg Keri <okerixx@gmail.com> # Lenovo Yoga Slim 7x Gen 11 (Glymur)
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Link: https://patch.msgid.link/20260918-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v20-1-dc244e124e71@linaro.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+[ sashal: Placed mutex acquisition after the existing NULL-name rejection in phy_get(), preserving its direct error return. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/dc395x.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/phy/phy-core.c | 42 ++++++++++++++++++++++++++++--------------
+ 1 file changed, 28 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/scsi/dc395x.c b/drivers/scsi/dc395x.c
-index d8967bf72ef26..5442713433f9b 100644
---- a/drivers/scsi/dc395x.c
-+++ b/drivers/scsi/dc395x.c
-@@ -4456,13 +4456,11 @@ static void adapter_uninit_chip(struct AdapterCtlBlk *acb)
- static void adapter_uninit(struct AdapterCtlBlk *acb)
- {
- 	unsigned long flags;
--	DC395x_LOCK_IO(acb->scsi_host, flags);
+diff --git a/drivers/phy/phy-core.c b/drivers/phy/phy-core.c
+index dac0f7f4f3d3d..5bd96f11bb467 100644
+--- a/drivers/phy/phy-core.c
++++ b/drivers/phy/phy-core.c
+@@ -117,13 +117,13 @@ static struct phy *phy_find(struct device *dev, const char *con_id)
+ 	const char *dev_id = dev_name(dev);
+ 	struct phy_lookup *p, *pl = NULL;
  
--	/* remove timers */
--	if (timer_pending(&acb->waiting_timer))
--		del_timer(&acb->waiting_timer);
--	if (timer_pending(&acb->selto_timer))
--		del_timer(&acb->selto_timer);
-+	/* Drain the self-rearming timer; must not run under host_lock. */
-+	timer_delete_sync(&acb->waiting_timer);
+-	mutex_lock(&phy_provider_mutex);
++	lockdep_assert_held(&phy_provider_mutex);
 +
-+	DC395x_LOCK_IO(acb->scsi_host, flags);
+ 	list_for_each_entry(p, &phys, node)
+ 		if (!strcmp(p->dev_id, dev_id) && !strcmp(p->con_id, con_id)) {
+ 			pl = p;
+ 			break;
+ 		}
+-	mutex_unlock(&phy_provider_mutex);
  
- 	adapter_uninit_chip(acb);
- 	adapter_remove_and_free_all_devices(acb);
+ 	return pl ? pl->phy : ERR_PTR(-ENODEV);
+ }
+@@ -504,6 +504,8 @@ static struct phy *_of_phy_get(struct device_node *np, int index)
+ 	struct phy *phy = NULL;
+ 	struct of_phandle_args args;
+ 
++	lockdep_assert_held(&phy_provider_mutex);
++
+ 	ret = of_parse_phandle_with_args(np, "phys", "#phy-cells",
+ 		index, &args);
+ 	if (ret)
+@@ -515,11 +517,10 @@ static struct phy *_of_phy_get(struct device_node *np, int index)
+ 		goto out_put_node;
+ 	}
+ 
+-	mutex_lock(&phy_provider_mutex);
+ 	phy_provider = of_phy_provider_lookup(args.np);
+ 	if (IS_ERR(phy_provider) || !try_module_get(phy_provider->owner)) {
+ 		phy = ERR_PTR(-EPROBE_DEFER);
+-		goto out_unlock;
++		goto out_put_node;
+ 	}
+ 
+ 	if (!of_device_is_available(args.np)) {
+@@ -533,8 +534,6 @@ static struct phy *_of_phy_get(struct device_node *np, int index)
+ out_put_module:
+ 	module_put(phy_provider->owner);
+ 
+-out_unlock:
+-	mutex_unlock(&phy_provider_mutex);
+ out_put_node:
+ 	of_node_put(args.np);
+ 
+@@ -558,15 +557,21 @@ struct phy *of_phy_get(struct device_node *np, const char *con_id)
+ 	if (con_id)
+ 		index = of_property_match_string(np, "phy-names", con_id);
+ 
++	mutex_lock(&phy_provider_mutex);
++
+ 	phy = _of_phy_get(np, index);
+ 	if (IS_ERR(phy))
+-		return phy;
++		goto out_unlock;
+ 
+-	if (!try_module_get(phy->ops->owner))
+-		return ERR_PTR(-EPROBE_DEFER);
++	if (!try_module_get(phy->ops->owner)) {
++		phy = ERR_PTR(-EPROBE_DEFER);
++		goto out_unlock;
++	}
+ 
+ 	get_device(&phy->dev);
+ 
++out_unlock:
++	mutex_unlock(&phy_provider_mutex);
+ 	return phy;
+ }
+ EXPORT_SYMBOL_GPL(of_phy_get);
+@@ -678,6 +683,7 @@ struct phy *phy_get(struct device *dev, const char *string)
+ 		return ERR_PTR(-EINVAL);
+ 	}
+ 
++	mutex_lock(&phy_provider_mutex);
+ 	if (dev->of_node) {
+ 		index = of_property_match_string(dev->of_node, "phy-names",
+ 			string);
+@@ -686,10 +692,12 @@ struct phy *phy_get(struct device *dev, const char *string)
+ 		phy = phy_find(dev, string);
+ 	}
+ 	if (IS_ERR(phy))
+-		return phy;
++		goto out_unlock;
+ 
+-	if (!try_module_get(phy->ops->owner))
+-		return ERR_PTR(-EPROBE_DEFER);
++	if (!try_module_get(phy->ops->owner)) {
++		phy = ERR_PTR(-EPROBE_DEFER);
++		goto out_unlock;
++	}
+ 
+ 	get_device(&phy->dev);
+ 
+@@ -698,6 +706,8 @@ struct phy *phy_get(struct device *dev, const char *string)
+ 		dev_dbg(dev, "failed to create device link to %s\n",
+ 			dev_name(phy->dev.parent));
+ 
++out_unlock:
++	mutex_unlock(&phy_provider_mutex);
+ 	return phy;
+ }
+ EXPORT_SYMBOL_GPL(phy_get);
+@@ -837,15 +847,17 @@ struct phy *devm_of_phy_get_by_index(struct device *dev, struct device_node *np,
+ 	if (!ptr)
+ 		return ERR_PTR(-ENOMEM);
+ 
++	mutex_lock(&phy_provider_mutex);
+ 	phy = _of_phy_get(np, index);
+ 	if (IS_ERR(phy)) {
+ 		devres_free(ptr);
+-		return phy;
++		goto out_unlock;
+ 	}
+ 
+ 	if (!try_module_get(phy->ops->owner)) {
+ 		devres_free(ptr);
+-		return ERR_PTR(-EPROBE_DEFER);
++		phy = ERR_PTR(-EPROBE_DEFER);
++		goto out_unlock;
+ 	}
+ 
+ 	get_device(&phy->dev);
+@@ -858,6 +870,8 @@ struct phy *devm_of_phy_get_by_index(struct device *dev, struct device_node *np,
+ 		dev_dbg(dev, "failed to create device link to %s\n",
+ 			dev_name(phy->dev.parent));
+ 
++out_unlock:
++	mutex_unlock(&phy_provider_mutex);
+ 	return phy;
+ }
+ EXPORT_SYMBOL_GPL(devm_of_phy_get_by_index);
 -- 
 2.53.0
 
