@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061964;
-	b=URRbuzSrAG5x1A4YQClx3T5EKOUfG9dSYlMf4K788byA/0DWjwnwXLfEX3aajFtXgimx
-	 nGB3ig4aFJe5TgZLr1xFjIKdjBtbk7cSFPAOOMoDOGjHmD1swLVOB4FX2K5xQ+6XlH7ez
-	 i9qXiPHUhayIOkFZEj2Yk+ykupKFyOPAUe73wZUvB0b7z+VRtYgimdO5smzCf/pIElNhe
-	 3t6Ys58Ed06VN1l17Y8BT5LCerldcb+8kuPdvVf1dxDSz6v1DhoP2BrEwOpMbaoNddagl
-	 jKwEZ5Dz4s7mMoHHPvrxILKamXWHy89tWuE6Gq9J00semtxGoZA7Is68vC1rE0wNz1g==
+	t=1795061967;
+	b=eZTngf9vQTLba78JKYpaRTV1tXkspTvG0kHL//WLQLXkPcAVMzAeTIBwTixjQUCuS8nU
+	 XlAlEEjDUTAe2hHMXljbQU0mqWLNScyDth5ZewhKM/vHdW+EoPLIzuIASejVv5Y/2ffIh
+	 ClZCsejmpTB8z0LjP1c2LhTea1BAFVAJJGFtREolHuOI3BbuBPqBiWcRT9zebFrkPw9Bv
+	 okxLod9AXk6izwxJ+u2CZ4iKpGKJ6hAtInvXu3tHDEkYCmhr3VBPKhTy73fP6S+XSvYOR
+	 x2bw+t+oPGwFNKcShIq1+pA1HedqG/aAG1ZNJbWE9Sp37RxiXxmL+3XOH3XSWwIcUjQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061964;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061967;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=P271iULdrm/+NSnmqfv54khHfiktDw0+x2wf199RHUE=;
-	b=t9nZ/bRHpxX8vBFrd8CURE+GjHLmxE8c4Id6ztqu4qhN0WoLmMNyoQiWKiICxoJIxDJl
-	 7dz96ESltnKriMqYlwLGk03GoZgPipOlvsGI4gTlLq6+HPnXJgR594bGLH7qtt01rJ0GB
-	 7SS1a6fRvJSoUp6yR2R+hEgSv8ROEJ+Dhl4ODYhs1iVymWwEP5qofzZr1oO4pAD9C5eE4
-	 lQuqjzOn7wkdi4KEuBE+oVc6R9uaNgYn54h10mIFGMpTT+Oy4/EVmQ/gjb9l16AV+Zq0z
-	 NtMa37HPh2xmwq4XKODcnb5OQ5gXOBQoXJEB8r7m/m7FiF8KuBdjWf+GTHjkEZ32n+g==
+	bh=B7I/aZPDxaFdj5ju5L1N3Glg3g8avWyMDs7hgwYcM9Q=;
+	b=rvMiWzH7lA2FkC6fWSYa3kCw4PfDblDfzyCm290xf9nWGd954F4uUe/LcMh8TgZS+CQl
+	 LyxzCJBW246tJewbLJm9BWIZaj6Keu+qIraMXdree9X66AtK5DCgI+UEM3uBgI418cZGx
+	 ULt+TP1ZL2STBxk9Zp/XhegCzHYpCwJMRglDdYkdZ8wqrDzAAHSO2xXZQst+KPdZOX/eZ
+	 SduCHs1KOTTUFgkUG3qWr6M6Pp4lJFbPPvvFmVhrtKYUgF+okO4B7fkJsKj2PHLlr5GXU
+	 OP2yXgu0rCFOkL+s9vhwb8KjV2wxtkenCN3/TLMXwz8tD7nFTQDrw4bAfw88q6yOqEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sva3HeG1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Jq8873j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6EEB606A320;
-	Thu, 19 Nov 2026 04:19:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 963DA606A325;
+	Thu, 19 Nov 2026 04:19:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sva3HeG1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23CE61F000C4;
-	Thu, 19 Nov 2026 04:19:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Jq8873j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFDFF1F000C4;
+	Thu, 19 Nov 2026 04:19:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061964;
-	bh=P271iULdrm/+NSnmqfv54khHfiktDw0+x2wf199RHUE=;
+	s=korg; t=1795061967;
+	bh=B7I/aZPDxaFdj5ju5L1N3Glg3g8avWyMDs7hgwYcM9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sva3HeG1ZODPbkX4gnIfBoNPw6nqC868RvzjhhLlS4JaHIKyr9ThSYx4XlLCSj3NG
-	 ovKdqIGisx/mnbpbeunl8nFYRi34+fVzOROkSx+j61myyNDvG4LrKHZBGmgC/qbv7Z
-	 4c9IzuJ8v5WVhtEJ8fSJhpeXj/amjhLbLFTvPIYU=
+	b=2Jq8873j5R23qxWqvBDm9nqQuUOcwPNSD+nlakhyEXL+HFCjE00Ato/0yc71v/uRd
+	 HoyOLh/J5ILjt3vl6t6y12+D/V4C8xkP56EhoxxIioWcMJ48fbi88Ax0ZkayJfTpJy
+	 w9Z9K+t9YsZhdvl1zNW60t5SIYhAkeykTlxsCwf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingming Cao <mmc@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1742/1848] ibmveth: wait for the RX poll to return before freeing the RX queue
-Date: Wed, 18 Nov 2026 16:03:00 +0100
-Message-ID: <20261118150032.455516915@linuxfoundation.org>
+Subject: [PATCH 5.10 1743/1848] ocfs2: reserve xattr value tree metadata only once
+Date: Wed, 18 Nov 2026 16:03:01 +0100
+Message-ID: <20261118150032.491549389@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,62 +71,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingming Cao <mmc@linux.ibm.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 3f872b34368c7c1d2a8900950e0fee4cb4dd9a34 ]
+[ Upstream commit 5365f1f417b36627f825aacf9844ae24b671b525 ]
 
-napi_disable() returns once ibmveth_poll() has called
-napi_complete_done(), but the poll is not finished: it then re-enables
-the interrupt and calls ibmveth_rxq_pending_buffer(), which reads the
-RX queue. ibmveth_close() can free that queue in the meantime, and the
-late enable can leave the interrupt unmasked after close() masked it.
-The request_irq() failure path in ibmveth_open() frees the same memory
-after napi_disable() too.
+ocfs2_calc_xattr_set_need() asks for the new value's extent tree twice
+when it replaces an inline value smaller than a value root with one large
+enough to be stored outside.  The "stored outside" branch reserves the
+tree and then falls through to meta_guess instead of going out:
 
-Call synchronize_net() after napi_disable() on both paths. Every
-caller of ibmveth_poll() runs it with bottom halves or interrupts
-disabled, so this waits for the poll to return.
+        if (!ocfs2_xattr_is_local(xe)) {
+                ...
+                xv = (struct ocfs2_xattr_value_root *)
+                     (base + name_offset + name_len);
+                value_size = OCFS2_XATTR_ROOT_SIZE;
+        } else
+                xv = &def_xv.xv;
 
-Found in review of the ibmveth multi-queue RX series and confirmed by
-code inspection; also raised by the Sashiko review of the first version
-of this series. The race was not reproduced. Tested on a POWER10 LPAR
-under an incoming ping flood with 30 rapid link down/up cycles and 30
-rapid MTU cycles (1500 <-> 9000); ran cleanly with no warnings or
-faults. No kernel selftests cover ibmveth.
+        if (old_clusters >= new_clusters) {
+                ...
+                goto out;
+        } else {
+                meta_add += ocfs2_extend_meta_needed(&xv->xr_list);
+                ...
+                if (value_size >= OCFS2_XATTR_ROOT_SIZE)
+                        goto out;
+        }
 
-Fixes: bea3348eef27 ("[NET]: Make NAPI polling independent of struct net_device objects.")
-Signed-off-by: Mingming Cao <mmc@linux.ibm.com>
-Link: https://patch.msgid.link/20261013182926.30417-9-mmc@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+On the fall-through xv is def_xv, so what gets added here is the two
+blocks ocfs2_extend_meta_needed() wants for an empty value root -- and
+both sides of meta_guess reserve that same tree again.  The create side
+has done so since commit 3ed2be719eb9 ("ocfs2: allow for more than one
+data extent when creating xattr"), which ported this reservation to the
+create case without noticing it was already on the way in, and the
+existing-block side since commit 0cdc7dde00ec ("ocfs2: fix missing
+metadata reservation for large xattrs").  Both were chasing the same
+RESTART_META failure in ocfs2_xattr_extend_allocation(), for xattr create
+and then for xattr update.
+
+ocfs2_init_xattr_set_ctxt() hands the total straight to
+ocfs2_reserve_new_metadata_blocks(), so the surplus is two blocks held for
+the whole transaction.  A setxattr that would otherwise fit can come back
+-ENOSPC on a filesystem whose metadata allocator is nearly exhausted.
+
+Move the reservation into the branch that stops there, leaving meta_guess
+as the only place that reserves for a value tree the fall through is about
+to create.  The paths that do go out keep reserving against the value root
+they already have, which for an external old value is the on-disk one and
+so can legitimately ask for more than two blocks.
+
+Both sides of meta_guess have to come out even on their own now that the
+copy covering for them is gone.  The existing-block side only started
+reserving the value tree in the commit this one is tagged against.  The
+create side has reserved the tree since 3ed2be719eb9, but only the tree:
+the block ocfs2_create_xattr_block() claims came out of the same two, and
+on the fall-through it was the duplicate removed here that made up the
+difference.  So "ocfs2: reserve metadata for a new xattr block and its
+value tree" has to land first -- without it the create side reserves 2
+where 3 are needed and the value tree is back to RESTART_META.  That one
+fixes a shortfall of its own on the path that reaches meta_guess directly,
+where there was never a duplicate to cover it, so it is worth taking
+alone; this patch is not.
+
+Link: https://lore.kernel.org/20261010113454.1420939-4-joseph.qi@linux.alibaba.com
+Fixes: 0cdc7dde00ec ("ocfs2: fix missing metadata reservation for large xattrs")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/ibmveth.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/ocfs2/xattr.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/ibm/ibmveth.c b/drivers/net/ethernet/ibm/ibmveth.c
-index 2a3e515f3edfe..ebd14562cd551 100644
---- a/drivers/net/ethernet/ibm/ibmveth.c
-+++ b/drivers/net/ethernet/ibm/ibmveth.c
-@@ -601,6 +601,7 @@ static int ibmveth_open(struct net_device *netdev)
- 			 netdev);
- 	if (rc != 0) {
- 		napi_disable(&adapter->napi);
-+		synchronize_net();
- 		netdev_err(netdev, "unable to request irq 0x%x, rc %d\n",
- 			   netdev->irq, rc);
- 		goto out_free_buffer_pools;
-@@ -670,6 +671,11 @@ static int ibmveth_close(struct net_device *netdev)
- 	netdev_dbg(netdev, "close starting\n");
- 
- 	napi_disable(&adapter->napi);
-+	/* napi_disable() returns once ibmveth_poll() has called
-+	 * napi_complete_done(), but the poll still re-enables the
-+	 * interrupt and reads the RX queue after that.
-+	 */
-+	synchronize_net();
- 
- 	if (!adapter->pool_config)
- 		netif_stop_queue(netdev);
+diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
+index e4615decc9e6c..9306121a0813c 100644
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -3205,12 +3205,21 @@ static int ocfs2_calc_xattr_set_need(struct inode *inode,
+ 			credits += ocfs2_remove_extent_credits(inode->i_sb);
+ 			goto out;
+ 		} else {
+-			meta_add += ocfs2_extend_meta_needed(&xv->xr_list);
+ 			clusters_add += new_clusters - old_clusters;
+ 			credits += ocfs2_calc_extend_credits(inode->i_sb,
+ 							     &xv->xr_list);
+-			if (value_size >= OCFS2_XATTR_ROOT_SIZE)
++			/*
++			 * The old value occupies at least as much room as a
++			 * value root, whether it sat outside or inline, so the
++			 * new root fits where it was and no new xattr block or
++			 * bucket is needed -- only the metadata to extend the
++			 * tree hanging off it.  A smaller one is replaced
++			 * outright, which meta_guess below reserves for.
++			 */
++			if (value_size >= OCFS2_XATTR_ROOT_SIZE) {
++				meta_add += ocfs2_extend_meta_needed(&xv->xr_list);
+ 				goto out;
++			}
+ 		}
+ 	} else {
+ 		/*
+@@ -3262,6 +3271,10 @@ static int ocfs2_calc_xattr_set_need(struct inode *inode,
+ 		 * Reserve metadata for the new xattr's value extent tree.
+ 		 * The not_found path above adds credits for this tree but
+ 		 * omits meta_add, leaving meta_ac NULL for large values.
++		 *
++		 * This is all of meta_ac on this side beyond the xattr tree
++		 * above: no xattr block is allocated here, and a new bucket or
++		 * index block is paid for out of data_ac.
+ 		 */
+ 		if (xi->xi_value_len > OCFS2_XATTR_INLINE_SIZE)
+ 			meta_add += ocfs2_extend_meta_needed(&def_xv.xv.xr_list);
 -- 
 2.53.0
 
