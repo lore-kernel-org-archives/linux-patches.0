@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027504;
-	b=sDHnEBTMyYZaKj8AfFJ2YtyQ84ezG8usfMYghJj+FxJRS7jnPLTVH7N+rvMLL85aDoIG
-	 pJ90m1a2IJsvuQooZbNkgaz5ZlmeTdxsn8r5n5SzPVpqAcI+cEj3xQyKyMmZANVjLEfFr
-	 rLCPof9D1SERpwvdwDe9vuoPK6XHw0541odUs5/V/41zd5XmAdckkzYciiWWASKI36f2m
-	 bKLibOzChL46VQSvq7iTyc7j6nQTERv4EsGSRBZlt8xRMgM4Cl7oKfoLcEgtgLIodBiG2
-	 Sw0sIZ9420NrUDNiSbH3fi3XdheQOcOuyLFZs+JFc3xxEE/6x/7v+0f5mdDpG3BIXGw==
+	t=1795027507;
+	b=h+160mh8R0kjJmw016AwMLI5iwZUo4Ia2B92WAbfw0KpcVr8CaKQikhMrc+d9eTGcuhn
+	 eiG6EJrhp19U+5Ss3Qfs6SmwvgHV9AQc27cD9kKDJp67X96xowByNm65txKxxWWfMB0AO
+	 Y/vAu1DJXnd/rbsqlqgzfl9k8h6vyPGTFMpWPCFDejfwZlYH5iMN8rZE/BoinUYDvnyS9
+	 AGKmDu6hfj1dU1tm0DxFNZDcf4r6p2jnx9dYe1UJqVLA3TUCXFVczfIEfzL8NxhxO7GWx
+	 zx7pkeAs1/H8D3E7EAVDNcNstxlFrmGSnRr61nR6IcIWhQuEm7T2cJwcznAMslJ05ww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027504;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027507;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=lvgp7RF3fyHDiT6BZdpRfNQw8NnfqhQTntaQ/e3z+sg=;
-	b=FjBOgsxzl7TRTQPs745wM0Lh8+livN7AYmdEMAj4i6+V/6KPI0lcnYZxEXcY9QTSVp9A
-	 a+pmek6KuhGPvae0OA001pERinkHlPGnA77M0BUgcEjneROlm7jAheyNpX3GXlJMx9Cab
-	 a1wZAnoJVdbQPkyk24+823u/t+n/IYbgaTM4ZS4wFb5c9jivdA9RW7QxEEEZjk3tmJfHR
-	 C46mZlUVkKGTJl2Mw9rj8kCq/GrfbfmBqX1Ps33lHUKnxPFbQLkLkQ8Qm8mkgqdNXcSwX
-	 uA0fOhUsfEmPSyN2cZ6z78hE0wlr3n0iL8tWhZw3Ea/ogRpXfdJ+jXBmFdJZXMTtcGQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=DtZSb8ZcCW3odAZt/4XqBIBJVLRhSDur34xHTGlaryE=;
+	b=lejWc8pflV80A2qrfvKQE2gA3n9q53wHr/BB45Lv3iGKLxRNCPpNsKtP3PIwREq3hio+
+	 tssnYMUODlcYLCvceKV8FaoNegp/bfTD8+hb6jmoZWHzBGoCbnb3o16AqD5mSBRuc6PGB
+	 xwTk1aYVwOQrlc+usXmSZDA/a/g42IOPP8EzT46fA5m3Yv8XqQ2HzpOVWDl8Cvq4eLM1w
+	 w1ErVM23CfYqxmS/rStm27J9trE38mzp3npqpBEIBLl/GUC2Nh4+AORz1oRm7uCGiBpR2
+	 iXrCiMDPLyaIJkE5SdET8EyLWI6ZGsauJOFwOA/FXOP9upbFuWHGYNsjaN1tZhm6vxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hTP6vt7X;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BRCUV7bE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7406660A2600;
-	Wed, 18 Nov 2026 18:45:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339DD60A260B;
+	Wed, 18 Nov 2026 18:45:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hTP6vt7X
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C95861F000C4;
-	Wed, 18 Nov 2026 18:45:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BRCUV7bE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B1C1F000C4;
+	Wed, 18 Nov 2026 18:45:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027504;
-	bh=lvgp7RF3fyHDiT6BZdpRfNQw8NnfqhQTntaQ/e3z+sg=;
+	s=korg; t=1795027507;
+	bh=DtZSb8ZcCW3odAZt/4XqBIBJVLRhSDur34xHTGlaryE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hTP6vt7XbVQ6s+RagUkn/F6PSHGUzsjJILDDM5US2GJZ6wHiku7KfOJFHm7EI32Jx
-	 vt4B0lWIY86NXmTycOEUeKoVegb+BbjAxiGQiqI+PSpkhQl4UXcOS5ixslAGrK/yBz
-	 d0ML8MjsJdzk7UOJ3dLT5suIRpkCbennSN2Tdisk=
+	b=BRCUV7bEgYLHrJ+l3OeJQIzZ+dpOCY529jWEKMJPqWNWibMeoUBRcR8PrVsZYDkI4
+	 52YHnhs97qru5D+EC1iTGG6spTfk3NyYtfPM2Kb+YF4fYXOYiXDM6uaPeLsQts+JCv
+	 3U1WMVE6q0ruxwloS97u1InfWvauFYI5LtXY+nek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Binbin Deng <18983559317@163.com>,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Anirudh Virdi <avirdi@redhat.com>,
+	=?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
+	Daniel Machon <daniel.machon@microchip.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1812/2151] octeontx2: Fix use-after-free of qos node in delete path
-Date: Wed, 18 Nov 2026 15:59:07 +0100
-Message-ID: <20261118150227.813854735@linuxfoundation.org>
+Subject: [PATCH 6.18 1813/2151] net: qede: initialize extack in qede_flow_spec_to_rule()
+Date: Wed, 18 Nov 2026 15:59:08 +0100
+Message-ID: <20261118150227.851088257@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -63,53 +64,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Binbin Deng <18983559317@163.com>
+From: Anirudh Virdi <avirdi@redhat.com>
 
-[ Upstream commit dcaa6219648955f7a8160313f1685321dbd1bf28 ]
+[ Upstream commit 106e562966a02f61917c2e0b83909aa2b088447f ]
 
-hash_del_rcu() only unlinks the node; a reader that already holds the
-bucket iterator still uses the node.  The immediate kfree() has no
-grace period, so a concurrent transmit on a socket whose skb priority
-carries the deleted classid reads node->classid / node->qid from freed
-memory (use-after-free in the softirq transmit path).
+qede_flow_spec_to_rule() declares a netlink_ext_ack on the stack
+without initializing it. qede_parse_flow_attr() and
+qede_flow_spec_validate() only set extack._msg on error paths via
+NL_SET_ERR_MSG_MOD(), so on a successful parse the err_out block
+reads an uninitialized pointer. If that garbage happens to be
+non-NULL, DP_NOTICE("%s", extack._msg) dereferences it inside
+vsnprintf, causing a page fault and kernel panic.
 
-Fix this by calling synchronize_net() before the node is freed, as
-mlx5e does.
+This manifests when configuring ethtool ntuple flow rules (ethtool -U
+flow-type tcp4/udp4) on kernels built with CONFIG_INIT_STACK_NONE=y.
+With CONFIG_INIT_STACK_ALL_ZERO=y the bug is masked because the
+compiler zero-initializes extack, making _msg NULL.
 
-Found during a static-analysis-assisted audit: candidate sites were
-surfaced by a Coccinelle rule, and the reader/writer paths were
-confirmed by LLM-assisted (GLM-5.3) code inspection.  The issue was
-not observed at runtime; it is identified by code inspection only.
+Reproduced on RHEL 9.8 (kernel-5.14.0-687.47.1.el9_8) and mainline
+(v7.3-rc6) with the following reproducer:
 
-Fixes: 5e6808b4c68d ("octeontx2-pf: Add support for HTB offload")
-Signed-off-by: Binbin Deng <18983559317@163.com>
-Reviewed-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Link: https://patch.msgid.link/20261014064204.291688-1-18983559317@163.com
+  IFACE=ens2f0
+  ip link set $IFACE up
+  ethtool -K $IFACE ntuple on
+  for i in $(seq 1 100); do
+    ethtool -U $IFACE flow-type udp4 src-ip 192.168.2.$i action -1
+  done
+
+The loop panics reliably after 10-15 iterations with:
+
+  BUG: unable to handle page fault
+  RIP: string+0x49/0xd0
+  Call Trace:
+   vsnprintf
+   qede_flow_spec_to_rule+0x2b6/0x4b0 [qede]
+   qede_add_cls_rule
+   ethtool_set_rxnfc
+
+Zero-initialize extack so _msg is NULL unless explicitly set by an
+error path.
+
+Fixes: eb705d734525 ("net: qede: use faked extack in qede_flow_spec_to_rule()")
+Signed-off-by: Anirudh Virdi <avirdi@redhat.com>
+Reviewed-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20261013105451.201211-1-avirdi@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/qos.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/qlogic/qede/qede_filter.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/qos.c b/drivers/net/ethernet/marvell/octeontx2/nic/qos.c
-index 69dfb34008572..7f22de0df3a5b 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/qos.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/qos.c
-@@ -331,6 +331,8 @@ static void otx2_qos_sw_node_delete(struct otx2_nic *pfvf,
- 		otx2_qos_update_tx_netdev_queues(pfvf);
- 	}
+diff --git a/drivers/net/ethernet/qlogic/qede/qede_filter.c b/drivers/net/ethernet/qlogic/qede/qede_filter.c
+index 7e341e026489c..7808b0c918e64 100644
+--- a/drivers/net/ethernet/qlogic/qede/qede_filter.c
++++ b/drivers/net/ethernet/qlogic/qede/qede_filter.c
+@@ -1991,8 +1991,8 @@ static int qede_flow_spec_to_rule(struct qede_dev *edev,
+ 				  struct ethtool_rx_flow_spec *fs)
+ {
+ 	struct ethtool_rx_flow_spec_input input = {};
++	struct netlink_ext_ack extack = {};
+ 	struct ethtool_rx_flow_rule *flow;
+-	struct netlink_ext_ack extack;
+ 	__be16 proto;
+ 	int err;
  
-+	synchronize_net();
-+
- 	list_del(&node->list);
- 	kfree(node);
- }
 -- 
 2.53.0
 
