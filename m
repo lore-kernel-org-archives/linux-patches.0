@@ -1,54 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042649;
-	b=vnjdbK68tb6KhiVTDoTMSUwV9HNnxYJ4XQYMWq4AcOx5mQxg/p6UIEegNdqEFVxIZ6RQ
-	 Xa3MfhmcHc4qObODREz6O6rgS+1tnIw/GHEiZj6sUQ0QCA51I7lFzsMWeEpdMt6GN7rzK
-	 XofM8YPi82yvHIcjTgZwCxgTNenVyk75imb9VO3iLvWSffU7rJxoumEz07jeDvxK+qX9r
-	 Bn07feX2h0PVtfRYiQarnJHNvXo6bvGESry6Y1ZenPYe0x4MWlTrhD7Qy69uQXY+8yfKQ
-	 k/NOIhwCTIpu7QSGxzXZp/fGKVBut5jeKm7CavTeu7qiyP1+X0DZzzXcYkq2hhJFQVw==
+	t=1795042652;
+	b=F/594zFXpE8tPnDb3I+hKfv6XMc7seBwBxpfGFD1st6/9qc0ejR8aef6dx3auUq/A/uZ
+	 761ktNievr1Lv/oH2T7GTdJ//hWegU4+IeMxkkHjHl8necNkyvtavag13Od0C5OPJTd1p
+	 kcreH31pRrQDhQeMTjIXNTBobgv5XRxeE7Lf+qbbcfPwmvIcBc2euWvJN16MexYydhDA6
+	 lwxQPWvdZOFmRG1yhwQl7NXYGAvSf3jNlNGVXwj+iNwftE1h6PTif/CvIAnlxFX3Z7LYV
+	 2DAawCq+a66MHqQjSBupyoXH+5daNlNtimv8VwP6H9uHl7udjTwpInKHNTDHGqLrL4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042649;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042652;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Cg9s5yGY5k6aiqNWZdtYyyhFMV0cpijP+HmnnMtlzV8=;
-	b=48m8VOtk2J5JX8yEqqbnnmiQQpBB23CC1On6LV2/J5GzSQCf4c7Va2rX7UVi7i9pTih6
-	 m426QkB8hdizuI+zIrD5JFdXBH+YHoEMZjylldCiQpbCuTyYYHPaxGZmWiDulftVplyjL
-	 L0HYhDPXJCt6VPbqERcdyNHezJsvEIZktN6+UyiSuFcLQ1TBse42nV/k87vybTdLBJPk3
-	 X0AYyvhK5aeKx2wDMr49ezP7NF3dQs723X350zEUrRxNF7IqOSxesqervcRwfMYUaOliH
-	 onxV/5wKdNQbtWMegk/+oNdnmcipgji+kimBMZdwO56pysjO/2KJRksM+I44DWV9bAw==
+	bh=8dLbGlMoVc0ylU9YXm8fYo70FE1xKgIIhATxHXSw4m8=;
+	b=q6HOH5iwLsJVmlEjDuZ7o+hkWBOI8jZbq4jlOiPiEjiAblVlDhKSkS0U0kXAKjrtZcbY
+	 11dkD7WUTCF5Ad5ob7J+QpAANgHTTwDILxkWAhtLgi5bJDv5Mpw3bejN4QOD0hJa+dGQK
+	 S6B6d8J1kPLd9RtYW5Wjd2FYlM716nibXiBMWAppOtLOcS+YR5je+SS7vuZ/XqWBaCvgf
+	 DK4ddgtIrY25XYUGUDVHn73K89ekqSZFiGtiAYIsWDGh0we4uME0yk95P3d8a6nojatYS
+	 PSlwAlqabgIav4ZtLaMluYlNIYVSCWykhmiRXLGJWy1+fQhkBgutzfOrBsEv7SCwctQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="o4Vn/OTx";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YGa7UvKq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F03A606A31C;
-	Wed, 18 Nov 2026 22:57:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6F9606A31C;
+	Wed, 18 Nov 2026 22:57:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o4Vn/OTx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3D231F000C5;
-	Wed, 18 Nov 2026 22:57:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YGa7UvKq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FCF91F000C4;
+	Wed, 18 Nov 2026 22:57:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042649;
-	bh=Cg9s5yGY5k6aiqNWZdtYyyhFMV0cpijP+HmnnMtlzV8=;
+	s=korg; t=1795042652;
+	bh=8dLbGlMoVc0ylU9YXm8fYo70FE1xKgIIhATxHXSw4m8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o4Vn/OTxV9uelWZjzz4zALik/AXURjgg0icOwdsLByoalySKztg4Mp++46Z65G6xD
-	 a50MZFOn8Y+EmaJ0Bbk7PBvuhaR5A94Y5zpMWmccCV5JelVjVyj43AOH2U0NhCYiq9
-	 K8hHHahTXznY43EEIxjhCxRGt7H5kjq0CYaPqWCM=
+	b=YGa7UvKqHhtw1gwprLSwoKMrorG0MgEtt9IB2+Q5kl5VYAiuiWDixV3halapxwByk
+	 nGADSdYwuFXQFe59BiV3sfryFJdUFvjO3g27TahlrpNLcSWkatbonuw6523Kon5P78
+	 OtAZpdc733aaW3oHMTTL4ArsCE0CEC/RANGZkBKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Yang <yangfeng@kylinos.cn>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Mahe Tardy <mahe.tardy@gmail.com>,
-	Ihor Solodrai <ihor.solodrai@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
+	Peter Morrow <pdmorrow@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3205/3318] bpf: Fix out-of-bounds btf->types write for split BTF
-Date: Wed, 18 Nov 2026 16:03:47 +0100
-Message-ID: <20261118150455.902521640@linuxfoundation.org>
+Subject: [PATCH 6.6 3206/3318] net/mlx4: always create the eth and ib auxiliary devices
+Date: Wed, 18 Nov 2026 16:03:48 +0100
+Message-ID: <20261118150455.929700117@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,70 +72,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feng Yang <yangfeng@kylinos.cn>
+From: Peter Morrow <pdmorrow@gmail.com>
 
-[ Upstream commit 6c476d2b73056ed151c3f8b884c627c75999ed7c ]
+[ Upstream commit 557d80138618b9d17407733d4ec25b33d3971d60 ]
 
-btf_add_type() stores the types of a BTF in btf->types[], which can hold at
-most BTF_MAX_TYPE entries.  The types of a split BTF get IDs start_id ..
-start_id + nr_types - 1, so only BTF_MAX_TYPE - start_id of them fit, but
-neither the limit check nor the size used to grow the array accounts for
-start_id: the check is an equality test against BTF_MAX_TYPE
-('start_id + btf->types_size == BTF_MAX_TYPE') and the new size is clamped
-to BTF_MAX_TYPE.
+Since commit 7d22b1cb9d84 ("mlx4: Connect the infiniband part to the
+auxiliary bus"), mlx4_core creates the "ib" auxiliary device only for
+an IB port or a device that advertises IBoE. Before it, each mlx4
+interface was offered every device and decided in its own add callback.
+mlx4_ib_add() accepted Ethernet ports without IBoE and registered them
+for raw packet QPs only.
 
-The check therefore only fires if the array happens to grow to exactly
-BTF_MAX_TYPE - start_id entries.  Otherwise, if the module has more than
-BTF_MAX_TYPE types, the array is filled up to BTF_MAX_TYPE entries.  The
-next type that needs to be added reallocates the array to the same size,
-after which btf->types_size no longer equals btf->nr_types and the growth
-path is not taken anymore, so every following type is written past the end
-of the array:
+ConnectX-3 VFs on Azure have an Ethernet port and no IBoE, so since
+v6.6 they get no RDMA device. DPDK's mlx4 PMD, which needs only raw
+packet QPs, then cannot open them:
 
-  BUG: unable to handle page fault for address: ffffc90006200000
-  RIP: 0010:btf_add_type+0x74/0x270
-  Call Trace:
-   btf_check_all_metas
-   btf_parse_module
+  net_mlx4: cannot access device, is mlx4_ib loaded?
 
-Bound both the array size and the limit check by BTF_MAX_TYPE - start_id.
-Base BTF (start_id == 0) is unaffected.
+Restore the old behaviour by creating both auxiliary devices for every
+device and letting mlx4_en and mlx4_ib decide in probe, as their add
+callbacks did. mlx4_ib_probe() returns -ENODEV when there are no usable
+ports, and mlx4_en_probe() binds a device without Ethernet ports but
+creates no netdevs, as mlx4_en_add() did.
 
-Fixes: 951bb64621b8 ("bpf: Add in-kernel split BTF support")
-Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Reviewed-by: Mahe Tardy <mahe.tardy@gmail.com>
-Acked-by: Ihor Solodrai <ihor.solodrai@linux.dev>
-Link: https://patch.msgid.link/20261028031933.277550-1-yangfeng59949@163.com
+Tested on 6.12.111 on an Azure VM with two ConnectX-3 VFs: each gets an
+eth and an ib auxiliary device, and DPDK attaches both VFs and passes
+traffic through them.
+
+Fixes: 7d22b1cb9d84 ("mlx4: Connect the infiniband part to the auxiliary bus")
+Closes: https://lore.kernel.org/r/20261014133951.3219055-1-pdmorrow@gmail.com
+Suggested-by: Leon Romanovsky <leon@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Peter Morrow <pdmorrow@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Acked-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/mellanox/mlx4/intf.c | 15 ++-------------
+ 1 file changed, 2 insertions(+), 13 deletions(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index 6e03ba710f11f..8f211a63fa3f2 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -1579,15 +1579,16 @@ static int btf_add_type(struct btf_verifier_env *env, struct btf_type *t)
- 		/* Expand 'types' array */
+diff --git a/drivers/net/ethernet/mellanox/mlx4/intf.c b/drivers/net/ethernet/mellanox/mlx4/intf.c
+index a371b970ac1e2..5bb6272968148 100644
+--- a/drivers/net/ethernet/mellanox/mlx4/intf.c
++++ b/drivers/net/ethernet/mellanox/mlx4/intf.c
+@@ -43,23 +43,12 @@ static DEFINE_IDA(mlx4_adev_ida);
  
- 		struct btf_type **new_types;
--		u32 expand_by, new_size;
-+		u32 expand_by, new_size, max_size;
+ static bool is_eth_supported(struct mlx4_dev *dev)
+ {
+-	for (int port = 1; port <= dev->caps.num_ports; port++)
+-		if (dev->caps.port_type[port] == MLX4_PORT_TYPE_ETH)
+-			return true;
+-
+-	return false;
++	return true;
+ }
  
--		if (btf->start_id + btf->types_size == BTF_MAX_TYPE) {
-+		if (btf->start_id + btf->types_size >= BTF_MAX_TYPE) {
- 			btf_verifier_log(env, "Exceeded max num of types");
- 			return -E2BIG;
- 		}
+ static bool is_ib_supported(struct mlx4_dev *dev)
+ {
+-	for (int port = 1; port <= dev->caps.num_ports; port++)
+-		if (dev->caps.port_type[port] == MLX4_PORT_TYPE_IB)
+-			return true;
+-
+-	if (dev->caps.flags & MLX4_DEV_CAP_FLAG_IBOE)
+-		return true;
+-
+-	return false;
++	return true;
+ }
  
-+		max_size = BTF_MAX_TYPE - btf->start_id;
- 		expand_by = max_t(u32, btf->types_size >> 2, 16);
--		new_size = min_t(u32, BTF_MAX_TYPE,
-+		new_size = min_t(u32, max_size,
- 				 btf->types_size + expand_by);
- 
- 		new_types = kvcalloc(new_size, sizeof(*new_types),
+ static const struct mlx4_adev_device {
 -- 
 2.53.0
 
