@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054054;
-	b=aCItivpNMamMXpF0OoGwFch69vKdJY1Y/2zMVnriXZ75n4arbCRikUTmPioXXBwIUS1m
-	 Erl2xT+lGuJTm0YkQeCFH/vibdA5cOdX0OnF6NSAY8Vbysb6+j7bZICx748WBO0VZhQM8
-	 mwC05niGA0PBR4xdSXNqo1oUGHYBMau8VIemVYSYUHFNOGyAewuWgP21did08UK/J8gd+
-	 FsG1x/UB/7G9EV3C/E0SpVAHkKyB2PZPwF9O6B8Hs+tH/qRjfv6T+mP/8xWIyypzOUH8b
-	 YTX781kurdQwx5LTYraIFTy65fTseZwUH60Kn5wCZwOQtGlNlMZOkuPk/JKYT/C5L/Q==
+	t=1795054057;
+	b=BNpuXrSrcBQoNn5aU5YnSEg8KNbj1Qp7GhCLD2nT+KAuF17h81n05RP8ZAlnAmieQ+DK
+	 l6jfCJHMPl5VsTFapWv36+o+vjRERLwhIXUHH2virj88y5xq2LNsz7h9bYUZ+N4BiebrF
+	 B+jWLqBkNUSjwSWeJrXEPDZLpT6n1d8bdWQXoqjoI8lvbyt1cTH/mzruuoIqK/J+w1dCD
+	 NSREcG+ZTLuUGsa1ssuBiCXuYF2xwFf2ruXqYn/f/Srl9bc3rlDu7gKGQxKm0C53lPe2o
+	 mQbpNZD1zn7Eoq94KOTb3fyQOw6iZZcB+e9S0fWRIxd+mzLA00LTUdBeGjnXm//E2ag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054054;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054057;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fwaHPRYWwwnCjeYaZ3joieRS7lHfq1/Ok2/jwN3CHW4=;
-	b=qlAGwK26z1/ZZGZcfwFE5hKL9duA54r+CIExbgIWccNIN/plPv38EFKecrI8FGaoWHHp
-	 2dmIzL9A1vzZfsUEvBUbdzT9PUlonRTKLrgwBkdYeKVOBZkCxSlXcuTUec/qagleu81L2
-	 1A1ItlMEcIgY51oD+YppWKJMnfuTZUjC9B7c7e6Y0XDhHe24MHYhWFbMOBuWfqPmYVcEU
-	 FAgA9ekitMn3AxT3ODai2gQCpiRQMhQ+djROuxKktkWBtBH8boXY/31mYXdpST01AM1yN
-	 yubD85RjQ4KQx8SxFUJjzDcpSB/U0cTDHGepl5g5qUosyuP2zmsHrZomhmD7C8pq13g==
+	bh=r7BFbuG0r1f2H4oEepMIiRGwW0ttMAqWMM+XY2suqbw=;
+	b=zMhkksUd8gNkriWfLCs68s/ql/uNb2V/8oQzETTyfqHCY4/UNIHTHQfN3zr/AT9g+MCe
+	 2VQrThz9nqriZMfa23QfSz085rMmfIq1lxyhzIoJ2OCio33m35yxt+G1e1KzTV4GFEwsq
+	 ywX+U1ciZbUmbn2BvjFwNhKn02dzj5PBmpm9vb7R93MXAGhneZZbN2E4i5HWr23dsi0HM
+	 dCqV+h4QJ/G4CFxM5JeHf3XPJn1WjbacmP9Q1M1inWOHuEZSA8Q/gMTJ50SKOEJWyUHPo
+	 7RNxhkG4yBaJbkWWoDzkOOaY/7cyPG0Xp699PSAaEuUXm+uT0QfdlDCrXdIPtt8TZzg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WDvZJBgy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qNUhK1SM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786B8606A31C;
-	Thu, 19 Nov 2026 02:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75043606A320;
+	Thu, 19 Nov 2026 02:07:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WDvZJBgy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AB751F000C4;
-	Thu, 19 Nov 2026 02:07:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qNUhK1SM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7BA61F000C4;
+	Thu, 19 Nov 2026 02:07:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054054;
-	bh=fwaHPRYWwwnCjeYaZ3joieRS7lHfq1/Ok2/jwN3CHW4=;
+	s=korg; t=1795054057;
+	bh=r7BFbuG0r1f2H4oEepMIiRGwW0ttMAqWMM+XY2suqbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WDvZJBgyaNmwwEfiP+ozmqYZ6HrHApu9BBZJ50sW5nfYN9khIpvWKLJiZc+T6x7Sd
-	 axCsyoKN1e8UpJi+7RSQm75dCDapfEETUb+1mdB7GSzT6S47IKLyv2mWld2Yjr9G1y
-	 Hr8wh7bMcc4dfIXZWOr0TmTTbGos+GaRtxWPPV2w=
+	b=qNUhK1SMwKZMps0llNC5aJr3sWzMEJSQpJPAyBkYXdElWVkWmIKTx+SOWo4cVf36O
+	 VVHJTpmcWK4Cyo/ZCermEiPuGlJ4rCaxExIE/sTAZ9IoJMc5D7YdP+cXZXSP4WcKLz
+	 3iybISwsw6UaGlVpTYRawnSZuPgw/RXbiIUgeU94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Maciej Kucharek <qchcio@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1138/2214] f2fs: fix to adjust appropirate defragment pg_end
-Date: Wed, 18 Nov 2026 15:46:54 +0100
-Message-ID: <20261118150057.559520831@linuxfoundation.org>
+Subject: [PATCH 5.15 1112/2214] drm/amdgpu: reset SI ASIC on MacBookPros with VRAM at 0
+Date: Wed, 18 Nov 2026 15:46:28 +0100
+Message-ID: <20261118150056.622707750@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,56 +68,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiguo Niu <zhiguo.niu@unisoc.com>
+From: Maciej Kucharek <qchcio@gmail.com>
 
-[ Upstream commit 197080156f27b6bf8cf198e9313dfbb94769c736 ]
+[ Upstream commit 5b56ede880317bd912f914d5cd38ba1d357677fa ]
 
-A length that exceeds the real size of the inode may be
-specified from user, although these out-of-range areas
-are not mapped, but they still need to be check in
-while loop, which is unnecessary.
+On MacBookPros with switchable graphics, the firmware puts VRAM at MC
+address 0 when the iGPU is enabled.  The EFI stub enables the iGPU on
+these machines through apple_set_os().  On a MacBookPro11,5 (Radeon R9
+M370X, 1002:6821, subsystem 106b:0149), the driver adopts this layout
+at init:
 
-Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: 92154fe28c37 ("f2fs: fix defragment writeback range truncation on 32-bit")
+  MC_VM_FB_LOCATION=0x007f0000, HDP_NONSURFACE_BASE=0
+  VRAM at 0x0-0x7fffffff, GART table at 0x1400000
+
+The driver posts the ASIC again on S3 resume and after a GPU reset.
+The VBIOS asic_init table then moves VRAM back to the VBIOS default:
+
+  MC_VM_FB_LOCATION=0xf47ff400, HDP_NONSURFACE_BASE=0xf4000000
+
+gmc_v6_0 does not reprogram these registers.  The GART table is then
+no longer in VRAM, and the gfx ring test times out:
+
+  amdgpu: ring gfx test failed (-110)
+  amdgpu: resume of IP block <gfx_v6_0> failed -110
+
+Reset and post the ASIC at driver load on Apple boards with VRAM at 0.
+The driver then uses the VBIOS layout (VRAM at 0xf400000000) from the
+start, and later posts keep it.  After the reset, FB_BASE is not 0, so
+a module reload does not reset the ASIC again.
+
+The test is the same one that commit c54e4d105077 ("drm/amdgpu: make
+Mac FB workaround generic") uses: an Apple subsystem vendor and VRAM at
+0.  The VI quirk for the MacBookPro14,3 resets at load for the same
+reason:
+
+  commit b6b1d9721851 ("drm/amdgpu: reset VI ASIC on MacBookPro14,3")
+
+Other Apple SI boards get the same reset if FB_BASE reads 0 at load.
+
+Tested on a MacBookPro11,5 with 7.2.5 and this patch: the panel comes
+up at boot, and 4 of 4 deep S3 cycles resume.  Without the patch, S3
+resume fails every time.  The GPU reset path is not tested.
+
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/5978
+Assisted-by: Claude:claude-opus-5-5
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Maciej Kucharek <qchcio@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 60dd16ae10f286cb9cce5b6027b2d5ee869637af)
+Cc: stable@vger.kernel.org
+[ sashal: replaced MC_VM_FB_LOCATION__FB_BASE_MASK with its equivalent literal 0xFFFF to avoid conflicting header definitions. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/si.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index dd4eab6367a66..5cf96cac8aabd 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -2610,12 +2610,13 @@ static int f2fs_defragment_range(struct f2fs_sb_info *sbi,
- 	bool fragmented = false;
- 	int err;
+diff --git a/drivers/gpu/drm/amd/amdgpu/si.c b/drivers/gpu/drm/amd/amdgpu/si.c
+index fd34c2100bd96..c63f1b7162d34 100644
+--- a/drivers/gpu/drm/amd/amdgpu/si.c
++++ b/drivers/gpu/drm/amd/amdgpu/si.c
+@@ -1509,6 +1509,16 @@ static bool si_need_full_reset(struct amdgpu_device *adev)
  
--	pg_start = range->start >> PAGE_SHIFT;
--	pg_end = (range->start + range->len) >> PAGE_SHIFT;
--
- 	f2fs_balance_fs(sbi, true);
- 
- 	inode_lock(inode);
-+	pg_start = range->start >> PAGE_SHIFT;
-+	pg_end = min_t(pgoff_t,
-+				(range->start + range->len) >> PAGE_SHIFT,
-+				DIV_ROUND_UP(i_size_read(inode), PAGE_SIZE));
- 
- 	/* if in-place-update policy is enabled, don't waste time here */
- 	set_inode_flag(inode, FI_OPU_WRITE);
-@@ -2625,8 +2626,9 @@ static int f2fs_defragment_range(struct f2fs_sb_info *sbi,
- 	}
- 
- 	/* writeback all dirty pages in the range */
--	err = filemap_write_and_wait_range(inode->i_mapping, range->start,
--						range->start + range->len - 1);
-+	err = filemap_write_and_wait_range(inode->i_mapping,
-+						pg_start << PAGE_SHIFT,
-+						(pg_end << PAGE_SHIFT) - 1);
- 	if (err)
- 		goto out;
+ static bool si_need_reset_on_init(struct amdgpu_device *adev)
+ {
++	/*
++	 * MacBookPros with switchable graphics put VRAM at 0 when the iGPU
++	 * is enabled.  Any later post (S3 resume, GPU reset) moves it back to
++	 * the vbios default, so reset and post on load to start with the
++	 * vbios layout.
++	 */
++	if (adev->pdev->subsystem_vendor == PCI_VENDOR_ID_APPLE &&
++	    !(RREG32(mmMC_VM_FB_LOCATION) & 0xFFFF))
++		return true;
++
+ 	return false;
+ }
  
 -- 
 2.53.0
