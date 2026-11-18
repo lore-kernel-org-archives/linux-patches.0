@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032867;
-	b=4zyyr7db+65n+oIm2Jp0ZdsqkNeIU2IxMk+wBOJcE2pLsgW4SzAgs9gAKGLVywsP3QEX
-	 twI9WWlM/18uaOHgj5KzntcA9Ht+m37xB8dN4qW95rixGKBEnWuA72rvemHZIMVaPeIY3
-	 j9kk1kykI0pG3BxoEELkGsO7Vxk/Ie+aogyFCwSLkUnGMX4VqmMCJpUKQfKXt4rYhY13T
-	 2Pfmao55ziLKVfpOJJ7roZ9mNlAFUMiWvFTSm2Iv48WTjzgon8ZzqD0L6faymKJTPzy5m
-	 tXi8Ij+6nW161FE+Jow39WSUrjNiv7Fj11ZUFCblewq4x7To8v+kY/h4BPg/UbTNUnw==
+	t=1795032870;
+	b=wDejc+drXhtEofvhkVSuE+aDytaWatckwRfucVDPyFPbgZsiOuZk/cetsaXEvSrOsF9n
+	 JnuiB24HVvNf05fybyPEFa2OUKDN8OrOXKUkn6X/x0Cwm8Lr6MQ0Jz+9Pe/O+OVuoHAdL
+	 BtCRhs/sFL/6jSNpDrfS/YuHmdoJIxcIWNCZm33M3L+cM4B1oy7P7hxUDIHd//ecoMxqW
+	 pyMIoiYgiCm8ykJY0FcjxiPSd2nXHMR4Tt4ossiO8fef/9poRGHFvatOQ8to8dWSz0bF+
+	 NngJ7hOjkGl8h5nKF7qB/OQmvh8VTfAqFFuV+ohhwOhYJWU+CsgjtMWop+eUG9+tG8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032867;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032870;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CT0SOOnTTP4j7lJZpmIACreerSnrP2kepdfJ9ubUBmo=;
-	b=rFsUwQDVauCDECr7GoYGtkFqE5w/QbwH6+/R2N+Rn4DHrgcwjAtXVK/zHk+x0IlTfxdN
-	 Eh9HltfKdlqnrroHsvumtw8nfT9dMtdoK1qTdw4LozQJIkX3DpCCrvzBpzvEDuXvj1yLz
-	 0Dmtuc+lBF0Tp0h4h8dP0dsIx7/YYZDJWrcQlmqZt/oOJq5mSIcAgMttlVJPBowJFxrez
-	 VtveMDcQwbjSA8ZOYj1Pv93JFAM93bC+/GUvIyHKchWc2lvTX3nZZbph2qKPPx7qp1eXx
-	 x1ptc8zTJxX+vv2WvDflP5Twh9v4tT6qqTDupquD+/EtCOChMmqqyFtr1OO7OeXD00g==
+	bh=MjYo8aLg141ugdeLbR6R08oCz7aAUw/YAgd1FiSHjEs=;
+	b=uPzDTDEJen/xEee+LS9gCpSjE24OhBKQ5vNKL3nmR+s0h6u49FE5XgTfiCpygq3F3s2H
+	 /xMeeQW+JLRfApZ/vM4yQ75f9lUSCmQaUxkSgeg7o1oQZEiIx8BKDiYPqyz2aT+j/BuPD
+	 Frp7gDvpylWADhloMNsgHFXj/Kb72PoFWconcoFCI3T/RM1b5QcB//EHLFwFBUqDixaYO
+	 rRUxSaXtihvGpOJdfwNWNuV3DVWNts/G/w+aYsVu7nGJMaRC0f8hkfsnlZ/2tYfhX1qTZ
+	 uUbDrqjQeU48Te3lPPhw3QjDffGBXTVb0N3jUw2VN5OAC+aUe0RSycz8QKXfxDbI2qQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k4PcVcen;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="RujIkq/L";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A632E60A260A;
-	Wed, 18 Nov 2026 20:14:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60FFF60A2609;
+	Wed, 18 Nov 2026 20:14:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k4PcVcen
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 045D41F000C4;
-	Wed, 18 Nov 2026 20:14:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RujIkq/L
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B77D41F000C4;
+	Wed, 18 Nov 2026 20:14:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032867;
-	bh=CT0SOOnTTP4j7lJZpmIACreerSnrP2kepdfJ9ubUBmo=;
+	s=korg; t=1795032870;
+	bh=MjYo8aLg141ugdeLbR6R08oCz7aAUw/YAgd1FiSHjEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k4PcVcenLzuJZwFlVMVKPpOoUWmFqZGrg+bLxDF9+gHZukWsdMgHpstcgQgVdkHA3
-	 KMPjxnqNv4h2pmqT0KMKH3XRFry2NwGsKtmFsnOl5ANAgXhb2/QPIE0lGt9W4g6GbO
-	 FCfbji2A0LW+S5x2vYG0AsrEckhWLX1Hjdx8IQ/E=
+	b=RujIkq/LbsYUT3es1m7XJ3qLFg+Z5JXjKAhhUi6duAUJhMWMgmr6+qVL8nz1t3U9T
+	 Ys3aq6OjCZrv01WPo8eYGK7Wuf7b70fgA2ePY0a5aXdygb9Pqmohy3RvivM2fMvxmp
+	 KbeEHJfFe3zG2MQv6i0vlNbdZOGxaoQotbAhkf6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Markuze <amarkuze@redhat.com>,
-	Tal Zussman <tz2294@columbia.edu>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	David Howells <dhowells@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1565/1756] ceph: fix page vector leak on encrypted netfs read EIO path
-Date: Wed, 18 Nov 2026 16:01:32 +0100
-Message-ID: <20261118150111.844069550@linuxfoundation.org>
+Subject: [PATCH 6.12 1566/1756] ceph: fix generic/421 test failure
+Date: Wed, 18 Nov 2026 16:01:33 +0100
+Message-ID: <20261118150111.927371001@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,52 +69,220 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Markuze <amarkuze@redhat.com>
+From: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 
-[ Upstream commit 00a0d7f377f6af59bc559b2e07dffff63eaa5544 ]
+[ Upstream commit fd7449d937e7fb3144770592927cf452bf66dbd3 ]
 
-ceph_netfs_issue_read() pins pages with iov_iter_get_pages_alloc2() for
-encrypted inodes and attaches them with own_pages=false. If
-ceph_inc_osd_stopping_blocker() then fails, the request is dropped
-without calling finish_netfs_read(), so the page array and the
-references taken on those pages leak: ceph_osd_data_release() only
-frees pages when own_pages is true, and __free_pages() would be the
-wrong destructor for GUP-pinned pages.
+The generic/421 fails to finish because of the issue:
 
-Release the vector with put_page() and kvfree() on that error path,
-matching finish_netfs_read(). Unencrypted ITER reads are unaffected.
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.894678] INFO: task kworker/u48:0:11 blocked for more than 122 seconds.
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.895403] Not tainted 6.13.0-rc5+ #1
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.895867] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.896633] task:kworker/u48:0 state:D stack:0 pid:11 tgid:11 ppid:2 flags:0x00004000
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.896641] Workqueue: writeback wb_workfn (flush-ceph-24)
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897614] Call Trace:
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897620] <TASK>
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897629] __schedule+0x443/0x16b0
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897637] schedule+0x2b/0x140
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897640] io_schedule+0x4c/0x80
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897643] folio_wait_bit_common+0x11b/0x310
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897646] ? _raw_spin_unlock_irq+0xe/0x50
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897652] ? __pfx_wake_page_function+0x10/0x10
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897655] __folio_lock+0x17/0x30
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897658] ceph_writepages_start+0xca9/0x1fb0
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897663] ? fsnotify_remove_queued_event+0x2f/0x40
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897668] do_writepages+0xd2/0x240
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897672] __writeback_single_inode+0x44/0x350
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897675] writeback_sb_inodes+0x25c/0x550
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897680] wb_writeback+0x89/0x310
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897683] ? finish_task_switch.isra.0+0x97/0x310
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897687] wb_workfn+0xb5/0x410
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897689] process_one_work+0x188/0x3d0
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897692] worker_thread+0x2b5/0x3c0
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897694] ? __pfx_worker_thread+0x10/0x10
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897696] kthread+0xe1/0x120
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897699] ? __pfx_kthread+0x10/0x10
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897701] ret_from_fork+0x43/0x70
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897705] ? __pfx_kthread+0x10/0x10
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897707] ret_from_fork_asm+0x1a/0x30
+Jan 3 14:25:27 ceph-testing-0001 kernel: [ 369.897711] </TASK>
 
-Fixes: 1464de9f813e ("ceph: wait for OSD requests' callbacks to finish when unmounting")
-Signed-off-by: Alex Markuze <amarkuze@redhat.com>
-Reviewed-by: Tal Zussman <tz2294@columbia.edu>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+There are several issues here:
+(1) ceph_kill_sb() doesn't wait ending of flushing
+all dirty folios/pages because of racy nature of
+mdsc->stopping_blockers. As a result, mdsc->stopping
+becomes CEPH_MDSC_STOPPING_FLUSHED too early.
+(2) The ceph_inc_osd_stopping_blocker(fsc->mdsc) fails
+to increment mdsc->stopping_blockers. Finally,
+already locked folios/pages are never been unlocked
+and the logic tries to lock the same page second time.
+(3) The folio_batch with found dirty pages by
+filemap_get_folios_tag() is not processed properly.
+And this is why some number of dirty pages simply never
+processed and we have dirty folios/pages after unmount
+anyway.
+
+This patch fixes the issues by means of:
+(1) introducing dirty_folios counter and flush_end_wq
+waiting queue in struct ceph_mds_client;
+(2) ceph_dirty_folio() increments the dirty_folios
+counter;
+(3) writepages_finish() decrements the dirty_folios
+counter and wake up all waiters on the queue
+if dirty_folios counter is equal or lesser than zero;
+(4) adding in ceph_kill_sb() method the logic of
+checking the value of dirty_folios counter and
+waiting if it is bigger than zero;
+(5) adding ceph_inc_osd_stopping_blocker() call in the
+beginning of the ceph_writepages_start() and
+ceph_dec_osd_stopping_blocker() at the end of
+the ceph_writepages_start() with the goal to resolve
+the racy nature of mdsc->stopping_blockers.
+
+sudo ./check generic/421
+FSTYP         -- ceph
+PLATFORM      -- Linux/x86_64 ceph-testing-0001 6.13.0+ #137 SMP PREEMPT_DYNAMIC Mon Feb  3 20:30:08 UTC 2025
+MKFS_OPTIONS  -- 127.0.0.1:40551:/scratch
+MOUNT_OPTIONS -- -o name=fs,secret=<secret>,ms_mode=crc,nowsync,copyfrom 127.0.0.1:40551:/scratch /mnt/scratch
+
+generic/421 7s ...  4s
+Ran: generic/421
+Passed all 1 tests
+
+Signed-off-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Link: https://lore.kernel.org/r/20250205000249.123054-5-slava@dubeyko.com
+Tested-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: ad67b498de17 ("ceph: fix error handling when the OSD client is stopping in ceph_submit_write()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/addr.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/ceph/addr.c       | 20 +++++++++++++++++++-
+ fs/ceph/mds_client.c |  2 ++
+ fs/ceph/mds_client.h |  3 +++
+ fs/ceph/super.c      | 11 +++++++++++
+ 4 files changed, 35 insertions(+), 1 deletion(-)
 
 diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
-index 63ead85dff268..0c2abc4adea67 100644
+index 0c2abc4adea67..9e3706e0a06f6 100644
 --- a/fs/ceph/addr.c
 +++ b/fs/ceph/addr.c
-@@ -432,6 +432,17 @@ static void ceph_netfs_issue_read(struct netfs_io_subrequest *subreq)
- 		osd_req_op_extent_osd_iter(req, 0, &subreq->io_iter);
+@@ -82,6 +82,7 @@ static bool ceph_dirty_folio(struct address_space *mapping, struct folio *folio)
+ {
+ 	struct inode *inode = mapping->host;
+ 	struct ceph_client *cl = ceph_inode_to_client(inode);
++	struct ceph_mds_client *mdsc = ceph_sb_to_mdsc(inode->i_sb);
+ 	struct ceph_inode_info *ci;
+ 	struct ceph_snap_context *snapc;
+ 
+@@ -92,6 +93,8 @@ static bool ceph_dirty_folio(struct address_space *mapping, struct folio *folio)
+ 		return false;
  	}
- 	if (!ceph_inc_osd_stopping_blocker(fsc->mdsc)) {
-+		struct ceph_osd_data *osd_data =
-+			osd_req_op_extent_osd_data(req, 0);
+ 
++	atomic64_inc(&mdsc->dirty_folios);
 +
-+		if (osd_data->type == CEPH_OSD_DATA_TYPE_PAGES) {
-+			int num_pages = calc_pages_for(osd_data->alignment,
-+						       osd_data->length);
+ 	ci = ceph_inode(inode);
+ 
+ 	/* dirty the head */
+@@ -899,6 +902,7 @@ static void writepages_finish(struct ceph_osd_request *req)
+ 	struct ceph_snap_context *snapc = req->r_snapc;
+ 	struct address_space *mapping = inode->i_mapping;
+ 	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(inode);
++	struct ceph_mds_client *mdsc = ceph_sb_to_mdsc(inode->i_sb);
+ 	unsigned int len = 0;
+ 	bool remove_page;
+ 
+@@ -954,6 +958,12 @@ static void writepages_finish(struct ceph_osd_request *req)
+ 
+ 			ceph_put_snap_context(detach_page_private(page));
+ 			end_page_writeback(page);
 +
-+			for (int i = 0; i < num_pages; i++)
-+				put_page(osd_data->pages[i]);
-+			kvfree(osd_data->pages);
-+		}
- 		err = -EIO;
- 		goto out;
++			if (atomic64_dec_return(&mdsc->dirty_folios) <= 0) {
++				wake_up_all(&mdsc->flush_end_wq);
++				WARN_ON(atomic64_read(&mdsc->dirty_folios) < 0);
++			}
++
+ 			doutc(cl, "unlocking %p\n", page);
+ 
+ 			if (remove_page)
+@@ -1667,13 +1677,18 @@ static int ceph_writepages_start(struct address_space *mapping,
+ 
+ 	ceph_init_writeback_ctl(mapping, wbc, &ceph_wbc);
+ 
++	if (!ceph_inc_osd_stopping_blocker(fsc->mdsc)) {
++		rc = -EIO;
++		goto out;
++	}
++
+ retry:
+ 	rc = ceph_define_writeback_range(mapping, wbc, &ceph_wbc);
+ 	if (rc == -ENODATA) {
+ 		/* hmm, why does writepages get called when there
+ 		   is no dirty data? */
+ 		rc = 0;
+-		goto out;
++		goto dec_osd_stopping_blocker;
  	}
+ 
+ 	if (wbc->sync_mode == WB_SYNC_ALL || wbc->tagged_writepages)
+@@ -1762,6 +1777,9 @@ static int ceph_writepages_start(struct address_space *mapping,
+ 	if (wbc->range_cyclic || (ceph_wbc.range_whole && wbc->nr_to_write > 0))
+ 		mapping->writeback_index = ceph_wbc.index;
+ 
++dec_osd_stopping_blocker:
++	ceph_dec_osd_stopping_blocker(fsc->mdsc);
++
+ out:
+ 	ceph_put_snap_context(ceph_wbc.last_snapc);
+ 	doutc(cl, "%llx.%llx dend - startone, rc = %d\n", ceph_vinop(inode),
+diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
+index 69f716e162190..14c307df2b981 100644
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -5679,6 +5679,8 @@ int ceph_mdsc_init(struct ceph_fs_client *fsc)
+ 	spin_lock_init(&mdsc->stopping_lock);
+ 	atomic_set(&mdsc->stopping_blockers, 0);
+ 	init_completion(&mdsc->stopping_waiter);
++	atomic64_set(&mdsc->dirty_folios, 0);
++	init_waitqueue_head(&mdsc->flush_end_wq);
+ 	init_waitqueue_head(&mdsc->session_close_wq);
+ 	INIT_LIST_HEAD(&mdsc->waiting_for_map);
+ 	mdsc->quotarealms_inodes = RB_ROOT;
+diff --git a/fs/ceph/mds_client.h b/fs/ceph/mds_client.h
+index a1629e61e75bf..5a5600b15cee4 100644
+--- a/fs/ceph/mds_client.h
++++ b/fs/ceph/mds_client.h
+@@ -458,6 +458,9 @@ struct ceph_mds_client {
+ 	atomic_t                stopping_blockers;
+ 	struct completion	stopping_waiter;
+ 
++	atomic64_t		dirty_folios;
++	wait_queue_head_t	flush_end_wq;
++
+ 	atomic64_t		quotarealms_count; /* # realms with quota */
+ 	/*
+ 	 * We keep a list of inodes we don't see in the mountpoint but that we
+diff --git a/fs/ceph/super.c b/fs/ceph/super.c
+index bd315aaaff13c..45425700a7bd7 100644
+--- a/fs/ceph/super.c
++++ b/fs/ceph/super.c
+@@ -1559,6 +1559,17 @@ static void ceph_kill_sb(struct super_block *s)
+ 	 */
+ 	sync_filesystem(s);
+ 
++	if (atomic64_read(&mdsc->dirty_folios) > 0) {
++		wait_queue_head_t *wq = &mdsc->flush_end_wq;
++		long timeleft = wait_event_killable_timeout(*wq,
++					atomic64_read(&mdsc->dirty_folios) <= 0,
++					fsc->client->options->mount_timeout);
++		if (!timeleft) /* timed out */
++			pr_warn_client(cl, "umount timed out, %ld\n", timeleft);
++		else if (timeleft < 0) /* killed */
++			pr_warn_client(cl, "umount was killed, %ld\n", timeleft);
++	}
++
+ 	spin_lock(&mdsc->stopping_lock);
+ 	mdsc->stopping = CEPH_MDSC_STOPPING_FLUSHING;
+ 	wait = !!atomic_read(&mdsc->stopping_blockers);
 -- 
 2.53.0
 
