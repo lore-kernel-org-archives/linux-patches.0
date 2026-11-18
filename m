@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029816;
-	b=3NOCUfj8Q5P/S1URDBrkmO40xvNpSp5Of/OWYMfJCMNH+tzxo6lGkyzJTMiEYmUJFV7e
-	 gu4cGr53NvQR3GWT8Utg+/Ux9I3I7jqQBHJ5nvhpSjDH/TprXUcddASZkKBdMCBaYBbrW
-	 WP118xhUCSQ52sV3XKBZYRiyOvZBhgT7odS1vzjOynV3fkUPyJDPCiPbtUbmYHTn90Kp+
-	 3OD2E8PIDua2SZPKDp/A0pcRQbnxP7+CFBGBvArqISxsIRrFxnBi+8NGvqurz0J8KtdYF
-	 fTRreTkexGFwEoN2XsSXpqQ7fjVE6a5j4K0KtgKBF/9N7xtPYynksKAW8bo6KGMSMMQ==
+	t=1795029819;
+	b=TrVGDQeGUQF9rA6rA9F70jxOmg0JRSHSxb7hlH9w91yFUHZtkMwCLi3rZFD1uU8mLizu
+	 NAKyvrsGVzwdBC2pMgBMqb67E94zrbZt3IQ6j6dCDWexi0AKACPPiw4SFPbMlruSZZ7an
+	 VSWHvTEwWz12/7xhYRbplshjhPwWGtiihtNIhkANCmkjRn/PGShP20lcsrTIc/nLROg/6
+	 woqz45FOUlPsNvN/ffZcjEmOGtnlAxwA8zGSwYg8BpVKIt9j392R1QXORi2uhxAv5Y/W8
+	 Mvdv8nUOliLqnBUoAJyVXqdH3Rr76rvCHF54zzY4W+W2E4Jdy1rRYsM/U5+sIyeUsLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029816;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029819;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nYiso/lEnn8iEPMeV02dh2t95tnJoh51wxdduA6UDiw=;
-	b=x2HeNBlmO1Re460NyGBZRM3SSPJejoQUh+NkwkGbo/lW+1zfphLWgoKPwD3uHzEgb4mN
-	 ltCSM2rSRaTBZM108JIHtdcl617SRCDHMm6a1jx0jMyyBQuwQrqXZ34aptF+l6SmS+2sc
-	 ChvFN4zlmf6MjRIg1eaDnPpoBWJukP0LRfFvRjpOuqRP+UDca/wLLtVmHoPX0SWnMoP+2
-	 geynWWpldh/89BNXizXwm/CXvtg+9Jb+zjWHnTAZkhJg7DJrWOr4Y9t61zR4dP4uW01MR
-	 xi/G/1U+hjwJgkvl86ipUsoA7s8CpBNVbvjE7kiCaa3+bGVpOqGnX5jSiQk9C7v1njw==
+	bh=M2ivuGD8ZeikY4mNB8dxOvzw32aBzP8BZZje/RA2gYc=;
+	b=XLHGWSiahVLndUex4Bq9ujXvfwzeb1nzdMIhOrYh6lX4j332MWSZE1faJ01McsS+ePoo
+	 HdT+/weBN+z3Dqu6oQ+jQoNXfjbMlxCoJZRKUi1+hLqEDqeai50NZt+sEE0g64/pw5eM7
+	 JFQVKl2wUtqyM0FuyRn8sQtvsrp0zirbq2fElibnLgf8pV/JA/99+FccvYubI35MCnzhR
+	 5fzqDUC4qGudRDdVWt1I/6tb2hRXiiJohvVvGVKnlEYeTja10IXvMGIsonrSFdwX7fFen
+	 P9VayEH55p+anmn4/z84VIZxP2CvG8NDhadfBc4v+ndUwqvXTr7/Idp3DvMWNcPNzyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iHiHNrHA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kw100kvP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B69E606A31C;
-	Wed, 18 Nov 2026 19:23:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04E39606A31C;
+	Wed, 18 Nov 2026 19:23:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iHiHNrHA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C0B81F000C4;
-	Wed, 18 Nov 2026 19:23:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kw100kvP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51B541F000C4;
+	Wed, 18 Nov 2026 19:23:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029816;
-	bh=nYiso/lEnn8iEPMeV02dh2t95tnJoh51wxdduA6UDiw=;
+	s=korg; t=1795029818;
+	bh=M2ivuGD8ZeikY4mNB8dxOvzw32aBzP8BZZje/RA2gYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iHiHNrHAStHeMR13K17pokFnH6HG6M+SZq7zOQuQAbAK9QDzBHwsbCYjiclDKxPSO
-	 KQuxTyWP+YLlHKhbMN8Vl2/e3PxhAB0Iv80ugEU8beahsfrlUOkqKw3xjPh1g88H44
-	 pXJzyvxLPEXOXPk2Xn/XsEZ8A1zs7tjwb4/24+R0=
+	b=kw100kvPCTF+C3JWZ6UdF8hBeHEx6YkrVGzqdJm3P3GWWo8JreI2GaNI3sqiLvVKJ
+	 vKNETrBEwZ5oR1wRQaNiqfhOtaZfvs9y1Ki8Z4HeBMWKJV2ZMtTqi9thSRViFsMW77
+	 IU4tqeOd6qjRRbmBzXFORmqeNiIM1BvnQ5RExcDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Kees Cook <kees@kernel.org>,
+	Alejandro Lucero <alucerop@amd.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0485/1756] pstore: dont leave an ERR_PTR in the ramoops zone pointer
-Date: Wed, 18 Nov 2026 15:43:32 +0100
-Message-ID: <20261118150028.309403153@linuxfoundation.org>
+Subject: [PATCH 6.12 0468/1756] ACPI: HMAT: preserve hmat_adist_nb notifier block
+Date: Wed, 18 Nov 2026 15:43:15 +0100
+Message-ID: <20261118150027.487373131@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,40 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Alejandro Lucero <alucerop@amd.com>
 
-[ Upstream commit 70fec428c845216da98041b1ae9f16a8f54b3d68 ]
+[ Upstream commit b1c75a77d494298b8dedf46062f2072239bbc33b ]
 
-ramoops_init_prz() stores the result of persistent_ram_new() in *prz and
-returns the error without clearing it when initialization fails.
-ramoops_probe() then cleans up through ramoops_free_przs(), which hands
-*prz to persistent_ram_free(); that treats the ERR_PTR as a valid zone
-and dereferences it, crashing the kernel.
+Remove __meminitdata from hmat_adist_nb declaration preserving it even
+when CONFIG_MEMORY_HOTPLUG is not set. Otherwise further notifier
+registrations using register_mt_adistance_algorithm() will find a
+notifier chain likely corrupted.
 
-Clear *prz before returning so that cleanup sees a NULL zone.
+This is the case when cxl_region_probe() calls
+register_mt_adistance_algorithm() what can happen when CXL regions
+are dynamically created at any time from Type3 device(s) or when a Type2
+device is initialized at its driver probe.
 
-Fixes: b5d38e9bf1b0c ("pstore/ram: Add console messages handling")
-Assisted-by: LLM
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Link: https://patch.msgid.link/20260921202317.70595-2-parri.andrea@gmail.com
-Signed-off-by: Kees Cook <kees@kernel.org>
+Fixes: 3718c02dbd4c ("acpi, hmat: calculate abstract distance with HMAT")
+Signed-off-by: Alejandro Lucero <alucerop@amd.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+[ rjw: Subject tweak ]
+Link: https://patch.msgid.link/20260716181114.35962-2-alejandro.lucero-palau@amd.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/ram.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/acpi/numa/hmat.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/pstore/ram.c b/fs/pstore/ram.c
-index 4311fcbc84f29..4657503e47120 100644
---- a/fs/pstore/ram.c
-+++ b/fs/pstore/ram.c
-@@ -605,6 +605,7 @@ static int ramoops_init_prz(const char *name,
- 	if (IS_ERR(*prz)) {
- 		int err = PTR_ERR(*prz);
+diff --git a/drivers/acpi/numa/hmat.c b/drivers/acpi/numa/hmat.c
+index c805d63df54ad..526ca27de0ca3 100644
+--- a/drivers/acpi/numa/hmat.c
++++ b/drivers/acpi/numa/hmat.c
+@@ -984,7 +984,7 @@ static int hmat_calculate_adistance(struct notifier_block *self,
+ 	return NOTIFY_STOP;
+ }
  
-+		*prz = NULL;
- 		dev_err(dev, "failed to request %s mem region (0x%zx@0x%llx): %d\n",
- 			name, sz, (unsigned long long)*paddr, err);
- 		return err;
+-static struct notifier_block hmat_adist_nb __meminitdata = {
++static struct notifier_block hmat_adist_nb = {
+ 	.notifier_call = hmat_calculate_adistance,
+ 	.priority = 100,
+ };
 -- 
 2.53.0
 
