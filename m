@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015274;
-	b=FTSKkInG5B0OVCceaDm0UAWQTs5szwWixTmnpWFH0IO+W0Yd4ymSC1biRDqoHWIOa331
-	 oOR/UyDdEWCsDzgyEgNo7MiXIEe8kuqFFlIkDjzlnXbCfVeZDkM3vrik7RxG1qS+IzFvL
-	 KtcHtDiQKxxj/uUAlsJgW4XDj1JvKrOOmfNnxc3uOG5JfOFRPaAU7Rr9KjD8BySRUPHPV
-	 zyjoSuyN5mxyjrZfsUZt2DtKPUlF/AsM3ZXtVhAcupJvJFg3Lf/hqmY68wHNrPnLEOay9
-	 FAsM4bD957vYDztje8AowEShJcKoF/gBES+JCuRX8g2U6jl8IfN2GinhmKxpWOKG0sg==
+	t=1795015276;
+	b=QF2PgqfAs29eatbBRsGbMGf3axk+mH6XCZ7e8fbRmmb9XtlAqgNTmqb5pkOdvC6NKWWs
+	 PjeS3ayTS1SzEnjFUd5dMBYgx/Z5p778++sl2S9XP1y24m1VNl5hbOSvvShj9ljkOu2Uz
+	 hAEoURQXIiQ0NuO+lkwXs4gS5ROMBNC9eG7lsX53hBPZvNZnrvBwrlCUwR6Xp7dz7O6w6
+	 nbEHGhYTW/SrfQv58+lv9tQtFA3iUdFYh7j0v4yVNwOKZgeiZSqHvNDIKQI2unEfgQ5UQ
+	 R0TnhKD5+oHV/0YV5eJf0c/jS88DjiFqa2JZGmO7x9D2D5G3NzOqHArlvY8rzy+hyKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015274;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015276;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=3sblvstiAGQRq0r66W9wLaKyQ2puvlwblIhWZFkyK9Q=;
-	b=D0FzqKOkVeS/3sCSvDTwJcKUVeRctOU9LWN/4AZPpD1ZkEZ4bc9sWWZ28ZVo3sR2CoRE
-	 0fKdaQch3xc0Ht4bBEkThDOJk6bjaI/LBvUZU8YD/RAUsJM7AIUgLuF1nr9TQ7SGGX8RP
-	 dMrdzxDzz1lcKHL99t7XR1pG4O8sSzQ0i81Z+wBl85dwO3KuuJZ4ps7M/lYrjQe1xEpq8
-	 GM01Tsnwfmvm7tQ4LgM2GM5jbNfJm9ubXjN/n8WCF1X/L32HLMHMPfwmrIu2oBBJOVLO5
-	 tNcF7Caz/LreN9Ot5LKfU0phcFZcG/C0EkOq6UqS5cpCugWIwlKx7vBgWy2aauytjjg==
+	bh=oLkIGYKRjkMFsnqRPM+XmNyyXBlXsMJ/GmvUjSlAwhI=;
+	b=OigeYTFyjplcYnHdQZg4GqPf9W7SURUciIVxIswUqRsET6RaIIop3hua7Bqj6QO5QZ1C
+	 v6AiNYhEHPbksWFE86P5N+TaP4KFZxx6v/qyBF+jzpBXqeAU8JijO1/woGXM7HKk1Hxaj
+	 k/+DpG7FYnOnK8vIFOh+e7llcsr2AcIZRIR66zG3ZO4pDgLnSrr4A311+YModnWAyvNYn
+	 12U+zI1YtQG7e1/anryKo67Y1+0BBCRFPIj7aBc8tA8X7WBTHfYqecuY1aquCl90MewMt
+	 VvJS9w4mjlhywUQCVCzGnkCxoNcA4MACZB5If4lDlcb/R5IQP6HvJ/S6QBnCkP6q23w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JbLR2bV2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="g4f9qq/L";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E8D606A33B;
-	Wed, 18 Nov 2026 15:21:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7831606A335;
+	Wed, 18 Nov 2026 15:21:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JbLR2bV2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 358141F000CF;
-	Wed, 18 Nov 2026 15:21:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g4f9qq/L
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02E4B1F000C5;
+	Wed, 18 Nov 2026 15:21:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015273;
-	bh=3sblvstiAGQRq0r66W9wLaKyQ2puvlwblIhWZFkyK9Q=;
+	s=korg; t=1795015276;
+	bh=oLkIGYKRjkMFsnqRPM+XmNyyXBlXsMJ/GmvUjSlAwhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JbLR2bV2Tv6gUUHU9GEz8r24vfyvZUfCUybK/sDtmItxj5smOpMws2/XyKpS39OMT
-	 +wCxo9nK/h6sTJ0CTSWmibYd+pAOMZbctDLRQ9G1TbAaby3VRlpASzaak5zawnm3Ra
-	 MKQkpFs/41TSQokavZOFIk5b3lCW91g2gokzNjz8=
+	b=g4f9qq/LfU+2vMExfBAr90WrvRk8Hv12a36JTHlOQFyBF706DhIPnuQEH0BLmaxpf
+	 P74U7ccUTEmZ1qvSEFMil0Uy/FmEXedJPQ1eEMsJO+PFz0GWh2LE3ruwja3npmooUy
+	 hO/PkqHXMw4ZlVgUmOH2VNsdoA9j/JvKcEK6Apok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stephane Eranian <eranian@google.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0113/2651] perf jitdump: Free event in jit_repipe_code_move()
-Date: Wed, 18 Nov 2026 15:22:33 +0100
-Message-ID: <20261118150251.951034486@linuxfoundation.org>
+Subject: [PATCH 7.3 0114/2651] perf jitdump: Use dirname() return value in jit_open()
+Date: Wed, 18 Nov 2026 15:22:34 +0100
+Message-ID: <20261118150251.986016614@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -73,14 +73,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 7fc5851aac606b9e4143f6857710cc5f346770c5 ]
+[ Upstream commit 4eddf7d9e341eb8c41704b8aa27b4a91f4e2c7c9 ]
 
-jit_repipe_code_move() allocates a perf_event with calloc but never
-frees it — the 'out' label exits with only perf_sample__exit().
+jit_open() calls dirname(jd->dir) but ignores the return value.  POSIX
+says dirname() may return a pointer to internal static storage — glibc
+does this when the path has no '/', returning "." from a static buffer
+and leaving jd->dir unchanged with the original filename.
 
-The sibling function jit_repipe_code_load() correctly calls
-free(event) at its out label.  Add the same free(event) to
-jit_repipe_code_move().
+Capture the return value and copy it back to jd->dir when dirname()
+returns a different pointer.
 
 Fixes: 9b07e27f88b9 ("perf inject: Add jitdump mmap injection support")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
@@ -90,21 +91,32 @@ Assisted-by: LLM
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/jitdump.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/perf/util/jitdump.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
-index ae63366b86c6d..91aa1eea8229f 100644
+index 91aa1eea8229f..d3de307532d55 100644
 --- a/tools/perf/util/jitdump.c
 +++ b/tools/perf/util/jitdump.c
-@@ -685,6 +685,7 @@ static int jit_repipe_code_move(struct jit_buf_desc *jd, union jr_entry *jr)
- 		build_id__mark_dso_hit(tool, event, &sample, jd->machine);
- out:
- 	perf_sample__exit(&sample);
-+	free(event);
- 	return ret;
- }
+@@ -146,6 +146,7 @@ jit_open(struct jit_buf_desc *jd, const char *name)
+ 	ssize_t bs, bsz = 0;
+ 	void *n, *buf = NULL;
+ 	int ret, retval = -1;
++	char *dname;
  
+ 	nsinfo__mountns_enter(jd->nsi, &nsc);
+ 	jd->in = fopen(name, "r");
+@@ -241,7 +242,9 @@ jit_open(struct jit_buf_desc *jd, const char *name)
+ 	 */
+ 	strncpy(jd->dir, name, PATH_MAX - 1);
+ 	jd->dir[PATH_MAX - 1] = '\0';
+-	dirname(jd->dir);
++	dname = dirname(jd->dir);
++	if (dname != jd->dir)
++		strlcpy(jd->dir, dname, sizeof(jd->dir));
+ 	free(buf);
+ 
+ 	return 0;
 -- 
 2.53.0
 
