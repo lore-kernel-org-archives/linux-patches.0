@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020747;
-	b=Tp5pl9exst3+swjcnpl4ALLH8sq5XUhVASI4g2zRzQborOJzZ86AufJMGcfirFSocgrs
-	 4V/cyrXMbZIbbwP851suwYBFsHvT6VVU/fivMgtwASMj1fKRGMKs8pItZHwQyRsNt+E+X
-	 c7eXmEmf7zPKhcYVYk5rng30CEa2J5dgXZoOZq9bm82ZPQqPo7+Ur5KTE0RXKL9cMbSfx
-	 PE/pWVKdbsIzZpjuRMb516D7YiMLQ654/CqL5zOXssRDp/Xg4gkC+gugTjyXDtM/FxPpN
-	 P2kEBchJwS5APESefIAIZb/Xx+kZgwBPahVaSkoQ9N8JLI1G7PRsrWVTen6IwmbtXIg==
+	t=1795020750;
+	b=GHiVONDy4Cqb0pYgRHAFg5TNIyAR0DXxRNpA/9LDF3XNNKWzfqq10BSlV+bU6jHWctva
+	 d+5bJFoo7Nvm7Sd7Ny0iSsm9CH8rHOq8fEktLFcC7bEpFBdenxS576wLYgbdLr5eyulO5
+	 9ZUIOzFTvConTxMpq4B1ar4iYbnW9iQ4MizomrdFTn+yZsR6f7lYvhbdhF23atUW1PSd7
+	 Sg0I0pATT+0uIuGk4+Tc2EgXdgv66YISMf49HZhXsK+nVMhly6dX2iYTd5pIJ1KbMLQ3r
+	 iN9sE0seNm8xlEFkSQSsw1BBdU/YD9KWkSCaYGJ4Af4uZuPOcJq2VRDnAqMs32r9mGA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020747;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020750;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xUmDb05mqQbglYCatEldrHMdYdVdol5qAfN/PhdSwgg=;
-	b=Rx/WNmblocRrukI2OfQqc5AKgjhzIPxkT8oB0rdfBWBmLwD8Wuuy19CiaDCTNI+v6QcR
-	 ATph34cU/AH2MHw4JoE1naX069Pc1QkaBATa1fkAS8sGHYnsYhrfxLhIeKaQVBgM/r+2a
-	 7Nwv1jD8P0Oji2AO/3bkqh5PxanQluW/Pk5pmUflt7ASEE/b7bL1OJQLLBMj1vevntd4C
-	 GSnzBrEgaPdhJ7GuiNBGkMENcboP8MeGQDlfijqfKlwCR1XNAPtaZ5iGxqh5XIqDXhgea
-	 UwLLNcVLPFm+HR7xOld8Ssi8SdUS2NtFVZLtVSw4qoUuDD+l68ofaRBjylX5PQRn8nw==
+	bh=3+b6aAkEmgclwzEL2/6K1lazgNJJu7fmeTqeQkOfLM8=;
+	b=D0gTJRoEcAKZbcrS6aXJA1W4DM2ysi3BTbNGbvHkrxYlm4YzKqiNKsbokbSuX9Z6okTE
+	 A7jeYcITcnO5motrifHHuTqI2mOVAI3Y6RvzcUw/fCjDzwTnhLkGpPgb8ws5Khy4nvV29
+	 IxQz5IRLBUas9GQ1jswUZLGb3pnUWlbrABpSklCG2wFjabAW6JhfMTWkZHSY2zJIyCtNc
+	 HJMe6AoULfO64K9wwHBbnZzBNPwDI1lmhmXPn6vFwaPhwO6EYCdudWv7BjHPyDarFWmcj
+	 yH29weg+B7Z9VCLLIUosIWrrkaJO4L0gBEjHJiAuGMFBFqa7G2O1LV/kWN5zozeteFA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fDyGUUW7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zuakLEAm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16B5606A330;
-	Wed, 18 Nov 2026 16:52:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63F3606A325;
+	Wed, 18 Nov 2026 16:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fDyGUUW7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 329DD1F000C6;
-	Wed, 18 Nov 2026 16:52:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zuakLEAm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03B9E1F000C4;
+	Wed, 18 Nov 2026 16:52:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020747;
-	bh=xUmDb05mqQbglYCatEldrHMdYdVdol5qAfN/PhdSwgg=;
+	s=korg; t=1795020750;
+	bh=3+b6aAkEmgclwzEL2/6K1lazgNJJu7fmeTqeQkOfLM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fDyGUUW7cB0fXM0WJJx+yGf4AM+3xlkw6EXxgBQpd3z18d9Of/ef2vmV4IptPDE1+
-	 kKz5hlRyQE8sYYmee7byld39LfDvePbAcMmtS2IFfIO1sTs0KKYqvo8lXKv7XLTkep
-	 41WsbZJEsjVTI5X281hdRgH5fHF3IoqQO91PtjT0=
+	b=zuakLEAmPG/k6Qtbd5up5gCjx2/YcjfAWJBJMgy40LB0/t7Ce51EokxFMF9BJ7vsO
+	 AYs89Hp4ONMUY9SkmW0xtthQOaC7GuY825XyWQbgdh2M9uV+yrLF7/I4GKC/msu8D+
+	 YhxEx1eWABz8f0znZapLELrIh5E5ElepuFd4KWbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	HyeongJun An <sammiee5311@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2063/2651] ASoC: codecs: sta32x: Fix definition of Ch2 and Ch3 Volume Bypass controls
-Date: Wed, 18 Nov 2026 15:55:03 +0100
-Message-ID: <20261118150400.329199047@linuxfoundation.org>
+Subject: [PATCH 7.3 2064/2651] ASoC: codecs: sta350: Fix definition of Ch2 and Ch3 Volume Bypass controls
+Date: Wed, 18 Nov 2026 15:55:04 +0100
+Message-ID: <20261118150400.359419610@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,37 +70,38 @@ Content-Transfer-Encoding: 8bit
 
 From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit ea53ab9003d8655cf7e94428de3006e86fbd06a0 ]
+[ Upstream commit 7308ce7c8459e994a36a22607e974e3e132a9275 ]
 
 Each channel's master volume bypass (CxVBP) is in its own
 configuration register, C2CFG and C3CFG, not in C1CFG, which holds the
 channel 1 bit.
 
-Fixes: c034abf6e503 ("ASoC: add STA32X codec driver")
+Fixes: 2439ea1f0f8f ("ASoC: sta350: Add codec driver")
 Assisted-by: Claude:claude-opus-5-5
 Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/8576f091aa0fe172ce43f28dacd6a1bf638258c6.1792135144.git.sammiee5311@gmail.com
+Link: https://patch.msgid.link/1107a42a563459b26038bdff4d8f6e2423816d0a.1792135144.git.sammiee5311@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/sta32x.c | 4 ++--
+ sound/soc/codecs/sta350.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/sta32x.c b/sound/soc/codecs/sta32x.c
-index 3766db457b673..d23b4d559744f 100644
---- a/sound/soc/codecs/sta32x.c
-+++ b/sound/soc/codecs/sta32x.c
-@@ -491,8 +491,8 @@ SOC_SINGLE("Ch2 Tone Control Bypass Switch", STA32X_C2CFG, STA32X_CxCFG_TCB_SHIF
- SOC_SINGLE("Ch1 EQ Bypass Switch", STA32X_C1CFG, STA32X_CxCFG_EQBP_SHIFT, 1, 0),
- SOC_SINGLE("Ch2 EQ Bypass Switch", STA32X_C2CFG, STA32X_CxCFG_EQBP_SHIFT, 1, 0),
- SOC_SINGLE("Ch1 Master Volume Bypass Switch", STA32X_C1CFG, STA32X_CxCFG_VBP_SHIFT, 1, 0),
--SOC_SINGLE("Ch2 Master Volume Bypass Switch", STA32X_C1CFG, STA32X_CxCFG_VBP_SHIFT, 1, 0),
--SOC_SINGLE("Ch3 Master Volume Bypass Switch", STA32X_C1CFG, STA32X_CxCFG_VBP_SHIFT, 1, 0),
-+SOC_SINGLE("Ch2 Master Volume Bypass Switch", STA32X_C2CFG, STA32X_CxCFG_VBP_SHIFT, 1, 0),
-+SOC_SINGLE("Ch3 Master Volume Bypass Switch", STA32X_C3CFG, STA32X_CxCFG_VBP_SHIFT, 1, 0),
- SOC_ENUM("Ch1 Limiter Select", sta32x_limiter_ch1_enum),
- SOC_ENUM("Ch2 Limiter Select", sta32x_limiter_ch2_enum),
- SOC_ENUM("Ch3 Limiter Select", sta32x_limiter_ch3_enum),
+diff --git a/sound/soc/codecs/sta350.c b/sound/soc/codecs/sta350.c
+index 2ba35076732b0..464ef292c9067 100644
+--- a/sound/soc/codecs/sta350.c
++++ b/sound/soc/codecs/sta350.c
+@@ -477,9 +477,9 @@ SOC_SINGLE("Ch2 EQ Bypass Switch",
+ SOC_SINGLE("Ch1 Master Volume Bypass Switch",
+ 	   STA350_C1CFG, STA350_CxCFG_VBP_SHIFT, 1, 0),
+ SOC_SINGLE("Ch2 Master Volume Bypass Switch",
+-	   STA350_C1CFG, STA350_CxCFG_VBP_SHIFT, 1, 0),
++	   STA350_C2CFG, STA350_CxCFG_VBP_SHIFT, 1, 0),
+ SOC_SINGLE("Ch3 Master Volume Bypass Switch",
+-	   STA350_C1CFG, STA350_CxCFG_VBP_SHIFT, 1, 0),
++	   STA350_C3CFG, STA350_CxCFG_VBP_SHIFT, 1, 0),
+ SOC_ENUM("Ch1 Binary Output Select", sta350_binary_output_ch1_enum),
+ SOC_ENUM("Ch2 Binary Output Select", sta350_binary_output_ch2_enum),
+ SOC_ENUM("Ch3 Binary Output Select", sta350_binary_output_ch3_enum),
 -- 
 2.53.0
 
