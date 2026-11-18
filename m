@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017993;
-	b=SXtdPw2sYnyw2mdes4Ns/iRsWlZYeHmBK1qbUDOX05gi3zJHlHx2CHBOUGY7/IHSZUwX
-	 r/GUOj4JuSi3qzDHm1T/Zbv1DsiLRCa/mqgtyuMG6FN9XvCvuSO+jX8Yc3jsfGy087csS
-	 SgPb1AIBu7DGO/E0McHWtpMPV9g/Nz2gT7V/ZuffnBvA1rk0D8PmURbjVhESBuZPUCUtk
-	 UYNKlT2+qjsNibRDGZwL7/FTzCAVY3eRooy1CeNGnMTAjl5lkofBwQ+gFbMNDzczLvPqt
-	 xYugh4tHKoIIvGIvMBGcjJtn6kXQBs9EG7/znsIHSiRMpVeVnUQOSrVJJBiqLSc5I3w==
+	t=1795017995;
+	b=rK5/t7dvDOntYwJEElQWOo6Sty8v2iUWBAPuG2TcxZcsFKcvcp//W378aikn233uKVMo
+	 zDKBEvshFPxbve4RDuqmiMGIO8uFVpp0wl6saBDV70KS5/BdlcCg1qwSNsaIygnel112B
+	 8dI7xDS76zSbCCs2+SAcDRE879NaiWl5Hm/YKQng+fQuGI9U3D9/Q5eFIKkJ6azAhU6PN
+	 Dch+OdTSWvVaU5LyHPKZuN8dHJpWi9UOKor84QvpWd9PGtqrFOInE2B9xmYkc0R0O+OW3
+	 eDxYhKiDc4jkToxmc5DND2Ts9c7Jd36sKdl9m6xjatJcm/0C6P/bdGsdwsRbmjgHUdA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017993;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017995;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sPYLNUHXAwebsnlfZC2G0ISUiHOxYaRf5xA6/LZkuHk=;
-	b=wP/6dQTYZMgNVvN0M0X7sfWAu2HRFQ6LWI0+dtE+oWMkZXtXIPlJ5icgeZgoBYxUYD1u
-	 1ILcimLHiQoNnWNkSElYkZOdBUgBusG82OIHbfLuYAz80rbwpkES2d5G/0bOHR98cDs7R
-	 51WY/mZnYj65mh41Ed0c1KLOAw9IMEyL7sPYlHqt23TfKQ6bGlTPUw5AXli3LlG/aKVJF
-	 Sor8XS1NkfYiCwcWG5tCMLd9GqOqGXD57vpyD2vp6110QpA+YJbX2szaFEL3OZMeao8/h
-	 XaZkgzsSRD6aKEiaFoZ2Clx+GprhMlR89OFngXXDb4mqRwNP7yUFsamSsKf4/tr2jlw==
+	bh=Aa4Q8uwya315zGq0jZUpAEiGzDKjyND2juHfzTWIlXg=;
+	b=VBRo4py4FomhpivR6G8XI+CSNKc3tQqUITWe3+5oKUaYKD3galZE6PRkizgV7HRJ5gM7
+	 nZaeZD9frbVJYILeMxwGzRekibJzSBval3OHArBUbPOYZw9GxO5NHyZp+++C27KVWQG1F
+	 Q2536Wh/uwcgrxEXLnUJhm3rvl8FVANeaMqgVMv94R1uPdNnwTUCjqn4Y/TDmPp9zX2j8
+	 GaAV67lx0M5lBijOlJ68eePXQouBEdzOk/RavV0++/WrANWtZMVwmcKlcSryxObW5lh/j
+	 x+nvVUFEw4DNsQfS1ERhwEITBPtVq1aF5OM5H7bq9ZuDdpx/O7uk9FB36DU1NsPNxJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s2iEDoRN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PwaD91+m;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A81606A31C;
-	Wed, 18 Nov 2026 16:06:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC8F1606A320;
+	Wed, 18 Nov 2026 16:06:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s2iEDoRN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57E6E1F000C4;
-	Wed, 18 Nov 2026 16:06:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PwaD91+m
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3697A1F000C4;
+	Wed, 18 Nov 2026 16:06:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017992;
-	bh=sPYLNUHXAwebsnlfZC2G0ISUiHOxYaRf5xA6/LZkuHk=;
+	s=korg; t=1795017995;
+	bh=Aa4Q8uwya315zGq0jZUpAEiGzDKjyND2juHfzTWIlXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s2iEDoRNA4Lyo0s6e6RgSQkOtneCLATiAlsqUBpo/GRXzTG48gEtnX8l9DBON6crz
-	 DNAbVOZRawhf+2uCw/C6ApG/fliJ1MrHR24Sw0zWXhvd6kATauxCuz6Po/lfx9ktgO
-	 ldyi38RT9eP6dhdu1QXk9XC8yOWgZwSuEZNQs/9E=
+	b=PwaD91+mtxhRRgpNKCzZW4GcmmQ9/vxWOPEKvANT7ov+5xi5iERvlNYBcoy4EPY8o
+	 O/XAuiSPVThuddd3V1OKc/1uTpZTN1ew1SYhsLFJbXx84H67dw5q47fdq8SB8jVZka
+	 zTeuKL4l7gIJe2KbP7iF/xajsUgvbeNXOdAWKuK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1045/2651] RDMA/cxgb4: Do not allow userspace to write the status page
-Date: Wed, 18 Nov 2026 15:38:05 +0100
-Message-ID: <20261118150325.587491667@linuxfoundation.org>
+Subject: [PATCH 7.3 1081/2651] ice: skip stats handling for channel VSIs on rebuild
+Date: Wed, 18 Nov 2026 15:38:41 +0100
+Message-ID: <20261118150326.912606691@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,48 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 
-[ Upstream commit 1c5335a6902639596a795705349da7f76027e103 ]
+[ Upstream commit 3fca849c965333f387aa02dca02326ce3abd1305 ]
 
-The device status page is shared by all userspace contexts and contains
-db_off, which the driver updates to control doorbell flow. The rdma-core
-provider maps it with PROT_READ, but c4iw_mmap() passes the requested page
-protection through when handling CXGB4_MMAP_CONTIG.
+ice_vsi_alloc_stat_arrays() returns early for ICE_VSI_CHNL, so a channel
+VSI never gets an entry in pf->vsi_stats[]. ice_vsi_realloc_stat_arrays()
+dereferences that entry unconditionally, and ice_vsi_rebuild() calls it
+before anything else, so the NULL is not filtered out anywhere.
 
-A process can therefore request PROT_WRITE directly or later upgrade a
-read-only mapping with mprotect() because VM_MAYWRITE remains set. This
-lets userspace alter device-wide flow-control state seen by the kernel and
-other contexts.
+The path is live. ice_prepare_for_reset() removes the queue channels only
+for resets other than a PFR, so a PFR leaves the channel VSIs in place,
+and ice_rebuild() then calls ice_rebuild_channels(), which rebuilds every
+ICE_VSI_CHNL VSI it finds. A PF reset with ADQ (mqprio hardware offload)
+configured thus dereferences NULL.
 
-Reject initially writable mappings and clear VM_MAYWRITE before mapping the
-page. This preserves the existing read-only userspace ABI.
+That combination is reset recovery on top of an active mqprio offload,
+which is why it went unnoticed. It was found while refactoring this code,
+not reported by a user.
 
-Fixes: 05eb23893c2c ("cxgb4/iw_cxgb4: Doorbell Drop Avoidance Bug Fixes")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Link: https://patch.msgid.link/20260926112611.3214382-1-yaojiale02@163.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+I'm leaning towards removing our limited (compared to OOT ADQ) support,
+but it's outside of this series. Bug could be triggered by:
+
+  tc qdisc del dev "$IF" root 2>/dev/null || true
+  tc qdisc add dev "$IF" root mqprio num_tc 2 \
+    map 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 \
+    queues 2@0 2@2 hw 1 mode channel
+  sleep 3
+  ethtool --reset "$IF" irq dma filter offload
+
+Workqueue: ice ice_service_task [ice]
+RIP: 0010:ice_vsi_rebuild+0x289/0x380 [ice]
+ ice_rebuild_channels+0xd6/0x320 [ice]
+ ice_rebuild+0x4f6/0x540 [ice]
+ ice_do_reset+0x9f/0x1a0 [ice]
+ ice_service_task+0x4a/0x460 [ice]
+
+Fixes: 5995ef88e3a8 ("ice: realloc VSI stats arrays")
+Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Link: https://patch.msgid.link/20260925132636.123300-2-przemyslaw.kitszel@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/cxgb4/provider.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/intel/ice/ice_lib.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/infiniband/hw/cxgb4/provider.c b/drivers/infiniband/hw/cxgb4/provider.c
-index ebe3170a641ca..904a5323a6930 100644
---- a/drivers/infiniband/hw/cxgb4/provider.c
-+++ b/drivers/infiniband/hw/cxgb4/provider.c
-@@ -171,6 +171,11 @@ static int c4iw_mmap(struct ib_ucontext *context, struct vm_area_struct *vma)
- 					 len, t4_pgprot_wc(vma->vm_page_prot));
- 		break;
- 	case CXGB4_MMAP_CONTIG:
-+		if (vma->vm_flags & (VM_WRITE | VM_EXEC)) {
-+			ret = -EPERM;
-+			break;
-+		}
-+		vm_flags_clear(vma, VM_MAYWRITE);
- 		ret = io_remap_pfn_range(vma, vma->vm_start,
- 					 addr >> PAGE_SHIFT,
- 					 len, vma->vm_page_prot);
+diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
+index 9e08db376d3d0..31af378aa0e7a 100644
+--- a/drivers/net/ethernet/intel/ice/ice_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_lib.c
+@@ -3031,6 +3031,10 @@ ice_vsi_realloc_stat_arrays(struct ice_vsi *vsi)
+ 	u16 prev_rxq = vsi->alloc_rxq;
+ 	int i;
+ 
++	/* channel VSIs have no entry in pf->vsi_stats[] */
++	if (vsi->type == ICE_VSI_CHNL)
++		return 0;
++
+ 	vsi_stat = pf->vsi_stats[vsi->idx];
+ 
+ 	if (req_txq < prev_txq) {
 -- 
 2.53.0
 
