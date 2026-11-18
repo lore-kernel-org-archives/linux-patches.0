@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052710;
-	b=l9Pv5mfzuciLz/5FN5utA2SdTlFKY5S3PAOgM+KrxSSX1J5yWo3YKCF/oRzSj4sGVYhH
-	 vvGvYELtJ8PDHVV5wbpWxc2OWPPUGiXFLpEFYi84VpehNHP7tpNiwd+NU0jGL5G7tQF/w
-	 txpCfCOQdn4vzfqC7Fr/0CL9yPib71x3LwNJTfgjLg8eEje65KeNQkYiOF68v9S/C5j+X
-	 vZpW881TEp0BEke6TJOzg0Or8aDJbC1qAMsIbNB/MkLrT8Er7vCmIeRjt1wXRjgGs9QtS
-	 HZ7Ap6dNBgAEl+bjCzioXlXTkqBePDJJvuhiyOhRb/OZ1UaeKOQemYHYHEjuy4ciUcQ==
+	t=1795052713;
+	b=EFQoqKVpq+VI5AzcvgwHeFIb8lp9wk2beD66PeTXLx1gull124mjQj3fjGXX6XnGLYgf
+	 PNHgPEEFuLxqZxeLOXo8WX1lTHLFhsPqck4/UAS8Poqeq/pnpYudwmI/AGQBk19jjkqih
+	 aJWrgKbGThb885fGxZG7IJwoZsDFKz2fG2NnpeLS6maW0jG4epzlEplgZoRP2HfiitEHg
+	 Q1kJBZWHRt8a0p14SB6+z1GRJyDFIp/vMsQocsXsaINk/YoCwfdykJDgr95Z1YByxV0K3
+	 OS2ESNgCz/tm1iFq3l1n0V3bXOQduEoM7Qfs9HZuVRJs/VR/q160nDqFU+d7Aa6v4Xg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052710;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052713;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QMP2wi4XumhfG5dwhvzZcMfhZDYNdbbFcQCOwAxD+Dw=;
-	b=ziilKhJ23iBSfvNiIAWxHuxZXs7oVhe85TRHGsubbZwRRgWop5LJlTHSx2QIQlGHbwTn
-	 gDBJSPerGd1uodjN02ofw6dDvqIPNjzuOjfL4wBOg8B4uC1iFk4NqWtmFu0s/ddQjpjrv
-	 KV5sJBxXj5mUHwoQiw3TlRFA3spEpG+dK5rZj2X30Yc+CEc1uEEoD4SzHpoAAV+SbS3/w
-	 g57Fhu9fyr1Cq91oXjZv7mcpsV+yBeuNDjZj6PqpR8DNwg70zf/DKEbb5BVnE8GFBn7KZ
-	 AWvShPmJoBMA90q2VA1O3wz+TV90bpG4pvO+4MIhwykE4kSmxQHbb5TVhCEyhjeR0KQ==
+	bh=pNDZp3Nm9gf1JLOPTVxMd4aMUuVCeasegfOSmnu0GVM=;
+	b=qtbak8/ibgRYI/hfwtVWY/KYIGo7Iba5jWpDuqOJ9Cp3Hwq9BN+dGksSBnkrP9/26hMK
+	 L2w2tc2xl06HM+D4b+ld5OtT1iLUJ0HViR3F/tYkELdGof1dVnBfWjeWJKWVHQLxye8EL
+	 OkxWDv2zBPPDQarvjxK0VsDzUfm+PPCUCn/ow3/xq4PsMgZ9uCR078UaQvmtQEu/X7sZN
+	 hp2pBLNTemFGH9gknIl+ps2U2CdVe/mg8cwRHH2RJb6l69hA7W1CLfEW/NoBjjZQg2Zw6
+	 OpbA5VfHBZ5QKWipNgs/Gxt66SdC4Uw0FAJS4V7+O9pf2qQiXnf+MD7SsB2GHmLF/4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tBgN3r9e;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iCTNEHXz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC940606A336;
-	Thu, 19 Nov 2026 01:45:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E7CE606A32C;
+	Thu, 19 Nov 2026 01:45:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tBgN3r9e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E9BD1F000C4;
-	Thu, 19 Nov 2026 01:45:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iCTNEHXz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B881F000C4;
+	Thu, 19 Nov 2026 01:45:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052710;
-	bh=QMP2wi4XumhfG5dwhvzZcMfhZDYNdbbFcQCOwAxD+Dw=;
+	s=korg; t=1795052713;
+	bh=pNDZp3Nm9gf1JLOPTVxMd4aMUuVCeasegfOSmnu0GVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tBgN3r9e7sK36XLWrCdfqmaSAVCzJLQleNuZYRwbUXn1KIxK6v+6JYS7psLbB0ToQ
-	 yDQJYP42TJ2yzsRBHTLXjwiE+NnhHENUuzbPKLhr0/2m1WHZxpHfgkkEQLQ4hL5itm
-	 ZLHasCpWc2WirhInAOvLU/HrntjJIcpmZP4HSYX4=
+	b=iCTNEHXzY/wQObOi5doGaptVW7GEEs71b1UF3QdkP8OrYiRrv4Hb3YODRN+EHIUmv
+	 nb9/KeTQpj4s562EUimFjTe1/k3iC+grDTJO1uRr5KLHAhaK4x7hmonYVTnAsuESsS
+	 MXnCXtmZZPiGhYT5A70E4O+eNv8xYkskQn1kN8Ls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Matt Turner <mattst88@gmail.com>,
 	Magnus Lindholm <linmag7@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0660/2214] alpha: fix the local TLB invalidate in flush_tlb_page()
-Date: Wed, 18 Nov 2026 15:38:56 +0100
-Message-ID: <20261118150038.106321803@linuxfoundation.org>
+Subject: [PATCH 5.15 0661/2214] alpha: fix the local TLB invalidate in the UP flush_tlb_page()
+Date: Wed, 18 Nov 2026 15:38:57 +0100
+Message-ID: <20261118150038.195984468@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,56 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Magnus Lindholm <linmag7@gmail.com>
 
-[ Upstream commit 32f4dd420d626f96128fcfeea2ab24760b4f21a6 ]
+[ Upstream commit c825bf802a7a43fd302c879ef25c975e067a2e94 ]
 
-flush_tlb_page() invalidates the calling CPU itself before asking the
-others, and gates that on current->active_mm. For a non-executable vma
-that means a targeted tbi(2, addr), which acts on the context currently
-loaded and is only guaranteed to invalidate the intended translations
-when the target mm's context is the loaded one. A lazy active_mm does
-not establish that, so as in ipi_flush_tlb_page() the target mm's stale
-translations can survive, and nothing forces the old ASN to be retired
-afterwards.
+The uniprocessor flush_tlb_page() in asm/tlbflush.h has the same wrong
+test as the SMP one: a targeted tbi() is only guaranteed to invalidate
+the intended translations when the target mm's context is loaded, but
+the gate is current->active_mm, which a lazily borrowed mm also
+satisfies.
 
-Test current->mm instead. A lazy caller then takes the flush_tlb_other()
-branch added by the previous patch, retiring its local context. Adding
-that branch first preserves the local invalidate at every step, including
-on EV7 where a targeted tbi() against a foreign ASN appeared to work.
-
-Which callers reach here with a foreign mm depends on the configuration.
-folio_mkclean(), from the writeback flusher kworker that has no mm of its
-own, accounted for about half the calls during writeback of a shared
-mapping and none at all on anonymous memory. Those counts were measured
-with CONFIG_COMPACTION=n: with COMPACTION=y, asm/pgtable.h overrides
-ptep_clear_flush() to call migrate_flush_tlb_page(), which rendezvouses
-with every CPU and handles the context itself, so folio_mkclean() does
-not reach this function.
+Test current->mm instead. The else branch it falls to already exists
+here, so unlike the SMP side this is the whole fix.
+arch/alpha/kernel/smp.c is not built with CONFIG_SMP=n, so this is how
+the same defect reaches a uniprocessor, where the flusher kworker
+necessarily shares the only CPU with the writer.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
 Reviewed-by: Matt Turner <mattst88@gmail.com>
 Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
-Link: https://lore.kernel.org/r/20261010142533.974797-6-linmag7@gmail.com
+Link: https://lore.kernel.org/r/20261010142533.974797-7-linmag7@gmail.com
 Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/alpha/kernel/smp.c | 3 ++-
+ arch/alpha/include/asm/tlbflush.h | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/alpha/kernel/smp.c b/arch/alpha/kernel/smp.c
-index 6c63b0d956e16..3e25329d5d124 100644
---- a/arch/alpha/kernel/smp.c
-+++ b/arch/alpha/kernel/smp.c
-@@ -694,7 +694,8 @@ flush_tlb_page(struct vm_area_struct *vma, unsigned long addr)
+diff --git a/arch/alpha/include/asm/tlbflush.h b/arch/alpha/include/asm/tlbflush.h
+index 94dc37cf873a7..64ea0f130cd57 100644
+--- a/arch/alpha/include/asm/tlbflush.h
++++ b/arch/alpha/include/asm/tlbflush.h
+@@ -118,7 +118,8 @@ flush_tlb_page(struct vm_area_struct *vma, unsigned long addr)
+ {
+ 	struct mm_struct *mm = vma->vm_mm;
  
- 	preempt_disable();
- 
--	if (mm == current->active_mm) {
-+	/* As in ipi_flush_tlb_page(): a targeted tbi() needs MM current.  */
-+	if (mm == current->mm) {
+-	if (mm == current->active_mm)
++	/* A targeted tbi() needs a thread of MM to be current.  */
++	if (mm == current->mm)
  		flush_tlb_current_page(mm, vma, addr);
- 		if (atomic_read(&mm->mm_users) <= 1) {
- 			int cpu, this_cpu = smp_processor_id();
+ 	else
+ 		flush_tlb_other(mm);
 -- 
 2.53.0
 
