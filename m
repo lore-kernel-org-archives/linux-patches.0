@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055594;
-	b=ADQaa8tRWoUWqeYzy/KZDcmYVJUz4PLWAJiehwk0XuPW497CdkJnzzieOCCFNVbFE/DC
-	 0ugF0BdsjmHgz23wb3qeoojYAV8x0cmW7eBbmikRy+Zv5NqlkPmn/UT7pJq0IqEAeXrpL
-	 wZn0hTHieAetaWQfcspy6z65Ls6FAFut0CxtWm1P7MUputi8BXDv0RNggeWLT53l2TqCg
-	 L/JvjiQpx76t7HRxBEJEZWd/a95Y7h+7FqhQ3R/0LpkSH7g2Q85fC+PqqYXkqgfbJNwXo
-	 gpW6jAqY8tYKBa/5c1TrnYNOK2Ie+O0xRnHWL77WXy1eLK/JPEnOiYBvZkyI0gxBPLg==
+	t=1795055597;
+	b=y9T1DjnBAX4bDPolU6FvJwBeJLl3lxRNuBtCLNjGyhgAJ6UwJkocc+n1ZKNv/HiTcWAW
+	 65qs2iw1IKXL6WKb7A0XHvsA334NapEAElUPFi/c6jRoqSVf+DyFBKanssCAV0Y4AzCem
+	 2OTbzZsbh5kiU/Kc+Q64e3YPU5dqfNavFG6BoXLU8ne4OGnOPbDHkqsfwnz6UG7qhQvVC
+	 OZhEbN/yZGCXB0KXGuFZ/znpEXSko/wTJgjhr+LVfZEhy5/BTJwGqlo4cDviRVldh77PS
+	 NnHovXjZ4Ra0R1rsQSrFQkSTMpBL3OEPMsM98u1P98gc5Juv98uRvz5rVMngxnCKjxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055594;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055597;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bBZLaLi4MdOCxMkcAQBoDTpaQA0zlMuxGcMc+Om0JDw=;
-	b=QOSfOq9pDd3X4x5/rEZ7Wq6mHOoF6prtjdNyRFNOXZs68tjCqVGjES7rtZL7xPXDuwtu
-	 k0BDvAj0CewCGFg1ihdX+qV7pHa9BIMZWAR+Ac+NDxEPbRL+vEXV1rYSOzKq9I1vs5lJw
-	 5DLbx0w05OwbvuZjg+BS5tQdwny/anREdMz6XcOeKwqU7Tq8DBONCnzFNRkxipMv3ttoV
-	 24BK75ofBvOxSkJk/Z80UIYkrhaA8Bmm3LCfLp2kSvRfgGdx772INQvlz81fW4eflLA9b
-	 tu+BokKaEfx3jfR4N4wztPg5fn1d8JXMzGbCNRsD/yPL6XLV0EZXu/IRidKH1KWoCHg==
+	bh=TOfb0w8NmwtiZ4Qo66H9pukIh3H+f0WPKxjGUnps5TU=;
+	b=SJNIG/O0FEiTSijAcKmCRv+DA2G4GrC0slK263aCL9aVTL+iJmbXjF8OawOzMlej9fCT
+	 6y0T4rQ+3Pd8c4sXok7e+TZM56H7/t5MITrwJ1JibxGIyDFxogrMa0olqQ2DVYERyX6v1
+	 xVKwHohPq4MZgzDxjs60NeIaVSUoLe0vV5SDJPgPLFJhuthLli0CKlanedTErrIbBq5j8
+	 kF8ybdWMqEslbWXn5qSm8Y98eg7fbD70VNSpHwEBCs2hKKmFVICrAgYKHTyoxUw9cXITI
+	 ZwzJMxZ/Fh+8AfBmK9zk3p2bXXXNo/46XwtODOoJvE4Rcjvxm6O2a+ZLLP9+EgaQ4XQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ve1zed+m;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="eyP/0N/c";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46C5606A332;
-	Thu, 19 Nov 2026 02:33:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C72606A332;
+	Thu, 19 Nov 2026 02:33:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ve1zed+m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A8801F000C4;
-	Thu, 19 Nov 2026 02:33:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eyP/0N/c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA8661F000C8;
+	Thu, 19 Nov 2026 02:33:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055594;
-	bh=bBZLaLi4MdOCxMkcAQBoDTpaQA0zlMuxGcMc+Om0JDw=;
+	s=korg; t=1795055597;
+	bh=TOfb0w8NmwtiZ4Qo66H9pukIh3H+f0WPKxjGUnps5TU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ve1zed+mYDcvqQ+Fu4d0kwlYbywRQBLZ8InNrO7a6nicfOn8pWRJIGWC/YDfNh204
-	 oL1Jf1jkKZFNkWg2yJyBGjOwZcePfwFocrooY+qs+CcFah4r6xDeeOB9LfsIoxK71b
-	 3Gux0aMVGD0lejLGL3y5HPOSxuHUL6iBf/F2yex8=
+	b=eyP/0N/cvlBd2tSTK0Ssn1Oj3XlJ4dp78ohLelgQAesvR15eyMsBEwAT8F9UGYFUi
+	 CFzMwFzSguizdbSGOPSTlG4kZkWqdeX3LmVHCFyBFzGxavEtZ9gTeEfI+WTudnhAHl
+	 iqfQjAT/Km6jEFrC28z2ZBEKMxJ8R0WRFIsp1U+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongyan Xu <getshell@seu.edu.cn>,
-	Leon Romanovsky <leon@kernel.org>,
+	Qingfang Deng <qingfang.deng@linux.dev>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1680/2214] RDMA/hfi1: shut down the trap timer before unregistering
-Date: Wed, 18 Nov 2026 15:55:56 +0100
-Message-ID: <20261118150119.041168505@linuxfoundation.org>
+Subject: [PATCH 5.15 1689/2214] ARM: mvebu: fix Cortex-A9 errata selection for Armada 38x
+Date: Wed, 18 Nov 2026 15:56:05 +0100
+Message-ID: <20261118150119.391914004@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,41 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongyan Xu <getshell@seu.edu.cn>
+From: Qingfang Deng <qingfang.deng@linux.dev>
 
-[ Upstream commit a1c9d476c2316685f85fffb6450ad88d01836357 ]
+[ Upstream commit 76e67df8bc1cb72157368c3669119e64cdb0a6a6 ]
 
-MAD processing arms a trap timer embedded in each hfi1_ibport. Device
-unregistration does not stop the timer, so its callback can run after
-the port and its containing hfi1_devdata have been released.
+Armada 38x uses Cortex-A9 r4p1, but MACH_ARMADA_38X selects the
+workaround for erratum 720789, which was fixed in r2p0, and omits
+workarounds for errata that still affect r4p1.
 
-Shut down every port timer before unregistering the IB device. The
-shutdown form also prevents a concurrent path from rearming the timer.
+Drop ARM_ERRATA_720789 and select ARM_ERRATA_754322 for faulty MMU
+translations following an ASID switch and ARM_ERRATA_764319 for
+unexpected undefined instruction exceptions when reading debug
+registers. Also select ARM_ERRATA_764369 when SMP is enabled to work
+around cache maintenance by MVA failing to reach other agents.
 
-Fixes: bf90aadd630c ("IB/hfi1: Send MAD traps until repressed")
-Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
-Link: https://patch.msgid.link/20260928134151.1213-1-getshell@seu.edu.cn
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+The Cortex-A9 r4 Software Developers Errata Notice (ARM UAN 0009D)
+lists these errata in sections 2.3.3, 2.5.10 and 2.3.4, respectively.
+
+Link: https://documentation-service.arm.com/static/608118675e70d934bc69f143
+Fixes: 9aa30f1c13d1 ("ARM: mvebu: add initial support for the Armada 380/385 SOCs")
+Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/verbs.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm/mach-mvebu/Kconfig | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/hfi1/verbs.c b/drivers/infiniband/hw/hfi1/verbs.c
-index dcc167dcfc61b..418d25d38044d 100644
---- a/drivers/infiniband/hw/hfi1/verbs.c
-+++ b/drivers/infiniband/hw/hfi1/verbs.c
-@@ -1906,6 +1906,10 @@ int hfi1_register_ib_device(struct hfi1_devdata *dd)
- void hfi1_unregister_ib_device(struct hfi1_devdata *dd)
- {
- 	struct hfi1_ibdev *dev = &dd->verbs_dev;
-+	int i;
-+
-+	for (i = 0; i < dd->num_pports; i++)
-+		timer_shutdown_sync(&dd->pport[i].ibport_data.rvp.trap_timer);
- 
- 	hfi1_verbs_unregister_sysfs(dd);
- 
+diff --git a/arch/arm/mach-mvebu/Kconfig b/arch/arm/mach-mvebu/Kconfig
+index 34dbeaab94b07..a986c1b2bdf95 100644
+--- a/arch/arm/mach-mvebu/Kconfig
++++ b/arch/arm/mach-mvebu/Kconfig
+@@ -56,7 +56,9 @@ config MACH_ARMADA_375
+ config MACH_ARMADA_38X
+ 	bool "Marvell Armada 380/385 boards"
+ 	depends on ARCH_MULTI_V7
+-	select ARM_ERRATA_720789
++	select ARM_ERRATA_754322
++	select ARM_ERRATA_764319
++	select ARM_ERRATA_764369 if SMP
+ 	select PL310_ERRATA_753970
+ 	select ARM_GIC
+ 	select ARM_GLOBAL_TIMER
 -- 
 2.53.0
 
