@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044077;
-	b=vW60CSa4jyqRb3kTxY9N8s/p24dFgpbXgw2V7j7IMmnfoLUgS1YhZWVVug8IR/liIlr8
-	 bsFoBUilFBEnOwE+fmACSwPO8b91pOAgt0N93njgBHRx2lJ36QuPWvsQDeZoP3JhBXHZT
-	 6I0kNlWWnvw72KCsSCwqYMDoEIv3Mr3wiIbBDVTCuXTCwXkjhP/qIif3Bl4aZSBHq3f9X
-	 xKPBhiTJCDWU7ErN17+DpBqtrr+yqhcqF2y4nLQ3/qr0n9p/VsUD/QqG/VXMdolkVO71i
-	 EV14bXuT1xtuRfsi9YrXo2B9OnDcR/Q/JJBfPTPpJQtdzsmQdji99Y7ihODB22IQ2DQ==
+	t=1795044080;
+	b=qEmCfvyKlKPntVh6yBNhDW2IyyHs7h/4dnPP8SbwPZK9brJikFz/41YK5T4IgxH5jL5F
+	 QwDUimYmg8kfbDNoLEFKB36LVMdCud8Ik/oegg21VlSRyuN2SC03PkI32SUksrKOCXruD
+	 XguwJBHsWfT+Q+Rz8ofQBtKE+7MrsPaPMgRsAq9lMOQLiXBni4PzlRzUjIiAUki5i6r1I
+	 7b5dSWT38vOoVxFDnqL8/ECsKHiavcn6eCY7pDMiArwyAjWfIRusb7eo8MYjRm0BsesUU
+	 kwaihleVsQRYmHRuRIyS3fbcQv7DsgDaKnvx9YVgR0w7eONk49rADiCRR/uzeqn+HVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044077;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044080;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XBoFSnbXaZxIDb6+j/Dn8r4DqdO/FPvY5Y/yZX0Gh28=;
-	b=vCjM7tBc0xEUVrAyBtVRdlyytpy44cK9N66eSEBszcZZuwwWZ0fmSQVIz5eGkYWCl7Ju
-	 15CaDG5/N7rc/2VnXd3MVxEZ7wr2ySrGXi5NBetqKjCSHiqiSYuP/EQvVpLaXcjvF3Agj
-	 U9lWOSeUgX3M/fiS6jBIs13NYcVOrObAqz5ej3M77sIdZYktSeOC9U054Mrwz9u1Wim2e
-	 xpMlohMpjGeWYvOvvICxjAXnkh7r5h655mY3WELO79llzwElhIRApUkEAxyh8akSjbqSV
-	 LF7YdRZJA2o0qCp9p+uJ7rp4K3tzs8vILsxMxOVEVfLOLT/W7OzJLghsvH8Dn9VtItg==
+	bh=Sinaxi9NbL//TdyHn4rxOJDz2+4bRURMs0G3FjR0uj4=;
+	b=116oNUJwoL419fkO1BgtFZacb5xu7ubKgEVOFyUATYc4eqvU6UrXO1w66bM5M2aB+X+G
+	 rgq11m3cxLvd+hMsSR/b6kBcWlXCPiT+AsVLitABfrJxCgaK9I//b85gM1Xc8PiSDEnY6
+	 9jjtrzdwhIVSxZzcNJDJIXk14N8LAM4VVhpgO64ZflyovHyZepytjqkLQNrau23Ih1JwJ
+	 MBTzqJZHIpJ3+NaMtGLIMTtwSyRFmDqSdu2WF+W45XjMoAmT7jCkj1pQpqPgZlqFiBYG9
+	 jpltat0oPwNPKMzB32v01MCt8OkX+OwY3RAMPfhNxs8i/51XzaZGx16le9oBRIS0dCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YsAId7Ba;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t6wfDpkw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D825B606A320;
-	Wed, 18 Nov 2026 23:21:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7AEB606A325;
+	Wed, 18 Nov 2026 23:21:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YsAId7Ba
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C76E1F000C4;
-	Wed, 18 Nov 2026 23:21:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t6wfDpkw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 115351F000C4;
+	Wed, 18 Nov 2026 23:21:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044077;
-	bh=XBoFSnbXaZxIDb6+j/Dn8r4DqdO/FPvY5Y/yZX0Gh28=;
+	s=korg; t=1795044080;
+	bh=Sinaxi9NbL//TdyHn4rxOJDz2+4bRURMs0G3FjR0uj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YsAId7Ba2sAbNSUY7OhRunet/92skTQGk6gZ8V7RaOIzyaNVYJja20bzjlYYZy26E
-	 0tb/bHEtM8Nu/0zg5vshm/7cNUKqJ4duQg1Vu1JuDqObNGWfGPl2fIFw/je5uJcF+E
-	 EFgliyHuTPg02K1pvM4TPvAurhr1W6cJG8/OK6aU=
+	b=t6wfDpkwed4gOkljEusVORobzzcqOISwt56usG4h8jged5hFJxifTpF/xj1HCHk/d
+	 xm5ghxlwZiTw+toKIpo6cF2X7UcEIkgvd9UAEaRH+Gx3XiGdKo2FY7AX0pZX/i8kOk
+	 lL3inm6gX7LBnuTKFJkKbr3hQtDl63t5g47ZnUP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengjun Yao <Chengjun.Yao@amd.com>,
-	Asad Kamal <asad.kamal@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	"Chang S. Bae" <chang.seok.bae@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0439/2857] drm/amdgpu: fix rmmio iounmap skipped on device removal
-Date: Wed, 18 Nov 2026 15:24:33 +0100
-Message-ID: <20261118150217.183554847@linuxfoundation.org>
+Subject: [PATCH 6.1 0440/2857] x86/microcode/intel: Reject problematic loading on Granite Rapids systems
+Date: Wed, 18 Nov 2026 15:24:34 +0100
+Message-ID: <20261118150217.216864319@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,56 +69,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengjun Yao <Chengjun.Yao@amd.com>
+From: Chang S. Bae <chang.seok.bae@intel.com>
 
-[ Upstream commit 5155002b03b24ba3ef91c5c313b8cf0171b24904 ]
+[ Upstream commit e7d3e2f46dd5a69046e6d95a0f189155a5516b93 ]
 
-amdgpu_pci_remove() calls drm_dev_unplug() before fini_sw(), so
-drm_dev_enter() is already false there and the iounmap() guarded by it
-is skipped. This .remove path runs on both hot-unplug and plain rmmod,
-so the register BAR ioremap mapping leaks one instance per unload.
+Microcode updates can usually jump revisions. However, there is an erratum on
+Granite Rapids systems. If they "jump over" revision 0x1000405, they result in
+an #MC. Avoid it.
 
-Unmap rmmio unconditionally (guard only on non-NULL) and drop the now
-unused idx.
-
-Fixes: 62d5f9f7110a ("drm/amdgpu: Unmap MMIO mappings when device is not unplugged")
-Signed-off-by: Chengjun Yao <Chengjun.Yao@amd.com>
-Reviewed-by: Asad Kamal <asad.kamal@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit dd6f86a97260e5207d3329ad03aa89fdad61b1e6)
+Signed-off-by: Chang S. Bae <chang.seok.bae@intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Dave Hansen <dave.hansen@linux.intel.com>
 Cc: stable@vger.kernel.org
-[ sashal: Removed the unused idx declaration and kept amdgpu_device_doorbell_fini() inside the new if (adev->rmmio) block, since this tree's guarded block also had that call. ]
+Link: https://patch.msgid.link/20260916225939.1144524-1-chang.seok.bae@intel.com
+[ sashal: Backport hooks the Granite Rapids revision-jump check into the older loader's extra paths (early AP load, patch cache lookup, late apply with real-revision refresh) and uses family/model checks instead of IFM(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ arch/x86/kernel/cpu/microcode/intel.c | 55 ++++++++++++++++++++++++++-
+ 1 file changed, 54 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index 25748ca1c3d5c..81eb14997d923 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -4189,7 +4189,6 @@ void amdgpu_device_fini_hw(struct amdgpu_device *adev)
+diff --git a/arch/x86/kernel/cpu/microcode/intel.c b/arch/x86/kernel/cpu/microcode/intel.c
+index 1def66118b03c..07efc44d227cc 100644
+--- a/arch/x86/kernel/cpu/microcode/intel.c
++++ b/arch/x86/kernel/cpu/microcode/intel.c
+@@ -261,6 +261,23 @@ static int microcode_sanity_check(void *mc, int print_err)
+ 	return 0;
+ }
  
- void amdgpu_device_fini_sw(struct amdgpu_device *adev)
- {
--	int idx;
- 	bool px;
++static bool revision_is_safe(struct cpu_signature *sig, u32 rev)
++{
++	/*
++	 * Erratum GNR98 can cause #MCs if "jumping over" revision 0x1000405.
++	 * Avoid the jumps.
++	 */
++	if (x86_family(sig->sig) == 6 &&
++	    x86_model(sig->sig) == INTEL_FAM6_GRANITERAPIDS_X &&
++	    x86_stepping(sig->sig) == 1 &&
++	    sig->pf & 0x95 &&
++	    sig->rev < 0x1000405 &&
++	    rev > 0x1000405)
++		return false;
++
++	return true;
++}
++
+ /*
+  * Get microcode matching with BSP's model. Only CPUs with the same model as
+  * BSP can stay in the platform.
+@@ -292,8 +309,19 @@ scan_microcode(void *data, size_t size, struct ucode_cpu_info *uci, bool save)
+ 			continue;
+ 		}
  
- 	amdgpu_device_ip_fini(adev);
-@@ -4221,12 +4220,10 @@ void amdgpu_device_fini_sw(struct amdgpu_device *adev)
- 	if ((adev->pdev->class >> 8) == PCI_CLASS_DISPLAY_VGA)
- 		vga_client_unregister(adev->pdev);
++		if (!revision_is_safe(&uci->cpu_sig, mc_header->rev)) {
++			data += mc_size;
++			continue;
++		}
++
+ 		if (save) {
+-			save_microcode_patch(uci, data, mc_size);
++			/*
++			 * Only cache what the BSP could have loaded: a newer
++			 * revision was rejected as unsafe and must not be
++			 * applied on resume or hotplug.
++			 */
++			if (mc_header->rev <= uci->cpu_sig.rev)
++				save_microcode_patch(uci, data, mc_size);
+ 			goto next;
+ 		}
  
--	if (drm_dev_enter(adev_to_drm(adev), &idx)) {
--
-+	if (adev->rmmio) {
- 		iounmap(adev->rmmio);
- 		adev->rmmio = NULL;
- 		amdgpu_device_doorbell_fini(adev);
--		drm_dev_exit(idx);
+@@ -629,6 +657,11 @@ void load_ucode_intel_ap(void)
+ 		*iup = patch;
  	}
  
- 	if (IS_ENABLED(CONFIG_PERF_EVENTS))
++	intel_cpu_collect_info(&uci);
++
++	if (!revision_is_safe(&uci.cpu_sig, (*iup)->hdr.rev))
++		return;
++
+ 	uci.mc = *iup;
+ 
+ 	apply_microcode_early(&uci, true);
+@@ -646,6 +679,9 @@ static struct microcode_intel *find_patch(struct ucode_cpu_info *uci)
+ 		if (phdr->rev <= uci->cpu_sig.rev)
+ 			continue;
+ 
++		if (!revision_is_safe(&uci->cpu_sig, phdr->rev))
++			continue;
++
+ 		if (!find_matching_signature(phdr,
+ 					     uci->cpu_sig.sig,
+ 					     uci->cpu_sig.pf))
+@@ -706,6 +742,7 @@ static enum ucode_state apply_microcode_intel(int cpu)
+ 	struct cpuinfo_x86 *c = &cpu_data(cpu);
+ 	bool bsp = c->cpu_index == boot_cpu_data.cpu_index;
+ 	struct microcode_intel *mc;
++	struct cpu_signature sig;
+ 	enum ucode_state ret;
+ 	static int prev_rev;
+ 	u32 rev;
+@@ -733,6 +770,17 @@ static enum ucode_state apply_microcode_intel(int cpu)
+ 		goto out;
+ 	}
+ 
++	/*
++	 * uci->cpu_sig.rev can be stale, e.g. on resume. Check against the
++	 * revision the CPU is really running.
++	 */
++	sig = uci->cpu_sig;
++	sig.rev = rev;
++	if (!revision_is_safe(&sig, mc->hdr.rev)) {
++		ret = UCODE_NFOUND;
++		goto out;
++	}
++
+ 	/*
+ 	 * Writeback and invalidate caches before updating microcode to avoid
+ 	 * internal issues depending on what the microcode is updating.
+@@ -818,6 +866,11 @@ static enum ucode_state generic_load_microcode(int cpu, struct iov_iter *iter)
+ 			break;
+ 		}
+ 
++		if (!revision_is_safe(&uci->cpu_sig, mc_header.rev)) {
++			pr_err_once("Erratum GNR98: skipping revision 0x%x.\n", mc_header.rev);
++			continue;
++		}
++
+ 		csig = uci->cpu_sig.sig;
+ 		cpf = uci->cpu_sig.pf;
+ 		if (has_newer_microcode(mc, csig, cpf, new_rev)) {
 -- 
 2.53.0
 
