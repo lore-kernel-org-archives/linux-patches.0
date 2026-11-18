@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058532;
-	b=jTd3TNASkjnHUDLQ+d/H5fgNHJRssX2OEzmDeIneQgKafOgT8ZgX4iBSHy2mAA7/lW6g
-	 mRL2NVNfulvqn2SghEClJjRN6E4OkCNrqFZ0Ajdxalak3IDGWuKIsr//UzKN7HoEIBiiU
-	 D8tjH5fc4JOCl5GzRsdVq0QltVpgZfDbTecgZQsBeEJAZ8bBz9fMB9Vrnm9LsYt9ZABSL
-	 DoBILo9OQV4EiZqjOa500caw57g60J4FNidqIOLlhNSywaeXnOfooNfCePbG40nlFoMj3
-	 CTE8TsXN9qMcni8+eqX52wfEHxy3llXhGZFnItfs1XJx4hW7XvO9lK+veKWyN38Aapw==
+	t=1795058534;
+	b=Npv+rXK6+h+hzC2y9iup57uLXRqXMU71JNc5B4uAJGfy3zaoFcynazPLZVi/D1TVc1pP
+	 o3+ssQl7SQY3LkEaBSYDm2lkP51H1oNT9Yiur1jXShM5FYKy5ndQor0tL5F9+cNYWNo6J
+	 CfmiOyjsG560ALbFDKRJ1Vme9uswEfJtxwA519zJj/BOmK0ezVh2AMaEgEC9DPOo9yG4q
+	 TtHMMEaC17UFMTGugp36yJ7i6cQRqqcQO7wjutQqGcoULg2ptHserXpQSLGd5aDqoVXis
+	 pfkpOGTMa06H3/NtmJSRPeld0Mvj0/P68YdjbOndBLueyy9EbAbvv31nVSW+eLBgwow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058532;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058534;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MOHgjCcJxjpv5gS4uXNJs6jiquEIZx12s5pZAXlnMfc=;
-	b=4q+8PT5KXWP5d8Gbefyr3cVH4e23euVwsdSFn0p+214Kgd9PoIEWxdWtmcTo/GcaER0F
-	 j5a3BMw06GYpbZiQn4KMeY6v1pmiFlHU5YKX2//tRJrVGlkv5MSJL5Jqj5USFpvGOsXEi
-	 9BPRfldhK8+DpFdT1iGVYSKW22Hfxh4MYyLTYwDz5cYdM44IcSL+iLOOmJ+wt0wenJtN4
-	 kgVeAiFb5GEWHVQKGkUKhV+CAlSSVKa5+N4l7d5HlF+f0R47YWRVZYBzqfqT60tidDUvO
-	 8Za5macd43P4TbyNFUKAzrry9auRz3YahdYDgCG3Llx3oKyT3umJli/zGWVAzKBx7qQ==
+	bh=VplIkVNR0cgQg+OyySxHHikYpCpBqXpP1hXXrOEpoV8=;
+	b=iPwznVy9AQGGlKaftq/uzRPhdzk09GP9D9GX6NXEkldALlDjONNFoS77/JdF+A4fvPMp
+	 bhgGg6f3sjB3p69OKC0cNRFQ3zrG1v21rZ8lauPOP4XOMQEQyw+elkwNUvxLoEJtsQvdG
+	 Bi2ezbknQyHc44542wDf38Zs71SSSEMNK6TyOtXUEB2UWq+dMlrIlaNCTotPX5Q1hjtww
+	 0QEa9PdAGHQ2ruR2ysjR5RrUT4XQrUbdiwuDS50SoGxmhr7yOJ6mEmGPpZPVTHJumXnqi
+	 Kwo3IJ8RUo98+yqwY4Xkb/5ghKgmXIggh7q7lV1rAfYzq1AYRDTOEOteb7wr/RyQI2A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GrJyu1YN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yB7jHQbZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E443F606A31C;
-	Thu, 19 Nov 2026 03:22:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0F3606A325;
+	Thu, 19 Nov 2026 03:22:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GrJyu1YN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D1E1F000C4;
-	Thu, 19 Nov 2026 03:22:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yB7jHQbZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CB841F000C4;
+	Thu, 19 Nov 2026 03:22:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058531;
-	bh=MOHgjCcJxjpv5gS4uXNJs6jiquEIZx12s5pZAXlnMfc=;
+	s=korg; t=1795058534;
+	bh=VplIkVNR0cgQg+OyySxHHikYpCpBqXpP1hXXrOEpoV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GrJyu1YNQHar+8Vn4jksRe9YeK8PCtVHKqaV6tI72T0zOFaD+xTkEiOCpXMOYcj6Q
-	 P5t48n7C1Io99cD9DXL4XJD27I4OP5qA09l2xQExA1+iZ/fcvlNtBbYq35Z1Jwoh+D
-	 0J7bYAroO7NKq1ZUentXmB3Wo14GgF8RZ9Mduvlw=
+	b=yB7jHQbZHw5KhINFcn1vA5P4rRdDNVvBUU9QUJtDuRTSuYWUbzAqAz7OMhb3yUbrV
+	 FUPrDhBUdCaRWUFbiqbl7fjHg6jjSYWnsEhgGra6Ar0ZMg3nVBtQ2gvfoHeQH2OXJV
+	 xjbdZg66IbvqjdjKJtJxXO1eFfqZcjQXmZgSOyPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bui Viet Dung <dungvn2345@gmail.com>,
+	Siwei Zhang <oss@fourdim.xyz>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0518/1848] Bluetooth: 6lowpan: Pin module for 6lowpan_control debugfs file
-Date: Wed, 18 Nov 2026 15:42:36 +0100
-Message-ID: <20261118145936.357201096@linuxfoundation.org>
+Subject: [PATCH 5.10 0519/1848] Bluetooth: L2CAP: Reject mode changes on connected channels
+Date: Wed, 18 Nov 2026 15:42:37 +0100
+Message-ID: <20261118145936.401611438@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,49 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bui Viet Dung <dungvn2345@gmail.com>
+From: Siwei Zhang <oss@fourdim.xyz>
 
-[ Upstream commit 8368f0c2cde48c09ed70644059f24172b0c59f52 ]
+[ Upstream commit c1398cf11b31a94c27ed810ba69515e0df5ce379 ]
 
-An open debugfs file retains lowpan_control_fops in the debugfs proxy
-state. However, lowpan_control_fops has no .owner set to THIS_MODULE.
-As a result, full_proxy_open_regular() calls fops_get() which succeeds
-without taking a reference to the bluetooth_6lowpan module.
+A peer can send a configuration response with an RFC
+option for another mode to a connected channel, for
+example to switch it from Streaming to ERTM mode.
+l2cap_parse_conf_rsp() then changes chan->mode, but
+l2cap_ertm_init() is not called again, so the ERTM
+sequence lists are never allocated. The next
+out-of-sequence I-frame makes l2cap_seq_list_clear()
+write through the NULL srej_list.list.
 
-With CONFIG_BT_6LOWPAN=m, a userspace process can keep the debugfs file
-descriptor for 6lowpan_control open across module unload
-(delete_module / rmmod bluetooth_6lowpan). When the process subsequently
-closes the file descriptor, full_proxy_release() accesses the already
-freed and unmapped lowpan_control_fops table, causing a kernel page fault
-or oops.
+Refuse the channel when a response tries to change
+the mode of a connected channel.
 
-The issue was discovered via manual code audit of
-net/bluetooth/6lowpan.c.
-
-Set .owner = THIS_MODULE on lowpan_control_fops so that debugfs pins
-the module until all open file descriptors have finished.
-
-Fixes: 6b8d4a6a0314 ("Bluetooth: 6LoWPAN: Use connected oriented channel instead of fixed one")
+Fixes: f2fcfcd67025 ("Bluetooth: Add configuration support for ERTM and Streaming mode")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bui Viet Dung <dungvn2345@gmail.com>
+Closes: https://sashiko.dev/#/patchset/20261007144717.3832330-1-oss%40fourdim.xyz
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/6lowpan.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/l2cap_core.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
-index 9a9b1c13ca91f..17c9af8d4bc68 100644
---- a/net/bluetooth/6lowpan.c
-+++ b/net/bluetooth/6lowpan.c
-@@ -1264,6 +1264,7 @@ static int lowpan_control_open(struct inode *inode, struct file *file)
- }
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 587aad401256b..244cd0865df08 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -3967,7 +3967,11 @@ static int l2cap_parse_conf_rsp(struct l2cap_chan *chan, void *rsp, int len,
+ 		}
+ 	}
  
- static const struct file_operations lowpan_control_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= lowpan_control_open,
- 	.read		= seq_read,
- 	.write		= lowpan_control_write,
+-	if (chan->mode == L2CAP_MODE_BASIC && chan->mode != rfc.mode)
++	/* A connected channel cannot change its mode, as the new mode would
++	 * not be initialized.
++	 */
++	if (chan->mode != rfc.mode &&
++	    (chan->mode == L2CAP_MODE_BASIC || chan->state == BT_CONNECTED))
+ 		return -ECONNREFUSED;
+ 
+ 	chan->mode = rfc.mode;
 -- 
 2.53.0
 
