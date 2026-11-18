@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055012;
-	b=Vy9D8Qn+/ifwtU6kTqbOXsNc6K8+mvFSprHpM67H9fWVgzyNw9/rUciLaTwcOmeFcyCB
-	 iuK/Vup98qAzdFR0PcSMSHuJegDUi9tDVt83VoLljtra5QsKcDYFD+/2Xwe8hABF4bFJn
-	 jflrVtUOCGY19yOW6SJP2RFw9ikH9u9fMoTHB4PB9VxCMxCOI6VlQXhAlSdA1VD+C4eAz
-	 9cdnUBEzlp8giq5GZ+SKPFjmglvYiJjcO01rCsOb/Y2LWIs33FBtor8K+gFgo3cW7l4Xa
-	 ZBgd/bFUXdnyUgKZbyxbApMS7mr4TmPwTdhvnaiWxD7kC8sNQto2YuNNMfz0Q9FfTPg==
+	t=1795055015;
+	b=g3isYqaOGcYNzw7SuZ6eKYRWkDgIF1oUqDT50bDFaVRg1qOjbwB8M4tF54pKH25Z7ZB0
+	 /+Gv29f60sPWkjZni2W4FSk4JDMhiUBAbKc1mmY5GwDbG5u4/+onLn5vcji0qBit9iZrp
+	 j6pA4CV8tAYVNlHtqx55hA2kaikj87dPcoBhvRyaFj8CVX1Fn3wV/d9k2TBmsg0ovFsw3
+	 iZPXSzlIQOGhDNckdz080cwehb7o9Gm511atWGmRgKG0MF4nF+ugxt3zFsyquvqHbOh1d
+	 9sLgA9Nb1DOJEj9qxh+5kg0cdm1nnbYyPvJnZk+wQjAxkFJOMIKizMrXL9c97hGs/Pg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055012;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055015;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QzTjRD7mAdIOdo54Vyac7ISxWJT1EHpld5n69GODjuQ=;
-	b=I0cRPao+QOqmlDU0mAmCyjlFgK7eGHYo+pt+TPL5ce+1joyo+q5wSx0yODNQgyVRqgaY
-	 +TyxW2UsU+SwAZXw2Kh7zfiUWcOEhJYIgBfCRx7xEaHxcXCcHoa0cIlbmUwJjMh95UcIj
-	 KJ5BGp1Csh/wQuKktWQ11J2fLxI8wchb7Nxrz6C8YnfLsv6OaySLv1nm0bQXK7uyQVs6o
-	 YiY691lJBeH1eqo6kAz5FrSI+y29F6SKbOZVXNnecLya1/xrkv3S6p4CQeYY3LCYWRfxB
-	 5Qhx9oXG+JnOO7q4/Zcpk2arV8yh1O9J3+W44MCBtGV2BKeeODBSdAvWtet39LXEUJw==
+	bh=ATUJybU9Mkr71TuYMFj6zdOUztqEbvm/amV8rOPDyDA=;
+	b=A8O1dDEDPSRJ4SmvBsXDIMaMDrGpCfIEkRRiMn/eirfOftJntPD9rk8BpOv/Kmu/zohP
+	 PAyPJTtCLudRWSLGM7RfBr7SVte2m4c8lKMDPmOD65aHum2yFFg8qiqFy3wlAiSXCfojo
+	 pipT6f63l63T8aRGJ82CxaxvUmqVy//cZluoGJMDS4U5K4O/bHBRegS82heEOI/PAp0qL
+	 2pVNBzX2urMNMJcJdTY5FZAuyuM/JLrNkz0Vvii92YguO6ANTWonwbpw64+Lht7zmZwaR
+	 xVva4StfEOFM8xJ2IJ3Dv1beAYvXR6njzr9mFyPKGgpSqFUZSWlOg9qRS7eyvf3iUUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oYh7a+0Q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CqlNxYyn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D993606A31C;
-	Thu, 19 Nov 2026 02:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2028E606A320;
+	Thu, 19 Nov 2026 02:23:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oYh7a+0Q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABDC71F000C4;
-	Thu, 19 Nov 2026 02:23:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CqlNxYyn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75E0B1F000C4;
+	Thu, 19 Nov 2026 02:23:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055012;
-	bh=QzTjRD7mAdIOdo54Vyac7ISxWJT1EHpld5n69GODjuQ=;
+	s=korg; t=1795055015;
+	bh=ATUJybU9Mkr71TuYMFj6zdOUztqEbvm/amV8rOPDyDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oYh7a+0QBo3lCfl2fVSQLQxNLe2xNqhUYYLlGCzeql1HQyknX4VhrwbAjbBbUWIB6
-	 iCsF+nz6ViaRPG1QgXM08qVTlbtEeqIA0+ierVIAOnymfBGGBFRWMBmjYQW7uPQhKc
-	 Qep3MlK69ZKy0J+kxQHgzrlu4VXhy4YakHsM56O4=
+	b=CqlNxYyndNtIh1qVFWUQvi+pzGHXmlT+0LtKtPZz6B8N8MydJvCnTD4U6vvXWou0/
+	 cY8o+CD/XsJP6J3R4QcyT1ycjoOyAmAhSqlao6nVtkWSNt2oEcs0gINFPkRFWwQGsG
+	 ZDE3uu2eMVh0NRYu5j21hE956Fh6r4t7D4z3jCMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Koichiro Den <den@valinux.co.jp>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1480/2214] firewire: core: remove unused link field in fw_packet structure
-Date: Wed, 18 Nov 2026 15:52:36 +0100
-Message-ID: <20261118150110.360526166@linuxfoundation.org>
+Subject: [PATCH 5.15 1463/2214] PCI: endpoint: pci-epf-vntb: Serialize virtual PCI bus scan
+Date: Wed, 18 Nov 2026 15:52:19 +0100
+Message-ID: <20261118150109.642500061@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,32 +70,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit 00d4d31e4fdfe51312f0184f8d162b8d4de172dc ]
+[ Upstream commit 84c3520c9e8c14b09a5cf645cc4fa7c6d9d61127 ]
 
-The link field in fw_packet structure has never been used since it was
-added.
+The virtual PCI bus is scanned without holding the PCI rescan/remove
+lock. This can race with other PCI topology changes.
 
-Fixes: 3038e353cfaf ("firewire: Add core firewire stack.")
-Link: https://lore.kernel.org/r/20260911141602.3288806-1-o-takashi@sakamocchi.jp
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Hold the lock across the bus scan and device addition.
+
+Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
+Suggested-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/3tgrcel5fl55ulf3zjya4fkz4t2ms7iwwjif5rnzn2rafsydd6@i4e5etm7uqvz/
+Link: https://patch.msgid.link/20260901063238.631166-2-den@valinux.co.jp
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/firewire.h | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/pci/endpoint/functions/pci-epf-vntb.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/include/linux/firewire.h b/include/linux/firewire.h
-index aec8f30ab200d..6395605e91fd0 100644
---- a/include/linux/firewire.h
-+++ b/include/linux/firewire.h
-@@ -309,7 +309,6 @@ struct fw_packet {
- 	 */
- 	fw_packet_callback_t callback;
- 	int ack;
--	struct list_head link;
- 	void *driver_data;
- };
+diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+index 30c003d8b0dd6..390bb9c9e8836 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
++++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+@@ -977,14 +977,19 @@ static int vpci_scan_bus(void *sysdata)
+ 	struct pci_bus *vpci_bus;
+ 	struct epf_ntb *ndev = sysdata;
+ 
++	pci_lock_rescan_remove();
++
+ 	vpci_bus = pci_scan_bus(ndev->vbus_number, &vpci_ops, sysdata);
+ 	if (!vpci_bus) {
+ 		pr_err("create pci bus failed\n");
++		pci_unlock_rescan_remove();
+ 		return -EINVAL;
+ 	}
+ 
+ 	pci_bus_add_devices(vpci_bus);
+ 
++	pci_unlock_rescan_remove();
++
+ 	return 0;
+ }
  
 -- 
 2.53.0
