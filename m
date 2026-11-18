@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054102;
-	b=Iiceenk1MgrltZj5NV3d7eh+C7gPF6nI+bjyPlDCsVgBI3imi1yErOlqEWvfMrpIZKfM
-	 V8YXhQTCKv/zP68NjyqsHLoZ4+vjuvJMVYToOQsD3olnBq8SJiZZnfXMnvyEp7MuSmZS1
-	 h3808Rxsc3VRmItdU4AdlTI7JOegVjVd/nLrcNwZStIgn5/7g2HWcd2ZANFz8ewFYIGOK
-	 HzMGpsFksx92iqA5v/L5CYCEdfuDkkJpj1XJOaubfHoYeXCo5Bqq60z0N2nF6ho3QcQn7
-	 sXwnV/Sb3IH/QAL5YJuBzR1bjb7WTdnkkMp1P4IVGynfd8zriLkRmx53f4qxqPQeYeQ==
+	t=1795054105;
+	b=kUCloeum4Nio0fKa0RIRRRMfZDQh8JB/4L+62yeaKuvGjSd37Q+6iCXjr5j3x6kh62qQ
+	 HKk4x1WdRdM6xFSnC182Veb59ikQE/rAIS9ZAWVYSjFdwKpVZ3/0caLcczdiGopNE0nPz
+	 rWSWR5J4Clu2BqXDJ0Ful5S25UieFSqnzR/Wz2AbuLOoKGmOJewbj8QeSFbfsIJ7jnjfa
+	 vUD8FuVIM/Ni4Y7i9Xs76hjDVCYyL4byjboXNTMRoSAXoBosAz4ZUW9ySlTHzkpwbggjN
+	 +7puyQBthjtVgBWGA62qgIgyYPWbLxTFtavU7Mbe39/MeqsCkElm1UATEmdE6F/2ccQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054102;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054105;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xE8Z0zijwMRZqx1rFcoSebbG3lOje1Ts6bPjxMAw7Hs=;
-	b=HGbE01XyERmOR4JdCZmjuE/4ooKt2UeLkvFNd65X2uH+a+OdaZPYb72W+0qclWRPtqtC
-	 65E3YSXqnXhpbkLGvQYZRuej+HCj1VIbN2UnQ8xXkZcpGzj/7LpQz1N9sZexPuYzgwvZH
-	 BLWnfqm8FOpYoFPnqeiRCsUy4PlBHsCSze2ybW++/k6pMLCL9dtXrLvz2RPEbc7hyCZqg
-	 VTZmBJH1fym5Lq8nxadbbvuUwE16egeZ2IleAnuNuiiGiNDs4CXJnZltRYRRQ32D7JGN+
-	 A6DytTGITPnGz78eDBoOP3Q6GsQAMVJTF6k3U4R8h8EysIYkpCTnlABOU2oZI1Yuxag==
+	bh=t3BU1IyHyTzIQ47QrC01AEfdZzN1fivPt8tZ28DB3WM=;
+	b=oSAb8eq/wOGebDXw0CL3XIyTjm6/0bK6qB2BiG8SaXvecK8JaqhKyGmeldktV9ZmYx2C
+	 UUnrD48DxqaCVB23NEK4z6KKd6+rVmdovdZ5fI0srs7Dgja7m6BhKKSF+M2nMKDYZowm9
+	 RYn17IuFKc0FWlKn9rR2PTGATsyCXNf1tCgdlIgj0gmfijuVdnXN9Q8dt8G3XBlCF0+6T
+	 2GNdpspLpZto5Vl5kb8zQvhbPFTgB86rP8jfZkU7faAiljsvjdlu7bmzmyyerptujp1zC
+	 2iyV4VfFJso5VY2KSelZ1zb54GpbgO5GyTFap5kZ4ZWMjy6Tj56WNI7xnzvbtk+dOGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q+71Q24p;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EOsMe0CR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C546606A325;
-	Thu, 19 Nov 2026 02:08:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50162606A31C;
+	Thu, 19 Nov 2026 02:08:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q+71Q24p
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D15C31F000C4;
-	Thu, 19 Nov 2026 02:08:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EOsMe0CR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A20D41F000C4;
+	Thu, 19 Nov 2026 02:08:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054102;
-	bh=xE8Z0zijwMRZqx1rFcoSebbG3lOje1Ts6bPjxMAw7Hs=;
+	s=korg; t=1795054105;
+	bh=t3BU1IyHyTzIQ47QrC01AEfdZzN1fivPt8tZ28DB3WM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q+71Q24paK5wEMsf1z7HqxfKc93lpzLCS4588MtuZ1LI7k6KT2G40zq45+rACFqG5
-	 kvudQrLQBxvrNJg2mckH4FzdTCYJ8XYTQdQoGcXY9HOclT2Rj0BVsyMg+y/UNJrU48
-	 LNGD9f8nhw70rHa4zgQpBLAiks2cKw7RVSaN5Z7w=
+	b=EOsMe0CR2dwasU0i+mleYOqzX5bdyB5C71+aezoiPIF3752WERpCw3MIlbCeCaow0
+	 t6Iwdu9KdABpD9XcJwyOGUY6kaaFuQ1/ADpK4SsWSs1p3H/nzZoq7Gx0m8TtZVmd0f
+	 H8mLKL1Y8fi3VSULwQvm10rJLmdYVAcunyo3jcak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Lino Sanfilippo <LinoSanfilippo@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1153/2214] media: serial_ir: Fix race condition where timer can be re-armed
-Date: Wed, 18 Nov 2026 15:47:09 +0100
-Message-ID: <20261118150058.108513746@linuxfoundation.org>
+Subject: [PATCH 5.15 1154/2214] serial: amba-pl011: remove redundant code in rs485_config
+Date: Wed, 18 Nov 2026 15:47:10 +0100
+Message-ID: <20261118150058.145764532@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,35 +67,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Young <sean@mess.org>
+From: Lino Sanfilippo <LinoSanfilippo@gmx.de>
 
-[ Upstream commit d74ac4016ba64cb3b20f395511d0b18025ca0ba9 ]
+[ Upstream commit a9efa452486ed59b38f15c2287d3e7e129f6e7fc ]
 
-Ensure the timer cannot be re-armed.
+In uart_set_rs485_config() the serial core already
 
-Fixes: 2940c7e49775 ("[media] serial_ir: generate timeout")
-Signed-off-by: Sean Young <sean@mess.org>
-Cc: stable@vger.kernel.org
-Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ sashal: adjusted context to replace del_timer_sync() instead of timer_delete_sync() ]
+- ensures that only one of both options RTS on send or RTS after send is
+  set
+
+- nullifies the padding field of the passed serial_rs485 struct
+
+- clamps the RTS delays
+
+- assigns the passed serial_rs485 struct to the uart port
+
+So remove these tasks from the code of the drivers rs485_config() function
+to avoid redundancy.
+
+Signed-off-by: Lino Sanfilippo <LinoSanfilippo@gmx.de>
+Link: https://lore.kernel.org/r/20220410104642.32195-3-LinoSanfilippo@gmx.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 97f85204275a ("serial: amba-pl011: keep transmitter enabled when disabling RS485")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/serial_ir.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/amba-pl011.c | 16 +---------------
+ 1 file changed, 1 insertion(+), 15 deletions(-)
 
-diff --git a/drivers/media/rc/serial_ir.c b/drivers/media/rc/serial_ir.c
-index 96ae0294ac102..dac341c68b2bb 100644
---- a/drivers/media/rc/serial_ir.c
-+++ b/drivers/media/rc/serial_ir.c
-@@ -797,7 +797,7 @@ static int __init serial_ir_init_module(void)
+diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
+index a5340c5e11b10..7b21907cd14dd 100644
+--- a/drivers/tty/serial/amba-pl011.c
++++ b/drivers/tty/serial/amba-pl011.c
+@@ -2241,25 +2241,11 @@ static int pl011_rs485_config(struct uart_port *port,
+ 	struct uart_amba_port *uap =
+ 		container_of(port, struct uart_amba_port, port);
  
- static void __exit serial_ir_exit_module(void)
- {
--	del_timer_sync(&serial_ir.timeout_timer);
-+	timer_shutdown_sync(&serial_ir.timeout_timer);
- 	serial_ir_exit();
- }
+-	/* pick sane settings if the user hasn't */
+-	if (!(rs485->flags & SER_RS485_RTS_ON_SEND) ==
+-	    !(rs485->flags & SER_RS485_RTS_AFTER_SEND)) {
+-		rs485->flags |= SER_RS485_RTS_ON_SEND;
+-		rs485->flags &= ~SER_RS485_RTS_AFTER_SEND;
+-	}
+-	/* clamp the delays to [0, 100ms] */
+-	rs485->delay_rts_before_send = min(rs485->delay_rts_before_send, 100U);
+-	rs485->delay_rts_after_send = min(rs485->delay_rts_after_send, 100U);
+-	memset(rs485->padding, 0, sizeof(rs485->padding));
+-
+ 	if (port->rs485.flags & SER_RS485_ENABLED)
+ 		pl011_rs485_tx_stop(uap);
  
+-	/* Set new configuration */
+-	port->rs485 = *rs485;
+-
+ 	/* Make sure auto RTS is disabled */
+-	if (port->rs485.flags & SER_RS485_ENABLED) {
++	if (rs485->flags & SER_RS485_ENABLED) {
+ 		u32 cr = pl011_read(uap, REG_CR);
+ 
+ 		cr &= ~UART011_CR_RTSEN;
 -- 
 2.53.0
 
