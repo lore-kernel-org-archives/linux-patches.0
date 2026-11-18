@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051408;
-	b=akpd5rZBvrLb3OAfYjmAOefKzPP/wFgirGiQQvFBplQBqufSMlkrew+6SwK81vC6kqSz
-	 onL4uy9XU+X0JWmFj/5mDB2jo5iaQiAC6c7Ld0C5pZJIoppBHNcDfuicxomnB0D1fb37t
-	 nv6DXrdCitkaWdIrisJSer2petupsNfZLCDvWwCqwrMAP4FXZP5TUQOV/OhAhnqCQc3G9
-	 bdfBiO7ARGpM/YkF92i/TImNolGUO5IhHj672pjYUXRKA+3njPECMQlAch5TdnAGTrJVM
-	 HGPV0JHhnwXN1Mmq8uvD4/zgRzERkt4XpbXdlmlOspiCCfcCE92dNupfqU/zFc862+g==
+	t=1795051410;
+	b=b46/6RZN6ehmYzJB9QgcGRVu4nhBvGN+idxRQbfcJOs+vzMDo+9+qCgJp8P70oNhs5Ah
+	 heHYAKr5UC3QVzu2sbTmPFCD8SNLRCveDTNaDOmYOnEMZNkplCvz+4/+2p4DOV23GFg98
+	 BiY+p5YduTOwB6s5IMvhrOLp8VmDWZUnccqxtQBTaN42NcMJXUwnGEFNfuK/sdk15v0i0
+	 Eg7/WtEmOoxY+8efeqlyn/DL0YyQt+wfPe9osu8VqICfvVk1Eg3BtYvv1OgGP77g+mQsh
+	 55alq0EfeKl46Usyf5IOArqdTaB8Non3FzUzWIrRdBIAYdQ/9lTYlAS/7yjbGQphCbw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051408;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051410;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=weT/3C1Xd1pByLgtgBX6AECuTRA4JzHc6RRGaNhlZ0I=;
-	b=zvrmZbLmZZe3wdpDDCQ38UvM2FOWAUBDbnDShjUZnev0xHozjdKb/wayjIVGwykG2vvQ
-	 eZx7Mhk5Pdc338Qm0YU0SQ3UkxaMW8DHxqdfgc2j3B8sz2Ys4nkzRe9j+ugkuqWQxYkgB
-	 cqrWQpUqJ2E89nYaw4nqd9upACK6QEq7bPctYT/7sC2KLKNjJGIk6BkL+7Yz3uaiqH+sY
-	 Pmb0vmFM1alGfz4Z3g2pMnwx0MsQXtYHinPv/HL+TVGV26kmHLJAKhwpWbsX204b79SWJ
-	 1dvk45PERLtMgROJN86N+sIfv+sflOCT6ujPAw/m2hZa/0mAz6ghFzo+u+Tb8Mx7ZfA==
+	bh=mNvCuPZ11rtOuGeQXxhXp9niAWLfXp3Slg4mLmjzCWE=;
+	b=4uDDp7jC0bBGn3U9TQVkFWws6T128WNsFAO3YGCifdgyBV8XUD/Ui7mM0S2cNPClPVUz
+	 Dy5+uL5klp00i2IFwJKxSOII+jOXJBwsU39Vy+lr741K9mCsSYe0LJQHVTGW+Qy9/MR7V
+	 8tU+9YjzgUAPJCKm2LWCmhdZXDzjgWf4iCP6JXz9KxGycwPLEqwXeJlIJ9YL1SQx0EJPM
+	 yu6ur62IrAeivrYXRhx1vMqTgLBiFTx6Ic5uhMqVACD4c6EmFRXm6Ey6ozFQ8zM/FKIEv
+	 TqzJiAM1OxXlhvWQzQ9J0m3grQ6ZKJL0UT3Zc7kb8ffo9UREKApcWq587o97qQOWlkA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kdmaCQ3N;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qZ3rq8zQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA15606A31C;
-	Thu, 19 Nov 2026 01:23:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889E0606A320;
+	Thu, 19 Nov 2026 01:23:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kdmaCQ3N
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 254CD1F000CA;
-	Thu, 19 Nov 2026 01:23:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qZ3rq8zQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDC261F000C5;
+	Thu, 19 Nov 2026 01:23:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051407;
-	bh=weT/3C1Xd1pByLgtgBX6AECuTRA4JzHc6RRGaNhlZ0I=;
+	s=korg; t=1795051410;
+	bh=mNvCuPZ11rtOuGeQXxhXp9niAWLfXp3Slg4mLmjzCWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kdmaCQ3NiZ03Aya2bUuahDHpUCkZqtKzeo88KWbf/Pqm+3WLUb9MJDGhvNLXfAr/8
-	 eZW/E1DFOvmzBhYHylB3uSUxoMkkv7o9AmwZZreQOxINdu7ZjrOKw75IvwRtGkVdLA
-	 rFR9WycFb18o2ba4xLQyInJYIrmtL1dh5sfcJD4g=
+	b=qZ3rq8zQDDM2U0bSCgo3cuq+L5escwqpvUK+ULsZxKwu4uH6RkIlIHiTMONE0l/Yo
+	 6AzTLHXKeGzXiz28HmMMg1Oh8GA60zFgkGr1jUwRwzTwH1CI91kNHXaHz7K87kiqYf
+	 qb97bl92+o2NTKk3UVNHIJSFkUe3NdSZDPkD810I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	Keith Busch <kbusch@kernel.org>,
+	David Heidelberg <david@ixit.cz>,
+	Griffin Kroah-Hartman <griffin@kroah.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0197/2214] nvme-tcp: look up host_iface in the current netns
-Date: Wed, 18 Nov 2026 15:31:13 +0100
-Message-ID: <20261118150018.100016644@linuxfoundation.org>
+Subject: [PATCH 5.15 0198/2214] nfc: mrvl: spi: Unregister dev on allocation fail
+Date: Wed, 18 Nov 2026 15:31:14 +0100
+Message-ID: <20261118150018.143624927@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,46 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Griffin Kroah-Hartman <griffin@kroah.com>
 
-[ Upstream commit 58202950e39c127d593ec4f0624d8b8985a285b1 ]
+[ Upstream commit d832b95697384a2b67f20b35106bbf925358cde9 ]
 
-nvme_tcp_alloc_ctrl() looks opts->host_iface up in &init_net, the boot-time
-netns. When called from any other netns - e.g. the selftest's ns2, where
-ns2eth1 actually lives - the lookup misses and the controller setup fails
-with "invalid interface passed":
+Call nfcmrvl_nci_unregister_dev() if nci_spi_allocate_spi() fails,
+unwrapping the previous call to nfcmrvl_nci_register_dev() during the
+nfcmrvl_spi_probe() function.
 
- nvmet: adding nsid 1 to subsystem nqn.2014-08.org.nvmexpress.mptcpdev
- nvmet_tcp: enabling port 24660 (0.0.0.0:24099)
- # nvme discover -a 10.1.1.1 --tos=0x10 --host-iface=ns2eth1
- nvme_tcp: invalid interface passed: ns2eth1
- # failed to add controller, error invalid interface
-
-Look the device up in current->nsproxy->net_ns instead so the check sees
-the calling task's netns.
-
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Assisted-by: gkh-clanker-2000
+Cc: David Heidelberg <david@ixit.cz>
+Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/2026070716-crucial-slouchy-b8a9@gregkh
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/tcp.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/nfc/nfcmrvl/spi.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index 8ce4dc96313fc..98df67f1bff96 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -2678,7 +2678,8 @@ static struct nvme_ctrl *nvme_tcp_create_ctrl(struct device *dev,
- 	}
+diff --git a/drivers/nfc/nfcmrvl/spi.c b/drivers/nfc/nfcmrvl/spi.c
+index abd75779194cd..23273828a8a41 100644
+--- a/drivers/nfc/nfcmrvl/spi.c
++++ b/drivers/nfc/nfcmrvl/spi.c
+@@ -168,6 +168,10 @@ static int nfcmrvl_spi_probe(struct spi_device *spi)
  
- 	if (opts->mask & NVMF_OPT_HOST_IFACE) {
--		if (!__dev_get_by_name(&init_net, opts->host_iface)) {
-+		if (!__dev_get_by_name(current->nsproxy->net_ns,
-+				       opts->host_iface)) {
- 			pr_err("invalid interface passed: %s\n",
- 			       opts->host_iface);
- 			ret = -ENODEV;
+ 	drv_data->nci_spi = nci_spi_allocate_spi(drv_data->spi, 0, 10,
+ 						 drv_data->priv->ndev);
++	if (!drv_data->nci_spi) {
++		nfcmrvl_nci_unregister_dev(drv_data->priv);
++		return -ENOMEM;
++	}
+ 
+ 	/* Init completion for slave handshake */
+ 	init_completion(&drv_data->handshake_completion);
 -- 
 2.53.0
 
