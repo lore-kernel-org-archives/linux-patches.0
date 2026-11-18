@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030431;
-	b=f1yZ0yDZ0QraY8Q/RK9x2SC27MEw3BBLyPDZhKf3S5bylMfW6pmPeHo4wZaloM+LUNL8
-	 zVL2K7B1qqhaDXhbXNSp+qs1V2vgZXm088lCyaj463jg/UWM/ddNwFkjaeXvAJ+wTuivp
-	 a61gsGWUvDcGC2Ted6YmDsw567j3tLk64blmvfruGBHLqSfByM/dIsPP6o5qVqQ2cwB/H
-	 czT6EOJEJDdgkmd470wSwJb6HEQS9+4Wyv7RLMf31YdA33ftDBMNUCMwhN7coSIqg+M6R
-	 zcgeL7F2RjF6GkGz4tbWD8o1+E6DzFX2Ss4y0gCS1yEOhf4SG9kFhDLNQ4QD/TWVBWA==
+	t=1795030434;
+	b=usooVCIWx2jOnOPh+PcgM1MMoHsDadjMiBczGUMWAgE2kEvySGHN/+sm5ypZUIHnHjCY
+	 u8dyX1gEECZBdBfsxkFty1M75DeRG089w4I1bigdTT3C+JOgSCKBNaL/JTsrRLuc3V4iR
+	 z3TLX8GOOcbqVsHXu873/z2NERtRx/MKOLyBVDGIOa2QXOTzIhlnYu8kmJmwZwgKdlPqS
+	 I9OUTJe3lpD9qfJ4xsegu4ssmyS1uy75+quNy9Iybsh1OprdX58fogI08IFUEqTEe43XG
+	 lqj2GDE0beeCLtNeuzWB+lbxnTGxfpjNU1Znz5Hc73H39u6MTYALEWxU1b87awG544Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030431;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030434;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vKea4YdH4dVjA3v81nwFTg64BqRbDvt/6jbPtDMkVAw=;
-	b=d80ZdBYXJ4Xp550URecoZxpizPw6ybJjA1WyYpKjfKBkp6h7GVT7pQ/7dPOfbfqRk0PC
-	 kwglYySCGZlZeepoOKqY6Ayxdk2Pa1JBjOYINOUD+zqenI+HsOZ4+tk0SW4JM2wsUi5iX
-	 4aSJKtNY6DSIGsS8BKzLq6Q+QlT9b80ztZUp1fRmqYWwpkzoIfbyRp9eX6CDyDKKrw2zh
-	 JM9AHc1L3c+/BMPY5gd8nkEJBNKXFkNqJ/mYzWVgSqkiW2ihqTY9ye0ZTWcsBgGrTaf/X
-	 ClER7oypYVoHqIbJPd/nGd/ShqcucC6gMSr4Utw8DvoBXW0jtLG2x0nJGuFJ4H8x2xA==
+	bh=0f2txKQWc2LPpOZngMtGnHjoyRMrFI0OIhYraHVdUfs=;
+	b=ydAj618gTzBVjEnQNAR/bnd4lRnWUTwYhYiuki43wfD4je1Pb0E+Vd0CtiDlyefUrfRW
+	 U0mXpFKKgaBWN8uTEJIoTn1fK/8CtGHJVT2CClmXc0GS7huUMwwrRq+cPXkHKaZ3IBC6F
+	 VEHX8PEvgj3sCdmQwPaz3MHqhB92qfMwk/DhS+f5lfYhu7aE+biDPJr++Tpo5rotu3m9A
+	 Nk3TWEcqjIulf7JbEQVEOODmsZovuJewmUo0DqCq1yimxNRzEIYAiPTFRzAOwXMVlHyUd
+	 E0uq6ZoRE8OkT45PtgO/HxpdWvXO6JIFH53tP2Vm2R5GoL7/p1od0ygwPEQuKPzlvCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=odY83s9K;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WIMcPWQk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D3A606B422;
-	Wed, 18 Nov 2026 19:33:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DABD606B425;
+	Wed, 18 Nov 2026 19:33:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=odY83s9K
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B87951F000C4;
-	Wed, 18 Nov 2026 19:33:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WIMcPWQk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 834631F000C4;
+	Wed, 18 Nov 2026 19:33:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030431;
-	bh=vKea4YdH4dVjA3v81nwFTg64BqRbDvt/6jbPtDMkVAw=;
+	s=korg; t=1795030434;
+	bh=0f2txKQWc2LPpOZngMtGnHjoyRMrFI0OIhYraHVdUfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=odY83s9KDjNnmJEucBooMv2K6yyANAQ8YeBl0do3EWDEH5pwWWGNuDEATpuuJ3HQW
-	 du46SzOVlymZQLTod32uF9jo8hNrdwXeCGEoTXo3dUAlNTTJd2pJMQ3X8WuaRukPts
-	 xGFIGhQRB0dPPM580MYKAIECdyqlbJutCFUahoIs=
+	b=WIMcPWQkN/rBbX3p1nQTBWxpgCTrksBLzRDDzwGEYkKBHRb6GCFJaoHjAACcH9RXJ
+	 kCFQry/Z3tyONEjgFQFSD8vToOWK2hv0saCTh9BNXssM6pu0rlQ5Za6sf+5IywrzIZ
+	 wChA2nSWvhF7j9rS7Gh0aaTvrTxskhK0HL6msxxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdifatah Suruur <suruurism@gmail.com>,
-	Alex Williamson <alex@shazbot.org>,
+	Qingshuang Fu <fuqingshuang@kylinos.cn>,
+	Thomas Gleixner <tglx@kernel.org>,
+	John Stultz <jstultz@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0703/1756] vfio/cdx: prevent read-only region mappings from becoming writable
-Date: Wed, 18 Nov 2026 15:47:10 +0100
-Message-ID: <20261118150037.168747404@linuxfoundation.org>
+Subject: [PATCH 6.12 0704/1756] selftests/timers: clocksource-switch: Fix unchecked open()/read()
+Date: Wed, 18 Nov 2026 15:47:11 +0100
+Message-ID: <20261118150037.233913349@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,53 +69,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdifatah Suruur <suruurism@gmail.com>
+From: Qingshuang Fu <fuqingshuang@kylinos.cn>
 
-[ Upstream commit 9c5cd385d295fa8621dff0e9f6063e3f6ff24159 ]
+[ Upstream commit 348f54c435bf3177baa78201952810b255d44b30 ]
 
-vfio_cdx_mmap() rejects writable mappings of regions without the WRITE
-flag, but leaves VM_MAYWRITE set.  Userspace can map such a region
-read-only and then upgrade the mapping to writable with mprotect(),
-writing to MMIO regions the device marks read-only.
+get_clocksources() and get_cur_clocksource() open and read the
+clocksource sysfs files without checking the return values and without
+NUL-terminating the buffer.
 
-Clear VM_MAYWRITE for regions without the WRITE flag, as i915 does for
-its read-only objects and as fixed in drm/vc4 (CVE-2026-68445),
-drm/panthor (CVE-2024-53071) and commit a5edadbae57e ("ptp: vmclock:
-prevent read-only mappings from becoming writable").
+If open() fails, read() is called on fd -1 and returns -1, which is
+stored in a size_t as SIZE_MAX.  The token-scanning loop in
+get_clocksources() then walks past the uninitialized stack buffer,
+reading and writing out of bounds.  Even on success the buffer is not
+NUL-terminated, so a fully read buffer makes the inner scan run past the
+data, and get_cur_clocksource() lets change_clocksource() call strlen()
+on a non-terminated buffer.
 
-Note this is defensive hardening: no in-tree cdx device currently
-publishes a region without the WRITE flag.  The guard costs nothing and
-keeps the mmap() interface honest if a read-only region ever appears.
+Check the open()/read() results, use ssize_t for the read length,
+NUL-terminate the buffer, and close the fd in get_cur_clocksource().
 
-Fixes: 234489ac56130 ("vfio/cdx: add support for CDX bus")
-Signed-off-by: Abdifatah Suruur <suruurism@gmail.com>
-Link: https://lore.kernel.org/r/20260929094848.7439-4-suruurism@gmail.com
-Signed-off-by: Alex Williamson <alex@shazbot.org>
+Fixes: 7290ce1423c3 ("selftests/timers: Add clocksource-switch test from timetest suite")
+Signed-off-by: Qingshuang Fu <fuqingshuang@kylinos.cn>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Acked-by: John Stultz <jstultz@google.com>
+Link: https://patch.msgid.link/20260825064605.472889-1-fffsqian@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/cdx/main.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ .../selftests/timers/clocksource-switch.c     | 23 ++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/vfio/cdx/main.c b/drivers/vfio/cdx/main.c
-index 4cf2e4fb02c81..921e259c0288e 100644
---- a/drivers/vfio/cdx/main.c
-+++ b/drivers/vfio/cdx/main.c
-@@ -289,9 +289,13 @@ static int vfio_cdx_mmap(struct vfio_device *core_vdev,
- 	    (vma->vm_flags & VM_READ))
- 		return -EPERM;
+diff --git a/tools/testing/selftests/timers/clocksource-switch.c b/tools/testing/selftests/timers/clocksource-switch.c
+index 83faa4e354e38..4e7f81ffe0a35 100644
+--- a/tools/testing/selftests/timers/clocksource-switch.c
++++ b/tools/testing/selftests/timers/clocksource-switch.c
+@@ -40,16 +40,23 @@
+ int get_clocksources(char list[][30])
+ {
+ 	int fd, i;
+-	size_t size;
++	ssize_t size;
+ 	char buf[512];
+ 	char *head, *tmp;
  
--	if (!(vdev->regions[index].flags & VFIO_REGION_INFO_FLAG_WRITE) &&
--	    (vma->vm_flags & VM_WRITE))
--		return -EPERM;
-+	/* Prevent read-only region mappings from being upgraded with mprotect() */
-+	if (!(vdev->regions[index].flags & VFIO_REGION_INFO_FLAG_WRITE)) {
-+		if (vma->vm_flags & VM_WRITE)
-+			return -EPERM;
+ 	fd = open("/sys/devices/system/clocksource/clocksource0/available_clocksource", O_RDONLY);
++	if (fd < 0)
++		return 0;
+ 
+-	size = read(fd, buf, 512);
++	size = read(fd, buf, sizeof(buf) - 1);
+ 
+ 	close(fd);
+ 
++	if (size <= 0)
++		return 0;
 +
-+		vm_flags_clear(vma, VM_MAYWRITE);
-+	}
++	buf[size] = '\0';
++
+ 	for (i = 0; i < 10; i++)
+ 		list[i][0] = '\0';
  
- 	return vfio_cdx_mmap_mmio(vdev->regions[index], vma);
+@@ -74,11 +81,21 @@ int get_clocksources(char list[][30])
+ 
+ int get_cur_clocksource(char *buf, size_t size)
+ {
++	ssize_t len;
+ 	int fd;
+ 
+ 	fd = open("/sys/devices/system/clocksource/clocksource0/current_clocksource", O_RDONLY);
++	if (fd < 0)
++		return -1;
++
++	len = read(fd, buf, size - 1);
++
++	close(fd);
++
++	if (len <= 0)
++		return -1;
+ 
+-	size = read(fd, buf, size);
++	buf[len] = '\0';
+ 
+ 	return 0;
  }
 -- 
 2.53.0
