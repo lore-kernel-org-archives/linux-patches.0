@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058431;
-	b=JpgnWFh1Jso82O1698m7/7iEHeI+QehyqZFQC3at5s7+OmuhpC0pTEbgKP3olkuE1vtc
-	 hhBj3t/az0MWPnIMfehOfqukwfoioLlaW0rZLCqs0VYqlV9MLHXVBvC4s0o01A7617XPz
-	 EizeX6nVJDv6HpDwhJtrIViIfpVMaS4gTZplYUjIpyXX7YmYla0+hsYwyIrx3rZzE+Wr+
-	 NxdIfsZinaxRDBTPwSpIQx7IAEW/tWl/99gndpoJULRjVVVWOLmjOibOJKHbIj52ZxOsk
-	 INsk45siJRuiudWrjhv8vOLNT3biIKKj3XkQiJjUcNaNUxlzt01Hawdfx9vzTS+bpfQ==
+	t=1795058434;
+	b=HJ1/9ujpxt5B2sg7nfEZVdCk2mc/aerdgVZbjHf9tZ8fkLrQQGXaw9NYBwG/r6WJLQc8
+	 4hK6Vm4HFMdWiithHZbpGYIT9PGItmrjAqCfEA7zsY4iNQJcI/0rVOluYk9jsI8YnIRE+
+	 5Bkx7CvRh6coJOIZOhWSc1OmrU+n86CNlbC4O0Lc60NCY0Qv7KCEeiQpe4ewnEcQOcaSf
+	 41zHEPgdKIkydAsA21DdkitWkfYqfg2tBZtXCPDpRy4qp7p7xdAOIx8Dn/GJmGUj1PA6/
+	 8Vl3QPsdKdCwNYFTd9mfjK4y2WRsmwMgYoiAPCOqa3pG1xodRUXiaSfbw1zNdfZDuzg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058431;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058434;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PPwqx3gyAuK9AmusAkBlLDuJ01GZqeqylu5+7OqH0pc=;
-	b=UFkId89Qbpl8oo7WPabiXwCHM6CGl0HMO/vcpHrTYNqHiDDQY8nH3Qtcy8HQlTVkbpFh
-	 LHRI6hxsgNcYg+DVwLDj/KBrzH2kbIJ/jF8sZqmmHxh1qQz1le9UrXVscxUdZLdCGU6H1
-	 RTyFFi3dEJr9nVFQl5FWR9gZixCDGoTVTXIdy1KLYjmWGKeXyMIyKrDpTpJfUdGEwWVuU
-	 dzSjdzm+Nl4FDK8uXntfhjgbn1l2CHAButQVlXKVqjb79ZPG4j+XGUDH7W9bG/3w7SQpf
-	 o8WsLXoNEPx+AfrgOdcTQR0YnoNECEjJzPjscATEteG7QWCAdrIndqhRcFUHezRZKMQ==
+	bh=4zCh3MPpleioUJqxblt3NIcjbb6DZWhXu94AxCBdOP4=;
+	b=0vL0RPguWGhqHIxHw8xESsmFRd84uscOqvikpd8Xy+ert86UHD18IzgUDhNA/hbq4+hR
+	 WLpCwoOTFAO71kdx3JfJP81oVZdK70WtfkfwvSY59rQggqphg2WAMWj9Tjen0QFMuT42r
+	 N1hfnCdIzSBAgVKMymQ4EZUfkKroaGJqAkv9siq/O6ATEVkE04fmvwCCkHTAHs16pNpL6
+	 Y8SHDfU9prXItkCNpA9bDXRC82ioUJTPfN8WxVA5hij4k/n+k2MVjs8b5bx1eMRnsXcTL
+	 kfasQnRq7QyM2Xf7SdX80jdxm5eMpHDyYVqtZdAt9PAarm6moXl7Yw6nyLj3IiaXDsw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sMVnX9HZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lwyPPkNB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77421606A31C;
-	Thu, 19 Nov 2026 03:20:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3839B606A31C;
+	Thu, 19 Nov 2026 03:20:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sMVnX9HZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C511F000C4;
-	Thu, 19 Nov 2026 03:20:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lwyPPkNB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A6CA1F000C4;
+	Thu, 19 Nov 2026 03:20:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058431;
-	bh=PPwqx3gyAuK9AmusAkBlLDuJ01GZqeqylu5+7OqH0pc=;
+	s=korg; t=1795058434;
+	bh=4zCh3MPpleioUJqxblt3NIcjbb6DZWhXu94AxCBdOP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sMVnX9HZv0uBMvzNVSSTB+wfEVPh1GBeoAq/eGTVs5FlKOWoalm0ViiJ9EBK+tfbQ
-	 9rrWnfO4zI9oU6wz8c+wWbslMd1zfSqbiOq562fYdJ4QhmTnZIxVjv+aKg1tq3xHkO
-	 BP6/RnEjqDiAHhYxmS93HLmLHqx5Rcx+OuIRkSt0=
+	b=lwyPPkNBHzmyMeqbsuWxSbFB9oWeK6xeywc0XiGN0S4Ej3oAEkNixS+ARbxRiJgZn
+	 R8N/9LAkbUtw/0FpfW/k9CDComrTAaMRrrCoDKpmWeCrRIJW2VCEsKIXu1nlJs5gv0
+	 1ccZH8RcaAdkE2qGYjeHAt9bGGT7IMC8A20Bx350=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
-	Mark Anthony Agarro <markanthonyagarro@gmail.com>,
+	Jiale Yao <yaojiale02@163.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0481/1848] wifi: mt76: mt76x02: validate TX-status rate index before mac80211 handoff
-Date: Wed, 18 Nov 2026 15:41:59 +0100
-Message-ID: <20261118145934.358517044@linuxfoundation.org>
+Subject: [PATCH 5.10 0482/1848] wifi: mt76: mt7615: cancel reset work during unregister
+Date: Wed, 18 Nov 2026 15:42:00 +0100
+Message-ID: <20261118145934.388268057@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,79 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Anthony Agarro <markanthonyagarro@gmail.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit fbd12e8dabc8a9d2e81f427906749b4cff85d641 ]
+[ Upstream commit 5b779c63fb1e20e6729d3241b78be7502759296d ]
 
-mt76x02_mac_process_tx_rate() extracts the rate index straight from
-the hardware's raw TX-status word with no bounds check for the
-HT/HT_GF/VHT cases, and mt76x02_mac_fill_tx_status() ignores its
-return value. A stale or corrupt hardware index reaches mac80211's
-minstrel_ht rate control, whose per-group rate array is a fixed 10
-entries (MCS_GROUP_RATES), causing an out-of-bounds write.
+The MCU error interrupt handler queues reset_work on the device workqueue.
+Device removal can reach mt76_unregister_device() while that work is still
+pending, since the workqueue is not destroyed until mt76_free_device().
 
-Validate the index in mt76x02_mac_process_tx_rate() (HT: 0-31,
-VHT: MCS nibble 0-9) and have mt76x02_mac_fill_tx_status() bail out
-cleanly on failure instead of passing an invalid index through.
+If reset_work runs in this window, it operates on an unregistered hw and
+can requeue mac_work after ieee80211_unregister_hw() has torn the device
+down. Cancel it before unregistering the device so it cannot outlive the
+registered hw.
 
-Fixes: 7c1f88812690 ("mt76: unify send_tx_status and related helpers")
+Fixes: 61c4fa721968 ("mt76: mt7615: implement hardware reset support")
 Cc: stable@vger.kernel.org
-Tested-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Signed-off-by: Mark Anthony Agarro <markanthonyagarro@gmail.com>
-Link: https://patch.msgid.link/20260826092755.480190-1-markanthonyagarro@gmail.com
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Link: https://patch.msgid.link/20260927101041.957362-1-yaojiale02@163.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt76x02_mac.c  | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7615/pci_init.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c b/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
-index c5d3bb1d04b04..cf050ce03c538 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
-@@ -302,10 +302,14 @@ mt76x02_mac_process_tx_rate(struct ieee80211_tx_rate *txrate, u16 rate,
- 		txrate->flags |= IEEE80211_TX_RC_GREEN_FIELD;
- 		fallthrough;
- 	case MT_PHY_TYPE_HT:
-+		if (idx > 31)
-+			return -EINVAL;
- 		txrate->flags |= IEEE80211_TX_RC_MCS;
- 		txrate->idx = idx;
- 		break;
- 	case MT_PHY_TYPE_VHT:
-+		if ((idx & 0xf) > 9)
-+			return -EINVAL;
- 		txrate->flags |= IEEE80211_TX_RC_VHT_MCS;
- 		txrate->idx = idx;
- 		break;
-@@ -493,18 +497,21 @@ mt76x02_mac_fill_tx_status(struct mt76x02_dev *dev, struct mt76x02_sta *msta,
- 		first_rate = st->rate & ~MT_PKTID_RATE;
- 		first_rate |= st->pktid & MT_PKTID_RATE;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/pci_init.c b/drivers/net/wireless/mediatek/mt76/mt7615/pci_init.c
+index 726e4781d9d9f..b9330464e85cc 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7615/pci_init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7615/pci_init.c
+@@ -158,6 +158,7 @@ void mt7615_unregister_device(struct mt7615_dev *dev)
+ 	mcu_running = mt7615_wait_for_mcu_init(dev);
  
--		mt76x02_mac_process_tx_rate(&rate[0], first_rate,
--					    dev->mphy.chandef.chan->band);
-+		if (mt76x02_mac_process_tx_rate(&rate[0], first_rate,
-+						dev->mphy.chandef.chan->band))
-+			return;
- 	} else if (rate[0].idx < 0) {
- 		if (!msta)
- 			return;
- 
--		mt76x02_mac_process_tx_rate(&rate[0], msta->wcid.tx_info,
--					    dev->mphy.chandef.chan->band);
-+		if (mt76x02_mac_process_tx_rate(&rate[0], msta->wcid.tx_info,
-+						dev->mphy.chandef.chan->band))
-+			return;
- 	}
- 
--	mt76x02_mac_process_tx_rate(&last_rate, st->rate,
--				    dev->mphy.chandef.chan->band);
-+	if (mt76x02_mac_process_tx_rate(&last_rate, st->rate,
-+					dev->mphy.chandef.chan->band))
-+		return;
- 
- 	for (i = 0; i < ARRAY_SIZE(info->status.rates); i++) {
- 		retry--;
+ 	mt7615_unregister_ext_phy(dev);
++	cancel_work_sync(&dev->reset_work);
+ 	mt76_unregister_device(&dev->mt76);
+ 	if (mcu_running)
+ 		mt7615_mcu_exit(dev);
 -- 
 2.53.0
 
