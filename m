@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021400;
-	b=Uj4kQWje1ElP/PG3Ltzt+Cv603MtbJwrTeSQJSpBY3aLnS3c7TnL0A41mvpjjjk0W48T
-	 xT2Jy8tO7mxxhoyOP9e0Oj6aWtr3uTOISao/VnmiLW1ViS2aCRUViPNeTAyGXXav/XDXP
-	 2kUT20kuqgD0Dtqnf+cX05TKFOa9TWWAjtiYwx082WH2VagANy+4tP26BFBjoD1ujX0Gc
-	 umRmz+vyHj4gnXb+ifLfvj3fL++KeTPNvk3sstAh9bNfBfV8nxz93ZKYWxBV7AwbxZYt1
-	 JGtZc6Hegm+H4m3a74g5//es+UFCG7j0+i1XuwxpKMMhT2fn8dv9W248kp8U+zYFZRw==
+	t=1795021403;
+	b=4KujlSo3FSx1qgfFKn44fJbxVaddDfFKjtc0h3s4M2YTwzaBBH6Zp2S3wp/rPVjSSOIm
+	 sZSq6Uo50yBGZwvx67w+XBIZtq/1ubyJfxxKeZ36JhTDCi+5UpMdlS2lCGFlhXHY4B8+Z
+	 9Jyh+4wYRasfijeqwKzF26c7tMHfft1GKT/Qj3FolR233wjjXz4Tged1V4jTyK0OD6x6y
+	 4Pc8aPUJ/SdC4vmmlnbGnJ20KGvcHdId6gMljjtnCbGupKyjA/H97aAynBBbN/RRhvrfa
+	 ENn2R5cpVfKCqAFwBfReLrX40uw/CryQNes6CUQqyDg4rNiOwX98AMX/HbBarE7DuBg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021400;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021403;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YsQGeNcnlWqCmKRboMpyzj6uIaOiQx3jig1a2pavZmk=;
-	b=oT9k227bYscD/k6UpJnrxVx1dLlRVSsQkWTW0rOOYuIPvD+2ChyLPChrt7GdfiGzIORu
-	 ZUdKvUAqh2slhbxXIH8SvDE+pSuJe/06BwouUdte16tOmC9H67kMIx3FQzbDMr3rLuE9+
-	 At6hb6z1o5Jn1jR7r++2h4FweiSd4Ktoca4m1KkKU2bxb2Vs/kkWsw+98fA80CKJluSl8
-	 /squPU1x1dYHzSSkGUHkQ98/VRQ1z2+2bSFiBkOQJajnLLtVSfNNlQ2JvFg0Dc+xheY3W
-	 5fvKKH3dgh4dMhSgpBkWLZnpgOFP/I2PQX8NhmtaL+/po/UePPHhFOMOY0yUVnexTbQ==
+	bh=j39AQjt3YQwVJZlkp5FMjmi3f1gTexBv2BRnA3y3/2A=;
+	b=XFwzZxynMNlLo94w/ZWha6aX+x2FRkS/aQopJGV1/MJEUjtiKJJll3kvRo8k8xcqYC1R
+	 RGV+PTrJcDb1Q9JXwdhrJYQXME3qdpAK5pX08W7iVzvZBqXj9ixU6g3c7jtw3+mm4nofs
+	 jsfqx31ZtW+Cz+ti6J6zzgl9dvoIbewNOw7vevGRCj1PUle3ckVg2UQW3oLTc3DyOMDwy
+	 xjVAAjzYFyBW0PNxsylfVh00d6lFh82aQYMPDwNIhPefmeOs1KmXYFXhP+u4oyy/IqY6s
+	 pYGpsyZaxRucVlWRYezDc9f48/YdAad59Lni/V0NhhMrfa/MS1c3uY1rOhKeJb6pSSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OqDIJPgv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Hrf9bk1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5AB960A2603;
-	Wed, 18 Nov 2026 17:03:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801FA606A337;
+	Wed, 18 Nov 2026 17:03:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OqDIJPgv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 063211F000C4;
-	Wed, 18 Nov 2026 17:03:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Hrf9bk1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2E881F000C4;
+	Wed, 18 Nov 2026 17:03:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021400;
-	bh=YsQGeNcnlWqCmKRboMpyzj6uIaOiQx3jig1a2pavZmk=;
+	s=korg; t=1795021403;
+	bh=j39AQjt3YQwVJZlkp5FMjmi3f1gTexBv2BRnA3y3/2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OqDIJPgvCfuaJPto9wNDHt5qQSCDsou1x3o8zt8qhvGmeKIeW8hMT1+njh9O7gPMu
-	 jFuy9LbMgT7VIGll2W7ip29+Iueckhc2AdJEwrV0U5qi8OQh31H4aHYqa04OxeCLeZ
-	 BOSUMJY7lnvmUd9LqF5wc7nvhbwCIQhdolmOSxiY=
+	b=2Hrf9bk1qvgOhF/eMGoEUwwpLCKMK/ZdHZoMSza+lysAcFHC2DDkT8jHs8TfewDUY
+	 8l+lRMZDIWB61rwsvsEJ7ONOFixdDtsTIWUh/lhxpau/EmR0H1ckhRacYrSYhrLklx
+	 0ZnsgmYx58HgqcIGGeq9Hs15/auuq1VY3Zq7GsZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pan Guihua <pan.guihua@datatom.com>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2294/2651] ksmbd: keep lease tables until their last lease is closed
-Date: Wed, 18 Nov 2026 15:58:54 +0100
-Message-ID: <20261118150407.837181353@linuxfoundation.org>
+Subject: [PATCH 7.3 2295/2651] ksmbd: inherit FileIds in related compound requests
+Date: Wed, 18 Nov 2026 15:58:55 +0100
+Message-ID: <20261118150407.869025208@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,167 +70,272 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 20e3068315423e6e493588dd94d462c8e7fd3a2e ]
+[ Upstream commit 318cd7461a7facb9cd5f7a5d1580fd874440e035 ]
 
-Disconnecting one channel destroys the lease table for its ClientGuid,
-even when another channel still uses the same opens. A lease break ACK
-on the surviving channel can no longer find the lease. Detached durable
-opens also lose their lease lookup entries before reconnect or expiry.
+MS-SMB2 specifies that subsequent related operations use the FileId from
+the preceding operation. Track FileIds from handle-bearing requests so
+related requests that use the all-ones placeholder resolve to the
+inherited handle.
 
-Tie a client table to its lease entries instead of the connection which
-created it. Remove the table when its last lease is removed, and release
-any remaining entries at server shutdown. Do not destroy client tables
-from connection teardown or keep a connection reference in each table.
+Return STATUS_INVALID_HANDLE when a related request refers to a FileId
+but the preceding operation neither contained nor generated one.
 
-For a detached lease, collect break candidates using the table's
-ClientGuid directly. The existing notification retry path takes its own
-references on matching live connections.
-
-Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
-Reported-by: Pan Guihua <pan.guihua@datatom.com>
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Reported-by: Ronnie Sahlberg <ronniesahlberg@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/oplock.c | 46 +++++++++++++++++-------------------------
- fs/smb/server/oplock.h |  3 +--
- fs/smb/server/server.c |  3 +--
- 3 files changed, 20 insertions(+), 32 deletions(-)
+ fs/smb/server/ksmbd_work.h |   9 ++-
+ fs/smb/server/server.c     |   5 +-
+ fs/smb/server/smb2pdu.c    | 150 ++++++++++++++++++++++++++++---------
+ fs/smb/server/smb2pdu.h    |   1 +
+ 4 files changed, 126 insertions(+), 39 deletions(-)
 
-diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
-index 313bf01ad3508..96b36b8329a66 100644
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -125,6 +125,12 @@ static void lease_add_table(struct lease *lease, struct lease_table *lb)
- 	spin_unlock(&lb->lb_lock);
- }
+diff --git a/fs/smb/server/ksmbd_work.h b/fs/smb/server/ksmbd_work.h
+index 6877f68381186..be98a2c3be770 100644
+--- a/fs/smb/server/ksmbd_work.h
++++ b/fs/smb/server/ksmbd_work.h
+@@ -54,10 +54,7 @@ struct ksmbd_work {
+ 	/* Current cmd hdr in compound rsp buf*/
+ 	int                             curr_smb2_rsp_hdr_off;
  
-+static void free_lease_table(struct lease_table *lb)
-+{
-+	kfree(lb);
-+}
-+
-+/* The caller holds lease_list_lock for write. */
- static void lease_del_table(struct lease *lease)
- {
- 	struct lease_table *lb = lease->l_lb;
-@@ -143,6 +149,10 @@ static void lease_del_table(struct lease *lease)
- 	spin_unlock(&lb->lb_lock);
+-	/*
+-	 * Current Local FID assigned compound response if SMB2 CREATE
+-	 * command is present in compound request
+-	 */
++	/* FileId generated or used by the previous operation in a compound. */
+ 	u64				compound_fid;
+ 	u64				compound_pfid;
+ 	u64				compound_sid;
+@@ -95,6 +92,10 @@ struct ksmbd_work {
+ 	bool				owns_conn_ref:1;
+ 	bool                            need_invalidate_rkey:1;
+ 	bool				request_open_chseq_tracked:1;
++	/* The previous command carries a FileId or is a CREATE. */
++	bool				compound_fid_present:1;
++	/* A related command failed because there was no FileId to inherit. */
++	bool				compound_fid_missing:1;
+ 	bool				session_setup_reauth:1;
  
- 	lease_put(lease);
-+	if (list_empty(&lb->lease_list)) {
-+		list_del(&lb->l_entry);
-+		free_lease_table(lb);
-+	}
- }
- 
- static struct lease_table *alloc_lease_table(struct oplock_info *opinfo)
-@@ -155,21 +165,11 @@ static struct lease_table *alloc_lease_table(struct oplock_info *opinfo)
- 
- 	memcpy(lb->client_guid, opinfo->conn->ClientGUID,
- 	       SMB2_CLIENT_GUID_SIZE);
--	lb->conn = ksmbd_conn_get(opinfo->conn);
- 	INIT_LIST_HEAD(&lb->lease_list);
- 	spin_lock_init(&lb->lb_lock);
- 	return lb;
- }
- 
--static void free_lease_table(struct lease_table *lb)
--{
--	if (!lb)
--		return;
--
--	ksmbd_conn_put(lb->conn);
--	kfree(lb);
--}
--
- static struct lease *alloc_lease(struct lease_ctx_info *lctx,
- 				 struct ksmbd_inode *ci)
- {
-@@ -927,8 +927,6 @@ static int smb2_break_collect_channels(struct oplock_info *opinfo,
- 		if (lb) {
- 			memcpy(guid, lb->client_guid, sizeof(guid));
- 			have_guid = true;
--			if (lb->conn)
--				owner->conn = ksmbd_conn_get(lb->conn);
- 		}
- 		read_unlock(&lease_list_lock);
- 	}
-@@ -1495,25 +1493,17 @@ static void oplock_break_drain_none(struct list_head *head,
- 	}
- }
- 
--void destroy_lease_table(struct ksmbd_conn *conn)
-+void destroy_lease_table(void)
- {
--	struct lease_table *lb, *lbtmp;
--	struct lease *lease, *ltmp;
-+	struct lease_table *lb;
-+	struct lease *lease;
- 
- 	write_lock(&lease_list_lock);
--	if (list_empty(&lease_table_list)) {
--		write_unlock(&lease_list_lock);
--		return;
--	}
--
--	list_for_each_entry_safe(lb, lbtmp, &lease_table_list, l_entry) {
--		if (conn && memcmp(lb->client_guid, conn->ClientGUID,
--				   SMB2_CLIENT_GUID_SIZE))
--			continue;
--		list_for_each_entry_safe(lease, ltmp, &lb->lease_list, l_entry)
--			lease_del_table(lease);
--		list_del(&lb->l_entry);
--		free_lease_table(lb);
-+	while (!list_empty(&lease_table_list)) {
-+		lb = list_first_entry(&lease_table_list, struct lease_table,
-+				      l_entry);
-+		lease = list_first_entry(&lb->lease_list, struct lease, l_entry);
-+		lease_del_table(lease);
- 	}
- 	write_unlock(&lease_list_lock);
- }
-diff --git a/fs/smb/server/oplock.h b/fs/smb/server/oplock.h
-index e114e2148c30e..5ef05166e5020 100644
---- a/fs/smb/server/oplock.h
-+++ b/fs/smb/server/oplock.h
-@@ -34,7 +34,6 @@ struct lease_ctx_info {
- 
- struct lease_table {
- 	char			client_guid[SMB2_CLIENT_GUID_SIZE];
--	struct ksmbd_conn	*conn;
- 	struct list_head	lease_list;
- 	struct list_head	l_entry;
- 	spinlock_t		lb_lock;
-@@ -122,7 +121,7 @@ struct oplock_info *lookup_lease_in_table(struct ksmbd_conn *conn,
- 					  char *lease_key);
- int find_same_lease_key(struct ksmbd_conn *conn, struct ksmbd_inode *ci,
- 			struct lease_ctx_info *lctx);
--void destroy_lease_table(struct ksmbd_conn *conn);
-+void destroy_lease_table(void);
- void smb_send_parent_lease_break_noti(struct ksmbd_file *fp,
- 				      struct lease_ctx_info *lctx);
- void smb_lazy_parent_lease_break_close(struct ksmbd_file *fp);
+ 	unsigned int                    remote_key;
 diff --git a/fs/smb/server/server.c b/fs/smb/server/server.c
-index 0593094f5fd08..c836e75b4825c 100644
+index c836e75b4825c..064f99427ca6f 100644
 --- a/fs/smb/server/server.c
 +++ b/fs/smb/server/server.c
-@@ -436,7 +436,6 @@ static int ksmbd_server_process_request(struct ksmbd_conn *conn)
- static int ksmbd_server_terminate_conn(struct ksmbd_conn *conn)
- {
- 	ksmbd_conn_sessions_cleanup(conn);
--	destroy_lease_table(conn);
+@@ -157,7 +157,10 @@ static int __process_request(struct ksmbd_work *work, struct ksmbd_conn *conn,
+ 		}
+ 	}
+ 
+-	ret = cmds->proc(work);
++	if (smb2_check_compound_fid(work))
++		ret = -EBADF;
++	else
++		ret = cmds->proc(work);
+ 	if (conn->ops->inc_reqs) {
+ 		struct smb2_hdr *rsp = ksmbd_resp_buf_curr(work);
+ 
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 74b4e332317b7..c380f82ed8796 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -458,6 +458,95 @@ int smb2_set_rsp_credits(struct ksmbd_work *work)
  	return 0;
  }
  
-@@ -666,7 +665,7 @@ static int ksmbd_server_shutdown(void)
- 	ksmbd_proc_cleanup();
- 	ksmbd_crypto_destroy();
- 	ksmbd_free_global_file_table();
--	destroy_lease_table(NULL);
-+	destroy_lease_table();
- 	ksmbd_work_pool_destroy();
- 	ksmbd_exit_file_cache();
- 	server_conf_free();
++static bool smb2_get_file_ids(struct smb2_hdr *hdr, u64 *volatile_id,
++			      u64 *persistent_id)
++{
++	unsigned int offset;
++
++	switch (hdr->Command) {
++	case SMB2_CLOSE:
++		offset = offsetof(struct smb2_close_req, PersistentFileId);
++		break;
++	case SMB2_FLUSH:
++		offset = offsetof(struct smb2_flush_req, PersistentFileId);
++		break;
++	case SMB2_READ:
++		offset = offsetof(struct smb2_read_req, PersistentFileId);
++		break;
++	case SMB2_WRITE:
++		offset = offsetof(struct smb2_write_req, PersistentFileId);
++		break;
++	case SMB2_LOCK:
++		offset = offsetof(struct smb2_lock_req, PersistentFileId);
++		break;
++	case SMB2_IOCTL: {
++		struct smb2_ioctl_req *req = (struct smb2_ioctl_req *)hdr;
++
++		switch (le32_to_cpu(req->CtlCode)) {
++		case FSCTL_DFS_GET_REFERRALS:
++		case FSCTL_DFS_GET_REFERRALS_EX:
++		case FSCTL_QUERY_NETWORK_INTERFACE_INFO:
++		case FSCTL_VALIDATE_NEGOTIATE_INFO:
++		case FSCTL_PIPE_WAIT:
++			return false;
++		}
++		offset = offsetof(struct smb2_ioctl_req, PersistentFileId);
++		break;
++	}
++	case SMB2_QUERY_DIRECTORY:
++		offset = offsetof(struct smb2_query_directory_req, PersistentFileId);
++		break;
++	case SMB2_CHANGE_NOTIFY:
++		offset = offsetof(struct smb2_change_notify_req, PersistentFileId);
++		break;
++	case SMB2_QUERY_INFO:
++		offset = offsetof(struct smb2_query_info_req, PersistentFileId);
++		break;
++	case SMB2_SET_INFO:
++		offset = offsetof(struct smb2_set_info_req, PersistentFileId);
++		break;
++	case SMB2_OPLOCK_BREAK:
++		if (((struct smb2_oplock_break *)hdr)->StructureSize !=
++		    cpu_to_le16(OP_BREAK_STRUCT_SIZE_20))
++			return false;
++		offset = offsetof(struct smb2_oplock_break, PersistentFid);
++		break;
++	default:
++		return false;
++	}
++
++	/* FileId contains consecutive persistent and volatile opaque values. */
++	memcpy(persistent_id, (char *)hdr + offset, sizeof(*persistent_id));
++	memcpy(volatile_id, (char *)hdr + offset + sizeof(*persistent_id),
++	       sizeof(*volatile_id));
++	return true;
++}
++
++/* Called after message validation and signature verification. */
++bool smb2_check_compound_fid(struct ksmbd_work *work)
++{
++	struct smb2_hdr *req = ksmbd_req_buf_next(work);
++	struct smb2_hdr *rsp = ksmbd_resp_buf_next(work);
++	u64 volatile_id, persistent_id;
++
++	if (!work->next_smb2_rcv_hdr_off ||
++	    !(req->Flags & SMB2_FLAGS_RELATED_OPERATIONS))
++		return false;
++
++	if (!work->compound_fid_missing &&
++	    !work->compound_fid_present &&
++	    smb2_get_file_ids(req, &volatile_id, &persistent_id))
++		work->compound_fid_missing = true;
++
++	if (!work->compound_fid_missing)
++		return false;
++
++	/* MS-SMB2 3.3.5.2.7.2 requires all subsequent operations to fail too. */
++	rsp->Status = STATUS_INVALID_HANDLE;
++	smb2_set_err_rsp(work);
++	return true;
++}
++
+ /**
+  * init_chained_smb2_rsp() - initialize smb2 chained response
+  * @work:	smb work containing smb response buffer
+@@ -470,6 +559,21 @@ static void init_chained_smb2_rsp(struct ksmbd_work *work)
+ 	struct smb2_hdr *rcv_hdr;
+ 	int next_hdr_offset = 0;
+ 	int len, new_len;
++	u64 volatile_id = KSMBD_NO_FID, persistent_id = KSMBD_NO_FID;
++	bool req_has_fid;
++
++	req_has_fid = smb2_get_file_ids(req, &volatile_id, &persistent_id);
++	/* A failed CREATE is handled through compound_status instead. */
++	work->compound_fid_present = req_has_fid || req->Command == SMB2_CREATE;
++	if (!work->compound_fid_present) {
++		work->compound_fid = KSMBD_NO_FID;
++		work->compound_pfid = KSMBD_NO_FID;
++	}
++
++	/* Related requests keep the inherited SessionId. */
++	if (!work->next_smb2_rcv_hdr_off ||
++	    !(req->Flags & SMB2_FLAGS_RELATED_OPERATIONS))
++		work->compound_sid = le64_to_cpu(rsp->SessionId);
+ 
+ 	/* Len of this response = updated RFC len - offset of previous cmd
+ 	 * in the compound rsp
+@@ -481,48 +585,24 @@ static void init_chained_smb2_rsp(struct ksmbd_work *work)
+ 	if (req->Command == SMB2_CREATE && rsp->Status == STATUS_SUCCESS) {
+ 		work->compound_fid = ((struct smb2_create_rsp *)rsp)->VolatileFileId;
+ 		work->compound_pfid = ((struct smb2_create_rsp *)rsp)->PersistentFileId;
+-		work->compound_sid = le64_to_cpu(rsp->SessionId);
+ 		work->compound_status = STATUS_SUCCESS;
+-	} else if ((req->Command == SMB2_FLUSH ||
+-		    req->Command == SMB2_READ ||
+-		    req->Command == SMB2_WRITE) &&
+-		   rsp->Status == STATUS_SUCCESS) {
+-		u64 volatile_id = KSMBD_NO_FID;
+-		u64 persistent_id = KSMBD_NO_FID;
+-
+-		if (req->Command == SMB2_FLUSH) {
+-			struct smb2_flush_req *flush_req =
+-				(struct smb2_flush_req *)req;
+-
+-			volatile_id = flush_req->VolatileFileId;
+-			persistent_id = flush_req->PersistentFileId;
+-		} else if (req->Command == SMB2_READ) {
+-			struct smb2_read_req *read_req =
+-				(struct smb2_read_req *)req;
+-
+-			volatile_id = read_req->VolatileFileId;
+-			persistent_id = read_req->PersistentFileId;
++	} else if (rsp->Status == STATUS_SUCCESS) {
++		if (req_has_fid && req->Command != SMB2_CLOSE) {
++			/* Preserve the inherited FID when the request uses all ones. */
++			if (has_file_id(volatile_id)) {
++				work->compound_fid = volatile_id;
++				work->compound_pfid = persistent_id;
++			}
+ 		} else {
+-			struct smb2_write_req *write_req =
+-				(struct smb2_write_req *)req;
+-
+-			volatile_id = write_req->VolatileFileId;
+-			persistent_id = write_req->PersistentFileId;
+-		}
+-
+-		if (has_file_id(volatile_id)) {
+-			work->compound_fid = volatile_id;
+-			work->compound_pfid = persistent_id;
+-			work->compound_sid = le64_to_cpu(rsp->SessionId);
+-			work->compound_status = STATUS_SUCCESS;
++			work->compound_fid = KSMBD_NO_FID;
++			work->compound_pfid = KSMBD_NO_FID;
+ 		}
++		work->compound_status = STATUS_SUCCESS;
+ 	} else if (req->Command == SMB2_CREATE) {
+ 		work->compound_fid = KSMBD_NO_FID;
+ 		work->compound_pfid = KSMBD_NO_FID;
+-		work->compound_sid = le64_to_cpu(rsp->SessionId);
+ 		work->compound_status = rsp->Status;
+ 	} else if (rsp->Status != STATUS_SUCCESS) {
+-		work->compound_sid = le64_to_cpu(rsp->SessionId);
+ 		/*
+ 		 * Only carry the failed status forward when the failing command
+ 		 * was itself part of the related chain. An unrelated command
+@@ -561,6 +641,8 @@ static void init_chained_smb2_rsp(struct ksmbd_work *work)
+ 		work->compound_fid = KSMBD_NO_FID;
+ 		work->compound_pfid = KSMBD_NO_FID;
+ 		work->compound_status = STATUS_SUCCESS;
++		work->compound_fid_present = false;
++		work->compound_fid_missing = false;
+ 	}
+ 	memset((char *)rsp_hdr, 0, sizeof(struct smb2_hdr) + 2);
+ 	rsp_hdr->ProtocolId = SMB2_PROTO_NUMBER;
+diff --git a/fs/smb/server/smb2pdu.h b/fs/smb/server/smb2pdu.h
+index 20a5337459ab0..38270130d1444 100644
+--- a/fs/smb/server/smb2pdu.h
++++ b/fs/smb/server/smb2pdu.h
+@@ -397,6 +397,7 @@ bool is_smb2_rsp(struct ksmbd_work *work);
+ u16 get_smb2_cmd_val(struct ksmbd_work *work);
+ void set_smb2_rsp_status(struct ksmbd_work *work, __le32 err);
+ int init_smb2_rsp_hdr(struct ksmbd_work *work);
++bool smb2_check_compound_fid(struct ksmbd_work *work);
+ int smb2_allocate_rsp_buf(struct ksmbd_work *work);
+ bool is_chained_smb2_message(struct ksmbd_work *work);
+ int init_smb2_neg_rsp(struct ksmbd_work *work);
 -- 
 2.53.0
 
