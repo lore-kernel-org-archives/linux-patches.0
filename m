@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033205;
-	b=BqnrpfMoYWAvR1YkKpiwlX1pxFAO1oL+0lupoF25H20og7h0pyU8y6As4lLJH6CYpp5g
-	 GguRh4Z19kD8UYynuwwgl/GyKgh+GaL64UUXkG5s3Qd1h74ooy8U1wiNsVEkCtCONC5Za
-	 0oMINyz3QmF4NspDscCYBPeMqw9p5viZd+QLBngG04FZKz6okpsW0UVU1aKrRai5X6/bk
-	 v3AyP3oSjRfT2LI/VTKazUwlo/3QJ44NhTPud6QKyXchjjHiZ9zoV2Pj92qwUQGwZuUAo
-	 oLRI53yB7W6kUn4E5IeFKqv706bD7y7+hBk8GuuOzwKwTNNVbytRNaSyDAQVTLMCoDg==
+	t=1795033208;
+	b=jEspWWifnLsJTM61V/INtoMufuM/aFbfq9Sx7FBCAW6AulTM01SXU6AIdxFHxhJAs/zz
+	 MxZ3SqhAki2gRUzNuYHDnWpIBCwgHeJLJI3le7gmup7HvW1k7WkXP6/wcC62k817P8Gpq
+	 9QiWVuI1tavIVhmGRhFsjN+v2XulgJOkLspWwF6J8VeWcIP6Y+3DH6DNdxnRX7z5rQ/Rg
+	 r5MDt7p0jMbVCV4EY+VswIrs3aVaObui7ENK3LpPZE1fq1SrUf/BXJwOAsuQn4JXfQhv6
+	 9TqtYbqg0L0K94mdG0ygErSYTvkwXDHCBsUZbtpgRxBEsH8QC5W6nQ+MtBQ0gcEkbPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033205;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033208;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=L+nzN7AIClMtPC8Y3leUMnsV+4fJ8JeLGwhaGSIUe4Q=;
-	b=LS2vm4B6bj531uQVwW9DVQYPBjnYYwxle5FyLJFBkMWfvNvpRoIhx8X3wTH1VCkxeBik
-	 F3o+QNAaorA5HqJaeICYVllTMWQdvOT56+Mn2eVvK+tX9E5MW5LDyRIgvuT9sqzgxDS9m
-	 bNm+Ld6wlQbKtegvsCHJxv77lNjJs22YRN/tjS+s+/8gMYlF2ryarDj51CE97IcjJKeIU
-	 a/pnkQnjG0GRHyFXqVTN5dw3TefaCJ/UKsPmSY/PjlkuKNqdxD6U3q4HrN7CBBagUVlWy
-	 eSZzPm/tjhrN4GrH1KdH8DQsG/dU/6dIhgSh9O48NwccKEaavYcw+s5YhNphFk9DHIA==
+	bh=p9vGCNXf23NTNHAh/hM3DT6KRJ57QWksEg4WX8iv4BI=;
+	b=2PqsugmFdelRmqXVISNtBTmcUMkcBL9oYZ5qN/dqlhYpOIHOSiFftESatrSAHSwIGdDn
+	 qCqKOvnyhsHGoTnI0gyOQn6gOtDbE6kBff2dasX16jNpDNv7/RPr7wwfMubBu52Qd96xz
+	 rOo4ocpVXFwv2MD+ah632DndcfZXdhIsuWBjkIRSmhLNLECyNsV8uaxaZMY50pZqa6yt4
+	 dUoEbwzah9SmH7HxrBPn+OAAdt8+QVUFKiIgoTw8ls39FmmAOHc2fgj00po0ZpSna3kKx
+	 6FuvnAOeA3mFDuTPchqkncSxxIiIHriJmWxv2Khb7DljAFznogqDX05GI2sbsTmFvmg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DQewDcLV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vbiUi3Vc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67FAB606A33B;
-	Wed, 18 Nov 2026 20:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50547606A33A;
+	Wed, 18 Nov 2026 20:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DQewDcLV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73D221F000C4;
-	Wed, 18 Nov 2026 20:20:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vbiUi3Vc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23C851F000C4;
+	Wed, 18 Nov 2026 20:20:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033205;
-	bh=L+nzN7AIClMtPC8Y3leUMnsV+4fJ8JeLGwhaGSIUe4Q=;
+	s=korg; t=1795033207;
+	bh=p9vGCNXf23NTNHAh/hM3DT6KRJ57QWksEg4WX8iv4BI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DQewDcLVgdE/rcHvSylmjkW5DGeYQ/VqisELnD1FBCAXQeVl290aPRgdF3GkSPFLm
-	 kE/ta3dIua5bYHxTXX2QW2b4spsOvpNiDXqAx4WyC668WFblY6Jqi7AfAAz2F9qkt8
-	 9Z8OGHvcvaaYTGqCD2+Mi+FPNn58GEFb9ORhatH8=
+	b=vbiUi3Vc8UVbcNh1Fsh2x9oHN4cCRNrqV709g6eXozlkBgvr+QCBIGBneZNt39Vgn
+	 AjLG3H+DZtouB7qhZCnCvNIbSlYRSnzd0KIGIMDrIyAWYDEGqQGzuheUhd09VJZMsk
+	 diFYSnDKF4ZjAxYDiFOGnRUQ2Y6vM/INtk50XEyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Berger <opendmb@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Tejun Heo <tj@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1648/1756] net: bcmgenet: introduce bcmgenet_[r|t]dma_disable
-Date: Wed, 18 Nov 2026 16:02:55 +0100
-Message-ID: <20261118150115.353493381@linuxfoundation.org>
+Subject: [PATCH 6.12 1684/1756] block: introduce init_wait_func()
+Date: Wed, 18 Nov 2026 16:03:31 +0100
+Message-ID: <20261118150116.730207064@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,192 +71,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doug Berger <opendmb@gmail.com>
+From: Muchun Song <songmuchun@bytedance.com>
 
-[ Upstream commit 791f349d02f73aa5c11e84994447adcaf76a92a4 ]
+[ Upstream commit 36d03cb3277e29beedb87b8efb1e4da02b26e0c0 ]
 
-The bcmgenet_rdma_disable and bcmgenet_tdma_disable functions
-are introduced to provide a common method for disabling each
-dma and the code is simplified.
+There is already a macro DEFINE_WAIT_FUNC() to declare a wait_queue_entry
+with a specified waking function. But there is not a counterpart for
+initializing one wait_queue_entry with a specified waking function. So
+introducing init_wait_func() for this, which also could be used in iocost
+and rq-qos. Using default_wake_function() in rq_qos_wait() to wake up
+waiters, which could remove ->task field from rq_qos_wait_data.
 
-Signed-off-by: Doug Berger <opendmb@gmail.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20250306192643.2383632-11-opendmb@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 1c1f51c3ee9c ("net: bcmgenet: recover from a failed resume")
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Muchun Song <songmuchun@bytedance.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20250208090416.38642-1-songmuchun@bytedance.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 0150554a3f38 ("blk-iocost: publish hweights as one atomic value")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/broadcom/genet/bcmgenet.c    | 123 +++++++++---------
- 1 file changed, 62 insertions(+), 61 deletions(-)
+ block/blk-iocost.c   |  3 +--
+ block/blk-rq-qos.c   | 14 +++++++-------
+ include/linux/wait.h |  6 ++++--
+ 3 files changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index d02473abf9bb8..44bee231caab8 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -2789,6 +2789,52 @@ static void bcmgenet_fini_tx_napi(struct bcmgenet_priv *priv)
- 	}
+diff --git a/block/blk-iocost.c b/block/blk-iocost.c
+index 2a4d246fd9922..9496666b65b6a 100644
+--- a/block/blk-iocost.c
++++ b/block/blk-iocost.c
+@@ -2722,8 +2722,7 @@ static void ioc_rqos_throttle(struct rq_qos *rqos, struct bio *bio)
+ 	 * All waiters are on iocg->waitq and the wait states are
+ 	 * synchronized using waitq.lock.
+ 	 */
+-	init_waitqueue_func_entry(&wait.wait, iocg_wake_fn);
+-	wait.wait.private = current;
++	init_wait_func(&wait.wait, iocg_wake_fn);
+ 	wait.bio = bio;
+ 	wait.abs_cost = abs_cost;
+ 	wait.committed = false;	/* will be set true by waker */
+diff --git a/block/blk-rq-qos.c b/block/blk-rq-qos.c
+index eb9618cd68adf..0b1245d368cd1 100644
+--- a/block/blk-rq-qos.c
++++ b/block/blk-rq-qos.c
+@@ -196,7 +196,6 @@ bool rq_depth_scale_down(struct rq_depth *rqd, bool hard_throttle)
+ 
+ struct rq_qos_wait_data {
+ 	struct wait_queue_entry wq;
+-	struct task_struct *task;
+ 	struct rq_wait *rqw;
+ 	acquire_inflight_cb_t *cb;
+ 	void *private_data;
+@@ -218,7 +217,12 @@ static int rq_qos_wake_function(struct wait_queue_entry *curr,
+ 		return -1;
+ 
+ 	data->got_token = true;
+-	wake_up_process(data->task);
++	/*
++	 * autoremove_wake_function() removes the wait entry only when it
++	 * actually changed the task state. We want the wait always removed.
++	 * Remove explicitly and use default_wake_function().
++	 */
++	default_wake_function(curr, mode, wake_flags, key);
+ 	list_del_init_careful(&curr->entry);
+ 	return 1;
  }
- 
-+static int bcmgenet_tdma_disable(struct bcmgenet_priv *priv)
-+{
-+	int timeout = 0;
-+	u32 reg, mask;
-+
-+	reg = bcmgenet_tdma_readl(priv, DMA_CTRL);
-+	mask = (1 << (priv->hw_params->tx_queues + 1)) - 1;
-+	mask = (mask << DMA_RING_BUF_EN_SHIFT) | DMA_EN;
-+	reg &= ~mask;
-+	bcmgenet_tdma_writel(priv, reg, DMA_CTRL);
-+
-+	/* Check DMA status register to confirm DMA is disabled */
-+	while (timeout++ < DMA_TIMEOUT_VAL) {
-+		reg = bcmgenet_tdma_readl(priv, DMA_STATUS);
-+		if ((reg & mask) == mask)
-+			return 0;
-+
-+		udelay(1);
-+	}
-+
-+	return -ETIMEDOUT;
-+}
-+
-+static int bcmgenet_rdma_disable(struct bcmgenet_priv *priv)
-+{
-+	int timeout = 0;
-+	u32 reg, mask;
-+
-+	reg = bcmgenet_rdma_readl(priv, DMA_CTRL);
-+	mask = (1 << (priv->hw_params->rx_queues + 1)) - 1;
-+	mask = (mask << DMA_RING_BUF_EN_SHIFT) | DMA_EN;
-+	reg &= ~mask;
-+	bcmgenet_rdma_writel(priv, reg, DMA_CTRL);
-+
-+	/* Check DMA status register to confirm DMA is disabled */
-+	while (timeout++ < DMA_TIMEOUT_VAL) {
-+		reg = bcmgenet_rdma_readl(priv, DMA_STATUS);
-+		if ((reg & mask) == mask)
-+			return 0;
-+
-+		udelay(1);
-+	}
-+
-+	return -ETIMEDOUT;
-+}
-+
- /* Initialize Tx queues
-  *
-  * Queues 1-4 are the priority queues, each one has 32 descriptors.
-@@ -2911,26 +2957,9 @@ static int bcmgenet_init_rx_queues(struct net_device *dev)
- static int bcmgenet_dma_teardown(struct bcmgenet_priv *priv)
+@@ -244,11 +248,6 @@ void rq_qos_wait(struct rq_wait *rqw, void *private_data,
+ 		 cleanup_cb_t *cleanup_cb)
  {
- 	int ret = 0;
--	int timeout = 0;
--	u32 reg;
--	u32 dma_ctrl;
--	int i;
+ 	struct rq_qos_wait_data data = {
+-		.wq = {
+-			.func	= rq_qos_wake_function,
+-			.entry	= LIST_HEAD_INIT(data.wq.entry),
+-		},
+-		.task = current,
+ 		.rqw = rqw,
+ 		.cb = acquire_inflight_cb,
+ 		.private_data = private_data,
+@@ -259,6 +258,7 @@ void rq_qos_wait(struct rq_wait *rqw, void *private_data,
+ 	if (!has_sleeper && acquire_inflight_cb(rqw, private_data))
+ 		return;
  
- 	/* Disable TDMA to stop add more frames in TX DMA */
--	reg = bcmgenet_tdma_readl(priv, DMA_CTRL);
--	reg &= ~DMA_EN;
--	bcmgenet_tdma_writel(priv, reg, DMA_CTRL);
--
--	/* Check TDMA status register to confirm TDMA is disabled */
--	while (timeout++ < DMA_TIMEOUT_VAL) {
--		reg = bcmgenet_tdma_readl(priv, DMA_STATUS);
--		if (reg & DMA_DISABLED)
--			break;
--
--		udelay(1);
--	}
--
--	if (timeout == DMA_TIMEOUT_VAL) {
-+	if (-ETIMEDOUT == bcmgenet_tdma_disable(priv)) {
- 		netdev_warn(priv->dev, "Timed out while disabling TX DMA\n");
- 		ret = -ETIMEDOUT;
- 	}
-@@ -2939,39 +2968,11 @@ static int bcmgenet_dma_teardown(struct bcmgenet_priv *priv)
- 	usleep_range(10000, 20000);
++	init_wait_func(&data.wq, rq_qos_wake_function);
+ 	has_sleeper = !prepare_to_wait_exclusive(&rqw->wait, &data.wq,
+ 						 TASK_UNINTERRUPTIBLE);
+ 	do {
+diff --git a/include/linux/wait.h b/include/linux/wait.h
+index 2b322a9b88a2b..10e46d5c31784 100644
+--- a/include/linux/wait.h
++++ b/include/linux/wait.h
+@@ -1207,14 +1207,16 @@ int autoremove_wake_function(struct wait_queue_entry *wq_entry, unsigned mode, i
  
- 	/* Disable RDMA */
--	reg = bcmgenet_rdma_readl(priv, DMA_CTRL);
--	reg &= ~DMA_EN;
--	bcmgenet_rdma_writel(priv, reg, DMA_CTRL);
--
--	timeout = 0;
--	/* Check RDMA status register to confirm RDMA is disabled */
--	while (timeout++ < DMA_TIMEOUT_VAL) {
--		reg = bcmgenet_rdma_readl(priv, DMA_STATUS);
--		if (reg & DMA_DISABLED)
--			break;
--
--		udelay(1);
--	}
--
--	if (timeout == DMA_TIMEOUT_VAL) {
-+	if (-ETIMEDOUT == bcmgenet_rdma_disable(priv)) {
- 		netdev_warn(priv->dev, "Timed out while disabling RX DMA\n");
- 		ret = -ETIMEDOUT;
- 	}
+ #define DEFINE_WAIT(name) DEFINE_WAIT_FUNC(name, autoremove_wake_function)
  
--	dma_ctrl = 0;
--	for (i = 0; i <= priv->hw_params->rx_queues; i++)
--		dma_ctrl |= (1 << (i + DMA_RING_BUF_EN_SHIFT));
--	reg = bcmgenet_rdma_readl(priv, DMA_CTRL);
--	reg &= ~dma_ctrl;
--	bcmgenet_rdma_writel(priv, reg, DMA_CTRL);
--
--	dma_ctrl = 0;
--	for (i = 0; i <= priv->hw_params->tx_queues; i++)
--		dma_ctrl |= (1 << (i + DMA_RING_BUF_EN_SHIFT));
--	reg = bcmgenet_tdma_readl(priv, DMA_CTRL);
--	reg &= ~dma_ctrl;
--	bcmgenet_tdma_writel(priv, reg, DMA_CTRL);
--
- 	return ret;
- }
+-#define init_wait(wait)								\
++#define init_wait_func(wait, function)						\
+ 	do {									\
+ 		(wait)->private = current;					\
+-		(wait)->func = autoremove_wake_function;			\
++		(wait)->func = function;					\
+ 		INIT_LIST_HEAD(&(wait)->entry);					\
+ 		(wait)->flags = 0;						\
+ 	} while (0)
  
-@@ -2997,27 +2998,27 @@ static void bcmgenet_fini_dma(struct bcmgenet_priv *priv)
- static int bcmgenet_init_dma(struct bcmgenet_priv *priv, bool flush_rx)
- {
- 	struct enet_cb *cb;
--	u32 reg, dma_ctrl;
- 	unsigned int i;
- 	int ret;
-+	u32 reg;
++#define init_wait(wait)	init_wait_func(wait, autoremove_wake_function)
++
+ typedef int (*task_call_f)(struct task_struct *p, void *arg);
+ extern int task_call_func(struct task_struct *p, task_call_f func, void *arg);
  
- 	netif_dbg(priv, hw, priv->dev, "%s\n", __func__);
- 
--	/* Disable RX/TX DMA and flush TX queues */
--	dma_ctrl = 1 << (DESC_INDEX + DMA_RING_BUF_EN_SHIFT) | DMA_EN;
--	for (i = 0; i < priv->hw_params->tx_queues; i++)
--		dma_ctrl |= (1 << (i + DMA_RING_BUF_EN_SHIFT));
--	reg = bcmgenet_tdma_readl(priv, DMA_CTRL);
--	reg &= ~dma_ctrl;
--	bcmgenet_tdma_writel(priv, reg, DMA_CTRL);
-+	/* Disable TX DMA */
-+	ret = bcmgenet_tdma_disable(priv);
-+	if (ret) {
-+		netdev_err(priv->dev, "failed to halt Tx DMA\n");
-+		return ret;
-+	}
- 
--	dma_ctrl = 1 << (DESC_INDEX + DMA_RING_BUF_EN_SHIFT) | DMA_EN;
--	for (i = 0; i < priv->hw_params->rx_queues; i++)
--		dma_ctrl |= (1 << (i + DMA_RING_BUF_EN_SHIFT));
--	reg = bcmgenet_rdma_readl(priv, DMA_CTRL);
--	reg &= ~dma_ctrl;
--	bcmgenet_rdma_writel(priv, reg, DMA_CTRL);
-+	/* Disable RX DMA */
-+	ret = bcmgenet_rdma_disable(priv);
-+	if (ret) {
-+		netdev_err(priv->dev, "failed to halt Rx DMA\n");
-+		return ret;
-+	}
- 
-+	/* Flush TX queues */
- 	bcmgenet_umac_writel(priv, 1, UMAC_TX_FLUSH);
- 	udelay(10);
- 	bcmgenet_umac_writel(priv, 0, UMAC_TX_FLUSH);
 -- 
 2.53.0
 
