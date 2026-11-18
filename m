@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043961;
-	b=PT9mhs50vx4DwwC14+tMcdVaevzCTK3AmyE3ra/Ixi+npEog6rOF98MlUv/hR1jNM/D6
-	 KRsSEEuM9jKYGivjvgzEiUH2CFDnK3jLE7SfBlqOxk5PNCi7MmIX6kKR081dg05wFYKyn
-	 ODhkbgYKqRM8Drx/0WigmvgR6+VtJhNX91GzyeZIdyVhqwBftHWHyD8ATdfDtGToDyjI8
-	 iooTPDcZn7hK04Ucc0hR8ujhk5XahKWxIpkJ3pLdhtrE3+IGzE8tAkLyw7xKUjsSo0P0j
-	 Xl35hpMXJjbDsFZOiHw/6ImvSvGrlqYK1OW4tgD70o05Ex0zxMyiZxQeITiRCqouHIQ==
+	t=1795043964;
+	b=yEFSsQQQQ7vPhEnFx3cyLrF3id393O9X01pv9FJkO1zTMXFjMrnhihZaDuzqWyAedVn4
+	 PH4fiST+cFMbgrE75gnwQsgCKgLm0aP28yhyMh1T7JoXGOQ2q6LBo8N72zHpPHx8QRvqU
+	 jdDB7Hd6Dyi9e+YnNF23RqpjgpdovtfS55A39dDznf0dXlDiopeSxL67fxtfbQ9cEoL/d
+	 YLzIAA5QbjPT++kXZ38dj2WLkRN8PMn97k0zgmR2xHnOkRhfHZraKpj5hjGvXXn1bOcx9
+	 5562WdVJ/QeBQPtBGFVS2Q/gJDcWyJzX5AsDgh7OJ/wBJcLksP8C008OEUkXusD6TBQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043961;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043964;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZPRF4BD83Y3jUGyMI+WrisHQ2rwq6tlakP04YyaPB1c=;
-	b=z/Ets5ZKsFDB9QzyR0xDW2ad0dQt8NIw+EiNRgbsGhS6NqxkgZ3ic3UTjWZSgtTEpWSq
-	 BPmo4WmeX/+FbO38Ncb2Sl4bWFeiIDFOk9T4B8DcaRWqUiS76ImFy5kzMzVZ2ygZiAbvr
-	 U5zEJvCZehewLhsabNRZYQCJER8s2/aYPUKiEPsvHMuntv1CFjNwE5zYroT5pgdiUdWuX
-	 ScWjmMzL3WnrNzkZAJNDq5P19QrHLKBZLkxnlWSAvBNJ5o5Ud+ExfIEw+MOd1sXY0sZoF
-	 4oLI4Ev5JeKVs2ZZhxwG1F2bZ5qfhqOe4GtX0BR5e56DWkcX/NUimpGvoCLV6fNxS3A==
+	bh=Qi7+9HisFRayeJU+Dhn36Qw/12Pi+Avk0ukfgzf8vzE=;
+	b=GhSftmKEChIaJA7iv5keBSj4YoP+dimghR4gyP+MbgAihMu3XoJIA+KU/t0A1YxtlEna
+	 TcEpIOQtAhrinYl8W1efaexbY+fdaCn7qFike9o+2FeKNZnJHMwuyhntMMzkpBindyuoR
+	 erd9C+qxRx1kmBy1rn/7Gs2ne7P/RdSqjsPxbPP12uREzi6k9Xa/DEf9BMnpghN4Pqgu2
+	 wGP5bvWB+ypLPSDkfZw2nEza+7NdemN+Ucr0/64+VuzIczgFkT6jQa5r76mWlZ/a8VZGi
+	 5Ckno5GxqjDH1NDfz6AxJtI0SeNS6bEmjw1X2chkIJTYZ9z3Vpuwk1NtnkuoNBXFd/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zm2jGMew;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kjIpVMXl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4564B606A31C;
-	Wed, 18 Nov 2026 23:19:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072E5606A32C;
+	Wed, 18 Nov 2026 23:19:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zm2jGMew
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 965FD1F000C4;
-	Wed, 18 Nov 2026 23:19:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kjIpVMXl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C4641F000C4;
+	Wed, 18 Nov 2026 23:19:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043961;
-	bh=ZPRF4BD83Y3jUGyMI+WrisHQ2rwq6tlakP04YyaPB1c=;
+	s=korg; t=1795043963;
+	bh=Qi7+9HisFRayeJU+Dhn36Qw/12Pi+Avk0ukfgzf8vzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zm2jGMewiezyonYIIDYjHbNrddaIsfm55MEul/ApOGeCieOZ21MXOptqW4JQ2mb4/
-	 KJ1ltKucUD9PsKiAVHg1psTLvE+oskWyrjMDhuCW9OihOhFx1RSNfcUahvyQ5p6aoi
-	 lr39Ve07pWtCDtkQchbs13xo9E8EW1zo04kQItas=
+	b=kjIpVMXlITmPzmmtMaXCe+YUf0GORdk0+upZqAWOcfhoEMWiFR3yGBU5373n5pEMX
+	 rU5KgLcB+YG1S8uRU+OdRUyuVWtSKj8z/ivKxc/sb/YE3UIEFYQzMzyWeBmD/PHEoG
+	 kGALztH2GzkunF7A+FFuxrIwLZKMYjk12bYSEkys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Kanala Ramalingeswara Reddy <Kanala.RamalingeswaraReddy@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0396/2857] dm-integrity: fix NULL pointer dereference when the R flag is used
-Date: Wed, 18 Nov 2026 15:23:50 +0100
-Message-ID: <20261118150215.651955918@linuxfoundation.org>
+Subject: [PATCH 6.1 0397/2857] drm/amdgpu: Skip accessing psp rum time db for APUs
+Date: Wed, 18 Nov 2026 15:23:51 +0100
+Message-ID: <20261118150215.688879869@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,49 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Kanala Ramalingeswara Reddy <Kanala.RamalingeswaraReddy@amd.com>
 
-[ Upstream commit 7d4d4f3b668d708d94f62ecdd33ac330a6fd8a84 ]
+[ Upstream commit a26301203a196a991527f7b1ab884d4dd0e7c95e ]
 
-If the dm-integrity device has the SB_FLAG_DIRTY_BITMAP flag set and the
-user activates the device in the 'R' mode, a crash in dm_integrity_resume
-happens because the function attempts to read the journal containing the
-bitmap.
+Psp runtime DB is for dGPUs only.
 
-This patch makes dm-integrity skip any writes to the device in
-dm_integrity_resume if the device is activated in the 'R' mode.
-
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Fixes: 468dfca38b1a ("dm integrity: add a bitmap mode")
+Signed-off-by: Kanala Ramalingeswara Reddy <Kanala.RamalingeswaraReddy@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit dce8195027f146467c9378efb2bb1b0859cb735e)
 Cc: stable@vger.kernel.org
+[ sashal: Adjusted context: the early APU return is inserted after the local declarations, since this tree's function lacks the MP0 13.0.6 check the upstream hunk used as context. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-integrity.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
-index 8a7422a54a896..3264d38e21cd5 100644
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -3253,6 +3253,10 @@ static void dm_integrity_resume(struct dm_target *ti)
- 	r = sync_rw_sb(ic, REQ_OP_READ);
- 	if (r)
- 		dm_integrity_io_error(ic, "reading superblock", r);
-+
-+	if (ic->mode == 'R')
-+		goto skip_writes;
-+
- 	if ((ic->sb->flags & flags) != flags) {
- 		ic->sb->flags |= flags;
- 		r = sync_rw_sb(ic, REQ_OP_WRITE | REQ_FUA);
-@@ -3362,6 +3366,7 @@ static void dm_integrity_resume(struct dm_target *ti)
- 		}
- 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
+index b489a97ba4ce2..c44c24c24bdf8 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
+@@ -266,6 +266,12 @@ static bool psp_get_runtime_db_entry(struct amdgpu_device *adev,
+ 	bool ret = false;
+ 	int i;
  
-+skip_writes:
- 	ic->reboot_notifier.notifier_call = dm_integrity_reboot;
- 	ic->reboot_notifier.next = NULL;
- 	ic->reboot_notifier.priority = INT_MAX - 1;	/* be notified after md and before hardware drivers */
++	/*
++	 * Runtime DB is for dGPUs only.
++	 */
++	if (adev->flags & AMD_IS_APU)
++		return false;
++
+ 	db_header_pos = adev->gmc.mc_vram_size - PSP_RUNTIME_DB_OFFSET;
+ 	db_dir_pos = db_header_pos + sizeof(struct psp_runtime_data_header);
+ 
 -- 
 2.53.0
 
