@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032629;
-	b=za1pW47V+e2/LiFy5LRHwgicE+wQT0ozRgIRQQEr6kdSWfRRg5j197I8gYYF6vCbaBOK
-	 eYLVcd8TfUjgp/Po2nwMAOd68h13qc6/uq9jwlnhl9sKyyBhwFGK9xwNo0PJ81aJshoNs
-	 MPLkSv9dQGV/QoxtYYvvW+PolIHdRnmRpq5tuvaJYJ9K/+rJrFIKVMzdUZgMavdjYlkFQ
-	 8pk3nSS3DYKCYIxE7/HZNy6c3MNZjVv7mGo7LmWZSDGjuTXW0mwRZxiOuTUwqO0dMMdar
-	 9sFP0/V5+HAmJtc+MRObfBYN8YtG5gYtrR7+aD5+FuEJsN75nTw4AqbnUABDJeeCsmA==
+	t=1795032632;
+	b=nxFADfPl8CoRg2JGSixgx3bIBkKZb5kbnoQm8A35bS9n32kWWEuXE0Zd0UnZiPUONNak
+	 GzJEq/9pqcJGg0jDNzq5F561mAGGs3dUuYsWtkqhfFYioSvtBjm0Kjzz4i5Wzj8ugrLbW
+	 p1Sy36vBhAOjTHTzJC8URPCfhOuVYPEhsXHTOFzbi5kHIrDf4TiVovUhfSZQZXmmnAn+n
+	 Dcb5+aaEWptgfWueHn8VM3zQE7GRdRWkvXJg3A6HdJuxNIxCOot5C+8SfLS1m+0f77Yhj
+	 MuhbGOPDBVzrzll3v0ic3yMVCWjfY5YwEWoU8WlKdScAxAThal3Q2GVUrAed8Xy6q0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032629;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032632;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SAFh+qbw3sWR1RUZUNHdhP4HP4fTGVcNeX469cZ4cAU=;
-	b=ybyE6cALFdUdngYb0+LLvq4gFxxZQMmYEm5JA81yBhH9uUcZXwZr9wl/MofPFxqcfHlh
-	 2MZ4dA+HXLkdSuFFlXNj7jLB+el/zR7GdwAn9fNtpGEwZYo8O0+Vk9Em+WMyW0iGgf33b
-	 GTSKWewp6VVi4Rly5CPzQ9FtjSNblCSosrOdVHyWrTSFDS2RzupIegHFH5LyID6ERciOG
-	 2MRQS2LNjQwS6KZsBIjoEDRNPgSBenN3rJYprvEEaqOaeic0yWK0riMNw1tuJMvU12+Ru
-	 qBP6To6QPxOqpQzBqa07YJvFrkGpOkLtuR6mbniqWQjOV8HYNJRWXem7okKmLSFSLGQ==
+	bh=Owp0ScqhAy/VOml4Xe9SeZHYu7EHpdt4nO/xnQM4q8I=;
+	b=PRypKlXeSuI3qTkMvLDzQ1YiGtMu6WQuXWRopadIZYPg6Dka9NoQNBkLLw13S+Glaq0E
+	 6uWuRSs+ykoIp3TL1rkm+IorUa1E2fNX59cqoSZjt9bHkLsvuFNQ4THwBQ3UH68sIuZJa
+	 jztpQ2WxcJJhlwO7JsmDo4xpylf0HOTvPZBX3gt718hrSgrrBhaQgStt3/gQsIZNQ50Cl
+	 Bc7rv65F5CMpVga28Sdh9d5b/WebBzoOh45NNIkEsAOlIFNO1EIWML+NQj/cweeOFpgJc
+	 ntGmkS7Sw51XFMEDlyIIyTW28ouVMGzr3hn70VYrbnAfT3qlpuKrvRl1erWRMh7eVdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JQilpeID;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RR7IyxLi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A97D606A331;
-	Wed, 18 Nov 2026 20:10:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF264606A332;
+	Wed, 18 Nov 2026 20:10:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JQilpeID
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8783F1F000C4;
-	Wed, 18 Nov 2026 20:10:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RR7IyxLi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CE231F000C4;
+	Wed, 18 Nov 2026 20:10:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032629;
-	bh=SAFh+qbw3sWR1RUZUNHdhP4HP4fTGVcNeX469cZ4cAU=;
+	s=korg; t=1795032631;
+	bh=Owp0ScqhAy/VOml4Xe9SeZHYu7EHpdt4nO/xnQM4q8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JQilpeIDfElp3Pm0ObE6Vk1WEXW/c+khE6hr9BmnU87bB+TKl0JnexzmUyOkZbHOu
-	 4Xd6+O5agcedqLSa8dyhjVCPWYM6vHrr0vJi4sQNIUVf1r4+NjjOdMFKtJR0oNDymr
-	 Wt9Aon3YxxNCgkYOmrh3KUT0XG3TvJoOzsAr2ZLc=
+	b=RR7IyxLipM/vWg9FmVYfXLrQQ+lI5PgxC5Qj7BufxnMBIli2YyFJgtncpquztiSFz
+	 fNFC3J55P6XnYXhUtJWzEKQLAKhxqPfv4vqAHqMiKKknxz2uImg9BESJfyLABg4KG4
+	 afTD+m8mE7g2LU+uCFX/kUQFPMtDc2dgHrdzkpSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot+sashiko@kernel.org>,
-	Henry Hu <huhai@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1480/1756] ksmbd: report IPv4 and IPv6 addresses independently in iface query
-Date: Wed, 18 Nov 2026 16:00:07 +0100
-Message-ID: <20261118150107.900911674@linuxfoundation.org>
+Subject: [PATCH 6.12 1481/1756] smb/server: fix trailing period in generated short names
+Date: Wed, 18 Nov 2026 16:00:08 +0100
+Message-ID: <20261118150107.938695021@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,213 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Hu <huhai@kylinos.cn>
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 
-[ Upstream commit bb0326a5806015fb7e5a6a721a50ff172c92c6e4 ]
+[ Upstream commit e8486c5cfbdd07811afa4196060bafbf78ccdae2 ]
 
-fsctl_query_iface_info_ioctl() appends an entry before checking that a
-usable address was found, so it advertises unspecified-address
-placeholders: an entry containing 0.0.0.0 when an in_device exists but
-has no primary IPv4 address, and an entry containing :: when an
-inet6_dev exists but its address list is empty or every address is
-tentative or deprecated.
+Reproducer:
 
-The loop also couples IPv6 reporting to IPv4 success: when
-__in_dev_get_rtnl() returns NULL it continues to the next interface,
-skipping the IPv6 pass, so an interface without an in_device is dropped
-even if it has a usable IPv6 address.
+  1. touch /mnt/file
+  2. smbinfo filealternatenameinfo /mnt/file
+     Alternate Name: FILE~9!.
 
-Query IPv4 and IPv6 independently and append an entry only when an
-address is found. Factor out the common entry initialization and query
-the link speed once per interface instead of once per address family.
+See MS-FSCC 2.1.5.2.1. The base filename MUST be 1-8 characters in length
+and MUST NOT contain a "." period character.
 
 Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Reported-by: Sashiko <sashiko-bot+sashiko@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260910090818.24479-1-15815827059%40163.com
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Henry Hu <huhai@kylinos.cn>
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 127 ++++++++++++++++++++++------------------
- 1 file changed, 70 insertions(+), 57 deletions(-)
+ fs/smb/server/smb_common.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 69c0c318b16e4..d2058cd162ab0 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -8195,6 +8195,27 @@ static __be32 idev_ipv4_address(struct in_device *idev)
- 	return addr;
- }
- 
-+static struct network_interface_info_ioctl_rsp *
-+ksmbd_iface_entry_init(struct smb2_ioctl_rsp *rsp, int nbytes,
-+		       struct net_device *netdev, unsigned long long speed)
-+{
-+	struct network_interface_info_ioctl_rsp *nii_rsp;
-+
-+	nii_rsp = (struct network_interface_info_ioctl_rsp *)&rsp->Buffer[nbytes];
-+	nii_rsp->IfIndex = cpu_to_le32(netdev->ifindex);
-+	nii_rsp->Capability = 0;
-+	if (netdev->real_num_tx_queues > 1)
-+		nii_rsp->Capability |= RSS_CAPABLE;
-+	if (ksmbd_rdma_capable_netdev(netdev))
-+		nii_rsp->Capability |= RDMA_CAPABLE;
-+	nii_rsp->Next = cpu_to_le32(152);
-+	nii_rsp->Reserved = 0;
-+	nii_rsp->LinkSpeed = cpu_to_le64(speed);
-+	memset(nii_rsp->SockAddr_Storage, 0, 128);
-+
-+	return nii_rsp;
-+}
-+
- static int fsctl_query_iface_info_ioctl(struct ksmbd_conn *conn,
- 					struct smb2_ioctl_rsp *rsp,
- 					unsigned int out_buf_len)
-@@ -8209,7 +8230,12 @@ static int fsctl_query_iface_info_ioctl(struct ksmbd_conn *conn,
- 
- 	rtnl_lock();
- 	for_each_netdev(&init_net, netdev) {
--		bool ipv4_set = false;
-+		struct inet6_ifaddr *ifa;
-+		struct inet6_dev *idev6;
-+		struct in_device *idev;
-+		struct in6_addr ip6 = { };
-+		bool have_ip6 = false;
-+		__be32 ip4 = 0;
- 
- 		if (netdev->type == ARPHRD_LOOPBACK)
- 			continue;
-@@ -8220,25 +8246,6 @@ static int fsctl_query_iface_info_ioctl(struct ksmbd_conn *conn,
- 		flags = dev_get_flags(netdev);
- 		if (!(flags & IFF_RUNNING))
- 			continue;
--ipv6_retry:
--		if (out_buf_len <
--		    nbytes + sizeof(struct network_interface_info_ioctl_rsp)) {
--			rtnl_unlock();
--			return -ENOSPC;
--		}
--
--		nii_rsp = (struct network_interface_info_ioctl_rsp *)
--				&rsp->Buffer[nbytes];
--		nii_rsp->IfIndex = cpu_to_le32(netdev->ifindex);
--
--		nii_rsp->Capability = 0;
--		if (netdev->real_num_tx_queues > 1)
--			nii_rsp->Capability |= RSS_CAPABLE;
--		if (ksmbd_rdma_capable_netdev(netdev))
--			nii_rsp->Capability |= RDMA_CAPABLE;
--
--		nii_rsp->Next = cpu_to_le32(152);
--		nii_rsp->Reserved = 0;
- 
- 		if (!__ethtool_get_link_ksettings(netdev, &cmd) &&
- 		    cmd.base.speed && cmd.base.speed != SPEED_UNKNOWN) {
-@@ -8248,60 +8255,66 @@ static int fsctl_query_iface_info_ioctl(struct ksmbd_conn *conn,
- 				    "speed is unknown, defaulting to 1Gb/sec");
- 			speed = SPEED_1000;
- 		}
--
- 		speed *= 1000000;
--		nii_rsp->LinkSpeed = cpu_to_le64(speed);
- 
--		sockaddr_storage = (struct sockaddr_storage_rsp *)
--					nii_rsp->SockAddr_Storage;
--		memset(sockaddr_storage, 0, 128);
-+		/*
-+		 * Query IPv4 and IPv6 independently; emit an entry only when a
-+		 * usable address exists, so an interface missing one family is
-+		 * still reported for the other and 0.0.0.0 / :: placeholders are
-+		 * never advertised.
-+		 */
-+		idev = __in_dev_get_rtnl(netdev);
-+		if (idev)
-+			ip4 = idev_ipv4_address(idev);
- 
--		if (!ipv4_set) {
--			struct in_device *idev;
-+		idev6 = __in6_dev_get(netdev);
-+		if (idev6) {
-+			rcu_read_lock();
-+			list_for_each_entry_rcu(ifa, &idev6->addr_list, if_list) {
-+				if (ifa->flags & (IFA_F_TENTATIVE | IFA_F_DEPRECATED))
-+					continue;
-+				memcpy(&ip6, ifa->addr.s6_addr, sizeof(ip6));
-+				have_ip6 = true;
-+				break;
-+			}
-+			rcu_read_unlock();
-+		}
- 
-+		if (ip4) {
-+			if (out_buf_len <
-+			    nbytes + sizeof(struct network_interface_info_ioctl_rsp)) {
-+				rtnl_unlock();
-+				return -ENOSPC;
-+			}
-+
-+			nii_rsp = ksmbd_iface_entry_init(rsp, nbytes, netdev, speed);
-+			sockaddr_storage = (struct sockaddr_storage_rsp *)nii_rsp->SockAddr_Storage;
- 			sockaddr_storage->Family = INTERNETWORK;
- 			sockaddr_storage->addr4.Port = 0;
--
--			idev = __in_dev_get_rtnl(netdev);
--			if (!idev)
--				continue;
--			sockaddr_storage->addr4.IPv4Address =
--						idev_ipv4_address(idev);
-+			sockaddr_storage->addr4.IPv4Address = ip4;
- 			nbytes += sizeof(struct network_interface_info_ioctl_rsp);
--			ipv4_set = true;
--			goto ipv6_retry;
--		} else {
--			struct inet6_dev *idev6;
--			struct inet6_ifaddr *ifa;
--			__u8 *ipv6_addr = sockaddr_storage->addr6.IPv6Address;
-+		}
-+
-+		if (have_ip6) {
-+			if (out_buf_len <
-+			    nbytes + sizeof(struct network_interface_info_ioctl_rsp)) {
-+				rtnl_unlock();
-+				return -ENOSPC;
-+			}
- 
-+			nii_rsp = ksmbd_iface_entry_init(rsp, nbytes, netdev, speed);
-+			sockaddr_storage = (struct sockaddr_storage_rsp *)nii_rsp->SockAddr_Storage;
- 			sockaddr_storage->Family = INTERNETWORKV6;
- 			sockaddr_storage->addr6.Port = 0;
- 			sockaddr_storage->addr6.FlowInfo = 0;
--
--			idev6 = __in6_dev_get(netdev);
--			if (!idev6)
--				continue;
--
--			rcu_read_lock();
--			list_for_each_entry_rcu(ifa, &idev6->addr_list, if_list) {
--				if (ifa->flags & (IFA_F_TENTATIVE |
--							IFA_F_DEPRECATED))
--					continue;
--				memcpy(ipv6_addr, ifa->addr.s6_addr, 16);
--				break;
--			}
--			rcu_read_unlock();
-+			memcpy(sockaddr_storage->addr6.IPv6Address, ip6.s6_addr, 16);
- 			sockaddr_storage->addr6.ScopeId = 0;
- 			nbytes += sizeof(struct network_interface_info_ioctl_rsp);
- 		}
- 	}
- 	rtnl_unlock();
- 
--	/*
--	 * nii_rsp may point to an entry not included in nbytes if the IPv4
--	 * or IPv6 device lookup failed. Clear Next in the last returned entry.
--	 */
-+	/* Clear Next of the last committed entry to terminate the list. */
- 	if (nbytes > 0) {
- 		nii_rsp = (struct network_interface_info_ioctl_rsp *)
- 			  &rsp->Buffer[nbytes - sizeof(*nii_rsp)];
+diff --git a/fs/smb/server/smb_common.c b/fs/smb/server/smb_common.c
+index 9f183a6d85d6d..a836b117f756f 100644
+--- a/fs/smb/server/smb_common.c
++++ b/fs/smb/server/smb_common.c
+@@ -494,8 +494,6 @@ int ksmbd_populate_dot_dotdot_entries(struct ksmbd_work *work, int info_level,
+  * @shortname:	destination short filename
+  *
+  * Return:	shortname length or 0 when source long name is '.' or '..'
+- * TODO: Though this function conforms the restriction of 8.3 Filename spec,
+- * but the result is different with Windows 7's one. need to check.
+  */
+ int ksmbd_extract_shortname(struct ksmbd_conn *conn, const char *longname,
+ 			    char *shortname)
+@@ -559,7 +557,7 @@ int ksmbd_extract_shortname(struct ksmbd_conn *conn, const char *longname,
+ 	if (dot_present)
+ 		memcpy(out + baselen + 4, extension, 4);
+ 	else
+-		out[baselen + 4] = '\0';
++		out[baselen + 3] = '\0';
+ 	smbConvertToUTF16((__le16 *)shortname, out, PATH_MAX,
+ 			  conn->local_nls, 0);
+ 	len = strlen(out) * 2;
 -- 
 2.53.0
 
