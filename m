@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058490;
-	b=IuirTLSQybMhGBtdQKQM90Z2HbOMeNiAjkVC70zktE1OT7qw+4JdqtTYk6gPHasCKaHU
-	 TSUH0Ya0CbV7+jS/KU+0Qwp4r4m7hvXiePHh1mvGyTDU4j7vA0K2ta8Zqp5F5TMMjvhlZ
-	 +WqfaUwZrtXRz2s4etl0TOOxbvIBE6pKx4GGjHgX5oTUYxrdUyC70eEm33Sm+J0dZmA2U
-	 KUPmZ8En2NSxrb378Vr/f7WXWcIQcfdNCrDGRn06tz8Xg5Ok0IXSRxuWW4l4s+EGjsYLZ
-	 wz4RcmPjqnFaeLeL0wpIbad2jyOqS3MF+goluUZGLt8LGy7fGq6K6n2hpxsWIegxmbg==
+	t=1795058493;
+	b=3FzC6KfK3rFhtWDtjhRattyu3GQEsSC/13rWzQWVpmFVRl3v5JYKe3rndujYfSRKSYwn
+	 lleSULropurjrbcJ0QFG2iVXjbYbaWgfEBlyEWp0TFHeCmFOOjBEkImd5rRVVHck1oXJx
+	 O7n1wc6ZJP3TGBsLmGGaHQtg1PBkn69xpOqmaEHXemRIkfKJJ29+vNBF6dMawGafr8MEb
+	 +3EtORaKD3L8XHSIfaipdpguZu20dmz/NDQZfyKkZcoMdePzH0Mbtf/1Lc3SuCh2jmVuA
+	 3WMAxxM+rnwtfpZQn1jzR3bOslCfKCphCjUagmDuDEPcXoq+c/Kl3rucVVVGdgkrZ3Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058490;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058493;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=s1giMwRXR2/JD0r9ex/pkWk8QAkV1lscG/pU2bgpjXA=;
-	b=YnC9gjgEZAz3dB6IyFLuXo9auROe/I9kZtnQT1xrtUcEaHRRyDk+hYgBY1EzzFTQrx3d
-	 EL/ajrvjwaAxWPi297Z3g6m/cRXJcEGCWjL0xsINkqVyafZxRWM/wClOD1tSVSPXpor/b
-	 0mW76+ujdhhWdqUZA4e3r93Ppcwynl4K/278Kp+mMxj3uVFzR3gc28q/5A18c2WbtOKSF
-	 stN1vROjADvpAkLQ5bYjvMeX1pAQNeVjOY7pLMdbTmfStPM/2vkjgJqbbNYBKwf5N5qfm
-	 vztOhTaEoRxfGWNGv95i81+9ZSFdJWCsn9oDsCOSRHBf7oKEMjFva+GSD5qdLAmzXRA==
+	bh=AbPVMfyusRH+3Wy4fd5w0TpxskUGN5L7iku8YnIS9JI=;
+	b=Y9LjkfkG/5kfcwwQFYR942jbvGqIcjiVh4uyc9RAE8XWXbXIRNdtwIo/a2rQYR0b/hqm
+	 XwW5iz/Koo0kUzoOhzfAXu2rI4xdpNVZPBK0c15YxRfWjZ+k6H2L1BpZH+QSscHEb2Zw3
+	 Fy8OxE8FNaHauIWR7zSDfT5d1+5IbNIA0mHKEzNwcikTz19AAe3TIayREfut/dcwIykRM
+	 gy+OTHFIwx0lNHJ3t4ORsWU8U+U7PJNYpDwi+N4Y13PsCREjS6O/VMuzY8dWtQnQmZksp
+	 OdEBq3GSAR5SYodRlNxv+I3hzInvO9s0XDvy2s5Md5nEwdHfrMyePdn4+H5myKcN09Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KXTZNWtN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SmkzjTyh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84BCE606A31C;
-	Thu, 19 Nov 2026 03:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0B3606A320;
+	Thu, 19 Nov 2026 03:21:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KXTZNWtN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D63EE1F000C4;
-	Thu, 19 Nov 2026 03:21:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SmkzjTyh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F53D1F000C4;
+	Thu, 19 Nov 2026 03:21:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058490;
-	bh=s1giMwRXR2/JD0r9ex/pkWk8QAkV1lscG/pU2bgpjXA=;
+	s=korg; t=1795058493;
+	bh=AbPVMfyusRH+3Wy4fd5w0TpxskUGN5L7iku8YnIS9JI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KXTZNWtNc0nhgvDNR3Xd8JBgRA8LQNLc1YARfWs1xtW67YPmmm/4jnMUZyI8TDoZ1
-	 09CNgvCmuf+Q2ZWJOg264sIOH/Vlgan/EFdp/z60f+LlV521eTMYgTAGTiI215LKy6
-	 WmVVlpEZ7Npeo1fRD7kmoyM1L+K1PjQdG0XY21lw=
+	b=SmkzjTyhc4jvXJq+WpfJ8cGNPzJjflxnI7BaZ+mYPAn6086yLxSCQ2yuT4loDknQa
+	 Vi9j5sY2OCwGj66Wjgy6PZ1s0z7DnphFcHnRA0q631gv18E7SvQCjhP9CdrRH/sfxT
+	 6T7NIUomUFyfDO9XaeWFml0z3qEDujsMq6C04TfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Goergens <matthias.goergens@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0487/1848] fanotify: report names longer than NAME_MAX
-Date: Wed, 18 Nov 2026 15:42:05 +0100
-Message-ID: <20261118145934.640681175@linuxfoundation.org>
+Subject: [PATCH 5.10 0505/1848] arm64/efi: Clear PTE_WRITE when applying EFI_MEMORY_RO
+Date: Wed, 18 Nov 2026 15:42:23 +0100
+Message-ID: <20261118145935.935095990@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,129 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Goergens <matthias.goergens@gmail.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit ff05910cb1b77c2b229c5e6e260c6173a17b579b ]
+[ Upstream commit 215d7b6622733603751f546b9faf9b84b0c281d4 ]
 
-fanotify keeps the length of a reported name in a u8, so it drops any
-name longer than NAME_MAX and warns:
+set_permissions() sets PTE_RDONLY for regions that the Memory Attributes
+Table describes as read-only, but leaves PTE_WRITE set.  PTE_WRITE is
+the DBM bit, so when hardware dirty state management is enabled
+(TCR_EL1.HD), such a descriptor is writable-clean rather than read-only,
+and a write by the firmware will be permitted by the hardware (which
+marks the entry dirty) instead of faulting.
 
-  WARNING: fs/notify/fanotify/fanotify.h:217 at fanotify_handle_event+0x2e82/0x39f0
+Clear PTE_WRITE as well, as pte_wrprotect() does.
 
-Such names are legitimate on some filesystems.  vfat mounted with utf8
-takes up to 255 UTF-16 characters, which are up to 765 bytes of UTF-8,
-and FUSE accepts names up to PATH_MAX - 1.  readdir() and inotify report
-them in full.  fanotify sends the event without the name, and for
-FAN_RENAME it trips a second warning in copy_fid_info_to_user(), after
-which read() fails with EFAULT and the event is lost.
-
-When syzbot hit this, Jan suggested accommodating names up to PATH_MAX
-[1], the limit readdir() already applies to a name
-(verify_dirent_name()).  Store the name lengths as u16, which keeps
-struct fanotify_info at 8 bytes, and drop without a warning only names
-of PATH_MAX bytes or more, which no path can refer to.  An event with
-such a name can exceed a page, so allocate name events with kvmalloc(),
-as Jan also suggested.  Names up to NAME_MAX are reported exactly as
-before, and the record format is unchanged: an event with a long name is
-just longer.
-
-Link: https://lore.kernel.org/all/20241112115059.ecvomkalee5m4i4i@quack3/ [1]
-Fixes: 2d9374f09513 ("fanotify: use macros to get the offset to fanotify_info buffer")
 Cc: stable@vger.kernel.org
-Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
-Link: https://patch.msgid.link/20260926020851.2938961-1-matthias.goergens@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/fanotify/fanotify.c |  7 +++++--
- fs/notify/fanotify/fanotify.h | 21 ++++++++++++---------
- 2 files changed, 17 insertions(+), 11 deletions(-)
+ arch/arm64/kernel/efi.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
-index a2a15bc4df280..1fafdcf6592c7 100644
---- a/fs/notify/fanotify/fanotify.c
-+++ b/fs/notify/fanotify/fanotify.c
-@@ -610,6 +610,9 @@ static struct fanotify_event *fanotify_alloc_name_event(struct inode *dir,
- 	unsigned long name2_len = name2 ? name2->len : 0;
- 	unsigned int len, size;
+diff --git a/arch/arm64/kernel/efi.c b/arch/arm64/kernel/efi.c
+index 3ee3b3daca47b..30f51f27fd069 100644
+--- a/arch/arm64/kernel/efi.c
++++ b/arch/arm64/kernel/efi.c
+@@ -100,8 +100,14 @@ static int __init set_permissions(pte_t *ptep, unsigned long addr, void *data)
+ 	efi_memory_desc_t *md = data;
+ 	pte_t pte = READ_ONCE(*ptep);
  
-+	if (WARN_ON_ONCE(name_len >= PATH_MAX || name2_len >= PATH_MAX))
-+		return NULL;
-+
- 	/* Reserve terminating null byte even for empty name */
- 	size = sizeof(*fne) + name_len + name2_len + 2;
- 	if (dir_fh_len)
-@@ -618,7 +621,7 @@ static struct fanotify_event *fanotify_alloc_name_event(struct inode *dir,
- 		size += FANOTIFY_FH_HDR_LEN + dir2_fh_len;
- 	if (child_fh_len)
- 		size += FANOTIFY_FH_HDR_LEN + child_fh_len;
--	fne = kmalloc(size, gfp);
-+	fne = kvmalloc(size, gfp);
- 	if (!fne)
- 		return NULL;
- 
-@@ -1013,7 +1016,7 @@ static void fanotify_free_fid_event(struct fanotify_event *event)
- 
- static void fanotify_free_name_event(struct fanotify_event *event)
- {
--	kfree(FANOTIFY_NE(event));
-+	kvfree(FANOTIFY_NE(event));
- }
- 
- static void fanotify_free_error_event(struct fsnotify_group *group,
-diff --git a/fs/notify/fanotify/fanotify.h b/fs/notify/fanotify/fanotify.h
-index 57f51a9a3015d..04263c5bbb8e8 100644
---- a/fs/notify/fanotify/fanotify.h
-+++ b/fs/notify/fanotify/fanotify.h
-@@ -42,9 +42,16 @@ struct fanotify_info {
- 	u8 dir_fh_totlen;
- 	u8 dir2_fh_totlen;
- 	u8 file_fh_totlen;
--	u8 name_len;
--	u8 name2_len;
--	u8 pad[3];
-+	u8 pad;
 +	/*
-+	 * Deliberately not limited to NAME_MAX: some filesystems return longer
-+	 * names (vfat up to 255 UTF-16 characters, as Windows allows, which is
-+	 * up to 765 bytes of UTF-8; FUSE up to PATH_MAX - 1), and readdir() and
-+	 * inotify report them in full. Only names of PATH_MAX bytes or more,
-+	 * which no path can refer to, are dropped.
++	 * Clear PTE_WRITE as well: it doubles as the DBM bit, and leaving it
++	 * set would permit the hardware to make the mapping writable again
++	 * when TCR_EL1.HD is set.
 +	 */
-+	u16 name_len;
-+	u16 name2_len;
- 	unsigned char buf[];
- 	/*
- 	 * (struct fanotify_fh) dir_fh starts at buf[0]
-@@ -167,7 +174,7 @@ static inline char *fanotify_info_name2(struct fanotify_info *info)
- static inline void fanotify_info_init(struct fanotify_info *info)
- {
- 	BUILD_BUG_ON(FANOTIFY_FH_HDR_LEN + MAX_HANDLE_SZ > U8_MAX);
--	BUILD_BUG_ON(NAME_MAX > U8_MAX);
-+	BUILD_BUG_ON(PATH_MAX > U16_MAX);
- 
- 	info->dir_fh_totlen = 0;
- 	info->dir2_fh_totlen = 0;
-@@ -213,8 +220,7 @@ static inline void fanotify_info_set_file_fh(struct fanotify_info *info,
- static inline void fanotify_info_copy_name(struct fanotify_info *info,
- 					   const struct qstr *name)
- {
--	if (WARN_ON_ONCE(name->len > NAME_MAX) ||
--	    WARN_ON_ONCE(info->name2_len > 0))
-+	if (WARN_ON_ONCE(info->name2_len > 0))
- 		return;
- 
- 	info->name_len = name->len;
-@@ -224,9 +230,6 @@ static inline void fanotify_info_copy_name(struct fanotify_info *info,
- static inline void fanotify_info_copy_name2(struct fanotify_info *info,
- 					    const struct qstr *name)
- {
--	if (WARN_ON_ONCE(name->len > NAME_MAX))
--		return;
--
- 	info->name2_len = name->len;
- 	strcpy(fanotify_info_name2(info), name->name);
- }
+ 	if (md->attribute & EFI_MEMORY_RO)
+-		pte = set_pte_bit(pte, __pgprot(PTE_RDONLY));
++		pte = set_pte_bit(clear_pte_bit(pte, __pgprot(PTE_WRITE)),
++				  __pgprot(PTE_RDONLY));
+ 	if (md->attribute & EFI_MEMORY_XP)
+ 		pte = set_pte_bit(pte, __pgprot(PTE_PXN));
+ 	set_pte(ptep, pte);
 -- 
 2.53.0
 
