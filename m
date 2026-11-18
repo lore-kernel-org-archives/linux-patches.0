@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036991;
-	b=Wr5Yf1+ao3Ez0Lo8sbBZJ54xiFIaDaiyuZVk8EghdloWvgGbxBC3F8KQBp181HxFExmd
-	 Cni05YRaCIcb2SbgesqxrcdPff5thhJO51aRLGlq5js9TwxKtVtD/Y8Zn3Nips4/rj5Ht
-	 fz10S5n9pvMI9vDlmNY+T/PISr1vjvVw9ATyLXWf0Q4AbN0JgwlonlYaCxu14qk5GkJTo
-	 f1nJGHPuwQF5HDGgFAeUf6GPp5IcshHOyYIPEDSDsDFn2V1BXnmHYnM8fnBlMo8Ryo5UW
-	 emW4HsKdZObErDnS0CdmVRXZrldbDJhjgvFPIhHFeiQSmN3ymISJDNINoOeGAMcw46w==
+	t=1795036994;
+	b=yBoY8eXTHbV5rjBYtGMiUGHk2EL51AcmH7Kv5PwZtKWEmsmkXuzxzpWQS/e3EjWzOoPy
+	 qk8RnbS62zDcg4NFAJsBXOmEBApBWRAE35oFdfb7rYw/aZM4VJbnrBaTWkw+y8K5w4oxa
+	 vAeTkoYviPbwK9VbL7f3dS7vqbAVVWFrZ0896UBPQefzLMmZgUgdE20VsPjbIt6sIGXX8
+	 5DBSBI/ydxM/oLLXwK2p0D9wJ+17BJjBs3be85ZMavNv9dXvkVBNjKVesmf5fZOtCo34G
+	 optuRcMXrF0UAajXvF/kSnkMadgMLwFhVf8/OIgqpIrm+dOXEWrwHGGz/hGa2OJcxCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036991;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036994;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uwHzGIz1Rm+Pw9egg+8HGD9/ZZPbSPSEKsj3U/7vceQ=;
-	b=oQVNsrSF24PbR0SpdpFGh8JbJrjqDuNhhrZC22j2DV/Ps+6YddyZF/1J2QmkfsXHAO43
-	 OS51cVKiwOojMtycGWv8zlT3mTv2ctnlbshKlnj7IZftR3sJh3BSrhSwGpzM34JrayrqH
-	 D4qz77WsnV4XlNNzA5UKZgtzcAzw39qOia/P/4+J6J4D9CIdmoOhHno5goVeFHUkAMtsh
-	 nljDEmJYOFTrVJFzIoDPpAcsWqAC/hTRvNy7FOEATqNgyP2cGzbsahR9fFrlJoSL0YGsD
-	 yKIgS2BkKZTM4DhePnu0fO/qoGhlnDK1zFF65JITlT6NJIPbLlqNA7jRZYRAl8iQ7vA==
+	bh=hpze9uMAfKM8kV7CTY3tRfDig4o/9X0jGfcrYR8ULJE=;
+	b=1h5/SA2kQiMHToLWyP9hWmJPo9mAW7bWSnIU/6kKGeQuh2fBJ3pRFIbvWZsbf6nMaDfI
+	 kV0Uaem3E645bGxAqf6MDdh2r57HvyZsuEJSEuZj/JKWXRxCsKAJlVRmJfgrVKgL1hKpT
+	 C1SwNn8l/ZudgmxCvrV43yBrQsHOFveWGs+dDVFRh5qm+80Vjf50YViGk7nIfqhntjBcf
+	 FKlg5TROq8q7itFfABsy6ZK614J+rbRx0HNWWwqed/P62oeOeg76hV4KVm5iMUzufC1iV
+	 N/pKiymbDWqrsbKmlFUF8VVF60WMixLMwcHgtbw6e4zP1k6kWFelMWqEm2DRzJFW1ow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KAudJGJM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q2+xgfsQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61DA1606A33A;
-	Wed, 18 Nov 2026 21:23:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED03606A320;
+	Wed, 18 Nov 2026 21:23:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KAudJGJM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1DF71F000C4;
-	Wed, 18 Nov 2026 21:23:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q2+xgfsQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A601F000C5;
+	Wed, 18 Nov 2026 21:23:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036991;
-	bh=uwHzGIz1Rm+Pw9egg+8HGD9/ZZPbSPSEKsj3U/7vceQ=;
+	s=korg; t=1795036994;
+	bh=hpze9uMAfKM8kV7CTY3tRfDig4o/9X0jGfcrYR8ULJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KAudJGJMveFYjqRgttIHrQdz7nQ7xqK/ajgb+9Ggjvjwxo182RAom4gJWF2kQse+5
-	 zd7xwqbHstA5gcBvo8zon5R4338Q6eMkcjQYJDtrIImjwpKfIhSpmU4HQ01zwxmKqA
-	 BuXI5iO0QFdlYMF2JtHBMX4tfj1QO2dFe1nZMo38=
+	b=Q2+xgfsQ46FBwaZyNqs1boc6pT81wKbQRWWrL2PHpk+Y0UgsGn9GnhSE61vs/68Cy
+	 2kjpMobTXghYtfjXRqo3x8B9pbj+e6CnJNa2JZm2tgYn3sN3dmI7NwvmWDbd4bBmL4
+	 gOXV0CUsSFYq65HxAw95B58gF9CAb6yHOXRggQTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1256/3318] LoongArch: Use pa_to_nid()/nid_to_addrbase() rather than hard-code
-Date: Wed, 18 Nov 2026 15:31:18 +0100
-Message-ID: <20261118150357.879834939@linuxfoundation.org>
+Subject: [PATCH 6.6 1257/3318] LoongArch: Remove redundant call in update_bp_registers()
+Date: Wed, 18 Nov 2026 15:31:19 +0100
+Message-ID: <20261118150357.908885972@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,77 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit 244eb26bbd152896f976db6415550993cd60b46d ]
+[ Upstream commit 23534c6efeb718e8a4d9107fa7d6707b5b1f5859 ]
 
-NODE_ADDRSPACE_SHIFT is 44 now but may be changed in future, so use
-pa_to_nid()/nid_to_addrbase() rather than hard-code.
+In update_bp_registers(), there is a duplicate call to write_wb_reg()
+when enabling an execute breakpoint:
+
+    write_wb_reg(CSR_CFG_CTRL, i, 0, CTRL_PLV_ENABLE);
+    write_wb_reg(CSR_CFG_CTRL, i, 0, CTRL_PLV_ENABLE);
+
+The two lines are completely identical. Remove the redundant call to
+clean up the code and eliminate unnecessary register writes.
 
 Cc: stable@vger.kernel.org
+Fixes: edffa33c7bb5 ("LoongArch: Add hardware breakpoints/watchpoints support")
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/include/asm/numa.h | 2 +-
- arch/loongarch/kernel/irq.c       | 3 ++-
- arch/loongarch/pci/pci.c          | 3 ++-
- 3 files changed, 5 insertions(+), 3 deletions(-)
+ arch/loongarch/kernel/hw_breakpoint.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/loongarch/include/asm/numa.h b/arch/loongarch/include/asm/numa.h
-index b5f9de9f102e4..553d8f72f0e23 100644
---- a/arch/loongarch/include/asm/numa.h
-+++ b/arch/loongarch/include/asm/numa.h
-@@ -14,7 +14,7 @@
- #define NODE_ADDRSPACE_SHIFT 44
- 
- #define pa_to_nid(addr)		(((addr) & 0xf00000000000) >> NODE_ADDRSPACE_SHIFT)
--#define nid_to_addrbase(nid)	(_ULCAST_(nid) << NODE_ADDRSPACE_SHIFT)
-+#define nid_to_addrbase(nid)	(_U64CAST_(nid) << NODE_ADDRSPACE_SHIFT)
- 
- #ifdef CONFIG_NUMA
- 
-diff --git a/arch/loongarch/kernel/irq.c b/arch/loongarch/kernel/irq.c
-index df42c063f6c43..f4da717512746 100644
---- a/arch/loongarch/kernel/irq.c
-+++ b/arch/loongarch/kernel/irq.c
-@@ -19,6 +19,7 @@
- 
- #include <asm/irq.h>
- #include <asm/loongson.h>
-+#include <asm/numa.h>
- #include <asm/setup.h>
- 
- DEFINE_PER_CPU(unsigned long, irq_stack);
-@@ -68,7 +69,7 @@ static int __init early_pci_mcfg_parse(struct acpi_table_header *header)
- 
- 	for (i = 0; i < n; i++, mptr++) {
- 		msi_group[i].pci_segment = mptr->pci_segment;
--		pch_group[i].node = msi_group[i].node = (mptr->address >> 44) & 0xf;
-+		pch_group[i].node = msi_group[i].node = pa_to_nid(mptr->address);
- 	}
- 
- 	return 0;
-diff --git a/arch/loongarch/pci/pci.c b/arch/loongarch/pci/pci.c
-index a25307d6aee81..d4deff031ded7 100644
---- a/arch/loongarch/pci/pci.c
-+++ b/arch/loongarch/pci/pci.c
-@@ -13,6 +13,7 @@
- #include <linux/io-64-nonatomic-lo-hi.h>
- #include <asm/cacheflush.h>
- #include <asm/loongson.h>
-+#include <asm/numa.h>
- 
- #define PCI_DEVICE_ID_LOONGSON_HOST     0x7a00
- #define PCI_DEVICE_ID_LOONGSON_DC1      0x7a06
-@@ -44,7 +45,7 @@ int raw_pci_write(unsigned int domain, unsigned int bus, unsigned int devfn,
- 
- phys_addr_t mcfg_addr_init(int node)
- {
--	return (((u64)node << 44) | MCFG_EXT_PCICFG_BASE);
-+	return (nid_to_addrbase(node) | MCFG_EXT_PCICFG_BASE);
- }
- 
- static int __init pcibios_init(void)
+diff --git a/arch/loongarch/kernel/hw_breakpoint.c b/arch/loongarch/kernel/hw_breakpoint.c
+index c35f9bf380334..deeb2f9795705 100644
+--- a/arch/loongarch/kernel/hw_breakpoint.c
++++ b/arch/loongarch/kernel/hw_breakpoint.c
+@@ -453,7 +453,6 @@ static void update_bp_registers(struct pt_regs *regs, int enable, int type)
+ 		if (enable) {
+ 			if ((info->ctrl.type == LOONGARCH_BREAKPOINT_EXECUTE) && (type == 0)) {
+ 				write_wb_reg(CSR_CFG_CTRL, i, 0, CTRL_PLV_ENABLE);
+-				write_wb_reg(CSR_CFG_CTRL, i, 0, CTRL_PLV_ENABLE);
+ 			} else {
+ 				ctrl = read_wb_reg(CSR_CFG_CTRL, i, 1);
+ 				if (info->ctrl.type == LOONGARCH_BREAKPOINT_LOAD)
 -- 
 2.53.0
 
