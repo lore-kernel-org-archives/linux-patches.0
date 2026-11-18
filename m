@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023487;
-	b=2aoI09feiAllbFqK4AibaBg86IrkOod057Pkljk82FkeZ+scP+WBLyt6OHBoYaLQVB7O
-	 4pEvhdHwbQudQFxVeCgCchFImCVxFXRaL819/U+wp3dAKPA6H/jx5TuhRLbP7wXHdeIGa
-	 NptZ6hjG7VacYbiUUXuUuzXTCCJ6M3faKM74r2dscaeCMJJIIE2ZDZclnMBjmkQLgGr0d
-	 Gex5cYdDP11mXykwcT+XoNUHlLxWP3zRN55JOI2m4eogMsUQjGUHrmtpscO8Xoqrv1kRc
-	 B4yDPyVS591He6OzgwgsnJgg1xjYUXm4rRhkRe/FXs+ldYte7qz/WYaLCnSa1+ugWHQ==
+	t=1795023491;
+	b=Gk4vrIUligq+1QkCD5A8/YJeAr/LF9kxssU5EedjGqwMircQTyd4f3OEnXQtNpJgxl6/
+	 LaMY4GgkmFPMCrJcBdjcbwrvY5JnAeq3HYpl9U2exKLfkspDuKS9FLPsIxTC2Fmx1TbDH
+	 LLAMZQ5gsf7mkMFy0j2IaeKbwSs+9GCWXm0zJIn3qrNkxouV7/9kczyNIWoBZPqZy8Zih
+	 sbnSltBzC/tloowPeWpOWj9kBc1cfoStFkQ61600swlZ49PfT8973dT2jBczhNL9yWXMj
+	 HlrCr4pNnpkSEa2qvlzNR3ihxrvh2zq0n0d4u9B2Ky7guMTNAUfXJeAUFPqYMevtE3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023487;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023491;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ae7e/RG0t7fBKyjhzRepNLjzL8wxPWXgLN/q2N6Oqdk=;
-	b=znhRGCKAbVj1nCrC8Hv/mtlsU7XRZjMexWaZTEp9rMl9BHB+DbinyW2OBP1dgbMBzQpG
-	 M1SsxZ1u6B0w4oyChRuxvUQHzH9OaH4ymI+jkp/B1u4P5IIJJOJzkH0lFjoovcuwUjGPG
-	 Vrh3NO2XFFzlfs5aCEJUO1HCK3WR1lMM69B2UN4GhrXeA6kFwyM4fAc8r4Ln43M2bO+G5
-	 AJ4V/3Fp2xHlDrVDWVHCavvFhzN6iU/Rl8OVjrdAyqRD+jCiM7Wla6VvXrUHUMBxYtn7s
-	 CxEhkGEALzWUHeoY09SJ83AUzay5hBpNh4cJaLBfvSjMlT6GEePGlrul3D1mJzLBP+A==
+	bh=35USMPlWvbrws+0ql5BT0pYjp4oVGQq0P8ztUNf/4gA=;
+	b=SjAHZKfyXEev5uc231+nmDmXpaZfxOZ+n8fILRCTM3GSG6Af0uNgSUpmrjHYlnJcwC3Q
+	 657/nd9OM6eXLwECy6As5u238ROmJlHhXMyuS3cZj+6GOVOuGfT/bi3ZMHqPhRi6JMCGF
+	 6AEWUR+AeuK/+4LzjflGrEh3qusW+1Tb/V6mABofhT/p+gk0hKMQT9oYba/P/oBh6oMV6
+	 4MQ/943bopQlj2Ql4e4O6NyM/MrvtC1KxRpBpZGvJUb74hUcpnEc5O0cP3sA8rv2hutnW
+	 PL+joq8ZxubkdZK4zvPpJl7Pq9XvRB8ib15+GFss3I1abUW1CSt0jvrN22mPOJi41dQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=En2DhZmQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="umZvU/50";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83139606A336;
-	Wed, 18 Nov 2026 17:38:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0281606A31C;
+	Wed, 18 Nov 2026 17:38:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=En2DhZmQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D266C1F000C9;
-	Wed, 18 Nov 2026 17:38:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=umZvU/50
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2FF41F000C4;
+	Wed, 18 Nov 2026 17:38:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023487;
-	bh=Ae7e/RG0t7fBKyjhzRepNLjzL8wxPWXgLN/q2N6Oqdk=;
+	s=korg; t=1795023490;
+	bh=35USMPlWvbrws+0ql5BT0pYjp4oVGQq0P8ztUNf/4gA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=En2DhZmQ6cV+4FhndZgycHyBNVXEBvkBnaPyYez56QQq2pSRtxselb+BhXFqLb6cY
-	 0jEiEMYdYAxZgfqYVVU+Ox6R7Ij2nCZeGyzz1cgx86e1i9jXgJmfssUef8nnf7xGAT
-	 sV65m47XkS83tjYUjGonUfSzZzHJ2i1f/yrT499U=
+	b=umZvU/507pp2HzkT+SZjKPCYGG6+fmfWSPCTk4zYhPJBHU0ueI3Y6DHe+xaxozzlW
+	 dmhuEbC9zKHSOhj3ryE6SgUtPJUjUeg7+4yQXjYH6JWwiqpSq6OkR7NdyJ2jptUBE8
+	 4DavlWaYW4H/JlrnQipJdGE0VgXDbwv+vLdaqrnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Tejun Heo <tj@kernel.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0346/2151] efi/libstub: Fix efi_set_event_at() parameter documentation
-Date: Wed, 18 Nov 2026 15:34:41 +0100
-Message-ID: <20261118150134.705759510@linuxfoundation.org>
+Subject: [PATCH 6.18 0347/2151] kernfs: fix up the unlocked attribute reads on the creation paths
+Date: Wed, 18 Nov 2026 15:34:42 +0100
+Message-ID: <20261118150134.745446997@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,39 +69,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Shakeel Butt <shakeel.butt@linux.dev>
 
-[ Upstream commit c12a3a4b35e47fd511fbd550d3637318be41c4eb ]
+[ Upstream commit 81bdc85b4c086502f4446a58eb5d25f29bb5e9f7 ]
 
-efi_set_event_at() documents ids although its array index argument is
-named idx. This produces missing and excess parameter warnings.
+Two creation paths read a live node's attributes without holding
+kernfs_iattr_rwsem, which kernfs_iop_setattr() takes for writing.  They
+need different fixes.
 
-Match the argument name and fix the adjacent spelling of array.
+kernfs_create_link() copies the target's ia_uid and then its ia_gid into
+the new link.  A chown of the target between the two reads leaves the
+link with the old uid and the new gid, an owner the target never had.
+Read both under the rwsem.
 
-Fixes: 8c0a839c2bcc ("efi/libstub: Descriptions for stub helper functions")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+kernfs_new_node() reads the parent's mode and ia_gid for S_ISGID
+inheritance.  Either value is fine there: the node does not exist yet,
+so nothing orders a racing chmod or chown against the creation.  Taking
+the rwsem would only pick between two answers that are both right.  Mark
+the reads with READ_ONCE() instead.
+
+The pointer that leads to them is already fine: __kernfs_iattrs()
+publishes kernfs_node::iattr with try_cmpxchg(), and both sides read it
+with READ_ONCE(), like the rest of fs/kernfs.
+
+The Fixes tag is for the symlink half.  kernfs_create_link() has read
+the pair unlocked since it started copying the target's owner; only the
+name of the lock its writer takes has changed.  The READ_ONCE() markings
+are not a fix.
+
+Fixes: 488dee96bb62 ("kernfs: allow creating kernfs objects with arbitrary uid/gid")
+Acked-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
+Link: https://patch.msgid.link/20260905191613.3143937-5-shakeel.butt@linux.dev
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/libstub/efistub.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/kernfs/dir.c     | 12 +++++++++---
+ fs/kernfs/symlink.c | 17 ++++++++++++++---
+ 2 files changed, 23 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/firmware/efi/libstub/efistub.h b/drivers/firmware/efi/libstub/efistub.h
-index f5ba032863a9c..3e21ff6acb9a2 100644
---- a/drivers/firmware/efi/libstub/efistub.h
-+++ b/drivers/firmware/efi/libstub/efistub.h
-@@ -220,8 +220,8 @@ typedef void (__efiapi *efi_event_notify_t)(efi_event_t, void *);
-  * efi_set_event_at() - add event to events array
-  *
-  * @events:	array of UEFI events
-- * @ids:	index where to put the event in the array
-- * @event:	event to add to the aray
-+ * @idx:	index where to put the event in the array
-+ * @event:	event to add to the array
-  *
-  * boottime->wait_for_event() takes an array of events as input.
-  * Provide a helper to set it up correctly for mixed mode.
+diff --git a/fs/kernfs/dir.c b/fs/kernfs/dir.c
+index 360cfbd8dd36e..8cdb44ac68db0 100644
+--- a/fs/kernfs/dir.c
++++ b/fs/kernfs/dir.c
+@@ -701,13 +701,19 @@ struct kernfs_node *kernfs_new_node(struct kernfs_node *parent,
+ {
+ 	struct kernfs_node *kn;
+ 
+-	if (parent->mode & S_ISGID) {
++	/*
++	 * The mode and the gid below are read unlocked on purpose: they feed
++	 * a node that does not exist yet, so nothing orders a racing chmod or
++	 * chown against this creation.
++	 */
++	if (READ_ONCE(parent->mode) & S_ISGID) {
+ 		/* this code block imitates inode_init_owner() for
+ 		 * kernfs
+ 		 */
++		struct kernfs_iattrs *attrs = READ_ONCE(parent->iattr);
+ 
+-		if (parent->iattr)
+-			gid = parent->iattr->ia_gid;
++		if (attrs)
++			gid = READ_ONCE(attrs->ia_gid);
+ 
+ 		if (flags & KERNFS_DIR)
+ 			mode |= S_ISGID;
+diff --git a/fs/kernfs/symlink.c b/fs/kernfs/symlink.c
+index 0bd8a2143723d..727d77ff742f0 100644
+--- a/fs/kernfs/symlink.c
++++ b/fs/kernfs/symlink.c
+@@ -31,9 +31,20 @@ struct kernfs_node *kernfs_create_link(struct kernfs_node *parent,
+ 	kuid_t uid = GLOBAL_ROOT_UID;
+ 	kgid_t gid = GLOBAL_ROOT_GID;
+ 
+-	if (target->iattr) {
+-		uid = target->iattr->ia_uid;
+-		gid = target->iattr->ia_gid;
++	/*
++	 * A symlink takes its owner from its target, so both fields have to
++	 * come from the same moment: read them under kernfs_iattr_rwsem, or
++	 * a chown of the target racing this could leave the link with the
++	 * old uid and the new gid.  The section ends before kernfs_add_one()
++	 * takes kernfs_rwsem.
++	 */
++	scoped_guard(rwsem_read, &kernfs_root(target)->kernfs_iattr_rwsem) {
++		struct kernfs_iattrs *attrs = READ_ONCE(target->iattr);
++
++		if (attrs) {
++			uid = attrs->ia_uid;
++			gid = attrs->ia_gid;
++		}
+ 	}
+ 
+ 	kn = kernfs_new_node(parent, name, S_IFLNK|0777, uid, gid, KERNFS_LINK);
 -- 
 2.53.0
 
