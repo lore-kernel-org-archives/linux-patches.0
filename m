@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046832;
-	b=glEjm7HhJ4isqUaRn/3xHvtpus+1GuM6Efh8b8Q75SJPCoyW91ka85gyE1uqFTZnM3F4
-	 895zHbFbuBsaxi9NYLe3YC2h8gZ1xXHgHKC+hXp2mBLOhIyD6PODH7MYGtu3HqjefPihd
-	 qXUrcqMU9usr3VOZfh5zmD1bt/mGJZagck5ASUm936NnAs9ssb5wBOp9TpCusbMZyOXuD
-	 649mRlyZKFF+54VrZEB6u6DtElivMmxPx8ukgi/lrCiug7GwFelj3VoLUqRxmZHilfu8j
-	 WRlc1NFQHHRu1KUtSMIflkbzKlU+Dm7OTruyI7OBIhlqvHJyMqSkXvEEB3ojAYGqrvQ==
+	t=1795046835;
+	b=Y6y3F80KlcyH7duMtDofJvg+2WOUXGbPjF6meRwNpFB0v6i2vYajU0drWxEMnEpAlNB6
+	 wIpy9+N3dLymaIoyt8ptI101eMeDPZOgtreh38bsBapuERDZJU9Y9dN3NWGdAI6B44VIw
+	 eW5RGyDvGtpPfWab9irUjSWZ3VJB5lmBqPFYh4z+ZiPv/gVLnC+GNhOnIFfkS5i75Uo4P
+	 U2AcKKJ4wIRA8VOUXaLOyyT8Z66pSGjLP1GMvWH+uxQ2/orlMea9BPCrWkhi2PuLtZ4Av
+	 YDKm34PzKUXcZrAB3GM33rf6k3C9FH2KRuUftmYQTCqEUcuIlplPPXmfeJPMkfOn5Xg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046832;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046835;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=azJJuqq8hHlqD7ajvrxdpkD9Yu5WDZBnnIYZ7UKIRwA=;
-	b=pzt2h6XdCjmWOJs4bTlU0ZnpTYtOs0DoeGaMqgUUmaytMqzNLOTe21084XfEJS23S8Yy
-	 a0/KFoNASbKrAGnVkp9qQmNheNVoZD6QawMp1fYdOxCevJkcRIxrRH16ct5A5GLLd4ijm
-	 3Emg11I7KKz3Qn4mvfVjqWA3CId3IvW7qcJTxpQ7o8jllaNaGPfUTI5r37Y/0pZJfXfGf
-	 nSOobJEtSX5gus6oa6T4X/rZbweIuUT0+pSGKSMN0+8bAMMsPTLQozpdxa9B79dPpQ6J6
-	 0teIDBphfoh+TFfcuFCzaVvZKnyy92bEsS68/rM6JJ4nt2Wx2GAFL2DWQg3t9IjZKjQ==
+	bh=R56YxOUrkmwaug7gH6YKTZqD2XJUCOfvh1HhqnCykic=;
+	b=eKO5Z5MO0XIZwMTAYYRpnjRWpcfUgqRwidypu3wUqDcYIcBb1KOjNfvX4Myo9U+x1iZQ
+	 0IJ0yXJC682PbQ7cM/mTDXr3+cZmvhtg8huBu/pzvl+sic4kX6FgiQOzYScNJ1alToAnx
+	 JIqHt5kQGaxDVdJB34oXieRx8/WGeMWEoBvrcil72Cc3T6p8+9d8zfopaCMwI5YPqMe9u
+	 yaDbsVw2nw8UWx3Nd6ePSKfPUbCi8S51/XbekJ0cxyf0JkZF+0ZI8/dAJkVJez3u3SFT+
+	 5FNbrBmupQ64U1wXvIVzGK+QkZQJN0i1gbwHw0nCSUVx9Ax2YHtHSCWUSkwpVnhju5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ttF515+P;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="s/eSQ8M2";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF0D606A31C;
-	Thu, 19 Nov 2026 00:07:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2FB606A32C;
+	Thu, 19 Nov 2026 00:07:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ttF515+P
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 321EF1F000C5;
-	Thu, 19 Nov 2026 00:07:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s/eSQ8M2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E03321F000C5;
+	Thu, 19 Nov 2026 00:07:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046832;
-	bh=azJJuqq8hHlqD7ajvrxdpkD9Yu5WDZBnnIYZ7UKIRwA=;
+	s=korg; t=1795046835;
+	bh=R56YxOUrkmwaug7gH6YKTZqD2XJUCOfvh1HhqnCykic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ttF515+PGZ+/MNU5vk6XjO8dupYqcZXf4YLZqjtZGZrte/s6wLL5ccPy2Dju5lCMu
-	 wmFpvi4AhL2Rp3dpvRv4HBEmdRMuov5mwxOrYYa0Aw1ScZzSzRA+LasAeIxifRbqQS
-	 bn5GEkgmewaXx2EKOwm0aZX+ImLi2yo2nH252Vn0=
+	b=s/eSQ8M2KK1aAn5/wZ+KZmwtjx3c+AUBJfVJn1+z9dXdT8lewuAXrFc5k+7Lqec7F
+	 201WsWQjKM0UBN5/zIl5NGhb3rh4kZFyl0L3KBjN9WfUGJHxoBJs6aSUU/vHnf1ZTh
+	 YvdzDRn0I807wQVGoZvKZ23FabXPtkiRmDrCQbjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Punnay Sharma <punnaysharma805@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1382/2857] media: i2c: ov5647: fix power cleanup on remove
-Date: Wed, 18 Nov 2026 15:40:16 +0100
-Message-ID: <20261118150251.133314867@linuxfoundation.org>
+Subject: [PATCH 6.1 1383/2857] staging: media: av7110: fix sp8870 initialization failure state
+Date: Wed, 18 Nov 2026 15:40:17 +0100
+Message-ID: <20261118150251.167635761@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,43 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Punnay Sharma <punnaysharma805@gmail.com>
 
-[ Upstream commit 6e81cfc38548109021ab761b94ecdd01f8753154 ]
+[ Upstream commit 30684fa98394bc0eb4362282908612aab7d4dad9 ]
 
-ov5647_remove() disables runtime PM without powering off the sensor if
-it is still runtime active. pm_runtime_disable() does not invoke the
-runtime suspend callback, so the sensor can remain powered on.
+The SP8870 DVB frontend driver prematurely flags the device as
+initialized at the very beginning of the sp8870_init() routine, prior
+to requesting the firmware (dvb-fe-sp8870.fw) and executing the I2C
+upload sequence.
 
-If the device is not already runtime suspended, call ov5647_power_off()
-and mark the runtime PM state as suspended.
+If request_firmware() times out or sp8870_firmware_upload() encounters
+an I2C bus error, the function aborts and returns -EIO. However,
+because `state->initialised` is already set to 1, all subsequent
+invocations of `fe->ops.init()` by the DVB core will immediately return
+0 (success) without attempting to load the firmware again. This leaves
+the demodulator microcontroller halted and the frontend permanently dead
+until the module is forcibly reloaded.
 
-This issue was found by manual code inspection.
+Relocate the `state->initialised = 1` assignment to the end of
+sp8870_init(), ensuring the flag is only set after the firmware is
+successfully uploaded and the system controller is actually restarted.
 
-Fixes: 089b7c70f0d8 ("media: ov5647: Use pm_runtime infrastructure")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-[ sashal: adjusted context for the existing mutex_destroy() call in ov5647_remove() ]
+Signed-off-by: Punnay Sharma <punnaysharma805@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ sashal: Adjusted patch context to match the relocated driver's existing initialization guard and logging. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov5647.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/staging/media/deprecated/saa7146/av7110/sp8870.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/i2c/ov5647.c b/drivers/media/i2c/ov5647.c
-index 869f4d3840f12..ff3752d53f27a 100644
---- a/drivers/media/i2c/ov5647.c
-+++ b/drivers/media/i2c/ov5647.c
-@@ -1460,6 +1460,10 @@ static void ov5647_remove(struct i2c_client *client)
- 	v4l2_ctrl_handler_free(&sensor->ctrls);
- 	v4l2_device_unregister_subdev(sd);
- 	pm_runtime_disable(&client->dev);
-+	if (!pm_runtime_status_suspended(&client->dev)) {
-+		ov5647_power_off(&client->dev);
-+		pm_runtime_set_suspended(&client->dev);
-+	}
- 	mutex_destroy(&sensor->lock);
+diff --git a/drivers/staging/media/deprecated/saa7146/av7110/sp8870.c b/drivers/staging/media/deprecated/saa7146/av7110/sp8870.c
+index f68479e75e462..3e05ef983fafb 100644
+--- a/drivers/staging/media/deprecated/saa7146/av7110/sp8870.c
++++ b/drivers/staging/media/deprecated/saa7146/av7110/sp8870.c
+@@ -297,7 +297,6 @@ static int sp8870_init (struct dvb_frontend* fe)
+ 
+ 	sp8870_wake_up(state);
+ 	if (state->initialised) return 0;
+-	state->initialised = 1;
+ 
+ 	dprintk ("%s\n", __func__);
+ 
+@@ -336,6 +335,8 @@ static int sp8870_init (struct dvb_frontend* fe)
+ 	sp8870_writereg(state, 0x0D00, 0x010);
+ 	sp8870_writereg(state, 0x0D01, 0x000);
+ 
++	state->initialised = 1;
++
+ 	return 0;
  }
  
 -- 
