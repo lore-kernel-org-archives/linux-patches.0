@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054762;
-	b=E6tkVKnxjffkf+eZINb1HPV7fOtp8zeC1yvaOJwF1pJraISS5zXjzHbVcz67vbg/q9mO
-	 Y50Jt+z2WaqL5luoVZEo19ntmYlEcTbmto9DyO1rg5QPSfYaxq1SW5s68irQOpnu669L/
-	 /mcKVPm802N5emUkA/Mr4r0dey+OO8blYy89ctRGEPx+mJSIFfn0WFqN1D3hoQohB2UBP
-	 GAVbLylZyxLYTVvscqVe+v0iN/eVyVnBve+Ml/CAdWkQFwWX+WOl4IaVHbFr/8BYThgYl
-	 3L1Frngjw19d68/tzaZ5jDW6Eu5bOeXwofoX64s4ELghbwnT2Wr9ZNJkvbDL2deIQJA==
+	t=1795054765;
+	b=sRpp2m/YIMXJZPBeBqXublAZlg35wVM5YXBcTxOnOANWTAr0C9KPN3PYX0CmZZeeJdZG
+	 uj/0OOYuKEgUca5glvZgDx7dTNleQQhKx8sEGUyLeAYW6AXmPW8EoeOFC0WGDmsHyJDHv
+	 3If8tptiA1NkkR8Kzs73JYOVl2H4p/f3raE5PE+mKcpyYFbZLJt6PFyWnF8gOM4uwiIs0
+	 F77nYSP1MC5PA5PE5d44pU2sJXwuRundxbcVadgSW8MS4G/iYTsI2wG/4ge/NzRYAb9yq
+	 +GU1F42aoS39eatgHeRAdCdvRPqitKNSIxWnN4wXR8dXiRraBnLh2pZu1fLp1Z04NAg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054762;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054765;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bVrSofbmIsVQqksx0DEYy8zfFrL1Z94Dvznia9acUMw=;
-	b=IYtbHRkt2w8dcPInDoq97U8ZBADjEDAq0y0AeHviBLmTS/48ZPIuHunNKNpQ8IxOZBHr
-	 LgiKms9ZY5W2jDXrugJ1UhaYV+ddL6PLHFkQHxDeyH7LswsfzJjTx3rgO42kUL+3aVLpo
-	 N1jkwP+NIAwVQNggFsHxyyTkJ5VJzoGSKgyLWl0t4gt+cW3vrYkcFJJxc0X1A07Ri/hJ/
-	 u4bcN7OPiyKo2F7bB6KtSwtvhSDrAWlQLTuIi41j3ZOj1EusYPE1wEJP0vF0ma4ArRGu0
-	 us5A2fSz/27VJLdv+SyfGK9x168Mh5J4bh3wmZRQw8Us/lsvEijcnRNf6Iq0DANSsEA==
+	bh=fdSXiM/EibTb4cIblhFCNVmaOWtVQ6Y57vzjg8FR1LE=;
+	b=epPeN8WzMC8WBqFLckbEeM++4joSX8ho04XAb/4gTcQVt4oPv75f+IFrwaP0yxgny8bw
+	 wWsZpJOC7ay2sYTqynwAiWvhijiw9DGqMaORIB9HJaVdAbIDjOhCfHn++Icwu3SCCeyOG
+	 /NYO3V6pbHh9/IE8EnM3x115lPsnxKeomFvnOhFHUQu7DNSWUobznoETb3sJGh/gSsKvY
+	 3MAO7kYLKR0HswgWf9a7bqgC8lrD76YGsZ1mcGng10Ip8n78f0XYajGXKxizjRfGZ3iB0
+	 SIR/JxhRo62W8HGn9TrgBGfyN6B9DdWL730sHgJQdbN9KlgspyIvs8gqikZIMxlNxUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fupRWGQh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tuXiowDU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3C0606A320;
-	Thu, 19 Nov 2026 02:19:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC890606A32F;
+	Thu, 19 Nov 2026 02:19:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fupRWGQh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08DB21F000C4;
-	Thu, 19 Nov 2026 02:19:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tuXiowDU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B304C1F000C4;
+	Thu, 19 Nov 2026 02:19:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054762;
-	bh=bVrSofbmIsVQqksx0DEYy8zfFrL1Z94Dvznia9acUMw=;
+	s=korg; t=1795054765;
+	bh=fdSXiM/EibTb4cIblhFCNVmaOWtVQ6Y57vzjg8FR1LE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fupRWGQhLoq3urQOIcYYRM0E48K+2iMdaKyFeVE1x/c4E/SOdCPjU4ayMx6M9xV8/
-	 Hu3sSLK3Ke8VzwYfYOj8Vim3Tko+zNEiG8PQM+oaU7PwNCAkvmNNz1hlIkE76ZGOCf
-	 UebfgvK4h6Od7Orckp2G4I2IMm+EhO3e+4x8qaR4=
+	b=tuXiowDU5xsgUxvI2k5oB5KCfxHMyVkxnpldXX+Tdxpqsuu1Ur2WIzXnw9QBVOq6N
+	 iwbVYFuyGxrZKkDGx58lOFC47/8yYLeYE7y6izvWEUnpYKqqMRyD77pYeCadXLrIaK
+	 2b1PBs6EjqVE1FSxBcbhZhz9CRLcxr/UFghXwB2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Hanjun Guo <guohanjun@huawei.com>,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1391/2214] efi/cper: Read only validated fields in cper_mem_err_pack()
-Date: Wed, 18 Nov 2026 15:51:07 +0100
-Message-ID: <20261118150106.969014892@linuxfoundation.org>
+Subject: [PATCH 5.15 1392/2214] spi: mtk-nor: fix runtime PM usage count leak in probe error path
+Date: Wed, 18 Nov 2026 15:51:08 +0100
+Message-ID: <20261118150107.001749183@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -71,73 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Jiang <dave.jiang@intel.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 92480a2b00a15b0add512b6fc474151ec5340a8e ]
+[ Upstream commit 4cee1ed13e2687f1a9fec7dd50e31eb179506d75 ]
 
-cper_mem_err_pack() copies extended, rank, mem_array_handle and
-mem_dev_handle unconditionally. Those live at offsets 73 to 79, past the
-end of struct cper_sec_mem_err_old, the 73-byte UEFI 2.1/2.2 layout that
-older firmware still emits and that cper_estatus_print_section() admits.
-On such a record the copy reads up to seven bytes past the payload, and off
-the end of the error status block when that section is the last one.
+mtk_nor_probe() takes a runtime PM reference with
+pm_runtime_get_noresume() before registering the controller, but the
+error path never drops it.
 
-Copy each of the four only when its validation bit is set, and zero it
-otherwise. Nothing is lost: a 2.1/2.2 record leaves those bits clear, and
-every consumer of struct cper_mem_err_compact already gates the fields on
-the same bits. Zeroing also stops callers reading them back out of the
-uninitialised on-stack struct they pass in.
+Balance the get with pm_runtime_put_noidle() in the error path.
 
-Reported-by: sashiko-bot@kernel.org
-Closes: https://sashiko.dev/#/patchset/20260714231835.303081-1-dave.jiang@intel.com?part=7
-Fixes: 2dfb7d51a61d ("trace, RAS: Add eMCA trace event interface")
-Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
-Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260904172337.1409775-11-dave.jiang@intel.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 3bfd9103c7af ("spi: spi-mtk-nor: Add power management support")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Link: https://patch.msgid.link/20260904-mtk-nor-v1-1-cefdca098f83@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/cper.c | 26 ++++++++++++++++++++++----
- 1 file changed, 22 insertions(+), 4 deletions(-)
+ drivers/spi/spi-mtk-nor.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/firmware/efi/cper.c b/drivers/firmware/efi/cper.c
-index 057813687d14c..754aaca08da6b 100644
---- a/drivers/firmware/efi/cper.c
-+++ b/drivers/firmware/efi/cper.c
-@@ -360,10 +360,28 @@ void cper_mem_err_pack(const struct cper_sec_mem_err *mem,
- 	cmem->requestor_id = mem->requestor_id;
- 	cmem->responder_id = mem->responder_id;
- 	cmem->target_id = mem->target_id;
--	cmem->extended = mem->extended;
--	cmem->rank = mem->rank;
--	cmem->mem_array_handle = mem->mem_array_handle;
--	cmem->mem_dev_handle = mem->mem_dev_handle;
-+
-+	/*
-+	 * These four sit past the end of the UEFI 2.1/2.2 layout, which older
-+	 * firmware still emits, so reading them unconditionally runs off a
-+	 * short record. Every consumer of the compact record gates them on the
-+	 * same validation bits, so leave them zero when firmware does not
-+	 * claim them.
-+	 */
-+	cmem->extended = 0;
-+	cmem->rank = 0;
-+	cmem->mem_array_handle = 0;
-+	cmem->mem_dev_handle = 0;
-+
-+	if (mem->validation_bits &
-+	    (CPER_MEM_VALID_ROW_EXT | CPER_MEM_VALID_CHIP_ID))
-+		cmem->extended = mem->extended;
-+	if (mem->validation_bits & CPER_MEM_VALID_RANK_NUMBER)
-+		cmem->rank = mem->rank;
-+	if (mem->validation_bits & CPER_MEM_VALID_CARD_HANDLE)
-+		cmem->mem_array_handle = mem->mem_array_handle;
-+	if (mem->validation_bits & CPER_MEM_VALID_MODULE_HANDLE)
-+		cmem->mem_dev_handle = mem->mem_dev_handle;
- }
+diff --git a/drivers/spi/spi-mtk-nor.c b/drivers/spi/spi-mtk-nor.c
+index 36584d1f0e835..58980e317ca89 100644
+--- a/drivers/spi/spi-mtk-nor.c
++++ b/drivers/spi/spi-mtk-nor.c
+@@ -861,6 +861,7 @@ static int mtk_nor_probe(struct platform_device *pdev)
+ 	return 0;
  
- const char *cper_mem_err_unpack(struct trace_seq *p,
+ err_probe:
++	pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 	pm_runtime_set_suspended(&pdev->dev);
+ 	pm_runtime_dont_use_autosuspend(&pdev->dev);
 -- 
 2.53.0
 
