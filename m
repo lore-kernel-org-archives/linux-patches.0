@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044720;
-	b=aN6LmDg5Ss8yMrFU8JndqL9SiZGBSZ+FMjW7i45V8QZxslLYjXTnKB8XcPQ93ZxyvqyZ
-	 RWZGNOh6Eivegbca61IW3tvgv7z5iWWsSe9u9ZVV+GEq0ORuvEeNf+SATAHqvb1EqmqcJ
-	 0Uyda8LpJr0ODyiMEPbZDWIo12AsIVIu+u1NpCfmcY8XZ+cr73eS7ITgU7TjIwu2L32vH
-	 rzwl7c8TFUZg7et1i+9k7YW8Pq1v2H3Fh+dnqh31I7fSjFQTHNTtPFHuiOz4LWByPdyTn
-	 8ie+5A4zn/5eToZU9nqmFU37D/w+2C8JJJsdd2Pa1bLWCltgkPO4IqaaxYeTdkmlmEA==
+	t=1795044723;
+	b=scFPg1fevXXn2qBmLxSQJDkHeI7BGMreQaSz5MAZUUUwVXTn3FdKGZA2ujAkrQ4k2qVk
+	 TvpDWtV6qIOjdgiLkZk4mntGe2o44/9h+vTq+6ZoZ5ACJam5g6kn7FEB2ZuflBkEo5qhH
+	 6MqapzWCQxemKRYVOcwJ2CiTzxAHW/PSF6+pc2QYpSPPR871gcuAvl32X6tkeNYZ9nlGv
+	 4+0fV0kPvJ38vVvhJUyDp2n5KgHxKawmZrn3KANXOP6Fetf2owUDL+llHEIu70TSES+Ki
+	 4Ab+XXwUqwPG3qRM4Xj58IwCCzJyFw1ffQ530f2lICMxhnrdUpPJhZOF49zdSgeylYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044720;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044723;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=1HFgl8bWP6pw05Bge5THHfp7cN2Tl/Z8bbkxxNLNyzg=;
-	b=n5ps8UKVenphu0/ZjtkD2eyny+G6Kqu8vN24Tu4sGj5/haLUdA0PkMpxZrJCldSihgAY
-	 dIRhX6VuJJnAaSb0lhtclZpHrC7Y4uMzGJwcj4YDS/pP2/K9B2KiYtwbHzw5FGqI9i4gE
-	 +FFDykCFLr5V+qRo5u5SXguUm+wqfqJ3V2rd99DGVcBonu8Ad9rmvFzf1DC3yms8WhJKd
-	 VxEOD4fN8FbiFPt8YHZIKN/uFSOKNkQEe69L1NZcRXCH+wFdPkumWCAW7cDLdFeccM/3X
-	 CwE3t9G7urILaT11ole5HD+K/pYoV6uPXT+cCqyh/KTj/RZtabeDRdZQUoNEj76XHew==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=oARDafliKR15iDT3lKEGETr+IYU1D8Cu4KNAn2Ih6kQ=;
+	b=VedaoSrWQlhdQcrTAvcy/iq6QxII8BiTsYiXLv2bO5pZe2FuiLvGeqiQN3mTYuHwCmW6
+	 CyCex0JLsy3OtfFyd2+D6tSc7ADuk3OfdllCKKGbjnCvtETsbxZQX8LkDNFg7P8tMWpeR
+	 v0lxUJ45naL7FzFZtYLFdC/JmqMx387/Un1nuXAw+z8zdd8Z3jFza/zrGj0u1/kvumCc4
+	 f4o+CUWEROXw7wl6Ndwhsx5GMEeeGkBUK3ua9r7cdBjzGb9zvLekCHdGr8aZDMqNITZMf
+	 3v/0mvkMZdl/KsJo4Q+S5ulXEqss3Pyh1ar2Ud8rP8iPedxFBfyNa6hk5RrklVBI/pw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u4JqB0HU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MWlZUclq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8516C606A320;
-	Wed, 18 Nov 2026 23:32:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6121D606A32A;
+	Wed, 18 Nov 2026 23:32:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u4JqB0HU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE28B1F000C4;
-	Wed, 18 Nov 2026 23:31:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MWlZUclq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04411F000C4;
+	Wed, 18 Nov 2026 23:32:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044720;
-	bh=1HFgl8bWP6pw05Bge5THHfp7cN2Tl/Z8bbkxxNLNyzg=;
+	s=korg; t=1795044723;
+	bh=oARDafliKR15iDT3lKEGETr+IYU1D8Cu4KNAn2Ih6kQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u4JqB0HUxo0/MIJ8WhcnTAEUIS2Gcyi/7jrU2s2WVHCMtRYB7G8OwgbXEBDt0W4JC
-	 3bCoIWklwXBI303uuJV0g/l96PaYXoPzj2cUivtTZO9/EJAOFMqa8NCBU4cVk0luH6
-	 mTI1KBOrvLUjkOWppKA1OC+fJO0sO0bpzWiZ2QLI=
+	b=MWlZUclqCTQpZ/wh+s4UzoLjob6VJdmH8G27VbP3tZpgqkb+Uvhh4li4YU3JapyqG
+	 QxznGJ4TXzKDEesfi5ITm80OybZl+J5PIdw2qFOd53YdNlc8wRPVgYekdG0PAU5GEb
+	 OYjBL8aIeSQBKAvcq4BE9v3fnu5i0pfRssbXFbkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Amir Goldstein <amir73il@gmail.com>,
+	Fredric Cover <fredric.cover.lkernel@gmail.com>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0666/2857] ovl: take a snapshot of the name for copy up
-Date: Wed, 18 Nov 2026 15:28:20 +0100
-Message-ID: <20261118150225.535234322@linuxfoundation.org>
+Subject: [PATCH 6.1 0667/2857] smb: client: fix early procfs exposure race
+Date: Wed, 18 Nov 2026 15:28:21 +0100
+Message-ID: <20261118150225.573522128@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,100 +62,137 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Fredric Cover <fredric.cover.lkernel@gmail.com>
 
-commit 65bf000962a33ec9d2488e4e1797b6cf630abcbb upstream.
+[ Upstream commit 7b1afb631395c958993cda4631002258ef4151ea ]
 
-The copy up of a directory reads a freed dentry name when a lookup
-moves the directory at the same time.
+Currently, init_cifs() calls cifs_proc_init() near the beginning of
+the function, before INIT_LIST_HEAD, leading to a momentarily
+uninitialized, but exposed, procfs. If a userspace process reads this
+empty procfs, iterating over a zeroed list_head leads to a NULL
+pointer dereference and a kernel oops/panic.
 
-A pointer to the name of a dentry is only valid while something stops
-a move of the dentry. ovl_do_copy_up() keeps a plain copy of
-c->dentry->d_name in c->destname, and ovl_copy_up_start() only keeps
-ovl_rename() away. When a lookup finds the same directory under another
-name after a change to the lower layer, d_splice_alias() moves the
-dentry and frees its external name.
+For example, if a delay is added between cifs_proc_init() and
+INIT_LIST_HEAD, and a userspace process is polling
+/proc/fs/cifs/DebugData, the following oops occurs:
 
-With a delay in ovl_do_copy_up(), a chmod of a lower-only directory with
-a 60 byte name raced with a rename of that directory in the lower layer
-and a stat of the new name, and KASAN reported a use-after-free in
-lookup_noperm_common().
+BUG: kernel NULL pointer dereference, address: 0000000000000608
+Oops: Oops: 0000 [#1] SMP PTI
+CPU: 0 UID: 0 PID: 3477 Comm: cat Not tainted
+7.3.0-02212-g4df4d2a577db-dirty #6 PREEMPT(lazy)
+RIP: 0010:cifs_debug_data_proc_show+0x103/0xd80 [cifs]
+Call Trace:
+<TASK>
+ ? seq_read_iter+0x86/0x400
+ ? seq_read_iter+0x86/0x400
+ seq_read_iter+0x183/0x400
+ proc_reg_read_iter+0x62/0x90
+ copy_splice_read+0x215/0x310
+ splice_file_to_pipe+0xec/0x1c0
+ do_splice+0x4b8/0x780
+ __se_sys_splice+0x18f/0x250
+ do_syscall_64+0x109/0x330
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+</TASK>
 
-Fix this by using take_dentry_name_snapshot() for c->destname.
+Fix this by moving cifs_proc_init() down in init_cifs(), ensuring it runs
+only after all internal lists, locks, counters, and workqueues are fully
+ready, but before registering the filesystem. Update the error cleanup
+ladder and exit_cifs() to maintain proper LIFO order.
 
-Fixes: 829c28be9bb9 ("ovl: use d_splice_alias() in place of d_add() in lookup")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-[backport: destname is set in ovl_copy_up_one(), take the snapshot in
- the non-index branch of ovl_do_copy_up() instead]
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+[ sashal: Adjusted context to fit the existing CIFS initialization and teardown code while preserving upstream’s added and removed lines. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/copy_up.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ fs/smb/client/cifsfs.c | 20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
-diff --git a/fs/overlayfs/copy_up.c b/fs/overlayfs/copy_up.c
-index 0f0c02121936e..a873bf4bac814 100644
---- a/fs/overlayfs/copy_up.c
-+++ b/fs/overlayfs/copy_up.c
-@@ -804,6 +804,7 @@ static int ovl_do_copy_up(struct ovl_copy_up_ctx *c)
+diff --git a/fs/smb/client/cifsfs.c b/fs/smb/client/cifsfs.c
+index d369528532c39..60ec559e0b6da 100644
+--- a/fs/smb/client/cifsfs.c
++++ b/fs/smb/client/cifsfs.c
+@@ -1842,7 +1842,6 @@ static int __init
+ init_cifs(void)
  {
- 	int err;
- 	struct ovl_fs *ofs = OVL_FS(c->dentry->d_sb);
-+	struct name_snapshot name;
- 	bool to_index = false;
- 
- 	/*
-@@ -832,13 +833,23 @@ static int ovl_do_copy_up(struct ovl_copy_up_ctx *c)
- 		/* Disconnected dentry must be copied up to index dir */
- 		return -EIO;
- 	} else {
-+		/*
-+		 * ovl_copy_up_start() keeps ovl_rename() away from c->dentry,
-+		 * because ovl_rename() calls ovl_copy_up() on source and target
-+		 * dentry.  It does not stop d_splice_alias() from moving a
-+		 * directory that a lookup found under another name after a
-+		 * change to the lower layer.  That move frees an external name,
-+		 * so take a snapshot.
-+		 */
-+		take_dentry_name_snapshot(&name, c->dentry);
-+		c->destname = name.name;
- 		/*
- 		 * Mark parent "impure" because it may now contain non-pure
- 		 * upper
- 		 */
- 		err = ovl_set_impure(c->parent, c->destdir);
- 		if (err)
--			return err;
-+			goto out;
+ 	int rc = 0;
+-	cifs_proc_init();
+ 	INIT_LIST_HEAD(&cifs_tcp_ses_list);
+ /*
+  *  Initialize Global counters
+@@ -1885,10 +1884,8 @@ init_cifs(void)
  	}
  
- 	/* Should we copyup with O_TMPFILE or with workdir? */
-@@ -870,6 +881,8 @@ static int ovl_do_copy_up(struct ovl_copy_up_ctx *c)
- out:
- 	if (to_index)
- 		kfree(c->destname.name);
-+	else
-+		release_dentry_name_snapshot(&name);
- 	return err;
+ 	cifsiod_wq = alloc_workqueue("cifsiod", WQ_FREEZABLE|WQ_MEM_RECLAIM, 0);
+-	if (!cifsiod_wq) {
+-		rc = -ENOMEM;
+-		goto out_clean_proc;
+-	}
++	if (!cifsiod_wq)
++		return -ENOMEM;
+ 
+ 	/*
+ 	 * Consider in future setting limit!=0 maybe to min(num_of_cores - 1, 3)
+@@ -1964,19 +1961,22 @@ init_cifs(void)
+ 	if (rc)
+ 		goto out_cifs_swn_init;
+ 
++	cifs_proc_init();
++
+ 	rc = register_filesystem(&cifs_fs_type);
+ 	if (rc)
+-		goto out_init_cifs_idmap;
++		goto out_clean_proc;
+ 
+ 	rc = register_filesystem(&smb3_fs_type);
+ 	if (rc) {
+ 		unregister_filesystem(&cifs_fs_type);
+-		goto out_init_cifs_idmap;
++		goto out_clean_proc;
+ 	}
+ 
+ 	return 0;
+ 
+-out_init_cifs_idmap:
++out_clean_proc:
++	cifs_proc_clean();
+ 	exit_cifs_idmap();
+ out_cifs_swn_init:
+ #ifdef CONFIG_CIFS_SWN_UPCALL
+@@ -2008,8 +2008,6 @@ init_cifs(void)
+ 	destroy_workqueue(decrypt_wq);
+ out_destroy_cifsiod_wq:
+ 	destroy_workqueue(cifsiod_wq);
+-out_clean_proc:
+-	cifs_proc_clean();
+ 	return rc;
  }
  
-@@ -1005,7 +1018,6 @@ static int ovl_copy_up_one(struct dentry *parent, struct dentry *dentry,
- 	if (parent) {
- 		ovl_path_upper(parent, &parentpath);
- 		ctx.destdir = parentpath.dentry;
--		ctx.destname = dentry->d_name;
+@@ -2019,6 +2017,7 @@ exit_cifs(void)
+ 	cifs_dbg(NOISY, "exit_smb3\n");
+ 	unregister_filesystem(&cifs_fs_type);
+ 	unregister_filesystem(&smb3_fs_type);
++	cifs_proc_clean();
+ 	cifs_dfs_release_automount_timer();
+ 	exit_cifs_idmap();
+ #ifdef CONFIG_CIFS_SWN_UPCALL
+@@ -2039,7 +2038,6 @@ exit_cifs(void)
+ 	destroy_workqueue(fileinfo_put_wq);
+ 	destroy_workqueue(serverclose_wq);
+ 	destroy_workqueue(cifsiod_wq);
+-	cifs_proc_clean();
+ }
  
- 		err = vfs_getattr(&parentpath, &ctx.pstat,
- 				  STATX_ATIME | STATX_MTIME,
+ MODULE_AUTHOR("Steve French");
 -- 
 2.53.0
 
