@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057610;
-	b=mI9G9xeqs70uFXdai+eAPps1hQ9uFBseOIMwoFXOp8e6GVKamJN0OGii2/Zyi22neTWP
-	 mIOBqdZ/3gV4PIBGFD3SzhTT6fHew7OXsdGSZlWrpT6ijZOAu4NBrYKUszJ1Sn+JeNVGX
-	 FbKjRzoohYSGAHsDh3Y6Zqn/oj3tk4AU+kaBst9OzcporUV6OHV+IiLKZYh+1H72jlcPd
-	 O0eUKAjTrLuNUSqXE+HLGOiFzabCo5iScPJDJ9qSpTmf6BxPnyInpkolbzpUh4kyXi/KL
-	 64Va4nEZYVJliD0KMpDf1tE9aCj4Z/whVx5ZiUWoKFT8do8pQhVUkS0PIXzyiwDJB7w==
+	t=1795057613;
+	b=BhydvpVjaV7hqPvFvj5u/wyIJnU+KwMJg03sZulYCtNdyIKACA/0kevQ9JS/OBc6fO4m
+	 3MT+6yKyBhalBoaGKqGKV8dxAQtaR/LVszdyhT904wmheZWyRCz7OdUG6Ery1I8l/A/Fw
+	 xahvbilqV4+eRQatOeuuqV06dTyH0F+SpGaa2guSS6zRfhlJRJ8+qzuuIMcTRxGo7pUFy
+	 B6n+IiI8aB04ZwwHNlHAeKLMXlG7fv1WB6A3uP+NXPjLoYAVrPA6ct8/Pzu4Nk0f3mcpK
+	 Q94XGzrHxnY4/EKIr1nsZQroUj6OtNtxMsNxZwy8FZa42VYBTlv11GCCwcKb39Lkldg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057610;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057613;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=DtRZ3kFn385gecfdD7boiZWMRGVuEhZhf4GZ247NStE=;
-	b=z7yzMFPUHIG3dBxwadgz/FFAzMjoFJTzCzCYCOnK29B7dfsKAymJ7Vvv9v1UuOijlnJK
-	 TF8RflEZyKYlX2MNWd/Se02sZsjGo9LNS2Y12HFsXvQX3sQcbhw1Gh6tJ0pUUegEc4XM9
-	 SZcyBhigNO0f5Sedvr4OXpifaLMp/xbytggcWZP2ixPuhqsA0/RPaTKfesYg4NqUUaEXB
-	 F3bkSWY5L2Mq5Bzj+TyzotnTbDzRUnQOZNSdrL/KMP8UBfIkhZfQF55yBXoLzXihq1rcd
-	 qC1nANFVpwcI76WSzl06He5+xJPfzg3KG/njNH0yex+KrS2MtqjXsquF7SnNmHstC8g==
+	bh=JmMA/yvvdYOHr5PndTRpKxLnxxmUyTkVPKabofa05+8=;
+	b=Td7K55rThhmbI7zETWZJLgVNYyYSydsac1h9nSXN2L8e/mZfF+a2R8WtlGlCHaVK68wG
+	 YrheGFXXzUgTzXejygTBk5lYAshB976XdFlov9hn+ECGuuFJf0umm0OrClhOVP05Xa+NE
+	 cywoq2fknR6KO3pXHMuqbV/ej7+QEwReAEYQ2EiwiwHLdQHjj/AUhM8MhYoQI/uv9HYjr
+	 /GrXL/wfgxnOyKRos2fOFmmpLlHkrDtxI69524Yu0o2+CcheWv4TVMDSBlGspHnBHHF56
+	 zoOYFt8E51rNkoM1Vn4NJW63ReiQqyKGTUERyYYAYBdMJHc3iZEm8gXoQj6Q9SlYsWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cJKuAaDC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vwtWBE3Z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F93606A33F;
-	Thu, 19 Nov 2026 03:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BF23606A33F;
+	Thu, 19 Nov 2026 03:06:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cJKuAaDC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8EAB1F000C4;
-	Thu, 19 Nov 2026 03:06:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vwtWBE3Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E91C1F000C4;
+	Thu, 19 Nov 2026 03:06:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057610;
-	bh=DtRZ3kFn385gecfdD7boiZWMRGVuEhZhf4GZ247NStE=;
+	s=korg; t=1795057613;
+	bh=JmMA/yvvdYOHr5PndTRpKxLnxxmUyTkVPKabofa05+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cJKuAaDC19PlGyPcPAhySYUM1TKhM7CRN2baAzw+G61uI6VQdzW5cbZrujP+AhOU5
-	 0nYkIzZ3PeFpP1K7IezbUVpDl65GU1n33srZNor4q6/1KpxunFxf5lzbhnnKwKoB3o
-	 CLIT5fHMAYTcRtx1jvVBcUoNOA8BaCyWYY8HcyWw=
+	b=vwtWBE3ZJtRR0sj4OelpMkY6z7i3/EV7Wo51A0t3TsPsWordHuWPLnQj31vi+ctAm
+	 +1T+w1rv4fcYiMDDaWI8cxwg8y2RTa8e4kU6hjpb/c9u+qIjuIsJkf3LTigubUCgZe
+	 JWn3vQPl5mpUwn+HyJ7z1oxruZPWKSXJYZtEY+0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Federico=20Valent=C3=ADn=20Andrade?= <fandrade@frba.utn.edu.ar>,
-	Takashi Iwai <tiwai@suse.de>,
+	Andras Pataki <apataki@flatironinstitute.org>,
+	Xiubo Li <xiubo.li@clyso.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0192/1848] ALSA: usb-audio: Skip mixer creation on M-Audio Venom
-Date: Wed, 18 Nov 2026 15:37:10 +0100
-Message-ID: <20261118145919.780625407@linuxfoundation.org>
+Subject: [PATCH 5.10 0193/1848] ceph: do not cache negative dentries for snapped directories
+Date: Wed, 18 Nov 2026 15:37:11 +0100
+Message-ID: <20261118145919.820376747@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,66 +71,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Federico Valentín Andrade <fandrade@frba.utn.edu.ar>
+From: Xiubo Li <xiubo.li@clyso.com>
 
-[ Upstream commit 4c0ec35e011309bd7091053ad5bbc01420967a66 ]
+[ Upstream commit af59562a5b3d34fb3aa7753f2543393578d06dbf ]
 
-The M-Audio Venom (0763:2084) does not answer any GET_CUR request
-of its feature units, hanging up the USB microcontroller and
-"responding" with timeouts. So the mixer building lasts around 47
-seconds, and the device does not stream at all.
+When a LOOKUP/LOOKUPSNAP in a snapped directory returns ENOENT
+without a trace, ceph_finish_lookup() creates a negative dentry
+via d_add(dentry, NULL).  For live directories this is fine — the
+dentry naturally expires.  But for snapped directories,
+ceph_d_revalidate() unconditionally trusts all cached dentries
+(valid = 1), so a negative dentry created by a transient error
+persists forever, hiding entries that genuinely exist in the
+snapshot.
 
-The same GET_CUR requests issued through libusb (with no kernel
-driver bound) complete correctly and blazingly fast. So it seems
-to only happen during the initial probe.
+Only cache negative dentries for live (non-snapshotted) parent
+directories.  For snapped parents, skip the negative dentry so
+that VFS retries the lookup on the next access.  Since the
+conditions that trigger a negative dentry (MDS transient error,
+local ENOENT shortcut, or MDS null dentry lease) are all rare in
+snapped directories, the performance impact of this change is
+negligible.
 
-I defined an explicit composite quirk to bypass the mixer creation,
-as it is not needed (the synth already comes with volume controls).
-
-With both this and the device flag applied, the synth works
-flawlessly.
-
-Signed-off-by: Federico Valentín Andrade <fandrade@frba.utn.edu.ar>
-Link: https://patch.msgid.link/20260824140211.17003-3-fandrade@frba.utn.edu.ar
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://tracker.ceph.com/issues/78529
+Reported-by: Andras Pataki <apataki@flatironinstitute.org>
+Signed-off-by: Xiubo Li <xiubo.li@clyso.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks-table.h | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ fs/ceph/dir.c   | 10 ++++++++--
+ fs/ceph/inode.c |  3 ++-
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/sound/usb/quirks-table.h b/sound/usb/quirks-table.h
-index 3891952e17476..3ae8f8cd22d94 100644
---- a/sound/usb/quirks-table.h
-+++ b/sound/usb/quirks-table.h
-@@ -2414,6 +2414,28 @@ YAMAHA_DEVICE(0x7010, "UB99"),
+diff --git a/fs/ceph/dir.c b/fs/ceph/dir.c
+index 52a441f86ee39..de12c27513024 100644
+--- a/fs/ceph/dir.c
++++ b/fs/ceph/dir.c
+@@ -719,8 +719,13 @@ struct dentry *ceph_finish_lookup(struct ceph_mds_request *req,
+ 				d_drop(dentry);
+ 				err = -ENOENT;
+ 			} else {
+-				if (d_unhashed(dentry))
+-					d_add(dentry, NULL);
++				if (d_unhashed(dentry)) {
++					struct inode *parent =
++						d_inode(dentry->d_parent);
++					if (!parent ||
++					    ceph_snap(parent) == CEPH_NOSNAP)
++						d_add(dentry, NULL);
++				}
+ 			}
  		}
  	}
- },
-+{
-+	/*
-+	 * M-Audio Venom
-+	 *
-+	 * The AudioControl interface times out on every GET_CUR request,
-+	 * which adds around 47 seconds to the card registration and
-+	 * freezes the device, blocking streaming.
-+	 * Using an explicit composite quirk to skip the mixer entirely.
-+	 */
-+	USB_DEVICE_VENDOR_SPEC(0x0763, 0x2084),
-+	QUIRK_DRIVER_INFO {
-+		.vendor_name = "M-Audio",
-+		.product_name = "Venom",
-+		QUIRK_DATA_COMPOSITE {
-+			{ QUIRK_DATA_IGNORE(0) },
-+			{ QUIRK_DATA_STANDARD_AUDIO(1) },
-+			{ QUIRK_DATA_STANDARD_AUDIO(2) },
-+			{ QUIRK_DATA_STANDARD_MIDI(3) },
-+			QUIRK_COMPOSITE_END
-+		}
-+	}
-+},
- 
- /* Casio devices */
- {
+@@ -771,6 +776,7 @@ static struct dentry *ceph_lookup(struct inode *dir, struct dentry *dentry,
+ 			    dentry->d_name.len) &&
+ 		    !is_root_ceph_dentry(dir, dentry) &&
+ 		    ceph_test_mount_opt(fsc, DCACHE) &&
++		    ceph_snap(dir) == CEPH_NOSNAP &&
+ 		    __ceph_dir_is_complete(ci) &&
+ 		    __ceph_caps_issued_mask_metric(ci, CEPH_CAP_FILE_SHARED, 1)) {
+ 			__ceph_touch_fmode(ci, mdsc, CEPH_FILE_MODE_RD);
+diff --git a/fs/ceph/inode.c b/fs/ceph/inode.c
+index 57132f8331ebe..8528903302c66 100644
+--- a/fs/ceph/inode.c
++++ b/fs/ceph/inode.c
+@@ -1429,7 +1429,8 @@ int ceph_fill_trace(struct super_block *sb, struct ceph_mds_request *req)
+ 				ceph_dir_clear_ordered(dir);
+ 				d_delete(dn);
+ 			} else if (have_lease) {
+-				if (d_unhashed(dn))
++				if (d_unhashed(dn) &&
++				    ceph_snap(dir) == CEPH_NOSNAP)
+ 					d_add(dn, NULL);
+ 				update_dentry_lease(dir, dn,
+ 						    rinfo->dlease, session,
 -- 
 2.53.0
 
