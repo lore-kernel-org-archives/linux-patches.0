@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025452;
-	b=XppUej9FfYUMuEjrzPnDmaCdguJ7GH6uIUfASPbczIxTVyz75x0AyPHgv//7b7qk2FOo
-	 EXA4FJDWUAnZ+fYyf1y4ddd1KeIIjY2JpEuP5mwrkAAU5DGUFbbvKf+qpNUKvF5TAgxvB
-	 qGIgAyQLDVnSgISa36gV7VYBb9ZfqZXx1PiOQOjXG7gWi/74MojvWqSLu3KWU46y88EQ3
-	 1ylAAhew3g1gKiWGtFxLTcUPd+us/twHm3gah9SfO8IxaOuxrGLdUU/A6Vd/WZ+wL8+HE
-	 3utxs5hMTWollb2emIO2eXZjekmp6wjlMXy6qmQvFPMCZ6B9XKCHflhHuGwo+Rhv+tA==
+	t=1795025454;
+	b=ClxVelmrFLxwzEtvigs/DYcTpPr5HdwN9kd8IyB9Th4hO+DpZMRfqLYcccx0aYb98Hr9
+	 7JGKpEnDR+3lf5r8zNKk5SR8qyeb8cEv4X/V2jEjH6oUWE6TyE2CQF/v39lnJ48LYiOdW
+	 A+OcN0LmS/MOAkoBwSeBuCMDQSVXvne/eCh+WGsFnUmJgI1QLpJWeupm1kUp92MzzBBYq
+	 q/JPBa6+RzvQzg1ivi++YL5XpufLfiawBxFGMdUsascSNbS/UcDPLVWSHaCJr83rYUjJ+
+	 SQyhEBnPXspfK4xF2WHu/wR9eQyf6UjEXPCzgtlvyMaJlsGbyvvxWpK1N9iW0cO+Ojg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025452;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025454;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wpQuSy4oI7pKch3RbMqI1rcD5Rj+8XJG0IVpjhLgAME=;
-	b=SlmCPMDUIqAR/K67QJkGrSCS72WRcjbrCkNnEMDtlNlVQR0GRz0eQjrGGzfA/PSShNfD
-	 ysKS7Psdz+exK4AFkIUBONNOIirX7kkNq7+prFk+suQto2h/qWZgtSkI1+DvlqwaGcWh5
-	 zsK4u/GfKOChIor5XmgsMKmiGpPeogorGiSKMpmoo038CMS7ABEpLqxauJqKxaDGDjhQw
-	 pZlrtRXoVlOTpZB4QIYcPLi7LGoKbCIrghaI0alPSbjJ2f/u0oaAkP+Zwz5UX9HVPMkV8
-	 wJuhG31p0TTVzYDkYa24bn4vASAXuGHc0L9EQr9M283wckb+Ce0zc8vmh6mUtRlOv0Q==
+	bh=KBS3UxUJ/8eGxzwQdkXmguV4xT31VZBXUNQvNulCUz8=;
+	b=iHBslIUTFi+3f6hgb98WBQ68wkujOPHpD4G4MYv+ozLnS/oZMVDppnD4AgFvGyQDl/pD
+	 OMrRCTpP6fhySgGFlUlK4ESQoAlT6Ecq6aA8GNuZgkPAdOn8XIBWYC8aISpwrxEaca2om
+	 3sqTWk6jwzxDoYsf/gwaQhmDfUeUCNcrw2aVQumGYhij3w4it/SUYPzMkhaIaP+67rejW
+	 sk5J1zgqyOYQkCOCbnQyU8fDxaBKJ2Ras0n5fKso5uSfwkmCSvrFMHq9nnfQ8Rxvpv3tm
+	 3iMz/VRLzi/I45n77IH4O+w4uBXGrMWPSVN+HoXNtn3pz+kF0rYmqsN8/qTyAVrdePw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f6mPWjLO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J5Yp+zKY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9355606A325;
-	Wed, 18 Nov 2026 18:10:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD45D606A320;
+	Wed, 18 Nov 2026 18:10:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f6mPWjLO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 413141F000C7;
-	Wed, 18 Nov 2026 18:10:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J5Yp+zKY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2722B1F000C7;
+	Wed, 18 Nov 2026 18:10:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025451;
-	bh=wpQuSy4oI7pKch3RbMqI1rcD5Rj+8XJG0IVpjhLgAME=;
+	s=korg; t=1795025454;
+	bh=KBS3UxUJ/8eGxzwQdkXmguV4xT31VZBXUNQvNulCUz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f6mPWjLONEoTgxNO7imWcqKo0lvS/m4yjS9cBg84n/17DEzkwwuQe8yhM+q27/OJM
-	 6CvH1Bya6QYQwvGCuhskfKoZNA79RLLNS9VmmqjJ24gKaysUb/gpsHiv6QblAkRGvA
-	 LSizZQHx/PtxkwXe7kqAft4rcqZGKHOBtkf0xa6s=
+	b=J5Yp+zKYF75pBSUfLtsQxl7mNDwwh5PtzgRm96RiH9zqgNTH8LccEg0Rw45AGiHNV
+	 /itb4LKJZ1nu2WfqiB6CWJmuPCQOaOHSeK2m8whIdcAfwa1Pv0qh1UY2k7IpoOLpiH
+	 fsC9qsmP80/soo7e82S/21SF7d3JA3AB5LA6FXnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"hpp.iscas" <hppiscas@163.com>,
-	Will Deacon <will@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1084/2151] perf/marvell: cn10k_tad: Publish the OF module alias
-Date: Wed, 18 Nov 2026 15:46:59 +0100
-Message-ID: <20261118150201.752024178@linuxfoundation.org>
+Subject: [PATCH 6.18 1085/2151] svcrdma: Fix svc_rdma_recv_cid_init() kernel-doc
+Date: Wed, 18 Nov 2026 15:47:00 +0100
+Message-ID: <20261118150201.785478332@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,36 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: hpp.iscas <hppiscas@163.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 848468c86f716e4552bd478d2f3c3f5d81bec7ac ]
+[ Upstream commit d1caedce2d015573b4c26b127c488059f25aabc4 ]
 
-The TAD PMU platform driver has ACPI and OF match tables, but only
-the ACPI table is published. A Device Tree platform device emits an
-OF modalias, so the ACPI alias does not select this module for it.
+svc_rdma_recv_cid_init() initializes a Receive Queue completion ID,
+but its kernel-doc heading names svc_rdma_send_cid_init(). The latter is
+a separate helper immediately below it, so kernel-doc cannot match this
+comment to the receive helper.
 
-Publish the OF table inside CONFIG_OF and retain ACPI support.
+Fix the copied function name.
 
-Fixes: 036a7584bede ("drivers: perf: Add LLC-TAD perf counter support")
-Signed-off-by: hpp.iscas <hppiscas@163.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 28ee0ec8948a ("svcrdma: De-duplicate completion ID initialization helpers")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260909064343.90437-1-kmehltretter@gmail.com
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/marvell_cn10k_tad_pmu.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/linux/sunrpc/svc_rdma.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/perf/marvell_cn10k_tad_pmu.c b/drivers/perf/marvell_cn10k_tad_pmu.c
-index 51ccb0befa05d..d7f09cb7c3265 100644
---- a/drivers/perf/marvell_cn10k_tad_pmu.c
-+++ b/drivers/perf/marvell_cn10k_tad_pmu.c
-@@ -424,6 +424,7 @@ static const struct of_device_id tad_pmu_of_match[] = {
- 	{ .compatible = "marvell,cn10k-tad-pmu", .data = &tad_pmu_data },
- 	{},
- };
-+MODULE_DEVICE_TABLE(of, tad_pmu_of_match);
- #endif
+diff --git a/include/linux/sunrpc/svc_rdma.h b/include/linux/sunrpc/svc_rdma.h
+index 6e1cdc3335e0a..e661f8cad0050 100644
+--- a/include/linux/sunrpc/svc_rdma.h
++++ b/include/linux/sunrpc/svc_rdma.h
+@@ -138,7 +138,7 @@ enum {
+ #define RPCSVC_MAXPAYLOAD_RDMA	RPCSVC_MAXPAYLOAD
  
- #ifdef CONFIG_ACPI
+ /**
+- * svc_rdma_send_cid_init - Initialize a Receive Queue completion ID
++ * svc_rdma_recv_cid_init - Initialize a Receive Queue completion ID
+  * @rdma: controlling transport
+  * @cid: completion ID to initialize
+  */
 -- 
 2.53.0
 
