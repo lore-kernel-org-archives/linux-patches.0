@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019051;
-	b=knfXfox5bzCn/t5RG3uW9f8XYRJa+7d6CAPWwiu4y+9kh/1/QuxEHUVHyWSXo53UpZOi
-	 Wo42AowAHdgv4OdrrgI4bzOgHpRUJ4mcbdcobL6zDTCUlp0JMCOzrEJFWYkIP7Lai/PgP
-	 UZ0cYHUGLvH+DQMigAB5L61D2wttLrU7q3CTcpriNqRSU3evns2QtX1Jjz3wfWSCROBM2
-	 jBZshdrN6HjnesHoHgWxMKb2AxHKR46DQBSYfU1evdlfxPYXW3IFSURwRF6kAhCRf9wC6
-	 VA4SV0TbFhmyiUT+ejhAc297Z491NkGed3VYWi83LJJn2XzMpLaNQRWUxbhzfteb80w==
+	t=1795019054;
+	b=hrDblHg+JO/yqBFI6WHHZyZMg72oDG0XcFM2RMnxfogAqqPsxv+CmmJn0kXRXRKM8LQ+
+	 nSYTEIN6uq6sJdSD6EFqORFUjk6hrLGxCTH0CEl4moNFDP/+D1WmpHCRcsj4nz76fr4TQ
+	 +q+DpeOX0sa64i7Qveb0vVa+sJCMn9xIgs2vjEdnBdtiCaOyP/G3q/5FsU/DzGaitjoKZ
+	 jHpuS7qv+sA1WS+y2n7Cz/8Asz3f0mjSwpD03rCADjGZm+0gw8xZsmBMrzTOBRgc4ZV1l
+	 /1DzPhtPR3RyLQccoEEwWxn2I1hxSV0QdhFZ2QhdfzTPI/AAtDkdjtz9Lt5YQ7PFtcg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019051;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019054;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=56wUsaa9DLsIkp2hi7is794Zjo2qb/cn8cPRs3y+Kkg=;
-	b=Kv0qaLAGj5sqMyrgfFOoEwiHzB560aitLot1oxoSAWWpEsqHx9NHy3rSIr1VT6+PoWpb
-	 bICd91mmgOUx54WzId2tUG0pRhekBL7lQ9zio3ZLSE1sHXojaDw07ld9EHGiZVlq7l+Zz
-	 t66QLxYn5PAttxBTcyCq75phn2CHgfMKl1z4b2S2ygssD8dUJpisOTPrPQTGZzWgQCI5+
-	 mM4+CtQaafOjX/kT7IksSm5Y2oZTBiQ8RWoJAWAWOaWH/iHvfIsRC1kY2KzARMGZSWY7w
-	 P4L8bnBNuFfxRUGp+58p681rdRzlvi36rHLVCAvCOvoF1GuRtfQeiERUkaaOLFV8Y5w==
+	bh=8mY2/s/KR4u8a+666IMr7RJMcFjK+kUdI5yZoGILABk=;
+	b=LjsMY5ruzIKN5WR/ePIQY2mWcoPtg+41NmPjYb8uPDyADamrfHJ0CfsqXviooLU3F9kC
+	 QSIIi3DLb2p1Ngw16mPYhyX1ZJCHG/TZyCpq6CNYJLxfmJOtSF4D/waCOqReWaOFpBaGk
+	 ArcQbVSIaYeDA+OC+iPyWNsI4b6ec0JHmMmiqKK58F96rHM6REoY3EcAZZJ7COmtLgRCT
+	 D3cCHufXrFtX8nrUp0WttAquUM9PV52BN5JbQ+P5GD3Gqrcz+JZEHHuZypW8Z+VIZRkh0
+	 cAPZWAXVT/GIswU3jyBstfL/fXcpfP8SZ/cnLfdHBzcOM3JGGBu1cVTngJ9rdEnzWWg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HttxRyk1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RKEqkhtS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44D1606A31C;
-	Wed, 18 Nov 2026 16:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D898606A31C;
+	Wed, 18 Nov 2026 16:24:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HttxRyk1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32EFA1F000C4;
-	Wed, 18 Nov 2026 16:24:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RKEqkhtS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F34821F000C6;
+	Wed, 18 Nov 2026 16:24:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019051;
-	bh=56wUsaa9DLsIkp2hi7is794Zjo2qb/cn8cPRs3y+Kkg=;
+	s=korg; t=1795019054;
+	bh=8mY2/s/KR4u8a+666IMr7RJMcFjK+kUdI5yZoGILABk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HttxRyk1bAXUOZ0LoGb0+gXThCD/HGnDLJDJPqhDvEkOLyasRNZ45sdfpfJFBQqeW
-	 RDy7uiCjm+Tx206iOb2eMapPpEwKdEDjAdMp4fYyE2/0+2LznpLLgyg4adtZMMwCIV
-	 9qRsWXuZjAte7Km9s3Gc28TfYo1naVQ1g4aC6RVo=
+	b=RKEqkhtSOxtwfNOCWAkaXVU1WaxP7hcVsm7uW12efb1W7PPd1vP6VIeBv6Q2hvNzn
+	 HJlT58GJCjHQkBscZVbVR8GduFufuDkRmKEKlBpWV0pnOfi8zVu1uBe1lVeGLrCD5b
+	 mqCbolewi2BZSJ1oUb0whDvKYaLrZk79MiE4HvNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Leung <untilscour@protonmail.com>,
+	Ethan Tidmore <ethantidmore06@gmail.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1458/2651] wifi: mt76: fix wcid->pktid corruption in mt76_wcid_cleanup()
-Date: Wed, 18 Nov 2026 15:44:58 +0100
-Message-ID: <20261118150340.524804718@linuxfoundation.org>
+Subject: [PATCH 7.3 1459/2651] wifi: mt76: mt7925: Remove useless condition
+Date: Wed, 18 Nov 2026 15:44:59 +0100
+Message-ID: <20261118150340.559334425@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,56 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Leung <untilscour@protonmail.com>
+From: Ethan Tidmore <ethantidmore06@gmail.com>
 
-[ Upstream commit 158c1145fe7ddd82914011a00de7cc3262616b16 ]
+[ Upstream commit 8db0381351fe6af82f81693d5085790e291b2f17 ]
 
-mt76_wcid_cleanup() releases dev->status_lock before calling
-idr_destroy(&wcid->pktid) to tear down the pktid idr. Meanwhile,
-mt76_tx_status_skb_add() from tx.c can concurrently insert into
-that same idr during tx completion handling:
+The condition (master_pref > NAN_MAX_MASTER_PREFERENCE) will always be
+false because the variable 'master_pref' is of type u8 and the macro
+'NAN_MAX_MASTER_PREFERENCE' is equal to 255.
 
-	spin_lock_bh(&dev->status_lock);
-
-	pid = idr_alloc(&wcid->pktid, skb, MT_PACKET_ID_FIRST,
-			MT_PACKET_ID_MASK, GFP_ATOMIC);
-
-Since idr_destroy() runs outside the lock, it can execute concurrently
-with idr_alloc() on the same idr, corrupting its internal data
-structures. Because idr nodes are freed through the generic slab
-allocator, this corruption can resurface later as an unrelated-looking
-crash anywhere in the kernel that happens to reuse the same freed
-memory.
-
-Fix this by calling idr_destroy() before releasing dev->status_lock,
-so that the table teardown and any concurrent insertion are mutually
-exclusive.
-
-Closes: https://github.com/openwrt/openwrt/issues/24594
-Fixes: bd1e3e7b693c ("mt76: introduce packet_id idr")
-Signed-off-by: Ryan Leung <untilscour@protonmail.com>
-Link: https://patch.msgid.link/20260820-mt76-pktid-idr-race-v1-1-451f176a6495@protonmail.com
+Fixes: a5487a6824068 ("wifi: mt76: mt7925: add NAN MCU helpers")
+Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
+Link: https://patch.msgid.link/20260818015440.875703-1-ethantidmore06@gmail.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mac80211.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/nan.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
-index 16b435b96d99b..9e6fab7b12229 100644
---- a/drivers/net/wireless/mediatek/mt76/mac80211.c
-+++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
-@@ -1758,9 +1758,8 @@ void mt76_wcid_cleanup(struct mt76_dev *dev, struct mt76_wcid *wcid)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/nan.c b/drivers/net/wireless/mediatek/mt76/mt7925/nan.c
+index 1adef4d52f655..ce2571832c08f 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/nan.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/nan.c
+@@ -91,9 +91,6 @@ mt7925_nan_mp_tlv(struct sk_buff *skb, u8 master_pref)
  
- 	mt76_tx_status_lock(dev, &list);
- 	mt76_tx_status_skb_get(dev, wcid, -1, &list);
--	mt76_tx_status_unlock(dev, &list);
+ 	mp_tlv = (struct mt7925_nan_master_preference_tlv *)tlv;
+ 
+-	if (master_pref > NAN_MAX_MASTER_PREFERENCE)
+-		return 0;
 -
- 	idr_destroy(&wcid->pktid);
-+	mt76_tx_status_unlock(dev, &list);
+ 	mp_tlv->master_preference = master_pref;
  
- 	/* Remove from sta_poll_list to prevent list corruption after reset.
- 	 * Without this, mt76_reset_device() reinitializes sta_poll_list but
+ 	return 0;
 -- 
 2.53.0
 
