@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018047;
-	b=q4OXj1jwsHW3+ekDv/zaazEO8nfsr8WOw+QhDmqLmsd9U+3tixPKCGQgc1GfNm2BEOqN
-	 lU41QbhCnv9RovXO6iVxxPHxoPaPpcJfbSZ5UkyX/KydawRI4jWfF5VqWsLkkD+I1g6M0
-	 5yZCVXsfOE8gN8Dyf0aptBehZOHzX3Tqoeda9DSCZ3ezTRNzQmqp268lgZRSN7giNWWM/
-	 djmSRL66UovI7lG3nl68xdhmmxK9s6WMkP84hs74WIxGNgut1IXZesyjhAkcugE36flgi
-	 BbWKu0kMUqnCR9UdY7NHb9/ee+wD4BCivs6K0ETiGI9DpwKuIcFTc5TlBVkrtWe+WpA==
+	t=1795018050;
+	b=hshKiOWMTrz1RvAJjy2GMdN8pqBW+KkF3PTff9DDwfoDKdXDoTDdJ08VwZj7ZumHCGuS
+	 ub+Cvghl7n8TqRbhYWhAwqLEm062IyWrvz/x0dBhnEL3wl5Y18e6cHWW5qzpHE8dxqn9C
+	 Q1hz+uAaQsaVHfv0D8kGjlkT1vTChH61jGU9dlXElbm7f1OjSqGRA976NHMoxqermMEc/
+	 A/2w3b3/WJgYjPWoiL4xDWSNrTK/yqDpGpYvqCoB0i6KYD4Bw6CtDoxnUrgnpVFhMYTd/
+	 eGm//4ShCuPNhTq8rtNv/2NHXAC125w4hzsqo1SOImxnfRoXyPEe7sQk3FjeKczAqeA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018047;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018050;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lS9SzcCVoecdjqW2+p9zFcYKPWmyQo2xb576yKW4gtY=;
-	b=mwRQA28g/GWgLBC7kxKjG9sM0Wu+gY680sTSgi/Qti/1vQyYo/VVuzBA0nAwuCYtv5Ra
-	 vJRmNSqq9CKEH2xQXCcdB6ld7yob8icthTlpv7fMSPiHvYpb8WNB0vIVczCA/0GbYTYVd
-	 jvZA4MzPzL3+PAIl3V/d4RCVWdDEfPc+LaOMaopLIobNB7khzIJo4rpCj+93YyK+g3NlH
-	 ntJlXq8F7b+uq93KdV4XTiFqpJWHKtyFVHqjqtCBuqZ7TaEj4wAMsrrsCrXVHpLVCtD2I
-	 pOQq7sHqdThW3cMxvEkxadKQnmfNqtPYP8Ww6iE7NiuvUfbNnJYZiGAH7enveYVUkPQ==
+	bh=basYnSpqoIlFdLHZUzH7yrNyfaOg9i66lU8YWGRfwOE=;
+	b=HsLwmErR6UPK2+Xi/hIO8E44od9bzEtbdg+msLAeR6paLb3zHq/ds6oTABq+eif4m1oO
+	 osp6qMGGYQz1vfPIb7ln54qF2/JVJpRVa4Hdl0L0zJWwh+rANgGAAb17Sl8K4CamX5QfJ
+	 4uSbcpdVxDVQASZ83n4qDYVePFEKkwjCKp5EHJlsTl/cFm8mGfhhX47/WR/4WBz7GwKLl
+	 u/e3Hxp6WflKNTJRtPFERaV2PdpXMMY8PnIsylNWTlYRgfLhWjgvPDHkIdlA1+dDEL/UM
+	 bVY1HUtZvkq93dz7Tasm1JsLjkX3EUCrPzEDa5QOtfQ/Hk0YJdoD1WC8EiF+nqebiHg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BYREawvA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C1ZOYPbh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D19606A320;
-	Wed, 18 Nov 2026 16:07:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7C43606A320;
+	Wed, 18 Nov 2026 16:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BYREawvA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 277311F000C4;
-	Wed, 18 Nov 2026 16:07:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C1ZOYPbh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1F251F000C4;
+	Wed, 18 Nov 2026 16:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018047;
-	bh=lS9SzcCVoecdjqW2+p9zFcYKPWmyQo2xb576yKW4gtY=;
+	s=korg; t=1795018050;
+	bh=basYnSpqoIlFdLHZUzH7yrNyfaOg9i66lU8YWGRfwOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BYREawvAOlFwAp8vXIniROoHfyjhgs1DkA7Zk++vgvAiWV4T+VEMqKKwj3Og2y7cb
-	 tq8/NrJDnClMKhw/Sz/RFmtRm2dWNwOZE1AG7dA9MQa58jUcZkXtMkusobg6yjioo4
-	 vS3nTnrzjrIPaNM+bpEzPfP4HoErBAFU4hSGToiI=
+	b=C1ZOYPbhl0eAh15AkduuiMguqTHjHr1REnizZQdteBcIY1D20eZWKtddNvVjF7/gk
+	 QkqoA4OpvmeuiE+b0XY9GN3ilsJNFfvgrYavZB8Lg9SbfoCwpfcvxWx+ZVxi8CqAZG
+	 nOfeH2EUZ5ER4gpdPQr7c2qM2FQo0hMb1rnusQQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Liviu Dudau <liviu.dudau@arm.com>,
 	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1102/2651] ARM: vexpress: fix device_node refcount leak in vexpress_flags_set()
-Date: Wed, 18 Nov 2026 15:39:02 +0100
-Message-ID: <20261118150327.670207653@linuxfoundation.org>
+Subject: [PATCH 7.3 1103/2651] ARM: vexpress: fix device_node refcount leak in vexpress_smp_dt_prepare_cpus()
+Date: Wed, 18 Nov 2026 15:39:03 +0100
+Message-ID: <20261118150327.703381560@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,51 +71,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Weigang He <geoffreyhe2@gmail.com>
 
-[ Upstream commit 62b9ae8ae4a7f0b93efa1efa230782b37057b1e7 ]
+[ Upstream commit 27b98d331f1dcebe088ab51a7061a387a7440cb2 ]
 
-vexpress_flags_set() obtains a reference to the "arm,vexpress-sysreg"
-device node via of_find_compatible_node() and passes it to of_iomap(),
-but never calls of_node_put() on it. of_iomap() only reads the node's
-reg property to create the mapping and does not take ownership, so the
-node reference is leaked. The function runs from the __init SMP prepare
-path and caches the mapping in a static, so this is a one-shot leak of a
-single refcount during boot, with no functional impact.
+vexpress_smp_dt_prepare_cpus() obtains a reference to the SCU device
+node via of_find_matching_node() and passes it to of_iomap(), but never
+calls of_node_put() on it. of_iomap() does not take ownership of the
+node, so the reference is leaked. The function is the .smp_prepare_cpus
+hook invoked once from the __init SMP bring-up path, so this is a
+one-shot leak of a single refcount during boot, with no functional
+impact.
 
-The lookup was added to drivers/mfd/vexpress-sysreg.c by the commit
-below and later moved here by commit 9b06fc39084e ("ARM: vexpress: Move
-vexpress_flags_set() into arch code").
+Annotate scu with the __free(device_node) cleanup attribute so the
+reference is released when the function returns.
 
-Annotate node with the __free(device_node) cleanup attribute so the
-reference is released when it goes out of scope.
+Found while reviewing a CodeQL report for vexpress_flags_set() on the
+same SMP bring-up path.
 
-Found by static analysis tool CodeQL.
-
-Fixes: 974cc7b93441 ("mfd: vexpress: Define the device as MFD cells")
+Fixes: d2606f81d563 ("ARM: vexpress: Simplify SMP operations for DT-powered system")
 Assisted-by: LLM codeql
 Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
 Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20260925173252.933705-2-geoffreyhe2@gmail.com
+Link: https://patch.msgid.link/20260925173252.933705-3-geoffreyhe2@gmail.com
 Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-versatile/v2m.c | 4 ++--
+ arch/arm/mach-versatile/platsmp-vexpress.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/mach-versatile/v2m.c b/arch/arm/mach-versatile/v2m.c
-index 79afdf2a90b6f..c86b38386cf7c 100644
---- a/arch/arm/mach-versatile/v2m.c
-+++ b/arch/arm/mach-versatile/v2m.c
-@@ -13,8 +13,8 @@ void vexpress_flags_set(u32 data)
- 	static void __iomem *base;
+diff --git a/arch/arm/mach-versatile/platsmp-vexpress.c b/arch/arm/mach-versatile/platsmp-vexpress.c
+index 1ee3c45e71c99..b810ad50b98ce 100644
+--- a/arch/arm/mach-versatile/platsmp-vexpress.c
++++ b/arch/arm/mach-versatile/platsmp-vexpress.c
+@@ -61,8 +61,8 @@ static const struct of_device_id vexpress_smp_dt_scu_match[] __initconst = {
  
- 	if (!base) {
--		struct device_node *node = of_find_compatible_node(NULL, NULL,
--				"arm,vexpress-sysreg");
-+		struct device_node *node __free(device_node) =
-+			of_find_compatible_node(NULL, NULL, "arm,vexpress-sysreg");
+ static void __init vexpress_smp_dt_prepare_cpus(unsigned int max_cpus)
+ {
+-	struct device_node *scu = of_find_matching_node(NULL,
+-			vexpress_smp_dt_scu_match);
++	struct device_node *scu __free(device_node) =
++		of_find_matching_node(NULL, vexpress_smp_dt_scu_match);
  
- 		base = of_iomap(node, 0);
- 	}
+ 	if (scu)
+ 		scu_enable(of_iomap(scu, 0));
 -- 
 2.53.0
 
