@@ -1,56 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021726;
-	b=mwBcvzicRy3SAbrTUHc+t8oPm9ADXq6jwNsfwvk1o5mdeP7gKSi3MQIJUxyNX9V0gRc9
-	 NHMG0SV3d5Ruz34fgESYOnjb6Y9PWWMfYJfaR5pIg/eMUoH4aKXR25TvBnsdt681i/VJn
-	 DEM+1cNCUbKpKeDMXsQrkbkvv3zqeng1s0dHYrCuUF9FgjnHnguwfHIQgpkDPC4qYMWzr
-	 V/JE0yHllw4nudnZkgnm4HXETIl/RoS4ebzjQE+S1vPQLhi9PUXp37Qjv/GcDySq+eztX
-	 PsjGktVYe2KQJRcmZIEKUoYxCi/lGndxgBHW9tL5t4GPRo4Deb77faXwNBMCOuJQbvQ==
+	t=1795021728;
+	b=4F8xVGJNXQ2nk05hVR5RXxEu1Lhv9xg06LmKqc+9I6UZdjEPu2/xmWbVko+RFtnGIUwI
+	 WluWJ19YoYjWJJQ3/d/yv2Uu3XunUgKLJkSo8YWqgUMXgb89vTYfsQLoyodk4iidDW6Gl
+	 apziAcAPRosZogONfarYPTPAmzsjVwusa2J9cnNC+TIY84fmyrfKleRju7BkN9oPCFtQM
+	 8D/z6oQ5ANB4i5m9DYRiIF/eVZ6sofAZFunYXbAoBreMwoxorvN13/x/McP/F/GH2KWwR
+	 bcUt7PWOKKA+CfnB2ld4bAtS0T6wbtkquJED8mtKqKAKRQkDEcqeBDddjsGGzMyPiSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021726;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021728;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/I1W73RcAqjrMUJnBr0Tp2A1pBoqchxTw+HP/Tm0ppo=;
-	b=gwF3bSgQe2jW99NZitjC7m4x30XtTjHFmIAfyypPlbUB7MDFvFGecGSRnIX8rGwLGdlj
-	 5GiSs1eeHhEWskfF5NJ9+3EwoKMaIht5C78MOL48W7+55EXnuuCzltFl1sB2qk7PbZ2kg
-	 laX4DMf1MPqsXt8alDc2v5r9k+2o11V+uuVU7X6RzsWo6LgGjXUNM8axkm7roOBuKp06q
-	 e57eXaOn+ANEFulii0/gkKieCGbPIykvha6UiIO4gBqCab9LYMsxekfdo2QenRjCZ0xm0
-	 J9jEIBOFm0RfPAJnPiSzpkyuS3lX7vjrs2NYyOk3ytJvmjpLKj/PBhws+/awBRldXhw==
+	bh=NQMz0Luk8w/0bmrvWEP17CxTVHP+iA2OX1zzm8rsYn4=;
+	b=2jkif6U4gmBAm15B1qNDIebJZPv0lMbhkf3PygFox++ZpMDNNVHgeZU7Uncm/6CGACSK
+	 wIWlYvsDRVLmXgzWi5N8PJyrLLQdu5RNaAVX8csMHDdGcXrLjlRKmvO5s4EOBVkzZcH5c
+	 TE9rA+enNz86euz9LhRvkYqEPbPt6GeFo937fMijIFfdUdR+onEhgNvSuOyDK7F4DI778
+	 6vpNeQgJMbDjB/KDrCIlEtu9kDvuEMV2gubvNv7MgXFlrtvZsgZIOvY4cUk3ZTzv1J9ZJ
+	 YOr8Xsl3+f5t4BH4LeZZyRuFT/iooEM422yDYYxcw7SYzoX9LHk9koH8TZ8A0x5hkmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yRAdFhS2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rYeBSs9p;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BBDD60A261D;
-	Wed, 18 Nov 2026 17:08:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5CB860A2635;
+	Wed, 18 Nov 2026 17:08:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yRAdFhS2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472E91F000C5;
-	Wed, 18 Nov 2026 17:08:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rYeBSs9p
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21B5F1F000C4;
+	Wed, 18 Nov 2026 17:08:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021725;
-	bh=/I1W73RcAqjrMUJnBr0Tp2A1pBoqchxTw+HP/Tm0ppo=;
+	s=korg; t=1795021728;
+	bh=NQMz0Luk8w/0bmrvWEP17CxTVHP+iA2OX1zzm8rsYn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yRAdFhS2EbBpYNUwe1vOYhpL2o2vTVfNh6/iAAUH7xK4tol2sITY+aXdXn3gVwtM2
-	 icgsDScmYhCOevjqSFub3i5ka9Byk0nJQKVj4r+QqrUe6Nxa8woAOjRcPL0JXEUAbO
-	 qxKDpGmkwxKR9hi0K/Awt0ast86FWo6Lz29fWrp4=
+	b=rYeBSs9pLU1SbcKMOejUzzewNr1dcUj85S34wGTTyXaxkpupl7ayqFlplijps5JAK
+	 k9rLupQdueggyogcCnJ3nVqSWSEqAd5ct6Pg06vIrXVp/rLZe1lop6+QVbGLhNAwSK
+	 s26lNu8ZO3xtqU+BBX26IOgaAsBkvcrt0i3AC0+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mina Almasry <almasrymina@google.com>,
-	Kaifeng Wang <kaifengw@google.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nickolai Zeldovich <nickolai@csail.mit.edu>,
+	Serge Hallyn <serge@hallyn.com>,
+	Bradley Morgan <brads@mainlining.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2368/2651] tcp: reject devmem tx with fastopen and repair
-Date: Wed, 18 Nov 2026 16:00:08 +0100
-Message-ID: <20261118150410.781079055@linuxfoundation.org>
+Subject: [PATCH 7.3 2359/2651] nsproxy: Fix cred leak in the error path of prepare_nsset()
+Date: Wed, 18 Nov 2026 15:59:59 +0100
+Message-ID: <20261118150410.487484832@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,94 +70,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaifeng Wang <kaifengw@google.com>
+From: Nickolai Zeldovich <nickolai@csail.mit.edu>
 
-[ Upstream commit 89b9db72918bc209029fad8cccc42191b498d511 ]
+[ Upstream commit e08601d3a7b2236f4915497dca353dcf117bab5c ]
 
-tcp_sendmsg_locked() enforces that devmem TX can only proceed if the
-zero-copy path is active and a valid dmabuf binding exists. However,
-subsequent branches in tcp_sendmsg_locked() can still intercept the
-message before it reaches the devmem zero-copy loop:
+A task that calls setns() with CLONE_NEWUSER together with CLONE_NEWNS
+and at least one more namespace flag leaks a struct cred (and the
+user_namespace, ucounts and group_info references it holds) whenever the
+call fails at the fs_struct copy.  On a kernel with CONFIG_USER_NS the
+leak is one cred per failed setns(); under memory pressure, or driven by
+a fault-injecting attacker, it accumulates and pins user namespaces that
+can then never be freed.
 
-1. TCP Fast Open (MSG_FASTOPEN or DEFER_CONNECT):
-   If TCP_FASTOPEN_CONNECT is set, the socket may have a valid dst with
-   NETIF_F_SG (so zc == MSG_ZEROCOPY and binding is present), but
-   tcp_sendmsg_fastopen() -> tcp_send_syn_data() will use
-   copy_page_from_iter() to byte-copy from the iterator. Since iov_base
-   represents dma-buf offsets rather than user virtual addresses, this
-   misinterprets offsets as user pointers and copies the caller's memory
-   at those addresses into the SYN packet.
+prepare_nsset() sets nsset->flags only on the success path:
 
-2. TCP repair mode:
-   If tp->repair is enabled with TCP_RECV_QUEUE, tcp_send_rcvq() similarly
-   calls skb_copy_datagram_from_iter(), byte-copying from the iterator.
+	if (flags & CLONE_NEWUSER)
+		nsset->cred = prepare_creds();
+	...
+	} else if (flags & CLONE_NEWNS) {
+		nsset->fs = copy_fs_struct(me->fs);
+		if (!nsset->fs)
+			goto out;	/* flags still 0 here */
+	}
+	nsset->flags = flags;
+	return 0;
+out:
+	put_nsset(nsset);
 
-Neither path supports or makes sense for devmem transmission. Reject
-devmem sends inside the Fast Open and TCP repair branches when a devmem
-binding is present. Checking inside the tp->repair branch also covers
-the case where repair mode is enabled while sk_stream_wait_connect()
-drops the socket lock.
+put_nsset() decides what to release from nsset->flags:
 
-Additionally, drop the !sockc_err gate from the devmem validation check
-and return sockc_err if set. Otherwise, if a valid SCM_DEVMEM_DMABUF is
-followed by a failing cmsg, sockc.dmabuf_id remains set while binding is
-not acquired, allowing the Fast Open and TCP_RECV_QUEUE repair paths to
-proceed and return before sockc_err is checked.
+	if (flags & CLONE_NEWUSER)
+		put_cred(nsset_cred(nsset));
 
-This pre-existing issue was identified by Sashiko AI review on commit
-125755776bc6 ("tcp: reject non zerocopy devmem tx") and has not been
-hit in production.
+On the copy_fs_struct() failure arm prepare_creds() has already
+allocated the cred, but nsset->flags is still the zero from the caller's
+"struct nsset nsset = {}", so put_nsset() does not see CLONE_NEWUSER and
+never drops it.  The caller (__do_sys_setns) returns the error without
+touching nsset, so the cred is lost.
 
-Fixes: 125755776bc6 ("tcp: reject non zerocopy devmem tx")
-Fixes: bd61848900bf ("net: devmem: Implement TX path")
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Signed-off-by: Kaifeng Wang <kaifengw@google.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://patch.msgid.link/20261019174522.55644-1-kaifengw@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Set nsset->flags at the start of prepare_nsset(), before anything can
+fail, so every error exit through put_nsset() releases what was taken.
+commit_nsset(), which clears nsset->cred on success, is unaffected.
+
+Reproduced on x86_64 under QEMU with failslab aimed at the fs_struct
+cache and kmemleak enabled: 500 calls of
+setns(pidfd, CLONE_NEWUSER | CLONE_NEWNS | CLONE_NEWUTS) each fail with
+-ENOMEM and leave 851 unreferenced cred objects allocated from
+prepare_creds() via setns() before the fix, and none after (the program
+is in the notes below).
+
+Found by formal verification of kernel/nsproxy.c.
+
+Fixes: 303cc571d107 ("nsproxy: attach to namespaces via pidfds")
+Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
+Link: https://patch.msgid.link/20261017033538.793280-1-nickolai@csail.mit.edu
+Reviewed-by: Serge Hallyn <serge@hallyn.com>
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ kernel/nsproxy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 87ef6d5cbfeba..2792923f07489 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -1169,14 +1169,18 @@ int tcp_sendmsg_locked(struct sock *sk, struct msghdr *msg, size_t size)
- 			zc = MSG_SPLICE_PAGES;
- 	}
+diff --git a/kernel/nsproxy.c b/kernel/nsproxy.c
+index 3fb1595a4a593..028019f3e387c 100644
+--- a/kernel/nsproxy.c
++++ b/kernel/nsproxy.c
+@@ -355,6 +355,7 @@ static int prepare_nsset(unsigned flags, struct nsset *nsset)
+ {
+ 	struct task_struct *me = current;
  
--	if (!sockc_err && sockc.dmabuf_id && (zc != MSG_ZEROCOPY || !binding)) {
--		err = -EINVAL;
-+	if (sockc.dmabuf_id && (zc != MSG_ZEROCOPY || !binding)) {
-+		err = sockc_err ?: -EINVAL;
- 		goto out_err;
- 	}
- 
- 	if (unlikely(flags & MSG_FASTOPEN ||
- 		     inet_test_bit(DEFER_CONNECT, sk)) &&
- 	    !tp->repair) {
-+		if (binding) {
-+			err = -EINVAL;
-+			goto out_err;
-+		}
- 		err = tcp_sendmsg_fastopen(sk, msg, &copied_syn, size, uarg);
- 		if (err == -EINPROGRESS && copied_syn > 0)
++	nsset->flags = flags;
+ 	nsset->nsproxy = create_new_namespaces(0, me, current_user_ns(), me->fs);
+ 	if (IS_ERR(nsset->nsproxy))
+ 		return PTR_ERR(nsset->nsproxy);
+@@ -375,7 +376,6 @@ static int prepare_nsset(unsigned flags, struct nsset *nsset)
  			goto out;
-@@ -1200,6 +1204,10 @@ int tcp_sendmsg_locked(struct sock *sk, struct msghdr *msg, size_t size)
  	}
  
- 	if (unlikely(tp->repair)) {
-+		if (binding) {
-+			err = -EINVAL;
-+			goto out_err;
-+		}
- 		if (tp->repair_queue == TCP_RECV_QUEUE) {
- 			copied = tcp_send_rcvq(sk, msg, size);
- 			goto out_nopush;
+-	nsset->flags = flags;
+ 	return 0;
+ 
+ out:
 -- 
 2.53.0
 
