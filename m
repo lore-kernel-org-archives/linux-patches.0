@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027428;
-	b=gZ+t6ip3cnAS2+W+mevQhPIq6nnTJxrumD155KYmVHxzIMfe3djBAnlbn1EOKgWZoOCr
-	 P80dvnAH7/EPHt+n5lYd8DsFRah340r9WnA9chf71Rqfn4YZfaryLiTdVqNG4fBd+ysK3
-	 tGBCM0BBAzTpEpK2jJfQWCRUBx7BS/Ar3egc33y1KFM+9Gw5+3zGa30Ag2ESS5wDKbXPc
-	 7SrbSxFC7l6Hj6/FODfzy8QP3HMwxAFSOvwIRNYd+gmzk1tzVaNZyO0hqvHhfpEuZtHjf
-	 WzKwbd+ccKHu1xbTRewvo1EGdXxK5HAhK89u1j4JIrqbNImc6LLu6aL/N3U/orYe9Zw==
+	t=1795027431;
+	b=Q5olAL/lACYh/snOAwRDunJ/Idf5/duIacTDG0RZQAS3TCWim/WENyU8SZocOWYNN9/F
+	 G2ovwgij5DAq4dOKIgZ49l/YqKw7WsAMuk7KeXeTRpgtJ/pP8BbOjj74zkFded78H6nj/
+	 GuVPJ/p86uKJtyx862GQXZT8Tw6fKjyAP3FhyOLzbKfh+lEYL7sRnF4stz5r277MfSYE6
+	 aqc6iVuYQ/yW8pTJiqZxBS6hu5SOLq5lBi9UcT5NiSBQLMoQKrNBrietLvrHEdpbOqTqG
+	 7zNsg9XMdPbGqakeLaZ/Sa4V6koIOm5U9YH8S3u5bGnlpq+TafFdQI7mHG9ytsaHYtA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027428;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027431;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=T4l6nUicII9Rjx0NR9akmYx3C+Dad4cObR2BbsgsSK8=;
-	b=Wdk35443LTb/PWUkdoQo0AtakYfjppbgbcCxN4takwlbKA4RZbzqB/b0bzUgEOeY+1x0
-	 XuwhX1VydAiCN8d9JC0mp8LbCMQPMg61XhS3u75Be3j8i488foGPmcwhzeRTPTZ3W9/jv
-	 5mC3PwL+lh3EVqmM+vFlMpPODd9pk2gX9trv6yHNsaKKtGxyEd5tdlAOwON3yOu2PeqTn
-	 D6im46k1sT4vcFq0mPak/cETajTXh6yUGS+P4yLtv9rLiMjf5dluy2GrYC89k9Caik2RY
-	 LQMJW2YyI6ISOfd2G2yEm7SNeCNKSlj9cHrGLZhf8jPjmd93Bz8IWaGJkJ+HpgFez6w==
+	bh=3JeLerdd8xJbC3kZkK+eU/dn1utwXpfHPvIA5N1f8Qk=;
+	b=pmdxAp2YNDdCMrSfjX1NxI+HA7wbTn5WLhwsLg6cE/N+G0dtycKENcq5ECm/+FXOeact
+	 LWjnH5lJc2e5i3hACuJEq1sUFn+qjYK6votmaVDBxd6CbxK3He5AFWp73Xzzfy7895RH7
+	 C5+Lc7RfNgwWBB3NeKmt8+MwlzyJw7CdS+Tuysrfx63/PF/l4efVy6/Lo5/Ky+GYPI5+3
+	 LXOwy+ct8njD3VQZXshP91E4am0GsKyR+lWnJF1FAFWzYmMGY5LTdHCdIEDF23EMvk5+k
+	 3mLYQXbUDoYdnvJ4Hya1rySzxUCecTWtD9kCUW48CaplXTyLauWof0b1yFILNnxm7aw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yfM0Ee3e;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1JfaPpa+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8343060A2602;
-	Wed, 18 Nov 2026 18:43:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C6560A261B;
+	Wed, 18 Nov 2026 18:43:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yfM0Ee3e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D49CC1F000C7;
-	Wed, 18 Nov 2026 18:43:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1JfaPpa+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB7AC1F000C4;
+	Wed, 18 Nov 2026 18:43:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027428;
-	bh=T4l6nUicII9Rjx0NR9akmYx3C+Dad4cObR2BbsgsSK8=;
+	s=korg; t=1795027431;
+	bh=3JeLerdd8xJbC3kZkK+eU/dn1utwXpfHPvIA5N1f8Qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yfM0Ee3eL9Vau3BrGqrJ8VTVFLW8Q5/g7gHEASc5p2GFFGywFvkjD9+Qj+zV0cNZj
-	 +/Zwc1hGaHlfG4OWGkuiNhnFyGmX8O9EE/Ut3nMk8zh2DE1WVes1KFpEk/PntwJDq8
-	 +etbo7ZQFDh8YV46SOVUh9Ff9sBRPpvudt+55duY=
+	b=1JfaPpa+eXbLy6Yag/0ZH6xtUXzx9C5Mb8x2/dTK5mj+vhLTbMUnoo8WsxKLVY99o
+	 OW28ZHrg6uXhwXkCUPbWyFgLfk70M13lIJLmNZCoJzYFQHYsRKYHE/jWc2FnRKF1h5
+	 UT1hH27BWuQ0MCUWfxFQXjICY8jkKMGFBTHuhYN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Li RongQing <lirongqing@baidu.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Yu Kuai <yukuai@fygo.io>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1787/2151] ALSA: aloop: Keep the timer source alive until card release
-Date: Wed, 18 Nov 2026 15:58:42 +0100
-Message-ID: <20261118150226.917101818@linuxfoundation.org>
+Subject: [PATCH 6.18 1788/2151] block, bfq: initialize active lists for all actuators
+Date: Wed, 18 Nov 2026 15:58:43 +0100
+Message-ID: <20261118150226.951925378@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,99 +70,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit 762ef425cf0ac9c4b9e9e61e0da0950e16e6fbea ]
+[ Upstream commit 00c2c34ead7e84d6594e20fa37a3c503823f5756 ]
 
-The timer_source string must remain valid while PCM opens can select
-and parse it. loopback_set_timer_source() allocates the string with
-parent-device devres, which can release it while the card is still
-registered.
+Commit 2d31c684a053 ("block, bfq: inject I/O to underutilized
+actuators") extended bfqd->active_list from a single list_head to an
+array indexed by actuator, but bfq_init_queue() still only initialized
+the first two entries:
 
-A successful nonempty proc replacement after snd_card_register() adds
-the string allocation after trigger_card_free. Unbinding the platform
-device while snd_aloop remains loaded releases devres in reverse order.
-An open for an unused cable can run after the string is freed and before
-the card-free action disconnects the card:
+        INIT_LIST_HEAD(&bfqd->active_list[0]);
+        INIT_LIST_HEAD(&bfqd->active_list[1]);
 
-  Device unbind                      PCM open
-  devres_release_all()
-    free replacement string
-                                     snd_pcm_open()
-                                       snd_card_file_add()
-                                       loopback_open()
-                                         loopback_snd_timer_open()
-                                           loopback_parse_timer_id()
-    trigger_card_free()
-      snd_card_free()
-        snd_card_disconnect()
+For devices with more than two independent access ranges, the remaining
+list heads stay zeroed by kzalloc() and are never set up as empty lists.
+When BFQ later adds a bfq_queue to one of those lists, list_add() writes
+through head->next, which is NULL, corrupting the list or crashing the
+kernel.
 
-The parser can then read freed memory. KASAN has reported a one-byte
-use-after-free read in strchr() from loopback_snd_timer_open(). The
-cable_lock mutex serializes explicit replacements with opens, but
-implicit devres release does not take it. The card and module references
-held by PCM open do not retain this separate devres allocation.
+Initialize every actuator's active list using bfqd->num_actuators,
+which is already set up earlier in bfq_init_queue().
 
-Use kstrdup() and release the current string from card->private_free.
-PCM admission already retains the card until each file is removed, and
-card disconnect drains proc callbacks before final card release. This
-keeps the string alive across admitted PCM opens and preserves the
-cable_lock serialization of replacements. Install the callback before
-the initial allocation so probe failures also release the string.
-
-Fixes: b072e65aadd6 ("ALSA: aloop: Allocate resources with device-managed APIs")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Assisted-by: LLM
-Link: https://patch.msgid.link/pm-pmb-71a33a26d68356e3ade7-v1-108d86919c5c92fe1ea8@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 2d31c684a053 ("block, bfq: inject I/O to underutilized actuators")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Yu Kuai <yukuai@fygo.io>
+Link: https://patch.msgid.link/20261019051137.1715-1-lirongqing@baidu.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/drivers/aloop.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ block/bfq-iosched.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/drivers/aloop.c b/sound/drivers/aloop.c
-index 24a5fbc1c288f..93ac63edfb975 100644
---- a/sound/drivers/aloop.c
-+++ b/sound/drivers/aloop.c
-@@ -1786,13 +1786,10 @@ static int loopback_cable_proc_new(struct loopback *loopback, int cidx)
- static void loopback_set_timer_source(struct loopback *loopback,
- 				      const char *value)
- {
--	if (loopback->timer_source) {
--		devm_kfree(loopback->card->dev, loopback->timer_source);
--		loopback->timer_source = NULL;
--	}
-+	kfree(loopback->timer_source);
-+	loopback->timer_source = NULL;
- 	if (value && *value)
--		loopback->timer_source = devm_kstrdup(loopback->card->dev,
--						      value, GFP_KERNEL);
-+		loopback->timer_source = kstrdup(value, GFP_KERNEL);
- }
+diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
+index 9e9d081e86bb2..5f0517fc27229 100644
+--- a/block/bfq-iosched.c
++++ b/block/bfq-iosched.c
+@@ -7287,8 +7287,8 @@ static int bfq_init_queue(struct request_queue *q, struct elevator_queue *eq)
+ 	bfqd->num_groups_with_pending_reqs = 0;
+ #endif
  
- static void print_timer_source_info(struct snd_info_entry *entry,
-@@ -1823,6 +1820,13 @@ static int loopback_timer_source_proc_new(struct loopback *loopback)
- 				    change_timer_source_info);
- }
+-	INIT_LIST_HEAD(&bfqd->active_list[0]);
+-	INIT_LIST_HEAD(&bfqd->active_list[1]);
++	for (i = 0; i < bfqd->num_actuators; i++)
++		INIT_LIST_HEAD(&bfqd->active_list[i]);
+ 	INIT_LIST_HEAD(&bfqd->idle_list);
+ 	INIT_HLIST_HEAD(&bfqd->burst_list);
  
-+static void loopback_private_free(struct snd_card *card)
-+{
-+	struct loopback *loopback = card->private_data;
-+
-+	kfree(loopback->timer_source);
-+}
-+
- static int loopback_probe(struct platform_device *devptr)
- {
- 	struct snd_card *card;
-@@ -1848,6 +1852,7 @@ static int loopback_probe(struct platform_device *devptr)
- 		pcm_substreams[dev] = MAX_PCM_SUBSTREAMS;
- 	
- 	loopback->card = card;
-+	card->private_free = loopback_private_free;
- 	loopback_set_timer_source(loopback, timer_source[dev]);
- 
- 	mutex_init(&loopback->cable_lock);
 -- 
 2.53.0
 
