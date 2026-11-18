@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024316;
-	b=5cLbPh4OysTUn5fd4Ae2amURo1snZJVQ4/iyHaLeNczcPQMBpnNZw/pMIHSoXyMBQ51Y
-	 M/sArcvCo/+oSHOxk/ko51z4Lhvm7de8doWDqDyz9xg1hE/Daj1Uu6MHQXqRLmODH1NFS
-	 zjO7aAd5yZB/HIGI7bkBlh5D8WZJlSmhBgqWmnapcJuv9cl66YnnUZKABJiZzohp7hskJ
-	 V5tx5cnG0B6GCSQbkRqqcgufUvub3bzBue8XDoxxMylr2zoals0LHBwRXvoBoLS48v7Wq
-	 jHCkvaH1WAl/OpP9KVjXzbWyAhhFi7os0iiiH2xZ1hbBMRcVQlLCLMHTLtfAj2lRs5g==
+	t=1795024319;
+	b=K0QsjVfBKGTnx8wfaua0gQm/qxb8+k8qJkPdioo6M1ASc9ohaUVJjIe94t3aa5+OG4Cd
+	 AhsPQ6/Si5T1Pj4zBVgjRgFll7uvh914kyzmZf6tfutsxCyXLkG+bt0u2vNQl2mEfxesG
+	 z5vJcjxocQ9KYkwu3LPDv/BLXoF5Qu/Wl9HuRCOzhlV2zgkEk1GbtjvbUFcLvgjXaXPXA
+	 +2SIo8jedzFJ3BoIkIPlg9d4E6cJMPOmeXfh1bxYk+2rbAtG9+nGqQiB2u0Z4zt+vUEWn
+	 5FGjbVzCxffpwyc5UiwzgLGdYIvC09kLgT8zgvvuLqsighNGtqIdiA/Z36MGjAwPRBw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024316;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024319;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wpu5+ld6i5CM1jJr+ZgNvbcVukBzXO1Z1ehQhv4P6iM=;
-	b=vVflCTx5uPeSC02oHTdRHIgqVDkpB9NYxTO6SKjqonjdj+CLYYhl+jNQJFazSSvUH3Nk
-	 u2wHL8xrHk9gjwS5qe/ogzBhrIKoCjUDEQ6sYx1V71nS9wJxF+/uO54//vcqNp5e1Xvrb
-	 3trnB8s44dDiz3tDsY4VywXFZUpemTu4hf/TV0b7YgjiDSNTdzPYZVp2PRvAQw9TZ6ZzG
-	 695DfC+65TD5b0d15UzANTAOsGhJAL16LQfMbCqjJPRabqKe66dqbRivAPRgO0+CvW4zg
-	 I8JdaOmEaDUO0DssNPp5IRko9SloCoRsHfepnNV1jLIQJpTjOiYN+ZISBASmKLSDV/A==
+	bh=lFP67SRQ/91DG1nfNMD/3radkkV/TljMAvFl651XSVg=;
+	b=t74kaHY6HiEBbOOTZk4wMQGpasoLP3xe7qRcRc+3zI0+sjX6UPaxVYye7eoPio2d7Xyj
+	 TH/1u+GB+dOJlOsHU/1F1qlRGpznmEfLkkyr9F25H+2m9UnNDTP2vZKNpmG5YrxXLEq+W
+	 ik5RtyyI2814QgBH3DVbhCFWaCMMNMSlWiKfO6c1hxWNM+Nzu7OxS8WHwQXoyWZe/yYK4
+	 qFZZ2aDw1OIsmxfZFgT6pw7F5akHOzuV17zKjI2KQyQ83obuExEJzJB3fAOzI3L1G2HFd
+	 wWPeCTcYSjTtg4TjCioW4gFTvOJnH5/D62WWa0vMPbmqwmOTo73iyT+93kAV+tkJ10A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hCp7ipKN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GVeExQPz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD4F0606A320;
-	Wed, 18 Nov 2026 17:51:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E4D606A325;
+	Wed, 18 Nov 2026 17:51:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hCp7ipKN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0430F1F000C4;
-	Wed, 18 Nov 2026 17:51:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GVeExQPz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7E861F000C4;
+	Wed, 18 Nov 2026 17:51:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024316;
-	bh=wpu5+ld6i5CM1jJr+ZgNvbcVukBzXO1Z1ehQhv4P6iM=;
+	s=korg; t=1795024319;
+	bh=lFP67SRQ/91DG1nfNMD/3radkkV/TljMAvFl651XSVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hCp7ipKNGIZhw6YR61HQE8pRcApEID84KatAjTpY5fww5zcBDbwMWgOE6JJ8Qln55
-	 vca/wAPOOh/sfTV3XjF772+ZgRTUDO3mGxooZZYKX0UrZS1R3ScRAc/92RWqLddVQg
-	 mfVvL2aRt/fZtbF8sU6Nqh8DQaUGjVjA1k92MY5w=
+	b=GVeExQPzJg9ArwEgyQ18eH/icgU7EVSYWkH2AWcJrpBBc69LiAZpPftoM0MMiGKWC
+	 239BIunTD8OIz0UenQN0vHmTpIXbgIUWmv8CqmJluN5NklNYBLkFhEvNiPsicFb13T
+	 dr1vw/yASO7kQbzZKkc3cSqFpFi4EhEACYTUcP8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Jan Kara <jack@suse.cz>,
+	Eric Anderson <ejona86@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0681/2151] ext2: drain in-flight DIO before buffered write fallback
-Date: Wed, 18 Nov 2026 15:40:16 +0100
-Message-ID: <20261118150146.614473977@linuxfoundation.org>
+Subject: [PATCH 6.18 0682/2151] mfd: rk8xx: Register poweroff handler in atomic phase
+Date: Wed, 18 Nov 2026 15:40:17 +0100
+Message-ID: <20261118150146.646575568@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,62 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Eric Anderson <ejona86@gmail.com>
 
-[ Upstream commit 1e2ef9f221e142ed19d874a71b2cae7fabbaf138 ]
+[ Upstream commit 128115b520c6b61afbffd01809cfc3e8cbb78516 ]
 
-An asynchronous direct write can remain in flight after the inode lock is
-released.  If another direct write falls back to buffered I/O while the
-first write is still pending, generic_perform_write() can dirty pages
-before the first write completes its post-I/O page cache invalidation.
-The invalidation then finds dirty pages, reports a page cache invalidation
-failure, and records -EIO in the mapping error sequence.  A later fsync()
-therefore returns -EIO.
+This fixes a regression from v6.1 to v6.6 where Google Veyron devices
+(rk3288) would not power off after being shut down.
 
-Commit 15cdefd0c0522f9d5e12d947fa04f4c11649b699 ("ext4: drain
-in-flight DIO before buffered write fallback") fixed the same race in
-ext4.  Ext2 has an equivalent fallback after iomap_dio_rw() returns
--ENOTBLK or a short write, but does not drain other in-flight DIO before
-dirtying the page cache.
+Prior to commit 4fec8a5a85c4 ("mfd: rk808: Convert to device managed
+resources"), pm_power_off was called by legacy_pm_power_off() which
+itself was registered using SYS_OFF_MODE_POWER_OFF. But in that commit
+the registration of rk808_power_off() moved to
+SYS_OFF_MODE_POWER_OFF_PREPARE. At the very least, the code should be
+consistent between SYS_OFF_MODE_POWER_OFF and SYS_OFF_MODE_RESTART; both
+should be *_PREPARE or both not.
 
-Wait for in-flight DIO before calling generic_perform_write() in the
-fallback path.
+It appears interrupt delivery is already shut down (but not disabled)
+when SYS_OFF_MODE_POWER_OFF_PREPARE is triggered, so
+regmap_update_bits() in rk808_power_off() does not complete
+successfully. Registering rk808_power_off() as SYS_OFF_MODE_POWER_OFF
+runs with interrupts disabled which causes polling I/O to be used
+instead, and the device to power down.
 
-A reproducer using concurrent AIO direct writes and buffered fallback
-triggered the following warning and made a subsequent fsync() return
--EIO:
-
-  Page cache invalidation failure on direct I/O.  Possible data corruption
-  due to collision with buffered I/O!
-
-Fixes: fb5de4358e1a ("ext2: Move direct-io to use iomap")
-Link: https://lore.kernel.org/r/20260629113827.4074335-3-libaokun@linux.alibaba.com
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Link: https://patch.msgid.link/20260924105125.577714-2-yaojiale02@163.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Fixes: 4fec8a5a85c4 ("mfd: rk808: Convert to device managed resources")
+Signed-off-by: Eric Anderson <ejona86@gmail.com>
+Assisted-by: Gemini:gemini-3.5-flash
+Link: https://patch.msgid.link/20260908-veyron-shutdown-v1-1-066ecb80f5f2@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext2/file.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/mfd/rk8xx-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ext2/file.c b/fs/ext2/file.c
-index 81f9cf3b884ce..dc261dc913b99 100644
---- a/fs/ext2/file.c
-+++ b/fs/ext2/file.c
-@@ -253,6 +253,13 @@ static ssize_t ext2_dio_write_iter(struct kiocb *iocb, struct iov_iter *from)
- 		int ret2;
- 
- 		iocb->ki_flags &= ~IOCB_DIRECT;
-+
-+		/*
-+		 * Prevent concurrent direct I/O and buffered I/O to the same file
-+		 * range. Wait for in-flight DIO to finish before dirtying pages.
-+		 */
-+		inode_dio_wait(inode);
-+
- 		pos = iocb->ki_pos;
- 		status = generic_perform_write(iocb, from);
- 		if (unlikely(status < 0)) {
+diff --git a/drivers/mfd/rk8xx-core.c b/drivers/mfd/rk8xx-core.c
+index def4587fdfb8b..9b5fb033edbaa 100644
+--- a/drivers/mfd/rk8xx-core.c
++++ b/drivers/mfd/rk8xx-core.c
+@@ -800,7 +800,7 @@ int rk8xx_probe(struct device *dev, int variant, unsigned int irq, struct regmap
+ 	if (device_property_read_bool(dev, "system-power-controller") ||
+ 	    device_property_read_bool(dev, "rockchip,system-power-controller")) {
+ 		ret = devm_register_sys_off_handler(dev,
+-				    SYS_OFF_MODE_POWER_OFF_PREPARE, SYS_OFF_PRIO_HIGH,
++				    SYS_OFF_MODE_POWER_OFF, SYS_OFF_PRIO_HIGH,
+ 				    &rk808_power_off, rk808);
+ 		if (ret)
+ 			return dev_err_probe(dev, ret,
 -- 
 2.53.0
 
