@@ -1,57 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044802;
-	b=soutZGDmojFz4DYu38b3izBvQqw8pv9VCrujHgovjNJ/1HNEo7cpE/y6L+cCVh5b1KBM
-	 OpVJfaQeVTnFLNwoBUDNHCAlPVMX3d5vebm6P9HAs6xb5xa6VQ1ASkGNZdVpI/Mx/Ln3/
-	 dmTsUr++UjPFow3EFuv3RMZAkcy836uSOqi86UvcHZ7VRLzLcXUMqGIiP6Nfy7MxPyrTC
-	 wt/f8+N1nE+2m/k4BA7V+NbMH63oNy0gjyu1yeaK3Qf1+txOyHJTMcCTaijnCRMN04uzv
-	 lkuAxbXu8G4MYGgu7U0RyCVzsXXqp1I1gcdthIpmtSy7DzoWMiFI+KTSoEt3W986KCw==
+	t=1795044804;
+	b=3HiACbRxBLhwxwTa+EavAlUrZH+yptOGzHvHtsFwaEvpq9xWaGlQt3A1+QuVE0Qo7+le
+	 zg5LcFx+UL39PlcvPaM6tKXYQTw5TxKRTfd9aMAAa2z2zBaaLhzTLuyPNoFTODwop3Rb2
+	 /BljITlW4VS5T7jlNgaG1bseNTiygxVMIZFbF3xtCbTaepcZgv5L0X2FlJ6cveVrYhIQ+
+	 Isgwri2+EIVKg+GlcZ8TiopkdJANf6SzObak10sRzWGFhUyT1j/r9f7IVmIda29YIt5fm
+	 Tx/0Bt68lPElJLObj5Y4/Gw7czXIOeDgR9NbLXpCkxMTD0pv02q8YmOVVvOH0pNHHtg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044802;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044804;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=vSSIKhKnizqxrDx1vs/TEIg8e9srodj0gyCKJoQVbOs=;
-	b=wkQnG1m8kgzUnpaGsZyf5ksl5MyWvmDJ71R/fOde5LHmPqPWrDtdnsQcaz9yhZ4nAdt+
-	 r8pD6UVSyF91KKvc3O9wcBk+nmFv7G2FDO8YbKZr9sIXRe0LFsWdHHA3MR0aORJeF8Bn4
-	 TcZdWOaTqrS17J16h0HCCNj65hXSE59FtP1AjLPNBcsXKoGwR51y3CDsNjVs4emlQ8cQ8
-	 VXZOhrfhSTSAUJfvY8RHy9yLwevxaZH5PdXx60ROT9e3rzHFr//ELXZ9gD9VEjhrl1ZuY
-	 tZqvtm4qRJWDhBHSf51I8lasiMAZslsVQImHs+WuLdHQAU5XWCLepLOI4oyadbjc0AA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=JMCubGHy6W11iFDcvorhDpy2dd1r7Zn2WZO4ggynZuw=;
+	b=x4NiHdvmcILifhhzX0aitRJHaASCZNk4eOz/oinzWr9ONCBkYov2ttYFMgVhbNSyIzM7
+	 aQQUlpTuDiYJOeemcCqqrY7IZuTZPzSs8MAoy2+GcGW2p2jq/TgjqGZkGXI5qEp1N8srf
+	 lVFqXYDDZ4OBWxrI1WeOM36RdP0pnHSETgAo0poiJI6NZFUzmFpRoZntD0Lc2r3ziMm3t
+	 XheL/J0iZs00EY4dTmXyhCcwyUKLmvhfvWraDl6wlCVDjpWCPBu4B0MzUMSHI6b992ldV
+	 zGxrNpy/0kz1EacTyCnCZ4RJBx5kbuxMoaJjSkKqagWgADsRpG6NcBXZXSAWVPXCeog==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q1u4sIPM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mFdbstL+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F1760A2629;
-	Wed, 18 Nov 2026 23:33:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B8660A2606;
+	Wed, 18 Nov 2026 23:33:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q1u4sIPM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 551291F000CB;
-	Wed, 18 Nov 2026 23:33:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mFdbstL+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33B271F000C4;
+	Wed, 18 Nov 2026 23:33:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044801;
-	bh=vSSIKhKnizqxrDx1vs/TEIg8e9srodj0gyCKJoQVbOs=;
+	s=korg; t=1795044804;
+	bh=JMCubGHy6W11iFDcvorhDpy2dd1r7Zn2WZO4ggynZuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q1u4sIPMPOQq+ksEOt/c9YnqYErJqhqNgHbgLKZJE3PAOMi8S1l1FXxAyQa3PA0Mi
-	 ajMWijbB3V3v1xtDiPDEvcwKkghFxyhmgPDAzhl/M9s/p6Eqzk48Ip7y01rwd3qQTM
-	 X2pSBDTqJpkQ7K1I7hcp4sJg47hbvtQgi3oejYVA=
+	b=mFdbstL+LHptDR4vevVJ2qFOqn3Jy0VoZaLzWNTgoBRVNbNBZfE9YCv2o2KRxoaf7
+	 k8FxHpK/oXgezqgyVGrV6UaT07jznqScJtfBDE4zGE4p92fgLfKjLnHNyI10ckn/Ec
+	 GkGFfC49zM38nrW0lvek7DQOeN02BEwR8KjD2j6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	David Lee <david.lee@trailofbits.com>,
-	Vega <vega@nebusec.ai>,
-	Ruide Cao <caoruide123@gmail.com>,
-	Ren Wei <weir@nebusec.ai>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0697/2857] mptcp: hold MP_JOIN msk ref when cloning reqsk
-Date: Wed, 18 Nov 2026 15:28:51 +0100
-Message-ID: <20261118150226.656324774@linuxfoundation.org>
+Subject: [PATCH 6.1 0698/2857] nvmet-auth: serialize access to DH-HMAC-CHAP state to fix UAF
+Date: Wed, 18 Nov 2026 15:28:52 +0100
+Message-ID: <20261118150226.691687658@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,201 +63,186 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ruide Cao <caoruide123@gmail.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit c9c90cf437a9e6597611b6d3aad6e255fad22867 ]
+[ Upstream commit 53f6efe00cea0c0cf7bd99debe3cdac8567170b5 ]
 
-TCP request migration clones pending request sockets with
-inet_reqsk_clone().  For MPTCP MP_JOIN requests this byte-copies
-subflow_req->msk, but the clone does not own a reference.
+A REPLY AUTH_SEND command can derive a dhchap_skey key while a
+concurrent AUTH_RECEIVE command observing this REPLY state executes
+the failure path and frees that key. The REPLY command then continues
+and writes into freed memory, causing a use-after-free. KASAN reports
+it as:
 
-The original and cloned requests can consequently drop the same msk
-reference, leaving one request with a dangling pointer.  This manifests as
-a KASAN slab-use-after-free in subflow_req_destructor():
+  BUG: KASAN: slab-use-after-free in __sha256_final
+  Write of size 4 at addr ffff88800359c540
+  ...
+  nvmet_auth_sq_free (drivers/nvme/target/auth.c:237)
+  nvmet_execute_auth_receive (drivers/nvme/target/fabrics-cmd-auth.c:621)
 
-  BUG: KASAN: slab-use-after-free in subflow_req_destructor (net/mptcp/subflow.c:45)
-  Write of size 4 at addr ff1100010e008d40 by task swapper/0/0
-  CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 7.2.0-rc5-00353-gc27e36054537 #10 PREEMPT(full)
+Add a mutex to each submission queue to serialize authentication
+commands and timeout handling. Unlock the mutex before completing
+requests and ignore outdated timeout callbacks. Limit timeout delays
+to prevent immediate expiry on 32-bit kernels.
 
-  Call Trace:
-   subflow_req_destructor (net/mptcp/subflow.c:45)
-   subflow_v4_req_destructor (net/mptcp/subflow.c:694)
-   __reqsk_free (net/ipv4/inet_connection_sock.c:906)
-   reqsk_timer_handler (include/net/request_sock.h:137 net/ipv4/inet_connection_sock.c:1147)
-
-  Allocated by task 10014:
-   sk_prot_alloc (net/core/sock.c:2246)
-   sk_clone (net/core/sock.c:2488)
-   mptcp_sk_clone_init (include/net/sock.h:1848 net/mptcp/protocol.c:3564)
-   subflow_syn_recv_sock (net/mptcp/subflow.c:883)
-   tcp_check_req (net/ipv4/tcp_minisocks.c:934)
-
-  Freed by task 0:
-   slab_free_after_rcu_debug (include/linux/kasan.h:235 mm/slub.c:2677 mm/slub.c:6439)
-   rcu_core (kernel/rcu/tree.c:2645 kernel/rcu/tree.c:2897)
-
-  Last potentially related work creation:
-   kmem_cache_free (mm/slub.c:2638 mm/slub.c:6377 mm/slub.c:6504)
-   __sk_destruct (net/core/sock.c:2289 net/core/sock.c:2391)
-   sk_destruct (net/core/sock.c:2419)
-   __sk_free (net/core/sock.c:2430)
-   sk_free (net/core/sock.c:2441)
-   mptcp_close (include/net/sock.h:2020 net/mptcp/protocol.c:3399)
-   inet_release (net/ipv4/af_inet.c:442)
-
-  The buggy address belongs to the cache MPTCP of size 2968
-  The buggy address is 128 bytes inside a freed 2968-byte region
-
-A non-NULL subflow_req->msk means that the request owns one reference. The
-third ACK can concurrently transfer the original request reference to the
-child and release it, so taking an unconditional hold on the copied pointer
-is unsafe.
-
-MPTCP sockets use SLAB_TYPESAFE_BY_RCU and all current inet_reqsk_clone()
-callers run in an RCU read-side critical section. Document and
-lockdep-check that calling-context requirement.  Read the pointer from the
-original request and acquire a reference only if it is still live.  Use
-refcount_inc_not_zero_acquire() so the subsequent ownership validation
-cannot be reordered before the try-get, then re-read the original request
-to verify that it still owns the same msk. If either check fails, clear the
-clone pointer; otherwise its normal destructor balances the new reference.
-Mark the ownership-transfer store with WRITE_ONCE() to match the lockless
-reads.
-
-The following patch completes the clone fixup for MP_CAPABLE token
-ownership. Both patches carry the same Fixes tag and are required for
-stable backports.
-
-Fixes: c905dee62232 ("tcp: Migrate TCP_NEW_SYN_RECV requests at retransmitting SYN+ACKs.")
+Fixes: 7a277c37d352 ("nvmet-auth: Diffie-Hellman key exchange support")
 Cc: stable@vger.kernel.org
-Reported-by: Kyle Zeng <kylebot@openai.com>
-Reported-by: David Lee <david.lee@trailofbits.com>
-Reported-by: Vega <vega@nebusec.ai>
-Closes: https://lore.kernel.org/all/20260804095051.715355-1-david.lee@trailofbits.com/
-Signed-off-by: Ruide Cao <caoruide123@gmail.com>
-Signed-off-by: Ren Wei <weir@nebusec.ai>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20261013-net-mptcp-misc-fixes-7-3-rc8-v1-3-932c9b182fc7@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: replaced refcount_inc_not_zero_acquire() with refcount_inc_not_zero() followed by an explicit smp_acquire__after_ctrl_dep() barrier. ]
+Assisted-by: LLM
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+[ sashal: adjusted context for the existing system_wq name and nvmet_sq field layout ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/mptcp.h             |  9 ++++++++
- net/ipv4/inet_connection_sock.c |  4 ++++
- net/mptcp/subflow.c             | 38 ++++++++++++++++++++++++++++++++-
- 3 files changed, 50 insertions(+), 1 deletion(-)
+ drivers/nvme/target/auth.c             |  1 +
+ drivers/nvme/target/fabrics-cmd-auth.c | 32 ++++++++++++++++++++++----
+ drivers/nvme/target/nvmet.h            |  2 ++
+ 3 files changed, 31 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/mptcp.h b/include/net/mptcp.h
-index 3c5c68618fcc5..32c5878f51175 100644
---- a/include/net/mptcp.h
-+++ b/include/net/mptcp.h
-@@ -189,6 +189,9 @@ int mptcp_subflow_init_cookie_req(struct request_sock *req,
- struct request_sock *mptcp_subflow_reqsk_alloc(const struct request_sock_ops *ops,
- 					       struct sock *sk_listener,
- 					       bool attach_listener);
-+/* Caller must hold an RCU read-side lock. */
-+void mptcp_subflow_reqsk_clone(struct request_sock *req,
-+			       struct request_sock *new_req);
+diff --git a/drivers/nvme/target/auth.c b/drivers/nvme/target/auth.c
+index b3a0e19464539..59762bbb98da3 100644
+--- a/drivers/nvme/target/auth.c
++++ b/drivers/nvme/target/auth.c
+@@ -218,6 +218,7 @@ u8 nvmet_setup_auth(struct nvmet_ctrl *ctrl)
  
- __be32 mptcp_get_reset_option(const struct sk_buff *skb);
+ void nvmet_auth_sq_free(struct nvmet_sq *sq)
+ {
++	sq->auth_expiry_active = false;
+ 	cancel_delayed_work(&sq->auth_expired_work);
+ 	kfree(sq->dhchap_c1);
+ 	sq->dhchap_c1 = NULL;
+diff --git a/drivers/nvme/target/fabrics-cmd-auth.c b/drivers/nvme/target/fabrics-cmd-auth.c
+index 990bb7af4dc8b..454a01fe00f2c 100644
+--- a/drivers/nvme/target/fabrics-cmd-auth.c
++++ b/drivers/nvme/target/fabrics-cmd-auth.c
+@@ -6,6 +6,7 @@
+  */
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ #include <linux/blkdev.h>
++#include <linux/jiffies.h>
+ #include <linux/random.h>
+ #include <linux/nvme-auth.h>
+ #include <crypto/hash.h>
+@@ -17,16 +18,27 @@ static void nvmet_auth_expired_work(struct work_struct *work)
+ 	struct nvmet_sq *sq = container_of(to_delayed_work(work),
+ 			struct nvmet_sq, auth_expired_work);
  
-@@ -282,6 +285,12 @@ static inline struct request_sock *mptcp_subflow_reqsk_alloc(const struct reques
- 	return NULL;
++	mutex_lock(&sq->auth_lock);
++	/* A command may have cancelled or rearmed this timeout. */
++	if (!sq->auth_expiry_active ||
++	    delayed_work_pending(&sq->auth_expired_work))
++		goto out_unlock;
++	sq->auth_expiry_active = false;
++
+ 	pr_debug("%s: ctrl %d qid %d transaction %u expired, resetting\n",
+ 		 __func__, sq->ctrl->cntlid, sq->qid, sq->dhchap_tid);
+ 	sq->dhchap_step = NVME_AUTH_DHCHAP_MESSAGE_NEGOTIATE;
+ 	sq->dhchap_tid = -1;
++out_unlock:
++	mutex_unlock(&sq->auth_lock);
  }
  
-+/* Caller must hold an RCU read-side lock. */
-+static inline void mptcp_subflow_reqsk_clone(struct request_sock *req,
-+					     struct request_sock *new_req)
-+{
-+}
+ void nvmet_auth_sq_init(struct nvmet_sq *sq)
+ {
+ 	/* Initialize in-band authentication */
++	mutex_init(&sq->auth_lock);
+ 	INIT_DELAYED_WORK(&sq->auth_expired_work, nvmet_auth_expired_work);
++	sq->auth_expiry_active = false;
+ 	sq->authenticated = false;
+ 	sq->dhchap_step = NVME_AUTH_DHCHAP_MESSAGE_NEGOTIATE;
+ }
+@@ -202,6 +214,8 @@ void nvmet_execute_auth_send(struct nvmet_req *req)
+ 	u16 status = 0;
+ 	u8 dhchap_status;
+ 
++	mutex_lock(&req->sq->auth_lock);
 +
- static inline __be32 mptcp_reset_option(const struct sk_buff *skb)  { return htonl(0u); }
- #endif /* CONFIG_MPTCP */
- 
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index 64bcddb9b042a..3ade0dd5cdbc7 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -20,6 +20,7 @@
- #include <net/tcp_states.h>
- #include <net/xfrm.h>
- #include <net/tcp.h>
-+#include <net/mptcp.h>
- #include <net/sock_reuseport.h>
- #include <net/addrconf.h>
- 
-@@ -945,6 +946,9 @@ static struct request_sock *inet_reqsk_clone(struct request_sock *req,
- 		rcu_assign_pointer(tcp_sk(nreq->sk)->fastopen_rsk, nreq);
+ 	if (req->cmd->auth_send.secp != NVME_AUTH_DHCHAP_PROTOCOL_IDENTIFIER) {
+ 		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 		req->error_loc =
+@@ -227,8 +241,10 @@ void nvmet_execute_auth_send(struct nvmet_req *req)
+ 			offsetof(struct nvmf_auth_send_command, tl);
+ 		goto done;
+ 	}
+-	if (!nvmet_check_transfer_len(req, tl)) {
++	if (unlikely(tl != req->transfer_len)) {
+ 		pr_debug("%s: transfer length mismatch (%u)\n", __func__, tl);
++		mutex_unlock(&req->sq->auth_lock);
++		nvmet_check_transfer_len(req, tl);
+ 		return;
  	}
  
-+	if (rsk_is_mptcp(req))
-+		mptcp_subflow_reqsk_clone(req, nreq);
-+
- 	return nreq;
+@@ -353,10 +369,12 @@ void nvmet_execute_auth_send(struct nvmet_req *req)
+ 			 status, req->error_loc);
+ 	if (req->sq->dhchap_step != NVME_AUTH_DHCHAP_MESSAGE_SUCCESS2 &&
+ 	    req->sq->dhchap_step != NVME_AUTH_DHCHAP_MESSAGE_FAILURE2) {
+-		unsigned long auth_expire_secs = ctrl->kato ? ctrl->kato : 120;
++		unsigned long auth_expire = min_t(u64, MAX_JIFFY_OFFSET,
++			(u64)(ctrl->kato ? ctrl->kato : 120) * HZ);
+ 
++		req->sq->auth_expiry_active = true;
+ 		mod_delayed_work(system_wq, &req->sq->auth_expired_work,
+-				 auth_expire_secs * HZ);
++				 auth_expire);
+ 		goto complete;
+ 	}
+ 	/* Final states, clear up variables */
+@@ -365,6 +383,7 @@ void nvmet_execute_auth_send(struct nvmet_req *req)
+ 		nvmet_ctrl_fatal_error(ctrl);
+ 
+ complete:
++	mutex_unlock(&req->sq->auth_lock);
+ 	nvmet_req_complete(req, status);
  }
  
-diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
-index cc62681d6ea8e..df85e8ac0d3d1 100644
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -47,6 +47,42 @@ static void subflow_req_destructor(struct request_sock *req)
- 	mptcp_token_destroy_request(req);
+@@ -483,6 +502,8 @@ void nvmet_execute_auth_receive(struct nvmet_req *req)
+ 	u32 al;
+ 	u16 status = 0;
+ 
++	mutex_lock(&req->sq->auth_lock);
++
+ 	if (req->cmd->auth_receive.secp != NVME_AUTH_DHCHAP_PROTOCOL_IDENTIFIER) {
+ 		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 		req->error_loc =
+@@ -508,8 +529,10 @@ void nvmet_execute_auth_receive(struct nvmet_req *req)
+ 			offsetof(struct nvmf_auth_receive_command, al);
+ 		goto done;
+ 	}
+-	if (!nvmet_check_transfer_len(req, al)) {
++	if (unlikely(al != req->transfer_len)) {
+ 		pr_debug("%s: transfer length mismatch (%u)\n", __func__, al);
++		mutex_unlock(&req->sq->auth_lock);
++		nvmet_check_transfer_len(req, al);
+ 		return;
+ 	}
+ 
+@@ -577,5 +600,6 @@ void nvmet_execute_auth_receive(struct nvmet_req *req)
+ 		nvmet_auth_sq_free(req->sq);
+ 		nvmet_ctrl_fatal_error(ctrl);
+ 	}
++	mutex_unlock(&req->sq->auth_lock);
+ 	nvmet_req_complete(req, status);
  }
- 
-+void mptcp_subflow_reqsk_clone(struct request_sock *req,
-+			       struct request_sock *new_req)
-+{
-+	struct mptcp_subflow_request_sock *subflow_req = mptcp_subflow_rsk(req);
-+	struct mptcp_subflow_request_sock *new_subflow_req;
-+	struct mptcp_sock *msk;
-+
-+	new_subflow_req = mptcp_subflow_rsk(new_req);
-+	RCU_LOCKDEP_WARN(!rcu_read_lock_any_held(),
-+			 "MPTCP reqsk clone called without RCU");
-+
-+	/* A non-NULL ->msk means the request owns one reference.  The clone
-+	 * copied only the pointer, while the original request can concurrently
-+	 * transfer its reference to the child.  Acquire a reference for the
-+	 * clone, then verify that the original request still owns the same msk.
-+	 * MPTCP sockets use SLAB_TYPESAFE_BY_RCU and all clone callers run in
-+	 * an RCU read-side critical section, keeping the memory stable here.
-+	 */
-+	msk = READ_ONCE(subflow_req->msk);
-+	if (msk) {
-+		struct sock *sk = (struct sock *)msk;
-+
-+		if (!refcount_inc_not_zero(&sk->sk_refcnt)) {
-+			msk = NULL;
-+		} else {
-+			smp_acquire__after_ctrl_dep();
-+			if (READ_ONCE(subflow_req->msk) != msk) {
-+				sock_put(sk);
-+				msk = NULL;
-+			}
-+		}
-+	}
-+
-+	new_subflow_req->msk = msk;
-+}
-+
- static void subflow_generate_hmac(u64 key1, u64 key2, u32 nonce1, u32 nonce2,
- 				  void *hmac)
- {
-@@ -812,7 +848,7 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
- 			}
- 
- 			/* move the msk reference ownership to the subflow */
--			subflow_req->msk = NULL;
-+			WRITE_ONCE(subflow_req->msk, NULL);
- 			ctx->conn = (struct sock *)owner;
- 
- 			if (subflow_use_different_sport(owner, sk)) {
+diff --git a/drivers/nvme/target/nvmet.h b/drivers/nvme/target/nvmet.h
+index 09778c5d26791..cc74886cb3b0a 100644
+--- a/drivers/nvme/target/nvmet.h
++++ b/drivers/nvme/target/nvmet.h
+@@ -108,7 +108,9 @@ struct nvmet_sq {
+ 	u32			sqhd;
+ 	bool			sqhd_disabled;
+ #ifdef CONFIG_NVME_TARGET_AUTH
++	struct mutex		auth_lock;
+ 	struct delayed_work	auth_expired_work;
++	bool			auth_expiry_active;
+ 	bool			authenticated;
+ 	u16			dhchap_tid;
+ 	u8			dhchap_status;
 -- 
 2.53.0
 
