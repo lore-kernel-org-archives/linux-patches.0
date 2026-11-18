@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054222;
-	b=0HGT+nFtpkacBk06HFw/9JMTC21ISTzA1R7XBMcmsRiDRyFMUoY3bbD1RtrWl3pESW2n
-	 OS2mydQq7oTtHq9HXITAHUmWfP1HLMbDO8u7vRgvTypX01l+Wc46Q8pQHDsOgLOlLfyQY
-	 EmS7llfosjvPLqzc+3Kc0FZNtIf8PEY6+JABZLTEKchy0GCzMH3l/WlOcGyuVgGQQSRcZ
-	 DwM0IE45rTk54Ets0Of/N0mPRmaR78kcVH7uFZLQ00qNI+VwNdSvI/44J4Pq/RJmcECK6
-	 +C4TR1M+cAXBGswg3xBKU7vMtIoXEaR2S70tfYvO9pgdFNT5SntHc+B8cvXAEvVwiww==
+	t=1795054225;
+	b=KsMaHB0QLxeF9kKbnsSZJdVLUXJ77n8tlZ7uajt+XZ9wNnKTaplOFRe02OxR3wehk/tc
+	 bBKxGkF6XsL31kTNf2XkjtSXCfQE6uCmBn43WdosGFe4FsiZ0n9WwFhXQbcxuQkGu9R2e
+	 viZ7nBZLwXayaYNyjOMOAocDWfyR9DkcTj9B1N6nKUVvXRq8zKlKOJeNEcdiG5mnlIAdu
+	 DTivE3XGVBCJH7DAgxMzKJ+nxe9rcEXRgkiu0g2BQEUbCa2zo69VHDfKl8G9pIkKSTnEW
+	 ERgPlMTAtqclbum9eW+6oBuvnxfm23V1qkniNEnY2iqiS1aiqDDsbT4+zxO8AlBfbkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054222;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054225;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=u1L0VKqESn3P3LtVVNQbMhcjwdLjhiZ+bRMBeNjrkFs=;
-	b=VuuKiXf4dFVMVYcWrzr7i6x8e9N+5sOJafSC2Xs332yhtZXG7HOUQcc11otxRhHkiJVt
-	 ad1+qTcbob1ZG9q9JmO9iOEdjSXgizoCmJConieTGeIVIi0FZ519n9V3tZgf+aX1mD3wz
-	 7+v6P70Rk5MMbFMAqff/hoz+1R52bCKRfMvROrOwFrGJ2ldnuKmfDdaqfxujuNw4hKHdT
-	 t4Vn5mZRnlbDVnwF6N37d1v/AGSHH1nY6fqDfKL3RCQ7i8GbOmRT7Zrj4zgiI1vEvR2Am
-	 jhC2CXGSBp7N7CTOIePUAfAbCacu3XLQ9rOW7HDAkc6kJHc1FevOAsNGUWwga7zX9WQ==
+	bh=eUjLIYrnn57u28W2LHjczAF9CssgKJMI8NtqTe5yu3w=;
+	b=KgrUhkdFtNXg13OIsKJGauIV/R5iY0Ia+rs8TE95o7fal/TenxXROkycUoA2AnCuz308
+	 TT33LokZJ+KDLavWtoIEp0PehAW+Ip3cRhDCvo5HGNUWCIIZ0fjJRn08aiaLBfNLNeR2u
+	 s9YMn394AMvHBQkG4yktiheL408Kuhq1sdn9QrfyAJKiCuz4a5PX/gRDypjp/3eefLWVh
+	 U4ij75Gn5FpJRSrhMcfcP9/abBzt6L+EO56Ry5A2xLwp3IelhoQqAQFmxzwhnsBI5UnhB
+	 oHZnFWqtG7o/NHz9nF9mboq2Mi+QxsnlPiG/bk+dknrJeJeiWR99/Era5jWbYZD5Nrg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="bYv3r1c/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2GiSJQh1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A322606A32A;
-	Thu, 19 Nov 2026 02:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B39606A325;
+	Thu, 19 Nov 2026 02:10:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bYv3r1c/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 742F91F000C4;
-	Thu, 19 Nov 2026 02:10:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2GiSJQh1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 461881F000C4;
+	Thu, 19 Nov 2026 02:10:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054222;
-	bh=u1L0VKqESn3P3LtVVNQbMhcjwdLjhiZ+bRMBeNjrkFs=;
+	s=korg; t=1795054224;
+	bh=eUjLIYrnn57u28W2LHjczAF9CssgKJMI8NtqTe5yu3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bYv3r1c/SCvACFRFSpIIQhfLz4QjzbIYb9xipj9kFPZnRqKZYOteLyZLpesqHehg3
-	 zKEBIihZNhh5wZHcEUSRBy4013LUO1WOv/pYzYjTzy7b7aPGX1nNSXWQHUjs7Lf17j
-	 y2rdUsbcfG3xYHHZAxzF84BN0ZTPK07KIYFkEiXw=
+	b=2GiSJQh1fjiZ7SQfm79O2tuGjVDCF3AwHQw7dAc1a2U6b7Qrekfap3OdOyIi9A/Qc
+	 YMTPAS/bH8Dma1LzYs6Cv6TZ0jfnMzkBIrQe3xWCWZqemwsMYXm62cYoDmlPkn0IeC
+	 i+IDul0Q/BFiPQwPCBoUFUEvDnx2TSi+AzdMcHco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	David Teigland <teigland@redhat.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1196/2214] media: sti: delta: use unaligned accessors for MJPEG SOF fields
-Date: Wed, 18 Nov 2026 15:47:52 +0100
-Message-ID: <20261118150059.734055335@linuxfoundation.org>
+Subject: [PATCH 5.15 1197/2214] dlm: fix send buffer backpressure handling
+Date: Wed, 18 Nov 2026 15:47:53 +0100
+Message-ID: <20261118150059.767425964@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,69 +71,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit fdc5bf02aeaef04e7d13895db9b6eaf8083953f9 ]
+[ Upstream commit e234d7625598b2eaded84fa99f53c8062650828f ]
 
-delta_mjpeg_read_header() scans a compressed MJPEG access unit byte by
-byte and passes the bytes after an SOF marker to delta_mjpeg_read_sof().
-The SOF parser then reads 16-bit big-endian fields directly from that
-byte stream.
+lowcomms.c tests and clears SOCKWQ_ASYNC_NOSPACE in con->sock->flags,
+but this bit has not been stored there for ten years.
 
-The SOF payload is not an aligned object. The marker scan can find the
-payload at any byte position, and the SOF layout also puts frame_height
-and frame_width after a one-byte sample_precision field. Those fields
-therefore sit at odd offsets within the payload even when the payload
-base happens to be 2-byte aligned.
+Commit 9cd3e072b0be ("net: rename SOCK_ASYNC_NOSPACE and
+SOCK_ASYNC_WAITDATA") mechanically renamed the two dlm users, then
+commit ceb5d58b2170 ("net: fix sock_wake_async() rcu protection") moved
+the bit from socket->flags to the RCU protected socket_wq->flags, where
+it is reachable only through sk_set_bit() and sk_clear_bit(), and is
+only maintained for sockets having SOCK_FASYNC set.  dlm uses kernel
+sockets, which never have SOCK_FASYNC set, and never sets the bit
+itself, so the test in send_to_sock() has been false ever since.
 
-Avoid casting the byte stream to __be16 pointers and use
-get_unaligned_be16() for the SOF length, height, and width fields.
+The consequence is that when sock_sendmsg() returns -EAGAIN because the
+socket send buffer is full, dlm no longer sets CF_APP_LIMITED, does not
+increment sk_write_pending, and does not return DLM_IO_END to wait for
+lowcomms_write_space().  It returns DLM_IO_RESCHED instead, and
+process_send_sockets() immediately requeues the send work.  A connection
+to a peer that is slow to drain thus keeps cycling through
+sock_sendmsg() and -EAGAIN, burning CPU, instead of sleeping until TCP
+reports that space is available again.
 
-This issue was detected by our static analysis tool and confirmed by
-manual audit. A focused UBSAN alignment validation of the same typed
-load shape reported a misaligned __be16 access in delta_mjpeg_read_sof().
+Test SOCK_NOSPACE instead.  This is the bit that lives in socket->flags,
+that TCP sets whenever sendmsg() returns -EAGAIN for lack of send buffer
+space (tcp_sendmsg_locked() and sk_stream_wait_memory()), and that
+lowcomms_write_space() already clears.  This restores the semantics dlm
+had before the bit moved.
 
-Fixes: 433ff5b4a29b ("[media] st-delta: add mjpeg support")
+Also remove the clear_bit() of SOCKWQ_ASYNC_NOSPACE from
+lowcomms_write_space(), for the same reason.
+
+SCTP connections are deliberately left as they are.  SCTP does not set
+SOCK_NOSPACE, and it never calls sk->sk_write_space(): sctp_wfree() ends
+up in sctp_wake_up_waiters(), which calls sctp_write_space() directly.
+lowcomms_write_space() is thus never invoked for an SCTP connection, and
+the test added here stays false, so send_to_sock() keeps returning
+DLM_IO_RESCHED as it does today.  This is the only safe behavior, as
+returning DLM_IO_END would wait for a callback that never comes.
+
+Fixes: ceb5d58b2170 ("net: fix sock_wake_async() rcu protection")
 Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ sashal: Changed the unaligned accessor include to the existing architecture header. ]
+Cc: David Teigland <teigland@redhat.com>
+Acked-by: Alexander Aring <aahringo@redhat.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20260929071743.23624-2-edumazet@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: adjusted context around the existing ret == -EAGAIN guard in send_to_sock() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/sti/delta/delta-mjpeg-hdr.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/dlm/lowcomms.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/platform/sti/delta/delta-mjpeg-hdr.c b/drivers/media/platform/sti/delta/delta-mjpeg-hdr.c
-index 90e5b2f72c82b..6e156cd806bb5 100644
---- a/drivers/media/platform/sti/delta/delta-mjpeg-hdr.c
-+++ b/drivers/media/platform/sti/delta/delta-mjpeg-hdr.c
-@@ -4,6 +4,7 @@
-  * Author: Hugues Fruchet <hugues.fruchet@st.com> for STMicroelectronics.
-  */
+diff --git a/fs/dlm/lowcomms.c b/fs/dlm/lowcomms.c
+index 5b53425554077..80aae70431fea 100644
+--- a/fs/dlm/lowcomms.c
++++ b/fs/dlm/lowcomms.c
+@@ -518,10 +518,8 @@ static void lowcomms_write_space(struct sock *sk)
  
-+#include <asm/unaligned.h>
- #include "delta.h"
- #include "delta-mjpeg.h"
+ 	clear_bit(SOCK_NOSPACE, &con->sock->flags);
  
-@@ -48,13 +49,13 @@ static int delta_mjpeg_read_sof(struct delta_ctx *pctx,
- 		goto err_no_more;
+-	if (test_and_clear_bit(CF_APP_LIMITED, &con->flags)) {
++	if (test_and_clear_bit(CF_APP_LIMITED, &con->flags))
+ 		con->sock->sk->sk_write_pending--;
+-		clear_bit(SOCKWQ_ASYNC_NOSPACE, &con->sock->flags);
+-	}
  
- 	memset(header, 0, sizeof(*header));
--	header->length           = be16_to_cpu(*(__be16 *)(data + offset));
-+	header->length           = get_unaligned_be16(data + offset);
- 	offset += sizeof(u16);
- 	header->sample_precision = *(u8 *)(data + offset);
- 	offset += sizeof(u8);
--	header->frame_height     = be16_to_cpu(*(__be16 *)(data + offset));
-+	header->frame_height     = get_unaligned_be16(data + offset);
- 	offset += sizeof(u16);
--	header->frame_width      = be16_to_cpu(*(__be16 *)(data + offset));
-+	header->frame_width      = get_unaligned_be16(data + offset);
- 	offset += sizeof(u16);
- 	header->nb_of_components = *(u8 *)(data + offset);
- 	offset += sizeof(u8);
+ 	queue_work(send_workqueue, &con->swork);
+ out:
+@@ -1417,7 +1415,7 @@ static void send_to_sock(struct connection *con)
+ 				      msg_flags);
+ 		if (ret == -EAGAIN || ret == 0) {
+ 			if (ret == -EAGAIN &&
+-			    test_bit(SOCKWQ_ASYNC_NOSPACE, &con->sock->flags) &&
++			    test_bit(SOCK_NOSPACE, &con->sock->flags) &&
+ 			    !test_and_set_bit(CF_APP_LIMITED, &con->flags)) {
+ 				/* Notify TCP that we're limited by the
+ 				 * application window size.
 -- 
 2.53.0
 
