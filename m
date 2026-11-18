@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022716;
-	b=DRzIsKebR5kgpH50zuMYKNso9dwFia/JEBJQOlj0CwEXMHWb7WDUiDxRV7m+ns8roxQx
-	 kGEC54KIxgjkQTzbYP4BEoD0UCEn7M5Qh3TxbzVMZwY5e7t1arioI657EN0hBmzku0gDX
-	 mIl3dBld2WcU/wRRT4mlvZTG5Zwg5KM3HryalG5ZT0cLZ6nu6OK5c8EwpiE6zQLKLHUE7
-	 KwDsO/YLFigb51Z0jU61MowoRcYJfPfFWSKMPIeFOBbMALh754XGdL3mwHEA3CrnZazTK
-	 oPq2tvP/tpzAmyeF2Ofedi0phh/kyAO3YE3AKqrtrNgCZ89m8ji9TpLIuKr4Mf5Q9dw==
+	t=1795022719;
+	b=LYK1/Qimvb+r2c6CTJQBWS3nwp84rbxWtAIUe0EvuQ5sFNmxVOk4cCfkVluUMvMfaeSa
+	 tEFsXqBCr/npdveJTAOJjhjzn2/okSGzAabyTYsjavNwIrSXI/bMaeVLoDWpQWSxxQ2N+
+	 m4ejK0iSu0/vsawLHbMh2INe49kjO+wmSIdRjU4ApSjwk4l6So6iaF+/Z9AM46nOPEBqb
+	 MnyAI+KmVcgOC1Fdh7AOjfUn5yLKPKGDbkvpPXXNh1Xxfet83mkOsiX+TkVw2EJPPw3ux
+	 OPyj75EY9zFbTqVBNNEyxGx4UlC/EUVqC7R0DF8c2Vffv4dSEpPJf8k/pSQuVa3RLkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022716;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022719;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+GfAlPaWDbwQipWVtPXiXlbf6LmSii5O7kErIGWRHX8=;
-	b=AOzhn4y58ALs7pdQ8HrfVIzVXmdPhFn3x1/KhD2qmyTzhShfm7lzbbSWWUAN7Ol2e4DI
-	 ATwVvkzbrZgGUwCe8nlb4I2BaBWSYvZOJ931kaCYeJ8Nse6qszoOBwnTUzUADpmi0XJ3i
-	 2J/KScGQPBtMRuVOUUxZ25FpgxplKLQ2whXIPkok2swZ42aHNTLoZpclZzEe1p59UsWAz
-	 rdQuxFs7wJZS+95TfllY0k+jT7qdEOcXPkA16dUawZ0ozAWd8MjF2n8njWmk0ayhhmUJV
-	 4ZqLUYwEAx1b1I+IA5ZBgcgtPNTZt/I9S73iZ1cS3e8qseRwmIF8O14DtDpv3dRxPow==
+	bh=/0m5wVLzQ5p93G8NxYQYvY2AhV+1Vy3VS+pnaYjgdEQ=;
+	b=IEO1P1Jfm15WXf1dzW1NS71VHFNHYWeI14RTzhKs9mjyXZ59e6aG/AiepHw2CAb6f54R
+	 7Q1Vx9fUswObtCswwGQ7nzM9f6pRNmMYtk1UvnnZgN42sKqdG2teyIdVrGzFtY1IvB74F
+	 GfTuM7RsQVN3QvjShhGhY6MSzzA5B50ruOoGEFr7HGbRM0prNuXDakcfzWJ/dvn/hDa5l
+	 jy8I/kgVvz1dvkqtiGVqNgedbyJAkf9UHXJDeCcwGtt+TF7CaWJjHTpUyeyrfnXut5fdR
+	 rNIf6OXlrF0icrCa2njASpOK6bpY6TH/spz3raFi0E54SA5OmkGt9cGLfXqUbWGqjFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VlSfgec9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="d5pcQ/Z3";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2941C606A32A;
-	Wed, 18 Nov 2026 17:25:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20DBF606A31C;
+	Wed, 18 Nov 2026 17:25:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VlSfgec9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 814921F000C4;
-	Wed, 18 Nov 2026 17:25:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d5pcQ/Z3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 594871F000C4;
+	Wed, 18 Nov 2026 17:25:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022716;
-	bh=+GfAlPaWDbwQipWVtPXiXlbf6LmSii5O7kErIGWRHX8=;
+	s=korg; t=1795022718;
+	bh=/0m5wVLzQ5p93G8NxYQYvY2AhV+1Vy3VS+pnaYjgdEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VlSfgec9pG5SaZZSuoNPZweWn3xKfahyEDokDzJBkMg7zgabQQate0I/9KRaCvyKT
-	 HO26xmMl7hc4/dBjJIVrk1Yhey0zx54j/0X/eENi9qKBjcSHSZ2VCRLP8dgVQRLVC0
-	 ICuh3xWFq2gur9KY+YEe4mZDuF7KUdqv4W9c6jW4=
+	b=d5pcQ/Z3MKUPuTZhu3ZABSyYrLqHoCQmkBPV2VkYiAg3Cv9EMHTGJgwaDM6yfIQxK
+	 S5Z9XAcNYzpvTefvCE69vQb88QxfcQ/XG5u3afBTdsRatUzSqJusgzrPmIbS3MKlzX
+	 qojEulMT9sxdASyvnTRDQW9GjJd86zNiEh8JoG3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0112/2151] rose: refuse an empty message when the Q bit is included
-Date: Wed, 18 Nov 2026 15:30:47 +0100
-Message-ID: <20261118150125.873726562@linuxfoundation.org>
+Subject: [PATCH 6.18 0113/2151] rose: give loopback answers LCIs that calls cannot be given
+Date: Wed, 18 Nov 2026 15:30:48 +0100
+Message-ID: <20261118150125.911547681@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,40 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-With the ROSE_QBITINCL socket option set, rose_sendmsg() takes the Q
-bit from the first byte of the message and pulls that byte off.
-Nothing checks that there is a first byte: a send() of zero bytes
-reads the Q bit from beyond the data copied from the user, skb_pull()
-fails without a word, and an empty data frame goes out with a Q bit
-taken from uninitialised memory.
+A call to an address of the node itself goes through the loopback
+neighbour, and both ends of it use that neighbour. rose_loopback_timer()
+gives the answering end LCI 51 - i for a call on LCI i, so that each
+end finds the other. The 51 comes from ROSE_DEFAULT_MAXVC, but the
+number of circuits is the maximum_virtual_circuits sysctl, which goes
+up to 254, and rose_new_lci() hands out LCIs from 1 up to that value
+on the loopback neighbour as on any other.
 
-Refuse such a message with EINVAL before anything is allocated.
-x25_sendmsg() checks for that byte too, with pskb_may_pull().
+With more than 50 circuits allowed, the call on LCI 51 is answered on
+LCI 0 and the next ones on LCIs that wrap around to huge values: the
+answer is never matched to its call. Below that, LCI 51 - i is never
+checked to be free, and only the way rose_new_lci() walks the LCIs
+keeps it from being one that a call already uses.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Answer on LCI 4096 - i instead, at the top of the 12-bit LCI range, as
+was nearly done before commit 1f731b63752d ("rose_loopback_timer sets
+VC number <= ROSE_DEFAULT_MAXVC"): 0xFFF - i. That commit moved the
+answers below 51 so that /proc/net/rose would not show an LCI above
+the number of circuits; it prints the LCI on three hex digits, which
+any LCI up to 0xFFF fits. 4096 - i is still its own inverse, so each
+end finds the other as before, and rose_new_lci() never gives out an
+LCI above 254.
+
+Fixes: 1f731b63752d ("rose_loopback_timer sets VC number <= ROSE_DEFAULT_MAXVC")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit fd8a23b811b7c46d0b9aefc2a45955ea8f685a8e)
+(cherry picked from commit aeddd6cb7ca6e8019ac73c8c0d40e5d9dcbc5c6f)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/af_rose.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/rose/rose_loopback.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index 52f279aa189ee..5a8585627feb9 100644
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -1286,6 +1286,10 @@ static int rose_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
- 	if (len > 65535)
- 		return -EMSGSIZE;
+diff --git a/net/rose/rose_loopback.c b/net/rose/rose_loopback.c
+index 6c5c35030e67b..efd4a719ab2ca 100644
+--- a/net/rose/rose_loopback.c
++++ b/net/rose/rose_loopback.c
+@@ -101,7 +101,12 @@ static void rose_loopback_timer(struct timer_list *unused)
+ 			continue;
+ 		}
+ 		dest      = (rose_address *)(skb->data + ROSE_CALL_REQ_DEST_ADDR_OFF);
+-		lci_o     = ROSE_DEFAULT_MAXVC + 1 - lci_i;
++		/*
++		 * The call and its answer use the same neighbour: give the
++		 * answer the LCI at the other end of the 12-bit range, which
++		 * rose_new_lci() never hands out, and get back from it.
++		 */
++		lci_o     = 0xFFF + 1 - lci_i;
  
-+	/* With the Q bit included, the first byte of the data holds it */
-+	if (rose->qbitincl && len < 1)
-+		return -EINVAL;
-+
- 	size = len + AX25_BPQ_HEADER_LEN + AX25_MAX_HEADER_LEN + ROSE_MIN_LEN;
+ 		skb_reset_transport_header(skb);
  
- 	if ((skb = sock_alloc_send_skb(sk, size, msg->msg_flags & MSG_DONTWAIT, &err)) == NULL)
 -- 
 2.53.0
 
