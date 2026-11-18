@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038044;
-	b=yQsKfUeVYre+nd7wj/XWPGtRkDBEIK+Ljrbq5xhg+ew9PJld4DHxCginM1OEZrHTgSuU
-	 0/pCaxYcEkuEK5kpamAYEcl+56DMk+9vW1/d7hqWDMvf/lHjB4SqbKEJwtpiOsK9/+v5T
-	 NPZtS96WEr5+6BhUgKnyyhqAYdVY2+HRVl8dqtz2DOp5zPFt67HATLFYtXMljTMLEdSdk
-	 i+W+4HjBAZTHKvi1PjKEX/6QVPgdy854m+PBwGPy3mzn5Ue4rqPfZ4kcPwnPTK6VPFD23
-	 x5vrdXFRJ5w/6bTdpIojyl5AqHJQ6N0KnQaw2pGImDX2fMKVFNKosG9xmT4hkVSMfGg==
+	t=1795038046;
+	b=fAeIkUjQ4JpanKfk+IaBak7O7v6mKC28wVTFuKpYUqqk+ni11HmCI7v4JOBhcDafsSUr
+	 51qlKqHH0tMRdfZSnlZ9J3j0+8EPfPlAKdyKv29d3YOk7GJaZ73eyjMxuEFaAjAGTnvQ3
+	 pHInAfZ+pIjU03vMDUv7MMGKNZABq9rk8QwIBv5RDUaQS4XCZFMo1UDnq4wwK05gM7FvC
+	 uiLbtztP4vGtzHb6AKKiIAWz8aQM0/AZLGoSinZTrncIw7BIij5wv+xf4jVPHeuTd9KOt
+	 tas+htJlL6HoXfpdfD9Yc2OvJk+so4fc/cOcW+jDjmnllKFLz3KwIP+d/PlzZ4i7kMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038044;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038046;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+Z8wvVIRE5JD3QDoizVzKfynMepqSbVCqf6ARVqBR0U=;
-	b=1d1H0ve2wijP3dTkUjKwHk91FKTIS/Lr2XcTc5uv8DrPG+xRH/OuM2zAifF7TJXVElqd
-	 ClRXrW1NmafS042/pPxC8/S54c+nihx9ZMinilUpWoeWtrFaLr3kHh/lHkeOAKPJY5a1w
-	 Sny9xdBdFe2hYf1rh3cBtc1a1j/Po8/EPz55Zz5DTCLHrBZDa20wdHCitkNz/8X5wpXNO
-	 lXxVJPRLmrw1vvQSTEk8WP+5At24mHe//Z8XuT5Goh4Fy3rZZC2POASCLl7OGDoiozBaq
-	 DEXY7bEChV4KctPQJ0WQzdEOSzM0TbTOqPxiHVy2FHVS13jqJO+5/9o0fX6vOxc/Lpw==
+	bh=MQfDqlGGEwXDXLixcg4K5gxZeNHqUG88N6FgEm8pHk0=;
+	b=WaLNg0/Q4CRdM15QJGNTZppvlnyLQg4wFItkQhy+1hWNhpb2I/7xESnzhX2nWd+Kb3ZC
+	 MeEZF3F6/j79jAim2qyRvX/GwvYT6UqxyyOYGcqbS70GoD5iPwOWpRV+4XnH14lu26lCi
+	 HTtT/0O33tk0onb4vnN44VZPLYcs+ZY4yPqyOY1M1XQiyF483985u/C9iKhAjgIy5HbmH
+	 OOd8zk5wN+IQTyp2lB5NSLA6MWuojv26rGSp7CtQ+xUF8FHg6F9qk01qHjutcRZam4wqX
+	 uA6UHmqGMTulF29Svur27OOn+E9oBr3NEFvn0EX7pedShXJh4/BiiUQrq9/2F1V2nDA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mWe6y/tx";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CVsSSJ+M;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06963606A320;
-	Wed, 18 Nov 2026 21:40:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C07DE606A325;
+	Wed, 18 Nov 2026 21:40:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mWe6y/tx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FBC11F000C5;
-	Wed, 18 Nov 2026 21:40:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CVsSSJ+M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D32621F000C5;
+	Wed, 18 Nov 2026 21:40:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038043;
-	bh=+Z8wvVIRE5JD3QDoizVzKfynMepqSbVCqf6ARVqBR0U=;
+	s=korg; t=1795038046;
+	bh=MQfDqlGGEwXDXLixcg4K5gxZeNHqUG88N6FgEm8pHk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mWe6y/txkYvnuCr9ezsY4aucxVi6uwMN9ltiQiCA9F1inWGjg/ogZkHO9jaxftPXc
-	 /JujnjjHG/OHk6JYc77WcQVXIYk9EclRJ6e+cz2A4reIuuu5CHkBISTvRSzpIkIRO1
-	 flPplbnxQC/YJGwlgUzae3+Bpz7zU4vgs3wFFIF4=
+	b=CVsSSJ+MnImlql3gVOQAtmSRIa6CW9cw+lSeWgeaSI7scybLkGNhYX4RkYOQrFF1u
+	 EGDMeG9JsBFo0ZVzxUtxXY9aqa8UNonVjowTcHcdpUXnTAisi3CWrgfMvnz/xOpWSj
+	 Go35XBrKsxd0Avt5v+NKM+m/VntJLqL4YFiGfTp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
+	Akshay Jindal <Akshay.Jindal@amd.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1563/3318] x86/nmi: Ignore negative NMI handler durations
-Date: Wed, 18 Nov 2026 15:36:25 +0100
-Message-ID: <20261118150407.928864392@linuxfoundation.org>
+Subject: [PATCH 6.6 1564/3318] iommu/amd: Skip non-IVMD entries when parsing IVRS memory definitions
+Date: Wed, 18 Nov 2026 15:36:26 +0100
+Message-ID: <20261118150407.960496599@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,72 +69,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Akshay Jindal <Akshay.Jindal@amd.com>
 
-[ Upstream commit ade63af6cfb7b3ca19ced28730fd6461e8d1d410 ]
+[ Upstream commit e62df37e0eff4d670e78bbd415be2c1675883c15 ]
 
-I am seeing NMI handlers in the Meta fleet reported as running for
-about 584 years. Over 30 days, 11 AMD and Intel machines logged 637
-such lines, for example:
+init_memory_definitions() walks every top-level subtable including the
+IVHD blocks (type 0x10/0x11/0x40) in the IVRS ACPI table. It interprets
+each one as a 'struct ivmd_header', solely on m->flags, without first
+checking that the subtable's type actually is one of the IVMD types
+(ACPI_IVMD_TYPE, ACPI_IVMD_TYPE_ALL, ACPI_IVMD_TYPE_RANGE).
 
-  AMD EPYC 9D25 (family 0x1a, model 0x11, stepping 0x0):
-  [ 1650.616627] INFO: NMI handler (nmi_cpu_backtrace_handler.llvm.9643156322683129580) took too long to run: 18446744073709.551 msecs
+    if (m->flags & (IVMD_FLAG_UNITY_MAP | IVMD_FLAG_EXCL_RANGE))
+            init_unity_map_range(m, table);
 
-  Intel Xeon Platinum 8321HC (family 0x6, model 0x55, stepping 0xb):
-  [360448.230129] INFO: NMI handler (perf_event_nmi_handler) took too long to run: 18446744071018.936 msecs
+IVMD_FLAG_UNITY_MAP (0x01) occupies the same bit position as the IVHD
+flags field's HtTunEn bit. Unlike real hardware, QEMU's AMD IOMMU
+emulation sets HtTunEn unconditionally (flags=0xD1 for type 0x10,
+0x11 for type 0x11), so every QEMU-emitted IVHD block is misidentified
+as a unity-map/exclusion-range IVMD entry, which subsequently results
+in the creation of a bogus pci segment. Eg:
 
-  Intel Xeon D-2191A (family 0x6, model 0x55, stepping 0x4):
-  [81787.188959] INFO: NMI handler (ghes_notify_nmi) took too long to run: 18446744073709.545 msecs
+    AMD-Vi: PCI segment : 0x4000, last bdf : 0x0000
 
-nmi_handle() times each handler with two sched_clock() reads. When the
-second read is lower than the first, the u64 subtraction wraps, and
-nmi_check_duration() treats the result as a duration. In the three
-examples, the clock went back by less than 1 us, by 2.7 s and by about
-6 us.
+Fix by checking the subtable's type before treating it as IVMD.
 
-The wrapped value is also stored in action->max_duration. Every later
-real duration is smaller, so the handler is never reported again until
-the next boot.
-
-Whatever makes the clock read lower, a negative difference is not a
-duration, so return before it is stored or reported. A clock that steps
-forward is not covered, since that cannot be told from a real stall.
-
-A backwards clock is still worth knowing about, so print the size of
-the step once per boot. This uses pr_warn_once() rather than WARN, as a
-stack trace says nothing about the clock and panic_on_warn machines
-should not go down for it.
-
-Fixes: 2ab00456ea8a ("x86: Warn when NMI handlers take large amounts of time")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Fixes: be2a022c0dd0 ("x86, AMD IOMMU: add functions to parse IOMMU memory mapping requirements for devices")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261027-nmi_negative-v1-1-b436a005eb8a@debian.org
+Signed-off-by: Akshay Jindal <Akshay.Jindal@amd.com>
+Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/nmi.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/iommu/amd/init.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kernel/nmi.c b/arch/x86/kernel/nmi.c
-index 35fd5f1444fdb..6a68efe45ed96 100644
---- a/arch/x86/kernel/nmi.c
-+++ b/arch/x86/kernel/nmi.c
-@@ -119,6 +119,14 @@ static void nmi_check_duration(struct nmiaction *action, u64 duration)
- {
- 	int remainder_ns, decimal_msecs;
+diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+index 10ab34bed410e..3097c17352655 100644
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -2641,6 +2641,15 @@ static int __init init_unity_map_range(struct ivmd_header *m,
+ 	return 0;
+ }
  
-+	/* sched_clock() went backwards? */
-+	if ((s64)duration < 0) {
-+		pr_warn_once("NMI handler (%ps): sched_clock() went backwards by %lld ns on CPU%d\n",
-+			     action->handler, -(s64)duration,
-+			     smp_processor_id());
-+		return;
-+	}
++static bool ivrs_block_type_ivmd(u8 type)
++{
++	if (type == ACPI_IVMD_TYPE ||
++	    type == ACPI_IVMD_TYPE_ALL ||
++	    type == ACPI_IVMD_TYPE_RANGE)
++		return true;
++	return false;
++}
 +
- 	if (duration < nmi_longest_ns || duration < action->max_duration)
- 		return;
+ /* iterates over all memory definitions we find in the ACPI table */
+ static int __init init_memory_definitions(struct acpi_table_header *table)
+ {
+@@ -2652,10 +2661,11 @@ static int __init init_memory_definitions(struct acpi_table_header *table)
  
+ 	while (p < end) {
+ 		m = (struct ivmd_header *)p;
++		p += m->length;
++		if (!ivrs_block_type_ivmd(m->type))
++			continue;
+ 		if (m->flags & (IVMD_FLAG_UNITY_MAP | IVMD_FLAG_EXCL_RANGE))
+ 			init_unity_map_range(m, table);
+-
+-		p += m->length;
+ 	}
+ 
+ 	return 0;
 -- 
 2.53.0
 
