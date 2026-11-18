@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017111;
-	b=OwJxekD0DNpttKTV+bOoHubLAUNnGCJixSQ/vimOVzheuRGOjkMgJyZRiAZjcCCMjV3N
-	 bJyLQprYVBTNOw9DlPH/j/7clPZWgwayMmXPjufI81EatkdMAVXJ8gOcOH91FvM8KYK75
-	 pgHdYj5AgjwBKiyldnb/WXNgxjmyM5wY5gb1bzgRnrLe0p4Owb2yoj2TZTjboDpFYli2d
-	 PegRFznP2Hw8aFgqw7kgzxuIhaYXpB0Jd0JfiDl9Ah09EN3zU7l8nw705FHPFCGub+vbJ
-	 6kFr0t+HXrba8LFrGnxRNDcqh45ZFPCegBU7/FfqIw1nWa83uWMQTt4RD/6KjP9najQ==
+	t=1795017114;
+	b=MtWdmfSpBKfqf1Uhdn33rUtKfgPty11INmrlt20HthpmmVZbXHWEmB5L0CE4Un2CdHpx
+	 ke311HJZAsWOFw+fzIL4sZX+YMaM2HBfOwbTEqx2WI9Oy/NvFCINjo5YKZDgztH2iZqzQ
+	 6KSC4Trx1Bb8m+06kpo4qBGhBuUjljj51QsPmTCogFtF1JjkBeygLPPZoFrYniK7mWGHC
+	 wYURIYRpcqJQDWqAG0qS28mppGDzhnAmirB4gl8wLpvOwa1n8ZsrRdKJM7kPJ/Qnli8+X
+	 dTxCY3fJElhSawA0zlhxncwcvZ96nnoSyz2w7fvIcXlFcmGBPS1rHDfnNRWxY/a4CAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017111;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017114;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Qw2X5wFPPkHAoKMgsX8E864Itf0bZSTt0AMQ0MMxliA=;
-	b=hlkZrfFaHgJqbONjH5RWB9AJ6q9rx5OlTPCxSBNsK2J7txoErr8c95NnBh1UvaqJpmeD
-	 XwJYr+y8jkbC5ont+n/Y+Fkjy46tsKqUROOEcaDEhLNzVc3fUFRgiHGim1Hs0gp9uRRSr
-	 whugdDl7n/XBs5pTYCaLf2EZ5145sDFfLMH6N7fhOgWYY4MOww0y1EdFKy8BFLPWXhYT/
-	 O4pWP24dXHVdV4B+cJGt20vJwTRGZZztBlQ1pLlOwZTF/S1KxUTJggqPEkm7CuyDo1A3S
-	 k4J+VfB+BsAJ9sgv07Q96hfe3l73bo/Cqj9C5lrTGkaixkeSJru+G2ElOymyXvLABPg==
+	bh=4+iy4mkdZ8xKYr89wQptSUOI7/ZSreloOctM+SYnBs8=;
+	b=hMfWTAOOa+QAJTfsIP7QPdb1K6Vv1Yjakjf42GVdoMftTFU4tsHtUmkoz9LVi5psEcS1
+	 8MuPbpn6iEwNIIZHql8Wif81bxyFhxlVl5yXTmasZ2+bYFcfJGLWSKZjYRDANvz/iXiNz
+	 WH7bt6U73snOEOw0YmbYz12HRmG1s6EqtpBs8LhmmVfW5owyDz4PYqTixKGTsPHb15OVB
+	 R+LafnTgfZSJJjrCxdzVpdmkBzpG6oIvDS0Hpa6Su71Bx72k4Pq2S70Z/eF3AAmsqLFf/
+	 Kn70EFxH6+lRCADiRxsvpsHWraGC00Mt1T+u37na7GmgyGIy0UZHnoCz3Trur6SwaTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kIfseebz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eXxTdHxh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15589606A31C;
-	Wed, 18 Nov 2026 15:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1BC8606A330;
+	Wed, 18 Nov 2026 15:51:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kIfseebz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D54A1F000C8;
-	Wed, 18 Nov 2026 15:51:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eXxTdHxh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E62F1F000CE;
+	Wed, 18 Nov 2026 15:51:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017110;
-	bh=Qw2X5wFPPkHAoKMgsX8E864Itf0bZSTt0AMQ0MMxliA=;
+	s=korg; t=1795017113;
+	bh=4+iy4mkdZ8xKYr89wQptSUOI7/ZSreloOctM+SYnBs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kIfseebz5ZJMaC3jiYkAiY3LmIX3biO+ZuNdIy2ji5GyY0yH1nBnoVp8lKgtBxOfT
-	 yTk+gLce17xS8+vFCVSMlCNXGE2oSm+SQTMhgmpa4pdKn5EudALjQNFiL4RdJPdvMF
-	 6nwZv86ayyL8N8w4j/vUA3LnELWh129C7dj9uUn8=
+	b=eXxTdHxhRI1EHdnsYbwIGGQHqtv6Zf2Lz4fPVZjz+HUxz7wQ9HPTzQLaI4bMhhiwF
+	 H47ijARgt/N24AKuRSQwsUvppj9qfCdL9W5UepG/vfS/4KUeV0SVcxVD60IvCtgLxf
+	 QE53kCn81GMdTONdpJ2rTiMSQgYgWnFkMYQh7wEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0767/2651] arm64: dts: renesas: ironhide: Align inline ECC carveout sizes with bootloader settings
-Date: Wed, 18 Nov 2026 15:33:27 +0100
-Message-ID: <20261118150315.497381163@linuxfoundation.org>
+Subject: [PATCH 7.3 0768/2651] arm64: dts: renesas: r9a09g077: Drop unwired ADC interrupts
+Date: Wed, 18 Nov 2026 15:33:28 +0100
+Message-ID: <20261118150315.531768532@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,67 +68,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marek.vasut+renesas@mailbox.org>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-[ Upstream commit 47ecb59d32cd4fd854aa64bf7e08a74fb97a744a ]
+[ Upstream commit b508d6fb28fe406c12e2070c53db79c57143d592 ]
 
-The DBSC5 DRAM controller protects DRAM content using inline ECC.  The
-current set of carveouts follows SoC documentation, which describes the
-three trailing carveouts as larger than the rest.
+Remove the compare match and compare mismatch interrupts from the ADC
+device nodes, as these interrupts are not wired to the GIC according to
+the hardware manual Rev.1.30.
 
-Both the downstream IPL and mainline U-Boot on RSIP configure the ECC
-carveouts to the same size for all eight carveouts.  Align the carveout
-sizes with the controller configuration set by the bootloader.
-
-This makes 1638 MiB of DRAM available for each of the three carveouts,
-which adds up to a total of 4915 MiB of newly accessible DRAM on this
-platform with this fix.
-
-Making this memory available does not pose a danger, since the current
-set of carveouts were carefully set to a larger size to prevent any
-possible issues until a confirmation from the hardware team become
-available, that it is safe to apply these less restrictive settings.
-
-Fixes: 6fa6ee724d8d ("arm64: dts: renesas: ironhide: Describe inline ECC carveouts")
-Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: a82a42963c89 ("arm64: dts: renesas: r9a09g077: Add ADCs support")
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260916220801.240796-1-marek.vasut+renesas@mailbox.org
+Link: https://patch.msgid.link/20260921110144.44425-3-prabhakar.mahadev-lad.rj@bp.renesas.com
 Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/r8a78000-ironhide.dts | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/renesas/r9a09g077.dtsi | 18 ++++++------------
+ 1 file changed, 6 insertions(+), 12 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/r8a78000-ironhide.dts b/arch/arm64/boot/dts/renesas/r8a78000-ironhide.dts
-index 0ab303863155e..b2d6b06c63881 100644
---- a/arch/arm64/boot/dts/renesas/r8a78000-ironhide.dts
-+++ b/arch/arm64/boot/dts/renesas/r8a78000-ironhide.dts
-@@ -134,18 +134,18 @@ ecc@18cccc0000 {
- 			no-map;
- 		};
- 
--		ecc@1a66660000 {
--			reg = <0x1a 0x66660000 0x0 0x999a0000>;
-+		ecc@1acccc0000 {
-+			reg = <0x1a 0xcccc0000 0x0 0x33340000>;
- 			no-map;
- 		};
- 
--		ecc@1c66660000 {
--			reg = <0x1c 0x66660000 0x0 0x999a0000>;
-+		ecc@1ccccc0000 {
-+			reg = <0x1c 0xcccc0000 0x0 0x33340000>;
- 			no-map;
- 		};
- 
--		ecc@1e66660000 {
--			reg = <0x1e 0x66660000 0x0 0x999a0000>;
-+		ecc@1ecccc0000 {
-+			reg = <0x1e 0xcccc0000 0x0 0x33340000>;
- 			no-map;
- 		};
- 	};
+diff --git a/arch/arm64/boot/dts/renesas/r9a09g077.dtsi b/arch/arm64/boot/dts/renesas/r9a09g077.dtsi
+index bac39390ead74..67cd67cdcce96 100644
+--- a/arch/arm64/boot/dts/renesas/r9a09g077.dtsi
++++ b/arch/arm64/boot/dts/renesas/r9a09g077.dtsi
+@@ -1258,11 +1258,9 @@ adc0: adc@90014000 {
+ 				     <GIC_SPI 699 IRQ_TYPE_EDGE_RISING>,
+ 				     <GIC_SPI 700 IRQ_TYPE_EDGE_RISING>,
+ 				     <GIC_SPI 701 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 702 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 851 IRQ_TYPE_EDGE_RISING>,
+-				     <GIC_SPI 852 IRQ_TYPE_EDGE_RISING>;
++				     <GIC_SPI 702 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "adi", "gbadi", "gcadi",
+-					  "cmpai", "cmpbi", "wcmpm", "wcmpum";
++					  "cmpai", "cmpbi";
+ 			clocks = <&cpg CPG_CORE R9A09G077_CLK_PCLKL>,
+ 				 <&cpg CPG_MOD 206>;
+ 			clock-names = "adclk", "pclk";
+@@ -1280,11 +1278,9 @@ adc1: adc@90014400 {
+ 				     <GIC_SPI 704 IRQ_TYPE_EDGE_RISING>,
+ 				     <GIC_SPI 705 IRQ_TYPE_EDGE_RISING>,
+ 				     <GIC_SPI 706 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 707 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 853 IRQ_TYPE_EDGE_RISING>,
+-				     <GIC_SPI 854 IRQ_TYPE_EDGE_RISING>;
++				     <GIC_SPI 707 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "adi", "gbadi", "gcadi",
+-					  "cmpai", "cmpbi", "wcmpm", "wcmpum";
++					  "cmpai", "cmpbi";
+ 			clocks = <&cpg CPG_CORE R9A09G077_CLK_PCLKL>,
+ 				 <&cpg CPG_MOD 207>;
+ 			clock-names = "adclk", "pclk";
+@@ -1302,11 +1298,9 @@ adc2: adc@80008000 {
+ 				     <GIC_SPI 709 IRQ_TYPE_EDGE_RISING>,
+ 				     <GIC_SPI 710 IRQ_TYPE_EDGE_RISING>,
+ 				     <GIC_SPI 711 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 712 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 855 IRQ_TYPE_EDGE_RISING>,
+-				     <GIC_SPI 856 IRQ_TYPE_EDGE_RISING>;
++				     <GIC_SPI 712 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "adi", "gbadi", "gcadi",
+-					  "cmpai", "cmpbi", "wcmpm", "wcmpum";
++					  "cmpai", "cmpbi";
+ 			clocks = <&cpg CPG_CORE R9A09G077_CLK_PCLKL>,
+ 				 <&cpg CPG_MOD 225>;
+ 			clock-names = "adclk", "pclk";
 -- 
 2.53.0
 
