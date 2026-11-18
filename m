@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023549;
-	b=5Fgi9DsdOyDxQlcKiTjNf7RPvP1rG0MnycESfreubdXAhF6SoB3qTZbAfLfLW8RAc72H
-	 OXSWwYmgppwtdqt/oU6hdgigdvTNjQa1MBTgnp4ccKWy5wiPJF7mVK9WVRWFj/uEeTF5r
-	 BfiVRPbOZCc0YFF2APaIpHZqeoQWOADp5K9LtZXRJGjTUZIMNz+fVytlBegsS3j6cHj+G
-	 j+PQoVYo5maKLnTujiJlKrcS3eduG1rlOtTZDfNGS3VeMFf0t3aExK33dyiUT6iZY8Dv/
-	 ZldAeFy4mXAdl1fN0ENRBwWe472qnXc7oD55HlRMcl0F9lHVp7WcrAy50a338mlmkzg==
+	t=1795023551;
+	b=d0rnOzIxPBhsJ/nJ4GOUaqwH51V7d/CWa1s8gVEhVv/NH5obhFTFX2olUCkIDk16zbMN
+	 T8ZdBYbiizvZxohXdUnnT9CNk/jy67/VX5LNgoy81WQ5b8EyvECASNpZ1YxvpeHwHctOW
+	 9x5HWYw69+TVEafl+hfqzLWdGWdF5L0wFOmkAhiN9bXUw7yXgXxNdzngc6TQVpebnb7Bq
+	 o1hGo9PFbyTuzA4eR7B5BWFESu4C375cwlzypcklpkR09mjkd/U6I+Aw6x3sV0mQu9Aba
+	 XzRsyJ9vJSxb04ZVzOcngYULDg6GXvwrjO3wIj4+MFZVXjVtxfG40tJXJAzakG/abLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023549;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023551;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LHSRBdO10wIUwKGVDYZfq6rPBaBCVdV4O2tmQk4lnpQ=;
-	b=QsX+CU/t9ZMSeYqM33VMnIXPvQOUrfI9wDiO2ANH67XWmg1kPX3Pt1gy404Z7A9eIRot
-	 yl6j6ggItLIMOFXJkby5RkA6wheJEQMpKJiaQm42AnMS6mNha3V+33fTZzWpX8CstbFWj
-	 UN8ce6pSb8zKOAy5d4CiJbHNrlp+KMwlOw4g1G9k7D9jqlqpwqhUzin3ET0/cgqiTv3Eq
-	 ZfyLQPRSrR2vVqvBCJMNOI+c2tTdtB8XENsOn6/Ih+YA+iJs800sEasHXWgx0aWnMV4t+
-	 FHWdQTfG4XszbOSIpsAXBCTKZNjA8Pr41oBCnzOIZnHOmJBFjvPk8FcUUUlCZV04kjg==
+	bh=6Pfv4CDEn9ZV7cqAp/cwZHwuVUXGgIqmYMVx2kckHOs=;
+	b=LnyXxKyeeyyadVMct5nlvGRnkqPy9aZsTLSWiwdQLFkLER1wub6ZPKKaUMVrQYIoe/YH
+	 hIldt8Gv8+7m2nhfWO7wBZkzw3w3HUJlsCykrzPsNEdYvIkhXYJ/2jBqD+7nJhW//AVkZ
+	 GdO7TbTpgbGlauQIu6KqZk+uMteSX1a1ouKkn3ZWUuJ69ortjy32uKdqWs1y0NQye5xfP
+	 c3mOSuy8iQGiumgzAkLc6uDeVksRl8RekCvmTu12XX5P4/f1RUP5wPGi2sRjU4j9yKl1f
+	 SsaXsgae52GQWWFN/fDZ14drv5Gk/0rt8qbLyhiUmvWW3Rd40+FIi6I64Q5vTsQzvow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MQyh7eGx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z20ucOFt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D53C606A325;
-	Wed, 18 Nov 2026 17:39:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26E1606A325;
+	Wed, 18 Nov 2026 17:39:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MQyh7eGx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 627CA1F000C4;
-	Wed, 18 Nov 2026 17:39:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z20ucOFt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23D591F000C4;
+	Wed, 18 Nov 2026 17:39:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023548;
-	bh=LHSRBdO10wIUwKGVDYZfq6rPBaBCVdV4O2tmQk4lnpQ=;
+	s=korg; t=1795023551;
+	bh=6Pfv4CDEn9ZV7cqAp/cwZHwuVUXGgIqmYMVx2kckHOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MQyh7eGxMXPfOKGRlntbMVxp46ubEPqCi8cIsAP++gCZmj47y53LcWgtcqreq1usP
-	 3T6DJdL5VpJGFUPA9l1jZRFtPLGybVsEfp08q4b6k//4pBM91swxphKbIg5cnZCv1L
-	 achtmmHeL+i4W5sF7foZESXwtUDbD51WJTqO7oUQ=
+	b=z20ucOFtLwGVmN0izNUtnB6sJB+6OvAkAuyCyUNooX2sT4mOnli57OojcmOoUKDFX
+	 NcjK3rB5jRVEnoREYc2VpgNZVIqmyZ4RbP1+PDzDeBD3LfEJso7h781yJoJaivHZNs
+	 jRMdEi5zNqh14RuZfZPe+ovntW8iRG79ueOX9lKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanghyun Park <sanghyun.park.cnu@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Sun Jian <sun.jian.kdev@gmail.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
+	Nora Schiffer <nora.schiffer@ew.tq-group.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0409/2151] bpf: Fix program BTF use-after-free in sleepable programs
-Date: Wed, 18 Nov 2026 15:35:44 +0100
-Message-ID: <20261118150136.965347803@linuxfoundation.org>
+Subject: [PATCH 6.18 0410/2151] ARM: dts: imx7-tqma7: correctly specify PMIC voltage constraints
+Date: Wed, 18 Nov 2026 15:35:45 +0100
+Message-ID: <20261118150137.000711751@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,52 +68,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanghyun Park <sanghyun.park.cnu@gmail.com>
+From: Nora Schiffer <nora.schiffer@ew.tq-group.com>
 
-[ Upstream commit 88c9c6d0a766dd146545990053e8a04422ccb367 ]
+[ Upstream commit f322f8f68c2c3291633ead663effa3b25c18f7b1 ]
 
-Object kfunc calls embed metadata owned by the program BTF. A sleepable
-program can remain active under Tasks Trace RCU after its last reference is
-dropped, while program teardown releases the BTF through ordinary RCU. The
-invocation can then dereference freed metadata in bpf_obj_new().
+regulator-(min|max)-microvolt refer to the supported voltages according
+to board design, not the possible range of the regulators themselves.
+Update the configuration for the TQMa7x's PMIC and also add a comment
+regarding the PMIC's VCC_SD switching feature.
 
-Move btf_put() into __bpf_prog_put_rcu(), the callback that frees the
-program. When teardown is deferred, that callback runs after the program's
-own grace period (Tasks Trace RCU for sleepable programs and ordinary RCU
-otherwise), so the BTF outlives every active invocation. The non-deferred
-path invokes the callback synchronously, so load-error cleanup stays direct.
-
-Fixes: 958cf2e273f0 ("bpf: Introduce bpf_obj_new")
-Signed-off-by: Sanghyun Park <sanghyun.park.cnu@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Sun Jian <sun.jian.kdev@gmail.com>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://lore.kernel.org/bpf/20260901014829.3504342-2-sanghyun.park.cnu@gmail.com
+Fixes: a80a1af6ec8a ("ARM: dts: tq imx7 common board support")
+Signed-off-by: Nora Schiffer <nora.schiffer@ew.tq-group.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/syscall.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/nxp/imx/imx7-tqma7.dtsi | 40 +++++++++++++----------
+ 1 file changed, 23 insertions(+), 17 deletions(-)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index 144d8b1183a98..f5eeaa0090875 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -2384,6 +2384,7 @@ static void __bpf_prog_put_rcu(struct rcu_head *rcu)
- {
- 	struct bpf_prog_aux *aux = container_of(rcu, struct bpf_prog_aux, rcu);
+diff --git a/arch/arm/boot/dts/nxp/imx/imx7-tqma7.dtsi b/arch/arm/boot/dts/nxp/imx/imx7-tqma7.dtsi
+index 2966a33bc528a..acd85ca02e3c5 100644
+--- a/arch/arm/boot/dts/nxp/imx/imx7-tqma7.dtsi
++++ b/arch/arm/boot/dts/nxp/imx/imx7-tqma7.dtsi
+@@ -46,8 +46,8 @@ pfuze3000: pmic@8 {
  
-+	btf_put(aux->btf);
- 	kvfree(aux->func_info);
- 	kfree(aux->func_info_aux);
- 	free_uid(aux->user);
-@@ -2394,7 +2395,6 @@ static void __bpf_prog_put_rcu(struct rcu_head *rcu)
- static void __bpf_prog_put_noref(struct bpf_prog *prog, bool deferred)
- {
- 	bpf_prog_kallsyms_del_all(prog);
--	btf_put(prog->aux->btf);
- 	module_put(prog->aux->mod);
- 	kvfree(prog->aux->jited_linfo);
- 	kvfree(prog->aux->linfo);
+ 		regulators {
+ 			sw1a_reg: sw1a {
+-				regulator-min-microvolt = <700000>;
+-				regulator-max-microvolt = <3300000>;
++				regulator-min-microvolt = <1000000>;
++				regulator-max-microvolt = <1225000>;
+ 				regulator-boot-on;
+ 				regulator-always-on;
+ 				regulator-ramp-delay = <6250>;
+@@ -55,34 +55,33 @@ sw1a_reg: sw1a {
+ 
+ 			/* use sw1c_reg to align with pfuze100/pfuze200 */
+ 			sw1c_reg: sw1b {
+-				regulator-min-microvolt = <700000>;
+-				regulator-max-microvolt = <1475000>;
++				regulator-min-microvolt = <1000000>;
++				regulator-max-microvolt = <1000000>;
+ 				regulator-boot-on;
+ 				regulator-always-on;
+ 				regulator-ramp-delay = <6250>;
+ 			};
+ 
+ 			sw2_reg: sw2 {
+-				regulator-min-microvolt = <1500000>;
+-				regulator-max-microvolt = <1850000>;
++				regulator-min-microvolt = <1800000>;
++				regulator-max-microvolt = <1800000>;
+ 				regulator-boot-on;
+ 				regulator-always-on;
+ 			};
+ 
+ 			sw3a_reg: sw3 {
+-				regulator-min-microvolt = <900000>;
+-				regulator-max-microvolt = <1650000>;
++				regulator-min-microvolt = <1350000>;
++				regulator-max-microvolt = <1350000>;
+ 				regulator-boot-on;
+ 				regulator-always-on;
+ 			};
+ 
+ 			swbst_reg: swbst {
+-				regulator-min-microvolt = <5000000>;
+-				regulator-max-microvolt = <5150000>;
++				/* Not connected and left unconfigured */
+ 			};
+ 
+ 			snvs_reg: vsnvs {
+-				regulator-min-microvolt = <1000000>;
++				regulator-min-microvolt = <3000000>;
+ 				regulator-max-microvolt = <3000000>;
+ 				regulator-boot-on;
+ 				regulator-always-on;
+@@ -95,18 +94,25 @@ vref_reg: vrefddr {
+ 
+ 			vgen1_reg: vldo1 {
+ 				regulator-min-microvolt = <1800000>;
+-				regulator-max-microvolt = <3300000>;
++				regulator-max-microvolt = <1800000>;
+ 				regulator-always-on;
+ 			};
+ 
+ 			vgen2_reg: vldo2 {
+-				regulator-min-microvolt = <800000>;
+-				regulator-max-microvolt = <1550000>;
++				regulator-min-microvolt = <1500000>;
++				regulator-max-microvolt = <1500000>;
+ 				regulator-always-on;
+ 			};
+ 
+ 			vgen3_reg: vccsd {
+-				regulator-min-microvolt = <2850000>;
++				/*
++				 * Specified values refer to 3.3V operation; voltage for 1.8V
++				 * operation is derived from this.
++				 *
++				 * The base board should usually mux GPIO1_IO08 to SD1_VSELECT for
++				 * automatic switching of SD card IO voltage.
++				 */
++				regulator-min-microvolt = <3300000>;
+ 				regulator-max-microvolt = <3300000>;
+ 				regulator-always-on;
+ 			};
+@@ -118,13 +124,13 @@ vgen4_reg: v33 {
+ 			};
+ 
+ 			vgen5_reg: vldo3 {
+-				regulator-min-microvolt = <1800000>;
++				regulator-min-microvolt = <3300000>;
+ 				regulator-max-microvolt = <3300000>;
+ 				regulator-always-on;
+ 			};
+ 
+ 			vgen6_reg: vldo4 {
+-				regulator-min-microvolt = <1800000>;
++				regulator-min-microvolt = <3300000>;
+ 				regulator-max-microvolt = <3300000>;
+ 				regulator-always-on;
+ 			};
 -- 
 2.53.0
 
