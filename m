@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046083;
-	b=fit1U3SOHref0o5WYPF+oAfJT7BC55acZcjlTR5CxBEZSVKQ64Gkk4YpZFNO28Op7YAQ
-	 vFStTUD8AA+k5rxd4AwCvd/PtNsKB5Xsu2u4GZsAy1bqxVABOxtcTdu5Z1EIQvsR/+Vkt
-	 4iqSpiDJoRN0ujXjrp0fcT9aeyYEpav6BaZXCyWBuxphE1YSum5muoZCeWD904AzXhvtZ
-	 pKfmXtzXN42sKJr0q3axd6/Gtvh+iAkwDQC1rbHa2EfsTjkBQ7PXAA6y9t6MWw+/IENZ6
-	 0DAsQj/WUTtQ69oZWaipkdGjP7nhgKIXGlMdxIezmAKH+R6NQ4rmPHSQFoL7hiHShEw==
+	t=1795046086;
+	b=2sjqjY/ljzi55Yam6R/dHopATprKxL1XjbakM7Qh/Pv5SRCIYis6Xw52G9lskFIhhBYx
+	 GS2wAVVByEQOPo1dSf5oStYRcbi9VFISuRHTt/eK2etB+nmvIvEVL03q9MDmARTqxiTtb
+	 GTHIjQH4hSrehYqkP994Q0+YgwKxlqDhm6CoBzYaHnocd3OWcsjGbgDUUVtkw3Dr3r/pR
+	 gdnffJvj3wpkJjSAOH+VgRicsv/jLa8hqGbWEB0ucrkx5VqDsVyrhOobAYnp+otqZEykQ
+	 cr2q1Q3PrGXBBDfWZnw6EugHcvJZM+rWlMtOM/Tsl9FwOqd83+luHcD6Kj5HSHpQjYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046083;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046086;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HfbDYRLSN758jNcAFNtlf+1DrLU5+epWHt1K2VYQr1U=;
-	b=yu3kkfc7trqYUpf4j5O1KV8DNp7hV/54XohXIxj7WSTAwhXhuCLZyWDHy/FZ3LGaddtj
-	 emsxjpuHjPRWjkZzCmqEpso545kdUohGAVDW/micjzePm2Tp4D1mCdrUYZxhVaNyy8aV3
-	 rJRXmHhFLoehaLN0FXZZOzEeHVR9BMLqHnEcIHjJcDk3ff6asI1oztVFO0uqMEtv4xnQH
-	 gzknqk/F9upbzTFd/th8AxQn2WHCZrp57/5prLUCA5jqE2HXOId5nWAO9dWzHmEH/O7Y4
-	 Gscc/g0btI8/CkHWCTS3w+q87Y/sH59eNQYAOTTEY48goYleVLE4Ng2F2MnLDuDyTCw==
+	bh=D4dmG/B2W4u4LCZIpaO+LZXXUJZVWzm4rxBZoVLsotc=;
+	b=Btpp79q5H7io17UAuhd2jWfE+klQbys5xxQtQTqeRnvWSqltUs8ZjTqKaUI4qxnvZ75h
+	 FXaagyKOxCfyQPHfTvWaoImGjvnCiAMBr7tP55N0x2gxQFcrZ/Q0CDtFpVrACk+Qhdmh6
+	 DNIkhyseuMQl2RaJY+MRm5bGnquVppoh5WXFtCLusnYY7SEzLtqENvvwrFB53BUYbFK7x
+	 vMGgQuLvmZ7pVJExovPr0uD48+zfsVuLoUNg21jaf72GHiLlRNb0Phf+OKEEPpG8Kssjt
+	 ta4yO3SQD7/XCkd7p9rbKRBQBHIhi6NoLuOhfpDwnThQPVZmFdEAeseB1BxMMUCF4lg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WieMAWMK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uvP9ueyZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B1CA606A32A;
-	Wed, 18 Nov 2026 23:54:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E59C606A320;
+	Wed, 18 Nov 2026 23:54:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WieMAWMK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A46A01F000C5;
-	Wed, 18 Nov 2026 23:54:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uvP9ueyZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF361F000C5;
+	Wed, 18 Nov 2026 23:54:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046083;
-	bh=HfbDYRLSN758jNcAFNtlf+1DrLU5+epWHt1K2VYQr1U=;
+	s=korg; t=1795046086;
+	bh=D4dmG/B2W4u4LCZIpaO+LZXXUJZVWzm4rxBZoVLsotc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WieMAWMKF6uTFQvl5daqCyy7sEP0HhFS32Feah4QYYfR2n9VKM7xhlYBCwEuD0yjb
-	 S3czsJ66GE4OtVaQWN3jupftCfNpe4src03xdoBtJTWBIyBNfPqg5EMVPlxdDtm4Xq
-	 h2JguGJcjQmNp6ouT1MGBuOYmRLgqte3+iys3x/k=
+	b=uvP9ueyZM62GB4R0l0U1tT1sScMtl+fxMC2KBsVBlThBKLA+Zi4NlfjKkQStHxufB
+	 I/r+xae3UJQtx6r/KRJ8/UxzrpAaz+Jvj3XarbeT7tw8AVmA0y0KxpWAtLpCyHgC6m
+	 sPQeUdVOQZRDo/KjEfhV4drhkMBKvPQcZGurI5Eg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Liz Fong-Jones <lizf@honeycomb.io>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Qingfang Deng <qingfang.deng@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1153/2857] writeback: keep cleanup_offline_cgwb()s scan out of syncs
-Date: Wed, 18 Nov 2026 15:36:27 +0100
-Message-ID: <20261118150243.100978204@linuxfoundation.org>
+Subject: [PATCH 6.1 1154/2857] pppoe: delete session hash entries by pointer match
+Date: Wed, 18 Nov 2026 15:36:28 +0100
+Message-ID: <20261118150243.137049460@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,77 +68,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liz Fong-Jones <lizf@honeycomb.io>
+From: Qingfang Deng <qingfang.deng@linux.dev>
 
-[ Upstream commit 90c96612460e6accddbda5a195e6ddaa391ecde0 ]
+[ Upstream commit b5b8c81836e2bec7b444dfa2b14fd14e912e9d63 ]
 
-On a filesystem mounted with lazytime, sync() and syncfs() can return
-without persisting timestamp updates of inodes attached to a dying
-cgroup wb, so a crash after the sync loses them. File data and sizes are
-not affected.
+pppoe_connect() copies the requested PPPoE address to a socket before
+attempting to insert the socket into the session hash table. If the
+tuple already exists, __set_item() returns -EALREADY, but the copied
+address and ifindex remain set on the failed socket.
 
-Since commit f6988c90671e ("writeback: bound cleanup_offline_cgwb()
-rescans by rotating scanned inodes"), isw_prepare_wbs_switch() moves the
-inodes it walks to the newest end of the list. When a pass fills its isw
-before reaching an inode that got its lazytime update after a sync's
-cutoff, the walked inodes land past it on b_dirty_time, and the sync's
-queue_io(), which stops at the first inode dirtied after the cutoff,
-misses them. The late inode has to be one without a pending lazytime
-update; one already on b_dirty_time keeps its position.
+Closing that socket then deletes the existing socket's hash entry
+through pppoe_release(), preventing it from receiving further session
+traffic. An unprivileged process in the same network namespace can
+trigger this through a duplicate connection attempt.
 
-The window is narrow. cleanup_offline_cgwbs_workfn() skips wbs with
-anything on b_dirty, b_io or b_more_io, so the scan has to land between
-wb_writeback() fixing dirtied_before and taking list_lock for its first
-queue_io(), unless a multi-pass drain started before the wb got dirty
-IO.
+To avoid the accidental delete, pass the pppox_sock to __delete_item(),
+and unlink only an entry whose pointer matches the requested socket.
 
-Take wb_switch_rwsem for read across the scan, as
-process_inode_switch_wbs() does for the switches.
-
-Fixes: f6988c90671e ("writeback: bound cleanup_offline_cgwb() rescans by rotating scanned inodes")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Suggested-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/all/0bc5d58533f10b4841807be3025daa11@kernel.org/
-Acked-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Liz Fong-Jones <lizf@honeycomb.io>
-Link: https://patch.msgid.link/20261017040710.1174009-1-lizf@honeycomb.io
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ Take wb_switch_rwsem before this branch's rcu_read_lock(), as
-  down_read() can sleep. ]
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Liz Fong-Jones <lizf@honeycomb.io>
+Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
+Link: https://patch.msgid.link/20261020092118.47416-1-qingfang.deng@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Resolve conflict, and remove const qualifier of pppox_sock to match
+  hash_item(). ]
+Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fs-writeback.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/ppp/pppoe.c | 22 ++++++++--------------
+ 1 file changed, 8 insertions(+), 14 deletions(-)
 
-diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
-index f82d5d70a6cd0..337970ba58237 100644
---- a/fs/fs-writeback.c
-+++ b/fs/fs-writeback.c
-@@ -731,6 +731,13 @@ bool cleanup_offline_cgwb(struct bdi_writeback *wb)
- 		new_wb = &wb->bdi->wb; /* wb_get() is noop for bdi's wb */
+diff --git a/drivers/net/ppp/pppoe.c b/drivers/net/ppp/pppoe.c
+index 0f8fc720ae00d..49758d9b075a2 100644
+--- a/drivers/net/ppp/pppoe.c
++++ b/drivers/net/ppp/pppoe.c
+@@ -194,18 +194,16 @@ static int __set_item(struct pppoe_net *pn, struct pppox_sock *po)
+ 	return 0;
+ }
  
- 	nr = 0;
-+	/*
-+	 * The scan moves walked inodes to the newest end of b_dirty_time,
-+	 * past ones it didn't reach. If one of those was dirtied after a
-+	 * sync's cutoff, the sync's queue_io() stops there and misses the
-+	 * moved ones. Exclude syncs as process_inode_switch_wbs() does.
-+	 */
-+	down_read(&wb->bdi->wb_switch_rwsem);
- 	/*
- 	 * Paired with synchronize_rcu() in cgroup_writeback_umount().
- 	 * Holding rcu_read_lock across the SB_ACTIVE check, the inode grab
-@@ -753,6 +760,7 @@ bool cleanup_offline_cgwb(struct bdi_writeback *wb)
- 		restart = isw_prepare_wbs_switch(new_wb, isw, &wb->b_dirty_time,
- 						 &nr);
- 	spin_unlock(&wb->list_lock);
-+	up_read(&wb->bdi->wb_switch_rwsem);
+-static void __delete_item(struct pppoe_net *pn, __be16 sid,
+-					char *addr, int ifindex)
++static void __delete_item(struct pppoe_net *pn, struct pppox_sock *po)
+ {
+-	int hash = hash_item(sid, addr);
++	int hash = hash_item(po->pppoe_pa.sid, po->pppoe_pa.remote);
+ 	struct pppox_sock *ret, **src;
  
- 	/* no attached inodes? bail out */
- 	if (nr == 0) {
+ 	ret = pn->hash_table[hash];
+ 	src = &pn->hash_table[hash];
+ 
+ 	while (ret) {
+-		if (cmp_addr(&ret->pppoe_pa, sid, addr) &&
+-		    ret->pppoe_ifindex == ifindex) {
++		if (ret == po) {
+ 			*src = ret->next;
+ 			break;
+ 		}
+@@ -255,11 +253,10 @@ static inline struct pppox_sock *get_item_by_addr(struct net *net,
+ 	return pppox_sock;
+ }
+ 
+-static inline void delete_item(struct pppoe_net *pn, __be16 sid,
+-					char *addr, int ifindex)
++static void delete_item(struct pppoe_net *pn, struct pppox_sock *po)
+ {
+ 	write_lock_bh(&pn->hash_lock);
+-	__delete_item(pn, sid, addr, ifindex);
++	__delete_item(pn, po);
+ 	write_unlock_bh(&pn->hash_lock);
+ }
+ 
+@@ -599,8 +596,7 @@ static int pppoe_release(struct socket *sock)
+ 	 * protect "po" from concurrent updates
+ 	 * on pppoe_flush_dev
+ 	 */
+-	delete_item(pn, po->pppoe_pa.sid, po->pppoe_pa.remote,
+-		    po->pppoe_ifindex);
++	delete_item(pn, po);
+ 
+ 	sock_orphan(sk);
+ 	sock->sk = NULL;
+@@ -651,8 +647,7 @@ static int pppoe_connect(struct socket *sock, struct sockaddr *uservaddr,
+ 	if (stage_session(po->pppoe_pa.sid)) {
+ 		pppox_unbind_sock(sk);
+ 		pn = pppoe_pernet(sock_net(sk));
+-		delete_item(pn, po->pppoe_pa.sid,
+-			    po->pppoe_pa.remote, po->pppoe_ifindex);
++		delete_item(pn, po);
+ 		if (po->pppoe_dev) {
+ 			dev_put(po->pppoe_dev);
+ 			po->pppoe_dev = NULL;
+@@ -703,8 +698,7 @@ static int pppoe_connect(struct socket *sock, struct sockaddr *uservaddr,
+ 
+ 		error = ppp_register_net_channel(dev_net(dev), &po->chan);
+ 		if (error) {
+-			delete_item(pn, po->pppoe_pa.sid,
+-				    po->pppoe_pa.remote, po->pppoe_ifindex);
++			delete_item(pn, po);
+ 			goto err_put;
+ 		}
+ 
 -- 
 2.53.0
 
