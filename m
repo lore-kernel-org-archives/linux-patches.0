@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024564;
-	b=HhAFkAgBAFeUqYXXvxmTBCmE7loatuWB9pD0EYIRiC9QajUF5fvwhgASFTsU4vqxKe5Y
-	 g/wqEPWp5OghRGmHfONvO3rK4mDo2mnDQ6nvl1dj7kEHhzkFOig5+zAPHfIMdRaJBHK0c
-	 yz0rqs8VVGgVITPYgAl+RJsExYVqOMvqtjANjd6EmXbzLOcO5drbfHrq91IOmXaZtANVL
-	 8frVgTNxKbec3N5gxcTkTHHLt6ToSVKzeHrDedMUxkQgPKBDzwDhjaKgcNWHzlf9hk3j6
-	 l04DpPBiTsXL9FCbcb1oR4xVClCEYTpKlI1lxZyXL95CJJCzucVYxRwzgzh6nvoCA0Q==
+	t=1795024567;
+	b=4u5e/O4MjB5JrloBrjh09HSNrT6Fw6DLSHk05GaplogMRI1aFuMjsU17pjfdjePlKm8Z
+	 dmG9kTTrFcep+VojugYjviQy3noaZuCmMejGQW/YGJw7S5q3SW8rbpYAYze/nVhUBso9/
+	 yULf9/wviqnyRUQBpO+jikDer+JtlrAbRoN/Vai/0eZqpjf0kn4XXHnVYXgOT22o3MVId
+	 CFF3oHE03KgaEfYo9OlfMeZFP3mGZQ1eKVPvsv6GPjZ1re8Y3IfcZy1zeZ/pwRBe7hVof
+	 9Qwby+bSCVSB7vXOXo731WWwNh7Z5F1VSNuCLqOhVkxWpA42YrqFRK+hA3iXf5Ezzbg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024564;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024567;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KZm836/8A/42OHFsjED2LyJBROTZ9JeRSEb4k9ujqac=;
-	b=YyinepJVWwlKY/4wZB0NEqoy2q0vugGkP8U1PkySQtEShO3uwBOFEv2BLNrqMcJQYkVJ
-	 IkgsQnJcRzse0JEhr1EVPNQZPfQ9WJpwYsO9VdV7KE+BbukQs/RJc+pBhlLMIo/xsdSD6
-	 0y5J726wD3qpeWGvX2rI18IOQkLoj5IPv67m+uBW+bhJFcIHbjd2xCal7jdAkb38/r9Wt
-	 W8RSbjHvfDagzWVVDdbU7tdy+US1G5ofdN3d3FyqhcVqjKfwEVyCVUcOMoow0BwxJkyKO
-	 +HtbZaFmC/cx3pq2lsZBlXS+4/tSTGgCx1mA3TFf6BnnA9U7ImmtgRfcbk8cmK7qP1Q==
+	bh=tgnVM+fZLgZZZwuhYp2RnatWGWHmAybjeqfzn6LyyJY=;
+	b=ajLpL/kVNuDwk1wjeuUK4HnK6l8FuqD6e3LezL5UBSkQAGojSN6hsM6lyB7q61EpwheQ
+	 oXMKlpHCfpy/nws2OuS7FodYcZLD4zWHOlUsY3sxIm7PlU2XyaA2spjHbRQ77z/ZFXkyX
+	 hu+Wa2wLmwxJemHMge8olRs85nj6bgI2CLDPUrM9ZvWzUV1OcQ0tcxSAV0pFWg1I/G8w3
+	 ub2MlKogcjPMf7JwZrKYQWmYbaMZ1YK1hGwXFcSSPR9xMBIKGhpLH++wiLZ1hc15WUNlP
+	 bVZpFPOi8vw5o43a82BFaYI13ZChLqwnevSxi0AKTR7ziXvp51yOJQWu2wPy32ZAr+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0iMpxttX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OTCdy5xK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D1E3606A320;
-	Wed, 18 Nov 2026 17:56:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A186606A320;
+	Wed, 18 Nov 2026 17:56:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0iMpxttX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C62CA1F000C4;
-	Wed, 18 Nov 2026 17:56:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OTCdy5xK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ED021F000C4;
+	Wed, 18 Nov 2026 17:56:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024564;
-	bh=KZm836/8A/42OHFsjED2LyJBROTZ9JeRSEb4k9ujqac=;
+	s=korg; t=1795024567;
+	bh=tgnVM+fZLgZZZwuhYp2RnatWGWHmAybjeqfzn6LyyJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0iMpxttXdP/eMDOzabxc0quyFjFVh0Z+8OxtS2oNU6+xYHMU7Hvm4p4CwNzroVJHd
-	 N2A0Ya5lkIfaztWl/LL9cZSQJD6IyY+4QXihqlBeQ5oHNYH4FzzlHezhD9uh3ylsXf
-	 TmsuJkp2HgDziS66SnWdTM7Hh9kfm0IRCtTG56R4=
+	b=OTCdy5xKWKsLOh+uBJYTmutrzwRrCzYtHwxdA1qrWf0w3j/zFc4wfaJObfcvMc5wN
+	 Iz7doudCxRQnqO/wFSlJakH4m0B1+Fl2VgHOIyZAwZ1cD3+PWt2qAWW7jvZwNM/ddB
+	 3yvxmyxhj0q5vp+qiYO99ZH54Hvn8Eo0phNpcr6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shashank Mohan Jain <jain.sm@gmail.com>,
-	Yury Norov <ynorov@nvidia.com>,
+	Daniel Palmer <daniel@0x0f.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0769/2151] bitmap: bitmap_parselist(): dont wrap around on a huge group size
-Date: Wed, 18 Nov 2026 15:41:44 +0100
-Message-ID: <20261118150150.105954674@linuxfoundation.org>
+Subject: [PATCH 6.18 0770/2151] m68k: apollo: Fix interrupt setup
+Date: Wed, 18 Nov 2026 15:41:45 +0100
+Message-ID: <20261118150150.150318366@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,71 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shashank Mohan Jain <jain.sm@gmail.com>
+From: Daniel Palmer <daniel@0x0f.com>
 
-[ Upstream commit d075c4dc0b3c8ed91a4f67ebdf3384aa59fd4fbb ]
+[ Upstream commit 6cdbe63badcb524c88f2c8b3cee08f2ffc099a1b ]
 
-In the "range:used/group" form bitmap_set_region() walks the range with
+The user interrupt vector needs to be installed before the interrupts
+are unmasked otherwise the timer tick isn't handled and boot up gets
+stuck in calibrate_delay().
 
-	for (start = r->start; start <= r->end; start += r->group_len)
-
-where all values are unsigned int.  bitmap_getnum() accepts any group
-size up to UINT_MAX, and bitmap_check_region() only requires it to be
-non-zero and at least the used size.  If start + group_len exceeds
-UINT_MAX, start wraps around to a small value that is still <= end, and
-bits below the start of the range get set:
-
-  "1-1:1/4294967295"    -> bits 0,1 (expected bit 1)
-  "15-15:1/4294967281"  -> bits 0,15 (expected bit 15)
-
-The loop still terminates, because start keeps decreasing until it
-wraps past zero again, but the resulting mask contains bits outside
-the requested range.
-
-This needs a group size within 'start' of UINT_MAX, so it is unlikely
-to be hit by accident; all bits set stay below the end of the range,
-so there is no out-of-bounds write.
-
-A group larger than the range simply means that the range contains a
-single group, so stop the walk when the next group would start beyond
-UINT_MAX.
-
-Fixes: 0a5ce0831d04 ("lib/bitmap.c: make bitmap_parselist() thread-safe and much faster")
-Assisted-by: LLM
-Signed-off-by: Shashank Mohan Jain <jain.sm@gmail.com>
-Signed-off-by: Yury Norov <ynorov@nvidia.com>
+Assisted-by: Claude:claude-fable-5 # Wrote Apollo DN3000 emulator using QEMU
+Fixes: 0aa78106c661cf6c ("[PATCH] m68k: convert apollo irq code")
+Signed-off-by: Daniel Palmer <daniel@0x0f.com>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://patch.msgid.link/20260828094940.3882602-1-daniel@0x0f.com
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/bitmap-str.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/m68k/apollo/dn_ints.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/lib/bitmap-str.c b/lib/bitmap-str.c
-index 65cd6f60d4360..777c89bc772cd 100644
---- a/lib/bitmap-str.c
-+++ b/lib/bitmap-str.c
-@@ -8,6 +8,7 @@
- #include <linux/hex.h>
- #include <linux/kernel.h>
- #include <linux/mm.h>
-+#include <linux/overflow.h>
- #include <linux/string.h>
+diff --git a/arch/m68k/apollo/dn_ints.c b/arch/m68k/apollo/dn_ints.c
+index ba96a92f8f18f..89bfb5aaad9df 100644
+--- a/arch/m68k/apollo/dn_ints.c
++++ b/arch/m68k/apollo/dn_ints.c
+@@ -2,6 +2,7 @@
+ #include <linux/interrupt.h>
+ #include <linux/irq.h>
  
- #include "kstrtox.h"
-@@ -219,10 +220,12 @@ struct region {
++#include <asm/irq.h>
+ #include <asm/traps.h>
+ #include <asm/apollohw.h>
  
- static void bitmap_set_region(const struct region *r, unsigned long *bitmap)
+@@ -11,10 +12,13 @@ static unsigned int apollo_irq_startup(struct irq_data *data)
  {
--	unsigned int start;
-+	unsigned int start = r->start;
+ 	unsigned int irq = data->irq;
  
--	for (start = r->start; start <= r->end; start += r->group_len)
-+	do {
- 		bitmap_set(bitmap, start, min(r->end - start + 1, r->off));
-+	} while (!check_add_overflow(start, r->group_len, &start) &&
-+		 start <= r->end);
++	m68k_irq_startup(data);
++
+ 	if (irq < 8)
+ 		*(volatile unsigned char *)(pica+1) &= ~(1 << irq);
+ 	else
+ 		*(volatile unsigned char *)(picb+1) &= ~(1 << (irq - 8));
++
+ 	return 0;
  }
  
- static int bitmap_check_region(const struct region *r)
+@@ -26,6 +30,8 @@ static void apollo_irq_shutdown(struct irq_data *data)
+ 		*(volatile unsigned char *)(pica+1) |= (1 << irq);
+ 	else
+ 		*(volatile unsigned char *)(picb+1) |= (1 << (irq - 8));
++
++	m68k_irq_shutdown(data);
+ }
+ 
+ static void apollo_irq_eoi(struct irq_data *data)
 -- 
 2.53.0
 
