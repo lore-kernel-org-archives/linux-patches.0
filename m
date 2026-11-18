@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032965;
-	b=3tfR36epDoWLSuFrKy1wqOaJeXPjTNnOJH+zAyzPtQVwwGwtF14HMOLQKTJrOSc8OV2C
-	 roGQyW5Vzlug050GDMj9HzJPbyMiEy3gMzHqSr1m6bo6S7Ooos8hDn4ISAVVc+6e4Dm+r
-	 +I6TB4n5lDhoX6XWt3BCAv+RhH3gcn5675K+//xuMIu1BLQe0MF0V8nOBmqOqpYpYsYhS
-	 T76fidzVfGbo68yYtfMcj3ZivdT8hOzq1JOSYcDzBH/C9bYgEn/hvxn1Gvelh4lKXu+Cs
-	 NB3TCgy2a+ylIoAVkKLZvK9a8Z4T2DgymMoGq6qQCk9V/CTbkdhgPxnkLLEixLlQqDg==
+	t=1795032968;
+	b=Umo7HYAr7AyYZ2XXHQyWJ18ixQTQpntYC38P4LKlUeQNfMPQdBcVu+LLs4NguIJvEJFU
+	 myI3xQi5M5nv0hJKsabMPKtVFlzfzqEFwT3cfJLEPCth0zwHOe/TUWNu2lS/G798AhUGc
+	 smcvyny7lbPQykzJhVMofesAcAMC35REjd1NnbMvPtfaZPoy10XSZp87vNP+NofN47bvt
+	 AULhH3hN4jGSiYpb3uX8DgeKg+g2M2+5vuR+9MC2TJcC++k8JJEqLo33FOXkPTz5gc0Dd
+	 L8ReRTBYcPhWopHLij2kxpKDQbY9WHg9E1m1ShP3DG2DyU4fyX78CTUiIs1HkUkLHSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032965;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032968;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=h8mnHc96KxTjaQdTXtUcVK7C2kG5Czgus4zCNmH18oM=;
-	b=JyeszjjjOK5PXMuRsIjSu6JYnjyrM89vfhpc4jLApL9TSM/IpfLG1MFRxrFjnHJ2RqyL
-	 o0AOkIMMthuBi6fZHUSUW408w3DZAQX2L0vcC585v3YdGfq9rvuXix2pXgs91gprd+BMF
-	 9SetUDWg82OEiDfLNKOXTtSTwPfFl57gmib3Kv5ETtsHrIuEzkjn6PQw9rrDfKhoN/Irr
-	 cLrQX21foPeUoX+v2XVZVTHSmExF6fbsXnzHTScEmxGBsSnjcnnE3pnmtyWD74a92KIzF
-	 QnZWMv0JP/zRwOv+Kj3xWFK0e8recc6Z3SE+Gz5x4IDukZKgbMom3f4xIBMUXjuqR7g==
+	bh=ajLEohxiGQw4HFZ88OZj7oXp+FeqYpSUtAIHm4SIjLE=;
+	b=hM/Ol9xYXHhjoW4QqVARN+DraX0+gQ0frwioC+A4jDSyNFKdHDkmIWr6xunWv0gsO5Ca
+	 CvnA4YIqy0qijErZt/enjBXyusG5gx7/+QTaWbMz1YLHrUBXtFtHF6jD8/4wrO5Ywdj4i
+	 /e1qFoutgV+PGEIrrlOVtSEWQHy1H65BFNQTz1kYyHHz+6o4+sTHjzRehvIgbGBIH8k/x
+	 lK6E5XrjRruwLQDzc6B6aJJAp9PO7kRtgbxYROjPHAUGCrL1SDId/nZrl4mcK5oDBKgKn
+	 MX1LWpGHMLKofOZsU0Gbs8J41irRJ7feZ4qV1h1wBOd0Jn5YBycHlyEVH1rgCq75R9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YRXDTZnv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VMFn4pM7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40736606A325;
-	Wed, 18 Nov 2026 20:16:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31CCE606A31C;
+	Wed, 18 Nov 2026 20:16:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YRXDTZnv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 904201F000C4;
-	Wed, 18 Nov 2026 20:16:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VMFn4pM7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C98E1F000C4;
+	Wed, 18 Nov 2026 20:16:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032965;
-	bh=h8mnHc96KxTjaQdTXtUcVK7C2kG5Czgus4zCNmH18oM=;
+	s=korg; t=1795032968;
+	bh=ajLEohxiGQw4HFZ88OZj7oXp+FeqYpSUtAIHm4SIjLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YRXDTZnvIwAmX9xUiAd5g6CEZ6Dp7m2bDCjNrLcDW/UePnV0As4o0BkJEq1bVWbnQ
-	 t8g7T4aBUq9bqr4Xptn2ULVS4M/vl4awY+JP3Zg/UBJANJVSagIEHMJd4DWp87n/bC
-	 7NHcUpsEPD1IbpLCpKjFbLzQXqd517YS6SeYnpqo=
+	b=VMFn4pM7/i/5BRdCOaM3Fqp9FKJEripLsYYZUWmPo4tXAx98xSPKSXbzsSSGQr4rx
+	 8gaK/comryDpzDPVknJwRr8Cm2+0CB6dwrIGcSzjZ8vd/dra2VO7zarlrOBpDABbj0
+	 3HA883jAOordDNTHU8JA0WisH1NHVCOEfsCIOdn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
+	Sally Marcher <me@gry.sh>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1597/1756] ALSA: pcmtest: Honor the enable parameter
-Date: Wed, 18 Nov 2026 16:02:04 +0100
-Message-ID: <20261118150113.487729296@linuxfoundation.org>
+Subject: [PATCH 6.12 1598/1756] ALSA: usb-audio: Add correct datainterval in the quirks-table for Microbook II
+Date: Wed, 18 Nov 2026 16:02:05 +0100
+Message-ID: <20261118150113.525602512@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,40 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Sally Marcher <me@gry.sh>
 
-[ Upstream commit fe3b45a0875a8b0944d2adee3ca62283d876edc0 ]
+[ Upstream commit a09c2f3b267e47767b8937f65930567edbb88d44 ]
 
-The enable module parameter is declared and documented as "Enable
-pcmtest soundcard.", but nothing reads it. Loading the module with
-enable=0 still creates the card.
+This patch fixes playback issues on the Microbook II.
+The correct value was in the older driver for this device
+(https://github.com/manuel-rhdt/snd-microbookii/blob/dd304c097bb6a9d52276ac29c6969fa02bc7674a/audio.c#L914).
 
-Return -ENODEV from mod_init() when enable is false, as the pcsp driver
-does.
+Datainterval needs to be set explicitly.
 
-Fixes: 315a3d57c64c ("ALSA: Implement the new Virtual PCM Test Driver")
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/20261027012228.3797565-1-sammiee5311@gmail.com
+Fixes: a634090a0f24 ("ALSA: usb-audio: Add quirk for MOTU MicroBook II")
+Signed-off-by: Sally Marcher <me@gry.sh>
+Link: https://lore.kernel.org/d5dfd044-69f6-4fc3-9884-6599d88afb55@student.tugraz.at
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/drivers/pcmtest.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/usb/quirks-table.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/drivers/pcmtest.c b/sound/drivers/pcmtest.c
-index 3c85f90c0cc1e..0376fe17365a8 100644
---- a/sound/drivers/pcmtest.c
-+++ b/sound/drivers/pcmtest.c
-@@ -762,6 +762,9 @@ static int __init mod_init(void)
- {
- 	int err = 0;
- 
-+	if (!enable)
-+		return -ENODEV;
-+
- 	buf_allocated = setup_patt_bufs();
- 	if (!buf_allocated)
- 		return -ENOMEM;
+diff --git a/sound/usb/quirks-table.h b/sound/usb/quirks-table.h
+index 5dcbd85a25112..9e7f29d099818 100644
+--- a/sound/usb/quirks-table.h
++++ b/sound/usb/quirks-table.h
+@@ -2753,6 +2753,7 @@ YAMAHA_DEVICE(0x7010, "UB99"),
+ 					.rates = SNDRV_PCM_RATE_96000,
+ 					.ep_attr = USB_ENDPOINT_XFER_ISOC |
+ 						   USB_ENDPOINT_SYNC_ASYNC,
++					.datainterval = 1,
+ 					.rate_min = 96000,
+ 					.rate_max = 96000,
+ 					.nr_rates = 1,
+@@ -2775,6 +2776,7 @@ YAMAHA_DEVICE(0x7010, "UB99"),
+ 					.rates = SNDRV_PCM_RATE_96000,
+ 					.ep_attr = USB_ENDPOINT_XFER_ISOC |
+ 						   USB_ENDPOINT_SYNC_ASYNC,
++					.datainterval = 1,
+ 					.rate_min = 96000,
+ 					.rate_max = 96000,
+ 					.nr_rates = 1,
 -- 
 2.53.0
 
