@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028959;
-	b=YKkm7sJTrXQPPCA7694J6FKnwoogfoefF3At0ZOtV61Q9f5vqKV21pCO5EgzY5dI0m0B
-	 z+mk5fyR917mqRSKQfoVwkrdm3dqPs+BeRHUyX3QPvXIZ2YLebRryfSFgbeq9VKXuupUj
-	 Db5VwtKc/YspwotMCaIUAUeR3YJ625Ix0FLrpx35+kxrvJestWDnhjlx7aIjegDU/FdXC
-	 2LrlbDsHNJ/xHEdEEKOp2mANCmwv5J2pY7KCzjYnczjDgZ1Hbxv4NybG/IfBwPxS3ZmNB
-	 NKjTTsdHnddVhaKFhXVp3V6NJuC/d/LiQq6xK4dVSST22LyzZTW7zDd5l84u4S/QMjw==
+	t=1795028962;
+	b=n6r9El7PJk/XuIDHgwwKbcNA8fcNIq1ZcQmP4Km3jYetJ3+N4s6St468xELyFH6sv5/Z
+	 omr/pOCNnHG36+khmIdXF85aTaz4v4YWuji1N4arPUSfCM3f5WqiFUaukCJF3zvNSnpXT
+	 9tZgWtJPwuCkBD1pNIS0PYuoWgp6OSAc5nPEaV5J/0SNZxDeildXyCWIEn+553JQFz0eN
+	 X+8oEFwglT3wjTVHNkOuCgiAhCxqODN10gR5m1C+SQ4Mh9myDhsCdsiNRDs/3xEUtYRqM
+	 qDpTEGdNfQ7XzCuvb51rOvsmgwRbRH2v1/ZpFASSooeKRz9ns/hcVnr1TI3odTIMLXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028959;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028962;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vBYrCUoi4AIGEbNxT+dW+Ae66Qt7BqWErkwHwj/sKBU=;
-	b=1ju0viDfjj/xKHc/ttmvs+O4RMUqHvEb8WOHYrorGFRC2tXg+RJppqDZ6cpnbVPKjNCA
-	 D+5RvrqekGHBd0YMLQfiWxO2ps3eTIFyrfQxR2/a0mAjmjP00zzraGTYFN2dGRMRfDG5Q
-	 cdQ8BFsqhKOuyZ8mAvWL+7yLi4LrZx/Jefq9xezGbYPL+cFP+SvBZGN/zLIMSiusnCqLF
-	 Sc/wbc0nI6n9ndYGpNanQBYtTe1ZnCLz4Ju4rFwYCf9VmuZ3NavbzCix9Pcv4V/DEAMSI
-	 TA1o4PJfWOJ++ON33SorzsUwkoUS/6SwuwadxBOtel3ZgOdtNp+1n/FxMVRNgAitcxQ==
+	bh=2jAtfk+4YtWTQHg+K9/mywAzx8Em+UIzMZeL70Dd6dI=;
+	b=zbLAkz/TpnuFKD7kWrvN3NiOPk75X7Xag+c2kmhIEkTZSxE754RuQ1Ys3Sr63SQURZOl
+	 l8EFSmnukoT8nwpWR3XCqOvAkSC9slM1hdur2K2u/0U3kbbFwOF17RxNrreAfEZyYZZx9
+	 ttn4YmR+U3Xill3kJFWcb9uwunsjJcA3yPPgWUXnCwuL4S5oqy8N25/7FZHt/7KKEsqTB
+	 csiB6WM+Dwv1y8nGpgj4IAh+5sHoq5/oQ9mv1cGjOD/zJTX/yk/j6/2uV4DzNCa04U1kj
+	 dh33VY/7AHkdFjYKSRL8SNR1bdtCkZzQ6OkL7qX8EXLgMK0VBXdrxl9XTvVTZoWO7Tw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bgR6LTqQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D37UYqN1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C897606A339;
-	Wed, 18 Nov 2026 19:09:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 957EF606A33F;
+	Wed, 18 Nov 2026 19:09:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bgR6LTqQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE9001F000C4;
-	Wed, 18 Nov 2026 19:09:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D37UYqN1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D586C1F000C4;
+	Wed, 18 Nov 2026 19:09:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028959;
-	bh=vBYrCUoi4AIGEbNxT+dW+Ae66Qt7BqWErkwHwj/sKBU=;
+	s=korg; t=1795028962;
+	bh=2jAtfk+4YtWTQHg+K9/mywAzx8Em+UIzMZeL70Dd6dI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bgR6LTqQHubTizNew0SjGE2BsrcnebwL1O+aYZRdBFfAFhxcDi7iGHEFJg2CpdRLW
-	 NcxOff4D9AKpdZAhbwZdBXXO7qiWul3/fOTDZJMgLL9YXzwqEw9bhaegqW4EYRLT38
-	 pKyqV/IfOuYd+QYDS91fW+2ofkHNjMtL3zf2dnDY=
+	b=D37UYqN1TJRIdbhnSF34Y1bgc53iW3w1XVsjrOXfR+99b/cu704gofnDnVD4L6r3o
+	 4/31/ypvlDrPLOlXlNK8GBYi+whRpXhzjqqvJ+1OGplR8lNbxVrMhLnyC8P4VE3DBG
+	 Qrnn+KGnLme9My5/dRSoa9koUYmkckA+p6flC828=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cai Xinchen <caixinchen1@huawei.com>,
-	Paul Moore <paul@paul-moore.com>,
+	David Heidelberg <david@ixit.cz>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0180/1756] lsm: dont call security_backing_file_free() multiple times
-Date: Wed, 18 Nov 2026 15:38:27 +0100
-Message-ID: <20261118150015.601101986@linuxfoundation.org>
+Subject: [PATCH 6.12 0181/1756] ASoC: wcd-mbhc-v2: Fix incorrect properties names and typos
+Date: Wed, 18 Nov 2026 15:38:28 +0100
+Message-ID: <20261118150015.633837281@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,57 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cai Xinchen <caixinchen1@huawei.com>
+From: David Heidelberg <david@ixit.cz>
 
-[ Upstream commit 3a84fc1a21577dbc8da7e4b6a49c9d8b07c07000 ]
+[ Upstream commit 17bca5d55446c1e21944d47354ee2f0b80db36d6 ]
 
-I found the following path:
+Improves debugging experience.
 
-alloc_empty_backing-file
-    init_file(&ff->file, xxx)
-        -> file_ref_init(&f->f_ref, 1); // only 1
-    error = init_backing_file
-        -> security_backing_file_alloc
-        -> rc = call_int_hook(backing_file_alloc, ...)
-           if (unlikely(rc))
-           	security_backing_file_free(backing_file); // first call
-    if (unlikely(error)) {
-        fput(&ff->file);
-         -> if (unlikely(file_ref_put(&file->f_ref))) // zero
-                __fput_deferred(file);
-                 -> ____fput -> __fput -> file_free(file);
-                 -> backing_file_free(backing_file(f));
-                 -> security_backing_file_free(&ff->file); // second call
-
-Currently, only SELinux has the lsm backing_file_alloc hook, and it always
-return 0. When security_backing_file_free is called for the first time,
-the blobs pointer is set to NULL. Therefore, double free will not occur in
-the code.
-
-Fixes: 6af36aeb147a ("lsm: add backing_file LSM hooks")
-Signed-off-by: Cai Xinchen <caixinchen1@huawei.com>
-[PM: subject line tweaks]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Fixes: 0e5c9e7ff899 ("ASoC: codecs: wcd: add multi button Headset detection support")
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Link: https://patch.msgid.link/20260823-wcd-dt-typo-fix-v1-1-a71b458e0d31@ixit.cz
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/security.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ sound/soc/codecs/wcd-mbhc-v2.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/security/security.c b/security/security.c
-index b31fd25f4e5e3..8e11b0793b8fc 100644
---- a/security/security.c
-+++ b/security/security.c
-@@ -2967,9 +2967,8 @@ void security_backing_file_free(struct file *backing_file)
- {
- 	void *blob = backing_file_security(backing_file);
+diff --git a/sound/soc/codecs/wcd-mbhc-v2.c b/sound/soc/codecs/wcd-mbhc-v2.c
+index d589a212b7688..bfd20303c9cc5 100644
+--- a/sound/soc/codecs/wcd-mbhc-v2.c
++++ b/sound/soc/codecs/wcd-mbhc-v2.c
+@@ -865,7 +865,7 @@ static int wcd_measure_adc_continuous(struct wcd_mbhc *mbhc)
+ 	u8 adc_en;
  
--	call_void_hook(backing_file_free, backing_file);
--
- 	if (blob) {
-+		call_void_hook(backing_file_free, backing_file);
- 		backing_file_set_security(backing_file, NULL);
- 		kmem_cache_free(lsm_backing_file_cache, blob);
- 	}
+ 	/* Pre-requisites for ADC continuous measurement */
+-	/* Read legacy electircal detection and disable */
++	/* Read legacy electrical detection and disable */
+ 	wcd_mbhc_write_field(mbhc, WCD_MBHC_ELECT_SCHMT_ISRC, 0x00);
+ 	/* Set ADC to continuous measurement */
+ 	wcd_mbhc_write_field(mbhc, WCD_MBHC_ADC_MODE, 1);
+@@ -966,7 +966,7 @@ static int wcd_check_cross_conn(struct wcd_mbhc *mbhc)
+ 	if (wcd_mbhc_read_field(mbhc, WCD_MBHC_HPH_PA_EN))
+ 		return -EINVAL;
+ 
+-	/* Read legacy electircal detection and disable */
++	/* Read legacy electrical detection and disable */
+ 	elect_ctl = wcd_mbhc_read_field(mbhc, WCD_MBHC_ELECT_SCHMT_ISRC);
+ 	wcd_mbhc_write_field(mbhc, WCD_MBHC_ELECT_SCHMT_ISRC, 0);
+ 
+@@ -1472,14 +1472,14 @@ int wcd_dt_parse_mbhc_data(struct device *dev, struct wcd_mbhc_config *cfg)
+ 	ret = of_property_read_u32(np, "qcom,mbhc-headset-vthreshold-microvolt",
+ 				   &microvolt);
+ 	if (ret)
+-		dev_dbg(dev, "missing qcom,mbhc-hs-mic-max-vthreshold--microvolt in dt node\n");
++		dev_dbg(dev, "missing qcom,mbhc-headset-vthreshold-microvolt in dt node\n");
+ 	else
+ 		cfg->hs_thr = microvolt/1000;
+ 
+ 	ret = of_property_read_u32(np, "qcom,mbhc-headphone-vthreshold-microvolt",
+ 				   &microvolt);
+ 	if (ret)
+-		dev_dbg(dev, "missing qcom,mbhc-hs-mic-min-vthreshold-microvolt	entry\n");
++		dev_dbg(dev, "missing qcom,mbhc-headphone-vthreshold-microvolt entry\n");
+ 	else
+ 		cfg->hph_thr = microvolt/1000;
+ 
 -- 
 2.53.0
 
