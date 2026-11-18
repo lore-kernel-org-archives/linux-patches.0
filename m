@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045929;
-	b=4vqazFC2MnTtwZJ34V2YOmcroJ0GJuh0GrIWGxmQzFfS/b31QCZEfZRSTvJ7uZIs2NsD
-	 dnRwlryuANfMpxOX83CXrDLYdRCzSIe8/XBqTwmebp+TkqZM3UfyGj5kV8bDZ4XTx80L0
-	 wAdatOx246qd9Z6z9YAts3/LXuLtSvOVDUCTuZcAdY9OaUqx9ZtJ9wWmo+GjJNaYqMOrA
-	 0dQarmikfocL1oiDHLUsoDcB1f9kcQdC6uVkjevx+NFLkkM5oL1QmuwiT2boVrXG5TrBD
-	 lHCH23qEb2AoX8JptM+igdwzssLnVLNIcbslUt/sIJ4v3Y8nXqZ4oUC1FgwCp3O/Evw==
+	t=1795045931;
+	b=IcWFViyaUYwKUVFFIk4zsjPIR8EzjSaj2nxSI5eWOVwRNsVRz3vVDL063DkOfuaxDLNf
+	 nNvD2DTSqgUaxdvv3dtK7gPkW9CYNefgub2r34A696pTU1/5yQtUQhPIax7r9Os1YfMqW
+	 dGkIW+x8tuObxk63nyI9YgHrLuh5qRlD2Pg+9ivZLq7thmrQKgbp2w3FV2Xcrb1m5BHci
+	 W4B6j3l7OxIwRDZoF5an8JQoCdWZUb6u+JkWI5fKBIzUOW8MELk3/K1fznWR3BBkIQuVl
+	 q1Ky0Kcuk6xwWdq2rbGQweUTOGpeuZOnD74Fj5p9QS/t2t6HdMCMyV6+5ppjmBHs8fg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045929;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045931;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qRYKsMMvZH4uhEv09qMbJCnQf2mdaSX8fqkLr4TeQjM=;
-	b=Ff9akpm1iwQI/4K5T+0BxlbLsfxhiw6O7p/wUafzPCuaKVWhunuOlSvi4PnoEmIIqrLf
-	 HamMIg2oKplvoOSceKKZo5dSLKmMFngM8BdDVg908LtX6zWPyOqm1/iqG2/DuwtsRb3W9
-	 Vh07d8NC8DV4unv9KZyhzPQVjQAawXsrL5PvY784Sbw8YESNAnhxjBHy6XLgGG5sjRDaF
-	 gj9DOumBg+9klMsnOH/7GffbG6Tgh+nP0SS1zfywU1YHplbnWUoQdmRdNibniYEg+uwDR
-	 ovW2g/E3WFdVHGyp3kuXWiDK77O42OBpCiMXsAK4cRwD65jM2he9R/3fZ93qAC0MPUA==
+	bh=RTUmZbBXF3WVwT4BTq/cykRgBYqylbgWtO37BgeWTPs=;
+	b=tIITp3SO74J0weLiKLNA0p43pI5BUivc1Er0aiBAHNWDzVVB+hWW5IagpuoHlqoAa8PG
+	 k9Hd/5i76V5qoH9uqENWCVgQTw0gudHidQIV9FIOKfRE3T0Obc5LGLcoeX66Mo1KxwCaD
+	 UTgNfkpHzooIjOoYMN4SijhUjeLxcU5c1z3b7Le6/Lrxw8szgEw3l6hmcPmQGM0tIH2r/
+	 cRBPqRVYKfQSn7VSZkzsSMxBW0leyaoHgK5mt30iKnmIKHhUrJZZ5ZcyZLInHYVi86YjH
+	 HPuTcqK0MmLggblULU+OM9laaXyGY99M3Dlob5fqwv4ED70VRfSJrAf45AV+NInj/8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ycmZxDmb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xtu+tjGU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDDC0606A32A;
-	Wed, 18 Nov 2026 23:52:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5572606A31C;
+	Wed, 18 Nov 2026 23:52:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ycmZxDmb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67AD71F000C4;
-	Wed, 18 Nov 2026 23:52:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xtu+tjGU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 282F61F000C4;
+	Wed, 18 Nov 2026 23:52:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045928;
-	bh=qRYKsMMvZH4uhEv09qMbJCnQf2mdaSX8fqkLr4TeQjM=;
+	s=korg; t=1795045931;
+	bh=RTUmZbBXF3WVwT4BTq/cykRgBYqylbgWtO37BgeWTPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ycmZxDmbs0+Nm+ItESzxTMX9Ytvy+2f5ddHJ9OUjV43WJGuKKQRuQArFoPBXaRjXk
-	 V7PksHLP1fkXT1B99OnOJtlflLaDpky7j1o8D6FzR/qs9WW+ttMAcMm0rQDJ6C+dTe
-	 GNXPanfzMHpVu6wL3b9APZAUYqQKDWTI7O2cONSo=
+	b=xtu+tjGUdzs9GBTgcA6gGUzlHTGhpwOWQLRmXjUo9K5zwxTiwcliIMYGF2bwz1Vzz
+	 Z6YS4sFh6e+C6ThGPKwWZ3Ac2GcfEtrr/rsmVRuGnBtq501g5PDh8v0lEcBehYwigX
+	 uhdJ/gRsyPqGAm/bFb1hq2ZR08ZjxZrhPHv3u97g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avi Weiss <thnkslprpt@gmail.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1099/2857] init/bootconfig: pass init arguments in documented order
-Date: Wed, 18 Nov 2026 15:35:33 +0100
-Message-ID: <20261118150241.205725672@linuxfoundation.org>
+Subject: [PATCH 6.1 1100/2857] apparmor: on failed load ensure profile files are removed before parent
+Date: Wed, 18 Nov 2026 15:35:34 +0100
+Message-ID: <20261118150241.241511752@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,50 +67,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avi Weiss <thnkslprpt@gmail.com>
+From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit 278b2abf660a3e0991eb9f16f11bd9e9514a286d ]
+[ Upstream commit 97ba44a2aa4c7ab011a93ce94cb595200fe4ea4f ]
 
-start_kernel() appends command-line init arguments before
-bootconfig init arguments, while setup_command_line()
-places them in the opposite order. As a result, the
-arguments passed to init do not match the saved command
-line, reversing the intended precedence of options.
+The load interface does not guarantee the order profiles are loaded.
+When a parent is loaded after its child, and the load fails, the
+current code will issue a warning, and leak a dentry.
 
-Parse extra_init_args before after_dashes so command-line
-init arguments are passed last.
+For the loaded set of profiles, ensure that on failure list is ordered
+is traversed in reverse so any children processed after their parent
+is freed first. We do not need to deal with the cases where the
+children are processed before their parent, because either a parent
+outside the list already exists or a dummy parent outside of the list
+is created, and the list walk will not put those parents before their
+children.
 
-Link: https://lore.kernel.org/all/20261027073719.4010659-2-thnkslprpt@gmail.com/
-
-Fixes: b66fbbe8d482 ("init/bootconfig: Reorder init parameter from bootconfig and cmdline")
-Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: 6ec46f8f1977d ("apparmor: remove fs entries created by a failed policy load")
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- init/main.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ security/apparmor/policy.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/init/main.c b/init/main.c
-index cd1b46b008ca0..2a91e32b00765 100644
---- a/init/main.c
-+++ b/init/main.c
-@@ -957,12 +957,12 @@ void start_kernel(void)
- 				  __stop___param - __start___param,
- 				  -1, -1, NULL, &unknown_bootoption);
- 	print_unknown_bootoptions();
--	if (!IS_ERR_OR_NULL(after_dashes))
--		parse_args("Setting init args", after_dashes, NULL, 0, -1, -1,
--			   NULL, set_init_arg);
- 	if (extra_init_args)
- 		parse_args("Setting extra init args", extra_init_args,
- 			   NULL, 0, -1, -1, NULL, set_init_arg);
-+	if (!IS_ERR_OR_NULL(after_dashes))
-+		parse_args("Setting init args", after_dashes, NULL, 0, -1, -1,
-+			   NULL, set_init_arg);
- 
- 	/* Architectural and non-timekeeping rng init, before allocator init */
- 	random_init_early(command_line);
+diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
+index c129f13fdeec6..dac3fb515814d 100644
+--- a/security/apparmor/policy.c
++++ b/security/apparmor/policy.c
+@@ -1182,8 +1182,10 @@ ssize_t aa_replace_profiles(struct aa_ns *policy_ns, struct aa_label *label,
+ 	 * them yet, and leaving them behind would leak the new profiles
+ 	 * (their dents pin the proxy) and make the next load at the same,
+ 	 * unbumped ns revision fail with -EEXIST on its raw_data dir.
++	 * ensure children (which are at the end of the list are removed
++	 * before their parent
+ 	 */
+-	list_for_each_entry(tmp, &lh, list) {
++	list_for_each_entry_reverse(tmp, &lh, list) {
+ 		if (!tmp->old)
+ 			__aafs_profile_rmdir(tmp->new);
+ 	}
 -- 
 2.53.0
 
