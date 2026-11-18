@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034999;
-	b=iVSRH7IRTNoN4oiwxqmZLAw4wo7rIm2BAfVpmReSn7tNgIqvhZzDEmeTZKWCZEZQhqh+
-	 4+OPSozFZa+W2EXDVSfxLoffLqCfhLvnCAFQrfXNHR8aS1NRwd+myyXlvGE1kVqmCVL3U
-	 SyLOKJNlp279Sr6zIsnvuuo72V7XIBZXgg5ioKG+EAWTbprzIAl2S8xRMsOB0oSTSyNPO
-	 WDkN/uDyk1sgzo25clu0QDU26Sxr74hyu7HvOmAhrBDkAkC2QpPnQXE9nQuzbq15Ute/y
-	 wSk5QjR/8ltdc1hOYwchwFIczFOGzxJwJKUFW65lnI22xsIldzf0EURvMRQre8qLM0g==
+	t=1795035002;
+	b=qxB1JPJ0wJtDL56r04iEKJDJDZ6GnDOR/Swq+4EUsWKCHOyWIF3A/UPuNNLNTJUEXzfl
+	 lWHwZNqmCxGv0GysCRGcDNV0PYd9b8SNbyDbMcUYZPgqgjUE2yl2sJXB8ROOU35SEWKHB
+	 RvEbi0uI4Zj257IPPiGFyRTUDHnrb25fthU+sseZI4Z39mPNfLKg0o+2H38geGv9/Lrpy
+	 YJkP+sqU7Y6owbUyyhA/PEtSGWvOGfNqZqL9MApr4CyyfbEDxVHfG718hx1upOE/CBb1A
+	 YJFejomEWvvhLbCo9PV4LFD4mMia02DRgDhMUkehJ+0RzB16Sy5V8HfVrhJ5XVLYkQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034999;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035002;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DWOrAUkMsAF2/JzvBvp7y/ggZve9XkG6Z/89MkP7/Kw=;
-	b=vTAH9fl6t8stDrwUxx3Lz5MK/Xcmn0cF7rOqFv8tXPCOVTR0Z5neIQT0HPyFONXij7SK
-	 CGtGCsaLjFB+LOEIQ3xFjtN4sgu6jKWSJiv2MEnLCIugfuM+z8d5iy81J96uGjm8ddeNt
-	 1WCfgYXD5edmGS+B4xw+VNf0NnZ5+tkeyvf6SFR5fKSn2229JQr6gzChUp2+Cgk7YXcT0
-	 dfIdatkQqBq924fgY8INH4GRvRbcf+O9rAuJbCK/4WrkGS7i8BktbrVqfHSGFgK77K2zJ
-	 jGWW8uHnvNGLiJFOhqCTqnvcshDkdw5EZWI4ytU4XOvdiUfBnXWXa6Ch3F3i2xqnfrg==
+	bh=OkUCKxkDWEbba7kI0A0hWBEr4sl6ps2W+IdQhGJngro=;
+	b=OmpFaWFQexDFRyBu3giaVgYpg3KKHuQ7MwK9yT1rGukL8jwcvk91WCVCl3hYDuxWeZAc
+	 jwUzV0lodOHfrtfrWtcrqCvgXeHJXywVDL5Yd0P7dByNSFMFD07wWnfO/RYn8b38doYpP
+	 gUMC+9V+XeG7QqWCE0aDFmEB9Mtkh8l0j9nPKcUoA+8mtIMVgeK9mPR39yyNNKNU5Zv1C
+	 WRsvyG+2Jw5jXSlGeHrrus0Vp2Q9g10dKNehHRLvoagx/EryipTp0Uhm8fhbDtO/G/ITZ
+	 Qnx8P0sJ7UCf6f/VP+fzqhzqMiXNKdhg7Psw7Txo4We8Jr+DEXU7ELZzWjBxczS3iEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Klu9Q3Ey;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="z3V5/cBX";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D026606A31C;
-	Wed, 18 Nov 2026 20:49:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6DD606A325;
+	Wed, 18 Nov 2026 20:50:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Klu9Q3Ey
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D190C1F000C4;
-	Wed, 18 Nov 2026 20:49:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z3V5/cBX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 995D11F000C4;
+	Wed, 18 Nov 2026 20:50:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034999;
-	bh=DWOrAUkMsAF2/JzvBvp7y/ggZve9XkG6Z/89MkP7/Kw=;
+	s=korg; t=1795035002;
+	bh=OkUCKxkDWEbba7kI0A0hWBEr4sl6ps2W+IdQhGJngro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Klu9Q3EypK/nW6F62KOPqpnG37rm5ssZrqR6kIKNSRkcy25LCf7Rh3mW2aj0+sken
-	 PPLYokTndLq/RuGqXEzL65IIVPw1/od5ceYqy3S2NioBOhDQkyq08RQSHYPabtMFNB
-	 Fj9mErMcmq3A3xY0frsetk1ljzy1wjUL/pxxkHCQ=
+	b=z3V5/cBX0o3MJH3JIl5tfha7genXODPY1c2NibOuCyTjBQitmQOmW25xNKH1xR55N
+	 eyIWHxaxBRZBEQvYhySLjz7lP8bNOdwI6BSPnphn5eglFRW4Cl4G4nxeQCDdDzVe5I
+	 TuGNVO0lhj4rpfPPjJY3+cZor+LRD/oYUw/aXMF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	DaeMyung Kang <charsyam@gmail.com>,
+	Tea La Forgia <tealaforgia+alias@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 6.6 0568/3318] ksmbd: avoid restoring only in-memory EOF after allocation change
-Date: Wed, 18 Nov 2026 15:19:50 +0100
-Message-ID: <20261118150334.450900271@linuxfoundation.org>
+Subject: [PATCH 6.6 0569/3318] ksmbd: fix extended session security negotiation for raw NTLMSSP
+Date: Wed, 18 Nov 2026 15:19:51 +0100
+Message-ID: <20261118150334.490941674@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,63 +67,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: DaeMyung Kang <charsyam@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 9455e920aebe41217cabff3f81e90da4c407fdb6 upstream.
+commit 6868f857514bbfd2ed10b9b566664dc4a8ca039d upstream.
 
-When SetAllocation requests a size below the allocated block count but
-above EOF, ksmbd truncates the file to that size and restores only the
-in-memory i_size. The larger EOF remains on disk and reappears after a
-reboot. A 3-byte file preallocated to 64 KiB can acquire a 4 KiB EOF
-after reducing its allocation to 4 KiB. Extending EOF this way is not
-a reliable way to reclaim the preallocation beyond the old EOF either.
+ksmbd_build_ntlmssp_challenge_blob() only advertises extended session
+security when conn->use_spnego is true. As a result, raw NTLMSSP
+negotiation drops NTLMSSP_NEGOTIATE_EXTENDED_SEC from the challenge even
+when the client requested it.
 
-Only use this truncate path when the requested allocation is at or below
-the observed EOF. A truncate to the existing EOF still lets filesystems
-release preallocated blocks beyond EOF. Remove the in-memory-only i_size
-restoration. The size check still precedes vfs_truncate() taking the
-inode lock, so a concurrent shrink can make the truncate extend EOF;
-that race also existed in the original path.
+A Windows capture shows an initial SPNEGO authentication succeeding,
+followed by a raw NTLMSSP negotiation on the same TCP connection. The raw
+challenge omits extended session security, and the client does not send
+an AUTHENTICATE message. The unfinished session then occupies the pending
+session slot, causing subsequent SESSION_SETUP requests to fail with
+STATUS_INSUFFICIENT_RESOURCES.
+
+Set NTLMSSP_NEGOTIATE_EXTENDED_SEC whenever the client requests it,
+independently of the SPNEGO wrapper, as required by [MS-NLMP].
 
 Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
+Reported-by: Tea La Forgia <tealaforgia+alias@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |   15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ fs/smb/server/auth.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -6467,24 +6467,17 @@ static int set_file_allocation_info(stru
- 			pr_err("vfs_fallocate is failed : %d\n", rc);
- 			return rc;
- 		}
--	} else if (alloc_blks < stat.blocks) {
--		loff_t size;
--
-+	} else if (alloc_blks < stat.blocks &&
-+		   alloc_blks * 512 <= i_size_read(inode)) {
- 		/*
--		 * Allocation size could be smaller than original one
--		 * which means allocated blocks in file should be
--		 * deallocated. use truncate to cut out it, but inode
--		 * size is also updated with truncate offset.
--		 * inode size is retained by backup inode size.
-+		 * Truncate at or below EOF to discard excess allocation.
-+		 * Truncating above EOF would extend the file on disk.
- 		 */
--		size = i_size_read(inode);
- 		rc = ksmbd_vfs_truncate(work, fp, alloc_blks * 512);
- 		if (rc) {
- 			pr_err("truncate failed!, err %d\n", rc);
- 			return rc;
- 		}
--		if (size < alloc_blks * 512)
--			i_size_write(inode, size);
- 	}
- 	return 0;
- }
+--- a/fs/smb/server/auth.c
++++ b/fs/smb/server/auth.c
+@@ -453,8 +453,7 @@ ksmbd_build_ntlmssp_challenge_blob(struc
+ 	if (cflags & NTLMSSP_REQUEST_TARGET)
+ 		flags |= NTLMSSP_REQUEST_TARGET;
+ 
+-	if (conn->use_spnego &&
+-	    (cflags & NTLMSSP_NEGOTIATE_EXTENDED_SEC))
++	if (cflags & NTLMSSP_NEGOTIATE_EXTENDED_SEC)
+ 		flags |= NTLMSSP_NEGOTIATE_EXTENDED_SEC;
+ 
+ 	if (cflags & NTLMSSP_NEGOTIATE_KEY_XCH)
 
 
