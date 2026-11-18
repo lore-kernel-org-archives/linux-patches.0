@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059431;
-	b=kZ5LSFTE7G1mONejJC56JFDhDuBb8zzSmAsPHTpGHzPjcCzRGlc4QSM8AztlFVLE378V
-	 8Gs/B3tByOpstpmxgH7x1yhljWvCfuCWsjQqx6187o8dol8t8qGhTqkTxsxVgJWu5DAQ0
-	 SKMA7XG2o4BVpk/SRQ3K/B6kUkZEC06SjFtOa6Z0rqAfFESDCD4KAMHbBPD0LW/kvCGyf
-	 eu93rpUoljhPFTIokUyPY7iP67nxFUlDjcHGcgzZiM/NhBG+Dz8Wkb4LVoWG4C+HyiQID
-	 zRKmXX45wom4h32Da33O/S3+g4ko7H94XcPW2IwYazGrVlXLp/W/SRz6h1o+pWXcnbg==
+	t=1795059433;
+	b=E25RyclylEz0RoJWN7QmaLViF0r/TVZQHInXuI5QCvvonjDNDHox5yaJsQLb/JOmjtR+
+	 tW8XSBnJ8PZGCG/yqAhmvXwOJM2GV+VsVXUTtkW5aFdnls3tKMU0BI1jmxYaakYTo+N/H
+	 WyDSsQZAPvyBxNigW0pnTXn5KpPhBGK4fDqCvP3r/FbfIyKgqdI8GLd6jSkvmX6hK42ZH
+	 Wow6mhj/SknxNoWqr9itvU8CpTC97DKfW20IqsrQIcRhJvICnsfPf6HFmmo6ozmYM2tji
+	 i8UrZX1hc7MJkuETOKz1/VtTLsjijofCqC/OxLPmt5uE2tghuuXN8e0lXwvykgMc+/Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059431;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059433;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=g2kueBv4a5IEf0/6IbHjiOpyH5+54yFR5hnF0uYtjN0=;
-	b=KVWDq/q92V2fzgq5VdacgRTwvHc7boV/5bvC9fda6/PRSsLOIK3D9FslYYYUXX9esvOt
-	 pnt+aZfgFu9B3b4Z7t9npnuvnWo1HIvWDz816yfqMlCmAuSqO490eT4IYAXqT1wBY+T/z
-	 GHRZwJlOqznrMbwkicYRBpM4xRQvkb0LNM+mGI8Y0YNPG1bPjo/uu18R162Dtcoht1Xc+
-	 TN65EUaUvA7e0geVHInjaGpoUSr6/NFMh3Yyvi4ZEJD5I+MP1+U3LZHkhkw04zt32z0WU
-	 Qq4bwXPiOut1MNzHfzgEPGbZBv2AJiT95TgjqSlBYp6fklIrMbs+BN0LGZ/c9/1jcaw==
+	bh=+7hFoy+lf/vqSkjPYcEZdpGra8/vuQbMFP/TqOScacI=;
+	b=dyR5LLnYdjPhfxmAfuMFXjMcZy7i28J8c+x4zn7vHTRBRUaTdY2L5exQBjLanPTBRXo1
+	 zXeryfpHS8wmjedVIzvGvEsUIQnF0LkDVRAKQkl5Geg20lcPt4x638WiF/tRKMva90qoy
+	 J9athVwS5Oz5/0o7ymbThKjcTqUd+yq5fjDLf4zBiDbGO+S0czeT0BfWssZASRoGrydRf
+	 yx1dzP4unMZKoSZjflWe9BntUxgJiUlkoyohrZG1X2yL3z9w9c9PyUocLYu8gf5o3IVSX
+	 ugCAEaQVm9YolEV+dSsJ5D/j/YosbHP9FoT7bzUOE5N9445CyvL32J5mozTJqzUjNOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MQlo9Y1Y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HRIfa++8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4991E606A326;
-	Thu, 19 Nov 2026 03:37:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39B9606A320;
+	Thu, 19 Nov 2026 03:37:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MQlo9Y1Y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 614481F000C4;
-	Thu, 19 Nov 2026 03:37:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HRIfa++8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 259C51F000C4;
+	Thu, 19 Nov 2026 03:37:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059430;
-	bh=g2kueBv4a5IEf0/6IbHjiOpyH5+54yFR5hnF0uYtjN0=;
+	s=korg; t=1795059433;
+	bh=+7hFoy+lf/vqSkjPYcEZdpGra8/vuQbMFP/TqOScacI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MQlo9Y1YCyUOy17Oh4icAzG7TKUXm5pqYY6bZRRKedgyu4bISrLBkgznZHZiCFHMF
-	 xu4DNXN6ha6+ElcdsxqFiHxEBxflX5ixVO1zM5eGv7wK570L/7Sbjr1eh35IG2o0yK
-	 of5ZoLg4A6L/F9VouwptH9q6Mo7TOyoBesYHeBaU=
+	b=HRIfa++8x31KsEtZ1VCz0dVW3cb/LHFFCpWtToeemhhWs+LClvoQE05LD3+1Fequ8
+	 aQYpa2xqWEFkQNQaLYxl18/bTOdzBw+3zjCf8YSm66CWMNtdy6F85NGU66Ga9R2Zzv
+	 9xFiUWNG/ytgpbd2EGADyRfntAqr7KQi4ksfdWgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Jun Yang <junvyyang@tencent.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kyle Zeng <kylebot@openai.com>,
+	David Lee <david.lee@trailofbits.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0837/1848] sctp: re-point retained control chunks on association migration
-Date: Wed, 18 Nov 2026 15:47:55 +0100
-Message-ID: <20261118145951.698522843@linuxfoundation.org>
+Subject: [PATCH 5.10 0838/1848] netfilter: nf_reject: initialize IPCB at inet ingress
+Date: Wed, 18 Nov 2026 15:47:56 +0100
+Message-ID: <20261118145951.736456113@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,160 +69,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jun Yang <junvyyang@tencent.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 52ffeaa358d1f3d91aa87a26ad90d77769cff74b ]
+[ Upstream commit 73a73d442f9986353fe284bd1b504d0313d0f153 ]
 
-sctp_sock_migrate() transfers DATA chunk ownership but leaves retained
-control chunks pointing at the old socket. A later retransmission can
-therefore access the socket after it has been freed.
+The inet ingress hook runs before ip_rcv_core() and ip6_rcv_core(), so
+neither IPCB nor IP6CB has been initialized when nft_reject_inet passes
+a packet to nf_send_unreach() or nf_send_unreach6(). skb->cb can
+therefore retain metadata from an earlier protocol layer.
 
-Extend the migration walk to cover retained control chunks and use
-sctp_control_set_owner_w() to assign their new owner. Reuse the DATA
-ownership check so each chunk is processed once per pass, even when it
-is reachable through multiple lists or retained pointers.
+For IPv4, icmp_send() treats IPCB(skb)->opt as parsed IPv4 options.
+Stale option offsets can make __ip_options_echo() copy an
+attacker-controlled length into its 40-byte reply option buffer and
+overflow the stack. On an unpatched v7.2-rc5 kernel, the IPv4
+reproducer produced:
 
-Preserve a control chunk's existing authentication key across migration
-so its final release can still generate SCTP_AUTH_FREE_KEY when needed.
+  BUG: KASAN: stack-out-of-bounds in __ip_options_echo()
+  Write of size 255
 
-Fixes: d04adf1b3551 ("sctp: reset owner sk for data chunks on out queues when migrating a sock")
-Cc: stable@kernel.org
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
-Signed-off-by: Jun Yang <junvyyang@tencent.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20261009074244.3718-3-juny24602@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+For IPv6, icmpv6_send() consumes IP6CB(skb) as parsed IPv6 metadata. It
+always uses iif for source selection and, when MIP6 is enabled, uses
+dsthao as an extension-header offset. These fields must not be stale.
+
+For NF_INET_INGRESS, clear the address-family-specific control block and
+restore its input interface before constructing the ICMP error.  This
+matches similar initialization normally performed by ip_rcv_core() and
+ip6_rcv_core().
+
+Fixes: 117ca1f8920c ("netfilter: nft_reject_inet: allow to use reject from inet ingress")
+Cc: stable@vger.kernel.org
+Assisted-by: Codex:gpt-5.6-sol Codex:gpt-5.5-cyber
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Co-developed-by: David Lee <david.lee@trailofbits.com>
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+[ sashal: Adjusted IPv4 patch context to preserve the existing one-argument nf_reject_verify_csum(proto) call. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sctp/sm.h    |  1 +
- net/sctp/sm_make_chunk.c |  5 ++--
- net/sctp/socket.c        | 53 ++++++++++++++++++++++++++++++----------
- 3 files changed, 44 insertions(+), 15 deletions(-)
+ net/ipv4/netfilter/nf_reject_ipv4.c | 5 +++++
+ net/ipv6/netfilter/nf_reject_ipv6.c | 5 +++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/include/net/sctp/sm.h b/include/net/sctp/sm.h
-index 5c491a3bc27e4..f6f0adb05d2d2 100644
---- a/include/net/sctp/sm.h
-+++ b/include/net/sctp/sm.h
-@@ -250,6 +250,7 @@ struct sctp_chunk *sctp_make_fwdtsn(const struct sctp_association *asoc,
- 				    struct sctp_fwdtsn_skip *skiplist);
- struct sctp_chunk *sctp_make_auth(const struct sctp_association *asoc,
- 				  __u16 key_id);
-+void sctp_control_set_owner_w(struct sctp_chunk *chunk);
- struct sctp_chunk *sctp_make_strreset_req(const struct sctp_association *asoc,
- 					  __u16 stream_num, __be16 *stream_list,
- 					  bool out, bool in);
-diff --git a/net/sctp/sm_make_chunk.c b/net/sctp/sm_make_chunk.c
-index 362c314fd48e9..de17f6ef1540a 100644
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -95,7 +95,7 @@ static void sctp_control_release_owner(struct sk_buff *skb)
- 	}
- }
+diff --git a/net/ipv4/netfilter/nf_reject_ipv4.c b/net/ipv4/netfilter/nf_reject_ipv4.c
+index 48dcb2f0794fd..db2c4bbc641db 100644
+--- a/net/ipv4/netfilter/nf_reject_ipv4.c
++++ b/net/ipv4/netfilter/nf_reject_ipv4.c
+@@ -198,6 +198,11 @@ void nf_send_unreach(struct sk_buff *skb_in, int code, int hook)
+ 	if (!skb_valid_dst(skb_in) && nf_reject_fill_skb_dst(skb_in) < 0)
+ 		return;
  
--static void sctp_control_set_owner_w(struct sctp_chunk *chunk)
-+void sctp_control_set_owner_w(struct sctp_chunk *chunk)
- {
- 	struct sctp_association *asoc = chunk->asoc;
- 	struct sk_buff *skb = chunk->skb;
-@@ -108,7 +108,8 @@ static void sctp_control_set_owner_w(struct sctp_chunk *chunk)
- 	 *  For now don't do anything for now.
- 	 */
- 	if (chunk->auth) {
--		chunk->shkey = asoc->shkey;
-+		if (!chunk->shkey)
-+			chunk->shkey = asoc->shkey;
- 		sctp_auth_shkey_hold(chunk->shkey);
- 	}
- 	skb->sk = asoc ? asoc->base.sk : NULL;
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index a3e9996120b89..74031d3e064a3 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -154,9 +154,24 @@ static void sctp_clear_owner_w(struct sctp_chunk *chunk)
++	if (hook == NF_INET_INGRESS) {
++		memset(IPCB(skb_in), 0, sizeof(*IPCB(skb_in)));
++		IPCB(skb_in)->iif = skb_in->skb_iif;
++	}
++
+ 	if (skb_csum_unnecessary(skb_in) || !nf_reject_verify_csum(proto)) {
+ 		icmp_send(skb_in, ICMP_DEST_UNREACH, code, 0);
+ 		return;
+diff --git a/net/ipv6/netfilter/nf_reject_ipv6.c b/net/ipv6/netfilter/nf_reject_ipv6.c
+index 4d8cfb7ae6e3e..a538f878ba332 100644
+--- a/net/ipv6/netfilter/nf_reject_ipv6.c
++++ b/net/ipv6/netfilter/nf_reject_ipv6.c
+@@ -263,6 +263,11 @@ void nf_send_unreach6(struct net *net, struct sk_buff *skb_in,
+ 	if (hooknum == NF_INET_LOCAL_OUT && skb_in->dev == NULL)
+ 		skb_in->dev = net->loopback_dev;
  
- static void sctp_set_owner_w_migrate(struct sctp_chunk *chunk)
- {
--	sctp_set_owner_w(chunk);
--	if (chunk->shkey)
--		sctp_auth_shkey_release(chunk->shkey);
-+	struct sctp_shared_key *shkey = chunk->shkey;
++	if (hooknum == NF_INET_INGRESS) {
++		memset(IP6CB(skb_in), 0, sizeof(*IP6CB(skb_in)));
++		IP6CB(skb_in)->iif = skb_in->skb_iif;
++	}
 +
-+	if (chunk->msg)
-+		sctp_set_owner_w(chunk);
-+	else
-+		sctp_control_set_owner_w(chunk);
-+
-+	if (shkey)
-+		sctp_auth_shkey_release(shkey);
-+}
-+
-+static void sctp_process_tx_chunk(struct sctp_association *asoc,
-+				  struct sctp_chunk *chunk, bool clear,
-+				  void (*cb)(struct sctp_chunk *))
-+{
-+	if ((clear && asoc->base.sk == chunk->skb->sk) ||
-+	    (!clear && asoc->base.sk != chunk->skb->sk))
-+		cb(chunk);
- }
+ 	if (!skb_valid_dst(skb_in) && nf_reject6_fill_skb_dst(skb_in) < 0)
+ 		return;
  
- #define traverse_and_process()	\
-@@ -164,17 +179,14 @@ do {				\
- 	msg = chunk->msg;	\
- 	if (msg == prev_msg)	\
- 		continue;	\
--	list_for_each_entry(c, &msg->chunks, frag_list) {	\
--		if ((clear && asoc->base.sk == c->skb->sk) ||	\
--		    (!clear && asoc->base.sk != c->skb->sk))	\
--			cb(c);	\
--	}			\
-+	list_for_each_entry(c, &msg->chunks, frag_list)	\
-+		sctp_process_tx_chunk(asoc, c, clear, cb);	\
- 	prev_msg = msg;		\
- } while (0)
- 
--static void sctp_for_each_tx_datachunk(struct sctp_association *asoc,
--				       bool clear,
--				       void (*cb)(struct sctp_chunk *))
-+static void sctp_for_each_tx_chunk(struct sctp_association *asoc,
-+				   bool clear,
-+				   void (*cb)(struct sctp_chunk *))
- 
- {
- 	struct sctp_datamsg *msg, *prev_msg = NULL;
-@@ -197,6 +209,21 @@ static void sctp_for_each_tx_datachunk(struct sctp_association *asoc,
- 
- 	list_for_each_entry(chunk, &q->out_chunk_list, list)
- 		traverse_and_process();
-+
-+	list_for_each_entry(chunk, &q->control_chunk_list, list)
-+		sctp_process_tx_chunk(asoc, chunk, clear, cb);
-+
-+	list_for_each_entry(chunk, &asoc->asconf_ack_list, transmitted_list)
-+		sctp_process_tx_chunk(asoc, chunk, clear, cb);
-+
-+	list_for_each_entry(chunk, &asoc->addip_chunk_list, list)
-+		sctp_process_tx_chunk(asoc, chunk, clear, cb);
-+
-+	if (asoc->strreset_chunk)
-+		sctp_process_tx_chunk(asoc, asoc->strreset_chunk, clear, cb);
-+
-+	if (asoc->addip_last_asconf)
-+		sctp_process_tx_chunk(asoc, asoc->addip_last_asconf, clear, cb);
- }
- 
- static void sctp_for_each_rx_skb(struct sctp_association *asoc, struct sock *sk,
-@@ -9470,9 +9497,9 @@ static int sctp_sock_migrate(struct sock *oldsk, struct sock *newsk,
- 	 * paths won't try to lock it and then oldsk.
- 	 */
- 	lock_sock_nested(newsk, SINGLE_DEPTH_NESTING);
--	sctp_for_each_tx_datachunk(assoc, true, sctp_clear_owner_w);
-+	sctp_for_each_tx_chunk(assoc, true, sctp_clear_owner_w);
- 	sctp_assoc_migrate(assoc, newsk);
--	sctp_for_each_tx_datachunk(assoc, false, sctp_set_owner_w_migrate);
-+	sctp_for_each_tx_chunk(assoc, false, sctp_set_owner_w_migrate);
- 
- 	/* If the association on the newsk is already closed before accept()
- 	 * is called, set RCV_SHUTDOWN flag.
 -- 
 2.53.0
 
