@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024761;
-	b=tIkyjIKHSqUo+b/Z1hQpia5093HR6yDvce0wFZM7dOvP2KKAY3Dc49ipbA2GtafMBu9c
-	 WaBXptyDXNtat0fzkF1qE4wPFWBMnNSVK7qOWMp3nC5dyhbQgUz5wC7PSzz16kDCWx5+n
-	 TBICBx+7IvxQl1+hhBwHATgsaNyAf/6vFhY/TSzdZHsU2m+sSf5eVnoQ2reEfA9sXLkKA
-	 3VkKmo3K7+jAcT/SBW7tWRIUAc+8xqZOSYgRyuOPdnVijbjofLbCjzu+ZtjY1Ifet7F7P
-	 mBI/jcjSc9OgQJFaqbHcdvEDCFuelaTNYGnRbwm6HR4Iiumdd/qHmoXPGo0EPPMRuHA==
+	t=1795024764;
+	b=IQNb/YlTB5CyLCPfNYtjFWPm0JHXc2Rr3hqmaPLVPSkiY8SiEElNCQz7jDCDv3F9Q5Ja
+	 pgmo3YxzzIj29IF8cs/NLmAkTZd7u6zxD7ZOx3sDYY/DY6cHDFstko10mtN+vrRteZoJx
+	 ig94SrgkjZaqbJu+yophJgjpjnOW4BgWJZlD5fb5LbNa1KUMdJPbavkeAsYTm9Z8FcPFx
+	 KwtJ/VfPcoPUNyrgU+IPUTcuHgI2Mj5cIL/7iwYwGeDJ016YYM5jEhMlEFOkuF3RT5kow
+	 HsbMZt5dgGqRADiki7pt/Hiuk/r+Da4bSbAgfiE+tjLWCJC2WTWntMVVL8Sa5+n4gcA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024761;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024764;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZIPsHAcVwGZvAxVb7R/yVQbrvqGWwTg3fxStRWpay48=;
-	b=EPgLy1hQY5zNHx1bX0Tw24U2m3lO9uNos2Z51F6dJcMya2nTQOQBZVPRDRWhtqlXl5K3
-	 OiAbMYYq4XvEU/VDKN64vnjYpHQDHa66yu9s6fiQBbDGYFP+yvNcmsiP7ynnTcMNBKPBm
-	 ulTxQiIwPwykS29S+ylmBesxHOk21fNYFlp2a3cq+xJrrIn180BrVy3ohADPxShpAYt7U
-	 KIG35DVaur4PIc0qHMw10dmN9LSXYW+82Wsq/KSwGe29wABesLiF9+7Q8UVkSLw2AD1cu
-	 AwA7uNgsf9SKe3USRHTg9NbBSYzXo0Y+cuDQ0CfM2f7gwBXSOGAwwbJpsY/ncLF3gKw==
+	bh=VG56PD8Zz5JHRYoZjk9P2BqGAdO0e1hZ3GxqMpUDRNw=;
+	b=MCe9arkAXLejkib5dmQGmOKZWCp8h5nlUgf6BmI8RcI/GAS5Y0mhAW8x9ViIPw7M4PCl
+	 uZ+KE4eS4hZwUhJfNaperfQ5NuZHMohDaUNRGjcD1EA5oa37NW9IU1g5SdAeIrZeMMD8m
+	 3VHljHyuwbRnNv4rm9YfpfpocT95N/ROwcragnjIn3I+E3VVYFSiLP1dddWK14rYHTMl2
+	 EiZ05vTdtwdXctwWX8WecmAB5zH8azrBHxSjZ6rEl3OMoP8GUxhJWGd2dEw9ZgoFdK7ew
+	 XND2mBaIMzZ/Dpe3tjMO3Z1uqBHfgfrtfMLtBOegehZgGmRkWh+sn0WHR/Jjad8D8xQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1bTVPEXu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E21oLR+H;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A6F60A2604;
-	Wed, 18 Nov 2026 17:59:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9111606A337;
+	Wed, 18 Nov 2026 17:59:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1bTVPEXu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 987C91F000C4;
-	Wed, 18 Nov 2026 17:59:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E21oLR+H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E75B1F000C4;
+	Wed, 18 Nov 2026 17:59:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024761;
-	bh=ZIPsHAcVwGZvAxVb7R/yVQbrvqGWwTg3fxStRWpay48=;
+	s=korg; t=1795024763;
+	bh=VG56PD8Zz5JHRYoZjk9P2BqGAdO0e1hZ3GxqMpUDRNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1bTVPEXu5pcQDbnSsJR/PrbMbrL8mPdvRJG6DKGgC46z3FIDGH+j+HT3VFkPuuToc
-	 PbYdbuHfrfJcMd8rt0hVwXHIscrhrf+lDr8v/8OzkN+TfoVt/jQwfGEnAP1aDoG3uq
-	 Hi9luY6JEzuKaBGKW5BY5d7BYif6rHhWQxCV9J78=
+	b=E21oLR+Hm4Rvg0rPZKMaBjHkkYNc2Z7vX34fg/N3GKZ2nzbTP7jKz8qWwvWK6RXO0
+	 xsPZchCkpErLRWwqs8My2tCqlidcBaCpkBk161EpFLLLPOuBq5GKmhXbOJ8tuep97Q
+	 z6T2xKTFgQEB2BdIHA26PwQWF5KovORUeVSJxpD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Waiman Long <longman@redhat.com>,
+	Ridong Chen <ridong.chen@linux.dev>,
+	Guopeng Zhang <zhangguopeng@kylinos.cn>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0823/2151] ASoC: mediatek: mt8192: switch to devm_clk_get_optional()
-Date: Wed, 18 Nov 2026 15:42:38 +0100
-Message-ID: <20261118150152.113384479@linuxfoundation.org>
+Subject: [PATCH 6.18 0841/2151] cgroup/cpuset: Run SCHED_DEADLINE shrink test on valid partition root only
+Date: Wed, 18 Nov 2026 15:42:56 +0100
+Message-ID: <20261118150152.885166731@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,49 +70,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 6f4edfdce0099dc0c346c78c85f58a23d4ee646e ]
+[ Upstream commit 8a1c0f5c82843104d9bef2bc3726c89da70a9b91 ]
 
-Switch from devm_clk_get() to devm_clk_get_optional() when requesting
-clocks, as optional clocks automatically return NULL when not present
-instead of requiring manual check and NULL assignment.
+Commit f82f80426f7a ("sched/deadline: Ensure that updates to exclusive
+cpusets don't break AC") adds a check in validate_change() to make
+sure that there is enough bandwidth for SCHED_DEADLINE tasks if we
+shrink a v1 exclusive cpuset that has CS_CPU_EXCLUSIVE flag set.
 
-Additionally, handle clock errors properly using dev_err_probe() to
-propagate error codes (such as -EPROBE_DEFER) on failure instead of
-just printing a warning and continuing with NULL pointers.
+With the introduction of cpuset partition in cgroup v2, we keep setting
+the CS_CPU_EXCLUSIVE flag for a partition root so that the SCHED_DEADLINE
+check will continue to work as intended. However it turns out that the
+current code isn't perfect and there are cases where a cpuset isn't
+a valid partition root, but the exclusive flag is still incorrectly
+set. This can leads to SCHED_DEADLINE check being incorrectly triggered
+when there are deadline tasks in the system. This can result in unexpected
+-EBUSY failure when making changes to cpuset control files. Fix that
+by checking for a valid partition root for v2 and is_cpu_exclusive()
+for v1. It is far easier and less cumbersome than to make sure that
+the exclusive flag is only set for valid partition roots.
 
-Fixes: 125ab5d588b0 ("ASoC: mediatek: mt8192: add platform driver")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260918133912.133799-6-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Even though commit a86ce68078b2 ("cgroup/cpuset: Extract out
+CS_CPU_EXCLUSIVE & CS_SCHED_LOAD_BALANCE handling") is marked as a
+commit to be fixed, the problem may exist before that.
+
+Fixes: a86ce68078b2 ("cgroup/cpuset: Extract out CS_CPU_EXCLUSIVE & CS_SCHED_LOAD_BALANCE handling")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Reviewed-by: Ridong Chen <ridong.chen@linux.dev>
+Reviewed-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8192/mt8192-afe-clk.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ kernel/cgroup/cpuset.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8192/mt8192-afe-clk.c b/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
-index 77f596cab92da..9b9a3465ddb52 100644
---- a/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
-+++ b/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
-@@ -672,13 +672,10 @@ int mt8192_init_clock(struct mtk_base_afe *afe)
- 		return -ENOMEM;
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index 15b6c9a6402ab..968a50997ac1e 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -714,8 +714,8 @@ static int validate_change(struct cpuset *cur, struct cpuset *trial)
+ 	 * For v1, effective_cpus == cpus_allowed & user_xcpus() returns
+ 	 * cpus_allowed.
+ 	 *
+-	 * For v2, is_cpu_exclusive() & is_sched_load_balance() are true only
+-	 * for non-isolated partition root. At this point, the target
++	 * For v2, is_partition_valid(cur) & is_sched_load_balance() are true
++	 * only for non-isolated partition root. At this point, the target
+ 	 * effective_cpus isn't computed yet. user_xcpus() is the best
+ 	 * approximation.
+ 	 *
+@@ -724,7 +724,8 @@ static int validate_change(struct cpuset *cur, struct cpuset *trial)
+ 	 * becomes an issue.
+ 	 */
+ 	ret = -EBUSY;
+-	if (is_cpu_exclusive(cur) && is_sched_load_balance(cur) &&
++	if ((is_partition_valid(cur) || (!cpuset_v2() && is_cpu_exclusive(cur))) &&
++	    is_sched_load_balance(cur) &&
+ 	    !cpuset_cpumask_can_shrink(cur->effective_cpus, user_xcpus(trial)))
+ 		goto out;
  
- 	for (i = 0; i < CLK_NUM; i++) {
--		afe_priv->clk[i] = devm_clk_get(afe->dev, aud_clks[i]);
--		if (IS_ERR(afe_priv->clk[i])) {
--			dev_warn(afe->dev, "%s devm_clk_get %s fail, ret %ld\n",
--				 __func__,
--				 aud_clks[i], PTR_ERR(afe_priv->clk[i]));
--			afe_priv->clk[i] = NULL;
--		}
-+		afe_priv->clk[i] = devm_clk_get_optional(afe->dev, aud_clks[i]);
-+		if (IS_ERR(afe_priv->clk[i]))
-+			return dev_err_probe(afe->dev, PTR_ERR(afe_priv->clk[i]),
-+					     "failed to get clock %s\n", aud_clks[i]);
- 	}
- 
- 	afe_priv->apmixedsys = syscon_regmap_lookup_by_phandle(of_node,
 -- 
 2.53.0
 
