@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059888;
-	b=4iKS+Ls30mqCEBLKjCqoY/MaCgA5MNG2EPuKvYL2GkiZpu8kB/NCxp6Zg5H2WQGCYG6B
-	 gVsRMrCLzGYOeqZoUWEYAa43eOHBlj0LEVl848j8nE5LeBzo+uKoyZysXg5d7OncoL/qB
-	 1lK/OlxuVPBG6DEhE8btvlEbOErE/1+bnd2xFiQpLGCgouZ3/Tc13cu8xal+NZG3VcES9
-	 Km6+fm5027Ex8IcUVBkaDXrJkj1CDF+zk86G+tPNBEyZQLNBbfpGg/M8NgZkQ3JE6VLMF
-	 FnFKPxdYBRv0RHGoNQO+OaSeoFtc91WYFYLM/493a1CGz5x/votoHq/U/sWlx9r247w==
+	t=1795059891;
+	b=PQJrO/ua1p2rz8q+mVAzhRKd4yO2sNa5lS4BhS1Xlj2SzWF42q6Ty8vst+/JMn/gRE85
+	 JhMFt8wUuwYnevdlykSjoayQCY5GBwk+H8FiQisJGEMM8dlnL5CcA4nhTSZdQ3JaCOu6D
+	 Rly/vjwtKZGMB/VStfBUMPYCyrXVjPLDOqgu6sdnZaGrVam2iYmPQdmENAMspcEWyjS5u
+	 55e/7NRIOJR2E6F5mVVfpx+uBHMus15/U+4UUe9ESzULm15uF/ZchO9huDtU/SeTudOlV
+	 qaDr8ZZPX1xZA5EZk8hr+EzwfJOBwCJIkFE64MJBMclf6phdiZ6WDPgxFDOPis5qdxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059888;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059891;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e/cX1yMM1Mo1tgiK3OubAnpScSNhosS9QZwPY20XcEQ=;
-	b=s++leOEzPT388uZASCnQEokWRTPrr981gw6dLCWWYdyP5a5DEyy0UnHVVtSMoP+oc8si
-	 7FMy4W25eiJ8gr1j3Ue+M9oYq2/zIR0D0NNxo8zVLb294hK9UGAIDjwz8DY1apGBdesiO
-	 QSULasPBjKK+3SLp2ltZxYk6Qd5NBo0xlr4UmDcJKFdVd5jSKTWrvZpDx0kyBjof1NPHy
-	 YH7IBhbGkfTtxT7X30xa6DdxiwQbrCfaSvZBudsJ3jrd6ifFfaaRci4SwFRcJzqyEV7sD
-	 NbEzSoOQBuKbyKQP74Fr/qVTUtPaT66mn9K7w4Zexlcb7MHATGBn0x4lI5dRcLmlHzQ==
+	bh=wfbk9UaqTp5sO2lOQSrvBtNiCS14iy8WudEG9Ezbgvc=;
+	b=yf6D7uCJWgsawCCycHmAyBpHyqgJkh8krKDix8UeD+liltgi3vHVsTYETG7IQoynz2/e
+	 vTLOS/p6L4BqQourzKCy25fgbMaisg9oPFpqj7LNKima51YZxXqzfncG/j94W0bStuQ5W
+	 wzoPqb6Oz15B2NMhN1pnJgKzYgM/XFAaSUjKRbue6hsAn0NjiV8lJ67wAJ/EMkiARfIx2
+	 nX+Tve8sGRe8Hnkc6kMAKbta731n4+/zwE1l4FHhAjevpKJhycVznJavX+BYhfe5q+fxf
+	 nVIjABvU1puDm0Ko16meYWYOnNjPNtiZXzMhE/j8s2ek2OLEK8buRt4cbhTs97Z2z/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=plAoRfHe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UtZsFIH5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68521606A326;
-	Thu, 19 Nov 2026 03:44:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4856A606A326;
+	Thu, 19 Nov 2026 03:44:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=plAoRfHe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDA7B1F000C4;
-	Thu, 19 Nov 2026 03:44:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UtZsFIH5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 967771F000C5;
+	Thu, 19 Nov 2026 03:44:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059888;
-	bh=e/cX1yMM1Mo1tgiK3OubAnpScSNhosS9QZwPY20XcEQ=;
+	s=korg; t=1795059891;
+	bh=wfbk9UaqTp5sO2lOQSrvBtNiCS14iy8WudEG9Ezbgvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=plAoRfHeVxG9UnZcDi8CvrM8jsz2s4q2YF3eUkXWsF6w6nu6GkBYUcv4GYK9JAxA+
-	 MjaEmvQk4zLCU9pK235o6lBZTRM1+AhKoDNk7uKHf64QU3gYh0OM3w961Q2fWYh23m
-	 WHPEQLX7GYBFTkW6neCAhKrOZIgDhKvU7zC0fjpA=
+	b=UtZsFIH5hzoV7ILuPLxqeKExWOMYS3c7GJ9r3Xa/R7HDDKRV7iN9g0ZNBaQjDPS6k
+	 MuaknKV6e+owEZoOWoQ+eLCoC0m70maE+4/fNy2T91OD6lBSOuehnsEEnx8Px0V/BG
+	 7JYdDKi6FxvSSknShAi+tYaAolnwsCS3wsaJjcec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Pavel Hofman <pavel.hofman@ivitera.com>,
+	Henrik Enquist <henrik.enquist@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1002/1848] media: sti: delta: use unaligned accessors for MJPEG SOF fields
-Date: Wed, 18 Nov 2026 15:50:40 +0100
-Message-ID: <20261118145958.753612608@linuxfoundation.org>
+Subject: [PATCH 5.10 0976/1848] ALSA: aloop: Dont constrain playback params in notify mode
+Date: Wed, 18 Nov 2026 15:50:14 +0100
+Message-ID: <20261118145957.817045761@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,69 +69,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Henrik Enquist <henrik.enquist@gmail.com>
 
-[ Upstream commit fdc5bf02aeaef04e7d13895db9b6eaf8083953f9 ]
+[ Upstream commit ded106036984a9dd766e7e1451b02e2d15c81438 ]
 
-delta_mjpeg_read_header() scans a compressed MJPEG access unit byte by
-byte and passes the bytes after an SOF marker to delta_mjpeg_read_sof().
-The SOF parser then reads 16-bit big-endian fields directly from that
-byte stream.
+With notify enabled (the pcm_notify module parameter or the "PCM
+Notify" control), the playback side of a cable may change format, rate
+and channels while a capture is running. loopback_check_format() then
+stops the capture and notifies the "PCM Slave" controls, so that the
+capture application can reopen with the new parameters. For this
+reason loopback_open() still gives a notify mode playback the
+unconstrained loopback_pcm_hardware.
 
-The SOF payload is not an aligned object. The marker scan can find the
-payload at any byte position, and the SOF layout also puts frame_height
-and frame_width after a one-byte sample_precision field. Those fields
-therefore sit at odd offsets within the payload even when the payload
-base happens to be 2-byte aligned.
+Since commit 898dfe4687f4 ("ALSA: aloop: Fix racy hw constraints
+adjustment") the hw rules refine against the shared cable->hw instead
+of the substream's own runtime->hw. This pins the playback side to the
+parameters of an open capture whatever the notify setting is. A player
+probing the device sees only the capture's rate, format and channels,
+and the format change path in loopback_check_format() can't be reached
+by a new playback.
 
-Avoid casting the byte stream to __be16 pointers and use
-get_unaligned_be16() for the SOF length, height, and width fields.
+Skip the format, rate and channels rules for the playback substream
+when notify is enabled. Skip the period bytes rule as well: with a
+sound timer source, params_change() already takes the period size from
+a notify mode playback, and keeping the old capture's period bytes
+leaves a playback at another rate with a period that doesn't match the
+timer. The capture side stays constrained to the cable parameters.
 
-This issue was detected by our static analysis tool and confirmed by
-manual audit. A focused UBSAN alignment validation of the same typed
-load shape reported a misaligned __be16 access in delta_mjpeg_read_sof().
+The capture stop this makes reachable again was hardened by commit
+826af7fa62e3 ("ALSA: aloop: Fix racy access at PCM trigger") and
+commit e5c33cdc6f40 ("ALSA: aloop: Fix peer runtime UAF during
+format-change stop"), which need to be applied first when backporting.
 
-Fixes: 433ff5b4a29b ("[media] st-delta: add mjpeg support")
+Reproducer, with notify enabled on the cable:
+  arecord -D hw:Loopback,1,0 -r 44100 -f S32_LE -c 2 /dev/null &
+  aplay -D hw:Loopback,0,0 96k.wav
+Before: aplay is forced to 44100 Hz and the capture keeps running.
+After: aplay runs at 96000 Hz, the capture is stopped and "PCM Slave
+Rate" reports 96000.
+
+Fixes: 898dfe4687f4 ("ALSA: aloop: Fix racy hw constraints adjustment")
+Reported-by: Pavel Hofman <pavel.hofman@ivitera.com>
+Closes: https://lore.kernel.org/all/b4af9071-f8d7-5b47-4d7a-c5743bd67394@ivitera.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ sashal: replaced the generic unaligned access header with the available architecture-specific header ]
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Henrik Enquist <henrik.enquist@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20261003-aloop-notify-fix-v1-1-ba5dfb831bf5@gmail.com
+[ sashal: adapted helper-based checks under scoped_guard() to inline checks with explicit mutex_unlock() calls before early returns ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/sti/delta/delta-mjpeg-hdr.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ sound/drivers/aloop.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/drivers/media/platform/sti/delta/delta-mjpeg-hdr.c b/drivers/media/platform/sti/delta/delta-mjpeg-hdr.c
-index 90e5b2f72c82b..6e156cd806bb5 100644
---- a/drivers/media/platform/sti/delta/delta-mjpeg-hdr.c
-+++ b/drivers/media/platform/sti/delta/delta-mjpeg-hdr.c
-@@ -4,6 +4,7 @@
-  * Author: Hugues Fruchet <hugues.fruchet@st.com> for STMicroelectronics.
-  */
+diff --git a/sound/drivers/aloop.c b/sound/drivers/aloop.c
+index 3901f52164933..5ff8fdaf8989d 100644
+--- a/sound/drivers/aloop.c
++++ b/sound/drivers/aloop.c
+@@ -961,6 +961,11 @@ static int rule_format(struct snd_pcm_hw_params *params,
  
-+#include <asm/unaligned.h>
- #include "delta.h"
- #include "delta-mjpeg.h"
+ 	snd_mask_none(&m);
+ 	mutex_lock(&dpcm->loopback->cable_lock);
++	if (dpcm->substream->stream == SNDRV_PCM_STREAM_PLAYBACK &&
++	    get_notify(dpcm)) {
++		mutex_unlock(&dpcm->loopback->cable_lock);
++		return 0;
++	}
+ 	m.bits[0] = (u_int32_t)cable->hw.formats;
+ 	m.bits[1] = (u_int32_t)(cable->hw.formats >> 32);
+ 	mutex_unlock(&dpcm->loopback->cable_lock);
+@@ -975,6 +980,11 @@ static int rule_rate(struct snd_pcm_hw_params *params,
+ 	struct snd_interval t;
  
-@@ -48,13 +49,13 @@ static int delta_mjpeg_read_sof(struct delta_ctx *pctx,
- 		goto err_no_more;
+ 	mutex_lock(&dpcm->loopback->cable_lock);
++	if (dpcm->substream->stream == SNDRV_PCM_STREAM_PLAYBACK &&
++	    get_notify(dpcm)) {
++		mutex_unlock(&dpcm->loopback->cable_lock);
++		return 0;
++	}
+ 	t.min = cable->hw.rate_min;
+ 	t.max = cable->hw.rate_max;
+ 	mutex_unlock(&dpcm->loopback->cable_lock);
+@@ -991,6 +1001,11 @@ static int rule_channels(struct snd_pcm_hw_params *params,
+ 	struct snd_interval t;
  
- 	memset(header, 0, sizeof(*header));
--	header->length           = be16_to_cpu(*(__be16 *)(data + offset));
-+	header->length           = get_unaligned_be16(data + offset);
- 	offset += sizeof(u16);
- 	header->sample_precision = *(u8 *)(data + offset);
- 	offset += sizeof(u8);
--	header->frame_height     = be16_to_cpu(*(__be16 *)(data + offset));
-+	header->frame_height     = get_unaligned_be16(data + offset);
- 	offset += sizeof(u16);
--	header->frame_width      = be16_to_cpu(*(__be16 *)(data + offset));
-+	header->frame_width      = get_unaligned_be16(data + offset);
- 	offset += sizeof(u16);
- 	header->nb_of_components = *(u8 *)(data + offset);
- 	offset += sizeof(u8);
+ 	mutex_lock(&dpcm->loopback->cable_lock);
++	if (dpcm->substream->stream == SNDRV_PCM_STREAM_PLAYBACK &&
++	    get_notify(dpcm)) {
++		mutex_unlock(&dpcm->loopback->cable_lock);
++		return 0;
++	}
+ 	t.min = cable->hw.channels_min;
+ 	t.max = cable->hw.channels_max;
+ 	mutex_unlock(&dpcm->loopback->cable_lock);
+@@ -1007,6 +1022,11 @@ static int rule_period_bytes(struct snd_pcm_hw_params *params,
+ 	struct snd_interval t;
+ 
+ 	mutex_lock(&dpcm->loopback->cable_lock);
++	if (dpcm->substream->stream == SNDRV_PCM_STREAM_PLAYBACK &&
++	    get_notify(dpcm)) {
++		mutex_unlock(&dpcm->loopback->cable_lock);
++		return 0;
++	}
+ 	t.min = cable->hw.period_bytes_min;
+ 	t.max = cable->hw.period_bytes_max;
+ 	mutex_unlock(&dpcm->loopback->cable_lock);
 -- 
 2.53.0
 
