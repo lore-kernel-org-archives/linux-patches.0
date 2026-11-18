@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031025;
-	b=hmTAEMYQNHPCpCo6bSncp49Qwn9ejW1bEE4yh/Zx30/6ZH7vl/li3tUgpHYyPVHoEMpd
-	 jGCvWVXatLfK2zFNC4WLEJThT78IE7tzeuBMM4XUSXU60Aruz2tjaJbxmuMu+QD88x0aM
-	 mDkEMwEAW7QNiDEoXj8FnsklUC5Sl8X8V0Goc9e9K4iVesQWn+ZBsMlzOP9KtzAvuAkY7
-	 R7mMzBPdZ6Ed823CXoDEOU+AwkU7UUo53YqBZ3NNrqUphFkBVvlbYKSsyzXnxbtyZ8STg
-	 MT1Z2xLI1jCf2kBwNm8H6xjMTu3Uy0xHLlTWdr4xUJTmfJP2ZthbDgQqZd5MQztxUVw==
+	t=1795031028;
+	b=Dbdtou6CioDNFxfAo+rF9qu3Z9/2ylCOvVApaH3rhX0Vk0MC0QtguB06EasDf3FcQapm
+	 OBHty+Qifs2HNx6Awx01KgD7j3XQlYB3UfJYGOuB9Y8uJ4SuQWFtQ+gl2/Yrq1Brl4re2
+	 osLYq7omtmUuatCKwcTgNl6FnS/BKa7FoI1wLdcbplUBJvoP2qU2eeGjfiVGUc2bBlOd8
+	 i7iZB15jUVGATMoacHUK0HPmL9LRvYBQozLZY7Ty9QA0zU5P1E8IoyZZerFZK2svGF5Ym
+	 tSzLEwtrZsZBW5RFB5Nq9mnlgFuYKXL6rRAnDpCDPaMOVqhLTCTdQ6v5v0Kcz0KO6mw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031025;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031028;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XKvwbLGWfP5RtD8eO8KZL6pGWcVT2WWXC+JH8LQWwR8=;
-	b=hxwXVOpS/c/cB/kXbepm6AEFkRkv+7WSOwfxYDv3Tzwfm0U/sB/0eGcHmtIiylM2tDfm
-	 OLaeAZaH4gxMNU2plnBbbaxO0H/yi+9iqUIYcPhyPvh2HOfZ1poLZ25DLaPbMtVGIRezz
-	 l0ewm2H9G0g7KU17KBMONcPyAiKaQQNqqkQYrEhdSYdPLuHddxih0CI17RwtriTcEiDbg
-	 LPpWV4p9TukJMddIBAKUCd9TLCIdgKIr9a2D+Q407GzkaOxg/crKCoELcAhKuSHm26mde
-	 k9LhAakNiowM5AEXv22cVIy7fInx5l1biuxc4NguGpEAgL29X+g4UKZKDmEQDZ2fAwQ==
+	bh=nG0hA235rajmP4it7WyxRSXl/GtdGDSN9cpidiD+oRs=;
+	b=kDCC+IiXfd+835jal6npZgFWN4ho6hfJWLRbHU5svso5Gq8CFL7NJT7plKqUFJi8FQrP
+	 m2belujBchMaNLhWUjFpcmHA0whjcN28LKhtZ45P/778PceOfkkxqxkaMz7RE/l53VFcQ
+	 PQpEHxA7WuM8cpSQz+V/InnnKCzcxp0ivo1RiATNbaE2crMeaDYPwVveZe2qDIly/ELvh
+	 /N+Bu7NrV5mUNZ1IuWQXL+TyzjtjG+JdH3bnUbZaXf7gLTQNUK05T6APAVyzoLoe8ecs4
+	 m9Vjkh0hNYuix/dvmNrsgIyCbSlCHEQsvrTcm7znOLxNFq+kW9CRh2H22uhKYCuzYaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RaGnKYI1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ojm4bwUs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB6F5606A320;
-	Wed, 18 Nov 2026 19:43:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2948606A325;
+	Wed, 18 Nov 2026 19:43:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RaGnKYI1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E0C61F000C4;
-	Wed, 18 Nov 2026 19:43:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ojm4bwUs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F2C1F000C4;
+	Wed, 18 Nov 2026 19:43:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031025;
-	bh=XKvwbLGWfP5RtD8eO8KZL6pGWcVT2WWXC+JH8LQWwR8=;
+	s=korg; t=1795031028;
+	bh=nG0hA235rajmP4it7WyxRSXl/GtdGDSN9cpidiD+oRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RaGnKYI1+MSTgeycz7/nMWIzMvGe1PrffB5FGBfsdHbINTWqSdzsrSLOp0BcSDNnn
-	 BBtkLwp7S9Bu/0x+n/K4QxfdaLzTixCcYAgRJ1bKCm9ohsheFIKMpEED63VbazdtkZ
-	 sizFue6i9BK4ZABhW3cCKsONSLnEBTGxi/p0c+f0=
+	b=ojm4bwUspCEhIuNtZPIgYE4OjPeW/0tlPnsXn1UGdrfD6TYtxVeyPLYwI2pZ/XH2o
+	 KR/OjlVt6QQWk4YYZJUDwlmPZxPHkQaDV5KhK3fCVfyyPV5rzGsT3+RLJjrjrNBmPF
+	 CZUezUu5YmnJG0rxhqhPt4cc1kP4ODKCXy5Ld/28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0911/1756] efi/libstub: Fix error unwind freeing fdt in allocate_new_fdt_and_exit_boot()
-Date: Wed, 18 Nov 2026 15:50:38 +0100
-Message-ID: <20261118150046.232842173@linuxfoundation.org>
+Subject: [PATCH 6.12 0912/1756] efi/riscv: libstub: Dont set image_size in handle_kernel_image()
+Date: Wed, 18 Nov 2026 15:50:39 +0100
+Message-ID: <20261118150046.279953403@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,60 +70,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit d83fe67339f2032d8facf0fe8a047a4c5d15394f ]
+[ Upstream commit fd4465f49b53c7379d10610f8edb71f77366a5b7 ]
 
-Sashiko says fdt_addr can point to either an allocated fdt or the fdt from
-get_fdt() which is memory owned by FW.
+Sashiko points out the image_size should only be set if image_addr was
+reassigned to some allocated memory. If image_size is not zero then the
+caller will free the image_addr pointer.
 
-Only the allocated fdt should be freed on the error unwind path. Use a
-dedicated variable for the allocation's size so that the free does not get
-confused.
+efi_kaslr_relocate_kernel() never works like that, if it changes
+image_addr to allocated memory the free is done through reserve_size.
 
-Fixes: 4fc8e738ff3e ("efi: libstub: remove DT dependency from generic stub")
-Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Fixes: b7ac4b8ee73d ("riscv: libstub: Implement KASLR by using generic functions")
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/libstub/fdt.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/firmware/efi/libstub/riscv-stub.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/firmware/efi/libstub/fdt.c b/drivers/firmware/efi/libstub/fdt.c
-index 6a337f1f8787b..b7a2d7aa61b4e 100644
---- a/drivers/firmware/efi/libstub/fdt.c
-+++ b/drivers/firmware/efi/libstub/fdt.c
-@@ -229,6 +229,7 @@ efi_status_t allocate_new_fdt_and_exit_boot(void *handle,
- 	u32 desc_ver;
- 	efi_status_t status;
- 	struct exit_boot_struct priv;
-+	unsigned long fdt_size_allocated = 0;
- 	unsigned long fdt_addr = 0;
- 	unsigned long fdt_size = 0;
+diff --git a/drivers/firmware/efi/libstub/riscv-stub.c b/drivers/firmware/efi/libstub/riscv-stub.c
+index e7d9204baee31..725b634c51791 100644
+--- a/drivers/firmware/efi/libstub/riscv-stub.c
++++ b/drivers/firmware/efi/libstub/riscv-stub.c
+@@ -37,17 +37,14 @@ efi_status_t handle_kernel_image(unsigned long *image_addr,
+ 	kernel_codesize = __init_text_end - _start;
+ 	kernel_memsize = kernel_size + (_end - _edata);
+ 	*image_addr = (unsigned long)_start;
+-	*image_size = kernel_memsize;
+-	*reserve_size = *image_size;
++	*reserve_size = kernel_memsize;
  
-@@ -251,12 +252,13 @@ efi_status_t allocate_new_fdt_and_exit_boot(void *handle,
- 		if (strstr(cmdline_ptr, "dtb="))
- 			efi_err("Ignoring DTB from command line.\n");
- 	} else {
--		status = efi_load_dtb(image, &fdt_addr, &fdt_size);
-+		status = efi_load_dtb(image, &fdt_addr, &fdt_size_allocated);
+ 	status = efi_kaslr_relocate_kernel(image_addr,
+ 					   reserve_addr, reserve_size,
+ 					   kernel_size, kernel_codesize, kernel_memsize,
+ 					   efi_kaslr_get_phys_seed(image_handle));
+-	if (status != EFI_SUCCESS) {
++	if (status != EFI_SUCCESS)
+ 		efi_err("Failed to relocate kernel\n");
+-		*image_size = 0;
+-	}
  
- 		if (status != EFI_SUCCESS && status != EFI_NOT_READY) {
- 			efi_err("Failed to load device tree!\n");
- 			goto fail;
- 		}
-+		fdt_size = fdt_size_allocated;
- 	}
- 
- 	if (fdt_addr) {
-@@ -334,7 +336,7 @@ efi_status_t allocate_new_fdt_and_exit_boot(void *handle,
- 	efi_free(MAX_FDT_SIZE, *new_fdt_addr);
- 
- fail:
--	efi_free(fdt_size, fdt_addr);
-+	efi_free(fdt_size_allocated, fdt_addr);
- 	if (!efi_novamap)
- 		efi_bs_call(free_pool, priv.runtime_map);
- 
+ 	return status;
+ }
 -- 
 2.53.0
 
