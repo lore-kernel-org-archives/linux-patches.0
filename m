@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019238;
-	b=qlN5JRa9Au29Y3Ycnt62bFWSbROEOQZ3rBAKpri+Rk5qQzqd1oA/fBvK8SvnrJt3HqHP
-	 Efjshrgzm1LuAoFx9J6n7xr3vuW5w2UNg9NizpRl4oJTWxhCKDhap9BiIbT3UMTEGMO/V
-	 mTf0YSRy+du5a9jnfxXwp0YMotw/7WPZasHLeJ/7c1bkHi4BkVSHVq7b9N5Cf7IxHh8QH
-	 auGS6wljaZlG3/CkvWODxTymEEtUS9x4KRvyJuJRHCTfjuZpfx8xo3U9pmEroId2QOIPN
-	 hV+n3QCzAXLQ2j4F6oln43Xy0GS849hOFGAds3vsH5GS5jjEk8J4kr3H3xW2BZbJzWw==
+	t=1795019241;
+	b=mHU4SF/65oFOdn1MY5V4OgTuzd2JkZ6MTQeBDDUtpozL0E6aX6MLWTwXTT4FumtD4nB6
+	 b/yOHF+iGsRwWqzNm/kXRHLSz/nPKCA9Qp+caCvcb8Dq7inzCqNLjhEhWcbx0Tz5ieGUP
+	 Y3SwR8Ki4IYLXEs9pwefi9A3sGDDKnNOffz9OqkcfwIk2BO26Bls2lJJRPc7KCCtAjEmn
+	 ifzVt58GniUa7HxwaLDywSCF5c/+CYD5RtB7/CJvOhyWiSyAOB8m+FESwBUQeblztQ1O8
+	 4ZaY9y98mQMuZIOYdsN24Dg7wPtzMSWg2fwgz2hWDiycuLUcrtsOzFNny11nNxwyLgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019238;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019241;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bVP//ZLWMhnmJKUXUjKhQdsvrtu96Yu4OP3OzDJMKh4=;
-	b=ezru+6kM3SpidgHKl3oOcrRGWgZh92xC5UFP48BFBLZw677QGaXDTUaQVjm2LUOnzGz3
-	 mAomerEtP47o/w9UhSrh3KUN8RsJhTCB5x1PYQ3ZRErhvOu7LnISE/gc+DK8ggDO60o6m
-	 u/g+QPjht7M8FdrzId7B8yPQ5+wDtUli2Se3WXnzrJuTZUVeHi49+10QvA0e7Tl+M3isO
-	 95G80JfSK/MTRF6Tfj/a6pTSdIoYDeZvECAAwykF4uFMPBnV7qOKYP7YZPgGv02nZnk9/
-	 DC/01LymFxo4UqTh5EXZgepOijkxSSj3vpIfobo9qIZfz91QPWzDqaY4FXfB0rm0suQ==
+	bh=dVqJgrYzX8+4UE8FkEGXkj8FK9O+MietKEz2bxyqVBs=;
+	b=iXKZHCPzS3m0zPnJUCqvauwZCxkCeBnQ5w5Hod6q/J05ucwvyJmuN4pZFDdS7Vai2iLq
+	 JxvcVLjJc6P1iRM+PDe8qTPtpcUefgoOvGw1Efd2PEnGZqLW0vmWCQvmrqmbffdYcsuCI
+	 BwabTAj+RTl+SglnZzbQtXIw9K1DFNSYlo20WCrkj8MuVKrnU3M6qHRYtmhqH3imswMWw
+	 4kYzPDaQv4QxZPjdpuO990syvKXaMVE7Kv3xAqFaJUoKD0Qn+3g2TSqfD9dsST19pkEPO
+	 Fd4Azi4W1Xv6a/Ld83IGQiUyJquHOJDJrDTPnfsmgXccoBW1YBz3Uh4D5ZOhpcVTpPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GN+KmPe1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iKgjbyUv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2034F606A332;
-	Wed, 18 Nov 2026 16:27:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4573960A260A;
+	Wed, 18 Nov 2026 16:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GN+KmPe1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7133D1F000C4;
-	Wed, 18 Nov 2026 16:27:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iKgjbyUv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 473A21F000C4;
+	Wed, 18 Nov 2026 16:27:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019238;
-	bh=bVP//ZLWMhnmJKUXUjKhQdsvrtu96Yu4OP3OzDJMKh4=;
+	s=korg; t=1795019240;
+	bh=dVqJgrYzX8+4UE8FkEGXkj8FK9O+MietKEz2bxyqVBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GN+KmPe1rWEK/e2Xq5jjZvfep5xIGvvvW6fV/LWLJ0cZpnYA6mryxDljFhII7kXeE
-	 alaLMxKQBUT4hs4NWZZGifCqECiX1+TGxvp/Wv3+nXJoYLxXi7D+6jAfzIIt8vLGFt
-	 X8pZbY7eoftU8RsCHyvFys4tFOXtCKJUDXsI2niY=
+	b=iKgjbyUvofVSCDX6PBwhz7SNwa/gfEhM/iTkZnGI3pZeUO9pgIaQJEqkvOLffamlr
+	 uhjiFhb35yShi1izLVaPqCyP8b+4cgGtfwWK3PB825sJHZ8lREzyTDQ97OxPRIm2QB
+	 gMKM6gWjqbeSJuBZEyJj7uXRitvOodTArjXhVH5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-bot@kernel.org>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1523/2651] ALSA: seq: Fix missing direction and ump_group handling in 32bit compat ioctl
-Date: Wed, 18 Nov 2026 15:46:03 +0100
-Message-ID: <20261118150342.824302317@linuxfoundation.org>
+Subject: [PATCH 7.3 1524/2651] ALSA: pcmtest: Fix leak at probe error
+Date: Wed, 18 Nov 2026 15:46:04 +0100
+Message-ID: <20261118150342.859223179@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,68 +70,147 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 9d3e19c192b97b4c4c0abcafdbf1edb1e56cee88 ]
+[ Upstream commit d0f2ca62e89f3c666d0ec203eaa23b8d965e5443 ]
 
-I forgot to cover the two new fields, direction and ump_group, in
-struct snd_seq_port_info for the 32bit compat ioctls of
-SNDRV_SEQ_IOCTL_GET_PORT_INFO & co, which ended up with the garbage
-copies in those fields.  Add the handling of those two fields in the
-compat layer.
+When an error happens at probe of pcmtest driver before
+snd_card_register() succeeds, we have to release the card explicitly,
+but it's not done, leading to a potential memory leak.
 
-Also, avoid over-copying the 64bit snd_seq_port_info but only the first
-part (before the field kernel); this avoids the copy of kernel-space
-garbage value in the reserved field.
+Also, pcmtest driver manages struct pcmtst object unnecessarily
+complicatedly by a dynamic allocation and release.
 
-Fixes: ff166a9d19fa ("ALSA: seq: Add port direction to snd_seq_port_info")
+This patch fixes and cleans up the resource management:
+- Use card's private_data allocation for struct sndpcmtst at the card
+  creation, which is released automatically together with the card
+- Since the allocation of pcmtest is gone, snd_pcmtst_create() is
+  rather pointless, so just directly calling snd_pcmtst_new_pcm()
+- Use the new auto-clean mechanism to handle the error case at probe.
+- Many release handlers became superfluous and dropped
+
+In the end we got a good amount of code reduction.
+
+Fixes: 315a3d57c64c ("ALSA: Implement the new Virtual PCM Test Driver")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261007172533.14667-2-tiwai@suse.de
+Link: https://patch.msgid.link/20261007172533.14667-3-tiwai@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_compat.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ sound/drivers/pcmtest.c | 66 +++++++----------------------------------
+ 1 file changed, 10 insertions(+), 56 deletions(-)
 
-diff --git a/sound/core/seq/seq_compat.c b/sound/core/seq/seq_compat.c
-index 80110501da6ff..57aaa39afb9dc 100644
---- a/sound/core/seq/seq_compat.c
-+++ b/sound/core/seq/seq_compat.c
-@@ -25,7 +25,9 @@ struct snd_seq_port_info32 {
- 	u32 kernel;			/* reserved for kernel use (must be NULL) */
- 	u32 flags;		/* misc. conditioning */
- 	unsigned char time_queue;	/* queue # for timestamping */
--	char reserved[59];		/* for future use */
-+	unsigned char direction;	/* port usage direction (r/w/bidir) */
-+	unsigned char ump_group;	/* 0 = UMP EP (no conversion), 1-16 = UMP group number */
-+	char reserved[57];		/* for future use */
- };
+diff --git a/sound/drivers/pcmtest.c b/sound/drivers/pcmtest.c
+index fea9580593e66..b4e333b4c4381 100644
+--- a/sound/drivers/pcmtest.c
++++ b/sound/drivers/pcmtest.c
+@@ -446,20 +446,6 @@ static snd_pcm_uframes_t snd_pcmtst_pcm_pointer(struct snd_pcm_substream *substr
+ 	return bytes_to_frames(substream->runtime, v_iter->buf_pos);
+ }
  
- static int snd_seq_call_port_info_ioctl(struct snd_seq_client *client, unsigned int cmd,
-@@ -40,7 +42,9 @@ static int snd_seq_call_port_info_ioctl(struct snd_seq_client *client, unsigned
+-static int snd_pcmtst_free(struct pcmtst *pcmtst)
+-{
+-	if (!pcmtst)
+-		return 0;
+-	kfree(pcmtst);
+-	return 0;
+-}
+-
+-// These callbacks are required, but empty - all freeing occurs in pdev_remove
+-static int snd_pcmtst_dev_free(struct snd_device *device)
+-{
+-	return 0;
+-}
+-
+ static void pcmtst_pdev_release(struct device *dev)
+ {
+ }
+@@ -563,40 +549,9 @@ static int snd_pcmtst_new_pcm(struct pcmtst *pcmtst)
+ 	return err;
+ }
  
- 	if (copy_from_user(data, data32, sizeof(*data32)) ||
- 	    get_user(data->flags, &data32->flags) ||
--	    get_user(data->time_queue, &data32->time_queue))
-+	    get_user(data->time_queue, &data32->time_queue) ||
-+	    get_user(data->direction, &data32->direction) ||
-+	    get_user(data->ump_group, &data32->ump_group))
- 		return -EFAULT;
- 	data->kernel = NULL;
+-static int snd_pcmtst_create(struct snd_card *card, struct platform_device *pdev,
+-			     struct pcmtst **r_pcmtst)
+-{
+-	struct pcmtst *pcmtst;
+-	int err;
+-	static const struct snd_device_ops ops = {
+-		.dev_free = snd_pcmtst_dev_free,
+-	};
+-
+-	pcmtst = kzalloc_obj(*pcmtst);
+-	if (!pcmtst)
+-		return -ENOMEM;
+-	pcmtst->card = card;
+-	pcmtst->pdev = pdev;
+-
+-	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, pcmtst, &ops);
+-	if (err < 0)
+-		goto _err_free_chip;
+-
+-	err = snd_pcmtst_new_pcm(pcmtst);
+-	if (err < 0)
+-		goto _err_free_chip;
+-
+-	*r_pcmtst = pcmtst;
+-	return 0;
+-
+-_err_free_chip:
+-	snd_pcmtst_free(pcmtst);
+-	return err;
+-}
+-
+ static int pcmtst_probe(struct platform_device *pdev)
+ {
+-	struct snd_card *card;
++	struct snd_card *card __free(snd_card_free) = NULL;
+ 	struct pcmtst *pcmtst;
+ 	int err;
  
-@@ -50,9 +54,12 @@ static int snd_seq_call_port_info_ioctl(struct snd_seq_client *client, unsigned
+@@ -604,10 +559,16 @@ static int pcmtst_probe(struct platform_device *pdev)
+ 	if (err)
+ 		return err;
+ 
+-	err = snd_devm_card_new(&pdev->dev, index, id, THIS_MODULE, 0, &card);
++	err = snd_devm_card_new(&pdev->dev, index, id, THIS_MODULE,
++				sizeof(*pcmtst), &card);
+ 	if (err < 0)
+ 		return err;
+-	err = snd_pcmtst_create(card, pdev, &pcmtst);
++
++	pcmtst = card->private_data;
++	pcmtst->card = card;
++	pcmtst->pdev = pdev;
++
++	err = snd_pcmtst_new_pcm(pcmtst);
  	if (err < 0)
  		return err;
  
--	if (copy_to_user(data32, data, sizeof(*data32)) ||
-+	if (copy_to_user(data32, data,
-+			 offsetof(struct snd_seq_port_info32, kernel)) ||
- 	    put_user(data->flags, &data32->flags) ||
--	    put_user(data->time_queue, &data32->time_queue))
-+	    put_user(data->time_queue, &data32->time_queue) ||
-+	    put_user(data->direction, &data32->direction) ||
-+	    put_user(data->ump_group, &data32->ump_group))
- 		return -EFAULT;
+@@ -620,17 +581,11 @@ static int pcmtst_probe(struct platform_device *pdev)
+ 		return err;
  
- 	return err;
+ 	platform_set_drvdata(pdev, pcmtst);
++	card = NULL; /* probe succeeded, don't release as error */
+ 
+ 	return 0;
+ }
+ 
+-static void pdev_remove(struct platform_device *pdev)
+-{
+-	struct pcmtst *pcmtst = platform_get_drvdata(pdev);
+-
+-	snd_pcmtst_free(pcmtst);
+-}
+-
+ static struct platform_device pcmtst_pdev = {
+ 	.name =		"pcmtest",
+ 	.dev.release =	pcmtst_pdev_release,
+@@ -638,7 +593,6 @@ static struct platform_device pcmtst_pdev = {
+ 
+ static struct platform_driver pcmtst_pdrv = {
+ 	.probe =	pcmtst_probe,
+-	.remove =	pdev_remove,
+ 	.driver =	{
+ 		.name = "pcmtest",
+ 	},
 -- 
 2.53.0
 
