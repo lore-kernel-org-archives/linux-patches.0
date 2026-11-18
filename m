@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025824;
-	b=yNIw5Ga4WjXTpWRiijU4vsP+ErfH18lHIJnHxwcEWrlYtQfUJmprPxu7GMiWRoENn2et
-	 ZCxVyPAP/lkQX3jrJhKOtKGtSQq6jKeXoUAb3tVAupgI0b7KAHzf0+8980bwJeNryzbwE
-	 osOL5qhhbNP1dmFfhQkKHx1DjwN3uQ0LatyRD589k8YNpW578vFZvgLwbaWrZXia/37MC
-	 QU4yGts1Q4fzIurbgQBgeZ39jtKgpAmyyRMDVhhW5n7xlyfvdMExccx7M+uE8qUj5c9BD
-	 EjG/Sp5Bhu95KzWbZa4WpXgxMbs8BM2bJv81bVKT9NVyYpMyuytGHjeLLqsgSqtBClQ==
+	t=1795025826;
+	b=LzN36Px+BBmWyGDkvieqlZQel1vrTzObGvh0N8AM6JIbLuZhY7T2Kv7hfIDsFHzW5LLR
+	 /mwEmpkZzqoOMsW70JJC67128tupziw5kj8N7+PLYxZSK5M0tjs6Eg8S06osw/+NED9vU
+	 cE4UrFd929nIT+oSW6M0tHigM9JiuCk8m1YoQaIYUedMRMniI/r+I6+dXXgRUXGvBU5ZI
+	 wL1Y5KS0B2hONZmgB4TqZH/oFde6yHZNJReb74xH3C+pZ2pDNwPuVqJ/kzBN6uworbfTW
+	 jinSyhG0KwtwMG2cgxVJMh/mOcDBSXbiwTKIaNM9Updq5JXcBNBd8iFFMPp2wv9jNig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025824;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025826;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DvmR9QcHsisOho0jQPGZhx2O2UxrARMZLrfJu/jrEnY=;
-	b=QSiQreFmwsHxZOwhnWpjI29h0u7e3dVHq0V6wTO+6mH1TKxNAld0NmK6uIwdxWquizZQ
-	 NJLbbfbzWbKCApKvknd3+TFr72ot/MeDAT8lEf905bhsUksHJdg5IVPjLUi3rKizpS4gM
-	 zRofi2xGGMH1tRyh7Gze4IIAzcw0O9dzZNfp3XoPZ+/lIQljcQrGVZYyqTwqgevDgcwfO
-	 5uc5GQBy5C/sU/UNit60uTtjLT65LW9cyAfyr7pKFGFfCG3uo6Oke13dbhLZq11inPUrM
-	 /QhWFbjp8Kej2NP1AimHoELOpN1RaODmx3ebEAe5mwieuyWCFSKC/bXpV2fg5aeMn/g==
+	bh=wITJZ8P23OHcl+NV+92q0aTIUHHdzS6qo0DKtki/ZZQ=;
+	b=a0b5aYUxAw3g6ozpD3Y9/pzEi40UQnB07YhrFT27LY9VVE1yO00D+Y92+HX2X9w+p9hs
+	 pw//MigzZz5MmV3lOwRFmE0LYE3AJfjZxr/jQqFKzbyLCNc8+ZqTVlCUjDOsvtP4WDjj4
+	 5dpwfAHZZShTkVDkpNyeHqa6JGkJBALIdgo9YnRieErBFKkRMfgxCnxnBk6D14AtLsdl0
+	 ZO1IoTE5SEQGr4ocItXp6JvKPuYNCDrNsoD5RXs457sRh8fXfOSvPj3FNhcYQGXsw1xuy
+	 6YIFZWvgjuOQ3grayUDvQ2wYYAQufP/AGl6+EpCTKJgA/h+l3xRI2Oj1j4e4dViRj7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cesvlapK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S4uSfnQJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E447A606A31C;
-	Wed, 18 Nov 2026 18:17:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5BF606A31C;
+	Wed, 18 Nov 2026 18:17:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cesvlapK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43A6B1F000C6;
-	Wed, 18 Nov 2026 18:17:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S4uSfnQJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03C421F000C5;
+	Wed, 18 Nov 2026 18:17:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025823;
-	bh=DvmR9QcHsisOho0jQPGZhx2O2UxrARMZLrfJu/jrEnY=;
+	s=korg; t=1795025826;
+	bh=wITJZ8P23OHcl+NV+92q0aTIUHHdzS6qo0DKtki/ZZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cesvlapK2+Hhb8/pZtJy/KxBwMoUDN9taxE11jmLaT0+ezrYlkmXLYKzJvQh75y7J
-	 zqJhLdOXOew3Ns1Wn/9Jhbzeqpdim2OmlSeae03FLoEC+3rbpURP3Zqc4gazyKw8Ay
-	 rlnYdaDwGv/i7a8yi6Y4G9Cgja9pOWLKzTgxmZ90=
+	b=S4uSfnQJLEivMPxkJjUb3HE1pgkgiIL0Ixj0gN4OfDfct9mydNTZUe23pV33B16bW
+	 6NCNPdxR3ZbbN/FxgeTEwCxbYqQ6UntoH5mNrL/GAXqBVVVlMzwenlTkyCz9DntuFm
+	 4Or5mPnYs/l3rFEXuj6hsOkxbf6MawZF5EsUHUBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
+	Cristian Papa <pcristian292@gmail.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1216/2151] wifi: mt76: mt7615: usb: fix source overread in mt7663u_copy
-Date: Wed, 18 Nov 2026 15:49:11 +0100
-Message-ID: <20261118150206.496944618@linuxfoundation.org>
+Subject: [PATCH 6.18 1217/2151] wifi: mt76: mt7603: dont drop short frames looped back on PS entry
+Date: Wed, 18 Nov 2026 15:49:12 +0100
+Message-ID: <20261118150206.532769782@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,60 +68,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Cristian Papa <pcristian292@gmail.com>
 
-[ Upstream commit 0c2fcb5225361f71905697ef9db287b24bcc67cf ]
+[ Upstream commit 9956c4cac9d3f479817d6fe6a057aef3e86defcf ]
 
-mt7663u_copy() rounds up len to a multiple of four and uses the rounded
-length as the bound for memcpy() from the source buffer. When the
-caller's length is not four-byte aligned, the final copy reads up to
-three bytes past the source buffer.
+When a station enters power save, mt7603 has the PSE redirect the frames
+still queued for it back to the host, and mt7603_rx_loopback_skb() parks
+them until the station wakes up.
 
-Keep the original length for the source copy and zero the remaining
-bytes in the transmit buffer so that the hardware access width remains
-four-byte aligned.
+The handler rejects every frame shorter than a four-address header
+(sizeof(struct ieee80211_hdr), 30 bytes) before looking at it. A
+BlockAck request is 20 bytes and a QoS-Null 26, so both are freed
+without a trace. Since commit b473c0e47f04 ("wifi: mt76: mt7603: fix tx
+queue of loopback packets"), a BAR would also be freed later as a frame
+that is not a bufferable MMPDU, although mac80211 buffers BARs for a
+sleeping station like any other unicast frame.
 
-Fixes: 6cb596ba84e3 ("mt76: usb: introduce __mt76u_init utility routine")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Link: https://patch.msgid.link/20260925150556.2304003-3-yaojiale02@163.com
+mac80211 queues the BAR with IEEE80211_TX_CTL_REQ_TX_STATUS, so it only
+learns about the loss when the tx status times out, and the recipient
+keeps waiting on its reorder window until then.
+
+Check the length against the header length of the actual frame, and
+park a BlockAck request on the queue of its TID, behind the data frames
+it refers to.
+
+Found on a TP-Link Archer XR500v (MT7603E) with a client whose Bluetooth
+coexistence toggles PM every ~15 ms under load. To test the change on
+its own, a temporary debugfs switch flipped between the old and the new
+checks every 30 seconds during a bidirectional TCP test, with counters
+on the loop-back path and on the tx status of BARs. With the old check,
+all 92 BARs that came back were freed, and 91 of the 544 BARs queued in
+those phases never got a tx status from the hardware. With this change,
+all 129 BARs that came back were parked and sent again, and 11 of 411
+got no tx status. Throughput was the same with both checks.
+
+Fixes: e004b7006600 ("mt76: mt7603: notify mac80211 about buffered frames in ps queue")
+Assisted-by: LLM
+Signed-off-by: Cristian Papa <pcristian292@gmail.com>
+Link: https://patch.msgid.link/20260922220814.15070-1-pcristian292@gmail.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7615/usb.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7603/dma.c    | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/usb.c b/drivers/net/wireless/mediatek/mt76/mt7615/usb.c
-index d96e06b4fee18..a64ddd82b2164 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/usb.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/usb.c
-@@ -58,15 +58,22 @@ static void mt7663u_copy(struct mt76_dev *dev, u32 offset,
- 			 const void *data, int len)
- {
- 	struct mt76_usb *usb = &dev->usb;
--	int ret, i = 0, batch_len;
- 	const u8 *val = data;
-+	int len_aligned;
-+	int batch_len;
-+	int copy_len;
-+	int ret;
-+	int i = 0;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/dma.c b/drivers/net/wireless/mediatek/mt76/mt7603/dma.c
+index 25009e49e7771..5a9e4bc15e1cc 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7603/dma.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7603/dma.c
+@@ -34,7 +34,7 @@ mt7603_rx_loopback_skb(struct mt7603_dev *dev, struct sk_buff *skb)
+ 	int idx;
+ 	u32 val;
  
--	len = round_up(len, 4);
-+	len_aligned = round_up(len, 4);
+-	if (skb->len < MT_TXD_SIZE + sizeof(struct ieee80211_hdr))
++	if (skb->len < MT_TXD_SIZE + 2)
+ 		goto free;
  
- 	mutex_lock(&usb->usb_ctrl_mtx);
--	while (i < len) {
--		batch_len = min_t(int, usb->data_len, len - i);
--		memcpy(usb->data, val + i, batch_len);
-+	while (i < len_aligned) {
-+		batch_len = min_t(int, usb->data_len, len_aligned - i);
-+		copy_len = min_t(int, batch_len, len - i);
-+		memcpy(usb->data, val + i, copy_len);
-+		if (copy_len < batch_len)
-+			memset(usb->data + copy_len, 0, batch_len - copy_len);
- 		ret = __mt76u_vendor_request(dev, MT_VEND_WRITE_EXT,
- 					     USB_DIR_OUT | USB_TYPE_VENDOR,
- 					     (offset + i) >> 16, offset + i,
+ 	val = le32_to_cpu(txd[1]);
+@@ -52,6 +52,9 @@ mt7603_rx_loopback_skb(struct mt7603_dev *dev, struct sk_buff *skb)
+ 	sta = container_of(priv, struct ieee80211_sta, drv_priv);
+ 	hdr = (struct ieee80211_hdr *)&skb->data[MT_TXD_SIZE];
+ 
++	if (skb->len < MT_TXD_SIZE + ieee80211_hdrlen(hdr->frame_control))
++		goto free;
++
+ 	hwq = wmm_queue_map[IEEE80211_AC_BE];
+ 	if (ieee80211_is_data_qos(hdr->frame_control)) {
+ 		tid = *ieee80211_get_qos_ctl(hdr) &
+@@ -62,6 +65,19 @@ mt7603_rx_loopback_skb(struct mt7603_dev *dev, struct sk_buff *skb)
+ 	} else if (ieee80211_is_data(hdr->frame_control)) {
+ 		skb_set_queue_mapping(skb, IEEE80211_AC_BE);
+ 		hwq = wmm_queue_map[IEEE80211_AC_BE];
++	} else if (ieee80211_is_back_req(hdr->frame_control)) {
++		struct ieee80211_bar *bar = (struct ieee80211_bar *)hdr;
++
++		if (skb->len < MT_TXD_SIZE + sizeof(*bar))
++			goto free;
++
++		tid = (le16_to_cpu(bar->control) &
++		       IEEE80211_BAR_CTRL_TID_INFO_MASK) >>
++		      IEEE80211_BAR_CTRL_TID_INFO_SHIFT;
++		tid &= IEEE80211_QOS_CTL_TAG1D_MASK;
++		qid = tid_to_ac[tid];
++		hwq = wmm_queue_map[qid];
++		skb_set_queue_mapping(skb, qid);
+ 	} else {
+ 		skb_pull(skb, MT_TXD_SIZE);
+ 		if (!ieee80211_is_bufferable_mmpdu(skb))
 -- 
 2.53.0
 
