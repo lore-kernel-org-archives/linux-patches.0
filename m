@@ -1,60 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051626;
-	b=e+c3f0pqx3nU9iaASotQyKoH9krKCOXQcR+oKimOpba2IdnCtY5aZPe6tL7Cuqi/jZKC
-	 qUMbcGLLF0eMp+EDDANQKIuMp27ULz4vD4BpkBqTAip/LS3CpNJ8sG90xRFxhtA9LSZhw
-	 9mXyx64orOp3Z7xbC3VyWf4Dwrvkb+VeHvVv4Oi/Fln6pPXf0WzggtNfCsTCOZJzpfUmx
-	 H832wz33I9i99652Ak1h7gPGlMXy585vtgMZt+DHoqSk8+LrcDZplDI7qR8juiCCj78DF
-	 yXxccl/ZrVAuXrS9WheOTCTPLYOOSBtmI5TZ/xZeflHu+A9f9VLWgX5uQk/o9bZGJig==
+	t=1795051629;
+	b=BUHqBL7FTjnLaqXWbXLYKTThb6VkC8D0nqtcjMrKiK51AU32/8t8jllPmRtp6PekEteC
+	 RsV3e7KyPTWxDTaN0wb7vjEJvRc6xDvvFSg5G5bfrvx02MDhz9iwoKZXXSriAt+1GFtyr
+	 MtfjMybc9zqTvoYEV6tpSKyNJh5sIEQpQy2pMPBS5bLXB9jGC02Xh0MgVLVXwkfqstlLq
+	 zH3BJEQrtW8N6apUnxLXlkMJYuyd3afAnu1/FIARtSthpxn/pVuqxot/sMaOjmrce23fl
+	 lxbmOx5HJkhZigDq8pxSFc4s/FpCdva2df0910ESz1Ye3RcR3fVR3E5Gg6mVK0fVpsQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051626;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051629;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=brv48x/2JAsHOZdWFdrqEVph1gGLNddRHnk8eBqWoDw=;
-	b=Jo1PkCUJjcKuL9EzoTbZcRUihv7fam/ET+TRF70qe366BsCPMJCXLxA5rF8t3IpRo1jp
-	 pwk9d6P61vqQrrP4/pmRt3eO4m6xuexRx/M37VuQaV2o7bgonjRuFKbuIVrSwkC7jg0tU
-	 Cvy81czmbwW/4aYMK2v1oGn2rqfMHP2mO1xbn4GLt4VIkXkZW5OvPJsrcHflggXnt5V3Q
-	 l/NtIUNEPkKRnNoPIY6at3FmYyynqPE2Ed32SwFdu9rOugJNHcJv3vj0uIW3cqZqwNaBG
-	 WmFiOY/X9sfUle9aLvHnqA/V7rvHJ1f6FLToyxkFUcapKTNaSMP+BnTyvstjrReHlJA==
+	bh=qAw1A5xhX42Ds3BoalS99oJRcsh+E4wf38RUqecPwIE=;
+	b=m5komlSP3oeJqwyPiU9z91mPVhfJZqDWiWrWm5uYDZFVIVQk/mmN1zkp1qPxwklTIGOR
+	 xM7Oebd5HAocP2uu+I1b7d9J4OKmmcpXd/p4ULAENnHBtOCdOgCOR/KIfTFa+/Tp3ibDo
+	 ovqKU3l6DDPHJHIfMTDPuGhWpnfhuVdOdlWATxgcvNBOzkuSrz1qSLQdZkO4z7C4kwBru
+	 oRmZ9vF6V63cZRUrr+jPfgCWd9dwDw4ZtkVmSCzi1XKqYe+sDe7AilNDr7XkGWsKfYetJ
+	 FTqVs0nWkQD5KMUbclJ0eTPAgmJ++BLSif43RWIYOXXioek2+paidzEiooDwL0i2C1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sAvlnXLt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bo2LSXWK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72FA606A31C;
-	Thu, 19 Nov 2026 01:27:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8875660A2607;
+	Thu, 19 Nov 2026 01:27:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sAvlnXLt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6F2D1F000C4;
-	Thu, 19 Nov 2026 01:27:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bo2LSXWK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B80FB1F000C4;
+	Thu, 19 Nov 2026 01:27:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051626;
-	bh=brv48x/2JAsHOZdWFdrqEVph1gGLNddRHnk8eBqWoDw=;
+	s=korg; t=1795051629;
+	bh=qAw1A5xhX42Ds3BoalS99oJRcsh+E4wf38RUqecPwIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sAvlnXLtpeh260HXGdWxkG8qycD8wRMkcnP8L3/Ad5Gk8BWG2yp9DRvt5oBzwzReX
-	 pMY0c8sNSnZkF4TBRRCWDuXeUsc6/upfA2bFoq5OQKqGGhuPtYlKA2njltrBvnN42i
-	 AmOJPYfma9JF3VmHcze3e0jH/WmXVbHuNjJv6Wrk=
+	b=bo2LSXWKNHVzYY0FjNTIJB5SVCQWtyNoJIAn3Vhe5JJ5IXd5KmXL3r7wEwx1fj07e
+	 auYJSD8OcAfOvlGQVjK4oHDj5jCTRbhAR75CCwyPgoDMzcLsbDqb1GfauMRm+OKp7/
+	 VAF0wB8FUa28LXLCdF35GmyZhQEHTb7DU16+TZQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <tanyuan98@outlook.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Yuhang Zheng <z1652074432@gmail.com>,
-	Yucheng Lu <kanolyc@gmail.com>,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Wengang Wang <wen.gang.wang@oracle.com>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0276/2214] net/sched: sch_netem: fix out-of-bounds access in packet corruption
-Date: Wed, 18 Nov 2026 15:32:32 +0100
-Message-ID: <20261118150021.108282419@linuxfoundation.org>
+	co+25860fb17af97289@bugs.sh,
+	Xiang Mei <xmei5@asu.edu>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 5.15 0259/2214] libceph: bound mon_command ack decode to front len
+Date: Wed, 18 Nov 2026 15:32:15 +0100
+Message-ID: <20261118150020.483290197@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -76,63 +69,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yucheng Lu <kanolyc@gmail.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit d64cb81dcbd54927515a7f65e5e24affdc73c14b ]
+commit 62b41a16d8603d4d809fda212f15c3e9c783a82b upstream.
 
-In netem_enqueue(), the packet corruption logic uses
-get_random_u32_below(skb_headlen(skb)) to select an index for
-modifying skb->data. When an AF_PACKET TX_RING sends fully non-linear
-packets over an IPIP tunnel, skb_headlen(skb) evaluates to 0.
+handle_command_ack() bounds the decode with msg->front_alloc_len, the size
+of the reply buffer, instead of msg->front.iov_len, the number of bytes the
+monitor sent.  mon_alloc_msg() routes every CEPH_MSG_MON_COMMAND_ACK to
+get_generic_reply(), which returns the preallocated ->reply of whichever
+generic request carries the same tid, so the buffer keeps its fixed size
+however short the reply is.  An ack with hdr.front_len below sizeof(struct
+ceph_mon_request_header) + sizeof(u32), including 0, still passes
+ceph_decode_need(), and ceph_decode_32() returns four bytes that were never
+received: uninitialized slab memory, stale bytes of an earlier message, or
+bytes the peer planted by sending a reply that lands in the same buffer and
+is then rejected.  The read stays within the allocation, so KASAN does not
+flag it.
 
-Passing 0 to get_random_u32_below() takes the variable-ceil slow path
-which returns an unconstrained 32-bit random integer. Using this
-unconstrained value as an offset into skb->data results in an
-out-of-bounds memory access.
+req->result reaches userspace through ceph_monc_do_statfs(),
+ceph_monc_get_version() and ceph_monc_blocklist_add(); rbd hands it back
+from write() on /sys/bus/rbd/add_single_major, and rbd_get_client() passes
+it to ERR_PTR() unchecked, which faults:
 
-Fix this by verifying skb_headlen(skb) is non-zero before attempting
-to corrupt the linear data area. Fully non-linear packets will silently
-bypass the corruption logic.
+  rbd: failed to get latest osdmap: -186318427
+  BUG: unable to handle page fault for address: fffffbfffe9ca034
+  Oops: Oops: 0000 [#1] SMP KASAN NOPTI
+  RIP: 0010:do_rbd_add (drivers/block/rbd.c:7105)
+  Call Trace:
+   ...
+   kernfs_fop_write_iter (fs/kernfs/file.c:345)
+   vfs_write (fs/read_write.c:595 fs/read_write.c:687)
+   ksys_write (fs/read_write.c:739)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:61 arch/x86/entry/syscall_64.c:84)
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+  Kernel panic - not syncing: Fatal exception
 
-Fixes: c865e5d99e25 ("[PKT_SCHED] netem: packet corruption option")
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
-Signed-off-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Yuhang Zheng <z1652074432@gmail.com>
-Signed-off-by: Yucheng Lu <kanolyc@gmail.com>
-Reviewed-by: Stephen Hemminger <stephen@networkplumber.org>
-Link: https://patch.msgid.link/45435c0935df877853a81e6d06205ac738ec65fa.1774941614.git.kanolyc@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-(cherry picked from commit d64cb81dcbd54927515a7f65e5e24affdc73c14b)
-Signed-off-by: Wengang Wang <wen.gang.wang@oracle.com>
+Use msg->front.iov_len, matching handle_subscribe_ack(),
+handle_statfs_reply(), handle_get_version_reply() and handle_auth_reply().
+A well-formed ack has front.iov_len >= 22 and is unaffected; a short one
+takes the existing bad: path.  This applies commit d3c32939fa0e ("libceph:
+bound get_version reply decode to front len") to the last decode-side
+use of front_alloc_len in this file.
 
-Conflicts:
-	net/sched/sch_netem.c
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 6305a3b41515 ("libceph: support for blacklisting clients")
+Reported-by: co+25860fb17af97289@bugs.sh
+Assisted-by: Cursor
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_netem.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/ceph/mon_client.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
-index 3e3bced82c564..6c206c97759a7 100644
---- a/net/sched/sch_netem.c
-+++ b/net/sched/sch_netem.c
-@@ -508,8 +508,9 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 			goto finish_segs;
- 		}
+--- a/net/ceph/mon_client.c
++++ b/net/ceph/mon_client.c
+@@ -943,7 +943,7 @@ static void handle_command_ack(struct ce
+ {
+ 	struct ceph_mon_generic_request *req;
+ 	void *p = msg->front.iov_base;
+-	void *const end = p + msg->front_alloc_len;
++	void *const end = p + msg->front.iov_len;
+ 	u64 tid = le64_to_cpu(msg->hdr.tid);
  
--		skb->data[prandom_u32() % skb_headlen(skb)] ^=
--			1<<(prandom_u32() % 8);
-+		if (skb_headlen(skb))
-+			skb->data[prandom_u32() % skb_headlen(skb)] ^=
-+				1 << (prandom_u32() % 8);
- 	}
- 
- 	if (unlikely(sch->q.qlen >= sch->limit)) {
--- 
-2.53.0
-
+ 	dout("%s msg %p tid %llu\n", __func__, msg, tid);
 
 
