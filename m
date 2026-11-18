@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033284;
-	b=TsOWeYalXuhrx3nmI78vFXukGkQTze7Htwolfxgk6shCl2jtTUmPnXQPgSExpz4ZcSfL
-	 QvAxQAJyciRyYnocdhdm4rd6dB//yJOp4yZNHtVWBYeffKosUn18670CHNwllyAblfpKm
-	 sSpoKBFwBw6kS6pAP3campGGEMMaYVEqkFwTW0sc/lLGnPHr+COobmcJ8rkjWXQvBxP/9
-	 cUVoVpUmM3i3Y/qd+IWqcEaiiLmRsaP3agcVfXu31jQqoVMvdCNgQlYe+/xSeTqKDbmRY
-	 IGtyvx2qLRYBxI3uDMZH1yB3tsBhxSynnWtmAFRsVPvItOmyi4f1RaFCOfxPsAW8GiA==
+	t=1795033287;
+	b=V9li2uZLjzXJQa6PAG5bhueADOhCV8Z9PNTPq5ISNfTlJWx3Tf5ku+W5aYb0e90O0FNU
+	 Xra8F1aviVIJl6k/xGRhDc18jwEzlL01yMK+rLxbpiwnE98fH2ABmXeyVsegm+xYtsrYk
+	 Z9TC/tAQDN3OP91plYuR4ZVEHTgQEbKW4x5Cd4HioIekYAqjS2x/5e8HKwYZTkQsBl6Ga
+	 607ZYjNjtsLQwe0ub+WO/165yurHI8hiYT1CGpXZOsoHdCjINTt7cOLUlEMyHYuoJ2HZT
+	 U3Hn6u6fvwrlj6xVH0EqHaa3nNf4rQz2ZenMGomudC/lAEi1gCqxRlkRw0BcZFNjTTA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033284;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033287;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nE9mjZvzPpfHxzPQVllTZ/s4uRUgKNO7KoZk35HreiE=;
-	b=0JS1J0/1QYu3dJemDhBfoVEUWwS6HUAOYoOso3gTztSD2Hw6RCYnUrCVJ9CgQJl/7QtZ
-	 SekMAw9efxjFNsk9rU3OBHk+v2sD/SOLxkCa9tUqg8+LHP03jLCeQKH74CKWiYYQg1xza
-	 wGHXmtM/MahLonNc/DdPrCyv5ztx3BCpjAJclOGDPc4OMv5TAU7hoA23YQFtHyuHyFfap
-	 zi18V7ixPVc1evMz3MskEhWcEJ3BlSKt9IOKMHwfZE+eSoR20K1JQkiwV0iy7Hhm7Gj0L
-	 BmJgcfjYPICtJzuGsssO6Xxq/tgl5OIe+yge++nlZ/YUNyOP9kXKZAi+ZBRp/cRtMDw==
+	bh=1wPyczTQobGolSUblMuyKlCj+DzzfLI122Ofn/WbxoQ=;
+	b=VMMDQaOds9OC89eo39ua02ehLmP5eOy/R6CxgQ319OLg2hgOIt8hhojy3MDw8yFuVFD7
+	 jpYrdqVN2AqEAJ/9/+XlytAdsztKQegqaHqRN0WPpJ/QFcPg6bwOovU07IrjSErrM4VUQ
+	 xtwmFSBWxxnBH1rjDPlAcYCgIHFhib+5NgfrYAgzKesOq69jniTfUDo7wUsKMmR+LXMew
+	 JG++kuNyGT0lzX6HRj9dFpATUi6ZAoSmgAi6pePrkzA39Hq1FI3F/UTyS5CXAEsQ5i0wa
+	 eTlujiHamVvks0ClO+MaEgIK0uzUKY5QYzU8gRayQ1mcoRR0GZVB+up0dGjcayEj+0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rfBdujQc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VLlDBJnx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE7B606A31C;
-	Wed, 18 Nov 2026 20:21:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3C4606A31C;
+	Wed, 18 Nov 2026 20:21:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rfBdujQc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D29B11F000C4;
-	Wed, 18 Nov 2026 20:21:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VLlDBJnx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 857381F000C4;
+	Wed, 18 Nov 2026 20:21:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033284;
-	bh=nE9mjZvzPpfHxzPQVllTZ/s4uRUgKNO7KoZk35HreiE=;
+	s=korg; t=1795033287;
+	bh=1wPyczTQobGolSUblMuyKlCj+DzzfLI122Ofn/WbxoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rfBdujQc8m+jSYG24JboZVWaPtc1lfIQlG5AsHWMLlpKtktU5AvI0j6aE8XwAtqcA
-	 SnjlUF78Is6LYmwzPcHSSwrSVNEMb4KTW06cgmEWcrrLoEuw2FaZNP16dwNa1Wun5Q
-	 5xe92wS8CgI+9dhpIz7lZr5+IrtjIwlXjfH1W254=
+	b=VLlDBJnx5hwccsN0FNT+0QIS7XqNBhRw3kWoVvq4cZrRXawfFtoFjjbhMwsm2bmvY
+	 KBkqDcmOtgw0xdtm91F412T0k0b7RH+4xnxHZqZzF2PfS3g4YAlgfrAwAM+fEVaOTx
+	 RFWbURq+0xLGVMUeBMH7cVTy7424K3p4/vLJlAxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nickolai Zeldovich <nickolai@csail.mit.edu>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Jori Koolstra <jkoolstra@xs4all.nl>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1714/1756] fs_pin: do not trust the pin after a spurious wakeup in pin_kill()
-Date: Wed, 18 Nov 2026 16:04:01 +0100
-Message-ID: <20261118150117.846437038@linuxfoundation.org>
+Subject: [PATCH 6.12 1715/1756] Add error handling to minix filesystem for inode corruption detection
+Date: Wed, 18 Nov 2026 16:04:02 +0100
+Message-ID: <20261118150117.882404841@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,71 +69,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nickolai Zeldovich <nickolai@csail.mit.edu>
+From: Jori Koolstra <jkoolstra@xs4all.nl>
 
-[ Upstream commit f3a6dae67c9ca3d913cbb42fe324c9b47c8d9e53 ]
+[ Upstream commit 21215ce7a95ae03891708028a8c805e5dc47395e ]
 
-A task waiting in pin_kill() for another task's ->kill() can take
-p->wait.lock after the pin has been freed, and can return with its
-on-stack wait entry still on p->wait. With BSD process accounting this
-is a use-after-free of the acct structure when umount() of the mount
-holding the accounting file races with acct(2).
+We would like to provide early and specific warnings of filesystem
+corruption without running into generic WARN_ONs and BUG_ONs.
+Towards this goal, ext4, e.g., has a EFSCORRUPTED errno and a
+standardized inode corruption message format. This patch adds this
+errno and message format to the minix filesystem.
 
-pin_kill() takes a still-queued entry as proof that pin_remove() has not
-run, so p is alive. But autoremove_wake_function() dequeues only when
-try_to_wake_up() succeeds: if the waiter was already woken spuriously,
-pin_remove() leaves the entry queued, acct_pin_kill() frees the acct
-with kfree_rcu(), and the grace period can end while the waiter sits
-between schedule() and rcu_read_lock().
-
-Dequeue the entry unconditionally in a private wake function;
-pin_remove() is the only waker and sets p->done first.
-
-Reproduced under QEMU with KASAN and test-only delays: a
-slab-use-after-free in pin_kill() before the patch, no report after.
-
-Fixes: 59eda0e07f43 ("new fs_pin killing logics")
-Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
-Link: https://patch.msgid.link/20261027015813.841821-1-nickolai@csail.mit.edu
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Jori Koolstra <jkoolstra@xs4all.nl>
+Link: https://patch.msgid.link/20251104143005.3283980-2-jkoolstra@xs4all.nl
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: fc9577079df8 ("minix: reject rmdir of a directory with a corrupted link count")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fs_pin.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ fs/minix/inode.c | 16 ++++++++++++++++
+ fs/minix/minix.h |  9 +++++++++
+ 2 files changed, 25 insertions(+)
 
-diff --git a/fs/fs_pin.c b/fs/fs_pin.c
-index 1a508f2167e0a..a4e5a5a7aca8d 100644
---- a/fs/fs_pin.c
-+++ b/fs/fs_pin.c
-@@ -28,6 +28,19 @@ void pin_insert(struct fs_pin *pin, struct vfsmount *m)
- 	spin_unlock(&pin_lock);
- }
+diff --git a/fs/minix/inode.c b/fs/minix/inode.c
+index 7084f41cefbcd..1bea63d71b806 100644
+--- a/fs/minix/inode.c
++++ b/fs/minix/inode.c
+@@ -26,6 +26,22 @@ static int minix_write_inode(struct inode *inode,
+ 		struct writeback_control *wbc);
+ static int minix_statfs(struct dentry *dentry, struct kstatfs *buf);
  
-+/*
-+ * Unlike autoremove_wake_function(), dequeue even if the waiter was already
-+ * running: pin_kill() trusts @p only while its entry is still queued.
-+ */
-+static int pin_kill_wake_function(struct wait_queue_entry *wait,
-+				  unsigned int mode, int sync, void *key)
++void __minix_error_inode(struct inode *inode, const char *function,
++			 unsigned int line, const char *fmt, ...)
 +{
-+	int ret = default_wake_function(wait, mode, sync, key);
++	struct va_format vaf;
++	va_list args;
 +
-+	list_del_init_careful(&wait->entry);
-+	return ret;
++	va_start(args, fmt);
++	vaf.fmt = fmt;
++	vaf.va = &args;
++	printk(KERN_CRIT "minix-fs error (device %s): %s:%d: "
++	       "inode #%lu: comm %s: %pV\n",
++	       inode->i_sb->s_id, function, line, inode->i_ino,
++	       current->comm, &vaf);
++	va_end(args);
 +}
 +
- void pin_kill(struct fs_pin *p)
+ static void minix_evict_inode(struct inode *inode)
  {
- 	wait_queue_entry_t wait;
-@@ -36,7 +49,7 @@ void pin_kill(struct fs_pin *p)
- 		rcu_read_unlock();
- 		return;
- 	}
--	init_wait(&wait);
-+	init_wait_func(&wait, pin_kill_wake_function);
- 	spin_lock_irq(&p->wait.lock);
- 	if (likely(!p->done)) {
- 		p->done = -1;
+ 	truncate_inode_pages_final(&inode->i_data);
+diff --git a/fs/minix/minix.h b/fs/minix/minix.h
+index c81e48badae93..73e1087502253 100644
+--- a/fs/minix/minix.h
++++ b/fs/minix/minix.h
+@@ -42,6 +42,9 @@ struct minix_sb_info {
+ 	unsigned short s_version;
+ };
+ 
++void __minix_error_inode(struct inode *inode, const char *function,
++			 unsigned int line, const char *fmt, ...);
++
+ struct inode *minix_iget(struct super_block *, unsigned long);
+ struct minix_inode *minix_V1_raw_inode(struct super_block *, ino_t, struct buffer_head **);
+ struct minix2_inode *minix_V2_raw_inode(struct super_block *, ino_t, struct buffer_head **);
+@@ -168,4 +171,10 @@ static inline int minix_test_bit(int nr, const void *vaddr)
+ 
+ #endif
+ 
++#define minix_error_inode(inode, fmt, ...)			\
++	__minix_error_inode((inode), __func__, __LINE__,	\
++			    (fmt), ##__VA_ARGS__)
++
++#define EFSCORRUPTED	EUCLEAN		/* Filesystem is corrupted */
++
+ #endif /* FS_MINIX_H */
 -- 
 2.53.0
 
