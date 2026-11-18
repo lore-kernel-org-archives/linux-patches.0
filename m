@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021774;
-	b=YeSXIJ0WS9QjX+Olpo9Lwg6c6tBYRkZbRzsfnjVHxxuILCiZsBCZLaxilR2vsTTHh5Nc
-	 skPETSw8drTyj8wAxj1OcC2l/VFwR9I+K+u/+7ZvTSIWhntmwMQg3O9soYczTfF7/7Q8n
-	 BkfnpV6t1buH92Kkl3f9TzyhYp9CPMrlCOoXMg/nYWYhg3MQi5Y1zxr5H0B8WN4xfl12Z
-	 TMi0DBX51+dd/WfgMXhUNHGWkMdzX+nfVno7V8pK86nCLOPVHPFoDNU50EY96YrXuKa04
-	 PD7sL13U4ege5ooOrhSNCCd24eQUW8vqLRAZX0wRgoTyn6mosdAtLMDEmG1TvTy953Q==
+	t=1795021777;
+	b=ojcXbvzi/stcDYoHZM1hh3EwGfyb/JmFVXL4mwmVDS0NlF+CxTe10YJuz3UjFOrEw5jg
+	 VPbZLEhPOptgP+abNcQQzJcZpUSE5uQRY4sIUUMLUSfZE/pvnqIvqVd9InovPvAKIP6bG
+	 L+eG4ZyWRtjK+lC/0E9LcIzrbQk4Wt9zM47q0Amg+HtkfcABmjBXhoNKRWMy+J8+C+j9L
+	 mV832AmAUQmSnzWGI0QEtCtIo1j+rqT+qAnwxtsma5Dpjd5LnixCbcqTUDNP78y+LLIYn
+	 AX3sdRQ1Kgr16hWBw+M18GWv4EGcFp8UZS+kjz7JFdKDqV+YbgfmIRn+ygVy44iJUmg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021774;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021777;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QI98Wjy0zEmbmx1SD/Z1nz35OA9dF7He7MD0QwkFKzg=;
-	b=TbRJPLp3/ZosbdSvtNKiQwfreW/SbehOYanqnBxv+eXbgUGMieHABDStWG+W2esbDbHP
-	 3DQ28TmUvm6nm/xeiDoF7hZg1NM/PRDnkpyOK7FG4aeK03wF6OxPsVz86WfvAayyx9suu
-	 bfKdehovw6cJmtXfLaSNOjU7k1Bf+8OT9fDBmo7LxflHMeZNlqfx/QOll0gUrlca4noOA
-	 gn1SihBplG5H6CCqsRHE0Ew6U/AW5RPZHnFmt3X7o2HZ4aVkfi3dkyFTlMOsOhlk12Q+q
-	 Y8Egerennk3QCbSsgMTtEdzJCF0muVkw2epkx+pimoV+krUjsfP6AhQJIOVK1Zzhq0Q==
+	bh=h0PP7jQSRW0+xgsMUa6pmchJhBXBDQGthzMC1pIGjwc=;
+	b=LpMHf7MJjkaVGDvYT5hQakeSZ+1/L4nOQ0fVQLwdbz+5t3FNBlCFaxSNNviJ2QBHSpMM
+	 OHfu+X7yaL7saxh6av6AMz1Dedxrt+cPbw5N90wPS9hWwHpDD1kn3KnEgMsrBAOMoywfp
+	 bPbbTr5HroA6wmd9IZ1HmnGcDlm1sK6oUohLfQYaywi+EOQef0wEUbT3HlFLl/fOh2aJ6
+	 IBnObWoOUVGFDKBX8ZEythXKbhG/Nb9xDt23XsKpMIbLA/DBkLIpxXohVRwy/mfm87I1V
+	 PkVkrD2WxknpOU/9K6ShzQZ733kSHAmMiR7fEFST+fvPaW769/+rk1XUkP6b9QFOegA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MTxZlQe2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="rg1m/Vqp";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CFA8606A320;
-	Wed, 18 Nov 2026 17:09:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED80606A320;
+	Wed, 18 Nov 2026 17:09:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MTxZlQe2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83E691F000C4;
-	Wed, 18 Nov 2026 17:09:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rg1m/Vqp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 473C61F000C5;
+	Wed, 18 Nov 2026 17:09:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021774;
-	bh=QI98Wjy0zEmbmx1SD/Z1nz35OA9dF7He7MD0QwkFKzg=;
+	s=korg; t=1795021776;
+	bh=h0PP7jQSRW0+xgsMUa6pmchJhBXBDQGthzMC1pIGjwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MTxZlQe2+n6MIRZ11jFAJnQEzTzgjxgkAB4mc75FeDiehG9QQwiY1abVMLEpip/NN
-	 VMN7HBaVp16Tawc2W63Xtf6jbXwaGvk5/JbEN9qb579BY01+lIgzaRLHwFF3XpB/ky
-	 g3Yu1cZAW9dbhKWrCPeBKjvXV+glNUiUeT8iSx9g=
+	b=rg1m/VqpHTqpINnmV11JpvHmd2EHPjBOzzsJ+Y4hSTTnTtYsGanaQhmOL/2nZ+cL0
+	 4fSQK9yljdTAbh1ITC/rKzpMjFXkELxhHkYmO2Q7xPzX2ROvDI+0ba8uvXzvJKBRcz
+	 /I0aEkXbAvxNfZXmHRrVSN/+l55FRX+7tSot9cQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
 	Guopeng Zhang <zhangguopeng@kylinos.cn>,
+	Waiman Long <longman@redhat.com>,
 	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2426/2651] cgroup/cpuset: Minor fixes to prstate_housekeeping_conflict()
-Date: Wed, 18 Nov 2026 16:01:06 +0100
-Message-ID: <20261118150412.568402473@linuxfoundation.org>
+Subject: [PATCH 7.3 2427/2651] cgroup/cpuset: Prevent recursive call of remote_cpus_update() via update_cpumasks_hier()
+Date: Wed, 18 Nov 2026 16:01:07 +0100
+Message-ID: <20261118150412.600325427@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,134 +71,122 @@ Content-Transfer-Encoding: 8bit
 
 From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 40702b2ca8fa08fb64b926d8c72a4909d0330580 ]
+[ Upstream commit 10a6f00d82544a1baa901de8d28f41f28c364995 ]
 
-Commit 9527ff78a413 ("cgroup/cpuset: Consider all the exclusive CPUs when
-doing housekeeping check") changes the way prstate_housekeeping_conflict()
-is being used by considering all the exclusive xcpus to be owned by the
-partition when doing housekeeping check. However there are two minor
-issues reported by sashiko with that patch:
+Guopeng reports that changing the cpumask of a remote partition root
+may set the effective_cpus of the top_cpuset incorrectly. It is
+due to the following call sequence:
 
- 1) In partition_cpus_change(), prstate_housekeeping_conflict() can
- be called with an invalid partition root. In that case, there are
- no isolated CPUs that are going to be returned back to the system to
- become housekeeping CPUs, so the calculation of the del_cpus cpumask
- is meaningless.
+  update_cpumask()
+   -> partition_cpus_change()
+    -> remote_cpus_update()
+     -> update_sibling_cpumasks()
+      -> update_cpumasks_hier()
+       -> remote_cpus_update()
 
- 2) The checking of del_cpus in prstate_housekeeping_conflict() to see
- if it can contain an active housekeeping CPU that can be returned to the
- system ignores the fact that an active CPU not in HK_TYPE_DOMAIN_BOOT HK
- cpumask will not become an active housekeeping CPU when it is released
- by an isolated partition.
+The second remote_cpus_update() call passes in the cs->effective_xcpus
+instead of the trialcs->effective_xcpus of the first remote_cpus_update()
+call.  As a result, the second call can revert what has been done in
+the first call leading to incorrect effective_cpus of the top_cpuset
+as well as subpartitions_cpus.
 
-Update the existing code to handle these two issues properly to make
-prstate_housekeeping_conflict() produce more accurate result.
+Fix that by adding a new remote_partition_updating flag into the cpuset
+structure to indicate that a remote partition is being updated and
+update_cpumasks_hier() should skip the whole subtree as update_cpumask()
+or update_exclusive_cpumask() which calls partition_cpus_change()
+will eventually calls update_cpumasks_hier() for that subtree anyway.
 
-Fixes: 9527ff78a413 ("cgroup/cpuset: Consider all the exclusive CPUs when doing housekeeping check")
-Signed-off-by: Waiman Long <longman@redhat.com>
+This new flag is currently set only in remote_cpus_update() to prevent
+recursive call of remote_cpus_update() on the same cpuset.
+
+A test case is added to test_cpuset_prs.sh to verify this change.
+
+Reported-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
+Link: https://lore.kernel.org/lkml/20261010075947.333549-2-guopeng.zhang@linux.dev
 Reviewed-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
+Tested-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
+Fixes: f62a5d39368e ("cgroup/cpuset: Remove remote_partition_check() & make update_cpumasks_hier() handle remote partition")
+Signed-off-by: Waiman Long <longman@redhat.com>
 Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c | 45 +++++++++++++++++++++++++++++-------------
- 1 file changed, 31 insertions(+), 14 deletions(-)
+ kernel/cgroup/cpuset-internal.h                   |  5 +++++
+ kernel/cgroup/cpuset.c                            | 13 +++++++++----
+ tools/testing/selftests/cgroup/test_cpuset_prs.sh |  1 +
+ 3 files changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 731f96f42574f..7e0ca4fae49eb 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -1471,6 +1471,9 @@ static bool prstate_housekeeping_conflict(int new_prs, int parent_prs,
- 	    !cpumask_subset(new_cpus, housekeeping_cpumask(HK_TYPE_DOMAIN_BOOT)))
- 		return true;
- 
-+	if (del_cpus && cpumask_empty(del_cpus))
-+		del_cpus = NULL;
-+
- 	/*
- 	 * Exit 2nd check early and return false if
- 	 * 1) there is no boot time isolated nohz_full CPU
-@@ -1479,8 +1482,7 @@ static bool prstate_housekeeping_conflict(int new_prs, int parent_prs,
- 	 *    be returned back to the parent.
+diff --git a/kernel/cgroup/cpuset-internal.h b/kernel/cgroup/cpuset-internal.h
+index 701c3854ec7ad..33990902cdc81 100644
+--- a/kernel/cgroup/cpuset-internal.h
++++ b/kernel/cgroup/cpuset-internal.h
+@@ -161,6 +161,11 @@ struct cpuset {
  	 */
- 	if (!housekeeping_enabled(HK_TYPE_KERNEL_NOISE) ||
--	    (new_prs == parent_prs) ||
--	    ((new_prs == PRS_ROOT) && (!del_cpus || cpumask_empty(del_cpus))))
-+	    (new_prs == parent_prs) || (!del_cpus && (new_prs == PRS_ROOT)))
- 		return false;
- 
- 	/*
-@@ -1491,20 +1493,29 @@ static bool prstate_housekeeping_conflict(int new_prs, int parent_prs,
- 	if (parent_prs == PRS_ISOLATED)
- 		swap(new_cpus, del_cpus);
- 
--	if (del_cpus &&
--	   (cpumask_first_and_and(del_cpus, housekeeping_cpumask(HK_TYPE_KERNEL_NOISE),
--				   cpu_active_mask) < nr_cpu_ids))
--		return false;
--
- 	if (!alloc_cpumask_var(&full_hk_cpus, GFP_KERNEL))
- 		return true;
+ 	bool remote_partition;
  
 +	/*
-+	 * Check if del_cpus may contain a CPU that can become an active
-+	 * housekeeping CPU again.
++	 * Set to true when a remote partition is undergoing update.
 +	 */
-+	if (del_cpus) {
-+		cpumask_and(full_hk_cpus, housekeeping_cpumask(HK_TYPE_KERNEL_NOISE),
-+			    housekeeping_cpumask(HK_TYPE_DOMAIN_BOOT));
-+		if (cpumask_first_and_and(del_cpus, full_hk_cpus,
-+					  cpu_active_mask) < nr_cpu_ids) {
-+			res = false;
-+			goto out;
-+		}
-+	}
++	bool remote_partition_updating;
 +
- 	cpumask_and(full_hk_cpus, housekeeping_cpumask(HK_TYPE_KERNEL_NOISE),
- 		    housekeeping_cpumask(HK_TYPE_DOMAIN));
- 	cpumask_andnot(full_hk_cpus, full_hk_cpus, isolated_cpus);
- 	cpumask_and(full_hk_cpus, full_hk_cpus, cpu_active_mask);
- 	res = !cpumask_weight_andnot(full_hk_cpus, new_cpus);
--
-+out:
- 	free_cpumask_var(full_hk_cpus);
- 	return res;
- }
-@@ -2529,23 +2540,29 @@ static void partition_cpus_change(struct cpuset *cs, struct cpuset *trialcs,
- 				  struct tmpmasks *tmp)
- {
- 	enum prs_errcode prs_err;
-+	int parent_prs = is_remote_partition(cs)
-+		       ? PRS_ROOT : parent_cs(cs)->partition_root_state;
- 
- 	if (cs_is_member(cs))
- 		return;
- 
- 	prs_err = validate_partition(cs, trialcs);
--	if (!prs_err && !cpumask_empty(trialcs->effective_xcpus)) {
-+	if (!prs_err && (parent_prs > 0) &&
-+	    !cpumask_empty(trialcs->effective_xcpus)) {
- 		int prs = cs->partition_root_state;
--		int parent_prs = is_remote_partition(cs)
--			       ? PRS_ROOT : parent_cs(cs)->partition_root_state;
-+
- 		/*
- 		 * Check for housekeeping conflict by passing the whole
- 		 * effective_xcpus as well as those CPUs that are to be
- 		 * removed from cs as delmask.
- 		 */
--		cpumask_andnot(tmp->delmask, cs->effective_xcpus, trialcs->effective_xcpus);
--		if (parent_prs > 0 &&
--		    prstate_housekeeping_conflict(prs, parent_prs,
-+		if (prs > 0)
-+			cpumask_andnot(tmp->delmask, cs->effective_xcpus,
-+				       trialcs->effective_xcpus);
-+		else
-+			cpumask_clear(tmp->delmask);
-+
-+		if (prstate_housekeeping_conflict(prs, parent_prs,
- 						  trialcs->effective_xcpus, tmp->delmask))
- 			prs_err = PERR_HKEEPING;
+ 	/*
+ 	 * number of SCHED_DEADLINE tasks attached to this cpuset, so that we
+ 	 * know when to rebuild associated root domain bandwidth information.
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index 7e0ca4fae49eb..3abfd6c2387d8 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -1800,6 +1800,7 @@ static void remote_cpus_update(struct cpuset *cs, struct cpumask *xcpus,
+ 			goto invalidate;
  	}
+ 
++	cs->remote_partition_updating = true;
+ 	spin_lock_irq(&callback_lock);
+ 	if (adding)
+ 		partition_xcpus_add(prs, NULL, tmp->addmask);
+@@ -1821,6 +1822,7 @@ static void remote_cpus_update(struct cpuset *cs, struct cpumask *xcpus,
+ 	 */
+ 	cpuset_update_tasks_cpumask(&top_cpuset, tmp->new_cpus);
+ 	update_sibling_cpumasks(&top_cpuset, NULL, tmp);
++	cs->remote_partition_updating = false;
+ 	return;
+ 
+ invalidate:
+@@ -2278,16 +2280,19 @@ static void update_cpumasks_hier(struct cpuset *cs, struct tmpmasks *tmp,
+ 		old_prs = new_prs = cp->partition_root_state;
+ 
+ 		/*
+-		 * For child remote partition root (!= cs), we need to call
+-		 * remote_cpus_update() if effective_xcpus will be changed.
+-		 * Otherwise, we can skip the whole subtree.
++		 * For a child remote partition with remote_partition_updating
++		 * set, we can skip the whole subtree as the this function will
++		 * be called eventually. We can also skip the subtree if the
++		 * effective_xcpus isn't going to be changed. Otherwise, we
++		 * will have to call remote_cpus_update().
+ 		 *
+ 		 * remote_cpus_update() will reuse tmp->new_cpus only after
+ 		 * its value is being processed.
+ 		 */
+ 		if (remote && (cp != cs)) {
+ 			compute_excpus(cp, tmp->new_cpus);
+-			if (cpumask_equal(cp->effective_xcpus, tmp->new_cpus)) {
++			if (cp->remote_partition_updating ||
++			    cpumask_equal(cp->effective_xcpus, tmp->new_cpus)) {
+ 				pos_css = css_rightmost_descendant(pos_css);
+ 				continue;
+ 			}
+diff --git a/tools/testing/selftests/cgroup/test_cpuset_prs.sh b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
+index 644cf0d2a7c48..b7ddebb6eebec 100755
+--- a/tools/testing/selftests/cgroup/test_cpuset_prs.sh
++++ b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
+@@ -278,6 +278,7 @@ TEST_MATRIX=(
+ 	"   C0-3    C1-3  C2-3    C4    X2-3   X2-3  X2-3:P2 P2:C4-5 0 A3:2-3|B1:4-5 A3:P2|B1:P2 2-5"
+ 	"  C4:X0-3  X1-3  X2-3     .      .      P2     .      .     0 A1:4|A2:1-3|A3:1-3 A2:P2 1-3"
+ 	"  C4:X0-3  X1-3  X2-3     .      .      .      P2     .     0 A1:4|A2:4|A3:2-3 A3:P2 2-3"
++	"   CX1-6  C1-4:P1  .    C4-5     .    C1-3     .      .     0 A1:4-6|A2:1-3|B1:4-5 A2:P1"
+ 
+ 	# Nested remote/local partition tests
+ 	"   C0-3    C1-3  C2-3   C4-5   X2-3  X2-3:P1   P2     P1    0 A1:0-1|A2:|A3:2-3|B1:4-5 \
 -- 
 2.53.0
 
