@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047363;
-	b=Sk3crNbP+Hf8mhTeo+c2c00wg+djJ1Mp8bnP4l+JLzWwyrr695Hde3+9qei0oGYRnayu
-	 +4D9rcSzk4mRHdDHw711jd6I/4ucrI+HCQRdjWZ+ztsNpEAMNKRx87MABr283pk/jXgtF
-	 Fl2fxwOProSjxvyugzZVxNdNR0yCa83tAMP4QoDofxFsLQwennY/QdPdEb2tfLcLpv7Z1
-	 7qlqcH2ZgKbf/ohhZz/lzq9RNHWA7ChCF1EMKT2+gi5/CCWqeocCYhb4uKh0JrnCg17IN
-	 NOya1A3kPY1u+U1h+bMOpZS+V/IVD2WQWQcjUiwqD0NUUUlKdU8eS6z3hcC9g66l4Vw==
+	t=1795047366;
+	b=o97C9gtt4iLPapNPkLMbMKLiT8W5wWe1G8ONjzcc+HBbNz4O0IVtXJfYttxOAez5YoVY
+	 6W/njuJk2cuZWYeE6zDs11ZpZ+fsrfOBrwQ7omCp1+te4LhKMEuZVSF7FSeIALBd+YkTw
+	 H0PP3hSyP3iFR9psuajX6KVdIPyEgoDFEHjnbH8f1fcJo787y454Su1T/qeyacx1sR5Bg
+	 1z6olB+h8/Cvg+YT31zWbhuovbQRGacNYFaSuThrI/It5Cv/v/TiDDi8AKviyabrG6n8H
+	 lpSKbZXg9rDXAV7HMCCOziB2gxF6bolDMjl1ZyBkLruGkYjnpJbTt+kNvVH+nBNOANw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047363;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047366;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IKYYZ3l4oEas2GFncWD9Pxklzp7OG45aEENUxOrVMos=;
-	b=CyR4U9UPYccsWZCSnBWgzj2ksnZED0SdiJCsb3S2qGOJVrqfYueV4rz3/F2+lUpB8Cs6
-	 IQIn4CAoVq1Tw4FGOwadCzCMcNYkIFQo78bm+xn/0DqY+JAEYyZawZNaDJ9Bkz+uk+z20
-	 9C7c9OF9BAC2oTRrLiCIx8yM7o7YZCbaWFIzuTvc5c2nvUsTQBetktAYBDpj/SqwIP9Yt
-	 YnDQm1zNADPXB7T9+SwR33EHeZGlSycaEDMPQwcD4g7+4fnYPxpdfRMRnPdYIcyHIIp9v
-	 /kBSSeD3SicbACZG+a23+Jk+Bf88oNxryD7utW1O2+H4TVDmpmt6HfY2pe+D8RvkHVg==
+	bh=DKBgitUEWAjpuQeBpVQKGAVoi8+EitsDnECOCpYTcxo=;
+	b=NzUcBSa3Jdw7sbsmM8ricXWZvSvVAKUDB7ZVS/YFSa3gUWMPUoOZgC5HmdTj2TNeKohi
+	 +wg6Otnkt+CTyO+quZg+aw1DcOqgfOlLSlt2n7S/zkhSN+MMoajbbQ+KF0RDaaRXMrJoN
+	 TaeQG32dl015qmak3Nu2et/qNzQAlfg3EPxrhByanYEI8rxAM4QKTURGR7/q+KpytRlpM
+	 Ou3uFr7Y8adWlKmaLHSt2TmkJNofvPEehq9fQqB77PzrP68e46HXsdlnIySeeEWQSqRYe
+	 OjvM7UfZJpgRyYcLuO7Evj7ayRpJrPSUjzC52uQ8CpfkE/5XvNTZscN0DdzdNPxgWHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JJNaXPWl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GOZmmK15;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5052606A31C;
-	Thu, 19 Nov 2026 00:16:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F49E606A334;
+	Thu, 19 Nov 2026 00:16:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JJNaXPWl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12B931F000CE;
-	Thu, 19 Nov 2026 00:16:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GOZmmK15
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E05221F000CA;
+	Thu, 19 Nov 2026 00:16:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047363;
-	bh=IKYYZ3l4oEas2GFncWD9Pxklzp7OG45aEENUxOrVMos=;
+	s=korg; t=1795047366;
+	bh=DKBgitUEWAjpuQeBpVQKGAVoi8+EitsDnECOCpYTcxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JJNaXPWlDPsVYfn5aJRLGAkyHvDUMSwH57d+EuhA1dxqGNm4oo3TXmxfNru6/Royv
-	 gwIYUUQKYY500kaXBf9Dp0bqtf+ZEK1Oi34WuEymdApeEltIauxIqOFIwtpMlJMp0T
-	 79p6QVNjzpNwx/zcOynFcbpWnaMrIKZl0NpxHTm0=
+	b=GOZmmK15zMcX+MIOpZRGJGZNvamrQp0yn89qCOdgPv8MuNChtPewN3rbnKgpcw0lP
+	 zmUl4R1kFF7S0gDGtmK66SVTuzAh70jEgSUFyAShk91eDidi5drmIku/oRCycl++1B
+	 vFsfLQOql3lrBFjcgT5Ha8ybOC8j9nAShXFixnrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Bill Wendling <morbo@google.com>,
+	Stefan Teodorescu <fane@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1595/2857] ata: libata: Do not leave ata_host_stop() registered when activation fails
-Date: Wed, 18 Nov 2026 15:43:49 +0100
-Message-ID: <20261118150258.804933781@linuxfoundation.org>
+Subject: [PATCH 6.1 1613/2857] KVM: nSVM: Check validity of vmcs01 save area copied from SMRAM on RSM
+Date: Wed, 18 Nov 2026 15:44:07 +0100
+Message-ID: <20261118150259.432286501@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,276 +70,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit d2f977008cbbae195df678ee1e70e5802f9bd0b8 ]
+[ Upstream commit 053621535f014085c935879582dd3b65964a0dce ]
 
-ata_host_start() registers ata_host_stop() as a devres action as soon as
-it has succeeded, which hands the release of the host resources over to
-devres: ->port_stop() and ->host_stop() are then called by the driver
-core when probe() fails.
+When doing RSM to L2, validate L1's state after copying it back into vmcb01
+from SMRAM, as SMRAM is carved out of guest memory, i.e. is writable by the
+guest.  Failure to validate L1's state is especially problematic for inputs
+to MMU context, as KVM can end up with impossible CR4 vs. EFER state.  E.g.
+without the recent hardening FNAME(walk_addr_generic), a guest can trigger:
 
-ata_host_activate() and ahci_host_activate_multi_irqs() can both fail
-after ata_host_start() has succeeded, e.g. if devm_request_irq() or
-ata_host_register() fails, and they return the error with the devres
-action still registered. A driver which releases the host resources in
-its probe() error path therefore releases them twice: once itself and
-once through ->host_stop().
+  ------------[ cut here ]------------
+  UBSAN: array-index-out-of-bounds in arch/x86/kvm/mmu/paging_tmpl.h:435:15
+  index 3 is out of range for type 'u32 [2]'
+  CPU: 3 UID: 0 PID: 92 Comm: CPU 1/KVM Not tainted 7.3.0-rc1 #2 PREEMPT(lazy)
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x5f/0x90
+   dump_stack+0x10/0x18
+   ubsan_epilogue+0x9/0x39
+   __ubsan_handle_out_of_bounds.cold+0x50/0x55
+   paging32_walk_addr_generic+0x889/0x970
+   paging32_page_fault+0x79/0xa60
+   kvm_mmu_do_page_fault+0x125/0x270
+   kvm_mmu_page_fault+0x88/0x7b0
+   npf_interception+0xc8/0x220 [kvm_amd]
+   svm_invoke_exit_handler+0x16d/0x1d0 [kvm_amd]
+   svm_handle_exit+0xb7/0x160 [kvm_amd]
+   vcpu_enter_guest+0x428/0x16a0
+   kvm_arch_vcpu_ioctl_run+0x479/0x920
+   kvm_vcpu_ioctl+0x316/0xb00
+   __x64_sys_ioctl+0xa3/0x100
+   x64_sys_call+0x281/0x23d0
+   do_syscall_64+0xba/0x550
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  RIP: 0033:0x79bb30deb04b
+   </TASK>
+  ---[ end trace ]---
 
-All ahci-platform drivers are in that situation, e.g. ahci_probe() calls
-ahci_platform_disable_resources() while ahci_host_stop() does the same
-through devres. This gives refcount underflow warnings from the clk,
-regulator and phy cores and, for shared resources, can disable resources
-which are still in use by other devices.
-
-Add ata_host_undo_start(), which stops the ports and drops the devres
-action without calling ->host_stop(), and call it from both activation
-helpers when they fail. Releasing the host resources on failure is then
-always left to the caller, which is what all callers having a probe()
-error path already assume.
-
-This changes the semantics for the drivers which implement ->host_stop()
-while also completely lacking error handling for the activate host call.
-Add activate host error handling for sata_qstor and sata_fsl. For
-sata_fsl this also means that hcr_base and host_priv are now released
-when activating the host fails, which ->host_stop() did not do when
-ata_host_start() itself failed.
-
-Note that ata_pci_sff_activate_host() is deliberately left as is: none of
-its callers releases the host resources in its probe() error path, they
-all rely on ->host_stop() being called by devres, including
-ata_pci_init_one(), which releases the devres group of the host itself.
-
-Fixes: 1896b15eddb4 ("ahci_platform: perform platform exit in host_stop() hook")
+Fixes: 37be407b2ce8 ("KVM: nSVM: Fix L1 state corruption upon return from SMM")
 Cc: stable@vger.kernel.org
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20260915084127.692494-13-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Reported-by: Bill Wendling <morbo@google.com>
+Reported-by: Stefan Teodorescu <fane@google.com>
+Tested-by: Stefan Teodorescu <fane@google.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20261022021046.295001-1-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+[ sashal: adapted validation to __nested_vmcb_check_save() with failure routed through the existing unmap_save cleanup ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libahci.c          |  2 +
- drivers/ata/libahci_platform.c |  4 ++
- drivers/ata/libata-core.c      | 75 +++++++++++++++++++++++++++++++---
- drivers/ata/libata-sff.c       |  5 +++
- drivers/ata/sata_fsl.c         |  6 ++-
- drivers/ata/sata_qstor.c       |  8 +++-
- include/linux/libata.h         |  1 +
- 7 files changed, 91 insertions(+), 10 deletions(-)
+ arch/x86/kvm/svm/nested.c | 23 ++++++++++++++++-------
+ arch/x86/kvm/svm/svm.c    |  2 ++
+ arch/x86/kvm/svm/svm.h    |  2 ++
+ 3 files changed, 20 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/ata/libahci.c b/drivers/ata/libahci.c
-index 2bfd82f3fee18..54b7b2283ed5e 100644
---- a/drivers/ata/libahci.c
-+++ b/drivers/ata/libahci.c
-@@ -2662,6 +2662,8 @@ static int ahci_host_activate_multi_irqs(struct ata_host *host,
- 			      host->ports[i]);
- 	}
- 
-+	ata_host_undo_start(host);
-+
- 	return rc;
+diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
+index af9caff998eba..1bd94165d2fba 100644
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -1507,6 +1507,21 @@ static void nested_copy_vmcb_cache_to_control(struct vmcb_control_area *dst,
+ 	/* 'clean' and 'hv_enlightenments' are not changed by KVM */
  }
  
-diff --git a/drivers/ata/libahci_platform.c b/drivers/ata/libahci_platform.c
-index 6ed700a02df43..b5cf2108518fc 100644
---- a/drivers/ata/libahci_platform.c
-+++ b/drivers/ata/libahci_platform.c
-@@ -691,6 +691,10 @@ EXPORT_SYMBOL_GPL(ahci_platform_get_resources);
-  * ahci-platform host, note any necessary resources (ie clks, phys, etc.)
-  * must be initialized / enabled before calling this.
-  *
-+ * On failure, ->host_stop() is not called, so the caller has to release the
-+ * resources it enabled (clocks, regulators, resets, PHYs) in its probe()
-+ * error path.
-+ *
-  * RETURNS:
-  * 0 on success otherwise a negative error code
-  */
-diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
-index b80113ebb3fc9..fd602ffbc5f7d 100644
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -5841,6 +5841,46 @@ int ata_host_start(struct ata_host *host)
- }
- EXPORT_SYMBOL_GPL(ata_host_start);
- 
-+/**
-+ *	ata_host_undo_start - undo ata_host_start()
-+ *	@host: ATA host to undo_start
-+ *
-+ *	Stop the ports of @host and drop the devres action registered by
-+ *	ata_host_start(), without calling ->host_stop().  Nothing is done if
-+ *	@host has not been started.
-+ *
-+ *	This gives the release of the host resources back to the caller, which
-+ *	is what a driver whose probe() error path releases those resources
-+ *	itself needs when starting or activating the host fails.
-+ *
-+ *	LOCKING:
-+ *	Inherited from calling layer (may sleep).
-+ */
-+void ata_host_undo_start(struct ata_host *host)
++bool nested_svm_check_vmcb01_save(struct kvm_vcpu *vcpu,
++				  struct vmcb_save_area *save)
 +{
-+	int i;
++	struct vmcb_save_area_cached save_cached;
 +
-+	if (!(host->flags & ATA_HOST_STARTED))
-+		return;
++	if (!(save->cr0 & X86_CR0_PG) ||
++	    !(save->cr0 & X86_CR0_PE) ||
++	    (save->rflags & X86_EFLAGS_VM) ||
++	    ((save->efer & EFER_LMA) && !(save->efer & EFER_LME)))
++		return false;
 +
-+	for (i = 0; i < host->n_ports; i++) {
-+		struct ata_port *ap = host->ports[i];
-+
-+		if (ap->ops->port_stop)
-+			ap->ops->port_stop(ap);
-+	}
-+
-+	/*
-+	 * Drop the action added by ata_host_start() without calling it.
-+	 * It does not exist if neither ->port_stop() nor ->host_stop() is
-+	 * implemented, in which case there is nothing to drop.
-+	 */
-+	devres_destroy(host->dev, ata_host_stop, NULL, NULL);
-+
-+	host->flags &= ~ATA_HOST_STARTED;
++	__nested_copy_vmcb_save_to_cache(&save_cached, save);
++	return __nested_vmcb_check_save(vcpu, &save_cached);
 +}
-+EXPORT_SYMBOL_GPL(ata_host_undo_start);
 +
- /**
-  *	ata_host_init - Initialize a host struct for sas (ipr, libsas)
-  *	@host:	host to initialize
-@@ -5925,6 +5965,12 @@ static void async_port_probe(void *data, async_cookie_t cookie)
-  *	starts ports, registers @host with ATA and SCSI layers and
-  *	probe registered devices.
-  *
-+ *	On failure, the host remains started, i.e. the devres action
-+ *	registered by ata_host_start() is kept, so ->host_stop() is called by
-+ *	the driver core when probe() fails.  A caller which releases the host
-+ *	resources in its own probe() error path must therefore call
-+ *	ata_host_undo_start().
-+ *
-  *	LOCKING:
-  *	Inherited from calling layer (may sleep).
-  *
-@@ -6031,6 +6077,10 @@ EXPORT_SYMBOL_GPL(ata_host_register);
-  *	have set polling mode on the port. In this case, @irq_handler
-  *	should be NULL.
-  *
-+ *	On failure, the ports are stopped again and the devres action
-+ *	registered by ata_host_start() is dropped without calling
-+ *	->host_stop(), so releasing the host resources is left to the caller.
-+ *
-  *	LOCKING:
-  *	Inherited from calling layer (may sleep).
-  *
-@@ -6051,27 +6101,40 @@ int ata_host_activate(struct ata_host *host, int irq,
- 	/* Special case for polling mode */
- 	if (!irq) {
- 		WARN_ON(irq_handler);
--		return ata_host_register(host, sht);
-+		rc = ata_host_register(host, sht);
-+		if (rc)
-+			goto undo_start;
-+
-+		return 0;
- 	}
- 
- 	irq_desc = devm_kasprintf(host->dev, GFP_KERNEL, "%s[%s]",
- 				  dev_driver_string(host->dev),
- 				  dev_name(host->dev));
--	if (!irq_desc)
--		return -ENOMEM;
-+	if (!irq_desc) {
-+		rc = -ENOMEM;
-+		goto undo_start;
-+	}
- 
- 	rc = devm_request_irq(host->dev, irq, irq_handler, irq_flags,
- 			      irq_desc, host);
- 	if (rc)
--		return rc;
-+		goto undo_start;
- 
- 	for (i = 0; i < host->n_ports; i++)
- 		ata_port_desc_misc(host->ports[i], irq);
- 
- 	rc = ata_host_register(host, sht);
--	/* if failed, just free the IRQ and leave ports alone */
--	if (rc)
-+	if (rc) {
-+		/* Free the IRQ, so that the handler can no longer run */
- 		devm_free_irq(host->dev, irq, host);
-+		goto undo_start;
-+	}
-+
-+	return 0;
-+
-+undo_start:
-+	ata_host_undo_start(host);
- 
- 	return rc;
- }
-diff --git a/drivers/ata/libata-sff.c b/drivers/ata/libata-sff.c
-index f51697e203404..3c4a7a7f27b2c 100644
---- a/drivers/ata/libata-sff.c
-+++ b/drivers/ata/libata-sff.c
-@@ -2335,6 +2335,11 @@ EXPORT_SYMBOL_GPL(ata_pci_sff_prepare_host);
-  *	hosts.  This separate helper is necessary because SFF hosts
-  *	use two separate interrupts in legacy mode.
-  *
-+ *	Note that, unlike ata_host_activate(), the devres action registered
-+ *	by ata_host_start() is kept on failure, i.e. ->host_stop() is called
-+ *	by the driver core when probe() fails.  All callers of this function
-+ *	rely on that, none of them releases the host resources itself.
-+ *
-  *	LOCKING:
-  *	Inherited from calling layer (may sleep).
-  *
-diff --git a/drivers/ata/sata_fsl.c b/drivers/ata/sata_fsl.c
-index 6bfa9f0542b67..f38c2089d55a5 100644
---- a/drivers/ata/sata_fsl.c
-+++ b/drivers/ata/sata_fsl.c
-@@ -1490,8 +1490,10 @@ static int sata_fsl_probe(struct platform_device *ofdev)
- 	 * device discovery process, invoking our port_start() handler &
- 	 * error_handler() to execute a dummy Softreset EH session
+ static int svm_get_nested_state(struct kvm_vcpu *vcpu,
+ 				struct kvm_nested_state __user *user_kvm_nested_state,
+ 				u32 user_data_size)
+@@ -1583,7 +1598,6 @@ static int svm_set_nested_state(struct kvm_vcpu *vcpu,
+ 		&user_kvm_nested_state->data.svm[0];
+ 	struct vmcb_control_area *ctl;
+ 	struct vmcb_save_area *save;
+-	struct vmcb_save_area_cached save_cached;
+ 	struct vmcb_ctrl_area_cached ctl_cached;
+ 	unsigned long cr0;
+ 	int ret;
+@@ -1653,12 +1667,7 @@ static int svm_set_nested_state(struct kvm_vcpu *vcpu,
+ 	 * Validate host state saved from before VMRUN (see
+ 	 * nested_svm_check_permissions).
  	 */
--	ata_host_activate(host, irq, sata_fsl_interrupt, SATA_FSL_IRQ_FLAG,
--			  &sata_fsl_sht);
-+	retval = ata_host_activate(host, irq, sata_fsl_interrupt,
-+				   SATA_FSL_IRQ_FLAG, &sata_fsl_sht);
-+	if (retval)
-+		goto error_exit_with_cleanup;
+-	__nested_copy_vmcb_save_to_cache(&save_cached, save);
+-	if (!(save->cr0 & X86_CR0_PG) ||
+-	    !(save->cr0 & X86_CR0_PE) ||
+-	    (save->rflags & X86_EFLAGS_VM) ||
+-	    ((save->efer & EFER_LMA) && !(save->efer & EFER_LME)) ||
+-	    !__nested_vmcb_check_save(vcpu, &save_cached))
++	if (!nested_svm_check_vmcb01_save(vcpu, save))
+ 		goto out_free;
  
- 	host_priv->intr_coalescing.show = fsl_sata_intr_coalescing_show;
- 	host_priv->intr_coalescing.store = fsl_sata_intr_coalescing_store;
-diff --git a/drivers/ata/sata_qstor.c b/drivers/ata/sata_qstor.c
-index 8ca0810aad26c..fb4d69b598a1f 100644
---- a/drivers/ata/sata_qstor.c
-+++ b/drivers/ata/sata_qstor.c
-@@ -584,8 +584,12 @@ static int qs_ata_init_one(struct pci_dev *pdev,
- 	qs_host_init(host, board_idx);
  
- 	pci_set_master(pdev);
--	return ata_host_activate(host, pdev->irq, qs_intr, IRQF_SHARED,
--				 &qs_ata_sht);
-+	rc = ata_host_activate(host, pdev->irq, qs_intr, IRQF_SHARED,
-+			       &qs_ata_sht);
-+	if (rc)
-+		qs_host_stop(host);
-+
-+	return rc;
- }
+diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
+index 4e68391c71f67..016a0d777f232 100644
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -4622,6 +4622,8 @@ static int svm_leave_smm(struct kvm_vcpu *vcpu, const char *smstate)
+ 	 */
  
- module_pci_driver(qs_ata_pci_driver);
-diff --git a/include/linux/libata.h b/include/linux/libata.h
-index 52b73315dae33..8df3d85a4cdff 100644
---- a/include/linux/libata.h
-+++ b/include/linux/libata.h
-@@ -1069,6 +1069,7 @@ extern struct ata_host *ata_host_alloc_pinfo(struct device *dev,
- extern void ata_host_get(struct ata_host *host);
- extern void ata_host_put(struct ata_host *host);
- extern int ata_host_start(struct ata_host *host);
-+void ata_host_undo_start(struct ata_host *host);
- extern int ata_host_register(struct ata_host *host,
- 			     struct scsi_host_template *sht);
- extern int ata_host_activate(struct ata_host *host, int irq,
+ 	svm_copy_vmrun_state(&svm->vmcb01.ptr->save, map_save.hva + 0x400);
++	if (!nested_svm_check_vmcb01_save(vcpu, &svm->vmcb01.ptr->save))
++		goto unmap_save;
+ 
+ 	/*
+ 	 * Enter the nested guest now
+diff --git a/arch/x86/kvm/svm/svm.h b/arch/x86/kvm/svm/svm.h
+index f5975b88756fd..087786ce1b47f 100644
+--- a/arch/x86/kvm/svm/svm.h
++++ b/arch/x86/kvm/svm/svm.h
+@@ -629,6 +629,8 @@ void nested_copy_vmcb_save_to_cache(struct vcpu_svm *svm,
+ 				    struct vmcb_save_area *save);
+ void nested_sync_control_from_vmcb02(struct vcpu_svm *svm);
+ void nested_vmcb02_compute_g_pat(struct vcpu_svm *svm);
++bool nested_svm_check_vmcb01_save(struct kvm_vcpu *vcpu,
++				  struct vmcb_save_area *save);
+ void svm_switch_vmcb(struct vcpu_svm *svm, struct kvm_vmcb_info *target_vmcb);
+ 
+ extern struct kvm_x86_nested_ops svm_nested_ops;
 -- 
 2.53.0
 
