@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019414;
-	b=ZLcckcXZYBi0UEX/Q8hozDyxPGVEhEK5RNs+hZuxs/PlQSvzOb3De2yHQAKWwNYEkV4b
-	 yrKps1FOEy4etVdBqP47J/pu0XiTPFME04vGCxnEQZzgFcS5Bltbc79+a88cYKzWQ+Xx8
-	 0v82zFf+nG9BnyjTyD5ZCHE4ibns9xChr397jeiZq/LBQrH0un50Akr6FdLXSFuUfCNpR
-	 JxZiVn2FT7OrGistJHYiMm85mcERFh+vTrYDjDmEng+bfBbvypeTHVVVyAZ+d6ZJ9YDMv
-	 kVtduY6XOa9I52Yq5UUPSDFkWfRbdbCi9bbpKzeZmtPcq/VF4woecETkr61jKC58oeQ==
+	t=1795019416;
+	b=0hII5nKQeHAaVZdKWm1ce5ezsBs6MJ463shZoOinNf6j9IQEyqXMmEXbhs45QARaosMe
+	 dZIaIs4nsHaOP5GpjOXpPWrupOr3F/nw0vvLXa8t7+UFuLKTc5lBs6thlLfq/Y9D6N7uH
+	 aQBiu2kyu+7eRbcnXEjIbr9PnbXkN+yFxBW5TF2YhWbO1z/x3ZLPxDtL/d6I3sgCOnS8J
+	 /UKe8DIeEch9S5z8ONJrhPgWZSs6RJp7oULALrK+1ISDB6iQDolvhOE2MVqLXx3sH4Rvk
+	 SEfnjsktE1gWbfVs1aiBbtKPJVvpKYfRehr7iszz5yh3CoGSITCycTrqsxkSUusXIfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019414;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019416;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=i3DCjybJ/wKSXXLI2q5O+oYfHKaUFvI/96LoSzfiHuA=;
-	b=FPvIw9m94ILq4WEVyC0voi/lSGe379cI4PtQYj947YDKVHBwwZlbZJ3YqwMRItImTPdv
-	 WpZRoyJT4GcORIyi1yRyLDe6xPFyWRl/1HNZ6OzEgSVeE/AACHnlqvSvI8j5hCR4uDYN+
-	 zYvCmGfVRSQxU6fR1BVw9lrdP76jYQpE8/D/M/qEhwFqk5V1NdkmV7EpO3HYJggasOHKc
-	 rXxPvndn5lgPXu3hc8TVRAA+xCskO0cztKJpqfzysDsZayux9XLOKwgs951pzMRKkH4gK
-	 HFtN+tjg6wqqI/jiu1zfmlArcPkyojwPT9rpaYGsPe2cLKKRLQVL+CwjyenZnMYBAhQ==
+	bh=yfCVxutLra1vesC/sHFrRkpxjnwSencFAX/as/6JlHo=;
+	b=MaomcfkBF7HcXa+T6r86SEku8NPwMrvFjg+pgz4awl/R2cQmj3K3d3fZLVVZPfsACMAC
+	 C0L3xgh8OrWM+7eNehdXfuFJCu+ttOUndRWoJ4VYZiw3yzE+Sww8G3Q0+i1d+6chtS/sB
+	 OtglAPcamGVzVYHxxFuUft92aJJkiTDuhzMYnMTT+K7Txcj+mu6dVUcDkCfDs8O2GJY4b
+	 DISH5K2hZv826VBszHhxAJ4AZ4w/aZzyYVUEZxMYYqIoEfuPFMS+C5Awf6ONhc74oVbnS
+	 UnUGp3V3IrRSXIS05uwkqRCkr0+JH5VtfOsngX5Lls3tyYn3ZNAWKGjqedx+InWowZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1du4BPTT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cxTws+6a;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC8A60A5BCB;
-	Wed, 18 Nov 2026 16:30:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC57060A3801;
+	Wed, 18 Nov 2026 16:30:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1du4BPTT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 452B31F00935;
-	Wed, 18 Nov 2026 16:30:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cxTws+6a
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E1A21F0182A;
+	Wed, 18 Nov 2026 16:30:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019413;
-	bh=i3DCjybJ/wKSXXLI2q5O+oYfHKaUFvI/96LoSzfiHuA=;
+	s=korg; t=1795019416;
+	bh=yfCVxutLra1vesC/sHFrRkpxjnwSencFAX/as/6JlHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1du4BPTTjd2BkYdXiIiiFg+riGNmO9234BO+NcJM1Smg+9i/XIdLUHN4c+/GR5tqg
-	 HRguehk16Bd7h+DSKJkykgpZTeuos6qaAnRMmuCSTLapdpbvQHJoK0qEDXXZjeibnv
-	 O0Zx11Ap52xQtPlekXvOwOB20XutyXMBpIyXXAuQ=
+	b=cxTws+6a+652B+TfR4NZDPEhDg93TdQxeP33HtzEENh1izkQnrrYCHYctTZFyB0Br
+	 aM6wfPDueH3PjhtO6z3LdePpDJ+84MNml6ADD7wM8dlQ19pGajDl0zvDntToaEWOu3
+	 5GKNdOmfdGjqs58CUPk56V0McgGr2YW6mekHihgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Tushar Dave <tdave@nvidia.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1588/2651] ALSA: hda: Disable unsol event handling at error and shutdown paths
-Date: Wed, 18 Nov 2026 15:47:08 +0100
-Message-ID: <20261118150345.075569432@linuxfoundation.org>
+Subject: [PATCH 7.3 1571/2651] PCI/P2PDMA: Do not tear down the allocate attribute on registration failure
+Date: Wed, 18 Nov 2026 15:46:51 +0100
+Message-ID: <20261118150344.495990142@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,77 +71,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 7a78c18bffc6e09016720681d791b799feb61783 ]
+[ Upstream commit 7c4d6505a1f8a1ebe8019b7f988ed494b696653b ]
 
-When the HD-audio controller driver probe fails, it still leaves the
-unsolicited event handling and jackpoll work active, hence if they are
-pending, they might fire up later after the resource gets released,
-which may lead to a UAF.  A similar problem may be seen at shutdown,
-too.
+pci_p2pdma_add_resource() installs pci_p2pdma_unmap_mappings() as a devres
+action with the devres allocated p2p_pgmap as its data, and only then adds
+the range to the pool:
 
-Add the recently added helper to disable unsol events and the cancel
-of jackpoll_work at the appropriate places.  We need the workaround in
-the error path before driver->ops->remove, too.  As unsol events and
-jack polling may have been already enabled during the probe callback,
-the driver->ops->remove call is done (more) conditionally now.
+  error = devm_add_action_or_reset(&pdev->dev, pci_p2pdma_unmap_mappings,
+                                   p2p_pgmap);
+  if (error)
+          goto pages_free;
 
-Fixes: c3ec8ac82105 ("ASoC: hdac_hda: fix memleak on module unload")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://patch.msgid.link/20261009133341.440917-3-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+  p2pdma = rcu_dereference_protected(pdev->p2pdma, 1);
+  error = gen_pool_add_owner(p2pdma->pool, ...);
+  if (error)
+          goto pages_free;
+
+The action removes the allocate attribute for the whole device, which tears
+down existing userspace mappings of every BAR already registered on it.
+Both failures here get that wrong, in opposite ways.
+
+devm_add_action_or_reset() runs the action when it cannot allocate its
+devres node, so an -ENOMEM while registering a second BAR unmaps the first
+one. Use devm_add_action() and let the error path unwind only what this
+call created.
+
+gen_pool_add_owner() allocates a chunk and can also fail with -ENOMEM.
+There the action is registered, and the error path frees p2p_pgmap with
+devm_kfree() while leaving the action pointing at it. On unbind devres
+runs the action and pci_p2pdma_unmap_mappings() dereferences
+p2p_pgmap->mem->owner->kobj, which is freed memory. Give that failure its
+own label and drop the action with devm_remove_action(), which removes it
+without running it.
+
+Fixes: 7e9c7ef83d78 ("PCI/P2PDMA: Allow userspace VMA allocations through sysfs")
+Fixes: f58ef9d1d135 ("PCI/P2PDMA: Separate the mmap() support from the core logic")
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Tushar Dave <tdave@nvidia.com>
+Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://patch.msgid.link/20260830-batch-p2p-fixes-v1-1-5044e8dfbe2e@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/common/bind.c  | 8 ++++++--
- sound/hda/common/codec.c | 1 +
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ drivers/pci/p2pdma.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/sound/hda/common/bind.c b/sound/hda/common/bind.c
-index 4772ca154a290..d12359970e74d 100644
---- a/sound/hda/common/bind.c
-+++ b/sound/hda/common/bind.c
-@@ -89,6 +89,7 @@ static int hda_codec_driver_probe(struct device *dev)
- 	struct hda_codec *codec = dev_to_hda_codec(dev);
- 	struct module *owner = dev->driver->owner;
- 	struct hda_codec_driver *driver = hda_codec_to_driver(codec);
-+	bool probed = false;
- 	int err;
+diff --git a/drivers/pci/p2pdma.c b/drivers/pci/p2pdma.c
+index 9334eb314663e..8124bcebfa2d3 100644
+--- a/drivers/pci/p2pdma.c
++++ b/drivers/pci/p2pdma.c
+@@ -440,8 +440,8 @@ int pci_p2pdma_add_resource(struct pci_dev *pdev, int bar, size_t size,
+ 		goto pgmap_free;
+ 	}
  
- 	if (codec->bus->core.ext_ops) {
-@@ -122,7 +123,8 @@ static int hda_codec_driver_probe(struct device *dev)
+-	error = devm_add_action_or_reset(&pdev->dev, pci_p2pdma_unmap_mappings,
+-					 p2p_pgmap);
++	error = devm_add_action(&pdev->dev, pci_p2pdma_unmap_mappings,
++				p2p_pgmap);
+ 	if (error)
+ 		goto pages_free;
  
- 	err = driver->ops->probe(codec, codec->preset);
- 	if (err < 0)
--		goto error_module_put;
-+		goto error_module;
-+	probed = true;
- 	err = snd_hda_codec_build_pcms(codec);
- 	if (err < 0)
- 		goto error_module;
-@@ -141,7 +143,9 @@ static int hda_codec_driver_probe(struct device *dev)
+@@ -451,13 +451,15 @@ int pci_p2pdma_add_resource(struct pci_dev *pdev, int bar, size_t size,
+ 			range_len(&pgmap->range), dev_to_node(&pdev->dev),
+ 			&pgmap->ref);
+ 	if (error)
+-		goto pages_free;
++		goto mappings_remove;
+ 
+ 	pci_info(pdev, "added peer-to-peer DMA memory %#llx-%#llx\n",
+ 		 pgmap->range.start, pgmap->range.end);
+ 
  	return 0;
  
-  error_module:
--	if (driver->ops->remove)
-+	snd_hdac_device_disable_unsol(&codec->core);
-+	cancel_delayed_work_sync(&codec->jackpoll_work);
-+	if (probed && driver->ops->remove)
- 		driver->ops->remove(codec);
-  error_module_put:
- 	module_put(owner);
-diff --git a/sound/hda/common/codec.c b/sound/hda/common/codec.c
-index 652df589759d4..5fc3b0344763d 100644
---- a/sound/hda/common/codec.c
-+++ b/sound/hda/common/codec.c
-@@ -3045,6 +3045,7 @@ void snd_hda_codec_shutdown(struct hda_codec *codec)
- 
- 	codec->jackpoll_interval = 0; /* don't poll any longer */
- 	cancel_delayed_work_sync(&codec->jackpoll_work);
-+	snd_hdac_device_disable_unsol(&codec->core);
- 	list_for_each_entry(cpcm, &codec->pcm_list_head, list)
- 		snd_pcm_suspend_all(cpcm->pcm);
- 
++mappings_remove:
++	devm_remove_action(&pdev->dev, pci_p2pdma_unmap_mappings, p2p_pgmap);
+ pages_free:
+ 	devm_memunmap_pages(&pdev->dev, pgmap);
+ pgmap_free:
 -- 
 2.53.0
 
