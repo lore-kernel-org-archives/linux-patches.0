@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056672;
-	b=lXngTA02T8CKBxgcxheII8lrJVcklMWcnzr62+dTMpgrAZ/ehbHnQRa8gWEIOKkiXpHt
-	 mYHYh2i64zsBbUKcfMao6W/948eVTpv0M+QPC37ZQMMsVEkvu8KmUELCNRIkn2jizmDMQ
-	 Wza0vmiUmHfyO/X+/05/9YuQX2g9vhTfgKc4r10Uf2lDBWjGo8osjY8vq25+wVwf/Rt6M
-	 rvM2KgSA9KRvl7jLsPu/GEYPrIurfE2ri5DUCLGwUPbYN0tONmIqxCectupe6K/3Hmf+7
-	 2zFXYR5UEUOMreb7WuN6hHd3o4d6r7SXQ4Z6WdJlMnFEdCYOowtDnWkNmEl+QjLyLAQ==
+	t=1795056675;
+	b=xYdcD5O+c/aOTXOCQfN0pvCuXTKvsi7LzPiBuPK7eapj+2hwko7Y5D6laelRv4iZZ/m+
+	 GYcvI9alnTYbw1KPhE03S7m8zLjZQRo9/YY0urSfuvMjKS2e87/px83qQnJsen1XLRfQz
+	 psReu+XlBs2aTw78vBPW4vmPXuzZvgZBUosRxVTzXdx52Ae+ygc+bKUf0Oy5XID2yUWUj
+	 U8usPfXQInI7McWpZYLwqC4WSy6BQnEqlqQPTwNF1kM2EM0ZUZpdCGfiisNij7UUbGac6
+	 5LKfmXNZd6lRLN2l5aquPPCI9uopk2Wfm2AtQ0D4yq9UKDLIH8vtysW6M5Y2pgk1GrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056672;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056675;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cR8VXKC8iyWb4Hs0KN2P0OZY0fJj2fXVgPHLnMPFoAc=;
-	b=p0U4dpImNCkOdAtKqBkFtYURgpjO7DKTsTKzSS/ZioN+jtX6RPXFEILakvE9AKsFIBEd
-	 1DrbocjdaB9vccxNMFoclvVe7KE6+hIbFZNX36v0XoDzXVmzTNxCi8mbDtC/G0X4RRkQE
-	 A9dcYmTO7ElxSgNtCWDrzrYFWda2uYcTWsawD1gUZdbOiXDI/MvugMspclMeZQVdGge0u
-	 e5yWTLIOMIfEA7uzZhBjL7waWtDV975sU0XgNGfGKbOJYPQDfd+2U6771i8MAS4jnmkuJ
-	 Puy/N5e7qHq8J6C1hcox4USpf3yMsr6FfzCOW4tKAz+JufE3/bupzpq95yIvCOowPlA==
+	bh=2Tzs7xNQdku9MUpgqm3Mv22XcvDOQrEps+AFxuWhGxE=;
+	b=pwVH386cBSshHqoB5tgJ5S9oD8BzYHuY4qqdLSnGSC0B+RLKycTaNlqFgQnOgwp/+0wJ
+	 aDrhQhPN/ZlslXNUGCD55gUb2/0nbgeMCLmp95nIpPSi8WPNN87zCB5tJRZeCqhmUe0Bq
+	 WPI6osVqOqzFcAyRyXykzUcLC1SeW4RT2VWkFprxaipsGb1i1huD0n6dWGbsFdYM6GAxB
+	 EDKMnrh7SKKuhxWXmrU/40xrEcW2jIXX8J07X3hBFq3gdw9YUXUR7JN+sn3qLZIF7na6o
+	 We+X/q1UH4rIPJl2NlZzYe1NZSbENp69RTn4jyutMOGtulJW9Ore33zlQMIZ/KwuqPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="U/mzWUX8";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dGesgSIn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77937606A32C;
-	Thu, 19 Nov 2026 02:51:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A8B606A325;
+	Thu, 19 Nov 2026 02:51:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U/mzWUX8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C84D41F000C4;
-	Thu, 19 Nov 2026 02:51:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dGesgSIn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D6D81F000C5;
+	Thu, 19 Nov 2026 02:51:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056672;
-	bh=cR8VXKC8iyWb4Hs0KN2P0OZY0fJj2fXVgPHLnMPFoAc=;
+	s=korg; t=1795056675;
+	bh=2Tzs7xNQdku9MUpgqm3Mv22XcvDOQrEps+AFxuWhGxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U/mzWUX8QtbO3TDhn1GVJKNBRUg6qbmzsSZ3FQxI0mj5CXxxjaT7AalwGNozFeJrR
-	 GriNcwVWBnaxMLWbLIUZH0dhC05C6l0grWOlNoZAxls0JcAPaz7fFf8YiE83DB/S5V
-	 tJgRZ7K2nl/FLjBp82Vch+1BQYRorexgHXuV9Vtc=
+	b=dGesgSIneI3c+fP2JFDNreKjmRBTCUDGRO+pgPm7dkqWozC61DvY7qiKpmEmcRkbf
+	 GTx0P98a+1VWYoxBxKp2i3/xjtaKIvIHTFRTbcmEkOj/vRiMa0UiQlVCCidaD3TDVf
+	 cWSiV1NmFuVfYJQicdkDKefbWhFDGsgtoIGhu0PE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Jijie Shao <shaojijie@huawei.com>,
+	Sagi Maimon <maimon.sagi@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2070/2214] net: hix5hd2: serialize timeout recovery with interface teardown
-Date: Wed, 18 Nov 2026 16:02:26 +0100
-Message-ID: <20261118150133.442229032@linuxfoundation.org>
+Subject: [PATCH 5.15 2071/2214] net: axienet: release every RX buffer in axienet_dma_bd_release()
+Date: Wed, 18 Nov 2026 16:02:27 +0100
+Message-ID: <20261118150133.476846805@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,84 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Sagi Maimon <maimon.sagi@gmail.com>
 
-[ Upstream commit 87cce46329a811ea3fe108ac721e0a2400d0a3bb ]
+[ Upstream commit b59787892d04a5647a7e662fbb02cd0abdb1a993 ]
 
-The timeout worker calls the driver's close and open methods without
-RTNL or a running-state check. A timeout queued before an interface is
-closed can call close again after ndo_stop has disabled NAPI. The second
-napi_disable() can then wait indefinitely. The worker can also race with
-an ongoing close.
+The RX walk in axienet_dma_bd_release() stops at the first descriptor
+without an skb, assuming that such a slot and all after it were never
+filled.  That holds on the axienet_dma_bd_init() error path, but not once
+the ring has been running: when axienet_rx_poll() fails to allocate or
+map a replacement buffer it leaves the slot it emptied with a NULL skb,
+in the middle of a populated ring, until a later poll refills it.
+Closing the interface before then leaks the skb and the streaming DMA
+mapping of every descriptor after that slot, which can be most of the
+ring, and is most likely under memory pressure.
 
-Take RTNL and skip recovery when the interface is no longer running.
-Use the netdev core close and open helpers so a failed reopen leaves the
-interface down, rather than leaving it marked running with NAPI disabled.
+The walk also frees each skb before unmapping it.  With swiotlb, the
+DMA_FROM_DEVICE unmap copies the bounce buffer back into the skb data
+that was just freed, and on non-coherent platforms it invalidates cache
+lines that may already belong to a new owner.
 
-After unregister_netdev() has stopped the watchdog, drain the worker
-before releasing its MDIO and descriptor resources. This wait is outside
-RTNL, allowing an already queued worker to take RTNL, observe the down
-state, and finish.
+Skip empty slots instead of stopping at the first one.  An emptied slot
+still has a non-zero cntrl but its buffer is already unmapped, so the
+skip has to cover the unmap too, which it does by coming before it.
+Then unmap before freeing, as axienet_rx_poll() does.
 
-This issue was identified as part of our ongoing research while
-reviewing kernel code.
+This was reported by the Sashiko AI review bot.
 
-Fixes: 57c5bc9ad7d7 ("net: hisilicon: add hix5hd2 mac driver")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Jijie Shao <shaojijie@huawei.com>
-Link: https://patch.msgid.link/179203116093.2621539.3718842986255459438.G202@gmail.com
+Tested on the AXI Ethernet MAC of an ADVA TimeCard X2 (PCIe card, with
+the built-in AXI DMA): traffic passes after each of ten down/up cycles,
+each running axienet_dma_bd_release(), so the unmap-then-free order is
+exercised on every buffer.  A failed RX refill was not reproduced, so
+the skip over an empty slot was not exercised.
+
+Fixes: f26667a373f3 ("net: axienet: Fix DMA descriptor cleanup path")
+Fixes: 7a7d340ba4d9 ("net: axienet: fix RX ring refill allocation failure handling")
+Signed-off-by: Sagi Maimon <maimon.sagi@gmail.com>
+Link: https://patch.msgid.link/20261015084743.1798326-1-maimon.sagi@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hix5hd2_gmac.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/xilinx/xilinx_axienet_main.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c b/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c
-index 7ecc3333c8df2..4fa0ba6996b7e 100644
---- a/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c
-+++ b/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c
-@@ -11,6 +11,7 @@
- #include <linux/of_net.h>
- #include <linux/of_mdio.h>
- #include <linux/reset.h>
-+#include <linux/rtnetlink.h>
- #include <linux/clk.h>
- #include <linux/circ_buf.h>
+diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+index fddf444072ea9..f9685cf2d56be 100644
+--- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
++++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+@@ -248,13 +248,13 @@ static void axienet_dma_bd_release(struct net_device *ndev)
+ 	for (i = 0; i < lp->rx_bd_num; i++) {
+ 		dma_addr_t phys;
  
-@@ -889,8 +890,13 @@ static void hix5hd2_tx_timeout_task(struct work_struct *work)
- 	struct hix5hd2_priv *priv;
+-		/* A NULL skb means this descriptor has not been initialised
+-		 * at all.
++		/* A NULL skb means the descriptor holds no buffer: it was
++		 * never filled, or axienet_rx_poll() took its skb and could
++		 * not refill it, having already unmapped the old buffer.
++		 * Such slots can sit anywhere in a ring that has been running.
+ 		 */
+ 		if (!lp->rx_bd_v[i].skb)
+-			break;
+-
+-		dev_kfree_skb(lp->rx_bd_v[i].skb);
++			continue;
  
- 	priv = container_of(work, struct hix5hd2_priv, tx_timeout_task);
--	hix5hd2_net_close(priv->netdev);
--	hix5hd2_net_open(priv->netdev);
+ 		/* For each descriptor, we programmed cntrl with the (non-zero)
+ 		 * descriptor size, after it had been successfully allocated.
+@@ -265,6 +265,8 @@ static void axienet_dma_bd_release(struct net_device *ndev)
+ 			dma_unmap_single(lp->dev, phys,
+ 					 lp->max_frm_size, DMA_FROM_DEVICE);
+ 		}
 +
-+	rtnl_lock();
-+	if (netif_running(priv->netdev)) {
-+		dev_close(priv->netdev);
-+		dev_open(priv->netdev, NULL);
-+	}
-+	rtnl_unlock();
- }
++		dev_kfree_skb(lp->rx_bd_v[i].skb);
+ 	}
  
- static void hix5hd2_net_timeout(struct net_device *dev, unsigned int txqueue)
-@@ -1289,6 +1295,7 @@ static int hix5hd2_dev_remove(struct platform_device *pdev)
- 	struct hix5hd2_priv *priv = netdev_priv(ndev);
- 
- 	unregister_netdev(ndev);
-+	cancel_work_sync(&priv->tx_timeout_task);
- 	mdiobus_unregister(priv->bus);
- 	mdiobus_free(priv->bus);
- 
-@@ -1296,7 +1303,6 @@ static int hix5hd2_dev_remove(struct platform_device *pdev)
- 		hix5hd2_destroy_sg_desc_queue(priv);
- 	hix5hd2_destroy_hw_desc_queue(priv);
- 	of_node_put(priv->phy_node);
--	cancel_work_sync(&priv->tx_timeout_task);
- 	free_netdev(ndev);
- 
- 	return 0;
+ 	dma_free_coherent(lp->dev,
 -- 
 2.53.0
 
