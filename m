@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043457;
-	b=ZFYuU4NcFrAjSWjvbgWTdJGUR9w+e5Uc/LgYGUCqT0ZHfoiP05fzwG7VQ1bCqHS3BLeO
-	 /8F/r5YWxkwChijOb3A2YXJwyrSggHHWMp+ex/zdiiKXm76zhemd1O7AiaUFUaDqoBDFs
-	 eC+l1THntyGEwDj1sZ3atfV8OBFevtX/ifXBrl6kOkQa3l1eQmMDuSF2F6hnEMDg+Wu6r
-	 i3+z9DpGGy4PBo0+rXhu9zqz0Pn0kCK929zQbAZWKY4HeApIsSHOG00HCTD1kISpE89bU
-	 EUswotpYRU3lnBFnJAdCh/ZkyHHOqph+VYTkZ1LxNh2XrxERHXPe31Pf2yMElKO2aiA==
+	t=1795043460;
+	b=hd/DCHElXfW1NSXZ5tfxBfqOE8PPxrwBv4QSKpzHal8+o39Y+jnyDCe0bWN7MyLH9gR9
+	 SNSgYepclNaupoSGW56p5ZexwOb5fPzqbHL1Y+9/s1I6z7izl39MOchHZmjbK/oPhAxGl
+	 3uVZNcLjVKUtoCscSB68GI2qLmYOcgDC53Offjz4n4ZLmVuEFuz+f3ukJgskTy70Quj5Y
+	 2BIvD/MlTpjhIP7hd4CQhn1WzqErOpFwFIrIxWJzLMXIHwy8dBeU0/Cw0unRjK8ZnHNsN
+	 03EaxoGeR6SPHjfV0dnSIDpOm9HdJkmx2wEPfj7Pm7dWVcHuZgSDZsaEF9L+59aVNyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043457;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043460;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=A1sBGW/pv/O8tuX7VGTYUlWCH0jCqo4reH+FZQj3hFc=;
-	b=dBT3MZKOYYVJ0TX8/C01CXvLT2WyP+2p8inn+oQQc8ePWUIOro3fII9yFBqM4xiiL+1r
-	 IhxAnjqVPbTQXiMo1/edPJ11lsD6M+x2odGKn1oVHIXJjcUpOlIHIQ7aPIMlZuvxq7G+l
-	 cFM5or3wbW4hrm3pDj+MiiAPgXy9jJ1M7s/suSTe9aN365Q6/pKkl83VZPQSoEYcEumy5
-	 lJT/4s/+HeAxzfGuoJ2lKd96bfqAWMY8KPo33l5urp6bZlFj+B9mE/0jmJXT76pIQTJGx
-	 7kxSzyhGHInE/0QcZQfqSj+2rrTChBchZHKztMgwoSvBUDC9jurhMEVj/HHG7DzQ7ig==
+	bh=v8SDAl9Zou5iZ4Z1pvORYTBUrGGsx/p7uhCbLTRYKXs=;
+	b=o1mLpaKEZ6mwHRsFeB8KbvOloPos3z5DqcZ+R5SniyzWM8CuSovyvTigcb4i+mimmh9d
+	 OdHHfWpR+A0mZvRfEuL9crjJRlM2cOOkKB1PexKQlcQ+6lczC7NvH3h5AT7XJHq5Wo2Wj
+	 FsueaxhHoEp8hKZhjPYetB10bZv9ySfLIuYEhdNpPLon0dmj8ZAjNbK2DDW+OXoya54L/
+	 juvy+tl9dUpTBG9nJ63uqm1Mu2pi14rvsoVhxbNdXrrufb9oeaAZrmQkoZp4xauPzL93Q
+	 e8LO7DyF/kwW/FjuF6pK/0Yu9Ozi+0Cc9BGh3/HgyKzEUfMqxKmk/MLYVeVl8HebPLg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=paKQx3bL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="B3/zafXA";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F8960A261A;
-	Wed, 18 Nov 2026 23:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6A5606A336;
+	Wed, 18 Nov 2026 23:11:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=paKQx3bL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBFDF1F000C4;
-	Wed, 18 Nov 2026 23:10:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B3/zafXA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8563A1F000C4;
+	Wed, 18 Nov 2026 23:10:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043457;
-	bh=A1sBGW/pv/O8tuX7VGTYUlWCH0jCqo4reH+FZQj3hFc=;
+	s=korg; t=1795043460;
+	bh=v8SDAl9Zou5iZ4Z1pvORYTBUrGGsx/p7uhCbLTRYKXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=paKQx3bLgW1tUyZ083AhMxOS4aZooED7kskgprT44L3S7v4rMOXeww6zunqM7OTsN
-	 gXxdOPKCKNwV1BNGyeWA0/tZ2txgBoDzMkFaThvHwzXizstBTrgIVli574ka5SSVhS
-	 Q/TRG1FFWJt2lV+xh3CxKh+DhqM2990Og+prfeQY=
+	b=B3/zafXAp4JsWVO3Cl6QqsViImaadaowjQjAY8CPyETjBdXAiBdop49OOgDNA1XqJ
+	 UZJkHxayL3frobeqEC3lLe2tnxXs+4smGN4pmmoxXkeTTjSrK2ELTATPoPUnsI34xw
+	 dIO0YcCc0hiD6OV5glWfFLah4A8FyLZ+amaCuLiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Saheed <muhammad.saheed.iam@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0217/2857] Bluetooth: hci_sync: Disable legacy instances ext adv before setup snapshot
-Date: Wed, 18 Nov 2026 15:20:51 +0100
-Message-ID: <20261118150209.280284483@linuxfoundation.org>
+Subject: [PATCH 6.1 0218/2857] net: dsa: mt7530: error out on failed PHY_IAC command writes
+Date: Wed, 18 Nov 2026 15:20:52 +0100
+Message-ID: <20261118150209.313411002@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,102 +69,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Saheed <muhammad.saheed.iam@gmail.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit 75722cde87ee24029e93e4e32d85309989f55991 ]
+[ Upstream commit 1c95dcb7e923beebccdc79adc3dc1ec8c52295d0 ]
 
-hci_setup_ext_adv_instance_sync(...) only disabled
-HCI_OP_LE_SET_EXT_ADV_ENABLE before setup snapshot in case of non-legacy
-instances (instance > 0) and never disabled the same for legacy instance
-(instance == 0). This would lead to failure in setting ext adv params
-with HCI_ERROR_COMMAND_DISALLOWED (0x0c) error like below, when toggling
-the discoverable/connectable property of a controller with advertising
-enabled.
-```
-$ btmgmt advertising off
-hci0 Set Advertising complete, settings: powered ssp br/edr le
-  secure-conn wide-band-speech cis-central cis-peripheral
-$ btmgmt connectable on
-hci0 Set Connectable complete, settings: powered connectable ssp br/edr
-  le secure-conn wide-band-speech cis-central cis-peripheral
-$ btmgmt connectable off
-hci0 Set Connectable complete, settings: powered ssp br/edr le
-  secure-conn wide-band-speech cis-central cis-peripheral
+MT7531_PHY_ACS_ST is only ever set by the command write that precedes
+each poll in the MT7531 indirect PHY access functions, and that
+write's return value is discarded. A failed write leaves ACS_ST at 0
+from the previous access, so the poll succeeds on its first iteration
+and the functions return stale IAC contents as if they were fresh PHY
+data. Check the writes and bail out before polling.
 
-$ btmgmt advertising on
-hci0 Set Advertising complete, settings: powered connectable ssp br/edr
-  le advertising secure-conn wide-band-speech cis-central cis-peripheral
-$ btmgmt connectable on
-Set Connectable for hci0 failed with status 0x0a (Busy)
-$ btmgmt connectable off
-Set Connectable for hci0 failed with status 0x0a (Busy)
-
-$ dmesg
-...
-[   21.970527] hci0: Opcode 0x2036
-[   21.970529] hci0: opcode 0x2036 plen 25
-[   21.970537] hci0: skb len 28
-[   21.970539] hci0: length 1
-[   21.976099] hci0: result 0x0c
-[   21.976105] hci0: end: err -16
-[   21.976114] Bluetooth: hci0: Opcode 0x2036 failed: -16
-```
-
-Signed-off-by: Muhammad Saheed <muhammad.saheed.iam@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/c34602e63a20ebbfb97babd145c82832d7a0b523.1785811140.git.daniel@makrotopia.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ drivers/net/dsa/mt7530.c | 24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index c0c19abd92590..28e7fa689aae8 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -1196,6 +1196,32 @@ int hci_update_random_address_sync(struct hci_dev *hdev, bool require_privacy,
- 	return 0;
- }
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index 73eeb6aeac5cc..7826d1e3a1cfa 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -654,7 +654,9 @@ mt7531_ind_c45_phy_read(struct mt7530_priv *priv, int port, int devad,
  
-+static int hci_disable_ext_adv_legacy_instance_sync(struct hci_dev *hdev)
-+{
-+	struct hci_cp_le_set_ext_adv_enable *cp;
-+	struct hci_cp_ext_adv_set *set;
-+	u8 data[sizeof(*cp) + sizeof(*set) * 1];
-+	u8 size;
-+
-+	if (!hci_dev_test_flag(hdev, HCI_LE_ADV_0))
-+		return 0;
-+
-+	memset(data, 0, sizeof(data));
-+
-+	cp = (void *)data;
-+	set = (void *)cp->data;
-+
-+	cp->num_of_sets = 0x01;
-+	cp->enable = 0x00;
-+
-+	set->handle = 0x00;
-+
-+	size = sizeof(*cp) + sizeof(*set) * cp->num_of_sets;
-+
-+	return __hci_cmd_sync_status(hdev, HCI_OP_LE_SET_EXT_ADV_ENABLE,
-+				     size, data, HCI_CMD_TIMEOUT);
-+}
-+
- static int hci_disable_ext_adv_instance_sync(struct hci_dev *hdev, u8 instance)
- {
- 	struct hci_cp_le_set_ext_adv_enable *cp;
-@@ -1421,6 +1447,10 @@ int hci_setup_ext_adv_instance_sync(struct hci_dev *hdev, u8 instance)
- 			return -EINVAL;
- 		}
- 	} else {
-+		err = hci_disable_ext_adv_legacy_instance_sync(hdev);
-+		if (err)
-+			return err;
-+
- 		adv = NULL;
- 	}
+ 	reg = MT7531_MDIO_CL45_ADDR | MT7531_MDIO_PHY_ADDR(port) |
+ 	      MT7531_MDIO_DEV_ADDR(devad) | regnum;
+-	mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
++	ret = mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
++	if (ret < 0)
++		goto out;
  
+ 	ret = readx_poll_timeout(_mt7530_unlocked_read, &p, val,
+ 				 !(val & MT7531_PHY_ACS_ST), 20, 100000);
+@@ -665,7 +667,9 @@ mt7531_ind_c45_phy_read(struct mt7530_priv *priv, int port, int devad,
+ 
+ 	reg = MT7531_MDIO_CL45_READ | MT7531_MDIO_PHY_ADDR(port) |
+ 	      MT7531_MDIO_DEV_ADDR(devad);
+-	mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
++	ret = mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
++	if (ret < 0)
++		goto out;
+ 
+ 	ret = readx_poll_timeout(_mt7530_unlocked_read, &p, val,
+ 				 !(val & MT7531_PHY_ACS_ST), 20, 100000);
+@@ -703,7 +707,9 @@ mt7531_ind_c45_phy_write(struct mt7530_priv *priv, int port, int devad,
+ 
+ 	reg = MT7531_MDIO_CL45_ADDR | MT7531_MDIO_PHY_ADDR(port) |
+ 	      MT7531_MDIO_DEV_ADDR(devad) | regnum;
+-	mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
++	ret = mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
++	if (ret < 0)
++		goto out;
+ 
+ 	ret = readx_poll_timeout(_mt7530_unlocked_read, &p, val,
+ 				 !(val & MT7531_PHY_ACS_ST), 20, 100000);
+@@ -714,7 +720,9 @@ mt7531_ind_c45_phy_write(struct mt7530_priv *priv, int port, int devad,
+ 
+ 	reg = MT7531_MDIO_CL45_WRITE | MT7531_MDIO_PHY_ADDR(port) |
+ 	      MT7531_MDIO_DEV_ADDR(devad) | data;
+-	mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
++	ret = mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
++	if (ret < 0)
++		goto out;
+ 
+ 	ret = readx_poll_timeout(_mt7530_unlocked_read, &p, val,
+ 				 !(val & MT7531_PHY_ACS_ST), 20, 100000);
+@@ -751,7 +759,9 @@ mt7531_ind_c22_phy_read(struct mt7530_priv *priv, int port, int regnum)
+ 	val = MT7531_MDIO_CL22_READ | MT7531_MDIO_PHY_ADDR(port) |
+ 	      MT7531_MDIO_REG_ADDR(regnum);
+ 
+-	mt7530_mii_write(priv, MT7531_PHY_IAC, val | MT7531_PHY_ACS_ST);
++	ret = mt7530_mii_write(priv, MT7531_PHY_IAC, val | MT7531_PHY_ACS_ST);
++	if (ret < 0)
++		goto out;
+ 
+ 	ret = readx_poll_timeout(_mt7530_unlocked_read, &p, val,
+ 				 !(val & MT7531_PHY_ACS_ST), 20, 100000);
+@@ -790,7 +800,9 @@ mt7531_ind_c22_phy_write(struct mt7530_priv *priv, int port, int regnum,
+ 	reg = MT7531_MDIO_CL22_WRITE | MT7531_MDIO_PHY_ADDR(port) |
+ 	      MT7531_MDIO_REG_ADDR(regnum) | data;
+ 
+-	mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
++	ret = mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
++	if (ret < 0)
++		goto out;
+ 
+ 	ret = readx_poll_timeout(_mt7530_unlocked_read, &p, reg,
+ 				 !(reg & MT7531_PHY_ACS_ST), 20, 100000);
 -- 
 2.53.0
 
