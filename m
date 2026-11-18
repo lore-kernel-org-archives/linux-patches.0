@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022631;
-	b=hcjfjbjKsPUJllX/AFjIOSW5YX2k3YgzPXQFKsvxP5dngnNok/9osEHtjltSHhPEiQ6g
-	 HPn5ca1qBa8GlJKYyITlcm1HsPr83fbjizgRlQo5kGxYQ/fnB2Mt75LuMebY1jaTqA3DM
-	 /ufPv+um7kObUPg3Nmga303/vuaoJn9pwz96gvPAw/H1pvBMGgFskfpO/+JSjPeIk1Mor
-	 BxYIz+Mg6SlF+XGu2PuoTge79rI2epMIrbB/3TcftXm3p23Xjx2puksMMkFX0TczChNZ6
-	 iVesiIQtdK/xqPP3tTjr+BZ84x5ZIhaPXhUVpafjefak7/9id3+MDt7JdKJDeWX+E6g==
+	t=1795022634;
+	b=bkO5c/fuMd6RzpyTgbwes2VqdTlsCsmJajgYwJc6cPGJEwtf/WQa0eeDpO/Rmaka4Y2B
+	 sqGaNpdUdPZSWX2SYCMdEilWm9oWMhp1HA2WAb9NG3o3bi7tC073Fntk6t/RY7U7cDG4V
+	 ZDFHCLuK2h9fARDrUUpubfbAFTl9KrmzH4j+o2RXwMNgyjBdHwm1paeuzLtLwL2nFCvt7
+	 hDYLN9hZuxdKE/JM5sYXBd4zTnz0lM4OB+P3c/ueuN+CkrRKma0lTsHlCW4h5BQxvZUx+
+	 w0cXUB3gHkj14esCeLjcPWDjEuho648Ge/sCRCzq00tdLY0Fd7fzhWrm4Eq07Ckptcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022631;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022634;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=I2tm20EeU2eL2nOxAdc3fv+PfJUSs86mJCFz1oA4Z4o=;
-	b=IqZzSaIilKCSV5wBdNASml7IOwt+aOx1p14i4PbEMS3Mfw/pB7TE2PxEaKw666drzsx2
-	 A3E89j1sjCaVOeSxo/Ub4Gtn8ldLDyssAfvsjTcLHIRj0lEmE/iHrbRSFJJN7kz80D43Q
-	 g/EKnqRkLPik8uVwiLSred3L2e0842IkxbPTMDJAuVvPJkfbK0F/6dexc6ik0EFyJjO5y
-	 WGiN3g5BznTJx54JCf5G5b0ktIrPosGM7iNGUTQ+cuIzt18KCIvS+UeOM/73fNY6gutp/
-	 vmkMFBR0Q/klz+JKqo6acdRQ26nUcqclmsd3d+sqQUzGypjPTEz5JGmIJfqQyXKuppQ==
+	bh=73FxLtrB36nb+Nl9xdHe+rvg4VkbLzgm6xRUgg/lmK0=;
+	b=xcoEScxmq2MAg0bOr1Yk+ym4sd9LS2onaIaycw2IkVLANIPecAyuFvnzPznQIZa30dxV
+	 E4y34d17PxKTpEyYMBXwrDPEz7UV83NezWbSUzwkAw8Qbz8wRmQtLtnd9Pq6Y2N9ritmd
+	 UiO7iU4I8K3z5YoStEUvO2S+78xwdyBM0BJ3lxuLUahsFz1LMrZI+bW4mvLh5r4fT9n0F
+	 rHWa7T1JpXR7aVAiwUOux+/OEFrWyAT/4H7vfNlUXH/rHGWkpSuw77kRJhoxgge+8AmWM
+	 YhwLB9bWPYU5C1DH0pwe+px4wO7mYgMkS05KYeiVUEgxZf1h9rnzuMnpHIks40Jh8/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZqaeDp27;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="MByCX/x1";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C408C606A339;
-	Wed, 18 Nov 2026 17:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B73B606A32F;
+	Wed, 18 Nov 2026 17:23:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZqaeDp27
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28FB71F000C6;
-	Wed, 18 Nov 2026 17:23:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MByCX/x1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE9541F000C6;
+	Wed, 18 Nov 2026 17:23:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022631;
-	bh=I2tm20EeU2eL2nOxAdc3fv+PfJUSs86mJCFz1oA4Z4o=;
+	s=korg; t=1795022634;
+	bh=73FxLtrB36nb+Nl9xdHe+rvg4VkbLzgm6xRUgg/lmK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZqaeDp27wihV8W5RpghBohPoA6dZDUe8XSwC/zh0sI+FtAGw6Ff8u033cPqVjIjPU
-	 K6cFGp/5on1M9ixVfWM/xOzkVmak02PhSCkFUsaBdmp0ZzeUv9VGUAla6bUSJZKPSb
-	 hAcfx70LZikItnFN95hrwAehWW++qe6jO7NkGpq8=
+	b=MByCX/x1M92FhgHQbN0kxotZgzVblEikxoZQqT4EzBi2SHlEqE+SWlVr5sBzH7+kt
+	 7uTbWfjX5H5jKc5TWsJ0M0+ni5rxfu0Pkcfuz1cTkgZH4UyGhVzxjiUiQjWoSWn91/
+	 PdFSsjcMmiwCg9IxVSeExVsRFRPxXA5eeIRHqLyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0081/2151] mm/huge_memory: fix truncate racing with PMD zapping
-Date: Wed, 18 Nov 2026 15:30:16 +0100
-Message-ID: <20261118150124.725265595@linuxfoundation.org>
+Subject: [PATCH 6.18 0082/2151] hwmon: (coretemp) Read TjMax only when refreshing the temperature
+Date: Wed, 18 Nov 2026 15:30:17 +0100
+Message-ID: <20261118150124.765052190@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -72,69 +68,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
 
-[ Upstream commit e6a07d29b0a60f3a4cfe77fe34eeb4b3fb38d6c4 ]
+[ Upstream commit 5407d2b7d5279b7100621d92f2181184c8f00d62 ]
 
-zap_huge_pmd_folio() removes the rmap before calling folio_mark_dirty().
-If this was the last mapping, truncation can skip unmapping the folio
-and proceed without waiting for the PMD lock, racing with dirtying.
+show_temp() reads TjMax before checking whether the cached temperature is
+still fresh, but consumes it only when recomputing that temperature. On a
+cache hit the value is discarded.
 
-ifs_set_range_dirty() can oops if MADV_DONTNEED races with
-ftruncate() on XFS, when we get the folio set dirty after it was found
-to not be mapped anymore.
+Discarding it is not free. On CPUs that report TjMax in
+MSR_IA32_TEMPERATURE_TARGET, get_tjmax() returns the value it just read
+without storing it in tdata->tjmax, so every call reads the MSR again.
+That is a cross-CPU call whenever the CPU owning the sensor is not the
+current one, and it is made while holding tdata->update_lock.
 
-Move folio_mark_dirty() and folio_mark_accessed() before rmap removal,
-matching the PTE zap path. This keeps the folio mapped while updating
-its state, so truncation must wait for the page table lock.
+Read TjMax where it is used. The value cannot go stale in the meantime:
+bits 23:16 of MSR_IA32_TEMPERATURE_TARGET are read-only, and the register
+is package-scoped, so every CPU of the package reads the same value.
 
-Fix generated by an LLM and sent by Chris Mason in private.
+The temperature reported to userspace does not change.
 
-Fixes: fe6cf984939d ("mm/huge_memory: transfer the pmd dirty bit to the folio on zap")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-[ david: simplify comment and description ]
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-13-d6437171ecc3@kernel.org
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: adapted zap_huge_pmd_folio() changes to the existing inline logic in zap_huge_pmd() ]
+Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+Link: https://patch.msgid.link/20260924-coretemp-temp-fault-v1-2-1884f0ff97d5@linux.intel.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+
+Use the existing rdmsrq_on_cpu() interface and struct msr in show_temp()
+so the subsequent timestamp fix applies without changes. Read the
+validity bit and temperature from the same low word as before.
+
+Stable-dep-of: 9a6aa085c94c ("hwmon: (coretemp) Fix 32-bit jiffies wraparound in show_temp()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/huge_memory.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/hwmon/coretemp.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/mm/huge_memory.c b/mm/huge_memory.c
-index 24f5887eb48ee..eba9280ddb594 100644
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -2327,8 +2327,6 @@ int zap_huge_pmd(struct mmu_gather *tlb, struct vm_area_struct *vma,
- 			struct page *page = pmd_page(orig_pmd);
+diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
+index 03b40d643dccf..3cbdf48b15af0 100644
+--- a/drivers/hwmon/coretemp.c
++++ b/drivers/hwmon/coretemp.c
+@@ -392,24 +392,24 @@ static ssize_t show_ttarget(struct device *dev,
+ static ssize_t show_temp(struct device *dev,
+ 			struct device_attribute *devattr, char *buf)
+ {
+-	u32 eax, edx;
++	struct msr val;
+ 	struct temp_data *tdata = container_of(devattr, struct temp_data, sd_attrs[ATTR_TEMP]);
+ 	int tjmax, temp;
+ 	bool valid;
  
- 			folio = page_folio(page);
--			folio_remove_rmap_pmd(folio, page, vma);
--			WARN_ON_ONCE(folio_mapcount(folio) < 0);
- 			VM_BUG_ON_PAGE(!PageHead(page), page);
- 		} else if (thp_migration_supported()) {
- 			swp_entry_t entry;
-@@ -2360,6 +2358,15 @@ int zap_huge_pmd(struct mmu_gather *tlb, struct vm_area_struct *vma,
- 				folio_mark_accessed(folio);
- 		}
+ 	mutex_lock(&tdata->update_lock);
  
-+		/*
-+		 * Only present folios are rmappable. Remove the rmap after
-+		 * transferring young+dirty to the folio.
-+		 */
-+		if (flush_needed) {
-+			folio_remove_rmap_pmd(folio, &folio->page, vma);
-+			WARN_ON_ONCE(folio_mapcount(folio) < 0);
-+		}
-+
- 		spin_unlock(ptl);
- 		if (flush_needed)
- 			tlb_remove_page_size(tlb, &folio->page, HPAGE_PMD_SIZE);
+-	tjmax = get_tjmax(tdata, dev);
+ 	/* Check whether the time interval has elapsed */
+ 	if (time_after(jiffies, tdata->last_updated + HZ)) {
+-		rdmsr_on_cpu(tdata->cpu, tdata->status_reg, &eax, &edx);
++		tjmax = get_tjmax(tdata, dev);
++		rdmsrq_on_cpu(tdata->cpu, tdata->status_reg, &val.q);
+ 		/*
+ 		 * Bit 31 indicates whether the reading is valid. Some CPUs
+ 		 * clear it while the temperature is too low to be measured.
+ 		 * Such a reading is not a temperature. Do not report it.
+ 		 */
+-		tdata->temp_valid = (eax >> 31) & 1;
+-		tdata->temp = tjmax - ((eax >> 16) & 0xff) * 1000;
++		tdata->temp_valid = (val.l >> 31) & 1;
++		tdata->temp = tjmax - ((val.l >> 16) & 0xff) * 1000;
+ 		tdata->last_updated = jiffies;
+ 	}
+ 
 -- 
 2.53.0
 
