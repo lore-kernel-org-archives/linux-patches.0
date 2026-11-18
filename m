@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055365;
-	b=o6iZjR5m1mp7oA7sHekxGQmc6cU4YY1I7+fcRvVesaD3F0gnJ9EjzHMtpyl9M9qd7L7V
-	 LVg+pKM6h4yfWP23fuMEdeHjwsTuNYiTCpJ9Yfx0cuRNXB93H6lmBd1jLuH7VxIM2lteA
-	 14C/md9HQnYkryb9lWGnsmNlohMT6qZ1N1Vj4jGaq+sG2Ta7/9d+0ryEuZ9Nbn9VR9V1p
-	 XN32Xx5VFB5uutlDokeweS9uK4XT8ImJdh4SMpn9eIuqYCct+VUzy7SY3ZqXleIUMUxfj
-	 aMJ0DfaXZmRZI2T7bzpLkwRZqE/5NWxHLPyEVF1mrzYFihjKFfQdyoDbHXCzkd9Ls3w==
+	t=1795055368;
+	b=cBz2opJB05ij/Ido9vlyZ4DOU3mVmGcgRhaGuVsxI9TGjjPM9AHvTX7wDxujCd9/LS34
+	 W9lPEpvjfok60q7xzc9QP9qkNWosiJDFC1SEZihfx94HDOIAZ10WOD/+HWsXO0/F8kxjj
+	 1kgHe4Vuy5+QijGLTN/tKDU3HO3qEB+6WXOSxaiBaHhKDGMbcSEKkSCiIazZTWcghwPfa
+	 6GoGs8OPIZbxkFtGFgASrajcj2MaCTzsej9AYF1Bu1ulLBs3flJA4Ic7BSyyxHCivY9v4
+	 7xkXqi1k52ZmvYMZEAfIC/anGB8TmLqjZutD2XJhEn9F1ST9E3JLw0qpR/lLPBLWjAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055365;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055368;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eUtHCyaB905GblH+/lFubNiXsgD5pUO2AvaZHRtNht0=;
-	b=qTfmUnJbO8pGozACOKl2uRYgWeJm0OV2nYJsxd1eH+L/CTex6jAFUsmSCs6o4fS6UaCt
-	 o/3k9MaYK3vNgaPv4yDK5ymhWNe/sNl+NlPy2uoUUBg5Jkf/7mqyI9f5aWLF79/LuUcR2
-	 IGicr+k6weSyCEKKCO/66IbkrkRbzLfZJL5P9iG1OgWMBQ5X1cZcTRGLFSEhl8Um/5D60
-	 7jb/S0DHxoMF9adVjjUb2CQLtK7RHAJoTzmv/pUeBhHoR2/wOslHzyWS8DWnb02bOGLme
-	 QouLulDyeHxn70e9cqTFveZGww/f/gTPyeqkdONP+dI9umnk9sDwuIjAkn8li2vgpRA==
+	bh=bIGVyF73HEA0QkC3vjqpUM4lKOrA4T4og1/hN1cnS1E=;
+	b=TEdbTw/Mfxf8Q/Tcgn8F2lWMKKuRJwa4NugpGJMGGrwIHFDA+Tz648IuDHRAysAJi5fv
+	 WajrQCRsq1is69iNA/Is1dGDF/xv6QR7kVMhboT8LWMe5Nivgwx9MgV0zw/zbfRen/7Vs
+	 t3bDj3/nmG57wXhLY01I8wV/QKyOR3rrEktu4A0nypFzN6JcYWHRs3P0aj548/bTaRiU/
+	 nhUX6miHrHWf7yOPoL8vymtcylj3dzKRvUphznX5BGzkx2kRFAqvb5I5pwPcJm2ou3A+H
+	 VwycnRufbrg5D40qrwZF8E/R0AQ9uWYbewjsOMzv37EKQhy1PPl22pepVyBjR9v/3ug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vqH9vz08;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PhnuTtOt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8F8606A32F;
-	Thu, 19 Nov 2026 02:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99CCD606A33F;
+	Thu, 19 Nov 2026 02:29:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vqH9vz08
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 413CA1F000C5;
-	Thu, 19 Nov 2026 02:29:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PhnuTtOt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0BDA1F000C4;
+	Thu, 19 Nov 2026 02:29:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055365;
-	bh=eUtHCyaB905GblH+/lFubNiXsgD5pUO2AvaZHRtNht0=;
+	s=korg; t=1795055368;
+	bh=bIGVyF73HEA0QkC3vjqpUM4lKOrA4T4og1/hN1cnS1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vqH9vz08jFwtoYW5K1YozCw5vKgge0I3HPIFvr1SJ2Ee1mY3j72V5Fm9OIvlpGD88
-	 zPsh3AjwXZLJTgXLh3EyrxouyIiS721Ff6KFuPOsc4s8hSlCCu6Vm7yXyVw4smOs1K
-	 mDPqEgiMNnFA2QioJrUga5NcQ82BNJ7ftg3jww+o=
+	b=PhnuTtOtRzFEkgy+r+9mtaTfAt/FeXKi14w9YOdVjQ4HNxtNddTaqYEqOuasZc4fs
+	 5JMZlzTiYaZ9nzoQLCsOAkztc3e957SphNIzWTosYnyd4qCygA818yVSkqb/uXebnF
+	 aE6/B2jMM5hQkIdQY4atXk/rspZjd0IY1NKOTLOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <hppiscas@163.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Muzaffer Kadir <muzafferkadir@mainlining.org>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1606/2214] iio: accel: bma220: publish the SPI driver ACPI alias
-Date: Wed, 18 Nov 2026 15:54:42 +0100
-Message-ID: <20261118150116.194211656@linuxfoundation.org>
+Subject: [PATCH 5.15 1607/2214] dt-bindings: vendor-prefixes: Add General Mobile
+Date: Wed, 18 Nov 2026 15:54:43 +0100
+Message-ID: <20261118150116.229827767@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,47 +69,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <hppiscas@163.com>
+From: Muzaffer Kadir <muzafferkadir@mainlining.org>
 
-[ Upstream commit cdc7d3dd101251a6373332726b8d6fad35e83b8a ]
+[ Upstream commit 7034bec693b752bcd7ebb4fa00dc3b429b4dc4f7 ]
 
-The SPI driver advertises an ACPI match for BMA0220 but does not export
-that table. A modular build therefore lacks the ACPI alias used to load
-the driver when the device is enumerated through ACPI.
+Add vendor prefix for General Mobile.
+Link: https://www.generalmobile.com
 
-Export the ACPI table. Move the existing SPI export next to its SPI ID
-table so each export is adjacent to the table it describes.
-
-The issue was found by our static-analysis tool.
-
-Fixes: bf2a5600a3eb ("iio: accel: Add support for Bosch BMA220")
-Assisted-by: LLM
-Signed-off-by: Pengpeng Hou <hppiscas@163.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Muzaffer Kadir <muzafferkadir@mainlining.org>
+Link: https://patch.msgid.link/20260921-msm8952-initial-support-v3-6-b96fd3fe298b@mainlining.org
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/bma220_spi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/iio/accel/bma220_spi.c b/drivers/iio/accel/bma220_spi.c
-index bc4c626e454d3..4497e80ef0199 100644
---- a/drivers/iio/accel/bma220_spi.c
-+++ b/drivers/iio/accel/bma220_spi.c
-@@ -308,12 +308,13 @@ static const struct spi_device_id bma220_spi_id[] = {
- 	{"bma220", 0},
- 	{}
- };
-+MODULE_DEVICE_TABLE(spi, bma220_spi_id);
- 
- static const struct acpi_device_id bma220_acpi_id[] = {
- 	{"BMA0220", 0},
- 	{}
- };
--MODULE_DEVICE_TABLE(spi, bma220_spi_id);
-+MODULE_DEVICE_TABLE(acpi, bma220_acpi_id);
- 
- static struct spi_driver bma220_driver = {
- 	.driver = {
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index 9de9c419f043f..c5fabb4692902 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -457,6 +457,8 @@ patternProperties:
+     description: Gemei Digital Technology Co., Ltd.
+   "^gemtek,.*":
+     description: Gemtek Technology Co., Ltd.
++  "^generalmobile,.*":
++    description: General Mobile Fzc.
+   "^genesys,.*":
+     description: Genesys Logic, Inc.
+   "^geniatech,.*":
 -- 
 2.53.0
 
