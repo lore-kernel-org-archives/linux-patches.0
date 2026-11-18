@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015468;
-	b=zM81NY9oOAPMkyZAbrak9uHRpXtQB3bCaPnoRClnNbOLr1b5am73xrwZc8NJ50K6YrzT
-	 v29DTBd9noYVP4+rSDu8j7chpi3Ily7CedlGCrfhQpGjQFXfk8+rV/FvkmZnr3jRBQQF8
-	 Z3xa0Q35EYMpFBUVW5E0rVNSinDrcrLkAox1vv1CGEMKs9TrJ8gWtL7uAXlJhcRzv+xAD
-	 ZxqpQY/DuvqFOk2chEj+xMTwbIQm358jLgcNahxfBXzlbtMAiCDrw+tS86TuQTgpAFMYb
-	 /fT163QeYRivJWuZ6hWgyC69ZJGo+FKYXipPvR/XTVsoHWjGiwVEpaAVnIDAjDW589g==
+	t=1795015471;
+	b=hbdYRcwyvYVk3J/Z2XU3xA+++2pSAU4j2g6lXBBAKZ3Sgf3vnZOCgtzmuIS/CUgcCc9P
+	 JLduVFWcDoOXl82IZu/bd3qJ+3aYHbLgGsmLPDdsuMgWZ0AdaeyTpEaghn60Demumnw6T
+	 Xh8T1u6hF/8tU3tolXVXGPWftGyN0dcwGOcU5elU0eGQ6pSQyq91pqONvPFPtGMd/Y5c7
+	 0RYazvV/n/g2s/W9hRcqz6rroJs+ryGhc6dwsu3Gakz4VFgKjsBZQNSv9CpTETbgnBgm0
+	 Efl9cLrCRPENgPQbtujDn21WcWhgFw8CTj1teDOtPIQ0B4amOTEIql3A9LYD20ePfyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015468;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015471;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rqvwYxHc+OORfRwf5W4H0LMLKvo19ZBEDGodRNLHCNQ=;
-	b=VeLGgzCJxuU1X6GYFG1iItNEacKOWiy0vwX/+cYo1xippymUvrPXfc6nJ1lily7i3lxE
-	 WTCtdQ2c/nNYs0nwsgQh70AtmrXTZuiClAMPiu7E1vTuMm6dPm+0cJ0FC/azYLYWo7mvZ
-	 Aq+x8+5Yzsi44EM3Ap3E6MKf9lX0GhZ+wPSnKr2VtBmiznKM1NYLgI9gGVzynuQVteomM
-	 pWTBwbz5ZvkSLaaLDwM5luGaYz1UrS9a7XrxRsW76XU+U/aIqvtI/mRXTI0j4dlwOEdka
-	 xDY+zFW2Guu5BxfGNPJjkJ7sFs+3/AjP7rS/uxOhBT6JENJVSWi1rp7r56QStqlep0g==
+	bh=LSxRD4qQKp672YHOPWsqrPvAXxa/kL07JUzPG6SGwX0=;
+	b=EBAuGOrskDG/XZBB2xslKPz/1yRcHUDWzTEq0HUIpyl+1sskZVpqTY9rDzQWsHPH3Fq8
+	 qjoGJKw4gePlB543MUda0VWgL1kIhx0rCvu5GCSSICG1+wXMtr+9CDgEh/BwXPdtuY5zR
+	 +Ifl+IZsrVfc86xH9NA0rtpHPJjmatTFvocLNcFOPe3Q1xW31aCWtPdkzL8TLEAGOEn/w
+	 9dGe8Cx+R7FFCNNVV45Ok+UCobBloFXUZBT5DwPwR5+Hb6Ydkyx3G5G+bOy+PMZBrE0GW
+	 8yeh1ybIB83Wu44NpZJbkcUzm4kby5oPIG5dqI3lK7/3EZ0ybBa/WvuQrU0ygXx1p/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WV2RosbU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BU33u9eF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525A4606A325;
-	Wed, 18 Nov 2026 15:24:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1581D606A32A;
+	Wed, 18 Nov 2026 15:24:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WV2RosbU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A50911F000C5;
-	Wed, 18 Nov 2026 15:24:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BU33u9eF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B82A1F000C4;
+	Wed, 18 Nov 2026 15:24:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015468;
-	bh=rqvwYxHc+OORfRwf5W4H0LMLKvo19ZBEDGodRNLHCNQ=;
+	s=korg; t=1795015470;
+	bh=LSxRD4qQKp672YHOPWsqrPvAXxa/kL07JUzPG6SGwX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WV2RosbUjRUyMJoTVO69u6dPy9BTJ5uz+ATuLe3M8SVvRwVBdi8F7E6Cwe4CIscJn
-	 R+ctr/1KhwuPuV4Gu2R+cXPom3RKz40tD2ubNLujDVc4uYEe5uDSmeipZWk4Ito7Df
-	 nrg3MQxlr82FwhJIiGhPR1iNEBa5/+BWuUy2aafw=
+	b=BU33u9eFqXPhjhQ+vIzrzFKoUqh6T7Jkh3Wmb3KoE0sWhhCMGljB2B93/GOsAvA+t
+	 0qJTWKhEE+rWiA7VfG3YhL1n6xXxtyUK7Gvj23x7ydXQ9qIcx4rmAclb+CrfKfxPKs
+	 KZv44rTjdLK93+drAN0g8846EupC4H4i6iMfmoI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	kernel test robot <lkp@intel.com>,
 	Rosen Penev <rosenp@gmail.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0184/2651] dmaengine: fsl_raid: avoid free_q underflow in free_chan_resources
-Date: Wed, 18 Nov 2026 15:23:44 +0100
-Message-ID: <20261118150254.486641966@linuxfoundation.org>
+Subject: [PATCH 7.3 0185/2651] dmaengine: at_hdmac: fix sparse __iomem cast warning in memset helpers
+Date: Wed, 18 Nov 2026 15:23:45 +0100
+Message-ID: <20261118150254.524776462@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,57 +72,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit d805aa5b6088b193debabaa80cc0991bfa2bd057 ]
+[ Upstream commit fdae0d0f096c92dd05d3722759fd614ea341e0dc ]
 
-fsl_re_free_chan_resources() loops alloc_count times calling
-list_first_entry() on free_q without checking whether the list still
-has entries. If descriptors remain un-acked or pending in submit_q /
-active_q / ack_q when the channel resources are freed, free_q becomes
-smaller than alloc_count and list_first_entry() returns the list head,
-causing list_del() to corrupt the list head and dereference a bogus
-pointer.
+Both atc_prep_dma_memset() and atc_prep_dma_memset_sg() declare vaddr
+as 'void __iomem *' but assign the return of dma_pool_alloc(), which
+returns 'void *' (not iomem memory). This causes sparse to warn about
+a cast removing the __iomem address space at the dereference site.
 
-Walk free_q with list_for_each_entry_safe() until it is empty,
-decrementing alloc_count per freed descriptor, instead of relying on
-the alloc_count count.
+The struct field memset_vaddr is also typed as 'int *', which is
+neither the type returned by dma_pool_alloc() nor the type used for
+the actual writes.
 
-Fixes: ad80da658bbc ("dmaengine: Driver support for FSL RaidEngine device.")
-Assisted-by: opencode:hy3-free
+Fix by declaring vaddr as 'u32 *' in both functions and changing
+memset_vaddr in struct at_desc from 'int *' to 'u32 *'. This matches
+the actual usage and eliminates the need for the (u32 *) cast.
+
+Fixes: 5d8c5bea0da9 ("dmaengine: at_hdmac: add COMPILE_TEST support")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202607231110.8MqNRj0Q-lkp@intel.com/
+Assisted-by: opencode:big-pickle
 Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Link: https://lore.kernel.org/oe-kbuild-all/202607231110.8MqNRj0Q-lkp@intel.com/
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260718235227.385108-1-rosenp@gmail.com
+Link: https://patch.msgid.link/20260724225958.43925-1-rosenp@gmail.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/fsl_raid.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/dma/at_hdmac.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
-index bfaef6245695e..e698c40b2ebca 100644
---- a/drivers/dma/fsl_raid.c
-+++ b/drivers/dma/fsl_raid.c
-@@ -614,18 +614,15 @@ static int fsl_re_alloc_chan_resources(struct dma_chan *chan)
- static void fsl_re_free_chan_resources(struct dma_chan *chan)
- {
- 	struct fsl_re_chan *re_chan;
--	struct fsl_re_desc *desc;
-+	struct fsl_re_desc *desc, *_desc;
+diff --git a/drivers/dma/at_hdmac.c b/drivers/dma/at_hdmac.c
+index e5b30a57c477a..7c071e6496371 100644
+--- a/drivers/dma/at_hdmac.c
++++ b/drivers/dma/at_hdmac.c
+@@ -244,7 +244,7 @@ struct at_desc {
+ 	/* Memset temporary buffer */
+ 	bool				memset_buffer;
+ 	dma_addr_t			memset_paddr;
+-	int				*memset_vaddr;
++	u32				*memset_vaddr;
+ 	struct atdma_sg			sg[] __counted_by(sglen);
+ };
  
- 	re_chan = container_of(chan, struct fsl_re_chan, chan);
--	while (re_chan->alloc_count--) {
--		desc = list_first_entry(&re_chan->free_q,
--					struct fsl_re_desc,
--					node);
--
-+	list_for_each_entry_safe(desc, _desc, &re_chan->free_q, node) {
- 		list_del(&desc->node);
- 		dma_pool_free(re_chan->re_dev->cf_desc_pool, desc->cf_addr,
- 			      desc->cf_paddr);
- 		kfree(desc);
-+		re_chan->alloc_count--;
+@@ -1097,7 +1097,7 @@ atc_prep_dma_memset(struct dma_chan *chan, dma_addr_t dest, int value,
+ 	struct at_dma_chan	*atchan = to_at_dma_chan(chan);
+ 	struct at_dma		*atdma = to_at_dma(chan->device);
+ 	struct at_desc		*desc;
+-	void __iomem		*vaddr;
++	u32			*vaddr;
+ 	dma_addr_t		paddr;
+ 	char			fill_pattern;
+ 	int			ret;
+@@ -1126,10 +1126,10 @@ atc_prep_dma_memset(struct dma_chan *chan, dma_addr_t dest, int value,
+ 	/* Only the first byte of value is to be used according to dmaengine */
+ 	fill_pattern = (char)value;
+ 
+-	*(u32*)vaddr = (fill_pattern << 24) |
+-		       (fill_pattern << 16) |
+-		       (fill_pattern << 8) |
+-		       fill_pattern;
++	*vaddr = (fill_pattern << 24) |
++		 (fill_pattern << 16) |
++		 (fill_pattern << 8) |
++		  fill_pattern;
+ 
+ 	desc = kzalloc_flex(*desc, sg, 1, GFP_ATOMIC);
+ 	if (!desc)
+@@ -1168,7 +1168,7 @@ atc_prep_dma_memset_sg(struct dma_chan *chan,
+ 	struct at_dma		*atdma = to_at_dma(chan->device);
+ 	struct at_desc		*desc;
+ 	struct scatterlist	*sg;
+-	void __iomem		*vaddr;
++	u32			*vaddr;
+ 	dma_addr_t		paddr;
+ 	size_t			total_len = 0;
+ 	int			i;
+@@ -1189,7 +1189,7 @@ atc_prep_dma_memset_sg(struct dma_chan *chan,
+ 			__func__);
+ 		return NULL;
  	}
+-	*(u32*)vaddr = value;
++	*vaddr = value;
  
- 	if (!list_empty(&re_chan->free_q))
+ 	desc = kzalloc_flex(*desc, sg, sg_len, GFP_ATOMIC);
+ 	if (!desc)
 -- 
 2.53.0
 
