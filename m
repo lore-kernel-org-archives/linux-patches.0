@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021941;
-	b=a+VLMQiTvy2OAT+acksbQjL4nKP3W6lCUWW5KBhXANzRY0nvUUcXC/9DKCl4ELSsJ7IH
-	 cQtkTu38XwAf95uTxR16kJuuy1AeRtUiO2cpXrWEPisGadF2Q19DUvsPqFKhWYlDGdyQ+
-	 hSdom15UGfg31cApTnXbLqTcSuLK/iV4abhUIuVTzeyOmNtJAIUbTh6olyy5YZtn2YqBS
-	 DJMya0mONvyaoFuzUWHul7Y0unVH+wFu3e5SA0AgdY5th7z8d0rzPX+O/K/vk7F+M8Shi
-	 hSvaNLgm9lNpKXigvbZrdte/ULaStQGJBHz7YiaxbAYIzN0f9nS/cToMikGtOpHKqtQ==
+	t=1795021944;
+	b=f/XSv7Qc1738l36NlLdf9sl9/Ty5brXExy0dWcq4p38cC3VEwuVCrJqPecFbkiicZ5sk
+	 x5jLQXxXHsyi9imQtzuZR1c/kml6F3D5Q2whgMU2fwD4P9izUVeRz0/WXdFtIZ8rckaUS
+	 Su0Uo09X2MoQ0Euot5dhiBIxtfaCPjKIBTVh9DiSubS+hG53xGNP5K4yzgX7B83yrbTzq
+	 1Jo3lHd+Gsa/U7Uloaju8RsYjzG27MjLge6dRM1qOHgxaaDQ4sbaNDcZHcZV3pElE+I/9
+	 awFhqSQFAYgolzFBwhsT7D6elxtWvly8jdfUXta03KkhozE1Gj7a1yS0ou9HQKaaCPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021941;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021944;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Iej7zLbfitgT7FKX+6f84XXuCZI4s9EHRqAsm5n80gs=;
-	b=mpgfiK2K6cjRxY9CaqOCKSs4PWCl9YHMBmnIJBRVxFTq/UP1Xjyz7LnrpOcfp+6ZVk4N
-	 xiNxrBfdP/QRkIB4tNHzlCbG+H60cLoTuGttYLG1jsii6sP5br2J/xU4YWxoAKN2gSkzj
-	 PNhGhoubz+6bG7Nu0ZQWLVGdTc22yJaxhProLnajLkMrTdhRVCTuQcjyoHx4jhqkMwcgu
-	 Z8X/74c3PAkahGoY94FxDsuocstfKWTl5x3aTxtDh9K12eFD+4GoI6Aa+xbHVVJwgE2GF
-	 U0q+M8E7xPvDlTTj9A1L9snsdokppvgPaOUgy9lA8CxUeThX6Mfjwg6cU8IHvM1AnEg==
+	bh=uR/fQBcSCNP2nrsmNNqO8Us/sX+TGZkuR7xpKuYzUOg=;
+	b=H8qp2Svj0ypyHOsfStbTWAT/DApAK/lN49yCUwCFN/5SlTcYNFC+vXomwJmmwSdliW5C
+	 Nc9wYkM4iGnUl+aWq7t6aPEDVm4vDBplD9qloQhy+VBX2BvewVwJULedjRV/sbc8TxmvP
+	 tbL9PoUBwyZdcnOlLc0IWE5cnCwtQA2puInqCCj6WC2JYGt6hUGSiyI2WlwznlSGCdRvi
+	 bUrJJDm+h19siK6oXi6sGfo5Ew/L4EsvBcbI9+jgrNMtWSpt2UiwVBMzDnv+AYEvqoJkO
+	 8sU8OW+DSN4VZfA4u0dbi4Qwr4ls38o8jPmn4ML1nWqW5u6YfGLkroayw6vUuAmgJ3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TWVz14Aq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OnzIdstZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B12DD606A31C;
-	Wed, 18 Nov 2026 17:12:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8354606A320;
+	Wed, 18 Nov 2026 17:12:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TWVz14Aq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 138211F000C4;
-	Wed, 18 Nov 2026 17:12:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OnzIdstZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE2871F000C4;
+	Wed, 18 Nov 2026 17:12:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021941;
-	bh=Iej7zLbfitgT7FKX+6f84XXuCZI4s9EHRqAsm5n80gs=;
+	s=korg; t=1795021944;
+	bh=uR/fQBcSCNP2nrsmNNqO8Us/sX+TGZkuR7xpKuYzUOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TWVz14AqTzjGjwUYaynmSU1yTP9/ymbiGOh9QJeGWo/Peg8muDXLbN3p8FSCIgbCr
-	 ESGl7h7F+P7p1NBDrKjAxR4xOtocWLs2hF6o56NU0IlXc6Q3tvKsjp98/4v5zLorBC
-	 fcHQZNKIlp7OAIA7QexyJ3zudy4QYmXn7UwjTYRU=
+	b=OnzIdstZvNrOGmzSTYuZekvb9MCcHNJPwEH6BYkB7UpIy8GWqu+Sk15eptZ3lz018
+	 2gn0tPi0gIpxe4nsA3mnUGOBJT3DvIDBzpEhAuBxO9TcCEL67KDkMODWhvpH6x9fYk
+	 Ep0T0wszjgxO60P1CWYw89ZU5OkzgAiNWA8ecxaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	John Stultz <jstultz@google.com>,
 	Andrea Righi <arighi@nvidia.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2485/2651] sched: Add sched_ext hooks for proxy execution
-Date: Wed, 18 Nov 2026 16:02:05 +0100
-Message-ID: <20261118150414.358745649@linuxfoundation.org>
+Subject: [PATCH 7.3 2486/2651] sched_ext: Fix ops.running/stopping() pairing for proxy-exec donors
+Date: Wed, 18 Nov 2026 16:02:06 +0100
+Message-ID: <20261118150414.387867376@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,144 +71,207 @@ Content-Transfer-Encoding: 8bit
 
 From: Andrea Righi <arighi@nvidia.com>
 
-[ Upstream commit be100c77178ef2299a080eb698720832a870248b ]
+[ Upstream commit 5f882051efabaf19f9b4dbe4b50cee1d250ac19e ]
 
-Proxy execution splits the scheduling context (the donor) from the
-execution context (the lock owner). sched_ext needs to observe that
-split at three points in __schedule():
+With proxy execution, pick_next_task() can select a blocked task as the
+scheduling context before find_proxy_task() resolves the execution
+context.
 
- - whether a blocked EXT task can be retained on the runqueue as a
-   donor,
- - when a donor's scheduling context starts driving a lock owner,
- - after proxy resolution, when deferred reenqueue work that was blocked
-   by an active proxy relationship can be retried.
+>From the BPF scheduler perspective, that donor is running while its
+scheduling context drives the lock owner; ops.tick() and other
+accounting must therefore remain enclosed by a matching
+ops.running()/ops.stopping() session.
 
-Introduce scx_allow_proxy_exec(), scx_proxy_donor_start() and
-scx_proxy_reenqueue_retry(), and add their call sites in __schedule().
-The implementations are empty here and are filled in by the sched_ext
-changes that follow, so that all the sched core changes needed by proxy
-execution stay together in the preparatory patches.
+In this scenario, the session boundaries do not always match physical
+task switches. Keep the "running" session open when the same donor
+continues on the same CPU. When proxy execution migrates a donor's
+scheduling context to another CPU, end its running session on the source
+CPU and start a new session on the destination CPU only after proxy
+resolution succeeds. This prevents a failed resolution from exposing a
+provisional ops.running() event.
 
-SCHED_PROXY_EXEC still depends on !SCHED_CLASS_EXT, so the new hooks are
-inert: they are compiled out with CONFIG_SCHED_CLASS_EXT=n and
-unreachable otherwise.
+Track these sessions with a new SCX_TASK_RUN_TRACKED flag. The explicit
+running-state tracking is also required by later donor-based accounting:
+it prevents an EXT owner executing for a non-EXT donor from being
+treated as the active EXT scheduling context when it is dequeued.
 
-This is a preparatory change to support proxy execution with sched_ext.
-No functional change.
+This is a preparatory change for enabling proxy execution together with
+sched_ext.
 
+Acked-by: John Stultz <jstultz@google.com>
 Signed-off-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260922165445.943315-6-arighi@nvidia.com
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Stable-dep-of: 5c23d1710606 ("sched_ext: Fix queued bypassed tasks stalling when the host loses SCX_CAP_BASE")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/core.c    | 12 +++++++-----
- kernel/sched/ext/ext.c | 13 +++++++++++++
- kernel/sched/ext/ext.h |  7 +++++++
- 3 files changed, 27 insertions(+), 5 deletions(-)
+ include/linux/sched/ext.h                     |  1 +
+ kernel/sched/ext/ext.c                        | 72 ++++++++++++++-----
+ kernel/sched/ext/internal.h                   |  6 ++
+ .../sched_ext/include/scx/enum_defs.autogen.h |  1 +
+ 4 files changed, 64 insertions(+), 16 deletions(-)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index b596d9f5d83f6..4a051764e7119 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -7196,13 +7196,12 @@ static void __sched notrace __schedule(int sched_mode)
- 		}
- 	} else if (!preempt && prev_state) {
- 		/*
--		 * We pass task_is_blocked() as the should_block arg
--		 * in order to keep mutex-blocked tasks on the runqueue
--		 * for slection with proxy-exec (without proxy-exec
--		 * task_is_blocked() will always be false).
-+		 * Keep mutex-blocked tasks on the runqueue for proxy execution
-+		 * only when their scheduling class allows it. Without proxy
-+		 * execution, task_is_blocked() always returns false.
- 		 */
- 		try_to_block_task(rq, prev, &prev_state,
--				  !task_is_blocked(prev));
-+				  !task_is_blocked(prev) || !scx_allow_proxy_exec(prev));
- 		switch_count = &prev->nvcsw;
- 	}
+diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
+index 36c04797436c7..81a29b3c0e5d8 100644
+--- a/include/linux/sched/ext.h
++++ b/include/linux/sched/ext.h
+@@ -104,6 +104,7 @@ enum scx_ent_flags {
+ 	SCX_TASK_SUB_INIT	= 1 << 4, /* task being initialized for a sub sched */
+ 	SCX_TASK_IMMED		= 1 << 5, /* task is on local DSQ with %SCX_ENQ_IMMED */
+ 	SCX_TASK_PROTECTED	= 1 << 6, /* slice and DSQ head position protected */
++	SCX_TASK_RUN_TRACKED	= 1 << 7, /* task is in an ops.running()/stopping() session */
  
-@@ -7223,6 +7222,7 @@ static void __sched notrace __schedule(int sched_mode)
- 			}
- 			if (next == rq->idle) {
- 				zap_balance_callbacks(rq);
-+				scx_proxy_reenqueue_retry(rq, next);
- 				goto keep_resched;
- 			}
- 		}
-@@ -7243,6 +7243,8 @@ static void __sched notrace __schedule(int sched_mode)
- 			donor->sched_class->put_prev_task(rq, donor, donor);
- 			donor->sched_class->set_next_task(rq, donor, SNT_PICK);
- 		}
-+		scx_proxy_donor_start(rq);
-+		scx_proxy_reenqueue_retry(rq, next);
- 	} else {
- 		rq_set_donor(rq, next);
- 	}
+ 	/*
+ 	 * Bits 8 to 10 are used to carry task state:
 diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 89e52371f7d29..4482df6d1187d 100644
+index 4482df6d1187d..c7565bc66fa1f 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -24,6 +24,11 @@
+@@ -2333,10 +2333,10 @@ static bool dequeue_task_scx(struct rq *rq, struct task_struct *p, int core_deq_
+ 	ops_dequeue(rq, p, deq_flags);
  
- DEFINE_RAW_SPINLOCK(scx_sched_lock);
- 
-+bool scx_allow_proxy_exec(const struct task_struct *p)
-+{
-+	return true;
-+}
-+
- /*
-  * NOTE: sched_ext is in the process of growing multiple scheduler support and
-  * scx_root usage is in a transitional state. Naked dereferences are safe if the
-@@ -1083,6 +1088,10 @@ static void schedule_deferred_locked(struct rq *rq)
- 	schedule_deferred(rq);
- }
- 
-+void scx_proxy_reenqueue_retry(struct rq *rq, struct task_struct *next)
-+{
-+}
-+
- void schedule_dsq_reenq(struct scx_sched *sch, struct scx_dispatch_q *dsq,
- 			u64 reenq_flags, struct rq *locked_rq)
- {
-@@ -3120,6 +3129,10 @@ static void set_next_task_scx(struct rq *rq, struct task_struct *p, enum snt_e t
+ 	/*
+-	 * A currently running task which is going off @rq first gets dequeued
+-	 * and then stops running. As we want running <-> stopping transitions
+-	 * to be contained within runnable <-> quiescent transitions, trigger
+-	 * ->stopping() early here instead of in put_prev_task_scx().
++	 * A current scheduling context which is going off @rq first gets
++	 * dequeued and then stops running. As we want running <-> stopping
++	 * transitions to be contained within runnable <-> quiescent transitions,
++	 * trigger ->stopping() early here instead of in put_prev_task_scx().
+ 	 *
+ 	 * @p may go through multiple stopping <-> running transitions between
+ 	 * here and put_prev_task_scx() if task attribute changes occur while
+@@ -2344,11 +2344,13 @@ static bool dequeue_task_scx(struct rq *rq, struct task_struct *p, int core_deq_
+ 	 * information meaningful to the BPF scheduler and can be suppressed by
+ 	 * skipping the callbacks if the task is !QUEUED.
+ 	 */
+-	if (task_current(rq, p) &&
+-	    (SCX_HAS_OP(sch, stopping) || unlikely(p == scx_rescuee(rq)))) {
+-		update_curr_scx(rq);
+-		if (SCX_HAS_OP(sch, stopping))
+-			SCX_CALL_OP_TASK(sch, stopping, rq, p, false);
++	if (task_current_donor(rq, p) && (p->scx.flags & SCX_TASK_RUN_TRACKED)) {
++		if (SCX_HAS_OP(sch, stopping) || unlikely(p == scx_rescuee(rq))) {
++			update_curr_scx(rq);
++			if (SCX_HAS_OP(sch, stopping))
++				SCX_CALL_OP_TASK(sch, stopping, rq, p, false);
++		}
++		p->scx.flags &= ~SCX_TASK_RUN_TRACKED;
  	}
+ 
+ 	if (SCX_HAS_OP(sch, quiescent) && !task_on_rq_migrating(p))
+@@ -3065,10 +3067,23 @@ static enum scx_dsp_verdict dispatch_one(struct rq *rq, struct task_struct *prev
+ 	return verdict;
  }
  
-+void scx_proxy_donor_start(struct rq *rq)
-+{
+-static void set_next_task_scx(struct rq *rq, struct task_struct *p, enum snt_e type)
++static void scx_start_task_running(struct rq *rq, struct task_struct *p)
+ {
+ 	struct scx_sched *sch = scx_task_sched(p);
+ 
++	if (p->scx.flags & SCX_TASK_RUN_TRACKED)
++		return;
++
++	if (SCX_HAS_OP(sch, running))
++		SCX_CALL_OP_TASK(sch, running, rq, p);
++
++	p->scx.flags |= SCX_TASK_RUN_TRACKED;
 +}
 +
- static enum scx_cpu_preempt_reason
- preempt_reason_from_class(const struct sched_class *class)
++static void set_next_task_scx(struct rq *rq, struct task_struct *p, enum snt_e type)
++{
++	bool first = type == SNT_PICK;
++
+ 	if (type == SNT_REPICK)
+ 		return;
+ 
+@@ -3083,9 +3098,20 @@ static void set_next_task_scx(struct rq *rq, struct task_struct *p, enum snt_e t
+ 
+ 	p->se.exec_start = rq_clock_task(rq);
+ 
+-	/* see dequeue_task_scx() on why we skip when !QUEUED */
+-	if (SCX_HAS_OP(sch, running) && (p->scx.flags & SCX_TASK_QUEUED))
+-		SCX_CALL_OP_TASK(sch, running, rq, p);
++	/*
++	 * See dequeue_task_scx() for why we skip when !QUEUED.
++	 *
++	 * During a normal switch (@first), a blocked task is only a provisional
++	 * donor. Proxy resolution may fail or migrate the donor to another CPU,
++	 * so defer ops.running() until scx_proxy_donor_start() confirms that
++	 * resolution succeeded.
++	 *
++	 * !@first denotes restoration after a SAVE/RESTORE cycle. The matching
++	 * dequeue already issued ops.stopping(), so restart the session here
++	 * regardless of the donor state.
++	 */
++	if ((p->scx.flags & SCX_TASK_QUEUED) && !(p->is_blocked && first))
++		scx_start_task_running(rq, p);
+ 
+ 	clr_task_runnable(p, true);
+ 
+@@ -3131,6 +3157,12 @@ static void set_next_task_scx(struct rq *rq, struct task_struct *p, enum snt_e t
+ 
+ void scx_proxy_donor_start(struct rq *rq)
  {
-diff --git a/kernel/sched/ext/ext.h b/kernel/sched/ext/ext.h
-index 0b7fc46aee08c..3cfbfeb1bf9d1 100644
---- a/kernel/sched/ext/ext.h
-+++ b/kernel/sched/ext/ext.h
-@@ -20,6 +20,9 @@ void scx_rq_deactivate(struct rq *rq);
- int scx_check_setscheduler(struct task_struct *p, int policy);
- bool task_should_scx(int policy);
- bool scx_allow_ttwu_queue(const struct task_struct *p);
-+bool scx_allow_proxy_exec(const struct task_struct *p);
-+void scx_proxy_donor_start(struct rq *rq);
-+void scx_proxy_reenqueue_retry(struct rq *rq, struct task_struct *next);
- void init_sched_ext_class(void);
++	struct task_struct *donor = rq->donor;
++
++	lockdep_assert_rq_held(rq);
++
++	if (donor->sched_class == &ext_sched_class && (donor->scx.flags & SCX_TASK_QUEUED))
++		scx_start_task_running(rq, donor);
+ }
  
- static inline u32 scx_cpuperf_target(s32 cpu)
-@@ -54,6 +57,10 @@ static inline void scx_rq_deactivate(struct rq *rq) {}
- static inline int scx_check_setscheduler(struct task_struct *p, int policy) { return 0; }
- static inline bool task_on_scx(const struct task_struct *p) { return false; }
- static inline bool scx_allow_ttwu_queue(const struct task_struct *p) { return true; }
-+static inline bool scx_allow_proxy_exec(const struct task_struct *p) { return true; }
-+static inline void scx_proxy_donor_start(struct rq *rq) {}
-+static inline void scx_proxy_reenqueue_retry(struct rq *rq,
-+					     struct task_struct *next) {}
- static inline void init_sched_ext_class(void) {}
+ static enum scx_cpu_preempt_reason
+@@ -3206,9 +3238,17 @@ static void put_prev_task_scx(struct rq *rq, struct task_struct *p,
+ 			scx_task_slice_ended(rq, p);
+ 	}
  
- #endif	/* CONFIG_SCHED_CLASS_EXT */
+-	/* see dequeue_task_scx() on why we skip when !QUEUED */
+-	if (SCX_HAS_OP(sch, stopping) && (p->scx.flags & SCX_TASK_QUEUED))
+-		SCX_CALL_OP_TASK(sch, stopping, rq, p, true);
++	/*
++	 * Preserve the running session when proxy execution refreshes the same
++	 * donor around an execution-context switch on this rq.
++	 */
++	if (next != p && (p->scx.flags & SCX_TASK_QUEUED) &&
++	    (p->scx.flags & SCX_TASK_RUN_TRACKED)) {
++		if (SCX_HAS_OP(sch, stopping))
++			SCX_CALL_OP_TASK(sch, stopping, rq, p, true);
++
++		p->scx.flags &= ~SCX_TASK_RUN_TRACKED;
++	}
+ 
+ 	if (p->scx.flags & SCX_TASK_QUEUED) {
+ 		set_task_runnable(rq, p);
+diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
+index a0619c941e91b..8d5ebec29b70d 100644
+--- a/kernel/sched/ext/internal.h
++++ b/kernel/sched/ext/internal.h
+@@ -477,6 +477,12 @@ struct sched_ext_ops {
+ 	 * Therefore, always use scx_bpf_task_cpu(@p) to determine the
+ 	 * target CPU the task is going to use.
+ 	 *
++	 * Under proxy execution, the BPF scheduler continues to observe the
++	 * donor as the current scheduling context. A blocked donor enters a
++	 * ->running()/->stopping() session while its scheduling context drives
++	 * the lock owner. The lock owner executing on its behalf is intentionally
++	 * not reported through these callbacks.
++	 *
+ 	 * See ->runnable() for explanation on the task state notifiers.
+ 	 */
+ 	void (*running)(struct task_struct *p);
+diff --git a/tools/sched_ext/include/scx/enum_defs.autogen.h b/tools/sched_ext/include/scx/enum_defs.autogen.h
+index 63b6b14b19bd4..6cb26ad5033cd 100644
+--- a/tools/sched_ext/include/scx/enum_defs.autogen.h
++++ b/tools/sched_ext/include/scx/enum_defs.autogen.h
+@@ -105,6 +105,7 @@
+ #define HAVE_SCX_TASK_SUB_INIT
+ #define HAVE_SCX_TASK_IMMED
+ #define HAVE_SCX_TASK_PROTECTED
++#define HAVE_SCX_TASK_RUN_TRACKED
+ #define HAVE_SCX_TASK_STATE_SHIFT
+ #define HAVE_SCX_TASK_STATE_BITS
+ #define HAVE_SCX_TASK_STATE_MASK
 -- 
 2.53.0
 
