@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049860;
-	b=4IPeh/00C9+by+re0l5CMFioQirfAHmIHgvyEiPsyg8q+PQgV0EqnJrE0FH/XcrKf4VZ
-	 Ps56vzQQUMDNxveDHPeLscwZpH6hMYrukJYhIfXhAdLmemA17QLatztq7v9OR0mwMYoPT
-	 8jQ9n01sG7BcfgJcj35O7WVQ2PNZcUpTAvJfYDn92mbTqxlaFNBMZ+/PVoUXtLeEIFNFm
-	 ZvOpNGhQ+DfV45htMHU0yO7YLHlsY+MkAT4+b3bXOMddPjhX/u+CDSQ84QnPmghzqGWre
-	 cHrmwZKyV/uCqnBaA+fxnRo124LHL8+GQd5irE1SS8IbpsqZ+5GMclAZtTaVtkW8Xnw==
+	t=1795049863;
+	b=RRrR2F/ii6reXfOfK1FoCJt4n8Nf0mMsUbfxlDq6a79gWSkfYfFcgzv9N2PFVh49HrBW
+	 AfNL4mF0rqGzbLPmq9uME/fiDmgKC/0Zxm0SvfNFuz18XZ4YbLLhXSEo6Jaqiwo2qIcLr
+	 9mSPM1puHcGPEx89scxLA5v+EQ5kf5AwAA3jZF/0Lvzrdo8ClQ7MDTbyRV0+PFM0QBd8q
+	 cRAmZCyODycLwvjJeKWWsudfEh14ELMXbzgZWbdC0Huqo9o2o6rR9rkBTQLinpkrEgVuI
+	 F40H1zFPe3i1vbT8XPx9b0F7U1LWxmTaJ1EIYNrZ5mDoyvc8Kpxr9Swt3Xxi612VS4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049860;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049863;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RqhYzs1w222FbFDkRyiuSKR19PvljNMfk4rgQOaROKw=;
-	b=AxOy1IbtUqxgE98ebEapmXaUu1EkoDtkYnZmmV9RSrqw8mgqlVhCcjuVjyDVSEOUYZE9
-	 uNuEnbMwWDL1/t5+DQQXVNt+tiiwwVEgqYOVqfAEyWGwLK+OemSkxbQOtPTI4l1IrjeWK
-	 ksr6QvnZsbzZIXu5pT57+SiVPqCzV2Q6+usFSQym4M/pA8FO9QB3joVJqC/gSh2MWqAjV
-	 0zgR40AiribY0JOrgCRNVsmJDgcyUaQI4E+o0nF8A3vk+uDvYMXkN0EwxGK29P5abI/aU
-	 hwuJUSV40mtE7Um4rD/mOPyrF3RuGAJyxxwzLiUdZa9U33HjVODzlCMTopGwkqTYKbg==
+	bh=gFT+KTxz/Kd95fttoqZaDmc1ZuOmx8Zwqo4UatHb/dg=;
+	b=p7LJ8jHq0gnAFr4LEno7TClaoUJqONOfk3hgikSrtV8GjuW5Cco7wXHq4JFR2a/J0NDD
+	 fer27NecT2i9kjTNUL7CEhgTGK6K3i6UwhspAQgGkc26sNySlypIogXsRwVDqHB8q2jfm
+	 9292JKOwdOs/2NQIJTZgFPY2opKVm8wTrJkAS0ZoLFinkIp095kmyW4gdqGoScD+7JO4Z
+	 Wkiu1YpLIGYX/VkUI0N9gQKNjxrC+tGs3c3iUjQ2Ph8jAIKyXDk3r83xtkTxMOsVOtJqZ
+	 A+71fy5VNbEHnboIv1Hxs6iiDPvSgJ6PKV6EB5bHWpv4TJLWFYo1CMZ5Gg1zc0JkB3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DMkj1Ivz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tlk9ViF2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37FF6606A335;
-	Thu, 19 Nov 2026 00:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E069606A330;
+	Thu, 19 Nov 2026 00:57:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DMkj1Ivz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 877AB1F000C4;
-	Thu, 19 Nov 2026 00:57:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tlk9ViF2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C6331F000C4;
+	Thu, 19 Nov 2026 00:57:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049860;
-	bh=RqhYzs1w222FbFDkRyiuSKR19PvljNMfk4rgQOaROKw=;
+	s=korg; t=1795049863;
+	bh=gFT+KTxz/Kd95fttoqZaDmc1ZuOmx8Zwqo4UatHb/dg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DMkj1IvzLh5f8IuVmfCa5de/sUnbUI4rcirLgm11aUfN+y57nMmTOPWZ0RGtF4d4V
-	 t3a56F4RESVA6W0gp4h89cG0FM0VHvixAiXeWzugIrpqK2YBb3x2xOt2Qi8q1wV1vY
-	 EtWDZrzrLEIZWmkqSXDMgPU50sW3uRpSLcs3ovWA=
+	b=Tlk9ViF2SmdCqXuzIYhomjumTji3DXxmSNiU4FWLYVrQ0txUn8wcYx8eME6dP1+Pw
+	 kzRnkOWZKPFDN8bBgu2t3OIh+2A5nvKbx7Kae058DyKXIdA0A42xtjk20J70Gziw57
+	 P+ZcGqthXaWfGbLUelPH+uN2v3BSFpwYW9VOP8Q4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
 	Kiran K <kiran.k@intel.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2503/2857] Bluetooth: btintel: propagate version TLV parsing errors
-Date: Wed, 18 Nov 2026 15:58:57 +0100
-Message-ID: <20261118150331.678838950@linuxfoundation.org>
+Subject: [PATCH 6.1 2504/2857] Bluetooth: btintel: Zero version data before parsing TLVs
+Date: Wed, 18 Nov 2026 15:58:58 +0100
+Message-ID: <20261118150331.714533167@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,54 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+From: Kiran K <kiran.k@intel.com>
 
-[ Upstream commit 3a74624b5deae7f5e2b98e638687fbf9594a9781 ]
+[ Upstream commit cf87709d7ff83b4de5d42b61e4a9806fe374cb9d ]
 
-btintel_read_version_tlv() ignores the parser return value, so setup
-continues with partially initialized version data after a malformed TLV
-causes parsing to stop.
+Firmware may omit optional TLVs, leaving their corresponding fields
+unset in the caller-supplied struct intel_version_tlv. Since the
+structure is typically stack-allocated and not cleared beforehand,
+fields for which no TLV is received retain uninitialized stack
+memory. This stale data can be logged via btintel_version_info_tlv()
+and copied back to the caller, leaking kernel stack contents.
 
-Return the parser error to the caller so an invalid response fails setup
-instead of being treated as successful. Keep this behavioral change
-separate from the bounds checks so it can be reverted independently if
-an existing controller sends malformed data.
+Clear the structure in btintel_read_version_tlv() before parsing so
+that fields with no corresponding TLV are deterministically zero
+instead of containing garbage.
 
-Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
-Reviewed-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Tested-by: Kiran K <kiran.k@intel.com>
+Fixes: 57375beef71a ("Bluetooth: btintel: Add infrastructure to read controller information")
+Signed-off-by: Kiran K <kiran.k@intel.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: cf87709d7ff8 ("Bluetooth: btintel: Zero version data before parsing TLVs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btintel.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-index efc4788b3d30a..7501a946aed7c 100644
+index 7501a946aed7c..3adfe01166c5e 100644
 --- a/drivers/bluetooth/btintel.c
 +++ b/drivers/bluetooth/btintel.c
-@@ -626,6 +626,7 @@ static int btintel_read_version_tlv(struct hci_dev *hdev,
- {
- 	struct sk_buff *skb;
- 	const u8 param[1] = { 0xFF };
-+	int err;
- 
- 	if (!version)
- 		return -EINVAL;
-@@ -644,10 +645,10 @@ static int btintel_read_version_tlv(struct hci_dev *hdev,
+@@ -645,6 +645,7 @@ static int btintel_read_version_tlv(struct hci_dev *hdev,
  		return -EIO;
  	}
  
--	btintel_parse_version_tlv(hdev, version, skb);
-+	err = btintel_parse_version_tlv(hdev, version, skb);
++	memset(version, 0, sizeof(*version));
+ 	err = btintel_parse_version_tlv(hdev, version, skb);
  
  	kfree_skb(skb);
--	return 0;
-+	return err;
- }
- 
- /* ------- REGMAP IBT SUPPORT ------- */
 -- 
 2.53.0
 
