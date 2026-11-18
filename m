@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020692;
-	b=TYmm/Lznfhx1341CeWa7A+5UjOu2DEsdOZ56jGGLqNzYcCFljdj+1voXgOCR1yDjdBKm
-	 T7w9OH/VDole/1grqRw5cOGH/mRVoB/vIbjur49xFc3O+S8MpotprJuUbCB79NX3Hmmsa
-	 DPguY2h6dAEnRypXMe6hlLmzqzutI0AOqstKf6scNQdrWike/XBfGBq1QO5FadV+dD/WW
-	 dDvud85p9W6iThdjRBdB0ybWut10Dtp58rK5MzJH2It0NnHLdHh7cJRqJeH713Mf9R4G+
-	 amLKh/3FbBiflD+l8HC5IETpaVeIdO2LBeKdvqJVZ2z/PpfD3IQj/buq2VWukAVWFZQ==
+	t=1795020695;
+	b=epFTcFZohWt0YyTU6DUEw5Jtz7M5T7d8dxou0OSkYWLiCs/ttWAgLJf4/E8bBr0yA7m7
+	 ICQ+hB3qvY3fPkUMoyIVChju1/KQz1qlip4Ud4HDkbBMzffLHMRq16ZyrLR9k91YZFxcQ
+	 LN+dZPjxt+7jo9g3P1Nx80OyCa5yH2bvrYyrR+XaVUEsZDMIvaFeXBtcl40X5Qu0PScOz
+	 /2Ui+wkxVfM8gtcBh07XmfsN4IGFzC034n2L/1Z/Ye+XR8e8NCW1+vGF95yuLmFzP+Yke
+	 dFT9G82ZhJl1bRTosDOqKxj6DbLoR3lvkvEIzt1tmNlXlhUnn8IX6oHSPqcTiNtMUgg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020692;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020695;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=colL7mI/FsPW4CYGkUFI/liibQVWIq9IBNVRzIF6Ggk=;
-	b=nJME9ueFTPt1a31yGBTs/q/5wnlX4YZjhLYddvP0wqQfktUVhoA/h9CuBfgAv5wLH7as
-	 JUrZOoxReyYxk3rWwpngRPck7CTnVXrIAn7yRMn+BP7D+iMUgJddT2oKOC0rNXfLy4KW9
-	 lrSOlqcvP+vOH7XaEPLOZcLU3/YnM+e1iOuuUJq2SQPStvJ4XeB3RhkTnIANjRXE0a8fE
-	 6N7kF42/b8bd0vBpej5Mt/G8Rz1WAjxggOvWQIxCpZXGk2hQsL/jHu7hQyFEKbyU4rAzA
-	 diaQhjzQ0oUVBWqiKlwJNoE8SYZKBxq7AUE6Tfuy1/fvMpBRMwxMAKAPolX0t69p3fg==
+	bh=hYN1zKBW0krv16u/hrIPEj7NmLSwU9rTlVfM2nsr7X0=;
+	b=o2Ec5+zbJGms6huVWkSeCEEzTxfLGJdnhUgVLyX674mRuetlP04KVHFMfZWT9OMPfqLc
+	 /h57TLX/2UqtPOBtBRQhNL6AEbQiYzfhaJD/r5R0CV20j52QmczgXOvC+eOL2+jRtM4Pl
+	 /83FIsPVNuI71aEmnHTB3g5br9Jm0djX4kKtZv40bP4Fy3LAMHqKb5c//BDUXKBVCnNUb
+	 jQGc9i3lfSjXUPu7utp3K9LmI4ADvIsDRv9l4OskBaS/YatsRHTvsQAFClWBjtToGG2vf
+	 +7NZM4oziLjMkquKgqO5IAxWZv5wkmU9fs92qspLxeVIs+4e76mAatKQqpOhzI9phsw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tygHcpAc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KA9CG8MA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BC4460A262C;
-	Wed, 18 Nov 2026 16:51:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1089E60A2604;
+	Wed, 18 Nov 2026 16:51:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tygHcpAc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69EA1F000CA;
-	Wed, 18 Nov 2026 16:51:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KA9CG8MA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 662FD1F000C8;
+	Wed, 18 Nov 2026 16:51:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020692;
-	bh=colL7mI/FsPW4CYGkUFI/liibQVWIq9IBNVRzIF6Ggk=;
+	s=korg; t=1795020694;
+	bh=hYN1zKBW0krv16u/hrIPEj7NmLSwU9rTlVfM2nsr7X0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tygHcpAc9ybDvJ1JEe6Z90Ymf23UpbcadOww9ZmCSLVj9/GTpQ9RWE8Y6uItRDa09
-	 y38+mimPag/rxJMnW9520BLyzRvOkCLVHh0qnuR5v2k6W6UeN90Kt98neQEdOrlXGn
-	 ZhJUplEhMx6cqqAf2OhH3ZMPbkGG2jlUnj2s2N80=
+	b=KA9CG8MAxO/CDQ+OFSCpM/ncTxY3cDd8yu/EIMuqS7TaaQdjMlN7gF7j0xvqpVnkQ
+	 7RHQyc996cCT29AvvI7lMi1tMJvtoexzD+CGV0te+pt89HQ5ACyTckiqAoJlA25TUn
+	 vFYFMMk0zWvV30FHHItkAIf/dxl8dFfRoPDNTtVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
+	Ju Nan <junan76@163.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2041/2651] drm/panthor: Fully disable the AS even if its going to be re-assigned
-Date: Wed, 18 Nov 2026 15:54:41 +0100
-Message-ID: <20261118150359.572398527@linuxfoundation.org>
+Subject: [PATCH 7.3 2042/2651] pinctrl: stm32: Fix the unit of the hwspinlock timeout
+Date: Wed, 18 Nov 2026 15:54:42 +0100
+Message-ID: <20261118150359.610464945@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,119 +68,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Brezillon <boris.brezillon@collabora.com>
+From: Ju Nan <junan76@163.com>
 
-[ Upstream commit a431d4ec5d938893060f69a018a2c47651c282d9 ]
+[ Upstream commit 544b3f8042dd7c18baa48dcb1a393ff8b6742322 ]
 
-We're trying to be smart by skipping the UPDATE(UNMAPPED) step, but
-it remains to be proven it adds any noticeable overhead. Moreover, it's
-breaking the assumption that, once the VM is unbound, no access can
-happen on it.
+HWSPNLCK_TIMEOUT is passed to hwspin_lock_timeout_in_atomic(), whose
+timeout argument is in milliseconds, not microseconds:
 
-For instance, say the panthor_mmu_as_enable() call in panthor_vm_active()
-fails after we've called panthor_vm_release_as_locked(), we're now in a
-state where the HW still points to the old page table, but SW slot points
-to the new VM, which is not truly HW-bound.
+  atomic_delay += HWSPINLOCK_RETRY_DELAY_US;
+  if (atomic_delay > to * 1000)
+          return -ETIMEDOUT;
 
-If, after the as_slots lock is released, the evicted VM itself is
-released, the HW might have access to memory that has been returned
-to the system until the reset we scheduled (because of the faulty
-AS_COMMAND) is effective.
+The hwspinlock core documents this explicitly:
 
-Let's make this bullet-proof by doing a full bound -> unbound -> bound
-cycle on AS slot recycling.
+  If the mode is HWLOCK_IN_ATOMIC (called from an atomic context) the
+  timeout is handled with busy-waiting delays, hence shall not exceed
+  few msecs.
 
-Fixes: 32e593d74c39 ("drm/panthor: Make sure caches are flushed/invalidated when an AS is recycled")
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20260924-panthor-mmu-fixes-v1-2-e25f9b106466@collabora.com
+Fixes: 290a9f937e5a ("pinctrl: stm32: use the hwspin_lock_timeout_in_atomic() API")
+Signed-off-by: Ju Nan <junan76@163.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_mmu.c | 21 +++++++--------------
- 1 file changed, 7 insertions(+), 14 deletions(-)
+ drivers/pinctrl/stm32/pinctrl-stm32.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_mmu.c b/drivers/gpu/drm/panthor/panthor_mmu.c
-index 41ae159aeb7dd..7ed89d484d0f4 100644
---- a/drivers/gpu/drm/panthor/panthor_mmu.c
-+++ b/drivers/gpu/drm/panthor/panthor_mmu.c
-@@ -620,8 +620,7 @@ static int panthor_mmu_as_enable(struct panthor_device *ptdev, u32 as_nr,
- 	return as_send_cmd_and_wait(ptdev, as_nr, AS_COMMAND_UPDATE);
- }
+diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
+index 6ebb8ea260d1b..241684cd383b5 100644
+--- a/drivers/pinctrl/stm32/pinctrl-stm32.c
++++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
+@@ -87,7 +87,7 @@
+ #define gpio_range_to_bank(chip) \
+ 		container_of(chip, struct stm32_gpio_bank, range)
  
--static int panthor_mmu_as_disable(struct panthor_device *ptdev, u32 as_nr,
--				  bool recycle_slot)
-+static int panthor_mmu_as_disable(struct panthor_device *ptdev, u32 as_nr)
- {
- 	struct panthor_mmu *mmu = ptdev->mmu;
- 	struct panthor_vm *vm = ptdev->mmu->as.slots[as_nr].vm;
-@@ -645,12 +644,6 @@ static int panthor_mmu_as_disable(struct panthor_device *ptdev, u32 as_nr,
+-#define HWSPNLCK_TIMEOUT	1000 /* usec */
++#define HWSPNLCK_TIMEOUT_MS	1
+ 
+ static const char * const stm32_gpio_functions[] = {
+ 	"gpio", "af0", "af1",
+@@ -609,7 +609,7 @@ static int stm32_gpio_domain_activate(struct irq_domain *d,
+ 
+ 	if (pctl->hwlock) {
+ 		ret = hwspin_lock_timeout_in_atomic(pctl->hwlock,
+-						    HWSPNLCK_TIMEOUT);
++						    HWSPNLCK_TIMEOUT_MS);
+ 		if (ret) {
+ 			dev_err(pctl->dev, "Can't get hwspinlock\n");
  			return ret;
- 	}
+@@ -946,7 +946,7 @@ static int stm32_pmx_set_mode(struct stm32_gpio_bank *bank,
  
--	/* If the slot is going to be used immediately, don't bother changing
--	 * the config.
--	 */
--	if (recycle_slot)
--		return 0;
--
- 	gpu_write64(mmu->iomem, AS_TRANSTAB(as_nr), 0);
- 	gpu_write64(mmu->iomem, AS_MEMATTR(as_nr), 0);
- 	gpu_write64(mmu->iomem, AS_TRANSCFG(as_nr), AS_TRANSCFG_ADRMODE_UNMAPPED);
-@@ -777,7 +770,7 @@ int panthor_vm_active(struct panthor_vm *vm)
- 		drm_WARN_ON(&ptdev->base, refcount_read(&lru_vm->as.active_cnt));
- 		as = lru_vm->as.id;
+ 	if (pctl->hwlock) {
+ 		err = hwspin_lock_timeout_in_atomic(pctl->hwlock,
+-						    HWSPNLCK_TIMEOUT);
++						    HWSPNLCK_TIMEOUT_MS);
+ 		if (err) {
+ 			dev_err(pctl->dev, "Can't get hwspinlock\n");
+ 			goto unlock;
+@@ -1089,7 +1089,7 @@ static int stm32_pconf_set_driving(struct stm32_gpio_bank *bank,
  
--		ret = panthor_mmu_as_disable(ptdev, as, true);
-+		ret = panthor_mmu_as_disable(ptdev, as);
- 		if (ret)
- 			goto out_unlock;
+ 	if (pctl->hwlock) {
+ 		err = hwspin_lock_timeout_in_atomic(pctl->hwlock,
+-						    HWSPNLCK_TIMEOUT);
++						    HWSPNLCK_TIMEOUT_MS);
+ 		if (err) {
+ 			dev_err(pctl->dev, "Can't get hwspinlock\n");
+ 			goto unlock;
+@@ -1135,7 +1135,7 @@ static int stm32_pconf_set_speed(struct stm32_gpio_bank *bank,
  
-@@ -919,7 +912,7 @@ static void panthor_vm_declare_unusable(struct panthor_vm *vm)
- 	vm->unusable = true;
- 	mutex_lock(&ptdev->mmu->as.slots_lock);
- 	if (vm->as.id >= 0 && drm_dev_enter(&ptdev->base, &cookie)) {
--		panthor_mmu_as_disable(ptdev, vm->as.id, false);
-+		panthor_mmu_as_disable(ptdev, vm->as.id);
- 		drm_dev_exit(cookie);
- 	}
- 	mutex_unlock(&ptdev->mmu->as.slots_lock);
-@@ -1911,7 +1904,7 @@ static void panthor_mmu_irq_handler(struct panthor_device *ptdev, u32 status)
- 			ptdev->mmu->as.slots[as].vm->unhandled_fault = true;
+ 	if (pctl->hwlock) {
+ 		err = hwspin_lock_timeout_in_atomic(pctl->hwlock,
+-						    HWSPNLCK_TIMEOUT);
++						    HWSPNLCK_TIMEOUT_MS);
+ 		if (err) {
+ 			dev_err(pctl->dev, "Can't get hwspinlock\n");
+ 			goto unlock;
+@@ -1181,7 +1181,7 @@ static int stm32_pconf_set_bias(struct stm32_gpio_bank *bank,
  
- 		/* Disable the MMU to kill jobs on this AS. */
--		panthor_mmu_as_disable(ptdev, as, false);
-+		panthor_mmu_as_disable(ptdev, as);
- 		mutex_unlock(&ptdev->mmu->as.slots_lock);
+ 	if (pctl->hwlock) {
+ 		err = hwspin_lock_timeout_in_atomic(pctl->hwlock,
+-						    HWSPNLCK_TIMEOUT);
++						    HWSPNLCK_TIMEOUT_MS);
+ 		if (err) {
+ 			dev_err(pctl->dev, "Can't get hwspinlock\n");
+ 			goto unlock;
+@@ -1242,7 +1242,7 @@ static int stm32_pconf_set_advcfgr(struct stm32_gpio_bank *bank, int offset, u32
+ 	spin_lock_irqsave(&bank->lock, flags);
  
- 		status &= ~mask;
-@@ -1940,7 +1933,7 @@ void panthor_mmu_suspend(struct panthor_device *ptdev)
+ 	if (pctl->hwlock) {
+-		err = hwspin_lock_timeout_in_atomic(pctl->hwlock, HWSPNLCK_TIMEOUT);
++		err = hwspin_lock_timeout_in_atomic(pctl->hwlock, HWSPNLCK_TIMEOUT_MS);
+ 		if (err) {
+ 			dev_err(pctl->dev, "Can't get hwspinlock\n");
+ 			goto unlock;
+@@ -1320,7 +1320,7 @@ stm32_pconf_set_skew_delay(struct stm32_gpio_bank *bank, int offset, u32 delay,
+ 	spin_lock_irqsave(&bank->lock, flags);
  
- 		if (vm) {
- 			drm_WARN_ON(&ptdev->base,
--				    panthor_mmu_as_disable(ptdev, i, false));
-+				    panthor_mmu_as_disable(ptdev, i));
- 			panthor_vm_release_as_locked(vm);
- 		}
- 	}
-@@ -2065,7 +2058,7 @@ static void panthor_vm_free(struct drm_gpuvm *gpuvm)
- 		int cookie;
- 
- 		if (drm_dev_enter(&ptdev->base, &cookie)) {
--			panthor_mmu_as_disable(ptdev, vm->as.id, false);
-+			panthor_mmu_as_disable(ptdev, vm->as.id);
- 			drm_dev_exit(cookie);
- 		}
- 
-@@ -3360,7 +3353,7 @@ void panthor_mmu_unplug(struct panthor_device *ptdev)
- 
- 		if (vm) {
- 			drm_WARN_ON(&ptdev->base,
--				    panthor_mmu_as_disable(ptdev, i, false));
-+				    panthor_mmu_as_disable(ptdev, i));
- 			panthor_vm_release_as_locked(vm);
- 		}
- 	}
+ 	if (pctl->hwlock) {
+-		err = hwspin_lock_timeout_in_atomic(pctl->hwlock, HWSPNLCK_TIMEOUT);
++		err = hwspin_lock_timeout_in_atomic(pctl->hwlock, HWSPNLCK_TIMEOUT_MS);
+ 		if (err) {
+ 			dev_err(pctl->dev, "Can't get hwspinlock\n");
+ 			goto unlock;
 -- 
 2.53.0
 
