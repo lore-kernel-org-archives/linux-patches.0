@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028022;
-	b=moPcKguZjUmK5KS6wr2s3kUti1wsr09c1Gn0oCAyOns6VF/ids+1wWNwH6jyUIHOEfMx
-	 5VqduWut6SOjPbpTK+0mQiFs9bWWDQHfwxTxXgXR+sBcTt8R2/HviStyrhVHSNW77KoeD
-	 clbdqoTh+b0YS/14FDrL3DAdRZZZIymhxTNoGGFElJqIe3JnJNQpCUgrfmzwakE5dhZOh
-	 UKQZS2Sw2k0if/60131Qy6q0aZauxc6ojf+GBgWoYv+NmhtFQNUktQPxIBmidIhy3siQW
-	 pvQjLX/5v7xQbh/gxv50ssuqfxVP5rSo0jv43XCl5HFq0D/LmIzPPO68bTAUKfvH14Q==
+	t=1795028025;
+	b=WPeW5fBcj2sSFnbnOnJNFEv1hE0fuwDRBG9Qq9NqUWtmXMKjkuel93KvBu9qFr0kg6j8
+	 kjgU2bbza9q9QYhdcIW0HymV+xDOyeyU05WzxGrki1tHEaHaqZ3XnwKe82ucz6BftsN16
+	 /ZplejYOfaw35Tf8ml5+UaPK1ogOQWVppWR5a0qIoCSFx+FGjaEKK1Qj+k/0OhRIAzxFe
+	 a/rxtG5ojTohMeZrBREi4bVCt/dEAaW4xPSfhWIXcgNHiz2Cj/a6dleIPPqCTTc4xPChm
+	 cqWV61J5WuZ8zAq89BrOZhkHXPrniBgab7+mCndyRHPKMP1pA/orQ6GPrbdzzVdccXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028022;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028025;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RWopWaZJjQ5uW6hSnhGRwYmBfj7xgD339m12SK4wQQY=;
-	b=OkUyBTyS87jWAqZRwVREVcDsG9Q+fqwlzhAA8EIWByGlP6cf3v+T35EWwjwVOHsrVMyM
-	 vaUY//WEMfUcMdx0/kASxdcaWxJ0/p72UX8o01a2KJmZtR+HOHOmhjkypaatm/eOEpGnX
-	 VACuOA3cbom5CPMTaE+ebLeT//QYyzx8VNPYoEJXvBGD8mxZoFZRiw8W0CIKYu9/J0mND
-	 Pd/Xlch5A8yuhdGmMU2LosMeL8HqhRwNl7dP08Tx12dGIocbH6OB4COOq0nuZZ0l24S+u
-	 29Y4kXakb0myRY8Za31tPkkRYSEwsZzZKqHxNqLL/DdOPYjJjaIO8stO0eLVwLYd94g==
+	bh=zSZocNDO1E/oMne/qRacpNzMCGx3vkvmu+tJic+ApIs=;
+	b=nOHc14YaypkLMMhMMhrqxckkO8p6HQgwFci775a/7G2rG0UbKNbUrNicg/5t3RJQf6Eg
+	 D4XXr5NytDDj7p22Glqgqgm2SEasQLoUzqt4dEuxbvJvUoOdG0zVQko6htzF9j2r3Hnpe
+	 rK48QP0AtiryEcdXwJ6hTJcouRIH7cr2jyxyrDzt51FF/0JKORLnYw2vKaWnUGrB2zDyE
+	 Vj86UptfrMS1TggBAXErknXH0weZ+xAdWoUM7ScGXWiAhuHfurS6vxtoK3VFTiVgsBtrF
+	 ljz7cTsS63NV7GLMh8TJAyZsAmXCWCyREWpK4OIXAy1xdCjhs+6XC2BsGb2qmBvM0Tw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AkJFWuvg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IVluj41P;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B87FE606A320;
-	Wed, 18 Nov 2026 18:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949B0606A320;
+	Wed, 18 Nov 2026 18:53:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AkJFWuvg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 153601F000C4;
-	Wed, 18 Nov 2026 18:53:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IVluj41P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E54C81F000C4;
+	Wed, 18 Nov 2026 18:53:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028022;
-	bh=RWopWaZJjQ5uW6hSnhGRwYmBfj7xgD339m12SK4wQQY=;
+	s=korg; t=1795028025;
+	bh=zSZocNDO1E/oMne/qRacpNzMCGx3vkvmu+tJic+ApIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AkJFWuvgwdn0e8S1uUy2txMOq1CEW1O73AzIj4wTQIt/ttk95ve/Z6JtE0mv4QBKZ
-	 NC8KgPydBywnnxe3FbyzO7hZqk92euwCWPco0ENO9le0qudgqeN1QmE9+q4QtQ2r5l
-	 bNRtGwemqoBfP2oTShJ/tC/EOpt0UWyo8EPao9dE=
+	b=IVluj41P71ppLJho2pTbfcrzLltxWqvBf/iAN2nQ7zouC6kXAxV8iG3Rbr9eQAH4e
+	 Zantv3TKLR7P7bDEY3hoISlUFpMUQB8bp5SK6QwiPRqtXjctCfZBVWCC/t+zy7BqZl
+	 JadGEpNs1MkJeFq9GCqrCPCioFcIeQLA95pL6XEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dudu Lu <phx0fer@gmail.com>,
-	Antoine Tenart <atenart@kernel.org>,
+	Daniel Machon <daniel.machon@microchip.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1995/2151] net: xps: bound the cleanup loop by the old maps num_tc
-Date: Wed, 18 Nov 2026 16:02:10 +0100
-Message-ID: <20261118150234.397196689@linuxfoundation.org>
+Subject: [PATCH 6.18 1996/2151] net: lan966x: do not inject uninitialised bytes past skb->len
+Date: Wed, 18 Nov 2026 16:02:11 +0100
+Message-ID: <20261118150234.434163489@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,46 +68,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dudu Lu <phx0fer@gmail.com>
+From: Daniel Machon <daniel.machon@microchip.com>
 
-[ Upstream commit 6d5a2cb0b7d6caf170d37ae7ac74738d592d2a05 ]
+[ Upstream commit b4a7180558eb3cd8affa1e240b22171425bdfcb4 ]
 
-__netif_set_xps_queue() walks the OLD dev_maps to free its entries.  The
-per-row trip count uses the NEW num_tc while the row stride uses the OLD
-dev_maps->num_tc, so when dev->num_tc was raised without rebuilding the
-XPS map the last row indexes attr_map[] past the allocation:
+lan966x_port_ifh_xmit() writes the frame to the injection FIFO one
+32-bit word at a time, and pads frames shorter than 60 bytes with zero
+words.
 
-  BUG: KASAN: slab-out-of-bounds in __netif_set_xps_queue+0x1458/0x1ee8
-  Read of size 8 at addr ffff000014f69458 by task insmod/112
+Before this patch, the last word is loaded whole even when skb->len is
+not a multiple of four, so 1 to 3 bytes past the end of the frame are
+read. For a frame shorter than 60 bytes those bytes are also
+transmitted, as VLD_BYTES marks the whole last word valid and the
+padding starts at the next word.
 
-The loop frees entries in dev_maps, so both the trip count and the stride
-must come from dev_maps->num_tc.  The map is sized
-XPS_CPU_DEV_MAPS_SIZE(old num_tc)/XPS_RXQ_DEV_MAPS_SIZE(old num_tc, ...),
-so iterating the new (larger) num_tc reads past the end.
+Write the trailing bytes from a zeroed word. The number of words written
+and VLD_BYTES are unchanged.
 
-Fixes: 255c04a87f43 ("net: embed num_tc in the xps maps")
-Signed-off-by: Dudu Lu <phx0fer@gmail.com>
-Reviewed-by: Antoine Tenart <atenart@kernel.org>
-Link: https://patch.msgid.link/20261021155538.67867-1-phx0fer@gmail.com
+Found by an AI code review agent. Reproduced on a lan9668 board with
+register injection, by sending a
+57 byte frame and capturing it on the link partner: byte 57 of the
+padded frame was not zero. With the fix all padding bytes are zero.
+
+Fixes: d28d6d2e37d1 ("net: lan966x: add port module support")
+Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20261026-lan966x-inject-tail-bytes-v1-1-51d599a48313@microchip.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../ethernet/microchip/lan966x/lan966x_main.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index f7126ede6d6a5..356e9a3fc224d 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -2971,7 +2971,7 @@ int __netif_set_xps_queue(struct net_device *dev, const unsigned long *mask,
- 		goto out_no_old_maps;
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
+index 1179a6e127c52..e576bc7c6deed 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
+@@ -253,9 +253,8 @@ static int lan966x_port_ifh_xmit(struct sk_buff *skb,
+ 		lan_wr((__force u32)ifh[i], lan966x, QS_INJ_WR(grp));
+ 	}
  
- 	for (j = 0; j < dev_maps->nr_ids; j++) {
--		for (i = num_tc, tci = j * dev_maps->num_tc; i--; tci++) {
-+		for (i = dev_maps->num_tc, tci = j * dev_maps->num_tc; i--; tci++) {
- 			map = xmap_dereference(dev_maps->attr_map[tci]);
- 			if (!map)
- 				continue;
+-	/* Write frame */
+-	count = DIV_ROUND_UP(skb->len, 4);
+-	last = skb->len % 4;
++	/* Write the whole words of the frame */
++	count = skb->len / 4;
+ 	for (i = 0; i < count; ++i) {
+ 		/* Wait until the fifo is ready */
+ 		err = lan966x_port_inj_ready(lan966x, grp);
+@@ -265,6 +264,20 @@ static int lan966x_port_ifh_xmit(struct sk_buff *skb,
+ 		lan_wr(((u32 *)skb->data)[i], lan966x, QS_INJ_WR(grp));
+ 	}
+ 
++	/* Write the last 1 to 3 bytes, zero padded to a whole word */
++	last = skb->len % 4;
++	if (last) {
++		/* Wait until the fifo is ready */
++		err = lan966x_port_inj_ready(lan966x, grp);
++		if (err)
++			goto err;
++
++		val = 0;
++		memcpy(&val, skb->data + count * 4, last);
++		lan_wr(val, lan966x, QS_INJ_WR(grp));
++		++i;
++	}
++
+ 	/* Add padding */
+ 	while (i < (LAN966X_BUFFER_MIN_SZ / 4)) {
+ 		/* Wait until the fifo is ready */
 -- 
 2.53.0
 
