@@ -1,65 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025251;
-	b=m0OXKMDyT8aw3oZsXrT3HznzxxGS63zR1Yw5rqVS3ymu5TyM41jTyMAE1n9BmuKkq0qJ
-	 aPFZD8OH4lLBqMdz6vYycC0S2RvSLWgWGdWm8udhoEOBmHJ4nc81JK9m2R7LWJFWhWT/i
-	 rS1+DvDTOEbC1am5owqxWIOsUliXCkW2Nwkn+jIe6idCqrnGgmCS265DhXdPDpwweynye
-	 Y8j6G1N1Toa42c1iWOxOqYEEwA3EDh+lxJbPKx76UNd5l59PgUf9bJaz9jDSrD+yV8PW6
-	 k0w5rGQtA8mm7XjEgqKYN3qMqLVR5LlXuEjegKxEhnEph5JXYwz+2Lzkzgz8QAc97hw==
+	t=1795025254;
+	b=ya34k4sq2bUsD3ONWYYKw9+uuIkzyhcTNCwwtJciPFuwKOPcH4/NWjfoC1Jhbqk/I3qf
+	 mTt4yNjFLqbHeXJEp3rQ/a4BgHY4QuxWQQnF0pcfNvnEHyvm3S8s2GvV8HlDjossywHTD
+	 /ButJ5F+cvLuS6+9YWrwZ+5Ifn6lRhZeQCurPNf7dBt10s0cqyi4Q3aTOnEwOoJFvF3e2
+	 /njhGFCEGLsDyBpC+FfqXmFG3bZj2XN/GTWGuUeOicrckFQJXZdi9Nuvq5zLoAzrwkL6D
+	 Cy7M6oPrVVF6npytGCM6qUrkdWUIlt8iQEKVl8+BmOeiZMveS/HEzKLSLhBBeWYFvoA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025251;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025254;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7URUDCm8T80mmdGArM/fKZxqC+cn/a0Bym3b3Yzzztk=;
-	b=MMtj7/lCDwBQI5F5ONRs2IO7wUvC3t4LkWvild8Qx+Sl0/KCM+vkd+SJNasp4nyoGV1e
-	 fe+Y1LBcxHa4ZpaoIpkSxPqDl8fCs3G8BzYF9zzvZVWFgnYePB0QZTEOiLVE9aLbnVjLd
-	 VnLJ2vqzFpuLfEpwoZxQam6GK9wz+C4P4m8NPREALJj9EaYHGOZMf4Zsjps18CPZkCQkj
-	 Ra1TaolZ7IULypRJKusQVvFp5sJfG3Io+bCdGq1KiJRaErp0Jc+oZOit5eWlvoUtmHPmP
-	 r9VUWpxOPl0kqb3bexsRyNzq4YznVzU6o262EBkC4r0+VE839KZ/EoTmZm3WX9m2H0g==
+	bh=QXDtyuDIPeN4qDWRz2zi5ttAKXrpn9FHeQbGrYWbXT8=;
+	b=1w7S4sR50DQkbBmUgWVXiR5nHnNlCgkaOzcozAF4h3h9vAmoQxZJKajdEUlmIH1BToGf
+	 vYtXQYbfjtwES3aE6rTRCKpl1EapcbBp9YyT3+90n0bAPXpcu7zaXAR9b24KE9f4kuU+3
+	 IEnTatvQgUicAy/pUnCQMrs38gfpSfT572ffe6OrTYsMcGDrkoUpR/Hs0VxAHBM+7LcMR
+	 TFTgldF7Ub5n/BD8jk/Fy+BqeAm/ano/hUWd7lgAjn8EWrX3niPbq5SA5erh6RCz75iUn
+	 zUsPpdCDZ7nwtTQlbDK8sjRyq9Wia6Dgk6aQvRNCuNfe/jN3YZu4/1FI2u7hqo/4edg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mwyifMDO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BfTSUKR4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB82606A332;
-	Wed, 18 Nov 2026 18:07:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B49606A31C;
+	Wed, 18 Nov 2026 18:07:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mwyifMDO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C671F000C4;
-	Wed, 18 Nov 2026 18:07:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BfTSUKR4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 698991F000C5;
+	Wed, 18 Nov 2026 18:07:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025251;
-	bh=7URUDCm8T80mmdGArM/fKZxqC+cn/a0Bym3b3Yzzztk=;
+	s=korg; t=1795025253;
+	bh=QXDtyuDIPeN4qDWRz2zi5ttAKXrpn9FHeQbGrYWbXT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mwyifMDOJVJPtuk+LlyTz7JVL2W+LO73SeeJtcmB9XFivXT/rCwLJa8/Pm0CGdWGI
-	 82w7T6q0p9ohjFgSihWADJRWJJGtH8d0s24rLdbj0U2Fmiex5yiVXcSH30nagMx3vo
-	 I5o86kMg85AYXRk3kHci91+xFO7FCuCgp1Lrmip4=
+	b=BfTSUKR4IozD2wyqHPvb4moxL0Sl7XPNZTGA/+MVvP8fIh8dAlcOA2gzZuQBDV6wD
+	 z5wNbVVBIXkF4mz4FWp0bhsgtg63cHbEY+owMhndWPC9xt1vqXHjV49by3p7RTZKRQ
+	 +SvXnwJHF49AVDtq1IDEryDHPY7uSfrpXyWu3pCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@linaro.org>,
-	Jens Remus <jremus@linux.ibm.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Hendrik Brueckner <brueckner@linux.ibm.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jan Polensky <japo@linux.ibm.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	John Garry <john.g.garry@oracle.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0976/2151] perf build: Do not duplicate CFLAGS in Python extension builds
-Date: Wed, 18 Nov 2026 15:45:11 +0100
-Message-ID: <20261118150158.049136834@linuxfoundation.org>
+Subject: [PATCH 6.18 1012/2151] scsi: core: Support allocating a pseudo SCSI device
+Date: Wed, 18 Nov 2026 15:45:47 +0100
+Message-ID: <20261118150159.286179388@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -81,82 +70,270 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Remus <jremus@linux.ibm.com>
+From: Hannes Reinecke <hare@suse.de>
 
-[ Upstream commit bcd2cc4405bdb9ac77210d0df5990d46c311be66 ]
+[ Upstream commit d630fbf6fc8ce2fc95de7784de5499387b682dc1 ]
 
-setuptools already uses CFLAGS.  Passing CFLAGS with additional flags as
-extra compile arguments causes CFLAGS to effectively get passed twice:
+Allocate a pseudo SCSI device if 'nr_reserved_cmds' has been set. Pseudo
+SCSI devices have the SCSI ID <max_id>:U64_MAX so they won't clash with
+any devices the LLD might create. Pseudo SCSI devices are excluded from
+scanning and will not show up in sysfs. Additionally, pseudo SCSI
+devices are skipped by shost_for_each_device(). This prevents that the
+SCSI error handler tries to submit a reset to a non-existent logical
+unit.
 
-$ make -C tools/perf V=1 JOBS=1
-...
-building 'perf' extension
-gcc [CFLAGS] -fPIC -Iutil/include -I/usr/include/python3.14 \
-  -c /root/linux/tools/perf/util/python.c \
-  -o python_ext_build/tmp/root/linux/tools/perf/util/python.o \
-  [CFLAGS] \
-  -fno-strict-aliasing -Wno-write-strings -Wno-unused-parameter \
-  -Wno-redundant-decls -Wno-cast-function-type \
-  -Wno-declaration-after-statement
+Do not allocate a budget map for pseudo SCSI devices since the
+cmd_per_lun limit does not apply to pseudo SCSI devices.
 
-Reviewed-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Jens Remus <jremus@linux.ibm.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Heiko Carstens <hca@linux.ibm.com>
-Cc: Hendrik Brueckner <brueckner@linux.ibm.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jan Polensky <japo@linux.ibm.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Thomas Richter <tmricht@linux.ibm.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: 2ed38aa8a52d ("perf python: Track linked libraries as extension dependencies")
+Do not perform queue depth ramp up / ramp down for pseudo SCSI devices.
+
+Pseudo SCSI devices will be used to send internal commands to a storage
+device.
+
+[ bvanassche: edited patch description / renamed host_sdev into
+  pseudo_sdev / unexported scsi_get_host_dev() / modified error path in
+  scsi_get_pseudo_dev() / skip pseudo devices in __scsi_iterate_devices()
+  and also when calling sdev_init(), sdev_configure() and sdev_destroy().
+  See also
+  https://lore.kernel.org/linux-scsi/20211125151048.103910-2-hare@suse.de/ ]
+
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Signed-off-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20251031204029.2883185-5-bvanassche@acm.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 92feb036a2d3 ("scsi: scsi_debug: Avoid 32-bit overflow in WRITE SCATTERED offsets")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/setup.py | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ drivers/scsi/hosts.c       |  8 +++++
+ drivers/scsi/scsi.c        |  7 ++--
+ drivers/scsi/scsi_priv.h   |  1 +
+ drivers/scsi/scsi_scan.c   | 67 +++++++++++++++++++++++++++++++++++++-
+ drivers/scsi/scsi_sysfs.c  |  5 ++-
+ include/scsi/scsi_device.h | 16 +++++++++
+ include/scsi/scsi_host.h   |  6 ++++
+ 7 files changed, 106 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/util/setup.py b/tools/perf/util/setup.py
-index b65b1792ca056..a0ce76624a230 100644
---- a/tools/perf/util/setup.py
-+++ b/tools/perf/util/setup.py
-@@ -74,18 +74,17 @@ class install_lib(_install_lib):
-         self.build_dir = build_lib
+diff --git a/drivers/scsi/hosts.c b/drivers/scsi/hosts.c
+index 2bd230e0fb0c7..31c4853462b45 100644
+--- a/drivers/scsi/hosts.c
++++ b/drivers/scsi/hosts.c
+@@ -307,6 +307,14 @@ int scsi_add_host_with_dma(struct Scsi_Host *shost, struct device *dev,
+ 	if (error)
+ 		goto out_del_dev;
  
++	if (shost->nr_reserved_cmds) {
++		shost->pseudo_sdev = scsi_get_pseudo_sdev(shost);
++		if (!shost->pseudo_sdev) {
++			error = -ENOMEM;
++			goto out_del_dev;
++		}
++	}
++
+ 	scsi_proc_host_add(shost);
+ 	scsi_autopm_put_host(shost);
+ 	return error;
+diff --git a/drivers/scsi/scsi.c b/drivers/scsi/scsi.c
+index c122a78afccfc..2aac55c7b9ea3 100644
+--- a/drivers/scsi/scsi.c
++++ b/drivers/scsi/scsi.c
+@@ -840,8 +840,11 @@ struct scsi_device *__scsi_iterate_devices(struct Scsi_Host *shost,
+ 	spin_lock_irqsave(shost->host_lock, flags);
+ 	while (list->next != &shost->__devices) {
+ 		next = list_entry(list->next, struct scsi_device, siblings);
+-		/* skip devices that we can't get a reference to */
+-		if (!scsi_device_get(next))
++		/*
++		 * Skip pseudo devices and also devices we can't get a
++		 * reference to.
++		 */
++		if (!scsi_device_is_pseudo_dev(next) && !scsi_device_get(next))
+ 			break;
+ 		next = NULL;
+ 		list = list->next;
+diff --git a/drivers/scsi/scsi_priv.h b/drivers/scsi/scsi_priv.h
+index 68866b18a6005..1beb71f101572 100644
+--- a/drivers/scsi/scsi_priv.h
++++ b/drivers/scsi/scsi_priv.h
+@@ -136,6 +136,7 @@ extern int scsi_complete_async_scans(void);
+ extern int scsi_scan_host_selected(struct Scsi_Host *, unsigned int,
+ 				   unsigned int, u64, enum scsi_scan_mode);
+ extern void scsi_forget_host(struct Scsi_Host *);
++struct scsi_device *scsi_get_pseudo_sdev(struct Scsi_Host *);
  
--cflags = getenv('CFLAGS', '').split()
- # switch off several checks (need to be at the end of cflags list)
--cflags += ['-fno-strict-aliasing', '-Wno-write-strings', '-Wno-unused-parameter', '-Wno-redundant-decls' ]
-+extra_cflags = ['-fno-strict-aliasing', '-Wno-write-strings', '-Wno-unused-parameter', '-Wno-redundant-decls' ]
- if cc_is_clang:
--    cflags += ["-Wno-unused-command-line-argument" ]
-+    extra_cflags += ["-Wno-unused-command-line-argument" ]
-     if clang_has_option("-Wno-cast-function-type-mismatch"):
--        cflags += ["-Wno-cast-function-type-mismatch" ]
-+        extra_cflags += ["-Wno-cast-function-type-mismatch" ]
- else:
--    cflags += ['-Wno-cast-function-type' ]
-+    extra_cflags += ['-Wno-cast-function-type' ]
+ /* scsi_sysctl.c */
+ #ifdef CONFIG_SYSCTL
+diff --git a/drivers/scsi/scsi_scan.c b/drivers/scsi/scsi_scan.c
+index 55d6478d255c5..404bdff475fd2 100644
+--- a/drivers/scsi/scsi_scan.c
++++ b/drivers/scsi/scsi_scan.c
+@@ -349,6 +349,9 @@ static struct scsi_device *scsi_alloc_sdev(struct scsi_target *starget,
  
- # The python headers have mixed code with declarations (decls after asserts, for instance)
--cflags += [ "-Wno-declaration-after-statement" ]
-+extra_cflags += [ "-Wno-declaration-after-statement" ]
+ 	scsi_sysfs_device_initialize(sdev);
  
- src_perf  = f'{srctree}/tools/perf'
- build_lib = getenv('PYTHON_EXTBUILD_LIB')
-@@ -94,7 +93,7 @@ build_tmp = getenv('PYTHON_EXTBUILD_TMP')
- perf = Extension('perf',
-                  sources = [ src_perf + '/util/python.c' ],
- 		         include_dirs = ['util/include'],
--		         extra_compile_args = cflags,
-+		         extra_compile_args = extra_cflags,
-                  )
++	if (scsi_device_is_pseudo_dev(sdev))
++		return sdev;
++
+ 	depth = sdev->host->cmd_per_lun ?: 1;
  
- setup(name='perf',
+ 	/*
+@@ -1067,6 +1070,9 @@ static int scsi_add_lun(struct scsi_device *sdev, unsigned char *inq_result,
+ 
+ 	sdev->sdev_bflags = *bflags;
+ 
++	if (scsi_device_is_pseudo_dev(sdev))
++		return SCSI_SCAN_LUN_PRESENT;
++
+ 	/*
+ 	 * No need to freeze the queue as it isn't reachable to anyone else yet.
+ 	 */
+@@ -1210,6 +1216,12 @@ static int scsi_probe_and_add_lun(struct scsi_target *starget,
+ 	if (!sdev)
+ 		goto out;
+ 
++	if (scsi_device_is_pseudo_dev(sdev)) {
++		if (bflagsp)
++			*bflagsp = BLIST_NOLUN;
++		return SCSI_SCAN_LUN_PRESENT;
++	}
++
+ 	result = kmalloc(result_len, GFP_KERNEL);
+ 	if (!result)
+ 		goto out_free_sdev;
+@@ -2081,12 +2093,65 @@ void scsi_forget_host(struct Scsi_Host *shost)
+  restart:
+ 	spin_lock_irqsave(shost->host_lock, flags);
+ 	list_for_each_entry(sdev, &shost->__devices, siblings) {
+-		if (sdev->sdev_state == SDEV_DEL)
++		if (scsi_device_is_pseudo_dev(sdev) ||
++		    sdev->sdev_state == SDEV_DEL)
+ 			continue;
+ 		spin_unlock_irqrestore(shost->host_lock, flags);
+ 		__scsi_remove_device(sdev);
+ 		goto restart;
+ 	}
+ 	spin_unlock_irqrestore(shost->host_lock, flags);
++
++	/*
++	 * Remove the pseudo device last since it may be needed during removal
++	 * of other SCSI devices.
++	 */
++	if (shost->pseudo_sdev)
++		__scsi_remove_device(shost->pseudo_sdev);
+ }
+ 
++/**
++ * scsi_get_pseudo_sdev() - Attach a pseudo SCSI device to a SCSI host
++ * @shost: Host that needs a pseudo SCSI device
++ *
++ * Lock status: None assumed.
++ *
++ * Returns:     The scsi_device or NULL
++ *
++ * Notes:
++ *	Attach a single scsi_device to the Scsi_Host. The primary aim for this
++ *	device is to serve as a container from which SCSI commands can be
++ *	allocated. Each SCSI command will carry a command tag allocated by the
++ *	block layer. These SCSI commands can be used by the LLDD to send
++ *	internal or passthrough commands without having to manage tag allocation
++ *	inside the LLDD.
++ */
++struct scsi_device *scsi_get_pseudo_sdev(struct Scsi_Host *shost)
++{
++	struct scsi_device *sdev = NULL;
++	struct scsi_target *starget;
++
++	guard(mutex)(&shost->scan_mutex);
++
++	if (!scsi_host_scan_allowed(shost))
++		goto out;
++
++	starget = scsi_alloc_target(&shost->shost_gendev, 0, shost->max_id);
++	if (!starget)
++		goto out;
++
++	sdev = scsi_alloc_sdev(starget, U64_MAX, NULL);
++	if (!sdev) {
++		scsi_target_reap(starget);
++		goto put_target;
++	}
++
++	sdev->borken = 0;
++
++put_target:
++	/* See also the get_device(dev) call in scsi_alloc_target(). */
++	put_device(&starget->dev);
++
++out:
++	return sdev;
++}
+diff --git a/drivers/scsi/scsi_sysfs.c b/drivers/scsi/scsi_sysfs.c
+index 15ba493d21386..c37992147847a 100644
+--- a/drivers/scsi/scsi_sysfs.c
++++ b/drivers/scsi/scsi_sysfs.c
+@@ -1406,6 +1406,9 @@ int scsi_sysfs_add_sdev(struct scsi_device *sdev)
+ 	int error;
+ 	struct scsi_target *starget = sdev->sdev_target;
+ 
++	if (WARN_ON_ONCE(scsi_device_is_pseudo_dev(sdev)))
++		return -EINVAL;
++
+ 	error = scsi_target_add(starget);
+ 	if (error)
+ 		return error;
+@@ -1513,7 +1516,7 @@ void __scsi_remove_device(struct scsi_device *sdev)
+ 	kref_put(&sdev->host->tagset_refcnt, scsi_mq_free_tags);
+ 	cancel_work_sync(&sdev->requeue_work);
+ 
+-	if (sdev->host->hostt->sdev_destroy)
++	if (!scsi_device_is_pseudo_dev(sdev) && sdev->host->hostt->sdev_destroy)
+ 		sdev->host->hostt->sdev_destroy(sdev);
+ 	transport_destroy_device(dev);
+ 
+diff --git a/include/scsi/scsi_device.h b/include/scsi/scsi_device.h
+index 993008cdea65f..21549c6dc5a0f 100644
+--- a/include/scsi/scsi_device.h
++++ b/include/scsi/scsi_device.h
+@@ -589,6 +589,22 @@ static inline unsigned int sdev_id(struct scsi_device *sdev)
+ #define scmd_id(scmd) sdev_id((scmd)->device)
+ #define scmd_channel(scmd) sdev_channel((scmd)->device)
+ 
++/**
++ * scsi_device_is_pseudo_dev() - Whether a device is a pseudo SCSI device.
++ * @sdev: SCSI device to examine
++ *
++ * A pseudo SCSI device can be used to allocate SCSI commands but does not show
++ * up in sysfs. Additionally, the logical unit information in *@sdev is made up.
++ *
++ * This function tests the LUN number instead of comparing @sdev with
++ * @sdev->host->pseudo_sdev because this function may be called before
++ * @sdev->host->pseudo_sdev has been initialized.
++ */
++static inline bool scsi_device_is_pseudo_dev(struct scsi_device *sdev)
++{
++	return sdev->lun == U64_MAX;
++}
++
+ /*
+  * checks for positions of the SCSI state machine
+  */
+diff --git a/include/scsi/scsi_host.h b/include/scsi/scsi_host.h
+index 8f819453dc698..4344f1b7af874 100644
+--- a/include/scsi/scsi_host.h
++++ b/include/scsi/scsi_host.h
+@@ -722,6 +722,12 @@ struct Scsi_Host {
+ 	/* ldm bits */
+ 	struct device		shost_gendev, shost_dev;
+ 
++	/*
++	 * A SCSI device structure used for sending internal commands to the
++	 * HBA. There is no corresponding logical unit inside the SCSI device.
++	 */
++	struct scsi_device *pseudo_sdev;
++
+ 	/*
+ 	 * Points to the transport data (if any) which is allocated
+ 	 * separately
 -- 
 2.53.0
 
