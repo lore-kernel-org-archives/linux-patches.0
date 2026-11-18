@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030118;
-	b=sfysDp9v9ufg9NZHCwVYJqYq0zfftTa6DKx/Xa06rB5u4nqOIgupLKGL+ChRywm4vWWG
-	 K2oJgOqx+SaMKId6DG5GM6a2PYFWW0+wAinMdeaudySttjvvZpXijG8N23bxsFrt1LMvc
-	 WD5/CcAjteBhfzls0+ekFY7X+6EjH9i/VROutbHUcp5fvECZP6c40V92t6C8JergkC6c+
-	 KuQ8w0lyczM5IV0/Xd8Jn8p0+4N3VQd0LdN8kBTA80jNYsvJ2HzAB0cxPNEfkyEnq4PVG
-	 SD3rIBizVyOKlqPf/Cgvs/+0wyukvr5foKt6CfzM8crwjD6qXJmZgVaewuNo2E+vCNw==
+	t=1795030121;
+	b=T3yYWIxs0vmOR5t12XOZPqPKZRv4qCtvGjH2z0L3lN4iCoNNQS/ddJWqW8vCHFAdg3CH
+	 rwc2/ohGi2SqDkPGvYZlV9NryVhcCFB+yd5gNVoBBdBV+VS+UUS9G7xrCozseeHSn99AQ
+	 I0DEHp7Vjdr5qjwv+TQFfDMgyVAiB7ryhkb1Tt1gjgd0z7+kTMvxLTG3dm+LolB5ECuKE
+	 /U1fv/upZmE8OlCDahZOXTQ7yH1sXHjXmERQGgWiUG5usQ04QAylYMvx54WEO/Kr443GY
+	 FlKOKhM11PCYi5u1OP7oYI9pq7SGvdm9lFg2GGEqKxgXmn8rdvNJRfO1zpgRvsQzeoA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030118;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030121;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZaohOgf8iCSzB3NiAZCu89vGNtYQ3J2iPm6UYFR2eYo=;
-	b=XmqHldg2PXYzh+cd3oIiStPP3H3yaT6VzIbrZ0VBlhF+WX1a5KxCE6Cog1GFryV/X/Sw
-	 uwrM94a4gFbO4DyERNrAUp9BOoGfTX5kgVEUu7fGTEilULY9kvIXe6ZD5k6FrSt+TGhyz
-	 v6QT27HV6CWdx1fE1OJp8aiGdSzFxESCOxN+jZQOY09JqdvaHl5Fe2N623PH2H6Fs9z1O
-	 4HAyd8TEz5xnEVNwKRKkYPI3J6VxR6qtl/S4s8Bti8ctlKrOlOJm26RKdXep4kwSo6/Xv
-	 /SC+UCF6PbYEPHvQRHbtis1c5o8jCFNROCVlH/GAA1s+LBnAIxEj0BzjZym26GL/CyA==
+	bh=Yd41dDpjCOkeKfWj1lfsuZDVivfdHn8Ll7Gp55JUirM=;
+	b=tDqoWnyuOMwl6HrhlCn83tIwpZSisi11Qwv12z1q/o2/TSy/VoP86fyN7CxsLL/hTZbR
+	 Pb7cZbkTZxHgbnZQlFeOq4JKXxa7BPjeyV3iKmg9GbGCb2d18P3EtsXwZEhCHtgd+qmx5
+	 msKI4Tn6wBc3SXDYxblVg6FCjCK+Uu/mA1hdB1CcVnt+l2NhTzhtnfxXMrFzyWP3hSccY
+	 axP7JJemI0PpHbkaEPzNa94rslLVQ6/i6eHFTn8JDCDbAOliNPV1zLdpyKZ1/f5iyFWkT
+	 CCLpCkTdMRPocTUsFPYPgraOfB9CL+8K6v/X6T5YcT7BlqX1ufI85NOk35TA5qe7d9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="0igLx+/k";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XhXybUa+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498D460712AB;
-	Wed, 18 Nov 2026 19:28:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20043607216F;
+	Wed, 18 Nov 2026 19:28:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0igLx+/k
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A7C31F000CE;
-	Wed, 18 Nov 2026 19:28:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XhXybUa+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 718931F000C4;
+	Wed, 18 Nov 2026 19:28:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030118;
-	bh=ZaohOgf8iCSzB3NiAZCu89vGNtYQ3J2iPm6UYFR2eYo=;
+	s=korg; t=1795030121;
+	bh=Yd41dDpjCOkeKfWj1lfsuZDVivfdHn8Ll7Gp55JUirM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0igLx+/krEE7QB4jyaWjFEDGA7R2yv2vAKsKqMqLeA19DJsV0eu3Deu/VUUFIC2G0
-	 +ziXg662S/hA6g1v1wGB6PHqTsTJCpszcn1u+ujBAMD1aMLINlWnv/czACEt6/j5Og
-	 ndJXUSxX7ffBL0i+s4/B8hIXCinBvOUj3oi5vb08=
+	b=XhXybUa+WOLueSy//AjwGN/057dcJdY0jgw1N235A0R2lPw1FmA5CpRTndWiZJMoz
+	 ztmb68wNi3tI4iM05L9ZZK2o75QZ7MRM3c1DYAKI6GCv/O7Rp01JgIh3bvNOd7wzJx
+	 BLE166fhpaCoXmruqGflH5ZbYpXcWP/S7Cb0AI1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Tejun Heo <tj@kernel.org>,
-	Xin Yin <yinxin.x@bytedance.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0590/1756] writeback: size foreign flushes by target wb dirty pages
-Date: Wed, 18 Nov 2026 15:45:17 +0100
-Message-ID: <20261118150032.496742065@linuxfoundation.org>
+Subject: [PATCH 6.12 0591/1756] ACPICA: Fix memory leak in acpi_ds_create_field()
+Date: Wed, 18 Nov 2026 15:45:18 +0100
+Message-ID: <20261118150032.533251848@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,76 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Yin <yinxin.x@bytedance.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 168a8c13159c6e3f0f08da6f8fa2f633a91ba9fd ]
+[ Upstream commit dbb3d99ee95c32711950850ddd33eb22a6042eb2 ]
 
-Foreign dirty tracking records the bdi and wb memcg IDs of recently
-dirtied foreign inodes. When the source memcg needs foreign writeback,
-mem_cgroup_flush_foreign() queues WB_REASON_FOREIGN_FLUSH to the
-recorded target bdi_writeback.
+acpi_ds_create_field() allocates internal_pcc_buffer for operation
+regions in the PCC address space.
 
-cgroup_writeback_by_id() currently sizes this best-effort work from the
-target memcg's NR_FILE_DIRTY counter. The work is scoped to one target
-wb, so a memcg-wide dirty count can over-size a single-bdi flush when
-the target memcg has dirty pages on other devices. It can also under-size
-the flush when the target wb has dirty pages charged to other memcgs.
+The function runs once per field, so a second field on the
+same region overwrites the pointer and orphans the previous buffer.
 
-Over-sizing keeps the target wb busy longer and can delay later
-writeback work. Under-sizing can finish before enough pages are written
-back for the source memcg.
+The matching ACPI_FREE() in acpi_ut_delete_internal_obj() only ever sees
+the last one.
 
-Use the target wb's WB_RECLAIMABLE counter and keep the existing 25%
-headroom. This keeps the budget aligned with the writeback object being
-queued.
+An arm64 platform whose SSDT declares regions with multiple fields each
+leaks two buffers at boot, as detected by kmemleak:
 
-Fixes: 97b27821b485 ("writeback, memcg: Implement foreign dirty flushing")
-Reviewed-by: Jan Kara <jack@suse.cz>
-Acked-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Xin Yin <yinxin.x@bytedance.com>
-Link: https://patch.msgid.link/20260924065443.1650126-1-yinxin.x@bytedance.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+  unreferenced object 0xffff000051e65400 (size 192):
+    comm "swapper/0", pid 1, jiffies 4294668436
+    backtrace (crc 0):
+      __kmalloc_noprof
+      acpi_ds_create_field
+      acpi_ds_load2_end_op
+      acpi_ds_exec_end_op
+      acpi_ps_parse_loop
+      acpi_ps_parse_aml
+      acpi_ns_load_table
+      acpi_load_tables
+      acpi_init
+
+Do not allocate a region if it was previously allocated before,
+preserving the current design, but, not leaking memory.
+
+Fixes: aa6ec56b574d ("ACPICA: ACPI 6.3: add PCC operation region support for AML interpreter")
+Link: https://github.com/open-acpica/acpica/commit/c71849d476bb5f97ca1867849e893368e12a69e6
+Signed-off-by: Breno Leitao <leitao@debian.org>
+[ rjw: Subject tweak, fixed the Fixes: tag ]
+Link: https://patch.msgid.link/20260925-acpica-pcc-field-leak-v2-1-e37008e715af@debian.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fs-writeback.c | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+ drivers/acpi/acpica/dsfield.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
-index 3b67018191df1..c195c97717396 100644
---- a/fs/fs-writeback.c
-+++ b/fs/fs-writeback.c
-@@ -1146,7 +1146,7 @@ int cgroup_writeback_by_id(u64 bdi_id, int memcg_id,
- 	struct cgroup_subsys_state *memcg_css;
- 	struct bdi_writeback *wb;
- 	struct wb_writeback_work *work;
--	unsigned long dirty;
-+	long dirty;
- 	int ret;
- 
- 	/* lookup bdi and memcg */
-@@ -1175,16 +1175,13 @@ int cgroup_writeback_by_id(u64 bdi_id, int memcg_id,
+diff --git a/drivers/acpi/acpica/dsfield.c b/drivers/acpi/acpica/dsfield.c
+index 532401ecdab0c..9009f4a3022e0 100644
+--- a/drivers/acpi/acpica/dsfield.c
++++ b/drivers/acpi/acpica/dsfield.c
+@@ -522,7 +522,8 @@ acpi_ds_create_field(union acpi_parse_object *op,
  	}
  
- 	/*
--	 * The caller is attempting to write out most of
--	 * the currently dirty pages.  Let's take the current dirty page
--	 * count and inflate it by 25% which should be large enough to
--	 * flush out most dirty pages while avoiding getting livelocked by
--	 * concurrent dirtiers.
--	 *
--	 * BTW the memcg stats are flushed periodically and this is best-effort
--	 * estimation, so some potential error is ok.
-+	 * The caller is attempting to write out most of the target wb's
-+	 * currently dirty pages.  Size the work from the wb's reclaimable pages
-+	 * and inflate the count by 25%, which should be large enough to flush
-+	 * out most dirty pages while avoiding getting livelocked by concurrent
-+	 * dirtiers.
- 	 */
--	dirty = memcg_page_state(mem_cgroup_from_css(memcg_css), NR_FILE_DIRTY);
-+	dirty = wb_stat_sum(wb, WB_RECLAIMABLE);
- 	dirty = dirty * 10 / 8;
- 
- 	/* issue the writeback work */
+ 	if (info.region_node->object->region.space_id ==
+-	    ACPI_ADR_SPACE_PLATFORM_COMM) {
++	    ACPI_ADR_SPACE_PLATFORM_COMM &&
++	    !region_node->object->field.internal_pcc_buffer) {
+ 		region_node->object->field.internal_pcc_buffer =
+ 		    ACPI_ALLOCATE_ZEROED(info.region_node->object->region.
+ 					 length);
 -- 
 2.53.0
 
