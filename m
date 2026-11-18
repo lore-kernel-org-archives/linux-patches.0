@@ -1,56 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058618;
-	b=AdydhZOyhQ4z50R+nYOWfMjxQ0yZCXVX15xQW35dLGlUoyCN1l/PWB4dq4ve4dVqL2gW
-	 Bzmb4KwTNMG6tUrCpt4C2MNSlv3Eu8wdDh1On2WfO5wPMXcXKUnCkVCEDw9dqtsDyGnPp
-	 AaQ9cdprFOJBsIZAx2v1dJA+fazJwWwY31Z+SbxjCXRunkFw+wwEGLpmXx7f5kvS2QRBv
-	 6mRYwL7IP0IdTupW8kO8FI61FFLKdjd/E5ISkUckIiIf0WUKfKNRq5TJkXMdbkVCRHdnZ
-	 M5RI2DCJb0JQBkuyqOJzFLGEDEnwDZMj61KBACSTTzQHXv+p5GgJWlP3MJn4VWwIvCw==
+	t=1795058621;
+	b=1UCNckO3m+clWbLdgwqcmAMlzsdpJGmOUmPM3yMAnJqDzyLF4/2ENUe32LjhhAYUFsSb
+	 TucSerwTsyAgGI4vgQg5/WrYOtYFJlyaia/JD5jWwKlZyF6/9EAN7W226G1+qp7uYyYLF
+	 CwMNfD+X/pJ5nSJK8iqM+UnHykt9uqx84dCmFHT+7lEwvqFKm0vPhd8AeeWI50gyG6lGA
+	 JfZUsgnnJF0o7osdQhIqFRjfAIdZfWQYjKipGmu+j/RQvtRm9yry3vACX0mmQuw3DFDcx
+	 GB/OW4T//nWl93XiR1RUGGlSxh5znYob2r3VmeOwfuu+n26uUB+slGfXZPneFQdziug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058618;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058621;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=NEMknso6McH2sZKJOk6PbYPd0lmKRAO+1ad70Pj/zRE=;
-	b=YElgeKWuZs/UhBhytl1Vb88ZyWVQFvWKSMA9inGM6X55undCqoxsSTzsFNFSFfztMas4
-	 TXnR9CYcJgS/AKmUnLJJPftw80H/l/vPZ0k8z9td0eCAe9BSTMnNqEnKEJ+5o56PZ5xOd
-	 oIpCshVbgrFdllvUTrBmRCjvlHh4uGY3CsJsKEepALImJ5wzsowUmaY33Ht4evWSh4KM3
-	 5h00QPX6HbSuWK8Z6wHv0IOxHqU4Qx0LMwDv3HKfsbKMlOjo0vGKQF81JbROLAZrgyuJU
-	 loSxRxuOXfxFr476szXifLYSA7zK698fUNUN9Wjt/Sa3UrXOmMiq8WwyE1l7V6zpCJQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=VCgCe3CPuOVeSXgtGYRa/jD//DbBo3jfesuU3hbLwm8=;
+	b=R4cXH+XgEH1A9uUuNKR8BmeDTM0UTykuBzHARTefJfTdAHW31Q9vXIAnu6cGXSt8ED7P
+	 /qBXj/jMe7rPKwS/dGUmCm1TxcsHefiBveHdGxW7xVon4m0kAXS42vdF6ZZliF/HKc01b
+	 Qeljfb1Zt+357GE6/myD2Nr2TOt5VOBycr0qc2v/njStWKWRSFni5PyaJUt4k7tdaorRr
+	 Fdv9J/HnHUa+EPpEjKs9kexW8XqOSSJnaohTe3nCkApx4D94Btr0Kivv1r75UjPYdNIDi
+	 sUi6DdkJiSo1clZ/993NOz6c3+/S/c2ogn0O+X4UELJ8vf+qhrciwFFh8RebIucEbTw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lAYz7CBC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ce7RfrQG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CDFE606A31C;
-	Thu, 19 Nov 2026 03:23:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5559F606A325;
+	Thu, 19 Nov 2026 03:23:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lAYz7CBC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D36701F000C4;
-	Thu, 19 Nov 2026 03:23:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ce7RfrQG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69C21F000C4;
+	Thu, 19 Nov 2026 03:23:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058618;
-	bh=NEMknso6McH2sZKJOk6PbYPd0lmKRAO+1ad70Pj/zRE=;
+	s=korg; t=1795058621;
+	bh=VCgCe3CPuOVeSXgtGYRa/jD//DbBo3jfesuU3hbLwm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lAYz7CBCSac8b+hgG5367PF0Th2p05clujKp95stt5UOg37T33OlRiSG+RAtkN11+
-	 nHvrIzFQM6ZWtZbQAnA/titLMmIdWxpWguavl+fssnCm8VO6vnykWE16SkWIQqN6LG
-	 jNxO/KrraXYz4W7fE7Ik7M/62PawYBIYZHlVc1+I=
+	b=Ce7RfrQGAJQP5vwK5uaW3vn8fhuW0Huhe41Kbrvzn2dPQyZD5FpD4W85w3QBqDWuf
+	 EK7zyi7F200hgHjcrBnoV7k20BZtweizwLALWWVy47CKY9koNY15zSpCCkVDsDg40T
+	 uJi+tVtXI6rA8xGe8YMtSN2Oi7LMH/kMSthS5M9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Philip Yang <Philip.Yang@amd.com>,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Sashiko <netdev-bot+sashiko@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0550/1848] drm/amdgpu: reject ANONONLY userptrs that span multiple VMAs
-Date: Wed, 18 Nov 2026 15:43:08 +0100
-Message-ID: <20261118145937.975479033@linuxfoundation.org>
+Subject: [PATCH 5.10 0551/1848] ipv6: initialize temporary ifaddr before publication
+Date: Wed, 18 Nov 2026 15:43:09 +0100
+Message-ID: <20261118145938.010773952@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -66,63 +64,115 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit d577b68a854d0f590f480777249b041507d0708c ]
+[ Upstream commit ed7f278812e540db507f683e5bf9b6d0a1f5bc1e ]
 
-For AMDGPU_GEM_USERPTR_ANONONLY, amdgpu_ttm_tt_get_user_pages() only
-checks the VMA at the start of the range for a backing file, and
-amdgpu_hmm_range_get_pages() then faults in the whole range, across any
-other VMAs. The check used to reject ranges ending beyond the first VMA
-(vma->vm_end < end), which got lost when the code moved to HMM.
+ipv6_create_tempaddr() holds a reference to the public ifaddr, publishes
+the new temporary address through ipv6_add_addr(), and only then stores
+the reference and final timestamps.
 
-An ANONONLY userptr over one page of file-backed memory is rejected
-with -EPERM, but one over an anonymous page followed by the same
-file-backed page is accepted.
+addrconf_ifdown() can remove the temporary address before ifpub is
+stored, leaking the public ifaddr reference. Publishing ifpub alone is
+insufficient: manage_tempaddrs() can then find the object before cstamp
+and tstamp are final, update its lifetimes, and have the constructor
+overwrite its timestamp with an older value.
 
-Restore the check and reject ANONONLY userptrs that cross more than one
-VMA. The second userptr is now rejected too.
+This follow-on was found by source review and was not separately
+triggered at runtime.
 
-v2: reject ranges spanning multiple VMAs instead of walking every VMA
-    (Christian)
-v3: cast num_pages to u64 to avoid an overflow (Christian)
+Pass the public ifaddr and both timestamps in ifa6_config. Initialize all
+three fields before adding the temporary address to either the hash or
+per-device lists. On success the existing public-ifaddr reference
+transfers to the temporary object. On error it remains owned and released
+by ipv6_create_tempaddr().
 
-Fixes: 6826cb3b92a3 ("drm/amdgpu: support userptr cross VMAs case with HMM")
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Philip Yang <Philip.Yang@amd.com>
-Cc: Felix Kuehling <Felix.Kuehling@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Acked-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 75d753ed4704d5efc72164d9e546b2a282e42ae2)
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
+Reported-by: Sashiko <netdev-bot+sashiko@kernel.org>
+Closes: https://lore.kernel.org/r/179122559913.434549.12720841717630168470@kernel.org
+Link: https://lore.kernel.org/r/179161099665.434549.5858601179492551889@kernel.org
+Link: https://lore.kernel.org/r/20261007164548.GA1153540@shredder
+Link: https://lore.kernel.org/r/20261012145240.GA779501@shredder
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261015050651.1841557-4-4ncienth@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/net/addrconf.h |  3 +++
+ net/ipv6/addrconf.c    | 20 +++++++++++++-------
+ 2 files changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-index 228da106477d8..9a185949eed2a 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-@@ -885,7 +885,8 @@ int amdgpu_ttm_tt_get_user_pages(struct amdgpu_bo *bo, struct page **pages)
- 		goto out_unlock;
+diff --git a/include/net/addrconf.h b/include/net/addrconf.h
+index cda93578a41b4..637251ed33e49 100644
+--- a/include/net/addrconf.h
++++ b/include/net/addrconf.h
+@@ -73,6 +73,9 @@ struct ifa6_config {
+ 	unsigned int		plen;
+ 
+ 	const struct in6_addr	*peer_pfx;
++	struct inet6_ifaddr	*ifpub;
++	unsigned long		cstamp;
++	unsigned long		tstamp;
+ 
+ 	u32			rt_priority;
+ 	u32			ifa_flags;
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index ad00a29ca7d43..41c2651dd1d39 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -1135,10 +1135,19 @@ ipv6_add_addr(struct inet6_dev *idev, struct ifa6_config *cfg,
+ 		ifa->flags |= IFA_F_TENTATIVE;
+ 	ifa->valid_lft = cfg->valid_lft;
+ 	ifa->prefered_lft = cfg->preferred_lft;
+-	ifa->cstamp = ifa->tstamp = jiffies;
+ 	ifa->tokenized = false;
+ 
+ 	ifa->rt = f6i;
++	ifa->ifpub = cfg->ifpub;
++	if (cfg->ifpub) {
++		ifa->cstamp = cfg->cstamp;
++		ifa->tstamp = cfg->tstamp;
++	} else {
++		unsigned long now = jiffies;
++
++		ifa->cstamp = now;
++		ifa->tstamp = now;
++	}
+ 
+ 	ifa->idev = idev;
+ 	in6_dev_hold(idev);
+@@ -1424,6 +1433,9 @@ static int ipv6_create_tempaddr(struct inet6_ifaddr *ifp, bool block)
+ 
+ 	cfg.pfx = &addr;
+ 	cfg.scope = ipv6_addr_scope(cfg.pfx);
++	cfg.ifpub = ifp;
++	cfg.cstamp = now;
++	cfg.tstamp = tmp_tstamp;
+ 
+ 	ift = ipv6_add_addr(idev, &cfg, block, NULL);
+ 	if (IS_ERR(ift)) {
+@@ -1434,12 +1446,6 @@ static int ipv6_create_tempaddr(struct inet6_ifaddr *ifp, bool block)
+ 		goto retry;
  	}
- 	if (unlikely((gtt->userflags & AMDGPU_GEM_USERPTR_ANONONLY) &&
--		vma->vm_file)) {
-+		     (vma->vm_file ||
-+		      vma->vm_end < start + (u64)ttm->num_pages * PAGE_SIZE))) {
- 		r = -EPERM;
- 		goto out_unlock;
- 	}
+ 
+-	spin_lock_bh(&ift->lock);
+-	ift->ifpub = ifp;
+-	ift->cstamp = now;
+-	ift->tstamp = tmp_tstamp;
+-	spin_unlock_bh(&ift->lock);
+-
+ 	addrconf_dad_start(ift);
+ 	in6_ifa_put(ift);
+ 	in6_dev_put(idev);
 -- 
 2.53.0
 
