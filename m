@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039097;
-	b=IJGYK0WwlSb/hRXAQmcvDfYsbZSbKoZE4pFl0NtxBv/pxG4OpPZ64bpZOfYX5Kc2fpnF
-	 BcLCByogHsmF9ekE2X7gMjcV3bRdjd3RMB1gw//UgLZAom+7WqcwmTHwhSWi9YrzqWdVG
-	 cqz7HjNPrgjKg4SNKzdy6qWngV6nquYG7Z8Oh2DjTqMXP784f9cURgWXkrv2k2MoyLprp
-	 l6E9kLUAmu4G/Qd557oxkPvgsO5CMpLQgERBPm5UbU2ttEMekDiMkrD+oULCFwd68oq7/
-	 UzKZ0gdyXz5YB2sDxtRbZXX8JO6JLMZeTWNnbfOtTFEMpV12G84eE68wMRduVETQ5Lg==
+	t=1795039100;
+	b=cMVY5DZMOyoeIpb2Kfy4HUXH/yUSdL6CczfSQ/2alU+RGd0H85fGgE9BufbY1TdhoGpX
+	 0NSJ8B110e3s0RLRlnS9162qCQDOx8kNLQF9MjXf5zqJ4Vo7+PV41xl5T+jG68iSfCpRb
+	 YTQ2Z0t6ns83kWr3DYhzPHfp8y9Vyc3iXGgXUgNb3zPWrjP23wOtSKPYyAtBahESJr+Ct
+	 FFjEEp9rPIHOd2ielV4PzXk4F0nyhr1Yg4PBYpKROPY/ugmu3+0cTMRKBKPpuV175duLm
+	 qQFNcH0Ig1BKqcOU0ka2UuF+AzV+6hVCBof4BzUl9wM6+OLeb2z52OAPiO7fiCDyeMQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039097;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039100;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=C5u31JcWa/e4vLl22B1bkRJSioHhFzS+zB0Mux8xfUU=;
-	b=M0ZNdj7F9yTN7e02NBuDAtH0wvkeixGBPw9I7O7LMTM7FtByC52kz6ga7W54F58eR9ub
-	 FbFeZSHJDrIFzGwxWnzJFKGq8OMBk2fQJn3wI4tMGCAPRSpYIABnkONSD/TX86P2jHWjJ
-	 jjPFne5IsjJXoHMA1I2UeDG8b2GkpVRzJ7YkRY+7cfbsfb/Tc2IoARCo33zlkYgLMWM+h
-	 iv/vu+tFaGgh1YI+uB2TkT1aIIv5WBidd1CovKUtvNuTiHyRslTajStpx59Vl/TALqrme
-	 ialI6rByM/8PQm+EmztHY26wnDiKGaLsjs0KQRRP5j6zx/MPL9M2Z1X5+v+hD8d9EuQ==
+	bh=Q9a5NIO3Sg9wgBlX31kdnfOaUFkXGgIwUyBtYEdWqJc=;
+	b=wEc2tLMP84tYm6YH2tZnEcdz0HNswJvv5OkOlou3gEn5GfhohvE82IW76LlYSrkI+p3d
+	 kOFPfqxAhdAt+FnPGQR8MzzPzCN9ZEFNo2gbAiOhyPOABNzZhZj0GbsPM3kZuliXKBHyT
+	 hVfS601HthxHMsCFKAwpRDAKGMYiIh2Ahe0qAwF19s4gj6iVumUZOFx7IfTOVmGvDio8l
+	 nBUyc+bCK2BlJ9oJkxszkgdcYySAd32Cx7cRsJlQXa6vw5Cbv4A8OIIaVqV7yxShzW2Lx
+	 DqBjnh1f9dJOXieu8HaQTIU3u8NMrQ27YagmU8cnw7yiiOhLPE9dgj/MQWDZ9MI0VeA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v9xPYhO5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mSbv65x3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C02A4606A320;
-	Wed, 18 Nov 2026 21:58:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C432606A32C;
+	Wed, 18 Nov 2026 21:58:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v9xPYhO5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE7F91F000C4;
-	Wed, 18 Nov 2026 21:58:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mSbv65x3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B766A1F000C4;
+	Wed, 18 Nov 2026 21:58:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039097;
-	bh=C5u31JcWa/e4vLl22B1bkRJSioHhFzS+zB0Mux8xfUU=;
+	s=korg; t=1795039100;
+	bh=Q9a5NIO3Sg9wgBlX31kdnfOaUFkXGgIwUyBtYEdWqJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v9xPYhO5oXVu0+D2QFq99ZiYqCyUQjNfBzgK+R6spmbCgYkQitgYOeZv++UMiTSNT
-	 Fhlg2KJNds7DNjc7QqQihOIbybHgVVUD9W4MTLsoq94lYmuI82jOhb093MQ+MSbo+s
-	 K7KDowfim6DvtXE4QmN1Le01HaZW+mp/BZ7KzxUU=
+	b=mSbv65x3kjYsT5GGRlZCyHGCNbhhFa77AzuXNfZBv7FHJFLO3Ui8YrcUEkL4GAnns
+	 YnTjQX3jcIK+dar39J4wq/30AyIu8UC+OEmfLhJtCj4zwoHR5qMoY3/nkefaUHDUH4
+	 fstwxfHRxG7eLecddJVm+iUKXz7B7IoLlwSBwXds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Daejun Park <daejun7.park@samsung.com>,
-	Pankaj Raghav <p.raghav@samsung.com>,
-	Carlos Maiolino <cem@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Wei Wang <wvw@google.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1979/3318] xfs: add a flag to convert unwritten extents without allocating blocks
-Date: Wed, 18 Nov 2026 15:43:21 +0100
-Message-ID: <20261118150421.444306957@linuxfoundation.org>
+Subject: [PATCH 6.6 1962/3318] arm64: suspend: Save and restore TPIDR2_EL0 across CPU suspend
+Date: Wed, 18 Nov 2026 15:43:04 +0100
+Message-ID: <20261118150420.947009161@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,109 +70,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daejun Park <daejun7.park@samsung.com>
+From: Wei Wang <wvw@google.com>
 
-[ Upstream commit f3ca3498dfe624f9b604c934263538a3acd55af5 ]
+[ Upstream commit beeec04046227eba42b7cc5ab32498aa43da9632 ]
 
-xfs_bmapi_write() with XFS_BMAPI_CONVERT also allocates blocks for
-holes and delalloc extents in the range. Add XFS_BMAPI_CONVERT_ONLY for
-callers that may only convert already allocated blocks. It stops at a
-hole or delalloc extent, and returns -ENOSR if it stops before mapping
-anything.
+TPIDR2_EL0 is a live EL0 register on systems with SME, but
+cpu_do_suspend()/cpu_do_resume() don't preserve it. Its value is
+UNKNOWN after a warm reset, so the task that initiates suspend can
+return to userspace with a corrupted TPIDR2_EL0.
 
-Marked for stable because "xfs: refuse a pNFS LAYOUTCOMMIT of a range
-without blocks" needs it.
+Save and restore it alongside TPIDR_EL0 and TPIDRRO_EL0. The new slot
+fits in existing padding, so sizeof(struct cpu_suspend_ctx) is
+unchanged.
 
-Suggested-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20261013120359.GB2944@lst.de
+Fixes: a9d691585950 ("arm64/sme: Implement support for TPIDR2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Daejun Park <daejun7.park@samsung.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Pankaj Raghav <p.raghav@samsung.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ sashal: adapted flag insertion to follow XFS_BMAPI_NORMAP because XFS_BMAPI_EXTSZALIGN is absent ]
+Acked-by: Will Deacon <will@kernel.org>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Wei Wang <wvw@google.com>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/libxfs/xfs_bmap.c | 14 ++++++++++++--
- fs/xfs/libxfs/xfs_bmap.h | 10 +++++++++-
- 2 files changed, 21 insertions(+), 3 deletions(-)
+ arch/arm64/include/asm/suspend.h | 2 +-
+ arch/arm64/mm/proc.S             | 8 ++++++++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/fs/xfs/libxfs/xfs_bmap.c b/fs/xfs/libxfs/xfs_bmap.c
-index c111f691ea51a..974dd4cd38e50 100644
---- a/fs/xfs/libxfs/xfs_bmap.c
-+++ b/fs/xfs/libxfs/xfs_bmap.c
-@@ -4296,6 +4296,8 @@ xfs_bmapi_finish(
-  * Returns a negative error code on failure, including -ENOSPC when it could not
-  * allocate any blocks and -ENOSR when it did allocate blocks to convert a
-  * delalloc range, but those blocks were before the passed in range.
-+ * With XFS_BMAPI_CONVERT_ONLY, it stops at a hole or a delalloc extent instead
-+ * of allocating blocks, and returns -ENOSR if it stops before mapping anything.
-  */
- int
- xfs_bmapi_write(
-@@ -4355,6 +4357,8 @@ xfs_bmapi_write(
- 	 */
- 	ASSERT((flags & (XFS_BMAPI_PREALLOC | XFS_BMAPI_ZERO)) !=
- 			(XFS_BMAPI_PREALLOC | XFS_BMAPI_ZERO));
-+	ASSERT(!(flags & XFS_BMAPI_CONVERT_ONLY) ||
-+	       (flags & XFS_BMAPI_CONVERT));
+diff --git a/arch/arm64/include/asm/suspend.h b/arch/arm64/include/asm/suspend.h
+index eb60c97355530..2cc5fb405769c 100644
+--- a/arch/arm64/include/asm/suspend.h
++++ b/arch/arm64/include/asm/suspend.h
+@@ -2,7 +2,7 @@
+ #ifndef __ASM_SUSPEND_H
+ #define __ASM_SUSPEND_H
  
- 	if (XFS_IS_CORRUPT(mp, !xfs_ifork_has_extents(ifp)) ||
- 	    XFS_TEST_ERROR(false, mp, XFS_ERRTAG_BMAPIFORMAT)) {
-@@ -4402,6 +4406,9 @@ xfs_bmapi_write(
- 		 * that we found, if any.
- 		 */
- 		if (need_alloc || wasdelay) {
-+			if (flags & XFS_BMAPI_CONVERT_ONLY)
-+				break;
-+
- 			bma.eof = eof;
- 			bma.conv = !!(flags & XFS_BMAPI_CONVERT);
- 			bma.wasdel = wasdelay;
-@@ -4489,10 +4496,13 @@ xfs_bmapi_write(
- 	 *
- 	 * To avoid a successful return with *nmap set to 0, return the magic
- 	 * -ENOSR error code for this particular case so that the caller can
--	 * handle it.
-+	 * handle it. The same goes for XFS_BMAPI_CONVERT_ONLY stopping at a
-+	 * hole or a delalloc extent at the start of the range, in which case
-+	 * nothing has been changed.
- 	 */
- 	if (!n) {
--		ASSERT(bma.nallocs >= *nmap);
-+		ASSERT((flags & XFS_BMAPI_CONVERT_ONLY) ? bma.nallocs == 0 :
-+							  bma.nallocs >= *nmap);
- 		return -ENOSR;
- 	}
- 	*nmap = n;
-diff --git a/fs/xfs/libxfs/xfs_bmap.h b/fs/xfs/libxfs/xfs_bmap.h
-index e33470e39728d..8bcb1a9b5fed3 100644
---- a/fs/xfs/libxfs/xfs_bmap.h
-+++ b/fs/xfs/libxfs/xfs_bmap.h
-@@ -87,6 +87,13 @@ struct xfs_bmalloca {
- /* Do not update the rmap btree.  Used for reconstructing bmbt from rmapbt. */
- #define XFS_BMAPI_NORMAP	(1u << 10)
+-#define NR_CTX_REGS 14
++#define NR_CTX_REGS 15
+ #define NR_CALLEE_SAVED_REGS 12
  
-+/*
-+ * Use with XFS_BMAPI_CONVERT to convert unwritten extents without allocating
-+ * blocks. Stop at a hole or a delalloc extent: return the mappings found so
-+ * far, or -ENOSR if there are none.
-+ */
-+#define XFS_BMAPI_CONVERT_ONLY	(1u << 12)
-+
- #define XFS_BMAPI_FLAGS \
- 	{ XFS_BMAPI_ENTIRE,	"ENTIRE" }, \
- 	{ XFS_BMAPI_METADATA,	"METADATA" }, \
-@@ -98,7 +105,8 @@ struct xfs_bmalloca {
- 	{ XFS_BMAPI_REMAP,	"REMAP" }, \
- 	{ XFS_BMAPI_COWFORK,	"COWFORK" }, \
- 	{ XFS_BMAPI_NODISCARD,	"NODISCARD" }, \
--	{ XFS_BMAPI_NORMAP,	"NORMAP" }
-+	{ XFS_BMAPI_NORMAP,	"NORMAP" }, \
-+	{ XFS_BMAPI_CONVERT_ONLY,	"CONVERT_ONLY" }
+ /*
+diff --git a/arch/arm64/mm/proc.S b/arch/arm64/mm/proc.S
+index 51c48ac29ad5d..574136a35ea21 100644
+--- a/arch/arm64/mm/proc.S
++++ b/arch/arm64/mm/proc.S
+@@ -105,6 +105,10 @@ SYM_FUNC_START(cpu_do_suspend)
+ alternative_if ARM64_HAS_TCR2
+ 	mrs	x2, REG_TCR2_EL1
+ 	str	x2, [x0, #104]
++alternative_else_nop_endif
++alternative_if ARM64_SME
++	mrs_s	x2, SYS_TPIDR2_EL0
++	str	x2, [x0, #112]
+ alternative_else_nop_endif
+ 	ret
+ SYM_FUNC_END(cpu_do_suspend)
+@@ -152,6 +156,10 @@ alternative_if ARM64_HAS_TCR2
+ 	ldr	x2, [x0, #104]
+ 	msr	REG_TCR2_EL1, x2
+ alternative_else_nop_endif
++alternative_if ARM64_SME
++	ldr	x2, [x0, #112]
++	msr_s	SYS_TPIDR2_EL0, x2
++alternative_else_nop_endif
  
- 
- static inline int xfs_bmapi_aflag(int w)
+ 	msr	sctlr_el1, x12
+ 	set_this_cpu_offset x13
 -- 
 2.53.0
 
