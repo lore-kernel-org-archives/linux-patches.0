@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015791;
-	b=ZV8i+4zCtCLzhY7lG+r2N6EDkpixn6HXbJFaV0rBxJS0RYBIz9dnD1sCHArIBEtTt9C9
-	 MejtMy2wq7p/j4jhVpsdYqNR+V+MVxOmMadyjtIqV+RvRjicQJR0U5J0e9XSDEFQpHBJr
-	 lRK4ySullFfFb/l0YDuP9Fs3u2yDKaw5lxVoujMae3hlHo+UWH8m3IzfsaSyA1N4nehur
-	 B1T96v2yQJ4Os7l0gWhWXyWG9+HmUN9POuZ+rrV0jAWdqOVV8dTgg+3DiAhSiuOJfaKiO
-	 5S2y1NmqU1u8l5ZiRKKS9ynSJPRvbkXZN0kEJxaT+TLqEupURpU3ZNEj1IwC8BJh8MA==
+	t=1795015794;
+	b=SrOkMBgK5nz8559x9FCdKBqYRTOd2g6meDGQu/T62Fqz0qtbPZXMdderzdSeDJg7KUQT
+	 Y79M99e8JpZKvBD5qOeDUOnQ8TWLGkeLtxlKgQ1GNQxM9MLPD58jaqElLI3xkOkcBA40z
+	 KB3elyZqbcnWgPIEHOmXD6Xl6/fr179MKCKOotNP5jebOol/T7Jd97b3kRmrk5jTl1FHp
+	 BTpXV9qyMSle2YTrUy9smxmJ+CSyVcYb+1Hddkds61eO+hqrKP044rbD8wR5hKd4r8fH+
+	 d5Xt3bunIh83+SN/WVv5mLyNBOYvNIB3Qh5bsHHmE5XYwIBej11NFyfI9x/QX585PRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015791;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015794;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6OexcJXt9MHW2cXG4PlksyZSycfMFAwPA8Nn/PokaaM=;
-	b=SoES5ApQ7BItO3yHnSrTqUCx5f/qt1Daq46v7pd6FAO4pQzII+X3ploipDVC99+0W2Do
-	 2mztv7ItrRHASyjqopnO71D3ysDfQLcsVYSIlS61IkBq9ihSWFRvrZgPPdvQ+05MxpKZp
-	 Tz8PXsnQwCoer0agogAQARpb+S7v3GkJ53Qm4GMEhQlamg+kYiGJnlm+F12tj9tc9Qmyp
-	 QeoZCxIK3cnIBhWjrw0BZnUaAWBQqOubuOmR9YMk8wtNNqAqWTJk73hgtmGpaNXTsru1B
-	 LtarN71XYplHsIv3MZm8fkUUuKP+S2ob0BlL8sqs8GaKucqcjIFVZ+AVeRJ6CMMxQSw==
+	bh=reCAWairWX8eGrlaKOKPf1GDD5bWjmfEPfp78LWa78I=;
+	b=Zn2ikMI2pWQqpOSGaECWtnMfV4fevuUubFJzyNheuywIJUSSfQDahNuTo2zHvr+3xUQC
+	 z+qaFT7MZE0EvjUjbS1Q4/J7qi1pIWGRdjNNdVBRSUcIui3fECXJePkNiL3hTZJHrslLJ
+	 bh9/Yih8nd798ZWTa/ZrOmNY9rdT8Hl6BUWGmWKnLwZLf+2mcdTHYs+wpQhp08Ykv0U2E
+	 PGZXM0utBHMb6t/mMdXRw4LU1/TJSqatsCjOtjC51FJBfvRRJhzWPiOxw/dV+AMUAosqE
+	 kqYDIsXz5ksNnepVugHzVyG3nMD1YVsUJlxv8ZO3/1ry0tK4UR0DNl4hEjfy9wcoZAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZEfJUUNY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UV7Y+kvI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF25F606A32A;
-	Wed, 18 Nov 2026 15:29:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92F73606A320;
+	Wed, 18 Nov 2026 15:29:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZEfJUUNY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 345671F000C5;
-	Wed, 18 Nov 2026 15:29:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UV7Y+kvI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E90751F000C5;
+	Wed, 18 Nov 2026 15:29:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015791;
-	bh=6OexcJXt9MHW2cXG4PlksyZSycfMFAwPA8Nn/PokaaM=;
+	s=korg; t=1795015794;
+	bh=reCAWairWX8eGrlaKOKPf1GDD5bWjmfEPfp78LWa78I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZEfJUUNYUSQ7eJd1REuCyM95awv6R5WGGv3CTBqWtgfHsEpJh6Z2oE2CY5rMuAvg6
-	 MQuO7p33Yuoo7DbgoK94/7jOFNTUkaZQJC46MUACDVPoVv7yavS28Bc4a9lttFHm1u
-	 aM+BIcdYtumZHHRNZb1e2arr4jrNJoky6yeLN0wo=
+	b=UV7Y+kvIYk7AX/9Qiuq9TjroadkC7vybYWkLQhf7g0MIL5cFFNTNKYxz6VNFZXpNQ
+	 L66N9nJpb4bVHC6BXvC7mXPapWAF5dxBRMiUKhFhOl28hB53QY3rb3b5D5q9qDxWLZ
+	 XnS5+f1WIGELm4BbErpuEbZs5HvhoPM6yzK0P99g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Mark Amirkan <markdamirkan@gmail.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Li Youhong <liyouhong@kylinos.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0247/2651] perf evsel: Validate RAW sample before byte swapping
-Date: Wed, 18 Nov 2026 15:24:47 +0100
-Message-ID: <20261118150256.746852648@linuxfoundation.org>
+Subject: [PATCH 7.3 0293/2651] spi: amlogic-spisg: check clk_prepare_enable() return value
+Date: Wed, 18 Nov 2026 15:25:33 +0100
+Message-ID: <20261118150258.453266729@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,153 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Amirkan <markdamirkan@gmail.com>
+From: Li Youhong <liyouhong@kylinos.cn>
 
-[ Upstream commit 02f6847e1822714a4201b87e42f92b0d43e8549d ]
+[ Upstream commit c595dcbce20f55c98cd9b0003c26db3787e0ddee ]
 
-For an opposite-endian RAW sample, __evsel__parse_sample() passes the
-input-controlled size to mem_bswap_64() before checking whether the
-payload fits in the event. A truncated record can therefore make the helper
-read and write past the event boundary.
+The driver ignored clk_prepare_enable() failures for sclk during
+probe and for core/sclk during runtime resume. Propagate the errors
+and, on resume, disable core if enabling sclk fails, so probe/resume
+do not continue with clocks disabled or report success falsely.
 
-A crafted perf.data file makes perf report crash with SIGSEGV. ASan
-reports the out-of-bounds access. A regression test puts backed data past
-the declared end and shows that it is changed before the parser returns
--EFAULT.
-
-Move the bounds checks before mem_bswap_64(). Check the rounded length too,
-because the helper accesses complete 64-bit words. Complete records are
-handled as before.
-
-Fixes: f9d8adb345d7adbb ("perf evsel: Fix swap for samples with raw data")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Assisted-by: Symbolic
-Signed-off-by: Mark Amirkan <markdamirkan@gmail.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: cef9991e04ae ("spi: Add Amlogic SPISG driver")
+Signed-off-by: Li Youhong <liyouhong@kylinos.cn>
+Link: https://patch.msgid.link/20260831094553.2247003-1-dayou5941@163.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/sample-parsing.c | 61 +++++++++++++++++++++++++++++++
- tools/perf/util/evsel.c           | 17 +++++----
- 2 files changed, 70 insertions(+), 8 deletions(-)
+ drivers/spi/spi-amlogic-spisg.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/tools/perf/tests/sample-parsing.c b/tools/perf/tests/sample-parsing.c
-index 5839515349373..bd30f6d4c31b2 100644
---- a/tools/perf/tests/sample-parsing.c
-+++ b/tools/perf/tests/sample-parsing.c
-@@ -461,6 +461,55 @@ static int test_truncated_branch_stack(void)
+diff --git a/drivers/spi/spi-amlogic-spisg.c b/drivers/spi/spi-amlogic-spisg.c
+index 6bca2379e4ee3..6243b47b6e68a 100644
+--- a/drivers/spi/spi-amlogic-spisg.c
++++ b/drivers/spi/spi-amlogic-spisg.c
+@@ -714,7 +714,9 @@ static int aml_spisg_clk_init(struct spisg_device *spisg, void __iomem *base)
+ 		return PTR_ERR(spisg->sclk);
+ 	}
+ 
+-	clk_prepare_enable(spisg->sclk);
++	ret = clk_prepare_enable(spisg->sclk);
++	if (ret)
++		return ret;
+ 
  	return 0;
  }
- 
-+static int test_truncated_swapped_raw(u16 event_size, u32 raw_size)
-+{
-+	struct perf_event_attr attr = {
-+		.sample_type = PERF_SAMPLE_RAW,
-+	};
-+	struct {
-+		struct perf_event_header header;
-+		union {
-+			u64 value;
-+			u32 words[2];
-+		} raw;
-+		u64 canary;
-+	} input = {
-+		.header = {
-+			.type = PERF_RECORD_SAMPLE,
-+			.size = event_size,
-+		},
-+		/* Parsing a pre-swapped word exchanges these two u32 values. */
-+		.raw.words = { 0x12345678, raw_size },
-+		.canary = 0x8877665544332211ULL,
-+	};
-+	struct perf_sample sample;
-+	struct evsel *evsel;
-+	u64 raw = input.raw.value;
-+	u64 canary = input.canary;
-+	int err;
+@@ -851,9 +853,18 @@ static int spisg_suspend_runtime(struct device *dev)
+ static int spisg_resume_runtime(struct device *dev)
+ {
+ 	struct spisg_device *spisg = dev_get_drvdata(dev);
++	int ret;
 +
-+	evsel = evsel__new(&attr);
-+	if (!evsel)
-+		return -1;
++	ret = clk_prepare_enable(spisg->core);
++	if (ret)
++		return ret;
 +
-+	evsel->sample_size = __evsel__sample_size(attr.sample_type);
-+	err = __evsel__parse_sample(evsel, (union perf_event *)&input,
-+				    &sample, /*needs_swap=*/true);
-+	perf_sample__exit(&sample);
-+	evsel__put(evsel);
-+
-+	if (err != -EFAULT) {
-+		pr_debug("truncated swapped RAW sample (size %u, raw %u) returned %d, expected -EFAULT\n",
-+			 event_size, raw_size, err);
-+		return -1;
++	ret = clk_prepare_enable(spisg->sclk);
++	if (ret) {
++		clk_disable_unprepare(spisg->core);
++		return ret;
 +	}
-+	if (input.raw.value != raw || input.canary != canary) {
-+		pr_debug("truncated swapped RAW sample modified data before validation\n");
-+		return -1;
-+	}
-+	return 0;
-+}
-+
- /**
-  * test__sample_parsing - test sample parsing.
-  *
-@@ -481,6 +530,18 @@ static int test__sample_parsing(struct test_suite *test __maybe_unused, int subt
- 	if (err)
- 		return err;
  
-+	/* The declared RAW payload extends past an otherwise aligned event. */
-+	err = test_truncated_swapped_raw(sizeof(struct perf_event_header) +
-+					 sizeof(u64), 16);
-+	if (err)
-+		return err;
-+
-+	/* The final complete word touched by mem_bswap_64() extends past it. */
-+	err = test_truncated_swapped_raw(sizeof(struct perf_event_header) +
-+					 sizeof(u32) + 9, 9);
-+	if (err)
-+		return err;
-+
- 	/*
- 	 * Fail the test if it has not been updated when new sample format bits
- 	 * were added.  Please actually update the test rather than just change
-diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
-index 947835ff7426b..94fcf532cee42 100644
---- a/tools/perf/util/evsel.c
-+++ b/tools/perf/util/evsel.c
-@@ -3596,7 +3596,10 @@ int __evsel__parse_sample(struct evsel *evsel, union perf_event *event,
- 	}
+-	clk_prepare_enable(spisg->core);
+-	clk_prepare_enable(spisg->sclk);
+ 	pinctrl_pm_select_default_state(&spisg->pdev->dev);
  
- 	if (type & PERF_SAMPLE_RAW) {
-+		const __u64 *raw;
-+
- 		OVERFLOW_CHECK_u64(array);
-+		raw = array;
- 		u.val64 = *array;
- 
- 		/*
-@@ -3612,16 +3615,14 @@ int __evsel__parse_sample(struct evsel *evsel, union perf_event *event,
- 		}
- 		data->raw_size = u.val32[0];
- 
--		/*
--		 * The raw data is aligned on 64bits including the
--		 * u32 size, so it's safe to use mem_bswap_64.
--		 */
--		if (swapped)
--			mem_bswap_64((void *) array, data->raw_size);
--
- 		array = (void *)array + sizeof(u32);
--
- 		OVERFLOW_CHECK(array, data->raw_size, max_size);
-+		if (swapped) {
-+			/* mem_bswap_64() accesses complete 64-bit words. */
-+			sz = roundup((u64)data->raw_size, sizeof(u64));
-+			OVERFLOW_CHECK(raw, sz, max_size);
-+			mem_bswap_64((void *)raw, data->raw_size);
-+		}
- 		data->raw_data = (void *)array;
- 		array = (void *)array + data->raw_size;
- 	}
+ 	return 0;
 -- 
 2.53.0
 
