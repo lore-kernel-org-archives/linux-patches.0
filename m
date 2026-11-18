@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032653;
-	b=TNoge/AeaYmqT9qDyg5LnrOjtmF0hbcAS1l5PnNXa3xlBH1d+8dm5KotAQaFqxVImBPh
-	 89vJf60fgwEkaVRG/bQMGTMaTyShiSSAzjwTYfBI79QFTlS+iaNZTiMIz6KbVJPFrNniI
-	 wFmAekil9GEQ2ln0VwpbdbFwYqh3vS14WihT2H4/IAkley5N/53z0jEyf8QdXcF9Sz+Mo
-	 g4QBuStFnteVOwLP0bvHZGHW+HbHYIfPcWs+HUaoyxDVyarNndegiUC5Yxpi5Mm0BfgSl
-	 PlAMRabpUeMbGk/CAgogs87xbh6rwjl+71d5rJW8py/xvJAKFbY3KaCvW3EbAKsCsew==
+	t=1795032656;
+	b=ic2OB8k4jD1Pc7DE9o06jy3uDX476wYRNvifLx5w0IQC+7dTMV6DdDYFGaaWx+P2W1g8
+	 UU9RF60Taz6SR8vyzRmlxiw39rDRa32dBOv9s+a1pTSKr0TAjxJ3z6wgrKbSh7TwD8J5e
+	 FL9PueWlYUVip3LCMPOgwMRVutZjIozmM4TM3LPgwen2E7TahPQSN9vMLLBWIaZ8Rz3nI
+	 WWj9C0hLnx6TD59s46u4EBh6LgBJssqXzOU1zYZtHL8+I8loxI48WGdJ+hBn03OKC70Q9
+	 g+YeRcGJBYSI+G2fMhyZ6CyV3+phv/eug8vEr9ztTB7DC8Q4gEs9tupl6J8pz2we1RQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032653;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032656;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=lY+PUum8d712+I19c+zV2udFQzPd0UyperQq/XraJ6k=;
-	b=1Bm4Bv+5fXK3RSjq1q4uolTIIlSDR+capk/vxqQwojWahMSpPril4JhSBUbD34vnNc+u
-	 9QSEJ7S26xVOngMBQurgzFQgl+tFlSajZqGXUd+gPFQNa6QbzECzfyUfp2Jv/OWJsiuSC
-	 FAxd3BRGkPWu1kUXjIA2/uTAW5ja069WaanSZW/K/cdgrc3mUwCZhN2Y0AtHdSCyYAM0Q
-	 EeKJG2VTXkcE/aOxBp6lweNbi45d50e37fTIJf9K8tMQuXGgl6yX8EqCBkqnRMvFuUuWp
-	 vQFjnAwit3mTozvDBXZgO3cqtzWuyq7vke1YuimhUX4MZiGeJSXBDQcPVv7P0McQXwA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Pr7ryA9P8ILcC+4x9KsrSNME0XiKxT3n9Aa2YNzLGxk=;
+	b=mEC/6k6o6zuD8XV1o3CcjardcC0zQkocJpw3azaJ57wrPF3XJygsF5jX9ZI3RbLltckS
+	 Bk+mKJDaI/vMXIIClbuHg6mJoKs49PUYj6XjBPHYFUfjxG/i1gV53j3wARHzf3uod/GSa
+	 aqn0rn8a/1yqg5xhVrQG4N7wX6J9R4H6abt3fhywu3sAoBIb0VH76elOLsgJe2GnajlHd
+	 h8YWSqY9etJdip0ouGGQXg0EYzj2KA/bwmoweosHatKVAmPCRa1Ou0z8Oxy6BmNSCP0Si
+	 FY2ZJaBek8f2MHN+Q1ZjQWObbZNqP1N2CccxJgWXh4mPOqxE3jWWGr0W03wustmycuw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jK46J32c;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I8yB9SZ8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE9E606A331;
-	Wed, 18 Nov 2026 20:10:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9937A606A325;
+	Wed, 18 Nov 2026 20:10:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jK46J32c
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC4A1F000C4;
-	Wed, 18 Nov 2026 20:10:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I8yB9SZ8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F021E1F000C4;
+	Wed, 18 Nov 2026 20:10:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032653;
-	bh=lY+PUum8d712+I19c+zV2udFQzPd0UyperQq/XraJ6k=;
+	s=korg; t=1795032656;
+	bh=Pr7ryA9P8ILcC+4x9KsrSNME0XiKxT3n9Aa2YNzLGxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jK46J32cUQeLn6daOxEJ27B5xufNh36TIbg1pcrMGvU+DANYoaaNxLY85lfhzsbGW
-	 ekwxOgW14pgwGes7N7tZRe6tE7nDZ14LTB45lbDKlIB1rD/GKs2ZU6tXy3vBMl/C9X
-	 NILwljcTnXi9grlQ/UI8hNcZDI8KWHCyMYdZOHrY=
+	b=I8yB9SZ8YXfRJuEnGW0MAW7L5AQ7cafiu+aXvlegLTdC4HT30utrUkKBfxGb50WlW
+	 Ts52WdCRMsesfAcNfEWFab89MyD7+9x9fYu45V/KT+Xq+K98zsuvgp8M/kS4TjLmDB
+	 tUC254gUCEk0ZpQo8bSDSCnkgoRwvORJcuHBXej8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Naman Jain <namjain@linux.microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1488/1756] Drivers: hv: vmbus: Check ACPI companion before use
-Date: Wed, 18 Nov 2026 16:00:15 +0100
-Message-ID: <20261118150108.187175666@linuxfoundation.org>
+Subject: [PATCH 6.12 1489/1756] platform/x86: ibm_rtl: Fix potential OOB read at signature search
+Date: Wed, 18 Nov 2026 16:00:16 +0100
+Message-ID: <20261118150108.234858851@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -63,53 +62,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit dd57772e36f72f8d9a53d7fa4d90c974d8ebbcff ]
+[ Upstream commit f1d81af2521ad504a20481fef12c358d26e6c3a6 ]
 
-Platform drivers can be forced to bind to devices outside their match
-tables through driver_override. vmbus_acpi_add() assumes that every bound
-device has an ACPI companion and dereferences it without checking.
+The loop for signature search fetches 22 bytes of struct ibm_rtl_table
+at each check, while the loop count is calculated in 4 bytes unit,
+which means that, at the last entry, it fetches over the limit.
 
-Return -ENODEV when the companion is absent to avoid a NULL pointer
-dereference.
+Rewrite the loop to use the byte offset and correct the boundary
+condition check for avoiding the potential OOB access.
 
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Fixes: 9c8434238041 ("Drivers: hv: vmbus: Convert acpi_device to more generic platform_device")
-Reviewed-by: Naman Jain <namjain@linux.microsoft.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Fixes: 15dd100349b8 ("platform/x86: ibm_rtl: fix EBDA signature search pointer arithmetic")
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20261021064012.457870-1-tiwai@suse.de
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/vmbus_drv.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/platform/x86/ibm_rtl.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
-index 153633bda1426..047831297a0ce 100644
---- a/drivers/hv/vmbus_drv.c
-+++ b/drivers/hv/vmbus_drv.c
-@@ -2459,10 +2459,14 @@ EXPORT_SYMBOL_GPL(vmbus_free_mmio);
- #ifdef CONFIG_ACPI
- static int vmbus_acpi_add(struct platform_device *pdev)
- {
-+	struct acpi_device *ancestor;
-+	struct acpi_device *device;
- 	acpi_status result;
- 	int ret_val = -ENODEV;
--	struct acpi_device *ancestor;
--	struct acpi_device *device = ACPI_COMPANION(&pdev->dev);
-+
-+	device = ACPI_COMPANION(&pdev->dev);
-+	if (!device)
-+		return -ENODEV;
+diff --git a/drivers/platform/x86/ibm_rtl.c b/drivers/platform/x86/ibm_rtl.c
+index 139956168cf94..82fda8d9178be 100644
+--- a/drivers/platform/x86/ibm_rtl.c
++++ b/drivers/platform/x86/ibm_rtl.c
+@@ -234,9 +234,9 @@ static const struct dmi_system_id ibm_rtl_dmi_table[] __initconst = {
+ };
  
- 	hv_dev = &device->dev;
+ static int __init ibm_rtl_init(void) {
+-	unsigned long ebda_addr, ebda_size;
++	unsigned long ebda_addr, ebda_size, offset;
+ 	unsigned int ebda_kb;
+-	int ret = -ENODEV, i;
++	int ret = -ENODEV;
  
+ 	if (force)
+ 		pr_warn("module loaded by force\n");
+@@ -271,9 +271,9 @@ static int __init ibm_rtl_init(void) {
+ 		return -ENOMEM;
+ 
+ 	/* search for the _RTL_ signature at the start of the table */
+-	for (i = 0 ; i < ebda_size/sizeof(unsigned int); i++) {
++	for (offset = 0; offset + sizeof(*rtl_table) <= ebda_size; offset += 4) {
+ 		struct ibm_rtl_table __iomem * tmp;
+-		tmp = (struct ibm_rtl_table __iomem *) (ebda_map + i*sizeof(unsigned int));
++		tmp = (struct ibm_rtl_table __iomem *) (ebda_map + offset);
+ 		if ((readq(&tmp->signature) & RTL_MASK) == RTL_SIGNATURE) {
+ 			phys_addr_t addr;
+ 			unsigned int plen;
 -- 
 2.53.0
 
