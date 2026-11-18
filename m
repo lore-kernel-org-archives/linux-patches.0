@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019235;
-	b=k5r0wgbNfb8XQlltG/pvg6YwTfhk0K3t1DLuNZ5WuJphlcYDHjZRrhCfoyQONPruVOo8
-	 fLaFGQOnN9lVPAIAvRINFLRTvNhx8ZFHlj/i2jbLR3s79pjvItnXA9rxM+wL/BnnpsHjG
-	 mcT/IeMbjaNctHFtnF7fcfPsbjgFnm++dG5A7VcwdYAmi0eIkq8FFxrrBdcMUoHHZwGyM
-	 HjRZjwrJWJ6wdWT6vF97wKI2AGD0/+ql7IMhqxBKdOLfkcVJJA4WSbieRWuPQsF4XU0f0
-	 uE/CsyaOTxd0Gw52qS7sSFvlD+3OpUsKEwLrFtegRvFIwEdJziOpXvDTAxGy9TP1Qfg==
+	t=1795019238;
+	b=qlN5JRa9Au29Y3Ycnt62bFWSbROEOQZ3rBAKpri+Rk5qQzqd1oA/fBvK8SvnrJt3HqHP
+	 Efjshrgzm1LuAoFx9J6n7xr3vuW5w2UNg9NizpRl4oJTWxhCKDhap9BiIbT3UMTEGMO/V
+	 mTf0YSRy+du5a9jnfxXwp0YMotw/7WPZasHLeJ/7c1bkHi4BkVSHVq7b9N5Cf7IxHh8QH
+	 auGS6wljaZlG3/CkvWODxTymEEtUS9x4KRvyJuJRHCTfjuZpfx8xo3U9pmEroId2QOIPN
+	 hV+n3QCzAXLQ2j4F6oln43Xy0GS849hOFGAds3vsH5GS5jjEk8J4kr3H3xW2BZbJzWw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019235;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019238;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=D5OSksPvON/xj3JtsvyR8/z2L/vEz70olFr8a4c5/Ok=;
-	b=HhxTQ1pLF290SThkDmIBCdn853JIQj3dsxe248PJ51VR5w+csEnfOpN5P0fMlZcxfAlQ
-	 Os22pTMHXsTd1y2hiQ6UgLn/Pg4KB7p4cB4fbwu+8NlEsfgl/DHJUoh3/zf2FU7Mj86ad
-	 2rEntOBEd5fCBTFQS+fy55/+7B9SlcqNkrx0gRsUjzUJxUqKvciZY55QGX+vfkWfkk2mT
-	 h1ovNPirqigAtHr3y7pfCNid6uO6Vas+GYY6PAPCtjkFgCNf1gj3Ff2n438XK+Auon4WA
-	 ZrpgKR4DHT1KSgVdxNdXXUnYenqQ2Meh+HVCQNKrTZa++XeamNSgXLoyPBujNq4K3ZA==
+	bh=bVP//ZLWMhnmJKUXUjKhQdsvrtu96Yu4OP3OzDJMKh4=;
+	b=ezru+6kM3SpidgHKl3oOcrRGWgZh92xC5UFP48BFBLZw677QGaXDTUaQVjm2LUOnzGz3
+	 mAomerEtP47o/w9UhSrh3KUN8RsJhTCB5x1PYQ3ZRErhvOu7LnISE/gc+DK8ggDO60o6m
+	 u/g+QPjht7M8FdrzId7B8yPQ5+wDtUli2Se3WXnzrJuTZUVeHi49+10QvA0e7Tl+M3isO
+	 95G80JfSK/MTRF6Tfj/a6pTSdIoYDeZvECAAwykF4uFMPBnV7qOKYP7YZPgGv02nZnk9/
+	 DC/01LymFxo4UqTh5EXZgepOijkxSSj3vpIfobo9qIZfz91QPWzDqaY4FXfB0rm0suQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2VF50NOZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GN+KmPe1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CCEF60A2600;
-	Wed, 18 Nov 2026 16:27:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2034F606A332;
+	Wed, 18 Nov 2026 16:27:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2VF50NOZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E1841F000C4;
-	Wed, 18 Nov 2026 16:27:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GN+KmPe1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7133D1F000C4;
+	Wed, 18 Nov 2026 16:27:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019235;
-	bh=D5OSksPvON/xj3JtsvyR8/z2L/vEz70olFr8a4c5/Ok=;
+	s=korg; t=1795019238;
+	bh=bVP//ZLWMhnmJKUXUjKhQdsvrtu96Yu4OP3OzDJMKh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2VF50NOZj7k9B3P3rzXOueMKnn39j2nEAKnxaKVDDNg2Vb+ZNOl0eMmufHb4wMf4n
-	 RHUUiFwCCVNIdZUXVzjhyfljkZiT/ROzPNvCgac21StATOQCcgTE6XoLgU5YiidIo5
-	 cpOiqkvgE0LnCCanmTFgodIXbfqdxDfbsKA4A2ZQ=
+	b=GN+KmPe1rWEK/e2Xq5jjZvfep5xIGvvvW6fV/LWLJ0cZpnYA6mryxDljFhII7kXeE
+	 alaLMxKQBUT4hs4NWZZGifCqECiX1+TGxvp/Wv3+nXJoYLxXi7D+6jAfzIIt8vLGFt
+	 X8pZbY7eoftU8RsCHyvFys4tFOXtCKJUDXsI2niY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-bot@kernel.org>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1522/2651] ALSA: core: Add missing barriers for power_ref vs card->shutdown
-Date: Wed, 18 Nov 2026 15:46:02 +0100
-Message-ID: <20261118150342.788566401@linuxfoundation.org>
+Subject: [PATCH 7.3 1523/2651] ALSA: seq: Fix missing direction and ump_group handling in 32bit compat ioctl
+Date: Wed, 18 Nov 2026 15:46:03 +0100
+Message-ID: <20261118150342.824302317@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,52 +70,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit a6913835735469751f56473f5212eb291a4805e7 ]
+[ Upstream commit 9d3e19c192b97b4c4c0abcafdbf1edb1e56cee88 ]
 
-snd_power_ref_and_wait() increments card->power_ref and then reads
-card->shutdown (and the power state) locklessly, while
-snd_card_disconnect() sets card->shutdown and then waits for
-power_ref to drop to zero via snd_power_sync_ref().  Due to the
-missing barrier on both sides, the caller proceeds with shutdown still
-seen as false, while the disconnect side sees a zero refcount and
-continues tearing down incorrectly.
+I forgot to cover the two new fields, direction and ump_group, in
+struct snd_seq_port_info for the 32bit compat ioctls of
+SNDRV_SEQ_IOCTL_GET_PORT_INFO & co, which ended up with the garbage
+copies in those fields.  Add the handling of those two fields in the
+compat layer.
 
-For addressing the potential race, add smp_mb__after_atomic() after
-the refcount increment and smp_mb() before snd_power_sync_ref() in
-snd_card_disconnect().
+Also, avoid over-copying the 64bit snd_seq_port_info but only the first
+part (before the field kernel); this avoids the copy of kernel-space
+garbage value in the reserved field.
 
-Fixes: e94fdbd7b25d ("ALSA: control: Track in-flight control read/write/tlv accesses")
+Fixes: ff166a9d19fa ("ALSA: seq: Add port direction to snd_seq_port_info")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Assisted-by: LLM
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261007172051.13240-9-tiwai@suse.de
+Link: https://patch.msgid.link/20261007172533.14667-2-tiwai@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/init.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/core/seq/seq_compat.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/sound/core/init.c b/sound/core/init.c
-index a51b71812fd9b..3b549eb553f1c 100644
---- a/sound/core/init.c
-+++ b/sound/core/init.c
-@@ -557,6 +557,8 @@ void snd_card_disconnect(struct snd_card *card)
- 		clear_bit(card->number, snd_cards_lock);
- 	}
+diff --git a/sound/core/seq/seq_compat.c b/sound/core/seq/seq_compat.c
+index 80110501da6ff..57aaa39afb9dc 100644
+--- a/sound/core/seq/seq_compat.c
++++ b/sound/core/seq/seq_compat.c
+@@ -25,7 +25,9 @@ struct snd_seq_port_info32 {
+ 	u32 kernel;			/* reserved for kernel use (must be NULL) */
+ 	u32 flags;		/* misc. conditioning */
+ 	unsigned char time_queue;	/* queue # for timestamping */
+-	char reserved[59];		/* for future use */
++	unsigned char direction;	/* port usage direction (r/w/bidir) */
++	unsigned char ump_group;	/* 0 = UMP EP (no conversion), 1-16 = UMP group number */
++	char reserved[57];		/* for future use */
+ };
  
-+	/* order card->shutdown store against power_ref read */
-+	smp_mb();
- 	snd_power_sync_ref(card);
- }
- EXPORT_SYMBOL(snd_card_disconnect);
-@@ -1174,6 +1176,8 @@ EXPORT_SYMBOL(snd_card_file_remove);
- int snd_power_ref_and_wait(struct snd_card *card)
- {
- 	snd_power_ref(card);
-+	/* order power_ref increment against card->shutdown read */
-+	smp_mb__after_atomic();
- 	if (snd_power_get_state(card) != SNDRV_CTL_POWER_D0) {
- 		wait_event_cmd(card->power_sleep,
- 			       card->shutdown ||
+ static int snd_seq_call_port_info_ioctl(struct snd_seq_client *client, unsigned int cmd,
+@@ -40,7 +42,9 @@ static int snd_seq_call_port_info_ioctl(struct snd_seq_client *client, unsigned
+ 
+ 	if (copy_from_user(data, data32, sizeof(*data32)) ||
+ 	    get_user(data->flags, &data32->flags) ||
+-	    get_user(data->time_queue, &data32->time_queue))
++	    get_user(data->time_queue, &data32->time_queue) ||
++	    get_user(data->direction, &data32->direction) ||
++	    get_user(data->ump_group, &data32->ump_group))
+ 		return -EFAULT;
+ 	data->kernel = NULL;
+ 
+@@ -50,9 +54,12 @@ static int snd_seq_call_port_info_ioctl(struct snd_seq_client *client, unsigned
+ 	if (err < 0)
+ 		return err;
+ 
+-	if (copy_to_user(data32, data, sizeof(*data32)) ||
++	if (copy_to_user(data32, data,
++			 offsetof(struct snd_seq_port_info32, kernel)) ||
+ 	    put_user(data->flags, &data32->flags) ||
+-	    put_user(data->time_queue, &data32->time_queue))
++	    put_user(data->time_queue, &data32->time_queue) ||
++	    put_user(data->direction, &data32->direction) ||
++	    put_user(data->ump_group, &data32->ump_group))
+ 		return -EFAULT;
+ 
+ 	return err;
 -- 
 2.53.0
 
