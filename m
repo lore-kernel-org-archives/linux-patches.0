@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029824;
-	b=rbH4B9dR0H5cLWvz8usZdpmIExzSzUsE+mLHs/KF6lO9/hibZGgcLeYEtC+Z9sti7G5+
-	 sWf6Mo+Gv8VAXfxyptnYmfbOPbK65ed+9Fx5KijynsndQRh+3oKqBSaAHBoWEoZd4WxNx
-	 qD/+HaTv9SMWxhGIR6YkmP2bXwFHZHqQ0/rNND4br7jKvgXrQb40pqeyfV6xwH4o3WX6l
-	 TSG46ocGmU7uitI4qkg4hpCA4UOM9ogSVEnecgcFXc1frX5aaVhqV35nvlH8ZU0Sn8doU
-	 VHz3AdTtiNs3ouL5sbIunjPtpuAEfD0YbZ9lwpzwSGppH/EaNVq7qOKbvyKhAts4z0Q==
+	t=1795029827;
+	b=nxbm/tJidcASk92fA7frEbjW0JjFd/j21MM5EZ9u9HIgL5TnsD1Tx6Iyd0zqe+byvi37
+	 3Ob7rf/gK5iCRTo0kEshUGhu5B9JvdQnwBTNe3QjXHX2bn4P7FofTEitJh3IJwtlBsxs7
+	 y4OhBjkevGxxNDRHJbC6uimElhpvkSzecrQK9DfP97rINmOhi0mA83DaI9Kw4Wbk4ED/8
+	 vU/Fo1wHtVrv+E4wwfrydVbUsek8EtjGdzC2jOtc59IrypqbYr93fJNFpmhBl6uq2xW7g
+	 sIhPkAZA4d9IDaxUeR070QiIWnGchqpuZZH3Qx+JajyLnnzHfsi//PIFLUNjfW7O6qg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029824;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029827;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zfAInx1ntc+T+YftIAZgRWwdieFyKRfhHARuwhsOjTQ=;
-	b=nfFlrRjpya/PGlErkdk+ztBd/J3HVcGxempbyHu0yrmDqLLjIKjsGPnig4HKKZAhEbKu
-	 0ml85hzouTtoTn+M7Lr1bUrJG84Tak3NKRphfks5w0sPLAwkdqCwCS9k3wO6l8dMEOdzb
-	 ECSwzvGzNtgraTw2gToSRQTIoeA+Giy22tfpoE59N2HVkVIcEkiB+vDJ897jFMRY5NzQt
-	 DAJd7lDxWNqN/Q2Dgk4DN1UlE0N10TDPLIJo/ngWvUZXCzKPyfD8+2DHTLKv3RY070Jrx
-	 F0QPcIAq+YPTchg9mqyZZ+a87j5UY8+asuAyXlnodeQ8jqtQRtzCxhRy0ZYVZKgcBRA==
+	bh=ASsd+2EaknTBaJJY5vgUxOxXq/YkPqT0TXOaovT6q8Y=;
+	b=12T/TR2ocK7tjguBtfiiEKe3m7pCU2FGkZjwo7uxzf5YZ2cCUAVrtLLcZ6hGAJplsVek
+	 WH+nLLq9sXTur9LsMndTTIH3lWGoey5P77ZC5DOczbQaAo5IyQq+NwnK2bfU3RSvWS9Er
+	 BiprSnwVIAVh6JFjjKJtFtJoQSkFbAk/oro/2qrgpcYuDIL0H6iv9hLOMlQkh8zC7vdA1
+	 3KY4vUYE3SfmwkX2uYRAlAWxcIgD6HKu5nvhCwzuWIMPfqBRdMuMqtYvpJ2Ha5KbX3Fqm
+	 GTIjnYY7Plh22pVKRqvQvUMbzFOK2rxtk2f+z6+AcTB4O7/F7DLMJjDAjp6xYXco0kA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lf+G3qRq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w9tlIR7y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94AFB606A320;
-	Wed, 18 Nov 2026 19:23:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A0EB606A31C;
+	Wed, 18 Nov 2026 19:23:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lf+G3qRq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34491F000C4;
-	Wed, 18 Nov 2026 19:23:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w9tlIR7y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D48651F000C4;
+	Wed, 18 Nov 2026 19:23:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029824;
-	bh=zfAInx1ntc+T+YftIAZgRWwdieFyKRfhHARuwhsOjTQ=;
+	s=korg; t=1795029827;
+	bh=ASsd+2EaknTBaJJY5vgUxOxXq/YkPqT0TXOaovT6q8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lf+G3qRqalcAd/YSHAeERHPy9OyBB8mdnbYHu/9CKgNRiqfvCDF7NrPdtlXfWkE2L
-	 CGnDTaHYhEzMxjtnx0hMTpDtIAfEil6pai/OIz15IDJz6e+ShPfsXPEmACcPanNVRJ
-	 Wcc6Ilweq25TpKsuX/gor0uFbXzlqMxkG2VTi8QE=
+	b=w9tlIR7yPHrh3Fua8hA30OD65n9APXE0MM93kGNB0HXS08XbGYGXHEf9CNvjfAOmF
+	 zCWUsCnK+9BvpRJLFrrwBk4Y8khDeX3E5++xXNnILVjL7lpxV0JeyekGSUJ4gRvIHY
+	 1zNVVCWCjJ78hd82udJgVij0E3ydN5Q0UIUuUOv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Kees Cook <kees@kernel.org>,
+	syzbot+2ef75c54d0b2ac5d00ba@syzkaller.appspotmail.com,
+	Yogesh Gaur <yogeshgaur.83@gmail.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0487/1756] KMSAN: fix memset() when using fortify-source, again
-Date: Wed, 18 Nov 2026 15:43:34 +0100
-Message-ID: <20261118150028.412554105@linuxfoundation.org>
+Subject: [PATCH 6.12 0488/1756] md/raid5: give the io_unit slab caches per-array names
+Date: Wed, 18 Nov 2026 15:43:35 +0100
+Message-ID: <20261118150028.470824262@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,48 +69,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Yogesh Gaur <yogeshgaur.83@gmail.com>
 
-[ Upstream commit 3555409e524a0279845f91273ba714998658c163 ]
+[ Upstream commit 96858e2308431ff5678e0e6fab1a06e19f3d95da ]
 
-Both kmsan and fortify-source replace the memset function. When both
-are enabled at the same time, the kmsan version gets used, which triggers
-a warning about fortify-source being nonfunctional:
+Both raid5 log backends create their io_unit slab cache per array but
+name it after the struct:
 
-warning: unsafe memset() usage lacked '__write_overflow' symbol in /home/arnd/arm-soc/lib/test_fortify/write_overflow-memset.c
-warning: unsafe memset() usage lacked '__write_overflow_field' symbol in /home/arnd/arm-soc/lib/test_fortify/write_overflow_field-memset.c
+	ppl_conf->io_kc = KMEM_CACHE(ppl_io_unit, 0);
+	log->io_kc      = KMEM_CACHE(r5l_io_unit, 0);
 
-Commit 78a498c3a227 already tried to address this, but this seems
-to only have worked for memcpy() and memmove() but not memset(),
-which is still lacking the macro definition when KMSAN is enabled.
+KMEM_CACHE() passes the stringified type as the cache name, so every
+array that enables PPL or attaches a journal asks for a cache called
+"ppl_io_unit" or "r5l_io_unit".  With two such arrays live at the same
+time the second one trips kmem_cache_sanity_check():
 
-Remove the incorrect #ifndef check around the memset() macro.
+  kmem_cache of name 'ppl_io_unit' already exists
+  WARNING: mm/slab_common.c:112 at __kmem_cache_create_args+0xae/0x460
+   ppl_init_log+0x285/0x1310 drivers/md/raid5-ppl.c:1363
+   log_init drivers/md/raid5-log.h:138 [inline]
+   raid5_change_consistency_policy+0x255/0x740 drivers/md/raid5.c:9141
+   consistency_policy_store+0x7f/0x230 drivers/md/md.c:5883
+   md_attr_store+0x3b7/0x640 drivers/md/md.c:6158
 
-Fixes: ff901d80fff6 ("x86: kmsan: use __msan_ string functions where possible.")
-Fixes: 78a498c3a227 ("x86: fortify: kmsan: fix KMSAN fortify builds")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20260618142951.1739694-1-arnd@kernel.org
-Signed-off-by: Kees Cook <kees@kernel.org>
+which is reachable by any user that can write "ppl" to
+md/consistency_policy on two arrays, and equally by assembling two
+journalled arrays.  The cache is created and destroyed correctly on
+every path, so this is a name collision only - duplicate names confuse
+slabtop and /proc/slabinfo, which is what the check is there to catch.
+
+Build the name from the array instead, the way grow_stripes() already
+does for the stripe_head cache in this driver, and fall back to the
+mddev pointer for dm-raid where mdname() is the constant "mdX".  The
+buffer is sized like conf->cache_name[] because mdname() can return up
+to DISK_NAME_LEN bytes.
+
+The explicit size/align arguments keep what KMEM_CACHE() expanded to,
+so object layout does not change.
+
+Fixes: 3418d036c81d ("raid5-ppl: Partial Parity Log write logging implementation")
+Fixes: f6bed0ef0a80 ("raid5: add basic stripe log")
+Reported-by: syzbot+2ef75c54d0b2ac5d00ba@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=2ef75c54d0b2ac5d00ba
+Assisted-by: LLM
+Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
+Link: https://patch.msgid.link/20260920091533.413-1-yogeshgaur.83@gmail.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/fortify-string.h | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/md/raid5-cache.c | 12 +++++++++++-
+ drivers/md/raid5-ppl.c   | 12 +++++++++++-
+ 2 files changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/fortify-string.h b/include/linux/fortify-string.h
-index 71f9dcf561282..bed58ec5363ff 100644
---- a/include/linux/fortify-string.h
-+++ b/include/linux/fortify-string.h
-@@ -508,10 +508,8 @@ __FORTIFY_INLINE bool fortify_memset_chk(__kernel_size_t size,
-  * __struct_size() vs __member_size() must be captured here to avoid
-  * evaluating argument side-effects further into the macro layers.
-  */
--#ifndef CONFIG_KMSAN
- #define memset(p, c, s) __fortify_memset_chk(p, c, s,			\
- 		__struct_size(p), __member_size(p))
--#endif
+diff --git a/drivers/md/raid5-cache.c b/drivers/md/raid5-cache.c
+index 4ec111fea1da3..1f06dd27290e7 100644
+--- a/drivers/md/raid5-cache.c
++++ b/drivers/md/raid5-cache.c
+@@ -3085,6 +3085,7 @@ int r5l_init_log(struct r5conf *conf, struct md_rdev *rdev)
+ {
+ 	struct r5l_log *log;
+ 	struct md_thread *thread;
++	char cache_name[48];
+ 	int ret;
  
- /*
-  * To make sure the compiler can enforce protection against buffer overflows,
+ 	pr_debug("md/raid:%s: using device %pg as journal\n",
+@@ -3124,7 +3125,16 @@ int r5l_init_log(struct r5conf *conf, struct md_rdev *rdev)
+ 	INIT_LIST_HEAD(&log->flushing_ios);
+ 	INIT_LIST_HEAD(&log->finished_ios);
+ 
+-	log->io_kc = KMEM_CACHE(r5l_io_unit, 0);
++	if (mddev_is_dm(conf->mddev))
++		snprintf(cache_name, sizeof(cache_name), "r5l_io_unit-%p",
++			 conf->mddev);
++	else
++		snprintf(cache_name, sizeof(cache_name), "r5l_io_unit-%s",
++			 mdname(conf->mddev));
++
++	log->io_kc = kmem_cache_create(cache_name, sizeof(struct r5l_io_unit),
++				       __alignof__(struct r5l_io_unit),
++				       0, NULL);
+ 	if (!log->io_kc)
+ 		goto io_kc;
+ 
+diff --git a/drivers/md/raid5-ppl.c b/drivers/md/raid5-ppl.c
+index 0c630cfbf3a01..84cb30e14a3a7 100644
+--- a/drivers/md/raid5-ppl.c
++++ b/drivers/md/raid5-ppl.c
+@@ -1318,6 +1318,7 @@ int ppl_init_log(struct r5conf *conf)
+ {
+ 	struct ppl_conf *ppl_conf;
+ 	struct mddev *mddev = conf->mddev;
++	char cache_name[48];
+ 	int ret = 0;
+ 	int max_disks;
+ 	int i;
+@@ -1360,7 +1361,16 @@ int ppl_init_log(struct r5conf *conf)
+ 
+ 	ppl_conf->mddev = mddev;
+ 
+-	ppl_conf->io_kc = KMEM_CACHE(ppl_io_unit, 0);
++	if (mddev_is_dm(mddev))
++		snprintf(cache_name, sizeof(cache_name), "ppl_io_unit-%p", mddev);
++	else
++		snprintf(cache_name, sizeof(cache_name), "ppl_io_unit-%s",
++			 mdname(mddev));
++
++	ppl_conf->io_kc = kmem_cache_create(cache_name,
++					    sizeof(struct ppl_io_unit),
++					    __alignof__(struct ppl_io_unit),
++					    0, NULL);
+ 	if (!ppl_conf->io_kc) {
+ 		ret = -ENOMEM;
+ 		goto err;
 -- 
 2.53.0
 
