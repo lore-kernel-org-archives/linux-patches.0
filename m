@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057173;
-	b=WXuTiUPpCB0/JnEuKsnG+Us15pFpmJJLGE4RIAF9gKwM2O3GtLwPjYgK/gwVnpiu/GcM
-	 DISpYZvoCLICogN696RRjZVUVqSHL/chrIkFctlwpXRhQ66+Syo9AlbvTRYU96DQyW6Gc
-	 DbxOugiNiEYSj1y/sv55qiapJhfVfm6Ec2Qz+6S90p62XOl4oHQAzkYKjSKd1BoiMdmlo
-	 Z+dQLB/BkhG9/BMG0h8SMaHjdV/ALyqaCUSuTrvgXXZ6OQGuuAtwZHnOq/0/I4hRAciUH
-	 IZktlQUb2hw7GOSR0XaY8HqNSxCzhLn4xE0QzL7pztRIM1A1XA9ZvLBzzyzNOIn+iWw==
+	t=1795057176;
+	b=I/tr/RhNNP8+wVFhzIgTAfTmvOBzdFQjmt9j/hZNU/73Ilv7HDWGIw/9U/3Hqf1sabIT
+	 7USuQ+xx8K9Iu+lU2ltjDTKKRXYwILnVg2xsvXPFmjKVmbJU1K7bI+b3hroMwr4H/H0ef
+	 wNZaF55PKAA8/7poK/4isxxseT99Kcxi61K4WdB8lDj85HZ7b/lBSg74eJq1J+vmjGS0b
+	 RjGh/h+N6Hl+4j8OJoJ7iifgI9ejm7tFc9yRiI9ifZWJN3jOq69kV8ydsO2scp48LZ0bj
+	 AU6qFXbNhEGIBSfuR+64PIYmjaRnj5VSXt3umPIZBL3iqnM02txkInlJ/SVRYcdH7YQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057173;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057176;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YfiYv0Xv166F3b8QAGLXFM2Xg1uFOTTSvqywLQWaXEo=;
-	b=IS/GtGkwkATfTlwZa5XUx/G5cgYMyJRIIzG7HC2nMaKHLOL5TqrK9XOQ8jFdh0pdpGbJ
-	 1JqPkqjl0S+upyFEU5cwEW/QJYEBwtBMFZbdy1bHrTUBNEebZqcyFByQfym+U6SsNgGnW
-	 r/4mejD//CTy1ouExT1D2h2bzBA/4AI5U6Cz2bc/MYdBCe0mX23oZw21xaZ02745bvJa9
-	 n+2gztrQddQ5KF8L5PYr/JCUR1rti43eBusFbcQfy24DP53Mg++dAzv18lgMgXdmqBLRS
-	 jPkiHrKbYvWQRRk4nniX7SEJwZVzwN+uAhZnfgxIsHT9lmkVATOPcOR+2aW1J5W6pWw==
+	bh=+PcQeZT9suhufvhlwulkcvV4hsx8XdMhFBGQ5j2MyIA=;
+	b=uQ4iqeTV+0HPlIrnU0qOB9PK0sZg5iNGD7Ukcmj2VBOR3p11jMb+CbUQR2zH9737JnzC
+	 bWtYTv9yRuvApyTVv2XQd40CPka/R9FK15POtia+SBe1xzAw9XPVAwcbyFjK8aANdC3hN
+	 CMcNS8YXGKSeANldLxN55F8i6vDZQCeqakf0kvdOs2IfLdQuaRo7IX2oAn6kjPKKjee6R
+	 PxTMdsz2Rkcc86VOIqbz/jDWYF32YrB/7vFrJBLqhmGIzDRiL/CLqzsl+XWMtBxBUoBt2
+	 1as22e3iU9i9L/sLtfmld0RQ2yzJ1Jk54u3wu+QRjy4fpnDqbE0BAei2efsncVo+vew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HAuh56mP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zyyaLSYs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE248606A31C;
-	Thu, 19 Nov 2026 02:59:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ACE4606A320;
+	Thu, 19 Nov 2026 02:59:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HAuh56mP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F56A1F000C5;
-	Thu, 19 Nov 2026 02:59:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zyyaLSYs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE5F1F000C5;
+	Thu, 19 Nov 2026 02:59:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057173;
-	bh=YfiYv0Xv166F3b8QAGLXFM2Xg1uFOTTSvqywLQWaXEo=;
+	s=korg; t=1795057176;
+	bh=+PcQeZT9suhufvhlwulkcvV4hsx8XdMhFBGQ5j2MyIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HAuh56mPaAoY6mAl6BqM5aXHjJuqWy1MFuAKrJmU7mmHdeq0JFsHRWYCzRvXkJES8
-	 q6nwfLE3E40834aEoho93f6ZSPSKcBV5LlLdI4JQ9aQkZq7YI1f3hdfwabtFR0dfKr
-	 gmoVD0PQe3WnBay1w3rFVQ+bPR7JF7BILsO1cBHs=
+	b=zyyaLSYsfT7hHrwjmqZF9RR0DtyxiExtXSi9TLpN6ZpnGI5Ymw7HMe7J/QCE+a211
+	 g8Rx9MkJCzRyI+2mtmyQmh62unbN/Niz2fYl5GrcvqPlSAqbsnm+dBn5MW6NPfQuvu
+	 EALHEzeNPWTolBeo4U3vwZIPzUsOzvjkwJyk4zvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zizhi Wo <wozizhi@huawei.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Abhijeeth Babu <babu.jeeth@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0036/1848] fat: reject name longer than NAME_MAX in msdos_format_name()
-Date: Wed, 18 Nov 2026 15:34:34 +0100
-Message-ID: <20261118145912.647090190@linuxfoundation.org>
+Subject: [PATCH 5.10 0037/1848] i2c: acpi: Force ELAN1300 touchpads to 100 kHz
+Date: Wed, 18 Nov 2026 15:34:35 +0100
+Message-ID: <20261118145912.680211121@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,56 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zizhi Wo <wozizhi@huawei.com>
+From: Abhijeeth Babu <babu.jeeth@gmail.com>
 
-[ Upstream commit 9d7ed813ee5ff0d469bd99630828ed6fdef4e8da ]
+[ Upstream commit 9e9762e578db7556bea644bb5a8a2435f63544d1 ]
 
-msdos_format_name() performs no upper-bound check on the input name length.
-It silently truncates an arbitrarily long name into the 8.3 form (11 bytes)
-and returns success. The subsequent fat_scan() then matches only against
-these 11 truncated bytes, so it returns an inode as long as any entry with
-the same 8.3 name exists on disk.
+The ELAN1300 touchpad with HID ID 04F3:3104 on the ASUS VivoBook
+X513UA_KM513UA exhibits severe pointer jumps and erratic movement when
+the I2C bus operates at 400 kHz.
 
-For example, passing a 300-byte name of all 'A's returns 0 with res set to
-"AAAAAAAA" (8 'A's + 3 padding spaces), reporting success for a name far
-longer than NAME_MAX.
+The system DSDT describes the touchpad using an I2cSerialBusV2 resource
+with a speed of 0x00061A80, corresponding to 400 kHz, on the
+AMDI0010:03 controller.
 
-As a result, when a user calls open() on a path component longer than
-NAME_MAX (255) bytes, the VFS only enforces PATH_MAX, not the length of an
-individual component. The dentry keeps the original long name but gets an
-inode attached and becomes positive. Later in vfs_open() -> fsnotify_open()
--> fanotify_info_copy_name() triggers WARN_ON_ONCE(), and the event is
-reported to userspace with an empty name.
+At this speed, libinput repeatedly reports:
 
-vfat is not affected, as create goes through xlate_to_uni() which refuses
-names longer than FAT_LFN_LEN.
+kernel bug: Touch jump detected and discarded
 
-Fix this by checking 'len > NAME_MAX' at the entry of msdos_format_name(),
-the single entry point for all msdos name handling, aligning with the
-NAME_MAX check that xfs/9p/ceph/simple_lookup() perform at lookup.
+Add ELAN1300 to i2c_acpi_force_100khz_device_ids so that it operates at
+100 kHz.
 
-Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
-Link: https://patch.msgid.link/20260629130943.3671939-1-wozizhi@huaweicloud.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Before the change, nine touch-jump events were recorded, with additional
+messages suppressed by libinput's rate limiter. With the bus forced to
+100 kHz, no touch-jump events have been observed and the touchpad operates
+normally.
+
+The affected system uses BIOS X513UA.319 dated 2023-05-09.
+
+Signed-off-by: Abhijeeth Babu <babu.jeeth@gmail.com>
+Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20260617192611.125513-1-babu.jeeth@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fat/namei_msdos.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/i2c/i2c-core-acpi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/fat/namei_msdos.c b/fs/fat/namei_msdos.c
-index 63a323be9179d..966386b01da15 100644
---- a/fs/fat/namei_msdos.c
-+++ b/fs/fat/namei_msdos.c
-@@ -29,6 +29,9 @@ static int msdos_format_name(const unsigned char *name, int len,
- 	unsigned char c;
- 	int space;
+diff --git a/drivers/i2c/i2c-core-acpi.c b/drivers/i2c/i2c-core-acpi.c
+index 197b89f0b3e09..2f180862dbec9 100644
+--- a/drivers/i2c/i2c-core-acpi.c
++++ b/drivers/i2c/i2c-core-acpi.c
+@@ -316,6 +316,7 @@ static const struct acpi_device_id i2c_acpi_force_100khz_device_ids[] = {
+ 	 */
+ 	{ "DLL0945", 0 },
+ 	{ "ELAN06FA", 0 },
++	{ "ELAN1300", 0 },
+ 	{}
+ };
  
-+	if (len > NAME_MAX)
-+		return -ENAMETOOLONG;
-+
- 	if (name[0] == '.') {	/* dotfile because . and .. already done */
- 		if (opts->dotsOK) {
- 			/* Get rid of dot - test for it elsewhere */
 -- 
 2.53.0
 
