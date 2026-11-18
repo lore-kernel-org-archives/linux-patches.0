@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035410;
-	b=J3R8O024Ogj5K1FTj8JjBOUnodNqvP2D/filNtSgdjMq4FpKhVLKXsv7SIg9oGu261w9
-	 sqSyTrgMW9qVg/W7lzeCDOXD4DgfkRBoI5Z4c9nEyvK7w6nqeF/DSh2ByW/TSX4XJ0bkj
-	 ID4DRHO2IXDIa0WMras+9JKjKCqCtkGBSMsnFCLLMTNoCb7KrmbQL/GolcULKhleUtt5c
-	 6+RgIZKl+960ut40WieZQhskTX6xxjSVNbq+1zmwGj1V8FDeJ/TUlGd0dc/VJMcCi4Gdb
-	 WHARTQ9J/2iRj0lRoG18pWC5Bez8YUc/gImdOIyHQf3MdkUmFgNPhAnwBaeqMo/eBdg==
+	t=1795035412;
+	b=BZGwVyxN7hnRUQvMAaaMHXeBO7gV9TLrVfpWTXPVwatuIOc1z5+XRDhRxVeSywECWIr3
+	 cLTIh9fLLglMvp4AbPiMqI8eHEVF+8UufSsSFcrc1yixs8RdRE+klKUUdGnFM/2EgxRUx
+	 +1te5YyYrht/yrKonn4inUJSLibSLpyIh7K8seJGxsusalilUSAwDx+xilBlma+5EhYk8
+	 ErsKPiIJcqhViVkyqg8AZKmmadbSpbWze40G1R7THNCO/EhHTAnd2swSLWaKhelAPzcHx
+	 VJPLjAZ5UegsKVO9R7XXQ6jjbxxAb7x70VWyvCXsgPMAK6Txg3VNvqKZ9HjeI6YBeSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035410;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035412;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=itMzT1U8WfpR4IBANscACbRu4bQEWUyHa6xGJ9hXJVo=;
-	b=U9iCCp+iR+BwvsNYWxsCMLVg/VscEyR9S/qwtiG6yLpI6a9Usia3FZuB0tHX/yJGdRcZ
-	 aZs+pgwItLMOV+qh76V+7ELyOANZ4eoz+D0wpALMu1Nrn6DefetEVEC7BGrSOXzMPNa6D
-	 QOjV9hBWPw0G+FBJz84C79Ry0Jpy5xCGPkxF55mn8oFmeOWGHEn5fiYYYljArRdetjrYZ
-	 tVFwNf792zOwecuQ0gbHC+SfGObkdQBxqMMrUyM4acekloBJ/wFvOoIm199vS8cGlxBaj
-	 QKtaMOc4uRmSpZ5qP49Abi8fQZK/HPrzBIan6VSLOQAoV7DSHy7OTWS7XpQKcFvUK1w==
+	bh=QDMsceB+T9OyhaqB3ZXUb74hci6axTyb/TihULMjiro=;
+	b=Pm1pFDfHNRau0rPRzGIVuJ3hFsPkW27Gf8AU7RlfFnnANIJ9P+wvUPRIYbBJeLp7KGs1
+	 csUqQq6ZO4gNG9/CMmzAD7tV2gYnvp0of6LOPKGI0WjPV1Ka20QpeQHbjFQAHO1y0YYmg
+	 hdZ3sWvFRj7DUIYfaxB9kcJHi5jdH0GiTk0yctOZgoqofYjBryfiSMbP63DzNjHNVnTM7
+	 5nOGxYyxZ6vP2RKwpcCy49lSH/irR8csth3abT0llfxwsvvrLA4jaVxEspZ1lPUdv64us
+	 Nxmmo8XvZss7YzL5mpsgbOb/piiwNn5QGnN5KXcPwHphzHt/LxR7Krh8UPY72KO3SmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eRFtHDEn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DxzV4hsx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B570606A31C;
-	Wed, 18 Nov 2026 20:56:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80AE606A330;
+	Wed, 18 Nov 2026 20:56:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eRFtHDEn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EBDB1F000C4;
-	Wed, 18 Nov 2026 20:56:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DxzV4hsx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C0B51F000C4;
+	Wed, 18 Nov 2026 20:56:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035410;
-	bh=itMzT1U8WfpR4IBANscACbRu4bQEWUyHa6xGJ9hXJVo=;
+	s=korg; t=1795035412;
+	bh=QDMsceB+T9OyhaqB3ZXUb74hci6axTyb/TihULMjiro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eRFtHDEn15YzCEaf9toeowz+BB3Y6Fqq2XiWdHpGzDDqJ0DoPhH1BSLO9mvxOHasu
-	 dKB00n53+6RClvlTv/WcXQgNqgduaIeqpKWMN0XKmUztuqowpSgvP17R4RPvFtJSbR
-	 mOYZEVcrcab6AHI8Mwesqicke8NXDt2yZD1+9mT4=
+	b=DxzV4hsxlLDcps0nOkIKfgIvPuVZgMirUwjW9taMGSi87iRg5TzG9chwNda5oF0LF
+	 kSN7mQUSH1Z/U0m55YV3uwN724mhykUP0Cr8HnNvI+wpX+YRu77zN0htcjESEqd4w7
+	 MJVNg9swxl+Fe/6vQAE1fOKYZrMX9DkHvvZiBMOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+24c7c12d69e63c6d@bugs.sh,
-	Weiming Shi <bestswngs@gmail.com>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.6 0647/3318] smb: client: stop processing a read response after a receive error
-Date: Wed, 18 Nov 2026 15:21:09 +0100
-Message-ID: <20261118150337.402899563@linuxfoundation.org>
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Cen Zhang (Microsoft Security FORGE Labs)" <blbllhy@gmail.com>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.6 0692/3318] nfsd: hold cl_lock in client_has_openowners()
+Date: Wed, 18 Nov 2026 15:21:54 +0100
+Message-ID: <20261118150339.033500662@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,54 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Cen Zhang (Microsoft Security FORGE Labs) <blbllhy@gmail.com>
 
-commit 51efca72345acdbedc4af76782d464bd15ba50ff upstream.
+commit 5336899b5491eaa2ac22c2925d87daab2b140eb3 upstream.
 
-cifs_read_iter_from_socket() may call cifs_reconnect() before returning an
-error.  The reconnect path aborts pending mids and invokes their callbacks.
-The callback can then release the cifs_io_subrequest containing rdata.
+client_has_openowners() walks clp->cl_openowners and reads so_stateids
+without clp->cl_lock. nfs4_put_stateowner() unhashes that openowner under
+cl_lock and then frees it, so a concurrent EXCHANGE_ID with mismatched
+creds can use-after-free the nfs4_openowner.
 
-cifs_readv_receive() nevertheless continues after a negative return and may
-dereference rdata in cifs_readv_discard().  KASAN reports the resulting
-UAF:
+BUG: KASAN: slab-use-after-free in client_has_state+0x10a/0x140
+  fs/nfsd/nfs4state.c:3718 client_has_openowners()
+  nfsd4_exchange_id
+  nfsd4_proc_compound
+  nfsd_dispatch
+  svc_process
 
-  BUG: KASAN: slab-use-after-free in cifs_readv_receive
-  Read of size 4 by task cifsd
-  cifs_readv_receive (fs/smb/client/transport.c:1284)
-  cifs_demultiplex_thread (fs/smb/client/connect.c:1355)
-  kthread (kernel/kthread.c:436)
-  ret_from_fork (arch/x86/kernel/process.c:158)
+Take clp->cl_lock while client_has_openowners() walks the openowner
+list.
 
-  Freed by task 148:
-  netfs_put_subrequest (fs/netfs/objects.c:267)
-  netfs_read_collection (fs/netfs/read_collect.c:460)
-  netfs_wait_for_in_progress (fs/netfs/misc.c:462)
-
-Return the socket error immediately, as this path did before the iterator
-conversion.  This also avoids adding a negative length to total_read.
-
+Fixes: 4eaea1342507 ("nfsd: improve client_has_state to check for unused openowners")
 Cc: stable@vger.kernel.org
-Fixes: d08089f649a0 ("cifs: Change the I/O paths to use an iterator rather than a page list")
-Reported-by: co+24c7c12d69e63c6d@bugs.sh
-Assisted-by: LLM
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Reported-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+Cc: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Cen Zhang (Microsoft Security FORGE Labs) <blbllhy@gmail.com>
+Link: https://patch.msgid.link/20260828041925.36758-1-blbllhy@gmail.com
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/transport.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/nfsd/nfs4state.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/fs/smb/client/transport.c
-+++ b/fs/smb/client/transport.c
-@@ -1862,6 +1862,8 @@ cifs_readv_receive(struct TCP_Server_Inf
- #endif
- 		length = cifs_read_iter_from_socket(server, &rdata->iter,
- 						    data_len);
-+	if (length < 0)
-+		return length;
- 	if (length > 0)
- 		rdata->got_bytes += length;
- 	server->total_read += length;
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -3349,12 +3349,18 @@ nfsd4_set_ex_flags(struct nfs4_client *n
+ static bool client_has_openowners(struct nfs4_client *clp)
+ {
+ 	struct nfs4_openowner *oo;
++	bool found = false;
+ 
++	spin_lock(&clp->cl_lock);
+ 	list_for_each_entry(oo, &clp->cl_openowners, oo_perclient) {
+-		if (!list_empty(&oo->oo_owner.so_stateids))
+-			return true;
++		if (!list_empty(&oo->oo_owner.so_stateids)) {
++			found = true;
++			break;
++		}
+ 	}
+-	return false;
++	spin_unlock(&clp->cl_lock);
++
++	return found;
+ }
+ 
+ static bool client_has_state(struct nfs4_client *clp)
 
 
