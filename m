@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033622;
-	b=T2C2i2cdc73RBMZAwELOg4bdS1L3osmIigObOEN6aw5q6voRwj8t48Dnmaa7AZvysHII
-	 Eqj/M7AAOtLrUTfaHNRDInHBo0lqWZNbuQlxT+8J5HcqYZvs46x2kMwEjJo1WsVbL/BKo
-	 vJN4feqV3LuLkl/rA/X+Zb1hSSlaOnNSG9fbFqYTZk3ySGHe3OdzWRYPnKE2UawzlIPAb
-	 cQzfleWYsQTP2j1zt3oqnUl/YhbYGxHDoY7c2eMbXWikqF3cXBgdQRzg/nHvlIDZVYVpX
-	 6M6m4kKtd2VQz1AvU7cA64UDuPt0c3Zl9pfGwWbfoS3/atzNtj81lv7mD8JilO733yQ==
+	t=1795033624;
+	b=EOugmblvMQP0luZg1sHb1umH3oPbeNSd0HDiQ6IkQZvVIOjGtLAl6GZKtf7v8Mvsu9W3
+	 L/px6VpPjqI9f7fTbb1bs97MxsvTsimY5CMz5oyilXIIfbxoI9lSIKJPjGYNZNdYrmRWQ
+	 onzqr35YNu+xtnn4qFtYivwNgqr2XSsGMoZLOfKc2CK6oF6fBm9T7zsaLyA+zR2Wbvnqk
+	 4Dg+G3iTV77RBLjPk6FIlbtxsUR2yLrNyfBRQl0CV626hjuHfVgFPhOHITC8lKKAP+tKR
+	 Ukts69q76qaYriYkDD6Y2eVSkGZZsmt7u2E2CP1u00C5jTvRiHIzE1s3XrpHxz0c++A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033622;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033624;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VAi89GIoBViwqLaIrc6ajIn6/Sdy4s/96pd563X10ts=;
-	b=wOrkWseW3p9xmV37QBMv0kfl+OQOE1K0F0i3gBhy3QE/B2zEeoSHSu3c80Srp9Qo7Fjh
-	 yXRLZbN6v/FFbpJFospV5BaLrssUcqpK64SM+dQmoJGEgi9Afkg9bao9TVWTHAictPgVy
-	 xYbZ4WAs0YBQACbrMp9PjGC58k1UtUzv3gk4sf6yKbc4H/gwhYmQS4J88dIk/8NOJkCf6
-	 JQxJ8kqdWa6JShHRhbx8eC/wL0vr4qJ/HAl+s5LgG1hGEUDThWNO5sn8Qr5qFR2GvBMh8
-	 iuZgkWY2F/sBWPGh3+Hrk7ZYDN8lxTykwCbLqyYnmxy+ZsTBPMpGuJBP2fw9+1SAUzw==
+	bh=e8ZEmqpNXQ5cb6SG9Bs7dwvV773ZqTtTmBMiHZaucyA=;
+	b=mKHkSPT1Q5Zb8k2CY/NuE53xYBHjQ4A9nE3DWAUR6gqOyYIZyUTzOzVh678+Q09P8BpH
+	 d7R8t92cDP3VHpRhqe/f5Z+/Q1pmka3oh4ykjJnYeEJZsXPMR/XjB6/XEC+4VwljDDDtq
+	 0La/UwME8np1g0oOAFX9k48GFvw7Bj979ggGuxaZYC4cYfHO7j1Qo3B0v9Kmaq7XO1QN0
+	 ebasLFzDwJqyAOh/jbFe66G39KkIxRjOA2XHYiAyF6KHrcJK/pT5SeBn4POGIii/uUw3n
+	 tifC6Yh/cMnsm6tKMckzmQ8O8cTZ6hQcfDIlBn7pCBucZ9B6GPEo0tVsUOxsmqyhytw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LEhhuVTi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LGn871aa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E091A606A320;
-	Wed, 18 Nov 2026 20:27:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8D3606A320;
+	Wed, 18 Nov 2026 20:27:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LEhhuVTi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F7591F000C4;
-	Wed, 18 Nov 2026 20:27:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LGn871aa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3A271F000C4;
+	Wed, 18 Nov 2026 20:27:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033621;
-	bh=VAi89GIoBViwqLaIrc6ajIn6/Sdy4s/96pd563X10ts=;
+	s=korg; t=1795033624;
+	bh=e8ZEmqpNXQ5cb6SG9Bs7dwvV773ZqTtTmBMiHZaucyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LEhhuVTiFp2mfFv8XIfA3CtloA2FAjBak/LQFBx6YMho0NRdFh2nDisMe5+ErhJyn
-	 Te7YoxhRd0QOzdnITNeegQaxHTU1Xtd4dEXCw1WiB/gGlQtD1adR5CpeP32pro3c7/
-	 tnXvUyftIQUUXCn3gALOlLXOVqmGqRCn4eiiVxGA=
+	b=LGn871aaUeik0uzCKvf9NVfT4mqwbEKD80K52a0PX6l+AoU4eedwd3Y+voLnNo7/t
+	 Pa2yiLOoFpMDsIbX44MfaDpUzIwmsfAiIm3NTaLhK8cU/59FSKt/4Y/O6TDr531yMX
+	 HQ64mHvVvo559oiJoJNRRXUUjO6KNpNWeHhbuCCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kent Russell <kent.russell@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Christoph Hellwig <hch@lst.de>,
+	John Garry <john.g.garry@oracle.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0081/3318] drm/amdgpu/gfx11: WARN() rather than BUG() for invalid SDMA engine
-Date: Wed, 18 Nov 2026 15:11:43 +0100
-Message-ID: <20261118150316.521203355@linuxfoundation.org>
+Subject: [PATCH 6.6 0082/3318] nvme: dont reference NS after unlocking in nvme_ns_head_ctrl_ioctl()
+Date: Wed, 18 Nov 2026 15:11:44 +0100
+Message-ID: <20261118150316.555609931@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,33 +69,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: John Garry <john.g.garry@oracle.com>
 
-[ Upstream commit c24edbd5ae0e4f24e0179e8c9f22a867016177bb ]
+[ Upstream commit 77c57daf98a2ad95ec9ac1371caeff8939cc1f58 ]
 
-There's no need to crash the kernel for these cases.
+In nvme_ns_head_ctrl_ioctl(), once we drop the SRCU read lock we should
+not reference the NS to lookup the controller, so use the available
+controller pointer directly.
 
-Reviewed-by: Kent Russell <kent.russell@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: John Garry <john.g.garry@oracle.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v11.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/nvme/host/ioctl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v11.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v11.c
-index d67d003bada2c..8680a8ebf0573 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v11.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v11.c
-@@ -139,7 +139,8 @@ static uint32_t get_sdma_rlc_reg_offset(struct amdgpu_device *adev,
- 				regSDMA1_QUEUE0_RB_CNTL) - regSDMA0_QUEUE0_RB_CNTL;
- 		break;
- 	default:
--		BUG();
-+		WARN(1, "Invalid SDMA engine id %d\n", engine_id);
-+		break;
- 	}
+diff --git a/drivers/nvme/host/ioctl.c b/drivers/nvme/host/ioctl.c
+index f19bef1d30dc6..38e3f17c79166 100644
+--- a/drivers/nvme/host/ioctl.c
++++ b/drivers/nvme/host/ioctl.c
+@@ -849,7 +849,7 @@ static int nvme_ns_head_ctrl_ioctl(struct nvme_ns *ns, unsigned int cmd,
  
- 	sdma_rlc_reg_offset = sdma_engine_reg_base
+ 	nvme_get_ctrl(ns->ctrl);
+ 	srcu_read_unlock(&head->srcu, srcu_idx);
+-	ret = nvme_ctrl_ioctl(ns->ctrl, cmd, argp, open_for_write);
++	ret = nvme_ctrl_ioctl(ctrl, cmd, argp, open_for_write);
+ 
+ 	nvme_put_ctrl(ctrl);
+ 	return ret;
 -- 
 2.53.0
 
