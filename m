@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018053;
-	b=3pdotenczkO0BIpcQbjkAaPWyvRbn8En4Wvjn8SSnjmtQBg29f98jnEDwVAm+WrkdwLo
-	 aBT7d6iaxX2c/TFx/Cx9JA5NGftGMu2X5cEdi+SI5Uhssax37gVHC+6zA2yU/VIYJHV2G
-	 kWr4LqHBs9kQCIQDM2k/yYgpV4kpKmasxEUIdtVEvTrCE+gbGGEGezTTDq0gVBLNt48ug
-	 WbmXkHjwRlrlRwYqeDQAKWJAW668ExS9mOd3FofruGCkY96hjz38otrlZxtEUotb8d4jj
-	 /CZdomaaHTjVHPDL+nXV4xDTW8EAbTPIhgtW+tvFOVITXqe9lMDUtw8hoPALKN6gBLw==
+	t=1795018056;
+	b=tRx4jPuFaiiEKBl0I1a6qChkCFg3gxKfvnwxZvsfjkXc7eBD94eYB22Kftahss+3wbuP
+	 TmeZWIBDi2wc7nQqrBxkiyTsPLZHwa9PpAZ/5wI6z+Db74e0+mBP9B/NEZxYpI13fV0Lx
+	 M0Zsrvp554SiPMwYxVy/D50yKfgwWRYZHb36HuR3OuDK2KAMj6+2iuM4wzXA7SNu+EXzH
+	 jty9T8jZCFIzckrke11nNJahJbk9fpA/4zMxm9lJRnNAbAdXT7OB9E+9rXJz/L40CyxSu
+	 d66y3BHU+V/NCAZ+EBgBdinRlgrfZk2Tbh1yxkEZ+Gn26/EyUUPCylfxHyEGcMUadYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018053;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018056;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Pti2Tn38dVlVzEzK98ntmRzI9y8rflxormuud93L/HQ=;
-	b=YsY6A3T2X7tQWduV60/rdsBR3IsIZivjOs/r+qX+/O6qgBuyLlBXBZ4C8AGEfLP6Jwbc
-	 oaT51L3IKDqsXSqA6omODzwhz+JGPUminKNuAkykIHtOVfXQyrikwoqLr/7KA9rzqnL4t
-	 VSB0JA7atjp6N4uk/h+swzbYTkvZ5jAWrNJahqDrDXpulla0vnQj38QCbbftczNM3pyrR
-	 QZhY0zKe9kzADwUIjCP57nEY/qpSdb/I5cysFBvs6BUjmbowSwFs3eh+N/8UQZwC9dipK
-	 40q5TCb+oCqi6B2Oqr05sn3EqmuElr/KnFPqzUhBz2WCRtgxXHn9Hv/w0EpuHYDD+CA==
+	bh=nk9DQxjSrXi7snEMetF7tpvc1LuYAVS5tKWOsQN/dto=;
+	b=PGA5yk1Q910jqVl0ZryqBz/NpfEAuXdk4/II+wSlgK5UnwaOLZ/syqhKECRUAo5txeY0
+	 AQYyP87Q/a3QXLJrjAFAyOWVVc1nkpcnv1cR05XrQ1z2ZPjFt0Ql7fQOQSdUOCfUMV5O+
+	 Xdk1+t4VbRZ32JY5MjPNb6G4+ekzoCpBdIF0PPnl8N6O8pKDEIMGDV/qOT6/t9U313caZ
+	 RolhTinCQ6MJjyEUbIvd0ePrRlQ3lc9MSy4xATXHl/xAWdVTcYJUxRRtcaJWac+V7bjaq
+	 C27whZasnBTfuSVMkfGuIf0anii7AoDvERjyAt27Ic/d5jy+nVVv+Tg6IQDPiFz6Ifw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="eDk/nRVP";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RWCkkFqU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C904606A31C;
-	Wed, 18 Nov 2026 16:07:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729DF606A31C;
+	Wed, 18 Nov 2026 16:07:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eDk/nRVP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D9E71F000C4;
-	Wed, 18 Nov 2026 16:07:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RWCkkFqU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82E721F000C5;
+	Wed, 18 Nov 2026 16:07:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018053;
-	bh=Pti2Tn38dVlVzEzK98ntmRzI9y8rflxormuud93L/HQ=;
+	s=korg; t=1795018056;
+	bh=nk9DQxjSrXi7snEMetF7tpvc1LuYAVS5tKWOsQN/dto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eDk/nRVPijoTFJr1RCewgTkeYfAoVVD0bOCzL3SQejsqEIM/j+xfostmysbVtfO4K
-	 p5Ag6SlpGJa0YSuodsJDeNwKWFy2+tCMA9qhiqsPbKttRj8dGcRLgQL9pWDqv1Bbpg
-	 R9FSJ4YHNXFI5XIzk/+GfLFJ+H/JLg9xxfvyvxE4=
+	b=RWCkkFqUvNEsw9xmg0vMCWnbqewpfVAf3xgU/3QytLNyQ+tSPj5ag6AvG06mRiZYQ
+	 mrsCa4tClJ3yeTuQ6cCEaIKMx3qsim0c8XGpwIh2i+cwegq1YhO9lxlqM2sX0g8B6d
+	 Vix32iuZVN8bB/Q4uxNdaqydp7xqjNzceF6C7Lig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1104/2651] serial: 8250_mid: Add missing module namespace import for SERIAL_8250
-Date: Wed, 18 Nov 2026 15:39:04 +0100
-Message-ID: <20261118150327.739982933@linuxfoundation.org>
+Subject: [PATCH 7.3 1087/2651] arm64: dts: qcom: kaanapali: Add GCC CX power domain
+Date: Wed, 18 Nov 2026 15:38:47 +0100
+Message-ID: <20261118150327.130447244@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,37 +69,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Abel Vesa <abel.vesa@oss.qualcomm.com>
 
-[ Upstream commit 789f52f83305032ecfaaf7efae9a8ba75815c01b ]
+[ Upstream commit 9339897ad7eded77adf834e032482f7609911448 ]
 
-After commit 1c305d5f1daa ("serial: 8250_mid: wait for LSR tx empty
-before setting termios"), modpost errors (or warning with
-CONFIG_MODULE_ALLOW_MISSING_NAMESPACE_IMPORTS=y):
+The GCC GDSCs on Kaanapali are backed by the RPMh CX power domain. Without
+describing that parent domain, consumers of GCC-provided GDSCs can enable
+their local domain without causing the required CX vote to be held.
 
-  ERROR: modpost: drivers/tty/serial/8250/8250_mid.ko: module uses symbol 'serial8250_wait_for_xmitr' from namespace 'SERIAL_8250', but does not import it.
+Add the CX power-domain reference to the GCC node so votes from GCC GDSC
+consumers can propagate to RPMh CX.
 
-Add the missing module namespace import to clear up the error/warning.
-
-Fixes: 1c305d5f1daa ("serial: 8250_mid: wait for LSR tx empty before setting termios")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Link: https://patch.msgid.link/20260927-tty-8250_mid-ns-import-v1-1-84d0482e1c5d@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2eeb5767d53f ("arm64: dts: qcom: Introduce Kaanapali SoC")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260924-qcom-tie-cx-to-gcc-v5-28-38732033e5b5@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_mid.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/kaanapali.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/tty/serial/8250/8250_mid.c b/drivers/tty/serial/8250/8250_mid.c
-index c02ecb96e8b6f..47f820fcd1a45 100644
---- a/drivers/tty/serial/8250/8250_mid.c
-+++ b/drivers/tty/serial/8250/8250_mid.c
-@@ -415,3 +415,4 @@ module_pci_driver(mid8250_pci_driver);
- MODULE_AUTHOR("Intel Corporation");
- MODULE_LICENSE("GPL v2");
- MODULE_DESCRIPTION("Intel MID UART driver");
-+MODULE_IMPORT_NS("SERIAL_8250");
+diff --git a/arch/arm64/boot/dts/qcom/kaanapali.dtsi b/arch/arm64/boot/dts/qcom/kaanapali.dtsi
+index 131fd2a16c545..c1528cc8b7b3f 100644
+--- a/arch/arm64/boot/dts/qcom/kaanapali.dtsi
++++ b/arch/arm64/boot/dts/qcom/kaanapali.dtsi
+@@ -552,6 +552,8 @@ gcc: clock-controller@100000 {
+ 				 <&ufs_mem_phy 2>,
+ 				 <0>;
+ 
++			power-domains = <&rpmhpd RPMHPD_CX>;
++
+ 			#clock-cells = <1>;
+ 			#reset-cells = <1>;
+ 			#power-domain-cells = <1>;
 -- 
 2.53.0
 
