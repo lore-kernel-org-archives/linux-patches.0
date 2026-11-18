@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047278;
-	b=x6gNDzcyEF0+FdMyplEcDXWc0HoZJ20Qrn9h6YeR8BkBgl+dB+URkANC/+LmyxZo4J2n
-	 uMtgeKJjuowk/Wc3UFFFJYzXxMCjFsrhA/g+l5VM7SBbhkmrO9inPNC2t4TCqU0b/Px5/
-	 mZGsCSs0kcs1mj5enA0fAhTysI3N1xL8WoSUmtqI0eV+Af+cdmvPBsBNzAmbYsAYP01YM
-	 OtC6bTN3cBvjQ09iaC+wwVh2sPLNF1w0Sj4L/xADNNifojSO5UUdBGIWf1P5mxZsK3joM
-	 0hBwiwln8VWsrZS1YFXEwGm4WTYgwLBuvaPCZzLdrOKfomVLUm9vJ5QGdtBFGc1Mmbw==
+	t=1795047281;
+	b=r/PvGvkJFSTVx60HrZYCyO0xdgW7M+aFwZ9yVFqj9cdK9axA3zBD/mN9NqX+wzf8dD7X
+	 q1f65pWypoF6EJdhkrOhLwrannTpImoMi2OjCns73+0uV9Df1v+u1CFo+FNU/gN2vFvkU
+	 y7BsIKwjELXr8WuVO1y7xkF+SAUEijgtBaJrZLS+8zUHJWEE0DSMaJp/3dEf5z2npmNvW
+	 GD0CMyKi6mpcV6VH83B4zSWTUI5gCxAO4qfkaP55o4TDUEfh/YqW/aTD90s325IL2NjGP
+	 fm7muq3vX9vN4r0bL1qpz5S+3KfhPTDdPL+sR1AqrmZqwe8oyOvk4+bvBExUit3G+mw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047278;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047281;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EsV2Gp9wqBw5rbW94JNMtN/IocH+EjrvRMEe9E1qM8o=;
-	b=eIyr85heZDjhPERupp3jO6/gRdGyeL6psgOja/LBMXztWvmCYkdXLON7eZWjvJ4GpgTf
-	 7eS1zwsWGyjwEkqVthWyXvzll3XhaYz+pVmu6BdOPnzHtlGv3fTORZ/kGgc6cOy/DBpPa
-	 vbwv/VRNnDMckaGhRMGkLgJrfFWg7c/CYzPBpxr95BrU6Q7zqStzP9T4kVpBQk0GdYM4E
-	 DxTiLLovNjD2hECp0FF5uRdF2MHd+xHdhBFiI1S2VfZmuYGMk39+4E6Ni/FDgBV+XDYWN
-	 wrdgt+dkLJ/DjVVcpaELqQvsvVG5+zKAGLDoqjivkbrObK1kxT18xFwsz2wSTj6fWVw==
+	bh=nlOcbehXtfmiGWlACK3sW4Lx9S/J9xyT/DgGeORK5Co=;
+	b=XoYe8xrA1L8wxxyPVF6Yf7GI6sS8RuUb5ulNayX5XWt1lwXVN0NFsCF9TPyArMYdviG2
+	 E0IcremDAZrwUbn55No0mljR07e8QZ41N7iWwxqTcFaaD4+M+7lEVkUSbLUs17Y+uRMAZ
+	 b3wIHVoMbwNKHyClhXcJUY+L3EQNcro1SZJDXto6ZyculSqNXIRe+SMIm4gWV9Blab9tq
+	 WNfxdgvdJyuXtqkk8D7yA79jzbq248kDx47LyHLpzrYgzhzI3LL40SoGQ+/y0sP+lZVYd
+	 AMsz3R2WqXtdaeaaYzOk5U+evyk5M6b3/ytAxF8dzE2AUGn/yGX/4e+ovYkJOGmd84w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=quOq5CVI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="VUCiks/B";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BBAD606A31C;
-	Thu, 19 Nov 2026 00:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B75606A320;
+	Thu, 19 Nov 2026 00:14:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=quOq5CVI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D7A1F000C4;
-	Thu, 19 Nov 2026 00:14:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VUCiks/B
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A39FA1F000C4;
+	Thu, 19 Nov 2026 00:14:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047278;
-	bh=EsV2Gp9wqBw5rbW94JNMtN/IocH+EjrvRMEe9E1qM8o=;
+	s=korg; t=1795047281;
+	bh=nlOcbehXtfmiGWlACK3sW4Lx9S/J9xyT/DgGeORK5Co=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=quOq5CVIUb+11gqJtSTXJsrSDJ3oIz1mAIGgiqeyTrV/xJFD3/2hf+iWblpKlUTF4
-	 L//87hi1BtkdSaUeKWKIoQD5EYSvybqXta+pCdLeRhVStwnXT6zVhu4YdPV9iKRqjL
-	 ji1a1VO7G+1dIDJlL7GC7ztB+HYcN2DH/5Kmr7dw=
+	b=VUCiks/BXa7JU6f7yP5KcEkheV3zUk4CPRLRtihvcWAVlRsUZtsGzr1qBCipcyME4
+	 0My9zW4dtK5XEJ6DxH7dlpCR6ANB2+gWacFrMBDsLG8Z3aMk0QrVh06KW/Ol18AuWp
+	 rhnhS3yY37Wr9A8EbCWA306jRQ/V9o+96jvue15E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olivier Kaloudoff <olivier.kaloudoff@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1581/2857] ALSA: usb-audio: Add mic resolution quirk for Logitech Webcam C200
-Date: Wed, 18 Nov 2026 15:43:35 +0100
-Message-ID: <20261118150258.300985046@linuxfoundation.org>
+Subject: [PATCH 6.1 1582/2857] power: supply: ltc2941: Fix of_node reference leak in ltc294x_i2c_probe()
+Date: Wed, 18 Nov 2026 15:43:36 +0100
+Message-ID: <20261118150258.334845946@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,46 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olivier Kaloudoff <olivier.kaloudoff@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 874323b68c93c6808e034dc0113681e822e6fb42 ]
+[ Upstream commit 09a29213bf15630e85a375478832b074b2cfc5c8 ]
 
-The C200 (046d:0802) reports a mic capture volume range of
-1536..7680 with a resolution of 1 (6144 steps), triggering
-"Warning! Unlikely big volume step count (=6144), linear volume or
-wrong cval->res?" at probe and exposing a uselessly fine-grained
-mixer control.  This is the same firmware behavior as the other
-UVC-era Logitech webcams already carrying QUIRK_FLAG_MIC_RES_384
-(C500, C600, C210, C270, C310, C510, C525, ...), so apply the same
-quirk: CTL_MSG_DELAY_1M (which the Logitech VENDOR_FLG would provide
-if the device-specific entry did not short-circuit the lookup) plus
-MIC_RES_384.
+ltc294x_i2c_probe() takes a reference on the device node with
+of_node_get(), but never drops it, so the reference leaks on every
+return path, including the success path.
 
-Verified on real hardware: with the quirk the warning disappears and
-the driver logs "set resolution quirk: cval->res = 384".
+The node is only used to read the battery properties and to set
+info->supply_desc.name, so release it after its last use and also on
+the lltc,resistor-sense error path.
 
-Signed-off-by: Olivier Kaloudoff <olivier.kaloudoff@gmail.com>
+Fixes: 085bc24d1553 ("Add LTC2941/LTC2943 Battery Gauge Driver")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261008230844.11246-1-olivier.kaloudoff@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260917142127.2156568-1-vulab@iscas.ac.cn
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+[ sashal: adjusted context for of_property_read_u32() instead of of_property_read_s32() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/power/supply/ltc2941-battery-gauge.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index 52164ae35250c..45a2753d483cf 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2058,6 +2058,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_DISABLE_AUTOSUSPEND),
- 	DEVICE_FLG(0x045e, 0x070f, /* MS LifeChat LX-3000 Headset */
- 		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
-+	DEVICE_FLG(0x046d, 0x0802, /* Logitech Webcam C200 */
-+		   QUIRK_FLAG_CTL_MSG_DELAY_1M | QUIRK_FLAG_MIC_RES_384),
- 	DEVICE_FLG(0x046d, 0x0807, /* Logitech Webcam C500 */
- 		   QUIRK_FLAG_CTL_MSG_DELAY_1M | QUIRK_FLAG_MIC_RES_384),
- 	DEVICE_FLG(0x046d, 0x0808, /* Logitech Webcam C600 */
+diff --git a/drivers/power/supply/ltc2941-battery-gauge.c b/drivers/power/supply/ltc2941-battery-gauge.c
+index 657305214d68d..9c18352f1adee 100644
+--- a/drivers/power/supply/ltc2941-battery-gauge.c
++++ b/drivers/power/supply/ltc2941-battery-gauge.c
+@@ -465,9 +465,11 @@ static int ltc294x_i2c_probe(struct i2c_client *client,
+ 	/* r_sense can be negative, when sense+ is connected to the battery
+ 	 * instead of the sense-. This results in reversed measurements. */
+ 	ret = of_property_read_u32(np, "lltc,resistor-sense", &r_sense);
+-	if (ret < 0)
++	if (ret < 0) {
++		of_node_put(np);
+ 		return dev_err_probe(&client->dev, ret,
+ 			"Could not find lltc,resistor-sense in devicetree\n");
++	}
+ 	info->r_sense = r_sense;
+ 
+ 	ret = of_property_read_u32(np, "lltc,prescaler-exponent",
+@@ -478,6 +480,8 @@ static int ltc294x_i2c_probe(struct i2c_client *client,
+ 		prescaler_exp = LTC2941_MAX_PRESCALER_EXP;
+ 	}
+ 
++	of_node_put(np);
++
+ 	if (info->id == LTC2943_ID) {
+ 		if (prescaler_exp > LTC2943_MAX_PRESCALER_EXP)
+ 			prescaler_exp = LTC2943_MAX_PRESCALER_EXP;
 -- 
 2.53.0
 
