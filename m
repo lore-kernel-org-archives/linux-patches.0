@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050034;
-	b=estxIYp2pcOElUUnHDr3XvingkO/5vbuOKn8pRqu2kgWcOvmI76152oU10hN2YK7cXvZ
-	 Q9mcM32Ox2JWGQYofS/Up2vx3r9iKLWmKxhg2eenvaG4qxOsFV9kXIlp+atzoTBx01azT
-	 AyWRisJa8Sa/x1zWM4PkpImsJ/5v0K1UNaMPVy7zj9HImkS/qnyyEBVRXo5L2bbcTm3gP
-	 BRXONOcXnuZm4GzeGpgjHI7QlBqUExRVyqtWRRU2t/XdrfN0X5wY/Twr0uSahiZExWfbY
-	 2bAzN6OK9Pc8YZ4hT9NTyc9r3wYa0VgYAGYwvM4AQ0bIV2TQCf2xVFiKtSL1JrCMUKQ==
+	t=1795050037;
+	b=LvkiMPDOHLTJiY6ONRRB8ZIQUSADfy3cXXS5RXEJCV2dIpgJAEny1nvN5Y0XZ/zUWWzO
+	 cDNsMU6UGO8q6zWli4LLhJjPK34/4DIMwRWTEY64o+rGK+cnm47dZCmwdBVEuTPNd3eae
+	 rF6bz3tzMBXPbEAD4jhB5dTvW9QvLK6eaA3EBQGS2NF92azxn31fTjEpU6ahBotnvNPYu
+	 fOJV7XdZWQLl7RYlDOKDlRXvqymd6vDQTviKvQlQwuEIhfrQv1iuKU7TuRN/WEaMbEScZ
+	 MQgo4OntXlrI4l3eFaayiUuhElgrgCjbAvYXm4W0rvnvNnl97t9TicpcU2oHQo+pnLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050034;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050037;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Wbg7iDku8KMq28uaqOTbTlbO8SAHnPLrLKQ7IvwCAM4=;
-	b=deg3lR5r4RlC3tnr202JlL2MeQ52a2chW0v1mbW5tlPlNWapvf3y0fr3BYgH5ia8xpyH
-	 EAgkbOsD9hp6yEt95F+MLZi+ObvRF6OxQGNYGR+E3LisUukMSu16TRUl//xhnDA1+mBHU
-	 O44sJwWL5hO+tWO2BOjPHsFw17XV+LjBMJBGJohQX0LVoMT+JPZXE8wksXndhjupGdYo3
-	 to/m13zdFBqz7UcwgSxyELXyOgRQTAdLvYDi/GPPHTmID3VZi3kL5ldvW4vPOinXkBa/m
-	 aVLjoy2bSJTpnu7uc/JSWp2kZVhD1ZWAbIHunYu8dm5mbZHLB4epMkJ7mIoX/sNYbIQ==
+	bh=1YsT1ODt6KWu76ilbpd34+4k8pgpT7dzW+a1VpIfpnA=;
+	b=iEzziwA9RQTiXR0SERzzIVw6w1Av6TDZHKRXSgyPCZ1nP/e/6yKjKJlTJ2o2BEs+k3sv
+	 0GazgDRcsXGhzDbfppu2LASv0VF0nePt2GXJb6/ntLdZGJxshWLl4Dv1LDvb+S2rXbhV/
+	 4beYkt/C5kvXxeSlp2ONfHCe6y6XlB7bMYCx/J+pH3drgjYdp1WTPwBYCg2AvpwL8J7A+
+	 ppkc6ISnuY3X349BUD/UAN3esiuca48TTzDDBDh8157hw2FdAGSlubyr4FnONkzdwDmHQ
+	 FCH/fSnLBaxoddeQ17LVvVsbdy++C2c/MXR/C+F+JGK/NhMwqaHBUD5rTRKWdd3F75g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xgfeLtJV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C6hGHWFG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B62606A330;
-	Thu, 19 Nov 2026 01:00:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA44560A260C;
+	Thu, 19 Nov 2026 01:00:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xgfeLtJV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 538441F000C4;
-	Thu, 19 Nov 2026 01:00:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C6hGHWFG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08AAA1F000C4;
+	Thu, 19 Nov 2026 01:00:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050033;
-	bh=Wbg7iDku8KMq28uaqOTbTlbO8SAHnPLrLKQ7IvwCAM4=;
+	s=korg; t=1795050036;
+	bh=1YsT1ODt6KWu76ilbpd34+4k8pgpT7dzW+a1VpIfpnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xgfeLtJVpNwO2VMFFPfUTh2x5etVx/t4xnoF4NCUcCpUQ1TedJgwkdiMN+vCARvgH
-	 cEo3Uqh2nJCEvX2oS7traMp3IonLCQ3F2GVzbvw9o/1y766dKlwEsyjO8m0VhIrSfh
-	 rObc8gNSRMfTqCGqZJKx4qeO/RELN/HLkFwmaTX8=
+	b=C6hGHWFGK0sKMmpvM8STFFFZ874arSLYed3tdVbD6Zc+c3pAcvzNGqNPnwsbLLygj
+	 eRrHKMI18a8CM8LpMndUDblDbXMLS+7KEM1AhdlHsgNZWpRBeXh+LDT5iokwklu3R5
+	 syyUf9kQWge8MUCHF9ygBIjsGqJpJhfqhZt2/2ng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2564/2857] tracing: Print a signed histogram key as signed
-Date: Wed, 18 Nov 2026 15:59:58 +0100
-Message-ID: <20261118150333.810950988@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 6.1 2538/2857] selftests: keep the build status from wrapping to success
+Date: Wed, 18 Nov 2026 15:59:32 +0100
+Message-ID: <20261118150332.905682893@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,96 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+[ Upstream commit 907d138279ee3747efedc9f7403d8b0edb52aca2 ]
 
-[ Upstream commit d3e0dfc1ba49a0ab6aeddbb4bcde4bfc0e171a02 ]
+The top-level all and install rules return failure only when every
+selected target fails, which commit cad6f32665cb ("selftests: Deescalate
+error reporting") deliberately kept as the default. They implement this
+by multiplying the exit statuses of the targets:
 
-A histogram sorts its rows by the key named in sort=, and for a key over a
-signed event field it sorts them signed: create_tracing_map_fields() picks
-the comparison function with
+  ret=$$((ret * $$?))
 
-	else
-		cmp_fn = tracing_map_cmp_num(field->size,
-					     field->is_signed);
+A failing recursive make exits with status 2, so eight failing targets
+produce 256, and "exit 256" reports success. Building eight or more
+targets that all fail therefore succeeds, and install goes on to
+package an empty installation.
 
-hist_trigger_print_key() does not look at is_signed at all. Every numeric
-key is printed with %llu, so a sorted histogram over a signed field comes
-out looking unsorted. syscalls/sys_exit_lseek carries "long ret", which
-SYSCALL_FIELD() marks signed and which is negative on every error:
+Record a successful target instead of multiplying statuses. The rules
+still fail only when no target succeeds, and FORCE_TARGETS still stops
+at the first failure.
 
-  # echo 'hist:keys=ret:sort=ret' > events/syscalls/sys_exit_lseek/trigger
-  # echo 1 > events/syscalls/sys_exit_lseek/enable
-  # (five lseek(2) calls returning -ESPIPE, -EINVAL, -EBADF, 0 and 100)
-  # cat events/syscalls/sys_exit_lseek/hist
-
-  { ret: 18446744073709551587 } hitcount:          1
-  { ret: 18446744073709551594 } hitcount:          1
-  { ret: 18446744073709551607 } hitcount:          1
-  { ret:          0 } hitcount:          1
-  { ret:        100 } hitcount:          1
-
-The rows are in ascending order and the numbers are not, because the three
-leading ones are -29, -22 and -9 rendered as their two's complement.
-
-Take the rendering from the same place the sort order comes from: the event
-field when the key has one, and the hist_field itself when it does not. The
-same histogram then reads
-
-  { ret:        -29 } hitcount:          1
-  { ret:        -22 } hitcount:          1
-  { ret:         -9 } hitcount:          1
-  { ret:          0 } hitcount:          1
-  { ret:        100 } hitcount:          1
-
-A ".buckets" key stays unsigned here, and not because it is right.
-hist_field_bucket() divides as unsigned, so the group holding S64_MAX also
-holds S64_MIN, reported at
-
-  https://lore.kernel.org/all/20260914054614.82A9B1F000FF@smtp.kernel.org/
-
-Printing that group signed would name a range that does not contain
-S64_MIN, so the grouping has to be fixed with it, in a patch of its own.
-
-Link: https://patch.msgid.link/20260917045918.370993-1-donggeunyoo.kernel@gmail.com
-Fixes: 7ef224d1d0e3 ("tracing: Add 'hist' event trigger command")
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Link: https://lore.kernel.org/r/20261014200115.1363363-2-sashal@kernel.org
+Fixes: 5f70bde26a48 ("selftests: fix build behaviour on targets' failures")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ tools/testing/selftests/Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index cdd0281ba6657..f53a2745ba2e1 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -270,6 +270,14 @@ static u64 hist_field_pstring(struct hist_field *hist_field,
- 	return (u64)(unsigned long)*addr;
- }
+diff --git a/tools/testing/selftests/Makefile b/tools/testing/selftests/Makefile
+index bf34fa443b233..25a722a14b611 100644
+--- a/tools/testing/selftests/Makefile
++++ b/tools/testing/selftests/Makefile
+@@ -163,7 +163,7 @@ all:
+ 		$(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET	\
+ 				O=$(abs_objtree)		\
+ 				$(if $(FORCE_TARGETS),|| exit);	\
+-		ret=$$((ret * $$?));				\
++		[ $$? -eq 0 ] && ret=0;				\
+ 	done; exit $$ret;
  
-+static bool hist_field_is_signed(struct hist_field *hist_field)
-+{
-+	if (hist_field->field)
-+		return hist_field->field->is_signed;
-+
-+	return hist_field->is_signed;
-+}
-+
- static u64 hist_field_log2(struct hist_field *hist_field,
- 			   struct tracing_map_elt *elt,
- 			   struct trace_buffer *buffer,
-@@ -5353,7 +5361,11 @@ static void hist_trigger_print_key(struct seq_file *m,
- 				   (char *)(key + key_field->offset));
- 		} else {
- 			uval = *(u64 *)(key + key_field->offset);
--			seq_printf(m, "%s: %10llu", field_name, uval);
-+			if (hist_field_is_signed(key_field))
-+				seq_printf(m, "%s: %10lld", field_name,
-+					   (s64)uval);
-+			else
-+				seq_printf(m, "%s: %10llu", field_name, uval);
- 		}
- 	}
+ run_tests: all
+@@ -223,7 +223,7 @@ ifdef INSTALL_PATH
+ 		$(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET INSTALL_PATH=$(INSTALL_PATH)/$$TARGET install \
+ 				O=$(abs_objtree)		\
+ 				$(if $(FORCE_TARGETS),|| exit);	\
+-		ret=$$((ret * $$?));		\
++		[ $$? -eq 0 ] && ret=0;		\
+ 	done; exit $$ret;
+ 
  
 -- 
 2.53.0
