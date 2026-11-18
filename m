@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044510;
-	b=YM5s1T9O61BJEb3bLwl2uQr3MIabwvYZmnZguN5lHn//njBfCB6b/dSY6jIT3hQfqv1z
-	 rzIRchu7Dz3o8rzFaWJVKSpxY6Q/TD2uv1DRe6QXZnHRtlc5X7UbIQUE6VTDuhgLNQLpy
-	 LK+rLvu8whChhxViY5ga6D8QBch59J19ZHV7gAXvlrZ7Hd1bDM+v4bpsZ+OqdTNYPchul
-	 A5u2jSLc12BfOHeRWS95r+joeNWJ+kLkuKyox8QS2p/3zMackn2jRZJjpIB8Vm2atbsnx
-	 pg8OoZkXDtSyDk+MlO4/R/y/X4bcqayMRI7DZsAnjxSH6J2hBGnYQSkhFj6pgN+cZTg==
+	t=1795044513;
+	b=0g5dm3BldVdXoDfcF+8TcoOY1ixJ8oifjm1mDmxmDSJ2YwXuWClEXjikmyDLa8bZNuKD
+	 dhpG7lE0kJ3QH0FxbqmIDP+dwjtDM06sMAJWu9g5wdISZUjnqC8ka6GFUHOMTZq7tTy6+
+	 pYwDO/B71YrIKfoVxJ9dtCXHLbJTUOlErYx5i18O+0dPN+Xrq3o4V58IpuZffMxaWP1x6
+	 F/BtROB3RsAU7t+VWeS4jHbyDVXUXISSlSDS21SHPUX++9jXO/k4WPWmMzHsGI0sMmPjg
+	 C4uYSr+K+ETJ9geCzMPcXobIusRmbV6K5Kvv2fiS/u7zf6QfcAMe2gUPqb0/eR9/dCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044510;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044513;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Zb0H9uTvN4RxYbAnFFlON+84w8BnUcsnuLW3h7U+Uy0=;
-	b=tEn2yRi9EIhqmkNmDJyETKRjp1xqxQZbneHbmLPQqhOskp3QOm/prdORUndFRvaiq0X+
-	 qU07jj9FqkbIULUAnF5yT5bvub8tOe7V5eUSUUxQkC2zqPtW3s2vqFSPXlBdrHRYznNRm
-	 toHL/aoT2pkIMrihoHqDK83Fq/m7F2aUVMcz4l9jCd1bfh4Zjdcd0JVR/WjvHM5ebPZUl
-	 E316sK4kRZuPoZ1hLZeVZrFIXZ5ZM93i/ZxJew6g9Yd9rmUJGP9YHTMJ4iimpVIzSbPQc
-	 rgqpcr4bqskM20BIBkGNaemThEVzEUtdy6epPiFqb015RsAWARaq6oQXjE2wJb1tZwQ==
+	bh=oddJmWcP+KI4+7e7tko0o+YO5vqg7CAft/ee3gu8zX4=;
+	b=XUDB8sIEyg4gZVyFZGwx3Y11FQ4+O6zrItVKO7pZis3d/Oy67G3P7s400xhGnDnkuCF1
+	 ROAiIvZGtKgQNsiK6JeUhD8qOJa1FtwwOWFMHAWgMSBE20CEbMptLhlfmeUAXmnuWUMOE
+	 jO4uS37Tm60aGkx1dUmlNAS72/jlYhqDDGp57eHI20jDDm09QEGbbD/4X6NeYWytABGIS
+	 2C+C2BCLCS21ktw6nkKCQCAyKtfSBOhvX9HmDFGhK8oXrnSdK9427KmRLshiALMRy5qQq
+	 Q0YShkA2ugrJHN5jvEUm44dBPcBa5YaZss7kO3/xH3QP7cRcMMG08ucYAJINMb9i7Mw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wX8Gx3Nc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OJOYUTK6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42451606A335;
-	Wed, 18 Nov 2026 23:28:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94AB60A2620;
+	Wed, 18 Nov 2026 23:28:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wX8Gx3Nc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94FC31F000C4;
-	Wed, 18 Nov 2026 23:28:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OJOYUTK6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DEA11F000C8;
+	Wed, 18 Nov 2026 23:28:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044510;
-	bh=Zb0H9uTvN4RxYbAnFFlON+84w8BnUcsnuLW3h7U+Uy0=;
+	s=korg; t=1795044512;
+	bh=oddJmWcP+KI4+7e7tko0o+YO5vqg7CAft/ee3gu8zX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wX8Gx3NcUefN4JO3IQ7oDfF2OhMFVQGZuqjs+iqsGaKwRiXK06iQujm3KtHyOYqKX
-	 mCOH1KxRwMns/VMdebhzPPnM5QjpF+vB4Mnb+jaqpD6gZEnM/k/ppxMGhjI57AVl3t
-	 a0Wrrnjll0qvA6ym0QnEe7wKAAikHnPyYM1rGan4=
+	b=OJOYUTK64rLIB4hLBaHhTp1WA7GyrNFOibdWgCdXDEjLw8BOiMt0jjt1wjGY6Y3tz
+	 WVdXbBidEx4Qf2K0hdfM1gFws7crLPMVjsL86lcbp6yNp/qSwxOcLmoVKEYxlUUwRU
+	 MUnstzf1SVPqa0hyJmhvaHUBu/cxrMgRUrgfzTVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.1 0593/2857] xfs: opportunistically skip btree block checks
-Date: Wed, 18 Nov 2026 15:27:07 +0100
-Message-ID: <20261118150222.837138633@linuxfoundation.org>
+Subject: [PATCH 6.1 0594/2857] xfs: propagate errors while checking null siblings
+Date: Wed, 18 Nov 2026 15:27:08 +0100
+Message-ID: <20261118150222.874609801@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,41 +70,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 4ce244b234c251963fca6dff9de6edf26a209d08 upstream.
+commit e5bde75a816b3549942f4b09a8bf09006b7ea9de upstream.
 
-LOLLM notices that both callers of xchk_btree_get_block will return
-early if *pblock is NULL after a successful return.  However,
-xchk_btree_get_block itself can return 0 after flagging a corruption.
-There's no point in continuing after we've found a corruption, so null
-the pointer out.
+LOLLM observes that if xfs_da3_path_shift returns an error here, scrub
+doesn't handle it the way that it handles most runtime errors.  Instead,
+it drops the error and keeps going, even though that's not how that's
+supposed to work.  Fix that by calling xchk_da_process_error to set
+corruption flags and then jump out of the flow of execution.
 
 Cc: stable@vger.kernel.org # v4.15
-Fixes: cc3e0948d2686f ("xfs: scrub the shape of a metadata btree")
+Fixes: 7c4a07a424c18d ("xfs: scrub directory/attribute btrees")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/btree.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/xfs/scrub/dabtree.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/xfs/scrub/btree.c
-+++ b/fs/xfs/scrub/btree.c
-@@ -550,6 +550,14 @@ xchk_btree_get_block(
- 				 level, *pbp);
- 	if (failed_at) {
- 		xchk_btree_set_corrupt(bs->sc, bs->cur, level);
-+		/*
-+		 * The btree block fails basic checks, so we know it's corrupt.
-+		 * There's no need to continue looking for corruptions, so we
-+		 * null out pblock.  If *pbp is non-null then it's also
-+		 * attached to the transaction so we won't leak it despite the
-+		 * 0 return code.
-+		 */
-+		*pblock = NULL;
- 		return 0;
+--- a/fs/xfs/scrub/dabtree.c
++++ b/fs/xfs/scrub/dabtree.c
+@@ -236,9 +236,10 @@ xchk_da_btree_block_check_sibling(
+ 	if (sibling == 0) {
+ 		error = xfs_da3_path_shift(ds->state, altpath, direction,
+ 				false, &retval);
+-		if (error == 0 && retval == 0)
++		if (!xchk_da_process_error(ds, level, &error))
++			goto out;
++		if (retval == 0)
+ 			xchk_da_set_corrupt(ds, level);
+-		error = 0;
+ 		goto out;
  	}
- 	if (*pbp)
+ 
 
 
