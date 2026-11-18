@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052597;
-	b=wnda5nDLccDq1B82O5PJIdv6nK1bWqzbhTu4UnUtZM2U+iMvwOi1Kk5P/sMkd5MgkTXq
-	 Z/KFYwK6elKe/tp9vWwklK1zzQx1rw6VrlKnlQaDOPwPA1yVzEVWAo1ZPknLaEoGh+8CJ
-	 jFthjCdR6DO8gIxdUf+wuqSX3lrLj0giyjW7P26D/zGa9mxJ7GAgCXfPchFkleGjfjxxK
-	 wVuRZ6wDWapi4yh/mnujVr3MsJ5PFgY7mC0XVqRGhUDw67wV3+IrEmJOnPoK6VTR2GxbE
-	 kT053VFKAHXoXeIRqZNWz+p912oriPprts6j2a/IS9wn48cJzW9PkJ6rdwI8f3SP/rA==
+	t=1795052599;
+	b=kiJsOLMcAnDnoGoh57jFaCarl0zVKZV7spoBvEvrzJySa8R3j3xT7AXbX5yDdGX8wBoQ
+	 jcYBxx83lsZJX9YKLepHFSeMkG0WILujyqs9pKx49UtZo183R/SjUCg/PMg/auYyC9iBH
+	 7VOPrIPoyhdhKNIExAWG8GhnCpdTQfZwkg3xEfUd7Xy/wxXvThIppKn8HXsMb7msaaQnt
+	 6BwfBREwEccyH4eWgfos8sOHIiT0H33Fm95wX1h/VQ9V9hvIzIRSeKWCb29c0pXITLykB
+	 A8nHDT3fPZMTIsa4TzScI2mi73zysy925qUdhIQDULjSV5CDXQKuo0A2QwxD1puKkpQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052597;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052599;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mANXZeb87p3U/4asOLiEr8a83ZX1sAS3u6V9Dmj5KZs=;
-	b=kEWAkbzgSVouBi14X1bxy1XjBPV8bRCuKfSXw9Sol/son+YYUOn2ZMwr62z/JLQBY4Tu
-	 51tXtZESeKOP81oe/zQTXpZN4XyT5J0Aa7qBhSuwcDOFe8Ggfr3T9Y1XsY1ugow3FZV0P
-	 uqC/y/86TpN5C1EcM+tVRKXeC9vM6tF9HxxTk0gqhtclpulU62E0Vk6Y1gHfAvDZ0U732
-	 EECXZbPRyV7xh0lDeSIQtc6hBE+o9U/GHsBiWGpbl9aaHlkTc07Gpmi9FONPFgf+FcZ+x
-	 etwc4eTYWjRILlRZiwcQHMsaDCj1sU13D90Z5jPRVPZ90vlil3LwBXjLnk64S0eG9PQ==
+	bh=vtisi6RU66I5IVSRGujvohagZfT0e91L8VWHb5ztXdk=;
+	b=B+58vteh1atA0KE2S316QJetAsI2bjhPzMqbjJA6LMNabJuVdZGiTWGPzJRGEegZAvcL
+	 YAo90QvL1to14p8PODhZw8A/dCXx5KuQNKV5Kk/aOmd1F9Lxh9ybTzItpWIkFQvyoll9f
+	 6gGgeBL8+asG3xRRcPX3bMZjPlUQUcYDIJwRjLFnidewM7sEJZSOU0oEMcC3L/5CaRj74
+	 Fg/q+iw7ui5lC3ogATa9AeLcOYGrS8R06/z5MCupPGylc/3oSearjSXNI9dXohwFm0SaZ
+	 Tz2+k/Y3Obt8M7SJctQrnJVvcPEvF+4EZZYhMQVD74S6npRS0ts8ZPC0Phc8sGUpM4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UWfWJdjJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jnCAeuZ1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0049A606A31C;
-	Thu, 19 Nov 2026 01:43:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D4D606A325;
+	Thu, 19 Nov 2026 01:43:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UWfWJdjJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DC681F000C4;
-	Thu, 19 Nov 2026 01:43:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jnCAeuZ1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D78D61F000C4;
+	Thu, 19 Nov 2026 01:43:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052596;
-	bh=mANXZeb87p3U/4asOLiEr8a83ZX1sAS3u6V9Dmj5KZs=;
+	s=korg; t=1795052599;
+	bh=vtisi6RU66I5IVSRGujvohagZfT0e91L8VWHb5ztXdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UWfWJdjJUfrHrtC6tgZkf56NLmI4unMT9ryo3suNyz/D214hIHoStPvqp/bXw0uXR
-	 8uI0SNEVrlZRGHkzBQtl2SrEyUxJ55D4aWhc/TmeEarDqlRpj3/N9zK8ZRp1kPMbd9
-	 AcaWrYQsH2MKqK8yOkJJDEWsq0J4+uerPvAm1WjQ=
+	b=jnCAeuZ1SlEosQ6ofaFMQXCXJ/KsGmZ0rDWVCvIYWwow7550+B4274dcAlS/FHTUG
+	 ra0qR3QY2kAfCZpqd4oumGiXBvD63tLzc5Pq4RvdBJ1cL3fSde3vCQKBG78vo4hTKP
+	 GSWtgcDCD13G8ip4Kh2yOy0nmjPXjGUTntxQQiZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weigang He <geoffreyhe2@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Tim Menninger <tmenninger@everpuredata.com>,
+	Chuck Lever <cel@kernel.org>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0618/2214] mtd: parsers: qcom: fix offset/size overflow on large partitions
-Date: Wed, 18 Nov 2026 15:38:14 +0100
-Message-ID: <20261118150036.108949063@linuxfoundation.org>
+Subject: [PATCH 5.15 0619/2214] xprtrdma: prevent disconnect feedback during endpoint teardown
+Date: Wed, 18 Nov 2026 15:38:15 +0100
+Message-ID: <20261118150036.142457020@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,59 +69,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weigang He <geoffreyhe2@gmail.com>
+From: Tim Menninger <tmenninger@everpuredata.com>
 
-[ Upstream commit 2f7fa8d90694d21dce68ceabd8383252b111cfea ]
+[ Upstream commit 0b5bb4e586f7b0a449f4d90a524f76a3be5db355 ]
 
-In parse_qcomsmem_part() the partition offset and size are computed as
+xprt_autoclose() clears XPRT_CLOSE_WAIT before invoking the transport's
+->close() operation. For RPC/RDMA, ->close() calls
+rpcrdma_xprt_disconnect(), which disconnects the RDMA CM endpoint and
+drains its QP.
 
-	parts[j].offset = le32_to_cpu(pentry->offset) * mtd->erasesize;
-	parts[j].size   = le32_to_cpu(pentry->length) * mtd->erasesize;
+Since commit 31e62d25b5b8 ("xprtrdma: Simplify RPC wake-ups on
+connect"), RDMA_CM_EVENT_DISCONNECTED requests a SUNRPC transport
+disconnect. Today that path, along with failed completion handling,
+reaches xprt_force_disconnect() through rpcrdma_force_disconnect().
 
-Both le32_to_cpu() and mtd->erasesize are 32-bit (u32). The multiply is
-therefore evaluated in 32-bit arithmetic and the product is truncated to
-32 bits before being widened and stored into the 64-bit (u64)
-parts[j].offset / parts[j].size fields, so the 64-bit destinations are
-never used at their full width.
+Commit c487eb7d8e41 ("xprtrdma: Clean up disconnect") later added
+re_force_disconnect to ensure that multiple failure indications request
+only one SUNRPC disconnect. However, the gate remains open when SUNRPC
+itself begins endpoint teardown.
 
-The SMEM partition table is firmware-provided and the per-entry offset
-and length are not bounds-checked against the device geometry (only
-numparts is capped). On a sufficiently large flash, a partition whose
-(offset|length) * erasesize is >= 2^32 gets a silently truncated
-offset/size and is mapped to the wrong region of the master MTD, which
-can overlap or extend into an unintended area.
+If re_force_disconnect is still clear, either a CM disconnect event or a
+completion error can set XPRT_CLOSE_WAIT again while the current close
+is in progress. When the transport send lock is subsequently released,
+xprt_clear_locked() observes XPRT_CLOSE_WAIT and queues another
+autoclose.
 
-Cast one operand to u64 so the multiplication is performed in 64-bit and
-the result fits the 64-bit fields without truncation.
+Requesting a disconnect this way is necessary when a connection is lost
+unexpectedly, but not when the event was generated by
+rpcrdma_xprt_disconnect() itself. In that case SUNRPC is already
+committed to closing the transport.
 
-Found by static analysis tool CodeQL.
+Mark re_force_disconnect before initiating local endpoint teardown so
+that CM events and completion errors caused by that teardown cannot
+request another close. An unexpected error that wins the race before
+local endpoint teardown begins can still request a disconnect normally.
 
-Fixes: 803eb124e1a6 ("mtd: parsers: Add Qcom SMEM parser")
+Use a fully ordered exchange so that the gate is globally closed before
+rdma_disconnect() can transition the QP to error and generate the
+callbacks that the gate suppresses.
+
+In 30-second traces of a sustained recovery loop, without this change
+there were 7,693 xprt_force_disconnect() calls, 6,267 SUNRPC autocloses,
+and 172,892 receive-side IB_WC_WR_FLUSH_ERR completions. With this
+change, the same tracepoints recorded 3,512 xprt_force_disconnect()
+calls, 3,212 autocloses, and 131,287 receive-side flush completions.
+Thus QP teardown continues to produce flushed completions, but closing
+the disconnect gate before teardown substantially reduces their
+feedback into the SUNRPC close path.
+
+Fixes: 31e62d25b5b8 ("xprtrdma: Simplify RPC wake-ups on connect")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM codeql
-Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Tim Menninger <tmenninger@everpuredata.com>
+Reviewed-by: Chuck Lever <cel@kernel.org>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/parsers/qcomsmempart.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sunrpc/xprtrdma/verbs.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mtd/parsers/qcomsmempart.c b/drivers/mtd/parsers/qcomsmempart.c
-index 32ddfea701423..cfffe3dbf28d3 100644
---- a/drivers/mtd/parsers/qcomsmempart.c
-+++ b/drivers/mtd/parsers/qcomsmempart.c
-@@ -142,9 +142,9 @@ static int parse_qcomsmem_part(struct mtd_info *mtd,
- 			*c = tolower(*c);
+diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
+index 5d588d26b8bab..4cb0c1eac46b6 100644
+--- a/net/sunrpc/xprtrdma/verbs.c
++++ b/net/sunrpc/xprtrdma/verbs.c
+@@ -120,9 +120,9 @@ static void rpcrdma_xprt_drain(struct rpcrdma_xprt *r_xprt)
+ 	rpcrdma_ep_put(ep);
+ }
  
- 		parts[j].name = name;
--		parts[j].offset = le32_to_cpu(pentry->offset) * mtd->erasesize;
-+		parts[j].offset = (u64)le32_to_cpu(pentry->offset) * mtd->erasesize;
- 		parts[j].mask_flags = pentry->attr;
--		parts[j].size = le32_to_cpu(pentry->length) * mtd->erasesize;
-+		parts[j].size = (u64)le32_to_cpu(pentry->length) * mtd->erasesize;
- 		pr_debug("%d: %s offs=0x%08x size=0x%08x attr:0x%08x\n",
- 			 i, pentry->name, le32_to_cpu(pentry->offset),
- 			 le32_to_cpu(pentry->length), pentry->attr);
+-/* Ensure xprt_force_disconnect() is invoked exactly once when a
+- * connection is closed or lost. (The important thing is it needs
+- * to be invoked "at least" once).
++/* Ensure xprt_force_disconnect() is invoked at most once for an
++ * unexpected endpoint failure. Local endpoint teardown closes this
++ * gate before it can generate CM events and flushed completions.
+  */
+ void rpcrdma_force_disconnect(struct rpcrdma_ep *ep)
+ {
+@@ -583,6 +583,9 @@ void rpcrdma_xprt_disconnect(struct rpcrdma_xprt *r_xprt)
+ 	if (!ep)
+ 		return;
+ 
++	/* Prevent teardown-generated events from requesting another close. */
++	atomic_xchg(&ep->re_force_disconnect, 1);
++
+ 	id = ep->re_id;
+ 	rc = rdma_disconnect(id);
+ 	trace_xprtrdma_disconnect(r_xprt, rc);
 -- 
 2.53.0
 
