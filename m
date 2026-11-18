@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041804;
-	b=20Y0QxYw6OLnsfeVq5KTlpl+ELheBVcm4Q5HPsjXgBWwNQHOkw8ZQKiNAfHnEHVkxVb9
-	 7+qN+5oRMeESaptrEzDTAsVYNti4hRSIOIXUQ9ZBiLg88cxGreA2gvWB0euA0eSs85LL/
-	 tvC+kGARWVgLL7V2rQsHyeQhOS0joZ+h5XkbSGRAK4aGoEkUcl/tEO7YPqtmQirUY7lxX
-	 Rw77uvRN9g5iZ4UBUsAQwQJgt57lchPX5pDyR++RrjVu7YYWBGuSy0pwdMllnyXbmSWeQ
-	 6w2+HW1s+qZPoxwwEudFyWTs8vb9/WNc2txF464UNwfSSmOPdNzn9o5VX2NCTUH4oPA==
+	t=1795041807;
+	b=vm8o5EWECAVrWbr/43mA40ub6N1LkYHb8aTDpLN8yRP65s6kH9MV0p79pgokrjUAVrxi
+	 re21lknSynt1DebYskzh7ESTIztGM/LKRXLAigynDjwGcBiDnC1iQ+GRlc5cCnC3JTs/L
+	 zDuaAUdksJpIaFbDZsYUd1huwWM5HGnXIqXwqYn+O4N9VjVNR0NRXB2YvO6AQOoF0E78X
+	 yBNX9bnsXN6SrwIRbt4eByRQzxsZ7AtiM2jsASoa3D1xffKP8gIhn0yCIdg17zxoa/rpI
+	 yMvoM1k8RxVy9yELjWiG2hlDcUowm8C1vcdlbiDPDbO0Ml3hHqB7wn4pMvpSsqDRb/Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041804;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041807;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=kiUtWfJ7aorUY6CtvyvmNa+D9cydRv2EpXjSji/Ps2w=;
-	b=vdmTvqvbpnqU4WOWtV8DdTbGM3W+32Y+bRix4ZXWAYiioMFm+YgDwa+NZPuhO2045lOL
-	 8NgBZ80nj0CFbDcDrwIrroMQpRbfXA8duPbxGT7uEA9WzxrHd2zN3yQ+Lk1xsQcfuSqCs
-	 Ok9T2iL9SMyQdk9O0IEDIopDHmY7Zbqqc5rgNNQC3DYMLdA936Mm/UwYisFnILJKl1mmL
-	 CqO7kia9Sgbijx7DANC2iAT9ND5nDB3692XdqZTW+3bsybdZiGdUdzNfzX5QavXGAbtDz
-	 kYiUBNOHG/RZ+g5MXgmIX2FK8B4aa5xAt9qA9K7f9miNOxrf2809bp2n5rHV6/GvghA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Ed29m7aE+olh445sStA0fNuOtJwjC0wyHzJL9EMCxHQ=;
+	b=CV4VbWLsGNKbeh0EHHdCnBzpyGuEB5fAGfZXaqI8c4mM2+9F+kLQjUPFDOBeko/gYfHX
+	 CoC3+4l4AzmRENRPGRlDhYBJmJXKrq+eRMxcnTmKNmk9wdqyxPfPEyBJ8O0DFLj59YEH/
+	 67EcY6YA51g1h/9mH+SzOrITQHMki5yYa2K2Lo4j6W2hBa5WeH4nfgwD8Hog3rdkzkhCf
+	 eGiHjztRHzSafcAZJu0bfNrXlhRVn9ptCBIXAxKwv0nBj8BDUhjT3E+PPkmQJW3DtTSlY
+	 5zrcrJQ19IgMMetaU3o6A+J510Fanh6mPS64L87Be29Z/ohX3f8JufvzRsrwijB+hEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bhoMNayM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C9IW88Dz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C351606A320;
-	Wed, 18 Nov 2026 22:43:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A25B606A325;
+	Wed, 18 Nov 2026 22:43:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bhoMNayM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF6DD1F000C4;
-	Wed, 18 Nov 2026 22:43:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C9IW88Dz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B22601F000C5;
+	Wed, 18 Nov 2026 22:43:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041804;
-	bh=kiUtWfJ7aorUY6CtvyvmNa+D9cydRv2EpXjSji/Ps2w=;
+	s=korg; t=1795041807;
+	bh=Ed29m7aE+olh445sStA0fNuOtJwjC0wyHzJL9EMCxHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bhoMNayMslDcgfczPDZiV3UkbASD/6PiFEP8//Y6xCfUgbftnHcdjI3WRAcucA0LT
-	 keBk+TkFJ5YZc25emgjosAmEHVRTOiIQPKWY/2G3EvmVr+U2zT81vLP8HYqSSewmcX
-	 5e5HvFgvr3YrzQQ2bnzSozh0KW0yXR0HyvQcDcw0=
+	b=C9IW88DzckS3DbvX+6fZ/axepUqsYoK2nujrcpfvE9+EwG4K2t0LNsmf91bFE2/7h
+	 da2hTsQdtLnzu7FDtSvwprllnC3DJK0VjXNa3X7HfVW+IOnSV0Wr1ERl1bAMeR9T7o
+	 zVq166pGUWK7xlHp83J+l0gWv9vEYjGQZtvN22ZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongbo Li <lihongbo22@huawei.com>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amade@asmblr.net>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2945/3318] ASoC: remove unused substream in macro soc_link_mark_pop
-Date: Wed, 18 Nov 2026 15:59:27 +0100
-Message-ID: <20261118150448.686970524@linuxfoundation.org>
+Subject: [PATCH 6.6 2946/3318] ASoC: soc-link: Correct stream stop operations in snd_soc_link_trigger
+Date: Wed, 18 Nov 2026 15:59:28 +0100
+Message-ID: <20261118150448.713379836@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,77 +62,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hongbo Li <lihongbo22@huawei.com>
+From: Amadeusz Sławiński <amade@asmblr.net>
 
-[ Upstream commit 2f12d0de77b99f0f35755d16efeb12e6f45e5710 ]
+[ Upstream commit 7ef99fcfbbac20ebec10d21a37aeaf8321de7829 ]
 
-The soc_link_mark_pop don't need substream, therefore we can
-remove it.
+When snd_soc_link_trigger() is called to stop, pause push or suspend
+stream it should call soc_link_mark_pop() on proper target to reverse
+operation from trigger start, pause release or resume.
 
-Signed-off-by: Hongbo Li <lihongbo22@huawei.com>
-Link: https://patch.msgid.link/20240821070815.2326534-5-lihongbo22@huawei.com
+Fixes: 6374f493d93b ("ASoC: soc-pcm: care trigger rollback")
+Signed-off-by: Amadeusz Sławiński <amade@asmblr.net>
+Link: https://patch.msgid.link/20261014200608.118770-2-amade@asmblr.net
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 7ef99fcfbbac ("ASoC: soc-link: Correct stream stop operations in snd_soc_link_trigger")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-link.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ sound/soc/soc-link.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/sound/soc/soc-link.c b/sound/soc/soc-link.c
-index 619664cc9ab95..e6d806591bb13 100644
+index e6d806591bb13..6c6624db5cd40 100644
 --- a/sound/soc/soc-link.c
 +++ b/sound/soc/soc-link.c
-@@ -35,7 +35,7 @@ static inline int _soc_link_ret(struct snd_soc_pcm_runtime *rtd,
-  * In such case, we can update these macros.
-  */
- #define soc_link_mark_push(rtd, substream, tgt)		((rtd)->mark_##tgt = substream)
--#define soc_link_mark_pop(rtd, substream, tgt)		((rtd)->mark_##tgt = NULL)
-+#define soc_link_mark_pop(rtd, tgt)		((rtd)->mark_##tgt = NULL)
- #define soc_link_mark_match(rtd, substream, tgt)	((rtd)->mark_##tgt == substream)
- 
- int snd_soc_link_init(struct snd_soc_pcm_runtime *rtd)
-@@ -94,7 +94,7 @@ void snd_soc_link_shutdown(struct snd_pcm_substream *substream,
- 		rtd->dai_link->ops->shutdown(substream);
- 
- 	/* remove marked substream */
--	soc_link_mark_pop(rtd, substream, startup);
-+	soc_link_mark_pop(rtd, startup);
- }
- 
- int snd_soc_link_prepare(struct snd_pcm_substream *substream)
-@@ -138,7 +138,7 @@ void snd_soc_link_hw_free(struct snd_pcm_substream *substream, int rollback)
- 		rtd->dai_link->ops->hw_free(substream);
- 
- 	/* remove marked substream */
--	soc_link_mark_pop(rtd, substream, hw_params);
-+	soc_link_mark_pop(rtd, hw_params);
- }
- 
- static int soc_link_trigger(struct snd_pcm_substream *substream, int cmd)
 @@ -175,7 +175,7 @@ int snd_soc_link_trigger(struct snd_pcm_substream *substream, int cmd,
  			break;
  
  		ret = soc_link_trigger(substream, cmd);
--		soc_link_mark_pop(rtd, substream, startup);
-+		soc_link_mark_pop(rtd, startup);
+-		soc_link_mark_pop(rtd, startup);
++		soc_link_mark_pop(rtd, trigger);
  	}
  
  	return ret;
-@@ -209,7 +209,7 @@ void snd_soc_link_compr_shutdown(struct snd_compr_stream *cstream,
- 	    rtd->dai_link->compr_ops->shutdown)
- 		rtd->dai_link->compr_ops->shutdown(cstream);
- 
--	soc_link_mark_pop(rtd, cstream, compr_startup);
-+	soc_link_mark_pop(rtd, compr_startup);
- }
- EXPORT_SYMBOL_GPL(snd_soc_link_compr_shutdown);
- 
 -- 
 2.53.0
 
