@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019009;
-	b=jBv3HAnUhlxTNcrFTgsOoxTfdNVaeUEXBEecrDIxFpqxW28l3zmoYx42K/Kd9OxYO3qv
-	 AFXGu9utKhTtbA0LbUTS93va0hYsCipgQIC1KP3FR/74WG6YRkzYHYtK+m0Hs2Bnvva01
-	 S6yuewZ5PZgW7jMAUS3aw1TIMHHdJDbOd6xlzzCXrggwh7u6Y+17DW66Y/AjzhEN2mb/B
-	 5BboDKnxge8hu2OvrrEfyRd6v1I6xOla82hcC/neAad0Pafj08y9fM1wHNeh0+JU2Iv2T
-	 lvgz3y3j2N1Sq3Z0aWerxi4BO4yzsfUX/k8Wv/Tv3MC39jXmzsBcTNY/TJ6dpQ9ISKw==
+	t=1795019012;
+	b=FsZ9nedtHjBEVLkP/mkEMdGWpHYSSXOOYLkYlTNi+qgKDwTghNVTaItVCsR8YbCeHmsh
+	 QtSmMxBhK3frdIL3o2TUZ+shYLD8MACFlYW0VIh7sWBXb6Xjhr2/24zo74BwiZxQJIVr4
+	 SFeatk4G6Gh3N56aSy7gulCL8DaGIz05G0QkNhsLpLSUvzzcAc/xWGMJ0wwtbvOrG53Xy
+	 ScZpkI7T7oBL4wQry+ZqiHaFSDxJpDxtrRFp8B8I4anRDm1OK9+6t2x/FOv/ocJk/dVgE
+	 UMhCFp5VS2kmTVCXsE/vgOUErS0xclPV2/+K6ap4vM9mukpIusN1ToB9CqU2Q0BBYXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019009;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019012;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=i+A6jSXBRJU7lG7/7i32lVWA+wlHaHggxdNHWbPBs6A=;
-	b=vx13b/YB/QZ3qWC+OonKvTZM2xJCpK9CdbaGcF0tSb56ldgCy894hs8tp3bdzn0hZ2LN
-	 wBD3SvQWjagIKMBcAxF36SwCqfliohhdrT8PcTIg3CmtL3iVnpCj4eZAfTSTurRiZe8RE
-	 3bpzEQ6f2ei6nGceF3WrF7DBFmLKLC/h64I1Q1+khvMlXN7jasH2n1HHJ3ZyCAk7+Nf5i
-	 KeQ1UWzOMlgWVXKymAPk/2QrOQlqsxDOCTk7Z9XdJ//qrXrlWh+W1mZO1GFlNvg0u38nm
-	 O9CgokAIgeVs8JshfpbvnHTJO0jJm2aPdxStzht2LSKIxqe87OFPAtdaIEP75uPV/Ag==
+	bh=9+BUZcMlik07hz19KglBu2aZy19CRap5fxJ9SMGpOQQ=;
+	b=TbRTXbae9cokH0glH7G/7cwdNGTnzeHZW9vAse2bdchXYCtu5/GoEOT/X4RccdIEw2yX
+	 uUGZrhSnc+pc15tIav4FiIkdw6+iaHgFV3PHrCzPZ6SogCHuz8nWWPz1sUMqUiJGKd6tb
+	 0RbC6CO9hipnu+ZZB9jgdyBe9PRJralzBynzBcwVSvrlLS/6VYYirvEPmUwuAt4VyGrBf
+	 NkuVx7QkSsTGUKPcHGOWWwxXF03Cn7JGq1AIkQNIf8WJ3DggBMBUB718QpiC3JRjJiWKm
+	 zoHSuoQ9jKpTKQF5cseZEPeZJbEL+JW55p61c2s2fCgxXmXEV9o4a2wY5KvV6he87uA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lzd5kAOs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rN+b5z08;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D2460A2609;
-	Wed, 18 Nov 2026 16:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A1E9606A325;
+	Wed, 18 Nov 2026 16:23:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lzd5kAOs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 214401F000CA;
-	Wed, 18 Nov 2026 16:23:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rN+b5z08
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBBE81F000D0;
+	Wed, 18 Nov 2026 16:23:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019009;
-	bh=i+A6jSXBRJU7lG7/7i32lVWA+wlHaHggxdNHWbPBs6A=;
+	s=korg; t=1795019012;
+	bh=9+BUZcMlik07hz19KglBu2aZy19CRap5fxJ9SMGpOQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lzd5kAOsnQcxJgxeh3cTanseL5rlu4ZCdYdvaffsxJ+Tl1+YS0LmCZo2R8O+qDmHj
-	 cmYeWvuVG+Fze3hJWMnb4JWDWgITmbRNwt3fSIveKY4e/JbNfOa5Xl1DvX/7I2vk2/
-	 eOgy2xhyIA6CLN0amFlX6AmnximJw3FJRv6AqR4Y=
+	b=rN+b5z08n+cXl2ZGMxy1x3Al/+QdNboAfcRHWvFfg73p+aO4QPr+4o6zkUUsrOzpt
+	 HtFxbkMR0XAJunh5z86i5oKq4Ht8S9T3uAHb4l/8uV7joMC03SqVRjiXoLRWFfl6OY
+	 xCHhQ91dcMBRswuOa8fOAdmNcGKPZ10ZxrdtjrCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Vorel <pvorel@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Andy Whitcroft <apw@canonical.com>,
-	Dwaipayan Ray <dwaipayanray1@gmail.com>,
-	Joe Perches <joe@perches.com>,
-	Lukas Bulwahn <lukas.bulwahn@gmail.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1392/2651] checkpatch: skip CamelCase cache for --no-tree without root
-Date: Wed, 18 Nov 2026 15:43:52 +0100
-Message-ID: <20261118150338.132237531@linuxfoundation.org>
+Subject: [PATCH 7.3 1437/2651] wifi: mt76: mt7925: restore the reset state when fw_pmctrl fails
+Date: Wed, 18 Nov 2026 15:44:37 +0100
+Message-ID: <20261118150339.787089486@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,49 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Vorel <pvorel@suse.cz>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit d41ebc7f9e2cc80cb57139c05e71415a79582ab0 ]
+[ Upstream commit 8d2f5990cd429a2fe5fff05f7acf84d6799d4324 ]
 
-Running outside tree (--no-tree) without git root (--root DIR) is not
-doable because we have no include/ directory which could be cached.  But
-3445686af721 expected that we are always in Linux tree (w/a git).  But
---no-tree does not require --root.  Therefore skip whole caching in that
-case.
+mt7925e_mac_reset() returns directly when mt792xe_mcu_fw_pmctrl()
+fails, leaving MT76_RESET set and the TX worker parked. Every other
+error path jumps to out, which clears both. mt7925_mac_reset_work()
+clears neither, so once every reset attempt fails there, TX stays
+blocked until another reset succeeds.
 
-This fixes perl and find errors when running checkpatch.pl *with*
---no-tree --strict and *without* --root:
+Jump to out instead.
 
-    No structs that should be const will be found - file 'scripts/const_structs.checkpatch': No such file or directory
-    Use of uninitialized value $root in concatenation (.) or string at scripts/checkpatch.pl line 1213.
-    find: `/include': No such file or directory
-
-Link: https://lore.kernel.org/20260810161159.1044160-1-pvorel@suse.cz
-Fixes: 3445686af721 ("checkpatch: ignore existing CamelCase uses from include/...")
-Signed-off-by: Petr Vorel <pvorel@suse.cz>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Andy Whitcroft <apw@canonical.com>
-Cc: Dwaipayan Ray <dwaipayanray1@gmail.com>
-Cc: Joe Perches <joe@perches.com>
-Cc: Lukas Bulwahn <lukas.bulwahn@gmail.com>
+Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
+Link: https://patch.msgid.link/20260827162115.1449757-1-nbd@nbd.name
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/checkpatch.pl | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7925/pci_mac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index 8a7787d228a63..f424dafce5bce 100755
---- a/scripts/checkpatch.pl
-+++ b/scripts/checkpatch.pl
-@@ -1206,6 +1206,8 @@ sub seed_camelcase_includes {
- 		my $git_last_include_commit = `${git_command} log --no-merges --pretty=format:"%h%n" -1 -- include`;
- 		chomp $git_last_include_commit;
- 		$camelcase_cache = ".checkpatch-camelcase.git.$git_last_include_commit";
-+	} elsif (not defined $root) {
-+		return;
- 	} else {
- 		my $last_mod_date = 0;
- 		$files = `find $root/include -name "*.h"`;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/pci_mac.c b/drivers/net/wireless/mediatek/mt76/mt7925/pci_mac.c
+index 280797fa0d85f..67eb86746779d 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/pci_mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/pci_mac.c
+@@ -127,7 +127,7 @@ int mt7925e_mac_reset(struct mt792x_dev *dev)
+ 
+ 	err = mt792xe_mcu_fw_pmctrl(dev);
+ 	if (err)
+-		return err;
++		goto out;
+ 
+ 	err = __mt792xe_mcu_drv_pmctrl(dev);
+ 	if (err)
 -- 
 2.53.0
 
