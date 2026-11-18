@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056338;
-	b=PwbaFcNDA9QOW/EqZ3VJa4M7C7ktyuGXEGIzlTI4ZRV/gRtx42vrrVlcYTD3/3Ze4dni
-	 j2etNk9f20O+xN4Ef5VaxjfuNNDwo1+QhdR+GDOcOs2D72feMkbW1D6lo4j7XAd+xvE+u
-	 V38PXfZ+4WvuPYaGWd1G0LEvu7wPgM07IERqKW4YmA1RlZdYZoCBx2I77y9I8rBynrBaK
-	 T7irmwIQUU5TahlZtVhwC/OlvyFhvN/JS6TzC/xjW+/8XpFSxj1O7XKHuZVavXe5dBaMI
-	 Liww5PuuCYx8WujVaLqvAz2K/aJF7fbEIR5loE1AUn5rOdvBsuUj3RbVl0zYNPuJtmg==
+	t=1795056341;
+	b=HQUIy6exX7zIXBeTy6SdaH5ddmFIO+NGQzu+T71T74rLyIyt0cD9v9JflY7mTczgYOrU
+	 tnz8Kf+lN8wqJfE+x4S+pHAC7/4HlmDnmO075DxFfDClSTeWl8X/+qwAPmO3PaVlwvGoN
+	 FmT/9hYwW6+0JTVt6ZTH7Aaq9I7o2E7VoAAm6Jbpy9eGUDPRR+UuheY0bfG+WtdNByz15
+	 DF9Pau7g7W5DfZsbMkiHHYo9QEtbFVgmbs/Nql2y/AR21R2aQQlAvLilo8ljPxb2ZMz3o
+	 lcwl3RlO36zHsOoKnlgOtlLPgY1oaL1IA3KsY2vvJj0xV88CFgNStKBNdXq0apjkrUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056338;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056341;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=O3BOnDBugIqn8oU8RO1m5X0JeZ9f63BvUXasOBWoBiA=;
-	b=vDPvFlzMCU3NxhYbxGrgHvLtsmFY9eTtcqkiymthbaD4lgDIQTwGICvOK8U/V9EFC+CY
-	 bQk9b/8W5s5WuCG+YO0WXl07CyDahL4LSaRHxSbxm6E6BQv5UQlAOMD9UqEKVNtWCS+Tx
-	 8Uk0PpnhKUb5Kz0LL4e2uf4YN8EUxdL1a82VMFeAT49Xzjp86BHNtN2D08v/qOCsg5VL/
-	 BYTNl5PRyMSg7DDR/MiGMfh+DKSLX38xIFMfm4JnkQYrcA3hU5ULI26QAY0HHyyQLB+3J
-	 LBxiE4KQiLhBHkF6kNYW+PdYHNtVt7QyjkAX4jhEFYBO2uMo4Q+OXenUuodQkObwbYQ==
+	bh=DHDpWygyTmbpOcrm8l0zwLw8bElQcsDWJkPyIytc16E=;
+	b=vEJK/3yrPN76rYgokfFP9HGx6L2wgGWytmdcq9CEh8jjPD4iCdTB39oiHSqqRKB5RRDg
+	 rFYhG16fkqaGOqPPwf1AoRdpOZLSSOM6Fe5mVRCGNx4ZTPMzcyA4egGXcVs+6DPEm0S9k
+	 hqCAX3P3fsomiGCJLxz1JHp7bMgNE0GmxHT2GuOcWk7bZSEuPbvdI3h+6VHSkNnVXcyL1
+	 eyt93e0RP6DqWu7ZdnGl31y9FDeUYr2kmH9YcxWy5YUONFY1Xk3MH/qNUyLp5jWp1FR7O
+	 wGstSTkr4tb7zsND+mteVJHwTcXKW9OtSifBqVzaq0AL351xa9Bczw+3WNi8lOZ+hRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iiXXsyvB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hjaA7Na+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253FB606A31C;
-	Thu, 19 Nov 2026 02:45:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02319606A335;
+	Thu, 19 Nov 2026 02:45:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iiXXsyvB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B7F41F000C4;
-	Thu, 19 Nov 2026 02:45:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hjaA7Na+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 545C71F000CB;
+	Thu, 19 Nov 2026 02:45:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056338;
-	bh=O3BOnDBugIqn8oU8RO1m5X0JeZ9f63BvUXasOBWoBiA=;
+	s=korg; t=1795056340;
+	bh=DHDpWygyTmbpOcrm8l0zwLw8bElQcsDWJkPyIytc16E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iiXXsyvBhD/EtGpvImhGKJpAhuYj+uewqKNKjaXNBkiaUr3WKesHar/vAZg3EdGqU
-	 nC8G0Zvr+O5ULys3LNdM3JRxf7wCpvKR3lm+7pKD01vUzXvlnrUnUxVDZxg74tsIsL
-	 /8IbQM316pF6XzCPzYh+mtPWjblH1F2l2wBJhLXI=
+	b=hjaA7Na+tYmI3ULOHkdw7epHezJMKL6/39MTGshPz+Mtc/czaIQ/yvScBe4EpsivW
+	 Udht6Cw6/zfjxe7G3hz+u+9Y88L0nMkPqsg4oYTbhzPCg0wLoi8Ws87NSMBdG+1ZYP
+	 Mi/DTOxJ3s9LeUAxyWTsOA6imvd2l9DwA5iXErwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	VEGA <vega@nebusec.ai>,
-	Kyungsik Lee <kyungsik.lee@lge.com>,
+	Long Zhao <longzhao@ambarella.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1899/2214] lib: validate in-memory LZ4 chunk length
-Date: Wed, 18 Nov 2026 15:59:35 +0100
-Message-ID: <20261118150127.123741895@linuxfoundation.org>
+Subject: [PATCH 5.15 1946/2214] dt-bindings: vendor-prefixes: add Ambarella
+Date: Wed, 18 Nov 2026 16:00:22 +0100
+Message-ID: <20261118150128.846824610@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,49 +71,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Long Zhao <longzhao@ambarella.com>
 
-[ Upstream commit 138a84817df01eda67bb23032ab49c23fe2ffc16 ]
+[ Upstream commit 5ef299ffb56531b3a4f2b311000da76beed403ee ]
 
-We found and validated an issue in lib/decompress_unlz4.c.  The bug is
-reachable by a root user through kexec_file_load() with a crafted external
-initrd.
+Document the Ambarella, Inc. vendor prefix so Ambarella DT bindings
+can be applied without waiting for the SoC series.
 
-unlz4() reads the compressed chunk length from an in-memory initrd and
-passes it to LZ4_decompress_safe().  It only checks the chunk length
-against the allocation size when the input is filled by a callback.
-
-Reject an in-memory chunk that extends past the remaining input before
-calling the LZ4 decoder.  This prevents malformed initrds from making
-the decoder read past the mapped archive.
-
-Link: https://lore.kernel.org/59c6555c27aa7ba18ee227f9f02c78d15a37605f.1789219453.git.zhilinz@nebusec.ai
-Fixes: e76e1fdfa8f8 ("lib: add support for LZ4-compressed kernel")
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: VEGA <vega@nebusec.ai>
-Assisted-by: LLM
-Cc: Kyungsik Lee <kyungsik.lee@lge.com>
+Signed-off-by: Long Zhao <longzhao@ambarella.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://patch.msgid.link/20261014-cv75-prefix-v1-1-fe95ed567880@ambarella.com
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/decompress_unlz4.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/lib/decompress_unlz4.c b/lib/decompress_unlz4.c
-index e6327391b6b66..80bd4ea40f95b 100644
---- a/lib/decompress_unlz4.c
-+++ b/lib/decompress_unlz4.c
-@@ -139,6 +139,10 @@ STATIC inline int INIT unlz4(u8 *input, long in_len,
- 		if (!fill) {
- 			inp += 4;
- 			size -= 4;
-+			if (chunksize > size) {
-+				error("data corrupted");
-+				goto exit_2;
-+			}
- 		} else {
- 			if (chunksize > LZ4_compressBound(uncomp_chunksize)) {
- 				error("chunk length is longer than allocated");
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index e8503de28eb62..5f4114bcb2e64 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -83,6 +83,8 @@ patternProperties:
+     description: Amarula Solutions
+   "^amazon,.*":
+     description: Amazon.com, Inc.
++  "^ambarella,.*":
++    description: Ambarella, Inc.
+   "^amcc,.*":
+     description: Applied Micro Circuits Corporation (APM, formally AMCC)
+   "^amd,.*":
 -- 
 2.53.0
 
