@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042063;
-	b=SsSvny34qlSSdnZl+wtYTOosJv6mYE45tNNwcRm6LxJaDrq4si3uPkxgRRbW+tiCqvJe
-	 mtwflsWFm1n7y8IXvnW4DbL+9IFOg0Zm+oVhGO90CAa/jEA3V4WuKZTT2nD56ZYZnapLr
-	 MXF3YgL9FtEAoUQ1o5gQNVcifDvJwx/IZsY8Wh55apSVQ8VfLJDdLLrvvmnu7AsFEqd4d
-	 mTqUUZQtbwiQtBNcOQyrnEK4xpJLcEozUBlL4J2mpm+9OpM9tEunKTA8ZQ83dpBijMHf8
-	 5GF+O0wrwX3YzD3wIcevmgXzdX/mNBLtBmbdMfwZQXaGNIAJPZfdRVbK+5AqC47vxwA==
+	t=1795042066;
+	b=G5SLqpBt7KNavOuNGGSc+/Hh/J8Fj75KmnkIZ11sCNAeeQ0Ue4hQNYOW1RGRdd+m5DCU
+	 hcZyam5NVrqJUsmIf81ZgfTD7sOfsLjMnlz2dz6voYHje+X9F2JAuljNlhGbV6Xm4HJFB
+	 Un0ol95zGcqcy9UUQU4Vju5y6Q374dW39dmdEMDk4CooC48lVbBx7vuI0FGvCLTS/tSSx
+	 n/QDkpU5XzXVMPj7UlZAg74wUH7BFcXRRM2ms+XJ5EL9NqBkHXF2Swj6ebkBML1bWtjUu
+	 Uaq/5d7nOPqnlE7ocV4aczbgd7XxGWaMKwTAYsTFDcZfkkgvxq5Jkf8vl280unpd97A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042063;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042066;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KZY1OdoAd7QVXMKQe4EC1yqhwXWXafyFqYjH0x2thG0=;
-	b=OX+181DxQGQ5SX7xtxzKRMRBlygXKkxQcVz1ftW8DoogBFctPoSTjgPxvTxg6cfWfbqg
-	 GlV2wSWATd+yo97Z8xBErrsQ5VsIHQTH6qiZwNnpLS9e8KzbY+BA9RvCIl+8w2vFQVd1P
-	 AFSjebiLMvH60dD8fqjMcn6/fiqrvZtfHhFHdy7AOHpTbvIeJIFDlxU0U71281/Wy4hoy
-	 xraTd+idacdPI9DGT0M8WCj/76RopkTErDnQpyhaFxpHNhhF99d1/NaLzNZ2QcNsF9VZb
-	 nlSr9swcHzaJR0FCRXIdlqtW84huCEB9yVvAIVfXqEXJKKa4L5pDslxZ4mmZkurb7TQ==
+	bh=txRVmpqbA6CR2KFaOss4Ef/KKqEi7FY29BmwNCOONaA=;
+	b=xLWctKJoR2Lm3F1GJ802s9pYO66q8ZoipX2wvhDr5Y7Rf2BNgmJMpUu6J+6hoxC7zjnh
+	 n+tNZowkhHJvI21YbN52YtSDr43l24f9MbvQeEWTZ4FA5iBF58E3N2yf5nmmsEaaMhT0L
+	 WuQwqv+xw4OCqRa7RmVFaM8YkZylX5PjUUYCe6HJZvahnqinqPZ40wcs8jCGx2hhz+7/E
+	 WDL8E8P6+Lroyt/yNpVqprZqw6vK/FE71cixT9H9Y3qivkHnnV2TVuiKLYqAzHoq3jdMp
+	 XEtivFgJyb+iasl95rxXVU1u1WI49ukQ3a+wTFsfIipQfX48VTWTxRJCA8H8bPfC4rA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g8Mt4dB2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r+reWWUC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAA25606A330;
-	Wed, 18 Nov 2026 22:47:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7FA606A320;
+	Wed, 18 Nov 2026 22:47:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g8Mt4dB2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C37A1F000C4;
-	Wed, 18 Nov 2026 22:47:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r+reWWUC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 079811F000C5;
+	Wed, 18 Nov 2026 22:47:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042063;
-	bh=KZY1OdoAd7QVXMKQe4EC1yqhwXWXafyFqYjH0x2thG0=;
+	s=korg; t=1795042066;
+	bh=txRVmpqbA6CR2KFaOss4Ef/KKqEi7FY29BmwNCOONaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g8Mt4dB2MmIzYlUsHOW4ZPWlAUwGV0WLu9/3OVVAJrrUhGYT5Voz9cTZj2sCiSjhu
-	 kQN6XOUGZciSI6PgnfJxIE6LPlFtx9TPYBk6NVWRuco8NIh/GTrU373bnxdf8iXbGL
-	 S26PSU6Ka0DQsWMJxxLDOiRsd7UHMTetDOrSqXPA=
+	b=r+reWWUCYOOD389CME+jYdHu2cA+OzfwmNSlM5XylfPNgdF8To+mNHzDRtvGNOra6
+	 jf2iT72BQ8P8mxerRJFRFloNrthTLFrt3tOjBwUsBQsbrVf+iMC9SRZwgnOJQR4Omd
+	 WndCF18q9RpaKd58XL1IvH0jGslz7wXyRR+A/q2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Troy Mitchell <troy.mitchell@linux.dev>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Qiliang Yuan <odys.yuan@gmail.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3038/3318] dt-bindings: vendor-prefixes: Add Sensylink
-Date: Wed, 18 Nov 2026 16:01:00 +0100
-Message-ID: <20261118150451.312755115@linuxfoundation.org>
+Subject: [PATCH 6.6 3039/3318] selftests/bpf: Run the cpumask map insert tests only for the test task
+Date: Wed, 18 Nov 2026 16:01:01 +0100
+Message-ID: <20261118150451.339548689@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,35 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Troy Mitchell <troy.mitchell@linux.dev>
+From: Qiliang Yuan <odys.yuan@gmail.com>
 
-[ Upstream commit f4ba4f8cc8e8df45e57c1754955b3a6b9b089a97 ]
+[ Upstream commit e2c978ad415ce223e71f6ddaa92778225eca0bef ]
 
-Add the vendor prefix for Sensylink Microelectronics.
+verify_success() attaches each cpumask test program to task_newtask,
+forks a single child, and expects err to be 0 afterwards. Most programs
+return right away for other tasks than the test one.
 
-Link: https://en.sensylink.com/
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Signed-off-by: Troy Mitchell <troy.mitchell@linux.dev>
-Link: https://patch.msgid.link/20260914-ctl2301-v5-1-b44b81cd2c3c@linux.dev
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+test_insert_leave and test_insert_remove_release don't, and insert a
+cpumask into the single entry of __cpumask_map for every task created
+in the system while they are attached. test_insert_leave leaves its
+cpumask in the map, so a second task created, for instance by a test
+running in parallel, fails to insert one and sets err to 3. Two tasks
+created at the same time can do the same to test_insert_remove_release.
+
+Return early for other tasks than the test one in both programs, as the
+other programs do.
+
+Fixes: 7b6abcfa15cd ("selftests/bpf: Add selftest suite for cpumask kfuncs")
+Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
+Link: https://lore.kernel.org/bpf/20261009-selftests-bpf-cpumask-insert-filter-v1-1-3249218594d7@gmail.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/testing/selftests/bpf/progs/cpumask_success.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index 635d0249651f8..4e73971c6c735 100644
---- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
-+++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-@@ -1225,6 +1225,8 @@ patternProperties:
-     description: Sensirion AG
-   "^sensortek,.*":
-     description: Sensortek Technology Corporation
-+  "^sensylink,.*":
-+    description: Sensylink Microelectronics Technology Co., Ltd.
-   "^sercomm,.*":
-     description: Sercomm (Suzhou) Corporation
-   "^sff,.*":
+diff --git a/tools/testing/selftests/bpf/progs/cpumask_success.c b/tools/testing/selftests/bpf/progs/cpumask_success.c
+index 674a63424dee3..76daff114cb29 100644
+--- a/tools/testing/selftests/bpf/progs/cpumask_success.c
++++ b/tools/testing/selftests/bpf/progs/cpumask_success.c
+@@ -387,6 +387,9 @@ int BPF_PROG(test_insert_leave, struct task_struct *task, u64 clone_flags)
+ {
+ 	struct bpf_cpumask *cpumask;
+ 
++	if (!is_test_task())
++		return 0;
++
+ 	cpumask = create_cpumask();
+ 	if (!cpumask)
+ 		return 0;
+@@ -403,6 +406,9 @@ int BPF_PROG(test_insert_remove_release, struct task_struct *task, u64 clone_fla
+ 	struct bpf_cpumask *cpumask;
+ 	struct __cpumask_map_value *v;
+ 
++	if (!is_test_task())
++		return 0;
++
+ 	cpumask = create_cpumask();
+ 	if (!cpumask)
+ 		return 0;
 -- 
 2.53.0
 
