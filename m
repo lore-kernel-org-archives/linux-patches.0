@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021264;
-	b=WG0LzW5lW6c/dV/fKtFoOvS0aBRtVWkKM4c0J2jSIAQlgw1jqd57IkzZFX3Tco1WAAvr
-	 8OCjf0nwruaui/2T/i7u4MPvkHCLC/ulI1MIfWj6CtSr1G3mcNHoS9GXtui4dZCioIA/r
-	 xpfFJj7xt8c1fTtTw0uF1wUCfrq23CNXgF+jKtFNBiGY2RK0cxIhwrrM2SM3DvrDBhDO8
-	 Hs23hItesy+m2elM2qVnayaly30hhvp/cs8sg8OnMuou41dPWpELTY3ToSNWm7lVCmpnd
-	 GMybI9zDCKcOvaZflvLBHYK3Uj/CO70bD/bbb5TUGru0nZYPbx+Vo40xYfDBved43TQ==
+	t=1795021267;
+	b=XZiwdr92B/2jm9Ed8QwBthwtK0kvz4aGezcjTV0BLm+7GJOOKt1NjaGae7Wn+YCkeY5M
+	 SIo2rp4XjgHdXidFVLhL3QhiZnOQfzsLJkITGGbcZPsKYQZzhYbPaSeML7wJ/20jgTGcG
+	 QzsP4dRRMhTeDC0fQOEdaAy7pq2Gt8lUbUpA4kF+A7KVKwrMIdCuCntPyBmBi3iTTUIyq
+	 6muizQ92KVIXOCLOdzgW8+WhtUC7X7WC0XXWDAFDFKtgDxX9TAUQGq1nQwrGZrY/S9KuU
+	 Ve0t/Hrq37qhARrqe4PxkPs+la0ps9YdmjQtwbJe64yksYoK1Cymcsjhrwcs+6q/2RA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021264;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021267;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rif4pENIXbgNQMsP5nciKll24Zhrk0KAsGfo0M7l4Hw=;
-	b=v8zZpFv2jQAi1pMSTtsgGkxIDqzWhs0OjSvH+LAlhMXB+rG4URL+O7aXIK94MpeSjn1X
-	 sm5KLvDyE5/9qHXoN8AHXeR3GNB+2PObr5WYiuBUYkkau6ozBO1xgR+F+Iyd8xFVTsRNT
-	 Mr2ux4EU3vVYBfMHS3r5yf0Ty2uLIws0EQm583yiFJtr47SQb0yxIKYkviJ9hXPvKtA0n
-	 dJaAZV03OswiQm9vlT5puwfuxBiFZYzkTWecjxtesc2TGWct8AJW2TQhdg/Gw5kSytHXI
-	 8WeknMSUqN6T6vOBX0sbmKiniybAV5SayviTMo5XvTXbcXPYhhAgQ7s637lKY3acZ8Q==
+	bh=Lvuuh7ehMArgdQTfI+SP1F1dCp/g1pB7F/bmFIy0adA=;
+	b=qn8CGj7aP3eFWFxO2KZOeOaPMLrdNKwGLGkCSd2A8IwSt8WrcADL8/dK8n+y5d27AUB+
+	 iLe26txEL+CEzCxlwN7NS8o/KCD+X3bpWP9gfuP9tdV7TXfO7xP32/UHjIBvO7yBQAn0R
+	 rVj1yFtXvF4lQqhXR3y0jsouc55ewSr+cQcxIFUcaVGackAUd1pV318M74xvCzMC8DXdI
+	 s+N9bm6GgDO2jF9w+P5I5wvi5y4YFyNhvll3JR9+lXgSKIFT4LPk9PGYpJGSfOOddR1Nk
+	 43YqWdeT7Lc0iyILMIPleF/xbIh9OLw/GZV8R3tRHyVUnvBdsw19tNLDFIjt1U6e9YQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=koW+rgEa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="rs/64aat";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1852606A320;
-	Wed, 18 Nov 2026 17:01:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8575A606A320;
+	Wed, 18 Nov 2026 17:01:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=koW+rgEa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 025B01F000C4;
-	Wed, 18 Nov 2026 17:01:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rs/64aat
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D510D1F000C4;
+	Wed, 18 Nov 2026 17:01:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021264;
-	bh=rif4pENIXbgNQMsP5nciKll24Zhrk0KAsGfo0M7l4Hw=;
+	s=korg; t=1795021267;
+	bh=Lvuuh7ehMArgdQTfI+SP1F1dCp/g1pB7F/bmFIy0adA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=koW+rgEaaFpDIHNzGic18MRrELFjDUf6QXjzrjTVr4kI4vkOYiYHEect6BVtxboOE
-	 o7/vTrcafPDxutY/MApVoMJKJr+aMFgRvr2CoOnLTNDF71XmkNK8HbYphUYzlGGQbA
-	 mbRMnCb9XJf1pK0J525epUYxEpnE89PoRIuexzT4=
+	b=rs/64aatTrzTeNLNv+TzyLVK8EiTD9qQv4xu/T2thqttQl1c3Uj6m5m/5ULMiLLCB
+	 9JxEP83eyO4lboTOtf0gn+IMACw8Iu411uyMZeUnSBgn9iXS2n5HwXEwlQDOQIFy3Q
+	 NSRsfaOHG/W8xDZLg97GVpWuWhJHciLk+anRMh/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
-	Qiliang Yuan <odys.yuan@gmail.com>,
-	Neal Cardwell <ncardwell@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sunny Tiwari <sunnytiwari@google.com>,
+	Jacob Moroni <jmoroni@google.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2246/2651] tcp: tcp_metrics: use the socket netns, not the dst device netns
-Date: Wed, 18 Nov 2026 15:58:06 +0100
-Message-ID: <20261118150406.321606954@linuxfoundation.org>
+Subject: [PATCH 7.3 2229/2651] RDMA/irdma: Bound in-flight CQP ops across deferred completions
+Date: Wed, 18 Nov 2026 15:57:49 +0100
+Message-ID: <20261118150405.784398549@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,112 +69,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Sunny Tiwari <sunnytiwari@google.com>
 
-[ Upstream commit 504bdcb8c1566a6f887f9accebe1aa99b502ae97 ]
+[ Upstream commit c3e8e9451e6f1b69f685b75e0fbf14f3d0fb2539 ]
 
-tcp_get_metrics(), __tcp_get_metrics_req() and tcpm_new() look up and
-create metrics entries in the netns of the cached dst device rather than
-in the netns of the socket.
+On IRDMA_GEN_3+ devices, CQP operations can complete in two stages:
+Stage-1 on the CCQ acknowledges receipt and moves an entry from
+cqp->ooo_avail to cqp->ooo_pnd, while Stage-2 signals final completion
+via an AEQ event or a subsequent CCQ CQE.
 
-These usually match, but not after the device has been moved to another
-netns or unregistered: a socket can keep a stale dst in sk_dst_cache
-until it is checked again, and tcp_update_metrics() reads it with
-__sk_dst_get() without any dst_check(). Once dst_dev_put() has run, the
-dst device is blackhole_netdev and the entry is created in init_net.
-Before that, for instance for routes through nexthop objects whose
-cached dsts are released from a nested RCU callback, it is the netns the
-device has just been moved to.
+In irdma_sc_ccq_get_cqe_info(), Stage-1 processing advances
+cqp->sq_ring.tail so the SQ descriptor slot can be reused once consumed
+by hardware, whereas cqp->completed_ops is only incremented on Stage-2.
+Because irdma_cqp_ring_full() only checks cqp->sq_ring, a burst of
+backlogged commands in dev->cqp_cmd_head allows irdma_process_bh() to
+submit more concurrent in-flight CQP commands than the maximum supported
+limit (cqp->sq_size - 1) while earlier commands await Stage-2. This
+causes CQP completions to be lost and synchronous waiters to time out
+with -ETIMEDOUT (-110).
 
-A TCP socket of netns A that enters TIME_WAIT in that window then
-creates or updates an entry carrying A's addresses and RTT in another
-netns, where TCP_METRICS_CMD_GET can dump it and where new connections
-to the same peer inherit those metrics.
+Fix this by:
+  - Updating irdma_cqp_ring_full() to bound total in-flight CQP
+    operations (cqp->requested_ops - cqp->completed_ops) to
+    (cqp->sq_size - 1).
+  - Calling irdma_process_bh() at the end of irdma_process_ae_def_cmpl()
+    so backlogged commands are drained after Stage-2 AEQ completions
+    increment cqp->completed_ops and free in-flight capacity.
 
-The metrics belong to the netns of the socket, so use sock_net() for
-full sockets and request sockets, and pass it to tcpm_new().
-
-Kernel sockets that do not hold a netns reference can still reach
-tcp_time_wait() after tcp_net_metrics_exit_batch() has flushed the
-entries of their dismantling netns, and an entry created then would
-never be flushed and would keep a dangling tcpm_net. Make tcpm_new()
-refuse to create entries when check_net() fails. Its callers are in
-an RCU read-side section, and cleanup_net() waits for a grace period
-between the refcount reaching zero and the flush, so an entry added
-after a successful check is always seen by the flush.
-
-Fixes: 51c5d0c4b169 ("tcp: Maintain dynamic metrics in local cache.")
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Cc: Qiliang Yuan <odys.yuan@gmail.com>
-Reviewed-by: Neal Cardwell <ncardwell@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261016084802.2725187-1-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c7db0abe5f2b ("RDMA/irdma: Add GEN3 CQP support with deferred completions")
+Assisted-by: Gemini
+Signed-off-by: Sunny Tiwari <sunnytiwari@google.com>
+Link: https://patch.msgid.link/20261017052856.3570063-1-sunnytiwari@google.com
+Reviewed-by: Jacob Moroni <jmoroni@google.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_metrics.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ drivers/infiniband/hw/irdma/ctrl.c | 6 +++++-
+ drivers/infiniband/hw/irdma/hw.c   | 1 +
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
-index dc0c081fc1f33..d58f99c67d4dc 100644
---- a/net/ipv4/tcp_metrics.c
-+++ b/net/ipv4/tcp_metrics.c
-@@ -161,16 +161,26 @@ static void tcpm_check_stamp(struct tcp_metrics_block *tm,
- 	rcu_dereference_protected(p, lockdep_is_held(&tcp_metrics_lock))
- 
- static struct tcp_metrics_block *tcpm_new(struct dst_entry *dst,
-+					  struct net *net,
- 					  struct inetpeer_addr *saddr,
- 					  struct inetpeer_addr *daddr,
- 					  unsigned int hash)
+diff --git a/drivers/infiniband/hw/irdma/ctrl.c b/drivers/infiniband/hw/irdma/ctrl.c
+index 970b61aa3e24f..ade451a4eb23e 100644
+--- a/drivers/infiniband/hw/irdma/ctrl.c
++++ b/drivers/infiniband/hw/irdma/ctrl.c
+@@ -5329,7 +5329,11 @@ int irdma_sc_static_hmc_pages_allocated(struct irdma_sc_cqp *cqp, u64 scratch,
+  */
+ static bool irdma_cqp_ring_full(struct irdma_sc_cqp *cqp)
  {
- 	struct tcp_metrics_block *tm;
- 	bool reclaim = false;
--	struct net *net;
- 
- 	spin_lock_bh(&tcp_metrics_lock);
--	net = dst_dev_net_rcu(dst);
+-	return IRDMA_RING_FULL_ERR(cqp->sq_ring);
++	u64 in_flight = cqp->requested_ops -
++			atomic64_read(&cqp->completed_ops);
 +
-+	/* Do not add entries to a dismantling netns: they would not be
-+	 * flushed again. Callers are in an RCU read-side section, and
-+	 * cleanup_net() waits for a grace period after the netns refcount
-+	 * reached zero and before tcp_metrics_flush_all(NULL) runs, so an
-+	 * entry added after a successful check_net() is seen by the flush.
-+	 */
-+	if (unlikely(!check_net(net))) {
-+		tm = NULL;
-+		goto out_unlock;
-+	}
++	return IRDMA_RING_FULL_ERR(cqp->sq_ring) ||
++	       in_flight >= (cqp->sq_size - 1);
+ }
  
- 	/* While waiting for the spin-lock the cache might have been populated
- 	 * with this entry and so we have to check again.
-@@ -273,7 +283,7 @@ static struct tcp_metrics_block *__tcp_get_metrics_req(struct request_sock *req,
- 		return NULL;
+ /**
+diff --git a/drivers/infiniband/hw/irdma/hw.c b/drivers/infiniband/hw/irdma/hw.c
+index b060ddc8b67bc..554f5d8962b9d 100644
+--- a/drivers/infiniband/hw/irdma/hw.c
++++ b/drivers/infiniband/hw/irdma/hw.c
+@@ -265,6 +265,7 @@ static void irdma_process_ae_def_cmpl(struct irdma_pci_f *rf,
+ 		irdma_sc_cqp_def_cmpl_ae_handler(&rf->sc_dev, info, false,
+ 						 &scratch, &sw_def_info);
  	}
++	irdma_process_bh(&rf->sc_dev);
+ }
  
--	net = dst_dev_net_rcu(dst);
-+	net = sock_net(req_to_sk(req));
- 	hash ^= net_hash_mix(net);
- 	hash = hash_32(hash, tcp_metrics_hash_log);
- 
-@@ -318,7 +328,7 @@ static struct tcp_metrics_block *tcp_get_metrics(struct sock *sk,
- 	else
- 		return NULL;
- 
--	net = dst_dev_net_rcu(dst);
-+	net = sock_net(sk);
- 	hash ^= net_hash_mix(net);
- 	hash = hash_32(hash, tcp_metrics_hash_log);
- 
-@@ -326,7 +336,7 @@ static struct tcp_metrics_block *tcp_get_metrics(struct sock *sk,
- 	if (tm == TCP_METRICS_RECLAIM_PTR)
- 		tm = NULL;
- 	if (!tm && create)
--		tm = tcpm_new(dst, &saddr, &daddr, hash);
-+		tm = tcpm_new(dst, net, &saddr, &daddr, hash);
- 	else
- 		tcpm_check_stamp(tm, dst);
- 
+ /**
 -- 
 2.53.0
 
