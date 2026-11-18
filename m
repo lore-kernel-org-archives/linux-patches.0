@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023957;
-	b=IpoT2SHLLkHyVb4+yplsXKfLt6LM2gsVpyIsAJKrz/KBe9HXMXAkZeOkHfLWqNDi8uL2
-	 a4HoT/CRhPqLrcihG+M+m6mTGrX/qsVP1OkL1mZicR7It9XyaMXTpemjbcaRRAWy8nlG2
-	 MzfBixruu0EMZ3scWgLwrUdfQvVEUA5MqWdrRztWX7Fttmg89+Pf15Xwmb5tPkTVf3vKZ
-	 m4NURAF+8Rs8Zaco5rvX3srkKDrSCGJxrFn0vxTRa96p6sNES5QUvTboIErmKHRatZnef
-	 /GsQdcEVYF46u6IwZl49+VnlEofa6jgCWxff3ytIl7a9no0OLgukEQM8eZli1EotYhA==
+	t=1795023960;
+	b=Ox1mSG5rtzx7kqc/CLSgSxdnPnf9PTcjOF7wajiZkban0Qi/i2ZnSPfz09M0sjFC6c24
+	 W3F9xHwheQ1YT02h3v+QJV1eXHfYBvpENZJ7QHF1/fm+ECqw4WJ86rIl6JFX5VFi451vL
+	 DXGBLKxYI6t/KDoxncSM6yaWVSIyH2KZznKk0HiZIK4wFCj+vf8qaEOtfz6kVw8Gc+zfl
+	 pXN0oyKOmVf27XeKoXgyFnOiru3owlubnDwXQmOyuMh0dn2MuKs9b60uz3OvH3ygSYrZ8
+	 btUEtsVhE03k+5Y4E2HneT5DsCoIM8APdRcQDYmdfCYlORDn0Rfb/b2w5LwsOwatNxQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023957;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023960;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SQTd13rPBRtWf7nYQUWKOlNMFcGxckFLoeT3yGGkM9w=;
-	b=CEX7ntsJ8bepUR/oqiHzgyv5fIr/XPxjkGJfDDDOh/Uxn884sG5FPw0sCuBdi+1/uVSh
-	 qm47Y4ocpem0q2w/JqGEbVgDA+IWZm8mDPYxUX3Z+bEhc70lSdlAcFk7jpb8GbdJY26NG
-	 XWQwIDEAjjA+YtmjzylGdj2mUD/50Mo9x9uHkOooaXXQSsFtmKw1rK6JWPDLMbP47KeBh
-	 uzOvXdnlo8HpYAyFRrvzigfHZDp7Azy/PCOJJDFr60PSbSJteCjXRGEpElQgUdJdzdBR6
-	 Xo+VReOyScXZQ5KYp86wF8p9LkgMgNDRH5YAHBahfgg+siAetDzU11tWKbpTr9ppMMw==
+	bh=nw8clo9mmyo/825djvLHU861AFFTOqVkEoKqaMCojIk=;
+	b=Y/n6/AbbTvVYmM4I07jjeeQfiUWqsd7iNe4pqyf8Zk35U46MpaWuLg5pe6NMh5NZJcUo
+	 klapqdrLi9HwehJd4BYNlpeAah2WpNukjS4yDjzWLYtNUcozkoGVInp9zT31TUd8mqhDF
+	 gmNZDZBo0xcY8T78Fdd/Lpd/m2SbKW21IRr0E6PYb3RbtvkpCg22Oe04JhPU+Vza5xFZ9
+	 JlqwYKLVSAwkRfznDhkLombRABMXapmq5gVwoxhNOh04SJxGDlpm4FzqcssiQtvveO3PK
+	 pGpl/v7++l60lAzqOZWBPNHivBwKG7998F1806XBrfGrEfBjSVPNwbZoah1pnqDvUqg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hP6VIdvu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O36rvupo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B209C606A31C;
-	Wed, 18 Nov 2026 17:45:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC9F606A31C;
+	Wed, 18 Nov 2026 17:46:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hP6VIdvu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 148731F000C4;
-	Wed, 18 Nov 2026 17:45:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O36rvupo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D88AE1F000C4;
+	Wed, 18 Nov 2026 17:45:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023957;
-	bh=SQTd13rPBRtWf7nYQUWKOlNMFcGxckFLoeT3yGGkM9w=;
+	s=korg; t=1795023960;
+	bh=nw8clo9mmyo/825djvLHU861AFFTOqVkEoKqaMCojIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hP6VIdvuy3sZEmHtpHUd2My0j4s0xWzxQBqxfeKFQr831KtoWhG8E64bTPCzfdT99
-	 n0FdsUkOua/VRrbKCRuy0tYD3qd3BPOFKCt6wN8x58oWdBRih+DTjYJjQIZNgBYKVS
-	 w0+eJ60jWr4q8dPEJVz+Mbt/twF0QdvdGP8ZzGlI=
+	b=O36rvupoA7Q99VPeWlT77aDfexCrOfahsRbImsEvUgUEXPkGtaLhuko7Q9ECGXCSL
+	 tJKG8VkzQHwKATQgh2bQ+83U0JVEOne8Pmxiw83wFfeQjshler0JyLcDAKjxdz8goe
+	 idtRIQ5qPVATlZ91nKsbclzylJVGxvHm659Ipp/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Guixin Liu <kanie@linux.alibaba.com>,
+	Richard Cheng <icheng@nvidia.com>,
+	Li Ming <ming.li@zohomail.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0553/2151] fs/ntfs3: validate $SDH entry size in ntfs_insert_security
-Date: Wed, 18 Nov 2026 15:38:08 +0100
-Message-ID: <20261118150142.106931319@linuxfoundation.org>
+Subject: [PATCH 6.18 0518/2151] cxl/core: Fix dport use-after-free via the einj_inject debugfs file
+Date: Wed, 18 Nov 2026 15:37:33 +0100
+Message-ID: <20261118150140.911922900@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,56 +71,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit 5b76487f94dacc2884135ce9a7bda61ce7ffa209 ]
+[ Upstream commit 0de71a1ab211694be7e88d56fc35c9bf72078ad1 ]
 
-ntfs_insert_security() walks the $Secure::$SDH index and reads
-e->sec_hdr.size for every entry returned by indx_find()/indx_find_sort().
-Those only guarantee the NTFS_DE envelope (e->size), so a crafted $SDH
-entry shorter than a full NTFS_DE_SDH at the tail of an index buffer makes
-the read of e->sec_hdr.size run past the allocation. Triggerable by an
-unprivileged setxattr(2) on a crafted NTFS image.
+The per-dport einj_inject debugfs file retains a pointer to the
+'struct cxl_dport', but its lifetime is not tied to the dport. Unbinding
+the dport host frees the dport and leaves einj_inject behind, so writing
+the file dereferences freed memory.
 
-  BUG: KASAN: slab-out-of-bounds in ntfs_insert_security (fs/ntfs3/fsntfs.c:2148)
-  Read of size 4 at addr ffff88800fa1de00 by task exploit/142
-   ntfs_insert_security (fs/ntfs3/fsntfs.c:2148)
-   ntfs_setxattr (fs/ntfs3/xattr.c:947)
-   __vfs_setxattr (fs/xattr.c:223)
-   __vfs_setxattr_noperm (fs/xattr.c:257)
-   vfs_setxattr (fs/xattr.c:344)
-   filename_setxattr (fs/xattr.c:690)
-   path_setxattrat (fs/xattr.c:734)
-   __x64_sys_setxattr (fs/xattr.c:764)
-   [...]
-  The buggy address is located 0 bytes to the right of
-   allocated 512-byte region [ffff88800fa1dc00, ffff88800fa1de00)
+The stale directory also prevents recreation on rebind.
 
-Stop the scan when an entry is too small to hold a SECURITY_HDR.
+Remove the per-dport debugfs directory when the dport host is released.
 
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Found by code inspection, then reproduced on a QEMU CXL topology with
+KASAN (the einj_cxl_is_initialized() guard had to be forced open, as
+QEMU emits no EINJ table). Unpatched, writing the leftover file after
+unbind gives a KASAN slab-use-after-free report in cxl_einj_inject(),
+and rebind hits "already exists in 'cxl'". Patched, the directory goes
+away with the dport and rebind recreates a working einj_inject.
+
+Fixes: 8039804cfa73 ("cxl/core: Add CXL EINJ debugfs files")
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Reviewed-by: Richard Cheng <icheng@nvidia.com>
+Reviewed-by: Li Ming <ming.li@zohomail.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20260914121843.718493-1-kanie@linux.alibaba.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fsntfs.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/cxl/core/port.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
-index 5e3506815c279..5bb66ad2513ad 100644
---- a/fs/ntfs3/fsntfs.c
-+++ b/fs/ntfs3/fsntfs.c
-@@ -2136,6 +2136,9 @@ int ntfs_insert_security(struct ntfs_sb_info *sbi,
- 		goto out;
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index c049b0e5eca7c..bfb2e457fa223 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -835,6 +835,11 @@ static int cxl_einj_inject(void *data, u64 type)
+ DEFINE_DEBUGFS_ATTRIBUTE(cxl_einj_inject_fops, NULL, cxl_einj_inject,
+ 			 "0x%llx\n");
  
- 	while (e) {
-+		if (le16_to_cpu(e->de.size) < SIZEOF_SDH_DIRENTRY)
-+			break;
++static void remove_debugfs(void *dentry)
++{
++	debugfs_remove_recursive(dentry);
++}
 +
- 		if (le32_to_cpu(e->sec_hdr.size) == new_sec_size) {
- 			err = ntfs_read_run_nb(sbi, &ni->file.run,
- 					       le64_to_cpu(e->sec_hdr.off),
+ static void cxl_debugfs_create_dport_dir(struct cxl_dport *dport)
+ {
+ 	struct cxl_port *parent = parent_port_of(dport->port);
+@@ -853,6 +858,8 @@ static void cxl_debugfs_create_dport_dir(struct cxl_dport *dport)
+ 
+ 	dir = cxl_debugfs_create_dir(dev_name(dport->dport_dev));
+ 
++	devm_add_action_or_reset(dport_to_host(dport), remove_debugfs, dir);
++
+ 	debugfs_create_file("einj_inject", 0200, dir, dport,
+ 			    &cxl_einj_inject_fops);
+ }
 -- 
 2.53.0
 
