@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051388;
-	b=VXobILDma4R7ARXT3cZxb7TR7XlY1BkGz9J3fZLm95Ynk0a0knLz9Ll7b+hgF0whgfQ4
-	 QUg+avh4LfZ3+SFmK72DQqB3s8B7adiTGLE3QNYcmC9JArfpDmlxZJj5GO7GVFIPIL11e
-	 b1EH3UjU1QbBolt65ZPPckX4gCStI8Z6E3588Fnfjpbi2He74bPlTMrT+83fk8jpxQLmk
-	 jo2K0qs9EUKZTXmZTlz63lLrZtcTGV3kbyw3kU9l09mMLRNTdx+rn0wZSkOENUvT14ESW
-	 ak00TZU5xY+jX2yBhxOkrOjVkR0ZcR8ql1tnaxBdAOBmK7lcHpObNPfYLwxyQ+Is/oA==
+	t=1795051390;
+	b=CBM3IxKrDRmjJpJWNLmE2k5r63MVopXkuoKfoskU4X5N0kIB7XE1mu10txPjdSSkdsQt
+	 61qyOtVl4LCev3Lm/wm5lXVte8mp9wtPilxA3rKTOvruXSDUgzFCSD3oHHbThY+Jdgg38
+	 2X9Qtc0hbqqgI3SuyDetjjhKmyx4Yd3sVZIC2x2o11NnfNmUvMLxvQIX5+xeTFh53PuBn
+	 d3UYCZL0RO+8PKZQrdav3SrGBgSJc4ug4HePI5xssa1vQaGWFRRylKOk/2FvT90mzYdfd
+	 crpgH+nUt/chkb/xWR9MEO7sPiNv53LdDXXq25LpphlVd7HQ6bjPL1ay/VRbI8gc8KA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051388;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051390;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QA0Mlsn3EgVeJx7Dq4m2/5/X2KK0s9M8i67szEy11Eo=;
-	b=CKhCtWoTexYNmPzAU3jWy7F+B4dOAzsAnFdPUczhSahZDiNx6tkDyjDxndiAzkEaOX1y
-	 yvy/hIqgnkjX87SxqaAJ00OTYPmiKF22xxXfzuXfnT8ihV4dlToFEIGJErLCKalwwCke9
-	 4icTRVE7aYjSZXqQ34MMLgybu2DCKe6gUVIQcPaKw5eSUPbDgYyINKpxYEoZ1mIzGtTiq
-	 fWXcRCE7BbzVpaPNTwfU4i9WWgDWIKjTbqdZino0D5XEewyj5NHMyZaco3Sm2DhV2c9tt
-	 AGjCSF1mBAmBbS5iRbSZy7tP4Iqm+6OjJv39Uyif7y+fvTJIbBXFUH6eOsHPBb1PO5Q==
+	bh=K0kCD+fQ2yWBUqJ4FrttspSwlTw3uHxHFPCdUA7Jc5Y=;
+	b=MRJ0ZNau5xUpJkvpKK7Ib4TAAg7gffwBbJqIrQk4cZoOXzR+3eOiBcHTQewYnvtKjRv9
+	 3rkJZFxWlcEL4TKfPSVzgyx97EGgWdp3aOfjTlMWzAWG3N6+gSKOG1+sFa88QKWRsiraZ
+	 Lg1XKTwjj7u98MJ8jd9H1GvWgB4bk7lkdO1cT7gcZeCQ4580qML5fkIs+PSjpO7Px52D9
+	 nTi5DhcVT7F4UaPRFePR+R3YgfHIpesoEsbPjCpv/89tX9h0RvNZnlvoL2uhhqk8j8tL7
+	 WbeVkByj+0CHMEsptQtFeXS56ZVku5749/Jc3Ubp4Jglt1CiEUhwy7UXYeLPhouhYTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IzD8fY93;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bsEzD4kJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6641606A332;
-	Thu, 19 Nov 2026 01:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA005606A31C;
+	Thu, 19 Nov 2026 01:23:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IzD8fY93
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4270C1F000C4;
-	Thu, 19 Nov 2026 01:23:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bsEzD4kJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238B71F000C5;
+	Thu, 19 Nov 2026 01:23:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051387;
-	bh=QA0Mlsn3EgVeJx7Dq4m2/5/X2KK0s9M8i67szEy11Eo=;
+	s=korg; t=1795051390;
+	bh=K0kCD+fQ2yWBUqJ4FrttspSwlTw3uHxHFPCdUA7Jc5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IzD8fY93+YknEdadAPnlzEpCo2mJyH3mdrUMSa3W3SPLLultdMUTZ+PCq93+MimKm
-	 RW7kyj50uOsMOz79rXGlPnpa13wpD83qg6p+eSfyy75fFd1CwUUvleJv2doctIw13v
-	 YdZPU+MCKIDZda3PYVh429xjKVqNU6rh4iMrhn1s=
+	b=bsEzD4kJzbSq3KN+TkpfEMmk+NtA4HFF2vpD+DxjlHaUulB0mzb9txEnq6nBTh9k8
+	 lFjvH6tQGwjKKcggFsDS4xIBLKJgTrdtznhPH745VdhTujfcozlYhCFDDAHZRMyyVx
+	 ZJ8OF0Ncl7UZ9Dhp2cpSZ0xQ+4owfEAddZxQRYZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Qiang <liqiang01@kylinos.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0190/2214] Bluetooth: hci_bcsp: validate received packet lengths
-Date: Wed, 18 Nov 2026 15:31:06 +0100
-Message-ID: <20261118150017.755500965@linuxfoundation.org>
+Subject: [PATCH 5.15 0191/2214] net: dsa: mt7530: error out on failed PHY_IAC command writes
+Date: Wed, 18 Nov 2026 15:31:07 +0100
+Message-ID: <20261118150017.788173331@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,48 +69,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Qiang <liqiang01@kylinos.cn>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit ceea75ad8925425ee6520ead964b55888fe871ec ]
+[ Upstream commit 1c95dcb7e923beebccdc79adc3dc1ec8c52295d0 ]
 
-The BCSP transmit path reads an HCI command header when an extension
-packet has only been tested for a nonzero length. Its LE configuration
-packet handler also indexes bytes through offset seven without a length
-check.
+MT7531_PHY_ACS_ST is only ever set by the command write that precedes
+each poll in the MT7531 indirect PHY access functions, and that
+write's return value is discarded. A failed write leaves ACS_ST at 0
+from the previous access, so the poll succeeds on its first iteration
+and the functions return stale IAC contents as if they were fresh PHY
+data. Check the writes and bail out before polling.
 
-Validate the complete command and LE configuration packet headers
-before accessing their fields.
-
-Signed-off-by: Li Qiang <liqiang01@kylinos.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/c34602e63a20ebbfb97babd145c82832d7a0b523.1785811140.git.daniel@makrotopia.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_bcsp.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/dsa/mt7530.c | 24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/bluetooth/hci_bcsp.c b/drivers/bluetooth/hci_bcsp.c
-index 8ff69111ceede..205a644545912 100644
---- a/drivers/bluetooth/hci_bcsp.c
-+++ b/drivers/bluetooth/hci_bcsp.c
-@@ -194,7 +194,7 @@ static struct sk_buff *bcsp_prepare_pkt(struct bcsp_struct *bcsp, u8 *data,
- 		return NULL;
- 	}
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index 118e72c845e02..51d20ade93efd 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -650,7 +650,9 @@ mt7531_ind_c45_phy_read(struct mt7530_priv *priv, int port, int devad,
  
--	if (hciextn && chan == 5) {
-+	if (hciextn && chan == 5 && len > HCI_COMMAND_HDR_SIZE) {
- 		__le16 opcode = ((struct hci_command_hdr *)data)->opcode;
+ 	reg = MT7531_MDIO_CL45_ADDR | MT7531_MDIO_PHY_ADDR(port) |
+ 	      MT7531_MDIO_DEV_ADDR(devad) | regnum;
+-	mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
++	ret = mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
++	if (ret < 0)
++		goto out;
  
- 		/* Vendor specific commands */
-@@ -402,6 +402,9 @@ static void bcsp_handle_le_pkt(struct hci_uart *hu)
- 	u8 sync_pkt[4]     = { 0xda, 0xdc, 0xed, 0xed };
+ 	ret = readx_poll_timeout(_mt7530_unlocked_read, &p, val,
+ 				 !(val & MT7531_PHY_ACS_ST), 20, 100000);
+@@ -661,7 +663,9 @@ mt7531_ind_c45_phy_read(struct mt7530_priv *priv, int port, int devad,
  
- 	/* spot "conf" pkts and reply with a "conf rsp" pkt */
-+	if (bcsp->rx_skb->len < 8)
-+		return;
-+
- 	if (bcsp->rx_skb->data[1] >> 4 == 4 && bcsp->rx_skb->data[2] == 0 &&
- 	    !memcmp(&bcsp->rx_skb->data[4], conf_pkt, 4)) {
- 		struct sk_buff *nskb = alloc_skb(4, GFP_ATOMIC);
+ 	reg = MT7531_MDIO_CL45_READ | MT7531_MDIO_PHY_ADDR(port) |
+ 	      MT7531_MDIO_DEV_ADDR(devad);
+-	mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
++	ret = mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
++	if (ret < 0)
++		goto out;
+ 
+ 	ret = readx_poll_timeout(_mt7530_unlocked_read, &p, val,
+ 				 !(val & MT7531_PHY_ACS_ST), 20, 100000);
+@@ -699,7 +703,9 @@ mt7531_ind_c45_phy_write(struct mt7530_priv *priv, int port, int devad,
+ 
+ 	reg = MT7531_MDIO_CL45_ADDR | MT7531_MDIO_PHY_ADDR(port) |
+ 	      MT7531_MDIO_DEV_ADDR(devad) | regnum;
+-	mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
++	ret = mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
++	if (ret < 0)
++		goto out;
+ 
+ 	ret = readx_poll_timeout(_mt7530_unlocked_read, &p, val,
+ 				 !(val & MT7531_PHY_ACS_ST), 20, 100000);
+@@ -710,7 +716,9 @@ mt7531_ind_c45_phy_write(struct mt7530_priv *priv, int port, int devad,
+ 
+ 	reg = MT7531_MDIO_CL45_WRITE | MT7531_MDIO_PHY_ADDR(port) |
+ 	      MT7531_MDIO_DEV_ADDR(devad) | data;
+-	mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
++	ret = mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
++	if (ret < 0)
++		goto out;
+ 
+ 	ret = readx_poll_timeout(_mt7530_unlocked_read, &p, val,
+ 				 !(val & MT7531_PHY_ACS_ST), 20, 100000);
+@@ -747,7 +755,9 @@ mt7531_ind_c22_phy_read(struct mt7530_priv *priv, int port, int regnum)
+ 	val = MT7531_MDIO_CL22_READ | MT7531_MDIO_PHY_ADDR(port) |
+ 	      MT7531_MDIO_REG_ADDR(regnum);
+ 
+-	mt7530_mii_write(priv, MT7531_PHY_IAC, val | MT7531_PHY_ACS_ST);
++	ret = mt7530_mii_write(priv, MT7531_PHY_IAC, val | MT7531_PHY_ACS_ST);
++	if (ret < 0)
++		goto out;
+ 
+ 	ret = readx_poll_timeout(_mt7530_unlocked_read, &p, val,
+ 				 !(val & MT7531_PHY_ACS_ST), 20, 100000);
+@@ -786,7 +796,9 @@ mt7531_ind_c22_phy_write(struct mt7530_priv *priv, int port, int regnum,
+ 	reg = MT7531_MDIO_CL22_WRITE | MT7531_MDIO_PHY_ADDR(port) |
+ 	      MT7531_MDIO_REG_ADDR(regnum) | data;
+ 
+-	mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
++	ret = mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
++	if (ret < 0)
++		goto out;
+ 
+ 	ret = readx_poll_timeout(_mt7530_unlocked_read, &p, reg,
+ 				 !(reg & MT7531_PHY_ACS_ST), 20, 100000);
 -- 
 2.53.0
 
