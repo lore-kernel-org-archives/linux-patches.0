@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044807;
-	b=r5EMUQU3EpIv18gru98B/Z8AcUlUlgt0cfvUTTTo13WHyA6IvsU4vrqMJX8mqjbVAsFc
-	 ApfpgdghSt6BJpOC4/08DFtgfjYOcZkLdblorTOK4ELPSlfFFnYis9LlgXpg1zTEjOrCB
-	 pwl5+ohc3iH+JxB+qDRtCSy4XE3MPBkED4dlXmbSCtTA7Hh8EMPTgNn5lAGFYYlWzrsQE
-	 8Fl5h6yeTdhsDtvlYrGU5iSyAi+HAAXuN+9fGf/G4JU2pnZyuYP7WtoWC6DJq6lyD3Q3O
-	 rmOtawuSGyXx2WHZ+WGU+9GBFMxPCweURvO3UvNEsG/85oMcYff0AP+z3QC2Y/g7Iiw==
+	t=1795044810;
+	b=LDjHuCp86JykZAvUPx6SPWxFKDsdaTAjq1XZRGszOF0lq1o/dn3xtEz5k8pGxKCAwHbo
+	 MJL15180DpLJOA+dcXhQkYIPAs2NBex9zT/5DIWXFIw/n9WR00fMsE1LN9JNY8leQ3Tur
+	 XvOCUCP5I7f/fKSIaMqPBZYWfFaETsyFjP60vMb5IIw0bd1Tj41Uw2NVRbGOM6XOzQn8l
+	 OZ6oIjwR2bzdrSHdjHgCJ4cUdFjsdKGGL+WotP8J+XKKLtnU6FP8U4C/wRQD++CfEcgYr
+	 V5DkjAw4+ngSQaGR+VX7yyJyKv5aIPMe7L80bjVRQpm9tbdZ8YxwD+urEQVxPCdT3Ow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044807;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044810;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nvSATxnxpmG/faFkobFa+sgIxXpjEA/XY4GIIN1dHA8=;
-	b=ygBUOT53R7y0vhCd2hxT+c+xsBHQVaXVduclOyuoq1p6MIP0irhWbtoMb+5UUuskaecd
-	 fPvxTmWAOCyLCiT8RwprOnJe0i+jKXQpcO8pIkklE+WNZzS4I+ZPjjfcwkzav0HEQ3lKt
-	 cjyQpCfV4EwVkYs2LDWnAFWN++vFTOt5QGHGO/n3CbkuthlJ4Ef2fE36lpoXor5yjs8Nw
-	 IBJ9bgc00o6BLtQFm/5RcmcJ/1ESeV/cm/MftCHuDs5CHSm5q3wGJQEARHGCqnXrTZOpX
-	 9uVy0NtAe8vJaztCH95ntl+iPrUwk6melZ1fOFDG+pDgBSpYZ6qCb4iAGBeWcWythzQ==
+	bh=51OjUH2bRswEJ/6GLSz84akZKtxRSDyCTs6uu/e5rXo=;
+	b=V6bXp7iQce0XdL5sQ7CDHJtOr4KZmMO0mr+JENndv+HsY4BSG42PjhAS/b7PERNQ6NCV
+	 LKPzSNuwQzpkKMU1jWjO0oms+sgR8ZEnTd3K7yi+6fFBS0rmnXu9dDEs4X3lYluqtBrGz
+	 p2goZTCF2/KfzMWXD/T/qdglIqy0nzrcHIFHFCb+SANd4ypo29deihWkSh6ddumorjaC5
+	 n3eW7C8EwjQ2IVNG6dgs+WyIktjqcNLkL19gF0UXWaE1YWZSh3EUI1oKvVvoE/djb+XIj
+	 tdBRERhgrQ2xzMz6cButEnizI/ROYNPWlRIpLzaqTWhLxUF2g5q9zdykqWmMXX/309w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UmM5xeWf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t4ZNGg6U;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD0860A2601;
-	Wed, 18 Nov 2026 23:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71AA260A382C;
+	Wed, 18 Nov 2026 23:33:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UmM5xeWf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DA3B1F000C9;
-	Wed, 18 Nov 2026 23:33:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t4ZNGg6U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C768A1F000C7;
+	Wed, 18 Nov 2026 23:33:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044807;
-	bh=nvSATxnxpmG/faFkobFa+sgIxXpjEA/XY4GIIN1dHA8=;
+	s=korg; t=1795044810;
+	bh=51OjUH2bRswEJ/6GLSz84akZKtxRSDyCTs6uu/e5rXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UmM5xeWftpKvd+W4o7uq0jsqjT1ka7hVb44z1qMrSbGCVL0wIIhkXecmm+mY5a6sq
-	 3tHGM3h6V3tPBNm/gBCqsV+8L1DniBkfAl4yZTX37FsU9EzE+HtqPV78ZQh4mFj8fa
-	 Iit/3ZA/hYSSWwGSBwysacgCK49Z/i/PsFfwg+Cs=
+	b=t4ZNGg6UrZTeJqJrMNEyjhycHgiYiSNLJwwqh2tI52pK7KsMmtGwo3V8+6cjMmKty
+	 CxLqf7sZHaq3QoVovRUVOg+xiRr/cEcwz38kticgdFTUCnH9Us8MDdv+ZTilE4p7Xt
+	 iFmJrKg2skEqpmpigPv2LjCS3U958nP6bQTdMhRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Nguyen <congnt264@gmail.com>,
-	Eugen Hristev <ehristev@kernel.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0699/2857] media: microchip-csi2dc: fix async notifier leak on probe error path
-Date: Wed, 18 Nov 2026 15:28:53 +0100
-Message-ID: <20261118150226.726617228@linuxfoundation.org>
+Subject: [PATCH 6.1 0700/2857] media: platform: microchip: use for_each_endpoint_of_node()
+Date: Wed, 18 Nov 2026 15:28:54 +0100
+Message-ID: <20261118150226.761459443@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,47 +69,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Nguyen <congnt264@gmail.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit c7528789244ce7329ca883170fb9315d739ae985 ]
+[ Upstream commit 68a1560c3b7f8bb23423b272334fc19279e82d9a ]
 
-csi2dc_of_parse() ends up calling csi2dc_prepare_notifier(), which
-registers the V4L2 async notifier with v4l2_async_nf_register(). The
-probe error label csi2dc_probe_cleanup_notifier is reached after
-csi2dc_of_parse() has already succeeded (e.g. when media entity init,
-csi2dc_power() or v4l2_async_register_subdev() fail), but it calls only
-v4l2_async_nf_cleanup() and never v4l2_async_nf_unregister().
+We already have for_each_endpoint_of_node(), don't use
+of_graph_get_next_endpoint() directly. Replace it.
 
-The notifier therefore stays chained in the global notifier_list while
-the enclosing struct csi2dc_device is freed, leading to list corruption
-and a use-after-free when the list is next walked.
-
-Unregister the notifier before cleaning it up on the error path,
-matching the teardown already done in csi2dc_remove().
-
-Fixes: 2de0b3c0f678 ("media: atmel: introduce microchip csi2dc driver")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4
-Signed-off-by: Cong Nguyen <congnt264@gmail.com>
-Reviewed-by: Eugen Hristev <ehristev@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Stable-dep-of: f2eb2fd388bf ("media: microchip-isc: take a reference on the parsed endpoints")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/atmel/microchip-csi2dc.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../media/platform/atmel/atmel-sama5d2-isc.c  | 21 +++++++------------
+ .../media/platform/atmel/atmel-sama7g5-isc.c  | 21 +++++++------------
+ 2 files changed, 16 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/media/platform/atmel/microchip-csi2dc.c b/drivers/media/platform/atmel/microchip-csi2dc.c
-index d5b359f607ae9..19d6cc5984445 100644
---- a/drivers/media/platform/atmel/microchip-csi2dc.c
-+++ b/drivers/media/platform/atmel/microchip-csi2dc.c
-@@ -734,6 +734,7 @@ static int csi2dc_probe(struct platform_device *pdev)
- 	return 0;
+diff --git a/drivers/media/platform/atmel/atmel-sama5d2-isc.c b/drivers/media/platform/atmel/atmel-sama5d2-isc.c
+index 9881d89a645b0..7689bc2bff481 100644
+--- a/drivers/media/platform/atmel/atmel-sama5d2-isc.c
++++ b/drivers/media/platform/atmel/atmel-sama5d2-isc.c
+@@ -333,33 +333,29 @@ static const u32 isc_sama5d2_gamma_table[][GAMMA_ENTRIES] = {
+ static int isc_parse_dt(struct device *dev, struct isc_device *isc)
+ {
+ 	struct device_node *np = dev->of_node;
+-	struct device_node *epn = NULL;
++	struct device_node *epn;
+ 	struct isc_subdev_entity *subdev_entity;
+ 	unsigned int flags;
+-	int ret;
  
- csi2dc_probe_cleanup_notifier:
-+	v4l2_async_nf_unregister(&csi2dc->notifier);
- 	v4l2_async_nf_cleanup(&csi2dc->notifier);
- csi2dc_probe_cleanup_entity:
- 	media_entity_cleanup(&csi2dc->csi2dc_sd.entity);
+ 	INIT_LIST_HEAD(&isc->subdev_entities);
+ 
+-	while (1) {
++	for_each_endpoint_of_node(np, epn) {
+ 		struct v4l2_fwnode_endpoint v4l2_epn = { .bus_type = 0 };
+-
+-		epn = of_graph_get_next_endpoint(np, epn);
+-		if (!epn)
+-			return 0;
++		int ret;
+ 
+ 		ret = v4l2_fwnode_endpoint_parse(of_fwnode_handle(epn),
+ 						 &v4l2_epn);
+ 		if (ret) {
+-			ret = -EINVAL;
++			of_node_put(epn);
+ 			dev_err(dev, "Could not parse the endpoint\n");
+-			break;
++			return -EINVAL;
+ 		}
+ 
+ 		subdev_entity = devm_kzalloc(dev, sizeof(*subdev_entity),
+ 					     GFP_KERNEL);
+ 		if (!subdev_entity) {
+-			ret = -ENOMEM;
+-			break;
++			of_node_put(epn);
++			return -ENOMEM;
+ 		}
+ 		subdev_entity->epn = epn;
+ 
+@@ -380,9 +376,8 @@ static int isc_parse_dt(struct device *dev, struct isc_device *isc)
+ 
+ 		list_add_tail(&subdev_entity->list, &isc->subdev_entities);
+ 	}
+-	of_node_put(epn);
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ static int atmel_isc_probe(struct platform_device *pdev)
+diff --git a/drivers/media/platform/atmel/atmel-sama7g5-isc.c b/drivers/media/platform/atmel/atmel-sama7g5-isc.c
+index 8b11aa8340d7e..ef0c3c357426f 100644
+--- a/drivers/media/platform/atmel/atmel-sama7g5-isc.c
++++ b/drivers/media/platform/atmel/atmel-sama7g5-isc.c
+@@ -316,36 +316,32 @@ static const u32 isc_sama7g5_gamma_table[][GAMMA_ENTRIES] = {
+ static int xisc_parse_dt(struct device *dev, struct isc_device *isc)
+ {
+ 	struct device_node *np = dev->of_node;
+-	struct device_node *epn = NULL;
++	struct device_node *epn;
+ 	struct isc_subdev_entity *subdev_entity;
+ 	unsigned int flags;
+-	int ret;
+ 	bool mipi_mode;
+ 
+ 	INIT_LIST_HEAD(&isc->subdev_entities);
+ 
+ 	mipi_mode = of_property_read_bool(np, "microchip,mipi-mode");
+ 
+-	while (1) {
++	for_each_endpoint_of_node(np, epn) {
+ 		struct v4l2_fwnode_endpoint v4l2_epn = { .bus_type = 0 };
+-
+-		epn = of_graph_get_next_endpoint(np, epn);
+-		if (!epn)
+-			return 0;
++		int ret;
+ 
+ 		ret = v4l2_fwnode_endpoint_parse(of_fwnode_handle(epn),
+ 						 &v4l2_epn);
+ 		if (ret) {
+-			ret = -EINVAL;
++			of_node_put(epn);
+ 			dev_err(dev, "Could not parse the endpoint\n");
+-			break;
++			return -EINVAL;
+ 		}
+ 
+ 		subdev_entity = devm_kzalloc(dev, sizeof(*subdev_entity),
+ 					     GFP_KERNEL);
+ 		if (!subdev_entity) {
+-			ret = -ENOMEM;
+-			break;
++			of_node_put(epn);
++			return -ENOMEM;
+ 		}
+ 		subdev_entity->epn = epn;
+ 
+@@ -369,9 +365,8 @@ static int xisc_parse_dt(struct device *dev, struct isc_device *isc)
+ 
+ 		list_add_tail(&subdev_entity->list, &isc->subdev_entities);
+ 	}
+-	of_node_put(epn);
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ static int microchip_xisc_probe(struct platform_device *pdev)
 -- 
 2.53.0
 
