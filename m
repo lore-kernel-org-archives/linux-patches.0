@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057719;
-	b=uayPWrdtHD0SQ7k63mN6y4ZPVe27e78tmKkKZRGDo8F4vZD6+NoQNQQKJ+FO1hr20fgl
-	 A/ccZggI3AjFVK9gIHzls8xYXRTZJYEpRrkUYH3gNBGM0qTnR5Nl9fslD1lhsomVCDLvt
-	 UDpkAxW4tcLNg6EORXlnQsb/se9C+zTAo1tcwgL6pq3ZGB3RNlEOjhK4S2Pa37TujzHy/
-	 /U213zpuVvhCo7op8GbheLcUj/rSo8tYrQ+szbPGckXkEiwJHxGdFQ/vXrM46XHxw0raz
-	 7GF5i9uEUdXbRojV2i3h4B9NKn2DsbE+n48lBaC6U8zAGLmz9qa/EuG8ZOFp7g6aFdg==
+	t=1795057721;
+	b=0DB5BpAEsCBW3L3sworECE7ghL5b7gG5siKxj2IV4Is9x2hHMxqNTw5OhNcryu9KFp3G
+	 rkuy/gPPfHddrA2jhR8by6G6QByfOsBFY5mFvvKwnoc5ItUp/w5yOvNlmxskfO2x3pyfA
+	 G1q661NPZlOIuFVQCl2uvCMLxoJ3v/lhJNMNsvu/NU2gVq3nOcIVuAah0vz32+I0dri4Z
+	 xgxP84YYdZR37dWp0KWGObQmE427fZyjcUynGAR35/yjii3gXjKEilf7kUNoUYkrYLjcu
+	 DgQvPGCH49DCvxnsLW58xI2dr5JFpCKJtfnlWBx4bogwnZBiIqFw0Hf+Tgv66ueGCPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057719;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057721;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=q4PGRVbl5uLG/t2nSizDy6s+IcmvJuKG1ST2zPjzpP4=;
-	b=O/zbLBMkuLGxdldofK5ohwTbzej3jnrMZTX9meUqvNiIZTtasftk+BfIJ5InVXnVKIZE
-	 nIM7R1BHKadSNapCaYIkTscpgaf8iDSrEq1h8TGQQxsWa1DWPWAcLKzytDF6b3hh801Pw
-	 fmPN9fW761XLIb8VEbGqQ2viLw8ZE8pB++ri2KupJ73W8gTicpC4psdVo1Mbpily3M6qS
-	 tZdgGACzRqjOc6vEpc8Xt6REadCNfR+lS05nrgwjesA3a6TSvXGJ6tYE264TXV370HJyY
-	 LANow6/oB6KxWI+Gh5ILN+jp5D4B1/zGJO2Xjjjb1ltlyKWHzOQUtXRLfjPR0hx+Rbw==
+	bh=sfdGH2c6OQu/ig9eDY2yME9r4x14Rq5+N+mx35jt+BA=;
+	b=Tr/DVFEsRSmLTGplLV1uGkQeYjj4PWFmwYBOadwJ0ArJR+Yj+9ZyIK+GknBZStOvRYzE
+	 qSE+l1ywLWhdkXtAG08nFwM+N43jw5GPpYbKrH5vBBA+1k86HWG7hlYO8s8jtQYP9QJ+c
+	 zPHU2gVQVEdhdX5BPgIliLSBXXjFnuYdGwpJgm2n5hi6+rUrIYEtkazVIthXSN9BrUoPM
+	 hKj8HK33C3Q6INsth43QYxVF4Ud3yvIJpxRmBtk+dd28m4EBm7n8qMoZO5Iz/hvQcmz6n
+	 z0nTDC0oj6hjyqp9pCyQ0hCiJ3j6Mh62P9hY6BCYLGGf4CzrPKf4V8fuZLaVNzrcDVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cGw4+0Wh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G3fa6sfO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16DC606A31C;
-	Thu, 19 Nov 2026 03:08:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32AB606A325;
+	Thu, 19 Nov 2026 03:08:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cGw4+0Wh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43AFE1F000C4;
-	Thu, 19 Nov 2026 03:08:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G3fa6sfO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA9211F000C4;
+	Thu, 19 Nov 2026 03:08:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057718;
-	bh=q4PGRVbl5uLG/t2nSizDy6s+IcmvJuKG1ST2zPjzpP4=;
+	s=korg; t=1795057721;
+	bh=sfdGH2c6OQu/ig9eDY2yME9r4x14Rq5+N+mx35jt+BA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cGw4+0Wh4KxFDVXVpXQTPFWrSY4LIQejdZ1QP8L8YwZt5lZOBEobyYKZJX2IHHg9E
-	 8n31VCT5sknHQvxphK+tVFaCNq4UTCWnBDpMkkg9fN6YvGSsdkcl7rn7011Bf4oZqb
-	 r0vNe/1DaSuGtlHPtWHbStyaqqTNLSM6pXkYykGw=
+	b=G3fa6sfOYioL/4Brd80XUj0MFRG/f1TuV1mlbjCAD/7UVElDzWWo3gn/XhLSYX7Ha
+	 dS+XyMK4RF55VWJTiBsTttOBZaqPjDm/+3tjhluGigVxPolPFxxj3Mx5ktIlndmIvP
+	 VwmWfI+7R4S225Z6HFOsFnTI4uzCHzZfo7GIBwrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	Kameron Carr <kameroncarr@linux.microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH 5.10 0231/1848] Drivers: hv: vmbus: Bounds check the shared ring buffer indices
-Date: Wed, 18 Nov 2026 15:37:49 +0100
-Message-ID: <20261118145921.644641742@linuxfoundation.org>
+	David Heidelberg <david@ixit.cz>,
+	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 5.10 0232/1848] backlight: qcom-wled: Fix NULL pointer dereference in wled_remove()
+Date: Wed, 18 Nov 2026 15:37:50 +0100
+Message-ID: <20261118145921.674958739@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,102 +69,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kameron Carr <kameroncarr@linux.microsoft.com>
+From: David Heidelberg <david@ixit.cz>
 
-commit 1d287c17cc5bfd6386fe0770999be410b248d021 upstream.
+commit 1dbd46d4b2fb416a8202b1a8e4ef9d0cadbe075f upstream.
 
-In a CoCo VM the host is untrusted. Since the VMBus ring buffer read and
-write indices live in shared memory, the guest has to treat both as
-potentially malicious.
+wled_probe() doesn't set the driver data for the platform device.
+As a result, platform_get_drvdata() in wled_remove() will return NULL,
+and the first dereference of it crashes on unbind.
 
-hv_ringbuffer_write() copies into the ring at write_index with no bounds
-checking, so the host can make the guest write packet data at any offset
-up to 4 GiB past the start of the ring buffer. read_index matters too:
-the available space derived from both indices is the only bound on how
-much is copied, and an out-of-range index can make it far larger than
-the ring.
+Set the platform device driver data in wled_probe().
 
-The fix is to validate both indices before use and to use the validated
-snapshot instead of re-accessing. For invalid indices,
-hv_ringbuffer_write() logs and returns -EIO.
-
-One re-read of write_index is left unchecked in this patch:
-hv_get_ring_bufferindices() fetches it again for the prev_indices
-trailer. The value is only returned to the host and is not used as an
-offset or length for indexing. Since this is not a security issue, it is
-addressed later in the series.
-
-Open-coding the bytes available arithmetic keeps the fix free of
-prerequisites; a later patch refactors it into a helper function.
-
-Fixes: 3e7ee4902fe6 ("Staging: hv: add the Hyper-V virtual bus")
-Cc: stable@vger.kernel.org # 5.15.x
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Kameron Carr <kameroncarr@linux.microsoft.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: feeab87b3072 ("backlight: qcom-wled: Add support for short circuit handling")
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Reviewed-by: Daniel Thompson (RISCstar) <danielt@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260921-qcom-wled-backlight-v4-1-bab8c7ef73cb@ixit.cz
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hv/ring_buffer.c |   29 ++++++++++++++++-------------
- 1 file changed, 16 insertions(+), 13 deletions(-)
+ drivers/video/backlight/qcom-wled.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/hv/ring_buffer.c
-+++ b/drivers/hv/ring_buffer.c
-@@ -67,15 +67,6 @@ static void hv_signal_on_write(u32 old_w
- 	}
- }
+--- a/drivers/video/backlight/qcom-wled.c
++++ b/drivers/video/backlight/qcom-wled.c
+@@ -1642,6 +1642,7 @@ static int wled_probe(struct platform_de
  
--/* Get the next write location for the specified ring buffer. */
--static inline u32
--hv_get_next_write_location(struct hv_ring_buffer_info *ring_info)
--{
--	u32 next = ring_info->ring_buffer->write_index;
--
--	return next;
--}
--
- /* Set the next write location for the specified ring buffer. */
- static inline void
- hv_set_next_write_location(struct hv_ring_buffer_info *ring_info,
-@@ -269,6 +260,7 @@ int hv_ringbuffer_write(struct vmbus_cha
- 	u32 totalbytes_towrite = sizeof(u64);
- 	u32 next_write_location;
- 	u32 old_write;
-+	u32 read_index;
- 	u64 prev_indices;
- 	unsigned long flags;
- 	struct hv_ring_buffer_info *outring_info = &channel->outbound;
-@@ -283,7 +275,20 @@ int hv_ringbuffer_write(struct vmbus_cha
+ 	wled->regmap = regmap;
+ 	wled->dev = &pdev->dev;
++	platform_set_drvdata(pdev, wled);
  
- 	spin_lock_irqsave(&outring_info->ring_lock, flags);
- 
--	bytes_avail_towrite = hv_get_bytes_to_write(outring_info);
-+	read_index = READ_ONCE(outring_info->ring_buffer->read_index);
-+	old_write = READ_ONCE(outring_info->ring_buffer->write_index);
-+	if (unlikely(read_index >= outring_info->ring_datasize ||
-+		     old_write >= outring_info->ring_datasize)) {
-+		spin_unlock_irqrestore(&outring_info->ring_lock, flags);
-+		pr_err_ratelimited("outbound ring indices out of range: relid %u read %u write %u size %u\n",
-+				   channel->offermsg.child_relid, read_index,
-+				   old_write, outring_info->ring_datasize);
-+		return -EIO;
-+	}
-+
-+	bytes_avail_towrite = old_write >= read_index ?
-+		outring_info->ring_datasize - (old_write - read_index) :
-+		read_index - old_write;
- 
- 	/*
- 	 * If there is only room for the packet, assume it is full.
-@@ -305,9 +310,7 @@ int hv_ringbuffer_write(struct vmbus_cha
- 	channel->out_full_flag = false;
- 
- 	/* Write to the ring buffer */
--	next_write_location = hv_get_next_write_location(outring_info);
--
--	old_write = next_write_location;
-+	next_write_location = old_write;
- 
- 	for (i = 0; i < kv_count; i++) {
- 		next_write_location = hv_copyto_ringbuffer(outring_info,
+ 	wled->version = (uintptr_t)of_device_get_match_data(&pdev->dev);
+ 	if (!wled->version) {
 
 
