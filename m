@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044954;
-	b=S6FsqujH2GqVest9Rp6M8MaemdX61RTpZnN55MRN6u4O2EP32T1wOfkVSMAMj2KSJnHR
-	 c7JTa/QLCCGlJIpB8QiWn8RJ03BWsXszTDnKzjtb5Ikyxy2+WcWEeaXAWs35Ok+KC7UkO
-	 3ej+UYoQpE5AgK8em6mH2ug5H1Io1nDYi8m/ixe5mlmdUTlZq/hRdKFbpIN8/8eCg+fqx
-	 k2g+7vAU3/6TPDiZf/v+kMpIOu5m+vpqLhDYSndXsihC8NFZpdfcutRI5fiRIxtlaIekQ
-	 dVk2KEUlLstuKr2EM5yxovkH7biGRMBrQdwbix8wtohP8Lzc4UOqF3AFiyU8UEMqiwA==
+	t=1795044957;
+	b=5evJU4CQQCT5Y+TMASAbRITf2gGgjBZ6lWUOt7OGs/X5FiwX6bWBnqtAXfuEFaTnEb6t
+	 001420PhdO01QKuoTOO13Md/mhVUaRydRsMzP5/De6GHpWkpmJwxJbPniymovL00JTPPd
+	 KJ0/ZlLAppa+4PGSzo7DWWuiOJjmFsIvH2Uxm2r7UYA8+PhxJhV+ixR0yZQWFABHCvnMI
+	 IaaUQvKVmEP+oiIMOczPZ7stNR3Lbpxya4kCuVeumq2RL95DvlvvCWLtTf15yjpaCbKE4
+	 wmcOlnwo0bGrIWnjcDJAkgP8w7tjbTCfEk+AKlneKtoxo2URBNeJpw1rbGcGKzFOYOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044954;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044957;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hnnSP4OF9mG3Lzx0WIKoGTn5bwzZwApb7PPxlsRVhP8=;
-	b=2iVMKSejTiC7wLUrRl83RyEzyyWz1aGYtWAYxb983EoVh7XLdn69RV9iwNeNLGQGh2S2
-	 B4HczTG7AG9wDsnCrd6C7Udgmz7hpkpd0TWB9HUoJkWEfmGtNrByilB/VY++ThoeVMokA
-	 Qx7CMRJbNMRtdVaPNv50adfThOUH07iTjuzLlvA77wHqAXTmwivSnqxynsLDSTnLQ/+w+
-	 Nu3ASWpPx9GgkKKPTbE57aXT2QUBvDl++Qn0Vp5s4bSP1eJiFc7Hyx+WnR9zy5bI/vODp
-	 cEgb8MC+4mNQV07Y0N+QwvELiYouB/AYcIfCls9ih+9/rWbas1067IL+y5fbPDEeB9Q==
+	bh=+PcFX94nqpeMcvCdiroSNOwL/WYdPzyyP0OXfWXatt4=;
+	b=2XLMsNSR9lgCzewaR4EEqSJFzdP8W2SjNIMNldOXt4L0rdaqKCbZewfBYI8AkZY1w9Sv
+	 Ea4fxWD47ECYTUqMPR5t4c92i21tSVPfOsfEHB75VliJkMOXPKOLno55k3SQpGeOANOSe
+	 vu7KFZzMEIZs88O7FponT8b5FJaHBqAyNxDBqjaclBkGY6OzSkkDPh+xMdDR0M38hNdYn
+	 ct5YjomKBoVfVHHbqED4JxlM10Ta8r5oQ8eKcOhbFC9oXqtLsFdCe0DuVri1jy5Jroo7L
+	 IZuYMPY/0TOWCvPcKQqiiL5uBKSHEblR4vsjmPCsMQUk83BGQUXVnXeIXDLAgJtJ+/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kXxTm5MV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CBM6NrZx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3353B606A32C;
-	Wed, 18 Nov 2026 23:35:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F99606A332;
+	Wed, 18 Nov 2026 23:35:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kXxTm5MV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C94F1F000C4;
-	Wed, 18 Nov 2026 23:35:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CBM6NrZx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE2A1F000C4;
+	Wed, 18 Nov 2026 23:35:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044954;
-	bh=hnnSP4OF9mG3Lzx0WIKoGTn5bwzZwApb7PPxlsRVhP8=;
+	s=korg; t=1795044957;
+	bh=+PcFX94nqpeMcvCdiroSNOwL/WYdPzyyP0OXfWXatt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kXxTm5MVtxOO7gfTKgXwjvV4n89I5EvR6DtP7Gr2SDoETkSl5wtZ9s7Sm02Dzmlhv
-	 71p9FDMPxWPoni+fzaD15sKRxvki7tlbEdqbIeLUbwmNa+rR77MoQEDPFrubxSeZ+Z
-	 sZvFtBFCGpuM4ZgjmYiVMuvIodyRzE+S0NG63Dx0=
+	b=CBM6NrZxPPNwhsNhjDc3PA6eM4YRhoZ2l4PUlIhDkg3liSRn3cejBS6857TKtbwot
+	 92Kw1Kfuek2VwMgrC9mj9o7vXA2sUkPIkl+DSRmLhfKbRRu/rqUrMPsJtHTKlJoujP
+	 l2fNFBY6DV0J8jehceiN6xatQb5ayFWHQe94InBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@kernel.org,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0751/2857] media: adv7604: avoid negative array index in log_status when cp_read fails
-Date: Wed, 18 Nov 2026 15:29:45 +0100
-Message-ID: <20261118150228.592462163@linuxfoundation.org>
+Subject: [PATCH 6.1 0752/2857] media: stv090x: bound DiSEqC reply length to msg[] size
+Date: Wed, 18 Nov 2026 15:29:46 +0100
+Message-ID: <20261118150228.632122870@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,42 +70,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 10d8dfda1c08f6788049aa100685e223d857f901 ]
+[ Upstream commit bad6ce6e0856f344910ba95b006e6c0ebee2d9c8 ]
 
-cp_read() returns the negative errno from regmap_read() on I2C failure.
-adv76xx_log_status() shifts the result right by 4 and uses it directly
-to index csc_coeff_sel_rb[16] causing the right shift of a negative
-number to result in -1, reading a negative place in the array.
+The FIFO_BYTENBR_FIELD register field is 4 bits wide, giving a length
+of 0..15, but reply->msg is __u8[4] in struct dvb_diseqc_slave_reply.
+A faulty or malicious DiSEqC slave (or i2c bus glitch) reporting more
+than 4 bytes will the array and clobber the stack.
 
-Commit 8163419e3e05 ("media: adv7842: Avoid possible out-of-bounds
-array accesses in adv7842_cp_log_status()") fixed the identical pattern
-in the adv7842, so do the same thing here.
+The stb0899, tda10071, and s5h1420 drivers all properly bound the FIFO
+count against sizeof(reply->msg) before the read loop, so do the same
+thing in this driver.
 
-Fixes: 54450f591c99 ("[media] adv7604: driver for the Analog Devices ADV7604 video decoder")
+Fixes: e415c689a884 ("V4L/DVB (11579): Initial go at TT S2-1600")
 Cc: stable@kernel.org
 Assisted-by: gregkh_clanker_t1000
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/adv7604.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/dvb-frontends/stv090x.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/i2c/adv7604.c b/drivers/media/i2c/adv7604.c
-index 1f6ac602ad5a7..ae7e4dbab0146 100644
---- a/drivers/media/i2c/adv7604.c
-+++ b/drivers/media/i2c/adv7604.c
-@@ -2634,8 +2634,9 @@ static int adv76xx_log_status(struct v4l2_subdev *sd)
- 					"(16-235)" : "(0-255)",
- 				(reg_io_0x02 & 0x08) ? "enabled" : "disabled");
- 	}
-+	ret = cp_read(sd, info->cp_csc) >> 4;
- 	v4l2_info(sd, "Color space conversion: %s\n",
--			csc_coeff_sel_rb[cp_read(sd, info->cp_csc) >> 4]);
-+			ret < 0 ? "" : csc_coeff_sel_rb[ret]);
+diff --git a/drivers/media/dvb-frontends/stv090x.c b/drivers/media/dvb-frontends/stv090x.c
+index aba64162dac45..c3a13ce7779be 100644
+--- a/drivers/media/dvb-frontends/stv090x.c
++++ b/drivers/media/dvb-frontends/stv090x.c
+@@ -3897,6 +3897,8 @@ static int stv090x_recv_slave_reply(struct dvb_frontend *fe, struct dvb_diseqc_s
  
- 	if (!is_digital_input(sd))
- 		return 0;
+ 	if (rx_end) {
+ 		reply->msg_len = STV090x_GETFIELD_Px(reg, FIFO_BYTENBR_FIELD);
++		if (reply->msg_len > sizeof(reply->msg))
++			reply->msg_len = sizeof(reply->msg);
+ 		for (i = 0; i < reply->msg_len; i++)
+ 			reply->msg[i] = STV090x_READ_DEMOD(state, DISRXDATA);
+ 	}
 -- 
 2.53.0
 
