@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033496;
-	b=DR+KSLz2/B/MNnqRUQClsz9Bvy/dEeILyHPH5QjLgUUCisCEL7T59COIfo5BTfs8QfSA
-	 0OFKgESkuTnuZqV+iz3cY4yE+Tr+Kxc2WV7N8mRJXp1Li+iX5ROSSvsV5aLE7jxsRWfC3
-	 wzStGuebfwMGeiXuhPd08fZAGDHp79c0eE15zTX9s7hlECYpVTRo50h7fTu42Ye1dJeLg
-	 E3XjBMzWGctlREGDZbQC0XEmgLgYMnLffoURd6y9989Hpo5+1YLt7TwOie7VdbxKKnK+E
-	 Y6xW1usYmefLcU5Tnb6E5GcxXrD+dB18tSe2hZu7f4rZb5KF/pEhXznQsdb+5FfoNZw==
+	t=1795033499;
+	b=DztDZ7ogJCQFGIrWXeVuLq6ZxWhVanTHwUeH9DbFeNupg9phn7+n/QmdctqpB1OXgrNp
+	 KP6nwb4OlRN7Lcox5xLtu7J3DAf+RjAxTCiaAOoFyzU2m8A6k0Ri1F9vv7VvvsGP76EF8
+	 2wX6nP0ZiSyGyxyBLvHEkmhI39cXWKADYtcuqozx8t9PPXTHKCosNCRPiEiw01RDrKFpL
+	 N3tyXXDHZyVf5Wz/ZlRDSWlpEDQmVyqDiZKG1ospFSazZ1GlWsHEQ2wvV28EzzhpOV+pA
+	 d1GdvOv+5IrXZ13x26GQJ6MZN5aUf7HNmzUlfURBD46DZz2bepWO0u+VnumeJ2l4TIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033496;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033499;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VkOwHe7ON5ZJY7lto2BrEAekQDfThWo5orrrn42cY1k=;
-	b=mTvn8fT/Ro67JucWjwgpcazI4mVOYa2KTvDv4MzTDJwO8Q5wkshmpwCx+eVemuut+kX6
-	 ecPoMj9NSkzRQaVDut8DookTs1xwv1LAVeZFZU2W75/KjYKWu8un5feQI/vD6ncbAxK3D
-	 PMK+mRn3p5icBu+vTrl+TSyZb+hVLbLisRYRGoKPfqePK1qLTak54i7zxTD6cMmR4Ega9
-	 q+kvcaiJTip3H7pPFM1N79CpwMniZcLPBPGzT+mxgZpVDoyCX6UjcMsgUlgprCncksDmH
-	 pmEVvdikKjkT7KaHPUWzgp3LchXQBs+0gS7SjBVdX11R9PJjL9V3trmV0W19iLcKuag==
+	bh=6eRlsWV8YJhhaSKOH+jGjNolrM7mMBWHfu1HfrYcGU8=;
+	b=emi50lOXFIeqF9MyPR1V8HWS0YYwPxkAq/QzfVO9QKT1C1tzG5bmaCPFRddDlQH59uu/
+	 lLI4EjJeinGpA+zN6fVvNfE29mxupwCzsI+WcZqS+EtPcXyPOCednvAcMD6kKw+TQEafq
+	 Kk/giKn1flBvsacBxfWGNOyGyNS17kexUXjT1UCH0FVMTBps8+MRXOceTr81XXQKElUNH
+	 hsL8jsYzA1z/Ke8d0s+soWj72quVyQ9NgVm7Q406QN6sePqsoGngPaX0ZzROg60Kv0l09
+	 31rYRZDTP/9v7Dhz4lRy7CWzmFi/svemS4PiTzOepvlf6Cmh58m0xp+2EamuHcaDmkA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="e+/gHnYG";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=twu6BL81;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C46B606A320;
-	Wed, 18 Nov 2026 20:24:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B5A606A31C;
+	Wed, 18 Nov 2026 20:24:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e+/gHnYG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA9C1F000C4;
-	Wed, 18 Nov 2026 20:24:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=twu6BL81
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC9F1F000C4;
+	Wed, 18 Nov 2026 20:24:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033496;
-	bh=VkOwHe7ON5ZJY7lto2BrEAekQDfThWo5orrrn42cY1k=;
+	s=korg; t=1795033499;
+	bh=6eRlsWV8YJhhaSKOH+jGjNolrM7mMBWHfu1HfrYcGU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e+/gHnYGMl1+xDkzmxVuQpvbdSvn38MBZN6pPNhtq+zbDLxCj+0jsaIW7Od7qNtV2
-	 JK0ALYKH24E9K3Ja6x7udY2P5mgdwmOvP2wEoxusG/p0ywRNV2pCMFTsYYiqDsQnqu
-	 C2B549PFW+3oym3srNJ+GBkQZYqiwdsPNT2C9cP4=
+	b=twu6BL81zHt0GEZRAfryuHmolUDFOTB5oPJhghDZlA2ejZczDC4tYAz6Cnv+0HgiU
+	 3Zxehklzp3kKuOegF+SV78/itei4n0po2ZEEQ2zcoPhaw/0DcwUHtZwCNRQczrpEYa
+	 812zTTY9W4ckoJqKbpWKlmfIGb8yAnwMddNHtl3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zizhi Wo <wozizhi@huawei.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Zide Chen <zide.chen@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0036/3318] fat: reject name longer than NAME_MAX in msdos_format_name()
-Date: Wed, 18 Nov 2026 15:10:58 +0100
-Message-ID: <20261118150314.916726546@linuxfoundation.org>
+Subject: [PATCH 6.6 0037/3318] perf/x86/intel/uncore: Fix PCI PMU cleanup on setup failure
+Date: Wed, 18 Nov 2026 15:10:59 +0100
+Message-ID: <20261118150314.951271983@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,56 +69,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zizhi Wo <wozizhi@huawei.com>
+From: Zide Chen <zide.chen@intel.com>
 
-[ Upstream commit 9d7ed813ee5ff0d469bd99630828ed6fdef4e8da ]
+[ Upstream commit 003267cb94e21d762eb72d6977d84f44f1705bb7 ]
 
-msdos_format_name() performs no upper-bound check on the input name length.
-It silently truncates an arbitrarily long name into the 8.3 form (11 bytes)
-and returns success. The subsequent fat_scan() then matches only against
-these 11 truncated bytes, so it returns an inode as long as any entry with
-the same 8.3 name exists on disk.
+When uncore_pci_pmu_register() fails, pmu->boxes[die] is set to NULL
+before returning.  In the uncore_pci_remove() path, this causes
+uncore_pci_pmu_unregister() to be skipped entirely, leaking
+pmu->activeboxes.  In the uncore_bus_notify() path,
+uncore_pci_pmu_unregister() may still be called and must exit early
+when pmu->boxes[die] is NULL to avoid a NULL pointer dereference, and
+to ensure activeboxes is only decremented for a previously active box.
 
-For example, passing a 300-byte name of all 'A's returns 0 with res set to
-"AAAAAAAA" (8 'A's + 3 padding spaces), reporting success for a name far
-longer than NAME_MAX.
+Additionally, since pci_get_drvdata() returns NULL on registration
+failure, uncore_pci_remove() can no longer treat NULL drvdata as an
+indicator of an auxiliary PCI device.  Remove the associated
+WARN_ON_ONCE().
 
-As a result, when a user calls open() on a path component longer than
-NAME_MAX (255) bytes, the VFS only enforces PATH_MAX, not the length of an
-individual component. The dentry keeps the original long name but gets an
-inode attached and becomes positive. Later in vfs_open() -> fsnotify_open()
--> fanotify_info_copy_name() triggers WARN_ON_ONCE(), and the event is
-reported to userspace with an empty name.
-
-vfat is not affected, as create goes through xlate_to_uni() which refuses
-names longer than FAT_LFN_LEN.
-
-Fix this by checking 'len > NAME_MAX' at the entry of msdos_format_name(),
-the single entry point for all msdos name handling, aligning with the
-NAME_MAX check that xfs/9p/ceph/simple_lookup() perform at lookup.
-
-Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
-Link: https://patch.msgid.link/20260629130943.3671939-1-wozizhi@huaweicloud.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Zide Chen <zide.chen@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Link: https://sashiko.dev/#/patchset/20260512233048.9577-1-zide.chen@intel.com?part=1
+Link: https://patch.msgid.link/20260611160033.66760-2-zide.chen@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fat/namei_msdos.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/events/intel/uncore.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/fat/namei_msdos.c b/fs/fat/namei_msdos.c
-index e189fbf95fcac..25e1ace9d0c68 100644
---- a/fs/fat/namei_msdos.c
-+++ b/fs/fat/namei_msdos.c
-@@ -29,6 +29,9 @@ static int msdos_format_name(const unsigned char *name, int len,
- 	unsigned char c;
- 	int space;
+diff --git a/arch/x86/events/intel/uncore.c b/arch/x86/events/intel/uncore.c
+index 6769820a007b7..0b9c3144a7037 100644
+--- a/arch/x86/events/intel/uncore.c
++++ b/arch/x86/events/intel/uncore.c
+@@ -1173,6 +1173,7 @@ static int uncore_pci_pmu_register(struct pci_dev *pdev,
+ 	/* First active box registers the pmu */
+ 	ret = uncore_pmu_register(pmu);
+ 	if (ret) {
++		atomic_dec(&pmu->activeboxes);
+ 		pmu->boxes[die] = NULL;
+ 		uncore_box_exit(box);
+ 		kfree(box);
+@@ -1238,6 +1239,9 @@ static void uncore_pci_pmu_unregister(struct intel_uncore_pmu *pmu, int die)
+ {
+ 	struct intel_uncore_box *box = pmu->boxes[die];
  
-+	if (len > NAME_MAX)
-+		return -ENAMETOOLONG;
++	if (!box)
++		return;
 +
- 	if (name[0] == '.') {	/* dotfile because . and .. already done */
- 		if (opts->dotsOK) {
- 			/* Get rid of dot - test for it elsewhere */
+ 	pmu->boxes[die] = NULL;
+ 	if (atomic_dec_return(&pmu->activeboxes) == 0)
+ 		uncore_pmu_unregister(pmu);
+@@ -1262,7 +1266,6 @@ static void uncore_pci_remove(struct pci_dev *pdev)
+ 				break;
+ 			}
+ 		}
+-		WARN_ON_ONCE(i >= UNCORE_EXTRA_PCI_DEV_MAX);
+ 		return;
+ 	}
+ 
 -- 
 2.53.0
 
