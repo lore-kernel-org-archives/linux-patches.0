@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021869;
-	b=XX5/fIORf7c39kTw1lu+E70UId1acQ+Py9usZMIkI2vlyAnPiGlLy9CDZ6IXZVUJTLbd
-	 bzFW75PweuQeTvDboA9AKxNMrjgZiyl5O86pBVfI1xlYbipCDiRySTuh/+kWdkRy1c4bl
-	 zCuRtCHrRde+/eOyGps7qeE5KDE/Ru/G/V7iBpHxuRymzz+/OKp4Ya3GV5wZFdHCKKHtQ
-	 hqYFBDuP6Gqt12CuTgejIxQyHI6EPNnssb+/i8v6lAi4JBsLkRCVKz/xih2DxKyC+QqB/
-	 DakXlwFnXgkVK1Br4jGSc7+q3d/S6ayVGs4iiKV+vy4ARQ2t9Vp6KA8AWZWjHBRiVLg==
+	t=1795021873;
+	b=FW4FZOBMKK8gAEslbKFr2GjJginHy1MD3oPSKBh+UV2CKhlPahLOMcNRYuKXa6vgKNK8
+	 KTO0VNScUPShfzEN1R3jcKOfQVGDjpDvurBAU3pDV7bNpotEuq/tysGn6rBdsryGe7yXl
+	 8KQiQVnzPbnhHT7NeO4zvV1M/hM1tJ03g38d+4AESSgyS3iytSOE8vKkel5NDkw2qdIIK
+	 luPcHij9g88AuNHfOFgRUSQevQbszeNMx/0C4uk+rEdQd3orW/Yj0daK1LhD4SKEz+bGP
+	 IztITecBZIFE0IyKyqYy4mP7volOaPrpwR+xtUNxWjs8uYthppN+E8k7urd7HoUzIlg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021869;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021873;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=b7I7qK+nagcsoI/QzbDbclQB+wHg2KRva/O9cyN3guM=;
-	b=OXuk0KJ/Fnb5W59AbpWOSe/veUVgwyDb9+lA6uq3HLBP2ynlExmfekruzWgIAY2f6dDf
-	 +JXfJxm2Y8QfrU44kHakCyFYXPtMBLcs9NeWbmuj5/nW8Gq13TY0YLU5IeH0e3j3BVzDD
-	 rdv79kXCarL1HUWQMIqsn5dk46ux38bS07lXFmjC1YUbCvacZv5wvf/0trf5OAn0OWehh
-	 /Nt/3ra9faEQI6O7QSo8/W8HbpOtnIHtYQhcmGE9fyuqvjIvsliS90w5MVFoau0kocv6S
-	 SUg2NwCON4nJjEKO+osEpRZQkSfp/zLYQBGT8cETY4Vb0quIg35MbtKC5T4csI24L4Q==
+	bh=U93vRDc0lWTNl+rMhvSPRYOFUWRCo8SV4lD1QCuh3qQ=;
+	b=1x0pIsoOca3lEzDgulwmYSQrS+pXRQZ/ZVPryUqm69Z9Fc6UEY+tI/DH1iIll4Ir5oSd
+	 /qrleG/G5yENyRFnsRMDbjn73qRie9hH7ExI6OZtfVoE9pbr1gRggb59/iZPj90I4/QBg
+	 EWVSnyS0Sn1GWK3KJdzYkQGehvipe0CPFy5isp3eXilKi7AnRKpFL5qCIBTuJMYbMr4Dc
+	 NNsp/ix8FbgQwliLTFCNIWWEW8MLE3fALnY0guVvJSe3jjOxCHuHmyWYAhxBGB0NaR7ja
+	 4hmtUY+WR+w5eFI+kiGEFxDda3BLhbScFLq0oLl9OZ2dlHZfyd3d+thwibUbv2qjmMA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KiIyDh6V;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CnTFb5EP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C259E606A320;
-	Wed, 18 Nov 2026 17:11:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C714606A325;
+	Wed, 18 Nov 2026 17:11:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KiIyDh6V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238981F000C4;
-	Wed, 18 Nov 2026 17:11:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CnTFb5EP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 002C11F000C4;
+	Wed, 18 Nov 2026 17:11:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021869;
-	bh=b7I7qK+nagcsoI/QzbDbclQB+wHg2KRva/O9cyN3guM=;
+	s=korg; t=1795021872;
+	bh=U93vRDc0lWTNl+rMhvSPRYOFUWRCo8SV4lD1QCuh3qQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KiIyDh6VdMCGvvygYo0BezhupC/pukEZ7OQGDm1i7SaNoDIiJg9QEFkvToihhFx5g
-	 glUqpC8CoeAgm+BbU1vhiu/mN0QEFKk4K/LqPcQpQbgAIeeS5OxIEv1ga+5VH4BRki
-	 r3u1YpA5PR466spoYJXsNUXdSYPc6uAZBBSAUUmM=
+	b=CnTFb5EPSPpz5K1WZJTc5VG804210FA9LTw5feon4mOaA+tT2QpIQ9rCKdy8fwCfc
+	 p73cO8FTH2MaI71wlG/6mfuvLy/Z4Q6XwL18EzGjAN2IUEWVShTqotYI8IEu+M0Nlr
+	 v9Rtnx5lLVoERKXLH01Yb2uBBI27I8kyHZkNnKus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Giuseppe Scrivano <giuseppe@scrivano.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Gao Xiang <xiang@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2461/2651] fs: rename vfs_get_super() to get_tree_super() and export it
-Date: Wed, 18 Nov 2026 16:01:41 +0100
-Message-ID: <20261118150413.645609838@linuxfoundation.org>
+Subject: [PATCH 7.3 2462/2651] erofs: reuse superblock for file-backed mounts
+Date: Wed, 18 Nov 2026 16:01:42 +0100
+Message-ID: <20261118150413.676567957@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,97 +70,234 @@ Content-Transfer-Encoding: 8bit
 
 From: Giuseppe Scrivano <giuseppe@scrivano.org>
 
-[ Upstream commit 64571ba6581695e936cd701e345efdbe43e05920 ]
+[ Upstream commit cd4108319bb3355a54252377eeaa610e8d603ba7 ]
 
-Rename and export it so filesystems that need a custom superblock
-matching policy can reuse it directly instead of open-coding sget_fc()
-+ fill_super().  No functional change.
+When the same file-backed image is mounted multiple times (via path or
+fd) with the superblock_share mount option, reuse the existing
+superblock instead of creating a new one.  This allows multiple mounts
+of the same image to share in-kernel data structures more efficiently.
 
-This is a preparatory fix for the next patch.
+The backing file is identified by its inode and fsoffset.  If mount
+options conflict or extra devices are used, a separate superblock
+is created transparently as a fallback.  Remount is not allowed on
+shared superblocks.
+
+Tested by mounting a 177M Fedora EROFS image 20 times with full
+traversal:
+
+  #!/bin/sh
+  IMG=${1:-/root/fedora.erofs}
+  OPTS=${2:+-o $2}
+  N=20
+  DIR=$(mktemp -d)
+  trap "umount $DIR/m* 2>/dev/null; rm -rf $DIR" EXIT
+
+  sync; echo 3 > /proc/sys/vm/drop_caches
+  INODES_BEFORE=$(grep erofs_inode /proc/slabinfo | awk '{print $2}')
+  MEM_BEFORE=$(grep ^Slab: /proc/meminfo | awk '{print $2}')
+
+  for i in $(seq 1 $N); do
+      mkdir $DIR/m$i
+      mount -t erofs $OPTS "$IMG" $DIR/m$i
+      find $DIR/m$i > /dev/null
+  done
+
+  echo "Superblocks: $(grep $DIR /proc/self/mountinfo | \
+      awk '{print $3}' | sort -u | wc -l)"
+  echo "erofs_inode delta: +$(( $(grep erofs_inode /proc/slabinfo | \
+      awk '{print $2}') - INODES_BEFORE ))"
+  echo "Slab delta: +$(( $(grep ^Slab: /proc/meminfo | \
+      awk '{print $2}') - MEM_BEFORE )) kB"
+
+without superblock_share:
+
+  # time ./test.sh /root/fedora.erofs
+  Superblocks: 20
+  erofs_inode delta: +45864
+  Slab delta: +37448 kB
+  real	0m2.311s
+  user	0m0.222s
+  sys	0m1.998s
+
+with superblock_share:
+
+  # time ./test.sh /root/fedora.erofs superblock_share
+  Superblocks: 1
+  erofs_inode delta: +2044
+  Slab delta: +284 kB
+  real	0m0.679s
+  user	0m0.157s
+  sys	0m0.469s
+
+The time difference shows that sharing the superblock also benefits
+the page cache and inode cache, as subsequent mounts of the same image
+avoid re-reading the backing file.  This is particularly useful for
+container hosts running multiple containers from the same base image.
 
 Signed-off-by: Giuseppe Scrivano <giuseppe@scrivano.org>
-Link: https://patch.msgid.link/20261002163225.1258203-2-giuseppe@scrivano.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Reviewed-by: Gao Xiang <xiang@kernel.org>
+Signed-off-by: Gao Xiang <xiang@kernel.org>
 Stable-dep-of: 209108a54561 ("erofs: drop unnecessary .read_folio() checks for file-backed mounts")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/super.c                 | 19 +++++++++++++++----
- include/linux/fs_context.h |  4 ++++
- 2 files changed, 19 insertions(+), 4 deletions(-)
+ Documentation/filesystems/erofs.rst |  7 ++++
+ fs/erofs/internal.h                 |  1 +
+ fs/erofs/super.c                    | 56 +++++++++++++++++++++++++++--
+ 3 files changed, 61 insertions(+), 3 deletions(-)
 
-diff --git a/fs/super.c b/fs/super.c
-index cbcf5faeb78d7..c5a0658f7aaf3 100644
---- a/fs/super.c
-+++ b/fs/super.c
-@@ -1334,7 +1334,17 @@ static int test_single_super(struct super_block *s, struct fs_context *fc)
- 	return 1;
+diff --git a/Documentation/filesystems/erofs.rst b/Documentation/filesystems/erofs.rst
+index d301d9ac946a9..02caf3b061fed 100644
+--- a/Documentation/filesystems/erofs.rst
++++ b/Documentation/filesystems/erofs.rst
+@@ -139,6 +139,9 @@ inode_share            Enable inode page sharing for this filesystem.  Inodes wi
+                        page cache.
+ source=%s              (For file-backed mounts) Specify the backing image as a path
+                        or as an already-opened file descriptor.
++superblock_share       (For file-backed mounts) Share the superblock when the same
++                       backing file is mounted more than once with compatible
++                       options.  Remount is not allowed on shared superblocks.
+ ===================    =========================================================
+ 
+ File-backed mounts
+@@ -156,6 +159,10 @@ Only regular files are accepted as backing files; to mount an image that
+ resides on a block device, use the traditional block device mount path
+ instead.
+ 
++When superblock_share is specified, multiple mounts of the same backing
++file at the same fsoffset with compatible mount options can share a single
++superblock.  Remount is not allowed on shared superblocks.
++
+ Sysfs Entries
+ =============
+ 
+diff --git a/fs/erofs/internal.h b/fs/erofs/internal.h
+index 12e3a5b80a5a6..da58053c11169 100644
+--- a/fs/erofs/internal.h
++++ b/fs/erofs/internal.h
+@@ -150,6 +150,7 @@ struct erofs_sb_info {
+ #define EROFS_MOUNT_DAX_NEVER		0x00000080
+ #define EROFS_MOUNT_DIRECT_IO		0x00000100
+ #define EROFS_MOUNT_INODE_SHARE		0x00000200
++#define EROFS_MOUNT_SUPERBLOCK_SHARE	0x00000400
+ 
+ #define clear_opt(opt, option)	((opt)->mount_opt &= ~EROFS_MOUNT_##option)
+ #define set_opt(opt, option)	((opt)->mount_opt |= EROFS_MOUNT_##option)
+diff --git a/fs/erofs/super.c b/fs/erofs/super.c
+index 0967aace9f7ff..16fa3b853f1b6 100644
+--- a/fs/erofs/super.c
++++ b/fs/erofs/super.c
+@@ -386,7 +386,7 @@ static void erofs_default_options(struct erofs_sb_info *sbi)
+ enum {
+ 	Opt_user_xattr, Opt_acl, Opt_cache_strategy, Opt_dax, Opt_dax_enum,
+ 	Opt_device, Opt_domain_id, Opt_directio, Opt_fsoffset, Opt_inode_share,
+-	Opt_source,
++	Opt_source, Opt_superblock_share,
+ };
+ 
+ static const struct constant_table erofs_param_cache_strategy[] = {
+@@ -415,6 +415,7 @@ static const struct fs_parameter_spec erofs_fs_parameters[] = {
+ 	fsparam_u64("fsoffset",			Opt_fsoffset),
+ 	fsparam_flag("inode_share",		Opt_inode_share),
+ 	fsparam_file_or_string("source",	Opt_source),
++	fsparam_flag("superblock_share",	Opt_superblock_share),
+ 	{}
+ };
+ 
+@@ -560,6 +561,12 @@ static int erofs_fc_parse_param(struct fs_context *fc,
+ 		else
+ 			set_opt(&sbi->opt, INODE_SHARE);
+ 		break;
++	case Opt_superblock_share:
++		if (!IS_ENABLED(CONFIG_EROFS_FS_BACKED_BY_FILE))
++			errorfc(fc, "%s option not supported", erofs_fs_parameters[opt].name);
++		else
++			set_opt(&sbi->opt, SUPERBLOCK_SHARE);
++		break;
+ 	case Opt_source:
+ 		return erofs_fc_parse_source(fc, param);
+ 	}
+@@ -667,6 +674,16 @@ static int erofs_fc_fill_super(struct super_block *sb, struct fs_context *fc)
+ 		errorfc(fc, "FSDAX is not allowed when inode_share is on");
+ 		return -EINVAL;
+ 	}
++	if (test_opt(&sbi->opt, SUPERBLOCK_SHARE) &&
++	    test_opt(&sbi->opt, INODE_SHARE)) {
++		errorfc(fc, "superblock_share is not allowed when inode_share is on");
++		return -EINVAL;
++	}
++	if (test_opt(&sbi->opt, SUPERBLOCK_SHARE) &&
++	    sbi->devs->extra_devices) {
++		errorfc(fc, "superblock_share does not support extra devices");
++		return -EINVAL;
++	}
+ 
+ 	sbi->blkszbits = PAGE_SHIFT;
+ 	if (erofs_is_fileio_mode(sbi)) {
+@@ -794,6 +811,35 @@ static int erofs_fc_fill_super(struct super_block *sb, struct fs_context *fc)
+ 	return 0;
  }
  
--static int vfs_get_super(struct fs_context *fc,
-+/**
-+ * get_tree_super - Get a superblock, optionally sharing an existing one
-+ * @fc: The filesystem context holding the parameters
-+ * @test: Comparison function to find a matching existing superblock, or NULL
-+ * @fill_super: Helper to initialise a new superblock
-+ *
-+ * If @test is non-NULL and matches an existing superblock, that superblock is
-+ * reused; otherwise a new anonymous superblock is created and initialised with
-+ * @fill_super.  Passing NULL for @test always creates a new superblock.
++/*
++ * The function is used only with a sbi that has SUPERBLOCK_SHARE set,
++ * so that the memcmp later ensures new_sbi is also shareable.
 + */
-+int get_tree_super(struct fs_context *fc,
- 		int (*test)(struct super_block *, struct fs_context *),
- 		int (*fill_super)(struct super_block *sb,
- 				  struct fs_context *fc))
-@@ -1361,12 +1371,13 @@ static int vfs_get_super(struct fs_context *fc,
- 	deactivate_locked_super(sb);
- 	return err;
- }
-+EXPORT_SYMBOL_GPL(get_tree_super);
- 
- int get_tree_nodev(struct fs_context *fc,
- 		  int (*fill_super)(struct super_block *sb,
- 				    struct fs_context *fc))
++static int erofs_sb_share_test_super(struct super_block *sb,
++				     struct fs_context *fc)
++{
++	struct erofs_sb_info *sbi = EROFS_SB(sb);
++	struct erofs_sb_info *new_sbi = fc->s_fs_info;
++
++	if (sb->s_iflags & SB_I_RETIRED)
++		return 0;
++	if (!sbi->dif0.file || !new_sbi->dif0.file)
++		return 0;
++	return file_inode(sbi->dif0.file) == file_inode(new_sbi->dif0.file) &&
++	       sbi->dif0.fsoff == new_sbi->dif0.fsoff &&
++	       !memcmp(&sbi->opt, &new_sbi->opt, sizeof(sbi->opt));
++}
++
++static int erofs_file_get_tree(struct fs_context *fc)
++{
++	struct erofs_sb_info *sbi = fc->s_fs_info;
++
++	if (!test_opt(&sbi->opt, SUPERBLOCK_SHARE))
++		return get_tree_nodev(fc, erofs_fc_fill_super);
++
++	return get_tree_super(fc, erofs_sb_share_test_super, erofs_fc_fill_super);
++}
++
+ static int erofs_fc_get_tree(struct fs_context *fc)
  {
--	return vfs_get_super(fc, NULL, fill_super);
-+	return get_tree_super(fc, NULL, fill_super);
+ 	struct erofs_sb_info *sbi = fc->s_fs_info;
+@@ -809,7 +855,7 @@ static int erofs_fc_get_tree(struct fs_context *fc)
+ 			errorfc(fc, "source is unsupported");
+ 			return -EINVAL;
+ 		}
+-		return get_tree_nodev(fc, erofs_fc_fill_super);
++		return erofs_file_get_tree(fc);
+ 	}
+ 
+ 	ret = get_tree_bdev_flags(fc, erofs_fc_fill_super,
+@@ -827,7 +873,7 @@ static int erofs_fc_get_tree(struct fs_context *fc)
+ 
+ 		if (S_ISREG(file_inode(sbi->dif0.file)->i_mode) &&
+ 		    sbi->dif0.file->f_mapping->a_ops->read_folio)
+-			return get_tree_nodev(fc, erofs_fc_fill_super);
++			return erofs_file_get_tree(fc);
+ 	}
+ 	return ret;
  }
- EXPORT_SYMBOL(get_tree_nodev);
+@@ -840,6 +886,10 @@ static int erofs_fc_reconfigure(struct fs_context *fc)
  
-@@ -1374,7 +1385,7 @@ int get_tree_single(struct fs_context *fc,
- 		  int (*fill_super)(struct super_block *sb,
- 				    struct fs_context *fc))
- {
--	return vfs_get_super(fc, test_single_super, fill_super);
-+	return get_tree_super(fc, test_single_super, fill_super);
- }
- EXPORT_SYMBOL(get_tree_single);
+ 	DBG_BUGON(!sb_rdonly(sb));
  
-@@ -1384,7 +1395,7 @@ int get_tree_keyed(struct fs_context *fc,
- 		void *key)
- {
- 	fc->s_fs_info = key;
--	return vfs_get_super(fc, test_keyed_super, fill_super);
-+	return get_tree_super(fc, test_keyed_super, fill_super);
- }
- EXPORT_SYMBOL(get_tree_keyed);
++	/* Shared superblocks must not be reconfigured.  */
++	if (test_opt(&sbi->opt, SUPERBLOCK_SHARE))
++		return -EBUSY;
++
+ 	if (new_sbi->domain_id)
+ 		erofs_info(sb, "ignoring reconfiguration for domain_id.");
  
-diff --git a/include/linux/fs_context.h b/include/linux/fs_context.h
-index 0d6c8a6d7be21..d1727dffecc5e 100644
---- a/include/linux/fs_context.h
-+++ b/include/linux/fs_context.h
-@@ -150,6 +150,10 @@ extern int vfs_parse_fs_param_source(struct fs_context *fc,
- 				     struct fs_parameter *param);
- extern void fc_drop_locked(struct fs_context *fc);
- 
-+int get_tree_super(struct fs_context *fc,
-+		   int (*test)(struct super_block *, struct fs_context *),
-+		   int (*fill_super)(struct super_block *sb,
-+				     struct fs_context *fc));
- extern int get_tree_nodev(struct fs_context *fc,
- 			 int (*fill_super)(struct super_block *sb,
- 					   struct fs_context *fc));
 -- 
 2.53.0
 
