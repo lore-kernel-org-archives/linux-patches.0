@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019579;
-	b=i6nPp77MlHlwYB6WnITlzK9sOQBLYT8oHAAgfopC1Emx0FjoWmv+ojWKeXcIZG7S+dVG
-	 OKp4jeu0LymaeHrH8kEuDFmcPlDS4tbT6kBy805F/qKj7wNhCrMQwNGw8JRK9gUFloVuu
-	 xyHtNF2rkWbEPP+kzSSTOYe6vhqzUlfbB7MTlHDfQ+7e6+gzaXFMNx8i7AZGPo83c/Yay
-	 AdiPePB6bhDDuGqDwYk0IzWa0cXApRFl3DGqc0sYCK5qZZkiHwcYXpPpFVIhoWi5+3YG0
-	 ikdOWXbuwZhEosCqHuUEmwsj9S6nBQJ3Duc30UYgxnVkKlRXtsCdNWv+6aC4YIJWA8g==
+	t=1795019582;
+	b=MqGSN+x5q2+qatc728M1uBzU6MJZAWdFrLmjBNOAWAe80vtNp0N5XmBH5g6d5um8sLOY
+	 HehS6uya4qvYmevAGus/PLmnjioy9r87N5sZVBU8aGldqyyJPstABZAGeLBkQsXXA7rh+
+	 5dAuNLb0jV5OtepvVgEH8CZAgl18zVNu0sMPpy0uMI601cGTFlVKYlrmgOAbi3L3o6hqP
+	 zOJC5UIUKrvlw6VqkQWadQJK8BAUxIpKxep6fKn/ZnhPhnoxab4fC/yThnfj0M5TyL4V1
+	 +rtvDFmUMbWzM6cgeKM7Z7tmnQBi+lfozJ+RUhZNwxqYb/rTPQx2nTVeKwSxpxPqeCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019579;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019582;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2KetgpuRGX76ntK3naXJcC5gNWuZHc62O0xfyBh3GCk=;
-	b=ZdroVaev8LlKxCiZNFTrYeF7wmle0BwoDTMamWKKbWBJlKpuyf4BtSH6WPXG9fZsRslP
-	 hjwQ6yfPNe0lKoEIvggNs22EkDufjwrMElczSIfj8McgaNkUWPIqze0E4GfmlaJgdRN6O
-	 6zhd8LD6jvdoxD/HFV8WS6Q3IL0U7L2VSu69GzOMHywLP6l6JoHHjdVk8izN8pA4AMXLO
-	 xNl0ymewdb1CApMHPSMSBkTd7xRGqJKlG2QuV7Zv2FlzOltWxj6plyw42jDzdQaRbq0/6
-	 fB5IjHkJ+hUagHBmwl5LsBv6O+USSXYR0nN/qtc5MX3G/zMAPkQX7eCw++d+/BwAyuw==
+	bh=FGUjlz7Gxp5mmTBT6LO+FMFnIiHZkw1FMpsqH0v5MeM=;
+	b=MOSfElcAGk1jlgDjHrpFHj1ccSNKfhUXB46yZ1+gil1gc6W5yp98pc3RuEgcdtX/O46Q
+	 liQb6yXAb9p9FuEfPniy9aRgSyYLTw0zfvnOuCSr5BfCyxWAbzsZCxgTZsU8+4dfXZPUt
+	 nhBXTurolqEBHs6hBwPM+q4vnjVMiCFTNb9c5zXe3y7CGo7tVCUFtmV7Ibdx2RXu0nPmp
+	 IYehNI39XAcKSKmipDQgexnigfWbihX88/L3PeNHFJcMs4lEnEWmyn4L2SHXx+jwYRB0Z
+	 DxSiGnrSSqRlDRqHYF8b3tTkPlEBLIH6sHdpUk9Ie8l1+yBatHnGn7QnGz81QerM0lg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aj7TNHGS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MjgdLZZf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9AA7606A335;
-	Wed, 18 Nov 2026 16:32:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F31B606A325;
+	Wed, 18 Nov 2026 16:33:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aj7TNHGS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CFA21F000C9;
-	Wed, 18 Nov 2026 16:32:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MjgdLZZf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9C341F000C9;
+	Wed, 18 Nov 2026 16:33:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019579;
-	bh=2KetgpuRGX76ntK3naXJcC5gNWuZHc62O0xfyBh3GCk=;
+	s=korg; t=1795019582;
+	bh=FGUjlz7Gxp5mmTBT6LO+FMFnIiHZkw1FMpsqH0v5MeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aj7TNHGSL+sghXuM6ADWrCzDu2Uv0bMBfYCf9rjp9ZY3mR9Cos6RaYE/68hBbY3S7
-	 4+LuPJbhWjw3I6go/hdEF+JWm1akl2STciTeESliGYO9OnE34mhb2YfxVXCNrJ/xFd
-	 dh9bX5iL41ggqGf7QlDYr3/LUxgysx2ZlbWHQLV4=
+	b=MjgdLZZfRD/XRCjo6UBfntDhIpkblhzYU/XsZnsDUUcJVuU9CbB+SsBkFAVQ1VpI7
+	 JdRcPKV+GlKtukyxlm+d8POuTI/gqrm98k+WFcUJoi+W9c3INooBN/c01hQTFhT/Cz
+	 YPaMKxgr8XpF//tFw46gR4KEcVToK8aEq9VsAC5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sashiko <sashiko-bot@kernel.org>,
 	Hannes Reinecke <hare@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
+	John Garry <john.garry@linux.dev>,
 	Tal Zussman <tz2294@columbia.edu>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1645/2651] block: honor IOCB_NOWAIT in the block device buffered read path
-Date: Wed, 18 Nov 2026 15:48:05 +0100
-Message-ID: <20261118150347.028261173@linuxfoundation.org>
+Subject: [PATCH 7.3 1646/2651] block: dont fall back to buffered I/O for atomic writes
+Date: Wed, 18 Nov 2026 15:48:06 +0100
+Message-ID: <20261118150347.059699537@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -73,57 +73,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Tal Zussman <tz2294@columbia.edu>
 
-[ Upstream commit d16519a561f4ccc2cebbf52831435833cac1fec6 ]
+[ Upstream commit 9fd1afea19fa7c4ba438a1d162739e0832073a4c ]
 
-blkdev_read_iter() takes inode_lock_shared() unconditionally around
-filemap_read(). Unlike blkdev_write_iter(), it does not reject
-IOCB_NOWAIT for buffered I/O, so a non-blocking read, or the buffered
-tail of a short IOCB_NOWAIT direct read, blocks behind set_blocksize()
-holding i_rwsem across sync_blockdev().
+blkdev_direct_write() turns an -EBUSY from page cache invalidation into
+a 0 return, so an IOCB_ATOMIC write is retried in full through
+blkdev_buffered_write(), with no atomicity guarantee.
 
-A preadv2(RWF_NOWAIT) issued while another thread changes the block
-size with a dirty page cache blocks for as long as sync_blockdev()
-takes, 4 to 6 seconds on a scsi_debug device with delay=5.
+Skip the buffered fallback in blkdev_write_iter() for IOCB_ATOMIC, as
+it already does for IOCB_NOWAIT, so the -EBUSY case returns -EAGAIN and
+the caller retries, matching __iomap_dio_rw().
 
-Use inode_trylock_shared() for IOCB_NOWAIT and return the bytes the
-direct path already read, or -EAGAIN if none, when the lock is
-contended, preserving NOWAIT semantics.
+ext4 has the same fallback and only warns in it. For block devices the
+fallback can be skipped before any I/O is submitted, so fail early
+instead.
 
-Fixes: c0e473a0d226 ("block: fix race between set_blocksize and read paths")
+Fixes: caf336f81b3a ("block: Add fops atomic write support")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
 Link: https://sashiko.dev/#/patchset/20260802-blkdev-fixes-v1-0-a82fc549fd74%40columbia.edu?part=2
 Assisted-by: Claude:claude-fable-5
 Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: John Garry <john.garry@linux.dev>
 Signed-off-by: Tal Zussman <tz2294@columbia.edu>
-Link: https://patch.msgid.link/20261009-blkdev-fixes-v6-4-307939c387df@columbia.edu
+Link: https://patch.msgid.link/20261009-blkdev-fixes-v6-6-307939c387df@columbia.edu
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/fops.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ block/fops.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/block/fops.c b/block/fops.c
-index 847d22094d326..a5af145bd0116 100644
+index a5af145bd0116..562cc52af5aa2 100644
 --- a/block/fops.c
 +++ b/block/fops.c
-@@ -878,7 +878,15 @@ static ssize_t blkdev_read_iter(struct kiocb *iocb, struct iov_iter *to)
- 	 * Take i_rwsem and invalidate_lock to avoid racing with set_blocksize
- 	 * changing i_blkbits/folio order and punching out the pagecache.
- 	 */
--	inode_lock_shared(bd_inode);
-+	if (iocb->ki_flags & IOCB_NOWAIT) {
-+		if (!inode_trylock_shared(bd_inode)) {
-+			if (!ret)
-+				ret = -EAGAIN;
-+			goto reexpand;
-+		}
-+	} else {
-+		inode_lock_shared(bd_inode);
-+	}
- 	ret = filemap_read(iocb, to, ret);
- 	inode_unlock_shared(bd_inode);
- 
+@@ -787,10 +787,11 @@ static ssize_t blkdev_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 	if (iocb->ki_flags & IOCB_DIRECT) {
+ 		ret = blkdev_direct_write(iocb, from);
+ 		if (ret >= 0 && iov_iter_count(from)) {
+-			if (iocb->ki_flags & IOCB_NOWAIT) {
++			if (iocb->ki_flags & (IOCB_NOWAIT | IOCB_ATOMIC)) {
+ 				/*
+ 				 * The buffered fallback blocks on i_rwsem and
+-				 * on writeback of the data it copied: return
++				 * on writeback of the data it copied, and
++				 * can't provide torn-write protection: return
+ 				 * the short direct write instead and let the
+ 				 * caller retry. The bytes already written
+ 				 * still need a flush if REQ_FUA was not set.
 -- 
 2.53.0
 
