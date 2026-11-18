@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038287;
-	b=C9MMFvbzjrM5HElEep5TqBTTrBQXsJXyrSjIZwIrLcApyQsGKMwODKMSRNZpTfa5f6le
-	 S9jYHHJIxeXEzD8kImYVl23gLKgn27vtrgIxKVjDG/xf9O8V2IaZbUpOt9GEnYhy02Cbu
-	 NOqsGsxUfQPMKwXM1VMDKJZesF7NmtdST2Gho227PrjQDkgz/UOCb0Zl41AlK3l0brHsR
-	 ZVvUao8nevbUZyTB28qO1XdL80VutVbkKkpZgGAUGB199OEvYWUBxnEzBNmC8+9BoiSyg
-	 w0Bs+aZkp7ofbrVaHSMblpQ2KmB5kF3Tu/gcbSqmBLFszjEvrAHcU4UC72Njr2V/gXA==
+	t=1795038289;
+	b=1ZPIc/04JkNgD3KvzwhMaf6ahCoC58rk+9TWkqd5A0h0kpugOXtE23Az2jWYmPGDZHIu
+	 dUdaUe6yXBvVBo2ffrmFuawfCFxdVHetQKbT0ReMuNB66ItHrCP1P7/AIV6sKfwEp0ETS
+	 H3KweQhSa4/g0AgkUk+akv1UBGVoTSEFYqxet/C17Ne3U3sLLeACSyVsuVKtoUeXr5Ogu
+	 rCTctTdjGBvXWZfr8xrQuP9Gsv2CMeG/ahjmJ61cyIrfSAIvDF60MQ3SY59GJP+6kKj2N
+	 gFhppZDecNr3NxzDvB8mlU8VkYr/+nQaSIt4jxAEL3F11qVdVAiczEZOkvxsB716Xpw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038287;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038289;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4739ACt6mmhDzVThY3ctI/XLx1mUtQt58zf6x/gsyMQ=;
-	b=MbajeIJg8V243ddqYWp/nM2sTUtPed8OaB6egiKqyxREjvVCVPSoDJwbMS+UyJrC6Gaq
-	 Xvxx2jDbFkA/RySvVzaF0eXIsNYF64qePbkBUL4ymihBskNO3eSxCqKvqnXtV/nW8MJYW
-	 JST4friyrT40ZMlhyiroAgGazSK1hicqicXGHofdK9akiCYPZDwESdHfMfLuYZjI9iCRh
-	 KIuYxud6tSPCcQ5SZRFiKWcOSXa8n7sndBvn0bKkxIyydoP9r1EBcCBLc35X4MTL7L1Ak
-	 0PMCdf3HK7mN/RLjA3x+gYKHfKJVR1whPOQGvlmWKT5VuFdiCSWPjgeHu3FDC7csBAQ==
+	bh=JRcTm1pOURrgYoqeGhBbqaXKKAayMA7WlCvu6KcIsNQ=;
+	b=Rv5ZwhcBu7rnhySzfcMuxNDUZG+hjryEEz3GMSx42xkM+lQB9tj91dryDVMUPUh8jmwq
+	 iXtMluHC4MEwCz1cT8QOgYrTXO2UXAdqx3cjiW7t/bI9/gaXo/Ma5irwN+PVVW0jhKTAO
+	 2w0LI5WHmS7sk+5VyAEkI/veQwPW4NIsLYwJht+AltxJwzodGkhyH6C9XHpbtsvk0pnBi
+	 dwdDIL+Po8YJmr0NyZensx3XH3BcA8m11fRyrsNmxY70pWip8NjgvMTpZwGzxN8fldcbM
+	 DG81qkOMMQ9ZPFfBfEV357F1y0cUTzh/7ttrewzg6tzbfZSbNQaqb+v9BYxIF9HUwrg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ciFQIcWV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l7wvgj1D;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ECD7606A325;
-	Wed, 18 Nov 2026 21:44:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA672606A325;
+	Wed, 18 Nov 2026 21:44:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ciFQIcWV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 744A51F000C4;
-	Wed, 18 Nov 2026 21:44:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l7wvgj1D
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 387FC1F000C4;
+	Wed, 18 Nov 2026 21:44:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038287;
-	bh=4739ACt6mmhDzVThY3ctI/XLx1mUtQt58zf6x/gsyMQ=;
+	s=korg; t=1795038289;
+	bh=JRcTm1pOURrgYoqeGhBbqaXKKAayMA7WlCvu6KcIsNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ciFQIcWVt33iD0NdVz7DP2lQz830sks+fB9f1nV7mXCKnsfts92r0nTfVn5dnkMxf
-	 m5vmmRgcs2NnfkyvP9tFzI9qV+Q4gKTol1Tl4OBTKijaujRZ0s8xnkq2coX7i/Hh+k
-	 zVgzPxNrygFDXUAZlaVLnPeKWlTmhs6voWWcr/cc=
+	b=l7wvgj1D0wq3+ZX8fXV2BBaFsqAhtDNzfqalrFz2AVsOnxuZNRyEs56nhO8D3phC7
+	 Dd7EK4j2Bn0w/w5mSY3xhJLmIcUzn8tD1dkR521eXLI44Mbnu2QFIAKRtHOr4L2Vg4
+	 TLLRRmVStRb9XHNNoEXhmsfbN2SwaKH956Ynvp6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Rob Clark <rob.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1689/3318] ASoC: stm: stm32_i2s: request IRQ after regmap initialization
-Date: Wed, 18 Nov 2026 15:38:31 +0100
-Message-ID: <20261118150412.496674311@linuxfoundation.org>
+Subject: [PATCH 6.6 1690/3318] drm/msm/dsi: Fix VM leak in dsi_tx_buf_alloc_6g()
+Date: Wed, 18 Nov 2026 15:38:32 +0100
+Message-ID: <20261118150412.526629715@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,87 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 1b207c85551fd74854d632116849295b2305245f ]
+[ Upstream commit ab91ba61871a896ca2ecc6e048d80a152136da44 ]
 
-The ISR accesses the managed regmap, but probe requests the IRQ before
-creating it. An early interrupt can reach an uninitialized regmap.
-Reverse-order cleanup can free the regmap while the IRQ remains active.
+dsi_tx_buf_alloc_6g() takes a reference to the kms VM with
+drm_gpuvm_get() and stores it in msm_host->vm.  If
+msm_gem_kernel_new() fails, the function returns early without
+dropping that reference.  Since msm_host->tx_gem_obj is cleared on
+the error path, msm_dsi_tx_buf_free() will never see a non-NULL
+tx_gem_obj and thus never calls drm_gpuvm_put(), leaking the VM
+reference.
 
-Request the IRQ after regmap initialization so probe unwind and
-removal free and synchronize it before releasing the regmap.
+Drop the VM reference and clear msm_host->vm on the error path.
 
-The teardown ordering issue was found by static analysis.
-
-Fixes: e4e6ec7b127c ("ASoC: stm32: Add I2S driver")
+Fixes: 5e05be782645 ("drm/msm/dsi: free TX buffer in unbind")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20261004043451.1138613-1-mhun512@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Rob Clark <rob.clark@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/754332/
+Link: https://lore.kernel.org/r/20260916175738.2089950-1-vulab@iscas.ac.cn
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+[ sashal: Adapted VM reference handling from drm_gpuvm_put() and msm_host->vm to msm_gem_address_space_put() and msm_host->aspace. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/stm/stm32_i2s.c | 23 +++++++++++------------
- 1 file changed, 11 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/stm/stm32_i2s.c b/sound/soc/stm/stm32_i2s.c
-index 4e4d8d0ed7bd7..2da8aeb256bcb 100644
---- a/sound/soc/stm/stm32_i2s.c
-+++ b/sound/soc/stm/stm32_i2s.c
-@@ -1027,7 +1027,7 @@ static int stm32_i2s_parse_dt(struct platform_device *pdev,
- 	const struct of_device_id *of_id;
- 	struct reset_control *rst;
- 	struct resource *res;
--	int irq, ret;
-+	int ret;
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index cdc964aaf405f..cfef8d9067157 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -1184,6 +1184,8 @@ int dsi_tx_buf_alloc_6g(struct msm_dsi_host *msm_host, int size)
  
- 	if (!np)
- 		return -ENODEV;
-@@ -1072,16 +1072,6 @@ static int stm32_i2s_parse_dt(struct platform_device *pdev,
- 			return ret;
+ 	if (IS_ERR(data)) {
+ 		msm_host->tx_gem_obj = NULL;
++		msm_gem_address_space_put(msm_host->aspace);
++		msm_host->aspace = NULL;
+ 		return PTR_ERR(data);
  	}
  
--	/* Get irqs */
--	irq = platform_get_irq(pdev, 0);
--	if (irq < 0)
--		return irq;
--
--	ret = devm_request_irq(&pdev->dev, irq, stm32_i2s_isr, 0,
--			       dev_name(&pdev->dev), i2s);
--	if (ret)
--		return ret;
--
- 	/* Reset */
- 	rst = devm_reset_control_get_optional_exclusive(&pdev->dev, NULL);
- 	if (IS_ERR(rst))
-@@ -1106,7 +1096,7 @@ static int stm32_i2s_probe(struct platform_device *pdev)
- {
- 	struct stm32_i2s_data *i2s;
- 	u32 val;
--	int ret;
-+	int irq, ret;
- 
- 	i2s = devm_kzalloc(&pdev->dev, sizeof(*i2s), GFP_KERNEL);
- 	if (!i2s)
-@@ -1132,6 +1122,15 @@ static int stm32_i2s_probe(struct platform_device *pdev)
- 		return dev_err_probe(&pdev->dev, PTR_ERR(i2s->regmap),
- 				     "Regmap init error\n");
- 
-+	irq = platform_get_irq(pdev, 0);
-+	if (irq < 0)
-+		return irq;
-+
-+	ret = devm_request_irq(&pdev->dev, irq, stm32_i2s_isr, 0,
-+			       dev_name(&pdev->dev), i2s);
-+	if (ret)
-+		return ret;
-+
- 	ret = snd_dmaengine_pcm_register(&pdev->dev, &stm32_i2s_pcm_config, 0);
- 	if (ret)
- 		return ret;
 -- 
 2.53.0
 
