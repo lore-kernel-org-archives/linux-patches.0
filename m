@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029104;
-	b=vZFa9hB2ri8FFAM1/36IMLzdzLOnqw3cMTeEmFdSfXRE3hnQCiVcg6s6gErf6RIRj6V5
-	 cwEBYuDwR/zF5jgJFBm34Gij6a6elS/3zWe05mxCEmB1RsnuuqFkbRfa7eyIfpFbeV4Zb
-	 XOaA8fe0Z9h6KfK+CUOApn2r5VACuNcsTs6XEZX+2DZZsL6lm7loCdTc5NfwsHpo2H5Am
-	 S9PUHUoorZQYhzxllPhxe6Z91S3bZOUvBN+QL+cgwZPuLCz+zLQOT9SopoVtxr/4xPR0Y
-	 bGbUEQ21VqlmffF664pRSZnzZkFNCrBLO3ukr/6hw6a13RSroWj0oy2/MyTt9XsMjYQ==
+	t=1795029106;
+	b=yaeRaY7xHYzJuHNDrhBZ/3gANCt59UxRRAWmWtkqAO4W70ScqASKdscyT6VnTTZjYqas
+	 UBV9NJascxdAZ9Hf+aP2wzxRkYUnxx+7rnGLkVPNwx+UjZq9ohd5FI2KLxdO9HzijSWec
+	 0OCFDGyUIgPxiuxSQ3MixHI0AJySkCX1t1LjgbMl72KTigS3uXtTH6dnuo4s17y7rLU+U
+	 dFgxjY6H/UyC8Ct+4ZZeBYS7juJM5+vaUActoa+jZDBFQgM/n/gNUNtA9UNtgs86wSaXi
+	 0YvSv+tXiA5zX1kCWtqXzxjYQq7T8bEa5HnGJ44CE1PDw00AEmbqvZ4P4tAxqWDvZsA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029104;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029106;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4MK/0kVuVbBsK+KvKFdVZ2qFVovz9w8x0qUVGk3aZQE=;
-	b=FkR7BdGJEysTuDnhLxwxrahRDCZbElB1Awn0CXFCH4bg1+kx/DmM9tIl2Tu53A/1wl2W
-	 spvHHfkvxkwtoJTvshurWTcxHBvjSjOJ+Pt492EUdR+FNWyLgZGVzkkxpzpjTUDIimfB1
-	 rWRo53ghJ6VXz6Vxcqsdhi2Gudd+Cn+9fStln0JlfW2vQh2YsMcQ8mWJE/INpJuviHlnb
-	 ZWxuDuU2sQ5x/Bk2VijY83StEpMJMoZMuE2bWmAr2loaMBgOG6NfbyoRm/D/Jv0zD5SCT
-	 psXj1LP6BfFG4l82QK4R25Yn+N1DKKnJoPfTqf0w1YUxiGbKL56eQaLy0gir6OGdm5g==
+	bh=eUo5yznZ1jl20YwuveuN4Jr+lxfJvu78LLf+ykA4KXw=;
+	b=IbwPmZ8Cf9RGugtQV9Sf0Rz4+PtVfaE9URIPqtIcRH/Hik51o0N5cDgZVZjGLiMF6sRI
+	 INkVYPxXZNoPKk6a4LiICKzI52eKrQ5rITTlBOTXcHiW77DuceFVpnxCipTqoy4oSZR+V
+	 cTHVy5bg5WDchx3pmZLhPT+tpqekTa1lMOn6iPT7KmAAu5P05P8ppNB8Vm4t7OwUULLOA
+	 pzKMVsC1yzVTDlWc+EUgobBFQN9njufwyiSH+qm7Y9VCK6ewp8oWXrTWpuVoFllWBKF31
+	 d1FVY0b3+eEhVR7/sECvRN8CZzGhCME8LcaHa0FIXj7voEpKHAJ8+NbRgImW97yAZiQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hM3E86Pn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DkIxwed4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E43AF606A320;
-	Wed, 18 Nov 2026 19:11:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E96A606A320;
+	Wed, 18 Nov 2026 19:11:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hM3E86Pn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D4F1F000C4;
-	Wed, 18 Nov 2026 19:11:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DkIxwed4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 019201F000C4;
+	Wed, 18 Nov 2026 19:11:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029103;
-	bh=4MK/0kVuVbBsK+KvKFdVZ2qFVovz9w8x0qUVGk3aZQE=;
+	s=korg; t=1795029106;
+	bh=eUo5yznZ1jl20YwuveuN4Jr+lxfJvu78LLf+ykA4KXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hM3E86PnCYXN9fa8FTd2gStAUYM4FF1CJFQJv/7E7O7ii8hY/jXwt0khLsQsgBIxU
-	 WqbSob/7Sf3bTEWcZw9JwKHGI8XNtAVCqPIU6qs+mMf6JkdZqkcli3OBdhmyA1NBrg
-	 WPdwCfJpVrLzCzqRW+AYxZpcp6yIa/faKTQGNzaY=
+	b=DkIxwed4ZDopXHVfgZNjyGx8nncoa/DVv0spVQ5c1nqGwAMzGbc6uV0aMGIG+e2t/
+	 dS6K/fyD10rostG5pLsN6LP74oAxpjXGOIyDBxwo2xfwu1bEJUevdAqyFPS2KhLrko
+	 vLV3tZ6TdUPoqnvliNaY+e9noPLuIr9Uwj+xwPFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Udit Kumar <u-kumar1@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0214/1756] RDMA/hns: Fix missing CQE when UD QP use different SL
-Date: Wed, 18 Nov 2026 15:39:01 +0100
-Message-ID: <20261118150016.851860568@linuxfoundation.org>
+Subject: [PATCH 6.12 0232/1756] arm64: dts: ti: k3-j722s-evm: Enable PMIC
+Date: Wed, 18 Nov 2026 15:39:19 +0100
+Message-ID: <20261118150017.501925794@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,87 +68,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Udit Kumar <u-kumar1@ti.com>
 
-[ Upstream commit 3547f46c31993d41748f0f7936f9d4dc5b5d4b12 ]
+[ Upstream commit 998ad09ad3b0ef1776fcb988af4916a062b92cc1 ]
 
-Due to the hardware contraint, CQEs may be dropped when a UD QP
-sends with multiple SLs. Pin the SL to the value from the first
-post_send on the QP to avoid this issue.
+Add support for TPS6522x PMIC family on wakeup I2C0 bus.
+This device provides regulators (bucks and LDOs), along with
+GPIOs, and monitors SOC's MCU error signal.
 
-Fixes: 66d86e529dd5 ("RDMA/hns: Add UD support for HIP09")
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20260831020324.3540901-2-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Udit Kumar <u-kumar1@ti.com>
+Link: https://lore.kernel.org/r/20250102103814.102499-1-u-kumar1@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
+Stable-dep-of: 432bfc86fe62 ("arm64: dts: ti: k3-j722s-evm: Switch audio codec clock from audio_refclk1 to external clock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_device.h |  1 +
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c  | 15 ++++++++++-----
- 2 files changed, 11 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/ti/k3-j722s-evm.dts | 88 +++++++++++++++++++++++++
+ 1 file changed, 88 insertions(+)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_device.h b/drivers/infiniband/hw/hns/hns_roce_device.h
-index e184a715d1661..a825dae5744ce 100644
---- a/drivers/infiniband/hw/hns/hns_roce_device.h
-+++ b/drivers/infiniband/hw/hns/hns_roce_device.h
-@@ -655,6 +655,7 @@ struct hns_roce_qp {
- 	u8			priority;
- 	spinlock_t flush_lock;
- 	struct hns_roce_dip *dip;
-+	bool ud_sl_set;
+diff --git a/arch/arm64/boot/dts/ti/k3-j722s-evm.dts b/arch/arm64/boot/dts/ti/k3-j722s-evm.dts
+index 98fc1c0f86a42..4504912512b41 100644
+--- a/arch/arm64/boot/dts/ti/k3-j722s-evm.dts
++++ b/arch/arm64/boot/dts/ti/k3-j722s-evm.dts
+@@ -359,6 +359,13 @@ audio_ext_refclk1_pins_default: audio-ext-refclk1-default-pins {
+ 			J722S_IOPAD(0x00a0, PIN_OUTPUT, 1) /* (N24) GPMC0_WPn.AUDIO_EXT_REFCLK1 */
+ 		>;
+ 	};
++
++	pmic_irq_pins_default: pmic-irq-default-pins {
++		pinctrl-single,pins = <
++			J722S_IOPAD(0x030, PIN_INPUT, 7) /* (K23) GPIO0_12 */
++		>;
++	};
++
  };
  
- struct hns_roce_ib_iboe {
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index a54f86468b053..9036593857397 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -425,7 +425,8 @@ static int set_ud_opcode(struct hns_roce_v2_ud_send_wqe *ud_sq_wqe,
- 	return 0;
- }
- 
--static int fill_ud_av(struct hns_roce_v2_ud_send_wqe *ud_sq_wqe,
-+static int fill_ud_av(struct hns_roce_qp *qp,
-+		      struct hns_roce_v2_ud_send_wqe *ud_sq_wqe,
- 		      struct hns_roce_ah *ah)
- {
- 	struct ib_device *ib_dev = ah->ibah.device;
-@@ -435,7 +436,12 @@ static int fill_ud_av(struct hns_roce_v2_ud_send_wqe *ud_sq_wqe,
- 	hr_reg_write(ud_sq_wqe, UD_SEND_WQE_HOPLIMIT, ah->av.hop_limit);
- 	hr_reg_write(ud_sq_wqe, UD_SEND_WQE_TCLASS, ah->av.tclass);
- 	hr_reg_write(ud_sq_wqe, UD_SEND_WQE_FLOW_LABEL, ah->av.flowlabel);
--	hr_reg_write(ud_sq_wqe, UD_SEND_WQE_SL, ah->av.sl);
-+	if (!qp->ud_sl_set) {
-+		qp->sl = ah->av.sl;
-+		qp->ud_sl_set = true;
-+	}
+ &cpsw3g {
+@@ -459,6 +466,87 @@ &wkup_i2c0 {
+ 	clock-frequency = <400000>;
+ 	status = "okay";
+ 	bootph-all;
 +
-+	hr_reg_write(ud_sq_wqe, UD_SEND_WQE_SL, qp->sl);
++	tps65224: pmic@48 {
++		compatible = "ti,tps65224-q1";
++		reg = <0x48>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&pmic_irq_pins_default>;
++		interrupt-parent = <&main_gpio0>;
++		interrupts = <0 IRQ_TYPE_EDGE_FALLING>;
++		ti,primary-pmic;
++
++		gpio-controller;
++		#gpio-cells = <2>;
++
++		buck12-supply = <&vsys_io_3v3>;
++		buck3-supply = <&vsys_io_3v3>;
++		buck4-supply = <&vsys_io_3v3>;
++
++		ldo1-supply = <&vsys_io_3v3>;
++		ldo2-supply = <&vsys_io_3v3>;
++		ldo3-supply = <&vsys_io_3v3>;
++
++		regulators {
++
++			buck1: buck1 {
++				regulator-name = "vcc1v8_io_buck1";
++				regulator-min-microvolt = <1800000>;
++				regulator-max-microvolt = <1800000>;
++				regulator-boot-on;
++				regulator-always-on;
++				bootph-all;
++			};
++
++			buck2: buck2 {
++				regulator-name = "vcc1v1_ddr_buck2";
++				regulator-min-microvolt = <1100000>;
++				regulator-max-microvolt = <1100000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++
++			buck3: buck3 {
++				regulator-name = "vcc0v85_ram_buck3";
++				regulator-min-microvolt = <850000>;
++				regulator-max-microvolt = <850000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++
++			buck4: buck4 {
++				regulator-name = "vcc0v75_ioret_buck4";
++				regulator-min-microvolt = <750000>;
++				regulator-max-microvolt = <750000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++
++			ldo1: ldo1 {
++				regulator-name = "vdda1v8_pll_ldo1";
++				regulator-min-microvolt = <1800000>;
++				regulator-max-microvolt = <1800000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++
++			ldo2: ldo2 {
++				regulator-name = "dvdd3v3_ldo2";
++				regulator-min-microvolt = <3300000>;
++				regulator-max-microvolt = <3300000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++
++			ldo3: ldo3 {
++				regulator-name = "vdd1v85_phy_ldo3";
++				regulator-min-microvolt = <1800000>;
++				regulator-max-microvolt = <1800000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++	       };
++	};
+ };
  
- 	ud_sq_wqe->sgid_index = ah->av.gid_index;
- 
-@@ -485,12 +491,10 @@ static inline int set_ud_wqe(struct hns_roce_qp *qp,
- 			  qp->qkey : ud_wr(wr)->remote_qkey);
- 	hr_reg_write(ud_sq_wqe, UD_SEND_WQE_DQPN, ud_wr(wr)->remote_qpn);
- 
--	ret = fill_ud_av(ud_sq_wqe, ah);
-+	ret = fill_ud_av(qp, ud_sq_wqe, ah);
- 	if (ret)
- 		return ret;
- 
--	qp->sl = to_hr_ah(ud_wr(wr)->ah)->av.sl;
--
- 	set_extend_sge(qp, wr->sg_list, &curr_idx, valid_num_sge);
- 
- 	/*
-@@ -5383,6 +5387,7 @@ static void v2_set_flushed_fields(struct ib_qp *ibqp,
- 	hr_reg_write(context, QPC_SQ_PRODUCER_IDX, hr_qp->sq.head);
- 	hr_reg_clear(qpc_mask, QPC_SQ_PRODUCER_IDX);
- 	hr_qp->state = IB_QPS_ERR;
-+	hr_qp->ud_sl_set = false;
- 	spin_unlock_irqrestore(&hr_qp->sq.lock, sq_flag);
- 
- 	if (ibqp->srq || ibqp->qp_type == IB_QPT_XRC_INI) /* no RQ */
+ &k3_clks {
 -- 
 2.53.0
 
