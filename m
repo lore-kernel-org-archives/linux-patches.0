@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058630;
-	b=xy+fZiu/X89IYaWFOGB9uKcuaChENxDx3+kbwFppHcrjEKivSl5KyYEf0kDLEzc2hY8E
-	 pPrKacgEqCE/u4rFB1sSZS0QBeZkQEq1aA4zusvP7Or1e0ZXlFXOghYaiSAsk+HZTA/Wg
-	 W6lK5mj9R8oDecNjpGOSwg8zqSb6csAz1U64RZlGVvoGYPr3dGGZqjUtNa8vg4L/FejJH
-	 eXI0AePOPko/xyT1NnyZ3V3CkUbVwd9TmnApMCbocex66AB4BZwovYOwrImkv0/7HHDvg
-	 3LlUhWW0+NMfpipbU9N3ChFZXFXYN2cfE6dOtJNm4CbkO2orAlwvVb0gryRv1VIhrAQ==
+	t=1795058632;
+	b=LJk4736qyPVf7lv4QVNLCA5ViUtgh9LDPVmj42QfdYVCUcYecSzl7p4/zTgVc2wBsPAU
+	 CoqjLqu/eW9GtBCaIhk6k0UQ+ZPPxnYEGgvBSuWVzdkTxl6iMcX4zMaAiXd6yeAfFEZPJ
+	 bUv8pOAThfgRRPvfu/nQjTlm79+B8kG7qwswSRzooQXCnO+hfBLb/PxQ0DmTelWODCpJH
+	 VaUMFFNJNkJvfOuXt+2l5sOw0JZsF1Kyp7oanO2b1XbcB29xZIgenZadniQDL+jVjMDD/
+	 r4ixu+Uchm6RQEUbDKumVF1KkYmAnck5hpvJtt6ukgZq7tiZAINTHlKXGqkTKjm4fxg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058630;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058632;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CONIcZLoU2YnY+mkUlTYi+79LD39isZfU94SlMcqIdk=;
-	b=fTliUR3udB1EZI01+gp9WmZwpsRtL+L0Bsf4eVIAtHIB5/HEIO0Au/iJtfG5ZWYtTGdx
-	 XvTr6/Bem+gQAC9S8THorK/c1/q4V0S+7he9l+iGiDwnyC5W61EWc4UHHoz7q8+4FNDLo
-	 YssI1UcYxPFhtzaEBUHw6s6ivdVnKj5elaeN87l5KAIXP7/FyDE5LdJYkaF4J87B3fFXo
-	 rB+HGgP9B1tqN8RXhjyjamc5tEc1G+YtuJPtenBs+rM8PLZ4rqSHKlG3qanBFbIBBRPLZ
-	 FtANb7hpBXHY6AMGKXrQfFT/O8dAk0ZKx0l/kw/zKilorPfj8Bxi+EtByMhHArC9E8A==
+	bh=ZURypWif1d+XoE6eckG7wD1uoicdh9r+LyWrBc49Jas=;
+	b=PLmb/kaQhsVFjcGM+Zdfsq281LjYHaPsz4yF5tPL9Ct37/R915aPKrnfGo65nFcjKkvv
+	 w+tFQX72MQE3vUOt1xe9gAqqXFJ6QS8+D9JJRAIqeiZ84YZSbSkpnCYiu1vep7g3G/v/+
+	 cW9MdX3M37x3bcVDjrWp5W0udPPu22OuHIc2w4RieA75SQifZ4qb7pkziXRrMTxSE3tlY
+	 IbHhxL24PBcGsCFjU7Jf+Tq6OoiYKrl42Mqsf1e/3m4o3DEyk/uWvJd/U7OQiRLqlT/mv
+	 vCGdG5DoszojBjrVuZmoyHeKWHniJtzZGKkqLupLitiLBkK5Jc1zLHjYWeawO8WMUFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=USwMvCqH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cR1L1FiV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1701606A325;
-	Thu, 19 Nov 2026 03:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7690B606A31C;
+	Thu, 19 Nov 2026 03:23:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=USwMvCqH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1435A1F000C4;
-	Thu, 19 Nov 2026 03:23:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cR1L1FiV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB51B1F000C4;
+	Thu, 19 Nov 2026 03:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058629;
-	bh=CONIcZLoU2YnY+mkUlTYi+79LD39isZfU94SlMcqIdk=;
+	s=korg; t=1795058632;
+	bh=ZURypWif1d+XoE6eckG7wD1uoicdh9r+LyWrBc49Jas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=USwMvCqHO4GJ2zFyFe1I0u+iN6Z6W8nv3KV7Ywsa5FICT0iC/N+pAXh+r0+EDOfM3
-	 nQbT0+IdYpPG4S5SH7O4QPVgrtFMGOhlTW4hyFhFNsrGaN1yYoeHdLFNd1gdXtMffV
-	 s0FalAPTPJRvIqqEwG/5p6X1TLE2FQn3q6P46jaQ=
+	b=cR1L1FiVDEb3abrMJBetgldGh6WMYpfsLjjNTdQbYuxKEuBWk36u1lbB8NOGfceIQ
+	 k5l23OI3H9TJxjG72wvODlqLzhhAMI62X2SgAZtzbBVSGwy1u3U/6E/K+l5LI3OVWS
+	 Y5cFytFFsxPEkT9XVdK4RohKUa4zW3LrpJaeq0cI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yingjie Wang <1075151112@qq.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0554/1848] net: unix: reject negative max_dgram_qlen values
-Date: Wed, 18 Nov 2026 15:43:12 +0100
-Message-ID: <20261118145938.112755928@linuxfoundation.org>
+Subject: [PATCH 5.10 0555/1848] net/smc: queue the copied chunk when smc_tx_sendmsg() faults
+Date: Wed, 18 Nov 2026 15:43:13 +0100
+Message-ID: <20261118145938.144795053@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,66 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yingjie Wang <1075151112@qq.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit 1a4e7bc6e3457ad95515a9d2c042452c3161bb2c ]
+[ Upstream commit c0703534b223a5c6993e0f000fd1c3abe621fb65 ]
 
-net.unix.max_dgram_qlen is parsed as a signed int and copied to the u32
-sock::sk_max_ack_backlog when an AF_UNIX socket is created.  Consequently,
-a negative value such as -1 is accepted and converted to UINT_MAX.  Since
-the receive queue length is also u32, its fullness check cannot become true
-for that limit.
+When a send wraps the end of the send buffer, smc_tx_sendmsg() copies
+the data in two chunks. If memcpy_from_msg() faults on the second one,
+smc_tx_sendmsg() returns send_done, which already counts the first
+chunk, but leaves tx_curs_prep and sndbuf_space as they were. send()
+reports bytes the peer never receives, and the next send() overwrites
+them. Any caller can hit this on its own stream with a buffer whose
+tail is unreadable.
 
-max_dgram_qlen has no documented negative sentinel.  Its existing signed
-interface represents nonnegative values only through INT_MAX; negative bit
-patterns are not a supported encoding for the upper half of the u32
-consumer range.
+On a fault in the second chunk, queue the first one. The next pass
+retries the rest and returns send_done if it faults again, so send()
+reports only what it queued, as TCP does.
 
-Switch to proc_dointvec_minmax and make the established 0..INT_MAX input
-range explicit.  This rejects negative values without adding new accepted
-values or changing the default and zero-value behavior.  Very large valid
-values can still make the queue limit impractical to reach; this change
-corrects the input domain rather than imposing a new resource ceiling.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: e6727f39004b ("smc: send data (through RDMA)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yingjie Wang <1075151112@qq.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/tencent_A643419B56079E9A448D97922763FF069F08@qq.com
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20261013-b4-disp-872a3689-v1-1-2a4c63b04761@proton.me
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/networking/ip-sysctl.rst | 3 ++-
- net/unix/sysctl_net_unix.c             | 4 +++-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ net/smc/smc_tx.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/Documentation/networking/ip-sysctl.rst b/Documentation/networking/ip-sysctl.rst
-index fbe902b72fb9e..6ae1b06f9f066 100644
---- a/Documentation/networking/ip-sysctl.rst
-+++ b/Documentation/networking/ip-sysctl.rst
-@@ -2698,5 +2698,6 @@ addr_scope_policy - INTEGER
- max_dgram_qlen - INTEGER
- 	The maximum length of dgram socket receive queue
- 
--	Default: 10
-+	Possible values: 0 - INT_MAX
- 
-+	Default: 10
-diff --git a/net/unix/sysctl_net_unix.c b/net/unix/sysctl_net_unix.c
-index c09bea89151b2..1b8508865bb80 100644
---- a/net/unix/sysctl_net_unix.c
-+++ b/net/unix/sysctl_net_unix.c
-@@ -17,7 +17,9 @@ static struct ctl_table unix_table[] = {
- 		.data		= &init_net.unx.sysctl_max_dgram_qlen,
- 		.maxlen		= sizeof(int),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec
-+		.proc_handler	= proc_dointvec_minmax,
-+		.extra1		= SYSCTL_ZERO,
-+		.extra2		= SYSCTL_INT_MAX,
- 	},
- 	{ }
- };
+diff --git a/net/smc/smc_tx.c b/net/smc/smc_tx.c
+index 3a2748bc4beaf..899a9060874a9 100644
+--- a/net/smc/smc_tx.c
++++ b/net/smc/smc_tx.c
+@@ -193,6 +193,13 @@ int smc_tx_sendmsg(struct smc_sock *smc, struct msghdr *msg, size_t len)
+ 			rc = memcpy_from_msg(sndbuf_base + chunk_off,
+ 					     msg, chunk_len);
+ 			if (rc) {
++				if (chunk) {
++					/* send_done counts the first chunk:
++					 * queue it and retry the rest
++					 */
++					copylen -= chunk_len;
++					break;
++				}
+ 				smc_sndbuf_sync_sg_for_device(conn);
+ 				if (send_done)
+ 					return send_done;
 -- 
 2.53.0
 
