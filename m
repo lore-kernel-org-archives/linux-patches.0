@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040948;
-	b=vJ1HR7LXq03JLPehT6xD53h8b2vO7+kC1r8TW//sXwncuorXKwiTxfWofhGf+jMDVbL/
-	 rmZ+hrj1BX04nyYnyOibukrXUmQiu/zt0EkxTT3qVT9py1SGMHv7VwNzo1RqXaTAKPwIU
-	 PIPlHSdQopYYzgHXXLW+0+2LhFMbxotXQ63nJA5kCF1zcVtsHsvlF1kNZ71W6ovahbUMt
-	 EQe/puMP1oQ9+JdTlvb6hZwZHTM6pYJfMaeiHjsOXwCyiQo47Tn6sAfSi/UzrAHGvzflP
-	 ZYG0CSpyGBjsUt6jg875H3xdlAMWZ6ufDgbbpjhEJeBqV98elPkng6FSQNrUZ2J7HFg==
+	t=1795040950;
+	b=1EV+4LSrtR0+PI0+j8OdPb+sVd4ARjMaDcCQdtvEMH5AzYOmQEd0ThcYUf+rS1F/LFej
+	 wZUTJnKJVhJt8m/5hZVWS5PbHn5CRQxJXGJZUWlJWimGwjhXOQNjAjbipdmMH97BrPYCv
+	 UUXmcGV1rrIKLnIf8Zmt2fYILdLvErBK0tuptNY6giGh1GaSYjqYwVA58LMd3sH0I9iB1
+	 B4bxKA7n7IZ/0HYdY1LQyOkv+97Gps1oXJaF0L5pcvHjfVDUXmOuH0ncx2M+0zYPufi5V
+	 AUMUIsceNwsx2wxGgR0rGuhtGGb2qYieqVopq4qTQxIlMRytI66riDVO9KaLQ/jYVMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040948;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040950;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=g/oDZIicukAHpCy12OQhhHMWG0/AQZ+gOhBQWo6eGDE=;
-	b=s3b2AVy8fv4T88f7VaqFQbJhjd1K+t4LxdWIZ020qIt68d8h9f/d01znPHw7fMJ3rJ6t
-	 UifBUZXes6nlhA2rD6naDMoWWeKwmOMbA/BqydIO+tdiC1KeiYL+1daV0XXPjheJwghLI
-	 yEkovf7O0oWqs5q/om9kCTgiJMYUYNC6UysaiVxknf9fdU1wJe6SewCDOVabEjA86yto0
-	 T6tg9GPDMAk4265a8MltUGaJi+YbxfSKasdkNuwMcifoH5U94KSBfW8AR9GknChL4ag/4
-	 OVBPI+6ZL0Ean941ypOcUYmjWc7h+QRv1iD79kd7x9i9yAUJhqRs2T5p6H3qtYgCe5w==
+	bh=9g0q3hYsBFtTNJ/jneHHFQMbkR4czxWiBBcUpFdgnuY=;
+	b=X+Q7uslz47YKCqSaWDAvygnmcKlnpbfDTacBgNWK5fREknJmjEX1k3fkQc9yihNDTDdQ
+	 FRY6sJpkTFUCnbyHb73z5Vv6L1hNnbUpZe8y9rlohtMtVzFx/AIT8cJs1TXfWXJipfcH8
+	 SNhGvKHXzd3toLFlG5eOQqEnZM9Ri8rjGPBAYQ9YzvDyvYETdAsZ36NCJ7+NgL6Tn3dhe
+	 cNDXym1ALcZ8MK38r5F5iH7sWqSu6HmFttbMSWnEBytiGUGfgwDlcNdOFIunT4DkjmKHf
+	 IfVaKkLDySXGez3ex2iz3tbnW0GLmFNUA0DiH3vUBIwo5c8BgC82PKrqY0OHXcXMzZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gQzPoafX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WKPnq4Cx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B5B606A31C;
-	Wed, 18 Nov 2026 22:29:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DAB606A31C;
+	Wed, 18 Nov 2026 22:29:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gQzPoafX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E3861F000C4;
-	Wed, 18 Nov 2026 22:29:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WKPnq4Cx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 265E51F000C4;
+	Wed, 18 Nov 2026 22:29:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040947;
-	bh=g/oDZIicukAHpCy12OQhhHMWG0/AQZ+gOhBQWo6eGDE=;
+	s=korg; t=1795040950;
+	bh=9g0q3hYsBFtTNJ/jneHHFQMbkR4czxWiBBcUpFdgnuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gQzPoafXydHRjOXPCrm49cVlpBVlLudcpWqe9PTNe+2s8Ta9VfZhKRvJipro5Snum
-	 q97d3NY1x2V+o27OgOF5LkuJP+apK5nW18m73qNwP8tbWNmMBPscGsLCl4n7twBQXf
-	 xKYUA7lMJs8UdbAtzQc2ZNius0N8VcoP5Siu2l6U=
+	b=WKPnq4CxWIWj16JFrW/rzNBMqi6oqMzIxOc03v7WdIbLBTx23ulSWEbSpOvkMITXV
+	 OSqbAjt/9PKZKyIb/E9pb2GweKA7PRXE1LwFg/BrVybo82dHwq7JU95e2k37geiAz3
+	 dEf++zUnhR33yu+u+gNp/Waro3ZYyMeyjqJyt05g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Tobias Schramm <t.schramm@manjaro.org>,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Jonas Rebmann <jre@pengutronix.de>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2639/3318] spi: spi-sun4i: sun4i_spi_transfer_one(): fix setting of clock rate
-Date: Wed, 18 Nov 2026 15:54:21 +0100
-Message-ID: <20261118150440.245293878@linuxfoundation.org>
+Subject: [PATCH 6.6 2640/3318] spi: spi-sun4i: sun4i_spi_handler(): fix race condition between transfer completion and RX FIFO interrupt
+Date: Wed, 18 Nov 2026 15:54:22 +0100
+Message-ID: <20261118150440.272985966@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,68 +72,124 @@ Content-Transfer-Encoding: 8bit
 
 From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit 672ba6d88324f223634dd2dc4098f6fb6b346b25 ]
+[ Upstream commit b8f09251da7871fbb9c62bd83516af422641d816 ]
 
-A SPI transfer defines the _maximum_ speed of the SPI transfer. However
-the driver doesn't take into account that the clock divider is always
-rounded down (due to integer arithmetic). This results in a too high
-clock rate for the SPI transfer.
+In commit 196737912da5 ("spi: sun4i: Allow transfers larger than FIFO
+size"), support for transfers larger than the FIFO size was added.
 
-E.g.: with an mclk_rate of 24 MHz and an SPI transfer speed of 10 MHz,
-the original code calculates a reg of "0", which results in an effective
-divider of "2" and a 12 MHz clock for the SPI transfer.
+This commit moves the draining of the RX-FIFO from
+sun4i_spi_transfer_one() (after completion of the transfer) to the IRQ
+handler when the IRQ "transfer complete" is handled. In addition, the
+IRQ "RX-FIFO 3/4 full" is activated for all transfers.
 
-Use DIV_ROUND_UP() instead of a plain integer division to fix the
-problem.
+However, this does not take into account that the RX-IRQ for transfers
+that exceed 3/4 of the FIFO size is still pending after the IRQ
+"transfer complete" has been processed. All interrupt sources are only
+deactivated after the wait_for_completion_timeout() in
+sun4i_spi_transfer_one().
 
-While there simplify the divider calculation for the CDR1 case, use
-order_base_2() instead of two ilog2() calculations.
+This opens a race window for "RX-FIFO 3/4 full" interrupts to come.
+The sequence is as follows:
 
-Fixes: b5f6517948cc ("spi: sunxi: Add Allwinner A10 SPI controller driver")
+| sun4i_spi_transfer_one()
+|     sun4i_spi_fill_fifo()       // fill TX-FIFO with 48 bytes
+|     // enable RX-FIFO 3/4 full IRQ
+|     wait_for_completion_timeout();
+|
+| // SPI controller transfers 48 bytes
+| // SPI controller issues "transfer complete" and "RX-FIFO 3/4 full" IRQ
+|
+| // IRQ handler start
+|     sun4i_spi_handler()
+|         // ACK "transfer complete" IRQ
+|         sun4i_spi_drain_fifo();
+|         complete();                         ----.
+|         return IRQ_HANDLED;                      \
+| // IRQ handler end                                \__ race
+|                                                   /   window
+|     // wait_for_completion_timeout() continues   /
+|     // disable all IRQ sources              ----'
+
+Avoid the race condition by disabling all interrupts when handling the
+"transfer complete" IRQ and before calling complete(). Also move the
+draining of the RX-FIFO back into sun4i_spi_transfer_one() where it
+was before commit 196737912da5 ("spi: sun4i: Allow transfers larger than
+FIFO size").
+
+This has the added benefit of spending a little less time in the IRQ
+handler.
+
+With all interrupts disabled once the transfer completed, omit the
+clearing of the Transfer Complete bit in sun4i_spi_handler. This is safe
+because sun4i_spi_transfer_one() takes care of this before enabling any
+interrupts again.
+
+Cc: Tobias Schramm <t.schramm@manjaro.org>
+Fixes: 196737912da5 ("spi: sun4i: Allow transfers larger than FIFO size")
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Jonas Rebmann <jre@pengutronix.de>
-Link: https://patch.msgid.link/20260914-spi-sun4i-fixes-v3-3-9fe919d5cecf@pengutronix.de
+Link: https://patch.msgid.link/20260914-spi-sun4i-fixes-v3-4-9fe919d5cecf@pengutronix.de
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-sun4i.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ drivers/spi/spi-sun4i.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/spi/spi-sun4i.c b/drivers/spi/spi-sun4i.c
-index 9b21d3b945b35..59e8a82cd8b64 100644
+index 59e8a82cd8b64..ad0200d8dce8c 100644
 --- a/drivers/spi/spi-sun4i.c
 +++ b/drivers/spi/spi-sun4i.c
-@@ -212,7 +212,7 @@ static int sun4i_spi_transfer_one(struct spi_controller *host,
- 				  struct spi_transfer *tfr)
- {
- 	struct sun4i_spi *sspi = spi_controller_get_devdata(host);
--	unsigned int mclk_rate, div;
-+	unsigned int mclk_rate, div, div_cdr1, div_cdr2;
- 	unsigned long time_left;
- 	unsigned int start, end, tx_time;
- 	unsigned int tx_len = 0;
-@@ -296,15 +296,13 @@ static int sun4i_spi_transfer_one(struct spi_controller *host,
- 	 * First try CDR2, and if we can't reach the expected
- 	 * frequency, fall back to CDR1.
- 	 */
--	div = mclk_rate / (2 * tfr->speed_hz);
--	if (div <= (SUN4I_CLK_CTL_CDR2_MASK + 1)) {
--		if (div > 0)
--			div--;
--
--		reg = SUN4I_CLK_CTL_CDR2(div) | SUN4I_CLK_CTL_DRS;
-+	div_cdr1 = DIV_ROUND_UP(mclk_rate, tfr->speed_hz);
-+	div_cdr2 = DIV_ROUND_UP(div_cdr1, 2);
-+	if (div_cdr2 <= (SUN4I_CLK_CTL_CDR2_MASK + 1)) {
-+		reg = SUN4I_CLK_CTL_CDR2(div_cdr2 - 1) | SUN4I_CLK_CTL_DRS;
- 	} else {
--		div = ilog2(mclk_rate) - ilog2(tfr->speed_hz);
--		reg = SUN4I_CLK_CTL_CDR1(div);
-+		div = min(SUN4I_CLK_CTL_CDR1_MASK + 1, order_base_2(div_cdr1));
-+		reg = SUN4I_CLK_CTL_CDR1(div - 1);
+@@ -82,6 +82,8 @@ struct sun4i_spi {
+ 
+ 	struct completion	done;
+ 
++	int			irq;
++
+ 	const u8		*tx_buf;
+ 	u8			*rx_buf;
+ 	int			len;
+@@ -333,6 +335,7 @@ static int sun4i_spi_transfer_one(struct spi_controller *host,
+ 	start = jiffies;
+ 	time_left = wait_for_completion_timeout(&sspi->done,
+ 						msecs_to_jiffies(tx_time));
++
+ 	end = jiffies;
+ 	if (!time_left) {
+ 		dev_warn(&host->dev,
+@@ -340,12 +343,11 @@ static int sun4i_spi_transfer_one(struct spi_controller *host,
+ 			 dev_name(&spi->dev), tfr->len, tfr->speed_hz,
+ 			 jiffies_to_msecs(end - start), tx_time);
+ 		ret = -ETIMEDOUT;
+-		goto out;
++		sun4i_spi_write(sspi, SUN4I_INT_CTL_REG, 0);
++		synchronize_irq(sspi->irq);
  	}
  
- 	sun4i_spi_write(sspi, SUN4I_CLK_CTL_REG, reg);
+-
+-out:
+-	sun4i_spi_write(sspi, SUN4I_INT_CTL_REG, 0);
++	sun4i_spi_drain_fifo(sspi, SUN4I_FIFO_DEPTH);
+ 
+ 	return ret;
+ }
+@@ -357,8 +359,7 @@ static irqreturn_t sun4i_spi_handler(int irq, void *dev_id)
+ 
+ 	/* Transfer complete */
+ 	if (status & SUN4I_INT_CTL_TC) {
+-		sun4i_spi_write(sspi, SUN4I_INT_STA_REG, SUN4I_INT_CTL_TC);
+-		sun4i_spi_drain_fifo(sspi, SUN4I_FIFO_DEPTH);
++		sun4i_spi_write(sspi, SUN4I_INT_CTL_REG, 0);
+ 		complete(&sspi->done);
+ 		return IRQ_HANDLED;
+ 	}
+@@ -462,6 +463,7 @@ static int sun4i_spi_probe(struct platform_device *pdev)
+ 		goto err_free_host;
+ 	}
+ 
++	sspi->irq = irq;
+ 	sspi->host = host;
+ 	host->max_speed_hz = 100 * 1000 * 1000;
+ 	host->min_speed_hz = 3 * 1000;
 -- 
 2.53.0
 
