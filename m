@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056800;
-	b=teqJqAX4cw9CIZqFug+783oeJaYgSr8lbcjwEdRWk+gdEaKIPBmv1yU/Wi/I/RETovGa
-	 p7Jho2jhbeUmMA4dlc51NiJICdlngwKmcBrtbR0XC1a07M6DLFQiiVYgqCuvkhKTIKW2v
-	 molsxrMSVB+G7W9uythnvddVt0UDXd/fDpwbmZd0ncM4fb7w+DP/DLZVKhdt19sxk5NRM
-	 0n+MBLKn6pRGoEY7AmthqxFlew9wzerSJN1CVEWbBYb52J3YOtZ+DP0imfzE6lm6nfvsM
-	 2S0xs9q8T33fzAUr88svv3wYp/jZbJWfGT+vfevmGLeo5ANjInxbXlk/RaGFcUvSuhQ==
+	t=1795056803;
+	b=B8XZbyCFdJS3YmWaT9Aul1YUNG5/lz/3oo3BH061kgCwu4dwHzHG92gUfD5EKhc6H7xx
+	 oJZ1lbYDY8ZgLhECqXAgE4wjDpb6YJaJjvizDBQRqcPorKuxQ88SWCd1NRS3+T1/BuRNP
+	 EUVfeGyxgRmwCRk/x6tqodq9aQUmTpS4qpnuRE5wur5wmL0oW8Z+wOSGzTgU0ur0ei4pv
+	 AFUuu1GuPBPMdybgQn0o4iMYpQBlyOzGGLP5lcrIWoDM5Dddpuz+UGbjT+1Q195k9MJGS
+	 2G5IY8gIPI5yhTtskLWwXjWHSEw/1ePoUIT7+LzoG+iQwr1m6cJvwFpsGj64nIbsEqg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056800;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056803;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QzPcWeyuzuTtyfT8Kbz5Asw4WKVErsX+BeXw5JNZCoE=;
-	b=m9FnNnHydTR6DGoAonX4DJ/ljm9WnAD5BFK+kbaM8/f9WMabKW8ddfc2OyUxgWfqwhY6
-	 hvNjjMPqtIYOS5J3sFIwKQt6omJFNjjj8uWAK+avl8GBl70Gh0Myo8QxeuZ2PkcfaIeGO
-	 aRWhS5/Bl1RYtF/vdKlSmTK9XDDaEs2m63ytAfUsOqrQlf0Ax1Cr7ZCgmg47qWh7jJjwU
-	 uQPYNZG18hThv6bTBrWgYVzGpMLOMdEJ49JrNWZ1l8tEl4lXzPbN7JFXbeerAEzxl4F3F
-	 f8Ryt5KhQV+sAGrxCphyazycPv98tHuycEuDk//qmvbJyclLrK/BM63MddSL19afeVg==
+	bh=F8lf96qPJX8y8WymwlFc8C8cPmQvIIDNPthloTORUkc=;
+	b=M+vaFoAidJgMpo3LtrSkJty8lehgDTRCMG+dYkX/bCzEVXqbMr1VNQ3URzxcjVz0kR8n
+	 wRrrrNJhE0JcRltaeWEqI2ZBasrQpYvPjQCcZoNVpRghM5JO7cYn/g6WOPRwmBxIG4cFc
+	 j+AdlRDkwtr1SlTlIvY2C/ESV3TsrVQXQsgsewNgpjy/YX0psxgo7nHaMrPFgi43un+oa
+	 buur/aujSQA1agmThJTtSTvXjVykC9FApyIzvbKSSI2uEqNtTfYa1OFBPrwEqy37Hjrgx
+	 M3ULb33IT7yZs8H8HMgRpLr3ALkfH5rfPFGF5XOa+NBC7sMVB20Bxchkb0OEMLCGEuA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kFBGchNe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pWcGLjme;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D8E2606A325;
-	Thu, 19 Nov 2026 02:53:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE0AB606A31C;
+	Thu, 19 Nov 2026 02:53:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kFBGchNe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 930D11F000C4;
-	Thu, 19 Nov 2026 02:53:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pWcGLjme
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56E1C1F000C4;
+	Thu, 19 Nov 2026 02:53:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056800;
-	bh=QzPcWeyuzuTtyfT8Kbz5Asw4WKVErsX+BeXw5JNZCoE=;
+	s=korg; t=1795056802;
+	bh=F8lf96qPJX8y8WymwlFc8C8cPmQvIIDNPthloTORUkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kFBGchNerQP4XE0VQdT7PmnWOjxRLpJObkVIDQzREjsahSN5Kv9yEgF+xBMQeuDY+
-	 +/o7LPxE/2b4s7XV5GIKAZ5Xj3NNWktOkOcLKTO/yD44CInThPD0qCFRyJqr1eZqjk
-	 N0KXRr1njjlLhS/RHWMCjQtmeyJ93jKQsAIrC74E=
+	b=pWcGLjmeSoILcKyE9SuMlVqzsMfBl4axlqlzOFN5DlEQ/K8VDDHYHyT21yo7SJhfn
+	 sGrEsERwk7bSUa519etlz/Pd4lchG9EcQfACupXKLqtxs4wJwzF8CH8Oh23MryEggH
+	 GtKuT6T8Mbl8KF4XAIZl8g2VR/W3KZFknjO6bIzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Greg Thelen <gthelen@google.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2116/2214] selftests/net: tcp_mmap: remove unused -k option and keepflag
-Date: Wed, 18 Nov 2026 16:03:12 +0100
-Message-ID: <20261118150135.246453531@linuxfoundation.org>
+Subject: [PATCH 5.15 2081/2214] ocfs2: reserve xattr value tree metadata only once
+Date: Wed, 18 Nov 2026 16:02:37 +0100
+Message-ID: <20261118150133.891799954@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,61 +71,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Thelen <gthelen@google.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 5536d5553f274c8baa77c44854c9091657213970 ]
+[ Upstream commit 5365f1f417b36627f825aacf9844ae24b671b525 ]
 
-Commit aacb0c2e524c ("selftests: net: tcp_mmap must use
-TCP_ZEROCOPY_RECEIVE") removed the only read of keepflag in child_thread(),
-leaving the file-scope keepflag variable set by the -k option in main() but
-never read. This triggers a Clang 23 warning:
+ocfs2_calc_xattr_set_need() asks for the new value's extent tree twice
+when it replaces an inline value smaller than a value root with one large
+enough to be stored outside.  The "stored outside" branch reserves the
+tree and then falls through to meta_guess instead of going out:
 
-  tcp_mmap.c:91:12: error: variable 'keepflag' set but not used
-  [-Werror,-Wunused-but-set-global]
+        if (!ocfs2_xattr_is_local(xe)) {
+                ...
+                xv = (struct ocfs2_xattr_value_root *)
+                     (base + name_offset + name_len);
+                value_size = OCFS2_XATTR_ROOT_SIZE;
+        } else
+                xv = &def_xv.xv;
 
-Remove the unused keepflag variable and the dead -k getopt option.
+        if (old_clusters >= new_clusters) {
+                ...
+                goto out;
+        } else {
+                meta_add += ocfs2_extend_meta_needed(&xv->xr_list);
+                ...
+                if (value_size >= OCFS2_XATTR_ROOT_SIZE)
+                        goto out;
+        }
 
-Fixes: aacb0c2e524c ("selftests: net: tcp_mmap must use TCP_ZEROCOPY_RECEIVE")
-Signed-off-by: Greg Thelen <gthelen@google.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261021152658.2618709-1-gthelen@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+On the fall-through xv is def_xv, so what gets added here is the two
+blocks ocfs2_extend_meta_needed() wants for an empty value root -- and
+both sides of meta_guess reserve that same tree again.  The create side
+has done so since commit 3ed2be719eb9 ("ocfs2: allow for more than one
+data extent when creating xattr"), which ported this reservation to the
+create case without noticing it was already on the way in, and the
+existing-block side since commit 0cdc7dde00ec ("ocfs2: fix missing
+metadata reservation for large xattrs").  Both were chasing the same
+RESTART_META failure in ocfs2_xattr_extend_allocation(), for xattr create
+and then for xattr update.
+
+ocfs2_init_xattr_set_ctxt() hands the total straight to
+ocfs2_reserve_new_metadata_blocks(), so the surplus is two blocks held for
+the whole transaction.  A setxattr that would otherwise fit can come back
+-ENOSPC on a filesystem whose metadata allocator is nearly exhausted.
+
+Move the reservation into the branch that stops there, leaving meta_guess
+as the only place that reserves for a value tree the fall through is about
+to create.  The paths that do go out keep reserving against the value root
+they already have, which for an external old value is the on-disk one and
+so can legitimately ask for more than two blocks.
+
+Both sides of meta_guess have to come out even on their own now that the
+copy covering for them is gone.  The existing-block side only started
+reserving the value tree in the commit this one is tagged against.  The
+create side has reserved the tree since 3ed2be719eb9, but only the tree:
+the block ocfs2_create_xattr_block() claims came out of the same two, and
+on the fall-through it was the duplicate removed here that made up the
+difference.  So "ocfs2: reserve metadata for a new xattr block and its
+value tree" has to land first -- without it the create side reserves 2
+where 3 are needed and the value tree is back to RESTART_META.  That one
+fixes a shortfall of its own on the path that reaches meta_guess directly,
+where there was never a duplicate to cover it, so it is worth taking
+alone; this patch is not.
+
+Link: https://lore.kernel.org/20261010113454.1420939-4-joseph.qi@linux.alibaba.com
+Fixes: 0cdc7dde00ec ("ocfs2: fix missing metadata reservation for large xattrs")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/tcp_mmap.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ fs/ocfs2/xattr.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/net/tcp_mmap.c b/tools/testing/selftests/net/tcp_mmap.c
-index 51d48229c18cd..457a7d969cb1b 100644
---- a/tools/testing/selftests/net/tcp_mmap.c
-+++ b/tools/testing/selftests/net/tcp_mmap.c
-@@ -85,7 +85,6 @@ static int rcvbuf; /* Default: autotuning.  Can be set with -r <integer> option
- static int sndbuf; /* Default: autotuning.  Can be set with -w <integer> option */
- static int zflg; /* zero copy option. (MSG_ZEROCOPY for sender, mmap() for receiver */
- static int xflg; /* hash received data (simple xor) (-h option) */
--static int keepflag; /* -k option: receiver shall keep all received file in memory (no munmap() calls) */
- static int integrity; /* -i option: sender and receiver compute sha256 over the data.*/
- 
- static size_t chunk_size  = 512*1024;
-@@ -439,7 +438,7 @@ int main(int argc, char *argv[])
- 	int sflg = 0;
- 	int mss = 0;
- 
--	while ((c = getopt(argc, argv, "46p:svr:w:H:zxkP:M:C:a:i")) != -1) {
-+	while ((c = getopt(argc, argv, "46p:svr:w:H:zxP:M:C:a:i")) != -1) {
- 		switch (c) {
- 		case '4':
- 			cfg_family = PF_INET;
-@@ -473,9 +472,6 @@ int main(int argc, char *argv[])
- 		case 'x':
- 			xflg = 1;
- 			break;
--		case 'k':
--			keepflag = 1;
--			break;
- 		case 'P':
- 			max_pacing_rate = atoi(optarg) ;
- 			break;
+diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
+index d45c87d20fd36..6ecf0c3c24552 100644
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -3203,12 +3203,21 @@ static int ocfs2_calc_xattr_set_need(struct inode *inode,
+ 			credits += ocfs2_remove_extent_credits(inode->i_sb);
+ 			goto out;
+ 		} else {
+-			meta_add += ocfs2_extend_meta_needed(&xv->xr_list);
+ 			clusters_add += new_clusters - old_clusters;
+ 			credits += ocfs2_calc_extend_credits(inode->i_sb,
+ 							     &xv->xr_list);
+-			if (value_size >= OCFS2_XATTR_ROOT_SIZE)
++			/*
++			 * The old value occupies at least as much room as a
++			 * value root, whether it sat outside or inline, so the
++			 * new root fits where it was and no new xattr block or
++			 * bucket is needed -- only the metadata to extend the
++			 * tree hanging off it.  A smaller one is replaced
++			 * outright, which meta_guess below reserves for.
++			 */
++			if (value_size >= OCFS2_XATTR_ROOT_SIZE) {
++				meta_add += ocfs2_extend_meta_needed(&xv->xr_list);
+ 				goto out;
++			}
+ 		}
+ 	} else {
+ 		/*
+@@ -3260,6 +3269,10 @@ static int ocfs2_calc_xattr_set_need(struct inode *inode,
+ 		 * Reserve metadata for the new xattr's value extent tree.
+ 		 * The not_found path above adds credits for this tree but
+ 		 * omits meta_add, leaving meta_ac NULL for large values.
++		 *
++		 * This is all of meta_ac on this side beyond the xattr tree
++		 * above: no xattr block is allocated here, and a new bucket or
++		 * index block is paid for out of data_ac.
+ 		 */
+ 		if (xi->xi_value_len > OCFS2_XATTR_INLINE_SIZE)
+ 			meta_add += ocfs2_extend_meta_needed(&def_xv.xv.xr_list);
 -- 
 2.53.0
 
