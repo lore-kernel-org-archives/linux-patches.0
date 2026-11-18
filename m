@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043939;
-	b=wYUkQ/dPfVvc+VreUgIiSP2WKzq97mOnnmFKJ4cwj3vsX0abhe8LwChpXAagl5rSfhlG
-	 btYNomw1wyaEdwkm1tXdtubCO+g6YeBGtUPsbU60ocm9vZbQsl4vKUfK/7IOaGMEwaXwX
-	 Thb6XP75HSc3IkvjcAbjeulRyiqQWUUUVxyJUZo6rdrkEKmHSrpPk41B7VP1cbTPd3Xxn
-	 4JaHS2cb3iOr8flTCxM92K4gdf4P3AMXTyRulhRXnv51zGY2LrgSBBIfwavVrHnzNMy64
-	 /Uwk3wZXN/SJUasIsa49Z4IWHMfpgr/dtQendFxzyjIBtnu6p7kD4eL1RRdzNgZwFCw==
+	t=1795043941;
+	b=b3d6bwBnIpEnvDtq7vk12UVissCTB4+Mou7/nBN1Qgy8LN9u4FehuG53NnJwiZRnQTY8
+	 i1OnHYpBFAOd6vQAsV32RE7wDNptBdYwYQ0kWPHJgEagR3vDEQgGC8US0UduHvHK/B3oq
+	 x89+GpA4/6ZNGMeyjhVck2/5dFVPwWZdtrVpSrFd8+QK9FybFmkEODENvWYskz+di+zTZ
+	 XRkBId/kBqfpu62HMgFj4JL8yS6WG3zhlJAtBr+yrE4NWn1tHmPVnz6ab3sSxWcfuxH7r
+	 v1WdQ7Hi4s0EY6GhR8DT1+jNHcbwaVtrOokk2yR09c67h0oV3c9Rue0Anh874MwbRuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043939;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043941;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=g9KgXfMOdI3gZ2FgLXFVemUfpLP8fKecNqyjixvem7Y=;
-	b=ZMEaIaNGsWmz2jGxA1xz1AM2eKR1TPv8983mzy4ntQg9ws75TPYbzMxR69IJFHOipJ5m
-	 caPuP/1akWlAIGC1t+vMzsWetpVlJikyaaLQ1F2u6SHkviiYnQUuwDKG43oxjTUvz13yx
-	 PtC1vbUfhPyfVDN7wCG2dh1sazZeYoVXINGZQagX2Jc/J7JdI2V4NM9q4KCVKVVOGTchR
-	 tRhuQkiuih0WAKeFYPBRkrOIMTkWI44Sq2f6vT/nYbdD8qrI330XJxqdIfgxIy0YsFaoN
-	 sUz2hPYkfOwf1Ph/Yrw64Qqy/shKfDPKZqELkwYmRfElcVH2XiZQYmiVy7ebgA1wF3A==
+	bh=ucDB60i7r65KmoffLidfV0+Z4LHqKDWQRUegZOdGjJc=;
+	b=41DQ1L7JRWM2ocAbhasvb3JZr0qLs3+0BGODx7nkMCvkOfrafXpNLmLBc+B4obhGjd8d
+	 7w4UVy3GnRR45wXp7rIvZCBDPhirLzpicU13A2ILQNQnIj02XjN2eCLqNMbCfvIJswCZ8
+	 biheo2cuNgcY/JGL0IwUj35IRqxwox9V+TZHOs0Mz2gM8+as++qljeHKpTAzyt1DeUJhn
+	 nFkMuGuY8O8AYvF1HX6eDxRwKN3sw7ESPo1UQH7ifpk9tCotG7jogB8YyI1OXqn0XpHpJ
+	 0Y+xUOIZuQBn0E3lhSciP2M+d+G8IUSP5JIi7nu2NN5NNX87LEI2soJyvEv5B4KlGOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lKURr4sx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cEKhge0Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23FFA606A320;
-	Wed, 18 Nov 2026 23:18:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3468606A32C;
+	Wed, 18 Nov 2026 23:19:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lKURr4sx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 784791F000C4;
-	Wed, 18 Nov 2026 23:18:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cEKhge0Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 291A91F000C4;
+	Wed, 18 Nov 2026 23:19:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043939;
-	bh=g9KgXfMOdI3gZ2FgLXFVemUfpLP8fKecNqyjixvem7Y=;
+	s=korg; t=1795043941;
+	bh=ucDB60i7r65KmoffLidfV0+Z4LHqKDWQRUegZOdGjJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lKURr4sxNdOEv5rllOPEduiX6ApTL1vs8pru3COTLFQ9r9yq3ALfusZa/KBy9hCLN
-	 SL+dvyA1lidCWSaaEouVsbhBACmHimVDoDpxNHE/uIu8aU5q0x06Pb4jgsi/xmfj3X
-	 2S0b4EO2Ck5y0o7uL8grHHajE7oCY3WR76mUt33g=
+	b=cEKhge0Qwx8wWZu2tWYu/WqP6pHaMQ1oOEqimeL5rTMm2zDUFcL6kX3kRTsAZy0sj
+	 eXNzsoxKGn91HOLLpCxBrzr7P46Kly8fIVj4QBU3Tj4+G1UUqZchuxraEQcSU8T3nH
+	 gkGEfM5jmA5cMoMMZucINA0SDlUA5/empl63+2Cc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dean Luick <dean.luick@cornelisnetworks.com>,
-	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+	Shuhei Takeshita <jyohuku.alterego@gmail.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0389/2857] IB/hfi1: Use dma_mmap_coherent for matching buffers
-Date: Wed, 18 Nov 2026 15:23:43 +0100
-Message-ID: <20261118150215.406297405@linuxfoundation.org>
+Subject: [PATCH 6.1 0390/2857] IB/hfi1: Resolve the credit-return buffer through the send contexts node
+Date: Wed, 18 Nov 2026 15:23:44 +0100
+Message-ID: <20261118150215.442767342@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,186 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dean Luick <dean.luick@cornelisnetworks.com>
+From: Shuhei Takeshita <jyohuku.alterego@gmail.com>
 
-[ Upstream commit 1ec82317a1daac78c04b0c15af89018ccf9fa2b7 ]
+[ Upstream commit 975396b9e5a4028e649f4b9a6a5ca5dfb76a824b ]
 
-For memory allocated with dma_alloc_coherent(), use
-dma_mmap_coherent() to mmap it into user space.
+hfi1_file_mmap()'s PIO_CRED case derives this context's credit-return
+page offset, and the DMA handle for it, from dd->cr_base[uctxt->numa_id].
+uctxt->numa_id is the node of whichever CPU the process happened to be
+running on, but the entry itself lives in the credit-return allocation of
+the send context's own node:
 
-Signed-off-by: Dean Luick <dean.luick@cornelisnetworks.com>
-Signed-off-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
-Link: https://lore.kernel.org/r/167329107460.1472990.9090255834533222032.stgit@awfm-02.cornelisnetworks.com
+	sc->hw_free = &sc->dd->cr_base[sc->node].va[gc].cr[index];
+
+and user send contexts are allocated with sc_alloc(dd, SC_USER, ...,
+dd->node), the HFI-local node.  On a multi-socket host with the process
+running off that node the two allocations differ, so the subtraction
+produces an offset into an unrelated buffer and the DMA handle belongs to
+the wrong allocation.
+
+Use the send context's own node for all three references.  The
+continuation lines are reindented at the same time; they mixed spaces and
+tabs.
+
+Fixes: 7724105686e7 ("IB/hfi1: add driver files")
+Cc: stable@vger.kernel.org
+Signed-off-by: Shuhei Takeshita <jyohuku.alterego@gmail.com>
+Link: https://patch.msgid.link/20260809032743.2671579-2-jyohuku.alterego@gmail.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Stable-dep-of: 975396b9e5a4 ("IB/hfi1: Resolve the credit-return buffer through the send context's node")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/file_ops.c | 81 +++++++++++++++++++--------
- 1 file changed, 57 insertions(+), 24 deletions(-)
+ drivers/infiniband/hw/hfi1/file_ops.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/infiniband/hw/hfi1/file_ops.c b/drivers/infiniband/hw/hfi1/file_ops.c
-index 7c5d487ec9168..e03b0207856e7 100644
+index e03b0207856e7..1bc59d71c1d0b 100644
 --- a/drivers/infiniband/hw/hfi1/file_ops.c
 +++ b/drivers/infiniband/hw/hfi1/file_ops.c
-@@ -306,6 +306,17 @@ static ssize_t hfi1_write_iter(struct kiocb *kiocb, struct iov_iter *from)
- 	return reqs;
- }
- 
-+static inline void mmap_cdbg(u16 ctxt, u8 subctxt, u8 type, u8 mapio, u8 vmf,
-+			     u64 memaddr, void *memvirt, dma_addr_t memdma,
-+			     ssize_t memlen, struct vm_area_struct *vma)
-+{
-+	hfi1_cdbg(PROC,
-+		  "%u:%u type:%u io/vf/dma:%d/%d/%d, addr:0x%llx, len:%lu(%lu), flags:0x%lx",
-+		  ctxt, subctxt, type, mapio, vmf, !!memdma,
-+		  memaddr ?: (u64)memvirt, memlen,
-+		  vma->vm_end - vma->vm_start, vma->vm_flags);
-+}
-+
- static int hfi1_file_mmap(struct file *fp, struct vm_area_struct *vma)
- {
- 	struct hfi1_filedata *fd = fp->private_data;
-@@ -315,6 +326,7 @@ static int hfi1_file_mmap(struct file *fp, struct vm_area_struct *vma)
- 	u64 token = vma->vm_pgoff << PAGE_SHIFT,
- 		memaddr = 0;
- 	void *memvirt = NULL;
-+	dma_addr_t memdma = 0;
- 	u8 subctxt, mapio = 0, vmf = 0, type;
- 	ssize_t memlen = 0;
- 	int ret = 0;
-@@ -334,6 +346,11 @@ static int hfi1_file_mmap(struct file *fp, struct vm_area_struct *vma)
- 		goto done;
- 	}
- 
-+	/*
-+	 * vm_pgoff is used as a buffer selector cookie.  Always mmap from
-+	 * the beginning.
-+	 */ 
-+	vma->vm_pgoff = 0;
- 	flags = vma->vm_flags;
- 
- 	switch (type) {
-@@ -355,7 +372,8 @@ static int hfi1_file_mmap(struct file *fp, struct vm_area_struct *vma)
- 		vma->vm_page_prot = pgprot_writecombine(vma->vm_page_prot);
- 		mapio = 1;
- 		break;
--	case PIO_CRED:
-+	case PIO_CRED: {
-+		u64 cr_page_offset;
- 		if (flags & VM_WRITE) {
- 			ret = -EPERM;
- 			goto done;
-@@ -365,10 +383,11 @@ static int hfi1_file_mmap(struct file *fp, struct vm_area_struct *vma)
- 		 * second or third page allocated for credit returns (if number
+@@ -384,10 +384,10 @@ static int hfi1_file_mmap(struct file *fp, struct vm_area_struct *vma)
  		 * of enabled contexts > 64 and 128 respectively).
  		 */
--		memvirt = dd->cr_base[uctxt->numa_id].va;
--		memaddr = virt_to_phys(memvirt) +
--			(((u64)uctxt->sc->hw_free -
--			  (u64)dd->cr_base[uctxt->numa_id].va) & PAGE_MASK);
-+		cr_page_offset = ((u64)uctxt->sc->hw_free -
-+			  	     (u64)dd->cr_base[uctxt->numa_id].va) &
-+				   PAGE_MASK;
-+		memvirt = dd->cr_base[uctxt->numa_id].va + cr_page_offset;
-+		memdma = dd->cr_base[uctxt->numa_id].dma + cr_page_offset;
+ 		cr_page_offset = ((u64)uctxt->sc->hw_free -
+-			  	     (u64)dd->cr_base[uctxt->numa_id].va) &
+-				   PAGE_MASK;
+-		memvirt = dd->cr_base[uctxt->numa_id].va + cr_page_offset;
+-		memdma = dd->cr_base[uctxt->numa_id].dma + cr_page_offset;
++				  (u64)dd->cr_base[uctxt->sc->node].va) &
++				 PAGE_MASK;
++		memvirt = dd->cr_base[uctxt->sc->node].va + cr_page_offset;
++		memdma = dd->cr_base[uctxt->sc->node].dma + cr_page_offset;
  		memlen = PAGE_SIZE;
  		flags &= ~VM_MAYWRITE;
  		flags |= VM_DONTCOPY | VM_DONTEXPAND;
-@@ -378,14 +397,16 @@ static int hfi1_file_mmap(struct file *fp, struct vm_area_struct *vma)
- 		 * memory been flagged as non-cached?
- 		 */
- 		/* vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot); */
--		mapio = 1;
- 		break;
-+	}
- 	case RCV_HDRQ:
- 		memlen = rcvhdrq_size(uctxt);
- 		memvirt = uctxt->rcvhdrq;
-+		memdma = uctxt->rcvhdrq_dma;
- 		break;
- 	case RCV_EGRBUF: {
--		unsigned long addr;
-+		unsigned long vm_start_save;
-+		unsigned long vm_end_save;
- 		int i;
- 		/*
- 		 * The RcvEgr buffer need to be handled differently
-@@ -404,24 +425,34 @@ static int hfi1_file_mmap(struct file *fp, struct vm_area_struct *vma)
- 			goto done;
- 		}
- 		vma->vm_flags &= ~VM_MAYWRITE;
--		addr = vma->vm_start;
-+		/*
-+		 * Mmap multiple separate allocations into a single vma.  From
-+		 * here, dma_mmap_coherent() calls dma_direct_mmap(), which
-+		 * requires the mmap to exactly fill the vma starting at
-+		 * vma_start.  Adjust the vma start and end for each eager
-+		 * buffer segment mapped.  Restore the originals when done.
-+		 */
-+		vm_start_save = vma->vm_start;
-+		vm_end_save = vma->vm_end;
-+		vma->vm_end = vma->vm_start;
- 		for (i = 0 ; i < uctxt->egrbufs.numbufs; i++) {
- 			memlen = uctxt->egrbufs.buffers[i].len;
- 			memvirt = uctxt->egrbufs.buffers[i].addr;
--			ret = remap_pfn_range(
--				vma, addr,
--				/*
--				 * virt_to_pfn() does the same, but
--				 * it's not available on x86_64
--				 * when CONFIG_MMU is enabled.
--				 */
--				PFN_DOWN(__pa(memvirt)),
--				memlen,
--				vma->vm_page_prot);
--			if (ret < 0)
-+			memdma = uctxt->egrbufs.buffers[i].dma;
-+			vma->vm_end += memlen;
-+			mmap_cdbg(ctxt, subctxt, type, mapio, vmf, memaddr,
-+				  memvirt, memdma, memlen, vma);
-+			ret = dma_mmap_coherent(&dd->pcidev->dev, vma,
-+						memvirt, memdma, memlen);
-+			if (ret < 0) {
-+				vma->vm_start = vm_start_save;
-+				vma->vm_end = vm_end_save;
- 				goto done;
--			addr += memlen;
-+			}
-+			vma->vm_start += memlen;
- 		}
-+		vma->vm_start = vm_start_save;
-+		vma->vm_end = vm_end_save;
- 		ret = 0;
- 		goto done;
- 	}
-@@ -481,6 +512,7 @@ static int hfi1_file_mmap(struct file *fp, struct vm_area_struct *vma)
- 		}
- 		memlen = PAGE_SIZE;
- 		memvirt = (void *)hfi1_rcvhdrtail_kvaddr(uctxt);
-+		memdma = uctxt->rcvhdrqtailaddr_dma;
- 		flags &= ~VM_MAYWRITE;
- 		break;
- 	case SUBCTXT_UREGS:
-@@ -529,14 +561,15 @@ static int hfi1_file_mmap(struct file *fp, struct vm_area_struct *vma)
- 	}
- 
- 	vma->vm_flags = flags;
--	hfi1_cdbg(PROC,
--		  "%u:%u type:%u io/vf:%d/%d, addr:0x%llx, len:%lu(%lu), flags:0x%lx\n",
--		    ctxt, subctxt, type, mapio, vmf, memaddr, memlen,
--		    vma->vm_end - vma->vm_start, vma->vm_flags);
-+	mmap_cdbg(ctxt, subctxt, type, mapio, vmf, memaddr, memvirt, memdma, 
-+		  memlen, vma);
- 	if (vmf) {
- 		vma->vm_pgoff = PFN_DOWN(memaddr);
- 		vma->vm_ops = &vm_ops;
- 		ret = 0;
-+	} else if (memdma) {
-+		ret = dma_mmap_coherent(&dd->pcidev->dev, vma,
-+					memvirt, memdma, memlen);
- 	} else if (mapio) {
- 		ret = io_remap_pfn_range(vma, vma->vm_start,
- 					 PFN_DOWN(memaddr),
 -- 
 2.53.0
 
