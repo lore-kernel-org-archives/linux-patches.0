@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052971;
-	b=uZFGNLZ7WYL2HEQjuxnPvaI4v7ej0eLiTkfsYf2T3t2OOuEPTT+N+GMJHlch3JoImAjr
-	 /Hy7Mm72I4z/tAsdh39pGmV7c1Ps/uzuxIGhiXZD3PMkd5TunFB31R4HC/Vw6JGo/zoqo
-	 F9yTt5WRGG3hUG3vTW/ElzqxcWF5GwPIs3y/0aoT+Ir5yEn7W2PPwDt8tBmkJCujwfyBT
-	 AE0YI5n9lABIt6GdMl4ZOorFdAgQhqguXCQwo5ugrGHB8YGVoGr3EnqPXo9Y+tgyAZrQX
-	 g+wipbpCbivxyONfUlk2x+UGWy60haIqsAwFJBIa+Gt6KHO1oCII8K4p0VjDFYIuVIA==
+	t=1795052974;
+	b=WnMyTDI3Swer0IS6y5YA0vFX+8lQEVTO5cF5GiHA5fQs8Zav9+yVI06/PsROMrto3mmL
+	 6G0eCloRYSesgd3cyJLLs/issTTwNulWVVMPJP5UBG0Qpmi3EalDK8l6wO6/vMRDnLn5V
+	 LOt+JQ2PP/CFCr/T7Y44hDig6VGGxerIoMCff+5jC/Z0rBvwMlHA2GRfoPaUd0NDkJdyT
+	 cW4UTKx2KZEBuxZYJAz+O5PEoOitVtyB0s/D0SWgANSeHlNwm+J1CZ84e+a/FDK4dmZaQ
+	 4i8iRP0IfjrAT2f/8m+dD9lYnm0JFc13KVPSV0HVzpjS2VFb4x/6Oupiyeq0f2XoeOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052971;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052974;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mWUwIKDsUlKh7F1jIx3qrCVnd0PnX3KnmmHZviC9CHw=;
-	b=uRI4L9jLXacuVcRALwx7WUFUwqyP90sP6A0njalswGNWwm3jDomNGsr7AMf0oMGix40K
-	 yRD52soOAcFKvNQVFxwgTOpjCfmT1snwn8lyVjJ03ZNzph3QBaZqHlgddCVDI02AQzhSW
-	 UQ4fYcPjPGOSoitU+omtTS6QMAHUSh59Qm2fKpDmVn0jCQBRLgWCWIO+8CZR6SZnKnKWa
-	 /PHxBY8/FJKYqAG+hU+RsD+aWd1l0uqIsRC0M7mSIdCi2aorBAgpGNqU1m4KxOEs6DPgM
-	 cn0Wga4CvPWYwl8yRCDKe55z9WQ0yFVSfkpvdqSBkwMdSTTM3CkM+T9x05DblqWOE+g==
+	bh=z5VgxrE+6Wk/oM3cW4HoKivz+Ek3Zr8au/EixJPlQng=;
+	b=RRiTIXC4jRYzjQM09Fa7o+hyZjXtEEYEt2GlL3y48PRiaftDzyK3tXigC2f1rHlFojO0
+	 IHRFV+rr8i6BJNB3XIG3urc4RPw8cOF546iL2YNL7Umve3YOtzFqNMaZOsESH5uXVyrrq
+	 6jI6CC60DeAaC8yI7dXtme5kDCbmAavFwOCXEoNrhsf6WYaSQLLJMVtpEHVBw4kdvD4R5
+	 /aiM09sOKq/IuhWgnJwT0W+arhlgPlgfKNC1zVzsn6nu2IPXfQkk9u/jmpci5l4XUjZZp
+	 X367mixJujXh98Ro7zWZnIMJ+pbw4qZsdaSkgJnrdVbG7ZJJiZUcjNUf2746E6LDh6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Na1O5gNN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kEjCT+5g;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65253606A32A;
-	Thu, 19 Nov 2026 01:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A839606A320;
+	Thu, 19 Nov 2026 01:49:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Na1O5gNN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5AF01F000C4;
-	Thu, 19 Nov 2026 01:49:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kEjCT+5g
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BD0B1F000C4;
+	Thu, 19 Nov 2026 01:49:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052971;
-	bh=mWUwIKDsUlKh7F1jIx3qrCVnd0PnX3KnmmHZviC9CHw=;
+	s=korg; t=1795052974;
+	bh=z5VgxrE+6Wk/oM3cW4HoKivz+Ek3Zr8au/EixJPlQng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Na1O5gNN1aEA2sYMgaSyZj5H++Lh5dCWBEakQO6uCNfh6SnTqWIqjohMnXfZqbEYN
-	 +mJlkx8NQB086C4oh0oolQdo5MH9wZAZmEHUvDnIagIXr4G/rCS4LEfEvaPWW1DgfK
-	 QABVv8+fJdVBGquf3a6AeSt6wSsu/tbFuceRV/XE=
+	b=kEjCT+5g53/5OuTWTxl92J0Ti1LWw+IIi1x9sfWckxB16xnSTMLchg+ix3Wl3ju0u
+	 1yiZQto1iR6Cfr4Ka/yTWtGsQcR/n8+P2y35QPSuFoI64mm+KzwABDQJgOWpdGURIw
+	 6I9p9900lE4yoI5JFmw3NQiZOncBdzDJQW/qtkuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Perlow <jperlow@gmail.com>,
-	Aditya Garg <aditya.garg@linux.dev>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0753/2214] wifi: brcmfmac: map msgbuf RX packet IDs bidirectional
-Date: Wed, 18 Nov 2026 15:40:29 +0100
-Message-ID: <20261118150041.878130119@linuxfoundation.org>
+Subject: [PATCH 5.15 0754/2214] ksmbd: fix out-of-bounds write in smb2_get_ea() EA alignment
+Date: Wed, 18 Nov 2026 15:40:30 +0100
+Message-ID: <20261118150041.912084326@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,44 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Perlow <jperlow@gmail.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit 7ed5dce55fa8393972b1bf2bf5af1c818c5e7dc2 ]
+[ Upstream commit 30010c952077a1c89ecdd71fc4d574c75a8f5617 ]
 
-Commit f0ba5fd51ff2 ("wifi: brcmfmac: Set DMA direction for msgbuf
-packet IDs") maps the RX packet ID buffers DMA_FROM_DEVICE. The
-BCM4364 firmware also reads posted RX buffers, so with VT-d
-translation enabled every such read faults ("PTE Read access is not
-set") and the firmware crashes and resets in a loop.
+smb2_get_ea() applies 4-byte alignment padding via memset() after
+writing each EA entry. The bounds check on buf_free_len is performed
+before the value memcpy, but the alignment memset fires unconditionally
+afterward with no check on remaining space.
 
-Map the RX pool DMA_BIDIRECTIONAL again, as before that commit. TX
-keeps DMA_TO_DEVICE.
+When the EA value exactly fills the remaining buffer (buf_free_len == 0
+after value subtraction), the alignment memset writes 1-3 NUL bytes
+past the buf_free_len boundary. In compound requests where the response
+buffer is shared across commands, the first command (e.g., READ) can
+consume most of the buffer, leaving a tight remainder for the QUERY_INFO
+EA response. The alignment memset then overwrites past the physical
+kvmalloc allocation into adjacent kernel heap memory.
 
-Fixes: f0ba5fd51ff2 ("wifi: brcmfmac: Set DMA direction for msgbuf packet IDs")
+Add a bounds check before the alignment memset to ensure buf_free_len
+can accommodate the padding bytes.
+
+This is the same bug pattern fixed by commit beef2634f81f ("ksmbd: fix
+potencial OOB in get_file_all_info() for compound requests") and
+commit fda9522ed6af ("ksmbd: fix OOB write in QUERY_INFO for compound
+requests"), both of which added bounds checks before unconditional
+writes in QUERY_INFO response handlers.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Jason Perlow <jperlow@gmail.com>
-Signed-off-by: Aditya Garg <aditya.garg@linux.dev>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20261021172238.10004-1-aditya.garg@linux.dev
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: e2b76ab8b5c9 ("ksmbd: add support for read compound")
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ksmbd/smb2pdu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
-index f578ac00e5d1c..611c7a8f13785 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
-@@ -1617,7 +1617,7 @@ int brcmf_proto_msgbuf_attach(struct brcmf_pub *drvr)
- 	if (!msgbuf->tx_pktids)
- 		goto fail;
- 	msgbuf->rx_pktids = brcmf_msgbuf_init_pktids(NR_RX_PKTIDS,
--						     DMA_FROM_DEVICE);
-+						     DMA_BIDIRECTIONAL);
- 	if (!msgbuf->rx_pktids)
- 		goto fail;
- 
+diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
+index 55117e96e9498..3959e419c45f4 100644
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -4556,6 +4556,8 @@ static int smb2_get_ea(struct ksmbd_work *work, struct ksmbd_file *fp,
+ 		/* align next xattr entry at 4 byte bundary */
+ 		alignment_bytes = ((next_offset + 3) & ~3) - next_offset;
+ 		if (alignment_bytes) {
++			if (buf_free_len < alignment_bytes)
++				break;
+ 			memset(ptr, '\0', alignment_bytes);
+ 			ptr += alignment_bytes;
+ 			next_offset += alignment_bytes;
 -- 
 2.53.0
 
