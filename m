@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057607;
-	b=zMP64qwJmJUq4VNFn0ypuFg5jT8HTpmTbFH+P9gEc+SjA7cYRFUcBRp8L9YpLlYFBWmm
-	 EdQZ+HsXUwi1erUb2XOvNAHALZvf9tryO24eYLDgP6j/k5++VveGNJVT7ZWwrFHO8V2Ij
-	 G0ANJkmrXAI9z1YQzSuj3wIusgQe+bI4EGPMpvYiQwotMxmK56Wq0ffem+vifSktcolNO
-	 Z9wwXqpU7wsdaCTu6WwaMvsSqBH7hT17AWRvuV7QWUaoiIuzIQKGKrg1BUGPAIEjE82QN
-	 AqduBKMDnlEmLr3QEPtaC/wMLRlpYqthjf6alXv20eN3SHkuC3OyddTI/pOBX+27IOQ==
+	t=1795057610;
+	b=mI9G9xeqs70uFXdai+eAPps1hQ9uFBseOIMwoFXOp8e6GVKamJN0OGii2/Zyi22neTWP
+	 mIOBqdZ/3gV4PIBGFD3SzhTT6fHew7OXsdGSZlWrpT6ijZOAu4NBrYKUszJ1Sn+JeNVGX
+	 FbKjRzoohYSGAHsDh3Y6Zqn/oj3tk4AU+kaBst9OzcporUV6OHV+IiLKZYh+1H72jlcPd
+	 O0eUKAjTrLuNUSqXE+HLGOiFzabCo5iScPJDJ9qSpTmf6BxPnyInpkolbzpUh4kyXi/KL
+	 64Va4nEZYVJliD0KMpDf1tE9aCj4Z/whVx5ZiUWoKFT8do8pQhVUkS0PIXzyiwDJB7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057607;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057610;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=tvn8cCr5py8CktjQHoqAWN1jBhEdByhski++Xmnxq+k=;
-	b=Zzw4Bp//IHEiCXZrur7NFL/hLJR+5MFkFqMhGXFkHt5koTtiGKEcYKTIy48oxlbQ02DQ
-	 EVLJwHZ8xaJUlogtd9tMVslH8YnyGkgR3RXs6lG7XJDOx8G9gBeJDGW59U7hxqFN+uzgM
-	 0xmjkdaFtA76WSlrtkEq53GbK0wtrZJAFVYeZ9Rdc80IjPOyXPdQ/YtmszJtJkHwrERB0
-	 Mco/FgXlCQJAued94ipojMmmxuX4tfjB6YU5CoY05RVUA4FXWo5GF4IHnNPhvYtJyJ+yJ
-	 FWNx1Llw7mkimM2l+lZse6KWbMH62DKz9xnBqjIcu+knVLL4XaBv49bkpRb95iyNsXw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=DtRZ3kFn385gecfdD7boiZWMRGVuEhZhf4GZ247NStE=;
+	b=z7yzMFPUHIG3dBxwadgz/FFAzMjoFJTzCzCYCOnK29B7dfsKAymJ7Vvv9v1UuOijlnJK
+	 TF8RflEZyKYlX2MNWd/Se02sZsjGo9LNS2Y12HFsXvQX3sQcbhw1Gh6tJ0pUUegEc4XM9
+	 SZcyBhigNO0f5Sedvr4OXpifaLMp/xbytggcWZP2ixPuhqsA0/RPaTKfesYg4NqUUaEXB
+	 F3bkSWY5L2Mq5Bzj+TyzotnTbDzRUnQOZNSdrL/KMP8UBfIkhZfQF55yBXoLzXihq1rcd
+	 qC1nANFVpwcI76WSzl06He5+xJPfzg3KG/njNH0yex+KrS2MtqjXsquF7SnNmHstC8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V6wPgZgj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cJKuAaDC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8158C60A2600;
-	Thu, 19 Nov 2026 03:06:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F93606A33F;
+	Thu, 19 Nov 2026 03:06:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V6wPgZgj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D89A41F000C4;
-	Thu, 19 Nov 2026 03:06:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cJKuAaDC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8EAB1F000C4;
+	Thu, 19 Nov 2026 03:06:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057607;
-	bh=tvn8cCr5py8CktjQHoqAWN1jBhEdByhski++Xmnxq+k=;
+	s=korg; t=1795057610;
+	bh=DtRZ3kFn385gecfdD7boiZWMRGVuEhZhf4GZ247NStE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V6wPgZgjtRrVuvCMJWAIv5PQkPQfRlkjqRo/Hvu+OtGFsIDf6Z3glndfv+AuJCX7o
-	 Ve0WaKTqMSKirl1BLCWXYNHVn0t7ApcuHsZZTSBIde4yM29pTRCUmeu7siRJJv4L3c
-	 Qd7+EZOazF5+3J2JFDZkVk25O4BurNUr0K9LmoFw=
+	b=cJKuAaDC19PlGyPcPAhySYUM1TKhM7CRN2baAzw+G61uI6VQdzW5cbZrujP+AhOU5
+	 0nYkIzZ3PeFpP1K7IezbUVpDl65GU1n33srZNor4q6/1KpxunFxf5lzbhnnKwKoB3o
+	 CLIT5fHMAYTcRtx1jvVBcUoNOA8BaCyWYY8HcyWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Jun <lijun01@kylinos.cn>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	=?UTF-8?q?Federico=20Valent=C3=ADn=20Andrade?= <fandrade@frba.utn.edu.ar>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0191/1848] tpm: tpm_tis_spi: fix nodef CR50 tpm_tis_spi_resume is null
-Date: Wed, 18 Nov 2026 15:37:09 +0100
-Message-ID: <20261118145919.724813182@linuxfoundation.org>
+Subject: [PATCH 5.10 0192/1848] ALSA: usb-audio: Skip mixer creation on M-Audio Venom
+Date: Wed, 18 Nov 2026 15:37:10 +0100
+Message-ID: <20261118145919.780625407@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -62,48 +62,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li Jun <lijun01@kylinos.cn>
+From: Federico Valentín Andrade <fandrade@frba.utn.edu.ar>
 
-[ Upstream commit b4d1adc70471d0752bba674552d19971ed9fa869 ]
+[ Upstream commit 4c0ec35e011309bd7091053ad5bbc01420967a66 ]
 
-if no define CONFIG_TCG_TIS_SPI_CR50 in config,
-the add of tpm_tis_spi_resume is null, this cause the tpm chip to
-fail to resume.
+The M-Audio Venom (0763:2084) does not answer any GET_CUR request
+of its feature units, hanging up the USB microcontroller and
+"responding" with timeouts. So the mixer building lasts around 47
+seconds, and the device does not stream at all.
 
-Signed-off-by: Li Jun <lijun01@kylinos.cn>
-Link: https://lore.kernel.org/r/20260812100914.3540149-1-lijun01@kylinos.cn
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+The same GET_CUR requests issued through libusb (with no kernel
+driver bound) complete correctly and blazingly fast. So it seems
+to only happen during the initial probe.
+
+I defined an explicit composite quirk to bypass the mixer creation,
+as it is not needed (the synth already comes with volume controls).
+
+With both this and the device flag applied, the synth works
+flawlessly.
+
+Signed-off-by: Federico Valentín Andrade <fandrade@frba.utn.edu.ar>
+Link: https://patch.msgid.link/20260824140211.17003-3-fandrade@frba.utn.edu.ar
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_tis_spi.h | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ sound/usb/quirks-table.h | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/drivers/char/tpm/tpm_tis_spi.h b/drivers/char/tpm/tpm_tis_spi.h
-index bba73979c3687..87927f48beaf9 100644
---- a/drivers/char/tpm/tpm_tis_spi.h
-+++ b/drivers/char/tpm/tpm_tis_spi.h
-@@ -44,8 +44,12 @@ static inline int cr50_spi_probe(struct spi_device *spi)
- }
- #endif
+diff --git a/sound/usb/quirks-table.h b/sound/usb/quirks-table.h
+index 3891952e17476..3ae8f8cd22d94 100644
+--- a/sound/usb/quirks-table.h
++++ b/sound/usb/quirks-table.h
+@@ -2414,6 +2414,28 @@ YAMAHA_DEVICE(0x7010, "UB99"),
+ 		}
+ 	}
+ },
++{
++	/*
++	 * M-Audio Venom
++	 *
++	 * The AudioControl interface times out on every GET_CUR request,
++	 * which adds around 47 seconds to the card registration and
++	 * freezes the device, blocking streaming.
++	 * Using an explicit composite quirk to skip the mixer entirely.
++	 */
++	USB_DEVICE_VENDOR_SPEC(0x0763, 0x2084),
++	QUIRK_DRIVER_INFO {
++		.vendor_name = "M-Audio",
++		.product_name = "Venom",
++		QUIRK_DATA_COMPOSITE {
++			{ QUIRK_DATA_IGNORE(0) },
++			{ QUIRK_DATA_STANDARD_AUDIO(1) },
++			{ QUIRK_DATA_STANDARD_AUDIO(2) },
++			{ QUIRK_DATA_STANDARD_MIDI(3) },
++			QUIRK_COMPOSITE_END
++		}
++	}
++},
  
--#if defined(CONFIG_PM_SLEEP) && defined(CONFIG_TCG_TIS_SPI_CR50)
--extern int tpm_tis_spi_resume(struct device *dev);
-+#if defined(CONFIG_PM_SLEEP)
-+	#if defined(CONFIG_TCG_TIS_SPI_CR50)
-+		extern int tpm_tis_spi_resume(struct device *dev);
-+	#else
-+		#define  tpm_tis_spi_resume tpm_tis_resume
-+	#endif
- #else
- #define tpm_tis_spi_resume	NULL
- #endif
+ /* Casio devices */
+ {
 -- 
 2.53.0
 
