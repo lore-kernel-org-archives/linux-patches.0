@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039737;
-	b=2ItbJMVBChBrOyZkJnY770h6V0YppnyE31hX5itmVBs6WUZ88ZElIrBEwKUEZxaVKKKT
-	 lqa1N3NI7CfjG7KwR3/noGLZ2QLriR6NDLR0LxC/qNhr7BELIcMspWo076dj+yOSKyyWI
-	 ajcBjQbl0J3eotfvH98+VgrCArbV/VaGMeoBtS0TzNAmDBO5K1rKIDaggFNo4ppLy1lc4
-	 pbQiiR41os+5VFUVq6UWccfG+l9nJo6DreUuR+CZKgjHnGx4NtnO48VWy1Oa0h4JTrF49
-	 hy62X7xKBMQmHvch2Au9ncj1WpSzX0KffaXf7s6plJAdGDxnYfDQLu2x5l+ccNZVpVw==
+	t=1795039740;
+	b=nVSUK6rpUybzD3pT7pVw9DCLc0wtJpsIguHhhRa9K6WgSma/xXV3/MiRXMYqVUE8hztT
+	 RNK/zmNlAk3g0EwfRCcSWLNm5yBSqdP805hh27ZvoNovLv7CGg85k+sgQDnBO2G8CQKK/
+	 W+fXXXWf4Ze6Ozqlf/Cm9aGVSzxS0ujcV926KcUbZQmg+kMMH8JFJjmpiL/fYpvL2m8L5
+	 kuAQey7AScElCYemt4xAdbaXbYS8bp3ups9I8MrMrsstOZxRNk2zyAB6D2vs7rQkvme3v
+	 3y5KigVQfmkTjyu3cTmAA/Loq94CNsRJrMIOCkpgyzDfzmF2MsMHYtcLuLo4p64x8WA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039737;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039740;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sTsOSZYTC9rhJfqFpYyz1iwU736j5wseewktTFDM3XU=;
-	b=Y1hfwpM2OSBgDnaxntSsHXQZWO5+9EXbysH25OKq5Y5qmhbmd0pABOysxYEsQGYiu4mX
-	 luW4VsnF/wCxrzLW/WJadBU2IAIN79RjufdeC16UPB15tFK97XJIm9hDuhcvBsqI0egFC
-	 HL7R4iNS4nn+5LpDZkB3VL87dlLxlx4JsqdDVkjvLW8HuRhdllgfxXVSLgdkwY8Xr1Nzh
-	 DtY4erl3eAkEvIDuqq3PjUT1kkCz82zi9GGef+zx75ShkUqku/SbZV4hFrbJeUeaKCcOp
-	 GWn66X3pOxeQ6IpqdTYsLQNe4KFVoNP5gWMm6pXOZkrHT3ixdDl/oVcu0tMtn4n8hMw==
+	bh=LBZdQDxE/q0QyjA6EEUo329SeEebspJjqKI3edJtpLE=;
+	b=d1KS6scoTInpfugdQt6vIdfTwVIg6W3zov69fXKgWwUmClzGt2MvCe+Hp8FsDH9XLE/4
+	 LKx395ed+rNQ7Mjyq5/+XKqIIFQ+9nDlMHIEzy2lx07SvMblycQ6+loyWXyIyOQdjTkgI
+	 JX4FAOURh4PByH9zB7RI7LDSjHVlOWXIST+/xsQE7nJL0Wv5UFjiMK1K3XbRS+KiUGLg2
+	 4D42KNtbUpKfsG1f8DF/YKhXjzNbslsHSGYbpQIG4exWTtzYl2zaCbaqcI29+MXsB8qjY
+	 a/+/uoZOPKx1jQeuZrt4hxkE5PiigAOErel7A7smCCoMZzYQFzX6mW12PEG4SE20i5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m1sXHapv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AJNWg80J;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8C1606A31C;
-	Wed, 18 Nov 2026 22:08:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31415606A31C;
+	Wed, 18 Nov 2026 22:09:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m1sXHapv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D38EE1F000C4;
-	Wed, 18 Nov 2026 22:08:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AJNWg80J
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874FD1F000C4;
+	Wed, 18 Nov 2026 22:08:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039737;
-	bh=sTsOSZYTC9rhJfqFpYyz1iwU736j5wseewktTFDM3XU=;
+	s=korg; t=1795039740;
+	bh=LBZdQDxE/q0QyjA6EEUo329SeEebspJjqKI3edJtpLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m1sXHapvEl/g+m4bdvdLPzbpTvXaGkErHEa/b0HNuOb3ZE/1BucHXYwojIc1xJhGO
-	 45lhx0Q1jIFi2iu3YaY5b03GkS7+Wy4z2MOtWTCArGY/+ttJjHsJafiMoES8oQUr6l
-	 n8aee8dwbfdEXnDLYJMT9s4GhBZor2dW9YyXVWYY=
+	b=AJNWg80JbBDSIXpnwEXSHhFzm3O10qFCGGjv5D+BLTkeZTvVkuYAsWPkK/7FeOKwU
+	 N1I1TNIbgwUJCizD+R7ZG0NUa9lSl0X4aYu7/p0BSX4sAlLlRkbPacCy/CY30LUXIx
+	 6P3/lFy2AiVV4u4lN7hgFCGHEG4jQaItvgzfzdVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2207/3318] fs/ntfs3: zero frame pages on read error
-Date: Wed, 18 Nov 2026 15:47:09 +0100
-Message-ID: <20261118150428.131160666@linuxfoundation.org>
+Subject: [PATCH 6.6 2208/3318] pinctrl: amd: Add PM debugging message for turning on/off wakes
+Date: Wed, 18 Nov 2026 15:47:10 +0100
+Message-ID: <20261118150428.159957491@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,45 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Mario Limonciello (AMD) <superm1@kernel.org>
 
-[ Upstream commit a32e893a077a4b0d3b04c86cb7f69e354a187995 ]
+[ Upstream commit 54b962fa14dc82a625436fcbcee7b3f2067a4f6d ]
 
-ni_read_frame() marks every frame page uptodate at the 'out:' label
-regardless of the return value. The pages come from ntfs_lock_new_page()
-and are not zeroed, and several error paths reach 'out:' before anything
-is written to them (e.g. a failed decompress_lznt()/decompress_lzx_xpress()
-on a corrupted chunk, or an allocation failure).
+The GPIOs for devices not in _AEI/_EVT such as touchpad or touchscreen
+won't have wakeup turned on until the suspend sequence starts.
 
-A page marked uptodate is served directly from the page cache, so a later
-read() of the file returns the uninitialized page contents to userspace.
-On a crafted compressed image this leaks kernel memory, including pointers.
+Due to code in amd_gpio_suspend_hibernate_common() masking the interrupt
+can make this difficult to follow what's going on.  Add an explicit
+debugging message to tell when that was turned on/off.
 
-Zero each page on the error path before marking it uptodate. The success
-path is unchanged.
-
-Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Link: https://lore.kernel.org/20250814183430.3887973-2-superm1@kernel.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Stable-dep-of: 44c232e80adc ("pinctrl: amd: add timeout to irq-enable readback")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/frecord.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pinctrl/pinctrl-amd.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
-index 32317e127f5a9..3e3c9caaddf54 100644
---- a/fs/ntfs3/frecord.c
-+++ b/fs/ntfs3/frecord.c
-@@ -2757,6 +2757,8 @@ int ni_read_frame(struct ntfs_inode *ni, u64 frame_vbo, struct page **pages,
- out:
- 	for (i = 0; i < pages_per_frame; i++) {
- 		pg = pages[i];
-+		if (err)
-+			clear_highpage(pg);
- 		SetPageUptodate(pg);
- 	}
+diff --git a/drivers/pinctrl/pinctrl-amd.c b/drivers/pinctrl/pinctrl-amd.c
+index 64dc6b1a1c7e4..3d0ea327c3e60 100644
+--- a/drivers/pinctrl/pinctrl-amd.c
++++ b/drivers/pinctrl/pinctrl-amd.c
+@@ -440,6 +440,9 @@ static int amd_gpio_irq_set_wake(struct irq_data *d, unsigned int on)
+ 	u32 wake_mask = BIT(WAKE_CNTRL_OFF_S0I3) | BIT(WAKE_CNTRL_OFF_S3);
+ 	int err;
+ 
++	pm_pr_dbg("Setting wake for GPIO %lu to %s\n",
++		   d->hwirq, str_enable_disable(on));
++
+ 	raw_spin_lock_irqsave(&gpio_dev->lock, flags);
+ 	pin_reg = readl(gpio_dev->base + (d->hwirq)*4);
  
 -- 
 2.53.0
