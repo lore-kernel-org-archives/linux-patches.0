@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047592;
-	b=XGVN3oZHFdziw39ksbKArkGzqtnimHx+FUUfr5S3dhi86Rg/0E/N8CR561v+Lht8gkHa
-	 loym2W68YVVJA4w9mbU634vpropEDomt8kYojKuIE8tqK8VSTBLMhAyj0ipz66obXcC3Y
-	 2BcvZYL375IVZw4oe+UIAui46fiWz21DVQ5qdxjfNvI0d2mzJyC24HcJO/NU2bKYYjqqL
-	 +8C+qDX8YPvddueSVU3pVgkbRXm+tYmNw0q1b3p0EybCwv2igQGwNvAbec4QcZTb6reQ8
-	 FMZS5pqN7415sMIMT+SGRGyc2DOwpMqSOlVtDiAJx14XElpMb65RKBCjW8CVzuMPGVw==
+	t=1795047595;
+	b=0TPvXi1E4WQaxmWdRlgxE3MkdCYWV9PXcl11ivdqf0OrTQBuMCrrkmAX9dRRPi6Ws6mm
+	 KUdgZXVB1yba2FSi+JNRivjO6bBmhL3L4BBOj9HMXYFVzYz3MiGYF5JN+AgsX6CCb0GBu
+	 qRCM949Wi5H6xGRmRP/kyzWNat4Ev6L+e4SlbKMniJYW1t49XeiThCwK1a1LsS1INZbx5
+	 AGv/GS1ps+NZFHmF0u001ccJ9IAwbqNsIfavM813a3TctV0O976V0Vsn0qyEqnF18tR5s
+	 kpuAuc3RhpeC7I8RlYefe3BdFwhnEI6v3ziW3kLOm7MRy2eb1ND2p6SYOoFec6UvBYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047592;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047595;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UDa0i5RyoT+sdnppzraPTmVpBjyBl++Ia1EX0Gdp2FE=;
-	b=SnoZ+c9eahwBfCVR+QBCWVkqTpOK6q/fyhoCHV+e2ZBMvXPd90g+DPxoBQZfWzDeDVWa
-	 8dWJdJZBtEGBUFolfc6f6rgyHgKaz7ya9Q+xgRse81/P0IKcylTCDgUwD/v1/ftdzHEJf
-	 E/4pUuP+Au2VKW2uoiuUyYkg4wX3379UMUwHjCe1J/iAXqrywTRmOc3MEF3QS3aij7crq
-	 7aF3Jz8gugqjk0ZpJTAOqSIbHsl8Mt3fYT2P3KZ99OkVv3iEq7tXvU+drJIpZTNr6g0yD
-	 MsMJg8A8C7wf0nk1U2Tkdt7ciV0MRBMCwmM8aWcr1U8yXrSrqA8ZKROruIYlxt9ahMg==
+	bh=bYLkzR+2KO9YGl5b7X+hPf72AZD7qhCYEUH6k2ACR3A=;
+	b=XaDbhue8GTj+UkQJsKxNCf2E+PbSepRwug5l5JU8zjdPuDAqTcUXJstKGsI25Myj80dr
+	 82di4KiDtZQe5cW4xQqdn+PtPgzep8BYbCrHWNp9ixq6HXpTF2j+ZxQR5ui2QuMett7xs
+	 uEbe9uRdJWj8yL31EWzE4qKFGt8AP42pl8GmknCmK7iKt881YUgw6Ur0RSBrlNzp8nTx5
+	 xafMiw2TIy8fxno9rjliyo/L/2hS9EhJuYAZjErH5A5Af4WU+6E/AkHLULXYVuoy02Ckh
+	 47VnEzPtTPpdqdbGjggcdVqDpFbFRA65TWqAeWgs2tOiu9Of6iAIDNnoz4DltlbVgLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oGzGSMwV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Jo/kOkj7";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDAE2606A31C;
-	Thu, 19 Nov 2026 00:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B45A606A320;
+	Thu, 19 Nov 2026 00:19:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oGzGSMwV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F8E61F000C4;
-	Thu, 19 Nov 2026 00:19:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jo/kOkj7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0D5A1F000C4;
+	Thu, 19 Nov 2026 00:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047592;
-	bh=UDa0i5RyoT+sdnppzraPTmVpBjyBl++Ia1EX0Gdp2FE=;
+	s=korg; t=1795047595;
+	bh=bYLkzR+2KO9YGl5b7X+hPf72AZD7qhCYEUH6k2ACR3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oGzGSMwV5ldF4SGF7JsYeFTzIzrZySoK7mDKtJWaoHyo5pIWhKtHQw+ai96M1NHPx
-	 nOGjER/C2/nQwa7vg0ZUJ7tY/OiPrOCLsjqPkmzz625v4AcxNmdTVUKiWU8QuiICGx
-	 xrdpKrv9PXAp5Wj3hhhWISgcKml58e03AL/l9Cn0=
+	b=Jo/kOkj7itDeYourYBLqPRvB78E2f+DFwLt6gidDaTt5PGJOCTLMPElFsEwZnvYUE
+	 RZPEhvNVTirfIH540VCMsUur6GsFpqwOaQx08zIb6WqwVNvUF+naXuGY+BYBbbW+Wc
+	 Nhneoru5QGSGya+zwA+0UNUmphVMfEf1jNCNKG3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>,
-	Mohit Sharma <mohit.sharma@oss.qualcomm.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1695/2857] ASoC: qcom: q6apm: Guard callbacks until probe data is ready
-Date: Wed, 18 Nov 2026 15:45:29 +0100
-Message-ID: <20261118150302.365138290@linuxfoundation.org>
+Subject: [PATCH 6.1 1696/2857] ASoC: qcom: audioreach: fix ADSP ready check
+Date: Wed, 18 Nov 2026 15:45:30 +0100
+Message-ID: <20261118150302.400719564@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,77 +68,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohit Sharma <mohit.sharma@oss.qualcomm.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-[ Upstream commit ef7062864c0511bba52775d0eb3aa72d886b5f3a ]
+[ Upstream commit dd33c2e7b21d72b151a87b5dafffee2c019043e5 ]
 
-The GPR bus needs to make response callbacks available before invoking a
-client probe because clients can issue synchronous commands from probe.
-This creates a short interval where a callback can run before the client
-has published its private data.
+currently q6apm_is_adsp_ready() will only return the cached value of
+previous result. If we are unlucky and previous result is not-ready
+then the caller will always get not-ready flag.
 
-Make q6apm publish its driver data only after all callback-visible state
-has been initialized. Have the q6apm and q6prm callbacks ignore packets
-received before driver data is available.
+This is not correct, we should query the dsp of its current state in
+irrespective of previous reported state.
 
-Fixes: ec1471a898cc ("soc: qcom: apr: Add GPR support")
-Cc: stable@vger.kernel.org
-Co-developed-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
-Signed-off-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
-Signed-off-by: Mohit Sharma <mohit.sharma@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261022144130.2443667-2-mohit.sharma@oss.qualcomm.com
+Fixes: 47bc8cf60e92 ("ASoC: qdsp6: audioreach: Add ADSP ready check")
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20230209122806.18923-5-srinivas.kandagatla@linaro.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/q6apm.c | 6 ++++--
- sound/soc/qcom/qdsp6/q6prm.c | 3 +++
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ sound/soc/qcom/qdsp6/q6apm.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
 diff --git a/sound/soc/qcom/qdsp6/q6apm.c b/sound/soc/qcom/qdsp6/q6apm.c
-index 4f9143b903b31..8529381139865 100644
+index 8529381139865..79bf618a90166 100644
 --- a/sound/soc/qcom/qdsp6/q6apm.c
 +++ b/sound/soc/qcom/qdsp6/q6apm.c
-@@ -757,8 +757,6 @@ static int apm_probe(gpr_device_t *gdev)
- 	if (!apm)
- 		return -ENOMEM;
+@@ -145,14 +145,6 @@ static void q6apm_put_audioreach_graph(struct kref *ref)
+ 	kfree(graph);
+ }
  
--	dev_set_drvdata(dev, apm);
+-bool q6apm_is_adsp_ready(void)
+-{
+-	if (g_apm && g_apm->state)
+-		return true;
 -
- 	mutex_init(&apm->lock);
- 	apm->dev = dev;
- 	apm->gdev = gdev;
-@@ -771,6 +769,7 @@ static int apm_probe(gpr_device_t *gdev)
+-	return false;
+-}
+-EXPORT_SYMBOL_GPL(q6apm_is_adsp_ready);
  
- 	idr_init(&apm->modules_idr);
+ static int q6apm_get_apm_state(struct q6apm *apm)
+ {
+@@ -169,6 +161,15 @@ static int q6apm_get_apm_state(struct q6apm *apm)
+ 	return apm->state;
+ }
  
-+	dev_set_drvdata(dev, apm);
- 	g_apm = apm;
- 
- 	q6apm_get_apm_state(apm);
-@@ -811,6 +810,9 @@ static int apm_callback(struct gpr_resp_pkt *data, void *priv, int op)
- 	struct gpr_ibasic_rsp_result_t *result;
- 	struct gpr_hdr *hdr = &data->hdr;
- 
-+	if (!apm)
-+		return 0;
++bool q6apm_is_adsp_ready(void)
++{
++	if (g_apm)
++		return q6apm_get_apm_state(g_apm);
 +
- 	result = data->payload;
- 
- 	switch (hdr->opcode) {
-diff --git a/sound/soc/qcom/qdsp6/q6prm.c b/sound/soc/qcom/qdsp6/q6prm.c
-index e3b8ddeb769eb..16504683ed725 100644
---- a/sound/soc/qcom/qdsp6/q6prm.c
-+++ b/sound/soc/qcom/qdsp6/q6prm.c
-@@ -197,6 +197,9 @@ static int prm_callback(struct gpr_resp_pkt *data, void *priv, int op)
- 	struct gpr_ibasic_rsp_result_t *result;
- 	struct gpr_hdr *hdr = &data->hdr;
- 
-+	if (!prm)
-+		return 0;
++	return false;
++}
++EXPORT_SYMBOL_GPL(q6apm_is_adsp_ready);
 +
- 	switch (hdr->opcode) {
- 	case PRM_CMD_RSP_REQUEST_HW_RSC:
- 	case PRM_CMD_RSP_RELEASE_HW_RSC:
+ static struct audioreach_module *__q6apm_find_module_by_mid(struct q6apm *apm,
+ 						    struct audioreach_graph_info *info,
+ 						    uint32_t mid)
 -- 
 2.53.0
 
