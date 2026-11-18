@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046665;
-	b=Ob2fCSSOUVdQh5D+eS2Wju9oXB0s2iH1E1JuizBxF4o21yXj7o+yem2ML43QE88elBUv
-	 plkrAlPy9o75UlBn0ukfajznRSZ/CTkfRuqlzv/GiD8dXwDf0dJUGO0pn/ZRrRCL63YSt
-	 bdYHik3WJkOrFA2ulEiVVhMBKwXqqfGjJyJ6XIGHQD6aM+LSbYGoVphmpAxz0TXF+ni3g
-	 ZtOhmS0PoTd6wqikFTL4QtPVctaUebBDoOaUyWVMkrjoKKxMs74RuQKCuXhdLCp5Uu1MM
-	 0H95rM0m5hTsWU5BzepgSOB0wYCpsHdgNCAOnqDGWMY/YcTJ6I7wgPRwzVNi77PNFzw==
+	t=1795046667;
+	b=FWMNQdqYwX/QUSmNbPukMTEg6e3aCBgfFybSfB5oxoekW5r8JpyOrOniKsXhVfSblM0H
+	 7ESEv/8eR4A2fQ6UHku7670SU4zisJ7S8T8c+iGyBvlBhWFmAKgV0Z1pEehTrlJkLkQ4h
+	 IY7XhK/43r03tF67VI9zXOo6iS3RkJpswYPsU4qpv4+3HanGbPREmqo+FalWcpU8/DLwe
+	 68pGstGGLNlbMcZf8gul9YPuQFdFH34E7Q1UtS6WmlNlp6lVHDIaUZ1WOwkWnKoHg5S3c
+	 03OrLw49S9xhvPt6sEg4V/mpz2nGVvhTcs8zk1Jcht059Tw3Hjb9MW3wCEc9nWQBtzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046665;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046667;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eeNTj/S3gpCrKwECIEH9Rehkx/oMG1ZRub1QxOxpwi8=;
-	b=G1X0yT3vpbOHuII8Ipb0dWtbax2Jejukn+GUUeq/AENaZIRF/Bimvu7OXrXf/Q8uuuJF
-	 QkZcSTKzWYy9Qh2j04Yp6IzlC+HRmX1ahdvt0yYyQw1AtsDUPDiol2DDHQjMELbYuJDuA
-	 2uA6STEMIWhHK4y3RTVs1UdMJZfbn96RmZKsRCX+clHukZP+28eJd4bM0HGFMRxf+T/95
-	 xIq8hptgwcQMkTxpXDGGNuf49EZ5wZbazTz+gzugajc9W12K8YHWi6KmO8RKDpXMAlHHS
-	 csks88I9HDVrwZOQwwz0uox9Wn0wXJqsZuk4InS6loAwIPUJJQa7c6J0KufXgXdkwYg==
+	bh=eo2mYm4jCtdGZR6jsKsjRxAOrn+Ps2jbbPEXaPDKquk=;
+	b=HD92kjGHT5ClXE3XLAusgLyjE2IJvjd/dtB4+OEez+W3VcvagWvk9GoLq40pQL6uxBLj
+	 kxNhyaGEcCdZl0wXeXHaOmD5lA7i8+tldIKI86BBgVJSJTI7PvSznwZ3kAJLvTHJpyIbO
+	 kfSOFIYiqkMXZRtWShmoAQikkJm8S0TBJ0RDV7l+RxPM7I6OSUtVPU1vL96TkTKfsfJMO
+	 cgcpIFaIvJ/j/3n0jAjsGeELfWcZan0VrYLnspqa/6EdEKTRy/AkNNPWEszPL40DQhPgB
+	 uVMCw4A0mgQ660pSphjSdqyByozEVVYXmueNezb87eGroAw9lQ6CGosDv67N+fMBPPg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lxfUyCN3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NixBgDGN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF10E606A325;
-	Thu, 19 Nov 2026 00:04:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D3F606A320;
+	Thu, 19 Nov 2026 00:04:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lxfUyCN3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14C111F000C4;
-	Thu, 19 Nov 2026 00:04:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NixBgDGN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E39531F000C4;
+	Thu, 19 Nov 2026 00:04:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046664;
-	bh=eeNTj/S3gpCrKwECIEH9Rehkx/oMG1ZRub1QxOxpwi8=;
+	s=korg; t=1795046667;
+	bh=eo2mYm4jCtdGZR6jsKsjRxAOrn+Ps2jbbPEXaPDKquk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lxfUyCN3amAaGlwWJajsXTWEgserqlzf2VM66m8qs81D4FqGpzg55itusaolbhv/f
-	 VdqmzQmqvk4MCkV12pk5w/tNjmfKzDmsgruiVUKJUbWSrOK9aeZlvMQmO14xcGA9EL
-	 TJIIs7tdzLSsFImxlK0BtTPkVOm2nD7iwr/SVtq8=
+	b=NixBgDGNwns97IcPhuOYqqaIGCJX56Darqcak8sDN7qlJP9vRl9aAOJ4ylGxQ9wGa
+	 UgqYIddxtnkzPSYrM4tJjoLrUtYWCSoBVIRgnrQ87EiRMQtiLWVLqmoAWiNeVIZAAW
+	 MGF+gyGBNgAwT6HSa4ZAftlLXjvo1l+QeKcE3jmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bradley Morgan <brads@mainlining.org>,
-	Hui Peng <benquike@gmail.com>,
-	Kees Cook <kees@kernel.org>,
+	Robert Morris <rtm@csail.mit.edu>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1362/2857] seccomp: restore knotif->state when SECCOMP_ADDFD_FLAG_SEND is interrupted
-Date: Wed, 18 Nov 2026 15:39:56 +0100
-Message-ID: <20261118150250.443762632@linuxfoundation.org>
+Subject: [PATCH 6.1 1336/2857] udf: Avoid invalid LVID used on mount
+Date: Wed, 18 Nov 2026 15:39:30 +0100
+Message-ID: <20261118150249.533018269@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,276 +68,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Peng <benquike@gmail.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 832b9b176be06a20747a267db6bc0010a24b74f4 ]
+[ Upstream commit c8f1140cb82dc843e72697dc6f8c7ee1acce5d28 ]
 
-In seccomp_notify_addfd(), when SECCOMP_ADDFD_FLAG_SEND is set in
-addfd.flags, knotif->state is optimistically transitioned from
-SECCOMP_NOTIFY_SENT to SECCOMP_NOTIFY_REPLIED before waking the tracee
-and waiting on kaddfd.completion:
+udf_load_logicalvolint() loads logical volume integrity descriptors.
+Since there can be multiple blocks with LVIDs, we verify the contents of
+only the last (prevailing) LVID found. However if we fail to load the
+last LVID (either due to IO error or because it's checksum fails to
+match), we never perform the verification of validity of the LVID we are
+going to use. If such LVID contains invalid data, we can hit
+out-of-bounds access or similar issues. Fix the problem by verifying
+each LVID we are potentially going to accept.
 
-	if (addfd.flags & SECCOMP_ADDFD_FLAG_SEND) {
-		knotif->state = SECCOMP_NOTIFY_REPLIED;
-		...
-	}
-
-If wait_for_completion_interruptible(&kaddfd.completion) is interrupted
-by a signal before the tracee dequeues the kaddfd request
-(!list_empty(&kaddfd.list)), seccomp_notify_addfd() removes kaddfd from
-knotif->addfd and returns -EINTR to the supervisor without having
-installed the file descriptor.
-
-However, knotif->state is left as SECCOMP_NOTIFY_REPLIED (with
-knotif->error == 0 and knotif->val == 0). This causes two problems:
-
-1. When the tracee runs in do_user_notif(), it checks
-   if (knotif.state != SECCOMP_NOTIFY_REPLIED) after calling
-   seccomp_handle_addfd(). Because knotif->state is already
-   SECCOMP_NOTIFY_REPLIED, the tracee exits the notification wait loop
-   prematurely and returns 0 from the trapped syscall without the file
-   descriptor ever having been installed.
-
-2. If the supervisor retries SECCOMP_IOCTL_NOTIF_ADDFD or
-   SECCOMP_IOCTL_NOTIF_SEND before the tracee runs, it fails with
-   -EINPROGRESS because knotif->state is no longer SECCOMP_NOTIFY_SENT.
-
-Fix this by restoring knotif->state back to SECCOMP_NOTIFY_SENT if
-SECCOMP_ADDFD_FLAG_SEND was set and kaddfd was not consumed before the
-interrupted wait. Also add a seccomp_bpf selftest
-(user_notification_addfd_send_interrupted) covering this race.
-
-Tested in QEMU against Linux 7.3.0-rc3 using the
-user_notification_addfd_send_interrupted selftest added in this patch
-(./seccomp_bpf -t user_notification_addfd_send_interrupted): on the
-unfixed kernel the test fails because the retry ioctl(listener,
-SECCOMP_IOCTL_NOTIF_ADDFD, &addfd) returns -EINPROGRESS (-1) and the
-tracee prematurely exits do_user_notif() with return value 0 instead of
-FD 42, whereas with this patch applied the test passes.
-
-Fixes: 0ae71c7720e3 ("seccomp: Support atomic "addfd + send reply"")
-Cc: stable@vger.kernel.org
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Assisted-by: LLM
-Signed-off-by: Hui Peng <benquike@gmail.com>
-Link: https://patch.msgid.link/20260922023204.2504832-1-benquike@gmail.com
-Signed-off-by: Kees Cook <kees@kernel.org>
+Reported-by: Robert Morris <rtm@csail.mit.edu>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Stable-dep-of: a61fb39759d7 ("udf: Make sure there's enough space for LVID implementation use field")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/seccomp.c                              |   7 +-
- tools/testing/selftests/seccomp/seccomp_bpf.c | 179 ++++++++++++++++++
- 2 files changed, 184 insertions(+), 2 deletions(-)
+ fs/udf/super.c | 42 +++++++++++++++++++++++++-----------------
+ 1 file changed, 25 insertions(+), 17 deletions(-)
 
-diff --git a/kernel/seccomp.c b/kernel/seccomp.c
-index 8dcb585ae78c1..d1fc20de74646 100644
---- a/kernel/seccomp.c
-+++ b/kernel/seccomp.c
-@@ -1690,10 +1690,13 @@ static long seccomp_notify_addfd(struct seccomp_filter *filter,
- 	 * We need to check again if the addfd request has been handled,
- 	 * and if not, we will remove it from the queue.
- 	 */
--	if (list_empty(&kaddfd.list))
-+	if (list_empty(&kaddfd.list)) {
- 		ret = kaddfd.ret;
--	else
-+	} else {
- 		list_del(&kaddfd.list);
-+		if (addfd.flags & SECCOMP_ADDFD_FLAG_SEND)
-+			knotif->state = SECCOMP_NOTIFY_SENT;
-+	}
- 
- out_unlock:
- 	mutex_unlock(&filter->notify_lock);
-diff --git a/tools/testing/selftests/seccomp/seccomp_bpf.c b/tools/testing/selftests/seccomp/seccomp_bpf.c
-index b054bfef0f4f2..50f3a33f691d5 100644
---- a/tools/testing/selftests/seccomp/seccomp_bpf.c
-+++ b/tools/testing/selftests/seccomp/seccomp_bpf.c
-@@ -4246,6 +4246,185 @@ TEST(user_notification_addfd_rlimit)
- 	close(memfd);
+diff --git a/fs/udf/super.c b/fs/udf/super.c
+index 48ffcfd287eab..b091cc98406b4 100644
+--- a/fs/udf/super.c
++++ b/fs/udf/super.c
+@@ -1574,6 +1574,20 @@ static int udf_load_logicalvol(struct super_block *sb, sector_t block,
+ 	return ret;
  }
  
-+/* Just take a signal and do nothing else. */
-+static void empty_handler(int signo)
++static bool udf_lvid_valid(struct super_block *sb,
++			   struct logicalVolIntegrityDesc *lvid)
 +{
++	u32 parts, impuselen;
++
++	parts = le32_to_cpu(lvid->numOfPartitions);
++	impuselen = le32_to_cpu(lvid->lengthOfImpUse);
++	if (parts >= sb->s_blocksize || impuselen >= sb->s_blocksize ||
++	    sizeof(struct logicalVolIntegrityDesc) + impuselen +
++	    2 * parts * sizeof(u32) > sb->s_blocksize)
++		return false;
++	return true;
 +}
 +
-+/*
-+ * Verify that when SECCOMP_IOCTL_NOTIF_ADDFD with SECCOMP_ADDFD_FLAG_SEND is
-+ * interrupted by a signal before the tracee dequeues the addfd request,
-+ * knotif->state is restored from SECCOMP_NOTIFY_REPLIED back to
-+ * SECCOMP_NOTIFY_SENT so that:
-+ *   1. The woken tracee sees knotif->state == SECCOMP_NOTIFY_SENT in
-+ *      do_user_notif() and goes back to sleep instead of prematurely
-+ *      returning 0 from the trapped syscall without the FD installed.
-+ *   2. The supervisor can retry SECCOMP_IOCTL_NOTIF_ADDFD (or
-+ *      SECCOMP_IOCTL_NOTIF_SEND) instead of failing with -EINPROGRESS.
-+ *
-+ * To deterministically hit the race window where the supervisor sleeps in
-+ * wait_for_completion_interruptible(&kaddfd.completion) after waking the
-+ * tracee (complete(&knotif->ready)) but before the tracee runs
-+ * seccomp_handle_addfd(), pin all processes to a single CPU and enforce a
-+ * strict 3-tier scheduling priority hierarchy on that CPU:
-+ *   - Supervisor:            SCHED_FIFO priority 99 (highest)
-+ *   - Signal helper (sig_pid): SCHED_FIFO priority 50 (middle)
-+ *   - Tracee (pid):          SCHED_IDLE             (lowest)
-+ */
-+TEST(user_notification_addfd_send_interrupted)
-+{
-+	/*
-+	 * Save parent_pid before user_notif_syscall(__NR_getppid, ...) installs
-+	 * the seccomp filter on the calling process; children inherit that
-+	 * filter, so sig_pid must not call getppid().
-+	 */
-+	pid_t tracee_pid, sig_pid, parent_pid = getpid();
-+	long ret;
-+	int status, listener, memfd, err;
-+	struct seccomp_notif_addfd addfd = {};
-+	struct seccomp_notif req = {};
-+	struct sigaction sa = {};
-+	struct sched_param sp_zero = { .sched_priority = 0 };
-+	struct sched_param sp_fifo_high = { .sched_priority = 99 };
-+	struct sched_param sp_fifo_mid = { .sched_priority = 50 };
-+	struct timespec delay = { .tv_nsec = 15000000 };
-+	cpu_set_t cpuset;
-+	int cpu;
+ /*
+  * Find the prevailing Logical Volume Integrity Descriptor.
+  */
+@@ -1584,7 +1598,6 @@ static void udf_load_logicalvolint(struct super_block *sb, struct kernel_extent_
+ 	struct udf_sb_info *sbi = UDF_SB(sb);
+ 	struct logicalVolIntegrityDesc *lvid;
+ 	int indirections = 0;
+-	u32 parts, impuselen;
+ 
+ 	while (++indirections <= UDF_MAX_LVID_NESTING) {
+ 		final_bh = NULL;
+@@ -1606,32 +1619,27 @@ static void udf_load_logicalvolint(struct super_block *sb, struct kernel_extent_
+ 		if (!final_bh)
+ 			return;
+ 
+-		brelse(sbi->s_lvid_bh);
+-		sbi->s_lvid_bh = final_bh;
+-
+ 		lvid = (struct logicalVolIntegrityDesc *)final_bh->b_data;
++		if (udf_lvid_valid(sb, lvid)) {
++			brelse(sbi->s_lvid_bh);
++			sbi->s_lvid_bh = final_bh;
++		} else {
++			udf_warn(sb, "Corrupted LVID (parts=%u, impuselen=%u), "
++				 "ignoring.\n",
++				 le32_to_cpu(lvid->numOfPartitions),
++				 le32_to_cpu(lvid->lengthOfImpUse));
++		}
 +
-+	/* Pin the supervisor (and its future child processes) to one CPU. */
-+	cpu = sched_getcpu();
-+	if (cpu >= 0) {
-+		CPU_ZERO(&cpuset);
-+		CPU_SET(cpu, &cpuset);
-+		sched_setaffinity(0, sizeof(cpuset), &cpuset);
-+	}
-+
-+	sa.sa_handler = empty_handler;
-+	ASSERT_EQ(sigaction(SIGUSR1, &sa, NULL), 0);
-+
-+	memfd = memfd_create("test", 0);
-+	ASSERT_GE(memfd, 0);
-+
-+	ret = prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
-+	ASSERT_EQ(0, ret) {
-+		TH_LOG("Kernel does not support PR_SET_NO_NEW_PRIVS!");
-+	}
-+
-+	/*
-+	 * Follow the convention of other user_notification_* tests in this
-+	 * file by trapping __NR_getppid: because the filter is installed on
-+	 * the supervisor before fork(), the trapped syscall must be a
-+	 * side-effect-free syscall that the supervisor itself never invokes.
-+	 * Even though getppid() does not normally return an FD,
-+	 * SECCOMP_ADDFD_FLAG_SEND replaces the trapped syscall's return value
-+	 * with the newly installed FD number (42).
-+	 */
-+	listener = user_notif_syscall(__NR_getppid,
-+				      SECCOMP_FILTER_FLAG_NEW_LISTENER);
-+	ASSERT_GE(listener, 0);
-+
-+	tracee_pid = fork();
-+	ASSERT_GE(tracee_pid, 0);
-+
-+	if (tracee_pid == 0) {
-+		/*
-+		 * Tracee: invoke __NR_getppid as a dummy trigger syscall to
-+		 * trap into do_user_notif(). Verify that the syscall returns
-+		 * the injected FD number (42) and that FD 42 is open.
-+		 */
-+		ret = syscall(__NR_getppid);
-+		exit(ret != 42 || fcntl(42, F_GETFD) < 0);
-+	}
-+
-+	/* Wait for the tracee to trap in do_user_notif(). */
-+	ASSERT_EQ(ioctl(listener, SECCOMP_IOCTL_NOTIF_RECV, &req), 0);
-+
-+	/*
-+	 * Demote the tracee to SCHED_IDLE and promote the supervisor to
-+	 * SCHED_FIFO(99) on the same CPU.
-+	 */
-+	ASSERT_EQ(sched_setscheduler(tracee_pid, SCHED_IDLE, &sp_zero), 0);
-+	if (sched_setscheduler(0, SCHED_FIFO, &sp_fifo_high) != 0) {
-+		kill(tracee_pid, SIGKILL);
-+		waitpid(tracee_pid, NULL, 0);
-+		SKIP(return, "SCHED_FIFO requires CAP_SYS_NICE");
-+	}
-+
-+	addfd.srcfd = memfd;
-+	addfd.newfd_flags = O_CLOEXEC;
-+	addfd.newfd = 42;
-+	addfd.id = req.id;
-+	addfd.flags = SECCOMP_ADDFD_FLAG_SETFD | SECCOMP_ADDFD_FLAG_SEND;
-+
-+	/*
-+	 * Fork a signal helper on the same CPU and set it to SCHED_FIFO(50).
-+	 * Because the supervisor is currently running at SCHED_FIFO(99) on
-+	 * this CPU, sig_pid is queued on the runqueue but cannot run until the
-+	 * supervisor blocks inside the kernel.
-+	 *
-+	 * When the supervisor invokes ioctl(SECCOMP_IOCTL_NOTIF_ADDFD) below:
-+	 *   1. seccomp_notify_addfd() sets knotif->state = SECCOMP_NOTIFY_REPLIED,
-+	 *      wakes the tracee (SCHED_IDLE), and blocks in
-+	 *      wait_for_completion_interruptible(&kaddfd.completion).
-+	 *   2. The CPU scheduler immediately runs sig_pid (SCHED_FIFO 50)
-+	 *      ahead of the woken tracee (SCHED_IDLE).
-+	 *   3. sig_pid sends SIGUSR1 to parent_pid, waking the supervisor
-+	 *      (SCHED_FIFO 99), which immediately preempts sig_pid, aborts the
-+	 *      wait with -ERESTARTSYS (-EINTR), removes kaddfd from
-+	 *      knotif->addfd, and restores knotif->state = SECCOMP_NOTIFY_SENT
-+	 *      before the tracee has executed a single instruction.
-+	 */
-+	sig_pid = fork();
-+	if (sig_pid < 0) {
-+		sched_setscheduler(0, SCHED_OTHER, &sp_zero);
-+		kill(tracee_pid, SIGKILL);
-+		waitpid(tracee_pid, NULL, 0);
-+	}
-+	ASSERT_GE(sig_pid, 0);
-+	if (sig_pid == 0) {
-+		if (sched_setscheduler(0, SCHED_FIFO, &sp_fifo_mid) != 0)
-+			_exit(1);
-+		kill(parent_pid, SIGUSR1);
-+		_exit(0);
-+	}
-+
-+	ret = ioctl(listener, SECCOMP_IOCTL_NOTIF_ADDFD, &addfd);
-+	err = errno;
-+
-+	/*
-+	 * Restore normal scheduling ASAP so the supervisor does not remain
-+	 * SCHED_FIFO on a single-CPU machine/VM/CI, then sleep briefly so the
-+	 * woken tracee runs in do_user_notif(). With knotif->state restored to
-+	 * SECCOMP_NOTIFY_SENT, the tracee must loop back to sleep waiting for
-+	 * the notification reply rather than returning 0 from __NR_getppid.
-+	 */
-+	ASSERT_EQ(sched_setscheduler(0, SCHED_OTHER, &sp_zero), 0);
-+	ASSERT_EQ(sched_setscheduler(tracee_pid, SCHED_OTHER, &sp_zero), 0);
-+
-+	EXPECT_EQ(ret, -1);
-+	EXPECT_EQ(err, EINTR);
-+	EXPECT_EQ(waitpid(sig_pid, &status, 0), sig_pid);
-+	EXPECT_EQ(true, WIFEXITED(status));
-+	EXPECT_EQ(0, WEXITSTATUS(status));
-+
-+	nanosleep(&delay, NULL);
-+
-+	/*
-+	 * Retry SECCOMP_IOCTL_NOTIF_ADDFD. Because knotif->state is
-+	 * SECCOMP_NOTIFY_SENT, the retry succeeds (returns 42) instead of
-+	 * failing with -EINPROGRESS, installs FD 42 into the tracee, and wakes
-+	 * the tracee to complete the syscall with return value 42.
-+	 */
-+	EXPECT_EQ(ioctl(listener, SECCOMP_IOCTL_NOTIF_ADDFD, &addfd), 42);
-+
-+	EXPECT_EQ(waitpid(tracee_pid, &status, 0), tracee_pid);
-+	EXPECT_EQ(true, WIFEXITED(status));
-+	EXPECT_EQ(0, WEXITSTATUS(status));
-+
-+	close(listener);
-+	close(memfd);
-+}
-+
- /* Make sure PTRACE_O_SUSPEND_SECCOMP requires CAP_SYS_ADMIN. */
- FIXTURE(O_SUSPEND_SECCOMP) {
- 	pid_t pid;
+ 		if (lvid->nextIntegrityExt.extLength == 0)
+-			goto check;
++			return;
+ 
+ 		loc = leea_to_cpu(lvid->nextIntegrityExt);
+ 	}
+ 
+ 	udf_warn(sb, "Too many LVID indirections (max %u), ignoring.\n",
+ 		UDF_MAX_LVID_NESTING);
+-out_err:
+ 	brelse(sbi->s_lvid_bh);
+ 	sbi->s_lvid_bh = NULL;
+-	return;
+-check:
+-	parts = le32_to_cpu(lvid->numOfPartitions);
+-	impuselen = le32_to_cpu(lvid->lengthOfImpUse);
+-	if (parts >= sb->s_blocksize || impuselen >= sb->s_blocksize ||
+-	    sizeof(struct logicalVolIntegrityDesc) + impuselen +
+-	    2 * parts * sizeof(u32) > sb->s_blocksize) {
+-		udf_warn(sb, "Corrupted LVID (parts=%u, impuselen=%u), "
+-			 "ignoring.\n", parts, impuselen);
+-		goto out_err;
+-	}
+ }
+ 
+ /*
 -- 
 2.53.0
 
