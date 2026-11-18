@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047442;
-	b=W1RD/4Gc+uGkCse529Mxs9XlEVxxdVimxiS+I+tavxH+oO091it13+iJknhFFTHx0IjR
-	 BHBNpf7DsRLRnwpT8K758UmCCbU+xp+H5N7xVW9y2LytomWDS1kInaoWiEtYzgrHFCyOR
-	 yX1RGpc2S7zOsn+5tOnDCYmdolptWhhppp9A7CB4RXdFUrQFpfBBr7jtY/uHMH7IlsXjH
-	 PIAogGFRUhLVFjuu08jiEdDgJi2G8J/L67ytn7qsgXnBAxFLQisZG+59ryLi7Gs2+Xw/3
-	 KTzJIVwciaLXG7L3OkEjk3wqMCyKAtEfTkE652h20h6On79H0PbE9GRJs6/VwoC6M7Q==
+	t=1795047445;
+	b=F+ZSgWQd3nkRTBGV21SaUfUzaFPWbO16XZxUQxz4NzcD1GIMO79wul6V3Spjlp7b0JPy
+	 G5KQZZsP8JgF1xWO41iSWNymshVeC3DttFg+FZQTxTFCnz/wcajQ9nKoGhPLlHt6eaJEP
+	 JeXufPs1LknQhTOY7YPYBObIs1AiX0f3OhiunaUDe2DozFxO0p1AYbTs9e+ZLAGoflEep
+	 2HcZ9FzvJbhOj1mNL89D5TngwQjPnhP4dDBP/jh/l3xvMz9Pm0pBpyMOXDOYSUjMYHoeZ
+	 EH6XUA00P9aeHaRSgTXpn2Bc7Os/7YGkOtZEaC2Jg+DgUmJF9Uli+egl8rF0DrIHorg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047442;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047445;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kBFGiPi7SomZgd917SfBe6HXSX95kBOz4ycb3MaQOi4=;
-	b=fMyXaeBsiuUTn5UIJCPKCRQev86IkSUvHEbL3Z474uLof4l3GtOtDE5JfBLaoCs9Jgu4
-	 bwBWAboddSJO8HTBGbCkSKujy0/8Lto0FNebVfX+sRiQuY0BIh6Y6rx80/MWH6oW9ugox
-	 qw7nJ2BW95CLulZFIXBj6enD+XkySl7tE7p1+zS6IxjAP/e7WTdSdflu+GULhL/7I0xDJ
-	 XIZa2DevVJ1vXXh6IQ7Eyu3BfdMEedm0xB0w+14ju0VgYx9LgNNyb8nXBOpvaKrO6D4Kg
-	 5fgb7jL6YtQlZqZzxY8BBECHorxYeBh1yEPiA9GMJ5DKD8aFFB3TVF26TXCpMkdeayw==
+	bh=H+hqUcBjuZsXUk0eV27N5oG7M7oBvMgje+32aEEsdPE=;
+	b=lkSP+Lk4l3WyxouW4eKWL57f33Hn4lgN0Dn2ljwK2/BgS7SHvy8PcNemM/moZ+WrBC19
+	 2H1BNCSd8MU8z+l83tXPW6qhWYK2DFdl8bd1V7kt7XtKhaxJ8H3UFvSGQ1cX+sUWKiJkp
+	 +T4q4yYg+RucddqR3sHzdyH8ZM2XMvQ7YwgWWZGJGeydAcd2MTDF8GY3YMmlxS/tyCfOR
+	 jrptOOnP0anNc2/OnBntKe3Pr72c/GTpulum6TVwRfg+6CcGh0eDzdXgZnxP7GskaNptj
+	 O1P9v0qIOh+EQPAxgHk3JNczerXFlmVRf/B1BQeNbyGW94pgv0IhWslcY+P9X8MJUNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1dxMJJFI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e2pJttT3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583B5606A332;
-	Thu, 19 Nov 2026 00:17:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30BAF606A320;
+	Thu, 19 Nov 2026 00:17:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1dxMJJFI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6F481F000C5;
-	Thu, 19 Nov 2026 00:17:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e2pJttT3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 825451F000C4;
+	Thu, 19 Nov 2026 00:17:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047442;
-	bh=kBFGiPi7SomZgd917SfBe6HXSX95kBOz4ycb3MaQOi4=;
+	s=korg; t=1795047445;
+	bh=H+hqUcBjuZsXUk0eV27N5oG7M7oBvMgje+32aEEsdPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1dxMJJFIiRusFOGVesj5GzTaJI9LZVkU2WluZe3VaYUP05WS7p9DO6Mbqz3gNrb0j
-	 s+7xqQt9eTNujkGjCtBaKqRdHfYOSEpRL7Sz9kfHr/wvlYqO9HY9JOTNc7Pi2O8CZV
-	 XMnNVbJzhSToiQIsyvIv1saNhXIlznwo+pHPGE+c=
+	b=e2pJttT3YgIgAdejHVV1G4O0HlAa8Fvqw65awo9y1tpfLnFgLnh3F5kKemgN2MOZe
+	 3y8zQ9/HlDrt6KvJjVnbEG8xDa+2QK6UfLOGMtqYfrq24TXhpvaJlL6DGsljKwNVpW
+	 YrKpo7RdmzgIiziOoNmchKza3D0A8fcHkZs/tux0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Andrew Donnellan <ajd@linux.ibm.com>,
-	Russell Currey <ruscur@russell.cc>,
-	Stefan Berger <stefanb@linux.ibm.com>,
+	Srish Srinivasan <ssrish@linux.ibm.com>,
+	R Nageswara Sastry <rnsastry@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1599/2857] powerpc/pseries: Make caller pass buffer to plpks_read_var()
-Date: Wed, 18 Nov 2026 15:43:53 +0100
-Message-ID: <20261118150258.946904103@linuxfoundation.org>
+Subject: [PATCH 6.1 1600/2857] pseries/plpks: fix error handling in plpks_read_var()
+Date: Wed, 18 Nov 2026 15:43:54 +0100
+Message-ID: <20261118150258.983569887@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,95 +69,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Donnellan <ajd@linux.ibm.com>
+From: Srish Srinivasan <ssrish@linux.ibm.com>
 
-[ Upstream commit 0cf2cc1fe4e2e7a37da077cdd3fba5cfd9a6a36c ]
+[ Upstream commit d52a1659cb1718f93166ab8dd8621237e564a1c4 ]
 
-Currently, plpks_read_var() allocates a buffer to pass to the
-H_PKS_READ_OBJECT hcall, then allocates another buffer into which the data
-is copied, and returns that buffer to the caller.
+When a PLPKS variable is initialized without a policy and used to read an
+object with the PLPKS_WRAPPINGKEY policy set, the hypervisor returns
+H_AUTHORITY along with the object's policy. However, plpks_read_var()
+currently treats this the same as any other H_AUTHORITY failure and returns
+an error without propagating the policy information to the caller.
 
-This is a bit over the top - while we probably still want to allocate a
-separate buffer to pass to the hypervisor in the hcall, we can let the
-caller allocate the final buffer and specify the size.
+Distinguish this case from other H_AUTHORITY failures and propagate the
+returned policy to the caller while preserving the authorization error.
+Remove the explicit assignment of zero to rc on H_SUCCESS, as it is
+redundant.
 
-Don't allocate var->data in plpks_read_var(), instead expect the caller to
-allocate it. If the caller needs to discover the size, it can set
-var->data to NULL and var->datalen will be populated. Update header file
-to document this.
+Also validate the PLPKS variable pointer before dereferencing it.
 
-Suggested-by: Michael Ellerman <mpe@ellerman.id.au>
-Signed-off-by: Andrew Donnellan <ajd@linux.ibm.com>
-Signed-off-by: Russell Currey <ruscur@russell.cc>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20230210080401.345462-20-ajd@linux.ibm.com
-Stable-dep-of: d52a1659cb17 ("pseries/plpks: fix error handling in plpks_read_var()")
+Fixes: 2454a7af0f2a ("powerpc/pseries: define driver for Platform KeyStore")
+Cc: stable@vger.kernel.org # 6.0
+Signed-off-by: Srish Srinivasan <ssrish@linux.ibm.com>
+Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260923182816.151451-2-ssrish@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/plpks.h       | 12 ++++++++++++
- arch/powerpc/platforms/pseries/plpks.c | 11 ++++-------
- 2 files changed, 16 insertions(+), 7 deletions(-)
+ arch/powerpc/platforms/pseries/plpks.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/plpks.h b/arch/powerpc/include/asm/plpks.h
-index 9e2219b0202db..4652ad319858e 100644
---- a/arch/powerpc/include/asm/plpks.h
-+++ b/arch/powerpc/include/asm/plpks.h
-@@ -82,16 +82,28 @@ int plpks_remove_var(char *component, u8 varos,
- 
- /**
-  * Returns the data for the specified os variable.
-+ *
-+ * Caller must allocate a buffer in var->data with length in var->datalen.
-+ * If no buffer is provided, var->datalen will be populated with the object's
-+ * size.
-  */
- int plpks_read_os_var(struct plpks_var *var);
- 
- /**
-  * Returns the data for the specified firmware variable.
-+ *
-+ * Caller must allocate a buffer in var->data with length in var->datalen.
-+ * If no buffer is provided, var->datalen will be populated with the object's
-+ * size.
-  */
- int plpks_read_fw_var(struct plpks_var *var);
- 
- /**
-  * Returns the data for the specified bootloader variable.
-+ *
-+ * Caller must allocate a buffer in var->data with length in var->datalen.
-+ * If no buffer is provided, var->datalen will be populated with the object's
-+ * size.
-  */
- int plpks_read_bootloader_var(struct plpks_var *var);
- 
 diff --git a/arch/powerpc/platforms/pseries/plpks.c b/arch/powerpc/platforms/pseries/plpks.c
-index 00137d6a303cd..b66a980478fec 100644
+index b66a980478fec..b15e841b19791 100644
 --- a/arch/powerpc/platforms/pseries/plpks.c
 +++ b/arch/powerpc/platforms/pseries/plpks.c
-@@ -528,17 +528,14 @@ static int plpks_read_var(u8 consumer, struct plpks_var *var)
- 		goto out_free_output;
+@@ -489,6 +489,9 @@ static int plpks_read_var(u8 consumer, struct plpks_var *var)
+ 	u8 *output;
+ 	int rc;
+ 
++	if (!var)
++		return -EINVAL;
++
+ 	if (var->namelen > PLPKS_MAX_NAME_SIZE)
+ 		return -EINVAL;
+ 
+@@ -520,24 +523,23 @@ static int plpks_read_var(u8 consumer, struct plpks_var *var)
+ 				 virt_to_phys(var->name), var->namelen, virt_to_phys(output),
+ 				 maxobjsize);
+ 
+-
+ 	if (rc != H_SUCCESS) {
+ 		pr_err("Failed to read variable %s for component %s with error %d\n",
+ 		       var->name, var->component, rc);
+ 		rc = pseries_status_to_err(rc);
+-		goto out_free_output;
++		if (rc != -EPERM || !retbuf[1])
++			goto out_free_output;
++		goto out_copy_policy;
  	}
  
--	if (var->datalen == 0 || var->datalen > retbuf[0])
-+	if (!var->data || var->datalen > retbuf[0])
+ 	if (!var->data || var->datalen > retbuf[0])
  		var->datalen = retbuf[0];
  
--	var->data = kzalloc(var->datalen, GFP_KERNEL);
--	if (!var->data) {
--		rc = -ENOMEM;
--		goto out_free_output;
--	}
- 	var->policy = retbuf[1];
+-	var->policy = retbuf[1];
+-
+ 	if (var->data)
+ 		memcpy(var->data, output, var->datalen);
  
--	memcpy(var->data, output, var->datalen);
-+	if (var->data)
-+		memcpy(var->data, output, var->datalen);
-+
- 	rc = 0;
- 
+-	rc = 0;
+-
++out_copy_policy:
++	var->policy = retbuf[1];
  out_free_output:
+ 	kfree_sensitive(output);
+ out_free_label:
 -- 
 2.53.0
 
