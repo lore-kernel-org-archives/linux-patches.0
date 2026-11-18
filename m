@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041097;
-	b=TtqXLbsDtt1cCHKRoTGPSL+9iaZiU4NhPQ348vCcmR4bZMDiqkvc68lWtJ0kqY16rkbx
-	 wBEsyeq5cNu0QFjzUV6Kz91fyVuXJJDKb6/B4XND3tPoOXOOhGwpJLBxlCWOVwDiqUgkM
-	 5MRQwums1pNcU8eTHoWW93iunFWYcPLTU8SUilQjg1PTUIjl5+rkeb2XxF8HWZj98TpeE
-	 pTyWgv84NlGOKHkmO4p2h7FDvLyq41OF0GTdNlDX++HuGEdtVzfhfh3/q5MDChlYnYvBz
-	 BHwzAAby5C3Nv1j974p8LTkBKqfcYbqEyfMocpBalbqsVd6AVCKdPw3E1uaXXjdK/zg==
+	t=1795041100;
+	b=yjy7O+WBo4ECHrP21qYh7yFCXK9MYl8OLF0seUNAaXqZ7mu+Fc7PN3qS1+SdJ2uBOEP7
+	 Xpe5FmgI1VHeOUP8HWNg9IgsmZCMdcdQTcN5FvCndUy4nMtS4k6E9LJXkNqQELXTUMJJo
+	 o68XsPhr10iv8k/vKDJO9zWAAvbSytDjSMCnnwhpbVsMlkYmX4N60UeVZsSVN9rhp4LWm
+	 bZqOxVBukXQNCYb23QuNyD3NuXK/KLclEIKSapHDGHbOOIkS7YRdgbyrtL4zRxcrNbuvo
+	 LBjbVVXKQXckaXB3THXbRb68lGavVz1dbu6RhpF0RFzXCYpKv1Gd6PJy8tz4T80hhaw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041097;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041100;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d7luxYIddxlR7VEZ7eNN1GSnArYnrFdwzfg4Qr02zyI=;
-	b=X7By4xms1IIktABeBVi3MMYP18vYgpLiZgRCy1eRYtsgdP9il65yL+ptcxk/OxOuYL9B
-	 3Q6bwcPQ44W3EezaVRmYV2a5R8BtWzFl5mF5jZQbhz2mjVooCPwrrCyNjQ1T8mjNrDfwS
-	 Gy1JG2p9mftbw/LKv4/72vB2ug3OwwQVl8Rxao3vJROK0Nls2//c7vCayZmRbNgix8H+E
-	 wMSFNdB+RQPhlya8TCg78k26w8Gfo7YBcZdH0/F8KYfuYI9LNdBwTR1QZ6dGyffyT5LN3
-	 YdwCxoqP8exO11Kp98SI6lMR6wNxIoz6L0HyvPpaeZJk14WQMfuBw4DEQgoLwMoNr5g==
+	bh=xCVEToMua0zguXoqLHPdUMksxHCSgSsIfHp1Ubb3bi4=;
+	b=4uUJm4xDoEPMW75y12+4ZEVq+Sce68zcBFiRQxYfe6mg0l+k0ZEDaKe6UimbeP7jsZxo
+	 ZpJXlHM90XQANDVOXu5S9iIfeN8GFSkU3D1hdLq14MgAH6BfnmKxPxUcLuvAUUldo4r3H
+	 VTcHemeOmnyz5wHAc0hbg7gBn/tfC0HuwyaxnOrfxziiqM+L1stWT+PYLa9AeR2lGupcj
+	 QIwru0mfsMMaRViXQhmqKKAWxg7dfU71mjhlSt5szFHCr8QoCQ5G5e5ZHcuYv9NwsNIUC
+	 addSPLPQmNkYObqCafnP4Ja3l2yOwhiEtoa9J+4g7MUAnnABWjvBN4oVpxp7LM+JLrw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NfL7LP2o;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rhuge+Vx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B543C606A31C;
-	Wed, 18 Nov 2026 22:31:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A23C606A31C;
+	Wed, 18 Nov 2026 22:31:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NfL7LP2o
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 130491F000C4;
-	Wed, 18 Nov 2026 22:31:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rhuge+Vx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6FAA1F000C4;
+	Wed, 18 Nov 2026 22:31:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041097;
-	bh=d7luxYIddxlR7VEZ7eNN1GSnArYnrFdwzfg4Qr02zyI=;
+	s=korg; t=1795041100;
+	bh=xCVEToMua0zguXoqLHPdUMksxHCSgSsIfHp1Ubb3bi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NfL7LP2oPSl/33DlmYKbqVTa7KqjJ43Xxvv0ekyKkyfStQJcSZET7UigVK6uDLxV1
-	 9xLO3j1T9ijWPUxPGRMm2x12aaROAGgDXJ+1iqMnZZPJE27jmSonh537imiLQb0vgK
-	 p6hbkLKlPPDo2aL4ob35X0rvSjsIuS2/rAdoMGY0=
+	b=Rhuge+VxCgmc8VImUrG3Ega7XLlNZRUhiLXCdzvTrvF61DPVcFDbAkn3qVe98Z2tR
+	 ak/v5Mq1zlolsod5uISR4NaGu0+4Da+gyE8Ttb9yC6el8L4kYk/uqn5jfXxko1d2QQ
+	 QETnHHvp5rlriIep25EsiPzHTsiv4LKlaG5W090I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sashiko <sashiko-bot@kernel.org>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2692/3318] ALSA: seq: core: Use automatic cleanup of kfree()
-Date: Wed, 18 Nov 2026 15:55:14 +0100
-Message-ID: <20261118150441.708097509@linuxfoundation.org>
+Subject: [PATCH 6.6 2693/3318] ALSA: seq: Fix missing direction and ump_group handling in 32bit compat ioctl
+Date: Wed, 18 Nov 2026 15:55:15 +0100
+Message-ID: <20261118150441.734118651@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,125 +70,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit edbcf872c14690c2894b726b67a871b4d238eea8 ]
+[ Upstream commit 9d3e19c192b97b4c4c0abcafdbf1edb1e56cee88 ]
 
-There are common patterns where a temporary buffer is allocated and
-freed at the exit, and those can be simplified with the recent cleanup
-mechanism via __free(kfree).
+I forgot to cover the two new fields, direction and ump_group, in
+struct snd_seq_port_info for the 32bit compat ioctls of
+SNDRV_SEQ_IOCTL_GET_PORT_INFO & co, which ended up with the garbage
+copies in those fields.  Add the handling of those two fields in the
+compat layer.
 
-No functional changes, only code refactoring.
+Also, avoid over-copying the 64bit snd_seq_port_info but only the first
+part (before the field kernel); this avoids the copy of kernel-space
+garbage value in the reserved field.
 
+Fixes: ff166a9d19fa ("ALSA: seq: Add port direction to snd_seq_port_info")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://lore.kernel.org/r/20240222111509.28390-10-tiwai@suse.de
-Stable-dep-of: 9d3e19c192b9 ("ALSA: seq: Fix missing direction and ump_group handling in 32bit compat ioctl")
+Link: https://patch.msgid.link/20261007172533.14667-2-tiwai@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_compat.c | 12 +++++-------
- sound/core/seq/seq_midi.c   | 14 +++-----------
- 2 files changed, 8 insertions(+), 18 deletions(-)
+ sound/core/seq/seq_compat.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
 diff --git a/sound/core/seq/seq_compat.c b/sound/core/seq/seq_compat.c
-index e26200fb351e3..ee9bfdf781b12 100644
+index ee9bfdf781b12..e585b09111991 100644
 --- a/sound/core/seq/seq_compat.c
 +++ b/sound/core/seq/seq_compat.c
-@@ -31,8 +31,8 @@ struct snd_seq_port_info32 {
- static int snd_seq_call_port_info_ioctl(struct snd_seq_client *client, unsigned int cmd,
- 					struct snd_seq_port_info32 __user *data32)
- {
--	int err = -EFAULT;
--	struct snd_seq_port_info *data;
-+	struct snd_seq_port_info *data __free(kfree) = NULL;
-+	int err;
+@@ -25,7 +25,9 @@ struct snd_seq_port_info32 {
+ 	u32 kernel;			/* reserved for kernel use (must be NULL) */
+ 	u32 flags;		/* misc. conditioning */
+ 	unsigned char time_queue;	/* queue # for timestamping */
+-	char reserved[59];		/* for future use */
++	unsigned char direction;	/* port usage direction (r/w/bidir) */
++	unsigned char ump_group;	/* 0 = UMP EP (no conversion), 1-16 = UMP group number */
++	char reserved[57];		/* for future use */
+ };
  
- 	data = kmalloc(sizeof(*data), GFP_KERNEL);
- 	if (!data)
-@@ -41,22 +41,20 @@ static int snd_seq_call_port_info_ioctl(struct snd_seq_client *client, unsigned
+ static int snd_seq_call_port_info_ioctl(struct snd_seq_client *client, unsigned int cmd,
+@@ -40,7 +42,9 @@ static int snd_seq_call_port_info_ioctl(struct snd_seq_client *client, unsigned
+ 
  	if (copy_from_user(data, data32, sizeof(*data32)) ||
  	    get_user(data->flags, &data32->flags) ||
- 	    get_user(data->time_queue, &data32->time_queue))
--		goto error;
-+		return -EFAULT;
+-	    get_user(data->time_queue, &data32->time_queue))
++	    get_user(data->time_queue, &data32->time_queue) ||
++	    get_user(data->direction, &data32->direction) ||
++	    get_user(data->ump_group, &data32->ump_group))
+ 		return -EFAULT;
  	data->kernel = NULL;
  
- 	scoped_guard(mutex, &client->ioctl_mutex) {
- 		err = snd_seq_kernel_client_ctl(client->number, cmd, data);
- 	}
+@@ -50,9 +54,12 @@ static int snd_seq_call_port_info_ioctl(struct snd_seq_client *client, unsigned
  	if (err < 0)
--		goto error;
-+		return err;
+ 		return err;
  
- 	if (copy_to_user(data32, data, sizeof(*data32)) ||
+-	if (copy_to_user(data32, data, sizeof(*data32)) ||
++	if (copy_to_user(data32, data,
++			 offsetof(struct snd_seq_port_info32, kernel)) ||
  	    put_user(data->flags, &data32->flags) ||
- 	    put_user(data->time_queue, &data32->time_queue))
--		err = -EFAULT;
-+		return -EFAULT;
+-	    put_user(data->time_queue, &data32->time_queue))
++	    put_user(data->time_queue, &data32->time_queue) ||
++	    put_user(data->direction, &data32->direction) ||
++	    put_user(data->ump_group, &data32->ump_group))
+ 		return -EFAULT;
  
-- error:
--	kfree(data);
  	return err;
- }
- 
-diff --git a/sound/core/seq/seq_midi.c b/sound/core/seq/seq_midi.c
-index 2006313dc9255..9af4d4dad6206 100644
---- a/sound/core/seq/seq_midi.c
-+++ b/sound/core/seq/seq_midi.c
-@@ -320,8 +320,8 @@ snd_seq_midisynth_probe(struct device *_dev)
- 	struct snd_seq_device *dev = to_seq_dev(_dev);
- 	struct seq_midisynth_client *client;
- 	struct seq_midisynth *msynth, *ms;
--	struct snd_seq_port_info *port;
--	struct snd_rawmidi_info *info;
-+	struct snd_seq_port_info *port __free(kfree) = NULL;
-+	struct snd_rawmidi_info *info __free(kfree) = NULL;
- 	struct snd_rawmidi *rmidi = dev->private_data;
- 	int newclient = 0;
- 	unsigned int p, ports;
-@@ -347,10 +347,8 @@ snd_seq_midisynth_probe(struct device *_dev)
- 	ports = output_count;
- 	if (ports < input_count)
- 		ports = input_count;
--	if (ports == 0) {
--		kfree(info);
-+	if (ports == 0)
- 		return -ENODEV;
--	}
- 	if (ports > (256 / SNDRV_RAWMIDI_DEVICES))
- 		ports = 256 / SNDRV_RAWMIDI_DEVICES;
- 
-@@ -361,7 +359,6 @@ snd_seq_midisynth_probe(struct device *_dev)
- 		client = kzalloc(sizeof(*client), GFP_KERNEL);
- 		if (client == NULL) {
- 			mutex_unlock(&register_mutex);
--			kfree(info);
- 			return -ENOMEM;
- 		}
- 		client->seq_client =
-@@ -371,7 +368,6 @@ snd_seq_midisynth_probe(struct device *_dev)
- 		if (client->seq_client < 0) {
- 			kfree(client);
- 			mutex_unlock(&register_mutex);
--			kfree(info);
- 			return -ENOMEM;
- 		}
- 	}
-@@ -453,8 +449,6 @@ snd_seq_midisynth_probe(struct device *_dev)
- 	if (newclient)
- 		synths[card->number] = client;
- 	mutex_unlock(&register_mutex);
--	kfree(info);
--	kfree(port);
- 	return 0;	/* success */
- 
-       __nomem:
-@@ -467,8 +461,6 @@ snd_seq_midisynth_probe(struct device *_dev)
- 		snd_seq_delete_kernel_client(client->seq_client);
- 		kfree(client);
- 	}
--	kfree(info);
--	kfree(port);
- 	mutex_unlock(&register_mutex);
- 	return -ENOMEM;
- }
 -- 
 2.53.0
 
