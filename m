@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017836;
-	b=ZMf0TFVmGpE3fQpCvwH5OxoUHLUF9Q/QhNPNjtytmzLlbCY9feC9B/ycoqry4Gb1JxLO
-	 GC5MAO7ziYn77rU3PHGSxvdJdX4pJWT/T1S8RN3C7vfyjIfcSB72EFS/aK+DhfQkNgt+M
-	 dkwQr1wawlF4eDV57aGL0HuRccm4WK6hGTF8Vl7TX6yMD0LzZX6TjbFdCKlXgxjIQwLhv
-	 2DcTENJx+YiN+im4wn3pO+JNAiUCaAdb8KgFDzHUDpvZzv+hxL2OgINZApjYgxs3xIMf7
-	 Yf/wHAX6C8pBKg1Ch+mu4J6g0gj/YyU36pGx1Sp9/fUuiBS4fWrdD2VUKmdUp/DyVOA==
+	t=1795017839;
+	b=b4isw5S1mn85rY4pxWxa8Tj5Zq1qzvddz/6F4XSm3y68ct73uUiZ3FP5U44gwSlwtNPj
+	 sdvsGRFOVWAym6Yj9+brUBehyslMH1A9mIvDo6v00bEgSf4HeuGD1d7fhT5KmWuWV9b8e
+	 QU1DNGBYmGMl8sboOa1bKfrwo7byilNodHFiO25UHZwiNgTilTBW2nWCEBQdH0R1sCADI
+	 370MXlmagp8b9hwfFSexCO63YmCgNEzp0ZYNa1SMTa8nZ/fshIkvxgilIIgluYLX5/KAJ
+	 8VheAWEGYm5tlHCIzPzZM0rb2W6UtXmXWr/lSMJbI+zSmvnmXGPh3VQ+2zCZdvUpthg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017836;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017839;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yH0LhsOalxAFzIpLTMD81R+jv/AfcYIzSOpJzdqZn7o=;
-	b=yHRIzPdwnR5abriYhflB5ObnhNcvI/iZz5IJXWmT8AgyP7f1Qo/hQdPpooyr+hET2PfT
-	 0TrSnnYMohLMfE2RnLgZztce0RdmZ7YD9aZXBYztm0d3WzA1ezcATmPpKHQHykZljnv5t
-	 i940wb1HYEsG5a+f2DweaZqmssoMAE2Y1RnGl1Lu8R/fnD3IWZMOBn+6YEAoEJm7yaJ0U
-	 yVfxIyIzKqTijQavKDY/j9XMvtsBDjApNjpF1uHqQAyhILBkT8ulovrbzFx67eL5gJChj
-	 +xyFTwlPJLlV0Q1LvA6jYhxXwPaluppXENhhPuSccLg4vwGgXI1BcGF+nx9ORttAIEw==
+	bh=uNgdIYO87hZRjyLNLc88uIsAVsXAua8WEuw20gke+pM=;
+	b=qL8mFtBh17gFRfCmTPkDi84qoBFpepKde1mdu6wfL9QZuFuoTX+m9Qvr2uFr2n+/0ien
+	 qBynrMaBWcQvsQarRHLekSihUPK7RWGs0q/4PP4WtTEeuolWbytHbQajvmw1nbLZ6tlcq
+	 rmyOkUUYdv7RypO0ogCud8OjMlnakFUvSs3GetRaHaGm/bDYaFn6FiG9eQGDlT5a0I4fv
+	 RCWC84V/VVsqn64spWLfWrjSoiNKimp6PQtpo8jtbGM31fodneHaMGgYZEmaAXKRdEE8p
+	 7XveunmTtwoN2m/dp4s83plnLqQfY5ZmBzHOKQU9KdUMcnQ+ohvmoUJVMk9s34t6WWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hyQL8WdG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oa8fpY9k;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84DC8606A31C;
-	Wed, 18 Nov 2026 16:03:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69628606A31C;
+	Wed, 18 Nov 2026 16:03:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hyQL8WdG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA1E01F000C4;
-	Wed, 18 Nov 2026 16:03:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oa8fpY9k
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B73E41F000C4;
+	Wed, 18 Nov 2026 16:03:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017836;
-	bh=yH0LhsOalxAFzIpLTMD81R+jv/AfcYIzSOpJzdqZn7o=;
+	s=korg; t=1795017839;
+	bh=uNgdIYO87hZRjyLNLc88uIsAVsXAua8WEuw20gke+pM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hyQL8WdGs57LM0GQVLJAZSuV1OdUUu5G0AjSBItbQ8Y8V/hD0s9b0gOwMT8dKhpPv
-	 ve1Z0MJ1w1TalbvV+Xq+hOoepnBIM4/mLqFNBC7ypDhfA3cQA7nCvpZ5Uc/NCSaZRo
-	 ledvq5eIcgKUD1uVkDzP6uL8GgCbEmtIHAda7x7A=
+	b=Oa8fpY9kqHx9SpNA2/OR7kPQ/CsoqVzn5jacudrEmOEuGuk+TCK07zAfdXSUa1izW
+	 Wh5AFPMlhN+N0iEYUaCS+4lFyNj/CHh/v1ewmEGYgxKC9Xvsv9z9uA/FUT3dWc3jop
+	 RlRajPqPPlePgZWX1k/0Ey4Nll7qRK7DeWVglYe8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dairui Zhang <zhangdairui@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Peng Fan <peng.fan@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1026/2651] IB/mad: fix UAF and double-free in RMPP receive reassembly
-Date: Wed, 18 Nov 2026 15:37:46 +0100
-Message-ID: <20261118150324.892490621@linuxfoundation.org>
+Subject: [PATCH 7.3 1000/2651] arm64: dts: imx93-9x9-qsb: fix reserved memory node names for remoteproc
+Date: Wed, 18 Nov 2026 15:37:20 +0100
+Message-ID: <20261118150323.912868644@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,97 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dairui Zhang <zhangdairui@gmail.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 90e9b6357bec75f627cde1a85b5887215c80aad8 ]
+[ Upstream commit 475a58b82921cc89805b31e0bc1df91681124a3d ]
 
-mad_rmpp_recv.state is protected by two locks that do not exclude
-each other: recv_timeout_handler() (port workqueue) uses agent->lock,
-continue_rmpp() (CQ softirq) uses rmpp_recv->lock. Nothing serializes
-the check-then-set sequence on the state word:
+The imx_rproc driver checks for the name "vdev0buffer" to skip mapping
+the vdev buffer region, as it is handled by rproc_add_virtio_dev.
+With the node named "vdevbuffer", the check fails and the region gets
+unnecessarily mapped. Rename it to "vdev0buffer" to match what the
+driver expects.
 
-  T1 (CQ softirq)              T2 (port workqueue)
-  continue_rmpp()
-    lock(rmpp_recv->lock)
-    state == ACTIVE  [passes]
-                               recv_timeout_handler()
-                                 lock(agent->lock)
-                                 state = TIMEOUT
-                                 list_del(&rmpp_recv->list)
-                                 unlock(agent->lock)
-                                 destroy_rmpp_recv()
-                                   wait_for_completion()
-                                   [blocks on T1's ref]
-    state = COMPLETE
-    unlock(rmpp_recv->lock)
-    complete_rmpp()
-      queue cleanup_work (+10s)
-    deref()
-                               [unblocks]
-                               kfree(rmpp_recv)
-                               ib_free_recv_mad(done_wc)
-
-  +10s: recv_cleanup_handler() runs lock/list_del/destroy on the
-        freed rmpp_recv -> UAF write and double free; nothing can
-        cancel that cleanup_work anymore, the entry is already off
-        agent->rmpp_list. done_wc is also returned to
-        ib_mad_complete_recv() and freed again -> UAF read and
-        double free.
-
-Reaching this requires sending MADs to a kernel RMPP agent from the
-InfiniBand/RoCE fabric: the per-port sa_query agent accepts subnet
-manager responses whose SLID/GID/TID are not authenticated on the
-fabric, and legacy user_mad agents registered without
-IB_USER_MAD_USER_RMPP start reassembly on any incoming RMPP DATA
-MAD with an attacker-chosen TID, no in-flight send required. The
-attacker controls segment timing and can run many transactions in
-parallel (agent->rmpp_list has no cap), so landing the
-microseconds-wide receive critical section on the 40-second timeout
-boundary is a matter of patience, not luck.
-
-Unify state transitions under rmpp_recv->lock in
-recv_timeout_handler(), keeping list manipulation under agent->lock
-(which preserves the agent->lock -> rmpp_recv->lock ordering used
-by continue_rmpp()). State check/set in both paths is then
-serialized, so the loser of the race always observes the final
-state and bails out. recv_cleanup_handler() needs no change: with
-transitions serialized, a cleanup_work can only be pending after
-COMPLETE, in which case the timeout handler exits early.
-
-The race is as old as the RMPP implementation itself.
-
-Fixes: fa619a77046b ("[PATCH] IB: Add RMPP implementation")
-Assisted-by: LLM
-Signed-off-by: Dairui Zhang <zhangdairui@gmail.com>
-Link: https://patch.msgid.link/20260922152342.1474845-1-zhangdairui@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 0565d20cd8c2 ("arm64: dts: freescale: Support i.MX93 9x9 Quick Start Board")
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/mad_rmpp.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/freescale/imx93-9x9-qsb.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/core/mad_rmpp.c b/drivers/infiniband/core/mad_rmpp.c
-index 17c4c52a19e4c..f05e9ce93c335 100644
---- a/drivers/infiniband/core/mad_rmpp.c
-+++ b/drivers/infiniband/core/mad_rmpp.c
-@@ -245,12 +245,15 @@ static void recv_timeout_handler(struct work_struct *work)
- 	struct ib_mad_recv_wc *rmpp_wc;
- 	unsigned long flags;
+diff --git a/arch/arm64/boot/dts/freescale/imx93-9x9-qsb.dts b/arch/arm64/boot/dts/freescale/imx93-9x9-qsb.dts
+index 01c11c517986a..f07e93653e4e6 100644
+--- a/arch/arm64/boot/dts/freescale/imx93-9x9-qsb.dts
++++ b/arch/arm64/boot/dts/freescale/imx93-9x9-qsb.dts
+@@ -76,7 +76,7 @@ rsc_table: rsc-table@2021e000 {
+ 			no-map;
+ 		};
  
--	spin_lock_irqsave(&rmpp_recv->agent->lock, flags);
-+	spin_lock_irqsave(&rmpp_recv->lock, flags);
- 	if (rmpp_recv->state != RMPP_STATE_ACTIVE) {
--		spin_unlock_irqrestore(&rmpp_recv->agent->lock, flags);
-+		spin_unlock_irqrestore(&rmpp_recv->lock, flags);
- 		return;
- 	}
- 	rmpp_recv->state = RMPP_STATE_TIMEOUT;
-+	spin_unlock_irqrestore(&rmpp_recv->lock, flags);
-+
-+	spin_lock_irqsave(&rmpp_recv->agent->lock, flags);
- 	list_del(&rmpp_recv->list);
- 	spin_unlock_irqrestore(&rmpp_recv->agent->lock, flags);
- 
+-		vdevbuffer: vdevbuffer@a4020000 {
++		vdev0buffer: vdev0buffer@a4020000 {
+ 			compatible = "shared-dma-pool";
+ 			reg = <0 0xa4020000 0 0x100000>;
+ 			no-map;
+@@ -212,7 +212,7 @@ &cm33 {
+ 	mboxes = <&mu1 0 1>,
+ 		 <&mu1 1 1>,
+ 		 <&mu1 3 1>;
+-	memory-region = <&vdevbuffer>, <&vdev0vring0>, <&vdev0vring1>,
++	memory-region = <&vdev0buffer>, <&vdev0vring0>, <&vdev0vring1>,
+ 			<&vdev1vring0>, <&vdev1vring1>, <&rsc_table>;
+ 	status = "okay";
+ };
 -- 
 2.53.0
 
