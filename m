@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031231;
-	b=wKC3Kwpstz+DE6/QH1R2H6OEwEDJX0m+uZ8dlNFj4pV0bDbklOsqGZI4lj5lnoeqL1Ho
-	 dfLF61v3eaqh5tkwFMmGCp9sXq/pE7NnRE2XKj9+PaiybeQNJniFf6Z0bebPJwydp+v2u
-	 sDcqpSVdsai+74PoKOelIn7eDGQ/kxG983XP0IHR2O30+cmAEXWOMDf2bNln2hT0Ey/7l
-	 dyXhsKjYP5JMTt7uwBEHWdEHRmx7hKjk6GEMt+rsOdQEkmqp+frULY1rqXUB/hsJuwQf+
-	 TBjCjprTa9URa66zfuHofNr1YBLRl8VuJPTCZhNr+tr1KLcbC5xcKO5XC1QxBa/L1eQ==
+	t=1795031234;
+	b=YNwiUYWrcKf6OidvWSTZhzgD7xBMM7EaCamWZ6m7USHzeod2gfjQpXgkp8zgodOo8yuV
+	 ha0HnXctJiKBXQCt7ANfgnHkysgJ1qgarfnFq9mPLD/YM/paCc4dQK5RL3QQcAWd1wr7i
+	 RQay5QF12+k1RYmc0FokHs/V4II7ql4Q6FG2eTqbBNdnvhDutNFVFWfV+A+Ta8mXhU8LV
+	 RaH1ZnI18NsbWSUxkdiW0+3dWrNLoPAADFeuFz7bsHwBzyWREbRGI+uVAB7oRoHug1vk3
+	 fENt0xTkBj0XPpyxxJrqsrJ/h6Du6da8S8+tjCGpvbMzj0hRXVGaTk6drZn5I1fjeFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031231;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031234;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=V661mfTrWGKZ2Qesb1bpmJ06evJlWAOBnihIy9ucw+M=;
-	b=NSMO3qj9Bo5UJgb4Zj7pjoWZDt6Lzb9InpdecRERiXlM01AH3INq7gi5Gyxgvg3L2+ta
-	 hdnjRQl5PNOnLRrJBWcgHFXqTWtp+k85diP/xFaO0iPu22MgGbfUE/CrJyL0Kxekr2Tpt
-	 naQG2T905md0Vt5cv9+tnz3X2lexOonQ7oHOulF8qj3UjMp903YU/IZwMIKWCT6mmK9uw
-	 AZErYVomGoE1UjJ233RxS4Blz9KkgvMaaUs2ML0k68VAcSeAMs/d59IdcP+tjpRoFZY/u
-	 L73rQumJ9nKcUkKnS8BIiVtR0HJ+FR5nEDlstOxfB2eIKz5hbmdsBpIC8ytwFG/JUGA==
+	bh=UvffpGuGrPxWiBb5TXn3rLHx1QjuJCnn1hjmIfiU4dg=;
+	b=zV0M6kIVgXzliL2uvUf4O88tx12R0NagQ1jBkQdIgk7zA2lR5hWj/Xk4G+jF8rP9GDvc
+	 jtK4XpiO3XuqzNjqZ5kpX0t2FTO3Vg26QqtZNarUdNmw60cwQULSyAb97e4Fgn9Dm42wX
+	 aBo1iUEhoucNNwuZCNtmA8ja6hcbB6BJOWcXyEG7nC/90lAEOna3ZYpMgStfZKMk8BNDL
+	 Y2JZb9YfnFMqzLpPJgMqcMSfe27LwD1v49krxHwC51iKNC0fcZki+wJCuNKmU+bo5TjJb
+	 BzTH0CS20CFcWlonozC6oUsN8OFbtmWjevj3X3miBLOwZ9mY0h+nls8gznUFsfjK1TA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xMpRXWje;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a91hniyl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F3E606A320;
-	Wed, 18 Nov 2026 19:47:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21AE8606A31C;
+	Wed, 18 Nov 2026 19:47:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xMpRXWje
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A646B1F000C4;
-	Wed, 18 Nov 2026 19:47:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a91hniyl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74BC61F000C4;
+	Wed, 18 Nov 2026 19:47:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031231;
-	bh=V661mfTrWGKZ2Qesb1bpmJ06evJlWAOBnihIy9ucw+M=;
+	s=korg; t=1795031234;
+	bh=UvffpGuGrPxWiBb5TXn3rLHx1QjuJCnn1hjmIfiU4dg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xMpRXWjepjKTZen9Pt/HNJNb9QYCB5qNQ+8N+/T5TMFQ7QtuJHfHB3XRFeCOWDAmY
-	 2oGiE0oudoGe5lhUGfQr1SdtSz4pFWZoaG4BTrMcD7tEj39KPzTXp4YiYRjzT8x47U
-	 bXDQaFnol6KO+YXFtLjCBzb68oWHfQN/QZpcj/Sw=
+	b=a91hniylu7QL3GQG5JhcM1+a1HeN6ccMLdwyWHhcaCiKDgLYKY6qb9gfE5/26mGRi
+	 Y+Rn84fYt18g/bj82fwB8NDIEC71Ye6bMFCY2xbkqx/EyeFDZUIATx6CfiSRMX5/Jq
+	 j6ld2kAcedjAJAdJZCE3YH13TdyIfhFEcTh3kfHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0968/1756] wifi: mt76: mt7615: usb: fix source overread in mt7663u_copy
-Date: Wed, 18 Nov 2026 15:51:35 +0100
-Message-ID: <20261118150048.668962660@linuxfoundation.org>
+Subject: [PATCH 6.12 0986/1756] ASoC: mediatek: common: Handle constraint return value in FE startup
+Date: Wed, 18 Nov 2026 15:51:53 +0100
+Message-ID: <20261118150049.427305642@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,60 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 0c2fcb5225361f71905697ef9db287b24bcc67cf ]
+[ Upstream commit 5fcdb40a4776cc6f8d3179aa9cf9663fc18c7861 ]
 
-mt7663u_copy() rounds up len to a multiple of four and uses the rounded
-length as the bound for memcpy() from the source buffer. When the
-caller's length is not four-byte aligned, the final copy reads up to
-three bytes past the source buffer.
+snd_pcm_hw_constraint_integer() may return 1, which is then returned
+from mtk_afe_fe_startup(). ASoC only treats 0 as success when marking
+the DAI as started, so .shutdown() can be skipped on rollback.
 
-Keep the original length for the source copy and zero the remaining
-bytes in the transmit buffer so that the hardware access width remains
-four-byte aligned.
+Return 0 explicitly on success.
 
-Fixes: 6cb596ba84e3 ("mt76: usb: introduce __mt76u_init utility routine")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Link: https://patch.msgid.link/20260925150556.2304003-3-yaojiale02@163.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 283b612429a2 ("ASoC: mediatek: implement mediatek common structure")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20261007110858.509341-2-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7615/usb.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ sound/soc/mediatek/common/mtk-afe-fe-dai.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/usb.c b/drivers/net/wireless/mediatek/mt76/mt7615/usb.c
-index 4aa9fa1c4a23b..6452acfcd57e3 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/usb.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/usb.c
-@@ -58,15 +58,22 @@ static void mt7663u_copy(struct mt76_dev *dev, u32 offset,
- 			 const void *data, int len)
- {
- 	struct mt76_usb *usb = &dev->usb;
--	int ret, i = 0, batch_len;
- 	const u8 *val = data;
-+	int len_aligned;
-+	int batch_len;
-+	int copy_len;
-+	int ret;
-+	int i = 0;
+diff --git a/sound/soc/mediatek/common/mtk-afe-fe-dai.c b/sound/soc/mediatek/common/mtk-afe-fe-dai.c
+index 3044d9ab3d4d9..4e47689bb1f16 100644
+--- a/sound/soc/mediatek/common/mtk-afe-fe-dai.c
++++ b/sound/soc/mediatek/common/mtk-afe-fe-dai.c
+@@ -75,8 +75,10 @@ int mtk_afe_fe_startup(struct snd_pcm_substream *substream,
  
--	len = round_up(len, 4);
-+	len_aligned = round_up(len, 4);
+ 	ret = snd_pcm_hw_constraint_integer(runtime,
+ 					    SNDRV_PCM_HW_PARAM_PERIODS);
+-	if (ret < 0)
++	if (ret < 0) {
+ 		dev_err(afe->dev, "snd_pcm_hw_constraint_integer failed\n");
++		return ret;
++	}
  
- 	mutex_lock(&usb->usb_ctrl_mtx);
--	while (i < len) {
--		batch_len = min_t(int, usb->data_len, len - i);
--		memcpy(usb->data, val + i, batch_len);
-+	while (i < len_aligned) {
-+		batch_len = min_t(int, usb->data_len, len_aligned - i);
-+		copy_len = min_t(int, batch_len, len - i);
-+		memcpy(usb->data, val + i, copy_len);
-+		if (copy_len < batch_len)
-+			memset(usb->data + copy_len, 0, batch_len - copy_len);
- 		ret = __mt76u_vendor_request(dev, MT_VEND_WRITE_EXT,
- 					     USB_DIR_OUT | USB_TYPE_VENDOR,
- 					     (offset + i) >> 16, offset + i,
+ 	/* dynamic allocate irq to memif */
+ 	if (memif->irq_usage < 0) {
+@@ -88,10 +90,10 @@ int mtk_afe_fe_startup(struct snd_pcm_substream *substream,
+ 		} else {
+ 			dev_err(afe->dev, "%s() error: no more asys irq\n",
+ 				__func__);
+-			ret = -EBUSY;
++			return -EBUSY;
+ 		}
+ 	}
+-	return ret;
++	return 0;
+ }
+ EXPORT_SYMBOL_GPL(mtk_afe_fe_startup);
+ 
 -- 
 2.53.0
 
