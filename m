@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058805;
-	b=ImWK8K4xvTLP4wogLv4d+PqneW+6XA5hmTLe6fKDHfFjfmovTdYFRMHibDz0e3VlP4Ra
-	 TEIxL1qrY/ylznV7YaQa0BERCOcp3KtwMYI6ynVvhFPVIe9ohoSNy3Ur/J6YfxURzJrUE
-	 MxMPJsxBcf5dydTsaxlb5bKeDwgFESDhAsuEms6BulwlGjdJHpF0OCDq70FEG2xVKS8UC
-	 8Sc9Yd7gq6UQ1wSlv+pNLdt/Sw36RDdnKC4M95FgzuBVPRgfEh0BCvMvxt9Z//zJwtf5K
-	 OfcnzijyE1PrEOZuA+XFOPkrr6In3dWmptR/th/OINVO/EGFXe5wm/w5y5Q2qYzGrxg==
+	t=1795058808;
+	b=dm2OR4og9zeEmO/+BFBL92oUq7Hvp5wlIXfE+OwnSyp0vYJFi+WNpE90FG8wgadyNQbd
+	 ecjtKukG9cWqETplSiPt1GPe7dHILAow/3pDYn0gcmKCwSuqi7bZ/+iEbNywfVdNGSPVf
+	 VhsfTKAT0T8td/ONgRgWta9EUbPd3iygjSswEDta6CzesPob+8jN4P3PhxN6J8SMO9WD0
+	 oP0bgL2DiOBh/NNfACSqG9FCu4rw9Zt47prAPKfJ/zcqHDMYgEsJMYfQpSCeVlaejHrLB
+	 z2tw3cQ8OKctTYt+YhNdGd/ZxugpYsfp3Z++EDLy+qiVXkW+sdJe1uEQWvHZibfqPuw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058805;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058808;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=t1Fa+jUhQ4DxAGPOG2FcYE6XIOo5ajMVkBiWd6gjz4Y=;
-	b=ey4U4trHBPIJe6NDzYHNCiexQ9maLaWpMYHwaYWuhmdzv8Kj58Ey9bUKp5rq0wmvRDOR
-	 t7mm0FKwNywlNTPLWxQpE4GiGroJajimIMgqAUv1nhpZMQNCHYpVriGETnC+5NFwTlCUO
-	 H873QyUpGRJAUO3dxs5IiSXc72v3DdMj8EOBJiSbNyqSUtiSJFdaRVaXK/FuooM6r99wa
-	 XFlB0/UxDVPTeJgmGAjNHLkhgwD9VkEnASrbAFYZBHSIdNGZHnEPHRGDGANVu/OsNXoJZ
-	 53K3MXMmA/vuumrvcUju96LwK6Hu962xP/xeBluDMpPHSQydZsibRmrgkOI37nlN5+Q==
+	bh=CkoW89cJlqRM1yVYLzdTWic6uTpnjmv/QH6HZVpMUcU=;
+	b=l9+suB7WTKETZrHaZMf+XC5t2kIA1xMDUdDG3uAqzzmfbjCJA4+39d+qc1H8NoKvfW7c
+	 EHfXr/TYUYElXpLjm5wSb81yLSUSwxLZuzGpDmCZvowAMUafy8XXZ8rMm8ayXGqsL+bdy
+	 TSb49zap9CxtIb0fiVJsUEdA7+KXKpFlte5kpDCA2L/CKxgsEjJBQO7P5UJnUNCxGBHqJ
+	 Jx7W3gcsFXgPIKxLmSMSninF3XZmMLjEjVitTKICNBNpsuZfeC8E4emmlMJzi0DRSP72A
+	 MKoVpPsgrdQx1j4v6W7cXlx91TeHYetsoBJAIKhHlS9A6hW+X2eVPGu/+TFRC3h6UOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hC471QWA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=isMkDaZx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4472E606A320;
-	Thu, 19 Nov 2026 03:26:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B60606A320;
+	Thu, 19 Nov 2026 03:26:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hC471QWA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BBD11F000C4;
-	Thu, 19 Nov 2026 03:26:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=isMkDaZx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 795AC1F000C4;
+	Thu, 19 Nov 2026 03:26:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058805;
-	bh=t1Fa+jUhQ4DxAGPOG2FcYE6XIOo5ajMVkBiWd6gjz4Y=;
+	s=korg; t=1795058808;
+	bh=CkoW89cJlqRM1yVYLzdTWic6uTpnjmv/QH6HZVpMUcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hC471QWAwdx/gxkqJ6o7T2bVsEG6M62z6sfzaRZv4Ws/GccW4ym0QsTb+4qt3uxCc
-	 0Ucye/BWFJ+id+DccIY1rjIOSswoOE2Eqza7o/tpyaX3IeXxKoosr6PhhVUcCBnHb9
-	 tSkxnc6goRZYJLdRpSnib1rDSdN50j6PdD8bsqbU=
+	b=isMkDaZx7L2UlJWFG9dnRonG9/3VlH+5VVT9O/yTrr5UKfqCiqt6yZgoSy8cmAfuY
+	 CxMSx+v3a/QAQEw/3kUg6PR3kYNhjdIsa5pDHx/DdB7NhOAEvKbgVv5N6QYLiT0Jeg
+	 G1D3lKM62Ih/V2lYIRBlsJcY5Stzjjm1rdBCEKp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Kamil Sawicki <user148783812897@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+5c3ed2a0de3270efc921@syzkaller.appspotmail.com,
+	syzbot+c2ec61adfbcb24e5ec20@syzkaller.appspotmail.com,
+	Eduard Zateev <hackerowskiy@gmail.com>,
+	Michail Andreas Michalopoulos <mike.michalo@gmail.com>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0615/1848] net: limit priority VLAN untag depth
-Date: Wed, 18 Nov 2026 15:44:13 +0100
-Message-ID: <20261118145941.022987487@linuxfoundation.org>
+Subject: [PATCH 5.10 0616/1848] smb: client: hold server info until cifsd exits
+Date: Wed, 18 Nov 2026 15:44:14 +0100
+Message-ID: <20261118145941.065899140@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,78 +71,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kamil Sawicki <user148783812897@gmail.com>
+From: Eduard Zateev <hackerowskiy@gmail.com>
 
-[ Upstream commit d3ff07f5acc573e5f72bf1c581bae5d05191ba61 ]
+[ Upstream commit 482c117c6dbeee382790168af10959810450ab09 ]
 
-The priority VLAN receive path can repeatedly remove VID 0 tags and retry
-packet processing. Unlike the read-only VLAN protocol parser, this path has
-no limit on the number of nested tags it consumes.
+The last session reference can be dropped while the cifsd demultiplex
+thread is still running clean_demultiplex_info(). That thread frees
+TCP_Server_Info there, racing with cifs_put_tcp_session() as it releases
+the server crypto state. syzbot reported a KASAN use-after-free in
+cifs_crypto_secmech_release().
 
-Each skb_vlan_untag() advances skb->data and resets header offsets. The
-offsets are stored in 16-bit fields. With enough nested tags, the network
-or transport offset can wrap. A later protocol handler can then derive a
-large pull length from the wrapped offsets and access memory outside the
-skb allocation.
+Keep an object reference for the cifsd thread. Defer final crypto,
+session-key, network namespace, string, and structure cleanup until both
+the last session reference and the thread reference are dropped. Drop the
+thread reference after clean_demultiplex_info() has finished using the
+server.
 
-Apply the existing VLAN_MAX_DEPTH limit to the exceptional VID 0 retry.
-Count the tag already stored in skb VLAN metadata as the first level, then
-stop before untagging a ninth level. Keep the accounting inside this
-uncommon branch so the regular VLAN receive path is unaffected.
+Build-tested with ARCH=arm64 and W=1 for
+fs/smb/client/connect.o. The KASAN reproducer was not run on the patched
+kernel.
 
-A single VID 0 priority tag before a real VLAN tag is valid. No normal
-deployment was found that intentionally emits multiple consecutive VID 0
-tags; permitting eight levels is therefore conservative.
-
-The issue was found while researching the Linux network receive path for
-Google kvmCTF, with OpenAI Codex (gpt-5.6-sol) assisting the analysis. The
-affected path, reproducer and fix were manually reviewed and tested.
-
-Fixes: 36b2f61a42c2 ("net: handle 802.1P vlan 0 packets properly")
+Fixes: a5c3e1c725af ("Revert "cifs: No need to send SIGKILL to demux_thread during umount"")
+Reported-by: syzbot+5c3ed2a0de3270efc921@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5c3ed2a0de3270efc921
+Reported-by: syzbot+c2ec61adfbcb24e5ec20@syzkaller.appspotmail.com
+Closes: https://syzbot.org/bug?extid=c2ec61adfbcb24e5ec20
+Assisted-by: LLM OpenAI Codex
+Signed-off-by: Eduard Zateev <hackerowskiy@gmail.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Kamil Sawicki <user148783812897@gmail.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261024004835.17862-1-user148783812897@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-
-[ Backport to 5.10.y: __netif_receive_skb_core() has no local
-  drop_reason variable, and this branch does not define
-  SKB_DROP_REASON_RECURSION_LIMIT. Omit the upstream assignment
-  and keep the existing drop path, which frees the skb with
-  kfree_skb(). ]
-Signed-off-by: Kamil Sawicki <user148783812897@gmail.com>
-
+Tested-by: Michail Andreas Michalopoulos <mike.michalo@gmail.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+[ sashal: moved thread reference acquisition before kthread_run() because it starts the thread immediately. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/cifs/cifsglob.h |  2 ++
+ fs/cifs/connect.c  | 29 +++++++++++++++++++----------
+ 2 files changed, 21 insertions(+), 10 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index b39f31890fce2..8d286a64d2c8f 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -5315,6 +5315,8 @@ static int __netif_receive_skb_core(struct sk_buff **pskb, bool pfmemalloc,
+diff --git a/fs/cifs/cifsglob.h b/fs/cifs/cifsglob.h
+index 8a5cdf4ba0ae6..05f68bf0a4a68 100644
+--- a/fs/cifs/cifsglob.h
++++ b/fs/cifs/cifsglob.h
+@@ -25,6 +25,7 @@
+ #include <linux/scatterlist.h>
+ #include <linux/mm.h>
+ #include <linux/mempool.h>
++#include <linux/refcount.h>
+ #include <linux/workqueue.h>
+ #include <linux/fcntl.h>
+ #include "cifs_fs_sb.h"
+@@ -674,6 +675,7 @@ struct TCP_Server_Info {
+ 	struct list_head tcp_ses_list;
+ 	struct list_head smb_ses_list;
+ 	int srv_count; /* reference counter */
++	refcount_t obj_refs; /* struct lifetime: srv_count users + cifsd */
+ 	/* 15 character server name + 0x20 16th byte indicating type = srv */
+ 	char server_RFC1001_name[RFC1001_NAME_LEN_WITH_NULL];
+ 	struct smb_version_operations	*ops;
+diff --git a/fs/cifs/connect.c b/fs/cifs/connect.c
+index 6ff0eab0be81a..93e862f19c214 100644
+--- a/fs/cifs/connect.c
++++ b/fs/cifs/connect.c
+@@ -880,6 +880,18 @@ handle_mid(struct mid_q_entry *mid, struct TCP_Server_Info *server,
+ 	dequeue_mid(mid, malformed);
+ }
+ 
++static void cifs_tcp_server_put(struct TCP_Server_Info *server)
++{
++	if (!refcount_dec_and_test(&server->obj_refs))
++		return;
++
++	cifs_crypto_secmech_release(server);
++	kfree_sensitive(server->session_key.response);
++	put_net(cifs_net_ns(server));
++	kfree(server->hostname);
++	kfree_sensitive(server);
++}
++
+ static void clean_demultiplex_info(struct TCP_Server_Info *server)
+ {
+ 	int length;
+@@ -964,12 +976,11 @@ static void clean_demultiplex_info(struct TCP_Server_Info *server)
+ 		 */
  	}
  
- 	if (unlikely(skb_vlan_tag_present(skb)) && !netdev_uses_dsa(skb->dev)) {
-+		unsigned int priority_tag_depth = 1;
+-	kfree(server->hostname);
+-	kfree(server);
+-
+ 	length = atomic_dec_return(&tcpSesAllocCount);
+ 	if (length > 0)
+ 		mempool_resize(cifs_req_poolp, length + cifs_min_rcv);
 +
- check_vlan_id:
- 		if (skb_vlan_tag_get_id(skb)) {
- 			/* Vlan id is non 0 and vlan_do_receive() above couldn't
-@@ -5327,6 +5329,10 @@ static int __netif_receive_skb_core(struct sk_buff **pskb, bool pfmemalloc,
- 			 * 802.1Q or 802.1AD and vlan_do_receive() above could
- 			 * not find vlan dev for vlan id 0.
- 			 */
-+			if (unlikely(priority_tag_depth >= VLAN_MAX_DEPTH))
-+				goto drop;
++	cifs_tcp_server_put(server);
+ }
+ 
+ static int
+@@ -2498,8 +2509,6 @@ cifs_put_tcp_session(struct TCP_Server_Info *server, int from_reconnect)
+ 		return;
+ 	}
+ 
+-	put_net(cifs_net_ns(server));
+-
+ 	list_del_init(&server->tcp_ses_list);
+ 	spin_unlock(&cifs_tcp_ses_lock);
+ 
+@@ -2520,16 +2529,13 @@ cifs_put_tcp_session(struct TCP_Server_Info *server, int from_reconnect)
+ 	server->tcpStatus = CifsExiting;
+ 	spin_unlock(&GlobalMid_Lock);
+ 
+-	cifs_crypto_secmech_release(server);
+ 	cifs_fscache_release_client_cookie(server);
+ 
+-	kfree(server->session_key.response);
+-	server->session_key.response = NULL;
+-	server->session_key.len = 0;
+-
+ 	task = xchg(&server->tsk, NULL);
+ 	if (task)
+ 		send_sig(SIGKILL, task, 1);
 +
-+			priority_tag_depth++;
- 			__vlan_hwaccel_clear_tag(skb);
- 			skb = skb_vlan_untag(skb);
- 			if (unlikely(!skb))
++	cifs_tcp_server_put(server);
+ }
+ 
+ struct TCP_Server_Info *
+@@ -2550,6 +2556,7 @@ cifs_get_tcp_session(struct smb_vol *volume_info)
+ 		rc = -ENOMEM;
+ 		goto out_err;
+ 	}
++	refcount_set(&tcp_ses->obj_refs, 1);
+ 
+ 	tcp_ses->ops = volume_info->ops;
+ 	tcp_ses->vals = volume_info->vals;
+@@ -2637,6 +2644,8 @@ cifs_get_tcp_session(struct smb_vol *volume_info)
+ 	 * this will succeed. No need for try_module_get().
+ 	 */
+ 	__module_get(THIS_MODULE);
++	/* Keep the server alive until the demultiplex thread has exited */
++	refcount_inc(&tcp_ses->obj_refs);
+ 	tcp_ses->tsk = kthread_run(cifs_demultiplex_thread,
+ 				  tcp_ses, "cifsd");
+ 	if (IS_ERR(tcp_ses->tsk)) {
 -- 
 2.53.0
 
