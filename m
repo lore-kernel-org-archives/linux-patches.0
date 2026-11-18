@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053556;
-	b=5QzN3zXZmPaEFzE1MLG31Ww+rdMT5H+rGzI7UxWkQxQ3j6AyqBDkgdby9bAj8GwVBPmz
-	 feBxpCppOojXH6vStr8JOI12aFMep6l+6KIWfJ9ftyVvo+Cghhg/sfNaDi2lHwQdumenN
-	 uwt1GyGecmoFL023g4EWllpVffgkhFXlNHaGECBEFVq+deoU3mbLjMiyw6Ng0Gqizz6Ax
-	 VFFChXXusLfUaqhA1xcIr1aUmQYmsBUrOAsx9OaGgjzHe8Xn7wGM7aw/pQvTFdjrSrWxb
-	 6/Xr2Ti8ms2NIvWUVW864vohpgZF4FkwWamyK2nIUtMCMp1iEcDRpvcbDmtYyttavhg==
+	t=1795053558;
+	b=z5wJbAIG37+HUMLYBHPRPpisSn67hrbMt78UjCA47AVwOPWiaOrx1Nk9y6bz3w+gKWFq
+	 4agGo8TfF2WtamQzt3HZSVcc3B9iHIA3vRS+CevR6J3xcjnmF9n3NnnQev+QwgCw4L3Ix
+	 7zg9R/KU7jLhdTAtxGSbY4YBdbOGlHqM+pXprgKoK6WzAibMB3psmFbaM3oJsEh6ycSSU
+	 eBQplAFaesxsNmcR6Ov/KiX/+EAdQZ5EVDSEjCtu+dlcnwh3+rERfxXyRqO4/hhz8XyA7
+	 64EXvNv01dLUYqEa3t55OMymhcPpYz7qSPVNv4vtvgUnFuZlOkW7q1R1M73B1XL+Gwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053556;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053558;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=W3goXNMVnLl8GlTe4gKehmwzQFo9pKc++z4LEZ1l9U8=;
-	b=bRyw/E9K2EvEqAushvdCHdLilzZSKVTqfmE2JqE65ydDRSGtl+SX7SlavPpiEFEoWKSY
-	 YP18XNqd1IX0AFCQfEun8WAfI0vfjBAYzZsjgxzveq+1M2cK4JF67sLoeYf9weNonsuQC
-	 2n/0hi0Xfe98nUOwhKfWZ6aQmnUrIOyi4o0ZMJaB6eVuZFy6ao8EohonQZ6C0UQMqTJ1N
-	 BPdc4/WnsGdZAi0kXfUOLxvXmPA+9Jb6lbNhVHgY/IsBV2WxgVIdb2xhd+5e8CiszlrqV
-	 F6B2cyjLm27im6Ok/WGWYySdJjX9OC1/C2FwTZSzrN3jJ8UYze8l4SDql8SkvKVSI8g==
+	bh=u1A3JK+hf8eBwvkgd/ibI069A5XS3hSgSxkBJCsx1bc=;
+	b=I8/nZo9aJDy28X/aDPgetF7rmVfSIUGcnBtnYr5i4ODiOTD0inKuaKT2sMFUZAQMyDvw
+	 porU/1uRTHfn7vec9oYPUZq2W6mQ2oUFBzFC9vZwfNEL6Y2HCU5t+h0tdGd3yLey7Q5I0
+	 cRb43UM2Asy9blS7TNjMPo7VtJAt66otpoxGgotTMcEwRcgE5/0jA5M9pPzo0DjL4rrLx
+	 JVTU33rEAtma0wQkxImlatyI8fJBFs9ZyXYWVKhARHFTJhze9YEYV3a8jVfIDoEHgBpQK
+	 G8+gLrUFsTl/wGuBPU5yJDWNlIFauQcej9yYNXoVrtBRX9Vj1O1zAhkWw/EVx//Kyuw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a+0dZFiE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="hQ6cSF/C";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA43C606A325;
-	Thu, 19 Nov 2026 01:59:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD30B606A325;
+	Thu, 19 Nov 2026 01:59:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a+0dZFiE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 481061F000C4;
-	Thu, 19 Nov 2026 01:59:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hQ6cSF/C
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2721F1F000C5;
+	Thu, 19 Nov 2026 01:59:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053555;
-	bh=W3goXNMVnLl8GlTe4gKehmwzQFo9pKc++z4LEZ1l9U8=;
+	s=korg; t=1795053558;
+	bh=u1A3JK+hf8eBwvkgd/ibI069A5XS3hSgSxkBJCsx1bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a+0dZFiEpsrm3VH7St+Es+rKxSO+jG4k4DYZxpz/1+iXtbIR6dp5bOr+stSL9yHo6
-	 G9nVv4wK4bIeEDthFRx6Y6gbTN8MVtRj9bNzZKj4bcG2EJ2z1bwIpKW36+sYR233Gu
-	 /4iqrthEgLjnelchyhQX0AAeM1fYjOtVOLwST3Nk=
+	b=hQ6cSF/Cn2vo0xPGj86wRfPfziV53nbij7m5Gsu5SXZvU5u3pm+qukfsHNG9AaX6F
+	 xNJk1gcSpvvouMlUUCBP4eEx/QHEAYJzReNv0veFKIphwOqSg/7mWo7tZMZG0GXNj+
+	 0fzJiijvBfAQFTkT5/CQqZnE8/wQdtwo+nyZSZbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Sashiko <sashiko-bot@kernel.org>,
 	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0961/2214] batman-adv: Close OGM aggregation before transmission
-Date: Wed, 18 Nov 2026 15:43:57 +0100
-Message-ID: <20261118150050.734114881@linuxfoundation.org>
+Subject: [PATCH 5.15 0962/2214] batman-adv: tpmeter: fix u32 truncation of reported bytes
+Date: Wed, 18 Nov 2026 15:43:58 +0100
+Message-ID: <20261118150050.786820812@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,80 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit f91f64a91682c07e6c5f059804e709656364e8a6 upstream.
+commit 1025b76d13288a311e8259a0eefde0854fa63c41 upstream.
 
-The OGM send worker leaves its forwarding packet on forw_bat_list until
-after batadv_iv_ogm_emit() returns. Aggregation holds forw_bat_list_lock,
-but emission reads and clones the packet without that lock.
+When more than 4 GB are transferred by the throughput meter,
+batadv_tp_batctl_notify() will cut of the upper 32 bit of the u64 counter
+and thus under-report the actual transferred bytes.
 
-CPU 0 can therefore start emitting a queued packet while CPU 1 takes the
-list lock, finds the same packet and appends another OGM. The sender can
-observe the new packet length before the corresponding direct-link flag
-is set, or clone the skb while its length and payload are being updated.
-This can transmit an OGM with incorrect flags or inconsistent data.
+The data type of the temporary storage variable must therefore still
+continue to use u64.
 
-KCSAN reported:
-
-  BUG: KCSAN: data-race in batadv_iv_ogm_queue_add / batadv_iv_send_outstanding_bat_ogm_packet
-  write to 0xffff888100fedcf8 of 2 bytes by interrupt on cpu 1:
-  read to 0xffff888100fedcf8 of 2 bytes by task 70 on cpu 2:
-  value changed: 0x00c0 -> 0x00d8
-
-Mark the aggregate as full under forw_bat_list_lock before emission. This
-waits for any ongoing append and prevents further aggregation. Emission
-uses packet_len to walk the OGMs, so all queued packets are still sent.
-Keep the packet on the list so interface purging can find the worker,
-wait for it to finish and free the packet.
-
-Fixes: 9b4aec647a92 ("batman-adv: fix rare race conditions on interface removal")
-Cc: stable@vger.kernel.org # 4.10.x: 434becf57bdc ("batman-adv: Limit number of aggregated packets directly")
-Cc: stable@vger.kernel.org # 4.10.x
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-[ Use BITS_PER_TYPE(...) instead of BATADV_MAX_AGGREGATION_PACKETS ]
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/bug/linux-08bb3be4-6c6a-452d-b4e4-606940c6cfa5
+Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
+[ Context ]
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/bat_iv_ogm.c | 5 +++++
- net/batman-adv/types.h      | 8 +++++++-
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ net/batman-adv/tp_meter.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/batman-adv/bat_iv_ogm.c b/net/batman-adv/bat_iv_ogm.c
-index a6253f488ada2..375fe4882543f 100644
---- a/net/batman-adv/bat_iv_ogm.c
-+++ b/net/batman-adv/bat_iv_ogm.c
-@@ -1794,6 +1794,11 @@ static void batadv_iv_send_outstanding_bat_ogm_packet(struct work_struct *work)
- 		goto out;
- 	}
+diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
+index 5514fef54b0a9..1c19da01fa2d0 100644
+--- a/net/batman-adv/tp_meter.c
++++ b/net/batman-adv/tp_meter.c
+@@ -226,9 +226,9 @@ static void batadv_tp_batctl_notify(enum batadv_tp_meter_reason reason,
+ 				    unsigned long start_time, u64 total_sent,
+ 				    u32 cookie)
+ {
++	u64 total_bytes;
+ 	u32 test_time;
+ 	u8 result;
+-	u32 total_bytes;
  
-+	/* Mark aggregate as full before forcing emit. */
-+	spin_lock_bh(&bat_priv->forw_bat_list_lock);
-+	forw_packet->num_packets = BITS_PER_TYPE(forw_packet->direct_link_flags);
-+	spin_unlock_bh(&bat_priv->forw_bat_list_lock);
-+
- 	batadv_iv_ogm_emit(forw_packet);
- 
- 	/* we have to have at least one packet in the queue to determine the
-diff --git a/net/batman-adv/types.h b/net/batman-adv/types.h
-index a51fee83d1126..a0d334b3d4659 100644
---- a/net/batman-adv/types.h
-+++ b/net/batman-adv/types.h
-@@ -2177,7 +2177,13 @@ struct batadv_forw_packet {
- 	/** @direct_link_flags: direct link flags for aggregated OGM packets */
- 	u32 direct_link_flags;
- 
--	/** @num_packets: counter for aggregated OGMv1 packets */
-+	/**
-+	 * @num_packets: counter for aggregated OGMv1 packets. Set to
-+	 *  BITS_PER_TYPE(forw_packet->direct_link_flags) (independent of the
-+	 *  real number of aggregated packets) by the send worker to prevent
-+	 *  further aggregation while the packet is emitted. It must therefore
-+	 *  not be used to iterate over the aggregated packets
-+	 */
- 	u8 num_packets;
- 
- 	/** @delayed_work: work queue callback item for packet sending */
+ 	if (!batadv_tp_is_error(reason)) {
+ 		result = BATADV_TP_REASON_COMPLETE;
 -- 
 2.53.0
 
