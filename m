@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042423;
-	b=uRmFaQRgPbTa+lSr/C1r+rAOOlw1EpLH+XqNEk+Ft6qjV0+f8RoSlyKinbYloIm5MrQ9
-	 0+sW8vIGA3xENW13YHZ7DGnnjzxKj5LLRhlLk9fHHZvbXHbI8eJuX+fk5R+9QZY1iYcZ+
-	 Rni/KLZPnrjTvpsHDVpowcSePaOhKDH3csEUfnJO78myxYNahwveLtvZT8qjOxRdcBHXp
-	 56U7sdSrKtBbA3uigEVQS8vkvQVpJQLtf5epKBOzy4sK8y5dQEXgrOotvUPglMdYxA/UL
-	 NuMvuQ3ysiC0ZflSVsMh8KOTozv0R4AHiSziAnmftLBXX1xUqnx+NFr1U433bMtoHNw==
+	t=1795042426;
+	b=Ow2r6DLXx6pny2Ar5edMgNQJNANLgVcmSCjS5GEf4X+5itnCKBY9SfXiQt/sQGaRGepZ
+	 4sI5QT0mHoup/rK9IymotQYerdxMDIN6EWGJhveYeYe3qG7pRMGiDCJUKocON2xSAiJhQ
+	 L+aUaBFTU7Kv2/rofLi4wP39Jd0GdMlR0oz21ObtdZKsNczmfOoEpA14UAnn7TRTvbnwq
+	 ZCX4F9FVBWb8r93yMjIw81ZLNMjHM53tdI0iMHvDT4+++Iti0m+GM4M7fA6hqqW/RBnII
+	 VkuTUkRtYooBml1QGlexzq50Y0Ilk1L6BiO8w8Alp0oG+ufHxaCmhXenFfQJqDdaD8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042423;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042426;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9W0jPtwXe/2T1zW+Qk2Ed10SHoZnERJNKptweLsOBbQ=;
-	b=AV1R0IAkrnqvq47fJOmExutuliVA9vGECsiY9VmsINy/QVwbTg79CsgyClykzOrVr7JV
-	 6LPMPI1YQp4SzNIkYn8XxYlBtn4gOAM2MqKkxe+ftpHrJlBTs4flZ0663FAMxldc1G95r
-	 DJ4YD2r0mVvkZjoIRGivYhvaaWcZozA5I6IbXiIojVKr68FsG2qBnu604chO0LSitfM1K
-	 FnrmbF3Zy8x1U/LjvFPphhXUcbAp8wu+E28iJb5rzFbrsLeyXdAKRgi47ilGrb/lw6VtP
-	 GKjUNhH7JNgdx5zrlA+2NhxvoDuZcr+n5mqZf5kcwWFVY7BTK5WN7Vw08UWJ/r3JiHQ==
+	bh=Y8VQ6UMjs2JfTWG1DMbMmVvHHxsyY7ilqCUTqUZgH3g=;
+	b=i61C7Uo8tn5ZOL5buQY4qN9L8UEoObMmzQTw5YZ19e2fo2XEwV3xcR3vsjX0NbtijHtk
+	 KR7Kq431BPygAXI23UWE73O88Iym+zWSGI54Y/td5T/TqWHWRVGgtnCwOiqJ1C+K38DWt
+	 mZXCLB4RJYY8frBetRs91Ae3ybg899wlhrfqlSS/FsK5kVxl2hEU8YZKlExiskOTHgFmT
+	 yp70KFUDOwEixTwP8qKwa6lU9hgN6ihR9M8rlPpULBx9TKKUO2layJJ8TtKvrgntFvtu/
+	 M8o7EMhecxETb2ErgJ+co8iEZ1z1EYOAJOm/EtofFIrxZ+0X5+i2ABITZXyOEVGPLtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qj5vinpw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=18nlnxss;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D9ED606A31C;
-	Wed, 18 Nov 2026 22:53:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 327B8606A31C;
+	Wed, 18 Nov 2026 22:53:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qj5vinpw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CBF81F000C5;
-	Wed, 18 Nov 2026 22:53:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=18nlnxss
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FB681F000C4;
+	Wed, 18 Nov 2026 22:53:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042423;
-	bh=9W0jPtwXe/2T1zW+Qk2Ed10SHoZnERJNKptweLsOBbQ=;
+	s=korg; t=1795042426;
+	bh=Y8VQ6UMjs2JfTWG1DMbMmVvHHxsyY7ilqCUTqUZgH3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qj5vinpwJzZxL3slQS4uWnqxXqouxIoayf6IK4Yq39mlxZ/2Xs2BOG0G1hM80Hj9I
-	 bptY9vXeIo6isKAEdMjU3IyvxomZi0iI1tLEQOJw1c3yCZ6D9UWxie7ToHGT2BIVAa
-	 yfD5Yix4RsmOdw8ykYLtk5UldjafbWwZ3dnYdbx4=
+	b=18nlnxsstHcTQa4FyZxHlMKylHSOAmyKludbM8GedruZzfm++x1lBqs6p/ZVrmLET
+	 sRE988NnyFo/97dfgKsAI2FVVK/6M6WODf411NMmqvWnxwzEfK6wvKa/DAWK5sbZCg
+	 Elx2ylK65z1kOy4U5aP3BFEU/lZAQDTK+Jyz/cjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	co+b0f93e29183ce737@bugs.sh,
+	Xiang Mei <xmei5@asu.edu>,
 	Alex Markuze <amarkuze@redhat.com>,
-	Tal Zussman <tz2294@columbia.edu>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3166/3318] ceph: fix page vector leak on encrypted netfs read EIO path
-Date: Wed, 18 Nov 2026 16:03:08 +0100
-Message-ID: <20261118150454.820974212@linuxfoundation.org>
+Subject: [PATCH 6.6 3167/3318] ceph: fix off-by-one NUL termination in decode_encrypted_symlink()
+Date: Wed, 18 Nov 2026 16:03:09 +0100
+Message-ID: <20261118150454.850561926@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,52 +70,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Markuze <amarkuze@redhat.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 00a0d7f377f6af59bc559b2e07dffff63eaa5544 ]
+[ Upstream commit 4da259ea8bf4bd6a91a63f33630a26592d2353f8 ]
 
-ceph_netfs_issue_read() pins pages with iov_iter_get_pages_alloc2() for
-encrypted inodes and attaches them with own_pages=false. If
-ceph_inc_osd_stopping_blocker() then fails, the request is dropped
-without calling finish_netfs_read(), so the page array and the
-references taken on those pages leak: ceph_osd_data_release() only
-frees pages when own_pages is true, and __free_pages() would be the
-wrong destructor for GUP-pinned pages.
+decode_encrypted_symlink() allocates enclen + 1 bytes but writes the NUL
+terminator at sym[declen + 1] instead of sym[declen].  A malicious MDS can
+report symlink_len == 0 for an encrypted inode, and base64_decode() returns
+0 for a zero-length input, so the store lands one byte past a kmalloc(1)
+allocation.
 
-Release the vector with put_page() and kvfree() on that error path,
-matching finish_netfs_read(). Unencrypted ITER reads are unaffected.
+Terminate at sym[declen], which is always within the allocation.
 
-Fixes: 1464de9f813e ("ceph: wait for OSD requests' callbacks to finish when unmounting")
-Signed-off-by: Alex Markuze <amarkuze@redhat.com>
-Reviewed-by: Tal Zussman <tz2294@columbia.edu>
+  BUG: KASAN: slab-out-of-bounds in ceph_fill_inode (fs/ceph/inode.c:996)
+  Write of size 1 at addr ffff888020aad361 by task kworker/0:0/9
+  Workqueue: ceph-msgr ceph_con_workfn
+  Call Trace:
+   kasan_report (mm/kasan/report.c:595)
+   ceph_fill_inode (fs/ceph/inode.c:996 fs/ceph/inode.c:1277)
+   ceph_fill_trace (fs/ceph/inode.c:1716)
+   ceph_con_process_message (net/ceph/messenger.c:1424)
+   ceph_con_v1_try_read (net/ceph/messenger_v1.c:1430)
+   ceph_con_workfn (net/ceph/messenger.c:1576)
+   ...
+  The buggy address belongs to the object at ffff888020aad360
+   which belongs to the cache kmalloc-8 of size 8
+  The buggy address is located 0 bytes to the right of
+   allocated 1-byte region [ffff888020aad360, ffff888020aad361)
+
+Fixes: 79f2f6ad878c ("ceph: create symlinks with encrypted and base64-encoded targets")
+Reported-by: co+b0f93e29183ce737@bugs.sh
+Assisted-by: LLM
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/addr.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/ceph/inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
-index b48ea3bce962a..4957a40777821 100644
---- a/fs/ceph/addr.c
-+++ b/fs/ceph/addr.c
-@@ -425,6 +425,17 @@ static void ceph_netfs_issue_read(struct netfs_io_subrequest *subreq)
- 		osd_req_op_extent_osd_iter(req, 0, &iter);
+diff --git a/fs/ceph/inode.c b/fs/ceph/inode.c
+index 940ab16f7cfc8..4555fccfc4c9d 100644
+--- a/fs/ceph/inode.c
++++ b/fs/ceph/inode.c
+@@ -913,7 +913,7 @@ static int decode_encrypted_symlink(struct ceph_mds_client *mdsc,
+ 		kfree(sym);
+ 		return -EIO;
  	}
- 	if (!ceph_inc_osd_stopping_blocker(fsc->mdsc)) {
-+		struct ceph_osd_data *osd_data =
-+			osd_req_op_extent_osd_data(req, 0);
-+
-+		if (osd_data->type == CEPH_OSD_DATA_TYPE_PAGES) {
-+			int num_pages = calc_pages_for(osd_data->alignment,
-+						       osd_data->length);
-+
-+			for (int i = 0; i < num_pages; i++)
-+				put_page(osd_data->pages[i]);
-+			kvfree(osd_data->pages);
-+		}
- 		err = -EIO;
- 		goto out;
- 	}
+-	sym[declen + 1] = '\0';
++	sym[declen] = '\0';
+ 	*decsym = sym;
+ 	return declen;
+ }
 -- 
 2.53.0
 
