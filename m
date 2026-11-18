@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020322;
-	b=1uU2+WIld16nzRxulWpHt///AF+qGorjejeZ4a5hvtedgceE0twmYViqkH8Qrxs6D1MH
-	 cUQvIwwIKtt77iPkR9Yx3icCsaNpjd560M1Kf77o/YdBSpdP8kWSx6h/3M/Oq+iJWaESo
-	 gxjxE2HBqTDYGzOUx+xXVcTnzfgCfbHi+1Z80x/Mgdtk2PFeHktDhs4qKAwFMBIxtCNZj
-	 XgYXtAPPomMjXeXkV4W8dEWLGqIHOsIOITPqwmIDf9aHFXrSBUUshNBz/9zp4iZ7A0f67
-	 khEKp7Q3uSLNO5ZMkzubEN6GxFhKazfFcaASi5mkXjyx0NnsWHkmuXgv+9G/qzP3WpA==
+	t=1795020325;
+	b=XAtFFVdLVKH6BxYm+68RkmYfmZ8MD/avqquanZiMxhmE/T/+fH7mZdQebUJzByHza8f/
+	 gfGP/+yNQtvre/eJFtOksTjutr87WS00pKHJ4J1oiQrX3xki+el8+SRM0TqQXe6ErIVne
+	 uqyieBBWwmduWVga8O4wbn/i2VLV3dRELVT5pVjliGim9whhBkKNbOibj/XubPqBbfHHa
+	 Pq9CnZv3Mj7B5r70qssh7yKMyfF1unHzTurf2PI8lTA2JJGNnhBM2o0oG0rPzDACc1kth
+	 epG91vlBh3e+rIG5kfbPFoCiUJFI6HcZAHUXVf4UzMEz3jd8lSy4UGSSWXXa/P61jpA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020322;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020325;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lufbXEyJlomHAxNxhjZulvhdEtQvfXAWTlCm1Jbo2Lg=;
-	b=S4rkzSVIt1glX2bBRDxq3NC/DGqfDebNr6MdIGZQ5JIP/jlQH+mEZKNoxnX2T81kDvEo
-	 3Kh10Xoh/tzzRKudVaWeA1NAlu0QJ82dC2vZg+phup2GiazZfHVWFr/9cK4Wnk08Lj4RB
-	 PfB9e1Kec72PP0NdSaEWIktgcs9wRoEDQzStMvNgPY89xZtKmnMy8mWObM6luuSirHyHG
-	 lvk/4wtb9rdf5xZU5jQFnbCbpPfKhOV5lBDL+W7GatFg2eCx4UiZvKFdfPYw89Xma52Zk
-	 9WlLfJaW0UxrUizRwDCOtvk7cN5IUWq3GU1Y/9CrZcg1DXakNGJ12P9vPI/ZFdZtdWQ==
+	bh=U/shQK6eMl1wSaiElrvpD60Ac2zqSolLX69yHCQp6dk=;
+	b=m8jCrhab1N+AKOJZNgdIhXe3Gjcak5W6yWTEXB8Qm28UCwlCIOD9A0a/yGzdH/fiL8qy
+	 FDAYGxLhIyloUr0IIAYkq7eJocOSMH+9NCEnJk93pkTd/szX7Cl3QHfOHlXSjprcdpsw/
+	 k/f1DUXcd2ZWd4MJaMlJN7GgpJ4hUSpxmgtGacVNbGpP/WQAK+dx9HhSI5psVoS2V7Dvn
+	 xQUy0ObAfMBWW8IPD5OzvyqRGpgmnFSBiqMeFXi8WpSH1G7fM0oVu6hv0oaoQTa7y31ZS
+	 NFAijW3JhgOpFRFPahCKDX7aPba9MFrfm7sXKMwhGWODpba0ri3cGDd0Rdbk0Bn6kAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oogfb4mL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nHuVsyAp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833B2606A320;
-	Wed, 18 Nov 2026 16:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F23606A32A;
+	Wed, 18 Nov 2026 16:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oogfb4mL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D41DF1F000C4;
-	Wed, 18 Nov 2026 16:45:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nHuVsyAp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B2101F000C4;
+	Wed, 18 Nov 2026 16:45:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020322;
-	bh=lufbXEyJlomHAxNxhjZulvhdEtQvfXAWTlCm1Jbo2Lg=;
+	s=korg; t=1795020325;
+	bh=U/shQK6eMl1wSaiElrvpD60Ac2zqSolLX69yHCQp6dk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oogfb4mLUuiXbFkgdN/vbWHSEVeWlMCFwHP2vGQnRg3epqWAzgqYDXSKjrGxepdAB
-	 4IxbFA7cOiADcrUblHtGYJuW1flXMLOyUiSEC4+J2n32tCIzJgevlxrGz3Qbrmxp3j
-	 20orQ4yWI03ah3VP1JoZBgviYZS7gii6i9zRToO8=
+	b=nHuVsyApkfyapxqDyftfp+M49tPcXhobgpDDTk8tOZhS2FUoTCO16Tu9J2hYtenX6
+	 kRVbIdaNtv735ipBuPUjnhrCXexpHUQcuDdAGb9hTmJKwOEPm/VunX7KXYFNOtHaJO
+	 G8SeJdf3gmeDBm1yNeeW8l67ZSbTvjC62iXEQ3/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1909/2651] clocksource/drivers/timer-ti-dm: Handle runtime resume failure
-Date: Wed, 18 Nov 2026 15:52:29 +0100
-Message-ID: <20261118150355.520481524@linuxfoundation.org>
+Subject: [PATCH 7.3 1910/2651] net: selftests: use skb_share_check() in the loopback receive hook
+Date: Wed, 18 Nov 2026 15:52:30 +0100
+Message-ID: <20261118150355.551316532@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,51 +69,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Nicolai Buchwitz <nb@tipi-net.de>
 
-[ Upstream commit c40b76c8cf580466d9e56223f7f74beecc165480 ]
+[ Upstream commit fbd3a301b1378423a5cfc23a42e3c0b04e26192c ]
 
-omap_dm_timer_write_counter() accesses timer registers and updates the
-saved counter value after requesting a runtime PM reference. If runtime
-resume fails, the timer remains inaccessible and no reference is
-acquired, but the function still writes the register, drops a
-reference, updates the cached value, and reports success.
+The loopback hook gets a shared skb when another ETH_P_IP handler is
+bound to the device. skb_unshare() does not unshare it, so
+skb_linearize() on a non-linear frame hits BUG_ON(skb_shared()).
 
-Check the return value and propagate an error before touching the timer
-state.
+Use skb_share_check() instead.
 
-Fixes: 0494fc345b37 ("clocksource/drivers/timer-ti-dm : Capture functionality for OMAP DM timer")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Link: https://patch.msgid.link/20261003080812.429386-1-yaojiale02@163.com
+Fixes: 3e1e58d64c3d ("net: add generic selftest support")
+Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261007-nb-net-selftest-shared-net-v1-1-458369bfa1ba@tipi-net.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-ti-dm.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/core/selftests.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clocksource/timer-ti-dm.c b/drivers/clocksource/timer-ti-dm.c
-index ae8777d032154..8012d3f3e1a3f 100644
---- a/drivers/clocksource/timer-ti-dm.c
-+++ b/drivers/clocksource/timer-ti-dm.c
-@@ -1095,6 +1095,7 @@ static int omap_dm_timer_write_counter(struct omap_dm_timer *cookie, unsigned in
- {
- 	struct dmtimer *timer;
- 	struct device *dev;
-+	int ret;
+diff --git a/net/core/selftests.c b/net/core/selftests.c
+index 36b949ae520b3..80029a67b2d2b 100644
+--- a/net/core/selftests.c
++++ b/net/core/selftests.c
+@@ -170,7 +170,7 @@ static int net_test_loopback_validate(struct sk_buff *skb,
+ 	struct tcphdr *thdr;
+ 	struct iphdr *ihdr;
  
- 	timer = to_dmtimer(cookie);
- 	if (unlikely(!timer)) {
-@@ -1104,7 +1105,10 @@ static int omap_dm_timer_write_counter(struct omap_dm_timer *cookie, unsigned in
- 
- 	dev = &timer->pdev->dev;
- 
--	pm_runtime_resume_and_get(dev);
-+	ret = pm_runtime_resume_and_get(dev);
-+	if (ret < 0)
-+		return ret;
-+
- 	dmtimer_write(timer, OMAP_TIMER_COUNTER_REG, value);
- 	pm_runtime_put_sync(dev);
+-	skb = skb_unshare(skb, GFP_ATOMIC);
++	skb = skb_share_check(skb, GFP_ATOMIC);
+ 	if (!skb)
+ 		goto out;
  
 -- 
 2.53.0
