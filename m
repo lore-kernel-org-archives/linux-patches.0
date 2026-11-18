@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040683;
-	b=WbkDXquuCnre5hZoZ6Mlu3x42hRcWRgQL/wvJKzPwcVfMrCl2Ljh0/iC1MtWxhMqU3ew
-	 i0LMJyXK2cjGJCcw4Qiz/rkmjUht6l8ac57oUyPBVLzA5RF8OeSDesiBWcJbXc6XzkI9c
-	 n+wLNIpFyBXEQUCyb3Bq7qDHWTgI33SXg+F5GLqnSkv5/3nEPwNbMCgh5wuARDvnWycIo
-	 BxXxLja5wcLqaqJ/5U9ML8OrhWRGmvqowR8fBrsa1l45K2MF4JKaRw8B3n/637zbvb9Ja
-	 EqXFQKW8JnsdCDZ1lMch28KDhFxolvgz987if+C/RLnwF5UwPFgGA02/MpnVI4BJe8w==
+	t=1795040686;
+	b=oFLoSLBgTadCbkgY8Coh0CNfh2jKzy7sygf8M5qWTJJgIJGeDi3+b6cPubBBAEll2RXc
+	 sn0lVYB8jopP6UiazU5umIp9zP7ARf/staTkIo3SolWDFQ8evc5ga0mqRdsxjekb3UC2z
+	 aIqWfWkZ5MMxqOrtXh0+IjiF6h1hdbzPXq/aqrGghJCjL/xLLybhCqbnBvgjvQ5DBgtV+
+	 pZYdMLrBLKr2YBlM7tf2fF54BcpPWPoyoplv3TBALU5vILUc/j2K7qyFNKhjn4dLjcDpO
+	 A1Kgf6hol2Kq0cfEn1xjl5g+mB8koizRdt01QtYThflW2uLwelm/6vwtUiqRi7xsasg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040683;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040686;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Cb0Zci2KJyueMmjgGGRLTz7mMmT4wyrv7zPC6ilNM3U=;
-	b=f+lUfD5JyFjRP+zX9YjP8BC0dkZG/XOjnIvezNdjhN2We1umzg97YCTVf/koOXgk+JOq
-	 DSBXg48sahWcKfyQmUZoowuhGI66zxZmde2x3WAucncGkdUt4jVuvHkE9jtz3w+N99BFP
-	 Liy2ehhzcw3s3jA0JdZ83dxd8KBsnORjxyhqcrWRv7QcGKqQl9urDlyeSY8c3fHvHO9Zm
-	 L/W7rJlrF6DPT9hDJuoauxBhGPGmdeKWRXpvlh2LBPhfM1eIKf2vk3TNw8tTbd3UYLNd9
-	 JO6miSsfRRwDZdRuwBY7qjn9mZWuz371NoyonHXdufIBAitfhVw41Vgj94TdyaR4/eg==
+	bh=ILY8ZwG8gTm6asbCCvG3wE+HuNrv0phXwZGdteaQr+A=;
+	b=C3xtXHfv/nzloOmEnPlIW2FSaxLAVgtB0P038kjK8tXjoI573xJ+b12r126cDmaZUNrY
+	 SNKe6h5mIGBd4Wh/ku6BD/puouSTOXEzB7NShl4nVtQlmLB28MfhcfqB9XSupzS4kxn0f
+	 intmoLafAtmBTP0AxEY7hy/J6N89LQZY2jiAJA9rjqwLaXy2SsytQ/2nmzxGkqI31yPcO
+	 +hlPacywb6w3BGmM1McVEkCfbbEDiCwcQC4veoNSmPgc+N+fMqtU5iZ12Nq+MvPGFWUis
+	 I3uA6MTGZd5Jf+vfz0wTPBZ6WU77LyOG/IRNVeemV5/UoXwTNXoeppMXHNxzt3gUXAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uBANMLoK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GV4ngn7A;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58477606A32A;
-	Wed, 18 Nov 2026 22:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3828C606A320;
+	Wed, 18 Nov 2026 22:24:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uBANMLoK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8AD71F000C4;
-	Wed, 18 Nov 2026 22:24:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GV4ngn7A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B21A1F000C4;
+	Wed, 18 Nov 2026 22:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040683;
-	bh=Cb0Zci2KJyueMmjgGGRLTz7mMmT4wyrv7zPC6ilNM3U=;
+	s=korg; t=1795040686;
+	bh=ILY8ZwG8gTm6asbCCvG3wE+HuNrv0phXwZGdteaQr+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uBANMLoK84JuX8NFar04jFgiNGYLaotKJGv6VCdHBwIlbJJmsoBPLZManBnr+QDHX
-	 HqfQ74ldJ1JSmqKUFWb1ZG0u/mS1ZXIufhkNuXIb/GA/Bv+MI3yUL9P9OHXvd074Br
-	 K7p8GBRUw8CBLwG/eiwOIPDIEyDga5h6FZhgMMlg=
+	b=GV4ngn7ACNDZWofZLYK3YRf6QM5gSeoKW4J0AlWImaTRWsfoxTKhWafvBAYKni9aJ
+	 8pwygt8po9+iLdCUqIlVusW2BaEg2KSPjH/z+nTHYjEfGzdfrRxMH/YykYuHW3YRrn
+	 QQYh2ZSBtHAAXFI9HKSZrl+qXzjry7lTJH94XHZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Omar Ramadan <omar@blockcast.net>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2495/3318] amt: pull the AMT header behind the transport header in amt_parse_type()
-Date: Wed, 18 Nov 2026 15:51:57 +0100
-Message-ID: <20261118150436.238895585@linuxfoundation.org>
+Subject: [PATCH 6.6 2538/3318] dt-bindings: media: sun4i-a10-video-engine: Fix IOMMU count for H6
+Date: Wed, 18 Nov 2026 15:52:40 +0100
+Message-ID: <20261118150437.458336216@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,58 +71,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Omar Ramadan <omar@blockcast.net>
+From: Chen-Yu Tsai <wens@kernel.org>
 
-[ Upstream commit eb0c18404c8943356f4aa164e5db9067b79ea93c ]
+[ Upstream commit ca9a67831805dc788407a05f276abb6b86b1174d ]
 
-A gateway's encap socket passes ICMP errors to amt_err_lookup(), which
-calls amt_parse_type() on the quoted datagram to see which AMT message
-failed. On that path skb->data points at the quoted IP header and the
-transport header at the quoted UDP header, and icmp_socket_deliver()
-only guarantees the quoted IP header plus 8 bytes, that is, up to the
-end of the UDP header.
+On the H6 SoC, the Video Engine has two memory ports, thus two IOMMU
+connections. The secondary one that is missing is likely used for
+reading reference frames. The newer H616 is the same. On the other
+hand, the D1 only has one memory port.
 
-amt_parse_type() pulls sizeof(struct udphdr) + sizeof(struct amt_header)
-bytes from skb->data, which on this path stays inside the quoted IP
-header, and then reads the AMT header behind udp_hdr(skb). An ICMP error
-that quotes only the IP and UDP headers of a Request, the minimum RFC 792
-asks for, therefore makes it read past the pulled data, and past the end
-of the packet when nothing follows.
+Add the missing IOMMU connection for the Video Engine.
 
-Pull up to the transport header plus the UDP and AMT headers, as
-vxlan_err_lookup() does. amt_rcv() is called with the transport header
-at skb->data, so the pull on the receive path does not change.
-
-Fixes: cbc21dc1cfe9 ("amt: add data plane of amt interface")
-Signed-off-by: Omar Ramadan <omar@blockcast.net>
-Reviewed-by: Eric Dumazet <edumazet@@google.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20260928181557.85796-1-omar@blockcast.net
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 62a8ccf3a248 ("arm64: dts: allwinner: h6: Fix Cedrus IOMMU usage")
+Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/amt.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ .../allwinner,sun4i-a10-video-engine.yaml     | 21 ++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/amt.c b/drivers/net/amt.c
-index 9bdc6c0e7bf9c..ad855130b4300 100644
---- a/drivers/net/amt.c
-+++ b/drivers/net/amt.c
-@@ -1284,8 +1284,12 @@ static int amt_parse_type(struct sk_buff *skb)
- {
- 	struct amt_header *amth;
+diff --git a/Documentation/devicetree/bindings/media/allwinner,sun4i-a10-video-engine.yaml b/Documentation/devicetree/bindings/media/allwinner,sun4i-a10-video-engine.yaml
+index 01f2afa023f04..932043d7f0cc4 100644
+--- a/Documentation/devicetree/bindings/media/allwinner,sun4i-a10-video-engine.yaml
++++ b/Documentation/devicetree/bindings/media/allwinner,sun4i-a10-video-engine.yaml
+@@ -55,7 +55,10 @@ properties:
+     description: Phandle to the device SRAM
  
--	if (!pskb_may_pull(skb, sizeof(struct udphdr) +
--			   sizeof(struct amt_header)))
-+	/* skb->data is the UDP header on receive, but the quoted IP header
-+	 * when amt_err_lookup() parses an ICMP error, so pull up to the
-+	 * transport header rather than from skb->data.
-+	 */
-+	if (!pskb_may_pull(skb, skb_transport_offset(skb) +
-+			   sizeof(struct udphdr) + sizeof(struct amt_header)))
- 		return -1;
+   iommus:
+-    maxItems: 1
++    minItems: 1
++    items:
++      - description: VE port on IOMMU
++      - description: VE_R port on IOMMU
  
- 	amth = (struct amt_header *)(udp_hdr(skb) + 1);
+   memory-region:
+     maxItems: 1
+@@ -82,6 +85,22 @@ required:
+   - resets
+   - allwinner,sram
+ 
++allOf:
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - allwinner,sun50i-h6-video-engine
++    then:
++      properties:
++        iommus:
++          minItems: 2
++    else:
++      properties:
++        iommus:
++          maxItems: 1
++
+ additionalProperties: false
+ 
+ examples:
 -- 
 2.53.0
 
