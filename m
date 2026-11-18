@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038604;
-	b=MdjhSTny/Ph/CZkgJYiS9hNM1dJVWCsP0vqU/wU3G+XE/7R9TbK7bM2nDN3/j95557kE
-	 JrAMncBc+p+4BFrdeEBrurxBGh+M5Vr17I8HC9J3JsZmn3p1vfdooD9j2pik4KJhVeqXs
-	 Ssj2nCGKLGlELSy3NECrK2uXCiGtwTBg+H6DQrJ3UAIW3C6mxe/d5Hn1NqAIO6wHiVRZ4
-	 lZ4bGXHtobl9EiMTvDiJQtnNz1pS5A4L3U8842ncbT0CrAV8w/c18gc86VVufB9NIbx4Q
-	 RSNnq/wWjtsMdO3mVO4ws5yjB6vDyALjsWIQjPbtK0FVFG3ePumIW3sapGqDvtrIIsQ==
+	t=1795038607;
+	b=1sKn6VQS9Km2JvCCyNwd/9VQlw9M6UzplfrcwR6XbYJPF6k/VXjLDeaDRA60a59QP7yn
+	 QykjstoV3jm6p/xe7aOJCWBrl3em1Ql0N6QGK7jcniwUlIUdjcLx14giRS8h30943ZT3u
+	 5jEye+EBch4d2VVoc86WY8Iixqs0dg+OFARUihgu2ihUjPWMADUMBYtZRy5u2L9v0qxFv
+	 zqg6uuvjwVSJcz1W9OtMNpYaZ6T/xgCS4CengmwHQYfKmJthTuGNVa4T5g26SRtfNw0GV
+	 VB8Dok1CdDCw4nzXQPxAal4wkBgf7Mku6ckR3V5ZriD1kX4sKGS8VnWeCSW3rUbY8nA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038604;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038607;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bBGUitn2lw2xQU3WeMS/Y3cRvhOchX/LF9JEJ8OKXTE=;
-	b=qOrCnM6i6aO6odw/y0f8XQ79E5YDaZ6CLOcf70m4G0r4k/EugLl9t54V9coThxn2oNm3
-	 wVuA+3BxfC1DGOoOkKvv0SSXZ8rtb6msE+3ZhwmewXkh5wB6jYZj6fZb00wox9QCFC87o
-	 Bn3BLhHnTtar4nNVSCeWAXhuSnN7KkZ3XfubOvfI+Dz5+zOpBpbdLieVSjZmcF7Mg/d9m
-	 4HzlFa/hzoxp70siSh+oIrWZmyezsbYSYMJYkLboQn4lsY/hEJVA4a4sYlbjCDf0VLd/g
-	 v7NpB1sQU2HDOuzwOmBHl84y6jfnmxZptyIupjsVUdvdVhtZ9xfGFfa3WkRij2lGmSg==
+	bh=6VtwGtGOk94rYU2c8V9zKEZLdhqVfjdeUXzw5MNLTHY=;
+	b=aY+28Xzbtq3fQulvdKSXdd80gdb4MoVwkfWGA7rnkwlNqWpbVAIxhRr8xY6Ils9xbxm8
+	 yfcrKdgVDC668/z72TilR8qYPQpXAqkZ6Tw8M7eZ37JAhnw1fnbwV/aVs0CtO80cG2bAU
+	 QYKgEPYO8Iyg5WDGjvMgTuTkOBDw4aFU1HiU9GaVaCW8qz0l89SFqx45h3oDO+0HPp2Tr
+	 PAAkDhHKyPsqu09Yy3tWpI49ulew5wtLYJI3Imq3xoQasAZZ0YVBY1vq8k84taIxqWZiD
+	 tedt5q+IME9iXVGVq3EqFMvXWtoiZPBivLw7pYQYgmqZScm+PstIDS2XSpov81UliIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mAh7loy/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yDz9yaR5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 950F1606A31C;
-	Wed, 18 Nov 2026 21:50:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 581D0606A336;
+	Wed, 18 Nov 2026 21:50:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mAh7loy/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEBBC1F000C4;
-	Wed, 18 Nov 2026 21:50:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yDz9yaR5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 867361F000C4;
+	Wed, 18 Nov 2026 21:50:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038604;
-	bh=bBGUitn2lw2xQU3WeMS/Y3cRvhOchX/LF9JEJ8OKXTE=;
+	s=korg; t=1795038607;
+	bh=6VtwGtGOk94rYU2c8V9zKEZLdhqVfjdeUXzw5MNLTHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mAh7loy/A83pp2CKKo6wVe7G9JBVFzuxzBkI/a8E2Yjq9Iv9WE2baYiw3+1Y5SqUt
-	 S5B1bRvL3vQeklu+nboSYlHIapW28BdPkJMVbuduBUlOdCZiRsfNqAI7C1RiNMWchW
-	 zJprHa+PVQBGMhN4PR/ygxQvCyIaaVE04DwyrGjI=
+	b=yDz9yaR5JHzILTOSC5Lgo88ZPGKoW8FPEfFJL3wisPbacv8ribejzeBnv/e9JQkYX
+	 fizbPhpgoZZYhUAH97H64M4oggpAdu1UkJo1I1YYFIe1G1FsXK54jCTslhigbpvVo1
+	 KfP10YHTCSweoN9YEQkwPkHYgHImo0PnisZqRxlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Hitesh Patel <hitesh@ebytelogic.com>,
+	Bryan ODonoghue <bod@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1802/3318] PCI: cadence: Preserve all error codes in cdns_plat_pcie_probe()
-Date: Wed, 18 Nov 2026 15:40:24 +0100
-Message-ID: <20261118150415.915466506@linuxfoundation.org>
+Subject: [PATCH 6.6 1803/3318] media: qcom: camss: vfe-17x: Fix write master selection for RDI lines
+Date: Wed, 18 Nov 2026 15:40:25 +0100
+Message-ID: <20261118150415.945207105@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,45 +70,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Hitesh Patel <hitesh@ebytelogic.com>
 
-[ Upstream commit fe108800a865b268eec103e4940c248c85a86e9f ]
+[ Upstream commit fc02156a3efb747b724a490cc50e1ad8c28a3b23 ]
 
-The blamed commit functionally changed the error path of
-cdns_pcie_host_probe(), now cdns_plat_pcie_probe().
+On the gen2 VFE bus there is no crossbar between the RDI paths and
+the bus write masters: RDI n is served by write master n. The common
+vfe_get_output_v2() reflects this by mapping line->id to write master
+line->id, and every gen2 VFE except 17x uses it.
 
-When the old code path executed "goto err_get_sync", the PCIe controller
-probe function propagated the pm_runtime_get_sync() error code. The new
-code doesn't, and returns 0.
+The 17x code kept its own vfe_get_output(), which reserves whichever
+write master is free first. That happens to be the right one as long
+as a single line streams and it is RDI0. As soon as two lines of the
+same VFE stream, for instance two virtual channels demultiplexed by
+the CSID to RDI0 and RDI1, the second line to start is given the
+write master of the other RDI. Both write masters are then programmed
+with the buffer address and frame size of the wrong line. The frames
+are truncated to the smaller of the two buffers and the SMMU faults
+on the larger one.
 
-Similarly for the "goto err_init" previously triggered by
-cdns_pcie_host_init() errors, and now triggered by
-cdns_pcie_host_setup() and cdns_pcie_ep_setup() errors. These are not
-propagated and will result in probing success, which is incorrect.
+Use vfe_get_output_v2() on 17x like the other gen2 VFEs and drop the
+duplicate. This also removes an error path that released
+output->wm_idx[0] before it had been assigned.
 
-Fixes: bd22885aa188 ("PCI: cadence: Refactor driver to use as a core library")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260810124315.433448-2-vladimir.oltean@nxp.com
+The gen1 VFEs are not affected: they have a bus crossbar and any write
+master can serve any line, so vfe_reserve_wm() is correct there.
+
+Fixes: 7319cdf189bb ("media: camss: Add support for VFE hardware version Titan 170")
+Cc: stable@vger.kernel.org
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Signed-off-by: Hitesh Patel <hitesh@ebytelogic.com>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+[ sashal: applied the shared vfe_get_output_v2() implementation to the existing local vfe_get_output() helper ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/cadence/pcie-cadence-plat.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../media/platform/qcom/camss/camss-vfe-170.c   | 17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/pci/controller/cadence/pcie-cadence-plat.c b/drivers/pci/controller/cadence/pcie-cadence-plat.c
-index 528038f926c13..c1ec619ab0a4e 100644
---- a/drivers/pci/controller/cadence/pcie-cadence-plat.c
-+++ b/drivers/pci/controller/cadence/pcie-cadence-plat.c
-@@ -119,7 +119,7 @@ static int cdns_plat_pcie_probe(struct platform_device *pdev)
- 	while (phy_count--)
- 		device_link_del(pcie->link[phy_count]);
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-170.c b/drivers/media/platform/qcom/camss/camss-vfe-170.c
+index b9a403921d7d4..f23ef724b4594 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-170.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-170.c
+@@ -402,7 +402,6 @@ static int vfe_get_output(struct vfe_line *line)
+ 	struct vfe_device *vfe = to_vfe(line);
+ 	struct vfe_output *output;
+ 	unsigned long flags;
+-	int wm_idx;
  
--	return 0;
-+	return ret;
+ 	spin_lock_irqsave(&vfe->output_lock, flags);
+ 
+@@ -414,12 +413,12 @@ static int vfe_get_output(struct vfe_line *line)
+ 
+ 	output->wm_num = 1;
+ 
+-	wm_idx = vfe_reserve_wm(vfe, line->id);
+-	if (wm_idx < 0) {
+-		dev_err(vfe->camss->dev, "Can not reserve wm\n");
+-		goto error_get_wm;
+-	}
+-	output->wm_idx[0] = wm_idx;
++	/* Correspondence between VFE line number and WM number.
++	 * line 0 -> RDI 0, line 1 -> RDI1, line 2 -> RDI2, line 3 -> PIX/RDI3
++	 * Note this 1:1 mapping will not work for PIX streams.
++	 */
++	output->wm_idx[0] = line->id;
++	vfe->wm_output_map[line->id] = line->id;
+ 
+ 	output->drop_update_idx = 0;
+ 
+@@ -427,11 +426,9 @@ static int vfe_get_output(struct vfe_line *line)
+ 
+ 	return 0;
+ 
+-error_get_wm:
+-	vfe_release_wm(vfe, output->wm_idx[0]);
+-	output->state = VFE_OUTPUT_OFF;
+ error:
+ 	spin_unlock_irqrestore(&vfe->output_lock, flags);
++	output->state = VFE_OUTPUT_OFF;
+ 
+ 	return -EINVAL;
  }
- 
- static void cdns_plat_pcie_shutdown(struct platform_device *pdev)
 -- 
 2.53.0
 
