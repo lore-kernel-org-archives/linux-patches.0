@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015551;
-	b=Dxen3911MXOkTB7WBqwEjIt5/YF5fo3KDzbFBanr2cQ72aBLOGAMidmDfzdlfJcKCIBW
-	 3qi9j6yqKWafsbXVFkkjpnfnDV3iTWdbHCbZM3AyyRMS/Ev+/f5jysnKFPm/Zf7dkyOHz
-	 U6tZTOHLo6ZGQFnR1MoGxe4AV4Eq82PPpd6Z9Y4WcUhL3dn3CHRKe8If9CgSyv4/CzerT
-	 Mzacvgl6wzqXsKRaNM5YHjZOiGBLe7zoVV2yUTjAaqVQJtzvpVLwGNvLXt7r2esb4Yly4
-	 CUxOa72fc4fKVlAh1BsGwzsukcgEwo+/rlYHWwkDriOcW1acx+pqY2o1KJiLwxlXwUw==
+	t=1795015554;
+	b=iVakHNOh+aIqZLxJd4qUPEhBUhADvVxHU6t0rSTQr7rMiS2xNfVVE1pbtrMz8iILXVdn
+	 v5iyOPMBLaU0ItwubeInPvsogoBOpkt1cv16HvoC7JXVwIGn+3YS19WfgKwvc/JnkwL0a
+	 ZXp/t2uGTU7x5mCNkeqOZVw37RSxwSLYhsC8ywTpK/Yi6KAgnl6xdAVAPNuh+FKSIkNgt
+	 +dhoPbgTYwkeOWhNS3sorylrB6BAxGzeKYarVpPZou4B8oCwIWlC0ro5p1LoUBD30aaJj
+	 8NlShokgLhgi6tHpRN6G60i65Iab9gvLMq63aZDQlrd9sT/0uqa5BN/LECa00NDWscA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015551;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015554;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=8tQjRrrSvEGlz116GKq63qmemNGUyB/wWvQkdcxal7s=;
-	b=MyQKVoVi2mNFOBLKW1n7vSlV3AoCiIkd6SjT/2/Jlq933TDw77gSsgfHU8JqqF6tSbBE
-	 EKQCzKH5BmTDGbxosNhsZSLzesUGGCtxwaV6AQQ2JOkI/jCtMt7KwhVomFzifFlHWu/Ui
-	 gR3w1QpIFrohkcKiD79iD+1hKPj8FwUX5X9uRZQ1kP7U3sc9gcVljAh+RAdTvvKpm5F1l
-	 0/O532iFC/qfRnweDyRA1ZdzSXpwwssstVnS7E/R0aRKvn3dx5X9Lm7zRzxDMR27KVBpw
-	 5D/e9fbERF0hYB3nMcAHSY/UV8CYEde55rIXQ3X1x3eO+ZuNRS7g+6S/56pi/dyMHQw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=gUdL75uNZEgdZVXXndDr8t0JQgiIVKifk9GIINjEhVE=;
+	b=HQp8SxzxghgqflYZagDWXMa5sUL4ZzdIqk7dTg8hmlp2x65XFqVc87ZugsHlBjdB8HO3
+	 OVV9uf/6l+6juG64snlse4DAj/Qv2sNwNhtsM0AaNKr0rHeVnVDNjwB13/GafR0oAisjF
+	 WjlmWF0G88pqiLh3Btw6BTX7mW+iW/TE7M9qu5YgHCDjNeXOj7wcixBrltaqiqcDTf217
+	 A9ftoJtgKd5EN0Rv/fXsF1zllyeeg7coPrfX12STYP9rR1PVrgyKkUSCoidrDDHe1Y+XJ
+	 b0MLOcrtdWyiJ0bZ6c5CEL1gsUl65409DavV31nZFvRs3X92//NRsrL53r/Z0iAL2Zg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FLdI3V87;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wJ9eqQwD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A6F606A325;
-	Wed, 18 Nov 2026 15:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A032F606A325;
+	Wed, 18 Nov 2026 15:25:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FLdI3V87
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1388F1F000C4;
-	Wed, 18 Nov 2026 15:25:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wJ9eqQwD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85431F000C4;
+	Wed, 18 Nov 2026 15:25:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015551;
-	bh=8tQjRrrSvEGlz116GKq63qmemNGUyB/wWvQkdcxal7s=;
+	s=korg; t=1795015554;
+	bh=gUdL75uNZEgdZVXXndDr8t0JQgiIVKifk9GIINjEhVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FLdI3V87tlBAuNRE9Rv63Mpj9l00JPGeMAfjOPLxrzeZueOM14i+OQ5qiYMJmsGkK
-	 KpTnk1R1A16dVBbFtj9c5UbInUQFB+CaEqRWwfLbmY71DuLgeu9+tGXFuYPvuwkXvm
-	 QhtaxFcrGLtdKKfhsW4GWp2Jfmk34/0KXeKgLyHE=
+	b=wJ9eqQwDhHdANkUOkkMoOfmu37buwdkZVwl2ubtzhPRBdyjhiUb1OnqR0sVYDnzy3
+	 iHg9bZ8NQtYBswT/W0sOh3Ki9ZouHGvd640Etm7Q0RVrdQ7phqZa+jLyLKyU6Ndb1D
+	 E25qS2p9Szwu6Eamqj0qhwZqoYXepd8us9BntfNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrice Derepas <fabrice.derepas@canonical.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Julius Bairaktaris <julius@bairaktaris.de>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0215/2651] crypto: asymmetric_keys - fix OOB read in pefile_parse_binary
-Date: Wed, 18 Nov 2026 15:24:15 +0100
-Message-ID: <20261118150255.612398253@linuxfoundation.org>
+Subject: [PATCH 7.3 0216/2651] wifi: mac80211: fix swapped fq_overlimit/fq_overmemory in aqm debugfs
+Date: Wed, 18 Nov 2026 15:24:16 +0100
+Message-ID: <20261118150255.650702780@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,63 +63,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fabrice Derepas <fabrice.derepas@canonical.com>
+From: Julius Bairaktaris <julius@bairaktaris.de>
 
-[ Upstream commit 37d550172c2d3cdb3a5ace3e6cb0625967d86349 ]
+[ Upstream commit 25f3f2ff88ae604a3b473b501fc55d58fcb0f5eb ]
 
-pefile_parse_binary() reads the size field of the certificate table's
-data-directory entry, which sits at fixed index 4 of the PE optional
-header's data directory:
+The two scnprintf arguments for fq_overlimit and fq_overmemory are in the
+wrong order, which results in the aqm debugfs file showing the overmemory
+count under the fq_overlimit label and vice versa.
 
-	ctx->certs_size = ddir->certs.size;
-
-but nothing ensures index 4 is present. n_data_dirents (the untrusted
-NumberOfRvaAndSizes) is only upper-bounded against header_size and may be
-0, and header_size need only satisfy cursor < header_size < datalen. A
-crafted PE with n_data_dirents = 0 and a tiny header_size therefore causes
-the ddir->certs.size read to land past the end of the image (CWE-125). The
-chkaddr() that bounds the certificate blob runs only after this read.
-
-verify_pefile_signature() is reached from kexec_file_load() (the
-lockdown/secure-boot enforced PE-image signature path), and the image is
-parsed before its signature is checked. The trigger needs CAP_SYS_BOOT and
-the access is out-of-bounds read only (no write).
-
-Require the certificate table's data-directory entry (index 4) to be
-present; the existing upper-bound check then keeps ddir->certs within
-[cursor, header_size).
-
-Fixes: 26d1164be37f ("pefile: Parse a PE binary to find a key and a signature contained therein")
-Assisted-by: copilot-cli:claude-opus-4-6 frama-c
-Signed-off-by: Fabrice Derepas <fabrice.derepas@canonical.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 2a4e675d887b ("mac80211: Export fq memory limit information in debugfs")
+Reviewed-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Julius Bairaktaris <julius@bairaktaris.de>
+Link: https://patch.msgid.link/20260904090626.92727-1-julius@bairaktaris.de
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/asymmetric_keys/verify_pefile.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/mac80211/debugfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/crypto/asymmetric_keys/verify_pefile.c b/crypto/asymmetric_keys/verify_pefile.c
-index cec99db14129a..1efd5c0d0e9ce 100644
---- a/crypto/asymmetric_keys/verify_pefile.c
-+++ b/crypto/asymmetric_keys/verify_pefile.c
-@@ -87,6 +87,11 @@ static int pefile_parse_binary(const void *pebuf, unsigned int pelen,
- 	if (ctx->n_data_dirents > (ctx->header_size - cursor) / sizeof(*dde))
- 		return -ELIBBAD;
- 
-+	/* the certificate table entry must be present in the data directory */
-+	if (ctx->n_data_dirents <=
-+	    offsetof(struct data_directory, certs) / sizeof(*dde))
-+		return -ELIBBAD;
-+
- 	ddir = pebuf + cursor;
- 	cursor += sizeof(*dde) * ctx->n_data_dirents;
- 
+diff --git a/net/mac80211/debugfs.c b/net/mac80211/debugfs.c
+index e38631d7cfb42..1f914b48e3bbe 100644
+--- a/net/mac80211/debugfs.c
++++ b/net/mac80211/debugfs.c
+@@ -96,8 +96,8 @@ static ssize_t aqm_read(struct file *file,
+ 			"RW fq_quantum %u\n",
+ 			fq->flows_cnt,
+ 			fq->backlog,
+-			fq->overmemory,
+ 			fq->overlimit,
++			fq->overmemory,
+ 			fq->collisions,
+ 			fq->memory_usage,
+ 			fq->memory_limit,
 -- 
 2.53.0
 
