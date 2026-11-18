@@ -1,64 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046467;
-	b=Ewt193uR1LXiYvl0sb9tY0T0Qn9WKAe8dgYmDS2KoNU1ZOwLFHq3Zd6kFnr/zGbNQZ7Z
-	 A4Ke6bOyiql3zXJQodeGG4ZmHfYtzM3pz+ITV66iTujwVWITG5MQmrHwaaVfcRK0myWL3
-	 SNAvTGoYTheBhk0sEGFtlQcL6zhREj8S1Jjb8lvUnWBCddhxpOL9pjdBJdVGVyx7Vg8cM
-	 SdsGF4BztdEnbwwKAVwvSrWFSqfz2h+Y8Mgyc9cqPZ2so6qbomTJUjKblCQa0Ukbuelov
-	 XD67PBowp94ZEEMZZuTUnFWt/DudkTJfLV1HAZ5Pc7BfUElhCgWZxkEJVayoZMZZQXw==
+	t=1795046469;
+	b=dkE6jrpoco7vqWMKNWi9AuKaM9Sf95tKbydsSNgM+J+L73ip8a0DQoxVE2N4+Uf9c1D7
+	 LvwiwVDLhE9M0vhB0O1PUxHioJ5Jc4J69kavFTxaJuCOIOYCMtP32ojSavFa1xUICGrjY
+	 4kr1oVBBXTzfV+zZN83leGOtaEcLaS4oF+vKh7M1L3+CZKgKI3nViQq8DnBsbaCEUZPzZ
+	 DD0BxOhmZ4hvphxqRGyGfklw5Up+NyTm2oimO/Xmg/Ne+d+ZqAlh3TzaKhaCcv5qgwM3Z
+	 Kd/B6EcAu0qEfrl5XuJkxdXzvCDh8/5YKH4UbCiZX6sWVmGMBU6O9qgDQ/G5MAcCXRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046467;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046469;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uMJWi9+AqwPCWnO6XLuM5xbKuLaQpyF1BtPsxlDwzMY=;
-	b=5IQVRnhTi4WH+m6sMFKIQwQdDo9sXRDZ9zpwirj8WM6yqhBRS6k33PT9GLc6FJJkoECW
-	 yForD7/YxxwfJ3qW+TmxH5DftNQBCAnCgjX4WoXqm6t6BRYCXa4SLGYSma189Jmbc5V5t
-	 NXvd7szlrPG8lTkcVZe3R1waWK6BRmsg1XG07CV8xU+PWXecfY+pQF1pLJpqzlw/O6kuE
-	 u6xc0ErmXaRnFyMpZnFmQAoELK9H3c1fUSI7fFFm09V/1hdaeg6VI3JEl7REOqB4aHnjk
-	 xV+NhJ6aqWVNgs1HJdOy0/d6nxahGqloSc+kuvHQ4iunWWDoj5rLayUR5uanyBtYIPw==
+	bh=tyHnoHAGmy14xeiZFoIYoyMVIkNQOyJXcn0g2uMGIaM=;
+	b=ejBgjtQOS+q+oIxRhDZXnWzjJBnVWcT9oHs9lWIjQFNOWRvn+22fJPDvkQi4f33zQRwZ
+	 Ro6rqGdTKviRgdP7XipbrYxfPAV+9dKh9kFPBFimD8GaPmU0UZPkYyF/wbm7JgarHZVl2
+	 MMOrneVKPNnslzBe/zgywDtYZLZu0fpkLijNBG3QSHCcMdoM1UdoDkGmyvmjHIA18O2c7
+	 5EMrKPrZBt7Gh8oNToq2DJ3YomY7SRt4pnSgOLlxW+d5bpqr33AvjLhyc+XkVahyk7wA2
+	 BhG9UBm+YHm1/vrWuvJFR2eYT4QGKhrNUE54ysT2ztnpCONo53os9aqrkDdMJ2IETtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FKqN61i9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V7L6mXYM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E89606A31C;
-	Thu, 19 Nov 2026 00:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87878606A31C;
+	Thu, 19 Nov 2026 00:01:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FKqN61i9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13C5A1F000C4;
-	Thu, 19 Nov 2026 00:01:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V7L6mXYM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5D2D1F000C4;
+	Thu, 19 Nov 2026 00:01:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046466;
-	bh=uMJWi9+AqwPCWnO6XLuM5xbKuLaQpyF1BtPsxlDwzMY=;
+	s=korg; t=1795046469;
+	bh=tyHnoHAGmy14xeiZFoIYoyMVIkNQOyJXcn0g2uMGIaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FKqN61i9tWpKK4wPKv3B2ks//yGVsIHPsmTnGZrE2Sbba0kDdUxtrgffEniefk6Qn
-	 1x7gUHdEiT6m5rQ5lyzWydx2y7/eVrVgpWnXHPaKdU26CqB7qGT5+994hWblSCCUHv
-	 s4HKmC7h76yrDxUkkRcAJv53nkGQgJGivreKYdKA=
+	b=V7L6mXYM2BVuB6dz1pbCoExKHuDmU5FQ3Iac8GnkKhcBA9O/q5yRlMt1ooDyGnuQi
+	 4VS+tFvNMeJLngOH7KJNBaCr0YrxQk4K4Vj1atxowgJBNSbtKYHRj1Fk0NeIvZMAN4
+	 BXIinaph6cuUnSyj8SCuu0HIihitmQ+w0ciKUHVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Down <chris@chrisdown.name>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	"Vineeth Pillai (Google)" <vineeth@bitbyteword.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Kairui Song <kasong@tencent.com>,
-	Hugh Dickins <hughd@google.com>,
-	Chris Li <chrisl@kernel.org>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Baoquan He <baoquan.he@linux.dev>,
-	Barry Song <baohua@kernel.org>,
-	Youngjun Park <youngjun.park@lge.com>,
-	Ying Huang <huang.ying.caritas@gmail.com>,
-	Kelley Nielsen <kelleynnn@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	kernel test robot <lkp@intel.com>,
+	Bradley Morgan <brads@mainlining.org>,
+	Jonas Bonn <jonas@southpole.se>,
+	Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>,
+	Stafford Horne <shorne@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1251/2857] mm: make swapoff interruptible when unusing mms/shmem
-Date: Wed, 18 Nov 2026 15:38:05 +0100
-Message-ID: <20261118150246.592330884@linuxfoundation.org>
+Subject: [PATCH 6.1 1252/2857] openrisc: export __mulsi3 for modules
+Date: Wed, 18 Nov 2026 15:38:06 +0100
+Message-ID: <20261118150246.627002898@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -80,114 +74,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Down <chris@chrisdown.name>
+From: Andrew Morton <akpm@linux-foundation.org>
 
-[ Upstream commit 740128dd1a3f2bd81a80314d079b6b03c39ba3af ]
+[ Upstream commit 8ff981aa283a0ce516c2dc65a48a185ed336c657 ]
 
-try_to_unuse() only checks for a pending signal between mms, and
-shmem_unuse() doesn't check at all.  That means that once swapoff gets to
-a process or a shmem file with a lot swapped out, nothing can interrupt it
-until every last page of it has been read back in.
+OpenRISC configurations without hardware multiplication fail to build
+modules which contain compiler-generated calls to __mulsi3.  The failure
+is widespread, affecting filesystems, drivers and KUnit tests at modpost.
 
-Just as one example of where this can concretely show up, freezing tasks
-for suspend or hibernation has to wait for swapoff to notice the freezer's
-fake signal, and gives up after freeze_timeout_msecs (20 seconds by
-default).
+When CONFIG_OPENRISC_HAVE_INST_MUL is disabled, the architecture Makefile
+passes -msoft-mul to GCC.  The multiplication helper is supplied by the
+libgcc archive linked into vmlinux, but or32_ksyms.c does not export it.
+Built-in callers can therefore link while module callers cannot resolve
+the symbol.
 
-Here's a facetious example where one swaps out 2GiB of one process to a
-swap file on ext4, starts swapoff, and half a second later tries to freeze
-with pm_test=freezer.  Writing to /sys/power/state then fails with EBUSY
-and this in dmesg:
+Export __mulsi3 alongside the other compiler-generated helpers.
 
-    Freezing user space processes failed after 20.003 seconds (1 tasks refusing to freeze, wq_busy=0):
-    task:swapoff         state:D stack:0     pid:3175  tgid:3175  ppid:2955   task_flags:0x400100 flags:0x00000419
-    Call trace:
-     [...]
-     io_schedule+0x44/0x70
-     folio_wait_bit_common+0x1ec/0x3d0
-     __folio_lock+0x24/0x40
-     unuse_pte_range+0x2d0/0x348
-     unuse_vma+0x158/0x248
-     unuse_mm+0xfc/0x150
-     try_to_unuse+0x104/0x3f8
-     __do_sys_swapoff+0x220/0x5d8
-     [...]
+The omission predates 7c3f4d699f34 ("resource, kunit: stop selecting
+GET_FREE_REGION"), which the robot identified when reporting an additional
+failing module.  It was already present in the initial OpenRISC export
+list.
 
-The same goes for anything else that wants swapoff to stop, like an admin
-hitting ^C in a panic, of course.
-
-Prior to commit b56a2d8af914 ("mm: rid swapoff of quadratic complexity")
-try_to_unuse() was driven by find_next_to_unuse() which checks for a
-signal before every entry, so let's restore that behaviour.
-
-Just as an example of the improvements, here's how long freezing takes
-in the same test while swapoff is happening on my computer:
-
-                      before                  after
-    400MiB anon       8.925s                  0.028s
-    400MiB shmem      1.639s                  0.003s
-    2GiB anon         failed after 20.003s    0.011s
-
-Link: https://lore.kernel.org/at9kJwdGkHPsWwgG@chrisdown.name
-Fixes: b56a2d8af914 ("mm: rid swapoff of quadratic complexity")
-Signed-off-by: Chris Down <chris@chrisdown.name>
+Fixes: 616257669e1a ("OpenRISC: Miscellaneous")
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: Vineeth Pillai (Google) <vineeth@bitbyteword.org>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: Kairui Song <kasong@tencent.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Chris Li <chrisl@kernel.org>
-Cc: Nhat Pham <nphamcs@gmail.com>
-Cc: Baoquan He <baoquan.he@linux.dev>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Youngjun Park <youngjun.park@lge.com>
-Cc: Ying Huang <huang.ying.caritas@gmail.com>
-Cc: Kelley Nielsen <kelleynnn@gmail.com>
-Cc: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202610290106.o8Fs3NvO-lkp@intel.com/
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Cc: Jonas Bonn <jonas@southpole.se>
+Cc: Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>
+Cc: Stafford Horne <shorne@gmail.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Karl Mehltretter <kmehltretter@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem.c    | 4 ++++
- mm/swapfile.c | 4 +++-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ arch/openrisc/kernel/or32_ksyms.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 289707965dd1c..97288239d98a5 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -1317,6 +1317,10 @@ static int shmem_unuse_inode(struct inode *inode, unsigned int type)
- 		if (ret < 0)
- 			break;
- 
-+		if (signal_pending(current)) {
-+			ret = -ERESTARTSYS;
-+			break;
-+		}
- 		start = indices[folio_batch_count(&fbatch) - 1];
- 	} while (true);
- 
-diff --git a/mm/swapfile.c b/mm/swapfile.c
-index 03adf2ddb126b..48ec57f66fda1 100644
---- a/mm/swapfile.c
-+++ b/mm/swapfile.c
-@@ -1927,6 +1927,8 @@ static inline int unuse_pmd_range(struct vm_area_struct *vma, pud_t *pud,
- 	pmd = pmd_offset(pud, addr);
- 	do {
- 		cond_resched();
-+		if (signal_pending(current))
-+			return -ERESTARTSYS;
- 		next = pmd_addr_end(addr, end);
- 		if (pmd_none_or_trans_huge_or_clear_bad(pmd))
- 			continue;
-@@ -2139,7 +2141,7 @@ static int try_to_unuse(unsigned int type)
- 	if (READ_ONCE(si->inuse_pages)) {
- 		if (!signal_pending(current))
- 			goto retry;
--		return -EINTR;
-+		return -ERESTARTSYS;
- 	}
- 
- 	return 0;
+diff --git a/arch/openrisc/kernel/or32_ksyms.c b/arch/openrisc/kernel/or32_ksyms.c
+index 212e5f85004cc..c63d7f25bc575 100644
+--- a/arch/openrisc/kernel/or32_ksyms.c
++++ b/arch/openrisc/kernel/or32_ksyms.c
+@@ -35,6 +35,7 @@ DECLARE_EXPORT(__divsi3);
+ DECLARE_EXPORT(__umodsi3);
+ DECLARE_EXPORT(__modsi3);
+ DECLARE_EXPORT(__muldi3);
++DECLARE_EXPORT(__mulsi3);
+ DECLARE_EXPORT(__ashrdi3);
+ DECLARE_EXPORT(__ashldi3);
+ DECLARE_EXPORT(__lshrdi3);
 -- 
 2.53.0
 
