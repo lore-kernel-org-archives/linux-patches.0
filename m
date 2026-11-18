@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031444;
-	b=A3HYCuNP5pv0AMTJzhf94k8yCxy3UHXOEkKVCf+Ci6gXpg4nVNVAUhxJxymC2bkEkLx+
-	 mVEvgHhVDmIVm0rygcJwBOqi3i78ZAVjjh5kxA+Bfxq27sscSjxZ2ozm9Izf/xl3+flB+
-	 8zeCe5egd6HWJy+JT9E4Uhlg+3gpIgPhp9uPGv741VTmsBH/2pkT7nsv4vGN8AGulEj7x
-	 zEDgF5GhwMl5w+XpdejHVyNbO0OrfJ9jY+JAsIguZoiMnlc/wuWhUT375Ysdx3IkiXB30
-	 q70FGA1jwjPVUet5JIViYK1rjoioYV1HekBHgAjatZ/jB6hGg0udj7grzMv/ER02ZAA==
+	t=1795031447;
+	b=VXw5LjRkLNoIBfZxD7ajdT6UqYF6aAX02MmRS1O3VQHWrpNStCYH56mffzEvOHtks5fr
+	 d77Lq/tIv2hObho0nesnuJVjpFC0Ay53yM5u/DE4jUAkBOiazdQ52NWe8iwNtwDn1lBcv
+	 c1izYXHTJDs8jFmyktIA9ulWJi/iz9Je2KTIFATgB0TIf7X6tDJ76fUQM3k0YY71nvUhL
+	 qb4sxgu8F0dshSOtoAJBuZ2qXuWMGVT8i/jtlMHHiu9yM/BOsCCg0tvV8dSdzIkjaSPfw
+	 GMbyKtmwbdl1OYZYgubStltxMhyArJe6f/9Gv0NlbcILpwvut6HBUS9tmXi+VGzmydg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031444;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031447;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kCwnjoA0fkhL/WmnLDNMBI3i+0mQ9l1w9xAbVXbv/EE=;
-	b=qkXpORrCsJ9MRee5R2FSTfjEOpj5fT0cG5ckB1SSXzDKX+TSkA+G1UjjYw0ZqzASt+KT
-	 JI2SRJXoWEc5i2+OmsnRaZFLo1EBveehBdLAU6fVIj201l5tKt7+LMj+pfbvA0LCUbJUu
-	 Vw4wTVodlil9IvL+jByMGCb/RuJlbCvQ9FBOfCYSTQDhGnbmhZxKf9dOmT6ERuY946ztI
-	 uBgLYLQ5zSooBBhwPiiynIVyanVxZk0TPpbvfsDBpoW9iRu98B/dNXxP5fJBP5e68Ljzt
-	 Vbn7sh5X7bRRMVrkdMmRs577pcPl039YSxs9rhxaNBCmjgS/dx3dDs/3MF+86KNtNWQ==
+	bh=D9G0X5+zCiE7btdF2dK1nP99FdkRdDerY7tRNKn4rlo=;
+	b=z6p30ynNkSmF1ndyUlI/VZU35Zmbi4/sG45v1s32ihT+9Tbh3PbujrB+YlXebpMG/Lr+
+	 63e6kv+yGdk7t+++9R7+Wn61IspNIyafgedQU7E0nuDXfR2J7JuWZ2ghe5oBcVxzPgbP3
+	 xeSu8sF7eEkaus0pQK4RO4kA1Wdlaii2xgnqlnW6WRI0DobvmhdzZ9BgGWQN7FnXuWgH0
+	 yQP9BGcGsafJwgEelxulbAvyt5KvfwsipMC5ohqi5wIUSJqJTC2HDid7EMAA5SPxsv2qT
+	 at6TzREc6Y1h9R+A/FVHqtQIUupePc9AupLtarHfiLlqEKIqr77k52J6nrEhIAdgRQw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nCyGcXL6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YL91jc0C;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56F8606A32A;
-	Wed, 18 Nov 2026 19:50:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAAB6606A320;
+	Wed, 18 Nov 2026 19:50:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nCyGcXL6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2113F1F000C4;
-	Wed, 18 Nov 2026 19:50:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YL91jc0C
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E93D81F000C4;
+	Wed, 18 Nov 2026 19:50:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031444;
-	bh=kCwnjoA0fkhL/WmnLDNMBI3i+0mQ9l1w9xAbVXbv/EE=;
+	s=korg; t=1795031447;
+	bh=D9G0X5+zCiE7btdF2dK1nP99FdkRdDerY7tRNKn4rlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nCyGcXL6V0kxgNJ5GBWTUo4gwcmhThZgZcyTlA1cpuIK+QocG2psxzjtW4mY80QYb
-	 eLcwfAxgFypIBRuWuqHRjRgcXg24AqKXZxje7nFY1oe/AyQ5FGPinDI9KxToXH6ozr
-	 zKbzbji5LX9xFjAlIIt6UTfNIS1ylcrqDdX2r5TA=
+	b=YL91jc0Cb42RyJaQnfzGrw5clhRhvuD8Uy+ZOSTO4ukwkd2LywRpYwyKbSnMTytZ+
+	 m0S1/FLaNz/bRH4OJKnctS5Jh4N7zMs5bvtVvoE/K47IPnvyisJQqXx+OrqVigTruT
+	 +3oCE0guNmBmS0BRD1AqjiWA8BhrAotRXILi+JiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-bot@kernel.org>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1018/1756] ALSA: usb: us16x08: Fix racy accesses of mixer elements
-Date: Wed, 18 Nov 2026 15:52:25 +0100
-Message-ID: <20261118150050.648906904@linuxfoundation.org>
+Subject: [PATCH 6.12 1019/1756] ALSA: line6: Reject too small max packet sizes
+Date: Wed, 18 Nov 2026 15:52:26 +0100
+Message-ID: <20261118150050.684006895@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,155 +70,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 589fccbe1e9dd8aaf075cc073a7489c0c015ee49 ]
+[ Upstream commit e2ef553dfe923959632e580bcad8583d922868ac ]
 
-All get and put callbacks for us16x08 mixer have no proper protection,
-hence the concurrent accesses to multiple elements may face data
-races, resulting in unexpected values.
+Although the LINE6 driver has a sanity check for the given max packet
+sizes, it still has an implicit requirement of the minimal size being
+bytes-per-frame; e.g. the impulse test signal assuming the fixed size,
+and when a too small size is specified by a malformed USB descriptor,
+this may lead to an OOB access.
 
-Put the new mixer->lock mutex for protecting the concurrent accesses.
+Change the sanity check conditions to reject too small max packet
+sizes for avoiding the scenario above.
 
-Fixes: d2bb390a2081 ("ALSA: usb-audio: Tascam US-16x08 DSP mixer quirk")
+Fixes: 3450121997ce ("ALSA: line6: Fix write on zero-sized buffer")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://patch.msgid.link/20261008192553.300025-8-tiwai@suse.de
+Link: https://patch.msgid.link/20261008192553.300025-10-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_us16x08.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ sound/usb/line6/pcm.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/mixer_us16x08.c b/sound/usb/mixer_us16x08.c
-index b74e198c365c3..60565d5f113e3 100644
---- a/sound/usb/mixer_us16x08.c
-+++ b/sound/usb/mixer_us16x08.c
-@@ -183,6 +183,7 @@ static int snd_us16x08_route_get(struct snd_kcontrol *kcontrol,
- 	struct usb_mixer_elem_info *elem = kcontrol->private_data;
- 	int index = ucontrol->id.index;
- 
-+	guard(mutex)(&elem->head.mixer->lock);
- 	/* route has no bias */
- 	ucontrol->value.enumerated.item[0] = elem->cache_val[index];
- 
-@@ -198,6 +199,7 @@ static int snd_us16x08_route_put(struct snd_kcontrol *kcontrol,
- 	char buf[sizeof(route_msg)];
- 	int val, val_org, err;
- 
-+	guard(mutex)(&elem->head.mixer->lock);
- 	/*  get the new value (no bias for routes) */
- 	val = ucontrol->value.enumerated.item[0];
- 
-@@ -252,6 +254,7 @@ static int snd_us16x08_master_get(struct snd_kcontrol *kcontrol,
- 	struct usb_mixer_elem_info *elem = kcontrol->private_data;
- 	int index = ucontrol->id.index;
- 
-+	guard(mutex)(&elem->head.mixer->lock);
- 	ucontrol->value.integer.value[0] = elem->cache_val[index];
- 
- 	return 0;
-@@ -266,6 +269,7 @@ static int snd_us16x08_master_put(struct snd_kcontrol *kcontrol,
- 	int val, err;
- 	int index = ucontrol->id.index;
- 
-+	guard(mutex)(&elem->head.mixer->lock);
- 	/* new control value incl. bias*/
- 	val = ucontrol->value.integer.value[0];
- 
-@@ -304,6 +308,7 @@ static int snd_us16x08_bus_put(struct snd_kcontrol *kcontrol,
- 
- 	val = ucontrol->value.integer.value[0];
- 
-+	guard(mutex)(&elem->head.mixer->lock);
- 	/* prepare the message buffer from template */
- 	switch (elem->head.id) {
- 	case SND_US16X08_ID_BYPASS:
-@@ -340,6 +345,7 @@ static int snd_us16x08_bus_get(struct snd_kcontrol *kcontrol,
- {
- 	struct usb_mixer_elem_info *elem = kcontrol->private_data;
- 
-+	guard(mutex)(&elem->head.mixer->lock);
- 	switch (elem->head.id) {
- 	case SND_US16X08_ID_BUSS_OUT:
- 		ucontrol->value.integer.value[0] = elem->cache_val[0];
-@@ -362,6 +368,7 @@ static int snd_us16x08_channel_get(struct snd_kcontrol *kcontrol,
- 	struct usb_mixer_elem_info *elem = kcontrol->private_data;
- 	int index = ucontrol->id.index;
- 
-+	guard(mutex)(&elem->head.mixer->lock);
- 	ucontrol->value.integer.value[0] = elem->cache_val[index];
- 
- 	return 0;
-@@ -376,6 +383,7 @@ static int snd_us16x08_channel_put(struct snd_kcontrol *kcontrol,
- 	int val, err;
- 	int index = ucontrol->id.index;
- 
-+	guard(mutex)(&elem->head.mixer->lock);
- 	val = ucontrol->value.integer.value[0];
- 
- 	/* sanity check */
-@@ -422,6 +430,7 @@ static int snd_us16x08_comp_get(struct snd_kcontrol *kcontrol,
- 	int index = ucontrol->id.index;
- 	int val_idx = COMP_STORE_IDX(elem->head.id);
- 
-+	guard(mutex)(&elem->head.mixer->lock);
- 	ucontrol->value.integer.value[0] = store->val[val_idx][index];
- 
- 	return 0;
-@@ -439,6 +448,7 @@ static int snd_us16x08_comp_put(struct snd_kcontrol *kcontrol,
- 	int threshold, ratio, attack, release, gain, switch_on;
- 	int err;
- 
-+	guard(mutex)(&elem->head.mixer->lock);
- 	val = ucontrol->value.integer.value[0];
- 
- 	/* sanity check */
-@@ -515,6 +525,7 @@ static int snd_us16x08_eqswitch_get(struct snd_kcontrol *kcontrol,
- 	struct snd_us16x08_eq_store *store = elem->private_data;
- 	int index = ucontrol->id.index;
- 
-+	guard(mutex)(&elem->head.mixer->lock);
- 	/* get low switch from cache is enough, cause all bands are together */
- 	val = store->val[EQ_STORE_BAND_IDX(elem->head.id)]
- 		[EQ_STORE_PARAM_IDX(elem->head.id)][index];
-@@ -534,6 +545,7 @@ static int snd_us16x08_eqswitch_put(struct snd_kcontrol *kcontrol,
- 	int val, err = 0;
- 	int b_idx;
- 
-+	guard(mutex)(&elem->head.mixer->lock);
- 	/* new control value incl. bias*/
- 	val = ucontrol->value.integer.value[0] + SND_US16X08_KCBIAS(kcontrol);
- 
-@@ -576,6 +588,7 @@ static int snd_us16x08_eq_get(struct snd_kcontrol *kcontrol,
- 	int b_idx = EQ_STORE_BAND_IDX(elem->head.id) - 1;
- 	int p_idx = EQ_STORE_PARAM_IDX(elem->head.id);
- 
-+	guard(mutex)(&elem->head.mixer->lock);
- 	val = store->val[b_idx][p_idx][index];
- 
- 	ucontrol->value.integer.value[0] = val;
-@@ -595,6 +608,7 @@ static int snd_us16x08_eq_put(struct snd_kcontrol *kcontrol,
- 	int b_idx = EQ_STORE_BAND_IDX(elem->head.id) - 1;
- 	int p_idx = EQ_STORE_PARAM_IDX(elem->head.id);
- 
-+	guard(mutex)(&elem->head.mixer->lock);
- 	val = ucontrol->value.integer.value[0];
- 
- 	/* sanity check */
-@@ -723,6 +737,7 @@ static int snd_us16x08_meter_get(struct snd_kcontrol *kcontrol,
- 	struct snd_us16x08_meter_store *store = elem->private_data;
- 	u8 meter_urb[64] = {0};
- 
-+	guard(mutex)(&elem->head.mixer->lock);
- 	switch (kcontrol->private_value) {
- 	case 0: {
- 		char tmp[sizeof(mix_init_msg1)];
-@@ -782,6 +797,7 @@ static int snd_us16x08_meter_put(struct snd_kcontrol *kcontrol,
- 	struct snd_us16x08_meter_store *store = elem->private_data;
- 	int val;
- 
-+	guard(mutex)(&elem->head.mixer->lock);
- 	val = ucontrol->value.integer.value[0];
- 
- 	/* sanity check */
+diff --git a/sound/usb/line6/pcm.c b/sound/usb/line6/pcm.c
+index 77d5802872b16..586e38e40b930 100644
+--- a/sound/usb/line6/pcm.c
++++ b/sound/usb/line6/pcm.c
+@@ -561,7 +561,11 @@ int line6_init_pcm(struct usb_line6 *line6,
+ 	line6pcm->max_packet_size_out =
+ 		usb_maxpacket(line6->usbdev,
+ 			usb_sndisocpipe(line6->usbdev, ep_write));
+-	if (!line6pcm->max_packet_size_in || !line6pcm->max_packet_size_out) {
++	/* reject max packet sizes smaller than bytes-per-frame;
++	 * (the magic number 6 is taken from the playback case)
++	 */
++	if (line6pcm->max_packet_size_in < 6 ||
++	    line6pcm->max_packet_size_out < 6) {
+ 		dev_err(line6pcm->line6->ifcdev,
+ 			"cannot get proper max packet size\n");
+ 		return -EINVAL;
 -- 
 2.53.0
 
