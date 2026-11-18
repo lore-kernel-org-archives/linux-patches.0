@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050712;
-	b=qQSrgoArzDFCkdMb9TijCaHkY7qffN9z2hJjtzvCwtnWi9WZFGdekxPT5uTUTjA40DH5
-	 m9Be6kNH1VpaiihguElhFWi8WCDq8FR74QVBNnTldy02xwVYuHNaYYl8FQ5eB7dNyKve1
-	 OAUlDaJnFhOpC+vsRXViJ2kI1LDKGaMUWNL0qSmmTGpVt4P5j9217B+KIB5MdVNE4sOJF
-	 iPV0BBIK8OwBbvVeIOKcwLayk+ORS/lmpM8q3ZGNeUu4xAfBR6yqa2uvmOLpH2gCOcMs+
-	 /Z9bKR0b8yTb4nTrRGLcZAAxTU96W+an/nAXI0hqPgwdBuHwefpqBEaHZl1/HZ0melw==
+	t=1795050714;
+	b=TUIQH/O+qjIFMx/9sgGrCGDHzwwiwjjPIFCeOIs45IN3GGg3FyVmW9dKmdCEFsk0nXwz
+	 hWIJS+W8Bmkuf6olwmavkVLqbGyxojRMlxJN0mDWCCVQLPyxPNebeG2Xbn0Rhv0vAP1Ci
+	 wzMyb0hJFm/0+pUo4TEzt8Nyuz8Oow/iai/uUeP4o8qgia/dLLjb8uRlV9f9IU/30xSWd
+	 7uY5HSRC+wivbZcnAfLZW5zwKMGbP6UmyG6OOtZToX5TWlNTOhV/9YcW3yIttkU43ZrGI
+	 MUwNB3yqL5WzU/ZWoTgXBwrycD90hrMvnJTM0k7vCoPAah2Gpp7m8clwAy259D8O4lQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050712;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050714;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KLgw2ky6zTc5lhxQs/zGY6GJLvro/UOBnDwEMufcKTg=;
-	b=swj1Qj06c8mZaDDZlAWc+HpIIGXeaukqTfslfYJz4SGUpya/AlGnj1NBjwFfkjslh5zV
-	 WJn7oAvjGXIXBGttI029kG/xZsaNfNQg6PrZRbw8DjCpNYgxxo7Uov+cowuW1/3zwfOqz
-	 N0sDKhSjpklYX1OHjlOiFaOvTVZtx37OSu1WUHVt1W9GKGC9w+wF1GmCy60eN163i4sDZ
-	 tQL32XeyrinfFchEpKv33a+y8V1ARM+aIoMVsLngzy/crGKDn+8KwV1tcvEv9ubt10aWp
-	 2kEJhOLxA22Dfpldln4EO6Oe4CcG240rtW6fF3GyHvzNTpx3dA7+WBj+lXji9EksoWw==
+	bh=RE/F8bba63XwttwdmhtdJRmwS3MiGB8p0+6uaP9xN6Y=;
+	b=n7LpyHNeJhWkHd2R3dml8/5Y2T2HSkcBrBPr/Wm8HJ21XZXBPvOWq7/wPuO1+VXXk37d
+	 qvApBif7B19ZJyzY6e9rLJKkydNvWnbD0Pgx/mBd9gHCJWSIKUvnjiD0XvoxKSXpOiDVm
+	 P6hj+QXUubZAN4V+hQYjHs4mactxoN7Br4044yXI/g/4G7YEYuzF/QKANvptGhs+pxYE/
+	 t6iojWa72Ydbo0hZ13kdIxLfT8xTjBg7acg+FpGoQte5ctTL9x1LBkVar+ytAFpBTMpEx
+	 YaonwUcQmdb7GBqGUfeHYAHi3hImT3v6iNvqkFEm0BHGL6k3J8dB0xsWHtD7O671jbg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="gv/Fuewr";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=igh7R1Wp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08146606A320;
-	Thu, 19 Nov 2026 01:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD523606A32A;
+	Thu, 19 Nov 2026 01:11:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gv/Fuewr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20CA31F000C4;
-	Thu, 19 Nov 2026 01:11:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=igh7R1Wp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE67C1F000CA;
+	Thu, 19 Nov 2026 01:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050711;
-	bh=KLgw2ky6zTc5lhxQs/zGY6GJLvro/UOBnDwEMufcKTg=;
+	s=korg; t=1795050714;
+	bh=RE/F8bba63XwttwdmhtdJRmwS3MiGB8p0+6uaP9xN6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gv/FuewrangiVW56QX3Sf+jc9CLOR9fmBjG/8ekm1duW5k+Kf7KjH1oLSr7ESCzba
-	 xLkx3l5hANai+ySocHKSu8nE0+WvZPZeRhn4dVSXIoGXzec8KgM6W5cDQgSE6c1BMh
-	 p9g3cE3KkwQSkFYhsoMQ9TyuXHhesZGdYngEKW/o=
+	b=igh7R1Wp5PJr4dGRUu7uVMaCior5sj/7bcySVIjEVsFo3cheMzH3ZVv2lrYVrEzSO
+	 QXDB1OlngwCPwiSTJIrGFfjFFMqNAJYaECRcRZ0kt7e6qgLBRtcbI8vcEehxraujpF
+	 7LnolVZ4cU/xpInjsEK6w+VOBB8wGGNz11gyRcRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Md. Haris Iqbal" <haris.iqbal@ionos.com>,
+	Jack Wang <jinpu.wang@ionos.com>,
 	Josef Bacik <josef@toxicpanda.com>,
-	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2798/2857] block: fix use-after-free of the disk in sync_bdevs()
-Date: Wed, 18 Nov 2026 16:03:52 +0100
-Message-ID: <20261118150342.336788826@linuxfoundation.org>
+Subject: [PATCH 6.1 2807/2857] block/rnbd-srv: drop the sess_dev kobject unlocked
+Date: Wed, 18 Nov 2026 16:04:01 +0100
+Message-ID: <20261118150342.668983994@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,56 +72,91 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit cebb1c2331c2af1b7f1c822ac672a7f77b54bd90 ]
+[ Upstream commit 81941915d53ef3384ab4e4b68e92673e66cf66d7 ]
 
-sync_bdevs() holds a reference to the bdev inode while it takes
-bd_disk->open_mutex. For a partition the inode doesn't keep the gendisk
-alive, the device reference does: part_release() drops the disk as soon
-as the last reference to the partition device is gone. A sync(2) racing
-with the last close of a partition of an already deleted disk locks a
-freed open_mutex.
+rnbd_srv_create_dev_session_sysfs() drops the kobject reference when it
+fails. The release function is rnbd_destroy_sess_dev(), which takes
+srv_dev->lock, and the caller holds that lock: the worker deadlocks on
+itself. A client opening one device as "ram0" and "./ram0" gets there
+through -EEXIST from kobject_add().
 
-Take a device reference before touching the disk, like
-blkdev_get_no_open() does, and skip the bdev if it's on its way out.
+Have process_msg_open() drop the reference after releasing the lock, and
+leave the rest of the cleanup to the release function.
 
-Fixes: a8698707a183 ("block: move bd_mutex to struct gendisk")
+Fixes: 8cee532f469b ("block/rnbd: server: sysfs interface functions")
+Fixes: d3a95ccaaf4d ("block/rnbd: call kobject_put in the failure path")
+Cc: "Md. Haris Iqbal" <haris.iqbal@ionos.com>
+Cc: Jack Wang <jinpu.wang@ionos.com>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20261028164415.1262013-5-axboe@kernel.dk
+Link: https://patch.msgid.link/20261028164415.1262013-18-axboe@kernel.dk
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bdev.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/block/rnbd/rnbd-srv-sysfs.c | 12 ++++++------
+ drivers/block/rnbd/rnbd-srv.c       |  8 +++++++-
+ 2 files changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/block/bdev.c b/block/bdev.c
-index 0c1b8d3e80a37..5331a733a3258 100644
---- a/block/bdev.c
-+++ b/block/bdev.c
-@@ -1076,6 +1076,15 @@ void sync_bdevs(bool wait)
- 		old_inode = inode;
- 		bdev = I_BDEV(inode);
+diff --git a/drivers/block/rnbd/rnbd-srv-sysfs.c b/drivers/block/rnbd/rnbd-srv-sysfs.c
+index d9d6a5fd7cf58..8cf9236cc1a1d 100644
+--- a/drivers/block/rnbd/rnbd-srv-sysfs.c
++++ b/drivers/block/rnbd/rnbd-srv-sysfs.c
+@@ -193,6 +193,10 @@ static struct kobj_type rnbd_srv_sess_dev_ktype = {
+ 	.release	= rnbd_srv_sess_dev_release,
+ };
  
++/*
++ * On failure the caller has to drop the reference of the kobject. The release
++ * function takes the lock of the device, which the caller holds here.
++ */
+ int rnbd_srv_create_dev_session_sysfs(struct rnbd_srv_sess_dev *sess_dev)
+ {
+ 	int ret;
+@@ -200,17 +204,13 @@ int rnbd_srv_create_dev_session_sysfs(struct rnbd_srv_sess_dev *sess_dev)
+ 	ret = kobject_init_and_add(&sess_dev->kobj, &rnbd_srv_sess_dev_ktype,
+ 				   sess_dev->dev->dev_sessions_kobj, "%s",
+ 				   sess_dev->sess->sessname);
+-	if (ret) {
+-		kobject_put(&sess_dev->kobj);
++	if (ret)
+ 		return ret;
+-	}
+ 
+ 	ret = sysfs_create_group(&sess_dev->kobj,
+ 				 &rnbd_srv_default_dev_session_attr_group);
+-	if (ret) {
++	if (ret)
+ 		kobject_del(&sess_dev->kobj);
+-		kobject_put(&sess_dev->kobj);
+-	}
+ 
+ 	return ret;
+ }
+diff --git a/drivers/block/rnbd/rnbd-srv.c b/drivers/block/rnbd/rnbd-srv.c
+index c47ad07972699..67108aeda467d 100644
+--- a/drivers/block/rnbd/rnbd-srv.c
++++ b/drivers/block/rnbd/rnbd-srv.c
+@@ -575,6 +575,7 @@ rnbd_srv_create_set_sess_dev(struct rnbd_srv_session *srv_sess,
+ 		return sdev;
+ 
+ 	kref_init(&sdev->kref);
++	INIT_LIST_HEAD(&sdev->dev_list);
+ 
+ 	strscpy(sdev->pathname, open_msg->dev_name, sizeof(sdev->pathname));
+ 
+@@ -775,7 +776,12 @@ static int process_msg_open(struct rnbd_srv_session *srv_sess,
+ 		rnbd_srv_err(srv_sess_dev,
+ 			      "Opening device failed, failed to create dev client sysfs files, err: %d\n",
+ 			      ret);
+-		goto free_srv_sess_dev;
 +		/*
-+		 * The inode does not keep the gendisk of a partition alive, the
-+		 * device does.
++		 * rnbd_destroy_sess_dev() undoes everything down to the open
++		 * of the block device.
 +		 */
-+		if (!kobject_get_unless_zero(&bdev->bd_device.kobj)) {
-+			spin_lock(&blockdev_superblock->s_inode_list_lock);
-+			continue;
-+		}
-+
- 		mutex_lock(&bdev->bd_disk->open_mutex);
- 		if (!atomic_read(&bdev->bd_openers)) {
- 			; /* skip */
-@@ -1091,6 +1100,7 @@ void sync_bdevs(bool wait)
- 			filemap_fdatawrite(inode->i_mapping);
- 		}
- 		mutex_unlock(&bdev->bd_disk->open_mutex);
-+		put_device(&bdev->bd_device);
- 
- 		spin_lock(&blockdev_superblock->s_inode_list_lock);
++		kobject_put(&srv_sess_dev->kobj);
++		goto free_path;
  	}
+ 
+ 	list_add(&srv_sess_dev->dev_list, &srv_dev->sess_dev_list);
 -- 
 2.53.0
 
