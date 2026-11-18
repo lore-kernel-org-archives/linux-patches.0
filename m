@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029433;
-	b=BpnS4pgZXJ6Sv7iI5p3tXFB17fKuYsFiKZkw9CJv0fawooq7M3df8KMB4njXVPSDfNmo
-	 ycrP9RrBEbSk54X2WdETDOa7hVuCqxnW2YAuAaPUYC74XR/LJ8qDzgr4NQn/Dz47tfzy3
-	 m9iP1N5LnmrGTUUhZGfw7Wtv//i3h8nilO80pkv2sysjxBSVpIFgBepq0tKFs5iKPZ+v4
-	 ep1eyWhHlmEST6bJTq6c5dzTZqTihBbyEIzh5dukZpAcgEWcuQh6nlYbrcJAjqHtYu84j
-	 4lTxAU7o7W66LhqiMi6rXmTKlYvrpOKlZBBmSlAoM8FxgVX/G9s9b4HJSqFXWXQaNiw==
+	t=1795029436;
+	b=OVFYGUIhjpsHCthT6vM6JptFBSFnR7Wtub903NMl5wcwoaaIOKxOFHzMdDjI66tknJCx
+	 3oXTukHT7GwsEGtq2wG5vxrCJuSMBmn5mlQRyy0OJKbGDWxuDbqcTov1RFdZqRvgnyWBO
+	 NZmvJQFFhmGecWK1vV8Syy5G24xBx7tvuyn/aQ2p3napdQ0SVfbvZqusNhphMJT0HEc6l
+	 2MlllaItolqw4DnSXQvojt+fgeEWwtOjHNX8tv/USIruAmMxm+E4YfNYeTbBBJtIu2RjM
+	 jNUSzNyJUDas3lkrmb6GlF+VzsXCACDlSfnq7PsUMhgCSPiO6HeXMPb/ASjo/6gcHsQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029433;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029436;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fwh1MNiENwUzotIuZBMRzyBZmhhJ1NlDAx+3fV2kzyU=;
-	b=PBV4DAoSbeLFOwSqsiueVufeJA85jBCsVIwd/Q81c/AwAaSHgfhkEvsFaP2O7Pq3bybc
-	 dkHAvr4PDW1r7orQ35IuBzIQQt0k3NvwP5RbyJc3YJMygZZkLxRB2EA3tbnmVBg3hF5vh
-	 m1JxOwf8TjL5XI0cdQJ6qf/1GelzAUm+ZD7od2mOaUI7k6BgCliTBHYFfBnt2ZXl3IWOs
-	 8fCTPa8fTaWyPDUzfnYuwXz6ZBUaFI1fjjcRXBtxKm9bCFni8vdDcNTqSq3EfGA0M9W/i
-	 cJkrKPA+wce/5cncZMqPgHTNP9PdMWZ9XM9SIHsLmFu++JZlF+yibpZtHhSfCzkRvHA==
+	bh=YUAv+i4EGgQwCJihdm+Y1JMZOC0Jo5NOWxIGGh9G9bY=;
+	b=DORanZ07p19MBOH/cPUd1OEeYrLr3jK2WgnlXfbXYv3/W9VosD/mxCqH5A8LiVtaWxnu
+	 dLRTsdOVYtBeN7uIBWmI0vJksI50wlyhqNdwUAMiHAW6tnt9V8aaQXiT7VrHaDH3t7SEE
+	 nFb2KlYQ+Ax9AHlwJlBZEteylm+A4xVlmmOfKJYUi9q5vSzwpMs38ve1ug505J5CBU3c0
+	 7s4iYykIPTzPGdrWk2V/SYKoiPo9mJexidEPrFSQTz1UAY77RV/gx29X+plv8H4ItrWxE
+	 PRtMIwHh+xQKel0wAksvtiUp5Madyr42dWAzIRbKqJ4Kdj4QVNfpgJbiy2LxdBpJc3w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bTKa9UMt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zj6oRfV0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26549606A31C;
-	Wed, 18 Nov 2026 19:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14E3606A31C;
+	Wed, 18 Nov 2026 19:17:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bTKa9UMt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7705C1F000C4;
-	Wed, 18 Nov 2026 19:17:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zj6oRfV0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4226A1F000C4;
+	Wed, 18 Nov 2026 19:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029433;
-	bh=fwh1MNiENwUzotIuZBMRzyBZmhhJ1NlDAx+3fV2kzyU=;
+	s=korg; t=1795029435;
+	bh=YUAv+i4EGgQwCJihdm+Y1JMZOC0Jo5NOWxIGGh9G9bY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bTKa9UMtNp6Okh4u0CtA2ddpy3JbOAR21/m88XIGELNuR5kT5C3FWuuj3Fopvordz
-	 uVxysLKihoC2K02YTZpjPGOlPjg/+VPgFurNbZEHY6UHJBEcxBnYndKJLO/epqdUwE
-	 hY/2RPZaOCABVLH/qXIZtaJ92PhVXA+b0NBvdnzA=
+	b=Zj6oRfV05TMJsOCw/7O5BT/uduSwx8BZ9GX3afnvMOsNDXdOU6ISHzj/qjvmRGSsp
+	 FIPIDCwQ/pC1WqrC5ZL1MWuTp2zDDE3KTc3Gmhq5kgxQK0kMvMVvkSoSAdXGwUEivM
+	 Tyk/WGwUJOL4jXW1iCp8vK2nRU9YflY3v3m8/NE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0348/1756] regulator: ab8500: Test dedicated enable bits only
-Date: Wed, 18 Nov 2026 15:41:15 +0100
-Message-ID: <20261118150022.229873197@linuxfoundation.org>
+Subject: [PATCH 6.12 0322/1756] PCI: xgene: Use managed clock for PCIe controller
+Date: Wed, 18 Nov 2026 15:40:49 +0100
+Message-ID: <20261118150021.112138241@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,126 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit a5ee78846015512b4d3d32f8aa463024a23234ce ]
+[ Upstream commit b9022584ebbae81f7bbe4a61bd1df0d0a95e1a99 ]
 
-Some regulator control registers have independent enable and low-power
-bits. is_enabled() currently tests their combined update mask, so an
-off regulator with its low-power bit set is incorrectly reported as
-enabled.
+xgene_pcie_init_port() obtains and enables the controller clock manually.
+When xgene_pcie_setup() or pci_host_probe() fails, probe returns without
+disabling, unpreparing, or releasing the clock. A failed enable also leaves
+the clk_get() reference unreleased.
 
-Add an optional enable mask and use it for VINTCORE, AB8500 TVOUT,
-AB8505 ADC, and AB8505 VAUX5/6. Regulators whose two-bit field encodes
-the complete operating state continue to test the full update mask.
+Use devm_clk_get_enabled() so the clock is unwound automatically on probe
+failure and device removal.
 
-References: AB8500 User Manual, UM0836 Rev 3, p. 214;
-AB8505 User Manual, DM00046744 Rev 3, pp. 171-172 and 223
-
-Fixes: 65e03ed2d0cd ("regulators: Fixed errors in ab8500 register mapping")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260901-ux500-dts-snowball-regulator-v2-5-fe88b01829bf@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 5f6b6ccdbe1c ("PCI: xgene: Add APM X-Gene PCIe driver")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260802221146.573233-1-dbgh9129@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/ab8500.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/pci/controller/pci-xgene.c | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/regulator/ab8500.c b/drivers/regulator/ab8500.c
-index 42cb8dfdc7c90..05c6b9c7af0c7 100644
---- a/drivers/regulator/ab8500.c
-+++ b/drivers/regulator/ab8500.c
-@@ -162,6 +162,7 @@ struct ab8500_shared_mode {
-  * @update_bank: bank to control on/off
-  * @update_reg: register to control on/off
-  * @update_mask: mask to enable/disable and set mode of regulator
-+ * @enable_mask: optional mask for an enable bit separate from the mode bit
-  * @update_val: bits holding the regulator current mode
-  * @update_val_idle: bits to enable the regulator in idle (low power) mode
-  * @update_val_normal: bits to enable the regulator in normal (high power) mode
-@@ -183,6 +184,7 @@ struct ab8500_regulator_info {
- 	u8 update_bank;
- 	u8 update_reg;
- 	u8 update_mask;
-+	u8 enable_mask;
- 	u8 update_val;
- 	u8 update_val_idle;
- 	u8 update_val_normal;
-@@ -377,6 +379,7 @@ static int ab8500_regulator_is_enabled(struct regulator_dev *rdev)
+diff --git a/drivers/pci/controller/pci-xgene.c b/drivers/pci/controller/pci-xgene.c
+index 7028d4b6abe6c..e850a3183370b 100644
+--- a/drivers/pci/controller/pci-xgene.c
++++ b/drivers/pci/controller/pci-xgene.c
+@@ -322,18 +322,11 @@ static void xgene_pcie_linkup(struct xgene_pcie *port,
+ static int xgene_pcie_init_port(struct xgene_pcie *port)
  {
- 	int ret;
- 	struct ab8500_regulator_info *info = rdev_get_drvdata(rdev);
-+	u8 enable_mask;
- 	u8 regval;
+ 	struct device *dev = port->dev;
+-	int rc;
  
- 	if (info == NULL) {
-@@ -392,13 +395,15 @@ static int ab8500_regulator_is_enabled(struct regulator_dev *rdev)
- 		return ret;
+-	port->clk = clk_get(dev, NULL);
++	port->clk = devm_clk_get_enabled(dev, NULL);
+ 	if (IS_ERR(port->clk)) {
+ 		dev_err(dev, "clock not available\n");
+-		return -ENODEV;
+-	}
+-
+-	rc = clk_prepare_enable(port->clk);
+-	if (rc) {
+-		dev_err(dev, "clock enable failed\n");
+-		return rc;
++		return PTR_ERR(port->clk);
  	}
  
-+	enable_mask = info->enable_mask ? info->enable_mask : info->update_mask;
-+
- 	dev_vdbg(rdev_get_dev(rdev),
- 		"%s-is_enabled (bank, reg, mask, value): 0x%x, 0x%x, 0x%x,"
- 		" 0x%x\n",
- 		info->desc.name, info->update_bank, info->update_reg,
--		info->update_mask, regval);
-+		enable_mask, regval);
- 
--	if (regval & info->update_mask)
-+	if (regval & enable_mask)
- 		return 1;
- 	else
- 		return 0;
-@@ -833,6 +838,7 @@ static struct ab8500_regulator_info
- 		.update_bank		= 0x03,
- 		.update_reg		= 0x80,
- 		.update_mask		= 0x44,
-+		.enable_mask		= 0x04,
- 		.update_val		= 0x44,
- 		.update_val_idle	= 0x44,
- 		.update_val_normal	= 0x04,
-@@ -861,6 +867,7 @@ static struct ab8500_regulator_info
- 		.update_bank		= 0x03,
- 		.update_reg		= 0x80,
- 		.update_mask		= 0x82,
-+		.enable_mask		= 0x02,
- 		.update_val		= 0x02,
- 		.update_val_idle	= 0x82,
- 		.update_val_normal	= 0x02,
-@@ -1070,6 +1077,7 @@ static struct ab8500_regulator_info
- 		.update_bank		= 0x01,
- 		.update_reg		= 0x55,
- 		.update_mask		= 0x18,
-+		.enable_mask		= 0x10,
- 		.update_val		= 0x10,
- 		.update_val_idle	= 0x18,
- 		.update_val_normal	= 0x10,
-@@ -1092,6 +1100,7 @@ static struct ab8500_regulator_info
- 		.update_bank		= 0x01,
- 		.update_reg		= 0x56,
- 		.update_mask		= 0x18,
-+		.enable_mask		= 0x10,
- 		.update_val		= 0x10,
- 		.update_val_idle	= 0x18,
- 		.update_val_normal	= 0x10,
-@@ -1113,6 +1122,7 @@ static struct ab8500_regulator_info
- 		.update_bank		= 0x03,
- 		.update_reg		= 0x80,
- 		.update_mask		= 0x44,
-+		.enable_mask		= 0x04,
- 		.update_val		= 0x04,
- 		.update_val_idle	= 0x44,
- 		.update_val_normal	= 0x04,
-@@ -1141,6 +1151,7 @@ static struct ab8500_regulator_info
- 		.update_bank		= 0x03,
- 		.update_reg		= 0x80,
- 		.update_mask		= 0x82,
-+		.enable_mask		= 0x02,
- 		.update_val		= 0x02,
- 		.update_val_idle	= 0x82,
- 		.update_val_normal	= 0x02,
+ 	return 0;
 -- 
 2.53.0
 
