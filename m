@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050593;
-	b=qpClA1ou1IeVhp3TWq47ceaBJzBp+eQDShuXUf2KV7C6xgI+csy5X6avugyNtXxSQ/Tk
-	 4YsotYJVHKLne+T9/VhIGBfKn7Ajhy98al1wtQhzkX7l2GW8yTEgi1RoDz8/hObEDZpLD
-	 5JX+xox8EGTeLawZuUE1i5O1rgAmUbHB+uSJb/oj8IQ/0DL5mYit2wpRNzCSAKJsjQVfd
-	 XFsIhotMdB3Iu7BcX3AZ3aXxiVnSFzS3yB9TaHKqhH02o/TksMKhGKqTQVuolAeMA2Vrl
-	 x13NuOjOtIC5gr96NdPm1eP3sLrBDe5S1JAxytz5hqw8v2t9w/pB0DJcInUq8CEqCtw==
+	t=1795050596;
+	b=3KRB48YMWHt/u0lCRoR9r3SkhlrkTj7Cx2pTyD9iRL2ZYg0HeKOKKC0eIN2kR1yAq8u8
+	 jM/DKHtfQ4e5OQoDaJ7Zx0QlVS4w0rYHRh4O3AEpwdjS8N/3EZi96T9lN8YQRL/IlNt0t
+	 EZpS5cvL8NJJ2KKeGVA5lUp5/jBNLafiGFDmJyjwbaN3pz0kdsV4l5gXyY8+nwR+GSBKa
+	 8aE9DurqdBQi869CRWKOQ8QZvgQFxRlNedPObETibEWvn8LMLc7dDifoCcUam+JNNGo+W
+	 c+Y3fO7TDebX3lBYT6WgzRh6HI5KMeS9lw/26R7BSBWNpy8+V5yUqld/CwFLPQ35rAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050593;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050596;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=C+5gDTK2Wvv1Rg7D+PwsS3hv8Ri6SLouweqE6JL15pY=;
-	b=E9txfF8PC+YExEuLXcTqFECVTKJKv0r2LMtqVYGazto+3Z4LBH5uC/oHylbZltIYoWA8
-	 YxYRI/jygAu3uWJuQcrFehD55TCRZKxNLN+Z84ovtYm1jM2UqDtsFVzxqmqszmM5beqLW
-	 x8uupxTeJRMSts1hDTaXOm2OWSTF2lddm3AxF1c7mIeKMRv2L1Kmdrzx3Yn97plBrzp3e
-	 VNW64tkOAFcBw2Gso9a82FujBMOhQFCoLeeZBJS9EuArN/0kREZBr8vfGM7tg1735zW33
-	 SrFsgEsSG643yhknJlkmV0yuxcGX3jXzUVHzGlz48fmaB9hPKqEa2kW+eciT/Zk8DWw==
+	bh=gb5EJ3hTkp7gIhoFxqVxr9kBOUZIRrRwni46EgeXAVA=;
+	b=tn7r2txX0GOe5x3OFjbR5ocuqYc+fvfNfJICdjtKo75XQRr7okfTst47amamEhLU084f
+	 i43JPyn1+jYJSbXZVdJ3usRtwhQYA6Lmu6UK9mNesc0p6zbdVxayJXO7URb4IgFy1TcJp
+	 Cb4hpk/aYL7Bk/3lKAczxPYnq89Ml8aaxznukve/jlru5ig3ZevXXWHCs9L5oEIIelnb7
+	 47XGXOWf3L8OVwo19zrCCqc3jRR3SVihGY491hknjaY2q1X9e3OT7BOM8jggBCOqxSj0B
+	 stqmzz17a9XD4tmeNNI6RuQEFQP47GoFSZGL3vGTBHjNdQfO/qKaAdaiBmcJI5XYiSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o6Lag+xX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ieBavTYx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 897BB606A325;
-	Thu, 19 Nov 2026 01:09:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D227606A31C;
+	Thu, 19 Nov 2026 01:09:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o6Lag+xX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE8851F000C4;
-	Thu, 19 Nov 2026 01:09:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ieBavTYx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF5481F000C4;
+	Thu, 19 Nov 2026 01:09:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050593;
-	bh=C+5gDTK2Wvv1Rg7D+PwsS3hv8Ri6SLouweqE6JL15pY=;
+	s=korg; t=1795050596;
+	bh=gb5EJ3hTkp7gIhoFxqVxr9kBOUZIRrRwni46EgeXAVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o6Lag+xXk3Jdmrz4ncD9+X4jK0an09z1Ct2w/SkkPwTOHj6Qmcd0eYS58ae4LybTq
-	 Ccbcj1sWrh16VboKuRZ3vacM39ByMmZxazoSPLVil3vCClNoWedPul1Ic0vL9ZHBtm
-	 wYV8YmLM6t2hLDfAekr8yWMToL5OEp42yHLZEcLY=
+	b=ieBavTYxXF4TIUgQpgedmOeFx/EjDAoS3IRpOCx+GtKiZewr9ExYAeJeKkNAj8SB8
+	 7dYVb3eRocngFvSb+V+rL0aAfROS/6Vtz3V9nX1SXqpKg9nrPN3P/6pXZXjf1z9gE/
+	 QS65Mvbz7pylQhEf8E9Ly26jW/+Xor5G3Z67qY1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Parri <parri.andrea@gmail.com>,
+	Avi Weiss <thnkslprpt@gmail.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2764/2857] nvmet: zns: reject a NUMD whose byte count wraps
-Date: Wed, 18 Nov 2026 16:03:18 +0100
-Message-ID: <20261118150341.122909948@linuxfoundation.org>
+Subject: [PATCH 6.1 2765/2857] nvmet: prevent double-free after metadata SGL allocation failure
+Date: Wed, 18 Nov 2026 16:03:19 +0100
+Message-ID: <20261118150341.161857794@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,89 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit 12740bec646dafe009a7d9a4d22d3495ef1ea5cd ]
+[ Upstream commit 2f61b9d1d54edf75a352c43eebe3804144b5d44e ]
 
-Zone Management Receive computes its buffer size as (numd + 1) << 2 in
-u32, in nvmet_bdev_validate_zone_mgmt_recv(),
-nvmet_bdev_zone_zmgmt_recv_work() and
-nvmet_bdev_execute_zone_mgmt_recv(). NUMD is a 32-bit dword count, so
-any NUMD from 0x3fffffff up wraps.
+If metadata SGL allocation fails, nvmet_req_alloc_sgls() frees
+req->sg without clearing it. The RDMA error completion path later
+frees the same scatterlist again.
 
-The data length check in nvmet_bdev_execute_zone_mgmt_recv() sees the
-same wrapped value, so such a command can pass it. A data length that
-does not match the wrapped size is already rejected by that check, with
-Data SGL Length Invalid.
+Use nvmet_req_free_sgls() instead so that the scatterlist pointers
+and counts are cleared before response cleanup.
 
-Every site agrees on the wrapped size, so the target zeroes and fills
-only that many bytes and nothing leaks, but it answers a command whose
-NUMD asks for 4 GiB or more.
-
-Reject a NUMD from U32_MAX / 4 up with Invalid Field at the start of
-nvmet_bdev_execute_zone_mgmt_recv(), before this handler or its work
-item computes the byte count. A size_t computation would still wrap on
-32-bit kernels, where nvmet_check_transfer_len() and req->transfer_len
-are 32 bits wide.
-
-nvmet_io_cmd_transfer_len() in core.c, which the pci-epf transport uses
-to size its buffer, computes the same expression before this handler
-runs. Return 0 there for such a NUMD, so pci-epf allocates no buffer and
-the handler then rejects the command.
-
-Tested over the loop, tcp, rdma and fc transports with a zoned
-null_blk namespace: a wrapping NUMD, sent with a data length that
-matches the wrapped size, was accepted before this patch and now fails
-with Invalid Field, while ordinary NUMD values still succeed. The core.c
-change only affects pci-epf and is build-tested only.
-
-Fixes: aaf2e048af27 ("nvmet: add ZBD over ZNS backend support")
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
+Fixes: c6e3f13398123 ("nvmet: add metadata support for block devices")
+Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/core.c |  3 +++
- drivers/nvme/target/zns.c  | 12 ++++++++++--
- 2 files changed, 13 insertions(+), 2 deletions(-)
+ drivers/nvme/target/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
-index ca4fd4e88e116..9035c78fba75c 100644
+index 9035c78fba75c..817127153f73d 100644
 --- a/drivers/nvme/target/core.c
 +++ b/drivers/nvme/target/core.c
-@@ -905,6 +905,9 @@ static u32 nvmet_io_cmd_transfer_len(struct nvmet_req *req)
- 	case nvme_cmd_dsm:
- 		return nvmet_dsm_len(req);
- 	case nvme_cmd_zone_mgmt_recv:
-+		/* The handler rejects a NUMD whose byte count would wrap. */
-+		if (le32_to_cpu(req->cmd->zmr.numd) >= U32_MAX / 4)
-+			return 0;
- 		return (le32_to_cpu(req->cmd->zmr.numd) + 1) << 2;
- 	default:
- 		return 0;
-diff --git a/drivers/nvme/target/zns.c b/drivers/nvme/target/zns.c
-index 64ec757c7c23b..877d5f7ebc782 100644
---- a/drivers/nvme/target/zns.c
-+++ b/drivers/nvme/target/zns.c
-@@ -324,9 +324,17 @@ static void nvmet_bdev_zone_zmgmt_recv_work(struct work_struct *w)
+@@ -1129,7 +1129,7 @@ int nvmet_req_alloc_sgls(struct nvmet_req *req)
  
- void nvmet_bdev_execute_zone_mgmt_recv(struct nvmet_req *req)
- {
--	u32 out_bufsize = (le32_to_cpu(req->cmd->zmr.numd) + 1) << 2;
-+	u32 numd = le32_to_cpu(req->cmd->zmr.numd);
-+
-+	/* From U32_MAX / 4 up, (numd + 1) << 2 wraps here and in the work. */
-+	if (numd >= U32_MAX / 4) {
-+		req->error_loc = offsetof(struct nvme_zone_mgmt_recv_cmd, numd);
-+		nvmet_req_complete(req,
-+				   NVME_SC_INVALID_FIELD | NVME_STATUS_DNR);
-+		return;
-+	}
- 
--	if (!nvmet_check_transfer_len(req, out_bufsize))
-+	if (!nvmet_check_transfer_len(req, (numd + 1) << 2))
- 		return;
- 
- 	INIT_WORK(&req->z.zmgmt_work, nvmet_bdev_zone_zmgmt_recv_work);
+ 	return 0;
+ out_free:
+-	sgl_free(req->sg);
++	nvmet_req_free_sgls(req);
+ out:
+ 	return -ENOMEM;
+ }
 -- 
 2.53.0
 
