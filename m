@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061424;
-	b=U3P6bngy6XrhjiNos6HWtbco/2zWGnye2gpI5DJHyFQW7KZJ/x9lFGDJA+yYQ0Zp0I/n
-	 k23w/5T5qD4ZNQoEIUjXPhqVvynWCregj4F6Pa7Yi+zkfce9VP2O7IkZ+p8Jvt5P/i0eY
-	 HAq5KWZ9wFpnYSxfLZU+Mr5qrTPHyuJ1g7sJlJbHUFYmtQ/0KqzaGi1o+VYKuo1neJOW8
-	 9OM9Yc3DLdY2gSH7jgs+SsljXKPr06J6Tn88xYiD6aeWYZysqzLiCzFoE6IbZpb3LliBd
-	 rg/NgHRkgSjTR9IjpvhyDV8VWFfJUQ8NUAMr4UK5wsJT2paBKkLiJ5tAd9JP+b2F2bw==
+	t=1795061426;
+	b=GyA2EcJPgQyuH5sVKdSlt0o1b6d6e/4IdK5EtkMENHa6utbOgtZ9gPtB+YylQy8wxAPX
+	 7J4QadO1jRZuN9JBkiaThxYE6lvD96lzkKORBwIQGTOeRAD7fZVNhJJE0c2MqKJcP4H+q
+	 r9LLCd3NoPgPjspS3RaXb39SIp6KOclulq4nRy9R1NeKQPlhcWyLN3/hF7sFkjXSx6iMG
+	 LwKOr90MmZkBQVSjL9FTQEkzRE5xWiKOftjJF9oQtU9KvY6Qyndd3HzJZdvPXLMfBJdhk
+	 jjejB6GW7fTx9eEZkRqTe7TIbJaZFNW03ZubOD5bVlZ7tXXUGIznb09z27CVtxo0XfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061424;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061426;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ppt/On6bAU00VlHvU4TcCCf5N3zALCQYT/YTCatxjJI=;
-	b=Ads5wIRKuYYljEpfO+3cMbhWLnFpIHS/+CXOnT++uVXrmjLDAnSlovfL5pkDq91Bz+0f
-	 DM6V7sBWiykfxoQKBgMqlK5Ls13Cwsj1via8Pm9H1Ojj/sQnxSirMcEs/Z5d1p1yLOdUi
-	 7PU/PYDyrR6Qd+0Zzhak6YpXQ7Svlq6d/ZWy9OSOIK6IaLaivkZwdd7AnZVCmVihjl9Mv
-	 6NlW7tSDxgqLL8woRLh1lzsEzK3cF8n+iI8L42+ffXFNMlCg4H2qfiEm5j7uepia7LK2B
-	 d+3Ew8MMyeYU49YBYVI0eq/gmPhzVV+GlZl9b1wQqPSECAMJ97oLiS+lXb4XrSJ1ZLQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=XrHW86dujCwrM9ufIWFUZdei5wv+YxGb+kQ5SMjXoeA=;
+	b=d7UUBGz75YpyIaE1oztBygpV2OW+uR8b0xrsjKkOy65jQ4djOdmOzA0tLQ/pqMLERhoK
+	 ewop3HaCacQk0bTwq8VO/iXfT08osSN4nqx8RP6DaZWqqsNZezBGte5oPHlM8lIFxpxx5
+	 +1wal+QeYn/HygsnYOJVnxYjx7ttQPhVv3CRFccM07GEPfhf4n+6jKsv+NuKef0X+3y5F
+	 9TMQgN0Gl5QmAHMZ803MMZtMs6it4Qc/mTj99s838J+a8cnxE4/U5hVchaolbqXKMNUNC
+	 bKmlKjRUcdDJ0DxqsH7EKokHb6l99U7et2lsOYvJreWhu/MDcQ5YD+Gs81AdFo5q4ng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PuKlCqk0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0TzQXOiV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02483606A320;
-	Thu, 19 Nov 2026 04:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBF56606A326;
+	Thu, 19 Nov 2026 04:10:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PuKlCqk0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15BE71F000C4;
-	Thu, 19 Nov 2026 04:10:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0TzQXOiV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B351F000C4;
+	Thu, 19 Nov 2026 04:10:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061423;
-	bh=Ppt/On6bAU00VlHvU4TcCCf5N3zALCQYT/YTCatxjJI=;
+	s=korg; t=1795061426;
+	bh=XrHW86dujCwrM9ufIWFUZdei5wv+YxGb+kQ5SMjXoeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PuKlCqk0WyjPpFoC8v64ryc+g4JnBcCfWSV6lx4pPjzirHBQKpbXn7ZOBwisq53NT
-	 sC3n6V4zATR3vNghxfhmG11o76dgvILQx0Z3c4+GODBPGmyFzexjWJ+BCU39KuSTdY
-	 GU7AssERb01y6QPGEjOmyPgfbdSuyY9HzEzsuE48=
+	b=0TzQXOiVsOYglEnGe0McHVnkFRMM+H/GsYwfaSB6Iu3DlOLsA7uyejnjpPqiGBLQw
+	 5UEJDuRylaOfZKVcFZETo0Yd+rP8VMvw9+50gHQBLVmBB7sd4B3sqe8OUxPTOttvGF
+	 9ECsfZzCBPXak+Z5lcafYcvSOVsodU04HwHm7OX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fuchs <fuchsfl@gmail.com>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger@xenproject.org>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1510/1848] sh: uaccess: Require offsettable operands for 64-bit user access
-Date: Wed, 18 Nov 2026 15:59:08 +0100
-Message-ID: <20261118150022.526735095@linuxfoundation.org>
+Subject: [PATCH 5.10 1546/1848] xen/blkback: Prevent missed completion when draining I/O
+Date: Wed, 18 Nov 2026 15:59:44 +0100
+Message-ID: <20261118150024.321851658@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -62,75 +63,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Fuchs <fuchsfl@gmail.com>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-[ Upstream commit 8b5dba9ea4a3f5ed994f03d6ca7686c49491b426 ]
+[ Upstream commit 9b4df0baa2aa03d22310e59846ca628f7afd4115 ]
 
-The 64-bit __get_user_u64()/__put_user_u64() paths address the memory
-operand as %T2 (base+4). This base+4 requires an offsettable address,
-but "m" also allows the indexed mode @(R0,Rn) (e.g. for a variable-
-indexed array element), which has no displacement field for the +4.
-Depending on optimization this build fails with "invalid 'asm'" or an
-ICE in GCC's change_address_1.
+xen_blk_drain_io() sets drain before checking inflight.
+xen_blkbk_unmap_and_respond_callback() decrements inflight with
+atomic_dec_and_test() before checking drain.
 
-Require an offsettable memory operand, allowing GCC to reload an
-unsuitable indexed address into an appropriate form.
+The pre-wait condition check was added to avoid missing a completion, but
+atomic_set() is unordered. With one I/O in flight, the drain path can set
+drain to 1 and read inflight as 1 before the completion decrement. The
+completion path then decrements inflight to 0 but can still read drain as
+0. It skips complete(), so the drain path waits until the timeout despite
+no I/O remaining.
 
-Fixes: 2d2b308a8b7d ("sh: Implement __get_user_u64() required for 64-bit get_user()")
-Signed-off-by: Florian Fuchs <fuchsfl@gmail.com>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Add a full barrier between setting drain and reading inflight.
+atomic_dec_and_test() already provides full ordering on the completion
+side.
+
+Fixes: 6927d92091df ("xen/blkback: Fix two races in the handling of barrier requests.")
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Acked-by: Roger Pau Monné <roger@xenproject.org>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20260730084000.3305702-1-hanguidong02@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sh/include/asm/uaccess_32.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/block/xen-blkback/blkback.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/arch/sh/include/asm/uaccess_32.h b/arch/sh/include/asm/uaccess_32.h
-index 5d7ddc092afd7..cef40414bfb13 100644
---- a/arch/sh/include/asm/uaccess_32.h
-+++ b/arch/sh/include/asm/uaccess_32.h
-@@ -92,7 +92,7 @@ __asm__ __volatile__( \
- 	".long	1b + 2, 3b\n\t" \
- 	".previous" \
- 	:"=&r" (err), "=&r" (x) \
--	:"m" (__m(addr)), "i" (-EFAULT), "0" (err)); })
-+	:"o" (__m(addr)), "i" (-EFAULT), "0" (err)); })
- #else
- #define __get_user_u64(x, addr, err) \
- ({ \
-@@ -116,7 +116,7 @@ __asm__ __volatile__( \
- 	".long	1b + 2, 3b\n\t" \
- 	".previous" \
- 	:"=&r" (err), "=&r" (x) \
--	:"m" (__m(addr)), "i" (-EFAULT), "0" (err)); })
-+	:"o" (__m(addr)), "i" (-EFAULT), "0" (err)); })
- #endif
+diff --git a/drivers/block/xen-blkback/blkback.c b/drivers/block/xen-blkback/blkback.c
+index 3874233f7194d..42cc6489800f4 100644
+--- a/drivers/block/xen-blkback/blkback.c
++++ b/drivers/block/xen-blkback/blkback.c
+@@ -1021,6 +1021,13 @@ static void xen_blk_drain_io(struct xen_blkif_ring *ring)
+ 	struct xen_blkif *blkif = ring->blkif;
  
- #define __put_user_size(x,ptr,size,retval)		\
-@@ -196,7 +196,7 @@ __asm__ __volatile__( \
- 	".long	1b, 3b\n\t" \
- 	".previous" \
- 	: "=r" (retval) \
--	: "r" (val), "m" (__m(addr)), "i" (-EFAULT), "0" (retval) \
-+	: "r" (val), "o" (__m(addr)), "i" (-EFAULT), "0" (retval) \
-         : "memory"); })
- #else
- #define __put_user_u64(val,addr,retval) \
-@@ -218,7 +218,7 @@ __asm__ __volatile__( \
- 	".long	1b, 3b\n\t" \
- 	".previous" \
- 	: "=r" (retval) \
--	: "r" (val), "m" (__m(addr)), "i" (-EFAULT), "0" (retval) \
-+	: "r" (val), "o" (__m(addr)), "i" (-EFAULT), "0" (retval) \
-         : "memory"); })
- #endif
- 
+ 	atomic_set(&blkif->drain, 1);
++	/*
++	 * Publish drain before checking inflight. Otherwise,
++	 * xen_blkbk_unmap_and_respond_callback() can decrement inflight with
++	 * atomic_dec_and_test() and still see drain == 0 after this path saw
++	 * inflight > 0, missing the completion.
++	 */
++	smp_mb();
+ 	do {
+ 		if (atomic_read(&ring->inflight) == 0)
+ 			break;
 -- 
 2.53.0
 
