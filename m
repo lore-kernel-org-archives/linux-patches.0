@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049022;
-	b=CBYGtxXVzvCeA4R9LadR0FWMpX82Qml+OGcLFUIMdXYKLL/sVf2FYJFD8bjNA2TZURo9
-	 JInIA9txJ2/QYB1TOVT+xDMWm2ythm1klPr3nzHqTuJp09DfucKRf4M9FRVivfPFQp2O7
-	 WIL+AEipk2PsALzNkslwJeQK1env7Bf+RmXrtxx0aIV7hfl7h74AcxWBncRzkJadLBh3m
-	 AeClObusSOu5x1aIxkhHNWm7QJPNT8JfSGnp2cJovQCmVloFWHWAKyy9+ufnpdrnLVRz4
-	 +14suXiqcLvQFe8CENu12LARDlZOnbq8IQEhZupQ4n/5M62WZTOLZ/DO6YT3WJUK+og==
+	t=1795049025;
+	b=2JGeNu9JaPBnFQROOeB0TnLTfyS1qrgAiBqEpB9ATtGaE7H712TFk4ew18KEkuAWeokl
+	 kmg+EeL/UWR7xVTJQomXzSoJq5e2asMfBGEiNClz9wCIvXbNlOyLDt337Hf7tWsRZjifn
+	 ooFo8d7aciWvACI6FYqsXOZLY1Gbh9LEArYXOAqI1w800SU1F47wo2SZmcW1IQl+1ZB2f
+	 7BHEAfxwklwjZNWSUzXIY0mf80LzSiSlIi2Ava5JSSUZSh7QKIyXstlfKeTouD0t2lr+4
+	 Nby1WwyXP0UXUuMso/nnSEbQBWk5mylxcrs/K36jd1e2Ld1aDSrAzKw77Mx+eOMtIcA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049022;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049025;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r/RY5qAD1PHcFI6hGWqNWiGnUq19IJtVXGNIkt/28XQ=;
-	b=xITMoqKBVcrzfPNsSdCSvMNn7ygBETTM0HCELTOob+3b5yD84salsZXXofrRgANHUZFK
-	 yTkPG4Ib3TiETNRfU8BthVNtP2D/v8ML/yJTAutMVkwZ6feku4ewz65DH8WkhNFo2Eqso
-	 /RMF4DXsY7z4Hx8CrqXvQXS98P9tNjxgTL3qjSeNrn1okvJS/Z2cIT4rZdxcXULx261Fd
-	 ovIBbiVXnyjGu1AQcTvNwHaax2JCkMy4GC09M5uv6/bECq5GOwG8ox+/ZyAymGOqjr5Zo
-	 KvyEVtUwbWlk7bzN9AW6JInijvsTLnl4GYgXJ3FD2WRhwoanyg8OWDr/Y8ivRPmiD5w==
+	bh=oLwMI8UquJ3AvbLOKSqJ8eHIBq1o8oLAs6xKAZRpXVU=;
+	b=c9ptD/lXkA6JRlO6/4O6RBTtuHI4JJ36vpOMY3HMqzsSely2RYOzrING1kBs4SmFRVkn
+	 f7brYASOah/iDePiuoM7/SlBNgv/fhGU/Z45VNkhlQLZaym9BNOddEgcZm0RQqoBEWCNl
+	 EnmuMd0t15ONPVeMPvsooVh3t8jlKfMpPZpXJ8kP0CjrrgqC0HTBZmothOT4iTTARLE4r
+	 wqDi4RRFWS3nwo/jU0lqo4mCUVs5f9+18dGhZrR08rkBnyh3Wh1dlr2QoM9aQQhmuxrSD
+	 DekSbyyUJiT/HyFbe0nYjIWh79WnTZxUsZpLeBMpxjTpGmAOEkTv4Q6BQ/jJDwQ9uww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DRQcWFn8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zWP2dO5Z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12BE8606A31C;
-	Thu, 19 Nov 2026 00:43:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4FAA606A31C;
+	Thu, 19 Nov 2026 00:43:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DRQcWFn8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D3171F000C4;
-	Thu, 19 Nov 2026 00:43:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zWP2dO5Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FDE71F000C4;
+	Thu, 19 Nov 2026 00:43:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049021;
-	bh=r/RY5qAD1PHcFI6hGWqNWiGnUq19IJtVXGNIkt/28XQ=;
+	s=korg; t=1795049024;
+	bh=oLwMI8UquJ3AvbLOKSqJ8eHIBq1o8oLAs6xKAZRpXVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DRQcWFn8w49v2LfrJTk+jDnBwWDZBiK68hdKRNNl/8DPIKUhk698lbvgL3j64hCLW
-	 +bTd9l/mg8no2I4JrNiZ0/jpEsFzCQNTDINsWKXKhHZFh0xtoiqbHv0+Ycp1zIaDaP
-	 VWanxfMNxmgrVXSgHoIiGKjjoFrp7E+a/cLP2i+g=
+	b=zWP2dO5ZWsAFs0b449jYvxVAyNZKLnuVJ6of2tatYQ9o/6bn6PPC/BurIx+ogStA8
+	 ajVQST5nt/djcvkwEF2HEGKQMktnTG6LpIE7FO1BwgTQeSp6gUdOYPplwXeeCdyGRn
+	 CZKkZ9jWkil8agYwmynlZdCmfcFpVd9x6KyrJ6C0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Jan Stancek <jstancek@redhat.com>,
+	Nicolas Schier <nsc@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2203/2857] dt-bindings: power: supply: ab8500: Add AB8505 charger
-Date: Wed, 18 Nov 2026 15:53:57 +0100
-Message-ID: <20261118150320.749628390@linuxfoundation.org>
+Subject: [PATCH 6.1 2204/2857] .gitignore: drop Module.markers
+Date: Wed, 18 Nov 2026 15:53:58 +0100
+Message-ID: <20261118150320.784758296@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,138 +69,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Jan Stancek <jstancek@redhat.com>
 
-[ Upstream commit 80d28539c1f9baab72210501729d67e3d9daa4b8 ]
+[ Upstream commit a7d32fa14bc74d1786a2f0513b6f0815bd4be311 ]
 
-AB8500 and AB8505 expose different charger interrupt sets. Add a unique
-AB8505 charger compatible with the AB8500 compatible as its fallback.
-Use the variant-specific string to require the fourteen main and USB
-charger interrupts on AB8500 and the nine USB charger interrupts on
-AB8505.
+commit fc5377668c3d ("tracing: Remove markers") deleted the marker code
+and the modpost output. Follow-up commit 8723eaeff59a ("Kbuild: clean up
+marker") removed it from clean and mrproper targets. Both are from 2009,
+so the file is hopefully no longer in anyone's tree, drop it from
+.gitignore as well.
 
-Also clarify that autopower_cfg describes the AB8500 facility, since the
-corresponding AB8505 register bit is reserved.
-
-Fixes: eb917497734c ("dt-bindings: power: supply: ab8500: Convert to DT schema format")
-Assisted-by: LLM
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260925-ab8500-charger-dt-v3-1-f80b8d295e2d@kernel.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 8723eaeff59a ("Kbuild: clean up marker")
+Signed-off-by: Jan Stancek <jstancek@redhat.com>
+Reviewed-by: Nicolas Schier <nsc@kernel.org>
+Link: https://patch.msgid.link/8cbe913b9f80dc6fea73a9e3d51429db2b38905f.1790838401.git.jstancek@redhat.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../supply/stericsson,ab8500-charger.yaml     | 76 ++++++++++++++-----
- 1 file changed, 56 insertions(+), 20 deletions(-)
+ .gitignore | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/power/supply/stericsson,ab8500-charger.yaml b/Documentation/devicetree/bindings/power/supply/stericsson,ab8500-charger.yaml
-index e33329b3af619..b653fc9c45436 100644
---- a/Documentation/devicetree/bindings/power/supply/stericsson,ab8500-charger.yaml
-+++ b/Documentation/devicetree/bindings/power/supply/stericsson,ab8500-charger.yaml
-@@ -10,12 +10,13 @@ title: AB8500 Charger
- maintainers:
-   - Sebastian Reichel <sre@kernel.org>
- 
--allOf:
--  - $ref: power-supply.yaml#
--
- properties:
-   compatible:
--    const: stericsson,ab8500-charger
-+    oneOf:
-+      - const: stericsson,ab8500-charger
-+      - items:
-+          - const: stericsson,ab8505-charger
-+          - const: stericsson,ab8500-charger
- 
-   monitored-battery:
-     $ref: /schemas/types.yaml#/definitions/phandle
-@@ -30,27 +31,15 @@ properties:
- 
-   autopower_cfg:
-     type: boolean
--    description: automatic poweron after powerloss
-+    description: AB8500 automatic poweron after powerloss
- 
-   interrupts:
-+    minItems: 9
-     maxItems: 14
- 
-   interrupt-names:
--    items:
--      - const: MAIN_CH_UNPLUG_DET
--      - const: MAIN_CHARGE_PLUG_DET
--      - const: MAIN_EXT_CH_NOT_OK
--      - const: MAIN_CH_TH_PROT_R
--      - const: MAIN_CH_TH_PROT_F
--      - const: VBUS_DET_F
--      - const: VBUS_DET_R
--      - const: USB_LINK_STATUS
--      - const: USB_CH_TH_PROT_R
--      - const: USB_CH_TH_PROT_F
--      - const: USB_CHARGER_NOT_OKR
--      - const: VBUS_OVV
--      - const: CH_WD_EXP
--      - const: VBUS_CH_DROP_END
-+    minItems: 9
-+    maxItems: 14
- 
-   io-channels:
-     minItems: 2
-@@ -77,6 +66,53 @@ required:
-   - io-channels
-   - io-channel-names
- 
-+allOf:
-+  - $ref: power-supply.yaml#
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            const: stericsson,ab8505-charger
-+    then:
-+      properties:
-+        interrupts:
-+          minItems: 9
-+          maxItems: 9
-+
-+        interrupt-names:
-+          items:
-+            - const: VBUS_DET_F
-+            - const: VBUS_DET_R
-+            - const: USB_LINK_STATUS
-+            - const: USB_CH_TH_PROT_R
-+            - const: USB_CH_TH_PROT_F
-+            - const: USB_CHARGER_NOT_OKR
-+            - const: VBUS_OVV
-+            - const: CH_WD_EXP
-+            - const: VBUS_CH_DROP_END
-+    else:
-+      properties:
-+        interrupts:
-+          minItems: 14
-+          maxItems: 14
-+
-+        interrupt-names:
-+          items:
-+            - const: MAIN_CH_UNPLUG_DET
-+            - const: MAIN_CHARGE_PLUG_DET
-+            - const: MAIN_EXT_CH_NOT_OK
-+            - const: MAIN_CH_TH_PROT_R
-+            - const: MAIN_CH_TH_PROT_F
-+            - const: VBUS_DET_F
-+            - const: VBUS_DET_R
-+            - const: USB_LINK_STATUS
-+            - const: USB_CH_TH_PROT_R
-+            - const: USB_CH_TH_PROT_F
-+            - const: USB_CHARGER_NOT_OKR
-+            - const: VBUS_OVV
-+            - const: CH_WD_EXP
-+            - const: VBUS_CH_DROP_END
-+
- additionalProperties: false
- 
- examples:
+diff --git a/.gitignore b/.gitignore
+index d4da8ea943327..86056b79cae8e 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -65,7 +65,6 @@ modules.order
+ /vmlinux-gdb.py
+ /vmlinuz
+ /System.map
+-/Module.markers
+ /modules.builtin
+ /modules.builtin.modinfo
+ /modules.nsdeps
 -- 
 2.53.0
 
