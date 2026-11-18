@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061255;
-	b=BPj42I5c1zj9sNkS82mHoE49KPyBb5EI8ithObUDm6Y25405ffXNqyem0FA/mRavXABQ
-	 eVld/xyiFpCgTkaD0jYe756WUBNGiZZ46SOzrjZqpuBJZuN3kK7zs3Y7+y0CA7eoyBNWj
-	 XS3lOpgpkRg0WCu8Np8XnutqJiZ+SSv4fp8+QJbiExPjQnAybNJJZA1QnOFj6pND9CNmc
-	 jrFxBiAQt3aXgZN6diawYvkHb6WDPf6YHFwMj2vW47rB3KLfmsbvXbTPYvfFGNt8H3l/G
-	 0tdCmXCcM5PVD+89iQHEE1sLFT9vi4m2BRtRDPUBbbel9qsrtB0FqPg/6o6PIbqFsAQ==
+	t=1795061258;
+	b=zhx+iptswiOMvydsN4PO4CDemeBP8RgkdhDPadsG8UJFwK9Rv2uum0Tv/zyfQDqLJy2C
+	 k7Dm10c+/tvXFNyy+/RLgSlkd/+BP+8JtzWYvcyvcg9NeFYoApmU0WBuLyzO68RtfAPIA
+	 +mniGYkmWoAfFUsspGl5ruzY+BjOWaT5n8lemXyzBWlnoXGT/UJjrBzw0Vlg18K++G7ds
+	 W1YxCVEq/6mScROkIUtT14Bqzwh1ImbJWSflQZ09KOkVmTlQF1+7MA/8COJh3/eQ03W3+
+	 ZAWq3Wm2Jm9f8rZzYNstEfaA1bPxl5z2PINrw/zpe9Y9lEIicyp+84tyA8mfv+/zENw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061255;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061258;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=u1zaMuwKWFJX2nmv6BzVLlpJI7a/GiJkYmeatQfhjB4=;
-	b=iIfe2OfPvP+KCeFTcL3kdkB1Lhfe/IR2bFJpwGoS/UX7lTGMWCgIxGUzRyZlYJYRhELE
-	 4SFK1eV8H+u2Eg49OT+LwXlQhXW1Yxr3EQ3YqtX9vCS42ybZIoyoMqh2uf2hOV8g/fcZG
-	 9sB+S3s60UT1v1Q3a98T6kF+fzo0Pc1qrUdSX5hrZbLfVd8SbwAiQJbXuQp/8+KKRBI0y
-	 a78k26iZ+0ndTpZc9cuIXY3SaBaKa3QB0WXRZ70/GCchgX8Qth9JPD/QmrrkErGLviPdL
-	 Ggvf6HqRmcQoIeg9uTdwThZYPLyd/ESNj6xQknX+tcxDSQo+SU7MlNAwwUQOUYcakCQ==
+	bh=dZB8UJZd0AqKB8tLL10oVbXkno3topx3a58dCOPgSdo=;
+	b=2PzBIB0RBt45q7aE8sVrkFErHUVGcLSbDmjKBUsc950VlBH6EAVEN76xxuXKKBlMci6b
+	 hAvdvKAPoLpR6EWNfPV2HSfjj9+XC2/w/6rcaSNPiqoz9l4xwQ2/uDENXNk/5/5o9II0V
+	 AunJUItnoZYOzaH2qJy9uxZdOHXTZcn6GfoiIJxFNMub6x7VNLdqJ0PfL5ZBvfSrkyIbf
+	 4mXksAhT1LD1En8Or/o4W0TD6zARJMn2fXGW76SfHMDIRGn+fFtdSrS+QCN5k3lSjo9WK
+	 IZl01OgNo4HrmLoCpwuvf7Mt7B0Dune/R9DA62AjwVbQj7wHT79v1piq0mhm0Zu4ZmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jqq67zfw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NEAfirrR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84FD060A2601;
-	Thu, 19 Nov 2026 04:07:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5345160A2607;
+	Thu, 19 Nov 2026 04:07:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jqq67zfw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CF081F000C6;
-	Thu, 19 Nov 2026 04:07:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NEAfirrR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 619E21F000C4;
+	Thu, 19 Nov 2026 04:07:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061255;
-	bh=u1zaMuwKWFJX2nmv6BzVLlpJI7a/GiJkYmeatQfhjB4=;
+	s=korg; t=1795061257;
+	bh=dZB8UJZd0AqKB8tLL10oVbXkno3topx3a58dCOPgSdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jqq67zfwXCkfpJYshUysrKWrs8QxanLO14NOBOY4zBQ4D4H1Qz2DBd6cAuwE8NidP
-	 9EeqxIxy8H4eBCqCwftWv84F10Kl0U8DCFk+lsPFUvrp3RmKnIu/mYx+JzAOwV6wxS
-	 +zTJ2GnqSmH1+iHUfXqPsl8/teINngGTiWYX4/o8=
+	b=NEAfirrRoCDAH9YYY+m9FQhqAjJs0Uks/a5qc4fd+dy+NWAIIFqvZAVJ4/ESCbQv4
+	 LPFbe8w0BrjbAbXJ3cdsH0LGnhhlKTq6Hb6Gmk5uNjwFklfDEl6zZitfj0U5LBImZt
+	 Dud5h3NKnvI7+TeNQa9YFrnTKVBboI8JaFyfhcHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linus Walleij <linusw@kernel.org>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1487/1848] dmaengine: ste_dma40: Handle runtime PM resume errors
-Date: Wed, 18 Nov 2026 15:58:45 +0100
-Message-ID: <20261118150021.496553618@linuxfoundation.org>
+Subject: [PATCH 5.10 1488/1848] dmaengine: ste_dma40: Return IRQ_NONE when no interrupt is pending
+Date: Wed, 18 Nov 2026 15:58:46 +0100
+Message-ID: <20261118150021.535050037@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,212 +71,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 55a35231b8ced2250a7743ec350a9566d553780e ]
+[ Upstream commit b96967644c524d34b2fdd2e58c31e7b36e3469e6 ]
 
-Several channel operations use pm_runtime_get_sync() and access DMA40
-registers without checking whether runtime resume succeeded. If resume
-fails, the registers may be inaccessible. pm_runtime_get_sync() also
-increments the usage counter on failure, making error unwinding easy to
-unbalance.
+d40_handle_interrupt() returns IRQ_HANDLED even when no terminal-count or
+error status bit is pending.
 
-Use pm_runtime_resume_and_get() and avoid register access when resume
-fails. Acquire the runtime PM reference before allocating a channel so
-failure needs no channel-allocation rollback.
+IRQ_NONE is not only used to identify a device on a shared interrupt.
+The generic IRQ core also counts it as unhandled for spurious IRQ
+detection. DMA40 does not request this IRQ with IRQF_SHARED, so interrupt
+sharing is not the purpose of this change.
 
-If a queued transfer cannot be started because resume failed, retire all
-issued descriptors through the normal tasklet path. Since
-dma_async_issue_pending() cannot return an error, leaving them queued would
-make clients wait indefinitely for callbacks.
+If the line remains asserted without matching DMA40 status, returning
+IRQ_HANDLED hides the stuck interrupt and can leave the CPU servicing it
+indefinitely. Track whether any DMA40 status is pending and return IRQ_NONE
+when none is present, allowing the generic IRQ core to diagnose and
+eventually disable the faulty line.
 
-Termination and channel release must also clean up software state when the
-controller cannot resume. d40_term_all() only releases descriptor state and
-does not access DMA40 registers, so it remains unconditional.
+DMA40 channels can be owned by other SoC cores. Their status means that
+the interrupt is real, but Linux must not acknowledge it. Treat foreign
+status as handled and leave its acknowledgment to the owning core, while
+acknowledging and dispatching only registered Linux channels.
 
-Balance each transient runtime PM reference in its successful acquisition
-block, without bookkeeping flags. Release the outstanding busy reference
-and channel allocation state when freeing a channel. Skip only the hardware
-stop that requires register access.
-
-Fixes: 7fb3e75e1833 ("dmaengine/ste_dma40: support pm in dma40")
+Fixes: 8d318a50b3d7 ("DMAENGINE: Support for ST-Ericssons DMA40 block v3")
 Assisted-by: LLM
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-7-89f595e8851d@kernel.org
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-8-89f595e8851d@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 74 +++++++++++++++++++++++++++++------------
- 1 file changed, 52 insertions(+), 22 deletions(-)
+ drivers/dma/ste_dma40.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index b495ee678363c..ac152421d5907 100644
+index ac152421d5907..d5bb481b0f6f0 100644
 --- a/drivers/dma/ste_dma40.c
 +++ b/drivers/dma/ste_dma40.c
-@@ -1426,11 +1426,14 @@ static int d40_pause(struct dma_chan *chan)
- 		return 0;
+@@ -1663,6 +1663,7 @@ static void dma_tasklet(struct tasklet_struct *t)
  
- 	spin_lock_irqsave(&d40c->lock, flags);
--	pm_runtime_get_sync(d40c->base->dev);
-+	res = pm_runtime_resume_and_get(d40c->base->dev);
-+	if (res < 0)
-+		goto unlock;
+ static irqreturn_t d40_handle_interrupt(int irq, void *data)
+ {
++	irqreturn_t handled = IRQ_NONE;
+ 	int i;
+ 	u32 idx;
+ 	u32 row;
+@@ -1697,6 +1698,12 @@ static irqreturn_t d40_handle_interrupt(int irq, void *data)
+ 		row = chan / BITS_PER_LONG;
+ 		idx = chan & (BITS_PER_LONG - 1);
  
- 	res = d40_channel_execute_command(d40c, D40_DMA_SUSPEND_REQ);
- 
- 	pm_runtime_put_autosuspend(d40c->base->dev);
-+ unlock:
- 	spin_unlock_irqrestore(&d40c->lock, flags);
- 	return res;
- }
-@@ -1450,13 +1453,16 @@ static int d40_resume(struct dma_chan *chan)
- 		return 0;
- 
- 	spin_lock_irqsave(&d40c->lock, flags);
--	pm_runtime_get_sync(d40c->base->dev);
-+	res = pm_runtime_resume_and_get(d40c->base->dev);
-+	if (res < 0)
-+		goto unlock;
- 
- 	/* If bytes left to transfer or linked tx resume job */
- 	if (d40_residue(d40c) || d40_tx_is_linked(d40c))
- 		res = d40_channel_execute_command(d40c, D40_DMA_RUN);
- 
- 	pm_runtime_put_autosuspend(d40c->base->dev);
-+ unlock:
- 	spin_unlock_irqrestore(&d40c->lock, flags);
- 	return res;
- }
-@@ -1493,8 +1499,20 @@ static struct d40_desc *d40_queue_start(struct d40_chan *d40c)
- 
- 	if (d40d != NULL) {
- 		if (!d40c->busy) {
-+			err = pm_runtime_resume_and_get(d40c->base->dev);
-+			if (err < 0) {
-+				chan_err(d40c, "Failed to resume DMA: %d\n",
-+					 err);
-+				do {
-+					d40_desc_remove(d40d);
-+					d40_desc_done(d40c, d40d);
-+					d40c->pending_tx++;
-+					d40d = d40_first_queued(d40c);
-+				} while (d40d);
-+				tasklet_schedule(&d40c->tasklet);
-+				return ERR_PTR(err);
-+			}
- 			d40c->busy = true;
--			pm_runtime_get_sync(d40c->base->dev);
- 		}
- 
- 		/* Remove from queue */
-@@ -2009,9 +2027,6 @@ static int d40_free_dma(struct d40_chan *d40c)
- 	struct d40_phy_res *phy = d40c->phy_chan;
- 	bool is_src;
- 
--	/* Terminate all queued and active transfers */
--	d40_term_all(d40c);
--
- 	if (phy == NULL) {
- 		chan_err(d40c, "phy == null\n");
- 		return -EINVAL;
-@@ -2033,11 +2048,18 @@ static int d40_free_dma(struct d40_chan *d40c)
- 		return -EINVAL;
- 	}
- 
--	pm_runtime_get_sync(d40c->base->dev);
--	res = d40_channel_execute_command(d40c, D40_DMA_STOP);
--	if (res) {
--		chan_err(d40c, "stop failed\n");
--		goto mark_last_busy;
-+	/* Release descriptor state; this does not access DMA40 registers. */
-+	d40_term_all(d40c);
++		/*
++		 * Status for a channel owned by another core still explains
++		 * the interrupt, but only ACK Linux-owned channels below.
++		 */
++		handled = IRQ_HANDLED;
 +
-+	res = pm_runtime_resume_and_get(d40c->base->dev);
-+	if (res >= 0) {
-+		res = d40_channel_execute_command(d40c, D40_DMA_STOP);
-+		if (res)
-+			chan_err(d40c, "stop failed\n");
-+
-+		pm_runtime_put_autosuspend(d40c->base->dev);
-+		if (res)
-+			return res;
- 	}
+ 		if (il[row].offset == D40_PHY_CHAN)
+ 			d40c = base->lookup_phy_chans[idx];
+ 		else
+@@ -1729,7 +1736,7 @@ static irqreturn_t d40_handle_interrupt(int irq, void *data)
+ 	if (ret > 0)
+ 		pm_runtime_put_autosuspend(base->dev);
  
- 	d40_alloc_mask_free(phy, is_src, chan_is_logical(d40c) ? event : 0);
-@@ -2053,8 +2075,6 @@ static int d40_free_dma(struct d40_chan *d40c)
- 	d40c->busy = false;
- 	d40c->phy_chan = NULL;
- 	d40c->configured = false;
-- mark_last_busy:
--	pm_runtime_put_autosuspend(d40c->base->dev);
- 	return res;
+-	return IRQ_HANDLED;
++	return handled;
  }
  
-@@ -2414,10 +2434,14 @@ static int d40_alloc_chan_resources(struct dma_chan *chan)
- 		err = d40_config_memcpy(d40c);
- 		if (err) {
- 			chan_err(d40c, "Failed to configure memcpy channel\n");
--			goto mark_last_busy;
-+			goto unlock;
- 		}
- 	}
- 
-+	err = pm_runtime_resume_and_get(d40c->base->dev);
-+	if (err < 0)
-+		goto unlock;
-+
- 	err = d40_allocate_channel(d40c, &is_free_phy);
- 	if (err) {
- 		chan_err(d40c, "Failed to allocate channel\n");
-@@ -2425,8 +2449,6 @@ static int d40_alloc_chan_resources(struct dma_chan *chan)
- 		goto mark_last_busy;
- 	}
- 
--	pm_runtime_get_sync(d40c->base->dev);
--
- 	d40_set_prio_realtime(d40c);
- 
- 	if (chan_is_logical(d40c)) {
-@@ -2458,6 +2480,7 @@ static int d40_alloc_chan_resources(struct dma_chan *chan)
- 		d40_config_write(d40c);
-  mark_last_busy:
- 	pm_runtime_put_autosuspend(d40c->base->dev);
-+ unlock:
- 	spin_unlock_irqrestore(&d40c->lock, flags);
- 	return err;
- }
-@@ -2602,19 +2625,26 @@ static int d40_terminate_all(struct dma_chan *chan)
- 
- 	spin_lock_irqsave(&d40c->lock, flags);
- 
--	pm_runtime_get_sync(d40c->base->dev);
--	ret = d40_channel_execute_command(d40c, D40_DMA_STOP);
--	if (ret)
--		chan_err(d40c, "Failed to stop channel\n");
-+	ret = pm_runtime_resume_and_get(d40c->base->dev);
-+	if (ret >= 0) {
-+		ret = d40_channel_execute_command(d40c, D40_DMA_STOP);
-+		if (ret)
-+			chan_err(d40c, "Failed to stop channel\n");
-+
-+		pm_runtime_put_autosuspend(d40c->base->dev);
-+	}
- 
-+	/*
-+	 * Always release software state, even when the controller cannot
-+	 * resume. d40_term_all() does not access DMA40 registers.
-+	 */
- 	d40_term_all(d40c);
--	pm_runtime_put_autosuspend(d40c->base->dev);
- 	if (d40c->busy)
- 		pm_runtime_put_autosuspend(d40c->base->dev);
- 	d40c->busy = false;
- 
- 	spin_unlock_irqrestore(&d40c->lock, flags);
--	return 0;
-+	return ret;
- }
- 
- static int
+ static int d40_validate_conf(struct d40_chan *d40c,
 -- 
 2.53.0
 
