@@ -1,56 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036480;
-	b=HP+R0tVUkydmB2y//OaBOMrrwNr9TVe+nirs/c5N2tWU8ou5w0imB55zkNjf/VpGssSV
-	 rZH1xwFKpF+d+I/8AkTSUbkLcLm9afrdgXKPSMoovViJD759ZsvOANwLHntFE8u0+fmYh
-	 kAty7j0dAP/jUluFI9CVL7wsA2dD8ZZjgH69Es969htN4NRRbDDL47WrQXwEGmHYcLWya
-	 NFrJyKSLtzX8SYZtJz/s4+FlVCanN157jQDh+zJp7JRAcg+UacAreacVCPbqlJm2GnzFz
-	 qdQ50NYO5gif1YBo5zo0rSIUPhIIOyS2skv+OguLBu+aYu20jdQOdWuQiOWo9IQ6NIQ==
+	t=1795036483;
+	b=185vFRfgTZepMkT7O3hUy++B3kwCmOYWEZpjhMWeSlQx20rjMu36nUUQU6L0FAyr7hVH
+	 BFND+tsKEQRH8PoKk6uoddkHDb6MQfc6hohLLd9B4Wv81X8gGLx0PbcDhnRa3LfrhTUNL
+	 Se/avVb/C/hpiYT+6EZeyDP1IUhTGX5PTrVjPK/z7Wizo551tItamT08rhol+yEfQZpDu
+	 EprT5GnBY4dCt+sk3uytbhoB3vCngbNfwrhMsbyz1cvcvwFJy8L+/Gtn62PuRk/fQGsT6
+	 rvnGAC7NA16/ZUg0Pe5TvQFC7iwYCJOyNZcDws8RJu5l60jFdxdWvy4GgeZ9Z68qB4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036480;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036483;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+js5raqhdw8201E2UTBKs+TPTX0xfNjmu5I6lXthCF4=;
-	b=RtUJG1c1Dpw4yGWzY8m0RPMI0mK7nzQ/CMdrVUvWEmicrhddGOVaTMHyEDuRjPV8YPvh
-	 v6m/RaAQd8U8IqHhzv9JFjdZiAP0+OgvKUpqSZsxRtKL+y/RfEB8yppTN/OnHd6KD65xj
-	 ynYcsrKuqa0h2UD224YQJ+PNf8GJEz0bC41Ncc3XRvYHD9weQ5m1NkKdzL6G60PSqHWln
-	 qG1SNFIAuexWgbVcrnXfgsfre2YKcxdF4MsVJhelvD10p0XQ4ZhE34Jp/xXMco9dW72WH
-	 bhEO060z6zQsPtjLYIirs6800K8Qlukx8NYEnywihRxXFzInLO6g7V5GpH0uSpFxIKQ==
+	bh=F1u6g0qmfbV/CsmoDPM9agq5DLLn6vIh2rjKiNvq38I=;
+	b=oqdCVT0iMpYSUnRiQsBpTRCLZVNr5k2qtaiSFpADMHPoUo7YSTaV45aFZlwbLTlpPF6q
+	 1FddXaGOeS4P2TJNvOj53GgljTwB91WROk80DZh0SaJ+vHn4l0AHPXpyxJ1WrU/YaXMgg
+	 ZdYHRfCpzI0WyVegR1eoEnYeeE4wBiwPhJhDgAUQfGuggcVLCBfBN3MBxJRE81H93DS3X
+	 0oSQDabuxCpewKYrtxuWKxgXiqqW93h/KYIW2nOBXfsquUm7cFJqRaDx2AM6SpWxRC0ER
+	 ZYBrEuKAh65awLVjSmkqLDqXKTx+tKzxLezuw21cFlP9hXLS/Ce8Fs/VsaUiocRByhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bYrLpf9i;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lf5jVped;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE71C606A320;
-	Wed, 18 Nov 2026 21:14:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A01C606A325;
+	Wed, 18 Nov 2026 21:14:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bYrLpf9i
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 395621F000C4;
-	Wed, 18 Nov 2026 21:14:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lf5jVped
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D758F1F000C4;
+	Wed, 18 Nov 2026 21:14:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036480;
-	bh=+js5raqhdw8201E2UTBKs+TPTX0xfNjmu5I6lXthCF4=;
+	s=korg; t=1795036483;
+	bh=F1u6g0qmfbV/CsmoDPM9agq5DLLn6vIh2rjKiNvq38I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bYrLpf9i/rg4MnnDkhjb9NzKQmxWo852vk4SSj58zqF2lt1GgpLYLGTcDtHJ7vGJt
-	 jcGqYNsvHDIQXjz+q3ZNLgkiOzB0gtjic5xRxjLKvzsuAtX+nUWX3XmAshFLWgvE0q
-	 1n09AUzAHztgsP7Vk3AkBBN4hVJbYC7VDNS51rcw=
+	b=lf5jVped3bPnS0nNT6Tgs6wq3OtJsqXaGbnl3Z1UvlI3g7MrVolkhgoIDGEORrOxO
+	 lgVEQ7sNsrkGoS0LBLmtA9/klWM2JS5aDjPGro4YRsfLjL4oUMHB1fLcxMHweCGyfd
+	 MmZQS5YvbT3JLzqKeVAmJIMVp1wjtuWRxTdDaoHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
 	SJ Park <sj@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Hugh Dickins <hughd@google.com>,
-	"Paul E . McKenney" <paulmck@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <david@davidgow.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1076/3318] mm/shmem: report RCU-tasks quiescent states while undoing a range
-Date: Wed, 18 Nov 2026 15:28:18 +0100
-Message-ID: <20261118150352.247877465@linuxfoundation.org>
+Subject: [PATCH 6.6 1077/3318] mm/damon/core: charge only the part of a region the filter left
+Date: Wed, 18 Nov 2026 15:28:19 +0100
+Message-ID: <20261118150352.279916417@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,70 +71,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-[ Upstream commit ebd1a08c192109c83a87ddf42793ed6283180faf ]
+[ Upstream commit 4ff3b4a54a32142497fb44b79d0920aa6ba3393d ]
 
-This shows up in the Meta fleet on ftruncate() of large tmpfs files:
+Patch series "mm/damon/core: fix the size charged for a filter-trimmed
+region", v2.
 
-  INFO: rcu_tasks detected stalls on tasks:
-  00000000752fd185: .. nvcsw: 59455/59455 holdout: 1 idle_cpu: -1/0
-  task:rocksdb:bottom  state:R  running task
-    __folio_split
-    find_get_entry
-    find_get_entries
-    truncate_inode_partial_folio
-    shmem_undo_range
-    shmem_setattr
-    notify_change
-    do_ftruncate
-    __x64_sys_ftruncate
-    do_syscall_64
+An address range DAMOS filter that partially overlaps a monitoring region
+splits it, so the scheme action reaches only one side of the boundary.
+damos_apply_scheme() reads the region size before that split and never
+re-reads it, so the quota charge and schemes/<S>/stats/sz_tried account
+for the whole original region.
 
-shmem_undo_range() walks the whole of the requested range in folio_batch
-sized steps, twice, and its two cond_resched() calls are the only
-reschedule points in that walk.
+Patch 1 re-reads the size after the core filters have run.  Patch 2 adds
+KUnit coverage for what the function charges and reports, for the trimmed
+cases and for the cases that must not change.
 
-cond_resched() is not an RCU-tasks quiescent state.  Use
-cond_resched_tasks_rcu_qs() at both points so the walk reports an
-RCU-tasks quiescent state as it proceeds.
+This patch (of 2):
 
-Link: https://lore.kernel.org/20260918-shmem-tasks-rcu-v1-1-79acf91a2569@debian.org
-Fixes: 8315f42295d2 ("rcu: Add call_rcu_tasks()")
-Signed-off-by: Breno Leitao <leitao@debian.org>
+An address range DAMOS filter that partially overlaps a monitoring region
+splits the region at the filter boundary, so the scheme action is applied
+to only one side of it.  damos_apply_scheme() reads the region size once
+on entry, before damos_core_filter_out() performs that split.
+
+The quota charge and the statistics update therefore account for the
+region as it was before the trim.  schemes/<S>/stats/sz_tried counts
+memory the filter excluded, which Documentation/mm/damon/design.rst says
+is not counted as tried, and with quotas/bytes set the excluded part is
+charged against the budget, throttling the scheme to a fraction of what
+was configured.
+
+User impact is that DAMOS could unexpectedly slowly run, due to
+over-charged quota.  DAMOS stat could also be confusing.  No critical
+events such as crashes or leask happen.
+
+Re-read the region size after the core filters have run.
+
+Link: https://lore.kernel.org/20260921152443.80132-1-sj@kernel.org
+Link: https://lore.kernel.org/20260921152443.80132-2-sj@kernel.org
+Fixes: ab9bda001b68 ("mm/damon/core: introduce address range type damos filter")
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Reviewed-by: SJ Park <sj@kernel.org>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: "Paul E . McKenney" <paulmck@kernel.org>
+Cc: Brendan Higgins <brendan.higgins@linux.dev>
+Cc: David Gow <david@davidgow.net>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/damon/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/mm/shmem.c b/mm/shmem.c
-index f31f6ffa28763..448fc9932684b 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -1024,7 +1024,7 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index b5b6d00d7a3b5..c106219d33dd9 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1008,6 +1008,7 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
  		}
- 		folio_batch_remove_exceptionals(&fbatch);
- 		folio_batch_release(&fbatch);
--		cond_resched();
-+		cond_resched_tasks_rcu_qs();
- 	}
- 
- 	/*
-@@ -1065,7 +1065,7 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
- 
- 	index = start;
- 	while (index < end) {
--		cond_resched();
-+		cond_resched_tasks_rcu_qs();
- 
- 		if (!find_get_entries(mapping, &index, end - 1, &fbatch,
- 				indices)) {
+ 		if (damos_filter_out(c, t, r, s))
+ 			return;
++		sz = damon_sz_region(r);
+ 		ktime_get_coarse_ts64(&begin);
+ 		if (c->callback.before_damos_apply)
+ 			err = c->callback.before_damos_apply(c, t, r, s);
 -- 
 2.53.0
 
