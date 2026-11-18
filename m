@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027126;
-	b=k80IDX7VdOmvfS7g977mmw78nzDv1/nZhF5TcEICQNrnkbmCBnYFdCVhqkS3AzY1nrEV
-	 Eqxf1wdUVe22NWTm8TqWqb1RHiVwblX9xebQSQ0Ez+y4U0eq8G0VT0PpBWsrbe0Vg/k96
-	 x5M3FICycyxoXpjtEMc8bauJH4yIkHzmbMk8JD4qAF3qNRF7Okwv+ojJk3/0gqwzDGRWP
-	 y5qjVUER3AcQC+MIolkSPOfF0pGaAG22vuiqv6NxArFad/g2qMoy0oms2VJyz9XkhDBHA
-	 EtSoPvqNvPZG3jJ060C+IcMtpi8cO/5ODxTqw5csU1qEgL44XFOout2gNY3+3ytykKA==
+	t=1795027129;
+	b=S+4VEFwYQnCRJLM27EBXTbSftfPCk9dsz9dX86Ddrb0QFMzhU2tZDncJ9fL3VUCVAI14
+	 UDaDil66WHR+wi8IymwvK2Lzgb3kg1NJDYBe4iQvYpZpAuaZj059OAuJYNMXPlwmG784o
+	 NepdDz6d9aIOsM9rvQfQghIazPV965dfYxHeHcoPnsiciC3m+D85CV7pzu+1Rn6Ey3nRG
+	 avolVz5okPBOrQIyb/Aft9Qv4cUTgkxl1mmvbWSByyqHU8mRzgDwQGq+sGtlsCz2Q6pIS
+	 8AwrKyWnVvRYpM8TUFx5BhGocu2OtjVEOA6uuu8Z17A3NYcgqfpXayo13c6wcueE2nQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027126;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027129;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qR8JZs6HQ3GOhMl2Xyu6emkSTmP7Uy0M+jNEOVMN12A=;
-	b=GXVBs13vhM4C+q0wwgYVuILAhL9ftLmBpW8vPQcG/vSvNcu2jk4773D3TwkGQ2n7Gt6I
-	 G5g+Y6+r57iBHK/AaaXhLe9DJSqVOOTfEaOA3KCYY8zlQB0os+BpF8UVAaSq8yx6Nv3j+
-	 nXJeDKO9iEmifZ1FdofhHc9etHrGox16pIMRG2qMhBD+5fLDOwUkRB1Hus8iVbNrpEgjZ
-	 /6/iJEH4PPQ6ZoFjR6F7Y7VsnjBE6IBLlL8CzxxOSViEC82ZqSjSRlIFBxGktbefoGg9s
-	 xZ1MIHAYNhYPcsDvM7nymq00HgtFwZxSd+Ie+upralVAT82pYa4G7KmwCp2eIaoBq4Q==
+	bh=+Dtv754h6cLvGrpi1Zv3H/1izieD6qUHJdd1e4YATtE=;
+	b=LGL5KPO/tJtp8x2vVKliHwCFBmgirei/qi7KBbHN2yi2GYRo0Ze8l/ybCCrxJ0H3oqzx
+	 oNmjuN3148bf4IszFm4iUWBoTfI8D5Ht7hwQxELvfhS32q6n/J2sVMCDz7hP/QhJ+UQ6j
+	 +3G4huGbAFKU955gw0M4mx4g8GBzu6LoG+lPQs/SLKRY9O7qeRdgO1bqq3s/U1/x18SUQ
+	 zRZ/c3iYTta1LB8TwvwsPSCYjgOpNqbbyI++78XTLgZcVldLKajzefKCObnZ9dxvrO+wo
+	 zc0h7ugCeuh69qDe6D6PEhHasBu5PmUX8AamSv0PgKFWUXrWLSCdNwFBIJXZLeIiN4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nbMkXC5J;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oDmVU07P;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9248B606A31C;
-	Wed, 18 Nov 2026 18:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44034606A330;
+	Wed, 18 Nov 2026 18:38:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nbMkXC5J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E41B11F000C4;
-	Wed, 18 Nov 2026 18:38:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oDmVU07P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DCED1F000C4;
+	Wed, 18 Nov 2026 18:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027126;
-	bh=qR8JZs6HQ3GOhMl2Xyu6emkSTmP7Uy0M+jNEOVMN12A=;
+	s=korg; t=1795027129;
+	bh=+Dtv754h6cLvGrpi1Zv3H/1izieD6qUHJdd1e4YATtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nbMkXC5JPK753BtPdcTmnhxf9BqzLznj5qVNE4+ud/Qlzniwg1PrZpmfazQsGF1bf
-	 sxHkUoSJi0vmVEwzj1/WiPxAQPBJyrGYezDdN193RSgYp/Z1vkGF1oeYJuCWheMdgw
-	 yYYF9cG2zSm1Cp59hpZFUGFEMJSyp7ucTiq64Psg=
+	b=oDmVU07P4/nlcuk7nn6dQOKdhmGqJvkietous8+UitGAZ/3jVeGyeWN0GWjwyru2R
+	 XNtzDlOnQOBZv0Me+LpHzIXMGzJus4S7yFX/A19D/Ihp8pNUY+u8B9e0rZBBLeszfH
+	 h0su7zNONwLu7E0V7QKi+utxyoJh3eyfPzZmZrBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Chen <chenyuan@kylinos.cn>,
+	Colin Ian King <colin.i.king@gmail.com>,
 	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1678/2151] bpftool: Fix inverted tracefs validation when scanning /proc/mounts
-Date: Wed, 18 Nov 2026 15:56:53 +0100
-Message-ID: <20261118150222.954017869@linuxfoundation.org>
+Subject: [PATCH 6.18 1679/2151] selftests/bpf: Fix spelling mistakes in descr literal strings
+Date: Wed, 18 Nov 2026 15:56:54 +0100
+Message-ID: <20261118150222.989840298@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,37 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan Chen <chenyuan@kylinos.cn>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-[ Upstream commit 21c755efaab1f40c2588ae5acbfa319a6d7d3638 ]
+[ Upstream commit 760c953525bab88f053e61f1c1a6b2a5f76911c0 ]
 
-The /proc/mounts fallback in get_tracefs_pipe() accepts only non-tracefs
-mount points, so a tracefs mounted outside the default locations is
-ignored: bpftool prog tracelog then mounts a second tracefs, or exits
-silently with --nomount. Negate the condition.
+There are spelling mistakes in the descr literal strings. Fix them.
 
-Fixes: be3245e22d22 ("tools: bpftool: attempt to mount tracefs if required for tracelog cmd")
-Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
+Fixes: 095ddb501b39 ("selftests/bpf: Add sockopt case to verify prog_type")
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20261016015057.127061-1-chenyuan_fl@163.com
+Link: https://lore.kernel.org/bpf/20261012212334.183116-1-colin.i.king@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/tracelog.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/bpf/prog_tests/sockopt.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/bpf/bpftool/tracelog.c b/tools/bpf/bpftool/tracelog.c
-index 573a8d99f009a..e104748c83502 100644
---- a/tools/bpf/bpftool/tracelog.c
-+++ b/tools/bpf/bpftool/tracelog.c
-@@ -86,7 +86,7 @@ static bool get_tracefs_pipe(char *mnt)
- 	fclose(fp);
+diff --git a/tools/testing/selftests/bpf/prog_tests/sockopt.c b/tools/testing/selftests/bpf/prog_tests/sockopt.c
+index eaac83a7f388b..ecf5a7a047a48 100644
+--- a/tools/testing/selftests/bpf/prog_tests/sockopt.c
++++ b/tools/testing/selftests/bpf/prog_tests/sockopt.c
+@@ -933,7 +933,7 @@ static struct sockopt_test {
+ 	/* ==================== prog_type ====================  */
  
- 	/* The string from fscanf() might be truncated, check mnt is valid */
--	if (found && validate_tracefs_mnt(mnt, TRACEFS_MAGIC))
-+	if (found && !validate_tracefs_mnt(mnt, TRACEFS_MAGIC))
- 		goto exit_found;
+ 	{
+-		.descr = "can attach only BPF_CGROUP_SETSOCKOP",
++		.descr = "can attach only BPF_CGROUP_SETSOCKOPT",
+ 		.insns = {
+ 			/* return 1 */
+ 			BPF_MOV64_IMM(BPF_REG_0, 1),
+@@ -947,7 +947,7 @@ static struct sockopt_test {
+ 	},
  
- 	if (block_mount)
+ 	{
+-		.descr = "can attach only BPF_CGROUP_GETSOCKOP",
++		.descr = "can attach only BPF_CGROUP_GETSOCKOPT",
+ 		.insns = {
+ 			/* return 1 */
+ 			BPF_MOV64_IMM(BPF_REG_0, 1),
 -- 
 2.53.0
 
