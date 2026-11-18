@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045060;
-	b=KzMwx4Yj/c/JTivXPgPxCeo5dD3z6K+HCJS3t2yKEwXhEkiba0HXV7pdLKA/uD2XrEhg
-	 +DUgxkQbZ3fbOgQhJ2QBDSavFNCMxGhebsdHDpWz2wPx/QmpX7z/s9ZjkHn7GWSr/KEln
-	 2RN9UJRnzB8isM2viAltDv51w4Tq41FEL7ORrcXAYetErBsbBimrUPEZ1Oc0ZV1TKdKO1
-	 FZ7qm1Qo6LSi69LQUtxLuVcH8kgnsuBrGlh0KUyVKDZvmeowuvmipPVaSSYHBkMAZgQYG
-	 a62UDz4/1vtZPJVUsil9RRr0ZjIC09vXCYJR30G0Yz2WyuPQ+a4B4BZTgqnqKEc+Rmw==
+	t=1795045063;
+	b=jRMkPsLxk2SMGYxFOKhv5mB8NaIxuuBsLHQedcxvFeW7GTwopBBdAIUDtsZBY4lh40ld
+	 lWDLGdD80dNz7writfly/l18UWnKIBmduyOfPzHxs7w+wwbKS96t1zDzSEFkp1AU+St2n
+	 14YX1Qw0EXtQrX9OkAFgTlOTCchnOlfnrpJ3QtEtW+/kTrVlLaO41oFWmzt9H/TGbFh/b
+	 dtsj+lydiAeIme7+sEzpP+cnPWygrBpRSVJmGvIABTiBbQXnsamYuepKqUmoMNxoCbIyq
+	 CKmKXWhT8/eBnDMyxd4zBp9dGj1fsgz1ETLTa1uJkqBRMjLOLrRpNPjQzVF3PO1KDPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045060;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045063;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5SvcRLsXv0eQM+0zvy9qN92SGcKKc63gcHDF0yHn37I=;
-	b=0KkzUa7NFl5tf2mGYWB14cHhy7GdeEmE78TwM+c73kighxKRchwyEzrHpWEtRRbrMuVU
-	 zTxtuAT6AeTX73GCwq2ZGRlHkwJs4cGkkWHcp/EJ2/dBToH2eUHwj1iCW+CEDKJgt2v8L
-	 5JxDsK+F1Tlpt6Lnk+0P3fSzmol3aaxafNiMRht2Hed+A7W6vBMtWBpkQSwUjbwpZet/8
-	 Z22sV1ZI8H87pQrqEoIF8IUfZK3nArlpW+fytY6t1LhYQoudHUypxHrSztgV7R0SpNPUA
-	 j9+YURsfvfVLEm1/rY0WbX4lJxmwVIkj/W3I5aMoJOHh/NuM4+rXsbcM9lXp8D6gSlQ==
+	bh=1sUzCzQlfj7ntIFEEFLFCD52ZjD+TIKK1a2gZ9eYHDU=;
+	b=XCb0PPeMpRZgOWpAYiQZRl6Km1ZucSbMT5qJwM9EO4lcdjADvgDL4Ebo7zDGxJwThKQu
+	 S3VnEcuBtk445LizFI+i5ha2uE2LmgZ2v5k27pzt2bGLzT4U5EJr1tA9e7zCheq2Osjgb
+	 HDwz1ZoA6gidoe8qjMxJK6UOeM4rXOu/+y+6E6810w8cGjC85M4STQAxaGvkrD3kq3JUE
+	 Kntfb2einZ23XcNMojsSxms+uC+Kp8ZbBw41ZHExVGpsrFaHCyIM6RbE6B+/eIISYg5px
+	 XZFEDHtXoienEW7rx2Ce/2FCXOCYjK07GmcLlYfc/KPIzFiAfdk9IzGWGUrQYnGMf8w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MXKq2OYQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=duh5Sm8Y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD9B0606A325;
-	Wed, 18 Nov 2026 23:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AB6B606A31C;
+	Wed, 18 Nov 2026 23:37:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MXKq2OYQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB20E1F000C4;
-	Wed, 18 Nov 2026 23:37:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=duh5Sm8Y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5ACC1F000C4;
+	Wed, 18 Nov 2026 23:37:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045060;
-	bh=5SvcRLsXv0eQM+0zvy9qN92SGcKKc63gcHDF0yHn37I=;
+	s=korg; t=1795045063;
+	bh=1sUzCzQlfj7ntIFEEFLFCD52ZjD+TIKK1a2gZ9eYHDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MXKq2OYQqkfkLHmcxmFclz1+N+7RbemnJYa6aaDGR+AKQgUV4AlHtbbbhzJgU1+on
-	 MLmBpqy5uyF/vbvJjZmgFFN73Pyz9vma6ajOD2wT0tiV3zIeMv3ffdp2ePip7x6zJg
-	 EuiFiFKoW30yoJMTvT1GB7K80c5sG9j/t/4YGbhI=
+	b=duh5Sm8YNv8OZgcN/HUTNMvYlI5oqGnH5ON9N0vGkbEOvjrv8utGSPAG3EYa4053h
+	 Oyq6eTL6b3Iqa5Pinwj2NUtIOIaPXGv+vBQPrg4pdHl8Q4UjElghAdu3VvVEmqF+IP
+	 nVGNgtwsXlIZ0nJdWmGdwAGRXYrj9XZdQHumRQ6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Luo Haiyang <luo.haiyang@zte.com.cn>,
+	Run Zhang <zhang.run@zte.com.cn>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Shengming Hu <hu.shengming@zte.com.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0729/2857] wifi: ath11k: Fix possible memory leak in ath11k_dp_srng_setup()
-Date: Wed, 18 Nov 2026 15:29:23 +0100
-Message-ID: <20261118150227.797197989@linuxfoundation.org>
+Subject: [PATCH 6.1 0783/2857] cpufreq: conservative: Restrict deferred downscaling to low load
+Date: Wed, 18 Nov 2026 15:30:17 +0100
+Message-ID: <20261118150229.760144886@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,50 +71,210 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Shengming Hu <hu.shengming@zte.com.cn>
 
-[ Upstream commit 6132d70d0890c03546f6970893fd71938efb2a2f ]
+[ Upstream commit 0fa55c5539173bceaeb400c69b1974aaa0cdb8dc ]
 
-In ath11k_dp_srng_setup(), the memory allocated for
-ring->vaddr_unaligned is not freed in the error paths that follow.
-Fix that by calling ath11k_dp_srng_cleanup() in those error paths.
+For a shared cpufreq policy, dbs_update() derives the load used for the
+frequency decision from the maximum load among its CPUs, but it may
+also record deferred idle periods accumulated by an idle CPU in the
+policy.
 
-Compile tested only. Issue found using a prototype static analysis tool
-built on the LLVM compiler infrastructure.
+Consequently, a single update can contain both a high decision load
+from one CPU and multiple deferred idle periods from another CPU. The
+conservative governor applies the deferred down steps before evaluating
+the decision load. If that load subsequently triggers an up step, the
+deferred down steps can outweigh the single up step and produce a net
+frequency reduction.
 
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-sonnet-4-6
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260801114911.91483-1-nihaal@cse.iitm.ac.in
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+This was observed on a policy shared by CPUs 2 and 3. A CPU-bound
+SCHED_EXT task kept CPU 2 fully utilized while CPU 3 remained idle.
+On this system, SCHED_EXT generated update-util callbacks less
+frequently than CFS, resulting in sparse DBS updates such as:
+
+ load=100 idle_periods=7 interval=59 ms
+ load=100 idle_periods=4 interval=39 ms
+ load=100 idle_periods=2 interval=19 ms
+ load=100 idle_periods=7 interval=59 ms
+
+With the default 5% frequency step and a 2.6 GHz policy maximum, seven
+deferred periods reduce the requested frequency by seven 130 MHz steps
+before the high decision load adds only one step. Repeated updates
+therefore keep the policy near 530 MHz even though CPU 2 is fully
+utilized.
+
+There are two load values relevant to this behavior:
+
+  * sample_load is calculated from the busy and elapsed time of the
+    current sample.
+
+  * decision_load is returned by dbs_update() for the governor's
+    frequency decision. After a long idle interval, it may reuse
+    prev_load to improve the response to a waking task and can therefore
+    differ from sample_load.
+
+The problem is that idle_periods is derived from accumulated idle time
+and is applied independently of whether the current sample load is in
+the conservative governor's downscaling region. A high sample load and
+multiple deferred idle periods can therefore coexist, particularly
+when updates are sparse.
+
+As suggested by Zhongqiu Han, calculate the sample load separately from
+the decision load. If no time has elapsed, use prev_load for the sample
+load as the existing load calculation does, since no load can be
+calculated for that interval.
+
+Record the maximum sample load for the policy and apply deferred down
+steps only when it is below down_threshold. This makes deferred
+downscaling follow the same threshold that the conservative governor
+normally uses to determine whether the policy load is low enough to
+reduce the frequency.
+
+The existing code applies deferred down steps whenever idle_periods is
+valid, regardless of the sample load. When the decision load is in the
+hold region, the locally adjusted frequency is not submitted unless
+another frequency-update branch is taken. Thus, when the sample and
+decision loads are the same and both are in the hold region, this
+change does not alter the requested frequency.
+
+The difference becomes visible when the decision load causes a
+frequency update. In particular, if it exceeds up_threshold, the
+governor applies a single up step after the deferred down steps and
+submits the resulting request. Multiple deferred down steps can then
+outweigh that up step and cause a frequency reduction even when the
+sample load is above down_threshold.
+
+With this change, deferred down steps are skipped whenever the maximum
+sample load is at or above down_threshold, keeping deferred downscaling
+consistent with the conservative governor's threshold semantics. The
+requested frequency may therefore be higher than with the existing
+behavior when deferred idle periods are present and the decision load
+causes a frequency update. This is intentional, because the lower
+request previously resulted from applying deferred downscaling while
+the sampled policy load was outside the governor's downscaling region.
+Accelerated deferred downscaling remains available when the policy
+sample load is below down_threshold, including after a workload has
+completed and the policy has become idle.
+
+Fixes: 00bfe05889e9 ("cpufreq: conservative: Decrease frequency faster for deferred updates")
+Cc: All applicable <stable@vger.kernel.org>
+Reviewed-by: Luo Haiyang <luo.haiyang@zte.com.cn>
+Reviewed-by: Run Zhang <zhang.run@zte.com.cn>
+Suggested-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Signed-off-by: Shengming Hu <hu.shengming@zte.com.cn>
+Link: https://patch.msgid.link/20260916140926740-DCokXh6dAgtqDn1EWdCh@zte.com.cn
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/dp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/cpufreq/cpufreq_conservative.c |  8 ++++---
+ drivers/cpufreq/cpufreq_governor.c     | 29 +++++++++++++++++++-------
+ drivers/cpufreq/cpufreq_governor.h     |  2 ++
+ 3 files changed, 29 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/dp.c b/drivers/net/wireless/ath/ath11k/dp.c
-index 5baa1a5ea3729..0203503ca31f5 100644
---- a/drivers/net/wireless/ath/ath11k/dp.c
-+++ b/drivers/net/wireless/ath/ath11k/dp.c
-@@ -313,6 +313,7 @@ int ath11k_dp_srng_setup(struct ath11k_base *ab, struct dp_srng *ring,
- 	case HAL_RXDMA_DIR_BUF:
- 		break;
- 	default:
-+		ath11k_dp_srng_cleanup(ab, ring);
- 		ath11k_warn(ab, "Not a valid ring type in dp :%d\n", type);
- 		return -EINVAL;
- 	}
-@@ -324,6 +325,7 @@ int ath11k_dp_srng_setup(struct ath11k_base *ab, struct dp_srng *ring,
+diff --git a/drivers/cpufreq/cpufreq_conservative.c b/drivers/cpufreq/cpufreq_conservative.c
+index 24fbb7313c950..b12647ee3fed7 100644
+--- a/drivers/cpufreq/cpufreq_conservative.c
++++ b/drivers/cpufreq/cpufreq_conservative.c
+@@ -85,10 +85,12 @@ static unsigned int cs_dbs_update(struct cpufreq_policy *policy)
+ 	freq_step = get_freq_step(cs_tuners, policy);
  
- 	ret = ath11k_hal_srng_setup(ab, type, ring_num, mac_id, &params);
- 	if (ret < 0) {
-+		ath11k_dp_srng_cleanup(ab, ring);
- 		ath11k_warn(ab, "failed to setup srng: %d ring_id %d\n",
- 			    ret, ring_num);
- 		return ret;
+ 	/*
+-	 * Decrease requested_freq one freq_step for each idle period that
+-	 * we didn't update the frequency.
++	 * Apply deferred down steps only when the policy sample load is
++	 * below down_threshold. Otherwise, multiple deferred down steps may
++	 * cause a net frequency decrease outside the downscaling region.
+ 	 */
+-	if (policy_dbs->idle_periods < UINT_MAX) {
++	if (policy_dbs->max_sample_load < cs_tuners->down_threshold &&
++	    policy_dbs->idle_periods < UINT_MAX) {
+ 		unsigned int freq_steps = policy_dbs->idle_periods * freq_step;
+ 
+ 		if (requested_freq > policy->min + freq_steps)
+diff --git a/drivers/cpufreq/cpufreq_governor.c b/drivers/cpufreq/cpufreq_governor.c
+index 00a26fa6292c5..a10cf44600ffa 100644
+--- a/drivers/cpufreq/cpufreq_governor.c
++++ b/drivers/cpufreq/cpufreq_governor.c
+@@ -116,7 +116,8 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
+ 	struct policy_dbs_info *policy_dbs = policy->governor_data;
+ 	struct dbs_data *dbs_data = policy_dbs->dbs_data;
+ 	unsigned int ignore_nice = dbs_data->ignore_nice_load;
+-	unsigned int max_load = 0, idle_periods = UINT_MAX;
++	unsigned int max_load = 0, max_sample_load = 0;
++	unsigned int idle_periods = UINT_MAX;
+ 	unsigned int sampling_rate, io_busy, j;
+ 
+ 	/*
+@@ -138,7 +139,7 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
+ 		struct cpu_dbs_info *j_cdbs = &per_cpu(cpu_dbs, j);
+ 		u64 update_time, cur_idle_time;
+ 		unsigned int idle_time, time_elapsed;
+-		unsigned int load;
++		unsigned int load, sample_load;
+ 
+ 		cur_idle_time = get_cpu_idle_time(j, &update_time, io_busy);
+ 
+@@ -171,6 +172,20 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
+ 			j_cdbs->prev_cpu_nice = cur_nice;
+ 		}
+ 
++		/*
++		 * Compute the sample load separately from the prev_load value
++		 * that may be reused after a long idle interval. The conservative
++		 * governor uses it to decide whether to apply deferred down steps.
++		 * If no time has elapsed, retain the existing behavior and use
++		 * prev_load.
++		 */
++		if (unlikely(!time_elapsed))
++			sample_load = j_cdbs->prev_load;
++		else if (time_elapsed > idle_time)
++			sample_load = 100 * (time_elapsed - idle_time) / time_elapsed;
++		else
++			sample_load = 0;
++
+ 		if (unlikely(!time_elapsed)) {
+ 			/*
+ 			 * That can only happen when this function is called
+@@ -205,11 +220,7 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
+ 			load = j_cdbs->prev_load;
+ 			j_cdbs->prev_load = 0;
+ 		} else {
+-			if (time_elapsed > idle_time)
+-				load = 100 * (time_elapsed - idle_time) / time_elapsed;
+-			else
+-				load = 0;
+-
++			load = sample_load;
+ 			j_cdbs->prev_load = load;
+ 		}
+ 
+@@ -222,9 +233,13 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
+ 
+ 		if (load > max_load)
+ 			max_load = load;
++
++		if (sample_load > max_sample_load)
++			max_sample_load = sample_load;
+ 	}
+ 
+ 	policy_dbs->idle_periods = idle_periods;
++	policy_dbs->max_sample_load = max_sample_load;
+ 
+ 	return max_load;
+ }
+diff --git a/drivers/cpufreq/cpufreq_governor.h b/drivers/cpufreq/cpufreq_governor.h
+index 1462d59277bd1..ceb33336b2b30 100644
+--- a/drivers/cpufreq/cpufreq_governor.h
++++ b/drivers/cpufreq/cpufreq_governor.h
+@@ -94,6 +94,8 @@ struct policy_dbs_info {
+ 	/* Multiplier for increasing sample delay temporarily. */
+ 	unsigned int rate_mult;
+ 	unsigned int idle_periods;	/* For conservative */
++	/* Maximum load from the current policy sample. */
++	unsigned int max_sample_load;
+ 	/* Status indicators */
+ 	bool is_shared;		/* This object is used by multiple CPUs */
+ 	bool work_in_progress;	/* Work is being queued up or in progress */
 -- 
 2.53.0
 
