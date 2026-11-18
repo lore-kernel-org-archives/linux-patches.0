@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025506;
-	b=aoHiv4IcdwyNCKhFtVFEpVGxMCMb0S6faGinE2DYtST1I4m5pQGlQLCsIdPNgrMR7kqz
-	 T90iytMgW1DpfKU2eVgk6Je8RVdgxFg/OlNsGoYFq4NMYJmp8gwWYLV+2DfsLqs8FaEdG
-	 5RM7XxKGtakc15PkfhZLUEg7vP0QEzhAS45kiymzT5Ig7NZ2GSbNFvpQTFfeYi7XQoBfN
-	 uZ4HVWp2G8iyQYJ8KP6bFR9CW6TgVsAHFvXOZII18piPCAQv4B9RRTelKZ/qed+3HUDRO
-	 XE8wluT/05O3HfoN+RV6FVgxMgt41b3yyCx/5EHM6USPQAA5iO61+B5UBQzF7Gw0lAQ==
+	t=1795025508;
+	b=oAwG45FSBVPxfMgx956kuIeu7ZiURf7q/cHNjdjYtNK1cw+kiTdiWnQVBj9dajXVp4wo
+	 p+bvlrWP2V9CQL9RLPUeqjpZiipaQtmRAvmLm/GqcV6iFKNIt9oH4yMFlvIaNLEhLyerL
+	 J2vuGgRyMHFIWxNPnVpbfTPM2cHu510xzS71y7eZPSYBh/lIk6vMM33lnBivVIoHFQ2ZR
+	 P3JO2XvjdY1R/7VfaZ1TppJDNbIo8zrB6mU5/+87nRi2kShjWvH6xLt1grm5+PtHgYVKq
+	 1EhxIGmWFyMXXeXJOpO/j6egy6rReEKAhAtUy6VU2xhs27rDyuatZVEvAkfo6SwpGjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025506;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025508;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+EjkLulcrWgDIvmAMvGflvn3LCPYtsZB6i7qzqxka/4=;
-	b=I1+AdjiJB6lOaj7tB+62TfBeBnCfIek85xIrUBVPVI4T8YNsEMe1LG+Et4wgkhPP6YVv
-	 P+e4OYwOnW/sfqoR9hGeyIxjnBvU5/+hfzt04vP/fDPgt5lhNOb6z8RD6mF+5NGWYHeMl
-	 UHjN1a60sGbOS3fv0GyexJZ4YeFX0qYbHaE+MHQDvHeKvPz34OiV0OECmsoxuMSkVXX0O
-	 h91+1F1AdeTwwdJKC1W8NXMKozD6K7ypIBNlP6guvcQ12RM1ALx4nFWrb6NC/IwLkDoui
-	 2sUHg2z4iCOJH6fyIU6Ol9MZmSIXT/Q5S03E6fu0RKB57thS7RF/MCeMaHaVJqM7fmw==
+	bh=6H35l/hq5D+tyqS34nuSXew/O229akLDWvZAPh6HeHc=;
+	b=yf//7VjyjdibZO8jomdy6L73+Dyi2dK516mRKfQz2W+n+nYJXjALlrxpFD+9UMvVPYyb
+	 Pb9pcllCEHNI/jtr8Kc6fboQLySSj5UMOBRvpIa+Qyfzvd1AManXOqHsooazCWKRhmyAK
+	 wM4WrbdYhhU2NqwDGQWGZ5mNVWHUxvj2Tu9v2vF9UKuuop6+zXT3Xe3Rx4g7HfcPISbdU
+	 vY2Xir60c7uUvAtrGfea9lpG7bLC58aj0elz1u6rlCXSvh+a+xwbf0QfcFAr3iNRrtV2x
+	 d0VN1gnnDanc1zMAJQrPckwc5qbX7HZ764dmNgX/aorZgMh0jK7rgbqgRs1Q5Nl1IHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xYdYBwXY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DLEHeGGe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B8C5606A325;
-	Wed, 18 Nov 2026 18:11:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E46606A330;
+	Wed, 18 Nov 2026 18:11:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xYdYBwXY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7456B1F000C8;
-	Wed, 18 Nov 2026 18:11:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DLEHeGGe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 340B11F000C5;
+	Wed, 18 Nov 2026 18:11:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025506;
-	bh=+EjkLulcrWgDIvmAMvGflvn3LCPYtsZB6i7qzqxka/4=;
+	s=korg; t=1795025508;
+	bh=6H35l/hq5D+tyqS34nuSXew/O229akLDWvZAPh6HeHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xYdYBwXY55yCauqrfrBTsOPyJmJq2gMHXBBwNddmTRQ9LB4eFzN6EXfKG6NdpxWQd
-	 Y91+jkA3Zs9txTFEalpGNoParlsSBHwoiKytrBxy1mMOqfzF8alpgEtNsC/Pvdz18+
-	 9FtPZouZtvC5Ty8EaN53FJWW1dNk+QLF+uXUjRWE=
+	b=DLEHeGGegrXEwR5HrJYiJCfJqRwNDX7zJdqRoj/SeV4OrDDfi0wJZ1n56spf8v7G9
+	 FBK27Fd7BW5MtPuIavIGSrGCpswxU78bKwhB/RUAGLWylJHTMQA8RV1kfHkzUiCzkB
+	 O9HxKBB8JQgj2wPFpr/e2V+gm/eT8b0YhdJS+/2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sangyun Kim <sangyun.kim@snu.ac.kr>,
-	Kyungwook Boo <bookyungwook@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Logan Gunthorpe <logang@deltatee.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Chuck Lever <cel@kernel.org>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1101/2151] dmaengine: plx_dma: fix NULL pointer deref in plx_dma_isr()
-Date: Wed, 18 Nov 2026 15:47:16 +0100
-Message-ID: <20261118150202.363800374@linuxfoundation.org>
+Subject: [PATCH 6.18 1102/2151] SUNRPC: reject a client-side TLS alert record that is not two octets
+Date: Wed, 18 Nov 2026 15:47:17 +0100
+Message-ID: <20261118150202.399743380@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,58 +68,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Logan Gunthorpe <logang@deltatee.com>
+From: Chuck Lever <cel@kernel.org>
 
-[ Upstream commit f3017892457d8bb664ea4b912910dc254e2dd825 ]
+[ Upstream commit 1e87497aac8d2d4aee9b288ba43f58d1690b9a89 ]
 
-plx_dma_create() registered the interrupt handler with request_irq()
-before initializing plxdev->bar. If the device raised an interrupt in
-that window, plx_dma_isr() would dereference the still-NULL bar.
+tls_alert_recv() reads two octets from the kvec it is handed and does
+not check the length (net/handshake/alert.c). xs_sock_process_cmsg()
+calls it for any alert record, and the alert[] buffer that
+xs_sock_recv_cmsg() supplies carries no initializer. A one-octet alert
+body leaves the description read from uninitialized stack and reported
+through trace_tls_alert_recv().
 
-Move the bar assignment ahead of request_irq() so everything the
-handler can touch is initialized before it can run.
+The peer controls that length. Neither tls_rx_msg_size() nor
+tls_rx_one_record() enforces the two-octet Alert payload. A TLS 1.3
+record carrying only the inner content-type octet decrypts to a
+zero-length payload. RFC 8446 Section 5.1 requires a record with an
+Alert type to carry exactly one message, so any other length is
+malformed. RFC 9289 Section 5 bars RPC-with-TLS from negotiating a
+version below TLS 1.3, so no other alert framing applies.
 
-Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
-Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
-Link: https://lore.kernel.org/all/20260610112121.676561-1-jjy600901@snu.ac.kr
-Fixes: c2dbcaa8c672 ("dmaengine: plx-dma: Implement hardware initialization and cleanup")
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
-Link: https://lore.kernel.org/all/20260610112121.676561-1-jjy600901@snu.ac.kr/T/#u
-Link: https://patch.msgid.link/20260902062153.31048-11-logang@deltatee.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Require exactly two octets before parsing and return -EACCES
+otherwise. xs_stream_data_receive() already treats -EACCES as a fatal
+alert and reports it to the pending tasks. Gate the path on a control
+message rather than a positive count so that a zero-length record
+reaches the check.
+
+Fixes: cc5d59081fa2 ("sunrpc: fix client side handling of tls alerts")
+Signed-off-by: Chuck Lever <cel@kernel.org>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/plx_dma.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/sunrpc/xprtsock.c | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/plx_dma.c b/drivers/dma/plx_dma.c
-index 34b6416c3287e..5e98a8509aa46 100644
---- a/drivers/dma/plx_dma.c
-+++ b/drivers/dma/plx_dma.c
-@@ -505,17 +505,17 @@ static int plx_dma_create(struct pci_dev *pdev)
- 	if (!plxdev)
- 		return -ENOMEM;
- 
--	rc = request_irq(pci_irq_vector(pdev, 0), plx_dma_isr, 0,
--			 KBUILD_MODNAME, plxdev);
--	if (rc)
--		goto free_plx;
--
- 	spin_lock_init(&plxdev->ring_lock);
- 	tasklet_setup(&plxdev->desc_task, plx_dma_desc_task);
- 
- 	RCU_INIT_POINTER(plxdev->pdev, pdev);
- 	plxdev->bar = pcim_iomap_table(pdev)[0];
- 
-+	rc = request_irq(pci_irq_vector(pdev, 0), plx_dma_isr, 0,
-+			 KBUILD_MODNAME, plxdev);
-+	if (rc)
-+		goto free_plx;
-+
- 	dma = &plxdev->dma_dev;
- 	INIT_LIST_HEAD(&dma->channels);
- 	dma_cap_set(DMA_MEMCPY, dma->cap_mask);
+diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
+index 2946f6b562fbc..04e0052c565b8 100644
+--- a/net/sunrpc/xprtsock.c
++++ b/net/sunrpc/xprtsock.c
+@@ -407,9 +407,25 @@ xs_sock_recv_cmsg(struct socket *sock, unsigned int *msg_flags, int flags)
+ 	iov_iter_kvec(&msg.msg_iter, ITER_DEST, &alert_kvec, 1,
+ 		      alert_kvec.iov_len);
+ 	ret = sock_recvmsg(sock, &msg, flags);
+-	if (ret > 0) {
+-		if (tls_get_record_type(sock->sk, &u.cmsg) == TLS_RECORD_TYPE_ALERT)
++	/* put_cmsg() shrinks msg_controllen, so a short one means
++	 * kTLS filled in u.cmsg.
++	 */
++	if (ret >= 0 && msg.msg_controllen < sizeof(u)) {
++		if (tls_get_record_type(sock->sk, &u.cmsg) ==
++		    TLS_RECORD_TYPE_ALERT) {
++			/* RFC 8446 Section 5.1 requires a record with an
++			 * Alert type to carry exactly one message. An alert
++			 * is two octets. tls_alert_recv() reads both without
++			 * checking the length. alert_kvec caps the count at
++			 * two, so a longer record fills it as well. kTLS
++			 * sets MSG_EOR only once the record has been
++			 * drained.
++			 */
++			if (ret != sizeof(alert) ||
++			    !(msg.msg_flags & MSG_EOR))
++				return -EACCES;
+ 			iov_iter_revert(&msg.msg_iter, ret);
++		}
+ 		ret = xs_sock_process_cmsg(sock, &msg, msg_flags, &u.cmsg,
+ 					   -EAGAIN);
+ 	}
 -- 
 2.53.0
 
