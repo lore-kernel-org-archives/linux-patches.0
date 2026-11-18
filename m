@@ -1,86 +1,59 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049506;
-	b=PScNPMfRuDzCC1xKTg12iNhAofEutkOS/Qoo6qjCiNBGl0IA6LyiBhCecoaqJOdYvjBz
-	 ju1aRhQRCZYvET2hkDl9Q9TevSYKBSC1+h27w0C1F9ij7B00SSziWaCxs17b5IWG1zGGH
-	 LgTv/o9MfvDC5xSfwH+CO8aD7gosC+kfnhWSmFGl2j74BxTjhrFswPhZqhMvmbi7ABpd+
-	 YNsEWVGOJeSJBpP3oIlkSd/hkpiloOp6ogzZxGCW+stK9fh127VlX0eFnXUsc+t4KqX+B
-	 eNvx8vNpdWaqZg9uAFetbly3TMcEYCLam97yZY9eNlAoPY4t1OmPB10UmwHDVfSuvAw==
+	t=1795049508;
+	b=EUMJX5cc99+G8aamfy5VTOHWQas8sS23TSEsIrMfzF6LWgU+jvHZfITMuW+RgLH0WcHR
+	 KJybMkXj+DTz0RbaZUsKjpANxWDTWXbRYTj7NtNbW9a0s+BEXq3By7QPMr9OKyb87H85l
+	 qgSHkJ0887MuXQ0C5ODZoRVSkfi79s6uvDVzlXNFa1+4CuBiqLtVGG0B938aqN5aez1vc
+	 5i9b43Na/sXuZ5B+eGyIvun9qX2H+Fw/o0bzpttj3+QOeeF/8jSaq4Zy4dC/icYxE3QfO
+	 UhEwHR47jPU5rH/+59sfHyIel+7JzAWf9SLv0Hn0KtGjoBpFShBkxx1xPoEYXkv11oQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049506;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:Content-Language:To:Cc:References:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=ya32YBMmsW8Ze+/UEBRzxYHvc+64tNFlziG219hEuQ0=;
-	b=pk+YVFBxHxF/65EYqYYRpNNsN3HG6X0eoNbRKYObr8J0RDbQdRGxmIK5d/+0CZhlE+FF
-	 VYBZSHFypkVHEhcNrY4LNL6wsVjZmc05IiQK4Sy9qvJcHZ0Lpb4ljFFcwdkomu6YI76Bb
-	 ZxfPmUT0omA1yVT+XHqqrkiRylvBy3gAc5/23ZDfWBDzZ7FKT5HPwMQI+7uB3k8ysYnXp
-	 Zz5+KM1Fr5SCOnJPS1Jta4H55ITTqz2UG1VcX/Nl6cv0fFI+QjFNJFxTSvtSqsUSQcjk6
-	 bQnnCogBw2rJI8mYhAfdGJ3n9ePXrAXOwgN7gUxSKvG0z11KhPv08mA6CL+9n7O2bUw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049508;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=vhhssy9dkHaTmBpThnJyZ9KzOTqlvFHMxIAAWffqrSE=;
+	b=t3SamgRTRZunBnTeFPsWWvHEoCnsi4wKBBs6Bj84yGLSPONz+QaI+38Ri1BOHCbT64IO
+	 0fmKpqNGuEWCh74wVdXwP+vxPuSILEgkzUfLNsjvKxu9KZSVHMx1D5tBSJWbDs+fk4i1y
+	 +Jw2qwsOVXMagwGZfG4KJbnEtsYOEyh+YV8qUF7eyVrC5/OuZnOJWmqhvYLWb70KsuqCc
+	 xeVPEII662B6dFBcVmhPoEZfhudjk8nmNWAjCjsZ49OqEdt2/U0zJ+c25s6Xtjy04pgmd
+	 jyDL3phTkJetPSgDhz83FcZWbi0MFWKeDIzUK7WLWvctN5Jd/OXn6VtDQX4ZZrly3DA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=googlemail.com;
-	spf=pass smtp.mailfrom=googlemail.com;
-	dkim=pass header.d=googlemail.com header.i=@googlemail.com header.a=rsa-sha256 header.s=20260707 header.b=kdZKqPN9;
-	arc=none smtp.remote-ip=209.85.128.46
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OI0hjMbV;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75EBB606A332
-	for <patches@lists.linux.dev>; Thu, 19 Nov 2026 00:51:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 75EBB606A332
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5F5606A331;
+	Thu, 19 Nov 2026 00:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.a=rsa-sha256 header.s=20260707 header.b=kdZKqPN9
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4bb64ef5a00so12437625e9.3
-        for <patches@lists.linux.dev>; Wed, 18 Nov 2026 16:51:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20260707; t=1795049505; x=1795654305; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from:references
-         :cc:to:content-language:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ya32YBMmsW8Ze+/UEBRzxYHvc+64tNFlziG219hEuQ0=;
-        b=kdZKqPN94/Z9vyeB9TFeHl10e9OlwuJZNzU9IKLKnOKf2+ZrjfBSvbI8G2svjZhbVe
-         YetcyXY3p0CUO7RqvaboV4nY0jYGTsYNpGT1aCI9J2qXnVrpDmAGCTw814P1fuUeJgL8
-         tRYxvWocVC0kKvU4Br+Oh5LBkAe6NpBrdR/KJ5tuAKoSdCulaG1uCzRZ5a6zmAVrgp5X
-         EJCOJDUtCb5lFUDw2wFtxReECZydv+cw5hxfZLabkcvlPJSF7cZcaGaBqKk07yI7cTAK
-         Rfnk2UeDUOSm0U5KZxF8mewjpDnQsMWLOazMf1qWeUrc/86WDaV3aO68MxTVVuEQrVVX
-         UwdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795049505; x=1795654305;
-        h=content-transfer-encoding:content-type:in-reply-to:from:references
-         :cc:to:content-language:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=ya32YBMmsW8Ze+/UEBRzxYHvc+64tNFlziG219hEuQ0=;
-        b=mCTo09trGBmRnqs2yzhLAm4GH3KbWL/CEm/58DyBJ9HOE9i7LoukwcjUD8repRyT6A
-         jAd/AQKbFqd4+uNsurc8kx713v8YJLY5ujkZvZXvCN/ZdmyQov9FdOth2Oa7/mIqPfMI
-         gBoCmo8PEG7V1wu9+k3JV1Nq3GZs7pMbyXoEfifgtLnovCaYt7d7V8ErAF6+XFfpwLb+
-         iAXJz19G9/z8LCIkQBHu2zVIE78beupDF4h66AoODJYvfbJIu5BhjmtEJ0U2UE4ZVr2T
-         fwqj2RRF4VyMJd95bRqbMiFYxkCvx/eAdLVnfJYDwpW4chD6Q/QhH5OZuTGLddV2s4Ph
-         hmnA==
-X-Gm-Message-State: APuU4Z9oChmQuoVsTfZhHLvPiISI+rzehPnCZzsQtsbVuF071otXJBgJ
-	rxz6jdYFqjI2PeYm6Q+CpnnUzPDvF2dnhgH7piNOmCh8V+TDHKog9fw=
-X-Gm-Gg: AYBFou10fyM8eTzwSWTfO0mHFkbqU+TgrpjaGsKx4eZdfk6VK5z/aFS7vNPqTwDORi5
-	sL/0p0FjbzuQnIO8DRE7ICfuF5ZdlusNVMWzBJKfjsJ2OX1hvcL2fS1+mFycr9WJShIk1MYPTHA
-	jZjBNvWPZf1x2zS7vM+sDB0Tt5ABQyAXUrSha6R0NNsAC8G0kl4M2KUpPoXjQJYYWIeCo8RSOCb
-	v4h5KhRTIptXdMVa/PpWfYOMrKgBwamE3XWEKdr2GVn+MKW3qMJHzRv36z5cZLc3gvKNpvTRPdY
-	OiOKrBdIgKIRtT6bpl5tO0l0si/zODZ5G2e4wn8RCJNhuDeB85O+gW3YTNapgSX9tG421uSNvFB
-	fzHrol296MGvMVlym+Ya9UvbwvDbmbQynHUxArzWRMktHZgW1JIkjgi/8U/gXJnl6Z0cshZ6Mj1
-	HX6uxkibvUA2ajt0X5tiFty8LNyExNuME+13t+xUcx9Gy1OIs7oCess0/9b29x1EGV134/Hbsli
-	RQ+ll8c7W5ooC6v/KtU5x2rBt42lgiOrKHQTQozffMcVrHS9gTqBabNiesovVedaeM7aH+m++B/
-	sbvW3oBaDwUd9ENb/1q6aPCDeeXeEsGCnqUFq0xNJx6l2JqVJbLpLvj3iAm14vieaXyBFu/6Mdt
-	3Pt/3PQ==
-X-Received: by 2002:a05:600c:4504:b0:4ba:7e6:53d6 with SMTP id 5b1f17b1804b1-4bb7da52ad6mr78902545e9.33.1795049504793;
-        Wed, 18 Nov 2026 16:51:44 -0800 (PST)
-Received: from [192.168.1.3] (p5b2acb64.dip0.t-ipconnect.de. [91.42.203.100])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb842f9348sm10626015e9.8.2026.11.18.16.51.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Nov 2026 16:51:44 -0800 (PST)
-Message-ID: <a67ab2fd-505a-47d2-9689-fb4086377da2@googlemail.com>
-Date: Thu, 19 Nov 2026 01:51:43 +0100
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OI0hjMbV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 488F71F000C4;
+	Thu, 19 Nov 2026 00:51:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1795049507;
+	bh=vhhssy9dkHaTmBpThnJyZ9KzOTqlvFHMxIAAWffqrSE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=OI0hjMbV6F3tzYFiI+7XTnr9+3EoGamSY2eBd81nvyNHRSxOXRB5IObtK0AhCy53u
+	 0RnW2adBC0RtplzmB0cul2GdtD/XNQW5xB7QIza4Vmj/r+xDHFwlP/abkYgUIR23H5
+	 0lozfHyVFvhUFoqdrMAFsiRRTbRF8PfSkRHLz0mA=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Sebastian Reichel <sre@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 2377/2857] power: supply: generic-adc-battery: convert to managed resources
+Date: Wed, 18 Nov 2026 15:56:51 +0100
+Message-ID: <20261118150327.109588648@linuxfoundation.org>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
+References: <20261118150201.293410965@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -90,44 +63,175 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.12 0000/1756] 6.12.119-rc1 review
-Content-Language: de-DE
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20261118150007.957976754@linuxfoundation.org>
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Am 18.11.2026 um 15:35 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.12.119 release.
-> There are 1756 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
+------------------
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697v2 server. No dmesg oddities or regressions found.
+From: Sebastian Reichel <sre@kernel.org>
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+[ Upstream commit 93297ef6920f071ed109cbdcf640edfc693d0456 ]
 
+Convert driver to use managed resources to simplify driver code.
 
-Beste Grüße,
-Peter Schneider
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Signed-off-by: Sebastian Reichel <sre@kernel.org>
+Stable-dep-of: 36b0abe904ac ("power: supply: generic-adc-battery: Propagate charged GPIO errors")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/power/supply/generic-adc-battery.c | 81 ++++++----------------
+ 1 file changed, 23 insertions(+), 58 deletions(-)
 
+diff --git a/drivers/power/supply/generic-adc-battery.c b/drivers/power/supply/generic-adc-battery.c
+index 33e151422d946..6cb697e24db0f 100644
+--- a/drivers/power/supply/generic-adc-battery.c
++++ b/drivers/power/supply/generic-adc-battery.c
+@@ -23,6 +23,7 @@
+ #include <linux/iio/consumer.h>
+ #include <linux/iio/types.h>
+ #include <linux/power/generic-adc-battery.h>
++#include <linux/devm-helpers.h>
+ 
+ #define JITTER_DEFAULT 10 /* hope 10ms is enough */
+ 
+@@ -269,14 +270,13 @@ static int gab_probe(struct platform_device *pdev)
+ 	 * copying the static properties and allocating extra memory for holding
+ 	 * the extra configurable properties received from platform data.
+ 	 */
+-	properties = kcalloc(ARRAY_SIZE(gab_props) +
+-			     ARRAY_SIZE(gab_chan_name),
+-			     sizeof(*properties),
+-			     GFP_KERNEL);
+-	if (!properties) {
+-		ret = -ENOMEM;
+-		goto first_mem_fail;
+-	}
++	properties = devm_kcalloc(&pdev->dev,
++				  ARRAY_SIZE(gab_props) +
++				  ARRAY_SIZE(gab_chan_name),
++				  sizeof(*properties),
++				  GFP_KERNEL);
++	if (!properties)
++		return -ENOMEM;
+ 
+ 	memcpy(properties, gab_props, sizeof(gab_props));
+ 
+@@ -285,12 +285,13 @@ static int gab_probe(struct platform_device *pdev)
+ 	 * based on the channel supported by consumer device.
+ 	 */
+ 	for (chan = 0; chan < ARRAY_SIZE(gab_chan_name); chan++) {
+-		adc_bat->channel[chan] = iio_channel_get(&pdev->dev,
+-							 gab_chan_name[chan]);
++		adc_bat->channel[chan] = devm_iio_channel_get(&pdev->dev, gab_chan_name[chan]);
+ 		if (IS_ERR(adc_bat->channel[chan])) {
+ 			ret = PTR_ERR(adc_bat->channel[chan]);
++			if (ret != -ENODEV)
++				return dev_err_probe(&pdev->dev, ret, "Failed to get ADC channel %s\n", gab_chan_name[chan]);
+ 			adc_bat->channel[chan] = NULL;
+-		} else {
++		} else if (adc_bat->channel[chan]) {
+ 			/* copying properties for supported channels only */
+ 			int index2;
+ 
+@@ -305,10 +306,8 @@ static int gab_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	/* none of the channels are supported so let's bail out */
+-	if (!any) {
+-		ret = -ENODEV;
+-		goto second_mem_fail;
+-	}
++	if (!any)
++		return dev_err_probe(&pdev->dev, -ENODEV, "Failed to get any ADC channel\n");
+ 
+ 	/*
+ 	 * Total number of properties is equal to static properties
+@@ -319,25 +318,24 @@ static int gab_probe(struct platform_device *pdev)
+ 	psy_desc->properties = properties;
+ 	psy_desc->num_properties = index;
+ 
+-	adc_bat->psy = power_supply_register(&pdev->dev, psy_desc, &psy_cfg);
+-	if (IS_ERR(adc_bat->psy)) {
+-		ret = PTR_ERR(adc_bat->psy);
+-		goto err_reg_fail;
+-	}
++	adc_bat->psy = devm_power_supply_register(&pdev->dev, psy_desc, &psy_cfg);
++	if (IS_ERR(adc_bat->psy))
++		return dev_err_probe(&pdev->dev, PTR_ERR(adc_bat->psy), "Failed to register power-supply device\n");
+ 
+-	INIT_DELAYED_WORK(&adc_bat->bat_work, gab_work);
++	ret = devm_delayed_work_autocancel(&pdev->dev, &adc_bat->bat_work, gab_work);
++	if (ret)
++		return dev_err_probe(&pdev->dev, ret, "Failed to register delayed work\n");
+ 
+-	adc_bat->charge_finished = devm_gpiod_get_optional(&pdev->dev,
+-							   "charged", GPIOD_IN);
++	adc_bat->charge_finished = devm_gpiod_get_optional(&pdev->dev, "charged", GPIOD_IN);
+ 	if (adc_bat->charge_finished) {
+ 		int irq;
+ 
+ 		irq = gpiod_to_irq(adc_bat->charge_finished);
+-		ret = request_any_context_irq(irq, gab_charged,
++		ret = devm_request_any_context_irq(&pdev->dev, irq, gab_charged,
+ 				IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING,
+ 				"battery charged", adc_bat);
+ 		if (ret < 0)
+-			goto gpio_req_fail;
++			return dev_err_probe(&pdev->dev, ret, "Failed to register irq\n");
+ 	}
+ 
+ 	platform_set_drvdata(pdev, adc_bat);
+@@ -346,38 +344,6 @@ static int gab_probe(struct platform_device *pdev)
+ 	schedule_delayed_work(&adc_bat->bat_work,
+ 			msecs_to_jiffies(0));
+ 	return 0;
+-
+-gpio_req_fail:
+-	power_supply_unregister(adc_bat->psy);
+-err_reg_fail:
+-	for (chan = 0; chan < ARRAY_SIZE(gab_chan_name); chan++) {
+-		if (adc_bat->channel[chan])
+-			iio_channel_release(adc_bat->channel[chan]);
+-	}
+-second_mem_fail:
+-	kfree(properties);
+-first_mem_fail:
+-	return ret;
+-}
+-
+-static int gab_remove(struct platform_device *pdev)
+-{
+-	int chan;
+-	struct gab *adc_bat = platform_get_drvdata(pdev);
+-
+-	power_supply_unregister(adc_bat->psy);
+-
+-	if (adc_bat->charge_finished)
+-		free_irq(gpiod_to_irq(adc_bat->charge_finished), adc_bat);
+-
+-	for (chan = 0; chan < ARRAY_SIZE(gab_chan_name); chan++) {
+-		if (adc_bat->channel[chan])
+-			iio_channel_release(adc_bat->channel[chan]);
+-	}
+-
+-	kfree(adc_bat->psy_desc.properties);
+-	cancel_delayed_work_sync(&adc_bat->bat_work);
+-	return 0;
+ }
+ 
+ static int __maybe_unused gab_suspend(struct device *dev)
+@@ -411,7 +377,6 @@ static struct platform_driver gab_driver = {
+ 		.pm	= &gab_pm_ops,
+ 	},
+ 	.probe		= gab_probe,
+-	.remove		= gab_remove,
+ };
+ module_platform_driver(gab_driver);
+ 
 -- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
+2.53.0
 
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+
+
