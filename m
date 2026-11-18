@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017686;
-	b=KkFp4KA+Q4W2T1PsSI7tfw++X5CwFtk6G237KKFNZH79IMGHaONyDgEe5ylHC5aBXIgU
-	 UggWmBKWOxgtEC54z1aHrotexOWeEODSiWwQKWrqTykYp1tmY3DTxncBYKWFTnmQN6E0N
-	 CmFdQj4OFBOPjVG6uWFWIz5oY/AkkLrTwWuFud6R/saAIAZVqaIVD7z9/jogyRk1VMv0o
-	 TRnYSpfLYy5WdN8yWEzN41om4/FEEeHo2dyvgaOTJV2432fGTRniTKs1sre08RQm63JKQ
-	 EiJroCIrdL+TRoTznDIqfWgFDbHXVAnS3Ruo3dN6ujzBYUeyqX0cXZzwXIOheUEmfWA==
+	t=1795017689;
+	b=3V/5agGtRrONHLcP7SNu/XZVkCPsK/EsvaFJ2xYMgnWTzP4pw3iDfynHPUutVTHffKDV
+	 tUaFKFNSb+9mvYeg/klDz1D5TP3NIXVaxBD1GlBCpN0pqopOwN4RgbKdyiycYXfog9oBy
+	 KIarj5uImdvsaKpYvHhW3sIZU0fmDnEfw/Y/gjGKIU0/z8z7odWXhAwoa62p89KIBtPdm
+	 mKNMSry4GHUkmAhRiaZNV4X2cYSbCDJvWNIR9m1Pij4tfGUgqcvMLvEiNPVLpNKtRzPLZ
+	 MVomwamF0pKbomeDsiWcNjg8Cnl2eW/0P/sMFLms8ouXABH1Npd4u5OoGGpwXlM58pQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017686;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017689;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=ZiqINcL4f5M1kZL5ESJ8G1pym2+SdDEj8FgInx1Xyno=;
-	b=H4xdegNO0g2dtgwkUu0vcUWDXh2L36D1qVhf86GYodzLTcLRGPpT8jmup1yuSJG2uKmN
-	 Yyvxe3NSprH4eUM8Ej55W2VedPDL/bKL3PRks9UYl3V3c5AdjjT5hy6CiAoEG07IyDLaG
-	 vXMpgCUwOrJ5gziMtcHW29DLwdrxkv1HQGgVoPvN901a28ilkqdkoTUpaEPMVTu+Hq4vF
-	 3SofU88rDQsrrjxD5IEqPK23KIGvYcoAREZeGJ/+ND+e3AS6tj8sGv6R1H1L2kizpm4bU
-	 0/1dGl9fN2I4/suVqGKjPGD49VnbWzqJ0p3LV2MSfGfRjLad6QbhIJ/cEMW+kYJgd8w==
+	bh=bcnhcH2BKE0Sw9qZ2tnWjy/yrrVgMHMplKYj1002CEk=;
+	b=GY5WVamXypjC8P8VMU4ToJ1QuPOa18ZLsbCBGDovJ9fFkP+6WgnVCG2vj8bDlyuL301W
+	 l8su/1w6mVT2dbZCqrfOCS9CW6JHrC6PZfYrrrIP6sJY2Sshpx+Ocj+vD1QSxQtSoPohe
+	 BEVWl8H5vYewcSglmf44EuPL9xpHNk0I0Hlam+qgP9hneC/YzwzZhBwxaqLEeAEklORyq
+	 zOwwVWwmzXpScfkiSEviC6UiHm3vdCZ0Cm9GY9H3m5zkgJi9/kITMo5VGgdSzqi6E2bPi
+	 t/tkZcDEGo9wPGkokwyTgRh3wS5NvZ50uOtSGwDCSKG4PlIKNjlWEuD72tAVtA6qBNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Nuo1i0G;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UHwLAb1R;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3A9606A31C;
-	Wed, 18 Nov 2026 16:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55054606A325;
+	Wed, 18 Nov 2026 16:01:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Nuo1i0G
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B97711F000C6;
-	Wed, 18 Nov 2026 16:01:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UHwLAb1R
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 937421F000C4;
+	Wed, 18 Nov 2026 16:01:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017686;
-	bh=ZiqINcL4f5M1kZL5ESJ8G1pym2+SdDEj8FgInx1Xyno=;
+	s=korg; t=1795017689;
+	bh=bcnhcH2BKE0Sw9qZ2tnWjy/yrrVgMHMplKYj1002CEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Nuo1i0Gnfu0Z/TNZTXASm+SsrEr2JMlRE5aqtjnZ3QEG4WYDuKOQakTr4h2jwoMB
-	 JTBTkQ2Wj2JaELScnG4OxyRXrJPovrf8FENX0OathVQ1lGhWmkNSrjtwtPR4DwV2t8
-	 Pnfz0WcHByoURoklW4BJz34XMn6TUy7oaUqM0NhQ=
+	b=UHwLAb1RgA76xpt5Rk4ACNeHfwNcKBrw4DSfZh31IV9S5PeWlUmuUh+50DyxmqDRe
+	 Q9eY4k3JaRRC6aioAWO9iEEgXuQRdaDvVp1h7bnyeH38LNo77DUYF+nvEohnNAkYPJ
+	 vJwuxhRSY8GKmbFgwh16rpXKoIl0W9bzfr/bn/YM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arka Mondal <arka@arkamondal.net>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Vladimir Kondratiev <vladimir.kondratiev@mobileye.com>,
+	James Clark <james.clark@linaro.org>,
+	=?UTF-8?q?Beno=C3=AEt=20Monin?= <benoit.monin@bootlin.com>,
+	Ian Rogers <irogers@google.com>,
+	Markus Mayer <mmayer@broadcom.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0956/2651] iio: dac: ad5758: Reject out-of-range raw values
-Date: Wed, 18 Nov 2026 15:36:36 +0100
-Message-ID: <20261118150322.318603142@linuxfoundation.org>
+Subject: [PATCH 7.3 0974/2651] perf build: Improve fix for "argument list too long" error
+Date: Wed, 18 Nov 2026 15:36:54 +0100
+Message-ID: <20261118150322.965953906@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,39 +73,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arka Mondal <arka@arkamondal.net>
+From: Benoît Monin <benoit.monin@bootlin.com>
 
-[ Upstream commit ebc026be1b719e47bd7f2f1e72fabc875b590f87 ]
+[ Upstream commit ea2058a975c549bc2cae3ae42490c3f5a846ad81 ]
 
-ad5758_write_raw() passes the value from userspace straight to
-ad5758_spi_reg_write(), which keeps only the low 16 bits. Writing -1
-to the raw attribute gives full-scale output, and 65536 gives code 0.
+The orphaned pmu-events JSON files are passed to the shell via
+`echo "$^"`, which puts the whole list into a single argument. With
+a long enough output directory path and enough files, exec'ing
+/bin/sh fails with:
 
-Return -EINVAL for values outside 0 to U16_MAX, as ad5755 does.
+  make[5]: /bin/sh: Argument list too long
+  make[5]: *** [pmu-events/Build:228: prune_orphans] Error 127
 
-Fixes: 28d1a7ac2a0d ("iio: dac: Add AD5758 support")
-Signed-off-by: Arka Mondal <arka@arkamondal.net>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+This only happens with out-of-tree builds, when setting O= to a
+relatively long path.
+
+To reproduce, build once with JEVENTS_ARCH=all, then rebuild with
+a smaller JEVENTS_ARCH without cleaning first, so the leftover files
+become orphans. Using nds32 (which leaves ~1100 orphans), an output
+path of only ~70 characters is already enough to trigger it:
+
+  OUT=/any/long/path (at least 70 characters)
+  make -C tools/perf JEVENTS_ARCH=all   O=$OUT -j$(nproc)
+  make -C tools/perf JEVENTS_ARCH=nds32 O=$OUT -j$(nproc)
+
+Express the orphan file list as paths relative to $(OUT_DIR) by
+stripping the common prefix and restoring it with printf, the same
+approach used in scripts/Makefile.clean, so the shell arguments stay
+short.
+
+Fixes: b6712d91f8f5a289 ("perf build: Prevent "argument list too long" error")
+Suggested-by: Vladimir Kondratiev <vladimir.kondratiev@mobileye.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Benoît Monin <benoit.monin@bootlin.com>
+Tested-by: Vladimir Kondratiev <vladimir.kondratiev@mobileye.com>
+Acked-by: Ian Rogers <irogers@google.com>
+Cc: Markus Mayer <mmayer@broadcom.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/dac/ad5758.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/perf/pmu-events/Build | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iio/dac/ad5758.c b/drivers/iio/dac/ad5758.c
-index ba381bd252d11..2a9e907b5eb8c 100644
---- a/drivers/iio/dac/ad5758.c
-+++ b/drivers/iio/dac/ad5758.c
-@@ -556,6 +556,9 @@ static int ad5758_write_raw(struct iio_dev *indio_dev,
+diff --git a/tools/perf/pmu-events/Build b/tools/perf/pmu-events/Build
+index 372773b998e40..4c7b082cb2bbb 100644
+--- a/tools/perf/pmu-events/Build
++++ b/tools/perf/pmu-events/Build
+@@ -223,9 +223,11 @@ ifneq ($(strip $(ORPHAN_FILES)),)
+ # of a build step.
+ quiet_cmd_rm = RM      ...$(words $^) orphan file(s)...
  
- 	switch (info) {
- 	case IIO_CHAN_INFO_RAW:
-+		if (val < 0 || val > U16_MAX)
-+			return -EINVAL;
-+
- 		mutex_lock(&st->lock);
- 		ret = ad5758_spi_reg_write(st, AD5758_DAC_INPUT, val);
- 		mutex_unlock(&st->lock);
+-# The list of files can be long. Use xargs to prevent issues.
++# The list of files can be long. Remove the $(OUT_DIR)/ prefix, and
++# restore it with printf, to prevent "Argument list too long"
++# (see scripts/Makefile.clean).
+ prune_orphans: $(ORPHAN_FILES)
+-	$(Q)$(call echo-cmd,rm)echo "$^" | xargs rm -f
++	$(Q)$(call echo-cmd,rm)printf '$(OUT_DIR)/%s ' $(patsubst $(OUT_DIR)/%,%,$(ORPHAN_FILES)) | xargs rm -f
+ 
+ JEVENTS_DEPS += prune_orphans
+ endif
 -- 
 2.53.0
 
