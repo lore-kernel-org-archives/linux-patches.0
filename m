@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027540;
-	b=nQhmq8FV+APKWmjP7smYRjcrhW54ingXh+x3Z9163Yzbp8cfSc9SsQi87xqsi5Oq9/fZ
-	 68dPOJt8xEFEDU+1C5QdU2HT4I5xm9R7LnWa+sxhQeXvmIaTT9h2TNQ4FDnzU6perBOND
-	 nYwwbaOaUYV+mE2YOXTgeYStBlyxnSvswsXy5O5xxkfLMpLr1Nhk++9PlH8ESZNy1vwq4
-	 YpX3FUFZmxaqbhBIZvmFouryWPqfocbXvrx1GsxcDIN87UagXSJqHqHujOp9Sc+eY8Qp3
-	 N0PdAltpPkt6rV3j2B686n3FP/iQNnG01khfOg7QEYd0I1/BBA2V9IUoJGRLZO2nIRg==
+	t=1795027544;
+	b=pfJ3Rz7qtdtumwxuIrn7EC6MQ6O653TMASfqXlLuzomBWmqXLIG7vOJlS8XV9p9+/HS2
+	 EW4DyOcpLGntrBOgG6cOfQSz+1XVqyYnJaB51ySyEBzqmwHFZc1kJJp8J+Cgb4eh/kUZp
+	 t45C9o222fSUvkdNgF5smXOCLI5wnOW8OAuwg2MAzErMI/oFz3NCrFmZQKQHbifkLe8fM
+	 6BJXqj8saxWmDPJ4G0zmTG13rIFtgcLPg+aWiFbw3BQ5PB9LcL/EyxqAmJ10xVFW4bNAz
+	 u9g7/jq09uj9wuupPpFD3KHip/evnFgy4Yv+kAKaSthEiWd5K2jboMqkoLGW6ExnC+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027540;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027544;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IJaJR3ylGOeYtnIKmuPIO5HNHBCglYsIr61C/79h2rw=;
-	b=mU3HRh/MAeR62cvZmANHqld9EVSN4CRjc/ABpB1dvFTvN+YOgksPcZiS1TQX2sHse9eL
-	 jevqbvz4uvXlc+Sx24i9uS1JcvH0cp1m91quWEt0ghLb4jiI4QBZ5aveFWMSa0a00inuP
-	 M3qw8CCs3blFkmNjKgLWzYKsc6KkVHPNXAdLYVSuMEGoEqDeTMhMp77haL0qKZLCCySAS
-	 1lmLxHyTMWUVpYbkDzhEDbewP5qy8TK/SaQsyH6LY0k819cfFdeQeBUicFxOwk3GlMNDy
-	 8nfrJZ+Ub2fw7OXZYZtcbMedCvTLf0nWgumkkK4q/h/eJnLkyuqmOkYXDfU+iS6Uqmw==
+	bh=ufGBlGeW2xHMUT7cy55A55QB6nt1HVETjT6HX7ARL14=;
+	b=g3wm9jNB0RQpEO9P7oBRt3JgbJc7nLr1RlDsvTjsD0eXZH65D64W4fVJFBbRO0cYD9c3
+	 Ns49h+366l3QYLC5RH88DajWaxj93ZgxxZxMSNnmFAGnGB2wt0t1fU7cOJrzheKBSzPgo
+	 J6KZE8FuoVk5wnDYaYR5smSQBay8LKEX1rQ2RhhK8UhLQmtsXRMB17gd5n3VfIvwYKIeo
+	 HH6c8IhWqDEuIDZux7//YAyLprbY0KwrXpvBtwq/a7DMXohv3EToammLoUxgOo2lqHUHz
+	 ZuEOqF1EdIdSY56RrzmYEeeKGL+AHGipWe9N5ROVeGnb6gJogBxzaBizFXLTZHB0Z1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=phs7EUOB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YldrdVAW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB1060A260E;
-	Wed, 18 Nov 2026 18:45:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79EAE60A2611;
+	Wed, 18 Nov 2026 18:45:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=phs7EUOB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EED91F00925;
-	Wed, 18 Nov 2026 18:45:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YldrdVAW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 935C71F000C6;
+	Wed, 18 Nov 2026 18:45:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027540;
-	bh=IJaJR3ylGOeYtnIKmuPIO5HNHBCglYsIr61C/79h2rw=;
+	s=korg; t=1795027544;
+	bh=ufGBlGeW2xHMUT7cy55A55QB6nt1HVETjT6HX7ARL14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=phs7EUOBMn+ak0Ssf8H1jvRj+SedJ3dEDCxBGcI8bR6oSapfhPGnqSyilEj6NS5En
-	 PAZRHQ0u3MhwNodbfsPpbHgDrvhd3ol7/Bh6R9kBkIMRMOfRcFth1S4otHRJWjSvMN
-	 zP/uBASMvHI/n/imORdOJiRcbsiG0ifdbd0HNltM=
+	b=YldrdVAWTp4mrgJbkk5PkvRw7WzfI6/F7xC3yno6Ds7JCHu6vynG7n+EHyHDDMUX9
+	 KxSBTwgpVhaCHlUdSxhYGxirNz574N3eLwrzdZXkZo4gnxZqm8lnUhou/9NjropRpT
+	 Tl+l5TJuqEwtBkJR0ZSjRfzVOB7JHGUsx+4eEG00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1785/2151] ALSA: aloop: Use the new helper for stop-count refcount
-Date: Wed, 18 Nov 2026 15:58:40 +0100
-Message-ID: <20261118150226.846718423@linuxfoundation.org>
+Subject: [PATCH 6.18 1786/2151] ALSA: aloop: Keep shared timer callbacks alive through close
+Date: Wed, 18 Nov 2026 15:58:41 +0100
+Message-ID: <20261118150226.881785651@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -67,74 +68,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit c54888c1171e6a03b8325e03011cedc0a9781161 ]
+[ Upstream commit a7d4d780f34b9e43eefab6a7e6c9f4101f2c144e ]
 
-Replace the open-code for managing the stop-count refcount with the
-new helpers.
-Only a code cleanup, no functional changes.
+The shared sound-timer callback must finish using the selected PCM
+runtimes before a close can detach them. loopback_snd_timer_period_elapsed()
+saves the active substreams under cable->lock, then drops the lock before
+calling snd_pcm_period_elapsed() or snd_pcm_stop_xrun(). The sound-timer
+backend has no per-stream close drain, and free_cable() keeps the timer
+open when the paired endpoint remains attached.
 
+With both directions running on a shared sound timer, playback can be
+dropped and closed while a notification is pending. Capture keeps the
+timer alive, allowing this order:
+
+  Timer callback                       Playback owner
+  --------------                       --------------
+  select playback under cable->lock
+  unlock; delay notification
+                                       DROP; HW_FREE -> OPEN
+                                       close: snd_pcm_drop(); unlock
+                                       free_cable(); peer stays alive
+  snd_pcm_period_elapsed()
+    lock stream; cache runtime
+                                       snd_pcm_detach_substream()
+                                         free runtime and its fasync
+    read runtime->fasync
+
+The stream lock taken by snd_pcm_drop() cannot protect a notification
+that starts after it returns, and detach does not take it. The callback
+can therefore read runtime->fasync after the runtime has been freed, and
+an escaped notification can also reach a replacement runtime if the same
+substream slot is reopened before the notification resumes.
+
+Take the existing cable->stop_count reference under cable->lock when
+selecting the targets and release it after the PCM callbacks finish,
+including the XRUN path. free_cable() already removes the closing
+endpoint under that lock and waits for stop_count before returning, so
+runtime detach and slot reuse cannot overtake the notification.
+
+Fixes: 26c53379f98d ("ALSA: aloop: Support selection of snd_timer instead of jiffies")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Assisted-by: LLM
+Link: https://patch.msgid.link/pm-pmb-275c4399f517e09d7188-v2-2f64c1328529ef7a8fec@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260610154538.51076-5-tiwai@suse.de
-Stable-dep-of: a7d4d780f34b ("ALSA: aloop: Keep shared timer callbacks alive through close")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/drivers/aloop.c | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ sound/drivers/aloop.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/sound/drivers/aloop.c b/sound/drivers/aloop.c
-index fd8d6b474e465..226d96bfa6e53 100644
+index 226d96bfa6e53..24a5fbc1c288f 100644
 --- a/sound/drivers/aloop.c
 +++ b/sound/drivers/aloop.c
-@@ -100,8 +100,7 @@ struct loopback_cable {
+@@ -99,7 +99,7 @@ struct loopback_ops {
+ struct loopback_cable {
  	spinlock_t lock;
  	struct loopback_pcm *streams[2];
- 	/* in-flight peer stops running outside cable->lock */
--	atomic_t stop_count;
--	wait_queue_head_t stop_wait;
-+	struct snd_refcount stop_count;
+-	/* in-flight peer stops running outside cable->lock */
++	/* in-flight PCM callbacks running outside cable->lock */
+ 	struct snd_refcount stop_count;
  	struct snd_pcm_hardware hw;
  	/* flags */
- 	unsigned int valid;
-@@ -374,7 +373,7 @@ static int loopback_check_format(struct loopback_cable *cable, int stream)
- 				return -EIO;
- 			else if (check && cruntime->state == SNDRV_PCM_STATE_RUNNING) {
- 				/* close must not free the peer runtime below */
--				atomic_inc(&cable->stop_count);
-+				snd_refcount_get(&cable->stop_count);
- 				stop_capture = true;
- 			}
- 		}
-@@ -407,8 +406,7 @@ static int loopback_check_format(struct loopback_cable *cable, int stream)
+@@ -804,6 +804,8 @@ static void loopback_snd_timer_period_elapsed(struct loopback_cable *cable,
+ 		valid_runtime = (running & (1 << SNDRV_PCM_STREAM_PLAYBACK)) ?
+ 			dpcm_play->substream->runtime :
+ 			dpcm_capt->substream->runtime;
++		/* Keep runtimes alive through the PCM callbacks. */
++		snd_refcount_get(&cable->stop_count);
  
- 	if (stop_capture) {
- 		snd_pcm_stop(dpcm_capt->substream, SNDRV_PCM_STATE_DRAINING);
--		if (atomic_dec_and_test(&cable->stop_count))
--			wake_up(&cable->stop_wait);
-+		snd_refcount_put(&cable->stop_count);
+ 		/* resolution is only valid for SNDRV_TIMER_EVENT_TICK events */
+ 		if (event == SNDRV_TIMER_EVENT_TICK) {
+@@ -839,13 +841,16 @@ static void loopback_snd_timer_period_elapsed(struct loopback_cable *cable,
+ 			snd_pcm_stop_xrun(substream_play);
+ 		if (substream_capt)
+ 			snd_pcm_stop_xrun(substream_capt);
+-		return;
++		goto exit;
  	}
  
- 	return 0;
-@@ -1093,7 +1091,7 @@ static void free_cable(struct snd_pcm_substream *substream)
+ 	if (substream_play)
+ 		snd_pcm_period_elapsed(substream_play);
+ 	if (substream_capt)
+ 		snd_pcm_period_elapsed(substream_capt);
++
++exit:
++	snd_refcount_put(&cable->stop_count);
+ }
+ 
+ static void loopback_snd_timer_function(struct snd_timer_instance *timeri,
+@@ -1090,7 +1095,7 @@ static void free_cable(struct snd_pcm_substream *substream)
+ 		other_alive = cable->streams[!substream->stream];
  	}
  
- 	/* Pair with the stop_count increment in loopback_check_format(). */
--	wait_event(cable->stop_wait, !atomic_read(&cable->stop_count));
-+	snd_refcount_sync(&cable->stop_count);
+-	/* Pair with the stop_count increment in loopback_check_format(). */
++	/* Wait for PCM callbacks running outside cable->lock. */
+ 	snd_refcount_sync(&cable->stop_count);
  	if (other_alive)
  		return;
- 
-@@ -1297,8 +1295,7 @@ static int loopback_open(struct snd_pcm_substream *substream)
- 			goto unlock;
- 		}
- 		spin_lock_init(&cable->lock);
--		atomic_set(&cable->stop_count, 0);
--		init_waitqueue_head(&cable->stop_wait);
-+		snd_refcount_init(&cable->stop_count);
- 		cable->hw = loopback_pcm_hardware;
- 		if (loopback->timer_source)
- 			cable->ops = &loopback_snd_timer_ops;
 -- 
 2.53.0
 
