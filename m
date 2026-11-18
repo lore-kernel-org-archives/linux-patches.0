@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030325;
-	b=W/4HaTLJcKf3D/n5XEddKg4Uq+kfkH0IORFS9FZYLvRVwL6+V4fla6m/BDhVpdm29j5B
-	 J68rPTLl/1NPltYpv2BbJHhRRHgTxg3rmQH8uPBUGCK+XI1njKUQfyOleotu8DISkt5US
-	 M35M9r/R3ZWwzLIVeYO6/lIPkqqX+h21RohIfhnJlOmFZS12FGuImyJBOJQJ6g39tJ8QT
-	 KOpceqXiRpdMjQlwO4qjWB3Q7DX6PcEGnsZJAtxDXZj+jWk4T0XYtuBNe5pT9W/scX5Wh
-	 1VyGjzlalCVG+VIriqLDcGxEyRmC3a2eh4O1wZPWwSmtVDf+qFC5zl6tgP81j9JrRww==
+	t=1795030328;
+	b=eWvfzDlTp+o8FJF+VDGeu9zQYdXKASL5UlsNgqDoxa6ZCNSveTQdwLnpPvoMnh5AbmDw
+	 nWB+cFFEA9fFSType7YTrjSqu6WW+96TprrqzUi9QdosLHcbuvtQksnqO1Up1pljhCADq
+	 c+gUnFkFskc5tX7jOUsbf6l5P6fdwcj0mADHr/nbPVz2huUrVXCPBVXlBw3911W+puwYn
+	 dqa9aII8bhk9PhiUR5sXHF8i4apUa+D/hJtv6nkb+RW6TEMXQXBSy3JJyuiP1Qp3s3zse
+	 Zgw4xcTWTizlKoiIlInJtcF7cDaR1dwYx3bm+CYoajYkXkEPq6v6fQOOW55LSEx2oVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030325;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030328;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QBM5Huqk+W2wpCddT41NcRtD4nT8vKRrFP4fbImxhWU=;
-	b=5NbycLpzkWVryr2+32Oex5u5r+S61gCCzOakuJISM/RqW9P3tCHUhIBa7PFinkCVQQGJ
-	 TtHL8lO3JUFzO4J7k/JzqpYpe6nmIjcYD6+632QWvEWuch942pVlmFNADxhx+UYd0o0Zn
-	 /SzKegMfc2DSEUccBpdUJ1C2Hu8VVjChMY94rwShyOl5t54LHAh/4sHKxr9TCvD97HV1e
-	 NRQr7Wm0zrWn6zDztVjqnWf99nDOYvZ1YdnAotOz0tTLiY6957j+X1x5h798kDODD1TeJ
-	 jNtlzuatrr2tYYiNzUIWmXQGHGvOC4pl67x6n/B/2sUDj8X6QwE2FMDZm2TSyB2zU7Q==
+	bh=I9EYmmthRgORZ7iUeU82zVWLgUOsMySflXlLjk166F4=;
+	b=pjCzOyOtMlPpxzH4Vdpqkh93/TEqirCaAmuKCyLGEXDJ4282j5ERiMD9y/F0VaLq1TZC
+	 o/WRcRGJykXt5JDBHDmzi9LMXN0bkd/XUGnhA3s+SnZOgVm8YZF6hj/EQlv2dH0vGNnVM
+	 u0NPjs+L6pemi9aM9t9uNTioQ3jtTLqvQrkuU2IVJI2dFMmrxj8rrjjKV2jd+wOtr+NEc
+	 bwAaiUtED4cMPnzpSkkai+EAeCq8ZmX+XOVXM1BIQL3mXNdsAQKxVh8fFR6hLawdMLl+f
+	 HuFPRTDpL97jhOOgiInLfH1PHSFQKg6XEJIspf4q8/dERiqf2HLi+U/VT2Ncdo0EF7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FcGkyLY5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pfLRMg5H;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D55606A333;
-	Wed, 18 Nov 2026 19:32:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA3B606A333;
+	Wed, 18 Nov 2026 19:32:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FcGkyLY5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 615951F000C7;
-	Wed, 18 Nov 2026 19:32:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pfLRMg5H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 483B21F000C7;
+	Wed, 18 Nov 2026 19:32:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030324;
-	bh=QBM5Huqk+W2wpCddT41NcRtD4nT8vKRrFP4fbImxhWU=;
+	s=korg; t=1795030327;
+	bh=I9EYmmthRgORZ7iUeU82zVWLgUOsMySflXlLjk166F4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FcGkyLY5XwhSdGd4/f8dyGBjhVymKZwZ9VlwAJLYtMbMPXB9CQNPy4KFpi+3t5mkw
-	 u18not8pArfq7tTlGQG9eHwOIx3e1nfkwWtPcwHtWuGx0czsT2dDNUnq2GLMQ+Otn4
-	 WFyf4fhapmHWQAiZA7lPXLt0cFtHKcJ07nbRwadM=
+	b=pfLRMg5Hhtl//Vxq2LTF+AMC7IvZTlkVBnxSBFt0nSLrf8jUNXBfyN8Fhq2WdlWxX
+	 Ijgc/z60GVv+A9U74CIdIVUUOEVrEMssEsN4X1Hbjs3lkH87p2CR4q8L7GhsSU9r6A
+	 RQuZqi7N6gXUFf9Fa+rnBbNsTua7VDD/l1Q8AGYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0647/1756] ASoC: mediatek: mt8192: fix error handling in APLL enable functions
-Date: Wed, 18 Nov 2026 15:46:14 +0100
-Message-ID: <20261118150034.574453036@linuxfoundation.org>
+Subject: [PATCH 6.12 0665/1756] perf vendor events intel: Fix skylakex umask encoding.
+Date: Wed, 18 Nov 2026 15:46:32 +0100
+Message-ID: <20261118150035.587584654@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,112 +68,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 88760524ca995acd229c30ec69ced7d883a90a72 ]
+[ Upstream commit f37e7dfbd34c4e48d2bea4c5e0e64c398671e87b ]
 
-If a clock operation fails in mt8192_apll1_enable() or apll2_enable(),
-the functions return without checking the return value of mux settings or
-unwinding previously enabled clocks and MUX configurations.
+Fix UMaskExt that was wrongly encoded when the UMask was 0.
 
-Fix this by checking the return value of apll1_mux_setting() and
-apll2_mux_setting(), and adding proper unwind handling on failure.
-
-Fixes: 125ab5d588b0 ("ASoC: mediatek: mt8192: add platform driver")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260918133912.133799-4-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 748d5cf71948 ("perf vendor events intel: Fix uncore topics for skylakex")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8192/mt8192-afe-clk.c | 32 ++++++++++++++++------
- 1 file changed, 24 insertions(+), 8 deletions(-)
+ .../pmu-events/arch/x86/skylakex/uncore-interconnect.json   | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/soc/mediatek/mt8192/mt8192-afe-clk.c b/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
-index 7647bdd463d9c..118dd48196828 100644
---- a/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
-+++ b/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
-@@ -308,20 +308,22 @@ int mt8192_apll1_enable(struct mtk_base_afe *afe)
- 	int ret;
- 
- 	/* setting for APLL */
--	apll1_mux_setting(afe, true);
-+	ret = apll1_mux_setting(afe, true);
-+	if (ret)
-+		return ret;
- 
- 	ret = clk_prepare_enable(afe_priv->clk[CLK_APLL22M]);
- 	if (ret) {
- 		dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
- 			__func__, aud_clks[CLK_APLL22M], ret);
--		goto EXIT;
-+		goto err_disable_mux_setting;
- 	}
- 
- 	ret = clk_prepare_enable(afe_priv->clk[CLK_APLL1_TUNER]);
- 	if (ret) {
- 		dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
- 			__func__, aud_clks[CLK_APLL1_TUNER], ret);
--		goto EXIT;
-+		goto err_disable_apll22m;
- 	}
- 
- 	regmap_update_bits(afe->regmap, AFE_APLL1_TUNER_CFG,
-@@ -332,7 +334,13 @@ int mt8192_apll1_enable(struct mtk_base_afe *afe)
- 			   AFE_22M_ON_MASK_SFT,
- 			   0x1 << AFE_22M_ON_SFT);
- 
--EXIT:
-+	return 0;
-+
-+err_disable_apll22m:
-+	clk_disable_unprepare(afe_priv->clk[CLK_APLL22M]);
-+err_disable_mux_setting:
-+	apll1_mux_setting(afe, false);
-+
- 	return ret;
- }
- 
-@@ -358,20 +366,22 @@ int mt8192_apll2_enable(struct mtk_base_afe *afe)
- 	int ret;
- 
- 	/* setting for APLL */
--	apll2_mux_setting(afe, true);
-+	ret = apll2_mux_setting(afe, true);
-+	if (ret)
-+		return ret;
- 
- 	ret = clk_prepare_enable(afe_priv->clk[CLK_APLL24M]);
- 	if (ret) {
- 		dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
- 			__func__, aud_clks[CLK_APLL24M], ret);
--		goto EXIT;
-+		goto err_disable_mux_setting;
- 	}
- 
- 	ret = clk_prepare_enable(afe_priv->clk[CLK_APLL2_TUNER]);
- 	if (ret) {
- 		dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
- 			__func__, aud_clks[CLK_APLL2_TUNER], ret);
--		goto EXIT;
-+		goto err_disable_apll24m;
- 	}
- 
- 	regmap_update_bits(afe->regmap, AFE_APLL2_TUNER_CFG,
-@@ -382,7 +392,13 @@ int mt8192_apll2_enable(struct mtk_base_afe *afe)
- 			   AFE_24M_ON_MASK_SFT,
- 			   0x1 << AFE_24M_ON_SFT);
- 
--EXIT:
-+	return 0;
-+
-+err_disable_apll24m:
-+	clk_disable_unprepare(afe_priv->clk[CLK_APLL24M]);
-+err_disable_mux_setting:
-+	apll2_mux_setting(afe, false);
-+
- 	return ret;
- }
- 
+diff --git a/tools/perf/pmu-events/arch/x86/skylakex/uncore-interconnect.json b/tools/perf/pmu-events/arch/x86/skylakex/uncore-interconnect.json
+index 216a00237cd1b..59fdd7fa7ba09 100644
+--- a/tools/perf/pmu-events/arch/x86/skylakex/uncore-interconnect.json
++++ b/tools/perf/pmu-events/arch/x86/skylakex/uncore-interconnect.json
+@@ -13462,6 +13462,7 @@
+         "EventName": "UNC_UPI_TxL_HDR_MATCH.DATA_HDR",
+         "Experimental": "1",
+         "PerPkg": "1",
++        "UMask": "0x800",
+         "Unit": "UPI"
+     },
+     {
+@@ -13472,6 +13473,7 @@
+         "EventName": "UNC_UPI_TxL_HDR_MATCH.DUAL_SLOT_HDR",
+         "Experimental": "1",
+         "PerPkg": "1",
++        "UMask": "0x2000",
+         "Unit": "UPI"
+     },
+     {
+@@ -13482,6 +13484,7 @@
+         "EventName": "UNC_UPI_TxL_HDR_MATCH.LOC",
+         "Experimental": "1",
+         "PerPkg": "1",
++        "UMask": "0x200",
+         "Unit": "UPI"
+     },
+     {
+@@ -13514,6 +13517,7 @@
+         "EventName": "UNC_UPI_TxL_HDR_MATCH.NON_DATA_HDR",
+         "Experimental": "1",
+         "PerPkg": "1",
++        "UMask": "0x1000",
+         "Unit": "UPI"
+     },
+     {
+@@ -13524,6 +13528,7 @@
+         "EventName": "UNC_UPI_TxL_HDR_MATCH.REM",
+         "Experimental": "1",
+         "PerPkg": "1",
++        "UMask": "0x400",
+         "Unit": "UPI"
+     },
+     {
+@@ -13567,6 +13572,7 @@
+         "EventName": "UNC_UPI_TxL_HDR_MATCH.SGL_SLOT_HDR",
+         "Experimental": "1",
+         "PerPkg": "1",
++        "UMask": "0x4000",
+         "Unit": "UPI"
+     },
+     {
 -- 
 2.53.0
 
