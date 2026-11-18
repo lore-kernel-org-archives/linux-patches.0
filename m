@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045846;
-	b=gntMh4yn2jHiQHznw47+CdWzdZuGVwCoMFgyW1c38MF/pgh9RkOpaG5OzasNe8L00Jlp
-	 8MxBBx9gRf95p+1eXWRIkX0PL1zF15q4sKyq8DvW46OaJs38IB/cN2HWJgRdIICB0nert
-	 iplWpYxhyO5MbXq/iSKWAJKeW6Q2/dF91teUtmHBiQ4DsOGP1uumXxSWP/g6qpKSsLu2L
-	 iSImXZzYNceIwEvircL013Y0MZutAH6jffKaUTIPVhKdiHjkryBT935U1JypTYkxX9F+m
-	 oeaquRIyL6ckP1B51dCqyio59XshFMu0h10VTUN/lerEBp1839jZbgY0yJspMLmPB5Q==
+	t=1795045848;
+	b=tAkBbLkcsACXxaLVcHZaV+oMdRVWexlkc775ogAvm39QqEKj98UjptGEGi0WCFOfCiuF
+	 gSQ7kfqAYC7Z4ep05HaDU8CpUjurzwByNYsSykFHKOy8d/vIroms5FQLLjNamDXbawRiC
+	 nuTyavTo6CEdwnWYzAo5wE5WsWsK5INwotGwFhFwCLKHSEeQG38UaeXcDVR8kTO6IZ4I4
+	 49UQs7KrrdXT4mklrQuoHxCFVLghLMVXQBZtHndQ6MPm6WRO6BvUECJI5H8l9680rVJVL
+	 6qobSfQmMvo2K7ZBVMkiRIxPXjUzKh9vxRqYcrlZTq/YJ84u9FHfbjWzibxJi0c7WFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045846;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045848;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=bPqkKQzEtz9RpXx9zGt4NKEGERRCE2igqYYB4TmrY1A=;
-	b=AgXVQYiq2yVygRXX3d3bo9BilovjuRbPCzTMiYAfSZqP95UfzrUydKEwhXMvc/EzmwVf
-	 rA8DuyEvtSSskI1KmdIGYlNhAZ9fr4jP4vKmY26q46h/Y2PZAd3xbpogVFGPTdpZvN09G
-	 JRqfOlNPCz/ezgCiBhy33bxhwWBwxz+F86f2UBN8ap8Sjb/4NEgLOiKTOp8o89MxUGoz6
-	 tB7rNoEWGpu6MrtSNRRx1dscvQZlY4gZKJ5u7KTRmo7azTyU9LtnHBT5Gac/i993KarG8
-	 cnX7m1b0ehhCzcowyPIF/c10LLsgxdKiOogy39DTspYlwpZNsI+s/gp1pjmXhJfwjNw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=QzGvYYD4xW5PWEwgUL7nrCpvc7fHniPhevqyoFMlR4U=;
+	b=pIDeaeZ/z7Hugo8k0UU14Gy6jWy30lXqlqM/Hljmon8CLogC8ss/UQuqF7dXGYQ2rUyw
+	 fmFZfrBbXi2FnXFalZEc0W7UeCyA9NfgiQL32vZpZ8Ki8+m53xorwNh5kNW5tj4LIOA1u
+	 tatPyMNHzLWpAInull1GGGTK4JREqqoYmLpiP+Bgk3quFC3uJsn6ejpqFXY61KiCRfn0r
+	 K6c/n9yzWUKPKLHKF8m91k9CKkuaJbE1OMMkTo/9vR2nX9evzmvOck2NYdIJwT8eXVDaa
+	 mXgOpLKU0HqUpWmGLDsF4FoFmC26wUBuJsPeSg9nrhGmKs7mbxrB37x+Z2vsHP6GBwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RDC9fg9H;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SaV32ITw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF335606A31C;
-	Wed, 18 Nov 2026 23:50:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A505660A2602;
+	Wed, 18 Nov 2026 23:50:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RDC9fg9H
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BCC71F000C5;
-	Wed, 18 Nov 2026 23:50:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SaV32ITw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0622C1F000C5;
+	Wed, 18 Nov 2026 23:50:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045845;
-	bh=bPqkKQzEtz9RpXx9zGt4NKEGERRCE2igqYYB4TmrY1A=;
+	s=korg; t=1795045848;
+	bh=QzGvYYD4xW5PWEwgUL7nrCpvc7fHniPhevqyoFMlR4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RDC9fg9Hs4qUGdhQ2lMd151V6rgKzr0hbZcfX2UD0b0jenNDZK0WZxm1Fm0R4jBPf
-	 zPaqgbJhEOVwxSNRK9nZuqceyqZ/7y+RGNVP91A2Takooe+JilRZYl8XL3066c1Nvd
-	 j1jP07Iqyp2YQr2CKF6C6M0/xZgwXmmsI6c/NUL0=
+	b=SaV32ITw0yWfbBv5y8V2BKvsuhPReaAEpX9BopvPL4fYKWzk59ndR9YHVU16bEVT6
+	 nqKMy49BC+wK8zWdATtQ4KOKkMqeyVyREuJbuZIdhJhc+oyGkpNb36skwzgrReJZDu
+	 YAOJlNWCHTGN8lY8tNQCHsrWSMI+EjmbqPxje6mY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh=20 ?= <thomas.weissschuh@linutronix.de>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1032/2857] timekeeping: Update offsets on sequence counter retry in ktime_get_update_offsets_now()
-Date: Wed, 18 Nov 2026 15:34:26 +0100
-Message-ID: <20261118150238.754312139@linuxfoundation.org>
+Subject: [PATCH 6.1 1068/2857] ASoC: hdac_hda: Balance the runtime PM disable in codec remove
+Date: Wed, 18 Nov 2026 15:35:02 +0100
+Message-ID: <20261118150240.059337239@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -62,57 +62,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh (Schneider Electric) <thomas.weissschuh@linutronix.de>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 6541fbc942f3b63bb8bd44e34eee6223e0abe719 ]
+[ Upstream commit f26c0d5f91d918bb66cbbc8916f41836adb38346 ]
 
-The sequence counter of the cwsseq target is modified during the
-sequence counter loop. If the loop retries, cwsseq will now match
-but the offsets contain the values from the previous loop iteration.
-These are not guaranteed to be consistent in themselves or with the
-current loops "now.
+hdac_hda_codec_remove() disables runtime PM of the codec device before
+releasing the HDA link and calling the codec driver's remove callback,
+so that no runtime resume can race with the teardown and access the
+link or the already freed codec driver data.
+snd_hda_codec_cleanup_for_unbind() then disables runtime PM again.
 
-Save the target's original sequence counter value so that the update
-also happens on loop retries.
+On the next probe snd_hda_codec_register() enables runtime PM only once,
+leaving it disabled after the ASoC card or the codec driver has been
+unbound and bound again: the codec stays powered and runtime_status
+reads 'unsupported'.
 
-Fixes: 868a3e915f7f ("hrtimer: Make offset update smarter")
-Signed-off-by: Thomas Weißschuh (Schneider Electric) <thomas.weissschuh@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Re-enable runtime PM at the end of hdac_hda_codec_remove() to balance
+its own disable. The codec remains disabled until it is registered again.
+
+Fixes: c3ec8ac82105 ("ASoC: hdac_hda: fix memleak on module unload")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261023-timekeeping-clock_was_set_seq-v1-1-61c4c53d031c@linutronix.de
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20261027083840.28813-4-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/timekeeping.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/codecs/hdac_hda.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/kernel/time/timekeeping.c b/kernel/time/timekeeping.c
-index 135c8727bb851..1481ada8baab6 100644
---- a/kernel/time/timekeeping.c
-+++ b/kernel/time/timekeeping.c
-@@ -2315,6 +2315,7 @@ ktime_t ktime_get_update_offsets_now(unsigned int *cwsseq, ktime_t *offs_real,
- 				     ktime_t *offs_boot, ktime_t *offs_tai)
- {
- 	struct timekeeper *tk = &tk_core.timekeeper;
-+	u32 cwsseq_orig = *cwsseq;
- 	unsigned int seq;
- 	ktime_t base;
- 	u64 nsecs;
-@@ -2326,7 +2327,7 @@ ktime_t ktime_get_update_offsets_now(unsigned int *cwsseq, ktime_t *offs_real,
- 		nsecs = timekeeping_get_ns(&tk->tkr_mono);
- 		base = ktime_add_ns(base, nsecs);
+diff --git a/sound/soc/codecs/hdac_hda.c b/sound/soc/codecs/hdac_hda.c
+index 4dcb4eb04ec25..6b9c0ad3600a8 100644
+--- a/sound/soc/codecs/hdac_hda.c
++++ b/sound/soc/codecs/hdac_hda.c
+@@ -525,6 +525,7 @@ static void hdac_hda_codec_remove(struct snd_soc_component *component)
+ 		return;
+ 	}
  
--		if (*cwsseq != tk->clock_was_set_seq) {
-+		if (cwsseq_orig != tk->clock_was_set_seq) {
- 			*cwsseq = tk->clock_was_set_seq;
- 			*offs_real = tk->offs_real;
- 			*offs_boot = tk->offs_boot;
++	/* prevent runtime PM callbacks while the link and the codec are torn down */
+ 	pm_runtime_disable(&hdev->dev);
+ 	snd_hdac_ext_bus_link_put(hdev->bus, hlink);
+ 
+@@ -532,6 +533,9 @@ static void hdac_hda_codec_remove(struct snd_soc_component *component)
+ 		codec->patch_ops.free(codec);
+ 
+ 	snd_hda_codec_cleanup_for_unbind(codec);
++
++	/* Balances the disable above, cleanup_for_unbind keeps runtime PM disabled */
++	pm_runtime_enable(&hdev->dev);
+ }
+ 
+ static const struct snd_soc_dapm_route hdac_hda_dapm_routes[] = {
 -- 
 2.53.0
 
