@@ -1,57 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031758;
-	b=kptGUFkNMzhyy4w/v/1SDccucP44P510lDnagMugqMdF0VKMy3+0dYmm4jrRlG2Wc5aV
-	 qeAIBAKGdEWiQWsDzxdjTcrpMDrEbyUZsDmVXxHAn/TAXaB6YAj3sFQ5qrhlAoBVpKGve
-	 Wnq1onvJWcDUIcvgoTMRqCaBJH6GODe4S+4LUxOnBy0BLloifBLyKhIgqDlNHj6pgJgFU
-	 e6/wtBV0OEeHFx8Ka2UPoAh26tDtU6aRvGQcMyac1jYO9MsPKqkHxZ+Bqtepe0JFOvUZ5
-	 Sz0haXrA7xwHKQ52L7UZsnusdNEgORz8XWC/zzJ2lq8iV4+i3leNQVtYEzBsOAsrHDA==
+	t=1795031762;
+	b=NvxPBj6G/JoK+IqY7op902YcEtm+gYhxWSY4Tus/kqbz6upefrqUaOr2PVejqFMyAItS
+	 AHQ3vQK7zyzi1RlwEqQ/0Wey7bAcb48kUPP2gHvHQu2yAjQMa1KuPckzfp9irSuzHfGbx
+	 i8fiRgkGS2r9dkKdWcvcA9SaoLhZL3V8r+LggXYUFTQtdKIcx1tSWoGl8Fy3KZvpqN0wx
+	 xaYlgNbAxbF8u0k28divApIrVxqB/Rjb8xQRUSsbxbFelxvuRaEqt/PSTJdYF3Y/cmOy9
+	 or4Pu16F3Kb/5qZoJzQRFbt4k2feuknUFDQQRYDCOvsgGeLcxA7lUoi2suUFmvHqNVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031758;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031762;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B/4cRJNtBpQJSx4DY7cBDnEEaIsAhKg7cJr1R8AyDes=;
-	b=dhWOxG5I5HP+xVE+egZ+lESsn1X2kbCqevpqHjkV3IExaGteyksV0iMcXCpqsIJP/zQj
-	 dU8IsAZB3ULTJxi//VZPlOSYEymB/J9Ac1kpJaxXBA5F2VHm/AC75c8+lWL6bCQNpfyyp
-	 bGsRh4FB6PRy1HpRs0H9oBhgZBc0vSqZxZnxgcFn7x1OQJ9IqkqL+JVwRhjUo94+2ifZt
-	 UVxV3UvYFkTQwc29kCPtn+4aOjvmqEVZVtpsv6HbTsdTrFIBLJUXks6pH+9ZUy8hAbyDk
-	 1Ic0a0AKjpMORl0tQwDww2t/Ispaqwv8sgEFUbvYnhWH0n4lQ8TtoKgus0Gw5n+rJIA==
+	bh=JWN/XzwCJl84KHWO0+OiWNA1cJMMy6OGvcfYcxaS0zI=;
+	b=msbvDzivukxM39bZpNHQn7nb90fLrTRp5hguYy7tT1lZ+E/4HYHdWizAA5eMvTDrqmtW
+	 vtlTCf++r4pHWstlqR9kHZVqW+qa38K9jrezZFLaoM4vGh9fI2bhHdMK631wRaw+qnE5Y
+	 2G2Y+MZWcNEOSe2oRRR0nqc8iVSv2nIR6dchrCwFMt2dKjHgQHtTjvYr2pGaUCDWhq3RR
+	 FAyK4A9DWt05YYzM8JcqoPktauD+itF9zF0xOR1TM9zF3JjpQ2q+oE9lD3nBNgdfoRmvI
+	 D/X75pjHGLjWVe1xo62lk9cae+Ixm4S/hPT6HgnK8LemNsGEml3uWyhopGJBb6cfA/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="B//X29or";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H+uJR7eG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A1E8606A320;
-	Wed, 18 Nov 2026 19:55:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D52606A32C;
+	Wed, 18 Nov 2026 19:56:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B//X29or
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A59211F000C4;
-	Wed, 18 Nov 2026 19:55:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H+uJR7eG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F4D81F000C4;
+	Wed, 18 Nov 2026 19:56:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031758;
-	bh=B/4cRJNtBpQJSx4DY7cBDnEEaIsAhKg7cJr1R8AyDes=;
+	s=korg; t=1795031761;
+	bh=JWN/XzwCJl84KHWO0+OiWNA1cJMMy6OGvcfYcxaS0zI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B//X29orKMVdKD6ZpwHoSPXMlCR3nEksOBojn0ua3xn4bM7VJ32zenRF1CvqVGgZ7
-	 /3tipdxssxHG8l7G/QXYYdpAeF9kEgbAxPy380M2cOZ41LwtmiPG6njpRNNn7fgk2Q
-	 uQnlPdM6hzvVH8T15aoPNiIwqo26E5bGPSfCV/Fk=
+	b=H+uJR7eGSuq03E4Sm3+EXZ09I0CBFLr38uCnEVcxvSp5BwsAslHgYmXSFdXs/3AXH
+	 xm96tVnMHS0jZNYcvgFYUTXYuUnPDqLNmgMCn4POSBbFZGkLeMqhmpcxrLmOWeG5+b
+	 euito8443HWTxRS722LlVEwW2plN+7L1bIW4I1H8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	syzbot+a68ce48df87b8e36e915@syzkaller.appspotmail.com,
-	Heming Zhao <heming.zhao@suse.com>,
+	syzbot+03aaa576f1daa1c1f2f0@syzkaller.appspotmail.com,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Mark Fasheh <mark@fasheh.com>,
 	Joel Becker <jlbec@evilplan.org>,
 	Junxiao Bi <junxiao.bi@oracle.com>,
+	Heming Zhao <heming.zhao@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1171/1756] ocfs2: fix possible deadlock between nfs_sync_rwlock and fs_reclaim
-Date: Wed, 18 Nov 2026 15:54:58 +0100
-Message-ID: <20261118150056.579470616@linuxfoundation.org>
+Subject: [PATCH 6.12 1172/1756] ocfs2: validate chunk and block counts of the local quota file
+Date: Wed, 18 Nov 2026 15:54:59 +0100
+Message-ID: <20261118150056.616704029@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -73,278 +74,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
 
-[ Upstream commit 169bc4d16a8efa7852b101fdaa4c028505cd6750 ]
+[ Upstream commit b10ef5d2c2083ea4c40e963c10a73a154793c5d4 ]
 
-syzbot detected a circular locking dependency on &osb->nfs_sync_rwlock:
+ocfs2_local_read_info() trusts dqi_chunks and dqi_blocks from the local
+quota file header.  If dqi_blocks is too small,
+ocfs2_extend_local_quota_file() computes a bogus chunk length, extends the
+file, and maps logical block dqi_blocks, which is already in the inode's
+metadata cache (the header or a chunk header read at mount).  sb_getblk()
+returns that cached buffer and ocfs2_set_new_buffer_uptodate() hits
+BUG_ON(ocfs2_buffer_cached()):
 
-       CPU0                    CPU1
-       ----                    ----
-  lock(fs_reclaim);
-                               lock(&ocfs2_sysfile_lock_key[INODE_ALLOC_SYSTEM_INODE]);
-                               lock(fs_reclaim);
-  rlock(&osb->nfs_sync_rwlock);
+  kernel BUG at fs/ocfs2/uptodate.c:509!
+  ocfs2_extend_local_quota_file+0x45c/0x1100
+  ocfs2_create_local_dquot+0x8ac/0xb50
+  ocfs2_acquire_dquot+0x614/0xae0
+  ocfs2_get_init_inode+0xe9/0x1b0
+  ocfs2_mkdir+0x174/0x430
 
- *** DEADLOCK ***
+ocfs2_local_quota_add_chunk() has the same exposure.
 
-Chain exists of:
-  &osb->nfs_sync_rwlock --> &ocfs2_sysfile_lock_key[INODE_ALLOC_SYSTEM_INODE] --> fs_reclaim
+Reject a header whose counts don't fit the chunk layout or exceed i_size.
 
-CPU0 is kswapd.  The dentry shrinker runs under fs_reclaim and reaches
-ocfs2_delete_inode() through ->evict_inode():
+Reproduced with a crafted image (dqi_blocks = 1, chunk 0 dqc_free = 0);
+syzbot has no reproducer for this report.
 
-kswapd
- balance_pgdat
-  shrink_node
-   shrink_slab
-    super_cache_scan
-     prune_dcache_sb
-      shrink_dentry_list
-       dentry_kill
-        ocfs2_dentry_iput
-         evict
-          ocfs2_evict_inode
-           ocfs2_delete_inode
-            ocfs2_nfs_sync_lock
-             down_read(&osb->nfs_sync_rwlock)      //C0: grabbing
-
-CPU1 is a task deleting an inode.  It takes nfs_sync_rwlock first, then
-the orphan dir and inode alloc system inode i_rwsems, and allocates the
-metadata reservation with GFP_KERNEL while holding them:
-
-evict
- ocfs2_evict_inode
-  ocfs2_delete_inode
-  + ocfs2_nfs_sync_lock
-  |  down_read(&osb->nfs_sync_rwlock)              //C1: hold
-  + ocfs2_wipe_inode
-     + inode_lock(orphan_dir_inode)                //C1: hold
-     + ocfs2_truncate_for_delete
-     |  ocfs2_commit_truncate
-     |   ocfs2_remove_btree_range
-     |    ocfs2_reserve_blocks_for_rec_trunc
-     |     ocfs2_reserve_new_metadata_blocks
-     |      kzalloc_obj()                          //C1: grabbing
-     |      // GFP_KERNEL -> might_alloc -> fs_reclaim_acquire
-     + ocfs2_remove_inode
-        inode_lock(inode_alloc_inode)
-
-jbd2 pins allocations to GFP_NOFS for the lifetime of a transaction
-handle, but these reservations are made before ocfs2_start_trans(), so
-fs_reclaim is acquired with ocfs2 locks still held and the cycle closes.
-
-The same cycle is reachable from ocfs2_get_dentry() and
-ocfs2_get_parent(), which hold nfs_sync_rwlock for write across
-ocfs2_test_inode_bit() and ocfs2_iget().
-
-This is more than a lockdep artifact.  A GFP_KERNEL allocation under the
-orphan dir i_rwsem enters direct reclaim, which runs the shrinkers, which
-can evict another ocfs2 inode and re-enter ocfs2_wipe_inode() on the same
-task; the second inode_lock() on the singleton orphan dir inode then
-self-deadlocks, since i_rwsem is not recursive.
-
-Establish a GFP_NOFS allocation context for the whole nfs_sync_rwlock
-critical section so that nothing holding it can recurse into filesystem
-reclaim.  Do it in ocfs2_nfs_sync_lock()/ocfs2_nfs_sync_unlock() rather
-than at the call sites, so that future callers cannot forget it.
-
-Link: https://lore.kernel.org/20260922093437.954127-1-joseph.qi@linux.alibaba.com
-Fixes: 6ca497a83e59 ("ocfs2: fix rare stale inode errors when exporting via nfs")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Link: https://lore.kernel.org/20260920140710.43938-1-ngocthang2710.1999@gmail.com
+Fixes: 9e33d69f553a ("ocfs2: Implementation of local and global quota file handling")
+Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: syzbot+a68ce48df87b8e36e915@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a68ce48df87b8e36e915
-Cc: Heming Zhao <heming.zhao@suse.com>
+Reported-by: syzbot+03aaa576f1daa1c1f2f0@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=03aaa576f1daa1c1f2f0
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Cc: Mark Fasheh <mark@fasheh.com>
 Cc: Joel Becker <jlbec@evilplan.org>
 Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/dlmglue.c | 29 +++++++++++++++++++++++++----
- fs/ocfs2/dlmglue.h |  5 +++--
- fs/ocfs2/export.c  | 10 ++++++----
- fs/ocfs2/inode.c   |  5 +++--
- 4 files changed, 37 insertions(+), 12 deletions(-)
+ fs/ocfs2/quota_local.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/fs/ocfs2/dlmglue.c b/fs/ocfs2/dlmglue.c
-index 96d8f39a653a6..33d921146e2ec 100644
---- a/fs/ocfs2/dlmglue.c
-+++ b/fs/ocfs2/dlmglue.c
-@@ -19,6 +19,7 @@
- #include <linux/time.h>
- #include <linux/delay.h>
- #include <linux/quotaops.h>
-+#include <linux/sched/mm.h>
- #include <linux/sched/signal.h>
- 
- #define MLOG_MASK_PREFIX ML_DLM_GLUE
-@@ -2855,21 +2856,34 @@ void ocfs2_rename_unlock(struct ocfs2_super *osb)
- 		ocfs2_cluster_unlock(osb, lockres, DLM_LOCK_EX);
- }
- 
--int ocfs2_nfs_sync_lock(struct ocfs2_super *osb, int ex)
-+int ocfs2_nfs_sync_lock(struct ocfs2_super *osb, int ex, unsigned int *nofs_flag)
- {
- 	int status;
-+	unsigned int flags;
- 	struct ocfs2_lock_res *lockres = &osb->osb_nfs_sync_lockres;
- 
- 	if (ocfs2_is_hard_readonly(osb))
- 		return -EROFS;
- 
-+	/*
-+	 * ocfs2_delete_inode() takes this lock from ->evict_inode(), which the
-+	 * dentry shrinker reaches while holding fs_reclaim.  Anything allocated
-+	 * under the lock must therefore stay out of filesystem reclaim, or
-+	 * reclaim recurses back into the shrinker and tries to take this lock
-+	 * again.  Cover the whole critical section, including the cluster lock
-+	 * and the sysfile inode locks the callers take below it.
-+	 */
-+	flags = memalloc_nofs_save();
-+
- 	if (ex)
- 		down_write(&osb->nfs_sync_rwlock);
- 	else
- 		down_read(&osb->nfs_sync_rwlock);
- 
--	if (ocfs2_mount_local(osb))
-+	if (ocfs2_mount_local(osb)) {
-+		*nofs_flag = flags;
- 		return 0;
-+	}
- 
- 	status = ocfs2_cluster_lock(osb, lockres, ex ? LKM_EXMODE : LKM_PRMODE,
- 				    0, 0);
-@@ -2880,12 +2894,17 @@ int ocfs2_nfs_sync_lock(struct ocfs2_super *osb, int ex)
- 			up_write(&osb->nfs_sync_rwlock);
- 		else
- 			up_read(&osb->nfs_sync_rwlock);
-+		memalloc_nofs_restore(flags);
-+		return status;
+diff --git a/fs/ocfs2/quota_local.c b/fs/ocfs2/quota_local.c
+index a52bf3895ae25..6bb549863c9c7 100644
+--- a/fs/ocfs2/quota_local.c
++++ b/fs/ocfs2/quota_local.c
+@@ -245,6 +245,25 @@ static void ocfs2_release_local_quota_bitmaps(struct list_head *head)
  	}
- 
--	return status;
-+	*nofs_flag = flags;
-+
-+	return 0;
  }
  
--void ocfs2_nfs_sync_unlock(struct ocfs2_super *osb, int ex)
-+void ocfs2_nfs_sync_unlock(struct ocfs2_super *osb, int ex,
-+			   unsigned int nofs_flag)
- {
- 	struct ocfs2_lock_res *lockres = &osb->osb_nfs_sync_lockres;
- 
-@@ -2896,6 +2915,8 @@ void ocfs2_nfs_sync_unlock(struct ocfs2_super *osb, int ex)
- 		up_write(&osb->nfs_sync_rwlock);
- 	else
- 		up_read(&osb->nfs_sync_rwlock);
++/* Check that the on-disk chunk and block counts match the file layout */
++static int ocfs2_check_local_quota_info(struct inode *inode,
++					unsigned int chunks,
++					unsigned int blocks)
++{
++	u64 chunk_len = ol_chunk_blocks(inode->i_sb) + 1;
++	u64 min_blocks = chunks ? 1 + chunk_len * (chunks - 1) + 1 : 1;
++	u64 max_blocks = 1 + chunk_len * chunks;
 +
-+	memalloc_nofs_restore(nofs_flag);
- }
++	if (blocks >= min_blocks && blocks <= max_blocks &&
++	    blocks <= i_size_read(inode) >> inode->i_sb->s_blocksize_bits)
++		return 0;
++
++	return ocfs2_error(inode->i_sb,
++			   "Quota file %llu has bad info: %u chunks, %u blocks\n",
++			   (unsigned long long)OCFS2_I(inode)->ip_blkno,
++			   chunks, blocks);
++}
++
+ /* Load quota bitmaps into memory */
+ static int ocfs2_load_local_quota_bitmaps(struct inode *inode,
+ 			struct ocfs2_local_disk_dqinfo *ldinfo,
+@@ -733,6 +752,11 @@ static int ocfs2_local_read_info(struct super_block *sb, int type)
+ 	oinfo->dqi_blocks = le32_to_cpu(ldinfo->dqi_blocks);
+ 	oinfo->dqi_libh = bh;
  
- int ocfs2_trim_fs_lock(struct ocfs2_super *osb,
-diff --git a/fs/ocfs2/dlmglue.h b/fs/ocfs2/dlmglue.h
-index e5da5809ed95b..dc383a0a87cbe 100644
---- a/fs/ocfs2/dlmglue.h
-+++ b/fs/ocfs2/dlmglue.h
-@@ -163,8 +163,9 @@ void ocfs2_orphan_scan_unlock(struct ocfs2_super *osb, u32 seqno);
- 
- int ocfs2_rename_lock(struct ocfs2_super *osb);
- void ocfs2_rename_unlock(struct ocfs2_super *osb);
--int ocfs2_nfs_sync_lock(struct ocfs2_super *osb, int ex);
--void ocfs2_nfs_sync_unlock(struct ocfs2_super *osb, int ex);
-+int ocfs2_nfs_sync_lock(struct ocfs2_super *osb, int ex, unsigned int *nofs_flag);
-+void ocfs2_nfs_sync_unlock(struct ocfs2_super *osb, int ex,
-+			   unsigned int nofs_flag);
- void ocfs2_trim_fs_lock_res_init(struct ocfs2_super *osb);
- void ocfs2_trim_fs_lock_res_uninit(struct ocfs2_super *osb);
- int ocfs2_trim_fs_lock(struct ocfs2_super *osb,
-diff --git a/fs/ocfs2/export.c b/fs/ocfs2/export.c
-index 96b684763b390..18be47cfc9087 100644
---- a/fs/ocfs2/export.c
-+++ b/fs/ocfs2/export.c
-@@ -37,6 +37,7 @@ static struct dentry *ocfs2_get_dentry(struct super_block *sb,
- 	struct inode *inode;
- 	struct ocfs2_super *osb = OCFS2_SB(sb);
- 	u64 blkno = handle->ih_blkno;
-+	unsigned int nofs_flag = 0;
- 	int status, set;
- 	struct dentry *result;
- 
-@@ -59,7 +60,7 @@ static struct dentry *ocfs2_get_dentry(struct super_block *sb,
- 	 * This will synchronize us against ocfs2_delete_inode() on
- 	 * all nodes
- 	 */
--	status = ocfs2_nfs_sync_lock(osb, 1);
-+	status = ocfs2_nfs_sync_lock(osb, 1, &nofs_flag);
- 	if (status < 0) {
- 		mlog(ML_ERROR, "getting nfs sync lock(EX) failed %d\n", status);
- 		goto check_err;
-@@ -89,7 +90,7 @@ static struct dentry *ocfs2_get_dentry(struct super_block *sb,
- 	inode = ocfs2_iget(osb, blkno, 0, 0);
- 
- unlock_nfs_sync:
--	ocfs2_nfs_sync_unlock(osb, 1);
-+	ocfs2_nfs_sync_unlock(osb, 1, nofs_flag);
- 
- check_err:
- 	if (status < 0) {
-@@ -132,12 +133,13 @@ static struct dentry *ocfs2_get_parent(struct dentry *child)
- 	u64 blkno;
- 	struct dentry *parent;
- 	struct inode *dir = d_inode(child);
-+	unsigned int nofs_flag = 0;
- 	int set;
- 
- 	trace_ocfs2_get_parent(child, child->d_name.len, child->d_name.name,
- 			       (unsigned long long)OCFS2_I(dir)->ip_blkno);
- 
--	status = ocfs2_nfs_sync_lock(OCFS2_SB(dir->i_sb), 1);
-+	status = ocfs2_nfs_sync_lock(OCFS2_SB(dir->i_sb), 1, &nofs_flag);
- 	if (status < 0) {
- 		mlog(ML_ERROR, "getting nfs sync lock(EX) failed %d\n", status);
- 		parent = ERR_PTR(status);
-@@ -181,7 +183,7 @@ static struct dentry *ocfs2_get_parent(struct dentry *child)
- 	ocfs2_inode_unlock(dir, 0);
- 
- unlock_nfs_sync:
--	ocfs2_nfs_sync_unlock(OCFS2_SB(dir->i_sb), 1);
-+	ocfs2_nfs_sync_unlock(OCFS2_SB(dir->i_sb), 1, nofs_flag);
- 
- bail:
- 	trace_ocfs2_get_parent_end(parent);
-diff --git a/fs/ocfs2/inode.c b/fs/ocfs2/inode.c
-index 51e487ea432e1..ee0d537a15866 100644
---- a/fs/ocfs2/inode.c
-+++ b/fs/ocfs2/inode.c
-@@ -1046,6 +1046,7 @@ static void ocfs2_delete_inode(struct inode *inode)
- {
- 	int wipe, status;
- 	sigset_t oldset;
-+	unsigned int nofs_flag = 0;
- 	struct buffer_head *di_bh = NULL;
- 	struct ocfs2_dinode *di = NULL;
- 
-@@ -1080,7 +1081,7 @@ static void ocfs2_delete_inode(struct inode *inode)
- 	 * shared mode so that all nodes can still concurrently
- 	 * process deletes.
- 	 */
--	status = ocfs2_nfs_sync_lock(OCFS2_SB(inode->i_sb), 0);
-+	status = ocfs2_nfs_sync_lock(OCFS2_SB(inode->i_sb), 0, &nofs_flag);
- 	if (status < 0) {
- 		mlog(ML_ERROR, "getting nfs sync lock(PR) failed %d\n", status);
- 		ocfs2_cleanup_delete_inode(inode, 0);
-@@ -1152,7 +1153,7 @@ static void ocfs2_delete_inode(struct inode *inode)
- 	brelse(di_bh);
- 
- bail_unlock_nfs_sync:
--	ocfs2_nfs_sync_unlock(OCFS2_SB(inode->i_sb), 0);
-+	ocfs2_nfs_sync_unlock(OCFS2_SB(inode->i_sb), 0, nofs_flag);
- 
- bail_unblock:
- 	ocfs2_unblock_signals(&oldset);
++	status = ocfs2_check_local_quota_info(lqinode, oinfo->dqi_chunks,
++					      oinfo->dqi_blocks);
++	if (status < 0)
++		goto out_err;
++
+ 	/* We crashed when using local quota file? */
+ 	if (!(oinfo->dqi_flags & OLQF_CLEAN)) {
+ 		rec = OCFS2_SB(sb)->quota_rec;
 -- 
 2.53.0
 
