@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042762;
-	b=Qid/xtX0+tQ6Sd4Y9tnT8KqKbx3oZNjBS6v3dKOXGb52Prxiw8gGuGCBZXZ6uuJ5g4qh
-	 9AHxvtrEWxhMy5h/yWt/2gt0cJeiiJ67O566ozPl2AQqGe5B4vLxcLmPmmjjb7beK3HWQ
-	 KkDJl9hYLlM2/48ZHuR76t1YghL978QalA0FSkX9k3dqppGhUGpjqw3RhB9yP1j7f46aU
-	 33cx9hYhJl12v4mi9WF281bmSee7BeF8CXCpnp0r6IhYTcQkjv2rPyQjCVEOaCtyAf8Sc
-	 KrkacQKzA1hJ0lbuI7GTyH8H/6JZR40gWMbJ0rBMX3Dm8JKJgwuZIgEzrmWe+d14tvw==
+	t=1795042765;
+	b=pr51/LFFn+FEi/44xxL5lHasuMUaNM4MyqDpJlxFKPcdxpGUIm9EFY7C81MmG7xNfDiL
+	 yIRaLXaUcTEKrHQSM63jeM7niDe+DRf6XMZhlFr8EdCqu82a96+TD5OHbxLesJ/B77QvM
+	 g9qBRuocxINNK7qXALOOf7r159cNiMUY34pBS9PUe3HmV8mOiMI6KSycnUDcJP4MMhzc9
+	 HM6s4XfUrl3P4XdaM5b0vgXi/FXDANSnDzgf4KvdoPJsMwEdp+gG/7EBYEfHcSMn0lpY9
+	 UTkmDIyK4RgAC3WiDPjsCUVeRMtXz/CtHU0zcoPxirVt4g1o1WP0kDCJ8+gMQVNL8tQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042762;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042765;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AQ9Eh3NGzYZ1xT6aIuq9UcgrWY0/BqQSyS3W1YrTE1M=;
-	b=sZ6qcs6pj9Ia5l+daPxHao6r111uJ3hDB52FDQzuZZcOQHNAU0VKFZG8QwW8q7TYovv5
-	 spUBisJkrB3m98NjZ9JHdSjKx+JqmufYCw/UN35IhciOSRtWm5Z9BAJrNMdzEftHF60Ft
-	 dYEBiUF5QdqZNysE+MFBeIy3hmX28TYU2xG0T0DUsH20h1JqAxmtAYyYrZF6G5rUoR0Cw
-	 690+ox5XC+bpsipRr/4M2+OolEIsNEsICrSBUQqY7CF3gya/Pfk+Q+zJ+pnX4TIx9WuZr
-	 qobJh/a0Pep0oGKLlxfHGixvnvOdf3PeuaDIbXPzS/XtPuPoztPZKwOLkrV34gmr6xw==
+	bh=eFMA0/MDah2k+etGxSz5tNRdMgHr++LTsgZeL9NTb18=;
+	b=kL2mlwYELH7UF1TjnSPt/Ze575O26wJO8zo0Xh9jEyvZJL3FyJ9pGYLHnEUaTIy3L+/J
+	 8QH7CAXDKt/m66JFxN/g9sCSGCPO+FYUbCowAlm9zuratKMaohYikkek74iOBICvfMDa5
+	 QC4c63f/KwCnwLYQ6iP3d+/nEO6rQ6XEc/5fZtX8afne+E6Hg7Q+1tqep1b1RU8mHznl+
+	 UU1dmFvoQElund+P364A2pFow4PCVNjs4/f6eyFavyGmDyxxjil1OROat19qF0PtotKjG
+	 Vn+4E3RZ6md3cfy4IglH7I2MVU1MEfybqlEDzCNm/dIWLeXODLW9Ljd6smSbehdfTnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hZmKalUh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VG89ErYY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0C5606A31C;
-	Wed, 18 Nov 2026 22:59:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B993D606A31C;
+	Wed, 18 Nov 2026 22:59:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hZmKalUh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23FE71F000C4;
-	Wed, 18 Nov 2026 22:59:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VG89ErYY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C88EC1F000C4;
+	Wed, 18 Nov 2026 22:59:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042762;
-	bh=AQ9Eh3NGzYZ1xT6aIuq9UcgrWY0/BqQSyS3W1YrTE1M=;
+	s=korg; t=1795042765;
+	bh=eFMA0/MDah2k+etGxSz5tNRdMgHr++LTsgZeL9NTb18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hZmKalUhhfPWRztuAxSKiixzuIuenxA5SieaXoPfl6A/CxVmdmU2Q/8846em0UEdz
-	 ZUvCTeD3yu1Ade8TJD2gQFiF/Sn2UNkY3qv4+8khElhwptZacsH8H4q8ICbRCZjeq1
-	 Ii/tYJpfz8GCcBMRF9LDJekr38wHeTrzC7CR+cIs=
+	b=VG89ErYYKvp46Euq53RbjV4Lk2rjh4HoK7gOI4RSvK5GJYFbkXlrRCHfFSvJbiNrD
+	 ZTId3wzso54FilwCpLSGZI857brWhZg2w4lCXB8Qc88pFDJSnvVxduiCRQniuGpQGX
+	 P91rXsB9bw0S/9SoGlrB0v4+c6aS4EVjYbt7x5Vw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nick Huang <sef1548@gmail.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3284/3318] net: use eth_type_trans_careful() in __dev_forward_skb2()
-Date: Wed, 18 Nov 2026 16:05:06 +0100
-Message-ID: <20261118150458.127753148@linuxfoundation.org>
+Subject: [PATCH 6.6 3247/3318] rtc: s35390a: use u8 instead of char for register buffer
+Date: Wed, 18 Nov 2026 16:04:29 +0100
+Message-ID: <20261118150457.066777638@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,152 +68,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Nick Huang <sef1548@gmail.com>
 
-[ Upstream commit 695e1408eb908ac7acf78069933201f92b95727c ]
+[ Upstream commit 73c4638a2864e69ff2251080ce874d360fd13056 ]
 
-A tc egress BPF program can push a tiny link-layer header with
-bpf_skb_change_head() on an skb whose head is almost empty, then
-redirect it to an Ethernet device ingress. __bpf_redirect_common()
-only checks mac_header < network_header, and __dev_forward_skb2()
-crashes in eth_type_trans():
+The register buffer in s35390a_get_reg() was previously defined as
+`char *buf`. This is not ideal since register data represents raw
+binary values rather than textual data.
 
-  tc filter add dev lo egress pref 1 matchall action vlan pop_eth continue
-  tc filter add dev lo egress pref 2 bpf da obj prog.o
-  # prog: bpf_skb_change_head(skb, 1, 0);
-  #       return bpf_redirect(veth1_ifindex, BPF_F_INGRESS);
-  # AF_PACKET SOCK_RAW on lo: eth / eth / 8192 bytes of payload
+Switch the type to `u8 *buf` to better reflect its intended usage and
+to avoid potential issues with sign extension when handling register
+values on platforms where `char` is signed by default.
 
-  kernel BUG at include/linux/skbuff.h:2839!
-  RIP: 0010:eth_type_trans (include/linux/etherdevice.h:635 net/ethernet/eth.c:163)
-  Call Trace:
-   __dev_forward_skb2 (net/core/dev.c:2507)
-   dev_forward_skb_nomtu (net/core/dev.c:2546)
-   __dev_queue_xmit (net/core/dev.c:4738 net/core/dev.c:4998)
-   packet_sendmsg (net/packet/af_packet.c:3157 net/packet/af_packet.c:3189)
+This change improves type safety and makes the code consistent with
+other RTC drivers that operate on raw register data.
 
-Use eth_type_trans_careful(), and drop the packet if the Ethernet
-header can not be pulled. This also covers other dev_forward_skb()
-users (veth, macvlan, ipvlan, netdevsim, l2tp_eth).
-
-Update the empty_skb BPF selftest: at lwt_xmit, BPF_PROG_TEST_RUN
-strips the Ethernet header, so the "veth ETH_HLEN+1" packet is a 1-byte
-skb. Redirecting it to veth ingress used to read the Ethernet header
-past skb->tail and deliver a 1-byte frame; it is now dropped with
-NET_RX_DROP, as veth_xmit() already does at egress.
-
-Fixes: 3a0af8fd61f9 ("bpf: BPF for lightweight tunnel infrastructure")
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Tested-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Acked-by: Alexei Starovoitov <ast@kernel.org>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20261028122703.2093730-4-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Nick Huang <sef1548@gmail.com>
+Link: https://patch.msgid.link/20250920174224.108795-1-sef1548@gmail.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Stable-dep-of: 6199051016cd ("rtc: s35390a: Read 24-hour mode on access")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c                                | 18 +++++++++++++-----
- .../selftests/bpf/prog_tests/empty_skb.c      | 19 ++++++++++++-------
- 2 files changed, 25 insertions(+), 12 deletions(-)
+ drivers/rtc/rtc-s35390a.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index a270657f672fb..95beb4b402d0c 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -2227,14 +2227,22 @@ EXPORT_SYMBOL_GPL(is_skb_forwardable);
- static int __dev_forward_skb2(struct net_device *dev, struct sk_buff *skb,
- 			      bool check_mtu)
+diff --git a/drivers/rtc/rtc-s35390a.c b/drivers/rtc/rtc-s35390a.c
+index 91bb0c2009708..7895b9f97c51b 100644
+--- a/drivers/rtc/rtc-s35390a.c
++++ b/drivers/rtc/rtc-s35390a.c
+@@ -67,7 +67,7 @@ struct s35390a {
+ 	int twentyfourhour;
+ };
+ 
+-static int s35390a_set_reg(struct s35390a *s35390a, int reg, char *buf, int len)
++static int s35390a_set_reg(struct s35390a *s35390a, int reg, u8  *buf, int len)
  {
--	int ret = ____dev_forward_skb(dev, skb, check_mtu);
-+	enum skb_drop_reason reason;
-+	int ret;
-+
-+	ret = ____dev_forward_skb(dev, skb, check_mtu);
-+	if (unlikely(ret))
-+		return ret;
- 
--	if (likely(!ret)) {
--		skb->protocol = eth_type_trans(skb, dev);
--		skb_postpull_rcsum(skb, eth_hdr(skb), ETH_HLEN);
-+	reason = eth_type_trans_careful(skb, dev);
-+	if (unlikely(reason)) {
-+		dev_core_stats_rx_dropped_inc(dev);
-+		kfree_skb_reason(skb, reason);
-+		return NET_RX_DROP;
- 	}
-+	skb_postpull_rcsum(skb, eth_hdr(skb), ETH_HLEN);
- 
--	return ret;
-+	return 0;
+ 	struct i2c_client *client = s35390a->client[reg];
+ 	struct i2c_msg msg[] = {
+@@ -84,7 +84,7 @@ static int s35390a_set_reg(struct s35390a *s35390a, int reg, char *buf, int len)
+ 	return 0;
  }
  
- int __dev_forward_skb(struct net_device *dev, struct sk_buff *skb)
-diff --git a/tools/testing/selftests/bpf/prog_tests/empty_skb.c b/tools/testing/selftests/bpf/prog_tests/empty_skb.c
-index 20ea2f9143917..e7da83fddfe55 100644
---- a/tools/testing/selftests/bpf/prog_tests/empty_skb.c
-+++ b/tools/testing/selftests/bpf/prog_tests/empty_skb.c
-@@ -24,7 +24,7 @@ void test_empty_skb(void)
- 		int *ifindex;
- 		int err;
- 		int ret;
--		int lwt_egress_ret; /* expected retval at lwt/egress */
-+		int lwt_ret; /* expected retval at lwt */
- 		__be16 h_proto;
- 		bool success_on_tc;
- 		bool adjust_room;
-@@ -82,7 +82,7 @@ void test_empty_skb(void)
- 			.data_size_in = sizeof(eth_hlen),
- 			.ifindex = &veth_ifindex,
- 			.ret = -ERANGE,
--			.lwt_egress_ret = -ERANGE,
-+			.lwt_ret = -ERANGE,
- 			.success_on_tc = true,
- 		},
- 		{
-@@ -96,17 +96,23 @@ void test_empty_skb(void)
- 			.data_size_in = sizeof(eth_hlen),
- 			.ifindex = &ipip_ifindex,
- 			.ret = -ERANGE,
--			.lwt_egress_ret = -ERANGE,
-+			.lwt_ret = -ERANGE,
- 		},
+-static int s35390a_get_reg(struct s35390a *s35390a, int reg, char *buf, int len)
++static int s35390a_get_reg(struct s35390a *s35390a, int reg, u8 *buf, int len)
+ {
+ 	struct i2c_client *client = s35390a->client[reg];
+ 	struct i2c_msg msg[] = {
+@@ -169,7 +169,7 @@ static int s35390a_read_status(struct s35390a *s35390a, char *status1)
  
--		/* ETH_HLEN+1-sized packet should be redirected. */
-+		/* ETH_HLEN+1-sized packet should be redirected at TC.
-+		 * At LWT, the Ethernet header is not part of the skb, and
-+		 * a 1-byte packet is too short for an Ethernet device.
-+		 */
+ static int s35390a_disable_test_mode(struct s35390a *s35390a)
+ {
+-	char buf[1];
++	u8 buf[1];
  
- 		{
- 			.msg = "veth ETH_HLEN+1 packet ingress",
- 			.data_in = eth_hlen_pp,
- 			.data_size_in = sizeof(eth_hlen_pp),
- 			.ifindex = &veth_ifindex,
--			.lwt_egress_ret = 1, /* veth_xmit NET_XMIT_DROP */
-+			/* lwt: skb->len=1, dropped by veth_xmit() at egress
-+			 * and by __dev_forward_skb2() at ingress.
-+			 */
-+			.lwt_ret = 1, /* NET_XMIT_DROP / NET_RX_DROP */
- 		},
- 		{
- 			.msg = "ipip ETH_HLEN+1 packet ingress",
-@@ -142,7 +148,6 @@ void test_empty_skb(void)
- 			eth_hlen.h_proto = tests[i].h_proto;
+ 	if (s35390a_get_reg(s35390a, S35390A_CMD_STATUS2, buf, sizeof(buf)) < 0)
+ 		return -EIO;
+@@ -211,7 +211,7 @@ static int s35390a_rtc_set_time(struct device *dev, struct rtc_time *tm)
+ 	struct i2c_client *client = to_i2c_client(dev);
+ 	struct s35390a	*s35390a = i2c_get_clientdata(client);
+ 	int i;
+-	char buf[7], status;
++	u8 buf[7], status;
  
- 		bpf_object__for_each_program(prog, bpf_obj->obj) {
--			bool at_egress = strstr(bpf_program__name(prog), "egress") != NULL;
- 			bool at_tc = !strncmp(bpf_program__section_name(prog), "tc", 2);
- 			bool is_adjust_room = !strcmp(bpf_program__name(prog), "tc_adjust_room");
- 			int expected_ret;
-@@ -151,7 +156,7 @@ void test_empty_skb(void)
- 			if (tests[i].adjust_room != is_adjust_room)
- 				continue;
+ 	dev_dbg(&client->dev, "%s: tm is secs=%d, mins=%d, hours=%d mday=%d, "
+ 		"mon=%d, year=%d, wday=%d\n", __func__, tm->tm_sec,
+@@ -240,7 +240,7 @@ static int s35390a_rtc_read_time(struct device *dev, struct rtc_time *tm)
+ {
+ 	struct i2c_client *client = to_i2c_client(dev);
+ 	struct s35390a *s35390a = i2c_get_clientdata(client);
+-	char buf[7], status;
++	u8 buf[7], status;
+ 	int i, err;
  
--			expected_ret = at_egress && !at_tc ? tests[i].lwt_egress_ret : tests[i].ret;
-+			expected_ret = at_tc ? tests[i].ret : tests[i].lwt_ret;
+ 	if (s35390a_read_status(s35390a, &status) == 1)
+@@ -292,7 +292,7 @@ static int s35390a_rtc_set_alarm(struct device *dev, struct rtc_wkalrm *alm)
+ {
+ 	struct i2c_client *client = to_i2c_client(dev);
+ 	struct s35390a *s35390a = i2c_get_clientdata(client);
+-	char buf[3], sts = 0;
++	u8 buf[3], sts = 0;
+ 	int err, i;
  
- 			tattr.data_in = tests[i].data_in;
- 			tattr.data_size_in = tests[i].data_size_in;
+ 	dev_dbg(&client->dev, "%s: alm is secs=%d, mins=%d, hours=%d mday=%d, "\
+@@ -345,7 +345,7 @@ static int s35390a_rtc_read_alarm(struct device *dev, struct rtc_wkalrm *alm)
+ {
+ 	struct i2c_client *client = to_i2c_client(dev);
+ 	struct s35390a *s35390a = i2c_get_clientdata(client);
+-	char buf[3], sts;
++	u8 buf[3], sts;
+ 	int i, err;
+ 
+ 	err = s35390a_get_reg(s35390a, S35390A_CMD_STATUS2, &sts, sizeof(sts));
+@@ -402,7 +402,7 @@ static int s35390a_rtc_ioctl(struct device *dev, unsigned int cmd,
+ {
+ 	struct i2c_client *client = to_i2c_client(dev);
+ 	struct s35390a *s35390a = i2c_get_clientdata(client);
+-	char sts;
++	u8 sts;
+ 	int err;
+ 
+ 	switch (cmd) {
+@@ -442,7 +442,7 @@ static int s35390a_probe(struct i2c_client *client)
+ 	unsigned int i;
+ 	struct s35390a *s35390a;
+ 	struct rtc_device *rtc;
+-	char buf, status1;
++	u8 buf, status1;
+ 	struct device *dev = &client->dev;
+ 
+ 	if (!i2c_check_functionality(client->adapter, I2C_FUNC_I2C))
 -- 
 2.53.0
 
