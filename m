@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019133;
-	b=XvopBxi6HXgJ/g4CJZwpo4Mck4keQLnd6agnslFbXRzaX6rzIGvX+NByqx386m+YZ+za
-	 XshHBmUGKJ84PYv0DibobsJQc7aw6Ejz72ZQ+FEDldwOy+da/Sxhp+abCtS98NZCNZdov
-	 Dh8er1oq8US/hOSQ/WKGs+AUq8x5cCxW8AVCq8BC9x9ydLCSP5KKfxqeiTzxl2+8XClew
-	 jGTeIWN5AO6iMU7IxCXExgiy9UjlUt1yAhR8dQGYEhD7qidjO8Vfun7SSWsOVJgIjsJ9/
-	 i9yLq0c8DT+v6UUqFoF8hlYqo9LWZ1jnMI+rw7LV7VBGEFEVNZHBaO+zLxA5XPuy09A==
+	t=1795019135;
+	b=YJzcfGxgO/mHXAnF+0NvdCdkyayQFr0dWsfJxPS+T3q+5dEqqiRnqNidEmmlKvPfUOTW
+	 5VwR6wVCnn+sCFjlc+p90EdKKsdD//AQzarxJ48e94Ozc8VpnyymXeG0Te6b5wwYn4hef
+	 58T7N2aSoCLn3B+IluI8QvyKvKZe6uopsZ7yoBDpWGREEkLBclOJKETK8B0DASCz94+Jy
+	 Eb0a52je12evX58V1usD5cs108z6IvwQEx5xSy3SiEu01dELD6xTrU3BwZJFAf3IhK4zz
+	 dS2nVhWlc1PxTQvlhKBnStTA3JaxXT0h56517jBawvDbQLEHJcPzQZPJuXKL9E+HDZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019133;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019135;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ti1YJthlWbkNwZ4JBiOJQopQ9VMSdN7b6GY1GE6nCbk=;
-	b=lFP067Pq+RDplfJUBzpj63j2vWBy2DkGKJQS4u6iXxZ51/rz0VVIMgkvpEoX/rgYr9a/
-	 mpOnMqzgA5srGnMiZwcSw1bqtfRyEe3aKftnscjeaaWl/Q5PqurrL8pFFbga61ikC5O3w
-	 BEWWaeJ7jU5XlEAz/D+RczCb4hwtLFdUHp1ZrVZ7nqiHXZBUirACVuRdBUBsnMnocnDcQ
-	 oFznB3dInyeGgFAzHxCvEBJW0FQvPuA7fK3n2er7Ons+zClBxoexrU1yaE0dkbakxQD/q
-	 sNO0/Bc7KhAbIevZbdDY08twJ9lGcH0vY1jlejhf3jxWF6S8yZaSOCWWtsjTV8hmOXw==
+	bh=wYSl3oYcm/mui5Wzzvb+i06NCL7zHyyFN40XJTsHuMM=;
+	b=gn9Sn5kX26i5cMt3gbEavHejcWFRDDYfJdjmJUDrx6xLJQsZLQOKCgdWVOH0wFvNeojU
+	 eeI85sbAUukke34s5QwzcJq36ZJlU9RFGl3jJbVv5PdUuQqsPCp1JxODfmsgl3DSYiR1C
+	 9/BSyR3gWHdDw8rkMZOE+FIoFEnASd3GvvetmaFNN/mjC+F8MZNic/vSollLMkatS3cde
+	 sRnz228rVjxJv+8BDpiZ0ebFDC7rrYc+ayPUVwCu7KScmynhdJqxbJc2TpgBMfisN+yTU
+	 udgJ37ymx75BBPXq+43zXniAhiG+X9TFsIGMqaYHbZrvuaiFQ2wy5vt25skoCbyJaFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ALQ2/JJA";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EnNRy2Ww;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 059BA606A32C;
-	Wed, 18 Nov 2026 16:25:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A09E7606A31C;
+	Wed, 18 Nov 2026 16:25:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ALQ2/JJA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 311A51F000C4;
-	Wed, 18 Nov 2026 16:25:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EnNRy2Ww
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0004A1F000C4;
+	Wed, 18 Nov 2026 16:25:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019132;
-	bh=Ti1YJthlWbkNwZ4JBiOJQopQ9VMSdN7b6GY1GE6nCbk=;
+	s=korg; t=1795019135;
+	bh=wYSl3oYcm/mui5Wzzvb+i06NCL7zHyyFN40XJTsHuMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ALQ2/JJAn+IVuLUYKqPf0EtRYUlOKCLP+FLGau47+bLRS0EFhdYszDDrxlWbLRbSk
-	 Vsd3kgCsQOpdEA2LJ/8ik9wlSO4dLlsZVfv8LgQaMl34VH3LhawFDjoDUbWAKZHc2c
-	 ZrOoyephoAloctXwj5TWjXC6Q5vn7Mq8IsdAUPgc=
+	b=EnNRy2WwTCa/NRAZddwIpvsrWuawlS3j+7G3aFJ1Nnrd08xSjGUqbxDjzxHg6G+zb
+	 gEHmc596Rmv91FDelT4+WpDwb0MzI29ixzZfNer5YH97wvXgSttZzB3cwq3r64RbsW
+	 f6HALG91/U09juTOXolrXlkX4UTFWAUA1avKR1sE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charlie-cy Wu <Charlie-cy.Wu@mediatek.com>,
+	Devin Wittmayer <lucid_duck@justthetip.ca>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1445/2651] wifi: mt76: connac2: fill TXD spe_idx for connac2 fixed-rate frames
-Date: Wed, 18 Nov 2026 15:44:45 +0100
-Message-ID: <20261118150340.067682100@linuxfoundation.org>
+Subject: [PATCH 7.3 1436/2651] wifi: mt76: mt7925: check drv_pmctrl return in the PCIe reset path
+Date: Wed, 18 Nov 2026 15:44:36 +0100
+Message-ID: <20261118150339.752325168@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,85 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charlie-cy Wu <Charlie-cy.Wu@mediatek.com>
+From: Devin Wittmayer <lucid_duck@justthetip.ca>
 
-[ Upstream commit e9fd0a209ff7f646e6ce9221a73c92c4912175c7 ]
+[ Upstream commit d12a54be2604ecd23a1e9ac863583e34034aadde ]
 
-On connac2 chipsets - MT7920, MT7921 and MT7922 - the spe_idx of
-fixed-rate frames was never programmed, so every management frame -
-auth and assoc req included - went out 1SS 1T on WF0 instead of 1SS 2T
-duplicate, giving up ~3dB of array gain during connection setup, which
-is exactly when the link budget is worst.
+mt7925e_mac_reset() ignores the return value of
+mt792xe_mcu_drv_pmctrl(), unlike the two pmctrl calls later in the same
+function. When the driver-own handshake fails,
+__mt792xe_mcu_drv_pmctrl() returns -EIO without reinitialising WPDMA or
+clearing MT76_STATE_PM, and the reset carries on: it writes the
+interrupt enable registers, cycles NAPI, resets WPDMA and calls
+mt7925_run_firmware() on a chip the driver does not own.
 
-mt76_connac2_mac_write_txwi() takes the MT_TXD2_FIX_RATE path for any
-non-data frame, but the block filling MT_TXD7_SPE_IDX was guarded by
-!is_connac2(), leaving the field at 0. As spe_idx 0 also encodes "WF0"
-the hardware happily transmitted on a single path. Drop the guard so
-connac2 fills the index like the other generations do.
+Return the error instead. The call is the first statement in the
+function, before MT76_RESET is set and before the TX worker and NAPI
+are disabled, so nothing needs unwinding.
 
-Do not set MT_TXD6_SPE_ID_IDX along with it: on connac2 that bit points
-the hardware at the WTBL instead of the TXD, and the WTBL spe_idx is
-still 0 while connecting, so setting it puts the frames back on WF0.
-This matches connac3, where SPE_IXD_SELECT_TXD is 0 and
-SPE_IXD_SELECT_BMC_WTBL is 1, and is the opposite of what the falcon
-firmware macro name HAL_MAC_TX_DESC_SET_FR_SPE_IDX_SPE_BY_TXD suggests.
-
-Guard the duplicate fallback with hweight8() as well: ant_to_spe[] maps
-a single-antenna mask to 0 too, so without the check a user asking for
-one antenna would still get spe_idx 24 and duplicate onto both paths.
-
-Verified on MT7922: TXD DW7 spe_idx now reads 0x18 and the in-chip
-sniffer reports spe_idx 0x18 in the TXV of auth and assoc req, where it
-previously reported 0x0. MT7920 and MT7921 share the same connac2 TXD
-path and are fixed by the same change.
-
-Fixes: 5c81a4f182d9 ("wifi: mt76: connac: use is_connac2() to replace is_mt7921() checks")
-Signed-off-by: Charlie-cy Wu <Charlie-cy.Wu@mediatek.com>
-Link: https://patch.msgid.link/20260930083103.1284937-1-jb.tsai@mediatek.com
+Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
+Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Link: https://patch.msgid.link/20260809205559.32116-1-lucid_duck@justthetip.ca
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/mediatek/mt76/mt76_connac_mac.c  | 20 ++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/pci_mac.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c b/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c
-index 8a8d608dd56e8..8481eac8d7838 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c
-@@ -600,6 +600,7 @@ void mt76_connac2_mac_write_txwi(struct mt76_dev *dev, __le32 *txwi,
- 							vif ? &vif->bss_conf : NULL,
- 							beacon, multicast);
- 		u32 val = MT_TXD6_FIXED_BW;
-+		u8 spe_idx = mt76_connac_spe_idx(mphy->antenna_mask);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/pci_mac.c b/drivers/net/wireless/mediatek/mt76/mt7925/pci_mac.c
+index 8477d21abc660..280797fa0d85f 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/pci_mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/pci_mac.c
+@@ -73,7 +73,9 @@ int mt7925e_mac_reset(struct mt792x_dev *dev)
+ 	const struct mt792x_irq_map *irq_map = dev->irq_map;
+ 	int i, err;
  
- 		/* hardware won't add HTC for mgmt/ctrl frame */
- 		txwi[2] |= cpu_to_le32(MT_TXD2_HTC_VLD);
-@@ -608,13 +609,18 @@ void mt76_connac2_mac_write_txwi(struct mt76_dev *dev, __le32 *txwi,
- 		txwi[6] |= cpu_to_le32(val);
- 		txwi[3] |= cpu_to_le32(MT_TXD3_BA_DISABLE);
+-	mt792xe_mcu_drv_pmctrl(dev);
++	err = mt792xe_mcu_drv_pmctrl(dev);
++	if (err)
++		return err;
  
--		if (!is_connac2(dev)) {
--			u8 spe_idx = mt76_connac_spe_idx(mphy->antenna_mask);
--
--			if (!spe_idx)
--				spe_idx = 24 + phy_idx;
--			txwi[7] |= cpu_to_le32(FIELD_PREP(MT_TXD7_SPE_IDX, spe_idx));
--		}
-+		/* Fixed-rate frames (all mgmt, so auth/assoc req too) otherwise
-+		 * carry spe_idx 0 and TX 1SS 1T on WF0. Fill spe_idx like the
-+		 * other connac generations do, but do NOT touch
-+		 * MT_TXD6_SPE_ID_IDX: on connac2 setting it points HW at the
-+		 * WTBL and the index below is ignored.
-+		 *
-+		 * spe_idx 0 is also a valid single-path index (WF0), so only
-+		 * take the duplicate fallback when a second path exists.
-+		 */
-+		if (!spe_idx && hweight8(mphy->antenna_mask) > 1)
-+			spe_idx = 24 + phy_idx;
-+		txwi[7] |= cpu_to_le32(FIELD_PREP(MT_TXD7_SPE_IDX, spe_idx));
+ 	mt76_connac_free_pending_tx_skbs(&dev->pm, NULL);
  
- 		txwi[7] &= ~cpu_to_le32(MT_TXD7_HW_AMSDU);
- 	}
 -- 
 2.53.0
 
