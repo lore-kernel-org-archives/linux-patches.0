@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046226;
-	b=1q/FXcCL7JXjEHZLmhS9YUWM2ld8vZS+d9ZnIhXCkSJbvqMGhCvSF0VD5rEf430AjqTd
-	 hpqWH5JuA5l7m8wTlU7d8tKREMUr82+s5bZZBHEld5Qhi4CcoYDXQ6uuHqhDKYXKcDntF
-	 vGRUGqxX1xbtgOjtgm/TB4AL+eEH9L1tCchg7FAnhkHbBZHq3bMTjj5D3eiulDyXFxYF5
-	 KjRT35fWAbQIg1+J2jAdgdzO6y4TJllFhB/BIbNX+22yceEOuVdoHLJ0HSfhOOvZLBnET
-	 G1SCjzX8xLAQy967ItJUOJG9Y45L0hVOn0vdxOZLpbzgKtySmuq1Sm880nihsSji6sw==
+	t=1795046229;
+	b=ACzxiD5psE0gJyNrdk1F3hOb2uy/8lRbdlW7AJMNv8K6PlF3L8t0+THmeSZfJ1HnQ4Fj
+	 1d9yBLGlqrFLvdKEmOo9Y9ZYWdIqr8mLXPYgKTOJksdYuZHnc+GLzxZf97YE6AYMLLVOL
+	 95v8urozI16HV7ELzWMTAwx8kvBNpSm78VrGRpHD4fG2Y4pnrpQACn0L2WWkE8gKIV5qK
+	 6LKbiizfjdXI5z5yNiuVA6xpO1pA2rpAx3kdgdiast5+r62JU5Q7o/HJjGzPBpW/dLl+b
+	 9HIGQElA22qZT76b/BAo9KUSYKsaYLmG+NVd5LQvJDJrH0FuvtMauRZ/1AZ1Qc3bbbw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046226;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046229;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GEah/4BJ06jmE6T7MqcCmE7WOxk6DqIIszN91KNcPnE=;
-	b=pcL1EGom3twEJHlA64JS7S7QFjBVFqRqBppb51zbD6VP7d2mIgkidqqMcb2SQCoRueZ4
-	 a7RgM2xp31TSLQNpJNVmZA7/JO+9qChm97r5OASer3sPhxletga/OLO/ydb+xYBCzfm1T
-	 es/ErZ5pNkQccrEV/SEvcS89MFUnfQ+VdtcIXG3GxtBbUuMf3zOjUkbJ62fmgUj4VZeCl
-	 ZrSHEbJ2j4xeMjZZHd/0hjM/vi794JnFB+qgQQlz23BxlW3StQJeOllMqkHXeH4gVwweO
-	 VuKWkZzuaMlhEgzDv67shJyTnarpk+5/gb/d5cA8xo7ZGq7BGuUVz58uJ76zerBmSaw==
+	bh=mKIKQfbUd5oLS/aYr2yoPu7goiCYXPRMA7kJYOQXVsw=;
+	b=BIVc6ZEn0n6ImfTZaYujZCBHbmK4a2uAEJMSbSeOoyJD00sNvlDSPATqyzX1t3UlCC+x
+	 3k5QYBuUHLtrc+nt/8MWus/Oo7wXM/czBlFd5WisPjxpJuKtX5+ggGq7i/IXLWmmde8Mh
+	 8rqjApf2AOWBPnLul3tg0KAITj9JYPYoUtjun5yuZQP/OzIcEtOpSW1S2w9mEJtnHZcqq
+	 DTnzkHTWUe1jwY9eJ4792rKhNWHOLxKJDoRXi/nIyEtMp0Mjaza2dyGMjMBqUa349FSRX
+	 TtADD/MLzmc29gfvo24cxYW4Mr02w4zsWAK/GwMLF7epcSNJJ2/JlAm/hgVJSa6/CTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pgw859Qh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IO3T7YNr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015D4606A31C;
-	Wed, 18 Nov 2026 23:57:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BED5606A320;
+	Wed, 18 Nov 2026 23:57:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pgw859Qh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5220A1F000C4;
-	Wed, 18 Nov 2026 23:57:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IO3T7YNr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1956D1F000C4;
+	Wed, 18 Nov 2026 23:57:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046225;
-	bh=GEah/4BJ06jmE6T7MqcCmE7WOxk6DqIIszN91KNcPnE=;
+	s=korg; t=1795046228;
+	bh=mKIKQfbUd5oLS/aYr2yoPu7goiCYXPRMA7kJYOQXVsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pgw859Qhdt1Q+OcVEmO81+y7gTsjDD/tdM9plfkYvUwmZdINbf9fECpKSrulvdb3D
-	 /0xyKnQllSqqimsVfi+dwm6QxUFAStzExwx7iQX3+LHcPnUBFhB5AGx2uQ3Dry06sv
-	 JgdcqkPgT0x58idIAn38i6l6PKZz7QW9tczLBVFE=
+	b=IO3T7YNr7FXNXYdhO0K7YYzA8s+sm+LKprajO+46yimd9HFsvFO0XkXKiM3jkpxib
+	 RJABKqD1wNVFd3aeC2VOVEl0vfjj4Dxh3NMUwcPDQ4NZfFLl6wS+BdyxKsCEdt/XZd
+	 PMKblXirbki4/a3fcShGtaVV2znf/M7R1DjmVwUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1165/2857] net: bgmac: enable interrupts only after NAPI is ready
-Date: Wed, 18 Nov 2026 15:36:39 +0100
-Message-ID: <20261118150243.536259643@linuxfoundation.org>
+Subject: [PATCH 6.1 1166/2857] s390/vmcp: Initialize full session info to zero
+Date: Wed, 18 Nov 2026 15:36:40 +0100
+Message-ID: <20261118150243.571667402@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,77 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
 
-[ Upstream commit ac1f6e58cb77bb66b8811f7d98703e0f076a8f65 ]
+[ Upstream commit f63eb4ee4a30fc5d8de07a229d92310e3c8d560c ]
 
-bgmac_open() calls bgmac_chip_init(), which unmasks the interrupts and
-enables the MAC receiver, before request_irq() and napi_enable().
-bgmac_enet_resume() also enables NAPI only after bgmac_chip_init().
+The cma_alloc bit as well as the response can contain old data.
+cma_release will not free the kmalloced memory in that case and
+the response code might leak kernel stack data to CAP_SYS_ADMIN
+users.
 
-When frames arrive in that window, the first RX interrupt masks all
-interrupts in bgmac_interrupt() and calls napi_schedule() on a NAPI
-instance that is still disabled, so nothing is scheduled. Nothing
-unmasks the interrupts again, the RX ring fills up and the interface
-stays deaf until it is brought down and up without traffic.
-
-On an Asus RT-N16 (BCM4716) a single "ip link set eth0 down/up" while
-a host sends UDP to the router left INT_MASK at 0, INT_STATUS with RX
-pending and the RX DMA idle on a full ring, with the RX packet and
-interrupt counters no longer moving. With this change, 10 of 10 such
-cycles recovered on their own.
-
-Request the IRQ and enable NAPI before the chip is initialized.
-
-Fixes: dd4544f05469 ("bgmac: driver for GBit MAC core on BCMA bus")
-Fixes: f3537b3494c0 ("net: ethernet: bgmac: driver power manangement")
 Cc: stable@vger.kernel.org
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261010070011.60403-1-rosenp@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+[borntraeger@linux.ibm.com: use kzalloc instead of kzalloc_obj for older versions]
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bgmac.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/s390/char/vmcp.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bgmac.c b/drivers/net/ethernet/broadcom/bgmac.c
-index 52ee3751187a2..37debd7abf267 100644
---- a/drivers/net/ethernet/broadcom/bgmac.c
-+++ b/drivers/net/ethernet/broadcom/bgmac.c
-@@ -1183,9 +1183,6 @@ static int bgmac_open(struct net_device *net_dev)
- 	if (err)
- 		return err;
+diff --git a/drivers/s390/char/vmcp.c b/drivers/s390/char/vmcp.c
+index 4cebfaaa22b43..614ec6c291752 100644
+--- a/drivers/s390/char/vmcp.c
++++ b/drivers/s390/char/vmcp.c
+@@ -105,13 +105,11 @@ static int vmcp_open(struct inode *inode, struct file *file)
+ 	if (!capable(CAP_SYS_ADMIN))
+ 		return -EPERM;
  
--	/* Specs say about reclaiming rings here, but we do that in DMA init */
--	bgmac_chip_init(bgmac);
--
- 	err = request_irq(bgmac->irq, bgmac_interrupt, IRQF_SHARED,
- 			  net_dev->name, net_dev);
- 	if (err < 0) {
-@@ -1195,6 +1192,9 @@ static int bgmac_open(struct net_device *net_dev)
- 	}
- 	napi_enable(&bgmac->napi);
+-	session = kmalloc(sizeof(*session), GFP_KERNEL);
++	session = kzalloc(sizeof(*session), GFP_KERNEL);
+ 	if (!session)
+ 		return -ENOMEM;
  
-+	/* Specs say about reclaiming rings here, but we do that in DMA init */
-+	bgmac_chip_init(bgmac);
-+
- 	phy_start(net_dev->phydev);
- 
- 	netif_start_queue(net_dev);
-@@ -1609,10 +1609,10 @@ int bgmac_enet_resume(struct bgmac *bgmac)
- 	if (rc)
- 		return rc;
- 
--	bgmac_chip_init(bgmac);
--
- 	napi_enable(&bgmac->napi);
- 
-+	bgmac_chip_init(bgmac);
-+
- 	netif_tx_lock(bgmac->net_dev);
- 	netif_device_attach(bgmac->net_dev);
- 	netif_tx_unlock(bgmac->net_dev);
+ 	session->bufsize = PAGE_SIZE;
+-	session->response = NULL;
+-	session->resp_size = 0;
+ 	mutex_init(&session->mutex);
+ 	file->private_data = session;
+ 	return nonseekable_open(inode, file);
 -- 
 2.53.0
 
