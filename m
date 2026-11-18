@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025737;
-	b=tPDrT1LxmjDL1W6tQhOJPa+41hm8oyaPJ4zHOKNG9Di4Z/MR9unEjsMVZyMU5qwajSRT
-	 4C7+mKeikbJgRV6SucZtbWPLMxAf4UjRt10vm2i0EpsHOraKEhGU/ytJZYC1ermVqDlBV
-	 sMqWd4IwIKxCzsxZ0qdph6Vv3dr672x/mI11exOHwZH/sJbUhNJGzEgYiwdX7MAu4Zxur
-	 tLIggArjRW2WT41j0SEAGGnVBzBypEy1O7t8eNLahaPayalvhnR/sVqEZkzQltE8DTjVu
-	 0F+1a7utUTu66flOVdLDkCL3KoFAEfcs7jYbkDLEFpYXTbodPZ/daN1d69PrAW9KDsg==
+	t=1795025740;
+	b=f9uTRRpbFKtqlXDF2OvV3MqpPzdUkIhqfiHUh/gB8+uwta4eL6LcU1UxmgMEUBSnS1Zo
+	 MOsqivf51WwB71GzrbfpixSdoG4ElP8d/Smxelv05Xg/8krQ2a6S1ac+eshknQpWDo7Lo
+	 aURsC/J577vnSQQzCSiVivj5/RlCA8QDR5+mpiiZqWb7XmHVo8VOtdwJUH7vnIx1PzmXw
+	 rKdEL37bDAhb+mhcv5IoyjPOfb3VMSx+cMYQA6mKZHFxT8JlkeEWjaDhVKG7ds3BS/EHJ
+	 8mqTWWZVC1IgV4XuTyi7y9r55G2BKj5tb5fepIBM9pJ9trkhTViV5uUOhKEmC6nOyiw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025737;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025740;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Tyz5FZW29iNJJJ91vSaB8p2P9kAutKlDuCrKOsK6WVo=;
-	b=J1kZau6pnR0ann0MihhFmZUFBfdJLQBDQMLZCP2IN1fApMy8wLBpKJZEx6YPAdw5visy
-	 nbO1L2OxiQ8azSMTF1AIfGD4Sc/uARscLBTOEvrqkagtmJ7PPkrOpkrHDpYBQsp2YCU7Y
-	 n9g+S0+xrozMbktkqvj2N0QCpBYZs8PcV3XIbSii1hN/QYopjM3DmCWsv7dEWKuuvvIdz
-	 2O5al0dSoEWWh0Xvur2ViyfrLnXiq4Apikfn9J6/k5tXgssxSSosUtXHv3bz2s4qHvIea
-	 A6QiuqjLnIst8AMqPGpQc6bWSptP0M7PS0LxCzSgtN1nIsnPmpY7zTqPWPwglExpC5g==
+	bh=j58CIgQhw6kfxh2qOaozb4OZJgPuEqn5+M7zBEjfXMg=;
+	b=bCZJJvk5bZBkZ2ODEjV3pIOHusKFJtRugoLfYLOrmNx3n6UBgR5q6lcR/LZLzUV49MTD
+	 XZmWBH6qyMECUIM2jsLDfSsALigpMVBHlcOwHYjQ29KQ/Xj8IuzSLtiJw3/dpYomKGxPO
+	 vhcO/BbehqhURSVqp3JHKoEbWxaBuN2ij/4ozB/TzrGmxImNbqFZEKNLWa2en0itJMXho
+	 qHPeoI+E2g/I5mvfHDIis/g23Gfknfk413+P+fgUzkVe/u+LAPby5ftKbZgawFbrP72kf
+	 HySy55d12hUNrkH4WbObG1shvWfoi3kG4vEhRN8tQDZ+UtrzN8UY8MLuWYpOsINXSNA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rp7sByjt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lPdNGHRA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77424606A31C;
-	Wed, 18 Nov 2026 18:15:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34613606A32F;
+	Wed, 18 Nov 2026 18:15:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rp7sByjt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C93BF1F000C4;
-	Wed, 18 Nov 2026 18:15:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lPdNGHRA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DE5C1F000C4;
+	Wed, 18 Nov 2026 18:15:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025737;
-	bh=Tyz5FZW29iNJJJ91vSaB8p2P9kAutKlDuCrKOsK6WVo=;
+	s=korg; t=1795025740;
+	bh=j58CIgQhw6kfxh2qOaozb4OZJgPuEqn5+M7zBEjfXMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rp7sByjtLB7Vay25Eis6GUbqY27zLuOI0xlqThaB2i0ZqwCgcDS0I79A7+YFusaZa
-	 km7BMD5TymuCdcmVvLT7PzHeFiEkrkj6kg19uWtylPlx120L7tY0FMvcslWT4dl0io
-	 +uMhMDqSZCZgiWzUz6g1OkJ+9/pwdouo5XBlsh+E=
+	b=lPdNGHRA06B9H5iy2W/dqhMRd2glzF77ETYiZAoyU0POjbCsbuUv2vQdcg9osXyUb
+	 y/qHC0KoV68Fsd67luQWW0mjjNtLpdYfI0CbJttzRZXGbIoCaxeXRfG2OrzGFuqWYv
+	 C9iZjQGBP+uuWS2VycReu7nX+PlbfWh4O9mHu8sE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Michael Petlan <mpetlan@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1184/2151] ALSA: caiaq: Allow zero-length packet handling for EP1
-Date: Wed, 18 Nov 2026 15:48:39 +0100
-Message-ID: <20261118150205.308198123@linuxfoundation.org>
+Subject: [PATCH 6.18 1185/2151] perf test attr: Propagate the return value from the test to the wrapper
+Date: Wed, 18 Nov 2026 15:48:40 +0100
+Message-ID: <20261118150205.362801532@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -67,49 +69,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Michael Petlan <mpetlan@redhat.com>
 
-[ Upstream commit ccfe6ab672c020fca56988e634088bfb7764e2a7 ]
+[ Upstream commit f8596112cbad0072cdc957c0ea06695afda246dc ]
 
-The recent fix to avoid OOB access for malformed packets added a
-packet length check and returns immediately if it's too short.
-However, this can be lead to a regression because the completion
-handler doesn't resubmit the packet, while a zero-length packet itself
-is valid, per se.
+Currently it does not matter what the python script actually returns,
+the test always passes, as the $err variable is always 0.
 
-For addressing the potential regression above, change the handling for
-a zero-length packet to just resubmit without processing the incoming
-contents.
+Fix that.
 
-Fixes: aba30af07d4f ("ALSA: usb-audio: caiaq: validate EP1 reply lengths")
-Link: https://patch.msgid.link/20261006134405.479603-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 8519e4f44c2af722 ("perf test: Add a shell wrapper for "Setup struct perf_event_attr"")
+Signed-off-by: Michael Petlan <mpetlan@redhat.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/caiaq/device.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/perf/tests/shell/attr.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/usb/caiaq/device.c b/sound/usb/caiaq/device.c
-index e8619bb743581..993858d18b680 100644
---- a/sound/usb/caiaq/device.c
-+++ b/sound/usb/caiaq/device.c
-@@ -142,7 +142,7 @@ static void usb_ep1_command_reply_dispatch (struct urb* urb)
- 		return;
- 	}
- 	if (urb->actual_length < 1)
--		return;
-+		goto resubmit;
- 
- 	payload_len = urb->actual_length - 1;
- 
-@@ -192,6 +192,7 @@ static void usb_ep1_command_reply_dispatch (struct urb* urb)
- 		break;
- 	}
- 
-+ resubmit:
- 	cdev->ep1_in_urb->actual_length = 0;
- 	ret = usb_submit_urb(cdev->ep1_in_urb, GFP_ATOMIC);
- 	if (ret < 0)
+diff --git a/tools/perf/tests/shell/attr.sh b/tools/perf/tests/shell/attr.sh
+index 5a4e43b2471de..307e1535795a3 100755
+--- a/tools/perf/tests/shell/attr.sh
++++ b/tools/perf/tests/shell/attr.sh
+@@ -18,5 +18,6 @@ trap trap_cleanup EXIT TERM INT
+ shelldir=$(dirname "$0")
+ perf_path=$(which perf)
+ python "${shelldir}"/lib/attr.py -d "${shelldir}"/attr -v -p "$perf_path"
++err=$?
+ cleanup
+ exit $err
 -- 
 2.53.0
 
