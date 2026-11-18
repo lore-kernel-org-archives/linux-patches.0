@@ -1,53 +1,64 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038298;
-	b=4OVYyH/+F2BGWqZLVITj2N6a4zQHcuOP2j/MMtxah751LzhineKmvpEHj/gtaW+3cfyQ
-	 DClDyBaeGbAqqA6+mEUW82xhJmrCkI96PgwMCyqYzjZVBwZbeTcp4uLEL3c7QZdnV0BEG
-	 TsNOPsKpX0RsQH6QdZAD8Zvvv2UMnnUWofa6Ufu4J7DSgWzsg8y45J+syF2Nyp2EMmYnS
-	 Keqk4UCvdrFCozD51NuQvdqvbfZp8B4NhZ99NQARP2hHtD/7+FW+Kk4JOvSC0j/jVxD9s
-	 JBaqEPTPSO4Tppk1bQCLNtV1VnbTa2OlU26mBC7qdfa++mcABgkD35wgk7xPPSjP1Pw==
+	t=1795038301;
+	b=StUvHORe/V16vD6OkVhd3clD20SaIvRdAD9hJFs9GISVGWd+xEjh7AOsZFZnTTX6lrWy
+	 bLLe0r49JdrWasI8Z/6oB9IHT6oSX2xIs+OTe5FIdRjOrs900FoQDcLi9WE915vOLT4wE
+	 Tz4z2ne63BoBduFaifK9scVKp4LlyQY6Ctja9KKXoz88oSE2F6ByxIzrdb7EYFb5Bnz9j
+	 N0huIk4WbD2hYmVFKcN0qkgUMrJ77aofOsRWUF+UX7M03Q0C36eZiupcMRT+s/aTNl5YN
+	 iomR8ujgxGRmzNVgYPtankeIFkIube6megELVFMbExgz6QcfXnLhA1JWHE+oE1cCbVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038298;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038301;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SE0az6RSoGbYtqUOjpIEdzydrijNTxjv+7U6AM0zFvg=;
-	b=3r3xNxjjq3VERqNZZ/iJDEmOYnFMVQjqljkefQ79PYZMR2dT1ldndNDVEP3rW+qn+Wvn
-	 mD2btsB6xruAcEBZsBTuH6Z5unpkYpeS5sJKcMZ+2iqc/NN2p1/duTM5wpaFQv/iZzDGw
-	 s3luaN5gEAAo+sOiTol1TfALBM09KIdzMP6Csoi8n9jBqaiUU2UzzdGuxcxqsG+W+eH26
-	 DcRyy0IHkjIIKMf1eSQ1ZIL38yafJTRGrQwng0mtugbovoRUgxRQs7VU6I+6wiaZfmRy7
-	 N5AWCpksdw3OktacvS9M5V4XI4bk8lByzBMDXjKkTtnoHu3/xLYNj4gohuecHMqI+7A==
+	bh=ISKmvrvPxEcCCwRCCvmWN+SSB5OFz3gObjGno/DGn9U=;
+	b=arwhSRtAcG4bhFMLhHUU84tah7E/kGv0T7O0q9STYA61ETBZgLPvL3NspPzUEkDu9PX8
+	 5ErH6PHZR8AP6ee3Q+MbHTNNo3l5baTt4L90pwHc+hl7aFCoACaYNeYiVozZTLHJiLYu5
+	 viY/Vgc0QT/gnJoavcozQOf7SeHpaGw8lAJTe+HKZJjzoZNEt2KVUjlGF9JeaCfeLbYsX
+	 zoVE+u0KBfj+3h2nzt2o8TLHXw0snqZ+kRLG9KFJIFmmG2M8MZNKMlwRruzFKo+aTkDdQ
+	 RyMpsCoV9/C2njLnumnDMcFBx+ntYslH5TzZA0qUrsegi9qJNiTYSgICKgYDIVl6z9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=01+y9TBd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vAtQjaEN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FCBD606A32F;
-	Wed, 18 Nov 2026 21:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D0D606A32A;
+	Wed, 18 Nov 2026 21:45:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=01+y9TBd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0ED61F000C4;
-	Wed, 18 Nov 2026 21:44:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vAtQjaEN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 779251F000C4;
+	Wed, 18 Nov 2026 21:45:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038298;
-	bh=SE0az6RSoGbYtqUOjpIEdzydrijNTxjv+7U6AM0zFvg=;
+	s=korg; t=1795038301;
+	bh=ISKmvrvPxEcCCwRCCvmWN+SSB5OFz3gObjGno/DGn9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=01+y9TBdwPW/MrAm6lJgJqUgHxyStKaw9UgtDFzvnndOGhxh/eK7K927knXMwpyFK
-	 ZlZsuv91NaqKD7IxVOZTicKYDctEa5KedFT4zx66PIZPrncVxUpyg0qyrLNKfRKbeO
-	 Iz0aCDS8tN74AJBgvmad/+K7ptNLaIKxIGQdRidk=
+	b=vAtQjaENDvIR8wBV/iKt/Ic620ZCKlRggA/UkEHwm6SNxVG0EE+ykuqZJbtdPPNmt
+	 Iz8S1pDPrSA3AIarBsxpYsXk5dIvJJA2kuuNqVhoWp24dlCtnqMuPmdXhPQusSbPgc
+	 q2DPjs+hM/sQfr7BiOELxAT9JWTDzDqcefMKq1bw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vaibhav Nagare <vnagare@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Samarth Narang <samarth.colleges@gmail.com>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Zi Yan <ziy@nvidia.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	SJ Park <sj@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Minchan Kim <minchan@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1653/3318] bnxt_en: dont leave an XDP program installed when the open fails
-Date: Wed, 18 Nov 2026 15:37:55 +0100
-Message-ID: <20261118150411.357120027@linuxfoundation.org>
+Subject: [PATCH 6.6 1654/3318] mm/madvise: atomically clear the young bit on THP MADV_COLD
+Date: Wed, 18 Nov 2026 15:37:56 +0100
+Message-ID: <20261118150411.387266621@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,117 +80,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vaibhav Nagare <vnagare@redhat.com>
+From: Pedro Falcato <pfalcato@suse.de>
 
-[ Upstream commit 78731b46967e3e7102b5cd5062bef185f3404b5c ]
+[ Upstream commit 246c8cc33438a71c28f9b86baa492d9a0a130316 ]
 
-bnxt_xdp_set() stores the new program and drops the reference on the old
-one before reopening the NIC.  If bnxt_open_nic() then fails, ndo_bpf()
-returns an error with the new program still in bp->xdp_prog.  The caller
-treats the error as "nothing was installed" and drops its own reference,
-so bp->xdp_prog is left pointing at a freed program and the next XDP
-update dereferences it:
+As-is, madvise_cold_or_pageout_pte_range() discards the hardware young bit
+by invalidating the PMD, doing pmd_mkold() and subsequently writing to the
+pmd again.  However, it does so in a racy manner, looking at a
+possibly-stale snapshot.  It's entirely possible that a write elsewhere
+set the hardware D bit, which this logic now loses.
 
-  BUG: unable to handle page fault for address: ff78ecc80ddd1038
-  RIP: 0010:__bpf_prog_put+0x5/0x80
-  Call Trace:
-   bnxt_xdp_set+0xad/0x1b0 [bnxt_en]
-   dev_xdp_propagate+0x36/0xa0
-   bond_xdp_set+0xeb/0x2d0 [bonding]
-   dev_xdp_install+0x1b1/0x350
-   bpf_xdp_link_update+0xc5/0x1b0
-   link_update+0x104/0x1e0
-   __sys_bpf+0x662/0xcf0
+Fix it by using pmdp_test_and_clear_young().  This is an atomic
+modification of the PMD entry, and thus safe against any possible racing
+writes.  As a (nice) side-effect, this elides one non-required TLB flush
+in pmdp_invalidate().
 
-Seen on a 6.12 based kernel after bnxt_alloc_mem() failed an order-4
-allocation on a fragmented host:
+This bug can interact with the swapping system in complicated ways,
+leading to data loss.  For instance, if a folio is marked lazyfree, but
+was later read from, and then MADV_COLD'd while racing a write to that
+same THP, dropping the dirty bit may lead to data loss as
+reclaim/MADV_PAGEOUT drops the "clean" anon folio:
 
-  bnxt_en 0000:a0:00.1 ens4f1np1: nic open fail (rc: fffffff4)
-  bond1: (slave ens4f1np1): Error -12 calling ndo_bpf
+T0                                T1
+================================================================
+MADV_FREE(thp)			|
+  folio marked lazyfree		|
+read(thp)			|
+  PMD marked young by hardware	|
+				| MADV_COLD(thp)
+write(thp)			|   if (pmd_young(pmd)) {
+  PMD marked dirty by hardware	|     set(pmdp, pmd_mkold(pmd));
+MADV_PAGEOUT/reclaim		|
+  dirty bit may or may not be   |
+  set				|
+    reclaim/pageout may drop    |
+    the folio			|
 
-Bonding is not required to hit this; a plain XDP attach on a bnxt
-interface takes the same path.
-
-Restore the previous program when an attach or a replace fails, and
-recompute the page-mode and XDP TX ring configuration from it.  The
-configuration matters because bnxt_init_one_rx_ring() only assigns
-rxr->xdp_prog in page mode, and __bnxt_set_rx_skb_mode() derives
-dev->max_mtu from the installed program.  Release the old program only
-once the change has been committed.
-
-A detach is not undone.  dev_xdp_detach_link() clears the core's record
-of the program even when the driver returns an error, so putting the
-program back would leave the driver running a program the core has
-already dropped.  If the reopen fails during a detach, bnxt_xdp_set()
-therefore returns 0 with the device closed; bnxt_open_nic() has already
-logged the failure.
-
-Found in a crash dump; the change was not tested on hardware.
-
-Fixes: c6d30e8391b8 ("bnxt_en: Add basic XDP support.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Vaibhav Nagare <vnagare@redhat.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261012072802.2153706-1-vnagare@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ sashal: replaced bnxt_xdp_apply_cfg() with an apply_cfg label inside bnxt_xdp_set() to reuse configuration without adding a function. ]
+Link: https://lore.kernel.org/20261013191719.95502-1-pfalcato@suse.de
+Fixes: 9c276cc65a58 ("mm: introduce MADV_COLD")
+Signed-off-by: Pedro Falcato <pfalcato@suse.de>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Samarth Narang <samarth.colleges@gmail.com>
+Closes: https://lore.kernel.org/linux-mm/20261011132227.413217-1-samarth.colleges@gmail.com/
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: SJ Park <sj@kernel.org>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: <stable@vger.kernel.org>
+[ sashal: Retained pmd_young(orig_pmd) without the !pageout guard because the corresponding reclaim optimization is absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c | 25 +++++++++++++++----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+ mm/madvise.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-index fc47d45805b75..85a9ffcc4fe06 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-@@ -388,6 +388,7 @@ static int bnxt_xdp_set(struct bnxt *bp, struct bpf_prog *prog)
- 	struct net_device *dev = bp->dev;
- 	int tx_xdp = 0, rc, tc;
- 	struct bpf_prog *old;
-+	int old_tx_xdp;
+diff --git a/mm/madvise.c b/mm/madvise.c
+index 209d0cc950139..e29bd73de12ae 100644
+--- a/mm/madvise.c
++++ b/mm/madvise.c
+@@ -404,10 +404,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
+ 		}
  
- 	if (prog && !prog->aux->xdp_has_frags &&
- 	    bp->dev->mtu > BNXT_MAX_PAGE_MODE_MTU) {
-@@ -414,11 +415,12 @@ static int bnxt_xdp_set(struct bnxt *bp, struct bpf_prog *prog)
- 	if (netif_running(dev))
- 		bnxt_close_nic(bp, true, false);
+ 		if (pmd_young(orig_pmd)) {
+-			pmdp_invalidate(vma, addr, pmd);
+-			orig_pmd = pmd_mkold(orig_pmd);
+-
+-			set_pmd_at(mm, addr, pmd, orig_pmd);
++			pmdp_test_and_clear_young(vma, addr, pmd);
+ 			tlb_remove_pmd_tlb_entry(tlb, pmd, addr);
+ 		}
  
-+	old_tx_xdp = bp->tx_nr_rings_xdp;
- 	old = xchg(&bp->xdp_prog, prog);
--	if (old)
--		bpf_prog_put(old);
- 
--	if (prog) {
-+apply_cfg:
-+	tc = netdev_get_num_tc(dev) ? : 1;
-+	if (bp->xdp_prog) {
- 		bnxt_set_rx_skb_mode(bp, true);
- 		xdp_features_set_redirect_target(dev, true);
- 	} else {
-@@ -431,8 +433,21 @@ static int bnxt_xdp_set(struct bnxt *bp, struct bpf_prog *prog)
- 	bnxt_set_tpa_flags(bp);
- 	bnxt_set_ring_params(bp);
- 
--	if (netif_running(dev))
--		return bnxt_open_nic(bp, true, false);
-+	if (rc)
-+		return rc;
-+
-+	if (netif_running(dev)) {
-+		rc = bnxt_open_nic(bp, true, false);
-+		/* a detach cannot be undone, only an attach */
-+		if (rc && prog) {
-+			WRITE_ONCE(bp->xdp_prog, old);
-+			tx_xdp = old_tx_xdp;
-+			goto apply_cfg;
-+		}
-+	}
-+
-+	if (old)
-+		bpf_prog_put(old);
- 
- 	return 0;
- }
 -- 
 2.53.0
 
