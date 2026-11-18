@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031228;
-	b=RhhB9iUPLjQw91K4+z2Rd5XMY3fVxBgt8Wd9VtyxmDDgQUmabtduZpBu2PgqAEHcbnVK
-	 C2AlYGOPLysqyKpixpTYDKcXnwmP/qaCgYQKLpM2AfvuaKON+0bEKdQ414JXL75MSSZzw
-	 Of0mfzCivCmv6fBKtpy26jHZUiFb7w8dAZSazqKHo1qSLSObiEgSu+lUgehBSAWaCLrDZ
-	 xx7mcGGN7YgUsBbMvEu/gornT5dZuTaYOg1yvy+THhZl2daJTaMUWArwigVI09adKtXFc
-	 vNcxnFAMGjvaKuk3Si88KX4W6J9mkmvA36dr0EOwCtnhd5rKUggRwmISu3iHiKY+4YQ==
+	t=1795031231;
+	b=wKC3Kwpstz+DE6/QH1R2H6OEwEDJX0m+uZ8dlNFj4pV0bDbklOsqGZI4lj5lnoeqL1Ho
+	 dfLF61v3eaqh5tkwFMmGCp9sXq/pE7NnRE2XKj9+PaiybeQNJniFf6Z0bebPJwydp+v2u
+	 sDcqpSVdsai+74PoKOelIn7eDGQ/kxG983XP0IHR2O30+cmAEXWOMDf2bNln2hT0Ey/7l
+	 dyXhsKjYP5JMTt7uwBEHWdEHRmx7hKjk6GEMt+rsOdQEkmqp+frULY1rqXUB/hsJuwQf+
+	 TBjCjprTa9URa66zfuHofNr1YBLRl8VuJPTCZhNr+tr1KLcbC5xcKO5XC1QxBa/L1eQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031228;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031231;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4Q47AWZQE1NqgJXokIzwbGKKuyHnA3pxHyRUEz8zGuI=;
-	b=bDjcDAPPxGKK/3DEJYrfcazl0rQ1DElskJetvlNM6mL9AaXnJ7esWFpZ/c27hiYtzVex
-	 ce8I1jWw7LJ32iBwP2y4zP7BG1r+9ZxZPdHCIT6ygzqQDVd15aYsusvlc26QkQ5vYBPIk
-	 ttKbmvIhoMFrKwKb24qsE6pHVcJzMaz1tlu2U3GKNZtf4SOuRJR/BWwiBEFDFk5rCqcbI
-	 pUR2FVn4qm+eSCR3R41HdvrLwc4OYHkz2fV15R5xrTOIKXZILCgqcgzXN2ZE+QdWS+Q2N
-	 xRKqOg6N4oum2p3i73dohaq0Loh3aP8838mtZylaxCePj1I5ppTS7zEf+uzQ7yXBG2g==
+	bh=V661mfTrWGKZ2Qesb1bpmJ06evJlWAOBnihIy9ucw+M=;
+	b=NSMO3qj9Bo5UJgb4Zj7pjoWZDt6Lzb9InpdecRERiXlM01AH3INq7gi5Gyxgvg3L2+ta
+	 hdnjRQl5PNOnLRrJBWcgHFXqTWtp+k85diP/xFaO0iPu22MgGbfUE/CrJyL0Kxekr2Tpt
+	 naQG2T905md0Vt5cv9+tnz3X2lexOonQ7oHOulF8qj3UjMp903YU/IZwMIKWCT6mmK9uw
+	 AZErYVomGoE1UjJ233RxS4Blz9KkgvMaaUs2ML0k68VAcSeAMs/d59IdcP+tjpRoFZY/u
+	 L73rQumJ9nKcUkKnS8BIiVtR0HJ+FR5nEDlstOxfB2eIKz5hbmdsBpIC8ytwFG/JUGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E+uJYt1p;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xMpRXWje;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EFF2606A31C;
-	Wed, 18 Nov 2026 19:47:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F3E606A320;
+	Wed, 18 Nov 2026 19:47:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E+uJYt1p
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E560E1F000C4;
-	Wed, 18 Nov 2026 19:47:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xMpRXWje
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A646B1F000C4;
+	Wed, 18 Nov 2026 19:47:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031228;
-	bh=4Q47AWZQE1NqgJXokIzwbGKKuyHnA3pxHyRUEz8zGuI=;
+	s=korg; t=1795031231;
+	bh=V661mfTrWGKZ2Qesb1bpmJ06evJlWAOBnihIy9ucw+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E+uJYt1perW0bxRFR+0UuoRsJMFFQn3bTEfafvDA8q289cQ/Cn8KPaiXRAC3v6gEP
-	 p6N6CQVgaWB1tW3qqdpS1bFeROZpwytM/09uJQOvf66fliQBUh2Osub1NMDjSwZhFX
-	 b4T/WyAsVtBiAzge3Jh6gzapvlYQe2ldqeL/vn/E=
+	b=xMpRXWjepjKTZen9Pt/HNJNb9QYCB5qNQ+8N+/T5TMFQ7QtuJHfHB3XRFeCOWDAmY
+	 2oGiE0oudoGe5lhUGfQr1SdtSz4pFWZoaG4BTrMcD7tEj39KPzTXp4YiYRjzT8x47U
+	 bXDQaFnol6KO+YXFtLjCBzb68oWHfQN/QZpcj/Sw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Melissa Wen <mwen@igalia.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Jiale Yao <yaojiale02@163.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0985/1756] drm/amd/display: copy function name into dcn_optc_lock_unlock_state trace event
-Date: Wed, 18 Nov 2026 15:51:52 +0100
-Message-ID: <20261118150049.391816289@linuxfoundation.org>
+Subject: [PATCH 6.12 0968/1756] wifi: mt76: mt7615: usb: fix source overread in mt7663u_copy
+Date: Wed, 18 Nov 2026 15:51:35 +0100
+Message-ID: <20261118150048.668962660@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,57 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Melissa Wen <mwen@igalia.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 624a5a158c2a49f07edba7f8653eeecca114921f ]
+[ Upstream commit 0c2fcb5225361f71905697ef9db287b24bcc67cf ]
 
-Userspace trace tools that use libtraceevent to read binary buffer only
-see a kernel address when printing const char *. Use string macros in
-dcn_optc_lock_unlock_state to copy the function name into the trace
-event.
+mt7663u_copy() rounds up len to a multiple of four and uses the rounded
+length as the bound for memcpy() from the source buffer. When the
+caller's length is not four-byte aligned, the final copy reads up to
+three bytes past the source buffer.
 
-Fixes: f1943a51f0f9 ("drm/amd/display: Add events log to trace OPTC lock and unlock")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Melissa Wen <mwen@igalia.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Reviewed-by: Roman Li <roman.li@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Keep the original length for the source copy and zero the remaining
+bytes in the transmit buffer so that the hardware access width remains
+four-byte aligned.
+
+Fixes: 6cb596ba84e3 ("mt76: usb: introduce __mt76u_init utility routine")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Link: https://patch.msgid.link/20260925150556.2304003-3-yaojiale02@163.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7615/usb.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
-index 8043c4ac31d5b..113b04678dd37 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
-@@ -664,7 +664,7 @@ TRACE_EVENT(dcn_optc_lock_unlock_state,
- 	    TP_ARGS(optc_state, instance, lock, function, line),
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/usb.c b/drivers/net/wireless/mediatek/mt76/mt7615/usb.c
+index 4aa9fa1c4a23b..6452acfcd57e3 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7615/usb.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7615/usb.c
+@@ -58,15 +58,22 @@ static void mt7663u_copy(struct mt76_dev *dev, u32 offset,
+ 			 const void *data, int len)
+ {
+ 	struct mt76_usb *usb = &dev->usb;
+-	int ret, i = 0, batch_len;
+ 	const u8 *val = data;
++	int len_aligned;
++	int batch_len;
++	int copy_len;
++	int ret;
++	int i = 0;
  
- 	    TP_STRUCT__entry(
--			     __field(const char *, function)
-+			     __string(function, function)
- 			     __field(int, instance)
- 			     __field(bool, lock)
- 			     __field(int, line)
-@@ -682,7 +682,7 @@ TRACE_EVENT(dcn_optc_lock_unlock_state,
- 			     __field(int, vready_offset)
- 	    ),
- 	    TP_fast_assign(
--			   __entry->function = function;
-+			   __assign_str(function);
- 			   __entry->instance = instance;
- 			   __entry->lock = lock;
- 			   __entry->line = line;
-@@ -704,7 +704,7 @@ TRACE_EVENT(dcn_optc_lock_unlock_state,
- 		      "min_v_blank_interlace=%d vstartup_start=%d vupdate_offset=%d vupdate_width=%d "
- 		      "vready_offset=%d",
- 		      __entry->lock ? "Lock" : "Unlock",
--		      __entry->function,
-+		      __get_str(function),
- 		      __entry->line,
- 		      __entry->instance,
- 		      __entry->opp_count,
+-	len = round_up(len, 4);
++	len_aligned = round_up(len, 4);
+ 
+ 	mutex_lock(&usb->usb_ctrl_mtx);
+-	while (i < len) {
+-		batch_len = min_t(int, usb->data_len, len - i);
+-		memcpy(usb->data, val + i, batch_len);
++	while (i < len_aligned) {
++		batch_len = min_t(int, usb->data_len, len_aligned - i);
++		copy_len = min_t(int, batch_len, len - i);
++		memcpy(usb->data, val + i, copy_len);
++		if (copy_len < batch_len)
++			memset(usb->data + copy_len, 0, batch_len - copy_len);
+ 		ret = __mt76u_vendor_request(dev, MT_VEND_WRITE_EXT,
+ 					     USB_DIR_OUT | USB_TYPE_VENDOR,
+ 					     (offset + i) >> 16, offset + i,
 -- 
 2.53.0
 
