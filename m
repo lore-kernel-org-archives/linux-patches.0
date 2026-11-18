@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052535;
-	b=0OsCei49LQOFsECsQQ0ATxdTM3h2iTR0CvGeg5in64BVF9dzvtDxaXahw2gpL4v+XPiQ
-	 FN+rvankHNQSylhfMeX+n4CqzBlUGftUev8/1VhmjiN7wc5o4ZfxaslEaNUb4zPK4j9/E
-	 0ozZZ6pG7ifMENDBTbRZzGQFnrP3GFR9qTM+Ue+DGoIhuq0gvaeMO/d/cj+co5U9APHui
-	 koCnG8SXmykXLWC2uidA8gsPqbQ8tVBWF+5dVrkfPUtyd4xBq8olQnvHfjIPXUKtL4AGZ
-	 LMpwY9FZ1XNSwTWpt2q8l2JmxN67Gir7mteNvaRENa/5UX6QU9w+SniDHeM8t5Ga14w==
+	t=1795052538;
+	b=IT8Wr5GPA5S9RCoVTo5tTdbspSjip+oLMGfS02sdbCW3aOJzFrc4CHzvuY+wAvGfM7hl
+	 9VZs93yligKbY+v4zB7y2RN5uGPWxM5PXAGFPWVfN2wCKl56n2Fm76URH+0IbA9z4sJDl
+	 P1ETtY1Tn7md8TCC2kSBsvDeH0dq4f1o2p916SeBsIxWedaV3CS9QcIYqQupZENZgNymv
+	 /YCuXZ2ZPwXTJwKVAGqNlJRuY+GUTVd5nFG/lKoEgAJjp3xjaKJi0lexH1WLEZ2Ukr1ZU
+	 1t7uYHmpOjevoug12VRL7C7mCwujJHw5mG7WrifR2mnmP5kEC4exyjAiXg8L2i9Pfpg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052535;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052538;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UF40vbKmFeR4V9U8TfquHmI4qg4GjbIYNSsE4J/WRGY=;
-	b=N3B/LR6CVFH34lU+gLsVtfEvUj5Wz+CDw8d9tGUEKuHp06XADk4nYW8F25H8UTNAvwvg
-	 dqwUd2eKaKt+9ub+968aa+12rurIArdRs+hDgBSginYYLaD2h4KXBKR8Gu0Tghg8i0fVY
-	 dJ2T4ckNTOeXLnIzwJxv8JsNb8Mlime2me9UKCM13KidtS2I0MMCWBuG5HFxbO4/5sRhJ
-	 lGFlSaDwWZ9oOrf5Pne2Op9QjYILj34CgbzPRZ2LCgKLvF2QRkC7MVDC85e6vvt4cOXCR
-	 eDtTBLr2aNEzNNav8uWm4JkyPJnxN16z6f/tIb6kRTaddWrSTBlGCy7RDgyz0Krgqkw==
+	bh=uSaET3QPuyWOvruSMLrz1YicJNWaaXqVrw+thPwTm38=;
+	b=pimo5Y8EiZ772DmlnZ66uV11xUg4362PA7lB5hqocxPmA+/zpjRg96HwMYXHEeelIiao
+	 XKkb4BNH+ngUSO72UCBi7F37QgxQuQqO7EO5Pq6FoEGvgxOzBq9MFa/eEwoI/RX2bcvXz
+	 Bc9tOPhYnEccOU+KeMFk+XL2C8Ak7YmWQPCWjgmrTDVyaWnpQolkmt9sHljFYaAiGTwUP
+	 2J+1HeYpMFrgYrTq/g3+ufES4YfKcxYwFV/Bty8cSq2o8TeQpj8qM3NWmK3FzYYBWqSXa
+	 QDqX8sidYQLFwJWRm8gy5paANeIoahDxJmIeHEzry932M8wCMjHcUzJUuENqWIlHhpg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="2D2g/fSF";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pnrvvNxz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8114606A331;
-	Thu, 19 Nov 2026 01:42:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B00C606A31C;
+	Thu, 19 Nov 2026 01:42:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2D2g/fSF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02AF41F000C4;
-	Thu, 19 Nov 2026 01:42:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pnrvvNxz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B42531F000C4;
+	Thu, 19 Nov 2026 01:42:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052535;
-	bh=UF40vbKmFeR4V9U8TfquHmI4qg4GjbIYNSsE4J/WRGY=;
+	s=korg; t=1795052538;
+	bh=uSaET3QPuyWOvruSMLrz1YicJNWaaXqVrw+thPwTm38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2D2g/fSFV9jSYA24GXQMLTsb59VGtT7X5GDjA0LYVLTbiSE9VlFnQf+jFqBSQlg47
-	 5r0rbDMuLVyGs9vER5lRwJ0S+9BlZvaHtrIrB8X9hFI4vxk3fCir0RdEV6VthonD5C
-	 F24jRReuifbB8g3yBdho/dD4ayS9U3zBzMtChSD8=
+	b=pnrvvNxzU37x/M2AVTtslCyk/onlfgSLmKf4fFSKXzWmpDA18GmrJZiXdtgube8IF
+	 DKbxfsh4ZltEVw16yzAzdb5Uz6z6pyv14Y+mKMfYBS9WW2IlfIsKy2Ue0Zj2VtfJTk
+	 ulG+rf5FVsNQLyYbDwXO0F3Fpm7AnphNta+Ogo5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Goergens <matthias.goergens@gmail.com>,
+	stable@kernel.org,
+	syzbot+4b03894b6ec5753ddf24@syzkaller.appspotmail.com,
+	Hemanth Selam <hemanth.selam@gmail.com>,
 	Jan Kara <jack@suse.cz>,
+	Jun Nie <jun.nie@linaro.org>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0598/2214] fanotify: report names longer than NAME_MAX
-Date: Wed, 18 Nov 2026 15:37:54 +0100
-Message-ID: <20261118150034.892275513@linuxfoundation.org>
+Subject: [PATCH 5.15 0599/2214] ext4: skip extra isize expansion while unmounting
+Date: Wed, 18 Nov 2026 15:37:55 +0100
+Message-ID: <20261118150034.922416037@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,129 +72,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Goergens <matthias.goergens@gmail.com>
+From: Hemanth Selam <hemanth.selam@gmail.com>
 
-[ Upstream commit ff05910cb1b77c2b229c5e6e260c6173a17b579b ]
+[ Upstream commit 418adcde99032194416248168df810535a1a93f9 ]
 
-fanotify keeps the length of a reported name in a u8, so it drops any
-name longer than NAME_MAX and warns:
+syzbot reports a WARN from ext4_xattr_inode_create() reached through the
+unmount path:
 
-  WARNING: fs/notify/fanotify/fanotify.h:217 at fanotify_handle_event+0x2e82/0x39f0
+  EXT4-fs warning (device loop0): ext4_xattr_inode_create:1485: refuse to
+  create EA inode when umounting
+  WARNING: fs/ext4/xattr.c:1486 at ext4_xattr_inode_lookup_create
+   ext4_xattr_block_set
+   ext4_expand_extra_isize_ea
+   __ext4_expand_extra_isize
+   __ext4_mark_inode_dirty
+   ext4_dirty_inode
+   __mark_inode_dirty
+   sync_lazytime
+   iput
+   dentry_kill
+   shrink_dentry_list
+   shrink_dcache_for_umount
+   generic_shutdown_super
+   kill_block_super
+   ext4_kill_sb
 
-Such names are legitimate on some filesystems.  vfat mounted with utf8
-takes up to 255 UTF-16 characters, which are up to 765 bytes of UTF-8,
-and FUSE accepts names up to PATH_MAX - 1.  readdir() and inotify report
-them in full.  fanotify sends the event without the name, and for
-FAN_RENAME it trips a second warning in copy_fid_info_to_user(), after
-which read() fails with EFAULT and the event is lost.
+shrink_dcache_for_umount() clears s_root before generic_shutdown_super()
+clears SB_ACTIVE, so during the dcache shrink the last iput() of a
+lazytime inode still redirties it and reaches the isize expansion.  The
+expansion can move xattrs out to a block, and creating the EA inode for
+them needs s_root, which ext4_xattr_inode_create() refuses without.
 
-When syzbot hit this, Jan suggested accommodating names up to PATH_MAX
-[1], the limit readdir() already applies to a name
-(verify_dirent_name()).  Store the name lengths as u16, which keeps
-struct fanotify_info at 8 bytes, and drop without a warning only names
-of PATH_MAX bytes or more, which no path can refer to.  An event with
-such a name can exceed a page, so allocate name events with kvmalloc(),
-as Jan also suggested.  Names up to NAME_MAX are reported exactly as
-before, and the record format is unchanged: an event with a long name is
-just longer.
+ext4_try_to_expand_extra_isize() already declines to expand when the
+superblock is not active, but that test does not cover this window.
+Decline while s_root is gone as well.  The expansion is best effort and
+__ext4_mark_inode_dirty() ignores its return value, so nothing else
+changes; the inode can be expanded on a later mount.
 
-Link: https://lore.kernel.org/all/20241112115059.ecvomkalee5m4i4i@quack3/ [1]
-Fixes: 2d9374f09513 ("fanotify: use macros to get the offset to fanotify_info buffer")
-Cc: stable@vger.kernel.org
-Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
-Link: https://patch.msgid.link/20260926020851.2938961-1-matthias.goergens@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Running the syzbot reproducer for 60 seconds produced 3583 splats before
+this change and none after it, with the same number of mount cycles.
+
+Cc: stable@kernel.org
+Reported-by: syzbot+4b03894b6ec5753ddf24@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=4b03894b6ec5753ddf24
+Fixes: f31173c19901 ("ext4: refuse to create ea block when umounted")
+Signed-off-by: Hemanth Selam <hemanth.selam@gmail.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Jun Nie <jun.nie@linaro.org>
+Link: https://patch.msgid.link/20260824094512.2436628-1-hemanth.selam@gmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/fanotify/fanotify.c |  7 +++++--
- fs/notify/fanotify/fanotify.h | 21 ++++++++++++---------
- 2 files changed, 17 insertions(+), 11 deletions(-)
+ fs/ext4/inode.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
-index a2a15bc4df280..1fafdcf6592c7 100644
---- a/fs/notify/fanotify/fanotify.c
-+++ b/fs/notify/fanotify/fanotify.c
-@@ -610,6 +610,9 @@ static struct fanotify_event *fanotify_alloc_name_event(struct inode *dir,
- 	unsigned long name2_len = name2 ? name2->len : 0;
- 	unsigned int len, size;
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index f1e83f321b78e..d277c118af5bd 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -5954,8 +5954,14 @@ static int ext4_try_to_expand_extra_isize(struct inode *inode,
+ 	 * When !SB_ACTIVE, iput triggers write_inode_now() which acquires
+ 	 * s_writepages_rwsem, causing a deadlock with the caller's active
+ 	 * jbd2 handle (lock order: s_writepages_rwsem -> jbd2_handle).
++	 *
++	 * Skip it while unmounting as well.  shrink_dcache_for_umount()
++	 * clears s_root before generic_shutdown_super() clears SB_ACTIVE, and
++	 * the last iput() of a lazytime inode in that window redirties it and
++	 * lands here.  Moving xattrs out to a block then needs a new EA inode,
++	 * which ext4_xattr_inode_create() refuses without s_root.
+ 	 */
+-	if (unlikely(!(inode->i_sb->s_flags & SB_ACTIVE)))
++	if (unlikely(!(inode->i_sb->s_flags & SB_ACTIVE) || !inode->i_sb->s_root))
+ 		return -EBUSY;
  
-+	if (WARN_ON_ONCE(name_len >= PATH_MAX || name2_len >= PATH_MAX))
-+		return NULL;
-+
- 	/* Reserve terminating null byte even for empty name */
- 	size = sizeof(*fne) + name_len + name2_len + 2;
- 	if (dir_fh_len)
-@@ -618,7 +621,7 @@ static struct fanotify_event *fanotify_alloc_name_event(struct inode *dir,
- 		size += FANOTIFY_FH_HDR_LEN + dir2_fh_len;
- 	if (child_fh_len)
- 		size += FANOTIFY_FH_HDR_LEN + child_fh_len;
--	fne = kmalloc(size, gfp);
-+	fne = kvmalloc(size, gfp);
- 	if (!fne)
- 		return NULL;
- 
-@@ -1013,7 +1016,7 @@ static void fanotify_free_fid_event(struct fanotify_event *event)
- 
- static void fanotify_free_name_event(struct fanotify_event *event)
- {
--	kfree(FANOTIFY_NE(event));
-+	kvfree(FANOTIFY_NE(event));
- }
- 
- static void fanotify_free_error_event(struct fsnotify_group *group,
-diff --git a/fs/notify/fanotify/fanotify.h b/fs/notify/fanotify/fanotify.h
-index 57f51a9a3015d..04263c5bbb8e8 100644
---- a/fs/notify/fanotify/fanotify.h
-+++ b/fs/notify/fanotify/fanotify.h
-@@ -42,9 +42,16 @@ struct fanotify_info {
- 	u8 dir_fh_totlen;
- 	u8 dir2_fh_totlen;
- 	u8 file_fh_totlen;
--	u8 name_len;
--	u8 name2_len;
--	u8 pad[3];
-+	u8 pad;
-+	/*
-+	 * Deliberately not limited to NAME_MAX: some filesystems return longer
-+	 * names (vfat up to 255 UTF-16 characters, as Windows allows, which is
-+	 * up to 765 bytes of UTF-8; FUSE up to PATH_MAX - 1), and readdir() and
-+	 * inotify report them in full. Only names of PATH_MAX bytes or more,
-+	 * which no path can refer to, are dropped.
-+	 */
-+	u16 name_len;
-+	u16 name2_len;
- 	unsigned char buf[];
  	/*
- 	 * (struct fanotify_fh) dir_fh starts at buf[0]
-@@ -167,7 +174,7 @@ static inline char *fanotify_info_name2(struct fanotify_info *info)
- static inline void fanotify_info_init(struct fanotify_info *info)
- {
- 	BUILD_BUG_ON(FANOTIFY_FH_HDR_LEN + MAX_HANDLE_SZ > U8_MAX);
--	BUILD_BUG_ON(NAME_MAX > U8_MAX);
-+	BUILD_BUG_ON(PATH_MAX > U16_MAX);
- 
- 	info->dir_fh_totlen = 0;
- 	info->dir2_fh_totlen = 0;
-@@ -213,8 +220,7 @@ static inline void fanotify_info_set_file_fh(struct fanotify_info *info,
- static inline void fanotify_info_copy_name(struct fanotify_info *info,
- 					   const struct qstr *name)
- {
--	if (WARN_ON_ONCE(name->len > NAME_MAX) ||
--	    WARN_ON_ONCE(info->name2_len > 0))
-+	if (WARN_ON_ONCE(info->name2_len > 0))
- 		return;
- 
- 	info->name_len = name->len;
-@@ -224,9 +230,6 @@ static inline void fanotify_info_copy_name(struct fanotify_info *info,
- static inline void fanotify_info_copy_name2(struct fanotify_info *info,
- 					    const struct qstr *name)
- {
--	if (WARN_ON_ONCE(name->len > NAME_MAX))
--		return;
--
- 	info->name2_len = name->len;
- 	strcpy(fanotify_info_name2(info), name->name);
- }
 -- 
 2.53.0
 
