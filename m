@@ -1,60 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059032;
-	b=r6E5ZZ5y0fMbXWCRdrNT5Eocm/MTNB0SpOTp1dil+8llMyPbBb8mwoZkvgjYjgwf1MSm
-	 u0W6SRULaD5rJ2LwezNGyxYTc2Y66gGKZiZ+hBPFyVHXtab5gQNslIPIo54Dj8AlzGjuG
-	 unOEntbrtGIAIWV3T+ABFnbFshI6fmWBu6EUsHJYlkEXgXlB0Sv3ODpuSwff54V8U2e33
-	 g6p+3AIwPwJ5S5MxDQCI8uAMmgif8YBPHusIwq8ZLD3g/vQ0hRwUEOij6nq60a3NaMPj5
-	 TzX9D/Elc9umeXz1kF8Gff9DsGpi0BDbF0VAtyf0oBby9Ak9iCwLWLaeJGq0kNlqGMQ==
+	t=1795059035;
+	b=cxzmQux3kq31nITowy5d+tdjVZeVjZNZglUe7W3U5yFbjayLE6LM2OKXstVmKHU5AGIZ
+	 mXXuaTWqSpHPmnh2zM5yROPsT7YldyupNtmpudm4UAfCGOFYqJRjjoDozkzEtpgQPai20
+	 0Z1G56aUP0byOuuDYYxuxpUY1hQvLdw+BizJ8eVlPyEe2Uh7Kao4g57as34uqliTvrV2d
+	 pMFhMILlPzPw7m917clCoXr1PztGBCB3GzkIj7qSNapU9tlodEr2fPQAm81ELbACmZDRo
+	 7MNFBQ69vC2QL3yH3qtt495ZM3zgvpeGXUjc0YYlCd13EPt5DQN1SUIkaVQ5CxRwG4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059032;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059035;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=jtmrzoQouEdVkfOiuRoaMg30V4j01eduiHwdih2/85Y=;
-	b=qmYPGB3SoKzo2X4oZtvpo0y3sOmrf1ChkvM6kg7dqKLw52+O7QUUnztsUCDP8DAG0VUb
-	 s3efuNVgRQHPKXdlo9S00NClJNoHqHKRMyYajKuGMqhyFKmIt645AZSc6D9oR11ZMUEAy
-	 lYfaxEelw4pjJm8AgPolykli4zpTkKy1O+gEsjEUjLmXKH27FINCNeJfYXJP+ZxvCoIpV
-	 1vG97BWAXhpZglKk6587wxTLIdSVk8svOQcB9OaNhmq+zHgyYqteAFOG/Xh8YcIS/sND+
-	 sUqxWT6svQhU1ocdgyRJHSuLZBKvNUlZ/UXIwmTmyrtxSHFr4po88clwywgOefzdu2g==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=asdgZdyVr2bQajDGCnOhymVjtYbl66QsogYsFelCskY=;
+	b=q3kNOuwXJfrORgWc04iQu7f3kr2TcvF6Atlpc7PNCn9VwzxjFNDI7MPSMZLW7V+CJfJm
+	 PV7oxVGGGS8GcTZYRalasP3Ovx+LOi3gM50ln0At11HmFggJqazB7yLbO8zwIA/mTiA78
+	 fSj8d+0L8cHOI7X5htMyArLVCs1WvTTTcWzg0nzmNKkz4gP9UwEaa7XP0lnnXjAu2h5lv
+	 +ktFN3ANkXRf4hymXyqHJLiAcKmPQ3s1jvTbybxD8IR+QHutQtNr7O4Jl6sxXJtdjgR+N
+	 TP1pA6imkVyFRhXAOiWkgtiYQ/IyTtzjI4soPTTa5yqXPVYVnUEAuPUkXQPCmvkxKcw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yORNDcvi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SvWzedJq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3227606A326;
-	Thu, 19 Nov 2026 03:30:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF8B606A31C;
+	Thu, 19 Nov 2026 03:30:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yORNDcvi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C9591F000C4;
-	Thu, 19 Nov 2026 03:30:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SvWzedJq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E19DB1F000C4;
+	Thu, 19 Nov 2026 03:30:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059032;
-	bh=jtmrzoQouEdVkfOiuRoaMg30V4j01eduiHwdih2/85Y=;
+	s=korg; t=1795059035;
+	bh=asdgZdyVr2bQajDGCnOhymVjtYbl66QsogYsFelCskY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yORNDcvipsT636TXP7cRVsejhpkf8PAqAQgoD44MYIg4cmOOd1XPXUpyDcmFOXoPh
-	 NJMdm9mYRXlCiMt8Tdi4oe9o5zK79kanPfn7PhZlybFSQHDfvAQz9acsK8iG5riWoY
-	 m/B5RQQFtPIlGhTt2l3isvWBARhnZm8vQEbkm7tA=
+	b=SvWzedJqtqd8O4vGSNFrq9IKXjhj1TadcjENLBbjjzMZ/wVjgkGpl69LNn2x2wkZ3
+	 AanlN9El2/kWJvF60c5p7YILfToWAcSOxC07Q5aoANxX0/0rs20HC17VTwVTkFfy3A
+	 KrSP8F011uzipzIvYfRNyGwfpLtW+Xg1QFc3d0QQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Rik van Riel <riel@surriel.com>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Jose Maria Casanova Crespo <jmcasanova@igalia.com>,
+	Iago Toral Quiroga <itoral@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0696/1848] mm/memfd: make f_pos accesses atomic
-Date: Wed, 18 Nov 2026 15:45:34 +0100
-Message-ID: <20261118145945.030972586@linuxfoundation.org>
+Subject: [PATCH 5.10 0697/1848] drm/v3d: Initialize timedout_batches when running a CSD job
+Date: Wed, 18 Nov 2026 15:45:35 +0100
+Message-ID: <20261118145945.064501152@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,79 +63,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Jose Maria Casanova Crespo <jmcasanova@igalia.com>
 
-[ Upstream commit 5426cd43a4d28f1041c9ca45955121b921f29548 ]
+[ Upstream commit 0afdbdd5b1af729108de8f893d179c3b99eac29d ]
 
-Commit 9c225f2655e3 ("vfs: atomic f_pos accesses as per POSIX") made
-read(), write() and lseek() on a shared open file description of a regular
-file serialize on ->f_pos_lock.  The flag that asks for it,
-FMODE_ATOMIC_POS, is set in do_dentry_open().  A memfd is a regular file
-too, but its struct file comes from alloc_file_pseudo() and never passes
-through do_dentry_open(), so it does not get the flag:
+v3d_csd_job_timedout() decides whether a compute job made progress by
+comparing CSD_CURRENT_CFG4, the number of batches the dispatcher still
+has to start, against the value saved at the previous timeout. That
+saved value is never initialized, so it is zero on the first timeout.
 
-  CPU0                                CPU1
-  write(memfd, "a", 1)                write(memfd, "b", 1)
-    pos = file->f_pos  (= 0)
-                                        pos = file->f_pos  (= 0)
-    vfs_write(..., &pos)
-                                        vfs_write(..., &pos)
-    file->f_pos = pos  (= 1)
-                                        file->f_pos = pos  (= 1)
+On V3D 7.1.6 and later, CFG4 counts down to zero once the dispatcher has
+started the last batch, but the dispatch keeps running until the batches
+in flight complete. If the first timeout fires in that window, the
+handler sees no change and resets the GPU while the job is about to
+complete. For example, this happens with long dispatches that only keep a
+single supergroup in flight.
 
-One of the two bytes is overwritten.  Two threads writing 100000 bytes
-each, one at a time, to a memfd end up with a file that is far shorter than
-200000 bytes, while the same program on a tmpfs file never loses a byte.
+Initialize timedout_batches to the value programmed in CFG4 when the job
+is started. The register does not return to it once a batch has started:
+it counts down to zero on V3D 7.1.6 and later (CFG4 holds the number of
+batches), and to 0xffffffff on V3D 4.2 (CFG4 holds the number of batches
+minus one).
 
-Set the flag when the memfd is created.  As for any other regular file the
-lock is only taken if the file is reachable in more than one way, and
-nothing a memfd does in read or write waits for another operation on the
-same file.  This cannot be done for all alloc_file_pseudo() files: anon
-inode files such as eventfd are S_IFREG as well, and a blocked read holding
-->f_pos_lock would lock out the write that is supposed to wake it.
-
-Fix generated by an LLM and sent by Josef Bacik in private.
-
-Fixes: 9183df25fe7b ("shm: add memfd_create() syscall")
 Cc: stable@vger.kernel.org
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-[ david: minor description tweaks ]
-Reviewed-by: Rik van Riel <riel@surriel.com>
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
-Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Reviewed-by: Pasha Tatashin <pasha.tatashin@soleen.com>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-4-d6437171ecc3@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Fixes: d223f98f0209 ("drm/v3d: Add support for compute shader dispatch.")
+Signed-off-by: Jose Maria Casanova Crespo <jmcasanova@igalia.com>
+Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
+Link: https://patch.msgid.link/20261101125619.2465064-1-mcanal@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memfd.c | 2 ++
+ drivers/gpu/drm/v3d/v3d_sched.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/mm/memfd.c b/mm/memfd.c
-index 8ce796ca5bfa4..a0a0233cadeb4 100644
---- a/mm/memfd.c
-+++ b/mm/memfd.c
-@@ -326,6 +326,8 @@ SYSCALL_DEFINE2(memfd_create,
- 		goto err_fd;
- 	}
- 	file->f_mode |= FMODE_LSEEK | FMODE_PREAD | FMODE_PWRITE;
-+	/* a regular file like any other: POSIX.1-2008/SUSv4 Section XSI 2.9.7 */
-+	file->f_mode |= FMODE_ATOMIC_POS;
- 	file->f_flags |= O_LARGEFILE;
+diff --git a/drivers/gpu/drm/v3d/v3d_sched.c b/drivers/gpu/drm/v3d/v3d_sched.c
+index 310fefac46c2a..badc39d6f6210 100644
+--- a/drivers/gpu/drm/v3d/v3d_sched.c
++++ b/drivers/gpu/drm/v3d/v3d_sched.c
+@@ -245,6 +245,8 @@ v3d_csd_job_run(struct drm_sched_job *sched_job)
+ 		dma_fence_put(job->base.irq_fence);
+ 	job->base.irq_fence = dma_fence_get(fence);
  
- 	if (flags & MFD_ALLOW_SEALING) {
++	job->timedout_batches = job->args.cfg[4];
++
+ 	trace_v3d_submit_csd(dev, to_v3d_fence(fence)->seqno);
+ 
+ 	for (i = 1; i <= 6; i++)
 -- 
 2.53.0
 
