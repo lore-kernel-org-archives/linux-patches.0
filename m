@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046918;
-	b=bg7xyUbt7D2YnBluxd/FUL9jVa9QU0PCtmKQbSiXFanh5lGmjRXDEz9Wq5khtwlPqOjw
-	 sWt01gFn25oGvT+KN1CDfUnmKGp47S2tZYZ0hNF/Wwt6jJotnPpJcOvAY60IEHGT2PEaE
-	 /VDFu6DmJludZpPVMAKF9Q4nNJfMvdjt9oRhwTIHP+9FlFVfDMA71DNUVBRX8hegFhRh8
-	 ntc7vm7uVGpo9u3jpjuzdQOV7qYNc+2roxKqcctE6gzFY6KmkFMmsEACiPYtHDW9Zhpja
-	 CU0WO397Hfu3gFFnoViK/89ayDAFbe7mVLtKvt9Gz2XXVVYGuWZyW23Jmr5JB5MXO2Q==
+	t=1795046921;
+	b=N4h2d+lPUXk60Usy4PrUrF9oXR8qJIAagApoExkcyyoYRTR/WzUDLAVMZwCEkWqCV6qK
+	 Cn+dEpudRxPRhOxNHseO27gieASWaJ/O891MnSXPFPMJ9B1vJ9sLxxVLqbWSXElD31l/W
+	 Ko6stZe1d5pjuN/rvkMiYxUlhVKFSdZva+ie+D+Dt+uYIuYD2550DWsvnill6ecg+uS+5
+	 tk+YlHftSREL14NVwGnN3ZvFuemb4/Mw2P9hh3A3R6gv2vHh3wPeQSEI1yW2Tm3bAmDsJ
+	 hTDBzuhd5687YcOio0WBMryENtgjDNNhK2hXgMWOpd0A7Ao4S2sn1fk0FKwK4f85KUw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046918;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046921;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7KA5Wf2xU4UzNuEKtx43bJ0Bq0b7gZ/D/fWqS7d94P8=;
-	b=I+bAb5yxWOO+M/Mu7iNu1IHBn2I1nftdJ33TYZ3atYzr3NplwsBpWElHAHBGJgG2W6Dr
-	 MMCcJp1PDqGDMDm2AGPAzFIBBoN7QhYtcAE0vfIN3gCsAkFkdI7zc7ZwgWPpLJfVlLDtX
-	 ycSbdUv61xJnf9SGecKPEFAOmyUSYFUNP+h+B7dJMIzG3DE/dFUiXWHdcixw0iWKSeo6u
-	 ZwOKR1H08yg48wKSo/mM0XAsQqp/KsqiTi/CMSGWC22/fbAfvhC/ZnHuiC39znLK2ri4R
-	 CpxkhOan07i1T56ru7Mz9pk8FI8ZHOH1eYg2csWyo7Kv2ttoiw+6kDD8WGQCvqEM56A==
+	bh=oXQWcHH/CZKGVxeytzIE2aob4M/ssk2SJ81UM1CxnHE=;
+	b=uoK/+eqvOYQSqEpAGWaBiJJRAvMjB+bOtA3wcD/MO7pV9OQNuYYxDQlf1vUNi5JcnA/P
+	 BXH78hAUfGitJjReYzefZYCEqFnoXndaItP1uhuAwyrNVF6MEO0iEgEGqj639+vlypEwY
+	 ajXFV774po9KVUI0IHN7b5lrhL9z0Zp1WFHUSyX8rpDjwZWTQrdBobB8Wol9pB6x8PURN
+	 vj302c4COD3SD9839N3eGlrx4A7cNQrx1od53gaivjPb6jY130S2mzLkOygTy925xaFDA
+	 O/vSUZgQTKi84PYw2GuYptdBnEs1hlAKyFPStAvIu7wfLlR+QTLmf2R/7d1vVKPkUEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QqRj562W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LwjInL9G;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5C5606A31C;
-	Thu, 19 Nov 2026 00:08:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A663606A31C;
+	Thu, 19 Nov 2026 00:08:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QqRj562W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFCEB1F000C4;
-	Thu, 19 Nov 2026 00:08:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LwjInL9G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEB6B1F000C4;
+	Thu, 19 Nov 2026 00:08:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046918;
-	bh=7KA5Wf2xU4UzNuEKtx43bJ0Bq0b7gZ/D/fWqS7d94P8=;
+	s=korg; t=1795046921;
+	bh=oXQWcHH/CZKGVxeytzIE2aob4M/ssk2SJ81UM1CxnHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QqRj562WM0DiIi+OWp2CaQZ24AOuWhLsDNn3DjyMdfU6KruSC8VZ/uvQcwDyrxf0g
-	 3v6CXklMwCZSIb6fasZRa2qRj5JEaIJXMaDJXF8+mHB+klvULM5BkYXIF5nqRWBb02
-	 /nXbrzpDc7ko60s9C//gn90K0cLF9Y+tI9Uw24Yo=
+	b=LwjInL9GbGtBeiDfaTZZnXWzhiaR9bEYXiqD+Xu6d3kM4/YYBUyjvlGhnDwE+NjHi
+	 XDJoEQBRl0Nwv5y8c35G/x+dUdPqmQHHilfNp4M+Lj3LubMfIWzyZUq5QjBJ/1edo+
+	 5KOrr0DGNCeIU68rS+lEzLxPSv07JOvm+W/u762k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Marc Zyngier <maz@kernel.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Jacob Chen <jacob-chen@iotwrt.com>,
+	Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
+	Michael Tretter <m.tretter@pengutronix.de>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1452/2857] KVM: arm64: Move IN_GUEST_MODE ahead of state being loaded
-Date: Wed, 18 Nov 2026 15:41:26 +0100
-Message-ID: <20261118150253.599641396@linuxfoundation.org>
+Subject: [PATCH 6.1 1453/2857] media: rockchip: rga: fix clock cleanup
+Date: Wed, 18 Nov 2026 15:41:27 +0100
+Message-ID: <20261118150253.637208436@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,77 +71,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit 22b6557ad05bf05c73246f62c19af3e04017270e ]
+[ Upstream commit 254f3337ce2575bf94f1fb40cc40fdbc70371116 ]
 
-IN_GUEST_MODE is advertised too late, when state has already been moved
-onto CPU registers and cannot be observed by another CPU anymore.
+Fix this smatch warning:
 
-Move the IN_GUEST_MODE publication ahead of the state being loaded, and
-immediately check for pending request. This ensures that there is no
-window of opportunity for another CPU to observe OUTSIDE_GUEST_MODE and
-yet for state to be loaded.
+drivers/media/platform/rockchip/rga/rga.c:734 rga_enable_clocks() warn: 'rga->sclk' from clk_prepare_enable() not released on lines: 734.
 
-This also simplifies the "state rollback", which solely amounts to
-synchronising the timer when no irqchip is present.
+The reason is that aclk should be disabled/unprepared before
+sclk, instead of the other way around.
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
-Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
-Link: https://patch.msgid.link/20261015100539.1011760-4-maz@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-[ sashal: adapted kvm_pmu_sync_hwstate() removal to code without the kvm_vcpu_has_pmu() guard ]
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Cc: Jacob Chen <jacob-chen@iotwrt.com>
+Cc: Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>
+Reviewed-by: Michael Tretter <m.tretter@pengutronix.de>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Stable-dep-of: a875c43dd95e ("media: rockchip: rga: quiesce IRQ before releasing m2m state")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/arm.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ drivers/media/platform/rockchip/rga/rga.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index b0b1324e84097..be99f1a88bd4c 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -923,30 +923,33 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
+diff --git a/drivers/media/platform/rockchip/rga/rga.c b/drivers/media/platform/rockchip/rga/rga.c
+index 9b20cef5afc61..4c4e8eabdbdbf 100644
+--- a/drivers/media/platform/rockchip/rga/rga.c
++++ b/drivers/media/platform/rockchip/rga/rga.c
+@@ -717,10 +717,10 @@ static int rga_enable_clocks(struct rockchip_rga *rga)
  
- 		local_irq_disable();
+ 	return 0;
  
--		kvm_vgic_flush_hwstate(vcpu);
--
--		kvm_pmu_update_vcpu_events(vcpu);
--
- 		/*
- 		 * Ensure we set mode to IN_GUEST_MODE after we disable
- 		 * interrupts and before the final VCPU requests check.
- 		 * See the comment in kvm_vcpu_exiting_guest_mode() and
- 		 * Documentation/virt/kvm/vcpu-requests.rst
-+		 *
-+		 * Requests to self must be posted before this point, or
-+		 * won't be taken into account until the next exit. No state
-+		 * loading other than what happens at vcpu_load() time can
-+		 * be done before we have checked for pending requests.
- 		 */
- 		smp_store_mb(vcpu->mode, IN_GUEST_MODE);
+-err_disable_sclk:
+-	clk_disable_unprepare(rga->sclk);
+ err_disable_aclk:
+ 	clk_disable_unprepare(rga->aclk);
++err_disable_sclk:
++	clk_disable_unprepare(rga->sclk);
  
- 		if (ret <= 0 || kvm_vcpu_exit_request(vcpu, &ret)) {
--			isb(); /* Ensure work in x_flush_hwstate is committed */
--			kvm_pmu_sync_hwstate(vcpu);
- 			if (unlikely(!irqchip_in_kernel(vcpu->kvm)))
- 				kvm_timer_sync_user(vcpu);
--			kvm_vgic_sync_hwstate(vcpu);
- 			smp_store_release(&vcpu->mode, OUTSIDE_GUEST_MODE);
- 			local_irq_enable();
- 			preempt_enable();
- 			continue;
- 		}
- 
-+		/* From here onwards, we are commited to entering the guest */
-+		kvm_vgic_flush_hwstate(vcpu);
-+
-+		kvm_pmu_update_vcpu_events(vcpu);
-+
- 		kvm_arm_setup_debug(vcpu);
- 		kvm_arch_vcpu_ctxflush_fp(vcpu);
- 
+ 	return ret;
+ }
 -- 
 2.53.0
 
