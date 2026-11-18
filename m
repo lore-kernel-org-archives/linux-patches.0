@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022661;
-	b=aq5PhoUil1iOcIdBljcoaFSk3HQNSXauumaH6HnCt3FTnktHe/YmCN4rh3EFmNMlnUOD
-	 wt11aAodXXVCQ3FQVSILFICoJfx5QeBi3G8NrjEQ46XEbeiMe+rUcOhjglez8tC1kE4LR
-	 rp9bix5XyqLTwjpq8s7tyzZX4A4nM1e0fGNN9m37WWhp49YSFxlSj3eV+ewnxHedZC2aa
-	 knPg58k9E8gO/2CVJhkxyRD6DOmCaELRJCe+dTZ9DvI6so6tOhDexwG1I8+rxAxTojimM
-	 KT+NVOBLagzZENb7i0IFAke/JKtWm9I8/Osnx+wi5wkbBbXAOLoouG9HmqWoQQV84Yg==
+	t=1795022664;
+	b=m5eNgHvn1y2Tm9OyjDfd8WspKMSUpMQQX7sELsdnGfXfeanIhViZHQp+3nBIoxFyFnbG
+	 UkJcxGvXFirCiTKJXJj3qcQeYdJWYhTqcIBqErNnS2imTC+ZPMG2niu9P5Gua5NZUJZ/r
+	 l992azmJ34UPLUJXZM/VqgWPDT9ygkdxg+WNS3/oCYKIWEmke89nnc/IaBEeJhzEG3DVV
+	 6uBSZEJdblFmo2LxRcmFge3XIwtF2dLww/2peodiSc1pNLhd58JNaGdUpm6v19BfUZw2S
+	 LkKzLQ5XpL27z2VI44x0iMhaepUDf+HhTknMjVMDeIficEPjQr9lGmLW2sL00eWNORA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022661;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022664;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=J5wGdQcUspDRhpNEQkai5GI5CgMNwO2RiExYoMyOi5E=;
-	b=W3ADL+b/qfNc6CkxiSAcFqfOpwcKK5HZ5glFJXGsEhKWxh0zern4wqDV8bZjUPq7O2TG
-	 GfX0szcbGVKKi8ZIEEp67Q+SorhZLcg3YOnUpjBhVIOJFULTekBNPqPRUbZCrL1FJHyTU
-	 S9mqhSvujc8ADlxVAlbPPWyIqQ7Yg9Y7EMMEXWn4PCs3pzeqaYsqNUlH7H3r0RssrlKDU
-	 JLzbsGvoiobp56ZUDrlGUxRcm9E2bNWAfQOyeFgpCsLTVXURvyEjVkJ61CNLBMdvP9uVL
-	 KXOSD0OLVqkIsEaN+JMHjTma56xz8VDHIDN/HdGg+vl3s86iCNswffbyUaFFwsNl7yA==
+	bh=6kJAQ2PHCTb7JS31ix0pxpmoLSciclsCmXPGh5GYI9o=;
+	b=aBXLQrpBxoEP2kPSUFC6LuWpvXo4MGT/B7gqfpTJ0nXhjKSXRpcvF1LA4WFMc3knGhPL
+	 Eugvj094DJnKVgoBSX5Zs+VmWm1LsKpmOmlSQPiztf7nARBKTvJUtjS7RlylnvvvMVIuS
+	 QEVbZFkpTdoS5NdpVr67V1hYwvh7Ki5ZfdCBHgutkuyICXrLMaq6T8RuH7RUM7y+2/srk
+	 3m/+0hdFYkatxQZRxZKDTQBd/CcdjsmrYfh2cdGOsgD8LNgq8VildPF2DXKchWbY438of
+	 hhTfmSYTcesnD2tEprUBVFjn5F+ph6u3OozmlS/HiHrRDqhKC6EwtbNExuQH91bKpYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JDqXQkFD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vVPzKCzQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787EA606A333;
-	Wed, 18 Nov 2026 17:24:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0524F606A32A;
+	Wed, 18 Nov 2026 17:24:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JDqXQkFD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D2B11F000C4;
-	Wed, 18 Nov 2026 17:24:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vVPzKCzQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C7821F000C4;
+	Wed, 18 Nov 2026 17:24:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022661;
-	bh=J5wGdQcUspDRhpNEQkai5GI5CgMNwO2RiExYoMyOi5E=;
+	s=korg; t=1795022663;
+	bh=6kJAQ2PHCTb7JS31ix0pxpmoLSciclsCmXPGh5GYI9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JDqXQkFDlOYrHQJL5LWiG5HwP9ttKeXFlEOWMWF/LYdhCKlqtJhz+o8nBNEDeT5Rz
-	 n+DA4hGdeIbeHUVTKgqV+y0I9O1EE3FbD9U6GiJ2dmSpDVvv3foWElUwkrIzAD8JAm
-	 g2gli6qXcnjyMdIMfZdESWNHpgSGXlpaKY57U5Zw=
+	b=vVPzKCzQKUH+6Sr3FKtrZ5FW/5EDRvLOaDriuYQQbS6vHFgdEfJRuaebvWOI590oG
+	 +Lf5Uk5vhBw66uycd0ExKaLpp4lAtQQLgpDF1lmTW9HsRaKIqupnxoedv5a7New4fM
+	 Ky5i3eipJY3baEbCpDj4/tw12UTHKOFJ2C3wGjD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Aaron Lu <ziqianlu@bytedance.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0090/2151] sched/fair: Clear throttle state when leaving the fair class
-Date: Wed, 18 Nov 2026 15:30:25 +0100
-Message-ID: <20261118150125.079001427@linuxfoundation.org>
+Subject: [PATCH 6.18 0052/2151] ALSA: pcm: Optimize cpu_latency_qos_*() calls
+Date: Wed, 18 Nov 2026 15:29:47 +0100
+Message-ID: <20261118150123.633130658@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,70 +67,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit c282051fc2cae2ea54770ebe435dbea090272c25 ]
+[ Upstream commit 9f6f4e97fd53908aecb0979507d9ff10a22288eb ]
 
-Task-based CFS bandwidth throttling removes a task's fair sched_entity
-while the scheduler core still considers the task queued. p->throttled
-carries the fair-specific state across dequeue/enqueue operations.
+We have a few cpu_latency_qos_*() calls in PCM callbacks, but they
+seem suboptimal in a few aspects:
+- We call them at each time when the hw_params changed, but explicitly
+  do remove and (re-)add; this could be
+  cpu_latency_qos_update_request(), instead
+- The setup of cpu_latency_qos_*() doesn't have to be in hw_params at
+  all; it's not the place where the actual parameters are set up, but
+  rather better at the prepare callback.
+- The hw_free calls cpu_latency_qos_remove_request() unconditionally,
+  which may be poking a WARNING when it wasn't queued.
 
-DEQUEUE_CLASS removes the task from cfs_rq->throttled_limbo_list
-but retains the bit. If the last finite CFS quota is disabled while
-the task runs in another class, it is absent from the unthrottle walk and
-the bit survives.
-Returning to fair while cfs_bandwidth_used() is false then performs a real
-fair enqueue with p->throttled still set.
+For addressing the issues above, this patch cleans up and reorganize
+the cpu_latency_qos_*() calls in the PCM core by a couple helper
+functions.  Now, they are set up at prepare callback, and cleared at
+hw_free and release callbacks via the new helpers.
 
-After bandwidth is re-enabled, a class-change dequeue treats the
-stale bit as limbo state and skips __dequeue_task(). p->se.on_rq therefore
-remains set, and put_prev_task_fair() places the entity in the EEVDF tree
-while the task moves to RT. On exit, the fair picker can select the
-TASK_DEAD task. __schedule() then returns to do_task_dead(),
-which hits BUG().
-
-Keep p->throttled across migrations and group moves, but clear it on
-DEQUEUE_CLASS because fair-specific state must not outlive fair-class
-membership. A later return to fair uses the normal enqueue path. That path
-still respects a throttled cfs_rq.
-
-A KASAN, LOCKDEP and DEBUG_LIST v7.3 kernel reproduced the do_task_dead()
-BUG in 3/3 root and 3/3 delegated uid-1000 runs with CapPrm=CapEff=0 and
-RLIMIT_RTPRIO=1. The fix passed both matrices plus a 3/3 class-switch
-control with bandwidth continuously enabled, without a scheduler warning,
-KASAN report, lockdep splat or crash.
-
-An AI coding assistant analyzed the state mismatch and drafted the initial
-reproducer, fix candidate and this changelog. The source paths, trigger,
-controls and results were rechecked against the cited revisions.
-
-Fixes: e1fad12dcb66 ("sched/fair: Switch to task based throttle model")
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Aaron Lu <ziqianlu@bytedance.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261022235234.150957-1-4ncienth@gmail.com
+Link: https://patch.msgid.link/20261002150420.879056-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 9017bc3d13da ("ALSA: pcm: Prevent O_APPEND open on OSS streams")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/core/pcm_native.c | 35 +++++++++++++++++++++++++----------
+ 1 file changed, 25 insertions(+), 10 deletions(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index fbc277c6963c5..a063e302fbf8e 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -5988,8 +5988,8 @@ static void dequeue_throttled_task(struct task_struct *p, int flags)
- 	WARN_ON_ONCE(p->se.on_rq);
- 	list_del_init(&p->throttle_node);
+diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
+index 553fad5300e10..7dab7ba130c0b 100644
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -751,11 +751,32 @@ EXPORT_SYMBOL_GPL(snd_pcm_runtime_buffer_set_silence);
+ #define is_oss_stream(substream)	false
+ #endif
  
--	/* task blocked after throttled */
--	if (flags & DEQUEUE_SLEEP) {
-+	/* Task blocked after throttling or is leaving the fair class: */
-+	if (flags & (DEQUEUE_SLEEP | DEQUEUE_CLASS)) {
- 		p->throttled = false;
- 		return;
++static void pcm_qos_req_clear(struct snd_pcm_substream *substream)
++{
++	if (cpu_latency_qos_request_active(&substream->latency_pm_qos_req))
++		cpu_latency_qos_remove_request(&substream->latency_pm_qos_req);
++}
++
++static void pcm_qos_req_update(struct snd_pcm_substream *substream, int usecs)
++{
++	if (usecs < 0) {
++		pcm_qos_req_clear(substream);
++		return;
++	}
++
++	if (cpu_latency_qos_request_active(&substream->latency_pm_qos_req))
++		cpu_latency_qos_update_request(&substream->latency_pm_qos_req,
++					       usecs);
++	else
++		cpu_latency_qos_add_request(&substream->latency_pm_qos_req,
++					    usecs);
++}
++
+ static int snd_pcm_hw_params(struct snd_pcm_substream *substream,
+ 			     struct snd_pcm_hw_params *params)
+ {
+ 	struct snd_pcm_runtime *runtime;
+-	int err, usecs;
++	int err;
+ 	unsigned int bits;
+ 	snd_pcm_uframes_t frames;
+ 
+@@ -862,12 +883,6 @@ static int snd_pcm_hw_params(struct snd_pcm_substream *substream,
+ 	snd_pcm_timer_resolution_change(substream);
+ 	snd_pcm_set_state(substream, SNDRV_PCM_STATE_SETUP);
+ 
+-	if (cpu_latency_qos_request_active(&substream->latency_pm_qos_req))
+-		cpu_latency_qos_remove_request(&substream->latency_pm_qos_req);
+-	usecs = period_to_usecs(runtime);
+-	if (usecs >= 0)
+-		cpu_latency_qos_add_request(&substream->latency_pm_qos_req,
+-					    usecs);
+ 	err = 0;
+  _error:
+ 	if (err) {
+@@ -944,7 +959,7 @@ static int snd_pcm_hw_free(struct snd_pcm_substream *substream)
+ 		goto unlock;
+ 	result = do_hw_free(substream);
+ 	snd_pcm_set_state(substream, SNDRV_PCM_STATE_OPEN);
+-	cpu_latency_qos_remove_request(&substream->latency_pm_qos_req);
++	pcm_qos_req_clear(substream);
+  unlock:
+ 	snd_pcm_buffer_access_unlock(runtime);
+ 	return result;
+@@ -1972,6 +1987,7 @@ static int snd_pcm_do_prepare(struct snd_pcm_substream *substream,
+ 	err = substream->ops->prepare(substream);
+ 	if (err < 0)
+ 		return err;
++	pcm_qos_req_update(substream, period_to_usecs(substream->runtime));
+ 	return snd_pcm_do_reset(substream, state);
+ }
+ 
+@@ -2762,8 +2778,7 @@ void snd_pcm_release_substream(struct snd_pcm_substream *substream)
+ 		substream->ops->close(substream);
+ 		substream->hw_opened = 0;
  	}
+-	if (cpu_latency_qos_request_active(&substream->latency_pm_qos_req))
+-		cpu_latency_qos_remove_request(&substream->latency_pm_qos_req);
++	pcm_qos_req_clear(substream);
+ 	if (substream->pcm_release) {
+ 		substream->pcm_release(substream);
+ 		substream->pcm_release = NULL;
 -- 
 2.53.0
 
