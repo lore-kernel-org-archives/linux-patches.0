@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019711;
-	b=gjROhyVEGMNgBGWM+Nkg1EHjSGOzZXSoVoATrDLBL41LCWSHHyXC/IDIez9DqTW2Jcdb
-	 U01bJvoQbo7Io33k1/H12vXPt/3fbuN3iYLjypBFYLltxrPiY0dg3w/d4OsGaMBOZctT8
-	 FsAXHCbcGTk5XaRklB0ulUWslHzm9uuBbv3VzDdmZHBCTJZfyZ2n2cKapF5/Cjl8In9LK
-	 0OJ0ag3Z/djxFcNxEGIaMgysJaxNQkb6xwOtpsQ3hJJBWiPSPtkpscmNHcUkKxaW9Caho
-	 RI8Fy+sit0GfqkFa0Cy6rTbznYpDWimwj3Ex7humToDqyUEuIt4EAl9i5B+WK17wz4A==
+	t=1795019713;
+	b=1hsm7MNnxiU1KvOhgHa4MQcFp0zwamWMpWTnp55t062atC56CvUq+NFJdBT04EXUwTCx
+	 oVPRFhcyibymYoP8BwJGeLRGBO657EpeFDPfGk32lbhlZgxYH2u0ByoxA1jI8kYtYP0Xb
+	 FQcWNg1675MQ2QM35yqsgnUfrD1JOBpdZmlYTYNNglkJZHHm7cK/ZeUH6MbckfoI07/ZI
+	 XwFE4i1WGryJtbX9u/UH3L4UP6Q3CcLMPvzHPPjzs7xKpkYmo5ZRU9CyXqDS/nflmscN3
+	 J6XKhX/7ejCAjDZ3uNVzaWT+MAm/j7Bm2mY0x9DVDUqHlF6x7aAa/ggZmFiy7pPqH+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019711;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019713;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=gMC+jVq0MpEPtkOSnP5ni+dfnLr6LjuwOnKhpKL7jV4=;
-	b=uzF92HuMUU7ymYFBTQC13fr6v5k88ZVk4zr+/qnZXgQcrDNLexn1ZyQiar1wxL33vkES
-	 GOX8JTObX/o9pawlnn8/h21PidUeXMLI25xFIf4wUCWf9ZTfwHnO6J2PWoKDm6hOgPYZU
-	 hP4QZjNgHsrCy82IdEcap9klLxjGl4vnFieWJzIe+0BLSOLkVkoNU1VHND3uqTjy0h70U
-	 YNejDG4c+QHcAAvEVqWp8N0DPq49DvagP68mjf44danSI9MbNv8jyMknZ+/4zRXKDQQdA
-	 r/mJBPP7WWGl2OHnmgC/EcBgUBMbv4p+2g+f57Ic3nPjHh6xBRh4diRvTb7a7pBx2Hw==
+	bh=G2SaykwXXyA0XakcCSWyP6nvWPV3pKfDF+OHr0H9ngc=;
+	b=nNYrHKlQiGggHvroF0q/bX9wFGzL2UetHdmzm0cuTAEZIWPvdGcCXKMxFgcJoX7Hc0jo
+	 yTe6WRtYJnrrT9pmOEEFUg0EGJgN8GfHC9g8O3VvMyY1SOztIhLaaFGINJyMSTBf6BvkE
+	 HFIUZ3pafrKnQAVq4PRiz4/srsWn2mWeC1P0S5ql7XiRyD3GBtODyC6ct1eazsBsDA76j
+	 cXeRMSV4gvGffuf5L/oJKC8PMhXFM9YniuWmyZA0QXu5bBkDdzwIUUOeO6Sz8VvBEgujI
+	 CUwQ8wIhnJVUByjG9vLubcVIwyh87T71Ey3Wglk2KNYoUTV/qrD58h3MoLglH81oTnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lfuLU7Z1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=coEuKfFy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274FA606A320;
-	Wed, 18 Nov 2026 16:35:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD32606A325;
+	Wed, 18 Nov 2026 16:35:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lfuLU7Z1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 444E51F000C4;
-	Wed, 18 Nov 2026 16:35:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=coEuKfFy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E81E01F000C4;
+	Wed, 18 Nov 2026 16:35:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019710;
-	bh=gMC+jVq0MpEPtkOSnP5ni+dfnLr6LjuwOnKhpKL7jV4=;
+	s=korg; t=1795019713;
+	bh=G2SaykwXXyA0XakcCSWyP6nvWPV3pKfDF+OHr0H9ngc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lfuLU7Z1FD3bJh7fC3PPi/ylesbXpjHkw0fKE09CLX+7Qd+I6m0pVelsyls48tfMU
-	 bq+ORWwwWDPNYDToklxAkAzqqOr5CKc0Z4fis0HVqghavce7Sj5FDTH+gLvr6iiooA
-	 E5nSr21iE0UtO30xpKppz8pfXKkqJyscgWCO4CiM=
+	b=coEuKfFy9L2lQD10Ul3GyrLAGmmQWWnPUmwYhuecKBJNhi5nNZmMZAJcfIh/vGTNx
+	 lvdHkpXSXxy1A4/+9+ov2bZaokMSDonvOHuzfHg0vq3UaEFQFMVXofBmUIV4lFG4Fs
+	 Obvou6D6OXSzV8RO8VgchhxNILHN8foiB7NU6auk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandrova Alyona <aga@itb.spb.ru>,
+	Jiale Yao <yaojiale02@163.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1692/2651] platform/x86: intel_telemetry: initialize default trace verbosity
-Date: Wed, 18 Nov 2026 15:48:52 +0100
-Message-ID: <20261118150348.584581797@linuxfoundation.org>
+Subject: [PATCH 7.3 1693/2651] platform/olpc: Reserve space for a string terminator
+Date: Wed, 18 Nov 2026 15:48:53 +0100
+Message-ID: <20261118150348.618974145@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,53 +69,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandrova Alyona <aga@itb.spb.ru>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 1b55ec81926eb7f6e4fad692fa4040a569e9daf7 ]
+[ Upstream commit 1fe88b1741ff655bb59e4fd78178fe2c557b9185 ]
 
-telemetry_def_get_trace_verbosity() returns success without initializing
-the output verbosity value.
+ec_dbgfs_cmd_write() copies user input into a zero-initialized stack
+buffer and passes it to sscanf(). A write that overwrites the entire
+buffer leaves no terminator, so the subsequent parsing can read beyond
+the buffer.
 
-The default telemetry operations are installed when the core driver is
-initialized and again by telemetry_clear_pltdata() when the platform
-driver is removed. The telemetry debugfs files can remain available after
-the platform driver removal.
+Limit the copy to leave room for the trailing NUL.
 
-A subsequent read of pss_trace_verbosity or ioss_trace_verbosity calls
-telemetry_get_trace_verbosity(), which may use the default callback and
-return success without setting verbosity. The uninitialized value is then
-passed to seq_printf().
-
-Validate the output pointer and initialize the default verbosity to zero
-so callers never use an uninitialized value after a successful call.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 378f956e3f93 ("platform/x86: Add Intel Telemetry Core Driver")
-Signed-off-by: Aleksandrova Alyona <aga@itb.spb.ru>
-Link: https://patch.msgid.link/20260917110812.2831-1-aga@itb.spb.ru
+Fixes: 6cca83d498bd ("Platform: OLPC: move debugfs support from x86 EC driver")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Link: https://patch.msgid.link/20260926121250.3258285-2-yaojiale02@163.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/telemetry/core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/platform/olpc/olpc-ec.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/intel/telemetry/core.c b/drivers/platform/x86/intel/telemetry/core.c
-index f312864b8d07a..62299524a07b2 100644
---- a/drivers/platform/x86/intel/telemetry/core.c
-+++ b/drivers/platform/x86/intel/telemetry/core.c
-@@ -24,6 +24,10 @@ static struct telemetry_core_config telm_core_conf;
- static int telemetry_def_get_trace_verbosity(enum telemetry_unit telem_unit,
- 					     u32 *verbosity)
- {
-+	if (!verbosity)
-+		return -EINVAL;
-+
-+	*verbosity = 0;
- 	return 0;
- }
+diff --git a/drivers/platform/olpc/olpc-ec.c b/drivers/platform/olpc/olpc-ec.c
+index 4a2d36f7331ea..063f7e55c421e 100644
+--- a/drivers/platform/olpc/olpc-ec.c
++++ b/drivers/platform/olpc/olpc-ec.c
+@@ -269,7 +269,7 @@ static ssize_t ec_dbgfs_cmd_write(struct file *file, const char __user *buf,
  
+ 	mutex_lock(&ec_dbgfs_lock);
+ 
+-	size = simple_write_to_buffer(cmdbuf, sizeof(cmdbuf), ppos, buf, size);
++	size = simple_write_to_buffer(cmdbuf, sizeof(cmdbuf) - 1, ppos, buf, size);
+ 
+ 	m = sscanf(cmdbuf, "%x:%u %x %x %x %x %x", &ec_cmd_int[0],
+ 			&ec_dbgfs_resp_bytes, &ec_cmd_int[1], &ec_cmd_int[2],
 -- 
 2.53.0
 
