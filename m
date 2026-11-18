@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024408;
-	b=O0TXM6Q03IDeVFKY/G2gLZypTHJqPWZmaJrZLGzdHU0mBLmMH4/36laWcpIdQOOllfxJ
-	 IWC6HcAI+DOOhAzGkmPX+V5sKuCFa8D4CQq6T5Q8K6E70e9ELq1leoxnylrVHfmlwSLGC
-	 wFQNOnkyJib7I74zddZa6MmyD215riQbRKX98Fb78M/CFE2YZfTTTGQsZ3MsZDX3sCQpy
-	 qsx6klpcAn3xDXZMkwBjwwRHBEmpLmjtLYPB/bXaxEU7dxBHZESHBS/jmQ0eabKKc193s
-	 FH2thNZFNcU/scs4XLIU0dN8GCJL1QY0mKnXxxQkkIQhv9rhKh2RMrlXQPPIW9HELpQ==
+	t=1795024411;
+	b=U3s360YbDcGVR+A58ErrWfmfMWJudTe1quNWo6rqKwn2nADoIQkDXq2l+uzMZ8RjiUQs
+	 hyRd+pYACWyS+rYi8zQH0FHYZ52cOcursHh4VFaWJz/uXJBahaQF6C/6NAUR93pNkmcMg
+	 fDFJixkxWdaDFGAJVhep8hWEO0uMfCQip9icjBi3FOloZ2lQRjoHFVt3zxIscgSGDXsC+
+	 JufhvVA4BDVyx9jVhV4xT/njh9G8TfIN/MYXhNIPN8UHkp/X8cPxdXGgk8Ks+m1n/tFdG
+	 z8PG60h9c4DgfJ/3mjPd+g49PuhHq5W2L6387DUguQA6ceMQsm5dPA3Zl3uBttkRiJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024408;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024411;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3VLxWVYBJqZumgQeLpA+wtNPl5liv7JmkA5R+4Jxy3w=;
-	b=21dIyJvvMXs9sy6z+VSEMO9ToLZeojMaRqLfypY1huHyXZIp8+K5ahvoksgpnBOvPVuj
-	 +kFr9GlTrzzFfg2YHZ5/wkXXVMdxgWEpFzdSjL9+jgdOEl02hCBMgEs99khMByDp65m/P
-	 Kn9biPzP6V09nFRpgH3OySc9SSamRK3DbuXmix8BLjv9U25dT7mxGOoU4vQMYWtCVkUTx
-	 aHx6HGNqu+5Uen/N/rfnH5e8gnUArOJqHVutV+LxlV/9Of1z76ARBbZ4EqCwA89FrUGx+
-	 RtPDy6JcKqNZAaFn1s4x+hzPuo7aHq/bhtdSizNfKDozO5XlzrcwVc3GHSJaun3NWog==
+	bh=K4sGfBC0OQgaFdlVymF9yXS1l4pb/uJ9ja4mzw8joIg=;
+	b=HrE5RZvEY+RK1ERQndslcliejQiCiz0cyFmxr98QaTlT1wtF05GObQmWD9uZK4N4piuk
+	 X73au7S4qfu7/X+K+Lj6FZYDQHidsB3Xtw3aZpC/u5uzzrmzbLZA0MOwEQOsA+mMhPPjx
+	 gWN/YIorHwNF5nlj8omAn5tky90Wz/VuTf4aSvA3kVmdndg43OTdqEAyYEsuN3Jy7Nt3x
+	 fMXWeyz5GvaUyV2BH4B4qdsUNFDoJcNkZhvVUC+jd25828zfbye54biyraBGsG+ZAZHnp
+	 6wuwfcfpSAlhH8AGB2Ndw+I0bDGbIC7WGvinAy02WmSthqiEGRZYpSoKlMh54jghMfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="QLA+2/Pi";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="gfF6po/h";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0315606A31C;
-	Wed, 18 Nov 2026 17:53:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A30C606A32A;
+	Wed, 18 Nov 2026 17:53:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QLA+2/Pi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 269691F000C4;
-	Wed, 18 Nov 2026 17:53:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gfF6po/h
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EACBB1F000C7;
+	Wed, 18 Nov 2026 17:53:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024408;
-	bh=3VLxWVYBJqZumgQeLpA+wtNPl5liv7JmkA5R+4Jxy3w=;
+	s=korg; t=1795024411;
+	bh=K4sGfBC0OQgaFdlVymF9yXS1l4pb/uJ9ja4mzw8joIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QLA+2/PilLV3+EacHhq7L+P6HhcwkRMs+5HRdWdBvt2ncsJHguH4o0ZGjFrsreaFZ
-	 28h6FffKbc70MAUmuYVQjh/jsA+sexQRdG174n/zpD/4DwCAYvWigPRGS8sxxYtcvl
-	 0HUIbzCKMVhqFDf5ywpKJHPcwtOUy6zna9ZibU8U=
+	b=gfF6po/hnbmtaCJIgtQ1ejl8I664f9eY18WLg2wc1Ygci3XQlrczFQBMpJJp2Z491
+	 ryxL92H2myYaWsEFK3jg+BbJ98jsMSa9idImJyDuIUXv1NP6j24OatclADVDTY+g5k
+	 HfEvchhoVUM0Slu372u9YbYGuUkz/4iTY74i0t6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Pengpeng Hou <hppiscas@163.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0715/2151] spi: rockchip-sfc: skip DMA cleanup in PIO mode
-Date: Wed, 18 Nov 2026 15:40:50 +0100
-Message-ID: <20261118150147.923917284@linuxfoundation.org>
+Subject: [PATCH 6.18 0716/2151] iio: accel: bma220: publish the SPI driver ACPI alias
+Date: Wed, 18 Nov 2026 15:40:51 +0100
+Message-ID: <20261118150147.956396206@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,67 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Pengpeng Hou <hppiscas@163.com>
 
-[ Upstream commit 926f9c44a76fe9e722180d0804c607c6cf1ebbb4 ]
+[ Upstream commit cdc7d3dd101251a6373332726b8d6fad35e83b8a ]
 
-With rockchip,sfc-no-dma, probe skips allocating and mapping the transfer
-buffer. However, controller registration failure and driver removal still
-call dma_unmap_single() for that nonexistent mapping.
+The SPI driver advertises an ACPI match for BMA0220 but does not export
+that table. A modular build therefore lacks the ACPI alias used to load
+the driver when the device is enumerated through ACPI.
 
-Guard the DMA mapping and buffer cleanup with use_dma. Keep the existing
-cleanup for allocation and mapping failures on the DMA path.
+Export the ACPI table. Move the existing SPI export next to its SPI ID
+table so each export is adjacent to the table it describes.
 
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
+The issue was found by our static-analysis tool.
 
-Fixes: ee795e82e101 ("spi: rockchip-sfc: Fix DMA-API usage")
-Assisted-by: OpenAI:GPT-5.6
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260912190056.42192-1-mhun512@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: bf2a5600a3eb ("iio: accel: Add support for Bosch BMA220")
+Assisted-by: LLM
+Signed-off-by: Pengpeng Hou <hppiscas@163.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-rockchip-sfc.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/iio/accel/bma220_spi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-rockchip-sfc.c b/drivers/spi/spi-rockchip-sfc.c
-index 4ad845cf70670..6ac0bc2905c24 100644
---- a/drivers/spi/spi-rockchip-sfc.c
-+++ b/drivers/spi/spi-rockchip-sfc.c
-@@ -720,10 +720,12 @@ static int rockchip_sfc_probe(struct platform_device *pdev)
+diff --git a/drivers/iio/accel/bma220_spi.c b/drivers/iio/accel/bma220_spi.c
+index 01592eebf05bb..db85a4aed656c 100644
+--- a/drivers/iio/accel/bma220_spi.c
++++ b/drivers/iio/accel/bma220_spi.c
+@@ -307,12 +307,13 @@ static const struct spi_device_id bma220_spi_id[] = {
+ 	{"bma220", 0},
+ 	{ }
+ };
++MODULE_DEVICE_TABLE(spi, bma220_spi_id);
  
- 	return 0;
- err_register:
--	dma_unmap_single(dev, sfc->dma_buffer, sfc->max_iosize,
--			 DMA_BIDIRECTIONAL);
-+	if (sfc->use_dma)
-+		dma_unmap_single(dev, sfc->dma_buffer, sfc->max_iosize,
-+				 DMA_BIDIRECTIONAL);
- err_dma_map:
--	free_pages((unsigned long)sfc->buffer, get_order(sfc->max_iosize));
-+	if (sfc->use_dma)
-+		free_pages((unsigned long)sfc->buffer, get_order(sfc->max_iosize));
- err_dma:
- 	pm_runtime_get_sync(dev);
- 	pm_runtime_put_noidle(dev);
-@@ -749,9 +751,11 @@ static void rockchip_sfc_remove(struct platform_device *pdev)
- 	pm_runtime_disable(&pdev->dev);
- 	pm_runtime_set_suspended(&pdev->dev);
- 	pm_runtime_dont_use_autosuspend(&pdev->dev);
--	dma_unmap_single(&pdev->dev, sfc->dma_buffer, sfc->max_iosize,
--			 DMA_BIDIRECTIONAL);
--	free_pages((unsigned long)sfc->buffer, get_order(sfc->max_iosize));
-+	if (sfc->use_dma) {
-+		dma_unmap_single(&pdev->dev, sfc->dma_buffer, sfc->max_iosize,
-+				 DMA_BIDIRECTIONAL);
-+		free_pages((unsigned long)sfc->buffer, get_order(sfc->max_iosize));
-+	}
+ static const struct acpi_device_id bma220_acpi_id[] = {
+ 	{"BMA0220", 0},
+ 	{ }
+ };
+-MODULE_DEVICE_TABLE(spi, bma220_spi_id);
++MODULE_DEVICE_TABLE(acpi, bma220_acpi_id);
  
- 	clk_disable_unprepare(sfc->clk);
- 	clk_disable_unprepare(sfc->hclk);
+ static struct spi_driver bma220_driver = {
+ 	.driver = {
 -- 
 2.53.0
 
