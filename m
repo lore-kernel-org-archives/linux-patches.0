@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059777;
-	b=I8X96RprnmxionLPR0S8PXAEEqYqCLnCYMgh5FE2PW+2XNM66FVwZdQmjYjxu7FAIgUv
-	 WIVVLyFn8meaQUTac6qfsehsjBoL9mlycJLX0P+fZRZkNyFyEiGJlcgk3cwsrXd3+hd4c
-	 AStxJC7Vnt7397DVSFVumXjTYYunZKipWRLGOHY4ytGg81zdU3BEEaHn0a2ijxfD4C5aC
-	 E3Db2kjK647M2jXH7TzS3xg53sGIfxEWFekLGweWsUju4tPHbz8wvzQJ3uhnCW7sqYlYB
-	 Zx95AqTxv47yDT4bKbY3LA8XbvDY7rFKb2i0KgRT9UG9qKqKIHL0mvyMAmTM1itfMFg==
+	t=1795059780;
+	b=ZgTJ2NpGS84r1/S0q8eTyrwPDuCHNJxhiilC/cN/yzS65b21shEDRmegFdfgCdtvvhqx
+	 P6BpsETRmVZBGz3nO5K/H7Ic8daWoYM2tCUY5FV/h912KRWgpkyDdvAX3fSUz8ab0yGgm
+	 5cjZ2uvbjvel7LfoxL/HR5BTqV+U7Gr6qDqo4vDt4Qsm3BPtmh5qZ27MwsC4IURS8P/Pj
+	 d2ENnOsT0eiNy41LrY7BYGLfgCjEsTzJnuwDf/059CBIIamRrnY9gs9RFMKUSOMZ3/+w5
+	 PsEixuT1jbY8FVF3NT/pbJDyupAkdKF/vzIj5Kx555XW9LY6ghUg3ziaZhMfe/tAtfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059777;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059780;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QkethY9kMxHhc1j9O1do7h53jtTOKylTicom0Xgbr44=;
-	b=JYPO4NeW0m5Ep1fVMet1SqESGz5UZwYX6zH/Ez+t/g5J9EokZmNbaSq+2PUntyNzf5Sa
-	 1pc9S9oUlwaqCi1VdBAUVQ7jfjeIERdcIfvSKQeb70BnLcc4jYkkidbXyQ4675kjMeG6h
-	 QuUMLEqrtH31uHYCWV/ukDz2BUPbjUG9ZXIMw3jZY0MyBMWpNaulqtpJPj7I+WEJTtO7g
-	 jYvbKQRhuFjJpA6YiMolIEAJxjEVip8Rzr1kv1ygzu/9jP5/ls3FUvphNO5Ott69bU+ry
-	 8E3dK/cV6S4OM3+ewhHc8joM5mt7rne2HKlNzrBOWBz5uX8wbnLbZX7tlnfWVq8Detw==
+	bh=63NXp7ZksrprK9xaDIFnPq12ZTCMQcBCvHhulNW5XVY=;
+	b=lSOrBeE3untmlgN1y+7k+NCbqES+6tF4Ubt+7SSg8NPs0RgPaPh7frjwSecMloSHRLbH
+	 nZJfZPBfg8kFaC9oY3MSYLV0/Fy5GgpURYYZCo4uJlHVhkJPsAYc7SXOD9jb8Pdm0b8OD
+	 qRmWAIk0HYRr/ORojly7uHBjj4P/MrGtCG9fAmyUEiRgQ3qFvJer0/mUxs/+Fm3G5Quxf
+	 c4pYQRwZxKFCnjaJQlH9VK/O6d+v0K8yUYY5ZGpXYkV9CPPBePI8orrJE2Mc5p58j0xzn
+	 E/Y/6/Cuug7RK4QGXfa2m6cdat2miGmnA/i2AR5zMMBynpyiwFT+wLu4Xa8HZvueuPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PBm2DnbT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tbztd7dK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82BA7606A325;
-	Thu, 19 Nov 2026 03:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51996606A320;
+	Thu, 19 Nov 2026 03:43:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PBm2DnbT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2B4E1F000C4;
-	Thu, 19 Nov 2026 03:42:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tbztd7dK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A45EC1F000C4;
+	Thu, 19 Nov 2026 03:42:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059777;
-	bh=QkethY9kMxHhc1j9O1do7h53jtTOKylTicom0Xgbr44=;
+	s=korg; t=1795059780;
+	bh=63NXp7ZksrprK9xaDIFnPq12ZTCMQcBCvHhulNW5XVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PBm2DnbTVB5q6TrRs3iJoncRV/L6x+l41ZLKM4hdFmgReeb4HKkwr7gOB5m4uoyCx
-	 Aod/seW+a8AxehtWwKh2WrGXtvqCJ29qrhIMqdR0COSJGQvMB1QpcorNOAwpIRmiHx
-	 OzEYX2c8UTZX18LrxSqMlZyaDS1Djpi8y7mF4aHs=
+	b=tbztd7dKdHXXpZfNqTlrhUmeX7DKC/eEQDZhPi1nK/23mlGRBYRCmoj7jp+y7wjyP
+	 CFoGaKIuRJBzZcMOfDn0w3+HMwYWi6Qx2dg5MK0kYuk9VkdEmfUKinzzkM5Fqb+nLk
+	 VXCP58T8wLVpFVtxGmuNgN8GLP35SPP3zaTFKQnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>,
-	Lee Jones <lee@kernel.org>,
+	Adrian Ambrozewicz <aambrozewicz@nvidia.com>,
+	Kent Gibson <warthog618@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0962/1848] mfd: tps65217: Use devres for IRQ domain and wake teardown
-Date: Wed, 18 Nov 2026 15:50:00 +0100
-Message-ID: <20261118145957.251537474@linuxfoundation.org>
+Subject: [PATCH 5.10 0963/1848] gpiolib: cdev: dont set GPIOD_FLAG_IS_OUT
+Date: Wed, 18 Nov 2026 15:50:01 +0100
+Message-ID: <20261118145957.287492654@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,144 +69,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>
+From: Adrian Ambrozewicz <aambrozewicz@nvidia.com>
 
-[ Upstream commit cffd44d2d89524e2dda6adc7b0dd59363be1c8e6 ]
+[ Upstream commit 974d2712cb15014019595799b3ed68fef5fe9695 ]
 
-Removing the parent device used to tear the IRQ domain down in
-tps65217_remove() before the MFD children are unbound: the i2c core
-only releases the parent's devres after the remove callback returns,
-whereas devm_mfd_add_devices() registered its own devres action which
-unbinds the children. Children that requested interrupts from the
-domain (e.g. tps65217-charger) therefore call free_irq() on virtual
-IRQs whose descriptors have already been disposed. With
-CONFIG_SPARSE_IRQ free_irq() then returns early without stopping the
-threaded handler, leaking the irqaction, the IRQ kthread and a module
-reference.
+When a line is requested or reconfigured through the v2 uAPI,
+gpio_v2_line_config_flags_to_desc_flags() copies the requested
+configuration into the descriptor flags, GPIOD_FLAG_IS_OUT included,
+before gpiod_direction_input_nonotify() or
+gpiod_direction_output_nonotify() asks the driver for the direction.
+If the driver refuses, for instance with -EOPNOTSUPP from
+.direction_input() for a line that can only be an output, the ioctl
+fails but the flag keeps the refused direction. gpiod_free_commit()
+does not touch GPIOD_FLAG_IS_OUT, so this outlives the failed request,
+and GPIO_V2_GET_LINEINFO_IOCTL reports the line as an input while the
+hardware still drives it, until a request without direction flags
+makes gpiod_request_commit() read the direction back from the driver:
 
-Register the domain teardown as a devres action right after the domain
-is created instead. Devres actions are released in reverse order of
-registration, so the MFD children release their IRQs first, then the
-parent interrupt is freed and its thread stopped, and only then is the
-domain torn down. The same ordering covers probe failure, which no
-longer needs manual cleanup, and the remove callback can be dropped
-entirely.
+  GPIO_V2_GET_LINE_IOCTL, line 0, input:         -EOPNOTSUPP
+  GPIO_V2_GET_LINEINFO_IOCTL, line 0:            input
+  GPIO_V2_GET_LINE_IOCTL, line 0, no direction:  ok
+  GPIO_V2_GET_LINEINFO_IOCTL, line 0:            output
 
-Balance the enable_irq_wake() in tps65217_irq_init() by registering
-disable_irq_wake() as a devres action as well. Only do so when
-enabling actually succeeded, since the parent chip may not support
-setting wake-up.
+GPIO_V2_LINE_SET_CONFIG_IOCTL updates the flags in the same order.
+There the line stays requested, and since commit 92ac7de3175e
+("gpiolib: don't allow setting values on input lines")
+GPIO_V2_LINE_SET_VALUES_IOCTL on it then fails with -EPERM, though the
+line is still an output. A line whose driver refuses to make it an
+output is likewise reported as one.
 
-Fixes: 6556bdacf646fcaa ("mfd: tps65217: Add support for IRQs")
+gpiod_direction_input_nonotify() and gpiod_direction_output_nonotify()
+set or clear GPIOD_FLAG_IS_OUT themselves once the driver has accepted
+the direction, emulated open drain and open source included, and
+nothing between the copy and those calls reads the flag. Leave it to
+them, as the v1 uAPI already does.
+
+The other flags that the helper copies stay as they are. Active low,
+drive and bias are what gpiod_direction_*() applies, drive and bias
+possibly before the driver refuses the direction; edges and event
+clock are the character device's own. None of them is read back from
+the driver, so there is no earlier state that is more accurate to go
+back to. A failed request releases the line, which clears them, and a
+failed reconfiguration leaves the line, like the lines before it, with
+what was applied up to the failure.
+
+Reproduced under QEMU with a test GPIO chip whose line 0 refuses input
+and line 1 refuses output: both refused requests and both refused
+reconfigurations leave the line info with the refused direction, and
+setting the value of the reconfigured output fails with -EPERM. With
+this change the line info shows the direction of the hardware in all
+four cases and setting the value works. First seen on real hardware
+with v6.12.
+
+Fixes: 3c0d9c635ae2 ("gpiolib: cdev: support GPIO_V2_GET_LINE_IOCTL and GPIO_V2_LINE_GET_VALUES_IOCTL")
 Cc: stable@vger.kernel.org
-Signed-off-by: Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>
-Link: https://patch.msgid.link/20261002113624.178588-4-r.zhambakiev@prosoftsystems.ru
-Signed-off-by: Lee Jones <lee@kernel.org>
-[ sashal: moved the loop variable declaration outside the for statement for compatibility with older C syntax ]
+Assisted-by: LLM
+Signed-off-by: Adrian Ambrozewicz <aambrozewicz@nvidia.com>
+Reviewed-by: Kent Gibson <warthog618@gmail.com>
+Link: https://patch.msgid.link/20261016-gpiolib-cdev-direction-v2-1-aambrozewicz@nvidia.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+[ sashal: adapted flag references to use FLAG_IS_OUT with flags and flagsp ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/tps65217.c | 60 ++++++++++++++++++++++++++++--------------
- 1 file changed, 40 insertions(+), 20 deletions(-)
+ drivers/gpio/gpiolib-cdev.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/mfd/tps65217.c b/drivers/mfd/tps65217.c
-index ca81623a74389..43dbcdb7f35cc 100644
---- a/drivers/mfd/tps65217.c
-+++ b/drivers/mfd/tps65217.c
-@@ -155,6 +155,32 @@ static const struct irq_domain_ops tps65217_irq_domain_ops = {
- 	.map = tps65217_irq_map,
- };
+diff --git a/drivers/gpio/gpiolib-cdev.c b/drivers/gpio/gpiolib-cdev.c
+index a4446d7baa390..f2e47c9e1ab75 100644
+--- a/drivers/gpio/gpiolib-cdev.c
++++ b/drivers/gpio/gpiolib-cdev.c
+@@ -968,11 +968,6 @@ static void gpio_v2_line_config_flags_to_desc_flags(u64 flags,
+ 	assign_bit(FLAG_ACTIVE_LOW, flagsp,
+ 		   flags & GPIO_V2_LINE_FLAG_ACTIVE_LOW);
  
-+static void tps65217_irq_cleanup(void *data)
-+{
-+	struct tps65217 *tps = data;
-+	unsigned int virq;
-+	int i;
-+
-+	if (!tps->irq_domain)
-+		return;
-+
-+	for (i = 0; i < TPS65217_NUM_IRQ; i++) {
-+		virq = irq_find_mapping(tps->irq_domain, i);
-+		if (virq)
-+			irq_dispose_mapping(virq);
-+	}
-+
-+	irq_domain_remove(tps->irq_domain);
-+	tps->irq_domain = NULL;
-+}
-+
-+static void tps65217_irq_wake_disable(void *data)
-+{
-+	unsigned long irq = (unsigned long)data;
-+
-+	disable_irq_wake(irq);
-+}
-+
- static int tps65217_irq_init(struct tps65217 *tps, int irq)
- {
- 	int ret;
-@@ -178,6 +204,10 @@ static int tps65217_irq_init(struct tps65217 *tps, int irq)
- 		return -ENOMEM;
- 	}
- 
-+	ret = devm_add_action_or_reset(tps->dev, tps65217_irq_cleanup, tps);
-+	if (ret)
-+		return ret;
-+
- 	ret = devm_request_threaded_irq(tps->dev, irq, NULL,
- 					tps65217_irq_thread, IRQF_ONESHOT,
- 					"tps65217-irq", tps);
-@@ -187,7 +217,16 @@ static int tps65217_irq_init(struct tps65217 *tps, int irq)
- 		return ret;
- 	}
- 
--	enable_irq_wake(irq);
-+	ret = enable_irq_wake(irq);
-+	if (ret) {
-+		dev_warn(tps->dev, "failed to enable IRQ wake: %d\n", ret);
-+		return 0;
-+	}
-+
-+	ret = devm_add_action_or_reset(tps->dev, tps65217_irq_wake_disable,
-+				       (void *)(unsigned long)irq);
-+	if (ret)
-+		return ret;
- 
- 	return 0;
- }
-@@ -388,24 +427,6 @@ static int tps65217_probe(struct i2c_client *client)
- 	return 0;
- }
- 
--static int tps65217_remove(struct i2c_client *client)
--{
--	struct tps65217 *tps = i2c_get_clientdata(client);
--	unsigned int virq;
--	int i;
+-	if (flags & GPIO_V2_LINE_FLAG_OUTPUT)
+-		set_bit(FLAG_IS_OUT, flagsp);
+-	else if (flags & GPIO_V2_LINE_FLAG_INPUT)
+-		clear_bit(FLAG_IS_OUT, flagsp);
 -
--	for (i = 0; i < TPS65217_NUM_IRQ; i++) {
--		virq = irq_find_mapping(tps->irq_domain, i);
--		if (virq)
--			irq_dispose_mapping(virq);
--	}
--
--	irq_domain_remove(tps->irq_domain);
--	tps->irq_domain = NULL;
--
--	return 0;
--}
--
- static const struct i2c_device_id tps65217_id_table[] = {
- 	{"tps65217", TPS65217},
- 	{ /* sentinel */ }
-@@ -419,7 +440,6 @@ static struct i2c_driver tps65217_driver = {
- 	},
- 	.id_table	= tps65217_id_table,
- 	.probe_new	= tps65217_probe,
--	.remove		= tps65217_remove,
- };
- 
- static int __init tps65217_init(void)
+ 	assign_bit(FLAG_EDGE_RISING, flagsp,
+ 		   flags & GPIO_V2_LINE_FLAG_EDGE_RISING);
+ 	assign_bit(FLAG_EDGE_FALLING, flagsp,
 -- 
 2.53.0
 
