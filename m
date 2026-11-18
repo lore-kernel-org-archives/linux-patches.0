@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024788;
-	b=cQQgAm/JCqI9nmmfmLbaU6MS5XUCEZD/ebUH1j2GSu6HhJL1WVdj2oFFVzbqymYrU7mR
-	 Gq4m8nD7rDB6BlD+dIcrBoSdwYYjcMZbEOD+sHKUXl8rgVSWfJPVbk7iz50lOns6nAJPx
-	 z48jCxwoEuq720MaD6J7wdqtmzuIj4sgdRWdDz2b+noswhqfo03iKBtZhaUo0Nt/+sfzu
-	 MRXvglY+yhzNR/veHIQNvkGIBNQhVZ2ZsDg4ZIM1MwY0cg1WMXkIyIbRAc23OvYpqd+Xm
-	 RfI4p91SEPXXlljNhTD6DNzy+yiV/B4fHqjiRasAfyW2QCn6YwJdAAmGETeVPl31oYA==
+	t=1795024791;
+	b=IZgTtmjMc8LQM1wHTfkW2WbEQi2p6FaCPzoFFO1+xKl4a4lkRx2QG/KequVxY59TS9rD
+	 M+gi8LA7ChJymMVHp0EIM48sD3wjOmoLZu/nJs5fbbkRZyNBT83rfS1OI2Y1FM0pDrTWi
+	 uV8KgwFEMzHsMkzhFu49vpO6G3F8i/jBtk+n9/sO2vkK/BmVlBZr8p86TqYTALDs9dTm2
+	 sicuwyrYX1usT0gcCyDreshvVhipyy9kyTjJXnqn1Bkdudvl1geCcUj1mbgVOBRIGq2VT
+	 GlKgEX8sCmY6ksF+kGSbRrH9fAiKMg/uCG9sfm4biD1vXmVXP2JISEKB8eZdY7V4QYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024788;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024791;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZM+ye0gnpDDGDwaTHogdpoG/ZKROfOtPenL8y6a+M9o=;
-	b=E5hhDEJXQJ7nLn7phfYRXZtkrR2GAWrYBswuG5o+79at0aTGuJlT1YwEroSkPlEKkGZP
-	 faFzUyzY7rWqJ5ARJmkpp03tn7bMkMy+1IIrDDPyXtoRQpxi5v2OGt7721hXSvZ77/oFg
-	 oGF2+SApx/eMzuusaXGxwaWrnGZCKzhmrRgiqrxEwfxG9iUT/90hgr0hZBOdklPb+dUDX
-	 LEM9/XA9A8UHFwDtQ/bQFi83lStTMRTq+VAqUpD2wgbmT//zL99kG+Ux4yq1HiQn9Ez+J
-	 X8OIah5s2xqqaxBEGAjZ5xeBP3H3fqDjSRlw3CpKbBDRkQmimz2pl+6NDT6W1yiHFqQ==
+	bh=cYs8sX/vyLgUz039mzLahhMH3yu5CcccGR4kkT5zRus=;
+	b=0L2vPnNRpW0ikllu4MBt7KBahicX/UGVnNsfr1elyWRVXftigVIztS8iRlBROmzs/7cP
+	 qeBMKM2qYLXgK3rk5x2J522sEJOfrlmm62JGljwyDxjk8seo1W2xaA7rmGieMrCfWq+WL
+	 lDmdRckIIQQ5922Tjf+l+XyTCt0aH9rWBACfVdUnpETqXdLPLIEuLKl2ZJk8iABYsE+zz
+	 TAQXnWTIkEj561upTi5QrndR2l5oJ7wsYMxGk+em9oWeVI2efNG+w6S6W3yUwwNHVlsAY
+	 zzbaWl9chiwWRfgVQH40U0V9i6gsWSSbS9hqYu0eXoVbK5U+DICwvojAZ6N9Z38PpyQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e6txiOW8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aCduuC08;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83BD6606A31C;
-	Wed, 18 Nov 2026 17:59:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6066A606A31C;
+	Wed, 18 Nov 2026 17:59:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e6txiOW8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2CF81F000C4;
-	Wed, 18 Nov 2026 17:59:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aCduuC08
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30B51F000C4;
+	Wed, 18 Nov 2026 17:59:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024788;
-	bh=ZM+ye0gnpDDGDwaTHogdpoG/ZKROfOtPenL8y6a+M9o=;
+	s=korg; t=1795024791;
+	bh=cYs8sX/vyLgUz039mzLahhMH3yu5CcccGR4kkT5zRus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e6txiOW8n1MXIj7YQKE07J02rwcvnvJX9MoEC6YJdqfAs2tft4i/O+pCAxOPu/lNj
-	 0UsxnuJEvPh+/R7yUB9DCwSbTMVSJKqUrrdKnVLwQGFhAVXeRlaV7NBGrUE9wjn6wG
-	 hWLcfyCWFQNGy6KdKFv6mroOXhCuMIvaEqQe8uW8=
+	b=aCduuC08xZHUgaFs0IXF87edGTsmf3U66qF+t7/S2IBBzYiA38Nrz8IgjkeFvwBrf
+	 qVHntkUsb1RsoSnpOiafwdI7pqB7M3dAzTIaX1UIttgeAPeKIByMzlBK09HgDNlmQi
+	 /l11ePu2ILbbcv1bid79NKU2bueQd3UACsMJ320c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Peng Fan <peng.fan@nxp.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0849/2151] arm64: dts: imx8qxp-mek: fix dsp reserved memory node names for remoteproc
-Date: Wed, 18 Nov 2026 15:43:04 +0100
-Message-ID: <20261118150153.177828912@linuxfoundation.org>
+Subject: [PATCH 6.18 0850/2151] arm64: dts: imx8ulp-evk: fix reserved memory node names for remoteproc
+Date: Wed, 18 Nov 2026 15:43:05 +0100
+Message-ID: <20261118150153.212136281@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,53 +70,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 715f8f8877d03025a2af98b4128c83441617eb74 ]
+[ Upstream commit f55e49b75c65c3e38e7bbe1d735f79128a50126e ]
 
-The imx_dsp_rproc driver checks for the name "vdev0buffer" to skip
-mapping the vdev buffer region, as it is handled by
-rproc_add_virtio_dev. With the node named "memory", the check fails
-and the region gets unnecessarily mapped.
+The imx_rproc driver checks for the name "vdev0buffer" to skip mapping
+the vdev buffer region, as it is handled by rproc_add_virtio_dev.
+With the node named "vdevbuffer", the check fails and the region gets
+unnecessarily mapped. Rename it to "vdev0buffer" to match what the
+driver expects.
 
-Rename the DSP reserved memory nodes to use proper names for
-consistency with other remoteproc reserved memory regions and to
-ensure the vdev0buffer check works correctly.
-
-Rename the DSP reserved memory nodes to use the expected names so
-the driver can correctly identify and handle each region.
-
-Fixes: f3e22e1d8171 ("arm64: dts: imx8qxp-mek: add dsp rproc-related mem regions")
+Fixes: 014fbffa25a7 ("arm64: dts: imx8ulp-evk: enable CM33 node")
 Signed-off-by: Peng Fan <peng.fan@nxp.com>
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8qxp-mek.dts | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8ulp-evk.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8qxp-mek.dts b/arch/arm64/boot/dts/freescale/imx8qxp-mek.dts
-index 4279510fc5c3b..53e71f4314b31 100644
---- a/arch/arm64/boot/dts/freescale/imx8qxp-mek.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8qxp-mek.dts
-@@ -257,17 +257,17 @@ vdev0buffer: vdev0buffer@90400000 {
+diff --git a/arch/arm64/boot/dts/freescale/imx8ulp-evk.dts b/arch/arm64/boot/dts/freescale/imx8ulp-evk.dts
+index 5dea66c1e7aa0..48a3e40053299 100644
+--- a/arch/arm64/boot/dts/freescale/imx8ulp-evk.dts
++++ b/arch/arm64/boot/dts/freescale/imx8ulp-evk.dts
+@@ -67,7 +67,7 @@ vdev1vring1: vdev1vring1@aff18000 {
  			no-map;
  		};
  
--		dsp_vdev0vring0: memory@942f0000 {
-+		dsp_vdev0vring0: vdev0vring0@942f0000 {
- 			reg = <0 0x942f0000 0 0x8000>;
- 			no-map;
- 		};
- 
--		dsp_vdev0vring1: memory@942f8000 {
-+		dsp_vdev0vring1: vdev0vring1@942f8000 {
- 			reg = <0 0x942f8000 0 0x8000>;
- 			no-map;
- 		};
- 
--		dsp_vdev0buffer: memory@94300000 {
-+		dsp_vdev0buffer: vdev0buffer@94300000 {
+-		vdevbuffer: vdevbuffer@a8400000 {
++		vdev0buffer: vdev0buffer@a8400000 {
  			compatible = "shared-dma-pool";
- 			reg = <0 0x94300000 0 0x100000>;
+ 			reg = <0 0xa8400000 0 0x100000>;
  			no-map;
+@@ -126,7 +126,7 @@ &cm33 {
+ 	mboxes = <&mu 0 1>,
+ 		 <&mu 1 1>,
+ 		 <&mu 3 1>;
+-	memory-region = <&vdevbuffer>, <&vdev0vring0>, <&vdev0vring1>,
++	memory-region = <&vdev0buffer>, <&vdev0vring0>, <&vdev0vring1>,
+ 			<&vdev1vring0>, <&vdev1vring1>, <&rsc_table>;
+ 	status = "okay";
+ };
 -- 
 2.53.0
 
