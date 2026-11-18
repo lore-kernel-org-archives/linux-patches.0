@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054793;
-	b=o604SJS1X908EH50jCk69Zx5/VFit0sNf2atLC1D/NRN2rqjjbdyEUrTBHxRPqOzjAUm
-	 fKZqdJdIi/Nag536vElNg1TWNsz/9LaAS8GcObQNFegb7B4nT3X4KTKO4+MzX2B5KSlqo
-	 wlzXW33MnGBICreY4CUwKhEYTNlTJEt1mNpWxGV0E7TCWxemkHmRUvovmdtUsIJIMr2+i
-	 bJPEIY+owfJ0WWtXgXcne9KMPQPZD+ydW+UBk1kb9wKKo9FNNlr9QBCAG0BR/D82K69xH
-	 vcPyMZCMsgRxpcIz4BvjEU2PXTXqpAexZcdtPLTT4s8RQHcGpMUWBnZMYCS58eIfyaw==
+	t=1795054795;
+	b=KYpZIyO4np+EVIrYvkzOF+8JPiiVkkw2MYxsB+Pl3sW8bWD/TsEQMaDLnbgSPpAnsWxf
+	 5tswmRsqsiknIBRjIo1GKrwyLi6rQyLQFpWoxB7GX9PCdrBz5q/L5GJ+C/n523Mw1kLhF
+	 vbpLsV4YW7hnB6wbU/jnv9DSYD80AllEFQrf68XkGZPfeDv75YZROuZk0AHZLTdd5zLsj
+	 QvFqPehEzITWee35N1oWs2Q/QfIup8ZFfuYmZJeiCV7tGFjXSmkGG60G52PYY3UTlQWpw
+	 LaP67feEAQC4Fs90mnIDW9L4j7gIuSo8Iex2OA4kVmpG9oX+/oWtwk/Y9lpEtysS6Vg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054793;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054795;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=K7iaNwYODcPVcDPDDstGbx7t/fIOecMAouzV5sD6ZX4=;
-	b=5Ch5+8nLGJeOS2obQmUZb+X7DwUbbKOa71jlJeGXcozJWmU4/GwDrlO4xh5LInrtXZTi
-	 KNTuiuNKLh3ErEjbkwQasETA/3OPwk8uOvORbzJIAUnXHf4gJDRslG4YfIvUBsfMgxKEy
-	 oQLWTM++pWwuTtwABAUBOL3BZdJDin6YTUSmzob+996NRXSD71n8VtWB+Fr1+9kZ12/oK
-	 dYHPe7XsFVsNbGxvY+COU2AcLCAiHjapNVL0QIhI8IjAM6hitrMcU2L0HJveWk6F4kQHX
-	 NLdIE0YTcLkB+iUnXLXdd3FsJ1NorkLurktmc2hcWru3SqdI9MdnIyp/C1VdVWvM2KA==
+	bh=eiA/zbiGxuFqBkOCUsysfgldR5yEnDAL+58q2rkLW78=;
+	b=emSME9etrxFs9+vK6UZvthWVEzPuBmtglBd8fh1OCCqWqmPUCWAPmZMGZnXB8I+tGHt7
+	 EXd3zHRva+5Z7ILE0Cc28JUe8dQtNIOozt4opm1LgIZS9LrjgDEx6NW2TlvNwlGdR1hst
+	 uMpqoonkQpGuInyKRmAJ9Pr4YFXLiUpa6ECzp6i0tchYaP6l9sKNpesIXtUDCdSdTCHRS
+	 i5fT9OkQrVPMh7KtlbCoUSR8agDNFtwIbPx3E+WqISGJ3JvCr8UdhE730N+ljWUKOmKYv
+	 8QkAIZF1nrMlXIOmXrUg6byQ5PQymLuHRAxT2/KCsAf2YhyDuG5IPjie/jvJIfQtqQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vYBqP7Gh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eT5oeXba;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0190B606A31C;
-	Thu, 19 Nov 2026 02:19:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D2A606A320;
+	Thu, 19 Nov 2026 02:19:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vYBqP7Gh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 575371F000C4;
-	Thu, 19 Nov 2026 02:19:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eT5oeXba
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D1521F000C4;
+	Thu, 19 Nov 2026 02:19:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054792;
-	bh=K7iaNwYODcPVcDPDDstGbx7t/fIOecMAouzV5sD6ZX4=;
+	s=korg; t=1795054795;
+	bh=eiA/zbiGxuFqBkOCUsysfgldR5yEnDAL+58q2rkLW78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vYBqP7GhtxR3Tg9ccAr9yNbFVbk8KgazL1Z45S1dAn/hsYon+xPeugNdXWbGVaYqp
-	 gMH6rCOEi6UC83qiIccJmI3FX49n8Gi9fOlJYiVEeB11ErChX/IMsvEeY9buDgffmr
-	 uTk1wRnZB9aq3GrdjVA+9Dnv7hKXpZlUMkmZkSU0=
+	b=eT5oeXbarf84cl4pXjI0O5gaAwVxEE0/K4oBP7ZKl/mQf4gN4xrpunyPyvpUKdcHv
+	 BJCaxoB4pAFQ/oO5FXW8zlEUtM1sg/ly/nDQx/dozjAWs7dDKuxhL4rGTNEzVzxAdS
+	 IRKlqpgMpKcOu2uKrsyeuN6cL/2DgoXh5TV3jQWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Sashiko AI review <sashiko-bot@kernel.org>,
+	Manush Prajwal <manushprajwal555@gmail.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1401/2214] pwm: lp3943: Drop usage of pwm_[gs]et_chip_data()
-Date: Wed, 18 Nov 2026 15:51:17 +0100
-Message-ID: <20261118150107.335960408@linuxfoundation.org>
+Subject: [PATCH 5.15 1402/2214] pwm: lp3943: fix NULL pointer dereference for an unconfigured channel
+Date: Wed, 18 Nov 2026 15:51:18 +0100
+Message-ID: <20261118150107.372809157@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,109 +70,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Manush Prajwal <manushprajwal555@gmail.com>
 
-[ Upstream commit 06cc4767750337ad162a0a7bcfd6f6eff6e0fe92 ]
+[ Upstream commit 17dbb6938d3ab444cd6be1c95506450595a8800d ]
 
-Instead of distributing the driver's bookkeeping over 3 (i.e.
-LP3943_NUM_PWMS + 1) separately allocated memory chunks, put all together
-in struct lp3943_pwm. This reduces the number of memory allocations and
-so fragmentation and maybe even the number of cache misses. Also
-&lp3943_pwm->pwm_map[pwm->hwpwm] is cheaper to evaluate than
-pwm_get_chip_data(pwm) as the former is just an addition in machine code
-while the latter involves a function call.
+lp3943_pwm_probe() unconditionally registers a pwmchip with
+LP3943_NUM_PWMS(2) hwpwm channels, but lp3943_pwm_parse_dt() only
+populates pdata->pwms[i] for the channels whose ti,pwm0/ti,pwm1
+property is actually present in the devicetree (the binding
+explicitly allows each PWM generator to drive zero or more outputs,
+and lp3943_pwm_parse_dt() only fails outright with -ENODATA if
+*neither* property is present). A devicetree that configures only one
+of the two channels leaves pdata->pwms[] NULL for the other.
 
-Link: https://lore.kernel.org/r/20230705080650.2353391-5-u.kleine-koenig@pengutronix.de
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
-Stable-dep-of: 17dbb6938d3a ("pwm: lp3943: fix NULL pointer dereference for an unconfigured channel")
+lp3943_pwm_request_map() dereferences pdata->pwms[hwpwm] with no NULL
+check:
+
+	pwm_map->output = pdata->pwms[hwpwm]->output;
+	pwm_map->num_outputs = pdata->pwms[hwpwm]->num_outputs;
+
+so requesting the unconfigured channel (e.g. exporting it from
+sysfs) crashes with a NULL pointer dereference instead of failing
+cleanly.
+
+Return -ENODEV from lp3943_pwm_request_map() when the channel was
+never configured, before the pointer is dereferenced. The caller,
+lp3943_pwm_request(), already propagates an ERR_PTR return correctly
+(it does so today for the existing -EBUSY case).
+
+Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/6a9d4c6b.79b5ea6e.147aa1.5883@mx.google.com?part=1
+Signed-off-by: Manush Prajwal <manushprajwal555@gmail.com>
+Link: https://patch.msgid.link/6a9d5187.d63de05c.175391.a17c@mx.google.com
+Fixes: af66b3c0934e ("pwm: Add LP3943 PWM driver")
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-lp3943.c | 21 +++++++--------------
- 1 file changed, 7 insertions(+), 14 deletions(-)
+ drivers/pwm/pwm-lp3943.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/pwm/pwm-lp3943.c b/drivers/pwm/pwm-lp3943.c
-index 2bd04ecb508cf..725f2abeaefc9 100644
+index 725f2abeaefc9..bafeeaa15f995 100644
 --- a/drivers/pwm/pwm-lp3943.c
 +++ b/drivers/pwm/pwm-lp3943.c
-@@ -23,6 +23,7 @@ struct lp3943_pwm {
- 	struct pwm_chip chip;
- 	struct lp3943 *lp3943;
- 	struct lp3943_platform_data *pdata;
-+	struct lp3943_pwm_map pwm_map[LP3943_NUM_PWMS];
- };
- 
- static inline struct lp3943_pwm *to_lp3943_pwm(struct pwm_chip *_chip)
-@@ -35,13 +36,9 @@ lp3943_pwm_request_map(struct lp3943_pwm *lp3943_pwm, int hwpwm)
- {
- 	struct lp3943_platform_data *pdata = lp3943_pwm->pdata;
- 	struct lp3943 *lp3943 = lp3943_pwm->lp3943;
--	struct lp3943_pwm_map *pwm_map;
-+	struct lp3943_pwm_map *pwm_map = &lp3943_pwm->pwm_map[hwpwm];
+@@ -39,6 +39,9 @@ lp3943_pwm_request_map(struct lp3943_pwm *lp3943_pwm, int hwpwm)
+ 	struct lp3943_pwm_map *pwm_map = &lp3943_pwm->pwm_map[hwpwm];
  	int i, offset;
  
--	pwm_map = kzalloc(sizeof(*pwm_map), GFP_KERNEL);
--	if (!pwm_map)
--		return ERR_PTR(-ENOMEM);
--
++	if (!pdata->pwms[hwpwm])
++		return ERR_PTR(-ENODEV);
++
  	pwm_map->output = pdata->pwms[hwpwm]->output;
  	pwm_map->num_outputs = pdata->pwms[hwpwm]->num_outputs;
  
-@@ -49,10 +46,8 @@ lp3943_pwm_request_map(struct lp3943_pwm *lp3943_pwm, int hwpwm)
- 		offset = pwm_map->output[i];
- 
- 		/* Return an error if the pin is already assigned */
--		if (test_and_set_bit(offset, &lp3943->pin_used)) {
--			kfree(pwm_map);
-+		if (test_and_set_bit(offset, &lp3943->pin_used))
- 			return ERR_PTR(-EBUSY);
--		}
- 	}
- 
- 	return pwm_map;
-@@ -67,7 +62,7 @@ static int lp3943_pwm_request(struct pwm_chip *chip, struct pwm_device *pwm)
- 	if (IS_ERR(pwm_map))
- 		return PTR_ERR(pwm_map);
- 
--	return pwm_set_chip_data(pwm, pwm_map);
-+	return 0;
- }
- 
- static void lp3943_pwm_free_map(struct lp3943_pwm *lp3943_pwm,
-@@ -80,14 +75,12 @@ static void lp3943_pwm_free_map(struct lp3943_pwm *lp3943_pwm,
- 		offset = pwm_map->output[i];
- 		clear_bit(offset, &lp3943->pin_used);
- 	}
--
--	kfree(pwm_map);
- }
- 
- static void lp3943_pwm_free(struct pwm_chip *chip, struct pwm_device *pwm)
- {
- 	struct lp3943_pwm *lp3943_pwm = to_lp3943_pwm(chip);
--	struct lp3943_pwm_map *pwm_map = pwm_get_chip_data(pwm);
-+	struct lp3943_pwm_map *pwm_map = &lp3943_pwm->pwm_map[pwm->hwpwm];
- 
- 	lp3943_pwm_free_map(lp3943_pwm, pwm_map);
- }
-@@ -154,7 +147,7 @@ static int lp3943_pwm_set_mode(struct lp3943_pwm *lp3943_pwm,
- static int lp3943_pwm_enable(struct pwm_chip *chip, struct pwm_device *pwm)
- {
- 	struct lp3943_pwm *lp3943_pwm = to_lp3943_pwm(chip);
--	struct lp3943_pwm_map *pwm_map = pwm_get_chip_data(pwm);
-+	struct lp3943_pwm_map *pwm_map = &lp3943_pwm->pwm_map[pwm->hwpwm];
- 	u8 val;
- 
- 	if (pwm->hwpwm == 0)
-@@ -173,7 +166,7 @@ static int lp3943_pwm_enable(struct pwm_chip *chip, struct pwm_device *pwm)
- static void lp3943_pwm_disable(struct pwm_chip *chip, struct pwm_device *pwm)
- {
- 	struct lp3943_pwm *lp3943_pwm = to_lp3943_pwm(chip);
--	struct lp3943_pwm_map *pwm_map = pwm_get_chip_data(pwm);
-+	struct lp3943_pwm_map *pwm_map = &lp3943_pwm->pwm_map[pwm->hwpwm];
- 
- 	/*
- 	 * LP3943 outputs are open-drain, so the pin should be configured
 -- 
 2.53.0
 
