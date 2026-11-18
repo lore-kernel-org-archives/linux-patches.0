@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031504;
-	b=t6VPtXJQT/DdtOPZ7Dh8MMUlcG6E/v34bg/Odclze9lp1wbCbiVSii4/WF3o+Orpgtl6
-	 uY5nHv8nnNV6oJd6WAsBFHvkMO+F34snzuUTL0HvHqNuhD8FmwbqX6jy5xn0wPIKpjLji
-	 OjIISdM7TdnHUi5nUw2dk4zWu9yclcHyuMjAtJPSP+kJz8exNX0pGuRCtp3gYv6lxz4Yk
-	 iF2ScAdvhnf21KJLYc8oeWSuf4mBvr6iTiVm1TjpH+nZSdUCvj6uosQnVxSv4uDwG21BO
-	 6UP/2JKFwYWmu0MvNxnUenUYlIpTXP1CbVsmIqyng3ovRlyW0CKtZ7WoCLW/JfMm9wg==
+	t=1795031507;
+	b=c43XRLZAVR6N3X8zr2ctscP5CCjp+yu8H67segoo+aoLqKfRzW9MeomJn1KS6XPGNuDk
+	 1vOaQ8k0AcQGzQFXsr0i2zkz/gdxxpvzoNsA+//FjEendTgiSQLHpiEKOoou8TsC6p1qS
+	 DROl55faEYHDoFqiVWmhN/CSeCjRn4BBntT5ldaAWGRF+MHUVJsEUb9aEYMFHXSP9kQv2
+	 RMI2WtM4xAaOnSbumKNcQLxv+8LfAYHbc5X1aWM/XfROZEDmn58aUqTpq0LDe6UL8Jt8K
+	 61prJuXgJ8J6qC8uKZiEBO/VqpUS/RGc6qx9Kydi0t7NyL+aabwTR+uu3USJpxra4AA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031504;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031507;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=9vvsntkVzCzplSBHEzSnLYNiBWpYzevp6KoOeo7bxVo=;
-	b=WiDeoTtfJmaOr8sKFK8WVwnOcwtIO6svOGbPAWU0QdzFy7AUrjr+q0zDnlZelSiVzli8
-	 Jz1wF2ZW11oh6tFwbhypZeggxV19btrYDhvYZqYg8FOmQSxExvW1emc7uKIW95cTPsWVX
-	 Kvd8WJnGxa/bufAmTdRw8i+kCIZsPVlU7MCSoQkM5fYQ83LpWy8w5W70s5XUmbKJns9fb
-	 Mg4LJOaguKBG4xhKow9iGp7oThqOS9+VZfAmt3cqDKD9f9JiZrJQcNY18QbCKU6TljZ0I
-	 ff9q0Nc9MDMmoWWAyDl9X9p4iXhTeyXz7zo53hKCqsbr8MO48WCCHIzTiWslgFcjxZA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=XpNWKUWbGYnFtCpUtY19EPfTVewlgQikB0y8x8Jep2I=;
+	b=K6lD4IJ97sxf4d042M6sfaRW/GjBA48tIrpi+yqSM5X3ebYp3OYaAxT8WInXHKJLea1V
+	 cDLTlsQIVB+Enj0HaIno4B3vunrow9udcogB0U6Y8WrBmccHxJKlkKeTn3vv9hWHrenPF
+	 bA4s8/8jYRJMvWebOJdzgKK3XXrIr4lTggcT9Y9sfsVIAUs4iy+oCW8Miz1e6B+w2ooB/
+	 J/zBtN/bInlTpHPvGsKzuMKMEH/tHsFy+Iv8RLsFtCuQFvJgH7/6IBeGX219jxV2BNlZN
+	 b+ZhCsjJ16woFXKBUdjHMQZtekMrTlYNLRq93hQCBNok526y8ff1r7KuHIX1TlEVrAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OebDzYXO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JLy1r7+C;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E400606A320;
-	Wed, 18 Nov 2026 19:51:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63737606A325;
+	Wed, 18 Nov 2026 19:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OebDzYXO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BC0D1F000C4;
-	Wed, 18 Nov 2026 19:51:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JLy1r7+C
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 642A41F000C4;
+	Wed, 18 Nov 2026 19:51:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031504;
-	bh=9vvsntkVzCzplSBHEzSnLYNiBWpYzevp6KoOeo7bxVo=;
+	s=korg; t=1795031506;
+	bh=XpNWKUWbGYnFtCpUtY19EPfTVewlgQikB0y8x8Jep2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OebDzYXO3rv8Z8v8e/vyXcPAq63bY5BXvJ5Xx5rm0riKSeDx0WMZ5AAEy1ZTYmlrQ
-	 flZ5DDeucuVVIAlETUA1G44d+CmW1ajZmd9je1dhtjVpHlPRcTJcD+SNDkYAtjLMP+
-	 8XoytQlbKGNiU9FXHji+DqEUn4TBWqOrilrIoYCc=
+	b=JLy1r7+Cs6jzJZnfGQwtXPFSmaPzOWMlbW0rdiM8Yq8JkEO4TLVt8+WTyWkaelI60
+	 pRkGwHwKFgi4HET4yBDgurkr562nIUsPk4NeZbKnlskZPWU/+MnX6zoXw+OSy2Vuk/
+	 VNWqQw47NKbwTVoMQsZ6zqxphK/kIzt/YMEsIxiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Bergantinos Corpas <rbergant@redhat.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alvin.sipraga@analog.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1082/1756] nfs: set gencount on protocol-specific remove
-Date: Wed, 18 Nov 2026 15:53:29 +0100
-Message-ID: <20261118150053.284053616@linuxfoundation.org>
+Subject: [PATCH 6.12 1083/1756] ASoC: codecs: rt5659: propagate GPIO errors
+Date: Wed, 18 Nov 2026 15:53:30 +0100
+Message-ID: <20261118150053.317296314@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -62,178 +63,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Roberto Bergantinos Corpas <rbergant@redhat.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 8c955dacf45f8964b98f26910ffecb5e26c02e31 ]
+[ Upstream commit c1e321bd5ce6ae3702db65837cfe0c792634d603 ]
 
-commit bd4928ec799b ("NFS: Avoid changing nlink when file removes and
-attribute updates race") avoids races on attribute cache with any
-inflight RPC that may modify inode attributes (and gencount) during
-i.e. REMOVE.
+devm_gpiod_get_optional() may return an error pointer, including
+-EPROBE_DEFER, but rt5659_i2c_probe() does not handle these errors
+for the ldo1-en GPIO and does not check for errors for the reset GPIO.
 
-However it does not take into account that REMOVE may trigger
-a delegation return which also advances gencount (via the attribute
-refresh during delegation return), and in that case the gencount
-mismatch is not due to an inflight RPC that already reflected the
-removal.
+Check the return values and propagate GPIO lookup errors.
 
-Push the setting of gencount under each version-specific layer,
-reordering correctly for nfsv4 case after the delegation returns.
-
-This fixes LTP/inotify04 failure after bd4928ec799b.
-
-Fixes: bd4928ec799b ("NFS: Avoid changing nlink when file removes and attribute updates race")
-Signed-off-by: Roberto Bergantinos Corpas <rbergant@redhat.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Fixes: d3cb2de2479b ("ASoC: rt5659: add rt5659 codec driver")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Reviewed-by: Alvin Šipraga <alvin.sipraga@analog.com>
+Link: https://patch.msgid.link/20261009112204.33199-2-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/dir.c      | 13 +++----------
- fs/nfs/internal.h |  1 +
- fs/nfs/nfs3proc.c |  8 ++++++++
- fs/nfs/nfs4proc.c |  5 +++++
- fs/nfs/proc.c     |  8 ++++++++
- 5 files changed, 25 insertions(+), 10 deletions(-)
+ sound/soc/codecs/rt5659.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/dir.c b/fs/nfs/dir.c
-index 0356b80e4a357..3b07cda9a8f43 100644
---- a/fs/nfs/dir.c
-+++ b/fs/nfs/dir.c
-@@ -1904,7 +1904,7 @@ static int nfs_dentry_delete(const struct dentry *dentry)
- }
+diff --git a/sound/soc/codecs/rt5659.c b/sound/soc/codecs/rt5659.c
+index d2944a43c205a..9ca71edc19dee 100644
+--- a/sound/soc/codecs/rt5659.c
++++ b/sound/soc/codecs/rt5659.c
+@@ -4112,10 +4112,14 @@ static int rt5659_i2c_probe(struct i2c_client *i2c)
+ 	rt5659->gpiod_ldo1_en = devm_gpiod_get_optional(&i2c->dev, "ldo1-en",
+ 							GPIOD_OUT_HIGH);
+ 	if (IS_ERR(rt5659->gpiod_ldo1_en))
+-		dev_warn(&i2c->dev, "Request ldo1-en GPIO failed\n");
++		return dev_err_probe(&i2c->dev, PTR_ERR(rt5659->gpiod_ldo1_en),
++				     "failed to get ldo1-en GPIO\n");
  
- /* Ensure that we revalidate inode->i_nlink */
--static void nfs_drop_nlink(struct inode *inode, unsigned long gencount)
-+void nfs_drop_nlink(struct inode *inode, unsigned long gencount)
- {
- 	struct nfs_inode *nfsi = NFS_I(inode);
+ 	rt5659->gpiod_reset = devm_gpiod_get_optional(&i2c->dev, "reset",
+ 							GPIOD_OUT_HIGH);
++	if (IS_ERR(rt5659->gpiod_reset))
++		return dev_err_probe(&i2c->dev, PTR_ERR(rt5659->gpiod_reset),
++				     "failed to get reset GPIO\n");
  
-@@ -1918,6 +1918,7 @@ static void nfs_drop_nlink(struct inode *inode, unsigned long gencount)
- 			       NFS_INO_INVALID_NLINK);
- 	spin_unlock(&inode->i_lock);
- }
-+EXPORT_SYMBOL_GPL(nfs_drop_nlink);
- 
- /*
-  * Called when the dentry loses inode.
-@@ -2522,7 +2523,6 @@ EXPORT_SYMBOL_GPL(nfs_rmdir);
- static int nfs_safe_remove(struct dentry *dentry)
- {
- 	struct inode *dir = d_inode(dentry->d_parent);
--	struct inode *inode = d_inode(dentry);
- 	int error = -EBUSY;
- 		
- 	dfprintk(VFS, "NFS: safe_remove(%pd2)\n", dentry);
-@@ -2534,14 +2534,7 @@ static int nfs_safe_remove(struct dentry *dentry)
- 	}
- 
- 	trace_nfs_remove_enter(dir, dentry);
--	if (inode != NULL) {
--		unsigned long gencount = READ_ONCE(NFS_I(inode)->attr_gencount);
--
--		error = NFS_PROTO(dir)->remove(dir, dentry);
--		if (error == 0)
--			nfs_drop_nlink(inode, gencount);
--	} else
--		error = NFS_PROTO(dir)->remove(dir, dentry);
-+	error = NFS_PROTO(dir)->remove(dir, dentry);
- 	if (error == -ENOENT)
- 		nfs_dentry_handle_enoent(dentry);
- 	trace_nfs_remove_exit(dir, dentry, error);
-diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
-index da7087c80ceab..ea0524be7c743 100644
---- a/fs/nfs/internal.h
-+++ b/fs/nfs/internal.h
-@@ -396,6 +396,7 @@ extern unsigned long nfs_access_cache_count(struct shrinker *shrink,
- 					    struct shrink_control *sc);
- extern unsigned long nfs_access_cache_scan(struct shrinker *shrink,
- 					   struct shrink_control *sc);
-+extern void nfs_drop_nlink(struct inode *inode, unsigned long gencount);
- struct dentry *nfs_lookup(struct inode *, struct dentry *, unsigned int);
- void nfs_d_prune_case_insensitive_aliases(struct inode *inode);
- int nfs_create(struct mnt_idmap *, struct inode *, struct dentry *,
-diff --git a/fs/nfs/nfs3proc.c b/fs/nfs/nfs3proc.c
-index b02ea9fc812da..c7be4fe0e0f15 100644
---- a/fs/nfs/nfs3proc.c
-+++ b/fs/nfs/nfs3proc.c
-@@ -448,13 +448,21 @@ nfs3_proc_remove(struct inode *dir, struct dentry *dentry)
- 		.rpc_resp = &res,
- 	};
- 	int status = -ENOMEM;
-+	struct inode *inode = d_inode(dentry);
-+	unsigned long gencount;
- 
- 	dprintk("NFS call  remove %pd2\n", dentry);
- 	res.dir_attr = nfs_alloc_fattr();
- 	if (res.dir_attr == NULL)
- 		goto out;
- 
-+	if (inode)
-+		gencount = READ_ONCE(NFS_I(inode)->attr_gencount);
-+
- 	status = rpc_call_sync(NFS_CLIENT(dir), &msg, 0);
-+	if (status == 0 && inode)
-+		nfs_drop_nlink(inode, gencount);
-+
- 	nfs_post_op_update_inode(dir, res.dir_attr);
- 	nfs_free_fattr(res.dir_attr);
- out:
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 760171dead8ef..cc14a62a23d74 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -4915,12 +4915,14 @@ static int nfs4_proc_remove(struct inode *dir, struct dentry *dentry)
- 	};
- 	struct inode *inode = d_inode(dentry);
- 	int err;
-+	unsigned long gencount;
- 
- 	if (inode) {
- 		if (inode->i_nlink == 1)
- 			nfs4_inode_return_delegation(inode);
- 		else
- 			nfs4_inode_make_writeable(inode);
-+		gencount = READ_ONCE(NFS_I(inode)->attr_gencount);
- 	}
- 	do {
- 		err = _nfs4_proc_remove(dir, &dentry->d_name, NF4REG);
-@@ -4928,6 +4930,9 @@ static int nfs4_proc_remove(struct inode *dir, struct dentry *dentry)
- 		err = nfs4_handle_exception(NFS_SERVER(dir), err,
- 				&exception);
- 	} while (exception.retry);
-+
-+	if (err == 0 && inode)
-+		nfs_drop_nlink(inode, gencount);
- 	return err;
- }
- 
-diff --git a/fs/nfs/proc.c b/fs/nfs/proc.c
-index 6c09cd090c34c..81173f90aa1d8 100644
---- a/fs/nfs/proc.c
-+++ b/fs/nfs/proc.c
-@@ -322,9 +322,17 @@ nfs_proc_remove(struct inode *dir, struct dentry *dentry)
- 		.rpc_argp = &arg,
- 	};
- 	int			status;
-+	struct inode *inode = d_inode(dentry);
-+	unsigned long gencount;
- 
- 	dprintk("NFS call  remove %pd2\n",dentry);
-+	if (inode)
-+		gencount = READ_ONCE(NFS_I(inode)->attr_gencount);
-+
- 	status = rpc_call_sync(NFS_CLIENT(dir), &msg, 0);
-+	if (status == 0 && inode)
-+		nfs_drop_nlink(inode, gencount);
-+
- 	nfs_mark_for_revalidate(dir);
- 
- 	dprintk("NFS reply remove: %d\n", status);
+ 	/* Sleep for 300 ms miniumum */
+ 	msleep(300);
 -- 
 2.53.0
 
