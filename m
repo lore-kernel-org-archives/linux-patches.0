@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031787;
-	b=j8u5EybW4Ag9QmRZ7YMYpPXWTyl2DeDM0vsMgr1OBHSyA8J2s/OUdsshWz2+gFq7LnpX
-	 rEWhTGph73qzkNza7oKPnfMDfMm90Rfa2mqJatlAU99DGvzR30Psim8ZTUzXlEFTpB8G7
-	 ZjXn4hwesIjucH4dEq8PRGKUF+naGo+P3tuhDUdW66jUXd7JhdUCf9p2eDusgDKjKUJj6
-	 s4KXBsCACJ7NZrjYRUg25gp3jGxCAWcLCzTZV0tQSY0k1VK/WYJiMn+w7usiLTT7F+M5W
-	 b6qgAdau7bQP/IrRKPFAc8a6TWKa96ZmS4pWkDyV7mjFqukOMt32bunrJ9dKfruDoBg==
+	t=1795031789;
+	b=b56rz2XknRu6EMuouaEF5iiYXQtKJHBXpDrF774EyPXTVVWV0EDjowNkRUMmAQi5mQrw
+	 wtPd85BmtHEbwldmutjiRY/h3zuu2TYWwRHyVzWRHAvjxmZbj/8HkvcTJHwpGnN9OtBBc
+	 hbb3hK/rMZm8BSqA5DJmeHF9qn7V6IgCi9G0zcmGyc3HykPhwD/jHBuvcUONMEwJC5Wjn
+	 w8P9+2z6taRNQdld1PC+t2nQqodTz/ne+pv2L/57ZS9D4odnfQHDGK+GD7zVo9J6zbrYy
+	 SO3dpnI/eD8fnoZP6rewZJHIk36z/IbYcBuP7/4R9+wG3blAZQqsDsQ6SIEaqbosZKQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031787;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031789;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BCoBTSj7v3971ftzTxhMbjbCyicAkztXiLcqVZjbth8=;
-	b=u2CRs7mDY0SFEBPzwKGRVxRZMjJsHpZQ7fpAXIEkWSUvxk1bGFhHv5rDyEV2ZQNLqoVd
-	 EL7r2aJqlquQ1jrDtAfQ0AWg6nwH1aVxpfxMc8VxOCtxdUZifZfG31yzw8x1/RL0kYuQC
-	 OeiSWM9vrMhyFeObkVL+ojSsDAfKpVf8GWjRKH0Aci/hqwZc/FqWZmbJab/4A1rKvBy8/
-	 WF8906uS4KLUZrNy5A8ffUI8TQISx67mSuEwVmucV2fHD4HT0UKcxGCf3Q0Io0deS6cV0
-	 aSgCWQ7eelLhz1m9UuM/F/FzIEhUjog2iGm12QajxHkCI6OLHG9Y1sfV12S09QWK2bA==
+	bh=2I7Hdg4OHiLDSMBaGT8vbHgijmMGHOOue2Gv4sCM8uY=;
+	b=y7AreLShyNmNemjpUGur0SVwJvsl+1+7+L69O3qXge2KsswopzBPF5xvuXvuA8dJPbPc
+	 tg7NjG5J61rBUBKZWUMqFEf2dHmG5dxuk4qMFeAyEd+0UpDgRDxRQs7wAW0OBiPG2WI/C
+	 hYWtJDpc9u8DAUcrqqJpA730u4+HEYcBxZ90cKFI8iDtzDs6PBDQJX0cCLMuiN07djwWn
+	 grQZwwfst6oWiBbgDZLsZC2KgPPGp9eRzd/Vsbj0MdcMEm56/rzYEeTo3ljbickgjd+G4
+	 nRAk90f+EEDCePjRg6kKnXTnVBGltXHKjj7sg8Z6nsC3m6RVrc5OPN7nX2m3r/EgBAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t6TkVHd0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WopcaR3b;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0470C606A32C;
-	Wed, 18 Nov 2026 19:56:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5495D606A32A;
+	Wed, 18 Nov 2026 19:56:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t6TkVHd0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04A481F000C4;
-	Wed, 18 Nov 2026 19:56:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WopcaR3b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFF381F000C4;
+	Wed, 18 Nov 2026 19:56:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031786;
-	bh=BCoBTSj7v3971ftzTxhMbjbCyicAkztXiLcqVZjbth8=;
+	s=korg; t=1795031789;
+	bh=2I7Hdg4OHiLDSMBaGT8vbHgijmMGHOOue2Gv4sCM8uY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t6TkVHd0ZqOTCY5BspIWl4iygcCoMuBR8QNaThcNP2Ie0nYYayX0QvNVwfYkwFalu
-	 L6I3PyhVyRNDsH5vFl/PQ0mBpI6dt+OlBIWLWVO+vEvp234wCzY6SkrqHlGYEMiECP
-	 3E7kP8Cq7QUiMTU5bGT95rFh023n2msvbsjmVUFY=
+	b=WopcaR3be25r8mezYuLSVXvadNQrbcDSvwJpO4JLMwZwLgcWJvZScBHXsExFdAW+d
+	 gmoUbDAYaSAVw/kNM6TkGSs/6o87aViZCE5zwCBRDu3y09ix78W6OJMEwNSlzvfFx6
+	 IJ0Tn2aMgl+FAMyqAgtCUYYaHHdShhnpGzWR9xSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Weigang He <geoffreyhe2@gmail.com>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1180/1756] ALSA: usb-audio: Use fixed control index for us16x08 mixer elements
-Date: Wed, 18 Nov 2026 15:55:07 +0100
-Message-ID: <20261118150056.899360798@linuxfoundation.org>
+Subject: [PATCH 6.12 1181/1756] thermal/drivers/sprd: validate the sensor id from the device tree
+Date: Wed, 18 Nov 2026 15:55:08 +0100
+Message-ID: <20261118150056.933619968@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,114 +68,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Weigang He <geoffreyhe2@gmail.com>
 
-[ Upstream commit a68a688ce220f1b359bec53fa38d1504314dc70f ]
+[ Upstream commit b17d799ce49bfaad68be5ff3df995b3bd021a9d7 ]
 
-The callbacks for us16x08 mixer elements assume that id.index points
-to the channel to be operated, and the assumption is correct for now.
-However, since the kctls are added via snd_usb_mixer_add_control() and
-it looks for the empty slot if the same control name is already
-present, in theory, the index can become more than the channel numbers
-(if a conflicting name really happens).
+sprd_thm_probe() reads each sensor child node's "reg" property into
+sen->id and uses it without validation: to compute the sensor's
+register offsets in sprd_thm_sensor_init(), as the thermal zone id, and
+finally as an index into thm->sensor[], which has SPRD_THM_MAX_SENSOR
+(8) entries:
 
-Since the mixer code in us16x08 doesn't need the search for an empty
-slot but requires the fixed index, this patch changes slightly how to
-assign the kcontrols.  Now, a new argument is added to
-snd_usb_mixer_add_list() in order to disable the empty slot search,
-and use it in us16x08's add_new_ctl() helper function, instead.
+	ret = of_property_read_u32(sen_child, "reg", &sen->id);
+	...
+	thm->sensor[sen->id] = sen;
 
-Fixes: d2bb390a2081 ("ALSA: usb-audio: Tascam US-16x08 DSP mixer quirk")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://patch.msgid.link/20261014061406.162938-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Only the number of sensor nodes is checked against SPRD_THM_MAX_SENSOR.
+A "reg" value of 8 or more, or one that is negative once stored in the
+int sen->id, makes the register offsets point outside the sensor range
+and the final store land outside thm->sensor[], overwriting the fields
+that follow it in struct sprd_thermal_data or other memory.
+
+Reject an out-of-range id right after reading it, before it is used.
+
+This does not address sparse ids, such as a single sensor with id 7:
+they leave holes in thm->sensor[] that the later loops over
+0..nr_sensors-1 dereference. That needs a separate fix.
+
+Found by static analysis tool CodeQL.
+
+Fixes: 554fdbaf19b1 ("thermal: sprd: Add Spreadtrum thermal driver support")
+Assisted-by: LLM codeql
+Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Link: https://patch.msgid.link/20260926042757.2109927-1-geoffreyhe2@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer.c         | 13 +++++++++----
- sound/usb/mixer.h         |  5 +++--
- sound/usb/mixer_quirks.c  |  2 +-
- sound/usb/mixer_us16x08.c |  3 ++-
- 4 files changed, 15 insertions(+), 8 deletions(-)
+ drivers/thermal/sprd_thermal.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
-index 07c373822e2ee..ae311c95ac023 100644
---- a/sound/usb/mixer.c
-+++ b/sound/usb/mixer.c
-@@ -581,20 +581,25 @@ static int check_matrix_bitmap(unsigned char *bmap,
+diff --git a/drivers/thermal/sprd_thermal.c b/drivers/thermal/sprd_thermal.c
+index 3ce97f1e6e08b..7b867c87a1134 100644
+--- a/drivers/thermal/sprd_thermal.c
++++ b/drivers/thermal/sprd_thermal.c
+@@ -396,6 +396,12 @@ static int sprd_thm_probe(struct platform_device *pdev)
+ 			goto of_put;
+ 		}
  
- /*
-  * add an alsa control element
-- * search and increment the index until an empty slot is found.
-+ * when @look_for_empty is set, search and increment the index until an empty
-+ * slot is found.
-  *
-  * if failed, give up and free the control instance.
-  */
- 
- int snd_usb_mixer_add_list(struct usb_mixer_elem_list *list,
- 			   struct snd_kcontrol *kctl,
--			   bool is_std_info)
-+			   bool is_std_info,
-+			   bool look_for_empty)
- {
- 	struct usb_mixer_interface *mixer = list->mixer;
- 	int err;
- 
--	while (snd_ctl_find_id(mixer->chip->card, &kctl->id))
--		kctl->id.index++;
-+	if (look_for_empty) {
-+		while (snd_ctl_find_id(mixer->chip->card, &kctl->id))
-+			kctl->id.index++;
-+	}
++		if (sen->id < 0 || sen->id >= SPRD_THM_MAX_SENSOR) {
++			dev_err(&pdev->dev, "invalid sensor id %d\n", sen->id);
++			ret = -EINVAL;
++			goto of_put;
++		}
 +
- 	err = snd_ctl_add(mixer->chip->card, kctl);
- 	if (err < 0) {
- 		usb_audio_dbg(mixer->chip, "cannot add control (err = %d)\n",
-diff --git a/sound/usb/mixer.h b/sound/usb/mixer.h
-index 08d472c5ef7b5..8e5e8da6d480f 100644
---- a/sound/usb/mixer.h
-+++ b/sound/usb/mixer.h
-@@ -110,10 +110,11 @@ int snd_usb_mixer_set_ctl_value(struct usb_mixer_elem_info *cval,
- 
- int snd_usb_mixer_add_list(struct usb_mixer_elem_list *list,
- 			   struct snd_kcontrol *kctl,
--			   bool is_std_info);
-+			   bool is_std_info,
-+			   bool look_for_empty);
- 
- #define snd_usb_mixer_add_control(list, kctl) \
--	snd_usb_mixer_add_list(list, kctl, true)
-+	snd_usb_mixer_add_list(list, kctl, true, true)
- 
- void snd_usb_mixer_elem_init_std(struct usb_mixer_elem_list *list,
- 				 struct usb_mixer_interface *mixer,
-diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
-index 18e41ea179565..8d4ca3e5f85fa 100644
---- a/sound/usb/mixer_quirks.c
-+++ b/sound/usb/mixer_quirks.c
-@@ -165,7 +165,7 @@ static int add_single_ctl_with_resume(struct usb_mixer_interface *mixer,
- 	}
- 	kctl->private_free = snd_usb_mixer_elem_free;
- 	/* don't use snd_usb_mixer_add_control() here, this is a special list element */
--	return snd_usb_mixer_add_list(list, kctl, false);
-+	return snd_usb_mixer_add_list(list, kctl, false, true);
- }
- 
- /*
-diff --git a/sound/usb/mixer_us16x08.c b/sound/usb/mixer_us16x08.c
-index 60565d5f113e3..83d4acf1a70e9 100644
---- a/sound/usb/mixer_us16x08.c
-+++ b/sound/usb/mixer_us16x08.c
-@@ -1128,7 +1128,8 @@ static int add_new_ctl(struct usb_mixer_interface *mixer,
- 
- 	strscpy(kctl->id.name, name, sizeof(kctl->id.name));
- 
--	err = snd_usb_mixer_add_control(&elem->head, kctl);
-+	/* look_for_empty=false, as we want the fixed id.index as channel */
-+	err = snd_usb_mixer_add_list(&elem->head, kctl, true, false);
- 	if (err < 0)
- 		return err;
- 
+ 		ret = sprd_thm_sensor_calibration(sen_child, thm, sen);
+ 		if (ret) {
+ 			dev_err(&pdev->dev, "efuse cal analysis failed");
 -- 
 2.53.0
 
