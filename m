@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026283;
-	b=eiuBMZmcbJ/s6nXWcOn7hOU79O3fU0Jvi5VYb0DuXhHpXYspqUK+bkkHWSJ+tgOi+Vg6
-	 qg2FtblVjNeN3Ee36EsE41VJNGExqGVi9NWwdP/KrG2/dDdni729iGq+1xg+yBf8RND9o
-	 CqSUWg/fWTBz5MO35PhEUdIN7BSMJQAAqTYolfxs4QdOeDe5PpAMkpwW4UZyRX8DZDQWZ
-	 jsDZHAD2+lihvrR5+wIWPNtb8lb9bzJFHOk7tPcji9qIuMuxIcy5YGa6/IgjpMm3wwlqi
-	 gkUwCd1911ejQazNplBDIOOSPG1vTgNMiV7qMtPy4pAnntK9O2EprY2O+gaA+FDf+4A==
+	t=1795026286;
+	b=COVyMdW+p98XU0hmWxt4lO0TiAhYkkWm9Qi+tLBvni6X4ENWCmGmrm+NJq3RDXyiA+2r
+	 6V0zsNLo/Mf3zVsAbrCAb5SwWWHLP3eJC9SLvcRBxXxk9xB5qBZQ2f4RS00vxjpXhszNv
+	 4kgf5pXcjZ9wmgfxBTlo+UL8o2lvgPkqwND4+aXcJFykwhXOc9YA2e4KcED7Biv5mUmsF
+	 w0lzbmgYP9AkYQ0d9rQaoWpLJ04blSdnXTN+qPp0WGQEFG7QusUi4EK+cw9g811X/Ir5z
+	 IMGQ8PPHD4N9ELjgQi6t1P3fqHgVyjumHh+g2U1XzXIauXSPH6JoA93EmudfERz4W8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026283;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026286;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=0kG3I0U4lICnZN0d+T3uIut3IgAGOlMQq6k4AjcVyPc=;
-	b=Vj4eK8v63EDIphCIezbBDxX1fU0eAGZ/AOkxS8o7JgrMomOD47O4PjAulndUsBNaWRZv
-	 TqggfSijJDZzWdQbRwoz6Di3b8eeWRfgeP7+5/e+hjYcgU2+0Ii9H+/JF03ll04uMqdWS
-	 EE8E3tjQEaoVaSWSKwItDw5S1rUOZV9niL8QTDhG3bgdilsj3W2uzK1LtQtyPl10SWnSI
-	 A/+KUOkAnbPSqHfMbWHE+wK2Ac7ZHydggtgMYsQRrqRQxFEcDfdGvd7pmB1Zwr15snVyX
-	 +mLr9KGcOWEK1IFKHqUBDMdaDISWXKlspeSC2lHsVwlZRx8DwHa/iuVibHv91+kZkiw==
+	bh=uadz7bt82yyKxdiiy7lScBgLP+76x2j0xlX6BCdl2UA=;
+	b=ALkLr6WBPl64Ec1xmRxiFONGockl+QwslAO6HZ7NoxibT/SvL8hgOQmaKDxbI3dQDWWH
+	 Or4fxRte+Jf4Lbm73bANOnxfvEVumSCWMj7ksAxb2oxzZZJf3V33ZVx+EcMnSjvOjY/9t
+	 zaxKCdOSaO3U6LX7z5oQ1xNham2vsT43alDtNTKImNjtjGD092rkQsRIHgjg1wVudOboW
+	 oYD+qA62YxcGKek/KLeHYH3Av0XoMgqT3cqsW4tKzhONwAzuHtTfU8b+QQZ834nrM8KhJ
+	 cV7mL9yYKk6kEPAzyezMnmmubnSbbwM/jQZx3iW/mjYqZ/kbTz+cP6iRH7yzZMIReuw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mHHsvNG8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="kaGJ7W/w";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6361B606A32A;
-	Wed, 18 Nov 2026 18:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9334C606A32F;
+	Wed, 18 Nov 2026 18:24:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mHHsvNG8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B12971F000C4;
-	Wed, 18 Nov 2026 18:24:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kaGJ7W/w
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99DED1F000C4;
+	Wed, 18 Nov 2026 18:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026283;
-	bh=0kG3I0U4lICnZN0d+T3uIut3IgAGOlMQq6k4AjcVyPc=;
+	s=korg; t=1795026286;
+	bh=uadz7bt82yyKxdiiy7lScBgLP+76x2j0xlX6BCdl2UA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mHHsvNG8UH+E5x/cYUZV1YvEK5Dzr5h0mITHrVVLGK+oAyBjZWGLraZSgh4AH1JcB
-	 SyZYrAXAgRjv8cSTxqcHHC70XJqcZhNkqVxw8fXpO67s9M4Gwchl4a0iizNIUKmFoZ
-	 Gzke/hspOGwroxo2jvuBFl2JTz/GIcPbGWMqZWd4=
+	b=kaGJ7W/wKTug62AlVy6EQ7pSuNTub3wyI4p3Lf/fewvHSYGH5F0CF2Wa0Qc9Xy9jr
+	 KWlVh4lN6srfDKUY75QyGFVtcsGdp+d7F5k6rrIObA1jOls5H9lAFzBm9gGkBshdCI
+	 /ZfJlRUPD3GzqHd/vf7YE43AlM8cer/0opAQdHAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ali=20Ahmet=20Memi=C5=9F?= <aliamemis@disroot.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Steven Price <steven.price@arm.com>,
+	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1338/2151] ALSA: control_led: Fix deadlock between sysfs writes and card disconnect
-Date: Wed, 18 Nov 2026 15:51:13 +0100
-Message-ID: <20261118150210.795488031@linuxfoundation.org>
+Subject: [PATCH 6.18 1339/2151] drm/panfrost: Explicitly enable MMU interrupts at device init
+Date: Wed, 18 Nov 2026 15:51:14 +0100
+Message-ID: <20261118150210.832032347@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,127 +70,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memiş <aliamemis@disroot.org>
+From: Adrián Larumbe <adrian.larumbe@collabora.com>
 
-[ Upstream commit 682d6bb5f783adea7fa2a5b05166bff01b338081 ]
+[ Upstream commit 8a597d099b8b2f25df655cbe8e30765013784fed ]
 
-snd_ctl_led_disconnect() removes the ctl-led sysfs files while
-holding card->controls_rwsem. device_unregister() waits for running
-sysfs callbacks which can deadlock when a concurrent write causes
-the attach or detach callback to wait for controls_rwsem.
+Because the device must be in a position to accept jobs between the time
+drm_dev_register() is called and autosuspend first kicks in, there's a very
+narrow window inbetween during which jobs targeting the tiler buffer
+object would time out, since the device's PM status is 'Active', but no MMU
+interrupts were enabled at device initialisation time.
 
-Break kernfs active protection in the attach, detach and list
-callbacks and hold a module reference instead.
-
-Fixes: a135dfb5de15 ("ALSA: led control - add sysfs kcontrol LED marking layer")
-Signed-off-by: Ali Ahmet Memiş <aliamemis@disroot.org>
-Link: https://patch.msgid.link/20261011180627.1594051-1-aliamemis@disroot.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Fixes: 73e467f60acd ("drm/panfrost: Consolidate reset handling")
+Reviewed-by: Steven Price <steven.price@arm.com>
+Link: https://patch.msgid.link/20261012-claude-fixes-v15-7-bc0a6c498553@collabora.com
+Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/control_led.c | 62 ++++++++++++++++++++++++++++++++++++----
- 1 file changed, 57 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/panfrost/panfrost_mmu.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/sound/core/control_led.c b/sound/core/control_led.c
-index f76a2f7ac7366..415b186561152 100644
---- a/sound/core/control_led.c
-+++ b/sound/core/control_led.c
-@@ -563,12 +563,43 @@ static ssize_t set_led_id(struct snd_ctl_led_card *led_card, const char *buf, si
- 	return count;
+diff --git a/drivers/gpu/drm/panfrost/panfrost_mmu.c b/drivers/gpu/drm/panfrost/panfrost_mmu.c
+index f6b91c052cfbc..fcb3bac8fd458 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_mmu.c
++++ b/drivers/gpu/drm/panfrost/panfrost_mmu.c
+@@ -330,6 +330,12 @@ void panfrost_mmu_as_put(struct panfrost_device *pfdev, struct panfrost_mmu *mmu
+ 	WARN_ON(atomic_read(&mmu->as_count) < 0);
  }
  
-+/*
-+ * snd_ctl_led_disconnect() removes these files with card->controls_rwsem
-+ * held. so don't let the removal wait for a callback that takes it.
-+ */
-+static struct kernfs_node *snd_ctl_led_sysfs_enter(struct device *dev,
-+						   struct device_attribute *attr)
++static void panfrost_mmu_enable_interrupts(struct panfrost_device *pfdev)
 +{
-+	struct kernfs_node *kn;
-+
-+	if (!try_module_get(THIS_MODULE))
-+		return NULL;
-+	kn = sysfs_break_active_protection(&dev->kobj, &attr->attr);
-+	if (!kn)
-+		module_put(THIS_MODULE);
-+	return kn;
++	mmu_write(pfdev, MMU_INT_CLEAR, ~0);
++	mmu_write(pfdev, MMU_INT_MASK, ~0);
 +}
 +
-+static void snd_ctl_led_sysfs_exit(struct kernfs_node *kn)
-+{
-+	sysfs_unbreak_active_protection(kn);
-+	module_put(THIS_MODULE);
-+}
-+
- static ssize_t attach_store(struct device *dev,
- 			    struct device_attribute *attr,
- 			    const char *buf, size_t count)
+ void panfrost_mmu_reset(struct panfrost_device *pfdev)
  {
- 	struct snd_ctl_led_card *led_card = container_of(dev, struct snd_ctl_led_card, dev);
--	return set_led_id(led_card, buf, count, true);
-+	struct kernfs_node *kn;
-+	ssize_t ret;
-+
-+	kn = snd_ctl_led_sysfs_enter(dev, attr);
-+	if (!kn)
-+		return -ENODEV;
-+	ret = set_led_id(led_card, buf, count, true);
-+	snd_ctl_led_sysfs_exit(kn);
-+	return ret;
+ 	struct panfrost_mmu *mmu, *mmu_tmp;
+@@ -349,8 +355,7 @@ void panfrost_mmu_reset(struct panfrost_device *pfdev)
+ 
+ 	spin_unlock(&pfdev->as_lock);
+ 
+-	mmu_write(pfdev, MMU_INT_CLEAR, ~0);
+-	mmu_write(pfdev, MMU_INT_MASK, ~0);
++	panfrost_mmu_enable_interrupts(pfdev);
  }
  
- static ssize_t detach_store(struct device *dev,
-@@ -576,7 +607,15 @@ static ssize_t detach_store(struct device *dev,
- 			    const char *buf, size_t count)
- {
- 	struct snd_ctl_led_card *led_card = container_of(dev, struct snd_ctl_led_card, dev);
--	return set_led_id(led_card, buf, count, false);
-+	struct kernfs_node *kn;
-+	ssize_t ret;
+ static size_t get_pgsize(u64 addr, size_t size, size_t *count)
+@@ -911,6 +916,8 @@ int panfrost_mmu_init(struct panfrost_device *pfdev)
+ 		return err;
+ 	}
+ 
++	panfrost_mmu_enable_interrupts(pfdev);
 +
-+	kn = snd_ctl_led_sysfs_enter(dev, attr);
-+	if (!kn)
-+		return -ENODEV;
-+	ret = set_led_id(led_card, buf, count, false);
-+	snd_ctl_led_sysfs_exit(kn);
-+	return ret;
+ 	return 0;
  }
  
- static ssize_t reset_store(struct device *dev,
-@@ -594,10 +633,8 @@ static ssize_t reset_store(struct device *dev,
- 	return count;
- }
- 
--static ssize_t list_show(struct device *dev,
--			 struct device_attribute *attr, char *buf)
-+static ssize_t snd_ctl_led_list(struct snd_ctl_led_card *led_card, char *buf)
- {
--	struct snd_ctl_led_card *led_card = container_of(dev, struct snd_ctl_led_card, dev);
- 	struct snd_ctl_led_ctl *lctl;
- 	size_t l = 0;
- 	struct snd_card *card __free(snd_card_unref) =
-@@ -620,6 +657,21 @@ static ssize_t list_show(struct device *dev,
- 	return l;
- }
- 
-+static ssize_t list_show(struct device *dev,
-+			 struct device_attribute *attr, char *buf)
-+{
-+	struct snd_ctl_led_card *led_card = container_of(dev, struct snd_ctl_led_card, dev);
-+	struct kernfs_node *kn;
-+	ssize_t ret;
-+
-+	kn = snd_ctl_led_sysfs_enter(dev, attr);
-+	if (!kn)
-+		return -ENODEV;
-+	ret = snd_ctl_led_list(led_card, buf);
-+	snd_ctl_led_sysfs_exit(kn);
-+	return ret;
-+}
-+
- static DEVICE_ATTR_WO(attach);
- static DEVICE_ATTR_WO(detach);
- static DEVICE_ATTR_WO(reset);
 -- 
 2.53.0
 
