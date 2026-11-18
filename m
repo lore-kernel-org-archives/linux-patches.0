@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050200;
-	b=U/h+vFH9zO7EVLUomwkoFcoy/SLBUNTIpDGElbeY9odJYSFpziFQKI5oWpjowNseEDRs
-	 eY7yN2ElZCitZxLJGhSCthQVKVHh+7k8Z2B2WE2UO4PgF19goSRgLZu8AOxTWeRPIdP/8
-	 vGzGcS/R1adeQNanIPc3KCLXqA6zEO0zZU8ne22RVWn5QaZtvTxKbIrvSPNICNAaQw+n8
-	 N0ZtDOnHYeFREh+cwm+f2jBsD5qqz0ZzPe7QzxoPBpKxXILS/I5F+ab3+egizWtPfid8b
-	 i9PIW3JdwXTnwbmGQEA5EaXmh6XTKD7zn61NCU9CeUr5/7ZP9LmyEzktqWtH/NcdDtw==
+	t=1795050202;
+	b=mkV4APUTLAG9hOoRvIJmfHjaI7QEqEGAwLjx+mRjPXk1msBBRX5gbLylKLd9Tcaw3IoX
+	 Ar06ZYUhGzLXDfyD63cwHpzftVwOAbnkJe9cZ3inD/cTMAfBFnsd9KcFM6oBjf9J+KqUu
+	 O+lAi1uOFqJWHqk4MyqAllGUPrqhId+y2Xw4VWnJ6wNYBPhNO1REjwDLcVaqPMiQUtw0t
+	 AWzBnNzMzGIMnWrrjuugKn1rG3NoLC9p9zSMp+Fa6NuUkxYndyxpLtHi2FeavRYl4wI2V
+	 mbfpYZEY4DHOTA3TOkYBIAJMWbXjfOUu+7YEv6iHahiRV0Patk7XtgLBI6YhnbPFfcQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050200;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050202;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Wtc+On5GhxjXPAQ+bN5gWtpL68OezqYjpwUjtmyL9Yw=;
-	b=IuymdzjzJRZ6y1RN++o/4oWOmdVCdePbDPdTH3dhz5fbp03yZluz36fCkpvZw9yiw+K/
-	 rC9CZvdzUcdFwWATuOBXjqxz3PZgH4gulgFqhGxD6yPjPVjeF+g2OLSqZ+p6MsAqgTykR
-	 LfwHJMX4vhaJSP8600HPW1WSETLif3ymDyLiEULS9DMaZyL/hS9zzQT7/kbwYotQFptoV
-	 V22blLq2eb6MpmylVTBkwfSEMoIaO7AOoerGyzFGUmcNc/3GK62dF8pLpkuisGLjq/l0h
-	 bV/cn5LBV+VIVICUF15XACfrBODGUyB6p1uSbkVtoSUEY6mS5ksysyQi/LcqUyBSbtA==
+	bh=kX/OC8HnX+Y7tAbNpHucpW+tj2q2Ul/sBVyoHxJcZXQ=;
+	b=YljwJIoqOv1xJbKcUO+qaRDFEnzM8nzT7K9d3M20hftze5Jx5Wj38tOTjGJb7pMfhSZM
+	 ehIh318Msl3Wzyduo1q0K7KN/PYCiFznejPq9Dv8ZI4lrUjt6QwPS5ZEItCooGDdImQW8
+	 HqFZDstc4dMPaDO9KBbOxjjy6XxoC+w87nj9/wfabSGUwHc3Yr4+Z/P/8P6VRu8pyo4yO
+	 tLGwyrfmqKvCctd9qAzwYlVcs+p4DEuSkZk/1x6WMKDIkT6BKf431H8BXtlVKiVA3tVPk
+	 n8ZdcFtZmMqo6UFtnlrtRKA+tw7ZweNgpps05/MyiQka5xnYaxA/hxIvEsqYgciQm7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DNGNPJKw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J1MRuLMq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FB1606A330;
-	Thu, 19 Nov 2026 01:03:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98A1606A335;
+	Thu, 19 Nov 2026 01:03:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DNGNPJKw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ABED1F000C4;
-	Thu, 19 Nov 2026 01:03:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J1MRuLMq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8271F000C5;
+	Thu, 19 Nov 2026 01:03:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050199;
-	bh=Wtc+On5GhxjXPAQ+bN5gWtpL68OezqYjpwUjtmyL9Yw=;
+	s=korg; t=1795050202;
+	bh=kX/OC8HnX+Y7tAbNpHucpW+tj2q2Ul/sBVyoHxJcZXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DNGNPJKwxl1L2bXOjdy5O6UuO/QvWbem7X9gy1n4P9s+p3ri9fhv8n2Vv7ktko6Tt
-	 Rs8GIune26dilSgCUHXt7RiEIyj4vYozZQzVDKpNvhRHgtmx2UlJPUAcuA7nrUvoTe
-	 WjNEHqdxyRMRXMNQjyo1CkQVpzksVosai00YGtQg=
+	b=J1MRuLMqKla8yOSiH7mKUs+ip4wCPxfQm1rtBBA5AocMRmadSf2GF7bCHp1PhVGQz
+	 Xfvp7LyXDOJ/o0sx3O2TGHzrKA6TvihIRe+W1xvXzj6ZGGP0gyEg4pLsBfydyPfRBs
+	 naVtGme50YQQk+gvGKr2NhfD7LmrvxkbeIMWnjhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Cen Zhang <zzzccc427@gmail.com>,
+	Brad Fitzpatrick <bradfitz@tailscale.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2621/2857] ALSA: oss: Keep emulation modules loaded until object teardown
-Date: Wed, 18 Nov 2026 16:00:55 +0100
-Message-ID: <20261118150335.942344903@linuxfoundation.org>
+Subject: [PATCH 6.1 2583/2857] gre: keep the UDP tunnel GSO type when completing GRO
+Date: Wed, 18 Nov 2026 16:00:17 +0100
+Message-ID: <20261118150334.508984234@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,267 +69,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Brad Fitzpatrick <bradfitz@tailscale.com>
 
-[ Upstream commit f0780cfa6acf72576464dc3b40431db389f46ee8 ]
+[ Upstream commit 718f364a20ecee4f25986789c25550cf4da73b4c ]
 
-OSS proc entries and notifier callbacks can remain in use without an
-open OSS device file. Normal snd-pcm-oss removal can therefore delete
-an existing PCM's OSS proc entry while late HDA codec binding repeats
-snd_card_register() on the same live card:
+gre_gro_complete() assigns SKB_GSO_GRE to gso_type rather than OR-ing
+it in. When GRE is carried over UDP by FOU or GUE, udp_gro_complete()
+has already set SKB_GSO_UDP_TUNNEL{,_CSUM} before calling into the FOU
+or GUE gro_complete handler and then gre_gro_complete(), so that bit is
+lost.
 
-  OSS PCM module unload                 Card registration
-  ---------------------                 -----------------
-  snd_info_free_entry(entry)
-    proc_remove(entry->p)
-    clear entry->p
-                                        snd_info_card_register()
-                                          republish linked entry
-    unlink and free entry
+That has broken forwarding of such packets since FOU gained GRO: if a
+host with a FOU or GUE socket on the tunnel's port merges transit
+packets and then forwards them out a device that can't segment them
+itself, udp4_ufo_fragment() finds neither tunnel bit and fails, and
+the packets are dropped. Since commit 3d010c8031e3 ("udp: do not accept
+non-tunnel GSO skbs landing in a tunnel"), local receive is broken too:
+udp_unexpected_gso() considers the merged skb, which reaches the
+encapsulation socket without either UDP tunnel bit, unexpected and
+hands it to udp_rcv_segment(). Segmenting fails, so the packet is
+freed and counted in UdpInErrors. Either way, only packets GRO didn't
+merge get through, so TCP over FOU or GUE GRE tunnels slows to about
+one segment per round trip whenever the receiving device has GRO
+enabled.
 
-The new proc node retains a pointer to freed storage. Mixer OSS removal
-can likewise release an adapter while a card notification still uses it.
+OR in SKB_GSO_GRE instead, as ipip_gro_complete() and
+sit_gro_complete() do for SKB_GSO_IPXIP4. For plain GRE, gso_type is
+still zero at this point unless the driver set it, so nothing changes
+there in the usual case.
 
-Hold a snd-pcm-oss module reference for each PCM registered with its
-notifier and a snd-mixer-oss reference for each card adapter. Release
-them at final unregister or FREE, after proc and adapter cleanup. Normal
-module unload can no longer initiate removal while these objects exist.
+The assignment dates to commit bf5a755f5e91 ("net-gre-gro: Add GRE
+support to the GRO stack"), but nothing set gso_type before it until
+FOU GRO came along, so the Fixes tag points there.
 
-Track PCM OSS registration with a separate bool registered. Unlike
-oss.reg, this state also covers unmapped PCMs and remains set across
-DISCONNECT until final unregister. BUILD-state and creation-error cleanup
-must not drop a reference when registration never acquired one. The PCM
-notifier's register_mutex serialization keeps the final put ahead of
-notifier removal and module teardown until dispatch has finished.
+Tested under virtme-ng with bulk TCP over a GRE tunnel between two
+network namespaces joined by a veth, with GRO on the receiving veth and
+segmentation off on the sending one, so GRO sees wire-sized packets.
+32 MiB took:
 
-For mixer OSS, serialize callback publication, dispatch and withdrawal
-in the core so module exit waits for callbacks, including one dropping
-the last reference, to return. Keep card enumeration in the OSS module,
-with card references released after dispatch drops the mutex. Ignore
-duplicate REGISTER notifications so a delayed registration cannot
-replace an adapter retained across DISCONNECT and leak its module pin.
+                  before                  after
+  FOU over IPv4   26.0s, 9658 UDP errors  0.28s, 0 errors
+  GUE over IPv4   26.1s, 9686 UDP errors  0.39s, 0 errors
+  FOU over IPv6   26.4s, 9860 UDP errors  0.16s, 0 errors
+  plain GRE       0.17s                   0.15s
 
-Partial HDA codec teardown can still remove an individual PCM while the
-card remains registered; its object-lifetime handling is separate.
+Forwarding the same FOU traffic through a third namespace with its own
+FOU socket on the port, GRO on its ingress and segmentation off on its
+egress, took 26.0s with 4826 egress drops before and 0.31s with none
+after. On v6.8, before 3d010c8031e3, local receive was fine but
+forwarding failed the same way (25.7s, 4764 drops).
 
-Fixes: 2471b6c80a70 ("ALSA: info: Register proc entries recursively, too")
-Suggested-by: Takashi Iwai <tiwai@suse.de>
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/pm-pmb-26d66390a25fec9fad6c-v6-5be251a3ac8832955a31-2@gmail.com
+With GRO off on the receiver, all took under 0.2s both before and
+after. The gre_gso.sh and fou_mcast_encap.sh selftests give the same
+results before and after.
+
+Fixes: afe93325bc02 ("fou: Add GRO support")
+Signed-off-by: Brad Fitzpatrick <bradfitz@tailscale.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261011-bradfitz-gre-fou-gro-b4-v1-1-df713aad1531@tailscale.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/core.h       |  3 ++-
- include/sound/pcm_oss.h    |  1 +
- sound/core/init.c          | 29 +++++++++++++++++++++--------
- sound/core/oss/mixer_oss.c | 36 ++++++++++++++++++++----------------
- sound/core/oss/pcm_oss.c   | 12 ++++++++++++
- 5 files changed, 56 insertions(+), 25 deletions(-)
+ net/ipv4/gre_offload.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/sound/core.h b/include/sound/core.h
-index 3a0e3010405ca..9820fd8b56cfb 100644
---- a/include/sound/core.h
-+++ b/include/sound/core.h
-@@ -298,7 +298,8 @@ int snd_card_locked(int card);
- #define SND_MIXER_OSS_NOTIFY_REGISTER	0
- #define SND_MIXER_OSS_NOTIFY_DISCONNECT	1
- #define SND_MIXER_OSS_NOTIFY_FREE	2
--extern int (*snd_mixer_oss_notify_callback)(struct snd_card *card, int cmd);
-+void snd_mixer_oss_set_notify(int (*callback)(struct snd_card *card, int cmd));
-+void snd_mixer_oss_notify(struct snd_card *card, int cmd);
- #endif
+diff --git a/net/ipv4/gre_offload.c b/net/ipv4/gre_offload.c
+index 2b9cb5398335b..d1405f3e2a0f0 100644
+--- a/net/ipv4/gre_offload.c
++++ b/net/ipv4/gre_offload.c
+@@ -241,7 +241,7 @@ static int gre_gro_complete(struct sk_buff *skb, int nhoff)
+ 	__be16 type;
  
- int snd_card_new(struct device *parent, int idx, const char *xid,
-diff --git a/include/sound/pcm_oss.h b/include/sound/pcm_oss.h
-index c96f23c7755b1..43f7653000314 100644
---- a/include/sound/pcm_oss.h
-+++ b/include/sound/pcm_oss.h
-@@ -70,6 +70,7 @@ struct snd_pcm_oss_stream {
- struct snd_pcm_oss {
- 	int reg;
- 	unsigned int reg_mask;
-+	bool registered;
- };
+ 	skb->encapsulation = 1;
+-	skb_shinfo(skb)->gso_type = SKB_GSO_GRE;
++	skb_shinfo(skb)->gso_type |= SKB_GSO_GRE;
  
- #endif /* __SOUND_PCM_OSS_H */
-diff --git a/sound/core/init.c b/sound/core/init.c
-index 7cd5e08d4e7ee..001de783cbbbb 100644
---- a/sound/core/init.c
-+++ b/sound/core/init.c
-@@ -82,8 +82,24 @@ static int module_slot_match(struct module *module, int idx)
- }
- 
- #if IS_ENABLED(CONFIG_SND_MIXER_OSS)
--int (*snd_mixer_oss_notify_callback)(struct snd_card *card, int free_flag);
--EXPORT_SYMBOL(snd_mixer_oss_notify_callback);
-+static DEFINE_MUTEX(mixer_oss_notify_mutex);
-+static int (*mixer_oss_notify_callback)(struct snd_card *card, int cmd);
-+
-+void snd_mixer_oss_notify(struct snd_card *card, int cmd)
-+{
-+	guard(mutex)(&mixer_oss_notify_mutex);
-+	if (mixer_oss_notify_callback)
-+		mixer_oss_notify_callback(card, cmd);
-+}
-+EXPORT_SYMBOL(snd_mixer_oss_notify);
-+
-+void snd_mixer_oss_set_notify(int (*callback)(struct snd_card *, int))
-+{
-+	/* Wait for callbacks, including a final module_put(), to return. */
-+	guard(mutex)(&mixer_oss_notify_mutex);
-+	mixer_oss_notify_callback = callback;
-+}
-+EXPORT_SYMBOL(snd_mixer_oss_set_notify);
- #endif
- 
- static int check_empty_slot(struct module *module, int slot)
-@@ -523,8 +539,7 @@ void snd_card_disconnect(struct snd_card *card)
- 	/* at this point, they cannot respond to any calls except release() */
- 
- #if IS_ENABLED(CONFIG_SND_MIXER_OSS)
--	if (snd_mixer_oss_notify_callback)
--		snd_mixer_oss_notify_callback(card, SND_MIXER_OSS_NOTIFY_DISCONNECT);
-+	snd_mixer_oss_notify(card, SND_MIXER_OSS_NOTIFY_DISCONNECT);
- #endif
- 
- 	/* notify all devices that we are disconnected */
-@@ -582,8 +597,7 @@ static int snd_card_do_free(struct snd_card *card)
- 
- 	card->releasing = true;
- #if IS_ENABLED(CONFIG_SND_MIXER_OSS)
--	if (snd_mixer_oss_notify_callback)
--		snd_mixer_oss_notify_callback(card, SND_MIXER_OSS_NOTIFY_FREE);
-+	snd_mixer_oss_notify(card, SND_MIXER_OSS_NOTIFY_FREE);
- #endif
- 	snd_device_free_all(card);
- 	if (card->private_free)
-@@ -927,8 +941,7 @@ int snd_card_register(struct snd_card *card)
- 		return err;
- 
- #if IS_ENABLED(CONFIG_SND_MIXER_OSS)
--	if (snd_mixer_oss_notify_callback)
--		snd_mixer_oss_notify_callback(card, SND_MIXER_OSS_NOTIFY_REGISTER);
-+	snd_mixer_oss_notify(card, SND_MIXER_OSS_NOTIFY_REGISTER);
- #endif
- 	return 0;
- }
-diff --git a/sound/core/oss/mixer_oss.c b/sound/core/oss/mixer_oss.c
-index ecb4af6709598..ec641ba666fa5 100644
---- a/sound/core/oss/mixer_oss.c
-+++ b/sound/core/oss/mixer_oss.c
-@@ -1403,13 +1403,22 @@ static int snd_mixer_oss_free1(void *private)
- static int snd_mixer_oss_notify_handler(struct snd_card *card, int cmd)
- {
- 	struct snd_mixer_oss *mixer;
-+	int err;
- 
- 	if (cmd == SND_MIXER_OSS_NOTIFY_REGISTER) {
--		int idx, err;
-+		int idx;
-+
-+		/* Module loading and card registration can both notify us. */
-+		if (card->mixer_oss)
-+			return 0;
- 
- 		mixer = kcalloc(2, sizeof(*mixer), GFP_KERNEL);
- 		if (mixer == NULL)
- 			return -ENOMEM;
-+		if (!try_module_get(THIS_MODULE)) {
-+			kfree(mixer);
-+			return -ENODEV;
-+		}
- 		mutex_init(&mixer->reg_mutex);
- 		err = snd_register_oss_device(SNDRV_OSS_DEVICE_TYPE_MIXER,
- 					      card, 0,
-@@ -1419,6 +1428,7 @@ static int snd_mixer_oss_notify_handler(struct snd_card *card, int cmd)
- 				"unable to register OSS mixer device %i:%i\n",
- 				card->number, 0);
- 			kfree(mixer);
-+			module_put(THIS_MODULE);
- 			return err;
- 		}
- 		mixer->oss_dev_alloc = 1;
-@@ -1452,7 +1462,10 @@ static int snd_mixer_oss_notify_handler(struct snd_card *card, int cmd)
- 		if (cmd == SND_MIXER_OSS_NOTIFY_DISCONNECT)
- 			return 0;
- 		snd_mixer_oss_proc_done(mixer);
--		return snd_mixer_oss_free1(mixer);
-+		err = snd_mixer_oss_free1(mixer);
-+		if (!err)
-+			module_put(THIS_MODULE);
-+		return err;
- 	}
- 	return 0;
- }
-@@ -1461,12 +1474,12 @@ static int __init alsa_mixer_oss_init(void)
- {
- 	struct snd_card *card;
- 	int idx;
--	
--	snd_mixer_oss_notify_callback = snd_mixer_oss_notify_handler;
-+
-+	snd_mixer_oss_set_notify(snd_mixer_oss_notify_handler);
- 	for (idx = 0; idx < SNDRV_CARDS; idx++) {
- 		card = snd_card_ref(idx);
- 		if (card) {
--			snd_mixer_oss_notify_handler(card, SND_MIXER_OSS_NOTIFY_REGISTER);
-+			snd_mixer_oss_notify(card, SND_MIXER_OSS_NOTIFY_REGISTER);
- 			snd_card_unref(card);
- 		}
- 	}
-@@ -1475,17 +1488,8 @@ static int __init alsa_mixer_oss_init(void)
- 
- static void __exit alsa_mixer_oss_exit(void)
- {
--	struct snd_card *card;
--	int idx;
--
--	snd_mixer_oss_notify_callback = NULL;
--	for (idx = 0; idx < SNDRV_CARDS; idx++) {
--		card = snd_card_ref(idx);
--		if (card) {
--			snd_mixer_oss_notify_handler(card, SND_MIXER_OSS_NOTIFY_FREE);
--			snd_card_unref(card);
--		}
--	}
-+	/* Live adapters hold module references and prevent normal unload. */
-+	snd_mixer_oss_set_notify(NULL);
- }
- 
- module_init(alsa_mixer_oss_init)
-diff --git a/sound/core/oss/pcm_oss.c b/sound/core/oss/pcm_oss.c
-index d5cd728c30a00..4b08480316c1b 100644
---- a/sound/core/oss/pcm_oss.c
-+++ b/sound/core/oss/pcm_oss.c
-@@ -3163,6 +3163,12 @@ static void register_oss_dsp(struct snd_pcm *pcm, int index)
- 
- static int snd_pcm_oss_register_minor(struct snd_pcm *pcm)
- {
-+	if (pcm->oss.registered)
-+		return 0;
-+	if (!try_module_get(THIS_MODULE))
-+		return -ENODEV;
-+	pcm->oss.registered = true;
-+
- 	pcm->oss.reg = 0;
- 	if (dsp_map[pcm->card->number] == (int)pcm->device) {
- 		char name[128];
-@@ -3217,8 +3223,14 @@ static int snd_pcm_oss_disconnect_minor(struct snd_pcm *pcm)
- 
- static int snd_pcm_oss_unregister_minor(struct snd_pcm *pcm)
- {
-+	/* BUILD-state and creation-error cleanup need not have registered us. */
-+	if (!pcm->oss.registered)
-+		return 0;
-+
- 	snd_pcm_oss_disconnect_minor(pcm);
- 	snd_pcm_oss_proc_done(pcm);
-+	pcm->oss.registered = false;
-+	module_put(THIS_MODULE);
- 	return 0;
- }
- 
+ 	type = greh->protocol;
+ 	if (greh->flags & GRE_KEY)
 -- 
 2.53.0
 
