@@ -1,56 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056975;
-	b=M3jDtYUaWjfv2AaeB9qfYy0DwyWSfUcoURoTS6OAMw8wVC7xDARcwgsZGAvrPw96OQu+
-	 2vbhDcgv+eqy94euCudP795wYLvyGCiqZOOy4jGapnCUQm8ZhlnD/u5K99T2ARPCmf4tc
-	 hSmQqagvVm5GMDl37AdG+neLTSt7tCu06yJqeElV65uRUkHkcBYS+XDECeYKU4FEX2/o+
-	 qVLCsOW/1cWAaJ2RRr8bisLdk9Ki/Qnzo7U7IngY5dRuxKI8RfUjSvlMZC7IFmmvzKNsb
-	 BW76TTQAfQuaB6PYw3f2pQNG5Nb+0A+/Q0ZcO3Fgo6h/L6D7wZT6U5iGESj01IOdm+A==
+	t=1795056978;
+	b=Y8QchQ/430mTZx4FSFdEwtpMBGmq7h0VfU6L8eh+7Qb+WReVCHwbe3DQPbsOWEKf3+1A
+	 QAnvYh6PkVczgTCDLq2XqAS3i/ELdHwsYHxP3kTJr/Qtj1QTMjRL49h5CHrevFL/dXjmJ
+	 xI8SpleH5jv7w0q4tG6flc+JgT0dp6nB0/5CQeuBGJ5Sep83zixPucqEV6w4Eqvwk+C5c
+	 kdl+FsHO3iXkWJIPMb+bS6O/A0TxA1Jn2Qm8mNGRm9o6zNxYlKkKHF2QD8lay9V044g8k
+	 mA4qPfdX9Dz3Ar/Z/q/vMM/yudH2Ck6YWwcfwY0b+SEGKCRb09QKpfhDJsmbvQTdoAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056975;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056978;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FCS2JsNcDkHGaPD89N2qQq1qBhKpPwcH6NGOAeNKXb4=;
-	b=eDGRyYdXdX9VdSyKwCaj2qYshO6RVDGMyQ1NsJ28PIoIJlqXzJ9nUSDmBSC8eA9DISZ7
-	 jfTmjdytH0AlZ+y6Xksyu8qg5M0xfpyCJyCPGZeubSZSV/auFRdp1ytipnwLPJfpLaDVb
-	 oMt3plcb+Rr4pq+1MAC9F6LZmdwF7UmlbgByQF/ql25XH9k6PtTFuSM/NgQKb20hAr66v
-	 zP3fFOI9Mj2td7/+MVj8Ozq3gX4jM3AYvZSs9l4bZrfMrQpIhUwgDIraKtQ5DpNalDqq5
-	 C0Mx6xGJmhUMaqcVL5iv+ndeFHVBBQCdJiZ4PSTkkE7HqA67Q61gYqL2qx/Xq7lofNw==
+	bh=3ntV48EG0AbnV4kSR3AmfWUICCZzEK4AO+71MKyC46k=;
+	b=JwovvgJvaguMVNi/qfROYDfHuCb+EGaadtt2gsRuaWVq5XS5r0UxhiYgjLqDxJAqlUVh
+	 pfHoJvXKhuo1DP2uqeB9eAReexAdiGo1c4TfIXMq5E08UbWfY8iksn1omwI1vb4aSnTWz
+	 BY6lGFRHSV1rFpT04iyaJAadJKy+9y2Zdrr4mxGPEPcnE6UBfaNnjCauKjPz1DWYARG0U
+	 Kzo0g5MIYtoT0XI062n70/CcSdtFcyZKHkysBXv8orr4lGtVq+yxb22SfNYMm/XUhRYSI
+	 tgkNJ/ohFH4Krqs0XUvex4G3kox6HAj/gaoOa7rctNukOMeWwHBjTUmU2SegNRGah3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=akb3+p3W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c9Fm0C8c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D10C606A320;
-	Thu, 19 Nov 2026 02:56:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20CE5606A31C;
+	Thu, 19 Nov 2026 02:56:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=akb3+p3W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78E191F000C4;
-	Thu, 19 Nov 2026 02:56:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c9Fm0C8c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 394DA1F000C4;
+	Thu, 19 Nov 2026 02:56:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056975;
-	bh=FCS2JsNcDkHGaPD89N2qQq1qBhKpPwcH6NGOAeNKXb4=;
+	s=korg; t=1795056977;
+	bh=3ntV48EG0AbnV4kSR3AmfWUICCZzEK4AO+71MKyC46k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=akb3+p3WShxzzp12WlnfKHL7qRjFT84hC9THFbd/74/CKhX6QthPEb6hM9xjfFSTY
-	 yMzAhzuIFWWbTRl/ztbar0/qDQO/SOTRXujU43h3mZGP6mrZ7CRt5AmIBiZ3vwiTvK
-	 m8tIW/lDHVL0pNqrQAY7jshee+54m8Abrzjb32YY=
+	b=c9Fm0C8cDn2h8+ayCTH1PkCPGepCMgmawRv8QqwdsXP3tgZNMXKigXkb9tA9aYCDS
+	 DkBwU7Gwd1Z0s8z720bXrb//FOKvNGSNOU7RB81Zk82wMyfLWXCiZ3wTxlVVJtf56P
+	 d18RXNStyqMhhOkgUryPwSQoZ4usajuXH/oB8HjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
+	"Md. Haris Iqbal" <haris.iqbal@ionos.com>,
 	Jack Wang <jinpu.wang@ionos.com>,
-	Jan Kara <jack@suse.cz>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2180/2214] rnbd-srv: remove the name field from struct rnbd_dev
-Date: Wed, 18 Nov 2026 16:04:16 +0100
-Message-ID: <20261118150137.584247631@linuxfoundation.org>
+Subject: [PATCH 5.15 2181/2214] block/rnbd-srv: dont free the device on a sysfs error
+Date: Wed, 18 Nov 2026 16:04:17 +0100
+Message-ID: <20261118150137.618216405@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -72,129 +70,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 6e880cf59932a14bca128fc8e8faae0554932942 ]
+[ Upstream commit d9667ade40f986c565769a900ced6ee95edd33c6 ]
 
-Just print the block device name directly using the %pg format specifier.
+rnbd_srv_create_dev_sysfs() drops the only kobject reference on its
+error paths, and the release function frees the rnbd_srv_dev.
+process_msg_open() keeps using it and ends in destroy_device() with a
+list_del() and a second kfree(). This doesn't need memory pressure: a
+client opening a device while its last mapping goes away gets -EEXIST
+from kobject_add() against the old directory.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Acked-by: Jack Wang <jinpu.wang@ionos.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Link: https://lore.kernel.org/r/20220713055317.1888500-7-hch@lst.de
+Only undo kobject_add() on failure and leave the reference to
+destroy_device(). Initialise the kobject once, the next open retries.
+
+Fixes: 8cee532f469b ("block/rnbd: server: sysfs interface functions")
+Fixes: d3a95ccaaf4d ("block/rnbd: call kobject_put in the failure path")
+Cc: "Md. Haris Iqbal" <haris.iqbal@ionos.com>
+Cc: Jack Wang <jinpu.wang@ionos.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261028164415.1262013-17-axboe@kernel.dk
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: d9667ade40f9 ("block/rnbd-srv: don't free the device on a sysfs error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/rnbd/rnbd-srv-dev.c   | 1 -
- drivers/block/rnbd/rnbd-srv-dev.h   | 1 -
- drivers/block/rnbd/rnbd-srv-sysfs.c | 5 ++---
- drivers/block/rnbd/rnbd-srv.c       | 9 ++++-----
- drivers/block/rnbd/rnbd-srv.h       | 3 +--
- 5 files changed, 7 insertions(+), 12 deletions(-)
+ drivers/block/rnbd/rnbd-srv-sysfs.c | 16 ++++++++++------
+ drivers/block/rnbd/rnbd-srv.c       |  3 +++
+ 2 files changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/block/rnbd/rnbd-srv-dev.c b/drivers/block/rnbd/rnbd-srv-dev.c
-index c5d0a03911659..c63017f6e4214 100644
---- a/drivers/block/rnbd/rnbd-srv-dev.c
-+++ b/drivers/block/rnbd/rnbd-srv-dev.c
-@@ -28,7 +28,6 @@ struct rnbd_dev *rnbd_dev_open(const char *path, fmode_t flags)
- 		goto err;
- 
- 	dev->blk_open_flags = flags;
--	bdevname(dev->bdev, dev->name);
- 
- 	return dev;
- 
-diff --git a/drivers/block/rnbd/rnbd-srv-dev.h b/drivers/block/rnbd/rnbd-srv-dev.h
-index 2c3df02b5e8ec..201a021246c2e 100644
---- a/drivers/block/rnbd/rnbd-srv-dev.h
-+++ b/drivers/block/rnbd/rnbd-srv-dev.h
-@@ -15,7 +15,6 @@
- struct rnbd_dev {
- 	struct block_device	*bdev;
- 	fmode_t			blk_open_flags;
--	char			name[BDEVNAME_SIZE];
- };
- 
- /**
 diff --git a/drivers/block/rnbd/rnbd-srv-sysfs.c b/drivers/block/rnbd/rnbd-srv-sysfs.c
-index 4db98e0e76f0e..122fee8aedd8a 100644
+index 122fee8aedd8a..e467bb63511ad 100644
 --- a/drivers/block/rnbd/rnbd-srv-sysfs.c
 +++ b/drivers/block/rnbd/rnbd-srv-sysfs.c
-@@ -39,14 +39,13 @@ static struct kobj_type dev_ktype = {
- };
- 
- int rnbd_srv_create_dev_sysfs(struct rnbd_srv_dev *dev,
--			       struct block_device *bdev,
--			       const char *dev_name)
-+			       struct block_device *bdev)
- {
+@@ -44,12 +44,17 @@ int rnbd_srv_create_dev_sysfs(struct rnbd_srv_dev *dev,
  	struct kobject *bdev_kobj;
  	int ret;
  
- 	ret = kobject_init_and_add(&dev->dev_kobj, &dev_ktype,
--				   rnbd_devs_kobj, dev_name);
-+				   rnbd_devs_kobj, "%pg", bdev);
- 	if (ret) {
- 		kobject_put(&dev->dev_kobj);
+-	ret = kobject_init_and_add(&dev->dev_kobj, &dev_ktype,
+-				   rnbd_devs_kobj, "%pg", bdev);
+-	if (ret) {
+-		kobject_put(&dev->dev_kobj);
++	/*
++	 * The release function frees the device, which the caller goes on
++	 * using and which others may share: never drop the reference of the
++	 * kobject here. That is for destroy_device().
++	 */
++	if (!dev->dev_kobj.state_initialized)
++		kobject_init(&dev->dev_kobj, &dev_ktype);
++
++	ret = kobject_add(&dev->dev_kobj, rnbd_devs_kobj, "%pg", bdev);
++	if (ret)
  		return ret;
-diff --git a/drivers/block/rnbd/rnbd-srv.c b/drivers/block/rnbd/rnbd-srv.c
-index 4bd58aa0e283f..6e6423d8c149a 100644
---- a/drivers/block/rnbd/rnbd-srv.c
-+++ b/drivers/block/rnbd/rnbd-srv.c
-@@ -421,7 +421,7 @@ static struct rnbd_srv_sess_dev
- 	return sess_dev;
+-	}
+ 
+ 	dev->dev_sessions_kobj = kobject_create_and_add("sessions",
+ 							&dev->dev_kobj);
+@@ -69,7 +74,6 @@ int rnbd_srv_create_dev_sysfs(struct rnbd_srv_dev *dev,
+ 	kobject_put(dev->dev_sessions_kobj);
+ free_dev_kobj:
+ 	kobject_del(&dev->dev_kobj);
+-	kobject_put(&dev->dev_kobj);
+ 	return ret;
  }
  
--static struct rnbd_srv_dev *rnbd_srv_init_srv_dev(const char *id)
-+static struct rnbd_srv_dev *rnbd_srv_init_srv_dev(struct block_device *bdev)
- {
- 	struct rnbd_srv_dev *dev;
- 
-@@ -429,7 +429,7 @@ static struct rnbd_srv_dev *rnbd_srv_init_srv_dev(const char *id)
- 	if (!dev)
- 		return ERR_PTR(-ENOMEM);
- 
--	strscpy(dev->id, id, sizeof(dev->id));
-+	snprintf(dev->id, sizeof(dev->id), "%pg", bdev);
- 	kref_init(&dev->kref);
- 	INIT_LIST_HEAD(&dev->sess_dev_list);
- 	mutex_init(&dev->lock);
-@@ -514,7 +514,7 @@ rnbd_srv_get_or_create_srv_dev(struct rnbd_dev *rnbd_dev,
- 	int ret;
- 	struct rnbd_srv_dev *new_dev, *dev;
- 
--	new_dev = rnbd_srv_init_srv_dev(rnbd_dev->name);
-+	new_dev = rnbd_srv_init_srv_dev(rnbd_dev->bdev);
- 	if (IS_ERR(new_dev))
- 		return new_dev;
- 
-@@ -767,8 +767,7 @@ static int process_msg_open(struct rnbd_srv_session *srv_sess,
- 	 */
- 	mutex_lock(&srv_dev->lock);
- 	if (!srv_dev->dev_kobj.state_in_sysfs) {
--		ret = rnbd_srv_create_dev_sysfs(srv_dev, rnbd_dev->bdev,
--						 rnbd_dev->name);
-+		ret = rnbd_srv_create_dev_sysfs(srv_dev, rnbd_dev->bdev);
- 		if (ret) {
- 			mutex_unlock(&srv_dev->lock);
- 			rnbd_srv_err(srv_sess_dev,
-diff --git a/drivers/block/rnbd/rnbd-srv.h b/drivers/block/rnbd/rnbd-srv.h
-index 05909a0d73f64..7cc3b299134e5 100644
---- a/drivers/block/rnbd/rnbd-srv.h
-+++ b/drivers/block/rnbd/rnbd-srv.h
-@@ -68,8 +68,7 @@ void rnbd_srv_sess_dev_force_close(struct rnbd_srv_sess_dev *sess_dev,
- /* rnbd-srv-sysfs.c */
- 
- int rnbd_srv_create_dev_sysfs(struct rnbd_srv_dev *dev,
--			      struct block_device *bdev,
--			      const char *dir_name);
-+			      struct block_device *bdev);
- void rnbd_srv_destroy_dev_sysfs(struct rnbd_srv_dev *dev);
- int rnbd_srv_create_dev_session_sysfs(struct rnbd_srv_sess_dev *sess_dev);
- void rnbd_srv_destroy_dev_session_sysfs(struct rnbd_srv_sess_dev *sess_dev);
+diff --git a/drivers/block/rnbd/rnbd-srv.c b/drivers/block/rnbd/rnbd-srv.c
+index 6e6423d8c149a..ad9cf2ab14671 100644
+--- a/drivers/block/rnbd/rnbd-srv.c
++++ b/drivers/block/rnbd/rnbd-srv.c
+@@ -197,6 +197,9 @@ static void destroy_device(struct kref *kref)
+ 		 * Destroy kobj only if it was really created.
+ 		 */
+ 		rnbd_srv_destroy_dev_sysfs(dev);
++	else if (dev->dev_kobj.state_initialized)
++		/* The files could not be created. Frees the name, too. */
++		kobject_put(&dev->dev_kobj);
+ 	else
+ 		kfree(dev);
+ }
 -- 
 2.53.0
 
