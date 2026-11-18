@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034554;
-	b=JZRt6bwdGzS9O0wIXBViuVKe6pEq0VPalVo1B8W41u5hR1dHcVRMYs/x1d/tXtJv13pc
-	 /VP0PVIi1wUJMaeyxcF5AFkO2ZAgw+vvKVs+F+wUuhxYmEl5F3zQ/4be3vDzgMOOgclm5
-	 wpPhfhF4uAj4Pan+3++lazaCblVDUxpUwwZ0ByeAA9YD8RcxoXs/VvAC+rtZakXoxY3Xi
-	 wF/Y/xCMZrGlP8WoX9adON/UhC0TDDWeuFxdXqqjGRg8tdpct7QMEjFU8A1lP18BpmhjQ
-	 xmpyu76nrUGLz5vw2eyR0Wlu3ivsp0I9i12abHZNKdwfmK2GEZq4p+o5xxhgsidPbwA==
+	t=1795034557;
+	b=YMZ+svjwkr8v1kL169G+QtaO6rd7FspPiUCRD0KXNxzD8mqWXZM08seBG9ta0XwxrBIg
+	 VUJeNBVQxfqi/CuJoEpTy2TqRccQlcZw7QvZpqy58CH9mNMEN5XzPaZra7JvUl2779PEf
+	 AXWrG+CjPittLOTP5S1NUNgTLeQfYO4wW2590ax43LsGKcg3oQ6W33hNTppbNwhc82k30
+	 gW4Skm8VNW5ZF0wQpafcYdULawz585/ArEW1vw9GvGmCCxNv4LY6Lt8sESCBU38seQdeV
+	 MJ55eJqMM8OtF8Eeuoy4UQy5/n8kFsWW5OsCvMrJX+DNqDXc2ntkZgzhVVxroqCUOFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034554;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034557;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IfA86APIZJeM5JqRcvim0vieD3cpSKCRSGnGlMobJVE=;
-	b=bj7NtM3pOfVPJs8aGz45PSULCj2r8nXt1qxeYZXYalW3fyETct/4oy6WGrQoXP/Yd8Pw
-	 06X1UqytgVBw3nogK8qr+UGXId7e+N/QUIjUmGU6LTQVmkoAvU7r1r79+i3cBjOGLv1GY
-	 gd7/iov6Ny7JkO7YiQROEH4qy5Vq5EXPehnM2gw6FmrKcCiLBl/QU4HtwYN9sWQbEqA8J
-	 UwF7ocuNK6dT9vEcHL7E27Vfx+U/cQLj+5olOwkcYPrMw8Qb9prog3/NiacueXIgr1R+G
-	 heOKr1T91nglOWVElEmYT7GLC9pQuhXHddfmhxruCOZTmODPKBSnZdhf8GDTehPTucg==
+	bh=o4IOj+zh+w8aJxGgsY22GdNQ7VCb56rOwo7lJNZWB8E=;
+	b=adam6TJDSIMCWdaqls3fqICCCxZk6Gsds2+N5Ekd5wOcYhYdLlw4fRAL0NYscrDeK2M9
+	 R9dKeouGqsgr7oXtw35gCYVLT9gbPLI9r5fuHlr5RG+1xrEKXm/oiNmdNSgJLkfxw72mj
+	 Fc2LMONVzn4TAzgiWt9gV44ZRrbgKHjHpuvd9V2NkD4JdriWYpAooAwoNg/zpx8aUnNJG
+	 c1iYJ7sR8iYm5y73J0iNRfuZFLyeDLlhb2LM6eJlMRjnKheoJzC4VAFTKfCBT+oFKp659
+	 FSYbXqMuGDSCMz4ezIdA5kZgJ5IuNLGNtkBbuKG1DVnXYNgiBch3IvjGXzJ5gwgBHiA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="wLcnK//5";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="z1tv5/s6";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B69606A32A;
-	Wed, 18 Nov 2026 20:42:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14BD1606A31C;
+	Wed, 18 Nov 2026 20:42:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wLcnK//5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DFE71F000C5;
-	Wed, 18 Nov 2026 20:42:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z1tv5/s6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65B6B1F000C4;
+	Wed, 18 Nov 2026 20:42:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034554;
-	bh=IfA86APIZJeM5JqRcvim0vieD3cpSKCRSGnGlMobJVE=;
+	s=korg; t=1795034556;
+	bh=o4IOj+zh+w8aJxGgsY22GdNQ7VCb56rOwo7lJNZWB8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wLcnK//5nM3ZzMHjzEznskayO4qaFwRP+WagSyHGs3SO8NcCiVG2ZDMG6hkAL60GA
-	 x9U3/4a7qeP2xocaAuALGZBD4i++p9GfMEKkznYYUdW9eiDJxXvZbWYhyAgtAgToS1
-	 bFocJvPZhHJgkelr0690FbvnhzEozlw7yApPy7yE=
+	b=z1tv5/s6UyXU2kbND0VsXLCQd18Tu4s0Sv/I77gKzjVgs8tHWb/gU1SeJntQfS5oL
+	 uwCdNKAHTC6kM/ku57rpftDXLNtofk61VpVnX0zv0fuXwxCnc8xwK+PI7ilr8rP5M5
+	 ffW719aT264+t33TuBQJL6q5OiueqKU9NbB6FbC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Batishchev <ii343hbka@gmail.com>,
+	Xu Rao <raoxu@uniontech.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0410/3318] ALSA: hda/realtek: Enable micmute LED on HP EliteBook 6 G1a p/n: AD3Q9ET#UUG
-Date: Wed, 18 Nov 2026 15:17:12 +0100
-Message-ID: <20261118150328.781871708@linuxfoundation.org>
+Subject: [PATCH 6.6 0411/3318] ALSA: hda/ext: preserve PPLCCTL bits when clearing reset
+Date: Wed, 18 Nov 2026 15:17:13 +0100
+Message-ID: <20261118150328.816748668@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,37 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis Batishchev <ii343hbka@gmail.com>
+From: Xu Rao <raoxu@uniontech.com>
 
-[ Upstream commit e7da28b820d12927de30abf554c727a319f80359 ]
+[ Upstream commit 36aa66de481d29edd63cbad9b5c4dc18c340fdf6 ]
 
-The HP EliteBook 6 G1a (SSID 103c:8e0d) uses a Realtek ALC236 codec.
-Without a quirk no fixup is selected and the mic-mute LED stays off.
-It needs the same ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF quirk as the
-already-supported 14" variant (SSID 103c:8dfb), so add it.
+snd_hdac_ext_stream_reset() polls PPLCCTL for STRST by masking the
+register value with AZX_PPLCCTL_STRST:
 
-Signed-off-by: Denis Batishchev <ii343hbka@gmail.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260810151440.2306217-2-ii343hbka@gmail.com
+	val = readl(...) & AZX_PPLCCTL_STRST;
+
+The same masked value is then used when clearing STRST. Since val
+contains no bits other than STRST, clearing STRST from it always
+produces zero. The subsequent writel() therefore writes zero to the
+entire PPLCCTL register instead of clearing only the reset bit.
+
+PPLCCTL contains other stream control fields, including the stream tag
+in AZX_PPLCCTL_STRM_MASK. Those fields must not be modified as a side
+effect of clearing stream reset.
+
+Use snd_hdac_updatel() to clear STRST, matching the existing set-reset
+path and preserving all unrelated PPLCCTL bits.
+
+Fixes: df203a4e46f4 ("ALSA: hdac_ext: add extended stream capabilities")
+Cc: stable@vger.kernel.org
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Link: https://patch.msgid.link/43BB7930B0F07C09+20260813065524.1955696-1-raoxu@uniontech.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[ sashal: Added the same HP quirk line to the older file that holds the quirk table, placed by SSID order because the upstream context entries are missing. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/hda/ext/hdac_ext_stream.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 9a57e073fab11..d375f0729e652 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10329,6 +10329,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8d84, "HP EliteBook X G1i", ALC285_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8d91, "HP ZBook Firefly 14 G12", ALC285_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8d92, "HP ZBook Firefly 16 G12", ALC285_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8e0d, "HP EliteBook 6 G1a 14 (AD3Q9ET#UUG)", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8e18, "HP ZBook Firefly 14 G12A", ALC285_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8e19, "HP ZBook Firefly 14 G12A", ALC285_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8e1a, "HP ZBook Firefly 14 G12A", ALC285_FIXUP_HP_GPIO_LED),
+diff --git a/sound/hda/ext/hdac_ext_stream.c b/sound/hda/ext/hdac_ext_stream.c
+index 11b7119cc47e6..75b56fdfb216a 100644
+--- a/sound/hda/ext/hdac_ext_stream.c
++++ b/sound/hda/ext/hdac_ext_stream.c
+@@ -169,8 +169,8 @@ void snd_hdac_ext_stream_reset(struct hdac_ext_stream *hext_stream)
+ 			break;
+ 		udelay(3);
+ 	} while (--timeout);
+-	val &= ~AZX_PPLCCTL_STRST;
+-	writel(val, hext_stream->pplc_addr + AZX_REG_PPLCCTL);
++	snd_hdac_updatel(hext_stream->pplc_addr, AZX_REG_PPLCCTL,
++			 AZX_PPLCCTL_STRST, 0);
+ 	udelay(3);
+ 
+ 	timeout = 50;
 -- 
 2.53.0
 
