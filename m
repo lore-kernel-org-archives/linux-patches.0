@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016510;
-	b=nPA/HLRUo9grG1jT6IZ0/mjT5QxMtvQPcAMHpLXx2UwQ/bk3W+WnWhkC0stOmCxbH7qa
-	 4VQpgqqP+wbeWkq28birqOOMlEGZc2QGPISITyOGDTMypHuqWZld69I/ULYMqFZ5vQjKA
-	 NZMwJf6ivt9ek4Ycj+PO3TcyB9e2bMF4PFuNTJD2OAcZp3PghjeGQfR9bZwia6QXZ5FAK
-	 5/D2CfZUHHtWUicMinPZF8QpqKdH7+LoJ0dqdFGw+W5hYNp56XB0qQWEJmYq6Ek+a5/lm
-	 A4uhARLrju+HybAhGN15TQF2k4qLt9xwzzvWZtVsl+3t5pxU85W4BSNKvV/eu4OXL1g==
+	t=1795016513;
+	b=V28uNINuFlk5Bm0xTWZimsM/9e1yS41Py86X9er8T0D6siSnnB9lfEVPbObkns4vZ5dV
+	 g7qPoEIkH45GjM46EXGXEl0kTRN6gFNKJaDmkpFfsoK/9MfX2u74Gbq7qzzUANIq7aClU
+	 X6LyvmxeS2lWSRfdVvMepOGw+a62dqn3R9B2j84uE33S9LgkPZPyppbMpEbzVKCBYbG7o
+	 7NyT9QG/v71Sm3IUbtycYN1D7KrwsyyhGfyFqxOe5gl2yKay3lIAZyJbakweoh6aNDQRF
+	 P3Q4tKoQFE+LwPEFzNnYe2qhroRRpvplKhFRZBgkDKz+cFQ5oAdU7JvdVJEqTII361A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016510;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016513;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+BJAcMDWfQi3kFuUWtVliMLjRdgVd7eE4RQPu63XwFc=;
-	b=DszfARylmOLbaNTU9h4sSPYQ/GZ2h7qQiMsjqV8+TwB7GEENLTZECp2OBez13nfov0L7
-	 e4IIKBeftplF/f9uITD/ifoHclRP722R2kPT3IAQ0Veft+EITrjE1IPxQ/1R/I4h7URRf
-	 8pJuP4ly58J+imMCiyBHpE7I+MhrVYSvVfCGZgMG07OHA3hrFeSF0FYjkkSOTg+4bDDCS
-	 GWcrAD1Co5y548SoLL7fUQZvTC32tTR3bZgp3mM4OFX56lObAxFk12ewksRG3hl4Vki3b
-	 36GbehFX8b5v9anaZ0TFRNmqOuYsnjij9M/UwUmqyJAwCWI/cHIgLMB3aVN95r3MW4Q==
+	bh=aUaoNB4LcxOIwVqv80UnL2KvfBWbv7GrJgAkh2XhmYg=;
+	b=RqbCHkGN65oN/CErrddT6WxAReqmerLj5M13OcKsAWJlBJxDLxj4VJCfe5eUBTKd8bel
+	 wv4426IYPvx4DpCbKUDQXDi6kMNxOp9SqgB5yE0agJzSTijMnyJhCTOmyvYA6ef6SIR+d
+	 eJBO7Z6qMBZVNEG+y4YoqIcQnwXeC9hOtGrY9TJp3IB03mlvW6Ff6D9zOkK9yMTKOS260
+	 JeR3E3JnpgYnhQ38pkMyQlFJ/cLUlgbw/JbEE7N53ZI8WIRZbjdKtOQZjEm7y29ffU9uK
+	 KiDFIzFVwubAFXKlM8fUPSeOb+2DQFnxD9wcSxY/WaHGA7EDtLSLPjXwsm78DsPlJtA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t5YLJDf1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gBkUzid1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3840606A320;
-	Wed, 18 Nov 2026 15:41:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA3C7606A325;
+	Wed, 18 Nov 2026 15:41:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t5YLJDf1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 232DC1F000C4;
-	Wed, 18 Nov 2026 15:41:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gBkUzid1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0478A1F000C4;
+	Wed, 18 Nov 2026 15:41:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016510;
-	bh=+BJAcMDWfQi3kFuUWtVliMLjRdgVd7eE4RQPu63XwFc=;
+	s=korg; t=1795016513;
+	bh=aUaoNB4LcxOIwVqv80UnL2KvfBWbv7GrJgAkh2XhmYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t5YLJDf18/UUMXwzuBKf2wd5ZHUnD4efn2ZSr4cNxUzgNIo+1DoIzeQrSHUkvwsIx
-	 o6hzRQmGRVBm/L8OEkOiKCi7DGKC6/KWbgnZCvaqyRXRwgDUVWy/W1gKrqx/iuPGcS
-	 5HecgMKQXyrPhIjvE+gLyePhngeAhRPXzd6ZT3RY=
+	b=gBkUzid1cEBG9PS/74dHtLpPK9mvv14ANq1hgemBmoprGR2fulfKGVMJNtmMP/CGk
+	 GCM2aCp7RvHk7rK0Ansgz3zC83rqnMrKAMmMszWDRe4kds0GuYqR2XMk363ocG87EZ
+	 RDTFuFpRrapp77RM1/c9rAjrGHOvSCRImKcds9SA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	Lizhi Hou <lizhi.hou@amd.com>,
+	Taimuraz Kaitmazov <taimuraz@kaitmazov.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0517/2651] md/raid5: setup_conf: Fix null-ptr-def in error handling path
-Date: Wed, 18 Nov 2026 15:29:17 +0100
-Message-ID: <20261118150306.364703293@linuxfoundation.org>
+Subject: [PATCH 7.3 0553/2651] accel/amdxdna: do not fail a sync for a BO with no debug context
+Date: Wed, 18 Nov 2026 15:29:53 +0100
+Message-ID: <20261118150307.653092808@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,50 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Taimuraz Kaitmazov <taimuraz@kaitmazov.com>
 
-[ Upstream commit eba5f518701b1c7f2d883504f89c41611bd2de46 ]
+[ Upstream commit b1da2a6cc13d66c03c364f7b72d5a343b3ccdb3c ]
 
-For raid5 setup_conf, if an error(eg. bioset_init fails) happens before
-'conf->mddev = mddev', following error handling path could trigger a
-null-ptr-def problem:
+amdxdna_drm_sync_bo_ioctl() calls amdxdna_hwctx_sync_debug_bo() for every
+FROM_DEVICE sync, which answers -EINVAL when the BO's assigned_hwctx names
+no context. Only a BO attached with ATTACH_DEBUG_BO is ever given one, so
+an ordinary read-back sync reports failure after its flush has already run.
 
- free_conf
-  log_exit
-   raid5_has_ppl
-    test_bit(MD_HAS_PPL, &conf->mddev->flags) // conf->mddev is NULL !
+Ask for the debug sync only when the BO has a context. An unattached BO
+carries AMDXDNA_INVALID_CTX_HANDLE and hwctx ids are allocated above it, so
+the test is exact, -EINVAL keeps meaning that the named context is gone,
+and the handle is not resolved twice. The field is written under dev_lock
+and read here without it; the context is still resolved under that lock, so
+a racing attach only decides whether this sync sees the buffer.
 
-Fix it by initializing conf->mddev in advance.
-
-Fixes: 3418d036c81d ("raid5-ppl: Partial Parity Log write logging implementation")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Link: https://patch.msgid.link/20260915081731.122933-1-chengzhihao1@huawei.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Fixes: 7ea046838021 ("accel/amdxdna: Support firmware debug buffer")
+Suggested-by: Lizhi Hou <lizhi.hou@amd.com>
+Signed-off-by: Taimuraz Kaitmazov <taimuraz@kaitmazov.com>
+Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20260819224458.257346-6-taimuraz@kaitmazov.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/accel/amdxdna/amdxdna_gem.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index d5a8428778e36..45b00c9904215 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -7679,6 +7679,7 @@ static struct r5conf *setup_conf(struct mddev *mddev)
- 	if (conf == NULL)
- 		goto abort;
+diff --git a/drivers/accel/amdxdna/amdxdna_gem.c b/drivers/accel/amdxdna/amdxdna_gem.c
+index 96f8bd46f0799..f4832337ec31d 100644
+--- a/drivers/accel/amdxdna/amdxdna_gem.c
++++ b/drivers/accel/amdxdna/amdxdna_gem.c
+@@ -1511,7 +1511,8 @@ int amdxdna_drm_sync_bo_ioctl(struct drm_device *dev,
+ 	XDNA_DBG(xdna, "Sync bo %d offset 0x%llx, size 0x%llx\n",
+ 		 args->handle, args->offset, args->size);
  
-+	conf->mddev = mddev;
- #if PAGE_SIZE != DEFAULT_STRIPE_SIZE
- 	conf->stripe_size = DEFAULT_STRIPE_SIZE;
- 	conf->stripe_shift = ilog2(DEFAULT_STRIPE_SIZE) - 9;
-@@ -7747,7 +7748,6 @@ static struct r5conf *setup_conf(struct mddev *mddev)
- 	ret = bioset_init(&conf->bio_split, BIO_POOL_SIZE, 0, 0);
- 	if (ret)
- 		goto abort;
--	conf->mddev = mddev;
+-	if (args->direction == SYNC_DIRECT_FROM_DEVICE)
++	if (abo->assigned_hwctx != AMDXDNA_INVALID_CTX_HANDLE &&
++	    args->direction == SYNC_DIRECT_FROM_DEVICE)
+ 		ret = amdxdna_hwctx_sync_debug_bo(client, args->handle);
  
- 	ret = -ENOMEM;
- 	conf->stripe_hashtbl = kzalloc(PAGE_SIZE, GFP_KERNEL);
+ put_obj:
 -- 
 2.53.0
 
