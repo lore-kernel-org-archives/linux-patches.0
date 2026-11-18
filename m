@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053811;
-	b=JSJYsZU64dn+b+msFdwdLFRZzD7TKXl8k+QOwZZvb76t+WwgyMdacJSsTRpn52AfeuHv
-	 yXgotGzZzWr3+STsrLGREtWNSw/yxfiAhoJ6tfep1TP9O+cpqCjhRJeoy/n4ckwR+TqRs
-	 3Ep53ehFcKZcjy0taPyr37pfd8kO89r9SNMwQh5UaF/G3K5OMXud8iBGi9cXyMikQoNGL
-	 aNXvQO3Vww+ERDK0pYHWDMD6YxTmhUnC0CIPrdCkzAvRVaEA1s7fclbf8Nsj2oFYQMKTM
-	 LPjdyiewW/tEZcp2peRJ50NM4iY8BFhyChfGGFavrMJ7gLBg7bHykoT5xEVkqQU9d1Q==
+	t=1795053814;
+	b=kgzKWuVzd2bKB8yqRUcrhFAq6xVpvRbphsbb1RxfM8W5llOK2yJiHWecKnH9OLAdkhd6
+	 2r/EqcLMGmi3fWKl5lCGFK4OV+bDc7HcL+RWYQTI1/3wsu0UVT1BtZ8nRbpaXBaG+LNIi
+	 F2Gi6+bM/TnaDjfU0Eegpn7IXdBWdYJI3l/2SO5tjFy90AIYAm9MBm7qVqnwockyETqlQ
+	 cwNWjCCNgaD7C7je/neEnNFeEaaNz1xn4vpa7Xl+S20o0nhp91y2UHEomiN2bM98EJ1d/
+	 9skq0PUg68vYyLTh/cXKE3DeBtZ/2W2Nx7aT7swle2Czqk++HK5NtApLUBLD5Qo8YcQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053811;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053814;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z1bbCCFNB/dgTIGrUXWwpnsNltwj121zG2joH+gSnu4=;
-	b=EphrcKULAdG5Dtbsv9C/hiHHx6dmKSHcC3r5K90sTfj5ZdCVyzh8ZmI8+YNt069FE83C
-	 EP91ZdfgL6u2nLkhBnF8ZUW+k7Nul+P90qGPdNpeMXX3kmYxa1q8h8313XhMcvz1jo7WZ
-	 Vgeb0xZ4xfokMXdupBv3dbLbuOnOvOL7yOCy1lk069/4WRAS+L7R5S8TjlcDdkH2T2RoV
-	 f5t7mSaHCEgBkJJlfGu9WLeJOMzSM6Oy94gZl6i42PNR9DOBnAHU/Z35R+5pmhBX3LqZg
-	 Pm0cSsyeg4gGF3ry6zepof2TIw+RO27p4FXuWJySYhrDh7NfMVcAOvEfnsCayn64nTg==
+	bh=nfgXzetbTRS8QBJ4AaYFGvfpGOoh/6eKcQ7QK7IZ+Ag=;
+	b=2k131CVzx4EAROigb64c/JVDvhfL+GfjpxbVXsHSW3zLqzIurDoMf1q+SCTZimO1SQaz
+	 SABLJgzOV3xJCvCr6oWK+SgrISoxYg1HfaItyZeOFPWz74O3PpgMAPKQadv1EP8hrUP1e
+	 HfZzpQUPvC2aQv/beZWMJJVfkh+c34J1vnx1xrl0FWzTs4NI6z2WiGikWgAHDO6V/vPSQ
+	 5og25DSYCl4ohg9nV4YcDSIpro2BU6ClqLkUcQCRxAx1rFNzJ6WZwqSy9bGXNqLw7HW6i
+	 Pin4MvuZHQIHfvZoUO2r46V17O27o0S0VeJkr8/k33Lst0N4tUHNLXO/zOQW8H4Ufng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fa2qoyLZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OW8cLNR9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C461D606A320;
-	Thu, 19 Nov 2026 02:03:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AF9C606A320;
+	Thu, 19 Nov 2026 02:03:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fa2qoyLZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C81F21F000C4;
-	Thu, 19 Nov 2026 02:03:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OW8cLNR9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B76B1F000C4;
+	Thu, 19 Nov 2026 02:03:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053811;
-	bh=Z1bbCCFNB/dgTIGrUXWwpnsNltwj121zG2joH+gSnu4=;
+	s=korg; t=1795053814;
+	bh=nfgXzetbTRS8QBJ4AaYFGvfpGOoh/6eKcQ7QK7IZ+Ag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fa2qoyLZEgFzCXyYj8dRLSllNIpJ7Eux0qNteu7duBVYbmTUPhjoiOclqd1tJsw92
-	 M7CjcWC0QXf7vRzznZHZXrEmxkMEtvLTIrVEgnns5uWvnc8qIdCnqbkhY/8aY6zCrQ
-	 ZUSHI+W158XwhEZUJvrhlfcOY9EfcEuclz6OR3j0=
+	b=OW8cLNR9WyT98CENMiZIasNFH731gTWAC9+h2scd24Pbdhux3QqmB6a0NyNX1cihQ
+	 hXB5MjkvDF0h1ULYwOpKY2b7S748X06f+V7nuC+vbs4EgF9OHxVwKgNebIf4etsAII
+	 SHLFCETSkOu3HZgxdKNVlo7a2hJv9ZtzeCLK6YV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1024/2214] splice: avoid stale f_pos writeback on error
-Date: Wed, 18 Nov 2026 15:45:00 +0100
-Message-ID: <20261118150053.317352179@linuxfoundation.org>
+Subject: [PATCH 5.15 1051/2214] ALSA: hda/hdmi: clamp sad_count in ELD proc write handler
+Date: Wed, 18 Nov 2026 15:45:27 +0100
+Message-ID: <20261118150054.371009665@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,68 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 79b496ebe382866e3a05090b7dc9ae95e85e65b2 ]
+[ Upstream commit b3e7ddd694f8429217ba509b55b910a0e4361dfb ]
 
-do_splice() snapshots an implicit file position before calling the splice
-helper. Since splice does not take f_pos_lock, another operation on the
-same open file description can update f_pos while the helper is blocked.
-If the helper then fails, the unconditional writeback restores the stale
-snapshot.
+snd_hdmi_write_eld_info() parses a "sad_count N" line from the
+root-writable ELD proc interface and assigns N directly to
+e->sad_count with no upper bound, unlike the per-index "sadN_*" lines
+a few lines below which are already bounded to ELD_MAX_SAD.
 
-For a directory without ->splice_read, a file-to-pipe splice fails with
--EINVAL. A concurrent directory mutation and getdents() call can advance
-f_pos and refresh the filesystem's revalidation cookie before that failure
-restores only the old position. The next ext2 readdir can then trust an
-offset inside a directory entry and copy data from the adjacent page to
-userspace.
+snd_hdmi_eld_update_pcm_info() later iterates
+"for (i = 0; i < e->sad_count; i++)" over the fixed
+e->sad[ELD_MAX_SAD] array, so an oversized sad_count read from the
+proc file causes it to walk past the array.
 
-Only update an implicit file position when splice returns a non-negative
-result, matching read and write. Keep explicit offset updates unchanged.
+Reject sad_count values above ELD_MAX_SAD, matching the existing
+per-index guard.
 
-Fixes: 7995bd287134 ("splice: don't pass the address of ->f_pos to methods")
+Fixes: acb059938810 ("ALSA: hda - ELD proc interface write updates")
 Cc: stable@vger.kernel.org
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Link: https://patch.msgid.link/20261018051708.2422394-1-4ncienth@gmail.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20261008085133.9528-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[ sashal: adapted to the older location of the HDMI ELD source file ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/splice.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ sound/pci/hda/hda_eld.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/splice.c b/fs/splice.c
-index 70008e08998f5..3630fd18a12e8 100644
---- a/fs/splice.c
-+++ b/fs/splice.c
-@@ -1107,10 +1107,10 @@ long do_splice(struct file *in, loff_t *off_in, struct file *out,
- 		ret = do_splice_from(ipipe, out, &offset, len, flags);
- 		file_end_write(out);
- 
--		if (!off_out)
--			out->f_pos = offset;
--		else
-+		if (off_out)
- 			*off_out = offset;
-+		else if (ret >= 0)
-+			out->f_pos = offset;
- 	} else if (opipe) {
- 		if (off_out)
- 			return -ESPIPE;
-@@ -1127,10 +1127,10 @@ long do_splice(struct file *in, loff_t *off_in, struct file *out,
- 
- 		ret = splice_file_to_pipe(in, opipe, &offset, len, flags);
- 
--		if (!off_in)
--			in->f_pos = offset;
--		else
-+		if (off_in)
- 			*off_in = offset;
-+		else if (ret >= 0)
-+			in->f_pos = offset;
- 	} else {
- 		ret = -EINVAL;
- 	}
+diff --git a/sound/pci/hda/hda_eld.c b/sound/pci/hda/hda_eld.c
+index 9e97443795f83..113c2081dda37 100644
+--- a/sound/pci/hda/hda_eld.c
++++ b/sound/pci/hda/hda_eld.c
+@@ -521,9 +521,11 @@ void snd_hdmi_write_eld_info(struct hdmi_eld *eld,
+ 			e->aud_synch_delay = val;
+ 		else if (!strcmp(name, "speakers"))
+ 			e->spk_alloc = val;
+-		else if (!strcmp(name, "sad_count"))
++		else if (!strcmp(name, "sad_count")) {
++			if (val > ELD_MAX_SAD)
++				continue;
+ 			e->sad_count = val;
+-		else if (!strncmp(name, "sad", 3)) {
++		} else if (!strncmp(name, "sad", 3)) {
+ 			sname = name + 4;
+ 			n = name[3] - '0';
+ 			if (name[4] >= '0' && name[4] <= '9') {
 -- 
 2.53.0
 
