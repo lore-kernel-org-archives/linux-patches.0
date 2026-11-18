@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057196;
-	b=NLkrepLGdCd97geV7Zx/uhiIcf9gctEfvGkwMyN0q3mq4kwVSOMHEpCflki327KBlmAQ
-	 cGBTYzJ1GObA2f7OIeqhXmn8tz0eNBXfFN04euoejTEJChlHZNRaaBkHGdyltg3dsIvAX
-	 efT24iKE7+hjOvghCIU8+AAL7sIfvnh4w6oblwVIxr82Mtw7auO2ZB6ftjVLyMPcVyiVm
-	 3U26et9JdH56zKx+Stt2ZAfZiQ73IKO9sRSHhWItLhYkg4G3/y0kzYGyqBJpORgRLq3g/
-	 YZqF3t/xkG/Hz9DdFvwqONIsiw/uWx3zSy8toLfskBBuUaDc7MKbzOzMgTctQGVROmw==
+	t=1795057199;
+	b=v+kxPt34+6Ub9RiUN1r3BvSKotQj36qsfTWZoLtYzKPC6oxnz8qm2mWl3RTlWI2dI1K2
+	 7HyPHyv6Q60nUR+MBQEAq3Hb9UrfYW0XN9ka5o2datv96g5c4XscxlhKUcFaDTA6uzILD
+	 fsRP9IIgj6Y6VKE3NdxBAG/OrR6a52orbvLHNhf54NBFnRiokwzo26+Pm+o5Ez090r0bP
+	 OBy1QIU0yRs8i6Dzq1+Qn0zeXsW897SiJEMqf0zJDO116y6E8eRGqnUo8bYljfYvLbI/J
+	 h5W2WgEEVRlCFYwvMWPUhFbDe26tHrkJ/3sxXcTmzoWcZ4iRDRCuON70KHNzQbZScNg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057196;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057199;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fBjxW6UyVoMbfXJWFTjSguZcPm6ISpkYaNPJH4g2hTU=;
-	b=QNjI8ycwWVmA5OSnH/1crwpxd0Y7CKJZqxVKuyW38m4DDaxGYSV/ZfF6gtrkTHUFVvqb
-	 +YB7tkwnLjYsT1eo3FWBS/kgqqDjvGlxU5nDyYhqZW40Xsm1Rv5Ox1skZMDciYK5tTcg8
-	 Go2DD2VbKCeY3OBm0IFc4TjOkBTFKNigd8danplkZmXxVfD8NlMRBWVwWnmkRdhdB+Eq1
-	 5Wbk/12kPsP2BhrS3mJz/4B97Hbi5gnsGGRybnEIpIFaJVtYc/LT2LAybjTqsi0vngEkG
-	 VdW8Smdj9V5ENwht/b08GVremEE78b1kdPUwT97yWOgoQRQkkxmDCke4B0P5T4t6Iww==
+	bh=nfXHEGg54HXJ/PhEOGWiryRshHDegb1xVE9Dh1p+Q14=;
+	b=ijM5B8szhgcrCNd/eQ1DLi8F5K3jqs0Pfgdvz+l54bq32gdwnhMXKLD+NQyxIDIjuE5+
+	 PR2f0x7yQUjW2QtMin65hkql70g2E9m+5CGu8jwOyM1uGBDVETM1l3wBCAlv15QIO0Fbk
+	 J9mcaIU5MKTJ12O0J9fia+sMxKuVZdLqg/mbvwri1IYpEi90VcFyMfeoBBEYokwMooPXh
+	 Yxs+QeHkVdQr59UrvRPy+f19Hg3LOxJrApsNZQul+WtrIE/4Gi3/D1gyb74Oup+JEVypB
+	 MhqSX1x55k77tDiniXkcL9rlzXdZ6qL9cxd2EQCT0EMYtnljW4/F4SfDG6YsrLshnwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C3XfPQsL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VMaVPwmj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C8E606A32C;
-	Thu, 19 Nov 2026 02:59:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91A3F606A332;
+	Thu, 19 Nov 2026 02:59:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C3XfPQsL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA421F000CD;
-	Thu, 19 Nov 2026 02:59:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VMaVPwmj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B55F61F000D0;
+	Thu, 19 Nov 2026 02:59:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057196;
-	bh=fBjxW6UyVoMbfXJWFTjSguZcPm6ISpkYaNPJH4g2hTU=;
+	s=korg; t=1795057199;
+	bh=nfXHEGg54HXJ/PhEOGWiryRshHDegb1xVE9Dh1p+Q14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C3XfPQsLXKu849OML4tVQwH8nXhBTZsbNOLf5eKTHpHAcgw55uIk2yrK2NOQhUpH4
-	 9ClC4QNgkoD2OIy9i4+p0SQYZeYRxitNnyXwRuWNpodRRXPQdCvOgSNhvSt6ZuHfZ+
-	 rStVDt1D6e/BJr99WOta/mOqghzyRtsmlwbMIqnA=
+	b=VMaVPwmjQq6w6h0Rm0hbYp1Bhf0CJ9UgrNquOh5u17n/ywB+cV+x1v0/Saz4qldtH
+	 EZ4IJzC5Cn/TmIBw7qb/3BCf1UI+hvN8qOPw458CM73MIwBqpnSKv3uSNHkvuTdpkf
+	 6JmFc0JNIdPaYKLB6GkucEZJKA4o7bTcqQvxciHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0008/1848] coredump: hold RCU while releasing parked threads
-Date: Wed, 18 Nov 2026 15:34:06 +0100
-Message-ID: <20261118145911.565482889@linuxfoundation.org>
+Subject: [PATCH 5.10 0044/1848] drm/amd/pm: Validate legacy hwmgr PP table offsets
+Date: Wed, 18 Nov 2026 15:34:42 +0100
+Message-ID: <20261118145912.951740715@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,61 +69,693 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-[ Upstream commit 61d58591aa0188bf2463e263962256316ff8b576 ]
+[ Upstream commit 0ceb6bc43e62f0e73b282c9de8f4bc4d5498f281 ]
 
-coredump_finish() releases the parked threads by clearing ->task in
-their core_thread entry and calling wake_up_process() on each of them.
-It does that without holding a reference on the task and without being
-inside rcu.
+processpptables.c walks several variable-length PPLIB tables by
+using offsets from the VBIOS PowerPlay table. Some paths dereference
+extended headers, state arrays, clock arrays, non-clock arrays, or VCE
+records before checking that the referenced data is inside the table
+buffer.
 
-But calling wake_up_process(task) without rcu here isn't safe. A parked
-thread doesn't need that wakeup to leave. A spurious wakeup or a
-preemption after the store is enough for the task to go away.
+Add local bounds helpers and validate the relevant offsets and entry
+sizes before dereferencing them. This prevents truncated or malformed
+legacy PowerPlay tables from driving out-of-bounds reads during hwmgr
+initialization and table entry lookup.
 
-So if the coredump client is preempted between the store and
-wake_up_process() the thread can exit and be freed in the meantime and
-try_to_wake_up() takes pi_lock in freed memory.
-
-Hold rcu across the loop.
-
-Fixes: a94e2d408eae ("coredump: kill mm->core_done")
-Cc: stable@vger.kernel.org
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Link: https://patch.msgid.link/20260921-work-coredump-fixes-v3-1-8e4adb1619e6@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ sashal: Replaced guard(rcu)() with explicit rcu_read_lock() and rcu_read_unlock() calls. ]
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/coredump.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ .../amd/pm/powerplay/hwmgr/processpptables.c  | 446 +++++++++++++-----
+ 1 file changed, 316 insertions(+), 130 deletions(-)
 
-diff --git a/fs/coredump.c b/fs/coredump.c
-index 7e5ac34112bd5..23afc126d4ea6 100644
---- a/fs/coredump.c
-+++ b/fs/coredump.c
-@@ -529,6 +529,8 @@ static void coredump_finish(struct mm_struct *mm, bool core_dumped)
- 	spin_unlock_irq(&current->sighand->siglock);
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/processpptables.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/processpptables.c
+index 04bf14cdefadf..48673dc888998 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/processpptables.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/processpptables.c
+@@ -47,26 +47,53 @@
  
- 	next = mm->core_state->dumper.next;
-+	/* A released thread may exit and be freed before it is woken. */
-+	rcu_read_lock();
- 	while ((curr = next) != NULL) {
- 		next = curr->next;
- 		task = curr->task;
-@@ -537,9 +539,11 @@ static void coredump_finish(struct mm_struct *mm, bool core_dumped)
- 		 * ->task == NULL before we read ->next.
- 		 */
- 		smp_mb();
-+		/* Any wakeup now lets the thread exit, rcu keeps it alive. */
- 		curr->task = NULL;
- 		wake_up_process(task);
- 	}
-+	rcu_read_unlock();
+ #define NUM_BITS_CLOCK_INFO_ARRAY_INDEX 6
  
- 	mm->core_state = NULL;
++static bool pp_table_has_space(struct pp_hwmgr *hwmgr, size_t offset,
++			       size_t size)
++{
++	size_t table_size = hwmgr->soft_pp_table_size;
++
++	return offset <= table_size && size <= table_size - offset;
++}
++
++static const ATOM_PPLIB_EXTENDEDHEADER *
++get_extended_header(struct pp_hwmgr *hwmgr,
++		    const ATOM_PPLIB_POWERPLAYTABLE *powerplay_table,
++		    size_t min_size)
++{
++	const ATOM_PPLIB_POWERPLAYTABLE3 *powerplay_table3;
++	const ATOM_PPLIB_EXTENDEDHEADER *extended_header;
++	u16 offset;
++
++	if (le16_to_cpu(powerplay_table->usTableSize) <
++	    sizeof(ATOM_PPLIB_POWERPLAYTABLE3) ||
++	    !pp_table_has_space(hwmgr, 0, sizeof(ATOM_PPLIB_POWERPLAYTABLE3)))
++		return NULL;
++
++	powerplay_table3 = (const ATOM_PPLIB_POWERPLAYTABLE3 *)powerplay_table;
++	offset = le16_to_cpu(powerplay_table3->usExtendendedHeaderOffset);
++	if (!offset || !pp_table_has_space(hwmgr, offset,
++					   sizeof(extended_header->usSize)))
++		return NULL;
++
++	extended_header = (const ATOM_PPLIB_EXTENDEDHEADER *)
++		(((unsigned long)powerplay_table) + offset);
++	if (le16_to_cpu(extended_header->usSize) < min_size ||
++	    !pp_table_has_space(hwmgr, offset, min_size))
++		return NULL;
++
++	return extended_header;
++}
++
+ static uint16_t get_vce_table_offset(struct pp_hwmgr *hwmgr,
+ 			const ATOM_PPLIB_POWERPLAYTABLE *powerplay_table)
+ {
+ 	uint16_t vce_table_offset = 0;
++	const ATOM_PPLIB_EXTENDEDHEADER *extended_header;
+ 
+-	if (le16_to_cpu(powerplay_table->usTableSize) >=
+-	   sizeof(ATOM_PPLIB_POWERPLAYTABLE3)) {
+-		const ATOM_PPLIB_POWERPLAYTABLE3 *powerplay_table3 =
+-			(const ATOM_PPLIB_POWERPLAYTABLE3 *)powerplay_table;
+-
+-		if (powerplay_table3->usExtendendedHeaderOffset > 0) {
+-			const ATOM_PPLIB_EXTENDEDHEADER  *extended_header =
+-						(const ATOM_PPLIB_EXTENDEDHEADER *)
+-						(((unsigned long)powerplay_table3) +
+-						le16_to_cpu(powerplay_table3->usExtendendedHeaderOffset));
+-			if (le16_to_cpu(extended_header->usSize) >=
+-			   SIZE_OF_ATOM_PPLIB_EXTENDEDHEADER_V2)
+-				vce_table_offset = le16_to_cpu(extended_header->usVCETableOffset);
+-		}
+-	}
++	extended_header = get_extended_header(hwmgr, powerplay_table,
++					      SIZE_OF_ATOM_PPLIB_EXTENDEDHEADER_V2);
++	if (extended_header)
++		vce_table_offset = le16_to_cpu(extended_header->usVCETableOffset);
+ 
+ 	return vce_table_offset;
  }
+@@ -93,7 +120,14 @@ static uint16_t get_vce_clock_info_array_size(struct pp_hwmgr *hwmgr,
+ 	if (table_offset > 0) {
+ 		const VCEClockInfoArray *p = (const VCEClockInfoArray *)
+ 			(((unsigned long) powerplay_table) + table_offset);
+-		table_size = sizeof(uint8_t) + p->ucNumEntries * sizeof(VCEClockInfo);
++		size_t size;
++
++		if (!pp_table_has_space(hwmgr, table_offset, sizeof(p->ucNumEntries)))
++			return 0;
++
++		size = sizeof(uint8_t) + p->ucNumEntries * sizeof(VCEClockInfo);
++		if (pp_table_has_space(hwmgr, table_offset, size))
++			table_size = size;
+ 	}
+ 
+ 	return table_size;
+@@ -104,10 +138,13 @@ static uint16_t get_vce_clock_voltage_limit_table_offset(struct pp_hwmgr *hwmgr,
+ {
+ 	uint16_t table_offset = get_vce_clock_info_array_offset(hwmgr,
+ 							powerplay_table);
++	u16 table_size;
+ 
+-	if (table_offset > 0)
+-		return table_offset + get_vce_clock_info_array_size(hwmgr,
+-							powerplay_table);
++	if (table_offset > 0) {
++		table_size = get_vce_clock_info_array_size(hwmgr, powerplay_table);
++		if (table_size)
++			return table_offset + table_size;
++	}
+ 
+ 	return 0;
+ }
+@@ -121,8 +158,15 @@ static uint16_t get_vce_clock_voltage_limit_table_size(struct pp_hwmgr *hwmgr,
+ 	if (table_offset > 0) {
+ 		const ATOM_PPLIB_VCE_Clock_Voltage_Limit_Table *ptable =
+ 			(const ATOM_PPLIB_VCE_Clock_Voltage_Limit_Table *)(((unsigned long) powerplay_table) + table_offset);
++		size_t size;
+ 
+-		table_size = sizeof(uint8_t) + ptable->numEntries * sizeof(ATOM_PPLIB_VCE_Clock_Voltage_Limit_Record);
++		if (!pp_table_has_space(hwmgr, table_offset, sizeof(ptable->numEntries)))
++			return 0;
++
++		size = sizeof(uint8_t) +
++			ptable->numEntries * sizeof(ATOM_PPLIB_VCE_Clock_Voltage_Limit_Record);
++		if (pp_table_has_space(hwmgr, table_offset, size))
++			table_size = size;
+ 	}
+ 	return table_size;
+ }
+@@ -130,9 +174,13 @@ static uint16_t get_vce_clock_voltage_limit_table_size(struct pp_hwmgr *hwmgr,
+ static uint16_t get_vce_state_table_offset(struct pp_hwmgr *hwmgr, const ATOM_PPLIB_POWERPLAYTABLE *powerplay_table)
+ {
+ 	uint16_t table_offset = get_vce_clock_voltage_limit_table_offset(hwmgr, powerplay_table);
++	u16 table_size;
+ 
+-	if (table_offset > 0)
+-		return table_offset + get_vce_clock_voltage_limit_table_size(hwmgr, powerplay_table);
++	if (table_offset > 0) {
++		table_size = get_vce_clock_voltage_limit_table_size(hwmgr, powerplay_table);
++		if (table_size)
++			return table_offset + table_size;
++	}
+ 
+ 	return 0;
+ }
+@@ -143,8 +191,12 @@ static const ATOM_PPLIB_VCE_State_Table *get_vce_state_table(
+ {
+ 	uint16_t table_offset = get_vce_state_table_offset(hwmgr, powerplay_table);
+ 
+-	if (table_offset > 0)
+-		return (const ATOM_PPLIB_VCE_State_Table *)(((unsigned long) powerplay_table) + table_offset);
++	if (table_offset > 0) {
++		if (pp_table_has_space(hwmgr, table_offset,
++				       sizeof(((ATOM_PPLIB_VCE_State_Table *)0)->numEntries)))
++			return (const ATOM_PPLIB_VCE_State_Table *)
++				(((unsigned long)powerplay_table) + table_offset);
++	}
+ 
+ 	return NULL;
+ }
+@@ -153,21 +205,13 @@ static uint16_t get_uvd_table_offset(struct pp_hwmgr *hwmgr,
+ 			const ATOM_PPLIB_POWERPLAYTABLE *powerplay_table)
+ {
+ 	uint16_t uvd_table_offset = 0;
++	const ATOM_PPLIB_EXTENDEDHEADER *extended_header;
++
++	extended_header = get_extended_header(hwmgr, powerplay_table,
++					      SIZE_OF_ATOM_PPLIB_EXTENDEDHEADER_V3);
++	if (extended_header)
++		uvd_table_offset = le16_to_cpu(extended_header->usUVDTableOffset);
+ 
+-	if (le16_to_cpu(powerplay_table->usTableSize) >=
+-	    sizeof(ATOM_PPLIB_POWERPLAYTABLE3)) {
+-		const ATOM_PPLIB_POWERPLAYTABLE3 *powerplay_table3 =
+-			(const ATOM_PPLIB_POWERPLAYTABLE3 *)powerplay_table;
+-		if (powerplay_table3->usExtendendedHeaderOffset > 0) {
+-			const ATOM_PPLIB_EXTENDEDHEADER  *extended_header =
+-					(const ATOM_PPLIB_EXTENDEDHEADER *)
+-					(((unsigned long)powerplay_table3) +
+-				le16_to_cpu(powerplay_table3->usExtendendedHeaderOffset));
+-			if (le16_to_cpu(extended_header->usSize) >=
+-			    SIZE_OF_ATOM_PPLIB_EXTENDEDHEADER_V3)
+-				uvd_table_offset = le16_to_cpu(extended_header->usUVDTableOffset);
+-		}
+-	}
+ 	return uvd_table_offset;
+ }
+ 
+@@ -193,8 +237,14 @@ static uint16_t get_uvd_clock_info_array_size(struct pp_hwmgr *hwmgr,
+ 		const UVDClockInfoArray *p = (const UVDClockInfoArray *)
+ 					(((unsigned long) powerplay_table)
+ 					+ table_offset);
+-		table_size = sizeof(UCHAR) +
+-			     p->ucNumEntries * sizeof(UVDClockInfo);
++		size_t size;
++
++		if (!pp_table_has_space(hwmgr, table_offset, sizeof(p->ucNumEntries)))
++			return 0;
++
++		size = sizeof(UCHAR) + p->ucNumEntries * sizeof(UVDClockInfo);
++		if (pp_table_has_space(hwmgr, table_offset, size))
++			table_size = size;
+ 	}
+ 
+ 	return table_size;
+@@ -206,10 +256,13 @@ static uint16_t get_uvd_clock_voltage_limit_table_offset(
+ {
+ 	uint16_t table_offset = get_uvd_clock_info_array_offset(hwmgr,
+ 						     powerplay_table);
++	u16 table_size;
+ 
+-	if (table_offset > 0)
+-		return table_offset +
+-			get_uvd_clock_info_array_size(hwmgr, powerplay_table);
++	if (table_offset > 0) {
++		table_size = get_uvd_clock_info_array_size(hwmgr, powerplay_table);
++		if (table_size)
++			return table_offset + table_size;
++	}
+ 
+ 	return 0;
+ }
+@@ -218,21 +271,12 @@ static uint16_t get_samu_table_offset(struct pp_hwmgr *hwmgr,
+ 			const ATOM_PPLIB_POWERPLAYTABLE *powerplay_table)
+ {
+ 	uint16_t samu_table_offset = 0;
++	const ATOM_PPLIB_EXTENDEDHEADER *extended_header;
+ 
+-	if (le16_to_cpu(powerplay_table->usTableSize) >=
+-	    sizeof(ATOM_PPLIB_POWERPLAYTABLE3)) {
+-		const ATOM_PPLIB_POWERPLAYTABLE3 *powerplay_table3 =
+-			(const ATOM_PPLIB_POWERPLAYTABLE3 *)powerplay_table;
+-		if (powerplay_table3->usExtendendedHeaderOffset > 0) {
+-			const ATOM_PPLIB_EXTENDEDHEADER  *extended_header =
+-				(const ATOM_PPLIB_EXTENDEDHEADER *)
+-				(((unsigned long)powerplay_table3) +
+-				le16_to_cpu(powerplay_table3->usExtendendedHeaderOffset));
+-			if (le16_to_cpu(extended_header->usSize) >=
+-			    SIZE_OF_ATOM_PPLIB_EXTENDEDHEADER_V4)
+-				samu_table_offset = le16_to_cpu(extended_header->usSAMUTableOffset);
+-		}
+-	}
++	extended_header = get_extended_header(hwmgr, powerplay_table,
++					      SIZE_OF_ATOM_PPLIB_EXTENDEDHEADER_V4);
++	if (extended_header)
++		samu_table_offset = le16_to_cpu(extended_header->usSAMUTableOffset);
+ 
+ 	return samu_table_offset;
+ }
+@@ -254,21 +298,12 @@ static uint16_t get_acp_table_offset(struct pp_hwmgr *hwmgr,
+ 				const ATOM_PPLIB_POWERPLAYTABLE *powerplay_table)
+ {
+ 	uint16_t acp_table_offset = 0;
++	const ATOM_PPLIB_EXTENDEDHEADER *extended_header;
+ 
+-	if (le16_to_cpu(powerplay_table->usTableSize) >=
+-	    sizeof(ATOM_PPLIB_POWERPLAYTABLE3)) {
+-		const ATOM_PPLIB_POWERPLAYTABLE3 *powerplay_table3 =
+-			(const ATOM_PPLIB_POWERPLAYTABLE3 *)powerplay_table;
+-		if (powerplay_table3->usExtendendedHeaderOffset > 0) {
+-			const ATOM_PPLIB_EXTENDEDHEADER  *pExtendedHeader =
+-				(const ATOM_PPLIB_EXTENDEDHEADER *)
+-				(((unsigned long)powerplay_table3) +
+-				le16_to_cpu(powerplay_table3->usExtendendedHeaderOffset));
+-			if (le16_to_cpu(pExtendedHeader->usSize) >=
+-			    SIZE_OF_ATOM_PPLIB_EXTENDEDHEADER_V6)
+-				acp_table_offset = le16_to_cpu(pExtendedHeader->usACPTableOffset);
+-		}
+-	}
++	extended_header = get_extended_header(hwmgr, powerplay_table,
++					      SIZE_OF_ATOM_PPLIB_EXTENDEDHEADER_V6);
++	if (extended_header)
++		acp_table_offset = le16_to_cpu(extended_header->usACPTableOffset);
+ 
+ 	return acp_table_offset;
+ }
+@@ -290,21 +325,12 @@ static uint16_t get_cacp_tdp_table_offset(
+ 				const ATOM_PPLIB_POWERPLAYTABLE *powerplay_table)
+ {
+ 	uint16_t cacTdpTableOffset = 0;
++	const ATOM_PPLIB_EXTENDEDHEADER *extended_header;
+ 
+-	if (le16_to_cpu(powerplay_table->usTableSize) >=
+-	    sizeof(ATOM_PPLIB_POWERPLAYTABLE3)) {
+-		const ATOM_PPLIB_POWERPLAYTABLE3 *powerplay_table3 =
+-				(const ATOM_PPLIB_POWERPLAYTABLE3 *)powerplay_table;
+-		if (powerplay_table3->usExtendendedHeaderOffset > 0) {
+-			const ATOM_PPLIB_EXTENDEDHEADER  *pExtendedHeader =
+-					(const ATOM_PPLIB_EXTENDEDHEADER *)
+-					(((unsigned long)powerplay_table3) +
+-				le16_to_cpu(powerplay_table3->usExtendendedHeaderOffset));
+-			if (le16_to_cpu(pExtendedHeader->usSize) >=
+-			    SIZE_OF_ATOM_PPLIB_EXTENDEDHEADER_V7)
+-				cacTdpTableOffset = le16_to_cpu(pExtendedHeader->usPowerTuneTableOffset);
+-		}
+-	}
++	extended_header = get_extended_header(hwmgr, powerplay_table,
++					      SIZE_OF_ATOM_PPLIB_EXTENDEDHEADER_V7);
++	if (extended_header)
++		cacTdpTableOffset = le16_to_cpu(extended_header->usPowerTuneTableOffset);
+ 
+ 	return cacTdpTableOffset;
+ }
+@@ -341,22 +367,13 @@ static uint16_t get_sclk_vdd_gfx_table_offset(struct pp_hwmgr *hwmgr,
+ 			const ATOM_PPLIB_POWERPLAYTABLE *powerplay_table)
+ {
+ 	uint16_t sclk_vdd_gfx_table_offset = 0;
++	const ATOM_PPLIB_EXTENDEDHEADER *extended_header;
+ 
+-	if (le16_to_cpu(powerplay_table->usTableSize) >=
+-	    sizeof(ATOM_PPLIB_POWERPLAYTABLE3)) {
+-		const ATOM_PPLIB_POWERPLAYTABLE3 *powerplay_table3 =
+-				(const ATOM_PPLIB_POWERPLAYTABLE3 *)powerplay_table;
+-		if (powerplay_table3->usExtendendedHeaderOffset > 0) {
+-			const ATOM_PPLIB_EXTENDEDHEADER  *pExtendedHeader =
+-				(const ATOM_PPLIB_EXTENDEDHEADER *)
+-				(((unsigned long)powerplay_table3) +
+-				le16_to_cpu(powerplay_table3->usExtendendedHeaderOffset));
+-			if (le16_to_cpu(pExtendedHeader->usSize) >=
+-			    SIZE_OF_ATOM_PPLIB_EXTENDEDHEADER_V8)
+-				sclk_vdd_gfx_table_offset =
+-					le16_to_cpu(pExtendedHeader->usSclkVddgfxTableOffset);
+-		}
+-	}
++	extended_header = get_extended_header(hwmgr, powerplay_table,
++					      SIZE_OF_ATOM_PPLIB_EXTENDEDHEADER_V8);
++	if (extended_header)
++		sclk_vdd_gfx_table_offset =
++			le16_to_cpu(extended_header->usSclkVddgfxTableOffset);
+ 
+ 	return sclk_vdd_gfx_table_offset;
+ }
+@@ -776,20 +793,37 @@ static ULONG size_of_entry_v2(ULONG num_dpm_levels)
+ }
+ 
+ static const ATOM_PPLIB_STATE_V2 *get_state_entry_v2(
++					struct pp_hwmgr *hwmgr,
+ 					const StateArray * pstate_arrays,
++					u16 state_array_offset,
+ 							 ULONG entry_index)
+ {
+ 	ULONG i;
+ 	const ATOM_PPLIB_STATE_V2 *pstate;
++	size_t entry_offset;
++	size_t entry_size;
++
++	if (entry_index >= pstate_arrays->ucNumEntries)
++		return NULL;
+ 
++	entry_offset = state_array_offset + sizeof(pstate_arrays->ucNumEntries);
+ 	pstate = pstate_arrays->states;
+-	if (entry_index <= pstate_arrays->ucNumEntries) {
+-		for (i = 0; i < entry_index; i++)
+-			pstate = (ATOM_PPLIB_STATE_V2 *)(
+-						  (unsigned long)pstate +
+-			     size_of_entry_v2(pstate->ucNumDPMLevels));
++	for (i = 0; i <= entry_index; i++) {
++		if (!pp_table_has_space(hwmgr, entry_offset, sizeof(*pstate)))
++			return NULL;
++
++		entry_size = size_of_entry_v2(pstate->ucNumDPMLevels);
++		if (!pp_table_has_space(hwmgr, entry_offset, entry_size))
++			return NULL;
++
++		if (i == entry_index)
++			return pstate;
++
++		entry_offset += entry_size;
++		pstate = (ATOM_PPLIB_STATE_V2 *)((unsigned long)pstate + entry_size);
+ 	}
+-	return pstate;
++
++	return NULL;
+ }
+ 
+ static const unsigned char soft_dummy_pp_table[] = {
+@@ -857,6 +891,8 @@ int pp_tables_get_response_times(struct pp_hwmgr *hwmgr,
+ 
+ 	PP_ASSERT_WITH_CODE(NULL != powerplay_tab,
+ 			    "Missing PowerPlay Table!", return -EINVAL);
++	PP_ASSERT_WITH_CODE(pp_table_has_space(hwmgr, 0, sizeof(*powerplay_tab)),
++			    "Invalid PowerPlay Table!", return -EINVAL);
+ 
+ 	*vol_rep_time = (uint32_t)le16_to_cpu(powerplay_tab->usVoltageTime);
+ 	*bb_rep_time = (uint32_t)le16_to_cpu(powerplay_tab->usBackbiasTime);
+@@ -869,13 +905,21 @@ int pp_tables_get_num_of_entries(struct pp_hwmgr *hwmgr,
+ {
+ 	const StateArray *pstate_arrays;
+ 	const ATOM_PPLIB_POWERPLAYTABLE *powerplay_table = get_powerplay_table(hwmgr);
++	u16 state_array_offset;
+ 
+ 	if (powerplay_table == NULL)
+ 		return -1;
++	if (!pp_table_has_space(hwmgr, 0, sizeof(*powerplay_table)))
++		return -1;
+ 
+ 	if (powerplay_table->sHeader.ucTableFormatRevision >= 6) {
++		state_array_offset = le16_to_cpu(powerplay_table->usStateArrayOffset);
++		if (!pp_table_has_space(hwmgr, state_array_offset,
++					sizeof(pstate_arrays->ucNumEntries)))
++			return -1;
++
+ 		pstate_arrays = (StateArray *)(((unsigned long)powerplay_table) +
+-					le16_to_cpu(powerplay_table->usStateArrayOffset));
++					state_array_offset);
+ 
+ 		*num_of_entries = (unsigned long)(pstate_arrays->ucNumEntries);
+ 	} else
+@@ -902,49 +946,128 @@ int pp_tables_get_entry(struct pp_hwmgr *hwmgr,
+ 	const NonClockInfoArray *pnon_clock_arrays;
+ 
+ 	const ATOM_PPLIB_STATE *pstate_entry;
++	u16 state_array_offset;
++	u16 clock_info_array_offset;
++	u16 non_clock_info_array_offset;
++	size_t clock_info_offset;
++	size_t non_clock_info_offset;
++	size_t state_entry_offset;
+ 
+ 	if (powerplay_table == NULL)
+ 		return -1;
++	if (!pp_table_has_space(hwmgr, 0, sizeof(*powerplay_table)))
++		return -1;
+ 
+ 	ps->classification.bios_index = entry_index;
+ 
+ 	if (powerplay_table->sHeader.ucTableFormatRevision >= 6) {
++		state_array_offset = le16_to_cpu(powerplay_table->usStateArrayOffset);
++		if (!pp_table_has_space(hwmgr, state_array_offset,
++					sizeof(pstate_arrays->ucNumEntries)))
++			return -1;
++
+ 		pstate_arrays = (StateArray *)(((unsigned long)powerplay_table) +
+-					le16_to_cpu(powerplay_table->usStateArrayOffset));
++					state_array_offset);
++
++		if (entry_index >= pstate_arrays->ucNumEntries)
++			return -1;
+ 
+-		if (entry_index > pstate_arrays->ucNumEntries)
++		pstate_entry_v2 = get_state_entry_v2(hwmgr, pstate_arrays,
++						     state_array_offset,
++						     entry_index);
++		if (!pstate_entry_v2)
++			return -1;
++
++		clock_info_array_offset =
++			le16_to_cpu(powerplay_table->usClockInfoArrayOffset);
++		if (!pp_table_has_space(hwmgr, clock_info_array_offset,
++					sizeof(*pclock_arrays)))
+ 			return -1;
+ 
+-		pstate_entry_v2 = get_state_entry_v2(pstate_arrays, entry_index);
+ 		pclock_arrays = (ClockInfoArray *)(((unsigned long)powerplay_table) +
+-					le16_to_cpu(powerplay_table->usClockInfoArrayOffset));
++					clock_info_array_offset);
++		if (!pclock_arrays->ucEntrySize)
++			return -1;
++
++		non_clock_info_array_offset =
++			le16_to_cpu(powerplay_table->usNonClockInfoArrayOffset);
++		if (!pp_table_has_space(hwmgr, non_clock_info_array_offset,
++					sizeof(*pnon_clock_arrays)))
++			return -1;
+ 
+ 		pnon_clock_arrays = (NonClockInfoArray *)(((unsigned long)powerplay_table) +
+-						le16_to_cpu(powerplay_table->usNonClockInfoArrayOffset));
++						non_clock_info_array_offset);
++		if (!pnon_clock_arrays->ucEntrySize ||
++		    pnon_clock_arrays->ucEntrySize < ATOM_PPLIB_NONCLOCKINFO_VER1 ||
++		    (pnon_clock_arrays->ucEntrySize > ATOM_PPLIB_NONCLOCKINFO_VER1 &&
++		     pnon_clock_arrays->ucEntrySize < ATOM_PPLIB_NONCLOCKINFO_VER2) ||
++		    pstate_entry_v2->nonClockInfoIndex >= pnon_clock_arrays->ucNumEntries)
++			return -1;
+ 
++		non_clock_info_offset = non_clock_info_array_offset +
++			offsetof(NonClockInfoArray, nonClockInfo) +
++			pstate_entry_v2->nonClockInfoIndex * pnon_clock_arrays->ucEntrySize;
++		if (!pp_table_has_space(hwmgr, non_clock_info_offset,
++					pnon_clock_arrays->ucEntrySize))
++			return -1;
+ 		pnon_clock_info = (ATOM_PPLIB_NONCLOCK_INFO *)((unsigned long)(pnon_clock_arrays->nonClockInfo) +
+ 					(pstate_entry_v2->nonClockInfoIndex * pnon_clock_arrays->ucEntrySize));
+ 
+ 		result = init_non_clock_fields(hwmgr, ps, pnon_clock_arrays->ucEntrySize, pnon_clock_info);
+ 
+ 		for (i = 0; i < pstate_entry_v2->ucNumDPMLevels; i++) {
+-			const void *pclock_info = (const void *)(
+-							(unsigned long)(pclock_arrays->clockInfo) +
+-							(pstate_entry_v2->clockInfoIndex[i] * pclock_arrays->ucEntrySize));
++			const void *pclock_info;
++
++			if (pstate_entry_v2->clockInfoIndex[i] >=
++			    pclock_arrays->ucNumEntries)
++				return -1;
++
++			clock_info_offset = clock_info_array_offset +
++				offsetof(ClockInfoArray, clockInfo) +
++				pstate_entry_v2->clockInfoIndex[i] * pclock_arrays->ucEntrySize;
++			if (!pp_table_has_space(hwmgr, clock_info_offset,
++						pclock_arrays->ucEntrySize))
++				return -1;
++
++			pclock_info = (const void *)
++					((unsigned long)(pclock_arrays->clockInfo) +
++					(pstate_entry_v2->clockInfoIndex[i] *
++					 pclock_arrays->ucEntrySize));
+ 			res = func(hwmgr, &ps->hardware, i, pclock_info);
+ 			if ((0 == result) && (0 != res))
+ 				result = res;
+ 		}
+ 	} else {
+-		if (entry_index > powerplay_table->ucNumStates)
++		if (entry_index >= powerplay_table->ucNumStates ||
++		    !powerplay_table->ucStateEntrySize ||
++		    !powerplay_table->ucNonClockSize ||
++		    powerplay_table->ucNonClockSize < ATOM_PPLIB_NONCLOCKINFO_VER1 ||
++		    (powerplay_table->ucNonClockSize > ATOM_PPLIB_NONCLOCKINFO_VER1 &&
++		     powerplay_table->ucNonClockSize < ATOM_PPLIB_NONCLOCKINFO_VER2) ||
++		    !powerplay_table->ucClockInfoSize)
++			return -1;
++
++		state_array_offset = le16_to_cpu(powerplay_table->usStateArrayOffset);
++		state_entry_offset = state_array_offset +
++			entry_index * powerplay_table->ucStateEntrySize;
++		if (!pp_table_has_space(hwmgr, state_entry_offset,
++					powerplay_table->ucStateEntrySize))
+ 			return -1;
+ 
+ 		pstate_entry = (ATOM_PPLIB_STATE *)((unsigned long)powerplay_table +
+-						    le16_to_cpu(powerplay_table->usStateArrayOffset) +
++						    state_array_offset +
+ 						    entry_index * powerplay_table->ucStateEntrySize);
+ 
++		non_clock_info_array_offset =
++			le16_to_cpu(powerplay_table->usNonClockInfoArrayOffset);
++		non_clock_info_offset = non_clock_info_array_offset +
++			pstate_entry->ucNonClockStateIndex * powerplay_table->ucNonClockSize;
++		if (!pp_table_has_space(hwmgr, non_clock_info_offset,
++					powerplay_table->ucNonClockSize))
++			return -1;
++
+ 		pnon_clock_info = (ATOM_PPLIB_NONCLOCK_INFO *)((unsigned long)powerplay_table +
+-						le16_to_cpu(powerplay_table->usNonClockInfoArrayOffset) +
++						non_clock_info_array_offset +
+ 						pstate_entry->ucNonClockStateIndex *
+ 						powerplay_table->ucNonClockSize);
+ 
+@@ -953,12 +1076,23 @@ int pp_tables_get_entry(struct pp_hwmgr *hwmgr,
+ 							pnon_clock_info);
+ 
+ 		for (i = 0; i < powerplay_table->ucStateEntrySize-1; i++) {
+-			const void *pclock_info = (const void *)((unsigned long)powerplay_table +
+-						le16_to_cpu(powerplay_table->usClockInfoArrayOffset) +
++			const void *pclock_info;
++
++			clock_info_array_offset =
++				le16_to_cpu(powerplay_table->usClockInfoArrayOffset);
++			clock_info_offset = clock_info_array_offset +
++				pstate_entry->ucClockStateIndices[i] *
++				powerplay_table->ucClockInfoSize;
++			if (!pp_table_has_space(hwmgr, clock_info_offset,
++						powerplay_table->ucClockInfoSize))
++				return -1;
++
++			pclock_info = (const void *)((unsigned long)powerplay_table +
++						clock_info_array_offset +
+ 						pstate_entry->ucClockStateIndices[i] *
+ 						powerplay_table->ucClockInfoSize);
+ 
+-			int res = func(hwmgr, &ps->hardware, i, pclock_info);
++			res = func(hwmgr, &ps->hardware, i, pclock_info);
+ 
+ 			if ((0 == result) && (0 != res))
+ 					result = res;
+@@ -1692,21 +1826,70 @@ static int get_vce_state_table_entry(struct pp_hwmgr *hwmgr,
+ 							unsigned long *flag)
+ {
+ 	const ATOM_PPLIB_POWERPLAYTABLE *powerplay_table = get_powerplay_table(hwmgr);
++	const ATOM_PPLIB_VCE_State_Table *vce_state_table;
++	const ATOM_PPLIB_VCE_State_Record *record;
++	const VCEClockInfoArray *vce_clock_info_array;
++	const VCEClockInfo *vce_clock_info;
++	const ClockInfoArray *clock_arrays;
++	u16 vce_state_table_offset;
++	u16 vce_clock_info_array_offset;
++	u16 clock_info_array_offset;
++	unsigned long clockInfoIndex;
++	size_t record_offset;
++	size_t vce_clock_info_offset;
++	size_t clock_info_offset;
++
++	if (!powerplay_table || !pp_table_has_space(hwmgr, 0, sizeof(*powerplay_table)))
++		return -1;
+ 
+-	const ATOM_PPLIB_VCE_State_Table *vce_state_table = get_vce_state_table(hwmgr, powerplay_table);
++	vce_state_table_offset = get_vce_state_table_offset(hwmgr, powerplay_table);
++	vce_state_table = get_vce_state_table(hwmgr, powerplay_table);
++	if (!vce_state_table || i >= vce_state_table->numEntries)
++		return -1;
++
++	record_offset = vce_state_table_offset +
++		offsetof(ATOM_PPLIB_VCE_State_Table, entries) +
++		i * sizeof(*record);
++	if (!pp_table_has_space(hwmgr, record_offset, sizeof(*record)))
++		return -1;
++
++	record = &vce_state_table->entries[i];
++
++	vce_clock_info_array_offset =
++		get_vce_clock_info_array_offset(hwmgr, powerplay_table);
++	if (!pp_table_has_space(hwmgr, vce_clock_info_array_offset,
++				sizeof(vce_clock_info_array->ucNumEntries)))
++		return -1;
+ 
+-	unsigned short vce_clock_info_array_offset = get_vce_clock_info_array_offset(hwmgr, powerplay_table);
++	vce_clock_info_array = (const VCEClockInfoArray *)
++		(((unsigned long)powerplay_table) + vce_clock_info_array_offset);
++	if (record->ucVCEClockInfoIndex >= vce_clock_info_array->ucNumEntries)
++		return -1;
+ 
+-	const VCEClockInfoArray *vce_clock_info_array = (const VCEClockInfoArray *)(((unsigned long) powerplay_table) + vce_clock_info_array_offset);
++	vce_clock_info_offset = vce_clock_info_array_offset +
++		offsetof(VCEClockInfoArray, entries) +
++		record->ucVCEClockInfoIndex * sizeof(*vce_clock_info);
++	if (!pp_table_has_space(hwmgr, vce_clock_info_offset, sizeof(*vce_clock_info)))
++		return -1;
+ 
+-	const ClockInfoArray *clock_arrays = (ClockInfoArray *)(((unsigned long)powerplay_table) +
+-								le16_to_cpu(powerplay_table->usClockInfoArrayOffset));
++	vce_clock_info = &vce_clock_info_array->entries[record->ucVCEClockInfoIndex];
+ 
+-	const ATOM_PPLIB_VCE_State_Record *record = &vce_state_table->entries[i];
++	clock_info_array_offset = le16_to_cpu(powerplay_table->usClockInfoArrayOffset);
++	if (!pp_table_has_space(hwmgr, clock_info_array_offset,
++				sizeof(*clock_arrays)))
++		return -1;
+ 
+-	const VCEClockInfo *vce_clock_info = &vce_clock_info_array->entries[record->ucVCEClockInfoIndex];
++	clock_arrays = (ClockInfoArray *)(((unsigned long)powerplay_table) +
++					  clock_info_array_offset);
++	clockInfoIndex = record->ucClockInfoIndex & 0x3F;
++	if (!clock_arrays->ucEntrySize || clockInfoIndex >= clock_arrays->ucNumEntries)
++		return -1;
+ 
+-	unsigned long clockInfoIndex = record->ucClockInfoIndex & 0x3F;
++	clock_info_offset = clock_info_array_offset +
++		offsetof(ClockInfoArray, clockInfo) +
++		clockInfoIndex * clock_arrays->ucEntrySize;
++	if (!pp_table_has_space(hwmgr, clock_info_offset, clock_arrays->ucEntrySize))
++		return -1;
+ 
+ 	*flag = (record->ucClockInfoIndex >> NUM_BITS_CLOCK_INFO_ARRAY_INDEX);
+ 
+@@ -1730,6 +1913,10 @@ static int pp_tables_initialize(struct pp_hwmgr *hwmgr)
+ 	hwmgr->need_pp_table_upload = true;
+ 
+ 	powerplay_table = get_powerplay_table(hwmgr);
++	PP_ASSERT_WITH_CODE((powerplay_table),
++			    "Missing PowerPlay Table!", return -1);
++	PP_ASSERT_WITH_CODE(pp_table_has_space(hwmgr, 0, sizeof(*powerplay_table)),
++			    "Invalid PowerPlay Table!", return -1);
+ 
+ 	result = init_powerplay_tables(hwmgr, powerplay_table);
+ 
+@@ -1832,4 +2019,3 @@ const struct pp_table_func pptable_funcs = {
+ 	.pptable_get_vce_state_table_entry =
+ 						get_vce_state_table_entry,
+ };
+-
 -- 
 2.53.0
 
