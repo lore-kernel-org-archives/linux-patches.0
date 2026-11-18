@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030694;
-	b=1QA+65Jb/DL8yOReZIAqCzcq7trazD/9UcXl3Lw6wFsE2Wlmy4WWU6L06p8Na4HyQS91
-	 ovQy3rbdJNJmlwo7G336WcHrePfsYXUiMcCKQAVDnu0qeORibbYoMh7FisKGA8VbQ6tIL
-	 ef4tlH0XxZY1jH/zUpH+7b0z5MmAnF2tK2aDEujVftGSZYOtYJdp442QUfbfZPWY2Q2/a
-	 LGuliDiwsJjV9V6rbFEIDloKXNvWdKiGVsTKevpm24wNbUx012PFNgAp4SD/H45g7qaoe
-	 vzMQZijBjRWIf5RS+0f/F4XGPRokDveDCAWxIo/SnxLADOfC9joBUTo6Q4oOFpWAKwA==
+	t=1795030697;
+	b=Q2sdoH1xjvGTQ9nbNWDQa31YO9Z1vNdHGWGAk4kzJxkdZDNQ+XfRosrkx0tWI3lAMnGd
+	 xJaKn/MqPVBAKETt/yG5BqhXrTFCaMGHTXGgOo6S699L8/6IR0PmZhmsE4C4ENH4RfU71
+	 /Pik1jQWqKadTC0m0ew9VphyzqP/Xpt/uqenTNmM95b2jZ4dTBJjUD4RKj0hxJWg5z3Vm
+	 Lq8bTZFL+Zv//ZvsoLNH45vHSHDdIaslsjL+rJDgEghKXiyjgPW9/xX/7LQBxcNONtYPH
+	 TUNn6+0w5n11xHWPqwowmEGTZcuJp2tlKdZXFFJh2Ma821mU6MWtEY3Fqx+/2pvMyEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030694;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030697;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KssMpm5y1fK+EkbKXnB62pIhQs/Mg4saI1Dxb+kdVug=;
-	b=LZWpezd0DkCvDR/abU6NTnCjZmsP7DNbpMCNq+pHCX4LURwva5qc8aZ6qQsupTvl1LvB
-	 8mHjFAjoaS/neao7gLClQ+NhbNj/zvovo8DdRyK0b5k97U9wbYSPotrfl+VSMPZ6SHCI2
-	 i0sTFvuv4elEISoTVh5xpZBuko089BHsJeCyHgbNWeuVh0YJiCWsBgRtzApnniA21p37A
-	 B89xbOmr7v0Si9CS0b6p3MjqEICTnCwkNWBAJ+mMV7nvKbceX2fwryB4NDeNyx6/q8F5o
-	 FP/jpepnyvJnvRknbo7kwd02HbDdKuWb8mDA5HTuSCHVzaq8q17cQTzESLLxxpVYE2A==
+	bh=MwM1snRvu9OzxfEbNDTNbLlug0v5AF9zlHL+vnZFF08=;
+	b=WbPa1Mq5iuX0UkZYpMtk91AQNaGt9UXfLU4PiUJ5BZbnLUo9gsnkuSttthLnRlJmTs7e
+	 8r+bkcbZymbwqCkDniiMUPUJ/4vH9F4BHvue98C6MVWHMj25XpxL39uWv1RMivZdaixNb
+	 GW2Xxs8Lz1FClxThStkGy3S3nuW2Z93/vj/6VoL1JxqNNW9h7cDIVcbSU+hXyHkhFSa5s
+	 kiDXni6eJhxDi52JtSyzqsLzUOHkQSxVsmKCDro4GGHgnDG2vrgHcDk5W67q4uY6vr+zX
+	 tFoAPLk5rlZtZLrL4RhdgtC6F8vudBf4QGtwrzEdl1Yjr/yU/pdy4hUyfZg42LkzjxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lVGyVOPx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DCD8QmD9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2B8606A33B;
-	Wed, 18 Nov 2026 19:38:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E937606A33B;
+	Wed, 18 Nov 2026 19:38:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lVGyVOPx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 035E01F000C4;
-	Wed, 18 Nov 2026 19:38:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DCD8QmD9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04C61F000C4;
+	Wed, 18 Nov 2026 19:38:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030694;
-	bh=KssMpm5y1fK+EkbKXnB62pIhQs/Mg4saI1Dxb+kdVug=;
+	s=korg; t=1795030697;
+	bh=MwM1snRvu9OzxfEbNDTNbLlug0v5AF9zlHL+vnZFF08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lVGyVOPxxD2EkRC9uS+9OLiQ8dMu0wJD7YSdyY3ktvgR+wzNeG5P3QIbIVCeI9Pci
-	 iTeJ6/XnRTDrPvgqDGEePkKKilqCVEM8rAVeMzjmXiZoOM0AP/OzDwdrWBeY1H18Hc
-	 xpb1hLW46DsH3y6sTDEUUMDz5O3Hspg0XrExbjYU=
+	b=DCD8QmD9FBKSZ7pIHIh8bh2QONWWf3H0Ul2u1ra6Je/bEqr+h8dG41QYaEZ9FIPaF
+	 8Da2xqU6z8xAN55Xc3vYE7/bzkFXbHftGXTJtLulZUlthSitc1PVs3cM7aZ9fItcLP
+	 rZwfbIUWOz/QSX8dpASMdqKccQQS1rmbmhRmSfzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Igor Paunovic <royalnet026@gmail.com>
-Subject: [PATCH 6.12 0788/1756] phy: rockchip: usbdp: Hold mutex in DP PHY configure
-Date: Wed, 18 Nov 2026 15:48:35 +0100
-Message-ID: <20261118150041.083459806@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	John Garry <john.garry@linux.dev>,
+	Niklas Cassel <cassel@kernel.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 0797/1756] scsi: scsi_debug: Validate the access parameters of WRITE ATOMIC (16)
+Date: Wed, 18 Nov 2026 15:48:44 +0100
+Message-ID: <20261118150041.426924005@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,46 +70,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 619233ce6b2329529c9f0ff9682d6e22d160ebd6 ]
+[ Upstream commit a6c339feb830daa097ccc4c50c339c1733c12d42 ]
 
-rk_udphy_dp_phy_configure() accesses some variables from the struct
-rk_udphy, which are updated independently from the USB-C framework.
+resp_atomic_write() validates the fields that are specific to an atomic
+write, but never the range that the command addresses. Every other command
+that writes user data calls check_device_access_params() first, which
+rejects a transfer that ends beyond the capacity of the device, one whose
+length exceeds the size of the store, and any write to a write protected
+device.
 
-The USB-C mux/orientation switch functions already hold a mutex to
-ensure mutual exclusive access to the struct rk_udphy states, so
-simply hold the same one in the DP PHY configuration function.
+Call check_device_access_params(). The zone checks that it ends with are
+unreachable, as atomic writes and ZBC emulation are mutually exclusive.
 
-Reproducing problems due to this on real hardware would be really hard,
-but could be possible when quickly re-connecting the USB-C connector.
-
-Fixes: 2f70bbddeb45 ("phy: rockchip: add usbdp combo phy driver")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/linux-phy/20260612164627.23D391F000E9@smtp.kernel.org/
-Tested-by: Igor Paunovic <royalnet026@gmail.com> # Orange Pi 5 Plus
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260915-rockchip-usbdp-cleanup-part2-v15-7-8d507cb1174f@collabora.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Assisted-by: LLM
+Fixes: 84f3a3c01d70 ("scsi: scsi_debug: Atomic write support")
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: John Garry <john.garry@linux.dev>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Link: https://patch.msgid.link/20260929082456.857423-28-cassel@kernel.org
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/rockchip/phy-rockchip-usbdp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/scsi_debug.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/phy/rockchip/phy-rockchip-usbdp.c b/drivers/phy/rockchip/phy-rockchip-usbdp.c
-index 05edd03761c37..f611018171e34 100644
---- a/drivers/phy/rockchip/phy-rockchip-usbdp.c
-+++ b/drivers/phy/rockchip/phy-rockchip-usbdp.c
-@@ -1136,6 +1136,8 @@ static int rk_udphy_dp_phy_configure(struct phy *phy,
- 	u32 i, val, lane;
- 	int ret;
+diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
+index 1d9947dc14351..0906ef5d7798e 100644
+--- a/drivers/scsi/scsi_debug.c
++++ b/drivers/scsi/scsi_debug.c
+@@ -5385,6 +5385,10 @@ static int resp_atomic_write(struct scsi_cmnd *scp,
+ 		}
+ 	}
  
-+	guard(mutex)(&udphy->mutex);
++	ret = check_device_access_params(scp, lba, len, true);
++	if (ret)
++		return ret;
 +
- 	if (dp->set_rate) {
- 		ret = rk_udphy_dp_phy_verify_link_rate(udphy, dp);
- 		if (ret)
+ 	/*
+ 	 * Short atomic writes are not allowed: SBC-6 4.28.2 requires an
+ 	 * atomic write that cannot complete to leave its LBAs unaltered, and
 -- 
 2.53.0
 
