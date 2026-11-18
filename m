@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049787;
-	b=4X+LEQjq6lPHFhJrYI2LUbzQMt08Jabu9q6YtJp1uFZB0plv5xz6izvLyv7Q5aO0AuLi
-	 XZ4Lu9NUz5fBhouz7NPHb1u1O8dmTTSrjokDBaHFV1KFPP2XOFhucsPc+OlMi3j+XG/Rl
-	 TSKlV2/TUag/0OYhaEoIYNBuDWyjTqpSHtZ5vxSdOSvL9ZUc0fM3Vejfx40VuXmADWrm1
-	 T3WTu32Bo0yvYBW4q89KJarsobpVzROR1cu95ojo9vQ3VKl3EmkB9aACpCA3MxPVa2a1/
-	 Y/Tim3hSFvtb0rUQuxgurBrvJk4qstI4Vd4P+HSOQx3J1z1+5fCHXfK4wjbn2avRICQ==
+	t=1795049790;
+	b=RcHXH1z/nD553VOQJDidAPPJ/WAtWF7jh8DQu5xK9qlzcDpcDyfxZAc/Dhui+C/C2B/f
+	 alnLGWffjL0Ziw3P2lThtchSgjX0ihEVkEFb5K4dl8cp7WvUewSBDHbE+yEwCHKpSOg5Q
+	 pOlkQC1EdJE6BNLLHG4p6Ac4/4NJAG3B80hRb7htGOzrvic5VBLO3TYSsWV4/0PQdKhfg
+	 uq9nlra96+U6i97x+aWlNmBVGzvbDMbSJzgugAjVIwUwx4Ii3s8HCXqDXYL1/HrLf9ovf
+	 2U8B9KeWoSPUFIFe8CToIQkItbJFab2gFLv6T+jiE60yG/dluKF5NGVZOhDFQhKo8yw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049787;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049790;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2+mQDVbizm+Du+6nl3ZxAymhPg8ahBkijvypuQSCqlA=;
-	b=YlSkHRjOrYMg2LlU/6OL7ApzfKe4mZugukuiKYYznmguwI9gn82amO2Uy0mqjLu0kM/2
-	 jB2ByNE6TATBcvlTgv1JgDtG0kyv1Kl5wFytpfpV1LsfFDuoYYMEIP9xK9rObzKqYMkoc
-	 Yz1edKb0prE38HnI/cCDxcSUFpAn9aiGqfRd4Zv5I4GDf4XIB1qtXSvM70o+Ng9lSqTG9
-	 00C3UdtbmyjuKI/epfjIgz140VRqgiNJHLaw0eBIYqib+68bBm9QdkFcCPSEXuwWk8v/O
-	 fM7T90BXdfPWvIS3eIiji32ays7Qymff8n5qoQ2kx/QtK/+Ne1j6N4yqvfw2D1ohjBQ==
+	bh=/YGYcmjuInsi3yHIKRveXSvzc+L+GscvkUSuOZq0dCg=;
+	b=2j+3/xSArjbhOMfyyNC/aQzSbBLFqu0nTrDK2g0UIlH/aiyoSA9txcLq6s5QqLKfItzD
+	 rYNCsSciyOlOFYtr4Qrshg+wKtfL/sFAtVg0HDa+WzlA8GeIRbPX+5tttZf5Rn/ZmssEj
+	 5TMn9eOa4RMQDCsE/PbfhbcTTGvxUs3FdxQJiJuqEDRQuZ7Gk575l9nb9YsyCcuTmn9SY
+	 98eDkkLGMJxWKcG+wKwrkZHdUAVgi55zlyPCgAWv/3b3R4evZluoj9Z1vN5ZQt7BH2FVL
+	 7nj567j9dsKKcTj4ou9eA5F4aDxPmtGmwbidUaOH/MP5jgUDC1wOa2p2VlGQDtmQEPg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="wVv+ft/h";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wpaa8s4+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99DC606A31C;
-	Thu, 19 Nov 2026 00:56:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD3CB606A325;
+	Thu, 19 Nov 2026 00:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wVv+ft/h
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 361DE1F000C4;
-	Thu, 19 Nov 2026 00:56:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wpaa8s4+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE2D51F000C4;
+	Thu, 19 Nov 2026 00:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049787;
-	bh=2+mQDVbizm+Du+6nl3ZxAymhPg8ahBkijvypuQSCqlA=;
+	s=korg; t=1795049790;
+	bh=/YGYcmjuInsi3yHIKRveXSvzc+L+GscvkUSuOZq0dCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wVv+ft/h8L0GIxB7xA/VjyNJUrc5YEob7+M3gNRcY2/gAg9853TO7vOVo2TIgR05A
-	 YRerVSihORX1VnjptJpDQ4tIKkxauZCrDkVTq/IfVe57ekeYlS4nGy0nKMwAV/tifc
-	 DI7FuPeVnYhkv/Xve9N/N/V5pfwN2dCkkZuvuqIQ=
+	b=wpaa8s4+IqAEaiz0mgv4VUK38FgMPzf4D579Qu3lyxZX3n/gAKVb0uED4n8MdGYvS
+	 Qfhv8UgBgKeg/ZPkLxpoi4KFQScJ7hVLDCoC6pcReLp4V13YyWzcKG7Ccs+FVCAowy
+	 gg8bqPAH0bT8vx0JWZGIKXRpcnpUx5cW+c8rSc5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	VEGA <vega@nebusec.ai>,
+	Kyungsik Lee <kyungsik.lee@lge.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2476/2857] ASoC: codecs: wm8737: Fix definition of zero cross switches
-Date: Wed, 18 Nov 2026 15:58:30 +0100
-Message-ID: <20261118150330.715121435@linuxfoundation.org>
+Subject: [PATCH 6.1 2450/2857] lib: validate in-memory LZ4 chunk length
+Date: Wed, 18 Nov 2026 15:58:04 +0100
+Message-ID: <20261118150329.780371727@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,48 +70,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-[ Upstream commit 121963197200ca89050f05a704f53c281702ec16 ]
+[ Upstream commit 138a84817df01eda67bb23032ab49c23fe2ffc16 ]
 
-The mic (xMZC) and PGA (xPZC) zero cross bits are bits 3 and 2 of each
-channel's Audio Path register. SOC_DOUBLE takes one register and two
-shifts, so both controls only write the left register. Use
-SOC_DOUBLE_R, as the Mic Boost Switch next to them does.
+We found and validated an issue in lib/decompress_unlz4.c.  The bug is
+reachable by a root user through kexec_file_load() with a crafted external
+initrd.
 
-Fixes: 2a9ae13a2641 ("ASoC: Add initial WM8737 driver")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/36cab58287bd24955e73bfe3a6fb24cae8fad7b8.1791959026.git.sammiee5311@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+unlz4() reads the compressed chunk length from an in-memory initrd and
+passes it to LZ4_decompress_safe().  It only checks the chunk length
+against the allocation size when the input is filled by a callback.
+
+Reject an in-memory chunk that extends past the remaining input before
+calling the LZ4 decoder.  This prevents malformed initrds from making
+the decoder read past the mapped archive.
+
+Link: https://lore.kernel.org/59c6555c27aa7ba18ee227f9f02c78d15a37605f.1789219453.git.zhilinz@nebusec.ai
+Fixes: e76e1fdfa8f8 ("lib: add support for LZ4-compressed kernel")
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: VEGA <vega@nebusec.ai>
+Assisted-by: LLM
+Cc: Kyungsik Lee <kyungsik.lee@lge.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8737.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ lib/decompress_unlz4.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/sound/soc/codecs/wm8737.c b/sound/soc/codecs/wm8737.c
-index 90b54343370c4..04fdbcbdf0d9c 100644
---- a/sound/soc/codecs/wm8737.c
-+++ b/sound/soc/codecs/wm8737.c
-@@ -149,13 +149,13 @@ SOC_DOUBLE_R_TLV("Mic Boost Volume", WM8737_AUDIO_PATH_L, WM8737_AUDIO_PATH_R,
- 		 6, 3, 0, micboost_tlv),
- SOC_DOUBLE_R("Mic Boost Switch", WM8737_AUDIO_PATH_L, WM8737_AUDIO_PATH_R,
- 	     4, 1, 0),
--SOC_DOUBLE("Mic ZC Switch", WM8737_AUDIO_PATH_L, WM8737_AUDIO_PATH_R,
--	   3, 1, 0),
-+SOC_DOUBLE_R("Mic ZC Switch", WM8737_AUDIO_PATH_L, WM8737_AUDIO_PATH_R,
-+	     3, 1, 0),
- 
- SOC_DOUBLE_R_TLV("Capture Volume", WM8737_LEFT_PGA_VOLUME,
- 		 WM8737_RIGHT_PGA_VOLUME, 0, 255, 0, pga_tlv),
--SOC_DOUBLE("Capture ZC Switch", WM8737_AUDIO_PATH_L, WM8737_AUDIO_PATH_R,
--	   2, 1, 0),
-+SOC_DOUBLE_R("Capture ZC Switch", WM8737_AUDIO_PATH_L, WM8737_AUDIO_PATH_R,
-+	     2, 1, 0),
- 
- SOC_DOUBLE("INPUT1 DC Bias Switch", WM8737_MISC_BIAS_CONTROL, 0, 1, 1, 0),
- 
+diff --git a/lib/decompress_unlz4.c b/lib/decompress_unlz4.c
+index e6327391b6b66..80bd4ea40f95b 100644
+--- a/lib/decompress_unlz4.c
++++ b/lib/decompress_unlz4.c
+@@ -139,6 +139,10 @@ STATIC inline int INIT unlz4(u8 *input, long in_len,
+ 		if (!fill) {
+ 			inp += 4;
+ 			size -= 4;
++			if (chunksize > size) {
++				error("data corrupted");
++				goto exit_2;
++			}
+ 		} else {
+ 			if (chunksize > LZ4_compressBound(uncomp_chunksize)) {
+ 				error("chunk length is longer than allocated");
 -- 
 2.53.0
 
