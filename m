@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044763;
-	b=CZHcCmPRO1QbIuqrm7Y8Q12V25slrNZo8SEk7N6tA6SFhk2dOagRlLwzzaTxR+Q3kipS
-	 SfKP0TlzKV2C1wL8i3Gp9+KdWY96yxgfIVSwlY04WYScwtmApfkfDqn/8aIcbwHrWtKlu
-	 B60QAoeLqKvOzptzMc55NlxpdPrOzrgVhh7OO9lES9rBEAp2VyppHoNc4FuE0g+rsO4sQ
-	 V58Gzy5/4zZwg1iS3jQZvTXyUpLR8oXsf7hahxYU/3wHy8NbK6WENj7UjRQA9Hibrd+UZ
-	 HAsvqf1rgBjq0NZLeWTDeiceORiDaTepbn58BPS3HmF2et+/WLq9VU5b9ph1ysqdYgg==
+	t=1795044765;
+	b=vqyBTRWw0jJaculo5U6G0qlPD3A51dwVQNZn32yhXkY9h6ccVCVjdBzK+/m0M3WIx3e4
+	 rL/lGbakzR8xKW2+9ciBdnTwmtzs7scaR8w51lnRX41U595IqiJXtKSWa8ZzyRWcXUTnN
+	 CNcgEyp0ZEwuck0L280VBZr2pp/deZtEVj6LCsh8UiIdVNHsDyaJkurIsEWByoXJMtaZv
+	 dqdmFb6LKoM/MSkDoV3D4UCna2rB7pAA1U4yuXROr8sNR4nqrbxU22Ao2CZPB7kjKA9Ay
+	 bEEcP+YOqseLoqCljKdbjV1dg9EzKLaYIUgSaV6ljqGX0g77TludyTqWfiLN6jox2zg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044763;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044765;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QP2GDi/94/fGvflr9VlqFLe5BYh5qDE76OYA2s5lLP4=;
-	b=3dkiKtQxDtYXTfqfDJwQcRGRQbITHcpnjTLXQ8yRIgzPm2bJb+o5nYs84Vm1jyn/+zDj
-	 6sO/wCVMnTXKeHmb/d7ti2wsBpkI6jkhO6320P/kbiIBMegenDRoCjl8XlHf26tDNAAru
-	 RhwIiwrwClHUdYPNOXLvxj/dcbc5eVgxA6C5qKx3jFnWLsOX+Ul6rCi9wHfvTiPJHE+2T
-	 GfxAKt/tqwO7w42ESbjLBqNo0Jueo0Owk51ovwTllMUufoErYLJuqYVuUCCou+4UNLrbA
-	 Iu4UAf3t4B4yP6qTffwuiyRn/llfQU2rHDU1ePJtP2c9TcDNkfMeq8FdYbiDl1oeqaw==
+	bh=AWSaxojDb5z9C77BwHgEiM+PkRUKiQW2rTPnMAkrNY4=;
+	b=W1aK4m73azo/Wxm8dsN4m0x6rBdl9EINxagjG91xDFMXHErvH9HPHluOxVY6+l2OPwuI
+	 NUoUx/kw+YZyIx5Wds2m5OYj6K/XqkhsKQYn0Euab2eSTBRSU+J3+2gCLSBnzKQGIHo2e
+	 5eLP00/i6S/v6Haa8du5GYmTGNjOnFR8fK6gCggX3RBbU/PTp5VPvw9KA6HMy+g96HawN
+	 O//cZE76NKM70SVlRPKLFTLFGp64eEYupckPx+f8LptygdsukO0QZVZfp1x3DLBe8yflI
+	 TrS+BKpJm+rEyYG2qt0q7NCpPcO+SS3BvpH57WGI1HPlzrEm/2FJkijtFmroBvyWMug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N4QLEmre;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DxtKTzoG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF1C60A2634;
-	Wed, 18 Nov 2026 23:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA7E560A6F6D;
+	Wed, 18 Nov 2026 23:32:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N4QLEmre
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53D4E1F000CB;
-	Wed, 18 Nov 2026 23:32:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DxtKTzoG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DD891F000C4;
+	Wed, 18 Nov 2026 23:32:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044762;
-	bh=QP2GDi/94/fGvflr9VlqFLe5BYh5qDE76OYA2s5lLP4=;
+	s=korg; t=1795044765;
+	bh=AWSaxojDb5z9C77BwHgEiM+PkRUKiQW2rTPnMAkrNY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N4QLEmreneJi8juev3SPjnCKiapdMZyeunyVvnXICAanPbQeZHRaDkCZ9o6tylsSy
-	 +BPlYTZNrdYDAOoWmR3sx/hdkfPdHhHMFfXKq1LyF98t9lzUyXzIrcrM0BS/TqpK1J
-	 ipOGCKPmn6vZAWHbZkJ6XaF9cGQm+SI7Gh6dRXYY=
+	b=DxtKTzoGI8O3IyAXdzOQcYtmIoWjU+STsDsmoEEKT911RBQuaK7hUlYBCfKpAjrI6
+	 VOjQgl0InpKAoxMp4p+Q2p5AXrkLKIGQm54mhoC9jcXbQlFpqYzGY0kx7Fpm5Z1N4M
+	 XH8DiNEZv6Qlqdwj8mG458G7NoJBaHcSl7j+A/tQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Teodorescu <fane@google.com>,
-	Yosry Ahmed <yosry@kernel.org>,
-	Nikunj A Dadhania <nikunj@amd.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.1 0622/2857] KVM: SVM: Trigger new ASID allocation in both VMCBs on pCPU switch
-Date: Wed, 18 Nov 2026 15:27:36 +0100
-Message-ID: <20261118150223.883951126@linuxfoundation.org>
+	Chris Mason <mason@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0677/2857] ovl: use the pinned upper dir in ovl_fix_origin()
+Date: Wed, 18 Nov 2026 15:28:31 +0100
+Message-ID: <20261118150225.938620932@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,106 +69,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yosry Ahmed <yosry@kernel.org>
+From: Chris Mason <mason@kernel.org>
 
-commit bf260dc9e7b8bfcd06c1a8e739797b1cf0917c72 upstream.
+commit 4f61ff2ebfb3d2967b83b6a4d456242244d5a61f upstream.
 
-When the pCPU where the VMCB was most recently used is switched, reset
-the ASID generation in both VMCBs, triggering new ASID allocation for
-the immediate VMRUN as well as the next VMRUN on the other VMCB.
+Renames made directly on the upper filesystem during a lookup crash the
+kernel.
 
-The ASID is shared between vmcb01 and vmcb02, and gets flushed on every
-nested transition. However, since pCPU tracking is done per VMCB, it is
-possible for one VMCB to allocate a new ASID when migrated to a new
-pCPU, and then the other VMCB reuses that ASID on the old pCPU. This can
-result in the same ASID being used by multiple vCPUs on the old pCPU.
+A dentry that is passed to vfs_setxattr() must be pinned.
+ovl_fix_origin() passes upper->d_parent to ovl_set_impure() without a
+reference, and the lookup holds no lock of the upper directory. A
+rename on the upper filesystem changes d_parent, and only the child
+pins the new parent, so a second rename and an rmdir free it.
 
-Example scenario:
-- vCPU runs on pCPU A, vmcb01 is active, asid=1.
-- vCPU migrates to pCPU B, vmcb01 pCPU changes, new asid=2.
-- Another vCPU runs on pCPU A and allocates asid=2 as well.
-- vCPU migrates back to pCPU A, and then switches to vmcb02 before it
-  runs again with vmcb01.
-- No pCPU switch is detected for vmcb02, so VMRUN is done with asid=2.
-- Two vCPUs end up using asid=2 on the same pCPU.
+With delays in ovl_fix_origin() and ovl_set_impure(), renaming the upper
+directory twice and removing the intermediate parent during the lookup
+of a merge directory without an origin xattr gave a KASAN
+use-after-free in vfs_setxattr().
 
-Keep the VMCB dirtying to the active VMCB only. Clean bits are tracked
-by a pCPU for each VMCB, so do not unnecessarily dirty a VMCB if its
-pCPU does not change.
+Fix this by passing the upper dentry that the overlay parent holds.
 
-Additionally, initialize the tracked pCPU for vmcb02 to -1 on nested
-enablement as hardening, so that a new ASID allocation is always
-triggered when nested is disabled and re-enabled.
-
-No performance regression was noticed when overcommitting L1 vCPUs in L0
-(to force rescheduling), pinning L1 <-> L2 vCPUs, and running CPUID in a
-tight loop bouncing between 2 vCPUs in L2.
-
-An alternative (and perhaps more proper) fix would be tracking the ASID
-per-VMCB instead (e.g. [1]). However, that's a more involved change, and
-it would result in having different ASIDs for L1 and L2 without actually
-properly maintaining them. It would probably work because all TLB
-flushes target the current VMCB, and the other VMCB is always flushed on
-nested transitions, but the code ends up in an arguably more fragile
-state. Punt a proper clean fix to an incoming (and overdue) overhaul of
-SVM's ASID usage [2].
-
-[1] https://lore.kernel.org/lkml/20250205182402.2147495-2-yosry.ahmed@linux.dev
-[2] https://lore.kernel.org/kvm/20260728003557.1136583-1-yosry@kernel.org
-
+Fixes: 9678e6303057 ("ovl: fix inconsistent d_ino for legacy merge dir")
 Cc: stable@vger.kernel.org
-Reported-by: Stefan Teodorescu <fane@google.com>
-Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Reviewed-by: Nikunj A Dadhania <nikunj@amd.com>
-Link: https://patch.msgid.link/20260903223258.486034-1-yosry@kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Chris Mason <mason@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+[amir: add helper ovl_set_impure_dir()]
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/nested.c |    1 +
- arch/x86/kvm/svm/svm.c    |   19 +++++++++++++++----
- 2 files changed, 16 insertions(+), 4 deletions(-)
+ fs/overlayfs/namei.c     | 6 ++++--
+ fs/overlayfs/overlayfs.h | 6 ++++++
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -1125,6 +1125,7 @@ int svm_allocate_nested(struct vcpu_svm
- 		goto err_free_vmcb02;
- 	svm_vcpu_init_msrpm(&svm->vcpu, svm->nested.msrpm);
+diff --git a/fs/overlayfs/namei.c b/fs/overlayfs/namei.c
+index cb8ca730c0ecf..cf805c99cfb9f 100644
+--- a/fs/overlayfs/namei.c
++++ b/fs/overlayfs/namei.c
+@@ -819,8 +819,10 @@ static int ovl_fix_origin(struct ovl_fs *ofs, struct dentry *dentry,
+ 		return err;
  
-+	svm->nested.vmcb02.cpu = -1;
- 	svm->nested.initialized = true;
- 	return 0;
+ 	err = ovl_set_origin(ofs, lower, upper);
+-	if (!err)
+-		err = ovl_set_impure(dentry->d_parent, upper->d_parent);
++	if (!err) {
++		/* upper->d_parent is not stable, use the overlay parent */
++		err = ovl_set_impure_dir(dentry->d_parent);
++	}
  
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -3495,14 +3495,25 @@ static void pre_svm_run(struct kvm_vcpu
- 	struct vcpu_svm *svm = to_svm(vcpu);
- 
- 	/*
--	 * If the previous vmrun of the vmcb occurred on a different physical
--	 * cpu, then mark the vmcb dirty and assign a new asid.  Hardware's
--	 * vmcb clean bits are per logical CPU, as are KVM's asid assignments.
-+	 * If the previous VMRUN of the VMCB occurred on a different physical
-+	 * cpu, then mark the VMCB dirty as hardware's clean bits are per pCPU.
-+	 *
-+	 * Reset the ASID generation in both VMCBs. This will lead to assigning
-+	 * a new ASID now, and then again when switching to the other VMCB.
-+	 * However, this is needed as the ASID is shared between the VMCBs, and
-+	 * otherwise it would be possible to use an ASID allocated on one pCPU
-+	 * on another, for example:
-+	 * - vCPU migrates from pCPU A to pCPU B, allocates a new ASID.
-+	 * - vCPU migrates back to pCPU A, and then switches the VMCB.
-+	 * - The new VMCB does not detect a pCPU change and runs on pCPU A with
-+	 *   the new ASID allocated on pCPU B, which is potentially used by
-+	 *   another vCPU/VM.
- 	 */
- 	if (unlikely(svm->current_vmcb->cpu != vcpu->cpu)) {
--		svm->current_vmcb->asid_generation = 0;
- 		vmcb_mark_all_dirty(svm->vmcb);
- 		svm->current_vmcb->cpu = vcpu->cpu;
-+		svm->vmcb01.asid_generation = 0;
-+		svm->nested.vmcb02.asid_generation = 0;
-         }
- 
- 	if (sev_guest(vcpu->kvm))
+ 	ovl_drop_write(dentry);
+ 	return err;
+diff --git a/fs/overlayfs/overlayfs.h b/fs/overlayfs/overlayfs.h
+index eb92e628afdd1..18d8cd614ef20 100644
+--- a/fs/overlayfs/overlayfs.h
++++ b/fs/overlayfs/overlayfs.h
+@@ -427,6 +427,12 @@ int ovl_check_setxattr(struct ovl_fs *ofs, struct dentry *upperdentry,
+ 		       enum ovl_xattr ox, const void *value, size_t size,
+ 		       int xerr);
+ int ovl_set_impure(struct dentry *dentry, struct dentry *upperdentry);
++
++static inline int ovl_set_impure_dir(struct dentry *dentry)
++{
++	return ovl_set_impure(dentry, ovl_dentry_upper(dentry));
++}
++
+ bool ovl_inuse_trylock(struct dentry *dentry);
+ void ovl_inuse_unlock(struct dentry *dentry);
+ bool ovl_is_inuse(struct dentry *dentry);
+-- 
+2.53.0
+
 
 
