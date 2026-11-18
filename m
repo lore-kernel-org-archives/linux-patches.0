@@ -1,52 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015154;
-	b=mMUDF+LWxTjyIv8bFM2GSgNeHsc+jQo5K/4B+y0EyzcezptHTrpp4z973/viYxAwM1Lh
-	 XGuAXCBd/3tudz2bqgVLIOcLyqc27RECyKH1Q4c/2qBqWj4snW+L9F1QYdvj58WyegTXI
-	 DA1yiNb/fdn1FYN0gP4afV2CVgLRi032+3W5vn5qgG0obRMvCBj5U5phQyciZ30Ljxuwi
-	 8GBk3qxJD77DQrAk6d183qQPf/eNIuvhoDQZBQnaxLVdwgDy9mttWiDO5YJCcJbRuxUk5
-	 6U5K9+x7ic2GkE9HSVTFQkBHQgiz2JOG8CfMK3ZGX3BNh5BmcAsuJUveVqjTbAsv7hg==
+	t=1795015157;
+	b=NDSzHfHbdP1N78mLLQ7y/1FdW9Wc/ftUD52nYMJb5W8sgqg7dyGYjfDzWyvkgO28XA15
+	 G7NEhiEjrLYYeeMpHzq+6TjeD4N2OdGowYiztLDflfeapkrMior0DeNl22vOfyxK65Y3x
+	 S+F2rqsYuGX+J6cSOUgRm0ekXyc+Cijc5F0FdmdbI9NPAM16OsBranSm0V14QImZXkn1R
+	 FipTB6gACxr8yLFwuIfF3xLLFut0I7XWAGKLiEPqJbMyjpVuqthBwVRdKzQ73LSPLIoAH
+	 n0TfYawkzGgUhJNMn5JQZ2g8P26LFP0d2+8xD4ru8iYwS+k+TmRy+/J2dr8BBzZK2Cw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015154;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015157;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=K4WB+EjlZleHsvZcp6yQIpL2Ad4HURwwCjTAAj+0Z3Q=;
-	b=e6Kx57Q/8KCE8+aH4Ti8RBHMmopcH0jM+SjDVV4G6SaFItAyQeZVwvQj6C619ACdoMVF
-	 +gc5oVdSJ3w3iziQkJuXofkpIri/ijz5OAwJH/PdYnLtQmr5W4hupQHHa2KiF7NKqqBQF
-	 jI4eBg4GcctytlAyR1EYi1xEUh+vdVYNaPwpQWtPo06av8q+J59WQ5Fcm0/ojf+VYT36q
-	 d//n7GtQ+8tgHAUsXUIeVFM8OlPvhfuwcJjQIX35vinNQ7n+MMD1ml9m9LqIlrtWacAnX
-	 AHRn7BMM7cdOyeCJdKdNGzDKibGud6R7nT9l1whPNl0VrPUwaJjUCuB35vybkgCCB9A==
+	bh=q7mwfN3I/s6Cmhia2ZVuEHDBNm9jO7kJrfJ++3CfTcY=;
+	b=KAYOPUHL8jJLeZxbUn3iD98uRpWi2t5dEfYSIU2ssNSXEuhQ9HAW8cyoldUdLBi09TLC
+	 RnZqzwU1xWk8bwrQtkikcJZSaXPFPTIcAFv14JqiaYDNYxY3IITYTWg8RdyjzMBnzQMio
+	 lNYBUJ9khR/QRp6TLmCtLJlMwjwrEIlqh4jIcntJp2h5BFNuuQTW9htAy3CyKRPPAHbHz
+	 /YCGOsXj41EsTCCBiCAKWv9qtU95DhrTTxsdulksF/8SQa4G4zaRohQCyhl23U7jo/7K/
+	 h4vKvZToppsN7ML3TVBm7CgScIN93+X5vSb4/h1CTE4h2rcm21jTqLlwfaAHF4FieHg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TK2Ndm3M;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WmZNjFQ6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7A960A2605;
-	Wed, 18 Nov 2026 15:19:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763AD606A338;
+	Wed, 18 Nov 2026 15:19:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TK2Ndm3M
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20D541F000C4;
-	Wed, 18 Nov 2026 15:19:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WmZNjFQ6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D16BA1F000C6;
+	Wed, 18 Nov 2026 15:19:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015154;
-	bh=K4WB+EjlZleHsvZcp6yQIpL2Ad4HURwwCjTAAj+0Z3Q=;
+	s=korg; t=1795015157;
+	bh=q7mwfN3I/s6Cmhia2ZVuEHDBNm9jO7kJrfJ++3CfTcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TK2Ndm3MnXgLz8e6B1vxklf/WqsFo+TXKvoVoXd0A8fi+nBHe9HHNOC5p7gX6o4i6
-	 cyNcut6Z34EdZUlhPOyeAMnHnPAWqfp2MFrUsNF1SEQN1nBdCj8AHANVcB+XiuUN5W
-	 A46iobHaHOx+UnXUsFI3A0ziJWKgdChI8TPIEwH4=
+	b=WmZNjFQ6lJplW4vMiwSF2Q8S2OU19whUltj9W1ea7PWu0T/aGk62QQnp6WjyLRJPB
+	 YMdXEDWy30SVhA/aThthjUZSh+DxqaAscmhdbabNiqnoOb7o1QuUoPa0yEbWi1Y/8X
+	 8E/vVyf4I92jFSio7xfSicwfdYrMuoYjAPIrtFAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Liu <leo.liu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Eva Kurchatova <eva.kurchatova@virtuozzo.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Muchun Song <muchun.song@linux.dev>,
+	Oscar Salvador <osalvador@suse.de>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0030/2651] drm/amdgpu: cancel idle work in hw_init failure paths for vcn/uvd/vce/jpeg
-Date: Wed, 18 Nov 2026 15:21:10 +0100
-Message-ID: <20261118150249.062613987@linuxfoundation.org>
+Subject: [PATCH 7.3 0031/2651] hugetlbfs: enforce F_SEAL_EXEC in setattr
+Date: Wed, 18 Nov 2026 15:21:11 +0100
+Message-ID: <20261118150249.096701513@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,703 +74,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Liu <leo.liu@amd.com>
+From: Eva Kurchatova <eva.kurchatova@virtuozzo.com>
 
-[ Upstream commit a56c2536c399d57a9bb1c02fd411e0c25859af3b ]
+[ Upstream commit b7f570e7cea761ec7eb4a3a9557a3a082d14e88c ]
 
-When hw_init() fails, amdgpu_device_ip_fini_early() skips hw_fini()
-because status.hw was never set.  For VCN, UVD (including UVD ENC), VCE,
-and JPEG, hw_fini() is where cancel_delayed_work_sync() is called.  Any
-idle work queued during the partial hw_init() is therefore left pending
-after sw_fini() frees the adev state the handler touches.
+F_SEAL_EXEC is enforced by shmem_setattr(), but hugetlbfs_setattr() does
+not check it. As a result, fchmod() can change the execute bits of a
+sealed hugetlbfs memfd.
 
-Cancel the idle work in each hw_init() error path, immediately before
-returning the error, so that hw_fini() remains the sole cancel site on
-the normal teardown path with no duplication.
+Use memfd_check_seals_mode() in hugetlbfs_setattr() to reject changes
+to execute bits when F_SEAL_EXEC is set.
 
-Link: https://github.com/ROCm/amdgpu/issues/234
-Fixes: 416e1fab4752 ("drm/amdgpu: drop redundant cancel_delayed_work_sync call")
-Assisted-by: Claude:Claude-Sonnet-4.6
-Signed-off-by: Leo Liu <leo.liu@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 7ff2327fde029e97d0050fcb94e3f4063c318547)
+This also fixes the memfd_test hugetlbfs SEAL-EXEC subtest, where
+fchmod() incorrectly succeeded after applying F_SEAL_EXEC.
+
+Fixes: 6fd7353829ca ("mm/memfd: add F_SEAL_EXEC")
 Cc: stable@vger.kernel.org
-[ sashal: Adjusted context and indentation in vcn_v5_0_2_hw_init() to account for the missing SR-IOV conditional. ]
+Signed-off-by: Eva Kurchatova <eva.kurchatova@virtuozzo.com>
+Link: https://patch.msgid.link/20260629180247.2343229-1-eva.kurchatova@virtuozzo.com
+Acked-by: Pedro Falcato <pfalcato@suse.de>
+Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Tested-by: Gregory Price (Meta) <gourry@gourry.net>
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
+[ david: use common helper; fixup Fixes:; check only regular files ]
+Acked-by: Oscar Salvador <osalvador@suse.de>
+Link: https://patch.msgid.link/20261029-fixes_shmem-v4-5-392fc715d8f6@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: Replaced the unavailable memfd_check_seals_mode() helper with an equivalent inline check. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c   |  6 +++++-
- drivers/gpu/drm/amd/amdgpu/jpeg_v2_5.c   |  6 +++++-
- drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c   |  6 +++++-
- drivers/gpu/drm/amd/amdgpu/jpeg_v4_0.c   |  6 +++++-
- drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c |  6 +++++-
- drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_5.c |  6 +++++-
- drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_0.c |  6 +++++-
- drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c |  6 +++++-
- drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_2.c |  6 +++++-
- drivers/gpu/drm/amd/amdgpu/jpeg_v5_3_0.c |  6 +++++-
- drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c    |  4 +++-
- drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c    |  4 +++-
- drivers/gpu/drm/amd/amdgpu/uvd_v5_0.c    |  4 +++-
- drivers/gpu/drm/amd/amdgpu/uvd_v6_0.c    |  4 +++-
- drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c    |  4 +++-
- drivers/gpu/drm/amd/amdgpu/vce_v1_0.c    |  6 +++++-
- drivers/gpu/drm/amd/amdgpu/vce_v2_0.c    |  6 +++++-
- drivers/gpu/drm/amd/amdgpu/vce_v3_0.c    |  6 +++++-
- drivers/gpu/drm/amd/amdgpu/vce_v4_0.c    |  6 +++++-
- drivers/gpu/drm/amd/amdgpu/vcn_v1_0.c    | 11 +++++++++--
- drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c    |  8 ++++++--
- drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c    | 12 ++++++++++--
- drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c    | 12 ++++++++++--
- drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c    | 10 +++++++++-
- drivers/gpu/drm/amd/amdgpu/vcn_v4_0_3.c  | 10 +++++++++-
- drivers/gpu/drm/amd/amdgpu/vcn_v4_0_5.c  | 10 +++++++++-
- drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c  | 10 +++++++++-
- drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c  | 10 +++++++++-
- drivers/gpu/drm/amd/amdgpu/vcn_v5_0_2.c  | 10 +++++++++-
- 29 files changed, 174 insertions(+), 33 deletions(-)
+ fs/hugetlbfs/inode.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c
-index a9c00adcfe410..2f4167f74ca22 100644
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c
-@@ -159,11 +159,15 @@ static int jpeg_v2_0_hw_init(struct amdgpu_ip_block *ip_block)
- {
- 	struct amdgpu_device *adev = ip_block->adev;
- 	struct amdgpu_ring *ring = adev->jpeg.inst->ring_dec;
-+	int r;
+diff --git a/fs/hugetlbfs/inode.c b/fs/hugetlbfs/inode.c
+index 7611a8470ea26..2eca1855e0973 100644
+--- a/fs/hugetlbfs/inode.c
++++ b/fs/hugetlbfs/inode.c
+@@ -841,6 +841,11 @@ static int hugetlbfs_setattr(struct mnt_idmap *idmap,
+ 	if (error)
+ 		return error;
  
- 	adev->nbio.funcs->vcn_doorbell_range(adev, ring->use_doorbell,
- 		(adev->doorbell_index.vcn.vcn_ring0_1 << 1), 0);
- 
--	return amdgpu_ring_test_helper(ring);
-+	r = amdgpu_ring_test_helper(ring);
-+	if (r)
-+		cancel_delayed_work_sync(&adev->jpeg.idle_work);
-+	return r;
- }
- 
- /**
-diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v2_5.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v2_5.c
-index 5208312e7017c..cd3ea918a392e 100644
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v2_5.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v2_5.c
-@@ -221,10 +221,14 @@ static int jpeg_v2_5_hw_init(struct amdgpu_ip_block *ip_block)
- 
- 		r = amdgpu_ring_test_helper(ring);
- 		if (r)
--			return r;
-+			goto error;
- 	}
- 
- 	return 0;
++	if (S_ISREG(inode->i_mode) && (ia_valid & ATTR_MODE) &&
++	    (info->seals & F_SEAL_EXEC) &&
++	    ((inode->i_mode ^ attr->ia_mode) & 0111))
++		return -EPERM;
 +
-+error:
-+	cancel_delayed_work_sync(&adev->jpeg.idle_work);
-+	return r;
- }
+ 	trace_hugetlbfs_setattr(inode, dentry, attr);
  
- /**
-diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c
-index e9ccadeb76961..e63ee43831c70 100644
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c
-@@ -174,11 +174,15 @@ static int jpeg_v3_0_hw_init(struct amdgpu_ip_block *ip_block)
- {
- 	struct amdgpu_device *adev = ip_block->adev;
- 	struct amdgpu_ring *ring = adev->jpeg.inst->ring_dec;
-+	int r;
- 
- 	adev->nbio.funcs->vcn_doorbell_range(adev, ring->use_doorbell,
- 		(adev->doorbell_index.vcn.vcn_ring0_1 << 1), 0);
- 
--	return amdgpu_ring_test_helper(ring);
-+	r = amdgpu_ring_test_helper(ring);
-+	if (r)
-+		cancel_delayed_work_sync(&adev->jpeg.idle_work);
-+	return r;
- }
- 
- /**
-diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0.c
-index 6fd4238a8471a..88646b5792596 100644
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0.c
-@@ -204,10 +204,14 @@ static int jpeg_v4_0_hw_init(struct amdgpu_ip_block *ip_block)
- 
- 		r = amdgpu_ring_test_helper(ring);
- 		if (r)
--			return r;
-+			goto error;
- 	}
- 
- 	return 0;
-+
-+error:
-+	cancel_delayed_work_sync(&adev->jpeg.idle_work);
-+	return r;
- }
- 
- /**
-diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
-index 0fdc32b3ae91b..d6dbf855c1368 100644
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
-@@ -434,12 +434,16 @@ static int jpeg_v4_0_3_hw_init(struct amdgpu_ip_block *ip_block)
- 							VCN_JPEG_DB_CTRL__EN_MASK);
- 				r = amdgpu_ring_test_helper(ring);
- 				if (r)
--					return r;
-+					goto error;
- 			}
- 		}
- 	}
- 
- 	return 0;
-+
-+error:
-+	cancel_delayed_work_sync(&adev->jpeg.idle_work);
-+	return r;
- }
- 
- /**
-diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_5.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_5.c
-index 3f61d5367d946..2e15214525ff3 100644
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_5.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_5.c
-@@ -231,10 +231,14 @@ static int jpeg_v4_0_5_hw_init(struct amdgpu_ip_block *ip_block)
- 		ring = adev->jpeg.inst[i].ring_dec;
- 		r = amdgpu_ring_test_helper(ring);
- 		if (r)
--			return r;
-+			goto error;
- 	}
- 
- 	return 0;
-+
-+error:
-+	cancel_delayed_work_sync(&adev->jpeg.idle_work);
-+	return r;
- }
- 
- /**
-diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_0.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_0.c
-index e6e99f7e0a8a9..daead8213bab4 100644
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_0.c
-@@ -172,9 +172,13 @@ static int jpeg_v5_0_0_hw_init(struct amdgpu_ip_block *ip_block)
- 
- 	r = amdgpu_ring_test_helper(ring);
- 	if (r)
--		return r;
-+		goto error;
- 
- 	return 0;
-+
-+error:
-+	cancel_delayed_work_sync(&adev->jpeg.idle_work);
-+	return r;
- }
- 
- /**
-diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c
-index db3fbe4eabb99..044deab6febde 100644
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c
-@@ -306,11 +306,15 @@ static int jpeg_v5_0_1_hw_init(struct amdgpu_ip_block *ip_block)
- 						    VCN_JPEG_DB_CTRL__EN_MASK);
- 			r = amdgpu_ring_test_helper(ring);
- 			if (r)
--				return r;
-+				goto error;
- 		}
- 	}
- 
- 	return 0;
-+
-+error:
-+	cancel_delayed_work_sync(&adev->jpeg.idle_work);
-+	return r;
- }
- 
- /**
-diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_2.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_2.c
-index ea54a2b6eddb8..ad554733a6995 100644
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_2.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_2.c
-@@ -252,11 +252,15 @@ static int jpeg_v5_0_2_hw_init(struct amdgpu_ip_block *ip_block)
- 						    VCN_JPEG_DB_CTRL__EN_MASK);
- 			r = amdgpu_ring_test_helper(ring);
- 			if (r)
--				return r;
-+				goto error;
- 		}
- 	}
- 
- 	return 0;
-+
-+error:
-+	cancel_delayed_work_sync(&adev->jpeg.idle_work);
-+	return r;
- }
- 
- /**
-diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v5_3_0.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v5_3_0.c
-index c929d6f83bac6..9f8f3a3cbc041 100644
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v5_3_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v5_3_0.c
-@@ -156,9 +156,13 @@ static int jpeg_v5_3_0_hw_init(struct amdgpu_ip_block *ip_block)
- 
- 	r = amdgpu_ring_test_helper(ring);
- 	if (r)
--		return r;
-+		goto error;
- 
- 	return 0;
-+
-+error:
-+	cancel_delayed_work_sync(&adev->jpeg.idle_work);
-+	return r;
- }
- 
- /**
-diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-index b7d451f439a76..603ee842fda75 100644
---- a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-@@ -710,7 +710,9 @@ static int uvd_v3_1_hw_init(struct amdgpu_ip_block *ip_block)
- 	amdgpu_ring_commit(ring);
- 
- done:
--	if (!r)
-+	if (r)
-+		cancel_delayed_work_sync(&adev->uvd.idle_work);
-+	else
- 		drm_info(adev_to_drm(adev), "UVD initialized successfully.\n");
- 
- 	return r;
-diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c b/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c
-index 8a9ba2276275c..174868aebd414 100644
---- a/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c
-+++ b/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c
-@@ -198,7 +198,9 @@ static int uvd_v4_2_hw_init(struct amdgpu_ip_block *ip_block)
- 	amdgpu_ring_commit(ring);
- 
- done:
--	if (!r)
-+	if (r)
-+		cancel_delayed_work_sync(&adev->uvd.idle_work);
-+	else
- 		drm_info(adev_to_drm(adev), "UVD initialized successfully.\n");
- 
- 	return r;
-diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v5_0.c b/drivers/gpu/drm/amd/amdgpu/uvd_v5_0.c
-index 454f109cbb2e2..90e8fbfb5a321 100644
---- a/drivers/gpu/drm/amd/amdgpu/uvd_v5_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/uvd_v5_0.c
-@@ -190,7 +190,9 @@ static int uvd_v5_0_hw_init(struct amdgpu_ip_block *ip_block)
- 	amdgpu_ring_commit(ring);
- 
- done:
--	if (!r)
-+	if (r)
-+		cancel_delayed_work_sync(&adev->uvd.idle_work);
-+	else
- 		drm_info(adev_to_drm(adev), "UVD initialized successfully.\n");
- 
- 	return r;
-diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v6_0.c b/drivers/gpu/drm/amd/amdgpu/uvd_v6_0.c
-index bbd0e05d39e51..b084c92609bc9 100644
---- a/drivers/gpu/drm/amd/amdgpu/uvd_v6_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/uvd_v6_0.c
-@@ -515,7 +515,9 @@ static int uvd_v6_0_hw_init(struct amdgpu_ip_block *ip_block)
- 	}
- 
- done:
--	if (!r) {
-+	if (r) {
-+		cancel_delayed_work_sync(&adev->uvd.idle_work);
-+	} else {
- 		if (uvd_v6_0_enc_support(adev))
- 			drm_info(adev_to_drm(adev), "UVD and UVD ENC initialized successfully.\n");
- 		else
-diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c b/drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c
-index 46222fc30be65..48eac56f758e1 100644
---- a/drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c
-@@ -583,7 +583,9 @@ static int uvd_v7_0_hw_init(struct amdgpu_ip_block *ip_block)
- 		}
- 	}
- done:
--	if (!r)
-+	if (r)
-+		cancel_delayed_work_sync(&adev->uvd.idle_work);
-+	else
- 		drm_info(adev_to_drm(adev), "UVD and UVD ENC initialized successfully.\n");
- 
- 	return r;
-diff --git a/drivers/gpu/drm/amd/amdgpu/vce_v1_0.c b/drivers/gpu/drm/amd/amdgpu/vce_v1_0.c
-index 93253db5e2de4..cc9dec9c3621a 100644
---- a/drivers/gpu/drm/amd/amdgpu/vce_v1_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vce_v1_0.c
-@@ -651,12 +651,16 @@ static int vce_v1_0_hw_init(struct amdgpu_ip_block *ip_block)
- 	for (i = 0; i < adev->vce.num_rings; i++) {
- 		r = amdgpu_ring_test_helper(&adev->vce.ring[i]);
- 		if (r)
--			return r;
-+			goto error;
- 	}
- 
- 	dev_info(adev->dev, "VCE initialized successfully.\n");
- 
- 	return 0;
-+
-+error:
-+	cancel_delayed_work_sync(&adev->vce.idle_work);
-+	return r;
- }
- 
- static int vce_v1_0_hw_fini(struct amdgpu_ip_block *ip_block)
-diff --git a/drivers/gpu/drm/amd/amdgpu/vce_v2_0.c b/drivers/gpu/drm/amd/amdgpu/vce_v2_0.c
-index 3a6fc8604108c..f8c65fb4ee56a 100644
---- a/drivers/gpu/drm/amd/amdgpu/vce_v2_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vce_v2_0.c
-@@ -483,12 +483,16 @@ static int vce_v2_0_hw_init(struct amdgpu_ip_block *ip_block)
- 	for (i = 0; i < adev->vce.num_rings; i++) {
- 		r = amdgpu_ring_test_helper(&adev->vce.ring[i]);
- 		if (r)
--			return r;
-+			goto error;
- 	}
- 
- 	drm_info(adev_to_drm(adev), "VCE initialized successfully.\n");
- 
- 	return 0;
-+
-+error:
-+	cancel_delayed_work_sync(&adev->vce.idle_work);
-+	return r;
- }
- 
- static int vce_v2_0_hw_fini(struct amdgpu_ip_block *ip_block)
-diff --git a/drivers/gpu/drm/amd/amdgpu/vce_v3_0.c b/drivers/gpu/drm/amd/amdgpu/vce_v3_0.c
-index 4dbbeaf97ad19..e5b7f64b94baf 100644
---- a/drivers/gpu/drm/amd/amdgpu/vce_v3_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vce_v3_0.c
-@@ -482,12 +482,16 @@ static int vce_v3_0_hw_init(struct amdgpu_ip_block *ip_block)
- 	for (i = 0; i < adev->vce.num_rings; i++) {
- 		r = amdgpu_ring_test_helper(&adev->vce.ring[i]);
- 		if (r)
--			return r;
-+			goto error;
- 	}
- 
- 	drm_info(adev_to_drm(adev), "VCE initialized successfully.\n");
- 
- 	return 0;
-+
-+error:
-+	cancel_delayed_work_sync(&adev->vce.idle_work);
-+	return r;
- }
- 
- static int vce_v3_0_hw_fini(struct amdgpu_ip_block *ip_block)
-diff --git a/drivers/gpu/drm/amd/amdgpu/vce_v4_0.c b/drivers/gpu/drm/amd/amdgpu/vce_v4_0.c
-index ee445d8abe474..4e1fbc7b50f53 100644
---- a/drivers/gpu/drm/amd/amdgpu/vce_v4_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vce_v4_0.c
-@@ -533,12 +533,16 @@ static int vce_v4_0_hw_init(struct amdgpu_ip_block *ip_block)
- 	for (i = 0; i < adev->vce.num_rings; i++) {
- 		r = amdgpu_ring_test_helper(&adev->vce.ring[i]);
- 		if (r)
--			return r;
-+			goto error;
- 	}
- 
- 	drm_info(adev_to_drm(adev), "VCE initialized successfully.\n");
- 
- 	return 0;
-+
-+error:
-+	cancel_delayed_work_sync(&adev->vce.idle_work);
-+	return r;
- }
- 
- static int vce_v4_0_hw_fini(struct amdgpu_ip_block *ip_block)
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v1_0.c b/drivers/gpu/drm/amd/amdgpu/vcn_v1_0.c
-index e9d790914761c..70ad27daeb511 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v1_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v1_0.c
-@@ -252,18 +252,25 @@ static int vcn_v1_0_hw_init(struct amdgpu_ip_block *ip_block)
- 
- 	r = amdgpu_ring_test_helper(ring);
- 	if (r)
--		return r;
-+		goto error_vcn;
- 
- 	for (i = 0; i < adev->vcn.inst[0].num_enc_rings; ++i) {
- 		ring = &adev->vcn.inst->ring_enc[i];
- 		r = amdgpu_ring_test_helper(ring);
- 		if (r)
--			return r;
-+			goto error_vcn;
- 	}
- 
- 	ring = adev->jpeg.inst->ring_dec;
- 	r = amdgpu_ring_test_helper(ring);
-+	if (r)
-+		goto error_both;
-+	return 0;
- 
-+error_both:
-+	cancel_delayed_work_sync(&adev->jpeg.idle_work);
-+error_vcn:
-+	cancel_delayed_work_sync(&adev->vcn.inst[0].idle_work);
- 	return r;
- }
- 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c b/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
-index 0442bfcfd384d..a8bead3124ccf 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
-@@ -293,7 +293,7 @@ static int vcn_v2_0_hw_init(struct amdgpu_ip_block *ip_block)
- 
- 	r = amdgpu_ring_test_helper(ring);
- 	if (r)
--		return r;
-+		goto error;
- 
- 	//Disable vcn decode for sriov
- 	if (amdgpu_sriov_vf(adev))
-@@ -303,10 +303,14 @@ static int vcn_v2_0_hw_init(struct amdgpu_ip_block *ip_block)
- 		ring = &adev->vcn.inst->ring_enc[i];
- 		r = amdgpu_ring_test_helper(ring);
- 		if (r)
--			return r;
-+			goto error;
- 	}
- 
- 	return 0;
-+
-+error:
-+	cancel_delayed_work_sync(&adev->vcn.inst->idle_work);
-+	return r;
- }
- 
- /**
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c b/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c
-index 0d8a3cea63ee2..2592927d2fd4d 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c
-@@ -480,18 +480,26 @@ static int vcn_v2_5_hw_init(struct amdgpu_ip_block *ip_block)
- 
- 			r = amdgpu_ring_test_helper(ring);
- 			if (r)
--				return r;
-+				goto error;
- 
- 			for (i = 0; i < adev->vcn.inst[j].num_enc_rings; ++i) {
- 				ring = &adev->vcn.inst[j].ring_enc[i];
- 				r = amdgpu_ring_test_helper(ring);
- 				if (r)
--					return r;
-+					goto error;
- 			}
- 		}
- 	}
- 
- 	return r;
-+
-+error:
-+	for (i = 0; i <= j; i++) {
-+		if (adev->vcn.harvest_config & (1 << i))
-+			continue;
-+		cancel_delayed_work_sync(&adev->vcn.inst[i].idle_work);
-+	}
-+	return r;
- }
- 
- /**
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c b/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
-index 00d8f35846f22..d4a3d5da3f769 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
-@@ -416,18 +416,26 @@ static int vcn_v3_0_hw_init(struct amdgpu_ip_block *ip_block)
- 
- 			r = amdgpu_ring_test_helper(ring);
- 			if (r)
--				return r;
-+				goto error;
- 
- 			for (j = 0; j < adev->vcn.inst[i].num_enc_rings; ++j) {
- 				ring = &adev->vcn.inst[i].ring_enc[j];
- 				r = amdgpu_ring_test_helper(ring);
- 				if (r)
--					return r;
-+					goto error;
- 			}
- 		}
- 	}
- 
- 	return 0;
-+
-+error:
-+	while (i >= 0) {
-+		if (!(adev->vcn.harvest_config & (1 << i)))
-+			cancel_delayed_work_sync(&adev->vcn.inst[i].idle_work);
-+		i--;
-+	}
-+	return r;
- }
- 
- /**
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
-index c2ddf3cb368fd..f2e89ba9fe41f 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
-@@ -348,11 +348,19 @@ static int vcn_v4_0_hw_init(struct amdgpu_ip_block *ip_block)
- 
- 			r = amdgpu_ring_test_helper(ring);
- 			if (r)
--				return r;
-+				goto error;
- 		}
- 	}
- 
- 	return 0;
-+
-+error:
-+	while (i >= 0) {
-+		if (!(adev->vcn.harvest_config & (1 << i)))
-+			cancel_delayed_work_sync(&adev->vcn.inst[i].idle_work);
-+		i--;
-+	}
-+	return r;
- }
- 
- /**
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0_3.c b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0_3.c
-index 62e2e04314dca..44a5d57c07a38 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0_3.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0_3.c
-@@ -394,11 +394,19 @@ static int vcn_v4_0_3_hw_init(struct amdgpu_ip_block *ip_block)
- 
- 			r = amdgpu_ring_test_helper(ring);
- 			if (r)
--				return r;
-+				goto error;
- 		}
- 	}
- 
- 	return r;
-+
-+error:
-+	while (i >= 0) {
-+		if (!(adev->vcn.harvest_config & (1 << i)))
-+			cancel_delayed_work_sync(&adev->vcn.inst[i].idle_work);
-+		i--;
-+	}
-+	return r;
- }
- 
- /**
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0_5.c b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0_5.c
-index c8879a6e5297d..f3a57cb8b6ae5 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0_5.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0_5.c
-@@ -302,10 +302,18 @@ static int vcn_v4_0_5_hw_init(struct amdgpu_ip_block *ip_block)
- 
- 		r = amdgpu_ring_test_helper(ring);
- 		if (r)
--			return r;
-+			goto error;
- 	}
- 
- 	return 0;
-+
-+error:
-+	while (i >= 0) {
-+		if (!(adev->vcn.harvest_config & (1 << i)))
-+			cancel_delayed_work_sync(&adev->vcn.inst[i].idle_work);
-+		i--;
-+	}
-+	return r;
- }
- 
- /**
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c
-index 886e2c2074a9e..b2936da0786c7 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c
-@@ -266,10 +266,18 @@ static int vcn_v5_0_0_hw_init(struct amdgpu_ip_block *ip_block)
- 
- 		r = amdgpu_ring_test_helper(ring);
- 		if (r)
--			return r;
-+			goto error;
- 	}
- 
- 	return 0;
-+
-+error:
-+	while (i >= 0) {
-+		if (!(adev->vcn.harvest_config & (1 << i)))
-+			cancel_delayed_work_sync(&adev->vcn.inst[i].idle_work);
-+		i--;
-+	}
-+	return r;
- }
- 
- /**
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c
-index 011afc0fdc879..5abd0da3dd921 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c
-@@ -341,11 +341,19 @@ static int vcn_v5_0_1_hw_init(struct amdgpu_ip_block *ip_block)
- 
- 			r = amdgpu_ring_test_helper(ring);
- 			if (r)
--				return r;
-+				goto error;
- 		}
- 	}
- 
- 	return 0;
-+
-+error:
-+	while (i >= 0) {
-+		if (!(adev->vcn.harvest_config & (1 << i)))
-+			cancel_delayed_work_sync(&adev->vcn.inst[i].idle_work);
-+		i--;
-+	}
-+	return r;
- }
- 
- /**
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_2.c b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_2.c
-index 9f9b3a47f63ba..70706703b02c6 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_2.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_2.c
-@@ -223,10 +223,18 @@ static int vcn_v5_0_2_hw_init(struct amdgpu_ip_block *ip_block)
- 
- 		r = amdgpu_ring_test_helper(ring);
- 		if (r)
--			return r;
-+			goto error;
- 	}
- 
- 	return 0;
-+
-+error:
-+	while (i >= 0) {
-+		if (!(adev->vcn.harvest_config & (1 << i)))
-+			cancel_delayed_work_sync(&adev->vcn.inst[i].idle_work);
-+		i--;
-+	}
-+	return r;
- }
- 
- /**
+ 	if (ia_valid & ATTR_SIZE) {
 -- 
 2.53.0
 
