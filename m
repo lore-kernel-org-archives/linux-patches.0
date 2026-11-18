@@ -1,58 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046279;
-	b=VbWciicP4o1fVXZ/TGBAXayqumxb0OBgpxkxQ7Q68GeJqZC1e6AchCdOORqYhl2/RvZh
-	 OkSjoJKw9KjNXcvBN1N7po4dvjU1Tov4niuiU94p4Nd589gPoNjoNtnW0ajXLv+/XViC9
-	 NWP5Z7f6b8Flfo21EwKCvdtLfl0xbz0Gr+4Fo28ToF6uRReCZJMadwzmb53y05uWhVF1l
-	 kb5P1ek6eW1VxD+oRgpLwt1TBYCefVda7UCaPdASuC8Wy/K/K8EiO2Fjyl3WVmdxpqBfK
-	 xgNVmfPd0gJWFMfZRrEYHaV/xSpl9qeHxpUV3G8zJ7RWZmQk64mFDFUDzL8PdRu1x6Q==
+	t=1795046282;
+	b=V8OPe9ZgdaMfY+zzZhs45vWo0kwlzA4iAMerC26cClaDYjUYAU3162jTRJQA5smW/DGi
+	 /6xcrgjQAH5kDgP8yW/93ozAev6Wm9emxUp5l5PR6/AbcDKclrLXPrQTjh8zDA3gpDdfm
+	 I8H3yqZmiLP2OrcpvJYDsbK3GI+aJ8BnCfz5KI2yHZ53jzhGtQhGd+h2gUlAG6eg9yVSH
+	 1GH2kWXn5rW8IXoxhRh7VSMOSGV+2h/s5CIV5n7TZmQHQpYb+VPFhq+e1MeT9WPClMQ2v
+	 LQgZ3sBu8R9D8Qd7OvCZzp5hKr3yAod1kE3F7Qn672LrFlN4OHGt7nbO0UdinyXte9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046279;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046282;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MwcZWrIUBB4B14SBVtnQs3ojiEHcz/aL9BuA3jBwEwI=;
-	b=EgvuPSv1nFFOKwMTv7yaOvRIFEj+W6/pM8qvQB919x65doWSFIFtR9EwYjG2wHjLHI/M
-	 kD8xiATvG/WC3Rer1Xvu/VsS8VZwvwsRvtAb6aS7gKWdNPGfhTSM42KKzWGIP1zOhNb49
-	 XRCFDvEiNtVrmtgFYW3YMcI3p1yvpdkqqfOUMqh/ePRAs5nIyvPL0B3wAdev7t6eUavkr
-	 kv5ui64eptmMppGxfVSN/QxaQ3rOjn5tlEBMABKd0FN9xpSLKHENaidfS2QiT3Zk5Q4Fk
-	 aqk67Gohcn8Sxa8ModJpZP2l4sMJAxh4d+XumwpREd7IJcAm0rB08rF8PqEW0yFpPMg==
+	bh=iupYC9IBM+fCLMrfxW9GH5caZq7zCwFnRj7OqUZjs0o=;
+	b=YpqVEluCOv5Rllnlxo/gYVIvTPod3ExGuFtlF/uhqSS5pBiRxG3Y8K8d2Icmdi02RjCD
+	 K4jl+Yw3TRDsWoHhoEC4WDqg3Bd1S1XzbU18XSluRFDlCWxesEgFqrozxADXtsV3jxFmx
+	 B20hlzNOKbTv9Px+KbgWJ6W7Xf5yce8q2gouL9QOX1JYfXtWb023b/wTgNEmN0oTt2N8P
+	 ox+ib48TLnaYGg1Y4x6EJnzL8nE9l6gcMBKT6KnaBNxdmvcBYklL4SXJ2jpI4RsKzGMsE
+	 oeHvsI89dK0Qw8vo89Lt18E9Yo2rKZissw2Y/0xbJugHpfUKv5iZlhhRo+OWeY8CszA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YokvmYLg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nStCw5wr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8A2606A320;
-	Wed, 18 Nov 2026 23:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44463606A31C;
+	Wed, 18 Nov 2026 23:58:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YokvmYLg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86C4B1F000C4;
-	Wed, 18 Nov 2026 23:57:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nStCw5wr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4063F1F000C4;
+	Wed, 18 Nov 2026 23:58:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046279;
-	bh=MwcZWrIUBB4B14SBVtnQs3ojiEHcz/aL9BuA3jBwEwI=;
+	s=korg; t=1795046281;
+	bh=iupYC9IBM+fCLMrfxW9GH5caZq7zCwFnRj7OqUZjs0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YokvmYLgSF7VT/MRUjX+nOawG/jD/yBVP7/w503CYCws1i9bVU9yeEofS1oYz+wXK
-	 KRGoyiTnbbXi6CiUI+1FBOtxnGXpJK4RO0j5gx2H5XnRVQiEjR6COjyQMDXhJgKFdr
-	 y59nJW/zPJ4XbM+1oRBzli1iFjoYSL/WYCTEHNi4=
+	b=nStCw5wrCDS1fl3ZPEdV0R8UyryAigmkSeKCwKFyGISJBVdlSPHFWjwWYFL4CeB0S
+	 k+9AHpmKmmj07Hoj2ObwQ4mRoq9YcTu34cfDSFpprf1BGLlYexOIQq0UgkPzDhGT7e
+	 Y4DguQfwauww0LEopN+IPk1uAqtwh17slLW8OcSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chris Mason <mason@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
 	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Zi Yan <ziy@nvidia.com>,
 	Balbir Singh <balbirs@nvidia.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1224/2857] mm/mempolicy: charge shared policy nodes
-Date: Wed, 18 Nov 2026 15:37:38 +0100
-Message-ID: <20261118150245.640685249@linuxfoundation.org>
+Subject: [PATCH 6.1 1225/2857] mm/shmem: stop retrying folios that cannot be split
+Date: Wed, 18 Nov 2026 15:37:39 +0100
+Message-ID: <20261118150245.674781322@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -76,74 +73,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 68b2aa37afa390f08de13bc0bac61a9ded3318bc ]
+[ Upstream commit a842a1f947da8a7020e72f885ffbf2ce6a93685f ]
 
-Any local user can bypass memory.max with mbind() on a tmpfs file, and
-allocate unbounded kernel memory.
+A fault or collapse can insert a large folio crossing EOF after
+shmem_undo_range() has handled the boundary folios. If splitting that
+folio fails, truncate_inode_partial_folio() retains it when it is dirty.
+The final scan then repeatedly finds it because it restarts from an
+unchanged start.
 
-mbind() sets a NUMA memory policy for a range of a mapping. If the
-mapping is of a shmem and friends, the kernel also stores the policy on
-the inode, in a tree with one entry per range of the file.
+Truncation keeps the inode lock and ignores fatal signals while looping.
+A concurrent unlink() can then block other directory operations while
+holding the directory lock and waiting for the file's lock.
 
-Each mbind() on a single page of a mapping can add one shared policy node
-(struct sp_node) and one struct mempolicy to that tree. They outlive the
-mapping and stay around until the inode is destroyed. The tree is not
-bounded by the file size, so the file can be empty.
+Advance start past the retained folio, whose truncated part has already
+been zeroed. Do not move start backwards if the failed split has shrunk
+the folio.
 
-Memory that user space can allocate must be charged to a memory cgroup. A
-slab cache does that for all of its objects if it is created with
-SLAB_ACCOUNT. numa_policy_init() creates the slab caches for both
-structs without SLAB_ACCOUNT, so they are not charged to any cgroup.
+Fix generated by an LLM and sent by Chris Mason in private.
 
-Reproduced with mbind() on single pages of an empty tmpfs file, from a
-cgroup with memory.max=8M: the global OOM killer killed tasks owned by
-root, and the machine panicked.
-
-Fix this by creating both caches with SLAB_ACCOUNT. This change implies
-that mbind() can now fail when running into memcg limits. Further,
-the policy_cache also serves task and VMA policies, so they are
-similarly accounted now.
-
-Note that per-file limits are not really helpful, as the user could
-simply use many files; having limits per user is tricky as well.
-
-Fix generated by an LLM and submitted by Chris Mason in private.
-
-Fixes: 5d097056c9a0 ("kmemcg: account certain kmem allocations to memcg")
+Fixes: 55ac8bbe358b ("mm/shmem: fix race in shmem_undo_range w/THP")
 Cc: stable@vger.kernel.org
 Signed-off-by: Chris Mason <mason@kernel.org>
-Acked-by: Pedro Falcato <pfalcato@suse.de>
-Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
 Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-[ david: smaller description tweaks ]
+[ david: split fixes, simplify descriptions, adjust comments ]
+Reviewed-by: Zi Yan <ziy@nvidia.com>
 Reviewed-by: Balbir Singh <balbirs@nvidia.com>
-Link: https://patch.msgid.link/20261029-fixes_shmem-v4-1-392fc715d8f6@kernel.org
+Link: https://patch.msgid.link/20261029-fixes_shmem-v4-7-392fc715d8f6@kernel.org
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mempolicy.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/shmem.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/mm/mempolicy.c b/mm/mempolicy.c
-index 48f7c15977335..5bc8ba6fa5189 100644
---- a/mm/mempolicy.c
-+++ b/mm/mempolicy.c
-@@ -2907,11 +2907,11 @@ void __init numa_policy_init(void)
- 
- 	policy_cache = kmem_cache_create("numa_policy",
- 					 sizeof(struct mempolicy),
--					 0, SLAB_PANIC, NULL);
-+					 0, SLAB_PANIC | SLAB_ACCOUNT, NULL);
- 
- 	sn_cache = kmem_cache_create("shared_policy_node",
- 				     sizeof(struct sp_node),
--				     0, SLAB_PANIC, NULL);
-+				     0, SLAB_PANIC | SLAB_ACCOUNT, NULL);
- 
- 	for_each_node(nid) {
- 		preferred_node_policy[nid] = (struct mempolicy) {
+diff --git a/mm/shmem.c b/mm/shmem.c
+index cfc573e04327c..c7939dde94f2d 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -1050,6 +1050,15 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
+ 						index = start;
+ 						break;
+ 					}
++				} else if (folio->mapping) {
++					/*
++					 * Splitting failed, but the part in the
++					 * range is already zeroed. The folio
++					 * was not dropped, so skip it when
++					 * restarting the scan to avoid retrying
++					 * it forever.
++					 */
++					start = max(start, folio_next_index(folio));
+ 				}
+ 			}
+ 			index = folio->index + folio_nr_pages(folio) - 1;
 -- 
 2.53.0
 
