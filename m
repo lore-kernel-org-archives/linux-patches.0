@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024054;
-	b=l1JwdqiDBtJKYLYyadO8l3C/cjmg8Zm0hYzzNvRK9lWtxeYoLYEc4jl7Nohu4MrWAbKW
-	 uOlF5hPzu/9P04yRMiusYcrwpdRLQIqhCi7rQomVisXM9E9pIbPXOk+886Ipj+OUjqBXY
-	 jtHMo43ildQCW5l4v2xH0K56KTpnQymSx51w8zi93NpyE4xnoVhjb4wjZmrCHpN5rpuPD
-	 0s9fx3QBETXZ3yGjT6NbUrwqFBqax78cQk1Q7O0ehIEOyFybpPOnlX+Yjrvd5HSRKlwvW
-	 +3SEomc+HmVxEHRdv/UE0VKDSNYpsTJ+oeSZ06upMXgcFgell3ZORq75odP6bWuaYdw==
+	t=1795024057;
+	b=4olAxdC3r4hybZ2P47+jZu9yO7W5nGsepgpXXy77L2bIBcacHyjCojZr/fA87iPn/Ght
+	 JqeQWecuGcgOu6zoGNfVmAVJWJmQlbCcChELLP4QNwnfAl0lnPSFWp233Aao4A20/EZuC
+	 lyq1rg7j6aDDZx8CmG9tvqcjCyjKZ2dkEH7LwByfJEjMGb2NoDlJqNvbIAVVWu5NOx8H1
+	 B/sogoSMFmHEMNiCuoDJBmCFiAf4v7DI3R0BwVfieyQFt9WsLrkYBsasKMy8ucDSqM1f1
+	 X/O2D5Z3XplZpw6xta2ghKbH6gnG6WY8g7dlN1ePqPa7sLS0r0/LTcSeRhaL/esv8yg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024054;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024057;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WGa0SSsJ1C7rzz1alQwLS+GsowR03iyI23292rxSFvc=;
-	b=fGWTwk1bWOP6EL9QkK98ZUmQLcKC1FC6YwkN9HExlua56u8ZTHZTPVNLWLJWSuQ90BFk
-	 ZQj5B6z+MTe7mmcYSS7B/p0Ll+OogTcf7w6B/D9LC8ih1R+xaJ97l7u5ywhYLoVJIAvOz
-	 yXAbq0sE6dMk/yi0msW6PVlshHNitQe/GqdA8TSJPPTQAj9PVtubWLHKoFxt75iUw4fah
-	 Lm71LWqwRis5XB1q4Y1aY3BWx3Wx+MDenwMcapFBwczlQQq5XYiLB6lcF4MH40rEMw7pl
-	 Q3k7bS8vICe0Zfa6Ptfpb0sWu0xsCi24N5JwU7mQNDY8xsghsZyb0jRJqx09G9QELIQ==
+	bh=Irqy47sZYQOg7PA/sFc/HGaXMVUU4+OSUag4nlFZGTs=;
+	b=WadCU3MdnfUMA67Da53+uBkJ9+afSiXIYZPqzqIrzfuQvp0tyipXjKt9p9pUPWBbIcpS
+	 QnArGEy6oDGfeRpDs9uOT+FYMAbvo5bD7LFLpshdbpQamuoM3Sd8gI6lkl+euODooe4q+
+	 wfI10CWKh0MKJaXyAZtja5ucVzmOqN8ol3qnsThkj8TPCQaTCLP0EmjBiVQ/FTO9VIXW8
+	 /YB4DTUpDrnHUKr09YRr15AYT0uThr5LHwdpv4JVHiUkmKzBOrxUHdv5QGtxXbqDsRe3J
+	 vSAcrVL+Zdbrn9m88MPP2xkK2kvqwMt709qVQtmIb0hSvScjG47hy15ktGoEoQEr8Ew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NrPpOo9r;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Re4sP/G7";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F860606A320;
-	Wed, 18 Nov 2026 17:47:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E6D606A31C;
+	Wed, 18 Nov 2026 17:47:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NrPpOo9r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D3F1F000C4;
-	Wed, 18 Nov 2026 17:47:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Re4sP/G7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFE6D1F000C4;
+	Wed, 18 Nov 2026 17:47:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024054;
-	bh=WGa0SSsJ1C7rzz1alQwLS+GsowR03iyI23292rxSFvc=;
+	s=korg; t=1795024057;
+	bh=Irqy47sZYQOg7PA/sFc/HGaXMVUU4+OSUag4nlFZGTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NrPpOo9rfXXz8WuE2dQLUj5aObRUNHso1WJZwxDO+/Q+wb3U0yxUEK0EEVs8G2Pe0
-	 f/2/dc+njNJ15aOHr1oBtgA5y3/7JMn0NMX59INn5oCUU2T+0q67s4lcwPTbgjpXvK
-	 WMtOIwxVOj99qCTGncBdyA0gWWyTyy9xyV8wLKpo=
+	b=Re4sP/G7TEeyRL0u9FIbrKXiKIOd6Exyf9wlHLJN5c8ZxTM3rNpenVVQdQUWOTP4K
+	 sLMheTw2itQgTFuWyTyNmdHqccIESJeQxcPp4sfsp4LWi0gk+RAk02MM2YSfgZk4Ov
+	 lJdAudaFyhMqWHwo7/KBwflve3MTBfwOT+Cfms7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
+	Jacob Moroni <jmoroni@google.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0588/2151] RDMA/core: Fix partial copy of IPv6 flow_lbl in LAG hash skb
-Date: Wed, 18 Nov 2026 15:38:43 +0100
-Message-ID: <20261118150143.373995589@linuxfoundation.org>
+Subject: [PATCH 6.18 0589/2151] RDMA/irdma: Fix erroneous -ENOMEM for large MR registration
+Date: Wed, 18 Nov 2026 15:38:44 +0100
+Message-ID: <20261118150143.409985203@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,49 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Jacob Moroni <jmoroni@google.com>
 
-[ Upstream commit b63d21631f836528ef660d7b5a0d84890ff6dbd5 ]
+[ Upstream commit 5bb710151753fe53047b1d34b1b54d0f179cec68 ]
 
-rdma_build_skb() constructs a synthetic IPv6 header for LAG slave
-selection and copies the flow label from the AH attribute:
+Commit cc8997c94bf3 ("RDMA/irdma: Refactor PBLE functions")
+replaced the explicit level1_only boolean with a bit mask
+but did not properly convert the "if (level1_only)" check
+in irdma_get_pble() to be "lvl == PBLE_LEVEL_1" and instead
+left it as "if (lvl)".
 
-	memcpy(&ip6h->flow_lbl, &ah_attr->grh.flow_label,
-	       sizeof(*ip6h->flow_lbl));
+User MR registration passes "lvl = PBLE_LEVEL_1 | PBLE_LEVEL_2"
+so this check always evaluates to true and causes the
+loop to bail after grabbing a single SD even if the region
+actually requires more than one SD (as is the case for
+regions larger than 1 GiB with 4k pages). As a result, these
+registrations can fail with -ENOMEM even if there are
+sufficient PBLE resources.
 
-ipv6hdr.flow_lbl is __u8[3], so sizeof(*ip6h->flow_lbl) dereferences the
-array to a single __u8 and yields 1.  The memcpy therefore copies only
-the first byte of the flow label, leaving flow_lbl[1] and flow_lbl[2]
-uninitialised in the skb buffer (alloc_skb() does not zero the data).
-The resulting LAG hash is computed over one byte of real flow-label
-data and two bytes of kmalloc residue, so IPv6 RoCEv2 traffic on a
-bonded interface can be steered to the wrong slave.
-
-Use sizeof(ip6h->flow_lbl) (the array, 3 bytes) so the whole flow label
-is copied.
-
-Fixes: bd3920eac1331 ("RDMA/core: Add LAG functionality")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Link: https://patch.msgid.link/20260916120926.1761-1-lirongqing@baidu.com
+Fixes: cc8997c94bf3 ("RDMA/irdma: Refactor PBLE functions")
+Signed-off-by: Jacob Moroni <jmoroni@google.com>
+Link: https://patch.msgid.link/20260915170317.2901672-1-jmoroni@google.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/lag.c | 2 +-
+ drivers/infiniband/hw/irdma/pble.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/lag.c b/drivers/infiniband/core/lag.c
-index 8fd80adfe833e..eeae4b0898ee0 100644
---- a/drivers/infiniband/core/lag.c
-+++ b/drivers/infiniband/core/lag.c
-@@ -59,7 +59,7 @@ static struct sk_buff *rdma_build_skb(struct net_device *netdev,
- 		ip6h->version = 6;
- 		ip6h->nexthdr = IPPROTO_UDP;
- 		memcpy(&ip6h->flow_lbl, &ah_attr->grh.flow_label,
--		       sizeof(*ip6h->flow_lbl));
-+		       sizeof(ip6h->flow_lbl));
- 		memcpy(&ip6h->saddr, ah_attr->grh.sgid_attr->gid.raw,
- 		       sizeof(struct in6_addr));
- 		memcpy(&ip6h->daddr, ah_attr->grh.dgid.raw,
+diff --git a/drivers/infiniband/hw/irdma/pble.c b/drivers/infiniband/hw/irdma/pble.c
+index 28dfad7f940c2..14318af97d581 100644
+--- a/drivers/infiniband/hw/irdma/pble.c
++++ b/drivers/infiniband/hw/irdma/pble.c
+@@ -482,7 +482,7 @@ int irdma_get_pble(struct irdma_hmc_pble_rsrc *pble_rsrc,
+ 
+ 		status = get_lvl1_lvl2_pble(pble_rsrc, palloc, lvl);
+ 		/* if level1_only, only go through it once */
+-		if (!status || lvl)
++		if (!status || lvl == PBLE_LEVEL_1)
+ 			break;
+ 	}
+ 
 -- 
 2.53.0
 
