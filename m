@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059422;
-	b=txSfV1fqVDF7vwCDtMzpXBm2QHI771DgHMWk2L1nbQFtRwdqqp0ktKRegHp2aCgspYsD
-	 x8DObt4ePBqEACtdc2neRSiUEianVD5DxYYWqW5AJ0TMcZbkrzi852ff8tRZX2mHxHR96
-	 PTeNjSLA/X3sxu3B+2dXWA1ABcfmTsMl6ZeVtjRfuDra+aDuf7ndC7bvxlop3ojZSE1J0
-	 za+DI2FH7U3USeAK8xLZcelO0vjByan6LUkxS1788CQcFYuRzTBjvU3waTn+zo5MAPozZ
-	 d9GyF+N+uK0q0X+WuKB5EdYoW7CSJCFCFTUc6RtoLJaKaewhQqyLWD1FkRq6XUlm4mw==
+	t=1795059425;
+	b=sHkshK68rCUK0H6dvQ0nXbN7C9woIrp7yfDc8UNqslOiJcGm4xmejDPnW5pUyb0mSHxR
+	 riHQkCQ1pO4hnbGLC03j0WNS2vhv1mwsjKx5sKsu7t9LKeKkcb3jkt/zvQejxaI3Q5nSy
+	 +IfnHyql/OHXPgKH033TIuCs3iZOXIdCJt1Q7oROw8O4V9fYCOYalSviZYSNcAJMZzr1C
+	 6BUOOME8RYiYJHev2xN4Ux5uaLWmIFISI+gM70Ger0vCWd6718BeftdWGnRDVIaVWMFbB
+	 pgfvaxsaZyRPzYtwm2H5pbNZ80RZBJ3qNCmfZ+GXngz9uWmtAGpqXRbJrb6r+DFpNjA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059422;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059425;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Em/WHzX1jzwg3jR5aAlLPi9tuFNKTblUfHG/Fj7AqoA=;
-	b=JchZ2sWHkt0RQlIsue+ASe5RAFyhQ/vbhaEA9mW06hax++CsIKG0KqseoK84cxGii5Rg
-	 QHEGczHYe+Wpfdczkr74CncQiEeW/XqHbSy3BkggOkzIzRta03uQNeA9hb6/3ffDmZriY
-	 SumlUJUs9/PWBwBrPOdXfczhSETj19J2TxvBpt9EPQe34Vvx9dpFzFZ/Ez4lA4WRDnmFh
-	 M5brxYdIZeCyAzw5UCxGb/mJOjsYrXWBF9MWIwx3u9XHvKkWlTopQo0LYcTUyF8xHgVEA
-	 7NNspPVkc9WkSr2HaccED/zaLZ92z5+x3kSfcbPdZHH3Q369wLgVv8kCWsb9yhrY+Pw==
+	bh=pWyQb4ohNDlYcGfBvNhmiqDWAiHpn2MHrwO2aTYPIEY=;
+	b=3p3KtZyuHMozebM20JC0NqdQUnaWbbQOcertkLkVx7JqD1eCgxDhtpsQ7JQEQPl/1IEs
+	 SN8GoBGZc69f+ORc4Pxm/86F9rWnbCgltpx80vDRSf6KexcZpgDTZZjvXysQjf2wUywjg
+	 CFltphzX3LcGp1sbwXM2fB0hRD/NJyXB+pIwADny4HM5J3ltn237BDLaj2LliKh+bdWH8
+	 LwvRbMWFjWaqDDB8gQKM+Wje7924Lle8bDk9HttqhnahZLjbDsTVMEhYK99gs/yMbry1+
+	 O/5Jt/ZdMr+5eO8qHvSvUe89LDcFHU59xFbD+8XxBnzZLgNMQ8/wjo9DAhIzS3yoS+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wT80613d;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s1ICYj2l;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8677D606A32C;
-	Thu, 19 Nov 2026 03:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C074606A326;
+	Thu, 19 Nov 2026 03:37:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wT80613d
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F491F000C4;
-	Thu, 19 Nov 2026 03:37:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s1ICYj2l
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A109C1F000C4;
+	Thu, 19 Nov 2026 03:37:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059422;
-	bh=Em/WHzX1jzwg3jR5aAlLPi9tuFNKTblUfHG/Fj7AqoA=;
+	s=korg; t=1795059425;
+	bh=pWyQb4ohNDlYcGfBvNhmiqDWAiHpn2MHrwO2aTYPIEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wT80613dJJDuDdsUYsQtn1S6va6mIm02iyisscInWPURQ2xGgXgDfTCqcw2xa/PEv
-	 EbMnIvHRwlpJNP/DY3c2sjTX0xRnWmZSJCdLGSf7A5ZPYeHE8fIW41/ZCEQKU2iQR9
-	 iNJLyigOEtxBheWFTl+ZAzaHqWQdtPOqqKeKIDgc=
+	b=s1ICYj2l6rz4EN5jvaVpQW8yMi/gyfm45dA2ymArzZ7GuPrVb8EhJUgYRO73mmfLy
+	 /RJTctyFzYjtWVFrqrFSlFBpI0IloRzypCJrKaoHkP4OUK36RFhZBIqchIEhZO2b8j
+	 9kV2x8K6Q/L3kq2lawjKY4hHxXzj3WSTLxzTB3Ow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Nathan Rebello <nathan.c.rebello.27@dartmouth.edu>,
-	Seungjin Bae <eeodqql09@gmail.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0835/1848] usb: typec: ucsi: ccg: Validate altmode index in GET_CURRENT_CAM response
-Date: Wed, 18 Nov 2026 15:47:53 +0100
-Message-ID: <20261118145951.630476690@linuxfoundation.org>
+Subject: [PATCH 5.10 0800/1848] batman-adv: tt: ignore ROAM flag of received ADD changes
+Date: Wed, 18 Nov 2026 15:47:18 +0100
+Message-ID: <20261118145949.866384291@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,101 +67,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seungjin Bae <eeodqql09@gmail.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit 02ee864e8d2142c5648998944c3306ea6a763c26 ]
+commit c5d68abe6e7f1dbd132a602cb696fe1fff0389eb upstream.
 
-When the PPM reports more than one DisplayPort alternate mode for a
-connector, ucsi_ccg_update_altmodes() merges them into a single entry
-in uc->updated[] and sets uc->has_multiple_dp. In that case,
-ucsi_ccg_update_get_current_cam_cmd() rewrites the response of the
-GET_CURRENT_CAM command. The response is a single byte holding the
-index of the currently active alternate mode, and it is provided by
-the PPM firmware.
+A received TT change (OGM diff or full table response) with the ROAM flag
+but without DEL is handled by batadv_tt_global_add() like a ROAMING_ADV:
 
-The function uses this byte directly as an index into uc->orig[], and
-then uses the linked_idx read from that entry as the translated index
-into uc->updated[]. Both arrays have UCSI_MAX_ALTMODES entries, but
-neither index is checked against that size.
+* a newly created global entry gets BATADV_TT_CLIENT_ROAM and is
+  therefore excluded from the global CRC. The sender has it in its local
+  CRC and the receiver has to request the full table again
+* batadv_tt_global_purge_local() removes the local entry of the
+  receiver. The receiver's own client is considered as roamed to the sender
+  and frames for it are rerouted
 
-If a malicious or buggy PPM reports a value of UCSI_MAX_ALTMODES or
-larger, e.g. 0xFF, uc->orig[cam].linked_idx reads over the end of
-uc->orig[]. The byte read from there is then used as the index for
-writing cam into uc->updated[new_cam].active_idx, so the out-of-bounds
-read is followed by an out-of-bounds write. This happens without any
-userspace action, since the UCSI core issues GET_CURRENT_CAM on its own
-when handling connector changes.
+The ROAM flag only has a meaning together with DEL. Drop it on reception to
+keep it from populating the global table with a temporary ROAMING entry
+which is not part of the CRC - and therefore causing a CRC mismatch.
 
-Fix this by rejecting responses whose index is out of range, printing an
-error and returning -EPROTO, so that the caller cannot accept this.
-Also check linked_idx before using it as an index, so that the write into
-uc->updated[] is always within bounds.
-
-The response is now only processed when the command completed without
-an error. ucsi_sync_control_common() only reads the response when the
-CCI reports command completion, so otherwise the buffer is not filled
-and must not be mistaken for an invalid index.
-
-This bug was found with a Python script that traces where firmware input
-is used.
-
-Fixes: 170a6726d0e2 ("usb: typec: ucsi: add support for separate DP altmode devices")
-Cc: stable <stable@kernel.org>
-Reported-by: Nathan Rebello <nathan.c.rebello.27@dartmouth.edu>
-Assisted-by: LLM
-Signed-off-by: Seungjin Bae <eeodqql09@gmail.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20261003215520.611083-2-eeodqql09@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ sashal: adapted the ucsi_ccg_sync_control() change to ucsi_ccg_read() without CCI status checks ]
+Cc: stable@vger.kernel.org
+Fixes: 068ee6e204e1 ("batman-adv: roaming handling mechanism redesign")
+[ Context ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi_ccg.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ net/batman-adv/translation-table.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi_ccg.c b/drivers/usb/typec/ucsi/ucsi_ccg.c
-index b50933cd4babf..2caef7d02cbb6 100644
---- a/drivers/usb/typec/ucsi/ucsi_ccg.c
-+++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
-@@ -351,14 +351,28 @@ static int ucsi_ccg_init(struct ucsi_ccg *uc)
- 	return -ETIMEDOUT;
- }
- 
--static void ucsi_ccg_update_get_current_cam_cmd(struct ucsi_ccg *uc, u8 *data)
-+static int ucsi_ccg_update_get_current_cam_cmd(struct ucsi_ccg *uc, u8 *data)
+diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
+index 1065003c99dfd..ce36340f97459 100644
+--- a/net/batman-adv/translation-table.c
++++ b/net/batman-adv/translation-table.c
+@@ -3572,20 +3572,29 @@ static void _batadv_tt_update_changes(struct batadv_priv *bat_priv,
  {
- 	u8 cam, new_cam;
+ 	int i;
+ 	int roams;
++	u8 flags;
  
- 	cam = data[0];
-+	if (cam >= UCSI_MAX_ALTMODES) {
-+		dev_err(uc->dev, "PPM returned invalid alternate mode index %u\n",
-+			cam);
-+		return -EPROTO;
-+	}
+ 	for (i = 0; i < tt_num_changes; i++) {
+-		if ((tt_change + i)->flags & BATADV_TT_CLIENT_DEL) {
+-			roams = (tt_change + i)->flags & BATADV_TT_CLIENT_ROAM;
++		flags = (tt_change + i)->flags;
 +
- 	new_cam = uc->orig[cam].linked_idx;
-+	if (new_cam >= UCSI_MAX_ALTMODES) {
-+		dev_err(uc->dev, "invalid linked alternate mode index %u for %u\n",
-+			new_cam, cam);
-+		return -EPROTO;
-+	}
++		if (flags & BATADV_TT_CLIENT_DEL) {
++			roams = flags & BATADV_TT_CLIENT_ROAM;
+ 			batadv_tt_global_del(bat_priv, orig_node,
+ 					     (tt_change + i)->addr,
+ 					     ntohs((tt_change + i)->vid),
+ 					     "tt removed by changes",
+ 					     roams);
+ 		} else {
++			/* an announced client cannot have roamed away from
++			 * orig_node. Only a ROAMING_ADV is allowed to add a
++			 * global entry with the ROAM flag
++			 */
++			flags &= ~BATADV_TT_CLIENT_ROAM;
 +
- 	uc->updated[new_cam].active_idx = cam;
- 	data[0] = new_cam;
-+
-+	return 0;
- }
- 
- static bool ucsi_ccg_update_altmodes(struct ucsi *ucsi,
-@@ -541,7 +555,7 @@ static int ucsi_ccg_read(struct ucsi *ucsi, unsigned int offset,
- 	switch (UCSI_COMMAND(uc->last_cmd_sent)) {
- 	case UCSI_GET_CURRENT_CAM:
- 		if (uc->has_multiple_dp)
--			ucsi_ccg_update_get_current_cam_cmd(uc, (u8 *)val);
-+			ret = ucsi_ccg_update_get_current_cam_cmd(uc, (u8 *)val);
- 		break;
- 	case UCSI_GET_ALTERNATE_MODES:
- 		if (UCSI_ALTMODE_RECIPIENT(uc->last_cmd_sent) ==
+ 			if (!batadv_tt_global_add(bat_priv, orig_node,
+ 						  (tt_change + i)->addr,
+ 						  ntohs((tt_change + i)->vid),
+-						  (tt_change + i)->flags, ttvn))
++						  flags, ttvn))
+ 				/* In case of problem while storing a
+ 				 * global_entry, we stop the updating
+ 				 * procedure without committing the
 -- 
 2.53.0
 
