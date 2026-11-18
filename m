@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060326;
-	b=41Qh1LHFhAmoZMCxawht3kvWM60PF68VppcDaCjo0EZ5I3v5alyYFOkzhfl1eN87yqBT
-	 36yvmCs9NO74BCTjD7jFLmJj5Bst0kAqyF12T8tt84L4ewe9xzAIJrd3BAMB2tYIJxlkH
-	 M3PMhB5lWIhs6Dqa/Ttd2HuITEsZoZiAdpoO4Hzux5jTuayDsZbRmYpdPxvyPRr4Qr1J5
-	 tDcVWrIbuWuDn+VLE80aEOZyXViMO3vRgiUFGKSgbvoSzkUyOUdg+bj2O10WLDfj1OyZX
-	 shG1s6/tjp16mm4joyDTdavLcQWx8qynWBsVq8ZmehJ7tT65oAbwa5yyVVN43x/F2Rg==
+	t=1795060329;
+	b=PJp8tYg34NjTfK2QKBkEk13+U7xFlxPKVSqG+qA9c1i+ofhZRWgcEXOhpGx2HDVyIscQ
+	 T8AQsDGMHw0XeIDYJrSfnqMpf7OkCJ+ptpUuRbjiBUZ/GN2lyqHxV8841S189EwxSGTcN
+	 8At13v/7EAGwkEs3sNSINJdAQc68FL2cDBgvTcruVXRfGxImqttnvxxnP+Pooy7heCQGW
+	 GtkVm8vDJ5UcHSm9ShgQX1D+oHdrVIZMU/LS0LjUTjOrAX5fGikzTCAFzDQRU0Yd+5VJd
+	 QXLOGbh2LDpxdG6JUsn6S/tJ9j9Wx6JE8js9TXctmM9nVCq9jeIB+esnhgJBH8MV/LQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060326;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060329;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dtdw1d8HTrit7G/vP1qLSeHYyEAYB7vxURawc28PCk8=;
-	b=jwuXCb3akVvOlGuO2uTiyl8ShJmrpomhCYWeWU+wrAEjjqGxOS6PAFlsyiddeLU6Xg0M
-	 0rMycTZGlORKfrSq8tTkmo15sUQRoKjHdsWfi/iGYgcRYl14EHS3B6Nm0/7Eya5Q+McGQ
-	 B+ojeLfpwDD1oFWAfli3DOaIzyXFnwF5oqGgOAlqcXDlnKCVWe6dKSMK1jv/i7XRW6DDH
-	 qIsixbyy7ycBAGqXfyGZc+cP+RHg74gkA8TZXqLBg2ixopfU+cgBu74mCWM+D8iZa/1cI
-	 pVuYfjcACTIAkowQkskOlV3EXXQEGJ46NW3hLsGbAq8Q1K1tO04GynM3olCvcKdfmEw==
+	bh=bHhg8eeU2FPAUWsyxEryZIY3AqDcFcz+toYI3nTIBVU=;
+	b=OW4zHJAZVCGI5nixjABG+TR7oRqO5Z3Q/QrJIDH7oC7NXZraImfwnBhTcnPpO9i2Qu8S
+	 ZktNazaq4wT3I6LvB0lHK4tJ0RaAX8UEoN72aeVErfHNVtA4/tZMe0uFc6BiV7aXkKoMQ
+	 xmNMpHekHXr5ONDASn+NOY5n3FKWIp2IuzJC8SJv1XbqssTvL+xvIOGsegO6wc2ahEcvW
+	 ab/7b/izo0ljTKyes2HRLlqtQHqWZAzd4F7edcgCH/8GCPzJPIZzr2xUTlrUoUnyXNs2d
+	 i6CJMfEAnCo7+7MZAQXXI1xl1/HIAV0FV4xhwGy2+JQ21LE14Qug63dL0RQxK4GKKgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CWsVpQbC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gGfjYzYb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1928606A325;
-	Thu, 19 Nov 2026 03:52:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78613606A320;
+	Thu, 19 Nov 2026 03:52:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CWsVpQbC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F111F000C4;
-	Thu, 19 Nov 2026 03:52:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gGfjYzYb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8A881F000C4;
+	Thu, 19 Nov 2026 03:52:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060326;
-	bh=dtdw1d8HTrit7G/vP1qLSeHYyEAYB7vxURawc28PCk8=;
+	s=korg; t=1795060329;
+	bh=bHhg8eeU2FPAUWsyxEryZIY3AqDcFcz+toYI3nTIBVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CWsVpQbCVl8kdnFYcYjqvWZonEn+KS3ggYPGSB9wHeFq5YSlGqduPCBCgQutnbiBD
-	 5cLlRxkfllug4gi3O6JzofZt9N/MP9IIdpRWdmO6b5Dkg1obwwotksPVe9pEgr3NW/
-	 t37g57pCVcYZtQ106VciS44VMoHmhTpP16aVaPHE=
+	b=gGfjYzYb9OqbfNUfmcWbxTC35fXRuSI0lB/7zxGUY8pSXh/p3382YMYNI/Ocisalr
+	 lbZp2VTd1V1K/IP/uX/ljHC84eQXHuq8QTBh6hRqxr0ys0+nO+EnAalRPlGaJO1PQZ
+	 QYeobviLq+AGwPk/B/R+72cKPNkjErm58HlMJq6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Boyd <sboyd@kernel.org>,
-	"Miquel Raynal (Schneider Electric)" <miquel.raynal@bootlin.com>,
-	Brian Masney <bmasney@redhat.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Paul Dolan <paul.dolan.dev@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1160/1848] clk: Use the generic OF phandle parsing in only one place
-Date: Wed, 18 Nov 2026 15:53:18 +0100
-Message-ID: <20261118150008.255829758@linuxfoundation.org>
+Subject: [PATCH 5.10 1161/1848] selftests/clone3: tighten CLONE_CLEAR_SIGHAND conflict test
+Date: Wed, 18 Nov 2026 15:53:19 +0100
+Message-ID: <20261118150008.292380407@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,57 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal (Schneider Electric) <miquel.raynal@bootlin.com>
+From: Paul Dolan <paul.dolan.dev@gmail.com>
 
-[ Upstream commit 57d728b4ab15a8af890013bb0f302e7733f7c1c6 ]
+[ Upstream commit aeebb4884f0e8feb9929f013067488b7f2081f33 ]
 
-Ideally, there should be one single entry in the OF world. This way, the
-DT parsing logic is always identical. At this stage, we call
-of_parse_phandle_with_args() in:
-- of_parse_clkspec()
-- of_clk_get_parent_name()
-which kinds of defeats the above statement. Furthermore, when this call
-is done from of_clk_get_parent_name(), we fail to parse the
-'clock-ranges' property.
+The CLONE_CLEAR_SIGHAND test intends to verify that
+CLONE_CLEAR_SIGHAND and CLONE_SIGHAND are mutually exclusive. However,
+CLONE_SIGHAND without CLONE_VM is independently invalid, so the test
+input has another reason to fail with EINVAL.
 
-Make sure DT world is entered only once by calling of_parse_clkspec()
-from of_clk_get_parent_name(). Doing so implies that we do not try the
-"clock-ranges" path if we already found a "clocks" property.
+Add CLONE_VM so that CLONE_SIGHAND is otherwise valid, and require
+clone3() to fail with EINVAL. This ensures the test exercises the
+intended flag conflict and does not accept an unrelated failure.
 
-Suggested-by: Stephen Boyd <sboyd@kernel.org>
-Fixes: 4472287a3b2f5 ("clk: Introduce of_clk_get_hw_from_clkspec()")
-Signed-off-by: Miquel Raynal (Schneider Electric) <miquel.raynal@bootlin.com>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+Fixes: de5287235631 ("tests: test CLONE_CLEAR_SIGHAND")
+Signed-off-by: Paul Dolan <paul.dolan.dev@gmail.com>
+Link: https://patch.msgid.link/20260902174939.15135-1-paul.dolan.dev@gmail.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tools/testing/selftests/clone3/clone3_clear_sighand.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-index 950dfa059a209..4f380c40db30a 100644
---- a/drivers/clk/clk.c
-+++ b/drivers/clk/clk.c
-@@ -4825,6 +4825,8 @@ static int of_parse_clkspec(const struct device_node *np, int index,
- 		 * has a "clock-ranges" property, then we can try one of its
- 		 * clocks.
- 		 */
-+		if (of_property_present(np, "clocks"))
-+			break;
- 		np = np->parent;
- 		if (np && !of_get_property(np, "clock-ranges", NULL))
- 			break;
-@@ -4970,8 +4972,7 @@ const char *of_clk_get_parent_name(const struct device_node *np, int index)
- 	int count;
- 	struct clk *clk;
+diff --git a/tools/testing/selftests/clone3/clone3_clear_sighand.c b/tools/testing/selftests/clone3/clone3_clear_sighand.c
+index 47a8c0fc3676b..dca5f617beb24 100644
+--- a/tools/testing/selftests/clone3/clone3_clear_sighand.c
++++ b/tools/testing/selftests/clone3/clone3_clear_sighand.c
+@@ -54,12 +54,12 @@ static void test_clone3_clear_sighand(void)
+ 	 * Check that CLONE_CLEAR_SIGHAND and CLONE_SIGHAND are mutually
+ 	 * exclusive.
+ 	 */
+-	args.flags |= CLONE_CLEAR_SIGHAND | CLONE_SIGHAND;
++	args.flags |= CLONE_VM | CLONE_CLEAR_SIGHAND | CLONE_SIGHAND;
+ 	args.exit_signal = SIGCHLD;
+ 	pid = sys_clone3(&args, sizeof(args));
+-	if (pid > 0)
++	if (pid != -1 || errno != EINVAL)
+ 		ksft_exit_fail_msg(
+-			"clone3(CLONE_CLEAR_SIGHAND | CLONE_SIGHAND) succeeded\n");
++			"clone3(CLONE_CLEAR_SIGHAND | CLONE_SIGHAND) did not fail with EINVAL\n");
  
--	rc = of_parse_phandle_with_args(np, "clocks", "#clock-cells", index,
--					&clkspec);
-+	rc = of_parse_clkspec(np, index, NULL, &clkspec);
- 	if (rc)
- 		return NULL;
- 
+ 	act.sa_handler = nop_handler;
+ 	ret = sigemptyset(&act.sa_mask);
 -- 
 2.53.0
 
