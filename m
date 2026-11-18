@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031736;
-	b=wr+2N3tCysgF5V5OjAfayz2yfZVwakeBxTF88GKm8W7XBsHg0LaDgmWE+FOkUYTPAliM
-	 gxftt2JTlDSUWofNeoUETP3ixhk8t2YTRY+Q14LIthV+m2WF4F+eUWZUFWe1Lymhb2WV1
-	 1nNkYPoipQp0W7r5T5khtjlK6teaAYaLy3V/hpKFBOo7N3e8A6Gz9Cg8sCUFhwenO77Z2
-	 s9lupJQoGTbe1rY9mmf16hNyaH/PmuoQhuARBPv+zglCjnARbi7h60ir8WhSrFUMtEGB/
-	 3o/ybpg25k3rTkRGhY6iLcEoryIv6gIC9/XrET9ocjx8f+cica6Ouya1M+tPAs8vMMQ==
+	t=1795031739;
+	b=H3AulNuSQ9QQ+NTYT9Eoc0WeOA68S347y3qt9F4qSrfclQZRr2F8wA8baPm0s5vSYaS7
+	 2dZqGzLOKVSSs1JWNr4UVJI378ZK4/kCEyl2Q5RDtZtClGLbLwWk/0j9MrMtXkaVh3eKU
+	 SGgCpoWOaIU0oL/A8OXryRW+1/IBoIWAmoSd0IVsIfsu2SVTh0j2oE8ik9On1R7cYsumO
+	 9JFEC+/LwiQHxnM5wRz6JOhH8/71VyLJLMw9YwkGu3ounqFvkeZAqVqid3jV2r0lsTHHj
+	 +HDbj7bzQLoc/mABEOc22HltpaB4RruazAJdyHd9K1XqKDFquVbMQ+Z5F77U7dwZ1/Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031736;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031739;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xTxeNL060ajK/kP35KUIJygypLpJtmp/l0v5JSe9850=;
-	b=uNtjwEfLZrIf55DEJ57EucspDYRuRIK2AYEpbr8wJqSpGWpfaKMx75zzLA1m9XQNRai4
-	 VLPJQazUJjnNxgbJT+ZBYiOzE8veOk4DKZL676IxKsyQyrI4QvLtsmsb3hAigdBkFwMK/
-	 G8JL8+8kihs1w0FKqQiiOgvL3i2k0mWeLjg2cZH54qnwXKJQW3QT2eLtNAnRY+OARAnmt
-	 1uldo9f51tDl07TIJo6EruqL6rS1Z+oisT8YoNfBze/BqCFb+uqrpGOhRIKfrNwkLixIH
-	 3nH3dRlnXvXf3lIbldHaJVd5DMrbctTKJPboZBTinCQgALF7IktUB+ca6pXoJ7dAmkQ==
+	bh=kN0Tc9eJLQKh6LWCYJPa4PXzqhh7PZFP3XfR/pLEubk=;
+	b=x/oUA1nw4mWzZmC0l8im7+8dQH7ouGxDZ7SjFqOj62MuqhreIxIlBI+f2BMk2emHYE6W
+	 7hLF9AJqqUXzRB3ESwoaSk5bfOplRH7oWKCqmFyZjxku0lDp90pp9UNHBfyiTYhR0MKE0
+	 6jDiI8Qzw1HIFyFY6jrqzafmJCWwQrG3PWFlZzjsP621lkZsy/n02QS5YWdwRZ8YrchAW
+	 sjwig39GcRVbnIDhFR1UeqA/G430VfBjh1b9KT7rPFmyjNiz5Ll8dXGF6zzflfrhhiF/C
+	 RhjVSmcOG1UT/0tRKeE8hdS0Aam8vQeCCPSF8GSP2YsPsPTIzoUjY04e5uM+elIi/aQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FefAT9MH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ahp8wKS1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EDBF606A31C;
-	Wed, 18 Nov 2026 19:55:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3286606A320;
+	Wed, 18 Nov 2026 19:55:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FefAT9MH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ABEC1F000C4;
-	Wed, 18 Nov 2026 19:55:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ahp8wKS1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5459C1F000C4;
+	Wed, 18 Nov 2026 19:55:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031736;
-	bh=xTxeNL060ajK/kP35KUIJygypLpJtmp/l0v5JSe9850=;
+	s=korg; t=1795031738;
+	bh=kN0Tc9eJLQKh6LWCYJPa4PXzqhh7PZFP3XfR/pLEubk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FefAT9MH85LEojj9OvMmkDqiQJUeVZTfLtCoUOZfeGbe0DzJBjrZIGJqi+S+m8nTH
-	 S5VS8Q88PNUkiCCax6Qhdg6wZFCyXlMiQTebcRd3e63L0U68CLd8JDkvfQP5FzP+O3
-	 93HT2QzdfG/maiHreVTt/4AqjqaXPpVbiRsAAm98=
+	b=Ahp8wKS1ro/wEdDUaAPMoxHAjqV+wLPsMuJlGVVIAR3hjCWvCJyCLjNQt8syc6agd
+	 tqobr9x3de7J32uX8x+MfIZfu+WakfxPXRTLK5NETkjuvDVtioksT33aYYYExC4rsx
+	 meqauP6IG0XmTJmQl/iqpubnih2X1OPhuM4HK4MI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Sung Byeongchan <tjdqudcks0424@naver.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1164/1756] ASoC: atmel-i2s: use optional API for gclk
-Date: Wed, 18 Nov 2026 15:54:51 +0100
-Message-ID: <20261118150056.329346369@linuxfoundation.org>
+Subject: [PATCH 6.12 1147/1756] nvmet-auth: reject undersized AUTH_SEND payloads
+Date: Wed, 18 Nov 2026 15:54:34 +0100
+Message-ID: <20261118150055.701839245@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,48 +69,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Sung Byeongchan <tjdqudcks0424@naver.com>
 
-[ Upstream commit b431a055fb7688c0d3725fa3c55aeef852991178 ]
+[ Upstream commit c9359401036e8294c007a10e8c8d8da7030fcc76 ]
 
-The gclk is an optional clock according to the device tree binding.
+nvmet_execute_auth_send() allocates and copies the initiator-supplied
+transfer length, then reads auth_type and auth_id through a common DHCHAP
+message pointer.  The existing zero and transfer-length checks do not
+ensure that both common-header bytes are present.
 
-Use devm_clk_get_optional() to handle the optional gclk directly.
+An unauthenticated NVMe/TCP initiator can complete ICReq and admin CONNECT,
+then send AUTH_SEND with tl equal to one.  KASAN reports a one-byte slab
+out-of-bounds read when auth_id is loaded.
 
-Unlike the existing code, errors other than -EPROBE_DEFER are now
-returned instead of being silently ignored.
+Reject payloads that do not cover the common auth_type/auth_id header
+before allocating or parsing them.  The one-byte trigger and
+header-minus-one boundary were cleanly rejected in three fixed fresh-boot
+runs.  Exact-header, valid DHCHAP, wrong-type, mismatch, and zero-length
+controls remained clean, and a following valid AUTH_SEND on the same
+connection received a response.  The touched source is unchanged at
+0c2669a9f4a1d607e7591ae50ccf3c432a0aff08, where the patch applies and
+builds cleanly.
 
-Fixes: 73ad0df57290 ("ASoC: atmel-i2s: Remove unnecessary audio PLL clock (aclk)")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20261002043856.97295-4-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The demonstrated impact is unauthenticated pre-authentication target-kernel
+denial of service.  No disclosure, controlled write, RCE, or LPE was
+demonstrated.  The source reproducer and complete logs are available on
+request and are not included in this public report.
+
+OpenAI Codex assisted source inspection, test design, patch drafting, and
+evidence organization.
+
+Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
+Assisted-by: LLM
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Sung Byeongchan <tjdqudcks0424@naver.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/atmel/atmel-i2s.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ drivers/nvme/target/fabrics-cmd-auth.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/soc/atmel/atmel-i2s.c b/sound/soc/atmel/atmel-i2s.c
-index 3135445805ecf..eb219223ece20 100644
---- a/sound/soc/atmel/atmel-i2s.c
-+++ b/sound/soc/atmel/atmel-i2s.c
-@@ -666,13 +666,10 @@ static int atmel_i2s_probe(struct platform_device *pdev)
+diff --git a/drivers/nvme/target/fabrics-cmd-auth.c b/drivers/nvme/target/fabrics-cmd-auth.c
+index cfd1fc6032593..0569f0e120c75 100644
+--- a/drivers/nvme/target/fabrics-cmd-auth.c
++++ b/drivers/nvme/target/fabrics-cmd-auth.c
+@@ -256,6 +256,12 @@ void nvmet_execute_auth_send(struct nvmet_req *req)
+ 		nvmet_check_transfer_len(req, tl);
+ 		return;
  	}
++	if (tl < offsetof(struct nvmf_auth_dhchap_success2_data, rsvd1)) {
++		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
++		req->error_loc =
++			offsetof(struct nvmf_auth_send_command, tl);
++		goto done;
++	}
  
- 	/* Get audio clock to generate the I2S Master Clock (I2S_MCK) */
--	dev->gclk = devm_clk_get(&pdev->dev, "gclk");
--	if (IS_ERR(dev->gclk)) {
--		if (PTR_ERR(dev->gclk) == -EPROBE_DEFER)
--			return -EPROBE_DEFER;
--		/* Master Mode not supported */
--		dev->gclk = NULL;
--	}
-+	dev->gclk = devm_clk_get_optional(&pdev->dev, "gclk");
-+	if (IS_ERR(dev->gclk))
-+		return PTR_ERR(dev->gclk);
-+
- 	dev->dev = &pdev->dev;
- 	dev->regmap = regmap;
- 	platform_set_drvdata(pdev, dev);
+ 	d = kmalloc(tl, GFP_KERNEL);
+ 	if (!d) {
 -- 
 2.53.0
 
