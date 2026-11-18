@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018443;
-	b=Z80DfxpG/N7+ZKpEVT26A5U98QLzaHhEvUqi/6HIe0WJm98m5Usom/Gind8mNopd9U66
-	 QyFmNsvazHC0rdCAz0wwhKgHbcHgrI2lcbkzvx0fkuycTHMivNhZf+Nj0o42UfOsa8oiJ
-	 g9d+YdiLCQIG2zuF5IvgKAqTqpv8oszWMERHAvdlCwLka34rbgWj7C+luXOMF59HN+utt
-	 txozPl1eVgcE76JWGucNKJ4JYMlDxaTGtK/VibP5eW1CvGckQBhK2fNayOhjmS7MnhbW+
-	 fDoe6Gi1p1jvPN5nlIduCylHmp1QgxDgUFGyvxKHq6FMOSNrm+7Q6dJ8sibCiW5pIQA==
+	t=1795018446;
+	b=H79mf397rXkTBQeONR6Ypvdr19ksDRSELsYw1Lc1HgI7+oZPH1guP6JKQNf/92IMoLOX
+	 0vse46PK9eOaY2a295ZJB+dWjh4e9qwTYlJD+OeS9CmhLGy/hoj6GLA2xQES4ZHoqA5AW
+	 WsIYKHWk4nNcgBZ/gRta2NYWqyvdVpPyO7Jzp94u6aP6Y7k7FtwT9gsbSerK8CrG/Z7Fv
+	 gF9UCIC4xGrVpYP7rcfRgqNV+sqpk/CwYEN3AP8eb9mH6RFOny5T5mXxaxhrUTkSzvjW9
+	 UckA+X1p/sUZen4o+afixaKs5inKLbr6XqHc0pYTf52zFjIC0TZ9jKJYc+R5C0e4ehQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018443;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018446;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=odw6Fws0YUOoseq0nE3CdrE/OQAlWozmnlYBEhnHzG0=;
-	b=PNTk2V0neOr9aYBAMJqfXv6eZntozMtuAvmCHonyeH4GgRstGF1vhJXdn2Ur0jLQrw55
-	 0LD6FpxqMEdf+zYod93lorN409JG5JjPh1BVaM8oHmWpr9rr58CMRYYUY7DGLXqV2toR8
-	 GJeZBpIXH6N/EtXRSZ3WO+N4Jz+dQfMDanjwTfX5qIB0UvieF1Ld/ZPGMqjFJ3VG07XnK
-	 pka5P8yJxEqSlB1bzmLJpH//bijfSpHRmNFlT04H35Sc98UN0M6uiVdwMctShN+7UI6Em
-	 rZz61QW9QsSoEDY5bLSiqubZvVqzd52yaBxkHNTkTrybmZrZ6NgOfQyXJU1rsAB09KQ==
+	bh=nO/LryqYYo2VwoZiFP4RaAWR8x6ze2Yog3/ornGxPjU=;
+	b=yRCJ6kIZqA+i8gru2lzQ841xn2MOUnXUxzW7MdtpNsH+Rqp/nOHzTpgzdO6+zcolMlZS
+	 KB1GhjwRBkwCf7a29LrN6TMI8pLN2iRuxk9i/O4Qs6iN55p6JtIIjRcMOORGSXJObfKiV
+	 Mld2fi0m0bCrPJlXW1NeBkmhV4beo3ObleYAaKy87AQIt7w5PeGjiIvzFhOnkEQaLQ5rO
+	 Ubs7P8GmmyZ+w7vYzyIbswf10QxR4MepV7/k1OkXvoipgn84G9/kZv/Cd+U0wGRo1HIAf
+	 QPcb9a7jOQ6eLYtLV56YpGXzTn5gIxBRNfvbrVxotG1MevohHGU5ztLvvFDCskF+PvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="k/xs0ieF";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wMJog231;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4F69606A320;
-	Wed, 18 Nov 2026 16:14:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2544606A320;
+	Wed, 18 Nov 2026 16:14:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k/xs0ieF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F21F61F000C4;
-	Wed, 18 Nov 2026 16:14:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wMJog231
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF9341F000C4;
+	Wed, 18 Nov 2026 16:14:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018443;
-	bh=odw6Fws0YUOoseq0nE3CdrE/OQAlWozmnlYBEhnHzG0=;
+	s=korg; t=1795018446;
+	bh=nO/LryqYYo2VwoZiFP4RaAWR8x6ze2Yog3/ornGxPjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k/xs0ieFDE+XaHDm1S9HN4VfHOWE8Gmc8QCQ4EmeXJXSIYHu77gGD6wI3ZnG4uP70
-	 HwVbnBBPHx6j7a8gDm8aJMKG/iJw0n1D+mpnHVFUl5+J6xLYtVMJzzVAMFprF19yAY
-	 1dVrWxt60SFYqTq4UPzno1XoR/DyqdjtR1CTMk0Y=
+	b=wMJog231jOADc2YkaJu74Dkt/Sr68lQxMAEyNs6z0cVQtmMS6ErZpLs6GKJn0KEr+
+	 x2LhS0u2xn5l+z7/lWj+fNegpemZ62679BRoyBTZdhIT1lQo2syoFpJaFhy0qYIj/W
+	 pAwBMk7u7aMwDn8wmxm9G0Q0L+2hp7jnyxiiKV38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Sang-Hoon Choi <csh0052@gmail.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1242/2651] phy: rockchip: samsung-hdptx: Handle PHY config after module reload
-Date: Wed, 18 Nov 2026 15:41:22 +0100
-Message-ID: <20261118150332.712465747@linuxfoundation.org>
+Subject: [PATCH 7.3 1243/2651] md/raid5: protect big_stripe_tree lookup with RCU
+Date: Wed, 18 Nov 2026 15:41:23 +0100
+Message-ID: <20261118150332.745281060@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,57 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Sang-Hoon Choi <csh0052@gmail.com>
 
-[ Upstream commit a673b3d18e37e573d52bf41c47e75d46982f2fae ]
+[ Upstream commit 73b0df929494522acf9ccc8dafea4f721166965b ]
 
-The pll_config_dirty mechanism introduced in commit aec3e4ce25da ("phy:
-rockchip: samsung-hdptx: Handle uncommitted PHY config changes")
-invalidates the clock rate in determine_rate() by resetting req->rate to
-zero, ensuring CCF will invoke set_rate() to program pending PLL
-configuration changes into hardware.
+big_stripe_tree is updated under tree_lock, and deleted radix-tree
+nodes are freed after an RCU grace period.  r5c_big_stripe_cached()
+used to run under an RCU read-side critical section, but that protection
+was removed together with unrelated rdev lookup protection.
 
-However, after a module reload cycle the PHY PLL clock gets
-re-registered with CCF, which causes the framework's cached rate to also
-be zero.  Setting req->rate to zero then has no effect, since CCF sees
-no difference between the requested and current rates and skips calling
-set_rate(), leaving the PLL unconfigured.
+The lookup can now be preempted while walking the tree, allowing a
+concurrent deletion and grace period to complete before the walk
+resumes.  Protect the lookup locally with rcu_read_lock().  Only the
+presence of the entry is used after unlocking.
 
-Address this by first computing the actual target rate from the HDMI
-link configuration, and only then invalidating it when it matches the
-CCF cached rate.
-
-Fixes: aec3e4ce25da ("phy: rockchip: samsung-hdptx: Handle uncommitted PHY config changes")
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://patch.msgid.link/20260901-hdptx-ffe-v2-2-3a5922c76fc5@collabora.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: ad8606702f26 ("md/raid5: remove rcu protection to access rdev from conf")
+Assisted-by: LLM
+Signed-off-by: Sang-Hoon Choi <csh0052@gmail.com>
+Link: https://patch.msgid.link/179070265341.12871.12495446593114993799.idr-bug-88@gmail.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/md/raid5-cache.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
-index 24ed0d7eb6f8d..b03042ec9a847 100644
---- a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
-+++ b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
-@@ -2346,14 +2346,16 @@ static int rk_hdptx_phy_clk_determine_rate(struct clk_hw *hw,
- 	 * to ensure rk_hdptx_phy_clk_set_rate() will be always invoked.
- 	 * Otherwise, restrict the rate according to the PHY link setup.
- 	 */
--	if (hdptx->pll_config_dirty)
--		req->rate = 0;
--	else if (hdptx->hdmi_cfg.mode == PHY_HDMI_MODE_FRL)
-+
-+	if (hdptx->hdmi_cfg.mode == PHY_HDMI_MODE_FRL)
- 		req->rate = hdptx->hdmi_cfg.rate;
- 	else
- 		req->rate = DIV_ROUND_CLOSEST_ULL(hdptx->hdmi_cfg.rate * 8,
- 						  hdptx->hdmi_cfg.bpc);
+diff --git a/drivers/md/raid5-cache.c b/drivers/md/raid5-cache.c
+index 2600cb5ac393a..7d5427f063f27 100644
+--- a/drivers/md/raid5-cache.c
++++ b/drivers/md/raid5-cache.c
+@@ -2970,7 +2970,9 @@ bool r5c_big_stripe_cached(struct r5conf *conf, sector_t sect)
+ 		return false;
  
-+	if (hdptx->pll_config_dirty && req->rate == clk_hw_get_rate(hw))
-+		req->rate = 0;
-+
- 	return 0;
+ 	tree_index = r5c_tree_index(conf, sect);
++	rcu_read_lock();
+ 	slot = radix_tree_lookup(&log->big_stripe_tree, tree_index);
++	rcu_read_unlock();
+ 	return slot != NULL;
  }
  
 -- 
