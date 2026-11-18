@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024701;
-	b=hT2UWb14C1lGJFFQO7g6TAaqj5F3hMAbWyL8/MvQRup5hGSY6v8jy1Y6lKYuX9AX8GcK
-	 YCkvNkXEnwZLsfwBGYvk6mUU4cWs11qcyQiYwkezeu6+dD8GyaDoM5lB74wfcP267Z6bb
-	 00EqRsGSEMRcvk1FvBhUlBW71m92qrwiOOVooUcg/di4cCkOuf6rOF0qJHEXouNIKmC9M
-	 4GMgR9R+5L6UHkioJ9X2rqx5mUfcj7BeqAtSxu0+DbYcvFNyMcrG+/SRj9TcYtVQCMzfZ
-	 2nP9m/YQ2EXu1tg314oYQsTlOo/QN11XFyLoNSHznwP9XxIpTLVhQaUCXnKIErGPZiQ==
+	t=1795024704;
+	b=PTckxrcIz6gqFdrsKz+mJtEttHumyd7B9pGT+M0ZJ9wRrpjE7uGL9hasJke2E1jK6cT3
+	 iyvjavYPjw21mG2xzGOxRTDwRJWuThyiP+OZ6ldgHAnVuXWaSlim6fjj8m0bTDvj/HNNy
+	 0Nc1hP0FKii0gn1eUejlCYjZ14NsbQ5b3mZjmHgLLbv/eF5gvOHnuEthqV2XW4IrRbDSy
+	 oPC3yV78gK3SasRPrQFEiTwO2opWiEuPDPKu49oYRT6rCWipdRP2dieSya7nsxbvINtZ+
+	 mqMrI0CAoD/eas30qoSedtmNUPGW1DUA9NLxxwnqykuPfKnSEMZcBqd0JaDIDxJ/r/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024701;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024704;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+OJv0gCvhKVwm8uBiCHbg5/IppyFkMK2OATr3URtFvE=;
-	b=0QXXHyRKU6O0L+AX2P1T6clW7/eBNICGCptv3ZniwJERWenUX40OC8O3QTIaG1+4pc51
-	 GNZacZst7vJ3/2gFqFlG9r7G/xKtW1ZZ0h0Y5kXxOlYWDjLC+UKzrrfuC2UNZI5mujm11
-	 pmlFvW3Msy/hf84DJEyy1ScqcUGh1ZHPWlWkQgxQAYQUlm/D8hJno1UiSy+DuCNlnh7Fr
-	 QNYNE6jV13FUX4patx8zo9/cp/HVoIITKl1YckJZlPBA+s0SnUnpNJAQJv3L1NLKBKT5A
-	 /dOnB+1qKwTjR9tPmVsQ6J5p5O5F6JFLUxV+HU0pk4PtbjKdFESLD2ilZNwO3alDl5A==
+	bh=3arII3tyVVgf4UoealH+zS1PZPCvzrKevTHNb2DDGHQ=;
+	b=HKjayrkrCwlog9osfkM0EK+46gTRyzwOGPklwUZ1JMrggYXOKmLjrfHMhBZpDSs1qC1c
+	 pgY7vGqNm7EZFvus8wDKiF7Stnh5NG9OMKgf5LOkT05ashcipW4W3fnRvZmgDBQsNy+0c
+	 MgP72ZF1rjv6nGIj9Z/tLfirmk7AfFAWw3xDCOWo1lAq1dkR/D8bkl2QQkBRvfM3jljDa
+	 bhCLBzFompJ6rqwF+crvKM8p2JXSN3KfufDt1a1OZJmXqUs8lgrAREWi6mlyY/xZ7P3bJ
+	 x03my39p/nWeSTtKHkjuxqH3ecUYNTm5k7BUAAfzyQhMM8j/0zRK+gT2IrgB6r/nXHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jLLCHXQx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nZ+mIFJa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6552606A331;
-	Wed, 18 Nov 2026 17:58:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D72606A325;
+	Wed, 18 Nov 2026 17:58:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jLLCHXQx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 082CE1F000CA;
-	Wed, 18 Nov 2026 17:58:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nZ+mIFJa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEC6A1F000C4;
+	Wed, 18 Nov 2026 17:58:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024701;
-	bh=+OJv0gCvhKVwm8uBiCHbg5/IppyFkMK2OATr3URtFvE=;
+	s=korg; t=1795024704;
+	bh=3arII3tyVVgf4UoealH+zS1PZPCvzrKevTHNb2DDGHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jLLCHXQxBUvWPlCrGkG+MMhHvPTeD5mnUEOZs2AwZYw0Gnwn/H5mLaYWOjzFf/gid
-	 dA/W+enZGbySsc+c1hNfURNBOTFjl0v/Ix5LBnWwxtNYB6MPzqYtmyqKdE5PxAg0A4
-	 bupD87dfBGFuRyZYbxWSPSxV1tW+LoTRmMefzIyc=
+	b=nZ+mIFJahdCgD8gTf5RE6oIORoFPPkJa/oWOBRKRBuYShMjelmqcxtqNyZD03cA7L
+	 wEJggwVsBbeVsX50qFElEUe7Vpl5I1H7NKJn0DcCYwb96hyF09dqTAV5Ay13zX+VV9
+	 yqZcgWXoUHBAB5s4xlLt3NFcUXz9hCtNfRez1yQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niko Huuskonen <niko.huuskonen.00@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0817/2151] ALSA: caiaq: Fix the Kore controller key map
-Date: Wed, 18 Nov 2026 15:42:32 +0100
-Message-ID: <20261118150151.902378824@linuxfoundation.org>
+Subject: [PATCH 6.18 0818/2151] spi: rspi: Fix DMA mode when the DMA controller is built as a module
+Date: Wed, 18 Nov 2026 15:42:33 +0100
+Message-ID: <20261118150151.938504925@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,99 +68,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niko Huuskonen <niko.huuskonen.00@gmail.com>
+From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
 
-[ Upstream commit c0508fc6895137f9e2dd43c1a09cc834254cc149 ]
+[ Upstream commit 7b85114d47f693b709b2e8e22e44cdf58c04b111 ]
 
-keycode_kore does not match the hardware in two places:
+On the Renesas RZ/G2L platform, the RSPI driver falls back to PIO mode
+instead of using DMA when the DMA controller driver is built as a module
+(CONFIG_RZ_DMAC=m):
 
-- Softkeys 5 to 8 are listed in reverse order, so pressing the fifth
-  softkey reports BTN_8, the sixth BTN_7 and so on. Softkeys 1 to 4 are
-  correct. The OpenKoreBridge project, which drives a Kore 2 through
-  this driver, works around the same reversal in userspace.
+    renesas_spi 1004b000.spi: dma_request_slave_channel_compat failed
+    renesas_spi 1004b000.spi: DMA not available, using PIO
 
-- On the first Kore controller the touch sensors of the eight knobs are
-  scrambled: touching knob 1 reports KEY_BRL_DOT6, knob 2 KEY_BRL_DOT8,
-  knob 3 KEY_BRL_DOT2, knob 6 KEY_BRL_DOT7, knob 7 KEY_BRL_DOT1 and
-  knob 8 KEY_BRL_DOT3. Only knobs 4 and 5 are right.
+The driver requests DMA channels through dma_request_slave_channel_compat()
+which returns either a valid pointer or NULL and cannot handle
+-EPROBE_DEFER. If the DMA controller has not probed yet, the driver falls
+back to PIO directly.
 
-Put the softkeys in order for both controllers, and give the first Kore
-controller its own touch sensor order, so that BTN_n and KEY_BRL_DOTn
-belong to the n-th knob. The touch sensor order of the Kore 2 is left
-alone, as it could not be checked.
+Fix this by replacing the dma_request_slave_channel_compat() call with a
+regular dma_request_chan() call. dma_request_slave_channel_compat() is
+always passed a NULL fn_param in all code paths, so it actually behaves
+like a plain dma_request_chan() call.
 
-Userspace that compensates for the old order needs to follow. It can
-read the key map with EVIOCGKEYCODE, which also makes it possible to
-support kernels with and without this change.
-
-Tested on a Kore controller (USB ID 17cc:4711).
-
-Link: https://github.com/OpenKoreBridge/OpenKoreBridge
-Fixes: 8e3cd08ed8e5 ("[ALSA] caiaq - add control API and more input features")
-Assisted-by: LLM
-Signed-off-by: Niko Huuskonen <niko.huuskonen.00@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260927003532.289468-3-niko.huuskonen.00@gmail.com
+Fixes: e825b8dd2b36 ("spi: rspi: Add DT support to DMA setup")
+Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+Link: https://patch.msgid.link/20260921195943.107247-1-ovidiu.panait.rb@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/caiaq/input.c | 29 +++++++++++++++++++++++++----
- 1 file changed, 25 insertions(+), 4 deletions(-)
+ drivers/spi/spi-rspi.c | 49 ++++++++++++++++--------------------------
+ 1 file changed, 19 insertions(+), 30 deletions(-)
 
-diff --git a/sound/usb/caiaq/input.c b/sound/usb/caiaq/input.c
-index 6a5adb8d1e6a7..aee526e0da36a 100644
---- a/sound/usb/caiaq/input.c
-+++ b/sound/usb/caiaq/input.c
-@@ -41,11 +41,11 @@ static const unsigned short keycode_kore[] = {
- 	BTN_3,
- 	BTN_2,
- 	BTN_1,
--	BTN_8,
--	BTN_7,
--	BTN_6,
- 	BTN_5,
--	KEY_BRL_DOT4,   /* touch sensitive knobs */
-+	BTN_6,
-+	BTN_7,
-+	BTN_8,
-+	KEY_BRL_DOT4,   /* touch sensitive knobs (Kore 2 order) */
- 	KEY_BRL_DOT3,
- 	KEY_BRL_DOT2,
- 	KEY_BRL_DOT1,
-@@ -55,6 +55,21 @@ static const unsigned short keycode_kore[] = {
- 	KEY_BRL_DOT5
- };
+diff --git a/drivers/spi/spi-rspi.c b/drivers/spi/spi-rspi.c
+index c90dfe5211542..2719e8b003ff9 100644
+--- a/drivers/spi/spi-rspi.c
++++ b/drivers/spi/spi-rspi.c
+@@ -22,7 +22,6 @@
+ #include <linux/of.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/reset.h>
+-#include <linux/sh_dma.h>
+ #include <linux/spi/spi.h>
+ #include <linux/spinlock.h>
  
-+/* index of the first touch sensor in keycode_kore */
-+#define KORE_TOUCH_KEYS	24
-+
-+/* the first Kore controller reports its touch sensors in this order */
-+static const unsigned short keycode_kore1_touch[] = {
-+	KEY_BRL_DOT4,
-+	KEY_BRL_DOT8,
-+	KEY_BRL_DOT3,
-+	KEY_BRL_DOT7,
-+	KEY_BRL_DOT2,
-+	KEY_BRL_DOT6,
-+	KEY_BRL_DOT1,
-+	KEY_BRL_DOT5
-+};
-+
- #define MASCHINE_BUTTONS   (42)
- #define MASCHINE_BUTTON(X) ((X) + BTN_MISC)
- #define MASCHINE_PADS      (16)
-@@ -656,6 +671,12 @@ int snd_usb_caiaq_input_init(struct snd_usb_caiaqdev *cdev)
- 		input->absbit[BIT_WORD(ABS_MISC)] |= BIT_MASK(ABS_MISC);
- 		BUILD_BUG_ON(sizeof(cdev->keycode) < sizeof(keycode_kore));
- 		memcpy(cdev->keycode, keycode_kore, sizeof(keycode_kore));
-+		BUILD_BUG_ON(KORE_TOUCH_KEYS + ARRAY_SIZE(keycode_kore1_touch) >
-+			     ARRAY_SIZE(keycode_kore));
-+		if (cdev->chip.usb_id ==
-+		    USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_KORECONTROLLER))
-+			memcpy(cdev->keycode + KORE_TOUCH_KEYS, keycode_kore1_touch,
-+			       sizeof(keycode_kore1_touch));
- 		input->keycodemax = ARRAY_SIZE(keycode_kore);
- 		input_set_abs_params(input, ABS_HAT0X, 0, 999, 0, 10);
- 		input_set_abs_params(input, ABS_HAT0Y, 0, 999, 0, 10);
+@@ -1091,24 +1090,15 @@ static irqreturn_t rspi_irq_tx(int irq, void *_sr)
+ 
+ static struct dma_chan *rspi_request_dma_chan(struct device *dev,
+ 					      enum dma_transfer_direction dir,
+-					      unsigned int id,
+ 					      dma_addr_t port_addr)
+ {
+-	dma_cap_mask_t mask;
+ 	struct dma_chan *chan;
+ 	struct dma_slave_config cfg;
+ 	int ret;
+ 
+-	dma_cap_zero(mask);
+-	dma_cap_set(DMA_SLAVE, mask);
+-
+-	chan = dma_request_slave_channel_compat(mask, shdma_chan_filter,
+-				(void *)(unsigned long)id, dev,
+-				dir == DMA_MEM_TO_DEV ? "tx" : "rx");
+-	if (!chan) {
+-		dev_warn(dev, "dma_request_slave_channel_compat failed\n");
+-		return NULL;
+-	}
++	chan = dma_request_chan(dev, dir == DMA_MEM_TO_DEV ? "tx" : "rx");
++	if (IS_ERR(chan))
++		return chan;
+ 
+ 	memset(&cfg, 0, sizeof(cfg));
+ 	cfg.dst_addr = port_addr + RSPI_SPDR;
+@@ -1121,7 +1111,7 @@ static struct dma_chan *rspi_request_dma_chan(struct device *dev,
+ 	if (ret) {
+ 		dev_warn(dev, "dmaengine_slave_config failed %d\n", ret);
+ 		dma_release_channel(chan);
+-		return NULL;
++		return ERR_PTR(ret);
+ 	}
+ 
+ 	return chan;
+@@ -1130,29 +1120,23 @@ static struct dma_chan *rspi_request_dma_chan(struct device *dev,
+ static int rspi_request_dma(struct device *dev, struct spi_controller *ctlr,
+ 			    const struct resource *res)
+ {
+-	unsigned int dma_tx_id, dma_rx_id;
++	struct dma_chan *chan;
+ 
+-	if (dev->of_node) {
+-		/* In the OF case we will get the slave IDs from the DT */
+-		dma_tx_id = 0;
+-		dma_rx_id = 0;
+-	} else {
+-		/* The driver assumes no error. */
++	if (!dev->of_node)
+ 		return 0;
+-	}
+ 
+-	ctlr->dma_tx = rspi_request_dma_chan(dev, DMA_MEM_TO_DEV, dma_tx_id,
+-					     res->start);
+-	if (!ctlr->dma_tx)
+-		return -ENODEV;
++	chan = rspi_request_dma_chan(dev, DMA_MEM_TO_DEV, res->start);
++	if (IS_ERR(chan))
++		return PTR_ERR(chan);
++	ctlr->dma_tx = chan;
+ 
+-	ctlr->dma_rx = rspi_request_dma_chan(dev, DMA_DEV_TO_MEM, dma_rx_id,
+-					     res->start);
+-	if (!ctlr->dma_rx) {
++	chan = rspi_request_dma_chan(dev, DMA_DEV_TO_MEM, res->start);
++	if (IS_ERR(chan)) {
+ 		dma_release_channel(ctlr->dma_tx);
+ 		ctlr->dma_tx = NULL;
+-		return -ENODEV;
++		return PTR_ERR(chan);
+ 	}
++	ctlr->dma_rx = chan;
+ 
+ 	ctlr->can_dma = rspi_can_dma;
+ 	dev_info(dev, "DMA available");
+@@ -1380,6 +1364,11 @@ static int rspi_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	ret = rspi_request_dma(&pdev->dev, ctlr, res);
++	if (ret == -EPROBE_DEFER) {
++		dev_err_probe(&pdev->dev, ret,
++			      "failed to request DMA channels\n");
++		goto error2;
++	}
+ 	if (ret < 0)
+ 		dev_warn(&pdev->dev, "DMA not available, using PIO\n");
+ 
 -- 
 2.53.0
 
