@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019820;
-	b=jVQ/H96FS/q6B4CdltIFjR7LTriuQlxp9Y4DbvREFYMa7Vy6sVUpoq1s8jvxptMKoiDm
-	 jtwkNgcqoMYBEWSPtmZFHKSIT+lYb9uoojcVy5O6yR5JatV3PVkSdOz+iLjQgWlv+I4kb
-	 sAPqcIYVdKkxOIhxIk7YMzw3lQcZI/riZk5M+EbpO3FYlys0k5ikNKT2aPCf/RbK8lgvw
-	 5i5FAiNlfnfuW7jsNS3q9PpRjLGteKibQv1bsUQFy5yN66Cn2sXBsu+SlEZnQqUO20yhG
-	 T7zJVh1lUiJWgHcFJbQLM/uWCGj8ce4qF6pHZCTfixDofgTNuBqoK3My8iW+j/Jk8rw==
+	t=1795019823;
+	b=lgK6DXuyqKyorJXScQJKPNXYSyM+rPrWPRRPu5hR6ZzGsKuZPE7CMb3x22GSE+8AERiD
+	 RWuH2YEZy3gHbIWo3ALG1cEZQ2rP/20iPHEidamVXRuRxL6BeXEkszvcyY96m9LvrzoqB
+	 qHmF2IyWYg4MSELfR+eNkNqW1ZQBCrNwXq6dJXoSoExYNqhWN/B6mg//DNapXt357lL3p
+	 3d2rZWmpgt4PrHex93PJF3VHybygxJkwc2ovCrdS298C/kcVCPYRZVAvUUIuJVGvpm8RU
+	 Ofa7F5hQFopadgIMqaJxtTJASbI0uJERQzpu/EAe4++wajuFC1ou+4MGXSMOc/w/ScQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019820;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019823;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5M/p3dZYdIUsEtDc0grw4XLE6nIf4vr6x5i8kDX3mYQ=;
-	b=PRpAWrC8XoYjjyOxw6zrvbXpBbW71BfzcuuT4glII/0wEWLuAiWLDzuNgG94ylQWswiC
-	 1YSWWtvchVJ8yH3pbd/skcjnA58BXQV+0kTj3Lx2obucK1GGHoqe6pfaVHVMDQnsczfA0
-	 Z30rbdP/evlHecDFxLvGrhGiBT6sWKqxqUJV6S+HlTdwpaTF16RrQO4q26M2TBYf291KC
-	 rW09b2Yqig33FzA3yJJqfYKuVTxlsS2jJIvAdatMkwpzx6gfUvn91JQTLq6M/NyyVNKD7
-	 wvLupxyiJFPcc2+nS+PNXsczoyWjoMcqZ42zEWVGEfJ5VubQbj+pIr7s5rGV/yhRiwA==
+	bh=Z8cEMCv1ZPsEOwlaFL4eF4eRSE2Fxro94KD+GxnUnQM=;
+	b=Ig6tYBOFOVsgMvvfitmbuwiGeMmO9eHfzlkwB+tz7/JTX/vrp/DCpB9VY61Ci9o5ODyy
+	 zJWz8S1GBkxJCD6X52cNW7GYk+26qxucQjV0P0TO3pdPF2Xj5svfEW5NNupMkXVGj5Q1m
+	 olkCEtUO1W6gRuG1j04VowNuO1AcsuY0xme7PvpyxNPXBKvsaRhUsgJCCqLvCFDeWO07G
+	 Wzzzg9hyq7JTR8iHw8grGhR1MWlGhEvqt2MBaXoBDIiYxBeBK4FiAfOPD7y/ZhVLHrIw7
+	 Ev9O1kgp45vQxG7Fj86q/FeGmvcdhxx0fnVKQAEZtkTDc4dykgmz2d4qY1kJ7HQ3M0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ymp3MK/g";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HBp17eBC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2263160A2623;
-	Wed, 18 Nov 2026 16:37:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF7F60A2622;
+	Wed, 18 Nov 2026 16:37:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ymp3MK/g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7206B1F000C4;
-	Wed, 18 Nov 2026 16:36:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HBp17eBC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4989F1F000C7;
+	Wed, 18 Nov 2026 16:37:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019820;
-	bh=5M/p3dZYdIUsEtDc0grw4XLE6nIf4vr6x5i8kDX3mYQ=;
+	s=korg; t=1795019822;
+	bh=Z8cEMCv1ZPsEOwlaFL4eF4eRSE2Fxro94KD+GxnUnQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ymp3MK/gqvWAkTuT2RssmQgjp3JKBaOXyUkFaTwG4LbaoS98Th/eZ+mFyH2WVtbUC
-	 40v9/L+AqsN/2/QraVHDMP0fQB9CgXBI0DIM0N1HcH9eDrKjuGbo8jayt1fQXP15Mi
-	 G5y1xk/Vg8lblp0hzSCyWQTrhWrKBWocMppB5H3s=
+	b=HBp17eBCqqfuqPa+XmM9YgCdP8uvaiz3cUaQi9gV3qkMIvIbDltJWiej3r4vrhe4u
+	 j5fb8tDrlq56vwblBfCZ5bog+Q6r678dHSEwSXoqGeaYNMLA7OsRBLTNVlwG+blXdC
+	 yqKkGajoy/Bt5aOlKUFi2MdkTJ2/aZgO4WKPIlZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yogesh Gaur <yogeshgaur.83@gmail.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1731/2651] comedi: pcmuio: validate the IRQs supplied by userspace
-Date: Wed, 18 Nov 2026 15:49:31 +0100
-Message-ID: <20261118150349.938296468@linuxfoundation.org>
+Subject: [PATCH 7.3 1732/2651] perf test attr: Source setup_python.sh instead of calling python
+Date: Wed, 18 Nov 2026 15:49:32 +0100
+Message-ID: <20261118150349.970582586@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -67,66 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yogesh Gaur <yogeshgaur.83@gmail.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 9c325b21bba99e597771137fc11b9427c86618d8 ]
+[ Upstream commit 3b05843302202598a6d25f3e2543c8182e6a930c ]
 
-comedi boards are configured through the COMEDI_DEVCONFIG ioctl, so
-it->options[1] is a number chosen by userspace. pcmuio passes it to
-request_irq() without checking it first, which lets an interrupt owned by
-another irqdomain -- a PCI device's IO-APIC GSI, for instance -- be
-claimed for this board. When the owner of that interrupt is later
-released the descriptor is freed while this driver's handler is still
-installed on it.
+The "Perf attribute expectations test" (perf test 82) fails on machines
+that don't ship a bare 'python' binary, i.e. distributions that provide
+only python3 unless python-is-python3 or an equivalent is installed.
+Namhyung Kim hit this and posted the fix applied here in
+<asWLmvF-3YtoKJ7j@google.com>:
 
-Every interrupt this board can assert is a legacy ISA one, so the ISA
-range is the right bound; it is also sufficient, because
-mp_chip_data->isa_irq is set only by alloc_isa_irq_from_domain() and
-mp_unmap_irq() returns early when it is set.
+  /home/namhyung/project/linux/tools/perf/tests/shell/attr.sh: line 20: python: command not found
+  ---- end(-1) ----
+   82: Perf attribute expectations test : FAILED!
 
-Bound the value before requesting it, as das16m1.c already does. An
-out-of-range value is ignored rather than rejected, so the board still
-attaches without interrupt support, exactly as it does today when
-request_irq() fails.
+attr.sh is the only shell test that still invokes python directly; do
+what the others do: source lib/setup_python.sh, which prefers python3,
+falls back to python and skips the test when no interpreter is found,
+then run $PYTHON.
 
-This board takes two interrupts, one per ASIC, so options[1] and
-options[2] both need the check. The existing options[2] == dev->irq case
-is left alone: it covers both ASICs sharing one interrupt and neither
-having one, and by then options[1] has already been validated.
-
-Fixes: 6baef150380d ("Staging: comedi: add pcmmio and pcmuio drivers")
+Fixes: 8519e4f44c2af722 ("perf test: Add a shell wrapper for "Setup struct perf_event_attr"")
+Reported-by: Namhyung Kim <namhyung@kernel.org>
+Suggested-by: Namhyung Kim <namhyung@kernel.org>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Link: https://lore.kernel.org/linux-perf-users/asWLmvF-3YtoKJ7j@google.com/
 Assisted-by: LLM
-Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
-Link: https://patch.msgid.link/20260909104848.1763-7-yogeshgaur.83@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/comedi/drivers/pcmuio.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tools/perf/tests/shell/attr.sh | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/comedi/drivers/pcmuio.c b/drivers/comedi/drivers/pcmuio.c
-index d9995cbeecb62..da80bca0bb55e 100644
---- a/drivers/comedi/drivers/pcmuio.c
-+++ b/drivers/comedi/drivers/pcmuio.c
-@@ -546,7 +546,8 @@ static int pcmuio_attach(struct comedi_device *dev, struct comedi_devconfig *it)
+diff --git a/tools/perf/tests/shell/attr.sh b/tools/perf/tests/shell/attr.sh
+index 307e1535795a3..ca3ca4a193971 100755
+--- a/tools/perf/tests/shell/attr.sh
++++ b/tools/perf/tests/shell/attr.sh
+@@ -4,6 +4,10 @@
  
- 	pcmuio_reset(dev);
+ err=0
  
--	if (it->options[1]) {
-+	/* only ISA interrupts are valid on this board */
-+	if (it->options[1] >= 1 && it->options[1] <= 15) {
- 		/* request the irq for the 1st asic */
- 		ret = request_irq(it->options[1], pcmuio_interrupt, 0,
- 				  dev->board_name, dev);
-@@ -558,7 +559,7 @@ static int pcmuio_attach(struct comedi_device *dev, struct comedi_devconfig *it)
- 		if (it->options[2] == dev->irq) {
- 			/* the same irq (or none) is used by both asics */
- 			devpriv->irq2 = it->options[2];
--		} else if (it->options[2]) {
-+		} else if (it->options[2] >= 1 && it->options[2] <= 15) {
- 			/* request the irq for the 2nd asic */
- 			ret = request_irq(it->options[2], pcmuio_interrupt, 0,
- 					  dev->board_name, dev);
++shelldir=$(dirname "$0")
++# shellcheck source=lib/setup_python.sh
++. "${shelldir}"/lib/setup_python.sh
++
+ cleanup() {
+   trap - EXIT TERM INT
+ }
+@@ -17,7 +21,7 @@ trap trap_cleanup EXIT TERM INT
+ 
+ shelldir=$(dirname "$0")
+ perf_path=$(which perf)
+-python "${shelldir}"/lib/attr.py -d "${shelldir}"/attr -v -p "$perf_path"
++$PYTHON "${shelldir}"/lib/attr.py -d "${shelldir}"/attr -v -p "$perf_path"
+ err=$?
+ cleanup
+ exit $err
 -- 
 2.53.0
 
