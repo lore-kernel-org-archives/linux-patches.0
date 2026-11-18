@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030345;
-	b=bCgl4X2gBIsrMTizjQGw5xK4JosPdBNmYkkk+Vk5kHS4+dk0DLj3F8u0wWd42QbovtaH
-	 lJrdo0WZuenFZlFxkhEpwpk2SuU61eFKyfI8NmJDwyXKo0SBPdJso3e/1IkvdIK4ZuRbv
-	 43okDK0vK5lWJTduzggPc3+s37tXdGAwDGlw56l/pfXBu0z5fwWUn8IvjYRxravOKkKUh
-	 VQConZrB4SKmwXzq27A8EMsut6wTRPG9xWXnB3qiU55TLe5cHHwFMREnwtbHEhWfNRqfn
-	 05V4/Su0Qm2RnmEWQ8KS6KtRWk732ZLlG1+3GmehkabFsykbUEPjw5Kzp3/x1nBqIaQ==
+	t=1795030347;
+	b=xrdSEY/zQXigmxCXaUjowg+x8ELmBhTdhbAJP+J45e/IEalsGnBfh5gIkPdFrg6tgawU
+	 Qk1Mh6krkzMxI0q7eh/GpXMUq1Z5LfZGWpdijHwfAEGh70f7lPh5iihkoZQ904NxUhm27
+	 /gL55stK0Ul5PH+bvTZb14k3yQZwHNCzaJSti7Asmg2w8atbIf7EmzeJgarq13qI/Xh69
+	 yRqt9Z1tS5vkEH7dNTIvD1s29UxqoG/+oL2BwUCT2m/EXvHCBledREBhiTqpGVeFhGMZB
+	 Cjm3xYPQE5JLx+wQFV2utt2O0t40kNMSUD7h19saVYFNHqTsp/Lx5u4HkoFsHGzuQoA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030345;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030347;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=L3FCGVvdfsf8R00Q6c+77dmjuGKWCuq4rQjr8d98Uzw=;
-	b=4QxhzpkO9iOLY3Hn+hCLWfJpVfGVDRng9M9QAXJ2sRcr2FZx/f/vxf6LF3UTTNuli2gB
-	 ulVv1ONRwpCTwke3y8locA0g5k3BsjFgFLYtbpdqy5GZjpXdPPG1y2VfuQWmLlfFA+hEG
-	 F1pbht+wM/JpCjau24gyZbW+me3mFdiFtNZwouL4kgfmkP/udiEUqnz9yp7lZwN+aCHMc
-	 zuLfgqrMKz1hVaX9I8OrZx6OE9fecGUs6uVNWhyUAhV8nzqGfWe1HVxEvSIWm0sA6bzFt
-	 XhLhV0ogbEawiOQMbmqleCEluJCwMGLhjKUEvwoZ5ZnoyRIdj/joq1IIcGd0h9VNnxQ==
+	bh=B+kdV32Bt7mhLVEqNDyAI5fN3Uf6v4LD99JLWmw+3L4=;
+	b=BEkw6WF+bACDsJVJ7U1JDaQyFrZ769no0tcuw4QQ5ZIYIApYhU1beuE7xtzbdMVBXgW+
+	 7fjDoAdboq3ipBLsrcBhvFL0yJs+wmhf5ou/gsYwtKLgvN91JbNn5DTDttYBb6mLDJgef
+	 /1jU3y8WSGcRjhcbfKQRPt+TSpyphkkp5VcqmjHvIVuRWBvkeLTvMsdQ5lXkm/bWCAIV3
+	 E4iry/1Ur/78L1YbAgYUJCKUWqXcIIBw8pCJ0ZWGjSYfGJrfpy8R1whPtXgW0hZHbThQ+
+	 IkikCE0yYH6sd8rXkUfG8dvMxLgzUxETrtbjZ8aV5S/VEhb9J3rwnZO/XlrUXtkO17Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nZmhtP+x;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UCHZ8+yD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBFC2606A33A;
-	Wed, 18 Nov 2026 19:32:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFDFE606A33A;
+	Wed, 18 Nov 2026 19:32:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nZmhtP+x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EDA31F000C4;
-	Wed, 18 Nov 2026 19:32:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UCHZ8+yD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1117A1F000C4;
+	Wed, 18 Nov 2026 19:32:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030344;
-	bh=L3FCGVvdfsf8R00Q6c+77dmjuGKWCuq4rQjr8d98Uzw=;
+	s=korg; t=1795030347;
+	bh=B+kdV32Bt7mhLVEqNDyAI5fN3Uf6v4LD99JLWmw+3L4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nZmhtP+xq31O9uNgurQe4pozClWHNLa1f+pGpgQKIEz6osVO8D+p2OWjzHZVz9Jt7
-	 OpmznmP0q7G9g2PQu78IGwpf/SJy04/+JF2ETtk9CGYi2Zg4G64SA0sk7G/ricf/Mn
-	 P49Ts2swZFVhjCIdpXOovqTYHa+Ewk3BtMShnMsw=
+	b=UCHZ8+yDtIISN8rd8OIOSvU2xX7R2pyYyEXiTsPpPAxWlrpSvW3hn+6Lq0byb55iw
+	 ZeKD3lhDPladDM/sGfj877kDm2A5SRaDdChMyJCRmvpQLCVeYJ7wZgn65zBzk9gmuj
+	 O/aTO3SGW2ia/kQSVZuI2ZwcVXugpD424l2ABAgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Ridong Chen <ridong.chen@linux.dev>,
-	Guopeng Zhang <zhangguopeng@kylinos.cn>,
-	Tejun Heo <tj@kernel.org>,
+	Li RongQing <lirongqing@baidu.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0671/1756] cgroup/cpuset: Run SCHED_DEADLINE shrink test on valid partition root only
-Date: Wed, 18 Nov 2026 15:46:38 +0100
-Message-ID: <20261118150035.990019177@linuxfoundation.org>
+Subject: [PATCH 6.12 0672/1756] RDMA/mlx5: Restore mr->pi_mr after temporary stack-local assignment
+Date: Wed, 18 Nov 2026 15:46:39 +0100
+Message-ID: <20261118150036.029903856@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,65 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit 8a1c0f5c82843104d9bef2bc3726c89da70a9b91 ]
+[ Upstream commit 9728effe43d8fc4d58e12b697d0d6127355abdd5 ]
 
-Commit f82f80426f7a ("sched/deadline: Ensure that updates to exclusive
-cpusets don't break AC") adds a check in validate_change() to make
-sure that there is enough bandwidth for SCHED_DEADLINE tasks if we
-shrink a v1 exclusive cpuset that has CS_CPU_EXCLUSIVE flag set.
+In handle_reg_mr_integrity, when mr->pi_mr is NULL (physical-address
+optimization path), the code points mr->pi_mr at a stack-local pa_pi_mr
+so set_pi_umr_wr can read it during this call. The pointer is never
+restored, so after the function returns mr->pi_mr dangles at a freed stack
+frame. A second IB_WR_REG_MR_INTEGRITY posted on the same MR without
+remapping reads the stale pointer and dereferences it.
 
-With the introduction of cpuset partition in cgroup v2, we keep setting
-the CS_CPU_EXCLUSIVE flag for a partition root so that the SCHED_DEADLINE
-check will continue to work as intended. However it turns out that the
-current code isn't perfect and there are cases where a cpuset isn't
-a valid partition root, but the exclusive flag is still incorrectly
-set. This can leads to SCHED_DEADLINE check being incorrectly triggered
-when there are deadline tasks in the system. This can result in unexpected
--EBUSY failure when making changes to cpuset control files. Fix that
-by checking for a valid partition root for v2 and is_cpu_exclusive()
-for v1. It is far easier and less cumbersome than to make sure that
-the exclusive flag is only set for valid partition roots.
+Save the original pi_mr (captured at function entry) and restore it on
+the out path.
 
-Even though commit a86ce68078b2 ("cgroup/cpuset: Extract out
-CS_CPU_EXCLUSIVE & CS_SCHED_LOAD_BALANCE handling") is marked as a
-commit to be fixed, the problem may exist before that.
-
-Fixes: a86ce68078b2 ("cgroup/cpuset: Extract out CS_CPU_EXCLUSIVE & CS_SCHED_LOAD_BALANCE handling")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Reviewed-by: Ridong Chen <ridong.chen@linux.dev>
-Reviewed-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 2563e2f30acb ("RDMA/mlx5: Use PA mapping for PI handover")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Link: https://patch.msgid.link/20260919100848.2442-1-lirongqing@baidu.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/mlx5/wr.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 02f02ab517fdb..24ec9fa748998 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -622,8 +622,8 @@ static int validate_change(struct cpuset *cur, struct cpuset *trial)
- 	 * For v1, effective_cpus == cpus_allowed & user_xcpus() returns
- 	 * cpus_allowed.
- 	 *
--	 * For v2, is_cpu_exclusive() & is_sched_load_balance() are true only
--	 * for non-isolated partition root. At this point, the target
-+	 * For v2, is_partition_valid(cur) & is_sched_load_balance() are true
-+	 * only for non-isolated partition root. At this point, the target
- 	 * effective_cpus isn't computed yet. user_xcpus() is the best
- 	 * approximation.
- 	 *
-@@ -632,7 +632,8 @@ static int validate_change(struct cpuset *cur, struct cpuset *trial)
- 	 * becomes an issue.
- 	 */
- 	ret = -EBUSY;
--	if (is_cpu_exclusive(cur) && is_sched_load_balance(cur) &&
-+	if ((is_partition_valid(cur) || (!cpuset_v2() && is_cpu_exclusive(cur))) &&
-+	    is_sched_load_balance(cur) &&
- 	    !cpuset_cpumask_can_shrink(cur->effective_cpus, user_xcpus(trial)))
- 		goto out;
+diff --git a/drivers/infiniband/hw/mlx5/wr.c b/drivers/infiniband/hw/mlx5/wr.c
+index 9947feb7fb8a0..1748c633213ed 100644
+--- a/drivers/infiniband/hw/mlx5/wr.c
++++ b/drivers/infiniband/hw/mlx5/wr.c
+@@ -925,6 +925,7 @@ static int handle_reg_mr_integrity(struct mlx5_ib_dev *dev,
+ 	qp->next_fence = MLX5_FENCE_MODE_INITIATOR_SMALL;
+ 
+ out:
++	mr->pi_mr = pi_mr;
+ 	return err;
+ }
  
 -- 
 2.53.0
