@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021891;
-	b=Aoum0PeXXzvPpOf8XixSLdLhdHxZHbesIX/NtM5ANKk5Lig3WNznKisfQ27nyHHYlnBB
-	 j3IeCY9E3rKtnSkyfYZMcjJWyByq8Hduw3jvTLGLimm7thB3Fz3rXxQKET6xBxgyp8SGE
-	 fxI+gn2U5KiwFGqu9r7kYLeM51A7dMNo3I9b/ZPYO2ojRUbTjnomvgXaOlbkAK/pove7X
-	 jU0/pZtS7Z71GNFYBQbH67MPRxGqdT/MJbMExwWYrFPh7TmSEy+Q4FclCFHTgb1FNvNr2
-	 GNvd02ennu2iIj/mCnJG8sdWO6xzMKoow54G+HSDEYopC+cJYhqtTfhr2Z1/olwwCdA==
+	t=1795021894;
+	b=hC4mWsAxfrmwdnQT143m1gZB4aVs+pUEMRSP9KRNXAVRrg/tU36UlAraz0fMLg8+oUGF
+	 1q/+QFXhr93YVtX9U5aSWBSJb/YLNdl+FG21nZ7S460hlYGiIHPUPm45jEjgb3dagzYp2
+	 eTWY8VXPRjuEtV7ueoL0i+Y3eGIF3sTzrfHFhQaqKpAjHVCJZXo3qtP+lSFlYipVen9xf
+	 AqfZzctMS1RbKgpbQCSmLdlJFfru4edpSxb127yR3Sf3qQ4e8wzOhIcaob/4h8jSV6WPq
+	 zUCBO1QMeCLO10olxGw916td7PMAuQ0mwAQ1QwFJED+vbPxqG4FTgHcmgpbooJ4ZrXw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021891;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021894;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dTmF662/I2mQnrh8+m2onKf/cFejU50jOJseFvRDzPM=;
-	b=ZV0eODB0toh0RbW96NFnP7Y1+3hkjfms0ClmJhByIH/0jLYEPm5z90pr8kxDF7dXqzJg
-	 GMCLFQg9aovfctAaFoeHn0I5kyq4CqEWscpQTwfPLJVhIDiBHdL9epJ2j77jwOhk8dlNd
-	 sd5XXQ9JDQV0fvE5wJoMJ370wlOBF2n/bygVuXtMFu2jdyJrp1cFS4QqLG7h6pcOr8EHj
-	 plolDD4JyNJyK2OEwHXAocNZzjf9gBIGBDtkV4eiIhcYLBNXLmqDfPXhnJ/3XX9+Z1PyN
-	 NpJSAXhtT4SMh5cUeWiBX+QHzpznoYiYZrZAVe6+rYMLXhN5U/8ElJWzyYmTNpczdVg==
+	bh=xmLBIhMCSN+j7DU08TdGUzwhCvcIqEsnrCGcrCMxMdU=;
+	b=aljDLAeClGkZ4oKj9xBzcVGgB0bANlGBZO8FjkaY/UHIMxSOceDFhY3BAxrnu7al+Q+B
+	 8j2n1nSdYPCaMn664mTtavu7k9iBovoR40sBBaDWX7Lb2jMil/uwZQAmDkBlADbKlLEBw
+	 WNly/EqYli0GN+Jd8o6/RczKN7lv6zLHdsveQYC0u1VHVHaxYNlyi0cPIF+Y5pDBgPYB+
+	 foIaSD2aEZouoTEk6oINccFim+v04UG6by13LGLIYTQzEURAAjdT5+BUPZklT8ZPfMUJ3
+	 b/HiAIRlN82QXmPj7zzxAlb1ASCwxRL83GHvXMHNzhBb2tfAYW0ESjJmI6YyqsON+pg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BTNS2u1q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hBFpa2yU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A60606A325;
-	Wed, 18 Nov 2026 17:11:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8326F606A320;
+	Wed, 18 Nov 2026 17:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BTNS2u1q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B5E51F000C4;
-	Wed, 18 Nov 2026 17:11:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hBFpa2yU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8E731F000C4;
+	Wed, 18 Nov 2026 17:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021891;
-	bh=dTmF662/I2mQnrh8+m2onKf/cFejU50jOJseFvRDzPM=;
+	s=korg; t=1795021894;
+	bh=xmLBIhMCSN+j7DU08TdGUzwhCvcIqEsnrCGcrCMxMdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BTNS2u1qjCZyp1haJpJQdxmaRUQI05AjVVHA6eKwPVCLim2CNeUowqE960n6ggomY
-	 k1m/kHYZVC6shPWk7wH3sRC6D9oC9LKl+jZhDko3zn+dt8oGwYGGCWFK8B76s+44oQ
-	 prXgv9KH5IR94M0PlC2yREm2Ioswo2DgL51CIE9k=
+	b=hBFpa2yUmNIW/4GUO5/8d61f3t2EExdjbbJR6wTr6loQNMY8vkOUIIhIYjui6nYqu
+	 W31/Qp+i20BOtyE5EJSsTV+c9qhe48ibapVRtVLopEtjIjXtf2mKzio1S8gVMatJKW
+	 4xtv0HRbW3GAeMkOVJHKRd7Vy2EfrQHDhcVnSSy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <yi1.lai@intel.com>,
-	Joel Granados <joel.granados@kernel.org>,
-	Allison Henderson <achender@kernel.org>,
 	Oleg Nesterov <oleg@redhat.com>,
+	Allison Henderson <achender@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2468/2651] net/rds: do not fail init when CONFIG_SYSCTL=n
-Date: Wed, 18 Nov 2026 16:01:48 +0100
-Message-ID: <20261118150413.855185725@linuxfoundation.org>
+Subject: [PATCH 7.3 2469/2651] net/rds: do not initialize transports after rds_init() failed
+Date: Wed, 18 Nov 2026 16:01:49 +0100
+Message-ID: <20261118150413.886650959@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -73,100 +71,122 @@ Content-Transfer-Encoding: 8bit
 
 From: Allison Henderson <achender@kernel.org>
 
-[ Upstream commit fbea154a86641d2543a871aa19f7c77a366de542 ]
+[ Upstream commit ffbbc315b8b883a1c0e131fb3186b9428d2812aa ]
 
-With CONFIG_SYSCTL=n, register_net_sysctl() and register_net_sysctl_sz()
-are inline stubs that return NULL.  rds_sysctl_init(),
-rds_ib_sysctl_init() and rds_tcp_init_net() all treat that NULL as
--ENOMEM, so RDS refuses to initialize at all even though every tunable
-has a sane compiled-in default.
+rds, rds_rdma and rds_tcp each have their own module_init().  When they
+are built in, those run in link order, so rds_init() goes first, but
+do_initcalls() does not stop when it fails.  The transports then
+initialize against a core that has already been torn down: rds_wq has
+been destroyed, yet rds_ib_dev_put(), rds_ib_unregister_client() and
+rds_tcp_accept_work() still queue onto or flush it, and
+rds_trans_register() hands the transports to a core whose socket
+family may never have been registered.
 
-When RDS is built in, that is worse than a missing feature: the failed
-rds_init() destroys rds_wq, but the rds_rdma initcall still runs, and
-when rds_ib_sysctl_init() fails the same way, the error path in
-rds_ib_init() flushes the already freed workqueue:
+This was seen with CONFIG_SYSCTL=n, where rds_sysctl_init() failed and
+rds_ib_init()'s error path then flushed the freed rds_wq [1], but any
+rds_init() failure after rds_threads_init() has the same effect.
 
-  BUG: KASAN: slab-use-after-free in touch_wq_lockdep_map
-  ...
-   __flush_workqueue
-   rds_ib_init
-   rds_rdma_init
-  ...
-  Allocated by task 1:
-   alloc_workqueue_noprof
-   rds_threads_init
-   rds_init
-  ...
-  Freed by task 0:
-   kfree
-   rcu_do_batch
+Record whether rds_init() succeeded and have rds_rdma_init() and
+rds_tcp_init() bail out with -ENODEV otherwise.  Modular builds are
+unaffected: the transports need symbols exported by rds.ko, so they
+cannot be loaded unless rds_init() succeeded.
 
-Only treat the NULL return as a failure when sysctl support is actually
-compiled in.  The exit paths need no change: unregister_net_sysctl_table()
-is an empty stub with CONFIG_SYSCTL=n and already tolerates a NULL header
-otherwise.
-
-The underlying problem of built-in transports initializing after
-rds_init() has failed is independent of sysctl and is addressed
-separately.
-
-Reported-by: kernel test robot <yi1.lai@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202610190310.9737b2e3-lkp@intel.com
-Fixes: 3e5048495c85 ("RDS: sysctls")
-Fixes: e6babe4cc4ce ("RDS/IB: Stats and sysctls")
-Fixes: c6a58ffed536 ("RDS: TCP: Add sysctl tunables for sndbuf/rcvbuf on rds-tcp socket")
-Suggested-by: Joel Granados <joel.granados@kernel.org>
+[1] https://lore.kernel.org/oe-lkp/202610190310.9737b2e3-lkp@intel.com
+Fixes: 55b7ed0b582f ("RDS: Common RDMA transport code")
+Fixes: 70041088e3b9 ("RDS: Add TCP transport to RDS")
+Suggested-by: Oleg Nesterov <oleg@redhat.com>
 Signed-off-by: Allison Henderson <achender@kernel.org>
-Reviewed-by: Joel Granados <joel.granados@kernel.org>
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Link: https://patch.msgid.link/20261021195837.142802-2-achender@kernel.org
+Link: https://patch.msgid.link/20261021195837.142802-3-achender@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/ib_sysctl.c | 2 +-
- net/rds/sysctl.c    | 2 +-
- net/rds/tcp.c       | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ net/rds/af_rds.c         | 14 ++++++++++++++
+ net/rds/rdma_transport.c |  3 +++
+ net/rds/rds.h            |  1 +
+ net/rds/tcp.c            |  3 +++
+ 4 files changed, 21 insertions(+)
 
-diff --git a/net/rds/ib_sysctl.c b/net/rds/ib_sysctl.c
-index 2af678e71e3c6..bc97a3eecad69 100644
---- a/net/rds/ib_sysctl.c
-+++ b/net/rds/ib_sysctl.c
-@@ -114,7 +114,7 @@ void rds_ib_sysctl_exit(void)
- int rds_ib_sysctl_init(void)
- {
- 	rds_ib_sysctl_hdr = register_net_sysctl(&init_net, "net/rds/ib", rds_ib_sysctl_table);
--	if (!rds_ib_sysctl_hdr)
-+	if (!rds_ib_sysctl_hdr && IS_ENABLED(CONFIG_SYSCTL))
- 		return -ENOMEM;
- 	return 0;
+diff --git a/net/rds/af_rds.c b/net/rds/af_rds.c
+index e84d00bbe9a15..fb6b8ddb2d111 100644
+--- a/net/rds/af_rds.c
++++ b/net/rds/af_rds.c
+@@ -925,8 +925,11 @@ static void rds6_sock_info(struct socket *sock, unsigned int len,
  }
-diff --git a/net/rds/sysctl.c b/net/rds/sysctl.c
-index 025f518a43495..968d6279bbd36 100644
---- a/net/rds/sysctl.c
-+++ b/net/rds/sysctl.c
-@@ -103,7 +103,7 @@ int rds_sysctl_init(void)
+ #endif
  
- 	rds_sysctl_reg_table =
- 		register_net_sysctl(&init_net, "net/rds", rds_sysctl_rds_table);
--	if (!rds_sysctl_reg_table)
-+	if (!rds_sysctl_reg_table && IS_ENABLED(CONFIG_SYSCTL))
- 		return -ENOMEM;
- 	return 0;
- }
++static bool rds_initialized;
++
+ static void rds_exit(void)
+ {
++	rds_initialized = false;
+ 	sock_unregister(rds_family_ops.family);
+ 	proto_unregister(&rds_proto);
+ 	rds_conn_exit();
+@@ -947,6 +950,16 @@ module_exit(rds_exit);
+ 
+ u32 rds_gen_num;
+ 
++/* When RDS is built in, a failed rds_init() does not stop the rds_rdma
++ * and rds_tcp initcalls from running against a core that has already
++ * been torn down (rds_wq in particular).  Let them bail out early.
++ */
++bool rds_is_initialized(void)
++{
++	return rds_initialized;
++}
++EXPORT_SYMBOL_GPL(rds_is_initialized);
++
+ static int __init rds_init(void)
+ {
+ 	int ret;
+@@ -983,6 +996,7 @@ static int __init rds_init(void)
+ 	rds_info_register_func(RDS6_INFO_SOCKETS, rds6_sock_info);
+ 	rds_info_register_func(RDS6_INFO_RECV_MESSAGES, rds6_sock_inc_info);
+ #endif
++	rds_initialized = true;
+ 
+ 	goto out;
+ 
+diff --git a/net/rds/rdma_transport.c b/net/rds/rdma_transport.c
+index 7be38be1228ec..cc6a7d29791ae 100644
+--- a/net/rds/rdma_transport.c
++++ b/net/rds/rdma_transport.c
+@@ -325,6 +325,9 @@ static int __init rds_rdma_init(void)
+ {
+ 	int ret;
+ 
++	if (!rds_is_initialized())
++		return -ENODEV;
++
+ 	ret = rds_ib_init();
+ 	if (ret)
+ 		goto out;
+diff --git a/net/rds/rds.h b/net/rds/rds.h
+index 9b1ffc49c0a61..e3937c1ff3a1a 100644
+--- a/net/rds/rds.h
++++ b/net/rds/rds.h
+@@ -1042,6 +1042,7 @@ extern unsigned int  rds_sysctl_trace_level;
+ int rds_threads_init(void);
+ void rds_threads_exit(void);
+ extern struct workqueue_struct *rds_wq;
++bool rds_is_initialized(void);
+ void rds_queue_reconnect(struct rds_conn_path *cp);
+ void rds_connect_worker(struct work_struct *);
+ void rds_shutdown_worker(struct work_struct *);
 diff --git a/net/rds/tcp.c b/net/rds/tcp.c
-index 774a71f88d375..34815b4f658ba 100644
+index 34815b4f658ba..c1ad37505417d 100644
 --- a/net/rds/tcp.c
 +++ b/net/rds/tcp.c
-@@ -637,7 +637,7 @@ static __net_init int rds_tcp_init_net(struct net *net)
- 	tbl[RDS_TCP_RCVBUF].data = &rtn->rcvbuf_size;
- 	rtn->rds_tcp_sysctl = register_net_sysctl_sz(net, "net/rds/tcp", tbl,
- 						     ARRAY_SIZE(rds_tcp_sysctl_table));
--	if (!rtn->rds_tcp_sysctl) {
-+	if (!rtn->rds_tcp_sysctl && IS_ENABLED(CONFIG_SYSCTL)) {
- 		pr_warn("could not register sysctl\n");
- 		err = -ENOMEM;
- 		goto fail;
+@@ -815,6 +815,9 @@ static int __init rds_tcp_init(void)
+ {
+ 	int ret;
+ 
++	if (!rds_is_initialized())
++		return -ENODEV;
++
+ 	rds_tcp_conn_slab = KMEM_CACHE(rds_tcp_connection, 0);
+ 	if (!rds_tcp_conn_slab) {
+ 		ret = -ENOMEM;
 -- 
 2.53.0
 
