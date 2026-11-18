@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052811;
-	b=HnayiirQiw7sF7AMMJzwrirKRAtn5s941M1U8Eon0ck5oocdgVZ/uOP8LWwolr/IY2LM
-	 iPpjZTdPlYfBtVNbVgj8IfydquukVLQ9+6dpdqvV5xy1C9iqeHVjm+jf7nX7ebRWXsAnZ
-	 BeJUbqJBBidtmre0eUOS7A9jDQY29if6shHxN1nTeKmfGuPikTyMP730HMMooDT3ugca5
-	 hxeHx8/LaBo0tzI4dJy/dB2VEfEN+4o3JeCL2y7alKuf/7Z3fNJvlmsIBvWCUQx0qXrGZ
-	 Wl+AAlZewa4py0D/HLlIVSutUxAtu8pTJPgsDnbjegkaT5BsdnvIxT7DLZ/Kt/FEGHw==
+	t=1795052814;
+	b=R5BCPFqB3rSFNgpnlFMF3jC13tpANeKrwG6uIS9qO48wATcfjVmpBXotQEQWsWzOq1uS
+	 BY5IO/E36NcIr3y7cGLeJ4GLsn+kJrLIoX7lKd5RMYOqc2UVsIIwXVnfQ5lHrmN//Nj/g
+	 1pD6JkxF1QYCODOlyirFZokuvdcHBVQAnzJUy+/42CRHIII2PhM8HbXVVVloBYxLxnZEb
+	 e0njN8iqbB/61VyqooK7IetSW4dwKXiXq+BtAdqH9t4iyHLVfIQDczwykOzZXNybt9osn
+	 OWoxFGmrQdpfc358s4QIS9w8juFbBUlK5zBC2HBLEqrp1WuVVjm07+Z5l8O1MMb9Z0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052811;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052814;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oilfk4a5jP8+hf6ZJeq0Nho5AZHALUGjuKhMN9h0rJM=;
-	b=RU9XLCpsaESxjyjWeGRQQClAs7JrTNsj1cJAEdXcN+V8Bw8wGCg4F3cnglvQx50c1PPr
-	 oInZuoSxHABbDEdAX/MAFgBlVMEWFP8lbQ2XKrnzHzurQCo48cFWhqdJsoG8x4EpL27M5
-	 Po2ANsaM2g3do7nFjTS86NCHvhGaJu1WxxKe+Z6aMPOGECzhKgkB/gNWAfnsOL7qBN4aD
-	 xFSPAyITWDemh7SdkUTK/fdbY0gEbM34B7QeIuHzw/9HhpBDztlwDzTKnS/03nJtjbaZA
-	 SrVZDnrM1aVt4EodPTEXbgiKtSde67K3YZG+ZQhcRCz7RNe3XYVcOPCl/b1I1lAP4nA==
+	bh=VXPdRpfKuGWN4NPid/Lq4ZdhrSeGM31CXuKgG8goYX4=;
+	b=aQ4Le5AziaRwt7X5RhJwIlwz4Q1NAR6n1R8zCLcqsEuVAmzyltzt9ewGPfKWthLb4DMG
+	 UpOCd0xSATdhbgmEeG4cPRJvFTvL55NiMRxchKF5JfMg8I3PzJB/AJLO1MGgw0Wnb7Hvy
+	 u0pyUWvfb4O7CIb4532wCsTB6JS1nEF54aZoYQFhq50UtJHGZ4dyPlk7wT9e2prdKh9g9
+	 YhHSF7lu5MjWmDlbUjsdOwdWXmGRq2foyqtWMnuSL4ujINxVu2/RArd8LN7Db2aUsV5Ug
+	 PDZIgWJb2I5ZVR9NYZo9tk23fefvIGNsPUHnuI8qV0+UWuBBobBz6C9iv6JnViHfgJA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e0kUV9Kp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iWwdv2IL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4C3E606A31C;
-	Thu, 19 Nov 2026 01:46:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A577606A31C;
+	Thu, 19 Nov 2026 01:46:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e0kUV9Kp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 221731F000C4;
-	Thu, 19 Nov 2026 01:46:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iWwdv2IL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC7A01F000C4;
+	Thu, 19 Nov 2026 01:46:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052811;
-	bh=oilfk4a5jP8+hf6ZJeq0Nho5AZHALUGjuKhMN9h0rJM=;
+	s=korg; t=1795052814;
+	bh=VXPdRpfKuGWN4NPid/Lq4ZdhrSeGM31CXuKgG8goYX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e0kUV9Kp4O7g7+U2YSa8BKShvG3bVRIBL5QKgEnBd0OaQpjNgCgwboHcKuAo6hAfN
-	 XVz8lNwvC6qrSJGrxvc1HsbZ4WaaMaJ39URCZYsUHZgc1klfLeubsj20XbrV9jgslQ
-	 ig1MmNi8wjkSQd5ZlZNGAvjYnncG7oT5HvgSiXug=
+	b=iWwdv2ILIJKd7kTSKMnDkLXbQOb1xZ5W++sQVMQt2qAFFeDY9yMkat1K93fXtNWVc
+	 0C6GiW87Rp2MGfSjJhlBCobtc9NrcxD9coac34Ea6Q+bjv0l0NjR1V+RCCQ7Nqceh6
+	 +M0bsenJx05vA7ooP2NNSa15Zvdg5hiLAgMz3wy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Tingjie Zhong <catme0w@live.cn>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0698/2214] i2c: mt7621: fix copying uninitialized kernel stack with reduced page_len
-Date: Wed, 18 Nov 2026 15:39:34 +0100
-Message-ID: <20261118150039.736502859@linuxfoundation.org>
+Subject: [PATCH 5.15 0681/2214] fbdev: bitblit: Fix glyph clipping when fbcon pans
+Date: Wed, 18 Nov 2026 15:39:17 +0100
+Message-ID: <20261118150039.013015636@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,68 +69,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Tingjie Zhong <catme0w@live.cn>
 
-[ Upstream commit b7fd977fec0d3f2bdd4f13bb59949c817a365652 ]
+[ Upstream commit 06fccf840640d8f6b0e08a1756f8d2f0435b4cbe ]
 
-When a page_len is less than 5 bytes in mtk_i2c_xfer, uninitialized kernel
-stack data is copied and written to REG_SM0D1_REG. Equally on the read
-part, an unnecessary read is done.
+Commit 3637d34b35b2 ("fbdev: Add bounds checking in bit_putcs to fix
+vmalloc-out-of-bounds") made bit_putcs() clip glyphs to var.yres. When
+fbcon scrolls by panning, it draws text rows up to var.yres_virtual,
+so after the first pan most new text is not drawn until the next full
+redraw. This affects fbdev drivers that set FBINFO_HWACCEL_YPAN or
+FBINFO_HWACCEL_YWRAP, such as vesafb with the ypan option, when
+CONFIG_FRAMEBUFFER_CONSOLE_LEGACY_ACCELERATION=y.
 
-Guard these extra copy/write and read for the page_len to fix leaking
-uninitialized stack memory.
+Clip to GETVYRES() instead, which fbcon_ud.c and fbcon_ccw.c already
+use as the drawing area height. When fbcon does not pan, GETVYRES()
+returns var.yres, keeping the existing bound. When fbcon pans, it
+returns var.yres_virtual, which the framebuffer memory must cover
+anyway for panning to work.
 
-Fixes: d04913ec5f89 ("i2c: mt7621: Add MediaTek MT7621/7628/7688 I2C driver")
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Cc: <stable@vger.kernel.org> # v5.3+
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/20261022193853.670625-1-ansuelsmth@gmail.com
+Fixes: 3637d34b35b2 ("fbdev: Add bounds checking in bit_putcs to fix vmalloc-out-of-bounds")
+Reported-by: Thomas Zimmermann <tzimmermann@suse.de>
+Closes: https://lore.kernel.org/linux-fbdev/b8b52ffd-ecec-4fba-b432-ba32135c2f99@suse.de/
+Tested-by: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: stable@vger.kernel.org
+Signed-off-by: Tingjie Zhong <catme0w@live.cn>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-mt7621.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/video/fbdev/core/bitblit.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-mt7621.c b/drivers/i2c/busses/i2c-mt7621.c
-index 901f0fb04fee4..d9728b763bd30 100644
---- a/drivers/i2c/busses/i2c-mt7621.c
-+++ b/drivers/i2c/busses/i2c-mt7621.c
-@@ -143,7 +143,6 @@ static int mtk_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
- 	u16 addr;
- 	int i, j, ret, len, page_len;
- 	u32 cmd;
--	u32 data[2];
+diff --git a/drivers/video/fbdev/core/bitblit.c b/drivers/video/fbdev/core/bitblit.c
+index d2e1e63117b26..dc165b62e7f0a 100644
+--- a/drivers/video/fbdev/core/bitblit.c
++++ b/drivers/video/fbdev/core/bitblit.c
+@@ -18,6 +18,7 @@
+ #include <linux/console.h>
+ #include <asm/types.h>
+ #include "fbcon.h"
++#include "fbcon_rotate.h"
  
- 	i2c = i2c_get_adapdata(adap);
+ /*
+  * Accelerated handlers.
+@@ -151,7 +152,9 @@ static void bit_putcs(struct vc_data *vc, struct fb_info *info,
+ 		      const unsigned short *s, int count, int yy, int xx,
+ 		      int fg, int bg)
+ {
++	struct fbcon_par *par = info->fbcon_par;
+ 	struct fb_image image;
++	u32 vyres = GETVYRES(par->p, info);
+ 	u32 width = DIV_ROUND_UP(vc->vc_font.width, 8);
+ 	u32 cellsize = width * vc->vc_font.height;
+ 	u32 maxcnt = info->pixmap.size/cellsize;
+@@ -168,10 +171,10 @@ static void bit_putcs(struct vc_data *vc, struct fb_info *info,
+ 	image.height = vc->vc_font.height;
+ 	image.depth = 1;
  
-@@ -189,6 +188,8 @@ static int mtk_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
+-	if (image.dy >= info->var.yres)
++	if (image.dy >= vyres)
+ 		return;
  
- 		/* transfer data */
- 		for (len = pmsg->len, j = 0; len > 0; len -= 8, j += 8) {
-+			u32 data[2] = { };
-+
- 			page_len = (len >= 8) ? 8 : len;
+-	image.height = min(image.height, info->var.yres - image.dy);
++	image.height = min(image.height, vyres - image.dy);
  
- 			if (pmsg->flags & I2C_M_RD) {
-@@ -197,7 +198,8 @@ static int mtk_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
- 			} else {
- 				memcpy(data, &pmsg->buf[j], page_len);
- 				iowrite32(data[0], i2c->base + REG_SM0D0_REG);
--				iowrite32(data[1], i2c->base + REG_SM0D1_REG);
-+				if (page_len > 4)
-+					iowrite32(data[1], i2c->base + REG_SM0D1_REG);
- 				cmd = SM0CTL1_WRITE;
- 			}
- 
-@@ -207,7 +209,8 @@ static int mtk_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
- 
- 			if (pmsg->flags & I2C_M_RD) {
- 				data[0] = ioread32(i2c->base + REG_SM0D0_REG);
--				data[1] = ioread32(i2c->base + REG_SM0D1_REG);
-+				if (page_len > 4)
-+					data[1] = ioread32(i2c->base + REG_SM0D1_REG);
- 				memcpy(&pmsg->buf[j], data, page_len);
- 			} else {
- 				if (!(pmsg->flags & I2C_M_IGNORE_NAK)) {
+ 	if (attribute) {
+ 		buf = kmalloc(cellsize, GFP_ATOMIC);
 -- 
 2.53.0
 
