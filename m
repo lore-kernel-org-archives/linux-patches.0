@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021267;
-	b=XZiwdr92B/2jm9Ed8QwBthwtK0kvz4aGezcjTV0BLm+7GJOOKt1NjaGae7Wn+YCkeY5M
-	 SIo2rp4XjgHdXidFVLhL3QhiZnOQfzsLJkITGGbcZPsKYQZzhYbPaSeML7wJ/20jgTGcG
-	 QzsP4dRRMhTeDC0fQOEdaAy7pq2Gt8lUbUpA4kF+A7KVKwrMIdCuCntPyBmBi3iTTUIyq
-	 6muizQ92KVIXOCLOdzgW8+WhtUC7X7WC0XXWDAFDFKtgDxX9TAUQGq1nQwrGZrY/S9KuU
-	 Ve0t/Hrq37qhARrqe4PxkPs+la0ps9YdmjQtwbJe64yksYoK1Cymcsjhrwcs+6q/2RA==
+	t=1795021270;
+	b=MV4DPKdXRmJ3CWURmzZKhiGKxI3RS1qcNWVy3hZOgrjxf2bJnQqSZQulVAUXsoVB7ltC
+	 GmTBku2T9366W49whAx2pP6EOaZP6fxOp/g/cukrNTrPcyvfRPhYpVjLkc1CWiUs+baFK
+	 448AWyAEp/vPqlP3mx16SJA0rOOHKGm/JhbRpUN/EvjSkCUyiFe+tpKVXYe3hzKM16R4T
+	 EYrFuxO8RtOTZCWclAgxjv0wiLl+oSL9C5DfPOT962aXUwnAtSj3RSZvDGIPMRMDehqIs
+	 To8sJvX0hrioac9Dx9Q77l/F8qn42rLYYqxWwJIB5Tk0XNrc0XNVJOO3ohLYdvG7gnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021267;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021270;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Lvuuh7ehMArgdQTfI+SP1F1dCp/g1pB7F/bmFIy0adA=;
-	b=qn8CGj7aP3eFWFxO2KZOeOaPMLrdNKwGLGkCSd2A8IwSt8WrcADL8/dK8n+y5d27AUB+
-	 iLe26txEL+CEzCxlwN7NS8o/KCD+X3bpWP9gfuP9tdV7TXfO7xP32/UHjIBvO7yBQAn0R
-	 rVj1yFtXvF4lQqhXR3y0jsouc55ewSr+cQcxIFUcaVGackAUd1pV318M74xvCzMC8DXdI
-	 s+N9bm6GgDO2jF9w+P5I5wvi5y4YFyNhvll3JR9+lXgSKIFT4LPk9PGYpJGSfOOddR1Nk
-	 43YqWdeT7Lc0iyILMIPleF/xbIh9OLw/GZV8R3tRHyVUnvBdsw19tNLDFIjt1U6e9YQ==
+	bh=0X5wqr5SRlunjjvOzisQt3ZwS3r32xxilZqXdhysJPg=;
+	b=4csz+sdsvsCkl6rtbF10KiJp8aCrJKc/i/OD0kq74Akrx3PddYaFy/SDq6zzGwJ23/qs
+	 i2lW6p+R8TnmiYRoPcoKtDyDZ6+GlIPNoxtDumMhsU/4fJEcdjO0mrTIh2COysHP9dtUI
+	 uZR4M+VG5Ogly8MVUlR1VqtpBpiso//XZKvnZvGJt2EfMw2SrRmn153BFUg2H40ExuGS2
+	 BFKRcktG12mi31ZkwjFUxe8zVhy5qLZvkQCG/gWH5YVsntlkDVbGAWgBQixDCOd4JV2FS
+	 FY/1mWP9HcDh7zMAmVUoIup1yYbPTV6UYFGo9bGAzp7bXzfmwwpv+Ewviej+EAlr72A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="rs/64aat";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RB8Ivi3j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8575A606A320;
-	Wed, 18 Nov 2026 17:01:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C99606A320;
+	Wed, 18 Nov 2026 17:01:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rs/64aat
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D510D1F000C4;
-	Wed, 18 Nov 2026 17:01:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RB8Ivi3j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A00361F000C4;
+	Wed, 18 Nov 2026 17:01:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021267;
-	bh=Lvuuh7ehMArgdQTfI+SP1F1dCp/g1pB7F/bmFIy0adA=;
+	s=korg; t=1795021270;
+	bh=0X5wqr5SRlunjjvOzisQt3ZwS3r32xxilZqXdhysJPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rs/64aatTrzTeNLNv+TzyLVK8EiTD9qQv4xu/T2thqttQl1c3Uj6m5m/5ULMiLLCB
-	 9JxEP83eyO4lboTOtf0gn+IMACw8Iu411uyMZeUnSBgn9iXS2n5HwXEwlQDOQIFy3Q
-	 NSRsfaOHG/W8xDZLg97GVpWuWhJHciLk+anRMh/g=
+	b=RB8Ivi3jGG0M0LmXIrqPsZ2ioLogbugKsuNeRQWINIYDtEQOA22GOqgDlBPghlaXa
+	 IY4Qncbx/a7v8AOndcE36kda57etePj9+rmdCXp/wpZm2WtI/hfZaG8KLVcdbvkQeO
+	 nubU3cMKNOr7tvxUGn90BdtnH4MLqaNbBsfBm7yU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sunny Tiwari <sunnytiwari@google.com>,
-	Jacob Moroni <jmoroni@google.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Rishikesh Jethwani <rjethwani@purestorage.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2229/2651] RDMA/irdma: Bound in-flight CQP ops across deferred completions
-Date: Wed, 18 Nov 2026 15:57:49 +0100
-Message-ID: <20261118150405.784398549@linuxfoundation.org>
+Subject: [PATCH 7.3 2247/2651] tls: device: protect async RX resync state during device-down
+Date: Wed, 18 Nov 2026 15:58:07 +0100
+Message-ID: <20261118150406.352873273@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,74 +68,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sunny Tiwari <sunnytiwari@google.com>
+From: Rishikesh Jethwani <rjethwani@purestorage.com>
 
-[ Upstream commit c3e8e9451e6f1b69f685b75e0fbf14f3d0fb2539 ]
+[ Upstream commit f89a228125238f8d4c7e2b8161e2a85fe35307b6 ]
 
-On IRDMA_GEN_3+ devices, CQP operations can complete in two stages:
-Stage-1 on the CCQ acknowledges receipt and moves an entry from
-cqp->ooo_avail to cqp->ooo_pnd, while Stage-2 signals final completion
-via an AEQ event or a subsequent CCQ CQE.
+tls_device_rx_resync_new_rec() can run in process context with the
+socket lock held, but without an RCU read lock: from the strparser work
+item (tls_strp_work()) and from the receive paths (tls_rx_rec_wait(),
+tls_rx_rec_done()). The resync_async pointer belongs to the driver RX
+context, which tls_device_down() tears down from the netdev notifier
+without taking the socket lock; only the softirq entry to the parser is
+implicitly inside an RCU section.
 
-In irdma_sc_ccq_get_cqe_info(), Stage-1 processing advances
-cqp->sq_ring.tail so the SQ descriptor slot can be reused once consumed
-by hardware, whereas cqp->completed_ops is only incremented on Stage-2.
-Because irdma_cqp_ring_full() only checks cqp->sq_ring, a burst of
-backlogged commands in dev->cqp_cmd_head allows irdma_process_bh() to
-submit more concurrent in-flight CQP commands than the maximum supported
-limit (cqp->sq_size - 1) while earlier commands await Stage-2. This
-causes CQP completions to be lost and synchronous waiters to time out
-with -ETIMEDOUT (-110).
+If the parser passes the TLS_RX_DEV_DEGRADED check before device-down
+sets it, tls_device_down() can complete synchronize_net() and delete the
+driver context before the parser accesses resync_async->req or its
+record log. In the asynchronous stage the parser also writes the record
+log, so this is a write to freed memory, not only a stale read. The RCU
+section in tls_device_resync_rx() starts after those accesses and
+therefore does not prevent the use-after-free.
 
-Fix this by:
-  - Updating irdma_cqp_ring_full() to bound total in-flight CQP
-    operations (cqp->requested_ops - cqp->completed_ops) to
-    (cqp->sq_size - 1).
-  - Calling irdma_process_bh() at the end of irdma_process_ae_def_cmpl()
-    so backlogged commands are drained after Stage-2 AEQ completions
-    increment cqp->completed_ops and free in-flight capacity.
+Found by code inspection; not reproduced. Hitting the window requires
+the parser to be preempted between the DEGRADED check and the
+resync_async access across the device-down grace period and the
+driver's teardown.
 
-Fixes: c7db0abe5f2b ("RDMA/irdma: Add GEN3 CQP support with deferred completions")
-Assisted-by: Gemini
-Signed-off-by: Sunny Tiwari <sunnytiwari@google.com>
-Link: https://patch.msgid.link/20261017052856.3570063-1-sunnytiwari@google.com
-Reviewed-by: Jacob Moroni <jmoroni@google.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: ed9b7646b06a ("net/tls: Add asynchronous resync")
+Signed-off-by: Rishikesh Jethwani <rjethwani@purestorage.com>
+Link: https://patch.msgid.link/20261013213517.2219663-1-rjethwani@purestorage.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/ctrl.c | 6 +++++-
- drivers/infiniband/hw/irdma/hw.c   | 1 +
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ net/tls/tls_device.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/infiniband/hw/irdma/ctrl.c b/drivers/infiniband/hw/irdma/ctrl.c
-index 970b61aa3e24f..ade451a4eb23e 100644
---- a/drivers/infiniband/hw/irdma/ctrl.c
-+++ b/drivers/infiniband/hw/irdma/ctrl.c
-@@ -5329,7 +5329,11 @@ int irdma_sc_static_hmc_pages_allocated(struct irdma_sc_cqp *cqp, u64 scratch,
-  */
- static bool irdma_cqp_ring_full(struct irdma_sc_cqp *cqp)
- {
--	return IRDMA_RING_FULL_ERR(cqp->sq_ring);
-+	u64 in_flight = cqp->requested_ops -
-+			atomic64_read(&cqp->completed_ops);
+diff --git a/net/tls/tls_device.c b/net/tls/tls_device.c
+index f11d0528fc431..69522aaeb7dc2 100644
+--- a/net/tls/tls_device.c
++++ b/net/tls/tls_device.c
+@@ -783,8 +783,15 @@ void tls_device_rx_resync_new_rec(struct sock *sk, u32 rcd_len, u32 seq)
+ 
+ 	if (tls_ctx->rx_conf != TLS_HW)
+ 		return;
 +
-+	return IRDMA_RING_FULL_ERR(cqp->sq_ring) ||
-+	       in_flight >= (cqp->sq_size - 1);
- }
++	/* The parser also runs in process context, without an RCU read lock.
++	 * Protect the driver's resync_async state before checking the flags:
++	 * device-down sets DEGRADED and waits for synchronize_net() before
++	 * freeing it, without taking the socket lock.
++	 */
++	rcu_read_lock();
+ 	if (unlikely(test_bit(TLS_RX_DEV_DEGRADED, &tls_ctx->flags)))
+-		return;
++		goto out;
  
- /**
-diff --git a/drivers/infiniband/hw/irdma/hw.c b/drivers/infiniband/hw/irdma/hw.c
-index b060ddc8b67bc..554f5d8962b9d 100644
---- a/drivers/infiniband/hw/irdma/hw.c
-+++ b/drivers/infiniband/hw/irdma/hw.c
-@@ -265,6 +265,7 @@ static void irdma_process_ae_def_cmpl(struct irdma_pci_f *rf,
- 		irdma_sc_cqp_def_cmpl_ae_handler(&rf->sc_dev, info, false,
- 						 &scratch, &sw_def_info);
+ 	prot = &tls_ctx->prot_info;
+ 	rx_ctx = tls_offload_ctx_rx(tls_ctx);
+@@ -799,11 +806,11 @@ void tls_device_rx_resync_new_rec(struct sock *sk, u32 rcd_len, u32 seq)
+ 
+ 		if (likely(!is_req_pending) || req_seq != seq ||
+ 		    !atomic64_try_cmpxchg(&rx_ctx->resync_req, &resync_req, 0))
+-			return;
++			goto out;
+ 		break;
+ 	case TLS_OFFLOAD_SYNC_TYPE_CORE_NEXT_HINT:
+ 		if (likely(!rx_ctx->resync_nh_do_now))
+-			return;
++			goto out;
+ 
+ 		/* head of next rec is already in, note that the sock_inq will
+ 		 * include the currently parsed message when called from parser
+@@ -812,7 +819,7 @@ void tls_device_rx_resync_new_rec(struct sock *sk, u32 rcd_len, u32 seq)
+ 		if (sock_data > rcd_len) {
+ 			trace_tls_device_rx_resync_nh_delay(sk, sock_data,
+ 							    rcd_len);
+-			return;
++			goto out;
+ 		}
+ 
+ 		rx_ctx->resync_nh_do_now = 0;
+@@ -823,16 +830,18 @@ void tls_device_rx_resync_new_rec(struct sock *sk, u32 rcd_len, u32 seq)
+ 		resync_req = atomic64_read(&rx_ctx->resync_async->req);
+ 		is_req_pending = resync_req;
+ 		if (likely(!is_req_pending))
+-			return;
++			goto out;
+ 
+ 		if (!tls_device_rx_resync_async(rx_ctx->resync_async,
+ 						resync_req, &seq, &rcd_delta))
+-			return;
++			goto out;
+ 		tls_bigint_subtract(rcd_sn, rcd_delta);
+ 		break;
  	}
-+	irdma_process_bh(&rf->sc_dev);
+ 
+ 	tls_device_resync_rx(tls_ctx, sk, seq, rcd_sn);
++out:
++	rcu_read_unlock();
  }
  
- /**
+ static void tls_device_core_ctrl_rx_resync(struct tls_context *tls_ctx,
 -- 
 2.53.0
 
