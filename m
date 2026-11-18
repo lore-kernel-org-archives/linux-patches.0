@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059074;
-	b=JI++cvvqWCghbBpy6JEzQFb62HZUExD4LeT87N1EzzAXY/OUVjI45oN6JMpFg5VyQcd8
-	 3NLhNN0Hr+Ip87YHDI800NsxKNe/tBJyf7mkrOlhLQJZZvrn+mf+4989SKfkBbt2r3M5s
-	 sBEZ79yXj9nMvg/4LBTvqH0G9CTrbXJknvHCi3cHCONe9SvG4T6TCBnoPnd2HnKZcd7Pj
-	 lGMQfB2qRRvmJqdcMOgeFZ1xDNuLiDNbgKF1npYSwBuGexAKWPQo1ZIAtHxh+ps78eMSU
-	 qCr9WhYHtYuCS3oonnReqtvOhS3tWpzb8rEZ6A1xxPhEsoOW2adaEH2ON7Oo93RXJqQ==
+	t=1795059077;
+	b=DS75qe0cPowOCvezrUUdK5VTxFNHOh5F8Po0/rJtle5DtQvfzK+Isu03jq0SSF/PBecL
+	 nzyCXSjvg7eVUph6cn9aI1yNmM4Xh2VCWT3FaqZh7C22MuuYewCmqycW5zvi8et5qLgJe
+	 MKbf03tBCpCC6OEuMq7+rsE8eDe3kKvN7HFc/fvgXhQL/PL0HJ5Ja2cfESH5rDl7TEDSX
+	 KX1Zbr0TtjFsdVlyUwpwWmfssFuuiQc4mAXSFNRskO+falvXaOBr6AulM6ELPky+04vDl
+	 f6/Ga0elThaj1RR3U7EMl+avtsIdvmM8HI8USXdFD+UnGXejaVQc/JjNC2JzCH8ukpg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059074;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059077;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LJIGYnmo9gb1e8SSiQ+wTh5UbZce9yN5IqFYPUTK/IE=;
-	b=E/E6Q+EmWm0Voj+3ezOK0S9CIoK6y7d+KoqhQvz10skFWrz96SJwFOC0G2o+v3POjso3
-	 3sWkXvZPecjmuFscbuTsDeGI4Vf4UqI4tE2MGoCa7zVX+YWVpWA9UJq16j0Rx0FxTX3Rc
-	 FDVH0sngge4kgsQghJR3EmsT5RoDY4adK3BwpBGsNF8vWQ17CDZZb9Xnu/tXNJ93W6ck/
-	 sfrTAhFqi8j9AF6fSnYQ6z3GEXRgyKGR9K1pL9crfao08iheENpeFFQEO2D43fb4dPHre
-	 5/PP8DyyIVlDZaVz7pe/T4q4PJ6ZE5Qhn5yHA+9OyxRu0ud/ieDJUah5AwYSTnw2r6g==
+	bh=PeYV/kIQg6xo2iC9FIkP7WM16SDlnCYlY4DLuuu7TGY=;
+	b=2EGuUiudiWbWq/l+eR/H8g7q+Wsqmm23FUXhYWHHixREvR4ik4gjgbTn8DTDSPptGBy8
+	 1fyqD891tFRn4EOOx0tQ+J0y6KXFCuvkASl5cYyP4UzcS6eWB0aWHdkIdPRIVe9EZoGML
+	 jp2duR/2aNDfwpV+6AeqyLTpXrnQymokg95qMsQOIMBm5fS/O4nLJd6LQPwqwloK5jAH0
+	 SRQCUA+MeBbYggEo9vs+DtuRag3w5NQSHhBKII9hmos1sTqII0+Sv+545ubb8Xwp2A4O/
+	 NwcRRpVj3iMqnkbgPrkq3gtACuVAAE7f8e4MDZDFZ+rUKOcNynH9+6f7AAvMo1VzmHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="z/s9lKTp";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gIaYaR38;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43864606A334;
-	Thu, 19 Nov 2026 03:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06013606A320;
+	Thu, 19 Nov 2026 03:31:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z/s9lKTp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9389F1F000C8;
-	Thu, 19 Nov 2026 03:31:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gIaYaR38
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B5091F000C5;
+	Thu, 19 Nov 2026 03:31:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059074;
-	bh=LJIGYnmo9gb1e8SSiQ+wTh5UbZce9yN5IqFYPUTK/IE=;
+	s=korg; t=1795059076;
+	bh=PeYV/kIQg6xo2iC9FIkP7WM16SDlnCYlY4DLuuu7TGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z/s9lKTp34x31l6s12CC8jT1vyo2ED6y64ulbPlVxeztVTcwp+gbEwQVtzs/ZAhWi
-	 5i4eFXzbq0juOcucMz2ZiiqL5MDcli3hqoNVfA65M9Nq+N54PLXK7V3KYTwyi3kfvT
-	 tpiUugG6w6FA/ZDjeDiNK+oow8MyDDqndHEocuM0=
+	b=gIaYaR38Wspvrx1SM3Waf3sriZr80y2tkMa7RirzXun5CiPPWHEQ6wrt5rchaQaRq
+	 /Ih+RncVu+/RJj+3K1x3aL4pA0OKzEOKrmgb3oTRExg4vnGqXb0O3tSv3tdC7b5mv/
+	 pNVnU/0OnlBsfiXTdlEXrPJmmFExSdSBK5LCJNlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Allison Henderson <achender@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sahaj Chaudhari <sahaj123.sc@gmail.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0670/1848] rds: fix out-of-bounds conn_path walks via handshake exthdrs
-Date: Wed, 18 Nov 2026 15:45:08 +0100
-Message-ID: <20261118145943.918001584@linuxfoundation.org>
+Subject: [PATCH 5.10 0671/1848] gpio: pca953x: Preserve wakeup accounting on parent IRQ failure
+Date: Wed, 18 Nov 2026 15:45:09 +0100
+Message-ID: <20261118145943.954418001@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,68 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Sahaj Chaudhari <sahaj123.sc@gmail.com>
 
-[ Upstream commit 50f2103fce43922b6e562937b2d2fc62089ff7ec ]
+[ Upstream commit a38bf551726a21c9bcc001b02164f30378b64b64 ]
 
-Both the lane and the connection-generation negotiation are driven by
-extension headers in handshake packets, and both are processed
-unconditionally, even on transports that are not multipath capable.
-A non-MP connection (t_mp_capable unset) owns exactly one
-rds_conn_path slot, so a peer claiming up to RDS_MPATH_WORKERS lanes
-makes every subsequent fan-out walk conn->c_path[0..7] at 504-byte
-strides past the single allocated slot (KASAN: "Read of size 8 in
-rds_conn_path_connect_if_down"); the generation negotiation opens a
-similar out-of-bounds walk on the same array.
+pca953x_irq_set_wake() updates wakeup_path before asking the parent
+IRQ controller to change its wake state. If irq_set_irq_wake() fails,
+the IRQ core rolls back its wake state but the driver's counter remains
+changed.
 
-Only process handshake extension headers when the connection's
-transport is multipath capable, so a peer can never make us walk
-lanes that do not exist.  Both call sites in rds_recv_incoming() are
-gated.
+A failed enable can therefore leave the expander marked as part of the
+wakeup path when no child IRQ has successfully enabled wakeup. A failed
+disable can make the driver stop retaining power even though wakeup is
+still enabled. The suspend and resume paths use this counter to decide
+whether to disable or enable the regulator.
 
-This is a port of the Oracle UEK fix for the same issue, picked up
-where Paula's series of the same change left off.
+Update wakeup_path only after the parent operation succeeds, leaving it
+unchanged on error.
 
-This issue was discovered by Tencent CodeBuddy Security.
-
+Fixes: f70fbc15bae2 ("gpio: pca953x: Configure wake-up path when wake-up is enabled")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/netdev/20260825120132.51636-1-pamoutafpro@gmail.com/
-Link: https://github.com/oracle/linux-uek/commit/2fdeb0513f18
-Fixes: 840df162b3eb ("rds: reduce memory footprint for RDS when transport is RDMA")
-Fixes: 905dd4184e07 ("RDS: TCP: Track peer's connection generation number")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20261012025336.54756-1-bsdhenrymartin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sahaj Chaudhari <sahaj123.sc@gmail.com>
+Fixes: f70fbc15bae2c89f ("gpio: pca953x: Configure wake-up path when wake-up is enabled")
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20261018161042.3298045-1-sahaj123.sc@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/recv.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpio/gpio-pca953x.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/rds/recv.c b/net/rds/recv.c
-index 24a82e335d5a6..f0238770ab7b8 100644
---- a/net/rds/recv.c
-+++ b/net/rds/recv.c
-@@ -342,7 +342,8 @@ void rds_recv_incoming(struct rds_connection *conn, struct in6_addr *saddr,
- 		rds_stats_inc(s_recv_ping);
- 		rds_send_pong(cp, inc->i_hdr.h_sport);
- 		/* if this is a handshake ping, start multipath if necessary */
--		if (RDS_HS_PROBE(be16_to_cpu(inc->i_hdr.h_sport),
-+		if (conn->c_trans->t_mp_capable &&
-+		    RDS_HS_PROBE(be16_to_cpu(inc->i_hdr.h_sport),
- 				 be16_to_cpu(inc->i_hdr.h_dport))) {
- 			rds_recv_hs_exthdrs(&inc->i_hdr, cp->cp_conn);
- 			rds_start_mprds(cp->cp_conn);
-@@ -350,7 +351,8 @@ void rds_recv_incoming(struct rds_connection *conn, struct in6_addr *saddr,
- 		goto out;
- 	}
+diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
+index 76c0c90647f66..ef69b7a01b585 100644
+--- a/drivers/gpio/gpio-pca953x.c
++++ b/drivers/gpio/gpio-pca953x.c
+@@ -645,13 +645,18 @@ static int pca953x_irq_set_wake(struct irq_data *d, unsigned int on)
+ {
+ 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+ 	struct pca953x_chip *chip = gpiochip_get_data(gc);
++	int ret;
++
++	ret = irq_set_irq_wake(chip->client->irq, on);
++	if (ret)
++		return ret;
  
--	if (be16_to_cpu(inc->i_hdr.h_dport) ==  RDS_FLAG_PROBE_PORT &&
-+	if (conn->c_trans->t_mp_capable &&
-+	    be16_to_cpu(inc->i_hdr.h_dport) ==  RDS_FLAG_PROBE_PORT &&
- 	    inc->i_hdr.h_sport == 0) {
- 		rds_recv_hs_exthdrs(&inc->i_hdr, cp->cp_conn);
- 		/* if this is a handshake pong, start multipath if necessary */
+ 	if (on)
+ 		atomic_inc(&chip->wakeup_path);
+ 	else
+ 		atomic_dec(&chip->wakeup_path);
+ 
+-	return irq_set_irq_wake(chip->client->irq, on);
++	return 0;
+ }
+ 
+ static void pca953x_irq_bus_lock(struct irq_data *d)
 -- 
 2.53.0
 
