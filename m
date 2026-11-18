@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044030;
-	b=407L9ChX2vzcL6dwHfbDq2sVEEueDM1Y//ClS/IJLDXgJcvDGfRNMbRKwlStUhVKtssj
-	 koRg1xyG4JiiFoORwq4MB2XRpNPSM0XLqOeViD5M98y1EryQkiFtD8/qjBUrHbrOoFvw+
-	 27pjiqLW0kunP1UAXalirJDJBSJl4DFEINzVYETXMBdni1xNV9ZwpAhZ+sNpZe39CU5lw
-	 ROUYJ3puadz82DqAGAWOSe9Fy0jJuFfLEtURNBKbKFU1mNezyYe2IdnfK5lFKSM8xA5h2
-	 oFI9wr0lrMxBM9uj5A/IZKcWJngh0pvQrnowwF3/2K43uFkP4/04nVDjU+XCG+GGxHA==
+	t=1795044033;
+	b=ZOop25jQsX/+5Kj0t4OwJ3mNnaLDJr9G6J2G3oKSwDfEN36qipTgsDRLRU1hHSR/q++P
+	 QSUeLioysNt4dYIQR0v6UjKY3yUT8vb0u7nn3uw9gAPBN9USLg2xc/PWppfTHfjxkPvVV
+	 MRIag4LigLPIvTne2UtApGbhRJp72A65lsT92mxeYp1dSM+COQFmi8F49GKpJclNbEjZ9
+	 h/S+2YGtZtF/uNhxJ+yxrEfO0ZQ9KgaozCG/ImcIxRclBk1l3m4cOz9Rm1Ffa3YdJxuah
+	 LakAKzfZEH4U3oacGFh7y4AcK5/q3oM/sA++Kzh4/5f0wJ53GxbBDOz1xUj3w/Sff2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044030;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044033;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JShibXonc5tc8iG2Bn1QmO6NBM+aN0N7+xhNYSkkNo8=;
-	b=00eOEmpkhW+hj0E11NyXkgTUyuGaDXrrOf2N28WU2NT8fXu9ooXX/x7sRw6ZvIlY/gN+
-	 MyofC+UwS0B5tn50IJLKcsMh1A3cT/wHCuFvAfvjuX7vYSKCbOr9zxFXF2v8OCqkoqohu
-	 hG2tT+FnrvzRZF0HeYjB5ZKwmA4Dk2tXsnmiujxEp5kT2lYqSMAQXZGZ1GjZRb6r+g9Gx
-	 4G0kTS8HJ7rfBYiJyDF/uiBhoe22DKV0q7pZ9iAIV3PoMEzneIy0q2d0oxzgRNwLxwz3p
-	 xTu5BDjBa4L/HJcJkE5iBR6xYQlqdMhxDJcqsQ1Kz8BaFrn03aUGxOkhiD4mYSVJg8w==
+	bh=Q7mfJ8KPZ91fWLDXGc+fRomsU/iprOG64yLU3jmW7Do=;
+	b=E5T+K742aNk6GAKSpcD//IiT87Lu4JNXHshcFyXKiQUWEe84d7jGoSx+DoozPp31cg/B
+	 etixyr04Ioz6krTgRGwWFahLYGX8UCfYkBjSYEx0Wj83rrgE6O5X3LQkcJOayCS/pQT6q
+	 2yO/CQfnRR6119ZD9n3A0ZW+v6NhkB7kBplEPcXAc2VqBvVfgX89lJWxnA313q0IgwlmH
+	 4JwNePwXpwBt0e5IgRQfTDYGRVpVvk693waXN0hj/uXjbddkvdsH2NrzrpsHDd0k5zBnw
+	 T7ltkcDdxWYvZZPhqkm9jRYMdD5wnLa0c+xdKEwzKQeXUU91v5msCsm4EW4Mh6QFCng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wiFMnMgF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FTfSpf5C;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F8B606A31C;
-	Wed, 18 Nov 2026 23:20:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF4C606A31C;
+	Wed, 18 Nov 2026 23:20:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wiFMnMgF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 171E71F000C4;
-	Wed, 18 Nov 2026 23:20:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FTfSpf5C
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE24C1F000C4;
+	Wed, 18 Nov 2026 23:20:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044030;
-	bh=JShibXonc5tc8iG2Bn1QmO6NBM+aN0N7+xhNYSkkNo8=;
+	s=korg; t=1795044033;
+	bh=Q7mfJ8KPZ91fWLDXGc+fRomsU/iprOG64yLU3jmW7Do=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wiFMnMgFUARscx54C5Kqiq4jKEgwTYSuMFafSQq3V8Jv2QqbW6Vxxo5HGelzjYkjR
-	 fughzCsQbZ3GcJGDVlnPqJwxzk4I/XsU8kTBo02oufVTalvGP1Z+I0ookOim/z52Kn
-	 rwFuYT0mYI6wChPN86Y0Uth8jK0fXYuIhQBct7ew=
+	b=FTfSpf5Ccg0R5iAx/cKy8Saf6WEX/D64Z4XeCWWyLWOUnCu9ghFiUulxSDvGtTNW0
+	 0zJjORKAman9VvLrpXpzE7k4Eh0tiL5ee0ycqVqvyEZvMRBx9rILnDWdlSG1Fu4mkw
+	 wN+fifEjEcRunjqPCuoRQc5c2sDqEfQvuXMwEsDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko AI <sashiko-bot@kernel.org>,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	sashiko-bot@kernel.org,
 	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0423/2857] tracing: Undo the registration when enabling the histogram trigger fails
-Date: Wed, 18 Nov 2026 15:24:17 +0100
-Message-ID: <20261118150216.616229478@linuxfoundation.org>
+Subject: [PATCH 6.1 0424/2857] tracing: Take trace_array reference when opening a tracer options file
+Date: Wed, 18 Nov 2026 15:24:18 +0100
+Message-ID: <20261118150216.651580951@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,118 +68,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 92383cef66791a0c63a2f27755cadbdb2fbf270b ]
+[ Upstream commit ed0aff60f83a9bdc2f6556376ac79c96b3ce7e80 ]
 
-Commit 6f86bdeab633 ("tracing: Fix bad hist from corrupting named_triggers
-list") described how a trigger that is registered but not on file->triggers
-ends up freed while still on the global named_triggers list, and moved the
-registration down so that hist_trigger_enable() follows it immediately. One
-path still gets there. hist_trigger_enable() adds the trigger and takes it
-straight back out when the event cannot be enabled:
+When a tracer option file is opened, it is passed a descriptor that points
+to an element on the trace_array's topts array. This element has
+information to find the trace array and other information. It uses this
+element to take a reference of the trace_array so that the trace_array
+does not get removed while this file is opened.
 
-	list_add_tail_rcu(&data->list, &file->triggers);
+Unfortunately, there's a race condition where the element itself could be
+freed by the removal of the instance the trace_array represents causing a
+use-after-free as this element that is used to find the trace_array to
+increment its reference counter is also freed when the instance is
+removed.
 
-	update_cond_flag(file);
+To solve this, add a trace_array_tracer_options_get() helper function that
+will take the address of the element that is passed to the open function
+by the inode->i_private pointer and search all the trace_arrays under a
+lock to find the one that the element's address is in the range of the
+trace_arrays topts array elements. When a match happens, that trace_array's
+reference would be increased.
 
-	if (trace_event_trigger_enable_disable(file, 1) < 0) {
-		list_del_rcu(&data->list);
-		update_cond_flag(file);
-		ret--;
-	}
-
-so the list walk in hist_unregister_trigger() matches nothing, test stays
-NULL, and the ->free() that would call del_named_trigger() is skipped.
-out_unreg falls through to out_free, which frees the trigger anyway:
-
- BUG: KASAN: slab-use-after-free in find_named_trigger+0xac/0xc0
- Read of size 8 at addr ffff8880091d3160 by task init/1
-  find_named_trigger+0xac/0xc0
-  hist_register_trigger+0xc1/0xa00
-  event_hist_trigger_parse+0x3146/0x6af0
-  event_trigger_write+0xce/0x160
- Freed by task 69:
-  kfree+0x154/0x420
-  trigger_kthread_fn+0xfd/0x160
-
-Leave the trigger where hist_unregister_trigger() can find it and let that
-undo the registration, which is the only code that knows all of what
-cmd_ops->init() took: the named list entry, the hist_pad reference, the
-reference on the trigger a named histogram is shared with, and the copied
-cmd_ops. It also pairs the failed trace_event_trigger_enable_disable(),
-whose sm_ref and buffered event reference are otherwise left behind.
-
-Since ->free() releases trigger_data and, for a trigger that does not share
-its histogram, hist_data with it, out_unreg can no longer fall through to
-out_free. For a trigger that does share, hist_register_trigger() has
-already destroyed the caller's hist_data, so the fall-through was reading
-freed memory there as well.
-
-Move the enable_timestamps check in hist_unregister_trigger() above the
-->free() call for the same reason: hist_data does not outlive it once the
-trigger being removed is the one that owns it.
+Note, there's a race where if an admin was deleting and creating trace
+instances at the same time and the memory of the old trace_array's array
+matched the memory of the new trace_array that it could in theory open the
+option from the wrong trace array. But we do not care because it would be
+stupid to perform that kind of action. As long as the only thing that can
+happen is that the option from the wrong trace array is used and doesn't
+crash the kernel it will only make the user confused. But if they are
+doing something stupid like this, they are already confused, so no harm
+done.
 
 Cc: stable@vger.kernel.org
-Fixes: 067fe038e70f ("tracing: Add variable reference handling to hist triggers")
-Reported-by: Sashiko AI <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/linux-trace-kernel/20260907092944.3950E1F00A3D@smtp.kernel.org/
-Link: https://patch.msgid.link/20260907124420.607097-3-donggeunyoo.kernel@gmail.com
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Link: https://patch.msgid.link/20260910221209.62dad8d3@robin
+Fixes: 7e2cfbd2d3c86 ("tracing: Have option files inc the trace array ref count")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/linux-trace-kernel/20260902121918.5a9e9d1b@gandalf.local.home/
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-[ sashal: Used test->ops->free instead of test->cmd_ops->free in hist_unregister_trigger(), since ->free lives in event_trigger_ops here. ]
+[ sashal: replaced the missing __trace_array_get() helper call with an open-coded tr->ref++; return 0; inside the already-locked list walk. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ kernel/trace/trace.c | 48 +++++++++++++++++++++++++++++++++++++++++++-
+ kernel/trace/trace.h |  1 +
+ 2 files changed, 48 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index e97369d462c00..a3b49b4b365aa 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -6302,11 +6302,12 @@ static int hist_trigger_enable(struct event_trigger_data *data,
- 
- 	update_cond_flag(file);
- 
--	if (trace_event_trigger_enable_disable(file, 1) < 0) {
--		list_del_rcu(&data->list);
--		update_cond_flag(file);
-+	/*
-+	 * On failure the caller undoes the registration, and
-+	 * hist_unregister_trigger() can only find the trigger here.
-+	 */
-+	if (trace_event_trigger_enable_disable(file, 1) < 0)
- 		ret--;
--	}
- 
- 	return ret;
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index bf8f3ca9df076..1d9625a95cc8e 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -8919,12 +8919,57 @@ trace_options_write(struct file *filp, const char __user *ubuf, size_t cnt,
+ 	return cnt;
  }
-@@ -6384,13 +6385,13 @@ static void hist_unregister_trigger(char *glob,
- 		}
- 	}
  
--	if (test && test->ops->free)
--		test->ops->free(test);
--
- 	if (hist_data->enable_timestamps) {
- 		if (!hist_data->remove || test)
- 			tracing_set_filter_buffering(file->tr, false);
- 	}
++static bool tr_option_match(struct trace_array *tr, void *topt)
++{
++	for (int i = 0; i < tr->nr_topts; i++) {
++		struct trace_options *tr_topts = &tr->topts[i];
 +
-+	if (test && test->ops->free)
-+		test->ops->free(test);
- }
++		if (topt >= (void *)&tr_topts->topts[0] &&
++		    topt < (void *)&tr_topts->topts[tr_topts->nr_topts])
++			return true;
++	}
++	return false;
++}
++
++/*
++ * The topt is the address of a trace_array->topts[] element that holds the
++ * the tracer options descriptor. But since the trace_array reference has not
++ * been taken yet, it cannot be dereferenced as it could have been freed by
++ * a rmdir of the instance the trace_array represents.
++ *
++ * Search the list of trace_arrays and compare the topt to the address of
++ * the entire trace_array topts array for each trace_array in the list.
++ * If one is matched, then take the reference and return it. If not, the
++ * trace_array no longer exits.
++ */
++static int trace_array_tracer_options_get(void *topt)
++{
++	struct trace_array *tr;
++	int ret;
++
++	ret = security_locked_down(LOCKDOWN_TRACEFS);
++	if (ret)
++		return ret;
++
++	if (tracing_disabled)
++		return -ENODEV;
++
++	guard(mutex)(&trace_types_lock);
++	list_for_each_entry(tr, &ftrace_trace_arrays, list) {
++		if (tr_option_match(tr, topt)) {
++			tr->ref++;
++			return 0;
++		}
++	}
++	return -ENODEV;
++}
++
+ static int tracing_open_options(struct inode *inode, struct file *filp)
+ {
+ 	struct trace_option_dentry *topt = inode->i_private;
+ 	int ret;
  
- static bool hist_file_check_refs(struct trace_event_file *file)
-@@ -6590,6 +6591,8 @@ static int event_hist_trigger_parse(struct event_command *cmd_ops,
- 	return ret;
-  out_unreg:
- 	event_trigger_unregister(cmd_ops, file, glob+1, trigger_data);
-+	/* The unregister frees trigger_data, skip out_free */
-+	goto out;
-  out_free:
- 	event_trigger_reset_filter(cmd_ops, trigger_data);
+-	ret = tracing_check_open_get_tr(topt->tr);
++	ret = trace_array_tracer_options_get(topt);
+ 	if (ret)
+ 		return ret;
  
+@@ -9208,6 +9253,7 @@ create_trace_option_files(struct trace_array *tr, struct tracer *tracer)
+ 	tr->topts = tr_topts;
+ 	tr->topts[tr->nr_topts].tracer = tracer;
+ 	tr->topts[tr->nr_topts].topts = topts;
++	tr->topts[tr->nr_topts].nr_topts = cnt;
+ 	tr->nr_topts++;
+ 
+ 	for (cnt = 0; opts[cnt].name; cnt++) {
+diff --git a/kernel/trace/trace.h b/kernel/trace/trace.h
+index f86b6f263ddf6..c6b3eba6899f6 100644
+--- a/kernel/trace/trace.h
++++ b/kernel/trace/trace.h
+@@ -202,6 +202,7 @@ struct array_buffer {
+ struct trace_options {
+ 	struct tracer			*tracer;
+ 	struct trace_option_dentry	*topts;
++	int				nr_topts;
+ };
+ 
+ struct trace_pid_list *trace_pid_list_alloc(void);
 -- 
 2.53.0
 
