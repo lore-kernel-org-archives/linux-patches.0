@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045049;
-	b=5HHuOCcU3i1lwlqjUrsO/C+7qZApw2WRdlSgRwD2hGUQG9uHZ/dC1Mxo8nPjtZFA8gbc
-	 1RkZh0BMNaI2/1+inVyDrUNnR4sYNR547XztmaGgyFCGgqHQG0up6uSYIcPmbKaYIoAqW
-	 JRHb68iUyl0fHo+s5pYE2amxAiNJ3TcBXWnzhk9IRIk5j0CX0T7KU0CJxU3JhYsdb+0+8
-	 jDAM4Hyo+Y7n6WU1NqSTvf4FH/RIKCoZEhhPs2zbLMARuHPRnseCX7XBldAf6phviXiMN
-	 Iw4kR3iScKRW26594TOj56ChGcP9izFy6hoL0XXvZImH0irwK4t77duPVCdnmsCSOnA==
+	t=1795045052;
+	b=uKtl3+0LNtFamoVKNAe5lZoSBy/HiEJbA2+ou7OxnMVW6+xVFLvhxKQ4reXttsFT43Fp
+	 cO0qVl1GF+rExUucCJNOr0LDp0WhsLau4VdzKaNTH/gCIK8IqWVjayb+6UN7wnrEGQlPs
+	 3iZrWBn+CX4LcwW5+yxpDpIZzqXnVGMUQtDNBiXTvmlHlD9cEUqs1rSir77+ViCLMAKfP
+	 n29X4eeR8VNlXobEtAWBU6o5UvcFKGOzKWbG7yTDVoX4Xjg601xmS3Q0FG3rJkbpv4e1z
+	 51Cr/szxSKefZpVFAI28tC/lH34kw2mrYle9LDwzSrJWRkV1ZcnYzlLo+5UfeXGjQlA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045049;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045052;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nG+43mqbJbFFwbhX35anllzS7Hj8RFua4n8BODhtuxg=;
-	b=v7yxE0PkCkveSyAn57vsMY49f6BT2hWYytKRkuzK/h1Sv/1rUNCYUf9Ox5L1qKedd/b6
-	 8uHr4Y8DVy2AbzZOHaWHfq7boplMhANqJlclip8Y1GAj+cxxUFAOasdPQL8WF6NBNzQAU
-	 ZF3T3FAd39csfO1cYxwTdpXfLqmFv/Xfd8tdx9t1LtAbch01FU7AmGFfV0u1XhGXMvKmZ
-	 0xVwbkdPZLe2XYne+eIBPzwJfgI2HYzBVehvuIx7n6x/RHD7dY3sGNesOA/gmC/L7tV/x
-	 o9mB8h11J0sPzTyvuoZ0BWZiRXp1QwkIoPna5V9DqCCwZ2bMIT0sfQvHecTQ7tyMHXA==
+	bh=Q7+ThQG0MuocrQK7HcEgElG/e6bJCuBs+PP/82LLJ/g=;
+	b=O3N5fM2xSeXr/RWthN2AiZ4Zs5vrOi7Mbtb0IoTaS67frX849zVyQ5FvDOAOSVRkIes/
+	 OC/Nja4xf8wtATlArNF4ukMCycZO5WuGjDqermzlnWn/yrK7rE9jXw89rCy+RRMEtZZDN
+	 936I7R5s7oafkm1aW3s+OgnNV1Amuar3iXVTOuFJFlIwNTHZbRKoRH4cbmMw6js+FTuVb
+	 QQfcF02fiYjpq8UOCma6epLpPqyuMgvHqaAKlrZZa+nvVszV8wb4e2tNVzm4t5inMsPGR
+	 StheZHtoCXNuCLj6yDDBVUEKzPtjrVuVqCX7rzJhYz0BagJU3VX6ks1fqwycdB/oDFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c63RHIWb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oupghkpE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE3D606A320;
-	Wed, 18 Nov 2026 23:37:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB08606A325;
+	Wed, 18 Nov 2026 23:37:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c63RHIWb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBC5E1F000C5;
-	Wed, 18 Nov 2026 23:37:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oupghkpE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 806521F000C4;
+	Wed, 18 Nov 2026 23:37:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045049;
-	bh=nG+43mqbJbFFwbhX35anllzS7Hj8RFua4n8BODhtuxg=;
+	s=korg; t=1795045052;
+	bh=Q7+ThQG0MuocrQK7HcEgElG/e6bJCuBs+PP/82LLJ/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c63RHIWb8pjXeg5SGj927m6eZFhH3od51Sy6mDMKxUU3OwPUOSqbKp1EbrnH+rWzg
-	 7beNkytNliG9KZ+SJcXMwfSKe+VAmKYM8AjWUfGYddkdCzcnCl161UujK81JKpwmge
-	 kN/DZow5gk35ZGbbV1106euFSt3LtuUb/S+9BG8o=
+	b=oupghkpEH2d3fgbd21VgP1qEQEeZku1E2pmGvt9N/RqmA6tjaXBhCyTm/XHHkCkZO
+	 G+TgUqooUNOHM/wFaf992XhHuL/eT19Ld+ppBWaOuHASE2oDTjH4WyUR4lEWQVWTrs
+	 fpMlr359F8yPXEE3s1VZMCqO6Jl76OuSstrPTePI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Farhad Alemi <farhad.alemi@berkeley.edu>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0735/2857] media: cx231xx: Fix cleanup path on failure
-Date: Wed, 18 Nov 2026 15:29:29 +0100
-Message-ID: <20261118150228.017051201@linuxfoundation.org>
+Subject: [PATCH 6.1 0736/2857] media: au0828: Free URBs when starting DVB streaming fails
+Date: Wed, 18 Nov 2026 15:29:30 +0100
+Message-ID: <20261118150228.052542417@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,56 +68,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andi Shyti <andi.shyti@kernel.org>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 6e30287eaf3e41b86dfb86df3b811526693d74b4 ]
+[ Upstream commit b8dd133d96a40012f4b67fd48d8ddd7306a3e024 ]
 
-If cx231xx_init_v4l2() fails the probe currently jumps to
-err_init, which only unregisters the V4L2 device. The analog
-devices and I2C resources are left registered while the driver
-state can be released.
+start_urb_transfer() stores each allocated URB in dev->urbs[], but sets
+urb_streaming only after all URBs have been submitted. If a later URB or
+transfer buffer allocation fails, earlier entries are left allocated. A
+submission failure calls stop_urb_transfer(), but that function returns
+immediately while urb_streaming is false, leaving both submitted and
+unsubmitted URBs behind.
 
-A subsequent driver bind attempts to create the same I2C mux
-channel links and triggers a warning when the existing
-"channel-0" link is encountered. The remaining devices may also
-access released driver state. This produces the following warning
+Make stop_urb_transfer() release every populated slot regardless of the
+streaming flag and clear each slot after release. Route all start errors
+through this cleanup. usb_kill_urb() safely handles both submitted and
+unsubmitted URBs, while the existing preallocation check preserves the
+lifetime of shared transfer buffers.
 
-    can't create symlink to channel 0
-    WARNING: drivers/i2c/i2c-mux.c:403 at i2c_mux_add_adapter+0xcd8/0xeb0
-    Call Trace:
-     i2c_mux_add_adapter+0xcdc/0xeb0
-     cx231xx_dev_init+0x2fb/0x1260
-     cx231xx_usb_probe+0xc48/0x2140
-     usb_probe_interface+0x657/0xc70
-     ...
+This issue was found by a static analysis checker and confirmed by
+manual source review.
 
-Jump to err_video_alt instead, which performs the full device
-cleanup before unregistering the V4L2 device.
-
-Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
-Closes: https://github.com/farhad-alemi/public_bug_reports/tree/main/185-warning-in-i2c-mux-add-adapter/
-Fixes: 4d2a7d3509f5 ("[media] cx231xx: move analog init code to a separate function")
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Cc: <stable@vger.kernel.org> # v3.17+
+Fixes: 265a6510629a ("V4L/DVB (7621): Add support for Hauppauge HVR950Q/HVR850/FusioHDTV7-USB")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/cx231xx/cx231xx-cards.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/au0828/au0828-dvb.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/media/usb/cx231xx/cx231xx-cards.c b/drivers/media/usb/cx231xx/cx231xx-cards.c
-index 64c3cb8fc2bf0..623c3106ef3ee 100644
---- a/drivers/media/usb/cx231xx/cx231xx-cards.c
-+++ b/drivers/media/usb/cx231xx/cx231xx-cards.c
-@@ -1830,7 +1830,7 @@ static int cx231xx_usb_probe(struct usb_interface *interface,
+diff --git a/drivers/media/usb/au0828/au0828-dvb.c b/drivers/media/usb/au0828/au0828-dvb.c
+index ead2fe0ed23bd..5d8436af8a695 100644
+--- a/drivers/media/usb/au0828/au0828-dvb.c
++++ b/drivers/media/usb/au0828/au0828-dvb.c
+@@ -163,9 +163,6 @@ static int stop_urb_transfer(struct au0828_dev *dev)
  
- 	retval = cx231xx_init_v4l2(dev, udev, interface, isoc_pipe);
- 	if (retval)
--		goto err_init;
-+		goto err_video_alt;
+ 	dprintk(2, "%s()\n", __func__);
  
- 	if (dev->current_pcb_config.ts1_source != 0xff) {
- 		/* compute alternate max packet sizes for TS1 */
+-	if (!dev->urb_streaming)
+-		return 0;
+-
+ 	if (dev->bulk_timeout_running == 1) {
+ 		dev->bulk_timeout_running = 0;
+ 		del_timer(&dev->bulk_timeout);
+@@ -179,6 +176,7 @@ static int stop_urb_transfer(struct au0828_dev *dev)
+ 				kfree(dev->urbs[i]->transfer_buffer);
+ 
+ 			usb_free_urb(dev->urbs[i]);
++			dev->urbs[i] = NULL;
+ 		}
+ 	}
+ 
+@@ -200,8 +198,10 @@ static int start_urb_transfer(struct au0828_dev *dev)
+ 	for (i = 0; i < URB_COUNT; i++) {
+ 
+ 		dev->urbs[i] = usb_alloc_urb(0, GFP_KERNEL);
+-		if (!dev->urbs[i])
+-			return -ENOMEM;
++		if (!dev->urbs[i]) {
++			ret = -ENOMEM;
++			goto err;
++		}
+ 
+ 		purb = dev->urbs[i];
+ 
+@@ -217,7 +217,7 @@ static int start_urb_transfer(struct au0828_dev *dev)
+ 			ret = -ENOMEM;
+ 			pr_err("%s: failed big buffer allocation, err = %d\n",
+ 			       __func__, ret);
+-			return ret;
++			goto err;
+ 		}
+ 
+ 		purb->status = -EINPROGRESS;
+@@ -235,10 +235,9 @@ static int start_urb_transfer(struct au0828_dev *dev)
+ 	for (i = 0; i < URB_COUNT; i++) {
+ 		ret = usb_submit_urb(dev->urbs[i], GFP_ATOMIC);
+ 		if (ret != 0) {
+-			stop_urb_transfer(dev);
+ 			pr_err("%s: failed urb submission, err = %d\n",
+ 			       __func__, ret);
+-			return ret;
++			goto err;
+ 		}
+ 	}
+ 
+@@ -249,6 +248,10 @@ static int start_urb_transfer(struct au0828_dev *dev)
+ 	dev->bulk_timeout_running = 1;
+ 
+ 	return 0;
++
++err:
++	stop_urb_transfer(dev);
++	return ret;
+ }
+ 
+ static void au0828_start_transport(struct au0828_dev *dev)
 -- 
 2.53.0
 
