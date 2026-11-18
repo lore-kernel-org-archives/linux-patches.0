@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049541;
-	b=wBM+59KJRe5yM9nnRVye6uGFbO00Pn1w+f9vxVuu+6YRrvv+HSwgpqPx1omtt6W6FRa8
-	 EqrwkSX3JD6sq6NCecZjndP/Mk4CvTd/mz5aUDdfs8n2BUXuwS3GUC90hc2wZHmHlGo1l
-	 y40HH327wH02tN3/k9iH7XaFEGZ8CgQUKo5gD8cQJPfPvSHxwLacDKg3UVPTrJYtoFKuY
-	 7rw9LtBFiRuW0nZPgUyauLsNKfwWtefkKR2NeuZZ3SeHsd3oWVR3CCG7vRB26lmx1429p
-	 r6hjQsgE8c1NzJxB8Rjj74anq36UT6O38RJ7P45a+Gp54jTqksjh5mpiYz6Yof+WO9g==
+	t=1795049544;
+	b=ETTlapYaXCsktgHfIJLoso49qOd7B1bLzg2fT2NDZ6p/IpPqgBv23/5QJOpyTqqKgW3b
+	 IkxqbSjDxK1iO1zHlZvvL3sSNPRlbYYrp5M24mB9fKA6flQDQYT0WeWSKr6c9iCnSVVYh
+	 Zl48E5KNKhZm81KvUneHdxj2WLEmjvqZO6vy0TTivOTx1G0C12bN2dtWCR1FYnn/7/uVg
+	 ThP4dFVzryvdxvQUvNADl5/6EjiQmby6Sxv24MA/hRTm7cRQSO/ioXIBILHsvutjfxXgo
+	 B3wTMYzSkM7Q5zlwVIcsQVu2vIP6hh+oo8QzNw76Oa56Sq1cT1awJsgTt5CEQfaiGSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049541;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049544;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AzMzAAo2yDk0tsf5QMcX2WVoLjQibaW+P+99c/WQAfc=;
-	b=NKEsemPa7DoBQziF8N0IpW6C4zx8wKwmd2AS1iPCfPi8PhsYkR4ZwMzuLIyxGVhvcyli
-	 nruRRks6TAU6zNRQmrKXEZQmT/6u/Z4QvLG9vWyx0rJJ8uHeGe834Od+UIBeFOhd60SF9
-	 qs9vpdNcIVIH4YS/LqVHZd+rcdEbPatv6/RnwHhk0GJ1Kbb7BrZ2y2veDg3DQ0QaIumGW
-	 qcYA5lgFyZTiacm+fA7rV8L1OsgdgUqXTGJq7g93/UsOiq4jcZs+cQaqIF8oeqmC3MKp5
-	 Uccxwym7f2Rl7TOjt+8RgSNRVyvAVSW7Z8UhRS8FIAItyWmfXCyji5qNMjj/YWtwecw==
+	bh=lJ43fpJvwPI97q/3jciOyu/jeCZ/oBJG7Ic/+Y7CIss=;
+	b=pazQ4gBkAa1GyZY7KonTaBzzAyaYjqL8jSC5sSg5NwXtI53+f3cC66RBjWtvQJi1khSe
+	 wSa1jtVfZIMOe9BQTXGD20zOlKPZEBRZnxpZXLDgrwb7NB385ghw2bILMqB2o0JIAqxbb
+	 b+iFt/VAAwZIYwSN7k50GsyxWnBe3Xf04bBS06n2tiiftjuTP/93GPw1OLP+xaDBHu4EW
+	 +aSuRnMASsULPTKw1nJcKGI+i7IrLlNnNUesQT8TG7S4e6/+huyWAQ9acA6780lpjgYEq
+	 /BCpL6zE94mzZOkdAiRF6VX8epGgLuBlqmzff94uSd+5lVozD1Y9ESXuFzPSq3oKgeQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2sKCPlms;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jJn4khlq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52884606A31C;
-	Thu, 19 Nov 2026 00:52:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F216606A31C;
+	Thu, 19 Nov 2026 00:52:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2sKCPlms
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A81491F000C4;
-	Thu, 19 Nov 2026 00:52:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jJn4khlq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C0BF1F000C4;
+	Thu, 19 Nov 2026 00:52:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049541;
-	bh=AzMzAAo2yDk0tsf5QMcX2WVoLjQibaW+P+99c/WQAfc=;
+	s=korg; t=1795049544;
+	bh=lJ43fpJvwPI97q/3jciOyu/jeCZ/oBJG7Ic/+Y7CIss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2sKCPlms9ARinoP2MWWI4/VngQxhTSQDm6TB3JZh5G+aiRGD9bp2YDhBrKadAjYe6
-	 P3S32lwIo/g9u1viIoydKKegr5V1nwWkYfhQt0qY91oPcpMcWjSyN6TgwzfJ1UaXPM
-	 r6KY2h/FsjbFz7Iai6EgTJXsvFrubYjIh7XOhsuE=
+	b=jJn4khlqz0awuGmmEH3k2Af32TbfkgBCycpjhsypdpVD7itDVmFYk1puVrGst3JtW
+	 L4NSGb5p44L2SipF5v7qgC+iysGPKcZ/p4CDBYSnVpzRiB9W9zfP3sklP8T9S22VkY
+	 iJQ1PTNnFNWkweMh5876oZZQCiGL2qxU0fgtG3Ls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Mark Zhang <markzhang@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2388/2857] ALSA: jack: Remove debugfs before freeing unregistered jacks
-Date: Wed, 18 Nov 2026 15:57:02 +0100
-Message-ID: <20261118150327.507556530@linuxfoundation.org>
+Subject: [PATCH 6.1 2362/2857] RDMA/mlx5: Support driver APIs pre_destroy_cq and post_destroy_cq
+Date: Wed, 18 Nov 2026 15:56:36 +0100
+Message-ID: <20261118150326.568259418@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,187 +68,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Mark Zhang <markzhang@nvidia.com>
 
-[ Upstream commit d3b59d50e1ff206aa519ed5c13bf6907f97dd6a6 ]
+[ Upstream commit b5eeb8365d196c95dbb0fd0a5b5a69a44832f16f ]
 
-Jack debugfs files store a raw snd_jack_kctl pointer, so their
-callbacks must be drained before the attachment is freed.
-snd_jack_dev_free() unlinks and frees the attachments before calling
-snd_jack_dev_disconnect(). Its late snd_jack_remove_debugfs() call
-then has no entries left to traverse.
+- pre_destroy_cq: Destroy FW CQ object so that no new CQ event would
+                  be generated;
+- post_destroy_cq: Release all resources.
 
-With CONFIG_SND_JACK_INJECTION_DEBUG and input support enabled, an
-HDA codec rebind on a live card can publish a non-phantom jack's type
-file while its component is still in SNDRV_DEV_BUILD. A later
-jack-control allocation failure permits the following order:
+This patch, along with last one, fixes the crash below.
 
-  1. hda_codec_driver_probe() creates a jack and publishes its debugfs
-     files before reaching snd_card_register().
-  2. A later control-build failure calls
-     snd_hda_codec_cleanup_for_unbind(), then snd_hda_jack_tbl_clear()
-     and snd_device_free(). __snd_device_disconnect() skips BUILD
-     components. snd_jack_dev_free() frees the attachment before its
-     late disconnect, leaving the debugfs files published.
-  3. After cleanup, a reader opens the surviving type file and
-     jack_type_read() dereferences the freed attachment's jack pointer.
+ Unable to handle kernel paging request at virtual address ffff8000114b1180
+ Mem abort info:
+   ESR = 0x96000047
+   EC = 0x25: DABT (current EL), IL = 32 bits
+   SET = 0, FnV = 0
+   EA = 0, S1PTW = 0
+ Data abort info:
+   ISV = 0, ISS = 0x00000047
+   CM = 0, WnR = 1
+ swapper pgtable: 4k pages, 48-bit VAs, pgdp=00000000f4582000
+ [ffff8000114b1180] pgd=00000447fffff003, p4d=00000447fffff003, pud=00000447ffffe003, pmd=00000447ffffb003, pte=0000000000000000
+ Internal error: Oops: 96000047 [#1] SMP
+ Modules linked in: udp_diag uio_pci_generic uio tcp_diag inet_diag binfmt_misc sn_core_odd(OE) rpcrdma(OE) xprtrdma(OE) ib_isert(OE) ib_iser(OE) ib_srpt(OE) ib_srp(OE) ib_ipoib(OE) kpatch_9658536(OK) kpatch_9322385(OK) kpatch_8843421(OK) kpatch_8636216(OK) vfat fat aes_ce_blk crypto_simd cryptd aes_ce_cipher crct10dif_ce ghash_ce sm4_ce sha2_ce sha256_arm64 sha1_ce sbsa_gwdt sg acpi_ipmi ipmi_si ipmi_msghandler m1_uncore_ddrss_pmu m1_uncore_cmn_pmu team_yosemite9rc6(OE) vnic(OE) ip_tables mlx5_ib(OE) sd_mod ast mlx5_core(OE) i2c_algo_bit drm_vram_helper psample drm_kms_helper mlxdevm(OE) auxiliary(OE) mlxfw(OE) syscopyarea sysfillrect tls sysimgblt fb_sys_fops drm_ttm_helper nvme ttm nvme_core drm t10_pi i2c_designware_platform i2c_designware_core i2c_core ahci libahci libata rdma_ucm(OE) ib_uverbs(OE) rdma_cm(OE) iw_cm(OE) ib_cm(OE) ib_umad(OE) ib_core(OE) ib_ucm(OE) mlx_compat(OE) [last unloaded: ipmi_devintf]
+ CPU: 83 PID: 59375 Comm: kworker/u253:1 Kdump: loaded Tainted: G           OE K   5.10.84-004.ali5000.alios7.aarch64 #1
+ Hardware name: Inspur AliServer-Xuanwu2.0AM-02-2UM1P-5B/AS1221MG1, BIOS 1.2.M1.AL.P.158.00 08/31/2023
+ Workqueue: ib-comp-unb-wq ib_cq_poll_work [ib_core]
+ pstate: 82c00089 (Nzcv daIf +PAN +UAO +TCO BTYPE=--)
+ pc : native_queued_spin_lock_slowpath+0x1c4/0x31c
+ lr : mlx5_ib_poll_cq+0x18c/0x2f8 [mlx5_ib]
+ sp : ffff80002be1bc80
+ x29: ffff80002be1bc80 x28: ffff000810e69000
+ x27: ffff000810e69000 x26: ffff000810e69200
+ x25: 0000000000000000 x24: ffff8000117db000
+ x23: ffff04000156b780 x22: 0000000000000000
+ x21: ffff04000ce6c160 x20: ffff0008196a4000
+ x19: 0000000000000010 x18: 0000000000000020
+ x17: 0000000000000000 x16: 0000000000000000
+ x15: ffff040055a364e8 x14: ffffffffffffffff
+ x13: ffff80002318bda8 x12: ffff0400358836e8
+ x11: 0000000000000040 x10: 0000000000000eb0
+ x9 : 0000000000000000 x8 : 0000000000000000
+ x7 : ffff04477fa20140 x6 : ffff8000114b1140
+ x5 : ffff04477fa20140 x4 : ffff8000114b1180
+ x3 : ffff000810e69200 x2 : ffff8000114b1180
+ x1 : 0000000001500000 x0 : ffff04477fa20148
+ Call trace:
+  native_queued_spin_lock_slowpath+0x1c4/0x31c
+  __ib_process_cq+0x74/0x1b8 [ib_core]
+  ib_cq_poll_work+0x34/0xa0 [ib_core]
+  process_one_work+0x1d8/0x4b0
+  worker_thread+0x180/0x440
+  kthread+0x114/0x120
+ Code: 910020e0 8b0400c4 f862d929 aa0403e2 (f8296847)
+ ---[ end trace 387be2290557729c ]---
+ Kernel panic - not syncing: Oops: Fatal exception
+ SMP: stopping secondary CPUs
+ Kernel Offset: disabled
+ CPU features: 0x9850817,7a60aa38
+ Memory Limit: none
+ Starting crashdump kernel...
+ Bye!
 
-The card's debugfs root remains live throughout this sequence. The
-result is a use-after-free even without an overlapping read. An
-already admitted callback is also not drained by this cleanup.
-
-Call snd_jack_remove_debugfs() before unlinking any controls in the
-free callback. The existing debugfs_remove() rundown blocks new
-accesses and waits for active callbacks while the attachment, control
-and jack remain valid. Roots cleared by an earlier disconnect are
-NULL, so repeating the removal is harmless.
-
-KASAN report as below:
-
-    ==================================================================
-    BUG: KASAN: slab-use-after-free in jack_type_read+0x1da/0x1f0
-    Read of size 8 at addr ffff8881085f9da0 by task python3/429
-
-    CPU: 2 UID: 0 PID: 429 Comm: python3 Not tainted 7.2.0-rc6-pmb-alsa-functional-v2+ #1 PREEMPT(lazy)
-    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x93/0xd0
-     print_report+0xce/0x630
-     ? jack_type_read+0x1da/0x1f0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __virt_addr_valid+0x20d/0x410
-     ? jack_type_read+0x1da/0x1f0
-     kasan_report+0xe0/0x110
-     ? jack_type_read+0x1da/0x1f0
-     jack_type_read+0x1da/0x1f0
-     ? __pfx_jack_type_read+0x10/0x10
-     ? __pfx___debugfs_file_get+0x10/0x10
-     ? __pfx_cp_new_stat+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? selinux_file_permission+0x122/0x570
-     full_proxy_read+0x11f/0x180
-     ? __pfx_full_proxy_read+0x10/0x10
-     vfs_read+0x1a0/0xc20
-     ? __pfx_vfs_read+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __do_sys_newfstat+0xa6/0x100
-     ? find_held_lock+0x2b/0x80
-     ? __pfx___do_sys_newfstat+0x10/0x10
-     ksys_read+0x111/0x200
-     ? __pfx_ksys_read+0x10/0x10
-     ? full_proxy_llseek+0x11e/0x170
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-    RIP: 0033:0x7f7e392e7687
-    Code: 48 89 fa 4c 89 df e8 58 b3 00 00 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b> c3 0f 1f 80 00 00 00 00 83 e2 39 83 fa 08 75 de e8 23 ff ff ff
-    RSP: 002b:00007fff5f7b9180 EFLAGS: 00000202 ORIG_RAX: 0000000000000000
-    RAX: ffffffffffffffda RBX: 00007f7e39253780 RCX: 00007f7e392e7687
-    RDX: 0000000000002000 RSI: 000000003d2e9b00 RDI: 0000000000000003
-    RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
-    R10: 0000000000000000 R11: 0000000000000202 R12: 00007f7e39253700
-    R13: 0000000000002000 R14: 00007f7e38d7e2c0 R15: 0000000000a55b98
-     </TASK>
-
-    Allocated by task 425:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     __kasan_kmalloc+0xaa/0xb0
-     __kmalloc_cache_noprof+0x251/0x610
-     snd_jack_kctl_new+0x80/0x180
-     snd_jack_new+0x4b/0x490
-     snd_hda_jack_add_kctl_mst+0x19b/0x610
-     add_jack_kctl+0x204/0x320
-     snd_hda_jack_add_kctls+0x212/0x910
-     snd_hda_gen_build_controls+0x233/0x600
-     snd_hda_codec_build_controls+0x2e4/0x9f0
-     hda_codec_driver_probe+0x26e/0x590
-     really_probe+0x21f/0xa90
-     __driver_probe_device+0x1ec/0x490
-     device_driver_attach+0xdc/0x210
-     bind_store+0xec/0x180
-     drv_attr_store+0x79/0xb0
-     sysfs_kf_write+0xed/0x140
-     kernfs_fop_write_iter+0x34b/0x500
-     vfs_write+0x637/0x1010
-     ksys_write+0x111/0x200
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    Freed by task 425:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     kasan_save_free_info+0x3b/0x60
-     __kasan_slab_free+0x5f/0x80
-     kfree+0x307/0x580
-     snd_jack_kctl_private_free+0x153/0x200
-     __snd_ctl_remove+0x29f/0x3b0
-     snd_ctl_remove+0x46/0x70
-     snd_jack_dev_free+0x1b1/0x370
-     __snd_device_free+0x193/0x3f0
-     snd_device_free+0xcf/0x190
-     snd_hda_jack_tbl_clear+0x159/0x2e0
-     snd_hda_codec_cleanup_for_unbind+0x37e/0x9c0
-     hda_codec_driver_probe+0x3ae/0x590
-     really_probe+0x21f/0xa90
-     __driver_probe_device+0x1ec/0x490
-     device_driver_attach+0xdc/0x210
-     bind_store+0xec/0x180
-     drv_attr_store+0x79/0xb0
-     sysfs_kf_write+0xed/0x140
-     kernfs_fop_write_iter+0x34b/0x500
-     vfs_write+0x637/0x1010
-     ksys_write+0x111/0x200
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    The buggy address belongs to the object at ffff8881085f9d80
-     which belongs to the cache kmalloc-64 of size 64
-    The buggy address is located 32 bytes inside of
-     freed 64-byte region [ffff8881085f9d80, ffff8881085f9dc0)
-
-    The buggy address belongs to the physical page:
-    page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x1085f9
-    flags: 0x200000000000000(node=0|zone=2)
-    page_type: f5(slab)
-    raw: 0200000000000000 ffff8881000428c0 dead000000000100 dead000000000122
-    raw: 0000000000000000 0000000000200020 00000000f5000000 0000000000000000
-    page dumped because: kasan: bad access detected
-
-    Memory state around the buggy address:
-     ffff8881085f9c80: 00 00 00 00 00 00 00 00 fc fc fc fc fc fc fc fc
-     ffff8881085f9d00: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-    >ffff8881085f9d80: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-                                   ^
-     ffff8881085f9e00: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-     ffff8881085f9e80: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-    ==================================================================
-
-Fixes: 495000a38634 ("ALSA: core: Remove debugfs at disconnection")
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/pm-pmb-e1e7490bbe7ba1b3c44a-v2-3e3b6315a18c02ced60d@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Mark Zhang <markzhang@nvidia.com>
+Link: https://patch.msgid.link/aaf0072f350d1c7e8731f43b79e11a560bafb9e0.1750070205.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: a0ab2bb269e7 ("RDMA/mlx5: Cancel software CQ notifications before teardown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/jack.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/infiniband/hw/mlx5/cq.c      | 19 +++++++++++++++----
+ drivers/infiniband/hw/mlx5/main.c    |  2 ++
+ drivers/infiniband/hw/mlx5/mlx5_ib.h |  2 ++
+ 3 files changed, 19 insertions(+), 4 deletions(-)
 
-diff --git a/sound/core/jack.c b/sound/core/jack.c
-index e4bcecdf89b7e..174571e130823 100644
---- a/sound/core/jack.c
-+++ b/sound/core/jack.c
-@@ -67,6 +67,9 @@ static int snd_jack_dev_free(struct snd_device *device)
- 	struct snd_card *card = device->card;
- 	struct snd_jack_kctl *jack_kctl, *tmp_jack_kctl;
+diff --git a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c
+index b5c2e0e1d82b2..3d50fd28b227f 100644
+--- a/drivers/infiniband/hw/mlx5/cq.c
++++ b/drivers/infiniband/hw/mlx5/cq.c
+@@ -1047,20 +1047,31 @@ int mlx5_ib_create_cq(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
+ 	return err;
+ }
  
-+	/* Remove debugfs while the controls are still linked. */
-+	snd_jack_remove_debugfs(jack);
+-int mlx5_ib_destroy_cq(struct ib_cq *cq, struct ib_udata *udata)
++int mlx5_ib_pre_destroy_cq(struct ib_cq *cq)
+ {
+ 	struct mlx5_ib_dev *dev = to_mdev(cq->device);
+ 	struct mlx5_ib_cq *mcq = to_mcq(cq);
 +
- 	list_for_each_entry_safe(jack_kctl, tmp_jack_kctl, &jack->kctl_list, list) {
- 		list_del_init(&jack_kctl->list);
- 		snd_ctl_remove(card, jack_kctl->kctl);
++	return mlx5_core_destroy_cq(dev->mdev, &mcq->mcq);
++}
++
++void mlx5_ib_post_destroy_cq(struct ib_cq *cq)
++{
++	destroy_cq_kernel(to_mdev(cq->device), to_mcq(cq));
++}
++
++int mlx5_ib_destroy_cq(struct ib_cq *cq, struct ib_udata *udata)
++{
+ 	int ret;
+ 
+-	ret = mlx5_core_destroy_cq(dev->mdev, &mcq->mcq);
++	ret = mlx5_ib_pre_destroy_cq(cq);
+ 	if (ret)
+ 		return ret;
+ 
+ 	if (udata)
+-		destroy_cq_user(mcq, udata);
++		destroy_cq_user(to_mcq(cq), udata);
+ 	else
+-		destroy_cq_kernel(dev, mcq);
++		mlx5_ib_post_destroy_cq(cq);
+ 	return 0;
+ }
+ 
+diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
+index 72bba5f05d248..a1a6aca8aff1b 100644
+--- a/drivers/infiniband/hw/mlx5/main.c
++++ b/drivers/infiniband/hw/mlx5/main.c
+@@ -3729,7 +3729,9 @@ static const struct ib_device_ops mlx5_ib_dev_ops = {
+ 	.modify_port = mlx5_ib_modify_port,
+ 	.modify_qp = mlx5_ib_modify_qp,
+ 	.modify_srq = mlx5_ib_modify_srq,
++	.pre_destroy_cq = mlx5_ib_pre_destroy_cq,
+ 	.poll_cq = mlx5_ib_poll_cq,
++	.post_destroy_cq = mlx5_ib_post_destroy_cq,
+ 	.post_recv = mlx5_ib_post_recv_nodrain,
+ 	.post_send = mlx5_ib_post_send_nodrain,
+ 	.post_srq_recv = mlx5_ib_post_srq_recv,
+diff --git a/drivers/infiniband/hw/mlx5/mlx5_ib.h b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+index 9b6fa6b1c1cac..2b05470c7011b 100644
+--- a/drivers/infiniband/hw/mlx5/mlx5_ib.h
++++ b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+@@ -1277,6 +1277,8 @@ int mlx5_ib_create_cq(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
+ 		      struct ib_udata *udata);
+ int mlx5_ib_destroy_cq(struct ib_cq *cq, struct ib_udata *udata);
+ int mlx5_ib_poll_cq(struct ib_cq *ibcq, int num_entries, struct ib_wc *wc);
++int mlx5_ib_pre_destroy_cq(struct ib_cq *cq);
++void mlx5_ib_post_destroy_cq(struct ib_cq *cq);
+ int mlx5_ib_arm_cq(struct ib_cq *ibcq, enum ib_cq_notify_flags flags);
+ int mlx5_ib_modify_cq(struct ib_cq *cq, u16 cq_count, u16 cq_period);
+ int mlx5_ib_resize_cq(struct ib_cq *ibcq, int entries, struct ib_udata *udata);
 -- 
 2.53.0
 
