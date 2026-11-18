@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026857;
-	b=UuY68u6XfxrueT6ISrZEcNYomO1rdkvzKA8GoB+K0RPhDSJidB50qfisv6HXqWXfQUJH
-	 RSKkzsW6q8TOHWHA6Kl1RgWR0T445IDFeKSO1500Xjlg7r3O4E+QKwjUU/GzqozYLtBrd
-	 Yq9JAQeJYeCjNJSPQY/1dHnGrPhoSnV31hghEcdnvFUBA1Y0Buau9pdh7aFD6G7L3Ze7G
-	 aHMbXFS9ookhWdv5ODCBqsSjfUSBYW0lmIuoIRr06YpUpP4jbZWLbAKteCE+qzugcpmij
-	 rgYaAtuloZGgexej9Mzj130zJAbXEAKOEXW3iNc+caUAykaom7PVbGTWL3eluxUSq7g==
+	t=1795026860;
+	b=XVYYmrwn2OEW3/ewJPFFJLLtedr4wU6MWeMclDWEyMokPYegk1/05n2iha+MWNN/73Jx
+	 ZG6RePpynONsXJBvubozpqEPgyy+21EY/Qcm0tL1RDZrZHZKLnp6+iIqexYd0GI9Ki2Kd
+	 tadLB2hQsNMdAzK8Ih2PUqHp9KiggD8p4syl7kIPFc+aaiXzwoQ4/r589SaFP3YtWJVJR
+	 bhSRnwTs55CXtKw3leTNr1SJYTiYHv+A5upQlPNO1ouiOmsME53ry+o4PxxueU103zomk
+	 rbYsWEgHjeA8sg4LiroEG92ODMvaX4KPVY3MzwdqY+rDrI/5hLom5SfZABuO5v/JIAw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026857;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026860;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=j/uOGlsI624jgb7G7QlqRhDHAO5a7YsviJfMsnnUowQ=;
-	b=yPyzUPbCjyNF3a5kdvCDadOGS07olcItGsj+xBk5CivK8HzkCYCCycKg8P47ELQWHsE3
-	 iakU2i5ir1cSG77wDTdKSfmdkxWwVnJQe47iHxMPZame2RjoSf8f3ro1Ul9+7NRLcCEA9
-	 L4weJE5RI2ImWGPOeQcfpf2bGkrchRNOQZ+RXhfvh66o7w2Mxu0Qt2IB3rkzBK2WoeoP8
-	 ZeyS7V2ED+oYWk67XgsEQUKijo2ccmq2EBvsuEkmErOxA6BfAu9mD1sTNOrHrd+Hb8Tzw
-	 rjPHKWdailZMQBxrS3AgPQj9kmRkqfbrri9RfV3abNX9HCPooE558GNL09oQZXYPN7w==
+	bh=ShsQTXtEAk5/RNxDBo2voWynMg6Vi6VHsDh+QV3oHmk=;
+	b=mAPEiGh1QqqE2yBcvXcgqn091Ax7fHiVpdORBd0MTitUucJMKvw372cIFcB2Ktt8YfXo
+	 Xay2tv2vv5aOyScQbTUhSvQ7jgwID7np0D6tqLMmjXeIypDzBlTQ4zHR2PtFAo5mbJJQB
+	 xUWdaa9F5KGHInTgA90C679U6uCl9UG+dIq53WgAz+UWk6ueEgfYBmPuTUYhepsuB3oe3
+	 FZndQbhqpvCIQj/Yk+k4upH8dfluSTDQORio3QX9srmI0XDEzxwrISe8PsRw6ZnQGg4eW
+	 9J2QIVW0oO8sJok0ip5bxwEcC9SjvKEzNNfrh8CC87aKlJnBLETQmvyJARiMVBro7Ag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VfvpOhw0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YgvU0Fbw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF7B606A32C;
-	Wed, 18 Nov 2026 18:34:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 867EB606A31C;
+	Wed, 18 Nov 2026 18:34:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VfvpOhw0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 052E11F000C4;
-	Wed, 18 Nov 2026 18:34:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YgvU0Fbw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D51E91F000C4;
+	Wed, 18 Nov 2026 18:34:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026857;
-	bh=j/uOGlsI624jgb7G7QlqRhDHAO5a7YsviJfMsnnUowQ=;
+	s=korg; t=1795026860;
+	bh=ShsQTXtEAk5/RNxDBo2voWynMg6Vi6VHsDh+QV3oHmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VfvpOhw082oSIULcu33LzVuqjETNS/jsz4CepK5BrptnjqEB7DSbc5F6rt7A5+pvx
-	 8LwZHoegvS4ALli8/QO6u1RfStVD/9KpCcKU3BYMqMMX3rgRl4ohiyQNhZmh7/r/+K
-	 kLfPXMB917p3qBKvtFeCCdBJlsL8edRhnuDxk2zM=
+	b=YgvU0FbwoM1GfP98AkaIo1DkCoVkXQYTMhvkBXfSSyYT3oNTUmQH7U62XruU43Krx
+	 3y/FxLxiDVaDpJ/VOItDgCw3e2cY+NmTy3kBMs8+v3btNevYE9tyD9nyLSXyKKKAMm
+	 8y1frzpSSTcYubu4g4rKrS6i9xxZDxnoPMUxWvhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Pengpeng Hou <hppiscas@163.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Anup Patel <anup@brainfault.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1557/2151] iommufd: Keep reserved IOVA ranges when a replace within one IOAS fails
-Date: Wed, 18 Nov 2026 15:54:52 +0100
-Message-ID: <20261118150218.612660373@linuxfoundation.org>
+Subject: [PATCH 6.18 1584/2151] irqchip/riscv-imsic: Reject overlapping group index fields
+Date: Wed, 18 Nov 2026 15:55:19 +0100
+Message-ID: <20261118150219.585715908@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,84 +69,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Pengpeng Hou <hppiscas@163.com>
 
-[ Upstream commit 1e67cca28490f897788c128c650a6f2cbb565403 ]
+[ Upstream commit 8caa8fcec8db5358437b9b7ca456bc3093d2a4d0 ]
 
-iommufd_device_do_replace() installs the group's reserved IOVA ranges in
-the new hwpt's IOAS only when it differs from the old hwpt's IOAS. If the
-replace fails in iommufd_device_do_replace() or
-iommufd_group_do_replace_reserved_iova(), the error paths remove the
-ranges from the new hwpt's IOAS whether or not the IOAS is shared
-between the old and new hwpt, which removes the ranges that the old hwpt
-still needs.
+The IMSIC address layout places the group index above the page offset,
+guest index and HART index. imsic_parse_fwnode() checks the individual
+field widths and the upper end of the group field, but does not check
+that its lower end is above the other fields.
 
-For example, on x86 with intel-iommu, after a replace within a shared
-IOAS fails with -ENODEV, IOMMU_IOAS_IOVA_RANGES goes from
+Reject a nonzero group field whose shift overlaps the lower fields.
+Otherwise a firmware-supplied layout can assign the same address bit to
+different indices when MSI target addresses are constructed.
 
-  0x0-0xfedfffff
-  0xfef00000-0xffffffffffff
+Keep the existing upper-bound check unchanged. The new lower-bound
+check applies only when group index bits are present.
 
-to
+The issue was found by our static-analysis tool.
 
-  0x0-0xffffffffffff
-
-and IOMMU_IOAS_MAP at 0xfee00000 succeeds.
-
-Remove the ranges on failure only when the replace installed them, and
-look up the old hwpt_paging before the replace so that the error path
-can compare the IOAS.
-
-Fixes: e88d4ec154a8 ("iommufd: Add iommufd_device_replace()")
-Assisted-by: LLM
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Link: https://patch.msgid.link/20260929031402.1998253-1-donggeunyoo.kernel@gmail.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 21a8f8a0eb35 ("irqchip: Add RISC-V incoming MSI controller early driver")
+Signed-off-by: Pengpeng Hou <hppiscas@163.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Assisted-by: gpt 5
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Link: https://patch.msgid.link/caplitmus-rv.v2.imsic.f2c0e5bdc627451c83deb0cf7eb8834a@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommufd/device.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/irqchip/irq-riscv-imsic-state.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/iommu/iommufd/device.c b/drivers/iommu/iommufd/device.c
-index 3216deab98e39..ccc33fc6eb70e 100644
---- a/drivers/iommu/iommufd/device.c
-+++ b/drivers/iommu/iommufd/device.c
-@@ -766,7 +766,8 @@ iommufd_group_do_replace_reserved_iova(struct iommufd_group *igroup,
- 	return 0;
- 
- err_unresv:
--	iommufd_group_remove_reserved_iova(igroup, hwpt_paging);
-+	if (!old_hwpt_paging || hwpt_paging->ioas != old_hwpt_paging->ioas)
-+		iommufd_group_remove_reserved_iova(igroup, hwpt_paging);
- 	return rc;
- }
- 
-@@ -805,6 +806,7 @@ iommufd_device_do_replace(struct iommufd_device *idev, ioasid_t pasid,
- 		return NULL;
+diff --git a/drivers/irqchip/irq-riscv-imsic-state.c b/drivers/irqchip/irq-riscv-imsic-state.c
+index e42be461ae670..120cbde971ab7 100644
+--- a/drivers/irqchip/irq-riscv-imsic-state.c
++++ b/drivers/irqchip/irq-riscv-imsic-state.c
+@@ -750,6 +750,14 @@ static int __init imsic_parse_fwnode(struct fwnode_handle *fwnode,
+ 		return -EINVAL;
  	}
  
-+	old_hwpt_paging = find_hwpt_paging(old_hwpt);
- 	if (attach_resv) {
- 		rc = iommufd_group_do_replace_reserved_iova(igroup, hwpt_paging);
- 		if (rc)
-@@ -815,7 +817,6 @@ iommufd_device_do_replace(struct iommufd_device *idev, ioasid_t pasid,
- 	if (rc)
- 		goto err_unresv;
- 
--	old_hwpt_paging = find_hwpt_paging(old_hwpt);
- 	if (old_hwpt_paging && pasid == IOMMU_NO_PASID &&
- 	    (!hwpt_paging || hwpt_paging->ioas != old_hwpt_paging->ioas))
- 		iommufd_group_remove_reserved_iova(igroup, old_hwpt_paging);
-@@ -836,7 +837,8 @@ iommufd_device_do_replace(struct iommufd_device *idev, ioasid_t pasid,
- 	/* Caller must destroy old_hwpt */
- 	return old_hwpt;
- err_unresv:
--	if (attach_resv)
-+	if (attach_resv &&
-+	    (!old_hwpt_paging || hwpt_paging->ioas != old_hwpt_paging->ioas))
- 		iommufd_group_remove_reserved_iova(igroup, hwpt_paging);
- err_unlock:
- 	mutex_unlock(&igroup->lock);
++	/* Group index bits must not overlap guest and HART index bits. */
++	i = IMSIC_MMIO_PAGE_SHIFT + global->guest_index_bits +
++	    global->hart_index_bits;
++	if (global->group_index_bits && global->group_index_shift < i) {
++		pr_err("%pfwP: group index shift too small\n", fwnode);
++		return -EINVAL;
++	}
++
+ 	/* Sanity check group index shift */
+ 	i = global->group_index_bits + global->group_index_shift - 1;
+ 	if (i >= BITS_PER_LONG) {
 -- 
 2.53.0
 
