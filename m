@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017386;
-	b=T0n4uO1HLwbrBJk+xRKugbMC5l0CiARiKuAN5Qo7FHrtNymAcZiAzLvMjqlSZsMAh7D1
-	 /aayBb8N6l2ibPrIlhvYl6GDwuSSGZlbNiBCV9HZ4soeRevEu945X4g2D4UNDf0BykhXj
-	 Eo8PACfk/SMGalpR0X1wIiIv/wx/ZawLD5QvIkQFPEjpOE/bnQ7evzk5r1APYZ05kFX/Y
-	 cRjaRlAdLqx811bo8+nEi9BIAOhC5mOFtd0ibzOARKciRePIiJ6Zsltndx3f4SGhKC3Is
-	 KrewnF3v71JT5H2zs7lONszABPv55K63y0IRZoHB961mUFgK6MfFi1qOeLyDVj5x11A==
+	t=1795017388;
+	b=YYBBg2n5nZSdDaBSn9foIbJADGWPc5F1E3oFtDvJ/6C2965Vuq6UfjDJnlVD9q0XA5p2
+	 XU6JENzXqwz4r4ppHTA+D+2MSN78nQiazp+i0d9NdExsVxibGw07iGZARh9tz0mAF5bsV
+	 d8ALjMvUA0tSGvBMtMIkaNuD2aCg48oIvjEiq++OSbJx9V/oi+dTUDEk7opXxZ0nG8IJL
+	 4toqfhz8Zm/5h65yA739O+3pr5y81qNdmEm3Z/ownuijQZdOUuB8aUwi+K4C5+XJLE3Hl
+	 S+HlZlu6XoxjxW7z4l86LHKxDiZ4YinwC4huypinRJyaqoXsdDO7JPrrQgxynMmEI4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017386;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017388;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=v6nJiZRrlfPC1rnzLKK1i0cOCOMC7cy2G60Nd/yV/GA=;
-	b=fgZLwEA78wpVruW+0CgeP3UmMr8JVAhMfeLY1yKWRMfWIEAXKFBvM3Z20akia7r1oitv
-	 P0eh0tp5ZjwscbNLnNmfwCq6fetzdWjgX11BAEZhMASDbb0As/lRp8/met8QFJvOcBI1a
-	 gg5G0sRI5Pim5kCxDzTITKUNtTvvDJ055HWmrSRhp7y2x1obxOg4u+gTxbyUDgSFuWkO4
-	 pkP2qvPYb04gB8cKsc5SkMcYzvmBtfk7jxzMgt1VncsP02W4ohEpyxlAwzGVroTWzMwyi
-	 lOcx3SoeCz01W4O7211aCAWBcxHfw3zEDks9x/Kdm7dVm7fNMYfY/No4wFCFB0YLw9Q==
+	bh=Ky2Us8OEXjMHOlZ7rbYP1DmBla66Kicv09EG7sbdIjI=;
+	b=Kdim0EgSbn4Zq6xQRRt/jkr+OJo1t/zyqGoHaBqd5Lv9lIpFuqR+O+ja0y7JvliCvaRP
+	 /AP9UVb/9PhiMBOa6KnpqtotThLMvHCfBXhGl7dXnB+auVTdcnB+//wEeVvbWvcKbwOTs
+	 ZgZzGfy57yLEcg3RWGe8dFcJKABzKO6DLaBR8RLAw3Wj50SHYZNlJoor3bHaCYGACWBQQ
+	 MdOP3hmKDhz/IYo4RBGpMImIqv6v3gm/jup2gVlGj6icg+rvr5zixCut4Qbk+r88GKAF4
+	 7J+v4X5qlnoJEHSF+MW/HHQ4buGzUUpay9wHjXObyB//IDsj4rtUEyweJQtn0rkClkQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B0elgSXY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zTevgdrC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C1F606A330;
-	Wed, 18 Nov 2026 15:56:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D62A7606A330;
+	Wed, 18 Nov 2026 15:56:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B0elgSXY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 759601F000C9;
-	Wed, 18 Nov 2026 15:56:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zTevgdrC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37FF21F000C7;
+	Wed, 18 Nov 2026 15:56:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017386;
-	bh=v6nJiZRrlfPC1rnzLKK1i0cOCOMC7cy2G60Nd/yV/GA=;
+	s=korg; t=1795017388;
+	bh=Ky2Us8OEXjMHOlZ7rbYP1DmBla66Kicv09EG7sbdIjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B0elgSXY3kTKM7kY/6Iyo2sG1bkCSQMUDcVcoYs94NjAYzJg45aIp2WV+rZLm1GiN
-	 n1QxxvaPzJOYG597LaHHQWh0PuhCVzKLEwfY7cHsp5r5U2f22cD4CoXcFLy1uo2aRw
-	 dPDtP9EiKwjT4IC1GTTROnQCWolOfhPJF9jDtY+Q=
+	b=zTevgdrC3XzSNVKKxBkDm28wbwToc4HCgxZaoQk+bmlznp+muOjoHP8a4W8JD5oRO
+	 P3+susN0t8MdKX5N/ky4MkwTNBSpOsuftu2tLZADaCL2TpMX6BNY3fulY5qgsE96oz
+	 8lvyUEr5ny4ndO1LEvhhMbZdhDkcDEO3gYQRKNC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudeep Holla <sudeep.holla@kernel.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0864/2651] ACPICA: Fix PCC OperationRegion command offsets
-Date: Wed, 18 Nov 2026 15:35:04 +0100
-Message-ID: <20261118150318.964345317@linuxfoundation.org>
+Subject: [PATCH 7.3 0865/2651] perf annotate-data: Resolve type DIEs in the debug file they came from
+Date: Wed, 18 Nov 2026 15:35:05 +0100
+Message-ID: <20261118150318.997111678@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,59 +69,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@kernel.org>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 888dab4b04ea8725168c6d50d0bfb8057fccca18 ]
+[ Upstream commit 14ca0a28de37849afdda6ffd4c9047f58d8906c2 ]
 
-ACPI 6.3, section 5.5.2.4.7.3, states that the PCC Operation
-Region is associated with the region of shared memory that follows the
-PCC signature.
+'perf report -s type' hangs burning CPU on the dwz compressed debug
+info of libz.so.1 (zlib-ng): die_collect_vars() saves the
+dwarf_dieoffset() of the type DIE, which is relative to the file it
+lives in - the dwz alt file for the types shared by more than one CU -
+and update_var_state() resolves that offset in the main debug file,
+parsing whatever is at it, here a typedef whose DW_AT_type refers to
+itself.
 
-The generic and extended PCC shared memory layouts include the 4-byte
-signature at offset 0, so their raw shared memory COMMAND fields are at
-offsets 4 and 12 respectively. Since AML field offsets for the PCC
-OperationRegion are relative to the region after that signature, ACPICA
-must look for those COMMAND fields at OperationRegion offsets 0 and 8.
+Record whether the type DIE came from the alt file and resolve the
+offset with die_get_type_die() in that file, with no fallback.
 
-Adjust the generic and master subspace command checks to use those
-OperationRegion-relative offsets. Otherwise writes to the COMMAND field
-can fail to invoke the PCC address space handler at the offset described
-by the PCC OperationRegion definition.
-
-Link: https://github.com/open-acpica/acpica/pull/1205
-Fixes: aa6ec56b574d ("ACPICA: ACPI 6.3: add PCC operation region support for AML interpreter")
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
-[ rjw: Fixed the Fixes: tag ]
-Link: https://patch.msgid.link/20260922144302.3847593-2-sudeep.holla@kernel.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 06b2ce75386df04b ("perf annotate-data: Maintain variable type info")
+Fixes: 55ee3d005d62279d ("perf annotate-data: Add a cache for global variable types")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Reviewed-by: Namhyung Kim <namhyung@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/exfield.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ tools/perf/util/annotate-data.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/acpi/acpica/exfield.c b/drivers/acpi/acpica/exfield.c
-index 9a55524ed8f42..50317fe0cbd5e 100644
---- a/drivers/acpi/acpica/exfield.c
-+++ b/drivers/acpi/acpica/exfield.c
-@@ -45,12 +45,13 @@ static const u8 acpi_protocol_lengths[] = {
+diff --git a/tools/perf/util/annotate-data.c b/tools/perf/util/annotate-data.c
+index 4e4c587640823..d6f3d1b55f6d6 100644
+--- a/tools/perf/util/annotate-data.c
++++ b/tools/perf/util/annotate-data.c
+@@ -645,6 +645,8 @@ struct global_var_entry {
+ 	u64 start;
+ 	u64 end;
+ 	u64 die_offset;
++	int die_tag;
++	bool from_alt;	/* die_offset is relative to the alt (dwz) file */
+ };
  
- /*
-  * The following macros determine a given offset is a COMD field.
-- * According to the specification, generic subspaces (types 0-2) contains a
-- * 2-byte COMD field at offset 4 and master subspaces (type 3) contains a 4-byte
-- * COMD field starting at offset 12.
-+ * According to the specification, the PCC OperationRegion begins after
-+ * the PCC signature. The raw shared memory COMD offsets of 4 for generic
-+ * subspaces (types 0-2) and 12 for master subspaces (type 3) therefore
-+ * appear at OperationRegion offsets 0 and 8.
-  */
--#define GENERIC_SUBSPACE_COMMAND(a)     (4 == a || a == 5)
--#define MASTER_SUBSPACE_COMMAND(a)      (12 <= a && a <= 15)
-+#define GENERIC_SUBSPACE_COMMAND(a)     (0 == a || a == 1)
-+#define MASTER_SUBSPACE_COMMAND(a)      (8 <= a && a <= 11)
+ static int global_var_cmp(const void *_key, const struct rb_node *node)
+@@ -682,7 +684,7 @@ static struct global_var_entry *global_var__find(struct data_loc_info *dloc, u64
+ }
  
- /*******************************************************************************
-  *
+ static bool global_var__add(struct data_loc_info *dloc, u64 addr,
+-			    const char *name, Dwarf_Die *type_die)
++			    const char *name, Dwarf_Die *type_die, bool from_alt)
+ {
+ 	struct dso *dso = map__dso(dloc->ms->map);
+ 	struct global_var_entry *gvar;
+@@ -704,6 +706,8 @@ static bool global_var__add(struct data_loc_info *dloc, u64 addr,
+ 	gvar->start = addr;
+ 	gvar->end = addr + size;
+ 	gvar->die_offset = dwarf_dieoffset(type_die);
++	gvar->die_tag = dwarf_tag(type_die);
++	gvar->from_alt = from_alt;
+ 
+ 	rb_add(&gvar->node, dso__global_vars(dso), global_var_less);
+ 	return true;
+@@ -778,12 +782,14 @@ static void global_var__collect(struct data_loc_info *dloc)
+ 			if (pos->reg != -1)
+ 				continue;
+ 
+-			if (!dwarf_offdie(dwarf, pos->die_off, &type_die))
++			if (!die_get_type_die(dwarf, pos->die_off, pos->die_tag,
++					      pos->from_alt, &type_die))
+ 				continue;
+ 
+ 			get_global_var_info(dloc, pos->addr, &var_name, &var_offset);
+ 
+-			global_var__add(dloc, pos->addr, var_name, &type_die);
++			global_var__add(dloc, pos->addr, var_name, &type_die,
++					pos->from_alt);
+ 		}
+ 
+ 		delete_var_types(var_types);
+@@ -808,7 +814,8 @@ bool get_global_var_type(Dwarf_Die *cu_die, struct data_loc_info *dloc,
+ 
+ 	gvar = global_var__find(dloc, var_addr);
+ 	if (gvar) {
+-		if (!dwarf_offdie(dloc->di->dbg, gvar->die_offset, type_die))
++		if (!die_get_type_die(dloc->di->dbg, gvar->die_offset,
++				      gvar->die_tag, gvar->from_alt, type_die))
+ 			return false;
+ 
+ 		*var_offset = var_addr - gvar->start;
+@@ -838,7 +845,8 @@ bool get_global_var_type(Dwarf_Die *cu_die, struct data_loc_info *dloc,
+ 
+ ok:
+ 	/* The address should point to the start of the variable */
+-	global_var__add(dloc, var_addr - *var_offset, var_name, type_die);
++	global_var__add(dloc, var_addr - *var_offset, var_name, type_die,
++			!die_same_file(cu_die, type_die));
+ 	return true;
+ }
+ 
+@@ -893,7 +901,8 @@ static void update_var_state(struct type_state *state, struct data_loc_info *dlo
+ 				continue;
+ 		}
+ 		/* Get the type DIE using the offset */
+-		if (!dwarf_offdie(dloc->di->dbg, var->die_off, &mem_die))
++		if (!die_get_type_die(dloc->di->dbg, var->die_off,
++				      var->die_tag, var->from_alt, &mem_die))
+ 			continue;
+ 
+ 		if (var->reg == DWARF_REG_FB || var->reg == fbreg || var->reg == state->stack_reg) {
 -- 
 2.53.0
 
