@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061534;
-	b=gMaCyI7kLcNrETyVx1Ofr2WCTDJfMKi+IhqmVkNesXkcb0VOyQbm/NaP9TKhS3maPUxw
-	 XRycF6rMWj+3JzpHqWJ6mtePIO8bSpfIfWMRdet7a1AKsv2V1kUngVJ45YwnvPEsqrtjL
-	 eHWt97+pn7JX3rp3UnBbzisJgnPq8QnouB51A3Lf8hQz89fTtcqJfc4ypsUpPl+6eONMJ
-	 KPGLBpC0LnIpo8sfKDXdH+wauWiwUw9z5+lS/2SszcogJl26WR7pxM2UKZcgE6QnSsBr+
-	 cnbMX5Dv75XOApM2u0avyl91QPZZAn7IHkbsFrmepq9j50EyR27iRGeR6AUNyC8YeSA==
+	t=1795061532;
+	b=Bu0Ycq350v6f93A3IvZj/hF/6c/2qPIO4+U2Ov9UXJ9ttdJaakAIwsiGzCL2xpc/whNO
+	 7BTNuxMJFlYsDeVp7ULq2jSaxdQ7Zl3d+Q9XyvoIGhHj8s40WSndc4ENawqCl9YwbtiP9
+	 KYWpCgYWDGvnhRobdlEXw+tRFNcMkUJlTHJ3XzmCrgrn9x4nBx3IuaZszaORTYaqbrlLT
+	 G8kPKTdp7+NZglYpLSxr5cZcYzHNhRlI8eDYZsPYzKa7E8VyB/dRkpknSYnLmYElh95kY
+	 OHJuhvzaW+o8MygcAdk8LUgg3PV2mzw5h615D49b6R5dD9HPVqUfOlz87gc+XZ2kksg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061534;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061532;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RZqOsLGwPNe8mIGwBcLBz1bl0OIJahRmY4zZ2dFcN24=;
-	b=BuU3loAoXWgSrumXllV6dNmww5mGQOg84jX5u2AnwJwi/4n+BVYPmAUnPPRG0KNJiei4
-	 JGOpOURivy/7ZKgPCwameExf/OkGR5fb8NNe1gxYGhDg95aafI8HgvwXhD+QPcBfClETp
-	 nEb8L79cNLNDv2LwLogibKgGYnMOfGGNVt1mENnEle02pCtGAqOJ2vEOISmXWpGt1cbNE
-	 F7enSQ6ek/UgvB3aFXZxOeZlvJHavZ77qc3t53GqWr356UhJLzjGWUHj6vbhFqIpfDjKW
-	 K/+imW6qfVQa5Tqm35tC22Tvywvv1hGNGimYw/Xw6S1t/CYtIdJcXAyRv9ZPz3vfG7Q==
+	bh=jlDqaUzBmY7KSJR/cJQFa9bN9vjDKYH/L3WntiwrWeU=;
+	b=fp5QBl15GDcNt604kk3vUV+SZXnqJyTy9NSWe5AJBrqXU398XJCHBrABeu9CicAvoVJd
+	 xZv62Wgzeiq/LMr7f98ghaM/t9G0L3V78VnWxIwPRHJFPhOK7l5miwWmDZFmiI6ooNGHz
+	 VV3Cf6qTJwjV3LrE5nlwh6+mVD9n8DvA4wnUhl/NQ+yEy0YlsupSRcuzoJ05PPnh314Qk
+	 7oncanPKUEvZ7Ra28RCypXafoz0jooYhT2w0Uhk+8jjjjuEkC4tTY4x9sWiLwtw6ZXe8f
+	 GmH6Oxajtd10DBAnRNRJIwSlf+dWHZ0v022hosG/70ezunJ1XBpHpgWQ6Gy4p3zpBgw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jtxCYno+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qpWjZ4IF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8D4606A32A;
-	Thu, 19 Nov 2026 04:12:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 369CC60A2608;
+	Thu, 19 Nov 2026 04:12:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jtxCYno+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1871C1F000C6;
-	Thu, 19 Nov 2026 04:12:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qpWjZ4IF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B5C11F000C6;
+	Thu, 19 Nov 2026 04:12:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061534;
-	bh=RZqOsLGwPNe8mIGwBcLBz1bl0OIJahRmY4zZ2dFcN24=;
+	s=korg; t=1795061531;
+	bh=jlDqaUzBmY7KSJR/cJQFa9bN9vjDKYH/L3WntiwrWeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jtxCYno+suqBdj4/pjIOz2IUKqPTYo+5SC/p5cdvPQs6W8auJ19uWgjwsLJpgCu3d
-	 xj9usX/sGxbyDDccIv3UvMdrw7YA07gfWG36A8X4x0XtUQh4AuQViepEskuzSxgev2
-	 h5TNfaMf3K7gZ9nzwjV2v3eGscLjKaFSNiJcXv1g=
+	b=qpWjZ4IFA/wEoUmOqL1tB2XTVHZEtv3+kbEe/pYUTrz8bEt6ajQjAd+cJ9t3sLm40
+	 I8hTWNvwZkDJERi6XhrtxseVizSUI96edme+owfeFjQnYx8DAWzMA7k2qnrkcq+Ic9
+	 wRis5ZLPUA5eD1d/I6AO+ZRLnJEwlXJT7J6x4jno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andy Shevchenko <andy.shevchenko@gmail.com>,
 	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1586/1848] serial: max310x: simplify probe() and remove() error handling
-Date: Wed, 18 Nov 2026 16:00:24 +0100
-Message-ID: <20261118150025.943182407@linuxfoundation.org>
+Subject: [PATCH 5.10 1585/1848] serial: max310x: remove holes in struct max310x_devtype
+Date: Wed, 18 Nov 2026 16:00:23 +0100
+Message-ID: <20261118150025.904902886@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,63 +70,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-[ Upstream commit 5d888f1c32e2281843d58eef963e3ebd625b77a9 ]
+[ Upstream commit eaf29135abb1c152a05572a5454c61dcd65bdeea ]
 
-Simplify error handling and only call uart_remove_one_port() if line bit
-is set, instead of having to manually set s->p[i].port.dev to NULL.
+Running pahole shows that there are some holes within the
+max310x_devtype structure.
 
+Remove holes and optimize alignment by reorganizing structure members.
+
+This can also lead to data structure size reduction for some CPUs.
+
+On 64-bit CPU (arm64):
+Before:
+    /* size: 40, cachelines: 1, members: 6 */
+    /* sum members: 34, holes: 2, sum holes: 6 */
+    /* last cacheline: 40 bytes */
+After:
+    /* size: 40, cachelines: 1, members: 6 */
+    /* padding: 6 */
+    /* last cacheline: 40 bytes */
+
+On 32-bit CPU (i386):
+Before:
+    /* size: 32, cachelines: 1, members: 6 */
+    /* sum members: 26, holes: 2, sum holes: 6 */
+    /* last cacheline: 32 bytes */
+After:
+    /* size: 24, cachelines: 1, members: 8 */
+    /* padding: 2 */
+    /* last cacheline: 24 bytes */
+
+Suggested-by: Andy Shevchenko <andy.shevchenko@gmail.com>
 Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
 Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20240118152213.2644269-10-hugo@hugovil.com
+Link: https://lore.kernel.org/r/20240118152213.2644269-7-hugo@hugovil.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: 4efacb600bf9 ("serial: max310x: fix breaks not reaching the wire in RS485 mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/max310x.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/tty/serial/max310x.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/tty/serial/max310x.c b/drivers/tty/serial/max310x.c
-index 15b0ad92d7264..b58278d0b8308 100644
+index 36f63519ebc33..15b0ad92d7264 100644
 --- a/drivers/tty/serial/max310x.c
 +++ b/drivers/tty/serial/max310x.c
-@@ -1450,10 +1450,9 @@ static int max310x_probe(struct device *dev, const struct max310x_devtype *devty
+@@ -268,11 +268,11 @@ struct max310x_devtype {
+ 		unsigned short min;
+ 		unsigned short max;
+ 	} slave_addr;
+-	char	name[9];
+ 	int	nr;
+-	u8	mode1;
+ 	int	(*detect)(struct device *);
+ 	void	(*power)(struct uart_port *, int);
++	char	name[9];
++	u8	mode1;
+ };
  
- 		/* Register port */
- 		ret = uart_add_one_port(&max310x_uart, &s->p[i].port);
--		if (ret) {
--			s->p[i].port.dev = NULL;
-+		if (ret)
- 			goto out_uart;
--		}
-+
- 		set_bit(line, max310x_lines);
- 
- 		/* Go to suspend mode */
-@@ -1489,10 +1488,8 @@ static int max310x_probe(struct device *dev, const struct max310x_devtype *devty
- 
- out_uart:
- 	for (i = 0; i < devtype->nr; i++) {
--		if (s->p[i].port.dev) {
-+		if (test_and_clear_bit(s->p[i].port.line, max310x_lines))
- 			uart_remove_one_port(&max310x_uart, &s->p[i].port);
--			clear_bit(s->p[i].port.line, max310x_lines);
--		}
- 	}
- 
- out_clk:
-@@ -1510,8 +1507,10 @@ static int max310x_remove(struct device *dev)
- 		cancel_work_sync(&s->p[i].tx_work);
- 		cancel_work_sync(&s->p[i].md_work);
- 		cancel_work_sync(&s->p[i].rs_work);
--		uart_remove_one_port(&max310x_uart, &s->p[i].port);
--		clear_bit(s->p[i].port.line, max310x_lines);
-+
-+		if (test_and_clear_bit(s->p[i].port.line, max310x_lines))
-+			uart_remove_one_port(&max310x_uart, &s->p[i].port);
-+
- 		s->devtype->power(&s->p[i].port, 0);
- 	}
- 
+ struct max310x_one {
 -- 
 2.53.0
 
