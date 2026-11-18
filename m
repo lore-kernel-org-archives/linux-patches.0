@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035060;
-	b=SpY/EXfUkY5Ix9QSfUTQ/LTMRYonSn960mHKpaJDzoVGkWswM9iRMDb/g/F4eSQKXdyE
-	 5uq2iUABuZ167ZGsLO4xFQxVKfRpaeAsqZqfYBXYlBdU3kzVZ8SeIYdPePgmziZ9bJphf
-	 lEcLwO5gZaB6SiKlM8dPtCcPzDgX5quW5AaEzKn8V/wOX2yXh+KgaUkBbMV8l2q6sQOFX
-	 7RQW7ye5+WTAxHJh6eiJ78KpG/nUwzliJPnMlCcrnFENh6Gp0TLGGwAUeh4OjofkpBVfN
-	 +ew5h5VmHlwH70l39mI9X2KcTDO54UNKqKX2sigWd6pLiK0WWuwVwq4czVFhlQ0jexg==
+	t=1795035063;
+	b=zvpOdHw5HjnnJ+WFgpeO3Qgwp63oDO/peOLn2BBJAH8pn4nG65ksX1caSfkiXe9g/eSl
+	 5XTHtaTcrvvDkksmLllEByBCCLr6aNiJVtWAxfi5QpxLOIiMZQaxDMpiiqAHyXO9fcNsP
+	 CjzBi9X6DNvmxioYJl3aikSc5SLWu82l65pal21QDFXuBuB9YbBnJxp2d2bDKT3Tag4PH
+	 e+OymLnObjrvNw9wYOXZffFfKs3VzoyjIcvrHtQOXGcCKP1ZGyhmWviL8zkHQX6kpHI7T
+	 pa1Xu070h9B6snCBfd+rd88eQKZzKzNF6yUD8DkCK4zmExFvTPWGrHzZC80j1UECTYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035060;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035063;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=6uUshEoqskJZkUMTBH7lulb68Pe9YzNAhNHKOcOySHo=;
-	b=NHwYsmqnF8g2qjfzw7We9+KciQfIARoxlBkAQdXKLu4yPmb30jpHYHhfcd8czozqzPsk
-	 83zlnat2gLlWAa+ryyHSQSOZcpoFdxykWvLRz8C1W2iwrWdkiHdPlji7hrC98iQ0G/dVf
-	 LkIgNQfpmNWtT6BRk3qXzArG2r9ANtnRNAYLgj8kGawcejaBRpKfgyVsqVnQ0wc7RpVU7
-	 4jRPywaL89yysZnZNAcfrEy7HWT8lzHCXLasNyXQuPM5Wnme3GHHXdKHskjtTuM5qqn6W
-	 6UhQzrWtDabqqbGoK5+IohKtZY9H9K4vibRFPlFEaf27yR3n1hsnirEpBS5EzyIQP3g==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=5TNr9NKoZiAxdrF3bMZs0NLlKAVOInvuEEWpIxtAeBA=;
+	b=pP1yrLy/gcPEbDK0x9gKht40qAbhCoH6yu6oEpqKmlvtlwdTIhKLU4t5wwtAt7PhovO+
+	 3IVuVPKETMF2+04ocSBlMFsp1FQoMkM8HmQ968iw/sluC6+4l/OPPEluSWFb5RYMakXbp
+	 ETfewukvltbfg2V8f1HSG7h/3RLjiFs0DsAzBglAHN2abmTWt57RE+nEOZ3OMVUr87UNF
+	 fmBJHJuqp8a10Rw8BO+jd07qtNAUKee5+jEOe3ARe89DE3sMrmDMuFptdc83DqsFw0a6x
+	 x/SDnLoiYidRANUqAl8B6Zs0WEUklMuW+wz6HA70xqBdBU/XfLwCOD4b5CkNgPlVnjw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XQ42qT8O;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NcRNaZC8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628C0606A31C;
-	Wed, 18 Nov 2026 20:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17542606A334;
+	Wed, 18 Nov 2026 20:51:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XQ42qT8O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B73471F000C4;
-	Wed, 18 Nov 2026 20:50:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NcRNaZC8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 922741F000C4;
+	Wed, 18 Nov 2026 20:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035060;
-	bh=6uUshEoqskJZkUMTBH7lulb68Pe9YzNAhNHKOcOySHo=;
+	s=korg; t=1795035062;
+	bh=5TNr9NKoZiAxdrF3bMZs0NLlKAVOInvuEEWpIxtAeBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XQ42qT8OzwkfCEOn8y4/F3TTBWJZnkz/lf1Qa0C0l0XfUQvKMT40rcb1eprvJoOaA
-	 mH9IYJ8ugY14jMrtpc3suCsSaYhX+gB0JVuAhSGsvJ/OB06Bg9korrdPCdB/0+mrcc
-	 onF/FY2ExQMYKjqM4MYrY6VUMVnaaU2eIOhtrdZk=
+	b=NcRNaZC83zR9RgPETrok8Al9u8ZtAIvqhdd2IuziQlZprzRhlIL7aernL9aKWi+5e
+	 d0/EqxtL5DwlixodTE4zsiY5SDzmdNQlROgq4aVN4CCQgD8rN/lnGpn1kX0kS8oHWM
+	 DGZ+AhY5h8+bm7njsCDu2JOLSREBwfeFk8wbQJ88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
-Subject: [PATCH 6.6 0588/3318] landlock: Fix superblock use-after-free in release_inode()
-Date: Wed, 18 Nov 2026 15:20:10 +0100
-Message-ID: <20261118150335.208197841@linuxfoundation.org>
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 0542/3318] ntfs3: free replaced mount options after a grace period
+Date: Wed, 18 Nov 2026 15:19:24 +0100
+Message-ID: <20261118150333.534801348@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -61,101 +61,147 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Günther Noack <gnoack@google.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 3e271a27c46fd591d1011c7de5a644a41e2010f1 upstream.
+[ Upstream commit 56c3824de56b5275c02ff6b6aa27ddbacfbb9b25 ]
 
-Without this fix, release_inode() (task 1) can race with a umount
-operation in hook_sb_delete() (task 2).  The order of operations in
-which the race occurs is:
+ntfs_fs_reconfigure() replaces the old mount options with new mount
+options in sbi->options. The old mount options land in fs_context and
+are freed as soon as remount returns. With a pathwalk held up in
+ntfs_nls_to_utf16() between loading sbi->options and dereferencing it
+while a remount replaces them:
 
-* task 2: hook_sb_delete() arrives at the end of the function, waiting
-  for landlock_superblock(sb)->inode_refs to become zero.
-* task 1: release_inode(): does atomic_long_dec_and_test(), decrementing
-  inode_refs to zero.
-* task 2: gets woken up through some other means, sees that inode_refs
-  is zero and returns.  The caller is the unmount operation and proceeds
-  to release the superblock.
-* task 1: Runs wake_up_var(&landlock_superblock(sb)->inode_refs),
-  *dereferencing the sb_security on the freed-up superblock*.
+  BUG: KASAN: slab-use-after-free in ntfs_nls_to_utf16+0x7ae/0x7c0
+  Read of size 8 at addr ff110001044fd448 by task walker/98
+  Call Trace:
+   <TASK>
+   ntfs_nls_to_utf16+0x7ae/0x7c0
+   ntfs_d_hash+0x22b/0x500
+   link_path_walk+0x11ad/0x1d30
+   path_lookupat+0x63/0xb00
+   filename_lookup+0x1f1/0x5b0
+   vfs_statx+0xd7/0x3b0
+  [...]
+  Allocated by task 95:
+   __kmalloc_node_track_caller_noprof+0x2a2/0x730
+   kmemdup_noprof+0x25/0x50
+   ntfs_fill_super+0x1e5/0x4550
+  [...]
+  Freed by task 97:
+   kfree+0x1db/0x5b0
+   put_fs_context+0x13c/0x7d0
+   path_mount+0x54a/0x2130
+   __x64_sys_mount+0x20c/0x270
 
-Notably, wake_up_var() does not dereference the pointer passed to it,
-and only uses it to determine an overapproximated set of tasks to wake
-up. So while it's potentially possible for an attacker to provide a
-different value for that pointer, this only results in the wrong set of
-tasks getting woken up, and in this scenario, no further tasks are
-actually waiting.
+That info is needed in rcu lookup in the dentry hash and dentry compary
+methods for ntfs3 and causes a UAF today. Delay freeing with an rcu
+grace period.
 
-Nevertheless, KASAN detects it as a slab-use-after-free read on
-sb->s_security:
+ntfs_nls_to_utf16() reads ->nls and ->ads once under rcu_read_lock() so
+the hooks pair with the release in ntfs_fs_reconfigure(). That also
+covers callers outside of rcu pathwalk such as ntfs_lookup(). They don't
+hold rcu_read_lock() themselves and wouldn't be protected by the grace
+period otherwise. Remount refuses to change the iocharset so ->nls stays
+valid after rcu_read_unlock().
 
-  BUG: KASAN: slab-use-after-free in release_inode+0x196/0x290
-  Read of size 8 at addr ffff888103b6c0a8 by task repro/217
-   release_inode+0x196/0x290
-   landlock_put_object+0x71/0x90
-   landlock_free_rules+0x38/0xc0
-   landlock_put_ruleset+0x47/0x130
-   fop_ruleset_release+0x33/0x40
-   __fput+0x305/0x780
-  Freed by task 54:
-   kfree+0x11c/0x390
-   process_scheduled_works+0x766/0xe50
-   worker_thread+0x7bc/0xb20
-
-The fix is to determine &landlock_superblock(inode->i_sb)->inode_refs only once
-earlier in release_inode(), and later use that precalculated address for the
-wake_up_var() call, without having to dereference through the superblock.
-
+Fixes: a3a956c78efa ("fs/ntfs3: Add option "nocase"")
 Cc: stable@vger.kernel.org
-Fixes: cb2c7d1a1776 ("landlock: Support filesystem access-control")
-Assisted-by: LLM
-Signed-off-by: Günther Noack <gnoack@google.com>
-Link: https://patch.msgid.link/20261006105847.2541190-1-gnoack@google.com
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-8-7446d2d335e6@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[ sashal: Dropped the ads mount option handling in ntfs_nls_to_utf16(), which has no ads option here, and kept the existing sync_filesystem() placement in ntfs_fs_reconfigure(). ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/landlock/fs.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/ntfs3/dir.c     |  9 ++++++++-
+ fs/ntfs3/ntfs_fs.h |  2 ++
+ fs/ntfs3/super.c   | 16 +++++++++++++++-
+ 3 files changed, 25 insertions(+), 2 deletions(-)
 
---- a/security/landlock/fs.c
-+++ b/security/landlock/fs.c
-@@ -45,7 +45,7 @@ static void release_inode(struct landloc
- 	__releases(object->lock)
+diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
+index cde23d4f103c7..0cb7a487d3f24 100644
+--- a/fs/ntfs3/dir.c
++++ b/fs/ntfs3/dir.c
+@@ -185,11 +185,18 @@ int ntfs_nls_to_utf16(struct ntfs_sb_info *sbi, const u8 *name, u32 name_len,
  {
- 	struct inode *const inode = object->underobj;
--	struct super_block *sb;
-+	atomic_long_t *inode_refs;
+ 	int ret, slen;
+ 	const u8 *end;
+-	struct nls_table *nls = sbi->options->nls;
++	struct ntfs_mount_options *opts;
++	struct nls_table *nls;
+ 	u16 *uname = uni->name;
  
- 	if (!inode) {
- 		spin_unlock(&object->lock);
-@@ -61,8 +61,8 @@ static void release_inode(struct landloc
- 	 * Makes sure that if the filesystem is concurrently unmounted,
- 	 * hook_sb_delete() will wait for us to finish iput().
- 	 */
--	sb = inode->i_sb;
--	atomic_long_inc(&landlock_superblock(sb)->inode_refs);
-+	inode_refs = &landlock_superblock(inode->i_sb)->inode_refs;
-+	atomic_long_inc(inode_refs);
- 	spin_unlock(&object->lock);
- 	/*
- 	 * Because object->underobj was not NULL, hook_sb_delete() and
-@@ -76,8 +76,8 @@ static void release_inode(struct landloc
- 	 */
+ 	static_assert(sizeof(wchar_t) == sizeof(u16));
  
- 	iput(inode);
--	if (atomic_long_dec_and_test(&landlock_superblock(sb)->inode_refs))
--		wake_up_var(&landlock_superblock(sb)->inode_refs);
-+	if (atomic_long_dec_and_test(inode_refs))
-+		wake_up_var(inode_refs);
++	/* ntfs_fs_reconfigure() may replace the options, but not ->nls */
++	rcu_read_lock();
++	opts = READ_ONCE(sbi->options);
++	nls = opts->nls;
++	rcu_read_unlock();
++
+ 	if (!nls) {
+ 		/* utf8 -> utf16 */
+ 		ret = _utf8s_to_utf16s(name, name_len, endian, uname, max_ulen);
+diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
+index 8850ee2b75b11..c035a97e6d22e 100644
+--- a/fs/ntfs3/ntfs_fs.h
++++ b/fs/ntfs3/ntfs_fs.h
+@@ -90,6 +90,8 @@ enum utf16_endian;
+ struct ntfs_mount_options {
+ 	char *nls_name;
+ 	struct nls_table *nls;
++	/* ->d_hash() and ->d_compare() read the options in rcu pathwalk */
++	struct rcu_head rcu;
+ 
+ 	kuid_t fs_uid;
+ 	kgid_t fs_gid;
+diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
+index 59270aa34c007..e8d8270828d25 100644
+--- a/fs/ntfs3/super.c
++++ b/fs/ntfs3/super.c
+@@ -238,6 +238,11 @@ static inline void put_mount_options(struct ntfs_mount_options *options)
+ 	kfree(options);
  }
  
- static const struct landlock_object_underops landlock_fs_underops = {
++static void put_mount_options_rcu(struct rcu_head *head)
++{
++	put_mount_options(container_of(head, struct ntfs_mount_options, rcu));
++}
++
+ enum Opt {
+ 	Opt_uid,
+ 	Opt_gid,
+@@ -408,6 +413,7 @@ static int ntfs_fs_reconfigure(struct fs_context *fc)
+ 	struct super_block *sb = fc->root->d_sb;
+ 	struct ntfs_sb_info *sbi = sb->s_fs_info;
+ 	struct ntfs_mount_options *new_opts = fc->fs_private;
++	struct ntfs_mount_options *old_opts;
+ 	int ro_rw;
+ 
+ 	ro_rw = sb_rdonly(sb) && !(fc->sb_flags & SB_RDONLY);
+@@ -438,7 +444,15 @@ static int ntfs_fs_reconfigure(struct fs_context *fc)
+ 		return -EINVAL;
+ 	}
+ 
+-	swap(sbi->options, fc->fs_private);
++	old_opts = sbi->options;
++	/* pairs with the READ_ONCE() in ntfs_nls_to_utf16() */
++	smp_store_release(&sbi->options, new_opts);
++	fc->fs_private = NULL;
++	/*
++	 * ntfs_d_hash() and ntfs_d_compare() of a pathwalk in rcu mode may
++	 * still read the old options through the sbi.
++	 */
++	call_rcu(&old_opts->rcu, put_mount_options_rcu);
+ 
+ 	return 0;
+ }
+-- 
+2.53.0
+
 
 
