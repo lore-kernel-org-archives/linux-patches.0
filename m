@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033959;
-	b=2wDxMlGHSR74JdNE+mcGSkBJuXEq+2xpPxlYmL2eILVTrF5o521tmudtwk8vSkti6V87
-	 MC2R0b8bGf/iNozLZPoDyIzL4dq4EcIfL7ma9LNVN8bAvcwbyEsAasGgPCeUUUy8VpVL1
-	 e4EDGCRl3/SlW3Y7PaPT/HJIHCEMVKvIWaeTGQ/gk88caohlhWdwAtlADIznrpw/WMx+/
-	 co2HpWZ2An0cuEOWUhe5fmZq1ZWbicOtA8EXjRx4juNNl2GR3HKKsREnz3l06A3wHuAZb
-	 mJabLgmgq6yQy22k5lR7CrnrAF6vuPP25sozZ8CWZg2rMzGtfHtWe8pdp9oYP1N+Ikw==
+	t=1795033962;
+	b=yGgPN0VN/5Obp6PMgL2y/NuZlGjWcRF6WpkH4Dk3Tcdcf0NBMhMCbH//F5asBMMcklKQ
+	 rn6Vcqx6sO6dAjSQv4W3odD49NXRPG2v8aFEaOp02CBMnidiPrboBcS6FQ9Kh3EfUD643
+	 unLohBeSWyMAt5fVIiKNA+cYkS1fbMNMYphRL+cXsBd52ROL4iUEXXU2odUWD4x9mf3l7
+	 cHp51au63VIgLoVyXsu2wsva4AoYxBv86W9tEh0pwV1MOd3zFrEeTAgeKoar3uRILl2dV
+	 uxAe6Sgxn+Ij5B2ohz8VYTea5YiYzbxugBzd5+slbncVzJ2zbWvcRSmv8p0JZIO7MGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033959;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033962;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Kb8uur01xic3BA9R4kziBoWtYK+QWMA7Cn1RE9+cIzI=;
-	b=Y729/c3sw1mI7TGtRdu/8m5A5Mrvl19jEmftK/YhKOBRgH1do34OKKq4uH+VxCHzcxDB
-	 XxSUfN+gjEr+6fETDc4aiL8g0DMy/2d1NqGecHC7mM6sEPSd0kNH3KjnRorrNXODbTHD0
-	 I+QAARBZwiiEQ7jg1pfSxJO5fngW3pCJtZ0zOMXRZQrOxY2l7YZCbTBdMZZq9WYIg6u63
-	 PRLIPj5UraysgckC0TMMchCMe7ixxfBkrvn/53YYPuzUMSyiSDSLv/9dV/bt8FamQJe5B
-	 5l0FsjEiyM7EKyKjR/ga3z6dWJ+G+D7s911qKegeN5o/haN8ubpLlKCcyYdTHE1Av4Q==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=cY2PQKbPVykbpRZJGHQOj/jqXpHGGl2wELLn0Sc4CBY=;
+	b=qrcx+x92YPDOLWPKPVoJKycWFjx3UEQom9u0wReKA62XGh0Zc6pC6Sg+fydlJyT77GHY
+	 BRwor6kj7y5CBRTT2aV6B/LchGHPZZ5Kv5fknawQvZkdCE3FkCXiese0KzVeSrkWtTpuc
+	 lASQHGYE+DmOugR0mrleRerz19pMz8xfVL2NKLMouHQakpQAxHBclPMyfMvdPp6TTQ1Xl
+	 NEVTH/W6LiNREe5CL+h/4mmiKCdwYN/R7K9MkIYh7hbxZOBF39/a/sGKPVVwOhKrAMMOw
+	 CdGAtxprh4TVp4McEYxzWkoCOKjb7+2xiB1bnAFrz7uuXqXOgMdgr2DS6ilP1+T9Qmg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ZqR/EWHF";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m88P6sTZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59E660A2605;
-	Wed, 18 Nov 2026 20:32:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8202A606A333;
+	Wed, 18 Nov 2026 20:32:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZqR/EWHF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B3051F000C6;
-	Wed, 18 Nov 2026 20:32:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m88P6sTZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB42F1F000C5;
+	Wed, 18 Nov 2026 20:32:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033959;
-	bh=Kb8uur01xic3BA9R4kziBoWtYK+QWMA7Cn1RE9+cIzI=;
+	s=korg; t=1795033962;
+	bh=cY2PQKbPVykbpRZJGHQOj/jqXpHGGl2wELLn0Sc4CBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZqR/EWHFY3YKBlYldxL55uDP+g/iTQp8pqUpwKWP+5RsPvS0IFms3ezC6EJ1YgyOt
-	 iQzV95zqAzoqEn7C7hOIx4SNgywH/6peQvQn9NmWu455KPf1QuqEkl0iMNuv3jhaFy
-	 asUPhFazWkGjwuY0PGISIvQHhvTo/xZ/KipssnT8=
+	b=m88P6sTZCRBzKObZtJEZmCj3eevb/p3+KTd7dvE560Lham9Cg9a3628+dB3hPL4Vs
+	 n1UxSHASL+SBihdS5sIdIWWgALnHozYL4XNLg6Elmsq/90lXlJ/TSI6xj1P9rrox4o
+	 Ld7VuudeoOUb5PgAB2NdgjZT+ttoZkcEaV03CZSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=EC=9D=B4=EC=83=81=ED=98=B8?= <kudo3228@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Rosen Penev <rosenp@gmail.com>,
+	Srinivas Kandagatla <srini@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0198/3318] romfs: detect hard link cycles
-Date: Wed, 18 Nov 2026 15:13:40 +0100
-Message-ID: <20261118150320.785000151@linuxfoundation.org>
+Subject: [PATCH 6.6 0199/3318] nvmem: brcm_nvram: reject empty NVRAM partition
+Date: Wed, 18 Nov 2026 15:13:41 +0100
+Message-ID: <20261118150320.819451160@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,79 +62,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: 이상호 <kudo3228@gmail.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit d30b5a954e0a4dcc16bba9c310c13709a6169a52 ]
+[ Upstream commit fde46579cf8872138b296349c2bd8a3cd3f132e2 ]
 
-romfs_iget() follows on-disk hard link entries until it reaches a non-hard
-link inode:
+If the partition is completely erased (all padding bytes), the trimming
+loop reduces data_len to 0. devm_kzalloc(dev, 0, GFP_KERNEL) returns
+ZERO_SIZE_PTR ((void *)16), which is non-NULL and bypasses the NULL
+check. The subsequent cast of priv->data to struct brcm_nvram_header *
+and dereference of header->magic causes a page fault on address 0x10.
 
-	pos = be32_to_cpu(ri.spec) & ROMFH_MASK;
+Reject data_len smaller than the header before allocating.
 
-The target position is image-controlled, and the loop does not detect
-cycles. A crafted romfs image can make the root inode a hard link. The hard
-link can point back to itself and leave mount(2) spinning in the kernel.
-
-Reject excessive hard link indirection with -ELOOP. Normal romfs images do
-not need long hard link chains. This bounds corrupted-image traversal.
-Propagate romfs_iget() errors from lookup because hard link traversal can
-now fail with -ELOOP.
-
-Signed-off-by: 이상호 <kudo3228@gmail.com>
-Link: https://patch.msgid.link/20260701220729.822112-1-kudo3228@gmail.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Assisted-by: opencode:big-pickle
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://patch.msgid.link/20260729094647.111468-13-srini@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/romfs/super.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/nvmem/brcm_nvram.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/romfs/super.c b/fs/romfs/super.c
-index 82975173dcb04..b43b0f6e688da 100644
---- a/fs/romfs/super.c
-+++ b/fs/romfs/super.c
-@@ -250,6 +250,8 @@ static struct dentry *romfs_lookup(struct inode *dir, struct dentry *dentry,
- 			if ((be32_to_cpu(ri.next) & ROMFH_TYPE) == ROMFH_HRD)
- 				offset = be32_to_cpu(ri.spec) & ROMFH_MASK;
- 			inode = romfs_iget(dir->i_sb, offset);
-+			if (IS_ERR(inode))
-+				return ERR_CAST(inode);
- 			break;
- 		}
- 
-@@ -272,6 +274,8 @@ static const struct inode_operations romfs_dir_inode_operations = {
- 	.lookup		= romfs_lookup,
- };
- 
-+#define ROMFS_MAX_HARDLINK_DEPTH 64
-+
- /*
-  * get a romfs inode based on its position in the image (which doubles as the
-  * inode number)
-@@ -283,6 +287,7 @@ static struct inode *romfs_iget(struct super_block *sb, unsigned long pos)
- 	struct inode *i;
- 	unsigned long nlen;
- 	unsigned nextfh;
-+	unsigned int depth = 0;
- 	int ret;
- 	umode_t mode;
- 
-@@ -299,6 +304,9 @@ static struct inode *romfs_iget(struct super_block *sb, unsigned long pos)
- 		if ((nextfh & ROMFH_TYPE) != ROMFH_HRD)
- 			break;
- 
-+		if (++depth > ROMFS_MAX_HARDLINK_DEPTH)
-+			return ERR_PTR(-ELOOP);
-+
- 		pos = be32_to_cpu(ri.spec) & ROMFH_MASK;
+diff --git a/drivers/nvmem/brcm_nvram.c b/drivers/nvmem/brcm_nvram.c
+index 5cdf339cfbec0..fe663f5fca9ca 100644
+--- a/drivers/nvmem/brcm_nvram.c
++++ b/drivers/nvmem/brcm_nvram.c
+@@ -84,6 +84,11 @@ static int brcm_nvram_copy_data(struct brcm_nvram *priv, struct platform_device
  	}
+ 	WARN(priv->data_len > SZ_128K, "Unexpected (big) NVRAM size: %zu B\n", priv->data_len);
  
++	if (priv->data_len < sizeof(struct brcm_nvram_header)) {
++		dev_err(priv->dev, "NVRAM data too small (%zu)\n", priv->data_len);
++		return -EINVAL;
++	}
++
+ 	priv->data = devm_kzalloc(priv->dev, priv->data_len, GFP_KERNEL);
+ 	if (!priv->data)
+ 		return -ENOMEM;
 -- 
 2.53.0
 
