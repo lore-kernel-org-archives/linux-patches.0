@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021373;
-	b=PnBsCKPGPslTUeR57pyy/L56EvGagkItvh2X4E4b7UUbS3AprWsY+xjhl8FXIgjsVMzR
-	 3sJQHFB4fvrsdsOhKvr9W/NpRNer0ornAJlcDS2YPLJw7E+ualKRXrVRTbFjCuJYDUTyn
-	 opw6C+TNG/8PY397nEehyevM8Nu9X2DiGq6dsZafRzWNRBeQlAcA3YYiiCbOhJ8ccPjz0
-	 LtCvz+wwVSGCf71X0Oaz9PVddZ7/zhf6+OJxig2OmF1J+ebFlheT5dkqUfSS0vYcBxZLd
-	 ce3SGtakkl9BdUpNaNxDsyNttDQAxtZGWZKOi92+/RVac/1yHsuTB6qjyAp8nxwfSEQ==
+	t=1795021375;
+	b=mXeUX449ue+vT6buT2hjegsylxspxfB2iw3psNpPuntYa6j/yFIbw51ZADKEZB//8IlR
+	 Pymc9o6aWRoW4eY+pZGkRZMG98ZD5W75dHH4ZCHDln4iZX1Mq4052dAG3c2XEu4zHa3Cr
+	 v9ouUtIWDd27CK4EGmjUU+7ImujQXtnaDzzGX6oOWdVpgNc3tBoX0KSmPped/E0xi9xnA
+	 4CA1z8kqsD6wbBRJMEiTEzflrB9FY64dvhJOFehBxt4/ao+ihUHVW3tmwJNw+91yizL/s
+	 fwqa+jI68oJ0WlpAa7xu5pVzE5d6v/ISunAUCuLX8nyI4pbMYI84rawdK+zRF2DWSLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021373;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021375;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zaiuwk50KEEKCZpq+wihxzDS2hfONhZoUOuxhOdHIvY=;
-	b=Pi041rrt9cHri1ZOpgVNaCMnNpxcZ7BdRNLnrFRf4t14coOSOdfdw7xUdiC+X5efKxWi
-	 W80WMk+jOdm3JomOF4NqF0mWtj8evHjBzEWoLOpupPdoAPmSt23gUziDEDz66KpPmtv1X
-	 BMlI2amj+LK5t3FcvR0Xsqflera8dGUxBOl0sGGNt1Cxx1lj3kUI2tEL2q2QnLXvufuqC
-	 6FEypR3opAy84yeGP4h+MtTafXtUlsi582KAU9GFmAf6ziHJwhE+0OU37RYWWXUllCxfr
-	 QUm25LVEB+euYCT9Ix7qg+GokkzAn2QQymgzijvUWr5SHMBYNgEgiNsCjyC+LvXLdhg==
+	bh=cNmXCY6Aj5DXylv7UfLEOhog4xYwlh18ut9y0qZxH4w=;
+	b=coAceYI2ACtxbie7uNtwnKwhO76W4fPvZLXPC626irt9ziNgFHgRolZHqDAHX1rw5Pts
+	 F3BRZmEzAzEsgaBXxOjw2DyUHZ6ZWJH0Z4eF4vBQuECufD13lCsy1ATUpr4zpUf4XaM8s
+	 3ZDmuKtTYs8VngzpWHrSxIm8PWGWd4CMfb5Yv1xxp6cwS9nmRPuYo1eA+Vv3gWSqCP9ZW
+	 uTPgWEMIqxbt0ILK7i95hD9JxdovzsP7kQzpgCSEcqR5VAoFlyebGY8YWB6PYi8Xt296A
+	 YMe2Qf84jgb4Pna0bhsh0bdpf5bCE+Iudg9m+k7UzOuk57/Q9N6MhVA776TOL2WMnjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uTUGrhrz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cYibGmw5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01F31606A320;
-	Wed, 18 Nov 2026 17:02:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DCCD606A325;
+	Wed, 18 Nov 2026 17:02:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uTUGrhrz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13F5C1F000C4;
-	Wed, 18 Nov 2026 17:02:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cYibGmw5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3FCD1F000C4;
+	Wed, 18 Nov 2026 17:02:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021372;
-	bh=zaiuwk50KEEKCZpq+wihxzDS2hfONhZoUOuxhOdHIvY=;
+	s=korg; t=1795021375;
+	bh=cNmXCY6Aj5DXylv7UfLEOhog4xYwlh18ut9y0qZxH4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uTUGrhrzE9r9/qJAd+oAekoGNt2F9+8RsxW2BogtRbkEQuMFHkH/KvySpU+vMF0PV
-	 nxKOhTI4HrcWwOac9R/ki/Y1FX6HctvG/NpAL32areoeE7wseiofsOcIpuMgVkk+JO
-	 ULWCUdXlyqob/B1ceQkQS0BXwgD5RkCg8IC/lXJI=
+	b=cYibGmw52F7tVcf5Bf4S2bXchk7TWDhk9UNgUMuk7IznO0krvqladeSKJPUNC6pOv
+	 rreavKIbwZ7EJ3Ka/O17qOoQ5T+LvEbxP52UXWjASliqOf/mAK+3OA+HyVnZXVa2B/
+	 tAiJ+AA9aUs3JQRHMRCDmVZdxTgch30hok01qIsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Henry Hu <huhai@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2285/2651] ksmbd: fix invalid Next offset in interface info replies
-Date: Wed, 18 Nov 2026 15:58:45 +0100
-Message-ID: <20261118150407.558187076@linuxfoundation.org>
+Subject: [PATCH 7.3 2286/2651] ksmbd: report IPv4 and IPv6 addresses independently in iface query
+Date: Wed, 18 Nov 2026 15:58:46 +0100
+Message-ID: <20261118150407.590946543@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,51 +71,211 @@ Content-Transfer-Encoding: 8bit
 
 From: Henry Hu <huhai@kylinos.cn>
 
-[ Upstream commit 2c50a4a5e75db55880eca43c035649cb51fcb52a ]
+[ Upstream commit bb0326a5806015fb7e5a6a721a50ff172c92c6e4 ]
 
-fsctl_query_iface_info_ioctl() assigns nii_rsp to the next output
-slot before checking whether the interface has an in_device or
-inet6_dev. If either lookup returns NULL, the loop continues without
-advancing nbytes, leaving nii_rsp pointing at an uncommitted slot. If
-no later entry is committed, clearing nii_rsp->Next updates that slot
-instead of the last returned entry, leaving the latter with a nonzero
-Next offset.
+fsctl_query_iface_info_ioctl() appends an entry before checking that a
+usable address was found, so it advertises unspecified-address
+placeholders: an entry containing 0.0.0.0 when an in_device exists but
+has no primary IPv4 address, and an entry containing :: when an
+inet6_dev exists but its address list is empty or every address is
+tentative or deprecated.
 
-Fix this by using nbytes to locate the last committed entry and clear
-its Next field, but only when the response contains at least one entry.
+The loop also couples IPv6 reporting to IPv4 success: when
+__in_dev_get_rtnl() returns NULL it continues to the next interface,
+skipping the IPv6 pass, so an interface without an in_device is dropped
+even if it has a usable IPv6 address.
+
+Query IPv4 and IPv6 independently and append an entry only when an
+address is found. Factor out the common entry initialization and query
+the link speed once per interface instead of once per address family.
 
 Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Reported-by: Sashiko <sashiko-bot+sashiko@kernel.org>
 Link: https://sashiko.dev/#/patchset/20260910090818.24479-1-15815827059%40163.com
+Assisted-by: Codex:gpt-5.6-sol
 Signed-off-by: Henry Hu <huhai@kylinos.cn>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ fs/smb/server/smb2pdu.c | 127 ++++++++++++++++++++++------------------
+ 1 file changed, 70 insertions(+), 57 deletions(-)
 
 diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index efc3723389c5a..9b97656d599b0 100644
+index 9b97656d599b0..dc53b1d3e5931 100644
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -10776,9 +10776,15 @@ static int fsctl_query_iface_info_ioctl(struct ksmbd_conn *conn,
+@@ -10673,6 +10673,27 @@ static __be32 idev_ipv4_address(struct in_device *idev)
+ 	return addr;
+ }
+ 
++static struct network_interface_info_ioctl_rsp *
++ksmbd_iface_entry_init(struct smb2_ioctl_rsp *rsp, int nbytes,
++		       struct net_device *netdev, unsigned long long speed)
++{
++	struct network_interface_info_ioctl_rsp *nii_rsp;
++
++	nii_rsp = (struct network_interface_info_ioctl_rsp *)&rsp->Buffer[nbytes];
++	nii_rsp->IfIndex = cpu_to_le32(netdev->ifindex);
++	nii_rsp->Capability = 0;
++	if (netdev->real_num_tx_queues > 1)
++		nii_rsp->Capability |= RSS_CAPABLE;
++	if (ksmbd_rdma_capable_netdev(netdev))
++		nii_rsp->Capability |= RDMA_CAPABLE;
++	nii_rsp->Next = cpu_to_le32(152);
++	nii_rsp->Reserved = 0;
++	nii_rsp->LinkSpeed = cpu_to_le64(speed);
++	memset(nii_rsp->SockAddr_Storage, 0, 128);
++
++	return nii_rsp;
++}
++
+ static int fsctl_query_iface_info_ioctl(struct ksmbd_conn *conn,
+ 					struct smb2_ioctl_rsp *rsp,
+ 					unsigned int out_buf_len)
+@@ -10687,7 +10708,12 @@ static int fsctl_query_iface_info_ioctl(struct ksmbd_conn *conn,
+ 
+ 	rtnl_lock();
+ 	for_each_netdev(&init_net, netdev) {
+-		bool ipv4_set = false;
++		struct inet6_ifaddr *ifa;
++		struct inet6_dev *idev6;
++		struct in_device *idev;
++		struct in6_addr ip6 = { };
++		bool have_ip6 = false;
++		__be32 ip4 = 0;
+ 
+ 		if (netdev->type == ARPHRD_LOOPBACK)
+ 			continue;
+@@ -10698,25 +10724,6 @@ static int fsctl_query_iface_info_ioctl(struct ksmbd_conn *conn,
+ 		flags = netif_get_flags(netdev);
+ 		if (!(flags & IFF_RUNNING))
+ 			continue;
+-ipv6_retry:
+-		if (out_buf_len <
+-		    nbytes + sizeof(struct network_interface_info_ioctl_rsp)) {
+-			rtnl_unlock();
+-			return -ENOSPC;
+-		}
+-
+-		nii_rsp = (struct network_interface_info_ioctl_rsp *)
+-				&rsp->Buffer[nbytes];
+-		nii_rsp->IfIndex = cpu_to_le32(netdev->ifindex);
+-
+-		nii_rsp->Capability = 0;
+-		if (netdev->real_num_tx_queues > 1)
+-			nii_rsp->Capability |= RSS_CAPABLE;
+-		if (ksmbd_rdma_capable_netdev(netdev))
+-			nii_rsp->Capability |= RDMA_CAPABLE;
+-
+-		nii_rsp->Next = cpu_to_le32(152);
+-		nii_rsp->Reserved = 0;
+ 
+ 		if (!__ethtool_get_link_ksettings(netdev, &cmd) &&
+ 		    cmd.base.speed && cmd.base.speed != SPEED_UNKNOWN) {
+@@ -10726,60 +10733,66 @@ static int fsctl_query_iface_info_ioctl(struct ksmbd_conn *conn,
+ 				    "speed is unknown, defaulting to 1Gb/sec");
+ 			speed = SPEED_1000;
+ 		}
+-
+ 		speed *= 1000000;
+-		nii_rsp->LinkSpeed = cpu_to_le64(speed);
+ 
+-		sockaddr_storage = (struct sockaddr_storage_rsp *)
+-					nii_rsp->SockAddr_Storage;
+-		memset(sockaddr_storage, 0, 128);
++		/*
++		 * Query IPv4 and IPv6 independently; emit an entry only when a
++		 * usable address exists, so an interface missing one family is
++		 * still reported for the other and 0.0.0.0 / :: placeholders are
++		 * never advertised.
++		 */
++		idev = __in_dev_get_rtnl(netdev);
++		if (idev)
++			ip4 = idev_ipv4_address(idev);
+ 
+-		if (!ipv4_set) {
+-			struct in_device *idev;
++		idev6 = __in6_dev_get(netdev);
++		if (idev6) {
++			rcu_read_lock();
++			list_for_each_entry_rcu(ifa, &idev6->addr_list, if_list) {
++				if (ifa->flags & (IFA_F_TENTATIVE | IFA_F_DEPRECATED))
++					continue;
++				memcpy(&ip6, ifa->addr.s6_addr, sizeof(ip6));
++				have_ip6 = true;
++				break;
++			}
++			rcu_read_unlock();
++		}
+ 
++		if (ip4) {
++			if (out_buf_len <
++			    nbytes + sizeof(struct network_interface_info_ioctl_rsp)) {
++				rtnl_unlock();
++				return -ENOSPC;
++			}
++
++			nii_rsp = ksmbd_iface_entry_init(rsp, nbytes, netdev, speed);
++			sockaddr_storage = (struct sockaddr_storage_rsp *)nii_rsp->SockAddr_Storage;
+ 			sockaddr_storage->Family = INTERNETWORK;
+ 			sockaddr_storage->addr4.Port = 0;
+-
+-			idev = __in_dev_get_rtnl(netdev);
+-			if (!idev)
+-				continue;
+-			sockaddr_storage->addr4.IPv4Address =
+-						idev_ipv4_address(idev);
++			sockaddr_storage->addr4.IPv4Address = ip4;
+ 			nbytes += sizeof(struct network_interface_info_ioctl_rsp);
+-			ipv4_set = true;
+-			goto ipv6_retry;
+-		} else {
+-			struct inet6_dev *idev6;
+-			struct inet6_ifaddr *ifa;
+-			__u8 *ipv6_addr = sockaddr_storage->addr6.IPv6Address;
++		}
++
++		if (have_ip6) {
++			if (out_buf_len <
++			    nbytes + sizeof(struct network_interface_info_ioctl_rsp)) {
++				rtnl_unlock();
++				return -ENOSPC;
++			}
+ 
++			nii_rsp = ksmbd_iface_entry_init(rsp, nbytes, netdev, speed);
++			sockaddr_storage = (struct sockaddr_storage_rsp *)nii_rsp->SockAddr_Storage;
+ 			sockaddr_storage->Family = INTERNETWORKV6;
+ 			sockaddr_storage->addr6.Port = 0;
+ 			sockaddr_storage->addr6.FlowInfo = 0;
+-
+-			idev6 = __in6_dev_get(netdev);
+-			if (!idev6)
+-				continue;
+-
+-			rcu_read_lock();
+-			list_for_each_entry_rcu(ifa, &idev6->addr_list, if_list) {
+-				if (ifa->flags & (IFA_F_TENTATIVE |
+-							IFA_F_DEPRECATED))
+-					continue;
+-				memcpy(ipv6_addr, ifa->addr.s6_addr, 16);
+-				break;
+-			}
+-			rcu_read_unlock();
++			memcpy(sockaddr_storage->addr6.IPv6Address, ip6.s6_addr, 16);
+ 			sockaddr_storage->addr6.ScopeId = 0;
+ 			nbytes += sizeof(struct network_interface_info_ioctl_rsp);
+ 		}
  	}
  	rtnl_unlock();
  
--	/* zero if this is last one */
--	if (nii_rsp)
-+	/*
-+	 * nii_rsp may point to an entry not included in nbytes if the IPv4
-+	 * or IPv6 device lookup failed. Clear Next in the last returned entry.
-+	 */
-+	if (nbytes > 0) {
-+		nii_rsp = (struct network_interface_info_ioctl_rsp *)
-+			  &rsp->Buffer[nbytes - sizeof(*nii_rsp)];
- 		nii_rsp->Next = 0;
-+	}
- 
- 	rsp->PersistentFileId = SMB2_NO_FID;
- 	rsp->VolatileFileId = SMB2_NO_FID;
+-	/*
+-	 * nii_rsp may point to an entry not included in nbytes if the IPv4
+-	 * or IPv6 device lookup failed. Clear Next in the last returned entry.
+-	 */
++	/* Clear Next of the last committed entry to terminate the list. */
+ 	if (nbytes > 0) {
+ 		nii_rsp = (struct network_interface_info_ioctl_rsp *)
+ 			  &rsp->Buffer[nbytes - sizeof(*nii_rsp)];
 -- 
 2.53.0
 
