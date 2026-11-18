@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017954;
-	b=pgPpc4+48rchO8796JgfKrn6ZG9VfHgBvqOuXMsIbGuLc5gZ26jM6Z56TPJ4MkZkFuH1
-	 vOnd+4xyq/Ev5zPyom1daPjD+CN9zHUF6jOskSSyzH53RjtKtBqsqrARnAlFgQoOZxZ2h
-	 DlQBeSyasMsoE7jGsDGgMs+dc0osYlH6Cnx8OlRJSoQhDsjO6gj7UAKmXUzkEmfh2m4ii
-	 rdtgEZqWzoIu7xX52yRxrqrmRqAcIJhlD2b6D0zTFOqMgCumuVVhgOF0G6YSyCKWDK91E
-	 oAT3cveBvfli5sclJbRXIT1dXYXbX3vUOZNrUfpuSh4C3A1qdfHWJgTyyxTwpGKQZMw==
+	t=1795017956;
+	b=m1zYQLaQhbELeFZcTRCRQ3lPReA6N+W9M9Yi27PJc21iwA76Jgl9rt87f3vPdnzxYPg0
+	 0XYQ7ue6imIgpMiqzZqQajzNH7t+HFnkl6F6yctsR2haEcwDH9dytdfiisa8BPAt3o3q0
+	 fvsBsfCLr1jITvUWU2zMSLd28zB3jxjjc6/VFKs4mtfy5JdxWP45fcH+6icIamQOOaKj7
+	 C/VqzGJ84TRg3YFT4sEwM4MZHw5ekmMo0G6/8IjfQ/Z6PsAZ+NKiqj9n0vFmn9rqv/GIV
+	 fBZp4islUKyEH+8ucMPjEVNCGhJhfdUdbIi9oiv8GypBtYuUQg0OpWMBD32Nduh17yQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017954;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017956;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4SaDvTZvca9MlOA4/1F4QyvDiwvsHtkic/ev13b4F3I=;
-	b=PZRZQUePNFYCllR4cRElTevWjlHrGhYArVlfFszkotP8u3n12oui/1hpWwm268HkCZQG
-	 AIlztR84aTymw1vYfJCMgB8TujOxljx5TJV+uYJR/P/zHUOgVQsBFz4rzAC1hLoKnCOsJ
-	 /EzrvFkDuFyH5xLt1uGIiFwiHJ+08Nn4BMXLg+v/PghgRrAccsq1U/uIAJxImaTKSrh1f
-	 CCeBAmKIyPBMd7nRJEACu9jC7ZnuXdZ5Y8ODgbLt8zOX9Ywe3BePoxsrVCsbZuyQrIBvh
-	 N/3uCtaBpgT/vyv9AUiswIFHaUhDUtqfOpZ1BGvZBlCHzjCSTTa1AwY7USbyC0VHutg==
+	bh=1QQakvIw1HwqSXlvGGe0Y1QaNX2aZZ1poDJxmm7HPE0=;
+	b=tY1sOnGZIASNE47PwSkRp33gZT8LXYlQ9U9atulzpW5ST7nMLYkSqKa23zTSsmi/BRFQ
+	 5cmIXnCU5mZQ7dIPwXweKjDGmlzzIWNfEIca2c9lH+CuEyb+4j85OZjhfl5iSd4TYXI+3
+	 lcPBRW2lqPhE/KKrpuBB3titVKBvbQdp7s+AbyztwltL8dWr8tkd2ah7TA0c1naMSOgAN
+	 hoiF9Y1KaO5Ygetap0ezxkRwEWuRarYl3GLzdjaT0Df0nRPqOjNcD0ssntwqE1FFfudZO
+	 EOzhCDNRRLVK4kXbdY8NI1Id6VRK7xHs44Ur1OOYbrU9riN4+7CL/opcGo9YUGDUFGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i41KvhiI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pueoTGt0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 024D3606A31C;
-	Wed, 18 Nov 2026 16:05:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6525606A31C;
+	Wed, 18 Nov 2026 16:05:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i41KvhiI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 534D31F000C4;
-	Wed, 18 Nov 2026 16:05:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pueoTGt0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19DBB1F000C4;
+	Wed, 18 Nov 2026 16:05:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017953;
-	bh=4SaDvTZvca9MlOA4/1F4QyvDiwvsHtkic/ev13b4F3I=;
+	s=korg; t=1795017956;
+	bh=1QQakvIw1HwqSXlvGGe0Y1QaNX2aZZ1poDJxmm7HPE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i41KvhiIw07niLf9mVYiFrjyNqcm354RhQ2eT45hSfppfSMzpsqm5yuATPiY0UF1l
-	 6Mgz74SAgy64ye1h0/vj346/gqY966o23SNh7m3tHi7RiHlxQuhwDhpuTunn/fuacj
-	 DoF3hCKqKq7TH268e5HR+k3qG2FdTtc4vInPZxJg=
+	b=pueoTGt02wUwWUNVdP0x/o3JkWm/eq2dSKN7gOcJj/DV8u2hYWWj+tSsrvRcnOmp7
+	 +8baHCSpiaihsT+XT2y2tRbr0gBbamTxHi1O+By6Gvns/N2WjMhtcEZ4RqdDWShfYk
+	 hpw7gEeK6OJj7j52Us8EnCT1bX9v/uHm/npBw/YY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Randy Dunlap <rdunlap@infradead.org>,
+	syzbot+ae5b8eb92ed40411ce16@syzkaller.appspotmail.com,
+	Seongjae Jeong <jsjlee1020@gmail.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1068/2651] f2fs: quota: fix unused-label warning
-Date: Wed, 18 Nov 2026 15:38:28 +0100
-Message-ID: <20261118150326.429854743@linuxfoundation.org>
+Subject: [PATCH 7.3 1069/2651] f2fs: reject device aliasing without a multi-device configuration
+Date: Wed, 18 Nov 2026 15:38:29 +0100
+Message-ID: <20261118150326.467782801@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,42 +70,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Seongjae Jeong <jsjlee1020@gmail.com>
 
-[ Upstream commit 4faeea625cf730bb20f609f061ff81c9b6852931 ]
+[ Upstream commit 7566fec606d233f803e61f5ce37c54fbcdb00010 ]
 
-The newly added label causes a warning when QUOTA is turned off:
+A malformed F2FS image can enable F2FS_FEATURE_DEVICE_ALIAS without
+providing a multi-device configuration. For a regular single-device
+filesystem, f2fs_scan_devices() returns without allocating sbi->devs.
 
-fs/f2fs/super.c: In function '__f2fs_remount':
-fs/f2fs/super.c:3142:1: error: label 'restore_holder' defined but not used [-Werror=unused-label]
- 3142 | restore_holder:
-      | ^~~~~~~~~~~~~~
+In this state, f2fs_dev_is_alloc_blocked() passes the device alias
+feature check and dereferences FDEV(0), resulting in a NULL pointer
+dereference during segment allocation.
 
-Fixes: 3f140a60c92a ("f2fs: quota: fix stale lock holder on remount failure")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Tested-by: Randy Dunlap <rdunlap@infradead.org>
+Device aliasing requires at least one secondary device. Reject
+superblocks that enable device aliasing without entries for both the
+main and secondary devices in sanity_check_raw_super().
+
+Fixes: eae3faf210bd ("f2fs: support dynamic reserve/release for device aliasing")
+Reported-by: syzbot+ae5b8eb92ed40411ce16@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ae5b8eb92ed40411ce16
+Signed-off-by: Seongjae Jeong <jsjlee1020@gmail.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/f2fs/super.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 17e00d5003b02..ec7ac09079cb7 100644
+index ec7ac09079cb7..070a0bfdbb015 100644
 --- a/fs/f2fs/super.c
 +++ b/fs/f2fs/super.c
-@@ -3126,7 +3126,9 @@ static int __f2fs_remount(struct fs_context *fc, struct super_block *sb)
- 	sbi->mount_opt = org_mount_opt;
- 	sb->s_flags = old_sb_flags;
+@@ -4178,6 +4178,12 @@ static int sanity_check_raw_super(struct f2fs_sb_info *sbi,
+ 		return -EFSCORRUPTED;
+ 	}
  
-+#ifdef CONFIG_QUOTA
- restore_holder:
-+#endif
- 	sbi->umount_lock_holder = NULL;
- 	return err;
- }
++	if (__F2FS_HAS_FEATURE(raw_super, F2FS_FEATURE_DEVICE_ALIAS) &&
++	    (!RDEV(0).path[0] || !RDEV(1).path[0])) {
++		f2fs_info(sbi, "Device aliasing requires a multi-device configuration");
++		return -EFSCORRUPTED;
++	}
++
+ 	if (RDEV(0).path[0]) {
+ 		block_t dev_seg_count = le32_to_cpu(RDEV(0).total_segments);
+ 		int i = 1;
 -- 
 2.53.0
 
