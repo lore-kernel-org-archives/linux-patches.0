@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044434;
-	b=hRtX8hsyk5zfyhKAOWFeflbn0uAvXfTuMYxvATEkhl7J/XPuFg1v6+dhEYH03M4VO0in
-	 YDe2w3/P9qIgTRIqFX5DrM39nVmlWW/OlXnjZpVL+WwWnMTrd2vbgXZHhoT++X5AOYJLB
-	 ezJLMICMMn65JvMnsd6PR/PCLUBhzTP7CjjuCyBPfGd0u0BppXpC5e1U0Icntq23AKEz9
-	 2ktYCt/+eTNbqKR6RU4d03EgVnXvPxuf1+M5386znsfDXDUBpGqwFrl8UWdJuykJDPfZQ
-	 RVZLKG2vn6kcXcuZWdaF93d1Wcyl9yEG/iyz8Typ1QWimox14mmqcGXnfH9wESqtDdw==
+	t=1795044437;
+	b=WEKi6cSOsV0oq8E5Umo2syf7UFyty0u20JZ4Q/zxbtKc9xbzy0/rsEhmLRZ5n48FXSXz
+	 m1HxsRvrhSNoUiImPi8/YLhrQ2gyZ3otKlV6li47Uvxip+fupdL+c/uVMdnrBfaipVVsn
+	 3UhgUmGlJb/68YIPL+MPZG3mJD6G3x1iZOn7qfywGZVEcRj+qJXJlYKh1rPSieHGjPUwV
+	 3ytRYlAnqwib0wRDXoPh2dzP7P3Qs5VzZnmCAF/QlJIX5wZ1XK0ErxkOYn5johEQBJ0cY
+	 tCYbbB+WZPXzj3iPHLc235oV2Z8WvlifJ1XioeKxJMWKwUXTWtrdF9vROCPoqvNzkxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044434;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044437;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=fsOb32pVRvYHsWpHYXAD4OKee35r+1w5/ECysSQRlUo=;
-	b=y37F6iMxjQGMmTBQmM/70FQwB3Wj4jjjSuhp+jmrQ6iXDiXgMi5Ni/iqNOnsLe+f/Wku
-	 hzMP+OQm5kpyZfPfDjM+RY5Nfg/U2JetKloCmIGJOLs1zQ0GCVahfLBflQ7yvBoAmcKJ1
-	 opFSb3w58X//bSvV78+3bf/kLM9wMglu7iGE58F+xtMY0CcPt7kckT8E7vszoDZQjxBA4
-	 P+uOXgGnDu5NR3uswm28BnrsymJ7mdEdBOTQYH8E+AfI4iN23DLSjwoYH79KQRQ9fVr/q
-	 16IQS9bDUbpVwqEOFDNcoIDOrbpH3R+2EJ3dC4LJjgQm07HHb5M4NvVUzToFPWea/Jg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=Lx1UpTGNEnewmyRIzbJRfOUrkdKXSjkMTzw0uNqEiv0=;
+	b=5DYWo47SLzIq4tNCDQ5sxH3Db8+gKqb7glMhnEilsgO1CVUUZAUsgJeLK7Bsx+UPwFRA
+	 IYcP6XzkKcOO+8davWovi49fq+X+8vVWIEBxXYMyIPBOWaRkaXOzGV/h+0YOhm03EV8E6
+	 c1ceZZjn2WOJDQkfOvObc/TYOVjF22u0TN1ZxTuvc7+akoQUkPv8ffrGlD6nAg9xc1ig5
+	 lPuDwtYze/EdLy0ewiouZTE+GIkGNSo/eAkwjFISwflHERfud3GuuAPmVytGdqpdbc69c
+	 +vPJjH41D96tyIqhC5bn4P4RVITRHVifRKL5V2zRqpZCaRumTUhDv94XBtyD0/dQ6ZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HO1DF8Ar;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IOmldQOr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97454606A32A;
-	Wed, 18 Nov 2026 23:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B041606A31C;
+	Wed, 18 Nov 2026 23:27:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HO1DF8Ar
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E41EC1F000C4;
-	Wed, 18 Nov 2026 23:27:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IOmldQOr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF7981F000C4;
+	Wed, 18 Nov 2026 23:27:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044434;
-	bh=fsOb32pVRvYHsWpHYXAD4OKee35r+1w5/ECysSQRlUo=;
+	s=korg; t=1795044437;
+	bh=Lx1UpTGNEnewmyRIzbJRfOUrkdKXSjkMTzw0uNqEiv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HO1DF8ArVzQKEkNXogwi9zdxXcNlAEXtRcnppkUfq0s7ci1wG0TNOjVaBFOU8fT6G
-	 wW/C9U9T5h93gGuAZzXFLmBqNomIENrf/9BSkH6zcH/+QsuQDPnY/1aB+/4PjkgGoi
-	 XUX0TZDIAePGVGJibPTLk9M6A75B7bb5K62Cvq4U=
+	b=IOmldQOr/zVOdTfXcdIppTI3l1pbG1ife7NbnprEYbyajMVa0MmLslsYQZG86Pr5Y
+	 X/VpWid/7EJu1nWvXs0XxN9IT4VKiDhGX1dGcMmphKMBri0Mb8ikIS2MbSMLTlXFeY
+	 HFpagGqLpuyITkT7DoDKCBWB8rBb1xcwTmYri35I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 6.1 0564/2857] wifi: ath9k: delete channel-context timers on deinit
-Date: Wed, 18 Nov 2026 15:26:38 +0100
-Message-ID: <20261118150221.796155932@linuxfoundation.org>
+	syzbot+8496ab5e117502750445@syzkaller.appspotmail.com,
+	stable <stable@kernel.org>,
+	Nguyen Quang Le Kien <khiemtranzo532001@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.1 0565/2857] usb: gadget: fix refcount underflow in gadgetfs_bind() error path
+Date: Wed, 18 Nov 2026 15:26:39 +0100
+Message-ID: <20261118150221.832940120@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -62,48 +63,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Nguyen Quang Le Kien <khiemtranzo532001@gmail.com>
 
-commit 81394dfb9a7905472957628b560ae894eae3a30f upstream.
+commit cb3b441f2698455a48e9a023d5f7f4e3fcb94c73 upstream.
 
-ath9k_deinit_channel_context() cancels chanctx_work but does not delete
-the offchannel and sched timers set up by ath9k_init_channel_context().
-If either timer fires after deinit (e.g. during driver unload or
-suspend), it accesses sc->sc_ah which may already be freed by
-ath9k_hw_deinit(), causing a use-after-free.
+gadgetfs_bind() calls get_dev() only on the success path, but
+gadgetfs_unbind() called from the enomem error label unconditionally
+calls put_dev().  When bind fails (e.g. ENOMEM), put_dev() fires
+without a matching get_dev(), leaving the refcount unbalanced.
 
-Delete both timers with timer_shutdown_sync() before cancelling the work
-item.
+A subsequent close of the ep0 file descriptor calls dev_release() ->
+put_dev() which hits zero and frees the object; then gadgetfs_kill_sb()
+calls put_dev(the_device) again on the already-freed pointer, triggering
+a refcount underflow and use-after-free.
 
-Assisted-by: LLM
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Cc: stable@vger.kernel.org # v6.2+
-Fixes: 705d0bf83dbe ("ath9k: Add a routine for initializing channel contexts")
-Link: https://patch.msgid.link/20260911213144.130192-1-rosenp@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fix by calling get_dev() at the start of gadgetfs_bind(), before any
+error path that invokes gadgetfs_unbind(), so the reference is always
+balanced regardless of whether bind succeeds or fails.
+
+Reported-by: syzbot+8496ab5e117502750445@syzkaller.appspotmail.com
+Cc: stable <stable@kernel.org>
+Closes: https://syzkaller.appspot.com/bug?extid=8496ab5e117502750445
+Signed-off-by: Nguyen Quang Le Kien <khiemtranzo532001@gmail.com>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260811060810.295666-1-khiemtranzo532001@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath9k/channel.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/gadget/legacy/inode.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/ath/ath9k/channel.c
-+++ b/drivers/net/wireless/ath/ath9k/channel.c
-@@ -1368,6 +1368,8 @@ void ath9k_init_channel_context(struct a
+--- a/drivers/usb/gadget/legacy/inode.c
++++ b/drivers/usb/gadget/legacy/inode.c
+@@ -1682,6 +1682,8 @@ static int gadgetfs_bind(struct usb_gadg
+ 	dev->gadget = gadget;
+ 	gadget->ep0->driver_data = dev;
  
- void ath9k_deinit_channel_context(struct ath_softc *sc)
- {
-+	timer_shutdown_sync(&sc->sched.timer);
-+	timer_shutdown_sync(&sc->offchannel.timer);
- 	cancel_work_sync(&sc->chanctx_work);
- }
++	get_dev (dev);
++
+ 	/* preallocate control response and buffer */
+ 	dev->req = usb_ep_alloc_request (gadget->ep0, GFP_KERNEL);
+ 	if (!dev->req)
+@@ -1696,7 +1698,6 @@ static int gadgetfs_bind(struct usb_gadg
+ 	spin_lock_irq(&dev->lock);
+ 	dev->state = STATE_DEV_UNCONNECTED;
+ 	spin_unlock_irq(&dev->lock);
+-	get_dev (dev);
+ 	return 0;
  
+ enomem:
 
 
