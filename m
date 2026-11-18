@@ -1,59 +1,64 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054446;
-	b=yuMk4nLAqVJbfxDvoTW57spktNMXrb27GwsAW0syNxnQ8EXDR0n61ulAs+SuObg8dOn2
-	 dnBOxDpzYMv9mGO44jOJLZRvBpy6EqpsN5xgfE88ETuGc82dIO4JrRzHHfYrMB99P4Who
-	 dBfFt9ismCWvXhoqYGyyybU1DT314/Sw/aNQ7nGUSDdMcM1BKnqi3WqMx+7ommkQDv5SE
-	 s1J/ivc1AVty27cXP5GzAFNikfgAe07PTwiPPgyHpwbvfOQHNoz6vonuE5jkvozvvG+Q3
-	 u5ia4sBBtLOhnAkZoDeNWs0JplfdD7PQec5zWyUhVME/2V88EMvwVVVgMJSBH/1PjlA==
+	t=1795054449;
+	b=3POtrXJcTCPGTkucLu21ku33AQHVZDN3HlWe+LzcoTEwTHFHYD69Y3dPuHIdMfbZk/Tx
+	 9TL+FkTLzzHHwLEXURrHjPx2lIr6neZ0rAUuo6Lh6Mfpz1fWqhQBEH0oLsff6CzDKJTS+
+	 Fy0BYSIkHLX9IvyyfoQFQht+ZdzE4lwGfVgrZXIW+SFUR7zy0gaH2XGRulFFc82y/xdNG
+	 QES9x3bmrENzHfMAjDqFH/j1o3aIpyXbDWlzqRdWMTS2iD4ld2ca+nju6S3h4LVSvfWsT
+	 laC2tve5sX1qPJNqhIqlFcJs9BKHlduvWsMtJYaOkd4YkZ1GkgN4yVp/p08aCs/PFsw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054446;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054449;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=y1QVfMI2c94kLNNnG2LD4QcfMzA+tMN05TkZOosXogc=;
-	b=Tze63mazrybUBhIbv1pLkyNxU1olP6t4bL+MQOymSdemTpMZXVtHsaetjm8UZuEBw2FP
-	 88uc5+oGc2OMWJ5YBeGPbMSl7frSn3xjwliZPQgFQ5SuLv96zfUE72nu/liisUnCFht8d
-	 5u1GcGiA7lbts+e29EQ7IXJpb13sHflMhSVVJe0gwconRsSTBkWm02CqU0tNbfb0Y3IhL
-	 MgR8rWqIkO43Kl5N+TNptcuHInmOVeTz4ClsrfWCCrzyD3OWKeltVuc7EsoKp5jqsCBnb
-	 qVMxxlsTgnm/Si33VSFA3+/vG7C9gsn+4V9xlUDqAf8sclvvZa8PHnPwYI11i6NO34Q==
+	bh=dbxMXk1A1nBgOjWQYy48ckUKMy2+RpJNQl+lqe5DrFA=;
+	b=ZjTEdQ2H1UfPtUQVwdwSbsCaTm7abrj3Au4aS//J3mvCKxDCnhtFg+A+nt7JUNm7vxwg
+	 r88xc00W0Cgtrtv0Qav1+n3wniSJlCcjk45UEX9MeVx4q36A1CiTfnlz8VlC8VPPwHBDw
+	 SvLulbvi/LLBSzNqcQXUeDlHVHcWKeZYffDmzvme43UhsR13uOQfnoSwkE42NUU0PCdGl
+	 WnpVTDd6HY/1ZmFI49HaVrnoM9ddTocnU4DVZOc/jX2/FdVLmYhe40PuBo50rdZDNvPyf
+	 F8qZ6zxlhWfSeg4GEobCt+FyCdASu4N0GQFZkEE15F86opXBoH5+cR+Tll1rOH9DAIA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oqnd7zyo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EMJhDk3x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B89D6606A31C;
-	Thu, 19 Nov 2026 02:14:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 805F4606A31C;
+	Thu, 19 Nov 2026 02:14:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oqnd7zyo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EADD1F000C4;
-	Thu, 19 Nov 2026 02:14:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EMJhDk3x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA6BE1F000C4;
+	Thu, 19 Nov 2026 02:14:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054446;
-	bh=y1QVfMI2c94kLNNnG2LD4QcfMzA+tMN05TkZOosXogc=;
+	s=korg; t=1795054449;
+	bh=dbxMXk1A1nBgOjWQYy48ckUKMy2+RpJNQl+lqe5DrFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oqnd7zyoe4nJZroXMmiJsOfjQekRqTJ61yMye4RaQnoyuCdBvB5AXKIdnHjD7TtLa
-	 V319kemVSE8si+PEcdqb8rj4YHHf5hjK/233JFWJAqa+NM/hHfMxKmMZ0JphB0j4p/
-	 7p7QbI4vyOCOAbLw0tgE2v/yDNdrQPH2o7R0au50=
+	b=EMJhDk3xeNXu90mq5nP3Yf12PHp+WcumcfoQF/7t/8zKCkI5rbVnqnxqO3GLcIUPs
+	 0qtt/cQtl61Vwvc7xRFlI7siOVgppQVXv8jadtbf6ZdbW8hxW9Cger6q4h96DXZ5Qa
+	 XtEl3uPsosqctePuEgLWA3aWK5ibHoPt544X15XU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Chris Down <chris@chrisdown.name>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	David Hildenbrand <david@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Ying Huang <ying.huang@linux.alibaba.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Michal Hocko <mhocko@suse.com>,
+	"Vineeth Pillai (Google)" <vineeth@bitbyteword.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Kairui Song <kasong@tencent.com>,
+	Hugh Dickins <hughd@google.com>,
+	Chris Li <chrisl@kernel.org>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Baoquan He <baoquan.he@linux.dev>,
+	Barry Song <baohua@kernel.org>,
+	Youngjun Park <youngjun.park@lge.com>,
+	Ying Huang <huang.ying.caritas@gmail.com>,
+	Kelley Nielsen <kelleynnn@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1276/2214] mm/mempolicy: apply bind policies against the scoped allocation zone
-Date: Wed, 18 Nov 2026 15:49:12 +0100
-Message-ID: <20261118150102.625869492@linuxfoundation.org>
+Subject: [PATCH 5.15 1277/2214] mm: make swapoff interruptible when unusing mms/shmem
+Date: Wed, 18 Nov 2026 15:49:13 +0100
+Message-ID: <20261118150102.664483211@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -75,89 +80,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price (Meta) <gourry@gourry.net>
+From: Chris Down <chris@chrisdown.name>
 
-[ Upstream commit d4ea410ce4b8aa46a316476ea2624a357bf31fa9 ]
+[ Upstream commit 740128dd1a3f2bd81a80314d079b6b03c39ba3af ]
 
-QEMU fails to start a guest with a VFIO device when guest RAM comes
-from a memory backend bound to a movable-only node:
+try_to_unuse() only checks for a pending signal between mms, and
+shmem_unuse() doesn't check at all.  That means that once swapoff gets to
+a process or a shmem file with a lot swapped out, nothing can interrupt it
+until every last page of it has been read back in.
 
-  vfio_container_dma_map(0x55b1b1317800, 0x0, 0x10000000,
-                         0x7f39a2200000)
-    = -12 (Cannot allocate memory)
+Just as one example of where this can concretely show up, freezing tasks
+for suspend or hibernation has to wait for swapoff to notice the freezer's
+fake signal, and gives up after freeze_timeout_msecs (20 seconds by
+default).
 
-VFIO pins guest RAM when the device is realized, and the pin faults
-the pages in. io_uring fixed buffers fail the same way. Faulting the
-range in before pinning lets the same pin succeed, since resident
-pages are migrated off the node instead.
+Here's a facetious example where one swaps out 2GiB of one process to a
+swap file on ext4, starts swapoff, and half a second later tries to freeze
+with pm_test=freezer.  Writing to /sys/power/state then fails with EBUSY
+and this in dmesg:
 
-A long-term pin faults under memalloc_pin_save(). PF_MEMALLOC_PIN makes
-current_gfp_context() clear __GFP_MOVABLE, but policy_nodemask() tests
-apply_policy_zone() against the caller's gfp.
+    Freezing user space processes failed after 20.003 seconds (1 tasks refusing to freeze, wq_busy=0):
+    task:swapoff         state:D stack:0     pid:3175  tgid:3175  ppid:2955   task_flags:0x400100 flags:0x00000419
+    Call trace:
+     [...]
+     io_schedule+0x44/0x70
+     folio_wait_bit_common+0x1ec/0x3d0
+     __folio_lock+0x24/0x40
+     unuse_pte_range+0x2d0/0x348
+     unuse_vma+0x158/0x248
+     unuse_mm+0xfc/0x150
+     try_to_unuse+0x104/0x3f8
+     __do_sys_swapoff+0x220/0x5d8
+     [...]
 
-The bind keeps its movable-only nodemask, and the allocation finds no
-usable zone:
+The same goes for anything else that wants swapoff to stop, like an admin
+hitting ^C in a panic, of course.
 
-  page allocation failure:
-      order:0,
-      mode:0x140dc2(GFP_HIGHUSER|__GFP_ZERO|__GFP_COMP),
-      nodemask=1,cpuset=/,mems_allowed=0-1
+Prior to commit b56a2d8af914 ("mm: rid swapoff of quadratic complexity")
+try_to_unuse() was driven by find_next_to_unuse() which checks for a
+signal before every entry, so let's restore that behaviour.
 
-  Call Trace:
-   warn_alloc+0x136/0x150
-   __alloc_frozen_pages_noprof+0xed8/0x1720
-   alloc_pages_mpol+0xaa/0x170
-   vma_alloc_folio_noprof+0x65/0xd0
-   __handle_mm_fault+0x137b/0x1ac0
-   handle_mm_fault+0xa0/0x270
-   __get_user_pages+0x250/0xfd0
-   __gup_longterm_locked+0x116/0x870
-   gup_fast_fallback+0xcfc/0xdf0
-   pin_user_pages_fast+0x47/0x60
-   io_pin_pages+0x9a/0x110
+Just as an example of the improvements, here's how long freezing takes
+in the same test while swapoff is happening on my computer:
 
-Base page faults fail with -ENOMEM.
-hugetlb faults fail with -EFAULT.
+                      before                  after
+    400MiB anon       8.925s                  0.028s
+    400MiB shmem      1.639s                  0.003s
+    2GiB anon         failed after 20.003s    0.011s
 
-Check the policy zone against current_gfp_context(gfp), so a pin-scoped
-fault falls back off the movable-only nodemask, like any other
-non-movable allocation under the same bind.
-
-Tested in qemu with a dax/kmem movable-only node 1. io_uring and VFIO
-pins of unfaulted base pages and 2MB hugetlb pages now succeed and land
-on node 0 (correct). QEMU now starts with the same backend binding.
-
-Link: https://lore.kernel.org/20261018023349.1697434-1-gourry@gourry.net
-Fixes: 8e3560d963d2 ("mm: honor PF_MEMALLOC_PIN for all movable pages")
-Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
+Link: https://lore.kernel.org/at9kJwdGkHPsWwgG@chrisdown.name
+Fixes: b56a2d8af914 ("mm: rid swapoff of quadratic complexity")
+Signed-off-by: Chris Down <chris@chrisdown.name>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Ying Huang <ying.huang@linux.alibaba.com>
-Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
-Cc: Michal Hocko <mhocko@suse.com>
+Acked-by: Vineeth Pillai (Google) <vineeth@bitbyteword.org>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Reviewed-by: Kairui Song <kasong@tencent.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Chris Li <chrisl@kernel.org>
+Cc: Nhat Pham <nphamcs@gmail.com>
+Cc: Baoquan He <baoquan.he@linux.dev>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Youngjun Park <youngjun.park@lge.com>
+Cc: Ying Huang <huang.ying.caritas@gmail.com>
+Cc: Kelley Nielsen <kelleynnn@gmail.com>
+Cc: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Cc: <stable@vger.kernel.org>
-[ sashal: adapted the MPOL_BIND switch-case change to the existing conditional in policy_nodemask() ]
+[ sashal: adjusted context for pagevec and frontswap accounting while using the existing retval return path ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mempolicy.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/shmem.c    | 4 ++++
+ mm/swapfile.c | 4 +++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/mm/mempolicy.c b/mm/mempolicy.c
-index 51ec529425118..421a3a3ee85f5 100644
---- a/mm/mempolicy.c
-+++ b/mm/mempolicy.c
-@@ -1766,7 +1766,7 @@ nodemask_t *policy_nodemask(gfp_t gfp, struct mempolicy *policy)
+diff --git a/mm/shmem.c b/mm/shmem.c
+index cc5b08d9802cf..04363ece9ecf6 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -1285,6 +1285,10 @@ static int shmem_unuse_inode(struct inode *inode, unsigned int type,
+ 			}
+ 		}
  
- 	/* Lower zones don't get a nodemask applied for MPOL_BIND */
- 	if (unlikely(mode == MPOL_BIND) &&
--		apply_policy_zone(policy, gfp_zone(gfp)) &&
-+		apply_policy_zone(policy, gfp_zone(current_gfp_context(gfp))) &&
- 		cpuset_nodemask_valid_mems_allowed(&policy->nodes))
- 		return &policy->nodes;
++		if (signal_pending(current)) {
++			ret = -ERESTARTSYS;
++			break;
++		}
+ 		start = indices[pvec.nr - 1];
+ 	} while (true);
  
+diff --git a/mm/swapfile.c b/mm/swapfile.c
+index 04f10e9c36c54..b8dcfdad0e7c7 100644
+--- a/mm/swapfile.c
++++ b/mm/swapfile.c
+@@ -2039,6 +2039,8 @@ static inline int unuse_pmd_range(struct vm_area_struct *vma, pud_t *pud,
+ 	pmd = pmd_offset(pud, addr);
+ 	do {
+ 		cond_resched();
++		if (signal_pending(current))
++			return -ERESTARTSYS;
+ 		next = pmd_addr_end(addr, end);
+ 		if (pmd_none_or_trans_huge_or_clear_bad(pmd))
+ 			continue;
+@@ -2275,7 +2277,7 @@ int try_to_unuse(unsigned int type, bool frontswap,
+ 	if (READ_ONCE(si->inuse_pages)) {
+ 		if (!signal_pending(current))
+ 			goto retry;
+-		retval = -EINTR;
++		retval = -ERESTARTSYS;
+ 	}
+ out:
+ 	return (retval == FRONTSWAP_PAGES_UNUSED) ? 0 : retval;
 -- 
 2.53.0
 
