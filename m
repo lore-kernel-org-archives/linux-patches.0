@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036844;
-	b=472AKFpcMQoro9Ky87tYRgwCZ3sVTq2365/U1Atq8LIP2adDmMYd91zDECq4G+LoemRR
-	 X44eIykbEecdR85DVsAShLGjdCkZz/s+1yDTq69fmNcygTCjLGTHE7pcSyYqldwhNvxbW
-	 esZyCriGrJGcfkXZ+vK8OieiBqXWCli7fh24mx/GVIAYj4zcZ9der4hyAbjkG9jY9w6rf
-	 78eaqn/ikSn+xJ4hJQCLZ7vKcfsiTtZ4OHh5PfRGZG2GTlG+2GOaLS6gu6N9cz5zgMzbY
-	 xlbHI/TgOvZs6ZLwloZI32WMTH++imYI32Z8AkRw7er4kry61LNbyYmlH38BaKWu6uw==
+	t=1795036847;
+	b=WVfCztrkTiNvPeuxX1ksawFtjAOPtNvAcfoLBwpj5mI++UrQTENygRbEVmdneIPjk338
+	 ku7TIct2+Z4DnfS7mhDu7XpUBAkglxQUjE1Fk+lqNyW/EsWqqubmW0gLyuvtt3Q2dwIZU
+	 Z1ADwOCdhuaqCdX3mJlNAEDjONalt9cnpaXJmmK0eGRZjH6B9VE1bkUG8pi+OqUjWFmqw
+	 fT1ERyE9LNw8QiRc1cH6TZYNrr6xGnOw+yOLjRJKuk/lxa3CZgtdFhvFiXwwNJTqAPO8d
+	 zIMvo+zXfSe9AMalCziQPc4CyMbSZMfjlt/K48fzURJqXyCMgFnQnniA6qYWR0iiIrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036844;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036847;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=N7qd2ICcC4xiyUUQxy/Uawi0LCBr+VvFHLjdGj7rgr0=;
-	b=k6EWScNiDlejJUHyB9Zc048MncQzQMEFRzyrNtchpBW4TvNwavavfAKY8hwy1a4th/Sp
-	 /9LCcN6vlUlmTXZhA4Hqj6lZYG7/Iyrs7bFN/uBUOPHuzJtEmAGAIrvuVIoCSVDUe/tpd
-	 GfSaP7Ge2C/tOzdQBsyj4eFR9YnAMl0ie/tv+BFBrbPW4hDdNACzi1FoP54GhjU0Sdgze
-	 2EfUAtunRfJ1Vy5EEhLDh5u6eVI/nd6Eu5BBl9kouctL9Ag02YdkoFB792yH//A66JP/6
-	 k9+jqyaVZ8Ib7X+/MpewgfpMPyzlj8M6P0Jz1jNsPtA21Z41dPvfklOciZQBxAo3X8g==
+	bh=XHl0pFBKkFWWcDalxzOprGh+naKZeedfAFu4AGCIphM=;
+	b=oOLp6r13s7W37QD9v3vGS7wug1HKhUluophz98+Ow26gVZqwc9gnHHioyrO/cNWWJmh8
+	 ZwDfDzGQlDYeV6oO6jUIgNsXKOCduVfLxW7qPf/hlZJ4o79ANXcRrtwZp3LOeCkZkYAdL
+	 IPvykIVBMyD91J09c4TEswdaLRde1Np7ge0k62f1TJ+dpNqWqPNwc/seSIyDY1SiY+s8M
+	 vYfiG06rVbom8Q2fhASAFsJYy3N/Wu59DznsSUp/9s2ai80gkvknStcVLJKSiFcpYlr0Q
+	 Cigf5HTtBvh13A1axkkezz2hhzlB2E1afp7gjMKJs71P0iT/FDsUU8bFxxa1fnJMxIg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uya56Gbb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="j/m106m0";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE335606A31C;
-	Wed, 18 Nov 2026 21:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F85606A31C;
+	Wed, 18 Nov 2026 21:20:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uya56Gbb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA4FF1F000C4;
-	Wed, 18 Nov 2026 21:20:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j/m106m0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79331F000C4;
+	Wed, 18 Nov 2026 21:20:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036844;
-	bh=N7qd2ICcC4xiyUUQxy/Uawi0LCBr+VvFHLjdGj7rgr0=;
+	s=korg; t=1795036847;
+	bh=XHl0pFBKkFWWcDalxzOprGh+naKZeedfAFu4AGCIphM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uya56Gbb2ELkR/kHEuXTQgPRvgpbLsriPsxsmH1odqhoI9HU8Yv7T6U5mcl/V2e6c
-	 //qtQWXH/plOGpWtlSBHqeJvCvBbB7+JgtGfRjD71P0S62wArRJ6BJqR6i7AkjS6wc
-	 +J3p/ZXCAf6GiUcxFbY7GyPRxNliG15j+d9tcU/k=
+	b=j/m106m0kPPmocCBNE1baCKb+YB83BvzHmoUNi4FIXFOobZAaZwP8An5mD017O9x2
+	 77HFRH4SczxbET8Cm+uB89+s+Ddqu4NcdlxhJNFhVIN23BkmtPyoxnkT705y5nXgof
+	 R0d2xQylPHWkTmTi6KSn4K4cA4J8slbnLfQd+E0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Turner <mattst88@gmail.com>,
-	Magnus Lindholm <linmag7@gmail.com>,
+	Nickolai Zeldovich <nickolai@csail.mit.edu>,
+	Alexey Gladkov <legion@kernel.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1153/3318] alpha: do not clear remote MMU contexts in migrate_flush_tlb_page()
-Date: Wed, 18 Nov 2026 15:29:35 +0100
-Message-ID: <20261118150354.685402832@linuxfoundation.org>
+Subject: [PATCH 6.6 1198/3318] ucount: take the rlimit reference before checking the limit
+Date: Wed, 18 Nov 2026 15:30:20 +0100
+Message-ID: <20261118150356.112213356@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,65 +69,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Magnus Lindholm <linmag7@gmail.com>
+From: Nickolai Zeldovich <nickolai@csail.mit.edu>
 
-[ Upstream commit 16266d50c51eb5eb98f1c345c5aa9ff359a305aa ]
+[ Upstream commit b14fcabd34e02c40f72d3cd1e9bd4fd18df40ff1 ]
 
-After the on_each_cpu() rendezvous, migrate_flush_tlb_page() walks the
-other CPUs and zeroes their mm->context[cpu] when mm_users is at most one,
-described as mimicking flush_tlb_mm()'s mm_users<=1 optimization.
+inc_rlimit_get_ucounts() takes the reference that pins a ucounts level
+while its rlimit count is non-zero only in the walk whose increment is
+the 0 -> 1 transition, and only after that walk passed the limit check.
+A walk that raises the count from zero and then fails the limit backs
+out without the reference, while a concurrent walk that raised it past
+one keeps its increment and never takes one either:
 
-It is not one. flush_tlb_mm() tests mm_users before deciding whether to
-send the IPIs; here every CPU has already been visited and waited for, so
-nothing is saved. The callback has also just set each CPU's own slot
-correctly, so the loop only overwrites it, and does so while that CPU may
-still be running in the address space.
+  CPU0 (obeys the limit)              CPU1 (overrides it)
+  new = add_return(1) -> 1
+                                      new = add_return(1) -> 2
+                                      new != 1, no get_ucounts()
+  new > max -> dec_unwind
+  sub_return(1) -> 1   (no put)
 
-Remove it. The shootdown shortcuts in flush_tlb_mm(), flush_tlb_page()
-and flush_icache_user_page() clear remote slots too; once the next patch
-removes those as well, every runtime update of mm->context[cpu] is made by
-CPU cpu itself. That patch relies on the invariant when it reads those
-slots to decide whether a shootdown can be skipped, so this one is tagged
-for stable as its prerequisite.
+The count is 1 with no reference held. When CPU1 drops its charge,
+dec_rlimit_put_ucounts() takes the count to 0 and puts a reference
+nobody took, which frees the live struct ucounts, and the user_namespace
+it pins, with kfree_rcu(). The mirror interleaving leaks the reference
+instead.
 
-Fixes: dd5712f3379c ("alpha: fix user-space corruption during memory compaction")
+An unprivileged user reaches this on a kernel with CONFIG_USER_NS=y: in
+a user namespace with RLIMIT_SIGPENDING 0, one process taking
+synchronous SIGSEGVs (forced, so override_rlimit is set) races a second
+process in the same namespace and uid that queues real-time signals,
+which obey the limit. The two hold different sighand->siglock but charge
+the same per-namespace SIGPENDING ucounts. Unpatched, with rcuref
+debugging:
+
+  rcuref - imbalanced put()
+  WARNING: lib/rcuref.c:266 at rcuref_put_slowpath+0xf4/0x120
+   put_ucounts+0x5a/0x180
+   do_dec_rlimit_put_ucounts+0x70/0x90
+   __sigqueue_free+0x33/0xc0
+   get_signal+0x56f/0xd20
+   arch_do_signal_or_restart+0x87/0x380
+   irqentry_exit+0x243/0x650
+   asm_exc_page_fault+0x26/0x30
+
+Take the reference on the 0 -> 1 transition before the limit is checked,
+so the walk that raises the count from zero owns that level's reference
+even when its request is rejected, and unwind a rejected level through
+do_dec_rlimit_put_ucounts(), which releases the reference when the count
+returns to 0. The get_ucounts() failure path is unchanged. With the
+patch the same interleaving, forced some 80000 times in a KASAN build,
+produces no warning and no KASAN report.
+
+Fixes: 15bc01effefe ("ucounts: Fix signal ucount refcounting")
 Cc: stable@vger.kernel.org
-Reviewed-by: Matt Turner <mattst88@gmail.com>
-Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
-Link: https://lore.kernel.org/r/20261010144621.974850-2-linmag7@gmail.com
-Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
+Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
+Link: https://patch.msgid.link/20261019185913.805378-1-nickolai@csail.mit.edu
+Acked-by: Alexey Gladkov <legion@kernel.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/alpha/mm/tlbflush.c | 16 ----------------
- 1 file changed, 16 deletions(-)
+ kernel/ucount.c | 21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/arch/alpha/mm/tlbflush.c b/arch/alpha/mm/tlbflush.c
-index ccbc317b9a348..239c72b8a7412 100644
---- a/arch/alpha/mm/tlbflush.c
-+++ b/arch/alpha/mm/tlbflush.c
-@@ -90,22 +90,6 @@ void migrate_flush_tlb_page(struct vm_area_struct *vma, unsigned long addr)
- 	 */
- 	preempt_disable();
- 	on_each_cpu(ipi_flush_mm_and_page, &d, 1);
--
--	/*
--	 * mimic flush_tlb_mm()'s mm_users<=1 optimization.
--	 */
--	if (atomic_read(&mm->mm_users) <= 1) {
--
--		int cpu, this_cpu;
--		this_cpu = smp_processor_id();
--
--		for (cpu = 0; cpu < NR_CPUS; cpu++) {
--			if (!cpu_online(cpu) || cpu == this_cpu)
--				continue;
--			if (READ_ONCE(mm->context[cpu]))
--				WRITE_ONCE(mm->context[cpu], 0);
--		}
--	}
- 	preempt_enable();
- }
+diff --git a/kernel/ucount.c b/kernel/ucount.c
+index 0ae13e4b6e9f9..c73d5a38ef7ee 100644
+--- a/kernel/ucount.c
++++ b/kernel/ucount.c
+@@ -318,23 +318,26 @@ long inc_rlimit_get_ucounts(struct ucounts *ucounts, enum rlimit_type type,
  
+ 	for (iter = ucounts; iter; iter = iter->ns->ucounts) {
+ 		long new = atomic_long_add_return(1, &iter->rlimit[type]);
+-		if (new < 0 || new > max)
++		/*
++		 * Take the extra reference on the 0 -> 1 transition before the
++		 * limit check: a rejected walk must not leave a concurrent one
++		 * holding the surviving increment with no reference.
++		 */
++		if (new == 1 && !get_ucounts(iter))
+ 			goto dec_unwind;
++		if (new < 0 || new > max) {
++			/* undo iter too, releasing the reference taken above */
++			do_dec_rlimit_put_ucounts(ucounts, iter->ns->ucounts, type);
++			return 0;
++		}
+ 		if (iter == ucounts)
+ 			ret = new;
+ 		if (!override_rlimit)
+ 			max = get_userns_rlimit_max(iter->ns, type);
+-		/*
+-		 * Grab an extra ucount reference for the caller when
+-		 * the rlimit count was previously 0.
+-		 */
+-		if (new != 1)
+-			continue;
+-		if (!get_ucounts(iter))
+-			goto dec_unwind;
+ 	}
+ 	return ret;
+ dec_unwind:
++	/* get_ucounts() failed for iter: undo iter without a put */
+ 	dec = atomic_long_sub_return(1, &iter->rlimit[type]);
+ 	WARN_ON_ONCE(dec < 0);
+ 	do_dec_rlimit_put_ucounts(ucounts, iter, type);
 -- 
 2.53.0
 
