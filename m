@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044871;
-	b=lLWuCs6JujEQGrWxb8lrJEnxvpXdLxbXpmaQHLCb9bnjZvHaLDRRcXXpHZnSWcWhm83b
-	 gyiQQsu+/80tVIvb/N57x4abYwlv2B1vrLMDGWXKGE0ZYhvJrBGTAESBUmBdFDf+GiPka
-	 XaOaZ/oez944Ux4tcX4e2bWr4pLKWHulM77E7FAO1+cEbsdZKeYBN4Sldw3j2rO4Agqj+
-	 891nHrgbbPNXYcxOIQgwNmPi8GxtfFqmrZx2YuWvmKsn0OMRZ3NgbacXA0hO/mcHiUrHC
-	 Nsr3tNl2coE8yxC5GAWUO1Cv09zul3ZVefLtrfoAvp+GrvRXod8COVnLXTnHiTL6pIg==
+	t=1795044873;
+	b=G/RVFs66eEp12eRp0YAYkMyHF9GSKdURwuHOfHudSH9GmCi7Y7TYSMWls3w7OXTaMPlO
+	 zl0PCiWuwyYgt3CnpjCf7iR8F/nur/zV1NMCavwzHUrAKgQHxispdM7pcmm7VAbR1syj2
+	 yjjk/20uzUF6mufYpI7wVCcLualhvjmxaSoo50eAbTOFRZEkixevmLOj9NtQbVzGoFpLC
+	 EeFFMBtrM9UrAOpdBxIa4zfqBXl2o/Lwhdf6CkTg/uEOJFc50orPy8z7/8NDI4pC022IX
+	 C55aAjtRhHPTEbuenfP7eU73uYWgLklwBASCx16c+qOo6H5MI6mNHpWmiGtXsBbZNwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044871;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044873;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mSCRpXWRVBbCHNLyM0XjknxRf7lmcMyL3+PQv6sZvhI=;
-	b=2pRM61s2+egPSIB+ZH4jI9D53rF5cFWnZjD8b0TJjZfh5Ka5SmxmKIpji6h8NA5A1LVv
-	 ADIAIARZ1/pw0YtUBeFyOvWL5lw6baYZLZNYh5aQejpCic3KXGeq58uqYg0tOeJyxUbFs
-	 t2u0+fY9kiB9Mi083HU7RrDpFQfeEsoE4ksSDKtufxBDyCOzBcqYGxA28CN+RSDVYbEJo
-	 sMrHWcPb4TPx9jg38cDVFLsJt35AL2OEchm0Dtxa41hqyCa4Y37vPmfLl9E8CpDbxiwyL
-	 bsD/bl6h155uyv6z2i+z5ZQasd/7VYM7D89LP2loAvoCiHbCuF2oI6lzudiyu5UlD2Q==
+	bh=8IuDfpEjnggoCOmY57owlgoZ0pL0V0gSlhb4/49Qrqo=;
+	b=CwSMpQk8/7qJgPwQ15U+5bZ8l2WNK7nRpa/8LZb2DQ/X9eJUwp11pp6C4RuwMtEk5swX
+	 H/IQuHiuyWQ0YxD0voCnjGwshLXV7YOfkaHpg9okX8Yxit+l/L3j7V8yCKxYCaE2O82if
+	 xAfdQTx1HJkJTDCbiGE8E2o8yGgFlta9gTNbW5cMrVdxWNzaZ+luygUPckhoGvrCzmrKi
+	 BhwNwv4zbd0GMowPr6VQomQpTd0aDnUl1JJRsmAPZCqMxUOwPMdBMp/MQqFPkmNiQ68o3
+	 nKGL+GBYnEsb3U6dNVMXF0Sfld4zDHR9HVOgB+YPss3z4Z3thRwgcFEZI1JaotDFy/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Cj/u7yZy";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J7WnS6yT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC658606A9EB;
-	Wed, 18 Nov 2026 23:34:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB6CA606A331;
+	Wed, 18 Nov 2026 23:34:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cj/u7yZy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EA7C1F000C4;
-	Wed, 18 Nov 2026 23:34:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J7WnS6yT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 257FB1F000C4;
+	Wed, 18 Nov 2026 23:34:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044870;
-	bh=mSCRpXWRVBbCHNLyM0XjknxRf7lmcMyL3+PQv6sZvhI=;
+	s=korg; t=1795044873;
+	bh=8IuDfpEjnggoCOmY57owlgoZ0pL0V0gSlhb4/49Qrqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cj/u7yZyRaEjYk6ZUDMJn3Nby6uXWL2cIzkBbOm5nR+G752EitzEo5q/eeAman72N
-	 VZagmBjOTtpAAUUzlumtKkOgXmL2xrxMUyrr60fOsHcjM4hv/orajSJlT132ZA7Dym
-	 fnm94IJ0M3LEvaPc0SWJU/4jnaj+yW2GQ1P++5Kw=
+	b=J7WnS6yTmriSHF+Lm8AKTz5QmCkB/CEXQ5w/uO54/qRj5EEwf3j94Lhj+TnA4P4Yv
+	 ZqnoByb5CqfB8BLvgW6/mhqSpDXn+CP2bi4F3D1Ij0CzO4I7rxHcbYgRT1+g/8A/Oe
+	 DkpzHxYQVkwxKVI/VSKwkKU47cVCVQ6SPUEOZtCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Ramin Moussavi <ramin.moussavi@yacoub.de>,
+	Waldemar Brodkorb <wbx@openadk.org>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0719/2857] remoteproc: elf_loader: Bound the section header table
-Date: Wed, 18 Nov 2026 15:29:13 +0100
-Message-ID: <20261118150227.433540977@linuxfoundation.org>
+Subject: [PATCH 6.1 0720/2857] microblaze: reserve the ABI argument-home area in the signal frame
+Date: Wed, 18 Nov 2026 15:29:14 +0100
+Message-ID: <20261118150227.469189008@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,81 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Ramin Moussavi <ramin.moussavi@yacoub.de>
 
-[ Upstream commit b32177ead5f8925aa66ceed2bd533a85196f4f0c ]
+[ Upstream commit c5947d28c20955de897eeb98430f96db0494f7d7 ]
 
-The rproc_elf_sanity_check() only checks the image is big enough to hold
-one section header. But find_table() walks e_shnum of them, and first
-dereferences the header at e_shstrndx to locate the section name table.
-Both fields are u16 and both come from the image, so an e_shstrndx of
-65535 reads about 4 MB past the buffer.
+The MicroBlaze procedure call standard reserves [r1+0] for the return
+address and lets a callee store its incoming register arguments r5..r10
+into the caller-provided home slots at [r1+4]..[r1+24].  When the kernel
+enters a signal handler it sets r1 to point at struct rt_sigframe, whose
+leading member is the siginfo prepared for the handler.  A handler that
+homes its arguments - which an unoptimised (-O0) build always does -
+therefore overwrites the first 24 bytes of that siginfo, so an
+SA_SIGINFO handler reads corrupted values.  The stores stay within
+siginfo (128 bytes) and do not reach the ucontext behind it.
 
-The commit 9f9967fed9d0 ("soc: qcom: mdt_loader: Ensure we don't read
-past the ELF header") added the same check to the MDT loader, and says
-the header "is sanitized beforehand" under remoteproc. That is what this
-patch makes true.
+Reserve the home area by making a seven-word gap -- the return-address
+slot plus the six argument slots, 28 bytes -- the first member of struct
+rt_sigframe, so the handler's argument stores land in scratch space
+instead of clobbering siginfo.
 
-Check e_shoff against the image size first, so the two bounds can use
-size_add() without an e_shoff above SIZE_MAX wrapping on 32-bit. The
-bounds are separate because e_shnum may be zero while find_table() still
-reads the e_shstrndx header.
+Tested on qemu-system-microblazeel (petalogix-s3adsp1800) with the
+uClibc-ng NPTL test suite: tst-timer4, tst-timer5, tst-mqueue5 and
+tst-signal6 pass; before this change they failed because the handler
+clobbered the signal frame.
 
-Fixes: 400e64df6b23 ("remoteproc: add framework for controlling remote processors")
+Fixes: 2148daa9c45f ("microblaze_v8: Signal support")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://lore.kernel.org/r/20260724025322.2341205-1-sammiee5311@gmail.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Ramin Moussavi <ramin.moussavi@yacoub.de>
+Tested-by: Waldemar Brodkorb <wbx@openadk.org>
+Link: https://patch.msgid.link/20260821151809.1233057-3-ramin.moussavi@yacoub.de
+Signed-off-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/remoteproc_elf_loader.c | 23 ++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ arch/microblaze/kernel/signal.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/remoteproc/remoteproc_elf_loader.c b/drivers/remoteproc/remoteproc_elf_loader.c
-index 5a412d7b6e0be..39301b80d879f 100644
---- a/drivers/remoteproc/remoteproc_elf_loader.c
-+++ b/drivers/remoteproc/remoteproc_elf_loader.c
-@@ -46,8 +46,9 @@ int rproc_elf_sanity_check(struct rproc *rproc, const struct firmware *fw)
- 	struct elf32_hdr *ehdr;
- 	u32 elf_shdr_get_size;
- 	u64 phoff, shoff;
-+	size_t shend;
- 	char class;
--	u16 phnum;
-+	u16 phnum, shnum, shstrndx;
+diff --git a/arch/microblaze/kernel/signal.c b/arch/microblaze/kernel/signal.c
+index c3aebec71c0ce..33c04b5c52b12 100644
+--- a/arch/microblaze/kernel/signal.c
++++ b/arch/microblaze/kernel/signal.c
+@@ -49,6 +49,14 @@ struct sigframe {
+ };
  
- 	if (!fw) {
- 		dev_err(dev, "failed to load %s\n", name);
-@@ -90,9 +91,27 @@ int rproc_elf_sanity_check(struct rproc *rproc, const struct firmware *fw)
- 	phoff = elf_hdr_get_e_phoff(class, fw->data);
- 	shoff = elf_hdr_get_e_shoff(class, fw->data);
- 	phnum =  elf_hdr_get_e_phnum(class, fw->data);
-+	shnum = elf_hdr_get_e_shnum(class, fw->data);
-+	shstrndx = elf_hdr_get_e_shstrndx(class, fw->data);
- 	elf_shdr_get_size = elf_size_of_shdr(class);
- 
--	if (fw->size < shoff + elf_shdr_get_size) {
-+	/* keeps shoff in size_t range for the two bounds below */
-+	if (shoff > fw->size) {
-+		dev_err(dev, "Section header table is out of bounds\n");
-+		return -EINVAL;
-+	}
-+
-+	if (shnum) {
-+		shend = size_add(size_mul(elf_shdr_get_size, shnum), shoff);
-+		if (shend > fw->size) {
-+			dev_err(dev, "Section headers are out of bounds\n");
-+			return -EINVAL;
-+		}
-+	}
-+
-+	/* find_table() reads the header at shstrndx even with no sections */
-+	shend = size_add(size_mul(elf_shdr_get_size, (size_t)shstrndx + 1), shoff);
-+	if (shend > fw->size) {
- 		dev_err(dev, "Image is too small\n");
- 		return -EINVAL;
- 	}
+ struct rt_sigframe {
++	/*
++	 * Home area for the handler's register arguments: the MicroBlaze
++	 * ABI reserves [r1+0] for the return address and lets the callee
++	 * store r5..r10 at [r1+4]..[r1+24], and r1 points at this frame
++	 * when the handler is entered.  Without the gap those stores
++	 * corrupt frame->info.
++	 */
++	unsigned long abi_gap[7];
+ 	struct siginfo info;
+ 	struct ucontext uc;
+ 	unsigned long tramp[2];	/* signal trampoline */
 -- 
 2.53.0
 
