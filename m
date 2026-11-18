@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016275;
-	b=TCe8rnu+qsKPnc/X0dQpc+ZIrWEDLdd1dPNiyU/6vWvVCTcd5YqRgW2Fwve4p4ZiRG7p
-	 /hMkd/T4IvLHU0fy8oHnTGBMYqZp/ekt8SApxJJWed7lPz9nlHLh1Jt7+jLSrC9RtpWqP
-	 MndO228sJaMGUG96Smx9XzLopLizlGtX/1FTYxWdolwBdqRiaHfrjFTf7FgZP4tIRcwGA
-	 BL13xfwoQYB/ms09zA4duf9Zj0NQ7bbeOYZhjlQ1zVPsI2vCqQXAOZOC9nLRvDm1KoyGA
-	 dPWa0ovdwIKo797kd3WMY3p85cj7TirhtXGlfbIhQA5EX0WGg1nsnNhqfe2X9UkvUew==
+	t=1795016278;
+	b=auQXYllIUxeNItvqup8uAPES2Vs1sNZJDdGSxZEq3p8+ossOWeabd7lD66gwtKes5Gmo
+	 STDV48iYKmdUCwb9BEScda/DPbB0j+sxg5A7uFHPwFFpBTmIkGqimQIxCFkdpNB0rI9Wp
+	 wHCCZtiZdBbwWfyEBuSfgCNZ4nzsJPYXLICmtFYUtINTHKYytqyVEKToWdA3fOLE2gPYZ
+	 UaLqOcYFuAWFDds84W2JmT2oLp29Qz1d5iS5kicQ/rhoZCKC9xhzB1nN69qpcSflPnTDo
+	 4cQa55ccPhGR10yZgTww2dJoiritj9f23cDWXyhgrRKFfrJC7F4aGXAwKll+nWl6cBg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016275;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016278;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7aQ/o7VvHPXyoubkl5G2CdJNf7QT3Fq07OTiLHpr/DQ=;
-	b=jd9A+uAYt03IjwcB3RB/DiGElkO0tMON2opMOGKS4aWZhNpYXr7JcHr8Io2RDjrylVvn
-	 b3Rt6TGsxUVjQj9YtIl9eAdaVivSrKC9p9V3FHILAffdpmWQVmwSsLMIFuB9oeIyb5TYi
-	 57Bqr4v9yuk7fgJxy65jpFGEAlNVW2HSBmgGw44KDt9axB4z70NPXT/XmZ/8M5EWW8ChG
-	 wCCBgFN7STkNvP3AsoXWsNWmIxm+ke6e4Qw3sDr62psGcxUah1H9EKi3D3stQnkX6qAcn
-	 wicESGN4+xpatH4QXmKm8TnRcYiNlWlilpVHuPspYnSF4x0Qef2bIaQa1L9lQsY1GDg==
+	bh=7LoHxm0pvytWROy1OdBX5OrvY4A4GDPR5EVvV7oLhMU=;
+	b=1dOp9HNvT9dGim9KVyGoGut8zRp521WUYjr8djkJn2nfMmR4ecdzPrQRF4n2532Ku4zb
+	 A+ORvHRbaCtOPynpjb5mQG9XGtQQwDaU1yZfKQmNi/PJhKxsfcaIk8EA6ZPh+H83NSCoF
+	 XW3OBZx1nSXTNbO2k7oLiqboqCGZnBM9WdHUqHlGHxq9C+4xSbDcKe8Y8mZTr2oLxWdRO
+	 sKZOS2/nxSw+Akjf3miqfztfnd/LWk/p3Usq/dmjxMGLmmTR+M6PhGG8hbd5f5RmUKHHt
+	 w3g1MtUmkkzBOqK8Sh/QhbH9pDEi9Ai+99G7I7qgfnjjUGomzAs0tVkGZTeD413ILLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AYUrwy44;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B+ZRUgbB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3ED260A3819;
-	Wed, 18 Nov 2026 15:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AEA160A262E;
+	Wed, 18 Nov 2026 15:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AYUrwy44
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0493D1F000CC;
-	Wed, 18 Nov 2026 15:37:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B+ZRUgbB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C72731F000C4;
+	Wed, 18 Nov 2026 15:37:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016275;
-	bh=7aQ/o7VvHPXyoubkl5G2CdJNf7QT3Fq07OTiLHpr/DQ=;
+	s=korg; t=1795016278;
+	bh=7LoHxm0pvytWROy1OdBX5OrvY4A4GDPR5EVvV7oLhMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AYUrwy44AD2YJIi0Q0vzXWPlKLvVPB/q/aK3+bGkUvx8U5nDm6VoGPzJqrKPE8043
-	 7IQABImtZU9+Gf7wMl+swai7D6ulRjDQjWPB/bu+W5EdUF79M4/Dd/yrXFW/YcW/xm
-	 JdgSjHl5dvDsdVc7pPoZHM/1gjjHOr8jIPjm81zA=
+	b=B+ZRUgbBZdBHBFQlz4fxr1Iv9Rkcy6fMlzhZMEp/M5XpqNZIIdzC9QvrDNDyaeGM4
+	 I4gK375NMUSzoLUSII6ORyzzWNHMBXFfMPI/J+abo4VtH/XTc6kDxNBiGQkMX6wxgo
+	 vkF7K466cVjXv5fNmekU9Ot1msZ3Wxe654eZWJV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
 	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0430/2651] clk: mediatek: reset: Fix device registration kernel-doc
-Date: Wed, 18 Nov 2026 15:27:50 +0100
-Message-ID: <20261118150303.307813299@linuxfoundation.org>
+Subject: [PATCH 7.3 0431/2651] clk: rs9: Add clock index range check to rs9_of_clk_get()
+Date: Wed, 18 Nov 2026 15:27:51 +0100
+Message-ID: <20261118150303.341283624@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,47 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 8d5fa37307ac1f0612cf17ac0ccabcc258cc1526 ]
+[ Upstream commit a2ef401bdfd19aa41d0e3e1b630a12fbc01ac184 ]
 
-The comment for mtk_register_reset_controller_with_dev() names the
-older helper and documents np rather than dev. The new helper takes
-a struct device and obtains its device node internally.
+rs9_of_clk_get() does not validate the clock index in the passed
+DT clock specifier.  If DT specifies an incorrect and out-of-range
+index, this will access memory beyond the end of the clk_dif[] array.
 
-Use the actual function and parameter names and clarify that failures
-return negative error codes.
+Fix by this adding a range check to rs9_of_clk_get().
 
-Fixes: 761bc64003e3 ("clk: mediatek: reset: Add new register reset function with device")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: 892e0ddea1aa6f70 ("clk: rs9: Add Renesas 9-series PCIe clock generator driver")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
 Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/reset.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/clk/clk-renesas-pcie.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/clk/mediatek/reset.h b/drivers/clk/mediatek/reset.h
-index 562ffd290a224..b09cdcab0c4ba 100644
---- a/drivers/clk/mediatek/reset.h
-+++ b/drivers/clk/mediatek/reset.h
-@@ -60,11 +60,11 @@ struct mtk_clk_rst_data {
- };
+diff --git a/drivers/clk/clk-renesas-pcie.c b/drivers/clk/clk-renesas-pcie.c
+index 564550c803896..f3376c29007aa 100644
+--- a/drivers/clk/clk-renesas-pcie.c
++++ b/drivers/clk/clk-renesas-pcie.c
+@@ -276,6 +276,11 @@ rs9_of_clk_get(struct of_phandle_args *clkspec, void *data)
+ 	struct rs9_driver_data *rs9 = data;
+ 	unsigned int idx = clkspec->args[0];
  
- /**
-- * mtk_register_reset_controller - Register mediatek clock reset controller with device
-- * @np: Pointer to device.
-+ * mtk_register_reset_controller_with_dev - Register a MediaTek reset controller
-+ * @dev: Device used to manage the reset controller resources.
-  * @desc: Constant pointer to description of clock reset.
-  *
-- * Return: 0 on success and errorno otherwise.
-+ * Return: 0 on success, negative errno otherwise.
-  */
- int mtk_register_reset_controller_with_dev(struct device *dev,
- 					   const struct mtk_clk_rst_desc *desc);
++	if (idx >= rs9->chip_info->num_clks) {
++		pr_err("%s: Invalid clock index %u\n", __func__, idx);
++		return ERR_PTR(-EINVAL);
++	}
++
+ 	return rs9->clk_dif[idx];
+ }
+ 
 -- 
 2.53.0
 
