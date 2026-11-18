@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017800;
-	b=q4bdJxTgQXrhUojXt7ynfdABdDXM0bmnFBdNJUejDZafcLxY11U6FKrE2NRISqDgIGre
-	 jJ0k1HNL0rmEQNNFKSnThlq4DjKen78gQSqPzkwGpr8DufzFfwA/tH38IZc90ruk4WtZJ
-	 ZttSyJhS80LA0HiN7v5NgUKLMmzJMrCFDhWm+Knq+EjdyoY8e/ovjBOVSuNpOONbJSzTh
-	 2+KZdKBPt7qrpF8bDXV1MCBLIx7znKh8V2Ew2GAs1NEtrtcW436Eihi29nC4KlJtMDHGN
-	 +RZc4jybRikXQMBA6VpsjYrYAHRfbDJWaGF8bZ7DMhq6F8uGPDU8iv70jkYNiD6wuKA==
+	t=1795017805;
+	b=inj9PbMLIIfPbysb8qpTsuBJ3GQkoPR9+EedL+c4FOuF+SpTusLVtyVHqJKxDBAhnd1s
+	 NvQLqOy1zyt6IqvhTKHvYVYnKDhNNesXKDIfEbpgB7upf+AbQ0HQZL1+yQKiHitsNeE15
+	 7jWdTLqMy5NrBBsVAtFzGPhLIEHadaPZxXl3GcU46eTy1datOIHg71/AJtvWAWsIvIjNb
+	 ONK+fpz/EhpCaFsLSp4/z5Ra6teac3K/CAZbfqrgqDuXzruYvkj1ltprr1nGRV6yxuWom
+	 UwAeHlDktJuoRer5cC7Wr6lG+dlFcdqQhNMs2x1fjzpBNLZSUqDADx+SVfweXzGtioQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017800;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017805;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Cxz8z8MatanjeuV/0ecrjxP9ARFW3yZho5ykc/0an4o=;
-	b=bCWJ7PmkHEtbbLFhzGgBT7xyydPLHMdPU4MNiKdkDK5NF1nl9f8KSKbOxqf5rHO/S0wu
-	 NRhUw0An1C2bkMogrkhQn15CI7n8D/FXsV3GBVqiOwjtWq5YnFJs11PUPRey1BkHj4enD
-	 Sv/oZV/w92zvFTqm2IduNfHXxeq45l4r3Kp64nkmYw0QkVGSibiLHues1dCFGk6gWvP5f
-	 Deqs5Er4lGlczUVc9EG/mfswDx4CsoqXzkgOLMm6gA6tD3tme+Xo/Kc1E/5bHs61Z1NVH
-	 w/myYAJNJkb3pksLqUYvWe5Qtj5f+YKhxnvKrpL4MOzGRqZZE7eVplGNmOobwULYYkA==
+	bh=o0oNfj00gNmQonpTdT8Ib0GNHiAD68fGvxte1X2bdnY=;
+	b=0g1aozqjPjMss5jNCqkk7OQ1JT28DRAuCPu+XWabSFl9QMbG3rdxMijl5OsK5twJ0pA/
+	 oW9x1RhpZVdBPMshvGkKlGvTju5ywiOhG9+XmfTR04WK9VAjbBWupeD9B3JCRoX0cQZrz
+	 PEDn9e46kfaQ74RmET+etpZh2x8GDyZj5Dd3k8PIGTb60SEjmd6iGOzxsqOougx40pf4P
+	 nvio83yYEX4GKZXybbloi0UBUh0FlN0LT2kXoZfv8PEQEBfyA3X64yAhyw+UDmALv9BtL
+	 WNO/BmoU5MXsizq1sMTt15qDUKWVneMLXgW/Z4AcbxSdJlYoBh16hSW7H/T5FbOSOrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=njFRAoNd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gYfnJaBS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6BE606A325;
-	Wed, 18 Nov 2026 16:03:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA6CA60A2606;
+	Wed, 18 Nov 2026 16:03:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=njFRAoNd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B1E01F000C5;
-	Wed, 18 Nov 2026 16:03:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gYfnJaBS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 080D21F000C5;
+	Wed, 18 Nov 2026 16:03:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017800;
-	bh=Cxz8z8MatanjeuV/0ecrjxP9ARFW3yZho5ykc/0an4o=;
+	s=korg; t=1795017805;
+	bh=o0oNfj00gNmQonpTdT8Ib0GNHiAD68fGvxte1X2bdnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=njFRAoNdIrzoIqrmPkyAk3+IwdZbKgPcHhw7uWM0eXDSxSO41HcWd4b/r6u9onSrY
-	 t67MjZhFmgVZMHBeahVDp8wj1zP9+goqLWgS1LKl7KFCFpLk5CyuXBdqQLzXh3hpsL
-	 p/cH96OWFMzUDqS+2YVooyDDuzGXavE1bZDP0znc=
+	b=gYfnJaBSFd5ddkOKdpTQ2iusnOFHsY9wQn8ch2T+kALzsqwgQBnetdVzCRY+Lc6Wu
+	 usrAVuWtxRA6kG1zwXVJDn34yqnlkOTnDehwshGGD1e9090xxIngeFHkhUmsgxA/iu
+	 QV4x+RkgDiF7ECMKV8Sim1o+9wMjkp8cAX7NvS44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Bryan ODonoghue <bod@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1014/2651] RDMA/bnxt_re: Fix the PD and DPI table size
-Date: Wed, 18 Nov 2026 15:37:34 +0100
-Message-ID: <20261118150324.428287256@linuxfoundation.org>
+Subject: [PATCH 7.3 1016/2651] media: venus: Drop session events without an instance
+Date: Wed, 18 Nov 2026 15:37:36 +0100
+Message-ID: <20261118150324.502017574@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,66 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Selvin Xavier <selvin.xavier@broadcom.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit aa6c2ef821a6ba7f3fd58cfcc031b2d16f3811c6 ]
+[ Upstream commit 8921f6da06fd869b6f1aa8d02e40a4e2e2a45fe4 ]
 
-The PD and DPI bitmaps were sized as max >> 3 (bytes),
-but bitmap ops (set_bit(), clear_bit(), find_first_bit(),
-test_and_set_bit()) operate on whole unsigned long words,
-so whenever max isn't a multiple of BITS_PER_LONG,
-the buffer under-allocates and the top word's bitops
-read/write past the end of the kmalloc()'d buffer.
-Most exposed on the DPI table, since dpit->max comes from the
-firmware-reported dev_attr->max_dpi with no alignment guarantee.
+hfi_process_msg_packet() intentionally allows HFI_MSG_EVENT_NOTIFY
+packets without a matching session instance because HFI_EVENT_SYS_ERROR
+is a system event and has no session attached.
 
-Fix the size of both allocations with
-BITS_TO_LONGS(max) * sizeof(unsigned long).
+That exception currently applies to every event-notify packet. If the
+firmware reports a late or otherwise invalid session event after
+to_instance() fails, hfi_event_notify() can dispatch it to session-only
+handlers such as event_seq_changed() or event_release_buffer_ref(), which
+dereference inst.
 
-Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Only system errors are valid without a session instance. Drop other
+event notifications before the session event handlers can dereference a
+NULL inst.
+
+This issue was found by a static analysis checker and confirmed by
+manual source review.
+
+Fixes: 09c2845e8fe4 ("[media] media: venus: hfi: add Host Firmware Interface (HFI)")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_res.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/media/platform/qcom/venus/hfi_msgs.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-index 756f8b5f042a9..7ff587ce91269 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-@@ -45,6 +45,7 @@
- #include <linux/dma-mapping.h>
- #include <linux/if_vlan.h>
- #include <linux/vmalloc.h>
-+#include <linux/bitops.h>
- #include <rdma/ib_verbs.h>
- #include <rdma/iter.h>
+diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media/platform/qcom/venus/hfi_msgs.c
+index 5c2025c5acc75..ed6b4e5e5e927 100644
+--- a/drivers/media/platform/qcom/venus/hfi_msgs.c
++++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
+@@ -230,6 +230,9 @@ static void hfi_event_notify(struct venus_core *core, struct venus_inst *inst,
+ 	if (!packet)
+ 		return;
  
-@@ -668,9 +669,9 @@ static int bnxt_qplib_alloc_pd_tbl(struct bnxt_qplib_res *res,
- {
- 	u32 bytes;
- 
--	bytes = max >> 3;
-+	bytes = BITS_TO_LONGS(max) * sizeof(unsigned long);
- 	if (!bytes)
--		bytes = 1;
-+		bytes = sizeof(unsigned long);
- 	pdt->tbl = kmalloc(bytes, GFP_KERNEL);
- 	if (!pdt->tbl)
- 		return -ENOMEM;
-@@ -848,9 +849,9 @@ static int bnxt_qplib_alloc_dpi_tbl(struct bnxt_qplib_res *res,
- 	if (!dpit->app_tbl)
- 		return -ENOMEM;
- 
--	bytes = dpit->max >> 3;
-+	bytes = BITS_TO_LONGS(dpit->max) * sizeof(unsigned long);
- 	if (!bytes)
--		bytes = 1;
-+		bytes = sizeof(unsigned long);
- 
- 	dpit->tbl = kmalloc(bytes, GFP_KERNEL);
- 	if (!dpit->tbl) {
++	if (!inst && pkt->event_id != HFI_EVENT_SYS_ERROR)
++		return;
++
+ 	switch (pkt->event_id) {
+ 	case HFI_EVENT_SYS_ERROR:
+ 		event_sys_error(core, EVT_SYS_ERROR, pkt);
 -- 
 2.53.0
 
