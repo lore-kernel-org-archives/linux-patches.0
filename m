@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043350;
-	b=KDwh0s61/BYjatzXJP5RKcYFy2nkk6BQnzRi7t8vhgKVMpmjZzAgXgIUXGbWXPk/sDUm
-	 Z7gE2rYsVfYv1mcURBH/ugoIcuUbeJz7UMkltnODhC423rQNg736+Ahv9kOod/0MrRDBf
-	 KpGOFYZ+EgEms2sQsdx1k0ysTsoxhSH4Uodk7H+e4t31uSR7OIQTidl83GQ9tSyo2mPvg
-	 wpwHZ5k8iPKC1My9admGK8A0O4PqZUUO6eSeB52YNGvsC1gLVXk40N0HUF2KrvI5pREGg
-	 Og8QdZkmOOTw9O7JqP2Uj6ZxtTzGmhIME+XTEIGrfJQcwe07+klbapklZs6AlT8ukSg==
+	t=1795043352;
+	b=SnsEZbj2MHFt8A1QR6L9DXc2r5cBQ03HEgq33ffQs8WgSmstHvj6/zKmoYXBeyS2rbSN
+	 v5DhL4uJ850r7EuYW17i46K/97c6NYfUo82z+EGM3mPn/oaiBYaVDzP1kew142WMRLJo0
+	 T5pBiSFszWuJUoWqkb/v5SNNjjSxQrRYeEDohRmYlJRZS33FoGxPPyT631E75OGHnLRvH
+	 v2bFTgtvZLSfoqBN16G+uXS6YF9TLehZUtDDybnwnsG4szLqpCbs6l6dbuSkoiPbQF2Qo
+	 NllbBxiGd6W1wp0GBhiZlQ+HhNVAYYRYF2KvFnCNFwG/f1f2M4dT6JWwsoXGSbK5wdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043350;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043352;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=P88aNMiMNt07pjdVmygx7F9D9XQfJ60L4pJ73aKi6PI=;
-	b=1thXOXkRRWoAsOD7oxlSSi6P+gLMgYdjYQmCGqHD8iNf5mxbxcknwIXYdjz5xfuJq/1x
-	 uIuadPbHeDPG5NxvRFrbK9YVYlxTdzdkQHrRjiuw/m7vgHXLxMdYGrkaC4NLtD+MoJ4Uo
-	 2Hye/LYM8v6AGEVjJ1vARF19jc/g6ZFO7PjVY8d8buZKaWoRM2ufR6zWFGnVzdMUfeJEL
-	 wM/toTg/fqVM+24C6gJPoFS2m/3NA6hf4Vc50pic0DJqV/6jN/MzUrRDPqzzht1mESiN3
-	 lvMGmXp/kh+Oc2NQKkGn8Rx9GEg/BdYjG1uXUYWmbaGpGKyvgRpFQKtuLGuOPnxtZ6g==
+	bh=QEALNdgL/ekQMlpBSQEXmyH3EgvyFX+l3tkNRLSsZeg=;
+	b=m7Uvm/nTVh7B6Hz/2AqzX4mT7KkqzL7KVHEC3LnA6Vh5l418vY5Zm2AzetyunxPI6g9r
+	 Ac+3QtO3bMN9FEa6TCeGTU+Za2e8CF9xgpbI8PUtFa+LJoc1MLtlbtpAxJ1ooNkFGBq+m
+	 k8PEkZSCLX9hQJsLdgpJvBtBIQ29tBdxp3y1k8hgo9iknGANnz3qJiLz73tWAaBghkVZ8
+	 CL6ALSmCCZYEMto2DDFaJLXbsLjTGaGPQXnWLAc+pvloul2MyLU8IEXhxjtYmNLGa6Kf6
+	 nOI7a6Oq+IoGFIvZ3oXTUh4BlqRf6X7KPbk9ONlTtA9J2lQ5DnzxHawyLEgAfOI4szQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uf8bGU6O;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K6wrxYKs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19FA0606A320;
-	Wed, 18 Nov 2026 23:09:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB06606A337;
+	Wed, 18 Nov 2026 23:09:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uf8bGU6O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 681441F000C7;
-	Wed, 18 Nov 2026 23:09:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K6wrxYKs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25BD41F000C9;
+	Wed, 18 Nov 2026 23:09:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043350;
-	bh=P88aNMiMNt07pjdVmygx7F9D9XQfJ60L4pJ73aKi6PI=;
+	s=korg; t=1795043352;
+	bh=QEALNdgL/ekQMlpBSQEXmyH3EgvyFX+l3tkNRLSsZeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uf8bGU6OEti0KY0UTnonVsFER1D1EH/7y/mjJOP+vS3ua3d2rfr8dImpwJgVXEt+r
-	 oX5/Qm8lwiFViLqEDUJNu4qTtpTgPS35gUD8+g54qB05vMBrAX3FlhewxpnjkKw+ft
-	 DrMhOq1cDlfjeJNIkKiAdnrdlr7ysrnuqXdWRYSM=
+	b=K6wrxYKsvRjaXtrPdKLxWMfaQGhBarDbTzC8U/X1SnjC4b08WY2mOu/XmWE7HoS9g
+	 se8AvKeQMEok7xSOPNVSn/5elKPf35XQW/60oVtPXl526Ed4qIZwvJwTs0GkuJGDat
+	 waSWd2rUxT5ZzyYN4x3d+AAhUwltG/wYLFqspx+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmed Naseef <naseefkm@gmail.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Florian Westphal <fw@strlen.de>,
+	Minghao Zhang <zhangmh25@mails.tsinghua.edu.cn>,
+	Jianjun Chen <jianjun@tsinghua.edu.cn>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0178/2857] wifi: mt76: mt7603: add 0x7592 EEPROM chip ID
-Date: Wed, 18 Nov 2026 15:20:12 +0100
-Message-ID: <20261118150207.761680941@linuxfoundation.org>
+Subject: [PATCH 6.1 0179/2857] netfilter: conntrack: tcp: use UNACK timeout for non-closing RST packets
+Date: Wed, 18 Nov 2026 15:20:13 +0100
+Message-ID: <20261118150207.795492648@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,38 +70,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmed Naseef <naseefkm@gmail.com>
+From: Minghao Zhang <zhangmh25@mails.tsinghua.edu.cn>
 
-[ Upstream commit d16447d7470502e998d82e806ca7ed49d1baa853 ]
+[ Upstream commit bf80e6802273a900311b44e47c9b1a59c6d2473c ]
 
-Some EcoNet based routers ship an on-flash EEPROM whose chip-id is
-0x7592 instead of the expected 0x7603. The device probes as PCI
-14c3:7603 and the hardware MT_HW_CHIPID register reports 0x7603,
-independent of the EEPROM value.
+Commit be0502a3f2e9 ("netfilter: conntrack: tcp: only close if RST
+matches exact sequence") keeps an established conntrack entry in
+ESTABLISHED when an in-window RST does not match the expected sequence
+number exactly, so the endpoint can validate the RST with a challenge
+ACK.
 
-This is seen across multiple EcoNet EN751221 and EN7528 based devices
-(for example the Genexis Platinum 4410).
+The timeout selection nevertheless uses the CLOSE timeout for every RST
+packet.  The bug is that timeout selection is based on the packet type,
+not on the state transition result: even when RST validation keeps
+new_state in ESTABLISHED, the timeout is still forced to
+TCP_CONNTRACK_CLOSE.
 
-Signed-off-by: Ahmed Naseef <naseefkm@gmail.com>
-Link: https://patch.msgid.link/20260719082530.3879831-1-naseefkm@gmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Linux TCP independently rate limits challenge ACKs per socket.  A second
+non-exact RST can therefore arrive after the first challenge ACK has
+restored the timeout but before the rate limit expires.  The second RST
+lowers the timeout to 10 seconds again while the endpoint suppresses the
+second challenge ACK, allowing the conntrack entry to expire while both
+TCP endpoints remain established.
+
+Using the ESTABLISHED timeout for such RSTs would avoid this short
+expiration window, but it could also retain stale entries for the
+five-day default because conntrack cannot reliably match the endpoint's
+exact TCP state.
+
+Use the UNACK timeout for RST packets that leave the conntrack entry in
+TCP_CONNTRACK_ESTABLISHED.  Exact-match RSTs and accepted RST packet
+trains still fall through to timeouts[new_state], which preserves the
+CLOSE timeout when conntrack accepts the RST as closing the flow.
+
+This avoids the aggressive 10-second expiration window for non-exact
+RSTs while preserving the short timeout for RSTs that conntrack accepts
+as closing the flow.
+
+Suggested-by: Florian Westphal <fw@strlen.de>
+Reported-by: Minghao Zhang <zhangmh25@mails.tsinghua.edu.cn>
+Reported-by: Jianjun Chen <jianjun@tsinghua.edu.cn>
+Signed-off-by: Minghao Zhang <zhangmh25@mails.tsinghua.edu.cn>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/netfilter/nf_conntrack_proto_tcp.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c
-index d951cb81df833..7d316212ac59b 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c
-@@ -142,6 +142,7 @@ static int mt7603_check_eeprom(struct mt76_dev *dev)
- 	case 0x7628:
- 	case 0x7603:
- 	case 0x7600:
-+	case 0x7592:
- 		return 0;
- 	default:
- 		return -EINVAL;
+diff --git a/net/netfilter/nf_conntrack_proto_tcp.c b/net/netfilter/nf_conntrack_proto_tcp.c
+index c75f42168b6d5..6516f2a048407 100644
+--- a/net/netfilter/nf_conntrack_proto_tcp.c
++++ b/net/netfilter/nf_conntrack_proto_tcp.c
+@@ -1333,8 +1333,9 @@ int nf_conntrack_tcp_packet(struct nf_conn *ct,
+ 	if (ct->proto.tcp.retrans >= tn->tcp_max_retrans &&
+ 	    timeouts[new_state] > timeouts[TCP_CONNTRACK_RETRANS])
+ 		timeout = timeouts[TCP_CONNTRACK_RETRANS];
+-	else if (unlikely(index == TCP_RST_SET))
+-		timeout = timeouts[TCP_CONNTRACK_CLOSE];
++	else if (unlikely(index == TCP_RST_SET &&
++			  new_state == TCP_CONNTRACK_ESTABLISHED))
++		timeout = timeouts[TCP_CONNTRACK_UNACK];
+ 	else if ((ct->proto.tcp.seen[0].flags | ct->proto.tcp.seen[1].flags) &
+ 		 IP_CT_TCP_FLAG_DATA_UNACKNOWLEDGED &&
+ 		 timeouts[new_state] > timeouts[TCP_CONNTRACK_UNACK])
 -- 
 2.53.0
 
