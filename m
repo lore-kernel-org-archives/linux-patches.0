@@ -1,61 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022688;
-	b=4IIYjnhfTxW4gNBbGx/Rth0tV8t/X4DeDsMXEaX3pZx1CFYk5vvdLHTSJQr/fyB4qA6Q
-	 iSoW+HmHmXCTixfF2bL/1r0xPPGHbm2oNHdXiVNyq6sVjVECC8lghEg9wlV1i/Xi1Nb7W
-	 EUphAVW6s06NhczWjWlSMRDn0S1PB+5Vy4Q5tpPevmH2KAWxFM1JY0qkVy6vdpfw9CpYO
-	 g8uz6GNroLgCSWKT8mpTlC80jnCTMOlcTNY/SlmoXdD34KasTIVEnBA8CYrhvRsjymwzk
-	 Xr8h0x1vJC5+mKCpgvRw5MTxNkOFXq0019tsbUIQG2bmXBEnbytRZR7fPOON1rD3OUg==
+	t=1795022691;
+	b=WFaL68ERdJuPessvqM0NJkD4OKx99NKXLjD2kSI3VlNc+cRLAFeAJFmN4CmvVnlmD5bP
+	 RGvu305Vvr60cRniUHIF/QNEfXb1FKQx4+Eudn0fM/0tkZnSyrECThNU9yqaEZFBlkUZn
+	 5nl7cSZYEyiz6So7xJuX7PcDjM9q6gIXdeAREkyPMp2XeiS78/qBWFwcTKlSa7bdtYYrV
+	 sJmnx7NCqaoHz2BkcKIt1J5y1useioOyRQE4nd23GGSKa15Aa7IJmZ2kZR4/9Ij86mRkd
+	 EZB+Fc1wDb5JOdv3pBaOm1WBpJw2Fr1QNu7J8g3kLCi5u4Ejv8aFlUCgavJ0P7Bw6Pw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022688;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022691;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=icPxhcaLAoRjPJzoW6BxmCH/wiLJMIpOwOBHjvO9szQ=;
-	b=DA7S2dOOLhLUJnjND91mg7Ky5Ag20IMmGFN4PVB4FI2QhoF+Na37oCOllbOufQPa4ZPe
-	 UxpEnYKoSbRBfRqpWG51SbqQo7tWgTr91bTQh8NpRzbE3ZOsfklKjxwiMrkRClXhqHoqi
-	 vWFUiEQoSH92Az5OqCKtzp7W3TT9bzBY9thomQNsz6upUMtXdYXYVAIUSRnA3S7bp+B9Q
-	 HvHPIzlMskqZzJQ43Zm+Mr+8VJWlwwxPOEmbIO00C48BNhIulDxn6YR0Tbi42SHXFIFsq
-	 +aOdPsxdAcSEcc6VuSt9z3AHyyqng1m2STKbhwTxQU8KLt5yNZx/pvjWoUA31a4a5aA==
+	bh=NkiNVwHGeet4OLXIu0kFe2k2NSTZcEga44O9phUD3Cs=;
+	b=NJInan79nFJzUExzs3sygKmm12jd7j2K3ZcY34IcX/LSpi5jvNyjl/E07fL0vvcWi/x2
+	 CSt4iDNiRQeepBD+vwe1ZB7vAcmGl+xHLXsBt8UOYlPxhbVcB6F3NG8by6YCS9+go3PyV
+	 QOrCBd/Pwtq7e9GB4VzGL6m6JhRrqBivH1ymiH1iVpvWYzbclSBB1YpwTwS8SUde3kl8O
+	 Rz6txYs5LwMOdLHtHdg+ezq9pWDsXov3e81Uj/ZrIoUtECbkHAl5xQl5bmKyx6x3tFlcc
+	 NH58nvtcEQ+hVMFUd5InJkFjZovPQiyvU33sQgNjuvFSjespjlYkxW8H/x17q+icmaw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KfcuXyOE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eMkumDtA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9784360A2602;
-	Wed, 18 Nov 2026 17:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 846FA60A2606;
+	Wed, 18 Nov 2026 17:24:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KfcuXyOE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E94A01F000C4;
-	Wed, 18 Nov 2026 17:24:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eMkumDtA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A7D1F000C4;
+	Wed, 18 Nov 2026 17:24:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022688;
-	bh=icPxhcaLAoRjPJzoW6BxmCH/wiLJMIpOwOBHjvO9szQ=;
+	s=korg; t=1795022691;
+	bh=NkiNVwHGeet4OLXIu0kFe2k2NSTZcEga44O9phUD3Cs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KfcuXyOExovs4yDbStix2zXNWjbVewRPHfg5uhA0QYFOw5+viV5UuOoorKrV+wQEm
-	 MWY4zcQya/PadB2ugbxOkuQMz4Xf26oGvcU+LPfbafviEmVFodlAwtQjuuvbX3QpC6
-	 Xl3+j0b43eYQvb/C5Off1ESZkuzpuHym6BxJic5g=
+	b=eMkumDtA3a7KYJRYgRBkTqMr4HqiaUH+5XaHX3REjBGRWGwSvGLHLjon4m73epBa1
+	 Ta9iqOUI/u9Br5NczTO+AU52h+MH7J02YNWvtkatnbBnoEVBkT0r4/zMGaAecele8E
+	 HdK71RpkbG9/0OCOkO/TwEYrLvjeGkzp6Mw+d0VY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Rik van Riel <riel@surriel.com>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	Barry Song <baohua@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Harry Yoo (Meta)" <harry@kernel.org>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	SJ Park <sj@kernel.org>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Alexei Solcanu <alexei.solcanu@pm.me>,
+	Antheas Kapenekakis <lkml@antheas.dev>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0103/2151] fork: take mmap_lock before copying mm_struct
-Date: Wed, 18 Nov 2026 15:30:38 +0100
-Message-ID: <20261118150125.553915902@linuxfoundation.org>
+Subject: [PATCH 6.18 0104/2151] hwmon: (gpd-fan) Reset both fans to automatic on duo boards
+Date: Wed, 18 Nov 2026 15:30:39 +0100
+Message-ID: <20261118150125.589971460@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -77,130 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Alexei Solcanu <alexei.solcanu@pm.me>
 
-[ Upstream commit ef694e2d210111cc08c52fd25da9ab130170bfa3 ]
+[ Upstream commit d1f60971fbf85c243ab6c78f6535fbc88fa640ce ]
 
-dup_mm() copies the parent's mm_struct before dup_mmap() takes the
-mmap_lock. A concurrent brk() can leave the child with a stale mm->brk
-and newer heap mappings, causing later brk() requests to fail.
+On boards using gpd_duo_drvdata (GPD Duo, GPD Win 5), writing
+pwm1_enable=2 only returns the first fan to EC control. The second fan
+keeps its last manual duty cycle, e.g. full speed after pwm1=255, so a
+fan control tool that exits leaves it running at that speed.
 
-Other operations (e.g., PR_SET_MM) on the parent's mm_struct can similarly
-cause inconsistencies.
+gpd_duo_write_pwm() writes both fan registers (pwm_write and
+pwm_write + 1), but switching to automatic only clears pwm_write.
+Also clear pwm_write + 1, so both fans return to EC control.
 
-As a simple and robust fix, grab the parent's mmap_lock earlier. This
-way we don't need to update individual mm fields in dup_mmap() and
-keep missing ones. Stop updating the 4 existing members (total_vm, data_vm,
-exec_vm, stack_vm), as that is now no longer required.
+Tested on a GPD Win 5 (G1618-05). Not tested on the GPD Duo.
 
-Keep releasing the parent's mmap_lock in dup_mmap(), before
-userfaultfd completion, to avoid moving the userfaultfd handling into the
-caller. This should get cleaned up later.
-
-Move uprobe_start_dup_mmap() to preserve the lock ordering.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 0ab88e239439 ("hwmon: add GPD devices sensor driver")
 Cc: stable@vger.kernel.org
-Reported-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Rik van Riel <riel@surriel.com>
-Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Reviewed-by: Barry Song <baohua@kernel.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Reviewed-by: Harry Yoo (Meta) <harry@kernel.org>
-Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Reviewed-by: SJ Park <sj@kernel.org>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-2-d6437171ecc3@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: Retained mm->user_ns as the third argument to mm_init(). ]
+Signed-off-by: Alexei Solcanu <alexei.solcanu@pm.me>
+Reviewed-by: Antheas Kapenekakis <lkml@antheas.dev>
+Link: https://patch.msgid.link/20260926-gpd-fan-duo-auto-v2-1-0a2ea41ee3b5@pm.me
+[groeck: Dropped obsolete 'Assisted-by: tag]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+[ sashal: adapted gpd_ecram_write() to the two-argument interface using global gpd_driver_priv.drvdata instead of per-device state ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/fork.c | 20 ++++++++++++++------
- mm/mmap.c     |  8 +-------
- mm/nommu.c    |  2 +-
- 3 files changed, 16 insertions(+), 14 deletions(-)
+ drivers/hwmon/gpd-fan.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/fork.c b/kernel/fork.c
-index bc6078b910a6a..e38d2de6c6b52 100644
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -1487,12 +1487,19 @@ static struct mm_struct *dup_mm(struct task_struct *tsk,
- 	if (!mm)
- 		goto fail_nomem;
- 
-+	uprobe_start_dup_mmap();
-+	if (mmap_write_lock_killable(oldmm)) {
-+		free_mm(mm);
-+		goto fail_uprobe;
-+	}
-+
- 	memcpy(mm, oldmm, sizeof(*mm));
- 
--	if (!mm_init(mm, tsk, mm->user_ns))
--		goto fail_nomem;
-+	if (!mm_init(mm, tsk, mm->user_ns)) {
-+		mmap_write_unlock(oldmm);
-+		goto fail_uprobe;
-+	}
- 
--	uprobe_start_dup_mmap();
- 	err = dup_mmap(mm, oldmm);
- 	if (err)
- 		goto free_pt;
-@@ -1511,9 +1518,10 @@ static struct mm_struct *dup_mm(struct task_struct *tsk,
- 	mm->binfmt = NULL;
- 	mm_init_owner(mm, NULL);
- 	mmput(mm);
--	if (err)
--		uprobe_end_dup_mmap();
--
-+	if (!err)
-+		return NULL;
-+fail_uprobe:
-+	uprobe_end_dup_mmap();
- fail_nomem:
- 	return NULL;
+diff --git a/drivers/hwmon/gpd-fan.c b/drivers/hwmon/gpd-fan.c
+index f81c3bc422f4c..310f461e1d633 100644
+--- a/drivers/hwmon/gpd-fan.c
++++ b/drivers/hwmon/gpd-fan.c
+@@ -412,6 +412,7 @@ static void gpd_duo_set_pwm_enable(enum FAN_PWM_ENABLE pwm_enable)
+ 		break;
+ 	case AUTOMATIC:
+ 		gpd_ecram_write(gpd_driver_priv.drvdata->pwm_write, 0);
++		gpd_ecram_write(gpd_driver_priv.drvdata->pwm_write + 1, 0);
+ 		break;
+ 	}
  }
-diff --git a/mm/mmap.c b/mm/mmap.c
-index b29b31a29ef66..9bf16cc92f185 100644
---- a/mm/mmap.c
-+++ b/mm/mmap.c
-@@ -1724,8 +1724,7 @@ __latent_entropy int dup_mmap(struct mm_struct *mm, struct mm_struct *oldmm)
- 	LIST_HEAD(uf);
- 	VMA_ITERATOR(vmi, mm, 0);
- 
--	if (mmap_write_lock_killable(oldmm))
--		return -EINTR;
-+	mmap_assert_write_locked(oldmm);
- 	flush_cache_dup_mm(oldmm);
- 	uprobe_dup_mmap(oldmm, mm);
- 	/*
-@@ -1736,11 +1735,6 @@ __latent_entropy int dup_mmap(struct mm_struct *mm, struct mm_struct *oldmm)
- 	/* No ordering required: file already has been exposed. */
- 	dup_mm_exe_file(mm, oldmm);
- 
--	mm->total_vm = oldmm->total_vm;
--	mm->data_vm = oldmm->data_vm;
--	mm->exec_vm = oldmm->exec_vm;
--	mm->stack_vm = oldmm->stack_vm;
--
- 	/* Use __mt_dup() to efficiently build an identical maple tree. */
- 	retval = __mt_dup(&oldmm->mm_mt, &mm->mm_mt, GFP_KERNEL);
- 	if (unlikely(retval))
-diff --git a/mm/nommu.c b/mm/nommu.c
-index d609ecdcf022b..be977f0dd0c10 100644
---- a/mm/nommu.c
-+++ b/mm/nommu.c
-@@ -1896,7 +1896,7 @@ subsys_initcall(init_admin_reserve);
- 
- int dup_mmap(struct mm_struct *mm, struct mm_struct *oldmm)
- {
--	mmap_write_lock(oldmm);
-+	mmap_assert_write_locked(oldmm);
- 	dup_mm_exe_file(mm, oldmm);
- 	mmap_write_unlock(oldmm);
- 	return 0;
 -- 
 2.53.0
 
