@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050929;
-	b=jpF/nI/VPv3bwBIqkxNSwAiinUAzg1Cw+jCUHpMeKO9Z1AgUX86Kvlv3ObphwGL7ylXn
-	 rJg/64FSiMigF9T6XTlcWBVNg4+bPTzQTFyYVFw3rYXWB/EHjQr+aXoGteOJQXYsW6wBV
-	 Ysy9s9HZgY5iWdiL05pi/RPtXo7NOorcNmQ1wmJmwXYNephac7p0qjV6U55j7QeTMZ+P1
-	 4jFi/30Os7uB53+CfD+UTDCXbVGPsU9Yok4WzJxW52vSgkKyIil436hBQvlEeA2w1FTNm
-	 NJIsHmeHQgKNNu9AtMJwCYLPb7rhGE8PvHwciIb8phgDHEDONO0rcWCOflpmTEHs5oA==
+	t=1795050932;
+	b=bVzAsb687ZfXtvcg29ssmVtcLfsbgtv4V6iliWsP2NARoK9aQYg/s89SCWE4rl7vwdfA
+	 9eMj/uxm+Hw0TyDv2/pHVzdE3+nFZmdNWQKm3YF7rxY4lKHiS3cz5hMz/sVwSL5mtfuZG
+	 pATa6HR08p/5e4FMEtf04tHxKrW3B2y0BmzFzcFsqFs7PmkQukucVcrqPFYqs1V/c2dYx
+	 aL44je1OO/vr/XyDDuS+rXMbs6Wkvq78DX+HgYpk/cpdAcvTnzCsTHnvrfbuVJNQGkzPu
+	 hyCOdYtx1uTrLoHP3qb7B984Ebwy7qMzogo5CV53HBf2jH9Dm8rx10wZANjoOdzDSAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050929;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050932;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=FlOOaVxinUt6XF9ae6hT/23+TSn77zVcf9kuqS5RVyI=;
-	b=zran+TihXCpU7+toLZ6ecEODWoYwUe/r0nulqnOiP+btCFH1YbXXwBJsfOFzFYX9BW/y
-	 gbHeV1/qUkrM0ogJCOHTfaDsn0/DkFBxnMgSGd5y0ewj6p3AGEVt7jYzygRNuF6ulgeOj
-	 iberKkciWfA/6errDewoVjpJ16sY0sAWpDjsi0U5lmsxA3257N7F/cPKXQMC4TRDf0ppn
-	 P/T4oSuMqgFxEYzHtDdwuzAVojG8O2/BzOxNKib44Q7WoYZzNGmoeA00nR4qCsi2BhN6n
-	 5qF7z8+qVaiNJM6+S5FOcIC/P2OIy7wR2Xg6wwA4Z+eATlh2zuwlFIy4KNOeQCXNpyw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=4Rgqw2Np/SotrnAw89qwJmaN+GXmPgn1PYeseVfVmhE=;
+	b=38os+aMSp8cQdVPYrjODmTLGELK0srL068X9oqZ/PbfYo81YW254d6qpvLhC5HaoX02g
+	 MGGfQmeBccO2MoqGp7NDhL7NrChqJVQ5G2e/0CufivrAzz47+fQELH4qlHs2VevYTlhmE
+	 2KMXlzHWXTqt111inezC/imLgRqsVVufqj3T9iJMhHh2dQ7ZyhqeCvdtNkkoprdfcotqZ
+	 +mdd5WQSLSe1Bcz/wvoLlvxxt++VCO7B5dIhZLTwBoxnAcUEeeqDNGlUO/nz9hljHUJdp
+	 EIHNoVgDdEuRxxm0aw8itRun5avHm72/OHm7TZ8sGChVFr4WsmCW6l8o2IuCBQiD1yw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XKRjR5aE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O1lW0AdS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52134606A331;
-	Thu, 19 Nov 2026 01:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 232D1606A31C;
+	Thu, 19 Nov 2026 01:15:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XKRjR5aE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB9B01F000C5;
-	Thu, 19 Nov 2026 01:15:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O1lW0AdS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73AF71F000C4;
+	Thu, 19 Nov 2026 01:15:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050929;
-	bh=FlOOaVxinUt6XF9ae6hT/23+TSn77zVcf9kuqS5RVyI=;
+	s=korg; t=1795050932;
+	bh=4Rgqw2Np/SotrnAw89qwJmaN+GXmPgn1PYeseVfVmhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XKRjR5aEnmjt4a4IeuUJULV3bDA6CX8g5in6PX1vXighqDJh4vAxfD2ulCodMlFbH
-	 26Hf6AnirNQjOshfsZYUwiOWnhDvcN4XHqslAwzXb1Tp4w1fpoP3lOib4paOynSjCC
-	 GcRhUAP6tmTNclFCccAuzihYa6j4jMy/Qchn6Hd8=
+	b=O1lW0AdS5hQMIRAU72hTyIU5meHWiaDKbtquuQ2u1EO4xycT3r+KqapCRS+zb/7G2
+	 Zv3l06YeGPgZy4Lr3yknmImWILcgOhbRLGyKwMpLoVMv5II+ikQwc89NNuYLjXXcRH
+	 pvW5sUQan+ctOUYEgaEthMIM+ddDm+KVDyLKYJzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Kry=C5=A1tof=20=C4=8Cern=C3=BD?= <cleverline1mc@gmail.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0028/2214] drm/radeon: avoid double free in r600 DPM cleanup
-Date: Wed, 18 Nov 2026 15:28:24 +0100
-Message-ID: <20261118150011.230557560@linuxfoundation.org>
+Subject: [PATCH 5.15 0029/2214] w1: ds2482: add OF device match table
+Date: Wed, 18 Nov 2026 15:28:25 +0100
+Message-ID: <20261118150011.269510787@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,97 +62,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Kryštof Černý <cleverline1mc@gmail.com>
 
-[ Upstream commit d3f30034f861a585f8e487ae1555d9f288a96f87 ]
+[ Upstream commit 53f33fd74d3993af0fbb5494b5be709f6ca6b712 ]
 
-r600_parse_extended_power_table() uses manual kfree() calls for some
-early allocation failures, but the freed pointers are left in the
-dynamic power-management state. If device teardown later calls
-r600_free_extended_power_table(), those stale pointers can be freed
-again.
+Add an of_device_id table and hook it into the i2c driver so the
+ds2482/ds2484 can be matched and auto-probed from Device Tree.
 
-Use the common extended power table cleanup helper for those early
-failure paths as well, and clear each pointer after freeing it so
-repeated cleanup stays safe.
+This allows automatic module loading when instantiated via DT.
 
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Kryštof Černý <cleverline1mc@gmail.com>
+Link: https://patch.msgid.link/20260612-w1-of-autoload-v1-1-74e8a17626e6@gmail.com
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/r600_dpm.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ drivers/w1/masters/ds2482.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/gpu/drm/radeon/r600_dpm.c b/drivers/gpu/drm/radeon/r600_dpm.c
-index 35b77c9447010..ea478a3ddfbac 100644
---- a/drivers/gpu/drm/radeon/r600_dpm.c
-+++ b/drivers/gpu/drm/radeon/r600_dpm.c
-@@ -935,7 +935,7 @@ int r600_parse_extended_power_table(struct radeon_device *rdev)
- 			ret = r600_parse_clk_voltage_dep_table(&rdev->pm.dpm.dyn_state.vddci_dependency_on_mclk,
- 							       dep_table);
- 			if (ret) {
--				kfree(rdev->pm.dpm.dyn_state.vddc_dependency_on_sclk.entries);
-+				r600_free_extended_power_table(rdev);
- 				return ret;
- 			}
- 		}
-@@ -946,8 +946,7 @@ int r600_parse_extended_power_table(struct radeon_device *rdev)
- 			ret = r600_parse_clk_voltage_dep_table(&rdev->pm.dpm.dyn_state.vddc_dependency_on_mclk,
- 							       dep_table);
- 			if (ret) {
--				kfree(rdev->pm.dpm.dyn_state.vddc_dependency_on_sclk.entries);
--				kfree(rdev->pm.dpm.dyn_state.vddci_dependency_on_mclk.entries);
-+				r600_free_extended_power_table(rdev);
- 				return ret;
- 			}
- 		}
-@@ -958,9 +957,7 @@ int r600_parse_extended_power_table(struct radeon_device *rdev)
- 			ret = r600_parse_clk_voltage_dep_table(&rdev->pm.dpm.dyn_state.mvdd_dependency_on_mclk,
- 							       dep_table);
- 			if (ret) {
--				kfree(rdev->pm.dpm.dyn_state.vddc_dependency_on_sclk.entries);
--				kfree(rdev->pm.dpm.dyn_state.vddci_dependency_on_mclk.entries);
--				kfree(rdev->pm.dpm.dyn_state.vddc_dependency_on_mclk.entries);
-+				r600_free_extended_power_table(rdev);
- 				return ret;
- 			}
- 		}
-@@ -1300,17 +1297,29 @@ void r600_free_extended_power_table(struct radeon_device *rdev)
- 	struct radeon_dpm_dynamic_state *dyn_state = &rdev->pm.dpm.dyn_state;
+diff --git a/drivers/w1/masters/ds2482.c b/drivers/w1/masters/ds2482.c
+index 50451ba345efb..e4cd059a67f12 100644
+--- a/drivers/w1/masters/ds2482.c
++++ b/drivers/w1/masters/ds2482.c
+@@ -554,9 +554,17 @@ static const struct i2c_device_id ds2482_id[] = {
+ };
+ MODULE_DEVICE_TABLE(i2c, ds2482_id);
  
- 	kfree(dyn_state->vddc_dependency_on_sclk.entries);
-+	dyn_state->vddc_dependency_on_sclk.entries = NULL;
- 	kfree(dyn_state->vddci_dependency_on_mclk.entries);
-+	dyn_state->vddci_dependency_on_mclk.entries = NULL;
- 	kfree(dyn_state->vddc_dependency_on_mclk.entries);
-+	dyn_state->vddc_dependency_on_mclk.entries = NULL;
- 	kfree(dyn_state->mvdd_dependency_on_mclk.entries);
-+	dyn_state->mvdd_dependency_on_mclk.entries = NULL;
- 	kfree(dyn_state->cac_leakage_table.entries);
-+	dyn_state->cac_leakage_table.entries = NULL;
- 	kfree(dyn_state->phase_shedding_limits_table.entries);
-+	dyn_state->phase_shedding_limits_table.entries = NULL;
- 	kfree(dyn_state->ppm_table);
-+	dyn_state->ppm_table = NULL;
- 	kfree(dyn_state->cac_tdp_table);
-+	dyn_state->cac_tdp_table = NULL;
- 	kfree(dyn_state->vce_clock_voltage_dependency_table.entries);
-+	dyn_state->vce_clock_voltage_dependency_table.entries = NULL;
- 	kfree(dyn_state->uvd_clock_voltage_dependency_table.entries);
-+	dyn_state->uvd_clock_voltage_dependency_table.entries = NULL;
- 	kfree(dyn_state->samu_clock_voltage_dependency_table.entries);
-+	dyn_state->samu_clock_voltage_dependency_table.entries = NULL;
- 	kfree(dyn_state->acp_clock_voltage_dependency_table.entries);
-+	dyn_state->acp_clock_voltage_dependency_table.entries = NULL;
- }
- 
- enum radeon_pcie_gen r600_get_pcie_gen_support(struct radeon_device *rdev,
++static const struct of_device_id ds2482_of_match[] = {
++	{ .compatible = "maxim,ds2482", },
++	{ .compatible = "maxim,ds2484", },
++	{ }
++};
++MODULE_DEVICE_TABLE(of, ds2482_of_match);
++
+ static struct i2c_driver ds2482_driver = {
+ 	.driver = {
+ 		.name	= "ds2482",
++		.of_match_table  = ds2482_of_match,
+ 	},
+ 	.probe		= ds2482_probe,
+ 	.remove		= ds2482_remove,
 -- 
 2.53.0
 
