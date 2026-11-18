@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057259;
-	b=1CIjoeXR76l3Dqm51BJQ75xR0qQaxFVVZaXMWoascWX3oySJucBb3nDk/Q9F8Xr6aHxs
-	 tPFzNfSndIBonYcaSqUnYs705abB5/MSiypfE4iqSKyyC3Wym5uBmV+7CSTnBnSnK4Ajl
-	 Tij1oG2w4eKRP4CY1hQL2I88+rEx34YAxASlYxEj2KYkoqsPJ4LayRKTRt4Xcgm+ywNT4
-	 Lhgag2MfRXyhSMrvGI1RMyNaXLE563OEl3kjoBmxFSR0pW+4iDJyavQyLuOLUj/Sc1Iyg
-	 E/IoxJ3US1a4Zl6XKD+jpzettAJSrhrT8cn+SxP9fU/Urt5SwBH3pL3A9h8X83zk/BA==
+	t=1795057262;
+	b=C7zDuqWuGz+0PAr3l/onMJUV2E6LeplyvVKBggdHzxzc1ngPW8D7mYJkWxkzNKwz1iAy
+	 XidNJw/qLUJxk+/taxWYJtNrJPSGXA2Ph1YHu5/Y3ijQJIGNocHu0JRoOCw4xz9T1bg7r
+	 x4E31bMyqom9kTYgpTrGgTzqsfrYcSDQAxV4DdxUGPfyxYixqbMO0BUda0JR/Lz22Psv9
+	 UUAz/d3J1faGb70sWDzNfok126nJyOTs6A8wGe7ePUw0C9im5dfhwMt2cnMjTzHbLBgyH
+	 fmUtSdvYtiwQRuQxN3ftxIj2j5jFNIkZGU/py6E/VfgjGgTBz/ChfCL7aabcq+0gn3w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057259;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057262;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/r1tnlnEjn7Z+Fj2z6IQpmKTqyRXg+e3s8bQ4V3OrUg=;
-	b=wrr+Hn1dZ+yyszcEW7SGZwoOQDZF9c+WASV3IXj2X+R+fjlY2PY/cqvsijaOlvX+x1Il
-	 9VyQeFZf22lKJTWA4LpLcuPkFQ9bwXRG7AR6y9AjjSyZ/nCg/VadPkJKZ872chOksuzbN
-	 TFGVsDO7/gzCr1WYSr16VauUqULflmETBwQ69osLUJ39EDi2lHIIC8Q9jCmWMXmAtIx3w
-	 dB7l6qSKmh0Vv+h994oORrN1eE4Crc431D4UBC5/u9QfFsVywVnsFGVq36j0KoA5XBHBf
-	 41+4XjC7UxA/61n4F2qvWrlNHXeTxv+4zW342sJZqEwJIexUbEEtrAIB0B1mlTT/zRQ==
+	bh=IBRHR6xKsRu2ZzL6hpnjcztPFf8atbKaxrWYt0X2bWM=;
+	b=IDBvxFwhJ60zeKZTPaAHWl4g63y8bTBKqStuZjRWsEucOLKNQL4uhOZjt9Oa0mEjlT2v
+	 dn9SLQxurwbJzUDMSZP99uRoO3QQlYVfwAckPf0cM50+NRX6ZvAdSqs6HLMa1CbbYWdeH
+	 kXcQv6FbtxM76AXO+P74kdf5s79+kP1Eg3Y4cZ2azh/4Zndr1X2TWWiooVh/B7SivhKhu
+	 CBykiQZnLpoBe0W2IoV1to5RdpZDFGJw60nOsUBJ/npbIxGSyeG+EwinpRvk6nhsseBHV
+	 ogot2zXVRCX2V2xYj16q6++DSvqiwmXfIS5NCbZzp4OaF48KpqU7Lo56H16OqxjeCTw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yoGKIyTF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vu1ImDYU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F66060A261E;
-	Thu, 19 Nov 2026 03:00:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060CA60A2626;
+	Thu, 19 Nov 2026 03:01:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yoGKIyTF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC5C1F000C5;
-	Thu, 19 Nov 2026 03:00:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vu1ImDYU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BFC71F000C6;
+	Thu, 19 Nov 2026 03:01:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057259;
-	bh=/r1tnlnEjn7Z+Fj2z6IQpmKTqyRXg+e3s8bQ4V3OrUg=;
+	s=korg; t=1795057261;
+	bh=IBRHR6xKsRu2ZzL6hpnjcztPFf8atbKaxrWYt0X2bWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yoGKIyTFAIaU3AI9MUfFlEh8XqJh5/ZvqbMzxMRh0x+09FcOS/UcZbC4sJjaM1YOP
-	 6LFbYzVsj1LCU6qgdtT3VE2eOybX9kMxkQxmCAAGQd/AseQaClHFYC1bqUe3NWyuse
-	 HkPkNfs73K7I3ANI59Xil/v5rA/mN+mRjzu7WuZg=
+	b=vu1ImDYUYJSCZHU8VkIRJ8SxAZnZ5yKMzDZuf49DBh61CkSnW5ythyR7mru5rdFgn
+	 5PEn8g7plgJrUVU6VnnaATzW1rJmAeXVO68NMPRzM/Ip6ym5XuumVwE3r5DBBjDSsD
+	 bJpgygJj4DSFQNuq4yBphZXgjh2y2Dil2Y3c9Jus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Gmeiner <cgmeiner@igalia.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <jic23@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0068/1848] drm/etnaviv: check all modules for idle after reset
-Date: Wed, 18 Nov 2026 15:35:06 +0100
-Message-ID: <20261118145913.965609960@linuxfoundation.org>
+Subject: [PATCH 5.10 0051/1848] iio: adc: max1241: add missing MODULE_DEVICE_TABLE()
+Date: Wed, 18 Nov 2026 15:34:49 +0100
+Message-ID: <20261118145913.243076487@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,40 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lucas Stach <l.stach@pengutronix.de>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 1006d1f7c03d92b28c252333836635df8e165401 ]
+[ Upstream commit 790a2080e0c9eabefea3561dec301172043de236 ]
 
-While the FE is an important part of the GPU, which needs to be idle
-after reset, all other modules should be idle after a proper reset.
-Check all present modules for being idle to determine whether the
-reset was successful.
+The driver has a match table for the spi bus wired into its driver
+structure, but the table is not exported with MODULE_DEVICE_TABLE().
 
-Reviewed-by: Christian Gmeiner <cgmeiner@igalia.com>
-Link: https://patch.msgid.link/20260511085148.652256-1-l.stach@pengutronix.de
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+Add the missing MODULE_DEVICE_TABLE() entry so module alias information
+is generated for automatic module loading.
+
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the driver registration structure, and the missing module alias
+publication.
+
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_gpu.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/iio/adc/max1241.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-index 407a15e1469f2..b9464240835d7 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-@@ -525,9 +525,9 @@ static int etnaviv_hw_reset(struct etnaviv_gpu *gpu)
- 		/* read idle register. */
- 		idle = gpu_read(gpu, VIVS_HI_IDLE_STATE);
+diff --git a/drivers/iio/adc/max1241.c b/drivers/iio/adc/max1241.c
+index 0cbbb3c56d08a..0ba0a2c7400da 100644
+--- a/drivers/iio/adc/max1241.c
++++ b/drivers/iio/adc/max1241.c
+@@ -204,6 +204,7 @@ static const struct spi_device_id max1241_id[] = {
+ 	{ "max1241", max1241 },
+ 	{}
+ };
++MODULE_DEVICE_TABLE(spi, max1241_id);
  
--		/* try resetting again if FE is not idle */
--		if ((idle & VIVS_HI_IDLE_STATE_FE) == 0) {
--			dev_dbg(gpu->dev, "FE is not idle\n");
-+		/* try resetting again if any module is not idle */
-+		if ((idle & gpu->idle_mask) != gpu->idle_mask) {
-+			dev_dbg(gpu->dev, "GPU modules not idle\n");
- 			continue;
- 		}
- 
+ static const struct of_device_id max1241_dt_ids[] = {
+ 	{ .compatible = "maxim,max1241" },
 -- 
 2.53.0
 
