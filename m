@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043964;
-	b=yEFSsQQQQ7vPhEnFx3cyLrF3id393O9X01pv9FJkO1zTMXFjMrnhihZaDuzqWyAedVn4
-	 PH4fiST+cFMbgrE75gnwQsgCKgLm0aP28yhyMh1T7JoXGOQ2q6LBo8N72zHpPHx8QRvqU
-	 jdDB7Hd6Dyi9e+YnNF23RqpjgpdovtfS55A39dDznf0dXlDiopeSxL67fxtfbQ9cEoL/d
-	 YLzIAA5QbjPT++kXZ38dj2WLkRN8PMn97k0zgmR2xHnOkRhfHZraKpj5hjGvXXn1bOcx9
-	 5562WdVJ/QeBQPtBGFVS2Q/gJDcWyJzX5AsDgh7OJ/wBJcLksP8C008OEUkXusD6TBQ==
+	t=1795043966;
+	b=WhPyOJIROzE2Ht/mVqwgsWApfB8C00sRfT5VWiT0gpJ+tzytPI5+igkKo0YZKG6m6A3u
+	 KG980gaIFEUhBPWWdD92R9XVkDZeWlDgs1iz8xqOMIHocPcgxzSBKZDVfnlqBOYmAPODL
+	 WxO0/P8iloJsMxJdlOxK5JO/HR4bhB2caGMHjm489vHMXBJj7z47ictFoTIMlz3Ehkkmr
+	 BWFOQq/FD8MrrjOhf9E7pD7W3SRXSvboYnTYUTOmtug5BH/Wg/L+TQ3ha4dL9zSQE/3pk
+	 4VOtDTOOPdEbq4Bc1ub4QPo6SNkebkCT8U15WccsHFievBPHBXr1SPzWykN7dFfNN1g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043964;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043966;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Qi7+9HisFRayeJU+Dhn36Qw/12Pi+Avk0ukfgzf8vzE=;
-	b=GhSftmKEChIaJA7iv5keBSj4YoP+dimghR4gyP+MbgAihMu3XoJIA+KU/t0A1YxtlEna
-	 TcEpIOQtAhrinYl8W1efaexbY+fdaCn7qFike9o+2FeKNZnJHMwuyhntMMzkpBindyuoR
-	 erd9C+qxRx1kmBy1rn/7Gs2ne7P/RdSqjsPxbPP12uREzi6k9Xa/DEf9BMnpghN4Pqgu2
-	 wGP5bvWB+ypLPSDkfZw2nEza+7NdemN+Ucr0/64+VuzIczgFkT6jQa5r76mWlZ/a8VZGi
-	 5Ckno5GxqjDH1NDfz6AxJtI0SeNS6bEmjw1X2chkIJTYZ9z3Vpuwk1NtnkuoNBXFd/g==
+	bh=FmhQr+RDh94lDpl3I9O6NUxdeHJ9n7bV/2rTOP07Ek0=;
+	b=AF9wZ7PWEsT0jSbS5eiE2arCe0EdZNxH4PsRQWVPfIurWbeeH59n5DkeVQ9ZkdWOFAXh
+	 b+lBA+RfcwPNJAsr4z06qwU0bl+BTMip6BEBFgP1bvKVlQDlFt/r2O4+eyyOGGWitmA9f
+	 ZFP1q7llDT38p1bhP+fEoMx4PiaFh566s+hyMECgNxLpfMpDzsQ6cMBDbwK49xMGT75jn
+	 KEwqv0B8jgRMNduM4tIRDbh0zJQKCz4It7FH63yXuOPhh5873mhbQSPLybsuhhS+0hxP8
+	 VqDmvfKQp2AnjCUiugMI+wr5eOrBxQpay7uT02xmugGFhuhDJmf0trHi0QKKpg12gQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kjIpVMXl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Cm/LdcbA";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072E5606A32C;
-	Wed, 18 Nov 2026 23:19:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B14606A320;
+	Wed, 18 Nov 2026 23:19:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kjIpVMXl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C4641F000C4;
-	Wed, 18 Nov 2026 23:19:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cm/LdcbA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AF1D1F000C4;
+	Wed, 18 Nov 2026 23:19:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043963;
-	bh=Qi7+9HisFRayeJU+Dhn36Qw/12Pi+Avk0ukfgzf8vzE=;
+	s=korg; t=1795043966;
+	bh=FmhQr+RDh94lDpl3I9O6NUxdeHJ9n7bV/2rTOP07Ek0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kjIpVMXlITmPzmmtMaXCe+YUf0GORdk0+upZqAWOcfhoEMWiFR3yGBU5373n5pEMX
-	 rU5KgLcB+YG1S8uRU+OdRUyuVWtSKj8z/ivKxc/sb/YE3UIEFYQzMzyWeBmD/PHEoG
-	 kGALztH2GzkunF7A+FFuxrIwLZKMYjk12bYSEkys=
+	b=Cm/LdcbAofsP3AlxkHaCRF2QYWvzfI/eiOrwOXtydb3qHexpBrI7gt3a62G0IIZYs
+	 2mlkNFEopDyGJFCm1xUVuRNu+Jm30ZWk/4bWbU6ZL2v64eFISfEm5Kz3+yQj615k0S
+	 K6RF/PX+YOBlfm9jneiVIxe4BVPNdEWGs7PttfyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kanala Ramalingeswara Reddy <Kanala.RamalingeswaraReddy@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0397/2857] drm/amdgpu: Skip accessing psp rum time db for APUs
-Date: Wed, 18 Nov 2026 15:23:51 +0100
-Message-ID: <20261118150215.688879869@linuxfoundation.org>
+Subject: [PATCH 6.1 0398/2857] smb: client: pin DFS superblock in iterator callback
+Date: Wed, 18 Nov 2026 15:23:52 +0100
+Message-ID: <20261118150215.722816450@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,40 +68,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kanala Ramalingeswara Reddy <Kanala.RamalingeswaraReddy@amd.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit a26301203a196a991527f7b1ab884d4dd0e7c95e ]
+[ Upstream commit d806d5a85dcbe2a0f181b2f0f9f61ddfbefa1818 ]
 
-Psp runtime DB is for dGPUs only.
+tcon_super_cb() stores a raw superblock pointer, but __cifs_get_super()
+takes its active reference only after iterate_supers_type() has dropped
+s_umount and its passive reference. Concurrent DFS automount expiry can
+therefore free the superblock before cifs_sb_active() uses it.
 
-Signed-off-by: Kanala Ramalingeswara Reddy <Kanala.RamalingeswaraReddy@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit dce8195027f146467c9378efb2bb1b0859cb735e)
+A deterministic KASAN test reproduces the race as:
+
+  BUG: KASAN: slab-use-after-free in cifs_sb_active+0x77/0x80
+
+The same test passes with this change applied.
+
+Take the active reference in the callback while iterate_supers_type()
+still holds s_umount shared. cifs_put_tcp_super() remains the matching
+release.
+
+Fixes: bacd704a95ad ("cifs: handle prefix paths in reconnect")
 Cc: stable@vger.kernel.org
-[ sashal: Adjusted context: the early APU return is inserted after the local declarations, since this tree's function lacks the MP0 13.0.6 check the upstream hunk used as context. ]
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+[ sashal: Applied the fix to tcp_super_cb() and its tcp_super match condition, since tcon_super_cb() and its DFS matching logic don't exist in this tree. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/smb/client/misc.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-index b489a97ba4ce2..c44c24c24bdf8 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-@@ -266,6 +266,12 @@ static bool psp_get_runtime_db_entry(struct amdgpu_device *adev,
- 	bool ret = false;
- 	int i;
+diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
+index fb841235617c1..0dd57b5d6a0ab 100644
+--- a/fs/smb/client/misc.c
++++ b/fs/smb/client/misc.c
+@@ -1379,8 +1379,14 @@ static void tcp_super_cb(struct super_block *sb, void *arg)
  
-+	/*
-+	 * Runtime DB is for dGPUs only.
-+	 */
-+	if (adev->flags & AMD_IS_APU)
-+		return false;
-+
- 	db_header_pos = adev->gmc.mc_vram_size - PSP_RUNTIME_DB_OFFSET;
- 	db_dir_pos = db_header_pos + sizeof(struct psp_runtime_data_header);
+ 	cifs_sb = CIFS_SB(sb);
+ 	tcon = cifs_sb_master_tcon(cifs_sb);
+-	if (tcon->ses->server == server)
++	if (tcon->ses->server == server) {
++		/*
++		 * Take the active reference while iterate_supers_type() still
++		 * holds s_umount shared.
++		 */
++		cifs_sb_active(sb);
+ 		sd->sb = sb;
++	}
+ }
  
+ static struct super_block *__cifs_get_super(void (*f)(struct super_block *, void *),
+@@ -1396,15 +1402,8 @@ static struct super_block *__cifs_get_super(void (*f)(struct super_block *, void
+ 
+ 	for (; *fs_type; fs_type++) {
+ 		iterate_supers_type(*fs_type, f, &sd);
+-		if (sd.sb) {
+-			/*
+-			 * Grab an active reference in order to prevent automounts (DFS links)
+-			 * of expiring and then freeing up our cifs superblock pointer while
+-			 * we're doing failover.
+-			 */
+-			cifs_sb_active(sd.sb);
++		if (sd.sb)
+ 			return sd.sb;
+-		}
+ 	}
+ 	return ERR_PTR(-EINVAL);
+ }
 -- 
 2.53.0
 
