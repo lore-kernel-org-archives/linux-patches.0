@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058009;
-	b=muBj+FmfzQXwCRrtxUa7y5Njqg11ooUJxYkp2B1+k3j1N6xqZzlQjvs0jhCUzR2WlZzB
-	 VNfj9ODKtjlSvQrxx3W8NI4hNRBOKlGmoQJw4iO8OHKc09OGXy+UhZqf/3nJnXquaUK2z
-	 7AB1aBw+OsKmsTf8c07yF4ynb3lWc5c2bOJSQUGUpZoVRjmJyXFm0wLZ/xYVxJjP4++Oa
-	 e0oZ14o+wysoCvWa3rnV68kO8Ouu9/OeWCkt6D699hwmmmvk/ogPdlP7VVR1CSmApJgWB
-	 nZ6HPkRmBpCqOZ+VMWHkE6mNNDzXZ9XcAyuTuqxxsZIgNNnJ+UdTWmRt5DenkCu2y9g==
+	t=1795058012;
+	b=ZGw7VqsSeQSzI2+Ua5bDUDskp0XUi4B/KNPPq6JIYrit4+gzaunR6N5PbyOr0gWMgQb8
+	 2lO+Y0WEKxmg7RcpXPeC/GA2DL9rJ7NEEa6blI/9KsI800BdAEeLPBLlkZnbVI2zZ/HF9
+	 /tr4ToV7lHFemzrRa+bCS4rD6yO5i07q1UPgba7md3VWbdyfdyHUzfvEaC29iL30VUka+
+	 BlcpshUy1P1HGgMQ0pyFyNbwQdnvGLwXVH9LUgu+XK8dD6KfJiA2ZJsorJgZA5Gh8Zc/Q
+	 +Bw7k9Hzv7Za896PaEH8J1zdy1CMTXbWCPvZEalCgwS4M+05tBPF8lPXs3CNKgMzskw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058009;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058012;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qr49h0vKLoaoDHLtNFl1df6PIg3Op3n/0zuT3csKQ3g=;
-	b=Fg6l/zPO1v8jYcdvzSUsAvYLy0H8o+1pVHiXPVRnz+ifnAPhPe55QE+7xa+RU3yIpWtO
-	 1O1O15PAcXdCHhU05gPVnJrwBLLzCdLiqQZDJBks1xekPzkEImaZtUtcUl3iEEFe1ZGNC
-	 JH5i2H5eHFHrbk7PJFd36hsTCQpTbKTnD7QaW3CvACOWemd39RT1zxPushgBb9IWw1SKz
-	 ltpToAsfOU9DC46Qcv6yjh2iZaACH78qFevZHE2aM04SDiUQ0l9KdQdfoHmhl2ocv4dL5
-	 tvan2ZvC8Lx6YYvyYy0Z4ymWvirBzgzaDtVMafaFMa1oV8rayfeVZmIQi648KLw7lzA==
+	bh=FRHe9UDLVP+LBEm/2lW+7dcOwKm+iJOfKQMFVMefr3Y=;
+	b=Yygry/UI5QAQxLuNxLyAsujJNE9+IhuehorvGE1nbaWd/On038XbRiU8AB10IoQNNffS
+	 IBba6gAaZecT7EH9gf20IEZehUoSSi1o4AEV6Q10xBJYuR+13wRXUINygYC9ks6hBCcCZ
+	 fG9bN+RUymKkPzchozobNSQaooRV7NDR3IvK4Gr8V6DoeE/C2K7Ss45tnv1g6L14UtY2z
+	 Vn9uy4916ZzO9Qx7W+IBqUOgm1vLSmueWjzfsRhT3GXEnA+y5ZWzZ5e5DLvtDNMJpHZqu
+	 P8tDs3ruKGgogc/qS4royNCFtiUiXC4R+4DBdhxrhjwL+lusILF1Subb6m51nlbD78A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SFQm1EB5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ujy2jJT+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3BA606A32A;
-	Thu, 19 Nov 2026 03:13:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D3E8606A31C;
+	Thu, 19 Nov 2026 03:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SFQm1EB5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76A921F000C4;
-	Thu, 19 Nov 2026 03:13:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ujy2jJT+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BE741F000C4;
+	Thu, 19 Nov 2026 03:13:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058009;
-	bh=qr49h0vKLoaoDHLtNFl1df6PIg3Op3n/0zuT3csKQ3g=;
+	s=korg; t=1795058011;
+	bh=FRHe9UDLVP+LBEm/2lW+7dcOwKm+iJOfKQMFVMefr3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SFQm1EB5Ec7SmuBnsioCUPxmP2rgZO/1paeQTDrVjxPnC16UvycJuldok98cza37S
-	 N7e4ubCowOgaPGVJUjAuUbWIkj0wIQ5BMHsO8ee+p6vKrbPaQ54Q5yYxilgMpsB1j4
-	 2cg08HlHKhZrZ8GL3UtC3DF0EDBc7fHxg7OlAf4E=
+	b=Ujy2jJT+uIZBd5RyS61Zpq4kCmuikCXT8stwaUiEz16iTgCvLJDWlFykmoPDWN0Rh
+	 mJfYY9Zu2F0sv0dHxpjHeWWJ/Gj3xdQMw81kR/lNyezKEJ9rvTYVXPqri1Enl7p+B/
+	 VzqmjHPW6Zzgb+vheiVN+Bit60HifpkBXU6QZZ8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0333/1848] smb: client: fix warning in CIFSFindFirst()
-Date: Wed, 18 Nov 2026 15:39:31 +0100
-Message-ID: <20261118145926.186514788@linuxfoundation.org>
+Subject: [PATCH 5.10 0334/1848] smb: client: fix warning in CIFSFindNext()
+Date: Wed, 18 Nov 2026 15:39:32 +0100
+Message-ID: <20261118145926.272966527@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,11 +70,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 032137fe136a6073dcc699ee15fa3fd05fd77f21 ]
+[ Upstream commit 215533f888dcf18f7cfbbf520bdd52e67ac6265a ]
 
 This fixes the following warning reported by kernel test robot
 
-  fs/smb/client/cifssmb.c:4089 CIFSFindFirst() warn: missing error
+  fs/smb/client/cifssmb.c:4216 CIFSFindNext() warn: missing error
   code? 'rc'
 
 Link: https://lore.kernel.org/all/202306170124.CtQqzf0I-lkp@intel.com/
@@ -83,131 +83,157 @@ Signed-off-by: Steve French <stfrench@microsoft.com>
 Stable-dep-of: 59131dd72f62 ("smb: client: fix use-after-free infoleak via the readdir resume name")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/cifssmb.c | 94 +++++++++++++++++++++--------------------------
- 1 file changed, 42 insertions(+), 52 deletions(-)
+ fs/cifs/cifssmb.c | 111 +++++++++++++++++++++-------------------------
+ 1 file changed, 51 insertions(+), 60 deletions(-)
 
 diff --git a/fs/cifs/cifssmb.c b/fs/cifs/cifssmb.c
-index 67ff1669cab2a..7712ba6d0dee7 100644
+index 7712ba6d0dee7..7f0839d5c6db7 100644
 --- a/fs/cifs/cifssmb.c
 +++ b/fs/cifs/cifssmb.c
-@@ -4441,11 +4441,12 @@ CIFSFindFirst(const unsigned int xid, struct cifs_tcon *tcon,
- 	TRANSACTION2_FFIRST_REQ *pSMB = NULL;
- 	TRANSACTION2_FFIRST_RSP *pSMBr = NULL;
- 	T2_FFIRST_RSP_PARMS *parms;
+@@ -4592,11 +4592,12 @@ int CIFSFindNext(const unsigned int xid, struct cifs_tcon *tcon,
+ 	TRANSACTION2_FNEXT_REQ *pSMB = NULL;
+ 	TRANSACTION2_FNEXT_RSP *pSMBr = NULL;
+ 	T2_FNEXT_RSP_PARMS *parms;
+-	char *response_data;
 -	int rc = 0;
-+	struct nls_table *nls_codepage;
+-	int bytes_returned;
+ 	unsigned int name_len;
 +	unsigned int lnoff;
-+	__u16 params, byte_count;
- 	int bytes_returned = 0;
- 	int name_len, remap;
--	__u16 params, byte_count;
--	struct nls_table *nls_codepage;
+ 	__u16 params, byte_count;
++	char *response_data;
++	int bytes_returned;
 +	int rc = 0;
  
- 	cifs_dbg(FYI, "In FindFirst for %s\n", searchName);
+ 	cifs_dbg(FYI, "In FindNext\n");
  
-@@ -4536,63 +4537,52 @@ CIFSFindFirst(const unsigned int xid, struct cifs_tcon *tcon,
- 			 (struct smb_hdr *) pSMBr, &bytes_returned, 0);
- 	cifs_stats_inc(&tcon->stats.cifs_stats.num_ffirst);
- 
--	if (rc) {/* BB add logic to retry regular search if Unix search
--			rejected unexpectedly by server */
--		/* BB Add code to handle unsupported level rc */
-+	if (rc) {
-+		/*
-+		 * BB: add logic to retry regular search if Unix search rejected
-+		 * unexpectedly by server.
-+		 */
-+		/* BB: add code to handle unsupported level rc */
- 		cifs_dbg(FYI, "Error in FindFirst = %d\n", rc);
--
- 		cifs_buf_release(pSMB);
--
--		/* BB eventually could optimize out free and realloc of buf */
--		/*    for this case */
-+		/*
-+		 * BB: eventually could optimize out free and realloc of buf for
-+		 * this case.
-+		 */
- 		if (rc == -EAGAIN)
- 			goto findFirstRetry;
--	} else { /* decode response */
--		/* BB remember to free buffer if error BB */
+@@ -4641,8 +4642,8 @@ int CIFSFindNext(const unsigned int xid, struct cifs_tcon *tcon,
+ 		pSMB->ResumeFileName[name_len] = 0;
+ 		pSMB->ResumeFileName[name_len+1] = 0;
+ 	} else {
+-		rc = -EINVAL;
+-		goto FNext2_err_exit;
++		cifs_buf_release(pSMB);
++		return -EINVAL;
+ 	}
+ 	byte_count = params + 1 /* pad */ ;
+ 	pSMB->TotalParameterCount = cpu_to_le16(params);
+@@ -4653,71 +4654,61 @@ int CIFSFindNext(const unsigned int xid, struct cifs_tcon *tcon,
+ 	rc = SendReceive(xid, tcon->ses, (struct smb_hdr *) pSMB,
+ 			(struct smb_hdr *) pSMBr, &bytes_returned, 0);
+ 	cifs_stats_inc(&tcon->stats.cifs_stats.num_fnext);
++
+ 	if (rc) {
++		cifs_buf_release(pSMB);
+ 		if (rc == -EBADF) {
+ 			psrch_inf->endOfSearch = true;
+-			cifs_buf_release(pSMB);
+ 			rc = 0; /* search probably was closed at end of search*/
+-		} else
++		} else {
+ 			cifs_dbg(FYI, "FindNext returned = %d\n", rc);
+-	} else {                /* decode response */
 -		rc = validate_t2((struct smb_t2_rsp *)pSMBr);
+-
 -		if (rc == 0) {
 -			unsigned int lnoff;
 -
+-			/* BB fixme add lock for file (srch_info) struct here */
 -			if (pSMBr->hdr.Flags2 & SMBFLG2_UNICODE)
 -				psrch_inf->unicode = true;
 -			else
 -				psrch_inf->unicode = false;
--
--			psrch_inf->ntwrk_buf_start = (char *)pSMBr;
+-			response_data = (char *) &pSMBr->hdr.Protocol +
+-			       le16_to_cpu(pSMBr->t2.ParameterOffset);
+-			parms = (T2_FNEXT_RSP_PARMS *)response_data;
+-			response_data = (char *)&pSMBr->hdr.Protocol +
+-				le16_to_cpu(pSMBr->t2.DataOffset);
+-			if (psrch_inf->smallBuf)
+-				cifs_small_buf_release(
+-					psrch_inf->ntwrk_buf_start);
+-			else
+-				cifs_buf_release(psrch_inf->ntwrk_buf_start);
+-			psrch_inf->srch_entries_start = response_data;
+-			psrch_inf->ntwrk_buf_start = (char *)pSMB;
 -			psrch_inf->smallBuf = false;
--			psrch_inf->srch_entries_start =
--				(char *) &pSMBr->hdr.Protocol +
--					le16_to_cpu(pSMBr->t2.DataOffset);
--			parms = (T2_FFIRST_RSP_PARMS *)((char *) &pSMBr->hdr.Protocol +
--			       le16_to_cpu(pSMBr->t2.ParameterOffset));
--
 -			if (parms->EndofSearch)
 -				psrch_inf->endOfSearch = true;
 -			else
 -				psrch_inf->endOfSearch = false;
-+		return rc;
-+	}
-+	/* decode response */
-+	rc = validate_t2((struct smb_t2_rsp *)pSMBr);
-+	if (rc) {
-+		cifs_buf_release(pSMB);
-+		return rc;
-+	}
- 
 -			psrch_inf->entries_in_buffer =
--					le16_to_cpu(parms->SearchCount);
--			psrch_inf->index_of_last_entry = 2 /* skip . and .. */ +
+-						le16_to_cpu(parms->SearchCount);
+-			psrch_inf->index_of_last_entry +=
 -				psrch_inf->entries_in_buffer;
 -			lnoff = le16_to_cpu(parms->LastNameOffset);
 -			if (CIFSMaxBufSize < lnoff) {
 -				cifs_dbg(VFS, "ignoring corrupt resume name\n");
 -				psrch_inf->last_entry = NULL;
 -				return rc;
--			}
+-			} else
+-				psrch_inf->last_entry =
+-					psrch_inf->srch_entries_start + lnoff;
+-
+-/*  cifs_dbg(FYI, "fnxt2 entries in buf %d index_of_last %d\n",
+-    psrch_inf->entries_in_buffer, psrch_inf->index_of_last_entry); */
+-
+-			/* BB fixme add unlock here */
+ 		}
++		return rc;
++	}
+ 
++	/* decode response */
++	rc = validate_t2((struct smb_t2_rsp *)pSMBr);
++	if (rc) {
++		cifs_buf_release(pSMB);
++		return rc;
+ 	}
++	/* BB fixme add lock for file (srch_info) struct here */
 +	psrch_inf->unicode = !!(pSMBr->hdr.Flags2 & SMBFLG2_UNICODE);
-+	psrch_inf->ntwrk_buf_start = (char *)pSMBr;
-+	psrch_inf->smallBuf = false;
-+	psrch_inf->srch_entries_start = (char *)&pSMBr->hdr.Protocol +
++	response_data = (char *)&pSMBr->hdr.Protocol +
++		le16_to_cpu(pSMBr->t2.ParameterOffset);
++	parms = (T2_FNEXT_RSP_PARMS *)response_data;
++	response_data = (char *)&pSMBr->hdr.Protocol +
 +		le16_to_cpu(pSMBr->t2.DataOffset);
  
--			psrch_inf->last_entry = psrch_inf->srch_entries_start +
--							lnoff;
-+	parms = (T2_FFIRST_RSP_PARMS *)((char *)&pSMBr->hdr.Protocol +
-+					le16_to_cpu(pSMBr->t2.ParameterOffset));
-+	psrch_inf->endOfSearch = !!parms->EndofSearch;
+-	/* BB On error, should we leave previous search buf (and count and
+-	last entry fields) intact or free the previous one? */
++	if (psrch_inf->smallBuf)
++		cifs_small_buf_release(psrch_inf->ntwrk_buf_start);
++	else
++		cifs_buf_release(psrch_inf->ntwrk_buf_start);
  
--			if (pnetfid)
--				*pnetfid = parms->SearchHandle;
--		} else {
--			cifs_buf_release(pSMB);
--		}
+-	/* Note: On -EAGAIN error only caller can retry on handle based calls
+-	since file handle passed in no longer valid */
+-FNext2_err_exit:
+-	if (rc != 0)
+-		cifs_buf_release(pSMB);
+-	return rc;
++	psrch_inf->srch_entries_start = response_data;
++	psrch_inf->ntwrk_buf_start = (char *)pSMB;
++	psrch_inf->smallBuf = false;
++	psrch_inf->endOfSearch = !!parms->EndofSearch;
 +	psrch_inf->entries_in_buffer = le16_to_cpu(parms->SearchCount);
-+	psrch_inf->index_of_last_entry = 2 /* skip . and .. */ +
-+		psrch_inf->entries_in_buffer;
++	psrch_inf->index_of_last_entry += psrch_inf->entries_in_buffer;
 +	lnoff = le16_to_cpu(parms->LastNameOffset);
 +	if (CIFSMaxBufSize < lnoff) {
 +		cifs_dbg(VFS, "ignoring corrupt resume name\n");
 +		psrch_inf->last_entry = NULL;
 +	} else {
-+		psrch_inf->last_entry = psrch_inf->srch_entries_start + lnoff;
-+		if (pnetfid)
-+			*pnetfid = parms->SearchHandle;
- 	}
--
--	return rc;
++		psrch_inf->last_entry =
++			psrch_inf->srch_entries_start + lnoff;
++	}
++	/* BB fixme add unlock here */
++
++	/*
++	 * BB: On error, should we leave previous search buf
++	 * (and count and last entry fields) intact or free the previous one?
++	 *
++	 * Note: On -EAGAIN error only caller can retry on handle based calls
++	 * since file handle passed in no longer valid.
++	 */
 +	return 0;
  }
  
- int CIFSFindNext(const unsigned int xid, struct cifs_tcon *tcon,
+ int
 -- 
 2.53.0
 
