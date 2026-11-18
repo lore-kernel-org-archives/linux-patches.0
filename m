@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046528;
-	b=ZXB6q0EpK/9UvKGpINRd9Mb4a3vL/JBgz2kp+Jjo/Bb6Nw4EulZbXOvlJjO0B40CtX3L
-	 YXVaawILawdwW6G62J091ZkbEwFqT88xealu+iaKc916RUi2TPzGWycJbi4PF59antviH
-	 lLxj02NBwS8LlGcor0ZZDy9su/atc2IE2OgkFljPJK3sqTzKsz52ryysJSFeKUA5SmHvs
-	 5YKGq+86J3OG+bla6DCejhLmPc5n7OSd+5XfBrYm9Hd6uGtFFYIUO1ekc24yL0Gr31nvV
-	 xQheaqqvi+NFVfnfL+bQPYkErgIR2vO3pbCLW93SLuH6yNYaYw+5Lwbl3oyhXPoCUFA==
+	t=1795046530;
+	b=pjUx7LflfBD7LgFhGwTBSOjc+ZL35zHzo1h4IM8pfGchRc+JhhRZCfuGnfwfofymGfJo
+	 l6+i/sd8LgrF0cE/8RDYfCgu3iM1hn9CYVmSD7VLG12jmMg4HOtKIeQ5vbhXV+42DqhiI
+	 v24RTUCPs5G/GJ+1pWDwikqJogoYMC8KMeSu9clrxc3bK25kYvBWACr0r9P/4Ku2eUBEB
+	 6RwVwisU6t0Xtvk7Y2GtsGvcwm2otam13as7klp0ziP9zMzCwVPnOXdfbrz7NgLImiBGl
+	 n6ZTTKw2j5nxhcbOdZkxIu7T0r5uFI2sIgCil9vAWYNOwSVn4LQi3aGJwXybBFavkgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046528;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046530;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vkZxIz8F8dSatHa40gapsMm4NMfBx5poBEYHMWf34jc=;
-	b=uHTI8rBakNFmLcaymQTOzHu7JCAfENdvGU4KnzOZP6vWgFSqohBM0wPy3vujNs+MEBIb
-	 V7KCSDPtxjEUFznZMfOlZzSJzuRwQ7tWRDPWow2oIJdZrjpkQoX+m7oiMZ0rvgyLH/v1o
-	 98gvNhh8R1dQvl+FtEmbHGYwG0TOtFtwY5PZbYnYslY+6tQVx1DFV2NdW1VHuo6eTovFZ
-	 Mxp/7hcK2tLOZIaouLgdV6V2QytcVyO1NKaXLyr3D8WSoqd/94o71TpjVLTddLIb4h0Uu
-	 SCdgudpnmw+r+qnhGlpy8srfOdxCTwmKC30ziJptoHHEhtEjXBJweT/KFIjT3tkn9nw==
+	bh=LtyDzq7beStkrefqiP0d4zA7ql+fjvMOoN89GfOrg4Q=;
+	b=emOZQgt8HFkPn+D4GG2U5dqZlNtAeScIFFjJM0JLYqeIcfii+SWFSOfh174igLEIY83R
+	 N/t6Kde6BsGVrTBRIcXMVf9C3KD9oyHwoE6HX7DOCPHLjbHP13ZbgmDfchDyilp5Pgt/S
+	 KuapGSVCB1Ob4+dA8AolhyCNXHoYRFZd0u0qNbDQK1fZrz+4SeT9pkalUI3q3M3AblFun
+	 5RZ1O2FIYYSpBiL9O4ObUBvGwBap5j+Pxhx+hlqdP+TKoqfqyQaeSapeQ7nvLkRuwc0q0
+	 2XAE4Aq4BYufkV9hxluwtG8bhsBJIZWOojqLdLgrDxPIT+/rDJIIq3IYfzPhzcPEQgg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h4ZeyVFc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DF+1ti0n;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16D4560A6F51;
-	Thu, 19 Nov 2026 00:02:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F9460A263C;
+	Thu, 19 Nov 2026 00:02:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h4ZeyVFc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B9CA1F000CC;
-	Thu, 19 Nov 2026 00:02:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DF+1ti0n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF5D1F000C7;
+	Thu, 19 Nov 2026 00:02:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046527;
-	bh=vkZxIz8F8dSatHa40gapsMm4NMfBx5poBEYHMWf34jc=;
+	s=korg; t=1795046530;
+	bh=LtyDzq7beStkrefqiP0d4zA7ql+fjvMOoN89GfOrg4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h4ZeyVFcBpajbfZATgKaeaZcUmpoCNF6DMdZ2vkPb1KBW6ajzEtKhyDqDhg15uIdx
-	 W9tF7BkLWYVhoZDhPy8S/8wQFqX85QFL6v7OT4Yi/YUA0+yv5TmTPRW8oUKOc+JrDT
-	 JH3B+FyLOp9+zhFYEZunkoZJfLIKZwuLvsSVbkK4=
+	b=DF+1ti0nNP0Vo+6Wbkk0ZHo5mJty92FQx7PXDZHNP/iKf0LRyG1CHeufMHrQbWAyi
+	 WsAYH8iXqKW20RYcHa1xnQO+XbxFansrCjJxylusa0b3kPe5HMBi8V9pOOhHBUe78K
+	 gED4VHsdy+hPuFJi9mzqeW16aVibKPXdhBwQWJnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shao Mingyin <shao.mingyin@zte.com.cn>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Danish Khateeb <danishkhateeb03@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1313/2857] nvmet: bound the traddr and trsvcid configfs writes
-Date: Wed, 18 Nov 2026 15:39:07 +0100
-Message-ID: <20261118150248.733217668@linuxfoundation.org>
+Subject: [PATCH 6.1 1314/2857] perf/core: Dont send SIGTRAP after exec removed the event
+Date: Wed, 18 Nov 2026 15:39:08 +0100
+Message-ID: <20261118150248.768502836@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,61 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shao Mingyin <shao.mingyin@zte.com.cn>
+From: Danish Khateeb <danishkhateeb03@gmail.com>
 
-[ Upstream commit cf399d4abbeddc317f8160a79fefb4016c469862 ]
+[ Upstream commit 6f083fbccd5f06889bc08e1182bd02c0383b9121 ]
 
-nvmet_addr_traddr_store() and nvmet_addr_trsvcid_store() reject a write
-only when count is larger than NVMF_TRADDR_SIZE (256) respectively
-NVMF_TRSVCID_SIZE (32).  A write of exactly that many characters is
-accepted, and the following
+A sigtrap event must also set remove_on_exec, so that its SIGTRAP never
+reaches a program after exec. But the signal is sent from task work,
+which only runs on the way back to user space. If the event overflows
+shortly before execve(), the task work can still be pending when the
+task enters execve(), and then runs when execve() returns. By then
+perf_event_exec() has removed the event and the new program has default
+signal handlers, so the SIGTRAP kills it.
 
-	sscanf(page, "%s\n", port->disc_addr.traddr)
+The exec_stress test in the remove_on_exec selftest catches this and
+fails about half the time in a VM. A process that opens a sigtrap event
+on itself and then calls execve() is killed by SIGTRAP in 15% to 50% of
+runs, both on an AMD machine running v7.2 and in a VM, with or without
+close-on-exec on the event fd.
 
-has no field width.  configfs terminates the buffer at page[count], so
-the scan writes 256 characters plus the trailing NUL, i.e. 257 bytes,
-into traddr[256].  The extra byte lands in the following tsas field of
-the discovery log entry, silently clearing the first TSAS byte (the
-RDMA queue type, or the TLS section type for TCP).  trsvcid has the
-same off-by-one with a 32-byte write; there the extra byte lands in
-the reserved bytes that follow trsvcid.
+Commit ffb684f2aa14 ("perf: Fix race between perf_event_exit_task() and
+perf_pending_task()") made perf_sigtrap() return once
+perf_event_exit_task() has set ctx->task to TASK_TOMBSTONE. Exec only
+calls perf_event_exit_task() when the new program is not dumpable, such
+as a setuid one. An ordinary exec keeps the context and only removes the
+remove_on_exec events, so the SIGTRAP is still sent.
 
-Limit the scans to one byte less than the destination arrays.  The
-count checks can stay as they are so that a normal newline-terminated
-write is still accepted.
+perf_event_exit_event() sets PERF_EVENT_STATE_EXIT when exec removes the
+event. If the event fd is close-on-exec and was the last reference to
+the file, exec also queues the file release as task work. Task work runs
+newest first, so perf_release() runs before the SIGTRAP work and moves
+the event on to PERF_EVENT_STATE_DEAD. So don't send the signal when the
+event state is PERF_EVENT_STATE_EXIT or lower, which means the event has
+been removed. That also covers PERF_EVENT_STATE_REVOKED, where the PMU
+is gone.
 
-Fixes: 9ba2a5cb8896 ("nvmet: filter newlines from user input")
+Fixes: 97ba62b27867 ("perf: Add support for SIGTRAP on perf events")
+Assisted-by: LLM
+Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Shao Mingyin <shao.mingyin@zte.com.cn>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Link: https://patch.msgid.link/20261015152013.106040-1-danishkhateeb03@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/configfs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/events/core.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
-index 88e6adc54dcbc..c966d1e3a1354 100644
---- a/drivers/nvme/target/configfs.c
-+++ b/drivers/nvme/target/configfs.c
-@@ -146,7 +146,7 @@ static ssize_t nvmet_addr_traddr_store(struct config_item *item,
- 	if (nvmet_is_port_enabled(port, __func__))
- 		return -EACCES;
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 1e9d9b77c10e2..ca5009e11b022 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -6586,6 +6586,15 @@ static void perf_sigtrap(struct perf_event *event)
+ 	if (event->ctx->task == TASK_TOMBSTONE)
+ 		return;
  
--	if (sscanf(page, "%s\n", port->disc_addr.traddr) != 1)
-+	if (sscanf(page, "%255s", port->disc_addr.traddr) != 1)
- 		return -EINVAL;
- 	return count;
- }
-@@ -220,7 +220,7 @@ static ssize_t nvmet_addr_trsvcid_store(struct config_item *item,
- 	if (nvmet_is_port_enabled(port, __func__))
- 		return -EACCES;
- 
--	if (sscanf(page, "%s\n", port->disc_addr.trsvcid) != 1)
-+	if (sscanf(page, "%31s", port->disc_addr.trsvcid) != 1)
- 		return -EINVAL;
- 	return count;
- }
++	/*
++	 * The event was removed after this signal was queued, e.g. by exec()
++	 * (remove_on_exec), which may also have closed its fd (close-on-exec).
++	 * The new program has default signal handlers, so a SIGTRAP would
++	 * kill it.
++	 */
++	if (READ_ONCE(event->state) <= PERF_EVENT_STATE_EXIT)
++		return;
++
+ 	/*
+ 	 * We'd expect this to only occur if the irq_work is delayed and either
+ 	 * ctx->task or current has changed in the meantime. This can be the
 -- 
 2.53.0
 
