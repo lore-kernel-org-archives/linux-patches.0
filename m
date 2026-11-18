@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027196;
-	b=zXDjHsTAUbuNFJwrAVONJxUSHPYUxyAcJvHqxEkuOdO04iXY0+szL+4HvFvS/PHg9pNh
-	 SQX/DR6k4kWjYUeiKMuI5tnIxSTZvJj3POOhevR5MhSuTAPpdz11ub3YPZEOgQXEev1iJ
-	 W91xW/xXadDijclXlAX4kOXj3E86HDjod35g6mRplm7kLy9d7s2Y9hIGvr2e0X75imK6l
-	 83TqUaWHhVohW4MiYtd6pJeKSTNwm5ZECLBb1xekrkY828lymXKjv2iEpDVJgtgwk+t12
-	 n5+6gDWLftlozJkKJMfUyskv+p2TbmG5ej0RUzW7dy+HYIIa7dUzlVGkhVDfqG/eM6w==
+	t=1795027199;
+	b=r2EpJqwfdQLNQqqpc0TQAabR5v4YYKipGY0MbXn9CKV1+Y33KyICFiKjEuoa+WRR6xvs
+	 Co/9q+2D+BGydiYHLsAWbR5UABhDjGlBryKXRn1GNWMm2KFACLbwZHiPeLGN69ajxm3I7
+	 Y7vLkgKVvirsRTEwXnvk051I3tmjCvYskDhDoERoKrvKhpaAyuh482G+9WYuVF8BTghEa
+	 KymTkJKWO2fnVKt0HD8XwwADtT70UeMFkVtMxRPAcGLKu17aMBzteE12kc5pN8iT4fPb+
+	 GsUigzGuj6zSbmm5OS8UAoDCXe0lJJgBNe5y9O/ZtX3Bm4TFp9BB6xWmUsJT11UWqEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027196;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027199;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZNEZsNHl1VFrElMSEWNJI6Szdid+ZfOSXhRzaygNxdM=;
-	b=Sh7LmYF2kKg6ee+PY9prlxHLc2xJ38DuMtRoGsnTNBHLfkRXlaCnL1rA12rzwuhIb8yl
-	 UD2khwBeNMfosek0WcvtNEzux+p4L/nLv1nrEMdVsdsyIE8TYFwIHQgYPdxnCjkyf9+5H
-	 Rw1VQtTDnfyjO84/eT0YHiJADBT95WLHv+LunzXTjDurbCD/XTg7t3FM+eWx+WR2bYkE1
-	 XStGHsk9Vw8zMYajJfPN0xaI03ZguBsCnUAfE7Fa63WC58JQnGFTjn9UcbUxlfXYxVvYi
-	 8SBGBSgBFZBmUsuv7td91+5A0sqsux96SAAjMX39ZddoJsAJFwYbp435ZAnPYMhLddw==
+	bh=JYZhh14MXzujALtE0BkbPMZPqJhncGvqon8zg2G9jSM=;
+	b=PtINEiDg1cmD3jb+SEmcoswDSTEnbVU8MnKY/s3875Cmv+HB6ePv7mx6iuc9kJBbua57
+	 CSQh8wnNDUkIDIBxMOHWbAmHRA//FjLpdlIQYhreO2ha/pU4a/fkB4owGSM1/uzGoUfHG
+	 vfkqDncnqMvAxRSmrW/B9f5g42baDYKfTybQQ5sTsuF6pKHrJWOisaGHd4budvwbNh7xY
+	 IGP+FWrs0lFDCTD5xLF89j8GPjjdoMd9Ik8e4oXHBhXpvmBiJf0C19u9m82rgTc607wCo
+	 BBBofY4uDlt/eFmYGCqTBiw612t8u8eNzfvNgNVlym69VZNh4THQVhp3l8eG1lP7qtA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aSwId1EP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MkMyPLGC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81802606A31C;
-	Wed, 18 Nov 2026 18:39:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B410606A31C;
+	Wed, 18 Nov 2026 18:39:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aSwId1EP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE491F000C4;
-	Wed, 18 Nov 2026 18:39:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MkMyPLGC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA1B1F000C4;
+	Wed, 18 Nov 2026 18:39:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027196;
-	bh=ZNEZsNHl1VFrElMSEWNJI6Szdid+ZfOSXhRzaygNxdM=;
+	s=korg; t=1795027199;
+	bh=JYZhh14MXzujALtE0BkbPMZPqJhncGvqon8zg2G9jSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aSwId1EPxrZ8shiSBcAmd7MhydtZF91Z/TXxSRCSCnrgVOcfrSTw73S8KQm0ZqWu6
-	 84v3dKCErMHDzvV8Ubj3EH7+53wwSd5srXjr/WfR1dPP0Zz/O8lo+coI2cgbrDP8kH
-	 cs4E4hIcFZHQQdku1BUxH9PX7ygjU/YtppdAAetU=
+	b=MkMyPLGCGgZPklnvl52BX5xPHTvjlRFn7oXNYlTtReVWf6c9XUhrR5C9e/CexicgG
+	 Jza8R24S1tOHlg6wvuGkFZ8vKWjAdD1lmbDIPcwW/F1wMOAG2Ona/yCumrDahy/nhe
+	 GX5PGKL5l5EyvpQj6iSBGgKGoVbuJX/1j5kLPgds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ivan Vecera <ivecera@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1705/2151] dpll: zl3073x: reject inexact frequencies for N-divided outputs
-Date: Wed, 18 Nov 2026 15:57:20 +0100
-Message-ID: <20261118150223.928354532@linuxfoundation.org>
+Subject: [PATCH 6.18 1706/2151] dpll: zl3073x: reject output frequencies with too small divisor
+Date: Wed, 18 Nov 2026 15:57:21 +0100
+Message-ID: <20261118150223.963042527@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,110 +71,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Ivan Vecera <ivecera@redhat.com>
 
-[ Upstream commit f8993627d3101de0833022ac88083ac0147aae7d ]
+[ Upstream commit 456027325c9cd2be94229687f2c412ae6f351bd8 ]
 
-For N-divided outputs the P-pin and N-pin share the output divisor and
-the N-pin frequency is synth_freq / (div * esync_n_period). The frequency
-set helper computed esync_n_period with a truncating division and only
-rejected a zero result, so a frequency that does not divide evenly was
-silently rounded. Setting the P-pin could then shift the N-pin frequency
-too (e.g. 600 MHz synth, div=60, period=10 gives P=10 MHz, N=1 MHz;
-setting P to 2.5 MHz moves N to 1.25 MHz). When setting the P-pin, the
-product esync_n_period * div used for the rescale was computed in 32
-bits and could wrap, so a wrong N divider was stored for low N-pin
-frequencies.
+The output divisor has to be at least 2: a divisor of 1 bypasses the
+divider and the hardware then ignores the pulse width and eSync
+registers. For the N-pin of an N-divided output the N divider (>= 2)
+applies on top, so its effective divisor has to be at least 4.
 
-Require esync_n_period >= 2 so the N-pin frequency stays below the P-pin
-one, reject a P-pin frequency for which the esync_n_period keeping the
-N-pin frequency does not fit into 32 bits, and check the division
-remainder and reject the request if it is not exact.
+zl3073x_pin_check_freq() only checked that the frequency divides the
+synth frequency. Require also the minimum divisor. For N-divided
+outputs this is necessary but not sufficient, the rest is checked by
+the frequency set callback.
 
-Found by code inspection, not triggered at runtime.
+Hit during development: an N-pin frequency that needs an N divider of 1
+was accepted, and with esync_n_period = 1 the N-pin produced no output
+on an oscilloscope.
 
-Fixes: ce26d7ca50a5 ("dpll: zl3073x: Add support to get/set frequency on pins")
+Fixes: a99a9f0ebdaa ("dpll: zl3073x: Read DPLL types and pin properties from system firmware")
 Reviewed-by: Petr Oros <poros@redhat.com>
 Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Link: https://patch.msgid.link/20261011061211.448373-3-ivecera@redhat.com
+Link: https://patch.msgid.link/20261011061211.448373-4-ivecera@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dpll/zl3073x/dpll.c | 46 ++++++++++++++++++++++---------------
- 1 file changed, 28 insertions(+), 18 deletions(-)
+ drivers/dpll/zl3073x/prop.c | 33 +++++++++++++++++++++++++++------
+ 1 file changed, 27 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/dpll/zl3073x/dpll.c b/drivers/dpll/zl3073x/dpll.c
-index 83d37e3eae789..c2ea96df3bcb6 100644
---- a/drivers/dpll/zl3073x/dpll.c
-+++ b/drivers/dpll/zl3073x/dpll.c
-@@ -903,6 +903,7 @@ zl3073x_dpll_output_pin_frequency_set(const struct dpll_pin *dpll_pin,
- 	const struct zl3073x_synth *synth;
- 	u32 new_div, synth_freq;
- 	struct zl3073x_out out;
-+	u64 n_period, rem;
- 	u8 out_id;
- 
- 	out_id = zl3073x_output_pin_out_get(pin->id);
-@@ -928,16 +929,11 @@ zl3073x_dpll_output_pin_frequency_set(const struct dpll_pin *dpll_pin,
- 	}
- 
- 	if (zl3073x_dpll_is_p_pin(pin)) {
--		/* We are going to change output frequency for P-pin but
--		 * if the requested frequency is less than current N-pin
--		 * frequency then indicate a failure as we are not able
--		 * to compute N-pin divisor to keep its frequency unchanged.
--		 *
--		 * Update divisor for N-pin to keep N-pin frequency.
-+		/* Keep the N-pin frequency: the new P-pin frequency has to be
-+		 * a multiple of it, at least twice as high.
- 		 */
--		out.esync_n_period = (out.esync_n_period * out.div) / new_div;
--		if (!out.esync_n_period)
--			return -EINVAL;
-+		n_period = mul_u32_u32(out.esync_n_period, out.div);
-+		n_period = div64_u64_rem(n_period, new_div, &rem);
- 
- 		/* Update the output divisor */
- 		out.div = new_div;
-@@ -945,17 +941,31 @@ zl3073x_dpll_output_pin_frequency_set(const struct dpll_pin *dpll_pin,
- 		/* For 50/50 duty cycle the divisor is equal to width */
- 		out.width = out.div;
+diff --git a/drivers/dpll/zl3073x/prop.c b/drivers/dpll/zl3073x/prop.c
+index 9a1911427eb7e..d80f62a500bc9 100644
+--- a/drivers/dpll/zl3073x/prop.c
++++ b/drivers/dpll/zl3073x/prop.c
+@@ -22,7 +22,8 @@
+  * The function checks the given frequency is valid for the device. For input
+  * pins it checks that the frequency can be factorized using supported base
+  * frequencies. For output pins it checks that the frequency divides connected
+- * synth frequency without remainder.
++ * synth frequency without remainder and that the resulting divisor is not
++ * below the minimum the driver supports.
+  *
+  * Return: true if the frequency is valid, false if not.
+  */
+@@ -41,18 +42,38 @@ zl3073x_pin_check_freq(struct zl3073x_dev *zldev, enum dpll_pin_direction dir,
+ 		if (rc)
+ 			goto err_inv_freq;
  	} else {
--		/* We are going to change frequency of N-pin but if
--		 * the requested freq is greater or equal than freq of P-pin
--		 * in the output pair we cannot compute divisor for the N-pin.
--		 * In this case indicate a failure.
--		 *
--		 * Update divisor for N-pin
-+		/* The N-pin frequency has to divide the P-pin frequency and
-+		 * be at most half of it.
- 		 */
--		out.esync_n_period = div64_u64(synth_freq, frequency * out.div);
--		if (!out.esync_n_period)
--			return -EINVAL;
-+		n_period = frequency * out.div;
-+		n_period = div64_u64_rem(synth_freq, n_period, &rem);
-+	}
-+	if (n_period < 2) {
-+		NL_SET_ERR_MSG_FMT(extack,
-+				   "OUT%uN freq must be at most half of OUT%uP freq",
-+				   out_id, out_id);
-+		return -EINVAL;
-+	}
-+	if (n_period > U32_MAX) {
-+		NL_SET_ERR_MSG_FMT(extack,
-+				   "OUT%uN freq is too low for OUT%uP freq",
-+				   out_id, out_id);
-+		return -EINVAL;
-+	}
-+	if (rem != 0) {
-+		NL_SET_ERR_MSG_FMT(extack,
-+				   "OUT%uN freq must divide OUT%uP freq",
-+				   out_id, out_id);
-+		return -EINVAL;
- 	}
-+	out.esync_n_period = n_period;
+-		u32 synth_freq;
+-		u8 out, synth;
++		u32 synth_freq, div, min_div, rem;
++		const struct zl3073x_out *out;
++		u8 out_id, synth;
  
- 	/* For 50/50 duty cycle the divisor is equal to width */
- 	out.esync_n_width = out.esync_n_period;
+ 		/* Get output pin synthesizer */
+-		out = zl3073x_output_pin_out_get(id);
+-		synth = zl3073x_dev_out_synth_get(zldev, out);
++		out_id = zl3073x_output_pin_out_get(id);
++		synth = zl3073x_dev_out_synth_get(zldev, out_id);
+ 
+ 		/* Get synth frequency */
+ 		synth_freq = zl3073x_dev_synth_freq_get(zldev, synth);
+ 
+ 		/* Check the frequency divides synth frequency */
+-		if (synth_freq % (u32)freq)
++		div = div_u64_rem(synth_freq, freq, &rem);
++		if (rem)
++			goto err_inv_freq;
++
++		/* The driver requires an output divisor of at least 2 -
++		 * below that the hardware bypasses the divider and ignores
++		 * the pulse width and eSync registers the driver programs.
++		 * For the N-pin of an N-divided output the effective divisor
++		 * also includes the N divider (>= 2), so the minimum is 4.
++		 * For N-divided outputs this is only a necessary condition -
++		 * whether the frequency can be set also depends on the output
++		 * divisor shared by both pins, which is checked when the
++		 * frequency is set.
++		 */
++		out = zl3073x_out_state_get(zldev, out_id);
++		if (zl3073x_out_is_ndiv(out) && zl3073x_is_n_pin(id))
++			min_div = 4;
++		else
++			min_div = 2;
++		if (div < min_div)
+ 			goto err_inv_freq;
+ 	}
+ 
 -- 
 2.53.0
 
