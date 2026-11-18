@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059323;
-	b=EXMD/woPZy0g4ZmGdd19wxq4LbHdodYTofer1lkIwBKfzAbCK3xCmPZS5clB9hjVmehz
-	 XxYn6r0jU0eh1QId9+fofADuhnKc39DjoqW6WQYa+bfXfVeD8GaSNZZqQVb/WQf603tAf
-	 5/sBFDUipohfRhrdUmaTFXYIyM3dHCqaCzz47fjulRYSsz0E+U7ebNpgSZJXmXLIWxwQU
-	 7enlNZh7IE84pZZMnpTYVYr3AXQKHhhRP0pi6Tg8AEBQqchAG65S1Ubt0jIVCMqZa/cx9
-	 FPaHy16R7XC4QFrIUWEZxuc7xOUPeOLKAyw1tn0+HRrYPZ6JfEk9Q9NLxLkt0zzndug==
+	t=1795059325;
+	b=n7YE82pWiWRzLLf+iKrAVoGBOwCvwHF0Fd7bwRT2Z7bsl2XbGJW0knZHUJt617nrC2B3
+	 7yBWTWiCdd23P+hGthFWtyQVkcj3FMkeTFmJk4DZPEUYOnrfweera8Y9D+lPoUkNURdrR
+	 fY9sjMFBAB/KgaV+YzWU2D8Wm06kTibgBUBFSoJHn0ZhQH05z8D/Ytsj7SkJZ24tdeDn+
+	 SZsoApwgLduZSljMnBnFP6FE89/nYSKGByFjwUt2j69ZtGV8WYc8dJPnoecsyTys/HWRu
+	 sWYqeisvt0IM512gpIIQrEbwVNzXE5OcXNE2+NVx3Ikw+bqeJEVLL0Z1f5oxS87KWig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059323;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059325;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=boLdsW1zHPPEDxk1uYFzlmj7LygrZnX+1UsazF7rno4=;
-	b=JxsayTUpA5nCx5JN4aMnpgbBQaj6Ke4D+r1ydZAbBzO3md8zJce4jLKk3ZOiWTkAqvAw
-	 4SAk2ZiISyMC3145ouEgOGQ0F6xew96Wxlt47V1n4mSvhtBAJ5eSzgzL4BxC9myNkXoV5
-	 Ef/hWhpJqGpSM1BFDifuFVyWU5wE9oS7digu0Jo/NHKCxwRE2zVdpZMQ3kgRnMNRwxeyX
-	 am5uTRoo+2GfTq3mKa1o+nW2/X/QU2ycM2s5UxXV7GKNA+CYi4LQ5NB0o9doB6AcdHYlH
-	 I7Dw6HqP1D9SuxuYG05nAd7m7GkygAwJmnAtkY/OEwSdxXcRdj/C1dGSuE3BWdRCwlg==
+	bh=aRT9hsFyPQl5kF7DVAG98piE2AMGmTc9gCWHgRWF9xk=;
+	b=xfwKEhjOtT75HaVVrzpK+WUZy/lkwZ9vHnfWOLvyBgJfN1R2RoeDSMXbDWKwGJufMr38
+	 jv/hoxfbCV3Es+8dyMOZgNOZFylsfiygjTMfjImEt6RCY7z8c/IaN/SUEpRBFTZE9Kkw+
+	 bA3q+xcbXJt/t84W0t1jfsRmGNvN3B9mMB37xLiNFwDlpqy7H+1+p+7NqEM9oawXRWZkr
+	 0+N6m53SWtZQbh9MzssUQx/G7vZuKAYfUa8XcmeRKavL2NzWxlWjNITP71zDQ18AWXPmm
+	 V0dTEXEP8jXgv71IWovdnAZB8XfkSOfiuPM6Z2ALZtrhsC5w1fPEzYydBXcy2ws33PQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2OYAIIWZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rs4R4IdG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC1C606A31C;
-	Thu, 19 Nov 2026 03:35:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D17C4606A325;
+	Thu, 19 Nov 2026 03:35:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2OYAIIWZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6343D1F000C4;
-	Thu, 19 Nov 2026 03:35:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rs4R4IdG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30FAC1F000C4;
+	Thu, 19 Nov 2026 03:35:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059322;
-	bh=boLdsW1zHPPEDxk1uYFzlmj7LygrZnX+1UsazF7rno4=;
+	s=korg; t=1795059325;
+	bh=aRT9hsFyPQl5kF7DVAG98piE2AMGmTc9gCWHgRWF9xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2OYAIIWZgTkJMBJC+nyPOYGXQbHnxw2AcCFr0CCt7i4QfJqOfYtwUC1L/WF5Lc3vd
-	 5sipp5WEAYxI8Hxu6+eZGW00YtNF+tpguFjclnhlDujUnVoQMlrd8al5tT9gHNnKFV
-	 EZ61EFmtxoDV2TnK9/E6zVHrVXyWxnRXCvOdO/ac=
+	b=Rs4R4IdGOvvdhkRtB19xLiHqBez79GmXbz1ODmU8D3d8DWtaNbQKDpVsTJhDjPkpn
+	 fSvVqFne/TRsoBqMzPADAks1lAAbmHYT9Pr/EWcV1sdfnC5yx5HKe+XAOvW7UyJu+v
+	 1nlaNP8NCfKQQmNeY2Wu+HcsHYx9nrSlTZC+HTAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
 	Ziyang Xuan <william.xuanziyang@huawei.com>,
 	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0758/1848] can: raw: fix lockdep issue in raw_release()
-Date: Wed, 18 Nov 2026 15:46:36 +0100
-Message-ID: <20261118145948.210397083@linuxfoundation.org>
+Subject: [PATCH 5.10 0759/1848] can: raw: add missing refcount for memory leak fix
+Date: Wed, 18 Nov 2026 15:46:37 +0100
+Message-ID: <20261118145948.242514184@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,162 +70,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-commit 11c9027c983e9e4b408ee5613b6504d24ebd85be upstream.
+commit c275a176e4b69868576e543409927ae75e3a3288 upstream.
 
-syzbot complained about a lockdep issue [1]
+Commit ee8b94c8510c ("can: raw: fix receiver memory leak") introduced
+a new reference to the CAN netdevice that has assigned CAN filters.
+But this new ro->dev reference did not maintain its own refcount which
+lead to another KASAN use-after-free splat found by Eric Dumazet.
 
-Since raw_bind() and raw_setsockopt() first get RTNL
-before locking the socket, we must adopt the same order in raw_release()
-
-[1]
-WARNING: possible circular locking dependency detected
-6.5.0-rc1-syzkaller-00192-g78adb4bcf99e #0 Not tainted
-------------------------------------------------------
-syz-executor.0/14110 is trying to acquire lock:
-ffff88804e4b6130 (sk_lock-AF_CAN){+.+.}-{0:0}, at: lock_sock include/net/sock.h:1708 [inline]
-ffff88804e4b6130 (sk_lock-AF_CAN){+.+.}-{0:0}, at: raw_bind+0xb1/0xab0 net/can/raw.c:435
-
-but task is already holding lock:
-ffffffff8e3df368 (rtnl_mutex){+.+.}-{3:3}, at: raw_bind+0xa7/0xab0 net/can/raw.c:434
-
-which lock already depends on the new lock.
-
-the existing dependency chain (in reverse order) is:
-
--> #1 (rtnl_mutex){+.+.}-{3:3}:
-__mutex_lock_common kernel/locking/mutex.c:603 [inline]
-__mutex_lock+0x181/0x1340 kernel/locking/mutex.c:747
-raw_release+0x1c6/0x9b0 net/can/raw.c:391
-__sock_release+0xcd/0x290 net/socket.c:654
-sock_close+0x1c/0x20 net/socket.c:1386
-__fput+0x3fd/0xac0 fs/file_table.c:384
-task_work_run+0x14d/0x240 kernel/task_work.c:179
-resume_user_mode_work include/linux/resume_user_mode.h:49 [inline]
-exit_to_user_mode_loop kernel/entry/common.c:171 [inline]
-exit_to_user_mode_prepare+0x210/0x240 kernel/entry/common.c:204
-__syscall_exit_to_user_mode_work kernel/entry/common.c:286 [inline]
-syscall_exit_to_user_mode+0x1d/0x50 kernel/entry/common.c:297
-do_syscall_64+0x44/0xb0 arch/x86/entry/common.c:86
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
--> #0 (sk_lock-AF_CAN){+.+.}-{0:0}:
-check_prev_add kernel/locking/lockdep.c:3142 [inline]
-check_prevs_add kernel/locking/lockdep.c:3261 [inline]
-validate_chain kernel/locking/lockdep.c:3876 [inline]
-__lock_acquire+0x2e3d/0x5de0 kernel/locking/lockdep.c:5144
-lock_acquire kernel/locking/lockdep.c:5761 [inline]
-lock_acquire+0x1ae/0x510 kernel/locking/lockdep.c:5726
-lock_sock_nested+0x3a/0xf0 net/core/sock.c:3492
-lock_sock include/net/sock.h:1708 [inline]
-raw_bind+0xb1/0xab0 net/can/raw.c:435
-__sys_bind+0x1ec/0x220 net/socket.c:1792
-__do_sys_bind net/socket.c:1803 [inline]
-__se_sys_bind net/socket.c:1801 [inline]
-__x64_sys_bind+0x72/0xb0 net/socket.c:1801
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-other info that might help us debug this:
-
-Possible unsafe locking scenario:
-
-CPU0 CPU1
----- ----
-lock(rtnl_mutex);
-        lock(sk_lock-AF_CAN);
-        lock(rtnl_mutex);
-lock(sk_lock-AF_CAN);
-
-*** DEADLOCK ***
-
-1 lock held by syz-executor.0/14110:
-
-stack backtrace:
-CPU: 0 PID: 14110 Comm: syz-executor.0 Not tainted 6.5.0-rc1-syzkaller-00192-g78adb4bcf99e #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/03/2023
-Call Trace:
-<TASK>
-__dump_stack lib/dump_stack.c:88 [inline]
-dump_stack_lvl+0xd9/0x1b0 lib/dump_stack.c:106
-check_noncircular+0x311/0x3f0 kernel/locking/lockdep.c:2195
-check_prev_add kernel/locking/lockdep.c:3142 [inline]
-check_prevs_add kernel/locking/lockdep.c:3261 [inline]
-validate_chain kernel/locking/lockdep.c:3876 [inline]
-__lock_acquire+0x2e3d/0x5de0 kernel/locking/lockdep.c:5144
-lock_acquire kernel/locking/lockdep.c:5761 [inline]
-lock_acquire+0x1ae/0x510 kernel/locking/lockdep.c:5726
-lock_sock_nested+0x3a/0xf0 net/core/sock.c:3492
-lock_sock include/net/sock.h:1708 [inline]
-raw_bind+0xb1/0xab0 net/can/raw.c:435
-__sys_bind+0x1ec/0x220 net/socket.c:1792
-__do_sys_bind net/socket.c:1803 [inline]
-__se_sys_bind net/socket.c:1801 [inline]
-__x64_sys_bind+0x72/0xb0 net/socket.c:1801
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7fd89007cb29
-Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 e1 20 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007fd890d2a0c8 EFLAGS: 00000246 ORIG_RAX: 0000000000000031
-RAX: ffffffffffffffda RBX: 00007fd89019bf80 RCX: 00007fd89007cb29
-RDX: 0000000000000010 RSI: 0000000020000040 RDI: 0000000000000003
-RBP: 00007fd8900c847a R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 000000000000000b R14: 00007fd89019bf80 R15: 00007ffebf8124f8
-</TASK>
+This patch ensures a proper refcount for the CAN nedevice.
 
 Fixes: ee8b94c8510c ("can: raw: fix receiver memory leak")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: Eric Dumazet <edumazet@google.com>
 Cc: Ziyang Xuan <william.xuanziyang@huawei.com>
-Cc: Oliver Hartkopp <socketcan@hartkopp.net>
-Cc: stable@vger.kernel.org
-Cc: Marc Kleine-Budde <mkl@pengutronix.de>
-Link: https://lore.kernel.org/all/20230720114438.172434-1-edumazet@google.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://lore.kernel.org/r/20230821144547.6658-3-socketcan@hartkopp.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 962947b69589 ("can: replace ARPHRD_CAN type checks with can_get_ml_priv()")
-[ backport to 5.10: Adapt the raw_release() context as
-  free_percpu(ro->uniq) has already been moved out of raw_release() in
-  this tree. ]
+[ backport to 5.10: Use dev_hold()/dev_put() as in the 5.15-stable
+  backport, as this tree has no netdevice reference tracker. ]
 Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/raw.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/can/raw.c | 34 +++++++++++++++++++++++++---------
+ 1 file changed, 25 insertions(+), 9 deletions(-)
 
 diff --git a/net/can/raw.c b/net/can/raw.c
-index 7df3086e9f910..c9513dca8fc96 100644
+index c9513dca8fc96..3e2822707ed8d 100644
 --- a/net/can/raw.c
 +++ b/net/can/raw.c
-@@ -393,9 +393,9 @@ static int raw_release(struct socket *sock)
- 	list_del(&ro->notifier);
- 	spin_unlock(&raw_notifier_lock);
+@@ -283,8 +283,10 @@ static void raw_notify(struct raw_sock *ro, unsigned long msg,
+ 	case NETDEV_UNREGISTER:
+ 		lock_sock(sk);
+ 		/* remove current filters & unregister */
+-		if (ro->bound)
++		if (ro->bound) {
+ 			raw_disable_allfilters(dev_net(dev), dev, sk);
++			dev_put(dev);
++		}
  
-+	rtnl_lock();
- 	lock_sock(sk);
+ 		if (ro->count > 1)
+ 			kfree(ro->filter);
+@@ -398,10 +400,12 @@ static int raw_release(struct socket *sock)
  
--	rtnl_lock();
  	/* remove current filters & unregister */
  	if (ro->bound) {
- 		if (ro->dev)
-@@ -411,12 +411,13 @@ static int raw_release(struct socket *sock)
- 	ro->bound = 0;
- 	ro->dev = NULL;
- 	ro->count = 0;
--	rtnl_unlock();
+-		if (ro->dev)
++		if (ro->dev) {
+ 			raw_disable_allfilters(dev_net(ro->dev), ro->dev, sk);
+-		else
++			dev_put(ro->dev);
++		} else {
+ 			raw_disable_allfilters(sock_net(sk), NULL, sk);
++		}
+ 	}
  
- 	sock_orphan(sk);
- 	sock->sk = NULL;
- 
- 	release_sock(sk);
-+	rtnl_unlock();
+ 	if (ro->count > 1)
+@@ -451,10 +455,10 @@ static int raw_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 			goto out;
+ 		}
+ 		if (dev->type != ARPHRD_CAN) {
+-			dev_put(dev);
+ 			err = -ENODEV;
+-			goto out;
++			goto out_put_dev;
+ 		}
 +
- 	sock_put(sk);
+ 		if (!(dev->flags & IFF_UP))
+ 			notify_enetdown = 1;
  
- 	return 0;
+@@ -462,7 +466,9 @@ static int raw_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 
+ 		/* filters set by default/setsockopt */
+ 		err = raw_enable_allfilters(sock_net(sk), dev, sk);
+-		dev_put(dev);
++		if (err)
++			goto out_put_dev;
++
+ 	} else {
+ 		ifindex = 0;
+ 
+@@ -473,18 +479,28 @@ static int raw_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 	if (!err) {
+ 		if (ro->bound) {
+ 			/* unregister old filters */
+-			if (ro->dev)
++			if (ro->dev) {
+ 				raw_disable_allfilters(dev_net(ro->dev),
+ 						       ro->dev, sk);
+-			else
++				/* drop reference to old ro->dev */
++				dev_put(ro->dev);
++			} else {
+ 				raw_disable_allfilters(sock_net(sk), NULL, sk);
++			}
+ 		}
+ 		ro->ifindex = ifindex;
+ 		ro->bound = 1;
++		/* bind() ok -> hold a reference for new ro->dev */
+ 		ro->dev = dev;
++		if (ro->dev)
++			dev_hold(ro->dev);
+ 	}
+ 
+- out:
++out_put_dev:
++	/* remove potential reference from dev_get_by_index() */
++	if (dev)
++		dev_put(dev);
++out:
+ 	release_sock(sk);
+ 	rtnl_unlock();
+ 
 -- 
 2.53.0
 
