@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029333;
-	b=uUHkMvUweHIFf6kdFSscf8knfwHicV4q7xBvykOWN+Weg5u549WiPlvkzIg5SPxFgyno
-	 zoEFEPg4B38M4oARv8gASJgVUnt6ue14XsS8c6THMFFMxIv+h3fmpSerbbzvZfuhJPy+/
-	 Bkt43WN+S9P+JuGS6vJb/eXIXnYogW3yPJLcaJAKmn0Mtw5FZRsHLE7v6LEG28t9IZ8Vz
-	 Eb5Kf+AFvxYsm13jEbnCdalLoGfah5jBKToAeYvXRoHmm+6IMg7hhlcF8AYqKm1+lVgC5
-	 IdXgJfg4pyzkLTlFxZu6WXCNHQAUS5QO4QsKyLj/p/i0yF2AVITJsVdLtFeTPMOb8gg==
+	t=1795029336;
+	b=lQLSrx5zSHxiOrCs1/GcC9ON/nwDcItmlawOPe9U1Sp7V6HAlKk93bFIj7QiudgkmzIs
+	 oeTLyXxBSTy8/nuap+TbsMeyX3VmF/V4D5Egs22rSQ2ZAewV75E1iMTp1AnSsB7cTAmdK
+	 u+GP/wKCdmdza1aXYn0MrSwLIafPqNVFt8bnG22ZciVoYLDAR3LZcud6LrrZFsqGQcIVq
+	 BbTuK49m9D9G4WFvL7RURX3H2K5Dx10RyNO6gKroe5F9L5Uwhfv9WJAkbzpEeGf2V1l0A
+	 e91dWNsmUbwxSfcZFBFrHRJhlZtyu7oFo9f50sVqw3/5GYKqU6DoVxM3Y65/96QYDSA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029333;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029336;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hXBaFJB4gInUWIMtYHbezP8khnfXXrR39Q70wT6xpSg=;
-	b=06UzFc+IbemXiO27fR8EIyEJ3SYGYNXiw4ooLRsGz0LVQGm3SPXxU+H4eJZ8BeeWdU1Z
-	 XrXAl7PiFd2NITLxNoaFQNiD68P+DvqE91cacNm+tvlibmVVNHPoqeD3ZS85lEjUetJFq
-	 8jq/j+l6iNwC3XJ7a5b1JV8LGFSU8e0Amos97tMogUtwEA7yLbD5f0Jw44dofxoHft3pE
-	 fsHqTMWx9h38O808nFgPlUHglLtHbJQddxIIsFFeNv5LZAymhd1vXj9ffU92oHjVcS4aN
-	 pn5sZf6zC8J/03pdKfDNCtRofAZSTV1wnOFLx7CdQ/MXMRvsvTw5goy8bXUfJlYJZlg==
+	bh=CpPCEn5om2t9P78iywu20QDm6/3ZTFTfZ8f8O3hMAnc=;
+	b=e7zYOFWbGRLczAhOOC3/QIiSzeVUvvTljnTcARULNn88YtVDEK8C4pFefbR/mDDRZ+Bw
+	 361BqUw6UsZEajc/StqbILJT5lyVIJiIs8z5LAdjB+Px+GxUUROc8lRVbzpt6LEJqF+2k
+	 wC/3GvlBwWJaK17EE6hcsvmS3hHKO0lPjLjq3jszFa75aTTQAmXDEQapehRlZyqOHEWBW
+	 CWbS+1lHqsIaxH42dDxIZLPRStZvyneNtc48aPXYmmxlpOOA4F7aFl8Ii9Ssul8A2WaZj
+	 1IbMxfMFEst53N/y1iPf3Nwu8YivoDY6MOQzxWoIbQfRX+QM9K0mxLJ4Kh1KCMeU38Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OM1jK9uE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kjnHS01D;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3BFE606A31C;
-	Wed, 18 Nov 2026 19:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5C1606A325;
+	Wed, 18 Nov 2026 19:15:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OM1jK9uE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C0D41F000C6;
-	Wed, 18 Nov 2026 19:15:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kjnHS01D
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1FF01F000C4;
+	Wed, 18 Nov 2026 19:15:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029333;
-	bh=hXBaFJB4gInUWIMtYHbezP8khnfXXrR39Q70wT6xpSg=;
+	s=korg; t=1795029336;
+	bh=CpPCEn5om2t9P78iywu20QDm6/3ZTFTfZ8f8O3hMAnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OM1jK9uEAOHaa7onAAzuTbZTKSaybL+Dr2w+qWukcTVAXDOD22KcxRmSc47GlbnFa
-	 R+IrROcUqqAYd+bnCYlRTQ+wAMxanUbJaMwCUNLDFYLKlnzC2vzjmfyNft24fBTsiP
-	 NaSC4xNLjTa2JAGXjtlWu3hbwPTHkGtCMkpAXtOc=
+	b=kjnHS01D9JKhN01xiKUX6uRW2/jlzxI9XSZChw0hDAFzpY2f4IeURgIm3rHbGn5Rw
+	 eFu02DOIvvzRiIH7Ew7itqb3A0aJrJldrrrFVZ0dGLFk4L41gidB/lZdMgNvmmxlUh
+	 iGcAQv+d+GYz6gPaO+ZPltxjKo+00J5lcJciuK34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0311/1756] scsi: mpi3mr: Fix out-of-bounds read of event data
-Date: Wed, 18 Nov 2026 15:40:38 +0100
-Message-ID: <20261118150020.710633514@linuxfoundation.org>
+Subject: [PATCH 6.12 0312/1756] scsi: mpi3mr: Fix out-of-bounds phy array access on link change
+Date: Wed, 18 Nov 2026 15:40:39 +0100
+Message-ID: <20261118150020.747735420@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,65 +70,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 
-[ Upstream commit 77554f01187d91c20f04d2a8e28270943ed64cca ]
+[ Upstream commit f67caaa2521a3c8f931d1e679d831ba5ca654794 ]
 
-The event data length from the reply is used as is, both when caching log
-data and when sizing the buffer handed to the bottom half. A length larger
-than the frame makes both of them read past the end of it.
+The phy number that comes with a link change is used to index the node's
+phy array without being compared against the number of phys allocated for
+that node.
 
-Clamp the length to what the frame can hold.
+Check it first.
 
-Fixes: 13ef29ea4aa0 ("scsi: mpi3mr: Add support for device add/remove event handling")
-Fixes: d0d19250ed81 ("scsi: mpi3mr: Rename log data save helper to reflect threaded/BH context")
+Fixes: 42fc9fee116f ("scsi: mpi3mr: Add helper functions to manage device's port")
 Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Link: https://patch.msgid.link/20260825210411.301535-12-chandrakanth.patil@broadcom.com
+Link: https://patch.msgid.link/20260825210411.301535-13-chandrakanth.patil@broadcom.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_os.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_transport.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
-index 18d3ebdb62e3c..0ce10b4bf0ffe 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_os.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-@@ -3024,7 +3024,7 @@ void mpi3mr_add_event_wait_for_device_refresh(struct mpi3mr_ioc *mrioc)
- void mpi3mr_os_handle_events(struct mpi3mr_ioc *mrioc,
- 	struct mpi3_event_notification_reply *event_reply)
- {
--	u16 evt_type, sz;
-+	u16 evt_type, sz, avail_reply_room;
- 	struct mpi3mr_fwevt *fwevt = NULL;
- 	bool ack_req = 0, process_evt_bh = 0;
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_transport.c b/drivers/scsi/mpi3mr/mpi3mr_transport.c
+index 97e8947b46d16..6bfac88a522c8 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_transport.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_transport.c
+@@ -1091,6 +1091,13 @@ void mpi3mr_update_links(struct mpi3mr_ioc *mrioc,
+ 		return;
+ 	}
  
-@@ -3085,7 +3085,12 @@ void mpi3mr_os_handle_events(struct mpi3mr_ioc *mrioc,
- 	case MPI3_EVENT_DEVICE_INFO_CHANGED:
- 	case MPI3_EVENT_LOG_DATA:
- 
--		sz = event_reply->event_data_length * 4;
-+		if (mrioc->reply_sz > offsetof(struct mpi3_event_notification_reply, event_data))
-+			avail_reply_room = mrioc->reply_sz -
-+			    offsetof(struct mpi3_event_notification_reply, event_data);
-+		else
-+			avail_reply_room = 0;
-+		sz = min_t(u16, event_reply->event_data_length * 4, avail_reply_room);
- 		mpi3mr_app_save_logdata_th(mrioc,
- 			(char *)event_reply->event_data, sz);
- 		break;
-@@ -3119,7 +3124,12 @@ void mpi3mr_os_handle_events(struct mpi3mr_ioc *mrioc,
- 		dprint_event_th(mrioc,
- 		    "scheduling bottom half handler for event(0x%02x) - (0x%08x), ack_required=%d\n",
- 		    evt_type, le32_to_cpu(event_reply->event_context), ack_req);
--		sz = event_reply->event_data_length * 4;
-+		if (mrioc->reply_sz > offsetof(struct mpi3_event_notification_reply, event_data))
-+			avail_reply_room = mrioc->reply_sz -
-+			    offsetof(struct mpi3_event_notification_reply, event_data);
-+		else
-+			avail_reply_room = 0;
-+		sz = min_t(u16, event_reply->event_data_length * 4, avail_reply_room);
- 		fwevt = mpi3mr_alloc_fwevt(sz);
- 		if (!fwevt) {
- 			dprint_event_th(mrioc,
++	if (phy_number >= mr_sas_node->num_phys) {
++		spin_unlock_irqrestore(&mrioc->sas_node_lock, flags);
++		ioc_err(mrioc, "%s: phy_number(%d) >= num_phys(%d)\n",
++			__func__, phy_number, mr_sas_node->num_phys);
++		return;
++	}
++
+ 	mr_sas_phy = &mr_sas_node->phy[phy_number];
+ 	mr_sas_phy->attached_handle = handle;
+ 	spin_unlock_irqrestore(&mrioc->sas_node_lock, flags);
 -- 
 2.53.0
 
