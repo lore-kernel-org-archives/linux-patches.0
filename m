@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036688;
-	b=VCHnf0mqDx8UcLXDmM17AE0tbf9KTMbwQiixsetU8/TSAqy1dMwy4iaeJrnTM/xsLYxX
-	 lAovWwIEz+gN5PtkVtnuQDdxDcDu/ALSrsnSpIpxfoKVRmM7VEOEX2eIMl/yK3SzLiIxD
-	 7dDhbMUObHRXx0No77oHQRPfVrsJ80TGULK+7rGN2OAwjW1Uphhbw0Jm8Ey1+UwnCCDAF
-	 ylKIHp7CtjIKzUNUEWO7R4m/ggaRnd1cwVBkUxkxNq4Uza9vykjqIKF2L8eL8cmyhafFf
-	 LtXcFjdAYX2byYQi1/rRQNd0KLa5UUbhf1mWetGamyvVIdBdwgb5fb+5bR0iedJVbWw==
+	t=1795036691;
+	b=NAf/cwd51gEi4v/lISzGbz7aMUvoujCnYMvoZ0JCLwIE3PnTid9HF0Ppf3SupCUHF5q6
+	 tsaP1NMf6mMuf6MH4PAp3aw4HN6yQo1mRGins7+vqvSbE6fyzBXP54qSyQIu8mgpDqolF
+	 toot15g8QkbqP4IvU6nn0xJ86VpQbE4iY6Q4dilPAJVZMuXFENRP8dhjwx4mg2r9WMzRN
+	 YI0dcbjxW5+MQZzOiXKFp0QNWUMK4qLGmDt/PdimUPNkbDGrSjbvHkzIV8eh+d5MIXrxd
+	 v92qHm2vLX/j8x8e328mSo2fKLh0QLqO/JFX5VK0vmftE4nzEZlocxa6mA0IpqCA1Ug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036688;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036691;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bafAkrEFQ5895eLHvGd4Vdx+sUWuJCyCVPyYc8ysMTM=;
-	b=MesQOHdrXG945jbsu/UsRpfKZg4lgq1WwieXuZAlQlDLqytZ2ikOnkBakaff/P7tQr5U
-	 7VRqoTEPOjFrbmaSNs68zQG/47BsCCELlwVnA4S9dIr+G9SQu66QSSTbKNhHZlZXU9S0m
-	 8T6Kg8O/salPzQ0Bc1pFIJiuDn7nQReXzsSzh7FSJke0B6ie8TuFn0y8VjlDe4wXotEA+
-	 XY/ZBFCp752OURVGX4iyVlRMUSLpkBN7a9cXcHilmfyZJai8FBh+tsHuklA3PckWqSIWs
-	 tjWFb8BDIkFx+DVOKVGYaoVIC2AsAb1L+aHtGE63zoc1Qc1FRrN/JmJmRnq0dnSJtHA==
+	bh=IcM1B+V0vc2wrfzJ+Q41DxgEJ+hE6nOkM1q9DNnrTjI=;
+	b=cr4ayfyn33yWoWE6iKy8rsgoYvg33mF2xMmOKZOcGS71sdDeRXHqXhHkqIT9ALERVKo0
+	 fAtZD8lb8F65nukpEQrvxFzmV7KU/p53/Vj4XjSkOK/gnnYs41qFZroaQo8XhXs9OcxaL
+	 Q+UV6tAh8DmCL/05d6Xrf6zpFKzJfCbFe5etQZCKwynAxnpgrhC0SJKzARYanmSj5LtX6
+	 Hj4av0cBloVAgaDm4QNMT9ogi4DHNAg3QEl32psOw3kg+kKQbgu1U7vjwF+mAETAXDnFo
+	 6GoDjvaAqkoBXkDfr06TBMkUruyo5A7EGKqGe4AklBBuvo5xlcjoK46t/DwGSiH/eHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vjeVU8hh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eLvhh1mj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93FC9606A31C;
-	Wed, 18 Nov 2026 21:18:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E89606A32C;
+	Wed, 18 Nov 2026 21:18:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vjeVU8hh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E58FE1F000C4;
-	Wed, 18 Nov 2026 21:18:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eLvhh1mj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C20E91F000C5;
+	Wed, 18 Nov 2026 21:18:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036688;
-	bh=bafAkrEFQ5895eLHvGd4Vdx+sUWuJCyCVPyYc8ysMTM=;
+	s=korg; t=1795036691;
+	bh=IcM1B+V0vc2wrfzJ+Q41DxgEJ+hE6nOkM1q9DNnrTjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vjeVU8hh8Gshch6B0/pdXTmiw0hOEnSvEHRrfaEGnBVY+5Y/EqmsTFJ8Oxoll91UL
-	 4yGb7FFKY8MF0voiL2xWKuhte8C3VlawlIITPCS3qI+g51sdRth776n7z2avtuge/V
-	 cW54TWUO5Tr4BXtUMZv2GBz0wRhVNKLX/KVWLiE0=
+	b=eLvhh1mjDL9Tx9VujoEqDOGnQ8O5R/aTQ7AlOE5dxSdf34suJBJviV2XRVa6GjF1r
+	 6z4EU0H86xWYzhXUT+Ue5G3JfhSouyHBuuHdGKJNfMFDTBEv63HT0KJeTkunfjhHw3
+	 GJK7L5jXXDREEa55TFXm7dNm1fFvhXfNp4kYIVB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Matt Turner <mattst88@gmail.com>,
 	Magnus Lindholm <linmag7@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1147/3318] alpha: only use a targeted tbi() when the target mm is really current
-Date: Wed, 18 Nov 2026 15:29:29 +0100
-Message-ID: <20261118150354.490828725@linuxfoundation.org>
+Subject: [PATCH 6.6 1148/3318] alpha: invalidate the local context in flush_tlb_page()
+Date: Wed, 18 Nov 2026 15:29:30 +0100
+Message-ID: <20261118150354.523199352@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,51 +70,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Magnus Lindholm <linmag7@gmail.com>
 
-[ Upstream commit 0d92845ac5dbc79e4ac4810b33c673f4c1c227e3 ]
+[ Upstream commit c0db730bf05eb3c10c1fae64b19f6913dce129fc ]
 
-ipi_flush_tlb_page() gates a targeted tbi() on current->active_mm.
-tbi() acts on the address space context currently loaded on the CPU, so
-it is only guaranteed to reach an mm's translations when a thread of
-that mm is running there. current->active_mm is not sufficient: under
-lazy TLB an idle or kernel task keeps an mm as its active_mm while a
-different ASN is loaded, so the invalidate is issued against the wrong
-context and the stale entry can survive. Nothing retires the old ASN
-afterwards either, mm->context[cpu] still being valid, so the resuming
-thread can reuse it.
+When the target mm is not the calling CPU's active_mm, flush_tlb_page()
+does nothing locally, and smp_call_function() reaches only the other CPUs.
+This CPU may still hold translations for the mm and can later reuse the
+old ASN together with them.
 
-Test current->mm instead and otherwise fall back to flush_tlb_other(),
-which clears mm->context[cpu] and forces a fresh ASN at the next switch
-whatever is loaded now.
+Add the missing else branch. flush_tlb_other() clears mm->context[cpu] so
+a fresh ASN is taken at the next switch. Add this before changing the
+current->active_mm test to current->mm: that change will also send lazy
+callers here, so their local invalidate must already be in place.
 
-For an mm borrowed through kthread_use_mm(), patch 1 of this series
-installs the context before the task can take a shootdown IPI. The
-current->mm test therefore covers that case as well.
+The uniprocessor implementations of flush_tlb_mm() and
+flush_icache_user_page() in asm/tlbflush.h and asm/cacheflush.h already
+contain exactly this branch.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
 Reviewed-by: Matt Turner <mattst88@gmail.com>
 Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
-Link: https://lore.kernel.org/r/20261010142533.974797-4-linmag7@gmail.com
+Link: https://lore.kernel.org/r/20261010142533.974797-5-linmag7@gmail.com
 Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/alpha/kernel/smp.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/alpha/kernel/smp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/arch/alpha/kernel/smp.c b/arch/alpha/kernel/smp.c
-index 7439b2377df57..5349c3127f9f4 100644
+index 5349c3127f9f4..9fa165df035dc 100644
 --- a/arch/alpha/kernel/smp.c
 +++ b/arch/alpha/kernel/smp.c
-@@ -673,7 +673,8 @@ ipi_flush_tlb_page(void *x)
- 	struct flush_tlb_page_struct *data = x;
- 	struct mm_struct * mm = data->mm;
+@@ -701,6 +701,9 @@ flush_tlb_page(struct vm_area_struct *vma, unsigned long addr)
+ 			preempt_enable();
+ 			return;
+ 		}
++	} else {
++		/* smp_call_function() does not call back into this CPU.  */
++		flush_tlb_other(mm);
+ 	}
  
--	if (mm == current->active_mm && !asn_locked())
-+	/* A targeted tbi() needs a thread of MM to be current.  */
-+	if (mm == current->mm && !asn_locked())
- 		flush_tlb_current_page(mm, data->vma, data->addr);
- 	else
- 		flush_tlb_other(mm);
+ 	data.vma = vma;
 -- 
 2.53.0
 
