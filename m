@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052349;
-	b=fofzfsuP5CupHfknAWrECeWEw6M2RgDaY8uY03CSzjO01Xw4UMc1fndcRkI8RVsoWYT3
-	 PQ+nicwIDinz3sWMgyR9l2G3kTB+/L3v3VVwZlm8JmTVqO99iIIkyTyDJkayvWRd5APxK
-	 TZAxFQvzKjCP/HZStSYKzzWKIVVtXYnq8QLzkTPDDxIzsCFRcXunDkzGPvsNFGku95x/h
-	 mQIvCp06eFR3uy+l0kLeQ+N0C6FR4hyGi7GvZlhNprM0+PupIv9BvOJHfwWtvpkHO7ScF
-	 d3dfPPALsuDsUtDW93dhYUEZM10q3JkUh7U3eD2RQ1hlQK/pHl8cDswxWESGfGCnrcA==
+	t=1795052353;
+	b=OhVU9+/SaQmCE0xHWj+aWCaulZ8XRylssvlZvnhgYKVpSuUdGDdxkJu0naNOC6o6p914
+	 uO/wbcwKS204NiSUdsP6KrZw1BGWcdExZIHfnCRK8Eji8/sHuSaQ/+PGtM6mMZjCE1dH1
+	 s5zkgv+XSrsnkzkwNYMAEswffTLHz2ZZr5IdkLqUyHZ1jKPOwYNBr6DAhejkmy93eegAp
+	 08wrnE13OnVUiHU5CaxD+oUuq7CwTlpmrmHZol+DSQnDAxaXQFWXoqQd32lfu6BRjV2kN
+	 B9UOh2e2H69wAhStaJDpJz0nGEZrTcJ99eYQ2/7BkFu2U4sDyfQhfuPIGjboWgu0GRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052349;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052353;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8qItVhNX4U1rgBG15mjjDFJlflAv+j4WJU48+4hmdXw=;
-	b=OSyjRc73QZudCn6JyZRoh+TgnIA5SlQSLq1NYtuMLCVTrW/OgOucS0ZP9LUPh6gnsH6N
-	 JBhA44rCbsz4sufYwq5J49qSw1soVc94AVILcLeD9qsJPGm51IkrYGEj1dUiYC+tSoc8H
-	 5cse6JjqmyFMysNY8rXpBtvqC3hT5OmCnzzg7HuMGd73p+UcNG9Zhlk/gNXeshiQdTal4
-	 0ifV3HFelVdjIc3sogX0kPqoUJ8GQ03uTpD/dQOZgY88Z1EjsuWU2Wd0f387dRNbZr5oI
-	 MoeCvikhaWhNxhbweOu8WBuxznoPyTZVKSTBG0IaQa+2C7TH79YynRyHSQJm/w0z5Yw==
+	bh=uVxRx2HffwVMGYB6zS5qNKYdb5GM72EVsDiS2jUBnFw=;
+	b=RhGcCv3Uj7vI1Yh7jfJ85ywd+4WztEoR3c89ATc5QrRIaiaNrKDtjG8KFpyLCdmGVr0g
+	 6tFrbTOR6ee3aWW4yz/f1Z/d0r+XasMhJWyRTIWmq2ubDT5FG8Y5I9hBMuy5NHFo0c6R6
+	 cfW8ZZI96r69TkPxjFnIAfx3UmbQgHU+CNR4wt9A8YfeZlc7BZAOFZ2vXPQ4yJkZ86NiY
+	 MBBhEcVmUeW2UYIHgpg+zCiPscrE/RnicEcQBqGBKYXwPr/rHq2WDi9sEYINs7P9veOG1
+	 l917mcHQmrwP1uqWMRlpv5BTHZUfLLDTIEdy3qWU0cioMh37TunPe5/+76sEWXvfSng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lbsBAHIj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sNb2ije0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE75460A380B;
-	Thu, 19 Nov 2026 01:39:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F2660A263E;
+	Thu, 19 Nov 2026 01:39:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lbsBAHIj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 435D31F000C5;
-	Thu, 19 Nov 2026 01:39:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sNb2ije0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EE7C1F000C8;
+	Thu, 19 Nov 2026 01:39:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052349;
-	bh=8qItVhNX4U1rgBG15mjjDFJlflAv+j4WJU48+4hmdXw=;
+	s=korg; t=1795052352;
+	bh=uVxRx2HffwVMGYB6zS5qNKYdb5GM72EVsDiS2jUBnFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lbsBAHIj4XfF9Btz0FCy6hmf4rHzgqWEjRh+CqlERfPEB55uwc5MgmsmgbV5F1OEl
-	 fuoL164CrNN9Euovd87qCeLNt9lHOa4i7FhDctlR1H6cCLQRg42mgFUxf0F1W5qglD
-	 LQDh5n6kOEOeTWmm8XtM7zUwNEOI4jzHZHWlUNbU=
+	b=sNb2ije0ogLE0rBh93HPE/PDdvtipEumN1NfUBQg5V8mo/wSfg67r0xyaYQlC2Gw9
+	 QhY9Hj9uVHmaZlWItr7Ey0iwDL05vDvgJ1uk57F/XQrfre2W9N+ZCeSfE4G+ok0hVn
+	 aagks83II8WGJpmGdK0gPlC6+I+9XgLkUUNM3jq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0533/2214] ASoC: Intel: atom: Fix platform device leak on probe failure
-Date: Wed, 18 Nov 2026 15:36:49 +0100
-Message-ID: <20261118150032.372089456@linuxfoundation.org>
+Subject: [PATCH 5.15 0534/2214] regulator: core: Fix coupled regulators reference leak on removal
+Date: Wed, 18 Nov 2026 15:36:50 +0100
+Message-ID: <20261118150032.406643310@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,63 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit dcc36d766dc82bc57cd730915d484119befcfca8 ]
+[ Upstream commit b9205f0837ca91a0bbe6aa9002207656840c1406 ]
 
-sst_acpi_probe() registers platform devices for the SST platform and
-machine board using platform_device_register_data(), but does not
-unregister them when later probe steps fail.
+of_parse_coupled_regulator() returns the coupled regulator with its
+device reference incremented and regulator_resolve_coupling() stores it
+in coupling_desc.coupled_rdevs[]. regulator_remove_coupling() clears
+those pointers without dropping the references, so they are leaked when
+the couple is torn down.
 
-Fixes: caf94ed8629a ("ASoC: Intel: bytcr_rt5640: fixup DAI codec_name with HID")
+Release the reference of each coupled regulator while removing the
+coupling.
+
+Fixes: d3d64537c339 ("regulator: core: Resolve coupled regulators")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260924134932.1590967-1-lgs201920130244@gmail.com
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260917143052.2156903-1-vulab@iscas.ac.cn
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/atom/sst/sst_acpi.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/regulator/core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/intel/atom/sst/sst_acpi.c b/sound/soc/intel/atom/sst/sst_acpi.c
-index 83fbee88e02a2..0e18e24125135 100644
---- a/sound/soc/intel/atom/sst/sst_acpi.c
-+++ b/sound/soc/intel/atom/sst/sst_acpi.c
-@@ -254,6 +254,11 @@ static int sst_platform_get_resources(struct intel_sst_drv *ctx)
- 	return 0;
- }
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 3babf26da8545..840748071f468 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -5389,6 +5389,8 @@ static void regulator_remove_coupling(struct regulator_dev *rdev)
  
-+static void sst_unregister_platform_device(void *data)
-+{
-+	platform_device_unregister(data);
-+}
+ 		c_desc->coupled_rdevs[i] = NULL;
+ 		c_desc->n_resolved--;
 +
- static int sst_acpi_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
-@@ -342,7 +347,10 @@ static int sst_acpi_probe(struct platform_device *pdev)
- 			pdata->platform);
- 		return PTR_ERR(plat_dev);
- 	}
--
-+	ret = devm_add_action_or_reset(dev, sst_unregister_platform_device,
-+				       plat_dev);
-+	if (ret)
-+		return ret;
- 	/*
- 	 * Create platform device for sst machine driver,
- 	 * pass machine info as pdata
-@@ -355,6 +363,10 @@ static int sst_acpi_probe(struct platform_device *pdev)
- 		return PTR_ERR(mdev);
++		put_device(&c_rdev->dev);
  	}
  
-+	ret = devm_add_action_or_reset(dev, sst_unregister_platform_device,
-+				       mdev);
-+	if (ret)
-+		return ret;
- 	/* Fill sst platform data */
- 	ctx->pdata = pdata;
- 	strcpy(ctx->firmware_name, mach->fw_filename);
+ 	if (coupler && coupler->detach_regulator) {
 -- 
 2.53.0
 
