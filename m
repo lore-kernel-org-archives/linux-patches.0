@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037721;
-	b=U3K8EjydlGMjcHRtwC+u7dFFY+uEC5MBAU5H5sjejZ+HT77eHf2halB3ai0Jc5SLVtF8
-	 9FfloM6HQ1qrUc/xFHNyFUoJuRFnjWwBo3Gz0Pj8n4t7EVeqdTOmPHj6pVLpWJ0JwsCdC
-	 4yag9apbeSuUi6QOLZBlOUbX0L9Kz3cU8YwCcny2g1KPwPeXk3QCZOEncQ9xyHYfXVFRi
-	 4UwMg66PHxSzM26lFzWbNHZjm/rTyAA18n59ic7bHeBjoVcHv17FZyo+Xe3oEArGv+7WJ
-	 qlYH6CBR2vup6rtdr9tfBFvZx40emq/aekwkGsNVpQmXUpjcan+PgZJzSfvKf/Gr7Zg==
+	t=1795037724;
+	b=r93EaY+DTjwE3Iq5cGDTtVJ3E/U4QwWDRcRyBrTA3rizJpLqZMChzQKBY6sybSQxo8oV
+	 ElzfFfuFOdYebEYWM5H6/gjmzENa4b7S7kPCah/mtvBzF3hx8kGv09v66W4WnCWckh40p
+	 qfNJngLO29bzMC4Ggw5J74CRpm4MsWWUg6KO5ci3vfYp3xCy+pNs/+tCSenmOeCV2Zpzh
+	 7GASJRh31r/Hqn2K7E0VKvvp10WWr5ROcbRHSv8X8ApP9y3YPOfE58QfsKP1Ja5g/UAKO
+	 vHGsaxQtHBKrknEMYxyIpP2FI4pYoE6SLDo/g7ALr42n4ozr3fW/GZOe9nNXWVfhSng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037721;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037724;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=k03qEXciQdkR1JuKVN8VOBTNrPhpyVou2mIBF6PRV80=;
-	b=vxsm3ZKCep18JWDG2MtBBMzjKNkPw+MK0uQmfBLv04KOPJLITotKg76btuAkYpyIDpfk
-	 GD/IRF1IstK2ra5XhwEaEe1FId8tXw6fFsyp6j8Z1lj15kzNTQ9NApVz4EOiybEyMGlI9
-	 cAaj1R5DjMnNJPLoCNlTdFKhPCigSnlGzQkniLRP9NFEWK/9lvcMsWE8kSoMwDoptIUmF
-	 6LisAgYRoCBnW8B8to7JTp1J+HX/x0RbCWNmOMrIYojGRrkWNf2R2V6F7SHxxCe3olAzl
-	 ysHKqyamZvlMjTzZvp+imKtaet5N6aG/xaU1/RENocQ2Y3xVbqrLDNBxdu46yDdt2Mw==
+	bh=Je3XGhhbnkdzgZdPiCf/0dSuMbdYnY+36z5sVhjkzHk=;
+	b=ee2XJMPrpe7ut6aq0lVId+CvwVA+9Ed8tXWL+ab9dLm291/+lPRZLJ1F/BbLTUJsA8U+
+	 rQFJzXmceMEV0jIHIlIHFpEF2ay0qIcJOTyR68Ik/a8a/IR0wm4L2+KMfd8ULRFTosTb+
+	 nWwVRZ5gxOJOMEFO9uZHHfUxA74b156DYED6Bewtc31pgF7aixWz/CWKewbxvqfVeBTyk
+	 KSz/WWZi6K4rXRQSnZI6Ny+EEqv4XD8XSeft+nxjj7rvna6Lj0sQzjujSeL2jLcfic+Wq
+	 Q53u0CZ4mg3Tqnf65zGpBhh/L0e8m9DefTAIzR8eaPUDUNcu5E8oruUpsBjtJYOorbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DDrRe8bm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="HTUX/VKd";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB3D4606A320;
-	Wed, 18 Nov 2026 21:35:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C4C606A320;
+	Wed, 18 Nov 2026 21:35:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DDrRe8bm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E3C21F000C4;
-	Wed, 18 Nov 2026 21:35:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HTUX/VKd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE75D1F000C4;
+	Wed, 18 Nov 2026 21:35:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037721;
-	bh=k03qEXciQdkR1JuKVN8VOBTNrPhpyVou2mIBF6PRV80=;
+	s=korg; t=1795037724;
+	bh=Je3XGhhbnkdzgZdPiCf/0dSuMbdYnY+36z5sVhjkzHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DDrRe8bmL4VtzWnn50gab0gvceKtAy2NLW1gz/d49O313/gd7dUrJxUMad1gtr9K8
-	 TDaW4g8it9fJIbzxPjPj7gr9GKiTiaSfbvgtMQ/PLa4w8hCMZ7+HEqoZKrmT8f/Chk
-	 TeASyFEH3aQVk/+BYf0zXLJllblkcZN2EqvApYqE=
+	b=HTUX/VKd93NLFBo6MMT56ohS40QnmOLa6QBdNMfhWK+hgtt7qdL2Y4zaKqYVMJ/DO
+	 XSWex7eB8A7ZM+lzYQENRxO1nuSq7pOdQJalvuZcfvapDNnVxS4f2zy/cx75fCSVo2
+	 2eBib2AkCWz2aCxz5f8tM/hI9/AdMOHVchvy3jSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <oss.patchbox@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	David Woodhouse <dwmw2@infradead.org>,
+	Stefan Teodorescu <fane@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1496/3318] vdpa/snet: Dont discard the DPU error in snet_send_ctrl_msg()
-Date: Wed, 18 Nov 2026 15:35:18 +0100
-Message-ID: <20261118150405.790968195@linuxfoundation.org>
+Subject: [PATCH 6.6 1470/3318] KVM: nVMX: Process each host MSR entry at most once when unwinding failed VM-Entry
+Date: Wed, 18 Nov 2026 15:34:52 +0100
+Message-ID: <20261118150404.996601398@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,55 +70,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <oss.patchbox@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit f41f153d49b4c18172ec61b69ba934c36e1be745 ]
+[ Upstream commit c33ef9d334059f7cb167569ed7b4779752fe4425 ]
 
-snet_send_ctrl_msg() reads the error code the DPU reports when it ACKs
-a control message, but then overwrites it with the return value of
-snet_wait_for_dpu_completion(). As a result, a DESTROY, SUSPEND or
-RESUME that the DPU rejects is reported to the caller as a success as
-long as the DPU clears the opcode register in time.
+Add a missing "break" in the inner for-loop of the open coded mess that
+unwinds MSRs back to the pre-VM-Enter state when VMLAUNCH/VMRESUME VM-Fails
+due to a consistency check that is caught by hardware but missed by KVM.
+I.e. move on to the next MSR in the VM-Entry load list after performing a
+write using a value found in the VM-Exit load list.  Processing *every*
+matching entry in the VM-Exit load list makes the processing quadratic,
+which is problematic if the load lists are full of MSRs that are expensive
+to emulate.  E.g. writing APIC_BASE triggers kvm_recalculate_apic_map() and
+a whole pile of unnecessary work.
 
-For SUSPEND this means vhost-vdpa marks the device as suspended and
-lets userspace reprogram the vrings while the DPU is still running
-them; for DESTROY, snet_reset_dev() never even sees that the device
-failed to stop.
+Functionally, arbitrarily restoring the value of the first matching entry
+is "fine", because none of this is architecturally correct: the load lists
+are never supposed to have been used in the first place.  In practice, it's
+likely a moot point as no well-behaved VMM will have multiple, diverging
+entries in the load lists.
 
-Return the error from the saved ACK value once the completion wait
-itself has succeeded.
-
-Fixes: 3f3a1675b731 ("vdpa/snet: support getting and setting VQ state")
+Fixes: bd18bffca353 ("KVM: nVMX: restore host state in nested_vmx_vmexit for VMFail")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yuho Choi <oss.patchbox@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261005044915.264532-1-oss.patchbox@gmail.com>
+Cc: David Woodhouse <dwmw2@infradead.org>
+Reported-by: Stefan Teodorescu <fane@google.com>
+Suggested-by: Stefan Teodorescu <fane@google.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20261027185917.1478906-1-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/solidrun/snet_ctrl.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/kvm/vmx/nested.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/vdpa/solidrun/snet_ctrl.c b/drivers/vdpa/solidrun/snet_ctrl.c
-index 3cef2571d15d3..1c3b5f2e44990 100644
---- a/drivers/vdpa/solidrun/snet_ctrl.c
-+++ b/drivers/vdpa/solidrun/snet_ctrl.c
-@@ -291,7 +291,6 @@ static int snet_send_ctrl_msg(struct snet *snet, u16 opcode, u16 vq_idx)
+diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
+index 38cfd4f968034..afff667c8ad9f 100644
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -4841,6 +4841,7 @@ static void nested_vmx_restore_host_state(struct kvm_vcpu *vcpu)
+ 					__func__, j, h.index, h.value);
+ 				goto vmabort;
+ 			}
++			break;
+ 		}
+ 	}
  
- 	/* Check for errors */
- 	val = snet_read_ctrl(regs);
--	ret = SNET_VAL_TO_ERR(val);
- 
- 	/* Clear the chunk ready bit */
- 	val &= ~SNET_CTRL_CHUNK_RDY_MASK;
-@@ -301,6 +300,8 @@ static int snet_send_ctrl_msg(struct snet *snet, u16 opcode, u16 vq_idx)
- 	if (ret)
- 		SNET_WARN(pdev, "Timeout waiting for DPU to complete a control command, err %d\n",
- 			  ret);
-+	else
-+		ret = SNET_VAL_TO_ERR(val);
- 
- exit:
- 	mutex_unlock(&snet->ctrl_lock);
 -- 
 2.53.0
 
