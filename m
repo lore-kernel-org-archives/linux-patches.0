@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030073;
-	b=wiFvH7DJgULJ+2xUtL/1FjSNH1k+bfYo15nkAU7gOWrUkkLmiApF/q5OSKMha/NDpiU2
-	 vD82E5Ex2cynceM2zzPScZ8qJZTaYi5d36MizE+tyY7wQoD6hWh9Us9i9Ntvxefye76Xc
-	 hw2oWXWfiWvu5Fy0l/tDv4dblCl8ga/mWSfVuAe+yUJ0heqByAeA3C7Aw4MFVm40pUgxn
-	 dUwX/bC75LPijJH8lYUhKMgIlvDscogvAbNJKU3At+6HdKjJ8Lgtsfvf1A2Lpt+AsgCkF
-	 E0QBQ2pR5JNS8fD/t99Jc4fl7rwoEGEuxCMojisDIDFt6kb+eEm5uSD9mDuEVhJLZHQ==
+	t=1795030076;
+	b=gUVffYT8BexxXSCMXVdyf3qehC2TINfWMpuXsNjr2j0xkCjs0TXOMj3LBE8/5Y+eZS7a
+	 6xPdNhZdEM27yVSH11sYr3BEopcXhBkTpQVsoOGztb5zTgWCKW2KW27BJaYWhdIfSMoJX
+	 laHOFetKhfWhz/A5Zga7B5ftpwyMsNcoL5ttRg8oXjrxNpzQgMZtyt/ppPzsXdYZVFVT0
+	 tYvxIO/ttKBRvuL7tTZXXb3+F94KVZo2iPNU2BreVp4xNpsqkCeO8fUhl98YniV50xRaf
+	 GSDENMOSboSzOZZ1S5xkK8eAoqsH2STELyYuyofi0QthoAk8T4Pa9l4xo+v7HzBc5KQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030073;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030076;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dffateyDinnx7cYipHRamMlj4ZE54GXs84eNH9oyYPM=;
-	b=mVuV74AKPBawfLJXhgS+OnlXBi9nwsTrQGcwXywcYL9UN6SwhvFWpoU3XagG1rIiiXYf
-	 OlmkBnxp4gWxcghQGWRT+QBeoBQprzo7ZUjrTe5j/RTOSp3v4E2ZFDkuC4UJdFFO2Vw4x
-	 oZ/LGLU5NQMNC0hJJrd5h1L4BsXHvSnli0IzSEmUyjTQ45qK6ymjPO343WzvADJZTTbY4
-	 ADSmpTAz/+6oDnBIlrjoTWEe5bVhyqVeWgsOloFhrAXsvlUpBmQSVZvLSdvj7gg9s+98M
-	 vVg0nTxAC20B97LEVuz9Ou/oCaCHFF/wifne4bHp5gmWKvBUUbxNCz1gPqUP/ALQ0ZA==
+	bh=ggB2wbtfc50h9jr+qxh8p8Ud+PHajt0QmnOsJkD6g4E=;
+	b=j4hA4N4b54ejekXGifrm6Og6ipJelQmROJjQ37QyTgfPqCOMbxZPtv/XPwT4Ots8c0D6
+	 dstkKyYNuivSem6Pd5E16j217Abof+ayWLC0kQD0WWV9rNjqqX2yvuxB0rZNll+Qd67uT
+	 sF0phYblAwlzIduXg4y1dhTLdMsNlRpCRP5GFRco0zpgkmQd9Hoz56xctR6Tzkg9MlemV
+	 ZpsTdW7htkMz6HlHSIy0jouUIIZakL1gVocRGYC3ccPyhdIoz5/0Rm24jUEI3yyXP4Pub
+	 DLYLaF0HYLxtM5/W10r8C9fPb4cXtDdsf1f3iIXssDBLCbQ+Mq9T8A2v59i+zPZ2xvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hjt3TFCn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hfHZIXG4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57217606B139;
-	Wed, 18 Nov 2026 19:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F1A606BB63;
+	Wed, 18 Nov 2026 19:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hjt3TFCn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A544F1F000C5;
-	Wed, 18 Nov 2026 19:27:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hfHZIXG4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92CB41F000C5;
+	Wed, 18 Nov 2026 19:27:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030073;
-	bh=dffateyDinnx7cYipHRamMlj4ZE54GXs84eNH9oyYPM=;
+	s=korg; t=1795030076;
+	bh=ggB2wbtfc50h9jr+qxh8p8Ud+PHajt0QmnOsJkD6g4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hjt3TFCn4aJeSmrtAGp0vVrHpcx1THXoTMiuMGIkK/X4/NLu0nMvBuogqahSR+YNN
-	 TsmZmS+dJvNxVoQ7HqJSPCRcZC24DNA2Qd9xEhuEgt06VVFtKvaAYB8DpoMTSJfRKo
-	 ZuvoVzyYBYtFvkpxVSrnuSZS6Rk+n91up/RhiJus=
+	b=hfHZIXG4zomLBCj6Egq+9OuvkNskq/AeHZeAxifQWoAXDnH9XFFFrm+/XBCU5Ohcc
+	 u3493xrIPmKaguRRUjfUwwPqSDeoRDiBLDZBD3F6WpTA1hHVbQYGpNp3OTUvflApvR
+	 49y3znpor5QN6kin3YdLwxSOpeFEyJnT6kQacnN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitrii Tulnov <tulnov.dl@gmail.com>,
-	Julian Braha <julianbraha@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0558/1756] kconfig: warn about malformed KCONFIG_PROBABILITY values
-Date: Wed, 18 Nov 2026 15:44:45 +0100
-Message-ID: <20261118150031.309980097@linuxfoundation.org>
+Subject: [PATCH 6.12 0576/1756] ASoC: rt5665: return cache sync errors from resume
+Date: Wed, 18 Nov 2026 15:45:03 +0100
+Message-ID: <20261118150031.977776867@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,260 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitrii Tulnov <tulnov.dl@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 9f01cd3a324390b235c67ae4ca3d35085369ebdd ]
+[ Upstream commit 9f2933d9a437302d5ae32eb9022efef049d8ab22 ]
 
-randconfig checks the numeric range of each probability but does not
-validate where strtol() stops. For example, KCONFIG_PROBABILITY=50% is
-accepted as 50:0:0: the '%' is parsed repeatedly as zero. For the
-documented value 50, tristate y/m/n probabilities are 25%/25%/50%.
-With 50%, both y/m probabilities silently become zero, reducing the
-coverage of random configuration builds. Empty fields and extra fields
-are also accepted.
+rt5665_resume() restores cached registers during component resume but
+discards the regcache_sync() result and returns success. A failed replay
+can therefore leave the hardware register state stale without reaching
+the component error reporting path.
 
-Warn when the value does not follow the documented decimal format. For
-malformed inputs whose parsed probabilities are in range, preserve the
-existing interpretation unless KCONFIG_WERROR is set. In that case, exit
-with an error before writing the configuration. Leading whitespace and
-signs are accepted by strtol(), but also trigger the warning because they
-are outside the documented format.
+Return the cache synchronization result. The ASoC component wrapper
+reports a negative callback result and retains the established
+best-effort resume state, so this adds observability without introducing
+rollback or retry semantics.
 
-Keep the strtol() result as long until the range check. This rejects
-out-of-range values that narrowing to int previously made valid, such as
-4294967296 becoming zero on a 64-bit host, regardless of KCONFIG_WERROR.
+The successful resume path is unchanged.
 
-Add regression tests for one warning per malformed input, preserved
-configurations, KCONFIG_WERROR, out-of-range values, the supported
-probability formats, and the documented empty-value default.
+The issue was found by a tool we developed.
 
-Fixes: e43956e60769 ("kconfig: implement KCONFIG_PROBABILITY for randconfig")
-Assisted-by: LLM
-Signed-off-by: Dmitrii Tulnov <tulnov.dl@gmail.com>
-Tested-by: Julian Braha <julianbraha@gmail.com>
-Reviewed-by: Julian Braha <julianbraha@gmail.com>
-Link: https://patch.msgid.link/20260918213430.3-1-tulnov.dl@gmail.com
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: 33ada14a26c8 ("ASoC: add rt5665 codec driver")
+Assisted-by: gpt 5
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260902013256.93072-15-pengpeng@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/conf.c                        |  16 ++-
- scripts/kconfig/tests/conftest.py             |   6 +
- .../tests/randconfig_probability/Kconfig      |  12 ++
- .../tests/randconfig_probability/__init__.py  | 130 ++++++++++++++++++
- 4 files changed, 163 insertions(+), 1 deletion(-)
- create mode 100644 scripts/kconfig/tests/randconfig_probability/Kconfig
- create mode 100644 scripts/kconfig/tests/randconfig_probability/__init__.py
+ sound/soc/codecs/rt5665.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/scripts/kconfig/conf.c b/scripts/kconfig/conf.c
-index efc7ae166c8af..22c95c689faa5 100644
---- a/scripts/kconfig/conf.c
-+++ b/scripts/kconfig/conf.c
-@@ -186,12 +186,23 @@ static void conf_set_all_new_symbols(enum conf_def_mode mode)
+diff --git a/sound/soc/codecs/rt5665.c b/sound/soc/codecs/rt5665.c
+index 4f0236b34a2d9..2f9b1c305cf0a 100644
+--- a/sound/soc/codecs/rt5665.c
++++ b/sound/soc/codecs/rt5665.c
+@@ -4485,9 +4485,7 @@ static int rt5665_resume(struct snd_soc_component *component)
+ 	struct rt5665_priv *rt5665 = snd_soc_component_get_drvdata(component);
  
- 	if (mode == def_random) {
- 		int n, p[3];
-+		bool warned = false;
- 		char *env = getenv("KCONFIG_PROBABILITY");
- 
- 		n = 0;
- 		while (env && *env) {
- 			char *endp;
--			int tmp = strtol(env, &endp, 10);
-+			long tmp = strtol(env, &endp, 10);
-+
-+			if (!isdigit((unsigned char)*env) ||
-+			    (*endp && *endp != ':') ||
-+			    (*endp == ':' && (!endp[1] || n == 2))) {
-+				if (!warned) {
-+					fprintf(stderr,
-+						"warning: KCONFIG_PROBABILITY has malformed format\n");
-+					warned = true;
-+				}
-+			}
- 
- 			if (tmp >= 0 && tmp <= 100) {
- 				p[n++] = tmp;
-@@ -227,6 +238,9 @@ static void conf_set_all_new_symbols(enum conf_def_mode mode)
- 			perror("KCONFIG_PROBABILITY");
- 			exit(1);
- 		}
-+
-+		if (warned && getenv("KCONFIG_WERROR"))
-+			exit(1);
- 	}
- 
- 	menu_for_each_entry(menu) {
-diff --git a/scripts/kconfig/tests/conftest.py b/scripts/kconfig/tests/conftest.py
-index 2a2a7e2da0608..26f194ed2d400 100644
---- a/scripts/kconfig/tests/conftest.py
-+++ b/scripts/kconfig/tests/conftest.py
-@@ -293,6 +293,12 @@ class Conf:
-         return self._matches('stderr', expected)
- 
- 
-+@pytest.fixture(autouse=True)
-+def clear_werror(monkeypatch):
-+    # extra_env can set strict mode, but cannot remove an inherited flag.
-+    monkeypatch.delenv('KCONFIG_WERROR', raising=False)
-+
-+
- @pytest.fixture(scope="module")
- def conf(request):
-     """Create a Conf instance and provide it to test functions."""
-diff --git a/scripts/kconfig/tests/randconfig_probability/Kconfig b/scripts/kconfig/tests/randconfig_probability/Kconfig
-new file mode 100644
-index 0000000000000..84f4e5fcc51e4
---- /dev/null
-+++ b/scripts/kconfig/tests/randconfig_probability/Kconfig
-@@ -0,0 +1,12 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+
-+config MODULES
-+	bool
-+	default y
-+	modules
-+
-+config BOOL
-+	bool "Bool"
-+
-+config TRI
-+	tristate "Tristate"
-diff --git a/scripts/kconfig/tests/randconfig_probability/__init__.py b/scripts/kconfig/tests/randconfig_probability/__init__.py
-new file mode 100644
-index 0000000000000..e6e5dda10ad92
---- /dev/null
-+++ b/scripts/kconfig/tests/randconfig_probability/__init__.py
-@@ -0,0 +1,130 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+"""Validate KCONFIG_PROBABILITY without changing the supported distributions."""
-+
-+
-+def test_malformed_warns(conf):
-+    probabilities = [
-+        'invalid', ' ', '50%', '50 ', '0x32', '10 20', '10:20x',
-+        '10:20:invalid', '10:20:30x',
-+        ':50', '50:', '10::20', '10:20:', '10:20:30:', '10:20:30:40',
-+        '-0', '+0', '+', '-', '+100:0', ' \t100:0', '0: \t100:0',
-+    ]
-+    for probability in probabilities:
-+        assert conf._run_conf('--randconfig', extra_env={
-+            'KCONFIG_PROBABILITY': probability,
-+            'KCONFIG_SEED': '0',
-+        }) == 0, repr(probability)
-+        assert ('warning: KCONFIG_PROBABILITY has malformed format' in
-+                conf.stderr), repr(probability)
-+        assert conf.stderr.count('warning:') == 1, repr(probability)
-+        assert conf.config is not None, repr(probability)
-+
-+
-+def test_malformed_preserves_config(conf):
-+    probabilities = [('50%', '50:0:0'), ('-0', '0')]
-+    for seed in range(20):
-+        for probability, equivalent in probabilities:
-+            context = 'probability={!r}, equivalent={!r}, seed={}'.format(
-+                probability, equivalent, seed)
-+            assert conf._run_conf('--randconfig', extra_env={
-+                'KCONFIG_PROBABILITY': probability,
-+                'KCONFIG_SEED': hex(seed),
-+            }) == 0, context
-+            assert ('warning: KCONFIG_PROBABILITY has malformed format' in
-+                    conf.stderr), context
-+            assert conf.stderr.count('warning:') == 1, context
-+            malformed = conf.config
-+
-+            assert conf._run_conf('--randconfig', extra_env={
-+                'KCONFIG_PROBABILITY': equivalent,
-+                'KCONFIG_SEED': hex(seed),
-+            }) == 0, context
-+            assert 'warning:' not in conf.stderr, context
-+            assert conf.config == malformed, context
-+
-+
-+def test_werror(conf):
-+    probabilities = [
-+        ('', 0), ('50', 0), ('50%', 1), ('-0', 1), ('10:20:30:40', 1),
-+    ]
-+    for probability, status in probabilities:
-+        for werror in ['', '0', '1']:
-+            context = 'probability={!r}, werror={!r}'.format(
-+                probability, werror)
-+            assert conf._run_conf('--randconfig', extra_env={
-+                'KCONFIG_PROBABILITY': probability,
-+                'KCONFIG_SEED': '0',
-+                'KCONFIG_WERROR': werror,
-+            }) == status, context
-+            if status:
-+                assert ('warning: KCONFIG_PROBABILITY has malformed format' in
-+                        conf.stderr), context
-+                assert conf.stderr.count('warning:') == 1, context
-+            else:
-+                assert 'warning:' not in conf.stderr, context
-+
-+
-+def test_out_of_range(conf):
-+    probabilities = [
-+        '-1', '101', '+101', '0:101', '0:0:101', '60:41', '0:60:41',
-+        '4294967296', '-4294967296',
-+        '999999999999999999999999', '-999999999999999999999999',
-+    ]
-+    for probability in probabilities:
-+        assert conf._run_conf('--randconfig', extra_env={
-+            'KCONFIG_PROBABILITY': probability,
-+            'KCONFIG_SEED': '0',
-+        }) == 1, repr(probability)
-+        assert 'KCONFIG_PROBABILITY:' in conf.stderr, repr(probability)
-+
-+
-+def test_valid(conf):
-+    probabilities = [
-+        ('0', 'n', 'n'),
-+        ('0:0', 'n', 'n'),
-+        ('100:0', 'y', 'y'),
-+        ('0:100', 'y', 'm'),
-+        ('100:0:0', 'y', 'n'),
-+        ('0:100:0', 'n', 'y'),
-+        ('0:0:100', 'n', 'm'),
-+        ('000:000:100', 'n', 'm'),
-+    ]
-+    for probability, boolean, tristate in probabilities:
-+        assert conf._run_conf('--randconfig', extra_env={
-+            'KCONFIG_PROBABILITY': probability,
-+            'KCONFIG_SEED': '0',
-+        }) == 0, repr(probability)
-+        assert 'warning:' not in conf.stderr, repr(probability)
-+        for symbol, value in [('BOOL', boolean), ('TRI', tristate)]:
-+            if value == 'n':
-+                expected = '# CONFIG_{} is not set'.format(symbol)
-+            else:
-+                expected = 'CONFIG_{}={}'.format(symbol, value)
-+            assert expected in conf.config.splitlines(), repr(probability)
-+
-+
-+def test_single_probability_matches_tristate_split(conf):
-+    for seed in range(20):
-+        context = 'seed={}'.format(seed)
-+        assert conf._run_conf('--randconfig', extra_env={
-+            'KCONFIG_PROBABILITY': '50',
-+            'KCONFIG_SEED': hex(seed),
-+        }) == 0, context
-+        assert 'warning:' not in conf.stderr, context
-+        single = conf.config
-+
-+        # 50% boolean y; 25% tristate y, 25% m, and 50% n.
-+        assert conf._run_conf('--randconfig', extra_env={
-+            'KCONFIG_PROBABILITY': '50:25:25',
-+            'KCONFIG_SEED': hex(seed),
-+        }) == 0, context
-+        assert 'warning:' not in conf.stderr, context
-+        assert conf.config == single, context
-+
-+
-+def test_empty(conf):
-+    assert conf._run_conf('--randconfig', extra_env={
-+        'KCONFIG_PROBABILITY': '',
-+        'KCONFIG_SEED': '0',
-+    }) == 0
-+    assert 'warning:' not in conf.stderr
+ 	regcache_cache_only(rt5665->regmap, false);
+-	regcache_sync(rt5665->regmap);
+-
+-	return 0;
++	return regcache_sync(rt5665->regmap);
+ }
+ #else
+ #define rt5665_suspend NULL
 -- 
 2.53.0
 
