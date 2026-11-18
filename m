@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029500;
-	b=xDyh8B1gjqFEEcmVb69awh7Zmv9U7pOb3t9QmwtamRZJVfpMNIe1YAzYCcD2oLDLvvTF
-	 GY2hwJDi5YQ6252Y3kj51Csta/uyJzveizcS3mMUajGJJnRO2kyJynfQ3/dfii/8yh01b
-	 F5Mt8yO+p+QR9kqtzjFnmbnlhG9FitBfMLfyk5J8QRTYgGyVbW2TXJSUzDlpzfSb4HR7x
-	 cR3Vo+HbEyw6WZDCTMGrq6KUcbk7J/T0eE38L/YGBN89KKmzIRVItBHnmG3DHlrwWgSlK
-	 hjqoPwkZt7sDxTbdBMfcLR1y7+PfnA6Z1nSQjXMPnUwKzfFTLlcR3zRgLOI/LmwczgQ==
+	t=1795029503;
+	b=H+kfSeENMfAq44ZF/5sixOCmjIjAXb4MNf/EdfAVDLXVIG79Sa2CMO8DqqfZoCDXvT9r
+	 GB7q4rHzxwEF82NTTGLX8LoCvbATJtwYcexSgvMprdfi9iiZWuZG0piLajj6uor8hOcHi
+	 ShHrCiCc1rnJdYExD43qLAeo4iCNbx2QJsUpLzPLqw77ya9GI9VcH+O1vwdO/1jrfIvH7
+	 Weid+4OH8WA7lV1Eigfc2PRZBvye0msDx0YF6fh+hyVhdM04aZOGNDCumWzTMVpkRjTWp
+	 TW3lyNV8wByVJyfNjXM0Tyt0mLCqhZJ6+tLImddfjOVHxC9CP/FWxrDl0mND/Utjq/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029500;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029503;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ApbdGtUX+s3xaV2JxuDDOt32wASv79qwDz+L1cKHyhA=;
-	b=clSgfeA68zbZOqbRUVRbsTP5hraknpjFV5ZWn8Jh0MOyxierctkj/sY7AtHG9D0z6GQd
-	 Rh1dnB3hzz2IDEkcPu4X2OlqXwwa7G0WEd0R0gnHTLSAk4PdYzlI3HXAA2WWHjwKpj6k9
-	 5DmwdQBMvHnM7YZueYZF6fY3S1degp3TNpto8hiLVtdvQHptZpsyQiqpJSK2aPTIXK/fv
-	 nSrp009n1ocKKJTspONXlIMk7GFkA/q545DcZvdcKNNFDM69F5E9gmXOnzLtwVi57w6F4
-	 NIOYPoo5bgKFltbFJI4TWQ9OUSzFByzijqX6vOSeaHiUBJRr0b9T3RsCM1Yc2YzMNqQ==
+	bh=67hikhjJ8N1UaWt+RuSgmOjBfU80nPm2/luFKAtpE4s=;
+	b=R0lg4eJRUUh/axjMNBITXQk4qSGNVCIHB5rBA/MeK7iW6/ALxcCGPOht11d4wkfgJBAw
+	 8CnNk5yBrwULfpKcDPXLE4x8ojcHZkGiWXU7Q6WNQPcN4EWCnqUWPAWysBlPMVoH5PVO1
+	 2+Ev3aBeJ8zilYFb4uGxyASMfjQiz1qRH5rnHwCkq+YjYN7gskuBWhKXgxnbnNAfu7tHp
+	 XnNtXhnQer3OchC+nKK63aMbJCK1Al0T16bgiw/4zVwZ8zaikvm9FdHWGDfSc5z+ly32J
+	 fGquwSQsWtOTV/jTK9jT0P+9q6M4bCrexKl2Md+stdbOTRw+Bt91vEqlu9obKMKHKeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="nxTX75u/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YURWrabE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A035D606A32A;
-	Wed, 18 Nov 2026 19:18:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A736C606A320;
+	Wed, 18 Nov 2026 19:18:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nxTX75u/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F30121F000C5;
-	Wed, 18 Nov 2026 19:18:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YURWrabE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7D581F000C5;
+	Wed, 18 Nov 2026 19:18:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029500;
-	bh=ApbdGtUX+s3xaV2JxuDDOt32wASv79qwDz+L1cKHyhA=;
+	s=korg; t=1795029503;
+	bh=67hikhjJ8N1UaWt+RuSgmOjBfU80nPm2/luFKAtpE4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nxTX75u/xbpK1aIWuTs9Ar8WkNql1jCzAbYR+A3MMCizGouX9iDDIQyioI0OqWnjM
-	 hsyEJNvciVDBnu718qGuTM6vkHlL3cIXCh9S6SqX3vG4WDz+idiiuB7SZeLtsc3sJH
-	 woXvJ/t++wGQEN6rqXP5o9hxP1UtDTIebm1LZl/Q=
+	b=YURWrabEG7MxCiNcr+2cKhW1Tx84TbjRqrXXEasFTM+OSp2xOYwzNiRo2wR8sIcNw
+	 w3xietL9r6Z9sUKN19Tj9jb7lHGjbfYCspAG8dcf7OAe/MmKKns97BU4zIRlrVImHG
+	 Va2X9q9nrF45llWAMw05iWxGq+NLvOXezkyv/RvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Xueqin Luo <luoxueqin@kylinos.cn>,
+	Christian Loehle <christian.loehle@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0369/1756] ARM: dts: stm32: add LTDC / DCMIPP access controller for STM32MP135
-Date: Wed, 18 Nov 2026 15:41:36 +0100
-Message-ID: <20261118150023.120451577@linuxfoundation.org>
+Subject: [PATCH 6.12 0370/1756] cpuidle: teo: Do not return a disabled idle state
+Date: Wed, 18 Nov 2026 15:41:37 +0100
+Message-ID: <20261118150023.177394678@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,78 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alain Volmat <alain.volmat@foss.st.com>
+From: Xueqin Luo <luoxueqin@kylinos.cn>
 
-[ Upstream commit 0c354b85cc95b5d563a581c8dbca57b4942bfae7 ]
+[ Upstream commit 60d5fca628f94f8f23398ad62d80aa284dae6571 ]
 
-Add ETZPC as an access controller for the LTDC and DCMIPP found
-on the stm32mp135.
+If idle state 0 is disabled and none of the enabled idle states satisfies
+the PM QoS latency constraint, constraint_idx in teo_select() stays at its
+initial value of 0, because the loop that updates it starts at state 1,
+and so the candidate state index is capped at state 0, which is disabled,
+and that state is returned to the caller.
 
-Fixes: a06b9560eb6c ("ARM: dts: stm32: add ETZPC as a system bus for STM32MP13x boards")
+The cpuidle core does not validate the returned state index against the
+per-state disable flags, so the CPU ends up entering the disabled state 0.
 
-Signed-off-by: Alain Volmat <alain.volmat@foss.st.com>
-Link: https://lore.kernel.org/r/20260721-etzpc-mp13-ltdc-dcmipp-fix-v1-1-a969f2ab8da1@foss.st.com
-Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
+To address this, ensure that constraint_idx is at least equal to the index
+of the first enabled idle state (idx0), so that the candidate state is
+never capped to a disabled one.
+
+Fixes: c410a9a142f1 ("cpuidle: teo: Change the main idle state selection logic")
+Signed-off-by: Xueqin Luo <luoxueqin@kylinos.cn>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://patch.msgid.link/20260828032457.2317326-1-luoxueqin@kylinos.cn
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/st/stm32mp135.dtsi | 42 ++++++++++++++--------------
- 1 file changed, 21 insertions(+), 21 deletions(-)
+ drivers/cpuidle/governors/teo.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/arch/arm/boot/dts/st/stm32mp135.dtsi b/arch/arm/boot/dts/st/stm32mp135.dtsi
-index 834a4d545fe44..f573335edf6b4 100644
---- a/arch/arm/boot/dts/st/stm32mp135.dtsi
-+++ b/arch/arm/boot/dts/st/stm32mp135.dtsi
-@@ -6,29 +6,29 @@
+diff --git a/drivers/cpuidle/governors/teo.c b/drivers/cpuidle/governors/teo.c
+index 520aa466c2e75..b22c1f8197795 100644
+--- a/drivers/cpuidle/governors/teo.c
++++ b/drivers/cpuidle/governors/teo.c
+@@ -432,6 +432,17 @@ static int teo_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
+ 		goto out_tick;
+ 	}
  
- #include "stm32mp133.dtsi"
- 
--/ {
--	soc {
--		dcmipp: dcmipp@5a000000 {
--			compatible = "st,stm32mp13-dcmipp";
--			reg = <0x5a000000 0x400>;
--			interrupts = <GIC_SPI 79 IRQ_TYPE_LEVEL_HIGH>;
--			resets = <&rcc DCMIPP_R>;
--			clocks = <&rcc DCMIPP_K>;
--			status = "disabled";
-+&etzpc {
-+	dcmipp: dcmipp@5a000000 {
-+		compatible = "st,stm32mp13-dcmipp";
-+		reg = <0x5a000000 0x400>;
-+		interrupts = <GIC_SPI 79 IRQ_TYPE_LEVEL_HIGH>;
-+		resets = <&rcc DCMIPP_R>;
-+		clocks = <&rcc DCMIPP_K>;
-+		access-controllers = <&etzpc 4>;
-+		status = "disabled";
- 
--			port {
--			};
-+		port {
- 		};
-+	};
- 
--		ltdc: display-controller@5a001000 {
--			compatible = "st,stm32-ltdc";
--			reg = <0x5a001000 0x400>;
--			interrupts = <GIC_SPI 88 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 89 IRQ_TYPE_LEVEL_HIGH>;
--			clocks = <&rcc LTDC_PX>;
--			clock-names = "lcd";
--			resets = <&scmi_reset RST_SCMI_LTDC>;
--			status = "disabled";
--		};
-+	ltdc: display-controller@5a001000 {
-+		compatible = "st,stm32-ltdc";
-+		reg = <0x5a001000 0x400>;
-+		interrupts = <GIC_SPI 88 IRQ_TYPE_LEVEL_HIGH>,
-+			     <GIC_SPI 89 IRQ_TYPE_LEVEL_HIGH>;
-+		clocks = <&rcc LTDC_PX>;
-+		clock-names = "lcd";
-+		resets = <&scmi_reset RST_SCMI_LTDC>;
-+		access-controllers = <&etzpc 3>;
-+		status = "disabled";
- 	};
- };
++	/*
++	 * If the latency constraint does not allow any of the enabled idle
++	 * states to be used, the candidate state index will be capped to 0
++	 * by the check below, but state 0 may be disabled.  To prevent the
++	 * selection of a disabled state in that case, ensure that
++	 * constraint_idx is at least equal to the index of the first
++	 * enabled idle state.
++	 */
++	if (constraint_idx < idx0)
++		constraint_idx = idx0;
++
+ 	/*
+ 	 * If there is a latency constraint, it may be necessary to select an
+ 	 * idle state shallower than the current candidate one.
 -- 
 2.53.0
 
