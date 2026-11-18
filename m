@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022439;
-	b=FHCx6OcWU+UysBYI/UBvNs942OQ8EOXNrBpCpz2BUlgQC+iFIl7OQnxvgHKVknbooIY4
-	 rfB7z99Pb+3wg1Pu5g0V7/uiKOVaJ1ZFREEPUgA9B9sVTKTQq1rh6knyoswCtirxlQNqY
-	 98eAz3085rzI7cyDhoWNwkR/Q2PBLZ6xcDse7EkutNWBLQnUg4k1+8yh8yKy/uyPCrHxl
-	 +1sDChT36KPrPLDWOcpPWynG4a3jbOsTFlUd1HYuAlEM+xQNNim9vgnpICnq/dAwA+e8y
-	 TMRvTy0QV38hGrM5LwYHF7uib5KrPg0teXVaXWNGNNbEjVgcrIl7H4NZy6/LVw8DvPA==
+	t=1795022442;
+	b=cT5RWvhHhb5bUQMCl5LjNdvXpPSd/cP98cKWGQAYmJIiwKN182Q4OExd1V0LAGjo1SBe
+	 KelhseRr7X1+G6uyqiRfTx2kciDkLdiNUZtvnwREmq8M+dlVVK/3+r4HS03sFga6hBXQF
+	 HDpAnsp8ECE+BiQSIdJUy7wTUpvkFfLGlsJOqnZq+hPtTvE//C7b+xz9jZ/Z6r1H3vrQG
+	 jRFG+FS7OnofILvC8EWNpa/YjI3YyYNqEYLL8sgZ9WswhKcy57ET9mlHYkRRuinzG1LG2
+	 WlDokQIX4XODOpjJMnGcnGUQTOlfZAjIw/WGm9IInhtUPOzhdbjiI/a/cU3LjeY9fmA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022439;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022442;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ATmVp5ni+2wqgj/2PVYu6e2Id8cdpJ/RGyTaC+wSybk=;
-	b=wOPGWqPKSXVfmLfNJBS5JLlvgs0/UP24Fk19d2KL1l+qKMv+Y8Vsdi48I6ckps4lQe7f
-	 z5z8rnVPx4XhtAUs7F7qEkCnood6EF3reV/Yvo1jHdRVHKGOoqHD9yoS3j/69MtM6JCMg
-	 IlhKE677pUQZzXUCZpBH6Jk3bcB21mPFAWI4D1du1AhbZMUMdR0fkXnHalgq9P/GSLzrv
-	 IDLLOMCHbFj/ioF+VimN1+iEhQuv57pHwjjqNoiQqiN74sT9mqJIIXoD0gkH6OD1NPrSI
-	 FaMFFNjukDBlUAI95+0sXlz4a9mtW2mo8fNmM5wfF2va0l4cv/dDIL1kLNWNFRSkfaA==
+	bh=Rej/gORME9ziL53Y8qrlh7t+BMtMoZLsXYHQnxy+aPw=;
+	b=Wqo9J1p0pJ8F6Wbp2XJSTEeqEJxMpfu16LHpkv7imrf31+X2KZy03r1Hba8tn7bLbsUS
+	 1po8QFWMU3q1ia+vrvmWPsJgIiN2PgbvKe8f5CGdGHHYlbgnoWpSWPCJ43j6Beg6hKot7
+	 zT6cA56Uj29A0+cWAk6L6MFeotwY47dhCP4wGSJrWIRYHNw1wMtudj7CcjpoZyD4p6Agw
+	 HTRgdJYfL3mH1g+h2Fu+3UcvUSim94aCCoGoRsFzu/XRIIvINkx/4rjAFjoORAUcARbqC
+	 ODn2joOPdZJLC35F8FrFw2aGvayZu6BY1146h05G/SfMVOG3ve82eE+97MbBld47MZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o3zHrbDP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e7zwVLjl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E2D606A31C;
-	Wed, 18 Nov 2026 17:20:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 482A4606A31C;
+	Wed, 18 Nov 2026 17:20:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o3zHrbDP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABBB41F000C4;
-	Wed, 18 Nov 2026 17:20:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e7zwVLjl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94F3B1F000C5;
+	Wed, 18 Nov 2026 17:20:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022439;
-	bh=ATmVp5ni+2wqgj/2PVYu6e2Id8cdpJ/RGyTaC+wSybk=;
+	s=korg; t=1795022442;
+	bh=Rej/gORME9ziL53Y8qrlh7t+BMtMoZLsXYHQnxy+aPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o3zHrbDPHOf6kli0/thsx7v+3hpCZWBuoQApJgvyQ8MnoKEHxs0UhuB0rX//5s2m6
-	 vmLg2RP1iF1BvQQfTv33S12u+A52frVWa3L+IQiNtOQOpQsxw6ns2vQn23qejPNYbE
-	 GAtPCKpbxz0rJEx5lIAkBbRw/IKcs1De76czbVHI=
+	b=e7zwVLjlDZBVBkk82pmYeS9Xf2OlGDTo9FbxQ6ERXIaC5SQAWRTvqK6/FOzyw5qsZ
+	 Sx6YeMb96dPM5G9chrL8J6jMTYzb/SDaa9AFiQVGzPF9GnV1ehAZmpphdWlzlzRNqQ
+	 /VmIjvXzhmDAFyvXvGRrr3T4POo1ZDbodbC6uJZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Palacek <William.Palacek@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0014/2151] drm/amdkfd: Validate the control stack of a restored queue
-Date: Wed, 18 Nov 2026 15:29:09 +0100
-Message-ID: <20261118150122.159823541@linuxfoundation.org>
+Subject: [PATCH 6.18 0015/2151] pidfs: prepare to drop exit_info pointer
+Date: Wed, 18 Nov 2026 15:29:10 +0100
+Message-ID: <20261118150122.198408826@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,175 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Palacek <William.Palacek@amd.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 90d91a192751cd9a7d9d2286299bc72ec1c28179 ]
+[ Upstream commit ad6e3ea683ef4086cdf3d2ec40cb3f6e62edb945 ]
 
-kfd_criu_restore_queue() takes the control stack size from the
-checkpoint image without the topology check create-queue does in
-kfd_queue_acquire_buffers(), which restore stopped calling in
-commit 1cafa8b29e02 ("drm/amdkfd: Don't acquire buffers
-during CRIU queue restore."). An image size of 0x300000 is accepted and
-sizes the MQD allocation, and 0xFFFFFFFF trips a page allocator warning
-in kmalloc().
+There will likely be more info that we need to store in struct
+pidfs_attr. We need to make sure that some of the information such as
+exit info or coredump info that consists of multiple bits is either
+available completely or not at all, but never partially. Currently we
+use a pointer that we assign to. That doesn't scale. We can't waste a
+pointer for each mulit-part information struct we want to expose. Use a
+bitmask instead.
 
-restore_mqd() also keeps the image's cp_hqd_cntl_stack_size,
-cp_hqd_cntl_stack_offset and cp_hqd_wg_state_offset. With offset > size
-or wave state offset < size, get_wave_state() returns wrapped sizes.
-
-Take the per-XCC size from topology, 0 for queues without a control
-stack, and reject larger images. In restore_mqd(), set the size to it
-and bound both offsets as init_mqd() does.
-
-Fixes: 626f7b3190b4 ("drm/amdkfd: CRIU add queues support")
-Fixes: 42c6c48214b7 ("drm/amdkfd: CRIU checkpoint and restore queue mqds")
-Signed-off-by: William Palacek <William.Palacek@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 92249023caee17bfc6f29c71d6aaa5f2298cf507)
-Cc: stable@vger.kernel.org
-[ sashal: inlined the upstream helper into four existing restore functions to avoid adding a new function ]
+Link: https://patch.msgid.link/20251028-work-coredump-signal-v1-6-ca449b7b7aa0@kernel.org
+Reviewed-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 172658cf6009 ("pidfs: don't let PIDFD_GET_INFO miss a reaped task")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c  |  3 ++
- .../gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c  |  3 ++
- .../gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c   |  3 ++
- .../gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c   |  3 ++
- .../amd/amdkfd/kfd_process_queue_manager.c    | 30 +++++++++++++------
- 5 files changed, 33 insertions(+), 9 deletions(-)
+ fs/pidfs.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
-index 4a621791da230..99fdbf666c87d 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
-@@ -293,6 +293,9 @@ static void restore_mqd(struct mqd_manager *mm, void **mqd,
- 	addr = mqd_mem_obj->gpu_addr;
+diff --git a/fs/pidfs.c b/fs/pidfs.c
+index 4341492b91e12..d2afc85b9df37 100644
+--- a/fs/pidfs.c
++++ b/fs/pidfs.c
+@@ -49,7 +49,12 @@ struct pidfs_exit_info {
+ 	__u32 coredump_mask;
+ };
  
- 	memcpy(m, mqd_src, sizeof(*m));
-+	m->cp_hqd_cntl_stack_size = qp->ctl_stack_size;
-+	m->cp_hqd_cntl_stack_offset = min(m->cp_hqd_cntl_stack_offset, qp->ctl_stack_size);
-+	m->cp_hqd_wg_state_offset = max(m->cp_hqd_wg_state_offset, qp->ctl_stack_size);
++enum pidfs_attr_mask_bits {
++	PIDFS_ATTR_BIT_EXIT	= 0,
++};
++
+ struct pidfs_attr {
++	unsigned long attr_mask;
+ 	struct simple_xattrs *xattrs;
+ 	struct pidfs_exit_info __pei;
+ 	struct pidfs_exit_info *exit_info;
+@@ -325,8 +330,8 @@ static long pidfd_info(struct file *file, unsigned int cmd, unsigned long arg)
  
- 	*mqd = m;
- 	if (gart_addr)
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
-index ca90454b01acc..2f4caf637a065 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
-@@ -344,6 +344,9 @@ static void restore_mqd(struct mqd_manager *mm, void **mqd,
- 	addr = mqd_mem_obj->gpu_addr;
+ 	attr = READ_ONCE(pid->attr);
+ 	if (mask & PIDFD_INFO_EXIT) {
+-		exit_info = READ_ONCE(attr->exit_info);
+-		if (exit_info) {
++		if (test_bit(PIDFS_ATTR_BIT_EXIT, &attr->attr_mask)) {
++			smp_rmb();
+ 			kinfo.mask |= PIDFD_INFO_EXIT;
+ #ifdef CONFIG_CGROUPS
+ 			kinfo.cgroupid = exit_info->cgroupid;
+@@ -681,7 +686,8 @@ void pidfs_exit(struct task_struct *tsk)
+ 	exit_info->exit_code = tsk->exit_code;
  
- 	memcpy(m, mqd_src, sizeof(*m));
-+	m->cp_hqd_cntl_stack_size = qp->ctl_stack_size;
-+	m->cp_hqd_cntl_stack_offset = min(m->cp_hqd_cntl_stack_offset, qp->ctl_stack_size);
-+	m->cp_hqd_wg_state_offset = max(m->cp_hqd_wg_state_offset, qp->ctl_stack_size);
- 
- 	*mqd = m;
- 	if (gart_addr)
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-index f0e7a7244a33f..e7bb62a0ac7e1 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-@@ -429,6 +429,9 @@ static void restore_mqd(struct mqd_manager *mm, void **mqd,
- 	addr = mqd_mem_obj->gpu_addr;
- 
- 	memcpy(m, mqd_src, sizeof(*m));
-+	m->cp_hqd_cntl_stack_size = qp->ctl_stack_size;
-+	m->cp_hqd_cntl_stack_offset = min(m->cp_hqd_cntl_stack_offset, qp->ctl_stack_size);
-+	m->cp_hqd_wg_state_offset = max(m->cp_hqd_wg_state_offset, qp->ctl_stack_size);
- 
- 	*mqd = m;
- 	if (gart_addr)
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c
-index f0de0893bc597..ae3bd2bb410a5 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c
-@@ -305,6 +305,9 @@ static void restore_mqd(struct mqd_manager *mm, void **mqd,
- 	addr = mqd_mem_obj->gpu_addr;
- 
- 	memcpy(m, mqd_src, sizeof(*m));
-+	m->cp_hqd_cntl_stack_size = qp->ctl_stack_size;
-+	m->cp_hqd_cntl_stack_offset = min(m->cp_hqd_cntl_stack_offset, qp->ctl_stack_size);
-+	m->cp_hqd_wg_state_offset = max(m->cp_hqd_wg_state_offset, qp->ctl_stack_size);
- 
- 	*mqd = m;
- 	if (gart_addr)
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-index 6f3cfb9245c4a..b2a0caa7e1ca0 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-@@ -26,6 +26,7 @@
- #include <linux/list.h>
- #include "kfd_device_queue_manager.h"
- #include "kfd_priv.h"
-+#include "kfd_topology.h"
- #include "kfd_kernel_queue.h"
- #include "amdgpu_amdkfd.h"
- #include "amdgpu_reset.h"
-@@ -968,7 +969,7 @@ int kfd_criu_checkpoint_queues(struct kfd_process *p,
+ 	/* Ensure that PIDFD_GET_INFO sees either all or nothing. */
+-	smp_store_release(&attr->exit_info, &attr->__pei);
++	smp_wmb();
++	set_bit(PIDFS_ATTR_BIT_EXIT, &attr->attr_mask);
  }
  
- static void set_queue_properties_from_criu(struct queue_properties *qp,
--					  struct kfd_criu_queue_priv_data *q_data, uint32_t num_xcc)
-+					  struct kfd_criu_queue_priv_data *q_data)
- {
- 	qp->is_interop = false;
- 	qp->queue_percent = q_data->q_percent;
-@@ -981,11 +982,6 @@ static void set_queue_properties_from_criu(struct queue_properties *qp,
- 	qp->eop_ring_buffer_size = q_data->eop_ring_buffer_size;
- 	qp->ctx_save_restore_area_address = q_data->ctx_save_restore_area_address;
- 	qp->ctx_save_restore_area_size = q_data->ctx_save_restore_area_size;
--	if (q_data->type == KFD_QUEUE_TYPE_COMPUTE)
--		qp->ctl_stack_size = q_data->ctl_stack_size / num_xcc;
--	else
--		qp->ctl_stack_size = q_data->ctl_stack_size;
--
- 	qp->type = q_data->type;
- 	qp->format = q_data->format;
- }
-@@ -997,6 +993,7 @@ int kfd_criu_restore_queue(struct kfd_process *p,
- {
- 	uint8_t *mqd, *ctl_stack, *q_extra_data = NULL;
- 	struct kfd_criu_queue_priv_data *q_data;
-+	struct kfd_topology_device *topo_dev;
- 	struct kfd_process_device *pdd;
- 	uint64_t q_extra_data_size;
- 	struct queue_properties qp;
-@@ -1033,6 +1030,24 @@ int kfd_criu_restore_queue(struct kfd_process *p,
- 		goto exit;
- 	}
- 
-+	memset(&qp, 0, sizeof(qp));
-+	set_queue_properties_from_criu(&qp, q_data);
-+
-+	/* Per-XCC control stack size from topology, as create-queue requires */
-+	if (qp.type == KFD_QUEUE_TYPE_COMPUTE && pdd->dev->kfd->cwsr_enabled) {
-+		topo_dev = kfd_topology_device_by_id(pdd->dev->id);
-+		if (!topo_dev) {
-+			ret = -EINVAL;
-+			goto exit;
-+		}
-+		qp.ctl_stack_size = topo_dev->node_props.ctl_stack_size;
-+	}
-+
-+	if (q_data->ctl_stack_size > (u64)qp.ctl_stack_size * NUM_XCC(pdd->dev->xcc_mask)) {
-+		ret = -EINVAL;
-+		goto exit;
-+	}
-+
- 	*priv_data_offset += sizeof(*q_data);
- 	q_extra_data_size = (uint64_t)q_data->ctl_stack_size + q_data->mqd_size;
- 
-@@ -1062,9 +1077,6 @@ int kfd_criu_restore_queue(struct kfd_process *p,
- 	mqd = q_extra_data;
- 	ctl_stack = mqd + q_data->mqd_size;
- 
--	memset(&qp, 0, sizeof(qp));
--	set_queue_properties_from_criu(&qp, q_data, NUM_XCC(pdd->dev->xcc_mask));
--
- 	ret = kfd_queue_acquire_buffers(pdd, &qp);
- 	if (ret) {
- 		pr_debug("failed to acquire user queue buffers for CRIU\n");
+ #ifdef CONFIG_COREDUMP
 -- 
 2.53.0
 
