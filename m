@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046893;
-	b=hA/X5u6kUEd+Y3p7uW5RrF+eMcJLeOmmtEWCVRSu9iWZyyphqAGr5ob+aSXngpSakN78
-	 udYju90H88SIBSoNxe9E3SGQ2wwbanb6/Am2KO09z2ILgXQWfeu7ej9Y56yIBsodh+uEs
-	 shziQbb3KcnD302BJvSPyEy5HfgyAxwTT4i9L3jt90nti457CmerFYgdThZEqtRD9H9Qg
-	 DcD84X6xumjku0tjDJX5M1j2iQKxnrxmctsX/fVD8j7WUnfaNOMdwrL3abXlEPtNbF/EO
-	 88UOY1zbJyVPHlRkTeb0u8N9V2MWo3HCWubkVRXae4mYT6O0P2UJlB+hgE+VAUa5Pyw==
+	t=1795046896;
+	b=sIrljp4BSFpQr127a1G2J8z2g9UFQDfa92SMiP0Ofb1gjOeZFZ0bTFQE4pF6AVPijr75
+	 ik+FfaDZQlp5r2EEiczazoe9f17ezILWh4x5tTcOHfDV2pYgXVDLKyV0pV+Yk63zpSP7c
+	 KvD83/tRYXMMPb1yjdlCBX6yywbQrMU1cM6O7hv2yP8IPbTxEbCJRf+XLimXxzRmSnvae
+	 KugQFoE+zBEbbJCYxNOhUukMAoQ/CwglywCiXXyvUqks1QYzAamWNwTxJpEmX1WXn7rtA
+	 XDQgpANi6/IelK5/CYNoiNPg/kZabOJalUxzuYQzHQRsFOrJPY60+jav8JcZOBd5P7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046893;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046896;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YhSaIfC0LdERxy6AMMKwA3f30Gq1AihELmN5NVRfZLQ=;
-	b=S72IJ4c5s5w7Vwmo+7awl7JAlw0ivb/Pir6sc9sPuSCiDtRvWPtRy2W4vCVHPIDPTWt/
-	 6mZ5y6Rw42cqcYHqlLV2qLw7yKPmr0byIi/Xxq6RFGByt264CBn1koCvp094AfbCPHBX1
-	 gzdf/kytdYtYSi0leYpWdO5skDaEEz06D3CtRMMCTOK10ef9vfdDeY7LnMCBQEAwq8RM1
-	 9ZTGzoMluCgnQQPBUgZnOaglAtyaOTIpHtCL8f//17UI0X9BZS6ElZfLCBDxgeaMMAX7z
-	 Y5O7Jyo/MIuwOksRFm3f5H6QvUGLk6SSiNL4CHwQuvizuWDxAAc0OwRiNE4yv66z1Pw==
+	bh=E97MLsKHNad91O44qsmmhz5OR+q7jxSBSA3MpUMzqC0=;
+	b=5tXurCI00CprTq9kx5C2a/egUi22j1EH6VhkUpiulihAjF6pvT7LEw1rwybdU7ES8OzG
+	 V/YOA0FbxO4eo0Mgg1j045rE5A3cLlNIsOxY84Jz8FrH1Gccg0Otlw9wCY28XUZr7TU0z
+	 5CeqtaEY2cjesE7dzdLBAMRSUsitPKbMPqFl+sXuxxocn8H39qx1mtRTJfVmViGnOx0v4
+	 oDj47LnRWe5Za94nZpr7HyoqFEspvB1g33GA58WkAT6B00lNLoBwuZuhsKjmJzRe/X8e1
+	 uQWHaAjjHrYPNDnkObljK5Xsi9zVdVLwo1m9QFV8UN+ydBN6yW2gJnq1OKvmw3UxYfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fuwoL9Sh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T3ELxAKt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4CD606A31C;
-	Thu, 19 Nov 2026 00:08:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87C4B606A32A;
+	Thu, 19 Nov 2026 00:08:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fuwoL9Sh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D19031F000C4;
-	Thu, 19 Nov 2026 00:08:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T3ELxAKt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A2071F000C5;
+	Thu, 19 Nov 2026 00:08:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046893;
-	bh=YhSaIfC0LdERxy6AMMKwA3f30Gq1AihELmN5NVRfZLQ=;
+	s=korg; t=1795046896;
+	bh=E97MLsKHNad91O44qsmmhz5OR+q7jxSBSA3MpUMzqC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fuwoL9ShZPGuwP14rh/CmwzESUUPQuHvC8fs4GZECElzKtJi5qzGQJCdjlOx/z4RX
-	 nJojubYzAdY0U/4yLHWu7u/dpS96fOF2iVVDHqr824VpmLK30iI4wygRze9vWbEmAM
-	 EHIgULxt2LElkBrNHCXHwyqkj08PobSS6PO59GQ4=
+	b=T3ELxAKtoEvktL/LGj/gJK1ydkcYifihYhnEyYfgoPQLvoYWvTk2/TXxqwkjcQ7l4
+	 467pbT4FjBgKjsO0LqWfEFH1fZvdrm0fZdp7md2amMMNgrx0CuG+sLrTXL6Y3KQslb
+	 rfeG8UchvdUAtQBS+luXvGxLY+DnJ6pxfiWsV5p8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1444/2857] mfd: twl-core: Use i2c_check_functionality as boolean value
-Date: Wed, 18 Nov 2026 15:41:18 +0100
-Message-ID: <20261118150253.305342903@linuxfoundation.org>
+Subject: [PATCH 6.1 1445/2857] mfd: twl-core: Unregister the auxiliary platform device on unbind
+Date: Wed, 18 Nov 2026 15:41:19 +0100
+Message-ID: <20261118150253.342111150@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,35 +69,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 7ee4fa2674e51a0d100b9240cd8a50355141362f ]
+[ Upstream commit 3c5c55d979ddcb0765ce531bc7ba173c87c8712a ]
 
-i2c_check_functionality() returns a boolean status rather than an error
-code - directly use it as a boolean value.
+twl_probe() registers a standalone platform device named "twl", but keeps
+its pointer only in a local variable. Probe errors unregister the device,
+while successful probe leaves no way for twl_remove() to release it. The
+platform device therefore remains registered after the I2C driver unbinds.
 
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Link: https://patch.msgid.link/20260505114543.159381-2-thorsten.blum@linux.dev
+Register a managed action on the I2C device immediately after adding the
+platform device. This unregisters it on probe failure and driver unbind,
+and also handles failure to register the action itself. Remove the manual
+error-path unregister to avoid releasing the device twice.
+
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
+
+Fixes: defa6be1c821 ("mfd: Fix compile for twl-core.c by removing cpu_is_omap usage")
+Cc: stable@vger.kernel.org
+Assisted-by: OpenAI:GPT-5.6
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20260913205013.54777-1-mhun512@gmail.com
 Signed-off-by: Lee Jones <lee@kernel.org>
-Stable-dep-of: 3c5c55d979dd ("mfd: twl-core: Unregister the auxiliary platform device on unbind")
+[ sashal: omitted the error-path update for the absent devm_mfd_add_devices() call ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/twl-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mfd/twl-core.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/mfd/twl-core.c b/drivers/mfd/twl-core.c
-index f6b4b9d94bbd3..6c589d71df2a9 100644
+index 6c589d71df2a9..703a6ebba7003 100644
 --- a/drivers/mfd/twl-core.c
 +++ b/drivers/mfd/twl-core.c
-@@ -786,7 +786,7 @@ twl_probe(struct i2c_client *client, const struct i2c_device_id *id)
+@@ -752,6 +752,11 @@ static struct of_dev_auxdata twl_auxdata_lookup[] = {
+ 	{ /* sentinel */ },
+ };
+ 
++static void twl_unregister_device(void *data)
++{
++	platform_device_unregister(data);
++}
++
+ /* NOTE: This driver only handles a single twl4030/tps659x0 chip */
+ static int
+ twl_probe(struct i2c_client *client, const struct i2c_device_id *id)
+@@ -786,17 +791,22 @@ twl_probe(struct i2c_client *client, const struct i2c_device_id *id)
  		return status;
  	}
  
--	if (i2c_check_functionality(client->adapter, I2C_FUNC_I2C) == 0) {
-+	if (!i2c_check_functionality(client->adapter, I2C_FUNC_I2C)) {
++	status = devm_add_action_or_reset(&client->dev, twl_unregister_device,
++					  pdev);
++	if (status)
++		return status;
++
+ 	if (!i2c_check_functionality(client->adapter, I2C_FUNC_I2C)) {
  		dev_dbg(&client->dev, "can't talk I2C?\n");
  		status = -EIO;
- 		goto free;
+-		goto free;
++		goto out;
+ 	}
+ 
+ 	twl_priv = devm_kzalloc(&client->dev, sizeof(struct twl_private),
+ 				GFP_KERNEL);
+ 	if (!twl_priv) {
+ 		status = -ENOMEM;
+-		goto free;
++		goto out;
+ 	}
+ 
+ 	if ((id->driver_data) & TWL6030_CLASS) {
+@@ -820,7 +830,7 @@ twl_probe(struct i2c_client *client, const struct i2c_device_id *id)
+ 					 GFP_KERNEL);
+ 	if (!twl_priv->twl_modules) {
+ 		status = -ENOMEM;
+-		goto free;
++		goto out;
+ 	}
+ 
+ 	for (i = 0; i < num_slaves; i++) {
+@@ -907,10 +917,7 @@ twl_probe(struct i2c_client *client, const struct i2c_device_id *id)
+ fail:
+ 	if (status < 0)
+ 		twl_remove(client);
+-free:
+-	if (status < 0)
+-		platform_device_unregister(pdev);
+-
++out:
+ 	return status;
+ }
+ 
 -- 
 2.53.0
 
