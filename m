@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033832;
-	b=bp/xhoAU4Cz1UtY6k8CdyrinDoBot6APh8BIJfgo+GxwSJuVrgeV8vmG6YZmFEnTl7vi
-	 ZDHBbLPqpJf7J1rXz5ORoSwjo6aPVGko4ixQpf1BL7HDYwF9fArRCjtxfJEWU4R0EE27J
-	 3MKtTS8z0hcVcnY0YDNnIjEE9Iq5O07L2OxkufgbnZRIn2uAQ4CKk8F3X4U8NmLZ+sloq
-	 3pv60eigCPvY6iNIizz4cb1SxXLoLdw1VEAVW+elvwjCQ8tSLWgWL2F5AON7ruA0fmR++
-	 LsyyGuaE8kBmj0sf6Rmdanmf8CvH8TYI9x2/1EvhZwURsnlOb06HOoGOb771otCGKmQ==
+	t=1795033835;
+	b=y4ntFMleA52MY1Z/DdMVCe226DTsO/7zh7/GfKVpGKGkVFCPtDrO/+10j66BU0j1nGxF
+	 QMzNOYE4VP/JhQeHMwb+jfOnEOVCLzeagUrusgDgzQfbHZe3CqarULgU3vKd3WY2Dqgz1
+	 OBNRqfPISEOC4uCwwky8ffXOZlMEdCxPAJnxilRs/1FaQQltE/OgyI5co7x1YrfWYfKNp
+	 fOD9o7inQQ+DX3t6XHzV1X2Vdurnn4cSod2RkU9RgOsqVtr+3DSlUWE5S+OB3UkBBrPnN
+	 Lt2Rzi19v9lluveLYBLqcpqxSI2YVOmjxpPlckz2tZFM2f7XQQ7M5OTmUW50y/90/6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033832;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033835;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5ZZr+1xpKUgXcVEmexEgxKVL+PqraL13wgCJ9pDnntY=;
-	b=EP45DMasi8xeYtaX6/rFja/UpJ2RxcyowTB8aW8LJnuTHFmudtLyFDCMXwQhZFdKxJmQ
-	 GPkrgFBCFNNh3lkOxOCOMVyLLE0InTOWyXZrDtCIf6hg1ECz/2sGejOO+Aw+SUgnRRtlB
-	 0T2PUkme+wUwlJv+bEBqQKYyaqKxAumd2tb40m43TvadlclmkhV+nkDP0X4YlyDRBaSlt
-	 Bs/D50UlREcCRFjITPJSBbJu9DHZmJkIGymN9YS3GE9WgU0ptIgpb0QRZ8n2XU+KXe8jN
-	 Gy11ikzlJ7VTVPTjGS26HHxgV0uekp+mHFgxsiCJwm/k/yoCoUwJG6EOTCGw2kBidnA==
+	bh=8ppGFeM4qqKxy6Nh1rzdCB0fLO3nLl74zikaOOgugVY=;
+	b=mFeYINkRt4IILX9vEZeKEQQq9uIuM65MquCAZCxihZmkJaPvqmI2yf89PzdPMjMeMfza
+	 OiI1mv18YXwNpLa0s+OzSkASKLus0vVqeBFfObAFe34aYCqSMQw/UZgKQueTg59JBeXqR
+	 0dRZhDqnJTQ0EqkkXSLAVTsq+FABJn8VkxrbDfX9FRC8bnv010Twf1hxuAN8aIVKfYivy
+	 3c+9furV2ZjVfJFjf/Nwu3Cn8xq3jQK9e4/sS3/CdyyDY5Q20/MdCID3/6POBpu8lW3ol
+	 V7tZT6JwWcVZds5P8pn3nrFYc9o5Gl1xHivQJtJ4u8X40cHZyF8ot61iuWQ8oU12EFA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0NjB1Wky;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pS0DuWOv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E062606A320;
-	Wed, 18 Nov 2026 20:30:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9EFA606A32F;
+	Wed, 18 Nov 2026 20:30:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0NjB1Wky
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ECD31F000C4;
-	Wed, 18 Nov 2026 20:30:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pS0DuWOv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6151F000C4;
+	Wed, 18 Nov 2026 20:30:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033831;
-	bh=5ZZr+1xpKUgXcVEmexEgxKVL+PqraL13wgCJ9pDnntY=;
+	s=korg; t=1795033834;
+	bh=8ppGFeM4qqKxy6Nh1rzdCB0fLO3nLl74zikaOOgugVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0NjB1WkyxslAgEeJvE8HsH88DDQSe1Nu/AWrJitxgmXtZBuvwJZqQntocX6AmjEk1
-	 xFtNQsbEV3m0p2y83Bnq3so/d+XjVGya5KmP7EeTyAeVroPfkl9dpjPAx1HDmrzyMs
-	 pEeYUX1kWYE12c6zymeibBzOxxXruTad8nQYPFyg=
+	b=pS0DuWOvwYyDc0LsfEemQDbF5jked4f58iRR1doSLKRzXOWxMd4jTr5zmEFcDtGuE
+	 5h1pv9qyNVC6lVrPIxpC00fNm/BRlkNg57Dfm/bTzWYkqbu6Gv7YCrKTv+S4MDnpTh
+	 E5y/Rlc+O/rYYiCE6arl5blSeQrJFJ0oDOrNZzxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Lucas Martins Alves <lucas.alves@lumal21.com.br>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0153/3318] wifi: mac80211_hwsim: clear PMSR request state on abort
-Date: Wed, 18 Nov 2026 15:12:55 +0100
-Message-ID: <20261118150319.122060017@linuxfoundation.org>
+Subject: [PATCH 6.6 0118/3318] usb: musb: host: clear stale RX interrupt on three-strikes error
+Date: Wed, 18 Nov 2026 15:12:20 +0100
+Message-ID: <20261118150317.854650241@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,64 +67,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Lucas Martins Alves <lucas.alves@lumal21.com.br>
 
-[ Upstream commit 37a77bd1395e8261d1760ae39c7f5eb637300550 ]
+[ Upstream commit 3a3a48487344a653f46a4aadc9ba296386eb3541 ]
 
-mac80211_hwsim saves the in-flight cfg80211 PMSR request and its wdev
-in data->pmsr_request / data->pmsr_request_wdev when a measurement
-starts, and clears them only when it reports completion.
+Unplugging a busy USB Ethernet adapter can leave a stale RX interrupt
+pending while the host handles MUSB_RXCSR_H_ERROR. On AM335x/DSPS
+platforms this can retrigger the same three-strikes error before the
+disconnect path completes, flooding the log and potentially leaving the
+host port stuck until reboot.
 
-mac80211_hwsim_abort_pmsr() never cleared that saved state. cfg80211
-owns the request and frees it once the abort callback returns
-(cfg80211_pmsr_process_abort() calls rdev_abort_pmsr() then
-kfree(req)), so after an abort data->pmsr_request dangles. A later
-hwsim PMSR report then dereferences the freed request in
-hwsim_pmsr_report_nl() and completes it; a use-after-free.
+Clear the pending endpoint RX interrupt when aborting the transfer so
+the error storm is broken, and rate limit the error message to avoid
+spamming the log while the fault path completes.
 
-Clear data->pmsr_request and data->pmsr_request_wdev once the abort
-matches the active request. Move the wmediumd/virtio notification check
-below the clear so the saved state is dropped even when no notification
-is sent.
-
-Assisted-by: Codex:gpt-5
-Assisted-by: Claude:opus-4.8
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260708195911.84365-2-enderaoelyther@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Lucas Martins Alves <lucas.alves@lumal21.com.br>
+Link: https://patch.msgid.link/20260714134941.18508-1-lucas.alves@lumal21.com.br
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/virtual/mac80211_hwsim.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/usb/musb/musb_host.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/virtual/mac80211_hwsim.c b/drivers/net/wireless/virtual/mac80211_hwsim.c
-index 4703406944353..6731f0a3de1b3 100644
---- a/drivers/net/wireless/virtual/mac80211_hwsim.c
-+++ b/drivers/net/wireless/virtual/mac80211_hwsim.c
-@@ -3483,9 +3483,6 @@ static void mac80211_hwsim_abort_pmsr(struct ieee80211_hw *hw,
- 	int err = 0;
+diff --git a/drivers/usb/musb/musb_host.c b/drivers/usb/musb/musb_host.c
+index bc45077811679..96fbd7baf8e84 100644
+--- a/drivers/usb/musb/musb_host.c
++++ b/drivers/usb/musb/musb_host.c
+@@ -1774,7 +1774,8 @@ void musb_host_rx(struct musb *musb, u8 epnum)
+ 		status = -EPIPE;
  
- 	data = hw->priv;
--	_portid = READ_ONCE(data->wmediumd);
--	if (!_portid && !hwsim_virtio_enabled)
--		return;
+ 	} else if (rx_csr & MUSB_RXCSR_H_ERROR) {
+-		dev_err(musb->controller, "ep%d RX three-strikes error", epnum);
++		dev_err_ratelimited(musb->controller,
++				    "ep%d RX three-strikes error\n", epnum);
  
- 	mutex_lock(&data->mutex);
+ 		/*
+ 		 * The three-strikes error could only happen when the USB
+@@ -1788,6 +1789,17 @@ void musb_host_rx(struct musb *musb, u8 epnum)
+ 		rx_csr &= ~MUSB_RXCSR_H_ERROR;
+ 		musb_writew(epio, MUSB_RXCSR, rx_csr);
  
-@@ -3494,6 +3491,13 @@ static void mac80211_hwsim_abort_pmsr(struct ieee80211_hw *hw,
- 		goto out;
- 	}
- 
-+	data->pmsr_request = NULL;
-+	data->pmsr_request_wdev = NULL;
++		/*
++		 * Unplugging a USB-Ethernet adapter while it is busy can make
++		 * the controller keep re-asserting the three-strikes error for
++		 * this endpoint before the disconnect is processed. That floods
++		 * the log and can wedge the host port until reboot. Drop the
++		 * stale pending RX interrupt on platforms that support it (e.g.
++		 * AM335x/DSPS) to break the storm; the transfer is still
++		 * aborted below via the fault path.
++		 */
++		musb_platform_clear_ep_rxintr(musb, epnum);
 +
-+	_portid = READ_ONCE(data->wmediumd);
-+	if (!_portid && !hwsim_virtio_enabled)
-+		goto out;
-+
- 	skb = genlmsg_new(GENLMSG_DEFAULT_SIZE, GFP_KERNEL);
- 	if (!skb) {
- 		err = -ENOMEM;
+ 	} else if (rx_csr & MUSB_RXCSR_DATAERROR) {
+ 
+ 		if (USB_ENDPOINT_XFER_ISOC != qh->type) {
 -- 
 2.53.0
 
