@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059539;
-	b=5qAWBB7DV/fu4dX73dyUnsE3rcMAa1v1DBIZqHWl/FHX7NVY6LOFUgCmXKxf1eYM1H/0
-	 BN7+UZRntbG15Z0se9Uwzab6NcAOaAJN6X/Iuei97h8wmvbgUBmCvAsj1fy8V1hVaxM+V
-	 j+PYF+/gY71bYrHRcd+CmYGcuk2522Yzdi2XGTEyzXqtQCZMS8Jh9BlGqz8Qflj13lMbS
-	 m27ut7PM2QWFHEojf+Pyf5AZr1lwS9YhZrzn8EAxUPNEUyU/nwmgGMZvBt0tSdlvTOVGy
-	 jEDzGns5RvJKcNpNQ5KrCJNaUgcCG/lImU4z87ujpwJaZEEPRYyJhGct/ve7b7UsPbQ==
+	t=1795059542;
+	b=sLkRPqxqs3XKZi9uQ8NaOfRhnotdldRbjqVXl7gxrHnrnOK8S4/65VFUC1+BPNvP/hOF
+	 CbSQo3LVGsbaGY5vIOVZqrZRHZo1JWWBi3cUxQLxK2ZqucHItfwqG2X43UnECpxuQjxS3
+	 N0V1QVpt/EjCpPXwjew0ii/VUgA8HkwXUSdm7X7Ua3bSJTQY6b8CtdSH/OhoKkOz+JWB0
+	 BblOdHHsou18oBsfJ7tUKunVb07qaRkYogKg5AVQ0ebZoahTMQsrNFaN/IeJKZdoldxY6
+	 6v0uBl9BknNtBSDqX7kWHtNCPrDnHaxD9Jqx5p/4yr6vR7kqWaBVoA9A3ZSBcqor0qQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059539;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059542;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QlcubVk5gbdoxqBRUMMAK9mqI5IryMHWRG+kty0yiX0=;
-	b=Z4CI8/R7qWOfw/gs5/YWJBRw2lerK78/wJTlv5g1cBtigPB9pr8yD7cCQh52N1VHJjpD
-	 gWT1mJ6SMMDCarYle/5WYDBwqtFejFdqQVlK7Q3A7YqOwjUS2s5H/MR5p9IfTHTT7WdLL
-	 iDXUC8dI7X9vLgXfO8U28QME0XM2HiA8v2TXJGrW8/O9IDRv+fE3+EdL0Kp+Q/Yk+SiL/
-	 R013bTGGwjTg6p7LE+cFe+RGLWR5Ym7VnUKgv0BlXCkxRDDvvcroMHfYjfENYR+msfBJU
-	 K8MtjZCkQFaYCiJcGfG54J5d5Xn4DdkkGJbVLR2zr5c2A7Qh5n2XE/fTI1gQIiYXlEw==
+	bh=C4YCE926SQob053XcWWvg0dgAJB19UIBCBNnGkb8z/4=;
+	b=PLT4fzjsIkd9r6/OEedZ49Kuc8zqU6X8w7KakryIp7BODHaNvFNQ70lmdfHjx3aQ91sO
+	 nDVe1buy65dirQSK2jFtvwsWMh0tpFLJes8IU8xw2NbKLmPCcniodZP2K5JJet3YtenmP
+	 OQmUKIQDwp2/3SN2NHSfzpArJ6v60W4WO0qdJt0kr5741KLkTXyAVqFNlB3ZsgM8evKHx
+	 odLFiIWyNCKzf8xKeqCsocBmScfMLCTrJ4H6tD/v8dfE77HvAxdbn2y5lzr/soxWTO+Rw
+	 EHgujmSUTMUE0xDUtF6WV224DtZwcnGk3GAg99Fc0A9yeOmi2abUC0MduF4GfNYSEqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r5e57QAG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FS8pfkzd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74F4E606A325;
-	Thu, 19 Nov 2026 03:38:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49759606A325;
+	Thu, 19 Nov 2026 03:39:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r5e57QAG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE78D1F000C4;
-	Thu, 19 Nov 2026 03:38:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FS8pfkzd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AA8D1F000C4;
+	Thu, 19 Nov 2026 03:39:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059539;
-	bh=QlcubVk5gbdoxqBRUMMAK9mqI5IryMHWRG+kty0yiX0=;
+	s=korg; t=1795059542;
+	bh=C4YCE926SQob053XcWWvg0dgAJB19UIBCBNnGkb8z/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r5e57QAGfnxAH6iTkGTYsBIi5v1YaZJxJmF3lbCdRe4d+b9Y0GSm5W2nVVB1kOciV
-	 1T4FLo0Dpsk/aR5UZqQ4kibo8IA7H1J4sc7YabwJn0/J9rfOt07Wi3fW0nzxRO8JRj
-	 SSWgs7aD/ohBX5jG+/DJToEmN8XX4suDsMPmwJMA=
+	b=FS8pfkzdamUI4xNQgUUNMLB2Y7cRlXHzaPxhww7FZyyT1YDUSfmC4N/5KvxZCDE6o
+	 5ZT0yVigHe23IrYk9woIGH0qlP0SeKwE+viT0aXgcRaHwv2PB5H64AeQLoCZcaJPVZ
+	 78BdzlOB9q+3g9Jz/vWMoj4vfWgDoj97Fc6/OXt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Lee Jones <lee.jones@linaro.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0877/1848] mfd: ab8500: Drop bm disable parameter
-Date: Wed, 18 Nov 2026 15:48:35 +0100
-Message-ID: <20261118145953.114328285@linuxfoundation.org>
+Subject: [PATCH 5.10 0878/1848] mfd: ab8500: Fix child device leaks on probe failure
+Date: Wed, 18 Nov 2026 15:48:36 +0100
+Message-ID: <20261118145953.147262374@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,59 +68,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit a98688d2ddfe274cb7c7ca3c6b6afbe9f844ffc3 ]
+[ Upstream commit 5bf2ae8b131d4ae9c0ed5f7aa02532645f512022 ]
 
-Nobody is passing the module parameter to disable the
-battery management portions so just drop this parameter.
+ab8500_probe() registers MFD child devices before completing the
+remaining device initialization. If a later MFD registration or sysfs
+group creation fails, previously registered child devices are not
+removed.
 
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Lee Jones <lee.jones@linaro.org>
-Stable-dep-of: 5bf2ae8b131d ("mfd: ab8500: Fix child device leaks on probe failure")
+Use devm_mfd_add_devices() so registered MFD child devices are removed
+when probe fails.
+
+The issue was identified by a static analysis tool I developed and
+confirmed by manual review.
+
+Fixes: cca69b67b3ba ("mfd: Export ab8500 chip id to sysfs")
+Fixes: 9c717cf3fa16 ("mfd: ab8500-core: Add device for new RTC version for AB8540 cut2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260924144355.1604369-1-lgs201920130244@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/ab8500-core.c | 20 ++++++--------------
- 1 file changed, 6 insertions(+), 14 deletions(-)
+ drivers/mfd/ab8500-core.c | 44 ++++++++++++++++++++-------------------
+ 1 file changed, 23 insertions(+), 21 deletions(-)
 
 diff --git a/drivers/mfd/ab8500-core.c b/drivers/mfd/ab8500-core.c
-index 4cea63a4cab73..bad4cb684da36 100644
+index bad4cb684da36..62741923440bf 100644
 --- a/drivers/mfd/ab8500-core.c
 +++ b/drivers/mfd/ab8500-core.c
-@@ -122,12 +122,6 @@
- static DEFINE_SPINLOCK(on_stat_lock);
- static u8 turn_on_stat_mask = 0xFF;
- static u8 turn_on_stat_set;
--static bool no_bm; /* No battery management */
--/*
-- * not really modular, but the easiest way to keep compat with existing
-- * bootargs behaviour is to continue using module_param here.
-- */
--module_param(no_bm, bool, S_IRUGO);
+@@ -1221,39 +1221,41 @@ static int ab8500_probe(struct platform_device *pdev)
+ 		return ret;
  
- #define AB9540_MODEM_CTRL2_REG			0x23
- #define AB9540_MODEM_CTRL2_SWDBBRSTN_BIT	BIT(2)
-@@ -1256,14 +1250,12 @@ static int ab8500_probe(struct platform_device *pdev)
+ 	if (is_ab9540(ab8500))
+-		ret = mfd_add_devices(ab8500->dev, 0, ab9540_devs,
+-				ARRAY_SIZE(ab9540_devs), NULL,
+-				0, ab8500->domain);
++		ret = devm_mfd_add_devices(ab8500->dev, 0, ab9540_devs,
++					   ARRAY_SIZE(ab9540_devs), NULL,
++					   0, ab8500->domain);
+ 	else if (is_ab8540(ab8500)) {
+-		ret = mfd_add_devices(ab8500->dev, 0, ab8540_devs,
+-			      ARRAY_SIZE(ab8540_devs), NULL,
+-			      0, ab8500->domain);
++		ret = devm_mfd_add_devices(ab8500->dev, 0, ab8540_devs,
++					   ARRAY_SIZE(ab8540_devs), NULL,
++					   0, ab8500->domain);
+ 		if (ret)
+ 			return ret;
+ 
+ 		if (is_ab8540_1p2_or_earlier(ab8500))
+-			ret = mfd_add_devices(ab8500->dev, 0, ab8540_cut1_devs,
+-			      ARRAY_SIZE(ab8540_cut1_devs), NULL,
+-			      0, ab8500->domain);
++			ret = devm_mfd_add_devices(ab8500->dev, 0,
++						   ab8540_cut1_devs,
++						   ARRAY_SIZE(ab8540_cut1_devs),
++						   NULL, 0, ab8500->domain);
+ 		else /* ab8540 >= cut2 */
+-			ret = mfd_add_devices(ab8500->dev, 0, ab8540_cut2_devs,
+-			      ARRAY_SIZE(ab8540_cut2_devs), NULL,
+-			      0, ab8500->domain);
++			ret = devm_mfd_add_devices(ab8500->dev, 0,
++						   ab8540_cut2_devs,
++						   ARRAY_SIZE(ab8540_cut2_devs),
++						   NULL, 0, ab8500->domain);
+ 	} else if (is_ab8505(ab8500))
+-		ret = mfd_add_devices(ab8500->dev, 0, ab8505_devs,
+-			      ARRAY_SIZE(ab8505_devs), NULL,
+-			      0, ab8500->domain);
++		ret = devm_mfd_add_devices(ab8500->dev, 0, ab8505_devs,
++					   ARRAY_SIZE(ab8505_devs), NULL,
++					   0, ab8500->domain);
+ 	else
+-		ret = mfd_add_devices(ab8500->dev, 0, ab8500_devs,
+-				ARRAY_SIZE(ab8500_devs), NULL,
+-				0, ab8500->domain);
++		ret = devm_mfd_add_devices(ab8500->dev, 0, ab8500_devs,
++					   ARRAY_SIZE(ab8500_devs), NULL,
++					   0, ab8500->domain);
  	if (ret)
  		return ret;
  
--	if (!no_bm) {
--		/* Add battery management devices */
--		ret = mfd_add_devices(ab8500->dev, 0, ab8500_bm_devs,
--				      ARRAY_SIZE(ab8500_bm_devs), NULL,
--				      0, ab8500->domain);
--		if (ret)
--			dev_err(ab8500->dev, "error adding bm devices\n");
--	}
-+	/* Add battery management devices */
-+	ret = mfd_add_devices(ab8500->dev, 0, ab8500_bm_devs,
-+			      ARRAY_SIZE(ab8500_bm_devs), NULL,
-+			      0, ab8500->domain);
-+	if (ret)
-+		dev_err(ab8500->dev, "error adding bm devices\n");
+ 	/* Add battery management devices */
+-	ret = mfd_add_devices(ab8500->dev, 0, ab8500_bm_devs,
+-			      ARRAY_SIZE(ab8500_bm_devs), NULL,
+-			      0, ab8500->domain);
++	ret = devm_mfd_add_devices(ab8500->dev, 0, ab8500_bm_devs,
++				   ARRAY_SIZE(ab8500_bm_devs), NULL,
++				   0, ab8500->domain);
+ 	if (ret)
+ 		dev_err(ab8500->dev, "error adding bm devices\n");
  
- 	if (((is_ab8505(ab8500) || is_ab9540(ab8500)) &&
- 			ab8500->chip_id >= AB8500_CUT2P0) || is_ab8540(ab8500))
 -- 
 2.53.0
 
