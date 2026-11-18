@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056849;
-	b=GaUTS8LES8QGWfPLZv4b01WMG7J2QshAek4SRmkAzgVBdZz2JDOB26Kckd2m50BHLr/d
-	 qz0XQIsHIZG+lxGJYfd77wtD7OuyxftblvXdakzEBaLdlUXyD1ZMO1Rs5HICPXJrmMba9
-	 QClHJksxFW4IF4dQ88irMxTvk19mHBzmWhqB5On4OlaHKtj0csXn/a2/jmDZaVy2zg6HJ
-	 qjRWhCrsw4BUeZY0MtH2mC8NipQ9xXupGmGIJx3b2q1hcqeU77SNoM5z19xY6ChF6Fsj9
-	 cuWe5bCTy/JV/yoQY2c22pJXrSM/nVjnFy67u6fws+a7ZduIvfge4zGqtJ1NMKqKlBA==
+	t=1795056852;
+	b=3hcwp0+PBpeEAURuM6m4cP7bONYjNhQeytM5FQv1DQvG0tp+igrMsWhLXU/ftWorb72k
+	 z8kOO61zVb7slDOzxDh403pQM3q/hwKmpjuG+gwx70tlZm/Qeg2b3XtgmAqBsfKuaV+54
+	 fKfdIT5AWVr4eVvQsqBLGzm3zftwZos9IzEFn/SZUO5jmiUoX6tzo+3b6SvZ3q4aFoZjr
+	 7iFl8tl0fDXj4kpEq/UCChbULh5lvWVOb7j3yeD662vwXzIKiEHz5RumQEhWibb3MyQWe
+	 Wjo4Mrl3ekPA9sjKEaVo2amENhPHhkv/reHe66govaNnBhplCmFCuHwlklP0N8EO0GA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056849;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056852;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MAhNpnsWR5OPAo/CQaUbzEoUGOvo1M5/Xy5njSswsNM=;
-	b=NTalLVlueHQMuCruLvtiQ4cphHW8ndsVe1HJNQNeqsExG+nzE3hfu1nCa2tNX2JXQwuc
-	 8PZko6pNJMRSNxSt6KcAMYqdCiDgWVMjjcRzYl4UaAm3vj6AvO+b7XBGyWp9ptue1/kLV
-	 jj/bAC7PaGdq1MSKNps0y4SS78e2bEvVR6+7hyzKbdfAPFpAd1E6IFd4QiMeuhq26aunU
-	 Zf27uGzyoRWSi1I5Ii6CNVwM7QXv8fn0inQjygR4YX09hpp13hQiBjPO8V+oHCnaEPrG8
-	 UjMQhW5+AA02weFN45JiM/AM2lEZdzjv+uRj3VeHC2ZRVvQk58tjOhTkWewtDXSHcHg==
+	bh=xm2FQooHwpWcl3bbG24+UYu3fKv0T3aOvRUOjnuYcHQ=;
+	b=eKCPr1kNct8pZEBnzp78+4vUvApgd+P31bcT2lV8NKjq40lfQUi1moPtmeq5Zfz0wx2Q
+	 GGB3kiHglW6xQtKSU4T5KIl5BHS9ASu+fajEVkjqnUwvKmKljf5UnY6AmCLvKe/BXF4hz
+	 1dZgqNpZnWSW2LXvqJkPZ3+v8aQ2IPdp/gkQAvXiu8R2eAJy0rY3Cu0WqjiOW5cOTsNbF
+	 FS83hfiHnRfcawI1ODk7WmD4saU4qOZupPPXm0PVTpvsk+ExU7Xj13MP3fu/VizJa8hAF
+	 RO1bvrVQ0O4hSsjicw0DDr4MkMZimbyRXVHmxnROmYA8Vw9zUP1cwu5B4XasVvglXwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ziCMny56;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LK6OIlP+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFFD3606A332;
-	Thu, 19 Nov 2026 02:54:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A6D606A31C;
+	Thu, 19 Nov 2026 02:54:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ziCMny56
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C879C1F000C4;
-	Thu, 19 Nov 2026 02:54:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LK6OIlP+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CD5A1F000C4;
+	Thu, 19 Nov 2026 02:54:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056849;
-	bh=MAhNpnsWR5OPAo/CQaUbzEoUGOvo1M5/Xy5njSswsNM=;
+	s=korg; t=1795056852;
+	bh=xm2FQooHwpWcl3bbG24+UYu3fKv0T3aOvRUOjnuYcHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ziCMny56odTBFGoaUY2eM1tF4hqEWjr5YywCUE31eqAtma2u9IJsOjKmS6sJzoWQk
-	 L2cNNhyMmDD88Gmd/1YTFOHaYj0IjYDmp37CB09Po8yAortDAQT2sEW8p/r5yxo8+0
-	 bFVhIoI4ZX9pDSmgVkagZ5HWXKcNSQRGAWxkuYXE=
+	b=LK6OIlP+Wf8Rh9Tmj1FnzYUNsPW9vb8sTOvq8y27z1NEIhb+zaipAwiEIvR2pTpAG
+	 LpqAOf27b5SHqUdAu5wM/V1u1Rh8C0mdl/Q4DoqTcw9do+i9qB8dj8NhJs2zNHE+s5
+	 9Q97m90MIB5x7FuDGStXQl2GN65a9txV4xBVzfHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sally Marcher <me@gry.sh>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2135/2214] net: usb: cdc_mbim: dont enable BHs in tx_fixup under netpoll
-Date: Wed, 18 Nov 2026 16:03:31 +0100
-Message-ID: <20261118150135.937157016@linuxfoundation.org>
+Subject: [PATCH 5.15 2136/2214] ALSA: usb-audio: Add correct datainterval in the quirks-table for Microbook II
+Date: Wed, 18 Nov 2026 16:03:32 +0100
+Message-ID: <20261118150135.972415935@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,42 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: Sally Marcher <me@gry.sh>
 
-[ Upstream commit bfd7ced012c7857b5ab5edf7e416c2789b652702 ]
+[ Upstream commit a09c2f3b267e47767b8937f65930567edbb88d44 ]
 
-cdc_mbim_tx_fixup() has the same spin_unlock_bh() as cdc_ncm_tx_fixup().
-Under netpoll it runs pending softirqs while the txq lock is held, and
-a transmit from one of them spins on that lock.
+This patch fixes playback issues on the Microbook II.
+The correct value was in the older driver for this device
+(https://github.com/manuel-rhdt/snd-microbookii/blob/dd304c097bb6a9d52276ac29c6969fa02bc7674a/audio.c#L914).
 
-Use plain spin_lock() as in cdc_ncm.
+Datainterval needs to be set explicitly.
 
-Fixes: 9bf211a30b3f ("net: cdc_mbim: adding MBIM driver")
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Link: https://patch.msgid.link/20261024-cdc-ncm-netpoll-v3-2-6284ca03f967@tipi-net.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a634090a0f24 ("ALSA: usb-audio: Add quirk for MOTU MicroBook II")
+Signed-off-by: Sally Marcher <me@gry.sh>
+Link: https://lore.kernel.org/d5dfd044-69f6-4fc3-9884-6599d88afb55@student.tugraz.at
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/cdc_mbim.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ sound/usb/quirks-table.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/usb/cdc_mbim.c b/drivers/net/usb/cdc_mbim.c
-index e795e3636f7db..47acf7552efcf 100644
---- a/drivers/net/usb/cdc_mbim.c
-+++ b/drivers/net/usb/cdc_mbim.c
-@@ -289,9 +289,10 @@ static struct sk_buff *cdc_mbim_tx_fixup(struct usbnet *dev, struct sk_buff *skb
- 		}
- 	}
- 
--	spin_lock_bh(&ctx->mtx);
-+	/* BHs or IRQs are always off here, see cdc_ncm_tx_fixup() */
-+	spin_lock(&ctx->mtx);
- 	skb_out = cdc_ncm_fill_tx_frame(dev, skb, sign);
--	spin_unlock_bh(&ctx->mtx);
-+	spin_unlock(&ctx->mtx);
- 	return skb_out;
- 
- error:
+diff --git a/sound/usb/quirks-table.h b/sound/usb/quirks-table.h
+index 941d9bef67e4b..331aaf6e9f85d 100644
+--- a/sound/usb/quirks-table.h
++++ b/sound/usb/quirks-table.h
+@@ -3522,6 +3522,7 @@ YAMAHA_DEVICE(0x7010, "UB99"),
+ 					.rates = SNDRV_PCM_RATE_96000,
+ 					.ep_attr = USB_ENDPOINT_XFER_ISOC |
+ 						   USB_ENDPOINT_SYNC_ASYNC,
++					.datainterval = 1,
+ 					.rate_min = 96000,
+ 					.rate_max = 96000,
+ 					.nr_rates = 1,
+@@ -3546,6 +3547,7 @@ YAMAHA_DEVICE(0x7010, "UB99"),
+ 					.rates = SNDRV_PCM_RATE_96000,
+ 					.ep_attr = USB_ENDPOINT_XFER_ISOC |
+ 						   USB_ENDPOINT_SYNC_ASYNC,
++					.datainterval = 1,
+ 					.rate_min = 96000,
+ 					.rate_max = 96000,
+ 					.nr_rates = 1,
 -- 
 2.53.0
 
