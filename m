@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059096;
-	b=1y3RVE+0EyidoBxU2keWL+Ej1fupn0gEZR49GZRSClZ5SSMCpJU7cVsZ54vzdLfuVpnD
-	 DWQP6VwlNVXFfarHMgUTxEGt1jtP2hLOMCGU4iwvIXDlv84maAZq4m1JofHFDnG2pSypV
-	 OK81yI90mtlqcOOcoZ9CCsYO8WaxHceDfbErPivOdTxfYSGq78dkQT2CwLq62g85/1fav
-	 CH8DHlOA8OEWXrE38jUlzT5ZjSkJsoF3SlHpXZIiZUtChIoITrAf55IURTf0ekfI7UTAF
-	 cnjqsHwe7DGR+VIL1Ek44sz0YcqnD+8b5xRXGf5XLs11Fisfc0lJajz9DN7qhrVZ2Kg==
+	t=1795059099;
+	b=z3udN6znEb158JgcZtuHo/RX55/hxGTqWFsq763ZusaWf2TBlprsVsKaLYxfveojYErM
+	 NpYC7LbOmwq7zlJ/QbrWh02nzt+AVh0gcHg236nhSIhd19FQKzyrb7ZLZdnPX8J6iYCJH
+	 azCV9z2ZP05miCACNvwpnzayd9pB2D/YMU1aZ3aWWIZ6w8nypusx1D1D9uAB7llTdrb8O
+	 SA1TZ9STKDq7EzG0E6OZrSwFeR6DB94vFu9Ub9Gmd5IRmvQO3EqdoCBURtYvwlAVOX1WY
+	 D0lyRX8I+gFR4L0ry5Cen6G/sHW2F+A/+6XLV2G5gO7Ng8TBfcp/j3EH4p3ikaxJxlg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059096;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059099;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qiMVMhnUAtFi0tgEu1MXCssl8nrtYKmLKmR+XevNQBc=;
-	b=vI84/X5xylOIYEKLFnnW81q3iAGvPkhJKLnq5GPtDHunw8ekFA4umuN7ubn2KkHsNmLS
-	 wvc4uxjc53gvE7ydLh4J/TVlbPLaGp7t1PtGgmAb1QRFTapPx1J90sYUumEZM131vRZqQ
-	 CGiHbvw+hHGSS9wRGNv7QsgYU4VSIdBOI1EvqfbI6TVnKkxqdWF0BG5EMlGdCyzVshxBV
-	 ra1hBSRflFJHxeDjaS9aR8BcQQ4/jztLbze8U+lA2/4SQqYlODVyTeaGuwTuN1CPCjI8U
-	 FXiLuSqTsNOAQjtBfUZLdXk6G4zOEqmk6Ly+RzE1Wg9JP4lm6hMOjsTgw5yMGGWS3gg==
+	bh=HWdDykqRUeeNED11skysv73biK7ccmKKRzibMs8ELww=;
+	b=NbYTywkdbNIGrxfcb18RFnlvGr2pEiDikFFzvVkVJNo355MSa54AZbkddZdzU3TEjNhp
+	 mzG0aOxWo9AzzTFh3hSwV16YQ+9igJWM9pK9AZaJnVcfxwYKRv85OZTmaicY8oaG7y+d7
+	 ZjvhBQ4mTLwitmXpR9BIyizWpb57IOwwirYs+BJNN4qg3GGZnZTIqX7TXflYxRnXVA5V9
+	 hF2H5fJsMXDecMZx2+cYrBvtSH+ZwUthrUfaBjE3Y6MUCjXA9MQC3/znura4/mg7hggfx
+	 Uo7ZcnbOu62tdKq9JaNyMN2plOkPHNI95cUjQsEP5CHsDiuDoWEQ23WdnXBUdalpFXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="HPZww2k/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vo6nLgky;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9B9606A320;
-	Thu, 19 Nov 2026 03:31:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7AE606A31C;
+	Thu, 19 Nov 2026 03:31:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HPZww2k/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0A971F000C5;
-	Thu, 19 Nov 2026 03:31:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vo6nLgky
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CC081F000C4;
+	Thu, 19 Nov 2026 03:31:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059096;
-	bh=qiMVMhnUAtFi0tgEu1MXCssl8nrtYKmLKmR+XevNQBc=;
+	s=korg; t=1795059099;
+	bh=HWdDykqRUeeNED11skysv73biK7ccmKKRzibMs8ELww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HPZww2k/s6SEWTANFDfKTE+cFH4rRO53olkR9btO6OYiSRcnbvLRPpZM8tQhToiVK
-	 VH3QH/SXPF7kqNNkNTvkV3J/uESaKcP1B70ABgHfmaNNKfJIHEgYabEq8z9t8IjFU6
-	 KQoVbvpN/DLKJi6tPbzuglgU/Giur4AFkPG9AmD8=
+	b=vo6nLgkyIqHDAaQ88X3egQZ7eopEISwQGRXKjSwi11yP0lzeBzPcxbTJQ9e8Ok0dj
+	 vwWMVW90+o/6IZ7g/gRMftcM/OxwZYDjy7Fi1iefcQpj3KxMQv6S0JXnOSbE9wwmpo
+	 9VRYIu73lisP/4bN9S57Z7qeegSHLQlKf/+mfYfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hungyu Lin <dennylin0707@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Reid Downing <skibletz@gmail.com>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0721/1848] block: Return the soft block size for compat BLKBSZGET
-Date: Wed, 18 Nov 2026 15:45:59 +0100
-Message-ID: <20261118145946.026561369@linuxfoundation.org>
+Subject: [PATCH 5.10 0722/1848] xfs: fix wrong compat fields in xfs_ioctl32_bstat_copyin()
+Date: Wed, 18 Nov 2026 15:46:00 +0100
+Message-ID: <20261118145946.090711705@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,51 +69,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Reid Downing <skibletz@gmail.com>
 
-[ Upstream commit 57cd1a08717690e5ea01d7ac7a96bb33a2dca117 ]
+[ Upstream commit b7eb276a39b14e685c2fe578f8ac22fc48ff9e6c ]
 
-BLKBSZGET returns the block device's soft block size, while BLKSSZGET
-returns its logical sector size. The compat BLKBSZGET_32 handler uses
-bdev_logical_block_size(), so it returns the wrong value when these
-sizes differ.
+bs_blocks and bs_xflags were both read from bstat32->bs_size.
+Read each one from its own field instead.
 
-For example, on an x86_64 kernel a native query of a RAM or loop device
-with 512-byte logical sectors returns the initial soft block size of
-4096 bytes, but an i386 process gets 512 bytes. This makes 32-bit
-blockdev --getbsz and the BSZ column of --report disagree with native
-queries, even without a preceding BLKBSZSET.
-
-Use block_size() as the native handler and the pre-regression compat
-handler do, and correct the case comment to describe the soft size.
-
-Fixes: 9b81648cb5e3 ("compat_ioctl: simplify up block/ioctl.c")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20261023153645.37546-1-dennylin0707@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: e94fc4a43e5c39 ("[XFS] Add compat handlers for swapext ioctl")
+Cc: stable@vger.kernel.org # v2.6.29
+Signed-off-by: Reid Downing <skibletz@gmail.com>
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/ioctl.c | 4 ++--
+ fs/xfs/xfs_ioctl32.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/block/ioctl.c b/block/ioctl.c
-index 11e692741f17c..5212ef396c220 100644
---- a/block/ioctl.c
-+++ b/block/ioctl.c
-@@ -692,8 +692,8 @@ long compat_blkdev_ioctl(struct file *file, unsigned cmd, unsigned long arg)
- 		return compat_put_ulong(argp, size >> 9);
- 
- 	/* The data is compatible, but the command number is different */
--	case BLKBSZGET_32: /* get the logical block size (cf. BLKSSZGET) */
--		return put_int(argp, bdev_logical_block_size(bdev));
-+	case BLKBSZGET_32: /* get the soft block size (cf. BLKSSZGET) */
-+		return put_int(argp, block_size(bdev));
- 	case BLKBSZSET_32:
- 		return blkdev_bszset(bdev, mode, argp);
- 	case BLKGETSIZE64_32:
+diff --git a/fs/xfs/xfs_ioctl32.c b/fs/xfs/xfs_ioctl32.c
+index c1771e7281177..62d62c2a9fc07 100644
+--- a/fs/xfs/xfs_ioctl32.c
++++ b/fs/xfs/xfs_ioctl32.c
+@@ -136,8 +136,8 @@ xfs_ioctl32_bstat_copyin(
+ 	    xfs_ioctl32_bstime_copyin(&bstat->bs_atime, &bstat32->bs_atime) ||
+ 	    xfs_ioctl32_bstime_copyin(&bstat->bs_mtime, &bstat32->bs_mtime) ||
+ 	    xfs_ioctl32_bstime_copyin(&bstat->bs_ctime, &bstat32->bs_ctime) ||
+-	    get_user(bstat->bs_blocks,	&bstat32->bs_size)	||
+-	    get_user(bstat->bs_xflags,	&bstat32->bs_size)	||
++	    get_user(bstat->bs_blocks,	&bstat32->bs_blocks)	||
++	    get_user(bstat->bs_xflags,	&bstat32->bs_xflags)	||
+ 	    get_user(bstat->bs_extsize,	&bstat32->bs_extsize)	||
+ 	    get_user(bstat->bs_extents,	&bstat32->bs_extents)	||
+ 	    get_user(bstat->bs_gen,	&bstat32->bs_gen)	||
 -- 
 2.53.0
 
