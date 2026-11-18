@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019683;
-	b=2tQVJ5p9we04uaKUiELV08Mf2SS4XKXvNxJfbFz0ZhwoL81aW0tXriq/rTYLGNH0eQpi
-	 v9nlQuRLm5gQA73nGFeklp/mUsYuASEANveenXJeToVav9EqMAraLhvoT3lhk0BeaEWTx
-	 iY59JvmZhiv2S73wb538QHYajJ/Qp9FGIjCDfwaYfQwKjDNvtNcN+gw21AcsTR+AjaygC
-	 KnFOq4YC7Qdc7t9IwKwcmXIpZJNPlzolgEaSMcWk9Iktis11aCOakLJ9Z0wR+KXvkQhnH
-	 lf5Jewac2/5wil57Orm2cn4HGiCf4FI+r4JNxffgQVzaQzGgFiaH1S/+2Xrc7FNvpuw==
+	t=1795019686;
+	b=lWwroxI7AtNIbuR2ffm7GqvuVGoummiBuOH2DmxTIVNd8KexUzYilc9i6JXxDv2HiK0p
+	 epCNRjD96POJ6INv3BAf97cfmu1gy4WRgM58m11C1rtKR+2oZYhlTGG8+/Rd5PteuP8FB
+	 axFodfoaOMm/3DUa8BtVaVc7JFvVxzex/pvxu6aVwNyvUpsjl+oNfWkSNtGtYBUMUHGP2
+	 p2kqAdQL/MxBJYC4r23egdh+MKmVK34l/x6WRBh9X2ANQZ8OMlsVZM1BXwEexiXDUJQvm
+	 +uuChKoYHpDMydX6TEWdftxdPgW7rEy92CFXtQiFGdxXSSxJbeymb5pARPDGvtahi8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019683;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019686;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=IUVwmlzvEG4Pzcxbci/htBP5VTjK401x1N9NWW9E3oI=;
-	b=01KQggQ3dcVInXDYN6r03+IOb8JzlZkjrjev0VzU4/dzourWQHIh6DqXdVbl8Pf/Grpo
-	 VrtUiBZcQw6tJ+ihneVIGOujojYorSUrarzLrBsJBSi3x35HvmVD7SSu/fjnmIwa8yKVp
-	 vkXRFxpOHUxAV4IvJbVrtzJRQX0uQF4yC8uwqIUW79XnPWWD2DKybFq0HP4ZWTdnE280w
-	 VnkU0urk3lGhyNaAUTIIswfuUGjsXlqYpB8jR7o+oo2gwPz/wY0qqm+5rE4DFSnIMrWQA
-	 Y+DsgELklTwOXkHqitwC/Flwunkq9AHp4WKoCdvyGzsqfKuzAdb0N0tsvbx/83SGnAw==
+	bh=hkh7PsX4fsRQKv1La0jRIgx4fyLKhUgfAoASUlhH/Zw=;
+	b=4bTUguXyFF3hUhhCqWf2aNI2xDtTmtNJidMkrgnhfuey0Swsfk7j6L4ysZaTmUAZcCJ5
+	 BnUK2sqc7QL17WqAP7Pln4LtrgKI3VO62pc7expf2BrcBD/2+ST0+zk3rV62i3iwyWs8A
+	 eOlJLUjXSqOywatt3OT3OFA+c+3uc2+ucZDRJn540N++FgpRYmA/2U8mtwA+g4GHoCMxU
+	 KbIHplLyUSYzPC8iWlb9TIXohreQPE8hQ9/KY2dZyzvQAwyUvwVZSYL59E4femGoLL71R
+	 PINtjCpkF20vsH9IU1IfaK7NLCd1zlels7lZW5Ri5+h3hmrXapPZaxKy8dVaME1GyZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Ly/jKgl0";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AbBCy6WB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405A4606A31C;
-	Wed, 18 Nov 2026 16:34:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18539606A32C;
+	Wed, 18 Nov 2026 16:34:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ly/jKgl0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 562BA1F000C4;
-	Wed, 18 Nov 2026 16:34:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AbBCy6WB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D9F31F000C4;
+	Wed, 18 Nov 2026 16:34:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019682;
-	bh=IUVwmlzvEG4Pzcxbci/htBP5VTjK401x1N9NWW9E3oI=;
+	s=korg; t=1795019685;
+	bh=hkh7PsX4fsRQKv1La0jRIgx4fyLKhUgfAoASUlhH/Zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ly/jKgl077DV/16t9a0wcr1ZbAQbaLQXunle4dBdtSWQAXlMgn1XLcsU6Nfdz0fmD
-	 M20shT8rAfZtqZpMm1iQugRyP/l5IXPoQPtCxLiQ3FUiQ7FMFW6Ol1I0/IoXEPw+13
-	 ZG/9rOdk4hvSp4ppOz04H/NlR4sfzVFt7osnfNE8=
+	b=AbBCy6WBb5R3uKoecq5YD2mt8bXlaJIXR/Oq+o4zoL/UH3fdpTAx6gue4J+zc7Tir
+	 ww4r8WEa7ltDleXF4zdDROOFpscANP0STTt6H3JgAg4pNbr7Rbb25wRRwEsFivY36F
+	 uIV6ERCHJ7cOQb9QK+X4x1aglB54SONvce1azy0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+40b06a86af225236fdb4@syzkaller.appspotmail.com,
-	=?UTF-8?q?Ali=20Ahmet=20Memi=C5=9F?= <aliamemis@disroot.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1683/2651] ALSA: hda: intel: Dont free card in the probe work
-Date: Wed, 18 Nov 2026 15:48:43 +0100
-Message-ID: <20261118150348.271217142@linuxfoundation.org>
+Subject: [PATCH 7.3 1684/2651] platform/x86/amd/pmf: fix compat ioctl handling
+Date: Wed, 18 Nov 2026 15:48:44 +0100
+Message-ID: <20261118150348.305088621@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,48 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memiş <aliamemis@disroot.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit fbaccb1b19c79e79220e3bcc5bb18ca54ffb017b ]
+[ Upstream commit 655d731c391ec3912503b91ecf6269883b13e0c2 ]
 
-If the delayed probe fails, azx_probe_work() frees the card and clears
-the drvdata. azx_remove() reads the card before it waits for the probe
-work with cancel_delayed_work_sync() so when the device is removed while
-the probe work is running, it frees the card again after the work has
-already freed it.
+Build testing with -Wpadded shows a structure that is incompatible
+between 32-bit and 64-bit x86 userspace:
 
-Only disconnect the card in the work so that its slot is released right
-away and leave freeing it to azx_remove().
+./usr/include/linux/amd-pmf.h:202:1: error: padding struct size to alignment boundary with 4 bytes [-Werror=padded]
 
-Fixes: 39173303c838 ("ALSA: hda: Free card instance properly at probe errors")
-Reported-by: syzbot+40b06a86af225236fdb4@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=40b06a86af225236fdb4
-Signed-off-by: Ali Ahmet Memiş <aliamemis@disroot.org>
-Link: https://patch.msgid.link/20261012162841.1879278-1-aliamemis@disroot.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Use the 64-bit padded on all architectures here to avoid both
+the warning and allow compat ioctl handling.
+
+Fixes: 98432eec3180 ("platform/x86/amd/pmf: Add util layer and userspace character device interface")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20260915202535.3689880-1-arnd@kernel.org
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/controllers/intel.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/platform/x86/amd/pmf/util.c | 1 +
+ include/uapi/linux/amd-pmf.h        | 3 +++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/sound/hda/controllers/intel.c b/sound/hda/controllers/intel.c
-index 2b5b5d555f2cd..6b80b59b87430 100644
---- a/sound/hda/controllers/intel.c
-+++ b/sound/hda/controllers/intel.c
-@@ -1737,7 +1737,12 @@ static void azx_check_snoop_available(struct azx *chip)
- static void azx_probe_work(struct work_struct *work)
- {
- 	struct hda_intel *hda = container_of(work, struct hda_intel, probe_work.work);
--	azx_probe_continue(&hda->chip, true);
-+
-+	if (azx_probe_continue(&hda->chip, false) < 0) {
-+		hda->init_failed = 1;
-+		complete_all(&hda->probe_wait);
-+		snd_card_disconnect(hda->chip.card);
-+	}
- }
+diff --git a/drivers/platform/x86/amd/pmf/util.c b/drivers/platform/x86/amd/pmf/util.c
+index 4d1a61e4f1b90..2befc1b14842f 100644
+--- a/drivers/platform/x86/amd/pmf/util.c
++++ b/drivers/platform/x86/amd/pmf/util.c
+@@ -123,6 +123,7 @@ static const struct file_operations pmf_if_ops = {
+ 	.owner          = THIS_MODULE,
+ 	.open           = amd_pmf_open,
+ 	.unlocked_ioctl = amd_pmf_set_ioctl,
++	.compat_ioctl	= compat_ptr_ioctl,
+ };
  
- static int default_bdl_pos_adj(struct azx *chip)
+ static struct miscdevice amd_pmf_util_if = {
+diff --git a/include/uapi/linux/amd-pmf.h b/include/uapi/linux/amd-pmf.h
+index 24cf9926dc590..151f264cd7d6c 100644
+--- a/include/uapi/linux/amd-pmf.h
++++ b/include/uapi/linux/amd-pmf.h
+@@ -199,6 +199,9 @@ struct amd_pmf_info {
+ 	/* BIOS parameters */
+ 	__u32 bios_input[AMD_PMF_BIOS_PARAMS_MAX];
+ 	__u32 bios_output[AMD_PMF_BIOS_PARAMS_MAX];
++
++	/* align to 64 bit boundary */
++	__u32 __pad;
+ };
+ 
+ #endif /* _UAPI_LINUX_AMD_PMF_H */
 -- 
 2.53.0
 
