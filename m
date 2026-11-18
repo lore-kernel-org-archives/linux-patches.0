@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041933;
-	b=1pA1UXyoZNPX78XArIR+GP9B/NZcOPchmAtCyfMKMh77WCjdJwfaIl5DZB+dLE06snpn
-	 3d6HtVG6MLA+BoRa8FxySwJfYq9iBu2onfinWnStrdAEtS7+woxstJf6/de+/AjHUCTCn
-	 rgWFxrLKgseLCdSJy3EOIFeTIojBs2l7iJinjBGqlxdoX+6yBSGyi70HuCKCiw7rcWXTZ
-	 rX1tEh5pMvqqJl0zOHwq/B4vZhgpkhpfG8m6BtBiRJN8+UGvfTGS9Abv5Hm78O1NlV0Jz
-	 +aCxlnn5zsLXGvXcVZxlP9RkntAKIHy+pjrMkW+bwv2EGkLyNi+uSF8XfU4ol4lIxcg==
+	t=1795041936;
+	b=vKCx5QMm5yAky94ye2dPkxUU9m1umFW+omY8i/wtL0TAvdtLkD+VSXIsbc3X1ql1fDZS
+	 pMK534iWyIiFrxZ0IlKaROQk4BYyZh6wVy+fW+xiEp489k5F7bnJUgBBUt/luznhEyiRo
+	 n6+7uBKbvFCGVXmrFRBusGq696mXrJvZLCJwGocVvDIH7IZBSA+YwBdzPbTqjs6bOOEpc
+	 nblLHZiowBYYb6wAAWXqaVTIEk0k3GoJCrYCRvgKTtomVBrOPnKXjqNYpQu4jSzeoOnyq
+	 ddUIsfuIOHxblUBtY6PUkCOYYmneJ+cHAFsBPjAwqkQ+oZ0SVgOqssK3hB+AQVcUY8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041933;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041936;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3vmf5w2qDP+4D9LfUIAFAFWo8Wv4UyiKcU7XJk1NUvU=;
-	b=5trUP05aaieVtRZSKaKRaSU6e5DtjYYPt4g0hujv60vUqoophrJHDb9/soLq7/+X0b3N
-	 GKeiwG45oxpZwzoWlJgz9ufNO1FYuF9ou/Zt3rmXW23haQJu7aJWj8nsLWaADtmHFUTEf
-	 5BQngJ5CZhKtWXm8fDBKdm/NyU9qZspNhaeYK3ch8nKpK4Dv3pBkMRxENweF9iI4Lzz7v
-	 4b0Ol36xCEJtQMB0cpowuYtxFXNsidMxWEUmMy9/BG+5syZENW4BMi3r94+xEX0usUTqL
-	 oTYFHiU7vXHraGQcfPabwi0hoFPqL3ghugNVlcAYRc9uOCx9fv77KpLKeGYXL/F4/JQ==
+	bh=2NjvW7GHxkub9EH7wpQ51fn9WQw9OD01TwsZUrwMq4Y=;
+	b=AH3UFq05IPDxzd6o0mOYoPHbnNnbn7+VGBDo7zcTSFu/lbSqrciY2Jac+IYW1fyzZVoP
+	 1MNS37xCDbRzqxArOV0yo+uHJVJckmyhkVjqrZURxZtzAS6nIVkdbvcNaxyORJnEWiY9e
+	 kktS+oaIUqC+mU5f1zJVZTLzhPyClSRDyq3IUF/Lkm0EBXtK7YVB71gcAIR+sEK6KoioN
+	 liDgIsLwUU3QUph+5XrymQvQzHUzrVb03jIvI7SHyxwjIZKicihxulU3RhXMbLGKv9Hu6
+	 E8Mk+boI4gA+YgXRI11B8hutGCGW1nhXMwMoMT6hePco/WHvzV39E3sXXSgU0Idufpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hHTi0SqM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JWUNMtQU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1333606A325;
-	Wed, 18 Nov 2026 22:45:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F33606A32A;
+	Wed, 18 Nov 2026 22:45:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hHTi0SqM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 545D31F000C4;
-	Wed, 18 Nov 2026 22:45:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JWUNMtQU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30ECC1F000C4;
+	Wed, 18 Nov 2026 22:45:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041932;
-	bh=3vmf5w2qDP+4D9LfUIAFAFWo8Wv4UyiKcU7XJk1NUvU=;
+	s=korg; t=1795041935;
+	bh=2NjvW7GHxkub9EH7wpQ51fn9WQw9OD01TwsZUrwMq4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hHTi0SqMk7M0VIXgR9Rw4DQ3cxcmjzzIiwOgAIbqFyKFNUrQAGKXeQ8hqTWp4HswN
-	 gKVbduWBr4+wkdHeJ3OTHKLCA1jjUvFjEf2yPt7Y3g0S2uH93/ofN0f6qSoH+uKR54
-	 F3q4O5GTlzfVcyvC5genZdojGPHKQ+TdLPM59LiU=
+	b=JWUNMtQUewpoFFJfcqD0hhfecX1Vbwm4gDMkAieY2AiEaF6BRQG01hfGjpOk011ol
+	 c69Eb/yO8l44ZsJQbLR8wAUM4RZmVUEvorY3t4qgPqW21BPNyoKZP4P+97qpHg0IlP
+	 peK/jwHW3dn5NvrqU/sBab7HeLb91AZq8nUMUoD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaiyan Mei <M202472210@hust.edu.cn>,
-	Yinhao Hu <dddddd@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
+	Joonhoe Kim <26rote@gmail.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2991/3318] bpf: Fix verifier WARN on narrow read of bpf_tcp_sock u64 fields
-Date: Wed, 18 Nov 2026 16:00:13 +0100
-Message-ID: <20261118150450.000638089@linuxfoundation.org>
+Subject: [PATCH 6.6 2992/3318] power: supply: qcom_battmgr: report the USB type from USB_ADAP_TYPE
+Date: Wed, 18 Nov 2026 16:00:14 +0100
+Message-ID: <20261118150450.028499539@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,56 +70,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Joonhoe Kim <26rote@gmail.com>
 
-[ Upstream commit af873495cbcb066ab029f7f63b94410d4db47628 ]
+[ Upstream commit a49f86cd1333c6e12fd37bc0b3234ace10072553 ]
 
-A BPF program can read the middle of a u64 field in struct bpf_tcp_sock:
+On SM8350 and SM8550 class firmware the USB power supply reads its
+usb_type from the USB_TYPE property. On a Kaanapali (SM8850) tablet that
+property is 1 (SDP) whatever is plugged in, while USB_ADAP_TYPE reports
+the adapter, using the same numbering as POWER_SUPPLY_USB_TYPE_*:
 
-	tp = bpf_tcp_sock(listener);
-	/* +0x54 is in the middle of the u64 bytes_received */
-	unsigned hi = *(unsigned *)((char *)tp + 0x54);
+  PC port                  USB_TYPE 1   USB_ADAP_TYPE 1 (SDP)
+  USB-C dock, 5 V PD       USB_TYPE 1   USB_ADAP_TYPE 6 (PD)
+  65 W PPS charger         USB_TYPE 1   USB_ADAP_TYPE 8 (PD_PPS)
 
-bpf_tcp_sock_is_valid_access() allows this 4-byte read (the default case
-only checks size == 4), but bpf_tcp_sock_convert_ctx_access() only knows
-the field starts and has no idea how to handle such an offset. It emits
-no instruction, cnt stays 0 and the fixup pass trips verifier_bug():
+Qualcomm's downstream qti_battery_charger driver also maps
+USB_ADAP_TYPE to POWER_SUPPLY_PROP_USB_TYPE.
 
-	verifier bug: error during ctx access conversion (0)
+Request USB_ADAP_TYPE for POWER_SUPPLY_PROP_USB_TYPE instead.
 
-Just disallow the narrower access by matching the whole u64 range of the
-two fields, so it is turned down at check time:
+Tested on a Lenovo Legion Tab Y700 gen 5 (qcom,kaanapali-pmic-glink,
+which uses the SM8550 path). Only tested on this device; the SM8350
+variant shares the property map and was not tested.
 
-	invalid tcp_sock access off=84 size=4
-
-Fixes: 655a51e536c0 ("bpf: Add struct bpf_tcp_sock and BPF_FUNC_tcp_sock")
-Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
-Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
-Reported-by: Dongliang Mu <dzm91@hust.edu.cn>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017143819.209510-1-jiayuan.chen@linux.dev
-Closes: https://lore.kernel.org/bpf/7a8ff335.1024c.1a14395f3e5.Coremail.kaiyanm@hust.edu.cn/
+Fixes: 29e8142b5623 ("power: supply: Introduce Qualcomm PMIC GLINK power supply")
+Reviewed-by: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
+Assisted-by: LLM
+Signed-off-by: Joonhoe Kim <26rote@gmail.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261012130053.442-1-26rote@gmail.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 4 ++--
+ drivers/power/supply/qcom_battmgr.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 89984a086b41d..fc2b34a453ea9 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -7172,8 +7172,8 @@ bool bpf_tcp_sock_is_valid_access(int off, int size, enum bpf_access_type type,
- 		return false;
+diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
+index 65140d4985af1..63799fd24e837 100644
+--- a/drivers/power/supply/qcom_battmgr.c
++++ b/drivers/power/supply/qcom_battmgr.c
+@@ -721,7 +721,7 @@ static const u8 sm8350_usb_prop_map[] = {
+ 	[POWER_SUPPLY_PROP_CURRENT_NOW] = USB_CURR_NOW,
+ 	[POWER_SUPPLY_PROP_CURRENT_MAX] = USB_CURR_MAX,
+ 	[POWER_SUPPLY_PROP_INPUT_CURRENT_LIMIT] = USB_INPUT_CURR_LIMIT,
+-	[POWER_SUPPLY_PROP_USB_TYPE] = USB_TYPE,
++	[POWER_SUPPLY_PROP_USB_TYPE] = USB_ADAP_TYPE,
+ };
  
- 	switch (off) {
--	case offsetof(struct bpf_tcp_sock, bytes_received):
--	case offsetof(struct bpf_tcp_sock, bytes_acked):
-+	case bpf_ctx_range(struct bpf_tcp_sock, bytes_received):
-+	case bpf_ctx_range(struct bpf_tcp_sock, bytes_acked):
- 		return size == sizeof(__u64);
- 	default:
- 		return size == sizeof(__u32);
+ static int qcom_battmgr_usb_sm8350_update(struct qcom_battmgr *battmgr,
+@@ -1237,7 +1237,7 @@ static void qcom_battmgr_sm8350_callback(struct qcom_battmgr *battmgr,
+ 		case USB_INPUT_CURR_LIMIT:
+ 			battmgr->usb.current_limit = le32_to_cpu(resp->intval.value);
+ 			break;
+-		case USB_TYPE:
++		case USB_ADAP_TYPE:
+ 			battmgr->usb.usb_type = le32_to_cpu(resp->intval.value);
+ 			break;
+ 		default:
 -- 
 2.53.0
 
