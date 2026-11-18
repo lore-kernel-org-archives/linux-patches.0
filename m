@@ -1,51 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044642;
-	b=p3X1R1MjmuLBTFdZhAMuZbMBys2tZbL7ykBs5m9X0kHxkkNCR73RMefovm1xYWJWQXfh
-	 bEOBZy1HCtuuELGOov8hkwyH32ZJHXgHTjYDAtO95NkoeATrRKP1JHX0/OrPrEIkyCEHB
-	 Z4ldeUBSXf9+2sPzZtWXmC/2C39POqOCFibq8Dy5EDE4fP7SJVylkcpbybCOdPgroBGrQ
-	 zmmdr46kODq+34wVxs4KXiPFJhwFvZRuv3lQtT+Dfi+Ntoj+oncad1FMXB5urWLJnlvi2
-	 ceO6F/noYxw2rNEZ6TaIrSEL4mOacyJ0gBop2xBgN0uN5sKcSrcxhDYSXweNuuHnwog==
+	t=1795044645;
+	b=xNKQ0tt+umqqEEWerZZpnfoAxnMVVSPDlwYc6ZF8m8ToN34MX/nkqgAb4h1X3kJux+Aj
+	 CurD/qdPo3Q9EIuku0NMYrBPMtq/pjQGp2Sgfitt1cnQLbLOm2mo7ioCqxdGIZyRrgSHA
+	 tmgMrx6JnDCeZF8zzOX0fPV7YIusFYncfupW05AYDTlmrQdWQUDHVOkP3oI1mA5bjtPA5
+	 3tBD6V3Ib5W0rO8xVH6uRcxHBOuHdnheZRkbsJEBN8QuAim+9s4/UlhnpVrXbOp56DIPr
+	 vfrnNGRzj4errajBFsnNo7RnzFqUiVcc87bU7Y78oNU0J4sTmH6ih+ENY4bEP7z/JCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044642;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044645;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JG2isfxm9szNReLAG3k4/KYRb5vVOItLyzEhn0ipprA=;
-	b=KAsooRYfcUwGxelUgfb01bDeiPYErpiKWQWtLgH7E3XlyKYrZjBZPghUOtwtF8j7z5/Y
-	 8rEhOOFlMBGhqzzamCg4rwT+icfsxVtqRCZ27l4qJZK9S7X5tl9F0C4GBa5EPieaDpeaB
-	 vjqNCBR8nnQlJipb5GPB3DU7W5rkVHI5/XbgHcPDm0AnIaHdJMXkWtZQvjaSgKtbmk8K6
-	 Zp/O2RuFhdrSw5fJmbKpzR1Xv8bMLhO/9g6Lo5NhTMv0DL+7Oxzg1TUL/UVhlL1R0ZZ6+
-	 cdhajSGLqA3SAusWMBGE/LRdX0Mi+S1vwJx8idsd3bmRrqcstCadeVniI+rzKwWtdkQ==
+	bh=SXeRhcMVm/OlFcHqbATp56B0AI2zA2/aYqObiGJq8lg=;
+	b=kCz5UDgiMVkeF5XV9L9IEDjiUbaWnxt+vSw+19P+FO+pHgp8IXmSylpATEYIWHAEsLC6
+	 I3CYoI1XvaUS+R70YhE0ZdjwCKV7nl+ugox41EjKwjtJQd5hJcUc7NKwTyU6Vod/o41r/
+	 1oZOOqvaYm1Jwn6jWk4U/RRaghRta7JHSyeencQ3+O4EKK93tI6MdJ02zAK24R+auuX+u
+	 qJ1V2sYNYnc6e/0qLHtu84Lg11XNE8nCHOZwMX2hZq7fxloZQrKegg4Kg6DaTeIMtU2q7
+	 eS/hg6ystR2hrNWPJhJuOvwhcIyOYWG/9zLSi+AGqtTVkcQ70GJ53vH8/nWOn6sn5uA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VvzFabft;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mu4IyUe1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2F6606A32F;
-	Wed, 18 Nov 2026 23:30:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32545606A325;
+	Wed, 18 Nov 2026 23:30:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VvzFabft
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE2931F000C4;
-	Wed, 18 Nov 2026 23:30:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mu4IyUe1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83DBA1F000C5;
+	Wed, 18 Nov 2026 23:30:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044642;
-	bh=JG2isfxm9szNReLAG3k4/KYRb5vVOItLyzEhn0ipprA=;
+	s=korg; t=1795044645;
+	bh=SXeRhcMVm/OlFcHqbATp56B0AI2zA2/aYqObiGJq8lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VvzFabftZ00bdqny+T6qXGlczDoAKykyIpZmCwnJ5o/0t5KMy0exjg4pJ4Wa53wjm
-	 nGZLLibk8dbtvYYUvACVsp/k6V3ewEq8WYR98VT3sVWyz6ljLUlE/FiolQEymoM6eP
-	 WopuQtLSJXRiKNd0QL0VsN9vpq2U/uYMZcmavCXM=
+	b=mu4IyUe1xMe0bHSH8vQETrooLNFgwGUsDNMXaupOLhX3ltp1Dfdw7InZK8RunvzhR
+	 xg5NL+kRgZfqrOUVepo4wcfvz2bCgB3obPFGXoEMeCqXHi6BgeQGdFcRQZpqJRBXSy
+	 MfrcxIfBdUJ7oW/vHqiaii3LHKDEvcLtDMHZtLVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Tanz <gabor.tanz@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.1 0641/2857] HID: quirks: Always poll the Anne Pro 2 with product ID a292
-Date: Wed, 18 Nov 2026 15:27:55 +0100
-Message-ID: <20261118150224.602016038@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.1 0624/2857] KVM: x86/mmu: Bug the VM if KVM calcs a CPU role with EFER.LMA=1 && CR4.PAE=0
+Date: Wed, 18 Nov 2026 15:27:38 +0100
+Message-ID: <20261118150223.960246048@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,52 +66,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabor Tanz <gabor.tanz@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit cbc13a78a89d087252947d0a51048e576cfcb3ef upstream.
+commit 34dacbe7ae93f2d3c26cd0bf3e08200b1fa2c180 upstream.
 
-The wired Anne Pro 2 identifying as 04d9:a292 stops delivering keyboard
-input after a period of inactivity. Unplugging and reconnecting the
-keyboard restores input.
-
-Keeping ObinsKit running prevents the problem. A read-only userspace
-reader that keeps USB HID interface 1 open also prevents it, as does
-usbhid.quirks=0x04d9:0xa292:0x00000400 without either application running.
-
-Commit ca28aff0e1dc ("HID: quirks: Always poll Obins Anne Pro 2
-keyboard") added HID_QUIRK_ALWAYS_POLL for product ID a293.
-The variant identifying as 04d9:a292 exhibits the same symptom.
-Apply the quirk to this product ID as well.
+Bug the VM if KVM attempts to construct a CPU role with the should-be-
+impossible combination of long mode being active without PAE paging being
+enabled.  KVM's MMU construction assumes that EFER.LMA can be set if and
+only CR4.PAE is set, and will create a completely invalid MMU if that
+assumption fails.  FNAME(walk_addr_generic) already has sanity checks to
+try and mitigate the fallout, but attempt to catch such bugs earlier, as
+this is (at least) the second time KVM has had bugs that escaped into
+FNAME(walk_addr_generic), and it's entirely possible the bad state could
+cause problems elsewhere.
 
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Gabor Tanz <gabor.tanz@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Link: https://patch.msgid.link/20260902232028.2767071-5-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-ids.h    |    1 +
- drivers/hid/hid-quirks.c |    1 +
- 2 files changed, 2 insertions(+)
+ arch/x86/kvm/mmu/mmu.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -693,6 +693,7 @@
- #define USB_DEVICE_ID_HOLTEK_ALT_MOUSE_A081	0xa081
- #define USB_DEVICE_ID_HOLTEK_ALT_MOUSE_A0C2	0xa0c2
- #define USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A096	0xa096
-+#define USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A292	0xa292
- #define USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A293	0xa293
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -4990,6 +4990,9 @@ kvm_calc_cpu_role(struct kvm_vcpu *vcpu,
+ 		return role;
+ 	}
  
- #define USB_VENDOR_ID_IMATION		0x0718
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -102,6 +102,7 @@ static const struct hid_device_id hid_qu
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_HAPP, USB_DEVICE_ID_UGCI_FIGHTING), HID_QUIRK_BADPAD | HID_QUIRK_MULTI_INPUT },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_HAPP, USB_DEVICE_ID_UGCI_FLYING), HID_QUIRK_BADPAD | HID_QUIRK_MULTI_INPUT },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_HOLTEK_ALT, USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A096), HID_QUIRK_NO_INIT_REPORTS },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_HOLTEK_ALT, USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A292), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_HOLTEK_ALT, USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A293), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_HP, USB_PRODUCT_ID_HP_LOGITECH_OEM_USB_OPTICAL_MOUSE_0A4A), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_HP, USB_PRODUCT_ID_HP_ELITE_PRESENTER_MOUSE_464A), HID_QUIRK_MULTI_INPUT },
++	if (KVM_BUG_ON(____is_efer_lma(regs) && !____is_cr4_pae(regs), vcpu->kvm))
++		*(u64 *)&regs->efer &= ~EFER_LMA;
++
+ 	role.base.efer_nx = ____is_efer_nx(regs);
+ 	role.base.cr0_wp = ____is_cr0_wp(regs);
+ 	role.base.smep_andnot_wp = ____is_cr4_smep(regs) && !____is_cr0_wp(regs);
 
 
