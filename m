@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033034;
-	b=qbAxQVYtZm8AlMD075N0nyaGiJCMBG8yy99xaEtKt0tcFiKiONS9tN7uS54n/C1g4Dxm
-	 bHzhC41eVnVsN86cZ7qEnTdF5uNqzYzkCl90pXc1dfxbmuHBl7XaRq9y29OzWAFQWhoJt
-	 Rn1uJdO6HfRnZ68RWlZTsVvulnV93WewE0M1iqH8sa4/zJSq7/L4w0Syb4rsKsskgSVqi
-	 zqg6iA1qJXcWmAd1/bV1oByLwUCIiFhnhicoKUL3LoN3YwW3bVRrnt47eJDfzCNfCXRn5
-	 Fy5YcWT/rN499qW8exkgQedAyBZGoSGx6EfVznc98kYlgxqwP5I/Tkw3FnquwlvlxTw==
+	t=1795033036;
+	b=oHIOWf0aEWE8l/qaTlD/t2XHLEzsMOIX74+ZYzaUMbYHcsMzOplE23jEX6vmg2P0B17v
+	 vB4hGJJ4kcbZR023+mMGfl9/ctK7t5QJG7n3kkz/CnL/y2e11QXpei7UxLZW0dfAwgXWn
+	 P2+kOdOuce5xS9XZ/gxHpahZQwBl3lLoA456B6jtJZ6eMUfmFQxsoy0gcd2gM/IWEttHd
+	 T7qCHd6NxZGWoXSE2+EOYZJld4seVrWGaP6KPSSlROitgx0dlny+ahCoqls+a5Ssin1rQ
+	 T0NQ2Og/UMYAeXxTVYobnS1QBl+sLMQJbNBT+pOaEe+z7R4W3tIubIXUqcIZ+JFrF7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033034;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033036;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WsPJpC0dc8DFKZrLKR3ioZ4E+Bd1XVQEcDxG9SKQD+E=;
-	b=5QHQ0tu9UNuQ13LvM/2HxkOjEUyPJEgnQcsDGd9bu7SsgeZO3440B4pN34ciB+r0NFUQ
-	 uPIuIOUpJPZp+q9Xrvz6QMDIfzm4NKSaF5uVkwAzuF1QhPsigB/HIz+dCDx0B2FFcYVIP
-	 zhc+2l4PGiV4P8t7vExNt8nixr4R7JTMeF1FWt0EA7K7HmWodLEiy78afFq/zYOz7sq8a
-	 +xMAqhk8Ukmh95WqnSOCs2tkYT1WWKnoshQ9PMrIYyoOmrqic+vzyNqMDO9oDb3vCUd1C
-	 9UcQiKMVw0i+Hsy0ymTCXk8Mk9BnJwOe35AyYdOUia2uTtFck7esK6by01sJge8VXJw==
+	bh=M+rp6Iu9V/qVvnPl8a6VjqJZ1dB+ADdiqiSmplTg5xw=;
+	b=0of6LwcdPqnPXcLzjZnesGONBuuZTlEVl4WI7UNA3wUsfj7rBhBtEz9M+c2TDI4bGAIO
+	 ISIdSC1Hs8R1ITn3UEIDmBibcIjNYRGUAhEHnNg8qWVcma6ZdjyDVIpHaKCYD/blON5V3
+	 htWsCx8qY6Ag2s1CJ7YcKd6vM2JklxYLqqFit1LGKzkS91EO9xBaoBAy/pli/vZeKDIVU
+	 aW7UJJMJlj0OJH/Zmudz/2Dg03vzLhCuBeamhvgKcI7VSB1BgWeviF3sUphEF+vmpTm0R
+	 X7XuXIspn1txKmX57/3ZKGy4LuMtFmRfURbQ80M9hByHZ6ZEheGTIHk2loip6q0jEjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U2NbCm31;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="t/zDnd8U";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED080606A31C;
-	Wed, 18 Nov 2026 20:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D75ED606A31C;
+	Wed, 18 Nov 2026 20:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U2NbCm31
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A6E11F000C4;
-	Wed, 18 Nov 2026 20:17:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t/zDnd8U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ECE31F000C7;
+	Wed, 18 Nov 2026 20:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033033;
-	bh=WsPJpC0dc8DFKZrLKR3ioZ4E+Bd1XVQEcDxG9SKQD+E=;
+	s=korg; t=1795033036;
+	bh=M+rp6Iu9V/qVvnPl8a6VjqJZ1dB+ADdiqiSmplTg5xw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U2NbCm31mlNqm79rHbJbdDbI9ReD6iPLP4+MERsKtCzZaxf1873Ar8F7k6dfYwTGb
-	 JcZoUvPk1mkSKN9VFWk0k8dNLP9rh/5SHzfpV7EHvp51LueX12yw/kWLUlaWhDHrqg
-	 AxKQkqj8GVqVMMA82A2dOksRtnv93Jdho635qdhE=
+	b=t/zDnd8UW+iIpYDvibdwJBOtx8pujRQgA+yIGbvgkqUlcKL1gTDB4sLvk6qxwCG9V
+	 A3AE6AOPQBKIwqjo409zQPknGtHwEe5yCcY9m48gbsID5+oCDUITul3q+5UB4hWFNr
+	 ciT4z0HKMtLgCCVAH8pfNgkeVbfbAiHrQd90TYIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avi Weiss <thnkslprpt@gmail.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Qing Zhang <diasyzhang@tencent.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1624/1756] nvmet: prevent double-free after metadata SGL allocation failure
-Date: Wed, 18 Nov 2026 16:02:31 +0100
-Message-ID: <20261118150114.469747576@linuxfoundation.org>
+Subject: [PATCH 6.12 1625/1756] nvmet: protect nvmet_ports_list with nvmet_config_sem
+Date: Wed, 18 Nov 2026 16:02:32 +0100
+Message-ID: <20261118150114.505391129@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,38 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avi Weiss <thnkslprpt@gmail.com>
+From: Qing Zhang <diasyzhang@tencent.com>
 
-[ Upstream commit 2f61b9d1d54edf75a352c43eebe3804144b5d44e ]
+[ Upstream commit cead6beb89256ae7145b65fbe8e8a5fedba4a47c ]
 
-If metadata SGL allocation fails, nvmet_req_alloc_sgls() frees
-req->sg without clearing it. The RDMA error completion path later
-frees the same scatterlist again.
+Readers of nvmet_ports_list (e.g. nvmet_subsys_disc_changed()) hold
+nvmet_config_sem and assert it via lockdep.  The writers --
+nvmet_ports_make() and nvmet_port_release() -- do not take the lock;
+they rely on the parent directory's VFS inode lock for serialization,
+which is an implementation detail of configfs and not a guaranteed
+contract.  Align the writers with the lock the readers already require.
 
-Use nvmet_req_free_sgls() instead so that the scatterlist pointers
-and counts are cleared before response cleanup.
+Also move list_add() in nvmet_ports_make() to after the port is fully
+initialized: the old position published the port on the global list
+before INIT_LIST_HEAD(&port->subsystems), so a concurrent reader
+could traverse uninitialized list heads.
 
-Fixes: c6e3f13398123 ("nvmet: add metadata support for block devices")
-Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+flush_workqueue() in nvmet_port_release() stays outside the semaphore
+to avoid a lock dependency on nvmet_wq.
+
+Fixes: b662a078576e ("nvmet: enable Discovery Controller AENs")
+Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
+Signed-off-by: Qing Zhang <diasyzhang@tencent.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/target/configfs.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
-index e2ebc699ae6c4..c4a4af8a0547c 100644
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -1136,7 +1136,7 @@ int nvmet_req_alloc_sgls(struct nvmet_req *req)
+diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
+index 0e12f800beb3f..7b0c04a3faf62 100644
+--- a/drivers/nvme/target/configfs.c
++++ b/drivers/nvme/target/configfs.c
+@@ -1921,7 +1921,9 @@ static void nvmet_port_release(struct config_item *item)
  
- 	return 0;
- out_free:
--	sgl_free(req->sg);
-+	nvmet_req_free_sgls(req);
- out:
- 	return -ENOMEM;
+ 	/* Let inflight controllers teardown complete */
+ 	flush_workqueue(nvmet_wq);
++	down_write(&nvmet_config_sem);
+ 	list_del(&port->global_entry);
++	up_write(&nvmet_config_sem);
+ 
+ 	key_put(port->keyring);
+ 	kfree(port->ana_state);
+@@ -1989,8 +1991,6 @@ static struct config_group *nvmet_ports_make(struct config_group *group,
+ 			port->ana_state[i] = NVME_ANA_INACCESSIBLE;
+ 	}
+ 
+-	list_add(&port->global_entry, &nvmet_ports_list);
+-
+ 	INIT_LIST_HEAD(&port->entry);
+ 	INIT_LIST_HEAD(&port->subsystems);
+ 	INIT_LIST_HEAD(&port->referrals);
+@@ -2022,6 +2022,10 @@ static struct config_group *nvmet_ports_make(struct config_group *group,
+ 	configfs_add_default_group(&port->ana_default_group.group,
+ 			&port->ana_groups_group);
+ 
++	down_write(&nvmet_config_sem);
++	list_add(&port->global_entry, &nvmet_ports_list);
++	up_write(&nvmet_config_sem);
++
+ 	return &port->group;
  }
+ 
 -- 
 2.53.0
 
