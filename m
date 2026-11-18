@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046717;
-	b=4Sk7XiUSBenah48hkALXZIrI3nj5x84HIm10SOSiw+cgI/9lNJdhUm8sJNHSf7kOM+3d
-	 3T5aJ7ZUg6uggi8lchJtwDcbhhJpR7XuH92c7sJotjQSI3y5Khc2xpDXfSyPwYsXGsVQ7
-	 PR6UL/LaRbqCGQ4cNxhpr3MMwSQciU4VZlop4iV5gbp1F7yeX7RkEmdR9YhRy3zLfkfnf
-	 bJy/0qHEDq5fKCaZSpiMrW6JF25bgQLyNobEWIk8qQz3ttnv665T5ykiwrUd0bx1fcHwo
-	 6k7XjC98tQqEMpOyg00lwv3BND5P+IngM3lISZjV+SsAxuZJ7mn6WFDYDdQlWvD3JBw==
+	t=1795046719;
+	b=p8dIbPdtXPWedDyc+OllngHg8zPP2uPirxCRO6LNMcF3VaRwxZmKXYGp06vxVkuiNdcI
+	 noUwxdnEe8zosLXgWwEd3n9mkI01qZP6fLvOiJ2dAbBvkU/pg7KdCjoObyU29xHCFQ6Dc
+	 E5UFEfOwM7RB/mEH0z6XcE61ORNiLB+YiHZ15Wu3m1UOJCiUdFI7eX1BjEtybvzibOVdY
+	 Trcr1YFLClpTI8kS/zV5jB+5o8YVd1FwBOCOPnVUWJLghOJyAwYHiTHGgwo8c6YF0UMY4
+	 lTEhKzpelFJof6FmDyheaYzLPurJVcL9ZmUyoq1u9onvFqlnboCqaOPi66bRdUx6OQw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046717;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046719;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=J11wODjltwf226IhpPofrC0HViE+lWYiD+AX7Z+HPLQ=;
-	b=m9cWNI/cOVWxMSoAhOSMZhMrPKm1iT+zyaysdGej9p843grLd1dyMgwbXJ5fuaKksQrb
-	 ORzBC99jP+8+2WkaRXnEcY7qk3Oojalu5brrlUgcOhOMp59uIL67/fJCk+Cj3dhBzXJzc
-	 zyfGD6uWDxZkvllSfhIYXCZ2kGRuEiGSUPO3RsbCoYDLg0V7S08yPrtEsG0lvtwIS2Vv3
-	 YrZ3fsh8FkYQmJf3qYOTOor38buNCxFvEhQ5RzGkPymgi+5zPrqlGipikzuVAiqEpfyy3
-	 kDQCBDLEiHw69HEEoadXWcBMEwPu8kCKT3MpX8lBHIjKkd8hLfIad8FuEEA4GzyvFgw==
+	bh=XjVUfLH7PeD3FjQIOHBp3/CKRaf/jcUcpvvtMiUh0Ms=;
+	b=HcvAcUFmUo0Id4bBk4HvCd7rYSUe3C7XWaL+A2U6NDE+aKsaOAYOhWhyRDeN1OJkE5XQ
+	 A3qyUAXW00OryZlvJTpPvNVIsTN7YmORHqnlfwybItuX2wzS/GmfEt+1DzO69QUXD3Ily
+	 xxvXsd9ejNkf7VTI/EvBvLrFsJrX7vIqx8y5wIeoTvKuYcCTQQ9X2f1BVjNZ8xWtbniyY
+	 exLAh7R+/BxvhY3oyR54zi18LZU8D8areGpsBbMc5VS3EkPhE6Nrgil4njqsBHa5XIa9i
+	 OMeI+OIDf8fh69tzb/3I4Aavor7CoBJDHxbW34ZbPtRyss1y0GPogkE5f09gOyUCrWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pBRnlaXb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tABa2yty;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F46606A320;
-	Thu, 19 Nov 2026 00:05:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4910606A31C;
+	Thu, 19 Nov 2026 00:05:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pBRnlaXb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 464E11F000C4;
-	Thu, 19 Nov 2026 00:05:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tABa2yty
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 065031F000C4;
+	Thu, 19 Nov 2026 00:05:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046716;
-	bh=J11wODjltwf226IhpPofrC0HViE+lWYiD+AX7Z+HPLQ=;
+	s=korg; t=1795046719;
+	bh=XjVUfLH7PeD3FjQIOHBp3/CKRaf/jcUcpvvtMiUh0Ms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pBRnlaXbNldIWQ305TJHyH6B6jhE/9E82GC+02xlspniHSV1uvSITW4pQ7Zm5OmNf
-	 52jKNRThr/iHCPNJzTalL3laZH4iiw7RsfAinTiKxJ9LP51F1Ehz6GrQ+vn+E7O82k
-	 UWI/15b6FXSb/vCawT98wnq40EeO/LIPwHJqFDgc=
+	b=tABa2yty5w8YtAci7Xjc5X3FlPT1/Q8jf8T8HoKDh8B+eKW+XAIXLkcobU0gFk6Yc
+	 oAL7PyivBWLJt/Ebe9BdEzUKOUO5suojoTOce/aT3Iy1YScYZZjs4TO3DPGoN8k4+6
+	 76J8mw8QtwenyWBhabUi+AEyXhgKjjK1B/3MAT/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
 	Sven Eckelmann <sven@narfation.org>,
-	Simon Wunderlich <sw@simonwunderlich.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1340/2857] batman-adv: Limit number of aggregated packets directly
-Date: Wed, 18 Nov 2026 15:39:34 +0100
-Message-ID: <20261118150249.675220437@linuxfoundation.org>
+Subject: [PATCH 6.1 1341/2857] batman-adv: Close OGM aggregation before transmission
+Date: Wed, 18 Nov 2026 15:39:35 +0100
+Message-ID: <20261118150249.710118788@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,63 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 434becf57bdc89f939db635ed3337b9d1da5967e upstream.
+commit f91f64a91682c07e6c5f059804e709656364e8a6 upstream.
 
-The currently selected size in BATADV_MAX_AGGREGATION_BYTES (512) is chosen
-such that the number of possible aggregated packets is lower than 32. This
-number must be limited so that the type of
-batadv_forw_packet->direct_link_flags has enough bits to represent each
-packet (with the size of at least 24 bytes).
+The OGM send worker leaves its forwarding packet on forw_bat_list until
+after batadv_iv_ogm_emit() returns. Aggregation holds forw_bat_list_lock,
+but emission reads and clones the packet without that lock.
 
-This requirement is better implemented in code instead of having it inside
-a comment.
+CPU 0 can therefore start emitting a queued packet while CPU 1 takes the
+list lock, finds the same packet and appends another OGM. The sender can
+observe the new packet length before the corresponding direct-link flag
+is set, or clone the skb while its length and payload are being updated.
+This can transmit an OGM with incorrect flags or inconsistent data.
 
+KCSAN reported:
+
+  BUG: KCSAN: data-race in batadv_iv_ogm_queue_add / batadv_iv_send_outstanding_bat_ogm_packet
+  write to 0xffff888100fedcf8 of 2 bytes by interrupt on cpu 1:
+  read to 0xffff888100fedcf8 of 2 bytes by task 70 on cpu 2:
+  value changed: 0x00c0 -> 0x00d8
+
+Mark the aggregate as full under forw_bat_list_lock before emission. This
+waits for any ongoing append and prevents further aggregation. Emission
+uses packet_len to walk the OGMs, so all queued packets are still sent.
+Keep the packet on the list so interface purging can find the worker,
+wait for it to finish and free the packet.
+
+Fixes: 9b4aec647a92 ("batman-adv: fix rare race conditions on interface removal")
+Cc: stable@vger.kernel.org # 4.10.x: 434becf57bdc ("batman-adv: Limit number of aggregated packets directly")
+Cc: stable@vger.kernel.org # 4.10.x
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+[ Use BITS_PER_TYPE(...) instead of BATADV_MAX_AGGREGATION_PACKETS ]
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/bat_iv_ogm.c | 4 ++++
- net/batman-adv/main.h       | 3 ---
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ net/batman-adv/bat_iv_ogm.c | 5 +++++
+ net/batman-adv/types.h      | 8 +++++++-
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
 diff --git a/net/batman-adv/bat_iv_ogm.c b/net/batman-adv/bat_iv_ogm.c
-index 7fd692b642e39..5f87db1ac9d9f 100644
+index 5f87db1ac9d9f..82685a0a9397e 100644
 --- a/net/batman-adv/bat_iv_ogm.c
 +++ b/net/batman-adv/bat_iv_ogm.c
-@@ -450,6 +450,7 @@ batadv_iv_ogm_can_aggregate(const struct batadv_ogm_packet *new_bat_ogm_packet,
- 	struct batadv_ogm_packet *batadv_ogm_packet;
- 	int aggregated_bytes = forw_packet->packet_len + packet_len;
- 	struct batadv_hard_iface *primary_if = NULL;
-+	u8 packet_num = forw_packet->num_packets + 1;
- 	bool res = false;
- 	unsigned long aggregation_end_time;
+@@ -1794,6 +1794,11 @@ static void batadv_iv_send_outstanding_bat_ogm_packet(struct work_struct *work)
+ 		goto out;
+ 	}
  
-@@ -475,6 +476,9 @@ batadv_iv_ogm_can_aggregate(const struct batadv_ogm_packet *new_bat_ogm_packet,
- 	if (aggregated_bytes > BATADV_MAX_AGGREGATION_BYTES)
- 		return false;
- 
-+	if (packet_num >= BITS_PER_TYPE(forw_packet->direct_link_flags))
-+		return false;
++	/* Mark aggregate as full before forcing emit. */
++	spin_lock_bh(&bat_priv->forw_bat_list_lock);
++	forw_packet->num_packets = BITS_PER_TYPE(forw_packet->direct_link_flags);
++	spin_unlock_bh(&bat_priv->forw_bat_list_lock);
 +
- 	/* packet is not leaving on the same interface. */
- 	if (forw_packet->if_outgoing != if_outgoing)
- 		return false;
-diff --git a/net/batman-adv/main.h b/net/batman-adv/main.h
-index c48803b32bb01..e26bb8840f25b 100644
---- a/net/batman-adv/main.h
-+++ b/net/batman-adv/main.h
-@@ -102,9 +102,6 @@
-  */
- #define BATADV_TQ_SIMILARITY_THRESHOLD 50
+ 	batadv_iv_ogm_emit(forw_packet);
  
--/* should not be bigger than 512 bytes or change the size of
-- * forw_packet->direct_link_flags
-- */
- #define BATADV_MAX_AGGREGATION_BYTES 512
- #define BATADV_MAX_AGGREGATION_MS 100
+ 	/* we have to have at least one packet in the queue to determine the
+diff --git a/net/batman-adv/types.h b/net/batman-adv/types.h
+index f3ee914f8d4ee..39cff1e9be252 100644
+--- a/net/batman-adv/types.h
++++ b/net/batman-adv/types.h
+@@ -2138,7 +2138,13 @@ struct batadv_forw_packet {
+ 	/** @direct_link_flags: direct link flags for aggregated OGM packets */
+ 	u32 direct_link_flags;
  
+-	/** @num_packets: counter for aggregated OGMv1 packets */
++	/**
++	 * @num_packets: counter for aggregated OGMv1 packets. Set to
++	 *  BITS_PER_TYPE(forw_packet->direct_link_flags) (independent of the
++	 *  real number of aggregated packets) by the send worker to prevent
++	 *  further aggregation while the packet is emitted. It must therefore
++	 *  not be used to iterate over the aggregated packets
++	 */
+ 	u8 num_packets;
+ 
+ 	/** @delayed_work: work queue callback item for packet sending */
 -- 
 2.53.0
 
