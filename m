@@ -1,56 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021911;
-	b=AKnHOtnZSzDwmwuTWuFdgZWU1fsk8qbs/mDybfFG4zs0wrA/mj/8kmGJfXrdoW0ar+vH
-	 4b2HQZQAeT9+TXcdMCtao8YrIAvK32PBDPrZu9EUh7nfNsCtCyd0mbSizja8bcvaZsO/s
-	 E4wFW/+y5fX9z5Vd1kAIV/KbUtJlc5nb0UMr4CfP9Y+vpct1jW8aKpigCR8aLuqdw3jHR
-	 39FxiWS+BeRQDon1Qb/RJYabBJa0xPgLM4gXAo5VsOddypkEdVUAFsNz44uteqgNUlYAg
-	 ybU1+02oxsqaFBqid1YtzoyN5w96fbA2jZuwKzzzPI7Jcjk7JxBQBybFjAyXKoK74cA==
+	t=1795021914;
+	b=4TVv+iOhn8Sr1Lq9q8Ct0dVn6khOopE738LcIN0fUTxY1VKwaDwIl+TXXFuHO/PkEms5
+	 /JfFfPBYdjxhgDxvYusrL/M4ZB4bZBzi7HexKgniVcZFQdU8ScqWbd4lVsve6WC8GaStH
+	 sSnygbAvLT3saafqwtQsdxBHhf4sLy2kcxxw5vtlXZ5ldvZaWKaG0JQxmEYtisbtxy5XS
+	 4xAxbBCs4K/zDJMqyAUWyQgGjILGkcz5G3Q/XgOMN8yFRAtc5aOLMoJOl16IZnCaIadAT
+	 r38MmA1lBoSVgsCH7VGzSPrcAFeTJoNdPn0Be4bEnJjgzUEfGNv0lR3QY2KjNYNJ7Lw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021911;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021914;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9DLeBAWVAj+WkH7ggtC7nM+IqlYEiKz0l+TbPZcb2nU=;
-	b=tGlz62wYAWqXOYHKqjsAvBeGBOI+1nnOhVt01B4RjZLTuctl+sJuH+TEMS3Rwb9/XMZZ
-	 y+Zr+XcqatfjIqzSTS1BIShtvHjZjOKRV9h+0/vuKtcjNwyL5wLxp1QYvZjdD/DNcKQqw
-	 wiYsDvqBDnGyNmvpbEdfez/BD/nRTDfCmUgqPN8Nv+GfCCB5sAQ/tNE5e48bzhXfrj52N
-	 K3AnpvrlAKCzu1E4N7xWlaKAlVXirDEFdw3n5bWjSQWrTmdNrGitbzO9CTHHymQDisY98
-	 6lqQ8bQxvBRTOLQTwgwMjgQq1+EEQ5VJANXwkQadCIcRSmAwCZFBbslJ+m4z1zlo9kA==
+	bh=gERFka5pz+fpPKvRJke4wtf0RT61PLE4KstebUYoOHs=;
+	b=a5CGjyaHOvG09U2TsllM6UfYuA000cfJdR9QmT6Qj6A1wlav809kwhyP710TshYF/yef
+	 drcE2VxlEhPdD0W1yx/x4QRmrKmegGVdJHowSS5poi1c2S/5DAX8h0h26F5dm3L8SbaeF
+	 SCsDiLqdrxguws5wd/xXyzuIWSpwJFNC/JqPp/+EM8dFFXZLQ0QiUptchZjcSLFWCNN3L
+	 oHjr2Mqy88zgIFfP4D903qrbMaDpESyJ79OoMsY0aXhKxUl+jsPS4QKc+UCUqjoL4Lnmm
+	 YPaRUpznr0xxX+b51V2Hb9fkRoxAIDly8HyeDbfiVzc6kau4iZOejJE+ichAr85IbhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EF3L4pnZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BSpaELsC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3226A606A331;
-	Wed, 18 Nov 2026 17:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF2F606A33F;
+	Wed, 18 Nov 2026 17:11:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EF3L4pnZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A341F000C5;
-	Wed, 18 Nov 2026 17:11:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BSpaELsC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A5951F000C5;
+	Wed, 18 Nov 2026 17:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021911;
-	bh=9DLeBAWVAj+WkH7ggtC7nM+IqlYEiKz0l+TbPZcb2nU=;
+	s=korg; t=1795021914;
+	bh=gERFka5pz+fpPKvRJke4wtf0RT61PLE4KstebUYoOHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EF3L4pnZdFLQCCQ0rS/S0MlV/sd0+fLHxEzGRgccNfh9mnp61gzgMcWCMmOdX9XPk
-	 aLcQrvaJRyjBbxNYBGFqL8/haISFgmcV9i3TOEWzmrDky3vAVZsg0J5XAGBXFQc0Zw
-	 C6NwGgKn/XSZ/gvQhdOae68F2z2PW75xBF9/X5kE=
+	b=BSpaELsCqE4jQlnL+hY3IPtyZaAz3M4tVSOLMih/9MefvkEowlpaBNzn3lGIRSZC9
+	 JtGvXCv5Q2TbPzMiRh9u/Ew4E8SJwfpRIGtq1kOoG/Lwsv5zpilITnGfbNbtofDdEe
+	 A8gnuJ3oiZDc92Y+6MP1h0WfLN7HuYbR670MOpD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+bd975ef54294bec73f0e@syzkaller.appspotmail.com,
-	Tal Zussman <tz2294@columbia.edu>,
-	Julian Sun <sunjunchao@bytedance.com>,
-	Zhenxian Ma <mzx199711@gmail.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Hengqi Chen <hengqi.chen@gmail.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2475/2651] block: fix recursive i_rwsem locking in blkdev_write_iter()
-Date: Wed, 18 Nov 2026 16:01:55 +0100
-Message-ID: <20261118150414.062570323@linuxfoundation.org>
+Subject: [PATCH 7.3 2476/2651] LoongArch: BPF: Fix stack arguments for indirect trampolines
+Date: Wed, 18 Nov 2026 16:01:56 +0100
+Message-ID: <20261118150414.093258425@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,68 +70,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhenxian Ma <mzx199711@gmail.com>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit 21b88cc8bafceee6c6c82503e3b2cc6f1d0c78bf ]
+[ Upstream commit 67ab1a331481ef282c53003e6c041c8c4348d4cd ]
 
-Commit 2fec4fd97cc3 ("block: take i_rwsem for the direct I/O write
-fallback") takes i_rwsem around blkdev_buffered_write() in the direct
-write fallback to close a race with set_blocksize().  Commit
-1b1be9ea4e34 ("block: take the inode lock for buffered write fallback")
-fixes the same race by taking i_rwsem inside blkdev_buffered_write()
-instead.  With both commits applied, the fallback path takes i_rwsem
-recursively:
+LoongArch passes arguments beyond a0-a7 at the caller stack pointer. The
+trampoline store_args() helper always reads those arguments at FP + 16,
+which is correct for a regular fentry trampoline: its prologue leaves FP
+16 bytes below the stack pointer at trampoline entry to hold the saved
+RA/FP frame record of the parent function.
 
-  blkdev_write_iter()
-    inode_lock_shared(bd_inode)
-    blkdev_buffered_write()
-      inode_lock_shared(inode)
+A struct_ops indirect trampoline is entered through a function pointer
+and only saves its own RA and FP before setting FP to the entry stack
+pointer. Its stack arguments therefore start at FP rather than FP + 16.
+As a result, every stack-passed struct_ops argument is currently read
+two slots late.
 
-syzbot reports this as:
+Select the source offset based on whether the trampoline is indirect.
+This also prepares the stack-passed arena argument path to consume the
+actual pointer slot.
 
-  WARNING: possible recursive locking detected
-  syz.0.40/6005 is trying to acquire lock:
-  ffff888024956f68 (&sb->s_type->i_mutex_key#10){++++}-{4:4}, at: blkdev_buffered_write+0xd7/0x160 block/fops.c:738
-  but task is already holding lock:
-  ffff888024956f68 (&sb->s_type->i_mutex_key#10){++++}-{4:4}, at: blkdev_write_iter+0x6c5/0x810 block/fops.c:815
+With this patch the BPF selftest "./test_progs -t struct_ops_multi_args"
+passed on LoongArch.
 
-rw_semaphore read locks are not recursive: once a writer is queued,
-new readers block behind it.  If set_blocksize() calls inode_lock()
-between the two acquisitions, it waits for the first read lock to be
-released, while the second inode_lock_shared() waits behind
-set_blocksize(), and the task deadlocks.
-
-Drop the outer locking in the fallback.
-
-Fixes: 1b1be9ea4e34 ("block: take the inode lock for buffered write fallback")
-Reported-by: syzbot+bd975ef54294bec73f0e@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=bd975ef54294bec73f0e
-Cc: Tal Zussman <tz2294@columbia.edu>
-Cc: Julian Sun <sunjunchao@bytedance.com>
-Assisted-by: LLM
-Signed-off-by: Zhenxian Ma <mzx199711@gmail.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20261022062513.77372-1-mzx199711@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: c9ebe2016de9 ("LoongArch: BPF: Support up to 12 function arguments for trampoline")
+Acked-by: Hengqi Chen <hengqi.chen@gmail.com>
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/fops.c | 2 --
- 1 file changed, 2 deletions(-)
+ arch/loongarch/net/bpf_jit.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/block/fops.c b/block/fops.c
-index 847db3841ff23..f404ab1bd4d16 100644
---- a/block/fops.c
-+++ b/block/fops.c
-@@ -817,9 +817,7 @@ static ssize_t blkdev_write_iter(struct kiocb *iocb, struct iov_iter *from)
- 			} else {
- 				ssize_t ret2;
+diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
+index e78eb582c3005..119a20a7edf18 100644
+--- a/arch/loongarch/net/bpf_jit.c
++++ b/arch/loongarch/net/bpf_jit.c
+@@ -1674,17 +1674,17 @@ int bpf_arch_text_invalidate(void *dst, size_t len)
+ 	return ret;
+ }
  
--				inode_lock_shared(bd_inode);
- 				ret2 = blkdev_buffered_write(iocb, from);
--				inode_unlock_shared(bd_inode);
- 				ret = direct_write_fallback(iocb, from, ret,
- 							    ret2);
- 				need_sync = true;
+-static void store_args(struct jit_ctx *ctx, int nr_arg_slots, int args_off)
++static void store_args(struct jit_ctx *ctx, int nr_arg_slots, int args_off, bool is_struct_ops)
+ {
+ 	int i;
++	int stack_args_off = is_struct_ops ? 0 : 16;
+ 
+ 	for (i = 0; i < nr_arg_slots; i++) {
+ 		if (i < LOONGARCH_MAX_REG_ARGS)
+ 			emit_insn(ctx, std, LOONGARCH_GPR_A0 + i, LOONGARCH_GPR_FP, -args_off);
+ 		else {
+-			/* Skip slots for T0 and FP of traced function */
+ 			emit_insn(ctx, ldd, LOONGARCH_GPR_T1, LOONGARCH_GPR_FP,
+-				  16 + (i - LOONGARCH_MAX_REG_ARGS) * 8);
++				  stack_args_off + (i - LOONGARCH_MAX_REG_ARGS) * 8);
+ 			emit_insn(ctx, std, LOONGARCH_GPR_T1, LOONGARCH_GPR_FP, -args_off);
+ 		}
+ 		args_off -= 8;
+@@ -2017,7 +2017,7 @@ static int __arch_prepare_bpf_trampoline(struct jit_ctx *ctx, struct bpf_tramp_i
+ 	func_meta = nr_arg_slots;
+ 	emit_store_stack_imm64(ctx, LOONGARCH_GPR_T1, -func_meta_off, func_meta);
+ 
+-	store_args(ctx, nr_arg_slots, args_off);
++	store_args(ctx, nr_arg_slots, args_off, is_struct_ops);
+ 
+ 	if (bpf_fsession_cnt(tnodes)) {
+ 		/* clear all session cookies' value */
 -- 
 2.53.0
 
