@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036067;
-	b=pnS0s+m4w1ouYt3ViuuUUx1AaYmX4qHIXGf8qtmocX6lSEIdlVWiAgYitOyODKNO/Jm6
-	 TmmEbrBt3Z8uOosaq1kCBpaNLTtEo1h6QCJbtZFvgYzKyAb2hUrRXWpfYe7FaaFkpzI6t
-	 2q1scq05LWt07SQ+hdPA5ZWP9tt2l+c2PjM8RdaXlR+TY/nyWCeWu+UVdxNFbajpUYCuX
-	 8LJrEvoDPytl2QrK8QPk9bJs7sx/BtfeAJOURPv1f2EgcI9B993mO2NwOZaY+860src7q
-	 ts1wPaXypTAjPZEuj0D8gOZ6u6VmyYEx6CzmaPB0ZYBEa7o3Q/W/J+Tu8jRs4FVMipg==
+	t=1795036070;
+	b=d8cvFXaMA48MTfhLdZypU1pAb4rEWt9TzDIddAx4fzwaRYuOEiqiQlS/wrQB9bYqQDKq
+	 tepkhsSLeooEOO2U3fz0SZFj5bgQd+RF+cHLVtllIMN3ZCiB6vZjoLSG6Bf7GdcNw7xEb
+	 OVwcn4rfV6FdFKN+JPHutVAALLqO63F711uf+RTK0VsmbmhQwByCd9vNKIq1k5vIIfYag
+	 4PL6DwbnFrfQvT2+VckTfXmeVZcheiMEeMql2y5egBkFyKrBpH/wgUKXAZAVWzparwot4
+	 eU4wjhhKEBUdTPCF8Mq6cciFSRRseYZDbv2MNWKK6jos3R+0KQsme3pJ08kP7gw515Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036067;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036070;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HFur4dDUThOXeGA3SGnbf0pmC/rwLktdxIOdphGJWGA=;
-	b=QGCQT+T4kIl1c7ApJiJunGKbk+pMHNwKUpXohHcZiprVVsLdL5MShnTVUoXGLHo/TbwX
-	 rwb4KbOrs5Oktq6trVrwtZy/6qtaL/K62fgimwsmbnXOxVwwkeI0cfuh+LkauRKCZ3hG9
-	 UjpObKkdw+qycQ5/cSpo6g9D5WcfV7GqSrY/z/HM85F6NNP5cgBYHdXE22Febw27yXYE5
-	 gkk/aaL243hoUOwww6fwFbvvJCU9BE0hYOZR0ue8lfEFc8txwbZd1Yvcvu+HjuC+GrmJo
-	 qSV8DnwxrqC9L3OxMW7wPftJGKONkXmq8VN7MqfYdOAQpXQlMhcHwb4W1QSokdXZggQ==
+	bh=GrhJSppgeaxCnb426lcuG7/00kgK00AzlTte8RTYa0g=;
+	b=vZ/y9SAAukRvRCv/eREsm5p00Gz6shVSZG2u4s3HCjcTjXpcapcA1SY2XmrqkpM7126F
+	 9cpi/PBSPVD0NfZF2LwNbVvh1IzbUIqV9jitstYeREU0QETq3tr7zQU4g6sqtlybMJCPD
+	 bNW7PolaXrNdvDjav8UWHuX5sYrYJkHQMDUBTaAwfZ0MnITlQ3sH1stl2TME1ufHi/kfx
+	 8SAwqGb5Wry02EmmfmkoRWyM35o0EH7l1jHq2PNr+CCnQ/xmlyJCG+AFoyt0TpMCfQuEI
+	 vjxelrjUBvEbCA6W3D0eBz46RQKd8lopctwKc5owrA96UIpa5+a87NY8eK/p80Y5Rag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="2N38DZa/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0MDyu1Pj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B618606A31C;
-	Wed, 18 Nov 2026 21:07:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC5C606A325;
+	Wed, 18 Nov 2026 21:07:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2N38DZa/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D14791F000C4;
-	Wed, 18 Nov 2026 21:07:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0MDyu1Pj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 948921F000C4;
+	Wed, 18 Nov 2026 21:07:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036067;
-	bh=HFur4dDUThOXeGA3SGnbf0pmC/rwLktdxIOdphGJWGA=;
+	s=korg; t=1795036070;
+	bh=GrhJSppgeaxCnb426lcuG7/00kgK00AzlTte8RTYa0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2N38DZa/iMlXBC+hiyGECnQVp9Z+EWKAv1CVz1MZ5kUIw0MdwsjMwH3GvvEMVU3Wu
-	 ExIlKAkhSPbRHkP6FtS9TCoTpfNYhT2X4J3Y1MXs/UkEpzS3I5Rj8x2HczykL8cG0+
-	 myVE3kihgFRWeMRySSs1wnbMQSieAx1xnH+8hK4k=
+	b=0MDyu1PjS9fq1hRTe4Nh7Arzy4XieQEO1QzPEPv6LQLxnqG0dZtQe8EMOGNYQ8uq7
+	 wgxXAUIKaK16NdH/GHsICZx80WTIRKjU5sOUnm4rEmUbwZItipI9TeNoNdD5vP2Y8u
+	 PDj05dzcCdaFxKcJX1fVE+HeEKYx3phe4VVVV4m8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0884/3318] iio: accel: mma9553: disable autosuspend on remove
-Date: Wed, 18 Nov 2026 15:25:06 +0100
-Message-ID: <20261118150345.891061370@linuxfoundation.org>
+Subject: [PATCH 6.6 0875/3318] ata: ahci_st: Assert the power down reset in the probe() error path
+Date: Wed, 18 Nov 2026 15:24:57 +0100
+Message-ID: <20261118150345.557265151@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,47 +68,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 4dda1f9d25fb889649e81bbf015809daa512a049 ]
+[ Upstream commit 91e0a7452d7a81e924a499b23f30f3bf85fddbd2 ]
 
-mma9553_probe() enables runtime PM autosuspend with
-pm_runtime_use_autosuspend(). The probe error path correctly undoes
-this setting with pm_runtime_dont_use_autosuspend(), but the normal
-remove path only disables runtime PM.
+st_ahci_probe_resets() deasserts the "pwr-dwn" reset, but the probe()
+error path of st_ahci_probe() only releases the host resources, so the
+SATA IP is left powered up when probe() fails after
+st_ahci_probe_resets() has succeeded, e.g. when
+ahci_platform_enable_resources() fails.
 
-The runtime PM API requires pm_runtime_use_autosuspend() to be undone
-with pm_runtime_dont_use_autosuspend() at driver exit unless runtime PM
-was enabled with devm_pm_runtime_enable(). Leaving the autosuspend flag
-set therefore leaves the runtime PM state incompletely cleaned up after
-the driver is unbound.
+The reset is asserted by st_ahci_host_stop(), however ->host_stop() is
+only called through the ata_host_stop() devres action registered by
+ata_host_start(), so it does not cover any failure happening before the
+host has been started.
 
-Add the missing pm_runtime_dont_use_autosuspend() call to the remove
-path.
+Factor the assert out into st_ahci_assert_pwrdwn() and call it when
+either ahci_platform_enable_resources() or ahci_platform_init_host()
+fails. The "pwr-dwn" reset control is an exclusive one, so asserting it
+once more from st_ahci_host_stop() is harmless.
 
-This issue was found by manual code inspection.
+No functional change intended for ->host_stop() and st_ahci_suspend().
 
-Fixes: 40cb761306d6 ("iio: add driver for Freescale MMA9553")
+Fixes: 76884cb2f7da ("ahci: st: Add support for ST's SATA IP")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20260915084127.692494-10-cassel@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/mma9553.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/ata/ahci_st.c | 51 +++++++++++++++++++++++++------------------
+ 1 file changed, 30 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/iio/accel/mma9553.c b/drivers/iio/accel/mma9553.c
-index d01aba4aecba5..0a576eba86e60 100644
---- a/drivers/iio/accel/mma9553.c
-+++ b/drivers/iio/accel/mma9553.c
-@@ -1155,6 +1155,7 @@ static void mma9553_remove(struct i2c_client *client)
+diff --git a/drivers/ata/ahci_st.c b/drivers/ata/ahci_st.c
+index 39775429c8c0c..e08d5dffd67ce 100644
+--- a/drivers/ata/ahci_st.c
++++ b/drivers/ata/ahci_st.c
+@@ -84,18 +84,27 @@ static int st_ahci_deassert_resets(struct ahci_host_priv *hpriv,
+ 	return 0;
+ }
  
- 	iio_device_unregister(indio_dev);
+-static void st_ahci_host_stop(struct ata_host *host)
++static int st_ahci_assert_pwrdwn(struct ahci_host_priv *hpriv,
++				 struct device *dev)
+ {
+-	struct ahci_host_priv *hpriv = host->private_data;
+ 	struct st_ahci_drv_data *drv_data = hpriv->plat_data;
+-	struct device *dev = host->dev;
+ 	int err;
  
-+	pm_runtime_dont_use_autosuspend(&client->dev);
- 	pm_runtime_disable(&client->dev);
- 	pm_runtime_set_suspended(&client->dev);
+-	if (drv_data->pwr) {
+-		err = reset_control_assert(drv_data->pwr);
+-		if (err)
+-			dev_err(dev, "unable to pwrdwn\n");
+-	}
++	if (!drv_data->pwr)
++		return 0;
++
++	err = reset_control_assert(drv_data->pwr);
++	if (err)
++		dev_err(dev, "unable to pwrdwn\n");
++
++	return err;
++}
++
++static void st_ahci_host_stop(struct ata_host *host)
++{
++	struct ahci_host_priv *hpriv = host->private_data;
++
++	st_ahci_assert_pwrdwn(hpriv, host->dev);
+ 
+ 	ahci_platform_disable_resources(hpriv);
+ }
+@@ -160,18 +169,23 @@ static int st_ahci_probe(struct platform_device *pdev)
+ 
+ 	err = ahci_platform_enable_resources(hpriv);
+ 	if (err)
+-		return err;
++		goto assert_pwrdwn;
+ 
+ 	st_ahci_configure_oob(hpriv->mmio);
+ 
+ 	err = ahci_platform_init_host(pdev, hpriv, &st_ahci_port_info,
+ 				      &ahci_platform_sht);
+-	if (err) {
+-		ahci_platform_disable_resources(hpriv);
+-		return err;
+-	}
++	if (err)
++		goto disable_resources;
+ 
+ 	return 0;
++
++disable_resources:
++	ahci_platform_disable_resources(hpriv);
++assert_pwrdwn:
++	st_ahci_assert_pwrdwn(hpriv, &pdev->dev);
++
++	return err;
+ }
+ 
+ #ifdef CONFIG_PM_SLEEP
+@@ -179,20 +193,15 @@ static int st_ahci_suspend(struct device *dev)
+ {
+ 	struct ata_host *host = dev_get_drvdata(dev);
+ 	struct ahci_host_priv *hpriv = host->private_data;
+-	struct st_ahci_drv_data *drv_data = hpriv->plat_data;
+ 	int err;
+ 
+ 	err = ahci_platform_suspend_host(dev);
+ 	if (err)
+ 		return err;
+ 
+-	if (drv_data->pwr) {
+-		err = reset_control_assert(drv_data->pwr);
+-		if (err) {
+-			dev_err(dev, "unable to pwrdwn");
+-			return err;
+-		}
+-	}
++	err = st_ahci_assert_pwrdwn(hpriv, dev);
++	if (err)
++		return err;
+ 
+ 	ahci_platform_disable_resources(hpriv);
  
 -- 
 2.53.0
