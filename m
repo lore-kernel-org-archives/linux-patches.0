@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016966;
-	b=IXgg6yFzl6EpoI0/vTIWvLm4hcqiCo8EZ8SC6GOkoEOocFYEFDfVlnUGczW+O/5Dy5YH
-	 1DB2Rgaful8TRr0+1pAMXJiPm0C+nkc6yNAkgEdad45qYw9/Z6OgEaWRLKaYOem56pvJA
-	 D6PKDjtPUFa5XbS8FZgE0Ix3FgAI7OF7qmnch0rnPuM/VKXRQMu7e29OB54AXfKHlOXMI
-	 QSStnAhRXt7cegzBUD7X0FvIiyOfht2hA25sgO8JLIiyjn8uA2uKIxLsJY7Q/WRE6Xe6z
-	 HEaMVR02Zmx3fRy80Vmx5zoI4luQ1PHKD2uN5iq0ulp6l8UVnttn0oG7xr9lwnWtogg==
+	t=1795016969;
+	b=b6Jo/GAJHJTo6V/7MfWwNzJy6lY0q+DgNNSpAGnlAfsvDVzNLoTPvsK6ctat2ZsjGTzV
+	 PrzLCqZmTXnU5yVhoUVaFQ7k5Q1xs90VojPMBqIkD5HB6xXqfUkpTSCe1qB6TCG/71Tqx
+	 1O9egDKr825CBAU71jBUviNb1wJ2GNtxkVxmmhG9SDhz0C1NtOnjpAUeMe6GMrtvJpjDH
+	 VF9FXaeDJPXAYJaO3ci13kvvy3u9aus31t4+jywcgndn5iyBk/BTNu5ckZ9JN5UrWJ9rk
+	 rucrqH11qc/9rxjsiphxHldCq78BiafcjOvA8v0iKiSkWL1+v3SH2DSJzK21711W6UQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016966;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016969;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=alUNtuFFVwpkz6dtYNFvpiH5/3ntDlFPLXdHl2JPSGg=;
-	b=MtdNOWFaW+w7awp70rE1k/aQUtLN7EjaPDYdWLfJ/PngytT+IWAyZkOH7PY6updNipsD
-	 tmYQhwjkhSF2gxFoZSlYkDgE5adGCZGM95Dd5MQ0512HZhqmyWEkls9cJzKnEfTD6gvIc
-	 br4a5oAFmpEPfj7o2vxejVWEnE5Tc2el7DXxtDMQQbIult+0kkGy54CUnrB8zD5w4x7KS
-	 kGW/Xodp9HxG2tXWF6Otu2nwiMCXwXuMcTvxMSkfeMAf16QvMiPvI1bHbarYG5dbHRV3m
-	 QvhcOd4paaeZSap+89aE2UDUZFTyxzJPmp3dXGP6bJjZhWaCwKkpd0mBFwqyJiHxpxw==
+	bh=vVij2pnexmOloTE4dACf+hSt8ZJeGQo7E7c/4+6zZbA=;
+	b=YsPghOGr/Gcqb1K8DQRKxR9loemYVVLpIa/+yP89GFkaZ0E7mGkDxdR+eEtZHNR5tHlI
+	 2C0H4P64Kunfr9gRflKxazPepiRCipEyTkR07Wgsc3zwWo25E1Mh4UGErS+TePqi6KzuX
+	 9FOzLWb0oGOcJ5zwY+lDmVDCw4EKSqnQmjswIJRnRel9jrS/2N0xUDnovrAyKg0tPeRfU
+	 a0tCAddaQXHpWNAfEpWVbfyHAmK2mNleOV5CtAltJgJMHG3MU7/wQrU+1DnzqzhPjv+9z
+	 H2ZObQiIqygu9C0bceqZZsxTuLXsCkO2hdUwVvpfddypFyFYBZpImESbI3sUMa+5Oug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ZA7w/7za";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="2fC/Gjz0";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29319606A32A;
-	Wed, 18 Nov 2026 15:49:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B5B606A31C;
+	Wed, 18 Nov 2026 15:49:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZA7w/7za
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AA981F000C5;
-	Wed, 18 Nov 2026 15:49:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2fC/Gjz0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CE951F000C4;
+	Wed, 18 Nov 2026 15:49:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016966;
-	bh=alUNtuFFVwpkz6dtYNFvpiH5/3ntDlFPLXdHl2JPSGg=;
+	s=korg; t=1795016968;
+	bh=vVij2pnexmOloTE4dACf+hSt8ZJeGQo7E7c/4+6zZbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZA7w/7zaJTNhjvmeE67o+WrO2ZkRGJZhZhS3bxN/g2Ip5hnzXUXkmpfxFYZQSOInG
-	 KfJdC8yVO6+qir6u4ffDH4jomT5C72CGpvhwzdiRmPUyRu4la+jcgjNAExgp2pT5c5
-	 uLcIhcJIcOEndU6LSwrLvFSLCS3EfwhllG0JtCCU=
+	b=2fC/Gjz01uDmSS3+vuWVkh5l74hNY4M6jZK353e4DWNGLhldzvDQco5Jtw+4kUlUa
+	 /FwSo1X5MMYZS6KcDojctjJfoez1MJVzruXwhr4XWCdqD5kEfzuCpo4HVDUK75+s4g
+	 QLUdds4IJJ+O17lN0QuslXEai3Pjpa2DWVOJ9gR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Omar Sandoval <osandov@fb.com>,
+	Laurent Vivier <laurent@vivier.eu>,
 	Finn Thain <fthain@linux-m68k.org>,
 	Stan Johnson <userm57@yahoo.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0716/2651] swim: Fix buffer overflow
-Date: Wed, 18 Nov 2026 15:32:36 +0100
-Message-ID: <20261118150313.655866126@linuxfoundation.org>
+Subject: [PATCH 7.3 0717/2651] swim: Convert to blocking queue
+Date: Wed, 18 Nov 2026 15:32:37 +0100
+Message-ID: <20261118150313.691246593@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,95 +73,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit a54870a4ae4962acf341eb6ca010cae02af1a6ea ]
+[ Upstream commit 92353a04763726f70fea6be90957c50fc18215e0 ]
 
-The effect of this bug can be observed as swim_read_sector_data()
-inexplicably returning -5, or an error flag indicating that a mark byte
-was read from the data register, or other odd behviour.
+These drives are slow: completing a request can take hundreds of
+milliseconds. Delays are managed by disabling interrupts judiciously and
+sleeping opportunistically.
 
-When copying bytes from the chip FIFO to the read buffer, the driver
-keeps count of the remaining buffer space using register %d4. A counter
-in register %d2 serves as a timeout. The driver polls (%a2), the handshake
-register, until flags indicate that byte(s) have arrived in the FIFO.
+As of commit e3896d77b702 ("swim: convert to blk-mq"), a spinlock is
+taken in irq mode as soon as a request is issued. That lock is held for
+the duration of the request. Hence the driver sleeps while holding the
+lock which is forbidden.
 
-        movel   #sector_size-1, %d4
-read_new_data:
-        movew   #max_retry, %d2
-read_data_loop:
-        moveb   %a2@, %d5
-        andb    #0xc0, %d5
-        dbne    %d2, read_data_loop
-        beq     data_exit
-        moveb   %a5@, %a4@+
-        andb    #0x40, %d5
-        dbne    %d4, read_new_data
-        beq     exit_loop
+Adopt BLK_MQ_F_BLOCKING and remove the spinlock. Use a mutex to serialize
+requests from the two request queues. (The chip cannot simultaneously
+process requests on both internal and external drive.)
 
-Note that the exit_loop branch depends upon a flag in the handshake
-register and not on the remaining buffer space. Hence there may be no
-branch to exit_loop after %d4 is decremented to -1 (i.e. full buffer).
-
-        moveb   %a5@, %a4@+
-        dbra    %d4, read_new_data
-exit_loop:
-
-Here is a second decrement of %d4 which can now reach -2. But the buffer
-bounds check is a comparison with -1, which is now ineffective. Hence the
-loop will continue copying until %d2 eventually reaches -1.
-
-Fix this bug by terminating the loop as soon as %d4 or %d2 reach -1.
-Reset the timeout whenever a byte is copied.
-
-Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
+Cc: Omar Sandoval <osandov@fb.com>
+Fixes: e3896d77b702 ("swim: convert to blk-mq")
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 Signed-off-by: Finn Thain <fthain@linux-m68k.org>
 Tested-by: Stan Johnson <userm57@yahoo.com>
-Link: https://patch.msgid.link/d8fceda197b840f892d9b511175e824ca2549f01.1788513997.git.fthain@linux-m68k.org
+Link: https://patch.msgid.link/d06b19132ec678d6168d158e10cd63e10da45607.1788513997.git.fthain@linux-m68k.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/swim_asm.S | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/block/swim.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/block/swim_asm.S b/drivers/block/swim_asm.S
-index 699f7c90dd1c0..e06aadb411a14 100644
---- a/drivers/block/swim_asm.S
-+++ b/drivers/block/swim_asm.S
-@@ -43,6 +43,8 @@
- 	.equ	sector_size, 512
+diff --git a/drivers/block/swim.c b/drivers/block/swim.c
+index 53a54a96feef1..c3fbcf377d1ff 100644
+--- a/drivers/block/swim.c
++++ b/drivers/block/swim.c
+@@ -211,7 +211,6 @@ enum head {
  
- 	.equ	.Lhr_crc_error,		0x02
-+	.equ	.Lhr_fifo_2bytes,	0x40
-+	.equ	.Lhr_fifo_1byte,	0x80
+ struct swim_priv {
+ 	struct swim __iomem *base;
+-	spinlock_t lock;
+ 	int floppy_count;
+ 	struct floppy_state unit[FD_MAX_UNIT];
+ };
+@@ -537,12 +536,10 @@ static blk_status_t swim_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 				  const struct blk_mq_queue_data *bd)
+ {
+ 	struct floppy_state *fs = hctx->queue->queuedata;
+-	struct swim_priv *swd = fs->swd;
+ 	struct request *req = bd->rq;
+ 	blk_status_t err;
  
- 	.global swim_read_sector_header
- swim_read_sector_header:
-@@ -189,20 +191,20 @@ wait_data_mark_byte:
- 	/* read data */
+-	if (!spin_trylock_irq(&swd->lock))
+-		return BLK_STS_DEV_RESOURCE;
++	mutex_lock(&swim_mutex);
  
- 	movel	#sector_size-1, %d4		/* sector size */
--read_new_data:
- 	movew	#max_retry, %d2
- read_data_loop:
- 	moveb	%a2@, %d5
--	andb	#0xc0, %d5
-+	andb	#(.Lhr_fifo_1byte + .Lhr_fifo_2bytes), %d5
- 	dbne	%d2, read_data_loop
- 	beq	data_exit
-+	moveq	#max_retry, %d2
- 	moveb	%a5@, %a4@+
--	andb	#0x40, %d5
--	dbne	%d4, read_new_data
--	beq	exit_loop
-+	dbra	%d4, 1f
-+	bra	data_crc0
-+1:	andb	#.Lhr_fifo_2bytes, %d5
-+	beq	read_data_loop
- 	moveb	%a5@, %a4@+
--	dbra	%d4, read_new_data
--exit_loop:
-+	dbra	%d4, read_data_loop
+ 	blk_mq_start_request(req);
  
- 	/* read CRC */
+@@ -560,7 +557,7 @@ static blk_status_t swim_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 
+ 	err = BLK_STS_OK;
+ out:
+-	spin_unlock_irq(&swd->lock);
++	mutex_unlock(&swim_mutex);
+ 	return err;
+ 
+ }
+@@ -842,11 +839,9 @@ static int swim_floppy_init(struct platform_device *pdev)
+ 		return -EBUSY;
+ 	}
+ 
+-	spin_lock_init(&swd->lock);
+-
+ 	for (drive = 0; drive < swd->floppy_count; drive++) {
+ 		err = blk_mq_alloc_sq_tag_set(&swd->unit[drive].tag_set,
+-				&swim_mq_ops, 2, 0);
++				&swim_mq_ops, 2, BLK_MQ_F_BLOCKING);
+ 		if (err)
+ 			goto exit_put_disks;
  
 -- 
 2.53.0
