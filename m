@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032060;
-	b=Kv5w/7xHnmQVw6nwH7mMH4ub5G/cd+7Ed16p951ENfYuEE7Dm5ZIX1h46gzMlDGYWQL5
-	 EBNmymMcT0cJwouVyw5wfLdLIba7IexqxCI1Nnqrqa3LML6CYDe51lfbsen5qwb1HIbpW
-	 ULboAhM2GAs1+D9s5FodwQ+PaEUm0lopMsESlS9U1zwj1Uv4kKCW0oz2DiZydxx3qqIyl
-	 Rtz4qaO9ZX21riGpPskIU1UOcmb1E3gdUw8DYVHXHeiKN1ckPTEzCJMjAELy40L+9FI7/
-	 BuauYISCFnq/9Pweh9X+YmTdbugjyJIXbBHrVLXLmJ3uNJ9pmEg2EMzKCgib8zccxyA==
+	t=1795032064;
+	b=bCBN+EPKPeOITxeV/4SHQbtRMlZGjBylJEYeDgJPgKdsEjIAlfP2UOS9zmRwU9WHL8fj
+	 npEQ2YiWPwdcrc6E80zoZh4vb6+GbZKgpJk5j7bOtM8cENEDtWyTM9VbQ+nV/2uIt4IJd
+	 wPQD74E2M+avekj21oXOISKmtmN70ih1IlIfGVfZzvZSS9YYCXcBuluzVSsJ83/EaNJ6C
+	 uvBB1WTfDe5olxwqE65X45SmrPrkac2VbJsKaxKivLE2IZ1B6CsfprdERikY3Gh0yA4XU
+	 Tg0QNSRjHtHepxH9bRuzLmp1kxTsNkvAy5E1p4LPLibV394KlT84f9Eu9tCZvuJxsIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032060;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032064;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iQGcO23CfxEQLzpsh3d1au+tUHJIcSnvgSUjgKRL8zk=;
-	b=HN+Woh4y/R70iVD5f3KM7puOZVrWUKdEnI5MdQUAeqdkAo0e5FP70s/W1b96YxphJD88
-	 4mv4B+iN72A+qKf3WA7KK/SjhGQjXPtxZoOWBMfbav2W5IRFVQiFJPhC/z1eZBn7ZIJVp
-	 aE371/hM4TMb+XsuYP2Ya044LEMFJpWv2gv4sVGteRTCFF4qE7QuYEBKYyX2VATiVeMwK
-	 r4PQAIJP5Rk6n8tLPEROvTVkQF5Qhin7pIW9AQkxyKgU1qkt/vp8do3suu/wCTzSf1u4D
-	 3/M7lM/oB6qJHzi9JVQcj9TKriAPByExZ/1cAisxOXRbOwbsMOHnIguSN4gKAXHOfZw==
+	bh=DiDdURR9Q3m+NkL6sLgA1Au4/IQTTCi+IQ0VWU5a154=;
+	b=5kHWxo66yMG8nlSfUb3ooHCHu0C6xPpbVGjsWTOXXR7IdO40iU4nTbbsNwNnqeoDT6uT
+	 fB0xuPv1MQty/5ajM9T3JKCHoBvCo8sQx69ro8+GbhnzCysoRoz4ooyrxskscOMX83A2i
+	 WI+UUbGdBtlDInLDMwxwkmPpYe3AhkfjNDShMHq3ogRNer5CKJWu64pK+ocq7euglE3Dv
+	 yM3/+D9o0rL9Dgv8XUEAzDjRwCvgAXYxHe6TAcXqg9+Xhs2sQZHm7A/GbvyagcbakKYst
+	 PEnTJsZmKnoa7EyPqCKV+Y0ZLgu5hscn9CFv9y+Qvgzy0krKcc1ghPpGdzN4qOCg3pA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U775xRlv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mX6FoCHx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88AFF606A325;
-	Wed, 18 Nov 2026 20:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5A460A2613;
+	Wed, 18 Nov 2026 20:01:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U775xRlv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF62B1F000C5;
-	Wed, 18 Nov 2026 20:00:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mX6FoCHx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95C3C1F000C7;
+	Wed, 18 Nov 2026 20:01:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032060;
-	bh=iQGcO23CfxEQLzpsh3d1au+tUHJIcSnvgSUjgKRL8zk=;
+	s=korg; t=1795032063;
+	bh=DiDdURR9Q3m+NkL6sLgA1Au4/IQTTCi+IQ0VWU5a154=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U775xRlvReCX0mHSs6s0mLpgM2FqwQtWzZ6y67JJY2myXKJjzL9/KNyvas26ECyPO
-	 WQ4cWcfDLiXIw+i4TE/iEF4TJrvBfWNcjr7u0PgNMUP9aHlmuK7npuzIx9ZnkNMbZU
-	 nHrAA6MsEEH7fDu+FFSm/KqeUzyOQ1eZwiz/y7tY=
+	b=mX6FoCHxOP1VjsbeyvERuDCKPqSRos4mIuBcfXw/UVrhKrkFDNizdR0MSuHOlHkiN
+	 boEAExCBNiXRIycCK8bQGo6iY4hBJguExyUqzdb/CoCGL+Y9DM+uVuK13E3eNQSYmS
+	 6OFfqueJfuiiph5q/7hhRGS79crKcnXtBGpgBP+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xiongweimin <xiongweimin@kylinos.cn>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Honggang LI <honggangli@163.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1276/1756] RDMA/rxe: Hold netdev reference for transmit skbs
-Date: Wed, 18 Nov 2026 15:56:43 +0100
-Message-ID: <20261118150100.393154572@linuxfoundation.org>
+Subject: [PATCH 6.12 1277/1756] RDMA/rxe: Fix out-of-range unsigned-to-signed conversion for RDMA message in 2GiB size
+Date: Wed, 18 Nov 2026 15:56:44 +0100
+Message-ID: <20261118150100.427008289@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,209 +68,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: xiongweimin <xiongweimin@kylinos.cn>
+From: Honggang LI <honggangli@163.com>
 
-[ Upstream commit 19881618ffa454c63e6b6bf34acd7cac28c695dc ]
+[ Upstream commit 56a27df6cedd4f3918969d61c7b9d3cc177b2d1b ]
 
-rxe_init_packet() assigns skb->dev from an RCU-protected GID attribute
-without holding a netdev reference. If the netdev is unregistered before
-the skb is freed, subsequent accesses to skb->dev are unsafe.
+When RDMA READ request for 2GiB in single WR, res->read.resid is u32
+0x80000000, which is INT_MIN (-2147483648).
 
-Hold a reference with dev_hold() when the skb is initialized and release
-it from the transmit destructor or via rxe_put_skb() on error paths that
-run before the destructor is installed.
+    payload = min_t(int, res->read.resid, mtu);
 
-skb->dev can change on the TX path (VLAN/bond/tunnel, ip_finish_output2,
-etc.), so put must use the same netdev that was held. Stash that pointer
-in skb_shinfo()->destructor_arg: skb->cb is already used by
-rxe_pkt_info and is rewritten by IP control blocks.
+The `min_t` function will return -2147483648 for payload. The wrong
+size is propagated through call chain, `read_reply` -> `prepare_ack_packet`
+-> `rxe_init_packet` -> `alloc_skb` . `alloc_skb` failed because of
+invalid size. The passive side failed to emit response packet for RDMA
+READ request.
 
-To avoid blocking netdev unregistration on held skbs, flush all QPs to
-the error state on NETDEV_GOING_DOWN and NETDEV_UNREGISTER so pending TX
-work is drained and references can be dropped.
+After fixed it, the active side of RDMA READ failed with error code
+"IB_WC_LOC_PROT_ERR". When RDMA_READ_RESPONSE_FIRST packet recived by
+the active side, `do_read` call `copy_data`. dma->resid is u32 0x80000000.
 
-Signed-off-by: xiongweimin <xiongweimin@kylinos.cn>
-Link: https://patch.msgid.link/20260716055255.157674-1-xiongwm2026@163.com
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+   int resid	= dma->resid;
+
+This conversion set resid to -2147483648. `copy_data` abort as length
+greater than resid.
+
+RDMA SEND and WRITE 2GiB message works too, after fixed these two bugs.
+
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Signed-off-by: Honggang LI <honggangli@163.com>
+Link: https://patch.msgid.link/20261002142250.657151-1-honggangli@163.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Stable-dep-of: 56a27df6cedd ("RDMA/rxe: Fix out-of-range unsigned-to-signed conversion for RDMA message in 2GiB size")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_loc.h  |  1 +
- drivers/infiniband/sw/rxe/rxe_net.c  | 68 ++++++++++++++++++++++++++--
- drivers/infiniband/sw/rxe/rxe_req.c  |  2 +-
- drivers/infiniband/sw/rxe/rxe_resp.c |  4 +-
- 4 files changed, 68 insertions(+), 7 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_loc.h  |  4 ++--
+ drivers/infiniband/sw/rxe/rxe_mr.c   |  8 ++++----
+ drivers/infiniband/sw/rxe/rxe_net.c  |  2 +-
+ drivers/infiniband/sw/rxe/rxe_resp.c | 17 +++++++++--------
+ 4 files changed, 16 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/infiniband/sw/rxe/rxe_loc.h b/drivers/infiniband/sw/rxe/rxe_loc.h
-index 1c78b9d36da4c..01cf3fa7160a0 100644
+index 01cf3fa7160a0..adc30bfb974ec 100644
 --- a/drivers/infiniband/sw/rxe/rxe_loc.h
 +++ b/drivers/infiniband/sw/rxe/rxe_loc.h
-@@ -92,6 +92,7 @@ void rxe_mw_cleanup(struct rxe_pool_elem *elem);
+@@ -67,7 +67,7 @@ int rxe_flush_pmem_iova(struct rxe_mr *mr, u64 iova, unsigned int length);
+ int rxe_mr_copy(struct rxe_mr *mr, u64 iova, void *addr,
+ 		unsigned int length, enum rxe_mr_copy_dir dir);
+ int copy_data(struct rxe_pd *pd, int access, struct rxe_dma_info *dma,
+-	      void *addr, int length, enum rxe_mr_copy_dir dir);
++	      void *addr, u32 length, enum rxe_mr_copy_dir dir);
+ int rxe_map_mr_sg(struct ib_mr *ibmr, struct scatterlist *sg,
+ 		  int sg_nents, unsigned int *sg_offset);
+ int rxe_mr_do_atomic_op(struct rxe_mr *mr, u64 iova, int opcode,
+@@ -91,7 +91,7 @@ void rxe_mw_cleanup(struct rxe_pool_elem *elem);
+ 
  /* rxe_net.c */
  struct sk_buff *rxe_init_packet(struct rxe_dev *rxe, struct rxe_av *av,
- 				int paylen, struct rxe_pkt_info *pkt);
-+void rxe_put_skb(struct sk_buff *skb);
+-				int paylen, struct rxe_pkt_info *pkt);
++				u32 paylen, struct rxe_pkt_info *pkt);
+ void rxe_put_skb(struct sk_buff *skb);
  int rxe_prepare(struct rxe_av *av, struct rxe_pkt_info *pkt,
  		struct sk_buff *skb);
- int rxe_xmit_packet(struct rxe_qp *qp, struct rxe_pkt_info *pkt,
+diff --git a/drivers/infiniband/sw/rxe/rxe_mr.c b/drivers/infiniband/sw/rxe/rxe_mr.c
+index fbb6fb31e2760..f354cc6782b90 100644
+--- a/drivers/infiniband/sw/rxe/rxe_mr.c
++++ b/drivers/infiniband/sw/rxe/rxe_mr.c
+@@ -417,13 +417,13 @@ int copy_data(
+ 	int			access,
+ 	struct rxe_dma_info	*dma,
+ 	void			*addr,
+-	int			length,
++	u32			length,
+ 	enum rxe_mr_copy_dir	dir)
+ {
+-	int			bytes;
++	u32			bytes;
+ 	struct rxe_sge		*sge	= &dma->sge[dma->cur_sge];
+-	int			offset	= dma->sge_offset;
+-	int			resid	= dma->resid;
++	u32			offset	= dma->sge_offset;
++	u32			resid	= dma->resid;
+ 	struct rxe_mr		*mr	= NULL;
+ 	u64			iova;
+ 	int			err;
 diff --git a/drivers/infiniband/sw/rxe/rxe_net.c b/drivers/infiniband/sw/rxe/rxe_net.c
-index 726b67e633014..000128706f638 100644
+index 000128706f638..301795f203635 100644
 --- a/drivers/infiniband/sw/rxe/rxe_net.c
 +++ b/drivers/infiniband/sw/rxe/rxe_net.c
-@@ -343,6 +343,29 @@ int rxe_prepare(struct rxe_av *av, struct rxe_pkt_info *pkt,
- 	return err;
+@@ -483,7 +483,7 @@ int rxe_xmit_packet(struct rxe_qp *qp, struct rxe_pkt_info *pkt,
  }
  
-+/*
-+ * skb->dev may be rewritten on the TX path (VLAN/bond/tunnel, etc.).
-+ * The netdev we held in rxe_init_packet() is kept in destructor_arg so
-+ * that put always matches hold. skb->cb cannot be used: it is already
-+ * occupied by struct rxe_pkt_info and rewritten by IP control blocks.
-+ */
-+static void rxe_skb_set_held_ndev(struct sk_buff *skb, struct net_device *ndev)
-+{
-+	dev_hold(ndev);
-+	skb->dev = ndev;
-+	skb_shinfo(skb)->destructor_arg = ndev;
-+}
-+
-+static void rxe_skb_put_held_ndev(struct sk_buff *skb)
-+{
-+	struct net_device *ndev = skb_shinfo(skb)->destructor_arg;
-+
-+	if (ndev) {
-+		skb_shinfo(skb)->destructor_arg = NULL;
-+		dev_put(ndev);
-+	}
-+}
-+
- static void rxe_skb_tx_dtor(struct sk_buff *skb)
+ struct sk_buff *rxe_init_packet(struct rxe_dev *rxe, struct rxe_av *av,
+-				int paylen, struct rxe_pkt_info *pkt)
++				u32 paylen, struct rxe_pkt_info *pkt)
  {
- 	struct rxe_qp *qp = skb->sk->sk_user_data;
-@@ -355,6 +378,18 @@ static void rxe_skb_tx_dtor(struct sk_buff *skb)
- 
- 	rxe_put(qp);
- 	sock_put(skb->sk);
-+	rxe_skb_put_held_ndev(skb);
-+}
-+
-+/*
-+ * Free an skb that still holds a netdev reference from rxe_init_packet()
-+ * and does not yet have rxe_skb_tx_dtor() installed. Once the TX
-+ * destructor is set, callers must use kfree_skb() instead.
-+ */
-+void rxe_put_skb(struct sk_buff *skb)
-+{
-+	rxe_skb_put_held_ndev(skb);
-+	kfree_skb(skb);
- }
- 
- static int rxe_send(struct sk_buff *skb, struct rxe_pkt_info *pkt)
-@@ -441,7 +476,7 @@ int rxe_xmit_packet(struct rxe_qp *qp, struct rxe_pkt_info *pkt,
- 	goto done;
- 
- drop:
--	kfree_skb(skb);
-+	rxe_put_skb(skb);
- 	err = 0;
- done:
- 	return err;
-@@ -486,8 +521,7 @@ struct sk_buff *rxe_init_packet(struct rxe_dev *rxe, struct rxe_av *av,
- 
- 	skb_reserve(skb, hdr_len + LL_RESERVED_SPACE(ndev));
- 
--	/* FIXME: hold reference to this netdev until life of this skb. */
--	skb->dev	= ndev;
-+	rxe_skb_set_held_ndev(skb, ndev);
- 	rcu_read_unlock();
- 
- 	if (av->network_type == RXE_NETWORK_TYPE_IPV4)
-@@ -596,6 +630,28 @@ void rxe_set_port_state(struct rxe_dev *rxe)
- 	dev_put(ndev);
- }
- 
-+/*
-+ * Move all QPs to the error state so pending send/recv work is drained and
-+ * in-flight TX skbs (which hold a netdev reference) can be released. Called
-+ * from the netdev notifier so unregister cannot stall on held skbs.
-+ */
-+static void rxe_flush_qps(struct rxe_dev *rxe)
-+{
-+	struct rxe_pool_elem *elem;
-+	struct rxe_qp *qp;
-+	unsigned long index;
-+
-+	rcu_read_lock();
-+	xa_for_each(&rxe->qp_pool.xa, index, elem) {
-+		if (!elem || !kref_get_unless_zero(&elem->ref_cnt))
-+			continue;
-+		qp = elem->obj;
-+		rxe_qp_error(qp);
-+		rxe_put(qp);
-+	}
-+	rcu_read_unlock();
-+}
-+
- static int rxe_notify(struct notifier_block *not_blk,
- 		      unsigned long event,
- 		      void *arg)
-@@ -607,7 +663,12 @@ static int rxe_notify(struct notifier_block *not_blk,
- 		return NOTIFY_OK;
- 
- 	switch (event) {
-+	case NETDEV_GOING_DOWN:
-+		/* Start draining TX queues before the netdev disappears. */
-+		rxe_flush_qps(rxe);
-+		break;
- 	case NETDEV_UNREGISTER:
-+		rxe_flush_qps(rxe);
- 		ib_unregister_device_queued(&rxe->ib_dev);
- 		break;
- 	case NETDEV_UP:
-@@ -624,7 +685,6 @@ static int rxe_notify(struct notifier_block *not_blk,
- 		rxe_set_port_state(rxe);
- 		break;
- 	case NETDEV_REBOOT:
--	case NETDEV_GOING_DOWN:
- 	case NETDEV_CHANGEADDR:
- 	case NETDEV_CHANGENAME:
- 	case NETDEV_FEAT_CHANGE:
-diff --git a/drivers/infiniband/sw/rxe/rxe_req.c b/drivers/infiniband/sw/rxe/rxe_req.c
-index ae552181b6846..eb1a950fea83c 100644
---- a/drivers/infiniband/sw/rxe/rxe_req.c
-+++ b/drivers/infiniband/sw/rxe/rxe_req.c
-@@ -819,7 +819,7 @@ int rxe_requester(struct rxe_qp *qp)
- 			wqe->status = IB_WC_LOC_PROT_ERR;
- 		else
- 			wqe->status = IB_WC_LOC_QP_OP_ERR;
--		kfree_skb(skb);
-+		rxe_put_skb(skb);
- 		if (ah)
- 			rxe_put(ah);
- 		goto err;
+ 	unsigned int hdr_len;
+ 	struct sk_buff *skb = NULL;
 diff --git a/drivers/infiniband/sw/rxe/rxe_resp.c b/drivers/infiniband/sw/rxe/rxe_resp.c
-index 82bdd97ce69a3..7f02dfef12cff 100644
+index 7f02dfef12cff..f9bc77974ec3d 100644
 --- a/drivers/infiniband/sw/rxe/rxe_resp.c
 +++ b/drivers/infiniband/sw/rxe/rxe_resp.c
-@@ -839,7 +839,7 @@ static struct sk_buff *prepare_ack_packet(struct rxe_qp *qp,
+@@ -600,7 +600,7 @@ static enum resp_states check_rkey(struct rxe_qp *qp,
+ }
  
- 	err = rxe_prepare(&qp->pri_av, ack, skb);
- 	if (err) {
--		kfree_skb(skb);
-+		rxe_put_skb(skb);
- 		return NULL;
- 	}
+ static enum resp_states send_data_in(struct rxe_qp *qp, void *data_addr,
+-				     int data_len)
++				     u32 data_len)
+ {
+ 	int err;
  
-@@ -967,7 +967,7 @@ static enum resp_states read_reply(struct rxe_qp *qp,
- 	err = rxe_mr_copy(mr, res->read.va, payload_addr(&ack_pkt),
- 			  payload, RXE_FROM_MR_OBJ);
- 	if (err) {
--		kfree_skb(skb);
-+		rxe_put_skb(skb);
- 		state = RESPST_ERR_RKEY_VIOLATION;
- 		goto err_out;
- 	}
+@@ -800,20 +800,21 @@ static enum resp_states atomic_write_reply(struct rxe_qp *qp,
+ static struct sk_buff *prepare_ack_packet(struct rxe_qp *qp,
+ 					  struct rxe_pkt_info *ack,
+ 					  int opcode,
+-					  int payload,
++					  u32 payload,
+ 					  u32 psn,
+ 					  u8 syndrome)
+ {
+ 	struct rxe_dev *rxe = to_rdev(qp->ibqp.device);
+ 	struct sk_buff *skb;
+-	int paylen;
+-	int pad;
++	u32 paylen;
++	u32 pad = 0;
+ 	int err;
+ 
+ 	/*
+ 	 * allocate packet
+ 	 */
+-	pad = (-payload) & 0x3;
++	if (payload % 4)
++		pad = 4 - payload % 4;
+ 	paylen = rxe_opcode[opcode].length + payload + pad + RXE_ICRC_SIZE;
+ 
+ 	skb = rxe_init_packet(rxe, &qp->pri_av, paylen, ack);
+@@ -907,9 +908,9 @@ static enum resp_states read_reply(struct rxe_qp *qp,
+ {
+ 	struct rxe_pkt_info ack_pkt;
+ 	struct sk_buff *skb;
+-	int mtu = qp->mtu;
++	u32 mtu = qp->mtu;
+ 	enum resp_states state;
+-	int payload;
++	u32 payload;
+ 	int opcode;
+ 	int err;
+ 	struct resp_res *res = qp->resp.res;
+@@ -955,7 +956,7 @@ static enum resp_states read_reply(struct rxe_qp *qp,
+ 
+ 	res->state = rdatm_res_state_next;
+ 
+-	payload = min_t(int, res->read.resid, mtu);
++	payload = min(res->read.resid, mtu);
+ 
+ 	skb = prepare_ack_packet(qp, &ack_pkt, opcode, payload,
+ 				 res->cur_psn, AETH_ACK_UNLIMITED);
 -- 
 2.53.0
 
