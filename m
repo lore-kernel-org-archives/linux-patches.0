@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038723;
-	b=w+IO2FkBsm59ekqrz1LoFADn7V5uvpZ//lhxM3VF/kXYI9jkbswOyBb9ZR0eDiv2ILsZ
-	 FLQZ5Uys9zylXNy0OVZXeKvPMDTLcRzu7aiSjlAt+jz1e6mGfiFY54KbKrQkjPR5hyM2r
-	 rvSjqoUcaTVrWiZxCuZuLGeVLcuNuHnrZV5UsWlJ4iRdeXv5efdg6rlBBr/fY1DDdTMyF
-	 9Lv8VCJ5B8rP6PqfcA4t+xVe6j0lrJuMWFSLWnG1fIUFis2ZTFQuRhKN/QhFjjTHXOEJm
-	 X25O9C9taTccrdIQoDc34rqCwdtQv/QwJyoHajFyiU09evy9TiewrU0w2cZNyg0POTw==
+	t=1795038725;
+	b=kWoOGjWfn8BcjPnTfaVojZmhbm9XXQvOT0qYxZ1JKxVXH8vLZRJrYwQXP6u5gXxkBpXl
+	 /KfrMv3xqyHuBgtmVIte+5Lwpa2CLgW1VkEBSFt+1jfizh3V/cTuFgmvp6f0Ez5NSmgYQ
+	 tN++S2UADMTMNTjzLtVmpbsQM2kOwn/w3jq3hSC9bDofBL/+c1eNmqKH6626ZAVR5W1+s
+	 uoCXHGEhAJcndaFXToUMUK4rcNK7czzsY1xk64AfTo67ElUlh6Q/ey1gyqbjionxaWcWH
+	 dj6lg3Iv09P5cQ9c0TfLt7QU7VxQuTn1K1150GhaPcfAUgYDI4Q1BaOdlV0k4R9EtZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038723;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038725;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Mz7aRPCLOr3jIoNXGaHj3Esk59HU9s4XAF9ejYOki5E=;
-	b=eslNYrZR2I/j7teW/vjlruLSpxNER0ypNMoVFjc0jkFimCapUYNFUphj6HJLI7hwYJ/A
-	 qJp0cKexOE6iXGS09UfLSyT8KW55R4lD7ubFuyFD6+X4A1oNLzY7F5SChXGhnm0awoGdw
-	 GchR9qDZMeaUm0kYArG9Im0lNNw+YFn7T33o69yvAtZTw4tToQJAtL8F07VUm85knU+Ek
-	 e4R149xGB744XvdE2apwMO/o8UTzxadn8jbifzkeM4T7BL4YIp3C9eazpYTIauoLuri9Y
-	 mtBdzcjpQCOLttvE55VRGKal/ZQCKQUCLverKpBOMhv8OhKky+J3ihESQsgbfk5gKgw==
+	bh=naMnKUMZOtTtff9K21T2YrUTln79QetUoIhc6u20ZqY=;
+	b=GdRw6Abb3iE4aCEvo80NXHOo47HZXgGGh1md0FRJ3S7OrIPwfEiosj+kL+qIwljJdD8r
+	 ZmfJP2PGHW/+o3iDNUxg02WYLI+IaCdFC6zlKPsAZbQ5ZfX/NvzFADS57k4Su/dJgX69E
+	 2daibLFLVt+jWANLAHyUA5LeUSReq5mfvVcQAe9R4GL7ctQiFAeceOW7+D5Z6corsNT6c
+	 OCvKlov8+wTa4tO18r88Lf5oOicZGNm3fVQh/BmzjCW8dpveeKTx0eyat+PlsQiRs2ydf
+	 CsmWlmJVXSSfwnh2nt6VLNjO3l7+/DGiAvoHsDaaR821h/bxCLz4T6NNtEfVmGXEsAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rkxYFLir;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E1vsNxE0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 045FE606A33F;
-	Wed, 18 Nov 2026 21:52:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1DC7606A32A;
+	Wed, 18 Nov 2026 21:52:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rkxYFLir
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5966A1F000C4;
-	Wed, 18 Nov 2026 21:52:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E1vsNxE0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E6651F000C4;
+	Wed, 18 Nov 2026 21:52:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038722;
-	bh=Mz7aRPCLOr3jIoNXGaHj3Esk59HU9s4XAF9ejYOki5E=;
+	s=korg; t=1795038725;
+	bh=naMnKUMZOtTtff9K21T2YrUTln79QetUoIhc6u20ZqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rkxYFLirgxxJWQPlZz6dgV/20vxeDl7EPBdBDrTu805WGGTBM7wXfzpUukkL0ou+n
-	 IJirZp653l9xtVBWdB1xk4ftn7Vq4qL+FTw4H9PAyb0MkgJ8+NgfZGP129q/jW9S9m
-	 m5yM9eASTWtJYS/oGGij6753wffOX+2A2wFbdQHs=
+	b=E1vsNxE0yFekdAjyneKf9E3vbnZEUMykUZe7Iazsk+xSjQVPBRXwQWdg11uMsroGn
+	 JRWoJ/vlxS/xt7xZMuLi1BQ+kPf4rmlPu8TpFryTNY7QwQrg/+FykRBOIszjAdq1qs
+	 GBCnzB5JOJGBe1inMTH0+iPEwfcHNza0PsQzMbKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armaan Sandhu <armaan.sandhu0504@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Leizhen Zhang <lzsx618@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1845/3318] lib/cmdline: fix get_options() count and overflow with large ranges
-Date: Wed, 18 Nov 2026 15:41:07 +0100
-Message-ID: <20261118150417.206231635@linuxfoundation.org>
+Subject: [PATCH 6.6 1828/3318] power: supply: ltc2941: Fix of_node reference leak in ltc294x_i2c_probe()
+Date: Wed, 18 Nov 2026 15:40:50 +0100
+Message-ID: <20261118150416.702323086@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,131 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armaan Sandhu <armaan.sandhu0504@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 5d72266218b1c4dd2917f1df2b86f3b0e0a605c9 ]
+[ Upstream commit 09a29213bf15630e85a375478832b074b2cfc5c8 ]
 
-get_range() stops writing once the array is full, but get_options() still
-advances its index by the whole range.  So "1-100" parsed into four ints
-reports 99 numbers, and a range like "0-2147483647" wraps the index
-negative and writes outside the array.
+ltc294x_i2c_probe() takes a reference on the device node with
+of_node_get(), but never drops it, so the reference leaks on every
+return path, including the success path.
 
-Stop once a range fills the array, bail out in validation mode before the
-count overflows, and saturate the range length in get_range().  Add KUnit
-cases; without the fix "0-2147483647" panics the test kernel.
+The node is only used to read the battery properties and to set
+info->supply_desc.name, so release it after its last use and also on
+the lltc,resistor-sense error path.
 
-Only root can supply this input, so this is a robustness fix.
-
-[akpm@linux-foundation.org: add additional test case from Leizhen]
-Link: https://lore.kernel.org/20261005213945.359905-1-armaan.sandhu0504@gmail.com
-Fixes: 22f2e2801799 ("[PATCH] get_options to allow a hypenated range for isolcpus")
-Signed-off-by: Armaan Sandhu <armaan.sandhu0504@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Leizhen Zhang <lzsx618@gmail.com>
-Reviewed-by: Leizhen Zhang <lzsx618@gmail.com>
-Cc: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: <stable@vger.kernel.org>
+Fixes: 085bc24d1553 ("Add LTC2941/LTC2943 Battery Gauge Driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260917142127.2156568-1-vulab@iscas.ac.cn
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+[ sashal: adjusted context for of_property_read_u32() instead of of_property_read_s32() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/cmdline.c       | 13 ++++++++++++-
- lib/cmdline_kunit.c | 39 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 51 insertions(+), 1 deletion(-)
+ drivers/power/supply/ltc2941-battery-gauge.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/lib/cmdline.c b/lib/cmdline.c
-index 90ed997d95701..f5dc59b3548e9 100644
---- a/lib/cmdline.c
-+++ b/lib/cmdline.c
-@@ -11,6 +11,7 @@
- 
- #include <linux/export.h>
- #include <linux/kernel.h>
-+#include <linux/overflow.h>
- #include <linux/string.h>
- #include <linux/ctype.h>
- 
-@@ -26,7 +27,9 @@ static int get_range(char **str, int *pint, int n)
- 
- 	(*str)++;
- 	upper_range = simple_strtol((*str), NULL, 0);
--	inc_counter = upper_range - *pint;
-+	/* Keep the sign of the result when the difference doesn't fit */
-+	if (check_sub_overflow(upper_range, *pint, &inc_counter))
-+		inc_counter = upper_range < *pint ? -1 : INT_MAX;
- 	for (x = *pint; n && x < upper_range; x++, n--)
- 		*pint++ = x;
- 	return inc_counter;
-@@ -122,6 +125,14 @@ char *get_options(const char *str, int nints, int *ints)
- 			range_nums = get_range((char **)&str, pint, n);
- 			if (range_nums < 0)
- 				break;
-+			/* The range didn't fit, so the array is full */
-+			if (!validate && range_nums > n) {
-+				i = nints;
-+				break;
-+			}
-+			/* Leave room for the upper number of the range */
-+			if (range_nums >= INT_MAX - i)
-+				break;
- 			/*
- 			 * Decrement the result by one to leave out the
- 			 * last number in the range.  The next iteration
-diff --git a/lib/cmdline_kunit.c b/lib/cmdline_kunit.c
-index 20d525aa23eda..e720f056c84df 100644
---- a/lib/cmdline_kunit.c
-+++ b/lib/cmdline_kunit.c
-@@ -139,6 +139,44 @@ static void cmdline_test_range(struct kunit *test)
- 	} while (++i < ARRAY_SIZE(cmdline_test_range_strings));
- }
- 
-+static const struct {
-+	const char *in;
-+	int parsed[4];
-+	int validated;
-+} cmdline_test_range_overflow_cases[] = {
-+	{ "1-100",         { 3, 1, 2, 3, },    100,        },
-+	{ "1,5-100,7",     { 3, 1, 5, 6, },    98,         },
-+	{ "1-2147483646",  { 3, 1, 2, 3, },    2147483646, },
-+	{ "0-2147483647",  { 3, 0, 1, 2, },    0,          },
-+	{ "-5-2147483647", { 3, -5, -4, -3, }, 0,          },
-+	{ "2147483647--5", { 0, 2147483647, }, 0,          },
-+	{ "1,0-2147483647", { 3, 1, 0, 1, },   1, },
-+};
-+
-+static void cmdline_test_range_overflow(struct kunit *test)
-+{
-+	unsigned int i, j;
-+
-+	for (i = 0; i < ARRAY_SIZE(cmdline_test_range_overflow_cases); i++) {
-+		const char *in = cmdline_test_range_overflow_cases[i].in;
-+		const int *e = cmdline_test_range_overflow_cases[i].parsed;
-+		/* Two guard elements past the array handed to get_options() */
-+		int r[ARRAY_SIZE(cmdline_test_range_overflow_cases[0].parsed) + 2];
-+		int n;
-+
-+		memset(r, 0, sizeof(r));
-+		get_options(in, ARRAY_SIZE(r) - 2, r);
-+		for (j = 0; j < ARRAY_SIZE(r) - 2; j++)
-+			KUNIT_EXPECT_EQ_MSG(test, r[j], e[j], "Pattern: %s at %u", in, j);
-+		for (; j < ARRAY_SIZE(r); j++)
-+			KUNIT_EXPECT_EQ_MSG(test, r[j], 0, "Pattern: %s out of bound at %u", in, j);
-+
-+		get_options(in, 0, &n);
-+		KUNIT_EXPECT_EQ_MSG(test, n, cmdline_test_range_overflow_cases[i].validated,
-+				    "Pattern: %s (validated)", in);
+diff --git a/drivers/power/supply/ltc2941-battery-gauge.c b/drivers/power/supply/ltc2941-battery-gauge.c
+index a1ddc4b060ce4..bf0b268b10bfb 100644
+--- a/drivers/power/supply/ltc2941-battery-gauge.c
++++ b/drivers/power/supply/ltc2941-battery-gauge.c
+@@ -464,9 +464,11 @@ static int ltc294x_i2c_probe(struct i2c_client *client)
+ 	/* r_sense can be negative, when sense+ is connected to the battery
+ 	 * instead of the sense-. This results in reversed measurements. */
+ 	ret = of_property_read_u32(np, "lltc,resistor-sense", &r_sense);
+-	if (ret < 0)
++	if (ret < 0) {
++		of_node_put(np);
+ 		return dev_err_probe(&client->dev, ret,
+ 			"Could not find lltc,resistor-sense in devicetree\n");
 +	}
-+}
+ 	info->r_sense = r_sense;
+ 
+ 	ret = of_property_read_u32(np, "lltc,prescaler-exponent",
+@@ -477,6 +479,8 @@ static int ltc294x_i2c_probe(struct i2c_client *client)
+ 		prescaler_exp = LTC2941_MAX_PRESCALER_EXP;
+ 	}
+ 
++	of_node_put(np);
 +
- static void cmdline_test_next_arg_quoted_value(struct kunit *test)
- {
- 	char in[] = "foo=\"bar baz\" qux=1";
-@@ -203,6 +241,7 @@ static struct kunit_case cmdline_test_cases[] = {
- 	KUNIT_CASE(cmdline_test_lead_int),
- 	KUNIT_CASE(cmdline_test_tail_int),
- 	KUNIT_CASE(cmdline_test_range),
-+	KUNIT_CASE(cmdline_test_range_overflow),
- 	KUNIT_CASE(cmdline_test_next_arg_quoted_value),
- 	KUNIT_CASE(cmdline_test_next_arg_bare_quote_regression),
- 	KUNIT_CASE(cmdline_test_next_arg_mixed_tokens),
+ 	if (info->id == LTC2943_ID) {
+ 		if (prescaler_exp > LTC2943_MAX_PRESCALER_EXP)
+ 			prescaler_exp = LTC2943_MAX_PRESCALER_EXP;
 -- 
 2.53.0
 
