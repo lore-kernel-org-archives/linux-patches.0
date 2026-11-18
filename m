@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031930;
-	b=cZTfOvi5SZyuA3I92ArMFW9rx6iq9yKuwvhOQB03L7kxYUgMu9yXGxjO9QrmbQjmtdgi
-	 FdqbVFoxnYMswF/WiR9CtLU4vijWmzTWZvzkXQIhjEjH/joy9lDqMEIN0wNJ+sBjCU+jI
-	 vR7kuv6ZAQs8XnihXMfZIEutRVhLNVptfWYZp74072eJbjSZPt1EhbS9Gteu58bBV9COE
-	 mAt+7fGzOVqR8GtOVrYnN5r8596+vPfXCJQOo8h4j3YS7hCZvBEuIjfrm9cA6+olPf2Rf
-	 qZi65UJ4VnpK3bwenHHwepy17q/cTzlz1hvn5ExFJipQl/z5SxOxi5Gbs83Er2WOuaA==
+	t=1795031933;
+	b=N72NbR34j77s7NLgRQM/NnFW3kXzB/QsZWf6mwMu0jMbITYy5Z8gyAeaMheEWIvTeI+s
+	 3A7xt6CPQMJV3hz38NAUgKPCcMn9hSaNRxAGv3Mi6FSGXGVabATxMpABkzzBND7peX0qT
+	 KdHFpXYyrQ/TQKTaDXSmgMqnx4SwFCcPOPO0kyz8tZeLGoL/XBnOLqTXLC+UELaYs9yEr
+	 HU+xgm5V6RHLuSLQbutUSIT/Tzl5EKq44MkQXg2knUtmUnnBhqzbfNVJTIfZZ0N5GEg2h
+	 rOeArRjggeii0eswVdVnnX0e8hkSITIe/MHFuhBm5qQydM1WnAbGxdBQPd9sBTbJOiw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031930;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031933;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8cNlICScQQ2DWH7jWL42XE/kr6Gc30BBKiZkvHHqjNM=;
-	b=Xw22Nck+35lyOzFO+91Yx2i07yYEtvQ99+wISj8TKleumtKsDrx/T/Muufqf5xFWOOs9
-	 9XPHTGL8KzbgkBZLOgVD6axRk/KqSRIsYMgm5GljBecsEtgzmGPnOxv5frIl/LRkdCRXF
-	 9agDEr6WwATT3tExI3cB01uWjdMicFywX/SLBBRIFjZQJhf24o0tHWRiONarTVkGSF+gc
-	 1+Uw7n8yVROCl0l7KAvapV/iFAVlCLyBTv/4hrivShIPTYQOLtpOmEQ+muBbkIgOmJbjc
-	 NgZF+/SSdL4lptqu8Xz4s+YTUUhPCFKzLc7cIZD6o8wuvg+CNJ4Yacbm9FdpyCMATJQ==
+	bh=3m8QjAAjDc+SW7OEt0tUPGAvxf0k1MbFY25WCJgZfCw=;
+	b=yoDJBv/zk3SRklLFIptHXyuIqdhnf0SutwMUlT/59Rrh0GTW75shnhf1rZtPZBDq9Kd1
+	 0vHIaeVCkZlAdm4P5MTldm9hAniExtjKXgamtChwaGTRWHGRSN+0g/BfRGyv/1m4T3DGe
+	 mC0K2ExDT3UlCs6Y4c4QBgU+HVkl5fCCGkwLl+Nw45yaVFvVKDCgsJT3GVGTd/ckBlrN4
+	 SxbNN+HJTvYJW+Hp/T4/JHbfBoHwTagOK0UGNRf8dr7WE7PTw2qN0CX25wN535N1y8X/9
+	 0ck9XZ92AJt4i1Vvwe2mPGVceooFb2UxUo+Q5jVOzrGMrysgNHo7/kEoEupJoOwOC9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=shuQDDr5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZWA7kBh2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74BA606A33A;
-	Wed, 18 Nov 2026 19:58:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3C88606A330;
+	Wed, 18 Nov 2026 19:58:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=shuQDDr5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 123381F000C4;
-	Wed, 18 Nov 2026 19:58:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZWA7kBh2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F16F91F000C4;
+	Wed, 18 Nov 2026 19:58:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031930;
-	bh=8cNlICScQQ2DWH7jWL42XE/kr6Gc30BBKiZkvHHqjNM=;
+	s=korg; t=1795031933;
+	bh=3m8QjAAjDc+SW7OEt0tUPGAvxf0k1MbFY25WCJgZfCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=shuQDDr5Pfrq/pWvng4gM+R7RRDWf0Km6XGTiUpqgLa2BfrdXsbG4ueLvYXTVbPP2
-	 OBro0hHEAZ2j8K3nDPinew7eYm8AH/VZy8FBYdIK7n0yMaiGSSl8Ms1trtthhdHUxn
-	 4iHaGUD7hNXSbeA1FPjXS3cwdr8mTPBWGW7JgeIc=
+	b=ZWA7kBh2kvst1fdSTBwHCUsG3eG+TX+NGhB2t/GMWzSYNMkdg1s064UCOnXWiupLH
+	 1NK6a+z9b5/BcejThKLNHyEUO+8Q9xJzO2XWjXU8nicIWIEZlQI10OjIW6xGNeuPrR
+	 D4813u7vG374YaVpO9wmRBCgS2Fi2nP8AGeHj2SI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hitalo Souza <enghitalo@gmail.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1230/1756] Bluetooth: Add missing newline to bt_dev_{err,warn}_ratelimited()
-Date: Wed, 18 Nov 2026 15:55:57 +0100
-Message-ID: <20261118150058.765671842@linuxfoundation.org>
+Subject: [PATCH 6.12 1231/1756] Bluetooth: hci_core: Keep RCU protection through LTK filtering
+Date: Wed, 18 Nov 2026 15:55:58 +0100
+Message-ID: <20261118150058.801869207@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,99 +68,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hitalo Souza <enghitalo@gmail.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit f51ee3bb5fbe9c2019c31befe330bddd3aee39c2 ]
+[ Upstream commit 817cbcab91fe870e5b69c835cbd708242c9f8c8e ]
 
-bt_dev_err_ratelimited() and bt_dev_warn_ratelimited() pass the format
-string to bt_err_ratelimited()/bt_warn_ratelimited() without appending
-a newline, unlike bt_dev_err() and bt_dev_warn(), which go through
-BT_ERR()/BT_WARN() and add one. Only 2 of the 22 in-tree callers (both
-in virtio_bt) put the newline in their own format string.
+The LTK selected by hci_find_ltk() must remain allocated while its
+value is checked against the blocked-key list. The finder releases RCU
+before passing k->val to hci_is_blocked_key(). The helper's own RCU
+section protects the blocked-key list, but the selected LTK may already
+have been reclaimed before that section starts.
 
-A printk record without a trailing newline is stored with prb_commit()
-instead of prb_final_commit(), and readers of the log buffer (/dev/kmsg,
-syslog) do not see it until it is finalized, which only happens when the
-next record is reserved. These messages therefore stay invisible until
-some unrelated message is printed, and journald, which timestamps a
-record when it reads it, logs them with the time of that later message.
+An LE ATT socket security request can reach smp_ltk_encrypt() without
+holding hdev->lock. With a matching stored LTK and an LTK-type
+blocked-key entry present, a concurrent MGMT_OP_LOAD_LONG_TERM_KEYS can
+remove the selected LTK in the following order:
 
-This was observed with a MediaTek MT7921 controller (USB 04ca:3802):
-when an eSCO link is closed, the host still receives a few SCO packets
-for the handle after Disconnection Complete, so hci_scodata_packet()
-logs "SCO packet for unknown connection handle". Comparing the record's
-kernel timestamp (_SOURCE_MONOTONIC_TIMESTAMP) with the time journald
-received it, over one capture:
+  Socket security                 Management / RCU reclamation
+  hci_find_ltk()
+    rcu_read_lock()
+    select k
+    rcu_read_unlock()
+                                  load_long_term_keys()
+                                    hci_dev_lock(hdev)
+                                    hci_smp_ltks_clear(hdev)
+                                      list_del_rcu(&k->list)
+                                      kfree_rcu(k, rcu)
+                                  grace period ends; k is freed
+    hci_is_blocked_key(..., k->val)
+      memcmp(b->val, val, ...)
 
-  emitted       logged        delay
-  15:36:52.896  15:37:00.214    7.3 s
-  15:37:03.410  15:39:05.574  122.2 s
-  15:39:05.574  15:39:12.506    6.9 s
-  15:39:19.791  15:40:54.109   94.3 s
-  15:41:22.021  15:41:24.647    2.6 s
+The final comparison reads freed LTK bytes. Entering a new RCU section
+in hci_is_blocked_key() cannot protect a pointer obtained before the
+completed grace period.
 
-Each message showed up together with the next kernel message; the 94 s
-one looked as if it had been logged in the middle of a later, healthy
-eSCO connection.
+Keep the finder's RCU read-side section active through the blocked-key
+comparison and the warning that reads k->bdaddr. Release it before
+returning on either matched-key path. This delays reclamation until the
+finder has finished using the selected record, following the existing
+IRK lookup pattern.
 
-bt_dev_err_ratelimited() lost its newline in commit 657cc646475b
-("Bluetooth: Remove usage of BT_ERR_RATELIMITED macro"), which replaced
-BT_ERR_RATELIMITED(), the variant that appended "\n", with a direct call
-to bt_err_ratelimited(). bt_dev_warn_ratelimited() never had one.
+KFENCE report as below:
 
-Append the newline in both macros, as BT_ERR() and BT_WARN() do, and
-drop it from the two virtio_bt format strings so that their messages do
-not gain an empty line.
+    ==================================================================
+    BUG: KFENCE: use-after-free read in hci_is_blocked_key+0xdf/0x240
 
-Fixes: 36278a5d4d35 ("Bluetooth: Adding a bt_dev_warn_ratelimited macro.")
-Fixes: 657cc646475b ("Bluetooth: Remove usage of BT_ERR_RATELIMITED macro")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Hitalo Souza <enghitalo@gmail.com>
+    Use-after-free read at 0x00000000b9ee38e4 (in kfence-#249):
+     hci_is_blocked_key+0xdf/0x240
+     blocked_key_wrapper+0xc5/0x140 [pmbd_ltk_probe]
+     hci_find_ltk+0x1aa/0x3e0
+     smp_ltk_encrypt.isra.0+0xad/0x340
+     smp_conn_security+0x3b8/0x8c0
+     l2cap_sock_setsockopt+0x1c4b/0x2270
+     do_sock_setsockopt+0x1fb/0x430
+     __sys_setsockopt+0x106/0x180
+     __x64_sys_setsockopt+0xc2/0x160
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    kfence-#249: 0x00000000121f2ad9-0x000000005b5bfb3d, size=72, cache=kmalloc-96
+
+    allocated by task 495 on cpu 0 at 36.722380s (2.603973s ago):
+     hci_add_ltk+0x1f5/0x3a0
+     load_long_term_keys+0x6d0/0x860
+     hci_sock_sendmsg+0x128b/0x22e0
+     __sys_sendto+0x425/0x470
+     __x64_sys_sendto+0xe5/0x1c0
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    freed by task 533 on cpu 0 at 36.993097s (2.339769s ago):
+     __rcu_free_sheaf_prepare+0x261/0x2a0
+     rcu_free_sheaf+0x1f/0xe0
+     rcu_core+0x661/0x1d10
+     handle_softirqs+0x201/0x930
+     __irq_exit_rcu+0x110/0x1e0
+     irq_exit_rcu+0xe/0x20
+     sysvec_apic_timer_interrupt+0x6c/0x80
+     asm_sysvec_apic_timer_interrupt+0x1a/0x20
+     srso_alias_return_thunk+0x0/0xfbef5
+     __asan_memcpy+0x23/0x60
+     create_monitor_ctrl_event+0x1a2/0x460
+     mgmt_cmd_complete+0x2da/0x580
+     load_long_term_keys+0x741/0x860
+     hci_sock_sendmsg+0x128b/0x22e0
+     __sys_sendto+0x425/0x470
+     __x64_sys_sendto+0xe5/0x1c0
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    CPU: 1 UID: 0 PID: 495 Comm: python3 Tainted: G           O        7.2.0-rc6-pmb-bt-functional-v1+ #1 PREEMPT(lazy)
+    Tainted: [O]=OOT_MODULE
+    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+    ==================================================================
+
+Fixes: 600a87490ff9 ("Bluetooth: Implementation of MGMT_OP_SET_BLOCKED_KEYS.")
+Assisted-by: LLM
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/virtio_bt.c     | 4 ++--
- include/net/bluetooth/bluetooth.h | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ net/bluetooth/hci_core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bluetooth/virtio_bt.c b/drivers/bluetooth/virtio_bt.c
-index f9b124fe109ba..179a2de43f5f7 100644
---- a/drivers/bluetooth/virtio_bt.c
-+++ b/drivers/bluetooth/virtio_bt.c
-@@ -228,7 +228,7 @@ static void virtbt_rx_handle(struct virtio_bluetooth *vbt, struct sk_buff *skb)
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index ff3ccb33da0c7..3a713084fd534 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -1189,16 +1189,16 @@ struct smp_ltk *hci_find_ltk(struct hci_dev *hdev, bdaddr_t *bdaddr,
+ 			continue;
  
- 	if (skb->len < min_hdr) {
- 		bt_dev_err_ratelimited(vbt->hdev,
--				       "rx pkt_type 0x%02x payload %u < hdr %zu\n",
-+				       "rx pkt_type 0x%02x payload %u < hdr %zu",
- 				       pkt_type, skb->len, min_hdr);
- 		kfree_skb(skb);
- 		return;
-@@ -251,7 +251,7 @@ static void virtbt_rx_work(struct work_struct *work)
+ 		if (smp_ltk_is_sc(k) || ltk_role(k->type) == role) {
+-			rcu_read_unlock();
+-
+ 			if (hci_is_blocked_key(hdev, HCI_BLOCKED_KEY_TYPE_LTK,
+ 					       k->val)) {
+ 				bt_dev_warn_ratelimited(hdev,
+ 							"LTK blocked for %pMR",
+ 							&k->bdaddr);
++				rcu_read_unlock();
+ 				return NULL;
+ 			}
  
- 	if (!len || len > VIRTBT_RX_BUF_SIZE) {
- 		bt_dev_err_ratelimited(vbt->hdev,
--				       "rx reply len %u outside [1, %u]\n",
-+				       "rx reply len %u outside [1, %u]",
- 				       len, VIRTBT_RX_BUF_SIZE);
- 		kfree_skb(skb);
- 	} else {
-diff --git a/include/net/bluetooth/bluetooth.h b/include/net/bluetooth/bluetooth.h
-index 32701b5fedafc..2c9024c6b130d 100644
---- a/include/net/bluetooth/bluetooth.h
-+++ b/include/net/bluetooth/bluetooth.h
-@@ -281,9 +281,9 @@ void bt_err_ratelimited(const char *fmt, ...);
- 	BT_DBG("%s: " fmt, bt_dev_name(hdev), ##__VA_ARGS__)
- 
- #define bt_dev_warn_ratelimited(hdev, fmt, ...)			\
--	bt_warn_ratelimited("%s: " fmt, bt_dev_name(hdev), ##__VA_ARGS__)
-+	bt_warn_ratelimited("%s: " fmt "\n", bt_dev_name(hdev), ##__VA_ARGS__)
- #define bt_dev_err_ratelimited(hdev, fmt, ...)			\
--	bt_err_ratelimited("%s: " fmt, bt_dev_name(hdev), ##__VA_ARGS__)
-+	bt_err_ratelimited("%s: " fmt "\n", bt_dev_name(hdev), ##__VA_ARGS__)
- 
- /* Connection and socket states */
- enum bt_sock_state {
++			rcu_read_unlock();
+ 			return k;
+ 		}
+ 	}
 -- 
 2.53.0
 
