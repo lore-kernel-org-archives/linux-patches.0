@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015262;
-	b=t/CAdKEuXSIdKDRkfXvz5YdZhM+2nOst9Qw9IcLY5iI/o1NID0bjf8fRKeql5dXPB+9J
-	 ndGauTHxhgtDfoYTdtWxI+PzY7yEzbsDPQ/8GorN4xT4hOEWb/hhMmLY6gBpavgoNSCmZ
-	 xz8lh5d9WNfkVPlyBRkoLiGyJH37vuMDZvkktjKM/YEN7VzIiyONrNOAM4pufO+J5w6tF
-	 ftuRuOBxggCk/lVX6V5chQhvOcZmnrR360XR2GoENWsOrsQNClEeerZfdvvMrzlqCSy4c
-	 5re8mzNZP6cuKZSqZrF0RvrkLIXXNPCOlT8AVGA+QG7lkbnG1fTAAOqkJHlRDZ9NX0w==
+	t=1795015265;
+	b=nSQKvp6T4sqqs3cT24Qn/lsjnjtaMhHrs68XDDpTm+vCVwEZaqo9/Gx6nYkL6pbRiYFf
+	 98RmXy3ynPTGHV+y7qs7j1btuT2o3TK8Xoks+SNaIvkyUbA/rStYBARIEqdt/VN9VILTe
+	 13KA2XKPvjYENeypahrM3lHWvjG8yM57D1U0PNLeipo6/5ukqDjLQOsbslyRX4QuEaSbT
+	 4B8CweSY87zz67jv11sCOxWDQiqaTNLhwDq1ZavqF349iVgUAQZNMGWg3L+E+dsQY55Vs
+	 QU8RustKbfkxxFU2HjP/8hX0qXIXOPiUTVz7MSwxC0c3Z9a5jKYLpLXq1ZHvdTxSvDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015262;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015265;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=qWJ8yXqky8aoWKgbcN+o393JJ/JA5tBNwFPkdfAJdJQ=;
-	b=Wb851VRfY9tuNDJMelHtFE/kkktqTU8jMbZxxct/wegMJdtB970N1/S9hQP8qftv8CY0
-	 dhatgTXej73HIxXybQ61csRTwtjSzbOvZvkKEAn2+FxSwvrsHKYQ9O5jVfzCzzRUeB6JL
-	 dWsUDavmXdsbzSLmTreWp3tS0zThG/Maf7lEwxrQLKMFKn0nH0gtkAemNTaYJvwtqalCJ
-	 4PC/JH/ccLD0vLTAXZQE4zaeKZFU4RGoZmBUBNYQXYNo0K8sjf2tMdK/ssSxB1q9gyY01
-	 1lwaBTF6QmPjtQmCUu+WpfSKcqC0QnPEh1a+d2+9sIOYcdAzUUJ+1pIX44u7Ven/8kQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=nM6bhtmMsvK5NXezMdsILFaVFY5YaOHG5sYolDuaHxk=;
+	b=a8zIhzPHwoEJmCZZyDiE0Er8H1HxhtDq6zAic+BPHyUApkxyKAFChdF4p/mFwsqHvfIm
+	 R6hXu2DPIdbBaeV96EK2ndDlROk9jwtBC9LxTQVLtGjN6p9nOQ9utv6OKyDTWUpCEEdNR
+	 qwq5qgHc4aeNStTaFOmzCqAyXbPIO0tTOuN9run4X0BWHUgs6VmnMHe/eANitxVKrqVL7
+	 E7oJtJS019Ncuj045ci9r+wlTGiomV9cnyaSTkAHTBRB4luntv8MdNERvH39uInsccryZ
+	 27GV1Yb6C6NNde+C3RGWOrMpar5q1CxRmp91ECN7Imqx1AAFg2nlMxCT+7LZnUL4cWg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WObcdU4R;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qkxohApI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1357606A325;
-	Wed, 18 Nov 2026 15:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3712606A325;
+	Wed, 18 Nov 2026 15:21:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WObcdU4R
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F8CA1F000C4;
-	Wed, 18 Nov 2026 15:21:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qkxohApI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD0EC1F00936;
+	Wed, 18 Nov 2026 15:21:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015262;
-	bh=qWJ8yXqky8aoWKgbcN+o393JJ/JA5tBNwFPkdfAJdJQ=;
+	s=korg; t=1795015265;
+	bh=nM6bhtmMsvK5NXezMdsILFaVFY5YaOHG5sYolDuaHxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WObcdU4Rlildk5AYAu3Nf/gbNxDhYc5nz2zVzAzL66xuVYajLw0Fj7H1WkFZNQnRa
-	 Cq0EigsC/WwW+EZJXQyeoUhZIdDNyppTK4raAV3C/MQdd6ABofvvW/Wt9JJy3p78E+
-	 7dT5baQjfIlgCed/u2yRBMt3p3ptsTTyOuMqJjS8=
+	b=qkxohApI3OoxjrICq1b/jd48oxasaPv4u6Q8Il+79qBDpIfMTnlzoKffuICQwK5JO
+	 Q3jHrSR1cBCyAowxgHh/xkflfZNa5qGYZ/FFrUblVdSxkuEMpVFxtQQxV/Mp20bzGz
+	 BKLKPrewfhBDDS575GXzNQs3582fBp95SOnoKV30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianlin Shi <shijianlin11@foxmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Stephane Eranian <eranian@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0074/2651] bpf: Reject oversized bpf_stream_vprintk output with -E2BIG
-Date: Wed, 18 Nov 2026 15:21:54 +0100
-Message-ID: <20261118150250.596373926@linuxfoundation.org>
+Subject: [PATCH 7.3 0110/2651] perf jitdump: Bounds-check debug entry byte-swap loop
+Date: Wed, 18 Nov 2026 15:22:30 +0100
+Message-ID: <20261118150251.845207837@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,67 +64,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jianlin Shi <shijianlin11@foxmail.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 41c0348f6e65c26df4866d5dc96c57b1995fe36c ]
+[ Upstream commit ede3cd8151675c2983cd49104b1e9b25a3712ed8 ]
 
-bstr_printf() returns the would-be length excluding the trailing NUL.
-When that value is >= MAX_BPRINTF_BUF the message was truncated, but
-bpf_stream_push_str() still tried to allocate with the inflated length
-and failed with -ENOMEM. The boundary case of exactly MAX_BPRINTF_BUF
-could also copy the trailing NUL into the stream element.
+The byte-swap loop for JIT_CODE_DEBUG_INFO uses array indexing
+(jr->info.entries[n]) to iterate debug entries.  struct debug_entry has
+a flexible array member name[], so each entry has a different size.
+Array indexing computes offsets assuming fixed-size elements, landing
+inside variable-length name strings after the first entry and
+byte-swapping garbage.
 
-Reject such lengths with -E2BIG before charging stream capacity, and
-tighten bpf_stream_elem_alloc() to accept only payloads strictly shorter
-than the bprintf buffer.
+Additionally, nr_entry is read from untrusted jitdump input without
+validation against total_size, so a crafted value causes OOB reads.
 
-Fixes: 5ab154f1463a ("bpf: Introduce BPF standard streams")
-Signed-off-by: Jianlin Shi <shijianlin11@foxmail.com>
-Link: https://lore.kernel.org/r/74387ae5024d7e2996095e97211430285095b525.1787492521.git.shijianlin11@foxmail.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Replace the array indexing with debug_entry_next() pointer arithmetic
+(which correctly accounts for the variable-length name) and
+bounds-check each entry against the record's total_size before
+byte-swapping.
+
+Fixes: 9b07e27f88b9 ("perf inject: Add jitdump mmap injection support")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Cc: Stephane Eranian <eranian@google.com>
+Assisted-by: LLM
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/stream.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ tools/perf/util/jitdump.c | 26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/bpf/stream.c b/kernel/bpf/stream.c
-index 09471a6052682..7a5c3ac8676b9 100644
---- a/kernel/bpf/stream.c
-+++ b/kernel/bpf/stream.c
-@@ -22,11 +22,11 @@ static struct bpf_stream_elem *bpf_stream_elem_alloc(int len)
- 	size_t alloc_size;
- 
- 	/*
--	 * Length denotes the amount of data to be written as part of stream element,
--	 * thus includes '\0' byte. We're capped by how much bpf_bprintf_buffers can
--	 * accomodate, therefore deny allocations that won't fit into them.
-+	 * Length is the payload pushed into the stream, excluding the
-+	 * trailing NUL of the bprintf buffer. Reject anything that cannot
-+	 * fit without copying that NUL into the stream element.
- 	 */
--	if (len < 0 || len > max_len)
-+	if (len < 0 || len >= max_len)
- 		return NULL;
- 
- 	alloc_size = offsetof(struct bpf_stream_elem, str[len]);
-@@ -245,6 +245,11 @@ __bpf_kfunc int bpf_stream_vprintk(int stream_id, const char *fmt__str, const vo
- 		return ret;
- 
- 	ret = bstr_printf(data.buf, MAX_BPRINTF_BUF, fmt__str, data.bin_args);
-+	/* Truncation: reject before capacity charge (not -ENOMEM). */
-+	if (ret >= MAX_BPRINTF_BUF) {
-+		bpf_bprintf_cleanup(&data);
-+		return -E2BIG;
-+	}
- 	/* Exclude NULL byte during push. */
- 	ret = bpf_stream_push_str(stream, data.buf, ret);
- 	bpf_bprintf_cleanup(&data);
+diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
+index f79e9420c6bd7..7efbaa07f1ba7 100644
+--- a/tools/perf/util/jitdump.c
++++ b/tools/perf/util/jitdump.c
+@@ -320,14 +320,32 @@ jit_get_next_entry(struct jit_buf_desc *jd)
+ 	switch(id) {
+ 	case JIT_CODE_DEBUG_INFO:
+ 		if (jd->needs_bswap) {
++			void *end = (void *)jr + jr->prefix.total_size;
++			struct debug_entry *ent;
+ 			uint64_t n;
++
+ 			jr->info.code_addr = bswap_64(jr->info.code_addr);
+ 			jr->info.nr_entry  = bswap_64(jr->info.nr_entry);
+-			for (n = 0 ; n < jr->info.nr_entry; n++) {
+-				jr->info.entries[n].addr    = bswap_64(jr->info.entries[n].addr);
+-				jr->info.entries[n].lineno  = bswap_32(jr->info.entries[n].lineno);
+-				jr->info.entries[n].discrim = bswap_32(jr->info.entries[n].discrim);
++
++			/*
++			 * debug_entry has a variable-length name[], so array
++			 * indexing would compute wrong offsets — use
++			 * debug_entry_next() and bounds-check each entry.
++			 */
++			ent = &jr->info.entries[0];
++			for (n = 0; n < jr->info.nr_entry; n++) {
++				if ((void *)ent + sizeof(*ent) > end)
++					break;
++				/* name must be NUL-terminated within the record */
++				if (!memchr(ent->name, '\0', (char *)end - ent->name))
++					break;
++				ent->addr    = bswap_64(ent->addr);
++				ent->lineno  = bswap_32(ent->lineno);
++				ent->discrim = bswap_32(ent->discrim);
++				ent = debug_entry_next(ent);
+ 			}
++			/* clamp so downstream consumers don't overrun */
++			jr->info.nr_entry = n;
+ 		}
+ 		break;
+ 	case JIT_CODE_UNWINDING_INFO:
 -- 
 2.53.0
 
