@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050997;
-	b=Ds2Y94Bm0AnDxlRfVC44uqzBXuV6raIAiATvE/2vGvCm5R7LJ+xwjG14xxEfSluD+ZpB
-	 o+aKhfTnfYYkFXczau5P8yunxbvY1h/P6LqBzxzKAlhgF2WfAZic9DI8tVby1UfFkc4Kp
-	 VSHCG9wmFowhybONJEfGahylk95bNzQIFLeW1VQAN9kXdpI8tyXj9iPZ63H7GpXVmnMeT
-	 sjbEy23J3tRmnERbMWaEk0ybIy3/OmFwLljxrd/ftleMPoTgB1Ovl+veXF2Bk3NC++sc+
-	 CjiS7KCnvKB2QGY4wyq6wLq63Ry1xLLH/zZcFDvHlFzEzVU7IFAcNUscnvX6C3lrI8w==
+	t=1795051000;
+	b=nbwRS76+7Oe5/5sB5wWyEtMcH+nADW9cQb7yfwRuzzauDcr2Cp478Ym0R28XII3lX1vP
+	 281nnDMleeUG8v7j7VxDwD82J+YS+fYYreM5CelRYKV1ovu1erh3HwJdDPsjt6X9bOmKf
+	 hbBaNygv379TMOYfo2gcIxNT89fLwjLC5hSkGf7xNAT/rBAQQ7FpzH79VPQH1ZflIzfAd
+	 ZmDN1AYozpm3n7oHyPaQRW217whAmUtI2WwSS89loRURwRKAK80wRtmxhxlx+4mM/prRF
+	 3aRK+a4vy9rn7ybjXq001ZBhB5wxYULOkCq9hqcBLHBxypAlgPEDffUX3KaoqYsn44g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050997;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051000;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XCozLFRLx4bWMiLmHRAM3VQaXXaEAwkyL7iGVtmwwXY=;
-	b=WbCe9o82EtByMkiOoalgux5KwXLHlub94AeH+cuRzgMdTdlY1AycrB1n+3iVyGh3zthR
-	 Ri4Fb12JClf7Ytc8Y18BaY5jAh93yhVFiyk7JxBStUD2NG//cIficJO4mzlSbmA7wOVFB
-	 8rogqxjdEaMdU1VTbP1KnjfIhTeRBKUB2eVaM610hMPFEVtK7XyfVdSAUjV6EhHwlFR/x
-	 Rp6BIT9vpE79+xoR8YRD7PADHWcNmgK6mxpqPbpVwyozLyUGL9/Bkx73KW2vC/th5qnLU
-	 U+60aclDe+Y+jveP3AqP0ovjvCO/hv+ddQo1ntuNflZ3xLbA19Q8QKF0nqKZcFa7a0Q==
+	bh=CWvFSolxmW3aXx81ek5I95nbiWzaLXQqxZ4V5i7fy8I=;
+	b=Xy/aX5qT8vf/yTjyGdRM+1HB8OVtQZ6wEHN1poGuB+lfbnrkMXvoLotJ1NORZDo72mk5
+	 HPXQst5fNVCiAUlg+dQnkNg1LgUBiPhTxDNmEX5JjTiFY0GCZLPiqBaGAyihhr43ytK+5
+	 NowQvgIZ4s3k3qsNPnTbl7Rq0zgKBlJ62L9mWhMhTUasWEd/hJ9F8Mg/7og8puKRoCXn5
+	 6lfy8GwEz4bI39M9OGlawhoXmndrPX5pB5TpN+9l2FLKRkXiWoVlokB+zCBibM6DCRbHC
+	 p5qG6yiwnEzPPRuHUdFqzokTZxrZRa3p/3g13e6eQwJ2EcfQVAv6an6idRt2JrXDFmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cto5ykqK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bJ4kY+vE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFCE606A32C;
-	Thu, 19 Nov 2026 01:16:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BC93606A320;
+	Thu, 19 Nov 2026 01:16:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cto5ykqK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF9DB1F000C4;
-	Thu, 19 Nov 2026 01:16:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bJ4kY+vE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C97691F000C4;
+	Thu, 19 Nov 2026 01:16:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050997;
-	bh=XCozLFRLx4bWMiLmHRAM3VQaXXaEAwkyL7iGVtmwwXY=;
+	s=korg; t=1795051000;
+	bh=CWvFSolxmW3aXx81ek5I95nbiWzaLXQqxZ4V5i7fy8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cto5ykqKMjJxUylqgQv2ex6Osc0ukcN2+pDo9cmB5R4uqC6H40H7b9hCXMjMFadK4
-	 iCv5SaQrOm0B5tr4U1Bxvh9BX5nw3smL/e5vkYxxXIeXV7hqJeADpTOCg42NSv5o4y
-	 shWntbCeEYMxvR2pdzsdIoJFPvtVAEwAwzV2b/oE=
+	b=bJ4kY+vEKRUs+dM8JJ5hUjhDmR0vvTsrE60koGe+cGp+dh11Nde3yHHKCP0mvq0la
+	 D5375O3AHzNPvJaAXcrkd6hlXpjUvjgUyRRVkV4RtlF+2KmLYGag2F2CF7gjFprFWF
+	 kKf4qFm0BGUm9Y5pFyXUWYLh7Qfd11i2R94fwfg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	William Hansen-Baird <william.hansen.baird@gmail.com>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0053/2214] wifi: rtlwifi: rtl8723be: Remove unnecessary irq save/restore in hw_init()
-Date: Wed, 18 Nov 2026 15:28:49 +0100
-Message-ID: <20261118150012.153053870@linuxfoundation.org>
+Subject: [PATCH 5.15 0054/2214] wifi: rtlwifi: fix disabling of ASPM for RTL8723BE with AER flooding
+Date: Wed, 18 Nov 2026 15:28:50 +0100
+Message-ID: <20261118150012.191664364@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,93 +70,120 @@ Content-Transfer-Encoding: 8bit
 
 From: William Hansen-Baird <william.hansen.baird@gmail.com>
 
-[ Upstream commit 1b4cd55626b6ffa93d18848412afb912a4add585 ]
+[ Upstream commit 04a46c2dbf3b516c96a1d19b72917b56055ad6c1 ]
 
-rtl8723be hw_init() calls local_save_flags(flags) followed by
-local_irq_enable(). Later, local_irq_restore(flags) is called.
+commit 77a6407c6ab2 ("wifi: rtlwifi: disable ASPM for RTL8723BE with subsystem ID 11ad:1723")
+adds code which sets ppsc->support_aspm to false in
+_rtl_pci_update_default_setting() in order to disable ASPM.
+This does not, however, disable ASPM. Rather, it disables driver
+control of ASPM, and blocks calls to rtl_pci_enable_aspm()
+and rtl_pci_disable_aspm().
 
-This causes warnings from Lockdep on boot and modprobe,
-as local_irq_restore(flags) should only be called while irqs are disabled.
-The warning was introduced to detect this class of bug in [1].
+In some cases, the pci device supplied to the probe function has
+ASPM enabled. The code would therefore not disable ASPM, as it means to,
+but rather just leave it enabled.
+This was discovered through testing on a Razer Blade 14 2017.
 
-With testing I found that all paths which call hw_init() have irqs
-already enabled for rtl8723be.
+Implement a new __rtl_pci_disable_aspm(hw) function which does not check
+ppsc->support_aspm before disabling and call it from
+rtl_pci_disable_aspm().
 
-Furthermore, the calls were originally added for the rtl8192ce
-in commit f78bccd79ba3 ("rtlwifi: rtl8192ce: Fix too long disable of IRQs")
-before later being added to most other rtlwifi drivers.
-
-Commit d3feae41a347 ("rtlwifi: Update power-save routines for 062814 driver")
-then replaces the call to spin_lock_irqsave() before hw_init(),
-and thus the codepath which caused irqs to be disabled in hw_init and
-prompted the original commit has been removed.
-
-The same irq save/restore pattern is also present in the hw_init() of
-rtl8192ce, rtl8723ae, rtl8188ee, rtl8192se and rtl8192cu,
-however I don't have the hardware to test them,
-so I did not include them in my changes.
-
-Tested on a Razer Blade 14 2017.
-
-Example of output from Lockdep prior to fix:
-
-raw_local_irq_restore() called with IRQs enabled
-
-...
-
-Call Trace:
-<TASK>
-rtl8723be_hw_init+0x5992/0x7220 [rtl8723be]
-? static_obj+0x61/0xa0
-rtl_pci_start+0x222/0x5c0 [rtl_pci]
-rtl_op_start+0x128/0x1a0 [rtlwifi]
-? __kasan_check_read+0x11/0x20
-drv_start+0x16c/0x550 [mac80211]
-
-...
-
-irq event stamp: 887679
-hardirqs last  enabled at (887689): [<ffffffff96511170>] __up_console_sem+0x90/0xa0
-hardirqs last disabled at (887698): [<ffffffff96511155>] __up_console_sem+0x75/0xa0
-softirqs last  enabled at (887670): [<ffffffff962f4675>] __irq_exit_rcu+0x175/0x2f0
-softirqs last disabled at (887649): [<ffffffff962f4675>] __irq_exit_rcu+0x175/0x2f0
----[ end trace 0000000000000000 ]---
-
-[1] https://lore.kernel.org/all/20210111153707.10071-1-mark.rutland@arm.com/
+Then move the code added in the previous commit to rtl_pci_init_aspm() to
+allow adding a call to __rtl_pci_disable_aspm(hw).
+This makes sure ASPM is disabled while still disabling
+driver control of ASPM to block it from being enabled later.
 
 Signed-off-by: William Hansen-Baird <william.hansen.baird@gmail.com>
 Acked-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260609095359.2964193-1-william.hansen.baird@gmail.com
+Link: https://patch.msgid.link/20260630141553.785769-2-william.hansen.baird@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/rtl8723be/hw.c | 6 ------
- 1 file changed, 6 deletions(-)
+ drivers/net/wireless/realtek/rtlwifi/pci.c | 39 ++++++++++++++--------
+ 1 file changed, 26 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8723be/hw.c b/drivers/net/wireless/realtek/rtlwifi/rtl8723be/hw.c
-index ccbb082d5e928..8d18dfe774034 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8723be/hw.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8723be/hw.c
-@@ -1339,11 +1339,6 @@ int rtl8723be_hw_init(struct ieee80211_hw *hw)
- 	bool rtstatus = true;
- 	int err;
- 	u8 tmp_u1b;
--	unsigned long flags;
--
--	/* reenable interrupts to not interfere with other devices */
--	local_save_flags(flags);
--	local_irq_enable();
+diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
+index 9272ac0095261..bbcf69452d0e9 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/pci.c
++++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
+@@ -156,15 +156,6 @@ static void _rtl_pci_update_default_setting(struct ieee80211_hw *hw)
+ 	    init_aspm == 0x43)
+ 		ppsc->support_aspm = false;
  
- 	rtlhal->fw_ready = false;
- 	rtlpriv->rtlhal.being_init_adapter = true;
-@@ -1449,7 +1444,6 @@ int rtl8723be_hw_init(struct ieee80211_hw *hw)
- 
- 	rtl8723be_dm_init(hw);
- exit:
--	local_irq_restore(flags);
- 	rtlpriv->rtlhal.being_init_adapter = false;
- 	return err;
+-	/* RTL8723BE found on some ASUSTek laptops, such as F441U and
+-	 * X555UQ with subsystem ID 11ad:1723 are known to output large
+-	 * amounts of PCIe AER errors during and after boot up, causing
+-	 * heavy lags, poor network throughput, and occasional lock-ups.
+-	 */
+-	if (rtlpriv->rtlhal.hw_type == HARDWARE_TYPE_RTL8723BE &&
+-	    (rtlpci->pdev->subsystem_vendor == 0x11ad &&
+-	     rtlpci->pdev->subsystem_device == 0x1723))
+-		ppsc->support_aspm = false;
  }
+ 
+ static bool _rtl_pci_platform_switch_device_pci_aspm(
+@@ -203,7 +194,7 @@ static void _rtl_pci_switch_clk_req(struct ieee80211_hw *hw, u16 value)
+ }
+ 
+ /*Disable RTL8192SE ASPM & Disable Pci Bridge ASPM*/
+-static void rtl_pci_disable_aspm(struct ieee80211_hw *hw)
++static void __rtl_pci_disable_aspm(struct ieee80211_hw *hw)
+ {
+ 	struct rtl_priv *rtlpriv = rtl_priv(hw);
+ 	struct rtl_pci_priv *pcipriv = rtl_pcipriv(hw);
+@@ -215,9 +206,6 @@ static void rtl_pci_disable_aspm(struct ieee80211_hw *hw)
+ 	u16 aspmlevel = 0;
+ 	u8 tmp_u1b = 0;
+ 
+-	if (!ppsc->support_aspm)
+-		return;
+-
+ 	if (pcibridge_vendor == PCI_BRIDGE_VENDOR_UNKNOWN) {
+ 		rtl_dbg(rtlpriv, COMP_POWER, DBG_TRACE,
+ 			"PCI(Bridge) UNKNOWN\n");
+@@ -240,6 +228,16 @@ static void rtl_pci_disable_aspm(struct ieee80211_hw *hw)
+ 	_rtl_pci_platform_switch_device_pci_aspm(hw, linkctrl_reg);
+ }
+ 
++static void rtl_pci_disable_aspm(struct ieee80211_hw *hw)
++{
++	struct rtl_ps_ctl *ppsc = rtl_psc(rtl_priv(hw));
++
++	if (!ppsc->support_aspm)
++		return;
++
++	__rtl_pci_disable_aspm(hw);
++}
++
+ /*Enable RTL8192SE ASPM & Enable Pci Bridge ASPM for
+  *power saving We should follow the sequence to enable
+  *RTL8192SE first then enable Pci Bridge ASPM
+@@ -331,10 +329,25 @@ static void rtl_pci_parse_configuration(struct pci_dev *pdev,
+ 
+ static void rtl_pci_init_aspm(struct ieee80211_hw *hw)
+ {
++	struct rtl_pci *rtlpci = rtl_pcidev(rtl_pcipriv(hw));
+ 	struct rtl_ps_ctl *ppsc = rtl_psc(rtl_priv(hw));
++	struct rtl_priv *rtlpriv = rtl_priv(hw);
+ 
+ 	_rtl_pci_update_default_setting(hw);
+ 
++	/*
++	 * RTL8723BE found on some ASUSTek laptops, such as F441U and
++	 * X555UQ with subsystem ID 11ad:1723 are known to output large
++	 * amounts of PCIe AER errors during and after boot up, causing
++	 * heavy lags, poor network throughput, and occasional lock-ups.
++	 */
++	if (rtlpriv->rtlhal.hw_type == HARDWARE_TYPE_RTL8723BE &&
++	    (rtlpci->pdev->subsystem_vendor == 0x11ad &&
++	     rtlpci->pdev->subsystem_device == 0x1723)) {
++		__rtl_pci_disable_aspm(hw);
++		ppsc->support_aspm = false;
++	}
++
+ 	if (ppsc->reg_rfps_level & RT_RF_PS_LEVEL_ALWAYS_ASPM) {
+ 		/*Always enable ASPM & Clock Req. */
+ 		rtl_pci_enable_aspm(hw);
 -- 
 2.53.0
 
