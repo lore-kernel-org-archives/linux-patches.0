@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036230;
-	b=zuJzOI6eVRAvz+i4tQTY3baExjx2im6zcBFgKQzldQvyVu3d0OOCfhMdS5zHgD7JB2/E
-	 9qSH2aJxdYrfEZAk6eb+liPk4QwDmca+zAa6DiA0QAr9lkOvMnXEB/ap80eY0pRB2j9Jd
-	 lmJof7NJ87maZjqKuqzQruactd1W0mVdxCo7bf22zsuJrpHCblwOQlIv/ob6lOLCWlfpN
-	 iTubwaosUtq5ZHtEABwCDNdIWeqPUhnMmX0Iq6H+/ctFPJNJ5rWmB3UD+0slmTEacnhCE
-	 PEIEn4lyEBg7iKvbygMDoJRnHl0lPLKshCAYBBx/y3HxoMseVFr+Z/kxJqLDHSpLLxA==
+	t=1795036232;
+	b=rfLIZRVrKYMHhZpxFEPItTASebE4jDSYzpuqISvpjWK+f+DxNjnkaEODcjjjSfgwqprC
+	 ZaPR3YqOHz05BN5SddbSIfvnotJfxlLAfPyuNOr1E8Qu1IZLox/ucCHLiOJjYbmQacNVz
+	 tJWUcmC0MhuK/+4tCpecjiFoL+b3qtLw8hcy22bl2uM577MPBfrGlUUcl82/JT3Cs0dZr
+	 Cd6nIQH/poRyWiseuhHIrg2SOGcW0DtSYYuiARMuhqyJeYPMRRmJBK6pnNgfYjmsVHWtS
+	 Tvl7R0FIogp0uKqtKv431UitvByMcIBUHy6iAqKAw0WarGRH6MUiX3sYES/iezvhkKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036230;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036232;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rD7jZ8BFsjpLcgr2q42TdHlqJwywBHyYJnNldvEEpPY=;
-	b=FGwBCfeMwbAY9cMfZBIjPNXKhKHWhhD7H8vqkJ+ccgkSuVZudG/Psz4SfxxxE9ZMt0Vl
-	 0DmQjFOUMArQ9U76BwQQEEzTh7dx8gIB9twbr2w1t6c3FjPvZ+Z6jlI1iJrn3FQD9V8Ds
-	 JF+sgasnYxPRBt8+RkDw70yyjMnIY6Qg5Rcj+G30EudYDqwTc0+VXgHe3oHW62gBTz57A
-	 dJ0vy0ZKIYpK1sBWxi0mNISSM7/Nso/Xb+GVaack+wO8iqA3LzMD2/LbidJK8wpkNyyNZ
-	 cofdEhkryRAG82vO5l3PLtnQa1WXrQ//TU4i0GRI+xSKQmj8pdvhen/1GeWHLknPSRA==
+	bh=oHW7PWE43Nzrqa/ldoO3T1pc+TRryko71u2BhqKvkx8=;
+	b=iXztNJAhCt/7lRziIaLfJ92tTP912F6Lwj4o+klJ7rb3rM3c4mI2CFofGhiQgrz09Y0d
+	 pN40xEBwg8NA+uNCPIF30GoAin4YkgZsYBc1MRuqYclXcynWWVwDEybi1NUX0I1NXXmOL
+	 M8NytZuFhcJ6Jt7EpV3PZR/hMRBJJJVkQkXSmq+ceThJ60czOOhG64c9PQv8CCD2dvat9
+	 g5EVgljvzLR0iUH7e6vDY0yk/6+SFa+/lvJRMfo2ZCDXzsM0ncplo1fLLT2SgsoogOC8L
+	 wtb9DYbMyG7joQ+bS7ZyNNjRtQABe8nd3ep92ElgtHDgCtmIhXXwghktIeeXuda+99w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VVmkmHnt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="I5ZM9/xO";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01790606A320;
-	Wed, 18 Nov 2026 21:10:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2A9606A320;
+	Wed, 18 Nov 2026 21:10:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VVmkmHnt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 033111F000C7;
-	Wed, 18 Nov 2026 21:10:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I5ZM9/xO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4871F000C4;
+	Wed, 18 Nov 2026 21:10:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036229;
-	bh=rD7jZ8BFsjpLcgr2q42TdHlqJwywBHyYJnNldvEEpPY=;
+	s=korg; t=1795036232;
+	bh=oHW7PWE43Nzrqa/ldoO3T1pc+TRryko71u2BhqKvkx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VVmkmHntrsRrzYreIcN5XvnRwHD5RZ8z252v8PRerVkELux4//wiS2baIa6k5GUE1
-	 TTuofJR9S8uEDX+wiDVvQaORsJbT3IGXK5RRMQVvjya/st12VvygF63pfOyKoRmg9Z
-	 c1fEFJ1bZxoe6wMjWxn4VtkkYjOzTD2qZi1z1lT4=
+	b=I5ZM9/xOz3FIpQjErFyYdO7DbTp5mSK+PlSLZCgSg6fnGA7C9ADrQSu+lUsYAM6QF
+	 cDNcbnQzqib4k8Il9IkgxKME6QnUGtkzp2+Nst2py0ETuO7KF5SEd0CacJ7aGlMiAa
+	 hlDg0XqPJ/BMN37pxRiLZQEuGopoWmH+DGixgu/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhaoJinming <zhaojinming@uniontech.com>,
-	Sahil Malhotra <sahil.malhotra@nxp.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0986/3318] crypto: caam - fix double-free in caam_rsa_set_priv_key_form()
-Date: Wed, 18 Nov 2026 15:26:48 +0100
-Message-ID: <20261118150349.356671131@linuxfoundation.org>
+Subject: [PATCH 6.6 0969/3318] drm/msm/hdmi_phy: Cleanup after msm_hdmi_phy_resource_enable() failure
+Date: Wed, 18 Nov 2026 15:26:31 +0100
+Message-ID: <20261118150348.754300631@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,60 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhaoJinming <zhaojinming@uniontech.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit a91d9346a70b68f77884cba9d9ec3b70f96bf9d2 ]
+[ Upstream commit d27f831aaf20aaf06e41ceb1b260e10672269155 ]
 
-caam_rsa_set_priv_key_form() frees the partially allocated key
-components (p, q, tmp1, tmp2, dp, dq) with kfree_sensitive() on its
-error path, but does not set those pointers to NULL afterward.
+If msm_hdmi_phy_resource_enable() fails, e.g. when enabling regulators,
+it should reverse the state of things already changed.
+msm_hdmi_phy_resource_enable() is used also in probe path, thus such
+failure, which could be simple deferred probe, would leave these
+resources permanently enabled for the rest of the runtime.
 
-When the function returns an error, caam_rsa_set_priv_key() jumps to
-its err label and calls caam_rsa_free_key(), which frees all of those
-same pointers again, resulting in a double-free.
-
-This is reachable when the allocation of q, tmp1, tmp2, dp, dq or qinv
-fails, e.g. under memory pressure, or for a malformed key whose CRT
-members decode to zero length and make caam_read_rsa_crt() return NULL.
-
-Set each pointer to NULL right after freeing it so that the subsequent
-caam_rsa_free_key() call becomes a no-op for the already-freed fields.
-
-Fixes: 52e26d77b8b3 ("crypto: caam - add support for RSA key form 2")
-Cc: stable@vger.kernel.org
-Signed-off-by: ZhaoJinming <zhaojinming@uniontech.com>
-Reviewed-by: Sahil Malhotra <sahil.malhotra@nxp.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: <stable@vger.kernel.org>
+Fixes: 15b4a4523859 ("drm/msm/hdmi: Create a separate HDMI PHY driver")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/752654/
+Link: https://lore.kernel.org/r/20260911-drm-msm-hdmi-fixes-before-eliza-v4-1-87bdb9f1987f@oss.qualcomm.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/caam/caampkc.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/msm/hdmi/hdmi_phy.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/caam/caampkc.c b/drivers/crypto/caam/caampkc.c
-index cb001aa1de661..ac515ed8c5755 100644
---- a/drivers/crypto/caam/caampkc.c
-+++ b/drivers/crypto/caam/caampkc.c
-@@ -1033,16 +1033,22 @@ static int caam_rsa_set_priv_key_form(struct caam_rsa_ctx *ctx,
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
+index 33b0819a52c88..836bdba8aaa14 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
+@@ -63,16 +63,28 @@ int msm_hdmi_phy_resource_enable(struct hdmi_phy *phy)
+ 	ret = regulator_bulk_enable(cfg->num_regs, phy->regs);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(dev, "failed to enable regulators: (%d)\n", ret);
+-		return ret;
++		goto err_pm_put;
+ 	}
  
- free_dq:
- 	kfree_sensitive(rsa_key->dq);
-+	rsa_key->dq = NULL;
- free_dp:
- 	kfree_sensitive(rsa_key->dp);
-+	rsa_key->dp = NULL;
- free_tmp2:
- 	kfree_sensitive(rsa_key->tmp2);
-+	rsa_key->tmp2 = NULL;
- free_tmp1:
- 	kfree_sensitive(rsa_key->tmp1);
-+	rsa_key->tmp1 = NULL;
- free_q:
- 	kfree_sensitive(rsa_key->q);
-+	rsa_key->q = NULL;
- free_p:
- 	kfree_sensitive(rsa_key->p);
-+	rsa_key->p = NULL;
- 	return -ENOMEM;
+ 	for (i = 0; i < cfg->num_clks; i++) {
+ 		ret = clk_prepare_enable(phy->clks[i]);
+-		if (ret)
++		if (ret) {
+ 			DRM_DEV_ERROR(dev, "failed to enable clock: %s (%d)\n",
+ 				cfg->clk_names[i], ret);
++			goto err_clk_unprepare;
++		}
+ 	}
+ 
++	return 0;
++
++err_clk_unprepare:
++	for (; i > 0; i--)
++		clk_disable_unprepare(phy->clks[i - 1]);
++	regulator_bulk_disable(cfg->num_regs, phy->regs);
++
++err_pm_put:
++	pm_runtime_put_sync(dev);
++
+ 	return ret;
  }
  
 -- 
