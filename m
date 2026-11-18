@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023535;
-	b=w6dWxkbp/ZltlF9Wbfp8XJqeES+GZN2lqNhHuOjLPiizSE1w+ci38kL3AIc7vDb7DacD
-	 Ccyhqqgg124xb1gYd3Ms8iPl2t0WNqleI2Ef+2njqmaAr+j80JKlvl+YLouFARpwD8EoW
-	 XVgl0FXfOk6x8GrCPA/A1JlSCB7nr/Rlo8HxCLpQlbPpFhGJPWHl52l4dUrfRV5bmhe+T
-	 dywI+i99w01f3BQfS2Ry/57G4y1djgD68pqxCMr+ppmdMHOSJWxCssdDF8RIPtttQrIB1
-	 i0b3ma+FTWp2+CWiba1Nwl5KeR8DjsD8WTOIoEl2corGMn6n79AWmpn5Nyf0zpHTTWw==
+	t=1795023538;
+	b=kuqifgTaMyX+FpFzmnHhUPWUYeR8Kdq1Yhmv4dbhiPgnnzI+Nj107PDxQ0eLUPVytEhX
+	 6wPLTTnbXYxFQ3WS1uHjsS/devc/lcmsu/X3/GL5fTeajwg94TpginVkBl+XMiY1MDHuQ
+	 ONS7yqnz1jxV2dyoM+EsqQJevygjln5+gi0moatxhYEljW4KnVEDTDNHig5zTRXWizJOW
+	 ZlUf86KTVh4kCBHufDHRzY7Is50fnocZY+w01SuaikyzmbMkLvyZ7OlbZtUYxu4NFuIY6
+	 KmVwzgTTcpY46EaEWaDIUJjUjizseeVBQNeyrT6njsBO16PZQIbqm6kaJuVByX5R7IA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023535;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023538;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZOMuMOeua56e/5gM/It9k3xu2GXPz+kzy84aoON2cig=;
-	b=w2a4OS+9pNZcnvJbxV6WIQpvePI+WJACD4x8/Scd085e7c9Cs14A2Lb3+apJkRiaCZeU
-	 jKAKYPbZXKgURRQCURnyPGO3iqSQWwrt4D9BtUHiquOvFyTOIxz7k0TZM5URxwJqExyLH
-	 ISWuX3qjTzrm/+CIulNi8S2Lr90kj/4b2MxLE81t0VSTw9dSygktAtrcRmxzjn6PdBEUw
-	 YjZStmKPAlgvlO6EALpHc20akpPwInSvTRvulBrk9eeZ3/GiX9apCZ23CNnshxH0SNmwb
-	 PB4xM7subblOPDK1sIAYY41VI3P4w0LeOzBUTDjSBk7/85QugFrviMFke06OtAVlsQA==
+	bh=bLsz65wrvXaNXg5F8W+NoXvYoLSx/ZY8rTivIn7aWTo=;
+	b=pXHFNtvsJ9CW8SLslN8dsZSyIH/7hXTnbMlVE1Vxj7k+RLw4hoZvmsvuvGa2NqfZA965
+	 N2p3a+vbdUa+QSeCTeDp4vGl+xcqO3fxcRmbukOFVMybgnocyqchL9HtWwteIndutK2xa
+	 3ORot1at34CNrqt3ELpry6jphljZuTj83eun6Yya3UYQgbHKZSkFDqE1S4UTIMsbuPUpN
+	 GSMhXMdA/N/bafG/LUnwybgjB+W+fLsCHcT90fL6EaHUVipC2ayXVxBNe7MxhaAt9UheP
+	 PnrhufA3RcXEHodPhK6uQEkbt4MupQgPtEpofmElzUyD4EPCxDMUsAkPYqeHVRk1vGw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sWrs7bLZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tNnYu6Rh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C49606A332;
-	Wed, 18 Nov 2026 17:38:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF25B606A330;
+	Wed, 18 Nov 2026 17:38:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sWrs7bLZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96D5F1F000C4;
-	Wed, 18 Nov 2026 17:38:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tNnYu6Rh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D8A1F000C4;
+	Wed, 18 Nov 2026 17:38:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023535;
-	bh=ZOMuMOeua56e/5gM/It9k3xu2GXPz+kzy84aoON2cig=;
+	s=korg; t=1795023537;
+	bh=bLsz65wrvXaNXg5F8W+NoXvYoLSx/ZY8rTivIn7aWTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sWrs7bLZknhon8gymWSh/ihWb/U2Oh6o5SRDQLapNGLkpsC0f5avv+b6YmibidhDk
-	 JBiwv1G371fhHPKB2I5Sjq4GcGCAttzuMEAyl7jn6VlIfGRy/Wre5N4Wck4r2D7X1F
-	 R+yRsVE095x9fl7/bl9Onjsy/Bxy1nJXqLyp4Imk=
+	b=tNnYu6RhOeawwxGQT0cZ+0YwKnd/DrJF+m/uwmq7/etd/Uo0jZah28Na5Jrdy3d8+
+	 5spXWxpDVW+DKkiPic1UmdMhf41KxE930RM6JfsUABddLigmfCiBB8BTdHj84eEyYp
+	 zTL12r1e63Wc66YMydW2loWTND6VeK5BzJB58FRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@nabladev.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Justin Yeh <justin.yeh@mediatek.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0404/2151] ARM: dts: stm32: Drop bias-disable from STM32MP15xx DHCOM SoM sdmmc1_b4_pins_a
-Date: Wed, 18 Nov 2026 15:35:39 +0100
-Message-ID: <20261118150136.778570793@linuxfoundation.org>
+Subject: [PATCH 6.18 0405/2151] HID: i2c-hid: Unfollow the panel on shutdown
+Date: Wed, 18 Nov 2026 15:35:40 +0100
+Message-ID: <20261118150136.812705308@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,44 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@nabladev.com>
+From: Justin Yeh <justin.yeh@mediatek.com>
 
-[ Upstream commit 3572825773791f4258b553391f4e2187df321731 ]
+[ Upstream commit 59fc35a1edbfa5405122d749cf8843da131fd796 ]
 
-Drop bias-disable property from STM32MP15xx DHCOM SoM sdmmc1_b4_pins_a
-to fix the following DT checker warning. The bias-pull-up property is
-the only bias-related property that has to be present in those pinctrl
-node subnodes.
+i2c_hid_core_shutdown() sends SET_POWER(SLEEP) even for panel followers,
+but nothing in device_shutdown() guarantees whether the panel, and hence
+our own power, is still on by the time we get there.
 
-"
-arch/arm/boot/dts/st/stm32mp153c-dhcom-drc02.dtb: pinctrl@50002000 (st,stm32mp157-pinctrl): sdmmc1-b4-0:pins1: {'pinmux': [10253, 10509, 10765, 11021, 12813], 'slew-rate': 1, 'drive-push-pull': True, 'bias-disable': True, 'bias-pull-up': True} is valid under each of {'required': ['bias-pull-up']}, {'required': ['bias-disable']}
-"
+Do what i2c_hid_core_remove() does and just unfollow the panel.
+drm_panel_remove_follower() calls panel_unpreparing() only while the
+panel is still prepared, which powers us down properly; if it is already
+unprepared no transfer is attempted at all. On MT8196 the panel is
+unprepared long before us, so this also drops the ~2s i2c bus timeout
+from every reboot.
 
-Fixes: 7cd8567d988a ("ARM: dts: stm32: Enable internal pull-ups for SDMMC1 on DHCOM SoM")
-Signed-off-by: Marek Vasut <marex@nabladev.com>
-Link: https://lore.kernel.org/r/20260828150111.173089-1-marex@nabladev.com
-Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
+Fixes: 96a37bfd232a ("HID: i2c-hid: Support being a panel follower")
+Suggested-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Justin Yeh <justin.yeh@mediatek.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/st/stm32mp15xx-dhcom-som.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hid/i2c-hid/i2c-hid-core.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/st/stm32mp15xx-dhcom-som.dtsi b/arch/arm/boot/dts/st/stm32mp15xx-dhcom-som.dtsi
-index 4cc633683c6b7..0a4263e6209d8 100644
---- a/arch/arm/boot/dts/st/stm32mp15xx-dhcom-som.dtsi
-+++ b/arch/arm/boot/dts/st/stm32mp15xx-dhcom-som.dtsi
-@@ -505,9 +505,11 @@ &sdmmc1_b4_pins_a {
- 	 * - mandatory on SoMs without SD voltage translator
- 	 */
- 	pins1 {
-+		/delete-property/ bias-disable;
- 		bias-pull-up;
- 	};
- 	pins2 {
-+		/delete-property/ bias-disable;
- 		bias-pull-up;
- 	};
- };
+diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
+index 62b3dd0390a7c..4f0b461566958 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-core.c
++++ b/drivers/hid/i2c-hid/i2c-hid-core.c
+@@ -1355,7 +1355,16 @@ void i2c_hid_core_shutdown(struct i2c_client *client)
+ {
+ 	struct i2c_hid *ihid = i2c_get_clientdata(client);
+ 
+-	i2c_hid_set_power(ihid, I2C_HID_PWR_SLEEP);
++	/*
++	 * Like in i2c_hid_core_remove(): if we're a follower, the act of
++	 * unfollowing will cause us to be powered down. Otherwise we need to
++	 * manually do it.
++	 */
++	if (ihid->is_panel_follower)
++		drm_panel_remove_follower(&ihid->panel_follower);
++	else
++		i2c_hid_set_power(ihid, I2C_HID_PWR_SLEEP);
++
+ 	free_irq(client->irq, ihid);
+ 
+ 	i2c_hid_core_shutdown_tail(ihid);
 -- 
 2.53.0
 
