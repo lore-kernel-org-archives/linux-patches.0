@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016334;
-	b=xk5IuuMjrJ5DnGnX1M0zUxIxkxtN1pDo7YzCj7R5OnWiEGI1Hoc7LLnfQpGvbIE6htX3
-	 HnOyF3reBC/7uiITe9o6zeneUWbfzT6lYM6i9kDzauZBQEGfB39jENbs+pRANtMDVFqdo
-	 2tVLZgASb9c/TRtR+SA1mE+vzpsTK5n9lrJwcE3eYvRXMgzzMYuN1VFuKGGhEIdZMR8Oe
-	 91rOBXy6mu4JXKRw2YgF+DSrA0+oWxaFjo3jlDY5AzOzdvP8qFy6Fd/JGDIIsLhoSKX6x
-	 g98E1/A63WCDKSOVd0vdikIYjPxpnQ+fBzDc8m8S5rK9RVAlRB6QvAEFe83m3p+VX/w==
+	t=1795016337;
+	b=AM16G+PWNYhUvtS55pl0Jh6JAXVdonwHbXxG8GsiKqj4u1pQr8vyOtrqCpmAOpF2kSnK
+	 66gMw0wPYrbehJSVpsFnZuDexMST5Z3PBfJ5T6OebrnV0Qniqjuka4Xgaqp0we6wf2Wvt
+	 /U44r9i0G+XKqS9vxTmrnr/qTkL0/n1fnbMcIzePy9I3hIPVpgYYzJEv27a+vWaTfmNFD
+	 fbrqEqyJ3eBiYp34K/Mj6kRbdk0ryxkwLldIu5knTN4JWMNoBImwc5+TYiXG5MUgKdlZR
+	 NLqnertXVtgTJSgpI0a+hYwMYcqLPssOE1OXCQP1AFA76PDfg11fMR8ZuIQLYatVlLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016334;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016337;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x7HLx2FjCNzv3YoCGMknCbvUTuUzpbL3in9V+bSjrzM=;
-	b=BvYygQsFAeQUuGprTI5uAyUB5g5Gr69IQSxuIVoqqQP16fZQ2NL3ErGxUk2Kqf+pQ74Z
-	 HZl1ddGn/nW0SvooHU2aBZufyp3n2qdIptulrQRO5VpgiuLRFk8WyrXWo8PooPtK/lj5/
-	 yktRa9XFt+M7Qf/gg4AM4ftWmMIKYtqGbHy6yRdG7eFzUyZ1RsyLHhp07xMFBDb0BrvlV
-	 rFTLwBxV6g3aNbEpmQ3Allyct53cZZZhdJLg84Xs0GRQg0Zp8AmVYlcvW7Rozkf23Hd5j
-	 zlhExCc8fMoyNskLzO1B6nMVOg8GW71qYyFyHrzkLwunF1JPF9NlAnk26haK4VSC8fQ==
+	bh=kpPyD5mZuJoFPctFJMirx8BeZxM2eKc1itVg2NnWRm8=;
+	b=PiPrGl86/G4vhTawQsf/pDbWU+1PSrUgx2qcp1Ui3QnIy4VbFuDHu7dlxBjRjcu0Bg0L
+	 LF0YRrAT62Ns+Ysfx/UBfGOti6Qr8Eul59NSNIZ2XftWXeb56CYjZ51AoqROXL2m/+24B
+	 T0Fh94ioBG/3wJkUdGm0/bqX6TFaU1ozpuREIWF7I43arFQe3nIOQ0Z42VCS62Fb73wBH
+	 mi2LMRvfWqQepf+PSSxyD8A61pm68nP6h0Wrxtg3LcBAUCXFcDC7ZdDcRq5zxbDzbrL7P
+	 CnyPzdiyhwEe71DRzcOgZ6Ths3Vmm4s/hV5nZzC4tadLttAMmJnFfUKUucfNBY76veA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gjWNROfN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rvr+2rWl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8AEF606A339;
-	Wed, 18 Nov 2026 15:38:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5798F60A2601;
+	Wed, 18 Nov 2026 15:38:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gjWNROfN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E622D1F000C5;
-	Wed, 18 Nov 2026 15:38:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rvr+2rWl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD5D71F000C4;
+	Wed, 18 Nov 2026 15:38:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016334;
-	bh=x7HLx2FjCNzv3YoCGMknCbvUTuUzpbL3in9V+bSjrzM=;
+	s=korg; t=1795016337;
+	bh=kpPyD5mZuJoFPctFJMirx8BeZxM2eKc1itVg2NnWRm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gjWNROfNMMNoxckmVOQ/7aXUrYXSUpRTWedwCV2Lm9knFS4MdfroariUymUp+NxRj
-	 APN6DutFPDndvh3nAdnS/7c0oNXHIlCjX9zQSI5WWsBCUUXNz4gZcOTFJvRry4W7nv
-	 L636O272cNH0NT/4S3Ryb7rGVLgvqwfPciTaydLw=
+	b=Rvr+2rWlCu0YgqBQjqf+BVx3rS2ZgKfF26ZglfUZR/+m9Spi6kYZ2IPldjuaqjTK7
+	 RUHmFZ9RzNofhp+3rndR6PhOMHO4LiPugsOWX0oF3ZcTO6VyAvke1ymXSxzGq1OfkI
+	 VNnnonuEW3Ttxo8V32YNb+IBhvAqSD+Tft0TZ/yk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sarthak Sharma <sarthak.sharma@arm.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0492/2651] mm/gup_test: safely calculate GUP batch size
-Date: Wed, 18 Nov 2026 15:28:52 +0100
-Message-ID: <20261118150305.491512187@linuxfoundation.org>
+Subject: [PATCH 7.3 0493/2651] mm/gup_test: report actual pinned bytes
+Date: Wed, 18 Nov 2026 15:28:53 +0100
+Message-ID: <20261118150305.526016105@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,63 +71,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Sarthak Sharma <sarthak.sharma@arm.com>
 
-[ Upstream commit 44817a536aaa5bfac0d316242e93e489d0a69d5f ]
+[ Upstream commit 65a79b9b693d8c7bd7e5e4865c02cce922a7cc50 ]
 
-__gup_test_ioctl() calculates the end of a GUP batch using:
+__gup_test_ioctl() advances addr to the end of the current batch before
+checking if GUP pinned the entire requested batch. If GUP pins more than
+0 pages but less than the requested batch size, addr still advances by
+the requested batch size.
 
-next = addr + nr * PAGE_SIZE;
+The next iteration detects the partial pinning and breaks out of the loop.
+Again gup->size is calculated using addr - gup->addr, so it also includes
+the unpinned pages of the requested batch.
 
-If nr is too large, it can cause next to overflow and wrap around.
-If it wraps, the next > end check is bypassed and a large value
-of nr is passed to the GUP call, even though the pages array was
-allocated according to gup->size. This can lead to out of bounds writes.
-
-Also, when fewer than PAGE_SIZE bytes remain, the calculated batch
-contains zero pages. The code still calls GUP functions with pages + i,
-which can point past the allocated array.
-
-Calculate nr by taking the minimum of the number of pages per call and
-the pages remaining in the address range. Reject zero sized and non
-page aligned gup->size values and zero nr_pages_per_call value.
+Calculate gup->size using the actual number of pages pinned multiplied
+by PAGE_SIZE.
 
 Fixes: 64c349f4ae78 ("mm: add infrastructure for get_user_pages_fast() benchmarking")
 Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
 Signed-off-by: Sarthak Sharma <sarthak.sharma@arm.com>
-Link: https://patch.msgid.link/20260915102524.125758-1-sarthak.sharma@arm.com
+Link: https://patch.msgid.link/20260901083452.115365-3-sarthak.sharma@arm.com
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/gup_test.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ mm/gup_test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/mm/gup_test.c b/mm/gup_test.c
-index 44c1cdfb9c371..5bb940371a1e1 100644
+index 5bb940371a1e1..ba74bf3f41048 100644
 --- a/mm/gup_test.c
 +++ b/mm/gup_test.c
-@@ -116,7 +116,8 @@ static int __gup_test_ioctl(unsigned int cmd,
- 	bool needs_mmap_lock =
- 		cmd != GUP_FAST_BENCHMARK && cmd != PIN_FAST_BENCHMARK;
+@@ -187,7 +187,7 @@ static int __gup_test_ioctl(unsigned int cmd,
+ 	nr_pages = i;
  
--	if (gup->addr > ULONG_MAX || gup->size > ULONG_MAX)
-+	if (gup->addr > ULONG_MAX || gup->size > ULONG_MAX || !gup->size ||
-+	    !gup->nr_pages_per_call || !PAGE_ALIGNED(gup->size))
- 		return -EINVAL;
- 	if (check_add_overflow((unsigned long)gup->addr,
- 			       (unsigned long)gup->size, &end))
-@@ -139,11 +140,9 @@ static int __gup_test_ioctl(unsigned int cmd,
- 		if (nr != gup->nr_pages_per_call)
- 			break;
+ 	gup->get_delta_usec = ktime_us_delta(end_time, start_time);
+-	gup->size = addr - gup->addr;
++	gup->size = nr_pages * PAGE_SIZE;
  
-+		nr = min_t(unsigned long, nr, (end - addr) / PAGE_SIZE);
-+
- 		next = addr + nr * PAGE_SIZE;
--		if (next > end) {
--			next = end;
--			nr = (next - addr) / PAGE_SIZE;
--		}
- 
- 		switch (cmd) {
- 		case GUP_FAST_BENCHMARK:
+ 	/*
+ 	 * Take an un-benchmark-timed moment to verify DMA pinned
 -- 
 2.53.0
 
