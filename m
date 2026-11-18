@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020344;
-	b=j4HEt2fKVG6rLVTVs1J5Xpld2hx03PRcg+yaLxg8/lYHwLVWcHp5hKO7hzUNkgKsCLgT
-	 vOouLntQzNHgDqkuSislerk5bz54XggC0Jx/OODrLT04TEbZy6Ux4Rejx/ZwRdKIydExc
-	 AEBUAsdyZpBFt21pWUo+FxMoGr9Wc2wiPkfV28GD3HkHSJmOaPB6aAFs9v45DVhSy5HE8
-	 yQl492tJx+W+seppTacC73k/uvvFn7tKz8td//Z1o8aaG7rPLVtDgLfD1ULO+XP/dEO4i
-	 p7XSPs84jE+P/G5Vp+MqVGhCOtjS6J9TjMYbmxg10+f+Mcm8W8rOVCl2lOZzf/mqmiQ==
+	t=1795020347;
+	b=E2KaWPE5fvnNpoNg7A6p+iv3bYxP9podzZt1LJOutHzU35W4un5xPOLSEYaPZo/Y0xmK
+	 gX1fPMDMdudiWKVuW8dix6hSQ4zJAncKiO/F6qchymW6sd6eCbSwbsAlpFSlQEulg4Jzo
+	 y7ArLrNp3ljQCH8hs0zVb/jaTWYMv5QLlBw4V3AszsndLUFSE+3OPR9CeHhUtCvpW/Z5L
+	 DMQ8V0yoRAMVi10UIcl2yqLrlTvPhYzu3m8/k+uN1pTNcXHRwhNY7benjBCSZoeolZ40g
+	 JgLIhrwtkyDyWCenrUUGc0Ciq6HnI5wS8pw3wTGiHVwfMSYQYcIxF7FdcJZhNnsaY7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020344;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020347;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d+Gap2eIiyYW3Jb2/4I3aYhk7fAuzLDll6eTxddNfqU=;
-	b=12wVKulbupLd03JUFjs+s3S4ZgIP67Y2yMb1/UbRAxk7md6YWRuuFL+rT2x0ZxuiBSvu
-	 iSez4OCiraSWAc5Ka0imjKsPQ/5hT1pxEdi74OT+f6WHuzeHAIJDQFJWZQjI1qBV1sUJO
-	 VkSzCtLgrkTQi/IXMaChBfYLJ15ni4ZWpJMB3OcKXek+3wAAzcBjvjZPklsCBsN7zguck
-	 ftqIXs7jmGR8O6wgqBGcHGeSx2OcXQ0h3a/IAIJgI7NNka7aQ26Wwp0beqhmpnmWYb8xz
-	 GbpkieA/WyATKIJz3YtKixiVJcrxDA5Gn1lZD+zVFUI5FpbP6kzZLiEwp1ypVElCsbA==
+	bh=0z4VI+2VtpDuJT5EEx1tS12wztHsLJzL+p4bZhXyyb0=;
+	b=jMBW/MGPGCgVwisn4VDt0LOS8EHYlvFYBRvTBBOmdVVob64awcDSy7YIIFnOImZVf2Cu
+	 0FY1IXR0nq68FVZB2IDkpZWAkSe0QFkZ8L0d34EovZvsMDhmOd3/oTsVJ2jZfvoLk0qZq
+	 hSrpxoyGOBrqPktnGCh1gCFcR4MeGHmuMC5GE/i15JI4CCzkB+zU8MbBKVpjiQpu09m6x
+	 m4atVgXISqga9K2CRYKPGHpjmg7/zHWAurofoevm6lFyXGyPNPDEh7ikqo3SnmE3VYElA
+	 eir/UZ78Bk87zh4Zm4BW1rTZFGUeImGTC6I3U1ni4T680Xsr1IeN7cyWEQxnTgaTsyg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yfnZKbpa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YcMeq1Lm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96400606A32C;
-	Wed, 18 Nov 2026 16:45:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675BB606A330;
+	Wed, 18 Nov 2026 16:45:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yfnZKbpa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0D8C1F000C6;
-	Wed, 18 Nov 2026 16:45:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YcMeq1Lm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9B171F000C6;
+	Wed, 18 Nov 2026 16:45:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020344;
-	bh=d+Gap2eIiyYW3Jb2/4I3aYhk7fAuzLDll6eTxddNfqU=;
+	s=korg; t=1795020347;
+	bh=0z4VI+2VtpDuJT5EEx1tS12wztHsLJzL+p4bZhXyyb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yfnZKbpa+t6Wlt3qeS+TNVjU4j6V/kKAo39Ofq/R7Py9jQKX3BIl5rKc8gyyScUSf
-	 IiO56oxyKTUkIw8M7Gol55C9qj55zszV7B9itInJJWusmK+XN1XA/swjqBj5UaG73R
-	 ADmDQ8HULJwVcxyPUZ2HCQZh76gwKPGkA2TxoqQI=
+	b=YcMeq1Lmm2QzpBgI+OyOzHMYVSboi8aq/MOKSCHerco1O13PKn7aDA4Pcbc0uHAPl
+	 67YQ5J7DkIRVejqWwBA4Kp2jQnws8YaeKz/opD9Xc+X7UxUKa2DnaaUPZ/VrMRgt7c
+	 q8Gg3doGMMiUs6g6si9ZJMMxPpm4bcMDGuz2uDBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Lu <chris.lu@mediatek.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Xingui Yang <yangxingui@huawei.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1881/2651] Bluetooth: btmtk: Improve BT firmware logging
-Date: Wed, 18 Nov 2026 15:52:01 +0100
-Message-ID: <20261118150354.644769627@linuxfoundation.org>
+Subject: [PATCH 7.3 1917/2651] scsi: libsas: Fix out-of-bounds memcpy() in sas_ssp_task_response()
+Date: Wed, 18 Nov 2026 15:52:37 +0100
+Message-ID: <20261118150355.773576064@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,63 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Lu <chris.lu@mediatek.com>
+From: Xingui Yang <yangxingui@huawei.com>
 
-[ Upstream commit 046fa20e9c7abbafb166b431fe446c49b71cb15a ]
+[ Upstream commit 4d7f9c3fdce773f6c69d17c1d4a05bd5e17f4b99 ]
 
-The firmware log line in btmtk_setup_firmware_79xx() never says which
-file was requested, which matters because btmtk_fw_get_filename() derives
-the name from the device id and firmware version at runtime. It reports
-the firmware's own hwver field as the HW version, when the device id the
-driver read from the chip is the more useful value and is already
-available as dev_id. And it prints datetime, a u8[16] with no guaranteed
-NUL terminator, with %s.
+The min_t(int, ...) clamp of the device-provided sense_data_len turns
+negative for values >= 0x80000000 and is then used as the memcpy()
+length, reading and writing out of bounds. Compare as u32
+instead. Well-formed responses are unaffected.
 
-Log the filename before the image is parsed, so a file that fails
-validation still says which file it was, report dev_id as the HW version,
-and bound datetime with %.16s.
-
-The datetime change is hardening rather than a fix, hence no Fixes: tag:
-every file in linux-firmware terminates the field, and provoking the
-over-read needs a malformed file in /lib/firmware.
-
-Log output on MT7922 after the change:
-
-  [  365.245951] Bluetooth: hci0: Loading BT firmware: mediatek/BT_RAM_CODE_MT7922_1_1_hdr.bin
-  [  365.245956] Bluetooth: hci0: BT HW ver: 0x7922, SW ver: 0x008a, Build Time: 20260605203811
-
-Signed-off-by: Chris Lu <chris.lu@mediatek.com>
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 366ca51f30de ("[SCSI] libsas: abstract STP task status into a function")
+Signed-off-by: Xingui Yang <yangxingui@huawei.com>
+Link: https://patch.msgid.link/20261009033238.1076098-2-yangxingui@huawei.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btmtk.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/scsi/libsas/sas_task.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
-index 4ae545cf065b1..54cfc83032fb4 100644
---- a/drivers/bluetooth/btmtk.c
-+++ b/drivers/bluetooth/btmtk.c
-@@ -214,6 +214,8 @@ int btmtk_setup_firmware_79xx(struct hci_dev *hdev, const char *fwname,
- 		return err;
- 	}
+diff --git a/drivers/scsi/libsas/sas_task.c b/drivers/scsi/libsas/sas_task.c
+index e9d291007817b..2080e5836179b 100644
+--- a/drivers/scsi/libsas/sas_task.c
++++ b/drivers/scsi/libsas/sas_task.c
+@@ -25,7 +25,7 @@ void sas_ssp_task_response(struct device *dev, struct sas_task *task,
+ 	case SAS_DATAPRES_SENSE_DATA:
+ 		tstat->stat = SAS_SAM_STAT_CHECK_CONDITION;
+ 		tstat->buf_valid_size =
+-			min_t(int, SAS_STATUS_BUF_SIZE,
++			min_t(u32, SAS_STATUS_BUF_SIZE,
+ 			      be32_to_cpu(iu->sense_data_len));
+ 		memcpy(tstat->buf, iu->sense_data, tstat->buf_valid_size);
  
-+	bt_dev_info(hdev, "Loading BT firmware: %s", fwname);
-+
- 	err = btmtk_fw_validate_layout(hdev, fw, &section_num);
- 	if (err < 0)
- 		goto err_release_fw;
-@@ -222,8 +224,8 @@ int btmtk_setup_firmware_79xx(struct hci_dev *hdev, const char *fwname,
- 	fw_bin_ptr = fw_ptr;
- 	hdr = (struct btmtk_patch_header *)fw_ptr;
- 
--	bt_dev_info(hdev, "HW/SW Version: 0x%04x%04x, Build Time: %s",
--		    le16_to_cpu(hdr->hwver), le16_to_cpu(hdr->swver), hdr->datetime);
-+	bt_dev_info(hdev, "BT HW ver: 0x%04x, SW ver: 0x%04x, Build Time: %.16s",
-+		    dev_id & 0xffff, le16_to_cpu(hdr->swver), hdr->datetime);
- 
- 	for (i = 0; i < section_num; i++) {
- 		first_block = 1;
 -- 
 2.53.0
 
