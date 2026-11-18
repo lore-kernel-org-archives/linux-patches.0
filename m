@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038263;
-	b=B5clX1id+KcukWyCop7FY/+MtDQk+Cz0eXgmA4PKdYj5I/P4ohpDDzi7L8X4Ue0hfmq/
-	 BzUSH7CM4WXlwCTxKFi7Fp/VBsXJhTiw3Fa3pjkXZ7Rf+iXbUrpu48/b9Ag2XtDW8ZR/T
-	 2X0UvRgILvLB6oDgNawblzRA5DVTixZKFQmxq15TjpRpsXE+Hsir0yvvNMR3BHTERnYrL
-	 mVwV2O+p75cecOoXIA+6ERxE7DIfUjgEVA+uQ8PW5tDsbrmDQLtH68nxK01qMqjjTfhXp
-	 YcrrctlvjlDA9ZiTx254AJB2vMNtPvhreB7s+VuJcLc8qzbeOC/MqSg6v2863ai2mFA==
+	t=1795038266;
+	b=QIBL2gabaJzCmYDeXFxS36OGZuPHEJ4imBC2MDIHBy1BTnYsR18l9VcxJVG6b4KK03ff
+	 bEnYZccFB35VHfRKkD+73U/5NoV1rYCX4HwQf3UySV2e5d/BEZbN+zEdpVBRxMrdGNJLA
+	 EExw6mUheAdlem5MIP1arTPZTaQUy435ZAtF6rTDN3s/LE/fE/vZrC/hIzH4KXKqMVYwp
+	 YXsfpMPgsRWbhJz6p6w7Lgf/poHP8Me4g3bUkFuK6NCRB6AIEXfS6j2yGf7xpI947Ej40
+	 cXEHRTuXi6Ol/KL5kzIGDe2asNQq9tU0vAHYJrybU9WOvAwXOVKeLzF/hP2WdNi8vEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038263;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038266;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5nr6aiWsaNQ2Mdp3hDXcCfZ/DpG/AwyhgoYegjMkwDc=;
-	b=aq+hyAkqlLgSHpuXDkV/9tzeHbk2YqNrVBH+JTu8tNxZNYjMBz7O5lVDmypAMC26eV6v
-	 a+m6WbSd1beZFZiqK+booi62/hMHQ/kVTaGFrhMgUKCJdhYMOdfHz6kgUlwmJOxcOVbgs
-	 BUtzyZ3bdrwUWKAooEgmshttrQOfFVXMUoHso/rmXva2sYOs7VLZBatSo8hJDeFjm9HTO
-	 cJxiXhsJtAt6R7y0f4hNPmn5sNlbbhZnI1kg7OoJJD/BoOLGummvr5ClQpGsVstRincZO
-	 RVfR2VnsHPaIQjmWoeDHEOVvoB1RNR1peY2Y2NSeKgaP+QJ1oVSEGEK0cYQtB0DC2mQ==
+	bh=Aj9BI6+2j0smyQdz1CbcnpCTRtCJu9FXr16Y6Tqe0qU=;
+	b=H91SBJjrgF7JeCsOGe9oige51sZlzMjJ+MSkGd0wTCCzCA7wXrMMSqDO7EAzwIEzFZsD
+	 84+KUvfTnSBe4+I3v1y+u0xqqry9S4xE4qtSWZWaVfkDBkv/pFTrnacGE/ztLtrl7YEt+
+	 UoEfM5qNIrQl2/DDAxBnQbh/gtt8v34lGr91I4AaNSmiavyuL/4rSy+qD83+jmlve8d2A
+	 cM9b5M+P9NuUvwP1bhSpxkEgwyKwiQ1DHk6FZDmdiIVQllpuLh/5QCCkOjdDx3A2ulr+H
+	 9afsHfCi7IpAfnQcuvAffsn3gjnxesBE0dJQNabY7KBQM1Ci0frdO1jLOWP9YPLAKaA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nbIHg0Bq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ceX5gbZq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 143D3606A32A;
-	Wed, 18 Nov 2026 21:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B46606A325;
+	Wed, 18 Nov 2026 21:44:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nbIHg0Bq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FA291F000C4;
-	Wed, 18 Nov 2026 21:44:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ceX5gbZq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1E91F000C4;
+	Wed, 18 Nov 2026 21:44:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038262;
-	bh=5nr6aiWsaNQ2Mdp3hDXcCfZ/DpG/AwyhgoYegjMkwDc=;
+	s=korg; t=1795038265;
+	bh=Aj9BI6+2j0smyQdz1CbcnpCTRtCJu9FXr16Y6Tqe0qU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nbIHg0Bq1a8LngzgIO7ppw+rp0ybO3P8sfCd9Mh6C0ukBeZ83nnHBNcXUeYeFx6UX
-	 4EtWtdFaaAmXURFJDz3QyneL+P74MO97GjObAXujVHKUrR0wURHS8eajQcBNY5xUAT
-	 2rSdpsvoP+kxidxneIxpra0ZHs/1jKUf2MEwk1pI=
+	b=ceX5gbZqqHyOHhT8EWnMNtjs6VeLKBx/R8ODmYIpjycL9+A7p+aMaKiXKSfvblbKq
+	 3CfhLh7kuoEGrrRuKmSc+kQ181xGGK4qZyz2SIRoEclZLdz9zdmCiraUP05Rv0RM1K
+	 ptbeAbSsr34QfkjShONLWFQtPQO/LtCjsJrHhQbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunpeng Tian <shionthanatos@gmail.com>,
-	Gongming Wang <gmwgg05@gmail.com>,
-	Mingda Zhang <npczmd@qq.com>,
-	Qinrun Dai <jupmouse@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	Tom Verdonck <tom.verdonck@inspiral.be>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1682/3318] udf: validate the device specification EA before using it
-Date: Wed, 18 Nov 2026 15:38:24 +0100
-Message-ID: <20261118150412.272780827@linuxfoundation.org>
+Subject: [PATCH 6.6 1683/3318] hwmon: (tmp108) Fix jiffies wraparound in conversion-ready check
+Date: Wed, 18 Nov 2026 15:38:25 +0100
+Message-ID: <20261118150412.304704182@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,120 +68,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunpeng Tian <shionthanatos@gmail.com>
+From: Tom Verdonck <tom.verdonck@inspiral.be>
 
-[ Upstream commit 9a2390959685ac35a58c80c8016120849a2babf6 ]
+[ Upstream commit 6b8b1d1d7bc7e579b53fc7c3293b787d68de702a ]
 
-udf_get_extendedattr() bounds an extended attribute only against
-struct genericFormat, which is 12 bytes.  A type-12 device
-specification is struct deviceSpec, which is 24 bytes plus a flexible
-impUse array. Thus a corrupted filesystem can contain extended attribute
-that is accepted by udf_get_extendedattr() but udf_write_inode() or
-udf_read_inode() may access beyond the end of provided buffer.
+tmp108 records a one-shot deadline in ->ready_time at probe (and resume)
+and, on every temperature read, refuses the read with -EAGAIN while
+time_before(jiffies, ready_time) is true, in order to skip the initial
+conversion.
 
-Provide a udf_device_spec_valid() check to validate correctness of
-extended attribute that is a deviceSpec. While here, check the result of
-udf_add_extendedattr() before dereferencing it as it can return NULL in
-case of error.
+->ready_time is an unsigned long compared with time_before(), whose
+signed difference is only meaningful while the two values are within
+LONG_MAX jiffies of each other. Because ->ready_time is set once and
+never refreshed, jiffies keeps advancing away from it, and after 2^31
+jiffies the difference flips sign. On a 32-bit HZ=100 kernel that
+happens ~248.5 days after boot: time_before() then permanently reports
+"not ready" and the driver returns -EAGAIN on every read, without ever
+touching the sensor, until the next reboot. The continuous-mode path,
+which sets ->ready_time to jiffies with no added conversion delay, wraps
+the same way.
 
-[JK: Removed duplicated validity checks]
+Store the deadline as a 64-bit jiffies value and compare it with
+get_jiffies_64()/time_before64(), which does not wrap in any practical
+uptime.
 
-Reported-by: Yunpeng Tian <shionthanatos@gmail.com>
-Reported-by: Gongming Wang <gmwgg05@gmail.com>
-Reported-by: Mingda Zhang <npczmd@qq.com>
-Reported-by: Qinrun Dai <jupmouse@gmail.com>
+Fixes: 66e1c9171339 ("hwmon: Add Texas Instruments TMP108 temperature sensor driver.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yunpeng Tian <shionthanatos@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-[ sashal: adapted udf_write_inode() changes to udf_update_inode() using its existing error handling ]
+Signed-off-by: Tom Verdonck <tom.verdonck@inspiral.be>
+Link: https://patch.msgid.link/525fa49d8c50922344fa53e22be5e6133c9bbb62.1790358356.git.tom.verdonck@inspiral.be
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+[ sashal: adjusted probe context from tmp108_common_probe() to tmp108_probe() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/inode.c | 42 +++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 37 insertions(+), 5 deletions(-)
+ drivers/hwmon/tmp108.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/udf/inode.c b/fs/udf/inode.c
-index be59d205e3061..bf607df9ef02c 100644
---- a/fs/udf/inode.c
-+++ b/fs/udf/inode.c
-@@ -1344,6 +1344,26 @@ int udf_setsize(struct inode *inode, loff_t newsize)
- 	return err;
- }
+diff --git a/drivers/hwmon/tmp108.c b/drivers/hwmon/tmp108.c
+index d7a09ab2bc112..c763efa6aac49 100644
+--- a/drivers/hwmon/tmp108.c
++++ b/drivers/hwmon/tmp108.c
+@@ -73,7 +73,7 @@
+ struct tmp108 {
+ 	struct regmap *regmap;
+ 	u16 orig_config;
+-	unsigned long ready_time;
++	u64 ready_time;
+ };
  
-+/*
-+ * Verify validity of struct deviceSpec on disk. udf_get_extendedattr() has
-+ * already verified the generic header and made sure attribute fits in the
-+ * inode so we just have to make sure attribute space is large enough for
-+ * deviceSpec struct and required impUse information.
-+ */
-+static bool udf_device_spec_valid(struct deviceSpec *dsea)
-+{
-+	u32 attr_length, imp_use_length;
-+
-+	attr_length = le32_to_cpu(dsea->attrLength);
-+	imp_use_length = le32_to_cpu(dsea->impUseLength);
-+	if (attr_length < sizeof(struct deviceSpec) ||
-+	    imp_use_length < sizeof(struct regid) ||
-+	    imp_use_length > attr_length - sizeof(struct deviceSpec))
-+		return false;
-+
-+	return true;
-+}
-+
- /*
-  * Maximum length of linked list formed by ICB hierarchy. The chosen number is
-  * arbitrary - just that we hopefully don't limit any real use of rewritten
-@@ -1658,13 +1678,12 @@ static int udf_read_inode(struct inode *inode, bool hidden_inode)
- 	if (S_ISCHR(inode->i_mode) || S_ISBLK(inode->i_mode)) {
- 		struct deviceSpec *dsea =
- 			(struct deviceSpec *)udf_get_extendedattr(inode, 12, 1);
--		if (dsea) {
--			init_special_inode(inode, inode->i_mode,
-+
-+		if (!dsea || !udf_device_spec_valid(dsea))
-+			goto out;
-+		init_special_inode(inode, inode->i_mode,
- 				MKDEV(le32_to_cpu(dsea->majorDeviceIdent),
- 				      le32_to_cpu(dsea->minorDeviceIdent)));
--			/* Developer ID ??? */
--		} else
--			goto out;
+ /* convert 12-bit TMP108 register value to milliCelsius */
+@@ -124,7 +124,7 @@ static int tmp108_read(struct device *dev, enum hwmon_sensor_types type,
+ 	switch (attr) {
+ 	case hwmon_temp_input:
+ 		/* Is it too early to return a conversion ? */
+-		if (time_before(jiffies, tmp108->ready_time)) {
++		if (time_before64(get_jiffies_64(), tmp108->ready_time)) {
+ 			dev_dbg(dev, "%s: Conversion not ready yet..\n",
+ 				__func__);
+ 			return -EAGAIN;
+@@ -371,7 +371,7 @@ static int tmp108_probe(struct i2c_client *client)
+ 		return err;
  	}
- 	ret = 0;
- out:
-@@ -1812,6 +1831,10 @@ static int udf_update_inode(struct inode *inode, int do_sync)
- 				udf_add_extendedattr(inode,
- 						     sizeof(struct deviceSpec) +
- 						     sizeof(struct regid), 12, 0x3);
-+			if (!dsea) {
-+				err = -ENOSPC;
-+				goto out_unlock;
-+			}
- 			dsea->attrType = cpu_to_le32(12);
- 			dsea->attrSubtype = 1;
- 			dsea->attrLength = cpu_to_le32(
-@@ -1819,6 +1842,10 @@ static int udf_update_inode(struct inode *inode, int do_sync)
- 						sizeof(struct regid));
- 			dsea->impUseLength = cpu_to_le32(sizeof(struct regid));
- 		}
-+		if (!udf_device_spec_valid(dsea)) {
-+			err = -EFSCORRUPTED;
-+			goto out_unlock;
-+		}
- 		eid = (struct regid *)dsea->impUse;
- 		memset(eid, 0, sizeof(*eid));
- 		strcpy(eid->ident, UDF_ID_DEVELOPER);
-@@ -1958,6 +1985,11 @@ static int udf_update_inode(struct inode *inode, int do_sync)
- 	brelse(bh);
  
+-	tmp108->ready_time = jiffies;
++	tmp108->ready_time = get_jiffies_64();
+ 	if ((tmp108->orig_config & TMP108_CONF_MODE_MASK) ==
+ 	    TMP108_MODE_SHUTDOWN)
+ 		tmp108->ready_time +=
+@@ -405,7 +405,7 @@ static int tmp108_resume(struct device *dev)
+ 
+ 	err = regmap_update_bits(tmp108->regmap, TMP108_REG_CONF,
+ 				 TMP108_CONF_MODE_MASK, TMP108_MODE_CONTINUOUS);
+-	tmp108->ready_time = jiffies +
++	tmp108->ready_time = get_jiffies_64() +
+ 			     msecs_to_jiffies(TMP108_CONVERSION_TIME_MS);
  	return err;
-+
-+out_unlock:
-+	unlock_buffer(bh);
-+	brelse(bh);
-+	return err;
  }
- 
- struct inode *__udf_iget(struct super_block *sb, struct kernel_lb_addr *ino,
 -- 
 2.53.0
 
