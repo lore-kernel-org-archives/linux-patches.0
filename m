@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036536;
-	b=ZV6nsm1pCRJd9lIARNWURSX4jZwoeXoRirUEjgE9g77HaJomVk9oEdrfZA+094TYDdvf
-	 9AjISHl4QXd9rcXowqgRjwI0eDpHzikxJawjwHgoIIw1KZPbUHCW9RcNBq8aYy/p29FIs
-	 3ndW4BZKDU06z28b2z0tJT4ckyIqLYLnV8wsLWfZ0HVXMoRl1tg4VmcOANR+Zmp7Q2iyZ
-	 /tkFqTIXXwGXIRbioH1WQDcpu4NzRrLUkza8NHflYX6wo2PtUhuLD5ao9x9LJJUwogUSD
-	 FcFlO/wtXkBIptcmyDVjWK8aa40GNdCsDyyNwBWcjr5C77iyk35FzOZf7IDVWA6mZ1Q==
+	t=1795036539;
+	b=fu10bcVTt5moB5YxY3z0MpY/OowlurCCRROoot6ars4Vzte0YgWAHfIClePDyEPPCP4B
+	 3LPAgSr/suIBlsJDq1C4LtAekGqzFYt0rPRYgxgXYnd6OW4/9IMR1x31SB7T+VCV8WJu8
+	 iwUkWDnWXGgpqm5m53xrNsP/uq6bc1AuoKjXsDSpw0vQCZO8Bz7hwXuKcp1whR74l9wrx
+	 2enf39mbO2i3ECdAdwTXXyIncotkzA5ix+qo3J3U21l4L0vFiN7jHnsqGjedJelxvNkUi
+	 LnN72NQRXdpTQcbtxZj7vxTN0e0SXQSDHOMM+azE/VyTc+dh3GtA3eW+7Tl+6U83rTg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036536;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036539;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DoKwsL4K7L8vxMfLihhapDier1o2+Cgk9cWPp9o7azk=;
-	b=QkpP94q3P7E1WddM6I5NgoSCuxrUWFEPv6LScZU6z0tcDHSbvqu/Ygagz55DUucmppk9
-	 jros/yfiYc2GMx9CDO0/9+XPQES45Pb5403GRC9MH7SOtfQtidMC6mL0sZn+dtW6y7aIx
-	 fHPBByrZY04pHglWhX25HzBiLOIbksqgSWe7boxVhyMq5O9PSw/CYhN6IZW6ANkq48xDL
-	 adRHVxU6tLoi0Oq4ZEHv4YiA8d09eVdtAlXgW/71cUgXdOaFEtAfE2DXplSKm+ekbR0qb
-	 jBuGl9Pgx2+0P6J1GYGzSpXw38D52Kru2Vyv8RsXtk4YNO8FUyh/57UuYULfVuLGCsQ==
+	bh=6oj1MH4EEAOAgzPlUd5X1o+02KZQLnGzrrVZ5ON9HtY=;
+	b=v3cXL/dbkk0tGdvHPKm/I+STcIn/sVr1qeWqweAfXjVdmR9gGEKfvI8lf8cbTC5LaCBJ
+	 grVxFsLeis0LEbkRiUU6DymOeEJ1lIiglNoF0Y8UA5jVlc/EUZvQaWByWQB9L4xIr3OGQ
+	 QQKuAAA2x+JV6c/UjGGGy9Fp/d/FFQdNpad9ZBvKSe52iS/4SKoNJF95Wpy40zlkm7MEW
+	 mq0xJdopTjvi97+uPAMAX4//C367WZ/671LT3ogurCfD7oVsn1uH+UpoH6F1jw898jnYN
+	 jHlEwm5g+JUen20Yt80kyhxx8hci6Q6RsGR93OqTQFKUGdPdLOqryWisjTVkB4NUM4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gRT1ug7s;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tHLzvYkk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25A8606A320;
-	Wed, 18 Nov 2026 21:15:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9496260A2608;
+	Wed, 18 Nov 2026 21:15:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gRT1ug7s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D1EA1F000CA;
-	Wed, 18 Nov 2026 21:15:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tHLzvYkk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECAD81F000C6;
+	Wed, 18 Nov 2026 21:15:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036536;
-	bh=DoKwsL4K7L8vxMfLihhapDier1o2+Cgk9cWPp9o7azk=;
+	s=korg; t=1795036539;
+	bh=6oj1MH4EEAOAgzPlUd5X1o+02KZQLnGzrrVZ5ON9HtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gRT1ug7snDQ/zhXeUThB5fDQxgbZRUe2qWr2FfAj6W+AqYHApFm5pztMR0kDBvdxV
-	 lZbMBfhlEKordFT2SfJaYHyLe8kMlBCv5rh6SGydaEzLbb77md88PdYmRlxRuGTgw4
-	 cIRvEnBNSFDA6tMspbldqMxJsN79SWDkqO4QzwCo=
+	b=tHLzvYkkB6PJvVpE/ti99LGn3SLKV5HhAOhfmZQRG9k975D54icaQ+6BGvAF2h70r
+	 mgZyKFMpPta1+owwb7C+yB4pfY1The2zuqYI0V0HMXfKDmAAdmC/on0o8yd0KCVhaV
+	 mlMoG77pIfgWqGcG1yN8eMGbp/CABXL5tzbezCkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Geraldo Nascimento <geraldogabriel@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1094/3318] nvmet: zns: dont leak stale memory in zone management receive
-Date: Wed, 18 Nov 2026 15:28:36 +0100
-Message-ID: <20261118150352.797897363@linuxfoundation.org>
+Subject: [PATCH 6.6 1095/3318] PCI: rockchip-host: Do not attempt 5.0 GT/s retraining
+Date: Wed, 18 Nov 2026 15:28:37 +0100
+Message-ID: <20261118150352.829975259@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,83 +71,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Geraldo Nascimento <geraldogabriel@gmail.com>
 
-[ Upstream commit 31b8a6af19b73e6167c4b655cd5e86681bac1c41 ]
+[ Upstream commit 2a1e6c382fb7567679c07bd6a7060fefc7a5edc9 ]
 
-A Zone Management Receive report returns the full buffer the host asked
-for, but nvmet_bdev_zone_zmgmt_recv_work() writes only the 8-byte
-Number of Zones field and one 64-byte descriptor for each matching zone
-that fits. The 56 reserved header bytes and every descriptor slot past
-the last match keep whatever the buffer held before. A 4096-byte report
-covering a single zone leaves 4024 bytes unwritten.
+Drop the 5.0 GT/s Link Speed retraining from Rockchip PCIe Root Complex
+Mode Operation, so-called host driver.
 
-The tcp, rdma and fc transports allocate that buffer with sgl_alloc()
-and pci-epf with kmalloc(), none with __GFP_ZERO, and on success each
-sends the whole buffer to the host (nvmet_setup_c2h_data_pdu() for
-tcp), so the host receives old kernel memory from the target.
+The reason is that Shawn Lin from Rockchip has reiterated that there may be
+danger of "catastrophic failure" in using their PCIe with 5.0GT/s speeds.
 
-nvmet_bdev_execute_zone_mgmt_recv() also never checks the transport
-data length against NUMD, so on transports where the host sets that
-length, the buffer sent back can be much larger than the report NUMD
-describes. pci-epf derives its data length from NUMD, so the length
-check below does not apply there, but the zeroing still covers the
-report.
+While Rockchip has done so informally without issuing a proper errata, and
+the particulars are thus unknown, this may cause data loss or worse.
 
-Reject a data length that does not match NUMD with
-nvmet_check_transfer_len(), as nvmet_bdev_execute_zone_append() does,
-and zero the report with nvmet_zero_sgl() before filling it. Zeroing
-NUMD bytes is only enough because of the length check, so the two go
-together.
+This change is corroborated by RK3399 official datasheet [1], which states
+maximum link speed for this platform is 2.5 GT/s.
 
-Allocating with __GFP_ZERO in the transports would also close the leak,
-but it adds a memset to every read command to fix one handler, so the
-transports are left alone.
+[1] https://opensource.rock-chips.com/images/d/d7/Rockchip_RK3399_Datasheet_V2.1-20200323.pdf
 
-Tested over the loop, tcp, rdma and fc transports with a zoned
-null_blk namespace: before this patch, zone reports carried stale bytes
-and a data length larger than NUMD was accepted; with it, reports are
-fully initialized and such a length fails with Data SGL Length Invalid.
-
-Fixes: aaf2e048af27 ("nvmet: add ZBD over ZNS backend support")
+Fixes: e77f847df54c ("PCI: rockchip: Add Rockchip PCIe controller support")
+Reported-by: Dragan Simic <dsimic@manjaro.org>
+Reported-by: Shawn Lin <shawn.lin@rock-chips.com>
+Link: https://lore.kernel.org/all/ffd05070-9879-4468-94e3-b88968b4c21b@rock-chips.com/
+Signed-off-by: Geraldo Nascimento <geraldogabriel@gmail.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Link: https://patch.msgid.link/68f6353e3a2ea4914de36c42b6906e41282adad3.1781622998.git.geraldogabriel@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/zns.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/pci/controller/pcie-rockchip-host.c | 20 --------------------
+ 1 file changed, 20 deletions(-)
 
-diff --git a/drivers/nvme/target/zns.c b/drivers/nvme/target/zns.c
-index b7f48a24cc6bc..34b30ec859c99 100644
---- a/drivers/nvme/target/zns.c
-+++ b/drivers/nvme/target/zns.c
-@@ -290,6 +290,11 @@ static void nvmet_bdev_zone_zmgmt_recv_work(struct work_struct *w)
- 	if (status)
- 		goto out;
+diff --git a/drivers/pci/controller/pcie-rockchip-host.c b/drivers/pci/controller/pcie-rockchip-host.c
+index c63db46faee5d..66457732fd050 100644
+--- a/drivers/pci/controller/pcie-rockchip-host.c
++++ b/drivers/pci/controller/pcie-rockchip-host.c
+@@ -334,26 +334,6 @@ static int rockchip_pcie_host_init_port(struct rockchip_pcie *rockchip)
+ 		goto err_power_off_phy;
+ 	}
  
-+	/* Only the zone count and matching descriptors are written below. */
-+	status = nvmet_zero_sgl(req, 0, out_bufsize);
-+	if (status)
-+		goto out;
-+
- 	if (!req_slba_nr_zones) {
- 		status = NVME_SC_SUCCESS;
- 		goto out;
-@@ -318,6 +323,11 @@ static void nvmet_bdev_zone_zmgmt_recv_work(struct work_struct *w)
- 
- void nvmet_bdev_execute_zone_mgmt_recv(struct nvmet_req *req)
- {
-+	u32 out_bufsize = (le32_to_cpu(req->cmd->zmr.numd) + 1) << 2;
-+
-+	if (!nvmet_check_transfer_len(req, out_bufsize))
-+		return;
-+
- 	INIT_WORK(&req->z.zmgmt_work, nvmet_bdev_zone_zmgmt_recv_work);
- 	queue_work(zbd_wq, &req->z.zmgmt_work);
- }
+-	if (rockchip->link_gen == 2) {
+-		/*
+-		 * Enable retrain for gen2. This should be configured only after
+-		 * gen1 finished.
+-		 */
+-		status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL2);
+-		status &= ~PCI_EXP_LNKCTL2_TLS;
+-		status |= PCI_EXP_LNKCTL2_TLS_5_0GT;
+-		rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL2);
+-		status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
+-		status |= PCI_EXP_LNKCTL_RL;
+-		rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
+-
+-		err = readl_poll_timeout(rockchip->apb_base + PCIE_CORE_CTRL,
+-					 status, PCIE_LINK_IS_GEN2(status), 20,
+-					 500 * USEC_PER_MSEC);
+-		if (err)
+-			dev_dbg(dev, "PCIe link training gen2 timeout, fall back to gen1!\n");
+-	}
+-
+ 	/* Check the final link width from negotiated lane counter from MGMT */
+ 	status = rockchip_pcie_read(rockchip, PCIE_CORE_CTRL);
+ 	status = 0x1 << ((status & PCIE_CORE_PL_CONF_LANE_MASK) >>
 -- 
 2.53.0
 
