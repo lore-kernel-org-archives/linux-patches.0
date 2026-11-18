@@ -1,58 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020049;
-	b=q+IufeGcEMpuA0k13TYf4LdNz7w3WiBwMjdZPnSktraHVswjfALsP4u/5+Oez2sIxP5V
-	 KDMtQm1PboJ4MjgQTT/COerT2KOrWwfdvvomi/squqmIWU18hskCRLWPr1uRifrvZcxjv
-	 6P9rdn3Z/D6FQWpEpVLc8EMep3KCTtbWpjZcMcp+5sFeFp58fUYXufRTBMvyrpAiR9LNh
-	 WgishXVJeJ0yBM39gJqFZHKZG8EGo7t5me09OVXvpXnF4TpWjadmNHpqXb/Z9YaB3TK1v
-	 gGZh891pRqVcnCAdmGQOlVUVvlceiZMuayBQ9GGvFMZP/iVwtgi0Gh9P/kM2QAmTV6g==
+	t=1795020051;
+	b=hNpDWQD0u/FHY7HoU8t1U3wNIkCnuQy/nTx76/11H2vifvLO3QhFlOeni521QJAERIqx
+	 burcgvM/h56uCnjsndKNZO8y+SKChIPjX3x93fOL29uVRFl0kbdeT9G5CjrJuAUU1ZcCl
+	 FjMnJsej3jKJiE656YM5oGAApSyuBy9O+ZOWhQLTl+7zI3JdfhSHfPfjsxV5N5u3R4Mjl
+	 p2JgLR7yQSK7dt8JIK4kPB6YxxlmZb0912KNVL9GT6hatL0vEfAqkX6v2x02H00cpH5A9
+	 6cTpUEEWrYE7Ui8gqEDvrMXZdvlXmQibVwDCODHzqAjrXzPry6quf9iyrwfhLD4wRhA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020049;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020051;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r1JiPtQoL0DJIZ+L3Km727GkD20H3gh6NZ+MtuRkPag=;
-	b=JQ5WFUnc1aM2WX+aps1GAenmxUSR2dabu0MFLcjGxxEjAR8nKDQiqRyEicKYkI0IMPuM
-	 nV3fl9n5r+JngRFwzCWmlkmwKP6uTJJ7ArgelJmk9MWgnvjYc1ZBAXxc+pkgDcL7kgEyh
-	 9hOSrsLEvxsBLzVSfHf3Wn0gACK+weSuRyKeisTI+HYuMb95fCyXasU40awRs8ndz8RUu
-	 f+dRczjBEP3VPKxxCduIYGnIat+h3MZv/Wrl99L15VJ1sTNhtvqm0kYWYWQeGlJeyKDGI
-	 S+WoYwZNY6LUec2/lBVcuDcuqFSIldMpTFhLh8lGRzeBIcvMUEFzPGuy4FlQK1JZfCA==
+	bh=onxbA+0H6gmzirEYnTtltPQJ7wRm8ioBGWt7KhbQePM=;
+	b=TPvbCy1X6wGTmJm+cNF73gr2q7i8kikQrKnVeHXaLyVIq/nDaVtsQsnTClfBFEoR5JAf
+	 aN3GckYUKIsuMFUGzRRv4lts+kV2qoWGpbQDYFukBkIzG9x9yLwE1HmLGCAF2chY3aOpj
+	 nYgEMvWHvqc7XVDbXrmM0iNDevo5KdMBM7Hwm5qL2sHRBmdFairUfPzTYPxVCMALHQCZJ
+	 wg4jzVdv0lAY6j07tozhidn63H/3jqe/mguFdkHG93I3N/LLKsGbkH++j+iYpOHjNWjPk
+	 KKJV4arj8+F8bvg/k5mTrXKUPgUzlpcu7Ghhguz5A/qbl4aZvEdUM5q0s5UYFBHbaCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sg0MKulE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yMCGOqr0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44496606A31C;
-	Wed, 18 Nov 2026 16:40:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBE3606A335;
+	Wed, 18 Nov 2026 16:40:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sg0MKulE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F2A1F000C4;
-	Wed, 18 Nov 2026 16:40:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yMCGOqr0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E29E1F000C4;
+	Wed, 18 Nov 2026 16:40:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020048;
-	bh=r1JiPtQoL0DJIZ+L3Km727GkD20H3gh6NZ+MtuRkPag=;
+	s=korg; t=1795020051;
+	bh=onxbA+0H6gmzirEYnTtltPQJ7wRm8ioBGWt7KhbQePM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sg0MKulEx+FZyd8zL8oFqCG54d7KV7j+4Rdz8YQaXDgzaY36ET7mIe+YYp/kUXSKx
-	 YWYzfEUf7BHzQ+kr8t1c/1WeoJF3NvzgtiyPYYTBK/oUtkkMZ9oaEQ65InRbyNG/8d
-	 9IpGCE/n81R4vLTUcMJA4wgQXY/rES7LOpfbTUpU=
+	b=yMCGOqr031yUE9DG1iTGbLvdov/XfCi/V4ONAIxBku3CSnCmO68Q9n7qf2wP69smD
+	 rfwEtIX6h1lVLTJhTZ4BFBP3Dg52iRxviiUWtqJrn9AMpgQo4uTAMgwisGl3Iqc28r
+	 XkZojVYK/PAHIVj4eMuM/sEAYjcLFonCBXF0s6F8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
+	Danish Khateeb <danishkhateeb03@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	syzbot+03aaa576f1daa1c1f2f0@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Heming Zhao <heming.zhao@suse.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1813/2651] ocfs2: validate chunk and block counts of the local quota file
-Date: Wed, 18 Nov 2026 15:50:53 +0100
-Message-ID: <20261118150352.490428677@linuxfoundation.org>
+Subject: [PATCH 7.3 1814/2651] kselftest/filelock: plan for the five ofdlocks tests
+Date: Wed, 18 Nov 2026 15:50:54 +0100
+Message-ID: <20261118150352.525317960@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -74,90 +71,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+From: Danish Khateeb <danishkhateeb03@gmail.com>
 
-[ Upstream commit b10ef5d2c2083ea4c40e963c10a73a154793c5d4 ]
+[ Upstream commit d05de2360a3e25aa3ec24f460802755a95e8e6e9 ]
 
-ocfs2_local_read_info() trusts dqi_chunks and dqi_blocks from the local
-quota file header.  If dqi_blocks is too small,
-ocfs2_extend_local_quota_file() computes a bogus chunk length, extends the
-file, and maps logical block dqi_blocks, which is already in the inode's
-metadata cache (the header or a chunk header read at mount).  sb_getblk()
-returns that cached buffer and ocfs2_set_new_buffer_uptodate() hits
-BUG_ON(ocfs2_buffer_cached()):
+ofdlocks reports five results but plans for four, so even when they
+all pass it ends with
 
-  kernel BUG at fs/ocfs2/uptodate.c:509!
-  ocfs2_extend_local_quota_file+0x45c/0x1100
-  ocfs2_create_local_dquot+0x8ac/0xb50
-  ocfs2_acquire_dquot+0x614/0xae0
-  ocfs2_get_init_inode+0xe9/0x1b0
-  ocfs2_mkdir+0x174/0x430
+  # Planned tests != run tests (4 != 5)
 
-ocfs2_local_quota_add_chunk() has the same exposure.
+and exits with KSFT_FAIL, which run_kselftest.sh reports as a failure.
 
-Reject a header whose counts don't fit the chunk layout or exceed i_size.
-
-Reproduced with a crafted image (dqi_blocks = 1, chunk 0 dqc_free = 0);
-syzbot has no reproducer for this report.
-
-Link: https://lore.kernel.org/20260920140710.43938-1-ngocthang2710.1999@gmail.com
-Fixes: 9e33d69f553a ("ocfs2: Implementation of local and global quota file handling")
-Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+Link: https://lore.kernel.org/20260925205502.115327-1-danishkhateeb03@gmail.com
+Fixes: 33d5b13098fb ("kselftest/filelock: report each test in oftlocks separately")
+Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: syzbot+03aaa576f1daa1c1f2f0@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=03aaa576f1daa1c1f2f0
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
+Assisted-by: LLM
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/quota_local.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ tools/testing/selftests/filelock/ofdlocks.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ocfs2/quota_local.c b/fs/ocfs2/quota_local.c
-index 28c1c9f9403c1..a2ce25a33607e 100644
---- a/fs/ocfs2/quota_local.c
-+++ b/fs/ocfs2/quota_local.c
-@@ -245,6 +245,25 @@ static void ocfs2_release_local_quota_bitmaps(struct list_head *head)
- 	}
- }
+diff --git a/tools/testing/selftests/filelock/ofdlocks.c b/tools/testing/selftests/filelock/ofdlocks.c
+index 68bac28b234b7..0ab484cb075bc 100644
+--- a/tools/testing/selftests/filelock/ofdlocks.c
++++ b/tools/testing/selftests/filelock/ofdlocks.c
+@@ -40,7 +40,7 @@ int main(void)
+ 	int fd2 = open("/tmp/aa", O_RDONLY);
  
-+/* Check that the on-disk chunk and block counts match the file layout */
-+static int ocfs2_check_local_quota_info(struct inode *inode,
-+					unsigned int chunks,
-+					unsigned int blocks)
-+{
-+	u64 chunk_len = ol_chunk_blocks(inode->i_sb) + 1;
-+	u64 min_blocks = chunks ? 1 + chunk_len * (chunks - 1) + 1 : 1;
-+	u64 max_blocks = 1 + chunk_len * chunks;
-+
-+	if (blocks >= min_blocks && blocks <= max_blocks &&
-+	    blocks <= i_size_read(inode) >> inode->i_sb->s_blocksize_bits)
-+		return 0;
-+
-+	return ocfs2_error(inode->i_sb,
-+			   "Quota file %llu has bad info: %u chunks, %u blocks\n",
-+			   (unsigned long long)OCFS2_I(inode)->ip_blkno,
-+			   chunks, blocks);
-+}
-+
- /* Load quota bitmaps into memory */
- static int ocfs2_load_local_quota_bitmaps(struct inode *inode,
- 			struct ocfs2_local_disk_dqinfo *ldinfo,
-@@ -733,6 +752,11 @@ static int ocfs2_local_read_info(struct super_block *sb, int type)
- 	oinfo->dqi_blocks = le32_to_cpu(ldinfo->dqi_blocks);
- 	oinfo->dqi_libh = bh;
+ 	ksft_print_header();
+-	ksft_set_plan(4);
++	ksft_set_plan(5);
  
-+	status = ocfs2_check_local_quota_info(lqinode, oinfo->dqi_chunks,
-+					      oinfo->dqi_blocks);
-+	if (status < 0)
-+		goto out_err;
-+
- 	/* We crashed when using local quota file? */
- 	if (!(oinfo->dqi_flags & OLQF_CLEAN)) {
- 		rec = OCFS2_SB(sb)->quota_rec;
+ 	unlink("/tmp/aa");
+ 	assert(fd != -1);
 -- 
 2.53.0
 
