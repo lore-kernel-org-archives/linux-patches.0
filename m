@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059220;
-	b=GIdlV04jsze1baKCkZGmlTiHVrlEY/zw7K+TilbGdhvH8nHF0i9xlw/juyr4TAMUXoWM
-	 EJIMi5RRakArXC+Ij9TfeHgSQJttrW/J/vG9OlyJnddRuywDyo2GkNbiazC94fL7+6iKG
-	 7BCEy7bH/2AvUQyj9NTpyxcW7uPaDtrmVvzHM25WtBKP8ZyQX537cNiOh/VewhAxyug3a
-	 qh9sjgYYN6hV/j1BKyatt2yUWqFfZexD0vfKqJ+G02EA9olfrCUnSxfSIky+pCKrYfh0b
-	 OsBsgbr3R42m3a2X6tZCCLG3rhKBpWbYn+xlja2krJqRau57zAAKBPp7anHHOrTjHDg==
+	t=1795059222;
+	b=2LgQzqdH/dy0CFN7jCypAIZd44XUK1E9su7MyhEyZxdHrZSO4lOGiu/+t/TmgvdJ5Mo2
+	 FaA8URz7iduQuslu6TLulBPzLVN+Ybdh8ugwGSX4ShlUMUJktBSj5hNEtl/UHTfsLfEdW
+	 pcHRVTfVm08PAsuqElwyGMZIjBMkI0cNORshgbsFRC+lzc7Ijx/x8JY5A800d3/lAGPEX
+	 rLFbBZSH59kkTgJAvmm86y8bWkVRr+/SHTfFpCRQOFlB+nxKiFMyoM4m0/qUSzSrccD55
+	 uQdJwn/aebRwvH3iC3bTgu6HGQUjWEXLOQBkTeUKeZcUbtINA5k5rjRYw5FipbDnH3Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059220;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059222;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PWA9d9aEpMgocTLUwuXKQXuno+CObOrrxswdczJU9KY=;
-	b=rdACcHviPEbjwl/9VtrpOgdD9VmbpUhB9iFbq3xtzqQObYRMk+icuPOWJFufkvB2YDQC
-	 PJJaXm6PJHvtORNBdNw059ffhjplwVz3gpJ3MS7ymuL2pAYm/a4+zN8f/6qpmfmxAOmL7
-	 3UWxQO4Qjft3YZCO/4Kbo8ikKIfPvstQEBCuHPJ+Q0p6rQpwhGfSWVcOJ+Ve2H/j1GdIu
-	 YYoM9rrufwtyb3beotrry33e9D0PBK07Iocxb1syUyTBAQINd/HDD3sJS9j+CprNwqrPH
-	 jZsz14V4lPRzNu4rQYL/25qb+D6ZpjdZJGtAwWa5Mh/Lt1gekA3XnpZUaZPKmoSmFSA==
+	bh=r2ZQQ3hdE1Mq9nFKQEFx6m4570I+/0pEKV7IIkZu9xk=;
+	b=cbVtHv/jofgJ80TtINh7TyDYrqIcdWadsBOEUWX6JP31dQsTpIwrEnNQ5R5rCu83VRJ3
+	 ng2ns2HU6piuqB/79r2/d+li8xdShoU3S8jl22q1aKBAwfmdwZTq+9lkL4f48fmPqnAUF
+	 1/0senXKmjlTXFHq5DO8EzqiITxLi5l0jRnA2krQpQxqwFWECgknEY9szvZvJBq9SYAeX
+	 sNoAFsNJhGdorIG5qQpWV5L8H/ZZfMit//ZvFypSlAckJGsnYUB7jrxDrclSDChZWqTLk
+	 vUBib9sA+7oJsaLOUl3x9f7YpLOZcji8Z/AOLhBd9ZV8HQkii9Tz4m6HsBv3C2TAHsQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZHKXNTAy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HlzH30a8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13C6E606A320;
-	Thu, 19 Nov 2026 03:33:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B27606A320;
+	Thu, 19 Nov 2026 03:33:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZHKXNTAy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 692DD1F000C4;
-	Thu, 19 Nov 2026 03:33:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HlzH30a8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 489411F000C4;
+	Thu, 19 Nov 2026 03:33:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059219;
-	bh=PWA9d9aEpMgocTLUwuXKQXuno+CObOrrxswdczJU9KY=;
+	s=korg; t=1795059222;
+	bh=r2ZQQ3hdE1Mq9nFKQEFx6m4570I+/0pEKV7IIkZu9xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZHKXNTAyAU/Lx+ZaUKE4SuaEVdMDNesUQO7x1D2refoaoY3PjsxIJtW2SJUjl5jk5
-	 WQuPfNKhUaclSCw2KxYTV2Z5lvKuoURMGeyuOBpRM7JHs3FsFM3VRk5Et1zQFOzwlZ
-	 PaBLIuFzY1mey/+EYMtdMw9gLcEv/DF1/vPecJ2U=
+	b=HlzH30a8RSHOgP5F2Pw0tlpirdPRuR4NS12pYUNavuk0P1TJX6YuVwTG2A21bkxQ+
+	 612rS3RQaaLCbfsEUhT6HolFKBQRCUp+8cug3zbqBkxQl2MhH1TGBAKzea8UmXvLbx
+	 ePV/gOk28KwSlkxFFHBP/c7Kn7Lm02i2NAVSLiD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Michal Simek <michal.simek@xilinx.com>,
 	Mahesh Bodapati <mbodapat@xilinx.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0765/1848] microblaze: Use simple memset implementation from lib/string.c
-Date: Wed, 18 Nov 2026 15:46:43 +0100
-Message-ID: <20261118145948.448580148@linuxfoundation.org>
+Subject: [PATCH 5.10 0766/1848] microblaze: Do loop unrolling for optimized memset implementation
+Date: Wed, 18 Nov 2026 15:46:44 +0100
+Message-ID: <20261118145948.484917928@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,83 +70,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Michal Simek <michal.simek@xilinx.com>
 
-[ Upstream commit 8f0f265e6cf5b6d99a5a5d01b36985bc1131183e ]
+[ Upstream commit 95fee37be45f443a8a322ee7f6f78167b73f2abc ]
 
-On microblaze systems which are not using OPT_LIB_FUNCTION only simple
-memset is used. This function is already implemented in lib/string.c that's
-why it should be used instead.
-This change is done in respect of issue fixed by commit 33d0f96ffd73
-("lib/string.c: Use freestanding environment") where gcc-10.x moved
--ftree-loop-distribute-patterns optimization is to O2 optimization level.
+Align implementation with memcpy and memmove where also remaining bytes are
+copied via final switch case instead of using simple implementations which
+loop. But this alignment has much stronger reason and definitely aligning
+implementation is not the key point here. It is just good to have in mind
+that the same technique is used already there.
+
+In GCC 10, now -ftree-loop-distribute-patterns optimization is on at O2.
 This optimization causes GCC to convert the while loop in memset.c into a
-call to memset. So This optimization is transforming a loop in a
-memset/memcpy into a call to the function itself. This makes the memset
-implementation as recursive.
+call to memset.
+So this optimization is transforming a loop in a memset/memcpy into a call
+to the function itself. This makes the memset implementation as recursive.
+"-freestanding" option will disable the built-in library function but it
+has been added in generic library implementation.
 
-Based on fix above -ffreestanding was used and it needs to be used on
-Microblaze too but the patch is not adding this flag it removes simple
-implementation to cause that generic implementation is used where this flag
-is already setup.
+In default microblaze kernel defconfig we have CONFIG_OPT_LIB_FUNCTION
+enabled so it will always pick optimized version of memset which is target
+specific so we are replacing the while() loop with switch case to avoid
+recursive memset call.
+
+Issue with freestanding was already discussed in connection to commit
+33d0f96ffd73 ("lib/string.c: Use freestanding environment") and also this
+is topic in glibc and gcc.
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=56888
+http://patchwork.ozlabs.org/project/glibc/patch/20191121021040.14554-1-sandra@codesourcery.com/
 
 Signed-off-by: Michal Simek <michal.simek@xilinx.com>
 Signed-off-by: Mahesh Bodapati <mbodapat@xilinx.com>
-Link: https://lore.kernel.org/r/4a143e7654f72ee893dcea9769946e17d3570b16.1645797329.git.michal.simek@xilinx.com
+Link: https://lore.kernel.org/r/10a432e269a6d3349cf458e4f5792522779cba0d.1645797329.git.michal.simek@xilinx.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/microblaze/include/asm/string.h |  2 ++
- arch/microblaze/lib/memset.c         | 20 ++------------------
- 2 files changed, 4 insertions(+), 18 deletions(-)
+ arch/microblaze/lib/memset.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/arch/microblaze/include/asm/string.h b/arch/microblaze/include/asm/string.h
-index 34071a848b6a2..dbdb9eb4a733c 100644
---- a/arch/microblaze/include/asm/string.h
-+++ b/arch/microblaze/include/asm/string.h
-@@ -8,7 +8,9 @@
- 
- #ifdef __KERNEL__
- 
-+#ifdef CONFIG_OPT_LIB_FUNCTION
- #define __HAVE_ARCH_MEMSET
-+#endif
- #define __HAVE_ARCH_MEMCPY
- #define __HAVE_ARCH_MEMMOVE
- 
 diff --git a/arch/microblaze/lib/memset.c b/arch/microblaze/lib/memset.c
-index 04ea72c8a81dd..8810a89de851f 100644
+index 8810a89de851f..9a62a1f0fc1d9 100644
 --- a/arch/microblaze/lib/memset.c
 +++ b/arch/microblaze/lib/memset.c
-@@ -30,22 +30,7 @@
- #include <linux/compiler.h>
- #include <linux/string.h>
+@@ -72,8 +72,19 @@ void *memset(void *v_src, int c, __kernel_size_t n)
+ 	}
  
--#ifdef __HAVE_ARCH_MEMSET
--#ifndef CONFIG_OPT_LIB_FUNCTION
--void *memset(void *v_src, int c, __kernel_size_t n)
--{
--	char *src = v_src;
--
--	/* Truncate c to 8 bits */
--	c = (c & 0xFF);
--
--	/* Simple, byte oriented memset or the rest of count. */
+ 	/* Simple, byte oriented memset or the rest of count. */
 -	while (n--)
--		*src++ = c;
--
--	return v_src;
--}
--#else /* CONFIG_OPT_LIB_FUNCTION */
-+#ifdef CONFIG_OPT_LIB_FUNCTION
- void *memset(void *v_src, int c, __kernel_size_t n)
- {
- 	char *src = v_src;
-@@ -92,6 +77,5 @@ void *memset(void *v_src, int c, __kernel_size_t n)
++	switch (n) {
++	case 3:
+ 		*src++ = c;
++		fallthrough;
++	case 2:
++		*src++ = c;
++		fallthrough;
++	case 1:
++		*src++ = c;
++		break;
++	default:
++		break;
++	}
  
  	return v_src;
  }
--#endif /* CONFIG_OPT_LIB_FUNCTION */
- EXPORT_SYMBOL(memset);
--#endif /* __HAVE_ARCH_MEMSET */
-+#endif /* CONFIG_OPT_LIB_FUNCTION */
 -- 
 2.53.0
 
