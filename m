@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022325;
-	b=2rGRmkqM7fYOajnlirEnEstmILIC2kJ8Yt71YF/LKJyRQGzDjgAwIELShQOf8lb/Pigb
-	 NdcokuvEo7y9vciPAzza4WcXdMHuCGNf6igvqr1Ri+aTV47SWiboQoGGR7S24yWLlD3NU
-	 UiK9U3ajHzOd5yKOCY7TFvu1I+EGF6Uu1QwOwbmCkFcHLIcJujjoeWfrUVUHX2Ag61QCr
-	 0+JYNtQMZa07JyfWHY05qpS0upOKYlx7ObQd/AD/i50isc9wFnxNpt3hhdsoyVEX0q0xM
-	 dN7uK8PxES+/HDPTI8xtz6sXUxtKYG1u/dzMBmbVBt2nP4JkgSm7olMTqA3kxWCzikw==
+	t=1795022328;
+	b=Lm0DpS0UkrqlX4tU9TpufzurUIDUOvRaFOTNGslUtqsjBujmD9H8Hd5DIh2iP7fd7tjf
+	 rRoV0mQ54wfcl4U1xS3Hp6gbCcTFVxB0H64JjMrHVlLDhA47vxoPZUHMBhyGN70uesTt9
+	 QaYQu4q9ow4bKUXmN6YnEYwzE4ozAIYtOusMf5x5miGKieqCI1OxBNnMlkIC4kDBgENCJ
+	 TuSAAzcHpNGcc+LWEoeopDINkoGtO/fHYXjrmEQ1MqNoli2kNKbCzz4D7ufWKu8QheKF5
+	 KbAdLJxp5SHCuHdZpvkimRp9a05nM21FC464qg+mz6+aQ8iXr6SCFJjcwI62OZqhiAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022325;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022328;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BXLuG9O2wN2BODkOrnZL2QdhqjyFBcQN0AZ09zdA998=;
-	b=rCBmEpRzNvTBjGmEYnzaKdxD/+NVoa2MkaQRv+poFac+oWFNVwgTsxjQCCoLmZTu3pR7
-	 BcZX/BZgGF/ePlqRd29CP5jckDQQoAOMNfUI3uOMraUoksHD91woZ/HUxHQpOwucGVGPN
-	 hflrCywFCq2rtKeVA9qVQGUfWrthMfq928pr+L8QBIJ/dFESDE1u+QIoCKivH26MT936c
-	 I8QjtDBPIKkh4LC2L4R0mRI7pjvWubBMpIB6G5LyOang7alUZ3UYxwU+AT2/MUpNHj/bj
-	 obENWYuzjPcJ3cNkoYHpHI5+v4ZOguK6PbfgP8SRJwRuOYayMq0W7JS/LmzekvRaSuQ==
+	bh=ka13mOVwkJKRGbwCdPxgCN1ad25AFOumy3MfY8+AmXk=;
+	b=W60WxK5PK3Y41g7iMNELj4mteYtee7vTtyGlyvRHYKn0a1486xZFLbDFMngH5Q/qWsZP
+	 IsQ6xVXAXfARLzyDFPR1dW3fM/gXSKISAtDMaj0G9dAQRAe6/JlwFQSTViPac9nqQFFFF
+	 9s3BnGgcJrkSlzoHrF4c1/Bt3GUKtGDJfPHk4EhkSub+qWt3bis3feD3/D1WDKHLyHUhf
+	 Lc+6wUsv3axqp83xxw4DWXXmuNiraLk+7xMGeSN7/WPYDhA6svgGfuhsKiNEsW1nESuQ4
+	 0uGnDkxw1wMEuMrW3iPHD5+f1rEf+FeKI6AZU30DxugJk7KBQg1IH9Qcvn4Lb+4MJhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lmh7Ts4T;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v7UOArAi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86825606A31C;
-	Wed, 18 Nov 2026 17:18:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD4E606A31C;
+	Wed, 18 Nov 2026 17:18:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lmh7Ts4T
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D79E21F000C4;
-	Wed, 18 Nov 2026 17:18:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v7UOArAi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9DE91F000C4;
+	Wed, 18 Nov 2026 17:18:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022325;
-	bh=BXLuG9O2wN2BODkOrnZL2QdhqjyFBcQN0AZ09zdA998=;
+	s=korg; t=1795022328;
+	bh=ka13mOVwkJKRGbwCdPxgCN1ad25AFOumy3MfY8+AmXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lmh7Ts4TYkazVQziOTmQq+u0q6C4tiBMzydsBB42kLQmp7ooyMZSEuRCp8s9iI7bk
-	 jf7SN2uvgWJ87rQMYRBCG1XaaHMnMSR8N+xcqYPRMJqxd+pJ1aCaUz1HWwwSzXmOC+
-	 KmDWSEhy/g+0LIq/T3zKorPll5Ki3/yC4ZhdbJsI=
+	b=v7UOArAijEnbMbXLoxlneFVfUNYDxNaW97g+2b5T4y63GN5DFqlVUnCW2rX65eUb1
+	 RvM7qnwDEBzlm5UiepKVcNlb0A21HW6ri8eGy0fjPcMTK7cFN6/+xzU7k1imQtiao1
+	 y5b3blWSyf6nn3fiG/rWnfHPFok111gVhzUBB6FM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2620/2651] net: bgmac: fix TX DMA unmapping and slot cleanup
-Date: Wed, 18 Nov 2026 16:04:20 +0100
-Message-ID: <20261118150418.537022767@linuxfoundation.org>
+Subject: [PATCH 7.3 2583/2651] blk-mq: dont bring back flags of a completed request
+Date: Wed, 18 Nov 2026 16:03:43 +0100
+Message-ID: <20261118150417.308427364@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,124 +69,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 4f45e97b3aac2282f2b436d97338c9c2c484d093 ]
+[ Upstream commit 9531230ee1fcb8eca2c9cbb9bf02651cbf798842 ]
 
-When mapping a fragment fails, bgmac_dma_tx_add() unwinds with the
-wrong slots. It passes the failed fragment's slot->dma_addr, which
-holds the mapping error, to dma_unmap_single() for the head. The
-fragment loop indexes from ring->end instead of ring->end + 1, so it
-unmaps the head a second time as a page and leaves the last mapped
-fragment mapped. None of the affected slots get their dma_addr cleared
-either, which includes the head slot when mapping the head fails.
+The timeout handler sets and clears RQF_TIMED_OUT in a request it only
+holds a reference to, with a plain read-modify-write, while the
+completion clears flags in rq_flags the same way. If the two interleave,
+blk_mq_finish_request() runs twice with the flags back: the zone write
+plug reference is dropped twice and the scheduler's ->finish_request()
+is called again.
 
-bgmac_dma_tx_ring_free() unmaps every slot with a non-zero dma_addr,
-so tearing down the ring unmaps these addresses again. It also frees
-the skbs of pending TX slots but leaves slot->skb and slot->dma_addr
-set. The slots survive a down/up cycle, and bgmac_dma_tx_add() only
-sets slot->skb on the last slot of a packet. If a slot with a stale
-pointer is later used for the head or a fragment of a scatter/gather
-packet, bgmac_dma_tx_free() frees the old skb a second time when that
-slot completes.
+Change RQF_TIMED_OUT with cmpxchg, so the handler never writes back a
+flag that changed under it.
 
-bgmac_dma_tx_ring_free() also picks dma_unmap_single() or
-dma_unmap_page() by looking at slot->skb, which is set on the last slot
-of a packet, while the head was mapped with dma_map_single() and the
-fragments with skb_frag_dma_map().
-
-In the error path, unmap the head and each mapped fragment from their
-own slots, and clear dma_addr on every slot the failed packet touched.
-In bgmac_dma_tx_ring_free(), choose the unmap function by the SOF flag
-of the descriptor like bgmac_dma_tx_free() does, unmap every slot
-before freeing any skb, since a packet can wrap around the end of the
-ring with its skb on the last slot, and clear both fields.
-
-This was found through code inspection by an LLM while hitting other
-bugs on an Asus RT-N16. It did not hit these ones specifically.
-
-Fixes: 9cde94506eac ("bgmac: implement scatter/gather support")
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20261028164839.28605-1-rosenp@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e5c0ca13659e ("blk-mq: release scheduler resource when request completes")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20261028164415.1262013-31-axboe@kernel.dk
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bgmac.c | 47 +++++++++++++++++----------
- 1 file changed, 30 insertions(+), 17 deletions(-)
+ block/blk-mq.c      |  2 +-
+ block/blk-timeout.c |  3 ++-
+ block/blk.h         | 14 ++++++++++++++
+ 3 files changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bgmac.c b/drivers/net/ethernet/broadcom/bgmac.c
-index 1835266fdd09f..b3f0ecc583fd5 100644
---- a/drivers/net/ethernet/broadcom/bgmac.c
-+++ b/drivers/net/ethernet/broadcom/bgmac.c
-@@ -208,19 +208,24 @@ static netdev_tx_t bgmac_dma_tx_add(struct bgmac *bgmac,
- 	return NETDEV_TX_OK;
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index 9f0e3af0f3366..3440e6906f5a4 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -1639,7 +1639,7 @@ EXPORT_SYMBOL_GPL(blk_mq_queue_inflight);
  
- err_dma:
--	dma_unmap_single(dma_dev, slot->dma_addr, skb_headlen(skb),
--			 DMA_TO_DEVICE);
-+	slot->dma_addr = 0;
+ static void blk_mq_rq_timed_out(struct request *req)
+ {
+-	req->rq_flags |= RQF_TIMED_OUT;
++	blk_rq_change_timed_out(req, true);
+ 	if (req->q->mq_ops->timeout) {
+ 		enum blk_eh_timer_return ret;
  
- 	while (i-- > 0) {
--		int index = (ring->end + i) % BGMAC_TX_RING_SLOTS;
--		struct bgmac_slot_info *slot = &ring->slots[index];
--		u32 ctl1 = le32_to_cpu(ring->cpu_base[index].ctl1);
--		int len = ctl1 & BGMAC_DESC_CTL1_LEN;
--
--		dma_unmap_page(dma_dev, slot->dma_addr, len, DMA_TO_DEVICE);
-+		index = (ring->end + 1 + i) % BGMAC_TX_RING_SLOTS;
-+		slot = &ring->slots[index];
-+		dma_unmap_page(dma_dev, slot->dma_addr,
-+			       skb_frag_size(&skb_shinfo(skb)->frags[i]),
-+			       DMA_TO_DEVICE);
-+		slot->dma_addr = 0;
- 	}
+diff --git a/block/blk-timeout.c b/block/blk-timeout.c
+index 1b8de0417fc1a..0590720e38c7f 100644
+--- a/block/blk-timeout.c
++++ b/block/blk-timeout.c
+@@ -137,7 +137,8 @@ void blk_add_timer(struct request *req)
+ 	if (!req->timeout)
+ 		req->timeout = q->rq_timeout;
  
-+	slot = &ring->slots[ring->end % BGMAC_TX_RING_SLOTS];
-+	dma_unmap_single(dma_dev, slot->dma_addr, skb_headlen(skb),
-+			 DMA_TO_DEVICE);
+-	req->rq_flags &= ~RQF_TIMED_OUT;
++	if (req->rq_flags & RQF_TIMED_OUT)
++		blk_rq_change_timed_out(req, false);
+ 
+ 	expiry = jiffies + req->timeout;
+ 	WRITE_ONCE(req->deadline, expiry);
+diff --git a/block/blk.h b/block/blk.h
+index 50abfd9328861..694d3f94ced5b 100644
+--- a/block/blk.h
++++ b/block/blk.h
+@@ -332,6 +332,20 @@ static inline void bio_integrity_free(struct bio *bio)
+ unsigned long blk_rq_timeout(unsigned long timeout);
+ void blk_add_timer(struct request *req);
+ 
++/*
++ * The timeout handler changes RQF_TIMED_OUT in a request which it does not
++ * own: whoever completes it changes rq_flags at the same time, with plain
++ * loads and stores. Never write back a flag that has changed under us.
++ */
++static inline void blk_rq_change_timed_out(struct request *rq, bool set)
++{
++	req_flags_t old = READ_ONCE(rq->rq_flags), new;
 +
- err_dma_head:
-+	slot->dma_addr = 0;
++	do {
++		new = set ? old | RQF_TIMED_OUT : old & ~RQF_TIMED_OUT;
++	} while (!try_cmpxchg(&rq->rq_flags, &old, new));
++}
 +
- 	netdev_err(bgmac->net_dev, "Mapping error of skb on ring 0x%X\n",
- 		   ring->mmio_base);
- 
-@@ -535,17 +540,25 @@ static void bgmac_dma_tx_ring_free(struct bgmac *bgmac,
- 		unsigned int len = ctl1 & BGMAC_DESC_CTL1_LEN;
- 
- 		slot = &ring->slots[i];
--		dev_kfree_skb(slot->skb);
- 
--		if (!slot->dma_addr)
--			continue;
-+		if (slot->dma_addr) {
-+			if (le32_to_cpu(dma_desc[i].ctl0) & BGMAC_DESC_CTL0_SOF)
-+				dma_unmap_single(dma_dev, slot->dma_addr,
-+						 len, DMA_TO_DEVICE);
-+			else
-+				dma_unmap_page(dma_dev, slot->dma_addr,
-+					       len, DMA_TO_DEVICE);
-+			slot->dma_addr = 0;
-+		}
-+	}
- 
--		if (slot->skb)
--			dma_unmap_single(dma_dev, slot->dma_addr,
--					 len, DMA_TO_DEVICE);
--		else
--			dma_unmap_page(dma_dev, slot->dma_addr,
--				       len, DMA_TO_DEVICE);
-+	/* A packet can wrap around the end of the ring with its skb on the
-+	 * last slot, so free the skbs only once every slot is unmapped.
-+	 */
-+	for (i = 0; i < BGMAC_TX_RING_SLOTS; i++) {
-+		slot = &ring->slots[i];
-+		dev_kfree_skb(slot->skb);
-+		slot->skb = NULL;
- 	}
- }
- 
+ enum bio_merge_status {
+ 	BIO_MERGE_OK,
+ 	BIO_MERGE_NONE,
 -- 
 2.53.0
 
