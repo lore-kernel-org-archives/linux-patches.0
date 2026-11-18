@@ -1,51 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049972;
-	b=J5YEhO01lwtDVNVm/DEEfrCvMaw2momsUXuZ9yEWjxOCAmhDHjs81aKJ/g5IFSEIRGLi
-	 XTT9qxpnR+xdAB+yiMHL5J4yZYAfF0lmyZvxnWq6fqnlPFdgH37bxwiDtaXFC+WX9lDsn
-	 x9x5nNQ9OiZuAITEO3SqnjMnRU9W0aDBddjVp/qGLUVZk8r1mj7E6/0ABExMjAoAik5IM
-	 DFokp3VBAHYMMirLGaiBxlOeqVUjT+kEDvuxhvTtH7/Ld5Td16UX7Y7IFNWgY2rFh6uC1
-	 PS5XMrjNuspLJ8op8Ou3irNqRjodtL8BJ1DA3a1IwJ9tfPkALJ1t5VLcnIRc/wFD7iA==
+	t=1795049974;
+	b=Z5c+EwcT46+yMYow2E4aWAKo9gTZ+EQFnSJHWHdoNqhOtUDdtlSEBkRodngOi1eOKL8a
+	 KoR5+h1P7s03QbFZ3hyEH7//59JPGls1JKejG9HoJGdpRolyIkAiw6tl0x++feylwyhi8
+	 tH4GED5UtijwW4fn5yPstPSZyTZym6ww7gJ9pDs8Gk8ykdd4v1EWtzRxgmKdRu4QtV+VG
+	 q5cXmRX4Ok8iNxILeahj56XeuC5eLyFs0xlPgJGWIGCeB3A+Du43EdKBoggjDDcRYTubv
+	 iXwPQ8IAa9cVU2x+byoMqLW/dV3d1XehugNNOfLcXTdAdvdUayhrsoYaGjOIAGuqAsw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049972;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049974;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=S7Ue++U1YppdgiAZFo0rDM5v2fMrcotYjLKpgyeV6tc=;
-	b=tTpeKl9QSmoxfc2hdjad8mp4oT7ndTmRUaNzF2g+4ye6hGSgFRlcqq7mnwa1wnZNGcke
-	 3yJ1j+ooUBlppus/io1Ne3OxXC1Bo/u1cVzJziAMfwDMuBMLDnamXeYBKmfr10IrgaPNJ
-	 eX0fA0cxTrfs1LV9o2AuBqhUv6l0rf6hhEMOW0fnftpIwKpxg0g8m/JUoLEePMD3qghxf
-	 4d6AlG04UXd43ERJ4geSeD/FnG5HBH4jZ2NKWfF3PwzAA8t36BuEZNouJ+uig4Q8XnBag
-	 DsHbENBHxg8py3Esw4PY+XOAjQV4x8pcjWsHOei0xj1UTF9T2frEueOrTN3YP+S18ag==
+	bh=66fip3YsMm1AKFbrcILpL2Kj5orZW4cP/z2cXFEKgrw=;
+	b=dwmwOjDRYdet5RJD05stbaB+DWnimQdauiF7GD3ObTVz7XIMqhzj4etQzPw/Nb1h/5Un
+	 mw2/pK5azHUQ07bNZYBrhYTP2wPIhqLbsJxe6i9Xt+sJfnRtY8eR5+5B1auGjf/mjlutO
+	 D88zQ4F8oM5AlsrxXXxZkE5lWljRvt9aQNi1R0Bq6vS8M0jAP0Qp95PXKh86z1bM+BCcQ
+	 xsNKgB9MewtYcS4LDpGJULiBWP5JqDNrg0rXf7CoQ//PvHwkwqXruUcfhMvwMTDg+HoFQ
+	 iYmxFby0MPhctn/erqcGjLpEpPgYttZiIKXEmAJ5OK++DodK2XmX+XYm7jN7xuhSx1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QCZgCj7D;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nMPRy03N;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CFE4606A31C;
-	Thu, 19 Nov 2026 00:59:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB5C606A320;
+	Thu, 19 Nov 2026 00:59:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QCZgCj7D
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F36F1F000C4;
-	Thu, 19 Nov 2026 00:59:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nMPRy03N
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37B8D1F000C4;
+	Thu, 19 Nov 2026 00:59:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049972;
-	bh=S7Ue++U1YppdgiAZFo0rDM5v2fMrcotYjLKpgyeV6tc=;
+	s=korg; t=1795049974;
+	bh=66fip3YsMm1AKFbrcILpL2Kj5orZW4cP/z2cXFEKgrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QCZgCj7D1JXcjOQ3+R1ou920uaSOc5LVfjHI/FBQpq0HWejpChIo93Bwwb0nKjDW2
-	 cmugaZRqA3FIp7lyZT2aUTVDsaE0RoEinrJ0201ktp+s1kO7K+4+/6ooKmgrqVGc80
-	 E7+xQFcZwYvMhKHss+M6pVb8ORh7FqyON+uikcTs=
+	b=nMPRy03NuP01oHCC/4LYagKmyN1fQXQqVoBk7F5/kPfdzbLJfmc1dil6x3Pmm3MBx
+	 1F6/VxQKlpcssLGEIvge8T+q82kwnvDjy3MAdAJQPNKthty2o6Ni8dyO45XTabzzw/
+	 QOMF1CTGWvU4cwjw0VUdXH2qVQkLB0IxgmPD01cA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Robert Oscilowski <drgitx@gmail.com>,
+	Casey Connolly <casey.connolly@linaro.org>,
+	David Heidelberg <david@ixit.cz>,
+	Alexey Klimov <alexey.klimov@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2491/2857] Bluetooth: HCI: Fix tracking of instances sharing handle 0x00
-Date: Wed, 18 Nov 2026 15:58:45 +0100
-Message-ID: <20261118150331.257920518@linuxfoundation.org>
+Subject: [PATCH 6.1 2536/2857] ASoC: qcom: sdm845: set quaternary MI2S codec DAI to I2S format
+Date: Wed, 18 Nov 2026 15:59:30 +0100
+Message-ID: <20261118150332.839143228@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,174 +72,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Robert Oscilowski <drgitx@gmail.com>
 
-[ Upstream commit 1bfecdbd031711e5205ae78f3b8c296e5a53bc55 ]
+[ Upstream commit 20c734cb678332883d317b17bf8fe7361648e170 ]
 
-When the controller supports a single advertising set, instance 1 uses
-handle 0x00 which is the same handle used by instance 0 (Global
-Advertising), but hci_cc_le_set_ext_adv_enable would lookup the instance
-using the handle as instance identifier, marking instance 0 as
-enabled/disabled instead of instance 1, leaving its state out of sync.
+We configure the codec DAI format for primary and secondary but not the
+quaternery MI2S path. Add the missing configuration to enable speaker
+codecs on the quaternary MI2S like the MAX9827 found on the OnePlus 6.
 
-Fix this by matching instances by handle and, for handle 0x00, using
-hdev->cur_adv_instance, now set when enabling an instance, to determine
-which instance owns the set. Also disable the instance sharing the
-advertising set of instance 0 before overriding it.
-
-Fixes: e77f43d531af ("Bluetooth: hci_core: Fix not handling hdev->le_num_of_adv_sets=1")
-Assisted-by: OpenCode:claude-opus-5.5
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Robert Oscilowski <drgitx@gmail.com>
+Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Reviewed-by: Alexey Klimov <alexey.klimov@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251115-sdm845-quaternary-v3-1-c16bf19128ac@ixit.cz
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: cef5d087d681 ("ASoC: qcom: sdm845: Disable the quaternary MI2S bit clock on shutdown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_event.c | 47 ++++++++++++++++++++++++++++++---------
- net/bluetooth/hci_sync.c  | 35 ++++++++++++++++++++++++++++-
- 2 files changed, 70 insertions(+), 12 deletions(-)
+ sound/soc/qcom/sdm845.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index b9688be5a6348..1fd012fa118f4 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -1571,6 +1571,39 @@ static u8 hci_cc_le_set_adv_enable(struct hci_dev *hdev, void *data,
- 	return rp->status;
- }
+diff --git a/sound/soc/qcom/sdm845.c b/sound/soc/qcom/sdm845.c
+index 6dca191ef3980..1c1bea388bea1 100644
+--- a/sound/soc/qcom/sdm845.c
++++ b/sound/soc/qcom/sdm845.c
+@@ -359,10 +359,12 @@ static int sdm845_snd_startup(struct snd_pcm_substream *substream)
+ 		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+ 		break;
+ 	case QUATERNARY_MI2S_RX:
++		codec_dai_fmt |= SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_I2S;
+ 		snd_soc_dai_set_sysclk(cpu_dai,
+ 			Q6AFE_LPASS_CLK_ID_QUAD_MI2S_IBIT,
+ 			MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+ 		snd_soc_dai_set_fmt(cpu_dai, fmt);
++		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+ 		break;
  
-+/* Update the enabled state of the instance(s) using the advertising set
-+ * identified by handle.
-+ *
-+ * Instances may share handle 0x00 with instance 0 (Global Advertising), e.g.
-+ * when the controller supports a single advertising set, in which case the
-+ * set is owned by the instance last enabled (hdev->cur_adv_instance) and any
-+ * other instance sharing it shall be considered disabled.
-+ */
-+static void hci_le_ext_adv_set_enabled(struct hci_dev *hdev, u8 handle,
-+				       bool enable)
-+{
-+	struct adv_info *adv;
-+	bool owned = false;
-+
-+	list_for_each_entry(adv, &hdev->adv_instances, list) {
-+		if (adv->handle != handle)
-+			continue;
-+
-+		adv->enabled = enable &&
-+			       (handle ||
-+				adv->instance == hdev->cur_adv_instance);
-+		owned |= adv->enabled;
-+	}
-+
-+	if (handle)
-+		return;
-+
-+	if (enable && !owned)
-+		hci_dev_set_flag(hdev, HCI_LE_ADV_0);
-+	else
-+		hci_dev_clear_flag(hdev, HCI_LE_ADV_0);
-+}
-+
- static u8 hci_cc_le_set_ext_adv_enable(struct hci_dev *hdev, void *data,
- 				       struct sk_buff *skb)
- {
-@@ -1592,18 +1625,13 @@ static u8 hci_cc_le_set_ext_adv_enable(struct hci_dev *hdev, void *data,
- 
- 	hci_dev_lock(hdev);
- 
--	if (cp->num_of_sets)
--		adv = hci_find_adv_instance(hdev, set->handle);
--
- 	if (cp->enable) {
- 		struct hci_conn *conn;
- 
- 		hci_dev_set_flag(hdev, HCI_LE_ADV);
- 
--		if (adv)
--			adv->enabled = true;
--		else if (!set->handle)
--			hci_dev_set_flag(hdev, HCI_LE_ADV_0);
-+		if (cp->num_of_sets)
-+			hci_le_ext_adv_set_enabled(hdev, set->handle, true);
- 
- 		conn = hci_lookup_le_connect(hdev);
- 		if (conn)
-@@ -1612,10 +1640,7 @@ static u8 hci_cc_le_set_ext_adv_enable(struct hci_dev *hdev, void *data,
- 					   conn->conn_timeout);
- 	} else {
- 		if (cp->num_of_sets) {
--			if (adv)
--				adv->enabled = false;
--			else if (!set->handle)
--				hci_dev_clear_flag(hdev, HCI_LE_ADV_0);
-+			hci_le_ext_adv_set_enabled(hdev, set->handle, false);
- 
- 			/* If just one instance was disabled check if there are
- 			 * any other instance enabled, including instance 0,
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 9327bf897951b..7b3b256adf276 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -1196,6 +1196,30 @@ int hci_update_random_address_sync(struct hci_dev *hdev, bool require_privacy,
- 	return 0;
- }
- 
-+/* Check if the advertising set with handle 0x00 is in use, either by instance
-+ * 0 or by an instance sharing its advertising set.
-+ */
-+static bool hci_ext_adv_handle_0_enabled(struct hci_dev *hdev)
-+{
-+	struct adv_info *adv;
-+	bool enabled;
-+
-+	hci_dev_lock(hdev);
-+
-+	enabled = hci_dev_test_flag(hdev, HCI_LE_ADV_0);
-+
-+	list_for_each_entry(adv, &hdev->adv_instances, list) {
-+		if (!adv->handle && adv->enabled) {
-+			enabled = true;
-+			break;
-+		}
-+	}
-+
-+	hci_dev_unlock(hdev);
-+
-+	return enabled;
-+}
-+
- int hci_disable_ext_adv_legacy_instance_sync(struct hci_dev *hdev)
- {
- 	struct hci_cp_le_set_ext_adv_enable *cp;
-@@ -1203,7 +1227,7 @@ int hci_disable_ext_adv_legacy_instance_sync(struct hci_dev *hdev)
- 	u8 data[sizeof(*cp) + sizeof(*set) * 1];
- 	u8 size;
- 
--	if (!hci_dev_test_flag(hdev, HCI_LE_ADV_0))
-+	if (!hci_ext_adv_handle_0_enabled(hdev))
- 		return 0;
- 
- 	memset(data, 0, sizeof(data));
-@@ -1447,6 +1471,9 @@ int hci_setup_ext_adv_instance_sync(struct hci_dev *hdev, u8 instance)
- 			return -EINVAL;
- 		}
- 	} else {
-+		/* Disable the advertising set with handle 0x00, including any
-+		 * instance sharing it, since it is going to be overridden.
-+		 */
- 		err = hci_disable_ext_adv_legacy_instance_sync(hdev);
- 		if (err)
- 			return err;
-@@ -1710,6 +1737,12 @@ int hci_enable_ext_advertising_sync(struct hci_dev *hdev, u8 instance)
- 		set->duration = cpu_to_le16(duration / 10);
- 	}
- 
-+	/* Track which instance owns the advertising set since the handle
-+	 * alone is ambiguous when instances share handle 0x00, see
-+	 * hci_cc_le_set_ext_adv_enable.
-+	 */
-+	hdev->cur_adv_instance = instance;
-+
- 	return __hci_cmd_sync_status(hdev, HCI_OP_LE_SET_EXT_ADV_ENABLE,
- 				     sizeof(*cp) +
- 				     sizeof(*set) * cp->num_of_sets,
+ 	case QUATERNARY_TDM_RX_0:
 -- 
 2.53.0
 
