@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017466;
-	b=jGa4RXCZwqbkWRavNteJc3wWjAm41fyQBM1VtL8Bf1VKNYNgikKruzG2YsptHHhG+qvG
-	 gKLA93TwmFvQ3C57YJGq0+V8IfL84X7Tga5C/0wnkDF2kUqIayN3xcLb7BX/q+55SA9rh
-	 aZdcR0BwCP2QOzaK3oomK8hVJbB7SOQ6KLSn3/37VrNhYhbYgEnByY+bbls3CgJs/D2KG
-	 uZlt2rKJUf7kqHwc8/wBpOnDnVAdGkKWy2S4qz0ZG7x9IMEAZRJMJP8a5jDLLfCY89jAF
-	 dXOvPfs3x1E0RDyb+cYuEchXndOPfCigolaWylhOUHaHXGCoMvy/Yw+E+3J5D1y02CQ==
+	t=1795017469;
+	b=5GluP+AjkRHL0AT4/EIHoOSbEclmHR9AAsLi/hlfrLAW5MuG4twgzq+T7BqJ9DS4gyzm
+	 ksv1fBnAAgij2J5m27nQHZyPODDcIaH/dlhWOIJlARA6Oo/BguGibP4KgQxFV3ng35bAm
+	 1lhJ9gG6tC8JWvbHXQPprZly/jrX2FAlb450TvqQ8eIiE7rDpsXuA4x0moG1l1idNKsCJ
+	 87aSNYuMbJbdvvLFEWy4SZLV0xOyanZu2JIKu3kXJtkE3KrfVlJ9up3scWBIKXm4MUI5n
+	 6cvx1iwPFH+j3F5wwA9//BKmasu4f1DOsw7vp9oRJVhPxVNIM0tjtJWqc8J0nEdsWHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017466;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017469;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=9n7WH47VkHObv6oh0s8IM+kFT7WYCT/bUM+qmNRmirA=;
-	b=X6MZA5JnCIp1+DS5D0FV38X9wuHtkAtA808jhsccNkPMA2Ambr6v79QLVqcFfFm6uhw8
-	 D7oomI18KJgKU13fYAkr1TpwXRPD2dXA1WFKK97b/K5EDHoQZPCeC3yh19IswEMLpyUv0
-	 dQvbuXDoyOEipYx/NZ3Jo++d4oILUZlbaoM7jw49xR1anzfNW+rdIfGEq2CLMTjvoJX1r
-	 dlxqTpngsjEcNJoWrc1dYI2KvrS6CSS5QoAEMoyjY2OszFR704AqldwvP+SbqeJ8D34Ak
-	 XeRpbAQWKbjzY6d0YpBJUQJJ7fM+A/p7yPbMizYPlTlqiZ4ud1Y/vDlEuQ/TNaHzWMQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=8IpVul37O60DklVDG07hYu+ZDpR0maIV9QXxlpP7kCQ=;
+	b=UJ4ygKCGX0oEgfHM518iYY6fot+JcXaJTWb0Tso6TWEXMnDCxJbGwLyQ4ykZJTTOZyeU
+	 S2F7FArNWyxZ/dp5VqL+LX5jOPYetymR9p1BjDijd7KckJSQhB27CYzs0tNGdLACxFCw9
+	 HCrYW9pl53X2byBrLG9hFWsyqaOCZ3NlwQOghXKUze++H7MQufH9L3MkRaYNVlNJ3sDb6
+	 w+ucW9o/z8R4wxDi2yW42wmiWxX8HqdmUuCwq4SfA19k2XXUjOtu6sIU0PKwdHYv16QKL
+	 X/d5Hi7lFvCQ6ngv+T8vekOnWi63vPqCeiZfzFu+6HVIamWnr2q/CtPqeFXclsGfTsQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QdD39MyL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hIf7z0Pk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1A0606A31C;
-	Wed, 18 Nov 2026 15:57:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0543F606A31C;
+	Wed, 18 Nov 2026 15:57:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QdD39MyL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DD441F000C6;
-	Wed, 18 Nov 2026 15:57:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hIf7z0Pk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 564871F000C6;
+	Wed, 18 Nov 2026 15:57:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017466;
-	bh=9n7WH47VkHObv6oh0s8IM+kFT7WYCT/bUM+qmNRmirA=;
+	s=korg; t=1795017468;
+	bh=8IpVul37O60DklVDG07hYu+ZDpR0maIV9QXxlpP7kCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QdD39MyLLY5zKQlyKs1vp6BAwOzvR8ZS36qFQGg1VjQqwFuQWjYv9aTAd4x4ufTod
-	 3QpiJKUEhlQJDZSDILZ7C7Mh/QtwNLtnzKWAVfcp1Fjueuqug1wiV5mY0PedQ7FX1T
-	 RQ4MlOt90NLk3T/Wdzhyaa7SNvHVCjcZ11crGDhU=
+	b=hIf7z0PkKLo879pMH6xHhGQ2zfsf6vGBQbeHUQYmpUcvjiv/ibO5ro9LPLjkJlgZK
+	 50fYGFsZaXP8RiMscRJmMEK790UBr7uxkzqB+lELrt40cHB5eROiscoxUC6V6jlGrB
+	 bGHOw0lUBMjR9YenJ0GEJt73PrdiZFdvRV0DH+4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Wang <peter.wang@mediatek.com>,
-	Chun-Hung Wu <chun-hung.wu@mediatek.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Danish Khateeb <danishkhateeb03@gmail.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0894/2651] scsi: ufs: core: Serialize AHIT register access between sysfs and host driver
-Date: Wed, 18 Nov 2026 15:35:34 +0100
-Message-ID: <20261118150320.051783215@linuxfoundation.org>
+Subject: [PATCH 7.3 0895/2651] tools/nolibc: fix readdir_r() with 64-bit directory offsets
+Date: Wed, 18 Nov 2026 15:35:35 +0100
+Message-ID: <20261118150320.084479203@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,127 +62,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Wang <peter.wang@mediatek.com>
+From: Danish Khateeb <danishkhateeb03@gmail.com>
 
-[ Upstream commit 7dec5cedf7b248036da606c16f9f3f9aa350b417 ]
+[ Upstream commit 00c81514ad49110574e4b9bdbc448551004161f2 ]
 
-A race exists between ufshcd_auto_hibern8_update() and
-ufs_mtk_pwr_change_notify() when both paths concurrently access
-REG_AUTO_HIBERNATE_IDLE_TIMER. Additionally, the static local variable used
-to save/restore AHIT in the power change path is not re-entrant and may
-hold a stale value if a sysfs write races with a gear change.
+readdir_r() stores the result of _sys_lseek() in an int. Directory
+offsets are opaque cookies which can use all 64 bits: ext4, for
+instance, gives 64-bit processes 63-bit hashes, and
+0x7fffffffffffffff as the offset after the last entry. Truncated to an
+int, such an offset is negative about half the time, and readdir_r()
+takes it for an error.
 
-Introduce ahit_mutex and ahit_disable_depth in struct ufs_hba to
-serialize AHIT register access. The depth counter tracks how many
-host-driver paths have forced AHIT off; sysfs writes are suppressed
-while it is non-zero and the register is restored from hba->ahit
-only when the last disabler drops it to zero.
+Since commit 4ada5679f18d ("tools/nolibc/dirent: avoid errno in
+readdir_r"), readdir_r() fails at the first entry whose offset has
+bit 31 set, which on ext4 is usually one of the first few, and returns
+the truncated offset as the error number. Before that, only -1 counted
+as an error, which the last entry always hits: readdir_r() then
+returned errno, usually 0, without filling in the entry, so the caller
+got the previous entry a second time and never saw the last one.
 
-Fixes: f5ca8d0c7a63 ("scsi: ufs: host: mediatek: Disable auto-hibern8 during power mode changes")
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Reviewed-by: Chun-Hung Wu <chun-hung.wu@mediatek.com>
-Link: https://patch.msgid.link/20260914085148.136429-3-peter.wang@mediatek.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+32-bit processes get 31-bit hashes from ext4 and are not affected.
+
+Keep the offset in an off_t.
+
+Fixes: 665fa8dea90d ("tools/nolibc: add support for directory access")
+Assisted-by: LLM
+Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
+Link: https://patch.msgid.link/20260925211600.119116-2-danishkhateeb03@gmail.com
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c       | 14 +++++++++++++-
- drivers/ufs/host/ufs-mediatek.c | 16 ++++++++++++----
- include/ufs/ufshcd.h            |  8 ++++++++
- 3 files changed, 33 insertions(+), 5 deletions(-)
+ tools/include/nolibc/dirent.h | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 9927feec17f51..15d1e97e1c380 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -4753,7 +4753,17 @@ void ufshcd_auto_hibern8_update(struct ufs_hba *hba, u32 ahit)
- 	if (!pm_runtime_suspended(&hba->ufs_device_wlun->sdev_gendev)) {
- 		ufshcd_rpm_get_sync(hba);
- 		ufshcd_hold(hba);
--		ufshcd_configure_auto_hibern8(hba);
-+		/*
-+		 * Serialize with the host driver's AHIT control. Skip the
-+		 * register write while the driver has AHIT forced off; the
-+		 * driver programs hba->ahit back when it re-enables it.
-+		 * Mutex is taken here (not across the rpm calls above) so it
-+		 * never blocks a resume that the driver's path may need.
-+		 */
-+		mutex_lock(&hba->ahit_mutex);
-+		if (!hba->ahit_disable_depth)
-+			ufshcd_configure_auto_hibern8(hba);
-+		mutex_unlock(&hba->ahit_mutex);
- 		ufshcd_release(hba);
- 		ufshcd_rpm_put_sync(hba);
- 	}
-@@ -11297,6 +11307,8 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
+diff --git a/tools/include/nolibc/dirent.h b/tools/include/nolibc/dirent.h
+index 4e02ef25e72d8..f6dbe3a66e902 100644
+--- a/tools/include/nolibc/dirent.h
++++ b/tools/include/nolibc/dirent.h
+@@ -67,6 +67,7 @@ int readdir_r(DIR *dirp, struct dirent *entry, struct dirent **result)
+ 	struct linux_dirent64 *ldir = (void *)buf;
+ 	intptr_t i = (intptr_t)dirp;
+ 	int fd, ret;
++	off_t off;
  
- 	mutex_init(&hba->wb_mutex);
+ 	if (i >= 0)
+ 		return EBADF;
+@@ -86,9 +87,9 @@ int readdir_r(DIR *dirp, struct dirent *entry, struct dirent **result)
+ 	 * readdir() can only return one entry at a time.
+ 	 * Make sure the non-returned ones are not skipped.
+ 	 */
+-	ret = _sys_lseek(fd, ldir->d_off, SEEK_SET);
+-	if (ret < 0)
+-		return -ret;
++	off = _sys_lseek(fd, ldir->d_off, SEEK_SET);
++	if (off < 0)
++		return -off;
  
-+	mutex_init(&hba->ahit_mutex);
-+
- 	init_rwsem(&hba->clk_scaling_lock);
- 
- 	ufshcd_init_clk_gating(hba);
-diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
-index 12a6d4138e445..ff0a661c14305 100644
---- a/drivers/ufs/host/ufs-mediatek.c
-+++ b/drivers/ufs/host/ufs-mediatek.c
-@@ -1521,19 +1521,27 @@ static int ufs_mtk_pwr_change_notify(struct ufs_hba *hba,
- 				struct ufs_pa_layer_attr *dev_req_params)
- {
- 	int ret = 0;
--	static u32 reg;
- 
- 	switch (stage) {
- 	case PRE_CHANGE:
- 		if (ufshcd_is_auto_hibern8_supported(hba)) {
--			reg = ufshcd_readl(hba, REG_AUTO_HIBERNATE_IDLE_TIMER);
-+			/* Block sysfs AHIT writes while we force AHIT off */
-+			mutex_lock(&hba->ahit_mutex);
-+			hba->ahit_disable_depth++;
-+			mutex_unlock(&hba->ahit_mutex);
- 			ufs_mtk_auto_hibern8_disable(hba);
- 		}
- 		ret = ufs_mtk_pre_pwr_change(hba, dev_req_params);
- 		break;
- 	case POST_CHANGE:
--		if (ufshcd_is_auto_hibern8_supported(hba))
--			ufshcd_writel(hba, reg, REG_AUTO_HIBERNATE_IDLE_TIMER);
-+		if (ufshcd_is_auto_hibern8_supported(hba)) {
-+			mutex_lock(&hba->ahit_mutex);
-+			/* re-enable only when the last disabler drops off */
-+			if (!--hba->ahit_disable_depth)
-+				ufshcd_writel(hba, hba->ahit,
-+					      REG_AUTO_HIBERNATE_IDLE_TIMER);
-+			mutex_unlock(&hba->ahit_mutex);
-+		}
- 		break;
- 	default:
- 		ret = -EINVAL;
-diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
-index dfd302f2dc7c1..be62165b785e0 100644
---- a/include/ufs/ufshcd.h
-+++ b/include/ufs/ufshcd.h
-@@ -1132,6 +1132,14 @@ struct ufs_hba {
- 
- 	/* Auto-Hibernate Idle Timer register value */
- 	u32 ahit;
-+	/* Serializes AHIT register access between sysfs and the host driver */
-+	struct mutex ahit_mutex;
-+	/*
-+	 * Nesting count of host-driver paths that have AHIT forced off.
-+	 * Non-zero blocks sysfs AHIT writes; AHIT is reprogrammed only when
-+	 * the last disabler drops it back to zero. Guarded by ahit_mutex.
-+	 */
-+	int ahit_disable_depth;
- 
- 	unsigned long outstanding_tasks;
- 	spinlock_t outstanding_lock;
+ 	entry->d_ino = ldir->d_ino;
+ 	/* the destination should always be big enough */
 -- 
 2.53.0
 
