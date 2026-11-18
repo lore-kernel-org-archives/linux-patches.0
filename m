@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060631;
-	b=A5I5VpaMDNOG1q7GlIGyCKCjzOuwXKPmI7Aw8r0vIWTipY4uWtDEwwS+Ah9FCq3PR0Na
-	 sllNsXmNSe6oDms6oLkFg1sfK75vRDFIPUlk7EESeTtYVULSEu85vKtl10RGxRH1ZW95d
-	 sjaUH9Qgl7EB5oQRhmqWdRkUmKCCwP/pOqaag2oNkye6kUCqbWkMjqnctApSLr/AZ5WyY
-	 A/ZTdy0L+d8eEnyJsZXWwjfEdL843uJagJY0IdPgwzkUPXzl+W8IDSEIkXG2JUN42xM61
-	 Zd+J9otKufr4CHO7nddxupS9A65C2BdgT6G/wjCwDtH+i1GjFp07u6NTOyAOgIDhTMg==
+	t=1795060634;
+	b=IY/Ehj1Yo541hkaH23QCz/i9Q+nu6dTPwooaNGvW8lQZN3Ir8WlAboJGR9pCYnvDaMfg
+	 soqQG4Jkuqt/wNgfzXvyhZjcBUnuiZJCdp1/urni9eA/buKAbh3VOPspP1oAYAmGBoZCi
+	 mPVJ0+1C0ImpaF3LWGb508K2AMCrGF/W7XQpf5RJj/M6TzS4ZeNPbctF3qAZc0AvlmZlX
+	 tmMOPkj91v1eHAmah4QA2R+yc3P0M1ajnaQY1fXVze9Yf16BtIEMqR75PUs2om98vxkdC
+	 KmIFjyBKMQgAjN9ObcWJW790ryFLz2Ukdd5s+8kqtL/4sFpIVWBYxSnRWEh4sTEsVlw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060631;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060634;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=R6RLnbQPe/0FVpAkvLqpvJSZZHUBVoguulTiIFoUqgE=;
-	b=yo5Na8l2/hdEsq0P4Vxm/Y6o6uEQdP+kAY0otck7tFF+yE09EVKFHTIsiejtwZLDC2Yq
-	 +xY8MeS4kx91zAfAAkwT27diwUUAjOUL5JsMwk3fdNMVsdLpYQRVXyYo3J0NiMoX5GnTs
-	 0g0lWZ4zqxq9vJzHIthMfg05/n06Kiyfl2dRpUY8EQCc7D8iLl1BAthTEU9EU5Qq1XmeE
-	 U/07RLwuI/pIBFzuyaoMVk3Dz0xZRh2YwtpOFsFPL3iRHHwKuyyiZfXvbMyEyV6WS7Lt7
-	 X1oyqGbCLOsNZPE/U2+GBL5zTFolvSyuxanWnuYwO0XGq0l/uhzO+VD1hnJUlLjAjZA==
+	bh=OrAdEIlyEVz6RZsSOZwIeeamqdSfI67SINKgQHs7Um4=;
+	b=qJJrlRwNk3SIlFPj6UmgZnrhcIfbrNBjkkv6CPYDB1KQa9adwGLJGTu5kXfhp3cCXllK
+	 diFN/GooH8XDyGE199dvtWjBQD/kPNz6ToX7EP7TLO7J1sdTOTGJc8mqMj6IPGvQgnYbT
+	 zWL3hlgghxzkfAAi/PSrLJdsjefCvM2rIBxoyXACA3Ua2qPwVKy7WwrT6f93+hTAp79g+
+	 7fbKDWbQ/cCHDHHicDHvYuDgdZkp/84A0d7dRZ84fgm6a1svgJuVh1eBJspvvu5jTAqGO
+	 cYVkaByEXY2ttPNZtHSTpVly77TrG7u1iytZ+PDVhQSqnMTAYMrYhujMvW3Pgkhc0GA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BNrkbn5z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ncASa3df;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A37D606A320;
-	Thu, 19 Nov 2026 03:57:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E225D606A338;
+	Thu, 19 Nov 2026 03:57:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BNrkbn5z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F71C1F000C4;
-	Thu, 19 Nov 2026 03:57:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ncASa3df
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FC101F000C4;
+	Thu, 19 Nov 2026 03:57:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060631;
-	bh=R6RLnbQPe/0FVpAkvLqpvJSZZHUBVoguulTiIFoUqgE=;
+	s=korg; t=1795060633;
+	bh=OrAdEIlyEVz6RZsSOZwIeeamqdSfI67SINKgQHs7Um4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BNrkbn5zlVGVaLODswVhizJLRYDVDxYTq4ke4jycXYh0/2wqfAbMhCxBQzDMLTp3i
-	 HrmhHB5JjJaJG2uUWvrm/y7bg5tiQ9iRZ8f2xzSZfOODG+9EmziOJCSojswP3dSMrT
-	 x0XcjEZI2SbQGN/OizRDMOeXomeqCQAmKuEwCtMY=
+	b=ncASa3dfJaiTwDESmoMaAt1xP6pMqyXZlbHu2z1MA51YxyF1UxbeTBqIqEqCTtu7e
+	 s0DLgHFq6W+6xICBkw2cUalb8SU28uDW8rD5aOk5o1RszeKPTpB/SynH2ndrag7LnF
+	 /7UPnrW7n8Cxsk/TOCv4qfgfdg9NNM4SbQnxLiDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	Chaithanya Lagisetty <nagachaithanya9911@gmail.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1268/1848] md/raid5: setup_conf: Fix null-ptr-def in error handling path
-Date: Wed, 18 Nov 2026 15:55:06 +0100
-Message-ID: <20261118150012.752869766@linuxfoundation.org>
+Subject: [PATCH 5.10 1242/1848] x86/svm: Avoid sign extension of SVM_EVTINJ_VALID in 64-bit expressions
+Date: Wed, 18 Nov 2026 15:54:40 +0100
+Message-ID: <20261118150011.828921354@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,50 +68,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
 
-[ Upstream commit eba5f518701b1c7f2d883504f89c41611bd2de46 ]
+[ Upstream commit c5991239b148d40d4981901968b3a6a838ff517b ]
 
-For raid5 setup_conf, if an error(eg. bioset_init fails) happens before
-'conf->mddev = mddev', following error handling path could trigger a
-null-ptr-def problem:
+SVM_EVTINJ_VALID is defined as (1 << 31), i.e. as an int with the sign
+bit set. Whenever it is used in a 64-bit expression the int is sign
+extended, so bits 63:32 end up set as well. Two 64-bit users are
+affected.
 
- free_conf
-  log_exit
-   raid5_has_ppl
-    test_bit(MD_HAS_PPL, &conf->mddev->flags) // conf->mddev is NULL !
+verify_exception_info() uses the macro as a mask against a 64-bit value
+when it sanity checks hypervisor supplied exception information:
 
-Fix it by initializing conf->mddev in advance.
+	u64 info = ghcb->save.sw_exit_info_2;
+	...
+	if ((info & SVM_EVTINJ_VALID) &&
 
-Fixes: 3418d036c81d ("raid5-ppl: Partial Parity Log write logging implementation")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Link: https://patch.msgid.link/20260915081731.122933-1-chengzhihao1@huawei.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+The mask is 0xffffffff80000000, so the check also passes when any bit of
+the error code in 63:32 is set while the valid bit itself is clear.
+
+svm_vmgexit_inject_exception() builds the value that KVM hands to an
+SEV-ES guest in GHCB SW_EXITINFO2:
+
+	u64 data = SVM_EVTINJ_VALID | SVM_EVTINJ_TYPE_EXEPT | vector;
+
+For vector == X86_TRAP_GP this yields 0xffffffff8000030d instead of
+0x000000008000030d. The field uses the EVENTINJ format, which holds the
+error code in bits 63:32, so KVM asks the guest to inject #GP with an
+error code of 0xffffffff. Linux guests only consume the error code when
+SVM_EVTINJ_VALID_ERR is set, which it is not here, so they are not
+affected in practice, but the value KVM writes is not the one it intends.
+
+Use BIT() instead, as is already done for most single bit definitions in
+this header. Every other user applies the macro to a u32, where the
+resulting bits are unchanged.
+
+Opportunistically give SVM_EVTINJ_VALID_ERR the same treatment, there's
+zero reason to open code BIT().
+
+Fixes: 597cfe48212a ("x86/boot/compressed/64: Setup a GHCB-based VC Exception handler")
+Fixes: c3392d0ab714 ("KVM: SVM: Provide helpers to set the error code")
+Signed-off-by: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
+Link: https://patch.msgid.link/20260908053722.3917934-1-nagachaithanya9911@gmail.com
+[sean: use BIT() for SVM_EVTINJ_VALID_ERR as well]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/include/asm/svm.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index f1fc249fcfd8b..9f403ac87de01 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -7213,6 +7213,7 @@ static struct r5conf *setup_conf(struct mddev *mddev)
- 	if (conf == NULL)
- 		goto abort;
+diff --git a/arch/x86/include/asm/svm.h b/arch/x86/include/asm/svm.h
+index f8fad50502ad6..b6e48bfff0bb0 100644
+--- a/arch/x86/include/asm/svm.h
++++ b/arch/x86/include/asm/svm.h
+@@ -347,8 +347,8 @@ struct vmcb {
+ #define SVM_EVTINJ_TYPE_EXEPT (3 << SVM_EVTINJ_TYPE_SHIFT)
+ #define SVM_EVTINJ_TYPE_SOFT (4 << SVM_EVTINJ_TYPE_SHIFT)
  
-+	conf->mddev = mddev;
- #if PAGE_SIZE != DEFAULT_STRIPE_SIZE
- 	conf->stripe_size = DEFAULT_STRIPE_SIZE;
- 	conf->stripe_shift = ilog2(DEFAULT_STRIPE_SIZE) - 9;
-@@ -7285,7 +7286,6 @@ static struct r5conf *setup_conf(struct mddev *mddev)
- 	ret = bioset_init(&conf->bio_split, BIO_POOL_SIZE, 0, 0);
- 	if (ret)
- 		goto abort;
--	conf->mddev = mddev;
+-#define SVM_EVTINJ_VALID (1 << 31)
+-#define SVM_EVTINJ_VALID_ERR (1 << 11)
++#define SVM_EVTINJ_VALID	BIT(31)
++#define SVM_EVTINJ_VALID_ERR	BIT(11)
  
- 	if ((conf->stripe_hashtbl = kzalloc(PAGE_SIZE, GFP_KERNEL)) == NULL)
- 		goto abort;
+ #define SVM_EXITINTINFO_VEC_MASK SVM_EVTINJ_VEC_MASK
+ #define SVM_EXITINTINFO_TYPE_MASK SVM_EVTINJ_TYPE_MASK
 -- 
 2.53.0
 
