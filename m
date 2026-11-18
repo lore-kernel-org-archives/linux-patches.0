@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025116;
-	b=z+PRIlPG6Ybha0lpwNvY1bBKAevGnHaK3/hx0NZ9SolnxBueUU3OHvseQ8yB6jE92Cyc
-	 QofijqhlmkX7asJC8nBc5UqTHhBYvujIrA4zLvDs2QElIHFlxjF6iL1Lo1bI5ldrj+BeK
-	 O7v59MdX6wMg9OYUxbaTMDVh4QCc773BD5C9XLD4xmmmDRacapzLrXkJkxCULSfsugzuA
-	 /PUn3JgLKuuB8ZImC8b9qdv9R7IcLG421zHn6nFcXarHUHko5bk/LSeVP8v5V8yPLad8K
-	 09UzoZd85zAZMAI93o2gbfPc4c1SVMpP9ERGj/AfKDfz8Tn7W2KXJhq4Mm99n1WmHxA==
+	t=1795025119;
+	b=K5rJ4XGz6XvmyOtgk0l734I1EgPtZm7j+r97njLCT4i6yq87YtYgSG9uty2pbEJaNwrI
+	 aUtu5hwKP7Hu9MlG/zlfYPXt7QWFzjjTtBcLC4ARI/pCG0C8qqBRvO2CEADQxZTWmCJKp
+	 B42Gd2ucthueMQ1kez5FvLLbF3yA8in9nc0VWx2rB2KjZpB7XAR8RyQfAB4JbPC1iKzsm
+	 9f8ftuijrwyQ4COF8vXNUXsNQ6dCw240mRG2HbGeSrbl869onR880Cn0EaUItiVR4KueI
+	 BmQn9u/j4EYB5su0jmg1PBoCyQqy9gTLqnERjULumqFu8rHkD0FvUuM7QnFxeM1bKmw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025116;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025119;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Gl0hff775uLrACmD/MQVB6BUJBLJ9zcNLeU7qLe8Zhg=;
-	b=aZlNCEuBAgA0OlRjkIBjIWH1M6T5+MCwEPt3zUeq0O1tmxpd3DYXD34MhGcYatk24dAZ
-	 YwNC8plAjEBmRW1hmn+dI4WaP7ulndPw8gO7O2b/AVA2HIeQh9KPRzMmhp5+kLWWu1oVU
-	 ky5Qij4xmD/S95Nug9JDu2IRbAoqRRKdPcsPyPPw9g5qRK7Aep/GARB+C0ANp/q8ovpIo
-	 0Zc0WbywjYmEsZtZjiDpG3rH/QJdlY7fzpRiKmdaCZpxbWIO8Y5hSeCeg4Fkhphf8AYSt
-	 UrfUBm0+IEU01ojsFaM7H0TVGAEkn29zBbbBMKNfPiFy0UHcxdhrV8RnGuzmhD3nucg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=9CAtr5YdDc2pLWKcfVwbneAGcmv+nxuXQY0Ki6O6bqo=;
+	b=LJV1qQ7F9dNgb99hb1WjD1SJv4WyQQ83epgrahJGg3CktCBh0igE3+nvLBA2Q3eD5g9e
+	 vMdE34J7FiXSw7kKlYAVJ6ZvGw+ils6NcW5c6xahVKbSLUMH/Qt5whUng6CJlAdBA+EF4
+	 QA5aZNqd8X4xLWICvAeKCs1WLmfU45rOIEuf70NV+wSFcnNHy2dg7tQ6u6SXAgzgnGBx+
+	 4WDojmiGyakDofMz0RpUzSjdVNIEEOMC3jeGFZCumrtbjlvjfkciMahG/tkJoPPu9Rf1X
+	 CHGs+3Nilijn+B7QFCPsqUZF+5M02dywBQk+3CTWshqqdS/CSt+sEQHxGbbjdEX3Zmw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y2P58Gek;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JzL7ddKT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 291CB606A336;
-	Wed, 18 Nov 2026 18:05:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24DF4606A339;
+	Wed, 18 Nov 2026 18:05:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y2P58Gek
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B2391F000C6;
-	Wed, 18 Nov 2026 18:05:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JzL7ddKT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5422C1F000C4;
+	Wed, 18 Nov 2026 18:05:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025116;
-	bh=Gl0hff775uLrACmD/MQVB6BUJBLJ9zcNLeU7qLe8Zhg=;
+	s=korg; t=1795025118;
+	bh=9CAtr5YdDc2pLWKcfVwbneAGcmv+nxuXQY0Ki6O6bqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y2P58GekQM/5E4nab6mP9P+s+fYJ7EufyGFw9WlERAZdCB/KuXJSE316yCX6GGLjG
-	 FOEJoiJwC2prcb33QBrZPS5SkfYlVoJhQTTXahsaKPoFx+uPuUFyCQ+Hh5DI7clt5V
-	 wTDHkr8AN3mlngKfl6z6oqaWr+/hydLwOujbiQOc=
+	b=JzL7ddKTBjWrPgv/0Wddi1E0oTFM2CzgB9NKxvhh3SRjFqdWZFdxnqtlH/4bSxtL+
+	 DQCF9Qvskv6ffbUhZHZ3FRRh+Qn914PR22IAvKSBfbPFxeiWV3+3dokHNv/BpGAFbI
+	 S9j5bJ7UH7cQ01aajQlf1yAMvwJzzkktDFo5pT0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <blum@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Liu Dalin <liudalin@kylinsec.com.cn>,
+	Linus Walleij <linusw@kernel.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0964/2151] hwrng: intel - return -ENOMEM when kmalloc_obj() fails
-Date: Wed, 18 Nov 2026 15:44:59 +0100
-Message-ID: <20261118150157.636008020@linuxfoundation.org>
+Subject: [PATCH 6.18 0965/2151] rtc: ftrtc010: fix integer overflow in time calculation
+Date: Wed, 18 Nov 2026 15:45:00 +0100
+Message-ID: <20261118150157.666650707@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -62,39 +63,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thorsten Blum <blum@kernel.org>
+From: Liu Dalin <liudalin@kylinsec.com.cn>
 
-[ Upstream commit a0590c556cdbf88373d38494a23f1503d39b0ab2 ]
+[ Upstream commit 32f04694fa87b8ac9fa58f9ceb2dc6cbc476e2a1 ]
 
-intel_rng_mod_init() incorrectly returns -ENODEV when kmalloc_obj()
-fails. Return -ENOMEM instead.
+In ftrtc010_rtc_read_time() and ftrtc010_rtc_set_time(), all
+variables (offset, days, hour, min, sec) are u32. The expression
+"days * 86400 + hour * 3600 + min * 60 + sec" is evaluated in
+32-bit arithmetic, which silently wraps around for dates beyond
+approximately year 2106 (U32_MAX / 86400 ≈ 49710 days).
 
-Fixes: ee527cd3a20c ("Use stop_machine_run in the Intel RNG driver")
-Signed-off-by: Thorsten Blum <blum@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+In ftrtc010_rtc_read_time(), perform the addition in 32-bit
+arithmetic first to preserve two's complement wrapping for negative
+offsets, then cast the result to timeu64_t. In
+ftrtc010_rtc_set_time(), cast individual u32 operands to timeu64_t
+before multiplication to prevent overflow in the right-hand side
+of the offset calculation.
+
+Fixes: 1d61d2592c1f ("rtc: gemini/ftrtc010: rename driver and symbols")
+Assisted-by: Sashiko AI [static analysis]
+Signed-off-by: Liu Dalin <liudalin@kylinsec.com.cn>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Tested-by: Liu Dalin <liudalin@kylinsec.com.cn>
+Link: https://patch.msgid.link/42C8FBD59AA34EA9+20260827080320.3351155-4-liudalin@kylinsec.com.cn
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/intel-rng.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/rtc/rtc-ftrtc010.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/char/hw_random/intel-rng.c b/drivers/char/hw_random/intel-rng.c
-index 7b171cb3b825f..94f7116e96682 100644
---- a/drivers/char/hw_random/intel-rng.c
-+++ b/drivers/char/hw_random/intel-rng.c
-@@ -349,6 +349,7 @@ static int __init intel_rng_mod_init(void)
- 	intel_rng_hw = kmalloc(sizeof(*intel_rng_hw), GFP_KERNEL);
- 	if (!intel_rng_hw) {
- 		pci_dev_put(dev);
-+		err = -ENOMEM;
- 		goto out;
- 	}
+diff --git a/drivers/rtc/rtc-ftrtc010.c b/drivers/rtc/rtc-ftrtc010.c
+index 2f610a0fc6e9b..c989574b1fbc6 100644
+--- a/drivers/rtc/rtc-ftrtc010.c
++++ b/drivers/rtc/rtc-ftrtc010.c
+@@ -73,7 +73,7 @@ static int ftrtc010_rtc_read_time(struct device *dev, struct rtc_time *tm)
+ 	days = readl(rtc->rtc_base + FTRTC010_RTC_DAYS);
+ 	offset = readl(rtc->rtc_base + FTRTC010_RTC_RECORD);
  
+-	time = offset + days * 86400 + hour * 3600 + min * 60 + sec;
++	time = (timeu64_t)(offset + days * 86400 + hour * 3600 + min * 60 + sec);
+ 
+ 	rtc_time64_to_tm(time, tm);
+ 
+@@ -93,7 +93,8 @@ static int ftrtc010_rtc_set_time(struct device *dev, struct rtc_time *tm)
+ 	hour = readl(rtc->rtc_base + FTRTC010_RTC_HOUR);
+ 	day = readl(rtc->rtc_base + FTRTC010_RTC_DAYS);
+ 
+-	offset = time - (day * 86400 + hour * 3600 + min * 60 + sec);
++	offset = time - ((timeu64_t)day * 86400 + (timeu64_t)hour * 3600 +
++			 (timeu64_t)min * 60 + (timeu64_t)sec);
+ 
+ 	writel(offset, rtc->rtc_base + FTRTC010_RTC_RECORD);
+ 	writel(0x01, rtc->rtc_base + FTRTC010_RTC_CR);
 -- 
 2.53.0
 
