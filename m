@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021191;
-	b=dKiLnDYn9rfScgcgeAW7Q1xjTBOAOsOaEVCYVNfJD22nF1Z1GLtTqZnGpORNT8EeZJZp
-	 RQB1saRLxoRL+/9wVp5QEhFqpzafhr1JL35y/AfG3c/9NOklDLGeT5P1Tg0inLNgIAQ7l
-	 RRDao6cEUYudw4uZqYkv2gOejvGYYNx8JimC45BolDS3vyCiusQL2a+3Oeq1FFlqEem5C
-	 gPigsxYSZv8ijpGs9BY04H0X09Y07W8QuLyYMNw4yhpYv/v5W/Xi3AWQW4aG/9p7q+gIS
-	 YEvbPwaTE3TJzW1fj+1/XZmUkkVhvTAPRsyJHQNCQftoiZNFu+APgHVXWDEgDgjQuaQ==
+	t=1795021194;
+	b=l/oHb66tHTf7tGax7Ec4gg+MYcv0UE4zxufAXYfTu4v2VNi7II4KBMK3MuVAlQSVIuXA
+	 yrzdXWhUxIKfAttNWD9xEJfzLeh6EPGcXE41ZBrZoJVjeBXCREaA4DYfqxSAPqJsxpDK4
+	 sky0QlS3cDpaFq3wWe+tl4AqsBY2aO8VGHoTyK4wa4jXozzAqSJr1304yiJcQAlty4Cbb
+	 m1lNntfmkmtuRVsEVHqBPNYbfyAjSESVSIxtFRMD+/ZkkG2QUcLLyV1Td/AeH414pFlG9
+	 krN0S0bTU7Gg1Jm2Zvwr5Rf6TJVHrSLtfypDx4nqS5G4EJsAyRRfaAptnNUtopBtC+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021191;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021194;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hbm9bfOawnaKZdTfJRAARvC+buM1M3e9JNfIEtAskUM=;
-	b=RQ7e7CUX1FoieA6qBccpECqPKzUZSkqfqvkpzs80HY4ngoAMkL2JUfEthxDusCI08aOQ
-	 DMLR3iPtqC3UQx8B0lwYdD3bvUmwJhMIX5ewCZczPjC0aWSJjf/5QdwIqHAs2J0+I4l1U
-	 CT/tg+4354y39IYZeOkp8e/6Ed6TARuBi5msJ5HcLlh6dlPycpxR8moFIrBPIkYC90qhM
-	 cOs1dpSgkvLRG6HMyb5ryFPiE42+WYPlRU2PWL+kTHaKk73F1p510fYmDrvKkkdTwFcii
-	 CYtpBowkop0yuYVXaGeTn9BigOp9gN1efRato8jISLRuA5wSZB2uUlBX6N7mOT1R0pQ==
+	bh=xn32V6EplNoyT/eDt5YM9BWwiQuCNC/yHAaj+kN1GNw=;
+	b=ghlu97Ih6JZ89BSSv5yXroWqcUq1Y3vgZ6AOM4rDAW12w0Oy1d8jUF0XgbjrSuao1d1j
+	 ZOgkGdeRewFCHif/2R00fLxxEYRc5TynSnA5g8sjJigBsTcsVztCBzHDka63LOIjqMfrx
+	 n+cNR6G6FOoFlMSkJjJ73KImMWCFWH3kDK23MPGFuCCC8Sk1RAj27WsK3Vp4g7OPSAuSH
+	 ejvwPM2/J0RWjs9lQjELMdeBa/1sZqHY/5MueuZX6+kAL3qhuGgsWxagvjZY/pOcV1zUP
+	 gLo9zmuIYU1CHP2ZzGVKmEXgKLT33/Ovahz/pcDF2qv9/yJ3mSN5PO0Sb2wPwHPjjBA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FvLOBInN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B4J1mxHn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E0A606A325;
-	Wed, 18 Nov 2026 16:59:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C57606A31C;
+	Wed, 18 Nov 2026 16:59:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FvLOBInN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 892CE1F000C8;
-	Wed, 18 Nov 2026 16:59:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B4J1mxHn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 511341F000C4;
+	Wed, 18 Nov 2026 16:59:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021191;
-	bh=hbm9bfOawnaKZdTfJRAARvC+buM1M3e9JNfIEtAskUM=;
+	s=korg; t=1795021193;
+	bh=xn32V6EplNoyT/eDt5YM9BWwiQuCNC/yHAaj+kN1GNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FvLOBInNHJwxJZhm1UjLhIWQfuMGGsH4Xsh9gDN7VIVMLslbIulV5vgGucuUO0Ghc
-	 M7KQcXPlw4tkC7yrkVzRE8ueGMlumQQfe+LM81ajbkssNCOAScsIVrwp8dc1lmEgMG
-	 ZbXjcFurnk/gQ048qSlYTpXAHq/SKihpAbhW9D8U=
+	b=B4J1mxHn6XRMqgJ7nPKJ76sZpikY5rOLv2hgs9QC7OHQujTWS6LS5oFShnPrypHqN
+	 CTxAkTlqOfUOPx+PE5ff4chIJgX/UV691biS2tU90rJEXQdJxPzv4fdnY7MQs475b1
+	 uJLxg4uK0fRVFdRH/VQXseZNS6mN/S8KMrGxVL1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Baolin Liu <liubaolin@kylinos.cn>,
+	Hyunchul Lee <hyc.lee@gmail.com>,
+	Jiale Yao <yaojiale02@163.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
-	Matthias Goergens <matthias.goergens@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2218/2651] ntfs: do not give a contiguous cluster allocation a second run
-Date: Wed, 18 Nov 2026 15:57:38 +0100
-Message-ID: <20261118150405.453506714@linuxfoundation.org>
+Subject: [PATCH 7.3 2219/2651] ntfs: drain in-flight DIO before buffered write fallback
+Date: Wed, 18 Nov 2026 15:57:39 +0100
+Message-ID: <20261118150405.481825070@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,70 +70,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Goergens <matthias.goergens@gmail.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit b05a67615b982cfaa903df8a6fb055d18ebafe11 ]
+[ Upstream commit c10e0c37697c4dd47006709af49b98cd3af45ddd ]
 
-ntfs_attr_map_cluster() asks ntfs_cluster_alloc() for contiguous
-clusters and merges the whole result into the runlist, but reports only
-its first run, so its callers zero only that run.  Within a bitmap page
-the allocator keeps such a request to one run, because a cluster in use
-ends it.  The zone search can also move on without testing the clusters
-after the run, though: it skips a bitmap page that has no free clusters,
-it goes from the end of the zone to the start of pass 2, and once every
-zone has been searched it shrinks the MFT zone by half and goes on at
-its new end.  After each of these jumps the first cluster tested is
-still taken as the next one of the run, and if it is free it starts a
-second run elsewhere on the volume.
+An asynchronous direct write can remain in flight after the inode lock is
+released.  If another direct write falls back to buffered I/O while the
+first write is still pending, iomap_file_buffered_write() can dirty pages
+before the first write completes its post-I/O page cache invalidation.
+The invalidation then finds dirty pages, reports a page cache invalidation
+failure, and records -EIO in the mapping error sequence.  A later fsync()
+therefore returns -EIO.
 
-fallocate() over a hole then leaves the clusters of that second run
-holding whatever they held before: on a nearly full volume, 16 of 20
-fallocated clusters read back a deleted file's data, in each of the
-three cases.
+Commit 15cdefd0c0522f9d5e12d947fa04f4c11649b699 ("ext4: drain
+in-flight DIO before buffered write fallback") fixed the same race in
+ext4.  NTFS has an equivalent fallback after iomap_dio_rw() returns
+-ENOTBLK or a short write, but does not drain other in-flight DIO before
+dirtying the page cache.
 
-Delayed allocation gets a second run without punching any holes: filling
-the same volume with write() reaches the last case when the MFT zone is
-shrunk.  The allocator then takes only the first run off the
-dirty-cluster count, and after the fill statfs() reported no free space
-while 939 clusters were still free, until the next mount.
+Wait for in-flight DIO before calling iomap_file_buffered_write() in the
+fallback path.  Since NTFS supports IOCB_NOWAIT, do not enter the blocking
+fallback for such requests.  Return -EAGAIN if no bytes were written, or
+preserve the positive short-write result if the direct write made partial
+progress.
 
-Before setting the bit of a cluster for a contiguous request, check that
-the cluster comes right after the run, and return the run as it is if
-not; no bit has to be cleared.  ntfs_attr_map_cluster() already handles
-a short run, which a cluster in use produces in the same way: its
-callers ask again for the rest.
+A reproducer using concurrent AIO direct writes and buffered fallback
+triggered the following warning and made a subsequent fsync() return
+-EIO:
 
-Fixes: 11ccc9107dc4 ("ntfs: update runlist handling and cluster allocator")
-Suggested-by: Namjae Jeon <linkinjeon@kernel.org>
-Link: https://lore.kernel.org/all/CAKYAXd-agPFvDj2-HvjP3SLtG7AxkqUeNPqYyrLt-BN7fT8w6g@mail.gmail.com/
-Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
+  Page cache invalidation failure on direct I/O.  Possible data corruption
+  due to collision with buffered I/O!
+
+Fixes: 9c87959601e8 ("ntfs: update file operations")
+Link: https://lore.kernel.org/r/20260629113827.4074335-3-libaokun@linux.alibaba.com
+Reviewed-by: Baolin Liu <liubaolin@kylinos.cn>
+Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/lcnalloc.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/ntfs/file.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/fs/ntfs/lcnalloc.c b/fs/ntfs/lcnalloc.c
-index c58e689fb5852..3ebcac4c28648 100644
---- a/fs/ntfs/lcnalloc.c
-+++ b/fs/ntfs/lcnalloc.c
-@@ -375,6 +375,16 @@ struct runlist_element *ntfs_cluster_alloc(struct ntfs_volume *vol, const s64 st
- 				has_guess = 1;
- 				continue;
- 			}
-+			/*
-+			 * A contiguous request gets a single run.  The scan can
-+			 * move on without testing the clusters after the run
-+			 * (past a bitmap page that is full, to pass 2 or to
-+			 * another zone), so return the run when this cluster
-+			 * does not follow it.
-+			 */
-+			if (is_contig && rlpos &&
-+			    lcn + bmp_pos != prev_lcn + prev_run_len)
-+				goto out;
- 			/*
- 			 * Allocate more memory if needed, including space for
- 			 * the terminator element.
+diff --git a/fs/ntfs/file.c b/fs/ntfs/file.c
+index 20b6019e6bd19..acfce7670248d 100644
+--- a/fs/ntfs/file.c
++++ b/fs/ntfs/file.c
+@@ -540,8 +540,21 @@ static ssize_t ntfs_dio_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 		ssize_t written;
+ 		int ret2;
+ 
++		if (iocb->ki_flags & IOCB_NOWAIT) {
++			if (!ret)
++				ret = -EAGAIN;
++			goto out;
++		}
++
+ 		offset = iocb->ki_pos;
+ 		iocb->ki_flags &= ~IOCB_DIRECT;
++
++		/*
++		 * Prevent concurrent direct I/O and buffered I/O to the same file
++		 * range. Wait for in-flight DIO to finish before dirtying pages.
++		 */
++		inode_dio_wait(file_inode(iocb->ki_filp));
++
+ 		written = iomap_file_buffered_write(iocb, from,
+ 				&ntfs_write_iomap_ops, &ntfs_iomap_folio_ops,
+ 				NULL);
 -- 
 2.53.0
 
