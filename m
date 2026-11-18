@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037787;
-	b=oTyrzkoy41DM3blf5LaUgscSNPv57w/oD3VyNxeWp33cd6FhM7Ouqd5llT/abScvrtYK
-	 f1ASNcx5Thln3+DzP5xZDPEdyW36Qnc6HNexDOd2nyBuZ7L7nBxjlCPXlWfXJ+lTbliVR
-	 sDNI/zVW80Yfzro2sKm3HcwhXJ/+aFDvUI3HxPZuBsA4N9Jpnhu1HWZdJxr2VaTrO1i4p
-	 KLUEbWzy9iGhnw6+VBbmIy1tsRx7znN1E9XU8LC2Pn5rAgpvCOm9HVOCsM6iwv/KmFSrN
-	 k3X+GJk5WZvkV4rJ6CTWXRrzGAY957UlOqOgdRpY6QhMvlt+5UQh69Rnxk7oHfWkZHQ==
+	t=1795037790;
+	b=ulrN38ZQtQoUCis+9k3VXXoCK2llqHTZlYwHiaK9NwXd/PMF8JF8ksfvV6F5yPwF/rHF
+	 0KVMSK8MimlPVOwSIGWD/uYKe21u3t/pFLnUAUFjj97Yox07rD0+q4jeUUYXSJrx+47d2
+	 4QChB/9HuepjXz7a4Et+qws44Pxp6NCWn3myoMEj0iItktcOvGytlny89hJgwd0nHh4QS
+	 vdSQrwPUkOQgbP2+P7xzOcnQNu7GA2sBWAJsZVa7qDSfSso/UcF+dFeMOio+1ZJ3wTE68
+	 usIf0S5L9pA3KWpzS9LPyJkPs4+CZsr3XcwHb6Jgv37mNTgtafU/OfCa3gW06nzvznQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037787;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037790;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CeGB8UZBWz/2VGFOa7cxBbw9NOx8ECV6oDBF+MFhxaU=;
-	b=FegengxztaPBu3QEz6CALm5sZxfOESH2qmMUWC5/lFpL3NUO8bZOYMFXJkzgslMyULkD
-	 nwLxzoQWNnuNCSJb4uLDxY+J6N8GCyrl4UhiB60w88VyvI6ZA57PBzgZl+YsWFNmWnwKp
-	 dXpfdOmGJ8DHNhRs3u2nP64kEGxQ82uVRZWN6aW4NCG6G8ZlU39YhwolwZN/Iuqo/lbyP
-	 t0FNWSm67+/ABP1RSctH9I81tNqBJ0c5MsVA3aB2aQpp+BDidh8hFDkRGJbnVC3Uf+OLg
-	 GYlLOOIBcLfZfBRwmKqBuqZk3at3wfrdyKvvB5gaE6AVs6M7hLcldxLjbxwALCtO3kA==
+	bh=lyqeBaXvDfu9imz2qKj09eEL+mrBX3s5JeeDq9WhepY=;
+	b=Jp/hbLv3vkIJbcudyjz6H5ID0+SuFt09zoZ+Zry7YU8Qsgh0Gjr4c65UBlCPOG/7PnqU
+	 jrv4k6vFtIdpP0qYEpYdMPut5N3RwQlGgLpsnk60JMtiRvTiz3PbECU0XwO64Kp6hTPbW
+	 GoHeb6mbxHhz7etIZ0+ktxgNlrOj8gSWrmSLJ7Pelud5mhstzVwJwcB/DdnVFsG3mnQBt
+	 2lY7+rX28mFIs3eXxFUyRQ2a2DvpdDPfxdLQ132khe1jtlAJdVqnXipIOgXh82tTayY2Z
+	 DT5v49bsJtKcdJVa9mhuGp4FyptqPF9IkibLSfdsbiNk0smwrswxwKYWn/Nocpwbsjw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bU5zQAEI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0f+bg4QF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1486606A325;
-	Wed, 18 Nov 2026 21:36:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27CD1606A31C;
+	Wed, 18 Nov 2026 21:36:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bU5zQAEI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8395B1F000C4;
-	Wed, 18 Nov 2026 21:36:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0f+bg4QF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E908A1F000C4;
+	Wed, 18 Nov 2026 21:36:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037786;
-	bh=CeGB8UZBWz/2VGFOa7cxBbw9NOx8ECV6oDBF+MFhxaU=;
+	s=korg; t=1795037789;
+	bh=lyqeBaXvDfu9imz2qKj09eEL+mrBX3s5JeeDq9WhepY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bU5zQAEI+h6rein3EtlM3qSFYIv08eGflhrIBTQm3+7vwkeMyyKVpvocqnppnnxdB
-	 U12lQx+N9wyQqL9S0XiaSQjS+0O29RUuteD+4tzLYWdpCR1kkNX2PqR3X6T6anWUcf
-	 4941v+MRqp4GQdXZFoLN3nCBXHeIiT+xS3zgRsRg=
+	b=0f+bg4QFcWmRpLDUp4PWRA1CQ93uzhsEVQhiH6QN08VrpffhQJCaPGTSh8DFCb0yV
+	 eYfbsvDlVgz76ZfgyZ752HLecuD54ZdF0FmX5gpfPduM/ElxkrHlMHULBLzlFbPm93
+	 iThhuW2ABRSJk5IhHkrqgX8Oy+mAMAOHh14N8Yjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vas Zayarskiy <contact@vasily.cc>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1467/3318] hwmon: (aquacomputer_d5next) Avoid truncating scaled sensor readings
-Date: Wed, 18 Nov 2026 15:34:49 +0100
-Message-ID: <20261118150404.900982678@linuxfoundation.org>
+Subject: [PATCH 6.6 1512/3318] can: proc: reset pkg_stats atomics individually
+Date: Wed, 18 Nov 2026 15:35:34 +0100
+Message-ID: <20261118150406.300838096@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,129 +69,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vas Zayarskiy <contact@vasily.cc>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit c221091f7e30c64280e4cbfa27dc4c05edc96d0c ]
+[ Upstream commit 12297f855bbd943847cb8893a3614caef5a9c2a8 ]
 
-High Flow Next power is reported in watts. Multiplying the 16-bit value
-by one million can overflow both the signed intermediate and the u32
-cache. Store power in long, perform the conversion in u64, and clamp to
-LONG_MAX. The other existing power conversions fit in a signed 32-bit
-value. Return -ENODATA for unavailable power instead of exposing the
-stored error as a reading.
+Commit 80b5f90158d1 ("can: statistics: use atomic access in hot path")
+converted several members of struct can_pkg_stats to atomic_long_t and
+updated the hot TX/RX and procfs read paths to use atomic_long_*()
+helpers. However, can_init_stats() still clears the whole struct with
+memset().
 
-The power cache is updated by HID reports without the hwmon read mutex.
-Read it once with READ_ONCE() and use that snapshot for both the
-availability check and the returned value. Mark the corresponding
-updates with WRITE_ONCE() so that the shared accesses are explicit.
+can_init_stats() is reached from can_stat_update() in timer context and
+also from the procfs reset path. Those paths can run while the TX/RX hot
+paths are concurrently updating rx_frames, tx_frames, matches and their
+*_delta counters. Hitting the whole-struct memset() in that window
+performs plain writes to fields that otherwise follow an atomic_long_t
+access contract, which can lose or mix live statistics updates.
 
-Widen the shared current cache to u32. The Aquastream XT conversion to
-milliamperes can exceed 65535 mA; clamp its negative conversion results
-to zero before assigning to the unsigned cache. This also permits devices
-with scaled aggregate currents to store milliamperes directly.
+This issue was found by source-level API-misuse analysis looking for
+whole-object resets left behind after atomic_long_t conversions, then
+manually audited on Linux v6.18.21.
 
-Fixes: aed80bb91de8 ("hwmon: (aquacomputer_d5next) Add support for Aquacomputer High Flow Next")
+Replace the whole-struct memset() with a helper that resets the
+atomic_long_t counters via atomic_long_set() and clears the derived
+scalar statistics explicitly. This preserves the existing reset
+semantics for scalar fields while restoring atomic access discipline for
+the live counters.
+
+Build-tested by compiling net/can/proc.o on x86_64 netdev/main.
+Runtime-tested with a QEMU + vcan setup on Linux v6.18.21 by driving
+concurrent traffic and reset_stats reads, which reproduced inconsistent
+exported statistics before the fix.
+
+[Hartkopp] can_stat_update() also read the *_delta counters at the
+beginning and cleared them with atomic_long_set() at the end. Increments
+from the hot path in between were lost for both the current and the next
+interval. Use atomic_long_xchg() to fetch and clear the *_delta counters
+in one atomic step instead.
+
+On x86_64 atomic_long_set() is a plain store like memset(), so the
+memset() is an actual problem only on architectures with lock-based
+atomics (e.g. parisc). The inconsistencies seen on x86_64 come from the
+*_delta handling and from the stale snapshots, which are fixed in "can:
+proc: skip stats calculation after reset in can_stat_update()". As
+before, the counters are reset one at a time and the derived scalar
+statistics use plain stores.
+
+Fixes: 80b5f90158d1 ("can: statistics: use atomic access in hot path")
 Cc: stable@vger.kernel.org
-Signed-off-by: Vas Zayarskiy <contact@vasily.cc>
-Link: https://patch.msgid.link/20260927191316.4137752-2-contact@vasily.cc
-[groeck: Dropped obsolete 'Assisted-by: tag]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20261027-can-rx-lock-v12-5-eb5afc2d8b9b@hartkopp.net
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/aquacomputer_d5next.c | 29 ++++++++++++++++++-----------
- 1 file changed, 18 insertions(+), 11 deletions(-)
+ net/can/proc.c | 39 +++++++++++++++++++++++++++++----------
+ 1 file changed, 29 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/hwmon/aquacomputer_d5next.c b/drivers/hwmon/aquacomputer_d5next.c
-index e9207cd6063ee..6efbe94110a80 100644
---- a/drivers/hwmon/aquacomputer_d5next.c
-+++ b/drivers/hwmon/aquacomputer_d5next.c
-@@ -18,6 +18,7 @@
- #include <linux/hwmon.h>
- #include <linux/jiffies.h>
- #include <linux/ktime.h>
-+#include <linux/limits.h>
- #include <linux/module.h>
- #include <linux/mutex.h>
- #include <linux/seq_file.h>
-@@ -571,9 +572,9 @@ struct aqc_data {
- 	u32 speed_input_min[1];
- 	u32 speed_input_target[1];
- 	u32 speed_input_max[1];
--	u32 power_input[8];
-+	long power_input[8];
- 	u16 voltage_input[8];
--	u16 current_input[8];
-+	u32 current_input[8];
+diff --git a/net/can/proc.c b/net/can/proc.c
+index 2f78ea8ac30b0..0f2cbc5816831 100644
+--- a/net/can/proc.c
++++ b/net/can/proc.c
+@@ -76,16 +76,39 @@ static const char rx_list_name[][8] = {
+  * af_can statistics stuff
+  */
  
- 	/* Label values */
- 	const char *const *temp_label;
-@@ -954,7 +955,7 @@ static int aqc_legacy_read(struct aqc_data *priv)
- 
- 		/* Calculation derived from linear regression */
- 		sensor_value = get_unaligned_le16(priv->buffer + AQUASTREAMXT_PUMP_CURR_OFFSET);
--		priv->current_input[0] = DIV_ROUND_CLOSEST(sensor_value * 176, 100) - 52;
-+		priv->current_input[0] = max(DIV_ROUND_CLOSEST(sensor_value * 176, 100) - 52, 0);
- 
- 		sensor_value = get_unaligned_le16(priv->buffer + AQUASTREAMXT_PUMP_VOLTAGE_OFFSET);
- 		priv->voltage_input[0] = DIV_ROUND_CLOSEST(sensor_value * 1000, 61);
-@@ -976,6 +977,7 @@ static int aqc_legacy_read(struct aqc_data *priv)
- static int aqc_read(struct device *dev, enum hwmon_sensor_types type, u32 attr,
- 		    int channel, long *val)
++static void can_reset_pkg_stats(struct can_pkg_stats *pkg_stats)
++{
++	atomic_long_set(&pkg_stats->rx_frames, 0);
++	atomic_long_set(&pkg_stats->tx_frames, 0);
++	atomic_long_set(&pkg_stats->matches, 0);
++
++	pkg_stats->total_rx_rate = 0;
++	pkg_stats->total_tx_rate = 0;
++	pkg_stats->total_rx_match_ratio = 0;
++
++	pkg_stats->current_rx_rate = 0;
++	pkg_stats->current_tx_rate = 0;
++	pkg_stats->current_rx_match_ratio = 0;
++
++	pkg_stats->max_rx_rate = 0;
++	pkg_stats->max_tx_rate = 0;
++	pkg_stats->max_rx_match_ratio = 0;
++
++	atomic_long_set(&pkg_stats->rx_frames_delta, 0);
++	atomic_long_set(&pkg_stats->tx_frames_delta, 0);
++	atomic_long_set(&pkg_stats->matches_delta, 0);
++}
++
+ static void can_init_stats(struct net *net)
  {
-+	long power;
- 	int ret;
- 	struct aqc_data *priv = dev_get_drvdata(dev);
+ 	struct can_pkg_stats *pkg_stats = net->can.pkg_stats;
+ 	struct can_rcv_lists_stats *rcv_lists_stats = net->can.rcv_lists_stats;
+ 	/*
+-	 * This memset function is called from a timer context (when
++	 * This stats reset is called from a timer context (when
+ 	 * can_stattimer is active which is the default) OR in a process
+ 	 * context (reading the proc_fs when can_stattimer is disabled).
+ 	 */
+-	memset(pkg_stats, 0, sizeof(struct can_pkg_stats));
++	can_reset_pkg_stats(pkg_stats);
+ 	pkg_stats->jiffies_init = jiffies;
  
-@@ -1040,7 +1042,10 @@ static int aqc_read(struct device *dev, enum hwmon_sensor_types type, u32 attr,
- 		}
- 		break;
- 	case hwmon_power:
--		*val = priv->power_input[channel];
-+		power = READ_ONCE(priv->power_input[channel]);
-+		if (power == -ENODATA)
-+			return -ENODATA;
-+		*val = power;
- 		break;
- 	case hwmon_pwm:
- 		switch (priv->kind) {
-@@ -1337,9 +1342,9 @@ static int aqc_raw_event(struct hid_device *hdev, struct hid_report *report, u8
- 		priv->speed_input[i] =
- 		    get_unaligned_be16(data + priv->fan_sensor_offsets[i] +
- 				       priv->fan_structure->speed);
--		priv->power_input[i] =
--		    get_unaligned_be16(data + priv->fan_sensor_offsets[i] +
--				       priv->fan_structure->power) * 10000;
-+		WRITE_ONCE(priv->power_input[i],
-+			   get_unaligned_be16(data + priv->fan_sensor_offsets[i] +
-+					      priv->fan_structure->power) * 10000);
- 		priv->voltage_input[i] =
- 		    get_unaligned_be16(data + priv->fan_sensor_offsets[i] +
- 				       priv->fan_structure->voltage) * 10;
-@@ -1379,7 +1384,8 @@ static int aqc_raw_event(struct hid_device *hdev, struct hid_report *report, u8
- 		priv->speed_input[2] = get_unaligned_be16(data + AQUASTREAMULT_PRESSURE_OFFSET);
- 		priv->speed_input[3] = get_unaligned_be16(data + AQUASTREAMULT_FLOW_SENSOR_OFFSET);
+ 	rcv_lists_stats->stats_reset++;
+@@ -121,9 +144,10 @@ void can_stat_update(struct timer_list *t)
+ 	long rx_frames = atomic_long_read(&pkg_stats->rx_frames);
+ 	long tx_frames = atomic_long_read(&pkg_stats->tx_frames);
+ 	long matches = atomic_long_read(&pkg_stats->matches);
+-	long rx_frames_delta = atomic_long_read(&pkg_stats->rx_frames_delta);
+-	long tx_frames_delta = atomic_long_read(&pkg_stats->tx_frames_delta);
+-	long matches_delta = atomic_long_read(&pkg_stats->matches_delta);
++	/* fetch and clear values for 'current rate' calculation */
++	long rx_frames_delta = atomic_long_xchg(&pkg_stats->rx_frames_delta, 0);
++	long tx_frames_delta = atomic_long_xchg(&pkg_stats->tx_frames_delta, 0);
++	long matches_delta = atomic_long_xchg(&pkg_stats->matches_delta, 0);
  
--		priv->power_input[1] = get_unaligned_be16(data + AQUASTREAMULT_PUMP_POWER) * 10000;
-+		WRITE_ONCE(priv->power_input[1],
-+			   get_unaligned_be16(data + AQUASTREAMULT_PUMP_POWER) * 10000);
+ 	/* restart counting in timer context on user request */
+ 	if (user_reset)
+@@ -172,11 +196,6 @@ void can_stat_update(struct timer_list *t)
+ 	if (pkg_stats->max_rx_match_ratio < pkg_stats->current_rx_match_ratio)
+ 		pkg_stats->max_rx_match_ratio = pkg_stats->current_rx_match_ratio;
  
- 		priv->voltage_input[1] = get_unaligned_be16(data + AQUASTREAMULT_PUMP_VOLTAGE) * 10;
- 
-@@ -1392,10 +1398,11 @@ static int aqc_raw_event(struct hid_device *hdev, struct hid_report *report, u8
- 	case highflownext:
- 		/* If external temp sensor is not connected, its power reading is also N/A */
- 		if (priv->temp_input[1] == -ENODATA)
--			priv->power_input[0] = -ENODATA;
-+			WRITE_ONCE(priv->power_input[0], -ENODATA);
- 		else
--			priv->power_input[0] =
--			    get_unaligned_be16(data + HIGHFLOWNEXT_POWER) * 1000000;
-+			WRITE_ONCE(priv->power_input[0],
-+				   min_t(u64, get_unaligned_be16(data + HIGHFLOWNEXT_POWER) *
-+					 1000000ULL, LONG_MAX));
- 
- 		priv->voltage_input[0] = get_unaligned_be16(data + HIGHFLOWNEXT_5V_VOLTAGE) * 10;
- 		priv->voltage_input[1] =
+-	/* clear values for 'current rate' calculation */
+-	atomic_long_set(&pkg_stats->tx_frames_delta, 0);
+-	atomic_long_set(&pkg_stats->rx_frames_delta, 0);
+-	atomic_long_set(&pkg_stats->matches_delta, 0);
+-
+ 	/* restart timer (one second) */
+ 	mod_timer(&net->can.stattimer, round_jiffies(jiffies + HZ));
+ }
 -- 
 2.53.0
 
