@@ -1,58 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035451;
-	b=lHBhAv8em+W9kZPdurYk/IX87R/vjoLVFRE6nU5In1SADrjXl9PjThik04qV6VFyHKEF
-	 cT0snnYxD5pzTRinLXgqEK6WARqiMhTIN0DWZWjS018NTLlqk1pzkKgJmNh1sRwD9wkpO
-	 VurXX9jkI/7io3zDzyziQ+Q/+eNECdaHgCoL4A5MisdsOz0irjB3Y4BlRhRm9w18EZvl4
-	 mBtWkpnucDfxrNdSfKFvaPy9OM67+JfJ4SQf0VM4mwoI63rj7C7diw+9x9t0vmp3dJpNd
-	 KfKRm1QN/+i5JblLvLg3B6o5IZq+nhZBwx6QOJQkDdbFlsUsbu9uOIUwdHlx4UAHFmg==
+	t=1795035454;
+	b=sjPpGN/HCFORt7e7tBzj7YCmxOHJwULIyj0A38W5J4lgXyKhllE+BWCA9u1ufzh1JzZn
+	 bJHciB119CHJz2MWL8u2su0PL6YfYlWKW2Keqr6showA/ZUgtDIyCmP+lsMvaV3clp6KY
+	 JW9BZYfjWcC6hJUWyjXBftY6HB5w1wztme8GgCKcQQeqI30zs5NUIPAzLR+vplg3QdNW6
+	 t8RaBFlNGOuui8Fq46uC/QhTYv+3sZShgKtcHELCJZ4JqUaX/IaClFqzqyv7XbfArWvpC
+	 JWEsYJgtxDm2z8ppexCoi1FtDUJMH37Nlo5ikwEZW8JdMTEkt6aY+GBTV2VjeNnCCeg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035451;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035454;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mtG9sL5315uLfYSmLPpXq1xRpypE0u2nk6bkkGDoVuA=;
-	b=vJTEo8I2PMzgIabMPqPA+vSCxGf2nuCpWszIvKQtkTHrmugPbe0CWn2YEDhNOQZaZpgE
-	 fYfg2KvZKBMm4L2QoJ2ANWgwqW7Sc1ITqnnUXS40PzWKgCBTrcHPuR83qLuiXv62rMtML
-	 MyN7M/W/ytnuyGfOD9v/XjiVeXL/PnJ0240g9Xq6NisbwWBgWK0DTyQ6fMnKF8vtG/Ntj
-	 d996XcZYC8RAICviUOMEsRENeG+Sc5+deXlzw+FWI3UUNUSrSrrp5SIBP4TsRaEZRcGEL
-	 2YblEFoxJnNL7jmRSKaOhA2ht4HOIVv1ba9uDDpzfW+EBQOWL265EELbDqVPo7wIbkA==
+	bh=NTHY5ZS+YQt2eORamglGdxxObbIMvtIXSjgwjVHDxsA=;
+	b=L+2ntCRaKglqErI07brADzg1k/mV99ieaqNynwRTZKwT9DrH6Y5pwIavad8V15jpw57D
+	 xmLCZPOGQLDiWkyiRMb0ZAECZJboYVfZljKuLSUTODZ1EOfk+1VyCaE47ZpSRuyLlOagp
+	 LaVi0mN1d74SNjw6uX1ePjwAWB6gycKFs2k0OPUqZSJn5e6w4YLaM89Kyz4kbqRAE2lLN
+	 6fGGZVNe0DcDak9vefcO3CaNk9MAuSFxBwTZDO+L4T/k6EUTHiauQfMmyfsos7LocfhI7
+	 lJT+N/lam1GllBxLGOSainJ/JP6eAcW4OXhbTT92z+TjETfIcEAxoVwTv5NxUNOQqpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zoJAMrnN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uYz0ZyMt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98160606A31C;
-	Wed, 18 Nov 2026 20:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6728C606A31C;
+	Wed, 18 Nov 2026 20:57:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zoJAMrnN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029721F000C4;
-	Wed, 18 Nov 2026 20:57:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uYz0ZyMt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B99F91F000C4;
+	Wed, 18 Nov 2026 20:57:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035451;
-	bh=mtG9sL5315uLfYSmLPpXq1xRpypE0u2nk6bkkGDoVuA=;
+	s=korg; t=1795035454;
+	bh=NTHY5ZS+YQt2eORamglGdxxObbIMvtIXSjgwjVHDxsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zoJAMrnNa5PYst2LPWFAJy9mUxhBNvvPE6olBH2oY/1WWApnHOkgf5WX5Z8m67GkM
-	 ZMyZNaqe+8LyKde0g8aBUa+aTCH7i49Xc2rIKf+F/Ny9YTHSKlzBHZMUW2X6NoU6y9
-	 owfeKUMwpjdvmmR3aEYo26Q/svMWdbAKi4nTBHn0=
+	b=uYz0ZyMtsMraUs3k1jVceKkhg/Lybsi1niDlODreF+9uThsXZd2EgyGi4VgJdGirh
+	 ewsOsnlpg9yEVLNO8N5GpnzaTmxX+gUl4z4Cb9CV7mp+az7EVQPiNI/8UyIC6Nl9Qd
+	 vqEHR0N8c9csjFTYzGkw3KPSXW3LhXfoJgc8bd8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org
-Subject: [PATCH 6.6 0710/3318] rxrpc: Fix double IRQ enablement
-Date: Wed, 18 Nov 2026 15:22:12 +0100
-Message-ID: <20261118150339.727641909@linuxfoundation.org>
+	Stefan Teodorescu <fane@google.com>,
+	Yosry Ahmed <yosry@kernel.org>,
+	Nikunj A Dadhania <nikunj@amd.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.6 0711/3318] KVM: SVM: Trigger new ASID allocation in both VMCBs on pCPU switch
+Date: Wed, 18 Nov 2026 15:22:13 +0100
+Message-ID: <20261118150339.763748331@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -74,70 +69,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Yosry Ahmed <yosry@kernel.org>
 
-commit 41eb0af096ba8754e584d47e6de42f1e4980ceae upstream.
+commit bf260dc9e7b8bfcd06c1a8e739797b1cf0917c72 upstream.
 
-rxrpc_notify_socket() explicitly disables and then re-enables IRQs, but one
-of its call chains (rxrpc_input_queue_data() -> rxrpc_end_rx_phase() ->
-rxrpc_call_completed() -> rxrpc_set_call_completion()) has IRQs disabled
-around it.
+When the pCPU where the VMCB was most recently used is switched, reset
+the ASID generation in both VMCBs, triggering new ASID allocation for
+the immediate VMRUN as well as the next VMRUN on the other VMCB.
 
-Fix this by making rxrpc_notify_socket() use irqsave spinlocks.
+The ASID is shared between vmcb01 and vmcb02, and gets flushed on every
+nested transition. However, since pCPU tracking is done per VMCB, it is
+possible for one VMCB to allocate a new ASID when migrated to a new
+pCPU, and then the other VMCB reuses that ASID on the old pCPU. This can
+result in the same ASID being used by multiple vCPUs on the old pCPU.
 
-Fixes: a2ea9a907260 ("rxrpc: Use irq-disabling spinlocks between app and I/O thread")
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260812110129.979970-6-dhowells@redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Eric Dumazet <edumazet@google.com>
-cc: "David S. Miller" <davem@davemloft.net>
-cc: Jakub Kicinski <kuba@kernel.org>
-cc: Paolo Abeni <pabeni@redhat.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20261006133011.531806-9-dhowells@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Example scenario:
+- vCPU runs on pCPU A, vmcb01 is active, asid=1.
+- vCPU migrates to pCPU B, vmcb01 pCPU changes, new asid=2.
+- Another vCPU runs on pCPU A and allocates asid=2 as well.
+- vCPU migrates back to pCPU A, and then switches to vmcb02 before it
+  runs again with vmcb01.
+- No pCPU switch is detected for vmcb02, so VMRUN is done with asid=2.
+- Two vCPUs end up using asid=2 on the same pCPU.
+
+Keep the VMCB dirtying to the active VMCB only. Clean bits are tracked
+by a pCPU for each VMCB, so do not unnecessarily dirty a VMCB if its
+pCPU does not change.
+
+Additionally, initialize the tracked pCPU for vmcb02 to -1 on nested
+enablement as hardening, so that a new ASID allocation is always
+triggered when nested is disabled and re-enabled.
+
+No performance regression was noticed when overcommitting L1 vCPUs in L0
+(to force rescheduling), pinning L1 <-> L2 vCPUs, and running CPUID in a
+tight loop bouncing between 2 vCPUs in L2.
+
+An alternative (and perhaps more proper) fix would be tracking the ASID
+per-VMCB instead (e.g. [1]). However, that's a more involved change, and
+it would result in having different ASIDs for L1 and L2 without actually
+properly maintaining them. It would probably work because all TLB
+flushes target the current VMCB, and the other VMCB is always flushed on
+nested transitions, but the code ends up in an arguably more fragile
+state. Punt a proper clean fix to an incoming (and overdue) overhaul of
+SVM's ASID usage [2].
+
+[1] https://lore.kernel.org/lkml/20250205182402.2147495-2-yosry.ahmed@linux.dev
+[2] https://lore.kernel.org/kvm/20260728003557.1136583-1-yosry@kernel.org
+
+Cc: stable@vger.kernel.org
+Reported-by: Stefan Teodorescu <fane@google.com>
+Signed-off-by: Yosry Ahmed <yosry@kernel.org>
+Reviewed-by: Nikunj A Dadhania <nikunj@amd.com>
+Link: https://patch.msgid.link/20260903223258.486034-1-yosry@kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/recvmsg.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ arch/x86/kvm/svm/nested.c |    1 +
+ arch/x86/kvm/svm/svm.c    |   19 +++++++++++++++----
+ 2 files changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/net/rxrpc/recvmsg.c b/net/rxrpc/recvmsg.c
-index efcba4b2e74f..56fa324d0962 100644
---- a/net/rxrpc/recvmsg.c
-+++ b/net/rxrpc/recvmsg.c
-@@ -24,6 +24,7 @@ void rxrpc_notify_socket(struct rxrpc_call *call)
- {
- 	struct rxrpc_sock *rx;
- 	struct sock *sk;
-+	unsigned long flags;
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -1232,6 +1232,7 @@ int svm_allocate_nested(struct vcpu_svm
+ 		goto err_free_vmcb02;
+ 	svm_vcpu_init_msrpm(&svm->vcpu, svm->nested.msrpm);
  
- 	_enter("%d", call->debug_id);
++	svm->nested.vmcb02.cpu = -1;
+ 	svm->nested.initialized = true;
+ 	return 0;
  
-@@ -38,16 +39,16 @@ void rxrpc_notify_socket(struct rxrpc_call *call)
- 	sk = &rx->sk;
- 	if (rx && sk->sk_state < RXRPC_CLOSE) {
- 		if (call->notify_rx) {
--			spin_lock_irq(&call->notify_lock);
-+			spin_lock_irqsave(&call->notify_lock, flags);
- 			call->notify_rx(sk, call, call->user_call_ID);
--			spin_unlock_irq(&call->notify_lock);
-+			spin_unlock_irqrestore(&call->notify_lock, flags);
- 		} else {
--			spin_lock_irq(&rx->recvmsg_lock);
-+			spin_lock_irqsave(&rx->recvmsg_lock, flags);
- 			if (list_empty(&call->recvmsg_link)) {
- 				rxrpc_get_call(call, rxrpc_call_get_notify_socket);
- 				list_add_tail(&call->recvmsg_link, &rx->recvmsg_q);
- 			}
--			spin_unlock_irq(&rx->recvmsg_lock);
-+			spin_unlock_irqrestore(&rx->recvmsg_lock, flags);
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -3649,14 +3649,25 @@ static void pre_svm_run(struct kvm_vcpu
+ 	struct vcpu_svm *svm = to_svm(vcpu);
  
- 			if (!sock_flag(sk, SOCK_DEAD)) {
- 				_debug("call %ps", sk->sk_data_ready);
--- 
-2.56.0
-
+ 	/*
+-	 * If the previous vmrun of the vmcb occurred on a different physical
+-	 * cpu, then mark the vmcb dirty and assign a new asid.  Hardware's
+-	 * vmcb clean bits are per logical CPU, as are KVM's asid assignments.
++	 * If the previous VMRUN of the VMCB occurred on a different physical
++	 * cpu, then mark the VMCB dirty as hardware's clean bits are per pCPU.
++	 *
++	 * Reset the ASID generation in both VMCBs. This will lead to assigning
++	 * a new ASID now, and then again when switching to the other VMCB.
++	 * However, this is needed as the ASID is shared between the VMCBs, and
++	 * otherwise it would be possible to use an ASID allocated on one pCPU
++	 * on another, for example:
++	 * - vCPU migrates from pCPU A to pCPU B, allocates a new ASID.
++	 * - vCPU migrates back to pCPU A, and then switches the VMCB.
++	 * - The new VMCB does not detect a pCPU change and runs on pCPU A with
++	 *   the new ASID allocated on pCPU B, which is potentially used by
++	 *   another vCPU/VM.
+ 	 */
+ 	if (unlikely(svm->current_vmcb->cpu != vcpu->cpu)) {
+-		svm->current_vmcb->asid_generation = 0;
+ 		vmcb_mark_all_dirty(svm->vmcb);
+ 		svm->current_vmcb->cpu = vcpu->cpu;
++		svm->vmcb01.asid_generation = 0;
++		svm->nested.vmcb02.asid_generation = 0;
+         }
+ 
+ 	if (sev_guest(vcpu->kvm))
 
 
