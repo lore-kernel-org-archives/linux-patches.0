@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020625;
-	b=Py5f5CzUc1SLSYRGdGsNJeOZbKAXShchUQgWHKCDZOg7J8CbyaV3mjr0akDujlXAmGuL
-	 6rc6/E0yRxRRyTcAqGSvD1jeJvmygt6k96GAo0+K6pco4sFpEcPnjAeEwIBwBGiYino2B
-	 381TthsK0gOKwcuodqs/llmC9I1sMlotMIwfzw1R3kHs0Ofc37eW9e/wQHp0JofmyWU2D
-	 C4MYAN/qBkUhQkIEb4HXb4KTlVHuG+4iS9JqfzL+U67xDWDNKTkcrkfWpx6KKo9pJqDYL
-	 owZllbbUvdYK0M1HE7S/Ey+3uqiINHCBjaHbDBJOyUce9HQlx31V9ZfSCYoOAGUtEFA==
+	t=1795020628;
+	b=OAw6SsrHRM/DnzB2gsqicOk+co8yDVHDc+l/xb+C2sdpl7HuxhleBdcEXsaXBLMo1afP
+	 FoLEND7cHDxrE41XHoRbpn2V9pYJabGCWJAxHqc2kwpFXkM/M/ZuOPjkozAsrZGs+z1pM
+	 qc4NdWlLxafBpCR2txO21wgClEKe0ftzyTtRxsdQtyRDZOvE0J8B+cgijKFPdUkyX8gNK
+	 sgz6DyvDmWfDNhzQjblab1FGES82cN8p+8nMEBaIEyqcMo+u7yaIvrp2GcKD8zKowrrRu
+	 86Vfb3B926gf1GYh2WBE+HsPFlEEmmm56HlpekH5ErtuSl778mp9MckzyJ1Nhvb8n8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020625;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020628;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=GrpB+J/d+uaVT0ujZBZbfiDrocDIunEuqVQqY3JmWGE=;
-	b=NuUJyzF+9yjdM1ok+IZzhGJk9HoaU5jYe2XFObOHnEnbcQwa8OxRNlmc+2TXMmZRp1xN
-	 CBZQKjEdRsWPJFzBox44cCbwKi9zS2av/8Az9nfBaDzGJmz3Rtw2AdwmkvpJVBZEqnTQX
-	 hubrPGkUdazAJ+P3WWczI/Zvw+qwvIG/Cn+rwywDL2AdwNTNu8svnPnIXBKjGCwGx8C5L
-	 6/7TQz5+KOx+YC07kzAUxfvMwhTgIBb/iz2wxPTiQr06A1YFbocUDQGNNSfav0ff3wtC3
-	 qFAlTxM8sVdxZ4u+tlB/EBLKbW+cRKvGmwYjCp5jvR8Zm6euZ4wEGzeYFLlhSp3N9/w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=d0uECeuSFcJIn2m7wTiPE3TZtWGqj1vSh6as9shuUvQ=;
+	b=ziApghopX2V7mC5jvT1HgvsSCRqxu/5S14jh48NjVQoA4KWRz972Ie6cksq2hkZmgZ/C
+	 9jLfrjc5hhOGjaFb70Y/b1bM6bA6szh650iAt/Lh+S+GbyQcBvprjnAjI3GInA9u06hG1
+	 /QOH5RMwA1yylt8XnYo23QNlDyNsWMSQrv6jrJ7TTBECn/jNwoNvWjk/mXec+N/X8msv9
+	 5RPTApW8T0v/rP5DVDatq2nNrpyJQnfjN/8FM37MYlbSFBTDPFGenedYf0yntRKVsjOQl
+	 3GFdDDTh1rR3eOREESpkcwScfWk/gt11ITEueDDn9S84B5rHTxv/MQpA5NxWh7WOmZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZivdxZvT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S0n87qij;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD362606A32A;
-	Wed, 18 Nov 2026 16:50:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7262C606A32A;
+	Wed, 18 Nov 2026 16:50:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZivdxZvT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0948A1F000C4;
-	Wed, 18 Nov 2026 16:50:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S0n87qij
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8C6D1F000C4;
+	Wed, 18 Nov 2026 16:50:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020625;
-	bh=GrpB+J/d+uaVT0ujZBZbfiDrocDIunEuqVQqY3JmWGE=;
+	s=korg; t=1795020628;
+	bh=d0uECeuSFcJIn2m7wTiPE3TZtWGqj1vSh6as9shuUvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZivdxZvT0ZfHjIrA8q6ZpkpWHbUbN/o9qr6ZOKrLMZvyeBVaI1D5t65LqvR1OOyGs
-	 L1rMxvRid16RvbRBDk0EwO+5I0pjKh9Ykp/1cKyukaL/epoSYhyeuut2S5SKTNfEdv
-	 ZkxJo6JsEL/95HxamEVjUsZcielZ8GrxZRZexqHc=
+	b=S0n87qijB05SIL4m0SwFR8MIuV7RtC8car/70PsYo+TPzf1mFMEcUcvPcv9cg0t53
+	 0RvDOKpJb/OwkCJUdV+aPvCpKDrNyblNP95hb0KuEwqy5Q3mbtWQ+HVG3XUV0x8X5Y
+	 fzqlsythTbyH3Q1DjOpsZcSN2dv5lDobWN/BXI18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Stefano Munari <stefanomunari.sm@gmail.com>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Daniel Machon <daniel.machon@microchip.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2019/2651] macsec: prevent AES-GCM nonce reuse after packet number wrap
-Date: Wed, 18 Nov 2026 15:54:19 +0100
-Message-ID: <20261118150358.907608993@linuxfoundation.org>
+Subject: [PATCH 7.3 2020/2651] net: usb: lan78xx: reject invalid EEPROM write requests
+Date: Wed, 18 Nov 2026 15:54:20 +0100
+Message-ID: <20261118150358.939117267@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,67 +64,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Stefano Munari <stefanomunari.sm@gmail.com>
 
-[ Upstream commit 94d51c59f0a872c57cb8daa1964ec033d77a79fb ]
+[ Upstream commit 9272297df14124fe603c81e40b52ff0c5dd88652 ]
 
-After allocating the last valid packet number, MACsec wraps next_pn to
-zero and deactivates the transmit SA. This happens for both 32- and
-64-bit types of packet numbers (at values 0xffffffff and
-0xffffffffffffffff, respectively).
+The runtime PM handling removed the -EINVAL return for invalid
+EEPROM/OTP write requests. These requests now return zero from a
+successful usb_autopm_get_interface() call, even though no data is
+written.
 
-TX packets that were still getting processed during deactivation keep
-being processed and then receive packet numbers. The first gets 0 and
-is correctly dropped, but next_pn is incremented to 1, which makes the
-next packet take number 1. It then does not get dropped and may induce
-a reuse of the AES-GCM nonce corresponding to value 1.
+Set ret to -EINVAL for invalid requests while preserving the runtime
+PM reference release.
 
-This race affects TX packets that have already passed the SA activity
-check: packets that observe the inactive SA are correctly dropped.
-Reactivating the SA after PN wrap without a packet number can also
-cause nonce reuse. Keep next_pn at 0 after wrap, even if the SA is
-reactivated, so further packet number allocations return 0 and the
-corresponding packets are dropped.
-
-Fixes: c09440f7dcb3 ("macsec: introduce IEEE 802.1AE driver")
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Link: https://patch.msgid.link/20261008080625.360063-2-Jeremy.Jean@oss.cyber.gouv.fr
+Fixes: 8a7ffeb795f8 ("lan78xx: Fix for eeprom read/write when device auto suspend")
+Signed-off-by: Stefano Munari <stefanomunari.sm@gmail.com>
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Tested-by: Nicolai Buchwitz <nb@tipi-net.de> # Raspberry Pi 3B+ (LAN7515)
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20261010213248.15938-1-stefanomunari.sm@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/macsec.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/usb/lan78xx.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
-index 78a19b1346321..233391acebb0f 100644
---- a/drivers/net/macsec.c
-+++ b/drivers/net/macsec.c
-@@ -486,6 +486,9 @@ static pn_t tx_sa_update_pn(struct macsec_tx_sa *tx_sa,
- 	spin_lock_bh(&tx_sa->lock);
+diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
+index 5655941f14783..2fed938fc7f41 100644
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -1712,13 +1712,16 @@ static int lan78xx_ethtool_set_eeprom(struct net_device *netdev,
+ 	/* Invalid EEPROM_INDICATOR at offset zero will result in a failure
+ 	 * to load data from EEPROM
+ 	 */
+-	if (ee->magic == LAN78XX_EEPROM_MAGIC)
++	if (ee->magic == LAN78XX_EEPROM_MAGIC) {
+ 		ret = lan78xx_write_raw_eeprom(dev, ee->offset, ee->len, data);
+-	else if ((ee->magic == LAN78XX_OTP_MAGIC) &&
++	} else if ((ee->magic == LAN78XX_OTP_MAGIC) &&
+ 		 (ee->offset == 0) &&
+ 		 (ee->len == 512) &&
+-		 (data[0] == OTP_INDICATOR_1))
++		 (data[0] == OTP_INDICATOR_1)) {
+ 		ret = lan78xx_write_raw_otp(dev, ee->offset, ee->len, data);
++	} else {
++		ret = -EINVAL;
++	}
  
- 	pn = tx_sa->next_pn_halves;
-+	if (unlikely(pn.full64 == 0))
-+		goto out;
-+
- 	if (secy->xpn)
- 		tx_sa->next_pn++;
- 	else
-@@ -493,6 +496,8 @@ static pn_t tx_sa_update_pn(struct macsec_tx_sa *tx_sa,
+ 	usb_autopm_put_interface(dev->intf);
  
- 	if (tx_sa->next_pn == 0)
- 		__macsec_pn_wrapped(secy, tx_sa);
-+
-+out:
- 	spin_unlock_bh(&tx_sa->lock);
- 
- 	return pn;
 -- 
 2.53.0
 
