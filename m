@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020561;
-	b=CSJ9bEgQ6xADJw1VfawU3C1BoibAjJU/twS5QLu6c3QSa06BgMsXzIuBHCKgf1dsUtCo
-	 UHhXinkXNGBOoRmR0x9Q+ZhhWbH1smhzYW2OwMN07kw84fq19R60u3WHAVdMwgAhvXf7l
-	 mvCe64yObEAbRswXpDxWUBeFP1FVoO/x7/Y/WhpBCVggQqWP8RSqd5Q/Uy5i78Kxq2JJe
-	 YQwjeXmO3Ua3VhD8l1MnSZPcd5KM/0o6WUJ1QvA9V2AX7k/Ll1dZ0UtsIO+7XXzuvH/Eh
-	 9HC9bms0b7metGFCLt8aoCBVO1rI2efP+fjifdJUnFs4R+hctTEVvUWsLM0vCh2jWgA==
+	t=1795020564;
+	b=MrPTGD+ImO4jNB60xwf7VEsAKANeKNSZ2dInnc7O4Z9cNvS/cZhHlcLA4y0FuornuoAt
+	 PLCPrrM+7O0x+m8vMVvFeL/SsKJwY6pdsO78gljBRQ5475zvf+uIO3DnCJbrAPiiiDfaS
+	 K2jd5pIaTilAJ4Fjj2PQ3HCw0lI0ghbmDG9l0/EK1sj74emLV2Z03Kk3QbjM3wLCFIYM7
+	 dsF/uUTya/SJrSS0BPdH8dJZ+FowtTJsYLqKvAoGlENHMBKXDKhC/JjxSmiqkwUyP9r+2
+	 1SdZB2KG7RvbAfLzsMrt0kOR5RzPY+HNLDrLJq2IhSA1lZsFok2GaQtOrasPmSawqLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020561;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020564;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=z0Yuz8ViZmwLrAjAsnW4gY4ToP+8Q01vc5UaaOOYZps=;
-	b=CX5AE7dN7ISoD3Z2ebWBNAPjfxPOcerEnQUwHaS5762eXgGYdvirgO9fvGNUwAaMjE4o
-	 4s1LTvqCEZhaF06JqT9bV5ICSTCO76kydrOEokQ7QrnomOs3vZpBWFYS9pxVjmc+Q8GW9
-	 hi8lQLHECdb7JQXm7d9brGxQZEI5U4miJqhg827MiL6R4mOkb+yp2ka4wKHQmlSHcgcqt
-	 0nud02mOwwnMrWhemAAfq/ZEM/RPJFl2O5+Krw30WCE9AKBPDMXv4hmq8mN19PSCcmy2/
-	 0yJwgWm8+Qkw2mXuRNxNdrsFFggoyFWTUMblCjd+Iv/NVNp1bQQVyY88hnkaF0Kryxg==
+	bh=zAY+9DHasRDdwLoYb9+NrR/xGyXp9RExjFz70gAw7Tw=;
+	b=KqyfT/eBv2H9Ftt1cni+nLM6nkVTp+zGObstjn8bPIFRnFpDdzZ8PTVVPwOo4N07RK8T
+	 RBd1xPRmOUiP9tTpKCspcKuZ+BALz7zmLYNHqvfN8MQd/zsG4H+UjnYzGAWXudvNOxP5c
+	 IrYHV5J+vxwXDnC/2CRgnbp8nUowk0k4V6CvIAxHFuJZQnJ1e22sm7o4dAxkswrMmswa8
+	 qtJd+12pQRVWVk3gycEB7C7vRIkvW5GXUM9+Nz5aZrXFNxta38RQj03r0KdEtg9dFUd4n
+	 fI2mfsUgQAhuiVSEsJeJLUXREvmYA8Ci/RNKc3646bB0AirJP1ANJpQpkiPLQ98WZhA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gezYdcGg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rQEyxfb5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A34B3606A31C;
-	Wed, 18 Nov 2026 16:49:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21F93606A31C;
+	Wed, 18 Nov 2026 16:49:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gezYdcGg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04FE1F000C4;
-	Wed, 18 Nov 2026 16:49:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rQEyxfb5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77CF21F000C4;
+	Wed, 18 Nov 2026 16:49:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020561;
-	bh=z0Yuz8ViZmwLrAjAsnW4gY4ToP+8Q01vc5UaaOOYZps=;
+	s=korg; t=1795020564;
+	bh=zAY+9DHasRDdwLoYb9+NrR/xGyXp9RExjFz70gAw7Tw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gezYdcGgXpEeE3xfwOaYmVICV9HwrdhPRcRvS+kQtB2cGoNL7iacTZ0DBLjclK72e
-	 qtEK5LkYd07FhVqb60Uk/80EZbc+OEXx8CigaBAs5aJmHgkm94/JBCBH+pqhjcmNZE
-	 3mvuTkrWptSANNLkCjuOQtWMYNWYpjm73F8K9j3c=
+	b=rQEyxfb5ysoptdDcWtrgGw6bf14+nU19RBJreE87RvQHvZjz4EEO2n7zUlRJ0aFRG
+	 hocMTqefh++RiY+TGIFXW7WBO274cGb/d/XICXgLIwO+G5zrV9UK3pkZt1OUzkE4l3
+	 Q6Uy97H3hnuxtS18QWGETYQUsmkH8pA9NocyBe+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaewon Jung <jaewon8868@gmail.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1968/2651] selftests/ftrace: Avoid unlink error on first run
-Date: Wed, 18 Nov 2026 15:53:28 +0100
-Message-ID: <20261118150357.331749408@linuxfoundation.org>
+Subject: [PATCH 7.3 1995/2651] ASoC: mediatek: mt8195: Fix timing system clock error handling
+Date: Wed, 18 Nov 2026 15:53:55 +0100
+Message-ID: <20261118150358.160991903@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,37 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jaewon Jung <jaewon8868@gmail.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 0abfa9ad5c6917cb9a509276f32009d944b3c269 ]
+[ Upstream commit f18c0a8e528eb8844ee362324220ab8df3664afe ]
 
-On the first run, ftracetest tries to unlink a symlink that does not
-exist.
-Use rm -f to avoid the "No such file or directory" error.
+Check the return value of mt8195_afe_enable_clk() when enabling the
+timing system clocks.
 
-Link: https://lore.kernel.org/r/20261014114839.6258-1-jaewon8868@gmail.com
-Fixes: 7dc1e125f07a ("ftrace/selftests: Add softlink to latest log directory")
-Signed-off-by: Jaewon Jung <jaewon8868@gmail.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+If enabling a clock fails, disable the clocks that were already
+enabled and propagate the error to the caller. In
+mt8195_afe_enable_main_clock(), return the error instead of continuing
+with AFE clock enable.
+
+Fixes: 6746cc858259 ("ASoC: mediatek: mt8195: add platform driver")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20261014112752.683032-5-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/ftrace/ftracetest | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/mediatek/mt8195/mt8195-afe-clk.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/ftrace/ftracetest b/tools/testing/selftests/ftrace/ftracetest
-index 246d7e1d015cf..95804610e079d 100755
---- a/tools/testing/selftests/ftrace/ftracetest
-+++ b/tools/testing/selftests/ftrace/ftracetest
-@@ -243,7 +243,7 @@ else
-   mkdir -p $LOG_DIR || errexit "Failed to make a log directory: $LOG_DIR"
-   date > $LOG_FILE
-   if [ "x-$LINK_PTR" != "x-" ]; then
--    unlink $LINK_PTR
-+    rm -f $LINK_PTR
-     ln -fs $LOG_DATE $LINK_PTR
-   fi
- fi
+diff --git a/sound/soc/mediatek/mt8195/mt8195-afe-clk.c b/sound/soc/mediatek/mt8195/mt8195-afe-clk.c
+index 0b56a3335d501..dad7dddd9f521 100644
+--- a/sound/soc/mediatek/mt8195/mt8195-afe-clk.c
++++ b/sound/soc/mediatek/mt8195/mt8195-afe-clk.c
+@@ -665,7 +665,7 @@ static int mt8195_afe_disable_afe_on(struct mtk_base_afe *afe)
+ static int mt8195_afe_enable_timing_sys(struct mtk_base_afe *afe)
+ {
+ 	struct mt8195_afe_private *afe_priv = afe->platform_priv;
+-	int i;
++	int i, ret;
+ 	static const unsigned int clk_array[] = {
+ 		MT8195_CLK_AUD_A1SYS,
+ 		MT8195_CLK_AUD_A2SYS,
+@@ -676,13 +676,22 @@ static int mt8195_afe_enable_timing_sys(struct mtk_base_afe *afe)
+ 		MT8195_TOP_CG_26M_TIMING,
+ 	};
+ 
+-	for (i = 0; i < ARRAY_SIZE(clk_array); i++)
+-		mt8195_afe_enable_clk(afe, afe_priv->clk[clk_array[i]]);
++	for (i = 0; i < ARRAY_SIZE(clk_array); i++) {
++		ret = mt8195_afe_enable_clk(afe, afe_priv->clk[clk_array[i]]);
++		if (ret)
++			goto err_disable_clk;
++	}
+ 
+ 	for (i = 0; i < ARRAY_SIZE(cg_array); i++)
+ 		mt8195_afe_enable_top_cg(afe, cg_array[i]);
+ 
+ 	return 0;
++
++err_disable_clk:
++	while (--i >= 0)
++		mt8195_afe_disable_clk(afe, afe_priv->clk[clk_array[i]]);
++
++	return ret;
+ }
+ 
+ static int mt8195_afe_disable_timing_sys(struct mtk_base_afe *afe)
 -- 
 2.53.0
 
