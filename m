@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037122;
-	b=O4ApOAhsPvdDKLI9FmaCtDepjRHGUgLgKIvj5APK6JpisjG7+30Hud4kDtpR39MLf7dN
-	 vaj+gWOOqT+nRlO2muKicR0WzRA7FKPLaM6CZfkJSGZeKbjgfsQbHAsMRWbbEpE8s4gzt
-	 EIshRAkeAMp1NhOM9RwuS0FdPNP1CYPdf97FyCpw0EcXH80egt/Eqi0Of+U1Jhwv4jYnQ
-	 7WnhcUUIjH53kSmnwragKyi8vWPRpZPqAzdPDjdpDZZ4aR4n53urmMHU22ccJQGdocwYo
-	 gYT3eqWfgpfLYPqNWhZJxt5ZdvfW+OKzv566qaa9BmZhNF7TgWQMLutbTWE3cfXPJUA==
+	t=1795037124;
+	b=2+m8iBOsf4bPaFB4LNgAkcv6rSU2UfDijO6XMbNCZ4fYBd79HMhl6fkgl6YhFoj8C5gf
+	 zRLVB7NnSY/3FZo5G+dIObuAcYOuyy2oC2Jq/Ruc6Rt8ONDMtm6C0e6ctcKZ5yPTftUvh
+	 emRfRd9EXy/9zwPHYRGTc/Jk1lvAZL1rGa7V7P0nDkN2ldyYQOZgYO6P55Blqbh7BJvNv
+	 F0vAUvGDoT/0MDwlRXeBYBEpNPH2Pxcc83yRqaUNc4IUbSx1dyv5AtD2WnY7exSd3yzTF
+	 imFhCNNLu8RHfzZie/A1LcqM+QdVjqCnanCjgruzkLCDsD8te3PW2KGLj8Pu2/IieSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037122;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037124;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WodISmtBIDU55Ixwx1PEAX2qf+Z78Bqoh/+aPaZB7Yc=;
-	b=eKxj5UtBmBAAZ6Toxh0q+IHnoRDExDpyhVd0u+DoMqaTq7Va5WVaiqvdZlCj87fs5X4z
-	 Usa5Fpf+mbLn0mNDNKRiSio2gITmZzJKEyQnhJUiK/h+L20S9A7PdWgjBKI54NaO9MIZn
-	 2kdMlNwF8YfNXlAgjEyjFAz3ZqK7NpfCEkUeTXsbUr3H83gtJZxgLHTSoftAy3E2LtHC2
-	 vvVFJ493X6S71xWgDgdtFeFKx1YWdlKyiXIZ1EWLOA33ylDh5eG/TE7XAVfmU9+5aphb+
-	 HQxizodjqKWPUDyCZT+Pa+l2fGR0jBsPzA7uMu6bDwJ22DZRGgqyeV6HOdEvBd0aTqQ==
+	bh=cPYQJ44mPV0AcPj3C4zTXONAxNyZvXiDr2zAgfy4zz4=;
+	b=1ycufsYdEXVKDNO6unGE+x/Yd6jdtmtDzjq7wj2xcmzsoQZn7UdpfRyff3yU2mcwyw2m
+	 SDzO2mcnOVnIIrgyqj9uN3T3PcCm/zhuVXZ64BGEy0sC5dNG+Sosv/3NGfMF9SeYbcu2G
+	 hPKGbvSmpFQw/vq+7CtMid4SOumzC7Wzeq0OZwKszGjwqjrMTqYCKbVcdqqetWE2xxojd
+	 +x/gGbNhkfcEvFGgVWrYiQX+hJhDfi9Qg0RmybiKqWjbpYyIObfhb5EguwYd2D0srGaf7
+	 ndIR1tlKbiH6aNcia13cjtJWIzCRrmQ5UJ/LEso3kx5vKalHUirloK5pK1cRHdH7URA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="FnsLeU/F";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ykOy/InE";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8489606BE5C;
-	Wed, 18 Nov 2026 21:25:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D090606BE76;
+	Wed, 18 Nov 2026 21:25:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FnsLeU/F
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 031B31F0280B;
-	Wed, 18 Nov 2026 21:25:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ykOy/InE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDD301F000CB;
+	Wed, 18 Nov 2026 21:25:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037121;
-	bh=WodISmtBIDU55Ixwx1PEAX2qf+Z78Bqoh/+aPaZB7Yc=;
+	s=korg; t=1795037124;
+	bh=cPYQJ44mPV0AcPj3C4zTXONAxNyZvXiDr2zAgfy4zz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FnsLeU/FzzeeUl6jvzP6MrYosto+olZjNIlYLydhvYJWwsR9mG9/hYnofeWPZkyWX
-	 CDdyNaz+d5SMF8jMjybdNT/UtrwtX1uHr9ezLoFixV0EURB+/MDQGOS5bUEw4ABbDZ
-	 9tW4InzV/hkJ7gK8dS3brRA02fgu+cddK6UR2TTQ=
+	b=ykOy/InE8XEH6cPfS++vQ69h7zAOObLktxn162DzWF8U4DrXaUHge6oS5EpAfyH2L
+	 +4ATA+2hlOYYT1WSs9SLEAM993uGsSlM3y4YdvH44+7/KCMqgpzg5vXjupgBPKnMOb
+	 9M30myAXvZOsdLEuOVzEJgvSeNOGR4fTjli0arIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Chris Mason <mason@kernel.org>,
+	Amir Goldstein <amir73il@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1302/3318] ALSA: x86: hdmi: fix chmap array missing terminator entry
-Date: Wed, 18 Nov 2026 15:32:04 +0100
-Message-ID: <20261118150359.324594697@linuxfoundation.org>
+Subject: [PATCH 6.6 1303/3318] backing-file: always end a queued write
+Date: Wed, 18 Nov 2026 15:32:05 +0100
+Message-ID: <20261118150359.357162283@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,70 +69,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit f5e1a9a3fddab8421416b68bb132ae9626d07156 ]
+commit 627cdcbc2a2eceb0452078a0c14370f9f1f17a91 upstream.
 
-had_build_channel_allocation_map() allocates a single struct
-snd_pcm_chmap_elem via kzalloc() and stores it as
-intelhaddata->chmap->chmap. struct snd_pcm_chmap.chmap is expected to
-be a zero-terminated array (see snd_pcm_std_chmaps[]), but
-had_register_chmap_ctls() never overrides the TLV callback installed
-by snd_pcm_add_chmap_ctls(), so the generic pcm_chmap_ctl_tlv() from
-ALSA core is left in place.
+Writes to a loop device with direct I/O on an overlay file make the
+next freeze of the upper filesystem hang for ever.
 
-pcm_chmap_ctl_tlv() is reachable by any local user via
-SNDRV_CTL_IOCTL_TLV_READ on the "Playback Channel Map" control and
-walks the array with "for (map = info->chmap; map->channels; map++)".
-Since the driver's single element is never terminated, this walks
-past the allocation. The same pointer is also freed on hot-unplug and
-rebuilt on hot-plug under intelhaddata->mutex, while the TLV callback
-runs under card->controls_rwsem without that mutex, so the walk can
-also race a concurrent free of the array.
+Every kiocb_start_write() needs a kiocb_end_write(). For a write that
+is queued, vfs_iocb_iter_write() leaves the end to the completion, and
+backing_aio_rw_complete() only calls kiocb_end_write() when IOCB_WRITE
+is set in the flags copied from the submitter. In-kernel submitters
+such as loop do not set that flag, so each queued write keeps the
+freeze protection of the backing filesystem.
 
-Fix this by allocating a second, zeroed element so the array is
-properly terminated, and by dropping the inherited TLV callback
-entirely at registration time, since the driver never implements one
-of its own.
+Direct writes to a loop device with direct I/O backed by an overlay
+file left fsfreeze of the ext4 upper filesystem, and a later touch
+there, blocked in D state. It takes write access to the node of the
+loop device, which root has by default, to attach the file and to write.
 
-Fixes: 5dab11d89777 ("ALSA: x86: hdmi: Add audio support for BYT and CHT")
+The fix used here is to mark a write in struct backing_aio and to call
+kiocb_end_write() on completion of every marked write.
+
+Reproduced under qemu without KVM, on v7.3-rc6-21-g602042bf29f6 with
+earlier fixes of this series applied, with and without this change,
+once each. The kernel was not changed for the run. With this change
+fsfreeze finished in about a second. Not run: the nvmet and LIO file
+backends, which do not set IOCB_WRITE either, FUSE passthrough, and an
+xfs upper filesystem.
+
+Fixes: 2406a307ac7d ("ovl: implement async IO routines")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20261008085411.13742-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[ sashal: Replaced unavailable kzalloc_objs() with kcalloc(2, sizeof(*chmap), GFP_KERNEL). ]
+Signed-off-by: Chris Mason <mason@kernel.org>
+[amir: use aio->is_write to explicitly mark a write aio]
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Link: https://patch.msgid.link/20261029180319.2852090-1-amir73il@gmail.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[backport: no fs/backing-file.c, mark the write in struct ovl_aio_req and
+ test it in ovl_aio_cleanup_handler()]
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/x86/intel_hdmi_audio.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/overlayfs/file.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/x86/intel_hdmi_audio.c b/sound/x86/intel_hdmi_audio.c
-index 7b9292cf839f2..d23dfdd50440a 100644
---- a/sound/x86/intel_hdmi_audio.c
-+++ b/sound/x86/intel_hdmi_audio.c
-@@ -478,7 +478,8 @@ static void had_build_channel_allocation_map(struct snd_intelhad *intelhaddata)
- 	kfree(intelhaddata->chmap->chmap);
- 	intelhaddata->chmap->chmap = NULL;
+diff --git a/fs/overlayfs/file.c b/fs/overlayfs/file.c
+index a493eed7f6053..967dfc88a69ad 100644
+--- a/fs/overlayfs/file.c
++++ b/fs/overlayfs/file.c
+@@ -19,6 +19,7 @@ struct ovl_aio_req {
+ 	struct kiocb iocb;
+ 	refcount_t ref;
+ 	struct kiocb *orig_iocb;
++	bool is_write;
+ };
  
--	chmap = kzalloc(sizeof(*chmap), GFP_KERNEL);
-+	/* info->chmap must be zero-terminated; allocate a spare terminator entry */
-+	chmap = kcalloc(2, sizeof(*chmap), GFP_KERNEL);
- 	if (!chmap)
- 		return;
+ static struct kmem_cache *ovl_aio_request_cachep;
+@@ -289,7 +290,8 @@ static void ovl_aio_cleanup_handler(struct ovl_aio_req *aio_req)
+ 	struct kiocb *iocb = &aio_req->iocb;
+ 	struct kiocb *orig_iocb = aio_req->orig_iocb;
  
-@@ -581,6 +582,12 @@ static int had_register_chmap_ctls(struct snd_intelhad *intelhaddata,
- 	intelhaddata->chmap->kctl->info = had_chmap_ctl_info;
- 	intelhaddata->chmap->kctl->get = had_chmap_ctl_get;
- 	intelhaddata->chmap->chmap = NULL;
-+
-+	/* drop the inherited TLV read: it walks chmap without our mutex */
-+	intelhaddata->chmap->kctl->tlv.c = NULL;
-+	intelhaddata->chmap->kctl->vd[0].access &=
-+		~(SNDRV_CTL_ELEM_ACCESS_TLV_READ | SNDRV_CTL_ELEM_ACCESS_TLV_CALLBACK);
-+
- 	return 0;
- }
+-	if (iocb->ki_flags & IOCB_WRITE) {
++	/* Pairs with kiocb_start_write() in ovl_write_iter() */
++	if (aio_req->is_write) {
+ 		struct inode *inode = file_inode(orig_iocb->ki_filp);
  
+ 		kiocb_end_write(iocb);
+@@ -413,6 +415,7 @@ static ssize_t ovl_write_iter(struct kiocb *iocb, struct iov_iter *iter)
+ 			goto out;
+ 
+ 		aio_req->orig_iocb = iocb;
++		aio_req->is_write = true;
+ 		kiocb_clone(&aio_req->iocb, iocb, get_file(real.file));
+ 		aio_req->iocb.ki_flags = ifl;
+ 		aio_req->iocb.ki_complete = ovl_aio_rw_complete;
 -- 
 2.53.0
 
