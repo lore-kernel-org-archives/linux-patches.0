@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020811;
-	b=dc5TXk1VwNnwpwW+kcKoeBbzhFY3lANfCAg57FX62VepKqvUjnANLKsQn810l6nu4ngP
-	 /x1LWIV1CAgeIWcLdXxqb6FoSv2cAVbjKPXfUuDA2PK0eg7iBhJOvlCD22v5lvmLZdpvk
-	 l6v4n/+m45uOQLPVCADOxMlW5f3+eDS9brGIdjBRLNnEb0vYeWd1Dpp1r4u5ouCukukRd
-	 CB1gDOea0byxMN0VoUPih6D79Lw94T1xSp3xxovF5wP/bIw/c100bCGILhWwWS6/ikNEu
-	 mJ3VlCDhJ+A1AvXfpCs/YrHIQ5qCREadRg2YkZYqj8K2khlXtPrVDc4XyyijQ7J7Snw==
+	t=1795020814;
+	b=t+YBcnGW7DdxukCFhbqQB937LWUX1pgyYOGAfpAM0FkuKJHrpNHg22lmeHN5bkI5p2Xb
+	 y09Df2B5y0YNR1ErwBbb0MKVRyQel0NKOWPs3iyMoJjyGBtDND6SFsyUPnqlQ8P8vbO4B
+	 JB1UdHRsRy5IXtI7E75RiSzYXcXcUgvLKGImxRkON8yHw/zUFkqRUo+lnT0+/l0vAI5qn
+	 gQnzv0KgymonxxLUMdSlT7a4kAWbsrjWKY0aaJD1hhLsJhU4WbYEhWIuJPiOfJzzl9ar+
+	 dNk/5NdVRvP/Ex75wg3C4tu7+H8mfVqQvnwFu/mZWBa1gMlC63cPEHP8t2uvxEnY/2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020811;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020814;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Aige4PbjWn+3wxkR6PHkBhQCy/BAvq9VH+d/4fKbHLA=;
-	b=uUESdGtNsJcm2KYqRN4M6YWoEPER0Brk1qB7OnIjn9kpGh16Y0vmNCChawcxwC23GmKD
-	 A+EJWm8uPqAAMKVjXP17lPGdlkXzBp4DO2CuqRcXQR5XHfkst3timIOoOsEOBtsogzYWK
-	 ISnCosl5ULIfypLYC1uOW1WnQ4AFOfm1lsiVQkn6vcc25S/Zq3M0Xm5gPCijIvL5LorwQ
-	 FkEE+xHo1Mr4tsfJqeGYyC65POtIPbq0D49+aFVDPAayhyUBjeySf5KCy14FAYwJeZA8U
-	 e2x8/N69xcukBaavljnoXr1LpcMtqKG4tTGwvXMSVbd27VmPEn85nXjszufE7mq28zA==
+	bh=cYLrH0ONNiltt4h/HCiHQORaw777W84/7RjK2G4f8PQ=;
+	b=NzPMWsV4TckBhb6GxR8dIfkDcM8Hn94w1QJlHVJ6gUDXZ4gAwSziyw0N6TZx4fdJTyTE
+	 SqGwFSO7JysA3ryOyTv+MVKmkVOWMU42pt9dBr2ycRMlsTjMdtk+LrmqEmmp8gJc33kzy
+	 pyLFn2fkV6GBfbFiSyyvAiF25gD5aVmpbebWPS0LMZvFRAoPNX7i0SebQGlTxyryAD2q4
+	 1TwEaI5I+OKq7+Q0nd6wDg0tI9LGOlQUYO0a5oHuXu03eI/Ljh9T7480tEgtvadZgTFMF
+	 VFZk0KEEkjqfeDIgFEvBCI0/PIpPnmx/Xy/Drw8TALTKXg7IPXKrT1YBuehi3iK2Yeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZxR8z93Q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LeYe0XpB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4359606A33F;
-	Wed, 18 Nov 2026 16:53:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3587360A5BCA;
+	Wed, 18 Nov 2026 16:53:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZxR8z93Q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C77E21F000C9;
-	Wed, 18 Nov 2026 16:53:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LeYe0XpB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DE241F000C7;
+	Wed, 18 Nov 2026 16:53:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020811;
-	bh=Aige4PbjWn+3wxkR6PHkBhQCy/BAvq9VH+d/4fKbHLA=;
+	s=korg; t=1795020814;
+	bh=cYLrH0ONNiltt4h/HCiHQORaw777W84/7RjK2G4f8PQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZxR8z93QeFLaKhw3I8AK5sZC5D5kONbT1h/xuj2FsT1mcrKndrEX6flbFw5mx7k/5
-	 EFFKVti7ZvhjE/TkMr/oFI59pSeYWpxLTL3CeCRMbXReaDPVoinzkcV7bXmR8qr6T+
-	 0uOdSxAmMtNuZ1WYE9Z2pKChMGJTyMjTrMRJsh1E=
+	b=LeYe0XpB2gKVv+pE/Bwbsj71mWIjCQRs9qsIOGTbe59uYtKRoNA+fQ5JuLbVQA/VZ
+	 mfMbtt1nBSBkyVfiA5a1hzuatn8Lcwr5EfsACZ+dStK1sZWQeSNdrAluguMztb7pCZ
+	 l9Yrs8f/zDMXixu6kjEMVNvxS4v2q2fuCsJlM5E0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
+	Andrea Righi <arighi@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2083/2651] perf evsel: Mark the event as supported when retrying an open
-Date: Wed, 18 Nov 2026 15:55:23 +0100
-Message-ID: <20261118150401.013697396@linuxfoundation.org>
+Subject: [PATCH 7.3 2084/2651] sched_ext: Fix the running task keeping its protection into bypass
+Date: Wed, 18 Nov 2026 15:55:24 +0100
+Message-ID: <20261118150401.045706061@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,59 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit cc956e0cd6a405fbc6ad3055cbbdb178562ef27d ]
+[ Upstream commit 30fb2b1e4d41a641a059f295a717ffa0e24307e7 ]
 
-Opening a group with perf record on a machine with perf_event_paranoid >
-1 and no CAP_PERFMON fails the first perf_event_open() with EACCES, after
-which evsel__open_cpu() clears evsel->supported; evsel__fallback() then
-adds exclude_kernel and record__open() retries, and the retry succeeds
-with supported left false.  get_group_fd() treats unsupported events as
-ungroupable, so the retry opens the group members without their leader:
+Protection ends when the scheduler enters bypass, so that bypass scheduling
+can cut every task's slice. scx_bypass() clears it for the queued tasks by
+cycling them, and strips the running task's in the same walk over
+rq->scx.runnable_list. The running task is never on that list.
+set_next_task_scx() takes it off and put_prev_task_scx() puts it back, so
+the strip never runs. A protected running task then keeps its slice into
+bypass, where the tick's attempts to cut it are refused.
 
-  sys_perf_event_open: pid 12345 cpu 0 group_fd -1
-  FAILED '.../test-record-group-sampling1' - group failure
+Strip the running task's protection outside the walk.
 
-which fails the group subtests of "perf test 82", the Perf attribute
-expectations test, when it is run as a regular user, while it passes as
-root or with CAP_PERFMON, where the first open doesn't fail.
-
-commit 2cc7aa995ce9 ("perf stat: Refactor retry/skip/fatal error handling")
-dropped the pos->supported = true that record__open() did after a
-successful open and moved the resets into the stat code only, while
-saying "When an event is tried the supported is set to true again".  Do
-that in evsel__open_cpu(), which every open entry point funnels through,
-so that a retry describes its own try instead of the previous failure.
-
-Fixes: 2cc7aa995ce9ecd8 ("perf stat: Refactor retry/skip/fatal error handling")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Tested-by: Ian Rogers <irogers@google.com>
-Cc: Ian Rogers <irogers@google.com>
-Assisted-by: LLM
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 9cfc6ab34a31 ("sched_ext: Add SCX_TASK_PROTECTED")
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/evsel.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ kernel/sched/ext/ext.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
-index 806a9e56b8e6c..12e05676b0daa 100644
---- a/tools/perf/util/evsel.c
-+++ b/tools/perf/util/evsel.c
-@@ -2997,6 +2997,12 @@ static int evsel__open_cpu(struct evsel *evsel, struct perf_cpu_map *cpus,
- 	enum rlimit_action set_rlimit = NO_CHANGE;
- 	struct perf_cpu cpu;
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 84774147a1d5b..df445fdaeb6d6 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -6360,6 +6360,16 @@ void scx_bypass(struct scx_sched *sch, bool bypass)
+ 			continue;
+ 		}
  
-+	/*
-+	 * A failed attempt being retried after evsel__fallback() would
-+	 * otherwise keep group members out of their group in get_group_fd().
-+	 */
-+	evsel->supported = true;
++		/*
++		 * Bypass trumps protection. Cycling the queued tasks below
++		 * clears theirs. The current task isn't on the runnable list,
++		 * so strip its protection here.
++		 */
++		p = rq->curr;
++		if (bypass && p->sched_class == &ext_sched_class &&
++		    scx_is_descendant(scx_task_sched(p), sch))
++			scx_task_slice_ended(rq, p);
 +
- 	if (evsel__is_retire_lat(evsel)) {
- 		err = evsel__tpebs_open(evsel);
- 		goto out;
+ 		/*
+ 		 * The use of list_for_each_entry_safe_reverse() is required
+ 		 * because each task is going to be removed from and added back
+@@ -6372,13 +6382,6 @@ void scx_bypass(struct scx_sched *sch, bool bypass)
+ 			if (!scx_is_descendant(scx_task_sched(p), sch))
+ 				continue;
+ 
+-			/*
+-			 * Bypass trumps protection. Cycling clears for queued
+-			 * tasks but current task needs explicit stripping.
+-			 */
+-			if (bypass && task_current(rq, p))
+-				scx_task_slice_ended(rq, p);
+-
+ 			/* cycling deq/enq is enough, see the function comment */
+ 			scoped_guard (sched_change, p, DEQUEUE_SAVE | DEQUEUE_MOVE) {
+ 				/* nothing */ ;
 -- 
 2.53.0
 
