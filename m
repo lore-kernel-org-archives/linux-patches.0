@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017984;
-	b=R8YaLqOU2wRvOVJuLnZod/p3Uv0mHvuYmjjK8kkvcVF9Z0Ud8DR4GnOUeSUDpODFPhVp
-	 cNZ6u5VncarSyiviwz82l5Bjt/WcFnjj8OAW3/f/3MBh0iGFa9YSILRohfwyLw7clFiIs
-	 tkhT+1uLYHKpAC7OTXhH0ApRHfKIKBpEf9vYmVVIcz92o9jCv1vfVdJlUrxBYvs4hQnRo
-	 3w+ztIt9QTlEXfEKINQswbYeQ9kQD79BwyBMycbCPxVI6QNgFCf35D4P/+OFZAqxq/P8Z
-	 hREmnRl4mSUM2WwnIwJ3EvXLXRlOb0V2VyUxNBmN1ufeRVoLGglg8jzf7DQpv3xORKQ==
+	t=1795017987;
+	b=yt67NgC2KB9lr86ZlOwBRNM0VQaOviENYfqDaYp3CatCm9lThLcma4KUYx/3B4im5cRd
+	 9aInDQPxQ6zqPZa/8x555naWOff6YHfJNwXfXN0CVpGPB0lgm9LAdSxCAI2khKaD4FKOb
+	 0er+x/IRDkLs/DUxUgkjNDqTdqKyrQt+gRIZumWR4dsevlcX2r3xhKrJDWq4u/lgN+/A+
+	 v8PxcmL7vJQgP3BcooFf143mr8nmChpN7X0MWCtofsSQ+Yw3FSzqkuVQQyOP9eyATUDJM
+	 D4cUEWlTysu74bFANzQqWm3LetcoNxO3/mluC3FozbGi7vlbpng+e0rs2QEEXyHrq1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017984;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017987;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7ZMLlaqXXjL4pI5Oj1sugUyOYhmj5GCvWqTTlKeENR8=;
-	b=P8+EJ+Ps/ug6CrcZyT97naU/Oia4crNtHUiU6Nf3cTgNzHXOvmLQdjVuNUYd00jLJTuR
-	 oT7d98bjtoYsYrfAmwzXpg+m04udqfT1dISQ9VXMNjFjU2tcTszzQHntHemEIppd6kmOy
-	 CxaAJ4BNsLFqHBFRk3beyZ6F4c1fn3APUuadp0SZos2O096ocIAfQmzc2Ntn+zsiKlBA8
-	 IsaLre1kpGeAbfQpzSmE7o6kH2awLJx6KATqHyhqacy1dnQcrKOULatPb/UvKMB5l4BGV
-	 pVum5M4LTdU1xa0BaBLTzUQEU/V7TgLGXGBMl+/jwe+tPPNNPUFzLo+BqNkBDvLQHdQ==
+	bh=TZXuHyxDsDSVoCxXWL5MLWYGoA4/aA7Y/49lwMzYsZs=;
+	b=epPdifZ3h2yfSI8/S/jm/b5lizmSw301ZsIPSwkDqUZJZSqFpYfUbQv+tndryFQTfjid
+	 SZnqrCIn6tBLKpdUvPtEkHhcRWZq++35csJKuhibXKrQh66LFNNcPsmhpef2Zdoiq8Ias
+	 CuSkbFY6N6IQkmIGLYl6hwlF7FAUjHFSEpnunhOqrN0eAxxll3Njw4k5q5b09S4vE2fRv
+	 HjQjZ6xlLIkubnDvNbdG8cUn6i4FwFEk4gaGX3mgTEvfdsMAIA6y7mnNwwHV5+1exw9/y
+	 dgNHAJcwTyuuq3PTVkPw81yXUe9/sVvb19GvFzHqtlVp4Zs9KwDNkIjmhaQWO+xQOoA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="qMwl6b/e";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TO25c+X4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F444606A31C;
-	Wed, 18 Nov 2026 16:06:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6254B606A31C;
+	Wed, 18 Nov 2026 16:06:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qMwl6b/e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E75D11F000C4;
-	Wed, 18 Nov 2026 16:06:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TO25c+X4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B42021F000C4;
+	Wed, 18 Nov 2026 16:06:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017984;
-	bh=7ZMLlaqXXjL4pI5Oj1sugUyOYhmj5GCvWqTTlKeENR8=;
+	s=korg; t=1795017987;
+	bh=TZXuHyxDsDSVoCxXWL5MLWYGoA4/aA7Y/49lwMzYsZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qMwl6b/eO/2iMpHgxnecFceSVFelQ8rgxwYhzRUW5ti36Wf43H+K58MxlitStN8wF
-	 tAPfFPeVXsjxtJdkTLcPf73pog8YmSpZFANdgFrPaRAMThky+gMWzZKDINUogBTpBi
-	 zxiYW0+XQHwOY6051hgoLnmFjXFuUykbZBsUbXiE=
+	b=TO25c+X4xmHQKsYGET24towwbel4ZVFnxZK+iN283RC6126bzqu/EvF6Yis5i92rd
+	 caBSEVUMh3frZsPj8DXVVqukTwbPiGGQY2lsKvJIwkGFGdK85348ao53Ef6/yRb54T
+	 BOMFyohH8Bow6RuFXQwi+/6BK0wsRgaFHI6pGpsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Ricci <io@r-ricci.it>,
-	Matthias Goergens <matthias.goergens@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Qingfang Deng <qingfang.deng@linux.dev>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1078/2651] x86/hibernate: Ignore page-zero RAM in E820 checksum
-Date: Wed, 18 Nov 2026 15:38:38 +0100
-Message-ID: <20261118150326.805725931@linuxfoundation.org>
+Subject: [PATCH 7.3 1079/2651] ARM: mvebu: fix Cortex-A9 errata selection for Armada 38x
+Date: Wed, 18 Nov 2026 15:38:39 +0100
+Message-ID: <20261118150326.841356277@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,141 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Goergens <matthias.goergens@gmail.com>
+From: Qingfang Deng <qingfang.deng@linux.dev>
 
-[ Upstream commit 29671cabfc09afb1ee2426b21173cdde276a95ac ]
+[ Upstream commit 76e67df8bc1cb72157368c3669119e64cdb0a6a6 ]
 
-The legacy kexec_load path reconstructs the E820 map exported through
-sysfs.  kexec-tools leaves the first 1 KiB unavailable for the real-mode
-transition, so a kernel entered through kexec_load can see conventional
-RAM starting at 0x400.  A subsequent firmware boot reports the same RAM
-range starting at zero.
+Armada 38x uses Cortex-A9 r4p1, but MACH_ARMADA_38X selects the
+workaround for erratum 720789, which was fixed in r2p0, and omits
+workarounds for errata that still affect r4p1.
 
-The hibernation E820 checksum compares those byte representations and
-rejects the image, even though the maps agree from page one onwards.
-A QEMU guest showed this transition:
+Drop ARM_ERRATA_720789 and select ARM_ERRATA_754322 for faulty MMU
+translations following an ASID switch and ARM_ERRATA_764319 for
+unexpected undefined instruction exceptions when reading debug
+registers. Also select ARM_ERRATA_764369 when SMP is enabled to work
+around cache maintenance by MVA failing to reach other agents.
 
-  firmware:     RAM [0-0x9fbff]
-  kexec_load:   gap [0-0x3ff], RAM [0x400-0x9fbff]
-  firmware:     RAM [0-0x9fbff]
+The Cortex-A9 r4 Software Developers Errata Notice (ARM UAN 0009D)
+lists these errata in sections 2.3.3, 2.5.10 and 2.3.4, respectively.
 
-The checksum covers e820_table_firmware, which trim_bios_range() leaves
-alone.  The nosave regions come from e820_table instead, where
-trim_bios_range() has already turned conventional RAM in page zero into
-reserved memory, so page zero never occurs in the image, whatever the
-firmware map says about it.
-
-Canonicalise only the conventional-RAM portion below PAGE_SIZE before
-calculating the checksum.  Preserve RESERVED, ACPI, NVS, UNUSABLE, PMEM
-and all other E820 types so that changes to exceptional mappings remain
-detectable.
-
-This is deliberately narrower than Marco Scardovi's June proposal to
-checksum only RAM and its opt-in relaxed_memmap successor.  Rafael
-noted that ignoring non-RAM changes could hide moved ACPI or UEFI
-regions still used by the resumed kernel.  This patch preserves every
-non-RAM entry and ignores only RAM within page zero, which common setup
-already reserves and excludes from the image.
-
-Bump RESTORE_MAGIC, since the checksum semantics change, so that an
-image written by a kernel without this change is refused by the magic
-check instead of being compared under different rules.
-
-In the same guest, with the page-zero difference kept, hibernation and
-resume now work after both a direct boot and a kexec_load boot.  An
-image written by an unpatched kernel is refused at resume with
-"Unrecognized hibernate image header format!", and the firmware-booted
-kernel carries on.
-
-Fixes: 62a03defeabd ("PM / hibernate: Verify the consistent of e820 memory map by md5 digest")
-Reported-by: Roberto Ricci <io@r-ricci.it>
-Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
-Link: https://lore.kernel.org/all/Z-hYWc9LtBU1Yhtg@desktop0a/
-Link: https://lists.openwall.net/linux-kernel/2025/04/04/1372
-Link: https://lore.kernel.org/all/CAJZ5v0jmOj0WBtMTvbnaD+2b0bTFowA=JWrqRzaaCYpHpai1Nw@mail.gmail.com/
-Link: https://lore.kernel.org/all/20260623165724.10753-1-scardracs@disroot.org/
-Link: https://patch.msgid.link/20260926052117.3613637-1-matthias.goergens@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://documentation-service.arm.com/static/608118675e70d934bc69f143
+Fixes: 9aa30f1c13d1 ("ARM: mvebu: add initial support for the Armada 380/385 SOCs")
+Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/power/hibernate.c | 51 +++++++++++++++++++++++++++++++++-----
- 1 file changed, 45 insertions(+), 6 deletions(-)
+ arch/arm/mach-mvebu/Kconfig | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/power/hibernate.c b/arch/x86/power/hibernate.c
-index a2294c1649f65..dbb340fb24ada 100644
---- a/arch/x86/power/hibernate.c
-+++ b/arch/x86/power/hibernate.c
-@@ -63,6 +63,25 @@ struct restore_data_record {
- 	unsigned long e820_checksum;
- };
- 
-+static bool trim_e820_page_zero_ram(struct e820_entry *entry)
-+{
-+	u64 lowmem_size;
-+
-+	/*
-+	 * Page zero is BIOS-owned and registered as nosave.  Boot loaders may
-+	 * therefore omit part of its conventional RAM entry without changing
-+	 * any memory available to the image.  Preserve all other E820 types.
-+	 */
-+	if (entry->type != E820_TYPE_RAM || entry->addr >= PAGE_SIZE)
-+		return true;
-+
-+	lowmem_size = min_t(u64, entry->size, PAGE_SIZE - entry->addr);
-+	entry->addr += lowmem_size;
-+	entry->size -= lowmem_size;
-+
-+	return entry->size;
-+}
-+
- /**
-  * compute_e820_crc32 - calculate crc32 of a given e820 table
-  *
-@@ -70,18 +89,38 @@ struct restore_data_record {
-  *
-  * Return: the resulting checksum
-  */
--static inline u32 compute_e820_crc32(struct e820_table *table)
-+static u32 compute_e820_crc32(struct e820_table *table)
- {
--	int size = offsetof(struct e820_table, entries) +
--		sizeof(struct e820_entry) * table->nr_entries;
-+	struct e820_entry entry;
-+	u32 crc = ~0;
-+	u32 nr_entries = 0;
-+	u32 i;
-+
-+	for (i = 0; i < table->nr_entries; i++) {
-+		entry = table->entries[i];
-+		if (trim_e820_page_zero_ram(&entry))
-+			nr_entries++;
-+	}
-+
-+	crc = crc32_le(crc, (unsigned char const *)&nr_entries,
-+		       sizeof(nr_entries));
-+
-+	for (i = 0; i < table->nr_entries; i++) {
-+		entry = table->entries[i];
-+		if (!trim_e820_page_zero_ram(&entry))
-+			continue;
-+
-+		crc = crc32_le(crc, (unsigned char const *)&entry,
-+			       sizeof(entry));
-+	}
- 
--	return ~crc32_le(~0, (unsigned char const *)table, size);
-+	return ~crc;
- }
- 
- #ifdef CONFIG_X86_64
--#define RESTORE_MAGIC	0x23456789ABCDEF02UL
-+#define RESTORE_MAGIC	0x23456789ABCDEF03UL
- #else
--#define RESTORE_MAGIC	0x12345679UL
-+#define RESTORE_MAGIC	0x1234567AUL
- #endif
- 
- /**
+diff --git a/arch/arm/mach-mvebu/Kconfig b/arch/arm/mach-mvebu/Kconfig
+index 9f60a6fe0eafb..5203b5cfa4577 100644
+--- a/arch/arm/mach-mvebu/Kconfig
++++ b/arch/arm/mach-mvebu/Kconfig
+@@ -55,7 +55,9 @@ config MACH_ARMADA_375
+ config MACH_ARMADA_38X
+ 	bool "Marvell Armada 380/385 boards"
+ 	depends on ARCH_MULTI_V7
+-	select ARM_ERRATA_720789
++	select ARM_ERRATA_754322
++	select ARM_ERRATA_764319
++	select ARM_ERRATA_764369 if SMP
+ 	select PL310_ERRATA_753970
+ 	select ARM_GIC
+ 	select ARM_GLOBAL_TIMER
 -- 
 2.53.0
 
