@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017292;
-	b=FLyKEts6O0xdaAnTSdxuzN6wUQZ9X3++38OLWQnguuItiVBgeNbj04z8c70LrM3sb9Az
-	 fdOFFXliGb4hJPxFfG5RSpeHKCe1JzFuE3P7QnThU4Hvyb6CFqxfvIfb0nHh5X62ApF92
-	 2wq8PbjM2gcDW4dtehba4YEc28Npw7gtyq0L4Qgfr+n28aAmCB+2YRhE/0YtJ7WLiLpYX
-	 RyN1vsYYtJHpmTHMzyxB1zFmU+tlNzGJsGeGA7XaWhx4X4vHiNujH3tE8z8ZcPlueSv57
-	 6vBkvZDEtV9lMVzR7quT6A+Y2j0/kmOsUFtopojkXJoNBpoBHYQ6FUnetldYORnFHEw==
+	t=1795017295;
+	b=d4xGfx8WCz+lITTlcUsbVxkIv7iZuZFbgAgDQ0uIzWgVUI5vsB1W/4p7b5PeJh+G/HfS
+	 VRAi4uUCV1sbaG6B2FU1k/FgPT8gDr2Z0wOii6NN0mnZT9ntw435TKVPKzSpnJjdCJM1M
+	 +5ccoqz0i4mu493O4z5qUZuulQ8KphaET/whRunW45YFiYb34GYGr2gTIZ9qiliRsYagu
+	 4Mc533Bnt2RdDLepG3XFiHOp52iU6XWTAoVAl4+7yzUZicJ0sSM0jdpASG0TXi4eBIcPJ
+	 yrYCW2pzJbU3pbZoa4Gb6Y3ysvLrZgRjUh053wJJj2ue2B0JpaqEXnlv92u5a0X6ENA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017292;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017295;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Pc0qcYEcYYH486QX3BIAYkuEAK8vITdHbiuaZXLnsTY=;
-	b=tcmvyIAbu/4QGRFU0rZJTvA8jHxMAOblyaCt8Z5/h45SsGvqAePW9lG+xKmBZtfvmV8g
-	 PdTLVVOSjDa2FSvacy0D10g9Jj2eP1HVFK9cBVlbKq1j4t+ubewjhBovm9Zf5SXCmqB0Q
-	 efZwnEvSqcdI1pc8U7/+wqWIBMkjQzXJ0UYr7DRun/xbLlJGBbyiH0ND3K1UwY/RgRjCr
-	 knrOTJWhkyRzBlqy6sZdEH+jIiWOSH8FMkf85gnQpGwJ6iuoAOveGBt1Edqyqx9meB4I+
-	 btJYOd/UkxXI4JDu+9X+kTUs0XeUpK5o6ZjdNNoqSE6Ca8XMdIRmaFUSN42omCOK6BA==
+	bh=LMG93Ll1A6YctrspylNnwSnKnSWRBe6ONXJ7IYbiQtA=;
+	b=YAm7Go0DZKmTW1wsgIY352hsV5+8v7oOqB1RSZE/1PSgSHSs2arLxfXyKQvw2eSsvOnn
+	 yvT3f7WFtqR6/Pf6PlMFpdXBix8cjad/2RHZm8ty6fXFryBpaF7zaJeNKnzXShbORTegY
+	 dW4aDpYQ4jEetQUlIaMGtu4Ul+WbvmpqfCN3Zy/xWwcA5s89WjUW9rNLjep2WiAxCltBG
+	 WuDRl7apCPUGvGwgZqUklWbKE08gpm21dIZMoee3tx2+hTrMBNJ0ZoTk4+H9YgGrDZRle
+	 18jCid9cawnUh6tTCwNMSzaL9uIrOzUW9k7X2Tlv1ufaTPw1LiCkRS49f3XLQUq24mg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fZQpnYNY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jO2Zw3Br;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D672606A320;
-	Wed, 18 Nov 2026 15:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BADD606A320;
+	Wed, 18 Nov 2026 15:54:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fZQpnYNY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 410591F000C5;
-	Wed, 18 Nov 2026 15:54:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jO2Zw3Br
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 165C51F000C6;
+	Wed, 18 Nov 2026 15:54:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017291;
-	bh=Pc0qcYEcYYH486QX3BIAYkuEAK8vITdHbiuaZXLnsTY=;
+	s=korg; t=1795017294;
+	bh=LMG93Ll1A6YctrspylNnwSnKnSWRBe6ONXJ7IYbiQtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fZQpnYNYXNIEL6ny438w3o+z35agZpu3E9oKZwto10y1KL58cwbHtT9o0Rj9Dz4bc
-	 DI8gA08qIgAsLN3y1j4EhAOujEIx/yTyCgGwKJTC2/9VDCmgnk++A5E1WmFVVwdhru
-	 OcgSGYMS4w6o3Vd+h58FPgcnrn0tvSrRdXoEFn+k=
+	b=jO2Zw3Br3+8TW4TdGA+G3w/uKVsbKM4DbLE5EdCmnZYtSIN651iPsMnVr9pImgLds
+	 TxLvp3MPoxO1deBAWo7xcj8S1IDmTXSMs5Sx1HzoAHbcN9SjZOn0K5jeiAuJWLG4da
+	 TlG1Jjqktnv8+xBOLaC8eUWoKOvNantY7BogfaVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0833/2651] arm64: dts: qcom: x1e001de-devkit: Mark the EC reset gpio as reserved
-Date: Wed, 18 Nov 2026 15:34:33 +0100
-Message-ID: <20261118150317.871642858@linuxfoundation.org>
+Subject: [PATCH 7.3 0834/2651] arm64: dts: qcom: x1e78100-t14s: Mark the EC reset gpio as reserved
+Date: Wed, 18 Nov 2026 15:34:34 +0100
+Message-ID: <20261118150317.906800676@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,7 +70,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Abel Vesa <abel.vesa@oss.qualcomm.com>
 
-[ Upstream commit 0297c8e98a054fc2a0afcb96114f57603a02594e ]
+[ Upstream commit 07321595ce693eea5854120869a8b1560d7b14d6 ]
 
 GPIO 65 from TLMM is used by the embedded controller as its reset line.
 
@@ -80,29 +80,27 @@ device not power up at all, unless the battery is unplugged.
 So reserve it in order to prevent Linux from requesting or
 reconfiguring it.
 
-Fixes: 7b8a31e82b87 ("arm64: dts: qcom: Add X1E001DE Snapdragon Devkit for Windows")
+Fixes: 7d1cbe2f4985 ("arm64: dts: qcom: Add X1E78100 ThinkPad T14s Gen 6")
 Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260922-dts-qcom-hamoa-reserve-ec-reset-gpio-v3-2-fde7f8a53382@oss.qualcomm.com
+Link: https://patch.msgid.link/20260922-dts-qcom-hamoa-reserve-ec-reset-gpio-v3-3-fde7f8a53382@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/x1e001de-devkit.dts | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts b/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
-index be1a8ac8c699e..3ba45a7884a23 100644
---- a/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
-@@ -1194,7 +1194,8 @@ wcd_tx: codec@0,3 {
- };
- 
+diff --git a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
+index 0bee2a3d6e7a9..8f7b016174618 100644
+--- a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
+@@ -1385,6 +1385,7 @@ wcd_tx: codec@0,3 {
  &tlmm {
--	gpio-reserved-ranges = <44 4>; /* SPI (TPM) */
-+	gpio-reserved-ranges = <44 4>, /* SPI (TPM) */
-+			       <65 1>; /* EC reset */
+ 	gpio-reserved-ranges = <34 2>, /* Unused */
+ 			       <44 4>, /* SPI (TPM) */
++			       <65 1>, /* EC reset */
+ 			       <72 2>, /* Secure EC I2C connection (?) */
+ 			       <238 1>; /* UFS Reset */
  
- 	eusb3_reset_n: eusb3-reset-n-state {
- 		pins = "gpio6";
 -- 
 2.53.0
 
