@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043010;
-	b=oxcay1VbW2qyfSgvjT+NJmwPyJDZMKqEwo9hY19TjBsF4+4OtKB5rmCMaYFNU45E+OQM
-	 i8VGN7MuLnPrZgLwecWD2Fc2k9NN+pvQuODvqtI0RmGFYqxusZsjgm2nN8tHnCJxUxivR
-	 azyMn7fyRCdJdN1m2p40s4IZQhw0RCnq00+Pqr4l1r+MWyazr8++jfNCrx45EfqQhki+g
-	 H/KJVxeGeh7ghdYt+2SbJlGMiEQ8ELugXGYXzVmLodV80N5XabF1050nOyPFTXnPT1xAj
-	 Q2mo7RfwkIaobHoQluQMqXAqwXefxUR0M67jJ19hB17YRAzhrDr65A2W3BeQkhBwd6Q==
+	t=1795043013;
+	b=BPCNUHD5IBtrRf6WrDfXb7+46X03Tb2iC7P61WxOGJPPevIQ2e2gLLtY1Cw1p1mJrCwh
+	 YqNIDeOgLJX9Ariwjlp9XGXa/anr2rLxiIICOKMOlIkjHFrYoD6b47pdqpHKg0gjF+8KA
+	 YtgUTCwfjsX3q2y55CBsbdDXujfUyuuBqNGH64VMlwJjLy9pmte+10TcVcJR4Bn+6SE9j
+	 zAUa+ZkttFHeDFvwWoArAJGJilXrmSEsj0ce77ySa6cacZNTGGklDObyXatmuk+gPX/fO
+	 4mmEI+W3Rfq6FD1ZM3EGIszCiHbPjNTRBoyGCmukzAhTY/4U7xF/PbfO6wLJqTX54Mg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043010;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043013;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zrHXwyZCV7AgYOr2icst0bZlN18bYZ1vMrXUJX+POhU=;
-	b=uNcobxQp/XzMC7ffP6kawD7vIHEJGnM/AJ6TQBBOR0TKQXya5VEpccxI2/jYC/2mL+jg
-	 eJKPmLM7mGCVv6csYCcQhPC5QtkB2CG4TECYRlDG15xeC4Vq6kSezmWazf/crHdvoL+Cd
-	 ELcbP7rmo/+3JWT+VUtt5BGo4oMm/hnYE3cC/T1tWo+8zVlp2Cp07f147byiQX/OcCf/m
-	 pSoc951MgyI1v/I8d5Od70kuiHGqZwBn0tZKQjExcCm4cApYIsnGk3hF15vZxCVAX+c1b
-	 qS+lQDleWeV/mLQ0rJbn7N2aPJidZtb0kAFpj0N5aqvHR0sVTKOmOOOyr3DsF8aVV8Q==
+	bh=fH4OQ3JzzH1JM/qC3fq5wmaQe73OXh/dHF/qjP0Q6s4=;
+	b=v1RlhTETYQagVJLSeYM7Q0Al97+2TXyjtGh7umDzvQQ7HqoRxsaI8k5/dFTIaSO1iSTp
+	 FFV1GHvAL9WdTNiff95cGsMirBOZrzQxdTZBeRd1g9slGoDV3qFS0aDSLnAf9wOYyutIV
+	 vHHKAWUiUw08wE4S8HF+DasyvXdbEzVoQLlrlheqh2bjDlbEpnE0mtTn0REnuxOfjJTT9
+	 fbUg06cesParPL+f7TtcdxexVxRnIbOouftBcvQ+2Y5y7L/MjMmbxgM9C/aax81PcdUPK
+	 j7vp0TObC7znFaCSUxepmr0cxyVRSP3Kg5BuIoZL9A1foisXCmVOtrXbOrsDzCNKteg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bLBQd4OL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=caMDBpFt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06685606A320;
-	Wed, 18 Nov 2026 23:03:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F73606A32A;
+	Wed, 18 Nov 2026 23:03:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bLBQd4OL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E565A1F000C4;
-	Wed, 18 Nov 2026 23:03:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=caMDBpFt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D853D1F000C4;
+	Wed, 18 Nov 2026 23:03:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043009;
-	bh=zrHXwyZCV7AgYOr2icst0bZlN18bYZ1vMrXUJX+POhU=;
+	s=korg; t=1795043013;
+	bh=fH4OQ3JzzH1JM/qC3fq5wmaQe73OXh/dHF/qjP0Q6s4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bLBQd4OLrtgNCdWTbj+HjPPs6vO2YI4bnnR2LJFZAwvSfRc5Bs46XjUbxAd6WR1Pu
-	 Pph5/GR01dz6WkT7rlrtyJI2LaY9WLcY1hKbHMM8XfvtD5sJ9uk1Cq01hHvxATDXcL
-	 Xo2Wvv3PYg7KFlL1+aapnbKytfOsY4/tFl1iBlCM=
+	b=caMDBpFtxpraxpqBrKmseJsw0JyKYhdxnhDaiztzA3cyjqOVTbt/tMfv1ImzkHoNh
+	 12fO6snYy4GCicaq53DK781sZgkpxC5hynbgxkfzqhoKeXvi++bn96zF++tAfCUWsy
+	 FRkKjrALtInb+v371qClvElTagbWGyddo/nljA2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Zhiwei Zhang <202275009@qq.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0056/2857] RDMA/rxe: Check PDs for memory window binds
-Date: Wed, 18 Nov 2026 15:18:10 +0100
-Message-ID: <20261118150203.324983066@linuxfoundation.org>
+Subject: [PATCH 6.1 0057/2857] gpio: sifive: add missing MODULE_DEVICE_TABLE()
+Date: Wed, 18 Nov 2026 15:18:11 +0100
+Message-ID: <20261118150203.358844206@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,70 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiwei Zhang <202275009@qq.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit fbbe1d5cd7d400a98afcf337969cfdb808cb198f ]
+[ Upstream commit 8fe6fa0f223f44b8b869319d1b9c383749aa147b ]
 
-The IBTA Software Transport Verbs specification requires the QP,
-Memory Window and Memory Region for a Bind Memory Window operation
-to belong to the same HCA and protection domain.
+The driver has an OF match table wired to .of_match_table, but does
+not export the table with MODULE_DEVICE_TABLE().
 
-rxe only checked the QP and MW protection domain for type 2 MWs.
-Move the QP/MW PD check to the common bind path and also reject
-binding an MW to an MR from a different PD.
+Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
+information is generated for OF based module autoloading.
 
-Invalid bind requests continue to fail with IB_WC_MW_BIND_ERR.
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the platform driver, and the missing module alias publication.
 
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Zhiwei Zhang <202275009@qq.com>
-Link: https://patch.msgid.link/tencent_FD4FB25AA4FFA845E63F5AC36CF4A46CDC0A@qq.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260704122230.75964-1-pengpeng@iscas.ac.cn
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_mw.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ drivers/gpio/gpio-sifive.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_mw.c b/drivers/infiniband/sw/rxe/rxe_mw.c
-index cebc9f0f428d8..9ed6647f156d5 100644
---- a/drivers/infiniband/sw/rxe/rxe_mw.c
-+++ b/drivers/infiniband/sw/rxe/rxe_mw.c
-@@ -72,13 +72,6 @@ static int rxe_check_bind_mw(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
- 			return -EINVAL;
- 		}
+diff --git a/drivers/gpio/gpio-sifive.c b/drivers/gpio/gpio-sifive.c
+index 0f1e1226ebbe8..7e0d72250cfab 100644
+--- a/drivers/gpio/gpio-sifive.c
++++ b/drivers/gpio/gpio-sifive.c
+@@ -269,6 +269,7 @@ static const struct of_device_id sifive_gpio_match[] = {
+ 	{ .compatible = "sifive,fu540-c000-gpio" },
+ 	{ },
+ };
++MODULE_DEVICE_TABLE(of, sifive_gpio_match);
  
--		/* C10-72 */
--		if (unlikely(qp->pd != to_rpd(mw->ibmw.pd))) {
--			rxe_dbg_mw(mw,
--				"attempt to bind type 2 MW with qp with different PD\n");
--			return -EINVAL;
--		}
--
- 		/* o10-37.2.40 */
- 		if (unlikely(!mr || wqe->wr.wr.mw.length == 0)) {
- 			rxe_dbg_mw(mw,
-@@ -87,10 +80,21 @@ static int rxe_check_bind_mw(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
- 		}
- 	}
- 
--	/* remaining checks only apply to a nonzero MR */
-+	/* C10-72 */
-+	if (unlikely(qp->pd != rxe_mw_pd(mw))) {
-+		rxe_dbg_mw(mw, "attempt to bind MW with qp with different PD\n");
-+		return -EINVAL;
-+	}
-+
- 	if (!mr)
- 		return 0;
- 
-+	/* remaining checks only apply to a nonzero MR */
-+	if (unlikely(qp->pd != mr_pd(mr))) {
-+		rxe_dbg_mw(mw, "attempt to bind MW/QP to MR with different PD\n");
-+		return -EINVAL;
-+	}
-+
- 	if (unlikely(mr->access & IB_ZERO_BASED)) {
- 		rxe_dbg_mw(mw, "attempt to bind MW to zero based MR\n");
- 		return -EINVAL;
+ static struct platform_driver sifive_gpio_driver = {
+ 	.probe		= sifive_gpio_probe,
 -- 
 2.53.0
 
