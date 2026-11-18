@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029098;
-	b=ZIdSNnIok21rr2cjHuFfBwyZMUZVzdxjcwCXAMuvlMvp+uqaVvM4ut52qIL9MyEsr+NQ
-	 lNIZpaQiAj78TzTUz9Rcm7xxecntVpddgVSJgIYN3J02X7gwSvkxmeGz7mdeb1NltMqtf
-	 s75QX/mecttQhqwgajsG1MmnHtXiF06AHa/PMMOqomGIdoohRsu+kOzHWQFkdSA9Csoko
-	 2MEQ7FZMSstsE2UALdcaHSqKQATn0TXzD+1cW9ZCYf/flljfelzrYVPS7kmOOdpSJgWu9
-	 xuJ1MKDpg+S/xlwEYkbuljIfjM3FPdTzn0X1EMD3WP3hg1062EGLv6gTE5HwnWumSsQ==
+	t=1795029101;
+	b=AV77mofj8eh07zhTrGGceGOmXq8r5pME3LP4BMrmdSRQpnlOXnuA1bY+D7zkPszeujzK
+	 H0V+B6omVIFGannDXtRJ3sRy6DC092dpfZHxjq/72aYWvnEoE8k67s266+mU/bAsQZ3Uy
+	 IYfS+xJq2esYbLR1G4iOfnDCciB0d7lfLIKsYNvUEJ1STXvXU0t+2klxKgcUFp5iPl7ya
+	 RBH8EN08JIDf3yLDZhfJC+6nATPYQZyXcV45F3MFZm5g0QGKOxgG6wBTUXSrMSpKcYCsa
+	 Ye8KXl5I7NUVy0/fj1k7cPcQrxHjVcpmvKKFqvMJaZMbU5XA2jlzJQEOXfC+k8pEfiw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029098;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029101;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=27eKhSk9oha9KgduKK5smMvJo1jeZbCFO7PHWNtlOzc=;
-	b=IW6V2wDfJANFIoIvO3SRKVT0SYgaAkd2O4WPgN1iAmyB0AgmIWfJEaqJnLnBUWZExpyx
-	 tZ6ElBhh+wf3+0XaMyhrQjs33rj+v/s3YuGbg47Y1ieYw7qNz9stk7UZOkFC0v5+orVvT
-	 MaElyPVeLjcjM2fTW9k6fgKBWHSqsHbBKkiNkjUr6HB3/h+INo61GfhYIvGcImiv2CIZN
-	 ModdRtj4k4WQuUXb1vixYoluEfqEH6rukyYgZsYQZpu0cMaUFxErJLqPycvqvBxqHgdmz
-	 bpSTPlFrZLHWdj1GomdvkXuyN2uiF4kcULmzcurpP9UsdyUk3PXlunn7ML9OXHi/zEw==
+	bh=ESFz1pb5D1GsWA8NuJKgIEhmn6BKO0RtOi76VnFtuxs=;
+	b=M3rUEhBoCF1tVUsRvitsW7/zeBv/f9jVdDFBpwCTDDeQ+1DBEhGwMy2fxiWHxdVuBK+M
+	 Fvr8Fawv/4q4lHj7hPNyuNg9qiUqpW7YrqwfJagjIhfYfJGHw4H3tGlVRbPJKE6Rw8XLS
+	 PYIq54T9XCWaVTzgS37wnyHePRWdjwzlmgWf3PAA/Y9gLBz4121AeTmEU45E1Y1JeVHkj
+	 qSrmM85HASHpChXKHWFmxT6y/Ma75Bi7oIYtRZvIJEVBQFUdHLVVVTiQ/nIEtQwCLYaqc
+	 0oyEqIep8C8JyuyzdvXQNbI1o+WIiPTfHZi6M28P6G8I3DX1LIiRcgM7Jm5alWcE6LA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WEpETg3h;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PhqIhzcL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68232606A32A;
-	Wed, 18 Nov 2026 19:11:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB8D606A31C;
+	Wed, 18 Nov 2026 19:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WEpETg3h
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB0431F000C4;
-	Wed, 18 Nov 2026 19:11:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PhqIhzcL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75FA91F000C4;
+	Wed, 18 Nov 2026 19:11:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029098;
-	bh=27eKhSk9oha9KgduKK5smMvJo1jeZbCFO7PHWNtlOzc=;
+	s=korg; t=1795029101;
+	bh=ESFz1pb5D1GsWA8NuJKgIEhmn6BKO0RtOi76VnFtuxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WEpETg3hKJZaBqFhzC+pYrkQj73bOSaOkTBw1SW5WcyN9Z3N2Dag5VFBy9kGWxHsq
-	 aoCA523HjgXEqkAdBp6Kxt6SbZkhiV2h3MBkvKYjWgWeiC59yRw+3MVjYixHbawXJH
-	 6KDno0s/gL9jhEBxtTavTXYb5hrwfdp8jbimRE5g=
+	b=PhqIhzcLdn0uxE7JKYKBwn64gtFqK1uLDPb7U3zqsqtbrtBsBNMa6+yTfIDcI0ByH
+	 hmF806c+O7B81NjJ3SXHrWTUUP5cv11ILhkZAJ4H1aQxLWpaO6QUcjfQO3Fnbc2VbW
+	 NYwmHs2dWPdzdyyFQtCFfOxYSSriiMmnkQW6n3+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Anup Patel <anup@brainfault.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0230/1756] irqchip/riscv-imsic: Use GENMASK for base address masks
-Date: Wed, 18 Nov 2026 15:39:17 +0100
-Message-ID: <20261118150017.426448166@linuxfoundation.org>
+Subject: [PATCH 6.12 0231/1756] memory: brcmstb_dpfe: validate firmware section sizes
+Date: Wed, 18 Nov 2026 15:39:18 +0100
+Message-ID: <20261118150017.465940147@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,70 +70,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit bd7d57a03c4b0fa3b0291ec64d688ebfed5edffc ]
+[ Upstream commit e61c1a1103e2617e8f86288368911a8591e35c1e ]
 
-The IMSIC DT binding allows riscv,guest-index-bits up to 7 and
-riscv,hart-index-bits up to 15. On RV32, guest-index-bits=7 and
-hart-index-bits=13, together with the 12-bit IMSIC page offset, is a
-binding-valid layout that consumes a 32-bit low-address mask.
+The firmware header is read before the image has been shown to contain a
+complete header. In addition, the final size check adds two
+firmware-provided u32 section lengths before comparing the result with
+fw->size, so the addition can wrap.
 
-The parser accepts this equality case because it rejects only values
-larger than the remaining bit budget. The base address canonicalization
-then builds the low-address mask with BIT(sum) - 1. When sum is 32 on
-RV32, that expression shifts an unsigned long by its full width.
+Reject images shorter than the fixed header and checksum before reading
+the header. Then derive the available payload length with subtraction and
+require the two declared sections to fill it exactly.
 
-Keep the legal equality layout and express the mask with GENMASK(sum - 1,
-0) instead. The existing parser bounds guarantee that sum - 1 is below
-BITS_PER_LONG at both mask sites.
-
-Fixes: 21a8f8a0eb35 ("irqchip: Add RISC-V incoming MSI controller early driver")
+Fixes: 2f330caff577 ("memory: brcmstb: Add driver for DPFE")
+Assisted-by: Codex:gpt-5
 Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://patch.msgid.link/20260718040000.004.929c1ef2-caplitmus-rv@iscas.ac.cn
+Link: https://patch.msgid.link/20260815134559.47888-1-pengpeng@iscas.ac.cn
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-riscv-imsic-state.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/memory/brcmstb_dpfe.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/irqchip/irq-riscv-imsic-state.c b/drivers/irqchip/irq-riscv-imsic-state.c
-index 06ff0e17c0c33..61e30372a67df 100644
---- a/drivers/irqchip/irq-riscv-imsic-state.c
-+++ b/drivers/irqchip/irq-riscv-imsic-state.c
-@@ -7,6 +7,7 @@
- #define pr_fmt(fmt) "riscv-imsic: " fmt
- #include <linux/acpi.h>
- #include <linux/cpu.h>
-+#include <linux/bits.h>
- #include <linux/bitmap.h>
- #include <linux/interrupt.h>
- #include <linux/irq.h>
-@@ -739,9 +740,9 @@ static int __init imsic_parse_fwnode(struct fwnode_handle *fwnode,
- 		return -EINVAL;
- 	}
- 	global->base_addr = res.start;
--	global->base_addr &= ~(BIT(global->guest_index_bits +
--				   global->hart_index_bits +
--				   IMSIC_MMIO_PAGE_SHIFT) - 1);
-+	global->base_addr &= ~GENMASK(global->guest_index_bits +
-+				       global->hart_index_bits +
-+				       IMSIC_MMIO_PAGE_SHIFT - 1, 0);
- 	global->base_addr &= ~((BIT(global->group_index_bits) - 1) <<
- 			       global->group_index_shift);
+diff --git a/drivers/memory/brcmstb_dpfe.c b/drivers/memory/brcmstb_dpfe.c
+index 0f8dac23ba288..c76d3281d644f 100644
+--- a/drivers/memory/brcmstb_dpfe.c
++++ b/drivers/memory/brcmstb_dpfe.c
+@@ -533,9 +533,15 @@ static int __verify_firmware(struct init_data *init,
+ 			     const struct firmware *fw)
+ {
+ 	const struct dpfe_firmware_header *header = (void *)fw->data;
+-	unsigned int dmem_size, imem_size, total_size;
++	unsigned int dmem_size, imem_size;
+ 	bool is_big_endian = false;
+ 	const u32 *chksum_ptr;
++	size_t payload_size;
++
++	if (fw->size < sizeof(*header) + sizeof(*chksum_ptr))
++		return ERR_INVALID_SIZE;
++
++	payload_size = fw->size - sizeof(*header) - sizeof(*chksum_ptr);
  
-@@ -820,9 +821,9 @@ int __init imsic_setup_state(struct fwnode_handle *fwnode, void *opaque)
- 		}
+ 	if (header->magic == DPFE_BE_MAGIC)
+ 		is_big_endian = true;
+@@ -554,13 +560,8 @@ static int __verify_firmware(struct init_data *init,
+ 	if ((dmem_size % sizeof(u32)) != 0 || (imem_size % sizeof(u32)) != 0)
+ 		return ERR_INVALID_SIZE;
  
- 		base_addr = mmios[i].start;
--		base_addr &= ~(BIT(global->guest_index_bits +
--				   global->hart_index_bits +
--				   IMSIC_MMIO_PAGE_SHIFT) - 1);
-+		base_addr &= ~GENMASK(global->guest_index_bits +
-+				      global->hart_index_bits +
-+				      IMSIC_MMIO_PAGE_SHIFT - 1, 0);
- 		base_addr &= ~((BIT(global->group_index_bits) - 1) <<
- 			       global->group_index_shift);
- 		if (base_addr != global->base_addr) {
+-	/*
+-	 * The header + the data section + the instruction section + the
+-	 * checksum must be equal to the total firmware size.
+-	 */
+-	total_size = dmem_size + imem_size + sizeof(*header) +
+-		sizeof(*chksum_ptr);
+-	if (total_size != fw->size)
++	/* The data and instruction sections must fill the payload exactly. */
++	if (dmem_size > payload_size || imem_size != payload_size - dmem_size)
+ 		return ERR_INVALID_SIZE;
+ 
+ 	/* The checksum comes at the very end. */
 -- 
 2.53.0
 
