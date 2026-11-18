@@ -1,54 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047559;
-	b=B1lJ8cWBxVSiyhtDkj10mYiOKwFu0KcoIoD/jEmP1kS7Doh9F7lOJtatCKskgeF57Y2f
-	 ukZ4D0HC6XQ4S7IXwJ+WpzontRffWPAtaOZoRfj0RU+oMYUHRH4VwRVzZWG1XVh1E7Kdz
-	 6lYP5srSnbXH9yJvai+dJFSga8h3ApdK+ON2eVnh40XExClsxkTNNyGNvUX8G5+sXU83o
-	 u6I288PMpyGbDaf7s9l91mAy2VKBJtX2xtQLP55+XV4oB7DfpF2Gl1SSVb1ZD497cheio
-	 WpEdh2dGzMtp+3QmfDbBk2cSoj0UwqcMmPtkV9Y9F+duhSfS3MVCNk5y9StkYIf5DwQ==
+	t=1795047562;
+	b=IqeaeEG4sYaJAKb7cGRnzGSnotISUc/jlxlMW5ZxZ5Pr9+3rnj1xZ3cL36JZDVaVBrb7
+	 IQ6m/sS/TdrV8XGUWvK8Eg5JTOk/ja6wibialZqtkfGvgtpqDfQBuKSVuksY3VtyheeuA
+	 c9tqGBw0zVQhFyeZL7pqQgdA1QFJInd0rivpdVwgt4TsEnXPRoQ475dTrg/Tpw+anfgex
+	 P8I0y8sxGM/Xtwg8J6WAas+zXTC1bckrrOql/VxZG7hne/56EqFBMQmvOjgzHHj28oT2l
+	 f8mEqGG/M8A6KHjIn+/dJ+FSkTUvt1dZmrTo9VRpsnUEEM+smFkhr3uNxD4abZH6FMQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047559;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047562;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WhKu37C93i/jkP5rIS76GWXnwsN/F6GafVfUR8X/OOg=;
-	b=lojrp+2NxWZqLm6BApWBAEUfvNQvn3WUzzxtZibvYZCHt9nSs7uFWwSHbXQkpN7i/xW7
-	 yLyHJADlN77pE44C8KVkma3iyHCUEzY++1IDKCwSGrXZIy7yXdMf9eODeLfwJHEEuXVMK
-	 1hFoLxNDZ/4CZ/qXlYTAjjcC/lTXJ09OvbLYslvPY+NAvaAOY3RuqdcuihzYCRE+7bXaR
-	 SzonHk7gmE/DY8EGRXzQY8xfATAR4c2Jm0ZPWWhXhILsBPr/8Vs7S9GlknRBERk1FX0TF
-	 a41JSA0JXSO+0UMYVtPXlrBtq2XFxgWyrDBnhVKEWkb1ZbNv7ofIq6u6RpW0mFG9MeA==
+	bh=u2EPyzxEav45bGB2/w8xfCN83RE+xJFJ/jEB/9IbpZg=;
+	b=lnxvrnndoj4UXrzd/6f6AyCWvUtbLDgOc2gZ0QrYfUTiqWaikH5sRCV7YUvgk4VdMsf5
+	 +DvTWblwasAs23RLb22cTBmE65o+uPfzI67ujmFVC37b4G2rj4kshoJ2ysEBc+XDFtwJk
+	 eBPrOTeE0PdDRe/ECOYyzQFV/c99u5/GL9VOPtFWKA1DuO/hFhrbgV57Jzj9RTfvnVIpY
+	 H+6pQnDYjCtFDrttyayNv50s0ER8ptYZ896cGi6J7OMLyydAQKPd7EN2hwA4dnOV21jRg
+	 G27PfTOQJGLT6MhAY5t0dWRDbvOifmcEZ/MaN7XJiQV2vMsnNXc40twX4X/6F/BJunA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WKaIdE5N;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V7Yw8J05;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23124606A32C;
-	Thu, 19 Nov 2026 00:19:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2FE4606A325;
+	Thu, 19 Nov 2026 00:19:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WKaIdE5N
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 772821F000C4;
-	Thu, 19 Nov 2026 00:19:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V7Yw8J05
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E111F000C4;
+	Thu, 19 Nov 2026 00:19:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047559;
-	bh=WhKu37C93i/jkP5rIS76GWXnwsN/F6GafVfUR8X/OOg=;
+	s=korg; t=1795047561;
+	bh=u2EPyzxEav45bGB2/w8xfCN83RE+xJFJ/jEB/9IbpZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WKaIdE5N7FTsz9dVSa6d14gmSahoeJSAz8WBoOzmlUvIpsFtT6ga4lWgDdtiVnz6q
-	 Rz8RQpiQaUfwzU5DW8iVqdmtp0ImgmdDg5U2ibTo8yED+I/VB+/uXYSpm0htFtNDh8
-	 DWfpjNBPZJXO2cUEmtEYWhohAHRQZG3yrQEbb3bk=
+	b=V7Yw8J05NWxbaNE3jlZgRCAxlFa087pQCXVj7k+DsGnREmugqhzGf4l8WyL5Iqd3W
+	 odm5Nk+HFUikmHOuV/GD8EXCyWGfbmaSo5sIjA2RW3xt/Un2VbWV5w4h8ELzCiSVkD
+	 sKqjnORMq4w2DGEqT7UZeS48lSQXD7H4vuObFpV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francis Perron <francis@akrites.dev>,
-	AutonomousCodeSecurity@microsoft.com,
-	"Cen Zhang (Microsoft)" <cenzhang@linux.microsoft.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Joseph Qi <jiangqi903@gmail.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1680/2857] apparmor: fix query_data() output overlapping the lookup key
-Date: Wed, 18 Nov 2026 15:45:14 +0100
-Message-ID: <20261118150301.819854891@linuxfoundation.org>
+Subject: [PATCH 6.1 1642/2857] ocfs2: constify struct ocfs2_lock_res_ops
+Date: Wed, 18 Nov 2026 15:44:36 +0100
+Message-ID: <20261118150300.458331508@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,110 +75,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit d30844001360a403a511cf24fc75ecaa6a7a7544 ]
+[ Upstream commit 3ebe69c0c3ae3ef5ecd1ad86aa98a3b7cbe3c7e9 ]
 
-In query_data(), buf and query point into the same multi_transaction
-buffer: buf at the start, query a few bytes in, and the lookup key
-right after the label string that query points to. Reusing the buffer
-is by design and is safe as long as the query is fully parsed before
-buf is written to, but the key is not: it is dereferenced on every
-iteration of label_for_each_confined(), after output has already been
-written. So when the label has more than one profile with a data
-table, the data of the first matching profile is written to buf while
-the key is still needed, and overwrites it if the data is large enough.
-The later lookups then run on a corrupted key. Besides, if the data has
-no NUL byte from the key's position to the end of the allocation,
-strhash() -> strlen() -> jhash() reads past the 4096-byte slab object,
-triggering an out-of-bound read:
+"struct ocfs2_lock_res_ops" are not modified in this driver.
 
-  BUG: KASAN: slab-out-of-bounds in jhash+0x595/0x5e0
-  Read of size 1 at addr ff1100001159d000 by task exploit/155
-  CPU: 0 UID: 1000 PID: 155 Comm: exploit Not tainted 7.3.0-rc7 #1
-  Call Trace:
-   jhash+0x595/0x5e0
-   aa_write_access+0x880/0x1400
-   vfs_write+0x26f/0xd20
-   ksys_write+0x115/0x210
+Constifying this structure moves some data to a read-only section, so
+increase overall security.
 
-Writing to the .access file is unprivileged (0666), but triggering this
-requires loaded profiles that carry a data table, which needs
-CAP_MAC_ADMIN and is not the case on default distribution policies.
+In order to do it, "struct ocfs2_lock_res" also needs to be adjusted to
+this new const qualifier.
 
-Fix by copying the key with kstrdup() before writing any output to buf,
-so the key stays valid across all loop iterations regardless of what
-gets written to the overlapping buffer.
+On a x86_64, with allmodconfig:
+Before:
+======
+   text	   data	    bss	    dec	    hex	filename
+  83038	   2632	    400	  86070	  15036	fs/ocfs2/dlmglue.o
 
-Fixes: 317d9a054e1c ("apparmor: update query interface to support label queries")
-Cc: stable@vger.kernel.org # v4.13+
-Cc: Francis Perron <francis@akrites.dev>
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
-[ sashal: adjusted context for label critical-section helpers without the needput argument ]
+After:
+=====
+   text	   data	    bss	    dec	    hex	filename
+  83806	   1992	    272	  86070	  15036	fs/ocfs2/dlmglue.o
+
+Link: https://lkml.kernel.org/r/43d3e2ae3a97d3cbe93d6ba6ce48ae5ec04d7526.1718382288.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Joseph Qi <jiangqi903@gmail.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 5b4696e0bfc3 ("ocfs2: cache the mount context for dentry lock callbacks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/apparmorfs.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ fs/ocfs2/dlmglue.c | 28 ++++++++++++++--------------
+ fs/ocfs2/ocfs2.h   |  2 +-
+ 2 files changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/security/apparmor/apparmorfs.c b/security/apparmor/apparmorfs.c
-index 1476517ddef11..c92e9517a02c0 100644
---- a/security/apparmor/apparmorfs.c
-+++ b/security/apparmor/apparmorfs.c
-@@ -743,7 +743,7 @@ static void profile_query_cb(struct aa_profile *profile, struct aa_perms *perms,
- static ssize_t query_data(char *buf, size_t buf_len,
- 			  char *query, size_t query_len)
+diff --git a/fs/ocfs2/dlmglue.c b/fs/ocfs2/dlmglue.c
+index dacf01536b529..ce61085f3b94b 100644
+--- a/fs/ocfs2/dlmglue.c
++++ b/fs/ocfs2/dlmglue.c
+@@ -222,12 +222,12 @@ struct ocfs2_lock_res_ops {
+  */
+ #define LOCK_TYPE_USES_LVB		0x2
+ 
+-static struct ocfs2_lock_res_ops ocfs2_inode_rw_lops = {
++static const struct ocfs2_lock_res_ops ocfs2_inode_rw_lops = {
+ 	.get_osb	= ocfs2_get_inode_osb,
+ 	.flags		= 0,
+ };
+ 
+-static struct ocfs2_lock_res_ops ocfs2_inode_inode_lops = {
++static const struct ocfs2_lock_res_ops ocfs2_inode_inode_lops = {
+ 	.get_osb	= ocfs2_get_inode_osb,
+ 	.check_downconvert = ocfs2_check_meta_downconvert,
+ 	.set_lvb	= ocfs2_set_meta_lvb,
+@@ -235,50 +235,50 @@ static struct ocfs2_lock_res_ops ocfs2_inode_inode_lops = {
+ 	.flags		= LOCK_TYPE_REQUIRES_REFRESH|LOCK_TYPE_USES_LVB,
+ };
+ 
+-static struct ocfs2_lock_res_ops ocfs2_super_lops = {
++static const struct ocfs2_lock_res_ops ocfs2_super_lops = {
+ 	.flags		= LOCK_TYPE_REQUIRES_REFRESH,
+ };
+ 
+-static struct ocfs2_lock_res_ops ocfs2_rename_lops = {
++static const struct ocfs2_lock_res_ops ocfs2_rename_lops = {
+ 	.flags		= 0,
+ };
+ 
+-static struct ocfs2_lock_res_ops ocfs2_nfs_sync_lops = {
++static const struct ocfs2_lock_res_ops ocfs2_nfs_sync_lops = {
+ 	.flags		= 0,
+ };
+ 
+-static struct ocfs2_lock_res_ops ocfs2_trim_fs_lops = {
++static const struct ocfs2_lock_res_ops ocfs2_trim_fs_lops = {
+ 	.flags		= LOCK_TYPE_REQUIRES_REFRESH|LOCK_TYPE_USES_LVB,
+ };
+ 
+-static struct ocfs2_lock_res_ops ocfs2_orphan_scan_lops = {
++static const struct ocfs2_lock_res_ops ocfs2_orphan_scan_lops = {
+ 	.flags		= LOCK_TYPE_REQUIRES_REFRESH|LOCK_TYPE_USES_LVB,
+ };
+ 
+-static struct ocfs2_lock_res_ops ocfs2_dentry_lops = {
++static const struct ocfs2_lock_res_ops ocfs2_dentry_lops = {
+ 	.get_osb	= ocfs2_get_dentry_osb,
+ 	.post_unlock	= ocfs2_dentry_post_unlock,
+ 	.downconvert_worker = ocfs2_dentry_convert_worker,
+ 	.flags		= 0,
+ };
+ 
+-static struct ocfs2_lock_res_ops ocfs2_inode_open_lops = {
++static const struct ocfs2_lock_res_ops ocfs2_inode_open_lops = {
+ 	.get_osb	= ocfs2_get_inode_osb,
+ 	.flags		= 0,
+ };
+ 
+-static struct ocfs2_lock_res_ops ocfs2_flock_lops = {
++static const struct ocfs2_lock_res_ops ocfs2_flock_lops = {
+ 	.get_osb	= ocfs2_get_file_osb,
+ 	.flags		= 0,
+ };
+ 
+-static struct ocfs2_lock_res_ops ocfs2_qinfo_lops = {
++static const struct ocfs2_lock_res_ops ocfs2_qinfo_lops = {
+ 	.set_lvb	= ocfs2_set_qinfo_lvb,
+ 	.get_osb	= ocfs2_get_qinfo_osb,
+ 	.flags		= LOCK_TYPE_REQUIRES_REFRESH | LOCK_TYPE_USES_LVB,
+ };
+ 
+-static struct ocfs2_lock_res_ops ocfs2_refcount_block_lops = {
++static const struct ocfs2_lock_res_ops ocfs2_refcount_block_lops = {
+ 	.check_downconvert = ocfs2_check_refcount_downconvert,
+ 	.downconvert_worker = ocfs2_refcount_convert_worker,
+ 	.flags		= 0,
+@@ -511,7 +511,7 @@ static inline void ocfs2_init_start_time(struct ocfs2_mask_waiter *mw)
+ static void ocfs2_lock_res_init_common(struct ocfs2_super *osb,
+ 				       struct ocfs2_lock_res *res,
+ 				       enum ocfs2_lock_type type,
+-				       struct ocfs2_lock_res_ops *ops,
++				       const struct ocfs2_lock_res_ops *ops,
+ 				       void *priv)
  {
--	char *out;
-+	char *out, *keydup;
- 	const char *key;
- 	struct label_it i;
- 	struct aa_label *label, *curr;
-@@ -764,11 +764,18 @@ static ssize_t query_data(char *buf, size_t buf_len,
- 	if (buf_len < sizeof(bytes) + sizeof(blocks))
- 		return -EINVAL; /* not enough space */
+ 	res->l_type          = type;
+@@ -554,7 +554,7 @@ void ocfs2_inode_lock_res_init(struct ocfs2_lock_res *res,
+ 			       unsigned int generation,
+ 			       struct inode *inode)
+ {
+-	struct ocfs2_lock_res_ops *ops;
++	const struct ocfs2_lock_res_ops *ops;
  
-+	/* buf overlaps query, keep a copy of the key for the later lookups */
-+	keydup = kstrdup(key, GFP_KERNEL);
-+	if (!keydup)
-+		return -ENOMEM;
-+
- 	curr = begin_current_label_crit_section();
- 	label = aa_label_parse(curr, query, GFP_KERNEL, false, false);
- 	end_current_label_crit_section(curr);
--	if (IS_ERR(label))
-+	if (IS_ERR(label)) {
-+		kfree(keydup);
- 		return PTR_ERR(label);
-+	}
+ 	switch(type) {
+ 		case OCFS2_LOCK_TYPE_RW:
+diff --git a/fs/ocfs2/ocfs2.h b/fs/ocfs2/ocfs2.h
+index 9de838f1ac555..fd57d798a8bae 100644
+--- a/fs/ocfs2/ocfs2.h
++++ b/fs/ocfs2/ocfs2.h
+@@ -154,7 +154,7 @@ struct ocfs2_lock_stats {
  
- 	/* We are going to leave space for two numbers. The first is the total
- 	 * number of bytes we are writing after the first number. This is so
-@@ -786,13 +793,14 @@ static ssize_t query_data(char *buf, size_t buf_len,
- 		if (!profile->data)
- 			continue;
+ struct ocfs2_lock_res {
+ 	void                    *l_priv;
+-	struct ocfs2_lock_res_ops *l_ops;
++	const struct ocfs2_lock_res_ops *l_ops;
  
--		data = rhashtable_lookup_fast(profile->data, &key,
-+		data = rhashtable_lookup_fast(profile->data, &keydup,
- 					      profile->data->p);
  
- 		if (data) {
- 			if (out + sizeof(outle32) + data->size > buf +
- 			    buf_len) {
- 				aa_put_label(label);
-+				kfree(keydup);
- 				return -EINVAL; /* not enough space */
- 			}
- 			outle32 = __cpu_to_le32(data->size);
-@@ -804,6 +812,7 @@ static ssize_t query_data(char *buf, size_t buf_len,
- 		}
- 	}
- 	aa_put_label(label);
-+	kfree(keydup);
- 
- 	outle32 = __cpu_to_le32(out - buf - sizeof(bytes));
- 	memcpy(buf, &outle32, sizeof(outle32));
+ 	struct list_head         l_blocked_list;
 -- 
 2.53.0
 
