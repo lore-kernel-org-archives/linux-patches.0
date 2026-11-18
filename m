@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051006;
-	b=AWuRjV4GHfhG6csPKqcf2BF9hBqJebm47bmoeHZ7W6dMcpZ+PDfSbw7AHEsuY60wE7My
-	 Hl5IFYd6DZ4lpKlKVw74a2zP55T1giHzrpJPTR4i1A+kQUiNSn9y8jBycZ+qavAKH68LK
-	 1DOLywX1CC6bHuOTIs873eGbP3QOf24uZajOdkvImM0uMZvU3mwMxW2/mREleQAKhVAMM
-	 AKSr7XqYjc7hAbXpZO+VHsbL0LayMOFhui/PKiFXcR90Tj9p5F5bIKBShmocTSAr+RFaK
-	 oRmWT5rlLHOgxq8o9TQg5yhrsGepJqeS4fPPUNCpFLn0zk6DIPMLIWUPy0JRQt+7uIg==
+	t=1795051009;
+	b=ZwyUyjNTgw2chawaSOKngASnBN0DPpYAbA+1xdczhegC3oo+TO8JfK2vNwgWzdqp997W
+	 ZUmYGBc8Ih+kY8cu/OgPVT7gW3pLOcrGS7926H7ok8nv5NPb7z55gohiWS/H6q6cJ7Yow
+	 cn+lLmSG9U7yylTQS1rP6Jg643GMk5dsd+vOgAdo4lQmJB4NpnHle4VUJAGsLUN9YLd2w
+	 mmpbrennOOzv2Ih5cBw/R6PRbqMbms2RJTvXXJUw1/3N/XRWJACyhDyhE/MtYDWSXZEvN
+	 mOSbM6ZY7nFXopsf+VH0eWPe1/+N5l9EvXrTFSDHVwVn7Spyojdns4xpV0L1LPcJ/mg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051006;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051009;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nav0nbQmNev/sKjUxnaQm2EmGRhJ/sqnSvX7+iJZ/8U=;
-	b=Ip/ZgMxChbnpI8RqS8uqwjGpnB3iqNn/MQiKf0JtdCuF6c3cBDJH1ZwTe4bLR1eBQN/E
-	 hhl6HOOUnHu/ISwULZ1hIQmwb38pe0EHSTKWJqu0yQz2jg3g4UWlNY1sWdE2UMkfDrDBL
-	 vPGi2GHUk97MRz03oGLI2T7RwGanlzu80EntSEWMzCHBTdZho+FK4H0uFrl0T8D4O7tjX
-	 0MBc10UCQ2q5/N1ps1j89lQk3/fscuHyCdqMBehkU9UVvYW6PS1dgSJe7/PrKTStBHkD5
-	 N4ItJLRKUltTYFj4qNsGi+yf290OS0EvHbolG0oabanFJQpuwhW21E8F3XYleAQ4j+Q==
+	bh=GKBpiF/tFFFwKDIxj++WTieXv9A9AnjJ0pm3if5atro=;
+	b=0z8eJ0QBPEGKks76fqeFsWm5jLsiNZK2bqy3lbqIXTEoiJYD4sjDlCz3h4yO8GU72Aob
+	 xH0H9sfkAJllhdpJDn/mjem7JVPUd/1tGtuy1gDvLuH9iz9fvc+tXZ75hUHKyxYJ0GCap
+	 UjXIMu4U1kAzSoe+slJ1FwO9miapzAkOAtiOXYnF3oasrnK90WcvbsWJ1Jl8FSPHlRWrF
+	 XXIygCUu2j/RjIiy/86N6eOKiYkRJ6LhFmieKONy4t7Tk37mAY+PhF2l2K6tV2sXp1UhA
+	 DMiULiZpJi2yjysUE9UamWwqe73RwR1eSut1td3b6PJWrSnFByx8KBsCp/9cKqT/H2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h+yNELT6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EunhYUGa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E069606A31C;
-	Thu, 19 Nov 2026 01:16:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF504606A32F;
+	Thu, 19 Nov 2026 01:16:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h+yNELT6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 902291F000C4;
-	Thu, 19 Nov 2026 01:16:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EunhYUGa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51F361F000C4;
+	Thu, 19 Nov 2026 01:16:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051006;
-	bh=nav0nbQmNev/sKjUxnaQm2EmGRhJ/sqnSvX7+iJZ/8U=;
+	s=korg; t=1795051008;
+	bh=GKBpiF/tFFFwKDIxj++WTieXv9A9AnjJ0pm3if5atro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h+yNELT69HZg8QPlU1qyGhaK7M8lEPt27goN01Nz9nrOESS0Fx3o2gSFakC/oD+Ye
-	 qva1A7CinucBV6ozcgtsVO7SCpe9B8bkRCVzd8x18JW546024OTszg2M7ueoXQrlVp
-	 gj1/evpr7EbEVZKt0lvtNnup/mwkuttziQwuKar8=
+	b=EunhYUGapdux8tRDg95ZeeNHuVXB2fLOU9v/YlPZarXhA3MJ6KJ0GEiNyO8Rd7a+l
+	 EjLebwlYNwUXlSONH4y2iqeXH7v7ZmvzsmqrE5DiBPfEeg59tvCrz8UoNLhOYL879H
+	 T1ymH6QINhIFxKOky7EbhqiZwc8+XLUTk6D0gDRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Jonathan Cameron <jic23@kernel.org>,
+	Ben Dooks <ben.dooks@codethink.co.uk>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0056/2214] iio: adc: max1241: add missing MODULE_DEVICE_TABLE()
-Date: Wed, 18 Nov 2026 15:28:52 +0100
-Message-ID: <20261118150012.266801893@linuxfoundation.org>
+Subject: [PATCH 5.15 0057/2214] mmc: cqhci: fix to missed endian conversions
+Date: Wed, 18 Nov 2026 15:28:53 +0100
+Message-ID: <20261118150012.305987648@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,41 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Ben Dooks <ben.dooks@codethink.co.uk>
 
-[ Upstream commit 790a2080e0c9eabefea3561dec301172043de236 ]
+[ Upstream commit 0aae2c73175821a71c0e20607f8e333be5b71940 ]
 
-The driver has a match table for the spi bus wired into its driver
-structure, but the table is not exported with MODULE_DEVICE_TABLE().
+Fix two places where the wrong type or conversion of little-endian
+types to fix the following sparse warnings:
 
-Add the missing MODULE_DEVICE_TABLE() entry so module alias information
-is generated for automatic module loading.
+drivers/mmc/host/cqhci-core.c:487:15: warning: incorrect type in assignment (different base types)
+drivers/mmc/host/cqhci-core.c:487:15:    expected restricted __le32 [usertype]
+drivers/mmc/host/cqhci-core.c:487:15:    got int
+drivers/mmc/host/cqhci-core.c:566:19: warning: incorrect type in assignment (different base types)
+drivers/mmc/host/cqhci-core.c:566:19:    expected unsigned long long [usertype] *task_desc
+drivers/mmc/host/cqhci-core.c:566:19:    got restricted __le64 [usertype] *
 
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the driver registration structure, and the missing module alias
-publication.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/max1241.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mmc/host/cqhci-core.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/iio/adc/max1241.c b/drivers/iio/adc/max1241.c
-index b60f8448f21a4..fb92a68e6827d 100644
---- a/drivers/iio/adc/max1241.c
-+++ b/drivers/iio/adc/max1241.c
-@@ -202,6 +202,7 @@ static const struct spi_device_id max1241_id[] = {
- 	{ "max1241", max1241 },
- 	{}
- };
-+MODULE_DEVICE_TABLE(spi, max1241_id);
+diff --git a/drivers/mmc/host/cqhci-core.c b/drivers/mmc/host/cqhci-core.c
+index 9569d56193bcd..80a960f7de2e1 100644
+--- a/drivers/mmc/host/cqhci-core.c
++++ b/drivers/mmc/host/cqhci-core.c
+@@ -479,11 +479,11 @@ static void cqhci_set_tran_desc(u8 *desc, dma_addr_t addr, int len, bool end,
+ {
+ 	__le32 *attr = (__le32 __force *)desc;
  
- static const struct of_device_id max1241_dt_ids[] = {
- 	{ .compatible = "maxim,max1241" },
+-	*attr = (CQHCI_VALID(1) |
+-		 CQHCI_END(end ? 1 : 0) |
+-		 CQHCI_INT(0) |
+-		 CQHCI_ACT(0x4) |
+-		 CQHCI_DAT_LENGTH(len));
++	*attr = cpu_to_le32((CQHCI_VALID(1) |
++			     CQHCI_END(end ? 1 : 0) |
++			     CQHCI_INT(0) |
++			     CQHCI_ACT(0x4) |
++			     CQHCI_DAT_LENGTH(len)));
+ 
+ 	if (dma64) {
+ 		__le64 *dataddr = (__le64 __force *)(desc + 4);
+@@ -532,7 +532,7 @@ static int cqhci_prep_tran_desc(struct mmc_request *mrq,
+ static void cqhci_prep_dcmd_desc(struct mmc_host *mmc,
+ 				   struct mmc_request *mrq)
+ {
+-	u64 *task_desc = NULL;
++	__le64 *task_desc = NULL;
+ 	u64 data = 0;
+ 	u8 resp_type;
+ 	u8 *desc;
+@@ -564,7 +564,7 @@ static void cqhci_prep_dcmd_desc(struct mmc_host *mmc,
+ 		 CQHCI_CMD_TIMING(timing) | CQHCI_RESP_TYPE(resp_type));
+ 	if (cq_host->ops->update_dcmd_desc)
+ 		cq_host->ops->update_dcmd_desc(mmc, mrq, &data);
+-	*task_desc |= data;
++	*task_desc |= cpu_to_le64(data);
+ 	desc = (u8 *)task_desc;
+ 	pr_debug("%s: cqhci: dcmd: cmd: %d timing: %d resp: %d\n",
+ 		 mmc_hostname(mmc), mrq->cmd->opcode, timing, resp_type);
 -- 
 2.53.0
 
