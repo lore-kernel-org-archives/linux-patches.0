@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025972;
-	b=D7WgdiLyUP5hlbVjisJvc/YWuqSxG9EfzrAPRJeX54829ztRPU0fKZ0JNY40CyO1qwe2
-	 Hxbd9YPoqLM3r80GShIWzTWiwEyDgL3prTmnzdvtjpIgm/PS3dG8I/O+vPSeX9eHLLgU+
-	 +yIAin/BMutvx+Gipew/w7Af/1RqIAAotW+fJrVoxyqxz3YUVZtyz9N2GRKlZW6zlq3Q5
-	 9Hj/o80Z4ioItJv0EuFZNs3JoW/wOzJUV377Tzl6+x9IJCouAZbdBigslOq3QfaXN0D7Q
-	 O5t7jL/RxizHUZRdybSW4IldJx38kpLwkriwNE1AfEoNuwNcf+Axxh05CSD86kPP4Ow==
+	t=1795025974;
+	b=V0knXX8j67D5tVkxPYfVl5WlaFTE6oZw9XeDwdAXzQVqAkNQKgpnzbwMEtyp1u/L43ES
+	 oYmfL9n1iQwwf7RadjkT9rcObwHWpOxgbZL1WThK7/ZViwVHqTh5qzvyRG+RPa2RTM1LO
+	 Ewg3DVscMr36iKhOVnQ9A3/QsQXxuRJdFBzKSmxelGbvEpM5mSR5o+jsjF5fW2wHSMV1R
+	 gjhhBGkCstyf6XrkKqb9t/196/QAlEIj0hKeMitIjDvEEZWH9zSHcDjaVU0uIVtojQ7HC
+	 1X6GtpaDa4Fh8RSlxYhjq7UXE591Ojglvhjg8bPJlkPm4g+/NCtbbzCEa5wAL0jNMww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025972;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025974;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VeqM2nXcv2ZDC6DJwtkMT7O/xC5+J7nEdZm0OFTc//Y=;
-	b=SbHoPZ7JgMYAO7BsFnzut1kFPH7Hq6Cbs+1nT6LtcFPFb2blW6G/k+T+rghK7ICSALON
-	 DX1NOJbnn5RVy+FONlaZOlgDqAyhdIqJ5SBGKUxjjsbFnFuGuAnJhtDtX3MHAON08Eh4c
-	 vkL99cHaElYXXi4GLX3m3rpsJHuzKbtTjhoPtA00J0WiXNxveb0EVnmT7hiH0+KaYjYDZ
-	 utCgkxBPpnd0sapso2+k+PHs4gg3LBbYXo4sGXRWRI+/KltvNnlvuEVy0hb+Cgb+6zkvd
-	 iiSwPbFPaTOOB6DFxUEwb6XTyhgvIS77ItmpixhuUACg3mg7TlZxuOTVol08v0lyN6w==
+	bh=W9QM1G9sKmevFAQtx8HsmbUfTYAENP0wysyT02iRODk=;
+	b=1VwB9Tw2FDAmEJan2UrmqW0hMUVSFDqxJw9oeN6Bn95zTmt9vOCnOX3mnhPCx5MpkNeK
+	 dmXvGTHgDpSCZIq0VLDHpaP8h2g2ustlsY/zghjDD+5D0B8bbT/dw7bnhPZEx3Q+uHBrz
+	 aHALUnR0EuvObCl2wyTbfnGXME9FDLjfJnJENbhEIuomeTcnhQJWeZQWXXiKcZV5UPd1s
+	 LsguPcd5IZqbdUE0dHY80vZLVSuK1De0bR0D38a2EhQYzA4HaiE5i6TSKl6rHvbqJsS8G
+	 +RKHPqqeMNNIquUMIZYxORYu+ale6FQSkJ8p3VoqYEv+qlKw7RJpFfsN2sjoATan+Mw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I3HJDRJw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f8ZBROxF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E646606A31C;
-	Wed, 18 Nov 2026 18:19:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7715606A31C;
+	Wed, 18 Nov 2026 18:19:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I3HJDRJw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73FAA1F000C4;
-	Wed, 18 Nov 2026 18:19:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f8ZBROxF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39C001F000C4;
+	Wed, 18 Nov 2026 18:19:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025972;
-	bh=VeqM2nXcv2ZDC6DJwtkMT7O/xC5+J7nEdZm0OFTc//Y=;
+	s=korg; t=1795025974;
+	bh=W9QM1G9sKmevFAQtx8HsmbUfTYAENP0wysyT02iRODk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I3HJDRJwufUB/qfIG6WNu/xwpsNskztnayeWblopXmTB7QN6XTlCj1xl/nUxJxFIn
-	 nZG3BWXWRzJgoJJ4GrSFVEX9PrvClU6NFQ1fs5/0ImLcIEc+/JqdDzIAjH3m9HMY4H
-	 yjaM4kqVclgKJE84LIc4Urnsi1SeDyGHssrGGIw4=
+	b=f8ZBROxFL5LpOEqe7d/H5gmGfka3ZhbPAhRxcMXkvS/ffavRixxdSxpYcZTqwUrJ+
+	 /Gb6SZ0aNE2rqs/aOe/PIO6LqcFnihEZ6QePnwsj20krflbPSgfh2mYerHToTJ74zo
+	 3PeMo68Z5owewtPmuRE7CFpHoy8MarXHD2aHYXYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Rosen Penev <rosenp@gmail.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1269/2151] crypto: talitos - allocate channels with main struct
-Date: Wed, 18 Nov 2026 15:50:04 +0100
-Message-ID: <20261118150208.366793905@linuxfoundation.org>
+Subject: [PATCH 6.18 1270/2151] crypto: talitos - use devm_platform_ioremap_resource()
+Date: Wed, 18 Nov 2026 15:50:05 +0100
+Message-ID: <20261118150208.400855152@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,97 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 24818f77603b3fcb7f3da5802b28bcc5ac7604aa ]
+[ Upstream commit 463be1c718fb9f07bdce3d51363a17eac4522538 ]
 
-Use a flexible array member to combine allocations.
+platform_get_resource and devm_ioremap effectively open codes this.
 
-Add __counted_by for extra runtime analysis.
+The return type of devm_platform_ioremap_resource() is also nice as it
+has multiple errors that it can return.
 
-Error in case of no channels as they are required.
+Because it internally calls devm_request_mem_region(), reg values and
+sizes cannot overlap. This was manually verified to be the case for all
+talitos users.
 
 Signed-off-by: Rosen Penev <rosenp@gmail.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Stable-dep-of: 666d66df2525 ("crypto: talitos - init tasklets before requesting IRQs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/talitos.c | 19 +++++++------------
- drivers/crypto/talitos.h |  5 +++--
- 2 files changed, 10 insertions(+), 14 deletions(-)
+ drivers/crypto/talitos.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/crypto/talitos.c b/drivers/crypto/talitos.c
-index 4b53b13f96d9f..2d69ee6086658 100644
+index 2d69ee6086658..584508963241c 100644
 --- a/drivers/crypto/talitos.c
 +++ b/drivers/crypto/talitos.c
-@@ -3410,14 +3410,20 @@ static int talitos_probe(struct platform_device *ofdev)
- 	struct device *dev = &ofdev->dev;
- 	struct device_node *np = ofdev->dev.of_node;
- 	struct talitos_private *priv;
-+	unsigned int num_channels;
+@@ -3413,7 +3413,6 @@ static int talitos_probe(struct platform_device *ofdev)
+ 	unsigned int num_channels;
  	int i, err;
  	int stride;
- 	struct resource *res;
+-	struct resource *res;
  
--	priv = devm_kzalloc(dev, sizeof(struct talitos_private), GFP_KERNEL);
-+	if (of_property_read_u32(np, "fsl,num-channels", &num_channels))
-+		return -EINVAL;
-+
-+	priv = devm_kzalloc(dev, struct_size(priv, chan, num_channels), GFP_KERNEL);
- 	if (!priv)
- 		return -ENOMEM;
+ 	if (of_property_read_u32(np, "fsl,num-channels", &num_channels))
+ 		return -EINVAL;
+@@ -3432,13 +3431,10 @@ static int talitos_probe(struct platform_device *ofdev)
  
-+	priv->num_channels = num_channels;
-+
- 	INIT_LIST_HEAD(&priv->alg_list);
+ 	spin_lock_init(&priv->reg_lock);
  
- 	dev_set_drvdata(dev, priv);
-@@ -3437,7 +3443,6 @@ static int talitos_probe(struct platform_device *ofdev)
- 	}
- 
- 	/* get SEC version capabilities from device tree */
--	of_property_read_u32(np, "fsl,num-channels", &priv->num_channels);
- 	of_property_read_u32(np, "fsl,channel-fifo-len", &priv->chfifo_len);
- 	of_property_read_u32(np, "fsl,exec-units-mask", &priv->exec_units);
- 	of_property_read_u32(np, "fsl,descriptor-types-mask",
-@@ -3512,16 +3517,6 @@ static int talitos_probe(struct platform_device *ofdev)
- 		}
- 	}
- 
--	priv->chan = devm_kcalloc(dev,
--				  priv->num_channels,
--				  sizeof(struct talitos_channel),
--				  GFP_KERNEL);
--	if (!priv->chan) {
--		dev_err(dev, "failed to allocate channel management space\n");
+-	res = platform_get_resource(ofdev, IORESOURCE_MEM, 0);
+-	if (!res)
+-		return -ENXIO;
+-	priv->reg = devm_ioremap(dev, res->start, resource_size(res));
+-	if (!priv->reg) {
++	priv->reg = devm_platform_ioremap_resource(ofdev, 0);
++	if (IS_ERR(priv->reg)) {
+ 		dev_err(dev, "failed to of_iomap\n");
 -		err = -ENOMEM;
--		goto err_out;
--	}
--
- 	priv->fifo_len = roundup_pow_of_two(priv->chfifo_len);
++		err = PTR_ERR(priv->reg);
+ 		goto err_out;
+ 	}
  
- 	for (i = 0; i < priv->num_channels; i++) {
-diff --git a/drivers/crypto/talitos.h b/drivers/crypto/talitos.h
-index 11f0eb6a41db6..d4ff8d589f461 100644
---- a/drivers/crypto/talitos.h
-+++ b/drivers/crypto/talitos.h
-@@ -151,8 +151,6 @@ struct talitos_private {
- 	 */
- 	unsigned int fifo_len;
- 
--	struct talitos_channel *chan;
--
- 	/* next channel to be assigned next incoming descriptor */
- 	atomic_t last_chan ____cacheline_aligned;
- 
-@@ -165,6 +163,9 @@ struct talitos_private {
- 	/* hwrng device */
- 	struct hwrng rng;
- 	bool rng_registered;
-+
-+	struct talitos_channel chan[] __counted_by(num_channels);
-+
- };
- 
- /* .features flag */
 -- 
 2.53.0
 
