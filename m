@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047964;
-	b=rbjhVZAqnkx+9TPw4KfN72PbFtG+dX/V+Ux5CmO4LOLLDwZbF0yw73cBual1o2LirJxX
-	 NjI556ITyTzyBxeTDWxHIuWd/cW3uaMtHIQGVZUG2ikkfB9f/NN1nVEQpF+twiHVqwSQ1
-	 pFLfmyIAw09L5nHtbFjssHCpvuBELLvl7JvXFwfh2bNEWdhUAkHF0M3aLP83JnF7VLvhw
-	 8daMeprfmntEEfPfQthmjsnIePSKWuIVxaJWGGK3hBuQFllZHiu6dEbEUeuxXi7wle2sb
-	 Zr8n9VlJFg5hB5ALDaerHyf0Hds3ow2LiBl0JQFug0cpkBXUIrFr+grCSfimORI6NGA==
+	t=1795047967;
+	b=nVpj6Fj2ALRRYjy3dmjJxR63m/tVZVECvXkCcw+ikcOz4I/9UlDe9S0gMetWENKSG5e1
+	 fml+Tzgsd0zxTvQVtiTQKmdMOcalRsgc3sm0GSYXTo68na5BVFFtE0qlnzQbqt+1IoYg3
+	 XQAeq45xrZLqVQ/oXZumJjpU1oNpuS068Zfvff704EbqMOxAqu83DXdpXSDMfVebsVhnb
+	 zatZhBC3cNMuct9sBYaJnemYyiD3KITaaBj7rU0HEwrg3/zwl3ZOA7E4bg1IacriC+ARD
+	 E5aaBNOsmJ6pDIyzAa+KQZeLJdxAlC5ewmcjHPs+4xR590I1LFcz4r1afA6zQMzgH/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047964;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047967;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6z//AwBJogA4uLiOoQrTXh+7oWcVN14iFQLABphoFzY=;
-	b=Xtn9wdThQeXLZ66q5+g/urUmu4j9SDH51KnEgEJqv2t+/Je/VMmj6a5xgeVp8vQGy5xg
-	 rk1SKWZziYhqj0xIuVO060ePfeUzwLvpUGvORCYQLGI61S9Ipdjls7m4z24m6+b66YvKi
-	 5FAP0aqc61y6aKW+yJzJ6F109ZCLK6vhA0FHsYA1S+PDWmO50dsrZHAqNNauhSRWJtciM
-	 IZmH5zTxhE8M6eSPw/Ff+jF+jLc1K376vvEOPNjVGB6lw44bGcDGsQOu/zHtc6Vl6YL5C
-	 Xo/QfhaDwkzFUtNhYweAB0VaQ+FGm+kfFjAJbtVFFdm4CGR+62/0K7P6yvg7rsra/FA==
+	bh=fVoh38mvSTxRVtRQZXrWAiUznZ6Dv8PSmybPTyFQD5Y=;
+	b=Qdcx7kz9JUS66qDCWYEkl1Ga6fKr+pVV8bhjgcXTI6+mu/0E+1UKqZMcg/JaVF+kGfaf
+	 qNEWCx+QUkkn7mQxFMk1Uhj7ST6iRo7YLy8bGU34m5ljdOLcT29TFqxdGoeTEbvGEHKdB
+	 TabHMuJzVZfPluOkvb3+JatB9ZoflEL+oeJ1p/cqc9JND2Zq9wbzu0Cj8IDqzUyZ/wFhn
+	 KdJv8lq14V5eoblH9iJlPh40RPC417ZpxZ6njdEgdngzl6OwnrGTrCjqD2Kfpfpg2GWpq
+	 3DbWe5G6HbN9eTHFsFVdVmilY0PkNYICZrAMKtReOThp47wSHnnF0QHzP/xCPvJylXg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K9lEpaQF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C5aZOTGc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5791606A325;
-	Thu, 19 Nov 2026 00:26:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 756D1606A31C;
+	Thu, 19 Nov 2026 00:26:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K9lEpaQF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06DFC1F000C4;
-	Thu, 19 Nov 2026 00:26:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C5aZOTGc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6BB91F000C4;
+	Thu, 19 Nov 2026 00:26:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047964;
-	bh=6z//AwBJogA4uLiOoQrTXh+7oWcVN14iFQLABphoFzY=;
+	s=korg; t=1795047967;
+	bh=fVoh38mvSTxRVtRQZXrWAiUznZ6Dv8PSmybPTyFQD5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K9lEpaQFJaGogYI2S9gthIeluv0z3wRTzX6MvKZf+RJymbIH0j+XtwKxltOCEmC7D
-	 OJ9xgk41PyrwMm37txCdOH5yZnl3PIyOpVqcZt1pjdyWaqxeBwuImgP5NMhrEVCYNs
-	 GEX99mKB/1Rlt6qO4T3U62+6YyirZoJQrCSuIsVw=
+	b=C5aZOTGcI1NDEdy9IED44wgndtM9GE2qkRwv+HCDVcsLHDjBnci/e1JTF22TY6y9U
+	 a2dJTzQJzT3YQEXe+a8kNulaK+gf3oALhNPwSbjuNbAA20LYJNIaUcgLTzTdpqz+dH
+	 suG+cbTXb42se4GpxI0rZ8rESAHhZ6yLttoXX7Iw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Walker Chen <walker.chen@starfivetech.com>,
-	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
+	Chaithanya Lagisetty <nagachaithanya9911@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1827/2857] dmaengine: dw-axi-dmac: Add support for StarFive JH7110 DMA
-Date: Wed, 18 Nov 2026 15:47:41 +0100
-Message-ID: <20261118150307.042526958@linuxfoundation.org>
+Subject: [PATCH 6.1 1828/2857] dmaengine: dw-axi-dmac: convert clock handling to clk_bulk API
+Date: Wed, 18 Nov 2026 15:47:42 +0100
+Message-ID: <20261118150307.075801224@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,134 +69,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Walker Chen <walker.chen@starfivetech.com>
+From: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
 
-[ Upstream commit 790f3c8b8f9f63b1f5a3ffd06630ed3d0df9804c ]
+[ Upstream commit c843417e6d6b55e24318e2edf405566e70786d3b ]
 
-Add DMA reset operation in device probe and use different configuration
-on CH_CFG registers according to match data. Update all uses of
-of_device_is_compatible with of_device_get_match_data.
+The driver managed its two mandatory clocks (core-clk and cfgr-clk)
+individually. This was error prone: axi_dma_resume() enabled cfgr_clk
+and then core_clk, and if enabling core_clk failed it returned the
+error without disabling cfgr_clk, leaving the clock refcount
+unbalanced.
 
-Signed-off-by: Walker Chen <walker.chen@starfivetech.com>
-Reviewed-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>
-Link: https://lore.kernel.org/r/20230322094820.24738-3-walker.chen@starfivetech.com
+Convert the driver to the clk_bulk API. The two clocks are always
+acquired, enabled and disabled together, so a clk_bulk_data array
+expresses this naturally and shrinks the get/enable/disable paths.
+clk_bulk_prepare_enable() also unwinds any clock it already enabled
+when a later one fails, which fixes the resume imbalance.
+
+Fixes: 1fe20f1b8454 ("dmaengine: Introduce DW AXI DMAC driver")
+Signed-off-by: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
+Link: https://lore.kernel.org/all/20260813105432.2577322-1-nagachaithanya9911@gmail.com/
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260816054858.2667380-1-nagachaithanya9911@gmail.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: c843417e6d6b ("dmaengine: dw-axi-dmac: convert clock handling to clk_bulk API")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 38 ++++++++++++++++---
- drivers/dma/dw-axi-dmac/dw-axi-dmac.h         |  1 +
- 2 files changed, 34 insertions(+), 5 deletions(-)
+ .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 28 ++++++++-----------
+ drivers/dma/dw-axi-dmac/dw-axi-dmac.h         |  3 +-
+ 2 files changed, 13 insertions(+), 18 deletions(-)
 
 diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index e1faa6562104a..04d96f7403fc7 100644
+index 04d96f7403fc7..c9571c248f4a6 100644
 --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
 +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -21,10 +21,12 @@
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/of.h>
-+#include <linux/of_device.h>
- #include <linux/of_dma.h>
- #include <linux/platform_device.h>
- #include <linux/pm_runtime.h>
- #include <linux/property.h>
-+#include <linux/reset.h>
- #include <linux/slab.h>
- #include <linux/types.h>
+@@ -1249,8 +1249,7 @@ static int axi_dma_suspend(struct axi_dma_chip *chip)
+ 	axi_dma_irq_disable(chip);
+ 	axi_dma_disable(chip);
  
-@@ -46,6 +48,10 @@
- 	DMA_SLAVE_BUSWIDTH_32_BYTES	| \
- 	DMA_SLAVE_BUSWIDTH_64_BYTES)
+-	clk_disable_unprepare(chip->core_clk);
+-	clk_disable_unprepare(chip->cfgr_clk);
++	clk_bulk_disable_unprepare(ARRAY_SIZE(chip->clks), chip->clks);
  
-+#define AXI_DMA_FLAG_HAS_APB_REGS	BIT(0)
-+#define AXI_DMA_FLAG_HAS_RESETS		BIT(1)
-+#define AXI_DMA_FLAG_USE_CFG2		BIT(2)
-+
- static inline void
- axi_dma_iowrite32(struct axi_dma_chip *chip, u32 reg, u32 val)
+ 	return 0;
+ }
+@@ -1259,11 +1258,7 @@ static int axi_dma_resume(struct axi_dma_chip *chip)
  {
-@@ -86,7 +92,8 @@ static inline void axi_chan_config_write(struct axi_dma_chan *chan,
- 
- 	cfg_lo = (config->dst_multblk_type << CH_CFG_L_DST_MULTBLK_TYPE_POS |
- 		  config->src_multblk_type << CH_CFG_L_SRC_MULTBLK_TYPE_POS);
--	if (chan->chip->dw->hdata->reg_map_8_channels) {
-+	if (chan->chip->dw->hdata->reg_map_8_channels &&
-+	    !chan->chip->dw->hdata->use_cfg2) {
- 		cfg_hi = config->tt_fc << CH_CFG_H_TT_FC_POS |
- 			 config->hs_sel_src << CH_CFG_H_HS_SEL_SRC_POS |
- 			 config->hs_sel_dst << CH_CFG_H_HS_SEL_DST_POS |
-@@ -1368,11 +1375,12 @@ static int parse_device_properties(struct axi_dma_chip *chip)
- 
- static int dw_probe(struct platform_device *pdev)
- {
--	struct device_node *node = pdev->dev.of_node;
- 	struct axi_dma_chip *chip;
- 	struct resource *mem;
- 	struct dw_axi_dma *dw;
- 	struct dw_axi_dma_hcfg *hdata;
-+	struct reset_control *resets;
-+	unsigned int flags;
- 	u32 i;
  	int ret;
  
-@@ -1401,12 +1409,25 @@ static int dw_probe(struct platform_device *pdev)
- 	if (IS_ERR(chip->regs))
- 		return PTR_ERR(chip->regs);
+-	ret = clk_prepare_enable(chip->cfgr_clk);
+-	if (ret < 0)
+-		return ret;
+-
+-	ret = clk_prepare_enable(chip->core_clk);
++	ret = clk_bulk_prepare_enable(ARRAY_SIZE(chip->clks), chip->clks);
+ 	if (ret < 0)
+ 		return ret;
  
--	if (of_device_is_compatible(node, "intel,kmb-axi-dma")) {
-+	flags = (uintptr_t)of_device_get_match_data(&pdev->dev);
-+	if (flags & AXI_DMA_FLAG_HAS_APB_REGS) {
- 		chip->apb_regs = devm_platform_ioremap_resource(pdev, 1);
- 		if (IS_ERR(chip->apb_regs))
- 			return PTR_ERR(chip->apb_regs);
- 	}
+@@ -1428,13 +1423,11 @@ static int dw_probe(struct platform_device *pdev)
  
-+	if (flags & AXI_DMA_FLAG_HAS_RESETS) {
-+		resets = devm_reset_control_array_get_exclusive(&pdev->dev);
-+		if (IS_ERR(resets))
-+			return PTR_ERR(resets);
-+
-+		ret = reset_control_deassert(resets);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	chip->dw->hdata->use_cfg2 = !!(flags & AXI_DMA_FLAG_USE_CFG2);
-+
- 	chip->core_clk = devm_clk_get(chip->dev, "core-clk");
- 	if (IS_ERR(chip->core_clk))
- 		return PTR_ERR(chip->core_clk);
-@@ -1559,8 +1580,15 @@ static const struct dev_pm_ops dw_axi_dma_pm_ops = {
- };
+ 	chip->dw->hdata->use_cfg2 = !!(flags & AXI_DMA_FLAG_USE_CFG2);
  
- static const struct of_device_id dw_dma_of_id_table[] = {
--	{ .compatible = "snps,axi-dma-1.01a" },
--	{ .compatible = "intel,kmb-axi-dma" },
-+	{
-+		.compatible = "snps,axi-dma-1.01a"
-+	}, {
-+		.compatible = "intel,kmb-axi-dma",
-+		.data = (void *)AXI_DMA_FLAG_HAS_APB_REGS,
-+	}, {
-+		.compatible = "starfive,jh7110-axi-dma",
-+		.data = (void *)(AXI_DMA_FLAG_HAS_RESETS | AXI_DMA_FLAG_USE_CFG2),
-+	},
- 	{}
- };
- MODULE_DEVICE_TABLE(of, dw_dma_of_id_table);
+-	chip->core_clk = devm_clk_get(chip->dev, "core-clk");
+-	if (IS_ERR(chip->core_clk))
+-		return PTR_ERR(chip->core_clk);
+-
+-	chip->cfgr_clk = devm_clk_get(chip->dev, "cfgr-clk");
+-	if (IS_ERR(chip->cfgr_clk))
+-		return PTR_ERR(chip->cfgr_clk);
++	chip->clks[0].id = "core-clk";
++	chip->clks[1].id = "cfgr-clk";
++	ret = devm_clk_bulk_get(chip->dev, ARRAY_SIZE(chip->clks), chip->clks);
++	if (ret)
++		return dev_err_probe(chip->dev, ret, "failed to get clocks\n");
+ 
+ 	ret = parse_device_properties(chip);
+ 	if (ret)
+@@ -1546,10 +1539,13 @@ static int dw_remove(struct platform_device *pdev)
+ 	struct dw_axi_dma *dw = chip->dw;
+ 	struct axi_dma_chan *chan, *_chan;
+ 	u32 i;
++	int ret;
+ 
+ 	/* Enable clk before accessing to registers */
+-	clk_prepare_enable(chip->cfgr_clk);
+-	clk_prepare_enable(chip->core_clk);
++	ret = clk_bulk_prepare_enable(ARRAY_SIZE(chip->clks), chip->clks);
++	if (ret)
++		dev_warn(chip->dev, "failed to enable clocks before remove: %d\n",
++			 ret);
+ 	axi_dma_irq_disable(chip);
+ 	for (i = 0; i < dw->hdata->nr_channels; i++) {
+ 		axi_chan_disable(&chip->dw->chan[i]);
 diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-index 764427a66f5e8..8521530a34ec4 100644
+index 8521530a34ec4..2b49ba6355525 100644
 --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
 +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-@@ -33,6 +33,7 @@ struct dw_axi_dma_hcfg {
- 	/* Register map for DMAX_NUM_CHANNELS <= 8 */
- 	bool	reg_map_8_channels;
- 	bool	restrict_axi_burst_len;
-+	bool	use_cfg2;
+@@ -68,8 +68,7 @@ struct axi_dma_chip {
+ 	int			irq;
+ 	void __iomem		*regs;
+ 	void __iomem		*apb_regs;
+-	struct clk		*core_clk;
+-	struct clk		*cfgr_clk;
++	struct clk_bulk_data	clks[2];
+ 	struct dw_axi_dma	*dw;
  };
  
- struct axi_dma_chan {
 -- 
 2.53.0
 
