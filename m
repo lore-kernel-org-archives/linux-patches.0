@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046067;
-	b=xqoNrn5LNk0HVnUXqF2+7/00V0OE9ELwwI77vVLvqOddgN61gNxRovqItGu5dIhyRQRn
-	 0P/BcCdlJJC8SVJo7LbOw4OhZnIOp2tbGqfGqG2y3eDQXkeWEFZ8XGuv57gPzJ4OG03Eq
-	 I3f9KfiU/0MK0kCK7MQGJOTm1Bg4r3XiJUgd2uz/xDj2taXtioZ0sKWIQ1lo7ePyRYlqZ
-	 C5XNKJBeQ6Ieozp/gpKQSlaiEBJOxKq8aCtg6jZ2MyTRi3nRzZPDfWAZPqXTHz13oWSPR
-	 MgB1iRG72scogX/RbLDbR/54gT0M/mmMiUm2+WaBt4+20bTkd6JYgkwWvodzD5CvT0Q==
+	t=1795046070;
+	b=vvZub81s9kbMU4i9d2YsY06rpwFKuOqt3IlH67Fir7h0kateShRRTAG+SojWS9DOABiq
+	 Jj+iEjd/OSaywKW3zB0Rfe+BDTIM37yPIKHSKVuZHkREZONtV41drbUnssWuzvO+wvJ2D
+	 o5DheaMg43z1bDEkgSt9qDt8E9yduPHZ2SK/bjwsBJDyo+QOSlULRI+beKzq2iX2qVpjW
+	 FIm/3C96ON8qS0HSrxg1fNmVOaCyeXDWl1j8NnJMFHTc2JqKyjrgXr7R5m1wP+kMUvXJo
+	 0CeLU7mp712EiqmaFKQDCMp9g8HRrQ4a0Hb02oMJGi0KcdQ0Eu8yC5VBLSmq9lRnghA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046067;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046070;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x87EE2cIMtYOw5l1NcDZ1MvxMuFtwWTDeqODF7Hc+j4=;
-	b=prploRJmFdR5dudlEWGmOFsnB2LDIb5r3hbOrm+4y4jPz9ruaMq+bp91Gz088LHpbH3r
-	 MEn/etl9b7OmGOFtIhlZLEcbTQbemdknSDH2M5Qrb2yP0KXZEe3h7jCRS/ldNo0WM9J0Y
-	 KZxvJ7tGQp+RlRsIApz/lmAqnTNHx6EX4F3ydEOJWXfCHg160zLwL1RXKSc2GUlRPdg4S
-	 FHV7f6hTeKHSZns6Ov2POZUfYdbydQrO2UbIrcTkzvyhds037HRS3rhU7HjvYPr5oI2js
-	 bVOmH/6Te2NeLLdZXNcrE7QnBbsXWou4qE2BYkT7/vc0BLiVKJ2CRPqg+4xhoZpsTxw==
+	bh=kNNOyBb0+I6R2+wLHmvXk13XE2vWLCrfN6i88p8KMGQ=;
+	b=ZbDk0ysGG2LYnVG/h+kyYSyWjlRa+FrxbrxOzNO19a1UV/HjzuQJ7sKnJ8XaqajVMoJ9
+	 PcbtAzXreSc50TAAHyiT45vwWAIuE4TaG0PTYCbMIj05mbiZBi4C9heUa5fQFk0mAL14O
+	 ufAsoPR/souQDs7yBqwjgXV/mYLEy9+CNHP3Q0delFLe0C4BpikS3MnMfaq+w1EN5vxqo
+	 WqNyauuy6oB9lUMcAk+F+mCE3lLhtk9+1E9VrxnRKnGKunTKNkD/0YCq0x3wcJGc2mmHl
+	 bdqv0VP2oP7vyElvFps9b4jRdmUxujD9nD6cJbmcHxKMQZFFY5Kq5u24mcCArbArM2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pgaVyVgy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B6kY7s7a;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94308606A31C;
-	Wed, 18 Nov 2026 23:54:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7607C606A31C;
+	Wed, 18 Nov 2026 23:54:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pgaVyVgy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED5DD1F000C5;
-	Wed, 18 Nov 2026 23:54:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B6kY7s7a
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47BA1F000C4;
+	Wed, 18 Nov 2026 23:54:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046067;
-	bh=x87EE2cIMtYOw5l1NcDZ1MvxMuFtwWTDeqODF7Hc+j4=;
+	s=korg; t=1795046070;
+	bh=kNNOyBb0+I6R2+wLHmvXk13XE2vWLCrfN6i88p8KMGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pgaVyVgyStqKPZ91CpwGwrgXFp611NIIPBcXy+udXDQD51kkIVPH92rHJk1jm7i5b
-	 tHOT+NXzvNi2ELHnPKu09xcBsvl3riNTScr/ibehmt8nva1qw05tHIB6wkNYCGTtUD
-	 33RiMJBr9tL5JQpursH1QImt+6YXkdd+BxgQEcok=
+	b=B6kY7s7ahOzfS4OWkI2dkEXtfoZ/Z08gy7npzKpN0DR6IhmXUohyev8kfbqlvr8U2
+	 /zaY4CWIezPGjkIDbfmjXBO83QBJE35aS8CQ8vnBK2w8/yAcJm9fMGu3BXwY7ac2oe
+	 yKWTDMy+gtPiZIemTJRW/4nEP2V/9BathBLb2n0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
+	SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Christoph Hellwig <hch@lst.de>,
+	Usama Arif <usamaarif642@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1148/2857] raid6: add missing vzeroupper to AVX-512 code
-Date: Wed, 18 Nov 2026 15:36:22 +0100
-Message-ID: <20261118150242.917438936@linuxfoundation.org>
+Subject: [PATCH 6.1 1149/2857] mm/damon/core: skip applying scheme if region split for quota fails
+Date: Wed, 18 Nov 2026 15:36:23 +0100
+Message-ID: <20261118150242.954147922@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,99 +69,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: SJ Park <sj@kernel.org>
 
-commit b82cf9e49c1be7cf1fd8e1bd806b0cdd25ab8127 upstream.
+[ Upstream commit 90c2fa6adfed7abe0935506a43cdff3a05c1fff0 ]
 
-Since the AVX-512 optimized RAID6 code uses ZMM registers, execute
-vzeroupper before returning from it.  This is needed to avoid degrading
-the performance of any later SSE code that may happen to be executed.
+Patch series "mm/damon: fix DAMOS bugs in core, paddr and vaddr".
 
-Link: https://lore.kernel.org/20260831212316.213896-1-ebiggers@kernel.org
-Fixes: e0a491c12968 ("lib/raid6: Add AVX512 optimized gen_syndrome functions")
-Fixes: 13c520b2993c ("lib/raid6: Add AVX512 optimized recovery functions")
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Fix misc bugs of DAMOS.  Patch 1 makes DAMOS less stress memory allocator
+under extreme situation.  Patches 2 and 3 fix wrong folios walking in
+DAMON_PADDR.  Patches 4 and 5 fix wrong folios walking in DAMON_VADDR.
+Patches 6-8 handle extreme and unlikely memory situations that can cause
+divide by zero and underflow.
+
+All bugs are discovered by Sashiko.
+
+This patch (of 8):
+
+damos_apply_scheme() splits a region and apply the action to the subregion
+if it is needed for not violating the quota.  The split operation
+(damon_split_region_at()) could fail for allocation failure.  In the case,
+the quota could be violated.  From the user's perspective, DAMOS becomes
+more aggressive than expected under the extreme situation.  Handle the
+failure.
+
+The user impact is not critical.  The failure of damon_split_region_at()
+is unlikely since it is arguably too small to fail.  Also DAMOS being
+aggressive is limited to the single region.  Users can set min_nr_regions
+to set the maximum size of each region.  If it is reasonably set, the
+transient overhead shouldn't be critical.
+
+The issue was discovered [1] by Sashiko.
+
+6.1.y porting notes.  Modify damon_split_region_at() to return failures.
+It is a part of commit c60874860762 ("mm/damon/core: handle region split
+failure in apply_min_nr_regions()").  Without it, build fails.
+
+Link: https://lore.kernel.org/20260901131850.98037-1-sj@kernel.org
+Link: https://lore.kernel.org/20260901131850.98037-2-sj@kernel.org
+Link: https://lore.kernel.org/20260718171523.87547-1-sj@kernel.org [1]
+Fixes: 2b8a248d5873 ("mm/damon/schemes: implement size quota for schemes application speed control")
+Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: <stable@vger.kernel.org>
+Cc: Usama Arif <usamaarif642@gmail.com>
+Cc: <stable@vger.kernel.org> # 5.16.x
+Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/raid6/avx512.c       | 6 ++++++
- lib/raid6/recov_avx512.c | 2 ++
- 2 files changed, 8 insertions(+)
+ mm/damon/core.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/lib/raid6/avx512.c b/lib/raid6/avx512.c
-index 9c3e822e1adf5..30956989e7d74 100644
---- a/lib/raid6/avx512.c
-+++ b/lib/raid6/avx512.c
-@@ -95,6 +95,7 @@ static void raid6_avx5121_gen_syndrome(int disks, size_t bytes, void **ptrs)
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index f0da5cb2b88a0..9206737d05ae7 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -718,7 +718,7 @@ static void kdamond_reset_aggregated(struct damon_ctx *c)
  	}
- 
- 	asm volatile("sfence" : : : "memory");
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
  }
  
-@@ -154,6 +155,7 @@ static void raid6_avx5121_xor_syndrome(int disks, int start, int stop,
- 	}
+-static void damon_split_region_at(struct damon_target *t,
++static int damon_split_region_at(struct damon_target *t,
+ 				  struct damon_region *r, unsigned long sz_r);
  
- 	asm volatile("sfence" : : : "memory");
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
+ static bool __damos_valid_target(struct damon_region *r, struct damos *s)
+@@ -810,7 +810,8 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
+ 						DAMON_MIN_REGION);
+ 				if (!sz)
+ 					goto update_stat;
+-				damon_split_region_at(t, r, sz);
++				if (damon_split_region_at(t, r, sz))
++					goto update_stat;
+ 			}
+ 			ktime_get_coarse_ts64(&begin);
+ 			sz_applied = c->ops.apply_scheme(c, t, r, s);
+@@ -1015,15 +1016,17 @@ static void kdamond_merge_regions(struct damon_ctx *c, unsigned int threshold,
+  *
+  * r		the region to be split
+  * sz_r		size of the first sub-region that will be made
++ *
++ * Return: 0 on success, negative error code otherwise.
+  */
+-static void damon_split_region_at(struct damon_target *t,
++static int damon_split_region_at(struct damon_target *t,
+ 				  struct damon_region *r, unsigned long sz_r)
+ {
+ 	struct damon_region *new;
+ 
+ 	new = damon_new_region(r->ar.start + sz_r, r->ar.end);
+ 	if (!new)
+-		return;
++		return -ENOMEM;
+ 
+ 	r->ar.end = new->ar.start;
+ 
+@@ -1031,6 +1034,7 @@ static void damon_split_region_at(struct damon_target *t,
+ 	new->last_nr_accesses = r->last_nr_accesses;
+ 
+ 	damon_insert_region(new, r, damon_next_region(r), t);
++	return 0;
  }
  
-@@ -227,6 +229,7 @@ static void raid6_avx5122_gen_syndrome(int disks, size_t bytes, void **ptrs)
- 	}
- 
- 	asm volatile("sfence" : : : "memory");
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
- }
- 
-@@ -311,6 +314,7 @@ static void raid6_avx5122_xor_syndrome(int disks, int start, int stop,
- 	}
- 
- 	asm volatile("sfence" : : : "memory");
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
- }
- 
-@@ -417,6 +421,7 @@ static void raid6_avx5124_gen_syndrome(int disks, size_t bytes, void **ptrs)
- 	}
- 
- 	asm volatile("sfence" : : : "memory");
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
- }
- 
-@@ -550,6 +555,7 @@ static void raid6_avx5124_xor_syndrome(int disks, int start, int stop,
- 			       "m" (q[d+128]), "m" (q[d+192]));
- 	}
- 	asm volatile("sfence" : : : "memory");
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
- }
- const struct raid6_calls raid6_avx512x4 = {
-diff --git a/lib/raid6/recov_avx512.c b/lib/raid6/recov_avx512.c
-index fd9e15bf3f30f..c8a152d9ab6da 100644
---- a/lib/raid6/recov_avx512.c
-+++ b/lib/raid6/recov_avx512.c
-@@ -221,6 +221,7 @@ static void raid6_2data_recov_avx512(int disks, size_t bytes, int faila,
- #endif
- 	}
- 
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
- }
- 
-@@ -363,6 +364,7 @@ static void raid6_datap_recov_avx512(int disks, size_t bytes, int faila,
- #endif
- 	}
- 
-+	asm volatile("vzeroupper");
- 	kernel_fpu_end();
- }
- 
+ /* Split every region in the given target into 'nr_subs' regions */
 -- 
 2.53.0
 
