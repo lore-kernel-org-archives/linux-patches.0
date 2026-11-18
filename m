@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037502;
-	b=khNSSttkPjzS+BjAdE/WBok+1w1lA4uXvknj6tgIyGsT4LQoznfg9XYstce9pRZegjjF
-	 T1+3ZhwaLPq+Vocs7QlkiPEa+OdrqtBlbOZGzv+AT95LPB085diW+f1byVyQ3d+PYm2EH
-	 h2w/zvNcoB1r7AM5Z45MMF7659hqjct9fSVq3Tx2+lidhExdcFe5jjtummm8g14+UjXYH
-	 8kQH4zb3VMMtWSfu4NkOvAv5RDngrFsjbzF7lUjdA65+V/ashRVXOBGIbzjpgWG0l71ix
-	 /lkgIDshLershOf3hUC5puOUx2THrTG4VH+VtTXrc6sMiPrzhPn++KUZlWqC7IjZi3w==
+	t=1795037505;
+	b=3BkLvmJBniSFgvaZ47ebP4XolRgg18zzrFMtnJCLvbc+mdXnFesn2zh+APHNqAqGGbsb
+	 WUsHF3Az+wCbIJi9tbt6bocuyYcNXpQFANz49M9WqbYN37S63h3OHGFuMCcICAG1OrnH1
+	 HZ3/yPv16xlPWyvLr8UsVyHuL7AWuUVAQD1bGJL3poUF/MbadGvYT/QSDpLoP61xT/hjD
+	 GSaI8RwGwByAD9+lB34SHXxoq11rTes8VYOlw8gyaddn9XP+JQehrtfq1Y82/tB7y2jO7
+	 kdDhLiylGWjGVFddGe4E5FwsZ337zo40vRf6XbazVI0fWdbw9oB+7cJwGrqHIZGlhlA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037502;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037505;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=15GSoaJBhea6/KV8w+GUGJb1Ybmg/RNawX7ab40hiSA=;
-	b=qXYSKeaHTZO3G7qxhr/OF5Si3n32i+0Q3B4P1TQmMgoSSgpuXb6tN4Mb4uVxgfGoXEwA
-	 zNZQrKLf2yhsOJ12jErDshj6nnuMjNQEi7DGasPwQek2D2xe6qeZ9rfsv2kFE7sCc4NpY
-	 qCrW6A7RLZZOCkDb42FI82e2vzCmDAQQd1TNv7w/TpgvIZodZ9Qlpd3hzslq2sWPS84Ir
-	 s4DPUAJQuECBChi58g/wy6+sKk0IncO9Puzi4qEKvO2HphU5IK1VF7I4UUIYShCZXeNS/
-	 L0v2jzTqW8Xm8IHwPKIAinyDF6WkWJNsQl74IRGb2y4q2gpWQhryicmi/vOkc123+Bw==
+	bh=LEY7qVkYwLVR6seGnNjwfkSKxHzSbebXg5Nf+oxXKJQ=;
+	b=Jf2gWqtVVbWx4TEFi8UUtZXlmKDDCQ1FRLT8T770IVFjL4mOvtqPhMmcgicj+BLi/ixJ
+	 uJV3iKmePN/hR7BgWhRRan/PTdOndNZsRMljB2hKuYt5mTD6tNyw4ktI0S1nvI5ZsBBoH
+	 6H+xBbX7vTh/2FP5fSaAu1Tn2c9krqlGM31j+bds8v9NYHpPylE365olzx5kpYdZflztS
+	 lmb96ItHIqh9Poep9ZYeCrQPQ2amx/B4Zspk27xZS59xTshcE7rOLtABcx+lQYyFfX9rA
+	 4OCKfJssRaBuYMK9ui97lY3YhlbYYL5BdGkf3NB8MHmBDw21Rywy5YTTns7WHTsupmw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ef95ueMA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dk4M6beM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2488E606A331;
-	Wed, 18 Nov 2026 21:31:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D222606A32A;
+	Wed, 18 Nov 2026 21:31:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ef95ueMA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7997B1F000CA;
-	Wed, 18 Nov 2026 21:31:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dk4M6beM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3790F1F000C6;
+	Wed, 18 Nov 2026 21:31:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037502;
-	bh=15GSoaJBhea6/KV8w+GUGJb1Ybmg/RNawX7ab40hiSA=;
+	s=korg; t=1795037504;
+	bh=LEY7qVkYwLVR6seGnNjwfkSKxHzSbebXg5Nf+oxXKJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ef95ueMAn6a0ItEqDWtA3Mtg/RPdSL8TZWubB3kAeQNVn5FQrjftTs08g4qvjeUzA
-	 z1mReikvJnMD3qo2e/cM4D+zln9ZxyFGKAHnGB0LU/5/4hZPu4DLcLIs4bSCKthrIj
-	 UrP36uVguSN8O2J+d2AaMluGa2UHd2OjY/gJd2Lw=
+	b=Dk4M6beMcvZQ058M415KHuwqHUJzsfkBGJcQSyT/oAJ25EZHMi2OLoBPZEMQFQtmB
+	 FLUqeXEgFPoYG10R8NzcIqBBTI3N2iFZNzOzkzW5Kudcb7bdoSsmgBb7h6LOxn0hJg
+	 n3ppXaxFeNU5EtmVMUcAPJOpj+d/zHTFHrpQw7R8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Franck Baur <franck.baur.67@gmail.com>,
+	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1382/3318] media: adv748x: Fix endpoint reference leaks on probe failure
-Date: Wed, 18 Nov 2026 15:33:24 +0100
-Message-ID: <20261118150402.002159539@linuxfoundation.org>
+Subject: [PATCH 6.6 1418/3318] net: jme: keep RX MAC clock enabled for WoL
+Date: Wed, 18 Nov 2026 15:34:00 +0100
+Message-ID: <20261118150403.230498073@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,81 +68,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Franck Baur <franck.baur.67@gmail.com>
 
-[ Upstream commit 359db09cf055497075a668b192f4578a0ed00955 ]
+[ Upstream commit ed9179fc7228315fb745dc3b111bae446e6894d2 ]
 
-adv748x_parse_dt() takes an extra reference for every endpoint saved in
-state->endpoints. If parsing later fails, adv748x_probe() skips
-adv748x_dt_cleanup(), so the saved references remain held. A CSI-2 lane
-parsing error also returns from for_each_endpoint_of_node() without
-dropping the iterator's reference.
+On the JMicron JMC250 revision 03, the MAC reset performed during
+suspend leaves GPREG1_RXCLKOFF set. Although the driver enables Magic
+Packet detection, the gated RX MAC clock prevents wake-up from ACPI S3.
 
-Save the endpoint reference only after lane parsing succeeds. Drop the
-iterator reference before returning a lane parsing error and route all
-parse failures through the endpoint cleanup path to release any saved
-references. This retains the endpoints only for a successful probe.
+Keep the RX MAC clock enabled while WoL is armed. Restore the gated
+clock state immediately after disabling WoL during resume, preserving
+the RX engine initialization ordering.
 
-This issue was found by a static analysis checker and confirmed by
-manual source review.
+Prevent concurrent link-change work from gating the clock again after
+WoL has been armed. Quiesce interrupt-driven link-change scheduling,
+synchronize pending interrupts, and cancel outstanding link-change
+work before programming WoL in suspend and shutdown paths.
 
-Fixes: 6a18865da8e3 ("media: i2c: adv748x: store number of CSI-2 lanes described in device tree")
-Fixes: eccf442ce156 ("media: i2c: adv748x: Support probing a single output")
+Restore the deferred processing state before requesting link
+reinitialization on resume.
+
+Tested on an ASUS K42JE with JMC250 [197b:0250] rev 03 using a
+Debian 6.12.111 kernel and an externally built module. ACPI S3 wake
+with a Magic Packet completed in 19 seconds, while a control without
+a Magic Packet resumed through the RTC alarm after 123 seconds.
+Ethernet and SSH recovered after resume.
+
+S4 and S5 wake behaviour has not been validated with this revision.
+
+Fixes: 854a2e7c331a ("jme: Safer MAC processor reset sequence")
 Cc: stable@vger.kernel.org
-Suggested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Franck Baur <franck.baur.67@gmail.com>
+Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/adv748x/adv748x-core.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/jme.c | 37 ++++++++++++++++++++++++++++++++-----
+ drivers/net/ethernet/jme.h |  1 +
+ 2 files changed, 33 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/i2c/adv748x/adv748x-core.c b/drivers/media/i2c/adv748x/adv748x-core.c
-index 3eb6d5e8f0826..70594d0018048 100644
---- a/drivers/media/i2c/adv748x/adv748x-core.c
-+++ b/drivers/media/i2c/adv748x/adv748x-core.c
-@@ -675,9 +675,6 @@ static int adv748x_parse_dt(struct adv748x_state *state)
- 			continue;
- 		}
+diff --git a/drivers/net/ethernet/jme.c b/drivers/net/ethernet/jme.c
+index a718207988f2c..2fd74ae243add 100644
+--- a/drivers/net/ethernet/jme.c
++++ b/drivers/net/ethernet/jme.c
+@@ -1502,7 +1502,8 @@ jme_intr_msi(struct jme_adapter *jme, u32 intrstat)
+ 		 * all other events are ignored
+ 		 */
+ 		jwrite32(jme, JME_IEVE, intrstat);
+-		schedule_work(&jme->linkch_task);
++		if (!test_bit(JME_FLAG_WOL_QUIESCE, &jme->flags))
++			schedule_work(&jme->linkch_task);
+ 		goto out_reenable;
+ 	}
  
--		of_node_get(ep_np);
--		state->endpoints[ep.port] = ep_np;
--
- 		/*
- 		 * At least one input endpoint and one output endpoint shall
- 		 * be defined.
-@@ -689,8 +686,13 @@ static int adv748x_parse_dt(struct adv748x_state *state)
+@@ -1546,7 +1547,8 @@ jme_intr_msi(struct jme_adapter *jme, u32 intrstat)
+ 	/*
+ 	 * Re-enable interrupt
+ 	 */
+-	jwrite32f(jme, JME_IENS, INTR_ENABLE);
++	if (!test_bit(JME_FLAG_WOL_QUIESCE, &jme->flags))
++		jwrite32f(jme, JME_IENS, INTR_ENABLE);
+ }
  
- 		/* Store number of CSI-2 lanes used for TXA and TXB. */
- 		ret = adv748x_parse_csi2_lanes(state, ep.port, ep_np);
--		if (ret)
-+		if (ret) {
-+			of_node_put(ep_np);
- 			return ret;
-+		}
+ static irqreturn_t
+@@ -1892,6 +1894,7 @@ jme_powersave_phy(struct jme_adapter *jme)
+ 		jme_set_100m_half(jme);
+ 		if (jme->reg_pmcs & (PMCS_LFEN | PMCS_LREN))
+ 			jme_wait_link(jme);
++		jme_mac_rxclk_on(jme);
+ 		jme_clear_pm_enable_wol(jme);
+ 	} else {
+ 		jme_phy_off(jme);
+@@ -3158,6 +3161,21 @@ jme_shutdown(struct pci_dev *pdev)
+ 	struct net_device *netdev = pci_get_drvdata(pdev);
+ 	struct jme_adapter *jme = netdev_priv(netdev);
+ 
++	if (netif_running(netdev)) {
++		set_bit(JME_FLAG_WOL_QUIESCE, &jme->flags);
++		netif_device_detach(netdev);
++		netif_stop_queue(netdev);
++		jme_stop_irq(jme);
++		synchronize_irq(pdev->irq);
++		jme_stop_irq(jme);
++		cancel_work_sync(&jme->linkch_task);
++		tasklet_disable(&jme->pcc_task);
++		napi_disable(&jme->napi);
++		tasklet_disable(&jme->txclean_task);
++		tasklet_disable(&jme->rxclean_task);
++		tasklet_disable(&jme->rxempty_task);
++	}
 +
-+		of_node_get(ep_np);
-+		state->endpoints[ep.port] = ep_np;
- 	}
+ 	jme_powersave_phy(jme);
+ 	pci_pme_active(pdev, true);
+ }
+@@ -3172,11 +3190,16 @@ jme_suspend(struct device *dev)
+ 	if (!netif_running(netdev))
+ 		return 0;
  
- 	return in_found && out_found ? 0 : -ENODEV;
-@@ -739,7 +741,7 @@ static int adv748x_probe(struct i2c_client *client)
- 	ret = adv748x_parse_dt(state);
- 	if (ret) {
- 		adv_err(state, "Failed to parse device tree");
--		goto err_free_mutex;
-+		goto err_cleanup_dt;
- 	}
+-	atomic_dec(&jme->link_changing);
+-
++	set_bit(JME_FLAG_WOL_QUIESCE, &jme->flags);
+ 	netif_device_detach(netdev);
+ 	netif_stop_queue(netdev);
+ 	jme_stop_irq(jme);
++	synchronize_irq(jme->pdev->irq);
++	jme_stop_irq(jme);
++	cancel_work_sync(&jme->linkch_task);
++	tasklet_disable(&jme->pcc_task);
++	napi_disable(&jme->napi);
++	atomic_dec(&jme->link_changing);
  
- 	/* Configure IO Regmap region */
-@@ -809,7 +811,6 @@ static int adv748x_probe(struct i2c_client *client)
- 	adv748x_unregister_clients(state);
- err_cleanup_dt:
- 	adv748x_dt_cleanup(state);
--err_free_mutex:
- 	mutex_destroy(&state->mutex);
+ 	tasklet_disable(&jme->txclean_task);
+ 	tasklet_disable(&jme->rxclean_task);
+@@ -3215,6 +3238,7 @@ jme_resume(struct device *dev)
+ 		return 0;
  
- 	return ret;
+ 	jme_clear_pm_disable_wol(jme);
++	jme_mac_rxclk_off(jme);
+ 	jme_phy_on(jme);
+ 	if (test_bit(JME_FLAG_SSET, &jme->flags))
+ 		jme_set_link_ksettings(netdev, &jme->old_cmd);
+@@ -3226,8 +3250,11 @@ jme_resume(struct device *dev)
+ 
+ 	atomic_inc(&jme->link_changing);
+ 
+-	jme_reset_link(jme);
++	napi_enable(&jme->napi);
++	tasklet_enable(&jme->pcc_task);
++	clear_bit(JME_FLAG_WOL_QUIESCE, &jme->flags);
+ 
++	jme_reset_link(jme);
+ 	jme_start_irq(jme);
+ 
+ 	return 0;
+diff --git a/drivers/net/ethernet/jme.h b/drivers/net/ethernet/jme.h
+index 860494ff37144..ec5dfddf73227 100644
+--- a/drivers/net/ethernet/jme.h
++++ b/drivers/net/ethernet/jme.h
+@@ -450,6 +450,7 @@ enum jme_flags_bits {
+ 	JME_FLAG_SSET		= 2,
+ 	JME_FLAG_POLL		= 5,
+ 	JME_FLAG_SHUTDOWN	= 6,
++	JME_FLAG_WOL_QUIESCE	= 7,
+ };
+ 
+ #define TX_TIMEOUT		(5 * HZ)
 -- 
 2.53.0
 
