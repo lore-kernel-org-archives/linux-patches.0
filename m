@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032817;
-	b=OZ7VvTDYLM5WOnCPc8QmLGgy7kkRZztMSVu/cNsjoNvOiXzqn2F+fDjRQK6S7kqSyWUG
-	 FZYOuTJZYCbhMhPz43m0yVV4MXoP1Cw9TsalZSIMg5qIbdvuuiiyfEmNrVEwjC492VRtj
-	 deEyjYHHNUnu+kCYy/IFKeuBpilpKtpkltVE7z+hzuXlOlXxYncjIJPldgjCSrlzkeX89
-	 sPrKTbPycHYnBye2+jZ4bQuyqip/dcYpqDIeARRjD7ikk5hv4pFfZq4p0gnbxgjzhbEUQ
-	 biXZk8okOh7RqKP0E/tWgwDbGsUn7U6j0XetqkLxw3oECtBzDiWs4VN9+r1jmMaddTQ==
+	t=1795032820;
+	b=k2pyRqPYV9lS/nLKv8ZsSzz6JUBTB33I4EsoSp8RgRrBmNL44PeuHCHH1frnyjMjupNc
+	 MUve0Z1JhPUnIjRdVJrqSB61Hc8hO8QonNS/oc2ZS21PG/cptSZXLbFynEFD63pDF1LSz
+	 U6LKyBVsbt/7IiHpeiSuwq0S6O800xBtnyGLDxmJ77BgA4pzPYwBNq54BXEbt7vxAjWCO
+	 u+/US00BfclgL9M5DPgZ/rxmIkL7coopEaZu8SW0Mho5Tcl2ulvAJHRvgUS8EXI6N3mOr
+	 uepYnZk+2vSoUpq2zjaiuAbe7mGQ6d/Zvvy4I442bZG5UbSGaTsppnSsvdR5OcwZlgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032817;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032820;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gGXAHQ6L76cvrFvqFPJ+ypQpDezXCUQ1j6dHz82S20Q=;
-	b=WTfU8BaU5RxDTIYWzKD+H6XugRR4n1SKa8wukLb57cut8IIPnDw2eTV+IMJG/uDfmjib
-	 egzIuKcFpNpRFH08otCzqATiGQDWwarn2blu6etmL4Je37/tq8RhC1sib2gEdawNHQrIV
-	 xETIatOEtAdKJVSupQ6sbqWdX0J2rzkOz+G+uK8j7gof/MV9LCLDhsq7yAphqQf7hUhOo
-	 mYhqfbDC+AEyrJDZ8htrGSGJhGhz8vIryLuvDbdYRLnYUpttMFXax0Yd8mqChpCoZouIM
-	 SeE1SfD6gvOVaKiTTguO8R9GRqEx8ZeghWo2zEHyiRtzZCFd/oOu9UX151LYRCkAw+w==
+	bh=mQSByaM+Lr2lgzuQOm+UGLTBZkzRHEAmFWL6lP8306w=;
+	b=lPfYKB8K7cDLOFaOJic1lbo5+LMJAUr8UcwY2D04kMXFsxjI7is89zETWmWazYJ3xVq2
+	 6R10FTQd8vchAhv+fINarzN1UkjPrCCLYJ4ywkkWPyNk6NvYfpRzhhJJSMYXMXDqghxSh
+	 FeyZAuB6X44U9zu/wtTNklYrIOGtujZm4k0DKvUz8KO8zDLHzHzp1WL4G+vkfYwa4/hUz
+	 pF3zJ4UPpe7xdSxH8/L2cN/9EtSAcAZlG0CBndSL9isUo+eJEAiUfFMpZ8K3pPy0FWoTZ
+	 1h+xVXNQDHNNOTg11NttPrl5hSrQ0YpvBHozAhdx+F1p+MrjjGAV8lpo0dRfComXinA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="MLKcu/6r";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KPKV6GeB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5C1606A32A;
-	Wed, 18 Nov 2026 20:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E8BF606A320;
+	Wed, 18 Nov 2026 20:13:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MLKcu/6r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B40FD1F000C4;
-	Wed, 18 Nov 2026 20:13:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KPKV6GeB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D8621F000C4;
+	Wed, 18 Nov 2026 20:13:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032817;
-	bh=gGXAHQ6L76cvrFvqFPJ+ypQpDezXCUQ1j6dHz82S20Q=;
+	s=korg; t=1795032820;
+	bh=mQSByaM+Lr2lgzuQOm+UGLTBZkzRHEAmFWL6lP8306w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MLKcu/6rordry3U+9ythjaFQ371Yfvm/zjPiZPVLlb7+zewwNwNZ+jITKoVsJGcwb
-	 N+ikqNSBMp7Smq5+Rzgmuo/KtQjSpBPb5VFnXHpawXYTjcJDKWGhaEtcV31guOZhtH
-	 am9rPuFBX0AjP85gwBNyY3umMwyBh0ykBQtZyjlk=
+	b=KPKV6GeBSTzt47BKkvV4f19x5e2aWl9FsV7LR69RKlij6VPgAYMxXCpSO6FtW4Csk
+	 3sMcXXGnbhUvy/h2TR7qlTSSIpUNr84n37IM2nwmq/VeButDa0yWMp/nmoHHbgT6qH
+	 loFbRdOaM0934BjjQwgefmrzUUOBAKgA/t8Lviuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Yang <yangfeng@kylinos.cn>,
+	Ayushman Rout <ayushmanrout27@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
-	Mahe Tardy <mahe.tardy@gmail.com>,
-	Alan Maguire <almagui@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1545/1756] bpf: Propagate btf_add_type() errors in btf_check_all_metas()
-Date: Wed, 18 Nov 2026 16:01:12 +0100
-Message-ID: <20261118150110.433202725@linuxfoundation.org>
+Subject: [PATCH 6.12 1546/1756] bpf: Use memmove() to load bytes from an skb and an xdp_buff
+Date: Wed, 18 Nov 2026 16:01:13 +0100
+Message-ID: <20261118150110.472886526@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,65 +68,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feng Yang <yangfeng@kylinos.cn>
+From: Ayushman Rout <ayushmanrout27@gmail.com>
 
-[ Upstream commit fb2b27d214c3b88d926a303267dd83cfdb428b13 ]
+[ Upstream commit b93cf2c8a0552b544e90e25802e4bf989987d29d ]
 
-btf_check_all_metas() ignores the return value of btf_add_type(), so a
-type that could not be registered is silently dropped while the loop
-keeps walking over the type section.
+bpf_dynptr_read() on an skb or xdp dynptr ends in bpf_skb_load_bytes()
+or bpf_xdp_load_bytes(). The destination can be a slice of the same
+packet, so it can overlap the source, which memcpy() does not allow.
+On x86 with FSRM memcpy() copies forward, so a destination above the
+source gets the first bytes repeated:
 
-Both failure modes are reachable:
+  p = bpf_dynptr_slice_rdwr(&ptr, 8, NULL, 64);
+  bpf_dynptr_read(p, 64, &ptr, 0, 0);
 
-  - -E2BIG.  Once the types array reaches its capacity (BTF_MAX_TYPE),
-    every following btf_add_type() fails the same way, so
-    btf_check_all_metas() still returns 0 and the BTF object is created
-    with btf->nr_types capped while hdr->type_len claims more records.
+leaves bytes 8-71 of the packet as bytes 0-7 repeated, not bytes 0-63.
+Reproduced with BPF_PROG_TEST_RUN on both an xdp and a tc program.
 
-  - -ENOMEM.  btf->nr_types is not incremented and the array is not
-    grown, so the next type is recorded at the slot of the dropped one
-    and btf->types[] stays off by one with respect to the type ids for
-    all remaining types.  btf_type_by_id() then returns the wrong type
-    for those ids for the whole lifetime of the object, and the last
-    type is silently left unresolved.
+Use memmove(), as the store side does since commit 1db084f42884
+("bpf: Use memmove() to store bytes in an skb") and commit ab08863c58b1
+("bpf: Use memmove() to store bytes in an xdp_buff"). A read that spans
+xdp frags still goes through bpf_xdp_copy_buf() and is not changed
+here.
 
-Propagate the error so that the object is rejected instead.
+bpf_skb_load_bytes_relative() has the same pattern and is reachable
+from tc and sk_filter programs, so use memmove() there as well.
+Reproduced with BPF_PROG_TEST_RUN on a tc program: loading into a
+slice at offset 8 gave wrong bytes before the change and correct
+bytes after.
 
-Fixes: 69b693f0aefa ("bpf: btf: Introduce BPF Type Format (BTF)")
-Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
+Fixes: 2012c867c800 ("bpf: verifier: Accept dynptr mem as mem in helpers")
+Signed-off-by: Ayushman Rout <ayushmanrout27@gmail.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Reviewed-by: Mahe Tardy <mahe.tardy@gmail.com>
-Acked-by: Alan Maguire <almagui@kernel.org>
-Link: https://patch.msgid.link/20261022064727.747304-1-yangfeng59949@163.com
+Link: https://patch.msgid.link/20261022112312.31563-1-ayushmanrout27@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/core/filter.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index eff94cebfedd9..8956f2fd0c57d 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -5268,6 +5268,7 @@ static int btf_check_all_metas(struct btf_verifier_env *env)
- 	struct btf *btf = env->btf;
- 	struct btf_header *hdr;
- 	void *cur, *end;
-+	int err;
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 16ac1c7a842d4..355c95863af38 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -1776,7 +1776,7 @@ BPF_CALL_4(bpf_skb_load_bytes, const struct sk_buff *, skb, u32, offset,
+ 	if (unlikely(!ptr))
+ 		goto err_clear;
+ 	if (ptr != to)
+-		memcpy(to, ptr, len);
++		memmove(to, ptr, len);
  
- 	hdr = &btf->hdr;
- 	cur = btf->nohdr_data + hdr->type_off;
-@@ -5282,7 +5283,10 @@ static int btf_check_all_metas(struct btf_verifier_env *env)
- 		if (meta_size < 0)
- 			return meta_size;
+ 	return 0;
+ err_clear:
+@@ -1858,7 +1858,7 @@ BPF_CALL_5(bpf_skb_load_bytes_relative, const struct sk_buff *, skb,
+ 	ptr = start + offset;
  
--		btf_add_type(env, t);
-+		err = btf_add_type(env, t);
-+		if (err)
-+			return err;
-+
- 		cur += meta_size;
- 		env->log_type_id++;
+ 	if (likely(ptr + len <= end)) {
+-		memcpy(to, ptr, len);
++		memmove(to, ptr, len);
+ 		return 0;
  	}
+ 
+@@ -4157,7 +4157,7 @@ BPF_CALL_4(bpf_xdp_load_bytes, struct xdp_buff *, xdp, u32, offset,
+ 	if (!ptr)
+ 		bpf_xdp_copy_buf(xdp, offset, buf, len, false);
+ 	else
+-		memcpy(buf, ptr, len);
++		memmove(buf, ptr, len);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
