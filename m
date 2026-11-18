@@ -1,54 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025326;
-	b=Nv33H0eC6XU0yRCrnYH4BwOv577Uq8XkxoTt1HR9sH1ULjop8rpRqRPz2j2ec6gqKArt
-	 zySV70jGj3KxMO/Qp/X8omwmef6zvYn85gPn9z+LfqsYM38I+68tSR5g+uIeTBVDX8tBe
-	 oOqsjXjD+EuAmDhSghIX+sD5N8gwXVvNHUShh8sZsqEl8f3JOWKWPS5McBtMXE6tk+XC5
-	 kWp0HQkUgpLIIewMg/w1yQ/a0Jmfds1T3d9zLIxxNWbU/VQvI7Lyd7Yl1uktxK0qGmMB5
-	 X389K+BDgmsjNifGn6xVE594By+1+1Woyb8LrXSNnT7CjE4a2VsiKHcY5ddorJN/Wog==
+	t=1795025329;
+	b=PxbosUvwTZ53ilMCA/Dca64TTn6jGDTosCEHxZONG98GFvuTq27BnCwy+LKXl+d5BrOn
+	 UHTRwSbcTew4suY6OLLlOp0RAxcDdFSr7+nEdkbpA8WXxwZ/SRtEIKoLy1zOT/U4F4q8D
+	 KqWKq85tAgN3/H4twJt+YBliWbsyMOi7QWL37LJTi2AWd405CYEOTgIzMRxNjhj/ouFri
+	 jmDUYZ/kkjLBMxCCco1rmNd8jUKxI39jnJSVJQ7XoQxI33BFBeSAEXLqjOcJ9LVYiRNO3
+	 9eF/Ojd1uhSxm/ZIRSMUCS+SMj1dh5fC9VpFGKhcshPjZY3rWG8Rn0AsglE2oDWOdBQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025326;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025329;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Tf37JcXq2YeC3wPD701A3hD5vzxZbM6jyuyDC+6NR0w=;
-	b=JeFNQGuyJZ5apR5peV/hmqulscC5YgMdXCvsw0vxr8Bj86cWa6WecyEguEV+NCdVtfCO
-	 wSDJhbNS9Wz/C5bCntM5O996YqIghQeamIIGm9BNiKnQnMgGJ8LoVYlKL1mzs+YZg6O4o
-	 FlKSRwHFj77c2WDHGV6QvMzkBpn3Z1SkmVtfFZ6Xoh3n6+D9AjJBFF54eUprcqmzzAUL/
-	 VZ0hjs8uLp7cIFlRSarrXbcxkzsA0HUULOGBFQtzlQsFyV+nquMDpPVnwl3umyG0kNyb3
-	 G8xTdQl+GotdToxOxnoHh0hK7eOGiFzj7pOZpYQAZGbyHe4tdN/zZif99CeAMhH32FQ==
+	bh=mC8B6srJ5HULKGIVQ/Auup/9JnuqvCZq2xnAu9/US38=;
+	b=TZ2IX5eS300V05RZaKmRjkuNGzdKCbZowUuggh+Pr1257t+Pcjbh8HXBRCSE6L1wp2ks
+	 K6wdTo1wBikd1lIKXMYtKAxt6u6Rgd+QrjyBbKD9kIbM5WyS3WlefDPDU0vJP4Z+WqAU+
+	 DAQRH5e5/YPye3epjR7Hge16evoPwB50rA97TxYLLwiip3eeGRyVl78u0Gk7LUXGc0oQ4
+	 TsGUE1KbAOtnfBVBaD/wJhjOceaUaQBtRnhyvM2JalxOiFyRfDMKdC4RQfpJbecrZ4evT
+	 VNisWLroByaKjoAxSOGPM6pf1qVCi4SgpUcn3RiTd21InJQFSvuY1h4RkdcyD/DvL/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WCZAnz1g;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ULW9m7SL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEFD9606A333;
-	Wed, 18 Nov 2026 18:08:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BCBD606A336;
+	Wed, 18 Nov 2026 18:08:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WCZAnz1g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1214D1F000CA;
-	Wed, 18 Nov 2026 18:08:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ULW9m7SL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D51AF1F000C4;
+	Wed, 18 Nov 2026 18:08:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025326;
-	bh=Tf37JcXq2YeC3wPD701A3hD5vzxZbM6jyuyDC+6NR0w=;
+	s=korg; t=1795025329;
+	bh=mC8B6srJ5HULKGIVQ/Auup/9JnuqvCZq2xnAu9/US38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WCZAnz1gg7kh0tSZQJeRhD8zvjA0509lmSQoFIzVpyBDRaK8MybTeEKTT2gEnthHU
-	 pKYygdltbX+paqVdbnqOxtCJB9dZACV4jQPTGAwGrZzKxHn0h80/EUiWJBbDSYgIJc
-	 6GG5krqhVjW5bn7thQ30Ri8vT6j+IsbDeSoTrMig=
+	b=ULW9m7SLrye3D8zN7bOZXe0eZuktlU0RaYYgf8G9v2e19mCZm8sxBLGn67+ck7mp7
+	 yKeVIkGQaEAq8kB4NhvHR91oM5PbllG0NLYaCestiOXPKne8xhLi7a2gszqY3Xfsib
+	 Pgic+jo3yewdRdIHYlD8VAXIuhpVjGc/Cmz+A2ls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot@kernel.org,
-	Dave Jiang <dave.jiang@intel.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Richard Cheng <icheng@nvidia.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1040/2151] perf/cxl: Fix the counter overflow delta fixup
-Date: Wed, 18 Nov 2026 15:46:15 +0100
-Message-ID: <20261118150200.225675005@linuxfoundation.org>
+Subject: [PATCH 6.18 1041/2151] perf/cxl: Accept an overflow interrupt on MSI message number 0
+Date: Wed, 18 Nov 2026 15:46:16 +0100
+Message-ID: <20261118150200.258305190@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -72,89 +74,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit 0326269ed73529cdf821664b6176814cde9ca374 ]
+[ Upstream commit af06fba45746058ba8f983a0ac2f457a3404edba ]
 
-The counter is masked to counter_width, so the subtraction in
-__cxl_pmu_read() throws away the bit that records the wrap. A delta of one
-whole period reads back as 0, the same as no events at all, and only the
-overflow status tells the two apart - which is why __cxl_pmu_read() takes
-an overflow argument.
+cxl_pmu_probe() rejects the PMU when info->irq <= 0, but at that point the
+field still holds the MSI/MSI-X message number the device signals overflow
+on, not a Linux virq. That number is 0-based, and -1 means no interrupt
+support. Message number 0 is valid and pci_irq_vector() takes a 0-based
+index, so a compliant device signalling on the first vector fails to probe.
 
-The fixup keys off the delta rather than the operands:
-
-	delta = (new_cnt - prev_cnt) & GENMASK_ULL(counter_width - 1, 0);
-	if (overflow && delta < GENMASK_ULL(counter_width - 1, 0))
-		delta += (1UL << counter_width);
-
-so it cannot tell which of these it is looking at:
-
-  event_start         polled read          wrap
-  ctr = 0 ..........  ctr = P/2 .........  mask -> 0 (+r)
-  prev = 0            prev = P/2                 IRQ reads new = r
-
-  prev = 0    (no read yet):  new >= prev, fell short -> add period
-  prev = P/2  (polled):       new <  prev, spans wrap -> add nothing
-
-Both rows are the same interrupt and the old guard adds a period in both,
-so a mid-period read makes the event over-count. 'perf stat -I' hits that.
-
-Condition the fixup on new_cnt >= prev_cnt, the one case the subtraction
-cannot express. Dropping it outright would break the first row. It stays
-exact whatever the residual r is, which matters because some events
-increment by more than 1 per cycle (CXL r4.0 8.2.7.2.1, Threshold) and can
-step past 0 as they wrap.
-
-Use mask + 1 for the period rather than a shift. It is 0 for a 64-bit
-counter, and avoids the old 1UL << counter_width - undefined for width 64,
-and for >= 32 on 32-bit kernels.
+Reject only the no-interrupt case, matching how the CXL mailbox and event
+interrupts handle it.
 
 Fixes: 5d7107c72796 ("perf: CXL Performance Monitoring Unit driver")
 Reported-by: sashiko-bot@kernel.org
 Closes: https://sashiko.dev/#/patchset/20260715191454.459673-1-dave@stgolabs.net?part=1
 Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Acked-by: Richard Cheng <icheng@nvidia.com>
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/cxl_pmu.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/perf/cxl_pmu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/perf/cxl_pmu.c b/drivers/perf/cxl_pmu.c
-index 7a770278f6892..39231f5feb4fb 100644
+index 39231f5feb4fb..24ff8082cc7cf 100644
 --- a/drivers/perf/cxl_pmu.c
 +++ b/drivers/perf/cxl_pmu.c
-@@ -689,7 +689,7 @@ static void __cxl_pmu_read(struct perf_event *event, bool overflow)
- {
- 	struct cxl_pmu_info *info = pmu_to_cxl_pmu_info(event->pmu);
- 	struct hw_perf_event *hwc = &event->hw;
--	u64 new_cnt, prev_cnt, delta;
-+	u64 new_cnt, prev_cnt, delta, mask;
+@@ -873,7 +873,7 @@ static int cxl_pmu_probe(struct device *dev)
+ 		.capabilities = PERF_PMU_CAP_NO_EXCLUDE,
+ 	};
  
- 	do {
- 		prev_cnt = local64_read(&hwc->prev_count);
-@@ -697,12 +697,16 @@ static void __cxl_pmu_read(struct perf_event *event, bool overflow)
- 	} while (local64_cmpxchg(&hwc->prev_count, prev_cnt, new_cnt) != prev_cnt);
+-	if (info->irq <= 0)
++	if (info->irq < 0)
+ 		return -EINVAL;
  
- 	/*
--	 * If we know an overflow occur then take that into account.
--	 * Note counter is not reset as that would lose events
-+	 * The mask discards the bit that says the counter wrapped, so a delta of
-+	 * one whole period reads back as 0 - the same as no events at all. Only
-+	 * the overflow status separates them, and new_cnt >= prev_cnt is that
-+	 * case, so add the period back. mask + 1 is 2^counter_width, which comes
-+	 * out as 0 for a 64-bit counter and avoids an undefined 1 << 64.
- 	 */
--	delta = (new_cnt - prev_cnt) & GENMASK_ULL(info->counter_width - 1, 0);
--	if (overflow && delta < GENMASK_ULL(info->counter_width - 1, 0))
--		delta += (1UL << info->counter_width);
-+	mask = GENMASK_ULL(info->counter_width - 1, 0);
-+	delta = (new_cnt - prev_cnt) & mask;
-+	if (overflow && new_cnt >= prev_cnt)
-+		delta += mask + 1;
- 
- 	local64_add(delta, &event->count);
- }
+ 	rc = pci_irq_vector(pdev, info->irq);
 -- 
 2.53.0
 
