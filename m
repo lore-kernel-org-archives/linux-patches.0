@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038962;
-	b=xIm2JyOGVOx5o4HwGP/R62RDhQeGfnAIxw+jVZeUM6Wq5vQePoS91YC3vgWeL5OY8m+F
-	 fGHpbw/ZS14wwvloSTRWp3/0bZutuJoYafDtVl+QiTtjtXyJ4EgPXXFTChaVqMIRtRLKU
-	 U8lYaB2bee3f9bRQhREOCCKs62mKxu3Wjw4d6mq1n98IwuCK02kCLxmciWCJ35z1e2D5v
-	 7d4nCrnvMHJKWtMuKu/fEunD1BD0AktnDm8I+XMo+HPDdpfNdQW0deRwhUkdcnz4fHX/W
-	 7hfVFDPTbuf3BawRMxe142+GF8PkOcDwMG0abaMtPMJl7Lhh1sWCn9+tFiYn6SwqEYA==
+	t=1795038965;
+	b=kFiuf+FyjeodhGRUZJHPqDgO0dK5Z/d7nSsSW/kB1eRNJEp2zkK7Ppj1qiwSNDwiQQ2L
+	 URvIJTFbY1SI6lJO4Gqdh9btnivz1QxrLYgOut1ezv6QWlsHIzIXD+ype8NZb3QWLwiQb
+	 wcPxUHhrMFPjcXAS7cuH/a8loHJp0a1+RyWUloGGAUGCnaMgO6RFq/5i3z5bUQlx9O8SN
+	 0ipsu4h721CyNBjY1FLwd5a9VOSi2jfzvIQWF8JP9JV2lL/FMP7P1RnPb6IZ+SOCqKmXM
+	 /pNXlBVqLOX4tCdE4Zhh97LDzuvDV8xBpf3hRTj/mGBbtzhCksJnSKgUOsVwEOeWsEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038962;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038965;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=IKvP/0cXryIzQ4Fth7khu5bL/An3Sdresaxscb7dfUA=;
-	b=HlZIowZGJ4L2HMsKp1jKswJ3nFf2UUDfxB8LvXy2OUcmzEpbkKmnn5DNLoNIdiG/xdAO
-	 VDFceBUhHdUFqK4MpmjBOMiqd2dEQRF7k18477rTeMu4v/4sqiuzwgXcZH20OD2uo8Lfx
-	 Nhjlj3AaQMnMBYTx7HNHcOIE/cXNgZUIowcH9TPYM/68TMx5XCQtIAz9s/tf/1fVirRFL
-	 OutFAzzwOLV1R1d79X9er3JOGYzltQNaqh1apPancoKoAqRoeTPoXJvX8o7MsumTHtdHO
-	 HJWHGeU8bVW7mRCH5L9CfM5X2jFVNlKg2SfwB87Uzju8i2RHuJV3CaGKRZjdgtZcDwg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=Nxn0szylI3g9hVTUpO0ViGLlMYodsySnOV4d1JMspX4=;
+	b=WwlIEO4bKu5njN9RiUyeLtqTQrGNntGGJz9tCi+Xog//8x8Q+3BM5vxW7T2H3ut5SB2U
+	 NpBm/xgn+NGJ3KqxemogOd2iRPtvgFHPMHw0LFgB5J7MYxqenBeC0x/dQfd/bQ3yj4zZ3
+	 lPUjzv5/CxLMSEE2eE2ZvP1LsfInzzovRtIj0t3Z0ExB0AUpC2gvCpbLMVEUNVwJUITNZ
+	 0U56O0qYfdFnpHYPKo1fQ9ynDpvT0hKyS8fVPcXBYN4XLeCkV+fTw2ek/wKP7t8ZQ5OaP
+	 hba35oEdu06/S2lcSrD3WzxD0TRHvSR/H7UtXb+X1hY/s7hVPVXY+7SCTL/tH2rOupQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LkbnRwyZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nK2wHTss;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0FE606A31C;
-	Wed, 18 Nov 2026 21:56:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B7C3606A320;
+	Wed, 18 Nov 2026 21:56:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LkbnRwyZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB7DA1F000C4;
-	Wed, 18 Nov 2026 21:56:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nK2wHTss
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91AD61F000C4;
+	Wed, 18 Nov 2026 21:56:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038962;
-	bh=IKvP/0cXryIzQ4Fth7khu5bL/An3Sdresaxscb7dfUA=;
+	s=korg; t=1795038965;
+	bh=Nxn0szylI3g9hVTUpO0ViGLlMYodsySnOV4d1JMspX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LkbnRwyZYQrALGAAh4Z+KC2fhPaoh+gqvBmVk2lsUtWiHzgYCquDaxQk4IxWe3HN9
-	 m/jL3n17XZTrfW1IQEZkNkjGTVEdpQ+Xi5ykmGQ1J/8lWt6/H0qz1KGpf5dRPSGlkY
-	 JylWQ/QAEz0bmv/GnvPR40qjkFbgdS0UjU4I5zL0=
+	b=nK2wHTsswgEmn6pd3IaHuHZ5tSdAuTStgduEqdz4r+OEHsQb7W7eVDvFtz+akCKOS
+	 eJ6ek6VaKRsRyNjEFmE4tYw7vfWw1t6CE84DzZl2nKObjv1ZK7dDjv8Y0zVcrJ4u0l
+	 pNzcMf0X11p6Wq8v9Kp/RtWtR7FNTwS/eG76M+ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Daejun Park <daejun7.park@samsung.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1931/3318] drm/amdgpu: dont walk the CS chunks when allocating them failed
-Date: Wed, 18 Nov 2026 15:42:33 +0100
-Message-ID: <20261118150419.963774963@linuxfoundation.org>
+Subject: [PATCH 6.6 1932/3318] nvme: unregister when pr_register() is given a zero new key
+Date: Wed, 18 Nov 2026 15:42:34 +0100
+Message-ID: <20261118150419.994565358@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -63,63 +63,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Daejun Park <daejun7.park@samsung.com>
 
-[ Upstream commit ade92d50aad6799a5a9d7e73cd1604fd0576e656 ]
+[ Upstream commit a9d431124fb2e58215daf0299d6fcf47bbc2d6b1 ]
 
-amdgpu_cs_pass1() sets p->nchunks before allocating p->chunks, and the
-allocation failure path skips resetting it. amdgpu_cs_parser_fini() then
-frees the kdata of nchunks chunks from a NULL array. On navi48 with the
-chunk array allocation failed through failslab:
+The block layer PR API defines a zero new_key in pr_register() as
+unregistering old_key. nvme_pr_register() sends Replace Reservation
+Key with a zero NRKEY instead. The host stays registered with key 0,
+and its next registration with another key fails with Reservation
+Conflict.
 
-  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
-  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-  RIP: 0010:amdgpu_cs_parser_fini+0x35d/0x710 [amdgpu]
-   amdgpu_cs_ioctl+0xcae/0x7a20 [amdgpu]
-   drm_ioctl_kernel+0x180/0x320 [drm]
+The pNFS SCSI layout client unregisters this way at umount. A later
+mount cannot register and sends all I/O through the metadata server.
 
-Set nchunks once the array exists.
+Send Unregister Reservation Key when new_key is zero.
 
-Fixes: d38ceaf99ed0 ("drm/amdgpu: add core driver (v4)")
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 0c828445757b86aaa3ed2638832d76f450022bdf)
+Fixes: 1d277a637a71 ("NVMe: Add persistent reservation ops")
 Cc: stable@vger.kernel.org
-[ sashal: adapted kvmalloc_objs() to kvmalloc_array() with explicit element size and GFP_KERNEL ]
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Daejun Park <daejun7.park@samsung.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+[ sashal: changed old_key and new_key references to old and new to match the existing parameter names ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/nvme/host/pr.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index 99de46eda59be..6d42290d68fb3 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -214,13 +214,14 @@ static int amdgpu_cs_pass1(struct amdgpu_cs_parser *p,
- 	if (IS_ERR(chunk_array))
- 		return PTR_ERR(chunk_array);
+diff --git a/drivers/nvme/host/pr.c b/drivers/nvme/host/pr.c
+index 566a04290e550..a6e563adb7017 100644
+--- a/drivers/nvme/host/pr.c
++++ b/drivers/nvme/host/pr.c
+@@ -133,7 +133,12 @@ static int nvme_pr_register(struct block_device *bdev, u64 old,
+ 	if (flags & ~PR_FL_IGNORE_KEY)
+ 		return -EOPNOTSUPP;
  
--	p->nchunks = cs->in.num_chunks;
--	p->chunks = kvmalloc_array(p->nchunks, sizeof(struct amdgpu_cs_chunk),
-+	/* parser_fini() walks nchunks chunks, set it once they exist */
-+	p->chunks = kvmalloc_array(cs->in.num_chunks, sizeof(struct amdgpu_cs_chunk),
- 			    GFP_KERNEL);
- 	if (!p->chunks) {
- 		ret = -ENOMEM;
- 		goto free_chunk;
- 	}
-+	p->nchunks = cs->in.num_chunks;
- 
- 	for (i = 0; i < p->nchunks; i++) {
- 		struct drm_amdgpu_cs_chunk __user *chunk_ptr = NULL;
+-	cdw10 = old ? 2 : 0;
++	if (!new)
++		cdw10 = NVME_PR_REGISTER_ACT_UNREG;
++	else if (old)
++		cdw10 = NVME_PR_REGISTER_ACT_REPLACE;
++	else
++		cdw10 = NVME_PR_REGISTER_ACT_REG;
+ 	cdw10 |= (flags & PR_FL_IGNORE_KEY) ? 1 << 3 : 0;
+ 	cdw10 |= (1 << 30) | (1 << 31); /* PTPL=1 */
+ 	return nvme_pr_command(bdev, cdw10, old, new, nvme_cmd_resv_register);
 -- 
 2.53.0
 
