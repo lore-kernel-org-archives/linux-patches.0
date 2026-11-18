@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049072;
-	b=u+p3JmFefZ2Yh0PxZx/Vn0OxTfjwmue2OUcVXXoCdSKQG3MmFtVpX7aYoAWPu/MgYPP8
-	 dMF4bsrjR1BuqLN1wDYr1WYu7Xko0SGZoHubZcQ+Yf30hb+kYGQls2nAvmZFlqsI38qdu
-	 xan3AkgMN+wk1jhKpRwPJxw7xhm+AywI1PYLtJJC288x+fXuKdcH+o2Y1PQoBIcKVjp7k
-	 gokFIxJZp58Rz44otd6P/lmlXOEnfZLhOsslvl0qWr4hCXWLctKEqsMcAu0hrljbqOg1X
-	 8fckzC4WhejLJ9FCNVpnYjDKHIdELK5klvz+OlmxaoLZP7eGjrE5NzWbZi/7Z89C2Mg==
+	t=1795049075;
+	b=BVFTXENmXN0VFlJMjsc9j5tKlWLndC1hu7r1Kz3cmHtn5NAx8hv9ivm+Vkk0dil1/zIu
+	 HMiw1a1niOtjtwOMh3gvtC63avxLu2cEMsACHWEdI1y/qMKf/L7EK7m2mAQLu+K1UWHKK
+	 Oi+oyKH5Eiwy5MJb72p6Ce7hNRNn55kw6yjYp7zv/upnJVaDRszvtDIAL83ZUYPus+kqy
+	 EO+BPQdNt5VEx+YYJPYz8Hu4Bl7qUPVJfIXOHD+aeO+sVbN9ElW/C+gf8gFxxUK2gvV2L
+	 2O8ppNbfoPezjRntxqqtI7km0GJ5Ks/imd4BtJJD9lapizysB+WW2uaYtU3yNP074BA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049072;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049075;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DeJ7rXjEsfGyuRzzOaqumND09Aj8tkKvwR7tLuSFL4Q=;
-	b=svusdQlaAvi/D2rZCE5f9Gl2bXpXlYHj+U4SWTRb5bN3D835uhFzVIi5oImOE9A8qpTK
-	 pyVqKh5NyLk9bFmChMPzRQppQywxu+f2Y/vd+3XxfRXaLDmmGTYO9qqskByqL3QuGV0bp
-	 AmHcwJU4a25AYuuXiP9USCYxZ1kVGagVUHRApusk2Uq2zYktNeTHC6oiQ8XXQdRT6LB+D
-	 RrDSXDOnk23G++tcTHnKRMXn7IoqSDnHxmPNlaqPidY8NDttaGY4J9+J0yN2wGgcxrjC1
-	 ZGIErSP7O/Q9r8cOsw/0fJw1Fdvo+71S+NHlfEViw2uQEqHCHdG4/CnLK+Kw08zS/Rw==
+	bh=tmX7Qojpyf+jL01EfYOq40C/xatJ86PSCP0Bv5cQWls=;
+	b=x+f6cKEVBcPyLMZ31u1aI+4CXVMPe1ZEn0cqYaD77EUndkRE0lZCzbzvHzPI2TdkZXJ2
+	 gQrgYmrCv03MPCuCC+p+sBf9Q0vPWDwQavTxJ/6toNEtaEYKAdOfNTiGvo2s7U+XT1XVT
+	 ugvOueG+KjRFedko2hYx903/UcQ6x48TFtqfTzNntBUhY8hfN4UEm8P/I+aUwz622H7bm
+	 NgYzBRyv5c60WSqoU/03ef+aVZLKdQhnfkk/7093Jq0DN554BDj80xEjzAmtEwWiMAh+L
+	 06NMJo+wLejDKoPgjKq9TRpNUWdo469Q9UEd4wEdKw1c7C+dukR2982k150IWYx/oIA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="K0eaVJ2/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aB3yEm69;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D241606A32C;
-	Thu, 19 Nov 2026 00:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A6C606A31C;
+	Thu, 19 Nov 2026 00:44:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K0eaVJ2/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 904501F000C4;
-	Thu, 19 Nov 2026 00:44:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aB3yEm69
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49B8B1F000C4;
+	Thu, 19 Nov 2026 00:44:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049072;
-	bh=DeJ7rXjEsfGyuRzzOaqumND09Aj8tkKvwR7tLuSFL4Q=;
+	s=korg; t=1795049074;
+	bh=tmX7Qojpyf+jL01EfYOq40C/xatJ86PSCP0Bv5cQWls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K0eaVJ2/V6rYiBSO445I4wgOqLVMIYu6C91zsc8JR7pom1UyXsK2slyapJNtrxciy
-	 SfVXQsIXooNnhJ/FWiizCsAwQsrbySINYrUnj5J77lhC6ktiomuhd1rMKXa4+6xSf5
-	 rSfAqDirywolU2ursGgoezgCE5IOePzdfXORDufs=
+	b=aB3yEm69iI2bLT6rnspng3kQBkxLZOF31n1y3yHy0kIhJ7XYEkxv4FxwUEEiu9afB
+	 Rfoi+AR3r1+/YPL8FP+L7eKOu9QUkVkRa8d4HmD+IbDQnwiiyB3R85QLGMI5wBdzX+
+	 gO/xrRwuL4+L+9F06OvsnNLrj0FgBKI9wH+jS+RM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Detlev Casanova <detlev.casanova@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2220/2857] arm64: dts: rockchip: Rename rk3328 HDMI audio card
-Date: Wed, 18 Nov 2026 15:54:14 +0100
-Message-ID: <20261118150321.348934492@linuxfoundation.org>
+Subject: [PATCH 6.1 2221/2857] ARM: dts: ux500: Use AB8505 charger compatible
+Date: Wed, 18 Nov 2026 15:54:15 +0100
+Message-ID: <20261118150321.384726062@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,36 +67,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Detlev Casanova <detlev.casanova@collabora.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit daa0db717771d43c25d98c2798fa6a7b0252deb7 ]
+[ Upstream commit ff1501cbb825de117267124ecb8898112b4051c5 ]
 
-Rename the card from "HDMI" to "RK3328 HDMI" so it identifies the SoC
-in user-visible ALSA fields and no longer collides with the identical
-"HDMI" string used by other Rockchip SoCs.
+Identify the AB8505 charger using its variant-specific compatible and
+retain the AB8500 compatible as a fallback for the existing driver. This
+selects the AB8505 interrupt constraints from the binding.
 
-Fixes: 29e8976e604f1 ("arm64: dts: rockchip: Add RK3328 audio pipelines")
-Signed-off-by: Detlev Casanova <detlev.casanova@collabora.com>
-Link: https://patch.msgid.link/20260910-fix-rockchip-hdmi-audio-names-v2-4-1396a6168e20@collabora.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+The AB8505 interrupt table explicitly omits the five interrupt sources
+belonging to the AB8500 main charger. Remove these nonexistent interrupts
+from the AB8505 charger node, leaving its nine USB charger interrupts.
+
+Fixes: bc324d447fba ("ARM: dts: ux500: Add interrupts to charger")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3328.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/ste-ab8505.dtsi | 17 ++++-------------
+ 1 file changed, 4 insertions(+), 13 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3328.dtsi b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
-index ce7c1d3c345e3..3db5f4acabc02 100644
---- a/arch/arm64/boot/dts/rockchip/rk3328.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
-@@ -176,7 +176,7 @@ hdmi_sound: hdmi-sound {
- 		compatible = "simple-audio-card";
- 		simple-audio-card,format = "i2s";
- 		simple-audio-card,mclk-fs = <128>;
--		simple-audio-card,name = "HDMI";
-+		simple-audio-card,name = "RK3328 HDMI";
- 		status = "disabled";
+diff --git a/arch/arm/boot/dts/ste-ab8505.dtsi b/arch/arm/boot/dts/ste-ab8505.dtsi
+index 131c82508e820..4c9a8418f225a 100644
+--- a/arch/arm/boot/dts/ste-ab8505.dtsi
++++ b/arch/arm/boot/dts/ste-ab8505.dtsi
+@@ -137,13 +137,9 @@ ab8500_btemp {
+ 				};
  
- 		simple-audio-card,cpu {
+ 				ab8500_charger {
+-					compatible = "stericsson,ab8500-charger";
+-					interrupts = <10 IRQ_TYPE_LEVEL_HIGH>,
+-						     <11 IRQ_TYPE_LEVEL_HIGH>,
+-						     <0 IRQ_TYPE_LEVEL_HIGH>,
+-						     <107 IRQ_TYPE_LEVEL_HIGH>,
+-						     <106 IRQ_TYPE_LEVEL_HIGH>,
+-						     <14 IRQ_TYPE_LEVEL_HIGH>,
++					compatible = "stericsson,ab8505-charger",
++						     "stericsson,ab8500-charger";
++					interrupts = <14 IRQ_TYPE_LEVEL_HIGH>,
+ 						     <15 IRQ_TYPE_LEVEL_HIGH>,
+ 						     <79 IRQ_TYPE_LEVEL_HIGH>,
+ 						     <105 IRQ_TYPE_LEVEL_HIGH>,
+@@ -152,12 +148,7 @@ ab8500_charger {
+ 						     <22 IRQ_TYPE_LEVEL_HIGH>,
+ 						     <21 IRQ_TYPE_LEVEL_HIGH>,
+ 						     <16 IRQ_TYPE_LEVEL_HIGH>;
+-					interrupt-names = "MAIN_CH_UNPLUG_DET",
+-							  "MAIN_CHARGE_PLUG_DET",
+-							  "MAIN_EXT_CH_NOT_OK",
+-							  "MAIN_CH_TH_PROT_R",
+-							  "MAIN_CH_TH_PROT_F",
+-							  "VBUS_DET_F",
++					interrupt-names = "VBUS_DET_F",
+ 							  "VBUS_DET_R",
+ 							  "USB_LINK_STATUS",
+ 							  "USB_CH_TH_PROT_R",
 -- 
 2.53.0
 
