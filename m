@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051913;
-	b=IiWFnY7jJ1YVI9lPrESLAUgiusxuuhb9Mjq3cftqQMiKWrztnWx5m6lPa8RITbRU77EF
-	 +CH+/Ff0OhvP6bEuRl6/vMXQlmtHt+9fxoJPR5mcgVe7to2Fu2dP953lYzZqfcliRIOOW
-	 q3dlFFGJoullSNTlt/ut7PDLlJo5acYWOck8FAo9un+L516Sw6YD5+NlhRfSxfMZaZ5Oe
-	 I3p+oH4Rkqz0r1DvaZyYyuXUHVvd7U626USB8Pu4J8c5K+IVlyP2BlNZHiBDaVPgDOXUW
-	 SEBIZFKBLoRDSK0DNrTvW+8ekgy5/lykU3ggkc8jRpoNDGYGO+TYYRWx806tFTI707g==
+	t=1795051916;
+	b=H+qMJwqz1iXVuyaTYQBDJ1E9XcNBqnJ19UDclgjTaFy+Q980z1kSYag0boAdbbiud3M7
+	 K58J0z/CQDnKdo+LJZWb7yW8smwadU/IQ1dHeyCTNXKFNmlW5ZEMU8k+gZzn+A7+IJqTp
+	 AFs1gIkjAJ+fP/xsFPi+r2fpjYWUXi4WWz8TDSxfe9banNx307zAAB24zdsobqsbnSNDp
+	 hsJyygfsf2SYpo4ZmzdBfQTOg7uSBCBKCE4wmh4ZK5JW04tnSKHY9io0GAIVVwo5Fk1Td
+	 /OQ6S0jPqUCYm7o0QTTK8J7xqd979MOO8VPCptKXZS/UvcFuxEbla1p8EoG+dcCWDQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051913;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051916;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fj6IehzQTU1Wz4jJpPgsGeN/f/aqTn9eb4LTigRphxI=;
-	b=IOB6+F/DEENih6eBLrFbkvCIPiyxqSVw5HcNF9YtMzIHuxfMzA9u3kCktRr4Z5UYY85R
-	 9IN+o6dtV+8wtmyHC58mWE2a3OaPRJ5J9VaxYVWECI5R+QRMD2jDR2xGAfqTcc5jinwZ5
-	 gORBddFioSvcQL4BTPLamFkWYnH7iDrERcfnkHLA5v1ZUyKo9BYurlh2XvrpHwhyuquKb
-	 JCYjpErQbJY110zELl8Ac/YYt4cAhZtRDTTP6U+giJwXOFGfU2jVYXJcO0rSuoi5EI8Jp
-	 12Z/to/Dh1Cud11DH1vPof+bmfJVKziVYpqCYGGsY33maJUgsRmFvqikiyrv5bsl2HA==
+	bh=tZWJQKspJDaiFkLN26ASk/FBG8dik7AIsTZbxJwUrOk=;
+	b=Y8nz/A9SaUDH55dzOHRXIC8rCs4YPrPAx3TmwMNTWNqQwZKl1trQLBYeRmAvbRv0L0SW
+	 EifnfMbUceHxDSka3ePvTchP/NBWWjAdIX5mxaNt62KArdYXm7i08XKxR8RvUIToPxRzb
+	 xhXO1gv8JlpG4L53b4u8k0QucLBslcrvWeYshYOQPtc0NDPM1qT6Fj4XQ8RhdqnwmHMX5
+	 XN5fBTRtRSJuRS7MQCKRybw/3w6UnftE4XsXgIZhsIP8tbpMkvg9hH/Zfg340wkjjrCoq
+	 FX3G3a8yPwAB+1RIHi4l7VbpCwE8J2OEfyd0pOD9kIb1L2EAlfujJdpkzCZ87NJy44A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EP2fxM4M;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zddt9+Au;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9A4060A3817;
-	Thu, 19 Nov 2026 01:31:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 355C0606A33D;
+	Thu, 19 Nov 2026 01:31:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EP2fxM4M
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8F4C1F000CF;
-	Thu, 19 Nov 2026 01:31:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zddt9+Au
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B771F000C4;
+	Thu, 19 Nov 2026 01:31:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051913;
-	bh=fj6IehzQTU1Wz4jJpPgsGeN/f/aqTn9eb4LTigRphxI=;
+	s=korg; t=1795051916;
+	bh=tZWJQKspJDaiFkLN26ASk/FBG8dik7AIsTZbxJwUrOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EP2fxM4Mbzms4WWYPvxjgYb8Mm+uxhPzaRk2AByvj3yky3GmjtOliW01fLLdBzthx
-	 WQdZZIVMdLhdr8zbLZA4w0QWiAuNUd/RRrieZHQldrmkI6uFv2YbdNU9FWQX1TAY6U
-	 19UTFhcpyTt+O7euVICryTya3bZztOXsc/6KZ8Nk=
+	b=Zddt9+AuSm7QIKmJxLO9TWrs9EeyXqzrxrxVypQ/aOFdYikfRikWdkYGoyeMwPWpR
+	 QSyaXdYDVRGEtgHdlKGF3GYx9Foe8aHtb2D2DiDWzH+TcRmEq5a1sQIMv0erhLSfe2
+	 xngxhqa8/pVtBWHlxhQZ1iHjXxaWZw+OYAx6JO7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.15 0378/2214] HID: picoLCD: check for fb_deferred_io_init() error
-Date: Wed, 18 Nov 2026 15:34:14 +0100
-Message-ID: <20261118150025.831108704@linuxfoundation.org>
+	Gabor Tanz <gabor.tanz@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 5.15 0379/2214] HID: quirks: Always poll the Anne Pro 2 with product ID a292
+Date: Wed, 18 Nov 2026 15:34:15 +0100
+Message-ID: <20261118150025.870279071@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,63 +67,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: Gabor Tanz <gabor.tanz@gmail.com>
 
-commit feade898fc958ff355101adf12d5632272e64220 upstream.
+commit cbc13a78a89d087252947d0a51048e576cfcb3ef upstream.
 
-fb_deferred_io_init() allocates deferred I/O state, populating
-info->fbdefio_state, or leaving it NULL if an error occurs.
+The wired Anne Pro 2 identifying as 04d9:a292 stops delivering keyboard
+input after a period of inactivity. Unplugging and reconnecting the
+keyboard restores input.
 
-Currently picolcd_init_framebuffer() ignores its return value.
+Keeping ObinsKit running prevents the problem. A read-only userspace
+reader that keeps USB HID interface 1 open also prevents it, as does
+usbhid.quirks=0x04d9:0xa292:0x00000400 without either application running.
 
-Therefore if an error arises in fb_deferred_io_init() (for instance, due
-to an allocation failure) info->fbdefio_state is left NULL.
+Commit ca28aff0e1dc ("HID: quirks: Always poll Obins Anne Pro 2
+keyboard") added HID_QUIRK_ALWAYS_POLL for product ID a293.
+The variant identifying as 04d9:a292 exhibits the same symptom.
+Apply the quirk to this product ID as well.
 
-When the file is subsequently opened, fb_open() will dereference a NULL
-pointer (calling fb_deferred_io_open()).
-
-Fix this by checking for the error.
-
-Also correct cleanup ordering - defio is initialised after the sysfs file,
-so cleanup defio first.
-
-Fixes: 56c134f7f1b5 ("fbdev: Track deferred-I/O pages in pageref struct")
 Cc: stable@vger.kernel.org
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Assisted-by: LLM
+Signed-off-by: Gabor Tanz <gabor.tanz@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-picolcd_fb.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/hid/hid-ids.h    |    1 +
+ drivers/hid/hid-quirks.c |    1 +
+ 2 files changed, 2 insertions(+)
 
---- a/drivers/hid/hid-picolcd_fb.c
-+++ b/drivers/hid/hid-picolcd_fb.c
-@@ -557,17 +557,23 @@ int picolcd_init_framebuffer(struct pico
- 		goto err_cleanup;
- 	}
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -669,6 +669,7 @@
+ #define USB_DEVICE_ID_HOLTEK_ALT_MOUSE_A081	0xa081
+ #define USB_DEVICE_ID_HOLTEK_ALT_MOUSE_A0C2	0xa0c2
+ #define USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A096	0xa096
++#define USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A292	0xa292
+ #define USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A293	0xa293
  
--	fb_deferred_io_init(info);
-+	error = fb_deferred_io_init(info);
-+	if (error) {
-+		dev_err(dev, "failed to initialize deferred I/O\n");
-+		goto err_sysfs;
-+	}
-+
- 	error = register_framebuffer(info);
- 	if (error) {
- 		dev_err(dev, "failed to register framebuffer\n");
--		goto err_sysfs;
-+		goto err_defio;
- 	}
- 	return 0;
- 
-+err_defio:
-+	fb_deferred_io_cleanup(info);
- err_sysfs:
- 	device_remove_file(dev, &dev_attr_fb_update_rate);
--	fb_deferred_io_cleanup(info);
- err_cleanup:
- 	data->fb_info    = NULL;
- 
+ #define USB_VENDOR_ID_IMATION		0x0718
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -102,6 +102,7 @@ static const struct hid_device_id hid_qu
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_HAPP, USB_DEVICE_ID_UGCI_FIGHTING), HID_QUIRK_BADPAD | HID_QUIRK_MULTI_INPUT },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_HAPP, USB_DEVICE_ID_UGCI_FLYING), HID_QUIRK_BADPAD | HID_QUIRK_MULTI_INPUT },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_HOLTEK_ALT, USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A096), HID_QUIRK_NO_INIT_REPORTS },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_HOLTEK_ALT, USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A292), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_HOLTEK_ALT, USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A293), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_HP, USB_PRODUCT_ID_HP_LOGITECH_OEM_USB_OPTICAL_MOUSE_0A4A), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_HP, USB_PRODUCT_ID_HP_ELITE_PRESENTER_MOUSE_464A), HID_QUIRK_MULTI_INPUT },
 
 
