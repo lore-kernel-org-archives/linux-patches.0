@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041774;
-	b=LnOhCu4+R42WbP4prMbHyI4GFEbSSByWRvh/IOy0odMAOZkczr5dhVAd784GAX38hPIi
-	 Z/zd0eDVFDxAJV/1Jx/699dPyq/C9iZ5dshTx1VOz0YcMewTxS5KyI9RQyBGYX1gL8S+U
-	 sN8n1n2a2POUXsnK5u/6UYzRAvk2U7fhBC9g5Z5xlXb6dHI2XHBlIPcfsYPjvNZi9mRGu
-	 GwPpPXF4oQp38HNvMjRV4QQ+mohQBw4vk3PPOoGNkE+QlYKebPDPBsoqSFdSuvsxDaunG
-	 jR99liVB96u+Cohe/f26asKElZr8rftECD479pwwAiLmFJiU66FxiIO2MWM9HAPolsA==
+	t=1795041777;
+	b=gQnxS3K2bh+bUJDFO+4rchXA0/mOy1ILH6j9kYpOSZLtGXWf8+rFqjjvY3XJkYlEsR3f
+	 BYMNcQVA+pured11n5G5snHqxulBVo1iIziyM0oN+DrGi5UbGc68We9tzxtgPNj8nB3Qn
+	 4238Ls1veqXrAXZwCG7VBa2M3HLPNc/uqTLN5bcsav/Uf9lzX1PQM96jqmv9gDbf/CGBK
+	 ylwT4bKdqUkfJcAnig2I9KogMBs9ixmNE9cxZlmkSQys6W9oSXjKdCcGZSrZreuZmWuTG
+	 fYL0neGfvBYh9CF9X5p+qepIR1vYFNPYXJyFEhvEnL4rMK2CY5RNHAsFMSvaFFo0ujg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041774;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041777;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ahRibazSsS07+5oK4WhPCMAc2nnDiAxnwz4SBa7j/+Y=;
-	b=tvrxQ7Fz1Cd1JFiUR6IHuX2TCWe77nw1KGm/ktqZtlyOxxFwwo8vzCAl3vsj8RekuQor
-	 xFlT06v/byntuUyGg/X7b5391xNpDareWncHtTu6oSI6KX6zGzfTy9dR8x3E8cHh07HFK
-	 LtczcV4btL0eIS5yvS1eM+QGt47u0OdRfgAdNU4HMkK9nQ4/h9kQ4iBH5Hez8PXJv3aSl
-	 t7Y8aw9NEawbGmj/8XWd1fGBaiVcYP/Zrwik3/q/8X1uinu41GthOxXrCDtru7Z7SdrwQ
-	 uYGH6Pnl7wBs3Oso1zRqRfcVeFp4nrMdkZJ2XUL3hTL1pb5yBMdFSU8e0vXe92hzR6g==
+	bh=+0mnzuUwfeGWMIQWQCthmVQ4JkOpdBTCrZg+JZLqC34=;
+	b=j1qQQQeppwfjk5N4RPeFuqW9xFF3cqQgpUj0Tnin9X3U8a74neAV7QnJCtq0zaxDwTQP
+	 qvi7mG+OCg5Vd/RFgXZ4v5zw+qm/Nz2uwn6Q1kuSmwstqykbPetZJqbWkNUqi3izx8qz6
+	 qNkfpGC/vwZIVLBxVf+l4oiIEY3RmauXi2Jdch7qWyO/4Vj1f8KmgQAcAbo+UdPYDc5Bt
+	 4d5WL4d5hzp1QelbvHAYPHpJ5IjdygNMgxU29Y6IT7AenSgxh/tD93btEYHTyK0CBQpZt
+	 I3o127eunaDY22mqVhyWQK9HcpeBNDZN60XkC7IFK37qtg0xZFSfpg59yX9svXeNhqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="0P6/OTaQ";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=io8LqvNH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF8B606A332;
-	Wed, 18 Nov 2026 22:42:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEBA2606A325;
+	Wed, 18 Nov 2026 22:42:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0P6/OTaQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F5C91F000C7;
-	Wed, 18 Nov 2026 22:42:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=io8LqvNH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C2381F000C4;
+	Wed, 18 Nov 2026 22:42:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041774;
-	bh=ahRibazSsS07+5oK4WhPCMAc2nnDiAxnwz4SBa7j/+Y=;
+	s=korg; t=1795041777;
+	bh=+0mnzuUwfeGWMIQWQCthmVQ4JkOpdBTCrZg+JZLqC34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0P6/OTaQ0t37oszA8di6Vy96xwr/2RfHe5mxtZ/LIu9bQgyS8Z7RFg6o7rRDWYMLX
-	 DykAnk+vj4Yq82VthBOl5qTfefDuLgaAq6hNSUzYv/KcQId3Uj675PDj/mz576DR4Z
-	 tmWXd1wbQfQabpl1OMwjsI+q7KDGETzuc/lFDTeU=
+	b=io8LqvNHllF9muA4EbeEf/z1zYdTeYhFb0kL5sqrk7LPuOnbzuFr3oVaVVbTWcvnH
+	 rnKWIzV+BTXE5ChhlyCpRZYw+ZjCGF+QodYSIeQbh08OOfYb/RZAfU0KvPXfmOz7Cs
+	 Mf+aXKYOuACNon6e0QsnAziRnX8XNbVvOAF7GzOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jaroslav Kysela <perex@perex.cz>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2932/3318] ALSA: hda: Upgrade stream-format infrastructure
-Date: Wed, 18 Nov 2026 15:59:14 +0100
-Message-ID: <20261118150448.343271479@linuxfoundation.org>
+Subject: [PATCH 6.6 2933/3318] ASoC: Intel: avs: Switch to new stream-format interface
+Date: Wed, 18 Nov 2026 15:59:15 +0100
+Message-ID: <20261118150448.370543933@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,257 +72,134 @@ Content-Transfer-Encoding: 8bit
 
 From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit d24f1a090d3f2a5c86a8782afeda71c2d2539966 ]
+[ Upstream commit 615d13cb4f3e499fb5c270a7db66917286f7d0ec ]
 
-Introduce a set of functions that ultimately facilite SDxFMT-related
-calculations in atomic manner:
-
-First, introduce snd_pcm_subformat_width() and snd_pcm_hw_params_bits()
-helpers that separate the base functionality from the HDAudio-specific
-one.
-
-snd_hdac_format_normalize() - format converter. S20_LE, S24_LE and their
-unsigned and BE friends are invalid from HDAudio perspective but still
-can be specified as function argument due to compatibility reasons.
-
-snd_hdac_stream_format_bits() - obtain just the bits-per-sample value.
-Does not ignore subformat and msbits parameters.
-
-snd_hdac_stream_format() and snd_hdac_spdif_stream_format() - obtain the
-SDxFMT value given the audio format parameters. The former is stripped
-away of spdif-related information. Useful for users that do not care
-about them.
+To provide option for selecting different bit-per-sample than just the
+maximum one, use the new format calculation mechanism.
 
 Acked-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
 Acked-by: Jaroslav Kysela <perex@perex.cz>
-Link: https://lore.kernel.org/r/20231117120610.1755254-5-cezary.rojewski@intel.com
+Link: https://lore.kernel.org/r/20231117120610.1755254-14-cezary.rojewski@intel.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Stable-dep-of: 85bc213f96ac ("ASoC: Intel: avs: Unprepare a stream when recovery occurs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/hdaudio.h    |   5 ++
- include/sound/pcm_params.h |   2 +
- sound/core/pcm_lib.c       |  34 ++++++++++
- sound/hda/hdac_device.c    | 124 +++++++++++++++++++++++++++++++++++++
- 4 files changed, 165 insertions(+)
+ sound/soc/intel/avs/loader.c |  4 ++--
+ sound/soc/intel/avs/path.c   |  2 +-
+ sound/soc/intel/avs/pcm.c    | 19 ++++++++++++++-----
+ sound/soc/intel/avs/probes.c |  3 +--
+ 4 files changed, 18 insertions(+), 10 deletions(-)
 
-diff --git a/include/sound/hdaudio.h b/include/sound/hdaudio.h
-index 32c59053b48ed..ed52ca898c3bb 100644
---- a/include/sound/hdaudio.h
-+++ b/include/sound/hdaudio.h
-@@ -140,6 +140,11 @@ int snd_hdac_get_connections(struct hdac_device *codec, hda_nid_t nid,
- 			     hda_nid_t *conn_list, int max_conns);
- int snd_hdac_get_sub_nodes(struct hdac_device *codec, hda_nid_t nid,
- 			   hda_nid_t *start_id);
-+unsigned int snd_hdac_stream_format_bits(snd_pcm_format_t format, snd_pcm_subformat_t subformat,
-+					 unsigned int maxbits);
-+unsigned int snd_hdac_stream_format(unsigned int channels, unsigned int bits, unsigned int rate);
-+unsigned int snd_hdac_spdif_stream_format(unsigned int channels, unsigned int bits,
-+					  unsigned int rate, unsigned short spdif_ctls);
- unsigned int snd_hdac_calc_stream_format(unsigned int rate,
- 					 unsigned int channels,
- 					 snd_pcm_format_t format,
-diff --git a/include/sound/pcm_params.h b/include/sound/pcm_params.h
-index ba184f49f7e18..fbf35df6e5cf5 100644
---- a/include/sound/pcm_params.h
-+++ b/include/sound/pcm_params.h
-@@ -362,6 +362,8 @@ static inline int params_physical_width(const struct snd_pcm_hw_params *p)
- 	return snd_pcm_format_physical_width(params_format(p));
+diff --git a/sound/soc/intel/avs/loader.c b/sound/soc/intel/avs/loader.c
+index 5c4ae3927ed24..606caf46c8482 100644
+--- a/sound/soc/intel/avs/loader.c
++++ b/sound/soc/intel/avs/loader.c
+@@ -371,7 +371,7 @@ int avs_hda_load_basefw(struct avs_dev *adev, struct firmware *fw)
+ 	hstream = hdac_stream(estream);
+ 
+ 	/* code loading performed with default format */
+-	sdfmt = snd_hdac_calc_stream_format(48000, 1, SNDRV_PCM_FORMAT_S32_LE, 32, 0);
++	sdfmt = snd_hdac_stream_format(1, 32, 48000);
+ 	ret = snd_hdac_dsp_prepare(hstream, sdfmt, fw->size, &dmab);
+ 	if (ret < 0)
+ 		goto release_stream;
+@@ -438,7 +438,7 @@ int avs_hda_load_library(struct avs_dev *adev, struct firmware *lib, u32 id)
+ 	stream = hdac_stream(estream);
+ 
+ 	/* code loading performed with default format */
+-	sdfmt = snd_hdac_calc_stream_format(48000, 1, SNDRV_PCM_FORMAT_S32_LE, 32, 0);
++	sdfmt = snd_hdac_stream_format(1, 32, 48000);
+ 	ret = snd_hdac_dsp_prepare(stream, sdfmt, lib->size, &dmab);
+ 	if (ret < 0)
+ 		goto release_stream;
+diff --git a/sound/soc/intel/avs/path.c b/sound/soc/intel/avs/path.c
+index a4b9e209f2230..104bd6c55a593 100644
+--- a/sound/soc/intel/avs/path.c
++++ b/sound/soc/intel/avs/path.c
+@@ -87,7 +87,7 @@ static bool avs_test_hw_params(struct snd_pcm_hw_params *params,
+ 	return (params_rate(params) == fmt->sampling_freq &&
+ 		params_channels(params) == fmt->num_channels &&
+ 		params_physical_width(params) == fmt->bit_depth &&
+-		params_width(params) == fmt->valid_bit_depth);
++		snd_pcm_hw_params_bits(params) == fmt->valid_bit_depth);
  }
  
-+int snd_pcm_hw_params_bits(const struct snd_pcm_hw_params *p);
-+
- static inline void
- params_set_format(struct snd_pcm_hw_params *p, snd_pcm_format_t fmt)
+ static struct avs_tplg_path *
+diff --git a/sound/soc/intel/avs/pcm.c b/sound/soc/intel/avs/pcm.c
+index c3e1d9554ee1c..b8eafc56c0383 100644
+--- a/sound/soc/intel/avs/pcm.c
++++ b/sound/soc/intel/avs/pcm.c
+@@ -335,20 +335,25 @@ static int avs_dai_hda_be_prepare(struct snd_pcm_substream *substream, struct sn
  {
-diff --git a/sound/core/pcm_lib.c b/sound/core/pcm_lib.c
-index 5d455bedb7c9d..459c1be526391 100644
---- a/sound/core/pcm_lib.c
-+++ b/sound/core/pcm_lib.c
-@@ -1706,6 +1706,40 @@ int snd_pcm_hw_param_last(struct snd_pcm_substream *pcm,
- }
- EXPORT_SYMBOL(snd_pcm_hw_param_last);
- 
-+/**
-+ * snd_pcm_hw_params_bits - Get the number of bits per the sample.
-+ * @p: hardware parameters
-+ *
-+ * Return: The number of bits per sample based on the format,
-+ * subformat and msbits the specified hw params has.
-+ */
-+int snd_pcm_hw_params_bits(const struct snd_pcm_hw_params *p)
-+{
-+	snd_pcm_subformat_t subformat = params_subformat(p);
-+	snd_pcm_format_t format = params_format(p);
-+
-+	switch (format) {
-+	case SNDRV_PCM_FORMAT_S32_LE:
-+	case SNDRV_PCM_FORMAT_U32_LE:
-+	case SNDRV_PCM_FORMAT_S32_BE:
-+	case SNDRV_PCM_FORMAT_U32_BE:
-+		switch (subformat) {
-+		case SNDRV_PCM_SUBFORMAT_MSBITS_20:
-+			return 20;
-+		case SNDRV_PCM_SUBFORMAT_MSBITS_24:
-+			return 24;
-+		case SNDRV_PCM_SUBFORMAT_MSBITS_MAX:
-+		case SNDRV_PCM_SUBFORMAT_STD:
-+		default:
-+			break;
-+		}
-+		fallthrough;
-+	default:
-+		return snd_pcm_format_width(format);
-+	}
-+}
-+EXPORT_SYMBOL(snd_pcm_hw_params_bits);
-+
- static int snd_pcm_lib_ioctl_reset(struct snd_pcm_substream *substream,
- 				   void *arg)
- {
-diff --git a/sound/hda/hdac_device.c b/sound/hda/hdac_device.c
-index 51984633ea64d..1410f3e6ca3b5 100644
---- a/sound/hda/hdac_device.c
-+++ b/sound/hda/hdac_device.c
-@@ -13,6 +13,7 @@
- #include <sound/hdaudio.h>
- #include <sound/hda_regmap.h>
- #include <sound/pcm.h>
-+#include <sound/pcm_params.h>
- #include "local.h"
- 
- static void setup_fg_nodes(struct hdac_device *codec);
-@@ -723,6 +724,129 @@ static const struct hda_rate_tbl rate_bits[] = {
- 	{ 0 } /* terminator */
- };
- 
-+static snd_pcm_format_t snd_hdac_format_normalize(snd_pcm_format_t format)
-+{
-+	switch (format) {
-+	case SNDRV_PCM_FORMAT_S20_LE:
-+	case SNDRV_PCM_FORMAT_S24_LE:
-+		return SNDRV_PCM_FORMAT_S32_LE;
-+
-+	case SNDRV_PCM_FORMAT_U20_LE:
-+	case SNDRV_PCM_FORMAT_U24_LE:
-+		return SNDRV_PCM_FORMAT_U32_LE;
-+
-+	case SNDRV_PCM_FORMAT_S20_BE:
-+	case SNDRV_PCM_FORMAT_S24_BE:
-+		return SNDRV_PCM_FORMAT_S32_BE;
-+
-+	case SNDRV_PCM_FORMAT_U20_BE:
-+	case SNDRV_PCM_FORMAT_U24_BE:
-+		return SNDRV_PCM_FORMAT_U32_BE;
-+
-+	default:
-+		return format;
-+	}
-+}
-+
-+/**
-+ * snd_hdac_stream_format_bits - obtain bits per sample value.
-+ * @format:	the PCM format.
-+ * @subformat:	the PCM subformat.
-+ * @maxbits:	the maximum bits per sample.
-+ *
-+ * Return: The number of bits per sample.
-+ */
-+unsigned int snd_hdac_stream_format_bits(snd_pcm_format_t format, snd_pcm_subformat_t subformat,
-+					 unsigned int maxbits)
-+{
-+	struct snd_pcm_hw_params params;
+ 	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+ 	struct snd_pcm_runtime *runtime = substream->runtime;
+-	struct hdac_ext_stream *link_stream = runtime->private_data;
++	struct snd_soc_pcm_stream *stream_info;
++	struct hdac_ext_stream *link_stream;
+ 	struct hdac_ext_link *link;
+ 	struct hda_codec *codec;
+ 	struct hdac_bus *bus;
+ 	unsigned int format_val;
 +	unsigned int bits;
-+
-+	memset(&params, 0, sizeof(params));
-+
-+	params_set_format(&params, snd_hdac_format_normalize(format));
-+	snd_mask_set(hw_param_mask(&params, SNDRV_PCM_HW_PARAM_SUBFORMAT),
-+		     (__force unsigned int)subformat);
-+
-+	bits = snd_pcm_hw_params_bits(&params);
-+	if (maxbits)
-+		return min(bits, maxbits);
-+	return bits;
-+}
-+EXPORT_SYMBOL_GPL(snd_hdac_stream_format_bits);
-+
-+/**
-+ * snd_hdac_stream_format - convert format parameters to SDxFMT value.
-+ * @channels:	the number of channels.
-+ * @bits:	bits per sample.
-+ * @rate:	the sample rate.
-+ *
-+ * Return: The format bitset or zero if invalid.
-+ */
-+unsigned int snd_hdac_stream_format(unsigned int channels, unsigned int bits, unsigned int rate)
-+{
-+	unsigned int val = 0;
-+	int i;
-+
-+	for (i = 0; rate_bits[i].hz; i++) {
-+		if (rate_bits[i].hz == rate) {
-+			val = rate_bits[i].hda_fmt;
-+			break;
-+		}
-+	}
-+
-+	if (!rate_bits[i].hz)
-+		return 0;
-+
-+	if (channels == 0 || channels > 8)
-+		return 0;
-+	val |= channels - 1;
-+
-+	switch (bits) {
-+	case 8:
-+		val |= AC_FMT_BITS_8;
-+		break;
-+	case 16:
-+		val |= AC_FMT_BITS_16;
-+		break;
-+	case 20:
-+		val |= AC_FMT_BITS_20;
-+		break;
-+	case 24:
-+		val |= AC_FMT_BITS_24;
-+		break;
-+	case 32:
-+		val |= AC_FMT_BITS_32;
-+		break;
-+	default:
-+		return 0;
-+	}
-+
-+	return val;
-+}
-+EXPORT_SYMBOL_GPL(snd_hdac_stream_format);
-+
-+/**
-+ * snd_hdac_spdif_stream_format - convert format parameters to SDxFMT value.
-+ * @channels:	the number of channels.
-+ * @bits:	bits per sample.
-+ * @rate:	the sample rate.
-+ * @spdif_ctls:	HD-audio SPDIF status bits (0 if irrelevant).
-+ *
-+ * Return: The format bitset or zero if invalid.
-+ */
-+unsigned int snd_hdac_spdif_stream_format(unsigned int channels, unsigned int bits,
-+					  unsigned int rate, unsigned short spdif_ctls)
-+{
-+	unsigned int val = snd_hdac_stream_format(channels, bits, rate);
-+
-+	if (val && spdif_ctls & AC_DIG1_NONAUDIO)
-+		val |= AC_FMT_TYPE_NON_PCM;
-+
-+	return val;
-+}
-+EXPORT_SYMBOL_GPL(snd_hdac_spdif_stream_format);
-+
- /**
-  * snd_hdac_calc_stream_format - calculate the format bitset
-  * @rate: the sample rate
+ 	int ret;
+ 
++	link_stream = runtime->private_data;
+ 	if (link_stream->link_prepared)
+ 		return 0;
+ 
+ 	codec = dev_to_hda_codec(snd_soc_rtd_to_codec(rtd, 0)->dev);
+ 	bus = &codec->bus->core;
+-	format_val = snd_hdac_calc_stream_format(runtime->rate, runtime->channels, runtime->format,
+-						 runtime->sample_bits, 0);
++	stream_info = snd_soc_dai_get_pcm_stream(dai, substream->stream);
++	bits = snd_hdac_stream_format_bits(runtime->format, runtime->subformat,
++					   stream_info->sig_bits);
++	format_val = snd_hdac_stream_format(runtime->channels, bits, runtime->rate);
+ 
+ 	snd_hdac_ext_stream_decouple(bus, link_stream, true);
+ 	snd_hdac_ext_stream_reset(link_stream);
+@@ -601,11 +606,13 @@ static int avs_dai_fe_hw_free(struct snd_pcm_substream *substream, struct snd_so
+ static int avs_dai_fe_prepare(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
+ {
+ 	struct snd_pcm_runtime *runtime = substream->runtime;
++	struct snd_soc_pcm_stream *stream_info;
+ 	struct avs_dma_data *data;
+ 	struct avs_dev *adev = to_avs_dev(dai->dev);
+ 	struct hdac_ext_stream *host_stream;
+ 	struct hdac_bus *bus;
+ 	unsigned int format_val;
++	unsigned int bits;
+ 	int ret;
+ 
+ 	data = snd_soc_dai_get_dma_data(dai, substream);
+@@ -620,8 +627,10 @@ static int avs_dai_fe_prepare(struct snd_pcm_substream *substream, struct snd_so
+ 	snd_hdac_ext_stream_decouple(bus, data->host_stream, true);
+ 	snd_hdac_stream_reset(hdac_stream(host_stream));
+ 
+-	format_val = snd_hdac_calc_stream_format(runtime->rate, runtime->channels, runtime->format,
+-						 runtime->sample_bits, 0);
++	stream_info = snd_soc_dai_get_pcm_stream(dai, substream->stream);
++	bits = snd_hdac_stream_format_bits(runtime->format, runtime->subformat,
++					   stream_info->sig_bits);
++	format_val = snd_hdac_stream_format(runtime->channels, bits, runtime->rate);
+ 
+ 	ret = snd_hdac_stream_set_params(hdac_stream(host_stream), format_val);
+ 	if (ret < 0)
+diff --git a/sound/soc/intel/avs/probes.c b/sound/soc/intel/avs/probes.c
+index 341773ec49072..202e50b663ab5 100644
+--- a/sound/soc/intel/avs/probes.c
++++ b/sound/soc/intel/avs/probes.c
+@@ -144,8 +144,7 @@ static int avs_probe_compr_set_params(struct snd_compr_stream *cstream,
+ 	bps = snd_pcm_format_physical_width(format);
+ 	if (bps < 0)
+ 		return bps;
+-	format_val = snd_hdac_calc_stream_format(params->codec.sample_rate, params->codec.ch_out,
+-						 format, bps, 0);
++	format_val = snd_hdac_stream_format(params->codec.ch_out, bps, params->codec.sample_rate);
+ 	ret = snd_hdac_stream_set_params(hdac_stream(host_stream), format_val);
+ 	if (ret < 0)
+ 		return ret;
 -- 
 2.53.0
 
