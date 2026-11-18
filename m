@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033800;
-	b=wIa2MLOzQruxwWGgRoi7L+kbnUOpupSuTi6TKQWH6gj8QtDr5phLMqJ5rvDalgWWW4Q0
-	 q6iko4QNmALAduMz1yx0tr1poU7suHRnRH0QWVlSxVD97dq2/XbzcXsqe0DdG/FWGpjsL
-	 IwjzJXC2GnJ72ydSOgj8cnSmcS1WGXEddKb9gJIqQbQTgy9uqyMRRb8VRy/n+bbaX9/ER
-	 M6B94WQyFllU/9a6NeMXWYwiwn/6XEFBXnMVHTmwQTzMr7Umbs1qRAwwrqqunmz9RgbTw
-	 UhJ62ZFzMpm7oZquu/P2VuzTxZokzCAmOtJIbdhfgkuaE8AfoZQtzf1DaQTvnJx5a0g==
+	t=1795033803;
+	b=QoILQ6DFCCvnXh13SnweLKKWmH1ZpD9gTgmaD0+FZ24M9yVnx61nR2iQOVauq4lLChFd
+	 cFkYgKOOF4EmP6ApatH1XGvlPo+YXDnApTg5DSdcEBB4zEX4pRC3n5axri6V6ovFBugnv
+	 xHZds3ashE730coszJYS8E55slDLmxBGhoj7uxDKhMyHoEAoK4PNiu67nYAFOl4B/qGEC
+	 0tquqf0K3vp8WwmMdKCfyrGizat/JJRAETKyyp19uOPdyHUEfMGUQkN/9VgBRHlkl6zHf
+	 Jt9sldNBtiyPvXN1KmmvgKNGX+GHYU3XRlCtzAGEWl32/abc8Sx0xyRzOiGgpBvAGrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033800;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033803;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZXyVUF/TafaWMCYPbbsjz0H5iKcGWLIcgfx66QUhCwo=;
-	b=PH8EMeYCXgRO9xMTxdtrvXaJjGKXUxNOXfzvLevIbsTD0oHfPHCTgMIr1gpVss2qY7Of
-	 QIHuLcgISt0ywO3vXRRYX6wKv79qntxjRU5iJ20IRuzbyZlYxWnZ7DF9U2AO2DbDxQVLR
-	 ickzHxGYCOJqsOBLQHzqmkvLMeyJ9eEKrOFbrXHe3WdDaauPiVWlJcEc7JQ/5gErck63Q
-	 QiUCpXm3m2Jg4VzPkjuZz3oTwsNuwHaTsJfX9W6SlYRdDnqjER+IZty0+GmPM3mZ4mWr6
-	 l1eQOm9o2+B+wEMcHWlHG7xkglzU+sdqKNOzyeoTBkTC5ngbiJFOpgw2gvSIx4tvDrw==
+	bh=PQMr2oYpCuIzBA7fD/VFpNz0IIVzefrmOss6sGPceqQ=;
+	b=JJ71HO2z4TJM+0TRlH0zzDrto/iwQ8pWSGT97OWEiqKHUxsIEnK3+/WyKKk9C7EbRT3k
+	 E4W6UaNftQztCAJAyjfFjVlPT2fsB9dWFidVAzILBCDUDqra/+T4wKYX+08skTjIg9jo/
+	 pi2jo8gn0mx78yNABqc0Kzb90XyH4JOQaWA9f937FmzYT2e79OruZExCVpeMPTXDfoxqY
+	 qoND4ZLllKLCYIYc1D9QqnO3lEilh0gsHuM4+7uEYIp6w5a31y9PdcbaC75x0kQFKiyWW
+	 HG1NdXEVbmDCGo40YeJUiD+BVxxsmBZslAon3disgLndwb9N5XNm+2+VtVNa2W2QcTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U3fzRkzW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BVdyg5BR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0651C606A320;
-	Wed, 18 Nov 2026 20:30:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB31606A320;
+	Wed, 18 Nov 2026 20:30:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U3fzRkzW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54EE81F000C4;
-	Wed, 18 Nov 2026 20:29:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BVdyg5BR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D93D1F000C4;
+	Wed, 18 Nov 2026 20:30:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033799;
-	bh=ZXyVUF/TafaWMCYPbbsjz0H5iKcGWLIcgfx66QUhCwo=;
+	s=korg; t=1795033803;
+	bh=PQMr2oYpCuIzBA7fD/VFpNz0IIVzefrmOss6sGPceqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U3fzRkzWPQzKIhB8LpjjnLNigfidHJX9Ye/b3KiTxjswEauFf34JfmLsMUarKxEhr
-	 NB1T7qfh10iwrtzb3T/VfqipsIMioOgzWFjlo/P461d8mJuiPjroeO1IYGLudpJCfw
-	 iLt48ebjJw4ceVcsqRcyjgOk1zEVMWNGKVUbpD4c=
+	b=BVdyg5BRsLGXEO9Eek6qP/JcOnYcZtFFVTCozWkvQLdhlZz49C7drdj1+vmlSnQIb
+	 OIi4cIqrBVuaXddRl/ObDFAiLyB2KZ3+cRjJib4SR62MoXoJG9LWO4FudzQXDQQYbi
+	 cI2PCvrMq6SZXFeT1/SWZxqBK+iGLWugxxUF/IUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0143/3318] wifi: iwlwifi: mvm: ignore sync frames when sync is disabled
-Date: Wed, 18 Nov 2026 15:12:45 +0100
-Message-ID: <20261118150318.761439139@linuxfoundation.org>
+Subject: [PATCH 6.6 0117/3318] media: cec/core: drop cec_post_state_event call
+Date: Wed, 18 Nov 2026 15:12:19 +0100
+Message-ID: <20261118150317.819840608@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,44 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Hans Verkuil <hverkuil+cisco@kernel.org>
 
-[ Upstream commit a790f60cc4d7dc64a2d7cadb94a3d9f60392bed4 ]
+[ Upstream commit 2ff4b91e82bd76e1a6e1ff22bfc9aeda08e12a61 ]
 
-Gate time-sync frame interception on the active flag so frames are not
-queued after time-sync teardown.
+No need to call cec_post_state_event() if the next call
+is to cec_adap_unconfigure() since that will also call
+cec_post_state_event().
 
-Assisted-by: GitHubCopilot:GPT-5.3-Codex
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Link: https://patch.msgid.link/20260717172958.ac73ee199a25.Ic1489244f9b02da93060f0a0e5b300a73527f265@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+This fixes the case when, when the physical address is
+invalidated, you get two CEC_EVENT_STATE_CHANGE events:
+one with a non-zero log_addr_mask and one with a zero
+log_addr_mask.
+
+You just want to see the event with phys_addr set to
+f.f.f.f and log_addr_mask set to 0.
+
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/time-sync.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/media/cec/core/cec-adap.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/time-sync.h b/drivers/net/wireless/intel/iwlwifi/mvm/time-sync.h
-index 2cfd0fb5e781a..7bdbacb640787 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/time-sync.h
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/time-sync.h
-@@ -1,6 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
- /*
-  * Copyright (C) 2022 Intel Corporation
-+ * Copyright (C) 2026 Intel Corporation
-  */
- #ifndef __TIME_SYNC_H__
- #define __TIME_SYNC_H__
-@@ -19,6 +20,9 @@ int iwl_mvm_time_sync_config(struct iwl_mvm *mvm, const u8 *addr,
- static inline
- bool iwl_mvm_time_sync_frame(struct iwl_mvm *mvm, struct sk_buff *skb, u8 *addr)
- {
-+	if (!mvm->time_sync.active)
-+		return false;
-+
- 	if (ether_addr_equal(mvm->time_sync.peer_addr, addr) &&
- 	    (ieee80211_is_timing_measurement(skb) || ieee80211_is_ftm(skb))) {
- 		skb_queue_tail(&mvm->time_sync.frame_list, skb);
+diff --git a/drivers/media/cec/core/cec-adap.c b/drivers/media/cec/core/cec-adap.c
+index c7be3c812b8d4..6bd1dbf0e24af 100644
+--- a/drivers/media/cec/core/cec-adap.c
++++ b/drivers/media/cec/core/cec-adap.c
+@@ -1658,7 +1658,6 @@ void __cec_s_phys_addr(struct cec_adapter *adap, u16 phys_addr, bool block)
+ 		cec_phys_addr_exp(phys_addr));
+ 	if (becomes_invalid || !is_invalid) {
+ 		adap->phys_addr = CEC_PHYS_ADDR_INVALID;
+-		cec_post_state_event(adap);
+ 		cec_adap_unconfigure(adap);
+ 		if (becomes_invalid) {
+ 			cec_adap_enable(adap);
 -- 
 2.53.0
 
