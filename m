@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048163;
-	b=dD2Ob4g4GWwlVa+JUZct9cFqy35PXSyI4B2GxNIOfhuyCbAV0nvrCftG8qSl1P8Se2Pf
-	 fVXtW3e3UbwmRCF4N6fmclLS6drKmsj4zkt5I8iHR4jcMD/mMRbWGeFmKPwFXsxQA+RhH
-	 0P2GCc+PwVZRN+jvmHW05rtxVkhWHZn+73fvWlOxZ19Fsk8R8M3vjq8ilPUtfIZGZdlM/
-	 X+kSMMILE+F24/6hQ9UIOioHVLcvpo+dEndMkdQYpG/e6PZKKAb7exvE5a9gWJIpcpmqi
-	 njihdUTS65Xd8KJt16ubu+3V4NYU/PTE0eaDfc1sAaidt6MfqowHc6HnGe6D13P0uSQ==
+	t=1795048165;
+	b=L0kZoi4ZMV/DCwAWBGJtEy1vqNCPLM01aIgqZYTyu2j1IbBHZvgsGNQaYmlb0xRD1xxz
+	 zDOJggcWXkBDZKBuxAQQZ9emfcGa1vo/VjJfdrFon/IqyBNov7C4zK5OLlmdwnso8+CBu
+	 uHUq2Z3sesFasHrgYCh1i1t+wfXGQS7Ay7h/b8QrenK1duNauzCIfHCmzxm9o/ywT76hl
+	 +f94KXZLFarwLrK4cr2V6bCHpws7QEAB6NX+ltg/iSCFxs1E+ZO3CxkURHCKWvIars8gK
+	 PnY1ASqYonGq/EY3qz0+zS+la2kOU7OcmdFLCKxTXR1pAVKzBYB7Egig7KNeIhFGGLw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048163;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048165;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ypc1cJk8k8kJCHJZdEdmTpKKPLmERIikrsP7QUh6pPw=;
-	b=rsSMEftLVwclFYjEOYyTwsf3XESNAGE5UW6dOnw8PG9QN4jIDCJ8HGfyHhXyCI4EtKci
-	 8kKscCAU1w2WkWNsihvkJo+EFM5PBZxZY3nUeamuL9rNjxyRmEUVyfj++Fi1KR3qEY11Q
-	 t56e/Zl2SurTkIB4lqOY7n29dXQKIzzMIY2T70CyzUxkTRQxLvlSNJkJQydu8SyFwilvR
-	 kxDoZb+PvsBTzPGg/RpIyVcLAX29dWudX+6wsY5dBbFWoP5fDFz41hhIx6CFjHJHjAmaa
-	 lZRMc531v9PqrpN3wxJxZiqZA7IbHzLmwOXi814+gvZOlwS4oQeyijvQzzfLoPgZ78g==
+	bh=sGwUoWQhzfbUDn798c/MIFta5lgfEb5WQcpsewndRcI=;
+	b=okM+QmpIo14ovuqkkHe6hujD/O/qOqkE11TsuXAsp44fngbedz4byLwr/ZwA0QYx/KUG
+	 QMASgGewHrbvhhVG/NqK+88LyuKOXohSwNUWsSbWTF7ksnZsjjXgYJatfpJwkeGuOaGpr
+	 nz4EUpOBzK8/ZRY2VWrXDatCj7ykefIhcq+3QyA0CoD6tIN33GMnCL1GF0H041buL1WnI
+	 JQOPD14EOZsHU2C3+hSpB28rsZISHRrblVvLsaGnemHYF8Kvf1Rm6qTcRv/+O5uQTOHC3
+	 wPCdqFL5PWui2gWWuDzatySqIfZRDWtKptUFICoMkZPcHhhQSFkyw5IdP+4G5WdCQtw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Au4V6Eos;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SrZ47kr8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F06D3606A31C;
-	Thu, 19 Nov 2026 00:29:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B00606A32F;
+	Thu, 19 Nov 2026 00:29:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Au4V6Eos
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ECEE1F000C4;
-	Thu, 19 Nov 2026 00:29:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SrZ47kr8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FB991F000C4;
+	Thu, 19 Nov 2026 00:29:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048162;
-	bh=ypc1cJk8k8kJCHJZdEdmTpKKPLmERIikrsP7QUh6pPw=;
+	s=korg; t=1795048165;
+	bh=sGwUoWQhzfbUDn798c/MIFta5lgfEb5WQcpsewndRcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Au4V6Eosgn6RsF0lY3mp/Ymq5KSDxjvnH+/NP0PcsEUA11ojnXxdWWVjdVB+CyWoh
-	 L2ICe1OMkG7nkwcOadHPloVi6qj+2SuuZqtUPFtw1fKnsdYoCk24l92f0vpXOHk4Sp
-	 +Ef/TOMVKomaFX53581pTdLdXH/qpU8Swox3sCLM=
+	b=SrZ47kr8kpuu5e5+K2rzsldGtGUtA1mqrDcKP5ekRkL2L+v6NEcDD1lOMTrH3o6Yi
+	 11ijiMpDnyK4/rjRmGYM1L9WwV2Ox7dpl7IPppT+N7G/qG08oHViDw4mxNK5EVGYGQ
+	 uwFijU7BQcETVL600ck4eLA+oCaXX7gvWMb3rCGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Jiawen Liu <1298662399@qq.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1860/2857] scsi: mpi3mr: Fix out-of-bounds read of event data
-Date: Wed, 18 Nov 2026 15:48:14 +0100
-Message-ID: <20261118150308.209511066@linuxfoundation.org>
+Subject: [PATCH 6.1 1896/2857] memory: exynos5422-dmc: handle clock enable failures
+Date: Wed, 18 Nov 2026 15:48:50 +0100
+Message-ID: <20261118150309.502590099@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,67 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+From: Jiawen Liu <1298662399@qq.com>
 
-[ Upstream commit 77554f01187d91c20f04d2a8e28270943ed64cca ]
+[ Upstream commit cce46902ea9fcd585cd200fffa3166f63bc571f1 ]
 
-The event data length from the reply is used as is, both when caching log
-data and when sizing the buffer handed to the bottom half. A length larger
-than the frame makes both of them read past the end of it.
+Check the return values of clk_prepare_enable() for fout_bpll and
+mout_bpll.
 
-Clamp the length to what the frame can hold.
+If enabling fout_bpll fails, propagate the error. If enabling mout_bpll
+fails, disable fout_bpll before returning. This keeps the clock enable
+count balanced on probe error paths.
 
-Fixes: 13ef29ea4aa0 ("scsi: mpi3mr: Add support for device add/remove event handling")
-Fixes: d0d19250ed81 ("scsi: mpi3mr: Rename log data save helper to reflect threaded/BH context")
-Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Link: https://patch.msgid.link/20260825210411.301535-12-chandrakanth.patil@broadcom.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Fixes: 6e7674c3c6df ("memory: Add DMC driver for Exynos5422")
+Signed-off-by: Jiawen Liu <1298662399@qq.com>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Link: https://patch.msgid.link/tencent_B0189529F550458590E3BA614EAB800FBF08@qq.com
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_os.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/memory/samsung/exynos5422-dmc.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
-index c1fd101fa7e59..b1173c63993e5 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_os.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-@@ -2870,7 +2870,7 @@ void mpi3mr_add_event_wait_for_device_refresh(struct mpi3mr_ioc *mrioc)
- void mpi3mr_os_handle_events(struct mpi3mr_ioc *mrioc,
- 	struct mpi3_event_notification_reply *event_reply)
- {
--	u16 evt_type, sz;
-+	u16 evt_type, sz, avail_reply_room;
- 	struct mpi3mr_fwevt *fwevt = NULL;
- 	bool ack_req = 0, process_evt_bh = 0;
+diff --git a/drivers/memory/samsung/exynos5422-dmc.c b/drivers/memory/samsung/exynos5422-dmc.c
+index c491cd549644f..85c05c9c75332 100644
+--- a/drivers/memory/samsung/exynos5422-dmc.c
++++ b/drivers/memory/samsung/exynos5422-dmc.c
+@@ -1304,8 +1304,15 @@ static int exynos5_dmc_init_clks(struct exynos5_dmc *dmc)
+ 	if (ret)
+ 		return ret;
  
-@@ -2925,7 +2925,12 @@ void mpi3mr_os_handle_events(struct mpi3mr_ioc *mrioc,
- 	case MPI3_EVENT_DEVICE_INFO_CHANGED:
- 	case MPI3_EVENT_LOG_DATA:
+-	clk_prepare_enable(dmc->fout_bpll);
+-	clk_prepare_enable(dmc->mout_bpll);
++	ret = clk_prepare_enable(dmc->fout_bpll);
++	if (ret)
++		return ret;
++
++	ret = clk_prepare_enable(dmc->mout_bpll);
++	if (ret) {
++		clk_disable_unprepare(dmc->fout_bpll);
++		return ret;
++	}
  
--		sz = event_reply->event_data_length * 4;
-+		if (mrioc->reply_sz > offsetof(struct mpi3_event_notification_reply, event_data))
-+			avail_reply_room = mrioc->reply_sz -
-+			    offsetof(struct mpi3_event_notification_reply, event_data);
-+		else
-+			avail_reply_room = 0;
-+		sz = min_t(u16, event_reply->event_data_length * 4, avail_reply_room);
- 		mpi3mr_app_save_logdata_th(mrioc,
- 			(char *)event_reply->event_data, sz);
- 		break;
-@@ -2959,7 +2964,12 @@ void mpi3mr_os_handle_events(struct mpi3mr_ioc *mrioc,
- 		dprint_event_th(mrioc,
- 		    "scheduling bottom half handler for event(0x%02x) - (0x%08x), ack_required=%d\n",
- 		    evt_type, le32_to_cpu(event_reply->event_context), ack_req);
--		sz = event_reply->event_data_length * 4;
-+		if (mrioc->reply_sz > offsetof(struct mpi3_event_notification_reply, event_data))
-+			avail_reply_room = mrioc->reply_sz -
-+			    offsetof(struct mpi3_event_notification_reply, event_data);
-+		else
-+			avail_reply_room = 0;
-+		sz = min_t(u16, event_reply->event_data_length * 4, avail_reply_room);
- 		fwevt = mpi3mr_alloc_fwevt(sz);
- 		if (!fwevt) {
- 			dprint_event_th(mrioc,
+ 	/*
+ 	 * Some bootloaders do not set clock routes correctly.
 -- 
 2.53.0
 
