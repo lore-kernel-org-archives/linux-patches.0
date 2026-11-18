@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048252;
-	b=z6noL9V6prwvk1ByDKb+iuwr/Uyqm2nyaViJHEnRejq9h8/aHus0HMH//alsGrlr/XZf
-	 2jOzEaYnbp0YDq+NfK/1ArBJhal1RlRNNiEEXLdTHSeXDeg2BMbUfWRyFL/FfnaJb9Y6u
-	 cDcAA5dYLL4NbW5JIijx084Rzt7pOFy4blCLJI7gtZtLagO6wqbDoRDMK6HRR74ZJ8RSP
-	 fLpYDAnVNvKyTtNqvT9C8IAhz/XlyMBVDmplG5myc3Sz27hVvLWBeXVtYRAa0AnnFwmxI
-	 FIjny8f5NggnTwZaNL5z85NJNMj5v5Sz9oOP50pAemMoj5Lwg0yl5562Adyg0OcLSVw==
+	t=1795048255;
+	b=ZGxuDPUlSOMC6Dsi+88hbw6Kg52GnZBaF8BqGA0evHunAQeMqzYcAebGAeCpDOCMINS+
+	 lXyLpfy7BEXnltWK0GcnJSVvWQq01WMEDjD0PydOF+/10ZwWsD4uwF+uvbSVzIqwXzzuu
+	 MYrttsFKZ4h1FG6TW6JuHqUKBb/8lkPHsgvIcKSLASBPSqAVYJdCYcu7myh3RhkITGIXA
+	 kEZFipoiioG8B/WXe6027W3SGma4A6rCeL/F4zfQQzOJ4ff8UFIs6XY1agQ95O3Pd3Kay
+	 vHuKLTuj4jZ0oUaxb0aWjgqvBw1DzmM1SpbIwxvITmF78R4kqNmiU2cxPcSadyUFvOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048252;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048255;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2lzlDbpZh0Rb23HZwpcewWFWFYYBHWVkNMYaBo/gkeA=;
-	b=Ru1+h35iUr+tikyHPhU+eCCnU/887KplTsWoXvECLN+IlqLxUqvswf09qAP2iiK5CnQR
-	 mWcHmXvW0jtglC1zuHYA8ZMEZTl7+2Y7ZDyf1QV1FxnpF8JtXkELDLHW84mqjbOzm7PIe
-	 GknYbhGTenmlf3NtuLVMgztXXSVB7PglR8QP6qezPsXbNOwWMl06jJLv/CvR1bMdNa7Dh
-	 65cxsykj8MCLoxbR+g5srCw+UYIwtCDY355JjlAKnOYnuRWU0bDqvC4/cRZ359q/QiYBi
-	 Sjfz2qCF8YboWMqxx9pV4ncV2JhPDVrbkLPcX5LIOsbyN2vC8bnofOIGj3zIAiNFNNg==
+	bh=kKIMUz9na7zRoJYKeCAahLk9eLR18czF+CPSgxuhsJY=;
+	b=VCjqGRa/lZvBlkdcaubD/HXBMdP6qwaf20OBVAJRaVi4a8SyeiVKbiVn9oTRLLL+ksPc
+	 N4FTYfbwSbUUV6mF1JqfXA1jwZMIfPbVJwgaLNqGD+mfTRDPHW4a2/NXZ4B4DZP7DpFgD
+	 qI6hQr3PKIYyBb4JX+c4wIEzeEdLLg18xX5me35PvmCh8hWwAFWBBldaZJBqNPFPUf8/z
+	 QuVvNE+uFmr5hEd8YMPL/fn1mI0Oy2fhQHsuiGbRfj0mYbFRxA+bx6Uxn35cazhigueSL
+	 QeSkeXymXVKFIgwYaxd440cd2SiyJhkk4mv6DimCTY+jPTVy690uZb8PJvMhkOCUsvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OVcr9fhT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RjcIUiau;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 333D2606A32A;
-	Thu, 19 Nov 2026 00:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E359F606A320;
+	Thu, 19 Nov 2026 00:30:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OVcr9fhT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82AB61F000C6;
-	Thu, 19 Nov 2026 00:30:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RjcIUiau
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 482451F000C6;
+	Thu, 19 Nov 2026 00:30:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048252;
-	bh=2lzlDbpZh0Rb23HZwpcewWFWFYYBHWVkNMYaBo/gkeA=;
+	s=korg; t=1795048254;
+	bh=kKIMUz9na7zRoJYKeCAahLk9eLR18czF+CPSgxuhsJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OVcr9fhTTel43j+RJuBMqQZbg6GmHSoH+iLyfm0Hn/Gae5i/HXfT4L1SrQJzW+fMf
-	 JG29SdJxa1u29ELIPnsfEnm5UdJ9siqcEguLVX8j9W4Z+wWZmysZeoCLIzq/UdPM+q
-	 EKGNksCHIxvM1+yKePcLqONYr2cTzx42UR8N8IlM=
+	b=RjcIUiauVXbZ5aK4FaY2xK9k+8ecXaRe59Kgf7K2zP6GqbIc7egbl1XJZT/DUnPbM
+	 okOqX2idaENxlRc4B5FYJmxYmLsm4NAj+uRdHStb1rbKKqeYyXsFTFd6iX5LbbIDYT
+	 pSKGj5dB5m6YBMXyGoG3YM3uzSd5IQSiTzloZnyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Christian Loehle <christian.loehle@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1928/2857] pinctrl: amd: Dont access irq_datas hwirq member directly
-Date: Wed, 18 Nov 2026 15:49:22 +0100
-Message-ID: <20261118150310.637201565@linuxfoundation.org>
+Subject: [PATCH 6.1 1902/2857] cpuidle: menu: Remove single state handling
+Date: Wed, 18 Nov 2026 15:48:56 +0100
+Message-ID: <20261118150309.714979371@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,148 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello (AMD) <superm1@kernel.org>
+From: Christian Loehle <christian.loehle@arm.com>
 
-[ Upstream commit 7a399ce67e981f5f28afc1ff50772acd1f4e7bbf ]
+[ Upstream commit 93983a9f3beea791c21d77c2425488ad327d4fda ]
 
-There is an irqd_to_hwirq() intended to get the hwirq number. Switch
-all use to it.
+cpuidle systems where the governor has no choice because there's only
+a single idle state are now handled by cpuidle core and bypass the
+governor, so remove the related handling.
 
-Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/20250821144942.2463014-1-superm1@kernel.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Stable-dep-of: 44c232e80adc ("pinctrl: amd: add timeout to irq-enable readback")
+Signed-off-by: Christian Loehle <christian.loehle@arm.com>
+[ rjw: Rebase on top of the cpuidle changes merged recently ]
+Link: https://patch.msgid.link/20260216185005.1131593-5-aboorvad@linux.ibm.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: d594187cafd5 ("cpuidle: menu: Do not return a disabled idle state")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-amd.c | 40 ++++++++++++++++++++---------------
- 1 file changed, 23 insertions(+), 17 deletions(-)
+ drivers/cpuidle/governors/menu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/pinctrl-amd.c b/drivers/pinctrl/pinctrl-amd.c
-index 755fb30731a83..7aaafa271003d 100644
---- a/drivers/pinctrl/pinctrl-amd.c
-+++ b/drivers/pinctrl/pinctrl-amd.c
-@@ -375,14 +375,15 @@ static void amd_gpio_irq_enable(struct irq_data *d)
- 	unsigned long flags;
- 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
- 	struct amd_gpio *gpio_dev = gpiochip_get_data(gc);
-+	irq_hw_number_t hwirq = irqd_to_hwirq(d);
+diff --git a/drivers/cpuidle/governors/menu.c b/drivers/cpuidle/governors/menu.c
+index 5bdef6470ca12..ef1ff9c36c6de 100644
+--- a/drivers/cpuidle/governors/menu.c
++++ b/drivers/cpuidle/governors/menu.c
+@@ -314,7 +314,7 @@ static int menu_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
+ 	nr_iowaiters = nr_iowait_cpu(dev->cpu);
+ 	data->bucket = which_bucket(data->next_timer_ns, nr_iowaiters);
  
--	gpiochip_enable_irq(gc, d->hwirq);
-+	gpiochip_enable_irq(gc, hwirq);
- 
- 	raw_spin_lock_irqsave(&gpio_dev->lock, flags);
--	pin_reg = readl(gpio_dev->base + (d->hwirq)*4);
-+	pin_reg = readl(gpio_dev->base + hwirq * 4);
- 	pin_reg |= BIT(INTERRUPT_ENABLE_OFF);
- 	pin_reg |= BIT(INTERRUPT_MASK_OFF);
--	writel(pin_reg, gpio_dev->base + (d->hwirq)*4);
-+	writel(pin_reg, gpio_dev->base + hwirq * 4);
- 	raw_spin_unlock_irqrestore(&gpio_dev->lock, flags);
- }
- 
-@@ -392,15 +393,16 @@ static void amd_gpio_irq_disable(struct irq_data *d)
- 	unsigned long flags;
- 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
- 	struct amd_gpio *gpio_dev = gpiochip_get_data(gc);
-+	irq_hw_number_t hwirq = irqd_to_hwirq(d);
- 
- 	raw_spin_lock_irqsave(&gpio_dev->lock, flags);
--	pin_reg = readl(gpio_dev->base + (d->hwirq)*4);
-+	pin_reg = readl(gpio_dev->base + hwirq * 4);
- 	pin_reg &= ~BIT(INTERRUPT_ENABLE_OFF);
- 	pin_reg &= ~BIT(INTERRUPT_MASK_OFF);
--	writel(pin_reg, gpio_dev->base + (d->hwirq)*4);
-+	writel(pin_reg, gpio_dev->base + hwirq * 4);
- 	raw_spin_unlock_irqrestore(&gpio_dev->lock, flags);
- 
--	gpiochip_disable_irq(gc, d->hwirq);
-+	gpiochip_disable_irq(gc, hwirq);
- }
- 
- static void amd_gpio_irq_mask(struct irq_data *d)
-@@ -409,11 +411,12 @@ static void amd_gpio_irq_mask(struct irq_data *d)
- 	unsigned long flags;
- 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
- 	struct amd_gpio *gpio_dev = gpiochip_get_data(gc);
-+	irq_hw_number_t hwirq = irqd_to_hwirq(d);
- 
- 	raw_spin_lock_irqsave(&gpio_dev->lock, flags);
--	pin_reg = readl(gpio_dev->base + (d->hwirq)*4);
-+	pin_reg = readl(gpio_dev->base + hwirq * 4);
- 	pin_reg &= ~BIT(INTERRUPT_MASK_OFF);
--	writel(pin_reg, gpio_dev->base + (d->hwirq)*4);
-+	writel(pin_reg, gpio_dev->base + hwirq * 4);
- 	raw_spin_unlock_irqrestore(&gpio_dev->lock, flags);
- }
- 
-@@ -423,11 +426,12 @@ static void amd_gpio_irq_unmask(struct irq_data *d)
- 	unsigned long flags;
- 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
- 	struct amd_gpio *gpio_dev = gpiochip_get_data(gc);
-+	irq_hw_number_t hwirq = irqd_to_hwirq(d);
- 
- 	raw_spin_lock_irqsave(&gpio_dev->lock, flags);
--	pin_reg = readl(gpio_dev->base + (d->hwirq)*4);
-+	pin_reg = readl(gpio_dev->base + hwirq * 4);
- 	pin_reg |= BIT(INTERRUPT_MASK_OFF);
--	writel(pin_reg, gpio_dev->base + (d->hwirq)*4);
-+	writel(pin_reg, gpio_dev->base + hwirq * 4);
- 	raw_spin_unlock_irqrestore(&gpio_dev->lock, flags);
- }
- 
-@@ -438,20 +442,21 @@ static int amd_gpio_irq_set_wake(struct irq_data *d, unsigned int on)
- 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
- 	struct amd_gpio *gpio_dev = gpiochip_get_data(gc);
- 	u32 wake_mask = BIT(WAKE_CNTRL_OFF_S0I3) | BIT(WAKE_CNTRL_OFF_S3);
-+	irq_hw_number_t hwirq = irqd_to_hwirq(d);
- 	int err;
- 
- 	pm_pr_dbg("Setting wake for GPIO %lu to %s\n",
--		   d->hwirq, str_enable_disable(on));
-+		   hwirq, str_enable_disable(on));
- 
- 	raw_spin_lock_irqsave(&gpio_dev->lock, flags);
--	pin_reg = readl(gpio_dev->base + (d->hwirq)*4);
-+	pin_reg = readl(gpio_dev->base + hwirq * 4);
- 
- 	if (on)
- 		pin_reg |= wake_mask;
- 	else
- 		pin_reg &= ~wake_mask;
- 
--	writel(pin_reg, gpio_dev->base + (d->hwirq)*4);
-+	writel(pin_reg, gpio_dev->base + hwirq * 4);
- 	raw_spin_unlock_irqrestore(&gpio_dev->lock, flags);
- 
- 	if (on)
-@@ -487,9 +492,10 @@ static int amd_gpio_irq_set_type(struct irq_data *d, unsigned int type)
- 	unsigned long flags;
- 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
- 	struct amd_gpio *gpio_dev = gpiochip_get_data(gc);
-+	irq_hw_number_t hwirq = irqd_to_hwirq(d);
- 
- 	raw_spin_lock_irqsave(&gpio_dev->lock, flags);
--	pin_reg = readl(gpio_dev->base + (d->hwirq)*4);
-+	pin_reg = readl(gpio_dev->base + hwirq * 4);
- 
- 	switch (type & IRQ_TYPE_SENSE_MASK) {
- 	case IRQ_TYPE_EDGE_RISING:
-@@ -555,10 +561,10 @@ static int amd_gpio_irq_set_type(struct irq_data *d, unsigned int type)
- 	pin_reg_irq_en = pin_reg;
- 	pin_reg_irq_en |= mask;
- 	pin_reg_irq_en &= ~BIT(INTERRUPT_MASK_OFF);
--	writel(pin_reg_irq_en, gpio_dev->base + (d->hwirq)*4);
--	while ((readl(gpio_dev->base + (d->hwirq)*4) & mask) != mask)
-+	writel(pin_reg_irq_en, gpio_dev->base + hwirq * 4);
-+	while ((readl(gpio_dev->base + hwirq * 4) & mask) != mask)
- 		continue;
--	writel(pin_reg, gpio_dev->base + (d->hwirq)*4);
-+	writel(pin_reg, gpio_dev->base + hwirq * 4);
- 	raw_spin_unlock_irqrestore(&gpio_dev->lock, flags);
- 
- 	return ret;
+-	if (drv->state_count <= 1 || latency_req == 0 ||
++	if (latency_req == 0 ||
+ 	    ((data->next_timer_ns < drv->states[1].target_residency_ns ||
+ 	      latency_req < drv->states[1].exit_latency_ns) &&
+ 	     !dev->states_usage[0].disable)) {
 -- 
 2.53.0
 
