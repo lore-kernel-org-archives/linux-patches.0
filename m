@@ -1,51 +1,65 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053861;
-	b=oA8DSQWJPdWBYf3MRz6qjv7rEzOj5q/ppBlY/HdFLUPgxVde/jHDRAXk7bDlwCH0xJ9e
-	 iAYtmgmq0ZPMaudz41FKIm64Uon4ff2u3JHXSZQ9x2uh56D6iwyKhmXIJCD7c86LkMESH
-	 9xzxLv06U6A9V9bkMjozdwKV1bJ0gNuVOp3kiU+Skjxiy29ia8ZNy7WUBvtBwesz3dbRA
-	 pSqQCxg441vskwLFbGFKl819GJTO/h6DEPeSbI8w7XAC3sq665xx/Mk8cS1dBnQx51Gj6
-	 ub4Wg26xwsnG2OpjzZX6MJA8Z9K1iHZYx//i8zivFBkTYvL9Tcun/5sa6Z14LmY7jWA==
+	t=1795053864;
+	b=Dsjs2SU+l1If/33w4W7T/5Da1Hffa6Zi+lJjS5da0MDKrSBpbtkF7LG0FEzthgaN4rmJ
+	 Dy67O6BOuliNwHkTG4wFsN+UU61JVDgPl6GXHIrZvMYhY/h35pB4DFd0b5OP3U9dlV0I6
+	 1Q2+z6A8TM4+Zg9Ptw+K/J3JczvhjgwNtYZ4FgFjKV7fGJwjiaAxHbrf/IlymyurNmBQO
+	 SeA80F0UOioHUTNYgkzUJsp9dgADp0SDuTV66q7YoMDKH9Ca4NUiSSY3B/M/19bnfs69f
+	 7A4rwHBWn+FG50C/syNL0Axbu3pPmP/29aZ4SC/pD401qLfhWE16Z00UbeWEwetqcLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053861;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053864;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lSuSFtdcPoZ9f/HSUYFsHRwhawtXf0rT2fYdJRbtdeA=;
-	b=NNBrGuRQThlm1I8kyP/XrotEfoKrEzG00OTpVNpx7Ca23ZhZLBxaTvryGQMdmmqLkOfl
-	 nJ0wHEJe2ne7qRBU3b4418llgbitBAS8rZ2to1nJbvw1YNFu5SA4TJ7QmHpaNr71ndp8+
-	 5023hit3wGp8PXJyiu5Eiqs2lnklM6kRKsT0JZeWlOA4/xrCKDbQxPAcuZPYT8gvRHJO/
-	 LeJbrFGCgZWHzlDr0Po078hbJbxzR4O4+hQwQ2WOprriMojy8lOdte9iliehxS0knvwfP
-	 aNTFNJo4uP7RABPhJ0g/fkzbVyIVuZDdeAOyV5VBOW/90H2I95geliSfV6S+SI7hW5A==
+	bh=KZSpmTPK52f/s54O72ozawmeYXNZs5osY8XGH5sleCY=;
+	b=QOmXsYE+zcslBR6d0W+p9r39Lbs2dE/1bESaja+XXtI+7ojLOsueaiOU6Wvd3VfrU+Ap
+	 M9BslDkR3DRvKeUbWUdgGzzzztPjXzL+tSagKXcsCHv7s5Aw2tlc4kygJKipwX8mgFzp5
+	 IYBdROICcGy5r3zbRMkJ0sI6xWUqjJfDPdmDR1Ih4DmlhVztSyxt08rzhVahSNFb8sou+
+	 zakv/9DWJSLix9QrdgtLoBEbiav0Lp1ZHc+XgJjgItpUqc12C3Jgvo+UM4X5RHo/KT8CO
+	 qwfckwcdJObDvoa+pimglQRej+VplL9jEjvyiYT6HVzlytK3yYthATJiOoq5yNW2xjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lMM8kPsf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gKg6nIDg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554F3606A31C;
-	Thu, 19 Nov 2026 02:04:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF66606A32C;
+	Thu, 19 Nov 2026 02:04:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lMM8kPsf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A93051F000C4;
-	Thu, 19 Nov 2026 02:04:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gKg6nIDg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 418861F000C6;
+	Thu, 19 Nov 2026 02:04:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053861;
-	bh=lSuSFtdcPoZ9f/HSUYFsHRwhawtXf0rT2fYdJRbtdeA=;
+	s=korg; t=1795053863;
+	bh=KZSpmTPK52f/s54O72ozawmeYXNZs5osY8XGH5sleCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lMM8kPsf60ui/5N9O8sS/pt1Rl3GfJa+n/gAUWX5iJBh6kiawn2iMqRLHQQBg9BHZ
-	 b9thWCb335nj9N6xk0lsAHPpD8AiDhI/CvSyMllcLWux3jmTHbA0mxNnEWr1vU0SZS
-	 aJfPJ5geN7UTyI3K8eDNQKM/USdUR7q/AGoL8Ww4=
+	b=gKg6nIDgPC3YUhH2QUr4F45QICw7OhVewIkkKCNbRQouuD2Xtwu/s2HROWWUJLo1A
+	 fr2srd+Dv6aUdTkS13Mo3fUaITR0/rnEmmKutLlnvxLW0Iz3Unxy7IahvflR1DIvZv
+	 JycnVn5GKMn6A/XYO9f2WbeRPpjKoSEmNSE9f0xM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Jiang <jiangwang@kylinos.cn>,
+	Hungyu Lin <dennylin0707@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	Byungchul Park <byungchul@sk.com>,
+	Gregory Price <gourry@gourry.net>,
+	Ying Huang <ying.huang@linux.alibaba.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	odys.yuan@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1028/2214] drm/amd/display: skip pre-flip post_update on DCE
-Date: Wed, 18 Nov 2026 15:45:04 +0100
-Message-ID: <20261118150053.459988699@linuxfoundation.org>
+Subject: [PATCH 5.15 1029/2214] mm/migrate: untag addresses when querying page nodes
+Date: Wed, 18 Nov 2026 15:45:05 +0100
+Message-ID: <20261118150053.496539689@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,73 +81,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Jiang <jiangwang@kylinos.cn>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-The v5.15.119 backport of the dc_update_planes_and_stream series
-(commit 3c1aa91b37f9 "drm/amd/display: Add wrapper to call planes and
-stream update", upstream commit 81f743a08f3b) made
-update_planes_and_stream_adapter() call
-dc_post_update_surfaces_to_stream() before every UPDATE_TYPE_FAST flip.
+[ Upstream commit 7d8746d7dc9cc4003661011424e5880ea7ae364b ]
 
-In mainline that series was merged in the same cycle as commit
-32953485c558 ("drm/amd/display: Do not update DRR while BW optimizations
-pending"), which restructured dc_post_update_surfaces_to_stream() so
-that disable_plane()/optimize_bandwidth() only run on DCN, retaining the
-legacy behaviour for DCE.  That companion commit was never backported to
-5.15.y, so on DCE every desktop flip now runs disable_plane() for each
-unused pipe - an ATOM enable_disp_power_gating VBIOS call each - plus
-optimize_bandwidth() immediately before the new surface address is
-programmed.
+When move_pages() is used with nodes == NULL, do_pages_stat_array()
+uses each page address as-is for its VMA lookup. A valid tagged address
+therefore gets -EFAULT in its status entry instead of the NUMA node
+reported for the corresponding untagged address.
 
-On Carrizo (DCE 11) this occasionally wedges the active pipe: the
-surface update stays GRPH_SURFACE_UPDATE_PENDING set forever and is
-never taken, GRPH_PFLIP never fires, drm_atomic_helper_wait_for_flip_done()
-times out and the desktop freezes.  When it hits the first desktop
-commit after boot, the pipe scans out zero data, which shows as a green
-screen on YCbCr 4:4:4 HDMI outputs (black on RGB/DP).  A VT switch
-recovers because the full modeset reprograms the front end.  Wedging
-boots also show "atombios stuck in loop" in the EnableDispPowerGating
-table and smu8 message timeouts.  Later modesets can deadlock in
-dce_mi_free_dmif().
+Strip the tag before the VMA lookup while holding the mmap read lock.
+Use untagged_addr(), the helper available in 5.15 and already used by
+the migration path.
 
-This is the same class of regression that commit 62e5a7e2333a
-("drm/amd/display: Fix surface optimization regression on Carrizo")
-fixed for the previous call site in dc_commit_updates_for_stream(),
-which the new adapter path bypasses.  Mainline is not affected (DCE is
-guarded inside dc_post_update_surfaces_to_stream(), later cleaned up by
-commit 9571dbaf98c8); 6.1.y, 6.6.y and 6.12.y all carry the guard.
-Only 5.15.y is missing it.
-
-Restrict the pre-update call to DCN, matching mainline behaviour.  The
-full mainline rework does not backport cleanly; this is the minimal
-equivalent for 5.15.y.
-
-Tested on LENOVO 90K7S04400/3141 (Carrizo, Wani [1002:9874], DCE 11,
-BIOS M25KT37A): without this patch the wedge reproduces within minutes
-of desktop use on 5.15.120 and later; with it (and on v5.15.110 which
-predates the series) it does not reproduce.
-
-Fixes: 3c1aa91b37f9 ("drm/amd/display: Add wrapper to call planes and stream update")
-Signed-off-by: Wang Jiang <jiangwang@kylinos.cn>
+Link: https://lore.kernel.org/20261026195330.46757-1-dennylin0707@gmail.com
+Fixes: 057d3389108e ("mm: untag user pointers passed to memory syscalls")
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/r/20260721183257.706661F000E9@smtp.kernel.org
+Acked-by: Zi Yan <ziy@nvidia.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+Cc: Byungchul Park <byungchul@sk.com>
+Cc: Gregory Price <gourry@gourry.net>
+Cc: Ying Huang <ying.huang@linux.alibaba.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Cc: <odys.yuan@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/migrate.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index b1fab9ba82963..91799bdb83ef8 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -376,7 +376,8 @@ static inline bool update_planes_and_stream_adapter(struct dc *dc,
- 	/*
- 	 * Previous frame finished and HW is ready for optimization.
- 	 */
--	if (update_type == UPDATE_TYPE_FAST)
-+	if (update_type == UPDATE_TYPE_FAST &&
-+	    dc->ctx->dce_version >= DCE_VERSION_MAX)
- 		dc_post_update_surfaces_to_stream(dc);
+diff --git a/mm/migrate.c b/mm/migrate.c
+index 728fbb0b90245..cea35108bf95a 100644
+--- a/mm/migrate.c
++++ b/mm/migrate.c
+@@ -1889,7 +1889,7 @@ static void do_pages_stat_array(struct mm_struct *mm, unsigned long nr_pages,
+ 	mmap_read_lock(mm);
  
- 	return dc_update_planes_and_stream(dc,
+ 	for (i = 0; i < nr_pages; i++) {
+-		unsigned long addr = (unsigned long)(*pages);
++		unsigned long addr = (unsigned long)untagged_addr(*pages);
+ 		struct vm_area_struct *vma;
+ 		struct page *page;
+ 		int err = -EFAULT;
 -- 
 2.53.0
 
