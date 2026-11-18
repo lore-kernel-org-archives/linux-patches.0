@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049716;
-	b=znhUS5ecPr2fJjf9sKcSK5FbpfB2KWGQErYd9+jRkVCqY/gqHxKiNzV4773txAju8OxV
-	 2Vyz3yRQnWtJWaVLFZnln/KsN7PJLEKYK7D1XoDaLTAuphsoatkqzLkhgYLYbyqRoWivG
-	 qCnJ8gfO+8S2KlYk+1GQMq7JVEFrlf8FJpdo/EzpcMVR9e69e0TQPjtpZqCEJkMskpOYy
-	 3EI/lP5eghm68nioAA2OFXJDPUbtcXajqfvzdrSC60KG18hL+73hH6JKDonYUvz6VCowp
-	 KcZBNXlGyYtdr5646zB5i8VyRht08zlAlwp6jdP7qCvi4HICCgi6BFkOPG2AlTpO9Vg==
+	t=1795049719;
+	b=to0KpgHdsk0oy7xA3RQpaD0bH7MgPRctlNT1hvCm4ULJ26p0JE5HUJ3EHpPopUUrZj2D
+	 enCKbYjHSFfsgLaPK//c1CsjNsyZLmjctMPfoDllxHMe0/6vu3rMtlj/Q4vZnVjb/a1J0
+	 xxXRgMyxKFXQO9TxOVO5SPSY+aqKILcriFcQcMGZIp/q/z0poaFCi5u9JI2KoHJ3Wo6Sw
+	 aEVtIfgBBike7alYz2f3Uj32qlTKBmVV5Djbfqv08TW8nNI6zaRBVdew2Ut6+eAXUQrfT
+	 ddS2qTDkzRCnNvytprWzpXAg9NP6pfwuht+u65pLCLsepUKiJ4RW4N10qb2giMdg9FQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049716;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049719;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EKl5uPtauloE6fdzkl8XI6CMZadD/n9PRWJDmTdtIgU=;
-	b=n2syU82XmY/vkDwDSrCkOG9+C/9igdIfy/jzbjsNMDqrl7yvDT9YDZfjHZgig9xDmeRY
-	 u5w3ohJXT/+fUkSP1osJRzye3IXKWmhE+KWHuL0UTcos1aq/BW+xWudUHTF02hPr7cwQW
-	 1ofkBeLWz60e/cY+NzFNK9w8AXIfUkt7YGMHw9xaE3+hAiDE+W+/zh7RCwfaM8k4ycwbF
-	 Osn23kYFUnsoCSWRSX2Qu/l5l6guJ15vPhnzytLf3GIDbeiN9jFFn/ajpUoedLUsb1aWs
-	 N7HCmXt82ba4u7cDkgl+HGAvxPPce7OfpMFhjzr6mof9mq+QxIoNq+66pFPFaFXLczw==
+	bh=W+R2oo5XsDAoed0/MluvG2I3czEB8Ulq+n7hIbLsGMo=;
+	b=O/yi9S+5SNCXKcSa+VNnVordEndzwpLlrBRycGQVbA7kFo9Ly1t2tU/KA6kaBMeC5QHu
+	 TSszVB0PuQ2NwPfn9K9QuhGJn1N4yakn6H5RjJovOkR8aAugchoafiKUpoSFmtZji0fSj
+	 YE0K6YZZMyng7bc2qN8PoYImqZ9DJ0bIo6TOnnXkoIWd2lAFrnkfA97uD72RR1IAmTjWa
+	 glIGuOPE/M/BgMiw2Ol7poa+wUWCzMClGaf6NGvcsRB2GUmmd1FkeOeCSlUD6XBRsoPZH
+	 EKfLozOjQH1Jx+z+Xb6ykkPf3jsk0nplzGPzA7bLAT8Evi0F8WJQjBCa1MH3ZAX6s1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ggQJab9n;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o1wyrjPb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6042B606A31C;
-	Thu, 19 Nov 2026 00:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298E4606A325;
+	Thu, 19 Nov 2026 00:55:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ggQJab9n
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B39BC1F000C4;
-	Thu, 19 Nov 2026 00:55:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o1wyrjPb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EE9A1F000C4;
+	Thu, 19 Nov 2026 00:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049716;
-	bh=EKl5uPtauloE6fdzkl8XI6CMZadD/n9PRWJDmTdtIgU=;
+	s=korg; t=1795049719;
+	bh=W+R2oo5XsDAoed0/MluvG2I3czEB8Ulq+n7hIbLsGMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ggQJab9n3NGxNTA1j3oS5NCtQnYAFQJckTgTwNee3+o7JqLUWktbH55MwvpIhj50j
-	 A0oFPFl88EMQONna9WUl2LuPN3Mgq+LCKFzto+uMRnLxXbIpnO2Er2Rhlj06LFzjqQ
-	 JycGYm8d7sIHt3PWV2fmRS4S/146RM3NGgMhWsYQ=
+	b=o1wyrjPbpx81p4rJJHkORFx6J5PkMvRcfiv//tQ/uIBF9eiUIIY80K82lYPW4b7Qz
+	 10hwndnxaBY7Lh6fs7knBTC5W6cslJR60sUTpDAlmQtm2K90MayKq8vV52k2LEEYee
+	 BZ49Ob7Wr4VKOtfvZdWpcsm48yltqL/C2QxNzu4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Tapio Reijonen <tapio.reijonen@vaisala.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2410/2857] serial: max310x: fix RS485 delays being programmed as bit-times
-Date: Wed, 18 Nov 2026 15:57:24 +0100
-Message-ID: <20261118150328.317427571@linuxfoundation.org>
+Subject: [PATCH 6.1 2411/2857] serial: max310x: dont power down the port mid-transmission on close
+Date: Wed, 18 Nov 2026 15:57:25 +0100
+Message-ID: <20261118150328.356374304@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,118 +69,132 @@ Content-Transfer-Encoding: 8bit
 
 From: Tapio Reijonen <tapio.reijonen@vaisala.com>
 
-[ Upstream commit 7784d6aee59a142505072b3fbea97932b2fd1fa0 ]
+[ Upstream commit c3ad42ccd303113a08bd0b441fb5b3380f29c5bf ]
 
-The HDPIXDELAY register counts the RTS setup and hold delays in
-bit-times, four bits per direction, but the driver has been writing the
-struct serial_rs485 delay_rts_before_send/delay_rts_after_send values
-into it unconverted - and the uapi expresses those in milliseconds. A
-requested 9 ms setup delay is programmed as 9 bit-times, which at 9600
-baud is 0.94 ms, roughly a tenth of what userspace asked for; the error
-grows with the baud rate.
+max310x_shutdown() powers the port down regardless of what the
+transmitter is doing. The power-off stops the UART clock mid-character,
+truncating the final frame, and on the auto-RTS path it freezes the
+RTS output at its current level: a close() with data still queued
+leaves the RS485 transceiver asserted until the next open, which also
+emits the interrupted character corrupted.
 
-Cache the baud rate in set_termios() and convert the delays to
-bit-times at the current rate, rounding up so the delay on the wire is
-never shorter than requested, and capping at the 15 bit-times the
-4-bit field can hold. The conversion lives in
-max310x_set_rts_ctl_params(); set_termios() now calls it as well,
-since the conversion depends on the baud rate.
+Waiting for the data to drain is no better: the tty layer's
+wait-until-sent is bounded by closing_wait, configurable to none, and
+a hangup arrives with no wait at all, so draining a full FIFO blocks
+close() in uninterruptible sleep for seconds at low baud rates - and
+forever when CTS flow control blocks the FIFO.
 
-The delays a 4-bit bit-time field can represent still fall well short
-of the milliseconds the uapi can express; requests beyond 15 bit-times
-are capped, and the -ERANGE rejection of values above 15 ms remains in
-place for now.
+Instead, set MODE1 TxDisabl: the character in flight completes and the
+transmitter ceases with TX_ at idle. Give that character one character
+time (the chip has no transmitter-idle status), then reset the FIFOs
+so the auto-RTS engine sees the transmitter empty and releases RTS
+within the configured after-send hold; wait that hold plus one bit
+time before powering off. Abandoned data was explicitly not waited
+for, and startup() resets the FIFOs and TxDisabl on open anyway.
 
-Fixes: 55367c620aed ("serial: max310x: Add support for RS-485 mode")
+Measured on a MAX14830: a truncating close() at 50 baud takes 0.23 s,
+RTS releases one character plus the hold after the last stop bit on
+both polarities, and the reopen corruption is gone.
+
+Fixes: f65444187a66 ("serial: New serial driver MAX310X")
 Assisted-by: Claude:claude-fable-5
 Signed-off-by: Tapio Reijonen <tapio.reijonen@vaisala.com>
-Link: https://patch.msgid.link/20261008-max310x-rs485-sw-delay-v8-4-6ba881f81e1f@vaisala.com
+Link: https://patch.msgid.link/20261008-max310x-rs485-sw-delay-v8-5-6ba881f81e1f@vaisala.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/max310x.c | 40 ++++++++++++++++++++++++++++--------
- 1 file changed, 31 insertions(+), 9 deletions(-)
+ drivers/tty/serial/max310x.c | 44 ++++++++++++++++++++++++++++++++----
+ 1 file changed, 40 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/tty/serial/max310x.c b/drivers/tty/serial/max310x.c
-index f173568115829..61960acbeef2d 100644
+index 61960acbeef2d..c770d2d16be62 100644
 --- a/drivers/tty/serial/max310x.c
 +++ b/drivers/tty/serial/max310x.c
-@@ -162,6 +162,10 @@
- #define MAX310X_IRDA_IRDAEN_BIT		(1 << 0) /* IRDA mode enable */
- #define MAX310X_IRDA_SIR_BIT		(1 << 1) /* SIR mode enable */
- 
-+/* HDPIXDELAY accessor macros */
-+#define MAX310X_HDPIXDELAY_SETUP(val)	(((val) & 0x0f) << 4)
-+#define MAX310X_HDPIXDELAY_HOLD(val)	((val) & 0x0f)
-+
- /* Flow control trigger level register masks */
- #define MAX310X_FLOWLVL_HALT_MASK	(0x000f) /* Flow control halt level */
- #define MAX310X_FLOWLVL_RES_MASK	(0x00f0) /* Flow control resume level */
-@@ -283,6 +287,7 @@ struct max310x_one {
+@@ -287,6 +287,7 @@ struct max310x_one {
  	struct work_struct	md_work;
  	struct work_struct	rs_work;
  	struct regmap		*regmap;
-+	unsigned int		baud;
++	unsigned int		char_time_us;
+ 	unsigned int		baud;
  	bool			tx_break;	/* break_ctl() owns the transceiver */
  
- 	u8 rx_buf[MAX310X_FIFO_SIZE];
-@@ -898,23 +903,33 @@ static void max310x_set_mctrl(struct uart_port *port, unsigned int mctrl)
- }
- 
- /*
-- * Program the chip's RS485 RTS timing (HDPIXDELAY) and the auto
-- * transceiver control (MODE1) from the current configuration. The
-- * rs485-config worker, startup() and break_ctl()'s break-off restore
-- * each carried their own copy of this sequence.
-+ * Program the chip's RS485 RTS timing. The HDPIXDELAY setup and hold fields
-+ * count bit-times, four bits per direction, while the uapi expresses the
-+ * delays in milliseconds: convert at the current baud rate, rounding up, and
-+ * cap at the field maximum.
-  */
- static void max310x_set_rts_ctl_params(struct max310x_one *one)
+@@ -975,6 +976,7 @@ static void max310x_set_termios(struct uart_port *port,
+ 				struct ktermios *termios,
+ 				const struct ktermios *old)
  {
-+	const unsigned int max_bit_dly = 15;
- 	struct uart_port *port = &one->port;
--	unsigned int delay;
-+	unsigned int setup = 0, hold = 0;
- 	u8 mode1 = 0;
++	unsigned int frame_bits = tty_get_frame_size(termios->c_cflag);
+ 	unsigned int lcr = 0, flow = 0;
+ 	int baud;
  
--	delay = (clamp(port->rs485.delay_rts_before_send, 0U, 15U) << 4) |
--		clamp(port->rs485.delay_rts_after_send, 0U, 15U);
--	max310x_port_write(port, MAX310X_HDPIXDELAY_REG, delay);
-+	if (port->rs485.flags & SER_RS485_ENABLED) {
-+		/* Convert milliseconds to bit-times, rounding up. */
-+		setup = DIV_ROUND_UP(one->baud * port->rs485.delay_rts_before_send,
-+				     MSEC_PER_SEC);
-+		hold  = DIV_ROUND_UP(one->baud * port->rs485.delay_rts_after_send,
-+				     MSEC_PER_SEC);
-+		setup = min(setup, max_bit_dly);
-+		hold  = min(hold,  max_bit_dly);
- 
--	if (port->rs485.flags & SER_RS485_ENABLED)
- 		mode1 = MAX310X_MODE1_TRNSCVCTRL_BIT;
-+	}
-+
-+	max310x_port_write(port, MAX310X_HDPIXDELAY_REG,
-+			   MAX310X_HDPIXDELAY_SETUP(setup) |
-+			   MAX310X_HDPIXDELAY_HOLD(hold));
+@@ -1085,10 +1087,13 @@ static void max310x_set_termios(struct uart_port *port,
+ 	uart_update_timeout(port, termios->c_cflag, baud);
  
  	/*
- 	 * A break owns the transceiver: break_ctl() disabled auto-RTS and
-@@ -1068,6 +1083,13 @@ static void max310x_set_termios(struct uart_port *port,
- 
- 	/* Update timeout according to new baud rate */
- 	uart_update_timeout(port, termios->c_cflag, baud);
-+
-+	/*
-+	 * Cache the new baud rate and reprogram the RS485 RTS delays, whose
-+	 * millisecond-to-bit-time conversion depends on it.
-+	 */
-+	to_max310x_port(port)->baud = baud;
-+	max310x_set_rts_ctl_params(to_max310x_port(port));
+-	 * Cache the new baud rate and reprogram the RS485 RTS delays, whose
+-	 * millisecond-to-bit-time conversion depends on it.
++	 * Cache the new baud rate and the time it takes to clock out one
++	 * character before reprogramming the RS485 RTS delays: the
++	 * millisecond-to-bit-time conversion divides by the baud rate.
+ 	 */
+ 	to_max310x_port(port)->baud = baud;
++	to_max310x_port(port)->char_time_us =
++		DIV_ROUND_UP(USEC_PER_SEC * frame_bits, baud);
+ 	max310x_set_rts_ctl_params(to_max310x_port(port));
  }
  
- static void max310x_rs_proc(struct work_struct *ws)
+@@ -1145,9 +1150,10 @@ static int max310x_startup(struct uart_port *port)
+ 	one->tx_break = false;
+ 	max310x_port_update(port, MAX310X_LCR_REG, MAX310X_LCR_TXBREAK_BIT, 0);
+ 
+-	/* Configure MODE1 register */
++	/* Configure MODE1: re-enable the transmitter shutdown() stopped */
+ 	max310x_port_update(port, MAX310X_MODE1_REG,
+-			    MAX310X_MODE1_TRNSCVCTRL_BIT, 0);
++			    MAX310X_MODE1_TRNSCVCTRL_BIT |
++			    MAX310X_MODE1_TXDIS_BIT, 0);
+ 
+ 	/* Configure MODE2 register & Reset FIFOs*/
+ 	val = MAX310X_MODE2_RXEMPTINV_BIT | MAX310X_MODE2_FIFORST_BIT;
+@@ -1181,9 +1187,39 @@ static int max310x_startup(struct uart_port *port)
+ 
+ static void max310x_shutdown(struct uart_port *port)
+ {
++	struct max310x_one *one = to_max310x_port(port);
++
+ 	/* Disable all interrupts */
+ 	max310x_port_write(port, MAX310X_IRQEN_REG, 0);
+ 
++	/*
++	 * Stop the transmitter: the character in flight completes, data
++	 * still queued is abandoned (the next startup() resets the FIFOs).
++	 */
++	max310x_port_update(port, MAX310X_MODE1_REG,
++			    MAX310X_MODE1_TXDIS_BIT, MAX310X_MODE1_TXDIS_BIT);
++
++	/*
++	 * Let the character in flight finish (the chip has no
++	 * transmitter-idle status), then empty the FIFO: auto-RTS releases
++	 * only once the transmitter is empty, and the power-off below
++	 * would freeze an asserted pin until the next open.
++	 */
++	fsleep(one->char_time_us);
++	max310x_port_update(port, MAX310X_MODE2_REG,
++			    MAX310X_MODE2_FIFORST_BIT,
++			    MAX310X_MODE2_FIFORST_BIT);
++	max310x_port_update(port, MAX310X_MODE2_REG,
++			    MAX310X_MODE2_FIFORST_BIT, 0);
++	if (port->rs485.flags & SER_RS485_ENABLED && one->baud) {
++		unsigned int hold = DIV_ROUND_UP(one->baud *
++				port->rs485.delay_rts_after_send,
++				MSEC_PER_SEC);
++
++		fsleep(max(DIV_ROUND_UP((hold + 1) * USEC_PER_SEC,
++					one->baud), 100U));
++	}
++
+ 	max310x_power(port, 0);
+ }
+ 
 -- 
 2.53.0
 
