@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043972;
-	b=eC3uG0TURSa36C4HWY1O4LhdIF+aHf41d0jMZprPHJuc0NA9biU54QJeHli2sqg41QPW
-	 Jm0pfnweGDJXYcnumUvdVSx9Ky96cym73qFLkxHBS1LXguQVDhNQMQvSEwtQMD+2Wk75T
-	 rUUuw1bIbsB3BdcHNph9UoZkXFuBiTP1RYceoY6bwyqWevdGSpiFN0HNMoQhuHAKp1Btz
-	 ruskK91gf0T8RWMeh0v85S1xJwKkLn1hUBLPY10Id2ehUX+U637JdyTCQu+QuxHpKL6IG
-	 pQB6UYAn0/fygm3oZrUkkbPvtCzglh2A3F92ESSaV8wb66tGkN35mFIhBAzSAepiM+A==
+	t=1795043975;
+	b=Yy8puaj6JTBKbMjHKjrMfLiOaZCbevVAYQNzMu2iBKSWXhtqQd77D32OLnub7NTOIMQ4
+	 VJN9qPo1kKlhbgsQPSOkWhpb4YDiIn1SANJ182eqfzYbrjJYPBumgk0Y4ZgNoSP5K0zL7
+	 GmgPnMLdbMKhVz1RYDVqR0KZakG3W2u4A7G/KgTNHRh6qox9XwQh9XVPJV4RqLOujb8o+
+	 hMD76Dpn9AtA4BbnRyKwZOrG27VmaVF57vMjZxGtgik3OH/acqMaLd5pi+wIFlUdSUMNE
+	 CMG4ybnxmoDFQ1uGN4ie3YyBvFSDCJuGnMNI/xRVpn5IsO8F7LxRzoz7S8TZtDUXyaQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043972;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043975;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jc8Q/1dow5zg4ZraKHAOsrZsWqHYuSUcHzqt7crC4Qw=;
-	b=xQzo4OV0sbmS7ECHIxjB6iqAskUJ91i7TnkbwwYqDmVi/ssUETDRXmkjf0yVnc2cN9aV
-	 lvkPdP9qOZeNL4iGIGZvrIu3iYJAU8/qgE4fBApIV7NRzEvBXIzOXJny6W91tgAZs8no0
-	 XAbhBPqu4k/wyWl/dqpDvsakcE5ixoJbr+5N4OTcKfhcnof9KT/Tv/Awig4h2rw9bHHfu
-	 yTRHMaaNAp4bIcvhhtQSmeomujfTTRAXgKDjJw9rfnKBCq4eeWgiqGCi9d+LOMDBrvNZj
-	 msC8uDCRTuUROjvplYF22YtD81Sc1c4rbhzXKfV6nCQmLSZHm3Y7fRTPWzxCMoGq96Q==
+	bh=uYZGUPCFwKoDS+eUb/yRgJ0GAVWrDziHvUqC0bmy7eo=;
+	b=5o3ugaDbeL0y+bSfx44LlhcS+AicMgpNktUM+kJfYyw59r829jvKlis3t4CemYKfbcd4
+	 NRcR54F4/n0AjRrz8Wz/DO2ZtQaFyv7qC0AJyUwk3M9UCGLXVGLlzY41B4aOzwMCkKb75
+	 sSKMgG+wMO2I03PZEqVFLvIgandpT0Mq2C5/iP9EQ7vShwHOKBgkNncLz9ue3Nn9aeMfK
+	 zLwy8nCwTCoZbx3pUu40vKSSkpcHOVXg9gZLLElgGydoUSdDHT9onmF0VjIWkdPhV8arD
+	 Y+LXjoMrTjTl41pO0wGoaOgAIcFzMDLDS//yqgP+xahZvJLyTXlH/4ee2okLi+30R8w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PAtOcVYv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tnsJcnHx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D3A606A320;
-	Wed, 18 Nov 2026 23:19:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FAE1606A31C;
+	Wed, 18 Nov 2026 23:19:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PAtOcVYv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 985281F000C4;
-	Wed, 18 Nov 2026 23:19:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tnsJcnHx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C6C51F000C4;
+	Wed, 18 Nov 2026 23:19:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043972;
-	bh=jc8Q/1dow5zg4ZraKHAOsrZsWqHYuSUcHzqt7crC4Qw=;
+	s=korg; t=1795043975;
+	bh=uYZGUPCFwKoDS+eUb/yRgJ0GAVWrDziHvUqC0bmy7eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PAtOcVYvOP8AOlUNIqersJvrCoq89wrGhOwv0owhfi64Kyd7eR5C2He3ffBQLVPNM
-	 gSnipzXPaJsATMhmpLbDxveF3AZ6mADawhEUb99+9dtcgp5MAcyRdhXNVNkEpWsp2A
-	 DNli8aaJPz4CsIwW6OToCXb77qViyB/zVECV1188=
+	b=tnsJcnHxxDewucQwtaegZOzwoM8bfOWVc6Pj+5sLHM8mo7Qm7AEqSmurazzg711iX
+	 B8Jxa1OGyyZWX30FMaEk0ckmof4yARH50iiA10GMVe0UAw+fFgYWhDSkfMwNxJq2YU
+	 crctGcHlS9XJfAl4xATs+5K9P/SFRvFmvkoKW3dI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Ulf Hansson <ulfh@kernel.org>,
+	Ju Nan <junan76@163.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Radu Rendec <radu@rendec.net>,
+	Antonio Borneo <antonio.borneo@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0400/2857] mmc: hsq: Fix use-after-free in retry work
-Date: Wed, 18 Nov 2026 15:23:54 +0100
-Message-ID: <20261118150215.791657795@linuxfoundation.org>
+Subject: [PATCH 6.1 0401/2857] irqchip/stm32mp-exti: Fix the unit of the hwspinlock timeout
+Date: Wed, 18 Nov 2026 15:23:55 +0100
+Message-ID: <20261118150215.828920873@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,67 +70,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Ju Nan <junan76@163.com>
 
-[ Upstream commit 5d132990475f02cfa1debe03d50b479432864ebd ]
+[ Upstream commit d31fbbade43f880b7e59e2b3a72722fe2725d93f ]
 
-mmc_hsq_pump_requests() queues retry_work when request_atomic() returns
--EBUSY; today sdhci-sprd is the only consumer that implements
-request_atomic(). The work is embedded in a devm-allocated mmc_hsq, but
-is never cancelled during driver removal. Work still pending at unbind
-can therefore run after the devm allocation has been released and
-dereference hsq->mmc and hsq->mrq.
+HWSPNLCK_TIMEOUT is passed to hwspin_lock_timeout_in_atomic(), whose
+timeout argument is in milliseconds, not microseconds:
 
-Use devm_work_autocancel() to cancel and drain retry_work before the devm
-allocation is released. By the time devres cleanup begins,
-mmc_remove_host() has already stopped the host, so no new requests can
-arm the work.
+  atomic_delay += HWSPINLOCK_RETRY_DELAY_US;
+  if (atomic_delay > to * 1000)
+          return -ETIMEDOUT;
 
-This issue was found by an in-house static analysis tool.
+So stm32mp_exti_set_type() asks for a 1 second timeout where the comment
+next to the macro says it wants 1 millisecond. The semaphore is polled
+with udelay() from a section that holds chip_data->rlock, a
+raw_spinlock_t, so preemption stays disabled for the whole wait on every
+configuration, PREEMPT_RT included.
 
-Fixes: 6db96e5810e0 ("mmc: host: Introduce the request_atomic() for the host")
+The hwspinlock core documents this explicitly:
+
+  If the mode is HWLOCK_IN_ATOMIC (called from an atomic context) the
+  timeout is handled with busy-waiting delays, hence shall not exceed
+  few msecs.
+
+Fixes: 5257169ade8c ("irqchip/stm32-exti: Use the hwspin_lock_timeout_in_atomic() API")
+Signed-off-by: Ju Nan <junan76@163.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Radu Rendec <radu@rendec.net>
+Reviewed-by: Antonio Borneo <antonio.borneo@foss.st.com>
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Link: https://patch.msgid.link/20260821024756.24927-2-junan76@163.com
+[ sashal: Applied the change to irq-stm32-exti.c, the older combined driver, and renamed the macro for both of its call sites instead of upstream's single one. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/mmc_hsq.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-stm32-exti.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mmc/host/mmc_hsq.c b/drivers/mmc/host/mmc_hsq.c
-index 424dc7b07858f..473aa02973d65 100644
---- a/drivers/mmc/host/mmc_hsq.c
-+++ b/drivers/mmc/host/mmc_hsq.c
-@@ -7,6 +7,7 @@
-  * Author: Baolin Wang <baolin.wang@linaro.org>
-  */
+diff --git a/drivers/irqchip/irq-stm32-exti.c b/drivers/irqchip/irq-stm32-exti.c
+index dc6f67decb022..2b3135b9bc147 100644
+--- a/drivers/irqchip/irq-stm32-exti.c
++++ b/drivers/irqchip/irq-stm32-exti.c
+@@ -24,7 +24,7 @@
  
-+#include <linux/devm-helpers.h>
- #include <linux/mmc/card.h>
- #include <linux/mmc/host.h>
- #include <linux/module.h>
-@@ -324,6 +325,7 @@ static const struct mmc_cqe_ops mmc_hsq_ops = {
+ #define IRQS_PER_BANK 32
  
- int mmc_hsq_init(struct mmc_hsq *hsq, struct mmc_host *mmc)
- {
-+	int ret;
- 	int i;
- 	hsq->num_slots = HSQ_NUM_SLOTS;
- 	hsq->next_tag = HSQ_INVALID_TAG;
-@@ -341,7 +343,11 @@ int mmc_hsq_init(struct mmc_hsq *hsq, struct mmc_host *mmc)
- 	for (i = 0; i < HSQ_NUM_SLOTS; i++)
- 		hsq->tag_slot[i] = HSQ_INVALID_TAG;
+-#define HWSPNLCK_TIMEOUT	1000 /* usec */
++#define HWSPNLCK_TIMEOUT_MS	1
  
--	INIT_WORK(&hsq->retry_work, mmc_hsq_retry_handler);
-+	ret = devm_work_autocancel(mmc_dev(mmc), &hsq->retry_work,
-+				   mmc_hsq_retry_handler);
-+	if (ret)
-+		return ret;
-+
- 	spin_lock_init(&hsq->lock);
- 	init_waitqueue_head(&hsq->wait_queue);
+ struct stm32_exti_bank {
+ 	u32 imr_ofst;
+@@ -363,7 +363,7 @@ static int stm32_irq_set_type(struct irq_data *d, unsigned int type)
+ 	irq_gc_lock(gc);
  
+ 	if (hwlock) {
+-		err = hwspin_lock_timeout_in_atomic(hwlock, HWSPNLCK_TIMEOUT);
++		err = hwspin_lock_timeout_in_atomic(hwlock, HWSPNLCK_TIMEOUT_MS);
+ 		if (err) {
+ 			pr_err("%s can't get hwspinlock (%d)\n", __func__, err);
+ 			goto unlock;
+@@ -567,7 +567,7 @@ static int stm32_exti_h_set_type(struct irq_data *d, unsigned int type)
+ 	raw_spin_lock(&chip_data->rlock);
+ 
+ 	if (hwlock) {
+-		err = hwspin_lock_timeout_in_atomic(hwlock, HWSPNLCK_TIMEOUT);
++		err = hwspin_lock_timeout_in_atomic(hwlock, HWSPNLCK_TIMEOUT_MS);
+ 		if (err) {
+ 			pr_err("%s can't get hwspinlock (%d)\n", __func__, err);
+ 			goto unlock;
 -- 
 2.53.0
 
