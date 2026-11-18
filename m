@@ -1,58 +1,63 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=178.251.229.89
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021908;
-	b=QHsu4nLX3YqOrjqXrrtgrbaGCzd33k60wkIdHUSV+bOn/UmuhOdFsQmAH0voHGoK0T32
-	 9aJk4S/iZ7KhzE+vTzbEZPHK+JvIeUwQRsjeU91x04JWmPgChS7IHqDeWy93yhLD62b+h
-	 Mz8y53RVxMHgL1gjPneFEvsanPqv1c5ECc+0Ge1L5hKv6NXvtMtJpeDC2ulIbJ71CRCD/
-	 bNWYYKV4z7oNx+vITDGyuryAovRSvdFUtNvvcq6VBMRAqbBBRFne2gYK/l/kv+OnCSfXH
-	 03yhjN1D0XXjb79wrjVefLoWGdtPYUFP0Mr6x9cqpmNtpTlj6O82yjKiLpTMBiShnmQ==
+	t=1795021910;
+	b=FluF4mooS1DAvivKPITQV0AM6ocZ/12VnQs+74HtNCYG3ikPbKo7PR0KucYipnPsHprn
+	 MWw1r2Sn/CJ5/L5KxJJC/qXf55jFbMJ3bjxwiWub0f2dH4LVZ1MUYGf1W90v5AOzsQhbs
+	 BiIaMWVmv4q/EJIKbAGuyooV5JcRDsyBroYGlIZ5jYOaly2tAmS3LHGMD5xekEYKfA0OB
+	 NjqGbCLH/oFmLBwENuYi7SHBD+OHo047s3PEvizNO39o0HdWwG4vUHyQgSSFqHeNYsIl7
+	 aAigxD6eQ4TlGVFBdg5zBxnb2PpzrvV3up+zHikhlYTu75K4t9wlh/uAloz0CMr/jaA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021908;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=O2DTwUZo3L6NbJTxV6uowayLf9mcvGaq9bE9ZzLzJ3Y=;
-	b=Yx7r7ZybBMdLknzjQ+sIrCgWhy9m788hi0KejqxMYvxu0liomHUkp9UmWpqGXBXDJkYB
-	 KxVqHvz9LAizNvi83lsdWzc62++FfclvPgcDeor9r3PuHmscn5pr5/JKvylcXyJa2cDxp
-	 9gcOXw6KpOA9s25Jkfbbavcllldym1+2n34ddove+CBeuWf6/jw2aS9/VYUc7oC5VU5wv
-	 RQ0t3oll57D7OwuJxmjarnlf5IK4VzQv01dm6M5j5P0dl5u3puEqzYLQheMH1uL78GShI
-	 L61AOv7MOB4BY7koB4HWh1fdAVnVmZxgQlLhuSWVbcGjT7r0zhu31lhJ/Rw7JkWSL9w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021910;
+	h=DMARC-Filter:Received:DKIM-Signature:Date:From:To:Cc:Subject:
+	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
+	 In-Reply-To:X-Last-TLS-Session-Version;
+	bh=55hWbv3ahW17b2iOOwscIBO2RQ8epSsBo1FkfhM4zo0=;
+	b=ZkoWw8eK2+kgc3ilktaO+BILm9bzfpjec/0PXN1CTSV8IyeNt3oiXsBV3Ai5pM6lP1xE
+	 5RSkxWUbvISZGTMAW9sEM1uNmbK2XG/+ebNdyr69ExlOzJuzzsj6TnYGawr2TV9eR5BvJ
+	 I4zgyntblK/skSFIACl8KGpSXGAYRVFN8NDPOCyWDAYwUnaiQrN1HOFwGHRLXfF+Hq5tP
+	 xKx6mkANvBbHTWphlKldjsSUZRob+qVLaWUTsicsL0ZNyHaoPsAdGLphwrFoXptbmu4OV
+	 bJ7fZm3Xm0+flUmqMgu7+vxuRT/QLdSZSD9/frHlyHHlvHqKApjrY6LjvRRV5Nn22GA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jVVETY+M;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=nabladev.com;
+	spf=pass smtp.mailfrom=nabladev.com;
+	dkim=pass header.d=nabladev.com header.i=@nabladev.com header.a=rsa-sha256 header.s=dkim header.b=McTjnncE;
+	arc=none smtp.remote-ip=178.251.229.89
+Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BEB606A31C;
-	Wed, 18 Nov 2026 17:11:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F2C606A320
+	for <patches@lists.linux.dev>; Wed, 18 Nov 2026 17:11:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 65F2C606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jVVETY+M
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D02A31F000C4;
-	Wed, 18 Nov 2026 17:11:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021908;
-	bh=O2DTwUZo3L6NbJTxV6uowayLf9mcvGaq9bE9ZzLzJ3Y=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jVVETY+Mv2R0lmV1n81WS8Xzf+0yx1kxcaCfNXaFbihTfGtPPNvp2OCJ8tgA22E/W
-	 gWrLMj5tFtBHgJyAVGY97gE8jKWSWbxypW8a7V1vHjlTfz8wNot1zTYBAnPWk2LecU
-	 V741Xln6uMT29el/a3IvTb1b0j7DN7hTAhJ7rCZQ=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2474/2651] net: lan966x: do not warn on MAC entries that are not port destined
-Date: Wed, 18 Nov 2026 16:01:54 +0100
-Message-ID: <20261118150414.033692535@linuxfoundation.org>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
-References: <20261118150247.972732815@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.a=rsa-sha256 header.s=dkim header.b=McTjnncE
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id AC10710BA16;
+	Wed, 18 Nov 2026 18:11:43 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
+	s=dkim; t=1795021904;
+	h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 in-reply-to:references; bh=55hWbv3ahW17b2iOOwscIBO2RQ8epSsBo1FkfhM4zo0=;
+	b=McTjnncEDdCNvrpd87ixynpCyAndkyYKLVNAJ32je6Eb9VEdmhg+/qXfbJUr3ZrjBSHw1D
+	JcmgWbcwt0sJ7LIO8gigByJSVzjiVu8AfDGeyAm0m9tUcepKNEhn0X4bSQ4P+CZL/QlYNm
+	Ra10zu/nGp35YTMjgzUFUxwMEVVkDE5UCtIwO96476mmQb88J3Esj0dZQoscomafhDeDI4
+	GTpDgT2cR++TRMIMWXpjmqKN7kitFBAv90uHTTZT7F62ROuPPsMxIZD9PvRC1zRdZmKAQK
+	a0xdGQ5Bldmt7GFmkPhCNGYwghWiM2948M8GGIhza+fNsj3ujeNy5YMdDKHMDA==
+Date: Wed, 18 Nov 2026 18:11:42 +0100
+From: Pavel Machek <pavel@nabladev.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 6.6 0000/3318] 6.6.163-rc1 review
+Message-ID: <av3cTuNbzz4trxoC@duo.ucw.cz>
+References: <20261118150313.527275416@linuxfoundation.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -62,68 +67,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-
-7.3-stable review patch.  If anyone has any objections, please let me know.
-
-------------------
-
-From: Daniel Machon <daniel.machon@microchip.com>
-
-[ Upstream commit 2cffcf1aeabb187e4f08fe4f5363128a3c45d786 ]
-
-lan966x_mac_irq_handler() scans the rows of the MAC table that the
-analyzer reports as changed, reads back all four columns of each row and
-treats ANA_MACACCESS.DEST_IDX as a port number.
-
-Before this patch, a destination index above num_phys_ports hits a
-WARN_ON(). The driver installs such entries itself:
-lan966x_mac_cpu_learn() uses PGID_CPU, and L2 multicast entries use a
-general-purpose PGID. A row holding one of them is read back whenever
-another entry in the same row is learned or aged out, so the scan warns
-in normal operation, repeatedly once the MAC table is busy.
-
-Skipping such a column is already the right behaviour. Drop the
-WARN_ON() and keep the bounds check as a plain filter.
-
-Found by an AI code review agent. Reproduced on a lan9668 board by
-bridging two ports with a 10 s ageing time and sending three rounds of
-2048 new source MACs: the base kernel warned 42 times from
-lan966x_mac_irq_process(), the fixed kernel did not warn.
-
-Fixes: 5ccd66e01cbe ("net: lan966x: add support for interrupts from analyzer")
-Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261026-lan966x-mac-warn-v1-1-9c885f9cbda9@microchip.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/net/ethernet/microchip/lan966x/lan966x_mac.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_mac.c b/drivers/net/ethernet/microchip/lan966x/lan966x_mac.c
-index 7a2294a0d099e..986c60ac23432 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_mac.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_mac.c
-@@ -447,7 +447,7 @@ static void lan966x_mac_irq_process(struct lan966x *lan966x, u32 row,
- 
- 			lan966x_mac_process_raw_entry(&raw_entries[column],
- 						      mac, &vid, &dest_idx);
--			if (WARN_ON(dest_idx >= lan966x->num_phys_ports))
-+			if (dest_idx >= lan966x->num_phys_ports)
- 				continue;
- 
- 			/* If the entry in SW is found, then there is nothing
-@@ -501,7 +501,7 @@ static void lan966x_mac_irq_process(struct lan966x *lan966x, u32 row,
- 
- 		lan966x_mac_process_raw_entry(&raw_entries[column],
- 					      mac, &vid, &dest_idx);
--		if (WARN_ON(dest_idx >= lan966x->num_phys_ports))
-+		if (dest_idx >= lan966x->num_phys_ports)
- 			continue;
- 
- 		spin_lock(&lan966x->mac_lock);
--- 
-2.53.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="BfKMZaz260JFDJKq"
+Content-Disposition: inline
+In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
+X-Last-TLS-Session-Version: TLSv1.3
 
 
+--BfKMZaz260JFDJKq
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
+Hi!
+
+> This is the start of the stable review cycle for the 6.6.163 release.
+> There are 3318 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+
+This failure looks similar to 6.12 failure.
+
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/18149509459
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/3084771510
+
+Best regards,
+								Pavel
+
+--BfKMZaz260JFDJKq
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCav3cTgAKCRAw5/Bqldv6
+8vVwAKCiOHAF0itzIm9a92Rqx161/MIf1gCfVxJ7y7RqnougTDqOz0QZPVSmvjg=
+=TeQW
+-----END PGP SIGNATURE-----
+
+--BfKMZaz260JFDJKq--
