@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020968;
-	b=lslffbLy9hc1ZjVqbs/0VqikmckqpUjkJw13+n+1jQRg+D3fHc51d7gERbIgItSPOgAx
-	 4ggAQA2jiYM+aImqQyJpqds3En/Y7lSc9ES//krOsc1i+pavaS6tWaEM2H3aW0gDQKUwr
-	 QlwSgbuQuZa/jo2WX7Sg+zVJL7LEsxum72WtOZC2SCFdBw4KRHGy3jX8F9AgB0Rv6TX0/
-	 A4ZEnfJR4aiLh4D19FsqXhWYYRMStin4FtKuUmsa1r2hZYmCMG3F0qQVibw9cK645pTBL
-	 gP1zq1kan4KvfLfoaw8N3HvuGZoYbpjyYguFfaIT0DXTel2wUt3YWYEnrQcbH2H18mw==
+	t=1795020970;
+	b=ajN42IjcztiGaYMifLQ3bYO7IaLiSka3Ljply07qRLBAx2ViTsCQ9zkfKa5jus7gdoij
+	 NkKbmyI6fmdEtSz6fAqlZDk3XEH0m+58LuGP/QsAUXw/db8vby3VDJLyRP12Oenj7HXRn
+	 tUWS/EjDbIVXKCgfx+9mogB6+xV9qtBUXEODEsLmTztNFTVL12JLN26tO02YlW1yFmBci
+	 8k7xmsfrzWhR4B7V4QfEHcBgpb/E1QWUE1v22f5XqnLjouid8tjZGnQ4ltI7icJrP3rhB
+	 xegbx4LiOslhLvkcFXYB2wvt32tA9/DxWBduAUIgojjSFDu85PbXNBRY0G/wGh9LrLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020968;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020970;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=okVf6Y3ToCA14W20zGLQyF7sm16rIZUA78C1Ive2iY8=;
-	b=4DPDzjpvkLyfSeIZ8avhUAPhPz5W1jsTeXcc3FDrTRpQsIsESUidOhD8zcMmCiLSMAgw
-	 qqvTk51SAWq5B3+RX0sLorld8+Akg99ZmeO+FOP5bpgSauCchW5mQE4y94aI6GhncwC8M
-	 SvBw5l4l5GhIfAytI3NZskoz6QAh8UUA7kx8P5W155/Zl1vqOc+25Xfk0YX0VKU1gwKGz
-	 hYX1uW4jn+cVzXOi5ySlZBkA1zzeIkZqs0FOElcRjYIRavKxxRVxKI44T66/3pdIndP60
-	 LmPChrLEYh9V2lHc8s28jCJGSp1Bg+WvaXlUceFJSnp1bd7zStDK/u2vMWskqbxwvGA==
+	bh=bVdXl8LYDL3mTiMNYltm3EcS/PKCY7V3HWEH3GkzC0A=;
+	b=BYqePG/VxdvZ+JZGRyPMJ8U/c2kJpf3LIQq6fBNt9g7xVYZlU/YWhiFQHdgYtI+1UNh2
+	 U63iKOzOcfGPiP8qiOb/4QP9wuz+aNb07fQpZCfZGgiRWKNRmOAb7fDU78QwXi1p0aX3j
+	 TShM/zq6Wv4IrWtLY/9GZoybziYG6C6fPiRz8xDs9ARTdUBeNAWP926mnOXASSeXpYnrH
+	 btzrjLmAAPPCQ8+6WCEK6f+Pl554G5lul5bmmVlg6mhYrV2owEQqGR7BYYpftmyERLwN6
+	 DVmZbp5655spieC+TVhz4BNp45lT+Hn/qliE0jJnPh+t7wx2IUXS5j+ZT5Fi+FkhMug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EzS+xeOc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o88sz6le;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119AB606A320;
-	Wed, 18 Nov 2026 16:56:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D28606A31C;
+	Wed, 18 Nov 2026 16:56:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EzS+xeOc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BF191F000C4;
-	Wed, 18 Nov 2026 16:56:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o88sz6le
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B0361F000C4;
+	Wed, 18 Nov 2026 16:56:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020967;
-	bh=okVf6Y3ToCA14W20zGLQyF7sm16rIZUA78C1Ive2iY8=;
+	s=korg; t=1795020970;
+	bh=bVdXl8LYDL3mTiMNYltm3EcS/PKCY7V3HWEH3GkzC0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EzS+xeOcKwRw+qpNIE4ZkyX6GnkydnpeN5iDpXgTnz/DBvFF3+pKgUwyv/BqYbSwc
-	 wHlSP6JrZes1UNDz2oVbLdO/mUZJg4wC6wSQCcTHth2+CJiGFN9gF71gtfkHFT8t/Z
-	 dX28m+VX+1GwKLF8WU5TgertD0PM3wjrlnuVAa14=
+	b=o88sz6leYbWe2ZN03BifkGK3l7OuZdtyQSirK69DhsCAFwa8NN3pvM97ONt4+fQ6g
+	 v9+WxpXi+WkD1Itw2HctUH4DjcbU2EgJ21S0vQI/rPuwECzXkDtRbVXe5/oxR1l7MI
+	 3KryClaCoGTGQ2fGsRhsVj879UV0XlKA+yUuOOlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serhat Kumral <serhatkumral1@gmail.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Leon Romanovsky <leon@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2138/2651] RDMA/srp: Avoid reading uninitialized has_port on srp_parse_in() failure
-Date: Wed, 18 Nov 2026 15:56:18 +0100
-Message-ID: <20261118150402.844400157@linuxfoundation.org>
+Subject: [PATCH 7.3 2101/2651] bpf: Update the SRH state if End.B6 fails late
+Date: Wed, 18 Nov 2026 15:55:41 +0100
+Message-ID: <20261118150401.623711499@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,36 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Serhat Kumral <serhatkumral1@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 4b8f20dc8d25f575e8b8bb5abb09ab803a7e1a3f ]
+[ Upstream commit 427e751a231aa781441d51c42e716905ee348099 ]
 
-srp_parse_in() returns -ENOMEM without initializing *has_port if
-kstrdup() fails. Only check has_port when srp_parse_in() succeeds.
+For SEG6_LOCAL_ACTION_END_B6 and END_B6_ENCAP bpf_lwt_seg6_action() looks
+for the SRH again only if bpf_push_seg6_encap() has succeeded. That
+function pushes the new header, for which the head of the skb is
+reallocated if it has not got the room, and then looks up the route to the
+first segment. If there is none, it returns an error, and the pointer to
+the SRH in seg6_bpf_srh_states still points into the old head, which has
+been freed.
 
-Fixes: bcef5b721568 ("RDMA/srp: Accept again source addresses that do not have a port number")
-Signed-off-by: Serhat Kumral <serhatkumral1@gmail.com>
-Link: https://patch.msgid.link/20261016211509.12973-1-serhatkumral1@gmail.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+The program goes on behind the error. bpf_lwt_seg6_store_bytes() and
+bpf_lwt_seg6_adjust_srh() read the SRH through that pointer.
+
+Look for the SRH whatever bpf_push_seg6_encap() says.
+
+Fixes: 486cdf21583e ("bpf: add End.DT6 action to bpf_lwt_seg6_action helper")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261017163745.3341787-14-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/srp/ib_srp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/filter.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/srp/ib_srp.c b/drivers/infiniband/ulp/srp/ib_srp.c
-index 955f36efeebd3..5811f02df9805 100644
---- a/drivers/infiniband/ulp/srp/ib_srp.c
-+++ b/drivers/infiniband/ulp/srp/ib_srp.c
-@@ -3499,7 +3499,7 @@ static int srp_parse_options(struct net *net, const char *buf,
- 			}
- 			ret = srp_parse_in(net, &target->rdma_cm.dst.ss, p,
- 					   &has_port);
--			if (!has_port)
-+			if (ret == 0 && !has_port)
- 				ret = -EINVAL;
- 			if (ret < 0) {
- 				pr_warn("bad dest parameter '%s'\n", p);
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 1a01b8e364504..2e6ebfabf6deb 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -7094,8 +7094,8 @@ BPF_CALL_4(bpf_lwt_seg6_action, struct sk_buff *, skb,
+ 			return -EBADMSG;
+ 		err = bpf_push_seg6_encap(skb, BPF_LWT_ENCAP_SEG6_INLINE,
+ 					  param, param_len);
+-		if (!err)
+-			bpf_update_srh_state(skb);
++		/* The header can be in place although err says otherwise */
++		bpf_update_srh_state(skb);
+ 
+ 		return err;
+ 	case SEG6_LOCAL_ACTION_END_B6_ENCAP:
+@@ -7103,8 +7103,8 @@ BPF_CALL_4(bpf_lwt_seg6_action, struct sk_buff *, skb,
+ 			return -EBADMSG;
+ 		err = bpf_push_seg6_encap(skb, BPF_LWT_ENCAP_SEG6,
+ 					  param, param_len);
+-		if (!err)
+-			bpf_update_srh_state(skb);
++		/* The header can be in place although err says otherwise */
++		bpf_update_srh_state(skb);
+ 
+ 		return err;
+ 	default:
 -- 
 2.53.0
 
