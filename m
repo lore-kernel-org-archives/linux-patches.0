@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021816;
-	b=oiTWTEduTkVA7+i+9e5apsA6ikUs9gDJjAIPPMyAfsBDdKfaB1Ri8/vZ8jbOyHp32aQa
-	 SaRQ8pRT4o8sAojPQ44Ht7CuT6+QnvX/LDXEzDEy2ALBOo7SZGd9WKnsemnaewodrxczl
-	 BwprUtyf5n32NFVHRp6rA5qgw4DT0pgl3KNCruEaECso2LnjILlzSQtkvWgTe0OM9jMyq
-	 LN6kmlmC/i6VOFFv8aXODuIBlmFourJX9HH/EpHjQe5kToWlTIBn3qYXLn8MrEQvN/IwS
-	 /yPdu2YXS7wP7ntmPOgUSkwV2hqRmR0t1KTK/y/taL7CwvNltcL8O1C9c8/2MADupKQ==
+	t=1795021819;
+	b=j6Hs7Uk71ESUu+HKkCeZ2dj71x6riKnvn4LlfZsxQiyoMHUc6u0Dp230zDN4SU1CdZXk
+	 JP46yJMYHh/nMcbY9JjgN/gsBAGSZhdbNG+0NUlllWFB/V0QEL2N3j3Bq9QlqOG/dVCJC
+	 si80ibJFKyGChDP1uoLd3kOT9Nf5eHNCMa6upb6uqlLwqEJ4A/XyJzbEP4xyza2K4bSBL
+	 2zKDK4CTCv1qP5WE8Ru1MhZXaZlCXmw+SYotMy13lDRXAYLAQkIpaxdBajMw/ahN3JVPD
+	 b9jnbpHsdV5zgRWsORk1cjnA7m22kosHYV+pdJfjqwvzZVMJneRVpjVa10z/uC97rzg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021816;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021819;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AdupU9nFVYykFkfD395wXNsWJcBJ/FrRBwH+mO8q7co=;
-	b=Nc0k2FtNQ8FoNN8ySiVepFcW+zl6pTzS0/LynotA2r1YrvzBuBV6GitEoYUzY8f8WJQA
-	 /ZrGL4REwpG4mvDd8soUU2Ek24FqDawIBj3y1LtZDtQjH/Ur6ss6K8K6V27HcyNZAPIr5
-	 UGDHjXkoiT/eYpkvF6okbATi+yYmJVHhnnwNBmF35VPRs8L0q+x6/kMK3zB/hNx7Cg8Yi
-	 7AwkaLZgBjx+aVXcNr+eSxYnFEBl5pxTyOOavEdBRfhH/WiEKu3gSHVppbf3dL7xWtJO3
-	 2y+f51UZ4k7LMuubkE1KsR+jgFL0HLLWFscs7WlMZbeqcP4ynhkYGffcEfFDtkIBaLw==
+	bh=c0poLMors2mpLuGM9V9JRBZfOLMOHz0G7sdgo6Hy5qk=;
+	b=sTjB1uSBk7gStTr16/JyxQk5nlFLmY5oNgSdewe+O8ar6IIiwtR93m/Glbw3+iIjMsWz
+	 oDFP9MUkH5DIx9L5EwoE3Avb3znFeVD832HuhHC5zUTv+H+Kol7Z73i0AzkSDLDPmA+0Y
+	 2A8HWMDupf8ES76ZJUXKO/u3UpgLyV4HJcdwDD87bBuxMr8WyCHlRs3abxJTKUwQO5whU
+	 /HnVPdjS7u8kQZPAApDu+tc9FhcLr0R3hNVukssvvJr4rqghzAh0tMNTdcIDCx4fAl9QI
+	 ridda1cRQtnhVUlfm0M7ze+0EFjyT+FyS8JNlzWqwemNJ5A1GKnZ7eM6ib2Lq4GR1lw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="0Hp0qtX/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ZFMqX//C";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF6D606A31C;
-	Wed, 18 Nov 2026 17:10:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F8F6606A31C;
+	Wed, 18 Nov 2026 17:10:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Hp0qtX/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB1FE1F000C6;
-	Wed, 18 Nov 2026 17:10:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZFMqX//C
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97ACB1F000C4;
+	Wed, 18 Nov 2026 17:10:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021816;
-	bh=AdupU9nFVYykFkfD395wXNsWJcBJ/FrRBwH+mO8q7co=;
+	s=korg; t=1795021819;
+	bh=c0poLMors2mpLuGM9V9JRBZfOLMOHz0G7sdgo6Hy5qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Hp0qtX/2D08FGv8lZik0xySUG2/oNoksSLEuq+4tsMrk+6wsWWf60vEFWCpgF57o
-	 5YikooFcB7UwJ+2NohsHJg6DvJOzmsDTk9bNP7e+jMVuVAzamEX0hD16vTSc8KFnWx
-	 11u2s1AuYmt7MBo9aWO6cFVXz6puQEflb2HtRjSU=
+	b=ZFMqX//CdXFS4v8GaZqhCalud/oGYDEfw6SkiMQeIH6fEm/+Gd5/+3LO/CP2UgTUk
+	 DieKeevNq/TIO9Az/Ii4hsde4sYd896RBAU1N9djhrIGmGGubrqttebHkqzmaCg3cs
+	 bRM42IxxIHDj5MxLVw+ICWE0d+1jXKfIwrpV5dkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Zhang Yi <zhangyi@everest-semi.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2440/2651] ASoC: codecs: wsa881x: Fix shared powerdown GPIO handling
-Date: Wed, 18 Nov 2026 16:01:20 +0100
-Message-ID: <20261118150413.014430442@linuxfoundation.org>
+Subject: [PATCH 7.3 2441/2651] ASoC: codecs: es*: Modify the registers related to ALC RECOVERY
+Date: Wed, 18 Nov 2026 16:01:21 +0100
+Message-ID: <20261118150413.044661315@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,104 +69,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Zhang Yi <zhangyi@everest-semi.com>
 
-[ Upstream commit c80f86ed857e21dcdd389559d3e62bf53ff39f9a ]
+[ Upstream commit dd64271fe1b935252cf454a72a558cbdb7be57c5 ]
 
-On Qualcomm RB5 both WSA8815 speaker amplifiers share a single powerdown
-GPIO (TLMM 130), which is handled by the shared GPIO proxy. Since commit
-b30973e8c392 ("gpio: shared: make the voting mechanism adaptable") the
-proxy treats the value set by the first user on request as the default
-and lets any single user vote for the opposite value.
+The register related to "ALC Capture Recovery Level" is ES8326_ALC_RECOVERY,
+not ES8326_ALC_LEVEL.
 
-The driver requests the GPIO de-asserted (GPIOD_OUT_LOW), so powering the
-amplifier up became the default and asserting powerdown became the
-winning vote. Once both amplifiers are runtime suspended, resuming them
-deadlocks: the first one releases its powerdown vote and waits for
-SoundWire enumeration, but the line stays asserted, because the second
-amplifier is still suspended and votes for powerdown. The wait times out
-and playback fails:
-
-  wsa881x-codec sdw:1:0:0217:2110:00:3: Initialization not complete
-  wsa881x-codec sdw:1:0:0217:2110:00:3: ASoC error (-110): at snd_soc_pcm_component_pm_runtime_get() on sdw:1:0:0217:2110:00:3
-
-Request the GPIO asserted, so that powerdown is the default state and
-the line is de-asserted as long as any amplifier needs to be powered,
-then de-assert it to power up the amplifier as before.
-
-Also use gpiod_set_value_cansleep() instead of gpiod_direction_output()
-in the runtime PM callbacks. The line is already configured as an output
-and the proxy resets its default value when the direction is set while
-it has only a single user, which can happen if the other amplifiers have
-not been probed yet.
-
-Fixes: bfa336cee332 ("ASoC: wsa881x: Move custom workaround to gpiolib-of")
-Fixes: b30973e8c392 ("gpio: shared: make the voting mechanism adaptable")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://patch.msgid.link/20261022090923.769464-1-m.szyprowski@samsung.com
+Fixes: 5c439937775d ("ASoC: codecs: add support for ES8326")
+Reviewed-by: HyeongJun An <sammiee5311@gmail.com>
+Signed-off-by: Zhang Yi <zhangyi@everest-semi.com>
+Link: https://patch.msgid.link/20261026054837.13618-2-zhangyi@everest-semi.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wsa881x.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ sound/soc/codecs/es8326.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/wsa881x.c b/sound/soc/codecs/wsa881x.c
-index 47ac3e4985a56..4f3e6bc29c7ec 100644
---- a/sound/soc/codecs/wsa881x.c
-+++ b/sound/soc/codecs/wsa881x.c
-@@ -1115,11 +1115,19 @@ static int wsa881x_probe(struct sdw_slave *pdev,
- 	if (!wsa881x)
- 		return -ENOMEM;
- 
--	wsa881x->sd_n = devm_gpiod_get_optional(dev, "powerdown", GPIOD_OUT_LOW);
-+	/*
-+	 * The powerdown GPIO may be shared between several amplifiers. Request
-+	 * it asserted, so the shared GPIO proxy treats powerdown as the default
-+	 * state and keeps the line de-asserted as long as any amplifier needs
-+	 * it, then power up this amplifier.
-+	 */
-+	wsa881x->sd_n = devm_gpiod_get_optional(dev, "powerdown", GPIOD_OUT_HIGH);
- 	if (IS_ERR(wsa881x->sd_n))
- 		return dev_err_probe(dev, PTR_ERR(wsa881x->sd_n),
- 				     "Shutdown Control GPIO not found\n");
- 
-+	gpiod_set_value_cansleep(wsa881x->sd_n, 0);
-+
- 	dev_set_drvdata(dev, wsa881x);
- 	wsa881x->slave = pdev;
- 	wsa881x->dev = dev;
-@@ -1154,7 +1162,7 @@ static int wsa881x_runtime_suspend(struct device *dev)
- 	struct regmap *regmap = dev_get_regmap(dev, NULL);
- 	struct wsa881x_priv *wsa881x = dev_get_drvdata(dev);
- 
--	gpiod_direction_output(wsa881x->sd_n, 1);
-+	gpiod_set_value_cansleep(wsa881x->sd_n, 1);
- 
- 	regcache_cache_only(regmap, true);
- 	regcache_mark_dirty(regmap);
-@@ -1169,11 +1177,11 @@ static int wsa881x_runtime_resume(struct device *dev)
- 	struct wsa881x_priv *wsa881x = dev_get_drvdata(dev);
- 	int ret;
- 
--	gpiod_direction_output(wsa881x->sd_n, 0);
-+	gpiod_set_value_cansleep(wsa881x->sd_n, 0);
- 
- 	ret = sdw_slave_wait_for_init(slave, WSA881X_PROBE_TIMEOUT);
- 	if (ret) {
--		gpiod_direction_output(wsa881x->sd_n, 1);
-+		gpiod_set_value_cansleep(wsa881x->sd_n, 1);
- 		return ret;
- 	}
- 
-@@ -1182,7 +1190,7 @@ static int wsa881x_runtime_resume(struct device *dev)
- 	if (ret) {
- 		regcache_cache_only(regmap, true);
- 		regcache_mark_dirty(regmap);
--		gpiod_direction_output(wsa881x->sd_n, 1);
-+		gpiod_set_value_cansleep(wsa881x->sd_n, 1);
- 		return ret;
- 	}
- 
+diff --git a/sound/soc/codecs/es8326.c b/sound/soc/codecs/es8326.c
+index 32f39cdff79d8..61396671cf9f3 100644
+--- a/sound/soc/codecs/es8326.c
++++ b/sound/soc/codecs/es8326.c
+@@ -264,7 +264,7 @@ static const struct snd_kcontrol_new es8326_snd_controls[] = {
+ 	SOC_SINGLE_TLV("DRE Gate Volume", ES8326_ADC_DRE_GATE,
+ 			4, 0x07, 0, dre_gate_tlv),
+ 	SOC_SINGLE("ALC Capture Switch", ES8326_ALC_RECOVERY, 3, 1, 0),
+-	SOC_SINGLE_TLV("ALC Capture Recovery Level", ES8326_ALC_LEVEL,
++	SOC_SINGLE_TLV("ALC Capture Recovery Level", ES8326_ALC_RECOVERY,
+ 			0, 4, 0, drc_recovery_tlv),
+ 	SOC_ENUM("ALC Capture Winsize", alc_winsize),
+ 	SOC_SINGLE_TLV("ALC Capture Target Level", ES8326_ALC_LEVEL,
 -- 
 2.53.0
 
