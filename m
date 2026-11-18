@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017408;
-	b=GnXFZ9qttKT/kvrIkugKDeVAXtqcmff8Wg6FAB6xzEoQC49VWFKvYfxBzdzK9f2C2qVY
-	 jhJ+qLFkf0g//v8pLOa634oYt7ph2lVhZf1BCql2VZCITesLBGHmfSWsvyKm1K0L6ASrB
-	 6rbWB1wWKQ2bkL8a15W6XQa4chJCOcoq7INHKTYQqiaUZAGDhVIPyJPSdJ9zJv0p2WKel
-	 VYZeN4KMsZWCSAPureS8uIWFgqiglcq9/QCqzDSE7RdQL8dacptmCbTjp8BUKpmo+fmWI
-	 qmqhOFSxkWx247xXNVbFTWc1tudjLV0Mqg9v9cBdiG3g7iukSm+3BnR8LvgQN0oxBnQ==
+	t=1795017411;
+	b=P9AZyhBZTYMRwL3xKqqnnDIcYvoCm79vz2unew6AY/Fqt0HBgEvTabkB/HlWX6b/mPZI
+	 Ni3yJfG/5U444wBqFOy52sFqmkpN3iVlgRAgwDm94nLqLkhee/r0pFAWRkUhDdF2sqkEq
+	 kXvHfp2uXq8CqQ97FIggC83PFEMm20fJV7LqQBipTuldw3KSdVhdGNMXxlYZI9vB3Ark+
+	 YY+CdiUHOuBrWEm+bvEYWjg9a4v/99OeEz9DLv/cQwJZy+b6wP0wsqcDiCGKv2eoRRgZw
+	 SMOJ+4v/crvDq2Kvyq5jGBraRliRTonDZVhNpcyDcq0zkNqpLmS7Z8iwt63zlRNpokg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017408;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017411;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YVctWswJRC1CkKQnP3MbLb2ZVzikFjGsUybzSBXtMpY=;
-	b=vCMYBls5c0cThd3m/Wpo+L1HfRJiZzYsI+ZAtcCJNKmSTCjY1Cy0D0bSp1fJlrzBfA2X
-	 /Lk2k6HysKArdyAnUPicle0XX1AwZ2PiY52SdHLNBIHA0Mj8X8k60xba1lyIw1THPSYCl
-	 W9S0gdNa8AUlCBw56zrl4J6SgJR95OJK2TGivgDjG7xhQ4H5dZMeA0mmkvuyYW75MZ/mM
-	 Di3OqdFbeKQU8zk1CQpdItTjI0SCrh4x0xWWpJ5lCu/wYtnrWBooWk3fMRpVP795ioQSE
-	 iIR0oOPLcPF587w5JtcfZAIr2wy6kkcK+4tPYYlYMyjg6XvHuKPYk6hExUUEoN2EbgQ==
+	bh=luGQfw48PCqZSaeaYYAyKFp0YotEZF75epvXAJGAkWo=;
+	b=RDtgG91ltn+WYVT0rhQJ+mmyJ6oyz62U9O8Uw8NQmcvJ62gUPQO3WVcEuULHLB3/2hyF
+	 8YPDurOXPIJueornF+bHiyPtX8kLevHyP00vPzd8+J+iAC1HsQSuDeCftH5kzqbuVk7ts
+	 dGEDZGgK/wcUv6Orvbe41zGl4y45pD6lw1SC3xsRem/lABXC/YHa5B8J+uL1GkjLJklgp
+	 i39Fh3wCGt7mA6hg5GmNbj1VeSqenJQ+xcYXoaXPjfvMQRRZURIJJHc7KI3sTOvRRsakJ
+	 0CoobgUezFP0VQODpMCEzMJ1JycV2igVqmHG7puPpRDCTuTlhtU/TlIAgggrwUkmVXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vAKU561l;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ECcPWmm7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A63606A31C;
-	Wed, 18 Nov 2026 15:56:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 369DB606A325;
+	Wed, 18 Nov 2026 15:56:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vAKU561l
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F371F000C5;
-	Wed, 18 Nov 2026 15:56:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ECcPWmm7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 595521F000C4;
+	Wed, 18 Nov 2026 15:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017408;
-	bh=YVctWswJRC1CkKQnP3MbLb2ZVzikFjGsUybzSBXtMpY=;
+	s=korg; t=1795017410;
+	bh=luGQfw48PCqZSaeaYYAyKFp0YotEZF75epvXAJGAkWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vAKU561l5GJiVCoBuHiuhQ9Iz4kHfkgeaSzYvgfpnrSFlzLKl9WJ+TusjqyDUop33
-	 FIwj8FhvgBrBDu8GEylqhvdxGRCvZVBj//xDIdyn/M8ALPMSI1jZkTZhjNipoD/sO9
-	 XsQkI2LJ6aAZ1RAFqVSwL1/WKzSKWex98sVIJDFQ=
+	b=ECcPWmm7BIObc481zSKN3ODVIycH7nBC75R4hi7HvEsp9MHC8vluuOsQuhk6+8JRg
+	 y5snizWFVTZj5LPA/G504XWZgmr5e13zfmnZ8jTJN7Qf4kBePwLT3cu+F01h+tbmSP
+	 ZPsWkjj+iFTnRl7iqtv5JSnxqs2IibTaUaaIz2YM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huisong Li <lihuisong@huawei.com>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0867/2651] ACPI: PCC: Free channel on OpRegion deactivation
-Date: Wed, 18 Nov 2026 15:35:07 +0100
-Message-ID: <20261118150319.069686292@linuxfoundation.org>
+Subject: [PATCH 7.3 0876/2651] arm64: dts: qcom: lemans-ride-common: fix SerDes PHY regulator supplies
+Date: Wed, 18 Nov 2026 15:35:16 +0100
+Message-ID: <20261118150319.393335561@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,56 +70,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@kernel.org>
+From: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
 
-[ Upstream commit fa9c7ee692988edddc1da74bc5257d53dd3c7130 ]
+[ Upstream commit 0d567fb7def9564d15c334ec0fa5f5f6a0114ffa ]
 
-ACPICA calls the address space setup callback with
-ACPI_REGION_DEACTIVATE when a PCC OperationRegion is torn down.
+Both SerDes PHY nodes were configured with 'phy-supply = <&vreg_l5a>',
+which was incorrect on two counts: vreg_l5a is not a supply the PHY
+requires, and only one rail was described where the hardware needs two.
 
-The PCC setup callback currently allocates a fresh pcc_data and requests
-the mailbox channel before looking at the function argument. If ACPICA
-deactivates a region, this can leave the existing region context and
-mailbox channel unreleased, and may also request a channel during
-teardown.
+The PHY requires vdda-0p9 (vreg_l4a) and vdda-1p2 (vreg_l1c). Replace
+the incorrect phy-supply with these two named properties on both nodes.
 
-Handle ACPI_REGION_DEACTIVATE before allocation. Free the PCC mailbox
-channel, release the region context and clear the context pointer.
-
-Fixes: 77e2a04745ff ("ACPI: PCC: Implement OperationRegion handler for the PCC Type 3 subtype")
-Reviewed-by: Huisong Li <lihuisong@huawei.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
-Link: https://patch.msgid.link/20260922144302.3847593-4-sudeep.holla@kernel.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 5ef26fb8b3ed ("arm64: dts: qcom: sa8775p-ride: enable the SerDes PHY")
+Signed-off-by: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260804-b4-sgmiieth_serdes_regulator-v2-4-c4bc688177dd@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_pcc.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/acpi_pcc.c b/drivers/acpi/acpi_pcc.c
-index 9881c9ee293d1..57d13b25c1d6b 100644
---- a/drivers/acpi/acpi_pcc.c
-+++ b/drivers/acpi/acpi_pcc.c
-@@ -55,6 +55,19 @@ acpi_pcc_address_space_setup(acpi_handle region_handle, u32 function,
- 	struct pcc_mbox_chan *pcc_chan;
- 	acpi_status ret;
+diff --git a/arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi b/arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi
+index 144f117ba5116..72f7457047222 100644
+--- a/arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi
+@@ -856,12 +856,16 @@ &qup_uart17_rx {
+ };
  
-+	if (function == ACPI_REGION_DEACTIVATE) {
-+		data = *region_context;
-+		if (data) {
-+			pcc_mbox_free_channel(data->pcc_chan);
-+			kfree(data);
-+			*region_context = NULL;
-+		}
-+		return AE_OK;
-+	}
+ &serdes0 {
+-	phy-supply = <&vreg_l5a>;
++	vdda-0p9-supply = <&vreg_l4a>;
++	vdda-1p2-supply = <&vreg_l1c>;
 +
-+	if (function != ACPI_REGION_ACTIVATE)
-+		return AE_BAD_PARAMETER;
+ 	status = "okay";
+ };
+ 
+ &serdes1 {
+-	phy-supply = <&vreg_l5a>;
++	vdda-0p9-supply = <&vreg_l4a>;
++	vdda-1p2-supply = <&vreg_l1c>;
 +
- 	data = kzalloc_obj(*data);
- 	if (!data)
- 		return AE_NO_MEMORY;
+ 	status = "okay";
+ };
+ 
 -- 
 2.53.0
 
