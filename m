@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055920;
-	b=eDStur1ldmTkD2W0p4zJCpM/YD2IzDICBtyI6HpCyV4GnTvwK9Q9bzELRzM7JYg0KfPG
-	 O/QjAXXnom4TaobTvm89My9BlIKlDWMzG8j1FX4M3XZ/xUU4JEdSQq7rYevYzs4UFog6P
-	 Oq4zR2qkn1iAJ5vvaTYetp9Voy7YWdw127ufDkUd2GKsiTS95eXdds4Bx3xig4lKp0fRS
-	 +ERelwtTgSpdeFaJMshlaRWh+pWN1KPL/E93xZTSDzo5vNp5e/sqitmysQ5E0crgFmf/C
-	 6xA4FCfn7MRpBnbIEqSacnxVySTPAthspuc1hw+pXrTdHb+WzgxQ2K3qAnNgTmIcN0Q==
+	t=1795055923;
+	b=dj5gFdn92lVI5MY3DVlCyQZNtwQiSUDiwWHGABZd89JRX2em2rVg9y9bDhzHBDPPqobI
+	 ZHY2I+fXmzLMy+2rVaaZQYkeykqNjgSzGUpmAIs1b/0+NYr9Pb1eMC9VHTiO21SOCw8cQ
+	 hKwIuVPZIsrfDZ/O6OpwP9xTmfNtspOY/wZVQgwQc0EUhvXzjCJHRjTcUVydnJH/Eg3RU
+	 OXM7I2mCiJNBRbtsXvIWQ3yg2j4pI1ndIjW/yFPtaigW9v0F3O3BqJNeMM7De2Dw3Lw1K
+	 pq1DQVYxkMK5mQgAvGFw3yjL+y0o0oiepkvYMld0bKpseqTRCBk82BMmBCxuA1D717Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055920;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055923;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=KpitsH2PicZPq/u7TXx8PpS98zn0CQvUPWF5S4nhPAc=;
-	b=RFnBtduqFRIX90D6eL06ppYlNZjof/AL9GWfBbrE9ZAQfYnYpHnAxECGvQSdeJ2ayo/4
-	 7e1pNGk3c34gwW0J5x02dVwL3hUtMuQoCdUwtnIP4PECi6nZ6/GagoYTW2mG1e8Cix5px
-	 ENhts1+kF6UqxSoUK7nnmjPltyWGcJHbHNdpwmREVZz38faV9p+FcytC4PZAFYlhyI//w
-	 YmmZR3jsRQR/LXoFy03TCL3Xk5HZG7A9EoN21ZC/WigDYG1e57CTJ6oQ5hVwfRm9bgGTP
-	 h7G+KYu8CC/gJqhC4nEBFQKPRYxqpl24caKEw0M5KLUic/MFZ6kovr4uxB4bzSprtxQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=7SXQ2BGJCCEezEiJ5tdzP+PZXW/1obqdzD3249PDp1c=;
+	b=3d8pKtRS9bTQ86mHO9hK3U7ik0+uBb4F2lL8W20UuJ2mK4Rz9kOe/lIiiBKgXlgtvHV2
+	 s+Vq1nNERVrBRMHcj6UK99Mw5vZfYC+yWY3t+8pBck+tdzdPV6+H0WJJ5IYaRruoK3Gz5
+	 LW2KipPl5omjr3eUu+a76G5MnRen40I07vPZoJHbZ1BRM/WtbF6cAO5cAuGtnL8pYpN94
+	 XtVBYMH9ybaecBXs5+5yXT6niGUMKdtJdEZSckRcOMU+ouLkKo3Ay2L34t3yFwV1eLbKm
+	 XCmycqWhuwrgMksd9SpgtguLgp3WZEj2D9o3CJHFZuq46/WozIRGw3LRTIMAy1QZBaA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jU0LC3Ek;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="RQ+kTM/O";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65628606A320;
-	Thu, 19 Nov 2026 02:38:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403E6606A320;
+	Thu, 19 Nov 2026 02:38:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jU0LC3Ek
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6D5B1F000C4;
-	Thu, 19 Nov 2026 02:38:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RQ+kTM/O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 913041F000C4;
+	Thu, 19 Nov 2026 02:38:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055920;
-	bh=KpitsH2PicZPq/u7TXx8PpS98zn0CQvUPWF5S4nhPAc=;
+	s=korg; t=1795055923;
+	bh=7SXQ2BGJCCEezEiJ5tdzP+PZXW/1obqdzD3249PDp1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jU0LC3EkOJiwT5Y9OxpQ/HwOJkE7eNbNErS4v6KM6jWzO5K/OwOP9viI+/naTGEEt
-	 zLwrr9ekadl0b2lCJXubEOtLFEcteY5i7IMGhtmp9oaJuaxoQqVRZXwTXkaDU7FIUb
-	 TCKFFdyOffQ0pkCJyFL2degbNQyIiKlnPbQNZQvo=
+	b=RQ+kTM/OEL+WfPoC+VZVdbsNo8sRkfgrERsqpq/rv9UMRID87g0W4bFVz4AcRWZKZ
+	 2abSD6GXb1/l2YrfNdAgzUKfEYfMiPBvyMaxFcWxuAXTtWc1BN3Ra5nNsWUY3gyyHP
+	 PQklkbLvIkRpnwVDfneDM5PO3elUkzbz/lDtDRuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1802/2214] ASoC: mediatek: common: Handle constraint return value in FE startup
-Date: Wed, 18 Nov 2026 15:57:58 +0100
-Message-ID: <20261118150123.588842558@linuxfoundation.org>
+Subject: [PATCH 5.15 1803/2214] PCI/sysfs: Stop reporting _DSM failures as -EPERM
+Date: Wed, 18 Nov 2026 15:57:59 +0100
+Message-ID: <20261118150123.629279044@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -63,61 +62,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Krzysztof Wilczyński <kwilczynski@kernel.org>
 
-[ Upstream commit 5fcdb40a4776cc6f8d3179aa9cf9663fc18c7861 ]
+[ Upstream commit 36f9bd09920ed71c1b79db397170412b2de22319 ]
 
-snd_pcm_hw_constraint_integer() may return 1, which is then returned
-from mtk_afe_fe_startup(). ASoC only treats 0 as success when marking
-the DAI as started, so .shutdown() can be skipped on rollback.
+Currently, dsm_get_label() returns the literal -1 on every failure path.
+The sysfs read path passes that value to userspace as -EPERM.  Reading the
+"label" or "acpi_index" attribute on a platform where the Device Name _DSM
+returns a malformed result then fails with:
 
-Return 0 explicitly on success.
+  $ cat /sys/bus/pci/devices/0000:00:08.3/label
+  cat: /sys/bus/pci/devices/0000:00:08.3/label: Operation not permitted
 
-Fixes: 283b612429a2 ("ASoC: mediatek: implement mediatek common structure")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20261007110858.509341-2-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Nothing in that path performs a permission check, and the read fails the
+same way for a privileged reader.  The error code points at a cause that
+does not exist, and tools such as lspci report it on every invocation.
+
+Return -ENODEV when the device has no ACPI companion, and -EIO when the
+_DSM evaluation fails or returns an object that cannot be parsed.  Other
+_DSM users in the tree report such failures the same way.
+
+The set of reads that succeed, and the bytes they return, stay the same.
+Only the error code of reads that already fail differs.
+
+Fixes: 6058989bad05 ("PCI: Export ACPI _DSM provided firmware instance number and string name to sysfs")
+Link: https://github.com/pciutils/pciutils/issues/175
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260814070522.2327975-2-kwilczynski@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/common/mtk-afe-fe-dai.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/pci/pci-label.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/mediatek/common/mtk-afe-fe-dai.c b/sound/soc/mediatek/common/mtk-afe-fe-dai.c
-index e95c7c018e7d4..2b0ca330af939 100644
---- a/sound/soc/mediatek/common/mtk-afe-fe-dai.c
-+++ b/sound/soc/mediatek/common/mtk-afe-fe-dai.c
-@@ -75,8 +75,10 @@ int mtk_afe_fe_startup(struct snd_pcm_substream *substream,
+diff --git a/drivers/pci/pci-label.c b/drivers/pci/pci-label.c
+index c224619b9a266..17f1bc0cf458e 100644
+--- a/drivers/pci/pci-label.c
++++ b/drivers/pci/pci-label.c
+@@ -160,12 +160,12 @@ static int dsm_get_label(struct device *dev, char *buf,
+ 	int len = 0;
  
- 	ret = snd_pcm_hw_constraint_integer(runtime,
- 					    SNDRV_PCM_HW_PARAM_PERIODS);
--	if (ret < 0)
-+	if (ret < 0) {
- 		dev_err(afe->dev, "snd_pcm_hw_constraint_integer failed\n");
-+		return ret;
-+	}
+ 	if (!handle)
+-		return -1;
++		return -ENODEV;
  
- 	/* dynamic allocate irq to memif */
- 	if (memif->irq_usage < 0) {
-@@ -88,10 +90,10 @@ int mtk_afe_fe_startup(struct snd_pcm_substream *substream,
- 		} else {
- 			dev_err(afe->dev, "%s() error: no more asys irq\n",
- 				__func__);
--			ret = -EBUSY;
-+			return -EBUSY;
- 		}
- 	}
--	return ret;
-+	return 0;
+ 	obj = acpi_evaluate_dsm(handle, &pci_acpi_dsm_guid, 0x2,
+ 				DSM_PCI_DEVICE_NAME, NULL);
+ 	if (!obj)
+-		return -1;
++		return -EIO;
+ 
+ 	tmp = obj->package.elements;
+ 	if (obj->type == ACPI_TYPE_PACKAGE && obj->package.count == 2 &&
+@@ -190,7 +190,7 @@ static int dsm_get_label(struct device *dev, char *buf,
+ 
+ 	ACPI_FREE(obj);
+ 
+-	return len > 0 ? len : -1;
++	return len > 0 ? len : -EIO;
  }
- EXPORT_SYMBOL_GPL(mtk_afe_fe_startup);
  
+ static ssize_t label_show(struct device *dev, struct device_attribute *attr,
 -- 
 2.53.0
 
