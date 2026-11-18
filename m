@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042158;
-	b=EQJa+W2K3hLxhD9zizA/m+rt8gRGpe0bbsfzgkzakvkDOdTdVN2vpzcVA0u+nBVZILZC
-	 TdEy6dUjc6LTeJuG2X3FpeqBBtEGMpJ5qZ71+dRXCZzDQ4XjBA8nbEbrR5xKtRYLdqTFA
-	 8JJ/b1UeaKzkIHn7GqavmYSPMr9u1feRJrXdFuXtpI3MMJmxHrkXueb960M/cibq6Al14
-	 dN953ILSc/tAJ7tLC+suQMZsmN+ZRx0vZlAS4LBkZ3wkga0q8DtOwXfzrxLQ1j5sRQF1A
-	 +AvIY3Z5RnFqvqHpkqTgJ6hZ3sfmbG6XStTWDy+iRIfbW4LGwf9Nbd46PosJI1s9I9Q==
+	t=1795042160;
+	b=h6grLAhfueDGNPwkDnq/rDxQJflLQj+3zk3Wy6Bn/Gct8OcakqGRgOFWyINQDLATSA9O
+	 MqUI7To0aVrfwQdu36UXXTiCPb0Ol2PNcWNhtdprJD99IcYlWeBZ3oxNRwtzp4M5eeEnQ
+	 /kKxBvUuXtwYWPO/MlQqCb7EJf3RTj+LdVGT2+U22u2YKiYvaMUaS2gBhFo5XIgE8Ribc
+	 9jYc7GREBoRHBwOhRXvpDtf0rwy0HeMtHeOE0TzKe0kC4ub8FtvrIPCeeYbQULx3b4G/V
+	 8+Zy3mIn5OvAnQVi9OPMAiAbowk61nMThfDxhTTJUunpfA6/qaD2obSbttGklCCEpCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042158;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042160;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QWU2Ualjq9Iw0KOmrON8KNw6RNdw8mNUdlzI1thPnAE=;
-	b=iXi3ATx8AGBuzg9VCgH/Fwzm4lLNm2D72wn8+Jn2ThYSnl7Ax7COISgD1er5cgxU1Dp6
-	 KdKavsbN2VnSxOJFozYpn/C0r8DHT1opGTmTMB+vB5xNBFeF0dcjgcmGOV54DE8+snxev
-	 yxGkQH8e8/0UUXPh1Ss9MCzZ6DPaQ98mn7A10dxP2R/8aV39SHDr+EQbovHwg2VmyFgmb
-	 G9NU27lkfKX3JjMHXF8dW+azGUFOAgwZI0Er28QuvOGMj0IFfwzcQE7widKv73caiiMrY
-	 zdVHFB6nC62jektfvmO8M7EwcouxI/8msTup/dvRzesVk4U9ih18v/dEKlrb3C15wAg==
+	bh=ane08XMsmcKi5IWfqKWEGv/M5wtpgyXLdCOqzzaG/d0=;
+	b=ggl3fYC/n9qZtNeQBBRvdzJAlegmiZla+O9ZztiYUO8nwyNmPwPkYuDm0gntXMUFV4E4
+	 9+rDtq7XshdC8D8x+hVo0VGjD6+6YBFuE1mF5LS2mce0EVISEnmZwmftIoUqgeGqFT50D
+	 sdNFhzxKYYX9EOB6QrMLHgYl0zwpQtktprA2GoKAWzGD+T2Y2f6Fwqo5CWRFxHpKpdm/F
+	 KjfY7kvRLag/yEfG/3laol5VisNYXcAPV/+3DCRLUNURpl3yiOB7AOd0LI79bP4XIhYN8
+	 colBrFUsJ0N//UxQgYuaSzsLc5hEtH5lV5f1x75/+GkdZZ6+ErnNo8jC4olXD+LJ0XQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MfIYasOT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YeiKu8YP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A12606A31C;
-	Wed, 18 Nov 2026 22:49:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C8D606A325;
+	Wed, 18 Nov 2026 22:49:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MfIYasOT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F4D71F000C4;
-	Wed, 18 Nov 2026 22:49:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YeiKu8YP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 132F11F000C4;
+	Wed, 18 Nov 2026 22:49:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042157;
-	bh=QWU2Ualjq9Iw0KOmrON8KNw6RNdw8mNUdlzI1thPnAE=;
+	s=korg; t=1795042160;
+	bh=ane08XMsmcKi5IWfqKWEGv/M5wtpgyXLdCOqzzaG/d0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MfIYasOTx4jLFOKA5lMptcbkWmZAz+k02akCQuuf8BXf2sph09ZPOvSYRmBUbLrh6
-	 4xCC6uH3cD4h2TCP5LqBZ3AgJBlTvTgYc3Z4qaPih35+Sm4XLmL183RntoPwon06dA
-	 YAv8OsyM//slcPSrbVprbTMGTaadcVm3jIvrguxk=
+	b=YeiKu8YP/YU3OJ6Guq71GQb9hTArLizqoXUusivLmZjmJpep8eNBlJ948M/3ryWFg
+	 zXor7FTfToetXFooQF1CdD5eSPnm0nWf8DUfCkzorPSfwBxfU43DIyzbJCvo5ii+9Q
+	 wpLn5ogClVmtORBzO9YL/RI89TUAJHyeZvAtA9pc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3029/3318] ASoC: codecs: sta350: Fix definition of limiter threshold controls
-Date: Wed, 18 Nov 2026 16:00:51 +0100
-Message-ID: <20261118150451.058740511@linuxfoundation.org>
+Subject: [PATCH 6.6 3030/3318] ASoC: codec: tlv320aic32x4: Add enum aic32x4_type to aic32x4_probe()
+Date: Wed, 18 Nov 2026 16:00:52 +0100
+Message-ID: <20261118150451.086601831@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,65 +69,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit 77623752c156763d7a80414afe5b769ba4532bd3 ]
+[ Upstream commit cac1636e214930b01b2f8ac9867771486554271a ]
 
-The limiter attack and release thresholds are the two 4-bit halves of
-one register, so their maximum is 15, not 16. With 16 the controls on
-bits 3:0 also write bit 4, which belongs to the other threshold.
+Add enum aic32x4_type to aic32x4_probe() and drop using dev_set_drvdata()
+from tlv320aic32x4_{i2c,spi} drivers.
 
-Fixes: 2439ea1f0f8f ("ASoC: sta350: Add codec driver")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/d65a21665a1e0d63dec174dd3691bd97764b8ae0.1792135145.git.sammiee5311@gmail.com
+Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20230831194622.87653-2-biju.das.jz@bp.renesas.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: f28c09b7e62f ("ASoC: tlv320aic32x4: Fix definition of TAS2505 HP Driver Gain Volume control")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/sta350.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ sound/soc/codecs/tlv320aic32x4-i2c.c | 7 ++++---
+ sound/soc/codecs/tlv320aic32x4-spi.c | 7 ++++---
+ sound/soc/codecs/tlv320aic32x4.c     | 5 +++--
+ sound/soc/codecs/tlv320aic32x4.h     | 3 ++-
+ 4 files changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/sound/soc/codecs/sta350.c b/sound/soc/codecs/sta350.c
-index c3d407b168539..0f2ff6d5307bc 100644
---- a/sound/soc/codecs/sta350.c
-+++ b/sound/soc/codecs/sta350.c
-@@ -507,28 +507,28 @@ SOC_ENUM("Limiter2 Release Rate (dB/ms)", sta350_limiter2_release_rate_enum),
-  */
- SOC_SINGLE_TLV("Limiter1 Attack Threshold (AC Mode)",
- 	       STA350_L1ATRT, STA350_LxA_SHIFT,
--	       16, 0, sta350_limiter_ac_attack_tlv),
-+	       15, 0, sta350_limiter_ac_attack_tlv),
- SOC_SINGLE_TLV("Limiter2 Attack Threshold (AC Mode)",
- 	       STA350_L2ATRT, STA350_LxA_SHIFT,
--	       16, 0, sta350_limiter_ac_attack_tlv),
-+	       15, 0, sta350_limiter_ac_attack_tlv),
- SOC_SINGLE_TLV("Limiter1 Release Threshold (AC Mode)",
- 	       STA350_L1ATRT, STA350_LxR_SHIFT,
--	       16, 0, sta350_limiter_ac_release_tlv),
-+	       15, 0, sta350_limiter_ac_release_tlv),
- SOC_SINGLE_TLV("Limiter2 Release Threshold (AC Mode)",
- 	       STA350_L2ATRT, STA350_LxR_SHIFT,
--	       16, 0, sta350_limiter_ac_release_tlv),
-+	       15, 0, sta350_limiter_ac_release_tlv),
- SOC_SINGLE_TLV("Limiter1 Attack Threshold (DRC Mode)",
- 	       STA350_L1ATRT, STA350_LxA_SHIFT,
--	       16, 0, sta350_limiter_drc_attack_tlv),
-+	       15, 0, sta350_limiter_drc_attack_tlv),
- SOC_SINGLE_TLV("Limiter2 Attack Threshold (DRC Mode)",
- 	       STA350_L2ATRT, STA350_LxA_SHIFT,
--	       16, 0, sta350_limiter_drc_attack_tlv),
-+	       15, 0, sta350_limiter_drc_attack_tlv),
- SOC_SINGLE_TLV("Limiter1 Release Threshold (DRC Mode)",
- 	       STA350_L1ATRT, STA350_LxR_SHIFT,
--	       16, 0, sta350_limiter_drc_release_tlv),
-+	       15, 0, sta350_limiter_drc_release_tlv),
- SOC_SINGLE_TLV("Limiter2 Release Threshold (DRC Mode)",
- 	       STA350_L2ATRT, STA350_LxR_SHIFT,
--	       16, 0, sta350_limiter_drc_release_tlv),
-+	       15, 0, sta350_limiter_drc_release_tlv),
+diff --git a/sound/soc/codecs/tlv320aic32x4-i2c.c b/sound/soc/codecs/tlv320aic32x4-i2c.c
+index 49b33a256cd72..713f3f63b5e3b 100644
+--- a/sound/soc/codecs/tlv320aic32x4-i2c.c
++++ b/sound/soc/codecs/tlv320aic32x4-i2c.c
+@@ -23,6 +23,7 @@ static int aic32x4_i2c_probe(struct i2c_client *i2c)
+ {
+ 	struct regmap *regmap;
+ 	struct regmap_config config;
++	enum aic32x4_type type;
  
- BIQUAD_COEFS("Ch1 - Biquad 1", 0),
- BIQUAD_COEFS("Ch1 - Biquad 2", 5),
+ 	config = aic32x4_regmap_config;
+ 	config.reg_bits = 8;
+@@ -34,15 +35,15 @@ static int aic32x4_i2c_probe(struct i2c_client *i2c)
+ 		const struct of_device_id *oid;
+ 
+ 		oid = of_match_node(aic32x4_of_id, i2c->dev.of_node);
+-		dev_set_drvdata(&i2c->dev, (void *)oid->data);
++		type = (uintptr_t)oid->data;
+ 	} else {
+ 		const struct i2c_device_id *id;
+ 
+ 		id = i2c_match_id(aic32x4_i2c_id, i2c);
+-		dev_set_drvdata(&i2c->dev, (void *)id->driver_data);
++		type = id->driver_data;
+ 	}
+ 
+-	return aic32x4_probe(&i2c->dev, regmap);
++	return aic32x4_probe(&i2c->dev, regmap, type);
+ }
+ 
+ static void aic32x4_i2c_remove(struct i2c_client *i2c)
+diff --git a/sound/soc/codecs/tlv320aic32x4-spi.c b/sound/soc/codecs/tlv320aic32x4-spi.c
+index 03cce8d6404f8..81c05030dd3bf 100644
+--- a/sound/soc/codecs/tlv320aic32x4-spi.c
++++ b/sound/soc/codecs/tlv320aic32x4-spi.c
+@@ -22,6 +22,7 @@ static int aic32x4_spi_probe(struct spi_device *spi)
+ {
+ 	struct regmap *regmap;
+ 	struct regmap_config config;
++	enum aic32x4_type type;
+ 
+ 	config = aic32x4_regmap_config;
+ 	config.reg_bits = 7;
+@@ -35,15 +36,15 @@ static int aic32x4_spi_probe(struct spi_device *spi)
+ 		const struct of_device_id *oid;
+ 
+ 		oid = of_match_node(aic32x4_of_id, spi->dev.of_node);
+-		dev_set_drvdata(&spi->dev, (void *)oid->data);
++		type = (uintptr_t)oid->data;
+ 	} else {
+ 		const struct spi_device_id *id_entry;
+ 
+ 		id_entry = spi_get_device_id(spi);
+-		dev_set_drvdata(&spi->dev, (void *)id_entry->driver_data);
++		type = id_entry->driver_data;
+ 	}
+ 
+-	return aic32x4_probe(&spi->dev, regmap);
++	return aic32x4_probe(&spi->dev, regmap, type);
+ }
+ 
+ static void aic32x4_spi_remove(struct spi_device *spi)
+diff --git a/sound/soc/codecs/tlv320aic32x4.c b/sound/soc/codecs/tlv320aic32x4.c
+index 6829834a412fc..5c0c81da06dba 100644
+--- a/sound/soc/codecs/tlv320aic32x4.c
++++ b/sound/soc/codecs/tlv320aic32x4.c
+@@ -1333,7 +1333,8 @@ static int aic32x4_setup_regulators(struct device *dev,
+ 	return ret;
+ }
+ 
+-int aic32x4_probe(struct device *dev, struct regmap *regmap)
++int aic32x4_probe(struct device *dev, struct regmap *regmap,
++		  enum aic32x4_type type)
+ {
+ 	struct aic32x4_priv *aic32x4;
+ 	struct aic32x4_pdata *pdata = dev->platform_data;
+@@ -1349,7 +1350,7 @@ int aic32x4_probe(struct device *dev, struct regmap *regmap)
+ 		return -ENOMEM;
+ 
+ 	aic32x4->dev = dev;
+-	aic32x4->type = (uintptr_t)dev_get_drvdata(dev);
++	aic32x4->type = type;
+ 
+ 	dev_set_drvdata(dev, aic32x4);
+ 
+diff --git a/sound/soc/codecs/tlv320aic32x4.h b/sound/soc/codecs/tlv320aic32x4.h
+index d6101ce73f80d..f68a846ef61d2 100644
+--- a/sound/soc/codecs/tlv320aic32x4.h
++++ b/sound/soc/codecs/tlv320aic32x4.h
+@@ -17,7 +17,8 @@ enum aic32x4_type {
+ };
+ 
+ extern const struct regmap_config aic32x4_regmap_config;
+-int aic32x4_probe(struct device *dev, struct regmap *regmap);
++int aic32x4_probe(struct device *dev, struct regmap *regmap,
++		  enum aic32x4_type type);
+ void aic32x4_remove(struct device *dev);
+ int aic32x4_register_clocks(struct device *dev, const char *mclk_name);
+ 
 -- 
 2.53.0
 
