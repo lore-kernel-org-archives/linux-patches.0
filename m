@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045191;
-	b=RT0zkgSKfA9eN/ycAKjO72OJxZDB2MOCtARZ0GzyB1/nukU3RtYNPNFa78R6o4dH7YSW
-	 ZAwB1jXd2ivFnW2IVWYjDPZX3+caZN8Su+xU633+xzSzMCEnEJzSXp8gDrLawmF0W+vId
-	 QkFrGgv8PqVEuKf4Xh1Yd2i1hsv83ZNNGhMUsfs6EdCnh7ZiR61gmY8/Qc622KE8wjYm3
-	 wsu+/trNkXn39TkC8IzNwEmZ/hAG82X3vhPfJpge3iPJnYEnb87yuradLf+7hH/mp/7jb
-	 NQtohvnk766+YXxr3U7Ys6ncswMnrbyXgTiuCMjY/gpaI8+FKuCywhbcNpJFoIaIkuw==
+	t=1795045193;
+	b=3qK6f8fEvLFdvVVw/etBuTEGcD/oiOAHxcqq1SQY6F+UFhRqSntRbjQSFSJR9ob7fVCs
+	 bhpDlyd6f2ZIhp4rImn+d8qn7xEHaGUqsdoCGaoDzDAb7CsfdeN45mqDpqvwvGT9xPEwc
+	 UURgy2PfX/XAll7CtcmKWpXaJ2IoxHCVb4RC4BcSTxxQlpjEhHVsIV4fW6JqAjuB3cJSe
+	 I40A82PcfiDNatUh7LOGPP7aIJexdMGFpNyWPy/SDL13a5UaK14+nf9kLnWBnXtdx8iMv
+	 8VV2ClWdg9qaBvJ3erRqOMSKladDIiaCrGQeGyowfGoIHX35Jfl/pG61W1gNLhZnYdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045191;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045193;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0DxQHa6/1JsNH77PRn4WoYYzPd7asmWL/OsMNhKtSXA=;
-	b=fVQTt0MZ1EhC6cyDe4K4NRsWWoxWscyg9dagC/5U9zDOKopddIzap6CNmRj2s6Vshiar
-	 Cc46krWwZWn14kbvvKffNR5wN9gpymUdW6CryniCapoXCowU48iFZ1Qiu2IXu8fF1OPmB
-	 XDfMLGvGJ9UAf2zg41zERkenqrVSCmK0s4P46Qrr5sdCIE/tanfAp8Nl3lVr8TN7kBcWc
-	 VxkMc6asYHfuE1cClaDOM8ydJNWAIw+IbnK1mOu+GyDK2SWovRvzOPG7aR+ULGMmlVFZH
-	 LsYHAsN/IpIg+YtxQ5wdLH5hhMlMzdzR8r70VCGG8q/ZZxXw1imdHCqnz6M8LiGqyhw==
+	bh=tm721GycH/v3VZZhMrGxpDvTGD21BdRCFGSK/8YSxFs=;
+	b=czx5IpgG+96rUIY7uFmL6sVlJdaViBrrAEVAqAUoNnE3wdGcGHjHDdokfuih5Wll54Ak
+	 2ksthUVmv2i3uIPD0KkIjfB8rhBX92+8L6NYMktibJLGyVOvdVMa4ru/rPgDoto2zyFeU
+	 gVCqVQbFNfMWW+cBikAApLa6M5+VAIg7mulREh6bzGLZ7uKzyOqkSBtAXWRhoVNh66PsY
+	 +G6mg/Q1kksX4WzVmOH69/XTOHMgH3Cl/v6NudgeIPLAZTvSLEMcOSSYPdhfhz3HVyDLx
+	 5/Ip23S27tSFQq300nx2xqPyOzINBVisTcldoxYrsvg/Q+PkBSzj71ZRXXJWM8k2d+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Udja5pOw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="tuAII/r5";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D8D7606A320;
-	Wed, 18 Nov 2026 23:39:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C652F606A31C;
+	Wed, 18 Nov 2026 23:39:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Udja5pOw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 648491F000C4;
-	Wed, 18 Nov 2026 23:39:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tuAII/r5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2782D1F000C4;
+	Wed, 18 Nov 2026 23:39:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045190;
-	bh=0DxQHa6/1JsNH77PRn4WoYYzPd7asmWL/OsMNhKtSXA=;
+	s=korg; t=1795045193;
+	bh=tm721GycH/v3VZZhMrGxpDvTGD21BdRCFGSK/8YSxFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Udja5pOwWs8dKwXgO358eLSqOmW1flpXRHUDdYVQz3CCZ8FuoTiEIgjyk82X/KuaW
-	 1KIpU6kOJWoYZQRWPYDAeAgvv/ovkGq69P+ud4rO89Oa/nFRbrjf6TZH20uUxNZB+d
-	 uyotaPmO7oZkw7UlYgCiqpf4MmrNSlXeYM+Lu6Cs=
+	b=tuAII/r5DBtzODaXlhTS2dWgpmGb2+PptPEtiYH5ujvT8i7UyAznkNjilHSTXB8/Y
+	 wkKuGR/7x/gZlxqZDDRRG2gVbkY+xhP30VXZX7w/CnSlHM8pm6/Ycllld2g/BAxuCU
+	 xGuYf0Dj+TJDLBm8UbC/Yr+5CG8/yAof/9z6U+pM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Piotr Kubik <piotr@kubik.pl>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	David Heidelberg <david@ixit.cz>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0832/2857] netfilter: ctnetlink: fix inverted IPv6 address match in dump filter
-Date: Wed, 18 Nov 2026 15:31:06 +0100
-Message-ID: <20261118150231.528237515@linuxfoundation.org>
+Subject: [PATCH 6.1 0833/2857] arm64: dts: qcom: sdm845-xiaomi-beryllium: Extend the xbl_mem region
+Date: Wed, 18 Nov 2026 15:31:07 +0100
+Message-ID: <20261118150231.565516813@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,56 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Piotr Kubik <piotr@kubik.pl>
+From: David Heidelberg <david@ixit.cz>
 
-[ Upstream commit 1ae2d094b0200f687923298c0e42579273558988 ]
+[ Upstream commit 511c4fea32708a065e03503c0e4d44f48990c530 ]
 
-ctnetlink_filter_match_tuple() rejects an entry when
-!ipv6_addr_cmp(filter, entry) is true. ipv6_addr_cmp() is a memcmp() and
-returns 0 for equal addresses, so the condition is true exactly when the
-addresses match: a CTA_FILTER dump with an IPv6 CTA_IP_SRC or CTA_IP_DST
-skips every entry that matches the requested address and returns all the
-others. The IPv4 branch compares with != and behaves correctly.
+Xiaomi's Oreo-era tree still had the CAF 1 MiB region, the 2 MiB version
+arrived with the Pie import. This isn't a board-layout quirk, it tracks
+the firmware. The later XBL wants one extra MiB below the old region.
 
-Observed with libnetfilter_conntrack NFCT_FILTER_DUMP_TUPLE: a dump
-filtered on src 2001:db8::10 returned only the unrelated entries, and a
-dump filtered on ::1 returned every entry except the ::1 ones.
-conntrack-tools does not use the tuple filter for -L, which is why this
-went unnoticed.
-
-Use ipv6_addr_equal() so the IPv6 branch mirrors the IPv4 one.
-
-Fixes: cb8aa9a3affb ("netfilter: ctnetlink: add kernel side filtering for dump")
 Cc: stable@vger.kernel.org
-Signed-off-by: Piotr Kubik <piotr@kubik.pl>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 77809cf74a8c ("arm64: dts: qcom: Add support for Xiaomi Poco F1 (Beryllium)")
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260916-sdm845-xbl-mem-v1-1-6e3c88507997@ixit.cz
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_netlink.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index b0ec7f7790bab..06986086cc9bf 100644
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -1069,13 +1069,13 @@ static int ctnetlink_filter_match_tuple(struct nf_conntrack_tuple *filter_tuple,
- 		break;
- 	case NFPROTO_IPV6:
- 		if ((flags & CTA_FILTER_FLAG(CTA_IP_SRC)) &&
--		    !ipv6_addr_cmp(&filter_tuple->src.u3.in6,
--				   &ct_tuple->src.u3.in6))
-+		    !ipv6_addr_equal(&filter_tuple->src.u3.in6,
-+				     &ct_tuple->src.u3.in6))
- 			return 0;
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+index 261364dc3faaf..63d11753d70b4 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+@@ -24,6 +24,7 @@
+ /delete-node/ &slpi_mem;
+ /delete-node/ &spss_mem;
+ /delete-node/ &rmtfs_mem;
++/delete-node/ &xbl_mem;
  
- 		if ((flags & CTA_FILTER_FLAG(CTA_IP_DST)) &&
--		    !ipv6_addr_cmp(&filter_tuple->dst.u3.in6,
--				   &ct_tuple->dst.u3.in6))
-+		    !ipv6_addr_equal(&filter_tuple->dst.u3.in6,
-+				     &ct_tuple->dst.u3.in6))
- 			return 0;
- 		break;
- 	}
+ / {
+ 	model = "Xiaomi Pocophone F1";
+@@ -54,6 +55,11 @@ key-vol-up {
+ 
+ 	/* Reserved memory changes from downstream */
+ 	reserved-memory {
++		xbl-mem@85d00000 {
++			reg = <0 0x85d00000 0 0x200000>;
++			no-map;
++		};
++
+ 		tz_mem: memory@86200000 {
+ 			reg = <0 0x86200000 0 0x4900000>;
+ 			no-map;
 -- 
 2.53.0
 
