@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023057;
-	b=1zCP96bdM8fl3ZUHSInEZhYzVZFf5rBwOjrMCAxD3JFdVM24jGO09XiCCPU6o+fgVCUD
-	 ijbtQmf/L3oSH0wW+GxqpYuXUHpB2XteEDFBd5KM0V/wi4bBNAdoxupOpdanrvxpuoM3Q
-	 Ex+1Cl2xtfcGsaDsyyIg2rGm0Lx3iQr97yb8dET3lC4R1h4G4cX2koCm2kLcGF6mgq2aX
-	 RH1yxVIdXxQ2tVBs5XoonQBSf7AqeQDiy705Okeiu6dGjxAGXa+ktxCUKbUwwNWUN3lvn
-	 T9WQGiFcO7bQFSxNLBRpXvh4fcrC0sycgikKyfCcOF9qJk+WN2zHZvSRRrNE0+IhTjQ==
+	t=1795023059;
+	b=qZmRza/qORoUuqphf52Utjizwi4hV5PdGS2Wtf0egTwGaWtifX89+ICMA62u3/pwnot4
+	 +ARST5cglYH6AP+JvXWeCASSfO48Qu9xWpVg33OzHcqpQygGcHiRvY4jU8Gb2MGv/1Z0T
+	 pn2ZODmS9KQ530/dBP+ZCz0tf+Ol0lqa7vBFjTmdlIaxOZsN9/fUTZK+i1fI/eiuc1nqD
+	 s41PMSrJNgeWiYz1wt4aInbKyC68hoQm864LVd0XAVeWMSnWuiswvx201z+GjAWWH6W9R
+	 JeP6ZdoUekmXJLHmUDON77axLIHt4mJS5yun4Ggpgxho01CwJRCtlLEEG5YMnBqQq6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023057;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023059;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YHuI8+JqG7nTwn6Q6pYuZpOlguvZstx23w789slFFlg=;
-	b=ENDtqU0x4PaUVpLd6LJI7xx4/cx5myVhU2/X6FmYmDRl2o5wLKp094tiS0RGn02x4DVj
-	 9zbZ1d/jyyEe/Ta68JM6y0pRjheHvCAnzIvxdIQ/P+t8R6mm4jn11YVq82bdcsgBP43e2
-	 UcpiR22w+ZFNJNzP0Fcq+GhekkvTAPX5Bn+yXcv9tHuMk3Jtgt1trIeqsAdFAp/L8pZxs
-	 NOUcVuOrTgkH8eFte3UZ+FXqTpnCekVynlEThjlsrW0VEgCYGRm5EsXMo9D+G2DyzdB2y
-	 KvESf/+gVa2Rt8CeNUZO3bgITu8RnFwIAPetrcw0HQk9nUFrqaa8+ZvSVaxvynwYgew==
+	bh=GC4rZANE76B15/GQlbq0zBvNS6AyuwuBTsEdPjGzKGk=;
+	b=KqJdXWOL6CImJnYg5mSuhngnr1HgyH7bW1CYhZZwviHc/qqchjFS2NWSQw3BnLh39Vqk
+	 tIu3E4SD1Ki4B6sQe9PaKL7qXIzZ22CWxPonQyOVbXQ2E7fGsUQcn022/5AjFpfqIG9bw
+	 HWqrcPcpwPBrFsljSez75v4A4cHSGYVYcovN9yhrEYkrlpOX78xQAcTowjwxzhl9sApEi
+	 BFy8MhtgSwnWCsRgsjACq4tq/VzT92UY1uFtPg5WfucForEkRa6DL/mX/S6lIZO5eWWKs
+	 P3QSRgZjuCRd1Nm/ex6VuMXc669aSVFiVh9loQDKm/3DXgLRlVGdCliKOn8xNnk/uZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ihAyNA7S;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ebqTAtqR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51D8606A330;
-	Wed, 18 Nov 2026 17:30:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66355606A32A;
+	Wed, 18 Nov 2026 17:30:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ihAyNA7S
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E211F000C4;
-	Wed, 18 Nov 2026 17:30:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ebqTAtqR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBF8B1F000C5;
+	Wed, 18 Nov 2026 17:30:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023056;
-	bh=YHuI8+JqG7nTwn6Q6pYuZpOlguvZstx23w789slFFlg=;
+	s=korg; t=1795023059;
+	bh=GC4rZANE76B15/GQlbq0zBvNS6AyuwuBTsEdPjGzKGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ihAyNA7SAdM4TR1eQgadI1qrCbHG1WfBd5pZKJsqLvvpGktysrIiGnB93Ewv6Pu5v
-	 l151P52VnySyrcNb+y/BUilLt6P2vS8zPXk9d5grNtVX/d5ETifJYiE/ITR9lB/WbT
-	 4NxYvgVMzzha91MB1j4obEggEd0ucxPUtudnb8G8=
+	b=ebqTAtqRo5lCmYPCrpmXpF3BTe9b3eWSA0+opiWwF5h6fnKGWpCqnCM1JBh2wgiPD
+	 DC40eLKLhmQzHNTLn+N1ewEvoJU1SYIrrC56l4ZoTgFwOKRQhh8Sd6v4YX3S7Om+mz
+	 EE8NBM/hnk5IW4gAx7oyUn9vV1lX51KbFFolcc6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Fabrice Derepas <fabrice.derepas@canonical.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0231/2151] hwrng: cctrng - Fix runtime PM usage counter leak
-Date: Wed, 18 Nov 2026 15:32:46 +0100
-Message-ID: <20261118150130.192579314@linuxfoundation.org>
+Subject: [PATCH 6.18 0232/2151] crypto: asymmetric_keys - fix OOB read in pefile_parse_binary
+Date: Wed, 18 Nov 2026 15:32:47 +0100
+Message-ID: <20261118150130.229820360@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,49 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Fabrice Derepas <fabrice.derepas@canonical.com>
 
-[ Upstream commit 58d27c41542be6c40edac4f91f35a1dd8bf0d2c2 ]
+[ Upstream commit 37d550172c2d3cdb3a5ace3e6cb0625967d86349 ]
 
-pm_runtime_get_sync() increments the device usage counter even when
-runtime resume fails. cctrng_read() propagates errors from
-cc_trng_pm_get() without scheduling the work that later drops the
-counter, so a clock or reset-completion failure in cctrng_resume()
-leaves the counter elevated.
+pefile_parse_binary() reads the size field of the certificate table's
+data-directory entry, which sits at fixed index 4 of the PE optional
+header's data directory:
 
-Use pm_runtime_resume_and_get(), which drops the usage counter when
-resume fails and returns zero on success. This preserves the existing
-success path while balancing the error path.
+	ctx->certs_size = ddir->certs.size;
 
-This issue was found by a static analysis checker and confirmed by
-manual source review.
+but nothing ensures index 4 is present. n_data_dirents (the untrusted
+NumberOfRvaAndSizes) is only upper-bounded against header_size and may be
+0, and header_size need only satisfy cursor < header_size < datalen. A
+crafted PE with n_data_dirents = 0 and a tiny header_size therefore causes
+the ddir->certs.size read to land past the end of the image (CWE-125). The
+chkaddr() that bounds the certificate blob runs only after this read.
 
-Fixes: a583ed310bb6 ("hwrng: cctrng - introduce Arm CryptoCell driver")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+verify_pefile_signature() is reached from kexec_file_load() (the
+lockdown/secure-boot enforced PE-image signature path), and the image is
+parsed before its signature is checked. The trigger needs CAP_SYS_BOOT and
+the access is out-of-bounds read only (no write).
+
+Require the certificate table's data-directory entry (index 4) to be
+present; the existing upper-bound check then keeps ddir->certs within
+[cursor, header_size).
+
+Fixes: 26d1164be37f ("pefile: Parse a PE binary to find a key and a signature contained therein")
+Assisted-by: copilot-cli:claude-opus-4-6 frama-c
+Signed-off-by: Fabrice Derepas <fabrice.derepas@canonical.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/cctrng.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ crypto/asymmetric_keys/verify_pefile.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/char/hw_random/cctrng.c b/drivers/char/hw_random/cctrng.c
-index a5be9258037f8..41c338a768ce9 100644
---- a/drivers/char/hw_random/cctrng.c
-+++ b/drivers/char/hw_random/cctrng.c
-@@ -86,12 +86,7 @@ static inline u32 cc_ioread(struct cctrng_drvdata *drvdata, u32 reg)
+diff --git a/crypto/asymmetric_keys/verify_pefile.c b/crypto/asymmetric_keys/verify_pefile.c
+index cec99db14129a..1efd5c0d0e9ce 100644
+--- a/crypto/asymmetric_keys/verify_pefile.c
++++ b/crypto/asymmetric_keys/verify_pefile.c
+@@ -87,6 +87,11 @@ static int pefile_parse_binary(const void *pebuf, unsigned int pelen,
+ 	if (ctx->n_data_dirents > (ctx->header_size - cursor) / sizeof(*dde))
+ 		return -ELIBBAD;
  
- static int cc_trng_pm_get(struct device *dev)
- {
--	int rc = 0;
--
--	rc = pm_runtime_get_sync(dev);
--
--	/* pm_runtime_get_sync() can return 1 as a valid return code */
--	return (rc == 1 ? 0 : rc);
-+	return pm_runtime_resume_and_get(dev);
- }
++	/* the certificate table entry must be present in the data directory */
++	if (ctx->n_data_dirents <=
++	    offsetof(struct data_directory, certs) / sizeof(*dde))
++		return -ELIBBAD;
++
+ 	ddir = pebuf + cursor;
+ 	cursor += sizeof(*dde) * ctx->n_data_dirents;
  
- static void cc_trng_pm_put_suspend(struct device *dev)
 -- 
 2.53.0
 
