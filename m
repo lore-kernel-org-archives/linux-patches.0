@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033672;
-	b=HNZovggjpUpE4abUjdNUqg5pI3FORicMvGK9v/hCFTnq/jY3Wz0S3qbOfhvNV/Bd+76z
-	 MAmPW1oxQkxy9kYw0BoDtOJVqJLE0fIcGO8Un6j7u/wM0Pegd5DlVIFiZF5gLljQV+Np/
-	 GjeC2cV+6o4iUHBxIbKVGPVjSP47+20n16xd86dE8N+oQePbfr4YVgVksjbBsdzl7x9dt
-	 haNs3HrTDmVLlBN1Wid6nbxzksg48MFWbuHFY7QxQ28auNzNuCmMnbk+4SFEcCe/p3d1Q
-	 OCFp7LJAqRbmRZfIARCx4M7z/CWn7uRIldEejqwOR9X7BSKFFR/5g9V5idvhKN7iP/g==
+	t=1795033675;
+	b=s6op0Nq84ujQ9ZY1e/KqYyIeNstrd4nNwVrBKOx3Aa/QLwsaf5Nv1WPEGs8ztoSzt2JZ
+	 RuAsq3hsJ+xv/YZ4hBOOYjNDEP9DCnT8hMhTiGB/6bCmVa2m7JkxGzK9hFJ7xhkK4YG0k
+	 epuNloyg8olBLYD+BrwZHoARVXM4N0njoTdnm+x6tpsvHw24eZkxgHDnHGZlNdl4JWqwj
+	 LqvGOAH2qAtbVJ2/iScDS2ETdJueukU48Qmw3CmKHFLTNN9mUZHikBVqyonBM862JZpqi
+	 Q39M10RvNt/4VwXRXd1OP3dwCbo8wZDZjrFSDAzoRbTwcbJ1+m7ZHoajVf/+qk6gzxg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033672;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033675;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BaBZ0Yhw6uG07mSEUOgWLS7f6BBW42TTtCe18f8RQjw=;
-	b=4DXste5Apw6zHPSbvTMgkDeMgeeokCbh8I7lcNAGkGAVgPObzm00Y20cvhHzuAxNJ4r7
-	 5gE/4WcbKpFlIDrK57X/qS5aN2yXbGiieAjmsspOhlsH2rkht+8sjIhUm/pPpz1gPiJhJ
-	 pbQ9jHPur/lpMVXmZyw+HDVhaEntxewiQILrqsZKej4dEpAtt0M48d38w00vqB8BUdg7E
-	 lunLmsXbNTOdth757vXbgcEnW1pjBwONhHzZhHV+pQmiDCIpmZm90XTS6PuLF/ZzwPYR4
-	 7RlaiPpdDmTrxufY88i2ct2LO3fBLItT9xSKACoEzx0rCynjhMtHpmeU6bPyKWfQPfw==
+	bh=n5ZeUSJ3upHnc+7U1ZxMj4l8BJL0yz91epxHHd114y8=;
+	b=AzKEoVR339rTVFQSDLxQdBBHxAVBCr3YIiD1gMn9RKakPLHLiBj21bKtDd70a/cTVQtN
+	 spwsRZLvVNkukKzYBPucrUSDLy2bUsiETfoNmGChiMOB21MT0MqNB05k4BcgyT4OjfSAk
+	 AYwT4RQ+5UJH61ipZQW7MybguIY1XqKAhOYTCFjnS0MW4EdxJDgfH6Rg9KXRXdSmj5Tzh
+	 A4Y8MATx5zgfSPYzK6aTVti5XD+lYWF/rPlyCTyrxSjD4r5ww8eFII34/+pK37YpM3U1I
+	 tsn1rW01vJp6Jr1rPfzPXp0UGh4IsTwLgppknQd9U2AJfnHjsIbRY3vncjfTwYfEYGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NrnnxE2N;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BTIXO14k;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9C29606A32A;
-	Wed, 18 Nov 2026 20:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0AB9606A320;
+	Wed, 18 Nov 2026 20:27:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NrnnxE2N
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C004F1F000C4;
-	Wed, 18 Nov 2026 20:27:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BTIXO14k
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF1711F000C4;
+	Wed, 18 Nov 2026 20:27:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033672;
-	bh=BaBZ0Yhw6uG07mSEUOgWLS7f6BBW42TTtCe18f8RQjw=;
+	s=korg; t=1795033675;
+	bh=n5ZeUSJ3upHnc+7U1ZxMj4l8BJL0yz91epxHHd114y8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NrnnxE2NOx8mY3kOax/9R9A3CgYtLbjwAFJ7w0f5J6smIQu7IBLtt+m8OccjNfWX6
-	 N+NzORg7jrA3Z8Dtz9IALJW2m4GR6PwGepqfX5b3HYD7/wgp84vx3F4ibl98Yfave1
-	 w9M9w0VaJMDDvDyj4yfszkTxV27PMNsyZBfvqEFM=
+	b=BTIXO14kSfF750k67/NMfwIrdVu9BJUWDdY5KwHx8QVn/RaiMKNxb4Z0D/tEeMZFd
+	 /cL4F5bBKigZkbzUiqKhB42ckcR4lRw9/Bbt1h81hqsuEj50BUGCPQZyPlX4s4AtmZ
+	 EOe1Qplhi2dC84loSTifBj6SVPliF+Rk90SQyTMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0098/3318] media: em28xx: dev_info->pr_info since dev has been freed
-Date: Wed, 18 Nov 2026 15:12:00 +0100
-Message-ID: <20261118150317.143638154@linuxfoundation.org>
+Subject: [PATCH 6.6 0072/3318] mmc: dw_mmc: stop and complete DMA also in STATE_DATA_BUSY state
+Date: Wed, 18 Nov 2026 15:11:34 +0100
+Message-ID: <20261118150316.202933373@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,36 +69,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil+cisco@kernel.org>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit c132b07f7e5853c0df35a9b94b8e204cdc6afdef ]
+[ Upstream commit cb3fcb8d118b874178251d1f02613f60d25e4ddc ]
 
-In em28xx_free_device() dev_info passed &dev->intf->dev,
-but that device can be freed already.
+When transfer was stopped in STATE_DATA_BUSY state, there was no call to
+dma_ops->cleanup function, so the DMA mapped buffer was never properly
+unmapped. Fix this by calling dw_mci_stop_dma() function also in that
+state to ensure proper cleanup call when DMA transfer was used.
 
-Just use pr_info instead.
-
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Tested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/em28xx/em28xx-cards.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/dw_mmc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/usb/em28xx/em28xx-cards.c b/drivers/media/usb/em28xx/em28xx-cards.c
-index 62887cf6afa5d..a835084914802 100644
---- a/drivers/media/usb/em28xx/em28xx-cards.c
-+++ b/drivers/media/usb/em28xx/em28xx-cards.c
-@@ -3504,7 +3504,7 @@ void em28xx_free_device(struct kref *ref)
- {
- 	struct em28xx *dev = kref_to_dev(ref);
+diff --git a/drivers/mmc/host/dw_mmc.c b/drivers/mmc/host/dw_mmc.c
+index f97caaa829f70..9c7a16adeb086 100644
+--- a/drivers/mmc/host/dw_mmc.c
++++ b/drivers/mmc/host/dw_mmc.c
+@@ -2209,6 +2209,7 @@ static void dw_mci_tasklet_func(struct tasklet_struct *t)
+ 			}
  
--	dev_info(&dev->intf->dev, "Freeing device\n");
-+	pr_info("%s: Freeing device\n", dev->name);
- 
- 	if (!dev->disconnected)
- 		em28xx_release_resources(dev);
+ 			dw_mci_stop_fault_timer(host);
++			dw_mci_stop_dma(host);
+ 			host->data = NULL;
+ 			set_bit(EVENT_DATA_COMPLETE, &host->completed_events);
+ 			err = dw_mci_data_complete(host, data);
 -- 
 2.53.0
 
