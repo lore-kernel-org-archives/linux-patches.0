@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023220;
-	b=BGaCAWiBZ0LXIJ6qMD9ISwjCsxOBNxtHgdfhQWxZWTy9xy2S2yw2oiJnKfx0e12HpuYi
-	 lNnFIz6hfXy/4by93gIVPBUjtC8aamNl0bgdZAcgRxSiTdk34Vt1GfAp/o/EdbgrkZGKo
-	 QfUgVQ88F7SR+DPn31c0LDarTfbxOHVPoLiauNol962QwUeRzKJMN/hOFt4m+uvGLdf1J
-	 4vb0ERyNG/CH15MTTT88cl/kTmfPIrwStbgJ/VO+Er/lKFS69AhlfDjO2U3OrWUhrrya5
-	 EJJIu9Dq/ZD9S8RRlYMLbNhBhMW6WNamYj4v5lt9y70MmS6HyEoYgQUy+GDxOpGVXKg==
+	t=1795023217;
+	b=4j2wAubJGDXHonkDZo1lKkz7nvVIqUB4eyn8TSWE3oGl7iuExCnS/GoFHbvXxOlb1v4c
+	 OgYTyEt1QxGS0sJKX8mF12LFF36XquAEiuBLJWhF4y8Zz0BvojLuv+CFahx46ivGi6raF
+	 k9/qMj1zR3I09xDevYclbDnVV/AKzJO6tTia4sbUQwWSlnmJ+Hr7H7rF4dlApEoX4DTHe
+	 OLv2LeKBjbRt0mJFMJHdW/0td7PK9W0aNQa3Jssb5p6SIsoJgRfOVmrhw3aPNGIomwaFk
+	 oGgFAwA+GEZoj4HVu5qYODO3pQBUzXwZEyvHVPiuvdVy7VFP/I3fzbXek9wD2BW6ASw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023220;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023217;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jfRcamVBPR9OOGaNCv80k6oA1WTW6EINF+jYm9oaw5o=;
-	b=TF01qR/wRjpMOBLUIkDIurLSz2T5b4ZqeBAgSOIVWWjG6vg7W2zq1nzx1Zxiw0ySD+jk
-	 Rg9sYfyGvGwRFjFjTNSVOZpjp01Xq/PDl7/0gMMtS7jRuxNBtj/rqeUR8TFVznRTOjiBp
-	 40rNG70vPFjrwVkbNMSnw9s2LR/gfeXATaacBl2vW+HfsVk8caVhS79bG3cFf9m/OwgEy
-	 UBoYgvR4yUU8l2wJaRtp1Wteb/2A/cbUvx7vY7FfmL8ZPfAsfYXWw2SwbQ0xQ8oo2ZETu
-	 +/im99pb3mv/5iZ2jv00HgF/MyTN9zwUXa0U+LYd759rMIv72t6aP0xBrj8cum/5Ejw==
+	bh=0pDPCT+HiPbPiAt2xAZifEKBq3nwX1k0B/gC7BOeFi0=;
+	b=iw2n/a1noZcNyW07l8UoOuna3yQEtE4VcpTj8HgqyhsMO/qh10vjAc3AU65IsjxJW+CB
+	 q8x5/YTe9oF/OBXSFLW5sYyzkOLx3iw2Jcc/n4855CrH1XCUgt/8Mobc3biMbnK9Td6ry
+	 CWiDtV9eynLrkKLwV7rDfkvczCpbDNJL6NdPLYtxtcQssZ432carsuitkeNedCMurVCq9
+	 WC6ahIT7BHsofOww7luwYQkALXV5johxvwMt7F70PJSX8+5c18QqMWFtgG2XkI4Z+7P88
+	 6IKM/om04zDu/UhQ4maeGnjv+aqJS7e856rVEY1TQoePy4fsfgJ+gG1ZnoPMdPFSQWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eNMjGfjv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KMo4ilEq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDDFB606A332;
-	Wed, 18 Nov 2026 17:33:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF148606CA51;
+	Wed, 18 Nov 2026 17:33:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eNMjGfjv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 028481F000C4;
-	Wed, 18 Nov 2026 17:33:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KMo4ilEq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22F191F000CC;
+	Wed, 18 Nov 2026 17:33:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023220;
-	bh=jfRcamVBPR9OOGaNCv80k6oA1WTW6EINF+jYm9oaw5o=;
+	s=korg; t=1795023217;
+	bh=0pDPCT+HiPbPiAt2xAZifEKBq3nwX1k0B/gC7BOeFi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eNMjGfjvkdl0K/8BmEuv+PRoQ8yqzh8Y9XQhXLy0V9FDQ5gSJG9gYcoKpOiIlj5GW
-	 mSVG8U+faz5OARNH+7HmczviXPLcM45MCArgxrkwcSgEg2wzfYHDc6uN4Do9lHx/7W
-	 ebl7gDy9aKyKMhTXOfj2+638YK1+SN6tCJwIJDV0=
+	b=KMo4ilEqaDZS14D9Cm6rgOGHxBLiUX+E+FsNgKd/APTQkDwRj3LDvDL027Gct18Xs
+	 Tk9qAS/u+qdtk0B7+yBw6TH3/BlBGcYFCaNhOmKZjM3Jh0A/LeI34l0Q9jiGIJaLNW
+	 EcVYrPG1nB1GBbHpMBaS49lrtsOKAnyw2XheXaDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Aaron Tomlin <atomlin@atomlin.com>,
-	Howard Chu <howardchu95@gmail.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	sashiko-bot@kernel.org,
+	Hanjun Guo <guohanjun@huawei.com>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0289/2151] perf trace: Add upper bound checks for augmented BTF struct printing
-Date: Wed, 18 Nov 2026 15:33:44 +0100
-Message-ID: <20261118150132.426661073@linuxfoundation.org>
+Subject: [PATCH 6.18 0244/2151] efi/cper: Reject CPER records with an out-of-range error_data_length
+Date: Wed, 18 Nov 2026 15:32:59 +0100
+Message-ID: <20261118150130.673747819@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,71 +71,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Tomlin <atomlin@atomlin.com>
+From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit 024b219744a949419b3c9e8aa23031c04428d9d6 ]
+[ Upstream commit a5a612cd3eecbadf135df1e9b2b40bc9f4c28f1c ]
 
-When pretty-printing augmented struct payloads using BTF via
-btf_struct_scnprintf(), augmented_arg->size is currently only validated
-against values <= 0.
+cper_estatus_check() sizes each section with acpi_hest_get_record_size(),
+which adds the firmware-controlled u32 error_data_length to the header size
+as a signed int (see <acpi/ghes.h>). A value in the top sizeof(*gdata)
+bytes of the u32 range wraps the sum small rather than large, so it slips
+past the "record_size > data_len" check: against the 72-byte v300 header,
+0xffffffb9 sizes the record at 1 and acpi_hest_get_next() walks it a byte
+at a time, off the end. 0xffffffb8 sizes it at 0 and loops forever.
 
-However, several edge cases can result in size mismatches or buffer
-over-reads:
-    1.  If arg->augmented.size is smaller than sizeof(*augmented_arg),
-        dereferencing augmented_arg->size reads past the available
-        buffer.
+Use check_add_overflow() to reject a sum that will not fit the int those
+helpers return, since the walk advances by that value. That subsumes the
+"acpi_hest_get_size(gdata) > data_len" test above it, because record_size
+is never smaller than the header.
 
-    2.  If augmented_arg->size exceeds arg->augmented.size -
-        sizeof(*augmented_arg), calculating consumed =
-        sizeof(*augmented_arg) + augmented_arg->size can overflow signed
-        integer limits (e.g., with crafted INT_MAX values in an
-        untrusted perf.data file) or cause arg->augmented.size to
-        underflow. This advances arg->augmented.args out of bounds,
-        corrupting the parsing state for subsequent arguments in
-        multi-argument syscalls.
+The later "len < sizeof(*foo)" guards rely on this per-section upper bound;
+they are lower bounds only.
 
-    3.  If the captured payload is truncated (e.g., short reads in BPF,
-        or during cross-architecture analysis such as replaying a 32-bit
-        perf.data on a 64-bit host where host BTF type->size exceeds the
-        32-bit target payload), passing type->size to
-        btf_dump__dump_type_data() causes libbpf to read past the end of
-        the payload buffer.
-
-Enforce an upper bound on augmented_arg->size against the remaining
-buffer (arg->augmented.size - sizeof(*augmented_arg)) and verify that the
-captured payload contains at least type->size bytes before passing it to
-btf_dump__dump_type_data().
-
-Fixes: cb32035214b9a09d ("perf trace: Pretty print struct data")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Signed-off-by: Aaron Tomlin <atomlin@atomlin.com>
-Cc: Howard Chu <howardchu95@gmail.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Reported-by: sashiko-bot@kernel.org
+Closes: https://sashiko.dev/#/patchset/20260714231835.303081-1-dave.jiang@intel.com?part=1
+Fixes: 45b14a4ffcc1 ("efi: cper: Fix possible out-of-bounds access")
+Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
+Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260904172337.1409775-2-dave.jiang@intel.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/firmware/efi/cper.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index b0e14dfaae1ba..da8fce7801ba5 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -1101,12 +1101,13 @@ static size_t btf_struct_scnprintf(const struct btf_type *type, struct btf *btf,
- 	LIBBPF_OPTS(btf_dump_opts, dump_opts);
- 	LIBBPF_OPTS(btf_dump_type_data_opts, dump_data_opts);
+diff --git a/drivers/firmware/efi/cper.c b/drivers/firmware/efi/cper.c
+index d4dc69693ece4..bc1d1fcbab865 100644
+--- a/drivers/firmware/efi/cper.c
++++ b/drivers/firmware/efi/cper.c
+@@ -752,7 +752,7 @@ EXPORT_SYMBOL_GPL(cper_estatus_check_header);
+ int cper_estatus_check(const struct acpi_hest_generic_status *estatus)
+ {
+ 	struct acpi_hest_generic_data *gdata;
+-	unsigned int data_len, record_size;
++	unsigned int data_len;
+ 	int rc;
  
--	if (arg == NULL || arg->augmented.args == NULL || arg->augmented.size <= 0 ||
-+	if (arg == NULL || arg->augmented.args == NULL || arg->augmented.size < (int)sizeof(*augmented_arg) ||
- 	    arg->fmt == NULL || !arg->fmt->from_user)
- 		return 0;
+ 	rc = cper_estatus_check_header(estatus);
+@@ -762,10 +762,18 @@ int cper_estatus_check(const struct acpi_hest_generic_status *estatus)
+ 	data_len = estatus->data_length;
  
- 	augmented_arg = arg->augmented.args;
--	if (augmented_arg->size <= 0)
-+	if (augmented_arg->size <= 0 || augmented_arg->size > arg->augmented.size - (int)sizeof(*augmented_arg) ||
-+	    (size_t)augmented_arg->size < type->size)
- 		return 0;
+ 	apei_estatus_for_each_section(estatus, gdata) {
+-		if (acpi_hest_get_size(gdata) > data_len)
++		int record_size;
++
++		/*
++		 * The <acpi/ghes.h> helpers sum these as a signed int, so a
++		 * huge error_data_length wraps small rather than large and the
++		 * walk then advances by that wrapped value. Reject a size an
++		 * int cannot carry.
++		 */
++		if (check_add_overflow(acpi_hest_get_size(gdata),
++				       gdata->error_data_length, &record_size))
+ 			return -EINVAL;
  
- 	dump_data_opts.compact	  = true;
+-		record_size = acpi_hest_get_record_size(gdata);
+ 		if (record_size > data_len)
+ 			return -EINVAL;
+ 
 -- 
 2.53.0
 
