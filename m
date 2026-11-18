@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048896;
-	b=V8WS1zZqzE2C+wbVLB0Hq1sVuiFe7ekLYCttw6lLk5/Mcz0TpNgIVEaGqGc/4ca5hKHq
-	 +SHR8QuSZTzyJdyOc34TjMuzALkWbMUen032ZkYL26aH1krMARd1xEjM4qEPujNtaITn5
-	 puvJqn1eUGe0noBwJaR2dzvmHgA07s47nVj9EkfFhq+TpQXz7P0PbWxrU1ADGfuR57x1k
-	 MOrGgKj7j1V4nu8qBiQYdZaPcm07VV7NY987/iJXQQbT+jxK2ww9ZjNTiBizWun2+hIQR
-	 lAkUuOFPOG8SA+ZHREhe9BcvoAYEnCIqXTng2mXUSQYMfprNKzREg9ZuLFu8u0DuNCg==
+	t=1795048899;
+	b=dZZQtMFzzW6zjzAt/i3CdWI4XZ7KCWdcLqsl67zPFzx8gZU4MZWsgBOA41iGPJgTFwPi
+	 pdhDPFPJU8lbWRnrA0DiD/W1C7FVBZ1/Kh3CSFEJN1N/UF53GsCl+rSUafhVNQZPmcMaY
+	 SkmyEumIwaUYRmM2ivxho60jK431JyhmLw+uRLCAHq5Vr2M1HUf/IkXnYIkGyLgOohwBZ
+	 sf2WcBqDtx8JST4rTy9NvET+3GVAe+AckCbBsdsSxT0fpPBO6gFH0WXIhwUucdQj1yoqs
+	 bEBOIeifm7Ms3BqWGWiUuQLjmqH+jnWX155QOSdOaz8xxVWMgkRba24kdaXXuHSjfwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048896;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048899;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zW65OZGwOSXfRbPoR5wOn0qxyNXyQH/EIcOMu/5a9Rk=;
-	b=oTHLPf+V+nZPKZoq8FK5DW2Ty3zenFahDge7VWuoQGMEmcYuEfnjJnRWx1Bg0qyPadfi
-	 yLOfDM+hj/ZGoOa1k1K4orXu+U/1j9FZyWfhyqTD2pULotCpK8EFEC2evGFjlyY0bsnBl
-	 m6WUfOQsPK6Hwu7M8kjKqqjWJ4ssGj1O7Kx5DEzUWQhv8ahqDXw/kbd5xL9uN0qBqs11i
-	 ruXXolQ4Y5hOtcNLtnt/8Qex+NegHsAYtkfNJOFmlcIeBi50GolenJHMJXEv8nAV3S3ny
-	 1RefVUos9RTCaBDM1eaATDp69eqyifhukfQlu4v8k+27gKd7eSghjnk/vdqzm2deNcA==
+	bh=t5WFQhIjpRDdzyZrMoejn5Og88cHzpmOQ0QtQMnGkNI=;
+	b=b1VMA68MLx1U/hiVNH6NHZJYLPWOoCPcFGxW6lOqiWhmqPxOKVNxG+67l7hQfQtvEb+F
+	 IdhUY8u5t0L5owS0iBhKOOhX8gf9py8YZqdNX/MMDfmOvF7vjz3rLDIUkVv0YZLQFb8qc
+	 IsMk5zJDGBinDSMygoVkN+96LeYNyO00lfRplAbvWfbUNZ2yY03b6XrDXGRX5xyQ5W++o
+	 Lms7w7HNYRvlQNp5zYYNX7FuX8pFaywrKkjJf4OvPTuB8y5e3dqKn/svLY+GllZ6VqjhO
+	 rZAitTTo30t17B67CrbT94DPUsTyTUaeiMPKXF3kcQvx7W9kMJWd9X/YBWIQUvgXlwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="a/Qg7QD8";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=teo6RSOb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B206A606A320;
-	Thu, 19 Nov 2026 00:41:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96410606A331;
+	Thu, 19 Nov 2026 00:41:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a/Qg7QD8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D14241F000C4;
-	Thu, 19 Nov 2026 00:41:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=teo6RSOb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA6331F000CB;
+	Thu, 19 Nov 2026 00:41:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048896;
-	bh=zW65OZGwOSXfRbPoR5wOn0qxyNXyQH/EIcOMu/5a9Rk=;
+	s=korg; t=1795048899;
+	bh=t5WFQhIjpRDdzyZrMoejn5Og88cHzpmOQ0QtQMnGkNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a/Qg7QD8ZmR3hboSKWBSWeScygWwAvFkauBus4MqXuvqx8n1tzbk9k+wvUWgIU9aV
-	 PX8YuVeO5zTM05m6BLkD7clDBmk3RthlY0WIZCvm94K+Vfvaecib6tTWOldCFuDCXe
-	 7rvVhhZKQ8qbiF2PmzVq+/7xICzL+ir87dntcUA0=
+	b=teo6RSObvsFoaQ1KLMWTN3VFEqdvYDaVJFYi1/4F7DKmQ7YM5rlWsTigRaajMxaeP
+	 EQcbckB5FTct8GhpJ08rpem3zeCMCvJ0CBz5BT7jYrTKcoxLkTiepVHeo0jLS2RFBS
+	 nEgbfMOMOD0hc82RKi5wCVJs7prxkyqHsv8tI+7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Lucas Costa <2000.costalucas@gmail.com>,
+	Logan Odell <loganodell@google.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2157/2857] staging: sm750fb: free cmap on framebuffer release
-Date: Wed, 18 Nov 2026 15:53:11 +0100
-Message-ID: <20261118150319.058708648@linuxfoundation.org>
+Subject: [PATCH 6.1 2122/2857] PCI/IOV: Read VF config values that need not match PF
+Date: Wed, 18 Nov 2026 15:52:36 +0100
+Message-ID: <20261118150317.806688334@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,71 +68,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lucas Costa <2000.costalucas@gmail.com>
+From: Logan Odell <loganodell@google.com>
 
-[ Upstream commit b7c885194b81a0376d1fdb457eac40d21d6fb65f ]
+[ Upstream commit ae43799529c480510dcc14bd0ed141a1d85b9259 ]
 
-The cmap is allocated by lynxfb_set_fbinfo() but never freed, so it is
-leaked when the framebuffer is torn down.  This happens on every unbind,
-and on the register_framebuffer() error path in
-sm750fb_framebuffer_alloc().
+Per PCIe r7.0, sec 7.5.1.1.5 and 7.5.1.2.3, VF Revision IDs and Subsystem
+IDs may differ from the PF's.  Read these values from VF config space
+instead of using cached values from VF 0.
 
-Add a lynxfb_unset_fbinfo() cleanup counterpart to lynxfb_set_fbinfo()
-which deallocates the cmap, and call it on teardown.  In the alloc error
-path it is only called once lynxfb_set_fbinfo() has succeeded, so the
-cmap is only freed when it was actually allocated.
+Per 7.5.1.1.6 and 7.5.1.2.3, VF Class Codes and Subsystem Vendor IDs must
+be the same as the PF's.  Use the PF's value instead of reading from VF
+config space.
 
-Fixes: 81dee67e215b ("staging: sm750fb: add sm750 to staging")
-Suggested-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Lucas Costa <2000.costalucas@gmail.com>
-Link: https://patch.msgid.link/20260922142851.46724-1-2000.costalucas@gmail.com
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Per 7.5.1.1.9, the Header Type for a VF must be 0, so hardcode that
+assignment.
+
+Fixes: cf0921bea66c ("PCI/IOV: Use VF0 cached config registers for other VFs")
+Signed-off-by: Logan Odell <loganodell@google.com>
+[bhelgaas: commit log, move "rev" decl inside block that uses it]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260910173648.1304517-1-loganodell@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/sm750fb/sm750.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/pci/iov.c   | 25 -------------------------
+ drivers/pci/pci.h   |  4 ----
+ drivers/pci/probe.c | 15 ++++++++++-----
+ 3 files changed, 10 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/staging/sm750fb/sm750.c b/drivers/staging/sm750fb/sm750.c
-index ad41ba284a3af..acbb475318d12 100644
---- a/drivers/staging/sm750fb/sm750.c
-+++ b/drivers/staging/sm750fb/sm750.c
-@@ -869,6 +869,11 @@ static int lynxfb_set_fbinfo(struct fb_info *info, int index)
- 	return ret;
+diff --git a/drivers/pci/iov.c b/drivers/pci/iov.c
+index 3965e003d7b57..cfffd932c7e81 100644
+--- a/drivers/pci/iov.c
++++ b/drivers/pci/iov.c
+@@ -154,29 +154,6 @@ resource_size_t pci_iov_resource_size(struct pci_dev *dev, int resno)
+ 	return dev->sriov->barsz[resno - PCI_IOV_RESOURCES];
  }
  
-+static void lynxfb_unset_fbinfo(struct fb_info *info)
-+{
-+	fb_dealloc_cmap(&info->cmap);
-+}
-+
- /*	chip specific g_option configuration routine */
- static void sm750fb_setup(struct sm750_dev *sm750_dev, char *src)
+-static void pci_read_vf_config_common(struct pci_dev *virtfn)
+-{
+-	struct pci_dev *physfn = virtfn->physfn;
+-
+-	/*
+-	 * Some config registers are the same across all associated VFs.
+-	 * Read them once from VF0 so we can skip reading them from the
+-	 * other VFs.
+-	 *
+-	 * PCIe r4.0, sec 9.3.4.1, technically doesn't require all VFs to
+-	 * have the same Revision ID and Subsystem ID, but we assume they
+-	 * do.
+-	 */
+-	pci_read_config_dword(virtfn, PCI_CLASS_REVISION,
+-			      &physfn->sriov->class);
+-	pci_read_config_byte(virtfn, PCI_HEADER_TYPE,
+-			     &physfn->sriov->hdr_type);
+-	pci_read_config_word(virtfn, PCI_SUBSYSTEM_VENDOR_ID,
+-			     &physfn->sriov->subsystem_vendor);
+-	pci_read_config_word(virtfn, PCI_SUBSYSTEM_ID,
+-			     &physfn->sriov->subsystem_device);
+-}
+-
+ int pci_iov_sysfs_link(struct pci_dev *dev,
+ 		struct pci_dev *virtfn, int id)
  {
-@@ -955,6 +960,7 @@ static void sm750fb_framebuffer_release(struct sm750_dev *sm750_dev)
- 	while (sm750_dev->fb_count) {
- 		fb_info = sm750_dev->fbinfo[sm750_dev->fb_count - 1];
- 		unregister_framebuffer(fb_info);
-+		lynxfb_unset_fbinfo(fb_info);
- 		framebuffer_release(fb_info);
- 		sm750_dev->fb_count--;
+@@ -311,8 +288,6 @@ int pci_iov_add_virtfn(struct pci_dev *dev, int id)
+ 	virtfn->physfn = pci_dev_get(dev);
+ 	virtfn->no_command_memory = 1;
+ 
+-	if (id == 0)
+-		pci_read_vf_config_common(virtfn);
+ 
+ 	rc = pci_setup_device(virtfn);
+ 	if (rc)
+diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
+index 49a0f23ebe4aa..c1d979015cc2d 100644
+--- a/drivers/pci/pci.h
++++ b/drivers/pci/pci.h
+@@ -339,10 +339,6 @@ struct pci_sriov {
+ 	u16		driver_max_VFs;	/* Max num VFs driver supports */
+ 	struct pci_dev	*dev;		/* Lowest numbered PF */
+ 	struct pci_dev	*self;		/* This PF */
+-	u32		class;		/* VF device */
+-	u8		hdr_type;	/* VF header type */
+-	u16		subsystem_vendor; /* VF subsystem vendor */
+-	u16		subsystem_device; /* VF subsystem device */
+ 	resource_size_t	barsz[PCI_SRIOV_NUM_BARS];	/* VF BAR size */
+ 	bool		drivers_autoprobe; /* Auto probing of VFs by driver */
+ };
+diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
+index 02f3fbe78c46f..f8ed6763dbc25 100644
+--- a/drivers/pci/probe.c
++++ b/drivers/pci/probe.c
+@@ -1760,8 +1760,13 @@ static u32 pci_class(struct pci_dev *dev)
+ 	u32 class;
+ 
+ #ifdef CONFIG_PCI_IOV
+-	if (dev->is_virtfn)
+-		return dev->physfn->sriov->class;
++	if (dev->is_virtfn) {
++		u8 rev;
++
++		if (pci_read_config_byte(dev, PCI_REVISION_ID, &rev))
++			rev = 0;
++		return (dev->physfn->class << 8) | rev;
++	}
+ #endif
+ 	pci_read_config_dword(dev, PCI_CLASS_REVISION, &class);
+ 	return class;
+@@ -1771,8 +1776,8 @@ static void pci_subsystem_ids(struct pci_dev *dev, u16 *vendor, u16 *device)
+ {
+ #ifdef CONFIG_PCI_IOV
+ 	if (dev->is_virtfn) {
+-		*vendor = dev->physfn->sriov->subsystem_vendor;
+-		*device = dev->physfn->sriov->subsystem_device;
++		*vendor = dev->physfn->subsystem_vendor;
++		pci_read_config_word(dev, PCI_SUBSYSTEM_ID, device);
+ 		return;
  	}
-@@ -981,12 +987,14 @@ static int sm750fb_framebuffer_alloc(struct sm750_dev *sm750_dev, int fbidx)
+ #endif
+@@ -1786,7 +1791,7 @@ static u8 pci_hdr_type(struct pci_dev *dev)
  
- 	err = register_framebuffer(fb_info);
- 	if (err < 0)
--		goto release_fb;
-+		goto unset_fb;
- 
- 	sm750_dev->fb_count++;
- 
- 	return 0;
- 
-+unset_fb:
-+	lynxfb_unset_fbinfo(fb_info);
- release_fb:
- 	framebuffer_release(fb_info);
- 	return err;
+ #ifdef CONFIG_PCI_IOV
+ 	if (dev->is_virtfn)
+-		return dev->physfn->sriov->hdr_type;
++		return 0;
+ #endif
+ 	pci_read_config_byte(dev, PCI_HEADER_TYPE, &hdr_type);
+ 	return hdr_type;
 -- 
 2.53.0
 
