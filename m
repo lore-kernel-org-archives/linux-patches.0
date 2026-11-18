@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045099;
-	b=RAztROhD7aB2g9pDpyDSCU+LglDQsNVSKwj6MEAf/5mM3Oln6gdDcq6dwIlG3hsE5d3H
-	 QmOjFdE7JKPZ9tpc72MmMJc0/MnAEU1abLovBoX7jz3QUmccKa9s8Z08/nr9Tb/xq0RDt
-	 7G/lhoYrdPlOR5T2/sN2CQ9qqIfHhTieAl3lmmIhoLrdXZH53n7+TOCj496KhhrbQNY5w
-	 An/A5wlK4ovuMdGRWe0rlyz2NlscoGcaMmiP4II67o6vgGDe0RxFkZHELbnwsLT9AJWhI
-	 RwAL6q0cuHKnwcpDdYGV2YJwAkRfr0f3v590mIbGOiYbV9krKL7offRV6xCniLiR/0w==
+	t=1795045102;
+	b=OR8u/NjkG8I6d5twOx0P8Uu0c8X96+G8FRYKuTUSlGZCZTehi53P3e5VG7YSE+2En6bx
+	 Cal6qScsdpFwzXlyF57lO8QV1R2jrd2uZr0j0dFfCDD74Ewk+n0MoHmh6psgNHFcGAxd8
+	 ra3yrme75ph0900D8iuWbtJtbKH9kDkYJciWqslpCUpAp8su47U+CSYw0cK6cbFsXXds8
+	 nK15HEJUPhh2Gz1BBmO/bNubZPrYmv0n5odi7b7w2td2i4sYRSU+Vww6FgQw4RITXcfKh
+	 8Gogo5fw77qMxd5JTh4vD9V/fSIXcgg3HtQsv2omV3vSYfwAIJKlmQtDn0bQTqKLaVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045099;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045102;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zL+Pupm9zh9frYEcNYPzsoesHlansmwMjzo7fsDrZGc=;
-	b=lq+Q6lIPGquQXQ4AwZuQZJOHEi4vCzZ+9xf8dQLDj8dsKWNXchtIxYjpo5UY11GFuPPL
-	 7MWWnFFQhhvoVdsyZ5nHWCPpg7BZSoy7Hb58ITpTU/IublA6sYx7o1j01L5+Bgw6Yresj
-	 yVo3ATbvrv6aPVM3GdepE1ECOUd5C44xHtskQo3dfufWARW+xSRgZtDmaMyU0XINhXZtl
-	 h1k3AZAi0lZIRFc7vtGlIdMWApFaUk/6a/M1OZbqfJ7c1Z0tEzydKASoOYbQaINU8GETe
-	 h+j9sOdwm59XDsW0BvZdT13XHeY4zXa5I+xfZcWPAQh5hm/wzDUYk5Y1kkR5nDZ04Og==
+	bh=4qmNUJMMk/umWIPVxu/o+xoBekqGS73dJJSznIqdbaY=;
+	b=tudW1V0XboFWW3+JwU1NRjjBgdx2bBP0rJmzrO/LtlpkSss8c7FnERMNxplkKHOq/4HQ
+	 ciTIg8cOcRnM66jB7vjB7/52Neco7C2wuYiA0N/wxhwYeGuEiiWnw4k8TH7wGnfzOEoUJ
+	 EOUpXK/tNmAgeslFdFt/pScN3Wv7vOI4FYnsw4Oz97dU13g14Mq2Hx4xbBXLl/X2GnRS+
+	 dbJqSHbFqMHpx4cduH+Yj9xpGeEg4oVpOIY447xAfjMHQ/+GYsWNyYXcc/nT4xbWnB0ZA
+	 C+XxnEnPCXj5nkP1uxsttQoAllWuUCOrXMfC/sw+Za5cECvDJxLoUTuckpzQXN6jQ9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=doD39wru;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OOqrXrRm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC3F60A2601;
-	Wed, 18 Nov 2026 23:38:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3873606A33A;
+	Wed, 18 Nov 2026 23:38:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=doD39wru
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 327011F000C5;
-	Wed, 18 Nov 2026 23:38:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OOqrXrRm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 113E21F000C5;
+	Wed, 18 Nov 2026 23:38:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045099;
-	bh=zL+Pupm9zh9frYEcNYPzsoesHlansmwMjzo7fsDrZGc=;
+	s=korg; t=1795045102;
+	bh=4qmNUJMMk/umWIPVxu/o+xoBekqGS73dJJSznIqdbaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=doD39wru+tOdblMkzZ/3/POi7EdGRAlQYszWex4XMpEhtcLONTFmHHAQ2jpAkhP7S
-	 XIyuKkO1/wdmg7Z2PLN1gmrBiNs1WuMpoBKNmA91vboCgNEeiXe3JBu9QxSNxLXk3R
-	 dnrCR2H0tNoVa6YvIvRFluw+0bA9ojHcvF0eHInY=
+	b=OOqrXrRmYuWucXzAHxUDJDJbpWsnqdE0VtNY4qACqm4GJr3BzjT7aw+K6Qs+zDn+K
+	 gCX72efetmDdPsVRzbTES7KHvhXaDaYRdggON/s2rcR3Pt2sZaIJtb6XBkZdvvuZMU
+	 YLftxcrgWZmTLJ9bz43fdrF8LEr5Yqch/O3YU/88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weili Qian <qianweili@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	syzbot+cf896de36144391bcde1@syzkaller.appspotmail.com,
+	Hans Verkuil <hverkuil@kernel.org>,
+	Rohinthan P <rokinthanp03@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0803/2857] crypto: hisilicon/hpre - fix GFP flags for dma_alloc_coherent
-Date: Wed, 18 Nov 2026 15:30:37 +0100
-Message-ID: <20261118150230.484415107@linuxfoundation.org>
+Subject: [PATCH 6.1 0804/2857] media: v4l2-ctrls: do nothing if controls[0] == NULL in cluster functions
+Date: Wed, 18 Nov 2026 15:30:38 +0100
+Message-ID: <20261118150230.521012463@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,99 +70,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weili Qian <qianweili@huawei.com>
+From: Rohinthan P <rokinthanp03@gmail.com>
 
-[ Upstream commit 40ec9605cb195e065470f8f23ef94b1b541411a3 ]
+[ Upstream commit 9ff738f93084351ed6e818d4d58679a9e9083a8d ]
 
-The HPRE driver hard-codes GFP_ATOMIC for RSA/DH and GFP_KERNEL for
-ECDH. This may cause "scheduling while atomic" in atomic context or
-unnecessary allocation failures under memory pressure.
+The V4L2 control framework is designed to allow drivers to instantiate
+controls and clusters without checking for errors after each call,
+checking hdl->error only once at the end.
 
-Select GFP flags dynamically based on CRYPTO_TFM_REQ_MAY_SLEEP and
-store them in hpre_asym_request::flags. The areq field is a union of
-rsa/dh/ecdh request pointers; reading base.flags through any union
-member other than the one that was written would be type-punning, so
-a dedicated flags field avoids that.
+However, if allocating the master control (controls[0]) fails, e.g. due to
+memory allocation failure, v4l2_ctrl_cluster() triggers a WARNING:
 
-Fixes: 98dfa9343f37 ("crypto: hisilicon/hpre - don't use GFP_KERNEL to alloc mem during softirq")
+      ncontrols == 0 || controls[0] == NULL
+      WARNING: drivers/media/v4l2-core/v4l2-ctrls-core.c:2525 at v4l2_ctrl_cluster
+
+Additionally, v4l2_ctrl_auto_cluster() attempts to dereference
+master->minimum without checking if controls[0] is NULL, leading to a
+NULL pointer dereference when master control creation fails.
+
+Update both v4l2_ctrl_cluster() and v4l2_ctrl_auto_cluster() to silently
+return if controls[0] is NULL, preserving the design that control
+creation errors are caught at the end when the driver checks hdl->error.
+Also update function documentation in include/media/v4l2-ctrls.h.
+
+Fixes: 71c689dc2e73 ("media: v4l2-ctrls: split up into four source files")
 Cc: stable@vger.kernel.org
-Signed-off-by: Weili Qian <qianweili@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reported-by: syzbot+cf896de36144391bcde1@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=cf896de36144391bcde1
+Suggested-by: Hans Verkuil <hverkuil@kernel.org>
+Signed-off-by: Rohinthan P <rokinthanp03@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[hverkuil: simplified the v4l2_ctrl_auto_cluster code a bit]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/hpre/hpre_crypto.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/media/v4l2-core/v4l2-ctrls-core.c | 12 ++++++++++--
+ include/media/v4l2-ctrls.h                |  6 ++++++
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/hisilicon/hpre/hpre_crypto.c b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
-index f107425348464..d13e8c228b702 100644
---- a/drivers/crypto/hisilicon/hpre/hpre_crypto.c
-+++ b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
-@@ -145,6 +145,7 @@ struct hpre_asym_request {
- 	int req_id;
- 	hpre_cb cb;
- 	struct timespec64 req_time;
-+	u32 flags;
- };
+diff --git a/drivers/media/v4l2-core/v4l2-ctrls-core.c b/drivers/media/v4l2-core/v4l2-ctrls-core.c
+index 3f1003fb7b011..febb2ef0f0543 100644
+--- a/drivers/media/v4l2-core/v4l2-ctrls-core.c
++++ b/drivers/media/v4l2-core/v4l2-ctrls-core.c
+@@ -2020,7 +2020,10 @@ void v4l2_ctrl_cluster(unsigned ncontrols, struct v4l2_ctrl **controls)
+ 	int i;
  
- static int hpre_alloc_req_id(struct hpre_ctx *ctx)
-@@ -249,6 +250,7 @@ static int hpre_prepare_dma_buf(struct hpre_asym_request *hpre_req,
- 				struct scatterlist *data, unsigned int len,
- 				int is_src, dma_addr_t *tmp)
- {
-+	gfp_t gfp = hpre_req->flags & CRYPTO_TFM_REQ_MAY_SLEEP ? GFP_KERNEL : GFP_ATOMIC;
- 	struct hpre_ctx *ctx = hpre_req->ctx;
- 	struct device *dev = ctx->dev;
- 	void *ptr;
-@@ -258,7 +260,7 @@ static int hpre_prepare_dma_buf(struct hpre_asym_request *hpre_req,
- 	if (unlikely(shift < 0))
- 		return -EINVAL;
+ 	/* The first control is the master control and it must not be NULL */
+-	if (WARN_ON(ncontrols == 0 || controls[0] == NULL))
++	if (WARN_ON(ncontrols == 0))
++		return;
++
++	if (!controls[0])
+ 		return;
  
--	ptr = dma_alloc_coherent(dev, ctx->key_sz, tmp, GFP_ATOMIC);
-+	ptr = dma_alloc_coherent(dev, ctx->key_sz, tmp, gfp);
- 	if (unlikely(!ptr))
- 		return -ENOMEM;
+ 	for (i = 0; i < ncontrols; i++) {
+@@ -2042,8 +2045,13 @@ void v4l2_ctrl_auto_cluster(unsigned ncontrols, struct v4l2_ctrl **controls,
+ 	u32 flag = 0;
+ 	int i;
  
-@@ -520,6 +522,7 @@ static int hpre_msg_request_set(struct hpre_ctx *ctx, void *req, bool is_rsa)
- 		h_req = PTR_ALIGN(tmp, HPRE_ALIGN_SZ);
- 		h_req->cb = hpre_rsa_cb;
- 		h_req->areq.rsa = akreq;
-+		h_req->flags = akreq->base.flags;
- 		msg = &h_req->req;
- 		memset(msg, 0, sizeof(*msg));
- 	} else {
-@@ -534,6 +537,7 @@ static int hpre_msg_request_set(struct hpre_ctx *ctx, void *req, bool is_rsa)
- 		h_req = PTR_ALIGN(tmp, HPRE_ALIGN_SZ);
- 		h_req->cb = hpre_dh_cb;
- 		h_req->areq.dh = kreq;
-+		h_req->flags = kreq->base.flags;
- 		msg = &h_req->req;
- 		memset(msg, 0, sizeof(*msg));
- 		msg->key = cpu_to_le64(ctx->dh.dma_xa_p);
-@@ -1490,6 +1494,7 @@ static int hpre_ecdh_msg_request_set(struct hpre_ctx *ctx,
- 	h_req = PTR_ALIGN(tmp, HPRE_ALIGN_SZ);
- 	h_req->cb = hpre_ecdh_cb;
- 	h_req->areq.ecdh = req;
-+	h_req->flags = req->base.flags;
- 	msg = &h_req->req;
- 	memset(msg, 0, sizeof(*msg));
- 	msg->in = cpu_to_le64(DMA_MAPPING_ERROR);
-@@ -1511,6 +1516,7 @@ static int hpre_ecdh_msg_request_set(struct hpre_ctx *ctx,
- static int hpre_ecdh_src_data_init(struct hpre_asym_request *hpre_req,
- 				   struct scatterlist *data, unsigned int len)
- {
-+	gfp_t gfp = hpre_req->flags & CRYPTO_TFM_REQ_MAY_SLEEP ? GFP_KERNEL : GFP_ATOMIC;
- 	struct hpre_sqe *msg = &hpre_req->req;
- 	struct hpre_ctx *ctx = hpre_req->ctx;
- 	struct device *dev = ctx->dev;
-@@ -1524,7 +1530,7 @@ static int hpre_ecdh_src_data_init(struct hpre_asym_request *hpre_req,
- 	if (unlikely(shift < 0))
- 		return -EINVAL;
++	if (WARN_ON(ncontrols <= 1))
++		return;
++
++	if (!master)
++		return;
++
+ 	v4l2_ctrl_cluster(ncontrols, controls);
+-	WARN_ON(ncontrols <= 1);
+ 	WARN_ON(manual_val < master->minimum || manual_val > master->maximum);
+ 	WARN_ON(set_volatile && !has_op(master, g_volatile_ctrl));
+ 	master->is_auto = true;
+diff --git a/include/media/v4l2-ctrls.h b/include/media/v4l2-ctrls.h
+index e59d9a234631d..ff42bbca4c084 100644
+--- a/include/media/v4l2-ctrls.h
++++ b/include/media/v4l2-ctrls.h
+@@ -796,6 +796,9 @@ bool v4l2_ctrl_radio_filter(const struct v4l2_ctrl *ctrl);
+  *
+  * @ncontrols:	The number of controls in this cluster.
+  * @controls:	The cluster control array of size @ncontrols.
++ *
++ *		If controls[0] is NULL, then this function does nothing and just
++ *		returns.
+  */
+ void v4l2_ctrl_cluster(unsigned int ncontrols, struct v4l2_ctrl **controls);
  
--	ptr = dma_alloc_coherent(dev, ctx->key_sz << 2, &dma, GFP_KERNEL);
-+	ptr = dma_alloc_coherent(dev, ctx->key_sz << 2, &dma, gfp);
- 	if (unlikely(!ptr))
- 		return -ENOMEM;
- 
+@@ -807,6 +810,9 @@ void v4l2_ctrl_cluster(unsigned int ncontrols, struct v4l2_ctrl **controls);
+  * @ncontrols:	The number of controls in this cluster.
+  * @controls:	The cluster control array of size @ncontrols. The first control
+  *		must be the 'auto' control (e.g. autogain, autoexposure, etc.)
++ *
++ *		If controls[0] is NULL, then this function does nothing and just
++ *		returns.
+  * @manual_val: The value for the first control in the cluster that equals the
+  *		manual setting.
+  * @set_volatile: If true, then all controls except the first auto control will
 -- 
 2.53.0
 
