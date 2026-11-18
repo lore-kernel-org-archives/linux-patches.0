@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024921;
-	b=irIfruCPz8qaIknuWSgcET1Udq8lIW3Ci3NtPmlHQD9kk3gHS9SGu6CKclYW9/0WoFC4
-	 MKMHgshAdnK5kDKUYkcG/gwPPr2uCKfFqh/tPXD8DedyYTOJNZ+sySUqw6H9TbPNFz4Qf
-	 ynLe7FIsalsbBBJpUs1PhFx0G6+fiUwvLlADy+KI7HXOQAldyPsbwKnTX6IWg/qiTA6ye
-	 Va1stvoSCNbj7MTmagSyMYpVu05cBcpY5qu1vBfr91eu/iCqD7ObUzY/dOZplfd6Ify66
-	 tI18BzHgUqQTlyJwY7trYOlMX5NDFU4NXyCw1gbL2+M++X1+xrz/epc1uoHG8I19ANQ==
+	t=1795024924;
+	b=N26CoeXvJZ4Gtl7cXkUO2hm5AumvVLXWJX9g4afpf72MZ/Y1jmFfEAFU1MEJSw+LpgNg
+	 RywsiPE6P2e5iBhn2qIyjd7l3koRqtYxMrUwhBxybg33ASAnCUy61Abrzse2Ze7+Wo6NG
+	 V7pyb9NVulibnnJASVOXhB8I4pXCGdJTCgBFqXCKaP1e+FXQE6yTr2YI6Nq8qGa553fzf
+	 D0969z2am5LYweSMeK1Y3/PKpSX5mwsG84SVawUonKiPW4vxCVK9gGmcCoi8Et/SHdUeV
+	 ZnthRK6f4dp1uxaaK1UjqefJXVGpngPt5FuVz3PO32X4dEdwYeQyXiUTb12qjY0Vl1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024921;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024924;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BM+yXHBi914J+Lv4OkrqxfA1XZouz6ypJJ/OMChbBLY=;
-	b=vSB4peQOBhHDRzKSNKu8hcACgi2MdtD72YVkkpNASIh3iBdubeqVU0xcSU9whxJHjYhE
-	 i8Fzj9uLTEXxRkul/BMO9H1+qFKRp1ll7hh4m8JCslhsuYFFVhMACxKJJUxwomvaWu3o9
-	 XTP7GtwVcYsB7bSlCexDsk3QS7geIFyB4sx1rD9cg+jTjFiL3o33BgSLinBPrNAw9x5p3
-	 aIozvTwTebL+mOG29EhOXnCUa+UYCBVqqa/PQL0uJrFH7IJiDjlS+8pdpSURwjR77FE9o
-	 O27Hbp06xSPdVQ/ON7ZdESNaM9e55qyh9IWn8oofMooKPaX4Os/tdufiK6z2gvPe06w==
+	bh=neWsZn9Q51fF3u3C1/i04ZkQDeOSzBXIdc0hwPMiDTc=;
+	b=mpCU/t17WOR1IPwBco0wQgp0qjzSqPTtkUhwcpfzHicObQFUb81U9Qu3shIKUmSN8411
+	 l07KNk/W9TFgodb/IS3tuex8hk9NcefpqaD5faDAVW8GlJiiacuce0/GUEOFaq9+QLmIs
+	 YxvAjvXf7SF7p37sVZwOFtcnFYsQCJ9BYTUcsTTYHESsJKqwkKUlu+/X9UaMrSo059fZO
+	 Q0zqoIoGl/nt+cMDinWFQpL/vHkdAaNMx6Z6l3NqlxUN7xEoNT3p8E51zu5bzFJ8lZ7w5
+	 0wlpXGKjPs8L46QFxrf2brYphAOI+3W0vrnb6lzMQTm4ANxa4ORRNt6r8yotAzqznZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KNSDJxes;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fS7Zs1Jp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1662606A31C;
-	Wed, 18 Nov 2026 18:02:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D63F606A31C;
+	Wed, 18 Nov 2026 18:02:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KNSDJxes
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F7B71F000C4;
-	Wed, 18 Nov 2026 18:02:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fS7Zs1Jp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 513341F000C4;
+	Wed, 18 Nov 2026 18:02:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024920;
-	bh=BM+yXHBi914J+Lv4OkrqxfA1XZouz6ypJJ/OMChbBLY=;
+	s=korg; t=1795024923;
+	bh=neWsZn9Q51fF3u3C1/i04ZkQDeOSzBXIdc0hwPMiDTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KNSDJxesgz2tknPwpqMzQvpTvHmcoTSPVsubIQ0NUMwv+QVaNvkZ34FjFDf1Rk1uD
-	 VB7V9ykWDxmgF8E/VMPQ+NIO5IJ5k5VUP26J0xjrJaf4ZnAmuA+0MMXrwBykaHPqOJ
-	 /TnfeS7C731IlTf2FRu0oXNDO7nmhcBM4KZEpI6Y=
+	b=fS7Zs1JpYypF5QrxOEBNtA1jeaId/AA9Da6Pv14SsLsB4QskSps4KHA6T7FK53awi
+	 Z23D4OWk76kbWQajgEmqQ1oda59eiXceJw/6QhR4j+ug5FoH1v/98dCghfPM7QYvMK
+	 OXDWcezCmFjBzFn9NeUlUN2DPPhgUOigkfBE9m5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bryan ODonoghue <bod@kernel.org>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0869/2151] media: iris: reference count video instances
-Date: Wed, 18 Nov 2026 15:43:24 +0100
-Message-ID: <20261118150153.859386553@linuxfoundation.org>
+Subject: [PATCH 6.18 0896/2151] pinctrl: nuvoton: Fix clock reference leak in ma35_get_bank_data()
+Date: Wed, 18 Nov 2026 15:43:51 +0100
+Message-ID: <20261118150154.936579270@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,177 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit af5f7df6c8b33bed714ec0aea15a0a2f48900c0a ]
+[ Upstream commit a854aa8e550502ef05c2836a4b426141d735bed1 ]
 
-iris_get_instance() looks up an instance on core->instances and returns
-it after dropping core->lock, without taking any reference. The threaded
-interrupt handler uses this to find the instance a firmware response
-belongs to and then takes inst->lock. Meanwhile userspace may close the
-same file descriptor: iris_close() removes the instance from the list,
-destroys inst->lock and frees the instance. The interrupt handler then
-operates on freed memory and a destroyed mutex, a use-after-free.
+ma35_get_bank_data() obtains the bank clock with of_clk_get() and
+stores it in bank->clk, but returns clk_prepare_enable() directly.  If
+that call fails, the reference taken by of_clk_get() is never dropped,
+and the driver has no other clk_put() for it.
 
-Add a kref to struct iris_inst. iris_get_instance() takes a reference
-under core->lock, so an instance it returns cannot be freed until the
-caller drops that reference with iris_inst_put(). The instance is
-released (mutexes destroyed, memory freed) only when the last reference
-goes away, whether that is held by the closing thread or the interrupt
-handler.
+Drop the reference when clk_prepare_enable() fails.
 
-Fixes: 38fc8beaba55 ("media: iris: implement reqbuf ioctl with vb2_queue_setup")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Fixes: f805e356313b ("pinctrl: nuvoton: Add ma35d1 pinctrl and GPIO driver")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../qcom/iris/iris_hfi_gen1_response.c        |  2 ++
- .../qcom/iris/iris_hfi_gen2_response.c        |  1 +
- .../media/platform/qcom/iris/iris_instance.h  |  4 ++++
- drivers/media/platform/qcom/iris/iris_utils.c |  6 +++++
- drivers/media/platform/qcom/iris/iris_utils.h |  1 +
- drivers/media/platform/qcom/iris/iris_vidc.c  | 23 +++++++++++++++----
- 6 files changed, 32 insertions(+), 5 deletions(-)
+ drivers/pinctrl/nuvoton/pinctrl-ma35.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c b/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
-index 8e864c239e293..bf7f63ef7dd61 100644
---- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
-@@ -632,6 +632,7 @@ static void iris_hfi_gen1_handle_response(struct iris_core *core, void *response
- 			mutex_lock(&inst->lock);
- 			iris_hfi_gen1_session_event_notify(inst, hdr);
- 			mutex_unlock(&inst->lock);
-+			iris_inst_put(inst);
- 		} else {
- 			iris_hfi_gen1_sys_event_notify(core, hdr);
- 		}
-@@ -667,6 +668,7 @@ static void iris_hfi_gen1_handle_response(struct iris_core *core, void *response
- 			}
- 		}
- 		mutex_unlock(&inst->lock);
-+		iris_inst_put(inst);
+diff --git a/drivers/pinctrl/nuvoton/pinctrl-ma35.c b/drivers/pinctrl/nuvoton/pinctrl-ma35.c
+index f5efa6725c405..3da7e517d1b6e 100644
+--- a/drivers/pinctrl/nuvoton/pinctrl-ma35.c
++++ b/drivers/pinctrl/nuvoton/pinctrl-ma35.c
+@@ -561,6 +561,8 @@ static int ma35_gpiolib_register(struct platform_device *pdev, struct ma35_pinct
  
- 		break;
- 	}
-diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
-index 2f1f118eae4f6..3b8bfcbbccad4 100644
---- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
-@@ -914,6 +914,7 @@ static int iris_hfi_gen2_handle_session_response(struct iris_core *core,
- 		iris_hfi_gen2_handle_dequeue_buffers(inst);
- 
- 	mutex_unlock(&inst->lock);
-+	iris_inst_put(inst);
- 
- 	return ret;
- }
-diff --git a/drivers/media/platform/qcom/iris/iris_instance.h b/drivers/media/platform/qcom/iris/iris_instance.h
-index 5982d7adefeab..7d7f187df2e93 100644
---- a/drivers/media/platform/qcom/iris/iris_instance.h
-+++ b/drivers/media/platform/qcom/iris/iris_instance.h
-@@ -6,6 +6,8 @@
- #ifndef __IRIS_INSTANCE_H__
- #define __IRIS_INSTANCE_H__
- 
-+#include <linux/kref.h>
-+
- #include <media/v4l2-ctrls.h>
- 
- #include "iris_buffer.h"
-@@ -30,6 +32,7 @@ struct iris_fmt {
-  * struct iris_inst - holds per video instance parameters
-  *
-  * @list: used for attach an instance to the core
-+ * @kref: reference count, keeps the instance alive while the IRQ thread uses it
-  * @core: pointer to core structure
-  * @session_id: id of current video session
-  * @ctx_q_lock: lock to serialize queues related ioctls
-@@ -68,6 +71,7 @@ struct iris_fmt {
- 
- struct iris_inst {
- 	struct list_head		list;
-+	struct kref			kref;
- 	struct iris_core		*core;
- 	u32				session_id;
- 	struct mutex			ctx_q_lock;/* lock to serialize queues related ioctls */
-diff --git a/drivers/media/platform/qcom/iris/iris_utils.c b/drivers/media/platform/qcom/iris/iris_utils.c
-index 85c70a62b1fd2..f5797cb1115a2 100644
---- a/drivers/media/platform/qcom/iris/iris_utils.c
-+++ b/drivers/media/platform/qcom/iris/iris_utils.c
-@@ -80,6 +80,12 @@ struct iris_inst *iris_get_instance(struct iris_core *core, u32 session_id)
- 	mutex_lock(&core->lock);
- 	list_for_each_entry(inst, &core->instances, list) {
- 		if (inst->session_id == session_id) {
-+			/*
-+			 * Take a reference under core->lock, paired with
-+			 * iris_inst_put() once the caller is done, so the
-+			 * instance cannot be freed by a concurrent close().
-+			 */
-+			kref_get(&inst->kref);
- 			mutex_unlock(&core->lock);
- 			return inst;
- 		}
-diff --git a/drivers/media/platform/qcom/iris/iris_utils.h b/drivers/media/platform/qcom/iris/iris_utils.h
-index 75740181122f5..4d6efc5e60f46 100644
---- a/drivers/media/platform/qcom/iris/iris_utils.h
-+++ b/drivers/media/platform/qcom/iris/iris_utils.h
-@@ -46,6 +46,7 @@ bool iris_res_is_less_than(u32 width, u32 height,
- int iris_get_mbpf(struct iris_inst *inst);
- bool iris_split_mode_enabled(struct iris_inst *inst);
- struct iris_inst *iris_get_instance(struct iris_core *core, u32 session_id);
-+void iris_inst_put(struct iris_inst *inst);
- void iris_helper_buffers_done(struct iris_inst *inst, unsigned int type,
- 			      enum vb2_buffer_state state);
- int iris_wait_for_session_response(struct iris_inst *inst, bool is_flush);
-diff --git a/drivers/media/platform/qcom/iris/iris_vidc.c b/drivers/media/platform/qcom/iris/iris_vidc.c
-index 2ebccd9455cf3..5edbf79549d17 100644
---- a/drivers/media/platform/qcom/iris/iris_vidc.c
-+++ b/drivers/media/platform/qcom/iris/iris_vidc.c
-@@ -39,6 +39,22 @@ static void iris_v4l2_fh_deinit(struct iris_inst *inst, struct file *filp)
- 	v4l2_fh_exit(&inst->fh);
- }
- 
-+static void iris_inst_release(struct kref *kref)
-+{
-+	struct iris_inst *inst = container_of(kref, struct iris_inst, kref);
-+
-+	mutex_destroy(&inst->ctx_q_lock);
-+	mutex_destroy(&inst->lock);
-+	kfree(inst->fmt_src);
-+	kfree(inst->fmt_dst);
-+	kfree(inst);
-+}
-+
-+void iris_inst_put(struct iris_inst *inst)
-+{
-+	kref_put(&inst->kref, iris_inst_release);
-+}
-+
- static int iris_add_session(struct iris_inst *inst)
+ static int ma35_get_bank_data(struct ma35_pin_bank *bank)
  {
- 	struct iris_core *core = inst->core;
-@@ -166,6 +182,7 @@ int iris_open(struct file *filp)
- 	inst->domain = session_type;
- 	inst->session_id = hash32_ptr(inst);
- 	inst->state = IRIS_INST_DEINIT;
-+	kref_init(&inst->kref);
++	int ret;
++
+ 	bank->reg_base = fwnode_iomap(bank->fwnode, 0);
+ 	if (!bank->reg_base)
+ 		return -ENOMEM;
+@@ -573,7 +575,11 @@ static int ma35_get_bank_data(struct ma35_pin_bank *bank)
+ 	if (IS_ERR(bank->clk))
+ 		return PTR_ERR(bank->clk);
  
- 	mutex_init(&inst->lock);
- 	mutex_init(&inst->ctx_q_lock);
-@@ -304,11 +321,7 @@ int iris_close(struct file *filp)
- 	iris_check_num_queued_internal_buffers(inst, V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE);
- 	iris_remove_session(inst);
- 	mutex_unlock(&inst->lock);
--	mutex_destroy(&inst->ctx_q_lock);
--	mutex_destroy(&inst->lock);
--	kfree(inst->fmt_src);
--	kfree(inst->fmt_dst);
--	kfree(inst);
-+	iris_inst_put(inst);
- 
- 	return 0;
+-	return clk_prepare_enable(bank->clk);
++	ret = clk_prepare_enable(bank->clk);
++	if (ret)
++		clk_put(bank->clk);
++
++	return ret;
  }
+ 
+ static int ma35_pinctrl_get_soc_data(struct ma35_pinctrl *pctl, struct platform_device *pdev)
 -- 
 2.53.0
 
