@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060047;
-	b=E5dzfABtyANJrPzEr0ki3ZcEKLr8s8aXxxpfQZR4K2579KL1pYPESm/nQJp/NaPZJcOJ
-	 UgAKKUXs0OAYQOYNM2AEuqecwAlBP6iEYw8zR5fAu7DYFl4I4drXAXG8uHKeE0sc01kv/
-	 UVv5vdPjcVN3tf0vw+BpzTD4Q6tN39LqnR3fKPhstFkwmwSfBJQ4J7ADvDtC/uUM0vy+n
-	 lhlZgZUPRs43q0+lWJGJLy0EK31RfHQbVidtJ0aJmCHYbKdf4moJNK+8fqljHiVsBRmhm
-	 OYPZK6BV1NPElVPNN2r/zg1dkhrwPHPAn/3FCTArRob4c8kz2M2B4ExeVMiO16lLDOw==
+	t=1795060050;
+	b=lmXpKGqVqltSmt6y7ADS9/VM/tWYXXPjpbEOWy/+YuK0w3TKs1iCbBL6T6fXPzLbi3hG
+	 opba+KDnpCGo6rI8BD8hE4cFHI3FVXJWDIQzVjlzFD3kLhe80e5wnnwq8M9cLLEKJlmbt
+	 KaETB04ksx8g0dyQjLkgsxnxYWgSn5BaLfQHFUGIXpLhHOfuHx3VBUK+ZoPy1SxdZtqV1
+	 zYCa1y9hsXQzuf0mYTOOg2Z6omPicKfVhZOg5MCyG/uBYEYCtwLUtjslQv0Ux/X8zonRX
+	 3YdoVMR8wCxuT4CbzT5HeNOenafuq9wydiCrciieuyIcNOFPCnhIxQV8aYxkAuxDRsg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060047;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060050;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=TkVGZEH0oivQWvhb8I37mX1I4sepwXCRqqzX2B/z24g=;
-	b=WFHJWCdWqw7nYTcZzCv8eQBoyybBDqhdA4OSt3DSb5rg6/NkOwD8EZXoKtXJ/i8n7Cha
-	 YzlQ06aQhoDI8A4BLX6YRUda80uqapyTAnCmYq2JMJAt7iLatihQ3rCu6KmTTOA0MtV6O
-	 CUt6aOWD4vn6HN7mQQcd1RXjwVE4SQo4QncwWPrrEstPp2cFkEN2oX4j80hcZQl5+25CN
-	 cnNV0tGNkSnm6NNO20UK9Zdc9w/4Q77F9KWIH+SImrVMAgl7slxR/6wv7r65mxSalHRwg
-	 1tlC4DJC8ZpjIcyaELjn6/DSx1GlshwKgEH70p0r/O/5GQHstyl4DzuyxOUNCy85uOg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=eA7b5F/eEi4QDtRSeOQ4v+efLqyaaUy9tZWDItYhZNA=;
+	b=lrhyoUDBzp8z+Z8BZuGQ+QHRKhc3H/6uHRfktyuug9Y2gAfqzPhCfnZIWp8y2HD2JKaA
+	 fPme0kOWiQJgtoA0iyo7dXxCihjYE/UtlFVckWACvXLu4aR5q10dc2otui3zMnPuSx3Mj
+	 +Re33RMcCqlrLUDDbys6oscHbxx4r195xkmGMPZ6k+1ajmjQGLQWXzRF2VQsZQ1WHEkQm
+	 /lSK4pUZ6viC7lOA5z6SfTiAs6KbYfvynY2ihr+QupuyUcGBm6/jksGkaFzbIyqjbH6f5
+	 uJ2XonslOLshyqx+LLfqfCpULMNuGsXBVMYtTBKFTBRoRFFmK9vC8mgVStb5LnnF2DQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ctY2H3uC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bqQQA9vk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3775E606A320;
-	Thu, 19 Nov 2026 03:47:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34FFF606A320;
+	Thu, 19 Nov 2026 03:47:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ctY2H3uC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 884CF1F000C4;
-	Thu, 19 Nov 2026 03:47:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bqQQA9vk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56BAF1F000C4;
+	Thu, 19 Nov 2026 03:47:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060047;
-	bh=TkVGZEH0oivQWvhb8I37mX1I4sepwXCRqqzX2B/z24g=;
+	s=korg; t=1795060049;
+	bh=eA7b5F/eEi4QDtRSeOQ4v+efLqyaaUy9tZWDItYhZNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ctY2H3uCTS8zMfz5Tvlm+LaFE2rRWgo8lViesDcdeiKzECe45UqMmZ38CJJvy5cbW
-	 UUf6Afk4f7eh9X9FJJ2Ec/V6WZFdsKWE5KLrbmOh5RrFfehFemxuockiK7peI8RNZQ
-	 zv1svmuRvNRyl2lnJHEBQQbomlUowKuoky2YS7wo=
+	b=bqQQA9vkcnYftnmAk74UB8ocIT+CG4+nb0+vZa8NpP8tPDoOqb3J+7lbXxC8gRzO5
+	 XrwUCwHwhtOdr9fpqGscdW5uwtDNZ7iT7+fZ6vPdQOi8S426anTOZwJkxEwOgdDoo8
+	 EmpHquG5sT/2sIGS8PQVmlCHMo7X0gfoJ1HyqFbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <oss.patchbox@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1057/1848] iommu/virtio: Reset device before deleting virtqueues on probe failure
-Date: Wed, 18 Nov 2026 15:51:35 +0100
-Message-ID: <20261118150001.665263734@linuxfoundation.org>
+Subject: [PATCH 5.10 1058/1848] drm/amdgpu: keep the CS user fence BO in GTT
+Date: Wed, 18 Nov 2026 15:51:36 +0100
+Message-ID: <20261118150001.746545159@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -62,69 +63,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuho Choi <oss.patchbox@gmail.com>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit 1f8efac19a0870cdfdf8477e447e5a07ddce9623 ]
+[ Upstream commit 7a56d929dc2304edaa6231e1eb5eb82b7e8b74a9 ]
 
-viommu_probe() marks the device DRIVER_OK before populating the event
-virtqueue and registering the IOMMU device in sysfs.  viommu_fill_evtq()
-hands the device a set of device-writable buffers through
-virtqueue_add_inbuf(), so from that point on the device may write into
-them and into the rings.
+The CS ioctl hands the GPU the GART address of the user fence BO, but
+since the BO keeps its own preferred and allowed domains, it no longer
+makes sure the BO is in GTT. A user fence in a VRAM BO, which only needs
+to be a page in size, gets its address from amdgpu_bo_gpu_offset(), which
+warns about non-contiguous VRAM. On navi31, a CS with a user fence in a
+4K VRAM BO, or in one created with AMDGPU_GEM_CREATE_VM_ALWAYS_VALID:
 
-If either step fails, the error path deletes the virtqueues without
-resetting the device first.  The event buffers are allocated with
-devm_kmalloc_array() and are released as probe unwinds, so the device can
-go on writing to memory that has been freed.
+  WARNING: amdgpu_object.c:1531 at amdgpu_bo_gpu_offset+0x86/0xb0 [amdgpu], CPU#11: cs_gem_checks/18393
+  RIP: 0010:amdgpu_bo_gpu_offset+0x86/0xb0 [amdgpu]
+  Call Trace:
+   <TASK>
+   amdgpu_cs_parser_bos.isra.0+0x4eb/0x850 [amdgpu]
+   amdgpu_cs_ioctl+0x97e/0x2510 [amdgpu]
+   drm_ioctl_kernel+0xac/0x110 [drm]
+   drm_ioctl+0x2c6/0x5b0 [drm]
+   __x64_sys_ioctl+0xa0/0xf0
+   do_syscall_64+0xa3/0x4d0
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Reset the device before deleting the virtqueues, the way viommu_remove()
-already does.
+and BOs which can't be in GTT at all, like GWS or OA ones of a page in
+size, pass the checks as well.
 
-Fixes: edcd69ab9a32 ("iommu: Add virtio-iommu driver")
+Only take BOs which can't be anywhere else than in GTT as user fence,
+which the CS then validates there along with its other BOs. While at it,
+detect userptrs with amdgpu_ttm_tt_is_userptr(); amdgpu_ttm_tt_get_usermm()
+returns NULL once the task which created the userptr is gone.
+
+v2: only take BOs which can only be in GTT instead of special casing the
+    user fence BO in the validation, use amdgpu_ttm_tt_is_userptr()
+    (Christian)
+
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit f16989def9561d04d0f2e77216f5319112d29bf1)
 Cc: stable@vger.kernel.org
-Signed-off-by: Yuho Choi <oss.patchbox@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261004182218.177343-1-oss.patchbox@gmail.com>
-[ sashal: replaced virtio_reset_device() with vdev->config->reset(vdev) after the existing err_unregister cleanup ]
+[ sashal: adapted p->uf_bo accesses to the local bo variable in amdgpu_cs_user_fence_chunk() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/virtio-iommu.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/virtio-iommu.c b/drivers/iommu/virtio-iommu.c
-index 81dea4caf561f..ef5eabeafa8c7 100644
---- a/drivers/iommu/virtio-iommu.c
-+++ b/drivers/iommu/virtio-iommu.c
-@@ -1058,12 +1058,12 @@ static int viommu_probe(struct virtio_device *vdev)
- 	/* Populate the event queue with buffers */
- 	ret = viommu_fill_evtq(viommu);
- 	if (ret)
--		goto err_free_vqs;
-+		goto err_reset_vdev;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+index 40146957996f0..38491f05c9d39 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+@@ -62,7 +62,12 @@ static int amdgpu_cs_user_fence_chunk(struct amdgpu_cs_parser *p,
+ 	if (size != PAGE_SIZE || data->offset > (size - 8))
+ 		return -EINVAL;
  
- 	ret = iommu_device_sysfs_add(&viommu->iommu, dev, NULL, "%s",
- 				     virtio_bus_name(vdev));
- 	if (ret)
--		goto err_free_vqs;
-+		goto err_reset_vdev;
+-	if (amdgpu_ttm_tt_get_usermm(bo->tbo.ttm))
++	if (amdgpu_ttm_tt_is_userptr(bo->tbo.ttm))
++		return -EINVAL;
++
++	/* The GPU writes the user fence through the GART */
++	if (bo->preferred_domains != AMDGPU_GEM_DOMAIN_GTT &&
++	    bo->allowed_domains != AMDGPU_GEM_DOMAIN_GTT)
+ 		return -EINVAL;
  
- 	iommu_device_set_ops(&viommu->iommu, &viommu_ops);
- 	iommu_device_set_fwnode(&viommu->iommu, parent_dev->fwnode);
-@@ -1101,6 +1101,8 @@ static int viommu_probe(struct virtio_device *vdev)
- err_unregister:
- 	iommu_device_sysfs_remove(&viommu->iommu);
- 	iommu_device_unregister(&viommu->iommu);
-+err_reset_vdev:
-+	vdev->config->reset(vdev);
- err_free_vqs:
- 	vdev->config->del_vqs(vdev);
- 
+ 	*offset = data->offset;
 -- 
 2.53.0
 
