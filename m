@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048885;
-	b=r+fhWWcxj5ZsrlBltpMK6wi726CB7Byp4YrZyE5/CwTKrg3jXe03P30aBYhd+/Lja0IQ
-	 A2Pav/xKJWBn/U6i9dy/BiPS1xuOGOk7bW3ljF1BkKFkU8jryFB42Q4wgpcFlRWiAoa8w
-	 +JqzxhoNu/w0UEQ+4YBYOl6y32KbyIGT08JFG/OzlTQj3kIkD8FTzMyUzwJns2EVXUlVE
-	 fnxxj5Ez9Rqwx7zoy3N2h+CWQ61kJVuJTGy67n7W0vnqiUqSKglt/n/o/BQ1kPQhWl2yj
-	 DjBwaCBz3YwfeftaxV+UFcgM2sY5kx/8xb4d19QWtVQLkIxlKZWqYzXmq1NW1YTLclg==
+	t=1795048888;
+	b=aMCE1uqibIX/vCLM90uMZfMpTldGSG6nCXmRO6HudOt3kLT5DZN5FA+JzTbk9mHLika/
+	 zEWVbIqBJ7pCCdqjSpIXY2mTJlbFwXWWGp+3XuQLkzxE9IR1nnSCWPIuvQ8CDtlA6oSzf
+	 46SEBr/PSEKcisp29MqKID68rSIC8g+Sc9nF75jxTJkjUzxcz4TxkZEQwlkhjUNcOg0RZ
+	 cRmLBga/gSzaE/SWfBP6Nhd5Zz40FBlGHY1pY/+DoZC6IYvT2/7/LvPkg89kEsJXW+SlV
+	 4R/jKQey4pSwwhdxAVpPgHKx6gPL1HcW0skiILjqLLGGq3RSR8pKMzrw66e+VqIUTkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048885;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048888;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ARsL+x8p8F40VB25urBmy6K8AGGAw5ByQMUHmaElapU=;
-	b=eh4Z6rGCQUaiBTJyOhaezc+BF7kySS5CgNgTwW1HwqinOM0wh1YDg2v/XE9tTSUmaeEz
-	 dOzVLRVv3155bZhxv91XwK8xMOat92qeTAmIMaCrpRbhUrH9M3SNHc5jE9hPJaWElGs/a
-	 SINkaQhSBsdp0tL6Ez0Q951P5y13s2gp5reDNxGO/ar3r2Lu9zBtnBZmnyy4Ahh64Uzmi
-	 9/FKFgZt33mbCpnRNOKrH/vUcIGkELul3vEhuajhIewtX0u66q7FwYkHr2G2cAUmK1N7h
-	 2uBNtUKVDzDkpg6ncAP5m5XwCXnVwH7rZbFn0UbZJtCGHMDqkJvSNISqwINHc0Zj/mg==
+	bh=TOgpV1/SN9mOz4XYKzNUVojcQKpeGkDgr69WwVVun+c=;
+	b=fzaZDJzx+JiO3aa7y6ATn0xUDaYRLI1hnnp5Gr9JfW7I48gDvgXeRBke5QI+KOghUD7B
+	 yRedejVLcoLaxu/YzQ5e88eLGbzWoxHe1QNx5PU3fKvtXD4xtCnm8CjXNoz1TPTYnvhFA
+	 0cLG8Khq+Lx717PbPOYokfPyYw9M19/dJbGmiG1M+UCNaF4ylzKwem2dE2CQViph9Yg8Z
+	 /aQNTIK783GDVweH47IMQWPlkRlJEVrXlecdg7/qIXIZB1c+8u3XAELHcPNwkSJYU2NEe
+	 4xTwDLq8CjERZGjmFVx74gKXqR4BioCtF5n9NuVNQ/s7GsfxQqcUPbfuKNNdMkjoVRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ey1Wbt5U;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XKMriLBD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75579606A31C;
-	Thu, 19 Nov 2026 00:41:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 485E7606A31C;
+	Thu, 19 Nov 2026 00:41:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ey1Wbt5U
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5021F000C4;
-	Thu, 19 Nov 2026 00:41:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XKMriLBD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99B581F000C8;
+	Thu, 19 Nov 2026 00:41:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048885;
-	bh=ARsL+x8p8F40VB25urBmy6K8AGGAw5ByQMUHmaElapU=;
+	s=korg; t=1795048888;
+	bh=TOgpV1/SN9mOz4XYKzNUVojcQKpeGkDgr69WwVVun+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ey1Wbt5UIpm6XSv0Gvkb4kH+2UkOchY1pFfFUl+1BnJu7nc2cN7SltfIXz50elKMB
-	 LK7tCuOpSR6Ut447lvzqyOEbxgFbVUdUv497YZ1+vDlFdWXKbB8CnQfQHYXmj/57aA
-	 rEqVk9RYa+gujTAGml+AUVPxM2AjBUTl/7CKq9pY=
+	b=XKMriLBDUbS238hP8acD3Z3YPBnPCPppZVXlexdSCR1esAodR9fkSmoj3TRDNwygs
+	 8zIbx7yS11UZz7DvwQXXUHnnKae585ZkforHMJ9xbDgA/xrCNuONp9eSE3y4GE3KpK
+	 4OQDtwoUkzCWDmqrLul5Wyi6I7TTR6vzbA2+oKlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang Deng <qingfang.deng@linux.dev>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2153/2857] ARM: mvebu: fix Cortex-A9 errata selection for Armada 38x
-Date: Wed, 18 Nov 2026 15:53:07 +0100
-Message-ID: <20261118150318.915650200@linuxfoundation.org>
+Subject: [PATCH 6.1 2154/2857] drm/msm: Properly handle msm_ioremap() without name
+Date: Wed, 18 Nov 2026 15:53:08 +0100
+Message-ID: <20261118150318.952074370@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,47 +70,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <qingfang.deng@linux.dev>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit 76e67df8bc1cb72157368c3669119e64cdb0a6a6 ]
+[ Upstream commit 14fe0ea79e0e25efc603f6f4bc81cb5b813f0e69 ]
 
-Armada 38x uses Cortex-A9 r4p1, but MACH_ARMADA_38X selects the
-workaround for erratum 720789, which was fixed in r2p0, and omits
-workarounds for errata that still affect r4p1.
+msm_ioremap() accepts being called without name of the region to map and
+in such case maps by index 0.  However error paths still use the name in
+error message.
 
-Drop ARM_ERRATA_720789 and select ARM_ERRATA_754322 for faulty MMU
-translations following an ASID switch and ARM_ERRATA_764319 for
-unexpected undefined instruction exceptions when reading debug
-registers. Also select ARM_ERRATA_764369 when SMP is enabled to work
-around cache maintenance by MVA failing to reach other agents.
-
-The Cortex-A9 r4 Software Developers Errata Notice (ARM UAN 0009D)
-lists these errata in sections 2.3.3, 2.5.10 and 2.3.4, respectively.
-
-Link: https://documentation-service.arm.com/static/608118675e70d934bc69f143
-Fixes: 9aa30f1c13d1 ("ARM: mvebu: add initial support for the Armada 380/385 SOCs")
-Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Fixes: c8afe684c95c ("drm/msm: basic KMS driver for snapdragon")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/752660/
+Link: https://lore.kernel.org/r/20260911-drm-msm-hdmi-fixes-before-eliza-v4-5-87bdb9f1987f@oss.qualcomm.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-mvebu/Kconfig | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/msm_io_utils.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/mach-mvebu/Kconfig b/arch/arm/mach-mvebu/Kconfig
-index 9f60a6fe0eafb..5203b5cfa4577 100644
---- a/arch/arm/mach-mvebu/Kconfig
-+++ b/arch/arm/mach-mvebu/Kconfig
-@@ -55,7 +55,9 @@ config MACH_ARMADA_375
- config MACH_ARMADA_38X
- 	bool "Marvell Armada 380/385 boards"
- 	depends on ARCH_MULTI_V7
--	select ARM_ERRATA_720789
-+	select ARM_ERRATA_754322
-+	select ARM_ERRATA_764319
-+	select ARM_ERRATA_764369 if SMP
- 	select PL310_ERRATA_753970
- 	select ARM_GIC
- 	select ARM_GLOBAL_TIMER
+diff --git a/drivers/gpu/drm/msm/msm_io_utils.c b/drivers/gpu/drm/msm/msm_io_utils.c
+index d02cd29ce8299..bebc9001db163 100644
+--- a/drivers/gpu/drm/msm/msm_io_utils.c
++++ b/drivers/gpu/drm/msm/msm_io_utils.c
+@@ -63,7 +63,8 @@ static void __iomem *_msm_ioremap(struct platform_device *pdev, const char *name
+ 
+ 	if (!res) {
+ 		if (!quiet)
+-			DRM_DEV_ERROR(&pdev->dev, "failed to get memory resource: %s\n", name);
++			DRM_DEV_ERROR(&pdev->dev, "failed to get memory resource: %s\n",
++				      (name ?: "#0"));
+ 		return ERR_PTR(-EINVAL);
+ 	}
+ 
+@@ -72,7 +73,8 @@ static void __iomem *_msm_ioremap(struct platform_device *pdev, const char *name
+ 	ptr = devm_ioremap(&pdev->dev, res->start, size);
+ 	if (!ptr) {
+ 		if (!quiet)
+-			DRM_DEV_ERROR(&pdev->dev, "failed to ioremap: %s\n", name);
++			DRM_DEV_ERROR(&pdev->dev, "failed to ioremap: %s\n",
++				      (name ?: "#0"));
+ 		return ERR_PTR(-ENOMEM);
+ 	}
+ 
 -- 
 2.53.0
 
