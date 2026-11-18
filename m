@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041164;
-	b=mZenyvQk09GP/vSuVrvcrL1Z+J81fsgGR0RF3CVqGzFxgUZuOJh0SsdSC23XkczBKK8L
-	 S2rIKHH8c5GELS1WbxKUfO0LrM/EJZ/+8ufvAFAtm8PwhtVbtaoPypRqoCAQVe/zI5b/U
-	 mZe2RU2TpuZz2cavsSbSylZ8yRed0cRlEc10efhlIiiZeJxFFg9bQr632ub1727rOQsB3
-	 Ee+S3Huwn1sDS16hJZhudlqgLCLaBVhQkXOYHkah/wTUMIaR5od+CtKtjSObWb+jLJmk+
-	 o1av2/liHsOzV6kcNclKJhj5kGnlx8uhIReOm2AgeW9gdro/6ekMDYqM+kHVVvMDOYA==
+	t=1795041167;
+	b=MH3lOfVheCEPWosnoYBohhVDT0QYcwokODSuNr7l6FhPiA7GbpWlMkVb80pyEjNeWmxM
+	 /5+SUj6XyCFVp4rIzhcAKBPxjb9P3yLt7m+DJWNJyE4R1f9R4NwS0vr5D7EpTXtCD4rfg
+	 WmQnigV7sQR58GWOBdd0Bc3rFpn4k0TEi4u92HJX+xG22HSq7VV0koYRQAbOwwqQ8yTPL
+	 14jEXl2BDQ6j9WQyZJYqCtTp8X2FESPd7Vu4R2PdjulBn0UYH37gcaViZvhjJ0Zem0vgD
+	 iIje51gm/N7Mah0W7URQXAQZ4ZZtznpeZf2SzDoOawFuw8AMKOnUXMGM1RCX+F7Q+pw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041164;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041167;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+DN92as2GBsmBpZCjbDJfa5P9+37YeneuquCalwwAOM=;
-	b=gkdZWbWulq0tvTumLOZiaAyG8SVkobDuhbLEQ4EltJj4yrF0u0zXmfrxOh2hWs67ZDHg
-	 2XXrkxhN1xtPyb/0RV2bjCny3pKtuZeJ2giQY0NcMEuFqgmaQKh3hEBMWgSVgqa/F41rv
-	 jOgeuheuh8GCYxkRQ0AhjPnNs6Gbe9C6dEW84Crdzia1h7m/jhkqE7LY+x4VreFEDZDtF
-	 QLKOvlRwQC2YYNfBrKBfPTGJmxI6RZl31oAxlJj1LpyuM9TxeQ2xE0JdAhkzjnoNDw56s
-	 w81o3mNeX8kjS+NwZOgpyKwoSVda94uA28J9Je62nh9gKikNYAOyq41RIwTnei7mHGQ==
+	bh=kuk1jkoUW7zDlmYd65oH++Xk1ZoXK79rA+RB+GiVByU=;
+	b=Ysk2yzVKPx9uffAqI3uZCCfPY8VsZM2tR2v5eZ2DY4z51xJFJpYha0ELHULjQzVOG6Ve
+	 gqxXPj6kykc/ptQ+ckEhRR7tN8K07kTWo4UPPN3NLKRGoNKwcDjvPq9kELAh5qc3jXPeD
+	 ZQtZjz7UtpdVDEmfGfvm/U8NpuQNA1xdakgEnxwbsJmYKgjM2b44E8hcNarb42TiLMJZp
+	 GpmOCi/4Dk6FWA4dqffwy/IdOW8f8gnW0cKOks5uIz9DLSv7QxqAI7RqlS7VzKRofOiGy
+	 YTHNUP/VVcTXJ6y7I4l/lyN3SlUKUlniuo5NN3zaBjauXAh9dbiYfOkOQdMyOyblLYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FY9nAdcS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hATWlc9P;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB224606A32A;
-	Wed, 18 Nov 2026 22:32:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB65C606A31C;
+	Wed, 18 Nov 2026 22:32:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FY9nAdcS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FE3D1F000C4;
-	Wed, 18 Nov 2026 22:32:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hATWlc9P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D38FA1F000C4;
+	Wed, 18 Nov 2026 22:32:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041164;
-	bh=+DN92as2GBsmBpZCjbDJfa5P9+37YeneuquCalwwAOM=;
+	s=korg; t=1795041167;
+	bh=kuk1jkoUW7zDlmYd65oH++Xk1ZoXK79rA+RB+GiVByU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FY9nAdcSP3WHhBpJfhf0cBpBx3pGnRaU0dXPqO2UNwGPyf6fCkdnnM/wTzmh694GH
-	 xl6dj6BlnFspORRpvG4BXkO82Z09gboHyPhgZxeTqxunusJmo8zMzzBtImOipTrjv7
-	 LyXWuiRgXAnpYOFPaO60ppcI4dxGEu7jMZTKOhjc=
+	b=hATWlc9PFD+6rdTYVfq/bA8mOrg9/Ff62ENEYLuE6a56SWPWcdz6WJkQoukCB58qC
+	 JF9wNlln8RDWd0oO39bsL3YtGvYNP2N/TKb2ARDroolC4/1nRXJtehAUUfI886Zeuo
+	 Nko+fMKuzlpNTVzO8GMu54IAnC5IWbqQrDEFe+54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2675/3318] wifi: mt76: mt7996: fix PLE free page and AC queue register offsets
-Date: Wed, 18 Nov 2026 15:54:57 +0100
-Message-ID: <20261118150441.249494874@linuxfoundation.org>
+Subject: [PATCH 6.6 2676/3318] ASoC: rockchip: rockchip_i2s: Handle runtime PM resume failures in set_fmt
+Date: Wed, 18 Nov 2026 15:54:58 +0100
+Message-ID: <20261118150441.277827339@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,50 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit c33af2e4622baafc56c565a13823f6b89d3f50db ]
+[ Upstream commit e9eb1854d16136006c6fe94c927b54b2b264b429 ]
 
-The PLE register map in the MediaTek vendor driver places the free
-page counter, the free page head and tail, and the HIF group page status
-at 0x3a0, 0x3a4 and 0x3a8. The driver reads them at 0x380, 0x384 and
-0x388, and the vendor map has the band 1 TXCMD queue empty status at
-0x388. The same map has 0x100 bytes per AC for the station queue empty
-bitmaps, with the MT7992 extension register at offset 0x80. The driver
-uses 0x80, which cannot hold the 34 registers per AC of MT7996, so the
-hw-queues file reads AC1 to AC3 of a station from the wrong register.
+rockchip_i2s_set_fmt() calls pm_runtime_get_sync() before accessing
+hardware registers, but ignores its return value.
+If the runtime resume fails, the function continues to perform register
+accesses while the device state is undefined.
+Replace pm_runtime_get_sync() with pm_runtime_resume_and_get() and
+return early on failure to avoid unpowered register accesses.
 
-Use the offsets of the vendor register map.
-
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Link: https://patch.msgid.link/20261006205936.669125-25-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 53ca9b9777b9 ("ASoC: rockchip: i2s: Fix regmap_ops hang")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260903112739.373621-2-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/regs.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/soc/rockchip/rockchip_i2s.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/regs.h b/drivers/net/wireless/mediatek/mt76/mt7996/regs.h
-index 97beab924517b..8d762076a29ac 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/regs.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/regs.h
-@@ -53,12 +53,12 @@ enum base_rev {
- #define MT_FL_Q2_CTRL				MT_PLE(0x3e8)
- #define MT_FL_Q3_CTRL				MT_PLE(0x3ec)
+diff --git a/sound/soc/rockchip/rockchip_i2s.c b/sound/soc/rockchip/rockchip_i2s.c
+index 834fbb5cf8103..f215389574013 100644
+--- a/sound/soc/rockchip/rockchip_i2s.c
++++ b/sound/soc/rockchip/rockchip_i2s.c
+@@ -245,7 +245,9 @@ static int rockchip_i2s_set_fmt(struct snd_soc_dai *cpu_dai,
+ 	unsigned int mask = 0, val = 0;
+ 	int ret = 0;
  
--#define MT_PLE_FREEPG_CNT			MT_PLE(0x380)
--#define MT_PLE_FREEPG_HEAD_TAIL			MT_PLE(0x384)
-+#define MT_PLE_FREEPG_CNT			MT_PLE(0x3a0)
-+#define MT_PLE_FREEPG_HEAD_TAIL			MT_PLE(0x3a4)
- #define MT_PLE_PG_HIF_GROUP			MT_PLE(0x00c)
--#define MT_PLE_HIF_PG_INFO			MT_PLE(0x388)
-+#define MT_PLE_HIF_PG_INFO			MT_PLE(0x3a8)
- 
--#define MT_PLE_AC_QEMPTY(ac, n)			MT_PLE(0x600 +	0x80 * (ac) + ((n) << 2))
-+#define MT_PLE_AC_QEMPTY(ac, n)			MT_PLE(0x600 + 0x100 * (ac) + ((n) << 2))
- #define MT_PLE_AMSDU_PACK_MSDU_CNT(n)		MT_PLE(0x10e0 + ((n) << 2))
- 
- /* WF MDP TOP */
+-	pm_runtime_get_sync(cpu_dai->dev);
++	ret = pm_runtime_resume_and_get(cpu_dai->dev);
++	if (ret)
++		return ret;
+ 	mask = I2S_CKR_MSS_MASK;
+ 	switch (fmt & SND_SOC_DAIFMT_CLOCK_PROVIDER_MASK) {
+ 	case SND_SOC_DAIFMT_BP_FP:
 -- 
 2.53.0
 
