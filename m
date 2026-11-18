@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044548;
-	b=sL2jsWzB7frMfsyXK5mea9BjjYjjpCRvzF29tX4dBm41zSnyGnqnKP/mZy10KBsbDBY2
-	 9+q/ny3WE13mF+ipdQrMEiwvlhQBX4pgJLqaD0cbkY9zQGk/eJvZnawTSLn8sG0ubm8bZ
-	 +u1FDvJeZdGXekYIeM0WMZtmJO5MaEdS2gJ7xUC8UNEsCS5PR9MkiXqisZ1uY3zOwxASR
-	 qrO6SE2xkRqLuJhGjb9h3a69Z8q8xdEhb4mBYWh57V1Dl2gqha4L3CWTS58DxxENfjgAS
-	 Awo5pNJ2T+pVqYCteMu/otSvDxm3cNAIl35z2zOE6N+r5T0KaRZbhdW447S4rODHedQ==
+	t=1795044550;
+	b=riorzIkUvBiIA0PWrKFlsOk/t0xFtSyLC0qgtqCLmP5yI+KBImlkuX7A2a/a5vMRwk6n
+	 K+GRI0/9OlHANcbjESfUGd6JBrBl/RxhLVJSLw/a69VObwEoAah/mFhKXJ3juOzNoJho9
+	 IDow0UM2hjNCGq6821Pv1bosyx5EQBX1Xcrtk/KSaKxAiZ8jFWTeZz7IMW1niIze/RsDW
+	 Pp74wSl66srjc6Zq4bbZF97S+7amnbcNPMCk4qkd7MjgIpZawvxeROkzcgqHgaD6HdiwM
+	 x7VfVZwwEhnqMo72CVql+iI70ryVBGkj1SeNL6P/nQmHyXvyzHT2f6kNzo6l655WMXQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044548;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044550;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x7YEvFkyZBqFsGOWD0yCi+DXgdDKfF+WhexgX5B+a3s=;
-	b=GKohs5h7wOept/QIYTIRJDd6R3OZ+MgQ+J/gqu3oTj9lFmQcQMacniTs3hukIZGZiuA1
-	 Pdo/ggjGEkHWhXZPZLcBu1T9BucWfMTtSyaHo3z/4sh7yx+z/HPwkUd4XKW4cl7BBPtjT
-	 DTCzoq4q2r5O+deXMsP55NrcBuGDokGTPlkGKiToNq86srCuD2ugmUBAitP9guaziKvRR
-	 D8CFPD7+wOLtwGRBq4FOxWVSOIkL5P0VLqmLUj/4ZS3c7Elt1WDKRwI9MajqJZFWYEqbK
-	 dHTLjF5AeKjQJ8lwNxqSNfxJLqLDa1YRUYl7EHedvP06ab1GYk9MFBXYakOZ+rI0RoA==
+	bh=4uGouKvL6Y4DGwjBv2qXPWfyDFFoS77+TO5ojzkGzng=;
+	b=zJ87VTGd+hczzqpZOkStwovtMssey7Ma+iXU4WtI6E0wACnoLSOdYuq41lz8KO6j3kVg
+	 He09iUMQ7ITOPBgDDUhO2tq084vXLdBqGcESRC/SH3GDBRYCRakUnW7DtOOSuusHzjR5D
+	 9tmdHWTWK8hY6Vy4D0xoDhrUtdvw1SPg3NPsajbrBph5ZrNb+gAqODSd9L4owfUYMROft
+	 xHrEM18+tIoLNcM3EnvN3XXpjwe3U5OZ2T0RgchjAKbrpKPxCHRrkExPHamww4ra38NZS
+	 CoRj378R4VSRS8YGtP3PALrMM+Rt2HkiI2I9PPiYS/6DrwAhdh5aStV+fLfIRbxGaYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BtueQhV6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vQ0kipNO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 153A6606A325;
-	Wed, 18 Nov 2026 23:29:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80F1606A325;
+	Wed, 18 Nov 2026 23:29:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BtueQhV6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F0101F000C4;
-	Wed, 18 Nov 2026 23:29:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vQ0kipNO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A5851F000C4;
+	Wed, 18 Nov 2026 23:29:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044547;
-	bh=x7YEvFkyZBqFsGOWD0yCi+DXgdDKfF+WhexgX5B+a3s=;
+	s=korg; t=1795044550;
+	bh=4uGouKvL6Y4DGwjBv2qXPWfyDFFoS77+TO5ojzkGzng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BtueQhV6R5v/ruEV+8pm34X5uwW5Sw9ytwTY/IThCfr28+oWO8OdgiZnJjMymz+gt
-	 juW/tcVTDJFt3AbTct5SJcz6aAWFIV3/6Pqh9Zy/scsXf+oVMNpcmTb1+hDCDXyF/T
-	 i3pPzv2AQ70qgVMW22C4lB9yEPB8R6jXYri5Q/v4=
+	b=vQ0kipNOgfyHNMQyTst94qwIkz5NHVG48PCOXGuNBQQ68EGidkNCsTToMB0uhi9bO
+	 gH35BVlxOuxWoEgh9xJEaxdez4chnzySVW/x6YubU3dA+PO89hwkXf1Jfgm7Mf7xZ4
+	 8KcYI47L3D8W5Vlci4DEJVS/y05liijzUe5HLT4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
+	Farhad Alemi <farhad.alemi@berkeley.edu>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.1 0605/2857] NFSD: Do not send CB_RECALL_ANY to NFSv4.0 clients
-Date: Wed, 18 Nov 2026 15:27:19 +0100
-Message-ID: <20261118150223.275007120@linuxfoundation.org>
+Subject: [PATCH 6.1 0606/2857] NFSD: Dont complete a cld upcall the daemon has not read
+Date: Wed, 18 Nov 2026 15:27:20 +0100
+Message-ID: <20261118150223.309475973@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,45 +69,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <cel@kernel.org>
 
-commit 95ff0c079b9cab91f2327beb4197a3bc48c71f55 upstream.
+commit 7f4bf851aca4e18940ebf2bddf4ba6783802ee81 upstream.
 
-deleg_reaper() sends CB_RECALL_ANY to every ACTIVE client holding
-delegations, but CB_RECALL_ANY is an NFSv4.1 operation. An NFSv4.0
-client's callback service accepts only CB_GETATTR and CB_RECALL, so it
-replies OP_ILLEGAL. The decoder maps the unexpected opnum to -EIO, and
-nfsd4_cb_done() marks the client's callback channel down.
+cld_pipe_downcall() matches a reply to its upcall on the xid alone.
+A write that arrives before the daemon has read that upcall
+completes __cld_pipe_upcall() while its struct rpc_pipe_msg is still
+queued on the pipe. The waiter returns, its stack frame goes away,
+and the pipe keeps a list_head that points into it. The next
+rpc_queue_upcall() walks that pointer:
 
-Nothing brings the channel back. nfsd4_run_cb_work() sets NFSD4_CB_UP
-only for a minor version above zero, and the only nfsd4_probe_callback()
-call site an NFSv4.0 client reaches is nfsd4_setclientid_confirm(). One
-visit from the reaper therefore leaves the channel marked down until the
-client re-establishes its clientid. RENEW then returns
-NFS4ERR_CB_PATH_DOWN for as long as the client holds delegations.
-nfsd4_cb_channel_good() stops returning true, so the client is granted
-no further delegations.
+  BUG: KASAN: vmalloc-out-of-bounds in __list_add_valid_or_report
+  Read of size 8 at addr ffffc90007027950 by task syz.0.96/13066
+   __list_add_valid_or_report+0x6a/0x130
+   rpc_queue_upcall
+   cld_pipe_upcall
+   nfsd4_cld_grace_start
+   nfsd4_cld_tracking_init
 
-Skip clients at minor version zero.
+The pipe is mode 0600 in rpc_pipefs, so the trigger is a broken or
+hostile nfsdcld rather than an unprivileged task.
 
-Fixes: 44df6f439a17 ("NFSD: add delegation reaper to react to low memory condition")
+Record whether the daemon has consumed the whole message and
+complete only when it has. cld_pipe_destroy_msg() runs on every path
+by which the pipe releases a message, so it can maintain that flag
+under cn_lock. nfsdcld sends its -EINPROGRESS downcalls only after
+reading the upcall, so the new check does not break the GraceStart
+record stream.
+
+Fixes: f3f8014862d8 ("nfsd: add the infrastructure to handle the cld upcall")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260817-recall-any-keep-count-v5-1-3b2cffce701e@kernel.org
+Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
+Closes: https://lore.kernel.org/linux-nfs/CA+0ovCjVF58WLeen2ctdzHyWUASAAW3Y=Yjihyq0pFApYawtDg@mail.gmail.com/
+Link: https://patch.msgid.link/20260901-alemi-v2-1-e163f94a3a6e@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/nfsd/nfs4recover.c |   23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -6463,6 +6463,8 @@ deleg_reaper(struct nfsd_net *nn)
- 	list_for_each_safe(pos, next, &nn->client_lru) {
- 		clp = list_entry(pos, struct nfs4_client, cl_lru);
+--- a/fs/nfsd/nfs4recover.c
++++ b/fs/nfsd/nfs4recover.c
+@@ -724,6 +724,8 @@ struct cld_upcall {
+ 	struct list_head	 cu_list;
+ 	struct cld_net		*cu_net;
+ 	struct completion	 cu_done;
++	/* daemon has read the whole upcall; protected by cn_lock */
++	bool			 cu_inflight;
+ 	union {
+ 		struct cld_msg_hdr	 cu_hdr;
+ 		struct cld_msg		 cu_msg;
+@@ -883,6 +885,13 @@ cld_pipe_downcall(struct file *filp, con
+ 	spin_lock(&cn->cn_lock);
+ 	list_for_each_entry(tmp, &cn->cn_list, cu_list) {
+ 		if (get_unaligned(&tmp->cu_u.cu_hdr.cm_xid) == xid) {
++			/*
++			 * Completing now would return the waiter
++			 * while its message is still queued on the
++			 * pipe.
++			 */
++			if (!tmp->cu_inflight)
++				break;
+ 			cup = tmp;
+ 			if (status != -EINPROGRESS)
+ 				list_del_init(&cup->cu_list);
+@@ -891,9 +900,9 @@ cld_pipe_downcall(struct file *filp, con
+ 	}
+ 	spin_unlock(&cn->cn_lock);
  
-+		if (clp->cl_minorversion == 0)
-+			continue;
- 		if (clp->cl_state != NFSD4_ACTIVE)
- 			continue;
- 		if (list_empty(&clp->cl_delegations))
+-	/* couldn't find upcall? */
++	/* no upcall to complete? */
+ 	if (!cup) {
+-		dprintk("%s: couldn't find upcall -- xid=%u\n", __func__, xid);
++		dprintk("%s: no completable upcall -- xid=%u\n", __func__, xid);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -913,8 +922,16 @@ cld_pipe_destroy_msg(struct rpc_pipe_msg
+ 	struct cld_msg *cmsg = msg->data;
+ 	struct cld_upcall *cup = container_of(cmsg, struct cld_upcall,
+ 						 cu_u.cu_msg);
++	struct cld_net *cn = cup->cu_net;
++
++	/*
++	 * errno >= 0 means the daemon read the whole message and a
++	 * downcall will complete the upcall.
++	 */
++	spin_lock(&cn->cn_lock);
++	cup->cu_inflight = msg->errno >= 0;
++	spin_unlock(&cn->cn_lock);
+ 
+-	/* errno >= 0 means we got a downcall */
+ 	if (msg->errno >= 0)
+ 		return;
+ 
 
 
