@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020990;
-	b=1ag2pkuqqJMdEaiGs7GpmG0ZGXeYxwB1xEBDenCx2Xu8m6n9b6guL9iPbzWApbJuapBn
-	 6SYOgkRCibWGoUM7iDneJT5o/P5DWCFs4WSODmqf/d3RyPgfKajZgbCNRZgPammH+tJJm
-	 3y9mbL+5eYDCfp3f9u7ujydrpTwN59wj/3tVnwpXb7rmFK6LYJALXvNcW5SmKvt9OOxYE
-	 ViXvuS3GtgZQCfhF2b8dsx0mWGqHAkHQFEew4kAtUAF9apa7bAgMOkIPOq9n7t6/fuKsw
-	 xlDYRH5dd5EK47OsEXqrabfF0TInSOQVPb0BxHDxOymPTuQzQYz7mPJQ+5N2ZE1r+Ew==
+	t=1795020993;
+	b=dP+doyigqa+ZijKSzo08mII1vmUFkyjEWXyBcpf5JoaZG/2xXa8tzVGTgLGB73jMIL1w
+	 lNHmcPDKfzTfDcq4kvaZgHPYxnyThAU0954+bsKMmud5Du3Pgnw+j+lz8iJxF8fIW7RuR
+	 vaMHKpqD37jThjaGp1xHCe466nLLx7U41SCreaAPy3UwGTRYZpQYuUJxiAYCrsaSQ4nYk
+	 TUMOaJuMpupjVAXRkt0Lp+560OX9qiWL7JCVbFVeHmenaQF8uibdLXXQ6Ecz4VcmcvDRY
+	 P2kdttUT68iD6TDt9cQkIaH033du8aQSLxlREjDu0j3S3wWmNsrzhY3zkfSMNhrkE5g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020990;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020993;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NH84FJ2NIkZ3VShteDG3bXjz6GbfAslGNCUPvFeOJcE=;
-	b=Xwk2jS6ohk9TwTDfhYhoHSxB8H+psC6WmWM/Fq2oXofIAv92pc24yMLxQNtMe/stTIMN
-	 Fqh7Jnvlg3T7SXCkXgJ5c07oQd9+KzWmuLMbVHu/rEUxc3hWg1mGEv1W7/WJ+FfIAo/zT
-	 ga69qxse084mrgPw6MfpVcIj0xmvvy1CHdHld1DGhT2l/l0YAkLT9adWSn7WcxsuxooCr
-	 vRSDE1ymasrCPkqmomYi6/9JwI1GiYnmej8VxBUlKnRIxK+40EnfNqrRqxvVAJvTGzbzv
-	 yRo56mqWAAnFXnC0lX0UoVByeF4Ze0024GD7meYoD21D8a5XDCrp3ZDGEne9e1NArFA==
+	bh=7/PjIQbg8W5VqFhr0EZqIT6QW5YkK4PPkoz63JxxiUs=;
+	b=pylrvxWO1SGywgSfOOZQ21838/p3Elxncf0cyFX66/DERxOQT0iMkFsoh3wyRRDQjli3
+	 /8qFp5w8eC0hu9MK1sqQyiDbOzpjUU7RSmFpQF20/vRPoDMkGjotcxoSnL+ghmgnxXmD/
+	 0rig9Fx/1acmvfbZ9qL7o3Lu4HKIp8xDesVxfUbGOzsm8XryUIn+SsYifc1xbnN7sWEG7
+	 5itqTgxNNsqW7Zk2D2lor9KbVByHNwteIlcVjRcCfS8geTOBKktlZVN/gzQXec1WFfeap
+	 3K4VBwpUKsWKH//AiRUOnn5xzPBPqNT1yfuwtPjA7sOVBehyg/wSao0kSgrk4JqBqig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wXTRsNB6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dN4GOtJ3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6A1606A320;
-	Wed, 18 Nov 2026 16:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481A9606A31C;
+	Wed, 18 Nov 2026 16:56:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wXTRsNB6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E227A1F000C4;
-	Wed, 18 Nov 2026 16:56:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dN4GOtJ3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FAF71F000C4;
+	Wed, 18 Nov 2026 16:56:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020990;
-	bh=NH84FJ2NIkZ3VShteDG3bXjz6GbfAslGNCUPvFeOJcE=;
+	s=korg; t=1795020993;
+	bh=7/PjIQbg8W5VqFhr0EZqIT6QW5YkK4PPkoz63JxxiUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wXTRsNB68rIByqVwWkpUh6q2jY90MeX4y2tzu15uiAls1n+bnQtNGmE0KkU374O3h
-	 HAsPk/+SUET/1/2KyLXr22YSy+h7S0u6y4y7gdzOyABlpJuKdBCzr9m/ilVzP2E1xb
-	 3aJeHSZTQUkdZXotEPPyU5RC9lW9xyGv2HNHOiMg=
+	b=dN4GOtJ3iDxQFSe5spscfYZTma8TOqZoIgNQIh1vbFYkfsZZEs4vZr+cVN2G2n/E6
+	 R74OPlNsYjgBQXlwyP02BAFSiv7JZLlnSNnWHIgvRtXrMqtI3D/S37CHkEWPgEmp95
+	 1aOSP/CmrAMGrHUdAPiuhWnTHer2xihVm59CbqaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	KaFai Wan <kafai.wan@linux.dev>,
+	Masoud Aghasi <maghasi@disroot.org>,
 	Alexei Starovoitov <ast@kernel.org>,
+	Leon Hwang <leon.hwang@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2149/2651] selftests/bpf: Use _exit() in uprobe_multi_test clone-ed child
-Date: Wed, 18 Nov 2026 15:56:29 +0100
-Message-ID: <20261118150403.203714594@linuxfoundation.org>
+Subject: [PATCH 7.3 2150/2651] bpf: Fix incorrect handling of user flags in bpf_percpu_array_update
+Date: Wed, 18 Nov 2026 15:56:30 +0100
+Message-ID: <20261118150403.235255219@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,65 +69,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: KaFai Wan <kafai.wan@linux.dev>
+From: Masoud Aghasi <maghasi@disroot.org>
 
-[ Upstream commit ce42271dc517baa880352d76548d301850e7385b ]
+[ Upstream commit a898ff0f3e9968b5f7c248d2af3cf1ddaf239e51 ]
 
-child_func() terminates with exit(), but spawn_child_flag() also starts
-it via clone(CLONE_VM), which shares the parent's address space. That
-exit() then runs atexit handlers and static destructors against globals
-the parent is still using.
+For BPF_MAP_TYPE_PERCPU_ARRAY map, bpf_percpu_array_update()
+is not considering the possibility of a combination of
+(BPF_NOEXIST, BPF_EXIST) flags with (BPF_F_CPU, BPF_F_ALL_CPUS) flags.
+This causes the (BPF_NOEXIST, BPF_EXIST) flags to lose their effect
+in some cases.
 
-LLVM commit `3c3ed59c6a2a ("[llvm] Add format check for
-MCSubtargetFeatures")` [1], included in the LLVM 23.1 releases, added
-Target::isValidFeatureListFormat() with a function-local static holding
-the compiled regex:
+For example, using the (BPF_F_ALL_CPUS | BPF_EXIST) flag combination
+with bpf_map_update_elem() results in an incorrect EINVAL error
+response, even though the flag combination is valid.
 
-	static const llvm::Regex pattern("^([+-][^,]+)(,[+-][^,]+)*,?$");
-	return pattern.match(Features);
+This patch fixes the bug by adding proper flag validations and checks.
+Before this patch, bpf_percpu_array_update() rejected
+BPF_F_ALL_CPUS | BPF_EXIST and BPF_F_ALL_CPUS | BPF_NOEXIST with
+-EINVAL. Also the BPF_F_CPU | BPF_NOEXIST were accepted.
+After the patch BPF_F_ALL_CPUS | BPF_EXIST is accepted and
+BPF_F_ALL_CPUS | BPF_NOEXIST and BPF_F_CPU | BPF_NOEXIST
+result in -EEXIST.
 
-The child exit destroys that static while its guard variable still marks
-it as initialized, so the regex is never rebuilt in the parent. From that
-point on, get_jited_program_text() gets NULL from
-LLVMCreateDisasmCPUFeatures(), so every jited program text check in the
-tests running after filter_clone_vm fails, e.g. "verifier_jit_convergence",
-"verifier_private_stack", "verifier_tailcall_jit" and "verifier_jit_inline".
+This patch also starts returning -EINVAL for (BPF_EXIST | BPF_NOEXIST),
+with or without BPF_F_CPU, which was previously accepted.
 
-Use _exit(), which runs neither atexit handlers nor static destructors, as
-uprobe_syscall.c already does for its own CLONE_VM child.
-
-[1] https://github.com/llvm/llvm-project/pull/180943
-
-Fixes: d2520bdb1932f ("selftests/bpf: Add uprobe multi pid filter test for clone-ed processes")
-Signed-off-by: KaFai Wan <kafai.wan@linux.dev>
+Fixes: 8eb76cb03f0f ("bpf: Add BPF_F_CPU and BPF_F_ALL_CPUS flags support for percpu_array maps")
+Signed-off-by: Masoud Aghasi <maghasi@disroot.org>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261018005348.2195130-5-kafai.wan@linux.dev
+Acked-by: Leon Hwang <leon.hwang@linux.dev>
+Link: https://patch.msgid.link/20261008120734.1565972-2-maghasi@disroot.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/bpf.h   | 3 +++
+ kernel/bpf/arraymap.c | 6 +++---
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c b/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c
-index f0baf5738b751..7fbcfddc3cc36 100644
---- a/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c
-+++ b/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c
-@@ -94,14 +94,14 @@ static int child_func(void *arg)
- 	/* wait for parent's kick */
- 	err = read(child->go[0], &c, 1);
- 	if (err != 1)
--		exit(err);
-+		_exit(err);
- 
- 	uprobe_multi_func_1();
- 	uprobe_multi_func_2();
- 	uprobe_multi_func_3();
- 	usdt_trigger();
- 
--	exit(errno);
-+	_exit(errno);
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index b052efd4a0591..a628f182bb64c 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -4256,6 +4256,9 @@ static inline bool bpf_map_is_percpu_map(enum bpf_map_type map_type)
+ 	}
  }
  
- static int spawn_child_flag(struct child *child, bool clone_vm)
++#define BPF_EXIST_FLAGS		(BPF_EXIST | BPF_NOEXIST)
++#define BPF_CPU_FLAGS		(BPF_F_CPU | BPF_F_ALL_CPUS)
++
+ static inline int bpf_map_check_op_flags(struct bpf_map *map, u64 flags, u64 allowed_flags)
+ {
+ 	u32 cpu;
+diff --git a/kernel/bpf/arraymap.c b/kernel/bpf/arraymap.c
+index 0fe9afd4a591e..133f189bf6d27 100644
+--- a/kernel/bpf/arraymap.c
++++ b/kernel/bpf/arraymap.c
+@@ -438,15 +438,15 @@ int bpf_percpu_array_update(struct bpf_map *map, void *key, void *value,
+ 	u32 size;
+ 	int cpu, off = 0;
+ 
+-	if (unlikely((map_flags & BPF_F_LOCK) || (u32)map_flags > BPF_F_ALL_CPUS))
+-		/* unknown flags */
++	if (unlikely(((map_flags & BPF_EXIST_FLAGS) == BPF_EXIST_FLAGS) ||
++		     ((u32)map_flags & ~(BPF_EXIST_FLAGS | BPF_CPU_FLAGS))))
+ 		return -EINVAL;
+ 
+ 	if (unlikely(index >= array->map.max_entries))
+ 		/* all elements were pre-allocated, cannot insert a new one */
+ 		return -E2BIG;
+ 
+-	if (unlikely(map_flags == BPF_NOEXIST))
++	if (unlikely(map_flags & BPF_NOEXIST))
+ 		/* all elements already exist */
+ 		return -EEXIST;
+ 
 -- 
 2.53.0
 
