@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795014392;
-	b=xx+WZM8pEoErncyxgwxzrCWA0uz7dKqc3TbM47+l3pvkWGj5BHkFQiR0JyW8WJE2vQQR
-	 5qH6/rc/CGAYUOPYiND0Oai73m+o0fVkaoTdlCM0aa69u0VEADa8sx0M4b8JIUXSY3pwA
-	 ptO300V1esjq5dFeNmpLvC+NAfjr/gQhhqJTEcEuYP0emx2cSgR20w3U4T/RfpShirXvN
-	 IZxIOFYwUOnSjn11gpi7cHRegolEqKmwZLyP5EzMz97HhwuEQ0uQNdovzk/2B3Y5GlqXQ
-	 4c24LsT72pJNq6u1zhCZ56HV+vZd6j0HebcCMcBm5af3y1d1e4hKKPgU6Kye6rc3yAw==
+	t=1795014395;
+	b=3QFHFcw9H/L/JVqPho3G3y5p/xkPMkv1FO0K/4e9LVAGXH7cC2/QUx3ovRPK7upQ4Z7g
+	 K94e3e1eMkZ/bEwV98x9tpnkQcgyAvCMfFNI0zF8BDcbHBiOO5niRioaG/zEJHo44dGim
+	 AUz203GZJngP98gpCyCcNAGveolUz/0EcpgzxkOb7b/fiqc7bZajnbZHPNygFAYVoOnZz
+	 k4jUsfT7326aicogAt21hcmr0v3EVqnoy+IDW8lh6RgwJVQTCy+LtdPQHDDJuzKjzRD17
+	 InBw8YsrVlbtJREllZ86QG3HMa6uLGjlVL+Ka8veD+rBdq2WGP9kd+tNQFS4QuostSA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795014392;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795014395;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9UEYyMFdojC5RMoHDFnEfwZYddC5w5h8R0j3moHyro8=;
-	b=zJ9gpCY4RF6kCzTfv4okQrTGW4VB3N35m+HSlceBMv24jKcaYPR1rXU4e5qfX+fdatbR
-	 wtXvvIRBzYkM3xIB1C11QDm3AUo1SfNCyePA3a0agOXPf60ufmCG+mZS4HDkavWNBXBZs
-	 gqgi+rM453XlrGdDfFP9VgDFVMf8Y7jPkaCRCgQ9A+bwfFfaWmu/BEvHN3IMasp0IECzY
-	 J8yYQA9+UQ7Glx9S0Y/5DonOfqC/R6lZpl+VuTsrJQYPUQ9xzSBXFpvzWwJy4RrAhgf1t
-	 rU7CCEJEzX3b6SiXKCOG2CebNQFH/M5J8QVcYbseVYFXNZj8IdYT4vnQRrF8kOAqoNw==
+	bh=itvMFU6nWBEWJLXBDMfT4Lx1k+PgK9eqt2edNFvb6iA=;
+	b=GEGmedA7MiNXL5r5YK46BYZiqZ9lnmFs0RZK7zOFcj862CFEBIt3JHx2oR9U3RdaxF8P
+	 bmAMKYxXQ1eGVYW6dDzzdkgrsEsEArt9gJev03kWo7h8HOBCCv25JSM4gF1HFqVl1loli
+	 BBRTheJCiw1mdE4aWEDE2fsEP1tekVdjYnDbJq0wYc+p7NZF4e6AIYvxc+1tSQhcaFRsY
+	 T/0SadmcxVCFudAfckiASgi89OT22KydZuuBuNklchan8NBndOves4fQLYMcqTziNm3oF
+	 LRz8fn2/XJnZli93L8Dwk67Wf/wGDAHl7/+zgUiygtzHwWl+9KNKAyhGOi9t7QfRqqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y+p+aIaL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HmraQneK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83A9606A335;
-	Wed, 18 Nov 2026 15:06:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48DCA606A31C;
+	Wed, 18 Nov 2026 15:06:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y+p+aIaL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF31B1F000C5;
-	Wed, 18 Nov 2026 15:06:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HmraQneK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B2EF1F000C5;
+	Wed, 18 Nov 2026 15:06:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795014392;
-	bh=9UEYyMFdojC5RMoHDFnEfwZYddC5w5h8R0j3moHyro8=;
+	s=korg; t=1795014395;
+	bh=itvMFU6nWBEWJLXBDMfT4Lx1k+PgK9eqt2edNFvb6iA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y+p+aIaL5zCDr028Ggc2Jw20OMO82MbMhdnS6dUzU2OC4jY2LrSa85PHKcfVuhLFW
-	 CrDnedTiAopYpC4cvCEw8ueT/Vu0mEt4FWs1nLbSe8n8GSP9iRFPXUiWjVysFkGF4v
-	 oT5BZOIki2/1qUEBgWlowQGWJL/D6FJ3qNGtpc88=
+	b=HmraQneKlnUNNN3yPkDkzH65vNxq5MOhv1xqezWrNaostYBYIvvU5S/EWjLid1sUh
+	 iGEhyGFzN2N031jFNwBSCnc3TVDI3Jw28Max3mK494e4kJ/0y2O6dEdptJvxykMcv1
+	 6wHnAxIjZCpgpeWlV648N5fBkB3rz0lzoA7oeKzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tu Dinh <ngoc-tu.dinh@vates.tech>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 6.1 0002/2857] xen-netback: Zero out sring pointers on unmap
-Date: Wed, 18 Nov 2026 15:17:16 +0100
-Message-ID: <20261118150201.412149919@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.6 0001/3318] x86/bugs: Mitigate TSA on AMD Zen5
+Date: Wed, 18 Nov 2026 15:10:23 +0100
+Message-ID: <20261118150313.635843521@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
-References: <20261118150201.293410965@linuxfoundation.org>
+In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
+References: <20261118150313.527275416@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -63,54 +62,123 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tu Dinh <ngoc-tu.dinh@vates.tech>
+From: "Borislav Petkov (AMD)" <bp@alien8.de>
 
-commit f96f16592a32430a0582309d73a873b6d3ee2bdb upstream.
+Commit cf27412f19c9cc5909b9107cd1b3f4ab7608e362 upstream.
 
-If xenvif_map_frontend_data_rings() fails when a ring is already mapped,
-it unmaps them via xenvif_unmap_frontend_data_rings() which keeps the
-ring pointers unchanged. xenvif_connect_data()'s cleanup path calls
-xenvif_disconnect_queue() which in turn calls
-xenvif_unmap_frontend_data_rings() again, which will attempt to unmap the
-pointers a second time.
+Zen5 is affected by TSA too, along with a third variant called TSA_FILL.
+Detect the vuln there and mitigate it. For Zen5, a table of microcode
+revisions is not needed because appropriate microcode sets the VERW_CLEAR
+CPUID bit, which simplifies mitigation detection considerably.
 
-Zero out the ring pointers after they are unmapped to avoid this issue.
-
-This is XSA-532
-
-Fixes: 2ac061ce97f4 ("xen/netback: cleanup init and deinit code")
-Signed-off-by: Tu Dinh <ngoc-tu.dinh@vates.tech>
-Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/xen-netback/netback.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ arch/x86/include/asm/cpufeatures.h |    2 ++
+ arch/x86/kernel/cpu/amd.c          |    9 +++++++--
+ arch/x86/kernel/cpu/common.c       |    4 +++-
+ arch/x86/kernel/cpu/scattered.c    |    1 +
+ arch/x86/kvm/cpuid.c               |    3 ++-
+ arch/x86/kvm/reverse_cpuid.h       |    2 ++
+ 6 files changed, 17 insertions(+), 4 deletions(-)
 
---- a/drivers/net/xen-netback/netback.c
-+++ b/drivers/net/xen-netback/netback.c
-@@ -1534,12 +1534,17 @@ static inline bool tx_dealloc_work_todo(
+--- a/arch/x86/include/asm/cpufeatures.h
++++ b/arch/x86/include/asm/cpufeatures.h
+@@ -475,6 +475,8 @@
+ #define X86_FEATURE_CLEAR_CPU_BUF_VM   (21*32+13) /* "" Clear CPU buffers using VERW before VMRUN */
+ #define X86_FEATURE_IBPB_EXIT_TO_USER  (21*32+14) /* Use IBPB on exit-to-userspace, see VMSCAPE bug */
  
- void xenvif_unmap_frontend_data_rings(struct xenvif_queue *queue)
- {
--	if (queue->tx.sring)
-+	if (queue->tx.sring) {
- 		xenbus_unmap_ring_vfree(xenvif_to_xenbus_device(queue->vif),
- 					queue->tx.sring);
--	if (queue->rx.sring)
-+		queue->tx.sring = NULL;
-+	}
++#define X86_FEATURE_TSA_FILL_NO		(21*32+17) /* AMD CPU not vulnerable to TSA-FILL */
 +
-+	if (queue->rx.sring) {
- 		xenbus_unmap_ring_vfree(xenvif_to_xenbus_device(queue->vif),
- 					queue->rx.sring);
-+		queue->rx.sring = NULL;
-+	}
+ /*
+  * BUG word(s)
+  */
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -594,9 +594,14 @@ static void tsa_init(struct cpuinfo_x86
+ 		if (amd_check_tsa_microcode())
+ 			setup_force_cpu_cap(X86_FEATURE_VERW_CLEAR);
+ 	} else {
+-		setup_force_cpu_cap(X86_FEATURE_TSA_SQ_NO);
+-		setup_force_cpu_cap(X86_FEATURE_TSA_L1_NO);
++		if (!cpu_has(c, X86_FEATURE_ZEN5)) {
++			setup_force_cpu_cap(X86_FEATURE_TSA_SQ_NO);
++			setup_force_cpu_cap(X86_FEATURE_TSA_L1_NO);
++		}
+ 	}
++
++	if (!cpu_has(c, X86_FEATURE_ZEN5))
++		setup_force_cpu_cap(X86_FEATURE_TSA_FILL_NO);
  }
  
- int xenvif_map_frontend_data_rings(struct xenvif_queue *queue,
+ static void bsp_init_amd(struct cpuinfo_x86 *c)
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -1341,6 +1341,7 @@ static const struct x86_cpu_id cpu_vuln_
+ 	VULNBL_AMD(0x17, RETBLEED | SMT_RSB | SRSO | VMSCAPE),
+ 	VULNBL_HYGON(0x18, RETBLEED | SMT_RSB | SRSO | VMSCAPE),
+ 	VULNBL_AMD(0x19, SRSO | TSA | VMSCAPE),
++	VULNBL_AMD(0x1a, SRSO | TSA | VMSCAPE),
+ 	{}
+ };
+ 
+@@ -1547,7 +1548,8 @@ static void __init cpu_set_bug_bits(stru
+ 
+ 	if (c->x86_vendor == X86_VENDOR_AMD) {
+ 		if (!cpu_has(c, X86_FEATURE_TSA_SQ_NO) ||
+-		    !cpu_has(c, X86_FEATURE_TSA_L1_NO)) {
++		    !cpu_has(c, X86_FEATURE_TSA_L1_NO) ||
++		    !cpu_has(c, X86_FEATURE_TSA_FILL_NO)) {
+ 			if (cpu_matches(cpu_vuln_blacklist, TSA) ||
+ 			    /* Enable bug on Zen guests to allow for live migration. */
+ 			    (cpu_has(c, X86_FEATURE_HYPERVISOR) && cpu_has(c, X86_FEATURE_ZEN)))
+--- a/arch/x86/kernel/cpu/scattered.c
++++ b/arch/x86/kernel/cpu/scattered.c
+@@ -51,6 +51,7 @@ static const struct cpuid_bit cpuid_bits
+ 	{ X86_FEATURE_BMEC,		CPUID_EBX,  3, 0x80000020, 0 },
+ 	{ X86_FEATURE_TSA_SQ_NO,	CPUID_ECX,  1, 0x80000021, 0 },
+ 	{ X86_FEATURE_TSA_L1_NO,	CPUID_ECX,  2, 0x80000021, 0 },
++	{ X86_FEATURE_TSA_FILL_NO,	CPUID_ECX,  7, 0x80000021, 0 },
+ 	{ X86_FEATURE_PERFMON_V2,	CPUID_EAX,  0, 0x80000022, 0 },
+ 	{ X86_FEATURE_AMD_LBR_V2,	CPUID_EAX,  1, 0x80000022, 0 },
+ 	{ X86_FEATURE_AMD_LBR_PMC_FREEZE,	CPUID_EAX,  2, 0x80000022, 0 },
+--- a/arch/x86/kvm/cpuid.c
++++ b/arch/x86/kvm/cpuid.c
+@@ -794,11 +794,12 @@ void kvm_set_cpu_caps(void)
+ 	kvm_cpu_cap_check_and_set(X86_FEATURE_VERW_CLEAR);
+ 
+ 	kvm_cpu_cap_init_kvm_defined(CPUID_8000_0021_ECX,
+-		F(TSA_SQ_NO) | F(TSA_L1_NO)
++		F(TSA_SQ_NO) | F(TSA_L1_NO) | F(TSA_FILL_NO)
+ 	);
+ 
+ 	kvm_cpu_cap_check_and_set(X86_FEATURE_TSA_SQ_NO);
+ 	kvm_cpu_cap_check_and_set(X86_FEATURE_TSA_L1_NO);
++	kvm_cpu_cap_check_and_set(X86_FEATURE_TSA_FILL_NO);
+ 
+ 	/*
+ 	 * Synthesize "LFENCE is serializing" into the AMD-defined entry in
+--- a/arch/x86/kvm/reverse_cpuid.h
++++ b/arch/x86/kvm/reverse_cpuid.h
+@@ -65,6 +65,7 @@ enum kvm_only_cpuid_leafs {
+ /* CPUID level 0x80000021 (ECX) */
+ #define KVM_X86_FEATURE_TSA_SQ_NO	KVM_X86_FEATURE(CPUID_8000_0021_ECX, 1)
+ #define KVM_X86_FEATURE_TSA_L1_NO	KVM_X86_FEATURE(CPUID_8000_0021_ECX, 2)
++#define KVM_X86_FEATURE_TSA_FILL_NO	KVM_X86_FEATURE(CPUID_8000_0021_ECX, 7)
+ 
+ struct cpuid_reg {
+ 	u32 function;
+@@ -137,6 +138,7 @@ static __always_inline u32 __feature_tra
+ 	KVM_X86_TRANSLATE_FEATURE(BHI_CTRL);
+ 	KVM_X86_TRANSLATE_FEATURE(TSA_SQ_NO);
+ 	KVM_X86_TRANSLATE_FEATURE(TSA_L1_NO);
++	KVM_X86_TRANSLATE_FEATURE(TSA_FILL_NO);
+ 	default:
+ 		return x86_feature;
+ 	}
 
 
