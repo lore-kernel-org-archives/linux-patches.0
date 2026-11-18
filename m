@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017275;
-	b=NxHWZEOB6dfnIr7o4AebQU5TYjGpyWEtQxUVFZhFxNfcOTZCgdgF3sSCmuBwFDbR2qJE
-	 tIeQ72bEtx0GIWCQZlZWGElbWdyVk+zNkHMf44etPQ17zKASiKqhX8fdafE4vktiMnaQ3
-	 V11qt7HQgZ4uxzVklTHm5Gik9w44lTabC5AeO6lmXnH+fDnhR/Tuj0SMovJWGTevVjmDg
-	 WePa7N7zUw9zV+e3oAjco0iMg7k0pxQKvwsKeT6iwVrRncrp6+hh0pqzQa/jlMyeAXyNa
-	 o9axWMZgleY9VGm6kk1CY47HNpYrivSQjdLkNrBnJ1mQBsMU/a2vF1ElxgJkbaRAnvg==
+	t=1795017278;
+	b=XkViDYnVb8Vz5TB+ORoH+NxhIdh04MUUeJC3RrWtohGewqc4FgiD+fwc8WTalrDCYyGO
+	 mhhIShmHaaXpZvyL2d8Yrw1dSKffAhFkOh/sV/AXy5aBOOLpos4IEELhjNy1DKWvSLBT8
+	 5wjQf6p7ZJEhbGOQpLOboCyWfN/MB7HAk/4kUP0Bd01/I0wgD0fdDVrDAG/laSfEUGM4I
+	 lkPHjubu4Y2dcl/vPyxdEFiea2AiE4ZDPcLz2/jyFZ1pyZjbN/oSXCs6ZHh71WEiOB6i/
+	 KOBfJVuncZEOYNtFJE139h/7S/GRdJXp4JTREID86dhZHLk9hqrc3guH793bT4r+20Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017275;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017278;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eHP7FQB8Jon+NJLK2m1twR0el/Els8JX2+WFmZ3RbV8=;
-	b=VoZ6CkIJDfrf8Krdm3G/Cwd6+iVqzA0jL/d2bp8aFYiRWrPbspuDnAnZ0352yaob4LIc
-	 jrD1K59bNzGWO65o1OFncLY2gPw8XAKsYzcRQbSXpetzvVWJa3qLishcMSbz4s3f67iS9
-	 E36lYSpmWuDn08HdJTqRmMbG2E3NOD3U68QOjUjbA/eigQqM/lsag3AQlK/A/hX9hVkRc
-	 QyPxVO5bwS6Pfz/HZ7OxggvLPtmXcKtCtBfMpaDQmdjtZZIlgnkbeSAuXPIPI3LzsvBih
-	 3kez5hq96t6J5uupDoHr+jakPm3llwuP44ee6bbtMHFInAk1qy9qfJgWlOiMmaT+HwQ==
+	bh=Hc9OxtTTRPb8kIeIVaZ1Q1Rwx6Xu4kJ7CjFDEgCy1tg=;
+	b=FPiOGnnKB0NZkWYIUMw0TU+QPdlaexUxrCIeDZ3TUFd4b7CA1tu08xrFsUnyUeAluXed
+	 ebRbVLnvKKWMk4lhpeCWeXktKdY82qRmfTYXYTVUmXsihGeaZKVXDxwvusy4yUi6bVWvK
+	 Tx+EzXIWAXtG8eSSn9j8e/od1d8ke+PRIt9AAoT/AWg5J6bzxRT0QEZiaKKw8BFSSF95s
+	 Qv3bxDDSA1PvuZ6rogtVxPflOthdujx0znSSAX0HbJrCK5+dAN7NxAYC9nTZRIypi5ob5
+	 ubP7n5XrIZBRR//ZkJPM2ZHDfr5T1w0MCdbP5x66qk6CWDAwHhk88lNNN7NhUX1mfvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RBy2sLXE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EtnwvUXO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F825606A31C;
-	Wed, 18 Nov 2026 15:54:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B15606A325;
+	Wed, 18 Nov 2026 15:54:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RBy2sLXE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A614B1F000C4;
-	Wed, 18 Nov 2026 15:54:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EtnwvUXO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 840541F000C4;
+	Wed, 18 Nov 2026 15:54:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017275;
-	bh=eHP7FQB8Jon+NJLK2m1twR0el/Els8JX2+WFmZ3RbV8=;
+	s=korg; t=1795017278;
+	bh=Hc9OxtTTRPb8kIeIVaZ1Q1Rwx6Xu4kJ7CjFDEgCy1tg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RBy2sLXEdbpZx4tWlUA7oRcRSM5sOvMxU/kme7aVqzvwrD1AJvgOCdFhzchmFOXU/
-	 HHfmUc/hfpWcf7Tvd0GMXzuuxorODymu36vwmovU1fvIEqGGU4jltUrxyrvOwmyT8l
-	 U27fBYlGW43/jSo7lkmNIfmp+wRuqxcdn7X1lnrw=
+	b=EtnwvUXOdLTVvn0MIZjWF6t6fsb6SKsFbhksgm4hp72d4S+a8RU742r52EKsIgs70
+	 a2Ryy3/bW3bcOXKb+XzZuzBkhrT4gWqoDScVcrjboS6No9WF1fWiAL8dyoOHmIKEQU
+	 ee+0vUbLvycRrzbnYxn9LV8zcoIXJqQRbXeDRf6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <cel@kernel.org>,
-	Prabhakar Pujeri <prabhakar.pujeri@dell.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Wei Huang <wei.huang2@amd.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0785/2651] NFS: use TCP for MOUNT when xprtsec= selects TLS
-Date: Wed, 18 Nov 2026 15:33:45 +0100
-Message-ID: <20261118150316.150267939@linuxfoundation.org>
+Subject: [PATCH 7.3 0786/2651] PCI/TPH: Validate the firmware Steering Tag response
+Date: Wed, 18 Nov 2026 15:33:46 +0100
+Message-ID: <20261118150316.185638097@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,58 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Wei Huang <wei.huang2@amd.com>
 
-[ Upstream commit 72233aabc78cd0415c850641bc2a6e4fea23173f ]
+[ Upstream commit 5c382ef425c875bf854d411fb0a45909878a233a ]
 
-An NFSv2 or NFSv3 text mount that specifies xprtsec= but no
-mountproto= crashes in nfs_init_timeout_values():
+TPH _DSM returns an eight-byte Steering Tag information buffer.  Checking
+only the ACPI object type allows a short firmware response to be read
+beyond the end of its buffer.
 
-  RIP: 0010:nfs_init_timeout_values+0x10a/0x110 [nfs]
-  Call Trace:
-   nfs_mount+0x1c3/0x330 [nfs]
-   nfs_try_get_tree+0x1e5/0x460 [nfs]
-   nfs_get_tree+0x64d/0x6d0 [nfs]
-   vfs_get_tree+0x2b/0xe0
-   vfs_cmd_create+0x5f/0xd0
-   vfs_fsconfig_locked+0x50/0x130
-   __se_sys_fsconfig+0x2f9/0x3a0
+For safety, require a non-NULL buffer containing the complete value before
+copying it. Use memcpy() so that reading the response does not depend on
+the alignment of the firmware buffer.
 
-nfs_validate_transport_protocol() sets nfs_server.protocol to
-XPRT_TRANSPORT_TCP_TLS when xprtsec= is present, but the switch in
-nfs_set_mount_transport_protocol() has no case for that value.
-mount_server.protocol stays zero, and nfs_init_timeout_values()
-calls BUG() on a transport it does not recognize.
-
-mount.nfs always appends mountproto= after probing the server's
-rpcbind, so only a caller that bypasses it, such as "mount -i" or a
-program that drives fsconfig() directly, reaches the crash.
-
-Select TCP for MOUNT when the NFS transport is XPRT_TRANSPORT_TCP_TLS.
-nfs_mount() requests no transport security, so MOUNT already runs
-over plain TCP whenever mount.nfs supplies mountproto=tcp.
-
-Fixes: c8407f2e560c ("NFS: Add an "xprtsec=" NFS mount option")
-Signed-off-by: Chuck Lever <cel@kernel.org>
-Reviewed-by: Prabhakar Pujeri <prabhakar.pujeri@dell.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: d2e8a34876ce ("PCI/TPH: Add Steering Tag support")
+Signed-off-by: Wei Huang <wei.huang2@amd.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260924190543.3424792-1-wei.huang2@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/fs_context.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pci/tph.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfs/fs_context.c b/fs/nfs/fs_context.c
-index 1967de7d1dff9..a7393ff05494c 100644
---- a/fs/nfs/fs_context.c
-+++ b/fs/nfs/fs_context.c
-@@ -402,6 +402,7 @@ static void nfs_set_mount_transport_protocol(struct nfs_fs_context *ctx)
- 		ctx->mount_server.protocol = XPRT_TRANSPORT_UDP;
- 		break;
- 	case XPRT_TRANSPORT_TCP:
-+	case XPRT_TRANSPORT_TCP_TLS:
- 	case XPRT_TRANSPORT_RDMA:
- 		ctx->mount_server.protocol = XPRT_TRANSPORT_TCP;
+diff --git a/drivers/pci/tph.c b/drivers/pci/tph.c
+index 655ffd60e62f6..4d064b86befcc 100644
+--- a/drivers/pci/tph.c
++++ b/drivers/pci/tph.c
+@@ -119,12 +119,14 @@ static acpi_status tph_invoke_dsm(acpi_handle handle, u32 cpu_uid,
+ 	if (!out_obj)
+ 		return AE_ERROR;
+ 
+-	if (out_obj->type != ACPI_TYPE_BUFFER) {
++	if (out_obj->type != ACPI_TYPE_BUFFER ||
++	    out_obj->buffer.length < sizeof(st_out->value) ||
++	    !out_obj->buffer.pointer) {
+ 		ACPI_FREE(out_obj);
+ 		return AE_ERROR;
  	}
+ 
+-	st_out->value = *((u64 *)(out_obj->buffer.pointer));
++	memcpy(&st_out->value, out_obj->buffer.pointer, sizeof(st_out->value));
+ 
+ 	ACPI_FREE(out_obj);
+ 
 -- 
 2.53.0
 
