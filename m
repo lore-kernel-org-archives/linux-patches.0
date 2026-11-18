@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053221;
-	b=tNwJaRzyQqK4ImI5Qlik6RLFBWVPJi9j37mPMD/Di08DK4yWycYFFpXX4N2s0QqQpyoA
-	 PSaljbZC3w82m04OcLlY6CINIA52P+0ZtCaAJ7/5020Cj19GL2vjLPyw+LrXaeR9EK/Po
-	 qyN5tS3AP9hQ4taEbzLHpqQfSASAS8f49gqBslk61Gyzsx/fQataDhgGio4hDzlkmWtV2
-	 TeJzNpN64kTGYi34cglnIRBq+Ep94eVAm5R7VEqEuA3LEGmfjrIrT9Uz8tKJ4yD6+JyC2
-	 yi1mPH6gaQNClKZmy+l39zqMWVofxW9PpsIQa2VT82Oas5XVnHMCUQTQYrAsJrkXtgA==
+	t=1795053224;
+	b=e81X2N3tWSbXcvLPciL7bOlq86yTFIHmv3qD8IjWcnElT+tuUzIBjVgJsWU7BMrZN24P
+	 oJ5+0fXlGwiEyJHQxsDO4ckRv7uAG9l6XHgodiuWmhRaKx4W4G71ahzq+fXfF7p2u8n5L
+	 EKL5tDM5QE4EEgzM8sKgu0PEg3nENdoUQ/OQU7PyGwKkPxGjYDyjlS5JV59I5G0dMFy9z
+	 La3TqYOKbtrSfZuwn1gcMMz2Y7OFU6q4V7gqdU6OLvDMI8V5MCjCGopQk505VDiQ9BhkP
+	 MgAJqketiBvf8uOk/ndETmsMzpl3kVklZefGML9DCEHZqNpwSn3OXRLfH84yGYx2xbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053221;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053224;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gpxQeCQ9etoRzKC4OdrY+U31uhVjfy+eG2Agul/8KCo=;
-	b=hmvyvcoN/JaoS79OnY8IlMVQLTa71qKFEcYCTwxEgGsocs3MmbjoMxAzLyngIV5Idw5U
-	 WIQtB+piRzB/Q78cBm4WjAvyvXFxQX7OSPgUH3WbkHAl/FW2X0XpSGXBl8sPColYqO6PI
-	 eh0m3LpkycMy0VOJYg7XE8g3lX4klRP4k6UNwtFKyEabhDD8m2zKi+Usz1D5f8cTeIbe6
-	 hzSpcQLDAFVvFBmFjkoUk7N/KxMeowqxkO5wj6xhm26r9iNKZ4yyanETWJRre1i9vF5L1
-	 +OUpoFqr+wXsLy3qAsCqCweuYekS+9kZG554JK3lMkSoo68u6CUZ5bwK9VowVaxlK6Q==
+	bh=oWN8//br9C72MjkjjnZ1efPaoCARbAYpB7pP6mKVjog=;
+	b=L9EPI5wMbuj3SXNfc6NLboqgAcY9GZjp51vwzwWjAS0u73bQX2wLh+3bkIjR15j9Zw5Q
+	 hMHPL1j2UFD0wwzaRyH4iQC7cHrelPW1l3iZQkr/Bd6LCY2lhmRUTdX2TZ1WprFhROlgJ
+	 Vaa8tnbYEReBRnYOVpzCfYcnThmCfyJNmhdOO4ouZx3m3nbU2NrIGsLtNwgLwDU1OINcT
+	 wXeoKhe3spXddShlRkzJWiPyoJBPeiMXxYtJ/0zPzX96aqi85B083baUB34EBE/fI7KB6
+	 dTeFDOaY9Qz0hB0XSRov8wieAvWOWzMEulLHVpgFi8wEDafymUc4Q8tZV+zLdZB8+SA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SOC5lPFX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a8No78Sa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4A7606A31C;
-	Thu, 19 Nov 2026 01:53:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F6FC606A320;
+	Thu, 19 Nov 2026 01:53:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SOC5lPFX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8292E1F000C4;
-	Thu, 19 Nov 2026 01:53:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a8No78Sa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F9E51F000C4;
+	Thu, 19 Nov 2026 01:53:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053221;
-	bh=gpxQeCQ9etoRzKC4OdrY+U31uhVjfy+eG2Agul/8KCo=;
+	s=korg; t=1795053223;
+	bh=oWN8//br9C72MjkjjnZ1efPaoCARbAYpB7pP6mKVjog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SOC5lPFX6q9zq/ZO9pDEQ+6S5CWnL0accdXBXyx3OBC+tkGgsIk6dHioHTK6g3WXo
-	 P4cQfEeeSOthdawHCmOZmqIZNPEp6MElbbOWNzN3OybRgsJmlynrcNquzSltRGpMcP
-	 IIygaSIgGQQ5kWpUOI2pD1xl650N5xJh+Jajkvlc=
+	b=a8No78SaOuK8XtU+/lj1/s66Tr9jCJe98Dti3vdtkLCKJsULeA3wQHIyqmW9+kFCQ
+	 X8EydcbUkJfXZxY30J6lDOlAkauZCDZzI3ugmoRFstw4yRQPWRpeYwdxFGtNDPASZ5
+	 8Dpv6hHPlg6zctxt21uPUSzmQ69aU4ePgIG1P+YA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Til Kaiser <mail@tk154.de>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andrey Albershteyn <aalbersh@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0793/2214] mlxsw: Initialize register query payloads
-Date: Wed, 18 Nov 2026 15:41:09 +0100
-Message-ID: <20261118150043.270530048@linuxfoundation.org>
+Subject: [PATCH 5.15 0794/2214] fsverity: Explicitly require FMODE_READ to retrieve hashes
+Date: Wed, 18 Nov 2026 15:41:10 +0100
+Message-ID: <20261118150043.303042343@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,109 +68,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Til Kaiser <mail@tk154.de>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit 15b7a86a8888dc6a8fd19e181757e32389de9064 ]
+commit 1acb4fd2d011c4bd6cc961095ae17361c71ff61a upstream.
 
-MFGD register queries can exhaust EMAD retries and leave Mellanox
-Spectrum switches stuck during boot or shutdown when running OpenWrt
-built with GCC 15.
+The comment in fsverity_ioctl_read_metadata(), which justifies not
+checking for FMODE_READ, doesn't consider that the nonstandard access
+mode 3 (ioctl-only) exists.
 
-An example failure is shown below with the second line wrapped:
+Opening an ioctl-only fd generally requires read (and write) permission.
+However, there are gaps with certain LSMs: an ioctl-only fd requests
+read (and write) permission via security_inode_permission, but not
+security_file_open.  With certain LSMs relying on the latter, such as
+Landlock and AppArmor, an ioctl-only fd can be opened without the LSM
+granting read (and write) permission.
 
-  EMAD retries (5/5) (tid=9b544fc100001f35)
-  EMAD reg access failed (tid=9b544fc100001f35,reg_id=90f0(mfgd),
-                          type=query,status=0(operation performed))
+Since FS_IOC_READ_VERITY_METADATA returns hashes of file contents
+blocks, it should require read permission.  This also applies to
+FS_IOC_MEASURE_VERITY, which returns a hash for the whole file.
 
-On an SN2100, the failure occurs during driver teardown on reboot.
-On an SN3420, it occurs while probing mlxsw_spectrum during boot.
+Meanwhile, ioctl-only fds are a rarely-used feature, not known to be
+used with either ioctl.
 
-The register query API transmits the supplied payload to the device
-before replacing it with the response. Both MFGD callers pass an
-uninitialized stack buffer, so the request contains arbitrary register
-field values and reserved bits. This makes the request depend on stack
-contents and compiler code generation.
+Therefore, just disallow these ioctls on ioctl-only file descriptors,
+similar to what was already done with FS_IOC_ENABLE_VERITY.
 
-Initialize both MFGD query buffers in the firmware fatal event
-configuration and reporter test paths. The initialization has been
-confirmed to eliminate the boot and shutdown hangs on both switches.
-The subsequent read-modify-write still preserves the other fields
-returned by the device.
+More specifically, explicitly check for FMODE_READ.  This also covers
+write-only fds to non-verity files which otherwise would have failed
+with ENODATA.  This change in error code for write-only fds should be
+fine too, as these ioctls cannot be usefully used with write-only fds
+anyway, but it's worth noting as another technicality.
 
-Also initialize the FORE fan fault query and the MOGCR mirroring policer
-base query, which pass entirely uninitialized payloads.
-
-This follows commit 5b0907407e7f ("mlxsw: core: Zero payload buffers for
-couple of registers"), which initialized other query payloads after a
-firmware field length bug caused firmware to consume uninitialized data.
-
-Tested with firmware 2020.1148 and with 2016.3900 from linux-firmware.
-
-Fixes: 7d83ee111008 ("mlxsw: core: Introduce fw_fatal health reporter")
-Fixes: 2c6a33cd334b ("mlxsw: core: Extend hwmon interface with fan fault attribute")
-Fixes: 4039504e6a0c ("mlxsw: spectrum_span: Allow setting policer on a SPAN agent")
+Fixes: 4dd893d832cf ("fs-verity: implement FS_IOC_MEASURE_VERITY ioctl")
+Fixes: e17fe6579de0 ("fs-verity: add FS_IOC_READ_VERITY_METADATA ioctl")
 Cc: stable@vger.kernel.org
-Signed-off-by: Til Kaiser <mail@tk154.de>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20261014173117.26305-1-mail@tk154.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Dropped the mtmp_pl hunk: already zero-initialized in 5.15.y. ]
-Signed-off-by: Til Kaiser <mail@tk154.de>
+Reviewed-by: Andrey Albershteyn <aalbersh@kernel.org>
+Link: https://patch.msgid.link/20261022211522.1489943-1-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/core.c          | 4 ++--
- drivers/net/ethernet/mellanox/mlxsw/core_hwmon.c    | 2 +-
- drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ Documentation/filesystems/fsverity.rst |  3 +++
+ fs/verity/measure.c                    | 10 ++++++++++
+ fs/verity/read_metadata.c              | 14 ++++++++++----
+ 3 files changed, 23 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/core.c b/drivers/net/ethernet/mellanox/mlxsw/core.c
-index d1102d5613dff..87b88d8ac17ee 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/core.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/core.c
-@@ -1829,7 +1829,7 @@ mlxsw_core_health_fw_fatal_test(struct devlink_health_reporter *reporter,
- 				struct netlink_ext_ack *extack)
- {
- 	struct mlxsw_core *mlxsw_core = devlink_health_reporter_priv(reporter);
--	char mfgd_pl[MLXSW_REG_MFGD_LEN];
-+	char mfgd_pl[MLXSW_REG_MFGD_LEN] = {0};
- 	int err;
+diff --git a/Documentation/filesystems/fsverity.rst b/Documentation/filesystems/fsverity.rst
+index 1d831e3cbcb33..073bb57334c45 100644
+--- a/Documentation/filesystems/fsverity.rst
++++ b/Documentation/filesystems/fsverity.rst
+@@ -146,6 +146,7 @@ fatal signal), no changes are made to the file.
+ FS_IOC_ENABLE_VERITY can fail with the following errors:
  
- 	/* Read the register first to make sure no other bits are changed. */
-@@ -1850,7 +1850,7 @@ mlxsw_core_health_fw_fatal_ops = {
- static int mlxsw_core_health_fw_fatal_config(struct mlxsw_core *mlxsw_core,
- 					     bool enable)
- {
--	char mfgd_pl[MLXSW_REG_MFGD_LEN];
-+	char mfgd_pl[MLXSW_REG_MFGD_LEN] = {0};
- 	int err;
+ - ``EACCES``: the process does not have write access to the file
++- ``EBADF``: the file descriptor is not open for reading
+ - ``EBADMSG``: the signature is malformed
+ - ``EBUSY``: this ioctl is already running on the file
+ - ``EEXIST``: the file already has verity enabled
+@@ -208,6 +209,7 @@ regardless of the size of the file.
  
- 	/* Read the register first to make sure no other bits are changed. */
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/core_hwmon.c b/drivers/net/ethernet/mellanox/mlxsw/core_hwmon.c
-index d41afdfbd0851..7f22174eeb981 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/core_hwmon.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/core_hwmon.c
-@@ -160,7 +160,7 @@ static ssize_t mlxsw_hwmon_fan_fault_show(struct device *dev,
- 	struct mlxsw_hwmon_attr *mlwsw_hwmon_attr =
- 			container_of(attr, struct mlxsw_hwmon_attr, dev_attr);
- 	struct mlxsw_hwmon *mlxsw_hwmon = mlwsw_hwmon_attr->hwmon;
--	char fore_pl[MLXSW_REG_FORE_LEN];
-+	char fore_pl[MLXSW_REG_FORE_LEN] = {0};
- 	bool fault;
- 	int err;
+ FS_IOC_MEASURE_VERITY can fail with the following errors:
  
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c
-index 96b098df144ea..e0e85fb9ff778 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c
-@@ -1703,7 +1703,7 @@ static int mlxsw_sp2_span_init(struct mlxsw_sp *mlxsw_sp)
- static int mlxsw_sp2_span_policer_id_base_set(struct mlxsw_sp *mlxsw_sp,
- 					      u16 policer_id_base)
- {
--	char mogcr_pl[MLXSW_REG_MOGCR_LEN];
-+	char mogcr_pl[MLXSW_REG_MOGCR_LEN] = {0};
- 	int err;
++- ``EBADF``: the file descriptor is not open for reading
+ - ``EFAULT``: the caller provided inaccessible memory
+ - ``ENODATA``: the file is not a verity file
+ - ``ENOTTY``: this type of filesystem does not implement fs-verity
+@@ -280,6 +282,7 @@ blocks from disk without actually verifying the path to the root node.
  
- 	err = mlxsw_reg_query(mlxsw_sp->core, MLXSW_REG(mogcr), mogcr_pl);
+ FS_IOC_READ_VERITY_METADATA can fail with the following errors:
+ 
++- ``EBADF``: the file descriptor is not open for reading
+ - ``EFAULT``: the caller provided inaccessible memory
+ - ``EINTR``: the ioctl was interrupted before any data was read
+ - ``EINVAL``: reserved fields were set, or ``offset + length``
+diff --git a/fs/verity/measure.c b/fs/verity/measure.c
+index f0d7b30c62db2..f0eaef6bea4a1 100644
+--- a/fs/verity/measure.c
++++ b/fs/verity/measure.c
+@@ -28,6 +28,16 @@ int fsverity_ioctl_measure(struct file *filp, void __user *_uarg)
+ 	const struct fsverity_hash_alg *hash_alg;
+ 	struct fsverity_digest arg;
+ 
++	/*
++	 * This ioctl returns a hash of the file contents, so it should require
++	 * read permission.  Disallow it on ioctl-only (i.e., nonstandard access
++	 * mode 3) fds, which can in some cases be acquired without passing all
++	 * LSM read-permission checks.  Also disallow write-only fds, which can
++	 * refer only to non-verity files which would fail with ENODATA anyway.
++	 */
++	if (!(filp->f_mode & FMODE_READ))
++		return -EBADF;
++
+ 	vi = fsverity_get_info(inode);
+ 	if (!vi)
+ 		return -ENODATA; /* not a verity file */
+diff --git a/fs/verity/read_metadata.c b/fs/verity/read_metadata.c
+index 7e2d0c7bdf0de..ea8044164508a 100644
+--- a/fs/verity/read_metadata.c
++++ b/fs/verity/read_metadata.c
+@@ -157,13 +157,19 @@ int fsverity_ioctl_read_metadata(struct file *filp, const void __user *uarg)
+ 	int length;
+ 	void __user *buf;
+ 
++	/*
++	 * This ioctl returns file contents block hashes, so it should require
++	 * read permission.  Disallow it on ioctl-only (i.e., nonstandard access
++	 * mode 3) fds, which can in some cases be acquired without passing all
++	 * LSM read-permission checks.  Also disallow write-only fds, which can
++	 * refer only to non-verity files which would fail with ENODATA anyway.
++	 */
++	if (!(filp->f_mode & FMODE_READ))
++		return -EBADF;
++
+ 	vi = fsverity_get_info(inode);
+ 	if (!vi)
+ 		return -ENODATA; /* not a verity file */
+-	/*
+-	 * Note that we don't have to explicitly check that the file is open for
+-	 * reading, since verity files can only be opened for reading.
+-	 */
+ 
+ 	if (copy_from_user(&arg, uarg, sizeof(arg)))
+ 		return -EFAULT;
 -- 
 2.53.0
 
