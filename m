@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034185;
-	b=ih+UvYEzYptJ29vmpQFsGosHLWVtPHXRmUnGuDEMoSApEocxFgC/iyl/zzecgEB5K5Qu
-	 7qu7mxs4I02mfhWC8BiXokTfYEDKKVxYWBO15qe0Kv7k9CpnRsg3QLNz8a+bjR4FszJha
-	 kB+JxM7C9uEYhv1DEq5GtPq/UlxkYdxQLIvBxG3NCHZ+Op9EBWg3QkHEl3tyKEUZ4lDuQ
-	 umi/3sdSt8ybxcF/AcBSGXniujqMzaL/eVvjS3dT5IIRdlk4t4LicgY+OEvp1+Y3aGMmD
-	 DW1uGQ84IxkCvG1fq9cRQQ4lvI0HFNq6pWJO1nqOelIBucvqka1aAJJxVGfgwc9GD3A==
+	t=1795034188;
+	b=IgXJ91woFFhBOaedWNG+pnDc2pZupwCJC3X41mLvGkyWMS76b7QJi6NCyn/1uq3LdaeZ
+	 +bnTehMEDAlifa0eWIjUoGj9McqqabDS2nl6NOM7iEQtT91JBU05cfaNsrK3sLNYnuJ1W
+	 UG7x1A04ml8W242om8iBXUQrXejFVLvZlkjKxms1RE4UCF9TX+MxWERQCRSu1XFuoqNu/
+	 5tkxLiHqWh3cMi+WNr660Cot7jur34XOAadE5amL/RVYTEmHoG561PErPl4hyzHFjQppE
+	 mmLZWMsUgrRf0uDBKp4E3iitb86bJ4xRrPbbLg6uAtQ8cBhAK/91vlqVo5a/x8DqS6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034185;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034188;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ulpDKPoOWKaPQ2dI2JpXCo7EfC5q3fntIgb9++b11As=;
-	b=RylCnqI/bclHMuWE2WJ8Fg59JnakCtabSTcu/49C/uAp5mLEKydcIwUPZwSRYLRrjjjM
-	 s2Q5TP8KcR8z3pqIG2CKuoqOTDM5W1+J+uNZyQlVGX4biv4MFqlqUkTrN7Mv0H3vR/vCO
-	 nj+l6QI0/554sBJyraEB1HmlCkXKwF3KREZf2eXLLCXeIDJ7OsF/hgxv7rCCC+QrtLGLb
-	 tXkW9BmEHRK0+Z1ogPQ9m1lOQngQzSZK9GvEgBg2AtCihQA9q214jMrN9iTAoL9S85Jda
-	 cjzuzx3J6E59N9DxnFRDqZvBrqYd6aLaJUXeCMX9rAZo3Ba48n3Jp+bDyIdTWXkOa4w==
+	bh=EMkUBe+WqEOxjyoPFKARBonVrM2FRmkI6uEQgPgSqcE=;
+	b=Ka3krVNVDyLu71rLYaNpjUYIzAuK51p3t04qwlpxHDwH4v4UV/4S6LjAUwsz5v9UOM6o
+	 0hGpW8DKcyhFyu8ulAgpBvkIrAf0aXBXzs8c/BMEzHRMxEFhojaqQlVjysMcSHqKkAWrC
+	 naQ3BSD9Wp9W9xCVa2NNeNIfIGSWP3O5/I2PZycR2uFCpC+p/v4XA+BZ9foeZzT4o02ZC
+	 Sw8uHRI9Bxz8MZlXSOSjpos9MN7ftEi+JYJ8D3jwHczTnT/QQPjYq2PU96t7logYpORyw
+	 ehRTCUgiLpGrjj7mJst4RgjIJ32eDY58dvI+FBpSUzL3VK5fAbRxsUiyN8ZtthI/nmg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NVzJP6dH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sgem+Siw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F7A606A320;
-	Wed, 18 Nov 2026 20:36:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B0B606A336;
+	Wed, 18 Nov 2026 20:36:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NVzJP6dH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B647B1F000C6;
-	Wed, 18 Nov 2026 20:36:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sgem+Siw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 935251F000C6;
+	Wed, 18 Nov 2026 20:36:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034185;
-	bh=ulpDKPoOWKaPQ2dI2JpXCo7EfC5q3fntIgb9++b11As=;
+	s=korg; t=1795034188;
+	bh=EMkUBe+WqEOxjyoPFKARBonVrM2FRmkI6uEQgPgSqcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NVzJP6dH/hkktbAwlYIVVpabO8+4Shm4JuHKdxLjicXKkK41IxOk/SiKZEZZ6a9yx
-	 EJDG4P829UTP199m4blzKT7bKpjsYBjvLzoopfXUXSNZTlUOT0dbiaIjWEtnmOAMMh
-	 hINRqiO+4/yvlN/qWpPEETUEhySJQVBrFKFfAFuk=
+	b=Sgem+SiwS4dmOfHsA2yQk+1m2HUdUmjxzLgehV5sLzUtjVGSm/ZhP1917FCAFVqlF
+	 StS2h3GKA//+x0RqSJj68pRtrChD1sMVti6s1OpJGd5AHFH5Us7M5hzCIuJChrMvp4
+	 utq2ZhPu9wXAW/VefFowsnrtcHzJzCoMfMnuN37o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+06f9b2a53ba4a5a47644@syzkaller.appspotmail.com,
-	Anuj Bolewar <bolewara@gmail.com>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Yang Wen <anmuxixixi@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0279/3318] drm/virtio: reclaim pending vbufs before tearing down vqs
-Date: Wed, 18 Nov 2026 15:15:01 +0100
-Message-ID: <20261118150323.881597154@linuxfoundation.org>
+Subject: [PATCH 6.6 0280/3318] exfat: keep FITRIM within the requested range
+Date: Wed, 18 Nov 2026 15:15:02 +0100
+Message-ID: <20261118150323.920141822@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,90 +68,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anuj Bolewar <bolewara@gmail.com>
+From: Yang Wen <anmuxixixi@gmail.com>
 
-[ Upstream commit 61d85f99b5a55d4f717c4bb2f4c4acabf22ee3fc ]
+[ Upstream commit 2de727471b3b13409466a4af4f8824a86073bf4b ]
 
-virtio_gpu_free_vbufs() destroys the vbufs kmem_cache after the virtqueues
-have already been released. Commands that were queued but never completed
-by the device leave their vbuffers stranded in the virtqueue, so the cache
-still holds live objects when virtio_gpu_deinit() tears everything down.
-This triggers a WARNING in virtio_gpu_free_vbufs:
+exfat_find_free_bitmap() searches the entire allocation bitmap and may
+wrap around to its beginning. exfat_trim_fs() does not verify that the
+returned cluster is still within the requested FITRIM range.
 
-    BUG virtio-gpu-vbufs (Not tainted): Objects remaining in cache
-    on __kmem_cache_shutdown()
+As a result, a partial FITRIM operation may discard free clusters outside
+the user-specified range and report a trimmed length larger than the
+requested length.
 
-Drain any buffers still sitting in the control and cursor virtqueues in
-virtio_gpu_deinit() after the device has been reset and before the
-virtqueues are deleted, following the same pattern used by virtio_console's
-remove_vqs(). Each reclaimed buffer is released with free_vbuf(), dropping
-the reference on any GEM objects it holds. Pending RESOURCE_UNREF
-commands are handled as well: their resp_cb_data still references a GEM
-object, so it is cleaned up with virtio_gpu_cleanup_object() to avoid
-leaking it on teardown.
+Validate each returned cluster against the requested range and stop the
+search when it wraps around or passes the range end.
 
-Reported-by: syzbot+06f9b2a53ba4a5a47644@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=06f9b2a53ba4a5a47644
-Signed-off-by: Anuj Bolewar <bolewara@gmail.com>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Link: https://patch.msgid.link/20260802-virtio-gpu-reclaim-vbufs-v2-1-5767fb860691@gmail.com
+Signed-off-by: Yang Wen <anmuxixixi@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/virtio/virtgpu_drv.h |  1 +
- drivers/gpu/drm/virtio/virtgpu_kms.c |  1 +
- drivers/gpu/drm/virtio/virtgpu_vq.c  | 15 +++++++++++++++
- 3 files changed, 17 insertions(+)
+ fs/exfat/balloc.c | 31 +++++++++++++++++++------------
+ 1 file changed, 19 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/virtio/virtgpu_drv.h b/drivers/gpu/drm/virtio/virtgpu_drv.h
-index de36af56df863..a1142f5630541 100644
---- a/drivers/gpu/drm/virtio/virtgpu_drv.h
-+++ b/drivers/gpu/drm/virtio/virtgpu_drv.h
-@@ -345,6 +345,7 @@ void virtio_gpu_array_put_free_work(struct work_struct *work);
- /* virtgpu_vq.c */
- int virtio_gpu_alloc_vbufs(struct virtio_gpu_device *vgdev);
- void virtio_gpu_free_vbufs(struct virtio_gpu_device *vgdev);
-+void virtio_gpu_reclaim_vbufs(struct virtio_gpu_device *vgdev);
- void virtio_gpu_cmd_create_resource(struct virtio_gpu_device *vgdev,
- 				    struct virtio_gpu_object *bo,
- 				    struct virtio_gpu_object_params *params,
-diff --git a/drivers/gpu/drm/virtio/virtgpu_kms.c b/drivers/gpu/drm/virtio/virtgpu_kms.c
-index c88456bc9fcc0..db120316b47c2 100644
---- a/drivers/gpu/drm/virtio/virtgpu_kms.c
-+++ b/drivers/gpu/drm/virtio/virtgpu_kms.c
-@@ -290,6 +290,7 @@ void virtio_gpu_deinit(struct drm_device *dev)
- 	flush_work(&vgdev->cursorq.dequeue_work);
- 	flush_work(&vgdev->config_changed_work);
- 	virtio_reset_device(vgdev->vdev);
-+	virtio_gpu_reclaim_vbufs(vgdev);
- 	vgdev->vdev->config->del_vqs(vgdev->vdev);
- }
+diff --git a/fs/exfat/balloc.c b/fs/exfat/balloc.c
+index 2d4fe3d754bbc..3f014daa5ecfd 100644
+--- a/fs/exfat/balloc.c
++++ b/fs/exfat/balloc.c
+@@ -327,14 +327,27 @@ int exfat_trim_fs(struct inode *inode, struct fstrim_range *range)
+ 	mutex_lock(&sbi->bitmap_lock);
  
-diff --git a/drivers/gpu/drm/virtio/virtgpu_vq.c b/drivers/gpu/drm/virtio/virtgpu_vq.c
-index d2c83f3e74b99..d44eabad06744 100644
---- a/drivers/gpu/drm/virtio/virtgpu_vq.c
-+++ b/drivers/gpu/drm/virtio/virtgpu_vq.c
-@@ -179,6 +179,21 @@ static void free_vbuf(struct virtio_gpu_device *vgdev,
- 	kmem_cache_free(vgdev->vbufs, vbuf);
- }
+ 	trim_begin = trim_end = exfat_find_free_bitmap(sb, clu_start);
+-	if (trim_begin == EXFAT_EOF_CLUSTER)
++	/*
++	 * exfat_find_free_bitmap() may wrap around to the beginning of
++	 * the bitmap. Reject a cluster outside the requested range.
++	 */
++	if (trim_begin == EXFAT_EOF_CLUSTER ||
++		trim_begin < clu_start || trim_begin > clu_end)
+ 		goto unlock;
  
-+void virtio_gpu_reclaim_vbufs(struct virtio_gpu_device *vgdev)
-+{
-+	struct virtio_gpu_vbuffer *vbuf;
+-	next_free_clu = exfat_find_free_bitmap(sb, trim_end + 1);
+-	if (next_free_clu == EXFAT_EOF_CLUSTER)
+-		goto unlock;
++	for (;;) {
++		if (trim_end >= clu_end)
++			break;
 +
-+	while ((vbuf = virtqueue_detach_unused_buf(vgdev->ctrlq.vq))) {
-+		if (vbuf->objs)
-+			virtio_gpu_array_put_free(vbuf->objs);
-+		if (vbuf->resp_cb_data)
-+			virtio_gpu_cleanup_object(vbuf->resp_cb_data);
-+		free_vbuf(vgdev, vbuf);
++		next_free_clu = exfat_find_free_bitmap(sb, trim_end + 1);
++		/*
++		 * Stop if the search wrapped around or moved beyond the requested
++		 * FITRIM range.
++		 */
++		if (next_free_clu == EXFAT_EOF_CLUSTER ||
++			next_free_clu <= trim_end || next_free_clu > clu_end)
++			break;
+ 
+-	do {
+ 		if (next_free_clu == trim_end + 1) {
+ 			/* extend trim range for continuous free cluster */
+ 			trim_end++;
+@@ -355,17 +368,11 @@ int exfat_trim_fs(struct inode *inode, struct fstrim_range *range)
+ 			trim_begin = trim_end = next_free_clu;
+ 		}
+ 
+-		if (next_free_clu >= clu_end)
+-			break;
+-
+ 		if (fatal_signal_pending(current)) {
+ 			err = -ERESTARTSYS;
+ 			goto unlock;
+ 		}
+-
+-		next_free_clu = exfat_find_free_bitmap(sb, next_free_clu + 1);
+-	} while (next_free_clu != EXFAT_EOF_CLUSTER &&
+-			next_free_clu > trim_end);
 +	}
-+	while ((vbuf = virtqueue_detach_unused_buf(vgdev->cursorq.vq)))
-+		free_vbuf(vgdev, vbuf);
-+}
-+
- static void reclaim_vbufs(struct virtqueue *vq, struct list_head *reclaim_list)
- {
- 	struct virtio_gpu_vbuffer *vbuf;
+ 
+ 	/* try to trim remainder */
+ 	count = trim_end - trim_begin + 1;
 -- 
 2.53.0
 
