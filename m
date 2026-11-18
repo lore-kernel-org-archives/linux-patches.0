@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048102;
-	b=KchyuHu0VZ903nyZ5HmLZdegmMS9aWd+TZ+rHHYypT7YpYkUuYLeBx23vM/Lm7HE3hqp
-	 3QNpNSECOSjvJKK2DO/CATYAjnXuWtfL6ts/dUGA76U6QXZxC37SyY6l2eBod5o1FEvJH
-	 qBwkoAY19d++Koy/s3bIYL4aXmvHc/SG+ZYoKPUALZ6j909MVpRAD78ArhP9qfkZF64qQ
-	 rfzlEA7LgoftclNS6MDCR6RXEF08hp6ikXY+isISItnPrJLaeh7UOwdOgglA3iBE6wiqr
-	 /teSl+3WGZvcBGSbZoPRs7JDFRli5LoKwV57dwrbI6LkLXjbzBh5I6WlPpEFWGvtLlg==
+	t=1795048104;
+	b=S6v0jnVM0sw1ek9RbWnesMG+G85wll3dqdrhQk7dhA8Kzl5RwFBs68jAbjvp+XntaZcj
+	 XKCGYldNqPkg6envA2WRIv1PVz8KR6vVcu+CMUnWbNKiw25spLZt63EmVZYfmAzrfQcp/
+	 RjpvR2cFUtV6RUZb9cINMjQMqz0pQHuTH+gh8epZUckyYk5xSGVF2NZnNadNtlCK5iOKs
+	 YhNaJqGO1Bx2/RdoM5B1c9fZlQsTJdESFL5w9+DOvCl/Mn3yG7aHvH2+yQUSNCQGWYjgV
+	 sT1wRrkDpKEtTklzodGWDtRQXY72ezrPc1hURVHT22aiPEOJ9wuwELsvzFFGzJRo5+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048102;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048104;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=08e8Oa2VoAjVKLsTARhlQXyyle4bSWZJbFqkrfhPTbE=;
-	b=FDaeJDDf1/Z6iIK+amgeF6tGNlL3IDa2D2vK2arzaMz0eYlXHC2n6zi3l1LHHdXtMR7X
-	 nDDw7OiyMnZGsXupk2FzzvPtqMhHsqGmEOw9v+9uhQxvHcfQ70dvgtwiVNeQypgQzlVKw
-	 SGteoXGubsLHl4dgFXtS0Wabuz3ZvClRtMZau0g/3V1oAJ43N1I6dBOHORVbsFkGRs58D
-	 X8WVBBbEyuX15jFrI2mBwxVfiKyuVtRr0DPJvT6AHvPXfmUM+Jtq4yT8SbrJMxXd+DRZN
-	 JtF8loRNx2NfeXH2VZV0uMq/JLH1UfuUWbLsgSG7S4tsxvpViOF9hs5oKPuWV2eFKdQ==
+	bh=LLZlp20+qFSwhYynSFnVhouE+ZZ1Gl2KMOxbYC5pUjk=;
+	b=VTIkMtyL50HrutYQzWPbqgHLvt4dDEFtRpaQCSxFqKJgeZV9ufRFA09CI5ypfz8SNI1u
+	 Sd8V7JKU0CCIOo3cU9+3AWq2bQ8haHuoyIERUJHWFjUx+h66fCreiT/gyDj4Yd7VsHcDd
+	 Oz3/puIzV3HDyRkRCUbBXYOb8ZWRRfhOa+YA1ylBz8RyuvYBPHWh8jrHmxGNMrZoO7oJj
+	 6VM8Y62zAawPEVIVyTcvbr2IS/JQsKWEgxYm+yQHyR5agXZ7OAdCkEjwvbKww4lNPyMBa
+	 +40q/SiO1PzXe1GdutgtZ4YB+16uXT7Fo4K4VSAvYbELsTHN8iKntfc3BeTkZJAd/7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0p4Aztou;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C4xR3bFl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0490606A32C;
-	Thu, 19 Nov 2026 00:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01EB606A320;
+	Thu, 19 Nov 2026 00:28:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0p4Aztou
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4191C1F000C6;
-	Thu, 19 Nov 2026 00:28:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C4xR3bFl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E7A31F000C5;
+	Thu, 19 Nov 2026 00:28:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048101;
-	bh=08e8Oa2VoAjVKLsTARhlQXyyle4bSWZJbFqkrfhPTbE=;
+	s=korg; t=1795048104;
+	bh=LLZlp20+qFSwhYynSFnVhouE+ZZ1Gl2KMOxbYC5pUjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0p4AztouBcPwIEAKrfracDAgRXz3pMYzC975EHvijxxWd7jXqhPIQ57PRN4YpPm/g
-	 b92McNBSzLN3ZGL7WJ+fIxg5mqoBd3RG3ovp1KBKvVMyLciJYgB/asv7FNyTfVttnm
-	 Y9MsLsZvnePjxsTeSeKzxq2GQiHRxHbFRYHo+FQ8=
+	b=C4xR3bFlYwSdBJ+ifLAe74rTP5dSlnoWt1STuA2CRbkATf9GBAZuEHj5yd+l0BW4e
+	 q+tZ75AG5siTCYESdyeNx+tdTcYMo9qZpc6Xwjf3DlfYPGQpwfY1usDMyW5+HMvg+s
+	 8sYMDWBrxLiSfCwxSTi/34RFwK8ONuYMQ8thWa+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1858/2857] scsi: mpi3mr: Fix device loss during enclosure reboot due to zero link speed
-Date: Wed, 18 Nov 2026 15:48:12 +0100
-Message-ID: <20261118150308.140681914@linuxfoundation.org>
+Subject: [PATCH 6.1 1876/2857] usb: musb: da8xx: depopulate OF children on probe failure
+Date: Wed, 18 Nov 2026 15:48:30 +0100
+Message-ID: <20261118150308.778781003@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,92 +67,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit d6c8e8b7c98c3cb326515ef4bc5c57e16ac5ae4e ]
+[ Upstream commit 8d70a378e702141424e27e0b8341e421f058635d ]
 
-During enclosure reboot or expander reset, firmware may report a link
-speed of 0 in "Device Add" events while the link is still coming up.
-The driver drops such devices, leaving them missing even after the link
-recovers.
+da8xx_probe() creates the CPPI child devices before registering the MUSB
+platform device. If population partially succeeds or the later MUSB
+registration fails, the probe path unregisters the generic PHY but leaves
+the OF children registered under a parent whose probe failed.
 
-Fix this by treating link speed 0 as 1.5 Gbps during device addition so
-the device is exposed to the OS. The actual link speed will be updated
-later when link-up events arrive.
+Depopulate the OF children before unregistering the PHY on both failure
+paths. Use one cleanup label so each resource is unwound in reverse
+publication order without introducing an unused label.
 
-Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Link: https://lore.kernel.org/r/20250820084138.228471-2-chandrakanth.patil@broadcom.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: 77554f01187d ("scsi: mpi3mr: Fix out-of-bounds read of event data")
+Fixes: d6299b6efbf6 ("usb: musb: Add support of CPPI 4.1 DMA controller to DA8xx")
+Assisted-by: Codex:gpt-5
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260813153230.40421-1-pengpeng@iscas.ac.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_os.c        |  8 ++++----
- drivers/scsi/mpi3mr/mpi3mr_transport.c | 11 +++++++++--
- 2 files changed, 13 insertions(+), 6 deletions(-)
+ drivers/usb/musb/da8xx.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
-index 600f771ae1403..ef913e4432270 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_os.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-@@ -1913,8 +1913,8 @@ static void mpi3mr_fwevt_bh(struct mpi3mr_ioc *mrioc,
- 	if (!fwevt->process_evt)
- 		goto evt_ack;
+diff --git a/drivers/usb/musb/da8xx.c b/drivers/usb/musb/da8xx.c
+index 2628e056d319e..f01a43fd16522 100644
+--- a/drivers/usb/musb/da8xx.c
++++ b/drivers/usb/musb/da8xx.c
+@@ -553,7 +553,7 @@ static int da8xx_probe(struct platform_device *pdev)
+ 	ret = of_platform_populate(pdev->dev.of_node, NULL,
+ 				   da8xx_auxdata_lookup, &pdev->dev);
+ 	if (ret)
+-		goto err_unregister_phy;
++		goto err_depopulate;
  
--	dprint_event_bh(mrioc, "processing event(0x%02x) in the bottom half handler\n",
--	    fwevt->event_id);
-+	dprint_event_bh(mrioc, "processing event(0x%02x) -(0x%08x) in the bottom half handler\n",
-+			fwevt->event_id, fwevt->evt_ctx);
- 
- 	switch (fwevt->event_id) {
- 	case MPI3_EVENT_DEVICE_ADDED:
-@@ -2952,8 +2952,8 @@ void mpi3mr_os_handle_events(struct mpi3mr_ioc *mrioc,
+ 	pinfo = da8xx_dev_info;
+ 	pinfo.parent = &pdev->dev;
+@@ -568,12 +568,13 @@ static int da8xx_probe(struct platform_device *pdev)
+ 	ret = PTR_ERR_OR_ZERO(glue->musb);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "failed to register musb device: %d\n", ret);
+-		goto err_unregister_phy;
++		goto err_depopulate;
  	}
- 	if (process_evt_bh || ack_req) {
- 		dprint_event_th(mrioc,
--			"scheduling bottom half handler for event(0x%02x),ack_required=%d\n",
--			evt_type, ack_req);
-+		    "scheduling bottom half handler for event(0x%02x) - (0x%08x), ack_required=%d\n",
-+		    evt_type, le32_to_cpu(event_reply->event_context), ack_req);
- 		sz = event_reply->event_data_length * 4;
- 		fwevt = mpi3mr_alloc_fwevt(sz);
- 		if (!fwevt) {
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_transport.c b/drivers/scsi/mpi3mr/mpi3mr_transport.c
-index 9a25d819b417a..d6ac71e1d9e4e 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_transport.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_transport.c
-@@ -410,9 +410,11 @@ static void mpi3mr_remove_device_by_sas_address(struct mpi3mr_ioc *mrioc,
- 			 sas_address, hba_port);
- 	if (tgtdev) {
- 		if (!list_empty(&tgtdev->list)) {
--			list_del_init(&tgtdev->list);
- 			was_on_tgtdev_list = 1;
--			mpi3mr_tgtdev_put(tgtdev);
-+			if (tgtdev->state == MPI3MR_DEV_REMOVE_HS_STARTED) {
-+				list_del_init(&tgtdev->list);
-+				mpi3mr_tgtdev_put(tgtdev);
-+			}
- 		}
- 	}
- 	spin_unlock_irqrestore(&mrioc->tgtdev_lock, flags);
-@@ -2058,6 +2060,8 @@ int mpi3mr_expander_add(struct mpi3mr_ioc *mrioc, u16 handle)
- 				link_rate = (expander_pg1.negotiated_link_rate &
- 				    MPI3_SAS_NEG_LINK_RATE_LOGICAL_MASK) >>
- 				    MPI3_SAS_NEG_LINK_RATE_LOGICAL_SHIFT;
-+				if (link_rate < MPI3_SAS_NEG_LINK_RATE_1_5)
-+					link_rate = MPI3_SAS_NEG_LINK_RATE_1_5;
- 				mpi3mr_update_links(mrioc, sas_address_parent,
- 				    handle, i, link_rate, hba_port);
- 			}
-@@ -2367,6 +2371,9 @@ int mpi3mr_report_tgtdev_to_sas_transport(struct mpi3mr_ioc *mrioc,
  
- 	link_rate = mpi3mr_get_sas_negotiated_logical_linkrate(mrioc, tgtdev);
+ 	return 0;
  
-+	if (link_rate < MPI3_SAS_NEG_LINK_RATE_1_5)
-+		link_rate = MPI3_SAS_NEG_LINK_RATE_1_5;
-+
- 	mpi3mr_update_links(mrioc, sas_address_parent, tgtdev->dev_handle,
- 	    parent_phy_number, link_rate, hba_port);
- 
+-err_unregister_phy:
++err_depopulate:
++	of_platform_depopulate(&pdev->dev);
+ 	usb_phy_generic_unregister(glue->usb_phy);
+ 	return ret;
+ }
 -- 
 2.53.0
 
