@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018645;
-	b=whqnRM2y7SXCxPTQ4JooEmF2fB7Ky6TQKLsRVxI+Eo1pSQDZUC01Gq7Icj9rLOdxHq0a
-	 3U9/ktSwVkB+CIoOaxF8DfUZTy0irJczIhnxkwjpDGMJN/cSjinsmV6QdHSIV7d0/cAPh
-	 LeuQLlLI9gSoTjNzwsBa9M7qyO0AynjmNyk9FCpDMujWK+pYypxKelgijuuAy9HFTiDt6
-	 lr5225R2i1KCbPL2tFz5r20ztcmagbDWUsMqKw7RWcwaYNPmm5ht4qQrFen+hLbpuC3A3
-	 A9YaeW8VcyjxykWDpZKhZcIXfIEVjZ/SzlpC5msHtI89fBD5sJPxq2irQ12A8VNn/5g==
+	t=1795018648;
+	b=QEe31HziXBtXApA0xCh5+Axv4ecgoxSKeJl3y9wMJWSDRQSNFubb+2O3VP2yUQhYlSrQ
+	 37n99s6DKVrzK52L4EmZ0WsWjJYd1dKWaw1ZkPlWYHhC8zCIT+FZKig7a06yOnCLAunLn
+	 dipoCmDiJG2oRo/qvjET31NTF4YhO9LutR48DYZiK6BCB/S75/XuhiAoM1Mh8j/l/gwZH
+	 8muFzMSw5FIdNBPUhAcYizLbk5fdG/SmFpPuaepz627TJw+326zymM52fcZIQCBh5mI6u
+	 fheDmda5mAKg+mV0mVapy4l56mJkzR6FutfFCRwQNUa9ybPtR8Sp9ZNgWLwahyk6ogQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018645;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018648;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XI5kRJUpQtLt4NJTzTHUGmc3n01KbPdXRgFEeNWfOfI=;
-	b=oXOjh4i/CvAamCxZ8CDj0y6mYQfCtu6w2/GVMMvzgT2C1KVNgHNRQ9AcBIbz907+LuwJ
-	 h8IMx/RKF8CSi9I69svsw5Vzc6uZxOxXQP+OJcDM4FS0JWP+6IHB3iErbOuuwisSRt7cV
-	 dnLVGcXzzgzGxjSxjXa7wHI5lnFmUwmDfi4XVPojGJwnEwIw+ObtpqOR1w7E2/zB+ynTn
-	 YNTju9ix/0Pc057GMlbz2VtMIrbXV00Z1dQjBmA4tbyE8HPLkYd4I2i9yTRYHUeauc3+D
-	 fdzE8P9lqfcvZr3ILdERcNmzJeYYCBfNLwZDS5qFhYUq/XhM/ZRFCM1haJZID8KIBQg==
+	bh=2y73roYnuPcRlItWPUM8YaxMOheYoRwOR5eCjYKd4zc=;
+	b=WOB1XgGV8N2F70DDBWPjVacSJYqplLQVTulPeYOLPtd5MpZwNGQUNjcTXyLNx7o0/+ki
+	 Mj5yNsx7VeX08PlHr0HmJcSlP1A1Ts8AP8UyV5zYLOdjrycfYHjKeqzKCWT/S7a+8Q658
+	 FuS4J78TZkQnz3tgEGOUbjavPC5Jy+LkicE1jDCyLBeZbxAZr33q7mMtLpN+yYo4D6cgt
+	 CRzai/4EPOtSb+QSYj42fGQqE3eYB+zvI1FIxyabLGyK6N8bCLDcToTFK4rExVS/QsoGd
+	 RtX+umuiHrMV51aBbfHWygub8NLBShdBpdMB5ftXgDEul78JqFEn4qKG2AhUPZp+L2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hhBvgduz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T76zliOz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F71606A31C;
-	Wed, 18 Nov 2026 16:17:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336B4606A320;
+	Wed, 18 Nov 2026 16:17:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hhBvgduz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3FF31F000C4;
-	Wed, 18 Nov 2026 16:17:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T76zliOz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 892671F000C4;
+	Wed, 18 Nov 2026 16:17:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018645;
-	bh=XI5kRJUpQtLt4NJTzTHUGmc3n01KbPdXRgFEeNWfOfI=;
+	s=korg; t=1795018648;
+	bh=2y73roYnuPcRlItWPUM8YaxMOheYoRwOR5eCjYKd4zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hhBvgduz4TUug3O2juR8VBW5PXKFv5Hb942fDpCszWXS5ow0bCEsD9lCse/nbpHEY
-	 NQiNUboKkHiKK5IVV/UpTHYSpPPVMZ1NZiwUxS5q3Qm/VCMpwN6fXYNFip8xJKnGZ8
-	 8Sz8dj6v/UZKNP6xW7TlFK11gvKqCl/AZTrnngKY=
+	b=T76zliOzY/NQIXgFgx6/oykqWATvEmAb36FQM3SynDm21xOWmMdpm105z1Ievk6Uv
+	 JT8LPLL4AMQhVkw6dFGZcUIN89bWozdqbjmWvssZS60YJ02syqE9PYmyqzHSYM/BrR
+	 S/ybuxu7ks0q2dKvt76aMfth/cPTBVj4I4KuIlMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Logan Gunthorpe <logang@deltatee.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1315/2651] dmaengine: switchtec-dma: fix resource leak in alloc_chan_resources
-Date: Wed, 18 Nov 2026 15:42:35 +0100
-Message-ID: <20261118150335.318285142@linuxfoundation.org>
+Subject: [PATCH 7.3 1316/2651] dmaengine: switchtec-dma: fix channel leak on registration failure
+Date: Wed, 18 Nov 2026 15:42:36 +0100
+Message-ID: <20261118150335.359374625@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,94 +72,105 @@ Content-Transfer-Encoding: 8bit
 
 From: Logan Gunthorpe <logang@deltatee.com>
 
-[ Upstream commit 1188942d6160b9f799af297bdb5d7812cd7fde6d ]
+[ Upstream commit fd39726ab7096840cc9c9dea6dfba23834fc81f0 ]
 
-switchtec_dma_alloc_chan_resources() returns directly on any later
-failure, without ever freeing the descriptor rings and coherent DMA
-memory it just allocated. The dmaengine core does not call
-device_free_chan_resources() when device_alloc_chan_resources() fails,
-so the driver has to unwind its own partial state.
+switchtec_dma_chans_release() is called in three places but the
+underlying memory is not freed in all of those places. In order to
+clean this up, introduce a switchtec_dma_chans_free() helper that
+will free the memory.
 
-The device-removed check also runs after ring_active and
-comp_ring_active have already been set true, so a failure there left
-the channel marked active despite alloc_chan_resources() reporting
-failure.
+Ensure each call to switchtec_dma_chans_release() has a corresponding
+switchtec_dma_chans_free() call. (The release in switchtec_dma_remove()
+pairs with the free in switchtec_dma_release()).
 
-Add an error-unwind path that disables the channel and frees the
-descriptor rings on every failure after allocation. ring_active and
-comp_ring_active are cleared under the same locks
-switchtec_dma_free_chan_resources() already uses, since the completion
-tasklet checks comp_ring_active under complete_lock before touching
-the completion ring, and a stale IRQ can still be in flight when this
-unwind path runs.
+swdma_dev->chan_cnt is now set to the number of channels that succeeded
+when one fails to initialise, so switchtec_dma_chans_free() can still
+be used if not all channels succeed in being allocated.
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/dmaengine/20260707165555.350951F000E9@smtp.kernel.org
+switchtec_dma_chans_free() also removes each channel from
+dma_dev->channels before freeing it, since the channel status ISR
+walks that list and would otherwise dereference freed memory.
+
 Fixes: 30eba9df76ad ("dmaengine: switchtec-dma: Implement hardware initialization and cleanup")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/dmaengine/20260717223024.9BB8A1F000E9@smtp.kernel.org
+Link: https://lore.kernel.org/dmaengine/20260727190604.397DB1F000E9@smtp.kernel.org
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
-Link: https://lore.kernel.org/dmaengine/20260707165555.350951F000E9@smtp.kernel.org/T/#u
-Link: https://patch.msgid.link/20260902062153.31048-3-logang@deltatee.com
+Link: https://patch.msgid.link/20260902062153.31048-4-logang@deltatee.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/switchtec_dma.c | 23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ drivers/dma/switchtec_dma.c | 27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/dma/switchtec_dma.c b/drivers/dma/switchtec_dma.c
-index 9eb8a49beda33..06b50d380792a 100644
+index 06b50d380792a..1708e7ff840dd 100644
 --- a/drivers/dma/switchtec_dma.c
 +++ b/drivers/dma/switchtec_dma.c
-@@ -988,15 +988,15 @@ static int switchtec_dma_alloc_chan_resources(struct dma_chan *chan)
- 
- 	rc = enable_channel(swdma_chan);
- 	if (rc)
--		return rc;
-+		goto err_free_desc;
- 
- 	rc = reset_channel(swdma_chan);
- 	if (rc)
--		return rc;
-+		goto err_disable_channel;
- 
- 	rc = unhalt_channel(swdma_chan);
- 	if (rc)
--		return rc;
-+		goto err_disable_channel;
- 
- 	swdma_chan->ring_active = true;
- 	swdma_chan->comp_ring_active = true;
-@@ -1007,7 +1007,8 @@ static int switchtec_dma_alloc_chan_resources(struct dma_chan *chan)
- 	rcu_read_lock();
- 	if (!rcu_dereference(swdma_dev->pdev)) {
- 		rcu_read_unlock();
--		return -ENODEV;
-+		rc = -ENODEV;
-+		goto err_ring_inactive;
- 	}
- 
- 	perf_cfg = readl(&swdma_chan->mmio_chan_fw->perf_cfg);
-@@ -1029,6 +1030,20 @@ static int switchtec_dma_alloc_chan_resources(struct dma_chan *chan)
- 		FIELD_GET(PERF_MRRS_MASK, perf_cfg));
- 
- 	return SWITCHTEC_DMA_SQ_SIZE;
-+
-+err_ring_inactive:
-+	spin_lock_bh(&swdma_chan->submit_lock);
-+	swdma_chan->ring_active = false;
-+	spin_unlock_bh(&swdma_chan->submit_lock);
-+
-+	spin_lock_bh(&swdma_chan->complete_lock);
-+	swdma_chan->comp_ring_active = false;
-+	spin_unlock_bh(&swdma_chan->complete_lock);
-+err_disable_channel:
-+	disable_channel(swdma_chan);
-+err_free_desc:
-+	switchtec_dma_free_desc(swdma_chan);
-+	return rc;
+@@ -1175,6 +1175,18 @@ static int switchtec_dma_chans_release(struct pci_dev *pdev,
+ 	return 0;
  }
  
- static void switchtec_dma_free_chan_resources(struct dma_chan *chan)
++static void switchtec_dma_chans_free(struct switchtec_dma_dev *swdma_dev)
++{
++	int i;
++
++	for (i = 0; i < swdma_dev->chan_cnt; i++) {
++		list_del(&swdma_dev->swdma_chans[i]->dma_chan.device_node);
++		kfree(swdma_dev->swdma_chans[i]);
++	}
++
++	kfree(swdma_dev->swdma_chans);
++}
++
+ static int switchtec_dma_chans_enumerate(struct switchtec_dma_dev *swdma_dev,
+ 					 struct pci_dev *pdev, int chan_cnt)
+ {
+@@ -1199,7 +1211,7 @@ static int switchtec_dma_chans_enumerate(struct switchtec_dma_dev *swdma_dev,
+ 		if (rc) {
+ 			dev_err(&pdev->dev, "Channel %d: init channel failed\n",
+ 				i);
+-			chan_cnt = i;
++			swdma_dev->chan_cnt = i;
+ 			goto err_exit;
+ 		}
+ 	}
+@@ -1207,10 +1219,8 @@ static int switchtec_dma_chans_enumerate(struct switchtec_dma_dev *swdma_dev,
+ 	return chan_cnt;
+ 
+ err_exit:
+-	for (i = 0; i < chan_cnt; i++)
+-		switchtec_dma_chan_free(pdev, swdma_dev->swdma_chans[i]);
+-
+-	kfree(swdma_dev->swdma_chans);
++	switchtec_dma_chans_release(pdev, swdma_dev);
++	switchtec_dma_chans_free(swdma_dev);
+ 
+ 	return rc;
+ }
+@@ -1219,12 +1229,8 @@ static void switchtec_dma_release(struct dma_device *dma_dev)
+ {
+ 	struct switchtec_dma_dev *swdma_dev =
+ 		container_of(dma_dev, struct switchtec_dma_dev, dma_dev);
+-	int i;
+ 
+-	for (i = 0; i < swdma_dev->chan_cnt; i++)
+-		kfree(swdma_dev->swdma_chans[i]);
+-
+-	kfree(swdma_dev->swdma_chans);
++	switchtec_dma_chans_free(swdma_dev);
+ 
+ 	put_device(dma_dev->dev);
+ 	kfree(swdma_dev);
+@@ -1315,6 +1321,7 @@ static int switchtec_dma_create(struct pci_dev *pdev)
+ 
+ err_chans_release_exit:
+ 	switchtec_dma_chans_release(pdev, swdma_dev);
++	switchtec_dma_chans_free(swdma_dev);
+ 
+ err_exit:
+ 	if (swdma_dev->chan_status_irq)
 -- 
 2.53.0
 
