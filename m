@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020642;
-	b=RnHXVPgWHW3faUhPCeZ1+jMgkwV92wffBMH5d1CN8lynOKb+n/7Ybt+7qn8GxRZXERDd
-	 wH8lvujgsrkHwcalnKl8MKys/rQTSsBbTsQLWai0c8F0qxXkjxBht/z6ry9+AksehzdBZ
-	 gkrLGzbzeLyWQ60aSJNe4mvKWdmhGU7ab0VXB6vuHmR8aKg13eeUkG5dh0o317llq13My
-	 WuCmBUFsZbmYEwOECPbYgN1Ht0Q/iHltYnGxRj3+SfCeMwPijc09SMvqusmx40/aBUOFM
-	 I+6gVu6dkI9DJz173jxwhY5TN51IlZy2TWERe1xCpp/SYEX3arSe7z6Y+WRrjVSuQ6g==
+	t=1795020645;
+	b=oZm+gyIHJRNscILSAawY8ZKYfIq9b677i9WfCh9cIJLsH0FEha0zfnDQrhdPDynu0EIV
+	 o3P4uMDAJBMuMqQMsYEcKjZcvGvnTIsVCOCf+VcQvZs3UJffSCCRKs20ctfTlfYj7a/K3
+	 XTLrlPNAfKDtX5TEDwD39GohuCILY0EA4dcwG/yTkoZpJUXGn5L04gby0Sp7SLmMIQDbn
+	 +vr9i1OPcUOxE5vBJu3LIopbW7ieNqlQWijU4uQIPg8434fybUAURsFhzb2c80zBstMcQ
+	 Lnzb5Uiw9zGFPpnw/vYHguG65VUpq/Quv8zgatT1CeQqTbGkPbJeofrFr5W3bVjQxmg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020642;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020645;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RSVgJZPfwf8owcACIqu/JWV7wLiUdFgi7H1ssKj83cg=;
-	b=BfuABcp1dz1oiwskqgyGOK0BmKg+sowBPHEk6vIacqTVJk0/pkTaGJgooppOZHeccD71
-	 Pm8PiG8nw19Cjhcj4zb+lrb79BFkZDU0Rb/ofkAleMIjr51Xipjk16vvd4a0IJO7x9GdM
-	 1c0hZ7nXZEzA3YncsHxjGMCPMwnecqFEZLVLQXdLXMZyQz1OkE2AnuUfcMkiFEr6vgfgg
-	 Tk/OMrdqWsHsh7S13DM3KaKH/FeLqQUo8M7kPoqYGIqy5UbmanL5AHbkNRI0pjPVcVbkf
-	 Nr7ywSFicrh8ue/G2HInw8t5N22COnXqU+ISetYOIyEhQYZdJZdAO1l7TysBzIEqdIw==
+	bh=i38Ywe4qsdRJKWxDAQj36lYr0r8euHtJB6Z4ycI8Olo=;
+	b=nCn/+NKehNYY4A/V4ld4SwP9GatbBEfOJodNAN2PLGJIS/NJyuwYCbEhqLSowsqWoRM1
+	 3thlroN3eI6+45ErGNdErI+2tIxZWO+6HVlyGyYK5nDBXOIVL+iCxhOpGde4Qsa07ABEl
+	 N2sVQIkxHrK6e1FO11Jk4I4gG9MwbLwXKshb4jCJTbJrxY/LFYPqsKQypqpak94rWNcY1
+	 mhg9aFYtZMj+COh1JOPdSUCPq3J+sXHPiSaoXQ+0K4Y+Y7oGKkheJiRU2VnUnRFWg+HHJ
+	 Gp7JGI8FLTK0shmqgYtBVEPi7MHTwOf4l0LLwa9fps4KixE7vbEcD0QxRAgqjK+InSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x8FL3NE9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yLLwSQ0p;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF5BC606A336;
-	Wed, 18 Nov 2026 16:50:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0961E606A32A;
+	Wed, 18 Nov 2026 16:50:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x8FL3NE9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 519381F000C4;
-	Wed, 18 Nov 2026 16:50:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yLLwSQ0p
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EF441F000CA;
+	Wed, 18 Nov 2026 16:50:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020641;
-	bh=RSVgJZPfwf8owcACIqu/JWV7wLiUdFgi7H1ssKj83cg=;
+	s=korg; t=1795020644;
+	bh=i38Ywe4qsdRJKWxDAQj36lYr0r8euHtJB6Z4ycI8Olo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x8FL3NE9aKyMhDjOOn+0g4hTq5AuYxdpZuSNcnheGx7fx+rF22YwDyHO8Do/ajAB0
-	 Etj8qIvt+fl7kzOU4sMX31OSyNLDChruWoL+SqZq7EY2gPAALeX6m20MAbI+15PVKt
-	 LyKTZdqJ+08HKDh0VgeODtW+FSJvOcChIeFb4nLw=
+	b=yLLwSQ0pGBC+7OqkNbl/VUW8I1gCDW6tB55ZXN70QJiKrHbSdaCWUO8rTmBP8UkPs
+	 MHhZExS2+jzJvMJrlsI7M1TAol+mO/uDYSBbzHRFIxDAdJlNukTNhYTm7241KI+XK7
+	 eBTS/pxmDfMAXl7vQgIO9+YUcNoCat+CiSCp5J1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Qiliang Yuan <odys.yuan@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2025/2651] tcp: use the echoed source route in cookie_v4_check()
-Date: Wed, 18 Nov 2026 15:54:25 +0100
-Message-ID: <20261118150359.086742582@linuxfoundation.org>
+Subject: [PATCH 7.3 2026/2651] selftests/bpf: Keep the bpffs of cgroup_hierarchical_stats private
+Date: Wed, 18 Nov 2026 15:54:26 +0100
+Message-ID: <20261118150359.117868797@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,88 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Qiliang Yuan <odys.yuan@gmail.com>
 
-[ Upstream commit 54d574d4afd9de820c8a017665c8095f0f5fdbaa ]
+[ Upstream commit 3c824dfd17e6e918e45a6a96bda0d020ddec8287 ]
 
-When the ACK carries a source route option, cookie_v4_check() routes
-the new socket to opt->faddr, where opt points to the options of the
-received packet.
+setup_hierarchy() mounts a bpffs on /sys/fs/bpf with setup_bpffs(), and
+then sets up the cgroups with setup_cgroups(), which moves the test into
+a private mount namespace.
 
-ip_options_compile() only fills faddr for options given by
-setsockopt() (when called without an skb), so on receive faddr is 0
-and the lookup is done for daddr 0, which gives a local route.
+The bpffs thus lands in the mount namespace that test_progs shares with
+the tests running in parallel, on top of the bpffs already there, and
+hides what they pin. cleanup_bpffs() later runs in the private mount
+namespace and can't unmount it, so it stays there for good.
+bpftool_maps_access then fails to pin an iterator because
+/sys/fs/bpf/test_bpftool_map doesn't exist anymore, and bpftool_metadata
+can't find the program it pinned in /sys/fs/bpf/test_metadata.
 
-Use the options echoed by tcp_v4_save_options() instead, as
-inet_csk_route_req() and inet_csk_route_child_sock() do with
-ireq->ireq_opt. Read them after security_inet_conn_request(),
-since CIPSO can replace ireq->ireq_opt there.
+Set up the cgroups first, so that the bpffs is mounted in the private
+mount namespace.
 
-The route now goes to the first hop of the source route, so also
-refuse a strict source route through a gateway, as
-inet_csk_route_req() does.
-
-Found by sashiko while reviewing the sk_mc_loop() fix.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261012101029.927296-3-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 88886309d2e8 ("selftests/bpf: add a selftest for cgroup hierarchical stats collection")
+Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261009-selftests-bpf-cgroup-stats-bpffs-v2-1-f93a111da992@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/syncookies.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ .../selftests/bpf/prog_tests/cgroup_hierarchical_stats.c        | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/syncookies.c b/net/ipv4/syncookies.c
-index 4b2d2713653b7..4e0ff3b820627 100644
---- a/net/ipv4/syncookies.c
-+++ b/net/ipv4/syncookies.c
-@@ -406,12 +406,12 @@ static struct request_sock *cookie_tcp_check(struct net *net, struct sock *sk,
-  */
- struct sock *cookie_v4_check(struct sock *sk, struct sk_buff *skb)
+diff --git a/tools/testing/selftests/bpf/prog_tests/cgroup_hierarchical_stats.c b/tools/testing/selftests/bpf/prog_tests/cgroup_hierarchical_stats.c
+index 3bd27d2ea668c..ad19d6d41918a 100644
+--- a/tools/testing/selftests/bpf/prog_tests/cgroup_hierarchical_stats.c
++++ b/tools/testing/selftests/bpf/prog_tests/cgroup_hierarchical_stats.c
+@@ -151,7 +151,7 @@ static void cleanup_cgroups(void)
+ /* Sets up cgroup hiearchary, returns 0 on success. */
+ static int setup_hierarchy(void)
  {
--	struct ip_options *opt = &TCP_SKB_CB(skb)->header.h4.opt;
- 	const struct tcphdr *th = tcp_hdr(skb);
- 	struct tcp_sock *tp = tcp_sk(sk);
- 	struct inet_request_sock *ireq;
- 	struct net *net = sock_net(sk);
- 	struct tcp_request_sock *treq;
-+	struct ip_options_rcu *opt;
- 	struct request_sock *req;
- 	struct sock *ret = sk;
- 	struct flowi4 fl4;
-@@ -451,6 +451,8 @@ struct sock *cookie_v4_check(struct sock *sk, struct sk_buff *skb)
- 		SKB_DR_SET(reason, SECURITY_HOOK);
- 		goto out_free;
- 	}
-+	/* Load ireq->ireq_opt after the LSM hook, which can replace it. */
-+	opt = rcu_dereference_protected(ireq->ireq_opt, true);
+-	return setup_bpffs() || setup_cgroups();
++	return setup_cgroups() || setup_bpffs();
+ }
  
- 	tcp_ao_syncookie(sk, skb, req, AF_INET);
- 
-@@ -463,7 +465,7 @@ struct sock *cookie_v4_check(struct sock *sk, struct sk_buff *skb)
- 	flowi4_init_output(&fl4, ireq->ir_iif, ireq->ir_mark,
- 			   ip_sock_rt_tos(sk), ip_sock_rt_scope(sk),
- 			   IPPROTO_TCP, inet_sk_flowi_flags(sk),
--			   opt->srr ? opt->faddr : ireq->ir_rmt_addr,
-+			   (opt && opt->opt.srr) ? opt->opt.faddr : ireq->ir_rmt_addr,
- 			   ireq->ir_loc_addr, th->source, th->dest,
- 			   sk_uid(sk));
- 	security_req_classify_flow(req, flowi4_to_flowi_common(&fl4));
-@@ -472,6 +474,12 @@ struct sock *cookie_v4_check(struct sock *sk, struct sk_buff *skb)
- 		SKB_DR_SET(reason, IP_OUTNOROUTES);
- 		goto out_free;
- 	}
-+	/* Same check as in inet_csk_route_req(). */
-+	if (opt && opt->opt.is_strictroute && rt->rt_uses_gateway) {
-+		ip_rt_put(rt);
-+		SKB_DR_SET(reason, IP_OUTNOROUTES);
-+		goto out_free;
-+	}
- 
- 	/* Try to redo what tcp_v4_send_synack did. */
- 	req->rsk_window_clamp = READ_ONCE(tp->window_clamp) ? :
+ static void destroy_hierarchy(void)
 -- 
 2.53.0
 
