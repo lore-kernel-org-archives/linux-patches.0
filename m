@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035063;
-	b=zvpOdHw5HjnnJ+WFgpeO3Qgwp63oDO/peOLn2BBJAH8pn4nG65ksX1caSfkiXe9g/eSl
-	 5XTHtaTcrvvDkksmLllEByBCCLr6aNiJVtWAxfi5QpxLOIiMZQaxDMpiiqAHyXO9fcNsP
-	 CjzBi9X6DNvmxioYJl3aikSc5SLWu82l65pal21QDFXuBuB9YbBnJxp2d2bDKT3Tag4PH
-	 e+OymLnObjrvNw9wYOXZffFfKs3VzoyjIcvrHtQOXGcCKP1ZGyhmWviL8zkHQX6kpHI7T
-	 pa1Xu070h9B6snCBfd+rd88eQKZzKzNF6yUD8DkCK4zmExFvTPWGrHzZC80j1UECTYQ==
+	t=1795035066;
+	b=4J/d27jfynq2If4BzS4vq4yuSEFroD82rvGJwllxTsAHlFG0/yLLlIFjEfu11REPI4Tu
+	 RHyVi61pDRykya/wFUL5B3C/3OUgyq+VQuBCTtGmeNLysCbChxy2mAZ7h8g19eNFZIdn7
+	 Cmjtp0PV2v7sglqUVfVxzx0LXxI00kPhR44ZS1CRA8BydlhPua4NTk1DFssit+G/VjuwY
+	 KajH7jTCXg1dS8avtUTAbj2ifG2v03D1lPz4MZk2bfNWh+vdt04LK1uucJ95VqyyoVQx0
+	 59gTJjBypSZtG02HXrK8tw/cLDfi85LS0C4pPd60CwDM7SoGljhuicQZzZOQ9zjVuuA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035063;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035066;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5TNr9NKoZiAxdrF3bMZs0NLlKAVOInvuEEWpIxtAeBA=;
-	b=pP1yrLy/gcPEbDK0x9gKht40qAbhCoH6yu6oEpqKmlvtlwdTIhKLU4t5wwtAt7PhovO+
-	 3IVuVPKETMF2+04ocSBlMFsp1FQoMkM8HmQ968iw/sluC6+4l/OPPEluSWFb5RYMakXbp
-	 ETfewukvltbfg2V8f1HSG7h/3RLjiFs0DsAzBglAHN2abmTWt57RE+nEOZ3OMVUr87UNF
-	 fmBJHJuqp8a10Rw8BO+jd07qtNAUKee5+jEOe3ARe89DE3sMrmDMuFptdc83DqsFw0a6x
-	 x/SDnLoiYidRANUqAl8B6Zs0WEUklMuW+wz6HA70xqBdBU/XfLwCOD4b5CkNgPlVnjw==
+	bh=HhhXicBVGiZhmaV8tn7frc5gxdWKsmw6SMZX/6+wx4A=;
+	b=m0Ip/ZgjyoDbuNidCQOO1IPXvV8baX2a5I1hCJB6+Z1XKrhD5Io/wTjOmtlQBpRq/7s/
+	 PaPBbpnmbUo0TwZ3cUzhGjVJ2Sr3voJYVbBLZwJB4v/QDPv/U3l/garz0EYcMyndlP9kR
+	 Gjd5lEU3fqpxtIq2Qf8t5XA0HkUNhl1Z+zOnCmz5fNb6FpMgPFAN0G9OF9qPEZcdQf9+u
+	 zhEP0ngg/f7/TC8WYb0QHOKmERy+wpQUIiLJ+gMRAIZ4XwQlzxfew/aB74wnNinq6mLZ/
+	 lw0YBIWBqMYQ6io61j4GTP9uXCKCwfM22iGFyGv1c9eJUWocFLW25SEGyEaNgQx7kUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NcRNaZC8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Au6ZcqoK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17542606A334;
-	Wed, 18 Nov 2026 20:51:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 043F1606A31C;
+	Wed, 18 Nov 2026 20:51:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NcRNaZC8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 922741F000C4;
-	Wed, 18 Nov 2026 20:51:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Au6ZcqoK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D9E1F000D0;
+	Wed, 18 Nov 2026 20:51:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035062;
-	bh=5TNr9NKoZiAxdrF3bMZs0NLlKAVOInvuEEWpIxtAeBA=;
+	s=korg; t=1795035065;
+	bh=HhhXicBVGiZhmaV8tn7frc5gxdWKsmw6SMZX/6+wx4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NcRNaZC83zR9RgPETrok8Al9u8ZtAIvqhdd2IuziQlZprzRhlIL7aernL9aKWi+5e
-	 d0/EqxtL5DwlixodTE4zsiY5SDzmdNQlROgq4aVN4CCQgD8rN/lnGpn1kX0kS8oHWM
-	 DGZ+AhY5h8+bm7njsCDu2JOLSREBwfeFk8wbQJ88=
+	b=Au6ZcqoKUo8heWuZpjxMNgMqBYXZoQNNB9iRrzML1o21onwhLgc0uwsIP9Jb9k361
+	 4dSgVaHfo5ltIoHlXOPTOgGWxenThSBWo7CzI6MHM+64hLWOnofHCYAOvzJVhv2lL0
+	 bb/Zard57bEdzEd6xZQsZCk1zrdsaKFq4yy2wO3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Tom Zanussi <zanussi@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0542/3318] ntfs3: free replaced mount options after a grace period
-Date: Wed, 18 Nov 2026 15:19:24 +0100
-Message-ID: <20261118150333.534801348@linuxfoundation.org>
+Subject: [PATCH 6.6 0543/3318] tracing: Fix fully-qualified variable reference printing in histograms
+Date: Wed, 18 Nov 2026 15:19:25 +0100
+Message-ID: <20261118150333.567704146@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,139 +68,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Tom Zanussi <zanussi@kernel.org>
 
-[ Upstream commit 56c3824de56b5275c02ff6b6aa27ddbacfbb9b25 ]
+[ Upstream commit 9236eebd138aa2753f7b30fc6cee7b7202841247 ]
 
-ntfs_fs_reconfigure() replaces the old mount options with new mount
-options in sbi->options. The old mount options land in fs_context and
-are freed as soon as remount returns. With a pathwalk held up in
-ntfs_nls_to_utf16() between loading sbi->options and dereferencing it
-while a remount replaces them:
+The syntax for fully-qualified variable references in histograms is
+subsys.event.$var, which is parsed correctly, but not displayed correctly
+when printing a histogram spec. The current code puts the $ reference at
+the beginning of the fully-qualified variable name i.e. $subsys.event.var,
+which is incorrect.
 
-  BUG: KASAN: slab-use-after-free in ntfs_nls_to_utf16+0x7ae/0x7c0
-  Read of size 8 at addr ff110001044fd448 by task walker/98
-  Call Trace:
-   <TASK>
-   ntfs_nls_to_utf16+0x7ae/0x7c0
-   ntfs_d_hash+0x22b/0x500
-   link_path_walk+0x11ad/0x1d30
-   path_lookupat+0x63/0xb00
-   filename_lookup+0x1f1/0x5b0
-   vfs_statx+0xd7/0x3b0
-  [...]
-  Allocated by task 95:
-   __kmalloc_node_track_caller_noprof+0x2a2/0x730
-   kmemdup_noprof+0x25/0x50
-   ntfs_fill_super+0x1e5/0x4550
-  [...]
-  Freed by task 97:
-   kfree+0x1db/0x5b0
-   put_fs_context+0x13c/0x7d0
-   path_mount+0x54a/0x2130
-   __x64_sys_mount+0x20c/0x270
+Before:
 
-That info is needed in rcu lookup in the dentry hash and dentry compary
-methods for ntfs3 and causes a UAF today. Delay freeing with an rcu
-grace period.
+trigger info: hist:keys=next_comm:vals=hitcount:wakeup_lat=common_timestamp.usecs-$sched.sched_wakeup.ts0: ...
 
-ntfs_nls_to_utf16() reads ->nls and ->ads once under rcu_read_lock() so
-the hooks pair with the release in ntfs_fs_reconfigure(). That also
-covers callers outside of rcu pathwalk such as ntfs_lookup(). They don't
-hold rcu_read_lock() themselves and wouldn't be protected by the grace
-period otherwise. Remount refuses to change the iocharset so ->nls stays
-valid after rcu_read_unlock().
+After:
 
-Fixes: a3a956c78efa ("fs/ntfs3: Add option "nocase"")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-8-7446d2d335e6@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ sashal: Dropped the ads mount option handling in ntfs_nls_to_utf16(), which has no ads option here, and kept the existing sync_filesystem() placement in ntfs_fs_reconfigure(). ]
+trigger info: hist:keys=next_comm:vals=hitcount:wakeup_lat=common_timestamp.usecs-sched.sched_wakeup.$ts0: ...
+
+Link: https://patch.msgid.link/5dee9a86d062a4dd68c2214f3d90ac93811e1951.1776112478.git.zanussi@kernel.org
+Signed-off-by: Tom Zanussi <zanussi@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Stable-dep-of: a0777b9e5315 ("tracing: Fix NULL dereference when copying keys for a field variable")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/dir.c     |  9 ++++++++-
- fs/ntfs3/ntfs_fs.h |  2 ++
- fs/ntfs3/super.c   | 16 +++++++++++++++-
- 3 files changed, 25 insertions(+), 2 deletions(-)
+ kernel/trace/trace_events_hist.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
-index cde23d4f103c7..0cb7a487d3f24 100644
---- a/fs/ntfs3/dir.c
-+++ b/fs/ntfs3/dir.c
-@@ -185,11 +185,18 @@ int ntfs_nls_to_utf16(struct ntfs_sb_info *sbi, const u8 *name, u32 name_len,
+diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
+index 7ae8160bb8f92..13b77b5900a3c 100644
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -1342,9 +1342,12 @@ static const char *hist_field_name(struct hist_field *field,
+ 		 field->flags & HIST_FIELD_FL_VAR_REF) {
+ 		if (field->system) {
+ 			static char full_name[MAX_FILTER_STR_VAL];
++			static char *fmt;
+ 			int len;
+ 
+-			len = snprintf(full_name, sizeof(full_name), "%s.%s.%s",
++			fmt = field->flags & HIST_FIELD_FL_VAR_REF ? "%s.%s.$%s" : "%s.%s.%s";
++
++			len = snprintf(full_name, sizeof(full_name), fmt,
+ 				       field->system, field->event_name,
+ 				       field->name);
+ 			if (len < sizeof(full_name))
+@@ -1724,9 +1727,10 @@ static const char *get_hist_field_flags(struct hist_field *hist_field)
+ 
+ static void expr_field_str(struct hist_field *field, char *expr)
  {
- 	int ret, slen;
- 	const u8 *end;
--	struct nls_table *nls = sbi->options->nls;
-+	struct ntfs_mount_options *opts;
-+	struct nls_table *nls;
- 	u16 *uname = uni->name;
+-	if (field->flags & HIST_FIELD_FL_VAR_REF)
+-		strcat(expr, "$");
+-	else if (field->flags & HIST_FIELD_FL_CONST) {
++	if (field->flags & HIST_FIELD_FL_VAR_REF) {
++		if (!field->system)
++			strcat(expr, "$");
++	} else if (field->flags & HIST_FIELD_FL_CONST) {
+ 		char str[HIST_CONST_DIGITS_MAX];
  
- 	static_assert(sizeof(wchar_t) == sizeof(u16));
- 
-+	/* ntfs_fs_reconfigure() may replace the options, but not ->nls */
-+	rcu_read_lock();
-+	opts = READ_ONCE(sbi->options);
-+	nls = opts->nls;
-+	rcu_read_unlock();
-+
- 	if (!nls) {
- 		/* utf8 -> utf16 */
- 		ret = _utf8s_to_utf16s(name, name_len, endian, uname, max_ulen);
-diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
-index 8850ee2b75b11..c035a97e6d22e 100644
---- a/fs/ntfs3/ntfs_fs.h
-+++ b/fs/ntfs3/ntfs_fs.h
-@@ -90,6 +90,8 @@ enum utf16_endian;
- struct ntfs_mount_options {
- 	char *nls_name;
- 	struct nls_table *nls;
-+	/* ->d_hash() and ->d_compare() read the options in rcu pathwalk */
-+	struct rcu_head rcu;
- 
- 	kuid_t fs_uid;
- 	kgid_t fs_gid;
-diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
-index 59270aa34c007..e8d8270828d25 100644
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -238,6 +238,11 @@ static inline void put_mount_options(struct ntfs_mount_options *options)
- 	kfree(options);
- }
- 
-+static void put_mount_options_rcu(struct rcu_head *head)
-+{
-+	put_mount_options(container_of(head, struct ntfs_mount_options, rcu));
-+}
-+
- enum Opt {
- 	Opt_uid,
- 	Opt_gid,
-@@ -408,6 +413,7 @@ static int ntfs_fs_reconfigure(struct fs_context *fc)
- 	struct super_block *sb = fc->root->d_sb;
- 	struct ntfs_sb_info *sbi = sb->s_fs_info;
- 	struct ntfs_mount_options *new_opts = fc->fs_private;
-+	struct ntfs_mount_options *old_opts;
- 	int ro_rw;
- 
- 	ro_rw = sb_rdonly(sb) && !(fc->sb_flags & SB_RDONLY);
-@@ -438,7 +444,15 @@ static int ntfs_fs_reconfigure(struct fs_context *fc)
- 		return -EINVAL;
- 	}
- 
--	swap(sbi->options, fc->fs_private);
-+	old_opts = sbi->options;
-+	/* pairs with the READ_ONCE() in ntfs_nls_to_utf16() */
-+	smp_store_release(&sbi->options, new_opts);
-+	fc->fs_private = NULL;
-+	/*
-+	 * ntfs_d_hash() and ntfs_d_compare() of a pathwalk in rcu mode may
-+	 * still read the old options through the sbi.
-+	 */
-+	call_rcu(&old_opts->rcu, put_mount_options_rcu);
- 
- 	return 0;
- }
+ 		snprintf(str, HIST_CONST_DIGITS_MAX, "%llu", field->constant);
+@@ -6138,7 +6142,8 @@ static void hist_field_print(struct seq_file *m, struct hist_field *hist_field)
+ 	else if (field_name) {
+ 		if (hist_field->flags & HIST_FIELD_FL_VAR_REF ||
+ 		    hist_field->flags & HIST_FIELD_FL_ALIAS)
+-			seq_putc(m, '$');
++			if (!hist_field->system)
++				seq_putc(m, '$');
+ 		seq_printf(m, "%s", field_name);
+ 	} else if (hist_field->flags & HIST_FIELD_FL_TIMESTAMP)
+ 		seq_puts(m, "common_timestamp");
 -- 
 2.53.0
 
