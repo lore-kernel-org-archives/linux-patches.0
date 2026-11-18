@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033575;
-	b=3xCzrP8HLo7oBZfs7hxDgxSs3BnHSv85EymWNAclyuSHMG7PWNcTrl3j3ikTnWRRKb1t
-	 a4AcfFWRQLpW+oF2lCmRUmfzbQSOffmP6MaCkHKZ3f8KpMw9eb7Z0mB+GrnYd1KFeHmLH
-	 svahJG0CWPaOhC9M53z5lgiWTAxKSrXq+X63ieuUnzOLaF9KPenxHwJEylj0TIMAVrUWW
-	 fSVl/qZK4AvDu+UK0WdEZDgqD4djjZUtEIC74APy78CfWXLmLOxqxbLgVkGAxRplRnZ5y
-	 R0D1R5t4wt9CD7rcK3wVGeNl31cEXwna0OcQ40Z5a2ccD1DIcZ9tLwuBzCe76CfiU7g==
+	t=1795033578;
+	b=M5KrcHIn2UIqApXEtgQWkDbRiydYuNPpEiujd+qMnvfSZwa9EYf90pGhQCa6wns8ClAn
+	 U2aVYK30V7GSt2P1aG37PDMtxGy2rkfJIAdoZVRJISqlvmI+Jnie8pekBcgcrL71O7n5Y
+	 DG6+GQCDkHqR7+Jhtyjx+R77OMlxAJg96EZnI0sWBHlWdj++IWHc+wbbLAfiHjZGqp2QQ
+	 TzJzJcL2AeLvu3bcBd/DV7qF4rY/NtNHDlZoXeA36b6KnUpvv3Gj+/UMlwR4fFgpgFf/P
+	 J4yXr12Th3USbX8J+a4B1pX+gdB+ynoEt8jqziJS5Xbu7WfCyoo00jYzztQTSROOxdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033575;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033578;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=O2OwICwLT3eIs3KL6U2mSB+Zp5sP/RGacgBNY8yLonk=;
-	b=hhBt0M6EVuoW615SFg5FTCfWXvxjhAyfqFWmZzKh+ROEhDgEfLHkH0Ge0VhcZw55VcZM
-	 OmFqVcTWd+Uk7XXH+JF/uRKz2zh2PDBlomibTgWJZe1owH7hOIx0VpAbkI4sD0K1nkPA+
-	 sGHzLNwYxt7kf8cOs4BRQ7wE8vj01FgPN9m1Tnz/Om8BncB1x0wSekoVRSYk7XWNWHLFp
-	 StcDqI35grvtD341x0CG1WpONqeY2tp4X1v88LyGdL5/oOzLsvV4hMZ+rMQMZB/d75d0Y
-	 Qnm3PLkDK/cowhZ4vMu4HEr1JyJFM9ZJRwek/isAmzrc6fVf5xMBiuO7pNNIImOD2Yg==
+	bh=SwyNChmG71AJTWpSILzdhGhpyQuh3XLBN+UBf5iBGZc=;
+	b=QH5XeF1kTjxhtXLs+aa7eWnVposT9jiGl7syNQ2NQfm6m1805DK0RpqgEeWkp3I4voIx
+	 Zry1FU3RhzqntpTT9cwnzmQfHbTB3buAouT5Hb5NM10bbgQZxfr+91um24M4/PzOheCY5
+	 OYFZgUhy58IBQadJSJEhSbwlDOn9IHf4u0xA+YpOFoc6EqlaogwKvw2cx+yHWqlF1cLNo
+	 VkqsFcIeM8xnbjgZDnbEjyvk/oD00ZxCQJcpvFk/rw2nx3rceet6x5zN0NBF+gyIfPFUv
+	 V2Eq+hhDu5iPChu65BZoA0nHbcwnV/Vxov8OKuYluV2SKkyj5AaMrq7w6PjYptHpiyQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jxIttVb5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yvnVoTsa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DACF606A338;
-	Wed, 18 Nov 2026 20:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D289606A335;
+	Wed, 18 Nov 2026 20:26:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jxIttVb5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDE601F000C5;
-	Wed, 18 Nov 2026 20:26:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yvnVoTsa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 851641F000CA;
+	Wed, 18 Nov 2026 20:26:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033575;
-	bh=O2OwICwLT3eIs3KL6U2mSB+Zp5sP/RGacgBNY8yLonk=;
+	s=korg; t=1795033578;
+	bh=SwyNChmG71AJTWpSILzdhGhpyQuh3XLBN+UBf5iBGZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jxIttVb52AFahDYOIeHgcvA7ZGhf50RA2jwKo9BEEfG+cUeG+pCvKnmmH6s+SZaT1
-	 Or4tAczmpiem2ba8OZQ1eohCfs3lOv9ZiImd53OqmG34LDHJoMFek00ebVBif9WiGQ
-	 0Buyenad7CS7V1l9zjP+R+b37Tw0A4l+aaooUmSA=
+	b=yvnVoTsa3WktpHtXVanuvKBL/CSUX6cvQxCVLzFs9yj9sut/+WW8GTw5WFRPKLO1u
+	 z4x+hipXpTHfqboowqh2DJtCpVwi1eFvNZIrwaGM+kRdzAp67HcnqGTa0Wydz5BVzV
+	 olIL1K/cP62Uw06GyX0gG4iLG18jyNkyYRPkF2PU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Dooks <ben.dooks@codethink.co.uk>,
-	Vinod Koul <vkoul@kernel.org>,
+	William Hansen-Baird <william.hansen.baird@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0062/3318] dmaengine: dw-axi-dmac: fix __le32 on set of CH_CTL_H_LLI_VALID
-Date: Wed, 18 Nov 2026 15:11:24 +0100
-Message-ID: <20261118150315.842985290@linuxfoundation.org>
+Subject: [PATCH 6.6 0063/3318] wifi: rtlwifi: rtl8723be: Remove unnecessary irq save/restore in hw_init()
+Date: Wed, 18 Nov 2026 15:11:25 +0100
+Message-ID: <20261118150315.876581030@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,40 +68,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Dooks <ben.dooks@codethink.co.uk>
+From: William Hansen-Baird <william.hansen.baird@gmail.com>
 
-[ Upstream commit 89aba9c39bdda8a973a6ffed7c9e93321edcfc16 ]
+[ Upstream commit 1b4cd55626b6ffa93d18848412afb912a4add585 ]
 
-When writing the lli->ctl_hi, this is an __le32 type so the
-value being orred should be convered to __le32 by cpu_to_le32.
+rtl8723be hw_init() calls local_save_flags(flags) followed by
+local_irq_enable(). Later, local_irq_restore(flags) is called.
 
-Fixes 1deb96c0fa58a ("dmaegine: dw-axi-dmac: Support device_prep_dma_cyclic()")
---
-Note, the call to axi_chan_irq_clear() is passing lli->status_lo
-through which is also an __le32 but it does not seem to be set
-anywhere. Is this also a bug?
+This causes warnings from Lockdep on boot and modprobe,
+as local_irq_restore(flags) should only be called while irqs are disabled.
+The warning was introduced to detect this class of bug in [1].
 
-Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
-Link: https://patch.msgid.link/20260617084944.705266-1-ben.dooks@codethink.co.uk
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+With testing I found that all paths which call hw_init() have irqs
+already enabled for rtl8723be.
+
+Furthermore, the calls were originally added for the rtl8192ce
+in commit f78bccd79ba3 ("rtlwifi: rtl8192ce: Fix too long disable of IRQs")
+before later being added to most other rtlwifi drivers.
+
+Commit d3feae41a347 ("rtlwifi: Update power-save routines for 062814 driver")
+then replaces the call to spin_lock_irqsave() before hw_init(),
+and thus the codepath which caused irqs to be disabled in hw_init and
+prompted the original commit has been removed.
+
+The same irq save/restore pattern is also present in the hw_init() of
+rtl8192ce, rtl8723ae, rtl8188ee, rtl8192se and rtl8192cu,
+however I don't have the hardware to test them,
+so I did not include them in my changes.
+
+Tested on a Razer Blade 14 2017.
+
+Example of output from Lockdep prior to fix:
+
+raw_local_irq_restore() called with IRQs enabled
+
+...
+
+Call Trace:
+<TASK>
+rtl8723be_hw_init+0x5992/0x7220 [rtl8723be]
+? static_obj+0x61/0xa0
+rtl_pci_start+0x222/0x5c0 [rtl_pci]
+rtl_op_start+0x128/0x1a0 [rtlwifi]
+? __kasan_check_read+0x11/0x20
+drv_start+0x16c/0x550 [mac80211]
+
+...
+
+irq event stamp: 887679
+hardirqs last  enabled at (887689): [<ffffffff96511170>] __up_console_sem+0x90/0xa0
+hardirqs last disabled at (887698): [<ffffffff96511155>] __up_console_sem+0x75/0xa0
+softirqs last  enabled at (887670): [<ffffffff962f4675>] __irq_exit_rcu+0x175/0x2f0
+softirqs last disabled at (887649): [<ffffffff962f4675>] __irq_exit_rcu+0x175/0x2f0
+---[ end trace 0000000000000000 ]---
+
+[1] https://lore.kernel.org/all/20210111153707.10071-1-mark.rutland@arm.com/
+
+Signed-off-by: William Hansen-Baird <william.hansen.baird@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260609095359.2964193-1-william.hansen.baird@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtlwifi/rtl8723be/hw.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index 3152c8b52884c..1a9b9732820ba 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -1082,7 +1082,7 @@ static void axi_chan_block_xfer_complete(struct axi_dma_chan *chan)
- 				hw_desc = &desc->hw_desc[i];
- 				if (hw_desc->llp == llp) {
- 					axi_chan_irq_clear(chan, hw_desc->lli->status_lo);
--					hw_desc->lli->ctl_hi |= CH_CTL_H_LLI_VALID;
-+					hw_desc->lli->ctl_hi |= cpu_to_le32(CH_CTL_H_LLI_VALID);
- 					desc->completed_blocks = i;
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8723be/hw.c b/drivers/net/wireless/realtek/rtlwifi/rtl8723be/hw.c
+index 15575644551f0..3514feb470e3a 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8723be/hw.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8723be/hw.c
+@@ -1339,11 +1339,6 @@ int rtl8723be_hw_init(struct ieee80211_hw *hw)
+ 	bool rtstatus = true;
+ 	int err;
+ 	u8 tmp_u1b;
+-	unsigned long flags;
+-
+-	/* reenable interrupts to not interfere with other devices */
+-	local_save_flags(flags);
+-	local_irq_enable();
  
- 					if (((hw_desc->len * (i + 1)) % desc->period_len) == 0)
+ 	rtlhal->fw_ready = false;
+ 	rtlpriv->rtlhal.being_init_adapter = true;
+@@ -1449,7 +1444,6 @@ int rtl8723be_hw_init(struct ieee80211_hw *hw)
+ 
+ 	rtl8723be_dm_init(hw);
+ exit:
+-	local_irq_restore(flags);
+ 	rtlpriv->rtlhal.being_init_adapter = false;
+ 	return err;
+ }
 -- 
 2.53.0
 
