@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022881;
-	b=sZCjVUgo1kNuVdcXvhCuMMHgeA58XJid+rpkhYeVCY+7cvr0Tn8H62tRXg8MQ+Oqik2z
-	 HjISlD9r1NdN2vDxePZr+fO8vBJu3Eo0W3sv6wDQRRJnDPIlMjhFhTPU1DEDDYdZWH4Sx
-	 PXhWnFfYWvghqdKq3zrextHrM1+9ZeULfxe9kzcNknWHxM6sMep7yn18q9qGR5sCjp831
-	 Ko3UPnQsxryDzVllbXaSroAzPrhjk2HDwaUOwaJnKlV+b3QG0/MraTnD2KL6YGB5yKvhM
-	 1md1bIOOu7/37HaLGJTaT2qEwjEAjlXB6lJNSceBzB5f+/s9uNcpS0WsgUEChMXxIxw==
+	t=1795022884;
+	b=1lelqyFruEB4wrsU+hiYDycMtvhJuF+xKhwoxdeC9BlWYTRgFgz7Li2VmthmovnyEf0W
+	 dpS9uqh6cuwSYm65oyTmFQ7b1KRZA7SETrkhwmZHQPlB8znph2B0EQngWm7NcgiLEQPxo
+	 A5lfhSieybnKqPKM2+2HjaKlFAEahdSLGN6RTA+FJAFvSBLa6sFb99TLCa9ukpEkojR6D
+	 N8/dNkr9Al6lnhAYrv5lNfn4wdKoTRSEgT6Rwt74ra+I3r8rbaniz04o/mvbjXIPZAH3k
+	 j+IEoowmObx+OO6nWQAaQCR6VbPnjxo+/Ffq79tG9rhvG2+VUDWjn1nc6MukCRnqU8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022881;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022884;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=AeXdbAybmlh8THOnqRUeT7pAdFKqcTcFjNP81/PUp+s=;
-	b=wF8T5rhlkprCAJt6F8WCwvOe1Dkns5zXHia1u6nX+Y8OhhQ1EJtZ0fcnMxi4X/VcmkXs
-	 6FLGWll7N4OJwiO06JCXtxBy85yypLuF1NvDd97s/wfWQSOa0s2Ue2LPJdf8bL4oJF6ZW
-	 NOFUlUs8R1gdXQiNAXm5YugDIp1POIAOngXPuBapx4HZYoCzIZ1rOirfLNbfsghW5xwg9
-	 JRzN0AtsFg+M191sQnX2hcAwiLtf7NS6uW+F4RbY44jyLXaIgOxMH+op1du57/GhZ0CTE
-	 YT+dpFFiHkjW0P8iEaEVvLPdS80/bgHI/3Ue267v9NnU75e00CQk2zvNTXWcbW3fX8Q==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=SSmJw9qe2TddFNdVq8PDqPOsLNUGBmkBx9w2mCcQI/A=;
+	b=Z1pMRdr6li3xL2njeoHzIYcAYhOCfjKM/SoWzPdyNac7uX21NBh1kE0l84yQue2rPgQG
+	 mcyI8R1I10pmXYPsnjeftTstKbcoRdwSnopqqGeNdtV6FgmtlHD4T7bRULVxNv7OXvYqA
+	 YngW0AlJS0XTWCqk/gNAn6cLmHJhqrIwlHIDhmJGime7Y1xEpTKwScrvQHCEP1mAJJ4+j
+	 dYZYNDcCMHviJ1aP3Vka0OKTQ6x2I1uikbz7uYofSTomhs4zlQXaeW0EpanicCrX5jm+b
+	 fhxmkBkcpmzCbpsfXjJelnEg7PQStpDquIjsCCR543hZZKiyE82briGS81QIyB19zHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zSMDv3ay;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P0822Mfc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD83F606CA66;
-	Wed, 18 Nov 2026 17:28:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D74C606CA67;
+	Wed, 18 Nov 2026 17:28:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zSMDv3ay
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3798E1F000C5;
-	Wed, 18 Nov 2026 17:28:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P0822Mfc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04F7F1F000C5;
+	Wed, 18 Nov 2026 17:28:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022881;
-	bh=AeXdbAybmlh8THOnqRUeT7pAdFKqcTcFjNP81/PUp+s=;
+	s=korg; t=1795022884;
+	bh=SSmJw9qe2TddFNdVq8PDqPOsLNUGBmkBx9w2mCcQI/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zSMDv3aysKdUEYxxxk/hLrVKpFBmDM1btXNhxcwKPKVW7nneDgWn1pSSzBVZ5CCDQ
-	 1w8Udw5Dh+n1zov/2iUMgjhOyHElVVEzuEkCAGB9wztWgJaora1cvCy1+8wWuf8Efx
-	 ea9HlgszDkm/ibobFf0JWvijHKtPt4fHJ956u3Go=
+	b=P0822Mfcy03HGfKwej6XFSvt/1Uyx0DBK04gQUrhaWDnA5JbtO//mvK5c8ls8O7Fl
+	 oBqKpmErK4JIokqFXQaN9apFPnXHKtbl6HhBvoKmWMRLCUe9w4baO5dJTDFEBekqLD
+	 6jHT/vTdOM4VsuBRuPJ4X2ljH0PUoxabMBG4Q8Nw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
 	Ian Rogers <irogers@google.com>,
+	Stefano Sanfilippo <ssanfilippo@chromium.org>,
 	Stephane Eranian <eranian@google.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0170/2151] perf jitdump: Validate sym string NUL-termination in code load
-Date: Wed, 18 Nov 2026 15:31:45 +0100
-Message-ID: <20261118150127.943024945@linuxfoundation.org>
+Subject: [PATCH 6.18 0171/2151] perf jitdump: Validate unwinding sizes against record payload
+Date: Wed, 18 Nov 2026 15:31:46 +0100
+Message-ID: <20261118150127.978747086@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -64,6 +65,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
@@ -72,46 +74,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 98bfe1142ccbaa5ffdca5dcdddd26f238ad33585 ]
+[ Upstream commit 92d50319b4f0c0bbee8a236a09063272cd22faab ]
 
-jit_repipe_code_load() computes sym = (void *)jr + sizeof(jr->load) and
-passes it to jit_emit_elf() which calls strlen(sym) via jit_write_elf().
-If code_size equals total_size - sizeof(jr->load), the sym pointer
-aliases the code blob with no NUL terminator, and strlen() scans past
-the buffer into adjacent heap memory.
+jit_repipe_unwinding_info() copies unwinding_size and eh_frame_hdr_size
+from the jitdump record into jd-> fields without checking them against
+the actual payload size.  Downstream, jit_add_eh_frame_info() in
+genelf.c computes unwinding_table_size = unwinding_size -
+eh_frame_hdr_size, which underflows when eh_frame_hdr_size >
+unwinding_size.  The result is passed as d->d_size to libelf, causing
+an OOB heap read into the output ELF file.
 
-Add a memchr() check to verify the symbol name is NUL-terminated within
-the region between the load header and the code blob before use.
+Validate that unwinding_size fits within the record payload and that
+eh_frame_hdr_size does not exceed unwinding_size before allocating or
+storing the values, so a bogus record cannot force a large allocation
+that is then discarded.
 
-Fixes: 598b7c6919c7bbcc ("perf jit: add source line info support")
+mapped_size is likewise taken from the record and was narrowed into an
+int for the mmap2 len computation in jit_repipe_code_load() and
+jit_repipe_code_move(); values above INT_MAX would turn negative,
+producing a wrong mmap2 length.  Use uint64_t for usize so the value
+cannot truncate.
+
+Fixes: 0284fecd13b6db3e ("perf jit: Add unwinding support")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
 Reviewed-by: Ian Rogers <irogers@google.com>
+Cc: Stefano Sanfilippo <ssanfilippo@chromium.org>
 Cc: Stephane Eranian <eranian@google.com>
 Assisted-by: LLM
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/jitdump.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ tools/perf/util/jitdump.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
 diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
-index 517deb8466493..be56de79eb4ca 100644
+index be56de79eb4ca..f0ebc15f6d499 100644
 --- a/tools/perf/util/jitdump.c
 +++ b/tools/perf/util/jitdump.c
-@@ -487,6 +487,13 @@ static int jit_repipe_code_load(struct jit_buf_desc *jd, union jr_entry *jr)
+@@ -462,7 +462,8 @@ static int jit_repipe_code_load(struct jit_buf_desc *jd, union jr_entry *jr)
+ 	u16 idr_size;
+ 	const char *sym;
+ 	uint64_t count;
+-	int ret, csize, usize;
++	int ret, csize;
++	uint64_t usize;
+ 	pid_t nspid, pid, tid;
+ 	struct {
+ 		u32 pid, tid;
+@@ -543,7 +544,7 @@ static int jit_repipe_code_load(struct jit_buf_desc *jd, union jr_entry *jr)
  
- 	sym   = (void *)((unsigned long)jr + sizeof(jr->load));
- 	code  = (unsigned long)jr + jr->load.p.total_size - csize;
+ 	event->mmap2.pgoff = GEN_ELF_TEXT_OFFSET;
+ 	event->mmap2.start = addr;
+-	event->mmap2.len   = usize ? ALIGN_8(csize) + usize : csize;
++	event->mmap2.len   = usize ? ALIGN_8((uint64_t)csize) + usize : (uint64_t)csize;
+ 	event->mmap2.pid   = pid;
+ 	event->mmap2.tid   = tid;
+ 	event->mmap2.ino   = st.st_ino;
+@@ -610,7 +611,7 @@ static int jit_repipe_code_move(struct jit_buf_desc *jd, union jr_entry *jr)
+ 	char *filename;
+ 	size_t size;
+ 	struct stat st;
+-	int usize;
++	uint64_t usize;
+ 	u16 idr_size;
+ 	int ret;
+ 	pid_t nspid, pid, tid;
+@@ -759,6 +760,18 @@ jit_repipe_unwinding_info(struct jit_buf_desc *jd, union jr_entry *jr)
+ 		return -1;
+ 
+ 	unwinding_data_size  = jr->prefix.total_size - sizeof(jr->unwinding);
 +
-+	/* sym string lives between the load header and the code blob */
-+	if (!memchr(sym, '\0', code - (unsigned long)sym)) {
-+		pr_warning("jitdump: unterminated symbol name in code_load record\n");
++	/*
++	 * Validate sizes before allocating — jit_add_eh_frame_info()
++	 * computes unwinding_size - eh_frame_hdr_size and uses the
++	 * result as a buffer length for libelf.
++	 */
++	if (jr->unwinding.unwinding_size > unwinding_data_size ||
++	    jr->unwinding.eh_frame_hdr_size > jr->unwinding.unwinding_size) {
++		pr_warning("jitdump: invalid unwinding sizes in unwinding_info record\n");
 +		return -1;
 +	}
 +
- 	count = jr->load.code_index;
- 	idr_size = jd->machine->id_hdr_size;
- 
+ 	unwinding_data = malloc(unwinding_data_size);
+ 	if (!unwinding_data)
+ 		return -1;
 -- 
 2.53.0
 
