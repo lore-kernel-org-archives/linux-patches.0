@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031037;
-	b=YiVKZhIH0zLbbMy6STmIT3AQf9Ez4AuScZeAGI+5dAJ92pyA6NFPLDI4MCSfbCH51/0v
-	 NNxvh4AzLolqnKoTdOa5tm77M22txPhenSPH7/nZJNapLMia28xVWxugpzqfXihmN1SU+
-	 wGN8Z6ui7bA6ztAYfzCncyP8J/SQUlnR7QunxTkA58j+HHm52jE0wcgmZgXltHmibsMEz
-	 7hzetNWAHm0DHN97Jk9PH3NG9MUakrnLtPeAvJiLVthWJh6he/y0QF3mZXwdgSMvpIRTR
-	 Te/LuM6QRa3Y6+idJ5tdseYiSyvMe3RWodw25WdsL95KpZMpL6a46AlDtKxm5IuWxmQ==
+	t=1795031039;
+	b=SaQdZ43ilBep4GXX+MGDrOQseZoSPtFV4nprKZ0cmk40smPCn0cuSNjBMsGKiwoYwNoF
+	 SLZ/jfmXD3aLoZeKODTRccSdfnE8vajV4DlI9snrYSuhYDnQQ7wA/wFmiVptzF/fircCw
+	 f174fn1d499NwUXNBnI1vfvV/d1zDx5zOBWOBRPR4zrkCdZZ+ocipSEqlTmN7t8kM200b
+	 Mqq2n42z8GCM8r3N7zi14U4utNAVqOBfk9I7oCCoyit1FxzJg2fXRf3SAZ5rDq6uYIPS5
+	 37qe8IhoQ5eDyThcmwyQ/gm42HOMjwBA0uOKB2kdgZw41nTzxKqZzV7uMczQXZ1w87g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031037;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031039;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=k3K63mzXaLJ97O9/aVBV7SKYOm8tfL6bzsh3SN1W7eM=;
-	b=poPKHpZVrMULJo1dAdMRvWyiN3uxISbyX5a9anHzF0VI3j1/CjAF3CKbHTdtiX+GHDd1
-	 blPa8vBngH6KcuC4hkXTJc8Qt5DYJ72R+71qqNqwqb2E6OUIPP7A2sAqQwtnn8nY20Sd6
-	 NdZu0p7bODZCu+f+zvrkf2Kudm/xai48OB9IzqHxpKRLm+1XB1DFsyyTkkdUEpMXBaIEh
-	 +rcm60jomod8wfdusafq59zulpPqzOq9gE8edizOQYp6xTsfBeQ17u+zG7A8QS77IoCQD
-	 fVqOO4gaRm3rm45GAnmALOsH2aFfLm7kt2RP2hBNpHMKv6c/ODNm7M1PD/BSC9OOTYg==
+	bh=0fq6LYSX2zuPoRtPVsCZq003qSO3WG/AsycW7TRFubc=;
+	b=JRFkilvuaTSiduBhg52IXU09CaCx3ZZAxPyqBEQMt/aMpiJ2wHmQVAtJN22X6ycSeIlx
+	 iBPNOCVqAp5s1g6jxb1M4IwltLaGzQGR9pemDGBt9ov4d/CSJRXk8fccy2C7038/vRAsz
+	 fENNY7t76RaqQf8YzKKWlC1ZjYZgM/4wZ7bVV388x1/HZ3Vk6afq+IYFhefEn936afhE9
+	 rW/NNYqj58FdHMF/m8gAw5BxcLgrssnBWFLpS9rf09rRoCxXEXkkW33hScyOoazbPp/g+
+	 JHuha763OgvI5TiBXQHov4ez9mtRExXkVFVc9zjPDspzQB2zNuxUmSN7uZ4eayM5o0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pYXcVupv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O4fmCd13;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5E7606A320;
-	Wed, 18 Nov 2026 19:43:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C84606A320;
+	Wed, 18 Nov 2026 19:43:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pYXcVupv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 792091F000C4;
-	Wed, 18 Nov 2026 19:43:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O4fmCd13
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BFFB1F000C4;
+	Wed, 18 Nov 2026 19:43:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031037;
-	bh=k3K63mzXaLJ97O9/aVBV7SKYOm8tfL6bzsh3SN1W7eM=;
+	s=korg; t=1795031039;
+	bh=0fq6LYSX2zuPoRtPVsCZq003qSO3WG/AsycW7TRFubc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pYXcVupvYH6ZEDXczVJMu8qf7upPK/NqyJ7fnN5ZqESKjeoj6bkFg9GuP0dpqDtrf
-	 HMILcMrnmA9lzAdtskUQ72a2AiRReFmET4yAL/UnskvYH1WLpFrkBZ/TJaKxUHZR14
-	 YY1pDOcU9c29VFzdZra0RmJyyGsVfCl+M6R3c9ZI=
+	b=O4fmCd13C6mvu4TrzKwnOKw4mZFv2YXq5TsSyqJ/M4ero4WFqoQZwvulqxKUdmgFJ
+	 NqoU0+v/7JGa5zYXDdQ//gPiL7Y6BDjyizY5G8uXeA+Ue/GGqqDTHGgk7SrwgHOb9L
+	 3I6DmiWIKa1MSQfmaKB34pLazl0HSdPlguJC5m3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
+	sashiko-bot@kernel.org,
+	Frank Li <Frank.Li@nxp.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0915/1756] efi/libstub: Use C99-style for loop to traverse handle buffer
-Date: Wed, 18 Nov 2026 15:50:42 +0100
-Message-ID: <20261118150046.426559098@linuxfoundation.org>
+Subject: [PATCH 6.12 0880/1756] dmaengine: ste_dma40: Fix probe runtime PM disable
+Date: Wed, 18 Nov 2026 15:50:07 +0100
+Message-ID: <20261118150044.542695205@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -67,115 +70,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit c14bca3f7aa94fd8d3f5e621ce5b56535ef2396b ]
+[ Upstream commit c6809b381e34f8966cc3d9e5d7d658775a408f83 ]
 
-Tweak the for_each_efi_handle() macro in order to avoid the need on the
-part of the caller to provide a loop counter variable.
+Some d40_probe() error paths jump to destroy_cache before runtime PM has
+been enabled for the DMA controller device. The label unconditionally calls
+pm_runtime_disable(), which increments disable_depth even though this probe
+attempt never enabled runtime PM.
 
-Also move efi_get_handle_num() to the callers, so that each occurrence
-can be replaced with the actual number returned by the simplified
-LocateHandleBuffer API.
+Use devm_pm_runtime_set_active_enabled() to mark the controller active,
+enable runtime PM and register balanced cleanup for probe failure. This
+avoids both the disable-depth imbalance and ad-hoc probe state tracking.
 
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Stable-dep-of: 8ea857a2bb54 ("efi/libstub: Free cmdline_ptr in efi_pe_entry")
+The interrupt handler uses pm_runtime_get_if_active() and cannot
+acknowledge a pending interrupt while runtime PM is disabled. Request the
+IRQ only after enabling runtime PM so the handler cannot enter an
+unacknowledged interrupt loop during probe.
+
+Fixes: 0618c077a8c2 ("dmaengine: ste_dma40: Fix PM disable depth imbalance in d40_probe")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/dmaengine/20260618051539.15E201F000E9@smtp.kernel.org/
+Assisted-by: LLM
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-5-89f595e8851d@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/libstub/efistub.h  | 9 ++++-----
- drivers/firmware/efi/libstub/gop.c      | 3 +--
- drivers/firmware/efi/libstub/pci.c      | 5 ++---
- drivers/firmware/efi/libstub/x86-stub.c | 3 +--
- 4 files changed, 8 insertions(+), 12 deletions(-)
+ drivers/dma/ste_dma40.c | 23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/firmware/efi/libstub/efistub.h b/drivers/firmware/efi/libstub/efistub.h
-index a2838e36f3f9f..21986fd151426 100644
---- a/drivers/firmware/efi/libstub/efistub.h
-+++ b/drivers/firmware/efi/libstub/efistub.h
-@@ -122,11 +122,10 @@ efi_status_t __efiapi efi_pe_entry(efi_handle_t handle,
- #define efi_get_handle_num(size)					\
- 	((size) / (efi_is_native() ? sizeof(efi_handle_t) : sizeof(u32)))
- 
--#define for_each_efi_handle(handle, array, size, i)			\
--	for (i = 0;							\
--	     i < efi_get_handle_num(size) &&				\
--		((handle = efi_get_handle_at((array), i)) || true);	\
--	     i++)
-+#define for_each_efi_handle(handle, array, num)				\
-+	for (int __i = 0; __i < (num) &&				\
-+		((handle = efi_get_handle_at((array), __i)) || true);	\
-+	     __i++)
- 
- static inline
- void efi_set_u64_split(u64 data, u32 *lo, u32 *hi)
-diff --git a/drivers/firmware/efi/libstub/gop.c b/drivers/firmware/efi/libstub/gop.c
-index ea5da307d542f..8eef63c48288d 100644
---- a/drivers/firmware/efi/libstub/gop.c
-+++ b/drivers/firmware/efi/libstub/gop.c
-@@ -466,11 +466,10 @@ find_gop(efi_guid_t *proto, unsigned long size, void **handles)
- {
- 	efi_graphics_output_protocol_t *first_gop;
- 	efi_handle_t h;
--	int i;
- 
- 	first_gop = NULL;
- 
--	for_each_efi_handle(h, handles, size, i) {
-+	for_each_efi_handle(h, handles, efi_get_handle_num(size)) {
- 		efi_status_t status;
- 
- 		efi_graphics_output_protocol_t *gop;
-diff --git a/drivers/firmware/efi/libstub/pci.c b/drivers/firmware/efi/libstub/pci.c
-index 99fb25d2bcf54..b0ba372c26c55 100644
---- a/drivers/firmware/efi/libstub/pci.c
-+++ b/drivers/firmware/efi/libstub/pci.c
-@@ -21,7 +21,6 @@ void efi_pci_disable_bridge_busmaster(void)
- 	efi_handle_t handle;
- 	efi_status_t status;
- 	u16 class, command;
--	int i;
- 
- 	status = efi_bs_call(locate_handle, EFI_LOCATE_BY_PROTOCOL, &pci_proto,
- 			     NULL, &pci_handle_size, NULL);
-@@ -46,7 +45,7 @@ void efi_pci_disable_bridge_busmaster(void)
- 		goto free_handle;
+diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+index 2f636c7333d24..08d1c2197ded5 100644
+--- a/drivers/dma/ste_dma40.c
++++ b/drivers/dma/ste_dma40.c
+@@ -3602,12 +3602,6 @@ static int __init d40_probe(struct platform_device *pdev)
+ 		goto destroy_cache;
  	}
  
--	for_each_efi_handle(handle, pci_handle, pci_handle_size, i) {
-+	for_each_efi_handle(handle, pci_handle, efi_get_handle_num(pci_handle_size)) {
- 		efi_pci_io_protocol_t *pci;
- 		unsigned long segment_nr, bus_nr, device_nr, func_nr;
+-	ret = request_irq(base->irq, d40_handle_interrupt, 0, D40_NAME, base);
+-	if (ret) {
+-		d40_err(dev, "No IRQ defined\n");
+-		goto destroy_cache;
+-	}
+-
+ 	if (base->plat_data->use_esram_lcla) {
  
-@@ -82,7 +81,7 @@ void efi_pci_disable_bridge_busmaster(void)
- 		efi_bs_call(disconnect_controller, handle, NULL, NULL);
+ 		base->lcpa_regulator = regulator_get(base->dev, "lcla_esram");
+@@ -3632,10 +3626,20 @@ static int __init d40_probe(struct platform_device *pdev)
+ 
+ 	pm_runtime_irq_safe(base->dev);
+ 	pm_runtime_set_autosuspend_delay(base->dev, DMA40_AUTOSUSPEND_DELAY);
+-	pm_runtime_use_autosuspend(base->dev);
+ 	pm_runtime_mark_last_busy(base->dev);
+-	pm_runtime_set_active(base->dev);
+-	pm_runtime_enable(base->dev);
++
++	ret = devm_pm_runtime_set_active_enabled(base->dev);
++	if (ret) {
++		d40_err(dev, "Failed to enable runtime PM: %d\n", ret);
++		goto destroy_cache;
++	}
++	pm_runtime_use_autosuspend(base->dev);
++
++	ret = request_irq(base->irq, d40_handle_interrupt, 0, D40_NAME, base);
++	if (ret) {
++		d40_err(dev, "No IRQ defined\n");
++		goto destroy_cache;
++	}
+ 
+ 	ret = d40_dmaengine_init(base, num_reserved_chans);
+ 	if (ret)
+@@ -3671,7 +3675,6 @@ static int __init d40_probe(struct platform_device *pdev)
+ 		regulator_disable(base->lcpa_regulator);
+ 		regulator_put(base->lcpa_regulator);
  	}
+-	pm_runtime_disable(base->dev);
  
--	for_each_efi_handle(handle, pci_handle, pci_handle_size, i) {
-+	for_each_efi_handle(handle, pci_handle, efi_get_handle_num(pci_handle_size)) {
- 		efi_pci_io_protocol_t *pci;
- 
- 		status = efi_bs_call(handle_protocol, handle, &pci_proto,
-diff --git a/drivers/firmware/efi/libstub/x86-stub.c b/drivers/firmware/efi/libstub/x86-stub.c
-index f8f9e043c283c..f77d6fd7e1154 100644
---- a/drivers/firmware/efi/libstub/x86-stub.c
-+++ b/drivers/firmware/efi/libstub/x86-stub.c
-@@ -124,7 +124,6 @@ static void setup_efi_pci(struct boot_params *params)
- 	unsigned long size = 0;
- 	struct setup_data *data;
- 	efi_handle_t h;
--	int i;
- 
- 	status = efi_bs_call(locate_handle, EFI_LOCATE_BY_PROTOCOL,
- 			     &pci_proto, NULL, &size, pci_handle);
-@@ -150,7 +149,7 @@ static void setup_efi_pci(struct boot_params *params)
- 	while (data && data->next)
- 		data = (struct setup_data *)(unsigned long)data->next;
- 
--	for_each_efi_handle(h, pci_handle, size, i) {
-+	for_each_efi_handle(h, pci_handle, efi_get_handle_num(size)) {
- 		efi_pci_io_protocol_t *pci = NULL;
- 		struct pci_setup_rom *rom;
- 
+  report_failure:
+ 	d40_err(dev, "probe failed\n");
 -- 
 2.53.0
 
