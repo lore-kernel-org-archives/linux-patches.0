@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022267;
-	b=4/ew7XpLDsu9LqWSjIdIDqeIHu6z1F7pVqfHdjy2qcTBZrI3De0CUVeo1ZkUlWZxVBsG
-	 Tj1AWwnaH9NIbrW+xLFI2nUJIVu8zFZPhuokzzzBrl8uxsy7s9cpazVXm36Aa9Y9C+T+o
-	 bYCtOutYfn5edbTrHKeQ4bQAudH8+kMSX1NNEEigdO/hAHC9h+C+mqx4lQjsALcG6/hH1
-	 1Ks0SlObnpSYQzapmEhADISzwfF4TPDeq5uw/jSg3jbKe9rBU6ViQz697aBbMcjy1RI8E
-	 oeAeGs6qH7688uCBZpkS2MO22kkeFKX6SxJiI1m54SdEHT7uCwN0PHulBfYBE/AGPxg==
+	t=1795022269;
+	b=oeViXdXydskSOX6xAwI0+qcIc5PjnjqxQQ5BG7AAUml9eS/eu8ixbAYm+KOWJNU97ctz
+	 rAY1CffEVrpBWkc9Wls4jQfXcpAKevbc8NdB6nmlFPRGFoOnRQ3/PiGJZlG4D8gEl1x95
+	 fKH+SdCXd29+byflGJEMGNHEQiVjwTxNwBTibrJR1KS5REVvQ48mzPnAi4b/8L3YkzHjr
+	 Q1At59i7e4c6rory8zrslvbWpbGpuHU5XOmMeRE/6TnxjLvmH0WCCUuPhckh2HQI/G2/q
+	 Sr+TSTOMLaanY+YlDY+rQguBk+eNkhyyRqam7+K7UHa0C2mIEz//2xuCtbutond7YPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022267;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022269;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0ZKlMnireTVpIc1An2uu0GXfAKWBG4iUYc3QieAYQWs=;
-	b=DJcDnyHVKkNukKMAubWHQ85N2AghBiwpse8ZFg1TiEx4OLiiEdRqZIxL2QYU1e+4p/T9
-	 WcBI/x4gwbZNQmufpvFeMtmTugP66G1snX3I1vul+K4vX+/jJ+Hrra2AXngueuh9Gq2vx
-	 iYyxPxINgEy49MYn+TWhgnCTIXMdOsWNbMclwoHmWR6UiI5NXDKVynVgzVbbPlx49xkul
-	 xGtVd7479B66UsVdJPuH+Mzjz+Equ9u0D3lSrbLXW2aYKA4iFZ/M7/gALJuUytKnux5VZ
-	 KGdAAbHSd8IwD3Xuy5H6nOuNCCU2hlcVnDqfPgR0av/6/8v4w6aeVf0451ir7Bw4Iew==
+	bh=3UticLRgrKKbSEdni6MkFvrlPn3WT0K4dnZ64fvSsTU=;
+	b=lnpm+nP17LQ1ev4rZLv041zWFTAqgTiTS59J6VV5pDvwPBFtBQrjQp4dv2oSKt2IhR5g
+	 NgRcZnW1TNfWVAAhONmj1VaivvAB/7qEULk3ZDmlvNQCJCDS4OETUjuHjUcZcjYwh7pg0
+	 fW7bIOwhLZCi/mqKo95tOeaU6cWlH4B2UtOpqULvEYECby0/bfkVEZNXBpkNVoAgua5am
+	 ywui/epdXzb9ux3LA0AVErF2nzCAXdqnBRqThMNgdNpwP4mXZS39zBBCkP4SZlPuN69tW
+	 hGn8Qond2FlE0IZJmCyLx/7g8oqNgaRvLHfZoYIBy84CxkOuH3uoew4BLrO9pMphRaA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LtTgliKQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nUvzVYoX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1561606A320;
-	Wed, 18 Nov 2026 17:17:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2FE3606A31C;
+	Wed, 18 Nov 2026 17:17:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LtTgliKQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 434661F000C4;
-	Wed, 18 Nov 2026 17:17:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nUvzVYoX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C8DB1F000C5;
+	Wed, 18 Nov 2026 17:17:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022266;
-	bh=0ZKlMnireTVpIc1An2uu0GXfAKWBG4iUYc3QieAYQWs=;
+	s=korg; t=1795022269;
+	bh=3UticLRgrKKbSEdni6MkFvrlPn3WT0K4dnZ64fvSsTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LtTgliKQ5XyCzquJsSRSwbx5NnhpWmGDK6iH10Mx5aQYGhP6a0KjfocGufRmBYFBs
-	 XJ6fDhBql8b3wa3k50R9qKJ5CyNbbS3Xp7t1+e4kAHsUOMf5PSVKBOIwTUUtZoWsMV
-	 xI29dQulIvRkVbKZ8KTADzQLklyBXTVb6VCfVXMA=
+	b=nUvzVYoXgjDim5u6wOnEkj9cVfrrjiUXk1JYxoBi89WBdKa8xxekb8x4dj2/dmKMa
+	 jdAfi8MUEOfa4xW/jU1XW+MP9LMSjSBb2Wv1eczfXWvVIw22w+WJabeVkO6b2/wqvs
+	 LsFYmGPvZQVy1EPwSCiTNQpTSdkNqOxtRzf6eLE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michail Andreas Michalopoulos <mike.michalo@gmail.com>,
+	Georgia Garcia <georgia.garcia@canonical.com>,
 	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2601/2651] apparmor: check address length before reading AF_UNSPEC bind address
-Date: Wed, 18 Nov 2026 16:04:01 +0100
-Message-ID: <20261118150417.900934732@linuxfoundation.org>
+Subject: [PATCH 7.3 2602/2651] apparmor: remove unconfined_profile() check in inet socket mediation
+Date: Wed, 18 Nov 2026 16:04:02 +0100
+Message-ID: <20261118150417.939138798@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,49 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michail Andreas Michalopoulos <mike.michalo@gmail.com>
+From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit 4890a8b1a9df880dd188adb8b8e8fab107ad69d9 ]
+[ Upstream commit 1f5428b9f9bfb9dab6828015a5254dcd7c582a01 ]
 
-bind_map_addr() handles AF_UNSPEC on an IPv4 socket by reading
-addr4->sin_addr.s_addr to check for INADDR_ANY. At that point the only
-length check done is addrlen >= offsetofend(struct sockaddr, sa_family),
-i.e. 2 bytes, while sin_addr sits at offset 4. move_addr_to_kernel()
-copies only addrlen bytes into the on-stack sockaddr_storage, so a
-bind() with a short AF_UNSPEC address makes AppArmor branch on bytes the
-caller never supplied.
+When a stacked label is used the early bailout !unconfined(label)
+fails, and the individual profile components of the label are checked.
+This can lead to aa_profile_af_perm() being called which results in
 
-Depending on those bytes, a confined task gets -EAFNOSUPPORT instead of
-the -EINVAL that inet_bind_sk() returns for the same request. Kernels
-built with CONFIG_INIT_STACK_ALL_ZERO read zeroes and happen to behave
-correctly.
+  WARNING: security/apparmor/net.c:263 at aa_profile_af_perm+0x228/0x3b0
 
-Check the length first, as inet_bind_sk() does, and as the AF_INET6
-case above already does for inet6_bind_sk().
+on any inet socket using basic socket mediation.
+
+Remove the AA_BUG(profile_unconfined(profile)) check, it is not needed
+as the code already handles the unconfined_profile() case. In addition
+also a comment to indicate that this case is covered.
 
 Fixes: 89ac6aa752ec ("apparmor: push inet mediation into profile callbacks, and improve auditing")
-Assisted-by: LLM
-Signed-off-by: Michail Andreas Michalopoulos <mike.michalo@gmail.com>
+Reported-by: Georgia Garcia <georgia.garcia@canonical.com>
 Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/af_inet.c | 3 +++
- 1 file changed, 3 insertions(+)
+ security/apparmor/net.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/security/apparmor/af_inet.c b/security/apparmor/af_inet.c
-index 42994e84cccaa..2a933572fa95e 100644
---- a/security/apparmor/af_inet.c
-+++ b/security/apparmor/af_inet.c
-@@ -196,6 +196,9 @@ static int bind_map_addr(const struct sock *sk, struct sockaddr *addr,
- 		 * AF_UNSPEC if the address is INADDR_ANY
- 		 */
- 		addr4 = (struct sockaddr_in *)addr;
-+		/* Length check from inet_bind_sk() */
-+		if (addrlen < sizeof(struct sockaddr_in))
-+			return -EINVAL;
- 		if (addr4->sin_addr.s_addr != htonl(INADDR_ANY))
- 			return -EAFNOSUPPORT;
- 		family = AF_INET;
+diff --git a/security/apparmor/net.c b/security/apparmor/net.c
+index a333e6aff9262..641d181544ac3 100644
+--- a/security/apparmor/net.c
++++ b/security/apparmor/net.c
+@@ -260,7 +260,6 @@ int aa_profile_af_perm(struct aa_profile *profile,
+ 
+ 	AA_BUG(family >= AF_MAX);
+ 	AA_BUG(type < 0 || type >= SOCK_MAX);
+-	AA_BUG(profile_unconfined(profile));
+ 
+ 	state = RULE_MEDIATES_NET(rules);
+ 	if (state) {
+@@ -268,7 +267,7 @@ int aa_profile_af_perm(struct aa_profile *profile,
+ 					 type, protocol, &p, &ad->info);
+ 		return aa_do_perms(profile, rules->policy, state, request, p,
+ 				   ad);
+-	} /* else */
++	} /* else - not mediated this covers the profile_unconfined() case */
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
