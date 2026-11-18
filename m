@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040383;
-	b=0nHnyp8ZQ1Tbd06lE09PbCwQpbVgdxzRkh7t7j/Hipgpa7XkyguICHKbD/8+izipdqTU
-	 q4+Nedn1a0qY3pVP9v2N1dNueLb8T6ymr3drGh+exnVtSbmopgXxx3FB8ihG2THG3QurI
-	 oI6D6veU0GCNVfe52UThkDFWwQjxlX+qoY3OcghWXoHWTj5qn/Pov4YJLPUiOKKfejv1g
-	 G43WNSxYEgfi0hnugbg2hY+vhWv6m/m+4q41fDmBNDSAr2yCCkpQKb490yAfhr7TSq9i8
-	 vV5BCy/vqLcdkgwyZwuAj8x05GNKDLLtjrgcR+tamF8Ptf4Gnuw5p7wEdQDswonSgbQ==
+	t=1795040386;
+	b=GFnyZeQOq+FHTTeAOCj4ZvqUojEVxfFK8l8i9Ra0YrX3KmZR6Oc8EGxuXkYAF40jVzan
+	 sU18GgGFqFKxuLKgp+sNCtQ/Nmj5KdctkoqHCfEjTeNAMIpJr9Yrvj9tXTD3pZV+Mmxmt
+	 42uCfqgbph9lwJ3nG5OfcBmT45//Ql0ZcUC1iz/qrNileISD1Z0QikvW7RZj8FEDS3aOE
+	 EKR+NNbniDILrIZPaMaRIiIDMQdDvuDNYYehnwUQ3cmNfQz96mYrvaqrINKp6aLGZulT1
+	 jBokbDFsWoCZh8WRz5jgLMbvxoKridlWzp0APH/KZTWzfOTketffElor6XFRq3B4+BA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040383;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040386;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BfjC3jtBvaBdrjAwa1w023AqFXTzh7ZD3DtD66iwsC8=;
-	b=WnxAzaKe3xA5tJLexP/nvJinyGmG07vcGN3QVqquSN0wpabvmiT8mNOo8xW4e6gOG28Z
-	 dSl9zFSWND7/mhU68rR8NjROk9tsn2HmH9l8Ktn5uQi7z0Pk8fL68YBFBoyEvs7771EnT
-	 4s9f14RouJYS30PlT+ImnfeIfpVWsYvvT4tlHJA8dhksQxg/QVAunRPOVKg3psApmOEkP
-	 1NCLNHsAN5MeypxQfqNVDIaCubU4NTz+ZRSw0Tbrk+4zMGm+cRtZ5lZKVj1TnemLcxTaB
-	 AA4PD7a1iEuqTSjJwpMK9/Krcx7NZTy3RuxtTynjv+t1lk06bOGERJdMNeaWWn1zv+g==
+	bh=qKPfL+GOywVbFSHhDk46PnE/FoZrM3RTh2fV2vT5MHM=;
+	b=j1k1tkXl0nwSBaaSFYgnAfPLu0kI9ovKEdGnXXv2Tp14jMNg0UmagVMdhWAtgrSyLAar
+	 G1ypOLQtEdQdfE4O+/sEgF6wjF06jB8781O9xolc1pztdJ5drL6uvlz0odOkJz2AIogvv
+	 wDnDAUd33rWEmp2g83Q3ZhhzcPPCfbE5t2f2OHbohznCrSk+IiMzSSFoLhk18KbVK7l9Q
+	 WjwQYU3rUsOOU+rT9c2eF2evL0/R+QZ0Y4OjBf09OV/W4FrGehn2YSzn5ea9xRTIBVw4U
+	 nyQwTMumg6BvMJvuSwoQcJLePUUeLOZiCO+7qrqeEHN3t125Dg7qQu26rjjWjZYaoTw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AoDXntuJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nF2KBOa4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A17606A32C;
-	Wed, 18 Nov 2026 22:19:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A4D606A320;
+	Wed, 18 Nov 2026 22:19:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AoDXntuJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77ECF1F000C7;
-	Wed, 18 Nov 2026 22:19:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nF2KBOa4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ACCA1F000C5;
+	Wed, 18 Nov 2026 22:19:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040383;
-	bh=BfjC3jtBvaBdrjAwa1w023AqFXTzh7ZD3DtD66iwsC8=;
+	s=korg; t=1795040385;
+	bh=qKPfL+GOywVbFSHhDk46PnE/FoZrM3RTh2fV2vT5MHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AoDXntuJyWbctMWoKxQbgXuqQRDtyWPvtcgj1ZW6nohgtZrpkN8Nc6Qn3jh5Ir4rG
-	 R8Ddpi2GYBANI0Ht2+ShTtXdrHTJ+JTcmxWi8+fbyIAxrnxpFvLBdsxlAuxkv6bgrh
-	 lh+/lzlclATL0bZhKqUaPFaO3kKVu29Hzupp3YRo=
+	b=nF2KBOa4TuWsjLsOkZ1hSpP7OUb+ATfyUtHm1YIlPHrCilobewYOrQBo7+RBDo0zj
+	 UvLTPMBHVL05u1+2cLMLCpz2/AVCpAO8NY0A0KI20sd3Vw/2aiwUq9oasiGHyGwRDW
+	 3qLsJN0w57zm/Mdgy16LrOc3VLxkkoV069P4dgvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Karl Mehltretter <kmehltretter@gmail.com>,
+	Udit Kumar <u-kumar1@ti.com>,
 	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2436/3318] soc: ti: k3-ringacc: Correct ring API kernel-doc
-Date: Wed, 18 Nov 2026 15:50:58 +0100
-Message-ID: <20261118150434.534450717@linuxfoundation.org>
+Subject: [PATCH 6.6 2437/3318] soc: ti: k3-ringacc: Fix DMA ring initialization kernel-doc
+Date: Wed, 18 Nov 2026 15:50:59 +0100
+Message-ID: <20261118150434.562935245@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,109 +71,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 45ea6911ad16859d4ce4f25780b0ebcf5660e43a ]
+[ Upstream commit 6c4e6e8f5cf95f7e0d4f04928a9ae70e20c73d4b ]
 
-The ring accelerator header labels k3_ring_cfg as an enum, uses
-propname instead of property, and gives the DMA reset helper the
-ordinary reset helper's name. The DMA reset comment also omits occ,
-including the convention that zero requests a hardware occupancy read.
+The heading for k3_ringacc_init_data repeats struct, so kernel-doc
+cannot match it to the declaration. Its three fields are also missing
+descriptions.
 
-The proxy flag is parsed as a separate parameter, and the pop helpers
-describe pushing elements. Proxy access is supported in Message mode;
-the listed Credentials and Queue modes are not implemented. The phandle
-lookup returns encoded error pointers rather than integer error values.
+Use the structure name and describe the firmware handle, device ID,
+and total number of available rings used during DMA ring initialization.
 
-Match the declarations and document these argument and operation roles.
-
-Fixes: 3277e8aa2504 ("soc: ti: k3: add navss ringacc driver")
+Fixes: d782298c6f6b ("soc: ti: k3-ringacc: add AM64 DMA rings support.")
 Assisted-by: LLM
 Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260923061658.20140-1-kmehltretter@gmail.com
+Reviewed-by: Udit Kumar <u-kumar1@ti.com>
+Link: https://patch.msgid.link/20260923061658.20140-2-kmehltretter@gmail.com
 Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/soc/ti/k3-ringacc.h | 26 ++++++++++++--------------
- 1 file changed, 12 insertions(+), 14 deletions(-)
+ include/linux/soc/ti/k3-ringacc.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/include/linux/soc/ti/k3-ringacc.h b/include/linux/soc/ti/k3-ringacc.h
-index 39b022b925986..2de6031b94241 100644
+index 2de6031b94241..7b7fc237c08f5 100644
 --- a/include/linux/soc/ti/k3-ringacc.h
 +++ b/include/linux/soc/ti/k3-ringacc.h
-@@ -57,13 +57,13 @@ struct k3_ringacc;
- struct k3_ring;
+@@ -254,7 +254,10 @@ u32 k3_ringacc_get_tisci_dev_id(struct k3_ring *ring);
+ struct ti_sci_handle;
  
  /**
-- * enum k3_ring_cfg - RA ring configuration structure
-+ * struct k3_ring_cfg - RA ring configuration structure
-  *
-  * @size: Ring size, number of elements
-  * @elm_size: Ring element size
-  * @mode: Ring operational mode
-  * @flags: Ring configuration flags. Possible values:
-- *	 @K3_RINGACC_RING_SHARED: when set allows to request the same ring
-+ *	 %K3_RINGACC_RING_SHARED: when set allows to request the same ring
-  *	 few times. It's usable when the same ring is used as Free Host PD ring
-  *	 for different flows, for example.
-  *	 Note: Locking should be done by consumer if required
-@@ -88,11 +88,10 @@ struct k3_ring_cfg {
- /**
-  * of_k3_ringacc_get_by_phandle - find a RA by phandle property
-  * @np: device node
-- * @propname: property name containing phandle on RA node
-+ * @property: property name containing phandle on RA node
-  *
-- * Returns pointer on the RA - struct k3_ringacc
-- * or -ENODEV if not found,
-- * or -EPROBE_DEFER if not yet registered
-+ * Return: Pointer to the RA, or ERR_PTR(-ENODEV) if the phandle cannot
-+ * be resolved, or ERR_PTR(-EPROBE_DEFER) if the RA is not yet registered.
+- * struct struct k3_ringacc_init_data - Initialization data for DMA rings
++ * struct k3_ringacc_init_data - Initialization data for DMA rings
++ * @tisci: TI SCI firmware handle
++ * @tisci_dev_id: TI SCI device ID of the DMA controller
++ * @num_rings: Total number of available rings
   */
- struct k3_ringacc *of_k3_ringacc_get_by_phandle(struct device_node *np,
- 						const char *property);
-@@ -103,10 +102,8 @@ struct k3_ringacc *of_k3_ringacc_get_by_phandle(struct device_node *np,
-  * k3_ringacc_request_ring - request ring from ringacc
-  * @ringacc: pointer on ringacc
-  * @id: ring id or K3_RINGACC_RING_ID_ANY for any general purpose ring
-- * @flags:
-- *	@K3_RINGACC_RING_USE_PROXY: if set - proxy will be allocated and
-- *		used to access ring memory. Sopported only for rings in
-- *		Message/Credentials/Queue mode.
-+ * @flags: Set %K3_RINGACC_RING_USE_PROXY to allocate a proxy for
-+ *	accessing ring memory in Message mode.
-  *
-  * Returns pointer on the Ring - struct k3_ring
-  * or NULL in case of failure.
-@@ -126,8 +123,9 @@ int k3_ringacc_request_rings_pair(struct k3_ringacc *ringacc,
-  */
- void k3_ringacc_ring_reset(struct k3_ring *ring);
- /**
-- * k3_ringacc_ring_reset - ring reset for DMA rings
-+ * k3_ringacc_ring_reset_dma - ring reset for DMA rings
-  * @ring: pointer on Ring
-+ * @occ: occupancy used by the DMA reset quirk, or zero to read it from hardware
-  *
-  * Resets ring internal state ((hw)occ, (hw)idx). Should be used for rings
-  * which are read by K3 UDMA, like TX or Free Host PD rings.
-@@ -217,8 +215,8 @@ int k3_ringacc_ring_push(struct k3_ring *ring, void *elem);
-  * @ring: pointer on ring
-  * @elem: pointer on ring element buffer
-  *
-- * Push one ring element from the ring head. Size of the ring element is
-- * determined by ring configuration &struct k3_ring_cfg elm_size..
-+ * Pop one ring element from the ring head. Size of the ring element is
-+ * determined by ring configuration &struct k3_ring_cfg elm_size.
-  *
-  * Returns 0 on success, errno otherwise.
-  */
-@@ -242,7 +240,7 @@ int k3_ringacc_ring_push_head(struct k3_ring *ring, void *elem);
-  * @ring: pointer on ring
-  * @elem: pointer on ring element buffer
-  *
-- * Push one ring element from the ring tail. Size of the ring element is
-+ * Pop one ring element from the ring tail. Size of the ring element is
-  * determined by ring configuration &struct k3_ring_cfg elm_size.
-  *
-  * Returns 0 on success, errno otherwise.
+ struct k3_ringacc_init_data {
+ 	const struct ti_sci_handle *tisci;
 -- 
 2.53.0
 
