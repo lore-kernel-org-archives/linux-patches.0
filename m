@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026191;
-	b=RuSfL4kTY/uGOBmijOeeU3ciZFvHGxiIc3PECpfKWOwxNWiBVXs5EudgltWyFja7btVQ
-	 CrN0z6x0QzRDRb1TpPHfn+dtJR3rVd02winSaZXD0SCv5EdxMavAMVfogBoFzv8N1d7wx
-	 p6zgGZuTTJzT3DpyN96hBeILsAG0mdMLvKMOnOytgNHmpa8Hz+eggQcYKg6q7kNPj/nSC
-	 WeFmOKHzbei/K7wUfeHZj503i1wfPaibOYmT151YP/ZSj3RBWKGhaU1RAaZZHbABCJPNj
-	 mFE+KxqExj5ya66BcTLmfPPVSCVhuImC+ai5kmV2S7oIUM89dKtKgsmStvPS0BgitvA==
+	t=1795026194;
+	b=rRCynFFV9XCNP0l8h2CbiMkH9m+Gu+izSlMZE4xcf3vRAUpQCLbKM4LIFyw9K9GC8W9i
+	 r5NV3R6PVGbgTipAO0Zutbxp73DMxCzMsicDcOkk/bkVbbqwToN/Monpe8l6HVny52R6f
+	 5sGMwhh3g5w0px3uhYkpbZhXlQgjTVYoatrOpXRQUEkpf8Yh3rzoXqIMKc3ia3ciJIIwD
+	 AfIkekvamCV1B+c7yeXF5Bsa928wzXMEySrxQVJbUA3My+Ai/SNdQAE4wEnUU/28eVoef
+	 ihRQntGGzkJfR2IP90s1WVNjX/JZ0m3bp3Jo6qmrGZFm6w+BiIoHnoFV/HCsAQ3PNng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026191;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026194;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gHlLbR6FXqPMiNiy/zDAoLOpRb8I8VQHVrIMDgVvMys=;
-	b=DAGVq3k4zgfnmaVlwx7P4Gf8J2ut1aCQSD3Nv3wtS9/ZQSzu18Jsfy7ZSLH8OWEF8PB3
-	 YcP6WC8rU6wRiWeGT6eOabPlIStfQlmgLvJUpNN9pVY+PVDEftNAJVPpW2+fsVCtScyo5
-	 QN5dt7ODhCKrX7CMStF7XALvp9Tqet5b7w/h9awuQ5YRoNFq1zn2XQ7oXuFcG00LIqzKd
-	 uVS4pV6RYJkkuQvwA5CVWTloxq42fel8kGwv+WbxNdu2WRdn5X16leBIiB7x7cQDXTpmd
-	 7hJmMEEhzv+43kp4Ksh0SPQiAG8YLF3n8Y+yVFEb8oPPAungRmy+2YDbQ8YyMVdg6aw==
+	bh=GfbI7K9sTv/JOSIZ9259egDWbjxTjuAOJ8GJLfbiQ+U=;
+	b=vhZHOK1/rtA6/ix8gVPAguySs1PVxDfKOS4GG6bSwkaVSEKdSwY79rvaSy+18O1TnIA3
+	 SXRzqKryjRMm6xBRCm/V4V7uESLhNj/dN6JFJNSNtCKGJtScYA/fD+ik7cpLyctVMJZfb
+	 7g/UPBTvrs1p6mojj2JV/527PLii4M/ZgpGJrFVQTpYZUA1Q71QQzu6aPIOsf3hXLVjzO
+	 wqJxBPhMkS8Cq6S/mQYX6Q+VFAd32BVpycEkNm+vSojebHwh6eR8Tg/o3hFMa5g0XRXef
+	 C5Dv6ChVhcjyS83XG51WcKMiq6uGnC+lQszalTAKlznY3il85ewSrxUBKjS9VGJnB2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s1NH96MR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x1dyKqsB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9269860A5BD0;
-	Wed, 18 Nov 2026 18:23:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AAE660A2637;
+	Wed, 18 Nov 2026 18:23:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s1NH96MR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 937931F00927;
-	Wed, 18 Nov 2026 18:23:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x1dyKqsB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541AB1F000C5;
+	Wed, 18 Nov 2026 18:23:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026191;
-	bh=gHlLbR6FXqPMiNiy/zDAoLOpRb8I8VQHVrIMDgVvMys=;
+	s=korg; t=1795026193;
+	bh=GfbI7K9sTv/JOSIZ9259egDWbjxTjuAOJ8GJLfbiQ+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s1NH96MRCw2wbs/fIxSqA595HUVNtkNq1YhQ0cvgZo+V3XI6T2tGkhdkUG+UAeQnH
-	 ynQFMv+DfB8ei+xdO/fTS+cBWesmu2fH6YcvjIa/GS58gmFjaz3/N7kNAxmKNMDjXm
-	 PlEVArEuMlBGl4Oeg8XVomghIcf4ojx0QfVyp+LY=
+	b=x1dyKqsBoaSxYhBxgd3FmvyocReLgaBtNOMy/Sl3OIpxeWhD2/Lr5unke/DF3KaKx
+	 fK+7hY+SJ/dlij7RfFDP4Rk1RFrpla1x9shbopmvlncLwZvZ0g1LWWIOahFinwAc6L
+	 Suu9wrgyAFWiFr2QStR4tzz+f95PowilKncyoZN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sashiko <sashiko-bot@kernel.org>,
 	Hannes Reinecke <hare@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
 	Tal Zussman <tz2294@columbia.edu>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1348/2151] block: take i_rwsem for the splice read path
-Date: Wed, 18 Nov 2026 15:51:23 +0100
-Message-ID: <20261118150211.146281794@linuxfoundation.org>
+Subject: [PATCH 6.18 1349/2151] block: honor IOCB_NOWAIT in the block device buffered read path
+Date: Wed, 18 Nov 2026 15:51:24 +0100
+Message-ID: <20261118150211.180684433@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -73,87 +73,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Tal Zussman <tz2294@columbia.edu>
 
-[ Upstream commit 5574b81c642e83d962732e86399020517f5f15af ]
+[ Upstream commit d16519a561f4ccc2cebbf52831435833cac1fec6 ]
 
-def_blk_fops wires ->splice_read directly to filemap_splice_read(),
-which allocates folios based on mapping_min_folio_order() without any
-lock against set_blocksize(). A splice from a block device can race
-set_blocksize() raising the minimum folio order and insert a folio that
-is too small for the mapping. blkdev_read_iter() wraps filemap_read()
-in inode_lock_shared() for this reason, but the splice path was missed.
+blkdev_read_iter() takes inode_lock_shared() unconditionally around
+filemap_read(). Unlike blkdev_write_iter(), it does not reject
+IOCB_NOWAIT for buffered I/O, so a non-blocking read, or the buffered
+tail of a short IOCB_NOWAIT direct read, blocks behind set_blocksize()
+holding i_rwsem across sync_blockdev().
 
-Splicing from a block device while toggling the block size between 512
-bytes and 64K with BLKBSZSET hits this within seconds on a
-CONFIG_DEBUG_VM kernel:
+A preadv2(RWF_NOWAIT) issued while another thread changes the block
+size with a dirty page cache blocks for as long as sync_blockdev()
+takes, 4 to 6 seconds on a scsi_debug device with delay=5.
 
-  page dumped because: VM_BUG_ON_FOLIO(folio_order(folio) < mapping_min_folio_order(mapping))
-  kernel BUG at mm/filemap.c:858!
-  Oops: invalid opcode: 0000 [#1] SMP NOPTI
-  RIP: 0010:__filemap_add_folio+0x51c/0x570
-  Call Trace:
-   filemap_add_folio+0x64/0x140
-   page_cache_ra_order+0x1dd/0x3d0
-   filemap_get_pages+0x153/0x760
-   filemap_splice_read+0x13f/0x300
-   splice_file_to_pipe+0xc0/0xd0
-   do_splice+0x6a8/0x890
-   __do_splice+0xb0/0x210
-   __x64_sys_splice+0x80/0x100
-   do_syscall_64+0x10e/0x520
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Use inode_trylock_shared() for IOCB_NOWAIT and return the bytes the
+direct path already read, or -EAGAIN if none, when the lock is
+contended, preserving NOWAIT semantics.
 
-Take inode_lock_shared() around filemap_splice_read(), like the read
-path does.
-
-Fixes: 3c20917120ce ("block/bdev: enable large folio support for large logical block sizes")
+Fixes: c0e473a0d226 ("block: fix race between set_blocksize and read paths")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260802-blkdev-fixes-v1-0-a82fc549fd74%40columbia.edu?part=2
 Assisted-by: Claude:claude-fable-5
 Reviewed-by: Hannes Reinecke <hare@kernel.org>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
 Signed-off-by: Tal Zussman <tz2294@columbia.edu>
-Link: https://patch.msgid.link/20261009-blkdev-fixes-v6-3-307939c387df@columbia.edu
+Link: https://patch.msgid.link/20261009-blkdev-fixes-v6-4-307939c387df@columbia.edu
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/fops.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ block/fops.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/block/fops.c b/block/fops.c
-index 4b058996fe086..de28ac38bcfef 100644
+index de28ac38bcfef..1b3d86b85da9a 100644
 --- a/block/fops.c
 +++ b/block/fops.c
-@@ -916,6 +916,22 @@ static ssize_t blkdev_read_iter(struct kiocb *iocb, struct iov_iter *to)
- 	return ret;
- }
+@@ -906,7 +906,15 @@ static ssize_t blkdev_read_iter(struct kiocb *iocb, struct iov_iter *to)
+ 	 * Take i_rwsem and invalidate_lock to avoid racing with set_blocksize
+ 	 * changing i_blkbits/folio order and punching out the pagecache.
+ 	 */
+-	inode_lock_shared(bd_inode);
++	if (iocb->ki_flags & IOCB_NOWAIT) {
++		if (!inode_trylock_shared(bd_inode)) {
++			if (!ret)
++				ret = -EAGAIN;
++			goto reexpand;
++		}
++	} else {
++		inode_lock_shared(bd_inode);
++	}
+ 	ret = filemap_read(iocb, to, ret);
+ 	inode_unlock_shared(bd_inode);
  
-+/*
-+ * Take i_rwsem to avoid racing with set_blocksize changing i_blkbits/folio
-+ * order and punching out the pagecache.
-+ */
-+static ssize_t blkdev_splice_read(struct file *in, loff_t *ppos,
-+		struct pipe_inode_info *pipe, size_t len, unsigned int flags)
-+{
-+	struct inode *bd_inode = bdev_file_inode(in);
-+	ssize_t ret;
-+
-+	inode_lock_shared(bd_inode);
-+	ret = filemap_splice_read(in, ppos, pipe, len, flags);
-+	inode_unlock_shared(bd_inode);
-+	return ret;
-+}
-+
- #define	BLKDEV_FALLOC_FL_SUPPORTED					\
- 		(FALLOC_FL_KEEP_SIZE | FALLOC_FL_PUNCH_HOLE |		\
- 		 FALLOC_FL_ZERO_RANGE | FALLOC_FL_WRITE_ZEROES)
-@@ -1017,7 +1033,7 @@ const struct file_operations def_blk_fops = {
- #ifdef CONFIG_COMPAT
- 	.compat_ioctl	= compat_blkdev_ioctl,
- #endif
--	.splice_read	= filemap_splice_read,
-+	.splice_read	= blkdev_splice_read,
- 	.splice_write	= iter_file_splice_write,
- 	.fallocate	= blkdev_fallocate,
- 	.uring_cmd	= blkdev_uring_cmd,
 -- 
 2.53.0
 
