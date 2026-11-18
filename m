@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023695;
-	b=Syt25cG/HuqSdqOWIkYPHiqT4kyArmKQhRqphN3Hhq0FeBhpg+6xgMvgDpnkxrLvGC83
-	 kG73urg+HKKObFbCmvjn0FfqIdO2Ws7PlzdMIftTbuPvbguY50egkZxEx8fQshWlCv3Cr
-	 W/hk/lmH2PiW1R+Zo85SjZErJ0LuqNN9VFCwlp8WJJcBYdUqFvELbSCkEY2ap3SwfuKo/
-	 kggicsig9GajC7Fl61eIKrLt/4vvNo7FgppRa756NlFeTo6twWZWcanwnOF6QIkuKzuS1
-	 cV7fujdZGi+DLFd32XRaagRwtzIvVx2Q+D8yrah+5n0we0d5SP0EVIHkIq3boImITJA==
+	t=1795023698;
+	b=plpVR+yE+UgUxEe63YtmErtu/5K0rm7vWEZfFPSSZvNtf+/xyCLn44S3tKycFGxyAzL8
+	 6tkGnxyNE1rUWLONhf+OrsnzoKm6MpP/tttGXKAB7cYbsADHEDeHRblJkqClpsds0k6Yf
+	 9L6SVvhR020qYjuY1b3Nfz6eWhEXdCEnxew2zLjnxQJYVNzFFaKG2+aj0USd6wI/moor8
+	 TMKD8uvCaNXqkdu8txMvuNEucwsEYTwvrm8F/OE5wanvW+VQYph1El/1cP1Aoed1wZDvO
+	 XGLZCO1ydGNZ3hBbcBnGWTST/XUEVMo1Hh8kHFzCs0RVuDOjoLC+DrFpbP8dLo09qZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023695;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023698;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qYWDAV1DdQPw7DlWFwVE8ZHEZmQhD+u/t5bnrQsXsXo=;
-	b=P9TAI06LlyfamajxPzhxp7ahMKUlDCcCrbZ7HtZSti3oa+P2SXhBOFo33LT9hpcT9OFD
-	 bm4EIe7VtRl2PkI3YX9JVB2RCtpnHGqvVIuxqcaxG2LBGLnDPnrGg8dYp19EHEtIIdFEl
-	 nE+N8/q74VBCWLDLKOMl2f3H8puIjCz5M8gl9gUUj0NQqSFcCjzlaiyeINVYhhgwK1CS+
-	 UwCEWL9PJiKwV1mq2kWATwOYgX+E++Lkvl1Llcx2d4q3H0m7T2PUHgO0Xu8sp7jTyD+/R
-	 +3MjlxewaXjwQeqGmGizeM43LPA64yq3R/9UhUJc4/VAMsZw4lHWc0Yw1Idw28RQ2mw==
+	bh=zLWz1jc9A+odNk49gzonSy6a1bxX77nAQWlf3Vt9vHk=;
+	b=f0p9pkhnuIk8ZkxmvknuemmgYv9isRtdHoO1azAKke/Cn0gQON30hbCzSjiaZL1pop0Z
+	 GsfVDCz64ZN6Yh3x6agzqoGOfiYvvVBH5DO2t+G3h1j4oCEygZB25/M2FNc+r2osKyGX7
+	 XxE2nLM6LE2aV17BJT2p+f/W6RGpQYKJNYRcRv6ZRaTMx3+TnMMfCQJoPuuqcAiXI9kRg
+	 dm2/pbsh7WidUXiYhj0xtfVK2E1r5Oee3M/+DzYaOmkUKW8cO6NmV98tkY1ekg1o0tx7b
+	 tBP7GdYm+Z7J2UwgHNQy61azFF7h0W5s89IJavCN0JTIhfAGGwjGeCBA7jgnogfDTVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mxcoq0Op;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Dl/NwPpG";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C991E606A320;
-	Wed, 18 Nov 2026 17:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 776E0606A320;
+	Wed, 18 Nov 2026 17:41:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mxcoq0Op
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1988C1F000C4;
-	Wed, 18 Nov 2026 17:41:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dl/NwPpG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D39121F000C4;
+	Wed, 18 Nov 2026 17:41:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023695;
-	bh=qYWDAV1DdQPw7DlWFwVE8ZHEZmQhD+u/t5bnrQsXsXo=;
+	s=korg; t=1795023698;
+	bh=zLWz1jc9A+odNk49gzonSy6a1bxX77nAQWlf3Vt9vHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mxcoq0Opj9hbF9h0D2AHGQFb9ftzMu671D3j6tYRmdosgiZqnqJHObi+MY6fHjV5H
-	 IM0Ghi+XMiFUf7r4Ot4bDfnMtJk1zGP8UhXbHpv4GIQ6wSEYV46sVVNWQ7uuiSTD0s
-	 QSs0M+7gP+rBPCuSLkhe8wahcNyisxHwwcX7rxew=
+	b=Dl/NwPpGzxnyq3+ujEvbQawD1xx9RYOqtCjQN42X3QHLwgyYdefmx3OCp5+yvBzsQ
+	 rlF11+Fgw94jjVdtN2cXszumwY8mqQ58z7JRAU0LVZC3q3HsXVGYL0Mnvrkd7Iof7P
+	 xAKkrnkM6zXe3F1to96MarhqJH+y7EZSh+RbCYEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baolin Liu <liubaolin@kylinos.cn>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Samuel Moelius <sam.moelius@trailofbits.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Peter Xu <peterx@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0460/2151] fs/ntfs3: reject FS_IOC_SETFSLABEL on readonly mounts
-Date: Wed, 18 Nov 2026 15:36:35 +0100
-Message-ID: <20261118150138.782905816@linuxfoundation.org>
+Subject: [PATCH 6.18 0461/2151] mm/gup_test: reject wrapped user ranges
+Date: Wed, 18 Nov 2026 15:36:36 +0100
+Message-ID: <20261118150138.817816711@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,36 +72,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baolin Liu <liubaolin@kylinos.cn>
+From: Samuel Moelius <sam.moelius@trailofbits.com>
 
-[ Upstream commit 5d3e03b70d05162ca49830efcd8b1cd2746a86a3 ]
+[ Upstream commit e8ae6fd67021fafa9205330b3b248c9fc7216e0b ]
 
-FS_IOC_SETFSLABEL does not check for readonly mounts and
-can report success without persisting the label change.
+gup_test accepts an address and size from the debugfs ioctl and repeatedly
+compares against addr + size.  If that addition wraps, the loop can be
+skipped and the ioctl returns success with size rewritten to zero.
 
-Return -EROFS on readonly mounts.
+Compute the end address once with overflow checking and use that checked
+end for the loop bounds.
 
-Fixes: 21dc07ac9c25 ("ntfs3: add FS_IOC_SETFSLABEL ioctl")
-Signed-off-by: Baolin Liu <liubaolin@kylinos.cn>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Assisted-by: Codex:gpt-5.5-cyber-preview
+Link: https://lore.kernel.org/20260609004814.1240586.6294d614ac80.gup-test-range-end-wrap@trailofbits.com
+Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Peter Xu <peterx@redhat.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 44817a536aaa ("mm/gup_test: safely calculate GUP batch size")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/file.c | 3 +++
- 1 file changed, 3 insertions(+)
+ mm/gup_test.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
-index 13d623560120c..d5cd8fe6dd868 100644
---- a/fs/ntfs3/file.c
-+++ b/fs/ntfs3/file.c
-@@ -65,6 +65,9 @@ static int ntfs_ioctl_set_volume_label(struct ntfs_sb_info *sbi, u8 __user *buf)
- 	if (!capable(CAP_SYS_ADMIN))
- 		return -EPERM;
+diff --git a/mm/gup_test.c b/mm/gup_test.c
+index eeb3f4d87c510..c9e7c1cf5b080 100644
+--- a/mm/gup_test.c
++++ b/mm/gup_test.c
+@@ -104,11 +104,15 @@ static int __gup_test_ioctl(unsigned int cmd,
+ 	unsigned long i, nr_pages, addr, next;
+ 	long nr;
+ 	struct page **pages;
++	unsigned long end;
+ 	int ret = 0;
+ 	bool needs_mmap_lock =
+ 		cmd != GUP_FAST_BENCHMARK && cmd != PIN_FAST_BENCHMARK;
  
-+	if (sb_rdonly(sbi->sb))
-+		return -EROFS;
-+
- 	if (copy_from_user(user, buf, FSLABEL_MAX))
- 		return -EFAULT;
+-	if (gup->size > ULONG_MAX)
++	if (gup->addr > ULONG_MAX || gup->size > ULONG_MAX)
++		return -EINVAL;
++	if (check_add_overflow((unsigned long)gup->addr,
++			       (unsigned long)gup->size, &end))
+ 		return -EINVAL;
+ 
+ 	nr_pages = gup->size / PAGE_SIZE;
+@@ -124,13 +128,13 @@ static int __gup_test_ioctl(unsigned int cmd,
+ 	i = 0;
+ 	nr = gup->nr_pages_per_call;
+ 	start_time = ktime_get();
+-	for (addr = gup->addr; addr < gup->addr + gup->size; addr = next) {
++	for (addr = gup->addr; addr < end; addr = next) {
+ 		if (nr != gup->nr_pages_per_call)
+ 			break;
+ 
+ 		next = addr + nr * PAGE_SIZE;
+-		if (next > gup->addr + gup->size) {
+-			next = gup->addr + gup->size;
++		if (next > end) {
++			next = end;
+ 			nr = (next - addr) / PAGE_SIZE;
+ 		}
  
 -- 
 2.53.0
