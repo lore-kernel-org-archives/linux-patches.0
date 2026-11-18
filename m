@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018333;
-	b=PPjOJhU5p6mE8EFsHjzJq9L7DMlGJqoG1PxWhXxCU+JXecW8FXXj3X+OrSECxZvtgIEU
-	 hjcB3aJk//+cRdJ797nj7vL1w4ml28tu79JILKnv+gX+LZ0eMAICevWDP98VQ8FXcbesd
-	 0fM4tQobMquxRdm/tmIcnUsUAQ+Ul1N10qRJ31aa8JqPshPL6OqKAKw5UpoPcQMzEuQbN
-	 7EezCpfwG5FaRQZhn2ANWYswlBTItdIRCCSYUwBS2X2nuC6u/hktwBJXJTKOqjX9A8rfo
-	 hFU4/vY90JT3AJRSJA6Jf8pco5htfBzcCc4V6C4KcomfavZdcSwBjAPszhOmaT9hrOQ==
+	t=1795018336;
+	b=BqOf3bfFDp0ln1l4NW+getU1qDIqY20ljUrCRUd97o8p4T0qQgexTyZsg6Sca9emaKJU
+	 xE/TD2+46EmM0Z0kPISzMLFHZuFY+RJtn6pFH2kSdCZ11bK6qEMK2otaL37Qm4X5+PHuM
+	 LrmG6KFfzCyBEOcTrtR51vpCo1lT6hAeOTI/k1WEc0m1mrpro3HVDfUlpVEQTGE5goKoI
+	 0fxThC3fwH3xerJvfd0E1QmDqe/5NixvmYqhszqilICnuGUEDvk91U6hlSh2zf79TNClH
+	 Jvd6a2wnCrzs2BK9UkbGrBSmLO7TJ23xMTLzZor5MNgtJsXM2myS4xownqvjKu8y7pw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018333;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018336;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2BPoy0T4PRKO8vrKpfmq6bofFe70RWEnyHHl09jqNd8=;
-	b=2NWJcKSCkEYfjx1goytQe6kQNxQsSb8zT8y6H48KnTRiKUvKsVu3leMqwNbpwuWxgHur
-	 jtLMiLVHd69R21egLHDGM45+brUzp3aP9g0tBI6iiB6iFXFbu2exKgTUkOFG819R/qNsY
-	 VcQWKq4ERl/7TZpqbYpIcOtL0u6t/BEd42TMOLcaMo4ZpgaZkRJte2ii/8YuR1oH6jHiv
-	 VDi+doqY93qvAuFah0UluwC4jrte80pLHue85IUs4jmpQUuDj6I8bdxlf6LtqRQvKxL29
-	 Q7Ju/lJ+d14JcPxjnqYuK5u1Qq2oqgp7qS9H89X6j9p6zpD++IURS6vMk/n/YwYln0w==
+	bh=ejzJVPcd8XMrtrMnE6pOm9PepiFwgTBi+lEXj+eHOJw=;
+	b=B1RyKSpHYCSYAaE44DQqvFH5R/5pGkhctld1GUOB3/6XQgEKwo+5au3Jj7Y/UGK99EIS
+	 j2XKTDyOR81uH2AL+r4xMxEOf7JU3gNnYsY8g44+EXm26h0WuQgIlby2Y3C/mq+Xlhwah
+	 9FRvKyiQrXPc6UNADTBmrhUsNqzXrJ86w3QjYqp12plmtfXJpx2QByPnejX3WZCz2HfRK
+	 /rqzS0kQrln3pFF8Fdq8noQ7v5AoFXYEcPTytetc0lPOgzgLGJ2dxnYoQa1/NaCAwqjen
+	 j9CfdIFZUMvzlXCrmv7MVqn1t2n7hBtGspVGvIND9eBemH97+Yjpc2aywjZvRCX6IQQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DJAAMirO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CGvVv0K4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3888A606A320;
-	Wed, 18 Nov 2026 16:12:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E78B5606A32A;
+	Wed, 18 Nov 2026 16:12:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DJAAMirO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BF1A1F000C4;
-	Wed, 18 Nov 2026 16:12:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CGvVv0K4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 182971F000C4;
+	Wed, 18 Nov 2026 16:12:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018332;
-	bh=2BPoy0T4PRKO8vrKpfmq6bofFe70RWEnyHHl09jqNd8=;
+	s=korg; t=1795018335;
+	bh=ejzJVPcd8XMrtrMnE6pOm9PepiFwgTBi+lEXj+eHOJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DJAAMirOGyOquXzMQ4gMobzoM2zMXMop2+UQswf0gZYSm0WHsZkYgey5MA5SMus7b
-	 V6OpZj7eaAKEY/Di5Uq9oOJZGCoisWqjPa5SVuqHTzlqXwbwwT9CpAPPKSf25STF53
-	 DQaDbhVAWHwtLdmsdQcmHZsQgU2Bo/3ZmcHb7p/A=
+	b=CGvVv0K4F763foG+WvxROyXiYA7a6Cy+38SszbIVaSECdqqE9UWILHEqhM+f8hbkk
+	 /Plm9eZ8oRnHF066ffoDN4dwfMt59XwaIoh3Qr87CuUYKxT/XsmqGHlxFG9dw8xfTm
+	 tV1LPM+U4WEVdMG4cvPR49RihmFJG95fj9isDTcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Mostafa Saleh <smostafa@google.com>,
-	Pranjal Shrivastava <praan@google.com>,
-	Will Deacon <will@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1176/2651] iommu/arm-smmu-v3-test: Fix OOB in arm_smmu_v3_invs_test_verify()
-Date: Wed, 18 Nov 2026 15:40:16 +0100
-Message-ID: <20261118150330.348275371@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Igor Paunovic <royalnet026@gmail.com>
+Subject: [PATCH 7.3 1203/2651] phy: rockchip: usbdp: Update mode_change after error handling
+Date: Wed, 18 Nov 2026 15:40:43 +0100
+Message-ID: <20261118150331.303576018@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,42 +71,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mostafa Saleh <smostafa@google.com>
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit 8105675f33746cce48f5381d02d0356ef79dca89 ]
+[ Upstream commit 3f2181226d7708349c69cd4a4b21372a8049576b ]
 
-arm_smmu_v3_invs_test_verify() validates the array bounds using
-KUNIT_EXPECT_EQ(), which triggers a failure and continues execution.
-If invs->num_invs was smaller than expected, the next loop over
-num_invs would blindly read past the end of the invs->inv[] array.
-Switch to KUNIT_ASSERT_EQ() to fail and stop the test on bound errors.
+If rk_udphy_init() or rk_udphy_setup() fails, the reinit will not be
+tried again. Fix this by only updating the variable after all potential
+errors have been handled.
 
-Fixes: 15a2a5645ad7 ("iommu/arm-smmu-v3: Introduce a per-domain arm_smmu_invs array")
-Reported-by: Sashiko <>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Mostafa Saleh <smostafa@google.com>
-Reviewed-by: Pranjal Shrivastava <praan@google.com>
-Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Note, that no errors have been seen on real hardware and failures would
+most likely be fatal and require at least a full reboot as the function
+already asserts the PHY reset lines. So this is more of a theoretical
+issue.
+
+Fixes: 2f70bbddeb45 ("phy: rockchip: add usbdp combo phy driver")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/linux-phy/20260612163835.8D5471F000E9@smtp.kernel.org/
+Tested-by: Igor Paunovic <royalnet026@gmail.com> # Orange Pi 5 Plus
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://lore.kernel.org/linux-phy/20260612163835.8D5471F000E9@smtp.kernel.org/
+Link: https://patch.msgid.link/20260915-rockchip-usbdp-cleanup-v15-2-80e2c11d1ce8@collabora.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/rockchip/phy-rockchip-usbdp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c
-index 366dcb2b55548..244cf34e5a0b8 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c
-@@ -643,7 +643,7 @@ static void arm_smmu_v3_invs_test_verify(struct kunit *test,
- 					 const int *ids, const int *users,
- 					 const int *ssids)
- {
--	KUNIT_EXPECT_EQ(test, invs->num_invs, num_invs);
-+	KUNIT_ASSERT_EQ(test, invs->num_invs, num_invs);
- 	KUNIT_EXPECT_EQ(test, invs->num_trashes, num_trashes);
- 	while (num_invs--) {
- 		KUNIT_EXPECT_EQ(test, invs->inv[num_invs].id, ids[num_invs]);
+diff --git a/drivers/phy/rockchip/phy-rockchip-usbdp.c b/drivers/phy/rockchip/phy-rockchip-usbdp.c
+index 07a839e41db71..13649b52e99b0 100644
+--- a/drivers/phy/rockchip/phy-rockchip-usbdp.c
++++ b/drivers/phy/rockchip/phy-rockchip-usbdp.c
+@@ -999,15 +999,14 @@ static int rk_udphy_power_on(struct rk_udphy *udphy, u8 mode)
+ 	}
+ 
+ 	if (udphy->status == UDPHY_MODE_NONE) {
+-		udphy->mode_change = false;
+ 		ret = rk_udphy_setup(udphy);
+ 		if (ret)
+ 			return ret;
+ 
+ 		if (udphy->mode & UDPHY_MODE_USB)
+ 			rk_udphy_u3_port_disable(udphy, false);
+-	} else if (udphy->mode_change) {
+ 		udphy->mode_change = false;
++	} else if (udphy->mode_change) {
+ 		udphy->status = UDPHY_MODE_NONE;
+ 		if (udphy->mode == UDPHY_MODE_DP)
+ 			rk_udphy_u3_port_disable(udphy, true);
+@@ -1016,6 +1015,7 @@ static int rk_udphy_power_on(struct rk_udphy *udphy, u8 mode)
+ 		ret = rk_udphy_setup(udphy);
+ 		if (ret)
+ 			return ret;
++		udphy->mode_change = false;
+ 	}
+ 
+ 	udphy->status |= mode;
 -- 
 2.53.0
 
