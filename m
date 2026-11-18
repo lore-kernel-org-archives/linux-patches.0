@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022724;
-	b=usmCuGfDa/iFkVDPqIFos7Gnm1B3EZ3euW7Ies0LADW0/v7F+D6PgXpt1lmXRhrzqQA5
-	 N9JAg9ZrxbgsWyitEkHEAfz1EPIB1ijPNZesBDrVd6MD9AYnWJPeAvw+J976sIbTPFfLt
-	 FgRI9BEMGF5WXGCwuz8MQ99kMVuhnut0Ku7/okxbFRzgEn13lrxHWQg6tkhRwebOwbuRW
-	 zQcQOUv3w7sblS9Ro7pkldExdxt/SroUxhlIQ0MRHRdMRYShWgxCQE3vd6x7tcIIG8rQZ
-	 7Iay9sC2lMJps+1FGm+/5Svei5klhZMQHJTFO7SnvSz7risf9DZ8o7KWJiQPdNjCx5A==
+	t=1795022727;
+	b=jspQpLS45RBibU1Y5Xf68430d0prhpZB9DVkJeyPu7yD2ESxdrg75ruA0GojNsNFCfPP
+	 jyVoc3QdVZ9+ptRg251Zp6a0xs2UymtebTqKxNo6D05Iq8Gq6u9jIrsp/g5GWv3UtUwW1
+	 iDpxYcvf4YqG29oxrxr5zWqPPcwoMxKuVsb82BDxAAoiscnJGBKX3xqrnoQGuR2OhC7nq
+	 L6kzJ+AlnuVug5vOZcsV/77x/7iKCO2uik1IgN8v2C2akJ2Ylk/oO92rg0hwmOmNFVRdM
+	 1htmBzoIRl91ntJKjnDO2hMgnhSlCwT2LoBF85XDmuSw/9yOtn2PZCj4kHJb3FS2RPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022724;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022727;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RgwhiaPlrQ5TOWn/E+KPNNXSq/Ow2YQiKSJQLQ5v+PY=;
-	b=AsyRCCphfvHedJCmcN0/badr1h2qZAiMxyLjE2oCmBH6OtduP9hxBFjmZCxYcY2GKQtN
-	 H0E8A+9QIz3uwR5BYDrZXjQSpK9afJ090We6Y86i+kyWJCAxUJfaP9tnbGiR5TH4Wsltv
-	 NUeIBJ88SW8/4L6T8iJMCOo/dRAPLMhH4/X2O/JoIcw35eK4frTCEfCXsJ3e5D6RzwYEF
-	 mI6j+2GZ2440GJBvpEfDNRjO5vqCAJ4F6ZHMBZEngvNRy/wCmxH4DvhBwxmOpWsm5TKAv
-	 R3E6wggKAxjOOsvZq6RnxKnj0IE5uM4/qR+nK6MjQsUw+O7nYt/QFZ/ZD4DZkFpVJ7A==
+	bh=iuaI5L7h2gBUEFSUteM0ti+VUKjNS15krMYCOG58EbQ=;
+	b=Sgosiqn/UZ0oMpbkVI1OmiwuLxwdSyugqAhRbVbbSvlhHTVS65FiGBwKIrHgeU87FJRf
+	 NuMYsDsDKUN3PMLb6cO53m9nCOE+LVL+/sVuR0an8qjobPHGlVIyTufnjOxADykbcJI+T
+	 Ts3lweT9ng5j5Vb7ql4r2OnGorMykIDPAd8UG3hZAb87/TyHUjI8Stru2eYIh/UKaLM6p
+	 CpaQDyhVEvWNdGYpxhG+Wcs+02ByZqyEUProxvoDDqblyWvFl9/6Gaj1nwxL8TruMYz/A
+	 6rcIgppbMCiexI5pnjgaNRtKSurCaeluq7qvzMvcLlAdytVkcCpC8+QOVHy83SUte8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZwTCs8P3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lCyUFXOW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF48606A320;
-	Wed, 18 Nov 2026 17:25:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 937D2606A320;
+	Wed, 18 Nov 2026 17:25:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZwTCs8P3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1AEF1F000C4;
-	Wed, 18 Nov 2026 17:25:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lCyUFXOW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A409C1F000C5;
+	Wed, 18 Nov 2026 17:25:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022724;
-	bh=RgwhiaPlrQ5TOWn/E+KPNNXSq/Ow2YQiKSJQLQ5v+PY=;
+	s=korg; t=1795022727;
+	bh=iuaI5L7h2gBUEFSUteM0ti+VUKjNS15krMYCOG58EbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZwTCs8P3uRmxGqz1G5Lf99D/QlbbbHDuXlwR1vKDs8iKd75vQXsWpEf6456U7Y03h
-	 qtH4bQfmgE2qJOOciJBnd5nHZ5akz/iJJfcX267uDgMNNVku1cXPCuTyn0+VC6d/JR
-	 8+p8TA7C8t4MRpnLYP9pkPPCYaf3D7nqKPr/9poA=
+	b=lCyUFXOWVXADcbp9lNzEdp1/zy7VU5D1HLlB54FSKyzsr9L53vHniEJFHAwE+BMYN
+	 i/PHue9H0tJjfO8+ZdCw+jI5SQH+5kcidU7idZVzGJUSwonNaiZRBlDLzM2c72rIQe
+	 +CJFs97CU2gRR8/L3rClAZH90hk8I4/MiIqUjf6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0115/2151] rose: disconnect sockets under their lock when a neighbour goes away
-Date: Wed, 18 Nov 2026 15:30:50 +0100
-Message-ID: <20261118150125.982172641@linuxfoundation.org>
+Subject: [PATCH 6.18 0116/2151] hdlcdrv: close the hardware driver once, and only if it was opened
+Date: Wed, 18 Nov 2026 15:30:51 +0100
+Message-ID: <20261118150126.017687942@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,106 +69,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-rose_kill_by_neigh() disconnects every socket that uses a neighbour
-whose link has failed, restarted or gone down, holding only
-rose_list_lock. rose_disconnect() stops the timers, purges the queues
-and changes the state of the socket, but its timers and the frames
-received for it work on the same socket under bh_lock_sock() only, on
-other CPUs, and are not kept out by rose_list_lock.
+hdlcdrv_unregister() calls the hardware driver's close() when s->opened
+is set and then calls unregister_netdev(). Two things go wrong:
 
-Disconnect each socket under its lock. rose_rx_call_request() and
-rose_kill_by_device() take the socket lock before rose_list_lock, so
-do as rose_kill_by_device() does: take a reference on the sockets that
-use the neighbour under rose_list_lock, drop it, and lock each socket
-in turn, checking that it still uses the neighbour. The neighbour is
-still taken under rose_list_lock as well: rose_release() takes it under
-that lock while it owns the socket, which bh_lock_sock() does not keep
-out.
+ - if the interface is still up, unregister_netdev() closes it through
+   ndo_stop, so hdlcdrv_close() calls the hardware driver's close() a
+   second time;
+
+ - hdlcdrv_open() sets s->opened before it calls the hardware driver's
+   open() and leaves it set when that fails, so close() is also called
+   for a port that was never opened.
+
+The close() methods of the baycom drivers are not written for either
+case. baycom_ser_fdx and baycom_ser_hdx call free_irq() and
+release_region() for resources they do not hold. baycom_par
+dereferences bc->pdev, which is NULL if the port was never opened and
+points to an unregistered parport device after a first close.
+
+Set s->opened only once the hardware driver's open() has succeeded,
+and let unregister_netdev() do the closing.
+
+Tested in a QEMU guest (6.12.94, KASAN and lockdep) with
+baycom_ser_fdx and two ports: bcsf0 at an address without a UART, whose
+open fails, and bcsf1 on a UART, left up. Unloading baycom_ser_fdx gave
+before the change:
+
+  Trying to free already-free IRQ 5
+   ser12_close+0xa1/0x190 [baycom_ser_fdx]
+   cleanup_baycomserfdx+0x38/0x50 [baycom_ser_fdx]
+  resource: Trying to free nonexistent resource <0x300-0x307>
+  baycom_ser_fdx: close ser_fdx at iobase 0x250 irq 9
+  Trying to free already-free IRQ 9
+  resource: Trying to free nonexistent resource <0x250-0x257>
+
+and after the change a single close of bcsf1 and no warning. The
+baycom_par case was not reproduced, the test kernel has no parport
+support.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit 250c2ad2174f0a1aeb6c306e7bcc259a7fe2178d)
+(cherry picked from commit 056d9c67e92622d5ec8cc6ce4a49179a16c53ef1)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/af_rose.c | 48 +++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 41 insertions(+), 7 deletions(-)
+ drivers/net/hamradio/hdlcdrv.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index 5a8585627feb9..916b8aad03d40 100644
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -162,19 +162,52 @@ static void rose_remove_socket(struct sock *sk)
-  */
- void rose_kill_by_neigh(struct rose_neigh *neigh)
- {
--	struct sock *s;
-+	struct sock *s, *array[16];
-+	bool rescan;
-+	int i, cnt;
- 
-+	/*
-+	 * Each socket is disconnected under its lock, which its timers and
-+	 * the frames received for it hold while they work on it. That lock
-+	 * is taken before rose_list_lock elsewhere, so collect the sockets
-+	 * first, as rose_kill_by_device() does. rose_list_lock is still
-+	 * held around the change of the neighbour, which rose_release()
-+	 * takes under it while it owns the socket. A socket done with has
-+	 * no neighbour left and is not collected again.
-+	 */
-+again:
-+	rescan = false;
-+	cnt = 0;
- 	spin_lock_bh(&rose_list_lock);
- 	sk_for_each(s, &rose_list) {
--		struct rose_sock *rose = rose_sk(s);
-+		if (rose_sk(s)->neighbour != neigh)
-+			continue;
-+		if (cnt == ARRAY_SIZE(array)) {
-+			rescan = true;
-+			break;
-+		}
-+		sock_hold(s);
-+		array[cnt++] = s;
-+	}
-+	spin_unlock_bh(&rose_list_lock);
-+
-+	for (i = 0; i < cnt; i++) {
-+		struct rose_sock *rose = rose_sk(array[i]);
- 
-+		bh_lock_sock(array[i]);
-+		/* rose_release() takes the neighbour under rose_list_lock */
-+		spin_lock_bh(&rose_list_lock);
- 		if (rose->neighbour == neigh) {
--			rose_disconnect(s, ENETUNREACH, ROSE_OUT_OF_ORDER, 0);
-+			rose_disconnect(array[i], ENETUNREACH, ROSE_OUT_OF_ORDER, 0);
- 			rose_neigh_put(rose->neighbour);
- 			rose->neighbour = NULL;
- 		}
-+		spin_unlock_bh(&rose_list_lock);
-+		bh_unlock_sock(array[i]);
-+		sock_put(array[i]);
- 	}
--	spin_unlock_bh(&rose_list_lock);
-+	if (rescan)
-+		goto again;
+diff --git a/drivers/net/hamradio/hdlcdrv.c b/drivers/net/hamradio/hdlcdrv.c
+index 2263029d1a20e..dc4e2c45e2d11 100644
+--- a/drivers/net/hamradio/hdlcdrv.c
++++ b/drivers/net/hamradio/hdlcdrv.c
+@@ -441,7 +441,6 @@ static int hdlcdrv_open(struct net_device *dev)
+ 	/*
+ 	 * initialise some variables
+ 	 */
+-	s->opened = 1;
+ 	s->hdlcrx.hbuf.rd = s->hdlcrx.hbuf.wr = 0;
+ 	s->hdlcrx.in_hdlc_rx = 0;
+ 	s->hdlcrx.rx_state = 0;
+@@ -458,6 +457,7 @@ static int hdlcdrv_open(struct net_device *dev)
+ 	i = s->ops->open(dev);
+ 	if (i)
+ 		return i;
++	s->opened = 1;
+ 	netif_start_queue(dev);
+ 	return 0;
  }
+@@ -725,8 +725,7 @@ void hdlcdrv_unregister(struct net_device *dev)
  
- /*
-@@ -721,9 +754,10 @@ static int rose_release(struct socket *sock)
- 		 * Disconnect before the socket lock is dropped: frames put on
- 		 * the backlog meanwhile, a Clear Confirmation for one, then
- 		 * find it in state 0 instead of dropping the neighbour
--		 * reference a second time. rose_kill_by_neigh() does not take
--		 * the socket lock: take the neighbour under rose_list_lock, as
--		 * it does, so that only one of them drops the reference.
-+		 * reference a second time. rose_kill_by_neigh() can run while
-+		 * the socket is owned here: take the neighbour under
-+		 * rose_list_lock, as it does, so that only one of them drops
-+		 * the reference.
- 		 */
- 		rose_disconnect(sk, 0, -1, -1);
- 		spin_lock_bh(&rose_list_lock);
+ 	BUG_ON(s->magic != HDLCDRV_MAGIC);
+ 
+-	if (s->opened && s->ops->close)
+-		s->ops->close(dev);
++	/* unregister_netdev() closes the device if it is still up */
+ 	unregister_netdev(dev);
+ 	
+ 	free_netdev(dev);
 -- 
 2.53.0
 
