@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025773;
-	b=FmFozEtfktjBh76IRKPVG/2YxQ+ycJ2d3Oa8tbhpaeeRx9rBILMmeDlyRMpc4tSVSg7A
-	 FDhD/D4Xfw20+/25IFA03D5I8LKmVmvoIzJBWKxwAP9hH/72QgumqhAW7/VNJEbBJ8wYR
-	 ytXUi+r5aByn9aEyzZ15J+0ZcO1/s3KVcSJpWIH8UfR3skjQ9uE1bwHyBBRHOTbf4UF//
-	 zEYCHcLaPFvZSA+gQKw9jF/tfMoEVsWEa35BgZdX0rtAJO/FBtRzTLo7NJwhBNndV/WIe
-	 z6yRufS3qWkN6GXnBo+dQwC+Tav3HSr6h/a0QRkRDpgS7UwyKHaeExlMkDE3r4w3ipg==
+	t=1795025776;
+	b=mSlF+jq6gnm07JEYiUEjhdkXTF/3NiJz4d3jC7CkItek6xaLafwG4ighvuZMyDQcs9X6
+	 1l9j9WZyliA2mbdB++peHuDFrwyc3mc3lhKjAGbDg8FjvFx/Kg3Ak+V1k7nO02WGm+nmb
+	 SHTM+fusIUlhbA/puF2AnKI40mW+frQtgtfWFcewQ5UGyyTB9BEDT5nzXjtaioH1Pewiw
+	 gQOWJBrVmRj9Mb0Cw9ijmplOIzvoRKVgJUV3gpRmzvFEVKjhBrUkkTwq+VpkZYkIlAecm
+	 COzHKdPrebo0ipk8RfBQIfg+0HGrXqDIRq4YeqFjs35K+754z9ksE7FkJ35LVoDXpdA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025773;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025776;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3lqoq7WwjxKo4m8Zhw79qtXgrZqZxTiIht1H2E87a8k=;
-	b=swQZq7OvAFcifayjLWDNZ7ncAczcrISC8dETlqqbkEfvavvN+k4zH+QE8ZjIQKHbi56L
-	 j4kxvoLF9qOcQYm0McdpYyX0MoWYCmMDglOxo5+1zbbNOHQUPeBeV7pUzpPuZHTA/TOVo
-	 6Io88Ejv7T+rgv0/u2u1Jw3hRVarrF5T3m8PZVW7M78N7FsbL3G1VUPnmFpNETkHDsmiI
-	 ajTyznkYxcnqwRW7KUKCEFj/PjinaoFc/tPR7Sl7qvAFTozxyhr0jT6JwqBgTI4MXmto/
-	 4+ejbQwlNzucN4C2QM3zZ1zUUS4hDM/Eo4CGixEdK9EcQyYA3daeXQOKDk3x0b3mKMg==
+	bh=KVtTIsKI1YxNPp/Km5YGTQ4qxzcGplAJNpsiSTJIw4A=;
+	b=TcpM3H21yjcnWOiIALiVYae3gr2Rw+XeOTo1FF2+Z0D8RHEUVoekxzRDT2CC3r/HVj9e
+	 tpSZ54bjSis/+IZnKey9147CUwl1Bm9AwVfRcxFtdhJmQnTq2PF1FAaVhpLMJPfW8Eiiu
+	 yguHtoRFamO+ey6Jrq4Cg8CjsJ9OBv1lcvkQbNrOOULbZMcMfbR4msts9hHBbeI6VJB5f
+	 QznzGOFe13IOCDe8fu8wKbGUliU2t2xmCL4h4FL7DtYMHiSmhYeeHKikcVCALfBbkAs6M
+	 WEvzL7I9569MBPZCgLFbr3f6YzcHBl7fEb9899qarT/Nuvs2fbkSQHH3r1abbbj4RuA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KS+Bdli0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e9rndyZ3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7A560A260F;
-	Wed, 18 Nov 2026 18:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93A7606A320;
+	Wed, 18 Nov 2026 18:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KS+Bdli0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 253F51F000CB;
-	Wed, 18 Nov 2026 18:16:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e9rndyZ3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05F321F000C5;
+	Wed, 18 Nov 2026 18:16:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025773;
-	bh=3lqoq7WwjxKo4m8Zhw79qtXgrZqZxTiIht1H2E87a8k=;
+	s=korg; t=1795025776;
+	bh=KVtTIsKI1YxNPp/Km5YGTQ4qxzcGplAJNpsiSTJIw4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KS+Bdli00EQhUW8QJfQYZZ3WmUXNftzCYcnbXSAFsnk0Bmcm+HLNr0DkXwsiDl9XQ
-	 OoZ0af2R4lKbao+Z76/f65vu+ljEIcOxpUqRmna+eRA5Qt4hwRwGMwlF6G24FsOwjw
-	 eMhEDA3Ac4OFwvtWn+N+mm8JoUXF0XYJaEDqmXwY=
+	b=e9rndyZ3blMny/GISEJDzyEtC+gKhHbYm8HMgBCqfESSJyVFb1JFTgONdup+sdm6n
+	 FlnbTddD1NM1FtkfJXdK3uxQ6DozQI7XYJLWxgprAWm7jcNCa4Yq13cv8SzvFQR2ED
+	 toWjPx0jx5FE+2EQz4DD69DrBy1DQpRKDAPa+Wyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1156/2151] efi/libstub: Free cmdline_ptr in efi_pe_entry
-Date: Wed, 18 Nov 2026 15:48:11 +0100
-Message-ID: <20261118150204.285161819@linuxfoundation.org>
+Subject: [PATCH 6.18 1157/2151] dt-bindings: dma: dma40: Restore disabled-channels
+Date: Wed, 18 Nov 2026 15:48:12 +0100
+Message-ID: <20261118150204.320759776@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,42 +69,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 8ea857a2bb547e388e86ca42c58a97e162e09f83 ]
+[ Upstream commit 38d97b1122e02f6b8859e660990aaeda1c32e00f ]
 
-Sashiko points out that efi_handle_cmdline() allocates this memory and
-hands it over to the caller. If efi_pe_entry() ever returns it should be
-freed. Add a __free annotation.
+The conversion of the DMA40 binding to YAML omitted the optional
+disabled-channels property from the original text binding. The driver still
+parses this property, but additionalProperties: false rejects any device
+tree using it.
 
-Fixes: 42c8ea3dca09 ("efi: libstub: Factor out EFI stub entrypoint into separate file")
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Restore disabled-channels and constrain it to the physical channel range.
+Also constrain memcpy-channels to the limits enforced by the driver and
+reject duplicate channel entries in both properties.
+
+Fixes: 23fbc87c8ae6 ("dt-bindings: dma: Rewrite ST-Ericsson DMA40 to YAML")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+Link: https://patch.msgid.link/20260918-dma40-dt-disabled-channels-v1-1-0f691109d8d3@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/libstub/efi-stub-entry.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../devicetree/bindings/dma/stericsson,dma40.yaml  | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/firmware/efi/libstub/efi-stub-entry.c b/drivers/firmware/efi/libstub/efi-stub-entry.c
-index 2ebb81fd9f42a..06934278677d6 100644
---- a/drivers/firmware/efi/libstub/efi-stub-entry.c
-+++ b/drivers/firmware/efi/libstub/efi-stub-entry.c
-@@ -36,7 +36,6 @@ efi_status_t __efiapi efi_pe_entry(efi_handle_t handle,
- 	unsigned long image_addr;
- 	unsigned long image_size = 0;
- 	/* addr/point and size pairs for memory management*/
--	char *cmdline_ptr = NULL;
- 	unsigned long reserve_addr = 0;
- 	unsigned long reserve_size = 0;
+diff --git a/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml b/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
+index 7b94d24d5ef42..73a69a1547701 100644
+--- a/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
++++ b/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
+@@ -145,8 +145,22 @@ properties:
+     items:
+       maxItems: 1
  
-@@ -58,6 +57,7 @@ efi_status_t __efiapi efi_pe_entry(efi_handle_t handle,
- 		return status;
- 	}
++  disabled-channels:
++    $ref: /schemas/types.yaml#/definitions/uint32-array
++    minItems: 1
++    maxItems: 31
++    uniqueItems: true
++    items:
++      maximum: 31
++    description: Physical channels that cannot be used by the DMA engine.
++
+   memcpy-channels:
+     $ref: /schemas/types.yaml#/definitions/uint32-array
++    minItems: 1
++    maxItems: 8
++    uniqueItems: true
++    items:
++      maximum: 63
+     description: Array of u32 elements indicating which channels on the DMA
+       engine are eligible for memcpy transfers
  
-+	char *cmdline_ptr __free(efi_pool) = NULL;
- 	status = efi_handle_cmdline(image, &cmdline_ptr);
- 	if (status != EFI_SUCCESS)
- 		return status;
 -- 
 2.53.0
 
