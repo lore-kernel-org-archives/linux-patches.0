@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034632;
-	b=ulMzDyF3hIok6kJLp3Af6RXT+aAzTdkAwb1J+2sqWQ5lvTW2duHYJdbFInRuDh6eHEUK
-	 Nxr6kCSfjXfLpj42poG1C5Y66x/clsXuXorM4FZE2wBUj/kEt89OX7PxgbrXGpD8aHiV9
-	 aBgCAcyhCzB+pXGZKx4P1HPsXbnMoZNe+dKYl8Q6cw5dQaCHKMwO5AlSQw9VTuZBqVOrQ
-	 yTGmQNsijmIh5+u2yxVgRQK94wH2xoWrfhyDbEt0LQv7AOHqjBWmzQ8NiDvaLB6IJM6DY
-	 JCaxbW5hdQKUFc9s7yq3yT22uQfXcLmWahf04KZidyzPSdCCv+R6TtTFZLtRtb/AspQ==
+	t=1795034634;
+	b=GGuXKicH2ZOY4OPqTICqAlOFtjzyTi2uSAQocPoNHyQS9Hagunxq0v6D3egD3LI6G8by
+	 5kKG5AcrUOI4iXhERPW6XO4toWGDb/wEoBs1+ZrImWsBxrw0Mku9QTnHvVeUhc6vzyyp8
+	 k+a4VgvdOJqY2Rxnv6lg25NsFZUlc7n/aR72gT0n6SU6rFaFPg8nlQY9XZgwOX45+ujzl
+	 qbafYjSYHcTzEhK/DsZvHdnQIOEJ1hYFc1Hk6g271eVEjHQNgmNKhbYMEPKv4fChLhB2a
+	 Iz9hA19vj6++NDNmf9gKibwwrDPFZUfxO1oy/jf5F0p59KlbH4u7HrxHSvUGhMj2nlw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034632;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034634;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ynRxNkAfh/Jj8qpvQtpWVyOHPo4GjixWGsIYdwNGP3M=;
-	b=NavtNYGbL+FtPF610Co2iHM5wSvMaXuxs8O3RN4q0/SM92IvLPYB7OT152S/PMKrnKmy
-	 BZPthwXkk1CyR+MY0LSfwlYTdbRpQb/N3Yx7xqHYCEjCHkFxsIfBUlIevSNm4iIwqxn2Q
-	 xfJxNy4ZpR0WLmr6ZTuQrQV78G5U5ZK/U1FonrsWoe0cdf09Gcm5vke3pbpBrE7n/w8b3
-	 a9jzdw4MDm7ot0lBw5GJl+2XTIFWK5m24SIv5v+ML7ImKZWRZ/aNGbrvtTVSJY6yTdtgN
-	 nDasG5l/0znjNM1g3SvlNomvLXkD+KDXVT1O8PFxZdmVBkTKAqcLiITwMU5cXdF0UTQ==
+	bh=9H+dbdMLWeyJXOLJOHynoUyCFeaVBySuJNjoIzgpdXw=;
+	b=qXuOwf/lSnPlZnY2h1YUT/EOSKlxHylM287z2NQ0ieSRxS2VV/ktKdUbo9BDXxbRsNBn
+	 PzmeIKq2uE+yjY6It6Ayh3zoGzLT9Axa5X67Xqz/Yo5DWgrAL3KXwNbGmLP36/FT1WwyJ
+	 bduR1mncdbI4QSfNx4vO5Sitzegpw5TTkg/A3SjH8HL/mgAr3MA7/ts8qh3fuUPUnyEcz
+	 Au+/QTaloM2eleKMQqHiY3juogfpSf8sRqapR73Bmfz0u27FguKHRpZKvZIFhHYxYYMZC
+	 lR2yAQmfY7Kcj+WRXqk/mox4ZOlA+/smav9vCRfl/iLq4IxdXIghvpZ2rgcqjDR9DYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CjqM07px;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iQeIabro;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB79606A320;
-	Wed, 18 Nov 2026 20:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1952606A334;
+	Wed, 18 Nov 2026 20:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CjqM07px
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 365E71F000C4;
-	Wed, 18 Nov 2026 20:43:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iQeIabro
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2001D1F000C4;
+	Wed, 18 Nov 2026 20:43:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034631;
-	bh=ynRxNkAfh/Jj8qpvQtpWVyOHPo4GjixWGsIYdwNGP3M=;
+	s=korg; t=1795034634;
+	bh=9H+dbdMLWeyJXOLJOHynoUyCFeaVBySuJNjoIzgpdXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CjqM07px8Vz07BdwzzQF1r2OuWv5BX3Kg2d4bHfc5M8V+z+Tgp16VE7b9sUJj7tnq
-	 3a6k/1e2c9kVDcREIMnDl8D/xyPDLc/afXJQjy93eBI6pcan5wtmlrKmekUOu2n8ey
-	 R5PyQwELVH6tmwFuJq00V+Pp6RjeFYGsgh5mk+yc=
+	b=iQeIabrojSXiBxMCwEL/nNztdQbR3NunrBz9I2ojB9EY04iIXU2sbF3JnS2Jzma/J
+	 9l+xRQeYJsicZSzH+YDA0OL9sdSdzfVKiDsfRpPmAuIPGjpfn2gWZEc4NK51JmDy1L
+	 ruhFUJ8tDdlv5usjxOgr3sLHkDZS6UpB6puJ9460=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Longlong Xia <xialonglong@kylinos.cn>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Minchan Kim <minchan@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Amit Klein <aksecurity@gmail.com>,
+	Noam Caspi <noam.caspi@mail.huji.ac.il>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0431/3318] zsmalloc: account for handle size in class lookup
-Date: Wed, 18 Nov 2026 15:17:33 +0100
-Message-ID: <20261118150329.559855341@linuxfoundation.org>
+Subject: [PATCH 6.6 0440/3318] ipv6: udp: Create exceptions before socket matching
+Date: Wed, 18 Nov 2026 15:17:42 +0100
+Message-ID: <20261118150329.897205455@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,79 +71,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Longlong Xia <xialonglong@kylinos.cn>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit f7bf5cd5b5f2b13fe2361860880c4e214c08b440 ]
+[ Upstream commit ac76cab50e899a7346408b8d3c3a4192c2eefb9f ]
 
-zs_lookup_class_index() lets zram recompression decide whether a newly
-compressed object would use a smaller size class.  It currently classifies
-the payload size directly, while zs_malloc() adds ZS_HANDLE_SIZE before
-selecting the class.
+Currently, when ICMPv6 Packet Too Big and Redirect Message packets are
+locally delivered and quote a UDP packet, an exception is only created
+in the IPv6 exception cache if the kernel can match the UDP packet to an
+existing socket.
 
-This makes lookup disagree with allocation near size-class boundaries.
-With 4 KiB pages, CONFIG_ZSMALLOC_CHAIN_SIZE=8, and 64-bit handles, a
-1025-to-1024-byte recompression appears to move from class 64 to class 62
-although both allocations use class 64.  Conversely, a 1049-to-1025-byte
-recompression appears to stay in class 64 although the allocations move
-from class 65 to class 64.
+This behavior allows off-path attackers to conduct a side-channel attack
+on the exception cache in order to discover the ephemeral port used by a
+connected UDP socket.
 
-As a result, zram can accept replacements with no allocation benefit or
-reject ones that would save memory, potentially marking the object
-incompressible.
+Commit 4785305c05b2 ("ipv6: use siphash in rt6_exception_hash()") and
+commit a00df2caffed ("ipv6: make exception cache less predictible") tried
+to mitigate such attacks by making it harder for attackers to discover
+hash collisions in the exception cache and by randomizing the number of
+exceptions a hash bucket can hold, respectively. Unfortunately, both of
+the mitigations can be bypassed.
 
-Factor size-class selection into lookup_size_class(), account for the
-handle there, and use the helper for both lookup and allocation.
+Instead, mitigate such attacks by always creating an exception, even
+before trying to find a matching socket. Do that by calling
+ip6_update_pmtu() and ip6_redirect(), the helpers used when the quoted
+packet did not originate from a socket.
 
-Link: https://lore.kernel.org/20260809115518.3791787-1-xialonglong2025@163.com
-Fixes: 7c2af309abd2 ("zram: add size class equals check into recompression")
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Longlong Xia <xialonglong@kylinos.cn>
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ sashal: Context adapted: the new helper is inserted above class_stat_inc() (not yet renamed class_stat_add()), and zs_malloc() keeps its three-argument signature and pool-wide lock. ]
+This means that guesses (right or wrong) from an off-path attacker will
+always result in an exception being created or updated in the cache that
+the attacker can observe.
+
+Pass the ifindex of the ingress device and the default uid, in a similar
+fashion to icmpv6_err(). Unlike IPv4, an oif of 0 would not match any
+nexthop in ip6_redirect_nh_match() and no exception would be created in
+response to a Redirect Message.
+
+Note that this does not allow attackers to create exceptions that they
+could not create before, as both helpers can already be reached with
+little to no validation. For example, by sending an ICMPv6 error that
+quotes an ICMPv6 Echo Reply or one that quotes a UDP source port that
+matches a wildcard socket.
+
+Also note that in the good case (matched socket) the above scheme comes
+at the cost of an extra route lookup, as the no socket helpers perform
+their own lookup before the one performed by ip6_sk_update_pmtu() /
+ip6_sk_redirect(). When the two resolve to different nexthops, it also
+results in two exceptions being created for the same destination IP. One
+in the exception cache of the nexthop resolved by the no socket helpers
+and another in the exception cache of the nexthop used by the socket.
+
+Fixes: 2b760fcf5cfb ("ipv6: hook up exception table to store dst cache")
+Cc: stable@vger.kernel.org
+Reported-by: Amit Klein <aksecurity@gmail.com>
+Reported-by: Noam Caspi <noam.caspi@mail.huji.ac.il>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20260828192344.2596928-4-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: Placed the new exception-creating helper call inside the shared __udp6_lib_err() (which takes a udptable argument) instead of udpv6_err(), and dropped the daddr/saddr assignments since they are initialised inline. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/zsmalloc.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ net/ipv6/udp.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/mm/zsmalloc.c b/mm/zsmalloc.c
-index 14327fc34aa71..85cb0d06db01e 100644
---- a/mm/zsmalloc.c
-+++ b/mm/zsmalloc.c
-@@ -516,6 +516,11 @@ static int get_size_class_index(int size)
- 	return min_t(int, ZS_SIZE_CLASSES - 1, idx);
+diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
+index 8cb969b4d862b..640452e6b6d0f 100644
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -617,6 +617,17 @@ static struct sock *__udp6_lib_err_encap(struct net *net,
+ 	return sk;
  }
  
-+static struct size_class *lookup_size_class(struct zs_pool *pool, size_t size)
++static void udpv6_err_update_exception(struct net *net, struct sk_buff *skb,
++				       u8 type, __be32 info)
 +{
-+	return pool->size_class[get_size_class_index(size + ZS_HANDLE_SIZE)];
++	if (type == ICMPV6_PKT_TOOBIG)
++		ip6_update_pmtu(skb, net, info, skb->dev->ifindex, 0,
++				sock_net_uid(net, NULL));
++	else if (type == NDISC_REDIRECT)
++		ip6_redirect(skb, net, skb->dev->ifindex, 0,
++			     sock_net_uid(net, NULL));
 +}
 +
- static inline void class_stat_inc(struct size_class *class,
- 				int type, unsigned long cnt)
- {
-@@ -1163,7 +1168,7 @@ unsigned int zs_lookup_class_index(struct zs_pool *pool, unsigned int size)
- {
- 	struct size_class *class;
+ int __udp6_lib_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
+ 		   u8 type, u8 code, int offset, __be32 info,
+ 		   struct udp_table *udptable)
+@@ -632,6 +643,8 @@ int __udp6_lib_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
+ 	int err;
+ 	struct net *net = dev_net(skb->dev);
  
--	class = pool->size_class[get_size_class_index(size)];
-+	class = lookup_size_class(pool, size);
++	udpv6_err_update_exception(net, skb, type, info);
++
+ 	sk = __udp6_lib_lookup(net, daddr, uh->dest, saddr, uh->source,
+ 			       inet6_iif(skb), inet6_sdif(skb), udptable, NULL);
  
- 	return class->index;
- }
-@@ -1372,9 +1377,7 @@ unsigned long zs_malloc(struct zs_pool *pool, size_t size, gfp_t gfp)
- 	if (!handle)
- 		return (unsigned long)ERR_PTR(-ENOMEM);
- 
--	/* extra space in chunk to keep the handle */
--	size += ZS_HANDLE_SIZE;
--	class = pool->size_class[get_size_class_index(size)];
-+	class = lookup_size_class(pool, size);
- 
- 	/* pool->lock effectively protects the zpage migration */
- 	spin_lock(&pool->lock);
 -- 
 2.53.0
 
