@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021409;
-	b=gqytDp0lILKVbfqN+My2wikdLBlmWzunrcDFfG6nUIMJQe4H5AmimnRYvL02JZ75vZT3
-	 PtLRVqkcigIOzaCyNx44oW6xAKHi3VQX621l4/6AsfLfHttQ2SZI9k9GVRKDJt4HiChy6
-	 AWcRxWR/sKK3rp+7lpAKAXiqtO8YIL1C4AeyQV+sJJw4B9c3ozjZyw2moeJU6+nFZGc5d
-	 0BCelMRgZM1Uttt6MA8TBeRNxEh0+MR7D8CW3BId91zm6n1aR/tPH1EvlW0HYUjcGKgWt
-	 xiz57MK6xUh5A2NylGXenF6lchcQ7K1XMVaDyRfDAzbvLQNmZhR8z4Cim5AKVC/4LjQ==
+	t=1795021413;
+	b=g59uSXBXxNLHh1iceyf4fjGLmsEZitAvV247F5V01m9QweeHASt7FpVvwbhL6nPUBTTu
+	 2W85gbERhFrurbJPTJUes+ix0q/byNC/56eTmQ/UpcnXR7V7Li6eLQE4yhmAGj82x76Aq
+	 VPSeZ3VWjA129jYk+vmPpuFVGd51yG7Fs1E+mLJmM1FBkj6unXsqBL4dzYh2mDdMbAOWG
+	 ZiaYWrFwwIQ0mYKAnkcEWMO08CIiLMVivBPBrw2MZ7Z6vDINfH2UuBcsPr4y2vhq2Z+T0
+	 4ZVSCEWzyKjFsQ9e6qiJ1/We0kdhmRm4kpWHm5/aiAI64DxPFIJv6JWi2Tzd6IsB8UQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021409;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021413;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6/vhDqhodzT+OW6KH96fftSU7KybQAFIMno+5QN64+w=;
-	b=N1vO2yqGeg6uh+RPYSCNMsho11we0W/+kRFibu8zPRWso2+3WHH0BTXelqi8iIE5p/a7
-	 7eeCmA5ePdhDCs82dCXPVnYL/grhgHYnj9jF2quqNLBrsuDBrQKr5y3d+iaFib3Qo/tl2
-	 zi6gS8uhYpXjBqhTu9UcfRok2SNkplKrjuqaJKV6KDzlVqcIkgYw1j0beDeaKR6a/8Tix
-	 WlO4/XL68znyIxdmEdpbJHKqAyl1KH9iVojPj+D5VXzWg6h2+3XuyzakcxUNbm3QiooxH
-	 sReMqVq2Xu8sBA4OXOTGzGNeMWkWJJS27k5FCZIgIGVAPpm132MbYhsBOrCK4oHsALg==
+	bh=bnn6i8bA/dEWNya5FQLe0BXGMb1NxciG/OoglV8I7QQ=;
+	b=bZL2PxGElhsbvUBu6IZjVfDlCBZuVsffFnF6aiSsuhwd5PIUUZKim3oLPfmmd/EtD7iA
+	 2rlUt8VpJIIoym93WQaGsfsWhb/EEvF4zZkB9bTFRpruglaYoLXwEWxVOFQNRor4E/Fou
+	 ob3DUyuCKD7qbA1z+Gl5dfb4VqzaYPhnpbJmOcZLfcAdaAZdr7WerVGUoDmjoaY3Wq7Wf
+	 0EOOP/EUFL4kJlttKPu33gW0gZAw0aP6DIhAfiNzJDRaQE/Y8rDb/gGGLVFuXO8TJNCk7
+	 cQwgsrp2Ry+3gVjzjPNhIkmi0zi+oyV3sUrkggft09djuNA8q0V9n3t3WzLkEOYV7nw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hiCQ1Zii;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VUqRVb26;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B606606A320;
-	Wed, 18 Nov 2026 17:03:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C83C606A31C;
+	Wed, 18 Nov 2026 17:03:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hiCQ1Zii
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93E5F1F000C4;
-	Wed, 18 Nov 2026 17:03:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VUqRVb26
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F101F000C4;
+	Wed, 18 Nov 2026 17:03:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021409;
-	bh=6/vhDqhodzT+OW6KH96fftSU7KybQAFIMno+5QN64+w=;
+	s=korg; t=1795021413;
+	bh=bnn6i8bA/dEWNya5FQLe0BXGMb1NxciG/OoglV8I7QQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hiCQ1Ziit/zFG0UcQ7VQrKUtCSs/6irczzJoXIYsKdfApuPpSMCBWnLx6EYlM585q
-	 kge1op7BimZ/PvvgMvHbPzymCK3P42rpNotKDjqaFPVIe4+BYF4hvjC7eQE6IotO39
-	 SfSlFC8vs9a6bfN1wV9Qx8D/Vu+tE5PcDIyu86GE=
+	b=VUqRVb26sB8vTwbF2Ha5QIV8bxGQYZ290rnlYwu0n1CbWvhCYDAsvw6hrWltspJmo
+	 tUm5NxTJOHRkQyIc9AqdJ/rV8GBmTtk0ol26+2u4iB0K31d9BoBG8p5fjRwyOfNbTb
+	 m9iQY/Fp/oKfJvxQYDf6maFT09MX0YyhTOTlMMbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohammed <mohammed.saad.alquraini@gmail.com>,
+	Mohammed Alquraini <mohammed.saad.alquraini@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2297/2651] ksmbd: fix fd_limit accounting across durable reconnects
-Date: Wed, 18 Nov 2026 15:58:57 +0100
-Message-ID: <20261118150407.930041916@linuxfoundation.org>
+Subject: [PATCH 7.3 2298/2651] ksmbd: reject foreign RPC pipe handles on IPC$ read and write
+Date: Wed, 18 Nov 2026 15:58:58 +0100
+Message-ID: <20261118150407.960220530@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,82 +68,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Mohammed Alquraini <mohammed.saad.alquraini@gmail.com>
 
-[ Upstream commit df5c868f6b80ca16c171cfac5e4e6c9be83ba4c2 ]
+[ Upstream commit da25995071e5e0f3aa9a41160b00b2f833127b3e ]
 
-A disconnected durable handle keeps its ksmbd_file and the fd_limit
-reservation taken at its initial open. Reconnecting allocates another
-volatile ID and takes another reservation for the same file. Final close
-returns only one reservation, so repeated reconnects permanently reduce
-the server-wide open-file budget.
+RPC pipe handles on IPC$ are allocated from a single server-global IDA,
+and ksmbd.mountd looks a pipe up by handle alone, with no session
+information.  smb2_read_pipe() and smb2_write_pipe() take the handle
+straight from the client request (VolatileFileId) and pass it to the
+daemon without checking that the requesting session opened it.  An
+authenticated user can therefore issue an SMB2 READ or WRITE on IPC$
+with another session's handle and receive that session's in-flight
+DCERPC response, or write attacker-chosen bytes into its pipe stream.
+A tree connect to IPC$, which every RPC client already has, is the only
+requirement.
 
-Move reservation into ksmbd_open_fd() and release it on every creation
-failure. Keep the reservation until final close, including while a durable
-handle is disconnected. Make ID allocation independent of fd_limit so
-reconnects neither consume nor return slots. This also avoids returning an
-unreserved slot when persistent ID allocation fails.
+Validate ownership before the transfer, the way the sibling pipe paths
+already do: under sess->rpc_lock, ksmbd_session_rpc_method() returns 0
+for a handle the session did not open.  smb2_get_info_file_pipe() and
+the FSCTL_PIPE_TRANSCEIVE ioctl already reject such handles; read and
+write were the remaining gap.  Reject them with STATUS_FILE_CLOSED, as
+the ioctl path does.
 
-New opens continue to return -EMFILE when the budget is exhausted, keeping
-the existing STATUS_INSUFFICIENT_RESOURCES mapping.
-
-Fixes: c8efcc786146 ("ksmbd: add support for durable handles v1/v2")
-Reported-by: Mohammed <mohammed.saad.alquraini@gmail.com>
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Assisted-by: LLM
+Signed-off-by: Mohammed Alquraini <mohammed.saad.alquraini@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/vfs_cache.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ fs/smb/server/smb2pdu.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
-index f00d4d81283a8..c6999ed4e6d67 100644
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -1283,11 +1283,6 @@ static int __open_id(struct ksmbd_file_table *ft, struct ksmbd_file *fp,
- 	u64			id = 0;
- 	int			ret;
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 81c8bc5033cdf..8bd0800a48f7e 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -8949,6 +8949,16 @@ static noinline int smb2_read_pipe(struct ksmbd_work *work)
  
--	if (type == OPEN_ID_TYPE_VOLATILE_ID && fd_limit_depleted()) {
--		__open_id_set(fp, KSMBD_NO_FID, type);
--		return -EMFILE;
--	}
--
- 	idr_preload(KSMBD_DEFAULT_GFP);
- 	write_lock(&ft->lock);
- 	ret = idr_alloc_cyclic(ft->idr, fp, KSMBD_START_FID, INT_MAX - 1,
-@@ -1297,7 +1292,6 @@ static int __open_id(struct ksmbd_file_table *ft, struct ksmbd_file *fp,
- 		ret = 0;
- 	} else {
- 		id = KSMBD_NO_FID;
--		fd_limit_close();
- 	}
+ 	id = req->VolatileFileId;
  
- 	__open_id_set(fp, id, type);
-@@ -1317,10 +1311,15 @@ struct ksmbd_file *ksmbd_open_fd(struct ksmbd_work *work, struct file *filp)
- 	struct ksmbd_file *fp;
- 	int ret;
- 
-+	/* Durable reconnects reuse the slot held for the lifetime of fp. */
-+	if (fd_limit_depleted())
-+		return ERR_PTR(-EMFILE);
++	lockdep_assert_not_held(&work->sess->rpc_lock);
++	down_read(&work->sess->rpc_lock);
++	if (!ksmbd_session_rpc_method(work->sess, id)) {
++		up_read(&work->sess->rpc_lock);
++		rsp->hdr.Status = STATUS_FILE_CLOSED;
++		smb2_set_err_rsp(work);
++		return -ENOENT;
++	}
++	up_read(&work->sess->rpc_lock);
 +
- 	fp = kmem_cache_zalloc(filp_cache, KSMBD_DEFAULT_GFP);
- 	if (!fp) {
- 		pr_err("Failed to allocate memory\n");
--		return ERR_PTR(-ENOMEM);
-+		ret = -ENOMEM;
-+		goto err_fd_limit;
+ 	rpc_resp = ksmbd_rpc_read(work->sess, id);
+ 	if (rpc_resp) {
+ 		void *aux_payload_buf;
+@@ -9579,6 +9589,16 @@ static noinline int smb2_write_pipe(struct ksmbd_work *work)
+ 		goto out;
  	}
  
- 	INIT_LIST_HEAD(&fp->blocked_works);
-@@ -1374,6 +1373,8 @@ struct ksmbd_file *ksmbd_open_fd(struct ksmbd_work *work, struct file *filp)
- 	ksmbd_conn_put(fp->conn);
- 	ksmbd_share_config_put(fp->share_conf);
- 	kmem_cache_free(filp_cache, fp);
-+err_fd_limit:
-+	fd_limit_close();
- 	return ERR_PTR(ret);
- }
++	lockdep_assert_not_held(&work->sess->rpc_lock);
++	down_read(&work->sess->rpc_lock);
++	if (!ksmbd_session_rpc_method(work->sess, id)) {
++		up_read(&work->sess->rpc_lock);
++		rsp->hdr.Status = STATUS_FILE_CLOSED;
++		smb2_set_err_rsp(work);
++		return -ENOENT;
++	}
++	up_read(&work->sess->rpc_lock);
++
+ 	data_buf = (char *)(((char *)&req->hdr.ProtocolId) +
+ 			   data_offset);
  
 -- 
 2.53.0
