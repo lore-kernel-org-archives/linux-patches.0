@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029010;
-	b=CFlOgLhO3OvaZlcUQDeOML4xULKkf3dMrK/SJDlRDfBZTuDVr15yyH/vUS9N9NJnGPbz
-	 Rh36tJ4EevGrgl11Srqnt4v7rSkB2wlVsn3W6cxzixvg8zR4zMBeoWtLQ2JcXy4nmmI1q
-	 Z4cUc5zLw20kmSAmRL7Z/TEBb6zLYihVbyKPtplC+ArrzLvpXj1BP10IDL3TLjoXg/KQg
-	 MKrnBivKtzrMwY5iDhwD7W+LLyrI1/8xN0dVDd5eGe3piEOEY2wZHhXQBCaapfRIcbg3m
-	 2eOh0aQ4/Ns+YCzKgLNyil8vBybAW11RNamDhCSa4acoM9dKVHGUEMEdIvn4SapADew==
+	t=1795029013;
+	b=gqVmWtEa3MsXoTi0EvDc927u+mpF0mDJDV8EGIsQaqWvBc/4adnFu6XX6lw5w3u0cbRA
+	 nxjgjmTTx+RY5u7aVzsB6pItu/Sic+CoUknE3hG+puuX8nK0SxJL0skGttKa0tyq+IkjI
+	 x6ntoTDVgKpXY24gGeS26dsu51f3VkxyrjMsvDw72euUP2mksm7mFIeg1eHO1bT7WmV8Y
+	 NXGZO85EdFI7Wz95RV8f3rRQZJmvdD9AKuT60mi+dvEvILRahlH7qpKDoYukted6NcT3Q
+	 cx3I1gBtEOSMKZa78fDuXCZRivuJz8B0lB7Rcxg3uzU62yTOMsqcs1lj5L+cfzVbe3w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029010;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029013;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=N2cODnNY4qipwqGtcf/WtmZnuKAQr2tKgXSMXd+7NvE=;
-	b=Ta2GgpUJqoBVcpLhW0JiaSrYEuf0AfQlegtTTL+y7ktzrbaxZO1tLVGdjY7mirWckEQU
-	 ul8S3w6hhiZ8yVasOe8wXo0SkdPcdKa0byL5phuDzpN+d97wMQnilEaR1vopN8+IPxrgA
-	 pzrWi4P7BAY6CsjQyzvtqEoVODahW5TwWrK018b1euN7e7S50VpHxjKfhIyKUHgRgiuaK
-	 CuTOSbc0pUyuDytOwwdJpIbsit8NOVAO8Rhy/oj3C0iaMLl5lNey5gwEg0b7h6lqMNnoe
-	 rMqsfjSh63A+1p4wMUH6A5TS6S+0Pzmg/S789R7jaCHvfeyYnPzsPzt53tlZhrQDzXQ==
+	bh=ZMkIwF5iwutQfBDIBq367OXXhQeUG+zQy1Bso04sz18=;
+	b=X6PF1Hpvgqor9+zwY7miFID8AxJLVz6e6BaZmOYfWwtPpgHbVoA05DZyMaxeKErV3En3
+	 2sRNUTEHxfIQ1zcs8M8/BmvHWnxyKwte6nR1hIxR0yhRPx2XYvIKBo2bBbhSit+7IZW5w
+	 u/lyae/rd0SjHAAYWaKI/YxwknKIVYvjYcON3jVi2d6B8739UI6TZfGJ9ITqRJCWcw1PW
+	 ru1m8N9GinM52Ikxc0SyUNePW9SnHnP/7GnnG8+T+3W0jMHGBWKmOe8Oc/uIUdnh9ez9E
+	 E2+WsQvDjXMtTZ2c+g7yKJttVVNwPT7zSBRUKegzWFuee/m8dqdxpWQTZw2o2UsAw2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u987THPb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HuDB8M9m;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D08606A332;
-	Wed, 18 Nov 2026 19:10:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DDE0606A325;
+	Wed, 18 Nov 2026 19:10:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u987THPb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E808D1F000C5;
-	Wed, 18 Nov 2026 19:10:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HuDB8M9m
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A72271F000C6;
+	Wed, 18 Nov 2026 19:10:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029010;
-	bh=N2cODnNY4qipwqGtcf/WtmZnuKAQr2tKgXSMXd+7NvE=;
+	s=korg; t=1795029013;
+	bh=ZMkIwF5iwutQfBDIBq367OXXhQeUG+zQy1Bso04sz18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u987THPbnv6cZ+6y9g89F7w7EUgAF2sY3jhcqDikJmUX49v95dOOHs7RMCA83mGxH
-	 cFs7P0+E/awQuRO1PJhxvvY2Jy5YNTlliceiaMhHz9qkmBXKk8DB6B0JNDFDTZ21xG
-	 1KGjOPjAa48tMpp5B6I0VetMZK4OYFtYspw++NHg=
+	b=HuDB8M9mRvrdCh+cV9uLF+C26C0Pwu+MjOxgWAUyT4xMsacGjsRHocgIAeRo50ST4
+	 KWZnXANdsuwHnoekPrWlTkCzZnAgdMhrLEjIhoXoFl5rqgLzjfFncbpWpnOl7uwt0+
+	 W5IwL7YoK1NaNf8CiRw8tjNnqaDcZXwyb0fzUQrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Morgan <macromorgan@hotmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Abdurrahman Karadag <abdurrahmankaradag19@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0197/1756] arm64: dts: rockchip: Correct Device Orientation on Gameforce Ace
-Date: Wed, 18 Nov 2026 15:38:44 +0100
-Message-ID: <20261118150016.230997661@linuxfoundation.org>
+Subject: [PATCH 6.12 0198/1756] wifi: rtw88: debugfs: dont vzalloc(0) when rsvd_page is read unconfigured
+Date: Wed, 18 Nov 2026 15:38:45 +0100
+Message-ID: <20261118150016.266189115@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,67 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Morgan <macromorgan@hotmail.com>
+From: Abdurrahman Karadag <abdurrahmankaradag19@gmail.com>
 
-[ Upstream commit 0d170ee38e7a943248082cdb4b3e40b45a96e2f6 ]
+[ Upstream commit 81510c3d6f2199889a4a936d8cf8b9e05911b10e ]
 
-The display, touchscreen, and IMU are currently not oriented
-consistently. The touchscreen is 90 degrees offset and the IMU is using
-the default mount matrix which is 180 degrees offset.
+Reading the rsvd_page debugfs entry before writing a page offset and
+count to it calls vzalloc() with a size of zero, because
+rsvd_page.page_num defaults to 0.  vmalloc warns about this:
 
-Fix the touchscreen alignment and add a mount matrix for the IMU. When
-the device is held vertically relative to the display hardware, the
-touchscreen 0,0 position is in the top left corner of the display
-(next to the home button), and the IMU reads the correct orientation.
+  WARNING: mm/vmalloc.c:4019 at __vmalloc_node_range_noprof+0x9ac/0xa30
+  ...
+  Call Trace:
+   __vmalloc_node_noprof+0x4c/0x70
+   rtw_debugfs_get_rsvd_page+0x4c/0x110 [rtw88_core]
+   seq_read_iter+0x132/0x4b0
+   seq_read+0x12e/0x1c0
+   full_proxy_read+0x6f/0xc0
+   vfs_read+0xdd/0x490
 
-Fixes: 4e946c447a04 ("arm64: dts: rockchip: Add GameForce Ace")
-Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
-Link: https://patch.msgid.link/20260828205331.78185-1-macroalpha82@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+rtw_fw_dump_fifo() would reject the zero size anyway, but only after
+the allocation.  Check for a zero buffer size first and print a short
+usage hint instead of allocating.
+
+Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
+Signed-off-by: Abdurrahman Karadag <abdurrahmankaradag19@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260827131244.35623-1-abdurrahmankaradag19@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtw88/debug.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts b/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts
-index b9a17108e1acd..b658e4892424b 100644
---- a/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts
-@@ -519,6 +519,7 @@ regulator-state-mem {
- &i2c3 {
- 	status = "okay";
+diff --git a/drivers/net/wireless/realtek/rtw88/debug.c b/drivers/net/wireless/realtek/rtw88/debug.c
+index c26a6905fd15a..ca38bc12dce26 100644
+--- a/drivers/net/wireless/realtek/rtw88/debug.c
++++ b/drivers/net/wireless/realtek/rtw88/debug.c
+@@ -315,6 +315,11 @@ static int rtw_debugfs_get_rsvd_page(struct seq_file *m, void *v)
+ 	int i;
+ 	int ret;
  
-+	/* Touchscreen is rotated 90 degrees with 0,0 position near home button. */
- 	touchscreen@14 {
- 		compatible = "goodix,gt911";
- 		reg = <0x14>;
-@@ -528,10 +529,8 @@ touchscreen@14 {
- 		pinctrl-0 = <&touch_int>, <&touch_rst>;
- 		pinctrl-names = "default";
- 		reset-gpios = <&gpio1 RK_PA7 GPIO_ACTIVE_HIGH>;
--		touchscreen-inverted-x;
- 		touchscreen-size-x = <1080>;
- 		touchscreen-size-y = <1920>;
--		touchscreen-swapped-x-y;
- 	};
- };
- 
-@@ -563,11 +562,15 @@ channel@7 {
- 		};
- 	};
- 
-+	/* IMU oriented relative to panel, which is rotated 90 degrees. */
- 	imu@68 {
- 		compatible = "invensense,mpu6880";
- 		reg = <0x68>;
- 		interrupt-parent = <&gpio0>;
- 		interrupts = <RK_PD3 IRQ_TYPE_EDGE_RISING>;
-+		mount-matrix = "-1", "0", "0",
-+			       "0", "-1", "0",
-+			       "0", "0", "1";
- 	};
- };
- 
++	if (!buf_size) {
++		seq_puts(m, "usage: echo <page_offset> <page_num> > rsvd_page\n");
++		return 0;
++	}
++
+ 	buf = vzalloc(buf_size);
+ 	if (!buf)
+ 		return -ENOMEM;
 -- 
 2.53.0
 
