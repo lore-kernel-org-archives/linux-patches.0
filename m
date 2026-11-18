@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041791;
-	b=qE14AnWpi9YJKW++YXuW7rarR/1pi2V35tbnjUmdUigZBNGglDMT88amG1LVXpieUI8j
-	 8/V6bqkJCqpo55kr3X5+bAoBWBMnSVpTa1O5H4JSY0Id36L17RMq8TJcJJiPiAj+QOS+b
-	 5Pr8hd1DNHT/uLDWL0OweuHulBNVJKIcf1fIZTPHXERu1QacAkoWt+7AGnjWEeoJWt+6u
-	 rR5h6RXxxVczFfEDTxb1JxRySzVao0jk8Gx7CrkPrt2hBJUAq8PBuLBU2DUZHWSgFlIpl
-	 orlTrYZTv5lJCGoZ+vCcYWq6iCRQ6SUhxz85S2+xy2rh2MHDVoecd7soOMDWPm2ymkg==
+	t=1795041793;
+	b=GkLD3VyvlkcBPZX1wo8Q+lRiJF563kOWDHbEvUc+69DFbjGboSsfCdm11da80oC6qUct
+	 /9GXjCoAie8Q+d+SMXgTf6b4GmtWrqUslHRnaLOfkloUWwBkOL3Pq+cSYU5W/b3o0ZYEM
+	 EoVeuhi41h0dtnf/QdvrsFG2r8CRY0nU+lC1g+eDAMAiaT1Xb8yB1OMfwdbuc9dZZLnxX
+	 dURBo+5a+oSdRISyIOaXPWK0+IMK+I5NaOxbr/Fky8Gal3UgTyQTfvq6B0Ho551RRlLR2
+	 dXgP97suBaNPHQ2EryH8gxh2bBzJ7r0tkS0riDzVejsgwVYLdPtfRar8iBufrvm13DA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041791;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041793;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7aCWrpi1Vl3LNmN+1bXkxtQNVIPUgE3aG7o0bhyDz3g=;
-	b=Mk+y5sB/C737lxsb0kLQW4POrBUtPymF7rV91VtheTXvMHT4OlVjRYeMaP+u8l9qOwRj
-	 hSydlrE5v7tpZizEFx0PaxTWe61uz60yDmLPb0DG9ww3P+3EYBBBUeBRHZQT9ymkU6yLH
-	 amRm/YHtjSToIa2/UB7Jefid5CZw3SygoGTz925lOhZ3E32f8ZxJhF4Gw6EFGbRT4eeOR
-	 /p1BknBX59FTwEz7FPZKv5jepQzClyLT8byzBoJ5kdR+UXNaa5u5Y8q6zqr7fJG3ul4kz
-	 YVK2YSmCjqgO8eaCdyW3CvquMkoK+Exdv6qQAneaWiJmnpCWvhiRo/vxPzqOglF5SIg==
+	bh=iV795qEfmCWHQzFevgnX2VB/l1f0hk+oIjmsH2Iw0ok=;
+	b=nZ37V5kkOHNLkQzTVX733/41EI116S3oGW4znjbEaDc2a2/omduJK+I/v49ZJ5kdzYfH
+	 qIJ0onkwm3K3B3DIrTbsvH7AgJ66JnnQI/QnayPB6s1Bb3yu4tgKjXMjEOYcnAurtGjgH
+	 V8nB/QBZ85k5a8leYlbY9rsHxBXKZEpWS0nJvmsN4skEpJyAEMonrFNWlMr1WXgen4c6b
+	 1880H81mGLSszc5SnxVo265neTmfnyB813aiyQW+yFsbF3ZUX8EaDJrzyOeg7M6oIGJYZ
+	 WrtNEKmDmiXhBmleuZBY1X9eJm7iZq8NxosTLcick7ykKu9IKyAOkPqEtS7VhKewl5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vEsIkohE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oJvVWrbk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06218606A325;
-	Wed, 18 Nov 2026 22:43:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DE22606A325;
+	Wed, 18 Nov 2026 22:43:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vEsIkohE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 157B41F000C6;
-	Wed, 18 Nov 2026 22:43:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oJvVWrbk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F201F000C4;
+	Wed, 18 Nov 2026 22:43:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041790;
-	bh=7aCWrpi1Vl3LNmN+1bXkxtQNVIPUgE3aG7o0bhyDz3g=;
+	s=korg; t=1795041793;
+	bh=iV795qEfmCWHQzFevgnX2VB/l1f0hk+oIjmsH2Iw0ok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vEsIkohEa3E3VwaYsXICDFQ+sWTxEmiF9Nfi5vRnGThme6JjMwmNDhPpdy+8VGoFp
-	 ejV1YxeNIbMd/MoQAz1FnRVeGJrKrfUG4Ttu5R0o5xe9AKEzvoSXcjsvCZZpg7/hjh
-	 C50gnhkcEkPacveO3EoDDofPR/JcQXRUvMCxLeXk=
+	b=oJvVWrbkvNM7wAxicWkNe4tj9uyxzrSw7bD3U5iJaK3YQiMzOmf+uDVFYxjJeGPQm
+	 7sIksGkIk70ZtyjwywusXEcVaXpBcdYigmLKz9EL0fbkIH+bu0/6nzi5SlVHzes3Rs
+	 uwbK41cRDrhZsKdC7SSic4lLzWaik6XA/CNxAHjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Simon Horman <horms@kernel.org>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Xingui Yang <yangxingui@huawei.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2897/3318] net/mlx5e: use skb_share_check() in the loopback selftest hook
-Date: Wed, 18 Nov 2026 15:58:39 +0100
-Message-ID: <20261118150447.402140518@linuxfoundation.org>
+Subject: [PATCH 6.6 2898/3318] scsi: libsas: Fix out-of-bounds memcpy() in sas_ssp_task_response()
+Date: Wed, 18 Nov 2026 15:58:40 +0100
+Message-ID: <20261118150447.428959770@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,41 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: Xingui Yang <yangxingui@huawei.com>
 
-[ Upstream commit 16fb7aa6955a0af9f67ca42a61d9be58dfc9382a ]
+[ Upstream commit 4d7f9c3fdce773f6c69d17c1d4a05bd5e17f4b99 ]
 
-The loopback hook gets a shared skb when another ETH_P_IP handler is
-bound to the device. skb_linearize() on a non-linear frame then hits
-BUG_ON(skb_shared()).
+The min_t(int, ...) clamp of the device-provided sense_data_len turns
+negative for values >= 0x80000000 and is then used as the memcpy()
+length, reading and writing out of bounds. Compare as u32
+instead. Well-formed responses are unaffected.
 
-Call skb_share_check() before linearizing the skb.
-
-Fixes: 95b9606b15bb ("net/mlx5: Extend Ethtool loopback selftest to support non-linear SKB")
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20261007-nb-net-selftest-shared-net-v1-3-458369bfa1ba@tipi-net.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 366ca51f30de ("[SCSI] libsas: abstract STP task status into a function")
+Signed-off-by: Xingui Yang <yangxingui@huawei.com>
+Link: https://patch.msgid.link/20261009033238.1076098-2-yangxingui@huawei.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/scsi/libsas/sas_task.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c b/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c
-index c170503b3aace..0c3b530f45e86 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c
-@@ -165,6 +165,10 @@ mlx5e_test_loopback_validate(struct sk_buff *skb,
- 	struct udphdr *udph;
- 	struct iphdr *iph;
- 
-+	skb = skb_share_check(skb, GFP_ATOMIC);
-+	if (!skb)
-+		goto out;
-+
- 	if (skb_linearize(skb))
- 		goto out;
+diff --git a/drivers/scsi/libsas/sas_task.c b/drivers/scsi/libsas/sas_task.c
+index e9d291007817b..2080e5836179b 100644
+--- a/drivers/scsi/libsas/sas_task.c
++++ b/drivers/scsi/libsas/sas_task.c
+@@ -25,7 +25,7 @@ void sas_ssp_task_response(struct device *dev, struct sas_task *task,
+ 	case SAS_DATAPRES_SENSE_DATA:
+ 		tstat->stat = SAS_SAM_STAT_CHECK_CONDITION;
+ 		tstat->buf_valid_size =
+-			min_t(int, SAS_STATUS_BUF_SIZE,
++			min_t(u32, SAS_STATUS_BUF_SIZE,
+ 			      be32_to_cpu(iu->sense_data_len));
+ 		memcpy(tstat->buf, iu->sense_data, tstat->buf_valid_size);
  
 -- 
 2.53.0
