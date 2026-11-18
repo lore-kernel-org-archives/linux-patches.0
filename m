@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052408;
-	b=G/LAYLE55Vo1DOlwHyLjB9sCwOKrIoaqCdLCJEakLUx2u8Bi2EKSpg8VjiuLclAIC5T0
-	 X5QkDn/IjFIM0GL/4wGmdR4dtOodu5iXV2QWou1Gh5l3ivSzBTNQ4KosK4KvnhQq7W6ce
-	 miAq4ANlXftED/c22/lL8AJumuZuRrw66l+eiA6c4Muxphk79Vy3tyH/J008stGrGzYPF
-	 8Co4x1xlDJ4GN9OuSSr6G9+Ng7pIzHGThB37wB/TfX8dW5pSFPFW5NuMXv2jonrvvTl/M
-	 6AE/ToDX3XDgZ+/FsEdeSQWqiRNR/uALd/zl7EvxQGnDxkP1yjwS6GHc1y6o/VIlzNA==
+	t=1795052411;
+	b=Q9ZqmEOwKyOgZuJgpkFXbbMWdR/sEg9/iLG1H8CANdgqCMHSKbPtXsqshn5Pnyyl6TfT
+	 a4YKtaa6Ivh1AbA1F6GIYQUvoL8JOBnq2j0Ek3mcQ2VQaYS57UpGN/26+uY5NFoqtVXKF
+	 ql55upAedNUsc1wU+ZjlRmM0M3qsVnyBhlCdxLKoIf24lbJpF54KCAvJeoyakFfARGUZd
+	 nLiIv42q7GTnkiytTtq79f2bvyuHvbcWQz89u5iPFiRpZZwKhG6CHwpJM486utPEe/N+n
+	 mBrjhynJ2VDd7GRe8ZZP3r22IANJXoS6Degid4d/t3zmqb8mqB/3/WrKGqgxYvbm1BQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052408;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052411;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JlnY4/FYIE2IGe3p+zVGo8vTW3szrEicH23pV5YIfmQ=;
-	b=ZS82zWZYeNJiZ5ijWrTIpldum2KgmP5Ln7UAjbqfTh3OiAKPLT4jLrIGBcr66lfUl5rA
-	 es8v4Z1NCINHGrktwPJSmp7XpPHHh2ZzNCOcpX2FcdJGhvoZZLJHaN5YLzBUwEe5mi+hG
-	 dT1ruykeM4bUFVvx7iGTuW7um2JUUyKJ4pjRzy/8d28cMfvxB91F1tkFa9f5PamgAEFiH
-	 seu4Y9bWf7BO1U62nWQFAIHgxiAcUpMvxj0R1qVI414//WyS9g6chrA6eQx5uMHi6aogd
-	 HpyS7KEjFRb50QuhK4UGW94gBO4yDUd9JLhnNGOAl5ih/FkAMBupWxFufdS7QiwV18Q==
+	bh=yu7YySPQPz6bcY7HBX+QAZK6anQT220mYFi26r+AGSw=;
+	b=N1xe0v2VoNfdP1PMr11Abnsc6cU7OFAFeR1zTKJhGFZpDQ93pNvVlSLQtJWkVjmZXM37
+	 6PKN8e8tQqDhYwKpzst7uyu2UDwTYpTJ1mbAlDUttvELBOZPpQQcuIwgbQGvj3t4fPEJ4
+	 4lUklvjAO/E+SyMxUf8XYn4KlAuG/ytN6FoSNotuBFoPMkSKN2/0NHcsbAuGHDVZDkHp4
+	 8b/6HR0ZBqq5OkzOsYDelbvcYc3vjKpD7157scSh8TKzXvQykfEF6FgyGtVOyzNTYaxkc
+	 OiE37yCX6U8lxOTuOy/Y/ts//MIZCUtIV9rmPKrCX3pBrBoX+Jvh+Z4/N6RbzzqgTgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N+eLkzXz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YeEGCAwB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1424606A333;
-	Thu, 19 Nov 2026 01:40:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D530606A32C;
+	Thu, 19 Nov 2026 01:40:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N+eLkzXz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C6EC1F000C7;
-	Thu, 19 Nov 2026 01:40:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YeEGCAwB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E011F000D0;
+	Thu, 19 Nov 2026 01:40:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052408;
-	bh=JlnY4/FYIE2IGe3p+zVGo8vTW3szrEicH23pV5YIfmQ=;
+	s=korg; t=1795052411;
+	bh=yu7YySPQPz6bcY7HBX+QAZK6anQT220mYFi26r+AGSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N+eLkzXzchNMJe+sMK09rJDfXx9ajv4ZeF6ChD8QknwC6vYsBk+34uhHY6t0ZIOxw
-	 LdcESsSfQbgoYkIG54CBmA9KEeWw9kBLo/MorNirDkHeru5FoIgTz9EZRy+onD7VWH
-	 WTtLpZI+ycaEHUbNePdUy5Y4wtlS1qpdk0whhSPw=
+	b=YeEGCAwB25eZ04GEpWIdH6ePcANGa2ZDAAe322nZ6sx3kachqZ8eoFBGVMSjjMAnY
+	 xXWWsaZxyONAwUNwFz1TjWzihG80p1pH7FS4sBrfgKBJlUSPwANBTa9kIclzNWKeST
+	 vdk26DrsvNTElj2bl3jV5NMFLwd4qcUtDx/zRz+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 5.15 0552/2214] staging: greybus: uart: fix racy TIOCMIWAIT implementation
-Date: Wed, 18 Nov 2026 15:37:08 +0100
-Message-ID: <20261118150033.074981288@linuxfoundation.org>
+	Tianchu Chen <flynnnchen@tencent.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 0553/2214] staging: rtl8723bs: fix RX buffer OOB write from device-reported length
+Date: Wed, 18 Nov 2026 15:37:09 +0100
+Message-ID: <20261118150033.145112100@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,90 +67,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Tianchu Chen <flynnnchen@tencent.com>
 
-[ Upstream commit e94cda6551d4716b17353fc458baa9e85ddea9ff ]
+[ Upstream commit c52929073fccbc149267a2fd7458626a7e9abcfc ]
 
-Check the wakeup condition after adding the task to the waitqueue and
-updating the task state to avoid missing a racing modem status update or
-disconnect.
+sd_recv_rxfifo() trusts the device-reported RX0_REQ_LEN value
+(hal->SdioRxFIFOSize, a u16 read from the card via CMD52) as the
+size of the next RX packet and passes it to sdio_read_port(), which
+copies that many bytes into the recvbuf skb whose data area is only
+MAX_RECVBUF_SZ (10240) bytes. A bogus device on SDIO can report up to
+65535 bytes, causing a heap overflow of up to ~55KB past the skb
+buffer.
 
-Store the old icount on entry and do not update it in the completion
-handler to avoid missing events or reporting spurious ones (due to modem
-status changes before TIOCMIWAIT was called).
+Bail out when the RX0_REQ_LEN exceeds MAX_RECVBUF_SZ. This is expected
+to keep behavior unchanged on normal devices.
 
-Fixes: e68453ed28c5 ("greybus: uart-gb: now builds, more framework added")
-Cc: stable@kernel.org	# 4.9
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260907095305.130762-1-johan@kernel.org
+Discovered by Atuin - Automated Vulnerability Discovery Engine.
+
+Fixes: 554c0a3abf216 ("staging: Add rtl8723bs sdio wifi driver")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
+Link: https://patch.msgid.link/8114c3adc1acaea78523cc0fb4d4b25f7665cee9@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/greybus/uart.c | 30 ++++++++++++++++++------------
- 1 file changed, 18 insertions(+), 12 deletions(-)
+ drivers/staging/rtl8723bs/hal/sdio_ops.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/staging/greybus/uart.c b/drivers/staging/greybus/uart.c
-index 87e9e349b3c61..6438ba930a594 100644
---- a/drivers/staging/greybus/uart.c
-+++ b/drivers/staging/greybus/uart.c
-@@ -53,7 +53,6 @@ struct gb_tty {
- 	spinlock_t read_lock;
- 	spinlock_t write_lock;
- 	struct async_icount iocount;
--	struct async_icount oldcount;
- 	wait_queue_head_t wioctl;
- 	struct mutex mutex;
- 	u8 ctrlin;	/* input control lines */
-@@ -642,11 +641,16 @@ static int wait_serial_change(struct gb_tty *gb_tty, unsigned long arg)
- 	if (!(arg & (TIOCM_DSR | TIOCM_RI | TIOCM_CD)))
- 		return -EINVAL;
+diff --git a/drivers/staging/rtl8723bs/hal/sdio_ops.c b/drivers/staging/rtl8723bs/hal/sdio_ops.c
+index a545832a468e7..c2a52fa303bf9 100644
+--- a/drivers/staging/rtl8723bs/hal/sdio_ops.c
++++ b/drivers/staging/rtl8723bs/hal/sdio_ops.c
+@@ -792,6 +792,13 @@ static struct recv_buf *sd_recv_rxfifo(struct adapter *adapter, u32 size)
+ 	struct recv_priv *recv_priv;
+ 	struct recv_buf	*recvbuf;
  
--	do {
-+	spin_lock_irq(&gb_tty->read_lock);
-+	old = gb_tty->iocount;
-+	spin_unlock_irq(&gb_tty->read_lock);
++	/* RX0_REQ_LEN is device-reported; the skb buffer is only
++	 * MAX_RECVBUF_SZ bytes, reject bogus lengths instead of
++	 * overflowing past it.
++	 */
++	if (size > MAX_RECVBUF_SZ)
++		return NULL;
 +
-+	add_wait_queue(&gb_tty->wioctl, &wait);
-+	for (;;) {
-+		set_current_state(TASK_INTERRUPTIBLE);
-+
- 		spin_lock_irq(&gb_tty->read_lock);
--		old = gb_tty->oldcount;
- 		new = gb_tty->iocount;
--		gb_tty->oldcount = new;
- 		spin_unlock_irq(&gb_tty->read_lock);
- 
- 		if ((arg & TIOCM_DSR) && (old.dsr != new.dsr))
-@@ -656,18 +660,20 @@ static int wait_serial_change(struct gb_tty *gb_tty, unsigned long arg)
- 		if ((arg & TIOCM_RI) && (old.rng != new.rng))
- 			break;
- 
--		add_wait_queue(&gb_tty->wioctl, &wait);
--		set_current_state(TASK_INTERRUPTIBLE);
--		schedule();
--		remove_wait_queue(&gb_tty->wioctl, &wait);
- 		if (gb_tty->disconnected) {
--			if (arg & TIOCM_CD)
--				break;
- 			retval = -ENODEV;
--		} else if (signal_pending(current)) {
-+			break;
-+		}
-+
-+		schedule();
-+
-+		if (signal_pending(current)) {
- 			retval = -ERESTARTSYS;
-+			break;
- 		}
--	} while (!retval);
-+	}
-+	__set_current_state(TASK_RUNNING);
-+	remove_wait_queue(&gb_tty->wioctl, &wait);
- 
- 	return retval;
- }
+ 	/*  Patch for some SDIO Host 4 bytes issue */
+ 	/*  ex. RK3188 */
+ 	readsize = round_up(size, 4);
 -- 
 2.53.0
 
