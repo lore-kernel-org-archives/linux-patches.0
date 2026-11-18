@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046576;
-	b=HYvX89VxrzVuB69Ux+WydGKT3BiWMq7VXUG6YPOctc6fv1sMVcl70+NNtpBIAWEwKEEU
-	 feVrpn7HjIblWwujCKuknMsVqt0D4ssQBspG1lY3g9FNH4L3ps7Y7UmGeKPNV6UqyBlnT
-	 dXcbCj5ASi8F4wm2yvtFR992PCD69uhGPNg/fKqUqUoOGa/UuvVCIbDcCqDQK1y3+YHfw
-	 qULFMFYNxpMTBhONkz6KL/5kK4SeTwqKpnag42daR4N9y71IsxrQnMGmhBCTHPaoX/9Sv
-	 gGUSN6B+Bku/CMBLUlmqqgseuIvOa+xq2/llmFRnDoMpGuWTODBvRiVyFkj6DUGGsYw==
+	t=1795046578;
+	b=NqSZCtkjhWE02WF8tIOxSAA6w0y+3ty4eh2NYNTfRN+A6IKM7PVmWMaxg2UuPwIKO2pc
+	 61Q+pGt0EDO5JP8tOcV+znEi1VnMDL1deMyKCa4cat6Xne5SVBDjqn9aDfIX/MIjLhE2q
+	 EuTfHR8AIkOonOQy6CvXzRLGSKnDq0gIcT6l2VV4FbQppDkUvKXAI1pOS3H/2mPctdXZP
+	 +Vb5VcT30jyRctnDima0xnu+nlsH2I35qt6k3VnEftDn8+S5ZLqURlzvMWQjMYOmf8exG
+	 NAMu08wq4q7SbjOL512zoVcTfPU2zqNzIlPIwh4IHdmTWFi8a1FSyDC85GomWx6MM3Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046576;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046578;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=erEdCGSSWOnXSWlbwiQ1Z/C3kjqCKQRn6GsgRJ2G73w=;
-	b=wN0wYtMWluNWckexUoJrhU4ccWg6AOKcaRgwzC7VfvJ9RVhrxpN9kklkvdn+kdKtLrOS
-	 DhDNt8KytCjB70GIoLJKF6cUy1uZGl3mZ4qrqkPotEl3qnYbImFI2vNJrLbriKB7u1YcB
-	 npMfVzu95xAeX7q7tsEKJoiva1qbDsfEm2VQLL6wBo2hpwbNs8U0u9b/LXLEvKWCq8suJ
-	 IW6fnFhpS0CSpe00RGVwoj5bvPqQM8S3NAIP0XAZfCJuRgxGZ0LHEbpns+XTUaxgP6lDp
-	 brVEn6zT7TpN9a5vRWQbaSRX756yU3RQXnO81yTm4Djhl4kXaCF2gVKFe0zYtfCxGcg==
+	bh=REoydpm47hQvNN4jz++njiZk4OsiWgX9cxlBsOHGSVg=;
+	b=dFD+e2g4Lerudpt1tv6SvdbCgP2JPBuAmba0EFuHZqqtnDx/2f0lEJUVpQ103TOqcA9m
+	 oUp81WLf2V18DGmdG+NngY3Tt6idiQX2EDM+SH+yrCZRk6YqBjyoCnbMs1iyjWFw4uS97
+	 PtxnahTqr1VZ1JzrfExK9wSNo1YSnGtWp3zV4JWxrQaTEjtP4r0DWPhiuGzqpZAjG5Mjv
+	 +bwbbuwbm5aXhd8plzEH+ziRRxAnJDuuAD6oKD0B6ipyZAP+wuCCjMmChbcY5msF8j9JY
+	 IE4SeCtS8T2oTtb7WUHSRgrCGm0SRAaGbnizUbr4WTz8VOFxh2YdD+DaeG0gfFFXQIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M2mvlstN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V8DcyU8V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8504606A332;
-	Thu, 19 Nov 2026 00:02:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E871606A325;
+	Thu, 19 Nov 2026 00:02:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M2mvlstN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01E631F000C4;
-	Thu, 19 Nov 2026 00:02:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V8DcyU8V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2FD41F000C4;
+	Thu, 19 Nov 2026 00:02:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046575;
-	bh=erEdCGSSWOnXSWlbwiQ1Z/C3kjqCKQRn6GsgRJ2G73w=;
+	s=korg; t=1795046578;
+	bh=REoydpm47hQvNN4jz++njiZk4OsiWgX9cxlBsOHGSVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M2mvlstNESJMr3MVr3hmGnpzdPTC90uzEQCE5F3hZ3fGpErYBk3II4/+DbIscOa5v
-	 8OKxA1yPbyIfYWupquepKJd3K86QmFgskDTx9/UbwB6xcRLApWAfALsnQFZCcQSWCd
-	 7bZ+qSHyqy2wjXUR662w+irV6TWoqKlv/Gz/LS9s=
+	b=V8DcyU8V7tIWFjigkAoK+qXIwkQDr0DQfCa/YJ5mDN4glLNQAk5MBaiX4Ox86BBMy
+	 q5lkMFzAu1fBOLfairQYiPmpNOHZAxAzuP3VXIrGNx9e0cU3HoLtmKl5Tg53CVSqsd
+	 OuslWIfXkmdpomBmeXLqM7B9zRe5OGbv/eJeQyEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danijel Slivka <Danijel.Slivka@amd.com>,
-	Milan Milicevic <Milan.Milicevic@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Zhao Gongyi <zhaogongyi@bytedance.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1293/2857] drm/amdgpu: publish IH enabled before PSP programs IH_RB_CNTL
-Date: Wed, 18 Nov 2026 15:38:47 +0100
-Message-ID: <20261118150248.042247176@linuxfoundation.org>
+Subject: [PATCH 6.1 1329/2857] ata: libata-scsi: reject data-in commands with a data-out buffer
+Date: Wed, 18 Nov 2026 15:39:23 +0100
+Message-ID: <20261118150249.290374458@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,80 +69,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Milan Milicevic <Milan.Milicevic@amd.com>
+From: Zhao Gongyi <zhaogongyi@bytedance.com>
 
-[ Upstream commit 9d550dd1a3b4b96da49f3560a84b5c2413a88cd3 ]
+[ Upstream commit a4845f077415ef32fe672c841e2fc58ae9e28273 ]
 
-On SR-IOV, programming IH_RB_CNTL through PSP is slow enough for the
-first MSI to arrive before ih->enabled is set. amdgpu_ih_process()
-then drops the interrupt, rptr stays at 0, and RPTR_REARM never
-generates another edge, so every ring hits the fence fallback timer.
+SG_IO can submit a data-in SCSI command with DMA_TO_DEVICE. The
+scatterlist can then contain pages pinned without write access.
+ata_scsi_rbuf_fill() writes simulated replies to that scatterlist;
+in the reported case, the copy tried to write the shared zero page
+and faulted in the kernel.
 
-Set ih->enabled before psp_reg_program() on the indirect IH path for
-Navi10 and IH v6.0, and clear it if programming fails.
+The same mismatch can affect SG_IO commands translated by libata.
+ZBC IN and GET PHYSICAL ELEMENT STATUS completion handlers can modify
+the receive buffer even if the drive aborts the command. For ATAPI,
+the successful INQUIRY completion also rewrites the buffer in
+atapi_fixup_inquiry().
 
-Signed-off-by: Danijel Slivka <Danijel.Slivka@amd.com>
-Signed-off-by: Milan Milicevic <Milan.Milicevic@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit b2f9434f9d17c94798e8d8957af3adc4a9949016)
+Reject these mismatched commands before the buffer is written or the
+command is issued. Report ABORTED COMMAND / DATA IN BUFFER ERROR because
+the CDB itself can be valid; the supplied transfer direction is wrong.
+
+Backport notes: Use the older five-argument ata_scsi_set_sense()
+interface and spell DATA IN BUFFER ERROR as ASC/ASCQ 0x4b/0x0a.
+The older ata_scsi_rbuf_fill() takes struct ata_scsi_args;
+get the device and command from args, and reject before copying.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://lore.kernel.org/r/20261104130638.37882-1-zhaogongyi@bytedance.com
 Cc: stable@vger.kernel.org
+Signed-off-by: Zhao Gongyi <zhaogongyi@bytedance.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/ih_v6_0.c   | 13 ++++++++++++-
- drivers/gpu/drm/amd/amdgpu/navi10_ih.c | 13 ++++++++++++-
- 2 files changed, 24 insertions(+), 2 deletions(-)
+ drivers/ata/libata-scsi.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/ih_v6_0.c b/drivers/gpu/drm/amd/amdgpu/ih_v6_0.c
-index fccbec438bbed..f3ad852ec2f2e 100644
---- a/drivers/gpu/drm/amd/amdgpu/ih_v6_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/ih_v6_0.c
-@@ -168,8 +168,19 @@ static int ih_v6_0_toggle_ring_interrupts(struct amdgpu_device *adev,
- 		tmp = REG_SET_FIELD(tmp, IH_RB_CNTL, ENABLE_INTR, (enable ? 1 : 0));
+diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
+index ed15d11cf9fcd..87ef473d22791 100644
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -1911,6 +1911,18 @@ static int ata_scsi_translate(struct ata_device *dev, struct scsi_cmnd *cmd,
+ 	if (xlat_func(qc))
+ 		goto done;
  
- 	if (amdgpu_sriov_vf(adev) && amdgpu_sriov_reg_indirect_ih(adev)) {
--		if (psp_reg_program(&adev->psp, ih_regs->psp_reg_id, tmp))
-+		/*
-+		 * PSP programming of IH_RB_CNTL is slow enough for MSI to
-+		 * arrive before this call returns. Publish ih->enabled first
-+		 * so amdgpu_ih_process() consumes that IV and rearms.
-+		 */
-+		if (enable) {
-+			ih->enabled = true;
-+			smp_wmb();
-+		}
-+		if (psp_reg_program(&adev->psp, ih_regs->psp_reg_id, tmp)) {
-+			ih->enabled = false;
- 			return -ETIMEDOUT;
-+		}
- 	} else {
- 		WREG32(ih_regs->ih_rb_cntl, tmp);
- 	}
-diff --git a/drivers/gpu/drm/amd/amdgpu/navi10_ih.c b/drivers/gpu/drm/amd/amdgpu/navi10_ih.c
-index cb4e4beb94b55..4e45568902647 100644
---- a/drivers/gpu/drm/amd/amdgpu/navi10_ih.c
-+++ b/drivers/gpu/drm/amd/amdgpu/navi10_ih.c
-@@ -194,8 +194,19 @@ static int navi10_ih_toggle_ring_interrupts(struct amdgpu_device *adev,
- 		tmp = REG_SET_FIELD(tmp, IH_RB_CNTL, ENABLE_INTR, (enable ? 1 : 0));
++	/*
++	 * A data-out request may contain pages pinned without write access.
++	 * Reject a translated data-in command before issuing it, since its
++	 * completion handler may write to the buffer even if the device fails.
++	 */
++	if (unlikely(cmd->sc_data_direction == DMA_TO_DEVICE &&
++		     ata_is_data(qc->tf.protocol) &&
++		     !(qc->tf.flags & ATA_TFLAG_WRITE))) {
++		ata_scsi_set_sense(dev, cmd, ABORTED_COMMAND, 0x4b, 0x0a);
++		goto done;
++	}
++
+ 	return ata_scsi_qc_issue(ap, qc);
  
- 	if (amdgpu_sriov_vf(adev) && amdgpu_sriov_reg_indirect_ih(adev)) {
--		if (psp_reg_program(&adev->psp, ih_regs->psp_reg_id, tmp))
-+		/*
-+		 * PSP programming of IH_RB_CNTL is slow enough for MSI to
-+		 * arrive before this call returns. Publish ih->enabled first
-+		 * so amdgpu_ih_process() consumes that IV and rearms.
-+		 */
-+		if (enable) {
-+			ih->enabled = true;
-+			smp_wmb();
-+		}
-+		if (psp_reg_program(&adev->psp, ih_regs->psp_reg_id, tmp)) {
-+			ih->enabled = false;
- 			return -ETIMEDOUT;
-+		}
- 	} else {
- 		WREG32(ih_regs->ih_rb_cntl, tmp);
- 	}
+ done:
+@@ -1947,6 +1959,12 @@ static void ata_scsi_rbuf_fill(struct ata_scsi_args *args,
+ 	struct scsi_cmnd *cmd = args->cmd;
+ 	unsigned long flags;
+ 
++	/* A data-out request may contain pages pinned without write access. */
++	if (cmd->sc_data_direction == DMA_TO_DEVICE) {
++		ata_scsi_set_sense(args->dev, cmd, ABORTED_COMMAND, 0x4b, 0x0a);
++		return;
++	}
++
+ 	spin_lock_irqsave(&ata_scsi_rbuf_lock, flags);
+ 
+ 	memset(ata_scsi_rbuf, 0, ATA_SCSI_RBUF_SIZE);
+@@ -2772,6 +2790,13 @@ static unsigned int atapi_xlat(struct ata_queued_cmd *qc)
+ 
+ 	qc->complete_fn = atapi_qc_complete;
+ 
++	/* atapi_fixup_inquiry() writes to the buffer on successful completion. */
++	if (scmd->sc_data_direction == DMA_TO_DEVICE &&
++	    scmd->cmnd[0] == INQUIRY) {
++		ata_scsi_set_sense(dev, scmd, ABORTED_COMMAND, 0x4b, 0x0a);
++		return 1;
++	}
++
+ 	qc->tf.flags |= ATA_TFLAG_ISADDR | ATA_TFLAG_DEVICE;
+ 	if (scmd->sc_data_direction == DMA_TO_DEVICE) {
+ 		qc->tf.flags |= ATA_TFLAG_WRITE;
 -- 
 2.53.0
 
