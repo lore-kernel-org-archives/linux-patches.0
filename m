@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051889;
-	b=OwVrsaipX6TN2BlqKP6MNzLCfzbJ7s+Jdqxa4iwlH1PvDm8InTKZtHJU1lXyGW0iO4Vt
-	 4T+sPXlZw2LurKdWyC6gvKesUCrmzCfAuA28uXb4WpuU++ZUNrqNDlGUxN5ytSWXjqJoI
-	 rssz5Aa4+tmTo4hOWIMTz/qKVbv9xnxK5KZJ4LICpuwNJzMLuEx7glWAk5VLOvyj3kYIG
-	 lP3K7Mt48K7vPA6WSapHpM8HCWBXaGB1BtoLB00p20oHiZ2A7L+psBEw7ujQQ0gL7cE/A
-	 xbUSridTzV7v6I+KiVMUiq1Gy863TrSb9xr17jsY843OpvlzdxOTg57XGU+C3ylXpgg==
+	t=1795051892;
+	b=c2QBfzD1+JV8/HSLf8tsvZDXPXjcrNGb/qAissUJ2oF+BJEj/8zD8HcPnbHHgZFchexr
+	 ksAA7VbHOz5GiJ8yKtdSVnKVRdUXBEoxCghqlPR7Cc63hKU8vV/q6wp914p1PGe8YAVcz
+	 PWuevd/wUlwvx7uLOgKBVV64LqHQof+q4AerzkaVO46XUNuEFEdy9dpUnpljdpDCeJIXQ
+	 J6y90vhVnJFgaIxzOWeDBvryqAh/6ph9QZbBuaq1xwRwwi5sRSlVaRZJTcnBLl9bhAaZg
+	 u9xuplFvrcq0OF3gihddNLEhL4IvSNYQfF+cxmaMTh/KLHQjsEuQIGtnY4nZOTctOOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051889;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051892;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Obcsg8drJxjX5o0lgMWbr5OtppAI8zIhfryK1iUhh/E=;
-	b=hKxdSAPNMffb2+3QNXNTR6ezG9CI4C+Ks9IuchB4hBTMKps/skWo/XwrhMV1qZJmWZiO
-	 ZODBg5mFPwwCdqWik1Et4X3K/J9kI1QRWprtb9yq5ZpbN8/23os8+aDRAxtL2G3cTSqj2
-	 vzvT3/fqNn+LyiHqzOw3Lq1fMl9Piael4nI2NmQYEba3nxluLEgCGUhejditwOeoyTD5U
-	 J0bIBWPypbZLZDz/qBrCgF7DW3tPyAuGnGygpiF6E6bZtc7NGhZ9UQeL8RXzWwOVTAMGy
-	 Dfz66fKT5DagKyqvBDl8NsyRHkRDMAifS156FB+l00ofiM7Y8KICAza8C3QTEUzfl7Q==
+	bh=LCqfHNVlQzh2krHfIrk6+646Jk7IXnDXcAki/a8WBMo=;
+	b=kzoPkSe91ZVz5jQ2PT2JSOVaK1n2O4vAoE56NCv5UgkR9YVHV5hv0bJ7jDq3azxNQSjD
+	 oDpNJitQYlTYJ9mGXLcgSbCLV1qSAvz8FLB6kOzRJd2CHEhJo7KRFkjl8qhDf9R/GWhU9
+	 KwG26xKCQECZFjhhYrNBPZ+bJu/r7E1lReXebNgKZ3kldXGthZTtDJUDFatg9fFhDb0mY
+	 hRr8PW8rPAcmdAzBnNOy4Iqh5x4/CrEtdhlHU07LGXuzDdZEICkd6cTHm3wOvxB6y+dU/
+	 UEJMHJnHsijOtDNoRYlcjTXFXVD1qIw0rKFkm5V6ZxM1MQIWg2qU3fPA7+msFHdSnkA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z3O31Z1t;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="BPD/l429";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E25060A262A;
-	Thu, 19 Nov 2026 01:31:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4272360A3806;
+	Thu, 19 Nov 2026 01:31:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z3O31Z1t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CEB91F000C4;
-	Thu, 19 Nov 2026 01:31:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BPD/l429
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4731C1F000CA;
+	Thu, 19 Nov 2026 01:31:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051889;
-	bh=Obcsg8drJxjX5o0lgMWbr5OtppAI8zIhfryK1iUhh/E=;
+	s=korg; t=1795051891;
+	bh=LCqfHNVlQzh2krHfIrk6+646Jk7IXnDXcAki/a8WBMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z3O31Z1tMvTeFy5MHA6x2AABU5Nm4WhBF8SXxtB0Y3UTaDEHNVD9rKOC54h3n1MtT
-	 oBMQ+QDnRQUXwqyr1xaXeutZjS12B/bZ97Zl3M4/HKZGPbdGdU8tEN0Sr0tCvqpV8V
-	 3iNY9He0KUeO0GAy6FXTcHBeir4/bSDBgWnM3/OI=
+	b=BPD/l429JM/kBIa4y7pQ98k+P4Pl1HdOVgs7i/s342PBVM10wEg40aRnq74C/PaW/
+	 4N5fLihXIXTIUGrACnUbt/4HBiqbhyFcAno8lcQYgFHl5n2gx/qai/G/5WG5uqlXvk
+	 DUM+VpYKCrz+YG5JOhk28tDEefpBYhJWc8uT6N6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.15 0309/2214] io_uring/io-wq: save worker type before dropping its reference
-Date: Wed, 18 Nov 2026 15:33:05 +0100
-Message-ID: <20261118150022.518691066@linuxfoundation.org>
+	VEGA <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 5.15 0363/2214] SUNRPC: trace an accepted transport before publishing it
+Date: Wed, 18 Nov 2026 15:33:59 +0100
+Message-ID: <20261118150025.194527879@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,52 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit 37e425460b7c41687e51e3254b1eb1d799da9614 upstream.
+commit 06f90cf104fc21ee01e7ef1eb80e092173089b9f upstream.
 
-io_wq_cancel_tw_create() inspects cb->func after calling
-io_worker_cancel_cb(). For an existing worker, that call can drop the
-last worker reference and wake io_worker_exit(). If the canceling task
-is preempted, the worker can be unlinked and freed by kfree_rcu() before
-the callback function is inspected. KASAN reports a slab-use-after-free
-read in this path.
+svc_handle_xprt() publishes a newly accepted transport before tracing
+it. svc_add_new_temp_xprt() places the transport on sv_tempsocks and
+clears XPT_BUSY, so another nfsd thread can dequeue it at once. If the
+peer has already closed the connection, that thread runs
+svc_delete_xprt(), which drops the list reference, the only reference
+the new transport holds. trace_svc_xprt_accept() then reads the
+transport's addresses and network namespace from freed memory.
 
-Save whether the callback belongs to an unpublished continuation worker
-while its reference is still held, then use the saved result for the
-conditional free. This preserves the existing accounting and frees only
-the worker allocated for the canceled continuation.
+Before publication the accepting thread owns the transport
+exclusively: XPT_BUSY is still set from svc_xprt_init() and the
+transport is on no list. Emit the tracepoint there.
 
-Fixes: e6db6f9398da ("io_uring/io-wq: only free worker if it was allocated for creation")
+Fixes: 11bbb0f76e99 ("SUNRPC: Trace a few more generic svc_xprt events")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reported-by: VEGA <vega@nebusec.ai>
+Assisted-by: LLM
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Link: https://patch.msgid.link/d15495bff2247e3f9d4f9ef36df8e246a3898380.1789220778.git.zhilinz@nebusec.ai
+[ cel: trace before publication instead of taking an extra reference ]
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io-wq.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/sunrpc/svc_xprt.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -1234,14 +1234,16 @@ static void io_wq_cancel_tw_create(struc
- 
- 	while ((cb = task_work_cancel_match(wq->task, io_task_work_match, wq)) != NULL) {
- 		struct io_worker *worker;
-+		bool free_worker;
- 
- 		worker = container_of(cb, struct io_worker, create_work);
--		io_worker_cancel_cb(worker);
- 		/*
- 		 * Only the worker continuation helper has worker allocated and
--		 * hence needs freeing.
-+		 * hence needs freeing. Save this before dropping its reference.
- 		 */
--		if (cb->func == create_worker_cont)
-+		free_worker = cb->func == create_worker_cont;
-+		io_worker_cancel_cb(worker);
-+		if (free_worker)
- 			kfree(worker);
- 	}
- }
+--- a/net/sunrpc/svc_xprt.c
++++ b/net/sunrpc/svc_xprt.c
+@@ -834,8 +834,8 @@ static int svc_handle_xprt(struct svc_rq
+ 		newxpt = xprt->xpt_ops->xpo_accept(xprt);
+ 		if (newxpt) {
+ 			newxpt->xpt_cred = get_cred(xprt->xpt_cred);
+-			svc_add_new_temp_xprt(serv, newxpt);
+ 			trace_svc_xprt_accept(newxpt, serv->sv_name);
++			svc_add_new_temp_xprt(serv, newxpt);
+ 		} else {
+ 			module_put(xprt->xpt_class->xcl_owner);
+ 		}
 
 
