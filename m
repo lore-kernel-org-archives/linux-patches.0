@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037025;
-	b=MmAUuN0kVsgFEPI5eoVPhse6pcLTa426m98upFSt2BnRTdlS4WeYZygchPaBSCWHEOZ5
-	 nrb4dxlXjQy94SUma1IoJ+d3Lv3RdViWHfy/UQUlbaooO8PfyEkRB+TKeMw20zrHm1hTo
-	 M9eMf73wVJhVJlAKCZxEe+V0ArBLwyvsHEpNnhIQ2/POj87x3Ow0W8lRj5XbT58KiNh3L
-	 i5aVT+8OHLqhWBhQ/CuOFD6fee6hFc4RW8GVtLncENux35ElC835Iy3YH59DaBAPDjJ2R
-	 cm8jypHsQL0AZ6N1xo0CV1Lt2ktqVjtRWJR26mK7JxLxh0OCRH4Pz3gtsxjrZ2yUnmQ==
+	t=1795037028;
+	b=h7QWVJ7GZ78AZNYDCIHhuXXgPbaRFjJGlz5N8JwdM42t90pLgAl+S/SLt170Aba6Y180
+	 j4tiv2KSZ3Zaprvahbc8uYzaVl65GDid2bLG8wM3N7x89m58hfd+t9nwSVWMbNOMDupw2
+	 gVloUYuHzyZrXUo+ppO/0VTapCX1DBoaFOMiG6HLtsChp06JY9BAu6G6r9b0D86QFUCrZ
+	 ojDKJnuocUZC5Y6FZk4RX6KbyHZsNwXRlS8et+rw85NrqNEK5FEvWCx5TIdTxglBqMW0q
+	 66uMwuYXuygoVZddswrvmKnrYM5a4D58USdv0DItWkhmpU2bEKkTG1F3jTTZvsoZOAg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037025;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037028;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jOkEMkGNHKjCufMc6eEN/ygL7K7ugs4YLuw3up+Gw5U=;
-	b=Uxu8MqZ4PpXoZRXXI+vNouRe4S31+OstLLpfs+h+GZhroI3H0L8+XB0J01VF7e3iD9IB
-	 bp0gzZNcO9QCwcYDLfpDAMBG6lcRl86zobcDeRc58/Waifs8GbhFWCeWN9fjhEVIE/XJn
-	 svkgs089TKpLTMMNNpIRlkQ35+5RzXAYzqPQQtCMt+ytm4ODE6fWhtpjmQ5728/sc86qw
-	 I28qu1U5b2Hu38ILcYQk8EQ6u7NVut3gbsziMZlIJ5hyIiCJwMCEg97DPhSd8y2oRTTxu
-	 VHCmnaMM2EwL0krX+JCofA1t7+T08jr1U9zrBPDbSVERG45KdXSnUPbpSnNN9dnRreQ==
+	bh=50M5cD5OaeqnimxgMyPN6P+m4ZMCCcx2pHvD4uMUpcg=;
+	b=Pdf5dsrbH8klR2gNd24FiYOEFcUlh7XQ+69v3NgQ06goULAaciVzFMlR8V+fbLpGpQRu
+	 RzIfDVNB+Z0ugnAuVcG9pallGL8OvqKAjmKJJIS3Qa4CFAmJg9EUrRLvFFA53eJQ4HKp6
+	 8KMlQnq3tSCyXpWwBLGL3J1odGfRgWbkH/7HQf2FnvobiHxWBXcs1DO2ySXZumx+F7CNA
+	 r833G8rNKkZc0/SdBEUS5l1Hzskk4jlNiZfwu3pkNjnXbrmlD7jl7FiiFrjou+sNpZya7
+	 ZqH8kWRTlsd1A09y4QcXg033tdR6U/ACrPQXbeJZyhpn2usU8QfUerhmMI1X9bdiKuA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1I3KmQo9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="xOu/CBsq";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8FB1606A32F;
-	Wed, 18 Nov 2026 21:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88595606A31C;
+	Wed, 18 Nov 2026 21:23:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1I3KmQo9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F9B1F000C5;
-	Wed, 18 Nov 2026 21:23:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xOu/CBsq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBA351F000C4;
+	Wed, 18 Nov 2026 21:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037025;
-	bh=jOkEMkGNHKjCufMc6eEN/ygL7K7ugs4YLuw3up+Gw5U=;
+	s=korg; t=1795037028;
+	bh=50M5cD5OaeqnimxgMyPN6P+m4ZMCCcx2pHvD4uMUpcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1I3KmQo9wnyCB/lVKeytSK2JtFA779BNXMkGuhx0v//8Kq5a5tB4Miv2w3mRnUoBw
-	 uE+ie9oUn91qCa0AWMTMzP/PUZ4B45Xtz3KIa0DDnjotEn09Q0qblbwzdNMeCg1K6R
-	 n9LZB6p6U7bzRDFOoS6pF+1p9L7pvdRsPIMzKLTA=
+	b=xOu/CBsqhq11ts4L+CgwxQ5tIQAyj1BDANd8mbOxCfYoc7Vme23m4Gp2CHPzmaY3z
+	 HPpFocu0a9dxL1S93J5AmQnOsyUBbVnFxHq1geDoPAep9IIqF8hO1MEUNlHYWBsSfI
+	 Rsxpsd+X5goc0ciHXShQGvzHy9cmz7/ChCn6exXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Yang <mmyangfl@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hyeontae Lee <wonju345@naver.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1267/3318] net: hisilicon: hisi_femac: Stop the receiver before releasing the RX ring
-Date: Wed, 18 Nov 2026 15:31:29 +0100
-Message-ID: <20261118150358.230271891@linuxfoundation.org>
+Subject: [PATCH 6.6 1268/3318] fs/ntfs3: bound CreateAttribute asize against record_size in do_action
+Date: Wed, 18 Nov 2026 15:31:30 +0100
+Message-ID: <20261118150358.261147165@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,43 +68,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Yang <mmyangfl@gmail.com>
+From: Hyeontae Lee <wonju345@naver.com>
 
-[ Upstream commit d54b21d824302af52d06574870817fbe14774dab ]
+[ Upstream commit fb0f0ef7b5a6bc761b372ce00764d4b6e0b91a47 ]
 
-hisi_femac_net_close() frees the receive ring while the RX address queue
-still holds every address that was pushed to IQ_ADDR.
+In do_action()'s CreateAttribute case (fslog.c:3286), attr2 points into
+the on-disk log record and asize = le32_to_cpu(attr2->size) is therefore
+attacker-controlled on mount.  The guard bounds asize only against the
+log record itself,
 
-A port that keeps receiving then DMAs arrived frames into buffers that
-other slab caches have already taken back; on an EC6108V9C (hi3798mv100)
-the queue still held all 52 armed addresses right after the interface
-was closed, and had dropped to 43 after 15 s of broadcast traffic.
+	Add2Ptr(attr2, asize) > Add2Ptr(lrh, rec_len)
 
-Reset the port before the buffers are released, so that the receiver no
-longer holds any of their addresses.
+where rec_len is the client data length, and separately bounds dlen
+against the MFT record.  Nothing bounds asize against record_size, but
+all three writes that follow are into rec, a kmalloc(sbi->record_size)
+buffer allocated by mi_init() (record.c:105):
 
-Fixes: 542ae60af24f ("net: hisilicon: Add Fast Ethernet MAC driver")
+	memmove(Add2Ptr(attr, asize), attr, used - roff);
+	memcpy(attr, attr2, asize);
+	rec->used = cpu_to_le32(used + asize);
+
+With record_size 0x400, roff 0x38, used 0x160 and asize 0x800 the memcpy
+writes 2048 bytes at rec + 0x38, 0x438 bytes past the allocation, and
+rec->used is left at 0x960.  dlen is 0x18 here, so the existing
+dlen check passes: dlen bounds nothing about the size of the copy.
+
+The equivalent non-replay path already refuses this.  mi_insert_attr()
+performs the same insert and starts with (record.c:488):
+
+	if (used + asize > sbi->record_size)
+		return NULL;
+
+Apply the same bound, spelled as a subtraction to match the neighbouring
+clause.  used <= record_size holds here because check_file_record()
+validates it (fslog.c:2826) and is called on this record at fslog.c:3172;
+roff <= used - 4 follows from check_if_attr() together with the ATTR_END
+check at fslog.c:2844, so bounding used + asize bounds both copies.
+
+The sibling WriteEndOfFileRecordSegment case does the equivalent check
+against record_size at fslog.c:3277.
+
+Reproduced by mounting a crafted image on v7.2-rc5 under KASAN:
+
+  BUG: KASAN: slab-out-of-bounds in do_action.isra.0+0x41f6/0x83a0
+  Write of size 2048 at addr ffff888005c74838 by task mount/69
+
+  CPU: 0 UID: 0 PID: 69 Comm: mount Not tainted 7.2.0-rc5-00300-g8ba098e6b6ff #2
+  Call Trace:
+   kasan_report+0xce/0x100
+   kasan_check_range+0x105/0x1b0
+   __asan_memcpy+0x3c/0x60
+   do_action.isra.0+0x41f6/0x83a0
+   log_replay+0x920a/0xd300
+   ntfs_loadlog_and_replay+0x3ef/0x510
+   ntfs_fill_super+0x1d23/0x4550
+   get_tree_bdev_flags+0x2ef/0x550
+   vfs_get_tree+0x82/0x2f0
+   fc_mount+0x10/0x1b0
+   path_mount+0x517/0x1df0
+   __x64_sys_mount+0x20b/0x270
+   do_syscall_64+0xf9/0x540
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+  Allocated by task 69:
+   __kasan_kmalloc+0x8f/0xa0
+   __kmalloc_noprof+0x1b4/0x460
+   mi_init+0x81/0x110
+   mi_get+0x6a/0x220
+   do_action.isra.0+0x1db4/0x83a0
+   log_replay+0x920a/0xd300
+   ntfs_loadlog_and_replay+0x3ef/0x510
+   ntfs_fill_super+0x1d23/0x4550
+
+  The buggy address belongs to the object at ffff888005c74800
+   which belongs to the cache kmalloc-1k of size 1024
+  The buggy address is located 56 bytes inside of
+   allocated 1024-byte region [ffff888005c74800, ffff888005c74c00)
+
+Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
 Cc: stable@vger.kernel.org
-Signed-off-by: David Yang <mmyangfl@gmail.com>
-Link: https://patch.msgid.link/20261025182022.2959333-1-mmyangfl@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Hyeontae Lee <wonju345@naver.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hisi_femac.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ntfs3/fslog.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hisi_femac.c b/drivers/net/ethernet/hisilicon/hisi_femac.c
-index cb7b0293fe85c..ed0920d580198 100644
---- a/drivers/net/ethernet/hisilicon/hisi_femac.c
-+++ b/drivers/net/ethernet/hisilicon/hisi_femac.c
-@@ -491,6 +491,7 @@ static int hisi_femac_net_close(struct net_device *dev)
- 	netif_stop_queue(dev);
- 	napi_disable(&priv->napi);
+diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
+index 7c26fc591e2fa..f793b5b10c718 100644
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -3304,10 +3304,15 @@ static int do_action(struct ntfs_log *log, struct OPEN_ATTR_ENRTY *oe,
+ 		asize = le32_to_cpu(attr2->size);
+ 		used = le32_to_cpu(rec->used);
  
-+	hisi_femac_port_reset(priv);
- 	hisi_femac_free_skb_rings(priv);
++		/*
++		 * attr2->size is taken from the log record and is bounded only
++		 * by the log record length, not by the MFT record.  Refuse an
++		 * attribute that does not fit, as mi_insert_attr() does.
++		 */
+ 		if (!check_if_attr(rec, lrh) || dlen < SIZEOF_RESIDENT ||
+ 		    !IS_ALIGNED(asize, 8) ||
+ 		    Add2Ptr(attr2, asize) > Add2Ptr(lrh, rec_len) ||
+-		    dlen > record_size - used) {
++		    dlen > record_size - used || asize > record_size - used) {
+ 			goto dirty_vol;
+ 		}
  
- 	return 0;
 -- 
 2.53.0
 
