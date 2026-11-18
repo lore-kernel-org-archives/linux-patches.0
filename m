@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025149;
-	b=gq9IMUrB3s8icgkFXlKArTW2X5lsk4V/eN9iS9GZmrNer/rMjngc85T4OHZAAYNIyK6H
-	 UU5WwKGCGcXzMlLj6pU27v4TtSZe2cuwWF4P+S1QPrydE62iIzKkYyKKyRWqcCfIJtCAG
-	 P5/Eez59ia6/vraTOF8j6csKs73bOxOIV/Fv2ZYu4zYNhE1Vn6uVgrqQARJtMGjmKBvBI
-	 injpW3FoG6EUoJnXdfIAZneFKgWUu4gummDJO8z9xL20ftKLmpkbfIH3a6EINmrge8DY6
-	 XSXglhgYVdNi+0XbpwsNg33MQkiMD0FER0OT3a8zIY/KHk9bC9uVLf/7pjoCCKy3zRw==
+	t=1795025152;
+	b=IbPowuYfI341VhR3SxFMAvt6fkbxmn738VZuicDLEDLcHQOLcsmgLGxzmAHncsNrvpw4
+	 8+wJp5nnnbLZkL4jt4BJsQgg+TGwKJqYwGNfPa6Fyh9ZhobX4wECrv6/4+7y8Q0yQsI6Q
+	 EhkigDdPDmvmnu1+tMpxxi0K22la7Mp2jR+N/Leq+lyhagFDpRj3UDwpWWKiIJsG7TV3T
+	 OP+BWkXfd57Bfc2CTz0K4PrJ4pvxlF6b28/FVRonWPUrnynJNKG+pzRgvbHoyH/wP+w6/
+	 /5VZQ50SpjLmgDtBiRlizni3EBPnsbeR0etWzIv/mSPMXzZsLhOXDoGO8/sAPy3L70Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025149;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025152;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=2egiUJi81iniPFV3foy++gDQGuf8TsdolsJu9lgR57I=;
-	b=fX529u5heXaWCx895b/tLvw+nX1Sl28vkAavSJXG28TeA07/BNsl6lnubZgMaW0tn7fs
-	 HAuD13WF1MMEihJqVJ511wRT0RaTMUFNSzLYbSB/L/1bvYIsJsuL8soe6gum7B+0c0CEa
-	 zbUcyoZt2WMrFWg9hk2U0F5UqL+QrM4YJ+3O1RI4Ovqm7qkp0cNouyKxICMbJ3knCOtks
-	 Etne06dEoLJjwOq3xQU+1X3z3Pgd7w5Y/nuTW5ZojusCJRGKrWoaR4rqt0RnE1XA5xgPS
-	 H+7V/92QOOsOfJzCKCX0fiSL3ZFD3GrAWoq+/tnQmp81ZGHeDXmLeXBk+nVPDeHnxlA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=jRvOizki2anR/U69YqDvh7QY3YYyrTGNRciogQm2140=;
+	b=O6UCOXuSHrCsOcnAvzmvRkJn8eVbxKd/J5OMiERKEWC+FQUkfHfyDhn6iQIuRN8NOCpZ
+	 Mb7cVrHnkmUt0kWG5ZDZz/Jg+iwN+USYIJCdMEBg9mVe++1mRiQ3QpYtN7kroUe12vPhS
+	 aY+wctBHy2YMw12R2hd/LfX77GvsO6zQG6urQx9ka2UaT2cVxPWuXASBfhvu46zpWzEL7
+	 cSaUR8tYMhieJfviB/BjYlgZMntcmBTfrQ/9nOUxNsErfiyloB1su1ZrHZfT/bxxONt3k
+	 VgIM3uurRLOQWZG69XKSTlYtyeti2h9gSH6rlAMc25T5GOhjtsOG5Y4caIqBFZo3D1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZhiaDy3Z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oXzt5qtd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D0A606A339;
-	Wed, 18 Nov 2026 18:05:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD015606A32F;
+	Wed, 18 Nov 2026 18:05:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZhiaDy3Z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E499D1F000C6;
-	Wed, 18 Nov 2026 18:05:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oXzt5qtd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B94E91F000C6;
+	Wed, 18 Nov 2026 18:05:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025149;
-	bh=2egiUJi81iniPFV3foy++gDQGuf8TsdolsJu9lgR57I=;
+	s=korg; t=1795025152;
+	bh=jRvOizki2anR/U69YqDvh7QY3YYyrTGNRciogQm2140=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZhiaDy3ZHt38wz//eVXQOW9inRow1WCQM5WMgU0a2S/UoFTWGj6ebyvUZzt16GXjW
-	 Fi0TeUUrJaA6bHnteOROphlvkJEyufoEsVRm8eYnw/zq0thG4Dbp4faor++IwZ3fF+
-	 YObt3Tr75UVYYjm4kfVqPMxIVjOJ9dPWT42ua7zc=
+	b=oXzt5qtdKLQUE/xRMkoQjSZto2XXtooQT4iz4jtvi6QNIV8IOfQD7RpqRGlNoE2Ec
+	 Hzhp3KaPFdnMlj2vpP8Iv8xJlTMrKLyAAEFaxtZDnfMYWjvlSRUmKcvWN5PQborfAP
+	 eIxpBaEes8dR+U0a4r3mT+2cIlHaYyby46Tqfioo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodolfo Giometti <giometti@enneenne.com>,
-	Danish Khateeb <danishkhateeb03@gmail.com>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0936/2151] pps: generators: wake up PPS_GEN_FETCHEVENT readers on unregister
-Date: Wed, 18 Nov 2026 15:44:31 +0100
-Message-ID: <20261118150156.582675357@linuxfoundation.org>
+Subject: [PATCH 6.18 0937/2151] perf trace: Copy sockaddr arguments by their length
+Date: Wed, 18 Nov 2026 15:44:32 +0100
+Message-ID: <20261118150156.615023231@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -62,71 +62,97 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Danish Khateeb <danishkhateeb03@gmail.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 5b864f8db0bd33216895f3fe0bb1ec245c596c8e ]
+[ Upstream commit 1c443dfc3202048b2cb1d3c2534b39b28701e929 ]
 
-A reader sleeping in PPS_GEN_FETCHEVENT waits for the next event, but
-no event comes after pps_gen_unregister_source(), so the reader sleeps
-until it gets a signal. A PPS_GEN_FETCHEVENT issued after the
-unregister sleeps the same way.
+The BTF augmenter copies sizeof(struct sockaddr), 16 bytes, for the
+sockaddr arguments of connect, bind and sendto, and runs before the
+sys_enter_connect and sys_enter_sendto programs that copy their length.
+An IPv6 address needs 24 or 28 bytes, so the rest was read from past the
+payload, and now that the printers are bounded only its family is shown.
 
-Wake up the readers on unregister, and make PPS_GEN_FETCHEVENT fail
-with -ENODEV once the generator is gone, like the other ioctls. The
-wait checks info without info_lock, so clear it with WRITE_ONCE().
+Copy them as buffers sized by the length argument after them, up to the
+32 bytes augmented buffers are limited to. That holds an IPv6 address
+and doubles the AF_LOCAL path shown.
 
-Fixes: 86b525bed275 ("drivers pps: add PPS generators support")
-Suggested-by: Rodolfo Giometti <giometti@enneenne.com>
-Assisted-by: LLM
-Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
-Acked-by: Rodolfo Giometti <giometti@enneenne.com>
-Link: https://patch.msgid.link/20260929124937.51114-5-danishkhateeb03@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Committer testing:
+
+Is using BPF:
+
+  root@x2:~# strace -e bpf perf trace -e connect,bind |& head -5
+  bpf(BPF_TOKEN_CREATE, {token_create={flags=0, bpffs_fd=12}}, 8) = -1 EOPNOTSUPP (Operation not supported)
+  bpf(BPF_PROG_LOAD, {prog_type=BPF_PROG_TYPE_SOCKET_FILTER, insn_cnt=2, insns=0x7ffea3054260, license="GPL", log_level=0, log_size=0, log_buf=NULL, kern_version=KERNEL_VERSION(0, 0, 0), prog_flags=0, prog_name="", prog_ifindex=0, expected_attach_type=BPF_CGROUP_INET_INGRESS, prog_btf_fd=0, func_info_rec_size=0, func_info=NULL, func_info_cnt=0, line_info_rec_size=0, line_info=NULL, line_info_cnt=0, attach_btf_id=0, attach_prog_fd=0, core_relo_cnt=0, fd_array=NULL, core_relos=NULL, core_relo_rec_size=0, log_true_size=0, prog_token_fd=0}, 148) = 12
+  bpf(BPF_PROG_LOAD, {prog_type=BPF_PROG_TYPE_SOCKET_FILTER, insn_cnt=2, insns=0x7ffea3054390, license="GPL", log_level=0, log_size=0, log_buf=NULL, kern_version=KERNEL_VERSION(0, 0, 0), prog_flags=0, prog_name="", prog_ifindex=0, expected_attach_type=BPF_CGROUP_INET_INGRESS, prog_btf_fd=0, func_info_rec_size=0, func_info=NULL, func_info_cnt=0, line_info_rec_size=0, line_info=NULL, line_info_cnt=0, attach_btf_id=0, attach_prog_fd=0, core_relo_cnt=0, fd_array=NULL, core_relos=NULL, core_relo_rec_size=0, log_true_size=0, prog_token_fd=0, fd_array_cnt=0, signature=NULL, signature_size=0, keyring_id=0}, 168) = 12
+  bpf(BPF_PROG_LOAD, {prog_type=BPF_PROG_TYPE_SOCKET_FILTER, insn_cnt=2, insns=0x7ffea3053f80, license="GPL", log_level=0, log_size=0, log_buf=NULL, kern_version=KERNEL_VERSION(0, 0, 0), prog_flags=0, prog_name="libbpf_nametest", prog_ifindex=0, expected_attach_type=BPF_CGROUP_INET_INGRESS, prog_btf_fd=0, func_info_rec_size=0, func_info=NULL, func_info_cnt=0, line_info_rec_size=0, line_info=NULL, line_info_cnt=0, attach_btf_id=0, attach_prog_fd=0, core_relo_cnt=0, fd_array=NULL, core_relos=NULL, core_relo_rec_size=0, log_true_size=0, prog_token_fd=0}, 148) = 12
+  bpf(BPF_MAP_CREATE, {map_type=BPF_MAP_TYPE_ARRAY, key_size=4, value_size=4, max_entries=1, map_flags=BPF_F_MMAPABLE, inner_map_fd=0, map_name="libbpf_mmap", map_ifindex=0, btf_fd=0, btf_key_type_id=0, btf_value_type_id=0, btf_vmlinux_value_type_id=0, map_extra=0, value_type_btf_obj_fd=0, map_token_fd=0, excl_prog_hash=NULL, excl_prog_hash_size=0}, 92) = 12
+  root@x2:~#
+
+And btf:
+
+  root@x2:~# strace -e openat perf trace -e connect,bind |& grep "/sys/kernel/btf/vmlinux"
+  openat(AT_FDCWD, "/sys/kernel/btf/vmlinux", O_RDONLY) = 12
+  ^C
+  root@x2:~#
+
+And copying the sockaddr parameters according to its addrlen or the cap
+in the augmented bpf, that probably needs to be a bit bigger for local
+sockets:
+
+  ⬢ [acme@toolbx perf-tools-next]$ echo -n /var/run/.heim_org.h5l.kcm-soc | wc -c
+  30
+  ⬢ [acme@toolbx perf-tools-next]$ ls -la /var/run/.heim_org.h5l.kcm-socket
+  srw-rw-rw-. 1 nobody nobody 0 Sep 14 23:13 /var/run/.heim_org.h5l.kcm-socket
+  ⬢ [acme@toolbx perf-tools-next]$
+
+  root@x2:~# perf trace -e connect,bind --max-events 10
+       0.000 ( 0.717 ms): pool-0/29901 connect(fd: 9, uservaddr: { .family: LOCAL, path: /var/run/.heim_org.h5l.kcm-soc }, addrlen: 110) = 0
+       3.733 ( 0.059 ms): pool-0/29901 connect(fd: 10, uservaddr: { .family: LOCAL, path: /var/run/.heim_org.h5l.kcm-soc }, addrlen: 110) = 0
+       8.859 ( 0.054 ms): pool-0/29901 connect(fd: 9, uservaddr: { .family: LOCAL, path: /var/run/.heim_org.h5l.kcm-soc }, addrlen: 110) = 0
+      10.880 ( 0.053 ms): pool-0/29901 connect(fd: 9, uservaddr: { .family: LOCAL, path: /var/run/.heim_org.h5l.kcm-soc }, addrlen: 110) = 0
+    1225.303 ( 0.081 ms): systemd-resolv/103685 connect(fd: 30, uservaddr: { .family: INET6, port: 53, addr: fd55:6f31:c26b::1, scope_id: 4 }, addrlen: 28) = 0
+    1226.000 ( 0.046 ms): systemd-resolv/103685 connect(fd: 31, uservaddr: { .family: INET6, port: 53, addr: fd55:6f31:c26b::1, scope_id: 4 }, addrlen: 28) = 0
+    1371.972 ( 0.055 ms): systemd-resolv/103685 connect(fd: 27, uservaddr: { .family: INET6, port: 53, addr: fd55:6f31:c26b::1, scope_id: 4 }, addrlen: 28) = 0
+    1382.266 ( 0.260 ms): Socket Thread/2663038 connect(fd: 178, uservaddr: { .family: INET, port: 443, addr: 186.192.83.34 }, addrlen: 16) = -1 (unknown) (Operation now in progress)
+    5003.508 ( 0.063 ms): pool-0/29901 connect(fd: 9, uservaddr: { .family: LOCAL, path: /var/run/.heim_org.h5l.kcm-soc }, addrlen: 110) = 0
+    5007.007 ( 0.054 ms): pool-0/29901 connect(fd: 10, uservaddr: { .family: LOCAL, path: /var/run/.heim_org.h5l.kcm-soc }, addrlen: 110) = 0
+  root@x2:~#
+
+Fixes: a68fd6a6cdd309bb ("perf trace: Collect augmented data using BPF")
+Assisted-by: Antigravity:gemini-3.1-pro
+Signed-off-by: Ian Rogers <irogers@google.com>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pps/generators/pps_gen.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ tools/perf/builtin-trace.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pps/generators/pps_gen.c b/drivers/pps/generators/pps_gen.c
-index eda7fd933bec7..8b6aff42c050d 100644
---- a/drivers/pps/generators/pps_gen.c
-+++ b/drivers/pps/generators/pps_gen.c
-@@ -103,11 +103,14 @@ static long pps_gen_cdev_ioctl(struct file *file,
- 		dev_dbg(&pps_gen->dev, "PPS_GEN_FETCHEVENT\n");
+diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
+index da8fce7801ba5..cac1027bf4800 100644
+--- a/tools/perf/builtin-trace.c
++++ b/tools/perf/builtin-trace.c
+@@ -3887,7 +3887,12 @@ static int trace__bpf_sys_enter_beauty_map(struct trace *trace, int e_machine, i
+ 				continue;
  
- 		ret = wait_event_interruptible(pps_gen->queue,
--				ev != pps_gen->last_ev);
-+				ev != pps_gen->last_ev ||
-+				!READ_ONCE(pps_gen->info));
- 		if (ret == -ERESTARTSYS) {
- 			dev_dbg(&pps_gen->dev, "pending signal caught\n");
- 			return -EINTR;
- 		}
-+		if (!READ_ONCE(pps_gen->info))
-+			return -ENODEV;
- 
- 		spin_lock_irq(&pps_gen->lock);
- 		info.sequence = pps_gen->sequence;
-@@ -238,9 +241,12 @@ static void pps_gen_unregister_cdev(struct pps_gen_device *pps_gen)
- 			pps_gen->info->enable(pps_gen, false);
- 			pps_gen->enabled = false;
- 		}
--		pps_gen->info = NULL;
-+		WRITE_ONCE(pps_gen->info, NULL);
- 	}
- 
-+	/* Wake up the readers in PPS_GEN_FETCHEVENT, they fail now as well */
-+	wake_up_interruptible_all(&pps_gen->queue);
-+
- 	put_device(&pps_gen->dev);
- }
- 
+ 			bt = sc->arg_fmt[i].type;
+-			beauty_array[i] = bt->size;
++			/* Copy a sockaddr as a buffer sized by the next argument, e.g. addrlen. */
++			if (strcmp(name, "sockaddr") == 0 && field->next &&
++			    strstr(field->next->name, "len"))
++				beauty_array[i] = -((i + 1) + 1);
++			else
++				beauty_array[i] = bt->size;
+ 			can_augment = true;
+ 		} else if (field->flags & TEP_FIELD_IS_POINTER && /* string */
+ 			   strcmp(field->type, "const char *") == 0 &&
 -- 
 2.53.0
 
