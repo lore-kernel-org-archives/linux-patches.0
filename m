@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024341;
-	b=kbG5g98sE5roI/lUFM4Q84ik1Z2W7Kz6x0yYEZeqfoLlI1ckCIZyHsaj9YFJ/PRF57hC
-	 gnaIzuzZkOiwwk0CAFkTnxRP6l2ZrJ3fUJ4rLXYTYtKEz/ab5jTEH7wizILFac5iugWIf
-	 XxhiwGtcg07gtJC8dvz5jzuLHOcqWSzO49zr6UnJkD3dAsw/YsAUH1tZqG9kKi7HcG1E4
-	 /yRcIx4m81ZZO2JdfTFY40tXZmIlw6S8V/5Z/qcl8tUkb+HyiYi5TTGgEmfUMNjZfuSVV
-	 /bLXnuRa5cWY+wC3M1H7VxEOyRJB56JBxpx0i63dowluWDxCfCQzQeiGuZIY+NIEu6g==
+	t=1795024344;
+	b=r8FcTT16S9RBa0iT51q0OpYQZrwCfY8cFvSN9md5u79fHlJk7Uf79kjOprEWxaScWP8Q
+	 33a2eJYwzGFkpJUMtbMn5G6MAcISWaokAIB7E4UaupGVgTwVoOArNwpQsBt0VNMZfekSq
+	 Y4KnmclVZicNk7TSsEBLkTKtszxjZBhsDLRYhd6RcGlUHwp/HqQ4A5b428GUOrAHIPOM8
+	 /rr9p0RE15jiDrD7FCXIoyMin528PunDz+IEgOdGb264r7LBSCUARA6D6GneFvPaog8Jd
+	 l9WTUdJwHVpJBl8DYTx6GjYgwItsDvK9Os+h0j2CbTSnxFzXkCFnAssrGFTYTjgDCNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024341;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024344;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=70eWB5wsCiyjvP6HCQ3ZtDdET5opJUgHlTZoIeMAT1k=;
-	b=aSbBvWBgCtZp3T+ZDVi9Pz+u7J9hgY8kLohQd0y8MJnMCbc5dcObZdoLhQ0ENZvYGP5q
-	 7Qj6CfhQ+DQ/k+SlE4jMLVY6bgz1n2hwfg8MOXyAqhZlD4W7j53GbV+wQEBf9Ofio8BRZ
-	 Jc2xtP+NLWPJQ44b6qXCja9bYwMKzlinuDCdMwO+uGOaYtPt9V1f9kLYlRAS/Tg2U4SpA
-	 WOPFXeF0oImW8mNzNCbdX50QzX22OVt/W8VJ+1A09LeySMdWle2rlKAoXIReSfgRQzYY9
-	 HWzPzARoUofR2WXbts/dwRcL09oHlm5qqDmb6UzuYE9h3hUIU6VXzfvqhG3kaOJoDew==
+	bh=w2Au6Rp4+MG2ELti6v3juig3qMXFe2YQNyOqlTMuV50=;
+	b=Wfyl1MGnmnVXuDOGf4uKfCJxwBWGjpqld9cXKjKHSesboe8vuO8/M4MjGd7lShGzV70C
+	 iqztSgYHkfiSXTo+34v38lgMPHxl7opEMG2FosglizE7T26xEEEfUcRYVmvgYnywTYPKH
+	 kVOUdyC2KAIwbXLjl/QSVmjnpOdk3oOa0+/OJfy+/6xUgSh0KoZILbGByybBfCWbyx5pP
+	 FClL363tedbFcdZmooVjt6J01+jEU4+U8ZbeMtBfqmIUYnmsqdlBZ2Va+ttwt6OhoF8LS
+	 fzt9DxPN2iLR2QRj9kDzmH0aE9ay97rR3BsShnagRc/2IJQogsfE2so+x0vX2a3BQ4g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kNqZT+a6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y37RuJgv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9414B606A332;
-	Wed, 18 Nov 2026 17:52:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C798606A320;
+	Wed, 18 Nov 2026 17:52:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kNqZT+a6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAAA81F000C6;
-	Wed, 18 Nov 2026 17:52:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y37RuJgv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF3CE1F000C5;
+	Wed, 18 Nov 2026 17:52:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024341;
-	bh=70eWB5wsCiyjvP6HCQ3ZtDdET5opJUgHlTZoIeMAT1k=;
+	s=korg; t=1795024344;
+	bh=w2Au6Rp4+MG2ELti6v3juig3qMXFe2YQNyOqlTMuV50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kNqZT+a6taE7jL3uLZa/BupgeyIZQQa37EZG3zXaOEJdoixSxoLqYqL/Bgwo59JJL
-	 CxpcrpCvHknTAt26Y+tkFeBS3NUXKiQJUcHZuHlKX+Aqiy3jnbmUC3lTl1mwg59r7L
-	 iz9HnLPDCOoFy3LivO+Lc8JCaEnqT74eX5PMTUkA=
+	b=y37RuJgvVjdf0kHgHlgc0y7hkag2AOwuR33SRPxaOsaUzI0KGoC+GCuypAvCzuWk7
+	 bqD8BUFpzuX8KKlsuf9fEE59BLNKPEtRECNhiNGjgMtY/OwHZsN6VGC0K8i9oJZBO1
+	 Sk0710PJaWOhozokDFcseuBE0A4BC5ow0PGwX1gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Chancel Liu <chancel.liu@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Stan Johnson <userm57@yahoo.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0689/2151] ASoC: fsl_asrc: use regmap_write_bits to update clock source registers
-Date: Wed, 18 Nov 2026 15:40:24 +0100
-Message-ID: <20261118150146.894503100@linuxfoundation.org>
+Subject: [PATCH 6.18 0651/2151] swim: Dont search beyond the first data mark
+Date: Wed, 18 Nov 2026 15:39:46 +0100
+Message-ID: <20261118150145.558749972@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,48 +69,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit 92871abc1302b852b88d86114115f8fd6b50b9b9 ]
+[ Upstream commit 79eafa4ccb74be023fd2cae87d75425d6eb903bb ]
 
-After a warm reboot the REG_ASRCSR register may not be in its hardware
-reset state. regmap caches the register value as 0 (the assumed default),
-so when the desired clock source index is also 0, regmap_update_bits()
-skips the actual hardware write because it believes the register already
-holds the correct value. This leaves a stale clock source in the hardware.
+The ISM chip does an automatic MFM gap/sync search when the Action bit
+is first set. That search may stop at any of a) post-index gap, b) address
+field gap or c) data field gap. To find the next sector header, the
+driver need not search at all. It only has to validate the mark bytes.
 
-Replace regmap_update_bits() with regmap_write_bits() so that the masked
-fields are always written to hardware regardless of the cached value.
+Once the sector address mark has been validated, swim_read_sector_data()
+is called to read the sector contents. Between the sector address and
+data fields lies an intra-sector gap followed by a data field mark.
+After this mark is validated, the 512-byte data area is read into the
+IO request buffer.
 
-Fixes: 3117bb3109dc ("ASoC: fsl_asrc: Add ASRC ASoC CPU DAI and platform drivers")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Reviewed-by: Chancel Liu <chancel.liu@nxp.com>
-Link: https://patch.msgid.link/20260916094043.1496709-1-shengjiu.wang@oss.nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Problem is, if any byte in the data field mark is mis-read, the driver
+searches the whole sector and then reaches the data field mark in the
+following sector. The wrong sector is then read into the buffer, and
+swim_read_sector_data() returns success. The request is silently
+corrupted.
+
+The existing limit on polling loop iterations does constrain the search
+distance but is inherently tied to CPU speed. This is probably the reason
+why corruption was only observed on a 68030 system.
+
+Discontinue the mark search when the mark bytes fail validation.
+
+Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Tested-by: Stan Johnson <userm57@yahoo.com>
+Link: https://patch.msgid.link/f6c97153faa0aceceffd3a61d85c0a82903a6b3e.1788513997.git.fthain@linux-m68k.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_asrc.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/block/swim_asm.S | 73 ++++++++++++++++++++++------------------
+ 1 file changed, 40 insertions(+), 33 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl_asrc.c b/sound/soc/fsl/fsl_asrc.c
-index 40279becb8d96..be55182071a28 100644
---- a/sound/soc/fsl/fsl_asrc.c
-+++ b/sound/soc/fsl/fsl_asrc.c
-@@ -521,10 +521,10 @@ static int fsl_asrc_config_pair(struct fsl_asrc_pair *pair, bool use_ideal_rate)
- 			   ASRCTR_USR(index));
+diff --git a/drivers/block/swim_asm.S b/drivers/block/swim_asm.S
+index e06aadb411a14..4d6404234bf09 100644
+--- a/drivers/block/swim_asm.S
++++ b/drivers/block/swim_asm.S
+@@ -41,18 +41,45 @@
+ 	.equ	seek_time, 30000
+ 	.equ	max_retry, 40
+ 	.equ	sector_size, 512
++	.equ	.Lmark_sequence_len,	4
  
- 	/* Set the input and output clock sources */
--	regmap_update_bits(asrc->regmap, REG_ASRCSR,
--			   ASRCSR_AICSi_MASK(index) | ASRCSR_AOCSi_MASK(index),
--			   ASRCSR_AICS(index, clk_index[IN]) |
--			   ASRCSR_AOCS(index, clk_index[OUT]));
-+	regmap_write_bits(asrc->regmap, REG_ASRCSR,
-+			  ASRCSR_AICSi_MASK(index) | ASRCSR_AOCSi_MASK(index),
-+			  ASRCSR_AICS(index, clk_index[IN]) |
-+			  ASRCSR_AOCS(index, clk_index[OUT]));
+ 	.equ	.Lhr_crc_error,		0x02
+ 	.equ	.Lhr_fifo_2bytes,	0x40
+ 	.equ	.Lhr_fifo_1byte,	0x80
  
- 	/* Calculate the input clock divisors */
- 	indiv = fsl_asrc_cal_asrck_divisor(pair, div[IN]);
++.Lmfm_mark_check:
++	/*
++	 * This subroutine reads and validates a mark byte sequence.
++	 * On entry, %a1 and %d4 shall hold the location and length (resp.)
++	 * of the mark byte array.
++	 * %a2 and %a3 shall hold the locations of the handshake and mark
++	 * registers.
++	 * Returns zero in %d1 for success.
++	 */
++
++	moveq	#-1, %d1
++	subq	#1, %d4
++	movew	#seek_time, %d2
++
++5:	tstb	%a2@
++	dbmi	%d2, 5b
++	bpl	6f
++
++	moveb	%a3@, %d3
++	cmpb	%a1@+, %d3
++	dbne	%d4, 5b
++	bne	6f
++
++	moveq	#0, %d1
++6:	rts
++
+ 	.global swim_read_sector_header
+ swim_read_sector_header:
+ 	link	%a6, #0
+ 	moveml	%d1-%d5/%a0-%a5,%sp@-
+ 	movel	%a6@(0x0c), %a4
+ 	moveq	#-1, %d0
+-	bsr	mfm_read_addrmark
++	bsr	.Lmfm_read_header
+ 	moveml	%sp@+, %d1-%d5/%a0-%a5
+ 	unlk	%a6
+ 	rts
+@@ -62,33 +89,25 @@ sector_address_mark:
+ sector_data_mark:
+ 	.byte	0xa1, 0xa1, 0xa1, 0xfb
+ 
+-mfm_read_addrmark:
++.Lmfm_read_header:
+ 	movel	%a6@(0x08), %a3
+ 	lea	%a3@(read_handshake), %a2
+ 	lea	%a3@(read_data), %a5
+ 	lea	%a3@(read_mark), %a3
+-	movew	#seek_time, %d2
+ 
+-wait_header_init:
+ 	moveb	#0x18, %a3@(write_mode0 - read_mark)
+ 	moveb	#0x01, %a3@(write_mode1 - read_mark)
+ 	moveb	#0x01, %a3@(write_mode0 - read_mark)
+ 	tstb	%a3@(read_error - read_mark)
+ 	moveb	#0x08, %a3@(write_mode1 - read_mark)
+ 
+-	lea	sector_address_mark, %a0
+-	moveq	#3, %d1
+-
+-wait_addr_mark_byte:
+-
+-	tstb	%a2@
+-	dbmi	%d2, wait_addr_mark_byte
+-	bpl	signal_nonyb
++	lea	sector_address_mark, %a1
++	moveq	#.Lmark_sequence_len, %d4
++	bsr	.Lmfm_mark_check
++	tstl	%d1
++	bne	signal_nonyb
+ 
+-	moveb	%a3@, %d3
+-	cmpb	%a0@+, %d3
+-	dbne	%d1, wait_addr_mark_byte
+-	bne	wait_header_init
++	/* read header */
+ 
+ 	moveq	#max_retry, %d2
+ 
+@@ -163,30 +182,18 @@ mfm_read_data:
+ 	lea	%a3@(read_handshake), %a2
+ 	lea	%a3@(read_data), %a5
+ 	lea	%a3@(read_mark), %a3
+-	movew	#seek_time, %d2
+ 
+-wait_data_init:
+ 	moveb	#0x18, %a3@(write_mode0 - read_mark)
+ 	moveb	#0x01, %a3@(write_mode1 - read_mark)
+ 	moveb	#0x01, %a3@(write_mode0 - read_mark)
+ 	tstb	%a3@(read_error - read_mark)
+ 	moveb	#0x08, %a3@(write_mode1 - read_mark)
+ 
+-	lea	sector_data_mark, %a0
+-	moveq	#3, %d1
+-
+-	/* wait data address mark */
+-
+-wait_data_mark_byte:
+-
+-	tstb	%a2@
+-	dbmi	%d2, wait_data_mark_byte
+-	bpl	data_exit
+-
+-	moveb	%a3@, %d3
+-	cmpb	%a0@+, %d3
+-	dbne	%d1, wait_data_mark_byte
+-	bne	wait_data_init
++	lea	sector_data_mark, %a1
++	moveq	#.Lmark_sequence_len, %d4
++	bsr	.Lmfm_mark_check
++	tstl	%d1
++	bne	data_exit
+ 
+ 	/* read data */
+ 
 -- 
 2.53.0
 
