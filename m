@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050912;
-	b=HA5049v49tcJwPVl+B0LM3PgmPPksJUH7p25m1jmJt92ZeoegDI3yC8b9stMm1Je6gkw
-	 xo7aW3fBpNFI4hbDONkGZzbPdTcUsBwDqWwwsGM9bc6426Lxk1y6O99mj2aOjDt2N5Pqc
-	 qQ4hPR/TTh8Jt+YCMAIwk+QTy1Ow5+5bJ6yilIF/iBJAx+Bs8/m/h80U6rjvtulhKyyIZ
-	 DjZsjD6DMaV8rjec63/fSWBbHnPs3nRKSjlnw70ap1J4n1MXVsE5H1+jEbUCGpC/CkhO1
-	 WvBdMuwiXBAOyTzoxAUxmv8Z4VyqPPy37mcjE4LnNGmA8fy6KI0yenZsWR61enQjVlw==
+	t=1795050916;
+	b=ThrAm8yLEaj00G2G8xFvU0DruXrw6YZpeWDuKwcfSSkK0jcw20/Ayyx7tRGWVLu3dLx6
+	 F2t/KZzmLp/qsdeQgNjhB8ZkWOqRO5WpFHb8D/pzZQu6NAXm8XUKMttCOwOqW3Tcvk1Vo
+	 XOMbIOMtGWTCe3JRkNHQlcrYiFRf4OuM8NX4gqk3HJmVzem2xlbXE8X5/kqRmFhKNAOeW
+	 0o7D0FgAzFbPqwgI9wMWnz0vuk8KEaZRgVK0+6q2UFaYky7qQjqUkov/87MUGKser+h7R
+	 XveNEg7NFvDsip2TYcklQpcUxOEIysoZnkfwsK9WQ/aFSYHA6IUweSE0jtpj+mE8HjA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050912;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050916;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=omDws6Jgur77TFUjb/Znd58nsqg53CZQXgVlXK+WxFM=;
-	b=JeCsk2LoApdIeYTrtjGwGO43731OiXY7je5HoH9FN1ebq6hueWMDT5VXAFnqKt26x7xR
-	 9hMMbj+tKBlgTh2L8PpRRamnjxNaTDvjQbzDIEBWvAp3DY8/CgKxbxFhn6fJvSXkWQnzW
-	 dGHx/ql155a9XzO1WdV9JYtGY+H1RtizVKsUsEFrQHH2P690rLEr2lOT271ZgXTs/0I0R
-	 Skh7+1CaTe9lGc5LqzjKHTkgyezZ7mqQ0U/9RAj1b+ZBQjtFzOgdFQgt0evPBx6WVoha4
-	 DFeE2/PA4cyXJWeYuNq3AyM7q3p5wqHaBZlvC5w7CNgZwq8gsKHVlAEZq8Q3rpklp9Q==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=PJaPilJiuxDDWvMMy3az1LwjZVOZx3T+6Qtg2kkrMeA=;
+	b=1xwtDQpgRsJQuajfM7jXqroNgEaobYECNNXwiLPQbUZcpSA0+cdHyulkbNCA9mko5yXA
+	 fGIOH8lgBjkxatRGvT+SJczaoW7oykxzuXdB1yqF7pIMIeWFT8ZD0N+r7uW0qe+wVztqB
+	 /iWQ7uFvVdkWLI4G2sff/b7M8Pmm1czCeDzsdpjlFYHsrNV6CeRKbbbSbQbGhwfQ7BcmO
+	 MEvurm6SWK4YZ+TKQ95dyHDHzTq3Fy+146AEHz8m9ZqRuywpHdL11DwFd2kXCPfR6fkqT
+	 ty9rZMwd5s7AK3MARacu56vJ9SRS8gkLpXOwFuduuUzXXKNhIBDilV+jRBHPGHfc/xA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tex9KFkg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nnARgtdM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD156606A32C;
-	Thu, 19 Nov 2026 01:15:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE53C606A32C;
+	Thu, 19 Nov 2026 01:15:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tex9KFkg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EBF11F000C4;
-	Thu, 19 Nov 2026 01:15:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nnARgtdM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F9EE1F000C4;
+	Thu, 19 Nov 2026 01:15:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050912;
-	bh=omDws6Jgur77TFUjb/Znd58nsqg53CZQXgVlXK+WxFM=;
+	s=korg; t=1795050915;
+	bh=PJaPilJiuxDDWvMMy3az1LwjZVOZx3T+6Qtg2kkrMeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tex9KFkgvYHhr9fFEOJu7OxAox/h7LLk+qWQLTkYZ60JBiXmeiEvtfS2lhmEAVfm6
-	 tuKRdkNOxU/ESjkHsr3kdL7F5LD/j/AaqtRQg2IMKHHpFZuwVA1D/CPkbXbLikNW4+
-	 WtupYl0Rr4mzSNQJglY56XEwl8FaFx9I6yUiGU18=
+	b=nnARgtdMefNDg+rnZLbNrgx0qL3OyACrcJUkrHSyhloXCuKpJsI7DqAAI2IUwHia+
+	 UKjVAvkiQJfPDuxrOTm9BL7PkoGiJi4MruG+IobXywu4sc981H0vvrKFotaNUg0H2N
+	 a2R0/UDDiDxnbxxt9L031gGzA1TkzJq76w4exMKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shu Han <ebpqwerty472123@gmail.com>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>,
-	yao zhang1 <yao.zhang1@amlogic.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0005/2214] mm: call the security_mmap_file() LSM hook in remap_file_pages()
-Date: Wed, 18 Nov 2026 15:28:01 +0100
-Message-ID: <20261118150010.355834835@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Jesse Zhang <jesse.zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Roman Demidov <roman.demidov.nn@gmail.com>
+Subject: [PATCH 5.15 0023/2214] drm/amdgpu: Limit BO list entry count to prevent resource exhaustion
+Date: Wed, 18 Nov 2026 15:28:19 +0100
+Message-ID: <20261118150011.051880327@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -64,90 +64,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shu Han <ebpqwerty472123@gmail.com>
+From: Jesse.Zhang <Jesse.Zhang@amd.com>
 
-commit ea7e2d5e49c05e5db1922387b09ca74aa40f46e2 upstream.
+commit 6270b1a5dab94665d7adce3dc78bc9066ed28bdd upstream.
 
-The remap_file_pages syscall handler calls do_mmap() directly, which
-doesn't contain the LSM security check. And if the process has called
-personality(READ_IMPLIES_EXEC) before and remap_file_pages() is called for
-RW pages, this will actually result in remapping the pages to RWX,
-bypassing a W^X policy enforced by SELinux.
+Userspace can pass an arbitrary number of BO list entries via the
+bo_number field. Although the previous multiplication overflow check
+prevents out-of-bounds allocation, a large number of entries could still
+cause excessive memory allocation (up to potentially gigabytes) and
+unnecessarily long list processing times.
 
-So we should check prot by security_mmap_file LSM hook in the
-remap_file_pages syscall handler before do_mmap() is called. Otherwise, it
-potentially permits an attacker to bypass a W^X policy enforced by
-SELinux.
+Introduce a hard limit of 128k entries per BO list, which is more than
+sufficient for any realistic use case (e.g., a single list containing all
+buffers in a large scene). This prevents memory exhaustion attacks and
+ensures predictable performance.
 
-The bypass is similar to CVE-2016-10044, which bypass the same thing via
-AIO and can be found in [1].
+Return -EINVAL if the requested entry count exceeds the limit
 
-The PoC:
-
-$ cat > test.c
-
-int main(void) {
-	size_t pagesz = sysconf(_SC_PAGE_SIZE);
-	int mfd = syscall(SYS_memfd_create, "test", 0);
-	const char *buf = mmap(NULL, 4 * pagesz, PROT_READ | PROT_WRITE,
-		MAP_SHARED, mfd, 0);
-	unsigned int old = syscall(SYS_personality, 0xffffffff);
-	syscall(SYS_personality, READ_IMPLIES_EXEC | old);
-	syscall(SYS_remap_file_pages, buf, pagesz, 0, 2, 0);
-	syscall(SYS_personality, old);
-	// show the RWX page exists even if W^X policy is enforced
-	int fd = open("/proc/self/maps", O_RDONLY);
-	unsigned char buf2[1024];
-	while (1) {
-		int ret = read(fd, buf2, 1024);
-		if (ret <= 0) break;
-		write(1, buf2, ret);
-	}
-	close(fd);
-}
-
-$ gcc test.c -o test
-$ ./test | grep rwx
-7f1836c34000-7f1836c35000 rwxs 00002000 00:01 2050 /memfd:test (deleted)
-
-Link: https://project-zero.issues.chromium.org/issues/42452389 [1]
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Suggested-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Jesse Zhang <jesse.zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 688b87d39e0aa8135105b40dc167d74b5ada5332)
 Cc: stable@vger.kernel.org
-Signed-off-by: Shu Han <ebpqwerty472123@gmail.com>
-Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-[PM: subject line tweaks]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-(cherry picked from commit ea7e2d5e49c05e5db1922387b09ca74aa40f46e2)
-Signed-off-by: yao zhang1 <yao.zhang1@amlogic.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mmap.c | 4 ++++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c |    4 ++++
  1 file changed, 4 insertions(+)
 
-diff --git a/mm/mmap.c b/mm/mmap.c
-index 53fa4f5167dd0..4e3c2f796fdd1 100644
---- a/mm/mmap.c
-+++ b/mm/mmap.c
-@@ -3055,8 +3055,12 @@ SYSCALL_DEFINE5(remap_file_pages, unsigned long, start, unsigned long, size,
- 		flags |= MAP_LOCKED;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c
+@@ -35,6 +35,7 @@
  
- 	file = get_file(vma->vm_file);
-+	ret = security_mmap_file(vma->vm_file, prot, flags);
-+	if (ret)
-+		goto out_fput;
- 	ret = do_mmap(vma->vm_file, start, size,
- 			prot, flags, pgoff, &populate, NULL);
-+out_fput:
- 	fput(file);
- out:
- 	mmap_write_unlock(mm);
--- 
-2.53.0
-
+ #define AMDGPU_BO_LIST_MAX_PRIORITY	32u
+ #define AMDGPU_BO_LIST_NUM_BUCKETS	(AMDGPU_BO_LIST_MAX_PRIORITY + 1)
++#define AMDGPU_BO_LIST_MAX_ENTRIES	(128 * 1024)
+ 
+ static void amdgpu_bo_list_free_rcu(struct rcu_head *rcu)
+ {
+@@ -230,6 +231,9 @@ int amdgpu_bo_create_list_entry_array(st
+ 	const uint32_t bo_number = in->bo_number;
+ 	struct drm_amdgpu_bo_list_entry *info;
+ 
++	if (bo_number > AMDGPU_BO_LIST_MAX_ENTRIES)
++		return -EINVAL;
++
+ 	/* copy the handle array from userspace to a kernel buffer */
+ 	if (likely(info_size == bo_info_size)) {
+ 		info = vmemdup_array_user(uptr, bo_number, info_size);
 
 
