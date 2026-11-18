@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017491;
-	b=nZ4WOUGf5z2ZWp9/767gKjyl8ri5h0EUKEWsSQf5gh6Su625lCKC3P8bEI75wsDblWNh
-	 TRwOyVUqFHXjvCqa/YqJbje5Sx24GS+71PeVv04Vf5YDgwrJqyeMDCCYb6cvdYa2KGZbw
-	 ciDpHSdXE/Cm/tOWO2W5yyxIireJw7huHM6xat5DCudH9N3FEe5pw8m7Zr0+K88MA653y
-	 0/Va13iPnrSPe70o5QvNidSrojvsj/g3epqUMqOs6aB9IkF0NUJkBiZEBt8EDke3hGgth
-	 wf4LnP2W7AZll9XiSQEtTuYj7HReY4Zii0xnLyBTLVtywC0O/d7UquRmmEdfZ8zn4LA==
+	t=1795017493;
+	b=LPaP7iZI0fXzlSAp2Dm0nfLubZtbGCMnlyYl5iqt4juwi+yqELfHEIIcWRMzecNmK5Vc
+	 g11ypLd4kOq1tpjHNBJwGS9zTKaMuhBJbYNZI/ilQ0nzZeZO2AOIhRKGWQ/e8iC7L1d2O
+	 Byvu6vvirLtoIBtdfkrU31ZXNeHn0lRaiFlefVgGB85wlfiO7+H52RYehq18bpCoNGC4f
+	 kLbwKJikMCaMBzEFfZE7F1ElFBUoZOF36YiTvsqQTQLnuH/vMqEKwMRDwRdqr6alQ7q+O
+	 kNhCiZ3KwayqEVozRJnt2o6nO27AjWLY+buaaIeCkvlY2DTuWDVmq0jfbmNjOsZjwgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017491;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017493;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TksRLKxX69xVWjEVr7LW6QvJo91aJSIzm+BH2h3O6uQ=;
-	b=ifPerScAWgTBQ7bzMCDpqR7R8mTvcpoCkCLS6NQh5qJVw3lVx2E/8cK5fakLOhg+n+9h
-	 VZx90weiBi+n37ZSX0STQ5ZOxsW/TIjmFvvN7qDntvtbzpLw36ePx1/1/7zxi9Ez2pJDH
-	 3lfgyZ9ua7iht06Ju8ZWC/8Uz3an75ol5JPGCL9wx1sTgzgLJzmJthLe4nkc6VDeMTDXp
-	 4C5yYVYesFGCG10ngDnjUnMtdF0qY3fyE6+5qm+76eEiDjTIZFBg1A1eWRh/hbcyxY/f7
-	 cuM29MKpA/qYhhVnnue+o0/TuR+i9RJUsgELEVoTRdxZWuW1ZyQhImi6eRuBc51Sd8g==
+	bh=MSRWNWQiwqN+SmdpM1qklp0zB7x2d1W+iVI9mO1ifvM=;
+	b=2DWCvedIjDhA45LpYXmqicWf7A7+kDEPCsBOmsF9JGM7WQKbaCkAkJaiTl4a0qYMiADi
+	 1iL/WHUzG1MCrboBOxytjJfOl1KAUU3/l6vDHgq+Ql8Kqlp0e9kPWBwfv36Wr5o+YJxnE
+	 d4MnmlLv7RErnDGESypQUfBcRNU9lt+FViYHUzuTOlX1EbkLMV5Baf9uth9GfJiB/FBSR
+	 t03qova9A6xe6IO14LMhDqAYfc+ZP3QRGoALtLji34MgV1WvoiN0bvKAf/I02+bHrv3XK
+	 thp5ATDJ9R/svF6DfBQF9Kn0JgywGpkAwskRf9s7Dsb06yj8/X1InKoI676KdXwjXww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="SYirO1/t";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CvyXgesl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FF4E606A325;
-	Wed, 18 Nov 2026 15:58:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C751A606A32A;
+	Wed, 18 Nov 2026 15:58:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SYirO1/t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 663C71F000C5;
-	Wed, 18 Nov 2026 15:58:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CvyXgesl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27CF01F000C5;
+	Wed, 18 Nov 2026 15:58:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017490;
-	bh=TksRLKxX69xVWjEVr7LW6QvJo91aJSIzm+BH2h3O6uQ=;
+	s=korg; t=1795017493;
+	bh=MSRWNWQiwqN+SmdpM1qklp0zB7x2d1W+iVI9mO1ifvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SYirO1/t/0bDOksmnidDxA+w8bsPWXhfv+Wso+HWM2skbiFeYBlc6UbZh8iJL+dKf
-	 N3DnhuJHioU2BWW4A5FOFPXoXHGYFsZbeYOrPKAX2m0zwli4hCdLrUUxgB8eavuU86
-	 2ndEA/NT7lHTw11g7vRmgqm+41RDi04SXJnLJEtg=
+	b=CvyXgeslKckF+SuIB6kF0oFJUW6Apc/Z7lqNSoeDavY6tF1mxX+bXudingn6TfugM
+	 KDgGJq9YV6EIdS6C1ClPhX47BKYZnALzUOptj+I3HMwKNTWXJ957tuchH7WJ/mJRSe
+	 4RZKGjO9rx4wpPthWecv44M9KTS08oUqZdJMhnCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shashank Mohan Jain <jain.sm@gmail.com>,
 	Yury Norov <ynorov@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0902/2651] bitmap: bitmap_parselist(): reject trailing characters after group size
-Date: Wed, 18 Nov 2026 15:35:42 +0100
-Message-ID: <20261118150320.338984268@linuxfoundation.org>
+Subject: [PATCH 7.3 0903/2651] bitmap: bitmap_parselist(): dont wrap around on a huge group size
+Date: Wed, 18 Nov 2026 15:35:43 +0100
+Message-ID: <20261118150320.380243812@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,60 +70,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Shashank Mohan Jain <jain.sm@gmail.com>
 
-[ Upstream commit c55d102257fa31271c6f11fea595b78c48fd7aa2 ]
+[ Upstream commit d075c4dc0b3c8ed91a4f67ebdf3384aa59fd4fbb ]
 
-bitmap_parse_region() checks that every region ends at a separator
-(',', whitespace, '\n' or '\0'), except in the "range:used/group" form:
-after parsing the group size it returns the pointer to the following
-character without looking at it.  The caller then starts a new region
-at that character.
+In the "range:used/group" form bitmap_set_region() walks the range with
 
-Before 'N' and 'all' were accepted as region starts this happened to be
-harmless, because any other character would fail to parse as a new
-region.  Now text directly following the group size is silently parsed
-as another region:
+	for (start = r->start; start <= r->end; start += r->group_len)
 
-  "0-7:1/2N"    -> bits 0,2,4,6,7 (nbits = 8), returns 0
-  "0-7:1/2all"  -> all bits set, returns 0
+where all values are unsigned int.  bitmap_getnum() accepts any group
+size up to UINT_MAX, and bitmap_check_region() only requires it to be
+non-zero and at least the used size.  If start + group_len exceeds
+UINT_MAX, start wraps around to a small value that is still <= end, and
+bits below the start of the range get set:
 
-while "0-7N", "5N" or "0-7:1/2x" are correctly rejected with -EINVAL.
-bitmap_parselist() is documented to return -EINVAL for an invalid
-character.  It parses cpu lists from sysfs, cgroup cpuset files and
-boot parameters such as isolcpus= and nohz_full=, so a typo there is
-accepted and yields a different mask than intended.
+  "1-1:1/4294967295"    -> bits 0,1 (expected bit 1)
+  "15-15:1/4294967281"  -> bits 0,15 (expected bit 15)
 
-Check for the end of the region after the group size as well, like the
-other forms do.
+The loop still terminates, because start keeps decreasing until it
+wraps past zero again, but the resulting mask contains bits outside
+the requested range.
 
-Fixes: 2c4885d24e64 ("lib: bitmap: support "N" as an alias for size of bitmap")
+This needs a group size within 'start' of UINT_MAX, so it is unlikely
+to be hit by accident; all bits set stay below the end of the range,
+so there is no out-of-bounds write.
+
+A group larger than the range simply means that the range contains a
+single group, so stop the walk when the next group would start beyond
+UINT_MAX.
+
+Fixes: 0a5ce0831d04 ("lib/bitmap.c: make bitmap_parselist() thread-safe and much faster")
 Assisted-by: LLM
 Signed-off-by: Shashank Mohan Jain <jain.sm@gmail.com>
 Signed-off-by: Yury Norov <ynorov@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/bitmap-str.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ lib/bitmap-str.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/lib/bitmap-str.c b/lib/bitmap-str.c
-index e02c5bc80951c..b589668646574 100644
+index b589668646574..cafd6388892f0 100644
 --- a/lib/bitmap-str.c
 +++ b/lib/bitmap-str.c
-@@ -299,7 +299,14 @@ static const char *bitmap_parse_region(const char *str, struct region *r)
- 	if (*str != '/')
- 		return ERR_PTR(-EINVAL);
+@@ -8,6 +8,7 @@
+ #include <linux/hex.h>
+ #include <linux/kernel.h>
+ #include <linux/mm.h>
++#include <linux/overflow.h>
+ #include <linux/string.h>
  
--	return bitmap_getnum(str + 1, &r->group_len, lastbit);
-+	str = bitmap_getnum(str + 1, &r->group_len, lastbit);
-+	if (IS_ERR(str))
-+		return str;
-+
-+	if (!end_of_region(*str))
-+		return ERR_PTR(-EINVAL);
-+
-+	return end_of_str(*str) ? NULL : str;
+ #include "kstrtox.h"
+@@ -186,10 +187,12 @@ struct region {
  
- no_end:
- 	r->end = r->start;
+ static void bitmap_set_region(const struct region *r, unsigned long *bitmap)
+ {
+-	unsigned int start;
++	unsigned int start = r->start;
+ 
+-	for (start = r->start; start <= r->end; start += r->group_len)
++	do {
+ 		bitmap_set(bitmap, start, min(r->end - start + 1, r->off));
++	} while (!check_add_overflow(start, r->group_len, &start) &&
++		 start <= r->end);
+ }
+ 
+ static int bitmap_check_region(const struct region *r)
 -- 
 2.53.0
 
