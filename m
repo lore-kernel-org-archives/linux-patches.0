@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033045;
-	b=0weXCJi5j1aicyzprO4F6/49Gw3gGxG5CydsrNqRPGHcH9wVQqK49FdOeoRCQlHlRbIR
-	 uOxdoWXKqyLX2K1TLbmatptCKNiH9mTM/8rQBTHK6bLmrMQ5nwAQdvqgTlBvX7TXgPf81
-	 eNy5G4QQga0DYHGqF4SLjoMeMd2NEOx7vcPY+dpAHcKks7j9DOFQCrXuo2aPCuxEwgHJ0
-	 PpVGWLNvFfvTwndhEpPuZYfZX0xUeAJbGdW2H/HMSSEeOM++detUJ1TywVrTf6b3y5mWY
-	 MCRQ4aVhlBSpdbodkpZcf8TkbwueQVhHPF7QrwDHh4Xx3l7Czb6KQtLG4LWKMZzfFtA==
+	t=1795033048;
+	b=FUa2NTPuAz9T04T3aSWgIVm0PdRpJXlaS09OcL5ODYWiezcUjub8oZAwTmGynvtm37+L
+	 RTB0iiljoOIxrh+l/Qjyrj6QAwJyFSZ+04iF8SP33qzqM0cI98b5ohcuKYlF/5CKWY6Jm
+	 SDNvb9SxkQHHREj9JBJ8VyuzV/llDx7mzBf7Z1syfU99YjXTUUBHcvXQssNJsUPGjX7be
+	 wFiGQInoTl2H7gaKAG2s6ygSLeE8gF+AjPCHq/+lUMoWswu207KV/UZ/5OAoYRTUU+S3T
+	 UXaulVs5e2gEH1c3533vZYzKrYmvYVv2SP39dWuRVuxq6ti/4yiqf/5B7XEfy9Kz32w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033045;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033048;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ueKJuzyKn1zh24LXgmKjZg4nJWBJtsQ8s0iYDgqVcCo=;
-	b=XbUPYh3QHqSJXaOFqfRI4wXwQCfhijQ2aGP/1nJNC8/Mm1dPYe1o//HtJKUnYPuPywZj
-	 qQsagwj+g1iOrqlVEevu1c1LuVPmr4tEvqJv1IucOpVx3pymp/L1y7TQat4s3LuWtzlXL
-	 c9Heowtn4H/pLMSN9TBsf7n694Z5pYIMMLBCufPceVIBDKn3+8XDVL297LJENfJ5H+UCB
-	 4youL73glsWtRZIOU3d5Z54GIz9WDCa1igkzGNqJNNws04LOwNUmKaigjtAUEecIe3ljc
-	 RXKnHcOGKsHSSiTXTUF08rKvFHufmyJBziuA7hslrKwD/knE8VrwrtC3zEIuvDtPoIw==
+	bh=2YJHoyDhtthQNLgyXKh3IRBpMCyz9XtO40VBgnl9SXc=;
+	b=nG1UJGzFdm0/bOgK6e6TR2gCgeZWmJOxGr3LIpEfiDr40Pe6slyRVWS771a4xBxk048F
+	 ojh6XLAHX8tePy/YQAmfESfSleOiq0EbHmfrHGWx9661l3BINkGC763dSKl8UMicOq6oO
+	 vCXjrNrnBYcPOVLqd9YY8HmSyFQmEnE+QwCU+7cnqSNkf22kZs35QGBKXpH5ycIledh0I
+	 L6oi1yAe5ZvqlmonsdmuSY8zR9sCyn/AZ6iIR2TfYwudm2x8rxJr8tp9IeUIrrujJf5UG
+	 fxW466kcY3ft5/REaA+qCTLTHrWxlgAkBjN+malARgEPUzt4wU0J9MBNSOTrEg1Mb4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GgHdzm3h;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wb70G3Om;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E8E360A261D;
-	Wed, 18 Nov 2026 20:17:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBDBE606A331;
+	Wed, 18 Nov 2026 20:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GgHdzm3h
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85E0B1F000C7;
-	Wed, 18 Nov 2026 20:17:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wb70G3Om
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B79B1F000C5;
+	Wed, 18 Nov 2026 20:17:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033045;
-	bh=ueKJuzyKn1zh24LXgmKjZg4nJWBJtsQ8s0iYDgqVcCo=;
+	s=korg; t=1795033047;
+	bh=2YJHoyDhtthQNLgyXKh3IRBpMCyz9XtO40VBgnl9SXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GgHdzm3hCM/By+dQoJ/6/Gxi4DWvzVfkQbzUb3npujPDOIbSLEGCFiRipJRBOY9/R
-	 YjcHB4TdAwFyltcOOoIP24k4jC8EHu/6+RErFK6QwPRXMm+ud/27a3lCS/KcCGC9zx
-	 8qZaetUr1toGLMV2BMjxHtQaJLfVVnhT7zWmy+EQ=
+	b=wb70G3OmT38aWjTZmFu42s5YclyWHDAxLqYayZHgVQUqXuEHiVo8Fnx/GqVeUOPL6
+	 mql6X6DIDrH+wSBRgu4qHNvtkZRQZRKyIyCz6xU4+VaFMy5Ghu7QSh9yu/1ZRWZt52
+	 ccliZS2Rj02bE3APbeAifwvg/E2rqgFZYjSJqAJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Dudu Lu <phx0fer@gmail.com>,
+	Antoine Tenart <atenart@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1628/1756] nvmet: ignore discard return value
-Date: Wed, 18 Nov 2026 16:02:35 +0100
-Message-ID: <20261118150114.614329334@linuxfoundation.org>
+Subject: [PATCH 6.12 1602/1756] net: xps: bound the cleanup loop by the old maps num_tc
+Date: Wed, 18 Nov 2026 16:02:09 +0100
+Message-ID: <20261118150113.669741767@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,80 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chaitanya Kulkarni <kch@nvidia.com>
+From: Dudu Lu <phx0fer@gmail.com>
 
-[ Upstream commit 38d12f15c4772b5383b1249b2afb0d206a430f0f ]
+[ Upstream commit 6d5a2cb0b7d6caf170d37ae7ac74738d592d2a05 ]
 
-__blkdev_issue_discard() always returns 0, making the error checking
-in nvmet_bdev_discard_range() dead code.
+__netif_set_xps_queue() walks the OLD dev_maps to free its entries.  The
+per-row trip count uses the NEW num_tc while the row stride uses the OLD
+dev_maps->num_tc, so when dev->num_tc was raised without rebuilding the
+XPS map the last row indexes attr_map[] past the allocation:
 
-Kill the function nvmet_bdev_discard_range() and call
-__blkdev_issue_discard() directly from nvmet_bdev_execute_discard(),
-since no error handling is needed anymore for __blkdev_issue_discard()
-call.
+  BUG: KASAN: slab-out-of-bounds in __netif_set_xps_queue+0x1458/0x1ee8
+  Read of size 8 at addr ffff000014f69458 by task insmod/112
 
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 424bd0e98ca4 ("nvmet: don't truncate the length of big discards")
+The loop frees entries in dev_maps, so both the trip count and the stride
+must come from dev_maps->num_tc.  The map is sized
+XPS_CPU_DEV_MAPS_SIZE(old num_tc)/XPS_RXQ_DEV_MAPS_SIZE(old num_tc, ...),
+so iterating the new (larger) num_tc reads past the end.
+
+Fixes: 255c04a87f43 ("net: embed num_tc in the xps maps")
+Signed-off-by: Dudu Lu <phx0fer@gmail.com>
+Reviewed-by: Antoine Tenart <atenart@kernel.org>
+Link: https://patch.msgid.link/20261021155538.67867-1-phx0fer@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/io-cmd-bdev.c | 28 +++++++---------------------
- 1 file changed, 7 insertions(+), 21 deletions(-)
+ net/core/dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/target/io-cmd-bdev.c b/drivers/nvme/target/io-cmd-bdev.c
-index 3b081f421c81d..fea45ce033d3e 100644
---- a/drivers/nvme/target/io-cmd-bdev.c
-+++ b/drivers/nvme/target/io-cmd-bdev.c
-@@ -357,29 +357,14 @@ u16 nvmet_bdev_flush(struct nvmet_req *req)
- 	return 0;
- }
+diff --git a/net/core/dev.c b/net/core/dev.c
+index f42ec2837143e..857d195bef231 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -2788,7 +2788,7 @@ int __netif_set_xps_queue(struct net_device *dev, const unsigned long *mask,
+ 		goto out_no_old_maps;
  
--static u16 nvmet_bdev_discard_range(struct nvmet_req *req,
--		struct nvme_dsm_range *range, struct bio **bio)
--{
--	struct nvmet_ns *ns = req->ns;
--	int ret;
--
--	ret = __blkdev_issue_discard(ns->bdev,
--			nvmet_lba_to_sect(ns, range->slba),
--			le32_to_cpu(range->nlb) << (ns->blksize_shift - 9),
--			GFP_KERNEL, bio);
--	if (ret && ret != -EOPNOTSUPP) {
--		req->error_slba = le64_to_cpu(range->slba);
--		return errno_to_nvme_status(req, ret);
--	}
--	return NVME_SC_SUCCESS;
--}
--
- static void nvmet_bdev_execute_discard(struct nvmet_req *req)
- {
-+	struct nvmet_ns *ns = req->ns;
- 	struct nvme_dsm_range range;
- 	struct bio *bio = NULL;
-+	sector_t nr_sects;
- 	int i;
--	u16 status;
-+	u16 status = NVME_SC_SUCCESS;
- 
- 	for (i = 0; i <= le32_to_cpu(req->cmd->dsm.nr); i++) {
- 		status = nvmet_copy_from_sgl(req, i * sizeof(range), &range,
-@@ -387,9 +372,10 @@ static void nvmet_bdev_execute_discard(struct nvmet_req *req)
- 		if (status)
- 			break;
- 
--		status = nvmet_bdev_discard_range(req, &range, &bio);
--		if (status)
--			break;
-+		nr_sects = le32_to_cpu(range.nlb) << (ns->blksize_shift - 9);
-+		__blkdev_issue_discard(ns->bdev,
-+				nvmet_lba_to_sect(ns, range.slba), nr_sects,
-+				GFP_KERNEL, &bio);
- 	}
- 
- 	if (bio) {
+ 	for (j = 0; j < dev_maps->nr_ids; j++) {
+-		for (i = num_tc, tci = j * dev_maps->num_tc; i--; tci++) {
++		for (i = dev_maps->num_tc, tci = j * dev_maps->num_tc; i--; tci++) {
+ 			map = xmap_dereference(dev_maps->attr_map[tci]);
+ 			if (!map)
+ 				continue;
 -- 
 2.53.0
 
