@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047730;
-	b=kfcAbrHMwtGlAddXFtozChoQ2EdvIxM/Ohl/V1LMOrcI4/ttNuYOIaVlmlqOUTCXoW/A
-	 8+wPKcKxqj4vgslIxR7b9BwYGt0wKbETC5U3aIh6A/lw3t039vPkvEySboPVCIdI2L8wS
-	 HEhT1OZ9l/wLZ5qRXLLJEjohpECr3eFJ0NIQ7LeNaatG3oWlHS/xTcoteknv9EXbiQUjV
-	 hTbrO2s/u49A3MDkb9E6Xpj3fZWBRYg8X2avJcLfmfXhm7fAk4VjZba7r5IcaxrOWrJBa
-	 kBPkXNF4tjdB7xXkW3PLeEZUs31By+R3ib4a2cMFGzvsdsUu/v6sChggMB43Ju+OcUg==
+	t=1795047732;
+	b=EFOg0BbrAv641h3PyUYoKJyngF0HcWbBfAXIZP60pr2r9hTxVLGXGU5jCE1ASzSlibJV
+	 Arqxyv9GCk+7Giq0MRDxsm+rMkq4QL+sU8qjr8M/AHc1EyTP/6LF399EB4Wxv4oRM8RvJ
+	 qOK6t5tNu7xgyyCjC+jdKC3Brp4Q70YcdINio+TiWtiP+Ev7K4lzES2NppktRE5Jfp9cr
+	 kNRiEDWzujN3IsLqxrGMxW2tAu9gAXyudcfi2o4cIBSfgND/QB6ERphRBWOLhisSz98ls
+	 Qo4y0km/8+rjSSyufwyMjDMLeazSpIn+fXdWUyks4VR/W2BIrRoaEoHE4E95VHiTUvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047730;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047732;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=tdgcoVQM4R2EDbyUnG0pYx5h8J8zzn3N766+9e9HRzs=;
-	b=T/xQlwOrXmrZHHNhR9d1y+YlTk3al+K38k6FDXD1N/9rzr3du5OyP+LO2WTuH7Sx8v8p
-	 v8mP4RamHDnE6LJfSNTIAX/UVOrNnx01wBEKLvMZRrSws4g3sLCK5yFhbWcmrQLNLouDD
-	 z/G0svbLM60Gj2IWW06NkjGARlcPbEkLU+pThkvJW5qkr5odr53cCgwt+KSZlslp+TWHf
-	 KcoEMQUesnGo9Hz9jMq9GpY7iELqS62MPQ7nI1Gu6Q1yY0Bv05m2jA4UDiPv7kbxBdD7N
-	 9zYfbP3ICZ4OuQp5jbfj+CWiB4xfYRlEUCdcAKZY+kRgBTuDt+Mgvaba7yXmPBOqouw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=HLBHdrGDZrTAhUQ4/DU71sirS7RHCrU+FY7dvd6bnEE=;
+	b=hQsNHt+VHuttB0ZzJCyShwSBSKCCzhsjZ30Uxvu1IKgP52FKZsMrCN0+wpQffrzY/1kV
+	 ES2ZK0uebAkihx/LNH6y8SKNjEVcB4WmLbsqYNn8I5QeFcqZJvAaLijgFbwllFcJ9iZSe
+	 pUlMB4Z4lHY7vFL0F7fejQ/3xEL8ELKAtmrHpeDGBD3f/fptUtrkH+1mWMIf/wTamYM79
+	 wSVotCxEbcxtRQyb8SzR8e1tvzogNH5aSn5dsY4YYps9J3l32ZAMUoQh1vkjV+iqG148C
+	 5NWQ34wJb7mTa5Ge2DDrx/3o6/oWEj/DZRCYlEC6h9CPzJAQlTKexeYAWbVlQqMuTHg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GPwJYuV2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UDXDhE59;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED2DA606A31C;
-	Thu, 19 Nov 2026 00:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC5D4606A325;
+	Thu, 19 Nov 2026 00:22:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GPwJYuV2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A401F000CC;
-	Thu, 19 Nov 2026 00:22:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UDXDhE59
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B5A21F000CC;
+	Thu, 19 Nov 2026 00:22:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047729;
-	bh=tdgcoVQM4R2EDbyUnG0pYx5h8J8zzn3N766+9e9HRzs=;
+	s=korg; t=1795047732;
+	bh=HLBHdrGDZrTAhUQ4/DU71sirS7RHCrU+FY7dvd6bnEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GPwJYuV2wqiBdw1yjB6X59MoplIVJBFOosR0/OIfENq5osGz4qSZ29oASfkqbrlxm
-	 qTsI8p3jV4AepZXlyLi9ldYzkDKeoev+E9GfYI3/UBQZOw/4s6Os+UG3hkKSw+PRQS
-	 HJ+k+Z9gdRJ8QcQCnSmrxvGVbfsbuxMWPhjKWj/U=
+	b=UDXDhE59FGN6PgYVVF2XgILYjDHhRkXDXAm+Pp87M7WcjxD9fY77yn1ZB4/ISud+T
+	 pFtnf+rve6NVxcOaJuNC+QwFY465FOT9bWZ/hXsPobzqDjxTnW7XmT14sVD8cJGcdR
+	 hjaTZVtWBfhSmxWjPqYRyOtlO6oiPDWkuzoo/5ew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Bradley Morgan <include@grrlz.net>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Claude <noreply@anthropic.com>,
+	Steven Price <steven.price@arm.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1744/2857] kexec_file: stop the top-down search before it underflows
-Date: Wed, 18 Nov 2026 15:46:18 +0100
-Message-ID: <20261118150304.098484287@linuxfoundation.org>
+Subject: [PATCH 6.1 1727/2857] drm/panfrost: Prevent division by 0
+Date: Wed, 18 Nov 2026 15:46:01 +0100
+Message-ID: <20261118150303.502599968@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,58 +64,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Adrián Larumbe <adrian.larumbe@collabora.com>
 
-[ Upstream commit c711461303af9f796b293b5ac06f49a885e46e71 ]
+[ Upstream commit fd4227f03546c323b5b21568f727233e9792d298 ]
 
-locate_mem_hole_top_down() walks candidates downwards by subtracting
-PAGE_SIZE whenever the window conflicts with an existing segment or with
-an architecture exclude range.
+When updating and debug-printing devfreq stats, in the very unlikely
+off-chance that total device time is less than 100 ns, division by 0
+would happen. Fix the divisor when relevant and rearrange operands.
 
-Nothing stops that subtraction at zero, so a search that reaches the
-bottom of the address space wraps temp_start around and continues.
-
-The walk starts inside the range being scanned and only moves down, so
-bail out once a candidate ends up above end. That covers every step in
-the loop rather than the subtractions alone, and it matches
-locate_mem_hole_bottom_up(), which already bounds its candidate on both
-sides.
-
-This is a better check than subtracting with check_sub_overflow(), given
-that we would have 3 subtractions in this block, and this single fix
-would take care of them all (instead of three check_sub_overflow()).
-
-Fixes: cb1052581e2b ("kexec: implementation of new syscall kexec_file_load")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Bradley Morgan <include@grrlz.net>
-Link: https://patch.msgid.link/20260812-kexec_posioned-v6-1-e477887086f0@debian.org
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reported-by: Claude <noreply@anthropic.com>
+Closes: https://gitlab.freedesktop.org/panfrost/linux/-/work_items/88
+Fixes: f3ba91228e8e ("drm/panfrost: Add initial panfrost driver")
+Reviewed-by: Steven Price <steven.price@arm.com>
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Link: https://patch.msgid.link/20260820-b4-panfrost-fixes-v1-2-1b2c2376f4bc@collabora.com
+Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kexec_file.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/panfrost/panfrost_devfreq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/kexec_file.c b/kernel/kexec_file.c
-index fe0201aec2a3f..fe7a21e9fbdc0 100644
---- a/kernel/kexec_file.c
-+++ b/kernel/kexec_file.c
-@@ -429,7 +429,9 @@ static int locate_mem_hole_top_down(unsigned long start, unsigned long end,
- 		/* align down start */
- 		temp_start = temp_start & (~(kbuf->buf_align - 1));
+diff --git a/drivers/gpu/drm/panfrost/panfrost_devfreq.c b/drivers/gpu/drm/panfrost/panfrost_devfreq.c
+index fe5f12f16a632..c72b5ebf18283 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_devfreq.c
++++ b/drivers/gpu/drm/panfrost/panfrost_devfreq.c
+@@ -69,7 +69,7 @@ static int panfrost_devfreq_get_dev_status(struct device *dev,
  
--		if (temp_start < start || temp_start < kbuf->buf_min)
-+		/* A candidate above the range means the walk wrapped around */
-+		if (temp_start < start || temp_start < kbuf->buf_min ||
-+		    temp_start > end)
- 			return 0;
+ 	dev_dbg(pfdev->dev, "busy %lu total %lu %lu %% freq %lu MHz\n",
+ 		status->busy_time, status->total_time,
+-		status->busy_time / (status->total_time / 100),
++		status->busy_time * 100 / MAX(status->total_time, 1),
+ 		status->current_frequency / 1000 / 1000);
  
- 		temp_end = temp_start + kbuf->memsz - 1;
+ 	return 0;
 -- 
 2.53.0
 
