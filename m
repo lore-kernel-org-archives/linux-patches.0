@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051322;
-	b=cTEH0ohfdLIDDyJGoLMt2LrW1llZt6t1rm4lsE0ZXc6/9Z90FPzWxFHApcuWRYtWtUV4
-	 mJsetHN4AnYFgQImkCnQfZl44YUktbesNzRknG70xC/zlUXFBjr3+n6lzaE9zvieCMYRq
-	 0c1CdrtiR8hANZixvpoR6FoDECVK+LX09TV09Aykf+KunGuU9OS8FbrTlcKUUFimFdoDk
-	 TQrjIzeUdsXmgLfuyTbAGP1LuyxI0h8eNfzMfNbj0jx/IHA6TrW/ixtqEiL8eVY/Nkxuq
-	 Xabc9mta2RZMG9QpvDy10PN8dXPXQgGmHEsLZ3J+zOZl42Dqb1k6NH8sXEQa7MW+sfg==
+	t=1795051325;
+	b=cfOj7QSAGNKkSG+EBjYbSEEeaMbpe/HuuiKU7AD0E4rbqT6RJ96bQu7CgYkJPeekN0LR
+	 UPrrjFnHKfupMhKcPEpCJgHSi9ExtAnl+gu+UpxxLp4NKaCk2FlcKgRoBmEoCXPV14oTR
+	 YW8iT9gt4m76n+5pq1JTDCDVvssScdrMzPYD/qQDAtyxiAHsa7UEE0OnXE8w74A5CRtwm
+	 cdgIGdqwXcDMBRx6rRpFunXCgNDfj05eQKyWWpCEuvZbO6GYGDenKtbjMcoNnrWrsJ6mQ
+	 7plxqD8l/AXpiOaT6UvAAjVOzpI3xwQCaM5h6POxex0ZfMgomMZW0dIDeWlDxa3nT4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051322;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051325;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+BPE448O/hjCZXrourjqgh8URrQyI794gRVhOe25hRA=;
-	b=Ls5V9KLDVEaM/oS+1Zz1pGknAqET4JKdQ+s7H7LHfaXuQvph6lVr4p786ODrUfMldt16
-	 RLPKTg/CBSK5+ul6KbQ34y5eAlNBYnG0r78+UdTyuoiRxH2D+vy4D+SxK1Q/w2qSqs0Xy
-	 3zyd+0bdPxtefxpm44N0EcuDY4DQFnVqtkVhOyEdGCAlmHUWYK2vGcJ6QTyH9CztTpAc3
-	 HwYO0Nip1+z/t7kVMTjCp4fKj/wHJrqmdLe3YmqP5RA6uTcg4vRyJSTASapzSBG/Yhfl2
-	 pRX9FWhUAW/If32ScDEbJDPdwVgqRkh39tWWlDaZx3eZzCURyLzxBJQKE/10ckuuZ3g==
+	bh=D8LimvLP5+baMR/0RlFT6/9XcIx8HXs+XEH4lLdL8PU=;
+	b=tBJLFtWlwvX4c1wE1koFva/BAxlrUxwFNw/ECNEm1mlyyaqVBFwuA3oK1tMIqZOYazYt
+	 Ncl6Dd324cBQ8xX2A3kxEWLQ01YnoenFKf7YrZlfvMhqeAmfg/qyoJ1pZH8///bZO28dS
+	 p5mR5C49duzFr0Uoqti19RYxjJ1OMcGPW2VmruhX1nDMNWBt7mDpA1lSUICTVtpCXrDYn
+	 yGxaSO+KWCJNQMX43LzgsAdabANTEfiYtHFucnwEasmbO2UZfZjHsai+Ea0JIW2+Nz7E4
+	 7hM1kiO2KOqCTwAuYEGsT2vcy8InzZkKIwHlgvciLV5PwVvNXw97VazpRJszS24mocg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oB7O9r2V;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lca6qMm7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56744606A320;
-	Thu, 19 Nov 2026 01:22:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38027606A320;
+	Thu, 19 Nov 2026 01:22:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oB7O9r2V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFAA51F000C4;
-	Thu, 19 Nov 2026 01:22:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lca6qMm7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 861681F000C4;
+	Thu, 19 Nov 2026 01:22:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051322;
-	bh=+BPE448O/hjCZXrourjqgh8URrQyI794gRVhOe25hRA=;
+	s=korg; t=1795051325;
+	bh=D8LimvLP5+baMR/0RlFT6/9XcIx8HXs+XEH4lLdL8PU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oB7O9r2V/impUOEktEiLQm+hlCSdfwKFwT7rQh9paBrfbDfb8BjMA/+4PqtkhlVSC
-	 yyH4uL3MRwMEu519Jzp6cQcrhljc8MufF0AC+lODH3j6urtDY1fG2e9bLgQFfVO53q
-	 l4ErO+7rfW5Ft8Nlxj/RiDrU4iYdlxYY0spvFIho=
+	b=lca6qMm76dy9zf3wALRnECvJNkGa71QaPYXbbaxXxgrS2C6hx2zslVqQ594a9i4X2
+	 ALluzwXCZ7VLfelEzjkfD6bdOw3MiMM8oHIYz4KDb1M3q1ZHW0hSwJOtGJCSbtoeio
+	 MO0jxwKKJwcUVgMInvvfbMhluL6jGrG9NgVRt35Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Marzinski <bmarzins@redhat.com>,
-	Yury Norov <ynorov@nvidia.com>,
+	Can Peng <pengcan@kylinos.cn>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0130/2214] bitops: make the *_bit_le functions use unsigned long
-Date: Wed, 18 Nov 2026 15:30:06 +0100
-Message-ID: <20261118150015.419855242@linuxfoundation.org>
+Subject: [PATCH 5.15 0166/2214] wifi: brcmfmac: validate msgbuf flowring IDs before use
+Date: Wed, 18 Nov 2026 15:30:42 +0100
+Message-ID: <20261118150016.741476141@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,101 +69,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Marzinski <bmarzins@redhat.com>
+From: Can Peng <pengcan@kylinos.cn>
 
-[ Upstream commit 1c61b0a6e5c472737619f74f79c390363ee258df ]
+[ Upstream commit 32856f39fefdc75bd253cab999f996750628648e ]
 
-The *_bit_le functions use a signed integer for the bit number.
-However, the *_bit functions can use an unsigned long. This causes
-problems if there is a large bitmap and a bit number > 0x80000000 is
-passed in. Since that is a negative int, it will get sign extended to a
-long when getting passed to the *_bit function, turning it into a huge
-bit number. This usually ends up with the memory address wrapping around
-and the function accessing memory before the start of the bitmap.
+Firmware messages carry flow_ring_id values which brcmfmac converts
+to an internal flowid by subtracting
+BRCMF_H2D_MSGRING_FLOWRING_IDSTART. The resulting value is used as
+a bit index in txstatus_done_map and as an array index into
+msgbuf->flowrings and the flowring state.
 
-Avoid this by making the *_bit_le functions take an unsigned long.
+Validate the firmware supplied flow_ring_id before using it. This
+prevents flow_ring_id values below BRCMF_H2D_MSGRING_FLOWRING_IDSTART
+from underflowing and rejects values outside msgbuf->max_flowrings.
 
-This can be triggered by faking an almost 4TB dm-mirror device, which
-uses bitmaps to track the mirror regions:
+In the tx status path, complete the packet with an error after
+removing a valid packet id so the skb is not leaked when the flow
+ring id is invalid.
 
-$ dmsetup create bigzero --table '0 8589934590 zero'
-$ dmsetup create mymirror --table '0 8589934590 mirror core 2 2 nosync 2 /dev/mapper/bigzero 0 /dev/mapper/bigzero 0'
-
-This will access memory before the start of the sync_bits bitmap, and
-likely hit the guard page of the previously allocated clean_bits bitmap,
-causing a kernel panic with the old code.
-
-I looked and didn't see any crazy code using the signed int to
-intentionally try and access bits before some address within the bitmap.
-
-Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
-Signed-off-by: Yury Norov <ynorov@nvidia.com>
+Signed-off-by: Can Peng <pengcan@kylinos.cn>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260723055618.550834-1-pengcan@kylinos.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/asm-generic/bitops/le.h | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ .../broadcom/brcm80211/brcmfmac/msgbuf.c      | 46 ++++++++++++++++---
+ 1 file changed, 40 insertions(+), 6 deletions(-)
 
-diff --git a/include/asm-generic/bitops/le.h b/include/asm-generic/bitops/le.h
-index 5a28629cbf4d4..a46c45be38ad0 100644
---- a/include/asm-generic/bitops/le.h
-+++ b/include/asm-generic/bitops/le.h
-@@ -80,47 +80,47 @@ unsigned long find_next_bit_le(const void *addr, unsigned
- #error "Please fix <asm/byteorder.h>"
- #endif
- 
--static inline int test_bit_le(int nr, const void *addr)
-+static inline int test_bit_le(unsigned long nr, const void *addr)
- {
- 	return test_bit(nr ^ BITOP_LE_SWIZZLE, addr);
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
+index cca042d88887b..f578ac00e5d1c 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
+@@ -561,6 +561,28 @@ brcmf_msgbuf_remove_flowring(struct brcmf_msgbuf *msgbuf, u16 flowid)
+ 	brcmf_flowring_delete(msgbuf->flow, flowid);
  }
  
--static inline void set_bit_le(int nr, void *addr)
-+static inline void set_bit_le(unsigned long nr, void *addr)
- {
- 	set_bit(nr ^ BITOP_LE_SWIZZLE, addr);
- }
++static bool brcmf_msgbuf_get_flowid(struct brcmf_msgbuf *msgbuf,
++				    u16 flow_ring_id, u16 *flowid)
++{
++	u32 id = flow_ring_id;
++
++	if (id < BRCMF_H2D_MSGRING_FLOWRING_IDSTART) {
++		bphy_err(msgbuf->drvr, "invalid flowring id %u\n",
++			 flow_ring_id);
++		return false;
++	}
++
++	id -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
++	if (id >= msgbuf->max_flowrings) {
++		bphy_err(msgbuf->drvr, "invalid flowring id %u\n",
++			 flow_ring_id);
++		return false;
++	}
++
++	*flowid = id;
++	return true;
++}
++
  
--static inline void clear_bit_le(int nr, void *addr)
-+static inline void clear_bit_le(unsigned long nr, void *addr)
- {
- 	clear_bit(nr ^ BITOP_LE_SWIZZLE, addr);
- }
+ static struct brcmf_msgbuf_work_item *
+ brcmf_msgbuf_dequeue_work(struct brcmf_msgbuf *msgbuf)
+@@ -877,17 +899,23 @@ brcmf_msgbuf_process_txstatus(struct brcmf_msgbuf *msgbuf, void *buf)
+ 	struct msgbuf_tx_status *tx_status;
+ 	u32 idx;
+ 	struct sk_buff *skb;
++	u16 flow_ring_id;
+ 	u16 flowid;
  
--static inline void __set_bit_le(int nr, void *addr)
-+static inline void __set_bit_le(unsigned long nr, void *addr)
- {
- 	__set_bit(nr ^ BITOP_LE_SWIZZLE, addr);
- }
+ 	tx_status = (struct msgbuf_tx_status *)buf;
+ 	idx = le32_to_cpu(tx_status->msg.request_id) - 1;
+-	flowid = le16_to_cpu(tx_status->compl_hdr.flow_ring_id);
+-	flowid -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
++	flow_ring_id = le16_to_cpu(tx_status->compl_hdr.flow_ring_id);
+ 	skb = brcmf_msgbuf_get_pktid(msgbuf->drvr->bus_if->dev,
+ 				     msgbuf->tx_pktids, idx);
+ 	if (!skb)
+ 		return;
  
--static inline void __clear_bit_le(int nr, void *addr)
-+static inline void __clear_bit_le(unsigned long nr, void *addr)
- {
- 	__clear_bit(nr ^ BITOP_LE_SWIZZLE, addr);
- }
++	if (!brcmf_msgbuf_get_flowid(msgbuf, flow_ring_id, &flowid)) {
++		brcmf_txfinalize(brcmf_get_ifp(msgbuf->drvr, tx_status->msg.ifidx),
++				 skb, false);
++		return;
++	}
++
+ 	set_bit(flowid, msgbuf->txstatus_done_map);
+ 	commonring = msgbuf->flowrings[flowid];
+ 	atomic_dec(&commonring->outstanding_tx);
+@@ -1234,13 +1262,16 @@ brcmf_msgbuf_process_flow_ring_create_response(struct brcmf_msgbuf *msgbuf,
+ 	struct msgbuf_flowring_create_resp *flowring_create_resp;
+ 	u16 status;
+ 	u16 flowid;
++	u16 flow_ring_id;
  
--static inline int test_and_set_bit_le(int nr, void *addr)
-+static inline int test_and_set_bit_le(unsigned long nr, void *addr)
- {
- 	return test_and_set_bit(nr ^ BITOP_LE_SWIZZLE, addr);
- }
+ 	flowring_create_resp = (struct msgbuf_flowring_create_resp *)buf;
  
--static inline int test_and_clear_bit_le(int nr, void *addr)
-+static inline int test_and_clear_bit_le(unsigned long nr, void *addr)
- {
- 	return test_and_clear_bit(nr ^ BITOP_LE_SWIZZLE, addr);
- }
+-	flowid = le16_to_cpu(flowring_create_resp->compl_hdr.flow_ring_id);
+-	flowid -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
++	flow_ring_id = le16_to_cpu(flowring_create_resp->compl_hdr.flow_ring_id);
+ 	status =  le16_to_cpu(flowring_create_resp->compl_hdr.status);
  
--static inline int __test_and_set_bit_le(int nr, void *addr)
-+static inline int __test_and_set_bit_le(unsigned long nr, void *addr)
- {
- 	return __test_and_set_bit(nr ^ BITOP_LE_SWIZZLE, addr);
- }
++	if (!brcmf_msgbuf_get_flowid(msgbuf, flow_ring_id, &flowid))
++		return;
++
+ 	if (status) {
+ 		bphy_err(drvr, "Flowring creation failed, code %d\n", status);
+ 		brcmf_msgbuf_remove_flowring(msgbuf, flowid);
+@@ -1263,13 +1294,16 @@ brcmf_msgbuf_process_flow_ring_delete_response(struct brcmf_msgbuf *msgbuf,
+ 	struct msgbuf_flowring_delete_resp *flowring_delete_resp;
+ 	u16 status;
+ 	u16 flowid;
++	u16 flow_ring_id;
  
--static inline int __test_and_clear_bit_le(int nr, void *addr)
-+static inline int __test_and_clear_bit_le(unsigned long nr, void *addr)
- {
- 	return __test_and_clear_bit(nr ^ BITOP_LE_SWIZZLE, addr);
- }
+ 	flowring_delete_resp = (struct msgbuf_flowring_delete_resp *)buf;
+ 
+-	flowid = le16_to_cpu(flowring_delete_resp->compl_hdr.flow_ring_id);
+-	flowid -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
++	flow_ring_id = le16_to_cpu(flowring_delete_resp->compl_hdr.flow_ring_id);
+ 	status =  le16_to_cpu(flowring_delete_resp->compl_hdr.status);
+ 
++	if (!brcmf_msgbuf_get_flowid(msgbuf, flow_ring_id, &flowid))
++		return;
++
+ 	if (status) {
+ 		bphy_err(drvr, "Flowring deletion failed, code %d\n", status);
+ 		brcmf_flowring_delete(msgbuf->flow, flowid);
 -- 
 2.53.0
 
