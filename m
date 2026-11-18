@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028188;
-	b=nfo8ykJ1DjTj4RZPkCXZJpX13Vx9lF1W6kYBe3Qa5CFIIjIdtS5Spf7+jRqRtuca1RhM
-	 17GPX0bWg6Gc4/Z8Y1OJJSdsI/vrqgckwjrlemDcCggs7xvj099A+3GNc+L+Sd6ipD3HE
-	 NfTOEE4AY9twlwqh3dj8r97dixyunBN1JY7j+rF/Y26Br+ZiUDI4ErsvrhKkqCVLYNqrs
-	 EUXfl/vWtX5JBYj0zd19mlEhVAnmfQN7satd2TSmNeZRSJSXap3Ov6iGIi0tkNTpi0Lz3
-	 2JFNDkBpY+TSj7b9jw/pZ22xSEhnyqr0k+k/fVXhOBDQKTgHhDtZ1FAC+zBz5lDbKEA==
+	t=1795028191;
+	b=UEWZACbbAknQl39RFwsHdSRZUaV+bLZfm4JyxgZJiWdW9USiCPzKSsduba8jYKB4HpNI
+	 Emfjx8fQLEwafqIusVi4DzmeOlu+EAUOcTEk3fOUIxRY1id3v6XRY0wviGCu3bEsnmGLB
+	 lfd1GjvETUXrMtf35cj7P2C3MbE2H4vnR+eVqmqlGF79mYTSxWf45e/0UqjY1nhXQmzCC
+	 yQf4+a8aKcKjKP+G/GAN7t7t2Yr7GAuU7wKnZHxhhvSyZCU1DfsLZW01cT0eF0PJBerRE
+	 Qp9y02qvs9hFAgV9vwAOQYVpBpFBYcxuUSKAGs9JZXTnw8T1K0R+sRgw4LN439XOOlQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028188;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028191;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ll06TSZjVcoq3LmOk29XE6D53Sehl2OX0+Q5/FklAMY=;
-	b=cJBDZIkQ1WavUJI14eJ72cWVD38SzHO1q4JAQtGa4nsZdyC2lwMKxNQLNnVnkg/HUj8q
-	 IcWgdELcaku1yx50Qt9GqjLDlKLClSyl7LNj6WWprSNN3GmK6/yRoXQAUaQlC8Dc5pk3z
-	 nRBGfYtsLwBk3+TsE1RizCMLc5rhyOCa0Dzq/hwRU++yJQu29RGKoT4l8NJ5SNZcGDzXC
-	 sApsLHizHVmqI70zP/7NM8kpJ6eNdHi9jXZxkfrhOhfIYrUWhAhUdnMULkGbIpn3y52/A
-	 KMthIDQ/yIfdtIqsKOkOG3HTUAv/VpdCS9UPbdsX1/8TxB1WSzeeQ6pAiJxPDhGZ/QQ==
+	bh=opigWmFWr5ZahQyxcg2IaSwJUGQukqsbKiSN18UpBuA=;
+	b=OT7hU1zE+TttzrJtWBjc5R4swMHrvp4W2zk+iWyGMWeEePL3iHlIccwdq1w1p0dfpaRL
+	 eKijWvO4ryByXvV5js3oH1zg0MHjAIyEaTiVEmdTW61RQ5lTWuRdALdv0dY+sa4zhwpTj
+	 HL5ZsrWjUt06ytq+3nlxLY8hD173ODpzRJ+Amyt5xBfgY1R2M8cyapgJobwfeGnvGWVpO
+	 w3oI6DQCaciv/9ihl3lpzNEf+OA1CN03+LR7nBZBuGiuzrRDxkjDngAqDNtrHms4nKN3S
+	 ZEpjoXTLVjZ/uaD+uXQxMGvuG4hj0USabSKSRyhBB6MHeOm/iue41yETDpLzLOR2bxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KyI01rLu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bvq7m+Mo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D25606A320;
-	Wed, 18 Nov 2026 18:56:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230F0606A31C;
+	Wed, 18 Nov 2026 18:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KyI01rLu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60BB91F000C4;
-	Wed, 18 Nov 2026 18:56:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bvq7m+Mo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 114D51F000C4;
+	Wed, 18 Nov 2026 18:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028187;
-	bh=Ll06TSZjVcoq3LmOk29XE6D53Sehl2OX0+Q5/FklAMY=;
+	s=korg; t=1795028190;
+	bh=opigWmFWr5ZahQyxcg2IaSwJUGQukqsbKiSN18UpBuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KyI01rLuuHcNRWjgo4eeNykDQxSMWjUjk0o0riscP2ACT6tCQdXmxPd2l93h41XIt
-	 Upo4EjvmBj+xwTcmRMRuudURxG3efV2clsw+jfCdE5PACSQ5hgE/i8uRI8SzjKjp6q
-	 xmy8f82PPHKR42mYBcNhjclFqFc4CfSsyTeTsFsM=
+	b=bvq7m+MoBLbWrQXm8vFSLbXcJn/GUbQ0hv304Cg6H7hzH83Bklr/y93AsKwZVkFZo
+	 xSck2NluD/tV6bkdFlGh/SHQpE4feOey/WMlUK7PflGQZr1wcNo63KcI4pr0i2tMls
+	 mmqE+orhB5iKUTprxer6Dr4VgwRFfbgxLyzCfn0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
+	Joas Antonio dos Santos <joasantonio108@gmail.com>,
+	Guikun Yang <yangguikun19@qq.com>,
+	Jeremy Kerr <jk@codeconstruct.com.au>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2057/2151] net/mlx5: Only set num_doorbells on a fully initialized SF
-Date: Wed, 18 Nov 2026 16:03:12 +0100
-Message-ID: <20261118150236.654814577@linuxfoundation.org>
+Subject: [PATCH 6.18 2058/2151] net: mctp: free reassembly head skb when key_add fails on SOM
+Date: Wed, 18 Nov 2026 16:03:13 +0100
+Message-ID: <20261118150236.689436227@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,45 +70,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Ratiu <cratiu@nvidia.com>
+From: Joas Antonio dos Santos <joasantonio108@gmail.com>
 
-[ Upstream commit fa503935c2d6603856dafff0a0852631ab6e9503 ]
+[ Upstream commit d2bfe74a8fe219a86b86c1f126e1d722a5001790 ]
 
-The validation for the num_doorbells devlink param rejects values
-greater than num_channels. For lightweight SFs, this ends up accessing
-a NULL priv->eq_table, leading to a crash.
+When a start-of-message fragment creates a new reassembly key on the
+broadcast/bind path, mctp_frag_queue() stores the skb as
+key->reasm_head before the key is made observable with mctp_key_add().
 
-Fix that by rejecting setting num_doorbells on uninitialized SFs.
+If mctp_key_add() fails (a race with another SOM packet for the same
+source/dest/tag, or the receiving socket going away), the error path
+only drops the key reference via mctp_key_unref().  The final key
+destructor frees the key itself but not key->reasm_head, and since the
+key was never added to any list, neither the expiry worker nor socket
+teardown can reach it to release the queued fragment.  The skb is
+leaked.
 
-Fixes: 11bbcfb7668c ("net/mlx5e: Use the 'num_doorbells' devlink param")
-Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261026084503.4122732-1-tariqt@nvidia.com
+Free key->reasm_head on the key_add failure path before releasing the
+key.  Other teardown paths (__mctp_key_done_in(), EOM delivery) already
+clear reasm_head before the final unref, so this only affects the
+failure path.
+
+Fixes: 4a992bbd3650 ("mctp: Implement message fragmentation & reassembly")
+Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
+Reported-by: Guikun Yang <yangguikun19@qq.com>
+Closes: https://lore.kernel.org/all/tencent_43A65D51143E18518EA968DF9323694EFD08@qq.com/
+Acked-by: Jeremy Kerr <jk@codeconstruct.com.au>
+Link: https://patch.msgid.link/179287946888.17431.11219154409333681184@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/devlink.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/mctp/route.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
-index 055ee020c56f4..7e436d32d69f7 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
-@@ -541,6 +541,12 @@ static int mlx5_devlink_num_doorbells_validate(struct devlink *devlink, u32 id,
- 	u32 val32 = val.vu32;
- 	u32 max_num_channels;
+diff --git a/net/mctp/route.c b/net/mctp/route.c
+index ebccff97ec980..383ec4ca0d790 100644
+--- a/net/mctp/route.c
++++ b/net/mctp/route.c
+@@ -552,8 +552,16 @@ static int mctp_dst_input(struct mctp_dst *dst, struct sk_buff *skb)
+ 			 * can do is drop.
+ 			 */
+ 			rc = mctp_key_add(key, msk);
+-			if (!rc)
++			if (!rc) {
+ 				trace_mctp_key_acquire(key);
++			} else {
++				/* key_add failed: the key is not observable by
++				 * any cleanup path, so free the fragment we
++				 * just queued on it to avoid leaking the skb.
++				 */
++				kfree_skb(key->reasm_head);
++				key->reasm_head = NULL;
++			}
  
-+	if (mlx5_dev_is_lightweight(mdev)) {
-+		NL_SET_ERR_MSG_MOD(extack,
-+				   "Setting num_doorbells requires full device initialization; reload the device first");
-+		return -EOPNOTSUPP;
-+	}
-+
- 	max_num_channels = mlx5e_get_max_num_channels(mdev);
- 	if (val32 > max_num_channels) {
- 		NL_SET_ERR_MSG_FMT_MOD(extack,
+ 			/* we don't need to release key->lock on exit, so
+ 			 * clean up here and suppress the unlock via
 -- 
 2.53.0
 
