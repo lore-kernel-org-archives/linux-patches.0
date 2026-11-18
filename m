@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059658;
-	b=wEtcKgl09XxZGF2wDjEgFuosbtzYmpX0v5NuAPZuD3IzDLV0ZDDOhRAIpm7tuuGGSy9Z
-	 LCZzBCHV5gK+9itr9o/h4QH012ih+pmJBsIjZDpv/nLkfrowPs6FAB3RmGpwM0U8BGjuN
-	 wyU3pd64OuplQPPy5qYzkt/l4IVArateShhCO78uxdKJhaGZVIsvPc5xIouvhNCfEVoXM
-	 gizo8tNF9claEZ/WgHuRbPBx1P+jXh9dwLyHkQJhbuyQ4x2XEHKKr9qjSII96nf/6OH15
-	 fb/wholicIWbgNowvMugshX18fkZ1pqMbrPtRXc+xcOsOzf74LWRhrn+/VgKRLHJhiw==
+	t=1795059661;
+	b=fDdwpqIt0fCttdRqBJhrADnu7F0USMV2OIAPk4Px9c6hkllDUV9WPeM3N9oe6f8LrrFy
+	 MuBTCTEULcvIyaJ4wwKiINQoi4zogm6zKI7SDAPDAjne2DP2WRaj5D2iiLjLNhI92W+Jk
+	 TMghf7/8L9ERGk3KjmxWDEH/lTi8wwK+j1gCsOg7uP+FWgXKYUHRjhsZUckGslBmT8MB9
+	 EvogQlbCTOJtdxy/y2iHa8731Fu2RbtgNKWTIzgRdKSGFoezTVlHuSpDRV3EWAoXvuCyK
+	 Px+lnWintE7hQKVGRYfGKiqRp1hgJ2ONUuRzho0iqJsOstlu+b1ZG3CgAYa4Zww5KIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059658;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059661;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Torau/28ndhWrWoQ9+ba8tPKeTPHu3bP6TiRmu0wPIk=;
-	b=Zj5gfFUnPQL0l6TcI/KIUeDbyQZajCnCUfS4GRBbyYW/t4aKz4lBPRdUC6cZB4Ef66Vq
-	 iwcyhvAvabNGxj/XuUYhRrvXcyOFTBJTh6tQqitSYTMWp72SmARyLv3+Ti8fT+nUc1zrX
-	 wDLQHv5Y4FPagh2iG/Gr47xYMGRJEtBfoFM1JQgaRCGKRh3OfjMm0Icl1hTuT14aejrKg
-	 pVbSlV+2CEbW+mYywSo8TM1sPhvDX+gynIIV5hPkJuM9/QitV6q3jZ/SRUMf7oyKmITtY
-	 65VIgae+fJWdbARFnVNNGGxLBpLBSiW1g8rIFAB8k3OOUQdJYi6eIimYB3ahR1mAUbQ==
+	bh=k6Rbciq0YIdjsXVYHFQ9SbnI+Q3OR5czxwj5h0IR8dc=;
+	b=wwVpXBI3YLE1GrrDvcQ/XmJ+5WcldyHEYFUNLUB3ksXBQkhaJL73cfiDkCr56EUcG5d6
+	 4q4YcYN/wFpnvmlb0A/GGYVohdTWaaimdKZhMFCdPrkNQw7SeEbnX3SKKU9ZTzvTOc4x7
+	 oQAOGwMwXHnzHslnaSxmgsRLroHDcvnh+jtCRRvNdP0Mlz5zUpRkrg7qBXKd3q5yg9Iyu
+	 4SF3iB73961/Zxnk1vrLjdF6LWQVFXX2vlzYExNT803mhv0qUpujHks50jkGvQS+I+FY/
+	 T/6nv1910Hc9QJpB73tySgpQwM2fsSgdyjL4ceDib7eMpncJ6T7jJIUUYZ2fHWt5GjA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=McUZo85H;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MbrlRsDn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0049606A332;
-	Thu, 19 Nov 2026 03:40:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75DBC606A331;
+	Thu, 19 Nov 2026 03:41:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=McUZo85H
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECF4A1F000C4;
-	Thu, 19 Nov 2026 03:40:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MbrlRsDn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C78041F000C4;
+	Thu, 19 Nov 2026 03:41:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059658;
-	bh=Torau/28ndhWrWoQ9+ba8tPKeTPHu3bP6TiRmu0wPIk=;
+	s=korg; t=1795059661;
+	bh=k6Rbciq0YIdjsXVYHFQ9SbnI+Q3OR5czxwj5h0IR8dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=McUZo85HoJH+PFAUCqHirDciR72Dtuo0RVWUCfAzV+YcuNlvU/Mk5qXBSoiElCht3
-	 XrjemHdWLS2mlP5ru51fDK5O7ecdHAaoUdce08+VqOC5tvNvpORqqQLotIWkvs4o3T
-	 Cz2zlcGiO+AVHuWhL6mFaRIN3bNZb0knAV/uxEcY=
+	b=MbrlRsDnbo5G+rU45l0nIzf+ix2Httr3MtjLZ4asuEvaxGctCfQz2mfVVMbKejRcZ
+	 gHAg556L9a6jYvAUsUrS2a0CB0zNRGy1QXhsV7rDA3/h329kuf7Qg0RQNPRY/3ff3i
+	 xzC8vSqI/Bc2XL9ckz7hEenbVRdgMiKbYqath/DY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0919/1848] leds: ktd2692: Pass context to regulator cleanup
-Date: Wed, 18 Nov 2026 15:49:17 +0100
-Message-ID: <20261118145955.309661436@linuxfoundation.org>
+Subject: [PATCH 5.10 0920/1848] ALSA: emux: Fix UAF of soundfont zones at note-on
+Date: Wed, 18 Nov 2026 15:49:18 +0100
+Message-ID: <20261118145955.344565559@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,84 +68,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit c73e9f04445f361d5f19ca2edfde742ce18348ef ]
+[ Upstream commit 34e3e04b8a1731a773797542f0781e99ce7cd755 ]
 
-regulator_disable_action() retrieves the driver context from device
-driver data.  However, ktd2692_parse_dt() registers the action before
-ktd2692_probe() stores the context with platform_set_drvdata().
+snd_emux_note_on() looks up the matching zones via
+snd_soundfont_search_zone(), which takes sflist->lock only during the
+lookup and returns the raw zone pointers after releasing it.  The
+caller then stores them in vp->zone without any protection.
+Meanwhile, a concurrent SNDRV_EMUX_IOCTL_REMOVE_LAST_SAMPLES ioctl may
+unlink and free those zones in snd_soundfont_remove_unlocked(); this
+leads to a use-after-free in snd_emux_note_on(), and later at
+accessing the cached vp->zone, e.g. in snd_emux_send_effect().
 
-If devm_add_action_or_reset() cannot allocate the action, it invokes the
-callback immediately.  A later probe failure also invokes it during
-managed-resource unwinding.  Both paths dereference a NULL context.
+Fix it by holding sflist->lock in snd_emux_note_on() over the whole
+zone lookup and voice setup, and let snd_soundfont_search_zone()
+require the caller to hold the lock, instead.
+snd_soundfont_lock_preset() takes sflist->lock for setting
+presets_locked, so the removal path now syncs with the note-on finish.
 
-Pass the already allocated context directly to the action and retain the
-device pointer in it for error reporting.  The context is allocated before
-the action is registered, so reverse-order devres unwinding keeps it alive
-through the callback.
-
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
-
-Fixes: ee78b9360e14 ("leds: ktd2692: Fix an error handling path")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/bug/linux-697212bb-a434-4ff5-8778-25a84f5dad89
 Cc: stable@vger.kernel.org
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260910194525.99654-1-mhun512@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
-[ sashal: adjusted context for the older ktd2692_context layout without ExpressWire fields ]
+Link: https://patch.msgid.link/20261020101624.205638-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[ sashal: replaced guard(spinlock_irqsave) with explicit spin_lock_irqsave()/spin_unlock_irqrestore() and an unlock label ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-ktd2692.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ sound/synth/emux/emux_synth.c |  9 +++++++--
+ sound/synth/emux/soundfont.c  | 15 +++++++--------
+ 2 files changed, 14 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/leds/leds-ktd2692.c b/drivers/leds/leds-ktd2692.c
-index f341da1503a49..5ef8b3c530084 100644
---- a/drivers/leds/leds-ktd2692.c
-+++ b/drivers/leds/leds-ktd2692.c
-@@ -72,6 +72,8 @@ struct ktd2692_led_config_data {
- };
+diff --git a/sound/synth/emux/emux_synth.c b/sound/synth/emux/emux_synth.c
+index a5385efcedb6c..195cb58fd428f 100644
+--- a/sound/synth/emux/emux_synth.c
++++ b/sound/synth/emux/emux_synth.c
+@@ -49,7 +49,7 @@ snd_emux_note_on(void *p, int note, int vel, struct snd_midi_channel *chan)
+ 	int i, key, nvoices;
+ 	struct snd_emux_voice *vp;
+ 	struct snd_sf_zone *table[SNDRV_EMUX_MAX_MULTI_VOICES];
+-	unsigned long flags;
++	unsigned long flags, sf_flags;
+ 	struct snd_emux_port *port;
  
- struct ktd2692_context {
-+	struct device *dev;
+ 	port = p;
+@@ -61,9 +61,12 @@ snd_emux_note_on(void *p, int note, int vel, struct snd_midi_channel *chan)
+ 		return;
+ 
+ 	key = note; /* remember the original note */
 +
- 	/* Related LED Flash class device */
- 	struct led_classdev_flash fled_cdev;
++	/* hold sflist->lock for protecting against concurrent free */
++	spin_lock_irqsave(&emu->sflist->lock, sf_flags);
+ 	nvoices = get_zone(emu, port, &note, vel, chan, table);
+ 	if (! nvoices)
+-		return;
++		goto unlock;
  
-@@ -258,13 +260,12 @@ static void ktd2692_setup(struct ktd2692_context *led)
- 
- static void regulator_disable_action(void *_data)
- {
--	struct device *dev = _data;
--	struct ktd2692_context *led = dev_get_drvdata(dev);
-+	struct ktd2692_context *led = _data;
- 	int ret;
- 
- 	ret = regulator_disable(led->regulator);
- 	if (ret)
--		dev_err(dev, "Failed to disable supply: %d\n", ret);
-+		dev_err(led->dev, "Failed to disable supply: %d\n", ret);
+ 	/* exclusive note off */
+ 	for (i = 0; i < nvoices; i++) {
+@@ -136,6 +139,8 @@ snd_emux_note_on(void *p, int note, int vel, struct snd_midi_channel *chan)
+ 		}
+ 	}
+ #endif
++unlock:
++	spin_unlock_irqrestore(&emu->sflist->lock, sf_flags);
  }
  
- static int ktd2692_parse_dt(struct ktd2692_context *led, struct device *dev,
-@@ -301,7 +302,7 @@ static int ktd2692_parse_dt(struct ktd2692_context *led, struct device *dev,
- 			dev_err(dev, "Failed to enable supply: %d\n", ret);
- 		} else {
- 			ret = devm_add_action_or_reset(dev,
--						regulator_disable_action, dev);
-+						regulator_disable_action, led);
- 			if (ret)
- 				return ret;
- 		}
-@@ -359,6 +360,7 @@ static int ktd2692_probe(struct platform_device *pdev)
- 	if (!led)
- 		return -ENOMEM;
+ /*
+diff --git a/sound/synth/emux/soundfont.c b/sound/synth/emux/soundfont.c
+index 18b2d84926563..ca3e100a637e4 100644
+--- a/sound/synth/emux/soundfont.c
++++ b/sound/synth/emux/soundfont.c
+@@ -1221,6 +1221,9 @@ delete_preset(struct snd_sf_list *sflist, struct snd_sf_zone *zp)
+  * The found zones are stored on 'table' array.  max_layers defines
+  * the maximum number of elements in this array.
+  * This function returns the number of found zones.  0 if not found.
++ *
++ * The caller must hold sflist->lock, and keep holding it as long as
++ * the returned zones are accessed.
+  */
+ int
+ snd_soundfont_search_zone(struct snd_sf_list *sflist, int *notep, int vel,
+@@ -1229,17 +1232,14 @@ snd_soundfont_search_zone(struct snd_sf_list *sflist, int *notep, int vel,
+ 			  struct snd_sf_zone **table, int max_layers)
+ {
+ 	int nvoices;
+-	unsigned long flags;
  
-+	led->dev = &pdev->dev;
- 	fled_cdev = &led->fled_cdev;
- 	led_cdev = &fled_cdev->led_cdev;
+-	/* this function is supposed to be called atomically,
+-	 * so we check the lock.  if it's busy, just returns 0 to
++	lockdep_assert_held(&sflist->lock);
++
++	/* if the presets are being modified, just returns 0 to
+ 	 * tell the caller the busy state
+ 	 */
+-	spin_lock_irqsave(&sflist->lock, flags);
+-	if (sflist->presets_locked) {
+-		spin_unlock_irqrestore(&sflist->lock, flags);
++	if (sflist->presets_locked)
+ 		return 0;
+-	}
+ 	nvoices = search_zones(sflist, notep, vel, preset, bank,
+ 			       table, max_layers, 0);
+ 	if (! nvoices) {
+@@ -1248,7 +1248,6 @@ snd_soundfont_search_zone(struct snd_sf_list *sflist, int *notep, int vel,
+ 					       def_preset, def_bank,
+ 					       table, max_layers, 0);
+ 	}
+-	spin_unlock_irqrestore(&sflist->lock, flags);
+ 	return nvoices;
+ }
  
 -- 
 2.53.0
