@@ -1,53 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032831;
-	b=smt31NTUK0zfkQzDW73GyAHOA/uuBL94KcuEqieiJ2qFMPRU1/Syl9moEdsRu+d6jt0J
-	 0dwz5GB9fCA6pcm1GruubRcG8/TboqThznrykVKMK+J9bYdamzBBX05AckVNUXpL3IPHz
-	 iW7aNgm5W434Obsl81PWsLBKe0LUevYD44u27DGEHFU6s0kH2KimgSJVb+ze2eex7pVkY
-	 LkQb3w0EzThvPR2WkeTf42x1qqLcL5T43c9RgaNkbIeb+BFuDQJK8YRkC5zrwv/Ghwqup
-	 Tj5BeN9f4x7OarLhAPJ0E3rXrEc1IvVq7UtzJIcbPE9WQLZZ538gVAw5GNwQ0Y0E9NA==
+	t=1795032833;
+	b=hUUsq1rkBcqov6wuBUGwEfr0o7/o3t7VgUTFTmuwO9XZsXvxMRtxUiTXaPDSmbWG4a6x
+	 JG4QoUES6bRgbLm4LX7XFlkamnMduu9kHGgE1bSze45qyn4vyj/6j2tgFIAJs+tKVTFN8
+	 Pf8akgTcTy4QyNE3eWH+FKEBVUtlSQR5YeuBOfU0uz05bZQrdoPNO6ncQjdLe9ymzXvzy
+	 yR7bHvIccIVnrz+1KcAM0sjtDDCyFh1JQtba1Rf024/6pZiFeBMyp/DjFAAYS8tpDKtwT
+	 ZnpIDQF3T4f29jGmtlvOMwWniRw3q5dLofnzDNislQcnVTpPYRbZ2HQQo8EkgO4mFRg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032831;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032833;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PYaLPCNbH6hPpvC4KkdFgsv3efRCITNN/ipUIli2Ja8=;
-	b=bv9Oo93rLpwR7Bl46G7QtJ/30hoAsujQbC1ST4o4H70fG9+xZtlSFlytb/PgcE7Z3sUY
-	 gGfAOUtjeRUWBPviBiSmBJ4+Bbv5QSzHriaq4owlnrHQeGn6khlNtPcDGWrz79WmKv+Lv
-	 i5Rzt2GP4k1FIwZhZ+UH+gi6E2oy9cwI7VC2SmvMDWn6JeI9deApmXYUcI068fCABHE45
-	 mQzteHwwIq7whEGywUx08kFXwW2wAiJOVK6DPgFJVg5/QEl9BHp3xuoecsdRzdezgo+x1
-	 ZHK4RWD/DesfnAM8Qj7sJRXWNFIcMu5bsrfQFw2ljEK1DZd1ZTYQi+Vdq3mUPNG5K5A==
+	bh=ZHf/zBpCUebsYrMIR+06+k8i3bqpffzpAuJz0UpYqXU=;
+	b=L2nhRsFUkzUf+syKdg1p982f8xuBbFZv/vGX5/v8yC9tfHcW1EOOTA1nQyvjvcZg9pdl
+	 sWSLd25Tiwk4Z6uRN/CT6q3MyJPhdrSQpW0crjxNKdgcsvtYHSV8Myv61GqhXceuwfOUv
+	 riOy+J2QlkkbHdFKDgEYlpJ9BqMXFmyL0IMfuTJLY4XLTaUa9gYIo3o5qg8hsZZFz/h0C
+	 igcmViFAQH5Ou0IOJSfupPl4fchCFDeNlXTHfc4SEgFuMHOpRfSfFxm+rywg0S1VUv2mD
+	 CRzv0AAQTKfc0knAlRYpEPfbE5KfgajJALznDgzPucHoyLRKplPHzT673Z0Fh5MOJAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KsuM9RQ3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="H6X/A94+";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C67606A32C;
-	Wed, 18 Nov 2026 20:13:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D245A60A260E;
+	Wed, 18 Nov 2026 20:13:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KsuM9RQ3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C1B1F000C4;
-	Wed, 18 Nov 2026 20:13:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H6X/A94+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DBD11F000C4;
+	Wed, 18 Nov 2026 20:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032831;
-	bh=PYaLPCNbH6hPpvC4KkdFgsv3efRCITNN/ipUIli2Ja8=;
+	s=korg; t=1795032833;
+	bh=ZHf/zBpCUebsYrMIR+06+k8i3bqpffzpAuJz0UpYqXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KsuM9RQ33wBMVAD99Rs/EQmdqy0Gv/dRlLnmsNyw4/CUhO+OdMxRFe7OsS1B5Wftm
-	 E3V/2ANFdP4IKC24m6EAJRa3F0XOz/+Ig/aJLV8VwZaOgLIbU6Y0r3YXIymq8T+fOB
-	 RlJH7uHobau+YcusPaIYMHfuNprEJvqi9QQ6ML4k=
+	b=H6X/A94+L9m4S2cX95G4FfO/KWvYVRpjieuh9PVl0jdw1twBydnhaXjfs8XDPlAlO
+	 tWQlXXENPZnlN/SjRLQ8gWV5oNezx9Qp7G1JOtL5/joJTP7ABINCuI7H91Lq8fNz0v
+	 RXXjzl93xh6vNHWZzePbhEkm8bG9GkqvL8wYYA4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avi Weiss <thnkslprpt@gmail.com>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkman <daniel@iogearbox.net>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Jan Kiszka <jan.kiszka@siemens.com>,
+	Kieran Bingham <kbingham@kernel.org>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Bradley Morgan <brads@mainlining.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1549/1756] profiling: fix sampling step on 64-bit big-endian systems
-Date: Wed, 18 Nov 2026 16:01:16 +0100
-Message-ID: <20261118150110.658960076@linuxfoundation.org>
+Subject: [PATCH 6.12 1550/1756] scripts/gdb/radix-tree: add lx-radix-tree-command
+Date: Wed, 18 Nov 2026 16:01:17 +0100
+Message-ID: <20261118150110.720843436@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,44 +76,213 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avi Weiss <thnkslprpt@gmail.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-[ Upstream commit b1d68946a08313895f352af5336623d29739c299 ]
+[ Upstream commit caa71919a622e3f7d290d4f17ae538b15f5cb6d3 ]
 
-read_profile() stores the sampling step in an unsigned long but copies
-only four bytes to userspace.  On 64-bit big-endian systems (not common
-obviously), this copies the upper 32 bits and discards the rest, causing
-/proc/profile to report zero for normal shift values.
+Patch series "scripts/gdb/symbols: make BPF debug info available to GDB",
+v2.
 
-Cast to unsigned int so we get the correct 4 bytes, while keeping the
-shift calculation in unsigned long.
+This series greatly simplifies debugging BPF progs when using QEMU gdbstub
+by providing symbol names, sizes, and line numbers to GDB.
 
-A small C reproducer under qemu-s390x reproduced this and proved the fix
-works for prof_shift=2.
+Patch 1 adds radix tree iteration, which is necessary for parsing
+prog_idr.  Patch 2 is the actual implementation; its description contains
+some details on how to use this.
 
-Link: https://lore.kernel.org/20261020101225.917959-1-thnkslprpt@gmail.com
-Fixes: 2d186afd04d6 ("profiling: fix shift-out-of-bounds bugs")
-Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+This patch (of 2):
+
+Add a function and a command to iterate over radix tree contents.
+Duplicate the C implementation in Python, but drop support for tagging.
+
+Link: https://lkml.kernel.org/r/20251106124600.86736-1-iii@linux.ibm.com
+Link: https://lkml.kernel.org/r/20251106124600.86736-2-iii@linux.ibm.com
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: Andrii Nakryiko <andrii@kernel.org>
+Cc: Daniel Borkman <daniel@iogearbox.net>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Jan Kiszka <jan.kiszka@siemens.com>
+Cc: Kieran Bingham <kbingham@kernel.org>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Stable-dep-of: 66d190b072b4 ("scripts/gdb: fix radix tree lookup pointer handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/profile.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ scripts/gdb/linux/radixtree.py | 139 +++++++++++++++++++++++++++++++--
+ 1 file changed, 132 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/profile.c b/kernel/profile.c
-index 1fcf1adcf4eb0..e7defa90a34c9 100644
---- a/kernel/profile.c
-+++ b/kernel/profile.c
-@@ -156,7 +156,7 @@ read_profile(struct file *file, char __user *buf, size_t count, loff_t *ppos)
- 	unsigned long p = *ppos;
- 	ssize_t read;
- 	char *pnt;
--	unsigned long sample_step = 1UL << prof_shift;
-+	unsigned int sample_step = (unsigned int)(1UL << prof_shift);
+diff --git a/scripts/gdb/linux/radixtree.py b/scripts/gdb/linux/radixtree.py
+index 074543ac763d2..bc2954e45c327 100644
+--- a/scripts/gdb/linux/radixtree.py
++++ b/scripts/gdb/linux/radixtree.py
+@@ -30,13 +30,16 @@ def entry_to_node(node):
+ def node_maxindex(node):
+     return (constants.LX_RADIX_TREE_MAP_SIZE << node['shift']) - 1
  
- 	if (p >= (prof_len+1)*sizeof(unsigned int))
- 		return 0;
+-def lookup(root, index):
++def resolve_root(root):
++    if root.type == radix_tree_root_type.get_type():
++        return root
+     if root.type == radix_tree_root_type.get_type().pointer():
+-        node = root.dereference()
+-    elif root.type != radix_tree_root_type.get_type():
+-        raise gdb.GdbError("must be {} not {}"
+-                           .format(radix_tree_root_type.get_type(), root.type))
++        return root.dereference()
++    raise gdb.GdbError("must be {} not {}"
++                       .format(radix_tree_root_type.get_type(), root.type))
+ 
++def lookup(root, index):
++    root = resolve_root(root)
+     node = root['xa_head']
+     if node == 0:
+         return None
+@@ -71,14 +74,120 @@ def lookup(root, index):
+ 
+     return node
+ 
+-class LxRadixTree(gdb.Function):
++def descend(parent, index):
++    offset = (index >> int(parent["shift"])) & constants.LX_RADIX_TREE_MAP_MASK
++    return offset, parent["slots"][offset]
++
++def load_root(root):
++    node = root["xa_head"]
++    nodep = node
++
++    if is_internal_node(node):
++        node = entry_to_node(node)
++        maxindex = node_maxindex(node)
++        return int(node["shift"]) + constants.LX_RADIX_TREE_MAP_SHIFT, \
++               nodep, maxindex
++
++    return 0, nodep, 0
++
++class RadixTreeIter:
++    def __init__(self, start):
++        self.index = 0
++        self.next_index = start
++        self.node = None
++
++def xa_mk_internal(v):
++    return (v << 2) | 2
++
++LX_XA_RETRY_ENTRY = xa_mk_internal(256)
++LX_RADIX_TREE_RETRY = LX_XA_RETRY_ENTRY
++
++def next_chunk(root, iter):
++    mask = (1 << (utils.get_ulong_type().sizeof * 8)) - 1
++
++    index = iter.next_index
++    if index == 0 and iter.index != 0:
++        return None
++
++    restart = True
++    while restart:
++        restart = False
++
++        _, child, maxindex = load_root(root)
++        if index > maxindex:
++            return None
++        if not child:
++            return None
++
++        if not is_internal_node(child):
++            iter.index = index
++            iter.next_index = (maxindex + 1) & mask
++            iter.node = None
++            return root["xa_head"].address
++
++        while True:
++            node = entry_to_node(child)
++            offset, child = descend(node, index)
++
++            if not child:
++                while True:
++                    offset += 1
++                    if offset >= constants.LX_RADIX_TREE_MAP_SIZE:
++                        break
++                    slot = node["slots"][offset]
++                    if slot:
++                        break
++                index &= ~node_maxindex(node)
++                index = (index + (offset << int(node["shift"]))) & mask
++                if index == 0:
++                    return None
++                if offset == constants.LX_RADIX_TREE_MAP_SIZE:
++                    restart = True
++                    break
++                child = node["slots"][offset]
++
++            if not child:
++                restart = True
++                break
++            if child == LX_XA_RETRY_ENTRY:
++                break
++            if not node["shift"] or not is_internal_node(child):
++                break
++
++    iter.index = (index & ~node_maxindex(node)) | offset
++    iter.next_index = ((index | node_maxindex(node)) + 1) & mask
++    iter.node = node
++
++    return node["slots"][offset].address
++
++def next_slot(slot, iter):
++    mask = (1 << (utils.get_ulong_type().sizeof * 8)) - 1
++    for _ in range(iter.next_index - iter.index - 1):
++        slot += 1
++        iter.index = (iter.index + 1) & mask
++        if slot.dereference():
++            return slot
++    return None
++
++def for_each_slot(root, start=0):
++    iter = RadixTreeIter(start)
++    slot = None
++    while True:
++        if not slot:
++            slot = next_chunk(root, iter)
++            if not slot:
++                break
++        yield iter.index, slot
++        slot = next_slot(slot, iter)
++
++class LxRadixTreeLookup(gdb.Function):
+     """ Lookup and return a node from a RadixTree.
+ 
+ $lx_radix_tree_lookup(root_node [, index]): Return the node at the given index.
+ If index is omitted, the root node is dereference and returned."""
+ 
+     def __init__(self):
+-        super(LxRadixTree, self).__init__("lx_radix_tree_lookup")
++        super(LxRadixTreeLookup, self).__init__("lx_radix_tree_lookup")
+ 
+     def invoke(self, root, index=0):
+         result = lookup(root, index)
+@@ -87,4 +196,20 @@ If index is omitted, the root node is dereference and returned."""
+ 
+         return result
+ 
++class LxRadixTree(gdb.Command):
++    """Show all values stored in a RadixTree."""
++
++    def __init__(self):
++        super(LxRadixTree, self).__init__("lx-radix-tree", gdb.COMMAND_DATA,
++                                          gdb.COMPLETE_NONE)
++
++    def invoke(self, argument, from_tty):
++        args = gdb.string_to_argv(argument)
++        if len(args) != 1:
++            raise gdb.GdbError("Usage: lx-radix-tree ROOT")
++        root = gdb.parse_and_eval(args[0])
++        for index, slot in for_each_slot(root):
++            gdb.write("[{}] = {}\n".format(index, slot.dereference()))
++
+ LxRadixTree()
++LxRadixTreeLookup()
 -- 
 2.53.0
 
