@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056730;
-	b=3TsbZN9ic49pgrb3T16F3sKmzTLsQXWxzqheVQlVfNwVDu6De+lzUUWjuJ+9rYbXIETb
-	 sSVnKVbVHME9UE1s3eMw0/Qu2HefDXLNHv7qcjjsBUhhaWTPWj7Im1Fx5pjSwQF24X6tt
-	 jg2SyGlMwyZzJRKFm7YaQ5qupOrfm8llZgg0+mLwCJRGfUJjc5gl8vsNeeNiuFeiKYyMh
-	 tNB4wCgWYAAkNIeupIMSDtFkgW5ixtheh8rM5yIyWgF9meuOqn2xwhucuqMa1lhwTp3g+
-	 zRSMn7lJ8SDVewDHKbXwN2NRSKa5p5W5us11IWxMpVTQPr9WOiZZNGuzg7HV13KYeug==
+	t=1795056733;
+	b=GiqBFYsNgONniWtJSQHC9TLLq+iXYx8aguFUICd+Xz1X4uGJiUOAK+/kQPmtFXe4if0F
+	 v8A7T9BBea+/mVCj9MALCppEJK3nuW0zNUOuJNbdrNq8r7SuJipoNcmK/Z/84AB1Wb377
+	 fhPHn1YHp4jAn3AbGf2dphlZTyT0eFmYX18XZqZMr6cGeacV1SgZAMJWMwirD13GWfBsq
+	 Raa+N/ZH5Z+rf30tEHUxDoVUlYH7nJnfF5BF/SHJkIS7kI4McCorSBXcQsTS3jkYaV7Ov
+	 tpVQejfBdMr1RxkyWZDUW/pE0SBjZxx7oDXslUAD/TQ5oJGzWm7thkObnzopO19QsPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056730;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056733;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wtaOB6t+maaPD4fuWqAUpKSmYXL/6o7Dq+asHwqRjbA=;
-	b=GLThVxoBGQV20K6wNkyJwDbmXqTLCbANAqHQokDGBrLWO9L3Xde3tSV1aG2vGYekCdVC
-	 QmerCiIp2hz6vHltV8AG5UYqoV+9JjAvw3TSQeZQ1rfF7mm1XSL7UjgYocZu2LvT1lYiB
-	 rFZxFAJJpJ33OOfLLISijaTq0A3AhDk9ftREx4GTtLG/37XsINeU3CSR+/1Fn6splTe7W
-	 YAm8+z5ylOWEEI9r7jOmeUUZ+8KoJHyA7DLL5Uo4aqgk0fJrXNtuzyI/errL0hIEK6m5N
-	 XFXWEiOFH+tqntUk7mBNNISnlykDirCRKXZprs5d7eCkjRGj/1oYJesteuaEKU24Kpw==
+	bh=xByK70sz+NJRahhxyyP3X87sHXc1McxvT36w6lek+pk=;
+	b=g8Idbn3B9JbyMcxE+pXacBOgev46CNQtUuNFNXWQX/pBvvPgAHJQbDk53JoVswzg6K2b
+	 swybIz8fAt9TtLwa++/G1QDwxF1B1kWaqvIYuwKclDjummpF1hxiX/+Cml5lOjbvehDS5
+	 KFyiJlMc6sJLPtlBh5G9JN5hotbZSK8HrHOJ3H2PQBvIgJATAWCjeVyKf9TZKibOLzmgz
+	 btaq3TCEvUy23QOKZBcfKshwMqci+gi6mpI3kfvhHIqunj0I47AmQs9/48upCS0KLUtjw
+	 ny83hSKQj99UAtc9RvqcNBYSzSfDGFotnNfac7TjbRqqTSgHEY7BH7rMUK+KYWlUvOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=suFjZYxL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iUSb8zjf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F8C606A31C;
-	Thu, 19 Nov 2026 02:52:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02CB5606A31C;
+	Thu, 19 Nov 2026 02:52:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=suFjZYxL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DF561F000C4;
-	Thu, 19 Nov 2026 02:52:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iUSb8zjf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E93A1F000C7;
+	Thu, 19 Nov 2026 02:52:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056730;
-	bh=wtaOB6t+maaPD4fuWqAUpKSmYXL/6o7Dq+asHwqRjbA=;
+	s=korg; t=1795056732;
+	bh=xByK70sz+NJRahhxyyP3X87sHXc1McxvT36w6lek+pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=suFjZYxLHeQ6tq6n14CpCMuRiLTPuzEiHuwnGltRLINSlv7ctGg+ga6mN7dS1tCik
-	 GmFUUDPF9cNj9Ii+NSpkJ35Rt/0UPUrGDZaAhc8xfZyr0r77Pmbp1LaXxmazEKe1k3
-	 yd29rJQl6L0/2Efebs4kv7jAm4rFusGlA+XxowKo=
+	b=iUSb8zjfK0PrCRXBDcH6JdRlpPINpCf2MTnZpfGCA5m5d0GsJmm8bSXLytKiA1h13
+	 1UnxJ6vw4hxzioVwJP/oUIoBc/Vent+zF0nMhqVYGRHuxOPTIEQ4rgIr8UfTaz8SR/
+	 QZxxyMMscC71rnsK+lAwOuR/ctNSCaIPf8bKMqig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Nikhil P. Rao" <nikhil.rao@amd.com>,
-	Eric Joyner <eric.joyner@amd.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Tianyi Gao <tianyi@cloudflare.com>,
+	Mohsin Bashir <hmohsin@meta.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2093/2214] ionic: fix port_info use-after-free on firmware recovery
-Date: Wed, 18 Nov 2026 16:02:49 +0100
-Message-ID: <20261118150134.355449332@linuxfoundation.org>
+Subject: [PATCH 5.15 2094/2214] veth: schedule the peers NAPI after XDP_TX when only GRO is enabled
+Date: Wed, 18 Nov 2026 16:02:50 +0100
+Message-ID: <20261118150134.422055804@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,71 +71,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikhil P. Rao <nikhil.rao@amd.com>
+From: Tianyi Gao <tianyi@cloudflare.com>
 
-[ Upstream commit d90d1a768b3b022c52beafb3a4701ee2ee3d2b5e ]
+[ Upstream commit f16b8c6a656e62bfa7bb6a3b876f9ccdaf53bd43 ]
 
-ionic_port_init() allocates port_info when the pointer is NULL, but its
-error path frees it without checking whether this call allocated it.
-Before commit ddc5911b9bd2 ("ionic: call ionic_port_init after
-fw-upgrade") the function returned early when the buffer already
-existed, so the two were symmetric.
+veth_xdp_xmit() queues XDP_TX frames on the peer's ring if the peer has
+NAPI. A peer with GRO enabled and no XDP program also has NAPI.
 
-Since then a failed PORT_INIT on either recovery path - fw_up or
-reset_done - frees a buffer an earlier init owns, while the netdev is
-registered and the ethtool ops are reading it.
+veth_xdp_flush() then schedules the peer's NAPI, but only if the peer's
+xdp_prog is set, so for such a peer the frames are never processed.
+Nothing else schedules that NAPI by default.
 
-Free only what this call allocated.
+Once the ring is full, every XDP_TX frame is dropped, and so are the
+skbs that veth_xmit() queues on the same ring.
 
-Fixes: ddc5911b9bd2 ("ionic: call ionic_port_init after fw-upgrade")
-Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
-Signed-off-by: Eric Joyner <eric.joyner@amd.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20261015-ionic-port-info-lifetime-v2-1-57232013fd79@amd.com
+Commit 0e672f306a28 ("veth: check for NAPI instead of xdp_prog before
+xmit of XDP frame") changed the check in veth_xdp_xmit() but not the one
+in veth_xdp_flush(). Make veth_xdp_flush() check the napi pointer
+instead of xdp_prog, as veth_xdp_xmit() does.
+
+Fixes: 0e672f306a28 ("veth: check for NAPI instead of xdp_prog before xmit of XDP frame")
+Signed-off-by: Tianyi Gao <tianyi@cloudflare.com>
+Reviewed-by: Mohsin Bashir <hmohsin@meta.com>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
+Link: https://patch.msgid.link/20261016214217.16942-2-tianyi@cloudflare.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_main.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/net/veth.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_main.c b/drivers/net/ethernet/pensando/ionic/ionic_main.c
-index 7942a7f0f7b38..20ea9057d6d3d 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_main.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_main.c
-@@ -526,6 +526,7 @@ int ionic_port_init(struct ionic *ionic)
- {
- 	struct ionic_identity *ident = &ionic->ident;
- 	struct ionic_dev *idev = &ionic->idev;
-+	bool allocated = false;
- 	size_t sz;
- 	int err;
+diff --git a/drivers/net/veth.c b/drivers/net/veth.c
+index 10a37c8c616f0..b6784043d348c 100644
+--- a/drivers/net/veth.c
++++ b/drivers/net/veth.c
+@@ -581,7 +581,7 @@ static void veth_xdp_flush(struct veth_rq *rq, struct veth_xdp_tx_bq *bq)
+ 	rcv_priv = netdev_priv(rcv);
+ 	rcv_rq = &rcv_priv->rq[veth_select_rxq(rcv)];
+ 	/* xdp_ring is initialized on receive side? */
+-	if (unlikely(!rcu_access_pointer(rcv_rq->xdp_prog)))
++	if (unlikely(!rcu_access_pointer(rcv_rq->napi)))
+ 		goto out;
  
-@@ -537,6 +538,8 @@ int ionic_port_init(struct ionic *ionic)
- 						     GFP_KERNEL);
- 		if (!idev->port_info)
- 			return -ENOMEM;
-+
-+		allocated = true;
- 	}
- 
- 	sz = min(sizeof(ident->port.config), sizeof(idev->dev_cmd_regs->data));
-@@ -553,10 +556,12 @@ int ionic_port_init(struct ionic *ionic)
- 	mutex_unlock(&ionic->dev_cmd_lock);
- 	if (err) {
- 		dev_err(ionic->dev, "Failed to init port\n");
--		dma_free_coherent(ionic->dev, idev->port_info_sz,
--				  idev->port_info, idev->port_info_pa);
--		idev->port_info = NULL;
--		idev->port_info_pa = 0;
-+		if (allocated) {
-+			dma_free_coherent(ionic->dev, idev->port_info_sz,
-+					  idev->port_info, idev->port_info_pa);
-+			idev->port_info = NULL;
-+			idev->port_info_pa = 0;
-+		}
- 	}
- 
- 	return err;
+ 	__veth_xdp_flush(rcv_rq);
 -- 
 2.53.0
 
