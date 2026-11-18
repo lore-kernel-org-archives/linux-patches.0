@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051869;
-	b=Y/h5l/rp1sevmkxYQd2C0w1wf2mordaBozRPhQ/h8flq2606upXA0L1OvHvSpKzIh4D0
-	 qbPHfh56xmJm2Gz04Yv9RNSMEAmAchc0z+S2F7JJ1Unv3y//F4B4PGnlOni6oz4edBbbP
-	 stviv4Muu2O0MNmZT7WFKgO5xVk55Z63trRHtk5WPx3qBtgST/n7kAb29WPiPCqII5and
-	 H9Ef+a0AEI8i63V42rZ01Vh10GxYEV2qpDx/eAG8t8kVlR/I9gDzTeKVQumOzaNwQ0fck
-	 txaxALfmA6gauGQGTsIgkRgCe01iZj8cm8Mj0ugO8B+cjrdPjtTQ+Jz571bpmzmgbWQ==
+	t=1795051872;
+	b=U6e6+RB+GiIEaCHAa4h+hj9QzRa4v0h/vrfQ2bCQ2tVvanAP6B9lubnd5opDltLHnd0a
+	 BcymhNNUNF4yFH2ASS03a5hqqx4g8/w4HK36bxMEJBQ5fqYQ/H8pOZcDsenx6YIE0Uqj+
+	 glhmCuT3nbTlPFAkL5cRi4u/scSwnBtIGozLdfj4dd832JE9xeyQpfpCGPMzzYQ418JhQ
+	 bq94B7JtdOxqZI/6+ZLwlkzTHao47+J0MLwvSxL/FfOEwtNwULY/LjFRugQsD6WVsX0MM
+	 5gFc6koaR+oYS137XiQVzUTU8IN98Gve9MciD6reSMhFwOurV9L5sDurtq1lf8Qpolg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051869;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051872;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JfwucbSp6sjsiRMiPlpbNWrLMYl3KHoKGJEeHsHzxeI=;
-	b=XNnMYVWxhyFq6r68LB9/vmtEEHJVxtJPQLaEKnsiVdATZP8+gKNOeJBDyGOeT9t9THj7
-	 F3I6iv8xgsDcnPuagmNoS5L+cXF1Z9XR0sqFQGL/I7sqBoXor5J+85pTNx8ysrYeWgC0g
-	 P260CEj3kh6MsDs1hFqDbbCeI3xlJ1vBsyJXfr1Fktst23QU+zN/GL8c5BpnPJNkOMxp0
-	 JL3v8qGtxVJ4SWSP3oP6HE+fOqkuYKyzxOyVn/SvQx0croDyylOfzu4tN2CLp5Cm2rzqF
-	 +U+uCe9Do+MMYFsRg3/TveipRARBL3Hk4wYwQfm+W/GAfVJOhlakR7JEWWTwxOO8zig==
+	bh=l4X57mJF20PKWRiMX1DW5KqcVY8YCCq7T7pCjaGXisA=;
+	b=d6KV2fZys0bw8pRXk/iW/P1oONlrLxcHV/zLV50xrMtlHBzz9uwyJGHt5bNPkYNVaRvb
+	 ocVUXcbJjieN/jNsvptYzFmyCiTPzX+ntubCAyGz4zYhPxzYWGOGUy9WOAU2b6vrkIau6
+	 3PkObLB3TY4PFKPuL9Dgy7X3bi1bPPdxb5wIst02MymQvSOABIeZA3XT/qaLfApEoa4ID
+	 2VVKgfu8e56SSD5seNBsa9VdsccYZz/peM5TdWPCTYcmmRaSlpYFNKjdNuu+eIJvlCbt5
+	 jjCN9/xP+yCQFUf0YK2xK6LQWWLx0uJAohng+Zzp8yP1YthffuDedVcPhhGVCLeRoAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AchXCQ1E;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RMyd6HYv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF13C606A325;
-	Thu, 19 Nov 2026 01:31:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B46E606A31C;
+	Thu, 19 Nov 2026 01:31:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AchXCQ1E
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E2251F000C4;
-	Thu, 19 Nov 2026 01:31:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RMyd6HYv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C30441F000C4;
+	Thu, 19 Nov 2026 01:31:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051869;
-	bh=JfwucbSp6sjsiRMiPlpbNWrLMYl3KHoKGJEeHsHzxeI=;
+	s=korg; t=1795051872;
+	bh=l4X57mJF20PKWRiMX1DW5KqcVY8YCCq7T7pCjaGXisA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AchXCQ1EAJ+2+Mo07qtsdUU84slresYXxqjRswaoSZcKYoYipu+Cc3796CgYEBZGu
-	 OAOnSNh7Qnq4Ha2bPI8oEM+Jnx0N/Da2VqjXxlvqMDE+RYm9ONkDLIyaHJx+54qxxu
-	 VKDwDRJHKhLMRCvorGlGhXU70RrqSwRKlOT9uAfg=
+	b=RMyd6HYvDzl5nl64gz/izZTdUk8jgRs625coSInB01s8/PLYSZHzBNV+8dxWl+Dx8
+	 SmPnYDhI/GgbRx3bjq5LcuYkvHuGQ+FvH2oWntzi9NUGyXCboAm+v3cTmzEoMPHN/P
+	 EzHpWO90m5wq8lyozhbmUlQIG05V3r86aP6rzjbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 5.15 0359/2214] nfsd: zero NFSv4 COMPOUND tag padding
-Date: Wed, 18 Nov 2026 15:33:55 +0100
-Message-ID: <20261118150025.050352123@linuxfoundation.org>
+Subject: [PATCH 5.15 0360/2214] SUNRPC: keep the first error in svc_register()
+Date: Wed, 18 Nov 2026 15:33:56 +0100
+Message-ID: <20261118150025.086564456@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,42 +67,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 3f1181cb09c85499286c7f462d93530b0ebcafcc upstream.
+commit 9ed91d7c4698e611ea5bfca45076008def831fb3 upstream.
 
-nfs4svc_encode_compoundres() copies the tag bytes into reserved XDR space
-and skips directly to the aligned end of the field. xdr_reserve_space()
-rounds the reservation up but does not initialize the padding bytes.
+svc_register() assigns every pg_rpcbind_set() result to the same "error"
+variable and returns the last one, so a later result erases an earlier
+failure.
 
-A remote client can choose a tag length that is not a multiple of four,
-causing one to three stale bytes from the response page to be returned in
-the COMPOUND reply.
+Keep the first error instead of the last.
 
-Use xdr_encode_opaque_fixed() to copy the tag and clear its XDR padding.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 642ee6b209c2 ("SUNRPC: Allow further customisation of RPC program registration")
 Cc: stable@vger.kernel.org
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260915160049.3105481-1-qwe.aldo@gmail.com
+Assisted-by: LLM
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260901-nfsd-nl-hang-v5-3-a540d86668b0@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4xdr.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/sunrpc/svc.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -5546,8 +5546,7 @@ nfs4svc_encode_compoundres(struct svc_rq
- 	rqstp->rq_next_page = xdr->page_ptr + 1;
+--- a/net/sunrpc/svc.c
++++ b/net/sunrpc/svc.c
+@@ -1102,13 +1102,16 @@ int svc_register(const struct svc_serv *
  
- 	*p++ = htonl(resp->taglen);
--	memcpy(p, resp->tag, resp->taglen);
--	p += XDR_QUADLEN(resp->taglen);
-+	p = xdr_encode_opaque_fixed(p, resp->tag, resp->taglen);
- 	*p++ = htonl(resp->opcnt);
+ 	for (progp = serv->sv_program; progp; progp = progp->pg_next) {
+ 		for (i = 0; i < progp->pg_nvers; i++) {
++			int ret;
  
- 	nfsd4_sequence_done(resp);
+-			error = progp->pg_rpcbind_set(net, progp, i,
++			ret = progp->pg_rpcbind_set(net, progp, i,
+ 					family, proto, port);
+-			if (error < 0) {
++			if (ret < 0) {
+ 				printk(KERN_WARNING "svc: failed to register "
+ 					"%sv%u RPC service (errno %d).\n",
+-					progp->pg_name, i, -error);
++					progp->pg_name, i, -ret);
++				if (!error)
++					error = ret;
+ 				break;
+ 			}
+ 		}
 
 
