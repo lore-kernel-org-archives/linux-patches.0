@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050924;
-	b=rmw3aUxGLmaIntP9N68YSTDFOg5yj4CNl/i23oQ1ExcHNnSvxFD6g+CpCwU/HPxTzaNV
-	 cB1FDwehWSM9FAqJUAovPTUqZdVTn4RWrTGR46roIr0wL1SiRgUoJhQZzHRfSatsKLlOC
-	 5gFqjd+xOJ5yQRHXKvAZirSLnYKX+e6cEyqmP5w3X++cC5yxSRTgfSGYYlLqlgdIMSZJh
-	 g0axwfM1G1DX5V1Lng6v/Ch7+WSA/k5xxMxQ6nQR3mvnBGoeI+/tK6tQ9mqWOvMzQtJEv
-	 fJkLbUnaC5fNoeEo7nB1NB8GzHSolac4iCkKw1C07xKtRm7K6SF/WNopJ689FbNmBmA==
+	t=1795050926;
+	b=q39bgqaSr4sOlR5uDIrX4/861sl57EkxrQjMZx3MvIJcsNCahE+DJihCLXJhwwHILeRr
+	 N6ModMnj7atWbH6Psd7LBIvA8y+gMCPDY8mKC2R8Gnp/S9R+o56Qy7clZc0DrqWHu2hG8
+	 PWcx+cC7gkD0jS7/MLluavXfatZdiC6lSdoEKyK43mG8bwJU3IVWizKrSN4MvShMbKDpk
+	 8E9psRSIzs/5/H6ErcSBJOg4wHjt6UR2GoXsFfJoL7+5225BG/FqwD3rsVPV0GrZVN/8p
+	 lyvDvjiLsUk9QkXDxAmtPJH+dCzTUvhOdUqTMnSnRCCY6SpwlGCuhZHTg5MThh2CbiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050924;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050926;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yDrJI1QZ6X2cO1I9v3KrkSsXTqCAlhP+hfgyxlHeQ4A=;
-	b=zx/0HmBk9FmZKp+YKoMiwRUtjyILBxCI9WO0S+mPy2PHZ3tuWtWAyclWHvwl5SgvEmIm
-	 29hQhRbotNMzEnqLCByxpazBNEWAugE2HfgcqmTxoN556o1O54vAQ0hl9kjaENY1YZ3Ns
-	 OCy8I82VkxNXldMxFR0yiBEHL2bqGM+dMsWQiUYhzXwy3qSgC6XE1RYb1IuJV87xxEsdP
-	 wOR8UABEKf2fPKmiF+AfeyNTGoA8FV2ptarpPtSoEXGPPBSON4ivUJhg108Pt/AAKu3Um
-	 9d43n4yh/0WFpnCctvc39GjOmPHUSNOTX98JiX6XWTi5D4uSybBUc47i6R47m/jBQ+A==
+	bh=rpkGbdXTTB38sIru8KOP9gzQKOl8TRv3VOJ6LDeTy3Q=;
+	b=EAqBiwSEb4hSrzHTxzOUhKgpN3kGLRDN9OUMHekQr7S5oNMVoS+pMj1O+8spG9r5PAQp
+	 SfypyyAdqqT5gB8yvZrd258heternSiYbIT97mJil31x0QIK3IGhbOo32cd2dYr/yhc5J
+	 3W9sKcIKFCQJP8oyXHFqK7arGlnzzKwq5MDevyKdL6tmecfqZPhzKIefK/KAXjp28Drcg
+	 fDHRoGfMFIy7U7sljDmFlZpz+ULQw60sw1pBvako9b9dxDQniufUR4uoBWM/9ujTGLw04
+	 VFlNvLRyqp22GXQlH1zy8U/D2QjcqTFBYqfrCYUpVmz0oU6+5h0gLKG4ddhsgyijyYg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xWzQPzeK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wEx9onGL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 064B9606A325;
-	Thu, 19 Nov 2026 01:15:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5443606A32C;
+	Thu, 19 Nov 2026 01:15:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xWzQPzeK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D2991F000C4;
-	Thu, 19 Nov 2026 01:15:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wEx9onGL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DEF61F000CA;
+	Thu, 19 Nov 2026 01:15:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050923;
-	bh=yDrJI1QZ6X2cO1I9v3KrkSsXTqCAlhP+hfgyxlHeQ4A=;
+	s=korg; t=1795050926;
+	bh=rpkGbdXTTB38sIru8KOP9gzQKOl8TRv3VOJ6LDeTy3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xWzQPzeKrbbPJCvgXYFLCFkNTBijB0zW2SYXHL0PV0tSSmyAAVNj/ZAqpg6rRNw48
-	 j6k0YLJOAGkgOmRa9CCW0L8Sbb09jCyEJ1HUA95xE8v36WhHDPF6FkI/b4aM+tS+wt
-	 hDwXFOin4DQW/94y3C7da91cmZlEUIADHfyOxX2Y=
+	b=wEx9onGL2h5Dufq+LexMGCnfm2cgoIFqOrjU2/vITrGE+BzW8YMmbQP+12jWDIc8v
+	 g7gcJE79LjKKGiDUM56yIYqzSTxyM1z+KGkSwQlLB+fyfJz30srg8SkwR/qooLGhRd
+	 7XqZPucdhEhDfJpddSBDOXcS0Qy2V4FVA9kWVwtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Asad Kamal <asad.kamal@amd.com>,
 	Lijo Lazar <lijo.lazar@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0026/2214] drm/amd/pm: Validate OD DPM triples before mutating tables
-Date: Wed, 18 Nov 2026 15:28:22 +0100
-Message-ID: <20261118150011.158255984@linuxfoundation.org>
+Subject: [PATCH 5.15 0027/2214] drm/amdgpu: Gate debugfs MMIO access on kernel lockdown
+Date: Wed, 18 Nov 2026 15:28:23 +0100
+Message-ID: <20261118150011.195383749@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -72,144 +71,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Asad Kamal <asad.kamal@amd.com>
 
-[ Upstream commit b390cb9d776039fc4f0be13b2649299079227d12 ]
+[ Upstream commit 17ac73b24006700f50972d37e297dec1f523c14a ]
 
-vega10_odn_edit_dpm_table() and smu7_odn_edit_dpm_table() could mutate
-the live ODN table for valid triples, then return 0 after detecting a
-truncated buffer or out-of-range index. Validate all (index, clock,
-voltage) triples first and return -EINVAL on any failure; only then
-apply updates.
+amdgpu_regs, amdgpu_regs2, and related debugfs nodes allow
+arbitrary MMIO read/write via RREG32/WREG32 without checking
+security_locked_down(). On kernel_lockdown=integrity systems
+this bypasses the same restrictions as /dev/mem and PCI config
+space sysfs.
 
-v2: Use distinct message for different error case, removed unused
-input_level from validation loop (Lijo)
+Check LOCKDOWN_PCI_ACCESS (matching pci-sysfs) at the entry of every
+debugfs handler that performs direct register access.
 
-v3: Reject negative level indices, input[] is long but was compared only
-against unsigned table bounds, so negative values could pass and truncate
-when assigned to uint32_t input_level.
+v2: Use consistent check as per previous check to use
+LOCKDOWN_DEBUGFS(Lijo)
 
-Set DPMTABLE_OD_UPDATE_SCLK/MCLK only after validation passes,
-so a failed sysfs write does not leave need_update_dpm_table set for a
-later commit.
+v3: Do not create any entry from amdgpu_debugfs_regs_init() if
+LOCKDOWN_PCI_ACCESS is active and log once. (Lijo)
 
 Signed-off-by: Asad Kamal <asad.kamal@amd.com>
 Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c   | 34 ++++++++++-------
- .../drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c | 37 ++++++++++++-------
- 2 files changed, 43 insertions(+), 28 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-index f1a7d6296bdfa..647a7cc9086ea 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-@@ -5602,23 +5602,29 @@ static int smu7_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
- 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+index f4f5dc704c701..ea6a246479b34 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+@@ -26,6 +26,7 @@
+ #include <linux/kthread.h>
+ #include <linux/pci.h>
+ #include <linux/uaccess.h>
++#include <linux/security.h>
+ #include <linux/pm_runtime.h>
  
- 	for (i = 0; i < size; i += 3) {
--		if (i + 3 > size || input[i] >= podn_dpm_table_in_backend->num_of_pl) {
--			pr_info("invalid clock voltage input \n");
--			return 0;
-+		if (i + 3 > size) {
-+			pr_info("truncated clock/voltage input\n");
-+			return -EINVAL;
- 		}
--		input_level = input[i];
--		input_clk = input[i+1] * 100;
--		input_vol = input[i+2];
--
--		if (smu7_check_clk_voltage_valid(hwmgr, type, input_clk, input_vol)) {
--			podn_dpm_table_in_backend->entries[input_level].clock = input_clk;
--			podn_vdd_dep_in_backend->entries[input_level].clk = input_clk;
--			podn_dpm_table_in_backend->entries[input_level].vddc = input_vol;
--			podn_vdd_dep_in_backend->entries[input_level].vddc = input_vol;
--			podn_vdd_dep_in_backend->entries[input_level].vddgfx = input_vol;
--		} else {
-+		if (input[i] < 0 || input[i] >= podn_dpm_table_in_backend->num_of_pl) {
-+			pr_info("invalid clock/voltage level\n");
- 			return -EINVAL;
- 		}
-+		input_clk = input[i + 1] * 100;
-+		input_vol = input[i + 2];
-+		if (!smu7_check_clk_voltage_valid(hwmgr, type, input_clk, input_vol))
-+			return -EINVAL;
+ #include "amdgpu.h"
+@@ -1107,6 +1108,12 @@ int amdgpu_debugfs_regs_init(struct amdgpu_device *adev)
+ 	struct dentry *ent, *root = minor->debugfs_root;
+ 	unsigned int i;
+ 
++	if (security_locked_down(LOCKDOWN_PCI_ACCESS)) {
++		drm_info(adev_to_drm(adev),
++			 "amdgpu: HW debugfs nodes disabled (kernel lockdown)\n");
++		return 0;
 +	}
 +
-+	for (i = 0; i < size; i += 3) {
-+		input_level = input[i];
-+		input_clk = input[i + 1] * 100;
-+		input_vol = input[i + 2];
-+		podn_dpm_table_in_backend->entries[input_level].clock = input_clk;
-+		podn_vdd_dep_in_backend->entries[input_level].clk = input_clk;
-+		podn_dpm_table_in_backend->entries[input_level].vddc = input_vol;
-+		podn_vdd_dep_in_backend->entries[input_level].vddc = input_vol;
-+		podn_vdd_dep_in_backend->entries[input_level].vddgfx = input_vol;
- 	}
- 
- 	return 0;
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-index a801ca47f5be6..7d0cf2a6d2d54 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-@@ -5466,11 +5466,9 @@ static int vega10_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
- 	if (PP_OD_EDIT_SCLK_VDDC_TABLE == type) {
- 		dpm_table = &data->dpm_table.gfx_table;
- 		podn_vdd_dep_table = &data->odn_dpm_table.vdd_dep_on_sclk;
--		data->need_update_dpm_table |= DPMTABLE_OD_UPDATE_SCLK;
- 	} else if (PP_OD_EDIT_MCLK_VDDC_TABLE == type) {
- 		dpm_table = &data->dpm_table.mem_table;
- 		podn_vdd_dep_table = &data->odn_dpm_table.vdd_dep_on_mclk;
--		data->need_update_dpm_table |= DPMTABLE_OD_UPDATE_MCLK;
- 	} else if (PP_OD_RESTORE_DEFAULT_TABLE == type) {
- 		memcpy(&(data->dpm_table), &(data->golden_dpm_table), sizeof(struct vega10_dpm_table));
- 		vega10_odn_initial_default_setting(hwmgr);
-@@ -5488,21 +5486,32 @@ static int vega10_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
- 	}
- 
- 	for (i = 0; i < size; i += 3) {
--		if (i + 3 > size || input[i] >= podn_vdd_dep_table->count) {
--			pr_info("invalid clock voltage input\n");
--			return 0;
-+		if (i + 3 > size) {
-+			pr_info("truncated clock/voltage input\n");
-+			return -EINVAL;
- 		}
--		input_level = input[i];
--		input_clk = input[i+1] * 100;
--		input_vol = input[i+2];
--
--		if (vega10_check_clk_voltage_valid(hwmgr, type, input_clk, input_vol)) {
--			dpm_table->dpm_levels[input_level].value = input_clk;
--			podn_vdd_dep_table->entries[input_level].clk = input_clk;
--			podn_vdd_dep_table->entries[input_level].vddc = input_vol;
--		} else {
-+		if (input[i] < 0 || input[i] >= podn_vdd_dep_table->count) {
-+			pr_info("invalid clock/voltage level\n");
- 			return -EINVAL;
- 		}
-+		input_clk = input[i + 1] * 100;
-+		input_vol = input[i + 2];
-+		if (!vega10_check_clk_voltage_valid(hwmgr, type, input_clk, input_vol))
-+			return -EINVAL;
-+	}
-+
-+	if (type == PP_OD_EDIT_SCLK_VDDC_TABLE)
-+		data->need_update_dpm_table |= DPMTABLE_OD_UPDATE_SCLK;
-+	else
-+		data->need_update_dpm_table |= DPMTABLE_OD_UPDATE_MCLK;
-+
-+	for (i = 0; i < size; i += 3) {
-+		input_level = input[i];
-+		input_clk = input[i + 1] * 100;
-+		input_vol = input[i + 2];
-+		dpm_table->dpm_levels[input_level].value = input_clk;
-+		podn_vdd_dep_table->entries[input_level].clk = input_clk;
-+		podn_vdd_dep_table->entries[input_level].vddc = input_vol;
- 	}
- 	vega10_odn_update_soc_table(hwmgr, type);
- 	return 0;
+ 	for (i = 0; i < ARRAY_SIZE(debugfs_regs); i++) {
+ 		ent = debugfs_create_file(debugfs_regs_names[i],
+ 					  S_IFREG | S_IRUGO, root,
 -- 
 2.53.0
 
