@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021969;
-	b=xRDVhXGg02fJLl2Kogj76JyO7a3Fkh6d23fjsXtFHe2xTX4MYPdo4FI5wLGK/PROt+Sn
-	 O3LWpljiRW9+XgO5+TXDmDS69lqMIVfnd1va1IARNhjgIRrBijzPI71HVjb5+PFdzMCqQ
-	 U4klnD9etUMeXVbEQ33IhzDZeCJb9e4iAAePYVRFxhiMzlBsssuEKB/9vooHJ1Bz3VSjQ
-	 GCcwqD+zsSaV7WyUOhZe/wTMH4ZeHKCoQ3jn+cBhpcRPkOvZj/r/dlDiZ+JPR/xwSfaM0
-	 g8Tesdry2RLgrMSyNFxyJoglIJjBzE9Cha39kAO11sIUW6rDgvOqwOLb25PnjDW5XFQ==
+	t=1795021972;
+	b=CIX1YAmXEFmkw8luMTqmDD6yBLSE6g+IaIckYcm2MV0Q8tY96ClmfJyTGVtBCdW0c1Mn
+	 Xfikk/e9aAPPOrqltYxqgZUxLpAV7K6q4FtvHrW3mGBmAYDorWWPFqpRz/lTbo04orvMG
+	 XAHDzbbMNEknndf+NAmgapyi/P7sI2nMYTw16mbE+WFPYioDwh8kCQyYSvz4LktxEtpAG
+	 vd/B72msMQ7JIrHe2GmMW+JEWKSczH+Ma7kt5gCOZt5FMp9zLw28MReZRF7vq2g/J++fc
+	 ihtt3vIRXEk11inpAM3wxHEp3bpKW7JEesDcoIsAArkDu1gXvtotRIIPu8Gyhk/D3bw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021969;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021972;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2xEYjtj4Y7O1wYNzvc0OE1WrJkL+37HbUfldEo+0oUc=;
-	b=XjjuZ5+SUve44LJdXCj5BiRrQd2aTdN5H686L88do4/dGq9FPhX/Hj1gkW2cNXidOaF3
-	 g7eKD+XVDWg+VdYSFbP+uyDbvPmD/zTCd9iiM8AkQDFEik6gIxMIa0vL9AvfMg18xhB6L
-	 WO76aWSRkVyX313vNlE8jZYVdXD3dFTOTwTymdsRwyADaLMCHfXp7lhPIgA9uVsMJ51EE
-	 GpEhuAzzXzDD+zfSfG1Jv2uKN0qfPuupA4IO1wEWqq2GM2UNW5RbTng0BvRW6w3c9s6D+
-	 y8VKpS6tszllAB5/+aUViKsG+e8da+MckplBCZBg/S1UWMEfQhRhcyamO4YIO2erq9w==
+	bh=CwdCny8aoJoAzOj/YU5MRh/fzHUpoS6ov4D/GqPsQjw=;
+	b=45dXL5Lw1oIxqG7IzDjDSfe/nSsZajm/SVc3djaLqpnxlhx3KBbQw/nF4/MlZwrkzznX
+	 WMMdOhVgK8qmImaltvC9ya+VzijpsV8wUKbEqcZEfESt7CJGhbuhXIrLA4UjF4zHFAD7l
+	 4Js/IxdZSBc/n5FapsliOScuzT2EnDQyDhLcKO9c7lrWFUYYBdXtGuZ0V3nLHPbjPj+sY
+	 Y6ogpUPVFMNBIz2UOUr8F68YaQfjqc4NC7RhDZ2SCKTmVt1nU5tGtpVyobAsMbAio0iXP
+	 19wp3+0YuN3d0Sb80KBn/AEhqKHcC4JoZcAuAFjoNDAzuKOaTNcnwLYEX4WPeq0h23Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="l56/mfQG";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gKFgQHg8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D90E060A260A;
-	Wed, 18 Nov 2026 17:12:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A388E606A31C;
+	Wed, 18 Nov 2026 17:12:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l56/mfQG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ABC11F000C8;
-	Wed, 18 Nov 2026 17:12:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gKFgQHg8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E2A1F000C4;
+	Wed, 18 Nov 2026 17:12:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021969;
-	bh=2xEYjtj4Y7O1wYNzvc0OE1WrJkL+37HbUfldEo+0oUc=;
+	s=korg; t=1795021972;
+	bh=CwdCny8aoJoAzOj/YU5MRh/fzHUpoS6ov4D/GqPsQjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l56/mfQGw1aHPpQ2bkyb7T8ho7jHs1ok+gQGYY6eTvffek4oJ9JCs6EDpLCd6xtFX
-	 1vrDU5UgIn7Srcg8h5NZ3eFpZ5EFNIbtwkDBw1gSLDnuSVcmSWC/FlE5IANzddomAU
-	 ls2EuOnnCxsxQ28IBNnzLQJfR+si9SUxwGpfsfTA=
+	b=gKFgQHg8CkpPRXdsFrSZq0NWFGKIaFCxFNBIDwv9rnOwq9A1GavyO8c4iT0exuX9W
+	 kYCzGZuANYrMIdatD+3dQcprvlMrisbMsYIZl4Gv5xLcpcpWf5HC5nbaSTX/Jlq40f
+	 sDiFsumhlNnV+1HgmczNiYJEWSMyIzRnkxBwZuP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
+	Binbin Deng <18983559317@163.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2455/2651] gtp: hold RCU in gtp_genl_send_echo_req()
-Date: Wed, 18 Nov 2026 16:01:35 +0100
-Message-ID: <20261118150413.465702855@linuxfoundation.org>
+Subject: [PATCH 7.3 2456/2651] net: atlantic: Unregister before clearing RXNFC rules
+Date: Wed, 18 Nov 2026 16:01:36 +0100
+Message-ID: <20261118150413.495196290@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,176 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Binbin Deng <18983559317@163.com>
 
-[ Upstream commit a204e9c001dfafe83cac01b16508b1cf5c953355 ]
+[ Upstream commit 13b364c765e69db1f8446399d8db0b331c23b50c ]
 
-Such function is invoked in process context, performs an RCU device
-lookup and dereference the found device with no additional protection.
+aq_pci_remove() clears the driver's RXNFC rule list before unregistering
+the netdevice.  Until unregister_netdev() returns, ethtool operations can
+still call aq_get_rxnfc_rule(), aq_get_rxnfc_all_rules(),
+aq_add_rxnfc_rule(), or aq_del_rxnfc_rule().  Those paths traverse the
+same unlocked hlist that aq_clear_rxnfc_all_rules() is mutating and
+freeing.
 
-  =============================
-  WARNING: suspicious RCU usage
-  7.3.0-virtme #7 Not tainted
-  -----------------------------
-  net/core/dev.c:1047 RCU-list traversed in non-reader section!!
+The race is reachable by issuing RXNFC ethtool commands concurrently with
+PCI device removal or driver unbind.  A reader can dereference a node that
+has just been freed, and two writers can corrupt the list or free the same
+rule more than once, causing KASAN reports, list corruption, or a kernel
+panic.
 
-  other info that might help us debug this:
+Reverse the removal order: unregister the netdevice first, then clear the
+RXNFC rules.  After unregister_netdev() returns, ethtool can no longer
+enter the driver, while the PCI device is still available for the
+rule-clearing routine to issue hardware commands.
 
-  rcu_scheduler_active = 2, debug_locks = 1
-  locks held by python3/233: 2, last CPU#5:
-   #0: ffffffffbab93268 (cb_lock){++++}-{4:4}, at: genl_rcv+0x19/0x40
-   #1: ffffffffbab93320 (genl_mutex){+.+.}-{4:4}, at:
-                                                genl_rcv_msg+0x12c/0x160
+Found during a static-analysis-assisted audit: candidate sites were
+surfaced by a Coccinelle rule, and the reader/writer paths were
+confirmed by LLM-assisted (GLM-5.3) code inspection.  The issue was
+not observed at runtime; it is identified by code inspection only.
 
-  stack backtrace:
-  CPU: 5 UID: 0 PID: 233 Comm: python3 Not tainted 7.3.0#7 PREEMPT(full)
-  Hardware name: Bochs, BIOS Bochs 01/01/2011
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x6f/0xb0
-   lockdep_rcu_suspicious.cold+0x37/0x8e
-   dev_get_by_index_rcu+0x135/0x180
-   gtp_find_dev+0xe7/0x360 [gtp]
-   gtp_genl_send_echo_req+0x298/0xb30 [gtp]
-   genl_family_rcv_msg_doit+0x20f/0x310
-   genl_family_rcv_msg+0x3a8/0x640
-   genl_rcv_msg+0xbb/0x160
-   netlink_rcv_skb+0x154/0x3a0
-   genl_rcv+0x28/0x40
-   netlink_unicast+0x54b/0x860
-   netlink_sendmsg+0x7fb/0xf60
-   __sys_sendto+0x3d6/0x450
-   __x64_sys_sendto+0xe4/0x1f0
-   do_syscall_64+0xff/0x530
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  RIP: 0033:0x7ffa43b0256e
-  Code: 4d 89 d8 e8 d4 bd 00 00 4c 8b 5d f8 41 8b 93 08 03 00 00 59 5e 48 83
-   f8 fc 74 11 c9 c3 0f 1f 80 00 00 00 00 48 8b 45 10 0f 05 <c9> c3 83 e2 39
-   83 fa 08 75 e7 e8 03 ff ff ff 0f 1f 00 f3 0f 1e fa
-  RSP: 002b:00007ffd3b8828d0 EFLAGS: 00000202 ORIG_RAX: 000000000000002c
-  RAX: ffffffffffffffda RBX: 00007ffd3b8829e0 RCX: 00007ffa43b0256e
-  RDX: 0000000000000034 RSI: 00007ffa3519d0d0 RDI: 0000000000000006
-  RBP: 00007ffd3b8828e0 R08: 0000000000000000 R09: 0000000000000000
-  R10: 0000000000000000 R11: 0000000000000202 R12: 00007ffa351cc0c0
-  R13: 00007ffd3b8829e0 R14: 00007ffa354ca130 R15: 00007ffa4433d498
-   </TASK>
-
-Add the missing RCU guards and keep it for the whole function body,
-while the RCU-protected device is used.
-
-Found by code inspection, validated explicitly testing the relevant
-code path.
-
-Fixes: d33bd757d362 ("gtp: Implement GTP echo request")
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://patch.msgid.link/ed27d133fe73afd377d3fa4e553c34e7987b6dd9.1792744478.git.pabeni@redhat.com
+Fixes: 8d0bcb012f57 ("net: aquantia: add infrastructure for ntuple rules")
+Signed-off-by: Binbin Deng <18983559317@163.com>
+Link: https://patch.msgid.link/20261020022630.515209-1-18983559317@163.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/gtp.c | 44 ++++++++++++++++++++++++++++++--------------
- 1 file changed, 30 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
-index df182cdd3bd4a..efb045001c434 100644
---- a/drivers/net/gtp.c
-+++ b/drivers/net/gtp.c
-@@ -2355,9 +2355,9 @@ static int gtp_genl_send_echo_req(struct sk_buff *skb, struct genl_info *info)
- 	struct gtp_dev *gtp;
- 	struct flowi4 fl4;
- 	struct rtable *rt;
-+	int len, ret = 0;
- 	struct sock *sk;
- 	__be16 port;
--	int len;
+diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c b/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
+index 005d6ef4fc36f..881727c3aa0af 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
+@@ -344,9 +344,9 @@ static void aq_pci_remove(struct pci_dev *pdev)
+ 	struct aq_nic_s *self = pci_get_drvdata(pdev);
  
- 	if (!info->attrs[GTPA_VERSION] ||
- 	    !info->attrs[GTPA_LINK] ||
-@@ -2369,14 +2369,21 @@ static int gtp_genl_send_echo_req(struct sk_buff *skb, struct genl_info *info)
- 	dst_ip = nla_get_be32(info->attrs[GTPA_PEER_ADDRESS]);
- 	src_ip = nla_get_be32(info->attrs[GTPA_MS_ADDRESS]);
+ 	if (self->ndev) {
+-		aq_clear_rxnfc_all_rules(self);
+ 		if (self->ndev->reg_state == NETREG_REGISTERED)
+ 			unregister_netdev(self->ndev);
++		aq_clear_rxnfc_all_rules(self);
  
-+	rcu_read_lock();
- 	gtp = gtp_find_dev(sock_net(skb->sk), info->attrs);
--	if (!gtp)
--		return -ENODEV;
-+	if (!gtp) {
-+		ret = -ENODEV;
-+		goto unlock;
-+	}
- 
--	if (!gtp->sk_created)
--		return -EOPNOTSUPP;
--	if (!(gtp->dev->flags & IFF_UP))
--		return -ENETDOWN;
-+	if (!gtp->sk_created) {
-+		ret = -EOPNOTSUPP;
-+		goto unlock;
-+	}
-+	if (!(gtp->dev->flags & IFF_UP)) {
-+		ret = -ENETDOWN;
-+		goto unlock;
-+	}
- 
- 	if (version == GTP_V0) {
- 		struct gtp0_header *gtp0_h;
-@@ -2385,8 +2392,10 @@ static int gtp_genl_send_echo_req(struct sk_buff *skb, struct genl_info *info)
- 			sizeof(struct iphdr) + sizeof(struct udphdr);
- 
- 		skb_to_send = netdev_alloc_skb_ip_align(gtp->dev, len);
--		if (!skb_to_send)
--			return -ENOMEM;
-+		if (!skb_to_send) {
-+			ret = -ENOMEM;
-+			goto unlock;
-+		}
- 
- 		sk = gtp->sk0;
- 		port = htons(GTP0_PORT);
-@@ -2402,8 +2411,10 @@ static int gtp_genl_send_echo_req(struct sk_buff *skb, struct genl_info *info)
- 			sizeof(struct iphdr) + sizeof(struct udphdr);
- 
- 		skb_to_send = netdev_alloc_skb_ip_align(gtp->dev, len);
--		if (!skb_to_send)
--			return -ENOMEM;
-+		if (!skb_to_send) {
-+			ret = -ENOMEM;
-+			goto unlock;
-+		}
- 
- 		sk = gtp->sk1u;
- 		port = htons(GTP1U_PORT);
-@@ -2413,7 +2424,8 @@ static int gtp_genl_send_echo_req(struct sk_buff *skb, struct genl_info *info)
- 		memset(gtp1u_h, 0, sizeof(struct gtp1_header_long));
- 		gtp1u_build_echo_msg(gtp1u_h, GTP_ECHO_REQ);
- 	} else {
--		return -ENODEV;
-+		ret = -ENODEV;
-+		goto unlock;
- 	}
- 
- 	rt = ip4_route_output_gtp(&fl4, sk, dst_ip, src_ip);
-@@ -2421,7 +2433,8 @@ static int gtp_genl_send_echo_req(struct sk_buff *skb, struct genl_info *info)
- 		netdev_dbg(gtp->dev, "no route for echo request to %pI4\n",
- 			   &dst_ip);
- 		kfree_skb(skb_to_send);
--		return -ENODEV;
-+		ret = -ENODEV;
-+		goto unlock;
- 	}
- 
- 	local_bh_disable();
-@@ -2435,7 +2448,10 @@ static int gtp_genl_send_echo_req(struct sk_buff *skb, struct genl_info *info)
- 				    dev_net(gtp->dev)),
- 			    false, 0);
- 	local_bh_enable();
--	return 0;
-+
-+unlock:
-+	rcu_read_unlock();
-+	return ret;
- }
- 
- static const struct nla_policy gtp_genl_policy[GTPA_MAX + 1] = {
+ #if IS_ENABLED(CONFIG_MACSEC)
+ 		aq_macsec_free(self);
 -- 
 2.53.0
 
