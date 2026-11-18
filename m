@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052982;
-	b=I6rep6PK58vx2WSqFnfomlrXuV8Md9ULRhFEO7PZJFrmyIfi1qXiSXHQoXlTCaiiNR/R
-	 qMJ5aw61DNQii3sPMe/Ci1Vqn1l64KwrNQ1svy9ClZCihh8fox6nr3oPydlRJ0+nejeVS
-	 mp1KBacw4Qezg8jN/xaWuA7HJUPc8qroVtftZbkQQQLUaA+U4S/hxc7ZIAz14JUDKBzVn
-	 32GMJXwjw6/P1BgSugWRSdCPUs0eVkt1PuqZh0O2l2BQ/5hRoSPwlV3YhgfYshxFzdwtE
-	 HDCyw5i6K5CPL+bntaAr0VQwD3WG2VQeM+OkPgSxagvkYc9Hl0JrOXV0PIL114xMpKg==
+	t=1795052985;
+	b=R0UEmTrxVujYLVctH2o5HhCEqaaCK//UkDADLIsDNaTgvfra41TV2auN8qxbe/59YxVn
+	 aHCdT1Zcx7X6g49kJ3P+vknT/pRQ6CEmV4ky3UvKtMUGFx2rrji+j4R7b6U4vTyOcJ+X9
+	 rHZ/41WrLnpeOOA4Xa3CE5+mHhqXMEMzsq7XKQ21hqqmECaM89o5WNywu6W8/rR93lCiv
+	 fOSdwzJn/cRWRzbX3bNqtq4BLsTxm+hFi0pPDoYctC4viXzfwp3KtXvwI1CYWlCHd2q8d
+	 T5WKqcLwa5nn2SFOGmPAREFbIpkMB0s7EBgMF/vt+WvPle087JyM/UhXrrpjV8aR3Qg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052982;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052985;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=PPFTjJWGMZi5bSfaMMmAEUawLrAoWYV8OgrSj8Nbvo0=;
-	b=QuAyBUxTSBB6U8fNfwe5aUUWSk9nU//PdY2qghvgUoPFs0MkusS5CG8CFrpHTe5ZniMI
-	 JdJGYFJx/cerh//KTtUlQHIbjhn5IPlng/xfuKZds2R3iyku0/hI8JRjf/YDjlwAygCvX
-	 ZNv+6aUiaiJANvpfjyyYWZbjbcncI+roUlNJxbBvEyljpIcDYClIU1eiZQDZVrOaP4TtR
-	 F5y0hBFfybB2rl5oKbvaDY2aDEEWaWZQ+oH3bni286lh7kpZEQp4WX3xoUFuKa5+7Es0W
-	 dmNqxit2I3JJ8FbeCHbmaelc838yact2MIiI8G8LhYj+WPXd2B9QS4esAjD7whx2bSg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=jMCRSvN2TWRA++2nw3+56o1e+jYnl5EIwoaL88JrtoI=;
+	b=Mx7qehVdpHOhCWAPATbTfbrH4sUnOYd76nzeTJFkgWuYI50je/tat3KHqG+8x3mBpj6l
+	 /26Zr2xQpZO3UHDoBsuh1ZHZ+N4pdYustWGOaoyKMs+uLTtDzKLSfHqmG0rgPsMjhdEzt
+	 WxQgQA5JTm2iXtnosriDk9LZRrfFR0oNB4AsRCUig02O0rUCogBbjrBh2eD4RohHgE1nw
+	 CFl2UOodq4j13A77MKI2WPdmDDJyYTRUSJS5tc3bahQxlD8SuoHekFlCasLOgTd2A57PQ
+	 e78aiIhvENjP0sVfGr5UKQxyyTec9QN5bqWJsEgZ05uQHnS03hq7OUvsYK1dPAILShw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oQ66uFk4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KGQ3OdeM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E249606A31C;
-	Thu, 19 Nov 2026 01:49:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BB68606A31C;
+	Thu, 19 Nov 2026 01:49:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oQ66uFk4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB0941F000C4;
-	Thu, 19 Nov 2026 01:49:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KGQ3OdeM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7273A1F000C4;
+	Thu, 19 Nov 2026 01:49:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052982;
-	bh=PPFTjJWGMZi5bSfaMMmAEUawLrAoWYV8OgrSj8Nbvo0=;
+	s=korg; t=1795052985;
+	bh=jMCRSvN2TWRA++2nw3+56o1e+jYnl5EIwoaL88JrtoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oQ66uFk4TsfbqoYIVtkhtMLxly/FV/U7LsgaUg0RiZRSsePjlokbKnDndUJT5pJEo
-	 sISYZKO/0pcz+g2lvmZow2bE1EltwTBPR+1s3c5X67gml4/SMnLi80cXours5d8l2P
-	 wL1Ux4Z26+5gOhxA4tvnWJOmSjbCx07+4rbcAa9o=
+	b=KGQ3OdeMtsYKd7E+4UvX4bU33FRI+4YcP3bYxwh3UEy5Oy6+cYiOB2JTJ/tR42VoK
+	 7N3bvxS6HkQuSSIMle837gCMDHkJEDjUvcw8RdqV8xeiF6YO24unAOt4D2JB0Vdtp5
+	 e/m+2w4E2KJQ7VGBfhGgdadMIxkyPg6XpfXnPtso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0757/2214] rxrpc: Fix update of call->tx_pending without holding lock
-Date: Wed, 18 Nov 2026 15:40:33 +0100
-Message-ID: <20261118150042.030959309@linuxfoundation.org>
+Subject: [PATCH 5.15 0758/2214] SUNRPC: fix oversized GSS proxy token copy
+Date: Wed, 18 Nov 2026 15:40:34 +0100
+Message-ID: <20261118150042.066902646@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,232 +62,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit 7801c42c3bb737cfb06194a383873fcad8daacf5 ]
+[ Upstream commit 62319c2534b603b416fa2aa2f3ef18c311f75010 ]
 
-Currently, rxrpc_send_data() updates call->tx_pending just before it
-returns - but it won't be holding the call->user_mutex when it does this if
-a wait was interrupted by a signal.  This would allow a parallel sendmsg()
-to race.
+gss_read_proxy_verf() allocates one page per token chunk, but it copies the
+entire linear head of an RPC request into in_token->pages[0]. A UDP datagram
+can leave more than PAGE_SIZE bytes in the linear head, so a large
+RPCSEC_GSS INIT token overwrites following pages.
 
-Further, both the callers of rxrpc_send_data() call it with the lock held,
-and then it returns an indication through the parameter list to say whether
-it has dropped the lock or not - after which the callers both just drop the
-lock if it's still held.
+Copy the linear head in page-sized chunks before switching to the request
+page array. The linear head itself can span multiple pages.
 
-Fix this by:
-
- (1) Moving the release of call->user_mutex down into rxrpc_send_data() and
-     get rid of the indicator parameter.  This makes it easier to see where
-     the lock is held.
-
- (2) After waiting, if the attempt to reacquire the mutex is interrupted,
-     just return directly there rather than going to out_unlock
-
- (3) Restricting the txb variable to inside the buffering loop and leaving
-     ->tx_pending set until we've queued the buffer.
-
-Note that there's a slight change in behaviour in that wait_for_space
-failure now doesn't check for completion because it doesn't hold the call
-user_mutex.  The caller, however, should re-issue the send and pick up any
-error at a second attempt.
-
-Fixes: b0f571ecd794 ("rxrpc: Fix locking in rxrpc's sendmsg")
-Closes: https://sashiko.dev/#/patchset/20260702144919.172295-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Eric Dumazet <edumazet@google.com>
-cc: "David S. Miller" <davem@davemloft.net>
-cc: Jakub Kicinski <kuba@kernel.org>
-cc: Paolo Abeni <pabeni@redhat.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261006133011.531806-4-dhowells@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ sashal: adapted rxrpc_txbuf handling to the existing sk_buff-based send path. ]
+Fixes: 5866efa8cbfb ("SUNRPC: Fix svcauth_gss_proxy_init()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Assisted-by: Codex:gpt-5
+Link: https://patch.msgid.link/20260910125120.3798995-1-Jeremy.Jean@oss.cyber.gouv.fr
+Signed-off-by: Chuck Lever <cel@kernel.org>
+[ sashal: adapted xdr stream pointer and length access to argv->iov_base and argv->iov_len ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rxrpc/sendmsg.c | 57 ++++++++++++++++++++++-----------------------
- 1 file changed, 28 insertions(+), 29 deletions(-)
+ net/sunrpc/auth_gss/svcauth_gss.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/rxrpc/sendmsg.c b/net/rxrpc/sendmsg.c
-index b03d93d8b69d0..28cd9fe93844e 100644
---- a/net/rxrpc/sendmsg.c
-+++ b/net/rxrpc/sendmsg.c
-@@ -287,11 +287,10 @@ static int rxrpc_queue_packet(struct rxrpc_sock *rx, struct rxrpc_call *call,
- static int rxrpc_send_data(struct rxrpc_sock *rx,
- 			   struct rxrpc_call *call,
- 			   struct msghdr *msg, size_t len,
--			   rxrpc_notify_end_tx_t notify_end_tx,
--			   bool *_dropped_lock)
-+			   rxrpc_notify_end_tx_t notify_end_tx)
-+	__releases(&call->user_mutex)
- {
- 	struct rxrpc_skb_priv *sp;
--	struct sk_buff *skb;
- 	struct sock *sk = &rx->sk;
- 	enum rxrpc_call_state state;
- 	long timeo;
-@@ -325,11 +324,9 @@ static int rxrpc_send_data(struct rxrpc_sock *rx,
- 			goto maybe_error;
+diff --git a/net/sunrpc/auth_gss/svcauth_gss.c b/net/sunrpc/auth_gss/svcauth_gss.c
+index 8beca18863907..0468b9f0163fb 100644
+--- a/net/sunrpc/auth_gss/svcauth_gss.c
++++ b/net/sunrpc/auth_gss/svcauth_gss.c
+@@ -1185,10 +1185,11 @@ static int gss_read_proxy_verf(struct svc_rqst *rqstp,
  	}
  
--	skb = call->tx_pending;
--	call->tx_pending = NULL;
--	rxrpc_see_skb(skb, rxrpc_skb_seen);
+ 	length = min_t(unsigned int, inlen, argv->iov_len);
+-	if (length)
+-		memcpy(page_address(in_token->pages[0]), argv->iov_base, length);
++	for (to_offs = 0; to_offs < length; to_offs += PAGE_SIZE)
++		memcpy(page_address(in_token->pages[to_offs >> PAGE_SHIFT]),
++		       (char *)argv->iov_base + to_offs,
++		       min_t(unsigned int, length - to_offs, PAGE_SIZE));
+ 	inlen -= length;
 -
- 	do {
-+		struct sk_buff *skb = call->tx_pending;
-+
- 		/* Check to see if there's a ping ACK to reply to. */
- 		if (call->ackr_reason == RXRPC_ACK_PING_RESPONSE)
- 			rxrpc_send_ack_packet(call, false, NULL);
-@@ -381,6 +378,9 @@ static int rxrpc_send_data(struct rxrpc_sock *rx,
- 			       sp->remain);
- 
- 			skb->ip_summed = CHECKSUM_UNNECESSARY;
-+			call->tx_pending = skb;
-+		} else {
-+			rxrpc_see_skb(skb, rxrpc_skb_seen);
- 		}
- 
- 		_debug("append");
-@@ -432,13 +432,13 @@ static int rxrpc_send_data(struct rxrpc_sock *rx,
- 
- 			ret = call->security->secure_packet(call, skb, skb->mark);
- 			if (ret < 0)
--				goto out;
-+				goto out_unlock;
- 
- 			ret = rxrpc_queue_packet(rx, call, skb,
- 						 !msg_data_left(msg) && !more,
- 						 notify_end_tx);
- 			/* Should check for failure here */
--			skb = NULL;
-+			call->tx_pending = NULL;
- 		}
- 	} while (msg_data_left(msg) > 0);
- 
-@@ -450,45 +450,46 @@ static int rxrpc_send_data(struct rxrpc_sock *rx,
- 			ret = call->error;
- 		read_unlock_bh(&call->state_lock);
- 	}
--out:
--	call->tx_pending = skb;
-+out_unlock:
-+	mutex_unlock(&call->user_mutex);
- 	_leave(" = %d", ret);
- 	return ret;
- 
- call_terminated:
--	rxrpc_free_skb(skb, rxrpc_skb_freed);
--	_leave(" = %d", call->error);
--	return call->error;
-+	ret = call->error;
-+	goto out_unlock;
- 
- maybe_error:
- 	if (copied)
- 		goto success;
--	goto out;
-+	goto out_unlock;
- 
- efault:
- 	ret = -EFAULT;
--	goto out;
-+	goto out_unlock;
- 
- wait_for_space:
- 	ret = -EAGAIN;
- 	if (msg->msg_flags & MSG_DONTWAIT)
- 		goto maybe_error;
- 	mutex_unlock(&call->user_mutex);
--	*_dropped_lock = true;
-+
- 	ret = rxrpc_wait_for_tx_window(rx, call, &timeo,
- 				       msg->msg_flags & MSG_WAITALL);
- 	if (ret < 0)
--		goto maybe_error;
-+		goto out_nolock;
- 	if (call->interruptibility == RXRPC_INTERRUPTIBLE) {
- 		if (mutex_lock_interruptible(&call->user_mutex) < 0) {
- 			ret = sock_intr_errno(timeo);
--			goto maybe_error;
-+			goto out_nolock;
- 		}
- 	} else {
- 		mutex_lock(&call->user_mutex);
- 	}
--	*_dropped_lock = false;
- 	goto reload;
-+out_nolock:
-+	_leave(" = %d [intr]", ret);
-+	return copied ?: ret;
- }
- 
- /*
-@@ -650,7 +651,6 @@ int rxrpc_do_sendmsg(struct rxrpc_sock *rx, struct msghdr *msg, size_t len)
- 	enum rxrpc_call_state state;
- 	struct rxrpc_call *call;
- 	unsigned long now, j;
--	bool dropped_lock = false;
- 	int ret;
- 
- 	struct rxrpc_send_params p = {
-@@ -760,12 +760,12 @@ int rxrpc_do_sendmsg(struct rxrpc_sock *rx, struct msghdr *msg, size_t len)
- 	} else if (p.command != RXRPC_CMD_SEND_DATA) {
- 		ret = -EINVAL;
- 	} else {
--		ret = rxrpc_send_data(rx, call, msg, len, NULL, &dropped_lock);
-+		ret = rxrpc_send_data(rx, call, msg, len, NULL);
-+		goto error_put;
- 	}
- 
- out_put_unlock:
--	if (!dropped_lock)
--		mutex_unlock(&call->user_mutex);
-+	mutex_unlock(&call->user_mutex);
- error_put:
- 	rxrpc_put_call(call, rxrpc_call_put);
- 	_leave(" = %d", ret);
-@@ -793,7 +793,6 @@ int rxrpc_kernel_send_data(struct socket *sock, struct rxrpc_call *call,
- 			   struct msghdr *msg, size_t len,
- 			   rxrpc_notify_end_tx_t notify_end_tx)
- {
--	bool dropped_lock = false;
- 	int ret;
- 
- 	_enter("{%d,%s},", call->debug_id, rxrpc_call_states[call->state]);
-@@ -811,8 +810,8 @@ int rxrpc_kernel_send_data(struct socket *sock, struct rxrpc_call *call,
- 	case RXRPC_CALL_SERVER_ACK_REQUEST:
- 	case RXRPC_CALL_SERVER_SEND_REPLY:
- 		ret = rxrpc_send_data(rxrpc_sk(sock->sk), call, msg, len,
--				      notify_end_tx, &dropped_lock);
--		break;
-+				      notify_end_tx);
-+		goto out;
- 	case RXRPC_CALL_COMPLETE:
- 		read_lock_bh(&call->state_lock);
- 		ret = call->error;
-@@ -825,8 +824,8 @@ int rxrpc_kernel_send_data(struct socket *sock, struct rxrpc_call *call,
- 		break;
- 	}
- 
--	if (!dropped_lock)
--		mutex_unlock(&call->user_mutex);
-+	mutex_unlock(&call->user_mutex);
-+out:
- 	_leave(" = %d", ret);
- 	return ret;
- }
+ 	to_offs = length;
+ 	from_offs = rqstp->rq_arg.page_base;
+ 	while (inlen) {
 -- 
 2.53.0
 
