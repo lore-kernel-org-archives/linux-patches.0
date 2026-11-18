@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030941;
-	b=g/C3uVqFAjnzopFpEisx1o58WVURJbZNav2hZtcmt4w5xWCxWyXG0PlTs1qn20x6Wvit
-	 zYyA/2olh9gdQIOT3w5aLaWl2yhNBeCFyWtBJv/XvZ69a33p37aXhPiJmmBUT1fOmmaYe
-	 9jWTSHUtbAJna9z74K+kQnA/jz76hwOuhe70lc1NIo5V4K8XUN+uoCIBvaYGqq7EixCBz
-	 uFqFTyse/LC8+UwL2ZQtI6di+IUkj3sCl5gTu0QrtpZDrnyZc9/i1T5VuNrXG93lspgSc
-	 ZSsXP3wwi/pgbvdgGwaIRzRAgxx9ncbT/l5PFRCnGvDC4u4isVdMyYOQtwgvyfduNgA==
+	t=1795030944;
+	b=Qbght75UbldTCh3pX83ulntmzWHzRFqvbRGZ2uOGhbdnZ5JKlFC/9Qg3prdn/oPV6Nqs
+	 7OvKQbnFrTZsGKFPCPG3XqXjcX6gO6//Zq9NXJ57idofXZ5w7vO3yEK3t1b+Er+2OrDCE
+	 ay2lhoyKM7DANEOjTTlVCl6Kn4k57wuzwl3P7aFLWIHUa0Nm8dYrbzHYhb5CNqhDTdPt8
+	 S2vHK1dGl2Htwgmkt9ohUiU2e81N8m4Fh+9kBda25dMgkHxtysvrGI2x/6o+CnFWN83o3
+	 okgtxt1HncdwNq/kokqdSaZ14luDWnlQKi3vwLz7Sn3MOt5xdQX3yjPMqHewLeUFoEA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030941;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030944;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CyV31+lcrh//cvEN3JpJHIsqm/pkVdLtT96XJrNvK7w=;
-	b=WzDOsjzXi7D6sgEfc+kNa75PurOnufpbXhh/NNZlwoJNL+NL2fR4LRviz1E3vnix3K/r
-	 7cFWLsM+gxKGVVgOmyWtZ2nX6vfslhkBEfGuSZFiJpeB/lLDlqZgwFndGAX2kAW+lOXNV
-	 qoxEM8Pz2HBOrhIdClT0xraOIxqTv8RtKD0DzbI4eztnDgcFMe/M7hbGWSrOPe2YvsAoG
-	 BR5CAXv8aIkm14DPEHyY2BSknIj2lmha3tnw4jFyFU4F5wc/BOdtBJQtr7yX66Uug/TBR
-	 LDvdqXf2ih1T2Im2pbAbsgC2kIlFP4eTZDHybxJpE+jk0VsJsHQK2bvAW9a2x1T7d1A==
+	bh=P8ZTy7fyTeOfEX9y86dSLfsUXn55SeehUOz6F1u0P9U=;
+	b=J2/c+BPZfIELfvyLhjQbHUOtBmU4dD/t9pkoI9dVdxmuQIJgeMrUIDHWEkMVKSnl8NNB
+	 eUC1+q4YB+u6UkfQfPs1aywX8ZClUzzJzKUd9p69qek/ZzCCBbiSqSZK56cox0G4vt2fz
+	 sXiIH+Xa6DoDRxdhQQdfba1gG6PFweZLQdEPMZa4MByVb3mbW2M+17yL5k8Fv0h6d2h/k
+	 rXo9O73xMPEGW7I+e7GMAFX37L/qDGYy2yOjSsOU7zk8eAeJYDiTKz2o9fW5nDyQ+S9jM
+	 Hzpxia5LvKxo0g31iXY3KC/nHSKQAiy7JeXHrhtWYrPcGpGG/yl9FHk9hHsv3VUNcTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J3Wka2rC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KynLVf8p;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A318606A33B;
-	Wed, 18 Nov 2026 19:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A46606A325;
+	Wed, 18 Nov 2026 19:42:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J3Wka2rC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC6F11F000C5;
-	Wed, 18 Nov 2026 19:42:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KynLVf8p
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2B911F000C5;
+	Wed, 18 Nov 2026 19:42:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030941;
-	bh=CyV31+lcrh//cvEN3JpJHIsqm/pkVdLtT96XJrNvK7w=;
+	s=korg; t=1795030944;
+	bh=P8ZTy7fyTeOfEX9y86dSLfsUXn55SeehUOz6F1u0P9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J3Wka2rC4gWyOJ2srSPxCfQYoliZ/ML/gUCXEjd/nP13+lLIryqpoHOmJs2YOh4G6
-	 oaVLl43xWFPjPn3/HvBFUsr1tbjIK5su0gafelMjNwl3oVAC1Ze/FoleK7cDUi8kdd
-	 oL1lH1RK0ST7v4YOMo+vkW00QMssjXoYJB9QhJwY=
+	b=KynLVf8pUlHJGxn9VSoiIcSwuFb7yg2kta/CYv9MMmy/75g+8fp1GjqBShbqDkzNz
+	 aHMw4Wn3HHIMy/rt0p1s5TqDr0Mdbzm+SPNjzr5yyaFnQ8xky1YB8rl3rGCx30ZgY7
+	 kuV93qWViyoyyoM1rNfWt7iRwnz2vxo8qi5USHzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Mark Brown <broonie@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0840/1756] ASoC: rt5682-sdw: always cancel jack work on remove
-Date: Wed, 18 Nov 2026 15:49:27 +0100
-Message-ID: <20261118150042.889953825@linuxfoundation.org>
+Subject: [PATCH 6.12 0831/1756] power: supply: ab8500_charger: Fix AC charger re-enable
+Date: Wed, 18 Nov 2026 15:49:18 +0100
+Message-ID: <20261118150042.582354465@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,44 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 9a98f7e955d35e0831fb179e88e98cf9bc0e001e ]
+[ Upstream commit 3e1d2517347f6bb72f74e63ec77d1634385fbf21 ]
 
-rt5682_sdw_remove() cancels jack_detect_work only when hw_init is true.
-rt5682_update_status() clears hw_init when the SoundWire slave becomes
-unattached, but jack_detect_work may already have been queued by
-rt5682_interrupt_callback() or the jack initialization path.
+The AC check-enable callback passes the embedded USB charger object to
+ab8500_charger_ac_en(). That helper derives the parent with the AC
+charger offset, so the wrong object yields an invalid ab8500_charger
+pointer.
 
-A remove after that status update can therefore skip the cancellation and
-leave delayed work pending after the codec private data has been freed.
+Pass the AC charger object when re-enabling AC charging.
 
-The work object is initialized during probe, so cancel it unconditionally
-instead of relying on the mutable hw_init state.
-
-Fixes: ac63716da307 ("ASoC: Realtek/Maxim SoundWire codecs: disable pm_runtime on remove")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Link: https://patch.msgid.link/20260925145019.2290367-2-yaojiale02@163.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: bc6e02871402 ("power: supply: ab8500: Standardize CV voltage")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260916-ab8500-charging-v1-7-e986ed321cc6@kernel.org
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt5682-sdw.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/power/supply/ab8500_charger.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/rt5682-sdw.c b/sound/soc/codecs/rt5682-sdw.c
-index 5edf11e136b43..24cd4a5e25199 100644
---- a/sound/soc/codecs/rt5682-sdw.c
-+++ b/sound/soc/codecs/rt5682-sdw.c
-@@ -695,8 +695,7 @@ static int rt5682_sdw_remove(struct sdw_slave *slave)
- {
- 	struct rt5682_priv *rt5682 = dev_get_drvdata(&slave->dev);
+diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
+index 5da3b12d9f0bb..b3b1fd7f82f2b 100644
+--- a/drivers/power/supply/ab8500_charger.c
++++ b/drivers/power/supply/ab8500_charger.c
+@@ -1778,7 +1778,7 @@ static int ab8500_charger_usb_check_enable(struct ux500_charger *charger,
+ }
  
--	if (rt5682->hw_init)
--		cancel_delayed_work_sync(&rt5682->jack_detect_work);
-+	cancel_delayed_work_sync(&rt5682->jack_detect_work);
+ /**
+- * ab8500_charger_ac_check_enable() - enable usb charging
++ * ab8500_charger_ac_check_enable() - enable AC charging
+  * @charger:	pointer to the ux500_charger structure
+  * @vset_uv:	charging voltage in microvolt
+  * @iset_ua:	charger output current in micrompere
+@@ -1817,7 +1817,7 @@ static int ab8500_charger_ac_check_enable(struct ux500_charger *charger,
+ 			return ret;
+ 		}
  
- 	pm_runtime_disable(&slave->dev);
- 
+-		ret = ab8500_charger_ac_en(&di->usb_chg, true, vset_uv, iset_ua);
++		ret = ab8500_charger_ac_en(&di->ac_chg, true, vset_uv, iset_ua);
+ 		if (ret < 0) {
+ 			dev_err(di->dev, "failed to enable AC charger %d\n",
+ 				__LINE__);
 -- 
 2.53.0
 
