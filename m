@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036215;
-	b=axCaf4/UED46eVgPy+jJYzPenLT21YD9uGMA0al+kw0uu/UlFciFXgdcTzjSh2cufdh3
-	 TY/TJPmu6k06b6qpqyAGcknKF+fvAFG5ybYioOa6MC2GqUo6zYe/ZsVk8qODLzj7EmUbG
-	 H8ECETazZlh3w2BHntJtYDG0VRZKtqdxBgmQwf1nCP2WU3MrKgvBqRsNde5kMz/QZkeus
-	 lYWSiKu/tfiQCpVEEtNxsPmFGAPAXgzIiR7Op8fWttfvVc9lkgzEMu7DVe82DGnbDDyGL
-	 vkytOz/Q6Sy6WR99mWPEiCUoFZG+mVM2PbbhDfrjL9z3egDCqfV/UmMp++gVgqIaepg==
+	t=1795036218;
+	b=mWB/i28y7H/j0dXoznwSjGpc5s41CGUyHK1Bs0NJfUJ2ZvMOi645hwnBgwpCDhIpxi//
+	 SRJ6NK8yoWlPcGfjhoOfsrLlzSECfSr/3GuJUinCrMKRgKWsI5akTsNjUNeMyE4fscARn
+	 BB3aQ97sdw3mgAf4bFXXxoMnEGSQICOSPtEvT5CH7W7Vsrbaipa/d1wTp8o4rCOZ+1NXD
+	 cNMW5eY6pnbeQgs1adNsRZb1wHIgR3E6VSU8JQ9sDXCWg+7s8LGlFDSoQRqq0dINqkKax
+	 vwsHm6KehRFsXFnxZNTnt2uKfeEc7wBSNtLSYCRcghzz6Rri/i0jzkeO2VFT8q4O8iA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036215;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036218;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=A8wtE+c0M0WVYpjDOwy6Gzgc0hYepl7bD/KWvxSHp2Q=;
-	b=lq1hUGIJ/LE/rps29osWxkkQRJOKbhd3YvY+hS7uOZBLJrw9tOV0BWuHLr+hOXwAcO3b
-	 6UazfuV5cr070yY6qEd/yzVxEWWs11x7WQ8A51x5cgKMFqA5MFwU0/2G4hrsLYfiDXC33
-	 oRrxZ6C1DLHmrdbWLb9LetS3vlcxWic5f3K5//TdyJWLX0RX1xKa2qYAUvqdKrGA4S+dN
-	 KjgLznObPdSmJFE6pwb38P+kL09wYxgfGglT1VuR0TQTCM0HoEcL08BZffGW/R0GKNFX3
-	 IGuLDSV0EiHVVzT+brtvllOGv0sjUnGnKd9joVVDz6klO/w1pypPB9cPA8WR2UoS3ng==
+	bh=X5EDqWkkr5zRCYBO9bC88XLy7Re9+zFBgdMlBgrTQv0=;
+	b=ZuZXXyixSyM8kZuDXx3iaDChen/xx4XhVx/lDfYIV7VlelePGnvlQkxY72tAbNFHZzpo
+	 PebtFnYmCcd0zcxb/B+w0NCbuRVgmPZ5oPrniw6SMcIViZuBV40XyCtVYFh1uBWBIjJM+
+	 q2zSQ5Jjd7XNE4ZCB0tjXDVRb0osur7R3bcFxIBthbriDDsbwB0kdIgZOTfIG23Spsb9i
+	 opcOOv6t17b7/lY6X6rJ3dQTLiD1XiLWdWgV9ozcdKZXCwnkAsAaeXidhKdffI3TjrAJW
+	 SXhRVzGadnF4GQ8EJPb+J4DLXEuj5ePQxq400wM8wDy366ZLmJgxWZGfO68jTQvA5AQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ruPd4mCX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jUBCL9Xq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC3F606A33A;
-	Wed, 18 Nov 2026 21:10:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F31606A32A;
+	Wed, 18 Nov 2026 21:10:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ruPd4mCX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE84A1F000C4;
-	Wed, 18 Nov 2026 21:10:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jUBCL9Xq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C40C81F000C4;
+	Wed, 18 Nov 2026 21:10:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036215;
-	bh=A8wtE+c0M0WVYpjDOwy6Gzgc0hYepl7bD/KWvxSHp2Q=;
+	s=korg; t=1795036218;
+	bh=X5EDqWkkr5zRCYBO9bC88XLy7Re9+zFBgdMlBgrTQv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ruPd4mCXTwRXDgRAK9p3O7lMaW1dxjTzxmowCAZUc0IobH2v8Ifdg/50Y7mNrLqdN
-	 kW9t73j6SmFp/qoNbBHhF7c6QSysXzNxOVeSW3dRc7+vU9u/vstagUk+TseS9G+uKU
-	 daq7pDGkfKNhK6vObzDqvFJbML+6T7Xq7XQ3oJpI=
+	b=jUBCL9XqT758Ror8x90ES/WxxPMFoZxjdi3e+v5qdUoMf2AldpcWuKK5SRs+nKIoD
+	 XmF/oxOh+8LP/A85Q48mf9xQQ7al4snxhtRj8b/abl7l3rDWl0+c8VOsK7fNRD+FCa
+	 bwyHPZkQLFGwLMY19oko6+IqyoKdxvyWnAkLPhPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0981/3318] dm-writecache: fix a crash if we attempt to use non-dax device
-Date: Wed, 18 Nov 2026 15:26:43 +0100
-Message-ID: <20261118150349.182716201@linuxfoundation.org>
+Subject: [PATCH 6.6 0982/3318] dm-writecache: fix uncommitted_blocks underflow
+Date: Wed, 18 Nov 2026 15:26:44 +0100
+Message-ID: <20261118150349.216465410@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,38 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit b15dc73f60ebf02410bc7014ce34fb7fd1040045 ]
+[ Upstream commit 8a0cc5f3446a324b13f62020eeddb32d6ba1c2db ]
 
-If we specify a non-DAX device as a cache device in the 'P' mode,
-dm-writecache crashes on NULL pointer dereference inside dax_synchronous.
+Revert the commit 39495b12ef1cf602e6abd350dce2ef4199906531
 
-Note that this is not a security bug because only root can trigger it.
+writecache_bio_copy_ssd sets wc->uncommitted_blocks = 0; and then queues
+the flush work: queue_work(wc->writeback_wq, &wc->flush_work);
+
+It may be possible that discard is dispatched in this window, and the
+discard would decrement wc->uncommitted_blocks to -1U.
+
+Note that this bug is benign - wc->uncommitted_blocks is only used to
+trigged autocommit, so decrementing it to -1U will trigger a spurious
+autocommit, but won't cause any data corruption.
 
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Fixes: a46624580376 ("dm writecache: reject asynchronous pmem devices")
-Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-5
+Fixes: 39495b12ef1c ("dm writecache: correct uncommitted_block when discarding uncommitted entry")
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-writecache.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/md/dm-writecache.c | 2 --
+ 1 file changed, 2 deletions(-)
 
 diff --git a/drivers/md/dm-writecache.c b/drivers/md/dm-writecache.c
-index 5110b352036a2..e2c81dd236419 100644
+index e2c81dd236419..4765f151b48d0 100644
 --- a/drivers/md/dm-writecache.c
 +++ b/drivers/md/dm-writecache.c
-@@ -2509,6 +2509,11 @@ static int writecache_ctr(struct dm_target *ti, unsigned int argc, char **argv)
- 	}
+@@ -898,8 +898,6 @@ static void writecache_discard(struct dm_writecache *wc, sector_t start, sector_
+ 				}
+ 				discarded_something = true;
+ 			}
+-			if (!writecache_entry_is_committed(wc, e))
+-				wc->uncommitted_blocks--;
+ 			writecache_free_entry(wc, e);
+ 		}
  
- 	if (WC_MODE_PMEM(wc)) {
-+		if (!wc->ssd_dev->dax_dev) {
-+			r = -EOPNOTSUPP;
-+			ti->error = "Cache device is not a DAX device";
-+			goto bad;
-+		}
- 		if (!dax_synchronous(wc->ssd_dev->dax_dev)) {
- 			r = -EOPNOTSUPP;
- 			ti->error = "Asynchronous persistent memory not supported as pmem cache";
 -- 
 2.53.0
 
