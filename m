@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049930;
-	b=c0kUntkynjaYbIxhkuO48wQ06mS5OxYH11s+hd6FH6UdwhTcPrNCGN9RmmTc0rzug4Sk
-	 twnz1fqYn6CLVUjOujXUnZI/IvPv/AUsNKm1j3rk174P5gBv1A7b9jFXde50n21UlLiT+
-	 CbdZ8KHm0jjtYTqYgOEjsdjGfO7eaT0Dou4RBYj7FGXsdDmY3dSZ2fIItAxwxMKczuxMf
-	 E5sLgdFu37zCtYUjQL91x4aRI9u0owbxOGNwyS1fRRsMb+S5AI02mLrDbiLc1OzCaE2Eq
-	 m5Twaz+t91WFH5y11kgbyOF0o5meuzdJ8p62OJw6szO8aI6UjcTWzxMylg1I7IT9M7Q==
+	t=1795049932;
+	b=Kqibqhvcdg46uEndoj5e562gVRY6BXhnXSmFcsblq/ZUiG9vr2ZgMb7BJCHjPzWjUv1+
+	 SUPv48xWAmRqJwNF2tc/Z2CcerfWY+09UbD95CEee263nHYH/R5gCbMA7hm592b6v9SFz
+	 YAISSwGXz0AI3OaXQYG41hoSIDmbo7vbmIQUm/bbvliYIsIaQWLM0vhucyRKIiDIHN7QF
+	 feq+Av9MGS/bFbNQYi9YQIkyL7tEYDXFgSvtPZYt7bj9uZaI4HSWpfrSDp5Cu/I7rmWdZ
+	 2vaiGJ7MRKz/8wT6N7vh0+amZIKa+on1mCHK+TEDPzqXDZwZbG16ArTj9ildrSV0EcA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049930;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049932;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tXg0iptJriSAZ38/XJGWgr5lMQALI7cFydqSHlnonus=;
-	b=UOO6A6mZp/saH0UMywAlTq1vi1f1tthXazneGI6g3wlS72LivcfPbOKTYOu47hPax5f0
-	 E4LUrrB8cwk7l/4jvE9xSFZXsMDgLK5GHj4T0P5PG4y4btXhUY+/JH5++6ulEhUXpm2C6
-	 7HIYckhCPFoofcPLQBEW60AnvoM3IVcq1iAtoPSiNBtS+5yov9fLmEmIJdFL6qa94d/Gj
-	 MiF93YOI6FoqtlKcUTxDUJN48vJjj01QgOtUMInd6k2BjaZzVP7uwzFyaw9qtdYLid+PL
-	 hBrldXrePs17La0n7bRDYItyUabh0GePw9TQtj79K1IfSu1OFxRsAd0sdq/2U2fmW2w==
+	bh=0zrvJJEMVIRpwnu3/sdxMaYgQM65fQtdYRAKQwLROMM=;
+	b=C+MAkIy4iqmG1TIkoH3WOSue6+S/EyPJOn43YoaL8x8MXlZRnO+dTz5vw82IMckaoHtg
+	 ABOXsca0QJaiFUTjk+3xtXOO5ZcbHasGlkISME7BfgOE4usjtabkcgAGm5kX+NA4YM9Yc
+	 LAmx7O26QSeo6MLQQU2AJOvZ6Ih+zKEfgeAdRndLDf9XX7ZZxO6wpKcpYtyAQAvTify30
+	 KDpRmggQJPtAzIor+YH0+RAz8csQ3/4Fdzdr3XOhQmClznoGQmTQyU3woOJDD9xB2jFga
+	 zgfrwQIv48haTBz0Bf5MpOJzP+OHZqEOVoOYDfiAuPfhmZLg6FyrVolab3tdpB84Zig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JWiNeLGX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zDgbaldn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E72F1606A325;
-	Thu, 19 Nov 2026 00:58:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F0C606A325;
+	Thu, 19 Nov 2026 00:58:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JWiNeLGX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AC7B1F000C4;
-	Thu, 19 Nov 2026 00:58:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zDgbaldn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F8001F000C4;
+	Thu, 19 Nov 2026 00:58:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049929;
-	bh=tXg0iptJriSAZ38/XJGWgr5lMQALI7cFydqSHlnonus=;
+	s=korg; t=1795049932;
+	bh=0zrvJJEMVIRpwnu3/sdxMaYgQM65fQtdYRAKQwLROMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JWiNeLGXTJHGROJVG5sbLe6/FL7RFMw7iHPbdtYbR/kPXl+sHgi8xWp1/UbSrnJaC
-	 E8zBlPUKuD941G+5Lt/kxBq4CcLPC/piwGEBVMdpxiPkiJnC1PgqaFtU2UjHA7rRP+
-	 BkB67/PjuJV09tlDyYUmAP1YfeVqhl9exHG1GS9U=
+	b=zDgbaldnEeRDX2sB3hicsSe3RVlbtsdh/K3w1dqh+rI8x7pKOFwDiZqXsQ1w9xab1
+	 eVe+Ra99sPU/sdMTcAr7tyYQxMuk620AjF9yzawhj/jA8GBWnk3TGV7zf69fs7z+1B
+	 WEFzsN6eCATx7MSOtOl9buSMeWy6f85gQIU7ZvKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Youngsung Ahn <ays511.kr@gmail.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2526/2857] RDMA/rxe: reject IB_WR_REG_MR from user QPs in rxe_reg_fast_mr()
-Date: Wed, 18 Nov 2026 15:59:20 +0100
-Message-ID: <20261118150332.493378601@linuxfoundation.org>
+Subject: [PATCH 6.1 2527/2857] RDMA/rxe: validate inline sge_offset in finish_packet() before indexing inline_data[]
+Date: Wed, 18 Nov 2026 15:59:21 +0100
+Message-ID: <20261118150332.525452800@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,54 +70,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Youngsung Ahn <ays511.kr@gmail.com>
 
-[ Upstream commit 33afe9909f213d8bb8e80f0b93382dde0f56e2c7 ]
+[ Upstream commit 47a9c0338f2e0d4178d77b0d2f529fe1fde84642 ]
 
-IB_WR_REG_MR is documented as kernel-only ("can not be issued by
-userspace"), but nothing enforces it.
-rxe_wr_opcode_info[IB_WR_REG_MR] sets WR_LOCAL_OP_MASK for IB_QPT_RC,
-a QP type userspace can create, so a user QP that writes
-opcode = IB_WR_REG_MR into its mmap'd SQ ring reaches
-rxe_do_local_ops() -> rxe_reg_fast_mr(). That function then trusts
-the ring-supplied fields:
+For a user QP, rxe_post_send() takes the qp->is_user branch and
+never runs init_send_wqe(), so
+dma.length/resid/num_sge/cur_sge/sge_offset all come straight from
+the mmap'd SQ ring. In the inline send path finish_packet() uses
+sge_offset directly as an index:
 
-	struct rxe_mr *mr = to_rmr(wqe->wr.wr.reg.mr);
-	...
-	if (unlikely(mr->state != RXE_MR_STATE_FREE))    /* deref */
-	...
-	mr->access = access;                             /* write */
+	u8 *tmp = &wqe->dma.inline_data[wqe->dma.sge_offset];
+	memcpy(payload_addr(pkt), tmp, payload);
 
-For a user QP wqe->wr.wr.reg.mr is a fully attacker-chosen pointer,
-so this is an arbitrary-kernel-address dereference (arbitrary read
-confirmed, oops). No existing check distinguishes a user QP on this
-path.
+inline_data is a flex array whose capacity is qp->sq.max_inline, but
+sge_offset is a u32 from user space, so the source pointer is
+displaced arbitrarily past the WQE and the memcpy reads out of
+bounds.
+commit 126c757e4cd4 ("RDMA/rxe: Validate num_sge/cur_sge before indexing wqe->dma.sge[]")
+added num_sge/cur_sge checks on the send path but not sge_offset, the
+third attacker-controlled index in the same struct.
 
-Reject IB_WR_REG_MR for user QPs before dereferencing the supplied
-pointer.
+Read sge_offset once with READ_ONCE() and bound it (and the payload
+that follows it) by qp->sq.max_inline before indexing, so the value
+that is validated is the value that is used.
 
 Fixes: 8700e3e7c485 ("Soft RoCE driver")
 Signed-off-by: Youngsung Ahn <ays511.kr@gmail.com>
-Link: https://patch.msgid.link/20261001152426.3259522-1-ays511.kr@gmail.com
+Link: https://patch.msgid.link/20261001152433.3259573-1-ays511.kr@gmail.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_mr.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/infiniband/sw/rxe/rxe_req.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_mr.c b/drivers/infiniband/sw/rxe/rxe_mr.c
-index 80e2d631fdb24..86f65c17e9b2f 100644
---- a/drivers/infiniband/sw/rxe/rxe_mr.c
-+++ b/drivers/infiniband/sw/rxe/rxe_mr.c
-@@ -570,6 +570,10 @@ int rxe_reg_fast_mr(struct rxe_qp *qp, struct rxe_send_wqe *wqe)
- 	u32 key = wqe->wr.wr.reg.key;
- 	u32 access = wqe->wr.wr.reg.access;
+diff --git a/drivers/infiniband/sw/rxe/rxe_req.c b/drivers/infiniband/sw/rxe/rxe_req.c
+index 55accb4a42980..be2d0f7a78741 100644
+--- a/drivers/infiniband/sw/rxe/rxe_req.c
++++ b/drivers/infiniband/sw/rxe/rxe_req.c
+@@ -467,7 +467,14 @@ static int finish_packet(struct rxe_qp *qp, struct rxe_av *av,
  
-+	/* IB_WR_REG_MR is a kernel-only op; a user QP must not reach here. */
-+	if (qp->is_user)
-+		return -EOPNOTSUPP;
+ 	if (pkt->mask & RXE_WRITE_OR_SEND_MASK) {
+ 		if (wqe->wr.send_flags & IB_SEND_INLINE) {
+-			u8 *tmp = &wqe->dma.inline_data[wqe->dma.sge_offset];
++			u32 sge_offset = READ_ONCE(wqe->dma.sge_offset);
++			u8 *tmp;
 +
- 	/* user can only register MR in free state */
- 	if (unlikely(mr->state != RXE_MR_STATE_FREE)) {
- 		pr_warn("%s: mr->lkey = 0x%x not free\n",
++			if (unlikely(sge_offset > (u32)qp->sq.max_inline ||
++				     payload > (u32)qp->sq.max_inline - sge_offset))
++				return -EINVAL;
++
++			tmp = &wqe->dma.inline_data[sge_offset];
+ 
+ 			memcpy(payload_addr(pkt), tmp, payload);
+ 
 -- 
 2.53.0
 
