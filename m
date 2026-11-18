@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038579;
-	b=UycI1f1wtaRAXSJgU27FbFXUfPaprXmKgjE4r1JrId9CvjRFepwL1yJcbsmTCxaZwC4A
-	 KB+y2+4Q1U14DjtFNVlpghKnxI4pkgmZthGdwFgRjw4CDy5apFBGAPIdbsbgUzhEs4I33
-	 jUp48Ib97pdLd7Xu2iRq6amSga80A18UntNeHCxrLNYCpgyYkUw0ZhtRoGctlZq+OzLeF
-	 UCLcmpkb5sBwH7HKEMAtsF9ZgAjXYcDJ+vb/LFIV/8qkUC47uCc2sxjasF2a7FYdUs229
-	 aqwpjHc5U9+5Kl8JdpHik6xURAtWl+bYGRf60af6FrNwNPhPXmP8HH7yM/nVbrSMfPA==
+	t=1795038582;
+	b=OwXQxEyh3ZGrk33twyDWIEljCIPP2kCnD33npfgvgA415D5dVUmh/oLlJf4PFiY7P1XK
+	 HJmDv9yRNIv2BvFpqUMQ4dRCK7SuWd9+1jjvLxIKWoQfVJmHCzwpXJFbac2NzL7UMBEic
+	 V17goUKuZxe18yapqgb1TQ0904Y/37ohZ+XCPJ4ip3hr5XGqrbEioTrFt3gZHpWetw7aR
+	 0e2WZanT6o1zasxR4Ihz4elbZ2n1PEkQE4U8j8fIRZznD/gA8gBZ7PzCdqeWdnrAVpkOt
+	 PFTCsvpyIoFzDuAApBbHRgSGrJW4tFdKF7gGfUgG81LDf15EjRyxoTWBhrVn6a2R50g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038579;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038582;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0v5kg5X0/fZBWSaB1TG/3VP5rvP0VJR2WjMCGcufQGo=;
-	b=5TtUcdL1MUjAlhcPa85Cpz+KkRnps2SeiL+GeYeOuVq/NsUL5aEefQ5TA/Sl1558c6hj
-	 F5RL7n/qy3jGQmKHbbMkpxxu7eIVgFCvCmEnVQaqtIMRV1MU1hLCHexLsBiS7wQzhT2LA
-	 JKc/CkvJQ3b4VdErcm40Q22rzZs0cLBNzfYDlaLvAKH9ScA4glpY0XyscwSkSUhIseh+F
-	 nStW+9NVlFjjrXg30jCP3aUVPSG/a2xMLIXgXGh1FgreqRhyvE1Wfh7060Z7D6oSIAxyM
-	 k1ZeeTVpypKBczGKRWz4tgj+9I5taNqG8+SqqnZblNtfdkhuwxlvLFHNzN053BlVEvQ==
+	bh=WdCnmmtOsa9IkQFWNdgS0g1SAnxilO2N46qQJzgbgmY=;
+	b=brtRQbDJ/BU4+1W0EgwcdTX98/57P+G6jtMeW9SKVL2J313YjBRJ299wQKD6OYvggPZg
+	 kL5BsIqEPQvAF3VEvBSFuWnO+9FkSupqzL+n1LiyOkLI/ud279itA02FTSNFfMRYORsQ4
+	 BYuCCbYekBkixAlbIkekrIZT+pTt0ycEeto3SUMeLZ7wPpUnTSLN3CTkV0Ncs+Q/p87AO
+	 0tLSZnFH7nA0FV9SEwpvLLbTTi5u8mqPR3mX5GwqQfhW0A4KQXC4qRPG4sliQDwri/4D8
+	 Oy5W54X9988fhVboBvXJmve/ssaF+ZBylRXHp3puw+sqFII3r9oapWqr0rQmNjY30Ag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DETgVGvE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XkYu1V1O;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E94606A31C;
-	Wed, 18 Nov 2026 21:49:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD6F606A320;
+	Wed, 18 Nov 2026 21:49:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DETgVGvE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF8A91F000C5;
-	Wed, 18 Nov 2026 21:49:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XkYu1V1O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A109D1F000C4;
+	Wed, 18 Nov 2026 21:49:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038579;
-	bh=0v5kg5X0/fZBWSaB1TG/3VP5rvP0VJR2WjMCGcufQGo=;
+	s=korg; t=1795038582;
+	bh=WdCnmmtOsa9IkQFWNdgS0g1SAnxilO2N46qQJzgbgmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DETgVGvEHZQ5sfpWaKAB0VvH3S/XSUq9SpyryBIvoa3Lk+DJwGudz6OAdXENrCVX3
-	 IKz6GX0n6yflb+VgT2mi7uO+6OIJoBJbLY9f8fRK+564fbkWghckqe+JnEPXQnJGuW
-	 fY7L5MuzzJAX1lMEc4qETVIoUquMgVIpcBQSN/IY=
+	b=XkYu1V1OMUi81y7S3QIRWQjhseFBEscMMs4jKhU3+1Auj5i/aIYIBrwSnOW3Y61ZA
+	 mAskbPCaXLAwDeTk5ny48dEsmxbVRRSwK6o79emW/o2xgpLbSizzTRAztQPAT/yrZM
+	 BS1fVBUwV+jfvdbVn+JjyA5WhvSUk7HffIgQcq3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	sung byeongchan <tjdqudcks0424@naver.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1794/3318] LoongArch: Fix one-shot limitation for perf hardware breakpoints
-Date: Wed, 18 Nov 2026 15:40:16 +0100
-Message-ID: <20261118150415.677210572@linuxfoundation.org>
+Subject: [PATCH 6.6 1795/3318] ceph: validate MDS reply fragtree split array length
+Date: Wed, 18 Nov 2026 15:40:17 +0100
+Message-ID: <20261118150415.706879537@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,268 +69,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: sung byeongchan <tjdqudcks0424@naver.com>
 
-[ Upstream commit 5e0b00fd000a53a5428fed6c96be74019bd0ad17 ]
+[ Upstream commit 8cab7e7461f81ea1e0fd45082b50bb3c04c0bb10 ]
 
-In breakpoint_handler() and watchpoint_handler(), the code disables the
-hardware slot by executing update_bp_registers(regs, 0, ...). This design
-forces the active hardware breakpoint configuration to be wiped out upon
-its first hit, turning standard perf hardware breakpoints into "one-shot"
-events.
+parse_reply_info_in() advances over the fragtree split array using an
+unchecked count multiplication.  On a 32-bit client, nsplits=0x20000000
+wraps the byte length to zero, so the reply is accepted and
+ceph_fill_fragtree() sorts far beyond the message front.
 
-Furthermore, while the ptrace single-step path in do_watch() executes a
-hardware single-step skip mechanism to advance the PC, the standard perf
-path lacks any mechanism to bypass the original triggering instruction.
+Compute the split length with size_mul() and require the complete array to
+remain in the inode record before advancing the cursor.
 
-To maintain the long-term persistence of hardware breakpoints for perf
-usage, eliminate the disruptive calls to update_bp_registers() within
-the handler loops to keep the breakpoint configuration enabled.
-
-Concurrently, execute a single, unified register write outside the loop
-to atomize the state transition and explicitly enforce the hardware skip
-mechanism once per exception return, ensuring the processor safely steps
-forward without lockups.
-
-Meanwhile, in order to prevent status contamination during single-core
-context switches or cross-core thread migrations, the hardware register
-skip state of the previous thread is saved first. Then, the skip state
-is restored and its software skip flag is also cleared only if the next
-thread has the skip flag; otherwise, 0 is written to clear the FWPS and
-MWPS registers, which explicitly clears the skip bit according to the
-architectural specification.
-
-Additionally, explicitly clear hbp_break_skip and hbp_watch_skip inside
-ptrace_hw_copy_thread() which is called by copy_thread() during the task
-creation. This guarantees that a newly cloned child task starts with a
-clean slate.
-
-Here is a user-space reproducer to demonstrate the issue.
-
-(1) Test program (test_perf_continuous.c):
-
-  #include <stdio.h>
-  #include <unistd.h>
-  #include <sys/syscall.h>
-  #include <sys/ioctl.h>
-  #include <linux/perf_event.h>
-  #include <linux/hw_breakpoint.h>
-
-  static int var = 0;
-
-  int main(void)
-  {
-  	size_t count = 0;
-  	struct perf_event_attr attr = {
-  		.type = PERF_TYPE_BREAKPOINT,
-  		.size = sizeof(attr),
-  		.bp_type = HW_BREAKPOINT_W,
-  		.bp_addr = (unsigned long)&var,
-  		.bp_len = HW_BREAKPOINT_LEN_1,
-  		.exclude_kernel = 1,
-  	};
-
-  	int fd = syscall(__NR_perf_event_open, &attr, 0, -1, -1, 0);
-  	ioctl(fd, PERF_EVENT_IOC_ENABLE, 0);
-
-  	asm volatile("st.b %1, %0" : "=m"(var) : "r"(11) : "memory");
-  	asm volatile("st.b %1, %0" : "=m"(var) : "r"(22) : "memory");
-  	asm volatile("st.b %1, %0" : "=m"(var) : "r"(33) : "memory");
-
-  	ioctl(fd, PERF_EVENT_IOC_DISABLE, 0);
-  	read(fd, &count, sizeof(size_t));
-
-  	printf("Watchpoint counts: expected = 3, actual = %zu\n", count);
-
-  	close(fd);
-  	return 0;
-  }
-
-(2) Test steps:
-
-  $ gcc test_perf_continuous.c -o test_perf_continuous
-  $ ./test_perf_continuous
-
-(3) Test results:
-
-Without this patch:
-
-  Watchpoint counts: expected = 3, actual = 1
-
-With this patch:
-
-  Watchpoint counts: expected = 3, actual = 3
+The malformed reply faulted in frag_tree_split_cmp() twice on the tested
+i386 baseline.  It was rejected without a fault twice after this change,
+while a normal reply and a one-split control remained functional.
 
 Cc: stable@vger.kernel.org
-Fixes: 3eb2a8b23598 ("LoongArch: Fix multiple hardware watchpoint issues")
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-[ sashal: adjusted switch_to() context for the existing __switch_to() call that passes task_thread_info(next) ]
+Fixes: 2f2dc053404f ("ceph: MDS client")
+Assisted-by: LLM
+Signed-off-by: sung byeongchan <tjdqudcks0424@naver.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+[ sashal: Adjusted overflow.h include placement because the mnt_idmapping.h include is absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/include/asm/hw_breakpoint.h |  4 +--
- arch/loongarch/include/asm/loongarch.h     |  3 ++
- arch/loongarch/include/asm/processor.h     |  1 +
- arch/loongarch/include/asm/switch_to.h     |  2 +-
- arch/loongarch/kernel/hw_breakpoint.c      | 39 +++++++++++++++++++---
- 5 files changed, 41 insertions(+), 8 deletions(-)
+ fs/ceph/mds_client.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/arch/loongarch/include/asm/hw_breakpoint.h b/arch/loongarch/include/asm/hw_breakpoint.h
-index d202052df8a16..f4478936787d6 100644
---- a/arch/loongarch/include/asm/hw_breakpoint.h
-+++ b/arch/loongarch/include/asm/hw_breakpoint.h
-@@ -121,12 +121,12 @@ bool watchpoint_handler(struct pt_regs *regs);
+diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
+index 321acdcd29db0..331cb321cbc82 100644
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -13,6 +13,7 @@
+ #include <linux/bits.h>
+ #include <linux/ktime.h>
+ #include <linux/bitmap.h>
++#include <linux/overflow.h>
  
- #ifdef CONFIG_HAVE_HW_BREAKPOINT
- extern void ptrace_hw_copy_thread(struct task_struct *task);
--extern void hw_breakpoint_thread_switch(struct task_struct *next);
-+extern void hw_breakpoint_thread_switch(struct task_struct *prev, struct task_struct *next);
- #else
- static inline void ptrace_hw_copy_thread(struct task_struct *task)
+ #include "super.h"
+ #include "mds_client.h"
+@@ -103,6 +104,7 @@ static int parse_reply_info_in(void **p, void *end,
+ 			       u64 features)
  {
- }
--static inline void hw_breakpoint_thread_switch(struct task_struct *next)
-+static inline void hw_breakpoint_thread_switch(struct task_struct *prev, struct task_struct *next)
- {
- }
- #endif
-diff --git a/arch/loongarch/include/asm/loongarch.h b/arch/loongarch/include/asm/loongarch.h
-index e0072b0e28652..546034c5c2fc1 100644
---- a/arch/loongarch/include/asm/loongarch.h
-+++ b/arch/loongarch/include/asm/loongarch.h
-@@ -1046,6 +1046,9 @@
- #define CSR_FWPS_SKIP_SHIFT		16
- #define CSR_FWPS_SKIP			(_ULCAST_(1) << CSR_FWPS_SKIP_SHIFT)
+ 	int err = 0;
++	size_t splits_len;
+ 	u8 struct_v = 0;
  
-+#define CSR_MWPS_SKIP_SHIFT		16
-+#define CSR_MWPS_SKIP			(_ULCAST_(1) << CSR_MWPS_SKIP_SHIFT)
-+
- /*
-  * CSR_ECFG IM
-  */
-diff --git a/arch/loongarch/include/asm/processor.h b/arch/loongarch/include/asm/processor.h
-index c3bc44b5f5b30..81af48cbee7b9 100644
---- a/arch/loongarch/include/asm/processor.h
-+++ b/arch/loongarch/include/asm/processor.h
-@@ -138,6 +138,7 @@ struct thread_struct {
- 	struct loongarch_lbt lbt; /* Also conditionally copied */
+ 	if (features == (u64)-1) {
+@@ -121,9 +123,11 @@ static int parse_reply_info_in(void **p, void *end,
  
- 	/* Hardware breakpoints pinned to this task. */
-+	bool hbp_break_skip, hbp_watch_skip;
- 	struct perf_event *hbp_break[LOONGARCH_MAX_BRP];
- 	struct perf_event *hbp_watch[LOONGARCH_MAX_WRP];
- };
-diff --git a/arch/loongarch/include/asm/switch_to.h b/arch/loongarch/include/asm/switch_to.h
-index 5b225aff3ba21..3b662b18e19a6 100644
---- a/arch/loongarch/include/asm/switch_to.h
-+++ b/arch/loongarch/include/asm/switch_to.h
-@@ -36,7 +36,7 @@ extern asmlinkage struct task_struct *__switch_to(struct task_struct *prev,
- do {										\
- 	lose_fpu_inatomic(1, prev);						\
- 	lose_lbt_inatomic(1, prev);						\
--	hw_breakpoint_thread_switch(next);					\
-+	hw_breakpoint_thread_switch(prev, next);				\
- 	(last) = __switch_to(prev, next, task_thread_info(next),		\
- 		 __builtin_return_address(0), __builtin_frame_address(0));	\
- } while (0)
-diff --git a/arch/loongarch/kernel/hw_breakpoint.c b/arch/loongarch/kernel/hw_breakpoint.c
-index 1a05350159f7b..df149ff06dd50 100644
---- a/arch/loongarch/kernel/hw_breakpoint.c
-+++ b/arch/loongarch/kernel/hw_breakpoint.c
-@@ -156,6 +156,9 @@ static int hw_breakpoint_slot_setup(struct perf_event **slots, int max_slots,
+ 	ceph_decode_need(p, end, sizeof(struct ceph_mds_reply_inode), bad);
+ 	info->in = *p;
+-	*p += sizeof(struct ceph_mds_reply_inode) +
+-		sizeof(*info->in->fragtree.splits) *
+-		le32_to_cpu(info->in->fragtree.nsplits);
++	splits_len = size_mul(sizeof(*info->in->fragtree.splits),
++			      le32_to_cpu(info->in->fragtree.nsplits));
++	*p += sizeof(struct ceph_mds_reply_inode);
++	ceph_decode_need(p, end, splits_len, bad);
++	*p += splits_len;
  
- void ptrace_hw_copy_thread(struct task_struct *tsk)
- {
-+	tsk->thread.hbp_break_skip = 0;
-+	tsk->thread.hbp_watch_skip = 0;
-+
- 	memset(tsk->thread.hbp_break, 0, sizeof(tsk->thread.hbp_break));
- 	memset(tsk->thread.hbp_watch, 0, sizeof(tsk->thread.hbp_watch));
- }
-@@ -485,6 +488,7 @@ NOKPROBE_SYMBOL(update_bp_registers);
- bool breakpoint_handler(struct pt_regs *regs)
- {
- 	int i;
-+	unsigned int clear_mask = 0;
- 	bool need_sigtrap = false;
- 	struct perf_event *bp, **slots;
- 
-@@ -500,11 +504,13 @@ bool breakpoint_handler(struct pt_regs *regs)
- 			if (bp->attr.sigtrap)
- 				need_sigtrap = true;
- 
--			csr_write32(0x1 << i, LOONGARCH_CSR_FWPS);
--			update_bp_registers(regs, 0, 0);
-+			clear_mask |= (0x1 << i);
- 		}
- 	}
- 
-+	if (clear_mask)
-+		csr_write32(clear_mask | CSR_FWPS_SKIP, LOONGARCH_CSR_FWPS);
-+
- 	return need_sigtrap;
- }
- NOKPROBE_SYMBOL(breakpoint_handler);
-@@ -512,6 +518,7 @@ NOKPROBE_SYMBOL(breakpoint_handler);
- bool watchpoint_handler(struct pt_regs *regs)
- {
- 	int i;
-+	unsigned int clear_mask = 0;
- 	bool need_sigtrap = false;
- 	struct perf_event *wp, **slots;
- 
-@@ -527,11 +534,13 @@ bool watchpoint_handler(struct pt_regs *regs)
- 			if (wp->attr.sigtrap)
- 				need_sigtrap = true;
- 
--			csr_write32(0x1 << i, LOONGARCH_CSR_MWPS);
--			update_bp_registers(regs, 0, 1);
-+			clear_mask |= (0x1 << i);
- 		}
- 	}
- 
-+	if (clear_mask)
-+		csr_write32(clear_mask | CSR_MWPS_SKIP, LOONGARCH_CSR_MWPS);
-+
- 	return need_sigtrap;
- }
- NOKPROBE_SYMBOL(watchpoint_handler);
-@@ -555,7 +564,7 @@ static int __init arch_hw_breakpoint_init(void)
- }
- arch_initcall(arch_hw_breakpoint_init);
- 
--void hw_breakpoint_thread_switch(struct task_struct *next)
-+void hw_breakpoint_thread_switch(struct task_struct *prev, struct task_struct *next)
- {
- 	u64 addr, mask;
- 	struct pt_regs *regs = task_pt_regs(next);
-@@ -567,6 +576,26 @@ void hw_breakpoint_thread_switch(struct task_struct *next)
- 			csr_write32(CSR_FWPS_SKIP, LOONGARCH_CSR_FWPS);
- 		regs->csr_prmd |= CSR_PRMD_PWE;
- 	} else {
-+		unsigned int fwps = csr_read32(LOONGARCH_CSR_FWPS);
-+		unsigned int mwps = csr_read32(LOONGARCH_CSR_MWPS);
-+
-+		prev->thread.hbp_break_skip = !!(fwps & CSR_FWPS_SKIP);
-+		prev->thread.hbp_watch_skip = !!(mwps & CSR_MWPS_SKIP);
-+
-+		if (!next->thread.hbp_break_skip)
-+			csr_write32(0, LOONGARCH_CSR_FWPS);
-+		else {
-+			csr_write32(CSR_FWPS_SKIP, LOONGARCH_CSR_FWPS);
-+			next->thread.hbp_break_skip = 0;
-+		}
-+
-+		if (!next->thread.hbp_watch_skip)
-+			csr_write32(0, LOONGARCH_CSR_MWPS);
-+		else {
-+			csr_write32(CSR_MWPS_SKIP, LOONGARCH_CSR_MWPS);
-+			next->thread.hbp_watch_skip = 0;
-+		}
-+
- 		/* Update breakpoints */
- 		update_bp_registers(regs, 1, 0);
- 		/* Update watchpoints */
+ 	ceph_decode_32_safe(p, end, info->symlink_len, bad);
+ 	ceph_decode_need(p, end, info->symlink_len, bad);
 -- 
 2.53.0
 
