@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018970;
-	b=cdc7dVc51GWp+PsM4xcrxybk6+DI7tO1bmRhy1/49IzI0Teu/9X2O1rwZQRK5xndSPlT
-	 fzwDC5MZnsPQbiyQSL1tP1iPiJpsAw1YMJhlZsWaXMENhFVbteeOZ4aEhthTnjsheWOlE
-	 Y8tW4MBHpqc5dRg/LWuKbKQJoLP9qWchtPp1sbDY6iqP1qBVQFQTS460RWdlBU+FmnnDl
-	 oy1k46iPyPOUAWO2z1ZMeWVwLTmlIdWzse87BoPW/JM5L0IkV6QYsCCfMO5926SeTLoRR
-	 PmKro/WMQ3KypQ8IdipH5II2gVHCwHSo0CGH/2nF4XlSThthr4CGgr4IRhrAcaKbyUg==
+	t=1795018973;
+	b=RUgj2RB6OmjX7qW2dBSHyRegbOLyTWnAznev8KmHXMC4lJwWJj7K1IY5F5Z3x2AcW8VU
+	 j8wIrbhmxCYIqxDKDgeTHrdVI+nbCjdg/r0ZD/ioz0bkabd0FAD6lXxpz5fBx5Snjtsww
+	 uv0CEnmuLJRizt0JZS4EPJ3LNGySKHvrGUNJgu6dnbHovDhYCLVZSjLIhI3HzGffCAmcz
+	 fjeGqWGJoLQe0MQzzrVEZGoZYZzU5yxBd003ZfhxEqyqPaIH6SnTR68bZ7+7OP/keqocw
+	 hocPEhMbJVFyUK3lDIhWukhJWCZyo80rbVTahzztV1GtAJG0FuyGxZfZwPvNEdBXxfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018970;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018973;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qPryGyIGdw57ucl4yAtPbwZukF32HrNZh4USMt9LV+A=;
-	b=GTnvL8335mnlMVFQh+60FyJRhMTbwrW5/gENuS/j1E729GkE1dgwZpmZInOru3kEau2J
-	 /EYOkooq0nUAOBa+Rzr07VMihFebGLVDfkq1snlyzZjOwpsPMwFpaegLyTpi0jVzFEbZM
-	 Tp5x6p2mGHQysfsE5O5GwNR6MVpZ6g0FYELPsuLp2frcIgO3hB3bv7d/RfxjI/muOqq4A
-	 MHE7n4nxMGLmvDsaQu/XBozFMI+7gmI6WOC58FCtZiGvd6rdpvgK3yoDeQQTef7bo0l8c
-	 0rDPXM0uRJhzpH+RR4n0UxOVue4aTssVjLitZAguj41DlfdhCrw77JCEFmyvCY+HiCg==
+	bh=ngimHyo1jglk4f+eLI/1kXLSA/H3g/mA6zq+S18h1Xo=;
+	b=dTkW5Z6ZbFd0mllkjKrzdYC1Z2RyMz3UUiAa/UHT1UnqgHKPEU5YVTKdXzIdjI2x91w3
+	 BQR6yBV699v80Si18FEqKWZJM42ihsoiPo0RnMRl5W6obcTYfUro+wf5e4zF/obhSA8VV
+	 ar4929On3INuyN6ENyx/eq/xNrtx67Wce8QIc8b8eFs/tBr0hMGg1bUX9Qg2+X8mmNRaC
+	 UAOYsr/qwp+EPie7ll9PNdBtEeWVp7lWoK6z0lMQTw9aqnB25xrAN4kOYctBIRWlZxYvx
+	 E7leTG8OuMD7HZFm9mgOohV2szMC0qfhiv0LvF5Gxzj14Zz2RerWRMhtAapWHmcfzGw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mMZaNccj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1CAwAy5u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCFD7606A320;
-	Wed, 18 Nov 2026 16:22:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A10BD606A32F;
+	Wed, 18 Nov 2026 16:22:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mMZaNccj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CCAF1F000C4;
-	Wed, 18 Nov 2026 16:22:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1CAwAy5u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F051F1F000C4;
+	Wed, 18 Nov 2026 16:22:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018970;
-	bh=qPryGyIGdw57ucl4yAtPbwZukF32HrNZh4USMt9LV+A=;
+	s=korg; t=1795018973;
+	bh=ngimHyo1jglk4f+eLI/1kXLSA/H3g/mA6zq+S18h1Xo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mMZaNccjg0jfAXJmg8uoVTmC4Kp1D8jOoIy+Z2Fo4NB2/qHKj4HlaaVW/ObcRKfh9
-	 uCP3457DWzUedfjOWyrCLW4oSgk4H8Nc0DaweWw9KEK09S8O85iNCqWcMQ0Xz3g/CM
-	 DhyBTNMi1oS32Ux4ikgJqrAL7szJ+2LttfPFGqg0=
+	b=1CAwAy5uHNFOLttJDA6QQXQtjShVe49bLkO3waKyBgNMGvMCw7uzwwP78UdtezsOh
+	 Jjf4m4rmrYEqZ+O6JO5j+OYcD9w2zLChEwoXck48Sdo66qYXw5Adm/PyqgDQIksmR2
+	 rvZQf4OKoKf387wyIGv1uDHnmmAyxnDekyefNf+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stella Liu <yu-ching.liu@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1428/2651] wifi: mt76: mt7925: clear CRB before deactivating NAN peer record
-Date: Wed, 18 Nov 2026 15:44:28 +0100
-Message-ID: <20261118150339.457171039@linuxfoundation.org>
+Subject: [PATCH 7.3 1429/2651] wifi: mt76: mt7925: add ULW event handling and peer ULW update
+Date: Wed, 18 Nov 2026 15:44:29 +0100
+Message-ID: <20261118150339.490724170@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,76 +71,219 @@ Content-Transfer-Encoding: 8bit
 
 From: Stella Liu <yu-ching.liu@mediatek.com>
 
-[ Upstream commit f0793ef2f7d48fa32d11e1b0915d9989ceb1de9a ]
+[ Upstream commit 0ed6ac64344e0dcbed04f270426ca6f4a240b472 ]
 
-Send a zero avail_map CRB TLV before the peer record deactivation
-command. This ensures FW clears the committed schedule slots for
-the departing peer, preventing stale CRB entries from affecting
-subsequent NDP connections.
+Forward NAN Unaligned Window attributes between FW and mac80211:
+report ULW updates from FW via cfg80211_nan_ulw_update() and push
+peer ULW attributes to FW with NAN_UNI_CMD_UPDATE_ULW.
 
-Fixes: a5487a682406 ("wifi: mt76: mt7925: add NAN MCU helpers")
+Fixes: 0f3605e4f8de ("wifi: mt76: mt7925: wire up NAN operations")
 Co-developed-by: Sean Wang <sean.wang@mediatek.com>
 Signed-off-by: Sean Wang <sean.wang@mediatek.com>
 Signed-off-by: Stella Liu <yu-ching.liu@mediatek.com>
-Link: https://patch.msgid.link/20260824195227.12589-12-sean.wang@kernel.org
+Link: https://patch.msgid.link/20260824195227.12589-13-sean.wang@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7925/nan.c   | 25 ++++++++++++++++---
- 1 file changed, 22 insertions(+), 3 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7925/nan.c   | 84 +++++++++++++++++++
+ .../net/wireless/mediatek/mt76/mt7925/nan.h   | 40 ++++++++-
+ 2 files changed, 123 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/nan.c b/drivers/net/wireless/mediatek/mt76/mt7925/nan.c
-index 79e57bae566d7..16f3e40c75e7a 100644
+index 16f3e40c75e7a..bfb1e6de5757b 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt7925/nan.c
 +++ b/drivers/net/wireless/mediatek/mt76/mt7925/nan.c
-@@ -809,18 +809,18 @@ int mt792x_nan_set_peer_schedule(struct mt792x_dev *dev,
- int mt792x_nan_set_peer_rec(struct mt76_dev *mdev,
- 			    struct ieee80211_sta *sta)
+@@ -397,6 +397,52 @@ mt7925_nan_mcu_handle_de_event(struct mt792x_dev *dev, struct tlv *tlv)
+ 	ieee80211_nan_cluster_joined(dev->nan_vif, cluster_id, true, GFP_KERNEL);
+ }
+ 
++static void
++mt7925_nan_handle_ulw_update(struct mt792x_dev *dev, struct tlv *tlv)
++{
++	struct mt7925_nan_ulw_event *evt;
++	struct mt7925_nan_ulw_attr attr;
++	struct wireless_dev *wdev;
++	u16 len;
++
++	if (!dev || !tlv)
++		return;
++
++	if (!dev->nan_vif || !ieee80211_vif_nan_started(dev->nan_vif))
++		return;
++
++	len = le16_to_cpu(tlv->len);
++	if (len < sizeof(*tlv) + sizeof(*evt)) {
++		dev_warn(dev->mt76.dev,
++			 "nan: short ulw event tlv len=%u\n", len);
++		return;
++	}
++
++	evt = (struct mt7925_nan_ulw_event *)tlv->data;
++	wdev = ieee80211_vif_to_wdev(dev->nan_vif);
++	if (!wdev)
++		return;
++
++	dev_dbg(dev->mt76.dev,
++		"nan: ulw_update wdev=%p owner_nlportid=%u sched_id=%u seq=%u dur=%u\n",
++		wdev, wdev->owner_nlportid,
++		evt->sched_id, evt->seq_id, le32_to_cpu(evt->duration));
++
++	/* Reorder the FW fields into NAN spec Table 109 attribute layout */
++	attr.attr_id = NAN_ULW_ATTR_ID;
++	attr.length = cpu_to_le16(NAN_ULW_FIXED_PAYLOAD);
++	attr.sched_id = evt->sched_id;
++	attr.seq_id = evt->seq_id;
++	attr.start_time = evt->start_time;
++	attr.duration = evt->duration;
++	attr.period = evt->period;
++	attr.count_down = evt->count_down;
++	attr.ulw_overwrite = evt->ulw_overwrite;
++
++	cfg80211_nan_ulw_update(wdev, (const u8 *)&attr, sizeof(attr),
++				GFP_KERNEL);
++}
++
+ void mt7925_nan_mcu_event(struct mt792x_dev *dev, struct sk_buff *skb)
  {
-+	struct mt7925_nan_sched_update_crb_tlv *crb_tlv;
- 	struct mt7925_nan_common_hdr *hdr;
- 	struct mt792x_sta *msta;
- 	struct mt792x_nan *nan;
- 	struct sk_buff *skb;
-+	struct tlv *tlv;
- 	int ret;
+ 	struct tlv *tlv;
+@@ -425,6 +471,9 @@ void mt7925_nan_mcu_event(struct mt792x_dev *dev, struct sk_buff *skb)
+ 		case NAN_UNI_EVENT_REPORT_DW_START:
+ 			mt7925_nan_handle_dw_ind(dev, tlv);
+ 			break;
++		case NAN_UNI_EVENT_ID_ULW_UPDATE:
++			mt7925_nan_handle_ulw_update(dev, tlv);
++			break;
+ 		default:
+ 			break;
+ 		}
+@@ -736,6 +785,37 @@ static int mt7925_nan_update_crb_tlv(struct sk_buff *skb,
+ 	return 0;
+ }
  
- 	if (!mdev || !sta)
- 		return -EINVAL;
- 
--	skb = mt76_mcu_msg_alloc(mdev, NULL,
--				 sizeof(struct mt7925_nan_common_hdr) +
--				 sizeof(struct mt7925_nan_sched_manage_peer_rec_tlv));
-+	skb = mt76_mcu_msg_alloc(mdev, NULL, MT7925_NAN_PEER_MAX_SIZE);
- 	if (!skb)
- 		return -ENOMEM;
- 
-@@ -835,6 +835,25 @@ int mt792x_nan_set_peer_rec(struct mt76_dev *mdev,
- 		return 0;
++static int
++mt7925_nan_peer_ulw_tlv(struct sk_buff *skb,
++			struct ieee80211_sta *sta,
++			struct mt792x_sta *msta)
++{
++	struct mt7925_nan_update_ulw_tlv *ulw_tlv = NULL;
++	struct ieee80211_nan_peer_sched *sched = NULL;
++	struct tlv *tlv = NULL;
++
++	if (!skb || !sta || !msta)
++		return -EINVAL;
++
++	sched = sta->nan_sched;
++	if (!sched || !sched->init_ulw || !sched->ulw_size)
++		return 0; /* No ULW to send, not an error */
++
++	if (sched->ulw_size > NAN_ULW_MAX_SIZE)
++		return -EINVAL;
++
++	tlv = mt76_connac_mcu_add_tlv(skb, NAN_UNI_CMD_UPDATE_ULW,
++				      sizeof(struct mt7925_nan_update_ulw_tlv));
++	if (!tlv)
++		return -ENOMEM;
++
++	ulw_tlv = (struct mt7925_nan_update_ulw_tlv *)tlv;
++	ether_addr_copy(ulw_tlv->nmi_addr, sta->addr);
++	memcpy(ulw_tlv->ulw_attr, sched->init_ulw, sched->ulw_size);
++
++	return 0;
++}
++
+ int mt792x_nan_set_peer_schedule(struct mt792x_dev *dev,
+ 				 struct ieee80211_sta *sta)
+ {
+@@ -788,6 +868,10 @@ int mt792x_nan_set_peer_schedule(struct mt792x_dev *dev,
+ 		goto free_skb;
  	}
  
-+	/* Send a zero-avail_map CRB TLV before deactivating the peer record so
-+	 * firmware clears the committed schedule slots for this peer.  Without
-+	 * this, stale CRB entries linger and cause scheduling conflicts for
-+	 * subsequent NDP connections that reuse the same sch_idx.
-+	 */
-+	tlv = mt76_connac_mcu_add_tlv(skb, NAN_UNI_CMD_UPDATE_CRB,
-+				      sizeof(struct mt7925_nan_sched_update_crb_tlv));
-+	if (!tlv) {
-+		dev_kfree_skb(skb);
-+		return -ENOMEM;
-+	}
-+	crb_tlv = (struct mt7925_nan_sched_update_crb_tlv *)tlv;
-+	crb_tlv->sch_idx = cpu_to_le32(msta->nan_sched.sch_idx);
-+	crb_tlv->flags = NAN_CRB_USE_DATA_PATH;
-+	crb_tlv->is_use_ranging = false;
-+	crb_tlv->comm_ndc_ctrl.is_valid = false;
-+	/* avail_map is zero-initialised by mt76_connac_mcu_add_tlv */
++	ret = mt7925_nan_peer_ulw_tlv(skb, sta, msta);
++	if (ret)
++		goto free_skb;
 +
-+	/* Deactivate peer record and release connection index */
- 	if (mt7925_nan_peer_rec_tlv(skb, sta, msta, false)) {
- 		dev_kfree_skb(skb);
- 		return -ENOMEM;
+ 	ret = mt76_mcu_skb_send_msg(mdev, skb, MCU_UNI_CMD(NAN), true);
+ 	if (ret && idx_allocated)
+ 		goto clear_idx;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/nan.h b/drivers/net/wireless/mediatek/mt76/mt7925/nan.h
+index eadb07e34b3eb..a0da16adf182c 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/nan.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/nan.h
+@@ -51,7 +51,8 @@
+ 	(sizeof(struct mt7925_nan_common_hdr) +				\
+ 	 sizeof(struct mt7925_nan_sched_manage_peer_rec_tlv) +		\
+ 	 sizeof(struct mt7925_nan_sched_update_peer_cap_tlv) +		\
+-	 sizeof(struct mt7925_nan_sched_update_crb_tlv))
++	 sizeof(struct mt7925_nan_sched_update_crb_tlv) +		\
++	 sizeof(struct mt7925_nan_update_ulw_tlv))
+ 
+ /* NAN Availability Attribute */
+ #define NAN_AVAIL_ATTR_ID_OFFSET	0
+@@ -82,6 +83,7 @@ enum nan_uni_cmd_tag {
+ 	NAN_UNI_CMD_UPDATE_CRB			= 10,
+ 	NAN_UNI_CMD_MANAGE_PEER_SCH_RECORD	= 12,
+ 	NAN_UNI_CMD_MAP_STA_RECORD		= 13,
++	NAN_UNI_CMD_UPDATE_ULW			= 16,
+ 	NAN_UNI_CMD_UPDATE_AVAILABILITY_CTRL	= 20,
+ 	NAN_UNI_CMD_UPDATE_PEER_CAPABILITY	= 21,
+ 	NAN_UNI_CMD_CHANGE_NMI_ADDRESS		= 24,
+@@ -93,6 +95,7 @@ enum nan_uni_cmd_tag {
+ 
+ enum nan_uni_event_tag {
+ 	NAN_UNI_EVENT_ID_DE_EVENT_IND		= 19,
++	NAN_UNI_EVENT_ID_ULW_UPDATE		= 39,
+ 	NAN_UNI_EVENT_REPORT_DW_START		= 59,
+ 	NAN_UNI_EVENT_REPORT_DW_END		= 60,
+ };
+@@ -166,6 +169,32 @@ struct nan_rpt_dw_evt {
+ 	__le16 dw_num;
+ };
+ 
++#define NAN_ULW_ATTR_ID		0x17
++#define NAN_ULW_FIXED_PAYLOAD	16	/* Table 109 fixed fields */
++
++struct mt7925_nan_ulw_event {
++	u8 sched_id;
++	u8 seq_id;
++	u8 count_down;
++	u8 ulw_overwrite;
++	__le32 start_time;
++	__le32 duration;
++	__le32 period;
++} __packed;
++
++/* ULW attribute laid out in NAN spec Table 109 field order */
++struct mt7925_nan_ulw_attr {
++	u8 attr_id;
++	__le16 length;
++	u8 sched_id;
++	u8 seq_id;
++	__le32 start_time;
++	__le32 duration;
++	__le32 period;
++	u8 count_down;
++	u8 ulw_overwrite;
++} __packed;
++
+ struct mt7925_nan_conf_dw {
+ 	u8 config_2dot4g_dw_band;
+ 	__le32 dw_2dot4g_interval_val;
+@@ -390,6 +419,15 @@ struct mt7925_nan_sched_update_crb_tlv {
+ 	struct mt7925_nan_sched_faw_ndc_timeline faw_ndc_timeline[NAN_TIMELINE_MGMT_SIZE];
+ } __packed __aligned(4);
+ 
++#define NAN_ULW_MAX_SIZE	256
++
++struct mt7925_nan_update_ulw_tlv {
++	__le16 tag;
++	__le16 len;
++	u8 nmi_addr[ETH_ALEN];
++	u8 ulw_attr[NAN_ULW_MAX_SIZE];
++} __packed __aligned(4);
++
+ struct mt7925_nan_sched_map_sta_rec_tlv {
+ 	__le16 tag;
+ 	__le16 len;
 -- 
 2.53.0
 
