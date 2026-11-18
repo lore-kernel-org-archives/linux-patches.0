@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060728;
-	b=tFHGkq+RAzbANEjhqPakZR3CNX3jmAnZnWHKLNRkDg+OY4HfcU42jA8Tt9+cz8i5tfQe
-	 KXCa1BNh8vzhmkl6vv+tBgTMqJhzuhsghea4RMzDyoKfHBeIwh2e5Tb8cF8eQBsh1ILkt
-	 qo6pG9b/NifxvC+/F72iWniEkKoQF6AIq1o4qBEOjo8W97bikZQHUA5pv9LYKgXxw+rUK
-	 EwAaCzIryJOrlHIRztkG5uMspYkFE1HvMxzW2KKSYUzkOiu3pAR695b+IBYrUdWxafpEw
-	 iQAGqJunilkfW8+KgLkFmtDkMjuRDX/GcujvIhqcGfOOHh/mEpayoDaysVPJPNvYgcw==
+	t=1795060731;
+	b=orz+eWKZF6RGuTsK1FnAtofe3Fi52c2afRqLHxty0dEt//f14GY2dY8dFtxz+aYGdCqk
+	 z3wuRc3UYLoRp8C9u8iEzF3wPloPFlyDDcja6BJ0eaRC9K8IBLd5Rgh/VxGrT/IvMkP3u
+	 j6mBziBzghPvL2Mgnw4QgBdWIwbvN3Vd2ceAqqZaW6IoTL08OfiShj/ddmG4jONcp1+ZT
+	 06ZsS46Qto39sgExYorKQr4Zlo+cfkvj7XI4oHCuYYXASvBD3Wyd3sUcaUCRksg1ZG5I7
+	 iS8Mw5PV3JZ+SAWf2reJy6LoqCc4wgqqA8HbJED7VEfjoIBQZlaQkc+i4uHBhYST57g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060728;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060731;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rJrc0qFMhDA3qGjD+OIKOJV0czyRmxTfFv7q0DBcy68=;
-	b=ypkE5V67NcPl/xZISqjQmgxp322HeikAssHU/HAGOR/Ec90gL7uJMrl0SOdctdt+56jl
-	 gdzN2n6H6WqHNiHaoTlnqU8Udd/txa60QXYJqYiJNia5gXCacqAhd4CaXeQUTUh1uMPFs
-	 lOWPOEQbDzw9v/eCAwJ8LaUPJ1tDAPCJrQkdbk6iD4PI0BSeTpQyfZ9eWkWhBF8bExHTg
-	 QgKz82YCKMWzOneyB2WAmxYmrgTebiVI3/8WKxHUmCTgWsQVZF377nuW4vTnEg4i+HPAV
-	 J8fjy98q5i6lCyeaR695DYPEbVAB03xJVMVC6BBPNIkL+uZhi/+nhL0WA9UkA9mXUcQ==
+	bh=7EKrrVzsnfTAp0fFqVt8fvUzUD+sTdZOtn8PBfSNBnQ=;
+	b=FYxSMDUplWKMJk9yYhcOiJ601K5HXwzaTj44236fxEvZwN4HCkB7SbrDFFb3OKWYGwXt
+	 tigwXUwz99OYBv/axfUuArjyTFGt92bF+FYGn3cdthzVeWkG2wNeib+f0E/Nhv957wq4t
+	 qs9khp4NnVm99dV9HnQiAx0lIwxGxenBaw/r03EFnwMVJzy426zISHrxQpSfccAqcFaSG
+	 et03mAuhPx4XCG98F+PWaH7QuJdgbvnd/pT5tCcOyO5xLGI6b6IIaSyv5tcfRi/l85u/L
+	 sSwsAu/+6JoqKw+78F4Z7ATUhaP1hHQ9iiB3z7HJmITrpBIXqL5B6bZDbG1u6te1zIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QZqDRtMg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mCVXkHID;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65957606A326;
-	Thu, 19 Nov 2026 03:58:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24676606A320;
+	Thu, 19 Nov 2026 03:58:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QZqDRtMg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB3441F000C4;
-	Thu, 19 Nov 2026 03:58:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mCVXkHID
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79FB71F000C4;
+	Thu, 19 Nov 2026 03:58:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060728;
-	bh=rJrc0qFMhDA3qGjD+OIKOJV0czyRmxTfFv7q0DBcy68=;
+	s=korg; t=1795060731;
+	bh=7EKrrVzsnfTAp0fFqVt8fvUzUD+sTdZOtn8PBfSNBnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QZqDRtMgXwNLHxprxZzVLH6tQKk5Zoif9dtwXnxB+EnfMYy1viRtOMt3eWu3ceXEI
-	 172frT49N1Yf9JWWp+3u75nHEXKX5E80ImHYUEjX9Ag4Mu1nRLvxzTbj9i+CmhVquH
-	 1GoRvulYrx0OY7ilaCVUABLBSoPRWgzpJ0mxW5KY=
+	b=mCVXkHIDujWsZ+ftz7ce0uAsihxfecddcNb5iWH+XOPA9mYTkufHLIjB+Qgy8aKCz
+	 NGY0TcWME2G0XUazPuUoxUCwTV4CIj7BrTvirgfrd36fy+fYOBzVfphhRsaLb9IedR
+	 VGFLdcl8mrdl7AYSv+BoQRoX7HNAPzG3XTrtipck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Laurent Vivier <laurent@vivier.eu>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Stan Johnson <userm57@yahoo.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1286/1848] dt-bindings: vendor-prefixes: add vendor prefix for Nexperia B.V.
-Date: Wed, 18 Nov 2026 15:55:24 +0100
-Message-ID: <20261118150013.422893539@linuxfoundation.org>
+Subject: [PATCH 5.10 1304/1848] swim: Dont disable drive after every sector
+Date: Wed, 18 Nov 2026 15:55:42 +0100
+Message-ID: <20261118150014.083542330@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,35 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit 819a3e62d37a2fe73c1e7f241f2ac086042e7757 ]
+[ Upstream commit 05a7c4b197279cfb3ec3df26146ce085a2438aec ]
 
-Document the vendor prefix for the semiconductor company Nexperia B.V.
+This fixes multi-sector reads on a Sony drive. The Mitsubishi drive
+doesn't seem to care either way.
 
-The company website is https://www.nexperia.com/
-
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20260921-topic-sm8x50-nex10000ub-v2-1-eeeaf9b0c913@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
+Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Tested-by: Stan Johnson <userm57@yahoo.com>
+Link: https://patch.msgid.link/fc511e72753ae18b6f021701aa00d480335b0caf.1788513996.git.fthain@linux-m68k.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/block/swim.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index 194f6480a8503..207a697009af6 100644
---- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
-+++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-@@ -736,6 +736,8 @@ patternProperties:
-     description: Guangdong Neweast Optoelectronics CO., LTD
-   "^nexbox,.*":
-     description: Nexbox
-+  "^nexperia,.*":
-+    description: Nexperia B.V.
-   "^nextthing,.*":
-     description: Next Thing Co.
-   "^newhaven,.*":
+diff --git a/drivers/block/swim.c b/drivers/block/swim.c
+index b65e781a2bda6..59dbd2734824a 100644
+--- a/drivers/block/swim.c
++++ b/drivers/block/swim.c
+@@ -471,8 +471,6 @@ static inline int swim_read_sector(struct floppy_state *fs,
+ 	short i;
+ 
+ 	swim_track(fs, track);
+-
+-	swim_write(base, mode1, MOTON);
+ 	swim_head(base, side);
+ 	swim_write(base, mode0, side);
+ 
+@@ -488,8 +486,6 @@ static inline int swim_read_sector(struct floppy_state *fs,
+ 	}
+ 	local_irq_restore(flags);
+ 
+-	swim_write(base, mode0, MOTON);
+-
+ 	if ((header.side != side)  || (header.track != track) ||
+ 	     (header.sector != sector))
+ 		return 0;
 -- 
 2.53.0
 
