@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018862;
-	b=5rHP8gsgAx1V6MSusomnKp1RFL07k0GOttj4itjcimRcm70mefr7IPqOubkMd6kFclWB
-	 1TTT8KGul0HwSgcvZcEJtK3ZW3GFufdJ8YjIhzFOI+2Hot0aVt/339PuC9O6qEG6VECH5
-	 JEbUgb2xaDgsAtYWRFrBSq/cDohbDPr5LjeWXERWMlQYNQa6BJbc1+krTRbcCFVabDjQV
-	 gNv/KwONEg/jYPHs9vbexNzrku8QJ671KNVM26z5Ue5lDSoAPIAmlWWE5xZ90JcKzYQ+V
-	 jicAY26kdx7W9iML2oHBK7xVtlokOn7AFiqMXPHjB6kERPx7l3Yceo/oETMEY3NbZug==
+	t=1795018865;
+	b=jHN1QtU0zEWSg0S+fgyNsQTa/fHuTY3aMjYAJV69FxD0tSJ4CiWznbeJzsP9//lEZlbB
+	 tSpE9B0TKJmP/ZtNbVI4243uhma9h3I8zp2/BoxjIN7SgCF4rFsAxC3gwMgcFcJmBn19O
+	 vilnW2IB03zGbdkE1/YYzYGFIU3lt1hMkh2ZbMFLjYJ+f2ckEXkppiDTszs3/l2g7omQI
+	 iJ6jKnYgvVaClmmOdzTDyF0GV0v2p/AlaNih887EkYmMk0W4GKuYozgA8dxxR27kaWE/+
+	 1aj4iYAb3f+/Xz9ptdzB7s/QiGqub5YFxldGkfgm8ey69cwqeSkWh0VSvrr8p4SR6sw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018862;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018865;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e0sNOPdsmpLWmh78gPWNNCkfpToB+LRtkE8Yz/9I1SU=;
-	b=VvBx64H4JCjcXlHQW48b08GLAyVb2twdbKLm8oYsnDnLayaqLql7g3GC9W9M796V3luX
-	 TwOHP8eNRc+P7WqIuvheXgfYsjWc8hKN+mJUsmk6Vw70mgm0PKJZwtVvA0XrHrdmKslKu
-	 I+kvo4/habpQPUCaWpWLP5i9QxlefOk79CEu/efc8hQ8CvEfC1+IfCcEc7cPmbf1pw6uF
-	 LNXUbPzm7y5Ji8qxwcPKgDVEEwJDHoaR9zv3Vc2D4KNIzxj8gPIEPtrLMdvijWAhwVPGK
-	 Vg3he/4JiE+DQUiTFfHs00bjMTcfCDV3FVEckQRlfqddDDgPWHsKjzWNvdbyawHSZ6g==
+	bh=2COh4A5Zz1hc0Nz+GSZP9nBNSCKEWPAtOMrSbEK+5tc=;
+	b=bv4IXb1kuPXNkegERu8LRWwEOFFp9s9nHdq/Km0D80Ucn6E+qJH9ga0DQVoC9jix+g4t
+	 8vIQDGRs7Hd0l9lSBt6+ghYZItf9eYCcZ4iFf6f2s2kvcx4M9PuPsu2ydbmXmR4BnklbJ
+	 RqFcIMRtt8K9AtiNf/VHLrck+qdzgrW0AWh9fsPRDGj6yHV+TDmuRpIokrB8UKMKpB2vI
+	 UX/naRjEZ0hMEaNwK/kJOTsTcgFqpPgEK2Y0G4hZQdrBAKYmRJEblfaJgP0dQXSG7LRfg
+	 4Wz4r7Y9QhNN63JgfVR4W4c8fMffWtP1qoj3Nl8eg3G1OgW0WOPBiyVcUFnwhz5nrPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="1PNm5NJ/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LKYpQYAi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E30606A325;
-	Wed, 18 Nov 2026 16:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73480606A320;
+	Wed, 18 Nov 2026 16:21:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1PNm5NJ/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E85F21F000C4;
-	Wed, 18 Nov 2026 16:21:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LKYpQYAi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3FF21F000C4;
+	Wed, 18 Nov 2026 16:21:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018862;
-	bh=e0sNOPdsmpLWmh78gPWNNCkfpToB+LRtkE8Yz/9I1SU=;
+	s=korg; t=1795018865;
+	bh=2COh4A5Zz1hc0Nz+GSZP9nBNSCKEWPAtOMrSbEK+5tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1PNm5NJ/Ho+VOw3qcgzGkjLo0EhF9OngDQb1GA4pfM5gjhHTP5SM5h8JL/wjvgRTS
-	 W2IxPeqqIUOznNFsK/6+LjpKORVOKm8e9xNGHhrTRc1YCjIgUeBhyAUYLUxrkliGng
-	 OIgUFt/AGVN0ymjgJSvzViemhynRmGmNVH1ESf9c=
+	b=LKYpQYAiulHIzYZP0tufhyG4m24wv/OVMXP3zTtxaOxelNFLMjgofiQbH+fF+iDa9
+	 upQ195R/6WTqO8hocPzXsaJB2Fupqosq8bFhWEOTuzhV0bpXrVdwiYai+myaJ8sMaq
+	 W/CvEe/nGS6vUtykLky5KyK0j02m8qpwPW9jUDB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1389/2651] rcuref: Fix the rcuread_is_dead reference in rcuref_read() kernel-doc
-Date: Wed, 18 Nov 2026 15:43:49 +0100
-Message-ID: <20261118150338.022386695@linuxfoundation.org>
+Subject: [PATCH 7.3 1390/2651] sched_ext: Clear a sub-schedulers caps before ops.sub_detach()
+Date: Wed, 18 Nov 2026 15:43:50 +0100
+Message-ID: <20261118150338.060183095@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,36 +67,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit 852fbf7fc857fd375d8caccbce576aefc37fb065 ]
+[ Upstream commit a546831dff38b624240a90a6ff6d2b43d9226d51 ]
 
-The kernel-doc comment of rcuref_read() refers to rcuread_is_dead, which
-does not exist. The name is rcuref_is_dead. Say rcuref_is_dead.
+A sub-scheduler can leave standing state behind on the cids delegated to it,
+cpuperf targets being the obvious case, and the kernel does not track who
+wrote it. Restoring it is the parent's job and ops.sub_detach() is the place
+for it. Today the parent can't rely on that: the dying sub-scheduler keeps
+every cap until it is marked dead after ops.exit(), so its ops.exit() or a
+late timer can write after the parent has cleaned up.
 
-Fixes: 3efa66ce6ee1 ("rcuref: Provide rcuref_is_dead()")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Clear every cap of the sub-scheduler before ops.sub_detach(). The pshard
+caps go first as a pending sync recomputes ecaps from them, and ecaps are
+then zeroed directly. A grant racing the clear is refused under the child's
+pshard lock, so nothing hands the caps back.
+
+Fixes: 86094b95efcf ("sched_ext: Add per-shard cap delegation for sub-schedulers")
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/rcuref.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/ext/internal.h |  7 ++++++
+ kernel/sched/ext/sub.c      | 49 ++++++++++++++++++++++++++++++++++---
+ 2 files changed, 52 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/rcuref.h b/include/linux/rcuref.h
-index 2fb2af6d98249..01fee161b67c3 100644
---- a/include/linux/rcuref.h
-+++ b/include/linux/rcuref.h
-@@ -34,7 +34,7 @@ static inline void rcuref_init(rcuref_t *ref, unsigned int cnt)
-  * indicate that it is safe to schedule the object, protected by this reference
-  * counter, for deconstruction.
-  * If you want to know if the reference counter has been marked DEAD (as
-- * signaled by rcuref_put()) please use rcuread_is_dead().
-+ * signaled by rcuref_put()) please use rcuref_is_dead().
+diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
+index 352547aedbb70..b9658b35bf966 100644
+--- a/kernel/sched/ext/internal.h
++++ b/kernel/sched/ext/internal.h
+@@ -828,6 +828,10 @@ struct sched_ext_ops {
+ 	/**
+ 	 * @sub_detach: Detach a sub-scheduler
+ 	 * @args: argument container, see the struct definition
++	 *
++	 * The sub-scheduler holds no caps by this point and can no longer
++	 * affect any cid. Whatever was delegated to it, e.g. cpuperf targets,
++	 * is the parent's to restore here.
+ 	 */
+ 	void (*sub_detach)(struct scx_sub_detach_args *args);
+ 
+@@ -911,6 +915,9 @@ struct sched_ext_ops {
+ 	 * ops.exit() is also called on ops.init() failure, which is a bit
+ 	 * unusual. This is to allow rich reporting through @info on how
+ 	 * ops.init() failed.
++	 *
++	 * A sub-scheduler holds no caps by the time ops.exit() runs. Its
++	 * cap-gated kfuncs are denied.
+ 	 */
+ 	void (*exit)(struct scx_exit_info *info);
+ 
+diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
+index 212de1cb8502d..a75b43296dc92 100644
+--- a/kernel/sched/ext/sub.c
++++ b/kernel/sched/ext/sub.c
+@@ -1153,6 +1153,34 @@ void scx_offline_ecaps(struct rq *rq)
+ 	}
+ }
+ 
++/*
++ * Clear every cap @sch holds. The pshard caps go first as they are the source a
++ * pending sync recomputes ecaps from. ecaps are then zeroed directly for the
++ * cap checks.
++ */
++static void clear_all_caps(struct scx_sched *sch)
++{
++	s32 si, cpu;
++	u32 cap_bit;
++
++	/* enable may have failed before scx_alloc_pshards() */
++	if (!sch->pshard)
++		return;
++
++	for (si = 0; si < sch->nr_pshards; si++) {
++		struct scx_pshard *ps = sch->pshard[si];
++
++		guard(raw_spinlock_irqsave)(&ps->lock);
++		for (cap_bit = 0; cap_bit < __SCX_NR_CAPS; cap_bit++)
++			scx_cmask_clear(&ps->caps[cap_bit].cmask);
++	}
++
++	for_each_possible_cpu(cpu) {
++		guard(rq_lock_irqsave)(cpu_rq(cpu));
++		WRITE_ONCE(per_cpu_ptr(sch->pcpu, cpu)->ecaps, 0);
++	}
++}
++
+ /*
+  * @pcpu's sched was unhashed before the grace period, so nothing re-queues its
+  * sync node. Remove the node from @rq's pending list so the pcpu can be freed.
+@@ -1628,6 +1656,12 @@ void scx_sub_disable(struct scx_sched *sch)
+ 
+ 	scx_unlink_sched(sch);
+ 
++	/*
++	 * The parent restores what it delegated in ops.sub_detach(). @sch must
++	 * hold no caps by then.
++	 */
++	clear_all_caps(sch);
++
+ 	mutex_unlock(&scx_enable_mutex);
+ 
+ 	/*
+@@ -2306,8 +2340,8 @@ static s32 sub_cap_preamble(u64 cgroup_id, u64 caps, const struct bpf_prog_aux *
+  * All-or-nothing keeps the caller-visible result binary per cid, so the denied
+  * mask is one mask to interpret rather than a per-cap matrix.
+  *
+- * Return 0 on full success, -EPERM if any cid was refused, or a negative
+- * errno on other failures.
++ * Return 0 on full success, -EPERM if any cid was refused, -ENODEV if the child
++ * is gone or being disabled, or a negative errno on other failures.
   */
- static inline unsigned int rcuref_read(rcuref_t *ref)
- {
+ __bpf_kfunc s32 scx_bpf_sub_grant(u64 cgroup_id, u64 caps,
+ 				  const struct scx_cmask *cmask__arena,
+@@ -2361,6 +2395,12 @@ __bpf_kfunc s32 scx_bpf_sub_grant(u64 cgroup_id, u64 caps,
+ 		scoped_guard (raw_spinlock, &pps->lock) {
+ 			guard(raw_spinlock_nested)(&cps->lock);
+ 
++			/* the child is being disabled, see clear_all_caps() */
++			if (unlikely(READ_ONCE(child->aborting))) {
++				ret = -ENODEV;
++				goto out;
++			}
++
+ 			/*
+ 			 * Narrow granted_cids to cids the parent holds every
+ 			 * requested cap on. All-or-nothing per cid.
+@@ -2413,9 +2453,10 @@ __bpf_kfunc s32 scx_bpf_sub_grant(u64 cgroup_id, u64 caps,
+ 		}
+ 	}
+ 
++	ret = any_denied ? -EPERM : 0;
++out:
+ 	caps_updated_deliver(&to_deliver);
+-
+-	return any_denied ? -EPERM : 0;
++	return ret;
+ }
+ 
+ /**
 -- 
 2.53.0
 
