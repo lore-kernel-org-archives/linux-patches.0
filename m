@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048356;
-	b=5a+UNcU9eljJ4Cc3jM3CkSutG6AVpuDRS+t0MHcMab8fLHg61zJmbXnPgBhgJa86OcR+
-	 D4+KR52j9GtZFTThVsW9Zkm4GsEwRFKRi1jPGcMeXpHPCX5CISoHn2KrnWVIr6yTiJGu3
-	 iWlUiPmGD1uIKuY89frZBOUbMcCmkQps5bU63Vp2Z8QQKq7LKUMFyt+D4JHsxWUjT2mEL
-	 5cWzYdpgGj7aAs8eimQK/opW+0JLlu+0+hsn4rIXoetDdR03GYQ0ebQaLrHYgVYDxsUv3
-	 i5orGWV51ALGL4fBQjAUV1Vs2QOpOfPUgTTAprED7Z9Vbq1dMsfdlsAGP6DXyWRvB0w==
+	t=1795048359;
+	b=ih0zeT/QGQWdYYcyvNuGwhIzZiasio7Fa0LEw9c53r4oXQAkyF8i8kMQ623ZJV5H//ih
+	 hmgfbm6DVk/S1ZjC+Mct8rAov5kf9H7ZduaOZHMF0VMFW96vw/SGytKGLbLAVJCidl7qq
+	 T3u3AIjdrT+O7Ws2O4GVWmitt514vh4ogFqZtqSUh4Y16EJxFxa+1N5gcyB1lo4hEm9gD
+	 fb9QAJ8Ofb0QpoS4XVhP8r6rUkwPdYmtlhxqY8uA679Q5hImXxCKwWyKr9bc22bL407LK
+	 CEjkVEuj8ndyPsxa6XS8flTLr9A4VWnbeE9lnIyaE3Z7RWkYZvdqLovY7tsmJoCFVfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048356;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048359;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ke1VASUfm2luhzkfMtKQuGzDOKcDNANn2QoHvj43xYI=;
-	b=x2jh/qGdPfUvln5VWhiGEXCtuwJN65wmJ98ambj2B5u70uBunq9QympTexndArE3UR8S
-	 /8WMK7rlwAbgTBsBeCa8VWXWefijivGDLSD59S48c+Xs2pMJ7SIyPU7GM249qmK/C1MDS
-	 gkaZ97NLMKNfPMbRvxrN4bXAEEmMkiLqukBIwyM18Qj40WQIvbxREVw5B0pAqC/Yf1PmQ
-	 Jswip5HdXkSTEXDGjqlBCfI62Pk+TBFde+x/ESYPyi7bY2ChMqN0KyOSQRBmDbvDXem2O
-	 G0JwCoVXGjaoL1w5o9ne2UggvcOGE0turrkg27Qc+0J51/UM/oqO2VRciGevU80YAlQ==
+	bh=2MwctLJJK+eJO5jMVGnR6XBR2T6fQMfVccaIH2svnOA=;
+	b=32KZn5bbSu5d6kTdeYMLF6Z6YMi+ykKGZ7Mp36YhK+fKEIDVBW323UZhJ6FV+BrvpDWb
+	 3gt0zOoq1TCpiLpIrMLJCUcYzuG/+DfzwQAiu1NdBTEaqRmRDwT7b4gVb8kyoKbWA2J/b
+	 2LW6BfyxZu3QuRbLgJZE662/l6gYjJV2AJBvKUXpSxBwst0+/qFOmpzaBaS9Wrd+d2oT4
+	 O37Bg0BbTiKS7QmZ0qpcBp3irXdURt9JYBWRBfjhhC+ZTTQkwp68nztNNQ+I+Q23LxZ6W
+	 zN7ypIGJus0dgKCtrEzRZYkq3r62QJszEqLBAI0srie6bMFqkfJy928/fI2KMu44hhA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x2B5Emxg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="i1E/qkOI";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A4B606A32A;
-	Thu, 19 Nov 2026 00:32:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306EA606A31C;
+	Thu, 19 Nov 2026 00:32:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x2B5Emxg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2F471F000C4;
-	Thu, 19 Nov 2026 00:32:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i1E/qkOI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8132D1F000C4;
+	Thu, 19 Nov 2026 00:32:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048356;
-	bh=ke1VASUfm2luhzkfMtKQuGzDOKcDNANn2QoHvj43xYI=;
+	s=korg; t=1795048359;
+	bh=2MwctLJJK+eJO5jMVGnR6XBR2T6fQMfVccaIH2svnOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x2B5Emxg5wmrVYNeR/4+U9FK0L36ZDn8pP+7nRTN+sBplNZmnPuUGhGl64M1eqaRl
-	 ubMUdnXLs1XgHGb59gpO+XxVbZekjGQNcnI18qRHx0SWYcRW8Gj+rlIKQVhKuxnwFd
-	 jRUok16eqdnJSPWDrTp0O6qgIPJmzU5q8+UO7+tk=
+	b=i1E/qkOI9SBW9PMTJrJZLc+9w+Dm2ih4TeUgHPSJBqdE+p1/9Oao50up9gHMOfU0H
+	 QLoZ1C4kwYeAtW2VvP9L47T9R/r0F2jBXCDuyQ4haZx4urJMumXCq3WJLPfNfGN8OG
+	 YXQO5v2cfzy/NGRL1M4TvS9xmKtE5OPh9vDY9gNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Yoann Congal <yoann.congal@smile.fr>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Julian Braha <julianbraha@gmail.com>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1965/2857] kconfig: default to zero if int/hex symbol lacks default property
-Date: Wed, 18 Nov 2026 15:49:59 +0100
-Message-ID: <20261118150312.159374073@linuxfoundation.org>
+Subject: [PATCH 6.1 1966/2857] kconfig: fix extra output from savedefconfig on out-of-range defaults
+Date: Wed, 18 Nov 2026 15:50:00 +0100
+Message-ID: <20261118150312.192460967@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,65 +69,244 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Julian Braha <julianbraha@gmail.com>
 
-[ Upstream commit 6262afa10ef7cc8fdf39b81a36f9546b68810431 ]
+[ Upstream commit dbe1ae2304a3b02c3bf6ae82895ff232a29f3fee ]
 
-When a default property is missing in an int or hex symbol, it defaults
-to an empty string, which is not a valid symbol value.
+The Kconfig interpreter currently allows defaults that are outside of the
+range bounds.
 
-It results in an incorrect .config, and can also lead to an infinite
-loop in scripting.
+In these cases, the 'sym_validate_range' function will adjust the default
+value to the nearest range bound. For example, see this example:
 
-Use "0" for int and "0x0" for hex as a default value.
+  config A
+    int
+    range 1 2
+    default 16
 
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Reviewed-by: Yoann Congal <yoann.congal@smile.fr>
-Stable-dep-of: dbe1ae2304a3 ("kconfig: fix extra output from savedefconfig on out-of-range defaults")
+Here, since the default value of 16 is greater than the bounds, the
+effective default value gets adjusted down to the upper bound, 2.
+
+However, 'savedefconfig' writes non-default values, and without being
+aware of the automatic adjustment to the range bound, it would write: A=2
+
+This limitation is also documented in a comment: "The following fails to
+handle the situation where a default value is further limited by the valid
+range."
+
+To resolve this, let's factor out the default-range adjustment logic from
+the existing 'sym_validate_range' function into its own
+'sym_get_near_range_bound' function for 'savedefconfig' to use too, so
+that it compares against the effective value.
+
+Adds tests, accordingly.
+
+Fixes: 7cf3d73b4360 ("kconfig: add savedefconfig")
+Assisted-by: Codex:gpt-5.6-sol
+Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Closes: https://lore.kernel.org/lkml/CAMuHMdVyUAA3L4mUkSjmnuE3cvj-+N8z-Bhxsh1wa-FQWc=fjw@mail.gmail.com/
+Signed-off-by: Julian Braha <julianbraha@gmail.com>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://patch.msgid.link/20260830221129.2668354-1-julianbraha@gmail.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/symbol.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ scripts/kconfig/symbol.c                      | 39 ++++++++----
+ .../kconfig/tests/savedefconfig_range/Kconfig | 60 +++++++++++++++++++
+ .../tests/savedefconfig_range/__init__.py     |  8 +++
+ .../kconfig/tests/savedefconfig_range/config  |  7 +++
+ .../savedefconfig_range/expected_defconfig    |  0
+ 5 files changed, 102 insertions(+), 12 deletions(-)
+ create mode 100644 scripts/kconfig/tests/savedefconfig_range/Kconfig
+ create mode 100644 scripts/kconfig/tests/savedefconfig_range/__init__.py
+ create mode 100644 scripts/kconfig/tests/savedefconfig_range/config
+ create mode 100644 scripts/kconfig/tests/savedefconfig_range/expected_defconfig
 
 diff --git a/scripts/kconfig/symbol.c b/scripts/kconfig/symbol.c
-index dc8edb0ac5236..0e44990ea0dda 100644
+index 0e44990ea0dda..b4213fb4b6419 100644
 --- a/scripts/kconfig/symbol.c
 +++ b/scripts/kconfig/symbol.c
-@@ -351,7 +351,11 @@ void sym_calc_value(struct symbol *sym)
- 
- 	switch (sym->type) {
- 	case S_INT:
-+		newval.val = "0";
-+		break;
- 	case S_HEX:
-+		newval.val = "0x0";
-+		break;
- 	case S_STRING:
- 		newval.val = "";
- 		break;
-@@ -759,14 +763,17 @@ const char *sym_get_string_default(struct symbol *sym)
- 		case yes: return "y";
- 		}
- 	case S_INT:
-+		if (!str[0])
-+			str = "0";
-+		break;
- 	case S_HEX:
--		return str;
--	case S_STRING:
--		return str;
--	case S_UNKNOWN:
-+		if (!str[0])
-+			str = "0x0";
-+		break;
-+	default:
- 		break;
- 	}
--	return "";
-+	return str;
+@@ -117,7 +117,12 @@ static long long sym_get_range_val(struct symbol *sym, int base)
+ 	return strtoll(sym->curr.val, NULL, base);
  }
  
- const char *sym_get_string_value(struct symbol *sym)
+-static void sym_validate_range(struct symbol *sym)
++/*
++ * Return the nearest range bound for an out-of-range default value.
++ * Return NULL if the value is valid or the symbol has no active range.
++ */
++static struct symbol *sym_get_near_range_bound(struct symbol *sym,
++					  const char *value)
+ {
+ 	struct property *prop;
+ 	struct symbol *range_sym;
+@@ -132,21 +137,31 @@ static void sym_validate_range(struct symbol *sym)
+ 		base = 16;
+ 		break;
+ 	default:
+-		return;
++		return NULL;
+ 	}
+ 	prop = sym_get_range_prop(sym);
+ 	if (!prop)
+-		return;
+-	val = strtoll(sym->curr.val, NULL, base);
++		return NULL;
++	val = strtoll(value, NULL, base);
+ 	range_sym = prop->expr->left.sym;
+ 	val2 = sym_get_range_val(range_sym, base);
+ 	if (val >= val2) {
+ 		range_sym = prop->expr->right.sym;
+ 		val2 = sym_get_range_val(range_sym, base);
+ 		if (val <= val2)
+-			return;
++			return NULL;
+ 	}
+-	sym->curr.val = range_sym->curr.val;
++
++	return range_sym;
++}
++
++static void sym_validate_range(struct symbol *sym)
++{
++	struct symbol *range_sym;
++
++	range_sym = sym_get_near_range_bound(sym, sym->curr.val);
++	if (range_sym)
++		sym->curr.val = range_sym->curr.val;
+ }
+ 
+ static void sym_set_changed(struct symbol *sym)
+@@ -707,7 +722,7 @@ bool sym_set_string_value(struct symbol *sym, const char *newval)
+ const char *sym_get_string_default(struct symbol *sym)
+ {
+ 	struct property *prop;
+-	struct symbol *ds;
++	struct symbol *ds, *range_sym;
+ 	const char *str = "";
+ 	tristate val;
+ 
+@@ -725,11 +740,6 @@ const char *sym_get_string_default(struct symbol *sym)
+ 			val = EXPR_AND(expr_calc_value(prop->expr), prop->visible.tri);
+ 			break;
+ 		default:
+-			/*
+-			 * The following fails to handle the situation
+-			 * where a default value is further limited by
+-			 * the valid range.
+-			 */
+ 			ds = prop_get_symbol(prop);
+ 			if (ds != NULL) {
+ 				sym_calc_value(ds);
+@@ -773,6 +783,11 @@ const char *sym_get_string_default(struct symbol *sym)
+ 	default:
+ 		break;
+ 	}
++
++	range_sym = sym_get_near_range_bound(sym, str);
++	if (range_sym)
++		str = range_sym->curr.val;
++
+ 	return str;
+ }
+ 
+diff --git a/scripts/kconfig/tests/savedefconfig_range/Kconfig b/scripts/kconfig/tests/savedefconfig_range/Kconfig
+new file mode 100644
+index 0000000000000..fd59d9082ed5b
+--- /dev/null
++++ b/scripts/kconfig/tests/savedefconfig_range/Kconfig
+@@ -0,0 +1,60 @@
++# SPDX-License-Identifier: GPL-2.0
++
++# Static default and range values
++
++config INT_DEFAULT_ABOVE_RANGE
++	int
++	range 1 1
++	default 16
++
++config INT_DEFAULT_BELOW_RANGE
++	int
++	range 4 8
++	default 2
++
++# Default and range values determined by other options
++
++config RANGE_UPPER_BOUND
++	int
++	default 3
++
++config INT_DYNAMIC_RANGE
++	int
++	range 0 RANGE_UPPER_BOUND
++	default 4
++
++# Hex
++
++config HEX_DEFAULT_ABOVE_RANGE
++	hex
++	range 0x10 0x20
++	default 0x40
++
++# Implicit default value of 0
++
++config INT_IMPLICIT_DEFAULT_ZERO
++	int
++	range 1 4
++
++# Conditional range
++
++config USE_FIRST_RANGE
++	bool
++	default y
++
++config INT_CONDITIONAL_RANGE
++	int
++	range 1 2 if USE_FIRST_RANGE
++	range 3 4 if !USE_FIRST_RANGE
++	default 3
++
++# Conditional default
++
++config USE_DEFAULT
++	bool
++	default y
++
++config INT_CONDITIONAL_DEFAULT
++	int
++	range 1 2
++	default 3 if USE_DEFAULT
+diff --git a/scripts/kconfig/tests/savedefconfig_range/__init__.py b/scripts/kconfig/tests/savedefconfig_range/__init__.py
+new file mode 100644
+index 0000000000000..961454be732c2
+--- /dev/null
++++ b/scripts/kconfig/tests/savedefconfig_range/__init__.py
+@@ -0,0 +1,8 @@
++# SPDX-License-Identifier: GPL-2.0
++"""Test savedefconfig with numerical defaults outside of ranges."""
++
++
++def test(conf):
++    assert conf._run_conf('--savedefconfig=defconfig', dot_config='config',
++                          out_file='defconfig') == 0
++    assert conf.config_matches('expected_defconfig')
+diff --git a/scripts/kconfig/tests/savedefconfig_range/config b/scripts/kconfig/tests/savedefconfig_range/config
+new file mode 100644
+index 0000000000000..d939cfe5fd349
+--- /dev/null
++++ b/scripts/kconfig/tests/savedefconfig_range/config
+@@ -0,0 +1,7 @@
++CONFIG_INT_DEFAULT_ABOVE_RANGE=1
++CONFIG_INT_DEFAULT_BELOW_RANGE=4
++CONFIG_INT_DYNAMIC_RANGE=3
++CONFIG_HEX_DEFAULT_ABOVE_RANGE=0x20
++CONFIG_INT_IMPLICIT_DEFAULT_ZERO=1
++CONFIG_INT_CONDITIONAL_RANGE=2
++CONFIG_INT_CONDITIONAL_DEFAULT=2
+diff --git a/scripts/kconfig/tests/savedefconfig_range/expected_defconfig b/scripts/kconfig/tests/savedefconfig_range/expected_defconfig
+new file mode 100644
+index 0000000000000..e69de29bb2d1d
 -- 
 2.53.0
 
