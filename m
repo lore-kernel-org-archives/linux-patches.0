@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017931;
-	b=wEmHtQ3EUk1UvV3AO8jrpVUSDmusOVe6xDgt9xdj9D/+cmcNtbdVAhJ+WXX8j4Wl3xyI
-	 aeowAqifLDelzR0BRn8BfNTFqIwslknz0XruVF4AWKDRBPI19koYEgFj8rHv0mZsUGPiW
-	 H2UDKl0NoSINP7FpOGaMNzV7PWf5eh9bxkr55303BZUEQDoirrS+mHr9TGw7QT8oIpVDd
-	 OuziNdXnPigMbhr1jgkzIi8ro+4v+A3ItIUJBB8fwnlHBf/mIf5LCTEKn1P5u2YlcW2xU
-	 sb0qiFIPY43xAZdkiSZ9PuR0AkVbBCHrpaT75KfSeB5TZaj/dqAgXsrSlqP5822i0Cg==
+	t=1795017934;
+	b=NIpVShJViqryHPRbpNhjaa1drCdVxpLoLs7NDb32ks9r87BOl2aoRvZ5z0/QQtA36FX8
+	 hCqq2xA5+aYk8nvvXV8kOEzZAQGL+30fJ3MeMK5RUEvNL08KdGHEHVqt3jZk4WAbvlioj
+	 bhAKYCZ+x2hIf+0AAeggUTWDZx4GKeZ2kPUI5pGVnAdLTFAunevK6/wv2yuuncCCmAuAP
+	 nb2s0hFq7T0h2vyblCGzyNp4GFKdutDBVhkrXX6rwH1meNzqplMNey/KRudzMozvyCDv+
+	 3d6CgGEBcR8j3HMrf9njzQvlfWuVDGVkG0c8OmCpWnuaso3IWMIqAk9gP2gNUrOInkw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017931;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017934;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5QKtBdTXeXkb2cWEogdWYBKTYS2KDsOjLGn0/GJLm84=;
-	b=owRfR8StRFApukvqCBfnixrMVRpzdvPyOEQaNFzYnjhX8vuXBHeJFhpc3ihdjsvFwbDv
-	 +AgJnl+6ZugH3LWHr71GSaQB26f8dU8xX+2F8X5i8mONEfA/jmVjcLjLETVg994ytSGSu
-	 Zvofp13/m5NE4GC0bk7ZwgJx+mNeIIQbsQvNiT2+1fSVcgcc0YxdYOly3eU68J30YW9k2
-	 uLn3lnyI1vhX6vbSW/WMBdn38s7Keuk4AgY6KKLFx3HTeLxQqNuhUg9QZvvifCZdCY5f9
-	 B4/aNCiD7XPx2b3cNdWQuIwLOYd25oKUEReKd1dUZn9SknS9oyVcjJK6svq6bJVVlTg==
+	bh=bk2QuIN82RXJ1UlsDBfvUe4ZIpFdUm0GY3gcLJXR5+8=;
+	b=yt98RzJVUbvGUEee7XJgLFY7PWjdkF8SZSjvKdLypsav6f/ni/st9iniEtSHbd5nS1ue
+	 pBZdsx68RGeI8HFiW6GcnjEyhxHKaRcdP1WLbuQZ2dQHJvd3iEkuJ5rPyrdt3Hp47Vv3i
+	 7JYACDUDtzW31Jj50xn0FfNZfocoB9L6/iULCeXYpxgtpEaDXCPFSPMrE/IJsjlSBDrRu
+	 x9F7Dtp8vz5WqtBB7iJL2lPiEwImR8Dd2BAPb/sWcDY8FvAJEiy0cuuPurDLQhAt3lQFN
+	 tSFu6CNU21trlrYqpuTXJNLFJCETvSKWp3w1cfOzfFrTEMxmqOb3Zh5F9B6YoyyyjUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Pxdbym5H;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J8Pt36PI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF810606A320;
-	Wed, 18 Nov 2026 16:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0DD2606A31C;
+	Wed, 18 Nov 2026 16:05:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Pxdbym5H
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D1731F000C5;
-	Wed, 18 Nov 2026 16:05:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J8Pt36PI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1E621F000C4;
+	Wed, 18 Nov 2026 16:05:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017931;
-	bh=5QKtBdTXeXkb2cWEogdWYBKTYS2KDsOjLGn0/GJLm84=;
+	s=korg; t=1795017934;
+	bh=bk2QuIN82RXJ1UlsDBfvUe4ZIpFdUm0GY3gcLJXR5+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pxdbym5HJwN/fzV0N2x2BdfktcDZOBnEe038giRf9w86Ka4RFkQlNzEK4dEEBzuqu
-	 bYfy6S/ZRHJN6kQ023E1JeePg6wGy4I7y8REKRGlOCE54Xu4yLl6Tp8lnGg4WAuCvp
-	 DWxVAovtWTw4Itdr9UTk+wozzO8ClBzBC5V/ACy8=
+	b=J8Pt36PIhynY6OVjF9+r3xiwGMlimT2CN2ljNKmeYhWAZdiQBgqD1WN9pROzyLNXD
+	 ZHaHPG9etuqbpixr/rIogx2kH1LDc8h1KDBwnVjKxaobHkNRVSCS9L8tdp+kwJZ50n
+	 INNSueVLDxEURUQ3br/epXcFqux9+8SUQzYaHVHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1043/2651] RDMA/mad: Reject receive completions shorter than GRH
-Date: Wed, 18 Nov 2026 15:38:03 +0100
-Message-ID: <20261118150325.511871505@linuxfoundation.org>
+Subject: [PATCH 7.3 1061/2651] pinctrl: stm32: Fix clock reference leak in stm32_pctl_probe()
+Date: Wed, 18 Nov 2026 15:38:21 +0100
+Message-ID: <20261118150326.178856904@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,40 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 2dc2126e690203d6adbddc7675927a242d810e43 ]
+[ Upstream commit dfd8259507c53a3c7eb0dd11c1152c88e12aa316 ]
 
-ib_mad_recv_done() derives the OPA MAD length by subtracting the GRH
-size from wc->byte_len without ensuring the receive completion covers
-the GRH. If it is shorter, the subtraction wraps before the result is
-stored in mad_len and an invalid length can be passed downstream.
+stm32_pctl_probe() obtains one clock per bank with
+of_clk_get_by_name(), but none of the error paths drop those
+references: the loop returns directly when a later clock lookup fails,
+and both the clk_bulk_prepare_enable() failure and the err_register
+path return without calling clk_bulk_put().  clk_bulk_disable_unprepare()
+only disables the clocks, it does not release them.
 
-Reject receive completions shorter than the GRH before inspecting the
-MAD header or deriving the MAD length.
+Release the references on these paths; the success path keeps them as
+the driver needs them for suspend/resume.
 
-Fixes: 8e4349d13f33 ("IB/mad: Add final OPA MAD processing")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Link: https://patch.msgid.link/20260926105927.3183294-1-yaojiale02@163.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 451bc9aea9a1 ("pinctrl: stm32: Add check for clk_enable()")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/mad.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pinctrl/stm32/pinctrl-stm32.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/infiniband/core/mad.c b/drivers/infiniband/core/mad.c
-index 3c91f00d09c6b..8124e0b5a87da 100644
---- a/drivers/infiniband/core/mad.c
-+++ b/drivers/infiniband/core/mad.c
-@@ -2342,6 +2342,8 @@ static void ib_mad_recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 			    recv->header.mapping,
- 			    mad_priv_dma_size(recv),
- 			    DMA_FROM_DEVICE);
-+	if (unlikely(wc->byte_len < sizeof(struct ib_grh)))
-+		goto out;
+diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
+index 93127da05d560..6ebb8ea260d1b 100644
+--- a/drivers/pinctrl/stm32/pinctrl-stm32.c
++++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
+@@ -1980,6 +1980,7 @@ int stm32_pctl_probe(struct platform_device *pdev)
+ 		pctl->clks[i].clk = of_clk_get_by_name(np, NULL);
+ 		if (IS_ERR(pctl->clks[i].clk)) {
+ 			fwnode_handle_put(child);
++			clk_bulk_put(i, pctl->clks);
+ 			return dev_err_probe(dev, PTR_ERR(pctl->clks[i].clk),
+ 					     "failed to get clk\n");
+ 		}
+@@ -1990,6 +1991,7 @@ int stm32_pctl_probe(struct platform_device *pdev)
+ 	ret = clk_bulk_prepare_enable(banks, pctl->clks);
+ 	if (ret) {
+ 		dev_err(dev, "failed to prepare_enable clk (%d)\n", ret);
++		clk_bulk_put(banks, pctl->clks);
+ 		return ret;
+ 	}
  
- 	/* Setup MAD receive work completion from "normal" work completion */
- 	recv->header.wc = *wc;
+@@ -2014,6 +2016,7 @@ int stm32_pctl_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	clk_bulk_disable_unprepare(banks, pctl->clks);
++	clk_bulk_put(banks, pctl->clks);
+ 	return ret;
+ }
+ EXPORT_SYMBOL(stm32_pctl_probe);
 -- 
 2.53.0
 
