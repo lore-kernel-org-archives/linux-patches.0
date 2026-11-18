@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032823;
-	b=oqRJt7UI1/CLt6g6NyeGpmsRPRceREkEItk8C0tTDttRN+8bk3+UNKASX3vycycueNLG
-	 OwDLZpoJYgsIPSDgU9UZcB3hAhSzL0ShBhkmAUj0czH0HLAZdNquMXwVk1kFIz7ZQGYXH
-	 X6SSHzRiwn9nRkosBfN7YjBGTIEhskwU26+Awi1n7ZIeHEUsmoGpaP41nDb1Ykgoxl1nE
-	 B21t7RgQD080pG8IQk8e3W0vZ4XfTWJuQEi2nPLKzGfQpfWB/UxBUFeRD3gLAwWEQp24t
-	 sC6GIrPHJ1fhy5IuThJmFlCHyFMZV+JJl1kf7xKO5HKtr9/F1QK0edwoZ92Ysa1fwhg==
+	t=1795032826;
+	b=bIHUfe069s0SRzuAKvdu4qKDGwOGBstnrUugba2DY3PXg4jKqjAOCObk5oI7UnA30KKu
+	 SNqTYq2PnlT+pg0W6TZkUhZFwt8us0/Xi2F8qAwcvgsh43TQv9XKQ/VxhvIAScrg+BM7v
+	 /TMBnK3JXtXhaeafnMdxioHmIhpv7bjhjryU580m3ZR65C3K2/UWxV4SS1J5MHYrEm36j
+	 stTCBnH4RRngQFm6QaAgcKzc4FjpFFUwHSpqJg9Vg2/W+wFm9bcVVEv3Z3iKZeBaudNVB
+	 cjBdzibJbF0wJVg2hyw0iz6ZBSp6gGozIxOftaMml0jSgHlvBc56mqXNjwtrt45ZIYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032823;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032826;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Cr3m0mztcNyc4D40qA2WIKspKpPu8vqkPfwod39LPNA=;
-	b=tJoOlPwH0/qcYs54KYQOdUZ7GZa3Dsp1ARYHofrVFBfTDJOwi2RBZxKv3ZjeSBvb0GzE
-	 TuJ/7+8zjdXIHSUIru0e2vlxOX0xb1UtUh3C2F3ptnIx5Z5UxBpJ96Q7sH2HUWF/i2Dev
-	 oT1oQVQ9qpy8bvkjVK0HiUIK79Fu7e1saA9EXj1kO+EgmRpUWTcng+TJkW/VsjG1/mPox
-	 epwGluG6bOz5um+4Rg6dIXRK8U2/0iJLdDZUIs8BpY5014a+U/bNPs+EYPmovT0HchIx0
-	 1uT+NOtfEK8Eqx6snspa6uIY56/5atCPC4prJFGodQxtVp7htuQPo8Cz3IKHN5Fm83w==
+	bh=isTq87MqFWUHv28GLA3YK/6lnERNAiIBjo36gWizJiI=;
+	b=5mOPwlJlnKmhBEV0w6fymX5dW618zt1cRpUIDgBPNquOR4/RZcT6iNb6FLC5bTqDixuU
+	 QZ5s8yizi9dw+hw09ZKVrE+bjvRT9Dr8t16qgvGNQMd1lhj0IwivP6p3uzdZV+3i95Ygl
+	 H99dZ829TiHjJYweInDLG98UUZnppnYIrljCaqqYU3Su52dNUHjXJfeHK854MG/bfJRwu
+	 8X0W65np0Xpt1uw9ABjEB/1o7fOlXkLUTRYLtJ56U8AmF4PAJAiNTmBqTBYjnwnwP0mnl
+	 QgA7Vtt5PN6v57gwDJvsjHdQfSijf1nMy1TYU8ZAE1o7ejm3tZVEsZNY8cgwV0Qt1Ww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HDajwzPa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lnk848g6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F273606A31C;
-	Wed, 18 Nov 2026 20:13:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E40A9606A31C;
+	Wed, 18 Nov 2026 20:13:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HDajwzPa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6388B1F000C4;
-	Wed, 18 Nov 2026 20:13:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lnk848g6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33CE21F000C5;
+	Wed, 18 Nov 2026 20:13:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032822;
-	bh=Cr3m0mztcNyc4D40qA2WIKspKpPu8vqkPfwod39LPNA=;
+	s=korg; t=1795032825;
+	bh=isTq87MqFWUHv28GLA3YK/6lnERNAiIBjo36gWizJiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HDajwzPaczFp/3sakJJpCo+pY8LHa4+G5oNn5XaTUwljMceNmJ+DYTPLpTXYwFpnK
-	 tWMFvXh/eOtTNYUyizmjYX5BpMShkbMdgjG6Jbl0hS0kQEpCxix5SntwZkSDYuqSWr
-	 aOHP+LwKHs5V+MI+1IUSVqf/aL5m7LZ/G/hET5u0=
+	b=Lnk848g6niUdczPDZxXG6LcEw7Qq28EdGW7SjksZo+CtLJC4CIc59xkKJF99a0d5P
+	 bAJ21IWDTMAJ2Pznip0y1uSlno8iT+9dVQA7Gt4agoiBwQxz6Ing5QAVI/8Rhcpv6P
+	 h+NlyU2axSWipEk7Q9ch/4jiprp2W/LF5040DlAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Aditya Sharma <adi.sharma@zohomail.in>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Edward Adam Davis <eadavis@sina.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	syzbot+1f0fbc2561b3e5d51b91@syzkaller.appspotmail.com,
+	Bradley Morgan <brads@mainlining.org>,
+	Pingfan Liu <kernelfans@gmail.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1547/1756] bpf: Remove nmi_uaccess_okay() check in bpf_send_signal_common()
-Date: Wed, 18 Nov 2026 16:01:14 +0100
-Message-ID: <20261118150110.511114250@linuxfoundation.org>
+Subject: [PATCH 6.12 1548/1756] kernel/reboot: avoid potential deadlocks during suspension
+Date: Wed, 18 Nov 2026 16:01:15 +0100
+Message-ID: <20261118150110.576670237@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,66 +72,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aditya Sharma <adi.sharma@zohomail.in>
+From: Edward Adam Davis <eadavis@sina.com>
 
-[ Upstream commit 93bd472336ac2424f5f3cf05cbb24e02242343b7 ]
+[ Upstream commit 66644b992f25f6a33775788c8b69a8bb3d41ad67 ]
 
-nmi_uaccess_okay() takes no task argument and is a statement about
-current. When commit 6280cf718db0 ("bpf: Implement bpf_send_signal_task()
-kfunc") made the PF_KTHREAD/PF_EXITING and is_global_init() test the
-supplied task, nmi_uaccess_okay() was left testing current.
+Invoking reboot with LINUX_REBOOT_CMD_SW_SUSPEND causes kernel/reboot.c
+to acquire system_transition_mutex and invoke hibernate(). hibernate()
+calls lock_system_sleep(), which sets PF_NOFREEZE on current and attempts
+to acquire system_transition_mutex again, potentially hitting:
 
-As a result bpf_send_signal_task() returns -EPERM whenever the
-calling context happens to be a kernel thread, regardless of which task
-the signal is aimed at. The same call with the same target succeeds or
-fails depending only on what the CPU was running:
+WARNING: possible recursive locking detected
+--------------------------------------------
+syz.3.5755/5950 is trying to acquire lock:
+ffffffff8fc04760 (system_transition_mutex){+.+.}-{4:4}, at: lock_system_sleep+0x49/0x70 kernel/power/main.c:71
 
-  bpf_send_signal_task() from tp_btf/workqueue_execute_start : -EPERM
-  bpf_send_signal_task() from tp_btf/sys_enter               : 0
+but task is already holding lock:
+ffffffff8fc04760 (system_transition_mutex){+.+.}-{4:4}, at: __do_sys_reboot kernel/reboot.c:774 [inline]
+ffffffff8fc04760 (system_transition_mutex){+.+.}-{4:4}, at: __se_sys_reboot+0x223/0x460 kernel/reboot.c:738
 
-The check was carried over from bpf_probe_write_user() when
-bpf_send_signal() was added in commit 8b401f9ed244 ("bpf: implement
-bpf_send_signal() helper"). There it guards a user memory write, but
-bpf_send_signal_common() does no user memory access, so the check has
-nothing to guard here. It is also already a no-op outside x86.
+other info that might help us debug this:
+ Possible unsafe locking scenario:
 
-Remove it, and drop the part of the comment above it that described
-the memory access checks, as none remain.
+       CPU0
+       ----
+  lock(system_transition_mutex);
+  lock(system_transition_mutex);
 
-Fixes: 6280cf718db0 ("bpf: Implement bpf_send_signal_task() kfunc")
-Suggested-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Aditya Sharma <adi.sharma@zohomail.in>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://lore.kernel.org/bpf/20260819124324.43162-1-adi.sharma@zohomail.in/T/#u
-Link: https://patch.msgid.link/20261001072449.1377267-2-adi.sharma@zohomail.in
+ *** DEADLOCK ***
+
+ May be due to missing lock nesting notation
+
+locks held by syz.3.5755/5950: 1, last CPU#0:
+ #0: ffffffff8fc04760 (system_transition_mutex){+.+.}-{4:4}, at: __do_sys_reboot kernel/reboot.c:774 [inline]
+ #0: ffffffff8fc04760 (system_transition_mutex){+.+.}-{4:4}, at: __se_sys_reboot+0x223/0x460 kernel/reboot.c:738
+
+Call Trace:
+ lock_system_sleep+0x49/0x70 kernel/power/main.c:71
+ hibernate+0x162/0x680 kernel/power/hibernate.c:784
+ __do_sys_reboot kernel/reboot.c:816 [inline]
+
+Move the suspension operation outside the scope protected by lock
+system_transition_mutex.
+
+Link: https://lore.kernel.org/20261020010559.23031-1-eadavis@sina.com
+Fixes: 55f2503c3b69 ("PM / reboot: Eliminate race between reboot and suspend")
+Signed-off-by: Edward Adam Davis <eadavis@sina.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: <syzbot+1f0fbc2561b3e5d51b91@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=1f0fbc2561b3e5d51b91
+Tested-by: <syzbot+1f0fbc2561b3e5d51b91@syzkaller.appspotmail.com>
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Cc: Pingfan Liu <kernelfans@gmail.com>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/bpf_trace.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ kernel/reboot.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index 5abd26d3a8ab8..d6d9ca8c79746 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -845,15 +845,12 @@ static int bpf_send_signal_common(u32 sig, enum pid_type type, struct task_struc
- 		siginfo = &info;
- 	}
+diff --git a/kernel/reboot.c b/kernel/reboot.c
+index caab5c86c6e29..788aaa4c5be76 100644
+--- a/kernel/reboot.c
++++ b/kernel/reboot.c
+@@ -801,8 +801,8 @@ SYSCALL_DEFINE4(reboot, int, magic1, int, magic2, unsigned int, cmd,
  
--	/* Similar to bpf_probe_write_user, task needs to be
--	 * in a sound condition and kernel memory access be
--	 * permitted in order to send signal to the current
--	 * task.
-+	/*
-+	 * Similar to bpf_probe_write_user, task needs to be
-+	 * in a sound condition.
- 	 */
- 	if (unlikely(task->flags & (PF_KTHREAD | PF_EXITING)))
- 		return -EPERM;
--	if (unlikely(!nmi_uaccess_okay()))
--		return -EPERM;
- 	/* Task should not be pid=1 to avoid kernel panic. */
- 	if (unlikely(is_global_init(task)))
- 		return -EPERM;
+ #ifdef CONFIG_HIBERNATION
+ 	case LINUX_REBOOT_CMD_SW_SUSPEND:
+-		ret = hibernate();
+-		break;
++		mutex_unlock(&system_transition_mutex);
++		return hibernate();
+ #endif
+ 
+ 	default:
 -- 
 2.53.0
 
