@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057474;
-	b=FI9Bqwj0IMPTBztHsG/EEbJmbwjG8vBVJ5Hg9DSnG3M4Mwbu1SnrlXY7QxHsYqEJdNdO
-	 YMfdxLfmObsfp0V4vdDuFAI/DaKqi7QKePK6Xq6oYS3WAdWCikI3mlZJrGasziTp7lkcx
-	 fDlRdTBUWOOCqWqfSBgdh6kmW6+5u9cBFiVgtxN44MrqK2ZmVo+99YUjhSrZGfpaRNdQE
-	 kGPRXnfFUXrfSZYH1t8TEdTR4Yt28dZAz5oIcg4ZNQNgmliyTsphOhCxABGnbzdF6fGUw
-	 ZOzMYrG7FKWYlqqxeEG7ygrWkXnEscmcLf3BJbccn1eoXu3B9MzZpZeogLSN4gC6q9A==
+	t=1795057477;
+	b=pnoPHngD+pwf/p5LCEWn9AWadRD3B7qChMW/4bWuNHXUxJqhu53HU5Duc1nFvUD44vgP
+	 zwDowrL6OH+c7sdsxS8Xl3mh5sUFQT5mVN2244/HlCwiRIDMFw0WbJuzkQmzXwVCs/VPw
+	 lUatmY9zqXnqW4JgrLC7AYSw034cdrwboesnm1GJnoEBS21XaPMhnsIFoHyD2awVRcoWV
+	 S8R2ONbGn3REPylpOjkF7KX/RyC7E9k6SCTK8Pfrpbu7qPLoqa0hVSwMd2emhpCMnEE9f
+	 QXmUl5joh1my4f4jEkc7jwvhkzqRfA4JKM5MxPRO9vm0zxS4QZCVhDUeXLbSnHvaO5Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057474;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057477;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DKLg8uJcS+PByFKpXvrHmUVA2jiRLLhLI1BHwoVHQW8=;
-	b=K/fLaLI/0SMqFJah7jpiah2I7HJiLSW8hSqLhLzAbPbXyrflX9EI0LmBc5L3O/egkijl
-	 G3Qyc3C/QmaMRfPaIhHmscyopXgxTWt5RzwFka2TsXMBQRIhv8LEu6bcZ0qnhdgleo0Hf
-	 GI5KECr7lGTmBJMnb4softiqCtiRu8Sk4kXzVTqGfCJWTlz4xrbNKuMwU7sjxwTVIWqD4
-	 ehx955mJ9qrmhhSBDeW8s+hyTALWNJVyivcDiMB3WCbxqZE2KkZY0jBq9lf2r+hDpO6xn
-	 tXj1vURAoAP0t7RqNt3MGYFxmkfHpdvYrOI3h0nAWfDvnjCBNCiXUexx8RF0xPXF/eQ==
+	bh=WFsbJCAYg4lYpbq5h7HTSTlV8dSFfPeN5AUMO7vA5RM=;
+	b=2xU5G7dnt/SBA8Bh4+oTn9ZLekOzq1+bx2BrG3MEXp+ds/x4gZ9T3wPYiPiJVjGwr4/u
+	 2CEjs/D5wBpLdy83XeJjH59e3RnxejarfDp/TwfXgXF4aMuGg+IpMaXEpRPFVdmUJWIKw
+	 a6xupRAlYmzbKUF/sik9o8ZCchd2tadHY8bh/XtfoHxU1w4DfaXQCVZXA2c2qbj4ulpBd
+	 xH4z5BhJRkeJol79CZkzuzgkzVnieVhrwNHOhtoieMsgmUZZ9UKm3qcxcgrDCqyYlWOvr
+	 b1yxoj3TIJDAwheQ7VIZuSsXKWVfzzlqJWgA3fTdobeLm8DNN1lC0p/ciriRPYG67Ww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JhekMO7M;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HSftfRCM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7CB6606A33A;
-	Thu, 19 Nov 2026 03:04:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8850660A2612;
+	Thu, 19 Nov 2026 03:04:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JhekMO7M
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A8F31F000CB;
-	Thu, 19 Nov 2026 03:04:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HSftfRCM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE5251F000C6;
+	Thu, 19 Nov 2026 03:04:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057474;
-	bh=DKLg8uJcS+PByFKpXvrHmUVA2jiRLLhLI1BHwoVHQW8=;
+	s=korg; t=1795057477;
+	bh=WFsbJCAYg4lYpbq5h7HTSTlV8dSFfPeN5AUMO7vA5RM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JhekMO7MTRvWm2rQZeruUvDi8qlN0xL8wOgBxEwEpxlYsT2R11YVBpyjtJtLzORaH
-	 D5woZwbBt5Wx7MVSSRpjXLPwG2FDEAUb0d0coKa+b9IIWSfzi65QePme0WonTjHexX
-	 2yHnUVnLm6/zmnnzic8Phw9864dCGbwtJ26lkplA=
+	b=HSftfRCM+/ARW7qaaQ/0FqKM78lbEMw1Ti5UIVIlNSWrEsI/n2AaWvwcqFfTGNF+U
+	 8jiTqZjlEEKm0yqgNCs8Bcrx35alpxdTAcazmDSSiIvv2qFPJsNxsG40OoscSnI8EK
+	 afHyNKWHPxOUdGA53DZboZ6WdYATD9E09qptilGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yun Zhou <yun.zhou@windriver.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0102/1848] ext4: set EXT4_STATE_NO_EXPAND in ext4_evict_inode
-Date: Wed, 18 Nov 2026 15:35:40 +0100
-Message-ID: <20261118145915.329160308@linuxfoundation.org>
+Subject: [PATCH 5.10 0093/1848] misc: hpilo: validate device queue entries before use
+Date: Wed, 18 Nov 2026 15:35:31 +0100
+Message-ID: <20261118145915.022588912@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,40 +67,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Zhou <yun.zhou@windriver.com>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit 2c0e4fb511f97467dafc91b6afb3414100289081 ]
+[ Upstream commit 7bf6940d7cf41f1f0330a9bae4b7a886e18fd8e3 ]
 
-An inode being evicted will never need its extra isize expanded.  Set
-EXT4_STATE_NO_EXPAND before ext4_mark_inode_dirty() in ext4_evict_inode()
-to make this explicit and prevent any unnecessary work in
-ext4_try_to_expand_extra_isize().
+ilo_pkt_dequeue() trusts descriptor IDs and lengths read from the shared
+FIFO entry. A bad entry can select a descriptor outside the allocated
+queue memory or report a packet length larger than one descriptor.
 
-This also provides defense-in-depth for the s_writepages_rwsem deadlock
-during mount-time orphan cleanup, ensuring the expand path is blocked
-for inodes under eviction regardless of how they are reached.
+Reject entries whose descriptor index or packet length exceeds the queue
+layout before deriving the packet pointer returned to read and write
+paths.
 
-Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260623061903.2148767-2-yun.zhou@windriver.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Link: https://patch.msgid.link/20260624190919.3432-1-alhouseenyousef@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inode.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/misc/hpilo.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index 6aaa29dc8edc5..4fafcdd688330 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -281,6 +281,7 @@ void ext4_evict_inode(struct inode *inode)
- 	if (ext4_inode_is_fast_symlink(inode))
- 		memset(EXT4_I(inode)->i_data, 0, sizeof(EXT4_I(inode)->i_data));
- 	inode->i_size = 0;
-+	ext4_set_inode_state(inode, EXT4_STATE_NO_EXPAND);
- 	err = ext4_mark_inode_dirty(handle, inode);
- 	if (err) {
- 		ext4_warning(inode->i_sb,
+diff --git a/drivers/misc/hpilo.c b/drivers/misc/hpilo.c
+index fea3ae9d86862..75ff914a3de35 100644
+--- a/drivers/misc/hpilo.c
++++ b/drivers/misc/hpilo.c
+@@ -158,11 +158,16 @@ static int ilo_pkt_dequeue(struct ilo_hwinfo *hw, struct ccb *ccb,
+ 
+ 	ret = fifo_dequeue(hw, fifobar, &entry);
+ 	if (ret) {
++		int pkt_len;
++
+ 		pkt_id = get_entry_id(entry);
++		pkt_len = get_entry_len(entry);
++		if (pkt_id >= NR_QENTRY || pkt_len > desc_mem_sz(1))
++			return 0;
+ 		if (id)
+ 			*id = pkt_id;
+ 		if (len)
+-			*len = get_entry_len(entry);
++			*len = pkt_len;
+ 		if (pkt)
+ 			*pkt = (void *)(desc + desc_mem_sz(pkt_id));
+ 	}
 -- 
 2.53.0
 
