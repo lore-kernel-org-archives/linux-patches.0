@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030392;
-	b=NpWU2VNHraAKNrUkkCYj3xAok2Cl3BUpi7d4fkO9i/z0T8SZy1z2Xe7HEjZlfIOuHO5c
-	 mkA1fdm+2ujJb/RMl7Fl9O77zAZkK5P3YaAyiQXCXD7htpqHnX2dxnmyluuoMrBBqvcvx
-	 Rw+tI2bnPS0tSwvuvBYa/Yg2Y6OXgPx5NG6i0fyFvG8aSV/R3DkHUzFBEjkO4LFpz+32s
-	 f8WDt6T2Ei5sw/lAfdah2QJm+wbonE410WghV77V1ogf1w4rl6pCpiLaDa82c47nWtD7P
-	 DApP+DtM2s+puZgnPhscXOUM5Ys5CvbPxFF4ml4UtWi/Jkzg1FRJIr9zGQ7XO6nDcYg==
+	t=1795030395;
+	b=uV9YaYaAIMwmzlXpG40xqgToH6mAXuLLeUvx72wrDBfaLaIBvXMVw9IyFWUbpIw8Xubh
+	 naVCZFzRpfhhueeXCxbCXG3O6vyajgxtvW+UBkllSNaj/oUXOJqgYMJzgFQdnaUiW84Wk
+	 u0422fDM7AkW2WjXZ4YKkjFW6OtjMgKB9Aic97nc7edZf1obiUXOAsC7C1EDNoTs7m1jT
+	 TpyD1zDy6BNHZMA0thlQnfN95g2ahUcICx8B6KJPP8oZ4cq+b/eeL9LLtQGV8Z0/lz9E5
+	 Ky+50T5+GypyCGDuekp9HMcxXmfOdCEspUfpUWDVBBldbsq6hIE02Cy1SfVF4d4D+vA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030392;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030395;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NNvaeAYVzw+EV55ZdM5NdwZuoaPxDuvUqr8gTMRyhMk=;
-	b=1lb/GUZrqASHmIE51LF5P4mCoy6ogm0iOjjTYtXFj1Mg0jiaEiJW+Ig7yKonBN1jTvRh
-	 5LhqLrOdBaCJ68NbGkWo1uClGP9lZABS6ea3LurDcop2J0AMV1QlF8ryjIqcto5p8thvX
-	 CqnbQjk1GMtKzO2EGpNq+dLP0kuRo4uFuKUDcankAbc0ltGaDz78va6fdWJW/t9kL04OT
-	 /w64GxK5FlPOUbxj8/B3n+pTBD4Lo54YoWqPerihmFRgC9K/YCjIgO5SSmqDhIeW04LgQ
-	 Qo9vq1sm/JRkWnsJIl7sVi0eTCTLfLK6ZvffgIGXYahaQ5hAvurW0UUCfeThdWdwPgg==
+	bh=4TONxrtuQhYqREzLp3v6l1CnlBDnJ+tcG7S3ShsxhvA=;
+	b=Md3m3cgdxNcEnBzinwIHAl9b8RS29JiosKeXbH/N2qxN7/DrVtBvC99/TdrLMdBYqjqV
+	 AYNeaQuURuC1zahRdDZEwmzpP/WNGgR5UxJlGavx2wMWB9tCgsgTkttJT1PTh1aIlqlSq
+	 AiMYHc+H3ex2nDlUiY2Fdc8tHEmF2H66lb2++k7FKTFzLCDFDfvnrnP9muHUyoTNwW7VQ
+	 og0tW3qgaTcND12qv4qUwoggUTpWZowoqxztkuiEWLYt0FOvv6ZXbHCw+9qt17VOezLzU
+	 ADZbXCtr+ALCLr3YjJyHB+zgAn4SI2qcJn/H84R9LXRG8Ply9OaMmZ5rSIoSFscX+nw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C7l6qSyj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F3HA4MVG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC03606A7F1;
-	Wed, 18 Nov 2026 19:33:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8C1606A339;
+	Wed, 18 Nov 2026 19:33:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C7l6qSyj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED5E1F000C6;
-	Wed, 18 Nov 2026 19:33:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F3HA4MVG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0B231F000C4;
+	Wed, 18 Nov 2026 19:33:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030392;
-	bh=NNvaeAYVzw+EV55ZdM5NdwZuoaPxDuvUqr8gTMRyhMk=;
+	s=korg; t=1795030395;
+	bh=4TONxrtuQhYqREzLp3v6l1CnlBDnJ+tcG7S3ShsxhvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C7l6qSyj2iT9Aof/OBIdDlaaGGn/6wT+YFUJwNI6Crs++P812/6gSIn8dqgH5cZX+
-	 90A46VyqF1WGJSahyExrJETXLscdaeWmkOTlqJlnJa/Mlxc0+sg2f9HBFby71u7jPz
-	 jcXBW7xAf0yoR9gIdMwcLyvwjNn+t0exbfGsYQiY=
+	b=F3HA4MVGV8XbAAOXZujq0P4KBVFf1RwYHLIwWc2oTC1TuyHJNPSAg2mo+mtQEcmxH
+	 414slApXTHUWmd92e/u4BZQaebaXnAWE/hBZVHpC3oT7748zm/7ZN86V8GIxp9nUQP
+	 9F1a6IrGCyspnjyf5ZR1kxnILW+aiqPc3F7jNHwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Selvin Xavier <selvin.xavier@broadcom.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0686/1756] RDMA/bnxt_re: Initialize wqe.flags in bnxt_re_post_srq_recv()
-Date: Wed, 18 Nov 2026 15:46:53 +0100
-Message-ID: <20261118150036.538790379@linuxfoundation.org>
+Subject: [PATCH 6.12 0687/1756] RDMA/bnxt_re: Fix the PD and DPI table size
+Date: Wed, 18 Nov 2026 15:46:54 +0100
+Message-ID: <20261118150036.573984036@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,36 +70,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Selvin Xavier <selvin.xavier@broadcom.com>
 
-[ Upstream commit 4d8168a3b7c93385c11dc836df569d337089b218 ]
+[ Upstream commit aa6c2ef821a6ba7f3fd58cfcc031b2d16f3811c6 ]
 
-wqe is declared once above the WR loop and never zeroed, so
-wqe.flags holds indeterminate stack contents on the first WR and the
-previous WR's stale value thereafter. This propagates straight into
-the hardware-visible srqe->flags in bnxt_qplib_post_srq_recv().
+The PD and DPI bitmaps were sized as max >> 3 (bytes),
+but bitmap ops (set_bit(), clear_bit(), find_first_bit(),
+test_and_set_bit()) operate on whole unsigned long words,
+so whenever max isn't a multiple of BITS_PER_LONG,
+the buffer under-allocates and the top word's bitops
+read/write past the end of the kmalloc()'d buffer.
+Most exposed on the DPI table, since dpit->max comes from the
+firmware-reported dev_attr->max_dpi with no alignment guarantee.
 
-Most values of the wqe struct is set except flags. So initialize
-flags also.
+Fix the size of both allocations with
+BITS_TO_LONGS(max) * sizeof(unsigned long).
 
-Fixes: 37cb11acf1f7 ("RDMA/bnxt_re: Add SRQ support for Broadcom adapters")
+Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
 Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/ib_verbs.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/hw/bnxt_re/qplib_res.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-index cabed393390dc..e9f47f96be1ea 100644
---- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-+++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -1936,6 +1936,7 @@ int bnxt_re_post_srq_recv(struct ib_srq *ib_srq, const struct ib_recv_wr *wr,
- 	spin_lock_irqsave(&srq->lock, flags);
- 	while (wr) {
- 		/* Transcribe each ib_recv_wr to qplib_swqe */
-+		wqe.flags = 0;
- 		wqe.num_sge = wr->num_sge;
- 		bnxt_re_build_sgl(wr->sg_list, wqe.sg_list, wr->num_sge);
- 		wqe.wr_id = wr->wr_id;
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
+index 5a99fa8e9be39..d43cbb953750c 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
+@@ -45,6 +45,7 @@
+ #include <linux/dma-mapping.h>
+ #include <linux/if_vlan.h>
+ #include <linux/vmalloc.h>
++#include <linux/bitops.h>
+ #include <rdma/ib_verbs.h>
+ #include <rdma/iter.h>
+ 
+@@ -684,9 +685,9 @@ static int bnxt_qplib_alloc_pd_tbl(struct bnxt_qplib_res *res,
+ {
+ 	u32 bytes;
+ 
+-	bytes = max >> 3;
++	bytes = BITS_TO_LONGS(max) * sizeof(unsigned long);
+ 	if (!bytes)
+-		bytes = 1;
++		bytes = sizeof(unsigned long);
+ 	pdt->tbl = kmalloc(bytes, GFP_KERNEL);
+ 	if (!pdt->tbl)
+ 		return -ENOMEM;
+@@ -821,9 +822,9 @@ static int bnxt_qplib_alloc_dpi_tbl(struct bnxt_qplib_res *res,
+ 	if (!dpit->app_tbl)
+ 		return -ENOMEM;
+ 
+-	bytes = dpit->max >> 3;
++	bytes = BITS_TO_LONGS(dpit->max) * sizeof(unsigned long);
+ 	if (!bytes)
+-		bytes = 1;
++		bytes = sizeof(unsigned long);
+ 
+ 	dpit->tbl = kmalloc(bytes, GFP_KERNEL);
+ 	if (!dpit->tbl) {
 -- 
 2.53.0
 
