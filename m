@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061207;
-	b=LpZxs3sBviVXEW7iQkS9WGUqWdhvNVdIbAfaDmOf7pVytKk8HHau2lloCY32oHs7z9gY
-	 m+HkXwuMCCKwvB91INgsTT20AiEeRKhFz4yNIZfrb9AQRYT2ygMmbc2xq5XzHlykL/HFw
-	 4qworS7STrJ4HcdhB5tGC304lTcDEqu8KoxoV3rIG7V4luAoabUBfzIct0yQu3UXqOPGg
-	 ht//pNKlRIlZJQ3s8dZ6gCSGDraEkkIzshjkOws1ESRDeEg9v1yMA2mpk8JWRi/UkOoaY
-	 vkzyYOOMtPY2HT9Monr42MkuPPIc2Y6ErnvS9zT4eMwpeWboRkAqvaI4obS2s6h0Zjg==
+	t=1795061210;
+	b=R6LmPH5ZkLYyBXKIqIeeVWKfCZc6TiP3ISTH1Fcd0uISLwt9eSOgOFMMD5pzJVxFoJp4
+	 HCNsmElPjvUtzo6I9xVs77JXhr/s3yOVpz5Fl1gAtbNZHSTypOe1pWwlComgn/kHCRc/X
+	 BO5IDyIMCfdspo6msXHZf1KeuVOQrT7Gj+gu6VXPTrimRAjEkvvhfFbVA7QXGl7RAHqvg
+	 b3WKIkvq1nm0wBX0wBI7vsKxF2Ur7+VrqhSEQe8b07YkRwVCreyLemG2l46av21FWtCLX
+	 4pcumMkSXlNLm5Ai8TtbrLnbaLQ/Hx9WcqezvzTlUdwwLOivC4u0lM5dNt0mqwd3Acg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061207;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061210;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=F+3uLSN8PAlIXIoNoJdP2D92KL+JGCPLx9jen8uFtyc=;
-	b=fhXG568bg08AFA+JXZoYnXLO0KDRX2dQpn/ivsyQ/37cwZebvc19YQJhEACrG8IuC89O
-	 cSwg84IZIebap83DvrhHss9UCa3QB1wiZHCVl1x24D85SjMFw87akMAxmlVKLPg82PZC8
-	 k198NtAvBRK52pMPTS2HhjfO5HnbcH2JA2SJNXYaenVyfTVUkvT6r9n/IbCGBL00u6HiR
-	 wpAKHxJj3OUmUaarHw8j2kUQpdkK3xMo+0hICWfI3KN/HSaEbUONO5nv2tKSdBiq1ubqv
-	 WPl5XdI94/uUcI60DooEy/lq/0VB/1sxPMYF/ZefSN/3JYJMrrfvzOHn5iyynTcL84Q==
+	bh=9W69I1nPlgo1kouuNw5Gudw6nXPEpI+ghmswe92vNuI=;
+	b=3tIoxXirBX9P1ePbJqr3AWCr1Um30IbbnX5f8a9lEVDheDav3iZYRYCC8Vm4iWLzrUYp
+	 Tq/+PbWQt/8DbHfoh9U4+srXnoMpqvDXJ1I+vtstNxJWHg5436o/eFRJNZGSc1hBdQiyj
+	 +Oz2JdDGBz8G5idsPal8TvTg1eXdMdW2Pevdgoa53/LnRV9nmbOPRe1DSvUS2MQEYe0NC
+	 BNBCUEGgdJL81dZptDtOqGQAgQMqWtlwIOMxN1fT4SFW91DNd73nME6p7wD+M9Zk/SxCt
+	 Nc42sobr6exFEVXhmGhkEe0kUYcAciu7IHItwY0/EiqOhDknGWhr6AxGSOHa8BzQ8lA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XFzWXjMm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="n/JeIRD1";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C55E606A320;
-	Thu, 19 Nov 2026 04:06:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE51606A325;
+	Thu, 19 Nov 2026 04:06:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XFzWXjMm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC8BD1F000C4;
-	Thu, 19 Nov 2026 04:06:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n/JeIRD1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 911431F000C4;
+	Thu, 19 Nov 2026 04:06:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061207;
-	bh=F+3uLSN8PAlIXIoNoJdP2D92KL+JGCPLx9jen8uFtyc=;
+	s=korg; t=1795061210;
+	bh=9W69I1nPlgo1kouuNw5Gudw6nXPEpI+ghmswe92vNuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XFzWXjMmod0dpjFl9Pbma2KrVql1QOxuiQ6nnJknWe5OzMb1DbwV+yOSj/w4Sfdv7
-	 5bUeScL8KoEqW4wd1onX/BdE33QiGUpzcwaOjaiewqqfTAQRJxvTg0exAbyOnJvegi
-	 WjxwaT/j3agok+9rIEAnjDXK/Oy6R5gF6Ge1WGH8=
+	b=n/JeIRD1YhocPpCwj+knSWisF08XD80IpgSUwIA6PINN0YGuuKqmyP+s/UkIgCFKi
+	 +/lDkQhX4M5PMkkbOJLm3bgApEIOjszbzQpMR7+Ajt1IVDh1y0qTYX5cfPeIHu1rko
+	 T/cNzk0qMI4mDUw85MDmZZ4WjhBTrjd5N8HnnpkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dominic White <github@singe.za.net>,
+	Dan Carpenter <error27@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1471/1848] wifi: cfg80211: allow zero HE OBSS PD offsets
-Date: Wed, 18 Nov 2026 15:58:29 +0100
-Message-ID: <20261118150020.888693426@linuxfoundation.org>
+Subject: [PATCH 5.10 1472/1848] wifi: b43: dont pass unterminated string to sscanf()
+Date: Wed, 18 Nov 2026 15:58:30 +0100
+Message-ID: <20261118150020.926328485@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,51 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dominic White <github@singe.za.net>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit d9ecaa0a31732014a128e3b03243de54bbbd8394 ]
+[ Upstream commit 9b6cb072f9249e2cdb7c32be2b8069774c7e01e6 ]
 
-IEEE Std 802.11 permits the OBSS PD offset fields in the Spatial Reuse
-Parameter Set element to have a value of zero. (IEEE Std 802.11-2024,
-26.10.2.4)
+The "buf" buffer is a PAGE_SIZE and allocated with kzalloc().  We store
+a string from the user in it and then pass it to sscanf() in the write
+functions such as shm32write__write_file().  Only a few numbers are
+stored in the buffer so it never comes close to filling up the whole
+PAGE_SIZE.  Reserve the last character of the page for a NUL terminator.
 
-The standard specifies the offsets as unsigned values added to -82 dBm,
-with field presence signalled independently. The valid offset range is
-therefore 0..20.
+This is debugfs so it's root only.
 
-nl80211 currently rejects zero for all three HE OBSS PD offset
-attributes during nested netlink policy validation, before the values
-reach cfg80211 or the driver. Allow zero while retaining the upper bound
-and the existing minimum/maximum relationship validation.
-
-Fixes: 796e90f42b7e ("cfg80211: add support for parsing OBBS_PD attributes")
-Signed-off-by: Dominic White <github@singe.za.net>
-Link: https://patch.msgid.link/20260903081804.96532-1-github@singe.za.net
+Fixes: 75388acd0cd8 ("[B43LEGACY]: add mac80211-based driver for legacy BCM43xx devices")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Link: https://patch.msgid.link/b396713e697c7411b23a2157e2102c347ac900bc.1790839793.git.error27@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/wireless/broadcom/b43/debugfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index e175593d8cedd..ccab4d673b2df 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -332,11 +332,11 @@ nl80211_pmsr_attr_policy[NL80211_PMSR_ATTR_MAX + 1] = {
- static const struct nla_policy
- he_obss_pd_policy[NL80211_HE_OBSS_PD_ATTR_MAX + 1] = {
- 	[NL80211_HE_OBSS_PD_ATTR_MIN_OFFSET] =
--		NLA_POLICY_RANGE(NLA_U8, 1, 20),
-+		NLA_POLICY_RANGE(NLA_U8, 0, 20),
- 	[NL80211_HE_OBSS_PD_ATTR_MAX_OFFSET] =
--		NLA_POLICY_RANGE(NLA_U8, 1, 20),
-+		NLA_POLICY_RANGE(NLA_U8, 0, 20),
- 	[NL80211_HE_OBSS_PD_ATTR_NON_SRG_MAX_OFFSET] =
--		NLA_POLICY_RANGE(NLA_U8, 1, 20),
-+		NLA_POLICY_RANGE(NLA_U8, 0, 20),
- 	[NL80211_HE_OBSS_PD_ATTR_BSS_COLOR_BITMAP] =
- 		NLA_POLICY_EXACT_LEN(8),
- 	[NL80211_HE_OBSS_PD_ATTR_PARTIAL_BSSID_BITMAP] =
+diff --git a/drivers/net/wireless/broadcom/b43/debugfs.c b/drivers/net/wireless/broadcom/b43/debugfs.c
+index 89a25aefb327c..4c864ef3266ed 100644
+--- a/drivers/net/wireless/broadcom/b43/debugfs.c
++++ b/drivers/net/wireless/broadcom/b43/debugfs.c
+@@ -561,7 +561,7 @@ static ssize_t b43_debugfs_write(struct file *file,
+ 
+ 	if (!count)
+ 		return 0;
+-	if (count > PAGE_SIZE)
++	if (count >= PAGE_SIZE)
+ 		return -E2BIG;
+ 	dev = file->private_data;
+ 	if (!dev)
 -- 
 2.53.0
 
