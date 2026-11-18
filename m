@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017741;
-	b=Orm55RA9uSZzu2xAjFK1JyqfkAK+/1rX18rItiOV3V7aJZyw+YUPpya4s9p/GSqJjO6R
-	 3/tZTRCz+BDp+UEOQw3CJ+hmSqj6G2APKzxPzHmGGIesH/JyHoqGafgMp8p04Lc1Ib252
-	 AX4I9WY4ZBY3TcfvDYRHZlBPsODQkzMsuwyr34sa7G2Yzx/5XadwLQy7krrBwab+k/Sk8
-	 UTlI8uiQm2vuVa5y0lSaaalbHtmxewXO5jBiw/ROkJQwqZzAjou3CuhnEI0XA1LELpTpR
-	 1U4XPLnu4usAq4ZKGpjIwEfXwyZUh0HHnxqtFmMBUDsVrCexyoL/5eDonDJLGPUGUyA==
+	t=1795017744;
+	b=4BpB1cd0dkgRrPEB0RGtQgjJtOK5BO1Dss2iliUHzLDYsNtS93qoNZ60oDTmNJVOOlOH
+	 lavV7b86eeuFoV3O74grV4lhidNfqUvu4R2ajPCJAQgoCpOy02MG4moyox3/0fVByFHOs
+	 UvmhOvT9MEi/bkwSD/GEOP/Zj65qy76ErRnUX4zvlDjnl5Rc0aLzwFG4rCXBsYPwdWq/6
+	 EpXzYYmNlf7vrcT0bd1eBQslfnUx3q5R6PMsJH87ejy1aBiVvcQbddFYP8ksuGm/RrgZo
+	 tLrr3uKhHNYU/hKLQ8qc0B9Py1KnQWffFlhJO0hyrg0WkhJvdfUkywAivTT8LRQOoNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017741;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017744;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=m773r1o8KZKQKEt55EfvVpPzNzy8aQhEvV/uU8ARa4k=;
-	b=YVuJ6xEjRLsciy6F0eJXcQOzZd+RcC8IPwKUnTzneH71APyPoReNs/9hF2559oo22kQ1
-	 bgFtJcOg7zR2E1qwlcTxrWV/wzNog5HpPSp2oB+0z8mKpMWtwqZit8iNll6dFJwFZRyZ2
-	 kAMhSDJCzSxXYdWw6tMMbig5loT9lfCrbpKbrl3cSAyQcVF/qzYR8GcyfyafIUhKiG316
-	 L+CNe8H49Bwmr21el3iuotjt7sZHY6S5VdoBC8KWJzscvp2Qrasy9AQMrKyrrd4Gie5HQ
-	 G11Z6Mt25vJECXZtjpA3piaBO1IiYrDnMlmtZAfg05FCBRC1wqtk3hS2Z+xrL/pH+qw==
+	bh=kmzFp2sz0h8GZ/eSwr1eOoCWJukQnTPn6/mU3hqBd8c=;
+	b=UBlXUMcrwk1+L0+figSDtX2ePGchYlnZ1bGhmmsG9AzYiMMgXNxiqKHwcdPv2bOT90dC
+	 +ot3awxpIMU259C8ds5jcr2reKqcCLw3z3dWtPgg13hiRNHS+v1rKCubFfIkX/REuRrWk
+	 vtKlyZvanF78BY0oFUiO+3fTyPHvGuo2oqvV0UChvWSRrB2m5mX5R8MIofb8uQNbCpkfo
+	 s320SmKGsghVmCKl1j2rK4JI1U+tIpjFJv6iOXpdNPqIOW2Fybkg07tHUgrjQQBK2WTen
+	 8GyCRYhiKJcHXT+0Lu1zeTqn6FJAI8ls8jG/P4S2eP4460ErNUHyxxq85DEqZI7vIhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l1o4UI6C;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MVt8bLx8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC74606A31C;
-	Wed, 18 Nov 2026 16:02:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33CCC606A320;
+	Wed, 18 Nov 2026 16:02:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l1o4UI6C
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2B781F000C4;
-	Wed, 18 Nov 2026 16:02:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MVt8bLx8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88E261F000C4;
+	Wed, 18 Nov 2026 16:02:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017741;
-	bh=m773r1o8KZKQKEt55EfvVpPzNzy8aQhEvV/uU8ARa4k=;
+	s=korg; t=1795017744;
+	bh=kmzFp2sz0h8GZ/eSwr1eOoCWJukQnTPn6/mU3hqBd8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l1o4UI6Ces3Tyg5E9UFOuS/RYccpElNY8F2tyhOUommth0uNJMS8zmU8FCt7ccsVR
-	 Hm9lRlg1TU7gaSrrTElRDp05eRRssQuUvG43mW3gAndx/1DBdJBE7NQCAUgECfwUdc
-	 IyiHGxbWgKfoWS+IANJFN4cxGgeaaVw3j4oUEOe0=
+	b=MVt8bLx8/C9BFk2+ejkLG+qyY0yeWIp8H+v/kzM+49Ss7ny72K2lWAaz2H57MeucX
+	 +uTR5HKIQdgdPCJYvr1a2iwXMiCGRKPv5jLhddzSCSCdAKnISJDqSlWRb7B3dNrs7d
+	 l7W7rh/prwTtvXzejIAmEH5+mNRY61NrsMXuFQL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Peng Fan <peng.fan@nxp.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0991/2651] arm64: dts: imx8dxl-evk: fix reserved memory node names for remoteproc
-Date: Wed, 18 Nov 2026 15:37:11 +0100
-Message-ID: <20261118150323.579856518@linuxfoundation.org>
+Subject: [PATCH 7.3 0992/2651] arm64: dts: imx8qm-mek: fix reserved memory node names for remoteproc
+Date: Wed, 18 Nov 2026 15:37:12 +0100
+Message-ID: <20261118150323.615408397@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,7 +70,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit c4e5f1a143799651aba2c4f66860b63b56786306 ]
+[ Upstream commit c712a46c10d38ce7869a9d81d7986e844a4e9f24 ]
 
 The imx_rproc driver uses node names to identify reserved memory regions.
 It checks for "vdev0buffer" to skip mapping, "rsc-table" to locate the
@@ -79,32 +79,23 @@ resource table, and "vdev" prefix to filter vdev regions.
 Rename the reserved memory nodes to use the expected names so the driver
 can correctly identify and handle each region.
 
-Fixes: ee39dbd9a6cb ("arm64: dts: imx8dxl-evk: add imx8dxl_cm4, lsio mu5, related memory region")
+Fixes: 52c9971edd4f ("arm64: dts: imx8qm-mek: add cm4 remote-proc and related memory region")
 Signed-off-by: Peng Fan <peng.fan@nxp.com>
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8dxl-evk.dts | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8qm-mek.dts | 26 ++++++++++----------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8dxl-evk.dts b/arch/arm64/boot/dts/freescale/imx8dxl-evk.dts
-index 0ede0c7ed422c..71eff3efa6d32 100644
---- a/arch/arm64/boot/dts/freescale/imx8dxl-evk.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8dxl-evk.dts
-@@ -29,7 +29,7 @@ imx8dxl-cm4 {
- 		clocks = <&clk_dummy>;
- 		mbox-names = "tx", "rx", "rxdb";
- 		mboxes = <&lsio_mu5 0 1 &lsio_mu5 1 1 &lsio_mu5 3 1>;
--		memory-region = <&vdevbuffer>, <&vdev0vring0>, <&vdev0vring1>,
-+		memory-region = <&vdev0buffer>, <&vdev0vring0>, <&vdev0vring1>,
- 				<&vdev1vring0>, <&vdev1vring1>, <&rsc_table>;
- 		power-domains = <&pd IMX_SC_R_M4_0_PID0>, <&pd IMX_SC_R_M4_0_MU_1A>;
- 		fsl,resource-id = <IMX_SC_R_M4_0_PID0>;
-@@ -65,32 +65,32 @@ linux,cma {
- 			linux,cma-default;
- 		};
+diff --git a/arch/arm64/boot/dts/freescale/imx8qm-mek.dts b/arch/arm64/boot/dts/freescale/imx8qm-mek.dts
+index 9e49ac377162b..8b67fb5d670da 100644
+--- a/arch/arm64/boot/dts/freescale/imx8qm-mek.dts
++++ b/arch/arm64/boot/dts/freescale/imx8qm-mek.dts
+@@ -44,57 +44,57 @@ reserved-memory {
+ 		#size-cells = <2>;
+ 		ranges;
  
--		vdev0vring0: memory0@90000000 {
+-		vdev0vring0: memory@90000000 {
 +		vdev0vring0: vdev0vring0@90000000 {
  			reg = <0 0x90000000 0 0x8000>;
  			no-map;
@@ -128,17 +119,65 @@ index 0ede0c7ed422c..71eff3efa6d32 100644
  			no-map;
  		};
  
--		rsc_table: memory-rsc-table@900ff000 {
-+		rsc_table: rsc-table@900ff000 {
+-		rsc_table0: memory@900ff000 {
++		rsc_table0: rsc-table@900ff000 {
  			reg = <0 0x900ff000 0 0x1000>;
  			no-map;
  		};
  
--		vdevbuffer: memory-vdevbuffer@90400000 {
+-		vdev2vring0: memory@90100000 {
++		vdev2vring0: vdev2vring0@90100000 {
+ 			reg = <0 0x90100000 0 0x8000>;
+ 			no-map;
+ 		};
+ 
+-		vdev2vring1: memory@90108000 {
++		vdev2vring1: vdev2vring1@90108000 {
+ 			reg = <0 0x90108000 0 0x8000>;
+ 			no-map;
+ 		};
+ 
+-		vdev3vring0: memory@90110000 {
++		vdev3vring0: vdev3vring0@90110000 {
+ 			reg = <0 0x90110000 0 0x8000>;
+ 			no-map;
+ 		};
+ 
+-		vdev3vring1: memory@90118000 {
++		vdev3vring1: vdev3vring1@90118000 {
+ 			reg = <0 0x90118000 0 0x8000>;
+ 			no-map;
+ 		};
+ 
+-		rsc_table1: memory@901ff000 {
++		rsc_table1: rsc-table@901ff000 {
+ 			reg = <0 0x901ff000 0 0x1000>;
+ 			no-map;
+ 		};
+ 
+-		vdevbuffer: memory@90400000 {
 +		vdev0buffer: vdev0buffer@90400000 {
  			compatible = "shared-dma-pool";
  			reg = <0 0x90400000 0 0x100000>;
  			no-map;
+@@ -456,7 +456,7 @@ imx8qm-cm4-0 {
+ 		mboxes = <&lsio_mu5 0 1
+ 			  &lsio_mu5 1 1
+ 			  &lsio_mu5 3 1>;
+-		memory-region = <&vdevbuffer>, <&vdev0vring0>, <&vdev0vring1>,
++		memory-region = <&vdev0buffer>, <&vdev0vring0>, <&vdev0vring1>,
+ 				<&vdev1vring0>, <&vdev1vring1>, <&rsc_table0>;
+ 		power-domains = <&pd IMX_SC_R_M4_0_PID0>, <&pd IMX_SC_R_M4_0_MU_1A>;
+ 
+@@ -471,7 +471,7 @@ imx8qm-cm4-1 {
+ 		mboxes = <&lsio_mu6 0 1
+ 			  &lsio_mu6 1 1
+ 			  &lsio_mu6 3 1>;
+-		memory-region = <&vdevbuffer>, <&vdev2vring0>, <&vdev2vring1>,
++		memory-region = <&vdev0buffer>, <&vdev2vring0>, <&vdev2vring1>,
+ 				<&vdev3vring0>, <&vdev3vring1>, <&rsc_table1>;
+ 		power-domains = <&pd IMX_SC_R_M4_1_PID0>, <&pd IMX_SC_R_M4_1_MU_1A>;
+ 
 -- 
 2.53.0
 
