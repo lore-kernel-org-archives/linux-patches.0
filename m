@@ -1,52 +1,63 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016483;
-	b=488+G3kj8iy9fjZ311U0i97ZfO1+qTJexg2a8Anklvc4mCvYMREK8dahoCjVFiEYS09O
-	 9if0lMjVD+Cqh7QhFSxkNQbcsBnU9j0XbAOd+s27zPYS6PLHB0R3ctcJfvzwEqoinJ3K8
-	 nwU5avkq1F0/z8ge2i1jXictx5SYNnck71YWPx2DfMUwJ9ZzExNGE+4+Evi/VTSjh/Pi+
-	 xeQasngx8EcgB9a7KushkQ3FidJiSma3vY+UZHhFVLZIvaHTYxcQsPr/+PLl3iD05KJh8
-	 o7ae0VztwYSvQDIUTJs2zp/tMZhfzPTKG46EpuCd7n7a6BNUNS+JZt5cdLt/TmDeqKg==
+	t=1795016486;
+	b=Jlrjpqbo9JDIs69KilGfpqEPgns1poKAZfkuqYlMabSTtLSVoL9CUso0/9NrnVo0Igg7
+	 5thvVI/KKiIT+tZN01aMeGmrSPPohLWYsoIV6g6Bqf/vxMbfSMVfpbtbgrl8AI1OsGA6x
+	 G+FdIpKpi3CPkKT3Sb5XWSmZY3UXrTzLazjajCYASlQfEFhyUH99xIATheWuT4OLW55bd
+	 WfiXDHaJq7RlI6XB1GXLsqKLWAcKeCEf7N/hkTgXObBnzrMKtw6IPIVIjz4o/KJ9Agj9/
+	 thF1G2tcRT6q5VCbhAhPHyDResBsQ13QGFrulIttymRqFLoUZOrcztZ9lMWzNOJR2pQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016483;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016486;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gnWJqfxE4JV3kVFtfeaY9WFi804nHcLQarmiterjVEY=;
-	b=JBL6Qse3IoVwlpwQv9dV3KkVHlRXheNBs0s6uvehmbTn/hA7voNddCTxMJGD185+GcOx
-	 kcH5VE80ZG9NurzYoLmSLkLFY4d3PDkEB8bLxEAD/EoWCPBR5Q/0++Ch3ZvhJUpjCpzds
-	 qPRu4kTQcwMFmU++MoEE8npbeSTEA+HSuj2BP32qfpXENFF9qFYEZiuRnrULzXpM1AEG4
-	 4xDFdfFrDQUfQPDKDsBZhZ88G7zCgS4ijXWDf2w9JT5PAeTbjdNQOO+GuN8Ez+Ngk5PkL
-	 WBeDjmSY/Bfl/ZfF9FYQi3YKIPsH3Wc3c472hUIUg46+EkDpm2uz0Ryte/NxW8ceXQA==
+	bh=/rvqJbcR0oI0qsctTPIMAZePctJG/X8xS+DjgxbsYlk=;
+	b=ffqP2soXDp5fae+mXo8An30wA/LIE8mr3/RvOMyQkpMxWlgH6D5x8ddimvhJfU331s1e
+	 sI05sqY0vDMXlNfsp+fgNzx3HFfsDfA9VNeIOFPIoHq4bPj8TkCK2faM5c8xEtvoiu62n
+	 t23Orv8eA3aAGtsWaYHQcOpVkU66FunLLItI4Kl0U2AIhwQVkyVfVMYvHloCbtsx+kk0k
+	 WXsq8mtr3ULYlgNRLxv/Vg8Iz7gd4BqgPCeCmpsmcSa6aO1c3AYHkrngrIDdHEJlUqQd7
+	 SMN814ZPpbo0Ea3hN5UvP3ZGl5ZbEaBZVANvsOOHSFHWVNoFssMXzocnX5cQzQxx6ng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=14uxUNRT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DYTIpMyG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E3C0606A31C;
-	Wed, 18 Nov 2026 15:41:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 283EA606A320;
+	Wed, 18 Nov 2026 15:41:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=14uxUNRT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FD211F000C4;
-	Wed, 18 Nov 2026 15:41:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DYTIpMyG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 499BD1F000C4;
+	Wed, 18 Nov 2026 15:41:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016483;
-	bh=gnWJqfxE4JV3kVFtfeaY9WFi804nHcLQarmiterjVEY=;
+	s=korg; t=1795016486;
+	bh=/rvqJbcR0oI0qsctTPIMAZePctJG/X8xS+DjgxbsYlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=14uxUNRT7bJoh76fX1vJbKZuff+HWGJbRSW1GM/eqb1ip7R55T4xWdiQTQHEH5Taw
-	 2qAOGKH+P2xGnf2YCTGZvxQ94E3j9nUSm/eZy5Wim2CgcATXIOUj2yd8U8czW9eZt2
-	 aw8mmzTGERuUUp+OhBo4ZlVqQxrhqVN27VWy5d28=
+	b=DYTIpMyGVb6LARAsYBmw2kmS5fCVqPtFtSgagl2CEyl6MHnZyCvj73wflW/4J64BX
+	 VRFQoOLiG//SYyla82xcfhiE4rdmyUJYgblu2L5QiKY0F5CkgNEx+ktisxfeQnySWS
+	 huUkXmoKeLKJ4zt1vLgEu0VPhe5OSBGZgyMyhPzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari Mishal <harimishal1@gmail.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Ivan Lipski <ivan.lipski@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Leo Chen <leo.chen@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0544/2651] drm/amdgpu/atom: bound the VBIOS date, part number, version and build getters
-Date: Wed, 18 Nov 2026 15:29:44 +0100
-Message-ID: <20261118150307.334119372@linuxfoundation.org>
+Subject: [PATCH 7.3 0545/2651] drm/amd/display: Fix redundant NULL check on dc->clk_mgr in dcn42_prepare_bandwidth
+Date: Wed, 18 Nov 2026 15:29:45 +0100
+Message-ID: <20261118150307.369015808@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,116 +79,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hari Mishal <harimishal1@gmail.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit aee05c455ad3e72df9a0591baf0b60da518800f3 ]
+[ Upstream commit 346d81ef808ba28465a3f19f2a0d63a758e7409c ]
 
-atom_get_vbios_date(), atom_get_vbios_pn(), atom_get_vbios_version()
-and atom_get_vbios_build() all walk the BIOS image using offsets and
-counts taken from the image itself, checked only against each other
-and never against ctx->bios_size:
+dc->clk_mgr is already dereferenced inside dcn401_prepare_bandwidth(),
+so the dc->clk_mgr NULL check that follows is redundant and misleading.
+Drop it.
 
- - atom_get_vbios_date() reads 14 bytes at a fixed offset that
-   check_atom_bios()'s minimum size (0x49) does not cover.
- - atom_get_vbios_pn() dereferences an image-supplied u16 string
-   offset unchecked, then walks and copies from it with only a length
-   cap, not an image cap.
- - atom_get_vbios_version() takes its search bounds from image u16s;
-   atom_find_str_in_rom() already clamps the search itself, but the
-   match is then advanced by a fixed 18 bytes and STRLEN_NORMAL bytes
-   are copied from there with no check that this still lands inside
-   the image.
- - atom_get_vbios_build() walks from an image-supplied config-string
-   offset toward the ROM header; a config offset at or past the
-   header makes the pointer difference negative, wrapping through the
-   u16 'len' and passing strscpy() a bound far larger than the
-   32-byte destination.
-
-Bound each getter's reads, walks and copies to ctx->bios_size, falling
-back to an empty string on a malformed image.
-
-Fixes: 29b4c589b43d ("drm/amdgpu: Add vbios info ioctl interface")
-Fixes: d6fa80266178 ("drm/amdgpu: Add vbios build number interface")
-Assisted-by: gkh_clanker_t1000
-Signed-off-by: Hari Mishal <harimishal1@gmail.com>
+Fixes: 53845307d52e ("drm/amd/display: Register DCN as a PMFW DF C-state client on DCN42")
+Reported-by: Dan Carpenter <error27@gmail.com>
+Cc: Roman Li <roman.li@amd.com>
+Cc: Alex Hung <alex.hung@amd.com>
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Cc: Ivan Lipski <ivan.lipski@amd.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Cc: Wayne Lin <wayne.lin@amd.com>
+Cc: Dan Wheeler <daniel.wheeler@amd.com>
+Cc: Leo Chen <leo.chen@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/atom.c | 29 ++++++++++++++++++++++++-----
- 1 file changed, 24 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/display/dc/hwss/dcn42/dcn42_hwseq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/atom.c b/drivers/gpu/drm/amd/amdgpu/atom.c
-index e0e585f280e21..1a599d5cf6a5c 100644
---- a/drivers/gpu/drm/amd/amdgpu/atom.c
-+++ b/drivers/gpu/drm/amd/amdgpu/atom.c
-@@ -1420,6 +1420,11 @@ static void atom_get_vbios_date(struct atom_context *ctx)
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn42/dcn42_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn42/dcn42_hwseq.c
+index 23d4786ea2464..bde918acba5be 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn42/dcn42_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn42/dcn42_hwseq.c
+@@ -683,7 +683,7 @@ void dcn42_prepare_bandwidth(
+ 	/* valid C-state watermarks have now been committed to HW, so it
+ 	 * is safe to vote "allow" to PMFW.
+ 	 */
+-	if (dc->clk_mgr && dc->clk_mgr->funcs && dc->clk_mgr->funcs->notify_cstate_disable)
++	if (dc->clk_mgr->funcs->notify_cstate_disable)
+ 		dc->clk_mgr->funcs->notify_cstate_disable(dc->clk_mgr, false);
+ }
  
- 	p_rom = ctx->bios;
- 
-+	if (ctx->bios_size < OFFSET_TO_VBIOS_DATE + 14) {
-+		ctx->date[0] = '\0';
-+		return;
-+	}
-+
- 	date_in_rom = p_rom + OFFSET_TO_VBIOS_DATE;
- 
- 	ctx->date[0] = '2';
-@@ -1483,10 +1488,15 @@ static void atom_get_vbios_pn(struct atom_context *ctx)
- 		vbios_str = p_rom + OFFSET_TO_VBIOS_PART_NUMBER;
- 	}
- 
--	if (*vbios_str == 0) {
-+	if (vbios_str >= p_rom + ctx->bios_size)
-+		vbios_str = NULL;
-+
-+	if (vbios_str == NULL || *vbios_str == 0) {
- 		vbios_str = atom_find_str_in_rom(ctx, BIOS_ATOM_PREFIX, 3, 1024, 64);
- 		if (vbios_str == NULL)
- 			vbios_str += sizeof(BIOS_ATOM_PREFIX) - 1;
-+		if (vbios_str >= p_rom + ctx->bios_size)
-+			vbios_str = NULL;
- 	}
- 	OPTIMIZER_HIDE_VAR(vbios_str);
- 	if (vbios_str != NULL && *vbios_str == 0)
-@@ -1494,7 +1504,9 @@ static void atom_get_vbios_pn(struct atom_context *ctx)
- 
- 	if (vbios_str != NULL) {
- 		count = 0;
--		while ((count < BIOS_STRING_LENGTH) && vbios_str[count] >= ' ' &&
-+		while ((count < BIOS_STRING_LENGTH) &&
-+		       vbios_str + count < p_rom + ctx->bios_size &&
-+		       vbios_str[count] >= ' ' &&
- 		       vbios_str[count] <= 'z') {
- 			ctx->vbios_pn[count] = vbios_str[count];
- 			count++;
-@@ -1527,9 +1539,10 @@ static void atom_get_vbios_version(struct atom_context *ctx)
- 	/* find anchor ATOMBIOSBK-AMD */
- 	vbios_ver =
- 		atom_find_str_in_rom(ctx, BIOS_VERSION_PREFIX, start, end, 64);
--	if (vbios_ver != NULL) {
--		/* skip ATOMBIOSBK-AMD VER */
--		vbios_ver += 18;
-+	if (vbios_ver != NULL)
-+		vbios_ver += 18; /* skip ATOMBIOSBK-AMD VER */
-+
-+	if (vbios_ver != NULL && vbios_ver + STRLEN_NORMAL <= p_rom + ctx->bios_size) {
- 		memcpy(ctx->vbios_ver_str, vbios_ver, STRLEN_NORMAL);
- 	} else {
- 		ctx->vbios_ver_str[0] = '\0';
-@@ -1545,7 +1558,13 @@ static void atom_get_vbios_build(struct atom_context *ctx)
- 	base = CU16(ATOM_ROM_TABLE_PTR);
- 	atom_rom_hdr = CSTR(base);
- 
-+	if ((uint32_t)base + ATOM_ROM_CFG_PTR + sizeof(uint16_t) > ctx->bios_size)
-+		return;
-+
- 	str = CSTR(CU16(base + ATOM_ROM_CFG_PTR));
-+	if (str >= atom_rom_hdr)
-+		return;
-+
- 	/* Skip config string */
- 	while (str < atom_rom_hdr && *str++)
- 		;
 -- 
 2.53.0
 
