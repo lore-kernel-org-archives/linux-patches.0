@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055759;
-	b=VLtptai9pSB7jH7ojYgMfO7k1BY0F9BeNNsP3i16ohrY8kFCEhBjubJHfM8RAU1eLNUi
-	 jv8NBQ+QdTKlM+nFbBxdcLIkWgPL6G/Z5/usv/cbGVLJnJAEFkZ/5y47S+6VxgkVWEFkT
-	 wQ36GX5MwHDIb1qnobA17426TlXDLB6H99ipcMyuy3GHjEzkSi/5sfyTktUG8rN5xkfci
-	 VB17LHVdKEBGlNEX9XbCb2HIEMZmuRrcwpGypRHUUWbjLi4z88dOQbmuJOy7SPwBJLmum
-	 o1Z6yMkR3M4npzL6CIPnS20sUi0SdhfO02rrYrsS3vWblof6HQgq4j2ARJyjeBM+n8A==
+	t=1795055762;
+	b=kPa//3PC/+jKXxtN58h1cNZXD51Ob5twAqriOm8UVq0GB4ARCiapQab/0Cgj1dX7UvdH
+	 3pPLHHR8XuV+Y3o4Sywg4f4Wxql5//xw08FpNLxnltUu/kvdKQ0LC3m8zX0MKXN5kGay3
+	 J+HzywkRTb3/bc6qjXSzsPlSjl/OfrIoEpqydyfuf4xg2a0XyfLASnsYm5mW5tPZ0rBAB
+	 xdq1yjjGOCoXzi7fRChvQ4a9XUL0yZ1TsIWv7YZk5bPVakz7vb8ypIruAIL9Ay9DjqaUo
+	 IjCmo6i0VtGVErb9QCuavJNfqf03f6gtK5AiBEpeyPZnNOrzHD7cozd/Rs8uyZ3DwjA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055759;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055762;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jzRj7d/RdqchZZEORvUr2xX8TkxZ7SStrlFqsJj2JUc=;
-	b=UDQKGSYVYCxKTjCArQbvxhUS8FQJMjh4ha+V/Ke2Vb/w+KyLKAnEXavJHf2buvBVLJah
-	 sHbAJArmtRt2fClCmaAzjwkDX6JrC1wUvrxHMXIxSq9xLej8JjfISV47ssQ9o/7dZoP4U
-	 HUjQ0VJ3TO1Qr/wUTgSdbU3yC4c9qXsHXn5ZUtDbUnIDzew9YbK8OeQrtjfIYjACosmE1
-	 kKAmmJNaShnaKNLTm+7EYWCkPiAyl0PQ/pUdJ47zC1CD4a6esQ/WLjATTioZd/GrsG51+
-	 9md5ALjPoPorAoFnoL5w+WFn5d6bSQGU+kZFiEIS8hCHguxd9/JlkEhgoq79Zp2EtsQ==
+	bh=F+yhMYwy2uSP5W7ENZdxmXgTPrZaNTaBeATD2aKyLKw=;
+	b=avV0SoI+Bay9tioZuzNSTuyrcwgG2flML3LNmVqwY2tsyiWRmU6k/Rw2yYAZUK/w8m1J
+	 qHLSL2bvMDwanbvXtX9/Sz8IDvnaltl1fupd8klog1RiPPUfI5K2d2Z7+1E0YwslIxVA5
+	 cv5mAdR51QZSV3AhWFTfF0A8SR7BoZHYzPh8CQTQEwxdr5nPbFE94NDTd5f1zdwGDxEuO
+	 EG8g0vQTR37tb3+ANWCkafPsqw0GeyMfN4WfhfSoozLKySG0smu+utnL6on2fHOZ8TQV2
+	 wKL9ODzGAjXsNM4xBpyQiKNPRfFIReWC9Afd6/eumgUilMxA15ScnTN322GjhhMXcnA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oU2NFobj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K09DKcH9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8424606A332;
-	Thu, 19 Nov 2026 02:35:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80650606A31C;
+	Thu, 19 Nov 2026 02:36:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oU2NFobj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07C9B1F000C5;
-	Thu, 19 Nov 2026 02:35:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K09DKcH9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C839A1F000C9;
+	Thu, 19 Nov 2026 02:36:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055759;
-	bh=jzRj7d/RdqchZZEORvUr2xX8TkxZ7SStrlFqsJj2JUc=;
+	s=korg; t=1795055762;
+	bh=F+yhMYwy2uSP5W7ENZdxmXgTPrZaNTaBeATD2aKyLKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oU2NFobjMp6oBBFwtNws4WT7YA8k0AIWwk7uP6Ig799kAUIxqyJLmX3QUaq1BjNr9
-	 gqUc4WuALcRen3/QheAaN7vILsJQKJ5YJdU1NXT2A5vfu/JIn0wZyPLzBqGTLbmwkv
-	 +sus2CfMNzSy0wsrmbOmCF9/fwKvBfGCPRg+mjbE=
+	b=K09DKcH9LqJMEKnc+WhgBWDRh/yGXw/lBmimlm+VkH14cD04Y/AYCKBXJZCyCc92p
+	 2YJfuMBih9kmDtjj2HDJ/MACWLxb8a8CIyAj8iaJlUThjqX17QNMXrTrXwh17MNidB
+	 SyqHdDfUlAeKn7PPoIdZ15t6l/HMsCR1b/FMrpGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Christian Lamparter <chunkeey@gmail.com>,
-	Jeff Johnson <jjohnson@kernel.org>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1746/2214] wifi: carl9170: NUL terminate string in debugfs
-Date: Wed, 18 Nov 2026 15:57:02 +0100
-Message-ID: <20261118150121.462557701@linuxfoundation.org>
+Subject: [PATCH 5.15 1747/2214] dmaengine: ioat: disable relaxed ordering before registering the device
+Date: Wed, 18 Nov 2026 15:57:03 +0100
+Message-ID: <20261118150121.499565269@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,58 +71,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Logan Gunthorpe <logang@deltatee.com>
 
-[ Upstream commit ece30e1daf6a9c95d6f9d0518534a0b9c8c7fd42 ]
+[ Upstream commit 10d34fbca6e09a6a18d64fa3ebaa3db9f27fc1a6 ]
 
-The "buf" buffer comes from the user.  We use it to store a number or
-two so it doesn't need to be large.  It gets passed to sscanf() in the
-write functions such as carl9170_debugfs_erp_write().  Ensure that
-buffer is NUL terminated.
+ioat3_dma_probe() disabled PCIe relaxed ordering after calling
+dma_async_device_register(), so if an error occurs and the code jumps
+to err_disable_interrupts, the function returns with the device still
+registered in the core's dma_device_list while the caller frees the
+ioatdma_device struct, leaving a dangling registration that anything
+walking the device list can dereference after it's been freed.
 
-This is debugfs so it's root only.
+Move the capability read/write ahead of dma_async_device_register()
+instead. Nothing after registration depends on relaxed ordering
+already being disabled, and nothing before it depends on the device
+being registered, so this is a plain reordering. It also means every
+remaining step after registration can't fail, so there's no need to
+ever have to unregister the device once registered.
 
-Fixes: 00c4da27a421 ("carl9170: firmware parser and debugfs code")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Acked-by: Christian Lamparter <chunkeey@gmail.com>
-Acked-by: Jeff Johnson <jjohnson@kernel.org>
-Link: https://patch.msgid.link/674270ab4aeefa1982362c0ea4132427e14f15eb.1790839793.git.error27@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 511deae0261c ("dmaengine: ioatdma: disable relaxed ordering for ioatdma")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/dmaengine/20260707165906.249F41F000E9@smtp.kernel.org
+Acked-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
+Link: https://lore.kernel.org/dmaengine/20260707165906.249F41F000E9@smtp.kernel.org/T/#u
+Link: https://patch.msgid.link/20260902062153.31048-9-logang@deltatee.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/carl9170/debug.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/dma/ioat/init.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/carl9170/debug.c b/drivers/net/wireless/ath/carl9170/debug.c
-index bb40889d7c720..6bbcca46358cf 100644
---- a/drivers/net/wireless/ath/carl9170/debug.c
-+++ b/drivers/net/wireless/ath/carl9170/debug.c
-@@ -121,7 +121,7 @@ static ssize_t carl9170_debugfs_write(struct file *file,
- 	if (!count)
- 		return 0;
- 
--	if (count > PAGE_SIZE)
-+	if (count >= PAGE_SIZE)
- 		return -E2BIG;
- 
- 	ar = file->private_data;
-@@ -134,7 +134,7 @@ static ssize_t carl9170_debugfs_write(struct file *file,
- 	if (!dfops->write)
- 		return -ENOSYS;
- 
--	buf = vmalloc(count);
-+	buf = vmalloc(count + 1);
- 	if (!buf)
- 		return -ENOMEM;
- 
-@@ -142,6 +142,7 @@ static ssize_t carl9170_debugfs_write(struct file *file,
- 		err = -EFAULT;
- 		goto out_free;
+diff --git a/drivers/dma/ioat/init.c b/drivers/dma/ioat/init.c
+index 2a47b9053bad8..677efa50fefce 100644
+--- a/drivers/dma/ioat/init.c
++++ b/drivers/dma/ioat/init.c
+@@ -1168,15 +1168,6 @@ static int ioat3_dma_probe(struct ioatdma_device *ioat_dma, int dca)
+ 		       ioat_chan->reg_base + IOAT_DCACTRL_OFFSET);
  	}
-+	buf[count] = '\0';
  
- 	if (mutex_trylock(&ar->mutex) == 0) {
- 		err = -EAGAIN;
+-	err = dma_async_device_register(&ioat_dma->dma_dev);
+-	if (err)
+-		goto err_disable_interrupts;
+-
+-	ioat_kobject_add(ioat_dma, &ioat_ktype);
+-
+-	if (dca)
+-		ioat_dma->dca = ioat_dca_init(pdev, ioat_dma->reg_base);
+-
+ 	/* disable relaxed ordering */
+ 	err = pcie_capability_read_word(pdev, PCI_EXP_DEVCTL, &val16);
+ 	if (err) {
+@@ -1192,6 +1183,15 @@ static int ioat3_dma_probe(struct ioatdma_device *ioat_dma, int dca)
+ 		goto err_disable_interrupts;
+ 	}
+ 
++	err = dma_async_device_register(&ioat_dma->dma_dev);
++	if (err)
++		goto err_disable_interrupts;
++
++	ioat_kobject_add(ioat_dma, &ioat_ktype);
++
++	if (dca)
++		ioat_dma->dca = ioat_dca_init(pdev, ioat_dma->reg_base);
++
+ 	if (ioat_dma->cap & IOAT_CAP_DPS)
+ 		writeb(ioat_pending_level + 1,
+ 		       ioat_dma->reg_base + IOAT_PREFETCH_LIMIT_OFFSET);
 -- 
 2.53.0
 
