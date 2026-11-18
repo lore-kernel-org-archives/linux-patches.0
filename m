@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032784;
-	b=lwFXfqSqbYArIm5FyEUVrrE5KY44dM2lgVUI5KZslGcJrmZnTWaYR3CxyaIfJIeG5Deb
-	 j9jNyKA3utnTN5kC9KTMNRNdxdXUtdc50ad0iDO03Ms63y//b17BOU6lEj7wfzFuWnGGS
-	 rWoKUXjLhhBsIxwUdp0ozv6G1XMh1+aBaSmyRfBfw24Dj3VeGA0JiaSdp+U4koSAwPu+F
-	 dt25GDplWGVHOQ+k6PxOhWLqsR2BnF7po6tNl//Q27uq/Gm45Y4O6sS3j7nZhX+5MoI94
-	 Z5PoxgTtnyGriA8kn8kfcMb2IeiAGdisB2/9sM7m3cb4IFUhAK0YL7HixYgU5OxS6Tg==
+	t=1795032786;
+	b=IRqO9FmLq0IIxpO0v2m0HZqeXwFrF9aiwl/3cOTQmcSJ/brwStbLe/pt6Wnyyu0twS1M
+	 mRRUfzcvB9bzFtwLT5M3mOT4yUPBsAJpk0dqw3ktMfSmLlzu1Ym7UGWAdM1phURQiFfTT
+	 zTcqaJuOQW5H00CGLdiA1l4AxYKNYCKY0V1FECmAVVJVCjNjOucA1xCz7eglSKa/qO5W8
+	 gcj4csWqqjj2lhM+E5eKAjCrKO4hZG56/Ry8v4srNVgk912Wg9+lEhBFuM48qYOiHDjj5
+	 m0eBKpQZKwX5ak1p4Fqrz/zWGtUVLSHoejNIhtONkWlZM67SwJ2PfpBkts18uBLM9Lg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032784;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032786;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ECkzCrR6MkvdX5lnQCBDNWyUnqiWtn6om1e3WJtWKTE=;
-	b=I++WzFliO6EHnqEe/e6DpLeoWDSolq6RHFA5d1o0r5YghWNG49ScvQl3lWOsgyC40N/+
-	 HcmnbEowJYNy9Un7ETRLpY2qvlcf8wYD/5Vg+hGVyckUrwkUf7r1DlKlGeF5GPjb/0KyQ
-	 wEAwJSNHtyveQtBFv7qalljp7lUflYKB1XcD7vIrxb7QerA5J3kUnHFTwLK62FbUMNNp0
-	 /UL0zyl5YgbKVkY1yd9w8uZuNVOWkYA1zBf24iRiV2EZgSQRrckBDV9rQzadxJYUgrGJM
-	 Pvh9c1Bp8sKXFWaveCXyT3iRrMIX6gtykLgrYqUSzA2URqeOKbMWS+0fJIfzU27VvoA==
+	bh=QASfG7vQ8jYD/1BU7ZO+f9Db1yM61r17tZh3fngvHBs=;
+	b=hPU0at6OUbEmDdSCgtX+wb6qOREgmqyulN9eDjBHe7Xb1Zei7CQXVw3IkLOBQSQpPxYF
+	 Ec7csh55KpVaCYbzwh3je+4PkiuOjTbGjTuTjU24zrXPlITWMVE3bQMoqDszNJrZYs8BX
+	 /Zh6qGoJUkat9dQYvybaq6wLsmEfIzCmL+vgViywOR4draix0Kqv18Ph0Qp/Fg4R0/jWA
+	 RE1IJpmBy/7y1JKz9yYW/0KP8If3CIJJBytEGKgUBOSggn+QqpVajHdSlkUzaYqy0oKxO
+	 bZveMBMEq7mCiFzsgKZMmMoQHdLi8wUmJDr3CrU6jvrDoreX8OUC4DkoTkoVNtVfLyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fJILWLKr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=klhu10Xb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19D0606A31C;
-	Wed, 18 Nov 2026 20:13:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABF6606A31C;
+	Wed, 18 Nov 2026 20:13:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fJILWLKr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F32801F000C4;
-	Wed, 18 Nov 2026 20:13:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=klhu10Xb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEDEC1F000C4;
+	Wed, 18 Nov 2026 20:13:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032783;
-	bh=ECkzCrR6MkvdX5lnQCBDNWyUnqiWtn6om1e3WJtWKTE=;
+	s=korg; t=1795032786;
+	bh=QASfG7vQ8jYD/1BU7ZO+f9Db1yM61r17tZh3fngvHBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fJILWLKrV83bCu5deumcb0qOUmr0526rLftBnmUQ5wPoaCOoKHzpJnjnn6IDrE9rc
-	 4sB3/+g/FUyKYBLHJUdkDPGcHKxthASNqEqzJMjhqSU/9xtkIamXmPyywZmGetLl+E
-	 L8aBJKIQOTjb7iuKpGBgw04eKuUQMvxdoNxiLDi8=
+	b=klhu10Xb6iXYivNabLEsZF7xPLezfOp51I0wA7ovLC15JMVDx4Oj1kZYvvEnNKkSy
+	 9WuMh6+mVSYdp7juzoYlo46ZzslS1lJIjY92JQMuaWx2t9E3Fh8PdYbjxHX+ekCF1O
+	 WLnxaP12RWcQG4AjU0SWBkuMLtrFm0OQW0DKehjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Daniel Machon <daniel.machon@microchip.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1534/1756] net: sparx5: split sparx5_fdma_{start(),stop()}
-Date: Wed, 18 Nov 2026 16:01:01 +0100
-Message-ID: <20261118150110.033167689@linuxfoundation.org>
+Subject: [PATCH 6.12 1535/1756] net: sparx5: activate FDMA tx in start()
+Date: Wed, 18 Nov 2026 16:01:02 +0100
+Message-ID: <20261118150110.063799668@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,146 +71,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Machon <daniel.machon@microchip.com>
 
-[ Upstream commit b91dcb237c69a05b06d64e2f4ba0a74a0552b80f ]
+[ Upstream commit cded2e0f1b0de5aa1ebd4bf42c3f1919b7adf6cd ]
 
-The two functions: sparx5_fdma_{start(),stop()} are responsible for a
-number of things, namely: allocation and initialization of FDMA buffers,
-activation FDMA channels in hardware and activation of the NAPI
-instance.
-
-This patch splits the buffer allocation and initialization into init and
-deinit functions, and the channel and NAPI activation into start and
-stop functions. This serves two purposes: 1) the start() and stop()
-functions can be reused for lan969x and 2) prepares for future MTU
-change support, where we must be able to stop and start the FDMA
-channels and NAPI instance, without free'ing and reallocating the FDMA
-buffers.
+The function sparx5_fdma_tx_activate() is responsible for configuring
+the TX FDMA instance and activating the channel. TX activation has
+previously been done in the xmit() function, when the first frame is
+transmitted. Now that we have separate functions for starting and
+stopping the FDMA, it seems reasonable to move the TX activation to the
+start function. This change has no implications on the functionality.
 
 Reviewed-by: Steen Hegelund <Steen.Hegelund@microchip.com>
 Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20250113-sparx5-lan969x-switch-driver-5-v2-2-c468f02fd623@microchip.com
+Link: https://patch.msgid.link/20250113-sparx5-lan969x-switch-driver-5-v2-3-c468f02fd623@microchip.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 1df26063ab9b ("net: sparx5: fix tx DCB index drift in fdma xmit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/microchip/sparx5/sparx5_fdma.c   | 44 ++++++++++++++-----
- .../ethernet/microchip/sparx5/sparx5_main.c   |  7 ++-
- .../ethernet/microchip/sparx5/sparx5_main.h   |  2 +
- 3 files changed, 41 insertions(+), 12 deletions(-)
+ drivers/net/ethernet/microchip/sparx5/sparx5_fdma.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_fdma.c b/drivers/net/ethernet/microchip/sparx5/sparx5_fdma.c
-index 61df874b76235..b65074b358899 100644
+index b65074b358899..c21f643423275 100644
 --- a/drivers/net/ethernet/microchip/sparx5/sparx5_fdma.c
 +++ b/drivers/net/ethernet/microchip/sparx5/sparx5_fdma.c
-@@ -258,10 +258,6 @@ static int sparx5_fdma_rx_alloc(struct sparx5 *sparx5)
- 	fdma_dcbs_init(fdma, FDMA_DCB_INFO_DATAL(fdma->db_size),
- 		       FDMA_DCB_STATUS_INTR);
- 
--	netif_napi_add_weight(rx->ndev, &rx->napi, sparx5_fdma_napi_callback,
--			      FDMA_WEIGHT);
--	napi_enable(&rx->napi);
--	sparx5_fdma_rx_activate(sparx5, rx);
- 	return 0;
- }
- 
-@@ -406,7 +402,7 @@ static void sparx5_fdma_injection_mode(struct sparx5 *sparx5)
- 	}
- }
- 
--int sparx5_fdma_start(struct sparx5 *sparx5)
-+int sparx5_fdma_init(struct sparx5 *sparx5)
+@@ -215,7 +215,6 @@ int sparx5_fdma_xmit(struct sparx5 *sparx5, u32 *ifh, struct sk_buff *skb)
  {
- 	int err;
+ 	struct sparx5_tx *tx = &sparx5->tx;
+ 	struct fdma *fdma = &tx->fdma;
+-	static bool first_time = true;
+ 	void *virt_addr;
  
-@@ -439,24 +435,52 @@ int sparx5_fdma_start(struct sparx5 *sparx5)
- 	return err;
+ 	fdma_dcb_advance(fdma);
+@@ -236,12 +235,8 @@ int sparx5_fdma_xmit(struct sparx5 *sparx5, u32 *ifh, struct sk_buff *skb)
+ 		     FDMA_DCB_STATUS_BLOCKO(0) |
+ 		     FDMA_DCB_STATUS_BLOCKL(skb->len + IFH_LEN * 4 + 4));
+ 
+-	if (first_time) {
+-		sparx5_fdma_tx_activate(sparx5, tx);
+-		first_time = false;
+-	} else {
+-		sparx5_fdma_reload(sparx5, fdma);
+-	}
++	sparx5_fdma_reload(sparx5, fdma);
++
+ 	return NETDEV_TX_OK;
  }
  
-+int sparx5_fdma_deinit(struct sparx5 *sparx5)
-+{
-+	sparx5_fdma_stop(sparx5);
-+	fdma_free_phys(&sparx5->rx.fdma);
-+	fdma_free_phys(&sparx5->tx.fdma);
-+
-+	return 0;
-+}
-+
- static u32 sparx5_fdma_port_ctrl(struct sparx5 *sparx5)
+@@ -452,6 +447,7 @@ static u32 sparx5_fdma_port_ctrl(struct sparx5 *sparx5)
+ int sparx5_fdma_start(struct sparx5 *sparx5)
  {
- 	return spx5_rd(sparx5, FDMA_PORT_CTRL(0));
- }
- 
-+int sparx5_fdma_start(struct sparx5 *sparx5)
-+{
-+	struct sparx5_rx *rx = &sparx5->rx;
-+
-+	netif_napi_add_weight(rx->ndev,
-+			      &rx->napi,
-+			      sparx5_fdma_napi_callback,
-+			      FDMA_WEIGHT);
-+
-+	napi_enable(&rx->napi);
-+
-+	sparx5_fdma_rx_activate(sparx5, rx);
-+
-+	return 0;
-+}
-+
- int sparx5_fdma_stop(struct sparx5 *sparx5)
- {
-+	struct sparx5_rx *rx = &sparx5->rx;
+ 	struct sparx5_rx *rx = &sparx5->rx;
 +	struct sparx5_tx *tx = &sparx5->tx;
- 	u32 val;
  
--	napi_disable(&sparx5->rx.napi);
-+	napi_disable(&rx->napi);
-+
- 	/* Stop the fdma and channel interrupts */
--	sparx5_fdma_rx_deactivate(sparx5, &sparx5->rx);
--	sparx5_fdma_tx_deactivate(sparx5, &sparx5->tx);
-+	sparx5_fdma_rx_deactivate(sparx5, rx);
-+	sparx5_fdma_tx_deactivate(sparx5, tx);
-+
- 	/* Wait for the RX channel to stop */
- 	read_poll_timeout(sparx5_fdma_port_ctrl, val,
- 			  FDMA_PORT_CTRL_XTR_BUF_IS_EMPTY_GET(val) == 0,
- 			  500, 10000, 0, sparx5);
--	fdma_free_phys(&sparx5->rx.fdma);
--	fdma_free_phys(&sparx5->tx.fdma);
-+
+ 	netif_napi_add_weight(rx->ndev,
+ 			      &rx->napi,
+@@ -461,6 +457,7 @@ int sparx5_fdma_start(struct sparx5 *sparx5)
+ 	napi_enable(&rx->napi);
+ 
+ 	sparx5_fdma_rx_activate(sparx5, rx);
++	sparx5_fdma_tx_activate(sparx5, tx);
+ 
  	return 0;
  }
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-index 5b83cd4b6270b..2c07a320cd8a2 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-@@ -698,8 +698,11 @@ static int sparx5_start(struct sparx5 *sparx5)
- 					       sparx5_fdma_handler,
- 					       0,
- 					       "sparx5-fdma", sparx5);
--		if (!err)
--			err = sparx5_fdma_start(sparx5);
-+		if (!err) {
-+			err = sparx5_fdma_init(sparx5);
-+			if (!err)
-+				sparx5_fdma_start(sparx5);
-+		}
- 		if (err)
- 			sparx5->fdma_irq = -ENXIO;
- 	} else {
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_main.h b/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
-index fde3e3d686d17..319cb020a9bcc 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
-@@ -314,6 +314,8 @@ int sparx5_manual_injection_mode(struct sparx5 *sparx5);
- void sparx5_port_inj_timer_setup(struct sparx5_port *port);
- 
- /* sparx5_fdma.c */
-+int sparx5_fdma_init(struct sparx5 *sparx5);
-+int sparx5_fdma_deinit(struct sparx5 *sparx5);
- int sparx5_fdma_start(struct sparx5 *sparx5);
- int sparx5_fdma_stop(struct sparx5 *sparx5);
- int sparx5_fdma_xmit(struct sparx5 *sparx5, u32 *ifh, struct sk_buff *skb);
 -- 
 2.53.0
 
