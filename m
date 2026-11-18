@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043807;
-	b=zmiJHNjp78VNjAkym3QjjaNZ3SBCGUVGPNpChiIv2tVbM5ngQC5eL6EHmXHodlwlLVDE
-	 R2PVCq8EKiqH6mN7xcWAvu0gy+4BW/Ky2/a5XAvG/fIKEKrLWdMolme51w+41/U2ghAnz
-	 uNeRscNBq+24DxkSsCePcpERFDEcrEgpqlPJ6xq/OIEkTXXw2rNsnt+T2WRNn8hSIMhI6
-	 oBWl6bK93bbq2l5bmVyv66lY2s1+6B5bFsZMvBRFJJq/soYCgGwmUu8lfsGQnxH4nRpX6
-	 E9bwAjW4+gCeteey+p3Cpsr0hd8CU/n5wmB+zrSDwzLESmaIvNj3JhNtcV2ZCrT3nWg==
+	t=1795043809;
+	b=aE5wPJZv7B/7J3l1mEFOp/kdERLQFpjQT4v5ni6NQwkRDgTkloAXavGbjZpMegjYT0oM
+	 lLtZnANm3B+VPwLgy117y6MIQcXMwPJxw1gp2GTR2wkFutQFvkjPVASt9zwPKaFlb9XJE
+	 rNXqyQFBukXoqj1eTldiSLhB+vPDGLgCjjWOgKDs2e6IYHhoN6tuHRmnBk2LgJtVGTQDD
+	 SYSOfiInHIREe5GwIfT4dEsMsJMn4/n67zgC4TWy8yPVvfJOmvu1RSJ3qFsfbtHxP5ujL
+	 rRDkHSTUUP9IPNiRcY25h4e+4r3SeWMSEIxUyFVATbQMqUw0IRgfscqBIsyZ42OW9+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043807;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043809;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cVCoJZsCruGV7mz5qJaSMxGiDuIt8Wjgu5nFsHxjeV4=;
-	b=RBXNRH1qzmgwBEsej5yWLrBx91S8EQjUucbtaKNLlbXzhfbxDGiL+g0Iod6s+k4Y/VAP
-	 RKIMfdnGDBnXEktjgf1y7Vp0Tuc6QDMq8TJyyf/Ge7r88wikpioObahwfBGvHzmrC6TA0
-	 jMeYY/Uz8CKafN2F5JMIU/VFy/z7quYDPc1CEVCxOoJT5yPKr4eQ7VP2oxBKr9xzHvaB7
-	 NnHiqnKCcKZICRp+WjisNjxfY7ASCVLeQs7u1tM9Md8b2vTgY/UDrtsYchSptn+3GApcB
-	 VET3tene30qQ3UElnmtJtxrOKrS5lRDKBOmWGLMUUAhJM3HAbMCT4WH29RV4LNfV4zQ==
+	bh=7vSQiDuOrQyDT6uhUiqcL3Ju/pcRzgQQ7/zXWY7Jtac=;
+	b=JPoJSfntCQodRWazof/QNud2GoBGefhqGI5eApr/KW7GJ6KT99aVkg5o2a/yDJfr8Wj/
+	 T5QRQFXXABay/j9d/0AWiLa1OH78J8UYP6L27a/WBvD1tcTqqMKsSArQjseeBFwaoeQu3
+	 B9aqv4FZAM96tbMBZEQmbloB1YyNQIrvs0pfbrrnyd5hjiy7lT+S+lxFXBMXVaKA5ZDNa
+	 sZra+wfINrLZw9S1WDIQoMdqRkf8yBDGacdkdG3xqzp5A5wdwak1Es0RuIUFCtz9C4cXv
+	 5/PeQlHV+/vCYbOX7n6Jj9JBwerVnNbWkenZwrD4yRR6aDmnQhDfDmoWB/96wZcty9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hlU8hoM2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JJkdqNdm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A89F606A32A;
-	Wed, 18 Nov 2026 23:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2BA3606A31C;
+	Wed, 18 Nov 2026 23:16:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hlU8hoM2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81D021F000C4;
-	Wed, 18 Nov 2026 23:16:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JJkdqNdm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 367A41F000C4;
+	Wed, 18 Nov 2026 23:16:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043807;
-	bh=cVCoJZsCruGV7mz5qJaSMxGiDuIt8Wjgu5nFsHxjeV4=;
+	s=korg; t=1795043809;
+	bh=7vSQiDuOrQyDT6uhUiqcL3Ju/pcRzgQQ7/zXWY7Jtac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hlU8hoM2HYmogjQv33Q8Os095ZuHyWe3/QyLprbAVLukOWE+X5oCgv6igA453ANq9
-	 sJ8tRUmXFvP+S1EETR9N+ohTOEDQduvgQSCA5Y485Plq0GIVZkyfgkw/S0aLbMtbcX
-	 Au0Zb1ebXFwL/sGM9i95cNhZwi2wG6OlSRy6CGPY=
+	b=JJkdqNdmHYXdgcx09Nor1NZo8kYqkuECTinDTDeJYTtlAZB1BFbVMJbX9BU7U72yU
+	 0XbM1S2H0AOsUWYQsEwNCG5PC29btLRJ74xHVATThqxjiPZS5c6aZ7zxeDntel6f23
+	 jJzFfqsccTBnejzIT/yqrTltkv3A7SMxGlTmJ4FA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joanne Chang <joannechien@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Can Peng <pengcan@kylinos.cn>,
+	Kursad Oney <kursad.oney@broadcom.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0342/2857] f2fs: dirty directory inodes on mtime/ctime update
-Date: Wed, 18 Nov 2026 15:22:56 +0100
-Message-ID: <20261118150213.755707628@linuxfoundation.org>
+Subject: [PATCH 6.1 0343/2857] spi: bcm63xx-hsspi: disable clocks on resume failure
+Date: Wed, 18 Nov 2026 15:22:57 +0100
+Message-ID: <20261118150213.790529666@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,113 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joanne Chang <joannechien@google.com>
+From: Can Peng <pengcan@kylinos.cn>
 
-[ Upstream commit 9ec09d5f4b317a417c8655c14056f70cbe71eb6c ]
+[ Upstream commit 3b0cee02664041aea7e4f787c66cb86c82eb4e97 ]
 
-Xfstests generic/547 sometimes fail with mismatched directory metadata
-before and after a power failure. This happens because when a directory
-entry is added, renamed, or deleted, its mtime and ctime are updated and
-the inode is marked dirty via
-f2fs_mark_inode_dirty_sync(dir, sync=false). The sync=false flag means
-the dirty inode is not added to the global DIRTY_META list. Therefore,
-subsequent checkpoints skip flushing these updated directory blocks,
-causing directory timestamps to revert to stale values after a sudden
-power failure.
+bcm63xx_hsspi_resume() enables the HSSPI clock, and optionally the PLL
+clock, before restarting the SPI controller queue.
 
-Address this by changing the dirtying parameter to sync=true during
-directory entry mutations and renames. This forces F2FS to immediately
-queue the updated directory blocks on the global DIRTY_META list,
-ensuring timestamps are committed to checkpoints.
+If spi_controller_resume() fails, the function currently reports success
+and leaves those clocks enabled. Propagate the error and disable the
+clocks before returning.
 
-Fixes: 7c45729a4d6d ("f2fs: keep dirty inodes selectively for checkpoint")
+Fixes: 142168eba9dc ("spi: bcm63xx-hsspi: add bcm63xx HSSPI driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Joanne Chang <joannechien@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ sashal: Kept this tree's older page and i_mtime APIs in the context lines and applied only the false to true change to f2fs_mark_inode_dirty_sync(). ]
+Signed-off-by: Can Peng <pengcan@kylinos.cn>
+Reviewed-by: Kursad Oney <kursad.oney@broadcom.com>
+Link: https://patch.msgid.link/20260804072017.860974-1-pengcan@kylinos.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
+[ sashal: Adapted the call to the older spi_master_resume(master) naming, which maps to spi_controller_resume(), instead of upstream's spi_controller_resume(host). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/dir.c    | 6 +++---
- fs/f2fs/inline.c | 2 +-
- fs/f2fs/namei.c  | 6 +++---
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ drivers/spi/spi-bcm63xx-hsspi.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/dir.c b/fs/f2fs/dir.c
-index cadc32959a23f..a48838a306525 100644
---- a/fs/f2fs/dir.c
-+++ b/fs/f2fs/dir.c
-@@ -514,7 +514,7 @@ void f2fs_set_link(struct inode *dir, struct f2fs_dir_entry *de,
- 	set_page_dirty(page);
+diff --git a/drivers/spi/spi-bcm63xx-hsspi.c b/drivers/spi/spi-bcm63xx-hsspi.c
+index 7d8e5c66f6d17..8822dd21486af 100644
+--- a/drivers/spi/spi-bcm63xx-hsspi.c
++++ b/drivers/spi/spi-bcm63xx-hsspi.c
+@@ -511,7 +511,13 @@ static int bcm63xx_hsspi_resume(struct device *dev)
+ 		}
+ 	}
  
- 	dir->i_mtime = dir->i_ctime = current_time(dir);
--	f2fs_mark_inode_dirty_sync(dir, false);
-+	f2fs_mark_inode_dirty_sync(dir, true);
- 	f2fs_put_page(page, 1);
+-	spi_master_resume(master);
++	ret = spi_master_resume(master);
++	if (ret) {
++		if (bs->pll_clk)
++			clk_disable_unprepare(bs->pll_clk);
++		clk_disable_unprepare(bs->clk);
++		return ret;
++	}
+ 
+ 	return 0;
  }
- 
-@@ -668,7 +668,7 @@ void f2fs_update_parent_metadata(struct inode *dir, struct inode *inode,
- 		clear_inode_flag(inode, FI_NEW_INODE);
- 	}
- 	dir->i_mtime = dir->i_ctime = current_time(dir);
--	f2fs_mark_inode_dirty_sync(dir, false);
-+	f2fs_mark_inode_dirty_sync(dir, true);
- 
- 	if (F2FS_I(dir)->i_current_depth != current_depth)
- 		f2fs_i_depth_write(dir, current_depth);
-@@ -984,7 +984,7 @@ void f2fs_delete_entry(struct f2fs_dir_entry *dentry, struct page *page,
- 	f2fs_put_page(page, 1);
- 
- 	dir->i_ctime = dir->i_mtime = current_time(dir);
--	f2fs_mark_inode_dirty_sync(dir, false);
-+	f2fs_mark_inode_dirty_sync(dir, true);
- 
- 	if (inode)
- 		f2fs_drop_nlink(dir, inode);
-diff --git a/fs/f2fs/inline.c b/fs/f2fs/inline.c
-index e2dddced55afb..62eab8af0234d 100644
---- a/fs/f2fs/inline.c
-+++ b/fs/f2fs/inline.c
-@@ -711,7 +711,7 @@ void f2fs_delete_inline_entry(struct f2fs_dir_entry *dentry, struct page *page,
- 	f2fs_put_page(page, 1);
- 
- 	dir->i_ctime = dir->i_mtime = current_time(dir);
--	f2fs_mark_inode_dirty_sync(dir, false);
-+	f2fs_mark_inode_dirty_sync(dir, true);
- 
- 	if (inode)
- 		f2fs_drop_nlink(dir, inode);
-diff --git a/fs/f2fs/namei.c b/fs/f2fs/namei.c
-index a374017baddb6..f304692ad91a2 100644
---- a/fs/f2fs/namei.c
-+++ b/fs/f2fs/namei.c
-@@ -1021,7 +1021,7 @@ static int f2fs_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
- 	f2fs_up_write(&F2FS_I(old_inode)->i_sem);
- 
- 	old_inode->i_ctime = current_time(old_inode);
--	f2fs_mark_inode_dirty_sync(old_inode, false);
-+	f2fs_mark_inode_dirty_sync(old_inode, true);
- 
- 	f2fs_delete_entry(old_entry, old_page, old_dir, NULL);
- 	old_page = NULL;
-@@ -1193,7 +1193,7 @@ static int f2fs_cross_rename(struct inode *old_dir, struct dentry *old_dentry,
- 		f2fs_i_links_write(old_dir, old_nlink > 0);
- 		f2fs_up_write(&F2FS_I(old_dir)->i_sem);
- 	}
--	f2fs_mark_inode_dirty_sync(old_dir, false);
-+	f2fs_mark_inode_dirty_sync(old_dir, true);
- 
- 	/* update directory entry info of new dir inode */
- 	f2fs_set_link(new_dir, new_entry, new_page, old_inode);
-@@ -1212,7 +1212,7 @@ static int f2fs_cross_rename(struct inode *old_dir, struct dentry *old_dentry,
- 		f2fs_i_links_write(new_dir, new_nlink > 0);
- 		f2fs_up_write(&F2FS_I(new_dir)->i_sem);
- 	}
--	f2fs_mark_inode_dirty_sync(new_dir, false);
-+	f2fs_mark_inode_dirty_sync(new_dir, true);
- 
- 	if (F2FS_OPTION(sbi).fsync_mode == FSYNC_MODE_STRICT) {
- 		f2fs_add_ino_entry(sbi, old_dir->i_ino, TRANS_DIR_INO);
 -- 
 2.53.0
 
