@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028463;
-	b=lZyMlG9f9QlMunbt4qfVZSe4XEcrF0khetYcbsWGAiWbDKgp6VmztOpC0B7X7d/i5aoC
-	 Q0pcyC19YSwN9JcsnknRvKyVVfLEHv+EVncZrzQ5pyReUhOkvaiSMqfCtnuijAorkO0g2
-	 Q7e9GI6DUSCiYkOUqsPRq5V02eTfEsi/m5ku56Ju0XfvfYDzXOBVGqkS+PG4sf11VxP30
-	 GhA2iEWL9rQy2IinqDmaIi3gVcES9VZeb+GrJmz1XS0XW22+iC4B28bgYE2RbEifLWeFH
-	 jvjmLGWl19Wrfr3TCqQorGjiM+l0pKTsyFSraJ8G7CRIueqYlqJTz0tI0Mww8K9buFA==
+	t=1795028466;
+	b=5PwmhHBjofx7USBt5RLzMwwhmmzyPiwklgqWLtYP9o3Le7ornlYbLVfBXv/8+g5M7YkC
+	 zQcCVnjYRbsmSLJaHs9UkXFawE5qXCJXTNS1E1Gi/Oqm75bLju+0WKOhlR0Mip2A4OrJ0
+	 DJlllCwKTsP2LlVk51tWL/WjWXcG9zQBeME8nowSRoOTM3zN4r+eTzi64p0Fm2qWXafMA
+	 udgkceNhZQ4kyEYzmhd7oFrzhWvDf82NLa6TTGJMaTLTssOxJjEfP+HmbP+N78YZdYD21
+	 DqsbIsk/sgbbtROzVmu5a0XtvxquLt3Eru87NJQYGEuZQe1g66/3y5hRT2dyLtk99Hw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028463;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028466;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=uPgRoL9ig+CqQPJhwzubiQAwrjxTbfazZcm+9t5YFjQ=;
-	b=31sLhvnPNlrDemc8qI4lCL4wNXt3YxN/MUeBfc+DMx8ajL+dH4CkY+2M3mdcCIm244j/
-	 s3QiYP2f0Z3r88JFi3WUKL9ey926A+wYjSpxg8E6mDOszn8sFSrqTfPZZLZURQKSlegcR
-	 WGyYtF9c91AqTb9A06eIWL7MFr+f/trDasSa9qE8bPNGnjZ9tmFCRQgMJ6KFJ7SPEWZy9
-	 YpCl/WheHp7wrr0S/Wgtm3L8fh0btCcdRNm5C/AfffNOjtLCiUgLQCuG2VF91EklKSnsM
-	 23e7f4uRz/nzYCUc/CQPNnI4UtxqNyiHsYKNLDUxLsLwYC1MxgL1pygxNdGHh7e2GRg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=FKpiB57BZt999fRgSOqvLgL6Ktrus0zAxgd4t9BjqlI=;
+	b=JNZ5fDwPq3K79m1GRGP089sfowGLBDOq0bvDghZsIRZ6C2s2ZoNtxDW5oselK30TzZQZ
+	 GJ5HKnOfqn+pIXysfFPiBdSEjXVi46kLdTTVnft8Gy9Lnl02wiAqE3zflfBkoO/pwYE/y
+	 BKNneghlXIjbnedxfvOUOhalJdRYL536Il5mClcu00bMOaC6XeNAjcMRB+Wa9I4mR0n4b
+	 gzbSfF4KhD0J/YRuAGstYLFtSLA7CRHxQzagHStekisRFjocO2fPEYxoeLHt/6YonOm36
+	 /Fp/DN8KGVRAGN9Ff+ffWFJz1rI+ox2EXKTSjZmvi+CJ6kUUCb3T7t5JJPPmXjFL1lg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xXf3sxAV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="wKSR/FJb";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE27606A31C;
-	Wed, 18 Nov 2026 19:01:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F92606A330;
+	Wed, 18 Nov 2026 19:01:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xXf3sxAV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D25D1F000C4;
-	Wed, 18 Nov 2026 19:01:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wKSR/FJb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C67DF1F000C4;
+	Wed, 18 Nov 2026 19:01:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028462;
-	bh=uPgRoL9ig+CqQPJhwzubiQAwrjxTbfazZcm+9t5YFjQ=;
+	s=korg; t=1795028466;
+	bh=FKpiB57BZt999fRgSOqvLgL6Ktrus0zAxgd4t9BjqlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xXf3sxAVekXkTDraFrwpwCQiUwFuKt1M17/h2YEYr75Wr7KQ1jkXAdUH6k0IB9uGI
-	 nhHeYNE1iapV8mFTspAnvBsLQ7lCfuTW4Wdkaojm34YM3t3RkKqIMgqcmVNeupxqJj
-	 1yi2gbuw1s5yiSafplR2A6UjVAHg0DYnvveht8Dg=
+	b=wKSR/FJbxm2OSEn96An1edgpMuOa+IvnXWeicgIRe5dwyvYEPOUlVCGcR02EwbdY2
+	 Ru8Pw5Y8nYgbsLa3V8yd6gtROdff7gXit67o3mE14tDYtUNBaX0k1FIwGR69+joUBH
+	 xCxDZjHHP0dpxpNbjQdGWgxcaVZbGabk7W1Y9kKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christoph Hellwig <hch@lst.de>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 2135/2151] zloop: fix block size query
-Date: Wed, 18 Nov 2026 16:04:30 +0100
-Message-ID: <20261118150239.448710060@linuxfoundation.org>
+	Hannes Reinecke <hare@kernel.org>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.18 2136/2151] nvmet-auth: reject incomplete DHCHAP messages
+Date: Wed, 18 Nov 2026 16:04:31 +0100
+Message-ID: <20261118150239.486498665@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -62,40 +63,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-commit 8fbee85a90789d367c347b1cfd5a5ef37f3a934a upstream.
+commit 29e027774324dbd5321a67bbd16840e8f7bcd189 upstream.
 
-The block size obviously needs to be queried when it is not set, not when
-it already is set.
+Commit c9359401036e ("nvmet-auth: reject undersized AUTH_SEND
+payloads") only ensures that AUTH_SEND has auth_type and auth_id
+before nvmet_execute_auth_send() starts parsing the payload, but the
+DHCHAP path reads t_id before it verifies message lengths. A two-byte
+DHCHAP NEGOTIATE payload can therefore still trigger an OOB read that
+KASAN reports as:
 
-Reported: Damien Le Moal <dlemoal@kernel.org>
-Fixes: 5e9929e2f03c ("zloop: share more code for opening a zone backing file")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://patch.msgid.link/20261102055558.3212814-1-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+  BUG: KASAN: slab-out-of-bounds in nvmet_execute_auth_send
+  Read of size 2 at addr ffff8880030d8364
+
+Require the payload to cover the minimum DHCHAP message length
+before parsing it.
+
+Fixes: c9359401036e ("nvmet-auth: reject undersized AUTH_SEND payloads")
+Cc: stable@vger.kernel.org
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/zloop.c |    2 +-
+ drivers/nvme/target/fabrics-cmd-auth.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/block/zloop.c
-+++ b/drivers/block/zloop.c
-@@ -841,7 +841,7 @@ static int zloop_init_zone(struct zloop_
- 		goto out_fput;
+--- a/drivers/nvme/target/fabrics-cmd-auth.c
++++ b/drivers/nvme/target/fabrics-cmd-auth.c
+@@ -303,7 +303,7 @@ void nvmet_execute_auth_send(struct nvme
+ 		nvmet_check_transfer_len(req, tl);
+ 		return;
  	}
- 
--	if (zlo->block_size) {
-+	if (!zlo->block_size) {
- 		ret = zloop_get_block_size(zlo, zone);
- 		if (ret)
- 			goto out_fput;
+-	if (tl < offsetof(struct nvmf_auth_dhchap_success2_data, rsvd1)) {
++	if (tl < sizeof(struct nvmf_auth_dhchap_failure_data)) {
+ 		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 		req->error_loc =
+ 			offsetof(struct nvmf_auth_send_command, tl);
 
 
