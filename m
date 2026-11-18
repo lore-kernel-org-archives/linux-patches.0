@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029055;
-	b=BVGPMqAkSp4OL3N41VmcEB+UlTQH8bnoK9l8TA5CVCs3bxm4vFaIyYepVclNJKO3bF1i
-	 Y4LJjii2oGxSN7dMLlaUAqeD9kJMxgl5egg7yAhT/e8XpzUhcZz1Tt0vIke3i0hAYIA4t
-	 3akmSX7ywu7gQoYqGBU+2bIk6SnMhxWAKmHrYtlkeccVcQetPTRwofvHpofPH+qMCy8P4
-	 N75/+MR6FV3JvmEYz+u6+Rbl9tgkM7sFJxPaX+mTn0YrM1i6dnwYz/QK5YYqTVnkLI4Gb
-	 I7QuyQNbcO/Zfv7b/Uf08WurBDJFT68QiWjFBULy+yDB8Rr0obOg1pV5s/WEfbY4GSQ==
+	t=1795029057;
+	b=iRbhxZLgH1c3732sTN6dL5R3hgC9JtSgPG+SeI+AQQYU49eJk7VuZ23AQfCurzz1CqTn
+	 ECzx5ogUWuJz+LRPC62Vme+LTr8tSfAhGfpPNoIwUgymICV1zWgDoGfVHxs+sgez2Ff6U
+	 RczwqolUvBDUr2E0YQAV6+/6zqHT8eYbLvfsIdCHv1AUwKtZnOV0+JfmjQPwrOzYy01qW
+	 ASaWK7/u48C0p+QsZW9LpVCUUb4nA5xj2pISnE+bxcLxXLIEOujMdJnQAaNmRJzupWLn7
+	 WSgcFYT+SazDIEaZCEhrGVgpJM/83rbr2IU5o9TsdwRK5BwFtQHg6inA8OvrHFSJY5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029055;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029057;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SVM0FETOnPJmzCvNDxMclbqghjELHPHQKGNMIgQP1SI=;
-	b=vQkd2AovjHZ2DMvQj4xDDLg4HStq1/92ADUiX0mPBvIIvaaXkkzyKrRTAaAYEljoM9l1
-	 Uo6n4RZHbIz4jYkg/MBly3t3nb6eXsAMZSgZfrIH6sN2ha4aQXybQIQX4QLaFcPsZ3UAr
-	 eIXOKUboNlDg57Os0Slq1ogdFv8bUQ55mP/y6eujYKFwBAErt+phMqXr72At4XrLvH8cd
-	 YCIJ2zFR+0sGyFYOUaRykF7adneUYmodK8ciDlaOi2qqnbZpJZsnrQVDTZPq6O5Sw02oU
-	 dUY1Sjt0XUEXkUFpMvigS2IID+9XOgsMI8hvO5IFeQc7lJXKVpdsj2d9ToSo/B5OBAw==
+	bh=iKH4YgAQfgX6E8K2yU+8O+S9EjpeHPYYqjYe2lHVZLU=;
+	b=SGO39+ML7qZRwUX5iw8HrN949y95Zv4gduDqmq0cJON3dMNBk1CUUcHGZcUXwwZOv/IV
+	 cdhf35q+kGxorr9GbY3e7oxfYgWDBwl5X/n8NthK+o7ws0M/9R3FLC7bVZoAtveE8eSiP
+	 sy7u22Q8MyVdxms+Cbk3QK7zW5unXBCbtN7KurbBFxsrCO6Mf1/zPEHgu1nUREJeJ01x/
+	 ealXiBt8HrDtPuKwJCTK1xjSHRqp5AkOAtUa8UQx3kZWs9NcXYjTPAsWiAzmolA+oM1Up
+	 pJn4gOylVb403A5QheqD/0Ux//P3OAXBy25/XTUIwFagxkYgM3UjVfP8x7Q/iQSJIXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vwP3I6X2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WIN1fHcb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081E0606A32F;
-	Wed, 18 Nov 2026 19:10:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2230606A325;
+	Wed, 18 Nov 2026 19:10:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vwP3I6X2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54FE31F000CC;
-	Wed, 18 Nov 2026 19:10:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WIN1fHcb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BD2D1F000C4;
+	Wed, 18 Nov 2026 19:10:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029054;
-	bh=SVM0FETOnPJmzCvNDxMclbqghjELHPHQKGNMIgQP1SI=;
+	s=korg; t=1795029057;
+	bh=iKH4YgAQfgX6E8K2yU+8O+S9EjpeHPYYqjYe2lHVZLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vwP3I6X2GxXPikEMTEFvV+42PvEdohPuAhVCk/HjMuRIv05UC+vMYAoqhAw21NG0h
-	 t/lSzPHD3DlAoyMwD1GhFqzcjRAz5gutK3TWQpCAn71+TxYSa0qNhg74xN9xp+9njz
-	 Lo1DA25kZaHq+aHVg1FPkHlCyI7+b+opBc5wO3PQ=
+	b=WIN1fHcb2f8fwWm4ACY5zTb2PfVFyCh57gpeqQV4AoeXUdEirjiezjeaFDMyIhZnl
+	 4IFeKFoYWDycnComUWKTvwrguJXRUPV00bOd+ffIDDfA/Q6N1l3ya/USe5xYD15iTg
+	 MjnMzEbolaylIQZIVjU8j1ikYrnkGjZePgPW8fRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Stephane Eranian <eranian@google.com>,
+	Stefano Sanfilippo <ssanfilippo@chromium.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0211/1756] PCI: endpoint: pci-epf-vntb: Pass PF/VF number when BAR programming
-Date: Wed, 18 Nov 2026 15:38:58 +0100
-Message-ID: <20261118150016.739879468@linuxfoundation.org>
+Subject: [PATCH 6.12 0165/1756] perf jitdump: Prevent integer underflow in debug info size calculation
+Date: Wed, 18 Nov 2026 15:38:12 +0100
+Message-ID: <20261118150014.834678498@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,42 +71,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit afe2aa9dc93d904730bab63f5ccb514a318e6464 ]
+[ Upstream commit dfe8fe96efca3c32979dc0859f88e15b677d25f1 ]
 
-vntb_epf_mw_set_trans() programs the memory-window BAR through
-pci_epc_set_bar() with hardcoded function numbers (0, 0), so the BAR
-lands on the wrong function whenever the vNTB EPF is bound to anything
-but PF0. The other BAR programming sites in the vNTB driver already pass
-the EPF's own numbers.
+jit_repipe_debug_info() and jit_repipe_unwinding_info() compute payload
+sizes by subtracting the fixed header size from total_size:
 
-Pass the EPF's own func_no/vfunc_no here as well.
+  sz = jr->prefix.total_size - sizeof(jr->info);
 
-Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260728172306.2751813-2-den@valinux.co.jp
+When total_size is smaller than the header struct (from a truncated or
+corrupted jitdump record), the subtraction underflows to a massive
+value, causing an oversized allocation followed by an OOB memcpy.
+
+Validate that total_size covers at least the fixed header before the
+subtraction in both functions.
+
+Fixes: 598b7c6919c7 ("perf jit: add source line info support")
+Fixes: 0284fecd13b6 ("perf jit: Add unwinding support")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Cc: Stephane Eranian <eranian@google.com>
+Cc: Stefano Sanfilippo <ssanfilippo@chromium.org>
+Assisted-by: LLM
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-vntb.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/perf/util/jitdump.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-index 710bddc30cdfc..ea96174cc5110 100644
---- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-@@ -1065,7 +1065,8 @@ static int vntb_epf_mw_set_trans(struct ntb_dev *ndev, int pidx, int idx,
- 	epf_bar->barno = barno;
- 	epf_bar->size = size;
+diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
+index de7dd4db33db8..96e728b49af5a 100644
+--- a/tools/perf/util/jitdump.c
++++ b/tools/perf/util/jitdump.c
+@@ -652,6 +652,10 @@ static int jit_repipe_debug_info(struct jit_buf_desc *jd, union jr_entry *jr)
+ 	if (!(jd && jr))
+ 		return -1;
  
--	ret = pci_epc_set_bar(ntb->epf->epc, 0, 0, epf_bar);
-+	ret = pci_epc_set_bar(ntb->epf->epc, ntb->epf->func_no,
-+			      ntb->epf->vfunc_no, epf_bar);
- 	if (ret) {
- 		dev_err(dev, "failure set mw trans\n");
- 		return ret;
++	/* total_size must cover at least the fixed header */
++	if (jr->prefix.total_size < sizeof(jr->info))
++		return -1;
++
+ 	sz  = jr->prefix.total_size - sizeof(jr->info);
+ 	data = malloc(sz);
+ 	if (!data)
+@@ -680,6 +684,10 @@ jit_repipe_unwinding_info(struct jit_buf_desc *jd, union jr_entry *jr)
+ 	if (!(jd && jr))
+ 		return -1;
+ 
++	/* total_size must cover at least the fixed header */
++	if (jr->prefix.total_size < sizeof(jr->unwinding))
++		return -1;
++
+ 	unwinding_data_size  = jr->prefix.total_size - sizeof(jr->unwinding);
+ 	unwinding_data = malloc(unwinding_data_size);
+ 	if (!unwinding_data)
 -- 
 2.53.0
 
