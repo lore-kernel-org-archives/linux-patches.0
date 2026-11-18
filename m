@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028724;
-	b=3uu6B6DdtBybswJNB3oyNUfwQ6ICjpWQPGBoKdHvMbU9q1Ht3fFNOTg+JmlnEMC24Sf/
-	 PL6HJIPr5p2esR+ocBmPopcZVOnNZg4Zfg599KAYfMl+AsVWlWorAx4shctTKuFcEJxHg
-	 yPtJWWuYvSvTG3uhDmtodtlnQII1RCS9wQm5LcDmqL9A0nA2QD0iUPFnbQCCC0tFJ/03q
-	 U5+AEmTsRba6uScI5SdrSIRX5FdiNeZoXrxPmOCGPwyiGf9PrLEFyrusgojNZmj53O+Cv
-	 A7r+kvBFdxhM1f3iJuhGRk6kuCHEt+uNee2asM+dT1VdDUIhUMjQOL7bCO99XwlkLeA==
+	t=1795028727;
+	b=i6aNPO6QmXclhKFaUKunrd7GAbo46NJNesQlsRwBRYRhNOXeFh1DwKQqK0hVNJDtaN69
+	 aNGeDleSxm4BhXP+1qIP6fsOyYCALcekDI83KJ9Knb1OOSeVUoynX6a2CbkO2j1s8L8cO
+	 WMXiFhTWQZxupBufl5MmZDWpsE4PfwmuMgN96kQhrsta6PVtocHOdY2czBpjxEr8a4O0e
+	 QWZ9zrr4t1xZZEmyoPhE5ZALL9bf1bOKtL0tEpTtepIpEEQs3SisevMQmERkFZLb4uKFB
+	 quCdtMovFAvv1Qnwm/c+gogsjX+RBswUysVnt3o2s+Zevie1JADPN5kdWkS4wAYclsg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028724;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028727;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GhgZAhXSuT3YB3Dm+iB34gCY8T9mwckL9339e3UX2X4=;
-	b=yY/x51Pk0eKKoG7gL7tMMee0EXp2cAwGVXbfW7BQdHHCqA3lVcJjxVssKTBWAZrxFcw4
-	 u/AOeQLdgXYSORjqWXFYMckxsZrM/e6pIr5SgEkp8t7jGodWdjPOb9fSsPDiyUY2BUGOB
-	 fe6t7L+JQGyxZohIijx9JcBP3J+GBoB1ZdXdN8W6oEi9frFWvNiLtT3cLPsahylygxRmW
-	 6j2RtuXxCNjgWkfy+Ym+QI52vm6ZpZDSQm2O1Re7dfXFb0v2sTUk7mZGfOa3/AR66EBFS
-	 YXfNsBkvHKfzo6bvR9I43HCqWnJJBqPfk8vSS2gdnsXc9/L27XXlqyMMzQNfDtV7ZjQ==
+	bh=888bw9YG83AmxaL/PhFgFZc3nsvDaEZGFliQkNDp6n0=;
+	b=lqZflf+6DQfwTauaNZ4c6ehPXj4jhJOBYwcK3lmjM684d8CP7oeE6z/WpEjaOmjNd08P
+	 ZWs4dJp7O47dT5FeFGvFpKYBGjQeZBrDUwHjKRv+8J70cLwKxCyv5EzkU5kWdbQ/VS7Nq
+	 lHB8h21Yfvs9lef3zdSA3DKT0UESR8W9vpSwz9YMJjK+DzEXGusRUYlSuSKP92TsjNNCW
+	 IWiYFhzXErNrdB/R+/ehGoZT5Kc3g0u7Ttyr7kuoU3pxY1OvwJLajX1m0znm1Env3N4eY
+	 XgP8NOmgRMovNQ0BdbHbZ+rshQOzzlaarzO5Xn4B6OGWVsp4Xnat9ChCMIfwt1CXi5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bKUx6WDZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ifl+aiVs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2FB9606A337;
-	Wed, 18 Nov 2026 19:05:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79197606A33B;
+	Wed, 18 Nov 2026 19:05:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bKUx6WDZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8C261F000C5;
-	Wed, 18 Nov 2026 19:05:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ifl+aiVs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82A141F000C4;
+	Wed, 18 Nov 2026 19:05:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028724;
-	bh=GhgZAhXSuT3YB3Dm+iB34gCY8T9mwckL9339e3UX2X4=;
+	s=korg; t=1795028727;
+	bh=888bw9YG83AmxaL/PhFgFZc3nsvDaEZGFliQkNDp6n0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bKUx6WDZVi1rqdPJICBqMd5g8QkcZ1MimzNfbHKfBkj9NIPKWEHXvfysgioQS9QOm
-	 NNZhxKDkT9vTGzQ+/Njj2qITSmPGJCHTVJ85oX+7ychy7XGzVnRQF0tcG8dsb/IdwD
-	 At2smJFlMyKrcOAcHtrVEucWTumQRWQFHusMg7RY=
+	b=Ifl+aiVsfNzbg4vixd+a9/WwqfIRRknQr9sAkzpdawGM/NTG2GYLvXaD9IfMh4fRy
+	 HxnN4Qbi246d+q/yKYJskj2JG6eXhZ7iIrvn6xlv59+gBs1THH+0NSYWbzzGCpdHym
+	 FcG6DP9Z00XAuqbYlflYjNbY+5BDD4pxgNa4sqOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Bridges <icb@fastmail.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0096/1756] ksmbd: let the owner read and change the DACL when no ACE names it
-Date: Wed, 18 Nov 2026 15:37:03 +0100
-Message-ID: <20261118150012.066346923@linuxfoundation.org>
+Subject: [PATCH 6.12 0097/1756] mm/userfaultfd: compare exact registration modes before skipping
+Date: Wed, 18 Nov 2026 15:37:04 +0100
+Message-ID: <20261118150012.103252681@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,117 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Bridges <icb@fastmail.org>
+From: Gregory Price <gourry@gourry.net>
 
-[ Upstream commit ffc855fe16afe02b22305111aa68cd8d07360941 ]
+[ Upstream commit 05f64f211a25f7d9771d4fde109aad97174a1cf3 ]
 
-smb_check_perm_dacl() refuses the owner when neither its DACL lookup nor
-the POSIX ACL fallback matches. The owner then cannot read or replace
-the DACL over SMB. MS-DTYP 2.5.3.2 grants the owner READ_CONTROL and
-WRITE_DAC unless an OWNER RIGHTS ACE applies.
+Changing registration from MISSING|WP to WP returns success but leaves
+MISSING enabled. The no-op check sees that WP is already set and skips
+the update, so later accesses to missing pages still wait for userspace.
 
-An empty DACL allows the owner's explicit requests for these rights but
-refuses MAXIMUM_ALLOWED. smb2_open() uses that check for the maximal
-access reply (MS-SMB2 3.3.5.9.5), so even a READ_CONTROL open fails when
-it asks for that reply.
+Skip the update only when the current and requested UFFD modes match
+exactly.
 
-Grant the owner's implicit rights on both paths, for explicit requests
-and MAXIMUM_ALLOWED, unless an OWNER RIGHTS ACE applies.
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Fixes: 63b2d4174c4a ("userfaultfd: wp: add the writeprotect API to userfaultfd ioctl")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ian Bridges <icb@fastmail.org>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ sashal: added the missing sid_owner_rights constant definition for OWNER_RIGHTS SID S-1-3-4 ]
+Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
+[ david: apply fixup from Lorenzo ]
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-26-d6437171ecc3@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: replaced vma_flags_t helpers with a direct vm_flags bitmask comparison ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smbacl.c | 37 +++++++++++++++++++++++++++++++++----
- 1 file changed, 33 insertions(+), 4 deletions(-)
+ mm/userfaultfd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
-index d8c01e775d941..42a638d1d2b97 100644
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -27,6 +27,9 @@ static const struct smb_sid creator_owner = {
- /* security id for everyone/world system group */
- static const struct smb_sid creator_group = {
- 	1, 1, {0, 0, 0, 0, 0, 3}, {cpu_to_le32(1)} };
-+/* security id for owner rights */
-+static const struct smb_sid sid_owner_rights = {
-+	1, 1, {0, 0, 0, 0, 0, 3}, {cpu_to_le32(4)} };
- 
- /* security id for everyone/world system group */
- static const struct smb_sid sid_everyone = {
-@@ -1466,6 +1469,7 @@ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
- 	int i, found = 0;
- 	unsigned int access_bits = 0, denied = 0;
- 	struct smb_ace *others_ace = NULL;
-+	bool or_ace = false;
- 	struct posix_acl_entry *pa_entry;
- 	unsigned int sid_type = SIDOWNER;
- 	unsigned short ace_size;
-@@ -1498,6 +1502,8 @@ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
- 	is_owner = uid == from_kuid(&init_user_ns, vfsuid_into_kuid(vfsuid));
- 
- 	if (!pdacl->num_aces) {
-+		unsigned int allowed = 0;
-+
- 		/*
- 		 * An empty (present, zero-ACE) DACL grants no access to
- 		 * anyone except the object owner's implicit READ_CONTROL
-@@ -1506,9 +1512,14 @@ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
- 		 * not let trailing bytes after a zero-ACE DACL become an
- 		 * implicit grant.
+diff --git a/mm/userfaultfd.c b/mm/userfaultfd.c
+index 10685c46f0866..6a575335bc6f0 100644
+--- a/mm/userfaultfd.c
++++ b/mm/userfaultfd.c
+@@ -1979,7 +1979,7 @@ int userfaultfd_register_range(struct userfaultfd_ctx *ctx,
+ 		 * userfaultfd and with the right tracking mode too.
  		 */
--		if (!is_owner ||
--		    (*pdaccess & ~(FILE_READ_CONTROL_LE | FILE_WRITE_DAC_LE)))
-+		if (is_owner)
-+			allowed = READ_CONTROL | WRITE_DAC;
-+		if (*pdaccess & FILE_MAXIMAL_ACCESS_LE)
-+			requested |= allowed;
-+		if (!allowed || requested & ~allowed)
- 			rc = -EACCES;
-+		else
-+			*pdaccess = cpu_to_le32(requested);
- 		goto err_out;
- 	}
+ 		if (vma->vm_userfaultfd_ctx.ctx == ctx &&
+-		    (vma->vm_flags & vm_flags) == vm_flags)
++		    (vma->vm_flags & __VM_UFFD_FLAGS) == vm_flags)
+ 			goto skip;
  
-@@ -1585,6 +1596,9 @@ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
- 			found = 1;
- 			break;
- 		}
-+		if (!compare_sids(&sid_owner_rights, &ace->sid) &&
-+		    !(ace->flags & INHERIT_ONLY_ACE))
-+			or_ace = true;
- 		if (!compare_sids(&sid_everyone, &ace->sid) ||
- 		    !compare_sids(&sid_authusers, &ace->sid))
- 			others_ace = ace;
-@@ -1629,8 +1643,23 @@ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
- 		if (others_ace) {
- 			ace = others_ace;
- 		} else {
--			ksmbd_debug(SMB, "Can't find corresponding sid\n");
--			rc = -EACCES;
-+			unsigned int allowed = 0;
-+
-+			/*
-+			 * No ACE names the owner, who may still read and
-+			 * change the DACL unless OWNER RIGHTS applies
-+			 * (MS-DTYP 2.5.3.2).
-+			 */
-+			if (is_owner && !or_ace)
-+				allowed = READ_CONTROL | WRITE_DAC;
-+			if (*pdaccess & FILE_MAXIMAL_ACCESS_LE)
-+				requested |= allowed;
-+			if (!allowed || requested & ~allowed) {
-+				ksmbd_debug(SMB, "Can't find corresponding sid\n");
-+				rc = -EACCES;
-+				goto err_out;
-+			}
-+			*pdaccess = cpu_to_le32(requested);
- 			goto err_out;
- 		}
- 	}
+ 		if (vma->vm_start > start)
 -- 
 2.53.0
 
