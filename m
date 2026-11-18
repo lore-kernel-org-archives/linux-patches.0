@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016039;
-	b=aFSjAArZIIWNanHdr4LLcIpg6m8I3pf9PFtwIAKdm7WbxW0S+xGz0whXA/R0GA2sGHfm
-	 hkfIXS9Imk2ILDPreEHjZ9IgtZgKz/RY7pDWIwoe2xbqVn7fBVSgYqieDSwLc65v+R2+D
-	 sHTj9vMYUh38pPxat4HINtqetpdheqFV8JPwbSWDODN39xu5tkVlSHcOdUzng1acd5HM6
-	 q4tA5jotiRqVz7Hh9iSoMnGthzKlO3RZjiiFL4NR+kppm9Q+YqDBR/TKxP877KVsKKGhm
-	 uvZdUfXLQMq121Jtzh1sk9YPvLKbUb1fGiRHoZB17LtEJG1Ypxsqpw4h0SiKR86FTuw==
+	t=1795016042;
+	b=byr0mQyy0x2vIjyRbxSDYOpKdkrBws+TWES028kdT/jKR5ZLqMYo3jSny7cmKqg4Erft
+	 lS5PIpAzRQEeU/kxLLDLulD6szXzpTGqIno3Wm3HVMd9MuotNCrr+jEozGxC86Dho194G
+	 lgpu//K41JTRv5I975wG4ZReDLHAanjRHQLvia9AVRnoIdquXMmZBkjayKX7n1KRt5jG+
+	 4V6+aFXffna1KvfChmc6BG1WT+mFqnG/lG9F5pzO0jqrvG8ygFoToApxP4zxq7c9XjxC0
+	 3qJPbmHnRzOLxrbYw+FdXn+VxEShURwowa2gKQus4syW96AgONWuqTWY633ppGtpJHw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016039;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016042;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=83RbDNNmO32XZERPIlMDk6VZPYvr6FvOnzp9mV3LBpE=;
-	b=N3kyilVrdJaRdL670iRDNIO3kiaA+T62J1SeXdb1NZzasu5LmHpKcU9r87xKWa0geq8e
-	 gbV96pCJO4ORgR80PVJFBzizAlRLEfioaZoRERlwINYbZ4o9fcP4YvP0QqXHyTKivqsBk
-	 PWJGr4VoO0agujKy1Tmll6A0nUkJRzAqYMH0YXOHRUTJf7nA5sFlMJX44txOS25KP/swE
-	 DJeNyxMDNWZdu/C11zsIyq42vpuEriSMATpOcDQNRY7xdbdf92RZXsrJzbK/Ra+9G9TlZ
-	 L5Dy3uIn3iGriBjTM8XKLT8fUORV6pS2753NNYCLdU+6rLvEVctxYcbteGw05APa9Gw==
+	bh=wRJtS1wDGAFgyVV8xlOa0C1tPKwetw/49/TYdmMHZz4=;
+	b=nyKsIm+mpP+tWvVXXlDf8XuW424CEM2ucUROnlYKJ6gNFPdmzue+m+5ZaKD9I51cDuJR
+	 /d7NMR32L6cqaRgv9DdiDUA1IC8knlRKNOObvPuHhWrz5lLav3uJwMy3TBooFH0GEevg3
+	 BvgW0Q7BbJ93YaS8BP15C5PHNtENmXWn0YBlBs9eo1z/DTM6XXoAoC+qEBrhuPxvCiBBr
+	 /D0SvlFXqIc9ZW1usWf/u7tKVV2KCQEVW4t+sMuIqVDObOoYBB7El44s+NROaE/q/ECbh
+	 zHfRTwnsYrFJSPYQDG7CmpgoUmTFRCrzlsOGZ+6owMDH8FwaCMVRR4RlEt/pGhjn91w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CX1k86vh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vkgT5JJu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3438B606A320;
-	Wed, 18 Nov 2026 15:33:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0DE9606A32F;
+	Wed, 18 Nov 2026 15:34:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CX1k86vh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 848651F000C4;
-	Wed, 18 Nov 2026 15:33:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vkgT5JJu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5222F1F000C5;
+	Wed, 18 Nov 2026 15:34:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016039;
-	bh=83RbDNNmO32XZERPIlMDk6VZPYvr6FvOnzp9mV3LBpE=;
+	s=korg; t=1795016041;
+	bh=wRJtS1wDGAFgyVV8xlOa0C1tPKwetw/49/TYdmMHZz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CX1k86vh8lpyVR3zmXGE56DsOpzXnn23SiKpYQ4XPHBXjuPJ7sJ5KtAgM4E7oMen3
-	 5OSWi63iTnlvOL3P8dKSEbyB5ZRwepyYgQViozrI8hMJQTQFWHcZbluAuv+flX+5q1
-	 /oxF+/+FodqFgWpRtXa1LGm5+HTWhTtAJchOxOtk=
+	b=vkgT5JJutOssqaJtfFI3Gx65ZRJLi4TjiSRq7JoKQVMpgn7Gdv4cwmCmVvTYXH1XN
+	 0FGYQtqp0PPqP6Kyv80G2Mfxt4iAXRM35ujSspm0qZfHfcsXnIUvyvhkYWlUQ7PxcN
+	 eJQCmtcrr6v6OTagCH2xTds1cS3mNM0jibuhS1PI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0336/2651] scsi: mpi3mr: Fix out-of-bounds sense buffer access
-Date: Wed, 18 Nov 2026 15:26:16 +0100
-Message-ID: <20261118150259.952376160@linuxfoundation.org>
+Subject: [PATCH 7.3 0381/2651] regulator: ab8500: Test dedicated enable bits only
+Date: Wed, 18 Nov 2026 15:27:01 +0100
+Message-ID: <20261118150301.550521849@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,49 +68,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 7fea128f6b829ad834f21834d2605d28a45b903d ]
+[ Upstream commit a5ee78846015512b4d3d32f8aa463024a23234ce ]
 
-The sense buffer address reported on completion is turned into a virtual
-address with no range check, so an address outside the pool resolves to
-memory that does not belong to it.
+Some regulator control registers have independent enable and low-power
+bits. is_enabled() currently tests their combined update mask, so an
+off regulator with its low-power bit set is incorrectly reported as
+enabled.
 
-Check that it lies within the pool and is correctly aligned.
+Add an optional enable mask and use it for VINTCORE, AB8500 TVOUT,
+AB8505 ADC, and AB8505 VAUX5/6. Regulators whose two-bit field encodes
+the complete operating state continue to test the full update mask.
 
-Fixes: 824a156633df ("scsi: mpi3mr: Base driver code")
-Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Link: https://patch.msgid.link/20260825210411.301535-8-chandrakanth.patil@broadcom.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+References: AB8500 User Manual, UM0836 Rev 3, p. 214;
+AB8505 User Manual, DM00046744 Rev 3, pp. 171-172 and 223
+
+Fixes: 65e03ed2d0cd ("regulators: Fixed errors in ab8500 register mapping")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260901-ux500-dts-snowball-regulator-v2-5-fe88b01829bf@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_fw.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/regulator/ab8500.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-index 82fadb4d2b21f..5c2547bb67a52 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-@@ -142,9 +142,19 @@ void *mpi3mr_get_reply_virt_addr(struct mpi3mr_ioc *mrioc,
- void *mpi3mr_get_sensebuf_virt_addr(struct mpi3mr_ioc *mrioc,
- 	dma_addr_t phys_addr)
+diff --git a/drivers/regulator/ab8500.c b/drivers/regulator/ab8500.c
+index 42cb8dfdc7c90..05c6b9c7af0c7 100644
+--- a/drivers/regulator/ab8500.c
++++ b/drivers/regulator/ab8500.c
+@@ -162,6 +162,7 @@ struct ab8500_shared_mode {
+  * @update_bank: bank to control on/off
+  * @update_reg: register to control on/off
+  * @update_mask: mask to enable/disable and set mode of regulator
++ * @enable_mask: optional mask for an enable bit separate from the mode bit
+  * @update_val: bits holding the regulator current mode
+  * @update_val_idle: bits to enable the regulator in idle (low power) mode
+  * @update_val_normal: bits to enable the regulator in normal (high power) mode
+@@ -183,6 +184,7 @@ struct ab8500_regulator_info {
+ 	u8 update_bank;
+ 	u8 update_reg;
+ 	u8 update_mask;
++	u8 enable_mask;
+ 	u8 update_val;
+ 	u8 update_val_idle;
+ 	u8 update_val_normal;
+@@ -377,6 +379,7 @@ static int ab8500_regulator_is_enabled(struct regulator_dev *rdev)
  {
-+	u64 offset;
-+
- 	if (!phys_addr)
- 		return NULL;
+ 	int ret;
+ 	struct ab8500_regulator_info *info = rdev_get_drvdata(rdev);
++	u8 enable_mask;
+ 	u8 regval;
  
-+	offset = phys_addr - mrioc->sense_buf_dma;
-+
-+	if (phys_addr < mrioc->sense_buf_dma ||
-+	    (phys_addr > mrioc->sense_buf_dma +
-+	     (mrioc->num_sense_bufs * MPI3MR_SENSE_BUF_SZ) - MPI3MR_SENSE_BUF_SZ) ||
-+	    do_div(offset, MPI3MR_SENSE_BUF_SZ))
-+		return NULL;
-+
- 	return mrioc->sense_buf + (phys_addr - mrioc->sense_buf_dma);
- }
+ 	if (info == NULL) {
+@@ -392,13 +395,15 @@ static int ab8500_regulator_is_enabled(struct regulator_dev *rdev)
+ 		return ret;
+ 	}
  
++	enable_mask = info->enable_mask ? info->enable_mask : info->update_mask;
++
+ 	dev_vdbg(rdev_get_dev(rdev),
+ 		"%s-is_enabled (bank, reg, mask, value): 0x%x, 0x%x, 0x%x,"
+ 		" 0x%x\n",
+ 		info->desc.name, info->update_bank, info->update_reg,
+-		info->update_mask, regval);
++		enable_mask, regval);
+ 
+-	if (regval & info->update_mask)
++	if (regval & enable_mask)
+ 		return 1;
+ 	else
+ 		return 0;
+@@ -833,6 +838,7 @@ static struct ab8500_regulator_info
+ 		.update_bank		= 0x03,
+ 		.update_reg		= 0x80,
+ 		.update_mask		= 0x44,
++		.enable_mask		= 0x04,
+ 		.update_val		= 0x44,
+ 		.update_val_idle	= 0x44,
+ 		.update_val_normal	= 0x04,
+@@ -861,6 +867,7 @@ static struct ab8500_regulator_info
+ 		.update_bank		= 0x03,
+ 		.update_reg		= 0x80,
+ 		.update_mask		= 0x82,
++		.enable_mask		= 0x02,
+ 		.update_val		= 0x02,
+ 		.update_val_idle	= 0x82,
+ 		.update_val_normal	= 0x02,
+@@ -1070,6 +1077,7 @@ static struct ab8500_regulator_info
+ 		.update_bank		= 0x01,
+ 		.update_reg		= 0x55,
+ 		.update_mask		= 0x18,
++		.enable_mask		= 0x10,
+ 		.update_val		= 0x10,
+ 		.update_val_idle	= 0x18,
+ 		.update_val_normal	= 0x10,
+@@ -1092,6 +1100,7 @@ static struct ab8500_regulator_info
+ 		.update_bank		= 0x01,
+ 		.update_reg		= 0x56,
+ 		.update_mask		= 0x18,
++		.enable_mask		= 0x10,
+ 		.update_val		= 0x10,
+ 		.update_val_idle	= 0x18,
+ 		.update_val_normal	= 0x10,
+@@ -1113,6 +1122,7 @@ static struct ab8500_regulator_info
+ 		.update_bank		= 0x03,
+ 		.update_reg		= 0x80,
+ 		.update_mask		= 0x44,
++		.enable_mask		= 0x04,
+ 		.update_val		= 0x04,
+ 		.update_val_idle	= 0x44,
+ 		.update_val_normal	= 0x04,
+@@ -1141,6 +1151,7 @@ static struct ab8500_regulator_info
+ 		.update_bank		= 0x03,
+ 		.update_reg		= 0x80,
+ 		.update_mask		= 0x82,
++		.enable_mask		= 0x02,
+ 		.update_val		= 0x02,
+ 		.update_val_idle	= 0x82,
+ 		.update_val_normal	= 0x02,
 -- 
 2.53.0
 
