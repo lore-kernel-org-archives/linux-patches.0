@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052885;
-	b=me6yoMLP12n+nWTAc/lvP6HSgsBC7GNjqDf7E38U6pLorX3GCtkseKGATiYXBexn6N8e
-	 OgKbU1wkzzvipbOizJsQR9w+1MD+3oUr4IL/xaXzTp4WGsHX9c6akUMsgtAAayfGt8/oS
-	 PqrgyRygwGvk99QBu4OZ5zZ0NTDMg6a37Yx9E+qTgJ7BKAqyyRW2k/9woBZL1JWJKJSNm
-	 xPj1VQSW0rb5qoJl17rCs+hTZ/kxARFFWiXI4R/cN5ea7w+S3yOG86mT9zHw/+zSZiEA3
-	 +a2qm0eapAdY4kdBWDIE+Q8XoW6Um7boC05BWCg1jrICe/gfrHu2+FfPzG9xWa/Re9Q==
+	t=1795052887;
+	b=a9m3+V2fQ3gcgxhNyDwW/noRHLK6lDjntgtZNCe4aiOUs68tdB0M97sT/ChBeVsGp5z0
+	 e2qgJcdtOyslmx2TLBZl7cHobMt0Oy3qeEGl1H2opL75PVc4+0UChzC5HnZouQQBt4l+B
+	 7L9HuSB8BlPU/dHHGEc2GO+vTyKzbxIRhGYWPxx2/zXRD25w3gv5M7TUcSK5b8TJSKQlJ
+	 YL0OF3zJucNw1z96AviX+FxYkH/rSyUtZL7Z4BCewiHYRfG8Wv1AGIbppc/yziHniel8e
+	 euzOg8Bb6AelYiMK+WEq/lqzAEHgxHP7HNLq4f6dF6QD/Iq9M/Ye7A98RGeqZC3xUkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052885;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052887;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jEzbV0oxHM9WnsWa5ZGETPqQT456w+ugK33At75XTSo=;
-	b=Rx/woYn7UZWeIuhPah83BYCBy1KrzTUUtZPWeVxU2vGOfEvqBQgUrIXtVNxzxhBc/2ay
-	 dgIsN4XuO6aLrocU9DtmDLQG4pw6L5/hQwyz6DiDaOgx+hRk1Q8oziIdGRjfJTsxGvb4+
-	 zV8t/K4AtzGa+QQ75ZqXTJkvBTv/ydXOlsR9joICy/Dbt2dWLOLLRGM0gRsiPYAWVKfQH
-	 XPy+zpdVmGnUh9bxeo2qlykO/bnu728H9GnDyRbuzioQvuEl6SI/ewGGpJ8Jgtxo+hAV4
-	 B5oCYI1wVhZ1IEbWPebLnr/oB8zceH5rS+GLt9f62s7vV70PD26eFNj0f2BEbboyavA==
+	bh=SNkqcPylSy+pGlwPXo+iTX5xEynaHfEpg2PJxqlsODc=;
+	b=4UPVEfiojCHOmPRqyS8htSwSRSJTZVztgqRMaYAKt53oHGYg1hYisaqGQ1k0H27ZoOHn
+	 WYe64dwwvWGNXB86j3r0e/msvXtpueOudaTUlGvF6+w/bB3hRVEAdgODCfLDDmxwb/r1f
+	 h6kaofdyO7bfkQpfiqtzf9tKzJmczjKWRi3Q+ZWgQep8jOnoKpHmZpOGNSOL3SKzibRu9
+	 Qnb8EtabrW7gWYSikT2Eyt9uLyMAkprQb9/cj5n+/NHgz/BfqKd1yHd0K9HryTSUoHTyF
+	 PXKXPBgUaSsTL44S4NSpOKgxeZdka70ZPC+/H7P75PpRpEidQ7Vb73Bks7bP2AJ3fGw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tNpX66ed;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yi+3ag0h;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A1EE606A325;
-	Thu, 19 Nov 2026 01:48:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC402606A320;
+	Thu, 19 Nov 2026 01:48:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tNpX66ed
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F4521F000C4;
-	Thu, 19 Nov 2026 01:48:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yi+3ag0h
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A0A51F000C4;
+	Thu, 19 Nov 2026 01:48:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052884;
-	bh=jEzbV0oxHM9WnsWa5ZGETPqQT456w+ugK33At75XTSo=;
+	s=korg; t=1795052887;
+	bh=SNkqcPylSy+pGlwPXo+iTX5xEynaHfEpg2PJxqlsODc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tNpX66edhiEX6yF2+fRTyGRkLgt+96ttPsu2vkoc4KcXfDsJBakUOjFsZpmkqdLhI
-	 hIcIeKN523698kxxVgfAacXfp81tsRXVFPWb5HzJ3oDlJvIOxQJARsbsl6q3VmDnEi
-	 ax9h7EzPtxL1bR4Mlc5kWtm0Fsp4oiqoajeBu6Ok=
+	b=yi+3ag0hqZeu6PGUeBMlHb/Oto0G/YypH1S7P+aDyjMVZzocYH+2ycluXSLmjNRu5
+	 coVYTVndYUbpg8YKTHJ/sRFFa+m+Tzk9XeQUiQXGLoNnV6Bw0uZnAd2bAJdUStXyHK
+	 hkRys1iDKJCw6N+8J7biDAxsEmrz9kDNz0mPMg4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0720/2214] ceph: bound name skips in ceph_mdsmap_decode() by the message end
-Date: Wed, 18 Nov 2026 15:39:56 +0100
-Message-ID: <20261118150040.587040821@linuxfoundation.org>
+Subject: [PATCH 5.15 0721/2214] ceph: validate encoded xattr name lengths
+Date: Wed, 18 Nov 2026 15:39:57 +0100
+Message-ID: <20261118150040.620675396@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -71,54 +71,68 @@ Content-Transfer-Encoding: 8bit
 
 From: sung byeongchan <tjdqudcks0424@naver.com>
 
-[ Upstream commit 7f702e1703c9648fcb02a217d66c880d00417150 ]
+[ Upstream commit 166375898d29fea050a9abec855da6075050d5c9 ]
 
-ceph_mdsmap_decode() reads two remote u32 name lengths and advances its
-parser cursor without checking that either string remains in the message.
-On a 32-bit client, a sufficiently large length can wrap the cursor below
-`end`.  The following numerical bounds check then succeeds and dereferences
-the wrapped address.
+__build_xattrs() advances over an MDS-provided name length before checking
+that the name remains in the encoded xattr blob.  On 32-bit clients,
+UINT_MAX wraps the cursor and is stored as a negative internal name
+length.  A later ordinary listxattr() converts it back to a UINT_MAX memcpy
+size and corrupts kernel memory.
 
-Use ceph_decode_skip_n() for both names so the remaining bytes are checked
-before the cursor advances.
+Check the name range before advancing and reject name, value, or aggregate
+sizes that overflow the signed internal accounting.
 
-The issue produced a page fault in ceph_mdsmap_decode twice on the tested
-i386 baseline.  The same frame was rejected without a fault twice after
-this change, while a normal MDSMap continued to be accepted.
+The malformed blob corrupted kernel state in two baseline boots.  It was
+rejected cleanly twice with this change, while normal and length-only
+controls remained safe.
 
 Cc: stable@vger.kernel.org
-Fixes: 2f2dc053404f ("ceph: MDS client")
+Fixes: 355da1eb7a1f ("ceph: inode operations")
 Assisted-by: LLM
 Signed-off-by: sung byeongchan <tjdqudcks0424@naver.com>
 Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/mdsmap.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ceph/xattr.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/fs/ceph/mdsmap.c b/fs/ceph/mdsmap.c
-index 77eca4d7aeff4..355ce829d8e72 100644
---- a/fs/ceph/mdsmap.c
-+++ b/fs/ceph/mdsmap.c
-@@ -206,7 +206,7 @@ struct ceph_mdsmap *ceph_mdsmap_decode(void **p, void *end, bool msgr2)
- 		ceph_decode_need(p, end, sizeof(u64) + sizeof(u32), bad);
- 		*p += sizeof(u64);
- 		namelen = ceph_decode_32(p);  /* skip mds name */
--		*p += namelen;
-+		ceph_decode_skip_n(p, end, namelen, bad);
+diff --git a/fs/ceph/xattr.c b/fs/ceph/xattr.c
+index 058bcbc79aa65..6faef163b2df7 100644
+--- a/fs/ceph/xattr.c
++++ b/fs/ceph/xattr.c
+@@ -11,6 +11,7 @@
+ #include <linux/security.h>
+ #include <linux/posix_acl_xattr.h>
+ #include <linux/slab.h>
++#include <linux/overflow.h>
  
- 		ceph_decode_32_safe(p, end, mds, bad);
- 		ceph_decode_32_safe(p, end, inc, bad);
-@@ -224,7 +224,7 @@ struct ceph_mdsmap *ceph_mdsmap_decode(void **p, void *end, bool msgr2)
- 		laggy = laggy_since.tv_sec != 0 || laggy_since.tv_nsec != 0;
- 		*p += sizeof(u32);
- 		ceph_decode_32_safe(p, end, namelen, bad);
--		*p += namelen;
-+		ceph_decode_skip_n(p, end, namelen, bad);
- 		if (info_v >= 2) {
- 			ceph_decode_32_safe(p, end, num_export_targets, bad);
- 			export_targets_len = size_mul(num_export_targets,
+ #define XATTR_CEPH_PREFIX "ceph."
+ #define XATTR_CEPH_PREFIX_LEN (sizeof (XATTR_CEPH_PREFIX) - 1)
+@@ -806,14 +807,23 @@ static int __build_xattrs(struct inode *inode)
+ 		}
+ 		err = -EIO;
+ 		while (numattr--) {
++			int names_size, vals_size;
++
+ 			ceph_decode_32_safe(&p, end, len, bad);
+ 			namelen = len;
+ 			name = p;
++			ceph_decode_need(&p, end, namelen, bad);
+ 			p += len;
+ 			ceph_decode_32_safe(&p, end, len, bad);
+ 			ceph_decode_need(&p, end, len, bad);
+ 			val = p;
+ 			p += len;
++			if (namelen > INT_MAX || len > INT_MAX ||
++			    check_add_overflow(ci->i_xattrs.names_size,
++					       (int)namelen, &names_size) ||
++			    check_add_overflow(ci->i_xattrs.vals_size,
++					       (int)len, &vals_size))
++				goto bad;
+ 
+ 			err = __set_xattr(ci, name, namelen, val, len,
+ 					  0, 0, &xattrs[numattr]);
 -- 
 2.53.0
 
