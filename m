@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059143;
-	b=Cn+fltnok8ZyX90CKgiOtfg5tq43CTm9kO4YFwlVNNhNJjQr3C+Cs0/pTNs8ULFk3o7o
-	 p/bGwBmU8iK8dapE86MOhh+d8jB+mLat+dzUzqWeFpeKBVvN+MTlMkUnq5cG3bI7d6pCN
-	 GZ3YEiJ8ohZiPSzIhm3GanrptdjYIuXX1jClZNiSjJHbY9GA9FO1kys1pFbeEB4h/IVA7
-	 ZQVjpD0M6cwPybYTU8pN6Z6K3PcMX8WySQNwHjjaVPne1p6vCX8JkN6VJuAQuZIMiPaFA
-	 0RInk/JRSB/YAXbmHNKqb/OU5DGIzCy0PEvpsHUpn7Jnefk4jhjHu2MCjrwPkeETXRw==
+	t=1795059146;
+	b=D0KD1gTWoajmNccAiCpnAWko4gwLAK2CUSjVn9aeyGgyYFVYpRSDvaDj5kGItUXRiKnK
+	 owlWNlcLUkqtsq+soxukmWFEfreIHktkIs+F1woSpqGL8JIBh3ztmyukwc6vSakXtroKO
+	 wJu+kz+zSQdUZMcIrwPkjS1R6j1ybAF1JkR/4/HHxmJJoc+tVPv7GrY2EPwCrDz9vI9rb
+	 DYet3Ie1qZ3BOJGeWw864ZIb5zU1Eb+9QlzXvJ/ZsO45YEXK0IjAhKi2q6yeNhLBonunF
+	 N6Oik+tyw/xeWWcDXSbQHmGQr6h9WYRv6iJgi/k3cKmCIBbEy5CIwceAqr7U6XrqSnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059143;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059146;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SYkDVaZST3QYmLQLrwDQ/z/AZUjzUtExtABXm1OCoug=;
-	b=DCHSEOfjsNR7zyvQ4zv/sKaTHBAIgLAB1u1lA8xmU+hiV8lOlosNjTVFRbnO5uQYTyD3
-	 lneo0JxkY4pINKvVkoXejGsAzV4G0ZEUHhefUTcqEUbtqPyrlWNV5zwofQMrauvj3TV5r
-	 DNMUQBlwWfqPk0SFAMVPTtuQpCjGqYgao2pLkehx5qmpvqSr+3CleQaLyZ8yrfrBKQqBZ
-	 k09v+Q3DCRmevznYNfdLKPy1hQTe3K6AbI0YqBlGu0GcuQydL8X1CVgGX+XOBEW9NH4vG
-	 Q7o1Z+1nIwE3yspuY9ojTUsmcumkOdIZW+FjMcERUf6P/HzAMdSbygtVLbOB5OTB1kQ==
+	bh=aKSB1bmb8tpHGBevjU+PHtf5Lcko010nVJytctQMaUY=;
+	b=ZWwFM4lSLoftcWyHTOJGS8YQviDDrnQogamBTuVI6zHIA3P+11/aWU9bMXoaDX1rnhaY
+	 exHXb0BA1k/ox57qSEGZ1L6EYnc0YKlD49q0E54kEW4r2SyY24msWIVqr5OWsNu8FDAZI
+	 MTWsD9omG7DEQsSLn4M7zRA9otbUR+NtbA0w7BbDhVYVPoaIazs9qKiwkcQbPMhic+9Fy
+	 kMOg1xaKNYOu4PsN+1uiwIxhofMmNqUiPGdMv3on6N9cV9hBV3CGqYQW6EGD1SQIGYakd
+	 E4BvD/0PrO7bi4QzG9hcKn7JvZSNUECzayRNt2pxRlvFpTvwyQUb3QTOcGY5dOJ7/6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Exa1PkWU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lyxKjdvv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A593606A320;
-	Thu, 19 Nov 2026 03:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3EA606A325;
+	Thu, 19 Nov 2026 03:32:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Exa1PkWU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 908EA1F000C4;
-	Thu, 19 Nov 2026 03:32:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lyxKjdvv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FDBF1F000C4;
+	Thu, 19 Nov 2026 03:32:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059143;
-	bh=SYkDVaZST3QYmLQLrwDQ/z/AZUjzUtExtABXm1OCoug=;
+	s=korg; t=1795059145;
+	bh=aKSB1bmb8tpHGBevjU+PHtf5Lcko010nVJytctQMaUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Exa1PkWUtTvwaEJ4CjFHOcfwofRqSXiT+PZRXCmTZbilz6g3agH+uda78UCaKS8Ha
-	 uTsJi/ivJzqAXHWFC1gQCzPV89FOdlvg66OLCgPNG06J0wt1s3qz8+UAbgbIe3fIHZ
-	 B23zCvLwIhdvnD3f8KOYU+bym0cu5xQtVdGQwQo4=
+	b=lyxKjdvvIDNSjHOhr6FcVLx4jN84j3zBoODtf6EgfsMCpMNzTekmHIp8oT8wX615W
+	 JkfKTHOIV/IFmuMi+dbLkzU7TDnHcIhUDR6YoYojIpgDPGg2GsD65GnZFgEsIjHhzd
+	 F2E+2q83C3g+GL8Cp/fnqi3OFkpB6F3XNoAn+q2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
-	Pedro Falcato <pfalcato@suse.de>,
+	Zhao Gongyi <zhaogongyi@bytedance.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0710/1848] fat: hold truncate_lock in fat_write_failed()
-Date: Wed, 18 Nov 2026 15:45:48 +0100
-Message-ID: <20261118145945.600937006@linuxfoundation.org>
+Subject: [PATCH 5.10 0737/1848] arm64: mm: validate /dev/mem mmap ranges without overflow
+Date: Wed, 18 Nov 2026 15:46:15 +0100
+Message-ID: <20261118145947.185172905@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,58 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>
+From: Zhao Gongyi <zhaogongyi@bytedance.com>
 
-[ Upstream commit 7b90009546f5d3f3ac9428040cd7ffbdfd60f2eb ]
+[ Upstream commit b0958b1397fb5ffdb995c0ccc74349841929c08d ]
 
-The current fat_write_failed() implementation calls into
-fat_truncate_blocks() without holding truncate_lock.
+An arm64 syzkaller reproducer creates a FUSE character device with
+major:minor 1:1, so opening it uses the /dev/mem file operations. It
+maps one page from offset 0xfffffffffffff000 at user address zero.
+The next openat() with a NULL pathname triggers a synchronous external
+abort (SEA, ESR 0x96000010) in strncpy_from_user() via do_getname(),
+panicking the kernel.
 
-A failed or short extending write racing with FIBMAP can spuriously make a
-FAT filesystem read-only.  FIBMAP bounds its lookup by i_blocks, so it can
-walk allocated clusters beyond i_size while fat_write_failed() is removing
-them.  If the chain is shortened during the walk, the mapper can report a
-bogus "request beyond EOF" error, triggering the default read-only error
-policy.  Hold truncate_lock for write around the block cleanup to
-serialize it with _fat_bmap().
+valid_mmap_phys_addr_range() checks the exclusive end by adding the
+mapping size to the starting address. For this offset, the sum wraps
+to zero and passes the PHYS_MASK test, allowing an out-of-range PFN to
+reach remap_pfn_range(). The inclusive-end overflow check in
+mmap_mem_prepare() does not catch it because the end is ULONG_MAX.
 
-For comparison, fat_setattr() correctly holds truncate_lock during
-truncation:
+Reject starting PFNs outside PHYS_MASK and compare the inclusive length
+against the remaining physical range without overflowing. This also
+allows mappings that end exactly at PHYS_MASK, which the old check
+incorrectly rejects.
 
-	down_write(&MSDOS_I(inode)->truncate_lock);
-	truncate_setsize(inode, attr->ia_size);
-	fat_truncate_blocks(inode, attr->ia_size);
-	up_write(&MSDOS_I(inode)->truncate_lock);
-
-Make it so ->truncate_lock is held exclusive while truncating.
-
-Link: https://lore.kernel.org/20261021162105.62525-1-matheus.aalmeida@inf.ufrgs.br
-Fixes: 16fab2015099 ("fat: permit to return phy block number by fibmap in fallocated region")
-Fixes: 459f6ed3b8c7 ("fat: convert to use the new truncate convention.")
-Signed-off-by: Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: <stable@vger.kernel.org>
+Fixes: 1d18c47c735e ("arm64: MMU fault handling and page table management")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zhao Gongyi <zhaogongyi@bytedance.com>
+[catalin.marinas@arm.com: changed the check to look more like __access_ok()]
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fat/inode.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/mm/mmap.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/fat/inode.c b/fs/fat/inode.c
-index bab9b202b4966..4b5eca334b268 100644
---- a/fs/fat/inode.c
-+++ b/fs/fat/inode.c
-@@ -221,7 +221,9 @@ static void fat_write_failed(struct address_space *mapping, loff_t to)
- 
- 	if (to > inode->i_size) {
- 		truncate_pagecache(inode, inode->i_size);
-+		down_write(&MSDOS_I(inode)->truncate_lock);
- 		fat_truncate_blocks(inode, inode->i_size);
-+		up_write(&MSDOS_I(inode)->truncate_lock);
- 	}
+diff --git a/arch/arm64/mm/mmap.c b/arch/arm64/mm/mmap.c
+index 3028bacbc4e9c..0e908fd345d7c 100644
+--- a/arch/arm64/mm/mmap.c
++++ b/arch/arm64/mm/mmap.c
+@@ -45,7 +45,9 @@ int valid_phys_addr_range(phys_addr_t addr, size_t size)
+  */
+ int valid_mmap_phys_addr_range(unsigned long pfn, size_t size)
+ {
+-	return !(((pfn << PAGE_SHIFT) + size) & ~PHYS_MASK);
++	const phys_addr_t limit = PHYS_MASK + 1;
++
++	return size <= limit && pfn <= (limit - size) >> PAGE_SHIFT;
  }
  
+ #ifdef CONFIG_STRICT_DEVMEM
 -- 
 2.53.0
 
