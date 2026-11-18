@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036514;
-	b=fHTMih9fFYLi4SM3tFcJUiX7+LAaE+fvTcGJlgbgefrDMR3ixeecixc/UlU7YwRsAGg7
-	 1Uo3bjB3urMHmROxmLu62FOfw0JcVRyKlqGjjJk3ZJQ+RB6oWKAUqfnbDNGD7syIJU/ir
-	 G1lxjSxm2mbg5UyVPYagR8ffEe7rkfFTuYwj2QcpassMEZyQzE6DWyN77XumN+/eBCaCr
-	 p/+1GlaDMiKPVLzPE8KAe/ZPRmJ+CHdMRe5G4Q+uYqI5bUeE3Xozyb/tF/7otXmvM07mX
-	 RyBYU3f8HCUYTTDDuXgC+urBLJGzkyCfjAQDDFOFrK1tTNxA53wQazzUrqFLiAnEDGg==
+	t=1795036517;
+	b=BD9nFR4fkDViMPvbOzowVOnOJh7+wpFrcL2lzWft3cbei3yeEIexVxResCrWPpGVgxUR
+	 mahkvFhxtDBT4ILSMObVaNXtO5ihL0o7l1wLUAfhb0maCc2iJe5irizg86C2fUegn91yr
+	 KLGOAwmZFvL7C/qhslOSVECV6whYOTT6wup/V6TLfFCH+tl/XDZMb+lSYhmzQORU41+Dw
+	 H9yVZLpcUYBY0agetJLMZauTpWvwm1bBuxB0ENSq9kuokFBgCrPOQ3p0I0Z6qsJwuGcVV
+	 2+v6SH1utZlChSY81Z2IRGKcjO2xXMA5lWWkpInwAKyVKUsNGPHqhAPYxfcytt5kJhA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036514;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036517;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ihcjn2RYEvMechKuRIcBn1Sy+d80LuGnztpJ69ZUKtE=;
-	b=Z3Jdlskk8W6RoRJoVgDP0OYcOgQhT6ddhnTluov+YfY2+Td+NfMk7ZqQurB0n1xzcHeD
-	 F7Ksu9c0gX2AB/9CJM2DmpBrtuZUeokzTXQAj4owUohDC4ESvIK5L6utUemsvvfeCjJ66
-	 7fN91A1NjC0ezQyvA/S5OtLvj/SDAH8VBtXK/7k+mfs6WSF4/L7z8J8fsmt9wWPbENfTa
-	 cJgSULi8TNz4f6YnZvpm78sj1b5sIgp41dWVUz0bbSNlm8ky4zuXOSC9r84Zf6wiznF2g
-	 sju09S6/2FGlT3xIMo7JFHOkdz6g/QJyObz8zUeHbOVZtYvktN06CkXpsYOx/XHtw/w==
+	bh=Jl3hERef4TnbPe474gY8J/Lb2RwPX5fegk/5midlNVE=;
+	b=zm2dc5VbwlqSXTwOGYs52e7aeUiS1gRqn3htb0FgtG9shrcZ3EqS7CDWsJDjB8yHglJh
+	 b4LUbD7Fg5n9C2P/ePW1uOcE3fpk4S8jKbB8lsCWE8FAT1IHsi/c6IyY8x2Fs27URUJAM
+	 GFP3/7FBVROZwS4r959onC2TOKlseVn5+Jsu8kNN+DvJbydFdM/eNPQDO8VhDVLA0UlZW
+	 MvYQJuSwKjya4h+Dhk+bvNrmv6h/Giix4jjPlin87kcJRNrl/V3aKRgfn5ZSHkboKRBiC
+	 wGaoFP6DZIiTR77UMJTS4QcJF5Pk6arG4iEIe8wE9fAq2ZeKt+o2Q//Eh4IEZ3h8p8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="BAKilD1/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VUSLLLlv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29804606A333;
-	Wed, 18 Nov 2026 21:15:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7513606A339;
+	Wed, 18 Nov 2026 21:15:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BAKilD1/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 741FE1F000C6;
-	Wed, 18 Nov 2026 21:15:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VUSLLLlv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 417D51F000CD;
+	Wed, 18 Nov 2026 21:15:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036514;
-	bh=ihcjn2RYEvMechKuRIcBn1Sy+d80LuGnztpJ69ZUKtE=;
+	s=korg; t=1795036516;
+	bh=Jl3hERef4TnbPe474gY8J/Lb2RwPX5fegk/5midlNVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BAKilD1/f/haUKoWaIzXXGrXAZ+TJDv9M+N/rwfnZV8+IuSYabxV5TP1T05rff4Lv
-	 IMKtcTimbPXksZ3pfHYvdMyjCIksLleFYCvKE5ULGDTQRmivpBVbA0xQCjUY8ZJqXb
-	 isw8E3BI2p5wTYYfGYCCnWsCeEJSMqYzcZS0Xs7M=
+	b=VUSLLLlvNTugf1ZY/LzoC7gzyDOLnr/WYgZt+EkK14TpGhYdLuYLs12v0k6RZnVsa
+	 xHj5TDN/h1g1pq4zKpBClFWxIiFo4btQR/pXgEbybmPWcOgcHrxFeDyEf//dPY1Da1
+	 3LZR3/2NVrr5pVoTNob/Tu42Z3U2MSp+psNZpWug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	co+e5693071d903b832@bugs.sh,
+	Samuel Thibault <samuel.thibault@ens-lyon.org>,
+	stable@kernel.org,
+	Weiming Shi <bestswngs@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1087/3318] dm-bufio: fix a race leading to an unsigned integer underflow
-Date: Wed, 18 Nov 2026 15:28:29 +0100
-Message-ID: <20261118150352.585158616@linuxfoundation.org>
+Subject: [PATCH 6.6 1088/3318] speakup: Fix NULL pointer dereference on VT switch + selection
+Date: Wed, 18 Nov 2026 15:28:30 +0100
+Message-ID: <20261118150352.616122828@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,49 +70,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Samuel Thibault <samuel.thibault@ens-lyon.org>
 
-[ Upstream commit 005d2ec5723cd4ac740de678274623f1fadd6a6e ]
+[ Upstream commit e1301ab8a8411fccc7effe0711fc09939a94953c ]
 
-The function __scan tests "count - freed <= retain_target" and then sets
-"atomic_long_set(&c->need_shrink, 0);" It exits with the condition "if
-(!atomic_long_read(&c->need_shrink)) break;" It may be possible that
-between these two statements, another thread sets &c->need_shrink to a
-non-zero value. In this case, the function __scan continues and it may
-possibly the "freed" variable is larger than the "count" variable. The
-expression "count - freed" underflows and the function __scan will
-continue to free all the buffers, even those that are below
-retain_target.
+When selecting/pasting very quickly after VT switch, the tty is not set
+yet, leading to a NULL dereference. We can just abort the operation.
 
-Fix this bug by immediatelly exiting if we set
-"atomic_long_set(&c->need_shrink, 0)"; and don't attempt to re-read
-c->need_shrink afterwards.
-
-Fixes: 450e8dee51aa ("dm bufio: improve concurrent IO performance")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Assisted-by: Claude:claude-opus-5
+Reported-by: co+e5693071d903b832@bugs.sh
+Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
+Cc: stable@kernel.org
+Tested-by: Weiming Shi <bestswngs@gmail.com>
+Link: https://patch.msgid.link/20260829164945.2691317-3-samuel.thibault@ens-lyon.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-bufio.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/accessibility/speakup/selection.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/md/dm-bufio.c b/drivers/md/dm-bufio.c
-index 4177d23eb7d6e..8f121a7e87bca 100644
---- a/drivers/md/dm-bufio.c
-+++ b/drivers/md/dm-bufio.c
-@@ -2378,8 +2378,10 @@ static void __scan(struct dm_bufio_client *c)
+diff --git a/drivers/accessibility/speakup/selection.c b/drivers/accessibility/speakup/selection.c
+index 7df7afad5ab42..463a7ef19315e 100644
+--- a/drivers/accessibility/speakup/selection.c
++++ b/drivers/accessibility/speakup/selection.c
+@@ -61,6 +61,9 @@ static struct speakup_selection_work speakup_sel_work = {
  
- 	for (l = 0; l < LIST_SIZE; l++) {
- 		while (true) {
--			if (count - freed <= retain_target)
-+			if (count - freed <= retain_target) {
- 				atomic_long_set(&c->need_shrink, 0);
-+				break;
-+			}
- 			if (!atomic_long_read(&c->need_shrink))
- 				break;
+ int speakup_set_selection(struct tty_struct *tty)
+ {
++	if (!tty)
++		return -ENODEV;
++
+ 	/* we get kref here first in order to avoid a subtle race when
+ 	 * cancelling selection work. getting kref first establishes the
+ 	 * invariant that if speakup_sel_work.tty is not NULL when
+@@ -120,6 +123,9 @@ static struct speakup_selection_work speakup_paste_work = {
  
+ int speakup_paste_selection(struct tty_struct *tty)
+ {
++	if (!tty)
++		return -ENODEV;
++
+ 	tty_kref_get(tty);
+ 	if (cmpxchg(&speakup_paste_work.tty, NULL, tty)) {
+ 		tty_kref_put(tty);
 -- 
 2.53.0
 
