@@ -1,63 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038649;
-	b=B4BP2j+QlQaAaGiGRwqpkcsptmDsmFrMwCVH1PD/N3BMdCWMXFQNIPmCvgOm1IbuxQ1x
-	 xDBSQSCpgI6sPzu0EhXxI+zRWxoN4k/IYLCnlhv+cyFfusM0i1ir3UZ+LErdegCRvP37K
-	 NkcwmrAUOFTh2H2waaa+SuGigw1q4pYwNxVAYJYW/CM5cx1ehEu9APYMYC5b0WymciaIe
-	 puLNyk1Vze7Z7kjzTv3n/d0LN2BdxxKb/5aOvErYwYKDMQ5YthvQ1aplejqiZY6fGyCpy
-	 4aXtW8Q3/VnajPHoEuo+rDsKra4NgzwjHdAW8//ymAjqjyJitgvws41XKygHYZQcVLw==
+	t=1795038652;
+	b=YrYJMdGaU01G9HJqA7yxH93edowpouiI6iMGLjkyUqCvdPAU8KAzfEjwuU3bjbZGt/vn
+	 z2BAkT87f97XCRK6xg9NUQCItn9FUPfqdn9trfGNB/Uyob5MvXCQwDc8BjnWbdq3MTl6G
+	 8AEYO3F3OU0N6gD2OrdYmM2flPZuBQZIv6ELqtdXIGsi0H3HwCSNHQkBqIqA47JS0rA+P
+	 K+bZnP2b9rjXmT5JciRo9oeKwVPA394MzIflGqpD6/Vf87CnBS04NQRCR+gbyQHADMo3p
+	 +sRJRQrPK5W7heBV53/rJ1V2EGp9BiC1PDfKsRQxsQyPHAfo+FXXVS0bmZnmRboBmfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038649;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038652;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ElfeDeJtuCPkVNtu49DkXWruBge7fZ9pIOikn1Nr038=;
-	b=Y8d9J1N4ZVz2wFaC9f6iEgL1QzqWS2bIzQ2eoRl8r8yrPoG+yCEkC+Wlt/gPamAFyIiA
-	 +5BUqydw5gawIrAk6IO6CLyKTbC36/ZpLhylWDj2QiT0TZx83BBG+GBG5iIcEvV/LFf41
-	 Az3vtRo6FElvoGMxAOYvPrS9dfuMuwtUDPAprGRZ2xTW/br/wc0Q95Y5MJCx3bzh6eepv
-	 kQuzHtVDT24BvzHfUZD/DKIdfveULSxLyWKhu0c1/DUqPiUPit5yX2V86CCKVxQ5E5KKV
-	 FLL4YTGPdw4hl/sz35GI20b+uLY5oSRYsvR+zAe+ME6yUfOJvIGSbp7N+8Jcn+NQLSw==
+	bh=9sZcgqkxdLMVKmtQS/6OcLrSn2VM4AQREK/Xx13JE78=;
+	b=0BcZvKFtKMWemVs6reUYPzvAXTZlNeiwp14h9f4E9UXZSAwKGPTWrU2c2RT14TY6zdOi
+	 5ya/dCTB+zZLFURZ+7h8jAwOxY2QunvVmg0OKRQeEcBkW2vI52+YahbNXAPg4U3nhbw5D
+	 Ox15SRmXwFNaQGlGKOLlgD1a0OyHEsLJ3iEPU95Y8HMcqjH+oo8Ro9Z2b6UYnwNoRZEZI
+	 NFZ33xpjrlibVXP6fMXoNcUVBpbjn8nuTKkDPFpvf1rpqfmp9oN/UB3i584Jw7aZsgbNI
+	 8eZvl3ys4vRtqpGUKU6zXQHdZMlIPfdWGIAYtQ7ooeIs3lpfyM29Cc9Gphk4s18NNKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xeHIy1tI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mo0xuFYW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3589606A31C;
-	Wed, 18 Nov 2026 21:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD2B606A31C;
+	Wed, 18 Nov 2026 21:50:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xeHIy1tI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 955F11F000C4;
-	Wed, 18 Nov 2026 21:50:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mo0xuFYW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E5AC1F000C4;
+	Wed, 18 Nov 2026 21:50:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038649;
-	bh=ElfeDeJtuCPkVNtu49DkXWruBge7fZ9pIOikn1Nr038=;
+	s=korg; t=1795038652;
+	bh=9sZcgqkxdLMVKmtQS/6OcLrSn2VM4AQREK/Xx13JE78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xeHIy1tIFN/Z2mUSRNc1ChQPQMKSli2sYIIx2m+ym0aWNipZfdy8fsNe7MMnkDY9k
-	 1g++kwcw1ibk+5+oxtZPNODsEd9aDc5qdPmz3sTiHCXdqv0CAMl5ElaiMf0wyyGiYf
-	 /6AE3OLrtmWrAUz+SvSm2oWQHf7kkGLgu1C3GY0k=
+	b=mo0xuFYWPa2u7AnhzyLh5+He7Rwp5judvXiWgXlmU01BBNY537m6kLjLVQC/PtSHO
+	 GxnrPULXiS+IGQGrM6XeoLcUPBhdDN9CUSM83yP0fFyuzUUSqIyATjUdaA2Zp3bQIp
+	 akdtX1wvcQIN3usr9A++vIcp90MxaGfe9Xkl/a9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	shaos <shawnq1@163.com>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Xueyuan Chen <xueyuan.chen21@gmail.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Mike Rapoport <rppt@linux.vnet.ibm.com>,
-	Peter Xu <peterx@redhat.com>,
-	David Hildenbrand <david@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1817/3318] mm/vma: avoid broken uffd merge on mremap
-Date: Wed, 18 Nov 2026 15:40:39 +0100
-Message-ID: <20261118150416.370949606@linuxfoundation.org>
+Subject: [PATCH 6.6 1818/3318] ALSA: aloop: Use guard() for mutex locks
+Date: Wed, 18 Nov 2026 15:40:40 +0100
+Message-ID: <20261118150416.401353483@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -79,75 +67,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 68cb098eadda190783f8f8bdf9fe764df59f7d32 ]
+[ Upstream commit ebd9b6c91d4e345b7ded4b56567c46267a45d961 ]
 
-Userfaultfd often causes unexpected interactions within mm, and does so at
-the intersection of uffd, mremap() and VMA merging.
+Replace the manual mutex lock/unlock pairs with guard() for code
+simplification.
 
-When an mremap of a VMA occurs, copy_vma_and_data() calls
-mremap_userfaultfd_prep() to notify uffd of this.
+Only code refactoring, and no behavior change.
 
-However, mremap_userfaultfd_prep() simply drops the UFFD context for the
-VMA if the user did not register it for remap, i.e. didn't specify the
-UFFD_FEATURE_EVENT_REMAP flag.
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250829150026.6379-2-tiwai@suse.de
 
-This is OK for the VMA itself, as upon page table move, move_ptes() clears
-UFFD page table flags, using vma_has_uffd_without_event_remap() to
-determine whether to do so.
+Keep the conversions in the format, rate, channels and period-bytes
+constraint rules, which need automatic unlocking for the notify-mode
+early returns. The other mutex conversions are unnecessary for that
+change, and the access-mode control is absent.
 
-However, this doesn't account for merging with adjacent VMAs, whose page
-tables won't have received this treatment, and thus latent UFFD markers
-will be left around.
-
-Worse, it'll break UFFD for any VMAs it is merged with. This is very
-surprising behaviour for a user, who will then simply not receive UFFD
-events for VMAs they ought to.
-
-Resolve the issue by explicitly checking for this case via
-vma_has_uffd_without_event_remap() in vma_merge_copied_range(), the merge
-function explicitly designated for mremap() operations.
-
-Also update the userland VMA tests accordingly.
-
-Link: https://lore.kernel.org/20261020-uffd-remap-fix-v1-1-0f34fc181f0a@kernel.org
-Fixes: 3cfd22be0ad6 ("userfaultfd: clear flag if remap event not enabled")
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: shaos <shawnq1@163.com>
-Closes: https://lore.kernel.org/all/20261020110748.959870-1-shawnq1@163.com/
-Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Reviewed-by: Xueyuan Chen <xueyuan.chen21@gmail.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: Mike Rapoport <rppt@linux.vnet.ibm.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: <stable@vger.kernel.org>
-[ sashal: Adapted the guard from vma_merge_copied_range() to copy_vma(), assigning new_vma = NULL instead of returning NULL. ]
+Stable-dep-of: ded106036984 ("ALSA: aloop: Don't constrain playback params in notify mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mmap.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/drivers/aloop.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/mm/mmap.c b/mm/mmap.c
-index 4fb3f7156dc35..10d5e416e80d1 100644
---- a/mm/mmap.c
-+++ b/mm/mmap.c
-@@ -3426,6 +3426,9 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
- 	if (can_self_merge && keep_source &&
- 	    (addr == vma->vm_end || vma->vm_start == addr + len))
- 		new_vma = NULL;
-+	else if (vma_has_uffd_without_event_remap(vma))
-+		/* If not registered for remap, uffd context will be cleared. */
-+		new_vma = NULL;
- 	else
- 		new_vma = vma_merge(&vmi, mm, prev, addr, addr + len,
- 				    vma->vm_flags, vma->anon_vma, vma->vm_file,
+diff --git a/sound/drivers/aloop.c b/sound/drivers/aloop.c
+index 9c7671f034d54..cc0c59232d61f 100644
+--- a/sound/drivers/aloop.c
++++ b/sound/drivers/aloop.c
+@@ -952,10 +952,10 @@ static int rule_format(struct snd_pcm_hw_params *params,
+ 	struct snd_mask m;
+ 
+ 	snd_mask_none(&m);
+-	mutex_lock(&dpcm->loopback->cable_lock);
+-	m.bits[0] = (u_int32_t)cable->hw.formats;
+-	m.bits[1] = (u_int32_t)(cable->hw.formats >> 32);
+-	mutex_unlock(&dpcm->loopback->cable_lock);
++	scoped_guard(mutex, &dpcm->loopback->cable_lock) {
++		m.bits[0] = (u_int32_t)cable->hw.formats;
++		m.bits[1] = (u_int32_t)(cable->hw.formats >> 32);
++	}
+ 	return snd_mask_refine(hw_param_mask(params, rule->var), &m);
+ }
+ 
+@@ -966,10 +966,10 @@ static int rule_rate(struct snd_pcm_hw_params *params,
+ 	struct loopback_cable *cable = dpcm->cable;
+ 	struct snd_interval t;
+ 
+-	mutex_lock(&dpcm->loopback->cable_lock);
+-	t.min = cable->hw.rate_min;
+-	t.max = cable->hw.rate_max;
+-	mutex_unlock(&dpcm->loopback->cable_lock);
++	scoped_guard(mutex, &dpcm->loopback->cable_lock) {
++		t.min = cable->hw.rate_min;
++		t.max = cable->hw.rate_max;
++	}
+         t.openmin = t.openmax = 0;
+         t.integer = 0;
+ 	return snd_interval_refine(hw_param_interval(params, rule->var), &t);
+@@ -982,10 +982,10 @@ static int rule_channels(struct snd_pcm_hw_params *params,
+ 	struct loopback_cable *cable = dpcm->cable;
+ 	struct snd_interval t;
+ 
+-	mutex_lock(&dpcm->loopback->cable_lock);
+-	t.min = cable->hw.channels_min;
+-	t.max = cable->hw.channels_max;
+-	mutex_unlock(&dpcm->loopback->cable_lock);
++	scoped_guard(mutex, &dpcm->loopback->cable_lock) {
++		t.min = cable->hw.channels_min;
++		t.max = cable->hw.channels_max;
++	}
+         t.openmin = t.openmax = 0;
+         t.integer = 0;
+ 	return snd_interval_refine(hw_param_interval(params, rule->var), &t);
+@@ -998,10 +998,10 @@ static int rule_period_bytes(struct snd_pcm_hw_params *params,
+ 	struct loopback_cable *cable = dpcm->cable;
+ 	struct snd_interval t;
+ 
+-	mutex_lock(&dpcm->loopback->cable_lock);
+-	t.min = cable->hw.period_bytes_min;
+-	t.max = cable->hw.period_bytes_max;
+-	mutex_unlock(&dpcm->loopback->cable_lock);
++	scoped_guard(mutex, &dpcm->loopback->cable_lock) {
++		t.min = cable->hw.period_bytes_min;
++		t.max = cable->hw.period_bytes_max;
++	}
+ 	t.openmin = 0;
+ 	t.openmax = 0;
+ 	t.integer = 0;
 -- 
 2.53.0
 
