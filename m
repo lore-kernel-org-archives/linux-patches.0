@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050728;
-	b=bl64Mrj5Tf6npnaJJMzfKomKoxBh/ZaEcTnYGWLqqYZt4wm2FNR9k6FS7KonzKmsfDv3
-	 kh1jj+7FsM/irS8rYGNYbZ16foopAqMf1ZsWQDylULMKh5B38Q6RY86RIH2ghyIKy73vs
-	 4+mBTkpKQOjFTJcjSDKWRC2WaUHI5RhAB9dYvv7+mpmp/2sRzcfaMNUbR+LycCvfkpNMN
-	 LiLVcjLUxMI2yTp3ziNpUeI9UBQrPijCK2LQKP6uoQ11oPCQWYn5ISRPeol/94UuPO9Qc
-	 99ui+KuI4+15FPLAD/rtP2KC9lqRwMioAjh+Y7jLacOryqlXLKSqs+NxYI/qbxfrO0g==
+	t=1795050731;
+	b=c88UR+TBJ/dWe9LPUVbAfIsSdaTUJiK/ZxyDiuiwjHrwclKnxzdrRSMwmmsYnHjRMN61
+	 l2+0QpdLNXsxJLvjw+7J5LpiPhreOY/+ISL0SWgK3oexslolxGwhDBnuq6UPisnbnjvyM
+	 Oh2lPlx+BJ1hi7nnzyMxVTv349j8ujxrQ7A+tZu5QCXLdkaBrJKFukMrT1PINESPwKQnn
+	 /zKSKhUPtRUQFUJK6vz5Rq5dJQYyvLKy0srYr3zhW74OTGK1OS/l3CMgTPxi7nPpHeBR5
+	 o/3LXx2IY8OR+Sxz5Q0IGLY0mBLAmc1BkTaQ2+pC94nj2ONkHAuhof082HFi3ySdrEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050728;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050731;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=BT8aUUSi1AchMYmsxSqCs0PilKwHSIkN6DpjPyoUJ+U=;
-	b=pihLhdZZNHPJDFQm5oR2eObkdox5p6X6RNQGnexP9A6OBGmDFXFEsW2SxCoYQQsAmdc+
-	 QUiSDqgzI5ZSuONPmrS2xHmYUmma2oCgsRWzwl9as6fYUGOwSrLk37xd7dXTeIM1nam4j
-	 dJ7lweVK9f6D0HJNNWhIK6Z9TDBokCmMqZ369+VHwPg5O9m8vdS4+2F4QIIrjnUXTYVTm
-	 Ct8VXCDB1jbGqKSlqDefmd7pAu9JkrYOfqu/CjMjSVwovbn+46N5VYydZV1VP0L6wY2IR
-	 18q68s9W5/AvrTMupj4ngtP90zVM7LzB8umEHYWqHE7BjOCzrMWy5fVoJ2J8e8f1C0A==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=zWUPbsLhrBmRYEFv0bI4oFZ6jVwLZ7w+QXBPfIx/2XI=;
+	b=iXQ861rPMWHlTfcj2v2XHbz81WPNRRf0+BQAOIEFGKm32uPywfGQ5PDIfpO++lP42zK2
+	 lCzAbQUbugEoNzu3hJ768ScGJ1MNlF6ASpmL66tk6q5D8JQA9x3Uaw/8QmeGfWUNKG66a
+	 3OlWx0pX1dJtdV/DLfSa0uaSdvRRXPkDlfutBXNNvmrHNcu1QGU6122coa9E7uutwoBVZ
+	 mSC7K7ZU894NTImsGmGUtTgvFr1UFHS+YTqKAl7Jq1Wi1FOyhRKGf5SzL/tX2Q0C6RljJ
+	 1T2BlFpD8EUvGvJ7Um9q8mz6u2Vs6EUKJY0RZj4dE8VWGlNFxHjhc9CjsvA8Avy5UYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nNaL1Xah;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1yvwr2px;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24BB1606A320;
-	Thu, 19 Nov 2026 01:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01807606A320;
+	Thu, 19 Nov 2026 01:12:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nNaL1Xah
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 798801F000C4;
-	Thu, 19 Nov 2026 01:12:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1yvwr2px
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50BE51F000C4;
+	Thu, 19 Nov 2026 01:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050728;
-	bh=BT8aUUSi1AchMYmsxSqCs0PilKwHSIkN6DpjPyoUJ+U=;
+	s=korg; t=1795050730;
+	bh=zWUPbsLhrBmRYEFv0bI4oFZ6jVwLZ7w+QXBPfIx/2XI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nNaL1XahY87aPjS5SPwrmjE5TzEHhnAew53NwGsSDgtse+C/wEtjJfkvFf8PVDV6B
-	 0d/wKQIASAbrwFsJmkjieZXXDJdGYK2VpfwPgsSn+jDDuJUnDws3iXtZTs7fK9TcgG
-	 wcPD6SJm8Oc1RpaQsOypJk/LETcNw4a1Z+14qrgQ=
+	b=1yvwr2pxUnpWLrLWjIPJJ2ihy/yXmikMvv1SQeTh2azlvsJHR2J3pjSOAtQrBLks/
+	 UYWwXstMWxqtAmVITSfhYz6qK29yOlu9bfYH0rdM0vlL1GOpWUZAv5+zDDnD+PEGzz
+	 3XwqTA+7jhxSo2aYaM1iMG5wdVl7Te7cWdLmjqKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Maxime=20B=C3=A9lair?= <maxime.belair@canonical.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
 	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2812/2857] apparmor: report a label allocation failure as -ENOMEM
-Date: Wed, 18 Nov 2026 16:04:06 +0100
-Message-ID: <20261118150342.851971732@linuxfoundation.org>
+Subject: [PATCH 6.1 2813/2857] apparmor: Fix namespace reference leak in __aa_find_or_create_ns()
+Date: Wed, 18 Nov 2026 16:04:07 +0100
+Message-ID: <20261118150342.888124742@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -62,57 +62,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maxime Bélair <maxime.belair@canonical.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 07aee062c6ecaa7199be583c83a1c74ae9885f03 ]
+[ Upstream commit 8f1f7f664c1822af34c5465f9820b4e39146786b ]
 
-aa_label_strn_parse() returns -ENOENT for every failure, so a caller
-cannot tell "no such profile" from "could not allocate a label".
+When the namespace already exists, the reference taken by aa_get_ns() is
+overwritten with ERR_PTR(-EEXIST) without being released. The caller in
+apparmorfs.c clears ns on IS_ERR() and so cannot drop it either, leaking
+the reference on raced mkdir of an existing namespace.
 
-Report an allocation failure as -ENOMEM.
+Release the reference before returning -EEXIST.
 
-Fixes: f1bd904175e8 ("apparmor: add the base fns() for domain labels")
-Signed-off-by: Maxime Bélair <maxime.belair@canonical.com>
+Fixes: 73688d1ed0b8 ("apparmor: refactor prepare_ns() and make usable from different views")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/label.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ security/apparmor/policy_ns.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/security/apparmor/label.c b/security/apparmor/label.c
-index 74b4fd651c423..fda1f5b57ee95 100644
---- a/security/apparmor/label.c
-+++ b/security/apparmor/label.c
-@@ -1951,12 +1951,18 @@ struct aa_label *aa_label_strn_parse(struct aa_label *base, const char *str,
- 		goto out;
- 	}
- 
--	if (create)
-+	if (create) {
- 		label = aa_vec_find_or_create_label(vec, len, gfp);
+diff --git a/security/apparmor/policy_ns.c b/security/apparmor/policy_ns.c
+index a306b08cd75d2..602dfa9845b91 100644
+--- a/security/apparmor/policy_ns.c
++++ b/security/apparmor/policy_ns.c
+@@ -304,10 +304,12 @@ struct aa_ns *__aa_find_or_create_ns(struct aa_ns *parent, const char *name,
+ 	/* try and find the specified ns */
+ 	/* released by caller */
+ 	ns = aa_get_ns(__aa_find_ns(&parent->sub_ns, name));
+-	if (!ns)
++	if (!ns) {
+ 		ns = __aa_create_ns(parent, name, dir);
 -	else
-+		if (!label) {
-+			/* not absence: creating only fails on allocation */
-+			label = ERR_PTR(-ENOMEM);
-+			goto out;
-+		}
 +	} else {
- 		label = vec_find(vec, len);
--	if (!label)
--		goto fail;
-+		if (!label)
-+			goto fail;
++		aa_put_ns(ns);
+ 		ns = ERR_PTR(-EEXIST);
 +	}
  
- out:
- 	/* use adjusted len from after vec_unique, not original */
+ 	/* return ref */
+ 	return ns;
 -- 
 2.53.0
 
