@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027182;
-	b=cSVmgULtGDyqAWeHcb+jmCZXBv1bNjqoNzDi8reEzUOG0bIr5FlZKtCzXhGccYO7NJV5
-	 Zn5CxWozf1lAsNr2oqYqmJU1o3EyeVwX8hbpiPc6rfqwRHAlpkbKJugeEWYKQjF+T5/Rr
-	 XIsTVoEI/wLCSSx7COzL8LGYEnOzB4EQL0q+vUGhZouTpEs6m1fzRNpKCUued1UXsIBtx
-	 7Trb+zHF4FAkJ+wVqw4X9o+lVRrpvdhzvgd0wxKIgrw2zFvIthqWljMm3jC4w3GPHp/dY
-	 ef4BhgCFL6sOZxB8Z+MjTCgzdn/7ualZmj68quYhPV5qP79qJfN8JEgPB6vSqgr7t0Q==
+	t=1795027185;
+	b=kkZX4uc0ASC9+HsZe40/XQ0OWBRwezKBCNCGhMMz9lzCNBSa4imzGM7/p3Ihc55idtj1
+	 TKOglPVIN0FQOa1KS3KHP67kkV90nelk4JcAO36l3btMLnbrSb3NUMcHm2cIWCueKokxg
+	 A6tBAhjbJOjFQ2okKobyfJAAgY3zPTgPDN5kedCxgBDQOOj3V+noVNEbTgnc3j5tQqqnq
+	 CsA4tdS9SWUX98o4v6NFO5u9Om1OK39j7Q2erInBZT/MPqaf7Ef55A/c/wpKBZCYa0Koj
+	 9NmWyejLTv7DhSFLrc2TUSy8H4MX5x6yr0Hjg+QFiZ7kGJYm2ONYuLG8bv6/tD1qZ7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027182;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027185;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7ZBiiOM7eufnAUJVJ9vTBQXkuzv+ppVdGhdoU1b0i/Q=;
-	b=GYLZ87n7xdgff4LTyBCViQChBY3rcBchKXlked1oGljPAOjvHg7l+s6DN/53i4dGhxey
-	 pQgtChYsXsetv9Qd7xFp+YS4Oon9rus/V6OOb6AAmDJ+FVdx+Wna928dE8QGKZb5K8SYy
-	 QkFSNf6xJ+aT7sjDRrGmLsF6lib73qZqHIwY6PhhoXep4GxEzmWaAVxZp7NkIxFnchThe
-	 QM4ESd+ktVQDBe0dOovWO5TZBOxa00xxxfq5G5r1GFA876gp7G1rRz22huFCYoMCsR8w4
-	 f1mKKApgTL4UjXjH352UMtr3nd1KnVjlvTpfZY1/lv7vL+yNFOwZGCv+KZTSJh9K7yg==
+	bh=Hc0Rkddo3MEUFmqpY/jOU0awlUs+TSXR0pqagik2XHA=;
+	b=bHRqZ+GTiRMWpUVo80wlGdlQcds/XiLIZhRf112HjV6/XnbDdNAvV48I8FS+YEIpAvGn
+	 RFgAfFEeH12uDC26JF4+ceKkapmf/rl9RN67O9d/ZDhywsTt0s0POPtYtSvjqmTWx/iSP
+	 +jsgyagGUGGmUi24/XUmi3AuVBbCUX/OyedWetnX+7tMoBIl2R2KwB+EjAv6pR4ddHKyw
+	 IWGigOgxq8P+qpFuSgx4DZIrjc09mcLLe/V7cl4jbh+ZXZMrp5pVkFyijh8tERRMKAlXp
+	 nzuDOak01HOXZE9I0lQts5CgUIF6K6MT0lnl1QForBkB2xr1R7PM02Y+XVbXgBsRt7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="wKsrEP/g";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RJVc7OQv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CCC2606A320;
-	Wed, 18 Nov 2026 18:39:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58165606A31C;
+	Wed, 18 Nov 2026 18:39:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wKsrEP/g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1CBE1F000C4;
-	Wed, 18 Nov 2026 18:39:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RJVc7OQv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD3F01F000C4;
+	Wed, 18 Nov 2026 18:39:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027182;
-	bh=7ZBiiOM7eufnAUJVJ9vTBQXkuzv+ppVdGhdoU1b0i/Q=;
+	s=korg; t=1795027185;
+	bh=Hc0Rkddo3MEUFmqpY/jOU0awlUs+TSXR0pqagik2XHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wKsrEP/ghGV1x+FLFDr/VVftMxyRi7rk3lSHoj+dMbGUyEWmq9HqyixtSVph/y+Fx
-	 YK5fiEzm8w2uAaxzPfEKW2up+1m9Jr3H22qFuoNSuE0EDs1EROGE2JzV8/vtsZuvA4
-	 taWYx5wTlfWhpq0qBbtMn3YVT8h04XfmxxQmMBTU=
+	b=RJVc7OQvt7wVfNs2wuyRSPhXn4LxKJl10KfyXf6fKnsSl0lJ3/Ai43vlnquecl5br
+	 pUHA0EH3XduDGKDt8qLksTqlS3olKrhvIQwGEcHWOWxhcDyN4E3CaMQrpsg0Asq1JY
+	 /RMYyMWjNDjTJefWgxafbiFSDsWpN9XDUxeZB2O0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joas Antonio dos Santos <joasantonio108@gmail.com>,
+	Ivan Vecera <ivecera@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1700/2151] calipso: update payload_len when removing the CALIPSO option
-Date: Wed, 18 Nov 2026 15:57:15 +0100
-Message-ID: <20261118150223.753479498@linuxfoundation.org>
+Subject: [PATCH 6.18 1701/2151] dpll: zl3073x: Add output pin frequency helper
+Date: Wed, 18 Nov 2026 15:57:16 +0100
+Message-ID: <20261118150223.787780364@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,66 +68,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joas Antonio dos Santos <joasantonio108@gmail.com>
+From: Ivan Vecera <ivecera@redhat.com>
 
-[ Upstream commit 00accbd9d5021b942a16078bd5717d7865f6971c ]
+[ Upstream commit 24e4336a87f5c51263535201218889b5f324511f ]
 
-calipso_skbuff_delattr() removes the CALIPSO option from the hop-by-hop
-extension header, or the whole extension header if CALIPSO is its only
-option, and pulls the skb by the removed length.  It never updates
-ipv6hdr->payload_len, so after a successful removal the header still
-claims the original length.
+Introduce zl3073x_dev_output_pin_freq_get() helper function to compute
+the output pin frequency based on synthesizer frequency, output divisor,
+and signal format. For N-div signal formats, the N-pin frequency is
+additionally divided by esync_n_period.
 
-calipso_skbuff_setattr() already adjusts payload_len by the length it
-adds; the delete path was missed.
+Add zl3073x_out_is_ndiv() helper to check if an output is configured
+in N-div mode (2_NDIV or 2_NDIV_INV signal formats).
 
-This is reached on the forward path when a packet carrying CALIPSO is
-sent to a destination mapped to an unlabeled NetLabel domain.  The
-forwarded packet then has a payload_len larger than its real payload
-by the removed length (8 to 264 bytes), and the receiver drops it as
-truncated.  So removing the label on the forward path has been broken
-for every packet that is not resegmented later (SYN, UDP, ICMPv6...).
+Refactor zl3073x_dpll_output_pin_frequency_get() callback to use the
+new helper, reducing code duplication and enabling reuse of the
+frequency calculation logic in other contexts.
 
-Adjust payload_len after the header is moved.  BIG TCP packets carry
-payload_len == 0 (see ipv6_set_payload_len()), and ipv6_payload_len()
-then falls back to skb->len, so leave them alone.
+This is a preparatory change for adding current frequency to the
+supported frequencies list in pin properties.
 
-Tested with client, router and server network namespaces on one kernel
-(arm64, QEMU): SELinux permissive with a minimal mdp-generated policy
-(network_peer_controls=1), "netlabelctl calipso add pass doi:16", the
-default NetLabel mapping left unlabeled, IPv6 forwarding on the router.
-The client sends 5 UDP datagrams with a CALIPSO hop-by-hop option
-(DOI 16, set through IPV6_HOPOPTS) to the server through the router:
-
-  before: router Ip6OutForwDatagrams 5, server receives 0,
-          server Ip6InTruncatedPkts 5
-  after:  router Ip6OutForwDatagrams 5, server receives 5,
-          server Ip6InTruncatedPkts 0
-
-Fixes: 2917f57b6bc1 ("calipso: Allow the lsm to label the skbuff directly.")
-Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
-Link: https://patch.msgid.link/179147329205.58079.5847298721173675285@gmail.com
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Link: https://patch.msgid.link/20260205154350.3180465-2-ivecera@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 23171065fb43 ("dpll: zl3073x: do not offer 0 Hz as a supported pin frequency")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/calipso.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/dpll/zl3073x/core.h | 30 ++++++++++++++++++++++++++++
+ drivers/dpll/zl3073x/dpll.c | 39 +------------------------------------
+ drivers/dpll/zl3073x/out.h  | 17 ++++++++++++++++
+ 3 files changed, 48 insertions(+), 38 deletions(-)
 
-diff --git a/net/ipv6/calipso.c b/net/ipv6/calipso.c
-index 2bc3a8fac86bf..5775ab1c39c04 100644
---- a/net/ipv6/calipso.c
-+++ b/net/ipv6/calipso.c
-@@ -1429,6 +1429,10 @@ static int calipso_skbuff_delattr(struct sk_buff *skb)
- 		skb_pull(skb, delta);
- 		memmove((char *)ip6_hdr + delta, ip6_hdr, size);
- 		skb_reset_network_header(skb);
-+		ip6_hdr = ipv6_hdr(skb);
-+		/* BIG TCP packets have payload_len == 0 */
-+		if (ip6_hdr->payload_len)
-+			be16_add_cpu(&ip6_hdr->payload_len, -delta);
- 	}
+diff --git a/drivers/dpll/zl3073x/core.h b/drivers/dpll/zl3073x/core.h
+index 08f1b49cccca4..3e924139dfc3a 100644
+--- a/drivers/dpll/zl3073x/core.h
++++ b/drivers/dpll/zl3073x/core.h
+@@ -406,6 +406,36 @@ u8 zl3073x_dev_out_dpll_get(struct zl3073x_dev *zldev, u8 index)
+ 	return zl3073x_synth_dpll_get(synth);
+ }
+ 
++/**
++ * zl3073x_dev_output_pin_freq_get - get output pin frequency
++ * @zldev: pointer to zl3073x device
++ * @id: output pin id
++ *
++ * Computes the output pin frequency based on the synth frequency, output
++ * divisor, and signal format. For N-div formats, N-pin frequency is
++ * additionally divided by esync_n_period.
++ *
++ * Return: frequency of the given output pin in Hz
++ */
++static inline u32
++zl3073x_dev_output_pin_freq_get(struct zl3073x_dev *zldev, u8 id)
++{
++	const struct zl3073x_synth *synth;
++	const struct zl3073x_out *out;
++	u8 out_id;
++	u32 freq;
++
++	out_id = zl3073x_output_pin_out_get(id);
++	out = zl3073x_out_state_get(zldev, out_id);
++	synth = zl3073x_synth_state_get(zldev, zl3073x_out_synth_get(out));
++	freq = zl3073x_synth_freq_get(synth) / out->div;
++
++	if (zl3073x_out_is_ndiv(out) && zl3073x_is_n_pin(id))
++		freq /= out->esync_n_period;
++
++	return freq;
++}
++
+ /**
+  * zl3073x_dev_out_is_diff - check if the given output is differential
+  * @zldev: pointer to zl3073x device
+diff --git a/drivers/dpll/zl3073x/dpll.c b/drivers/dpll/zl3073x/dpll.c
+index d7194418d1568..3baf7d5bcd0b7 100644
+--- a/drivers/dpll/zl3073x/dpll.c
++++ b/drivers/dpll/zl3073x/dpll.c
+@@ -903,46 +903,9 @@ zl3073x_dpll_output_pin_frequency_get(const struct dpll_pin *dpll_pin,
+ 				      struct netlink_ext_ack *extack)
+ {
+ 	struct zl3073x_dpll *zldpll = dpll_priv;
+-	struct zl3073x_dev *zldev = zldpll->dev;
+ 	struct zl3073x_dpll_pin *pin = pin_priv;
+-	const struct zl3073x_synth *synth;
+-	const struct zl3073x_out *out;
+-	u32 synth_freq;
+-	u8 out_id;
+ 
+-	out_id = zl3073x_output_pin_out_get(pin->id);
+-	out = zl3073x_out_state_get(zldev, out_id);
+-
+-	/* Get attached synth frequency */
+-	synth = zl3073x_synth_state_get(zldev, zl3073x_out_synth_get(out));
+-	synth_freq = zl3073x_synth_freq_get(synth);
+-
+-	switch (zl3073x_out_signal_format_get(out)) {
+-	case ZL_OUTPUT_MODE_SIGNAL_FORMAT_2_NDIV:
+-	case ZL_OUTPUT_MODE_SIGNAL_FORMAT_2_NDIV_INV:
+-		/* In case of divided format we have to distiguish between
+-		 * given output pin type.
+-		 *
+-		 * For P-pin the resulting frequency is computed as simple
+-		 * division of synth frequency and output divisor.
+-		 *
+-		 * For N-pin we have to divide additionally by divisor stored
+-		 * in esync_n_period output mailbox register that is used as
+-		 * N-pin divisor for these modes.
+-		 */
+-		*frequency = synth_freq / out->div;
+-
+-		if (!zl3073x_dpll_is_p_pin(pin))
+-			*frequency = (u32)*frequency / out->esync_n_period;
+-
+-		break;
+-	default:
+-		/* In other modes the resulting frequency is computed as
+-		 * division of synth frequency and output divisor.
+-		 */
+-		*frequency = synth_freq / out->div;
+-		break;
+-	}
++	*frequency = zl3073x_dev_output_pin_freq_get(zldpll->dev, pin->id);
  
  	return 0;
+ }
+diff --git a/drivers/dpll/zl3073x/out.h b/drivers/dpll/zl3073x/out.h
+index e8ea7a0e0f071..318f9bb8da3a0 100644
+--- a/drivers/dpll/zl3073x/out.h
++++ b/drivers/dpll/zl3073x/out.h
+@@ -79,6 +79,23 @@ static inline bool zl3073x_out_is_enabled(const struct zl3073x_out *out)
+ 	return !!FIELD_GET(ZL_OUTPUT_CTRL_EN, out->ctrl);
+ }
+ 
++/**
++ * zl3073x_out_is_ndiv - check if the given output is in N-div mode
++ * @out: pointer to out state
++ *
++ * Return: true if output is in N-div mode, false otherwise
++ */
++static inline bool zl3073x_out_is_ndiv(const struct zl3073x_out *out)
++{
++	switch (zl3073x_out_signal_format_get(out)) {
++	case ZL_OUTPUT_MODE_SIGNAL_FORMAT_2_NDIV:
++	case ZL_OUTPUT_MODE_SIGNAL_FORMAT_2_NDIV_INV:
++		return true;
++	default:
++		return false;
++	}
++}
++
+ /**
+  * zl3073x_out_synth_get - get synth connected to given output
+  * @out: pointer to out state
 -- 
 2.53.0
 
