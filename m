@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032786;
-	b=IRqO9FmLq0IIxpO0v2m0HZqeXwFrF9aiwl/3cOTQmcSJ/brwStbLe/pt6Wnyyu0twS1M
-	 mRRUfzcvB9bzFtwLT5M3mOT4yUPBsAJpk0dqw3ktMfSmLlzu1Ym7UGWAdM1phURQiFfTT
-	 zTcqaJuOQW5H00CGLdiA1l4AxYKNYCKY0V1FECmAVVJVCjNjOucA1xCz7eglSKa/qO5W8
-	 gcj4csWqqjj2lhM+E5eKAjCrKO4hZG56/Ry8v4srNVgk912Wg9+lEhBFuM48qYOiHDjj5
-	 m0eBKpQZKwX5ak1p4Fqrz/zWGtUVLSHoejNIhtONkWlZM67SwJ2PfpBkts18uBLM9Lg==
+	t=1795032789;
+	b=obpMkh/9nlqrDhej31fEcH6AS77dFQJaLPfImCwXEdUUqbFuCZCYHpd2DZB7YBRi8pV1
+	 e+S3E3DMBGJzWk4TXuA/Gx+ISeWJBQ35sG+XHV7PfZSVDHCPwXdRivih3Xwxp90hwEiny
+	 +hCoLc9BnR+8EL+KnRKslTFIGCRZKOzRjGaG2NygelYDfmi2jJ6KJBcBSiIUsceeYEfV2
+	 3cofjSx2KaGr8xX0qjFwfalxEwbJulMW1Qv8Yaool+Da6gFLBEeijd09Qx6cv3YIWMmjI
+	 kY5EF5jLAhhn732a0fXo4A7z9sLeGeSxhWb+Ze4iyWBJ4ILOF1N4iC1NJjJiE0LODXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032786;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032789;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QASfG7vQ8jYD/1BU7ZO+f9Db1yM61r17tZh3fngvHBs=;
-	b=hPU0at6OUbEmDdSCgtX+wb6qOREgmqyulN9eDjBHe7Xb1Zei7CQXVw3IkLOBQSQpPxYF
-	 Ec7csh55KpVaCYbzwh3je+4PkiuOjTbGjTuTjU24zrXPlITWMVE3bQMoqDszNJrZYs8BX
-	 /Zh6qGoJUkat9dQYvybaq6wLsmEfIzCmL+vgViywOR4draix0Kqv18Ph0Qp/Fg4R0/jWA
-	 RE1IJpmBy/7y1JKz9yYW/0KP8If3CIJJBytEGKgUBOSggn+QqpVajHdSlkUzaYqy0oKxO
-	 bZveMBMEq7mCiFzsgKZMmMoQHdLi8wUmJDr3CrU6jvrDoreX8OUC4DkoTkoVNtVfLyA==
+	bh=HinZpb6I6bhK9WTuNTSOVrusPoWdjUXKtFgZTCQueb8=;
+	b=NID4w2g4u0a9ofpaC0BambcNt40Yztv/tCiuHq7FOfYNqiMVFgoECup3oM67PCtwCCCF
+	 i5k3ocPLvBejIerXX7/P2NDTOUCRN7p1yIolgspyVnXFZNPxh2SQggq5GcsS9PwkfYx1L
+	 f2sXvTAGcEtu6q4S6DlibqefHrwED8l545sQXdqCoxILELT8EP9zA5Ui8e/VXU4dWbC4C
+	 AfHklZ9bxDxUdi8+oOEra9WSBvYbf5B19/FouPr+Tbt5lW3nr9CUz9sqrUoZ0UZbhLMRC
+	 tCKMnyYGbbLU4JFLfKWfzT0MbAFWZuQRCvEttiH0W5XQ1Yvl7+DGuD4Q1M06zUm2NgQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=klhu10Xb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="FRuZMH/w";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABF6606A31C;
-	Wed, 18 Nov 2026 20:13:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23978606A320;
+	Wed, 18 Nov 2026 20:13:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=klhu10Xb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEDEC1F000C4;
-	Wed, 18 Nov 2026 20:13:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FRuZMH/w
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79C9C1F000C4;
+	Wed, 18 Nov 2026 20:13:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032786;
-	bh=QASfG7vQ8jYD/1BU7ZO+f9Db1yM61r17tZh3fngvHBs=;
+	s=korg; t=1795032789;
+	bh=HinZpb6I6bhK9WTuNTSOVrusPoWdjUXKtFgZTCQueb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=klhu10Xb6iXYivNabLEsZF7xPLezfOp51I0wA7ovLC15JMVDx4Oj1kZYvvEnNKkSy
-	 9WuMh6+mVSYdp7juzoYlo46ZzslS1lJIjY92JQMuaWx2t9E3Fh8PdYbjxHX+ekCF1O
-	 WLnxaP12RWcQG4AjU0SWBkuMLtrFm0OQW0DKehjo=
+	b=FRuZMH/w2jSQOOWNBPjga4dF2lPzPr2vvSklyAnQDwjO3ZbNPu0sp8kkJM0L/hhEY
+	 2rstnrPxdaswA7JQWnRJrp/a2s1vMK9WZSNxZA2RYBHcUjh2vf75ersoHa0VdhQHCc
+	 f1qLWTrAgSHkbQnON8CXKvaS8G8IEu3V4U7JSWUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steen Hegelund <Steen.Hegelund@microchip.com>,
 	Daniel Machon <daniel.machon@microchip.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1535/1756] net: sparx5: activate FDMA tx in start()
-Date: Wed, 18 Nov 2026 16:01:02 +0100
-Message-ID: <20261118150110.063799668@linuxfoundation.org>
+Subject: [PATCH 6.12 1536/1756] net: sparx5: fix tx DCB index drift in fdma xmit
+Date: Wed, 18 Nov 2026 16:01:03 +0100
+Message-ID: <20261118150110.097502471@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,68 +71,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Machon <daniel.machon@microchip.com>
 
-[ Upstream commit cded2e0f1b0de5aa1ebd4bf42c3f1919b7adf6cd ]
+[ Upstream commit 1df26063ab9ba64f5fb11049fa4be686b7fc309e ]
 
-The function sparx5_fdma_tx_activate() is responsible for configuring
-the TX FDMA instance and activating the channel. TX activation has
-previously been done in the xmit() function, when the first frame is
-transmitted. Now that we have separate functions for starting and
-stopping the FDMA, it seems reasonable to move the TX activation to the
-start function. This change has no implications on the functionality.
+sparx5_fdma_xmit() advances dcb_index before checking that the FDMA is
+done with the DCB, and does not undo the advance when the check fails.
+Before commit f4aa7e361ae2 ("net: sparx5: use FDMA library for adding
+DCB's in the tx path") the next DCB was always the one after last_dcb.
+Since then dcb_index drifts one DCB further away from last_dcb on every
+failed transmit.
 
-Reviewed-by: Steen Hegelund <Steen.Hegelund@microchip.com>
+While the ring is full, this drops frames even though completed DCBs
+sit behind dcb_index. After a run of failures, dcb_index can also land
+on last_dcb itself. Re-adding last_dcb loses the frame, because the
+FDMA has already passed the tail of the chain, and that DCB is never
+completed again.
+
+Fix this by making dcb_index the next DCB to use, and advancing it only
+after the DCB has been added, as the rx path does. dcb_index and
+last_dcb now only move together, so dcb_index always points at the DCB
+after last_dcb.
+
+The issue was found by an AI code review agent. It was reproduced on a
+sparx5 PCB135 board with a modified kernel that forces 63 consecutive
+transmit failures. Afterwards, about 1 in 64 frames is lost for good.
+With the fix, the same test loses no frames.
+
+Fixes: f4aa7e361ae2 ("net: sparx5: use FDMA library for adding DCB's in the tx path")
 Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20250113-sparx5-lan969x-switch-driver-5-v2-3-c468f02fd623@microchip.com
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261021-sparx5-fdma-last-dcb-v2-1-7b8fabdb9239@microchip.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 1df26063ab9b ("net: sparx5: fix tx DCB index drift in fdma xmit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/sparx5/sparx5_fdma.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/microchip/sparx5/sparx5_fdma.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_fdma.c b/drivers/net/ethernet/microchip/sparx5/sparx5_fdma.c
-index b65074b358899..c21f643423275 100644
+index c21f643423275..95f8116b34633 100644
 --- a/drivers/net/ethernet/microchip/sparx5/sparx5_fdma.c
 +++ b/drivers/net/ethernet/microchip/sparx5/sparx5_fdma.c
-@@ -215,7 +215,6 @@ int sparx5_fdma_xmit(struct sparx5 *sparx5, u32 *ifh, struct sk_buff *skb)
- {
- 	struct sparx5_tx *tx = &sparx5->tx;
+@@ -217,7 +217,6 @@ int sparx5_fdma_xmit(struct sparx5 *sparx5, u32 *ifh, struct sk_buff *skb)
  	struct fdma *fdma = &tx->fdma;
--	static bool first_time = true;
  	void *virt_addr;
  
- 	fdma_dcb_advance(fdma);
-@@ -236,12 +235,8 @@ int sparx5_fdma_xmit(struct sparx5 *sparx5, u32 *ifh, struct sk_buff *skb)
+-	fdma_dcb_advance(fdma);
+ 	if (!fdma_db_is_done(fdma_db_get(fdma, fdma->dcb_index, 0)))
+ 		return -EINVAL;
+ 
+@@ -235,6 +234,8 @@ int sparx5_fdma_xmit(struct sparx5 *sparx5, u32 *ifh, struct sk_buff *skb)
  		     FDMA_DCB_STATUS_BLOCKO(0) |
  		     FDMA_DCB_STATUS_BLOCKL(skb->len + IFH_LEN * 4 + 4));
  
--	if (first_time) {
--		sparx5_fdma_tx_activate(sparx5, tx);
--		first_time = false;
--	} else {
--		sparx5_fdma_reload(sparx5, fdma);
--	}
-+	sparx5_fdma_reload(sparx5, fdma);
++	fdma_dcb_advance(fdma);
 +
+ 	sparx5_fdma_reload(sparx5, fdma);
+ 
  	return NETDEV_TX_OK;
- }
- 
-@@ -452,6 +447,7 @@ static u32 sparx5_fdma_port_ctrl(struct sparx5 *sparx5)
- int sparx5_fdma_start(struct sparx5 *sparx5)
- {
- 	struct sparx5_rx *rx = &sparx5->rx;
-+	struct sparx5_tx *tx = &sparx5->tx;
- 
- 	netif_napi_add_weight(rx->ndev,
- 			      &rx->napi,
-@@ -461,6 +457,7 @@ int sparx5_fdma_start(struct sparx5 *sparx5)
- 	napi_enable(&rx->napi);
- 
- 	sparx5_fdma_rx_activate(sparx5, rx);
-+	sparx5_fdma_tx_activate(sparx5, tx);
- 
- 	return 0;
- }
 -- 
 2.53.0
 
