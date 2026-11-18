@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035942;
-	b=uW443Gpa+jIiyKv1opD+KLgg8FbsWJHY22Pvi/9NFNLX+v1zRs/6JMMC0YVZict3jjY8
-	 YwXXZBAUUOfaG+/Mkll+wrk8jq/Mohe3Cht6KL2s0CME/iB4W4KAdE+wGIIGOO7/sx/Or
-	 SDzOwWbsPNksarUQRBuDXfBeqwu3CefEVddDGdlHDv7Ai9rcLaPh0fc2Xpl+Asvf0LTk+
-	 EHaudfjgMQd1m4IEvQzE1rG0u4Le7+LU1RjbWvFuRG0EGrWJET0au5nP/U0Q+WmBoIOYE
-	 SJx+l52KEgIOn6ikJLrgPcTQqLq/WKIBqK5s0xQXiKyzA7KndbgxxqMsSAdBjPakRJA==
+	t=1795035945;
+	b=31cibMM03AqWlGHu+37t1JwzkSMc/BZ0p+ODsEQ/y3LVsBEC1Ts0kGPPhJ5YCEFXZz8+
+	 3TEaaYKT/qPcQzLPcBxdGgGIJnSdLFDrA+sUIOyN7QF2H5EYQnB/glmw4TNTJbO5IDO4/
+	 u6ZtwFnoMmhCNkkw9fzemZHfq9uO2qQxvib25OzGgbYLeTXsjGBTR68mw7inXyq2tpHsP
+	 sVS4vkaJUa8MFh/iaNsf7RdvkWH2465n5as9HNFpmZz277B7OGmDA1HlXrOppf47aiz91
+	 UX+SRdGT/4H4xAiPcuYpPpWa9ok5iyhRs7XxiN/CcLLsDvbYrCthBAUp3haJsF7VWyQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035942;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035945;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=nJMfDkcjACYQuy6pz3KcKdipuSEPR5xUWJiQ5sDy9gE=;
-	b=4+doiaSjEMOtVQ58o+qRBoghpOTXbXHNsmPwX/Fz2p5yxOX+PPThmwHsppjtVhkAUTsI
-	 xAJ0mmc+Jy/KdtGTysbtiPZ2OQfyh/tugzgluzVN45B5nhzNZlc79ssGntX/lbR/Kb3WO
-	 SHw8YJ6+OMrs/wjy+iJciVQ2zxqqzval0B3qgwarwKe07rOHQRj2A5t4+jmp/XKucfV+v
-	 XzKOxU6VjS3FSSk9GCe3mVzPz9fp8T91TVx9GYC6rt3Dd4RfuutEca3x3PRN83ZONt7zy
-	 dySzPQm1rJ6sswitajDdrB7TwvY1jVFquqD8Pj7jc0FHYeH03/GOR1asfe2lJDKksIQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=xCbcjpNvAiH2SseHrZhnPYOl2Agrkk2pX0Y2uo6vyTA=;
+	b=GbKpO6Yt09csNecdvopOCsGP4Ba69apnnJRyzOIcREtXLObjqOZBpjXfNov9dOLqxLdk
+	 rPzDWtzgmiOZQKmJsaPFQ7w3QdR+Obmf4VooYrfFkyR8K81tHmCzOtt6LkJN03hBPtwso
+	 w7t196E1xcY9e5oIX4g8RX6HWkMjGX1KfD8l0/KeJT2R3mQblMyfwV5YNUuJ2QFkDXn+B
+	 O1A82ZqK9RrMSjwB4M/18aftgL2lfdFgtbKt/exCVEmeLyolJ2wsFo9kXQkh25OMcxRii
+	 Td9QIdNRDu65HRFHmQ8Eaw7wPc5BlezV3PTEp9scOGh70nmPuiUmFfL5bSnbHr42etA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lJLkpENH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j815UAww;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75723606A334;
-	Wed, 18 Nov 2026 21:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417DC606A334;
+	Wed, 18 Nov 2026 21:05:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lJLkpENH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3ED01F000C4;
-	Wed, 18 Nov 2026 21:05:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j815UAww
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93FF71F000C4;
+	Wed, 18 Nov 2026 21:05:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035942;
-	bh=nJMfDkcjACYQuy6pz3KcKdipuSEPR5xUWJiQ5sDy9gE=;
+	s=korg; t=1795035945;
+	bh=xCbcjpNvAiH2SseHrZhnPYOl2Agrkk2pX0Y2uo6vyTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lJLkpENHFjpxurXPocQnd4JUmoSEEturUeoDYuSaSPBXt0U4qNpgbomu8Yio/I064
-	 GVnvA/129ss9bkKi65xrirxljUjthsCkTut24MT45zOuUw7BnOa9rlYk4dCbUNuchx
-	 7WBcXiLHxIkA7UDgP6FJyfEb1PsfREKNeihcSuMM=
+	b=j815UAwwQMeGfN+e+YSCNXaNzCdHINwCNCV4JyeWX/W66JGh793cvsdxHtWGvR1yd
+	 1AGhdM7Yoi8mpjdoCr8QObFlfw8k68RPKwAS9+DxbkZMnqOntc/8j5JkvaCxf1tEOd
+	 +LnTh2yvXXPoS3nMfRUplIOyO/6QHH/tpFZmebYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Farhad Alemi <farhad.alemi@berkeley.edu>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Muhammad Bilal <meatuni001@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0831/3318] media: cx231xx: Fix cleanup path on failure
-Date: Wed, 18 Nov 2026 15:24:13 +0100
-Message-ID: <20261118150344.048852713@linuxfoundation.org>
+Subject: [PATCH 6.6 0876/3318] platform/x86: hp-bioscfg: fix slab-out-of-bounds write in hp_convert_hexstr_to_str()
+Date: Wed, 18 Nov 2026 15:24:58 +0100
+Message-ID: <20261118150345.588589470@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -63,62 +62,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andi Shyti <andi.shyti@kernel.org>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-[ Upstream commit 6e30287eaf3e41b86dfb86df3b811526693d74b4 ]
+[ Upstream commit 6a6f3051e705b5c8facb0bf5984d5b981509e0b7 ]
 
-If cx231xx_init_v4l2() fails the probe currently jumps to
-err_init, which only unregisters the V4L2 device. The analog
-devices and I2C resources are left registered while the driver
-state can be released.
+hp_convert_hexstr_to_str() decodes an ACPI string made up of
+space-separated ASCII hex-byte tokens of the form "0xHH". For
+example, the four-byte input "0x41" decodes to the single
+character 'A', and the nine-byte input "0x09 0x41" decodes to
+"\tA": each token is read in a five-byte step (four characters for
+the token, one for the trailing delimiter), and produces one output
+byte, or two if that byte is '\\', '\r', '\n', or '\t', which are
+written back out as a backslash followed by the matching letter.
 
-A subsequent driver bind attempts to create the same I2C mux
-channel links and triggers a warning when the existing
-"channel-0" link is encountered. The remaining devices may also
-access released driver state. This produces the following warning
+The output buffer is sized with kmalloc(input_len, GFP_KERNEL), the
+raw encoded length of the input, not the decoded length. For
+well-formed input this is generous, since five input bytes never
+decode to more than two output bytes. But input_len comes directly
+from the ACPI string length reported by firmware and isn't
+guaranteed to respect the five-byte encoding, so a short input_len
+can undersize the allocation. With input_len == 1, only one byte is
+allocated, yet decoding still produces at least one output byte
+plus the NUL terminator written unconditionally afterwards, so two
+bytes are needed. That terminator write then lands one byte past
+the end of the allocation.
 
-    can't create symlink to channel 0
-    WARNING: drivers/i2c/i2c-mux.c:403 at i2c_mux_add_adapter+0xcd8/0xeb0
-    Call Trace:
-     i2c_mux_add_adapter+0xcdc/0xeb0
-     cx231xx_dev_init+0x2fb/0x1260
-     cx231xx_usb_probe+0xc48/0x2140
-     usb_probe_interface+0x657/0xc70
-     ...
+KASAN caught exactly this during BIOS attribute enumeration on
+boot, triggered by a one-byte encoded input value:
 
-Jump to err_video_alt instead, which performs the full device
-cleanup before unregistering the V4L2 device.
+BUG: KASAN: slab-out-of-bounds in hp_convert_hexstr_to_str+0x6d8/0x710 [hp_bioscfg]
+Write of size 1 at addr ffff8881032e5d81 by task (udev-worker)/520
+The buggy address is located 0 bytes to the right of
+allocated 1-byte region [ffff8881032e5d80, ffff8881032e5d81)
 
-Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
-Closes: https://github.com/farhad-alemi/public_bug_reports/tree/main/185-warning-in-i2c-mux-add-adapter/
-Fixes: 4d2a7d3509f5 ("[media] cx231xx: move analog init code to a separate function")
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Cc: <stable@vger.kernel.org> # v3.17+
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Size the allocation to the worst-case decoded length instead of the
+raw input length: two output bytes for every five-byte input chunk
+(DIV_ROUND_UP(input_len, 5)), plus one byte for the terminator.
+
+Fixes: a34fc329b189 ("platform/x86: hp-bioscfg: bioscfg")
+Cc: stable@vger.kernel.org
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Link: https://patch.msgid.link/20260915174615.63924-1-meatuni001@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/cx231xx/cx231xx-cards.c | 2 +-
+ drivers/platform/x86/hp/hp-bioscfg/bioscfg.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/cx231xx/cx231xx-cards.c b/drivers/media/usb/cx231xx/cx231xx-cards.c
-index 64c3cb8fc2bf0..623c3106ef3ee 100644
---- a/drivers/media/usb/cx231xx/cx231xx-cards.c
-+++ b/drivers/media/usb/cx231xx/cx231xx-cards.c
-@@ -1830,7 +1830,7 @@ static int cx231xx_usb_probe(struct usb_interface *interface,
+diff --git a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
+index 8a29a01eead5b..32425ca5f5b5b 100644
+--- a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
+@@ -445,7 +445,7 @@ int hp_convert_hexstr_to_str(const char *input, u32 input_len, char **str, int *
+ 	*len = 0;
+ 	*str = NULL;
  
- 	retval = cx231xx_init_v4l2(dev, udev, interface, isoc_pipe);
- 	if (retval)
--		goto err_init;
-+		goto err_video_alt;
+-	new_str = kmalloc(input_len, GFP_KERNEL);
++	new_str = kmalloc(2 * DIV_ROUND_UP(input_len, 5) + 1, GFP_KERNEL);
+ 	if (!new_str)
+ 		return -ENOMEM;
  
- 	if (dev->current_pcb_config.ts1_source != 0xff) {
- 		/* compute alternate max packet sizes for TS1 */
 -- 
 2.53.0
 
