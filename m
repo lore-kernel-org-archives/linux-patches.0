@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041832;
-	b=hY6bSnbCb9lPbnL6veibUs/mZCW/Nn1C/5CJB3SrfNzXBeSqD68pxubq/ENgwobPJdXs
-	 1dk4UcF67eOsRS1O6UZAJ7UN7m9vfjPZvMj9RHoMoj3z/I80fqoV/2exD/1XdV3sHAlUS
-	 pcQ8k8OMuJUAcL9KfbsTUTIb17jTU0Rt/DbYWi73DDaOMRiKnoRDkdNzHKjHWJnsomeP5
-	 I8MoJhFB7iD06kjoEpLAQ6rGevx7Y965jQ5YnS0LhCPwWu9zPBn9175ldFEavuZAYX+V2
-	 HgIXYviuP8CFWHEKSZJVCtWuUJWcLb+kWdgxjoYuSvneCo86IsLDRSPR7+mc2q10rog==
+	t=1795041835;
+	b=E/agTHWJ2u1SdcY8FFEXSNHFu9KORPLGFdBmC+Cl55HN1eM3pUNb73fWJoYaGlSKbBN1
+	 x6yaTuXH8/9aZyq4kXQRxigGgNV0fHPcmGtnt59TOfK1wXDOHAXufVp7pXDi/dY/L0gp4
+	 ArpdqbDaXW6yWhYu6aT8txrBT1au6mJlHnTk5bz0zvtGvAJhoOV2mo8mN19ZkWjZhnyyV
+	 FI6V566eI/e9CDxB70MS1zlV7MuwUzUc6rtvSN8mx9Pn7eqpv82FNbrkYMnYen6lxprct
+	 Mkeq6j3UdVPYU5z2Brk2yT8Ltonmy2o8e2Xor6P4/akANEey6Y9YotsHkNbHOOJLrnQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041832;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041835;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kwK5RxgDGJHkw6VpGxoD8F2CsF0wTXIK29np4Fy48nY=;
-	b=pbhi85vYcbJ3GCwLDkTEO4T0o5OpUUbljPn1QZYPdVeVgt4m2RgSpVW93TDPm0taVHAP
-	 Pe/NcLJpL3bc7LpC6KFxkil7RW1cOM5sZrbDVukOuUiJWQTdVPK452Itx9aD9OwWuenBF
-	 25Cr/PPE+R3Y845GMZA0jv8XdFOW+LbO4+XKz4FZI69tR8lLMc2kUB3ty09nbk/zKWPWh
-	 Z5k41fDIVtTZsu3cn/EqIgaAVlVI/G1uE0lq15MFXd+1GI/u/tmH9GsY+ZYT3j44Ir/H8
-	 XwXf0S5uHlJk1o/1oOMiDC3H+elQRSVt499fAAwxaBLRTESkEzslR6PFO1v0ocpqxMA==
+	bh=0bfWlAjUuE6Uf6KDJKRIpw22uh31RpD5UCtrS9xW42c=;
+	b=YaRGBaeGRLO3pWqJzd/ix7STZmebHhazR7H9qjCLYezxx26BII6qpin6FSqDJrC0ZBN7
+	 Y/GEzLpYyj/dxMfYvaXoeKtSbhQKq9a4byZEUec7y2RxjxPVaCVhhOG4Sd85c0CzKN3Yv
+	 pccWhVC976rSY8I5oZIikdoyUvM15Wtfk4wPrFftyfA0iB1aeegvWCJ56v1c9e8C/s8fi
+	 3KDiiZtfgPsFZfeA3mX3iFZ1UYCdqp4/hAejeUgvQotmnG2Cp7o+baa8TSc8ve2TdUldy
+	 8TdsOJHezD8mU6cmgTO3udFtyCyw719I9oifCJVrOx8dbYHoIdVHDFJY7g4PI5h33eQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=McV41IF7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uuyL+Ujg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70CAE606A320;
-	Wed, 18 Nov 2026 22:43:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B03606A320;
+	Wed, 18 Nov 2026 22:43:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=McV41IF7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C54671F000C4;
-	Wed, 18 Nov 2026 22:43:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uuyL+Ujg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95D281F000C4;
+	Wed, 18 Nov 2026 22:43:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041832;
-	bh=kwK5RxgDGJHkw6VpGxoD8F2CsF0wTXIK29np4Fy48nY=;
+	s=korg; t=1795041835;
+	bh=0bfWlAjUuE6Uf6KDJKRIpw22uh31RpD5UCtrS9xW42c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=McV41IF7rUzHO+4XMrGugBeRUvgoZVA1q1jHmVIZZDGMEH3yYXML77IBbUckvJ/pt
-	 EMeaFG7TTrvJ1byeWEi+02Ef4/vyCXZpv41I6uDKp+7xOpR+80qcAj6utER04ZIOBp
-	 jXBnxDiIXCDC3RwUlbQpqGaj6LfP0vm8136BZhg4=
+	b=uuyL+UjgkfBv3oDl/gWJKMEMQ46NNMz3OdAOG/klsUK598uqL/xLu8A7xceLNJ2Mo
+	 fezv/97lkW2vUgsNGOJEQgbJcsCyqQfPtOGXZvTvLbaToNdnuSTMbUGfiicrbiCBb7
+	 RQYm0CkUvQp5XkkAkoLEnIOwpYqHMTXEDTof2API=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
+	bui duc phuc <phucduc.bui@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2937/3318] ASoC: Intel: avs: Store pointer to link_stream in dma_data
-Date: Wed, 18 Nov 2026 15:59:19 +0100
-Message-ID: <20261118150448.477618301@linuxfoundation.org>
+Subject: [PATCH 6.6 2955/3318] ASoC: mediatek: mt8195: Fix FE startup error handling
+Date: Wed, 18 Nov 2026 15:59:37 +0100
+Message-ID: <20261118150448.956668665@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,161 +68,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit cdcb770a60e8e6b9fbb737ebe21b2daadaba1744 ]
+[ Upstream commit b1db7408c8e0761d17b49b74f8f2d60c0c1929e8 ]
 
-While the HDAudio codec driver expectations must be met - store valid
-pointer to HDAudio LINK stream in substream->runtime->private_data - the
-code is more readable and easier to maintain if dma_data stores pointers
-to both HOST and LINK stream.
+Check and propagate errors from paired memif clock preparation and
+PCM hardware constraints during FE startup.
 
-DAI BE operations can refer to the LINK stream with data->link_stream,
-similarly to how DAI FE operations access the HOST stream with
-data->host_stream.
+Unprepare the paired memif clocks and shut down the FE when a later
+startup step fails to avoid leaving resources enabled on error.
 
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://lore.kernel.org/r/20240426095733.3946951-8-cezary.rojewski@intel.com
+Fixes: 6746cc858259 ("ASoC: mediatek: mt8195: add platform driver")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20261014112752.683032-8-phucduc.bui@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 85bc213f96ac ("ASoC: Intel: avs: Unprepare a stream when recovery occurs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/avs/pcm.c | 40 +++++++++++++++++++--------------------
- 1 file changed, 19 insertions(+), 21 deletions(-)
+ sound/soc/mediatek/mt8195/mt8195-afe-pcm.c | 40 +++++++++++++++-------
+ 1 file changed, 27 insertions(+), 13 deletions(-)
 
-diff --git a/sound/soc/intel/avs/pcm.c b/sound/soc/intel/avs/pcm.c
-index 4d98926de42ae..4c3ed762bedf8 100644
---- a/sound/soc/intel/avs/pcm.c
-+++ b/sound/soc/intel/avs/pcm.c
-@@ -22,13 +22,12 @@ struct avs_dma_data {
- 	struct avs_tplg_path_template *template;
- 	struct avs_path *path;
- 	struct avs_dev *adev;
--	/*
--	 * link stream is stored within substream's runtime
--	 * private_data to fulfill the needs of codec BE path
--	 *
--	 * host stream assigned
--	 */
--	struct hdac_ext_stream *host_stream;
-+
-+	/* LINK-stream utilized in BE operations while HOST in FE ones. */
-+	union {
-+		struct hdac_ext_stream *link_stream;
-+		struct hdac_ext_stream *host_stream;
-+	};
- 
- 	struct snd_pcm_substream *substream;
- };
-@@ -278,6 +277,7 @@ static int avs_dai_hda_be_startup(struct snd_pcm_substream *substream, struct sn
- {
- 	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
- 	struct hdac_ext_stream *link_stream;
-+	struct avs_dma_data *data;
- 	struct hda_codec *codec;
- 	int ret;
- 
-@@ -293,18 +293,18 @@ static int avs_dai_hda_be_startup(struct snd_pcm_substream *substream, struct sn
- 		return -EBUSY;
- 	}
- 
-+	data = snd_soc_dai_get_dma_data(dai, substream);
-+	data->link_stream = link_stream;
- 	substream->runtime->private_data = link_stream;
- 	return 0;
- }
- 
- static void avs_dai_hda_be_shutdown(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
- {
--	struct hdac_ext_stream *link_stream;
-+	struct avs_dma_data *data = snd_soc_dai_get_dma_data(dai, substream);
- 
--	link_stream = substream->runtime->private_data;
--	snd_hdac_ext_stream_release(link_stream, HDAC_EXT_STREAM_TYPE_LINK);
-+	snd_hdac_ext_stream_release(data->link_stream, HDAC_EXT_STREAM_TYPE_LINK);
- 	substream->runtime->private_data = NULL;
--
- 	avs_dai_shutdown(substream, dai);
- }
- 
-@@ -312,16 +312,13 @@ static int avs_dai_hda_be_hw_params(struct snd_pcm_substream *substream,
- 				    struct snd_pcm_hw_params *hw_params, struct snd_soc_dai *dai)
- {
- 	struct avs_dma_data *data;
--	struct hdac_ext_stream *link_stream;
- 
- 	data = snd_soc_dai_get_dma_data(dai, substream);
- 	if (data->path)
- 		return 0;
- 
--	link_stream = substream->runtime->private_data;
--
- 	return avs_dai_be_hw_params(substream, hw_params, dai,
--				    hdac_stream(link_stream)->stream_tag - 1);
-+				    hdac_stream(data->link_stream)->stream_tag - 1);
- }
- 
- static int avs_dai_hda_be_hw_free(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
-@@ -338,7 +335,7 @@ static int avs_dai_hda_be_hw_free(struct snd_pcm_substream *substream, struct sn
- 	if (!data->path)
- 		return 0;
- 
--	link_stream = substream->runtime->private_data;
-+	link_stream = data->link_stream;
- 	link_stream->link_prepared = false;
- 	avs_path_free(data->path);
- 	data->path = NULL;
-@@ -362,13 +359,16 @@ static int avs_dai_hda_be_prepare(struct snd_pcm_substream *substream, struct sn
- 	struct snd_soc_pcm_stream *stream_info;
- 	struct hdac_ext_stream *link_stream;
- 	struct hdac_ext_link *link;
-+	struct avs_dma_data *data;
- 	struct hda_codec *codec;
- 	struct hdac_bus *bus;
- 	unsigned int format_val;
- 	unsigned int bits;
- 	int ret;
- 
--	link_stream = runtime->private_data;
-+	data = snd_soc_dai_get_dma_data(dai, substream);
-+	link_stream = data->link_stream;
-+
- 	if (link_stream->link_prepared)
- 		return 0;
- 
-@@ -402,14 +402,12 @@ static int avs_dai_hda_be_trigger(struct snd_pcm_substream *substream, int cmd,
- 				  struct snd_soc_dai *dai)
- {
- 	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
--	struct hdac_ext_stream *link_stream;
- 	struct avs_dma_data *data;
+diff --git a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
+index d04dc96f0c6b8..602dcca21e336 100644
+--- a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
++++ b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
+@@ -364,24 +364,38 @@ static int mt8195_afe_fe_startup(struct snd_pcm_substream *substream,
+ 	int id = asoc_rtd_to_cpu(rtd, 0)->id;
  	int ret = 0;
  
- 	dev_dbg(dai->dev, "entry %s cmd=%d\n", __func__, cmd);
+-	mt8195_afe_paired_memif_clk_prepare(substream, dai, 1);
++	ret = mt8195_afe_paired_memif_clk_prepare(substream, dai, 1);
++	if (ret)
++		return ret;
  
- 	data = snd_soc_dai_get_dma_data(dai, substream);
--	link_stream = substream->runtime->private_data;
+ 	ret = mtk_afe_fe_startup(substream, dai);
++	if (ret < 0)
++		goto err_clk_unprepare;
  
- 	switch (cmd) {
- 	case SNDRV_PCM_TRIGGER_RESUME:
-@@ -418,7 +416,7 @@ static int avs_dai_hda_be_trigger(struct snd_pcm_substream *substream, int cmd,
- 		fallthrough;
- 	case SNDRV_PCM_TRIGGER_START:
- 	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
--		snd_hdac_ext_stream_start(link_stream);
-+		snd_hdac_ext_stream_start(data->link_stream);
+-	snd_pcm_hw_constraint_step(runtime, 0,
+-				   SNDRV_PCM_HW_PARAM_BUFFER_BYTES,
+-				   MT8195_MEMIF_BUFFER_BYTES_ALIGN);
++	ret = snd_pcm_hw_constraint_step(runtime, 0,
++					 SNDRV_PCM_HW_PARAM_BUFFER_BYTES,
++					 MT8195_MEMIF_BUFFER_BYTES_ALIGN);
++	if (ret)
++		goto err_fe_shutdow;
++
++	if (id == MT8195_AFE_MEMIF_DL7) {
++		ret = snd_pcm_hw_constraint_minmax(runtime,
++						   SNDRV_PCM_HW_PARAM_PERIOD_SIZE,
++						   1,
++						   MT8195_MEMIF_DL7_MAX_PERIOD_SIZE);
++		if (ret < 0) {
++			dev_dbg(afe->dev, "hw_constraint_minmax failed\n");
++			goto err_fe_shutdow;
++		}
++	}
  
- 		ret = avs_path_pause(data->path);
- 		if (ret < 0) {
-@@ -441,7 +439,7 @@ static int avs_dai_hda_be_trigger(struct snd_pcm_substream *substream, int cmd,
- 		if (ret < 0)
- 			dev_err(dai->dev, "pause BE path failed: %d\n", ret);
+-	if (id != MT8195_AFE_MEMIF_DL7)
+-		goto out;
++	return 0;
++
++err_fe_shutdow:
++	mtk_afe_fe_shutdown(substream, dai);
++err_clk_unprepare:
++	mt8195_afe_paired_memif_clk_prepare(substream, dai, 0);
  
--		snd_hdac_ext_stream_clear(link_stream);
-+		snd_hdac_ext_stream_clear(data->link_stream);
+-	ret = snd_pcm_hw_constraint_minmax(runtime,
+-					   SNDRV_PCM_HW_PARAM_PERIOD_SIZE,
+-					   1,
+-					   MT8195_MEMIF_DL7_MAX_PERIOD_SIZE);
+-	if (ret < 0)
+-		dev_dbg(afe->dev, "hw_constraint_minmax failed\n");
+-out:
+ 	return ret;
+ }
  
- 		ret = avs_path_reset(data->path);
- 		if (ret < 0)
 -- 
 2.53.0
 
