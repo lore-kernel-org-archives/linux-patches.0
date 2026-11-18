@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020084;
-	b=WlULcM8yJkBfPmagBHfm7iPxVrRqY4QhEHOlnWwVC2uX/6JEWTtMkflaash7xU1ldk81
-	 LFn9BLoLaN/PIAzUkMdfgxMPSfkvURlzd0Zitwqt0bfZexbQByuEpg7SRBh+XUSi5ciQ3
-	 71dE6SI9VQbZggYs1CXRfc5en3RGkXH2a8u/iLGddnW7IPewEwBiDNklcN0s5h0olXy89
-	 1Tf6kaqIBnB4Lysu9DapCRNMkw47GdosdeVxdR4bMTQb20v5s/UUAgpUDqAWu2DbP4eL/
-	 vuXy3fc+J9o7D75izbeu0MenKr/p21ncTmQORds3faOEHj35K0TxYhHN8x8cNNS/eCg==
+	t=1795020087;
+	b=Annn5hRDi9fMQhOUmbixPFsmFxJbD2KEdvBBON+tD7jlZqWbJ+ufruL5NYQTLsEQN07a
+	 Gaa9BOo7DC8/C+or41eAQZctWrK2Uk4A8gQQGS48eRhAKYzrbpsQbRrmOva2rGNDl6OQ5
+	 QJiDCx0OcDpC5FtePk8CtNvwmcUsZ1j0k4lhXwJ6AW7gshFcHIClE9mWH1r2RL914XahN
+	 byUz43cXelzirHygDSl+VvDy4lmJm38IyFlIW5kI9z4ldCufBc+ZOM12F9uqV3EtADbtw
+	 goZNupNXCT3/hRJgEFeVhakPzNc7MQotq4rjGoeT+Ec6bYhvjSgrqPGVDFuLFV4FmdA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020084;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020087;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sUJIeIHmLt1O0l67d/0ZlYG8KjOjQtrsPSkJXgxypDM=;
-	b=dAh/g8mkGCx5XoFArYy7UWhaEOKpkgTIvg7CaoBkWIs9zn+tMZ825w/FvX4AeFAzwxhT
-	 9h4pQoiYZtctx0KTPwT7bev3u1eX/85++DWYDvZbwlmN5+H8PXcJ9QFl33P8ry/SzWPYe
-	 5ZLu+IXx51fN/ydqXsZkjjqwH6YZkjFs9Mr6j9oz+yuHCrhzvFvbwMJba7BF/7NmkdX0n
-	 DQ7S9F5413GuTw7SlV6kmp0ZlRH3shE54xWmnobh9OkyfC3fpiOEBrPajQFDkjV3E5P2t
-	 MZcl0WTjURw9LicD4CEhPqMFpwF5awBlK/yI65qeFVVRlcFMRI0agXWlPDfxBoUXaCw==
+	bh=R1PAXBrWLRDzIzWgbkEC0P82XVKrlP+tYOskUmKq1X4=;
+	b=vOaaVLqY3BTnaAF8ZoRVNTo2UMyDSnIdlYOv4mig602lRLOGr5tRXAmEoqsnMPtuzjN9
+	 xPKiWjN8/iFDBfkqXhDT2ty1bpOGTBzgp6CJZj9xxcW+ABQSd3Uiiem7uE4LaN5JHUR1r
+	 yKMqPqlocftz3GuY41/RBvC0+RYXhjMTDFNYiSGp1UsMLXwS/51hw1cNSgFXo10JAML+B
+	 kuzjHK3qGMhEEESkoNoOrFMu795ljZEGCBUOzumtCFheGTqZGiHYwAVqO8KdOKbJVDc4D
+	 8+Yez3oncKQYB5cEfI90WZwfpHXFzlHzF8DdAvfVwNpXCtflcUgKJ40KisXjFejooKQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SkDumU32;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aEN3+2Fs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1056606A32C;
-	Wed, 18 Nov 2026 16:41:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F47606A320;
+	Wed, 18 Nov 2026 16:41:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SkDumU32
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32DBE1F000C4;
-	Wed, 18 Nov 2026 16:41:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aEN3+2Fs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11DAD1F000C4;
+	Wed, 18 Nov 2026 16:41:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020084;
-	bh=sUJIeIHmLt1O0l67d/0ZlYG8KjOjQtrsPSkJXgxypDM=;
+	s=korg; t=1795020087;
+	bh=R1PAXBrWLRDzIzWgbkEC0P82XVKrlP+tYOskUmKq1X4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SkDumU32HBI94+mQoeHUxKZYcSKEOqnIFLAtvS9DiriPhbYJIMciM0aQbBXsym4SE
-	 zFlAXJ7DImon1blmnx8yUgL9WjW3D8TH5FguWhlcGcwg3jisXO1ztfbzmWswYm9lHC
-	 vUMWo/2jkLtDypdRyicE7JUDe5pynmEEI+Go5/jw=
+	b=aEN3+2FsP/p/K6MevYvmvEjMZJml3gzotkhObx0TSTHBtNXRl3Le3bOmefprQ02Kd
+	 2p8iC0CNeaKU3Hvf1E42+ucarPBHgfm0Zmxs3a7es286auuqTKqIxeOgom+KWrYuYD
+	 DMVL3nn5BSGIMM6zHlIhEtgi+COIww4mBIMA157A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weigang He <geoffreyhe2@gmail.com>,
+	Vitaliy Sochnev <sochnev.v.74@gmail.com>,
 	Daniel Lezcano <daniel.lezcano@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1825/2651] thermal/drivers/sprd: validate the sensor id from the device tree
-Date: Wed, 18 Nov 2026 15:51:05 +0100
-Message-ID: <20261118150352.858334101@linuxfoundation.org>
+Subject: [PATCH 7.3 1826/2651] thermal/drivers/airoha: Fix AN7583 ADC mux field mapping
+Date: Wed, 18 Nov 2026 15:51:06 +0100
+Message-ID: <20261118150352.887099888@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,61 +68,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weigang He <geoffreyhe2@gmail.com>
+From: Vitaliy Sochnev <sochnev.v.74@gmail.com>
 
-[ Upstream commit b17d799ce49bfaad68be5ff3df995b3bd021a9d7 ]
+[ Upstream commit 4a0f3193c68eb41882ccf7c298f5cd0b17efb8ab ]
 
-sprd_thm_probe() reads each sensor child node's "reg" property into
-sen->id and uses it without validation: to compute the sensor's
-register offsets in sprd_thm_sensor_init(), as the thermal zone id, and
-finally as an index into thm->sensor[], which has SPRD_THM_MAX_SENSOR
-(8) entries:
+On AN7583, bits 3:1 of 0x2e4 select the sensor (0 bandgap, 5 GbE, 6 CPU)
+and bits 3:2 of 0x2a0 select the diode (0 D0, 1 ZERO, 2 D1). The driver
+names them the other way round: MUX_TADC is 0x2e4, MUX_SENSOR is 0x2a0.
 
-	ret = of_property_read_u32(sen_child, "reg", &sen->id);
-	...
-	thm->sensor[sen->id] = sen;
+v5 of the AN7583 series swapped the airoha_set_thermal_mux() arguments
+to match these names. The diode index now goes to the sensor selector,
+so the zone reads mux positions 1, 0 and 2 (PAD_AVS, bandgap, core
+voltage) instead of the bandgap diodes. On a Nokia XG-040G-MF the result
+crosses the critical trip and the board powers off during boot.
 
-Only the number of sensor nodes is checked against SPRD_THM_MAX_SENSOR.
-A "reg" value of 8 or more, or one that is negative once stored in the
-int sen->id, makes the register offsets point outside the sensor range
-and the final store land outside thm->sensor[], overwriting the fields
-that follow it in struct sprd_thermal_data or other memory.
+Swap the field definitions. MUX_TADC then selects the diode, as on
+EN7581, and the existing call order is correct.
 
-Reject an out-of-range id right after reading it, before it is used.
-
-This does not address sparse ids, such as a single sensor with id 7:
-they leave holes in thm->sensor[] that the later loops over
-0..nr_sensors-1 dereference. That needs a separate fix.
-
-Found by static analysis tool CodeQL.
-
-Fixes: 554fdbaf19b1 ("thermal: sprd: Add Spreadtrum thermal driver support")
-Assisted-by: LLM codeql
-Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
+Fixes: b20d9782756a ("thermal/drivers/airoha: Add support for AN7583 Thermal Sensor")
+Signed-off-by: Vitaliy Sochnev <sochnev.v.74@gmail.com>
 Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Link: https://patch.msgid.link/20260926042757.2109927-1-geoffreyhe2@gmail.com
+Link: https://patch.msgid.link/20260929165209.69669-2-sochnev.v.74@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/sprd_thermal.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/thermal/airoha_thermal.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/thermal/sprd_thermal.c b/drivers/thermal/sprd_thermal.c
-index d683fcb0f8ab8..b57277e2eac01 100644
---- a/drivers/thermal/sprd_thermal.c
-+++ b/drivers/thermal/sprd_thermal.c
-@@ -396,6 +396,12 @@ static int sprd_thm_probe(struct platform_device *pdev)
- 			goto of_put;
- 		}
+diff --git a/drivers/thermal/airoha_thermal.c b/drivers/thermal/airoha_thermal.c
+index ea3e2649c280c..1b187c41baeac 100644
+--- a/drivers/thermal/airoha_thermal.c
++++ b/drivers/thermal/airoha_thermal.c
+@@ -18,10 +18,10 @@
+ #define EN7581_DOUT_TADC			0x2f8
+ #define   EN7581_DOUT_TADC_MASK			GENMASK(15, 0)
  
-+		if (sen->id < 0 || sen->id >= SPRD_THM_MAX_SENSOR) {
-+			dev_err(&pdev->dev, "invalid sensor id %d\n", sen->id);
-+			ret = -EINVAL;
-+			goto of_put;
-+		}
-+
- 		ret = sprd_thm_sensor_calibration(sen_child, thm, sen);
- 		if (ret) {
- 			dev_err(&pdev->dev, "efuse cal analysis failed");
+-#define AN7583_MUX_SENSOR			0x2a0
++#define AN7583_MUX_TADC				0x2a0
+ #define   AN7583_LOAD_ADJ			GENMASK(3, 2)
+-#define AN7583_MUX_TADC				0x2e4
+-#define   AN7583_MUX_TADC_MASK			GENMASK(3, 1)
++#define AN7583_MUX_SENSOR			0x2e4
++#define   AN7583_MUX_SENSOR_MASK		GENMASK(3, 1)
+ #define AN7583_DOUT_TADC			0x2f0
+ 
+ /* PTP_THERMAL regs */
+@@ -636,8 +636,8 @@ static const struct thermal_zone_device_ops an7583_tz_ops = {
+ 
+ static const struct reg_field an7583_chip_scu_fields[AIROHA_THERMAL_FIELD_MAX] = {
+ 	[AIROHA_THERMAL_DOUT_TADC] = REG_FIELD(AN7583_DOUT_TADC, 0, 31),
+-	[AIROHA_THERMAL_MUX_TADC] = REG_FIELD(AN7583_MUX_TADC, 1, 3),
+-	[AIROHA_THERMAL_MUX_SENSOR] = REG_FIELD(AN7583_MUX_SENSOR, 2, 3),
++	[AIROHA_THERMAL_MUX_TADC] = REG_FIELD(AN7583_MUX_TADC, 2, 3),
++	[AIROHA_THERMAL_MUX_SENSOR] = REG_FIELD(AN7583_MUX_SENSOR, 1, 3),
+ };
+ 
+ static int an7583_thermal_probe(struct platform_device *pdev,
 -- 
 2.53.0
 
