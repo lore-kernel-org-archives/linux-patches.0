@@ -1,58 +1,61 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028738;
-	b=s6MzLHnEMlS/Sl5RIVyAnF4wOlf6YWOhG8o19GYNjygq7n+dRvCJz7FIw+POxgY8gulw
-	 mGwh8+lnYxGoWUG/QFxxG84kRhfEbCFLu5YM4Hy4CyD/pGOSVVVQD3WTWL7DtKW1tgYED
-	 J/44oPNdZBKKjbPmxL2d9CO022jlwq2kobaWRX6qW7WoCh8Einn8e0UiYzbJSkjLjSc8+
-	 ORIIe+knkckapVfWCWdnvCrwJ8oejsdZUVV5n9US6KuUoyu6zeAODQkEv9uY6s4ljnY0x
-	 ubu6uAj5n5kXGg7ZxiU4P2SmOwninH2LavtCqjcqnTBumvHbV4/fukbkcDlnPh1plIQ==
+	t=1795028741;
+	b=xzPcRiQ8nSdTMqc9R6EfrX+g1pfQGzp5hhYm90Qog0IbUNiVrrSNWpyMrgw2yXJhI44H
+	 Fo1wGRLM21RwDzO/5dVUmft1Xsubeyn2tItAL/uDdjWnBWbXL2ofud2gsgL3pcaG2VpB+
+	 HBk2a+oXPYdjz4kHgj326bqB0t+x95IZ7esYv6YyzmSgrBo1r1YL0RZsWiL1uqju01qFs
+	 ig8devylDtzpMFuHkwVtEKgGJhEGeb8A91QBFs2FzqxCzsY+w9rD0u88q2L/Hq27jZ9re
+	 wRBX6+YdJ78VUzpV/if8R1llVhRH95F0siDs3g86E9sSJ0+UtENDpomMFSJ8QmAcQhg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028738;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028741;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sTPxZUvCqKXxXtPnoR6dURv+BnsLVJDUVhvSH7q5vi8=;
-	b=ybYS7x43WQM7qmq30Zii47Go1ET/yietOyHleFdhe0sz4QVxSO9/VuwYjPF4zNv2lpMY
-	 r6lYjJvhFfn9GVa+xaalSpBibcouVQewC6c2alqBUSNPQ3aHL4dr6ypnD0X6jBcz2NlQg
-	 GJ5EF8hOpxkzivEkYihz0DS141efVWcQt2vue/9fzOwCf7G7VSRy4JZtnscz/zRyAc85D
-	 viS2qhkvuqz9q3LvvkBpgMTuFq3kZLGOg4AJnXYFUTeTNTJkEckueGXRKMkR3fKIciKN7
-	 9nQffg9Qx7AIXbcudfYZfIPvz462sFbAJUEjI31sOsn28BKh4N92o/lXXXovxgBS99Q==
+	bh=fLWN+Uym+X20hZ15gUO/L7QqoERZNEJk35TrCfT/DTk=;
+	b=Sc9RGa+ml+OevwWbm6fOWVoXaVhdgoj25LYWpdVldEtVv/9EeFe1aeD9iY3I40DVg4yR
+	 WbfzhrMSjIGXdv35HX2925NbRcnmiTpUZsGWUlvrPdl4gABtfBlwmbOLpQZEAxGEC6kpa
+	 a7STETDeTd5mnBnn6EtG9osaTgHIiyRx5ANwm9yXHzJfoUPP4yxX+PjJ7xGOQ3caZUd6B
+	 7edIT6+f6PT1/46R8MLhqDxRdRZ8qRFxt5oPWDd0zIdKqogw/lzRtyXOyWCCD1ljhTODm
+	 SLtifFCemG7yzBDYrkpdIokyl1ybVfupCwpmEolo9wDYL7PCN1m3EB8sfuvLYCimyvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EzGYIRgl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LUBjYMB3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42EBB606A339;
-	Wed, 18 Nov 2026 19:05:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1FA606A336;
+	Wed, 18 Nov 2026 19:05:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EzGYIRgl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DC561F000C4;
-	Wed, 18 Nov 2026 19:05:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LUBjYMB3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A5D1F000C5;
+	Wed, 18 Nov 2026 19:05:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028738;
-	bh=sTPxZUvCqKXxXtPnoR6dURv+BnsLVJDUVhvSH7q5vi8=;
+	s=korg; t=1795028740;
+	bh=fLWN+Uym+X20hZ15gUO/L7QqoERZNEJk35TrCfT/DTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EzGYIRgl7UA7U1G1W+JDSraQ3I3h2a/N8/G9XwEWiauQOKyA6VM5jhISxwlYUgesC
-	 0kpsd0eaCmXhK1SiQn12R/lvKO0xIGRV3W2bDv8L1eCKXo7h2dI93J0fvrMU5s8oMx
-	 wwb/xeywo81lAvmkYXD0YjjA6Is49S14wBt69cS0=
+	b=LUBjYMB38RCyCp4oW2vok4lWJhrQq4pf/porduPOL1tgHHKfV2ocr0inEaAHRF+E+
+	 +2pbS8TllU22qECQjutBlhp8ZPELDr2TIDoyOoPe3QQU5S6mOrq7UCEunD5ySQ4oeQ
+	 ATFNOOgxWtXYy2LXC1YMygTWcAqvizAOxXTsdNxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
 	Josef Bacik <josef@toxicpanda.com>,
-	"Harry Yoo (Meta)" <harry@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Rik van Riel <riel@surriel.com>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
 	Barry Song <baohua@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"Harry Yoo (Meta)" <harry@kernel.org>,
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	SJ Park <sj@kernel.org>,
 	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0101/1756] mm/rmap: handle device-exclusive entries in folio_referenced_one()
-Date: Wed, 18 Nov 2026 15:37:08 +0100
-Message-ID: <20261118150012.257552347@linuxfoundation.org>
+Subject: [PATCH 6.12 0102/1756] fork: take mmap_lock before copying mm_struct
+Date: Wed, 18 Nov 2026 15:37:09 +0100
+Message-ID: <20261118150012.291405153@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -76,85 +79,118 @@ Content-Transfer-Encoding: 8bit
 
 From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit f3c493d2f42b5f44a5c134d8d7ea7f960caf5e2c ]
+[ Upstream commit ef694e2d210111cc08c52fd25da9ab130170bfa3 ]
 
-page_vma_mapped_walk() can return non-present device-exclusive entries,
-but folio_referenced_one() passes them to PTE young-bit accessors that
-require present PTEs.
+dup_mm() copies the parent's mm_struct before dup_mmap() takes the
+mmap_lock. A concurrent brk() can leave the child with a stale mm->brk
+and newer heap mappings, causing later brk() requests to fail.
 
-We must neither call clear_flush_young_ptes_notify() nor
-folio_pte_batch() with non-present entries. For example, clearing the
-young bit on non-present PTEs can corrupt the entry: on arm64
-PTE_AF overlaps the swap type, so clearing it turns a device-exclusive
-entry into an ordinary swap entry.
+Other operations (e.g., PR_SET_MM) on the parent's mm_struct can similarly
+cause inconsistencies.
 
-folio_pte_batch() will VM_WARN_ON_FOLIO.
+As a simple and robust fix, grab the parent's mmap_lock earlier. This
+way we don't need to update individual mm fields in dup_mmap() and
+keep missing ones. Stop updating the 4 existing members (total_vm, data_vm,
+exec_vm, stack_vm), as that is now no longer required.
 
-Apply the same approach as the previous fixes to e.g., damon_ptep_mkold():
-treat these entries as old from the CPU's perspective and obtain their
-young state through the MMU notifier.
+Keep releasing the parent's mmap_lock in dup_mmap(), before
+userfaultfd completion, to avoid moving the userfaultfd handling into the
+caller. This should get cleaned up later.
 
-Skip PTE batching and MGLRU look-around for non-present entries, and
-don't modify non-present PTEs.
+Move uprobe_start_dup_mmap() to preserve the lock ordering.
 
-Fixes: b756a3b5e7ea ("mm: device exclusive memory access")
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
 Reported-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Harry Yoo (Meta) <harry@kernel.org>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Rik van Riel <riel@surriel.com>
+Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
 Reviewed-by: Barry Song <baohua@kernel.org>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Reviewed-by: Harry Yoo (Meta) <harry@kernel.org>
+Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Reviewed-by: SJ Park <sj@kernel.org>
 Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-9-d6437171ecc3@kernel.org
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-2-d6437171ecc3@kernel.org
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: Adapted batched PTE reference checks to the existing single-PTE walker. ]
+[ sashal: Retained mm->user_ns as the third argument to mm_init(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/rmap.c | 20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ kernel/fork.c | 30 ++++++++++++++++--------------
+ 1 file changed, 16 insertions(+), 14 deletions(-)
 
-diff --git a/mm/rmap.c b/mm/rmap.c
-index 1bf83e939583f..ad0c6b1eebfec 100644
---- a/mm/rmap.c
-+++ b/mm/rmap.c
-@@ -850,6 +850,7 @@ static bool folio_referenced_one(struct folio *folio,
- 	DEFINE_FOLIO_VMA_WALK(pvmw, folio, vma, address, 0);
- 	int referenced = 0;
- 	unsigned long start = address, ptes = 0;
-+	pte_t pteval;
+diff --git a/kernel/fork.c b/kernel/fork.c
+index a4139e5765a33..f3ba045debeda 100644
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -641,8 +641,7 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
+ 	LIST_HEAD(uf);
+ 	VMA_ITERATOR(vmi, mm, 0);
  
- 	while (page_vma_mapped_walk(&pvmw)) {
- 		address = pvmw.address;
-@@ -892,12 +893,25 @@ static bool folio_referenced_one(struct folio *folio,
- 			return false;
- 		}
+-	if (mmap_write_lock_killable(oldmm))
+-		return -EINTR;
++	mmap_assert_write_locked(oldmm);
+ 	flush_cache_dup_mm(oldmm);
+ 	uprobe_dup_mmap(oldmm, mm);
+ 	/*
+@@ -653,11 +652,6 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
+ 	/* No ordering required: file already has been exposed. */
+ 	dup_mm_exe_file(mm, oldmm);
  
--		if (lru_gen_enabled() && pvmw.pte) {
-+		if (pvmw.pte)
-+			pteval = ptep_get(pvmw.pte);
+-	mm->total_vm = oldmm->total_vm;
+-	mm->data_vm = oldmm->data_vm;
+-	mm->exec_vm = oldmm->exec_vm;
+-	mm->stack_vm = oldmm->stack_vm;
+-
+ 	/* Use __mt_dup() to efficiently build an identical maple tree. */
+ 	retval = __mt_dup(&oldmm->mm_mt, &mm->mm_mt, GFP_KERNEL);
+ 	if (unlikely(retval))
+@@ -824,7 +818,7 @@ static inline void mm_free_pgd(struct mm_struct *mm)
+ #else
+ static int dup_mmap(struct mm_struct *mm, struct mm_struct *oldmm)
+ {
+-	mmap_write_lock(oldmm);
++	mmap_assert_write_locked(oldmm);
+ 	dup_mm_exe_file(mm, oldmm);
+ 	mmap_write_unlock(oldmm);
+ 	return 0;
+@@ -1705,12 +1699,19 @@ static struct mm_struct *dup_mm(struct task_struct *tsk,
+ 	if (!mm)
+ 		goto fail_nomem;
+ 
++	uprobe_start_dup_mmap();
++	if (mmap_write_lock_killable(oldmm)) {
++		free_mm(mm);
++		goto fail_uprobe;
++	}
 +
-+		if (lru_gen_enabled() && pvmw.pte && pte_present(pteval)) {
- 			if (lru_gen_look_around(&pvmw))
- 				referenced++;
- 		} else if (pvmw.pte) {
--			if (ptep_clear_flush_young_notify(vma, address,
--						pvmw.pte))
-+			bool young = false;
-+
-+			/*
-+			 * PFN swap PTEs, such as device-exclusive ones, that
-+			 * actually map pages are "old" from a CPU perspective.
-+			 * The MMU notifier takes care of any device aspects.
-+			 */
-+			if (pte_present(pteval))
-+				young = ptep_clear_flush_young(vma, address, pvmw.pte);
-+			young |= mmu_notifier_clear_flush_young(vma->vm_mm, address,
-+								address + PAGE_SIZE);
-+			if (young)
- 				referenced++;
- 		} else if (IS_ENABLED(CONFIG_TRANSPARENT_HUGEPAGE)) {
- 			if (pmdp_clear_flush_young_notify(vma, address,
+ 	memcpy(mm, oldmm, sizeof(*mm));
+ 
+-	if (!mm_init(mm, tsk, mm->user_ns))
+-		goto fail_nomem;
++	if (!mm_init(mm, tsk, mm->user_ns)) {
++		mmap_write_unlock(oldmm);
++		goto fail_uprobe;
++	}
+ 
+-	uprobe_start_dup_mmap();
+ 	err = dup_mmap(mm, oldmm);
+ 	if (err)
+ 		goto free_pt;
+@@ -1729,9 +1730,10 @@ static struct mm_struct *dup_mm(struct task_struct *tsk,
+ 	mm->binfmt = NULL;
+ 	mm_init_owner(mm, NULL);
+ 	mmput(mm);
+-	if (err)
+-		uprobe_end_dup_mmap();
+-
++	if (!err)
++		return NULL;
++fail_uprobe:
++	uprobe_end_dup_mmap();
+ fail_nomem:
+ 	return NULL;
+ }
 -- 
 2.53.0
 
