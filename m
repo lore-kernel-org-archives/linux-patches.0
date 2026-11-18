@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016062;
-	b=QAKPoeZARlHe84s5WM/aaU21oiyFdzQqmXKMyo5m1m671/RazeaXSq8CgT9rvFao0f4X
-	 jWOWHOKekgjLGY+2xjXD9KnRGLVB1QlggYsCNzHbkOmgdivpVHpv4371nPD+jZzf3rBjr
-	 5NHM84/sqNn7f1fveTUxw62Lv2ANwJ5xeLlTQfZF3q6AdvZKAhsc3nsi0vXMP6wg4+TH0
-	 JxLHYk0il3KkKmbbRiNIFGiBW9P70CrdM2IeSqkFGg1UOoTYme0O0IMgyHDaWD8wYUFfB
-	 hF8PBfQiA59ji+4uHvuiVBcr2q0dIrFq1C5moQiECbhGao55+yv6lh8NWPEhq4hGKtw==
+	t=1795016064;
+	b=JrEqWHGcWVnk8HoIjr6znTsRnxt0ilDIHlzE6/r0ABnh2RhTEHJJcc6Q2CMVppUbtKmG
+	 rzREbA4IsmMsa7E6H1TCEUo6DhD/gBMT1eV2qyM78OjMcWiPVmIqIYS+EKNKvTqcEBUdP
+	 1BPtaK5nk69I1ejGbnB1TPq1Ubo3FchJa6iLMeEKv7Uc8yJK+ZAZfoPw3x1H0WwRz/2QU
+	 uvQ3fZZobQqdz1Ur2hp/ITUbI/goWM/pIsh3nD6beOsLQDv7F4M3iCx1oCnYqH3h0z4wb
+	 dF6JZ03UCRhDGd8ChyxyAdJItFXECpwpbSQ5AEmJxNUn8FGZ6F1+P2ncuuKjVltGs7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016062;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016064;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZxQmnvS7tsdTF6QfCfONpBZVsutUbtBxqfvS3kodu1Q=;
-	b=tYDxrhmegqlPDc4bGCPlERnDQVF5akckm1UeFGG62QQ/5RQjSGoAvqnY4MVwNdfY6xI+
-	 Y1u4GLmY1PSdNnmQeb8o8gxJuqMecUNXFGZ0OIm2rLfVreAMpnr6VP3//WO3BSrWVAb62
-	 fskkH0KEIVuRFpQy2NeyWJ/BFWYwDE2caHaWmm9/OPM3/qKdiZbH1jAjb6bo+2+0Md3Kb
-	 6uEtGV0C7dI4pWuhzyx3n8trIXkNdZqgxcJXG23ZO0Cl0n6SY2IiMM0zOx9GxgUfhrC0/
-	 FCsE992ZXFBzelzW271/rD5l1p7om+mukwQgjcRbqQlZ0x14GP9lO7Gs29PiZHwegjw==
+	bh=OeWsqBn5muqXnmjhzO7W0i9bV16JrWugs4zlRTrJMPM=;
+	b=XYdeXx3l4OJoMOq0hCD0qByieIdSygzE1t8Ut5f9Ki3LUjD+TyOMAiKN412gPqKxz1MU
+	 ZnOMDdZ6McnDwRFhXA4RW4REWus24BHR0evTv1E42ZMEMPGVTlsDmFBadHsm3fRWUane0
+	 Wlqt3qw5tW/TvJCGRUS0UcobSdSqtvkg2bUMfIH9OI2d+nKjYfRbRJx9GgxjiJBXx4Rz+
+	 vjdP7moO54eNQLNt9P8yHvE3IytNxUPJK3NAwFZm3iv7GJ0884LzcRFPRfakY3WVY8cZp
+	 zVlfdugYfrfwvnRohNU0p/b7seRvVjbjVUe9AeTnBE+72TXYJAeelH2yvbX5YCO5dMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dbcm15dG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VfkPfCYf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B782606A336;
-	Wed, 18 Nov 2026 15:34:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB03A606A32A;
+	Wed, 18 Nov 2026 15:34:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dbcm15dG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 129D11F000C4;
-	Wed, 18 Nov 2026 15:34:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VfkPfCYf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECF7A1F000C4;
+	Wed, 18 Nov 2026 15:34:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016061;
-	bh=ZxQmnvS7tsdTF6QfCfONpBZVsutUbtBxqfvS3kodu1Q=;
+	s=korg; t=1795016064;
+	bh=OeWsqBn5muqXnmjhzO7W0i9bV16JrWugs4zlRTrJMPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dbcm15dGCMDEivy0kkQ7tZFfgnqTH/1tIAOHbn1/CU/18yGcGKpFQrT7tY+kKEqV9
-	 5OtKQNgeWtoSXKBFPw8QxCXgXDxYV+hqNbWix35rP5NUupSrv/z7r7pRvgykZ9eh3Y
-	 i6JUwLA/tHt1MGnTVspwFf1L+kPoVWKs8rnj4Bwc=
+	b=VfkPfCYffp+2byhVgkujNh6F4cjWrRIGU9kCdp2MhQe0IVIUEnW99ERvaOOa0KSFd
+	 /U2MaS/Par0w2qKNY1YxAdTCh0WyVP4RMgRW7qK+hf+3Bd0tdWXUSqmCAf+HPiZtxG
+	 EoJZfLB+w5zF+LNrx1ST/Ebbjk7sWihciBy60NcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0396/2651] crypto: mxs-dcp - handle zero-length skcipher requests
-Date: Wed, 18 Nov 2026 15:27:16 +0100
-Message-ID: <20261118150302.091333879@linuxfoundation.org>
+Subject: [PATCH 7.3 0397/2651] crypto: lskcipher - preserve state across unaligned chunks
+Date: Wed, 18 Nov 2026 15:27:17 +0100
+Message-ID: <20261118150302.129838601@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,41 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit ac1d6a65a1e1f069f119df42c6b57dbdff5f6be8 ]
+[ Upstream commit ba871255f796d1f599ba710f03e1803d1b374a75 ]
 
-Zero-length skcipher requests are valid no-ops, but MXS-DCP queues them.
-When such a request reaches the worker, last_out_len remains zero. The
-CBC completion path then subtracts AES_BLOCK_SIZE from this unsigned
-value when updating the IV, causing the offset to underflow. On
-decryption, the resulting source address precedes aes_in_buf.
+crypto_lskcipher_crypt_unaligned() splits a request into page-sized
+chunks but never sets CRYPTO_LSKCIPHER_FLAG_CONT, so a stateful algorithm
+restarts from its keyed state at every page boundary. It also marks every
+chunk CRYPTO_LSKCIPHER_FLAG_FINAL, which is wrong but harmless: chunks are
+trimmed to a multiple of the chunk size, so the trailing partial block that
+FINAL guards against is caught after the loop instead.
 
-Return success before enqueueing zero-length requests. This avoids the
-invalid source access and leaves the IV unchanged for a no-op.
+ARC4 is the only lskcipher with internal state, and cbc, the other
+in-tree user of the direct API, never passes more than one block, so
+this went unnoticed. bpf_crypto_crypt() however hands
+__bpf_dynptr_data() to crypto_lskcipher_encrypt() unchecked, leaving
+both alignment and length to the BPF program. An 8192-byte ARC4 request
+offset by one byte comes back with its second page identical to its
+first: the keystream is reused.
 
-Fixes: fadd7a6e616b ("crypto: mxs-dcp - Fix AES issues")
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Set FINAL only on the last chunk and CONT after the first, mirroring the
+progression used by crypto_lskcipher_crypt_sg().
+
+Fixes: 0ae4dcc1ebf6 ("crypto: skcipher - Add internal state support")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/mxs-dcp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ crypto/lskcipher.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/mxs-dcp.c b/drivers/crypto/mxs-dcp.c
-index c75a069997876..d104d958cb61a 100644
---- a/drivers/crypto/mxs-dcp.c
-+++ b/drivers/crypto/mxs-dcp.c
-@@ -473,6 +473,9 @@ static int mxs_dcp_aes_enqueue(struct skcipher_request *req, int enc, int ecb)
- 	struct dcp_aes_req_ctx *rctx = skcipher_request_ctx(req);
- 	int ret;
+diff --git a/crypto/lskcipher.c b/crypto/lskcipher.c
+index a8b07594005db..6c30436a11354 100644
+--- a/crypto/lskcipher.c
++++ b/crypto/lskcipher.c
+@@ -75,6 +75,7 @@ static int crypto_lskcipher_crypt_unaligned(
+ 	unsigned ivsize = crypto_lskcipher_ivsize(tfm);
+ 	unsigned bs = crypto_lskcipher_blocksize(tfm);
+ 	unsigned cs = crypto_lskcipher_chunksize(tfm);
++	u32 flags = 0;
+ 	int err;
+ 	u8 *tiv;
+ 	u8 *p;
+@@ -98,13 +99,16 @@ static int crypto_lskcipher_crypt_unaligned(
  
-+	if (!req->cryptlen)
-+		return 0;
-+
- 	if (unlikely(actx->key_len != AES_KEYSIZE_128 && !actx->key_referenced))
- 		return mxs_dcp_block_fallback(req, enc);
+ 		if (chunk > cs)
+ 			chunk &= ~(cs - 1);
++		if (chunk == len)
++			flags |= CRYPTO_LSKCIPHER_FLAG_FINAL;
  
+ 		memcpy(p, src, chunk);
+-		err = crypt(tfm, p, p, chunk, tiv, CRYPTO_LSKCIPHER_FLAG_FINAL);
++		err = crypt(tfm, p, p, chunk, tiv, flags);
+ 		if (err)
+ 			goto out;
+ 
+ 		memcpy(dst, p, chunk);
++		flags |= CRYPTO_LSKCIPHER_FLAG_CONT;
+ 		src += chunk;
+ 		dst += chunk;
+ 		len -= chunk;
 -- 
 2.53.0
 
