@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025225;
-	b=fV16+6ZusUeFnhrr3b9zTkO3CoiGV8alxW1oVoHmqk3HD/qF78NVH/ZPMEaotf7u+Yhu
-	 KwqLLI0OqJHMdlQKKdA9RZsyBrdg54oNVBgVmZkOeP3eOUSJs88uUMvFIhVltro5zEzU3
-	 sMfSnSY8hUor9WXoisAWEyA/o4xxptTf/CNcUdUARTipqxiuygnb7M4sSOcUBB7LDBV3P
-	 QmgE92LWX28k1N+rk/2/f2JoqSx9djaZtfDdafDAlPeahyzLupHKYtX9cDer9iPtbHj3b
-	 GiDk27fjjJA+Dc8iQ+6RJiFgYxihNF75RWfz0O3YzRJE05GfThPMVjkavuz8SpUx7tA==
+	t=1795025228;
+	b=V2u/dqiD5NS6IexVRlUAG3bWHcInXTtsCoHeoUC31WEXpLWRA9sP3BvKLyDa0WTY+h2e
+	 uzjptDJPe/LuGDPkozIDo9r5oK1wcP6Jc/CmpfGk4IfWsox11+sTQdbVZr1ehOQnhV/EQ
+	 m78NYQMGMFN73nRmvsFmGP0PFy7Akmm1bZG0xqzmhBNLNIAlRZaRX5C69pFvwG0IUjZbC
+	 LrxKaIw3ZrKHF0tJ/4u30ZKMX0wx5OR/ms9OABoVJa3PKJE3YKIDY5mMFam5hcZ4liitr
+	 OXuLCD0hKGXu1lu58LMAR+IrHe78VupzoW+3JL2xvrq/jRaQQhKbvB/yybMX6wWAvCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025225;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025228;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UTNYttU/3U9MxjwR5V1Q7Zz4J874l91S34s9s7mcVEY=;
-	b=LcyIEuzucxXFWljTeLznAI9trKCXdmSJZ/rcatUZqY0ur8M55qUsEoo3xIMk3x3nLx6K
-	 oi8gIWOwQ+MtF3RkysHp//S3njqqAFHA/MglNOrzl7x8Kfay4qgHGc/+/haGvfgAnDePd
-	 6s/pzJEdtAHvttCT2voxERol0bsz5W/tdFA7nrd/005GQkRv4ZuqP+wuHADQwUt57eZQm
-	 hGU//hJ14qgbraJg9YYqvHPF3h4eN3FxXUFjEd68gfWBzNjnoTebBKQ+PaH/P2JdPprYv
-	 lZGobPkhRmTmj3pNWIiWLb/hsYZ64K7BkuVAlK5KPiHYw1i9Hmjr3UWs3MMvfeB/uNQ==
+	bh=yAe5uqxghX5djxWTaj2JFarAgBBn28s0qARQUfK8mCI=;
+	b=X7cnXIBJTxznl5T8iC2HeUsvNfTb3RE1asDlj3AEuejhEAVee0eKyYuYKwg2p/q14y8Q
+	 ZAlMqLz+mIJ5GCjsnjwdscE3JGJA0Tz2BOulwHNb0sXsaonxL7j70svtmDOAFoVKhLlBx
+	 Clf3DSzwMvtFlvzFp9dRe+IpQIuEz2o3VHikob8qynsgIqSmczWetlcG9O9kExwFnAOnm
+	 ocfCJiols5127w6zqw5ls9e5rXO48273FUrQSzRBQEpqhR2B1IRvm19wK/BLemZuTafYl
+	 bqQ+lqnq/oHiwcfN2XeqUsrha3JGllIhoTLsj3/yYpKszNDtGDhu1gXNVr2Tx3JouIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BgBFBc9V;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xON3rgu7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1F460A2615;
-	Wed, 18 Nov 2026 18:07:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B67606A320;
+	Wed, 18 Nov 2026 18:07:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BgBFBc9V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F02B21F000CE;
-	Wed, 18 Nov 2026 18:07:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xON3rgu7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B491F000CE;
+	Wed, 18 Nov 2026 18:07:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025225;
-	bh=UTNYttU/3U9MxjwR5V1Q7Zz4J874l91S34s9s7mcVEY=;
+	s=korg; t=1795025228;
+	bh=yAe5uqxghX5djxWTaj2JFarAgBBn28s0qARQUfK8mCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BgBFBc9VjgYEcecgJESf/v2MMvAJevE7OBzbh6WLmbUMCnS6R03VtAjtAkS3DIxK7
-	 pWUHikX7lp9/Xg1IaTUuUpP6qftGySNTy0oqqsJb8WVGdt8hLJTkCT+8PEE/8QbQQD
-	 x0ZsQfONPkrosKQV0KRbe3PFkvKkzsRpuPBcg8s8=
+	b=xON3rgu7yVUtxfQVHICnONJDUVjFIdYKKT7oN4FDqbzmsw2qhcoFQWRWg2yHvnwRM
+	 LMuJ4muxdljP4rTceDghnIDxlYLh9sZwhGFeOxh1Z/S1c/q5Xuyhe7+4lMgkXUn5st
+	 wdfbOReTFjVdx+0935FEZTz/emuIKCr3ksfs4MjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
 	Igor Paunovic <royalnet026@gmail.com>
-Subject: [PATCH 6.18 1003/2151] phy: rockchip: usbdp: Hold mutex in DP PHY configure
-Date: Wed, 18 Nov 2026 15:45:38 +0100
-Message-ID: <20261118150158.975600823@linuxfoundation.org>
+Subject: [PATCH 6.18 1004/2151] phy: rockchip: usbdp: Rename mode_change to phy_needs_reinit
+Date: Wed, 18 Nov 2026 15:45:39 +0100
+Message-ID: <20261118150159.010602689@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -73,44 +72,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit 619233ce6b2329529c9f0ff9682d6e22d160ebd6 ]
+[ Upstream commit fbce9cc28cadb24026a6c061819d42e50d3bfea0 ]
 
-rk_udphy_dp_phy_configure() accesses some variables from the struct
-rk_udphy, which are updated independently from the USB-C framework.
+Right now the mode_change property is set whenever the mode changes
+between USB-only, DP-only and USB-DP. It is needed, because on any
+mode change the PHY needs to be re-initialized. Apparently at least
+DP also requires a re-init when the cable orientation is changed,
+which is currently not being done (except when the orientation switch
+also involves a mode change). Prepare for this by renaming mode_change
+to phy_needs_reinit.
 
-The USB-C mux/orientation switch functions already hold a mutex to
-ensure mutual exclusive access to the struct rk_udphy states, so
-simply hold the same one in the DP PHY configuration function.
-
-Reproducing problems due to this on real hardware would be really hard,
-but could be possible when quickly re-connecting the USB-C connector.
-
-Fixes: 2f70bbddeb45 ("phy: rockchip: add usbdp combo phy driver")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/linux-phy/20260612164627.23D391F000E9@smtp.kernel.org/
 Tested-by: Igor Paunovic <royalnet026@gmail.com> # Orange Pi 5 Plus
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260915-rockchip-usbdp-cleanup-part2-v15-7-8d507cb1174f@collabora.com
+Link: https://patch.msgid.link/20260915-rockchip-usbdp-cleanup-part2-v15-2-8d507cb1174f@collabora.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: cf3aa34e6f07 ("phy: rockchip: usbdp: Avoid xHCI SErrors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/rockchip/phy-rockchip-usbdp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/phy/rockchip/phy-rockchip-usbdp.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/phy/rockchip/phy-rockchip-usbdp.c b/drivers/phy/rockchip/phy-rockchip-usbdp.c
-index d1d78d9f7b096..0a3a75b75d422 100644
+index 0a3a75b75d422..c73722ae185ec 100644
 --- a/drivers/phy/rockchip/phy-rockchip-usbdp.c
 +++ b/drivers/phy/rockchip/phy-rockchip-usbdp.c
-@@ -1136,6 +1136,8 @@ static int rk_udphy_dp_phy_configure(struct phy *phy,
- 	u32 i, val, lane;
- 	int ret;
+@@ -170,7 +170,7 @@ struct rk_udphy {
  
-+	guard(mutex)(&udphy->mutex);
-+
- 	if (dp->set_rate) {
- 		ret = rk_udphy_dp_phy_verify_link_rate(udphy, dp);
+ 	/* PHY status management */
+ 	bool flip;
+-	bool mode_change;
++	bool phy_needs_reinit;
+ 	u8 mode;
+ 	u8 status;
+ 
+@@ -590,7 +590,7 @@ static void rk_udphy_mode_set(struct rk_udphy *udphy, u8 mode)
+ 	if (udphy->mode == mode)
+ 		return;
+ 
+-	udphy->mode_change = true;
++	udphy->phy_needs_reinit = true;
+ 	udphy->mode = mode;
+ }
+ 
+@@ -963,8 +963,8 @@ static int rk_udphy_power_on(struct rk_udphy *udphy, u8 mode)
+ 
+ 		if (udphy->mode & UDPHY_MODE_USB)
+ 			rk_udphy_u3_port_disable(udphy, false);
+-		udphy->mode_change = false;
+-	} else if (udphy->mode_change) {
++		udphy->phy_needs_reinit = false;
++	} else if (udphy->phy_needs_reinit) {
+ 		if (udphy->mode == UDPHY_MODE_DP)
+ 			rk_udphy_u3_port_disable(udphy, true);
+ 
+@@ -972,7 +972,7 @@ static int rk_udphy_power_on(struct rk_udphy *udphy, u8 mode)
+ 		ret = rk_udphy_setup(udphy);
  		if (ret)
+ 			return ret;
+-		udphy->mode_change = false;
++		udphy->phy_needs_reinit = false;
+ 	}
+ 
+ 	udphy->status |= mode;
 -- 
 2.53.0
 
