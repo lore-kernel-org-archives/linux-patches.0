@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016187;
-	b=bEW5I8ZHQo+tp+JZJhAro30UcyousW+NM4tP5GgCyaiJQKq3us/Or/3FFMfCRDzgJmZ9
-	 EmXuZ/tthOp+EJUUmjEW7n/dfwg61Pf1cKzJdYxSc/iX+ineZr/kw6IqB4TrR4O5jX5Uj
-	 SHsXp25wwIF8ooG75GBEpF1k5+b7i15OwYxQssvEd+rLoeuv2iCMTYjgi92ZAocb9ZIQc
-	 BPmh/qJi8TgUGwOfiyk19KIIprHr+pSLwQgHo40bduDiOitbRL4d4Do6SEcm/W7j2xwof
-	 w9rAbZkZH9Qzbk0+QNAREcWLi9IZmfwsnyHZYV3YqDpSvCplA/coutg7Y0ypoQ/PgRw==
+	t=1795016189;
+	b=rkJHrO9FZytmUNR9MTi/n+yEO5O3UrgD9Abo1pj+nOUFBhPFXAXBdZq0lOr47YRkA2F3
+	 qmxUAkdXwjHG3h9njyZEE6Qxb6+XPIX5UP65ci8t45gjMqQX6I00ZvhVrZWczF7yJZymV
+	 jZoUKUZzi39HMTfSaHG3nlVw9g5i6UpNTJ+CNS3ZW5goCwtj/iIdg3kV+VZgIYjpB/HxW
+	 fxEPDfGq2tVsZNKHAjf+8OMAPGkzdDcheoKNArJVSl/MqVCIkyyOI8yGxnDlU4fXmDiYr
+	 aeLGtR5e2urTNzb6bKjmhtMQY4xEaE+J1orVR1HZfQvcMPPhuX7xp46LGXN7hIqnbbg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016187;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016189;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=H5LpKUkjqRbeIeTUbvISCOJ0/VB+kL+0fgXIOECsII4=;
-	b=YIb9Rn0QmA55I5cFHlzbOvxS1OkrAlQYHMcDOcZG4F0enzqM881aiBeh1zeF/NWzAYbq
-	 jUNoH6qNVSYBi/nzqlYmAf5Rc5jF2exzKDHdvqQdG683OVvF08sptutnFZ5HTSGhJ92D3
-	 jy+Ou0Rj6+Yc7ox9GokxiM/rSiHH6WbY7P31nuRgPyJs9zWuAFawQRFHIrLwWR4tZuqoo
-	 4WSTdVVVUO582nVzcpCX5Fntjb9dbUqGIkxt417x1OFezYHgYNklJYIyL7rMHt2Mi7vOw
-	 DdCx2ytgMLHLKVwfzIIKr89VG1/QBrFcxGcaFDPtyfKDPSZuDl4BO0UaeN/7+6DGt6Q==
+	bh=vSSlS4Yr6tErTG9LyptXPJIinM8KkTKrXEyaZhqU2V4=;
+	b=p65/ti8QO9VCod7oOZajEryabUQYGr0f9MmvozfR0Tvfvx6m4HLrW8uaPSZAoyseeJx3
+	 JQCxHi63cpUb98UfjYrjGBnxSdI4PeYXReNTKuYfErY/Wixn8GG4VmUMZkO6XEcQbC7/O
+	 bXDEdTCbRXG7ssZpoMyWZdy8OnNC10Wy74WF1Qes49w7gJTipEoruoOY+AI5dqPOGBLez
+	 1v+8acUuJdPuua5+EHhnOOlLIC0138m8J/gF0nh4nB/WM4mbqFwRAKJTzN40NobMmjgM4
+	 pLh6zdXHu5OAJAyJHZzwKPbjeE/Ba5K14XSmNMGaOhDmrmst1o4BKrC19daZm+OxsJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QvXp2iQU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eted0oGN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07286606A32C;
-	Wed, 18 Nov 2026 15:36:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA13606A325;
+	Wed, 18 Nov 2026 15:36:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QvXp2iQU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57A901F000C4;
-	Wed, 18 Nov 2026 15:36:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eted0oGN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A3F91F000C4;
+	Wed, 18 Nov 2026 15:36:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016186;
-	bh=H5LpKUkjqRbeIeTUbvISCOJ0/VB+kL+0fgXIOECsII4=;
+	s=korg; t=1795016189;
+	bh=vSSlS4Yr6tErTG9LyptXPJIinM8KkTKrXEyaZhqU2V4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QvXp2iQUbW6rxsiFDXxIVi+xKExwoXbGF40IOpNYpcPzPGcPzh9SOYkRPfrV3kray
-	 24JuXxh2qVB3INv6tBp+JALhy0GEWcmsg08kx010ShDrJBGP5KgJLokw9u8zqmQ0E6
-	 C6cRNgbKx+hL9bmbDWyHYem0ePMFnnSKWcVKsmWU=
+	b=eted0oGN2+c4EfLNfKYz1JObPXQnNX2Q1fR4wbp65KmxExYb8tal5IAOdrfvCQ7Bv
+	 hTXU+0zlMx8cM7S1QQ7EJgINmx2rzrCl6fX0U3n9LY3SBpai78661V1WWkRmUg1H6E
+	 hUyEKEVQYh/ZW007O+B/KxaVWTDTWpFtk7dRRuOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0441/2651] bpf: Read a kfuncs __sz argument only when it is in a register
-Date: Wed, 18 Nov 2026 15:28:01 +0100
-Message-ID: <20261118150303.696720775@linuxfoundation.org>
+Subject: [PATCH 7.3 0442/2651] cgroup/dmem: Fix eviction helper reference in dmem_cgroup_try_charge()
+Date: Wed, 18 Nov 2026 15:28:02 +0100
+Message-ID: <20261118150303.731196049@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,52 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit afe897e89918434be8600250dbdda977aa99f53d ]
+[ Upstream commit e8f69fe59a104b4a97a3365dbb43c72996c2acde ]
 
-Commit e0b7b91c72db ("bpf: Support stack arguments for kfunc calls")
-supported stack arguments for kfunc's. In bpf_kfunc_stack_access_bytes(),
-the size of a ptr + __sz pair is read from const_reg_vals[] at index
-'BPF_REG_1 + arg + 1'. Past the fifth argument that index leaves the
-argument registers and reaches 6 through 9, which are the callee saved
-registers R6 through R9. The verifier does record constants for those,
-so a __sz argument passed on the stack can take the value of an
-unrelated register as its size.
+The kernel-doc comment of dmem_cgroup_try_charge() refers to
+dmem_cgroup_evict_valuable, which does not exist. The name is
+dmem_cgroup_state_evict_valuable. Say dmem_cgroup_state_evict_valuable.
 
-Fix it by guard size_reg which has to be less than or equal to
-MAX_BPF_FUNC_REG_ARGS.
-
-Fixes: e0b7b91c72db ("bpf: Support stack arguments for kfunc calls")
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20260912195201.982215-1-yonghong.song@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: b168ed458dde ("kernel/cgroup: Add "dmem" memory accounting cgroup")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ kernel/cgroup/dmem.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index bc87b15d4556c..729dc8e072ea3 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -13600,13 +13600,14 @@ s64 bpf_kfunc_stack_access_bytes(struct bpf_verifier_env *env, struct bpf_insn *
- 		goto out;
- 	}
- 
--	/* ptr + __sz/__szk pair: size is in the next register */
-+	/* ptr + __sz/__szk pair: the size follows the pointer */
- 	if (arg + 1 < nargs &&
- 	    (btf_param_match_suffix(btf, &args[arg + 1], "__sz") ||
- 	     btf_param_match_suffix(btf, &args[arg + 1], "__szk"))) {
- 		int size_reg = BPF_REG_1 + arg + 1;
- 
--		if (aux->const_reg_mask & BIT(size_reg)) {
-+		if (size_reg <= MAX_BPF_FUNC_REG_ARGS &&
-+		    (aux->const_reg_mask & BIT(size_reg))) {
- 			size = (s64)aux->const_reg_vals[size_reg];
- 			goto out;
- 		}
+diff --git a/kernel/cgroup/dmem.c b/kernel/cgroup/dmem.c
+index 4683f3d680226..10e148d64e857 100644
+--- a/kernel/cgroup/dmem.c
++++ b/kernel/cgroup/dmem.c
+@@ -706,8 +706,8 @@ EXPORT_SYMBOL_GPL(dmem_cgroup_uncharge);
+  *
+  * When this function fails with -EAGAIN and @ret_limit_pool is non-null, it
+  * will be set to the pool for which the limit is hit. This can be used for
+- * eviction as argument to dmem_cgroup_evict_valuable(). This reference must be freed
+- * with @dmem_cgroup_pool_state_put().
++ * eviction as argument to dmem_cgroup_state_evict_valuable(). This reference
++ * must be freed with @dmem_cgroup_pool_state_put().
+  *
+  * Return: 0 on success, -EAGAIN on hitting a limit, or a negative errno on failure.
+  */
 -- 
 2.53.0
 
