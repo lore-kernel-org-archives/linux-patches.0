@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037535;
-	b=sWuqjShtHdC1/bWMzg3LqdxBd6wqs/n6QkqgXhv450vLIoLq7IPVVh9EykjU7kUQeqJ4
-	 VM5oQw7mzo1AJBadfjTyY5S77sotZkb+og2KEcVr38Pkt+QxLtISr0I25v234L0bFoyTh
-	 60eCvUcNL5fer+6p2HYZ7lFnPtwDL9IdVNh/dXTOvAAbhXxAQgArVWW0/bzNaNqH7J4ii
-	 HwRD9sAYay17VqScjqylMoh5BDeIr53lwVGyVmfUFCQPpVIDbVsPujo9CKxE+3SHjMkKP
-	 vGmWg6/4KssuJEC+ZkQJ/l1Mc0D4aETP3OsyLJSRtw0iiYRy9IBpgnrGdW94ZJPe15w==
+	t=1795037538;
+	b=OgHU5MS75G13M0iOVf2Vsv7IHbix+5TBPMPZF8qXKgvOhX2f/ifDPg3ZXaqTGQxEHFAc
+	 nHYZPoCmufEnB8a4tJb3Hkz9RKXDikyRvYIJmF4FVZwfhdb9eW82FPLU0t8a1veckZU6q
+	 hWo05lRNF0geKwjzugJs+NGWi4muluFeemBM6villWsLsRuTmE8LAGPUM/R2YtXXvH9n+
+	 rdUl0FOVwSI4vp3HlikNgKRCv2DA0jHLaeFekvT6VZ2LD1BG373/N5SWCHwi6fYKVp2Vy
+	 3c3le4byRFXskekxDT4kl+pv1sWgZGuJxsZ0NakuMP8R2bXhWPH9CzG7ViequHUzGYw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037535;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037538;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Jj34ToCpUqvUtSeGaNFkLGrNghtV66WXrUAhPC4n4pg=;
-	b=Y39pxHOIce2UYCqH5x19/OxFQO0qoj/XzOqwTFwDWxUrVrsbscvl/ViwrZTf+Pofg/cG
-	 YSx56FDDY+5TXALUdmP8juMJ+UcHLKYD/2FintTti4IfO5n9mvtcc5QUj/gdayqR+emjO
-	 VdmJyQDph1r7/EdrZnpXP/2xH/YrgTGlcQux0W5+zdL8ITlsuytyDdphGQkY/xDQ2MRd3
-	 iI2WRH420eV0FBV/QuB4SzXpQ1v7auA+VlS8mQQIQJJdam2txH87O1jMKMJME3RUuUTPN
-	 mHN8NRTsGnXhnRacPLUyYlVgF6h59NIgS74/GqFhsAPfuuS8vnshhVHRaiDXZoFln/A==
+	bh=d3XyXZm20lhYZRSnKptCplqZ3L6sPNVnFEPQ1gvGsbw=;
+	b=dwKmpALeW181fsK0P/apIQs3JQN0xhCdhmZuBP3K0c9RVdugaVA25+F52b9q8kpcLBIP
+	 z6Esll48My7MzFHtbdV0w/mDzPZlYcc+X1oXQAIqGrne14aD2GqodQ6Slg9vJn7hiLNXJ
+	 zeX+OCsUeN1ETnRX1GJtvcPItVBnGEgjmNF0yEKaH9sRV9YOwj9CDCiyiTE2u22Ry35Hf
+	 KokVnQ3J7hfq7vuHyLMLwRWvtY4gAkXxfsJCsKsmlJrNibdmUVYp1gwkNnv49YYAoEwbp
+	 Y9d81w6QpeNncZKALtcjn0DryIMxbEoCpMgTFK2cqPGyDPSUDNVO3ky9kDTNlOyWlpg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wfixnOXL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cYBvhhbt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4746606A32A;
-	Wed, 18 Nov 2026 21:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987E4606A31C;
+	Wed, 18 Nov 2026 21:32:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wfixnOXL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEB121F000C4;
-	Wed, 18 Nov 2026 21:32:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cYBvhhbt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B815B1F000C4;
+	Wed, 18 Nov 2026 21:32:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037535;
-	bh=Jj34ToCpUqvUtSeGaNFkLGrNghtV66WXrUAhPC4n4pg=;
+	s=korg; t=1795037538;
+	bh=d3XyXZm20lhYZRSnKptCplqZ3L6sPNVnFEPQ1gvGsbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wfixnOXLUKwUrXFbc+T2ObUjTdq/I93MCMscjB7C4/sasvDvbdim1xLV0wfCuN2+5
-	 4jKyQ4U6OA5ju5MMvc1NYdW2rh+awOk/bD+eU+SDg/NV9UcAyQAmgI6x/DN/GoakaB
-	 iIE9J7JQHnaZw/ekHbFCEbOpQXkdanxscNXywQ5M=
+	b=cYBvhhbtYxUgEElflv6bvFNA79a3UD/rzOT/Xmwz6d0wT2M8Nc1waJZBKxbeICuVg
+	 nlT+SkddB0t/ORe6tr1ii5OFy4Cc4cGSwhBvJMTkdsRD/NusXVSR+yciCzkLqtgRP/
+	 g1jTDPlcRUn97fDuJSOiOdS5ISajfVJ/sXRm8xmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1432/3318] ALSA: usx2y: Initialize idle URBs before submitting streams
-Date: Wed, 18 Nov 2026 15:34:14 +0100
-Message-ID: <20261118150403.733718580@linuxfoundation.org>
+Subject: [PATCH 6.6 1433/3318] ALSA: hwdep: Serialize DSP load requests
+Date: Wed, 18 Nov 2026 15:34:15 +0100
+Message-ID: <20261118150403.771657929@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,81 +72,70 @@ Content-Transfer-Encoding: 8bit
 
 From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
 
-[ Upstream commit ceb0d8c22473933099b46cec70639d0f1f7c68ad ]
+[ Upstream commit aee83c204f80d56b4d55f53acdb8594308ddcd4a ]
 
-usb_stream_start() submits the first two capture and playback URBs and
-only afterwards assigns sk->idle_inurb, sk->idle_outurb,
-sk->completed_inurb and sk->completed_outurb to the remaining two URBs
-of each direction.
+The check of the loaded DSP indices and the call of the driver's
+dsp_load callback in snd_hwdep_dsp_load() are not serialized.  A hwdep
+file descriptor can be shared among threads, or inherited across fork,
+so two SNDRV_HWDEP_IOCTL_DSP_LOAD requests for the same index can both
+observe the index as unloaded and enter the driver's callback
+concurrently, even though the device itself is opened exclusively.
 
-A transfer can complete as soon as usb_submit_urb() has been called, so
-the completion handler i_capture_start() or i_playback_start() may run
-before those pointers are set.  While the stream is still being
-synchronized (state below usb_stream_sync1), stream_start() then calls
-playback_prep_freqn(sk, sk->idle_outurb) with sk->idle_outurb still
-NULL, and the packet descriptors are written through that NULL pointer:
+This breaks the assumption behind hw->dsp_loaded that a firmware index
+is loaded only once.  For example, snd-usb-usx2y hits
+WARN_ON(usx2y->as04.buffer) in usx2y_async_seq04_init() and may
+allocate the US-428 sequence URBs twice.
 
-  Oops: general protection fault, probably for non-canonical address
-  0xdffffc0000000018: 0000 [#1] SMP KASAN
-  KASAN: null-ptr-deref in range [0x00000000000000c0-0x00000000000000c7]
-  RIP: 0010:playback_prep_freqn+0x11c/0x4a0 sound/usb/usx2y/usb_stream.c:33
-  Call Trace:
-   <IRQ>
-   stream_start+0x5dc/0x8d0 sound/usb/usx2y/usb_stream.c:596
-   i_capture_start+0x3da/0x710 sound/usb/usx2y/usb_stream.c:654
-   __usb_hcd_giveback_urb+0x238/0x550 drivers/usb/core/hcd.c:1657
-   usb_giveback_urb_bh+0x20b/0x530 drivers/usb/core/hcd.c:1691
-   tasklet_hi_action+0xa/0x20 kernel/softirq.c:994
-   handle_softirqs+0x16f/0x440 kernel/softirq.c:645
-   </IRQ>
+Serialize the check, the callback invocation and the bookkeeping with a
+per-hwdep mutex, so that the second request returns -EBUSY.
 
-The four URBs referenced by these pointers are allocated long before and
-do not depend on any transfer state, so assign them before the submit
-loop.  Keeping the assignment inside the retry path also restores a
-well-defined URB rotation when the start frame mismatch handling kills
-and resubmits the streams.
-
-Fixes: 030a07e441296c372f946cd4065b5d831d8dc40c ("ALSA: Add USB US122L driver")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
 Co-developed-by: Bin Yu <byu@xidian.edu.cn>
 Signed-off-by: Bin Yu <byu@xidian.edu.cn>
 Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
 Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
 Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
-Link: https://patch.msgid.link/20261028103158.22996-1-25031212351@stu.xidian.edu.cn
+Link: https://patch.msgid.link/20261029084810.21910-2-25031212351@stu.xidian.edu.cn
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/usx2y/usb_stream.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ include/sound/hwdep.h | 1 +
+ sound/core/hwdep.c    | 2 ++
+ 2 files changed, 3 insertions(+)
 
-diff --git a/sound/usb/usx2y/usb_stream.c b/sound/usb/usx2y/usb_stream.c
-index 66ea610aa433e..ca10407ca74bd 100644
---- a/sound/usb/usx2y/usb_stream.c
-+++ b/sound/usb/usx2y/usb_stream.c
-@@ -682,6 +682,10 @@ int usb_stream_start(struct usb_stream_kernel *sk)
- 	s->sync_packet = -1;
- 	s->inpacket_head = -1;
- 	sk->iso_frame_balance = 0;
-+	sk->idle_inurb = sk->inurb[USB_STREAM_NURBS - 2];
-+	sk->idle_outurb = sk->outurb[USB_STREAM_NURBS - 2];
-+	sk->completed_inurb = sk->inurb[USB_STREAM_NURBS - 1];
-+	sk->completed_outurb = sk->outurb[USB_STREAM_NURBS - 1];
- 	++try;
- 	for (u = 0; u < 2; u++) {
- 		struct urb *inurb = sk->inurb[u];
-@@ -740,11 +744,6 @@ int usb_stream_start(struct usb_stream_kernel *sk)
- 		return -EFAULT;
- 	}
+diff --git a/include/sound/hwdep.h b/include/sound/hwdep.h
+index b0da633184cde..7357727f06603 100644
+--- a/include/sound/hwdep.h
++++ b/include/sound/hwdep.h
+@@ -57,6 +57,7 @@ struct snd_hwdep {
  
--	sk->idle_inurb = sk->inurb[USB_STREAM_NURBS - 2];
--	sk->idle_outurb = sk->outurb[USB_STREAM_NURBS - 2];
--	sk->completed_inurb = sk->inurb[USB_STREAM_NURBS - 1];
--	sk->completed_outurb = sk->outurb[USB_STREAM_NURBS - 1];
--
- /* wait, check */
- 	{
- 		int wait_ms = 3000;
+ 	struct mutex open_mutex;
+ 	int used;			/* reference counter */
++	struct mutex dsp_mutex;		/* serializes DSP load requests */
+ 	unsigned int dsp_loaded;	/* bit fields of loaded dsp indices */
+ 	unsigned int exclusive:1;	/* exclusive access mode */
+ };
+diff --git a/sound/core/hwdep.c b/sound/core/hwdep.c
+index de7476034f2cf..378188a528d05 100644
+--- a/sound/core/hwdep.c
++++ b/sound/core/hwdep.c
+@@ -212,6 +212,7 @@ static int snd_hwdep_dsp_load(struct snd_hwdep *hw,
+ 		return -ENXIO;
+ 	if (info->index >= 32)
+ 		return -EINVAL;
++	guard(mutex)(&hw->dsp_mutex);
+ 	/* check whether the dsp was already loaded */
+ 	if (hw->dsp_loaded & (1u << info->index))
+ 		return -EBUSY;
+@@ -382,6 +383,7 @@ int snd_hwdep_new(struct snd_card *card, char *id, int device,
+ 
+ 	init_waitqueue_head(&hwdep->open_wait);
+ 	mutex_init(&hwdep->open_mutex);
++	mutex_init(&hwdep->dsp_mutex);
+ 	hwdep->card = card;
+ 	hwdep->device = device;
+ 	if (id)
 -- 
 2.53.0
 
