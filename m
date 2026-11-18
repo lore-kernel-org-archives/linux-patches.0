@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043273;
-	b=mQAUSN0BdapjEaimqXNHtq3hpbFaey/nyC9jS6BkUXUKhOduCr8Ql8/HHh0/in4AkYL4
-	 YPRQ274B8HJ7bV/gyzS8X4Mw/1hxZq+yY6hg8TqIbIix9bgfGcgnJrY3mX0zF093jEByD
-	 sc2hbkl7o4ptvevxhMXwOZ8YGffSfW3vX1HrpSWiqTccsbanlOB1Px41rLK/fm+2UCQjq
-	 OzpuDOk11Yqi/jZcbUCZzhfKJ1U5+7NSH88qoGrZkAJTEbfKW1xqKZ+eH6wu++IuZei2+
-	 j+pOixZRJvywjc0HjPUM102SF7wVou8M2fdRyTPo5jb1y1KadNY4+UaWyg6Xcx9dWxA==
+	t=1795043276;
+	b=ifssae+Bnk3w2rWMC6uOzltlsEHcgxOIcz4q1CoFgjrxiQw8dBV/c6VQxV8lj43hVaFY
+	 RQhAEEzk3i/JvurcWa9bms65+s6yljW5BpwSceJbxrUDvlN7uh+3iUKp7T5P2CKitQKnx
+	 0iExE0ENcEQOIVRFlUi8mqC6KjoK5LyjOquRGk5FFGYdHLY+4QU4HOrDDxJwcNlGgJ4H2
+	 ZYvWWYKhFKxHNsWvEvJ4tiuNpqiwFM+Umu0yoAbDSy1v27JA0XbaxduZGxDg4MHJCZDBi
+	 idnShhI0ZcsmzBSxk7EQ5/edsGdA5yLEWKw8ql7CDfW//SKSO213OuGEXjR8Oqft4Cg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043273;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043276;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JvEMzAKNdvTjUF8D4tfEfynhfGtwtYa3w8ysBo5Zagg=;
-	b=u1wBQuW2fgM65cDRcUx7hQ0kzG8swf4BK01jj1RNsICR+GutejSEqctQS0T0vC3tAP4i
-	 0yzg3+Xrl3BADUaR7cszw4A24PEftD3LNxn9mA+MM6+jHd36X9haXECWHbWlAdFjIzOhz
-	 KbdpRxrZDEw8JsRiwYS3SCm4+2upNPdylGhphnhTV9QBgSghEMbzHWod2gj/wI8Jwhk5t
-	 z1CVVNvtHcJx0Bo+Ghzsc7ZS+2Ku0Mt5Q96whe0FFFWT+AQw/diVF7AheQ0VjQjeqjLSV
-	 sxG5H7PmuGIK7ml/PVuArxRrcJm/E0wSnM/ERaQmxVqGNQJNUsViRur0xZ7IGtV5apg==
+	bh=I+7HBKtB/9A85C2gREHLS32pF5FEbl7STiZVP9ykfKM=;
+	b=hygJSZIJaGv6cP6vVwtMbMq9DIFuCUxdL1n9meTnXu7KdU/ggloWwLIN11v/TZ1eWl6l
+	 nMhmnk7XIijBOIsRQyMByNqTACr9DGMAWPKMpEfygsfYuqmexV7qTtWbxRp2G5oe1Rd0d
+	 hhl4RE7o/DPOiOm1V5o02o5Hze37uiBHZuf45wjx/rdRUt/KybF5fRoPeba0hPWbkynNp
+	 /Xbly2eTqHcJ/vqxk7cW6SaVySDkHdD30xc6wVBdSHJp1Hu35FaxzZmAe6pcGGAiCJXtB
+	 KbmX76Vml3exaVouZ75SV8VqM3SjLRT7BlAOcNr+LpobukUUH/pzSQXxDjIiS/KGhtw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nnj6gLXf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="yOpWSPd/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB2A606A31C;
-	Wed, 18 Nov 2026 23:07:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DC3606A32F;
+	Wed, 18 Nov 2026 23:07:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nnj6gLXf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7B091F000C4;
-	Wed, 18 Nov 2026 23:07:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yOpWSPd/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2AD41F000C4;
+	Wed, 18 Nov 2026 23:07:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043273;
-	bh=JvEMzAKNdvTjUF8D4tfEfynhfGtwtYa3w8ysBo5Zagg=;
+	s=korg; t=1795043276;
+	bh=I+7HBKtB/9A85C2gREHLS32pF5FEbl7STiZVP9ykfKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nnj6gLXfskYFcHCiHWVSeywcDMmlBwW41FrV7EF4S9eQrLD6CuQhmTN7aOhbSTH4n
-	 HzSGdMgt/qNenMF+ke9l9I+HkHyzbDDm74V98sctB1VG3441b9W4/AdqlSRkXH4vdK
-	 /ctCWxavAd94ix6i22PV3/cUfh4XuYVNt7ESDIR4=
+	b=yOpWSPd/Z+Q1dkcwtmjVfa7uQinyazR7G6qg9yg97Zm7iLkybpzSdS6IDEwfMCHLG
+	 IGyQZEVkM25mwp9wD+NDqe4m9UiXLBjSWgOy1HphgOc7X3Nxej0FsCAoUIMZOztDhC
+	 sI5RIHMh5he/LL9Vq0p4lDMOWHnlWFqIwh0m/hKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kyungwook Boo <bookyungwook@gmail.com>,
 	Ian Abbott <abbotti@mev.co.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0111/2857] comedi: aio_iiro_16: Add sanity check to interrupt handler
-Date: Wed, 18 Nov 2026 15:19:05 +0100
-Message-ID: <20261118150205.308096051@linuxfoundation.org>
+Subject: [PATCH 6.1 0112/2857] comedi: pcmmio: Add sanity check to interrupt handler
+Date: Wed, 18 Nov 2026 15:19:06 +0100
+Message-ID: <20261118150205.364331249@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -72,7 +72,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Abbott <abbotti@mev.co.uk>
 
-[ Upstream commit 1ca44751915134f19e8627768159781e75b5da50 ]
+[ Upstream commit ea72e2fc9026f375314421ddfa4dbdc49432a899 ]
 
 The driver requests an interrupt handler for the device, after setting
 device registers to disable interrupt generation.  The interrupt handler
@@ -88,27 +88,27 @@ Link: https://lore.kernel.org/lkml/20260610115912.780131-1-jjy600901@snu.ac.kr/
 Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
 Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
 Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260618102949.26607-2-abbotti@mev.co.uk
+Link: https://patch.msgid.link/20260618102949.26607-10-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/comedi/drivers/aio_iiro_16.c | 3 +++
+ drivers/comedi/drivers/pcmmio.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/drivers/comedi/drivers/aio_iiro_16.c b/drivers/comedi/drivers/aio_iiro_16.c
-index 739cc4db52ac7..fe75b7e1ddcac 100644
---- a/drivers/comedi/drivers/aio_iiro_16.c
-+++ b/drivers/comedi/drivers/aio_iiro_16.c
-@@ -59,6 +59,9 @@ static irqreturn_t aio_iiro_16_cos(int irq, void *d)
- 	unsigned int status;
- 	unsigned int val;
+diff --git a/drivers/comedi/drivers/pcmmio.c b/drivers/comedi/drivers/pcmmio.c
+index c2402239d5513..db9cb3fedb48d 100644
+--- a/drivers/comedi/drivers/pcmmio.c
++++ b/drivers/comedi/drivers/pcmmio.c
+@@ -362,6 +362,9 @@ static irqreturn_t interrupt_pcmmio(int irq, void *d)
+ 	unsigned int triggered;
+ 	unsigned char int_pend;
  
 +	if (!dev->attached)
 +		return IRQ_NONE;
 +
- 	status = inb(dev->iobase + AIO_IIRO_16_STATUS);
- 	if (!(status & AIO_IIRO_16_STATUS_IRQE))
- 		return IRQ_NONE;
+ 	/* are there any interrupts pending */
+ 	int_pend = inb(dev->iobase + PCMMIO_INT_PENDING_REG) & 0x07;
+ 	if (!int_pend)
 -- 
 2.53.0
 
