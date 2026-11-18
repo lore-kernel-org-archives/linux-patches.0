@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047497;
-	b=Uk+Z7SYz8e1orJm4ZdBKLv/mMl4prqV3QTKoZVzKiVuwL6LiPCaOyYGX2lNyXk29NWpJ
-	 lQviRVeiV2Nnbg9RoF80hJDTnQRZ3p59U/EdoioqyNIQeP5lkUaPxN0ysOFmSRANOcdRC
-	 uFpT13UdnD7AAy8wS7eNaL5pKwYDwyRt0krxzReC8hORvuFLy+JAF477x5B2fE6LOXBbq
-	 kGU+FPSnG3CNCNVVGDHM6L9+MFx56t69+H4jU9ijWHHnFiTPIpNx+k/ZOH4ksW261uW14
-	 nD+1ZyTwlazRThpna8Sa/e7YZu461rlLiTDuxTwJQ0dL42ltJNaYPw1JoiW/m5VG4Sg==
+	t=1795047500;
+	b=kmD52hZ88Su6BdN7/ZUNVD56T9rB/KCQBgcqP220XhngUVeLIu5eZvcPoc7pg6tUZV6J
+	 JMc0xos+DurT0wPmmiidnhM2MyznfZJwdIqezVghXe/2UmrP1rV+r+mlTwa3ZkUQPSQRT
+	 6+wfHagAyf1vV5aAuX209GxiXnodyOM2b3ndmqyIkx3iB2G29SaTXosCjSq112AWwvUq7
+	 BFF7N4uBMzTsQTSGbZGW2RncAU0nfBPlP1yYLhtkhk3LpkOo+OYcznxpqGTJ0c3qIdAKU
+	 MSGxPOR7rPcceCJv4qRl21X8s4jouvjI31/Vdoi9X1hVLmBE6ZiEWaPHnFcgfwQOIlw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047497;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047500;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sSWtFHB5SM+UVEYeekWyYHbUB9C97keTiQSM5nerwR4=;
-	b=20Pknuc+810BeN5DVV/uMN200XUjIvAkJHAF5TUuCLb4bpmJecBTkVLV6oXRkACDmc5M
-	 gAI2JZQPHqsTWZ3Y84l7eLVJvmTrNpa7I1FM4InRxmOxMBEDlJg7p7n7jE3PQv74jyVeY
-	 nc9M58hmsxx7ZTc6nph+qojMlVZJ25BRg0oQt0VCxEsy38cf9inS8d2bx6jM77R8KVYDw
-	 eMh9ZJDjCHRV69KMyy1JLacSZfhMqtvUbHK2DSJnniPk2wd+8uKefxK5hY78NIUg9i3Iq
-	 qRCfjCvxV3zolm9yypDhunLSy62sCOTv2fShYXi0Ww73Tmr4+YpX4TEfodLV3rIdRCQ==
+	bh=TO1UFzhoChvqDVSk9+KZ6odOr/7H1o75klotQDjJlVg=;
+	b=tK0ANLxDkH5M+QLV7WZ+Cqw83AWsxYSII5F7Vw8EJ5uWoSpgzSrI8YAh11f/uakVa3m9
+	 sOInFaPnEhEI539iskzKMqzPCh6jh8/r9e73jhgqJroaboHJDvTpbiMofC2Wi8cqT5M9J
+	 nhNOiS2M1Ha8+1qBjHYegdeLoyB8ILLE7N15gRU+OnLVfPA2Rk+zCPU/QBHIri1pCXrzL
+	 gTGiHBLUuaU9hrPobtcBgU0KDbC4gjZvlM0UjDBYnqLL/xTfGuMzgJzwPUehBkfZOaXpB
+	 kR/PiHVO79EGFAOIbrXuzdylxwk51kulqjEb2llF9gqYQJkFCfgFcwS98IWNMjRme1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hV3KieLH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Y8KMJmM/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D644D606A325;
-	Thu, 19 Nov 2026 00:18:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC17606A320;
+	Thu, 19 Nov 2026 00:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hV3KieLH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3512F1F000C4;
-	Thu, 19 Nov 2026 00:18:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y8KMJmM/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E60981F000C4;
+	Thu, 19 Nov 2026 00:18:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047497;
-	bh=sSWtFHB5SM+UVEYeekWyYHbUB9C97keTiQSM5nerwR4=;
+	s=korg; t=1795047500;
+	bh=TO1UFzhoChvqDVSk9+KZ6odOr/7H1o75klotQDjJlVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hV3KieLH4AQbj265woToE4B1mRhEjAbXH7OZV3LZixUcnY1v6R28X76iPpowl8Dwa
-	 RxaUHtWXtx98FZy4E+HNiR5YvNK8Yv2b+/MjUq1Rx2V1u9YpXHZ2a3Io0sLHgxobbN
-	 N2JtBA2axd7H1BwxZLndDadpAiyJqafO2BciHfIo=
+	b=Y8KMJmM/fCUuuUjndH7MqHpUf0G2p/9wx8b0m8dqW/Qrlr7sR4WaItsiXXpyFYpzo
+	 OaLGrEEvf7HwFvGIPjahodZFvDMSEbOhjN8ujlFXCQT0Re6G8Q6vNp5ZGlOWDKTW/v
+	 j/2nilDZ4p1lsXVOfxL8NtEeZRI+liY1egG/W5QE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Oliver Upton <oupton@kernel.org>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1660/2857] KVM: arm64: vgic-its: Dont map an LPI from more than one event
-Date: Wed, 18 Nov 2026 15:44:54 +0100
-Message-ID: <20261118150301.098028633@linuxfoundation.org>
+Subject: [PATCH 6.1 1661/2857] l2tp: snapshot sequencing state when building transmit headers
+Date: Wed, 18 Nov 2026 15:44:55 +0100
+Message-ID: <20261118150301.133520359@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,147 +68,340 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-[ Upstream commit de81b28f0b83b22163d7d9a9b708d7aa912e0ef7 ]
+[ Upstream commit d06ae66516e1aaf023808912af6292aef09d46c3 ]
 
-KVM keeps one vgic_irq per LPI. A MAPTI of an LPI whose vgic_irq
-already exists reuses it for the new ITE and leaves its target vCPU as
-it was. Mapping one LPI from two events is UNPREDICTABLE (IHI 0069H.b,
-5.2.10), but nothing stops a guest from doing it. If the first MAPTI
-names a collection the guest never maps and the second a mapped one,
-the LPI translates through the second event with a NULL target vCPU.
+Updates to send_seq from netlink, PPP setsockopt and receive-side
+negotiation race with packet transmission. The header length is updated
+separately, while transmit reads both fields repeatedly without
+synchronization.
 
-When the VMM routes an assigned device's MSI to that event on a host
-with GICv4 enabled, kvm_vgic_v4_set_forwarding() takes the vPE from the
-NULL target vCPU and the host oopses:
+For example, transmit can push a ten-byte L2TPv2 header, then a concurrent
+writer clears send_seq before the header builder reads it. The builder
+writes only six bytes, leaving four bytes of uninitialized skb headroom
+in the outgoing packet. The reverse mismatch overwrites the beginning of
+the payload. A later hdr_len read can also make the UDP length disagree
+with the skb length.
 
-  Unable to handle kernel paging request at virtual address 0000000000001980
-  [...]
-  Call trace:
-   its_build_vmapti_cmd (drivers/irqchip/irq-gic-v3-its.c:943) (P)
-   its_irq_set_vcpu_affinity (drivers/irqchip/irq-gic-v3-its.c:1380)
-   irq_set_vcpu_affinity (kernel/irq/manage.c:670)
-   its_map_vlpi (drivers/irqchip/irq-gic-v4.c:326)
-   kvm_vgic_v4_set_forwarding (arch/arm64/kvm/vgic/vgic-v4.c:485)
-   kvm_arch_irq_bypass_add_producer (arch/arm64/kvm/arm.c:2977)
-   irq_bypass_register_consumer (virt/lib/irqbypass.c:44)
-   kvm_irqfd (arch/arm64/kvm/../../../virt/kvm/eventfd.c:496)
-   kvm_vm_ioctl (arch/arm64/kvm/../../../virt/kvm/kvm_main.c:5270)
+KCSAN reported:
 
-Track in each vgic_irq whether an ITE maps it. Drop a MAPTI of an LPI
-that is already mapped, as a failed MAPTI already is. Restoring the ITS
-tables keeps the first ITE it reads for each LPI and drops any later
-one, so a guest saved with a double mapping still restores. Key the
-check on the mapping, not on the vgic_irq. A vgic_irq outlives its ITE
-while anything holds a reference to it, such as the vCPU it was last
-queued on. A later MAPTI of such an LPI succeeds as before, and now
-retargets it to its collection.
+  BUG: KCSAN: data-race in l2tp_session_set_header_len / l2tp_xmit_skb
 
-Fixes: 196b136498b35 ("KVM: arm/arm64: GICv4: Wire mapping/unmapping of VLPIs in VFIO irq bypass")
-Suggested-by: Marc Zyngier <maz@kernel.org>
+  write to 0xffff888100d0944a of 2 bytes by task 116 on cpu 1:
+   l2tp_session_set_header_len+0x81/0xc0
+   l2tp_nl_cmd_session_modify+0x122/0x2c0
+   genl_family_rcv_msg_doit+0x170/0x1d0
+
+  read to 0xffff888100d0944a of 2 bytes by task 115 on cpu 0:
+   l2tp_xmit_skb+0x9c/0xc80
+   pppol2tp_sendmsg+0x21c/0x2a0
+   __sys_sendto+0x28c/0x2a0
+
+The bug can lead to leak kernel base address for KASLR bypass, the
+corresponding reproducer can be provided per request.
+
+Initialize hdr_len to the maximum header size and leave it unchanged
+when sequencing is toggled. Snapshot send_seq once per packet and use
+that snapshot for the actual header length and header construction,
+including the sequence flag. Use the same length for headroom, the header
+push and the UDP length. PPP callers can safely reserve the maximum size;
+L2TPv3 header sizes do not depend on sequencing.
+
+Make send_seq a separate bool so READ_ONCE() and WRITE_ONCE() can be used
+without sharing a bitfield storage unit with other configuration flags.
+Preserve the netlink attribute's existing low-bit truncation.
+
+Fixes: 3557baabf280 ("[L2TP]: PPP over L2TP driver core")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Reviewed-by: Oliver Upton <oupton@kernel.org>
-Link: https://patch.msgid.link/20261013081646.933312-2-fuad.tabba@linux.dev
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-[ sashal: added missing IRQ locking and hw clearing to its_free_ite() while declaring mapped as a plain bool ]
+Assisted-by: GPT-6 Astra
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Link: https://patch.msgid.link/20261013090500.1180376-1-nicoyip.dev@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ sashal: adjusted PPP setsockopt context to preserve the existing po->chan.hdrlen update ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/vgic/vgic-its.c | 37 +++++++++++++++++++++++++++++-----
- include/kvm/arm_vgic.h         |  1 +
- 2 files changed, 33 insertions(+), 5 deletions(-)
+ net/l2tp/l2tp_core.c    | 51 +++++++++++++++++++----------------------
+ net/l2tp/l2tp_core.h    |  6 ++---
+ net/l2tp/l2tp_debugfs.c |  4 ++--
+ net/l2tp/l2tp_netlink.c | 11 ++++-----
+ net/l2tp/l2tp_ppp.c     |  8 +++----
+ 5 files changed, 35 insertions(+), 45 deletions(-)
 
-diff --git a/arch/arm64/kvm/vgic/vgic-its.c b/arch/arm64/kvm/vgic/vgic-its.c
-index 88a01ceb8ce2f..b290ccd644e7e 100644
---- a/arch/arm64/kvm/vgic/vgic-its.c
-+++ b/arch/arm64/kvm/vgic/vgic-its.c
-@@ -816,12 +816,18 @@ int vgic_its_inject_msi(struct kvm *kvm, struct kvm_msi *msi)
- /* Requires the its_lock to be held. */
- static void its_free_ite(struct kvm *kvm, struct its_ite *ite)
+diff --git a/net/l2tp/l2tp_core.c b/net/l2tp/l2tp_core.c
+index 717559ead628a..a0f7222a5ad0d 100644
+--- a/net/l2tp/l2tp_core.c
++++ b/net/l2tp/l2tp_core.c
+@@ -697,11 +697,9 @@ void l2tp_recv_common(struct l2tp_session *session, struct sk_buff *skb,
+ 		 * check if we sre sending sequence numbers and if not,
+ 		 * configure it so.
+ 		 */
+-		if (!session->lns_mode && !session->send_seq) {
++		if (!session->lns_mode && !READ_ONCE(session->send_seq)) {
+ 			trace_session_seqnum_lns_enable(session);
+-			session->send_seq = 1;
+-			l2tp_session_set_header_len(session, tunnel->version,
+-						    tunnel->encap);
++			WRITE_ONCE(session->send_seq, true);
+ 		}
+ 	} else {
+ 		/* No sequence numbers.
+@@ -719,12 +717,10 @@ void l2tp_recv_common(struct l2tp_session *session, struct sk_buff *skb,
+ 		 * If we're the LNS and we're sending sequence numbers, the
+ 		 * LAC is broken. Discard the frame.
+ 		 */
+-		if (!session->lns_mode && session->send_seq) {
++		if (!session->lns_mode && READ_ONCE(session->send_seq)) {
+ 			trace_session_seqnum_lns_disable(session);
+-			session->send_seq = 0;
+-			l2tp_session_set_header_len(session, tunnel->version,
+-						    tunnel->encap);
+-		} else if (session->send_seq) {
++			WRITE_ONCE(session->send_seq, false);
++		} else if (READ_ONCE(session->send_seq)) {
+ 			pr_debug_ratelimited("%s: recv data has no seq numbers when required. Discarding.\n",
+ 					     session->name);
+ 			atomic_long_inc(&session->stats.rx_seq_discards);
+@@ -934,7 +930,8 @@ EXPORT_SYMBOL_GPL(l2tp_udp_encap_recv);
+ 
+ /* Build an L2TP header for the session into the buffer provided.
+  */
+-static int l2tp_build_l2tpv2_header(struct l2tp_session *session, void *buf)
++static int l2tp_build_l2tpv2_header(struct l2tp_session *session, void *buf,
++				    bool send_seq)
  {
-+	struct vgic_irq *irq = ite->irq;
- 	list_del(&ite->ite_list);
+ 	struct l2tp_tunnel *tunnel = session->tunnel;
+ 	__be16 *bufp = buf;
+@@ -943,14 +940,14 @@ static int l2tp_build_l2tpv2_header(struct l2tp_session *session, void *buf)
+ 	u32 tunnel_id = tunnel->peer_tunnel_id;
+ 	u32 session_id = session->peer_session_id;
  
- 	/* This put matches the get in vgic_add_lpi. */
--	if (ite->irq) {
--		if (ite->irq->hw)
--			WARN_ON(its_unmap_vlpi(ite->irq->host_irq));
-+	if (irq) {
-+		scoped_guard(raw_spinlock_irqsave, &irq->irq_lock) {
-+			if (irq->hw)
-+				WARN_ON(its_unmap_vlpi(ite->irq->host_irq));
-+
-+			irq->hw = false;
-+			irq->mapped = false;
-+		}
+-	if (session->send_seq)
++	if (send_seq)
+ 		flags |= L2TP_HDRFLAG_S;
  
- 		vgic_put_irq(kvm, ite->irq);
- 	}
-@@ -829,6 +835,23 @@ static void its_free_ite(struct kvm *kvm, struct its_ite *ite)
- 	kfree(ite);
+ 	/* Setup L2TP header. */
+ 	*bufp++ = htons(flags);
+ 	*bufp++ = htons(tunnel_id);
+ 	*bufp++ = htons(session_id);
+-	if (session->send_seq) {
++	if (send_seq) {
+ 		*bufp++ = htons(session->ns);
+ 		*bufp++ = 0;
+ 		session->ns++;
+@@ -961,7 +958,8 @@ static int l2tp_build_l2tpv2_header(struct l2tp_session *session, void *buf)
+ 	return bufp - optr;
  }
  
-+/* Mapping one LPI from two events is UNPREDICTABLE: the first ITE keeps it. */
-+static bool vgic_its_map_lpi(struct kvm *kvm, struct its_ite *ite,
-+			     struct vgic_irq *irq, struct kvm_vcpu *vcpu)
-+{
-+	scoped_guard(raw_spinlock_irqsave, &irq->irq_lock) {
-+		if (!irq->mapped) {
-+			irq->mapped = true;
-+			irq->target_vcpu = vcpu;
-+			ite->irq = irq;
-+			return true;
-+		}
-+	}
-+
-+	vgic_put_irq(kvm, irq);
-+	return false;
-+}
-+
- static u64 its_cmd_mask_field(u64 *its_cmd, int word, int shift, int size)
+-static int l2tp_build_l2tpv3_header(struct l2tp_session *session, void *buf)
++static int l2tp_build_l2tpv3_header(struct l2tp_session *session, void *buf,
++				    bool send_seq)
  {
- 	return (le64_to_cpu(its_cmd[word]) >> shift) & (BIT_ULL(size) - 1);
-@@ -1138,13 +1161,14 @@ static int vgic_its_cmd_handle_mapi(struct kvm *kvm, struct vgic_its *its,
- 		vcpu = kvm_get_vcpu(kvm, collection->target_addr);
+ 	struct l2tp_tunnel *tunnel = session->tunnel;
+ 	char *bufp = buf;
+@@ -987,7 +985,7 @@ static int l2tp_build_l2tpv3_header(struct l2tp_session *session, void *buf)
+ 	if (session->l2specific_type == L2TP_L2SPECTYPE_DEFAULT) {
+ 		u32 l2h = 0;
  
- 	irq = vgic_add_lpi(kvm, lpi_nr, vcpu);
-+	if (!IS_ERR(irq) && !vgic_its_map_lpi(kvm, ite, irq, vcpu))
-+		irq = ERR_PTR(-EEXIST);
- 	if (IS_ERR(irq)) {
- 		if (new_coll)
- 			vgic_its_free_collection(its, coll_id);
- 		its_free_ite(kvm, ite);
- 		return PTR_ERR(irq);
- 	}
--	ite->irq = irq;
+-		if (session->send_seq) {
++		if (send_seq) {
+ 			l2h = 0x40000000 | session->ns;
+ 			session->ns++;
+ 			session->ns &= 0xffffff;
+@@ -1021,19 +1019,24 @@ static int l2tp_xmit_queue(struct l2tp_tunnel *tunnel, struct sk_buff *skb, stru
+ static int l2tp_xmit_core(struct l2tp_session *session, struct sk_buff *skb, unsigned int *len)
+ {
+ 	struct l2tp_tunnel *tunnel = session->tunnel;
++	bool send_seq = READ_ONCE(session->send_seq);
+ 	unsigned int data_len = skb->len;
+ 	struct sock *sk = tunnel->sock;
++	u16 hdr_len = session->hdr_len;
+ 	int headroom, uhlen, udp_len;
+ 	int ret = NET_XMIT_SUCCESS;
+ 	struct inet_sock *inet;
+ 	struct udphdr *uh;
  
- 	return 0;
- }
-@@ -2291,7 +2315,10 @@ static int vgic_its_restore_ite(struct vgic_its *its, u32 event_id,
- 		its_free_ite(kvm, ite);
- 		return PTR_ERR(irq);
- 	}
--	ite->irq = irq;
++	if (tunnel->version == L2TP_HDR_VER_2 && !send_seq)
++		hdr_len -= 4;
 +
-+	/* Drop an ITE whose LPI another ITE maps, as MAPTI does. */
-+	if (!vgic_its_map_lpi(kvm, ite, irq, vcpu))
-+		its_free_ite(kvm, ite);
+ 	/* Check that there's enough headroom in the skb to insert IP,
+ 	 * UDP and L2TP headers. If not enough, expand it to
+ 	 * make room. Adjust truesize.
+ 	 */
+ 	uhlen = (tunnel->encap == L2TP_ENCAPTYPE_UDP) ? sizeof(*uh) : 0;
+-	headroom = NET_SKB_PAD + sizeof(struct iphdr) + uhlen + session->hdr_len;
++	headroom = NET_SKB_PAD + sizeof(struct iphdr) + uhlen + hdr_len;
+ 	if (skb_cow_head(skb, headroom)) {
+ 		kfree_skb(skb);
+ 		return NET_XMIT_DROP;
+@@ -1041,9 +1044,9 @@ static int l2tp_xmit_core(struct l2tp_session *session, struct sk_buff *skb, uns
  
- 	return offset;
+ 	/* Setup L2TP header */
+ 	if (tunnel->version == L2TP_HDR_VER_2)
+-		l2tp_build_l2tpv2_header(session, __skb_push(skb, session->hdr_len));
++		l2tp_build_l2tpv2_header(session, __skb_push(skb, hdr_len), send_seq);
+ 	else
+-		l2tp_build_l2tpv3_header(session, __skb_push(skb, session->hdr_len));
++		l2tp_build_l2tpv3_header(session, __skb_push(skb, hdr_len), send_seq);
+ 
+ 	/* Reset skb netfilter state */
+ 	memset(&(IPCB(skb)->opt), 0, sizeof(IPCB(skb)->opt));
+@@ -1086,7 +1089,7 @@ static int l2tp_xmit_core(struct l2tp_session *session, struct sk_buff *skb, uns
+ 		uh = udp_hdr(skb);
+ 		uh->source = inet->inet_sport;
+ 		uh->dest = inet->inet_dport;
+-		udp_len = uhlen + session->hdr_len + data_len;
++		udp_len = uhlen + hdr_len + data_len;
+ 		if (udp_len > U16_MAX) {
+ 			kfree_skb(skb);
+ 			ret = NET_XMIT_DROP;
+@@ -1580,16 +1583,11 @@ void l2tp_session_delete(struct l2tp_session *session)
  }
-diff --git a/include/kvm/arm_vgic.h b/include/kvm/arm_vgic.h
-index 1d7d4cffaefc6..e0c4e70e15054 100644
---- a/include/kvm/arm_vgic.h
-+++ b/include/kvm/arm_vgic.h
-@@ -138,6 +138,7 @@ struct vgic_irq {
- 	bool active;			/* not used for LPIs */
- 	bool enabled;
- 	bool hw;			/* Tied to HW IRQ */
-+	bool mapped;			/* LPIs: mapped by an ITE */
- 	struct kref refcount;		/* Used for LPIs */
- 	u32 hwintid;			/* HW INTID number */
- 	unsigned int host_irq;		/* linux irq corresponding to hwintid */
+ EXPORT_SYMBOL_GPL(l2tp_session_delete);
+ 
+-/* We come here whenever a session's send_seq, cookie_len or
+- * l2specific_type parameters are set.
+- */
+-void l2tp_session_set_header_len(struct l2tp_session *session, int version,
+-				 enum l2tp_encap_type encap)
++static void l2tp_session_set_header_len(struct l2tp_session *session, int version,
++					enum l2tp_encap_type encap)
+ {
+ 	if (version == L2TP_HDR_VER_2) {
+-		session->hdr_len = 6;
+-		if (session->send_seq)
+-			session->hdr_len += 4;
++		session->hdr_len = 10;
+ 	} else {
+ 		session->hdr_len = 4 + session->cookie_len;
+ 		session->hdr_len += l2tp_get_l2specific_len(session);
+@@ -1597,7 +1595,6 @@ void l2tp_session_set_header_len(struct l2tp_session *session, int version,
+ 			session->hdr_len += 4;
+ 	}
+ }
+-EXPORT_SYMBOL_GPL(l2tp_session_set_header_len);
+ 
+ struct l2tp_session *l2tp_session_create(int priv_size, struct l2tp_tunnel *tunnel, u32 session_id,
+ 					 u32 peer_session_id, struct l2tp_session_cfg *cfg)
+diff --git a/net/l2tp/l2tp_core.h b/net/l2tp/l2tp_core.h
+index 9f7143d2dd31b..57022707a1955 100644
+--- a/net/l2tp/l2tp_core.h
++++ b/net/l2tp/l2tp_core.h
+@@ -79,7 +79,7 @@ struct l2tp_session {
+ 	u8			peer_cookie[8];
+ 	int			peer_cookie_len;
+ 	u16			l2specific_type;
+-	u16			hdr_len;
++	u16			hdr_len;	/* maximum L2TP header length */
+ 	u32			nr;		/* session NR state (receive) */
+ 	u32			ns;		/* session NR state (send) */
+ 	struct sk_buff_head	reorder_q;	/* receive reorder queue */
+@@ -93,8 +93,8 @@ struct l2tp_session {
+ 
+ 	char			name[L2TP_SESSION_NAME_MAX]; /* for logging */
+ 	char			ifname[IFNAMSIZ];
++	bool			send_seq;	/* send packets with sequence numbers? */
+ 	unsigned int		recv_seq:1;	/* expect receive packets with sequence numbers? */
+-	unsigned int		send_seq:1;	/* send packets with sequence numbers? */
+ 	unsigned int		lns_mode:1;	/* behave as LNS?
+ 						 * LAC enables sequence numbers under LNS control.
+ 						 */
+@@ -261,8 +261,6 @@ void l2tp_recv_common(struct l2tp_session *session, struct sk_buff *skb,
+ int l2tp_udp_encap_recv(struct sock *sk, struct sk_buff *skb);
+ 
+ /* Transmit path helpers for sending packets over the tunnel socket. */
+-void l2tp_session_set_header_len(struct l2tp_session *session, int version,
+-				 enum l2tp_encap_type encap);
+ int l2tp_xmit_skb(struct l2tp_session *session, struct sk_buff *skb);
+ 
+ /* Pseudowire management.
+diff --git a/net/l2tp/l2tp_debugfs.c b/net/l2tp/l2tp_debugfs.c
+index fe56dbae43bea..c4d10eb3923ef 100644
+--- a/net/l2tp/l2tp_debugfs.c
++++ b/net/l2tp/l2tp_debugfs.c
+@@ -183,12 +183,12 @@ static void l2tp_dfs_seq_session_show(struct seq_file *m, void *v)
+ 		   session->pwtype == L2TP_PWTYPE_ETH ? "ETH" :
+ 		   session->pwtype == L2TP_PWTYPE_PPP ? "PPP" :
+ 		   "");
+-	if (session->send_seq || session->recv_seq)
++	if (READ_ONCE(session->send_seq) || session->recv_seq)
+ 		seq_printf(m, "   nr %u, ns %u\n", session->nr, session->ns);
+ 	seq_printf(m, "   refcnt %d\n", refcount_read(&session->ref_count));
+ 	seq_printf(m, "   config 0/0/%c/%c/-/%s %08x %u\n",
+ 		   session->recv_seq ? 'R' : '-',
+-		   session->send_seq ? 'S' : '-',
++		   READ_ONCE(session->send_seq) ? 'S' : '-',
+ 		   session->lns_mode ? "LNS" : "LAC",
+ 		   0,
+ 		   jiffies_to_msecs(session->reorder_timeout));
+diff --git a/net/l2tp/l2tp_netlink.c b/net/l2tp/l2tp_netlink.c
+index 25800de8b4825..9fdaeb4cbc745 100644
+--- a/net/l2tp/l2tp_netlink.c
++++ b/net/l2tp/l2tp_netlink.c
+@@ -689,12 +689,9 @@ static int l2tp_nl_cmd_session_modify(struct sk_buff *skb, struct genl_info *inf
+ 	if (info->attrs[L2TP_ATTR_RECV_SEQ])
+ 		session->recv_seq = nla_get_u8(info->attrs[L2TP_ATTR_RECV_SEQ]);
+ 
+-	if (info->attrs[L2TP_ATTR_SEND_SEQ]) {
+-		struct l2tp_tunnel *tunnel = session->tunnel;
+-
+-		session->send_seq = nla_get_u8(info->attrs[L2TP_ATTR_SEND_SEQ]);
+-		l2tp_session_set_header_len(session, tunnel->version, tunnel->encap);
+-	}
++	if (info->attrs[L2TP_ATTR_SEND_SEQ])
++		WRITE_ONCE(session->send_seq,
++			   nla_get_u8(info->attrs[L2TP_ATTR_SEND_SEQ]) & 1);
+ 
+ 	if (info->attrs[L2TP_ATTR_LNS_MODE])
+ 		session->lns_mode = nla_get_u8(info->attrs[L2TP_ATTR_LNS_MODE]);
+@@ -737,7 +734,7 @@ static int l2tp_nl_session_send(struct sk_buff *skb, u32 portid, u32 seq, int fl
+ 	    (session->peer_cookie_len &&
+ 	     nla_put(skb, L2TP_ATTR_PEER_COOKIE, session->peer_cookie_len, session->peer_cookie)) ||
+ 	    nla_put_u8(skb, L2TP_ATTR_RECV_SEQ, session->recv_seq) ||
+-	    nla_put_u8(skb, L2TP_ATTR_SEND_SEQ, session->send_seq) ||
++	    nla_put_u8(skb, L2TP_ATTR_SEND_SEQ, READ_ONCE(session->send_seq)) ||
+ 	    nla_put_u8(skb, L2TP_ATTR_LNS_MODE, session->lns_mode) ||
+ 	    (l2tp_tunnel_uses_xfrm(tunnel) &&
+ 	     nla_put_u8(skb, L2TP_ATTR_USING_IPSEC, 1)) ||
+diff --git a/net/l2tp/l2tp_ppp.c b/net/l2tp/l2tp_ppp.c
+index 21b1016020f3a..92049b9020106 100644
+--- a/net/l2tp/l2tp_ppp.c
++++ b/net/l2tp/l2tp_ppp.c
+@@ -1205,15 +1205,13 @@ static int pppol2tp_session_setsockopt(struct sock *sk,
+ 			err = -EINVAL;
+ 			break;
+ 		}
+-		session->send_seq = !!val;
++		WRITE_ONCE(session->send_seq, !!val);
+ 		{
+ 			struct pppox_sock *po = pppox_sk(sk);
+ 
+ 			po->chan.hdrlen = val ? PPPOL2TP_L2TP_HDR_SIZE_SEQ :
+ 				PPPOL2TP_L2TP_HDR_SIZE_NOSEQ;
+ 		}
+-		l2tp_session_set_header_len(session, session->tunnel->version,
+-					    session->tunnel->encap);
+ 		break;
+ 
+ 	case PPPOL2TP_SO_LNSMODE:
+@@ -1323,7 +1321,7 @@ static int pppol2tp_session_getsockopt(struct sock *sk,
+ 		break;
+ 
+ 	case PPPOL2TP_SO_SENDSEQ:
+-		*val = session->send_seq;
++		*val = READ_ONCE(session->send_seq);
+ 		break;
+ 
+ 	case PPPOL2TP_SO_LNSMODE:
+@@ -1569,7 +1567,7 @@ static void pppol2tp_seq_session_show(struct seq_file *m, void *v)
+ 		   state, user_data_ok);
+ 	seq_printf(m, "   0/0/%c/%c/%s %08x %u\n",
+ 		   session->recv_seq ? 'R' : '-',
+-		   session->send_seq ? 'S' : '-',
++		   READ_ONCE(session->send_seq) ? 'S' : '-',
+ 		   session->lns_mode ? "LNS" : "LAC",
+ 		   0,
+ 		   jiffies_to_msecs(session->reorder_timeout));
 -- 
 2.53.0
 
