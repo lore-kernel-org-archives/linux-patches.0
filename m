@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048797;
-	b=mH0AMGg5GCNuw2k0vQBAE6DjvJ9nlsJ8GWvoOaFK81AQvCKbl6RPtr0hrithn3OqDcqN
-	 e6AmW9gDvq2Ocwst3bpUTibadbRDN6FZ4PEVEhWkc/bGYlUbXbiP2IJFhd0nmSIEqvqqc
-	 tSrjFdN8MfNNG2JNdnOBorZi6qSiiPxh0iiQEKlGpNtLB8iz1uAI3OPw6+q7G7cQ+L1DJ
-	 XzD83zsHuqYY7UBbBF/aZf5V5JKlBCciXPJDYYFWrh0Z1dV81wri+6hmjUwCGs2ilegwk
-	 OoJD9yzJrfQT+gGTdUldGC+7LhyQWX89YK/vjP0907Tr4zOPXrwuX+KoPqcohfAl1Rg==
+	t=1795048800;
+	b=aAvMNGHIT8r2MWTg+s81YC3s5b3Oefr4d/b4ObKdar6sOuT1eMBy3xGS4PhXCdwovcP7
+	 oqtrmtgLz3NIpgigLPM6M0UfGp+SvLVbX+5/qhpfuru5KsJhwL69zj77NmtnFQrdl752D
+	 +rfrXOsToAKDgVCH+mwXyRRSuYUf9JmCizQ+N2rTCm4GWCWfZzu137XINyCq4f7LB5MXY
+	 cAP1L8ISg+8buurLsUXSjdxuCHH7EHOpIbsF3Qe7MR5qDnnSedCGBfKwRANlnWQiAfazD
+	 5ve3l7iOtXw94w8J+sa/Tencj/xdjbkevhBv6Zog5YgOf3bZM9lCSyFGR1Uq8y/6pZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048797;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048800;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=/S4E3WV0maCSyB1/RXVnL0L5qJaL+U1PoFca2q5uO8M=;
-	b=a2y9BfaTOM260QefWqiZavkW0QiGy0whPrDE/YVf/RMvZSXo7UrJpRCORPtsTwlaPgAn
-	 941AdFnG+YXMDB+0Q9FTbXU3YKryAN8ubM4WMJ2JXwoTmxTF34ymkQyuRWYQ+CfYhBlTx
-	 jxvbmrMDQyFK16ieAdiLmSABBinrnAGK4IdMd2xO/sNxZ66Cd06SuvGCJ5xMO7Mc/QSpc
-	 W4isJSj73PlGL4ybOYcPDihV4Aef5kMBwEZ0h7Tf3xXOBNpbLMpLxxnuSq08evJOD/ylM
-	 9t39FF8nzYckrtEgUfADuCMRLwMCbF39KaL/DH6NnDT+A3omUDVkEE5gb6VPBkO8s+w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=JBUEXfGIerEivXTIvqvmhQNtmrd1+d8t/X2gjoxruFo=;
+	b=UGRwvs7+icNxGunyfBqTLIibiccezEOT/mls8sIQUt4S1DeEa4HhdyqSnHDHakRx//SR
+	 h2LzXtM3+qv2YncbMIE6Iow4gech5xSU1r43pDxmzWw1NU408WgM1ZGviTrLYP4JQ4BTK
+	 e9AGaQ47LzM5k+TKng2r0sUQ9VV+snyGdI+lNEpkMgSd9081c7aikdcVpiUUIFfuIuy+c
+	 BzWWak9G9xgq5NjFClbQy7Ba13m2tQAuxc0VYIO4diiFjRWVPMVPgBK4e8s8YhoqwlPBE
+	 rxfkTJW1/+IEZ5+2UF88DCxH/9LocU6/2uqgOR/5F/6gkb4CWXtz0JK88BY4Lpf9hRw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S6XVJGT8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t41x0IOj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F277606A32A;
-	Thu, 19 Nov 2026 00:39:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D0C606A325;
+	Thu, 19 Nov 2026 00:40:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S6XVJGT8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC13F1F000C4;
-	Thu, 19 Nov 2026 00:39:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t41x0IOj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90EE41F000C4;
+	Thu, 19 Nov 2026 00:39:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048797;
-	bh=/S4E3WV0maCSyB1/RXVnL0L5qJaL+U1PoFca2q5uO8M=;
+	s=korg; t=1795048800;
+	bh=JBUEXfGIerEivXTIvqvmhQNtmrd1+d8t/X2gjoxruFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S6XVJGT8zKFCHR86bgYlq2IVDZGLfKWcZcJNtdbYhv4zW8IKSFsiItxZ5YG6BSt6a
-	 R+hZVT+DIp76OBUoRuNN/C9bBH2e1lGtZdFlcV3zZBUzUBiSDV5tDmPYZeHY+qskqC
-	 6NePSsgkswMp+sYEnyeBrN4nOqjox8fU3vob4Lbc=
+	b=t41x0IOjHbvodamiceOW6AwoLRSrJNxCTf/gZvFDyvJHYapvgUYhUgX7mbm+FOOA+
+	 Ib7O3bbx8seODyAL8WVGKPMw676OokMqfRr5tgHmYs3sMxLJwYPoDaUOS/bBb2mQM+
+	 Ptt7IpJXKBZbb0nNmS9cDQWR6ln6AKVDrcfrpcb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanghui Feng <guanghuifeng@linux.alibaba.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Ginger Li <ginger.jzllee@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2082/2857] iommu/vt-d: Fix IQE handling to cover all descriptors in submission range
-Date: Wed, 18 Nov 2026 15:51:56 +0100
-Message-ID: <20261118150316.372025990@linuxfoundation.org>
+Subject: [PATCH 6.1 2083/2857] wifi: mac80211: Fix a race when expiring a mesh path
+Date: Wed, 18 Nov 2026 15:51:57 +0100
+Message-ID: <20261118150316.407419502@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,144 +62,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guanghui Feng <guanghuifeng@linux.alibaba.com>
+From: Ginger Li <ginger.jzllee@gmail.com>
 
-[ Upstream commit 754d07b940c4ce025fab022b548fb5c3d11bf766 ]
+[ Upstream commit 6571b6a24cc37c650a1815b1c320e30db5de466f ]
 
-When an Invalidation Queue Error (IQE) occurs, hardware halts fetching
-and IQH points at the faulting descriptor. The previous code only
-checked whether IQH matched the first descriptor index of the current
-submission, missing faults on any other descriptor within the batch.
+My static analyzer identified a potential issue in 'net/mac80211/mesh_pathtbl.c':
+mpath_expired() reads mpath->flags and mpath->exp_time without holding
+mpath->state_lock, while mesh_path_fix_nexthop() and the other writers update
+both fields under that lock.  In mpath_lookup() and
+__mesh_path_lookup_by_idx() the unlocked check is followed by taking the lock
+and clearing MESH_PATH_ACTIVE, so the check and the update are not atomic:
 
-Expand the check to cover the entire submission range [index, wait_index],
-accounting for circular wrap-around.
+CPU0 (mpath_lookup)                    CPU1 (mesh_path_fix_nexthop)
+  mpath_expired() reads the stale
+  flags/exp_time and returns true
+                                        spin_lock_bh(&mpath->state_lock)
+                                        mpath->exp_time = 0;
+                                        mpath->flags = FIXED|SN_VALID;
+                                        mesh_path_activate(mpath);
+                                        spin_unlock_bh(&mpath->state_lock)
+  spin_lock_bh(&mpath->state_lock)
+  mpath->flags &= ~MESH_PATH_ACTIVE;
+  spin_unlock_bh(&mpath->state_lock)
 
-Furthermore, after detecting IQE, the old recovery only replaced the
-single faulting slot with a copy of the wait descriptor and immediately
-returned -EINVAL. This left two problems:
+A path which mesh_path_fix_nexthop() has just set up as MESH_PATH_FIXED and
+MESH_PATH_ACTIVE then has MESH_PATH_ACTIVE cleared again, and forwarding to
+that destination silently stops.
 
-  a) Hardware resumed fetching and could hit another invalid descriptor
-     in the same abandoned batch, raising a second IQE that no submitter
-     would claim — permanently deadlocking the queue.
+Take mpath->state_lock before evaluating mpath_expired() so that the check and
+the clearing of MESH_PATH_ACTIVE are atomic with respect to the writers.
 
-  b) The caller reclaimed all batch slots (QI_FREE) while hardware might
-     still be asynchronously processing descriptors from that batch,
-     allowing concurrent overwrite and descriptor corruption.
-
-Fix both by introducing qi_drain_remaining_descs(): upon IQE detection,
-overwrite the stranded slots in [IQH, wait_index) with fenced no-op wait
-descriptors, resubmit the wait descriptor at wait_index, clear IQE, and
-spin until hardware signals QI_DONE (with DMAR_OPERATION_TIMEOUT). This
-guarantees hardware has fully drained the batch before the caller
-reclaims slots.
-
-Fixes: 8a1d82462540 ("iommu/vt-d: Multiple descriptors per qi_submit_sync()")
-Signed-off-by: Guanghui Feng <guanghuifeng@linux.alibaba.com>
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Fixes: 60854fd94573 ("mac80211: mesh: convert path table to rhashtable")
+Signed-off-by: Ginger Li <ginger.jzllee@gmail.com>
+Link: https://patch.msgid.link/20260922054253.11976-1-ginger.jzllee@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/dmar.c | 72 ++++++++++++++++++++++++++++++++------
- 1 file changed, 61 insertions(+), 11 deletions(-)
+ net/mac80211/mesh_pathtbl.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/iommu/intel/dmar.c b/drivers/iommu/intel/dmar.c
-index 1d330852fb0bb..5df4cf097bd8c 100644
---- a/drivers/iommu/intel/dmar.c
-+++ b/drivers/iommu/intel/dmar.c
-@@ -1256,6 +1256,49 @@ static void qi_dump_fault(struct intel_iommu *iommu, u32 fault)
- 	       (unsigned long long)desc->qw1);
+diff --git a/net/mac80211/mesh_pathtbl.c b/net/mac80211/mesh_pathtbl.c
+index 0a4641f06bb1f..a5ea7bc2065b9 100644
+--- a/net/mac80211/mesh_pathtbl.c
++++ b/net/mac80211/mesh_pathtbl.c
+@@ -210,9 +210,10 @@ static struct mesh_path *mpath_lookup(struct mesh_table *tbl, const u8 *dst,
+ 
+ 	mpath = rhashtable_lookup(&tbl->rhead, dst, mesh_rht_params);
+ 
+-	if (mpath && mpath_expired(mpath)) {
++	if (mpath) {
+ 		spin_lock_bh(&mpath->state_lock);
+-		mpath->flags &= ~MESH_PATH_ACTIVE;
++		if (mpath_expired(mpath))
++			mpath->flags &= ~MESH_PATH_ACTIVE;
+ 		spin_unlock_bh(&mpath->state_lock);
+ 	}
+ 	return mpath;
+@@ -253,11 +254,11 @@ __mesh_path_lookup_by_idx(struct mesh_table *tbl, int idx)
+ 	if (!mpath)
+ 		return NULL;
+ 
+-	if (mpath_expired(mpath)) {
+-		spin_lock_bh(&mpath->state_lock);
++	spin_lock_bh(&mpath->state_lock);
++	if (mpath_expired(mpath))
+ 		mpath->flags &= ~MESH_PATH_ACTIVE;
+-		spin_unlock_bh(&mpath->state_lock);
+-	}
++	spin_unlock_bh(&mpath->state_lock);
++
+ 	return mpath;
  }
  
-+static int qi_drain_remaining_descs(struct intel_iommu *iommu, int head,
-+				    int wait_index)
-+{
-+	struct q_inval *qi = iommu->qi;
-+	int shift = qi_shift(iommu);
-+	struct qi_desc wait_desc = {};
-+	struct qi_desc nop_desc = {};
-+	cycles_t start;
-+
-+	nop_desc.qw0 = QI_IWD_FENCE | QI_IWD_TYPE;
-+
-+	wait_desc.qw0 = QI_IWD_STATUS_DATA(QI_DONE) | QI_IWD_PRQ_DRAIN |
-+			QI_IWD_STATUS_WRITE | QI_IWD_FENCE | QI_IWD_TYPE;
-+	wait_desc.qw1 = virt_to_phys(&qi->desc_status[wait_index]);
-+
-+	while (head != wait_index) {
-+		memcpy(qi->desc + (head << shift), &nop_desc, 1 << shift);
-+		head = (head + 1) % QI_LENGTH;
-+	}
-+
-+	WRITE_ONCE(qi->desc_status[wait_index], QI_IN_USE);
-+	memcpy(qi->desc + (wait_index << shift), &wait_desc, 1 << shift);
-+
-+	/*
-+	 * Order the descriptor rewrites before the writel() that restarts
-+	 * the fetch engine.
-+	 */
-+	wmb();
-+
-+	writel(DMA_FSTS_IQE, iommu->reg + DMAR_FSTS_REG);
-+
-+	start = get_cycles();
-+	while (READ_ONCE(qi->desc_status[wait_index]) != QI_DONE) {
-+		if (DMAR_OPERATION_TIMEOUT < (get_cycles() - start)) {
-+			pr_err("Timeout draining invalidation queue after IQE\n");
-+			return -ETIMEDOUT;
-+		}
-+		cpu_relax();
-+	}
-+
-+	return 0;
-+}
-+
- static int qi_check_fault(struct intel_iommu *iommu, int index, int wait_index)
- {
- 	u32 fault;
-@@ -1276,18 +1319,25 @@ static int qi_check_fault(struct intel_iommu *iommu, int index, int wait_index)
- 	 * is cleared.
- 	 */
- 	if (fault & DMA_FSTS_IQE) {
-+		int head_idx, ret;
-+
- 		head = readl(iommu->reg + DMAR_IQH_REG);
--		if ((head >> shift) == index) {
--			struct qi_desc *desc = qi->desc + head;
--
--			/*
--			 * desc->qw2 and desc->qw3 are either reserved or
--			 * used by software as private data. We won't print
--			 * out these two qw's for security consideration.
--			 */
--			memcpy(desc, qi->desc + (wait_index << shift),
--			       1 << shift);
--			writel(DMA_FSTS_IQE, iommu->reg + DMAR_FSTS_REG);
-+		head_idx = (head >> shift) % QI_LENGTH;
-+
-+		/*
-+		 * The faulting descriptor can be anywhere within the current
-+		 * submission's range [index, wait_index]. Since the queue is
-+		 * circular, this submission may wrap around QI_LENGTH
-+		 * (index > wait_index in that case), so check both the
-+		 * non-wrapped and wrapped cases of the range.
-+		 */
-+		if (index <= wait_index ?
-+		    (head_idx >= index && head_idx <= wait_index) :
-+		    (head_idx >= index || head_idx <= wait_index)) {
-+			ret = qi_drain_remaining_descs(iommu, head_idx, wait_index);
-+			if (ret)
-+				return ret;
-+
- 			pr_info("Invalidation Queue Error (IQE) cleared\n");
- 			return -EINVAL;
- 		}
 -- 
 2.53.0
 
