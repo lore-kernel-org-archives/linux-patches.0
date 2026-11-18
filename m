@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019152;
-	b=mlWdMrW6SZ/XgeK5kcf53JNcm+BQyHTLgBQBho3QAzHiHXbTg1S3HqIS0NTTQlxHHys3
-	 921YQ9DZdOK5c3Db7KYDiwVnkS1sn35X5rrAtTdZ+unbFijTunPxVitG09nhiVaby0lSX
-	 W5lWrpJ3w7bV16FWdSv+kXNOfALNYsDpVDqyChpbX+C3pAoRx9JuEDamp1HxscZuH9mEM
-	 6hCJNDs54HVTjAFvA2DQnytDdulnZrXvfAxkkNXqZmjRno8xy+G8BZmjo7OS+DEgoiQzS
-	 n3GpyqOV2eizksmzz2heWDty/MxYbn+1U4VxkqqZ6ZxkBNZfxlpMtgUfVQIYmRj19kQ==
+	t=1795019155;
+	b=BDYoMnEiKRn9YA5T7MU0zUlAe4I5yHBYvGbqk76E4NYBT131quL0RTYzdNgkWhN0/Nwn
+	 T8YYPi/osIcQZvjJjYciuuFaQ9K7iEPbrUrX8G7MeTdYA0ojNRSlnZNsACeZ4LHPIHzPt
+	 vxiv6KQUIaS6l9QqHdjL8Unzrg/R1eXgQhChyKAQUlrfKotI/zaKL+pF3IESbcw7EbzPO
+	 6QCl3CWdFZgUv0qclQx41nbPiNLLYs7DdjRbLwWgYN2A/Qxmc00KBuVAnV5bzSQkHqgNc
+	 N4AkgNH9IoP5yB+cTk6l/yxmA/mBMTxP5ZxBZP7whMoSJivnpUBHMhJi8UDM+4XbyNg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019152;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019155;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZOBymX/kr32GmNYAhjd3zh70jepLEayjeGTwXV5z/XM=;
-	b=C6UvtnB58iC6CeeZr4vtNNx/fSVsKEgGG7Dh90fVDUfXSdqBN8WE28KCYu/A7pVWCRIU
-	 HhdgoYL5Y5jItA2PDbHMXb0f6PDCOAf3eCkd3UTHhxFzAujaDFyR0Dz7zK6wjWDO5x1Gg
-	 BtOSY79MZ0BwZa/hWxuBikSoyOfShfb2N7khtYoRIAEYUR5OFDsjPxvvX0wz3augVMdSB
-	 M/TOim0vVuSwkkLsb9b4ioyKunxkoNH5mj47LGDUuuuOO0GO0Ps4IDZl3gge5LREDmyoE
-	 px60o+lV/QmqtSK76OU478mN0JY+k/HafFkaOTKqEk4NI1k+nr8Y6DBXAUvxhqYEOpA==
+	bh=Wx6HbSFhJtasAM8FA9PKc5jqqMmcy6WKrK2uDiaUM98=;
+	b=DgfwXxanTO8Av9ZJdsRfXBIyu5Ye7eVq1H53IOm3GWrq+Uh7CUy5Un/XmjTNixRbk5NP
+	 rPhdMWS8irTo5NckYZIyvX5D2kx2+yOZsWE3BbHaVpcAWLrZTRozrn8a7PmX3A+Fh+/yK
+	 DHvn2I4pyXU6Ubp518kRQToPD8CQaI9i+OofFbQ85mtgJWv71KmTUBxtmZUXgMG8KtQ7I
+	 lEx2vLjQsBAplJu+2aF4FwTpvPMO9h7emQNwc7OeKav0c9bypb/sWsW2RmNikOPpp9GPC
+	 e0d0AH/o85Get5AT/fmBrsYDZXT03PfqavH1xN5CQRFIi+cTpnMLZc6dTZUh6yvIWBQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Z6L2Knn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eJ3QzaM9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7FB6606A31C;
-	Wed, 18 Nov 2026 16:25:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D0B3606A335;
+	Wed, 18 Nov 2026 16:25:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Z6L2Knn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B21FC1F000C4;
-	Wed, 18 Nov 2026 16:25:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eJ3QzaM9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682731F000C4;
+	Wed, 18 Nov 2026 16:25:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019152;
-	bh=ZOBymX/kr32GmNYAhjd3zh70jepLEayjeGTwXV5z/XM=;
+	s=korg; t=1795019154;
+	bh=Wx6HbSFhJtasAM8FA9PKc5jqqMmcy6WKrK2uDiaUM98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2Z6L2Knn95A82BOPlw2+KM2WQ1OQDZ7eT9Av5UaqPI+ZvUxKdksT0ABHiWSkBrLLB
-	 ZjmmCPObi8O+qzlpYOBD8SdBOM/Km4xMliI4bhkUSNmasG49Ngw73TOOfY8xVv0zP/
-	 KxUMTIlrOE7QKVb3QA9TtimPuSxbN7N74inMFGlU=
+	b=eJ3QzaM9gcaeaufVLxFrxqAIgszmd4BISGyQ2wvDEIVEby9Ol6yTV0SRx/807FD/m
+	 EFYsZ6XoITGuI5s0L7eN7hgjyKjwirRTocM2gwkdkkYl43CmJjo/vnG0mquZNL3Rcb
+	 v9Kzfjpq/alv0C+Bxr5iu4M0rUkSBQ2ZndcleJrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ting-Han Hou <ue081723@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Caleb James DeLisle <cjd@cjdns.fr>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1495/2651] checkkconfigsymbols.py: Parse Git status output line by line
-Date: Wed, 18 Nov 2026 15:45:35 +0100
-Message-ID: <20261118150341.844671247@linuxfoundation.org>
+Subject: [PATCH 7.3 1496/2651] clocksource/drivers/timer-econet-en751221: Fix clock reference leak
+Date: Wed, 18 Nov 2026 15:45:36 +0100
+Message-ID: <20261118150341.877446765@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,45 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ting-Han Hou <ue081723@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 72a61a7fef954152abd9df9def4f94816eb344ca ]
+[ Upstream commit 36790ef57803400339d8ea4081d85483264dbd6c ]
 
-tree_is_dirty() iterates over the string returned by execute() one
-character at a time. Its status check therefore examines filenames as
-well as the two status columns.
+timer_init() obtains the timer clock with of_clk_get() and only reads
+its frequency with clk_get_rate(); the clock is never prepared nor
+enabled. All four return paths after the acquisition (of_iomap()
+failure, clocksource_mmio_init() failure, cevt_init() failure and
+success) return without clk_put(), leaking the consumer reference.
 
-An otherwise clean tree containing an untracked README is reported as
-dirty because its name contains letters matched by [URMADC]. This
-prevents --commit and --diff from running, whereas an untracked
-notes.txt does not trigger the check.
+Drop the reference with clk_put() right after the frequency has been
+read. The clock enable state is untouched.
 
-Split the output into lines before examining the two status columns so
-that filenames do not affect the dirty-tree check.
-
-Fixes: b1a3f243485f ("checkkconfigsymbols.py: make it Git aware")
-Assisted-by: LLM
-Signed-off-by: Ting-Han Hou <ue081723@gmail.com>
-Link: https://patch.msgid.link/CA+NtrhQqXgjT+4eg6W4P94Hc=DqdV3gQXz3EKKCxWvdWzfND6A@mail.gmail.com
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: 3b4c33ac87d0 ("clocksource/drivers: Add EcoNet Timer HPT driver")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Tested-by: Caleb James DeLisle <cjd@cjdns.fr>
+Link: https://patch.msgid.link/20260915054552.1729612-1-vulab@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/checkkconfigsymbols.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clocksource/timer-econet-en751221.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/scripts/checkkconfigsymbols.py b/scripts/checkkconfigsymbols.py
-index 36c920e713137..9f7aed98d91c0 100755
---- a/scripts/checkkconfigsymbols.py
-+++ b/scripts/checkkconfigsymbols.py
-@@ -245,7 +245,7 @@ def tree_is_dirty():
-     """Return true if the current working tree is dirty (i.e., if any file has
-     been added, deleted, modified, renamed or copied but not committed)."""
-     stdout = execute(["git", "status", "--porcelain"])
--    for line in stdout:
-+    for line in stdout.splitlines():
-         if re.findall(r"[URMADC]{1}", line[:2]):
-             return True
-     return False
+diff --git a/drivers/clocksource/timer-econet-en751221.c b/drivers/clocksource/timer-econet-en751221.c
+index 4008076b1a210..1859335345b59 100644
+--- a/drivers/clocksource/timer-econet-en751221.c
++++ b/drivers/clocksource/timer-econet-en751221.c
+@@ -181,6 +181,7 @@ static int __init timer_init(struct device_node *np)
+ 	}
+ 
+ 	econet_timer.freq_hz = clk_get_rate(clk);
++	clk_put(clk);
+ 
+ 	for (int i = 0; i < num_blocks; i++) {
+ 		econet_timer.membase[i] = of_iomap(np, i);
 -- 
 2.53.0
 
