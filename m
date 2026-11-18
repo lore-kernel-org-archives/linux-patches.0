@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795062055;
-	b=NNMQvE/2TZC3dg9A7L19XGe0+U+bvIN+lz1qZ/UUa1EsRf+Zu9eY0ywzth5RejCH7vh2
-	 SO0t+AzUds4k9bU/Xbk+3AmsVwFITxFVxZ2v+FNHBttdmHWDNOpv2RtEomVynHEIvisyB
-	 Y9mjzeWvtpG5czEyJm0dbrTxs3qAV94WnB8LCrieoJ5I5El+54tacv8RoigNuPmE4/OwM
-	 oprz4uT2mJvQWUlHQKBxHexCe1haOxAPCuhzS1ynZGr5r2Khn4kxb+LrtVhgSzEc9dPnq
-	 raRYWfmnsHxL+F22B5nWNhwAqHHKEWGFdJngTBqHRMBWXuz7rxlrZOnw2MUVWJsspzQ==
+	t=1795062057;
+	b=nF3IkdSoiYwi8jCU1hBBqWqH3XhwzWPBbToohKMOvLfSTLn5FRGSogyECyhXsWjAXDVQ
+	 Z5r5OwkDXYeDgb+hnA5Za/Rpk/9YUL/zcRvzfWUZPLd5kuNPV1txCRdDFGUnB0wH4Ici/
+	 2d70SHe/y50NfqCGzzg5EJgAB/fTvrcHWpS1CmcAcKVb7HcCMUrwaFe10zeVYszYJn2Hz
+	 hBBv3a269HymvoAy+lJqWQPmNhwDnAtjpLPTo2hpw8o3UxDDbSSPTxFyPnwiLsPcX6iyU
+	 DQQ1/+Z+GdL/4WTw8C1bEMY1p5/+OEkm1prL8u1l1irhcIZdF7e0V0QReQZSTTtXMJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795062055;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062057;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5IypgxDIq2vt//a86t2tDQ0SroAdnmbPUmQmG+5SXVo=;
-	b=QYECeK/iL9zTCkABo84O6yYQDRZoSNZxhpc7gxwwKVsZRAhJVn80/LqiyyUvMehHp9ux
-	 G/qAD/5YZpFyTkqfx49Au2JRdi0Qjj/q+n4Jvg4KG/X5TafLbuDYIqvyFF0N9c9PB5b4O
-	 pTwyj6B/vfy6ev4K9Np39M4mDMltO3nJlIPPtp1J9V75tjE3Y+LErLhyfjvH2zSoxFqZd
-	 l4xzbDsvE07wtsV+KgmXNMl7PI9YmcLnooQdMh2NHtBrMAyU/LKHipow8XjIqvI+FVxjs
-	 a7KTrIZFNE6NFe5ESgxBPO679jA+3OiSsa3q2ewSgrjvQ3auwN2QH4cAqfA66DeMyyA==
+	bh=LAMfzURfCzuNX6SPNCBgCyMSi7rKKvRby6nRgYIXhWg=;
+	b=yRD6D2MrO1jIhv44S0a99oRWBdstPwJ3SRz8lVpUNfoKgoA9IIMQkqlSIHCtuFcDJy9d
+	 7GrDTUuoGvMwB8sss3Hb+2G1iDe2kAEv+MCuSSclpmQHCoE0VvKnC6PpW7y5E3fIJwk/8
+	 eMgPucf5cd1bWSDk3C4mkOMftNdNxUZOAKi8kztG/huSOzRCySJqY3vqZVTtro7ikjBDP
+	 JZB8CVH4L2A2/W3oLDJ0z74KuXh7bpuSMYTgox67dDc9yvmklWkMmmuwwJlwCAWaVukFk
+	 Npi4XwG8gEh9NXU3lQolkkkTQ6S0Q/o5Pz6VgMhYMDw7A1pkPCN8mJa4hpZF6gWmg2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dh2bEnpo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qea2Sft7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A21606A320;
-	Thu, 19 Nov 2026 04:20:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98F5606A320;
+	Thu, 19 Nov 2026 04:20:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dh2bEnpo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 490621F000C4;
-	Thu, 19 Nov 2026 04:20:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qea2Sft7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11BB51F000C5;
+	Thu, 19 Nov 2026 04:20:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795062054;
-	bh=5IypgxDIq2vt//a86t2tDQ0SroAdnmbPUmQmG+5SXVo=;
+	s=korg; t=1795062057;
+	bh=LAMfzURfCzuNX6SPNCBgCyMSi7rKKvRby6nRgYIXhWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dh2bEnpovHbCa5cTrZtbC3aWHnANBQMfhmYjUfEUkqLs1i//r3XJopGnOhvMPhwj2
-	 YcmWCfnQ/O6TdZSHOvLbsa+aiMlZer48YbH326/JBvUBtBefwV/Xtd7tB6vakt+nmy
-	 ubhGV014FpgGLHHdMAt2j51dwZ/O/WwLIMs5Jt70=
+	b=Qea2Sft7gZ+6KDoHaLrY7mLAIaLNyRwPGUiVap4wqnJxTCuNYYtas7xI/zr4dvKQ/
+	 iCRoQGILZqwAoSCMerAotnoLA0GGZpYl50IJHfJvusa+nUbVn6BqUAsLVRnc+OKDgS
+	 hNVL5jkfbEjaFNqTMTHTs8HofRNhNtZubOyS8Sac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@sina.com>,
+	Avi Weiss <thnkslprpt@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	syzbot+1f0fbc2561b3e5d51b91@syzkaller.appspotmail.com,
 	Bradley Morgan <brads@mainlining.org>,
-	Pingfan Liu <kernelfans@gmail.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1771/1848] kernel/reboot: avoid potential deadlocks during suspension
-Date: Wed, 18 Nov 2026 16:03:29 +0100
-Message-ID: <20261118150033.537806916@linuxfoundation.org>
+Subject: [PATCH 5.10 1772/1848] profiling: fix sampling step on 64-bit big-endian systems
+Date: Wed, 18 Nov 2026 16:03:30 +0100
+Message-ID: <20261118150033.573062039@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -72,78 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@sina.com>
+From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit 66644b992f25f6a33775788c8b69a8bb3d41ad67 ]
+[ Upstream commit b1d68946a08313895f352af5336623d29739c299 ]
 
-Invoking reboot with LINUX_REBOOT_CMD_SW_SUSPEND causes kernel/reboot.c
-to acquire system_transition_mutex and invoke hibernate(). hibernate()
-calls lock_system_sleep(), which sets PF_NOFREEZE on current and attempts
-to acquire system_transition_mutex again, potentially hitting:
+read_profile() stores the sampling step in an unsigned long but copies
+only four bytes to userspace.  On 64-bit big-endian systems (not common
+obviously), this copies the upper 32 bits and discards the rest, causing
+/proc/profile to report zero for normal shift values.
 
-WARNING: possible recursive locking detected
---------------------------------------------
-syz.3.5755/5950 is trying to acquire lock:
-ffffffff8fc04760 (system_transition_mutex){+.+.}-{4:4}, at: lock_system_sleep+0x49/0x70 kernel/power/main.c:71
+Cast to unsigned int so we get the correct 4 bytes, while keeping the
+shift calculation in unsigned long.
 
-but task is already holding lock:
-ffffffff8fc04760 (system_transition_mutex){+.+.}-{4:4}, at: __do_sys_reboot kernel/reboot.c:774 [inline]
-ffffffff8fc04760 (system_transition_mutex){+.+.}-{4:4}, at: __se_sys_reboot+0x223/0x460 kernel/reboot.c:738
+A small C reproducer under qemu-s390x reproduced this and proved the fix
+works for prof_shift=2.
 
-other info that might help us debug this:
- Possible unsafe locking scenario:
-
-       CPU0
-       ----
-  lock(system_transition_mutex);
-  lock(system_transition_mutex);
-
- *** DEADLOCK ***
-
- May be due to missing lock nesting notation
-
-locks held by syz.3.5755/5950: 1, last CPU#0:
- #0: ffffffff8fc04760 (system_transition_mutex){+.+.}-{4:4}, at: __do_sys_reboot kernel/reboot.c:774 [inline]
- #0: ffffffff8fc04760 (system_transition_mutex){+.+.}-{4:4}, at: __se_sys_reboot+0x223/0x460 kernel/reboot.c:738
-
-Call Trace:
- lock_system_sleep+0x49/0x70 kernel/power/main.c:71
- hibernate+0x162/0x680 kernel/power/hibernate.c:784
- __do_sys_reboot kernel/reboot.c:816 [inline]
-
-Move the suspension operation outside the scope protected by lock
-system_transition_mutex.
-
-Link: https://lore.kernel.org/20261020010559.23031-1-eadavis@sina.com
-Fixes: 55f2503c3b69 ("PM / reboot: Eliminate race between reboot and suspend")
-Signed-off-by: Edward Adam Davis <eadavis@sina.com>
+Link: https://lore.kernel.org/20261020101225.917959-1-thnkslprpt@gmail.com
+Fixes: 2d186afd04d6 ("profiling: fix shift-out-of-bounds bugs")
+Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: <syzbot+1f0fbc2561b3e5d51b91@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=1f0fbc2561b3e5d51b91
-Tested-by: <syzbot+1f0fbc2561b3e5d51b91@syzkaller.appspotmail.com>
 Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Cc: Pingfan Liu <kernelfans@gmail.com>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/reboot.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/profile.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/reboot.c b/kernel/reboot.c
-index e297b35fc6521..e5ec0d6838ad9 100644
---- a/kernel/reboot.c
-+++ b/kernel/reboot.c
-@@ -385,8 +385,8 @@ SYSCALL_DEFINE4(reboot, int, magic1, int, magic2, unsigned int, cmd,
+diff --git a/kernel/profile.c b/kernel/profile.c
+index 0db1122855c0d..c2ab50a88da51 100644
+--- a/kernel/profile.c
++++ b/kernel/profile.c
+@@ -476,7 +476,7 @@ read_profile(struct file *file, char __user *buf, size_t count, loff_t *ppos)
+ 	unsigned long p = *ppos;
+ 	ssize_t read;
+ 	char *pnt;
+-	unsigned long sample_step = 1UL << prof_shift;
++	unsigned int sample_step = (unsigned int)(1UL << prof_shift);
  
- #ifdef CONFIG_HIBERNATION
- 	case LINUX_REBOOT_CMD_SW_SUSPEND:
--		ret = hibernate();
--		break;
-+		mutex_unlock(&system_transition_mutex);
-+		return hibernate();
- #endif
- 
- 	default:
+ 	profile_flip_buffers();
+ 	if (p >= (prof_len+1)*sizeof(unsigned int))
 -- 
 2.53.0
 
