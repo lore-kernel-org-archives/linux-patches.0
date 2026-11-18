@@ -1,58 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038871;
-	b=YxhDACCCqj54h0/ipEZmiVDowHuzyYJHRaZtsff0omd4a4AoExYvLzwsooJtmyVLf0CD
-	 cZLmOBmbU9oXycypeDYxdebnsl5Q+6bNLlV0WDRYkn0F0xSD7KiunVVlNdThKNcPePWlR
-	 7QHxqJ9k+eHYrrfGU+FpxjudF2Dhr7OrBZX0zzL3t2chPzzgcJ810+iVVzwNi0JA+NvoC
-	 Wv4nt9EtLgDiQD6s4iqhVWjAYidg0KgSHzXAl5pt6mk38PfaLZXsmulBkkILzsB+G3wKX
-	 roFgns6BMzvQFOFJRWni/UlQ7iLYogYRGJOfk8IIeDkwAWC9aaXIEsOXnmI5RL7IZgw==
+	t=1795038874;
+	b=oHlLBIxyy+kSQMbV/XL3HntO0UDoREt/Kb+1gAA6PYGUMzwjkw2dmTIMLo1niz9eYdJD
+	 eLZTTVLa7kDelKeiMgTcfYS+L3wpX/WqxGPOlymY5YFZ5aqe8wMLXpqKhiiTs1QbxtCQ6
+	 o0uxdjwSGKDbzDjTCwxN11FNDDDetQHLv8+vmh1x/heV7cOJupZRVZDpe1clM9oFzAJBV
+	 OIv5jqTcKCdryYEPBIESWyWgpKwZ8RmkE13SjjzkpRg8wRtwLYzZLiTw8llQSiMVBHfOS
+	 EsGxJF9oPdL3CTBv6b3y+nKDwbsKIHjQvAH6NT6G8/Wi8TAgj+8VvcI4AXz3oyMhg8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038871;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038874;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Qrnf0J4Tt2SI/nvr6TLxQcwKcVw5lVmgBAReD8VwDII=;
-	b=h1xnkV4iEAKm+T12a8G6ZZl574olEpOZ/cHjG2Dh7xFqJtgEjFiD9dmMVMR18NNnrkTk
-	 Bh3zmI1f5LtWu1x96GE5F1/k5j20hjb+UesgjZCcCfra9L6Ywo9+STOWLX9Ra5Eu4PXou
-	 SSr0hW5nnOLqpgfV6SDRA0Y4jU01LZSCtJJHq4qALkw82r34/TrIrogrsn889LzDa/Z4u
-	 n9kVLAjnfABsvl2AepA8vn5rVH16LOECjSiqSUYRdQvjzokXjLgkii76uRHHmNLsQ8dav
-	 mrWcDIT9WuUbg2RRKyhii2qRtYsQUyyzc/aOYdTQtP1Tx8VjUa2vyNRXwSKjkB3mV/Q==
+	bh=HEt/BrKBr4KMdnjshTOaOxg3V5g1ZUMLmRrUHX3jWvA=;
+	b=a0g2nK4kGctjVOPsGtzHZY1grEanroE2EbUtgO9uoahYDOArzsHt0z+dM8VdLl+37JnB
+	 Waj7v0oz7JAM7dW+/7xt15KB/hF++BxKL+s/WUNyG7MvCJ3SR+LIfbJv+a61yanJxhoaT
+	 I/qHdTweyy9D7RK1GWz5Z33h1+yTrpyBsWOQ8rqdHDjJnXE6oV8qlutJW5BpeSa/u1Hgb
+	 3LlGYMKhwlrs34mZXYbKUOCiyTZKQjEb1csqfmED1nxm2R0soJMAw6gVeggMzRwk3o5EZ
+	 iQ3ietZPkWfE6FgWEOv8TIbMtaQSe+AOq2mIecnFIbDsz378N321hRvQufOp1GzDhAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="RwGYrlF/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TSZInrYQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BF42606A31C;
-	Wed, 18 Nov 2026 21:54:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A9C606A320;
+	Wed, 18 Nov 2026 21:54:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RwGYrlF/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86F4B1F000C4;
-	Wed, 18 Nov 2026 21:54:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TSZInrYQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 515E11F000C4;
+	Wed, 18 Nov 2026 21:54:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038871;
-	bh=Qrnf0J4Tt2SI/nvr6TLxQcwKcVw5lVmgBAReD8VwDII=;
+	s=korg; t=1795038873;
+	bh=HEt/BrKBr4KMdnjshTOaOxg3V5g1ZUMLmRrUHX3jWvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RwGYrlF/pmWKjav19cOPGAgVEt6keGDVWRSbfTASaJI4SCOuhTclpaVu6XF0rFEP2
-	 OLIcAGqTWCm885oaDNzcL+zxdRkF+SdMfrt0A0+JUwYvqlK3kw/MZ3bkzoHSDFaFYw
-	 9N0EvEuU9BfAIUPSl5ZsLmZmbsAO/+RSgdPFFfAA=
+	b=TSZInrYQLQQlviDUpABzsLreK+6PtUV1QJKBXJgal4Nb/FjoycNpWPK82b6fvpROU
+	 WzqEAUFufXoT9oqFobEgv0glx9tjTY5JfShFguAvqnoGcEFdY/FdNHWr9bOJOHbLRd
+	 yX4uoi7gia4qHtYVPDOhVGEA58kWs/N0yCT80ZaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	jjzuming@gmail.com,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1897/3318] ocfs2: cache the mount context for dentry lock callbacks
-Date: Wed, 18 Nov 2026 15:41:59 +0100
-Message-ID: <20261118150418.920006897@linuxfoundation.org>
+Subject: [PATCH 6.6 1898/3318] ALSA: pcm: Optimize cpu_latency_qos_*() calls
+Date: Wed, 18 Nov 2026 15:42:00 +0100
+Message-ID: <20261118150418.950682375@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -74,138 +67,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 5b4696e0bfc358619adaeab25ad35b4979af8331 ]
+[ Upstream commit 9f6f4e97fd53908aecb0979507d9ff10a22288eb ]
 
-ocfs2_drop_dentry_lock() drops the inode reference before releasing the
-DENTRY lock.  This lets inode eviction release the local inode and open
-locks before a remote unlink can proceed past the DENTRY lock.
+We have a few cpu_latency_qos_*() calls in PCM callbacks, but they
+seem suboptimal in a few aspects:
+- We call them at each time when the hw_params changed, but explicitly
+  do remove and (re-)add; this could be
+  cpu_latency_qos_update_request(), instead
+- The setup of cpu_latency_qos_*() doesn't have to be in hw_params at
+  all; it's not the place where the actual parameters are set up, but
+  rather better at the prepare callback.
+- The hw_free calls cpu_latency_qos_remove_request() unconditionally,
+  which may be poking a WARNING when it wasn't queued.
 
-A DLM callback can still arrive before the DENTRY lock has been dropped.
-ocfs2_get_dentry_osb() obtains the mount context through dl_inode->i_sb,
-which can access a freed inode when the downconvert thread drops the
-last inode reference in its post-unlock callback:
+For addressing the issues above, this patch cleans up and reorganize
+the cpu_latency_qos_*() calls in the PCM core by a couple helper
+functions.  Now, they are set up at prepare callback, and cleared at
+hw_free and release callbacks via the new helpers.
 
-  Downconvert thread                     DLM callback thread
-  ------------------                     -------------------
-  ocfs2_process_blocked_lock()
-    ocfs2_dentry_post_unlock()
-      ocfs2_dentry_lock_put()
-        ocfs2_drop_dentry_lock()
-          iput(dl->dl_inode)
-          [inode reclaimed after RCU]
-                                         ocfs2_blocking_ast()
-                                           ocfs2_get_dentry_osb()
-                                             dl->dl_inode->i_sb
-          ocfs2_simple_drop_lockres()
-
-Store the mount context in the DENTRY lock resource's l_priv field and use
-the default mount-context lookup.  Recover the containing dentry lock with
-container_of(), as already done for refcount locks, and remove
-ocfs2_get_dentry_osb().  ocfs2_dismount_volume() shuts down the DLM before
-freeing the mount context, so callbacks can use it without accessing the
-inode.  Preserve the existing iput-before-unlock order to avoid delaying
-local inode and open lock release until after the DENTRY lock is released.
-
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0012-v9-eeb9084fb29577971229@gmail.com
-Fixes: 8ed6b23709b3 ("ocfs2: revert iput deferring code in ocfs2_drop_dentry_lock")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
-Cc: <jjzuming@gmail.com>
-Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20261002150420.879056-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 9017bc3d13da ("ALSA: pcm: Prevent O_APPEND open on OSS streams")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/dcache.h  |  5 ++---
- fs/ocfs2/dlmglue.c | 16 ++++------------
- 2 files changed, 6 insertions(+), 15 deletions(-)
+ sound/core/pcm_native.c | 35 +++++++++++++++++++++++++----------
+ 1 file changed, 25 insertions(+), 10 deletions(-)
 
-diff --git a/fs/ocfs2/dcache.h b/fs/ocfs2/dcache.h
-index 7f246c5692d82..046ab9a807692 100644
---- a/fs/ocfs2/dcache.h
-+++ b/fs/ocfs2/dcache.h
-@@ -17,9 +17,8 @@ struct ocfs2_dentry_lock {
- 	u64			dl_parent_blkno;
- 
- 	/*
--	 * The ocfs2_dentry_lock keeps an inode reference until
--	 * dl_lockres has been destroyed. This is usually done in
--	 * ->d_iput() anyway, so there should be minimal impact.
-+	 * The inode reference is dropped before dl_lockres is unlocked.
-+	 * Callbacks must not use it to find the mount context during teardown.
- 	 */
- 	struct inode		*dl_inode;
- 	struct ocfs2_lock_res	dl_lockres;
-diff --git a/fs/ocfs2/dlmglue.c b/fs/ocfs2/dlmglue.c
-index 06fa76950b31d..bd187a6624513 100644
---- a/fs/ocfs2/dlmglue.c
-+++ b/fs/ocfs2/dlmglue.c
-@@ -56,7 +56,6 @@ struct ocfs2_mask_waiter {
+diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
+index 4b570d8aa80eb..989e822c1059c 100644
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -726,11 +726,32 @@ EXPORT_SYMBOL_GPL(snd_pcm_runtime_buffer_set_silence);
+ #define is_oss_stream(substream)	false
  #endif
- };
  
--static struct ocfs2_super *ocfs2_get_dentry_osb(struct ocfs2_lock_res *lockres);
- static struct ocfs2_super *ocfs2_get_inode_osb(struct ocfs2_lock_res *lockres);
- static struct ocfs2_super *ocfs2_get_file_osb(struct ocfs2_lock_res *lockres);
- static struct ocfs2_super *ocfs2_get_qinfo_osb(struct ocfs2_lock_res *lockres);
-@@ -256,7 +255,6 @@ static const struct ocfs2_lock_res_ops ocfs2_orphan_scan_lops = {
- };
- 
- static const struct ocfs2_lock_res_ops ocfs2_dentry_lops = {
--	.get_osb	= ocfs2_get_dentry_osb,
- 	.post_unlock	= ocfs2_dentry_post_unlock,
- 	.downconvert_worker = ocfs2_dentry_convert_worker,
- 	.flags		= 0,
-@@ -307,7 +305,7 @@ static inline struct ocfs2_dentry_lock *ocfs2_lock_res_dl(struct ocfs2_lock_res
++static void pcm_qos_req_clear(struct snd_pcm_substream *substream)
++{
++	if (cpu_latency_qos_request_active(&substream->latency_pm_qos_req))
++		cpu_latency_qos_remove_request(&substream->latency_pm_qos_req);
++}
++
++static void pcm_qos_req_update(struct snd_pcm_substream *substream, int usecs)
++{
++	if (usecs < 0) {
++		pcm_qos_req_clear(substream);
++		return;
++	}
++
++	if (cpu_latency_qos_request_active(&substream->latency_pm_qos_req))
++		cpu_latency_qos_update_request(&substream->latency_pm_qos_req,
++					       usecs);
++	else
++		cpu_latency_qos_add_request(&substream->latency_pm_qos_req,
++					    usecs);
++}
++
+ static int snd_pcm_hw_params(struct snd_pcm_substream *substream,
+ 			     struct snd_pcm_hw_params *params)
  {
- 	BUG_ON(lockres->l_type != OCFS2_LOCK_TYPE_DENTRY);
+ 	struct snd_pcm_runtime *runtime;
+-	int err, usecs;
++	int err;
+ 	unsigned int bits;
+ 	snd_pcm_uframes_t frames;
  
--	return (struct ocfs2_dentry_lock *)lockres->l_priv;
-+	return container_of(lockres, struct ocfs2_dentry_lock, dl_lockres);
+@@ -837,12 +858,6 @@ static int snd_pcm_hw_params(struct snd_pcm_substream *substream,
+ 	snd_pcm_timer_resolution_change(substream);
+ 	snd_pcm_set_state(substream, SNDRV_PCM_STATE_SETUP);
+ 
+-	if (cpu_latency_qos_request_active(&substream->latency_pm_qos_req))
+-		cpu_latency_qos_remove_request(&substream->latency_pm_qos_req);
+-	usecs = period_to_usecs(runtime);
+-	if (usecs >= 0)
+-		cpu_latency_qos_add_request(&substream->latency_pm_qos_req,
+-					    usecs);
+ 	err = 0;
+  _error:
+ 	if (err) {
+@@ -921,7 +936,7 @@ static int snd_pcm_hw_free(struct snd_pcm_substream *substream)
+ 		goto unlock;
+ 	result = do_hw_free(substream);
+ 	snd_pcm_set_state(substream, SNDRV_PCM_STATE_OPEN);
+-	cpu_latency_qos_remove_request(&substream->latency_pm_qos_req);
++	pcm_qos_req_clear(substream);
+  unlock:
+ 	snd_pcm_buffer_access_unlock(runtime);
+ 	return result;
+@@ -1976,6 +1991,7 @@ static int snd_pcm_do_prepare(struct snd_pcm_substream *substream,
+ 	err = substream->ops->prepare(substream);
+ 	if (err < 0)
+ 		return err;
++	pcm_qos_req_update(substream, period_to_usecs(substream->runtime));
+ 	return snd_pcm_do_reset(substream, state);
  }
  
- static inline struct ocfs2_mem_dqinfo *ocfs2_lock_res_qinfo(struct ocfs2_lock_res *lockres)
-@@ -608,13 +606,6 @@ static __u64 ocfs2_get_dentry_lock_ino(struct ocfs2_lock_res *lockres)
- 	return be64_to_cpu(inode_blkno_be);
- }
- 
--static struct ocfs2_super *ocfs2_get_dentry_osb(struct ocfs2_lock_res *lockres)
--{
--	struct ocfs2_dentry_lock *dl = lockres->l_priv;
--
--	return OCFS2_SB(dl->dl_inode->i_sb);
--}
--
- void ocfs2_dentry_lock_res_init(struct ocfs2_dentry_lock *dl,
- 				u64 parent, struct inode *inode)
- {
-@@ -622,6 +613,7 @@ void ocfs2_dentry_lock_res_init(struct ocfs2_dentry_lock *dl,
- 	u64 inode_blkno = OCFS2_I(inode)->ip_blkno;
- 	__be64 inode_blkno_be = cpu_to_be64(inode_blkno);
- 	struct ocfs2_lock_res *lockres = &dl->dl_lockres;
-+	struct ocfs2_super *osb = OCFS2_SB(inode->i_sb);
- 
- 	ocfs2_lock_res_init_once(lockres);
- 
-@@ -650,9 +642,9 @@ void ocfs2_dentry_lock_res_init(struct ocfs2_dentry_lock *dl,
- 	memcpy(&lockres->l_name[OCFS2_DENTRY_LOCK_INO_START], &inode_blkno_be,
- 	       sizeof(__be64));
- 
--	ocfs2_lock_res_init_common(OCFS2_SB(inode->i_sb), lockres,
-+	ocfs2_lock_res_init_common(osb, lockres,
- 				   OCFS2_LOCK_TYPE_DENTRY, &ocfs2_dentry_lops,
--				   dl);
-+				   osb);
- }
- 
- static void ocfs2_super_lock_res_init(struct ocfs2_lock_res *res,
+@@ -2750,8 +2766,7 @@ void snd_pcm_release_substream(struct snd_pcm_substream *substream)
+ 		substream->ops->close(substream);
+ 		substream->hw_opened = 0;
+ 	}
+-	if (cpu_latency_qos_request_active(&substream->latency_pm_qos_req))
+-		cpu_latency_qos_remove_request(&substream->latency_pm_qos_req);
++	pcm_qos_req_clear(substream);
+ 	if (substream->pcm_release) {
+ 		substream->pcm_release(substream);
+ 		substream->pcm_release = NULL;
 -- 
 2.53.0
 
