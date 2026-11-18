@@ -1,54 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059758;
-	b=fN6GwH7r1BRWpn+I2novh3yFQKpZrQGpr1BuhjFprAZNce2LVqSPGxAqu6W6T0L6nvzv
-	 Wm/2gJEnrIOoK9ULM8osm0CiRmHpPCudnyu/R8c4aqSqhsQ41OpsXDFJCCutq5ZKi2aNM
-	 wXoziPOQl5Wl1f18EOCCOlnXw0ez+8LoGoCISxfGg3OS7YzwPPfZY8iTQzySvY6I0SFCk
-	 qiFxHD+VB8n2Dn+vqhu9T9Mhm/I66RG+dGXS46zXwd7awApnDRUOQvXo6DIqVkzvwP1ih
-	 1tAVrL4BKFeloJVDINHibSe+pt0hRNVQvLGyCRu9NdmoIUj6zBqUR6jJu9UBk6fgUOg==
+	t=1795059761;
+	b=dhCUHs03KM+TOvuVO3hxwegvtCxB5virihB2ysicHvYgzUoGIJZ1LsIQlypEBN/tNHj/
+	 zy1eN8K2rUMnIPC13pokrvfaRaTjfGI+yGN3sMuYqfLvdX+yDgH1/kxDfs6p+CyvGIY2E
+	 2VeLrlvlru4dixoavpuXLR1Sd7N26IWB2fiBVjYK/GTuXXqRlXSdvPNkSuRwgRqb57Jwf
+	 IrjBw0M5mgY/TcJ6kMrJtREppGUGhMrUAgrZCBy/11XJWeGKa/QBkIEZ8Ps46sGJP+kOJ
+	 V7qW64I/CYXY83rs8BQS8vCAzEHfqQd/jHK4Z6iqbFDaU5MuuMVIASqafwhmIok6JyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059758;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059761;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WMFXejn46qmBdnrsoPaWqJ+Z4cHCUWu84sG5gH3Kmi8=;
-	b=YbIectxPkOa0IIuiMEs2EyU2uJvjC32hm40vM8u5nJAPAJsnJGhOqRwjVSdez+voZXfG
-	 JtCSE0Gm65/athKhwoSYUBkox4ex8IeCKe1VApCbcaBxjroJNHvS8FsCMTutKM4DgMMyp
-	 qclaxMxRs/8/ELVaetZO2Jc26hpZgLiI55tTSmaRCMUUduwZovJ7oO5BloCf9rvKyqhWa
-	 hhNjzdsCiuMhZ+WN0Afec/op3PdeDKann8lTkBaLNJ8ncbA4wp5b8q0LiQN/2VgTw01Ag
-	 MzE5Zh3TZfJuQoFCKNtKtY+pR0XQlUkvzbugRAVW9CHq41jWK1GSDAC8cORzZw7wUag==
+	bh=W0fq9hL/fdnQtrMNlbrPMyjHjX35QqHeIeiO+ma47mI=;
+	b=tBz/sHmC976JDE6eLpSfN/OO2ncpySQyuwSpv/ZqPeUOMVALxZKjuae5vAFLzWSRcwi9
+	 8iLlFcyGHX0BcR8gNQMDaDuqr3REzcTc83czwDsr0euBpTWgjxGUOx02lFlT7dVlYAkp8
+	 gNQZWadZHOGNQKSa7T0ST/VntagekHgRPookVUMNKPD/O/Azqa7dsy1HoCceiKpZI/z1W
+	 ybevMyUjKJQAb2uQLhJkvgnObotaqwX42PM72ThRUQFDBLBUhEHDIMrfvypNbjVCzg0aq
+	 qY7ghVoNV6czGteG/w+L8KoPAwtJzV1cv3sSeQXsRw20dtDtYU/UL0zBxWM8HMB+XfQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="pUM+iiJ/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=McAEUQ7j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13DB5606A320;
-	Thu, 19 Nov 2026 03:42:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A755606A320;
+	Thu, 19 Nov 2026 03:42:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pUM+iiJ/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6907A1F000C4;
-	Thu, 19 Nov 2026 03:42:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=McAEUQ7j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2714E1F000C4;
+	Thu, 19 Nov 2026 03:42:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059757;
-	bh=WMFXejn46qmBdnrsoPaWqJ+Z4cHCUWu84sG5gH3Kmi8=;
+	s=korg; t=1795059760;
+	bh=W0fq9hL/fdnQtrMNlbrPMyjHjX35QqHeIeiO+ma47mI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pUM+iiJ/tCRjf/41YAdfxCsrOh0O0bTcSkXXNu3H9BWI67EIYQ+8y6uheSW/7o30Y
-	 9wzm9DN6F8KhBXlzFIz7C3mEZQXI9E4MHT8VYn5fVS8AyVD0dLfswhI6RSmeyBejl9
-	 7VQz3kY4cp3pYM3wbvCplT6NNfb5hGuLXOKKQwUE=
+	b=McAEUQ7jZP0XrEFT0sygIaBaUj88HmrLYN0E/kCOXwPwvWWIuGJUEmqYzw9f/2uDc
+	 3p8b38CeyBNa9B+RnPm1+Ok2NkyaHuKHWSam6jM9oCWPgIZqstSeU0jn8rrdqVyTaA
+	 9TELqu7cPN/CX/Mk3otNmgtpmCpjn6zRJo1BFA/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Aksh Garg <a-garg7@ti.com>,
+	Breno Leitao <leitao@debian.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	SJ Park <sj@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Hugh Dickins <hughd@google.com>,
+	"Paul E . McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0956/1848] PCI: cadence: Store the core controller in platform drvdata
-Date: Wed, 18 Nov 2026 15:49:54 +0100
-Message-ID: <20261118145957.029636751@linuxfoundation.org>
+Subject: [PATCH 5.10 0957/1848] mm/shmem: report RCU-tasks quiescent states while undoing a range
+Date: Wed, 18 Nov 2026 15:49:55 +0100
+Message-ID: <20261118145957.070068841@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,120 +72,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit cfe96ce583c51bf6e034d4038c652a1e8227867c ]
+[ Upstream commit ebd1a08c192109c83a87ddf42793ed6283180faf ]
 
-cdns_plat_pcie_probe() stores a struct cdns_plat_pcie pointer with
-platform_set_drvdata(). cdns_plat_pcie_shutdown() and the callbacks in
-cdns_pcie_pm_ops retrieve the same pointer with dev_get_drvdata() but use
-it as a struct cdns_pcie pointer. This makes them read phy_count and phy
-beyond the wrapper.
+This shows up in the Meta fleet on ftruncate() of large tmpfs files:
 
-struct cdns_plat_pcie only contains a pointer to struct cdns_pcie. Drop
-the redundant wrapper and store the struct cdns_pcie pointer directly.
+  INFO: rcu_tasks detected stalls on tasks:
+  00000000752fd185: .. nvcsw: 59455/59455 holdout: 1 idle_cpu: -1/0
+  task:rocksdb:bottom  state:R  running task
+    __folio_split
+    find_get_entry
+    find_get_entries
+    truncate_inode_partial_folio
+    shmem_undo_range
+    shmem_setattr
+    notify_change
+    do_ftruncate
+    __x64_sys_ftruncate
+    do_syscall_64
 
-Fixes: bd22885aa188 ("PCI: cadence: Refactor driver to use as a core library")
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Aksh Garg <a-garg7@ti.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260915082826.4135665-1-lilinmao@kylinos.cn
-[ sashal: placed platform_set_drvdata() in each controller-mode branch instead of at the end of probe ]
+shmem_undo_range() walks the whole of the requested range in folio_batch
+sized steps, twice, and its two cond_resched() calls are the only
+reschedule points in that walk.
+
+cond_resched() is not an RCU-tasks quiescent state.  Use
+cond_resched_tasks_rcu_qs() at both points so the walk reports an
+RCU-tasks quiescent state as it proceeds.
+
+Link: https://lore.kernel.org/20260918-shmem-tasks-rcu-v1-1-79acf91a2569@debian.org
+Fixes: 8315f42295d2 ("rcu: Add call_rcu_tasks()")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: SJ Park <sj@kernel.org>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: "Paul E . McKenney" <paulmck@kernel.org>
+Cc: <stable@vger.kernel.org>
+[ sashal: adjusted loop context from folio batches to existing page vectors with explicit index advancement ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../controller/cadence/pcie-cadence-plat.c    | 36 ++++++-------------
- 1 file changed, 10 insertions(+), 26 deletions(-)
+ mm/shmem.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/cadence/pcie-cadence-plat.c b/drivers/pci/controller/cadence/pcie-cadence-plat.c
-index a224afadbcc00..181b36a5d159d 100644
---- a/drivers/pci/controller/cadence/pcie-cadence-plat.c
-+++ b/drivers/pci/controller/cadence/pcie-cadence-plat.c
-@@ -15,17 +15,6 @@
+diff --git a/mm/shmem.c b/mm/shmem.c
+index 5f8d8899bd0e7..6f2e267aa092f 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -957,7 +957,7 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
+ 		}
+ 		pagevec_remove_exceptionals(&pvec);
+ 		pagevec_release(&pvec);
+-		cond_resched();
++		cond_resched_tasks_rcu_qs();
+ 		index++;
+ 	}
  
- #define CDNS_PLAT_CPU_TO_BUS_ADDR	0x0FFFFFFF
+@@ -991,7 +991,7 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
  
--/**
-- * struct cdns_plat_pcie - private data for this PCIe platform driver
-- * @pcie: Cadence PCIe controller
-- * @is_rc: Set to 1 indicates the PCIe controller mode is Root Complex,
-- *         if 0 it is in Endpoint mode.
-- */
--struct cdns_plat_pcie {
--	struct cdns_pcie        *pcie;
--	bool is_rc;
--};
--
- struct cdns_plat_pcie_of_data {
- 	bool is_rc;
- };
-@@ -44,10 +33,10 @@ static const struct cdns_pcie_ops cdns_plat_ops = {
- static int cdns_plat_pcie_probe(struct platform_device *pdev)
- {
- 	const struct cdns_plat_pcie_of_data *data;
--	struct cdns_plat_pcie *cdns_plat_pcie;
- 	const struct of_device_id *match;
- 	struct device *dev = &pdev->dev;
- 	struct pci_host_bridge *bridge;
-+	struct cdns_pcie *pcie;
- 	struct cdns_pcie_ep *ep;
- 	struct cdns_pcie_rc *rc;
- 	int phy_count;
-@@ -62,11 +51,6 @@ static int cdns_plat_pcie_probe(struct platform_device *pdev)
- 	is_rc = data->is_rc;
+ 	index = start;
+ 	while (index < end) {
+-		cond_resched();
++		cond_resched_tasks_rcu_qs();
  
- 	pr_debug(" Started %s with is_rc: %d\n", __func__, is_rc);
--	cdns_plat_pcie = devm_kzalloc(dev, sizeof(*cdns_plat_pcie), GFP_KERNEL);
--	if (!cdns_plat_pcie)
--		return -ENOMEM;
--
--	platform_set_drvdata(pdev, cdns_plat_pcie);
- 	if (is_rc) {
- 		if (!IS_ENABLED(CONFIG_PCIE_CADENCE_PLAT_HOST))
- 			return -ENODEV;
-@@ -78,10 +62,10 @@ static int cdns_plat_pcie_probe(struct platform_device *pdev)
- 		rc = pci_host_bridge_priv(bridge);
- 		rc->pcie.dev = dev;
- 		rc->pcie.ops = &cdns_plat_ops;
--		cdns_plat_pcie->pcie = &rc->pcie;
--		cdns_plat_pcie->is_rc = is_rc;
-+		pcie = &rc->pcie;
-+		platform_set_drvdata(pdev, pcie);
- 
--		ret = cdns_pcie_init_phy(dev, cdns_plat_pcie->pcie);
-+		ret = cdns_pcie_init_phy(dev, pcie);
- 		if (ret) {
- 			dev_err(dev, "failed to init phy\n");
- 			return ret;
-@@ -106,10 +90,10 @@ static int cdns_plat_pcie_probe(struct platform_device *pdev)
- 
- 		ep->pcie.dev = dev;
- 		ep->pcie.ops = &cdns_plat_ops;
--		cdns_plat_pcie->pcie = &ep->pcie;
--		cdns_plat_pcie->is_rc = is_rc;
-+		pcie = &ep->pcie;
-+		platform_set_drvdata(pdev, pcie);
- 
--		ret = cdns_pcie_init_phy(dev, cdns_plat_pcie->pcie);
-+		ret = cdns_pcie_init_phy(dev, pcie);
- 		if (ret) {
- 			dev_err(dev, "failed to init phy\n");
- 			return ret;
-@@ -133,10 +117,10 @@ static int cdns_plat_pcie_probe(struct platform_device *pdev)
-  err_get_sync:
- 	pm_runtime_put_sync(dev);
- 	pm_runtime_disable(dev);
--	cdns_pcie_disable_phy(cdns_plat_pcie->pcie);
--	phy_count = cdns_plat_pcie->pcie->phy_count;
-+	cdns_pcie_disable_phy(pcie);
-+	phy_count = pcie->phy_count;
- 	while (phy_count--)
--		device_link_del(cdns_plat_pcie->pcie->link[phy_count]);
-+		device_link_del(pcie->link[phy_count]);
- 
- 	return 0;
- }
+ 		pvec.nr = find_get_entries(mapping, index,
+ 				min(end - index, (pgoff_t)PAGEVEC_SIZE),
 -- 
 2.53.0
 
