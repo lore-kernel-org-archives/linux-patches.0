@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021961;
-	b=fLGjumfiTX5xEKD5MFVUcexhI2SIB2igiAAULrfxx/JIjXWUtKB51dTMcpgu2GfK0upC
-	 cK1TVNAV7nDk9uiwwtjZhS6mAJxcHdBMwdSszwIrtS87PLgIv2d8e1WpbG/udwdBqBAbU
-	 1FQ24nLBra/fvlUkq+DjN+m7zrcrlTvRS07DxfRWxESDLbIq76t6K7Gj2VhR5iV/1WLg9
-	 /Ya8IK3dTNc4hVja/YYvfhPCnrdvS1T0X60Ai9mngLFHm/rmFRRcYVtPkWyGqKGftQ10X
-	 V2qTVLXKNYmqBdQaEsJ4g516kvOgE1dKhwfVBhkx/qANONOA0uZKOvBZ+pWU3g1x9gg==
+	t=1795021964;
+	b=qITcOjYXPANgcZnIlYPKP/GT52khTmQIBRLFY0fFZXt67SrSgzeqAybuddccne+Qqoto
+	 nqwXrZddPUN8zeZrlhjOA6uXxyFLDWFsvzm9Nv2r9SZ2B65gEsiKUh7+MgVN/dTimjARJ
+	 rLZCLuLIT6GYhWogDFcwaBb7j7G2YbW60/60FBiHBfB3UnDwIrPRsd1yGJFMsAPTUMNpU
+	 tlkV/1q1EmEhfsAujfws5cB7Too/outdpFM/DI50gc2WZK1nD0dENsZdBaZ2bYgUKuGDY
+	 kHMd33Bqvb/vHbtvats8bqYXN/3qycT/rPvoYnh/vrWi+2Rqf7EkpHGQoADokmGse7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021961;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021964;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gv5Wy4Dh8Z4MetUOSkqFbRe77kQAvH0WGYLrK5nwuQk=;
-	b=ecV4t8DCTZDrawNE4Hwb88Adhe8CgDJg5QRsTx5y3TigF23O2KYnPIwrYkelMNjov5M/
-	 rlsuRzTts+GRr21lCIeozB0iI9f3+fBN3rUAHodJZHE3Y4Cr9uxnOOSpTpr1W4njsVU4O
-	 /lT5xeWi8BSkSSGzEIxD6ozxIoYzlHQC2+wYIGw05UWiGJ0MfayPvq8OdJA9EAGGE3ns3
-	 wCPAlzNQf+nlIpCtZ57Z/WdVx6b/4Rlp+8xtFVop8uyQbbxrTkqR29UeISdzcs7gFCtS7
-	 1NPbYHJ92yL9tQEncFjEMF1c5Ni92XMJFPBIZdKVCGNZJVOkPB7hp9IeksL3Nk6EIyw==
+	bh=9dWRqPRU0FDv7COzI+JGNXFrrJtFjbxHw7jxs4w3wQM=;
+	b=3iTfyvIUEDdQAINO1UAif8sRvi0fx1lSOxZJGN7mL3hbkJkcFZ1d6+R2OVXabOBaeQAK
+	 tNAyNxWroC5pTvuzZ56ZHF7kZxiEj/qKnz8UPENMQ5VCXraVg8DX5+UhWrAz4WjAVfFzZ
+	 urQlTzznLKZg7PnFyxkUOYEtwBlWSGTOzANVAEKmi9BRW2T+cr1OrQfa+UzTP1RHfd1b4
+	 jALDcbimiuR/Le8SH4Lz4NQKJcOd9ILMigihFlPJcDibvZ/6sYhrp6BMIL0qwNMUviXUi
+	 FeTN3X2JbXddvcnqZwAfCVL0Mng4iVZDpk/xbQlFQIUB4iPQUkwS7vAS2Bz7PL9R0Lw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QbvPdFmi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T7OKACWB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87157606A31C;
-	Wed, 18 Nov 2026 17:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D66C606A334;
+	Wed, 18 Nov 2026 17:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QbvPdFmi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D67FB1F000C5;
-	Wed, 18 Nov 2026 17:12:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T7OKACWB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD3BB1F000C5;
+	Wed, 18 Nov 2026 17:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021961;
-	bh=gv5Wy4Dh8Z4MetUOSkqFbRe77kQAvH0WGYLrK5nwuQk=;
+	s=korg; t=1795021964;
+	bh=9dWRqPRU0FDv7COzI+JGNXFrrJtFjbxHw7jxs4w3wQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QbvPdFmihTmj2Ubi9yjSFR0ZZYadHeVEh9aMtQyDYJCdJcUjDHb/UfFMK16C9BM9j
-	 ASmP2ezCiYDrmK/rAlCfI0EjJ2BEIX9ys/K7dWAtt7SnZOZsXc5alKWrEiUs3c0iy3
-	 ymA0BU4SbWnADAsbQ8UF9MWW4Y0iEQXY9985+vR8=
+	b=T7OKACWBbghtDeQf9olaC/9DPn00lszvY87RYm1kD4CFPMhJghZRGVMEQgMONGXmf
+	 bKzXrRnVQ3tfMXHNJkAerMA9yriL6PwHg8hVWdHGojjevw4XeKsaTLU3wW9gmaugMI
+	 mtMrDBMMrErsWHcmh+ESPtZ7Sz4yhBCLSJ+WvEN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Brian Masney <bmasney@redhat.com>,
+	syzbot+0017742620a9d06f06ef@syzkaller.appspotmail.com,
+	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2452/2651] clk: cdce925: Size the PLL child name buffer for any int
-Date: Wed, 18 Nov 2026 16:01:32 +0100
-Message-ID: <20261118150413.376468250@linuxfoundation.org>
+Subject: [PATCH 7.3 2453/2651] tipc: fix refcount panic in tipc_rcv() when receiving shared skb
+Date: Wed, 18 Nov 2026 16:01:33 +0100
+Message-ID: <20261118150413.407360526@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,54 +70,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Tung Nguyen <tung.quang.nguyen@est.tech>
 
-[ Upstream commit e9e6b4dc303dff637ef725aca4f4968d7600798b ]
+[ Upstream commit 5308a2049b764aa55513c90c68933abf596c51d2 ]
 
-The PLL child node name is built from "PLL%d" in a 6 byte stack buffer.
-The PLL index is bounded by the chip's num_plls, at most 4, but GCC
-cannot see that bound and, with W=1, warns that the formatted string
-may not fit.
+TIPC assumes that the received skb is not shared with other users.
+However, syzbot reports a bug triggered by receiving a shared skb:
 
-Make the buffer large enough to hold any int and use snprintf() with
-sizeof() so the size stays tied to the declaration.
+...
+RIP: 0010:pskb_expand_head+0x135a/0x13a0 net/core/skbuff.c:2308
+__pskb_pull_tail+0x111/0x1870 net/core/skbuff.c:2890
+skb_cow_data+0x2ed/0xc50 net/core/skbuff.c:5398
+tipc_aead_decrypt net/tipc/crypto.c:892 [inline]
+tipc_crypto_rcv+0x346/0x23d0 net/tipc/crypto.c:1843
+tipc_rcv+0x4b7/0x1040 net/tipc/node.c:2119
+tipc_l2_rcv_msg+0x2d9/0x470 net/tipc/bearer.c:669
+deliver_ptype_list_skb net/core/dev.c:2533 [inline]
+...
 
-Fixes: 19fbbbbcd3a3 ("Add TI CDCE925 I2C controlled clock synthesizer driver")
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Link: https://patch.msgid.link/20261014-cdce925-truncate-child-name-v1-1-00136be00c49@baylibre.com
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+The root cause is that local delivery hooks in the kernel (e.g.,
+deliver_skb()) may increment the skb's reference count (`users`) before
+TIPC processes it on ingress.
+
+Fix this by calling skb_share_check() to ensure exclusive ownership
+before passing the skb to tipc_rcv(). As TIPC needs to modify the skb's
+data, the cloned skb needs to be uncloned when needed. This can be
+addressed in separate patch.
+
+Reported-by: syzbot+0017742620a9d06f06ef@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=0017742620a9d06f06ef
+Closes: https://lore.kernel.org/all/20261018145928.58317-1-ngocthang2710.1999@gmail.com/T/
+Fixes: b97bf3fd8f6a ("[TIPC] Initial merge")
+Co-developed-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+Signed-off-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20261023052921.54220-1-tung.quang.nguyen@est.tech
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-cdce925.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/tipc/bearer.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/clk/clk-cdce925.c b/drivers/clk/clk-cdce925.c
-index 30d0493c77181..231e7726fdb03 100644
---- a/drivers/clk/clk-cdce925.c
-+++ b/drivers/clk/clk-cdce925.c
-@@ -625,7 +625,12 @@ static int cdce925_probe(struct i2c_client *client)
- 	int i;
- 	int err;
- 	struct device_node *np_output;
--	char child_name[6];
-+	/*
-+	 * The PLL number isn't a compile time constant so GCC can't infer
-+	 * the number. Make the stack buffer large enough to hold any int
-+	 * so Wformat-truncation does not complain.
-+	 */
-+	char child_name[15];
- 	struct regmap_config config = {
- 		.name = "configuration0",
- 		.reg_bits = 8,
-@@ -697,7 +702,7 @@ static int cdce925_probe(struct i2c_client *client)
- 			dev_err(&client->dev, "Failed register PLL %d\n", i);
- 			goto error;
- 		}
--		sprintf(child_name, "PLL%d", i+1);
-+		snprintf(child_name, sizeof(child_name), "PLL%d", i + 1);
- 		np_output = of_get_child_by_name(node, child_name);
- 		if (!np_output)
- 			continue;
+diff --git a/net/tipc/bearer.c b/net/tipc/bearer.c
+index 05dcd2f9e887a..5e7e220fa7f5a 100644
+--- a/net/tipc/bearer.c
++++ b/net/tipc/bearer.c
+@@ -659,6 +659,10 @@ static int tipc_l2_rcv_msg(struct sk_buff *skb, struct net_device *dev,
+ {
+ 	struct tipc_bearer *b;
+ 
++	skb = skb_share_check(skb, GFP_ATOMIC);
++	if (!skb)
++		return NET_RX_DROP;
++
+ 	rcu_read_lock();
+ 	b = rcu_dereference(dev->tipc_ptr) ?:
+ 		rcu_dereference(orig_dev->tipc_ptr);
 -- 
 2.53.0
 
