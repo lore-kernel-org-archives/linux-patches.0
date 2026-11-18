@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042132;
-	b=uvo69XwtVPkQ79KeQQv4a1vR2c80VxW1I8jBM8hMP2CuyWASaaYovM+H9H7llnJQ+Ldh
-	 Zp3u8z0c/H+VpwCYNRm7yHwnjUg0hJ6xB1wR5wFHjdG5uYH2Ld7xkOwAhCwxxRRF7RDOX
-	 KMcm/LioIM3drtETAJtBjK/Alkxj3pHbOFyvzApiWg3U3SulrIwnb3R/r/mx4DUWGg6XR
-	 bxTDxRSkRu//p4q+79y9V+q4mf1dbQXxFa+7QnnqIwPU0hNRx5bdIXtT/VyB9L9/royMs
-	 V1V1Chf6KZTw00cseFdVGO4kaqAH4EQzaNuHiseFTKpTCVsVyNA0YdhPkpRHwOHtv0w==
+	t=1795042135;
+	b=QA+XSMHBX+Y0urxwAUpBq9UrHGa8qE+vuucYGfhwgmcWTzmKqQW3g8fUkmJilYljjRVx
+	 Agbe/YGzy5cNH2nuNKuJ/GFX5et1mg35A5K3zxZb3cFNGvkB9clAfvow6zhxpEwoKg4JR
+	 E7aqErpwrz8SkHZ6/RRzdvIyuQf98PJyWI50zseQQOsAZ4Yg3s/h5Znk3BO7+ICiM0WRM
+	 RslK0k2e1Ev/MylCxy8GznuRGKU+g/5FJk92AlxQXI0OB9Z9bEKRm/Bor8Xy4znJi2rsi
+	 NpThxznA1dvBkLXncsNQMhw8rnpYLfaK1mpmDaRxlPH0meceaVZ8GN8mdDjPWpGcn0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042132;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042135;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Td2EWUypIH4kADTmZR7IRKUHl7Z8xzDjOPweBsC0grU=;
-	b=cZ52mY135gggYwv2Ch+junwSzfC7+T3z6a6XMfB2UEG5r5dOBUp7+Q4l2Z8K7KJGvexg
-	 v8+3ZTV+cY7UL+tXmjW3alF+1Z7i7vWocpidnjzoxLCrJUJCihqTtqs0dlIovfcbvXEbZ
-	 U47wLB6kuR22rI8N6ePowLeKY/4rGPcCvNL6jGemrvOBCVgxuL/Jkjfq3d+Uh00C/0pcs
-	 Spb+jmc4O5/cQaol/i132WykogLc+HLq1WkhtB+lyDwLVnUUkarCziAk/db4xPJyUr1cI
-	 KAD7cUTlEaped/seez88bXAkbcdx4I/aoFAYne0qKmcO4IiRMLcg84feqYtGSlMRMUQ==
+	bh=/R+bebhEVaOZpntZTgRYqBlFcr0BPRb10i+7OfwArFc=;
+	b=LjSUoJf/JHKnTHyi2LKPlu+vQImCNMEL5kaBXQ+0+tz+vfPo/oFy+etLkXsNyuwXJ5U2
+	 4++IoWfQjiGSkc1nWf9r0bKpq44Hr5ERYh34+ujOAmYACYfosM4loCQKRllP4gi6WJGsM
+	 mXcjZUfr/lJguNcXITmnKhfGsoqO3IxchnTkUwZPx1Ol+APHgEHkI6cnBH3bkH+1O6wi8
+	 FONcWp4nvVIKmLQBjWy7ogwLYmYOylTs1hDVf+JboI5JwxO8Jn1/hhGOsigXOUo9DcpxM
+	 QbfYrWdjvn/EbTCIiMeHsn63f2WYc0bsbYSXP4NVoQDSmYVEE0nmWSQZJMTWM+X6WmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xAwP1ehz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pvWPnOt0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB36606A320;
-	Wed, 18 Nov 2026 22:48:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93AF9606A325;
+	Wed, 18 Nov 2026 22:48:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xAwP1ehz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DED11F000C4;
-	Wed, 18 Nov 2026 22:48:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pvWPnOt0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E393A1F000C4;
+	Wed, 18 Nov 2026 22:48:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042132;
-	bh=Td2EWUypIH4kADTmZR7IRKUHl7Z8xzDjOPweBsC0grU=;
+	s=korg; t=1795042135;
+	bh=/R+bebhEVaOZpntZTgRYqBlFcr0BPRb10i+7OfwArFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xAwP1ehzvBQgu1wSPVobPjuZpq0p8vzkWw+ph9yVjt8yczuSuBQnldOCabFYsHpfl
-	 kGce/NlfgB7drzVX3v24PXcpXLZ0Ua+j7Eks9W2YMGyctr3q4l05ESogHxxUxeNyST
-	 tJt8Ij68fJE5B58EmNo6ut0aNjfAYhFQJyFyuOhU=
+	b=pvWPnOt0T6i+7XGXDzOu4IK+TY3vJ9nADkmfsrHcRva/fFSuzbpsCOcTP1SxyrOui
+	 4dWkih2oAtbEx4GF5eh+7WiG6B1wKmIYqDhKQN6v+vNslAfpLMpizTJTKvCz35P2bj
+	 nfMiuykGSUhm6vNo3F00y0wQU5hMiTw1gFcgtrZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	James Hilliard <james.hilliard1@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3060/3318] mptcp: options: dss: avoid printing uninit csum
-Date: Wed, 18 Nov 2026 16:01:22 +0100
-Message-ID: <20261118150451.931058273@linuxfoundation.org>
+Subject: [PATCH 6.6 3061/3318] net: stmmac: avoid duplicate XSK TX completions
+Date: Wed, 18 Nov 2026 16:01:23 +0100
+Message-ID: <20261118150451.957292476@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,45 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: James Hilliard <james.hilliard1@gmail.com>
 
-[ Upstream commit 00e2690c9dad0e09cd2a4435b98de6d8efd5fbc2 ]
+[ Upstream commit daac93975b8ff0a0a036a5e3562236c0b40c3e36 ]
 
-When parsing the DSS suboption, this pr_debug() might read and print
-uninitialised checksum value.
+stmmac_tx_clean() reports completed AF_XDP TX descriptors through
+xsk_tx_completed(), but leaves their buffer type as STMMAC_TXBUF_T_XSK_TX.
+The slots retain that type until they are reused for another buffer type.
 
-That's mostly harmless, but that's also confusing. Fixing that also
-avoids some tools to complain about accessing uninit data.
+On interface close or XDP teardown, dma_free_tx_skbufs() walks the entire
+TX ring, not just the dirty_tx..cur_tx range. stmmac_free_tx_buffer()
+counts the stale XSK_TX slots again, causing xsk_tx_completed() to advance
+the completion-ring producer for buffers that have already been returned.
+This publishes completion entries without matching outstanding TX
+reservations and corrupts completion accounting for a socket which stays
+bound across the teardown.
 
-So read this csum field only if it has been set.
+Reset the XSK buffer type after counting the completion in both
+stmmac_tx_clean() and stmmac_free_tx_buffer(). XSK TX slots have a NULL
+skb pointer and no per-slot DMA mapping, so the SKB type represents an
+empty slot. Pending XSK descriptors keep their type until they are
+completed or released, and a released slot can no longer be counted
+again by a later cleanup.
 
-Note: this was initially reported by Clashiko as an existing issue. The
-code has been analysed by a human and confirmed. This is a non-urgent
-fix.
-
-Fixes: 390b95a5fb84 ("mptcp: receive checksum for DSS")
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20261013-net-next-mptcp-misc-feat-7-4-part2-v1-2-1181e5d2fda4@kernel.org
+Fixes: 132c32ee5bc0 ("net: stmmac: Add TX via XDP zero-copy socket")
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Link: https://patch.msgid.link/20261013-submit-stmmac-xsk-tx-completion-v1-v1-1-f21b9d098e62@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/options.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/net/mptcp/options.c b/net/mptcp/options.c
-index a79a4922c6108..44110c0e6cdf6 100644
---- a/net/mptcp/options.c
-+++ b/net/mptcp/options.c
-@@ -259,7 +259,7 @@ static void mptcp_parse_option(const struct sk_buff *skb,
- 			pr_debug("data_seq=%llu subflow_seq=%u data_len=%u csum=%d:%u\n",
- 				 mp_opt->data_seq, mp_opt->subflow_seq,
- 				 mp_opt->data_len, !!(mp_opt->suboptions & OPTION_MPTCP_CSUMREQD),
--				 mp_opt->csum);
-+				 (mp_opt->suboptions & OPTION_MPTCP_CSUMREQD) ? mp_opt->csum : 0);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 97c845f85fc29..b46fcb9f23378 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -1510,8 +1510,10 @@ static void stmmac_free_tx_buffer(struct stmmac_priv *priv,
+ 		tx_q->xdpf[i] = NULL;
+ 	}
+ 
+-	if (tx_q->tx_skbuff_dma[i].buf_type == STMMAC_TXBUF_T_XSK_TX)
++	if (tx_q->tx_skbuff_dma[i].buf_type == STMMAC_TXBUF_T_XSK_TX) {
+ 		tx_q->xsk_frames_done++;
++		tx_q->tx_skbuff_dma[i].buf_type = STMMAC_TXBUF_T_SKB;
++	}
+ 
+ 	if (tx_q->tx_skbuff[i] &&
+ 	    tx_q->tx_skbuff_dma[i].buf_type == STMMAC_TXBUF_T_SKB) {
+@@ -2627,8 +2629,11 @@ static int stmmac_tx_clean(struct stmmac_priv *priv, int budget, u32 queue)
+ 			tx_q->xdpf[entry] = NULL;
  		}
  
- 		break;
+-		if (tx_q->tx_skbuff_dma[entry].buf_type == STMMAC_TXBUF_T_XSK_TX)
++		if (tx_q->tx_skbuff_dma[entry].buf_type == STMMAC_TXBUF_T_XSK_TX) {
+ 			tx_q->xsk_frames_done++;
++			/* Teardown must not count this slot again. */
++			tx_q->tx_skbuff_dma[entry].buf_type = STMMAC_TXBUF_T_SKB;
++		}
+ 
+ 		if (tx_q->tx_skbuff_dma[entry].buf_type == STMMAC_TXBUF_T_SKB) {
+ 			if (likely(skb)) {
 -- 
 2.53.0
 
