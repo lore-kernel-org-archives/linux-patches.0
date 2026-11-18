@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029892;
-	b=c5ui9WhmGdNAiKDIsCKmISXKKeUGuKkh7mOG5esrq901oQCtiHCPXDUncJUWMSuNL079
-	 TSeC574+KYf0DrFzY6AmGHIiZ5nrrltY075ntRhDtGRoQoc2g3gXc8U0cbl4QaLkFPDJg
-	 6xZeyUuEj4+gI4hLfSfR4cdG4EZ8zYaLMil/I7sthgciX9NF8eJ5By/JrmTUAvSKs6nUA
-	 y2qBuCaHbK8uxShysHy0ZCs++FoXxP/h12Ni5v5nEzIKk9zwpys/PIELoWZiLS5x+dUIB
-	 ZF1mQnpPBUZFAFyNfTMaYQgUujxVd1qJkMJf2NwfedtX6tnV/tPVXr+dQXAa0JRGlkA==
+	t=1795029895;
+	b=y14JHF+vIUGSWbUBc/jMePisTXhuf9QsnpXlO9X4nUtWGUVFZF2GcYa1ZPbdhtjkI+7S
+	 bBY+DN3ZE2g3slTgkQ2DbVCpacqFMRm8fhrrJVX/zASg+RFsHB7nJRW3vLbk9OKHxbyHQ
+	 NZJItJI7PafFYJuz1cy7YRZnhlstmOVoRDdgSaRnQBcEq3jBlSL8giA3OkKVfh9QaPIvP
+	 8uubLrKnRJ/ZWrTKScF2Ih4m/MP2lgb1s33s1F3J+U6pxOVIf9N8N1UJeT6Z16IlbhZ0S
+	 pfYcD5DgoAJhD4fhBYyRWOCP5gEsd6qYOxP20TaFTSj72pvVeRA+LMWNJRCPNG3szug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029892;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029895;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y+/FOLSQs8xfaratRq+HZxT/7LjbkDzxfmSr5kz8BXg=;
-	b=uNReVED1nPQWu9qt4QT66naGrYObXejShIQFsmgJ1tJE938UOOrU0h6CcCtwzgxPEVHC
-	 mOBTMqJjBJcLWS1F67YXbnGRn01oVMs8UKlZI0gUJdU3UvYaCnsqL1csODeBgP8IpvFMI
-	 uKQem2yJsPClOiR5b8xRvTIjFt4+CtanlmYUA8MOFXIUqWsNpa7bvUIbd0ryWLefgCPZH
-	 6cxtkfbbw2W18GEVGMnIwrggfbKD/tqXnapXg0AdYHYnEFDY1stXM0WSQr2OrCnSz3YXX
-	 81ywAURxcNwfctAzkJ1Xlp8Qa2HWI+gqGF0BOSmUkFZTz64iB96qzPbk7WMF8bWPEsQ==
+	bh=evY8JGrhC+iat87U9eg6KK6h3tkkB5Jujqrv/h/skEg=;
+	b=i4smvIoBz64nBgzIg00O27d5+h7qlfY0wY/uZgBgssNv7xcdo07Um70C2SR7Nicxgvp3
+	 3EYpDQBKOTlfx0NLRcElWn2PHW7q4ZMeKhBhgL9+Qw+23tlnYfUto006n7JvRyyabex7F
+	 v/MqxJdop5VwQuhf7BWeViUrR95Mmc8QPI0A2n9v1nnCwv1D7KOgom/o4rjzC6zw3A7RG
+	 wpLnPuxMM9eSviGmQbAqeuW8wjGXLJ0namBHmjPrHg0shDVRIFoLMP3Pb6Fi/y5BliyjN
+	 d8Jo3xGXv8RyDKEhv623wD324N5s/n24CLtI0m5fQ5RNuGgXPcCEgrYc1uCrQiLHsZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HckfcPVT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CLFLDZ89;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C2D606A333;
-	Wed, 18 Nov 2026 19:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DB6A606A32C;
+	Wed, 18 Nov 2026 19:24:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HckfcPVT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF63C1F000CC;
-	Wed, 18 Nov 2026 19:24:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CLFLDZ89
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 819BA1F000CB;
+	Wed, 18 Nov 2026 19:24:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029892;
-	bh=Y+/FOLSQs8xfaratRq+HZxT/7LjbkDzxfmSr5kz8BXg=;
+	s=korg; t=1795029895;
+	bh=evY8JGrhC+iat87U9eg6KK6h3tkkB5Jujqrv/h/skEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HckfcPVTkSBmaHPNy3yXEYPPTtdbtfGnsCcgCNLYP9xfONDenwxEqxxK4CfDE1RUO
-	 QgBX8s4BJXI/9+Elu9k2QvlYht/98XMrPTr2CUDvSsiLzHlkTc5ok3UdyQHWBrb5r/
-	 Yymngvi5ZPE2JRt+u8VLyOdf8MsC+MEHdGIcOZo0=
+	b=CLFLDZ89JA0YyTtCuQxZNiXUcMTe75cHoBtJhubvESsXuDtRUJ1DoiZWrazNoY8iX
+	 fjOqEwi/My2Q/agqvOAsXmugA9q2DdKR7BNGKWMFzWLXNSYInTn5UFYXHo68zvNJjK
+	 nJAmoQNh3U/BCd0GRgt+05TN4B61juywX+Y1iN7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Leon Romanovsky <leon@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0509/1756] RDMA/siw: Fix qp use-after-free in siw_get_base_qp()
-Date: Wed, 18 Nov 2026 15:43:56 +0100
-Message-ID: <20261118150029.416520238@linuxfoundation.org>
+Subject: [PATCH 6.12 0510/1756] hwrng: starfive - propagate clock and reset errors
+Date: Wed, 18 Nov 2026 15:43:57 +0100
+Message-ID: <20261118150029.489406883@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,44 +68,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit ef15197f81ffedf29560edf2221199d92fd83dc2 ]
+[ Upstream commit ace145efdd80cd2eb95e84b1087d0f1fc55bdc0d ]
 
-The reference taken by siw_qp_id2obj() is dropped before the address
-of the embedded ib_qp is taken from the QP.  If that reference was
-the last one the QP is freed and the pointer returned to the iwarp
-core is dangling; the core only pins the QP with iw_add_ref() after
-the call has returned.
+The StarFive TRNG probe and resume paths ignore failures from their clock
+and reset operations. That lets the driver register or resume while its
+hardware access prerequisites were not established.
 
-Copy the pointer while the reference is still held.
+Check each transition, unwind only the previously enabled clock on failure,
+and propagate the error to the probe or PM core.
 
-Fixes: 6c52fdc244b5 ("rdma/siw: connection management")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260916184400.2093106-1-vulab@iscas.ac.cn
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: c388f458bc34 ("hwrng: starfive - Add TRNG driver for StarFive SoC")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_main.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/char/hw_random/jh7110-trng.c | 39 +++++++++++++++++++++-------
+ 1 file changed, 29 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_main.c b/drivers/infiniband/sw/siw/siw_main.c
-index 14d3103aee6f8..0e53bda4f5a12 100644
---- a/drivers/infiniband/sw/siw/siw_main.c
-+++ b/drivers/infiniband/sw/siw/siw_main.c
-@@ -218,8 +218,11 @@ static struct ib_qp *siw_get_base_qp(struct ib_device *base_dev, int id)
- 		/*
- 		 * siw_qp_id2obj() increments object reference count
- 		 */
-+		struct ib_qp *base_qp = &qp->base_qp;
+diff --git a/drivers/char/hw_random/jh7110-trng.c b/drivers/char/hw_random/jh7110-trng.c
+index 4712c3c530e42..6bfd52f5d1b1e 100644
+--- a/drivers/char/hw_random/jh7110-trng.c
++++ b/drivers/char/hw_random/jh7110-trng.c
+@@ -321,9 +321,17 @@ static int starfive_trng_probe(struct platform_device *pdev)
+ 		return dev_err_probe(&pdev->dev, PTR_ERR(trng->rst),
+ 				     "Error getting hardware reset line\n");
+ 
+-	clk_prepare_enable(trng->hclk);
+-	clk_prepare_enable(trng->ahb);
+-	reset_control_deassert(trng->rst);
++	ret = clk_prepare_enable(trng->hclk);
++	if (ret)
++		return ret;
 +
- 		siw_qp_put(qp);
--		return &qp->base_qp;
++	ret = clk_prepare_enable(trng->ahb);
++	if (ret)
++		goto disable_hclk;
 +
-+		return base_qp;
++	ret = reset_control_deassert(trng->rst);
++	if (ret)
++		goto disable_ahb;
+ 
+ 	trng->rng.name = dev_driver_string(&pdev->dev);
+ 	trng->rng.init = starfive_trng_init;
+@@ -343,13 +351,18 @@ static int starfive_trng_probe(struct platform_device *pdev)
+ 		pm_runtime_disable(&pdev->dev);
+ 
+ 		reset_control_assert(trng->rst);
+-		clk_disable_unprepare(trng->ahb);
+-		clk_disable_unprepare(trng->hclk);
+-
+-		return dev_err_probe(&pdev->dev, ret, "Failed to register hwrng\n");
++		ret = dev_err_probe(&pdev->dev, ret, "Failed to register hwrng\n");
++		goto disable_ahb;
  	}
- 	return NULL;
+ 
+ 	return 0;
++
++disable_ahb:
++	clk_disable_unprepare(trng->ahb);
++disable_hclk:
++	clk_disable_unprepare(trng->hclk);
++
++	return ret;
  }
+ 
+ static int __maybe_unused starfive_trng_suspend(struct device *dev)
+@@ -365,11 +378,17 @@ static int __maybe_unused starfive_trng_suspend(struct device *dev)
+ static int __maybe_unused starfive_trng_resume(struct device *dev)
+ {
+ 	struct starfive_trng *trng = dev_get_drvdata(dev);
++	int ret;
+ 
+-	clk_prepare_enable(trng->hclk);
+-	clk_prepare_enable(trng->ahb);
++	ret = clk_prepare_enable(trng->hclk);
++	if (ret)
++		return ret;
+ 
+-	return 0;
++	ret = clk_prepare_enable(trng->ahb);
++	if (ret)
++		clk_disable_unprepare(trng->hclk);
++
++	return ret;
+ }
+ 
+ static const struct dev_pm_ops starfive_trng_pm_ops = {
 -- 
 2.53.0
 
