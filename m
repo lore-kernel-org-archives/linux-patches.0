@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027680;
-	b=wMSmbgSFqIHw6F9mdNQcS47EcOVGjNOVXCZfw9pSpsctHdVYM3HsK43UHuHqnncNofrK
-	 T6G/SuQNshDiYmdyvFxCRVaC9eV1AcoaAu5FJFd+vTYisFMQRwUwBEOlBDEoihVDsHvt3
-	 517PC/A1aTy9+2fAA3Ut1rkSCL5swTPNo2W3sumO7W1yUo8plVuUPYn5o5DEIKm4vXtT4
-	 VNZtHAd6NdwYAWwgZl41nmlbv0CuOMZ07tTzPF9M9fuKm+HHahBi0cj7NGjoioZbTD5Be
-	 lmrJXq2r3j7BalRxSmau27MnHBHE5lAAVpTushxgyKfaFY9qevZ+uYlKHj9bRKU3waA==
+	t=1795027683;
+	b=h2Gs8HifrAQ5VzRhStmQ4yedJBzZ5r5FhHixEkq4GmXeN63lPE55YE8sr+dpH3zw47Uf
+	 AZttBUk1qrQUKn11azZKIeACy73oXv1SUKUBQq4Apv5zqgWvHZANCLQ6eVf55G0hNzpfi
+	 aKpM44I2J7kRcs7hJOHpt0Kl9BoZsMFwglA3eMD682G0KBVUw+7FjEfQT57yQV9Ks05d1
+	 MNOCYTTIs8uYaeIaFUUXlg0vkXs0ziM42tEfnyZCzrb79EA8QSmIwZBHqLtW4Yztbk5Va
+	 qjbt4ofw0QPGelkoRtgOaRtivTY9Zhgj6rej42T6ja4RxCSoJ+zHmCmKuGmMhvxw4iw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027680;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027683;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0nWinj1nDUD3GKI0Vh42gIttGU/bowyfVtKjW7LAiGk=;
-	b=kP+wu2SyaaVJMbuTwBTb+68wNStVV1egIm3/CpAjjroFG94UQ3KPxxytbfVCX65jY6IN
-	 fBA/Sp4syNol/bcgMT/m/vUiR8nN1rlorT+v8/46hpF5ntjbZKB4zFHNEJPx5v4n5udoF
-	 Uyl4saetjgZuVkcYcEtjLiLQ3yVHfY+PwecqzNq0ogZ0Z9iNE4ZJ6pbthxZBucYsMvRFb
-	 2vzMcmQu6noX6BxBGNfKDymm0lIdiEjlow2lMH+RzxrdbrcZA0Wj4RQrFYh8s5VX6nMYa
-	 u+7ekh5ynL2m8KeRRcYfQpsq8GG2b7OthoP8ZVtRG0Ux2pTTDCnOAgQhgef4cGmrT5Q==
+	bh=UC89GmasOLT+zckVGhVsTFmCXlVWw7YxiAw+F3NKr7k=;
+	b=HKTKWi8G3TgEXoa8Ixce73ZTkT0/keDzI4nk/zUllw5Qti5iT4KB/KtEKIpconDrPndu
+	 ORvqKtXEWdS0NJN/b/Sb9lgTp3mjNd1Gz+x2TDOBLakihwtURl5+fv6y1XN4WxilXR2Ps
+	 y5O57lhl8BPH2gSOvT2+4c+fQ8lZUHp67jDR3YWwfLMHBNSHAUYfGcpQEUQF9qGvSTej4
+	 ZUqbOlwUjRtIOyBmm7H8cWFYkv8VQgeP4KWgb8z5ZfOe/jx2DL/hFf8fUzIe6lwNT7ry2
+	 R7LFNYsAb00mlRoob4V/0j/4gYC6Vgv5Pew6oyc3qBsDJMyeZRB9KOPNeMdaNxuGbtA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XfvLVP9+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R3sY6yZs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 999E3606A32A;
-	Wed, 18 Nov 2026 18:48:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FC95606A320;
+	Wed, 18 Nov 2026 18:48:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XfvLVP9+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAB501F000C7;
-	Wed, 18 Nov 2026 18:47:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R3sY6yZs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 980051F000C4;
+	Wed, 18 Nov 2026 18:48:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027680;
-	bh=0nWinj1nDUD3GKI0Vh42gIttGU/bowyfVtKjW7LAiGk=;
+	s=korg; t=1795027683;
+	bh=UC89GmasOLT+zckVGhVsTFmCXlVWw7YxiAw+F3NKr7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XfvLVP9+KCXLXIFTUSo5SxcG8hWyV351qchs9BY7g6dt30pm89Bl/WgtXimiyKxww
-	 /gvNH9GV60qRoPNksnDyXHyAdC1tKw+SInG68jB23fiXcGD0QMTg85u/J9IbTowN2I
-	 dS3s4Ic9RVUPgjj97+s3iDmd2LTP69vShJX488mc=
+	b=R3sY6yZs+EIaeGypYDq3qIgqyNAhO7jOgYpahYckcd2QiSdJmBMv8Xd7rKswRT90k
+	 xiB5ZYZ+73uGajjg9/1yKXPEOPqED77I94iWS39DMlkVuofJUOns3IeZ+tyIOOvqoG
+	 E+wMkenM/ISOatMITihBRRcI8ykyfzplzKUA79Jc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1876/2151] ASoC: wm8994: fix MCLK index used for setting MCLK rate
-Date: Wed, 18 Nov 2026 16:00:11 +0100
-Message-ID: <20261118150230.132788940@linuxfoundation.org>
+Subject: [PATCH 6.18 1877/2151] ASoC: samsung: midas_wm1811: run FLL1 at the AIF1 configured rate when idle
+Date: Wed, 18 Nov 2026 16:00:12 +0100
+Message-ID: <20261118150230.169010279@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -72,57 +70,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit 7916b55b100973b5fb5b974e8f7c8ae9f3ac1d2e ]
+[ Upstream commit d9c23ac1217ab094e6bd9ab95e159ec72c8baca5 ]
 
-wm8994_set_dai_sysclk() passes the AIF index (dai->id - 1) to
-wm8994_set_mclk_rate(), which uses it to index the MCLK clocks and
-their cached rates. As a result, selecting MCLK2 as the AIF1 clock
-source sets and reads back the rate of MCLK1 instead, and the rate
-of MCLK1 is then stored as the MCLK2 rate.
+When the codec is brought up without an active stream, for example
+because the mixer state restored by alsactl powers up a digital path,
+midas_start_fll1() sets FLL1 to the default 11.2896MHz rate. The
+codec's AIF1 however keeps the configuration of the last stream, or its
+reset default of 48kHz at 256fs before the first stream, which needs
+a 12.288MHz AIF1 clock. The digital paths then run with AIF1 clocked
+at a rate not matching its configuration.
 
-On the Exynos4412 Trats2 board, where MCLK1 is a fixed 24MHz clock and
-MCLK2 a 32768Hz clock used when the codec is idle, this gives:
+Remember the FLL1 rate requested by the last hw_params() call, which
+matches the AIF1 configuration kept in the codec, and use it when no
+specific rate is requested. Change the default rate used before the
+first stream to 12.288MHz, matching the codec's default AIF1
+configuration.
 
- wm8994-codec wm8994-codec: AIF1 using MCLK2 at 24000000Hz
-
-so the driver assumes a 12MHz SYSCLK while it actually runs at 32kHz.
-This skips the 128fs AIF clock ratio setup for low SYSCLK rates and
-makes the mic detection rate configuration use the wrong clock rate.
-
-Pass the MCLK index matching the selected clock source instead.
-
-Fixes: 419e2f508336 ("ASoC: wm8994: Add support for setting MCLK clock rate")
+Fixes: fd0ea9cd9698 ("ASoC: samsung: Add sound support for Midas boards")
 Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Reviewed-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
-Link: https://patch.msgid.link/20261021101750.3297770-4-m.szyprowski@samsung.com
+Link: https://patch.msgid.link/20261021101750.3297770-5-m.szyprowski@samsung.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8994.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/samsung/midas_wm1811.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
-index e851fc5521eb5..c9d683596d9c5 100644
---- a/sound/soc/codecs/wm8994.c
-+++ b/sound/soc/codecs/wm8994.c
-@@ -2542,7 +2542,7 @@ static int wm8994_set_dai_sysclk(struct snd_soc_dai *dai,
- 	case WM8994_SYSCLK_MCLK1:
- 		wm8994->sysclk[dai->id - 1] = WM8994_SYSCLK_MCLK1;
+diff --git a/sound/soc/samsung/midas_wm1811.c b/sound/soc/samsung/midas_wm1811.c
+index 239e958b88d3f..20be8b7f90ecf 100644
+--- a/sound/soc/samsung/midas_wm1811.c
++++ b/sound/soc/samsung/midas_wm1811.c
+@@ -25,7 +25,8 @@
+  */
+ #define MCLK1_RATE 24000000U
+ #define MCLK2_RATE 32768U
+-#define DEFAULT_FLL1_RATE 11289600U
++/* Matches the codec's default AIF1 configuration: 48kHz, 256fs */
++#define DEFAULT_FLL1_RATE 12288000U
  
--		ret = wm8994_set_mclk_rate(wm8994, dai->id - 1, &freq);
-+		ret = wm8994_set_mclk_rate(wm8994, WM8994_MCLK1, &freq);
- 		if (ret < 0)
- 			return ret;
+ struct midas_priv {
+ 	struct gpio_desc *gpio_fm_sel;
+@@ -34,6 +35,7 @@ struct midas_priv {
+ 	struct gpio_desc *gpio_headset_key;
+ 	struct iio_channel *adc_headset_detect;
+ 	unsigned int fll1_rate;
++	unsigned int aif1clk_rate;
  
-@@ -2555,7 +2555,7 @@ static int wm8994_set_dai_sysclk(struct snd_soc_dai *dai,
- 		/* TODO: Set GPIO AF */
- 		wm8994->sysclk[dai->id - 1] = WM8994_SYSCLK_MCLK2;
+ 	struct snd_soc_jack headset_jack;
+ };
+@@ -171,11 +173,12 @@ static int midas_start_fll1(struct snd_soc_pcm_runtime *rtd, unsigned int rate)
+ 	if (!rate)
+ 		rate = priv->fll1_rate;
+ 	/*
+-	 * If no new rate is requested, set FLL1 to a sane default for jack
+-	 * detection.
++	 * If no new rate is requested, set FLL1 to the rate the codec's AIF1
++	 * is currently configured for, as its digital paths can be powered
++	 * up without an active stream.
+ 	 */
+ 	if (!rate)
+-		rate = DEFAULT_FLL1_RATE;
++		rate = priv->aif1clk_rate ?: DEFAULT_FLL1_RATE;
  
--		ret = wm8994_set_mclk_rate(wm8994, dai->id - 1, &freq);
-+		ret = wm8994_set_mclk_rate(wm8994, WM8994_MCLK2, &freq);
- 		if (ret < 0)
- 			return ret;
+ 	if (rate != priv->fll1_rate && priv->fll1_rate) {
+ 		/* while reconfiguring, switch to MCLK2 for SYSCLK */
+@@ -241,6 +244,7 @@ static int midas_aif1_hw_params(struct snd_pcm_substream *substream,
+ 				struct snd_pcm_hw_params *params)
+ {
+ 	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
++	struct midas_priv *priv = snd_soc_card_get_drvdata(rtd->card);
+ 	unsigned int pll_out;
+ 
+ 	/* AIF1CLK should be at least 3MHz for "optimal performance" */
+@@ -249,6 +253,8 @@ static int midas_aif1_hw_params(struct snd_pcm_substream *substream,
+ 	else
+ 		pll_out = params_rate(params) * 256;
+ 
++	priv->aif1clk_rate = pll_out;
++
+ 	return midas_start_fll1(rtd, pll_out);
+ }
  
 -- 
 2.53.0
