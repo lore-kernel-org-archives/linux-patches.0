@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044231;
-	b=1vcED9hhIteg5vSe1HQsvaraD35mc9tjHDrzWjNCELrtRuzXKm/JQ1+LA6sdKcJFmu5O
-	 bq9D6ULoNB4i3A3OmNviYzFBgh94NV6ZVqd5/lKlOBzEqUacI3XV8s07stRV8KFo9kb37
-	 oTnZw1Dg6AEYiKCbw8U6C6f89DxbMmjCW7pYZL9PhXAOjXG4dFWXAqeT5MFfWmJylhPRz
-	 8KGqdZLzWQYYu0pDTBR1IqwGYNPwxnXk9suIDa4pCmyHGA654WEkJBEzvxdqHJAV+YR4s
-	 xRbqzU+dQ8s+Ip10+ieffUwtBFEab1xAOxanZhb8hR9kwpzrP1IW+jLNCrvDgkVpUkg==
+	t=1795044234;
+	b=IgW6Qv7CCMhefy3IofJyCoZyvJ5UdC8UZVV1Jp4ET6dQJOUbQ77B8LuKB/9N6BGVODAy
+	 U7Rt3cco58LosJ+huza1KeJ8jxU+JyND1XACT+tWqfOsin7CtkoQF3w5Qlpb5qWH21eV1
+	 mr5na+q6i+T5wQ04WqPFiEI3noA7R8n7rROw5fJwAzG0e4DXXbzfs9WzK8EL/hn1d04jS
+	 /CwLEZjjT95emp+OFgNt34UzzJUxkIuvBeCjhKUgBu2kYgW6qpzrrjRKTGI2y5MdCYRmI
+	 D7A4+6rIzKRnxpbpb1JrAr8D0grgBA77OxWc+fIo2+ZYkorr1BIMrLVLBGfnMm6vThg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044231;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044234;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=815fzdn0faeiG9LOMSn05qbCQ2hcKG6nN2WYKo9bV6E=;
-	b=WhwiJr0P7yskpmJkWwabR9FOeoWNpLTAUJG7GafVptGiXXb0X+67f1wxgkJs19MlAUIB
-	 NBFwS+/NJPCjhy8u3cRjq2h8rqcQXCUANrhS/7cf3cDX5xDtMKMEsuMC6e7DXnlxmBJqP
-	 5exQSzb3shkPNEMnXF7pCIJCPiGFc2PhKOCbc2ELJ84xg8UXsRnkEKctwgSuK7kfdSKcO
-	 5lDjXiE58fo/ycTzgT0qbG4u6nZFI8qVF7vQaGtSL+tRYKtIhOoDMZSEUDJrp0plwNC6+
-	 NlHoybjbL7pWIoReDbpj5xK2m8Z3XrRD0F54mDEwZjhgteADQ2arLhWdw2/bp0HqU2A==
+	bh=BQJH47sqoyr9YfMXKDkRjx2jYPjblP78ovHLfxiAWsM=;
+	b=5brMzQ0pxIbmAP1t5TxzoGScirT1n0+Rfc0exiD4atGqFbPtxp2xyvZxEQfq8TJ6K5Rl
+	 ODetvoKt11t/1BcILAef5RqGf6/99eMenxSkCxepQUrzZwvFkaioTYHaLpcfFa4ZL8r+Q
+	 F8D0hAn41BqaZfokYc/x6RkeacmUtbmNKLPu39+JLNuioWSncMLEIrMMdpn/pywJ63Qa4
+	 OczFmQEV5RIj2Gh3h7s1hrGpNX0aa6kwxXTUqbD+z0uvKfJ2lmCXFfH/h3UJ17dL5curT
+	 bcJQ61N6oD2y/cNbQiu/BRX/uwEotn8m1y6nT3xFRU7/+rnXU7FPsRJ2KXl5iOSQwbg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F9nhZ4IY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xw76rDtd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5DB606A32F;
-	Wed, 18 Nov 2026 23:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0020D606A330;
+	Wed, 18 Nov 2026 23:23:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F9nhZ4IY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94ECA1F000C6;
-	Wed, 18 Nov 2026 23:23:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xw76rDtd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55EEA1F000C4;
+	Wed, 18 Nov 2026 23:23:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044231;
-	bh=815fzdn0faeiG9LOMSn05qbCQ2hcKG6nN2WYKo9bV6E=;
+	s=korg; t=1795044233;
+	bh=BQJH47sqoyr9YfMXKDkRjx2jYPjblP78ovHLfxiAWsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F9nhZ4IYPM66emvMzF1XuYwmGu2tngeM/NbLwKzhpvOWJ8SYPUM9EK/MWm5pzNdaA
-	 +qiX9qrRh7P/c3WZbpp8bfa4qM7TVPIg5XCyoY7ASczvUvG9dawD+4kPDtacmDzewz
-	 eW22cHRNqSNttTsQB/h6CsISMPrfn/gTrD3kycOA=
+	b=xw76rDtdqL6ygPOfdBLL/v54SKDsJXcSmHWWyiknSONqlQxhKXKKFhZhoa80y4gMe
+	 RCYz14opEX/FwPIYplTbGi5p0gHcz2ADrsiEq8jbJ7sek522yor6FEuWIVcU/zs7K4
+	 hul3o+e4qcQqDtjFfZM+2VDELAvWBhNZNJCHWXbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Zanussi <zanussi@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0493/2857] tracing: Fix fully-qualified variable reference printing in histograms
-Date: Wed, 18 Nov 2026 15:25:27 +0100
-Message-ID: <20261118150219.202878654@linuxfoundation.org>
+Subject: [PATCH 6.1 0494/2857] tracing: Use __free() for expr_str() buffer
+Date: Wed, 18 Nov 2026 15:25:28 +0100
+Message-ID: <20261118150219.240767468@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,75 +68,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tom Zanussi <zanussi@kernel.org>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 9236eebd138aa2753f7b30fc6cee7b7202841247 ]
+[ Upstream commit 988995c0552b6213b6bf16cea57258d4842c1488 ]
 
-The syntax for fully-qualified variable references in histograms is
-subsys.event.$var, which is parsed correctly, but not displayed correctly
-when printing a histogram spec. The current code puts the $ reference at
-the beginning of the fully-qualified variable name i.e. $subsys.event.var,
-which is incorrect.
+expr_str() allocates a temporary expression buffer and manually frees it
+on some error paths.
 
-Before:
+Convert the buffer to __free(kfree) and return it with return_ptr() on
+success. This keeps ownership handling separate from the later ERR_PTR()
+conversion and string-bound change.
 
-trigger info: hist:keys=next_comm:vals=hitcount:wakeup_lat=common_timestamp.usecs-$sched.sched_wakeup.ts0: ...
-
-After:
-
-trigger info: hist:keys=next_comm:vals=hitcount:wakeup_lat=common_timestamp.usecs-sched.sched_wakeup.$ts0: ...
-
-Link: https://patch.msgid.link/5dee9a86d062a4dd68c2214f3d90ac93811e1951.1776112478.git.zanussi@kernel.org
-Signed-off-by: Tom Zanussi <zanussi@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://patch.msgid.link/20260611055945.22348-2-pengpeng@iscas.ac.cn
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Stable-dep-of: a0777b9e5315 ("tracing: Fix NULL dereference when copying keys for a field variable")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ kernel/trace/trace_events_hist.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
 diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index a3b49b4b365aa..efec173e878ca 100644
+index efec173e878ca..d733d979c1a39 100644
 --- a/kernel/trace/trace_events_hist.c
 +++ b/kernel/trace/trace_events_hist.c
-@@ -1339,9 +1339,12 @@ static const char *hist_field_name(struct hist_field *field,
- 		 field->flags & HIST_FIELD_FL_VAR_REF) {
- 		if (field->system) {
- 			static char full_name[MAX_FILTER_STR_VAL];
-+			static char *fmt;
- 			int len;
+@@ -1736,7 +1736,7 @@ static void expr_field_str(struct hist_field *field, char *expr)
  
--			len = snprintf(full_name, sizeof(full_name), "%s.%s.%s",
-+			fmt = field->flags & HIST_FIELD_FL_VAR_REF ? "%s.%s.$%s" : "%s.%s.%s";
-+
-+			len = snprintf(full_name, sizeof(full_name), fmt,
- 				       field->system, field->event_name,
- 				       field->name);
- 			if (len < sizeof(full_name))
-@@ -1709,9 +1712,10 @@ static const char *get_hist_field_flags(struct hist_field *hist_field)
- 
- static void expr_field_str(struct hist_field *field, char *expr)
+ static char *expr_str(struct hist_field *field, unsigned int level)
  {
--	if (field->flags & HIST_FIELD_FL_VAR_REF)
--		strcat(expr, "$");
--	else if (field->flags & HIST_FIELD_FL_CONST) {
-+	if (field->flags & HIST_FIELD_FL_VAR_REF) {
-+		if (!field->system)
-+			strcat(expr, "$");
-+	} else if (field->flags & HIST_FIELD_FL_CONST) {
- 		char str[HIST_CONST_DIGITS_MAX];
+-	char *expr;
++	char *expr __free(kfree) = NULL;
  
- 		snprintf(str, HIST_CONST_DIGITS_MAX, "%llu", field->constant);
-@@ -5845,7 +5849,8 @@ static void hist_field_print(struct seq_file *m, struct hist_field *hist_field)
- 	else if (field_name) {
- 		if (hist_field->flags & HIST_FIELD_FL_VAR_REF ||
- 		    hist_field->flags & HIST_FIELD_FL_ALIAS)
--			seq_putc(m, '$');
-+			if (!hist_field->system)
-+				seq_putc(m, '$');
- 		seq_printf(m, "%s", field_name);
- 	} else if (hist_field->flags & HIST_FIELD_FL_TIMESTAMP)
- 		seq_puts(m, "common_timestamp");
+ 	if (level > 1)
+ 		return NULL;
+@@ -1747,7 +1747,7 @@ static char *expr_str(struct hist_field *field, unsigned int level)
+ 
+ 	if (!field->operands[0]) {
+ 		expr_field_str(field, expr);
+-		return expr;
++		return_ptr(expr);
+ 	}
+ 
+ 	if (field->operator == FIELD_OP_UNARY_MINUS) {
+@@ -1755,16 +1755,15 @@ static char *expr_str(struct hist_field *field, unsigned int level)
+ 
+ 		strcat(expr, "-(");
+ 		subexpr = expr_str(field->operands[0], ++level);
+-		if (!subexpr) {
+-			kfree(expr);
++		if (!subexpr)
+ 			return NULL;
+-		}
++
+ 		strcat(expr, subexpr);
+ 		strcat(expr, ")");
+ 
+ 		kfree(subexpr);
+ 
+-		return expr;
++		return_ptr(expr);
+ 	}
+ 
+ 	expr_field_str(field->operands[0], expr);
+@@ -1783,13 +1782,12 @@ static char *expr_str(struct hist_field *field, unsigned int level)
+ 		strcat(expr, "*");
+ 		break;
+ 	default:
+-		kfree(expr);
+ 		return NULL;
+ 	}
+ 
+ 	expr_field_str(field->operands[1], expr);
+ 
+-	return expr;
++	return_ptr(expr);
+ }
+ 
+ /*
 -- 
 2.53.0
 
