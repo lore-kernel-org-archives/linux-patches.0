@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059280;
-	b=34g3dWlsMA2fEaOAPmkbUA/+WZ+wfyDuNQWEbl/uL+VcCH+bUPiZKeDSV6i53iS6aj/l
-	 XabfnFyxw8iFn0yTrRiwr3zjB0KQRDN0uhCuZEwUeLs2OfXt8AnNJmAv4VIXDVRpwDHAD
-	 +YDYwr8A8TBs2NouMnXA4FA9ILVbYi9anZoB62ERA6xDh6MPduIuysuVTobpDaNtn5LSq
-	 zgqYi/wtdQrxyPrS3Bmgo+6avj9mEhiQSVP8ZG+23LV2p5AMPPZsrrxDgvg65YPVTF2fn
-	 48Y7FZcOP1O0k11uLFPp6Eh+AapKqpQpL30DCgs2N12C1qIILb9kcliba7vaIDjAuOA==
+	t=1795059283;
+	b=Z1s2WRwxyL+odpDF8cYy+hfUNs7wTi+VB9GcfKc0+AtHml3tYS07GkQO53N8xRVWS6/e
+	 ujW8f4UGTbGqPLOuYaHlRdPfsYwUwSXfZXFPNhQ8R5EdnxUCNSOmiF2NuPH5NgV/bO5cP
+	 O4zuOw2N4rkdvbtGCZ0nKkcv9knHSy09rCdyz+Hu1lCq6o17ZJ6BgTbgK6t8qQgXQHvt4
+	 veyXQGDexX9ZjKlJopAM2ycR1iKMJM55KDqpVTAL0fqGydp71BAKEY3zl0WuicZMDesfU
+	 ttEpX2E9I/mHIU1ujUm+z8nFlPCIje4Qy0/VrIhhnF1deQpTtZpeG3sCdqoFpUas9BQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059280;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059283;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ei5Tqp+SinMrv2DJ5D/xXhETxnrXxASI6Qa5ZB4MGM4=;
-	b=YCX4FAdEUqkqnXQ9gJZGlfv+thH27pFqHXviMWSeOeHMBbret3UHFjjOEzaIJ0EjNTGb
-	 p1E51BmAtuTfGet6LJ/SvPZLFa9LuNCDdaLNIKbWs2DSGmMtYC7P8VzjhB1OrVcQ7uuaa
-	 QKVNO/KIZlzrHPWDn6jI/AOV8BhdY3qntziDo6SlQwLDie4TtcuBg3DnWy7pqVIeuhr23
-	 MtNoassWrVYkYsECD6gXBnIMlPJgoI3GODO2K34yhEuiLPJvOiSUWDAg92u6ddg75VGDc
-	 XOofIXIQhwKGwHdZY/VC0TIEEGsFE6UqqsD90PV4jnjIMFzjd0Hs68RyefDHBk9M5Vw==
+	bh=2YkDp1E+O2fj36zqmRh1qkvzpDI3uuMu1xzHpkiZ5ME=;
+	b=ZGK1htDnzcmqyOFXOn+qJ4SyDBGUpc8ls5N5R9xXxrEX76WXAiIiGkdhYqmBp/fLekyj
+	 s3d/GKXwYFwJ5m9T82w0L8ejKTrB4oIF8EmTCrh8NnxFJCR2M7jeIyWMA7nh+San6slzb
+	 vDQsgkXVVBJN0jSsiRwCnQfaipeRRBw4d7Ep/G77HN9PRzcAqqBvIbbiX4joJTtYso0uB
+	 dEzsaUdiqf1VXIgOtcryECNs/0PCr2wu5y6TzhQkClX5kMsODJFApOFKdeUOAQa2i/CE+
+	 dpEx7+O/h6xTZUHHzhCxTFEjQkvgL1JgRBQr6mXj11jjG7JVyaCigcK/fHczGK8PYTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FJnPKggk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zLBw+C3+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86526606A325;
-	Thu, 19 Nov 2026 03:34:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 516E6606A320;
+	Thu, 19 Nov 2026 03:34:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FJnPKggk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFCFF1F000C4;
-	Thu, 19 Nov 2026 03:34:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zLBw+C3+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A49A61F000C4;
+	Thu, 19 Nov 2026 03:34:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059280;
-	bh=Ei5Tqp+SinMrv2DJ5D/xXhETxnrXxASI6Qa5ZB4MGM4=;
+	s=korg; t=1795059283;
+	bh=2YkDp1E+O2fj36zqmRh1qkvzpDI3uuMu1xzHpkiZ5ME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FJnPKggkWCZuaCiiq0+quJ0ALeoYOo+ZipQOCKJJUQWtJXkB6GRz/CPkZ+L3hMLNN
-	 LZQD4kHa4MITvYAvCxksLLVE7lpsDfwzryNHaZXBdbx31ekm16I7K8XhNg7LE+2Evh
-	 POiNP398tdYwEiminIzS6MtQJzLOaxCuGgGQHAtU=
+	b=zLBw+C3+AlHHg6FgN6ed+3Sqct4yOkVP1SWGRtjfN9GK2NWrvwyY95FAfARTuFpVJ
+	 45OZo8rN3SSRlA7Rk7wGK5oF6ztMveZn7cFwfWSyVI2Gw975+o02ntdUK2XEsGYYNd
+	 HGQBVMpnLw592Wf4LuovHwFawBrtf0hmSWZYoKXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Federico Musto <federico@rimpianto.com>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
+	stable@kernel.org,
+	Jiucheng Xu <jiucheng.xu@amlogic.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0784/1848] net: atl1c: drop oversized RX frames instead of panicking
-Date: Wed, 18 Nov 2026 15:47:02 +0100
-Message-ID: <20261118145949.284801351@linuxfoundation.org>
+Subject: [PATCH 5.10 0785/1848] f2fs: force out-place update for all writes on compressed file
+Date: Wed, 18 Nov 2026 15:47:03 +0100
+Message-ID: <20261118145949.321809071@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,109 +70,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Federico Musto <federico@rimpianto.com>
+From: Jiucheng Xu <jiucheng.xu@amlogic.com>
 
-[ Upstream commit c4ba1716853de5178a9df785844ebb5e397a80e6 ]
+commit a64a3fec11e77a3a0dc0009bdc58b925e45a1bb4 upstream.
 
-atl1c sizes its receive buffers from the netdev MTU plus a fixed set of L2
-overheads, which comes to 1522 bytes at the default MTU.  A link partner
-that sends a longer frame - in practice a MikroTik CCR2004-1G-2XS-PCIe,
-whose RouterOS side defaults to l2mtu 1600 while the host stays at MTU 1500
-- makes the length reported by the RX return descriptor exceed what the
-hardware wrote, and skb_put() then either includes bytes that were never
-received or trips skb_over_panic and takes the host down.
+For compressed file, compressed write may fail and fall back to raw
+write.
 
-Compare the descriptor length against buffer_info->length, the length the
-hardware was given, rather than against skb_tailroom(): the skb carries 64
-bytes of slack for the DMA erratum, so tailroom is larger than the DMA
-buffer and a frame in between would pass the check and still be delivered
-with a tail the device never wrote.  The same test rejects frames shorter
-than ETH_HLEN + ETH_FCS_LEN; before this change a reported length below
-ETH_FCS_LEN underflowed in skb_put().
+-Thread A                                         - Thread B
+  - f2fs_write_multi_pages                          - f2fs_down_write(&sbi->cp_rwsem);
+   - f2fs_write_compressed_pages                    - ...
+    - f2fs_trylock_op                               - ...
+     - f2fs_down_read_trylock(&sbi->cp_rwsem);      - ...
+   - f2fs_write_raw_pages                           - ...
 
-The frame is dropped with kfree_skb_reason(SKB_DROP_REASON_PKT_TOO_BIG) so
-drop_monitor and the kfree_skb tracepoint see it, and counted through
-dev_core_stats_rx_dropped_inc(), which survives atl1c_get_stats()
-overwriting the hardware counters on every read.  It also counts as work:
-atl1c_clean_rfd() has already recycled the RFD, and the refill at the end
-of the poll only runs when work_done is non-zero, so sustained oversized
-traffic would otherwise drain the ring and stop RX.
+Thread B acquires the lock first, which causes Thread A to fail lock
+acquisition and fall back to raw-data write.
+IPU_FORCE is enabled on small-capacity storage devices (< 16GB),
+so f2fs_write_raw_pages() overwrites the original compressed data
+in-place.
 
-Tested on a MikroTik CCR2004-1G-2XS-PCIe (4x AR8151) in a Proxmox VE host,
-with atl1c built from a DKMS tree carrying this change: the l2mtu-1600
-traffic that panics the stock driver is dropped and counted with the patch
-applied, and received normally once the host MTU is raised to match.
+The in-memory node has been updated with raw-data addresses, while the
+node metadata stored on eMMC still remains in compressed state.
+If a power-cut occurs before the node is flushed to disk, on-disk
+inconsistency arises: disk data is raw, yet metadata treats it as a
+compressed cluster, leading to decompression failure.
 
-This complements commit 36c2009d90f2 ("net: atl1c: fix soft lockup on
-out-of-range tpd_cons read"), which fixed the TX side of the same
-"host dies while the card resets" problem.
+To eliminate this risk completely, force out-place update for all
+write operations on compressed file.
 
-Fixes: 43250ddd75a3 ("atl1c: Atheros L1C Gigabit Ethernet driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Federico Musto <federico@rimpianto.com>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
-[ Federico Musto: 5.10.y has neither dev_core_stats_rx_dropped_inc() nor
-  kfree_skb_reason(): count the drop in netdev->rx_dropped, the counter
-  dev_core_stats replaced, which dev_get_stats() adds to what
-  atl1c_get_stats() returns, and free the skb with kfree_skb().  The RX
-  loop is atl1c_clean_rx_irq() here: work_done is an int * and the refill
-  at the end of the poll is gated on the local count, so the drop path
-  bumps both.  5.10.y does not have the 64 bytes of RX slack from commit
-  86565682e905 ("atl1c: Work around the DMA RX overflow issue"), but the
-  skb can still be larger than the buffer mapped for DMA, so the bound is
-  the same and only the comment is reworded.  Build-tested only, not run
-  on hardware. ]
-Signed-off-by: Federico Musto <federico@rimpianto.com>
+Cc: stable@kernel.org
+Fixes: 4c8ff7095bef ("f2fs: support data compression")
+Signed-off-by: Jiucheng Xu <jiucheng.xu@amlogic.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+(cherry picked from commit a64a3fec11e77a3a0dc0009bdc58b925e45a1bb4)
+Signed-off-by: Jiucheng Xu <jiucheng.xu@amlogic.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/atheros/atl1c/atl1c_main.c   | 34 +++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ fs/f2fs/data.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/ethernet/atheros/atl1c/atl1c_main.c b/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
-index 46a293b8a21c9..1a930cdf285cf 100644
---- a/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
-+++ b/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
-@@ -1844,6 +1844,40 @@ static void atl1c_clean_rx_irq(struct atl1c_adapter *adapter,
- 			break;
- 		}
- 		atl1c_clean_rfd(rfd_ring, rrs, rfd_num);
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index 2933b32032e79..f3ff1865868c3 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -2669,6 +2669,14 @@ bool f2fs_should_update_outplace(struct inode *inode, struct f2fs_io_info *fio)
+ 		return true;
+ 	if (f2fs_is_atomic_file(inode))
+ 		return true;
++	/*
++	 * rewrite low ratio compress data w/ OPU mode to avoid fragmentation.
++	 * If IO comes from compressed write path and fallback to raw write,
++	 * force out-place to prevent metadata-data inconsistency.
++	 */
++	if (f2fs_compressed_file(inode))
++		return true;
 +
-+		/* A link partner whose l2mtu is larger than ours can hand us a
-+		 * frame that does not fit the buffer the hardware was given:
-+		 * the descriptor reports the untruncated length while at most
-+		 * buffer_info->length bytes were written.  skb_put() of such a
-+		 * length would pull in whatever the tail of the buffer holds
-+		 * and, past the end of the skb, trips skb_over_panic and takes
-+		 * the host down.  Bound it by what the device actually wrote
-+		 * rather than by skb_tailroom(): the skb can be larger than
-+		 * the buffer mapped for DMA, so the two are not the same.
-+		 *
-+		 * Frames shorter than an Ethernet header plus its FCS are
-+		 * rejected by the same test; before this, a length below
-+		 * ETH_FCS_LEN underflowed in skb_put().
-+		 */
-+		if (unlikely(length < ETH_HLEN + ETH_FCS_LEN ||
-+			     length > buffer_info->length)) {
-+			atomic_long_inc(&netdev->rx_dropped);
-+			if (netif_msg_rx_err(adapter))
-+				dev_warn_ratelimited(&pdev->dev,
-+						     "dropped rx frame: %u bytes, buffer %u\n",
-+						     length, buffer_info->length);
-+			kfree_skb(skb);
-+			/* atl1c_clean_rfd() has already recycled the RFD, so
-+			 * count the drop as work: the refill at the end of the
-+			 * poll only runs when count is non-zero, and
-+			 * sustained oversized traffic would otherwise drain the
-+			 * ring and stop RX for good.
-+			 */
-+			(*work_done)++;
-+			count++;
-+			continue;
-+		}
-+
- 		skb_put(skb, length - ETH_FCS_LEN);
- 		skb->protocol = eth_type_trans(skb, netdev);
- 		atl1c_rx_checksum(adapter, skb, rrs);
+ 	if (fio) {
+ 		if (is_cold_data(fio->page))
+ 			return true;
 -- 
 2.53.0
 
