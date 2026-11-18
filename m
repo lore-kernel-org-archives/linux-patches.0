@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045105;
-	b=BnTuF77mNcAutHkj1ea3CguKO5r65ZmCo9pdlA7alfo+AR8tqRT97dEtTh4S+eoIfocj
-	 1lYd5rrp0w5GR6xfWMXGkXnRKDeD1GIXKLhRv0xEGSLg/wPB65UC6+fw7gbSZaujqw7eE
-	 Un9eiquIjKDHaYQnGY6Ksiv18oELpWFxznoX9haGazsQMrNIreC2CtIQldwyKNzgdqoJP
-	 yEzxocleuTjPK4D21Fno0kEAGvCsV4cGJjIR7FHEYdPaqSidyeQwKHHUB1OXxJ+JDQIAH
-	 Rp78vKHAFHg/jTBBOFnnxvJQa6r7dH119fEsz6OiXYA+Ar5NYxWmjvg2l2xzJ107Kcg==
+	t=1795045108;
+	b=KD9WXvOaR2zE3zMz2ofYZCChqlrMrwc3km1AdhpKA7/3g0lcL8FAs+uIHDr6ZXzQkAJM
+	 z3+STRbYn0eVe5C/r/GbJW3jaXk/UTQgXLm3X5CwqUPvjGiT7bQhmw09WTIMY0Sn17DNg
+	 ZPXFbCbHs7kz3X5AmekrtMvHTSZBFVFdMAvnmQ3wCXXB+QVmXMBmBURjOc3i4U97FEEtM
+	 /4iDZ/Z5Pu1MgqUfcQst0UpuOjDT496R7+1nFiQTnuNzdLR4W8Ib+6R1lYTCnSDMciZnM
+	 IfRYkc06z7J3LsFLfvrwxW4/oFeVFBs8s/zQQw20u6J4ZLlByGO3hGIVq1DVrsFfrnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045105;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045108;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eKciubuQVsZ9CD7paH13LyJIBZ3IRdDlHaTjRCNR1I4=;
-	b=aajfHx5PbISZRnnLPGIzkE180dtoMEc+VZJ14+jWnC4yp1dlSci0USj4Y2ldK1lrhHJ7
-	 TA75bZyQPJStqMN051x6x5OJJqsrcDj4FnE8KZTowWEXvlrOMhf6hQP8mPdhk65miLMHR
-	 nEwXyZkAo+MUE6qqIv+crFf0iPH4zlpw9+4OP+ZNalI0LMdV5H6jSEGvTXa3MUh0hXPxn
-	 qt0M77N6vpEKXSf9hL33JSqdPxFMQQk01DQvsVihoVpXEiIC2kbMmg2R9wEsVhn2X+VKZ
-	 XQ7XOa+JvljhaHZSXtCZQpvPmMbMjtg6/WRKE3vaNlXl0MUyc/wb0x3XRF9wXGmtMgA==
+	bh=vqlYoh9sX6E/cYcYbBVXr8qA7X94RoGWfWRftw6003M=;
+	b=koG8Pist3qbSGAZNRFOFnG/UdvTX+CfDEXw4ejOUJeZclTM0MhQ689gxCxsRz0WXWhrI
+	 JVhP7O3j2eiXOWnPevGDF37yeu7/Nr/j9f2EJZGFhjRuu6oMSXKm5lLHVUv7FfQTLHwXe
+	 C/Snt0g7/vyH9cmx7eX+KTlxJX9HVrunhEY8UPcuzUw82Z626wrTizL//T9pf9R1QNmpR
+	 tWH2pRK98QJuTWjBXn/6A8vpbKwzqiklYMYVlAp5o6dB3zblZu8Jk927MU4jAI1LBGKV6
+	 0IieeWatgKtqepYmkP30jJzx+v62CgPIHTwDAZ/oUToimhKwEPdrTsnbJ5b6v+RghFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xZScHeB+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VmWeGGmK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60BC7606A31C;
-	Wed, 18 Nov 2026 23:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F487606A31C;
+	Wed, 18 Nov 2026 23:38:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xZScHeB+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC2391F000C4;
-	Wed, 18 Nov 2026 23:38:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VmWeGGmK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CBF91F000C4;
+	Wed, 18 Nov 2026 23:38:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045105;
-	bh=eKciubuQVsZ9CD7paH13LyJIBZ3IRdDlHaTjRCNR1I4=;
+	s=korg; t=1795045108;
+	bh=vqlYoh9sX6E/cYcYbBVXr8qA7X94RoGWfWRftw6003M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xZScHeB+KTiKspeo/G588osnbgz+G3WZguhMhjahs39ojjcTdzaFTzgzwi2Kklhno
-	 UKGyd9nOoR84pp+fyFjMK7z/x55/RGjjmVJAJsEwBP4ODHJF+sBoL/M84QWqnd9JLP
-	 QE+5YY0ZiltOn/SQ43XGSyOYhEcs4S1rlmbY7IPQ=
+	b=VmWeGGmKnxZwMxUJSY997UdoeMkGXLtbnJviDiRbUiDr3xVWxGVw9H+/vbvsznL9z
+	 fjm+dTJZ/mNjn1/eMQKAHRZQwGqLkbhrrEnRyJf7W3KBnfb2M+URaqu2fujUhUZwwp
+	 SeKZ2gY0q1O/HquwWk63eULfPX04ORmY8oZm9g+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Myeonghun Pak <mhun512@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0805/2857] media: marvell: manage the MMP camera clock provider
-Date: Wed, 18 Nov 2026 15:30:39 +0100
-Message-ID: <20261118150230.556899884@linuxfoundation.org>
+Subject: [PATCH 6.1 0806/2857] media: go7007: unregister the I2C adapter on USB probe failure
+Date: Wed, 18 Nov 2026 15:30:40 +0100
+Message-ID: <20261118150230.593301662@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,54 +71,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 9887716132d6c3c58cc67841dfb441c5a4a0d209 ]
+[ Upstream commit 14165cd16fa7c233aec6a407b56b304e7a283911 ]
 
-mmpcam_probe() registers an OF clock provider before requesting the IRQ.
-Neither a later probe failure nor driver removal unregisters that provider,
-although the underlying clock is registered with devm_clk_register().
-This leaves the provider referring to a clock whose lifetime has ended.
+USB probe failures after I2C adapter registration free the backing
+go7007 structure without unregistering the adapter.
 
-Use devm_of_clk_add_hw_provider() with the existing mclk_hw so the provider
-is unregistered before the managed clock and camera storage are released.
+If i2c_adapter_online is set, unregister the adapter before releasing
+USB resources so that I2C client removal can still use its callbacks.
 
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
 
-Fixes: 81a409bfd551 ("media: marvell-ccic: provide a clock for the sensor")
+Fixes: 59aea928d57f ("[media] go7007: don't continue if firmware can't be loaded")
 Cc: stable@vger.kernel.org
-Assisted-by: OpenAI:GPT-5.6
 Co-developed-by: Ijae Kim <ae878000@gmail.com>
 Signed-off-by: Ijae Kim <ae878000@gmail.com>
 Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Assisted-by: OpenAI:GPT-5.6
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/marvell/mmp-driver.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/media/usb/go7007/go7007-usb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/platform/marvell/mmp-driver.c b/drivers/media/platform/marvell/mmp-driver.c
-index df16899ab1cbe..308e7b25783a4 100644
---- a/drivers/media/platform/marvell/mmp-driver.c
-+++ b/drivers/media/platform/marvell/mmp-driver.c
-@@ -25,6 +25,7 @@
- #include <linux/list.h>
- #include <linux/pm.h>
- #include <linux/clk.h>
-+#include <linux/clk-provider.h>
+diff --git a/drivers/media/usb/go7007/go7007-usb.c b/drivers/media/usb/go7007/go7007-usb.c
+index 6a0733c5925fc..ff479d6495c45 100644
+--- a/drivers/media/usb/go7007/go7007-usb.c
++++ b/drivers/media/usb/go7007/go7007-usb.c
+@@ -1326,6 +1326,8 @@ static int go7007_usb_probe(struct usb_interface *intf,
+ 	return 0;
  
- #include "mcam-core.h"
- 
-@@ -259,8 +260,8 @@ static int mmpcam_probe(struct platform_device *pdev)
- 	/*
- 	 * Add OF clock provider.
- 	 */
--	ret = of_clk_add_provider(pdev->dev.of_node, of_clk_src_simple_get,
--								mcam->mclk);
-+	ret = devm_of_clk_add_hw_provider(&pdev->dev, of_clk_hw_simple_get,
-+					  &mcam->mclk_hw);
- 	if (ret) {
- 		dev_err(&pdev->dev, "can't add DT clock provider\n");
- 		goto out;
+ allocfail:
++	if (go->i2c_adapter_online)
++		i2c_del_adapter(&go->i2c_adapter);
+ 	go7007_usb_release(go);
+ 	kfree(go);
+ 	return -ENOMEM;
 -- 
 2.53.0
 
