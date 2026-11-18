@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033406;
-	b=Fp3dEIjCblC+vtLRAPwMt/G/xjrWH0kDXba1NwR1WhFYAGeHW4Kuwz7UVO/uln8/qN48
-	 3rTUgh1dNszbMU+cwEN/goqss30+awryl0sEC5z9eUOwNJznBZXbGDi3orU//UU+ME6ro
-	 PlQWXKjTZZiOubfv1LAmiCfJsHQB/M64mAY0o5Uq4KSewn3YtDrcxwPv1oGHAjN8T5tTU
-	 9gA9H//Uss228pZX3aa1o+24sazafDLixeAWotkQzpbLWdrQiyM2qHd+QwkOvdJZMdCVH
-	 SffRf5JfOgzA/8kVD/6Y4e2zwi2uq51BahC3vsCeOOCCNpet+BlmopzqSye8cf/7d0A==
+	t=1795033409;
+	b=xA8knGzGzoe5ULZwAondEwliKSNVeZdZmWJgqIv05sEWZXdOZ4+B/wmSjrvOSy+Ui4YI
+	 wnAeppUL+wyp/z6pNYzCAI+62q7X/YuZgPeQkg/MCEX/oQhcYb3xmAVsY0401FCe3NnGo
+	 vmrHnGmdzfqrOq5USmcigDw2B0e2COKvSTCEgrR37auQBfkPwhFctFAAxGkSj2DPsU2UD
+	 Rt6Xbr9K7eZbtYmiK0vaU6KhWBX3sJ7Qn485QzYXMtO2eqDa5yYKOMgxA5AzAqFdjbkhR
+	 HM96pf4a34hBhpV3x68KByrYBtPK9uvHssOPHjKVycrqOjrUSXcG0z2EYludH7GZsCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033406;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033409;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=SMrV9yFD2Ht/7ubbq/l/abTVPQyK/ArHITNhKv1oGyE=;
-	b=Q4T6C9F9eEY8pzWHHTeKdSTHxPxPVS0455QXlz7fHG6vzBt0rdisVtOZY8w1xQ6aMiXY
-	 isBZ1GcSuFr7OyXknWYCLAbUcAkbFLc0TXq/KvAX6ShPe/n1JxgSNX8jYxw0rl8NrkHsC
-	 9J75goXPw/iKxGwfEnwerFJTbKoxc8gVeGJZ1t3u3fwGtCCp9j6ETovIwmfB2sMC9CQGH
-	 R96dc9KHXUBWyFA4O7T/tQ8yva1IZftzbDrAL63FPCtONR5l1R8Q2t2I9kcxsVL1pHRC+
-	 NJ90X13EFT71KLZ9apcrqZmsBIDrG4vEGjM59/TyWSgIe24TJLlIL+hIoKZrQ44rS6Q==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=WedX5ijGvWHP3Qx1efz4lyHjR92Ee1qtYLqR4IYscE4=;
+	b=dewX6uzVswERREGd5DCxsh3q+JzMwvWr6WeDR9pUZWvT+9dKzakFWP2b7dIwkr3hwThV
+	 F6bjRI/HG8ADSX+ZoH/2E6yMMl9BnXKrhd1+Gy+01RWhEZxG5hJ90Ie7fvsCgEj65q7k3
+	 oKO4iriTTxYdZ8KDVdsi0ra6V8qGxCpjzG2XCoj/kc0opvoKrwp1xxQdequC+2izVQVlD
+	 QZV2OOX858d+9LfNU90RXYBC1AnbRl3JNSPydvrNktBBRr72tVvIWxGKaV1vAzvZrTkJX
+	 aoCYe2+llcJSaSArh1Z/BkUchnGiRWahSxTQiMIClJwSgRkYBNEgAcEnMoWUp1IK4Dg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BbAgmvJ2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O8VtELeE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45A9E606A32F;
-	Wed, 18 Nov 2026 20:23:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B0D606A32A;
+	Wed, 18 Nov 2026 20:23:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BbAgmvJ2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98AF01F000C4;
-	Wed, 18 Nov 2026 20:23:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O8VtELeE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7460C1F000C4;
+	Wed, 18 Nov 2026 20:23:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033406;
-	bh=SMrV9yFD2Ht/7ubbq/l/abTVPQyK/ArHITNhKv1oGyE=;
+	s=korg; t=1795033409;
+	bh=WedX5ijGvWHP3Qx1efz4lyHjR92Ee1qtYLqR4IYscE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BbAgmvJ2dDCNaalVGyNuhE/SagxwjBGB0OdvMJQMwDgFgx0fPtF4FKLPTsyZty9Zc
-	 FuFBttz7rCfBI+1CGY195qTvtqYLEaFm6O8y8C8NBoAcKIaSCQ7+GxbaQZKnLBnfL0
-	 8B8dK5pxNw2fP3RoeHvOgqIXGC0PedZvdIenEPfQ=
+	b=O8VtELeEEkeHV+MOryo5bef9iX/YK/9Dsiz1G4UVvOTstPcRGDXm0KUwNHkiLgd5O
+	 8ssMTW2gsptSyM/cg5sHcNe1CNfVeghmkqvVZaC3OKZm9JR41UATolRqFhFtSxdOgj
+	 Wg7Mb0dXXnKVHQYTldd8VTWS9EN2Conalk5kj36U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Ian Rogers <irogers@google.com>,
 	Namhyung Kim <namhyung@kernel.org>
-Subject: [PATCH 6.12 1739/1756] perf tools: Fix compile error on sample->user_regs
-Date: Wed, 18 Nov 2026 16:04:26 +0100
-Message-ID: <20261118150118.778533271@linuxfoundation.org>
+Subject: [PATCH 6.12 1740/1756] perf libunwind: Fixup conversion perf_sample->user_regs to a pointer
+Date: Wed, 18 Nov 2026 16:04:27 +0100
+Message-ID: <20261118150118.817622574@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -62,123 +62,110 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-commit 20600b8aab734877740d5292c0cdd5ccb6c7beb7 upstream.
+commit 4e82c88a90a99b50f6488defd0d3d85ddc47c068 upstream.
 
-It's recently changed to allocate dynamically but misses to update some
-arch-dependent codes to use perf_sample__user_regs().
+The dc6d2bc2d893a878 ("perf sample: Make user_regs and intr_regs optional") misses
+the changes to a file, resulting in this problem:
+
+  $ make LIBUNWIND=1 -C tools/perf O=/tmp/build/perf-tools-next install-bin
+  <SNIP>
+    CC      /tmp/build/perf-tools-next/util/unwind-libunwind-local.o
+    CC      /tmp/build/perf-tools-next/util/unwind-libunwind.o
+  <SNIP>
+  util/unwind-libunwind-local.c: In function ‘access_mem’:
+  util/unwind-libunwind-local.c:582:56: error: ‘ui->sample->user_regs’ is a pointer; did you mean to use ‘->’?
+    582 |         if (__write || !stack || !ui->sample->user_regs.regs) {
+        |                                                        ^
+        |                                                        ->
+  util/unwind-libunwind-local.c:587:38: error: passing argument 2 of ‘perf_reg_value’ from incompatible pointer type [-Wincompatible-pointer-types]
+    587 |         ret = perf_reg_value(&start, &ui->sample->user_regs,
+        |                                      ^~~~~~~~~~~~~~~~~~~~~~
+        |                                      |
+        |                                      struct regs_dump **
+<SNIP>
+  ⬢ [acme@toolbox perf-tools-next]$ git bisect bad
+  dc6d2bc2d893a878e7b58578ff01b4738708deb4 is the first bad commit
+  commit dc6d2bc2d893a878e7b58578ff01b4738708deb4 (HEAD)
+  Author: Ian Rogers <irogers@google.com>
+  Date:   Mon Jan 13 11:43:45 2025 -0800
+
+      perf sample: Make user_regs and intr_regs optional
+
+Detected using:
+
+  make -C tools/perf build-test
 
 Fixes: dc6d2bc2d893a878 ("perf sample: Make user_regs and intr_regs optional")
-Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250214191641.756664-1-namhyung@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Link: https://lore.kernel.org/r/20250313033121.758978-1-irogers@google.com
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/arch/arm/tests/dwarf-unwind.c      |    2 +-
- tools/perf/arch/arm/util/unwind-libdw.c       |    2 +-
- tools/perf/arch/csky/util/unwind-libdw.c      |    2 +-
- tools/perf/arch/loongarch/util/unwind-libdw.c |    2 +-
- tools/perf/arch/powerpc/tests/dwarf-unwind.c  |    2 +-
- tools/perf/arch/powerpc/util/unwind-libdw.c   |    2 +-
- tools/perf/arch/riscv/util/unwind-libdw.c     |    2 +-
- tools/perf/arch/s390/util/unwind-libdw.c      |    2 +-
- 8 files changed, 8 insertions(+), 8 deletions(-)
+ tools/perf/util/unwind-libunwind-local.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/tools/perf/arch/arm/tests/dwarf-unwind.c
-+++ b/tools/perf/arch/arm/tests/dwarf-unwind.c
-@@ -46,7 +46,7 @@ static int sample_ustack(struct perf_sam
- int test__arch_unwind_sample(struct perf_sample *sample,
- 			     struct thread *thread)
- {
--	struct regs_dump *regs = &sample->user_regs;
-+	struct regs_dump *regs = perf_sample__user_regs(sample);
- 	u64 *buf;
+--- a/tools/perf/util/unwind-libunwind-local.c
++++ b/tools/perf/util/unwind-libunwind-local.c
+@@ -579,12 +579,12 @@ static int access_mem(unw_addr_space_t _
+ 	int ret;
  
- 	buf = calloc(1, sizeof(u64) * PERF_REGS_MAX);
---- a/tools/perf/arch/arm/util/unwind-libdw.c
-+++ b/tools/perf/arch/arm/util/unwind-libdw.c
-@@ -8,7 +8,7 @@
- bool libdw__arch_set_initial_registers(Dwfl_Thread *thread, void *arg)
- {
- 	struct unwind_info *ui = arg;
--	struct regs_dump *user_regs = &ui->sample->user_regs;
-+	struct regs_dump *user_regs = perf_sample__user_regs(ui->sample);
- 	Dwarf_Word dwarf_regs[PERF_REG_ARM_MAX];
+ 	/* Don't support write, probably not needed. */
+-	if (__write || !stack || !ui->sample->user_regs.regs) {
++	if (__write || !stack || !ui->sample->user_regs || !ui->sample->user_regs->regs) {
+ 		*valp = 0;
+ 		return 0;
+ 	}
  
- #define REG(r) ({						\
---- a/tools/perf/arch/csky/util/unwind-libdw.c
-+++ b/tools/perf/arch/csky/util/unwind-libdw.c
-@@ -10,7 +10,7 @@
- bool libdw__arch_set_initial_registers(Dwfl_Thread *thread, void *arg)
- {
- 	struct unwind_info *ui = arg;
--	struct regs_dump *user_regs = &ui->sample->user_regs;
-+	struct regs_dump *user_regs = perf_sample__user_regs(ui->sample);
- 	Dwarf_Word dwarf_regs[PERF_REG_CSKY_MAX];
+-	ret = perf_reg_value(&start, &ui->sample->user_regs,
++	ret = perf_reg_value(&start, perf_sample__user_regs(ui->sample),
+ 			     perf_arch_reg_sp(arch));
+ 	if (ret)
+ 		return ret;
+@@ -628,7 +628,7 @@ static int access_reg(unw_addr_space_t _
+ 		return 0;
+ 	}
  
- #define REG(r) ({						\
---- a/tools/perf/arch/loongarch/util/unwind-libdw.c
-+++ b/tools/perf/arch/loongarch/util/unwind-libdw.c
-@@ -10,7 +10,7 @@
- bool libdw__arch_set_initial_registers(Dwfl_Thread *thread, void *arg)
- {
- 	struct unwind_info *ui = arg;
--	struct regs_dump *user_regs = &ui->sample->user_regs;
-+	struct regs_dump *user_regs = perf_sample__user_regs(ui->sample);
- 	Dwarf_Word dwarf_regs[PERF_REG_LOONGARCH_MAX];
+-	if (!ui->sample->user_regs.regs) {
++	if (!ui->sample->user_regs || !ui->sample->user_regs->regs) {
+ 		*valp = 0;
+ 		return 0;
+ 	}
+@@ -637,7 +637,7 @@ static int access_reg(unw_addr_space_t _
+ 	if (id < 0)
+ 		return -EINVAL;
  
- #define REG(r) ({							\
---- a/tools/perf/arch/powerpc/tests/dwarf-unwind.c
-+++ b/tools/perf/arch/powerpc/tests/dwarf-unwind.c
-@@ -46,7 +46,7 @@ static int sample_ustack(struct perf_sam
- int test__arch_unwind_sample(struct perf_sample *sample,
- 			     struct thread *thread)
- {
--	struct regs_dump *regs = &sample->user_regs;
-+	struct regs_dump *regs = perf_sample__user_regs(sample);
- 	u64 *buf;
+-	ret = perf_reg_value(&val, &ui->sample->user_regs, id);
++	ret = perf_reg_value(&val, perf_sample__user_regs(ui->sample), id);
+ 	if (ret) {
+ 		if (!ui->best_effort)
+ 			pr_err("unwind: can't read reg %d\n", regnum);
+@@ -741,7 +741,7 @@ static int get_entries(struct unwind_inf
+ 	unw_cursor_t c;
+ 	int ret, i = 0;
  
- 	buf = calloc(1, sizeof(u64) * PERF_REGS_MAX);
---- a/tools/perf/arch/powerpc/util/unwind-libdw.c
-+++ b/tools/perf/arch/powerpc/util/unwind-libdw.c
-@@ -16,7 +16,7 @@ static const int special_regs[3][2] = {
- bool libdw__arch_set_initial_registers(Dwfl_Thread *thread, void *arg)
- {
- 	struct unwind_info *ui = arg;
--	struct regs_dump *user_regs = &ui->sample->user_regs;
-+	struct regs_dump *user_regs = perf_sample__user_regs(ui->sample);
- 	Dwarf_Word dwarf_regs[32], dwarf_nip;
- 	size_t i;
+-	ret = perf_reg_value(&val, &ui->sample->user_regs,
++	ret = perf_reg_value(&val, perf_sample__user_regs(ui->sample),
+ 			     perf_arch_reg_ip(arch));
+ 	if (ret)
+ 		return ret;
+@@ -808,7 +808,7 @@ static int _unwind__get_entries(unwind_e
+ 		.best_effort  = best_effort
+ 	};
  
---- a/tools/perf/arch/riscv/util/unwind-libdw.c
-+++ b/tools/perf/arch/riscv/util/unwind-libdw.c
-@@ -10,7 +10,7 @@
- bool libdw__arch_set_initial_registers(Dwfl_Thread *thread, void *arg)
- {
- 	struct unwind_info *ui = arg;
--	struct regs_dump *user_regs = &ui->sample->user_regs;
-+	struct regs_dump *user_regs = perf_sample__user_regs(ui->sample);
- 	Dwarf_Word dwarf_regs[32];
+-	if (!data->user_regs.regs)
++	if (!data->user_regs || !data->user_regs->regs)
+ 		return -EINVAL;
  
- #define REG(r) ({						\
---- a/tools/perf/arch/s390/util/unwind-libdw.c
-+++ b/tools/perf/arch/s390/util/unwind-libdw.c
-@@ -11,7 +11,7 @@
- bool libdw__arch_set_initial_registers(Dwfl_Thread *thread, void *arg)
- {
- 	struct unwind_info *ui = arg;
--	struct regs_dump *user_regs = &ui->sample->user_regs;
-+	struct regs_dump *user_regs = perf_sample__user_regs(ui->sample);
- 	Dwarf_Word dwarf_regs[ARRAY_SIZE(s390_dwarf_regs)];
- 
- #define REG(r) ({						\
+ 	if (max_stack <= 0)
 
 
