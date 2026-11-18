@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018188;
-	b=lARLArOA+dBTTQXxSewx7wfb6MbPZMOABwFWROgCBPIg+b8emiXViIYeoFcivsfmmFZ4
-	 ka9VxxKxs+bv+/wesZGXUJzmyZT4uXFEY/cZGYMp/+U2qplcv8MYg/CJG6F8Zv/5GgbUB
-	 f3WtqSlbUxuvFficeci+BGpABBvgbHbg7Jk6lXwO8h2gzxkmKT6sBHwZzZ9/Wzs7oNCCR
-	 BzqgwukVaYoBKbm+0E691DqV0Ewx5i7Pr70onef38RplJMuDzqZ8G0WdLcuInzheSgamb
-	 YQZ+h3KtE2AN6Z8C/U03rup18X1S4Jq1ocVhD6rrmkFZcEymCa5XaoMdXrPkk8EImyA==
+	t=1795018191;
+	b=a5zKnOdr8kVNUVQ8zSh1DZUVFX5TYOVE/Pg8/O+UKApivKnk4paVanAdoGecQbieDiYp
+	 LDdz5VF9VXxfWk7FThMxNwdv8xpkdQI5lo2+tU1OQ9uVBCbyAZGnkJ02Aso5uiutKgDdT
+	 ViWZ0o0yymM1OiYImJ3cSKVn9o6xwjlzjtY9xDRqyTmBDyT+HiUfP3IQp15B6ZDeS6O7M
+	 S85F9eN6fcpbiercgUFLGSADJtbpTWK2CFyyC2iKuaWugUGWJDshGUOPTKQFomb+O1x4X
+	 CtAe3M8MmHfrizpbwGXke9e+wV7Hf90vsIm3/FVfFW1CvDJuH0u9qFW2M5NGSJjJDzA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018188;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018191;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ch0H56gbbXbDiJnOgcfWkvpk/8nk1nJfgigKM0CXzWQ=;
-	b=Y66smlrdQmD8ydWSzK7wsidA+ocMGCz2rQV+9yQJl7i4UywVscJRPByI9V1BZ/F/Be1h
-	 zlpe/S2dASbeh4ZDzaJ2ai9Xh5KkYziBlmEtf9watH7B8I55+KV68oqb2ysrdUbNRuPNt
-	 842EwPT5ZJxqXjzYxq76vlYRzdsLCJo05W+2uwcGiSIN1ZhQPzmk6Eby5b7kApAIeYLhY
-	 maGChNjgk7YI6+iM7OjO6lKhcWzlaNuGAsYBDgpUOYan9xgHbc2VyZ9CSkAVZnz9rPoiH
-	 8Sae3lzqEXgIq09KsIzWTe3YqvDcj20i6cpMzLHT4EYpLPMkLrGyXYHS1LfN/DjTY+w==
+	bh=AUp6e9mxlB3dU4TE960HtGmDWAdt5QDw/phe6B3dBlI=;
+	b=Fk38Y/ADZeldDu5nMuJ1kSghIdQUqMvZSTGZNZIJUkfxqSC8XMnKnBhcOhctgEaLZL6D
+	 3/hYIOxtxZ0D7JW8mDAgdxMHgncsnlMD6+kvnClZjMgC6FQr2DjuwBguoIoCSPC27bzWB
+	 RZF0Mt5hYXNGvaDbIjV3lU1PPyz1WgWPwt0w0T5setobyer15zXAhGPWLati9IDXDU2zj
+	 kY6DJkjDb645yy+IavLBo5foGPzI3CJlJpQNZcf2Samw+A/h7kSUuLBsij2lx7PWSRhcq
+	 Te0MwCiQg/3leMyWU/kDx24CiW3CYhgScGaCxA0ANIsP1G7KTfGLA+gny4eVFwVMVKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pkQ4erEs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nlxAQCwU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07AE3606A339;
-	Wed, 18 Nov 2026 16:09:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66DC606A32A;
+	Wed, 18 Nov 2026 16:09:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pkQ4erEs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 598B51F000C7;
-	Wed, 18 Nov 2026 16:09:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nlxAQCwU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41FE21F000C4;
+	Wed, 18 Nov 2026 16:09:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018187;
-	bh=ch0H56gbbXbDiJnOgcfWkvpk/8nk1nJfgigKM0CXzWQ=;
+	s=korg; t=1795018190;
+	bh=AUp6e9mxlB3dU4TE960HtGmDWAdt5QDw/phe6B3dBlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pkQ4erEsLwNfVdQg9p9rAkDEx5aKfmgX0D7FIngpLjzweBw9lkFqHj83UwOvNY/sm
-	 e4hFRb37zKXeLpE2+tSjpqCgdgBJvAjXOpIleMoxV4liWY6AF2jlBI8Ub9sS011iDR
-	 +/o+3H1yG4C0O67gIJU4v0tb+woGxbqA0wfSKGNQ=
+	b=nlxAQCwUCvXhdqjXUr4zJmTcXuvTtwqz6r4dcO77I9iwEUAQQeVXlP43YBHNCM1rr
+	 cSEzscalrABGeBKTaNqrDQxCs0HKvxMAaM6CNV3X/TxJFnX2cD+pa6fFjDbTHK/ssP
+	 00eKaJNkKx6ZQKVwxgxn7sPyKlBlyG68FaSOCvRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hemanth Selam <hemanth.selam@gmail.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
+	Bartosz Szpila <bszpila@google.com>,
+	Andrei Kuchynski <akuchynski@chromium.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1151/2651] nvdimm/pmem: Release gendisk on probe failure
-Date: Wed, 18 Nov 2026 15:39:51 +0100
-Message-ID: <20261118150329.444309525@linuxfoundation.org>
+Subject: [PATCH 7.3 1152/2651] platform/chrome: cros_ec_typec: Validate SVID and mode counts in discovery data
+Date: Wed, 18 Nov 2026 15:39:52 +0100
+Message-ID: <20261118150329.480286454@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,56 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hemanth Selam <hemanth.selam@gmail.com>
+From: Bartosz Szpila <bszpila@google.com>
 
-[ Upstream commit 855a46681e0ba601952c346e5b62d867e51ecb23 ]
+[ Upstream commit 317e7abcaf60b79765dcf35c014edac8b9d37a6e ]
 
-pmem_attach_disk() allocates the gendisk with blk_alloc_disk() and hands
-it to devres only once device_add_disk() has succeeded.  Until that
-point the probe path owns the disk itself, which is why every failure
-after the allocation jumps to the out: label and puts it there.
+cros_typec_register_altmodes() iterates over sop_disc->svid_count and
+sop_disc->svids[i].mode_count from the EC_CMD_TYPEC_DISCOVERY response
+without validating their bounds.
 
-The devm_init_badblocks() failure returns directly instead, so the disk
-allocated a few lines earlier is never released.  Nothing releases it
-afterwards either: the devres action that would have done so has not
-been registered yet, so unbinding the namespace or destroying it does
-not reach the disk, and it stays allocated along with its queue and its
-bdev inode until the machine is rebooted.
+port->disc_data is allocated as a buffer of EC_PROTO2_MAX_RESPONSE_SIZE
+bytes, and each SVID entry contains a fixed mode_vdo[6] array. If the EC
+returns an out-of-bounds svid_count or mode_count, the loops read past
+the end of the mode_vdo array or the disc_data buffer.
 
-devm_init_badblocks() only fails when a single page allocation fails, so
-reaching this at all needs memory exhaustion during namespace probe, and
-because device_add_disk() has not run there is nothing user visible left
-behind: no device node, no sysfs entry, only the leaked memory.
+Validate that the discovery response with svid_count entries fits within
+EC_PROTO2_MAX_RESPONSE_SIZE using struct_size(), and ensure each SVID's
+mode_count does not exceed ARRAY_SIZE(sop_disc->svids[i].mode_vdo)
+before registering altmodes.
 
-Release the gendisk through the existing cleanup path on this failure.
-
-Fixes: 3dd60fb9d95d ("nvdimm/pmem: stop using q_usage_count as external pgmap refcount")
-Signed-off-by: Hemanth Selam <hemanth.selam@gmail.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260911082543.473670-1-hemanth.selam@gmail.com
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Fixes: de0f49487db3 ("platform/chrome: cros_ec_typec: Register partner altmodes")
+Signed-off-by: Bartosz Szpila <bszpila@google.com>
+Reviewed-by: Andrei Kuchynski <akuchynski@chromium.org>
+Link: https://lore.kernel.org/r/20261001085714.1086242-1-bszpila@google.com
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvdimm/pmem.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/platform/chrome/cros_ec_typec.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/nvdimm/pmem.c b/drivers/nvdimm/pmem.c
-index 30a51c365ce8b..648fc7d660639 100644
---- a/drivers/nvdimm/pmem.c
-+++ b/drivers/nvdimm/pmem.c
-@@ -563,8 +563,10 @@ static int pmem_attach_disk(struct device *dev,
- 	nvdimm_namespace_disk_name(ndns, disk->disk_name);
- 	set_capacity(disk, (pmem->size - pmem->pfn_pad - pmem->data_offset)
- 			/ 512);
--	if (devm_init_badblocks(dev, &pmem->bb))
--		return -ENOMEM;
-+	if (devm_init_badblocks(dev, &pmem->bb)) {
-+		rc = -ENOMEM;
-+		goto out;
-+	}
- 	nvdimm_badblocks_populate(nd_region, &pmem->bb, &bb_range);
- 	disk->bb = &pmem->bb;
+diff --git a/drivers/platform/chrome/cros_ec_typec.c b/drivers/platform/chrome/cros_ec_typec.c
+index 50a68819ceb7b..4427897eb3f59 100644
+--- a/drivers/platform/chrome/cros_ec_typec.c
++++ b/drivers/platform/chrome/cros_ec_typec.c
+@@ -7,8 +7,10 @@
+  */
  
+ #include <linux/acpi.h>
++#include <linux/array_size.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
++#include <linux/overflow.h>
+ #include <linux/platform_data/cros_ec_commands.h>
+ #include <linux/platform_data/cros_usbpd_notify.h>
+ #include <linux/platform_device.h>
+@@ -894,7 +896,15 @@ static int cros_typec_register_altmodes(struct cros_typec_data *typec, int port_
+ 	int ret = 0;
+ 	int i, j;
+ 
++	if (struct_size(sop_disc, svids, sop_disc->svid_count) > EC_PROTO2_MAX_RESPONSE_SIZE)
++		return -EINVAL;
++
+ 	for (i = 0; i < sop_disc->svid_count; i++) {
++		if (sop_disc->svids[i].mode_count > ARRAY_SIZE(sop_disc->svids[i].mode_vdo)) {
++			ret = -EINVAL;
++			goto err_cleanup;
++		}
++
+ 		for (j = 0; j < sop_disc->svids[i].mode_count; j++) {
+ 			memset(&desc, 0, sizeof(desc));
+ 			desc.svid = sop_disc->svids[i].svid;
 -- 
 2.53.0
 
