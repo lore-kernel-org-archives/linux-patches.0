@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028831;
-	b=WKJYqUG0qmbRvK8WtHYJqoL+5d/Y6woQPRNzBFTjM9wioZyWQvVYq/7TcOYYJvZKZh2Y
-	 y8VO4fYamu7cQTQ1j2yWFnofeauYNeg1f/hThkFsnoca1mctismbl3hNK3YOYTP38cfek
-	 qykHZgeRv8K0+RV8d/jrMlnE86fCApNHL1caNEhHjPwCjCRg/KalzKXfHv0lVEjjVwR8m
-	 wYGHQTzoy0hKFzForoKrwmQp7MPx1bdAjqFH/qyE6381KegpRlMQvw3KYWQyTz1bIsyFR
-	 dx1/NDvHQpKTu6JUadPvyREX20/FOLpE8dCcfx60QedbA9km0PJfv/cJk0PzJ4UIXeg==
+	t=1795028833;
+	b=qNc1WVhyhDuZ7Q9ho9o/c7TBxkDTBSbpzd0rn6Q2dx9rzl6UkLWijy3JvELjzhsjdPHw
+	 xd7nRVTXzYLDAc7h4dmrdf2LcOKZGHoxUBsWaEWfchPo0La9DoeGjtT3VUxwsyTa5LYdI
+	 VBLWt1gGNT2RcWIiy+fzsbfLNfLlRfRx7OZGdjZlknJ/oM8KJTZRwZUlxvxkrLA6KXnjI
+	 Qh8KYKoQpzob/FtkvpBxSbcYVt2z5Ylmo2kzdswTEWuw19WQwFVDIKdp8HIIl7qNWlqD7
+	 F5MP6wNxLS5d0/WB0YwN+ido2s+cFP4XAy3eq5tPCVUSvJnbNNt6u9O1ziHThgV17gQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028831;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028833;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8cZRMm/8Ba1ugNKMBbnRznGdugiBFg2I+S3hWAqQVlI=;
-	b=evNm/7IR1EB5l6LsxjfDJInB0zZ48ZKqbsf8yrd9ixsZpLqeOTdJdaYknd2L/RKRj7/o
-	 P9weEqMCch92Ho88QHDdcdpLOm1EDpjVWU+qoSi/wm6UKNw1zYrrBrkQZp8yQtPZOems+
-	 PS3fxEdI0OCh/1Cer2ypOip6EP5HvSFLfHbjjsT4vRD8JpzsztlHFmJD7c/wKMR+ZVjsN
-	 e5qEfU+LhY0YzFRnBAeuXhZrFM4VH+EBO8zIOqQrc47uZoMmvj2UVb766W9lL/AobRAB5
-	 fRXJ3MIOAaxr6ANRbqk2lHhZquT/Msr6ttT2bAFgdDDHXRHSMIxfxIRSLDY0TXHbPAw==
+	bh=/PZgS5HypoXcmsYJ4XE9KwHQ9LvnPz2RY5d78C0t7SE=;
+	b=v2rycy9a9sAcNqop8vLkHgNlTreeMG33tP/z+s2eqlEyvM6Mr8bQuQV8uaXgmAZs/XEO
+	 CB13JJlu2iVYoI+GLeReuYKlTjDm9kQqHQda6R/dQOgOKSCZOqo1oLp5DHtMEdRcg4aQ/
+	 rrVnstWY9L2wu7sUbWQBqqXlIkAEYPksyA5zEfNmC+f9/KyA82IYaSV0IWuBl4fJh+9mE
+	 f02U/PCOxOkRzLqbcter9O/B6YVhUA0PJZsaQAvterMzJ+RJEmmuzY6laxO2nZ0zfL4yP
+	 iHHJfqGsZs9z/zgnLmgm24YrPB9EWAqgsA6faVhFe1rPDZVezBTr2AamXN34e3V6mWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c2jBfOsO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OJoV3lLp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EBC4606A334;
-	Wed, 18 Nov 2026 19:07:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B353606A33F;
+	Wed, 18 Nov 2026 19:07:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c2jBfOsO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AEC41F000C4;
-	Wed, 18 Nov 2026 19:07:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OJoV3lLp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34F311F000C4;
+	Wed, 18 Nov 2026 19:07:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028830;
-	bh=8cZRMm/8Ba1ugNKMBbnRznGdugiBFg2I+S3hWAqQVlI=;
+	s=korg; t=1795028832;
+	bh=/PZgS5HypoXcmsYJ4XE9KwHQ9LvnPz2RY5d78C0t7SE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c2jBfOsOcSAmk12TEXUp1DbxxyNFTInyKSl/Be/45kkZ1ivu4mHq2EUlwy2Byhc4B
-	 ZAowrCEtBae+VBQiLclDpG+8XlUs5Kd/ez9RVlil3/F4SvbrEjmkD08lwgWLhdIQZU
-	 +waL0PUwxHLCgcbTIieG1PruVUrItZoWUypalbzY=
+	b=OJoV3lLpJv00NCyKUvv2t+1R/GAepOXj3GXeoI4xWIhhC48L/DC9FkzMCz7HTp1pH
+	 p6Eo5av1j/MtZPcdjLeKYOH31nMvpi9/aqHLjUWAgota1Y4Ks+cmX2C3JPSmA1U05C
+	 25Ly6SoNwfgn6uE9wnKGvJwJ/umL3MUmiUwUbp+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Liu <song@kernel.org>,
-	Matt Bobrowski <mattbobrowski@google.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Tejun Heo <tj@kernel.org>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0134/1756] bpf: Mark dentry->d_inode as trusted_or_null
-Date: Wed, 18 Nov 2026 15:37:41 +0100
-Message-ID: <20261118150013.515667526@linuxfoundation.org>
+Subject: [PATCH 6.12 0135/1756] bpf: sched_ext: Mark ops argument container pointer fields as trusted
+Date: Wed, 18 Nov 2026 15:37:42 +0100
+Message-ID: <20261118150013.554165537@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,124 +68,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Song Liu <song@kernel.org>
+From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit a766cfbbeb3a74397965a8fa2e9a402026d3e1d8 ]
+[ Upstream commit aed1bf1a352acd4f5ffd2a81e23d2bb6e8e9b636 ]
 
-LSM hooks such as security_path_mknod() and security_inode_rename() have
-access to newly allocated negative dentry, which has NULL d_inode.
-Therefore, it is necessary to do the NULL pointer check for d_inode.
+Walking an unannotated pointer field of a trusted struct yields a bare
+PTR_TO_BTF_ID in non-sleepable programs, which kfuncs and helpers accept,
+but PTR_UNTRUSTED in sleepable programs, which they reject. This gets in the
+way of making ops.init_task() sleepable, which schedulers want for
+allocations. For example, passing args->cgroup into bpf_cgrp_storage_get()
+then fails verification and the only recourse is round-tripping through the
+cgroup ID with bpf_cgroup_from_id().
 
-Also add selftests that checks the verifier enforces the NULL pointer
-check.
+The pointer fields in the sched_ext ops argument containers are all pinned
+by the callers for the duration of the ops calls and are never NULL. Add
+them to the verifier's trusted-fields whitelist so that they are PTR_TRUSTED
+in both sleepable and non-sleepable programs.
 
-Signed-off-by: Song Liu <song@kernel.org>
-Reviewed-by: Matt Bobrowski <mattbobrowski@google.com>
-Link: https://lore.kernel.org/r/20250613052857.1992233-1-song@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: aed1bf1a352a ("bpf: sched_ext: Mark ops argument container pointer fields as trusted")
+Fixes: 8195136669661 ("sched_ext: Add cgroup support")
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/bpf/95d7ccc17681aa3a4a2eeb1b073f00f7@kernel.org
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c                          |  5 ++---
- .../selftests/bpf/progs/verifier_vfs_accept.c  | 18 ++++++++++++++++++
- .../selftests/bpf/progs/verifier_vfs_reject.c  | 15 +++++++++++++++
- 3 files changed, 35 insertions(+), 3 deletions(-)
+ kernel/bpf/verifier.c | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index ecd8595bd5450..5d45edb98e3e3 100644
+index 5d45edb98e3e3..7d29b6b77f4ea 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -6850,8 +6850,7 @@ BTF_TYPE_SAFE_TRUSTED(struct file) {
+@@ -6850,6 +6850,28 @@ BTF_TYPE_SAFE_TRUSTED(struct file) {
  	struct inode *f_inode;
  };
  
--BTF_TYPE_SAFE_TRUSTED(struct dentry) {
--	/* no negative dentry-s in places where bpf can see it */
-+BTF_TYPE_SAFE_TRUSTED_OR_NULL(struct dentry) {
++/*
++ * The pointer fields in the sched_ext ops argument containers are pinned by the
++ * callers for the duration of the ops calls and are never NULL.
++ */
++BTF_TYPE_SAFE_TRUSTED(struct scx_init_task_args) {
++#ifdef CONFIG_EXT_GROUP_SCHED
++	struct cgroup *cgroup;
++#endif
++};
++
++BTF_TYPE_SAFE_TRUSTED(struct scx_cpu_release_args) {
++	struct task_struct *task;
++};
++
++BTF_TYPE_SAFE_TRUSTED(struct scx_sub_attach_args) {
++	struct sched_ext_ops *ops;
++};
++
++BTF_TYPE_SAFE_TRUSTED(struct scx_sub_detach_args) {
++	struct sched_ext_ops *ops;
++};
++
+ BTF_TYPE_SAFE_TRUSTED_OR_NULL(struct dentry) {
  	struct inode *d_inode;
  };
- 
-@@ -6889,7 +6888,6 @@ static bool type_is_trusted(struct bpf_verifier_env *env,
+@@ -6888,6 +6910,10 @@ static bool type_is_trusted(struct bpf_verifier_env *env,
  	BTF_TYPE_EMIT(BTF_TYPE_SAFE_TRUSTED(struct bpf_iter__task));
  	BTF_TYPE_EMIT(BTF_TYPE_SAFE_TRUSTED(struct linux_binprm));
  	BTF_TYPE_EMIT(BTF_TYPE_SAFE_TRUSTED(struct file));
--	BTF_TYPE_EMIT(BTF_TYPE_SAFE_TRUSTED(struct dentry));
++	BTF_TYPE_EMIT(BTF_TYPE_SAFE_TRUSTED(struct scx_init_task_args));
++	BTF_TYPE_EMIT(BTF_TYPE_SAFE_TRUSTED(struct scx_cpu_release_args));
++	BTF_TYPE_EMIT(BTF_TYPE_SAFE_TRUSTED(struct scx_sub_attach_args));
++	BTF_TYPE_EMIT(BTF_TYPE_SAFE_TRUSTED(struct scx_sub_detach_args));
  
  	return btf_nested_type_is_trusted(&env->log, reg, field_name, btf_id, "__safe_trusted");
  }
-@@ -6899,6 +6897,7 @@ static bool type_is_trusted_or_null(struct bpf_verifier_env *env,
- 				    const char *field_name, u32 btf_id)
- {
- 	BTF_TYPE_EMIT(BTF_TYPE_SAFE_TRUSTED_OR_NULL(struct socket));
-+	BTF_TYPE_EMIT(BTF_TYPE_SAFE_TRUSTED_OR_NULL(struct dentry));
- 
- 	return btf_nested_type_is_trusted(&env->log, reg, field_name, btf_id,
- 					  "__safe_trusted_or_null");
-diff --git a/tools/testing/selftests/bpf/progs/verifier_vfs_accept.c b/tools/testing/selftests/bpf/progs/verifier_vfs_accept.c
-index a7c0a553aa501..3e2d76ee8050f 100644
---- a/tools/testing/selftests/bpf/progs/verifier_vfs_accept.c
-+++ b/tools/testing/selftests/bpf/progs/verifier_vfs_accept.c
-@@ -2,6 +2,7 @@
- /* Copyright (c) 2024 Google LLC. */
- 
- #include <vmlinux.h>
-+#include <errno.h>
- #include <bpf/bpf_helpers.h>
- #include <bpf/bpf_tracing.h>
- 
-@@ -82,4 +83,21 @@ int BPF_PROG(path_d_path_from_file_argument, struct file *file)
- 	return 0;
- }
- 
-+SEC("lsm.s/inode_rename")
-+__success
-+int BPF_PROG(inode_rename, struct inode *old_dir, struct dentry *old_dentry,
-+	     struct inode *new_dir, struct dentry *new_dentry,
-+	     unsigned int flags)
-+{
-+	struct inode *inode = new_dentry->d_inode;
-+	ino_t ino;
-+
-+	if (!inode)
-+		return 0;
-+	ino = inode->i_ino;
-+	if (ino == 0)
-+		return -EACCES;
-+	return 0;
-+}
-+
- char _license[] SEC("license") = "GPL";
-diff --git a/tools/testing/selftests/bpf/progs/verifier_vfs_reject.c b/tools/testing/selftests/bpf/progs/verifier_vfs_reject.c
-index d6d3f4fcb24c4..4b392c6c8fc41 100644
---- a/tools/testing/selftests/bpf/progs/verifier_vfs_reject.c
-+++ b/tools/testing/selftests/bpf/progs/verifier_vfs_reject.c
-@@ -2,6 +2,7 @@
- /* Copyright (c) 2024 Google LLC. */
- 
- #include <vmlinux.h>
-+#include <errno.h>
- #include <bpf/bpf_helpers.h>
- #include <bpf/bpf_tracing.h>
- #include <linux/limits.h>
-@@ -158,4 +159,18 @@ int BPF_PROG(path_d_path_kfunc_non_lsm, struct path *path, struct file *f)
- 	return 0;
- }
- 
-+SEC("lsm.s/inode_rename")
-+__failure __msg("invalid mem access 'trusted_ptr_or_null_'")
-+int BPF_PROG(inode_rename, struct inode *old_dir, struct dentry *old_dentry,
-+	     struct inode *new_dir, struct dentry *new_dentry,
-+	     unsigned int flags)
-+{
-+	struct inode *inode = new_dentry->d_inode;
-+	ino_t ino;
-+
-+	ino = inode->i_ino;
-+	if (ino == 0)
-+		return -EACCES;
-+	return 0;
-+}
- char _license[] SEC("license") = "GPL";
 -- 
 2.53.0
 
