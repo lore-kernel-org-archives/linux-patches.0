@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034780;
-	b=zNDY3ML6EEG1Y2+VwLFG4xcnVt8PAYC5PftQXC7ZVi0KStRpTqfYZzNgYDsP1hvCsUia
-	 zlzGlwGZmCNdAHiq2myYjN10vHxQS3bjDneSrcYEHVUG7hYIyj4LtTusyKpWxbnWpQUqT
-	 G4daVjcclRnaJ/mn9Pgo8BcnoBV7jhrj6ne9HNbNVK0RHj5pIGwHRSgkm3xfY2lKm+1z+
-	 mC351xNig0xDXizScmbD6OIBq28eL8YVOck3EoyKQox5OH9siFkb4cNZafTYiy0EAzxbV
-	 MrHjeyOH/JrNHUDe1ZXSDfnAJW5SM3jUkFy+50kodYg0xmqextYw0T7GB4ayt1MgK1w==
+	t=1795034782;
+	b=cshqkmHX62o9ilcpf8Sb1qGc1WEuDARXC6gi9oFUEM8LKLL5S0XEGGpc257Go4R9gIkT
+	 9HX18B32Wtr4rqy7c9+4PN6lRkz/iBbNwEJhqImQS/4XmVtYbXhtvvdd8XAqNztKV5GQf
+	 6o4yFIJGuGlG3tM4DNkEf8sClNK2NwrTCdzKZaUR6ohCy8lE5HOpNG3R8S3AI/wEWv7f9
+	 2Bp+6ahiYYPSPUXLv5MXBIHnBLTMqsQqeSJiB7g41AY8ACKJ+78uqLndbDcVhFLIa26jc
+	 w+OwfHOZ9LvN89xve62MeRQDLX0KyFSFy+HWhA+GkA/hsJW5dMgwM0zn+Yd9caz+vBA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034780;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034782;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pZB//sOOa4iTXtcUGxGSYUz7HL6ZaGsssa8fNj9qlCc=;
-	b=l5B5KjD3m/r/wqa2/O4XLTwTeG6s+uPVn321irBs8EnFoOegN5oICaMiDj+r5qJUqzMG
-	 sL67Cwkk3eKFY8jDzWWoPI3LRrJfQysku6ml1pBFE3oj1nfYUj+aU0oq608EyN7+ynZFj
-	 gC66JZSveqXaZ0FMderf+7VU7WR1WO0CUCF2TbXRJrO5Nr1p6trtAUfh1Cq1OFQQBt4lU
-	 Xu1Xj4GtT4D+LrjOHtAsdegkEYko3YOGJyR/WRpslc5Yo12PldfY0bsXUbdwK9jnMd0ml
-	 JAPJceVWABaKSvYYujThe1hA0bGSmnxRD65E83YHuUyFhMPBjRnsTWsP77ME8YW54Kg==
+	bh=MAYIoKsoYYeeA7ElFkrr09ubJf56/I5lq2g4R+FgU14=;
+	b=DjS9iHIzA0LH3Zr0CaU7oy2YZcRAAq3qn0ubY5fKmAf2hY3LXZWUCXbfviCDeZX3vC2m
+	 o97NGo/Mshl7YaFaGSn/AaFAVcwTjHWlYGUOid5A33nolVYHS1FXRfGcNJFyxt36SgvE8
+	 SLoucP+7wdIQTFmz9cBG0MxfOUDMkCybyvCBu8Y+ddpZav9/R23hnjogA3ivSvA43uXRt
+	 p2NHmgzL6+12OePmnHf1YF/opLXsHCECOXXI53t8S5lRJ3ejm8JVYLA2hVHeQiZ4Pjp1O
+	 vmLxPRQdqrcesD0/na8xqOmjT6TitWnhrRiTsRAEYmgLih+jzcCpMVvGdT+l+rqdI8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tWUX4fEN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zXtHMOag;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DCCE606A32C;
-	Wed, 18 Nov 2026 20:46:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D315C606A31C;
+	Wed, 18 Nov 2026 20:46:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tWUX4fEN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73CB21F000C4;
-	Wed, 18 Nov 2026 20:46:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zXtHMOag
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 366581F000C4;
+	Wed, 18 Nov 2026 20:46:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034780;
-	bh=pZB//sOOa4iTXtcUGxGSYUz7HL6ZaGsssa8fNj9qlCc=;
+	s=korg; t=1795034782;
+	bh=MAYIoKsoYYeeA7ElFkrr09ubJf56/I5lq2g4R+FgU14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tWUX4fENLHWgaz+nph5Yb5obcHw1gbpL38zYkooSzVgfupHPoNoCRZrn5KnT4OLfz
-	 xo+ztKyUguYO5QxzqBcN8Lc9VhuZnWfUlAnnmHvviqrgglZyLGzUdfsLP0g+3KFiM8
-	 0K7WI43SYBCxEvgmE4Xcid6r9PtckkfnojNPX/lA=
+	b=zXtHMOagAeksoHc5clg1GqqDEAtlNeQKLGhgtxriNFhJYbk2tN+Sh5nMyq9tFXbFt
+	 ACIsVeOBi7vE3EloyIjG8LXurxXAX1B79tyXs0HNfua9qRVfl2HU91jxjCtGRhm1f9
+	 /0QXMkOgPHbN1MBxwmE8+N7RHYrxE2AWRb2/J7BA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	syzbot+eeb58d2197d88720a228@syzkaller.appspotmail.com,
+	Adarsh Das <adarshdas950@gmail.com>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0484/3318] ata: libahci_platform: Fix device reference leak in ahci_platform_get_resources()
-Date: Wed, 18 Nov 2026 15:18:26 +0100
-Message-ID: <20261118150331.488778191@linuxfoundation.org>
+Subject: [PATCH 6.6 0493/3318] smb: client: delete compound mids on send failure before unlock
+Date: Wed, 18 Nov 2026 15:18:35 +0100
+Message-ID: <20261118150331.800383588@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,43 +69,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Adarsh Das <adarshdas950@gmail.com>
 
-[ Upstream commit 0d1cb83337f13af082afb68b28d3fdfe29cde7fb ]
+[ Upstream commit 8f6f8a48399f82f4a83f7b9f25b9707e0062a4f9 ]
 
-of_find_device_by_node() takes a reference on the port platform device,
-which is only used to look up its port regulator and is never released,
-neither on success nor on the error paths. Drop the reference with
-put_device() once the regulator has been obtained, which covers both the
-success and error paths.
+When sending a compound request fails, smb_send_rqst() kicks off a
+reconnect. compound_send_recv() still has those mids on pending_mid_q,
+but it unlocks the server without removing them first.
 
-Fixes: c7d7ddee7e24 ("ata: libahci: Allow using multiple regulators")
+During reconnect, cifs_abort_connection() walks pending_mid_q and runs
+each mid callback. With no response yet, those callbacks return credits
+and drop in_flight. Then compound_send_recv()'s send-error path returns
+the same credits again. in_flight ends up decremented twice and
+smb2_add_credits() WARNs.
+
+syzbot hits this during SMB2_negotiate when the socket send fails.
+
+cifs_call_async() already calls delete_mid() before unlock on send
+failure. Do the same for compound chains and set cancelled_mid[] so the
+out: path does not delete them again.
+
+Fixes: ee258d79159a ("CIFS: Move credit processing to mid callbacks for SMB3")
+Reported-by: syzbot+eeb58d2197d88720a228@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/6a727d22.40259c87.584f4.04ce.GAE@google.com
+Tested-by: syzbot+eeb58d2197d88720a228@syzkaller.appspotmail.com
+Assisted-by: LLM
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20260915065933.1733061-1-vulab@iscas.ac.cn
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Adarsh Das <adarshdas950@gmail.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libahci_platform.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/transport.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/ata/libahci_platform.c b/drivers/ata/libahci_platform.c
-index 91d44302eac92..7308d48cf748b 100644
---- a/drivers/ata/libahci_platform.c
-+++ b/drivers/ata/libahci_platform.c
-@@ -623,10 +623,10 @@ struct ahci_host_priv *ahci_platform_get_resources(struct platform_device *pdev,
- 			of_platform_device_create(child, NULL, NULL);
+diff --git a/fs/smb/client/transport.c b/fs/smb/client/transport.c
+index facf4c6b180da..85ac020a33379 100644
+--- a/fs/smb/client/transport.c
++++ b/fs/smb/client/transport.c
+@@ -1180,6 +1180,10 @@ compound_send_recv(const unsigned int xid, struct cifs_ses *ses,
+ 	if (rc < 0) {
+ 		revert_current_mid(server, num_rqst);
+ 		server->sequence_number -= 2;
++		for (i = 0; i < num_rqst; i++) {
++			delete_mid(midQ[i]);
++			cancelled_mid[i] = true;
++		}
+ 	}
  
- 			port_dev = of_find_device_by_node(child);
--
- 			if (port_dev) {
- 				rc = ahci_platform_get_regulator(hpriv, port,
- 								&port_dev->dev);
-+				put_device(&port_dev->dev);
- 				if (rc == -EPROBE_DEFER)
- 					goto err_out;
- 			}
+ 	cifs_server_unlock(server);
 -- 
 2.53.0
 
