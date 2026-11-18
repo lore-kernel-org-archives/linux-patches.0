@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016115;
-	b=qaSXnR0jHZAIavy5uJmHJqTD2B9tgtr0n/VLvPCGv+pUi6hVATrakwo5XfIICkJ/9VtR
-	 j80J4rpF8iXrp1gZWFtNnFMtyNoPs189dpmMhExs8bK7SDHWErwgOllole7Cd83o8mpPI
-	 9G1eCRJ9gcAr74Jfy/z7CZXNuzfjb4oDytUB5YgMGndOkCgLzBq93OK5UUroeMrwIAjeq
-	 /E7eeTf+RU3GXZusLkDKPBN8AaH5HvvmqtcDl9JXgU8e51K4hGBD8TzlXCBSQLBwlHq5Z
-	 zwYAfxFSFKpfNLvI49DWyNoILPYfIymIlPQvsaiCBFP1TF4vSlqL14Av3RI8Ig0ozrw==
+	t=1795016117;
+	b=QJtG3y8X3uSHxpGLA8VEoPLkz4jV7pszeoUwT9GusVppARbHDhF8/mqfp+x40NftYc3d
+	 SbdBkgVUVyzjv+oMqndpT2CHir6ueoCCa1H8AXfyrnZ232rcJb2hG8BzTuWo3JBaSpTLE
+	 twfbTSwbA0qsArcfds3oUv0vCooqeqq9ImZMoRxaqjOa8wnWmKnHWysSmziuESoXnxMwF
+	 5/MFnbx7mTqNcgd1evH/mBbNPtN+CoGHHl5dm0chRGt4ICxF1KenpBWIHGz0I9S49uIWe
+	 4WxQ2qdFOOUgUiOBBoKR4iuPSc7TOpSYpK4sDeCfoE1yGQ3z67WKn1ReFN1GvZMk+Tg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016115;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016117;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hBD8vGBsa1OCgtpELIIP36vr1KGEw3YHf7npRm8RhLI=;
-	b=3MYlQNwHXHmXRYIbCnlOMKcsEgxIbo/zJHNkaVP32+40Sf4jrxoA7HlD3E8mseg1kAhX
-	 tCdneFvwzIqT8/peUybxamodqdJp1I8YQZQS00DPz+O4982QBjd7iy7M5N73wLs7vl8kr
-	 V5vXqpDXMJVQ4AiGtsVGrQkEi2Dsp/5Q13DFwA8JwfV9TQ41r7lrNg8yVO9iSIPIqFdDS
-	 ySTm1+9wPc6bGu5FMGSWN+zIhXxYvZ4K3xFZ5c9NhlDbbeV+8JJ78Ya5pteu6WF+zFgth
-	 DREwCDSNac3m+uHVt0FbQJxOnBwvlJeJ38AXgth6hB5CrrehFcWI6vuvnE2gdFy4vlA==
+	bh=mEwCm13hz80sbyef3kheXG300PSsdHHUwuctAsEQnmM=;
+	b=oYnf576Y49OYOnd+7j/CJibCIxmKwRJdI+j76wL0vn5tut2LAETu5cP7Jpvnhf5khmCz
+	 w9OEsq/X4XGNP3E8yIrDDmrtSk2B6SvrWfTdFrYIXFFA+8IgDomNJkyurV1g5QqJ5KrdB
+	 LNZorbpvuhE8JOT7mEMqf6ehIufdDmcN4XsBFFHbj3gCwtVAeHSlvTtV7gO27xwULrQDS
+	 WcCPHAy9AN72aey6gR1MABKIlDFBytD10lDRRjMXYYUclk6nyOvGDkbwj3bkxTD4Yi5Jj
+	 WnGxgDnUSBOtvw2W18jSY87GqonACeyBgGTXGDg7DnsJOPgKxJcElVqc9xxn4FDbjwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O6x2mz9j;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ycw7RxfE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E933B60A2629;
-	Wed, 18 Nov 2026 15:35:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD88060A2620;
+	Wed, 18 Nov 2026 15:35:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O6x2mz9j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46D731F000CC;
-	Wed, 18 Nov 2026 15:35:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ycw7RxfE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 281181F000C6;
+	Wed, 18 Nov 2026 15:35:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016114;
-	bh=hBD8vGBsa1OCgtpELIIP36vr1KGEw3YHf7npRm8RhLI=;
+	s=korg; t=1795016117;
+	bh=mEwCm13hz80sbyef3kheXG300PSsdHHUwuctAsEQnmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O6x2mz9j8NKJxmDycqk+Tkeuxl7fd/V1+8nrsLLm/GkB5WFLONjKU0OnfjmXUuW/I
-	 alFjaRGWjkQTYYzkoFa4azG2+Nupbj9eRljaW/CawNeBW01+w+WMDMHuPtRDD6FkGz
-	 UrY6AKa8+QNkxp/STOMIEvPAJMnGw805AjfD+ixw=
+	b=ycw7RxfE22Oyvn/15VdrfIutN5MuMGmNwqza2AvpFBt/4aorT9JpjPoXQcdxUOYBC
+	 geJimtj4Eh9LLLrObYjFYOu1LTVxBnIHpLegakC2LTPueusB2cr82E2HVz9ehalTq5
+	 srVtS4mnhUvlt9ijubWGOSJCLM7r9uywyq0tUCoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Aiman Najjar <aiman.najjar@hurranet.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0413/2651] ARM: dts: stm32: add LTDC / DCMIPP access controller for STM32MP135
-Date: Wed, 18 Nov 2026 15:27:33 +0100
-Message-ID: <20261118150302.704882989@linuxfoundation.org>
+Subject: [PATCH 7.3 0414/2651] HID: nintendo: add support for PDP Afterglow controller
+Date: Wed, 18 Nov 2026 15:27:34 +0100
+Message-ID: <20261118150302.740334089@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,78 +68,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alain Volmat <alain.volmat@foss.st.com>
+From: Aiman Najjar <aiman.najjar@hurranet.com>
 
-[ Upstream commit 0c354b85cc95b5d563a581c8dbca57b4942bfae7 ]
+[ Upstream commit 3774b1dd8cbce8dd75dd677fd68c5a2dc70860c6 ]
 
-Add ETZPC as an access controller for the LTDC and DCMIPP found
-on the stm32mp135.
+Add support for the PDP Afterglow (0e6f:018c), a licensed pro controller.
 
-Fixes: a06b9560eb6c ("ARM: dts: stm32: add ETZPC as a system bus for STM32MP13x boards")
+Commit 9146038120a6 ("HID: nintendo: add support for HORI Wireless Switch
+Pad") applied X/Y button swap to all Licensed Pro controllers which caused
+the North/West buttons to come up swapped for PDP Afterflow. The swapped
+layout seems to be specific to HORI, so restrict the quirk to HORI devices
+and use the standard mapping for all other licensed pro controllers.
 
-Signed-off-by: Alain Volmat <alain.volmat@foss.st.com>
-Link: https://lore.kernel.org/r/20260721-etzpc-mp13-ltdc-dcmipp-fix-v1-1-a969f2ab8da1@foss.st.com
-Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
+Fixes: 9146038120a6 ("HID: nintendo: add support for HORI Wireless Switch Pad")
+Link: https://lore.kernel.org/all/20260527-hori-support-v2-1-195c2f832112@hectorzelaya.dev/
+Signed-off-by: Aiman Najjar <aiman.najjar@hurranet.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/st/stm32mp135.dtsi | 42 ++++++++++++++--------------
- 1 file changed, 21 insertions(+), 21 deletions(-)
+ drivers/hid/hid-ids.h      |  1 +
+ drivers/hid/hid-nintendo.c | 14 ++++++++------
+ 2 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm/boot/dts/st/stm32mp135.dtsi b/arch/arm/boot/dts/st/stm32mp135.dtsi
-index 834a4d545fe44..f573335edf6b4 100644
---- a/arch/arm/boot/dts/st/stm32mp135.dtsi
-+++ b/arch/arm/boot/dts/st/stm32mp135.dtsi
-@@ -6,29 +6,29 @@
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index 3b19b742d4dd1..042421c8399b6 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -1170,6 +1170,7 @@
+ #define USB_DEVICE_ID_PDP_PS4_JAGUAR	0x0173
+ #define USB_DEVICE_ID_PDP_PS4_RIFFMASTER	0x024a
+ #define USB_DEVICE_ID_PDP_PS5_RIFFMASTER	0x0249
++#define USB_DEVICE_ID_PDP_SWITCH_AFTERGLOW	0x018c
  
- #include "stm32mp133.dtsi"
- 
--/ {
--	soc {
--		dcmipp: dcmipp@5a000000 {
--			compatible = "st,stm32mp13-dcmipp";
--			reg = <0x5a000000 0x400>;
--			interrupts = <GIC_SPI 79 IRQ_TYPE_LEVEL_HIGH>;
--			resets = <&rcc DCMIPP_R>;
--			clocks = <&rcc DCMIPP_K>;
--			status = "disabled";
-+&etzpc {
-+	dcmipp: dcmipp@5a000000 {
-+		compatible = "st,stm32mp13-dcmipp";
-+		reg = <0x5a000000 0x400>;
-+		interrupts = <GIC_SPI 79 IRQ_TYPE_LEVEL_HIGH>;
-+		resets = <&rcc DCMIPP_R>;
-+		clocks = <&rcc DCMIPP_K>;
-+		access-controllers = <&etzpc 4>;
-+		status = "disabled";
- 
--			port {
--			};
-+		port {
- 		};
-+	};
- 
--		ltdc: display-controller@5a001000 {
--			compatible = "st,stm32-ltdc";
--			reg = <0x5a001000 0x400>;
--			interrupts = <GIC_SPI 88 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 89 IRQ_TYPE_LEVEL_HIGH>;
--			clocks = <&rcc LTDC_PX>;
--			clock-names = "lcd";
--			resets = <&scmi_reset RST_SCMI_LTDC>;
--			status = "disabled";
--		};
-+	ltdc: display-controller@5a001000 {
-+		compatible = "st,stm32-ltdc";
-+		reg = <0x5a001000 0x400>;
-+		interrupts = <GIC_SPI 88 IRQ_TYPE_LEVEL_HIGH>,
-+			     <GIC_SPI 89 IRQ_TYPE_LEVEL_HIGH>;
-+		clocks = <&rcc LTDC_PX>;
-+		clock-names = "lcd";
-+		resets = <&scmi_reset RST_SCMI_LTDC>;
-+		access-controllers = <&etzpc 3>;
-+		status = "disabled";
- 	};
+ #define USB_VENDOR_ID_PLANTRONICS	0x047f
+ #define USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3210_SERIES	0xc055
+diff --git a/drivers/hid/hid-nintendo.c b/drivers/hid/hid-nintendo.c
+index 43e0f2aaea3b5..b1fcf3e5767ba 100644
+--- a/drivers/hid/hid-nintendo.c
++++ b/drivers/hid/hid-nintendo.c
+@@ -434,8 +434,8 @@ static const struct joycon_ctlr_button_mapping procon_button_mappings[] = {
+ 	{ /* sentinel */ },
  };
+ 
+-/* Licensed Pro Controllers (e.g. HORI) swap X/Y bits in the report */
+-static const struct joycon_ctlr_button_mapping lic_procon_button_mappings[] = {
++/* HORI Licensed Pro Controllers swap X/Y bits in the report */
++static const struct joycon_ctlr_button_mapping lic_hori_procon_button_mappings[] = {
+ 	{ BTN_EAST,	JC_BTN_A,	},
+ 	{ BTN_SOUTH,	JC_BTN_B,	},
+ 	{ BTN_NORTH,	JC_BTN_Y,	},
+@@ -1767,8 +1767,8 @@ static void joycon_parse_report(struct joycon_ctlr *ctlr,
+ 		joycon_report_left_stick(ctlr, rep);
+ 		joycon_report_right_stick(ctlr, rep);
+ 		joycon_report_dpad(ctlr, rep);
+-		if (ctlr->ctlr_type == JOYCON_CTLR_TYPE_LIC_PRO)
+-			joycon_report_buttons(ctlr, rep, lic_procon_button_mappings);
++		if (ctlr->hdev->vendor == USB_VENDOR_ID_HORI)
++			joycon_report_buttons(ctlr, rep, lic_hori_procon_button_mappings);
+ 		else
+ 			joycon_report_buttons(ctlr, rep, procon_button_mappings);
+ 	} else if (joycon_type_is_any_nescon(ctlr)) {
+@@ -2212,8 +2212,8 @@ static int joycon_input_create(struct joycon_ctlr *ctlr)
+ 		joycon_config_left_stick(ctlr->input);
+ 		joycon_config_right_stick(ctlr->input);
+ 		joycon_config_dpad(ctlr->input);
+-		if (ctlr->ctlr_type == JOYCON_CTLR_TYPE_LIC_PRO)
+-			joycon_config_buttons(ctlr->input, lic_procon_button_mappings);
++		if (ctlr->hdev->vendor == USB_VENDOR_ID_HORI)
++			joycon_config_buttons(ctlr->input, lic_hori_procon_button_mappings);
+ 		else
+ 			joycon_config_buttons(ctlr->input, procon_button_mappings);
+ 	} else if (joycon_type_is_any_nescon(ctlr)) {
+@@ -2905,6 +2905,8 @@ static const struct hid_device_id nintendo_hid_devices[] = {
+ 			 USB_DEVICE_ID_NINTENDO_N64CON) },
+ 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_HORI,
+ 			 USB_DEVICE_ID_HORI_WIRELESS_SWITCH_PAD) },
++	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_PDP,
++			 USB_DEVICE_ID_PDP_SWITCH_AFTERGLOW) },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(hid, nintendo_hid_devices);
 -- 
 2.53.0
 
