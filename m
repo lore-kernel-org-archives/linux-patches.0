@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016988;
-	b=IYYgKyUIw61mk8v+h420k8RIirci7GWwjLQ8i+4XcD9gxE3TQpdek/Vkw5ZjudWI3Q5z
-	 Dpzd4hmHK8xutGPBoXvC+AABIcjxe8WJHHsiW6KZMPDNVjHVDw3NLizm+5FFPDVb+wGsi
-	 0xutUKm2xj4kCYGQ+O8+kNYTTYPsGEvZnMr2EojwjNoHe70NoJtfIynmoq6JQlMsr2iTB
-	 P9bgkmH9fxpIylk3rw94SMVy3v9jH10aEsxM4Uu+Ex+FFEXW17xrJ2UMCOLyDMToZSrOI
-	 kvbdfRNvbRIeq4ygj8zKWTqk3twnnsF5irCk2WAdoftAizrnOdedSSF+5ORfjkDqhTw==
+	t=1795016992;
+	b=0wLaCJfqDDD79NQJf/iKtEllyVc90CowhSOtgUjHrjywGd2OQMbj5ptzsv/zSyxniEWY
+	 6LJh1fCfDRj+xcH6442zSuXgczNLXFseZFLuPD9rfiFYT2AupgjtY5mMVxouopTVICh+V
+	 NcNuyF+474+bBrOOlCV9Rmg499qTBnNtacQAPLdb6DOuHN4eFPTBnX4DL6eGILf827bpp
+	 tbsMEkRW772RdoB9WoObpoFVeN75Ppe2aeLr5SrLVwoZb1f1UIkH9/265D7oAX8kC7u92
+	 4PDmWJIQwGAALtrdlsmBhhmrLvGjgEjU+aDcGKLZHH8UpgBwwqhEX6Blm5PzMjkmPbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016988;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016992;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JrZcta42sj+RsLr6Z1RY1Pgu17WFP/d3vpBMIRwEOqQ=;
-	b=HS8DdoefAsGJhPL/8TchIW81G2Y21oguBi50S+iFvN326CGCp8EQICCxuiAqMLXXD+H0
-	 lKXRlzwykw2sJdWSTuYztlJ1u3zziVW4POAXoYKlQwxppHjrsdRlFBWwOaAGVkn69fT48
-	 Ea2iBsI1LMS/GQni9jPbIEiTq32QKr7jdzJBXrts+9eD4huj/nvKR4wf+uyxXO5wglrOz
-	 NO2ImswqxQbAPWEOXerkQZS8mbHpxgoz1pNkrqMYrWNvqIgXnOE2LliLg1rUa5I/k/rbE
-	 Cd9YBRMUu6qyA+NUrjDQ/EsJav5qzrpieumw0CDidxTziHJMqnZRRpmPwbX+Ed4MA2A==
+	bh=nTc/EWzVxGucQs5uZnSqDrtDSm2DlOGQRoDTyZDLojk=;
+	b=WiCPOmVY+icmQwRKMslDmRG5ZRfq0pbNidGIDyCLc1kD947xaOBFbJIfDHK9XVkNBHh3
+	 q03ESOZLPYAjW0iuBg1cHPJfY7MWI1VfcbBFXtYZxuva8+FWyq/AAeja82lRFKn0qY3Bb
+	 uxLo7wX7MU1dVt+2jIgaebExmtInZAR790aMNPiu+ju06WSIF4kfOxFpXbufzFbw/Q8wP
+	 wWhkPHDIHPh9/d2sncs7PAtQDXdRpWjwf6tJorR9gWEDQye6voR11SWS4i/f5wSW+xnpU
+	 IjJD6rf0icIPSdvDI+BndvBuA53h8Rggy771ewHwPlVqEzqzdrkVRc6jDMBun5PidZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H7yWpwW9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OOSXzz1J;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE54B606A31C;
-	Wed, 18 Nov 2026 15:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11176606A31C;
+	Wed, 18 Nov 2026 15:49:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H7yWpwW9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 385861F000C6;
-	Wed, 18 Nov 2026 15:49:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OOSXzz1J
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 158061F000C4;
+	Wed, 18 Nov 2026 15:49:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016988;
-	bh=JrZcta42sj+RsLr6Z1RY1Pgu17WFP/d3vpBMIRwEOqQ=;
+	s=korg; t=1795016991;
+	bh=nTc/EWzVxGucQs5uZnSqDrtDSm2DlOGQRoDTyZDLojk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H7yWpwW99LwM8R88CEEEFGRP8sQtZuqQ2fx7TGQXKfeon4iF/P2jpgfy8J03fRnvY
-	 0zenTGZm7k/Rf7w/LruRoovkTkH0/lXyM/H7KOCMa3IezF4ZfUuqAOrWu80k0KUfaV
-	 hFes+nhC2fn0RYECdnB6kw8pJmjN3LiLglSS0HMA=
+	b=OOSXzz1JoyM/REp/phRCFsBBZRHkptIglGWSJ/5A6JzFxzLDUzwc1AB9KGClRLaQ8
+	 C/d2k5TyDwFHaRLccJ1qJxOTgpbnEHB4SjnkgyExJr9L0PcpLLUZ26jVqoCkcR5pl5
+	 KWa4dRaIdV33vsQQSgLHDrxd4dOFShMlzmRYEcAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ginger Li <ginger.jzllee@gmail.com>,
-	Kieran Bingham <kieran.bingham@ideasonboard.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0723/2651] media: i2c: ov5648: Fix a data race on state->streaming
-Date: Wed, 18 Nov 2026 15:32:43 +0100
-Message-ID: <20261118150313.901825730@linuxfoundation.org>
+Subject: [PATCH 7.3 0724/2651] media: staging/ipu7: release ISYS firmware resources on remove
+Date: Wed, 18 Nov 2026 15:32:44 +0100
+Message-ID: <20261118150313.936059541@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,47 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ginger Li <ginger.jzllee@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 76c8ffbe1b9bc0ee4c977180e3f498352de0d01e ]
+[ Upstream commit 628a575c99e767d6fac81215fca1190b61867148 ]
 
-ov5648_s_stream() updates state->streaming after it has released
-sensor->mutex, while ov5648_resume() reads that field with sensor->mutex
-held. A concurrent resume can therefore observe a stale streaming state
-and leave the sensor in standby while the software believes that it is
-streaming, or the other way around.
+isys_remove() tears down the registered ISYS devices but does not call
+ipu7_fw_isys_release() after a successful probe. The probe error path
+already uses this helper after ipu7_fw_isys_init() succeeds.
 
-Keep the update inside the sensor->mutex protected section that already
-programs the standby mode.
+Without the matching release, resources initialized by
+ipu7_fw_isys_init() remain allocated on normal device removal.
 
-Fixes: e43ccb0a045f ("media: i2c: Add support for the OV5648 image sensor")
-Signed-off-by: Ginger Li <ginger.jzllee@gmail.com>
-Reviewed-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
+Call ipu7_fw_isys_release() after unregistering the ISYS devices to match
+the cleanup performed by the probe error path.
+
+Fixes: a516d36bdc3d ("media: staging/ipu7: add IPU7 input system device driver")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov5648.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/staging/media/ipu7/ipu7-isys.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/i2c/ov5648.c b/drivers/media/i2c/ov5648.c
-index f0b839cd65f11..006aeb93482b2 100644
---- a/drivers/media/i2c/ov5648.c
-+++ b/drivers/media/i2c/ov5648.c
-@@ -2145,13 +2145,13 @@ static int ov5648_s_stream(struct v4l2_subdev *subdev, int enable)
+diff --git a/drivers/staging/media/ipu7/ipu7-isys.c b/drivers/staging/media/ipu7/ipu7-isys.c
+index 601e5a79ef8ec..a54393fbb9db6 100644
+--- a/drivers/staging/media/ipu7/ipu7-isys.c
++++ b/drivers/staging/media/ipu7/ipu7-isys.c
+@@ -590,6 +590,7 @@ static void isys_remove(struct auxiliary_device *auxdev)
  
- 	mutex_lock(&sensor->mutex);
- 	ret = ov5648_sw_standby(sensor, !enable);
-+	if (!ret)
-+		state->streaming = !!enable;
- 	mutex_unlock(&sensor->mutex);
+ 	isys_notifier_cleanup(isys);
+ 	isys_unregister_devices(isys);
++	ipu7_fw_isys_release(isys);
  
- 	if (ret)
- 		return ret;
- 
--	state->streaming = !!enable;
--
- 	if (!enable)
- 		pm_runtime_put(sensor->dev);
+ 	cpu_latency_qos_remove_request(&isys->pm_qos);
  
 -- 
 2.53.0
