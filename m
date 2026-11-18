@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023617;
-	b=mFaSozBwnITM9cynUt6vxh0mSp8DvBhDtNiX5DVX8AsBD8Ttc4pJImz2apE/IctYnnOx
-	 twixd5Comuw7p64/vTJa9LNZDnpO3Y/ROOqOPskuY1bVY4FZduM2eUlB7vMA3uvhAel9G
-	 tYIObTMbNiYwDhcrPZbFrTw1NX9LBCloJb4Kzl3rlkPPIAGQIS0qcjqslMr6FmzvZSCAO
-	 DkMChFIUSg47hjbmEPI6YDCwVu9eMIi/M9vJnja6xBfl3V8Z9fqkAjzaLVZUMqUILhxSl
-	 6Xc/d7weuGv9s8h1WTlafty1xKxvPY8e5iaE8N/NPcLgm2ZmGKSejArY+huHho2SJ3Q==
+	t=1795023620;
+	b=le7Kvp2SSc/Mk4aEuzG4xBJ7z9p9OvOw1bBaSqYdVqy8Q9JQ1+dXOCYeQK/Z6PZA+nTQ
+	 /nJW8Fbipj6F4nSGyDW3UOo6BAUgJuovSJi9SHVg0UDz71vgePr0bT7/pTCdJXAsVc7WD
+	 jiowlUR3c6zWBgh5HALQUdX6aZtCM9cg5Qd49X7uBYiR5JzYWVXDVDZEyta2i0erzDOov
+	 2nz5wH9yfkEKBUUqqXMbvz6S/O5ZaCtdlnVEko0xWoVOFenJthwTv4Bg1rxZOw+niotSY
+	 ASlxXQYUvBzpcxwrGSOEM3NYItv+vG46Jgnfkkq3oDJ7eZT7dDROzMVh0MbmhTt3Q7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023617;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023620;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=acMzv60cZinXdJ6qcG2LXaH6M4bMUIzz36+TsJeSAKM=;
-	b=OeVkGbfCDrcQ9x6G5ZHyIJFYs2AAl1HEkGSUuV7j95VdpWZZSDOXiT0KNaMufwO1us1i
-	 LdJEzaLTLreOQLcIJo0uBDOTffiNVLhWueagFzENxW46NVYtIwKg1K86dtDKoCXsza1p+
-	 s4X48YasYUkJeruUNygh4ClQ0Z6gg3XYKd1+60rZ+tLhzZbCIGkd5SYnRVrNHOqUzfxgk
-	 W+9pVjIK1om7EJTJbTigwbDTZ8QEDGB+038LPYQgT4UlPyYglT64EfjqO5uMKpjbfajD8
-	 1rnjBlSc61WWhbrHT2GAVTW/h9e6bV/wdL3hSCDBL/wtL80vlEJaJNkYiboKporcL4Q==
+	bh=WSR4Zob0CdAb63E69GOn07leErQ8FGeG/fQPrhr00fQ=;
+	b=LhXlAiWSH+TPc5Ak4Yzj1mPz/2x7IdCvR/O5zJ6JnFMFhflMWZpjX8nzGC8bZwgrmVGR
+	 seUgrWc/qk4aM2MuhCWKtJLBsJP0MDdSMT753mPaO5+8wF1IFOvCktlGvWCDni/c7PrWm
+	 SYH0SFVl6k8BKk1XbQpJAmyCJZXN66Q+9UNd2g8CEMRxXDbxvbR4kpjkJoA+ufqih8v8F
+	 kjIkgoVuO0nGXB8hdXd6MGrwDPLYX+kkY6ie0be/yZ0owJnxF/cb/K0ENEHzWIcDEvdo+
+	 ORIKz+X6PkwFAm4ZUDeyIZDn7pBqONFJGOjGRLTWeDjdha1akca5IFpLPV+/Bp0cS5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1sEpciXP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uS8L4E0+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F31606A31C;
-	Wed, 18 Nov 2026 17:40:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5154C606A320;
+	Wed, 18 Nov 2026 17:40:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1sEpciXP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61321F000C4;
-	Wed, 18 Nov 2026 17:40:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uS8L4E0+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A29331F000C4;
+	Wed, 18 Nov 2026 17:40:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023617;
-	bh=acMzv60cZinXdJ6qcG2LXaH6M4bMUIzz36+TsJeSAKM=;
+	s=korg; t=1795023620;
+	bh=WSR4Zob0CdAb63E69GOn07leErQ8FGeG/fQPrhr00fQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1sEpciXPVINzGPDrVg+eS4gsx7PPE8uVFB5XcJx4CU2O9F0YPyRlFiz3svcKhcewL
-	 ityRaGRYSEXUNU6ykEelCejDCrtUjJvYhfv+vjCRfiUXXSdZXuaffDSI0NVk8zEMLk
-	 s7/SSWxTPWkohIVdnhCC9zHRXaKafQxy4d5jkOY4=
+	b=uS8L4E0+lCmo94Ryx4MuleH8XEHGWwEoxWk4Orq00DORxM0gpcc7EyfGO07RiKb4L
+	 /GI5IQ25KC7Pqo6Ls59SgFUxwOC6yb7M/YZNKZDCaGKncIsYZtmOXPHstV8p4aYfhB
+	 jzu1MYu91oV4OlB8X+xSmJydkKNCeNMt9/1SeTpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahsan Atta <ahsan.atta@intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Junhui Liu <junhui.liu@pigmoral.tech>,
+	Chen-Yu Tsai <wens@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0382/2151] crypto: qat - avoid OOB read when stripping RSA leading zeros
-Date: Wed, 18 Nov 2026 15:35:17 +0100
-Message-ID: <20261118150135.993352300@linuxfoundation.org>
+Subject: [PATCH 6.18 0427/2151] clk: sunxi-ng: sun55i-a523-ccu: Use P-only clocks for high-speed timers
+Date: Wed, 18 Nov 2026 15:36:02 +0100
+Message-ID: <20261118150137.609938737@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,67 +68,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahsan Atta <ahsan.atta@intel.com>
+From: Junhui Liu <junhui.liu@pigmoral.tech>
 
-[ Upstream commit ac508238898058f0b09b18a7891fb31279617781 ]
+[ Upstream commit f2aee33d06d5e1363596ae166459aa4354a8b5ae ]
 
-The logical AND operator uses short-circuit evaluation: the first
-operand is always evaluated, while the second is evaluated only if
-the first is true. Because the first operand dereferences a pointer,
-it may cause an out-of-bounds access before the bounds check in the
-second operand is evaluated.
+The high-speed timer clocks only have a P divider, but are currently
+modeled as MP clocks with a zero-width M divider.
 
-Resolve this by checking the vlen prior to the pointer being dereferenced.
+ccu_mp_set_rate() generates an invalid mask for the zero-width M
+divider, clearing unrelated register fields. Model these clocks as
+P-only clocks to avoid accessing a nonexistent M divider.
 
-Fixes: a990532023b9 ("crypto: qat - Add support for RSA algorithm")
-Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
-Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 74b0443a0d0a ("clk: sunxi-ng: a523: add system mod clocks")
+Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
+Link: https://patch.msgid.link/20260906-sunxi-clk-no-p-v1-3-cbde21c9fe69@pigmoral.tech
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_common/qat_asym_algs.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/clk/sunxi-ng/ccu-sun55i-a523.c | 83 +++++++++++---------------
+ 1 file changed, 36 insertions(+), 47 deletions(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/qat_asym_algs.c b/drivers/crypto/intel/qat/qat_common/qat_asym_algs.c
-index afb7e3f44a5f8..173392fdf5bc4 100644
---- a/drivers/crypto/intel/qat/qat_common/qat_asym_algs.c
-+++ b/drivers/crypto/intel/qat/qat_common/qat_asym_algs.c
-@@ -987,7 +987,7 @@ static int qat_rsa_set_n(struct qat_rsa_ctx *ctx, const char *value,
- 	const char *ptr = value;
- 	int ret;
+diff --git a/drivers/clk/sunxi-ng/ccu-sun55i-a523.c b/drivers/clk/sunxi-ng/ccu-sun55i-a523.c
+index 9bc3ff0ab12d7..0714090cc3b08 100644
+--- a/drivers/clk/sunxi-ng/ccu-sun55i-a523.c
++++ b/drivers/clk/sunxi-ng/ccu-sun55i-a523.c
+@@ -512,58 +512,47 @@ static const struct clk_parent_data hstimer_parents[] = {
+ 	{ .fw_name = "losc" },
+ 	{ .hw = &pll_periph0_200M_clk.hw },
+ };
+-static SUNXI_CCU_MP_DATA_WITH_MUX_GATE(hstimer0_clk, "hstimer0",
+-				       hstimer_parents, 0x730,
+-				       0, 0,	/* M */
+-				       0, 3,	/* P */
+-				       24, 3,	/* mux */
+-				       BIT(31),	/* gate */
+-				       0);
++static SUNXI_CCU_P_DATA_WITH_MUX_GATE(hstimer0_clk, "hstimer0",
++				      hstimer_parents, 0x730,
++				      0, 3,	/* P */
++				      24, 3,	/* mux */
++				      BIT(31),	/* gate */
++				      0);
  
--	while (!*ptr && vlen) {
-+	while (vlen && !*ptr) {
- 		ptr++;
- 		vlen--;
- 	}
-@@ -1018,7 +1018,7 @@ static int qat_rsa_set_e(struct qat_rsa_ctx *ctx, const char *value,
- 	struct device *dev = &GET_DEV(inst->accel_dev);
- 	const char *ptr = value;
+-static SUNXI_CCU_MP_DATA_WITH_MUX_GATE(hstimer1_clk, "hstimer1",
+-				       hstimer_parents,
+-				       0x734,
+-				       0, 0,	/* M */
+-				       0, 3,	/* P */
+-				       24, 3,	/* mux */
+-				       BIT(31),	/* gate */
+-				       0);
++static SUNXI_CCU_P_DATA_WITH_MUX_GATE(hstimer1_clk, "hstimer1",
++				      hstimer_parents, 0x734,
++				      0, 3,	/* P */
++				      24, 3,	/* mux */
++				      BIT(31),	/* gate */
++				      0);
  
--	while (!*ptr && vlen) {
-+	while (vlen && !*ptr) {
- 		ptr++;
- 		vlen--;
- 	}
-@@ -1044,7 +1044,7 @@ static int qat_rsa_set_d(struct qat_rsa_ctx *ctx, const char *value,
- 	const char *ptr = value;
- 	int ret;
+-static SUNXI_CCU_MP_DATA_WITH_MUX_GATE(hstimer2_clk, "hstimer2",
+-				       hstimer_parents,
+-				       0x738,
+-				       0, 0,	/* M */
+-				       0, 3,	/* P */
+-				       24, 3,	/* mux */
+-				       BIT(31),	/* gate */
+-				       0);
++static SUNXI_CCU_P_DATA_WITH_MUX_GATE(hstimer2_clk, "hstimer2",
++				      hstimer_parents, 0x738,
++				      0, 3,	/* P */
++				      24, 3,	/* mux */
++				      BIT(31),	/* gate */
++				      0);
  
--	while (!*ptr && vlen) {
-+	while (vlen && !*ptr) {
- 		ptr++;
- 		vlen--;
- 	}
-@@ -1067,7 +1067,7 @@ static int qat_rsa_set_d(struct qat_rsa_ctx *ctx, const char *value,
+-static SUNXI_CCU_MP_DATA_WITH_MUX_GATE(hstimer3_clk, "hstimer3",
+-				       hstimer_parents,
+-				       0x73c,
+-				       0, 0,	/* M */
+-				       0, 3,	/* P */
+-				       24, 3,	/* mux */
+-				       BIT(31),	/* gate */
+-				       0);
++static SUNXI_CCU_P_DATA_WITH_MUX_GATE(hstimer3_clk, "hstimer3",
++				      hstimer_parents, 0x73c,
++				      0, 3,	/* P */
++				      24, 3,	/* mux */
++				      BIT(31),	/* gate */
++				      0);
  
- static void qat_rsa_drop_leading_zeros(const char **ptr, unsigned int *len)
- {
--	while (!**ptr && *len) {
-+	while (*len && !**ptr) {
- 		(*ptr)++;
- 		(*len)--;
- 	}
+-static SUNXI_CCU_MP_DATA_WITH_MUX_GATE(hstimer4_clk, "hstimer4",
+-				       hstimer_parents,
+-				       0x740,
+-				       0, 0,	/* M */
+-				       0, 3,	/* P */
+-				       24, 3,	/* mux */
+-				       BIT(31),	/* gate */
+-				       0);
++static SUNXI_CCU_P_DATA_WITH_MUX_GATE(hstimer4_clk, "hstimer4",
++				      hstimer_parents, 0x740,
++				      0, 3,	/* P */
++				      24, 3,	/* mux */
++				      BIT(31),	/* gate */
++				      0);
+ 
+-static SUNXI_CCU_MP_DATA_WITH_MUX_GATE(hstimer5_clk, "hstimer5",
+-				       hstimer_parents,
+-				       0x744,
+-				       0, 0,	/* M */
+-				       0, 3,	/* P */
+-				       24, 3,	/* mux */
+-				       BIT(31),	/* gate */
+-				       0);
++static SUNXI_CCU_P_DATA_WITH_MUX_GATE(hstimer5_clk, "hstimer5",
++				      hstimer_parents, 0x744,
++				      0, 3,	/* P */
++				      24, 3,	/* mux */
++				      BIT(31),	/* gate */
++				      0);
+ 
+ static SUNXI_CCU_GATE_HWS(bus_hstimer_clk, "bus-hstimer", ahb_hws, 0x74c,
+ 			  BIT(0), 0);
 -- 
 2.53.0
 
