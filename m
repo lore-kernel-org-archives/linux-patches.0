@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033721;
-	b=qxAWBCAMGRuJshMQRjAQdjJNALdhdPITmNpgtOSYDYLo69HWN7CT7EmW0hpynSAPF+I/
-	 a1dZIWfOIXm2UkMEY0zHFwPMHXifTgS8YeJ4lM7efQZjYt8f2F1ATZb0ejg2/Pkf5ZOYY
-	 uWq3JumNkE8islEobKrh3SN+s/6gjFHPW72qDDMYNhjUViywCgd7xags09pu9dXtVKDnh
-	 wOUz7A2l8ToQz21lffB0ytEw9qikvUU6S9N/NTN9YvkCXLmzxxSHqhORJ7laGqxIWuLAI
-	 3/8akdSL/focvgMM5Pktm90dpWcj/cxtSBHzxns66I/VU+BrQ+wz0PQd9K1BLRBNN2Q==
+	t=1795033724;
+	b=3E1TlpsrFrhdXizNIOzeiLwHlisCO8BYlL3DfG32yE4fxSAqZmtrlYr97IT+Hn5DsQ4r
+	 ysPkuw7QJKmMo+/KHBaujPapafT9d7TrTZrfetdtvQyVY9nb482Z1/yRTyJQyDCQzN/IH
+	 HBGAwouq0PnijxSVyS7Lpn/ychhAMV/6H/Vmb4/igfCPzU7gohOE5nc5hw1IKavV+T/aF
+	 9EVZ4mv7NkALzWJhrLN0E8Sf6t5yCZzHhc7YejELv9n6RWwmxn8ujnhzPfx6A4z9ifQLN
+	 YMdixN35A9wfr4LGDXn2YiltGmWlQoFmRAt0bQSJQrHtJ6SiSskxaSImS0K0CgEnvkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033721;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033724;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dDmFk4kHyT8UZVh45gdW56PPf9hePkTgq3+CR52x/8Q=;
-	b=tFiBhYO6QIodQm163ITnrdt63Avo6jFN3ahek4MGWWx6HIunhm1NwdZ0ajg2+nvF8pIy
-	 YlUjjyweOMJh89PClMVFsczQKT5XYVdyCBZMhYztuuimqlVHUqzkLaA16sZnZ2YAnaWlj
-	 QyPpHYKDFGAxH/Q/z5FNBzZyOEgQgY8YNdxJH10QDiNsBcduKsErSmJBgj2y4tuIFQ+9X
-	 xR9c7za0zPQ/253JVjKoLy1Njj7HeENDy+FpZ/o1X5DUZb9AvhxztkGiyaFev2A3YFk5A
-	 gymSHoqkUZ0c6QaC/MCt/pYkUAHpFVHLeSJ54olmjrReEoHWENcWfX4XrPnJhCfp/yg==
+	bh=kZerLcQwyBXUD28HSg0SiYvMdV16U+d0ZYuJmiSFBOU=;
+	b=Y092cpOOT9WKlpMgFSHP1O6gfizyE3eyvl+uhvAr8dJLzIkD+1mwspxBZqr+1pQz9QAT
+	 R16TAMtHJP/wdZfRa/OOuclBleJnjFnwNXRS5+zlfTmrbGp1utQNIozxtXDStTuLH3gz8
+	 cprFa1Ik87KrdVmeugDHi1R9cxGwtFKRC1Y/PE7601JSblv3PRZOzT1Cz5zUw8AhO8lcF
+	 v9UGRU+VVWEXCZqgGoi3w3MhqAlVRSpNzH/KoHeAJGCfgm9Lqb2Fvh8tqyfKsx67/LoVQ
+	 yVmhOa+eta3tB8vVxRaqrDIjHaj0BRb57VKwxSNIcr7BtRg1WPK7mln5l6RHgcoI2lg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JT5Praac;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NQFK972K;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9B3606A33D;
-	Wed, 18 Nov 2026 20:28:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC28606A320;
+	Wed, 18 Nov 2026 20:28:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JT5Praac
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF77D1F000C8;
-	Wed, 18 Nov 2026 20:28:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NQFK972K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38061F000C6;
+	Wed, 18 Nov 2026 20:28:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033721;
-	bh=dDmFk4kHyT8UZVh45gdW56PPf9hePkTgq3+CR52x/8Q=;
+	s=korg; t=1795033724;
+	bh=kZerLcQwyBXUD28HSg0SiYvMdV16U+d0ZYuJmiSFBOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JT5PraacyDz1WiS5a2N9hKtsc5AEl5cZw1aLmcJlhmvzY9++KtdAOpeJulYX5CgEZ
-	 t1NBzZtZCf7ErkKkYMnYnnKQiN2nxLbZmkBoW7hGK9UVCXEgyQlmElsaL/u7JQzSJ7
-	 Wzih0uDKt4gHnDoV0E5D40BeYYTL3c8g/4lGM/fA=
+	b=NQFK972KwNG1XvytZYg2xArJo4E7tLekIjFhal8NRo1R56rLt/ncALGKYLnFzKm8p
+	 msp21Rb6+XDxwaUu49mojIolULO11LOO9W05ry1gfuUeq0WMSrWKwnSQGsZuq1dJbi
+	 mh2DcyYICGL7pHs+HJXuPCNAS8HjLuBxECWnS77k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko Review <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Tanmay Shah <tanmay.shah@amd.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0113/3318] tools/lib/api: Fix potential double-free from fdarray__grow()
-Date: Wed, 18 Nov 2026 15:12:15 +0100
-Message-ID: <20261118150317.682714848@linuxfoundation.org>
+Subject: [PATCH 6.6 0074/3318] remoteproc: core: Full attach detach during recovery
+Date: Wed, 18 Nov 2026 15:11:36 +0100
+Message-ID: <20261118150316.277850052@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,52 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Tanmay Shah <tanmay.shah@amd.com>
 
-[ Upstream commit eadce0f46a1d066b812c7e5aa46a33711c78a755 ]
+[ Upstream commit d93ffd549fb4df18c934ca7a47d4128a18c718cb ]
 
-If the realloc for fda->entries succeeds but the realloc for fda->priv
-fails, the error path frees the newly allocated entries.
+Current attach on recovery mechanism loads the clean resource table
+during recovery, but doesn't re-allocate the resources. RPMsg
+communication will fail after recovery due to this. Fix this
+incorrect behavior by doing the full detach and attach of remote
+processor during the recovery. This will load the clean resource table
+and re-allocate all the resources, which will set up correct vring
+information in the resource table.
 
-However, fda->entries is neither updated to point to the new entries block
-nor cleared to NULL. If realloc moved the allocation to a new block, the
-old fda->entries pointer is now freed memory.
-
-When fdarray__exit() is later called to clean up, it executes
-free(fda->entries), which would trigger a double-free on that old pointer.
-
-Reported-by: Sashiko Review <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/linux-perf-users/20260710200150.11FE71F00A3A@smtp.kernel.org
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Tanmay Shah <tanmay.shah@amd.com>
+Link: https://lore.kernel.org/r/20260630004806.3835488-2-tanmay.shah@amd.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/api/fd/array.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/remoteproc/remoteproc_core.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/tools/lib/api/fd/array.c b/tools/lib/api/fd/array.c
-index f0f195207fca9..dcb396ab51eb1 100644
---- a/tools/lib/api/fd/array.c
-+++ b/tools/lib/api/fd/array.c
-@@ -31,7 +31,8 @@ int fdarray__grow(struct fdarray *fda, int nr)
+diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+index 1e4bae2786dbe..a6f800a00e7db 100644
+--- a/drivers/remoteproc/remoteproc_core.c
++++ b/drivers/remoteproc/remoteproc_core.c
+@@ -1783,7 +1783,20 @@ static int rproc_attach_recovery(struct rproc *rproc)
+ 	if (ret)
+ 		return ret;
  
- 	priv = realloc(fda->priv, psize);
- 	if (priv == NULL) {
--		free(entries);
-+		/* this will be freed by fdarray__exit() */
-+		fda->entries = entries;
- 		return -ENOMEM;
- 	}
+-	return __rproc_attach(rproc);
++	/* clean up all acquired resources */
++	rproc_resource_cleanup(rproc);
++
++	/* release HW resources if needed */
++	rproc_unprepare_device(rproc);
++
++	rproc_disable_iommu(rproc);
++
++	/* Free the copy of the resource table */
++	kfree(rproc->cached_table);
++	rproc->cached_table = NULL;
++	rproc->table_ptr = NULL;
++
++	return rproc_attach(rproc);
+ }
  
-@@ -50,7 +51,7 @@ struct fdarray *fdarray__new(int nr_alloc, int nr_autogrow)
- 
- 	if (fda != NULL) {
- 		if (fdarray__grow(fda, nr_alloc)) {
--			free(fda);
-+			fdarray__delete(fda);
- 			fda = NULL;
- 		} else {
- 			fda->nr_autogrow = nr_autogrow;
+ static int rproc_boot_recovery(struct rproc *rproc)
 -- 
 2.53.0
 
