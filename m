@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035049;
-	b=XGzBOUquBdhlR/iga2ngdv0gJfbJIor6wqiqlz4BlErHZ18zSEGqhl7YZjI6fuWWx6la
-	 GUkwjbLPCg8tUAqiF9TlAnsOJtrMMtUBKbU9pkfSNLWLIThf3XL7tYpewZ9J3AO9DI0gJ
-	 kaPonJ+mjCWPQoZgYd6eQHnzBCyceKySIG+PWGZjzs6xr7jGhyqWnRoY5EWSBOa/Xfcly
-	 s6p6ovfC+pqbfFdGD6a72ZVij4d+onj/F1xx3ApQ2fKrng02NTbqE4GZjIyIyk+nh4DNn
-	 7+fbcu9zfV9YuB0kr7OqthhaVg/6Qmgz5eBbVEM3UByp/IiY1mP5Y4s4Zxk9rgHcwFw==
+	t=1795035052;
+	b=ktddz1dK2q6eQQ3TQ8WO8dcPl8CKrlWJZElkwlJfGBmqY66yCIWT9I4fGH1dNkxqKXU9
+	 0Q+RuhVR3bXBmm9Uj508HaAyCxTZIkko9VMSqTKGJmKU0rxEvkcwTZ58plsLH7SzA2t4b
+	 LNMvMuBLsKJwfSpq+ngni5LFAKvbdQBTVXocgULkG8xXaVu++qF+C4FowcoCsFqwCNc4H
+	 u8b9oqZ+p+IERRBFbrFsQPN/j9xuwa3i8wLf4n9QbE9x2+iAwurkm1C+NjTul829l0cSh
+	 u9ggQuSFVSUrmTUZcTbi5xP0S8FohHmhWtwm0ci3+STCMx0z9sWbZf7ENCe8sQo1/Pw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035049;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035052;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ctdx+gesRepzJD27IQqv1tZI3fVd7tud7pBItQWfxvs=;
-	b=zgzrnleaBSG/8NWkvgZbw4ldodTU9WXN9mQB7xOxf9cHWCb3yrjGavtKLYjwozZ/rMRE
-	 q7QtrM2ssF5dK15utOX28pDA5TnMHI3MtmVO7IJDy95L/qBy5VkxOtEXw1T4uqsu00c/v
-	 5FNtjcmMHM4hgPmDrDqAMqUEzcRiRsZ6Yab67x0tBsza3xWgG6HLV//9eghCmqoNjYejB
-	 5Bvng//3hW1B1tzH3sdqwYKzrt9tUsUBKyC+ERPlCWUsa1N0fJ/qvl9HC0sKJ/YInCiRn
-	 7irhIrB87pzRherVfq/pJFNkKlcKLoD8oY3Ze+ixnztJKIoDdGfcFEPIuts9m5wk31Q==
+	bh=+ks8P+FOyBZkUJsexUTyNs1/UDDrRjJ5V7D33oE62hw=;
+	b=2ZJOrjb52t14pKcW1PkfjOZqxjOaMnbplj4HP0eFQVm4HXMzpti5vSE3ANMe5HBgDWND
+	 CS2o9kwN1jZc2OsJBsdzyBPctTAfN6nDbNF2bWIdrDZSS1lAivjsdCy8CJcu3AZu7S5H/
+	 b9FPduMT6M5WjzC0wPCWAaY7iUqSP78CE/Rkv56ihRabvNsA5Y0TlLwiUlN/a6WR5j3Ni
+	 pDh3uVnOsKNG5OJisdW57cPVM51VYkFF6nVy2wlLRaUn+RLKRnpKRdoOWZevMV+5SMrMb
+	 ESBVQGv9QeuZDRnqXodSFc1JnHLUx4HcdP446OBBMS+iCQC+uWficoNf4iqc7AzsgyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H0k3wXfZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Tn3xm+/m";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243EB606A31C;
-	Wed, 18 Nov 2026 20:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00B88606A31C;
+	Wed, 18 Nov 2026 20:50:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H0k3wXfZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72D601F000C4;
-	Wed, 18 Nov 2026 20:50:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tn3xm+/m
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F9F11F000C4;
+	Wed, 18 Nov 2026 20:50:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035049;
-	bh=ctdx+gesRepzJD27IQqv1tZI3fVd7tud7pBItQWfxvs=;
+	s=korg; t=1795035051;
+	bh=+ks8P+FOyBZkUJsexUTyNs1/UDDrRjJ5V7D33oE62hw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H0k3wXfZjel8RLi2XFTLfMnr3y+MWQqkPFcyFLshT44UsmfN+RTtwildCAlBqlTMo
-	 apRUooiuXiuJegxPHYC+25QW2Gn7HSDcbJTqNwmcsBgE7K4AVdMd/7tKRC0BPZMP0c
-	 jXJxNBf4hpR8bDmlhVZx0jhD3ZdO7Lfn3RL482Ws=
+	b=Tn3xm+/m7wcBu5wR94c9Oq4p/2AUDcYd3PdBk+M9U764BP1EzLr0woK/ToT+u7nTK
+	 TRzLOSqX29Pc6cOA5dkIYPy+D9/PDMjQBpN76CIqFsfNDYXC8+b/SxdD/1CPyA87Zp
+	 BqrbM9Mawq/P/F27qsDGJ4IssocPKcWh5UAU6nSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.6 0585/3318] smb: client: fix use-after-free in cifs_ses_add_channel()
-Date: Wed, 18 Nov 2026 15:20:07 +0100
-Message-ID: <20261118150335.103418843@linuxfoundation.org>
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 0541/3318] ipc: drop the mqueue mount with kern_unmount() on setup failure
+Date: Wed, 18 Nov 2026 15:19:23 +0100
+Message-ID: <20261118150333.499142859@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,64 +67,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 031278577380e7875d95aed81a2b2bcac39be923 upstream.
+[ Upstream commit f0e48172a59e517e613b73f73cc35f24fd123aeb ]
 
-The error path of cifs_ses_add_channel() calls cifs_put_tcp_session()
-before cifs_chan_clear_need_reconnect().  The latter reaches
-cifs_ses_get_chan_index(), which dereferences server->terminate; if
-the put was the final reference, TCP_Server_Info is already freed and
-this is a use-after-free.  Same put-then-use pattern as the recently
-fixed sibling in commit 717e0a25036b ("cifs: Fix server use-after-free
-in cifs_chan_skip_or_disable()").
+mq_init_ns() creates the mqueue mount with fc_mount_longterm(), so its
+->mnt_ns is MNT_NS_INTERNAL. When setting up the mqueue or ipc sysctls
+or msg_init_ns() fails afterwards, create_ipc_ns() drops it with a plain
+mntput(). With ->mnt_ns set that takes the fast path of
+mntput_no_expire(). The count drops to zero and nothing ever kills the
+mount, so the mount and the mqueue superblock are leaked.
 
-Move the put last, but do not read chan->server after dropping
-chan_lock: chan points into ses->chans[], and once chan_count is
-decremented a concurrent add_channel can reuse the slot and overwrite
-the pointer, so the put would act on the new channel's server.  Cache
-the pointer under chan_lock, clear the reconnect bit and decrement
-chan_count while still holding the reference, and release it after
-the unlock.
+Commit dc55e35f9e81 ("ipc: Store mqueue sysctls in the ipc namespace")
+added the first failure path after mq_init_ns() and never dropped the
+mount. Commit 7229d74e5e8c ("ipc: create_ipc_ns: drop mqueue mount on
+sysctl setup failure") tried to fix that with a mntput() but that
+doesn't help for a long-term mount.
 
-This issue was discovered by Tencent CodeBuddy Security.
+Use kern_unmount(). free_ipc() open-codes the same thing for a namespace
+that made it.
 
-Fixes: ee1d21794e55a ("cifs: handle when server stops supporting multichannel")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Fixes: dc55e35f9e81 ("ipc: Store mqueue sysctls in the ipc namespace")
+Fixes: 7229d74e5e8c ("ipc: create_ipc_ns: drop mqueue mount on sysctl setup failure")
 Cc: stable@vger.kernel.org
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-5-7446d2d335e6@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/sess.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ ipc/namespace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/client/sess.c
-+++ b/fs/smb/client/sess.c
-@@ -673,12 +673,13 @@ cifs_ses_add_channel(struct cifs_ses *se
- 
- out:
- 	if (rc && chan->server) {
--		cifs_put_tcp_session(chan->server, 0);
-+		struct TCP_Server_Info *pserver;
- 
- 		spin_lock(&ses->chan_lock);
-+		pserver = chan->server;
- 
- 		/* we rely on all bits beyond chan_count to be clear */
--		cifs_chan_clear_need_reconnect(ses, chan->server);
-+		cifs_chan_clear_need_reconnect(ses, pserver);
- 		ses->chan_count--;
- 		/*
- 		 * chan_count should never reach 0 as at least the primary
-@@ -686,6 +687,7 @@ out:
- 		 */
- 		WARN_ON(ses->chan_count < 1);
- 		spin_unlock(&ses->chan_lock);
-+		cifs_put_tcp_session(pserver, 0);
- 	}
- 
- 	kfree(ctx->UNC);
+diff --git a/ipc/namespace.c b/ipc/namespace.c
+index b93280de1dc5c..e703b23127916 100644
+--- a/ipc/namespace.c
++++ b/ipc/namespace.c
+@@ -95,7 +95,7 @@ static struct ipc_namespace *create_ipc_ns(struct user_namespace *user_ns,
+ fail_mq_sysctls:
+ 	retire_mq_sysctls(ns);
+ fail_mq_mount:
+-	mntput(ns->mq_mnt);
++	kern_unmount(ns->mq_mnt);
+ fail_put:
+ 	put_user_ns(ns->user_ns);
+ 	ns_free_inum(&ns->ns);
+-- 
+2.53.0
+
 
 
