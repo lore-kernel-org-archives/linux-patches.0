@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021295;
-	b=Iyh8f7dwCDVdTEJ+7gTvWLwf0KzU+PnF8I8tyM8MEukEghMmSgPZD9et4F0cMC4OgJBZ
-	 mQaNJ1iXCj4tEJJoT2iHVu4oirFMz4cVjOutP4ZfHc32CkgMwByTm5blQ4RA8Yr4hNsiF
-	 trOb3NO2uwaNQU/nYICIgfdBaA4Ibel5Xjx9/vs50NP4JCoLUaTAzR6gsEhAPN/UJyTAg
-	 ZxQ77ZyIYW57xGq3TfEAYyhOovgnQI2G7C0j14UWydGgZg1KXmvtkrqn3545xmSPWCNXH
-	 NCoUy90kEtNTq6MfClE9nMkUWe0fljphqRxhobk3pd8p5bHQ5h9KnNFfTm3bw7AtGkg==
+	t=1795021298;
+	b=LQoOgDpM4QYyrW4SWZ+z07lgPLhgOFyX80AZf0AAep3r80v2MLH2EVcHVT75uMhZD7/M
+	 1k45RDozycfw6d78e2+IsLFMzPLU0LjjKd/0DevcmsA5yEZSfdOY/LtCH0H64azna30nM
+	 UUt/vXCGO1074ftzmLUqs9sbmQTE/gPyVIyoQPKA0exX4vV+0cPTCvzoXGUuokJe7oyNE
+	 Syav8PotgH5SIKx7QVBvAcVA5h1Clk+ByL5LPdso537dZAOy7xi+PZHIPkvfiIeFPb6pI
+	 JktifXpnCntYMs2RPi5JkZ+vK4JehutltO+3iKrBTEhEnqDKA+/MXAtoIlv7CibSLwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021295;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021298;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=BwvrskVdUZJLm7c9HvgExe7gLeINoxJUZ/ElPW53/5I=;
-	b=sqpioU8bSNjhikcZMhNKLfgpPE2gKxEqf6oWzlcOeCkJMzKXf3ELDGHy5mJiRTddiEAD
-	 oSw18/fKXS21gnMjuJOPrSIwsJ1sjUoT6oMBhT7qS0wwPRw2sx/WA4VH/+Gss5JBjXXA2
-	 QizP+jaogurgHeB+xnYZaNQCu6f9QHZ+C7fvYmdjMveNf1HVsOUQi+LFhU3lDBzUovGwB
-	 3oEGFfyODaJwA7gJYuawH1DxaqjPoo8BeSpZbqGq99zIow4piQZRBaKgV28jGEjAtIhLp
-	 7Q3SYvF/a7OKRdsqlj1mPrYKWLL4HCkW8MqgDYUw45P6KfIA7B5U0KzyFYT3LZ/KP5Q==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=5nxY6N0TcXhyyg9Dudu3gZCe05u4xSmfUpUdE5S9mso=;
+	b=F8S1dnL4LRG2jO9bLDiNode+nIhy9U04LHYwoTBi3HNS4htjpNEm+Jh5Db/wdF5rHsUu
+	 8fn8QpEe0Zrh8r4HSa82LiVlZ6JVS1rMvcnAD32o3eW7bnyDWLH/91dAASr1ltjOzLTPF
+	 nvcZH/AwvS+P+4knW4RVZQ3koUHP6C309vFR/ZSzqfaCTamKGHa66FsMzgEgvrWmJ8wWs
+	 6erOwyzPaGhXjS03m4FP9jNCmba3s7msZolERSG6Atjli71tohcfilOeGUeO+EORjQs2m
+	 d17kZTv1dEiGRV8rUtNlVeEh6rJySJGjjncSChxsKRlzmoG+H/YwotXafRMd9XzCMXg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ngQDM0x3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OXFZ3+IS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E344606A32A;
-	Wed, 18 Nov 2026 17:01:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65529606A31C;
+	Wed, 18 Nov 2026 17:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ngQDM0x3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C11C71F000C4;
-	Wed, 18 Nov 2026 17:01:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OXFZ3+IS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 821D41F000C4;
+	Wed, 18 Nov 2026 17:01:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021295;
-	bh=BwvrskVdUZJLm7c9HvgExe7gLeINoxJUZ/ElPW53/5I=;
+	s=korg; t=1795021298;
+	bh=5nxY6N0TcXhyyg9Dudu3gZCe05u4xSmfUpUdE5S9mso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ngQDM0x37Uae+7oH5e1d+duvqNAn1HNaqJqzcU2eaQZI54dTrz+NkZChnezOmUVEm
-	 ++FHuU0YsP4DHSmyT1YiaK3Jm/SK6FrmQbwNGmzPaaPcwqoOairv4L3X3h9APzW0VT
-	 C7nBwpF31X1pRs0I9Aue0yDczquHl5BJJQMCwcx4=
+	b=OXFZ3+ISTmnnOrRZOV15HraIIAJEFSF0Nf6UDXAZlL2iJ//AfiGTiNs7GVdZfxRef
+	 8o/Sys2xqjZFkufd5YIhu4twWs2ArtbZbBOmwUc/4GV+sILaDpXVRlijULzYzxPBSB
+	 5u1+3gV2L8deUnU7nQuuETVzqUl3An8OvlCM73+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Chen <justin.chen@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	James Hilliard <james.hilliard1@gmail.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2256/2651] net: bcmasp: account for offload header in TX short packet padding
-Date: Wed, 18 Nov 2026 15:58:16 +0100
-Message-ID: <20261118150406.641651029@linuxfoundation.org>
+Subject: [PATCH 7.3 2230/2651] xsk: freeze deferred pool teardown without blocking unregister
+Date: Wed, 18 Nov 2026 15:57:50 +0100
+Message-ID: <20261118150405.815282901@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,88 +65,207 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: James Hilliard <james.hilliard1@gmail.com>
 
-[ Upstream commit 74667a55122ad2fad88af4fd7672e4c8175c2558 ]
+[ Upstream commit fece8420e76fe53ee84f0439f18d026b4c7641da ]
 
-When hardware checksum offload is enabled for an skb,
-bcmasp_csum_offload() prepends a struct bcmasp_pkt_offload header
-(20 bytes) to the skb via skb_push(). This increases skb->len and
-skb_headlen(skb) by sizeof(struct bcmasp_pkt_offload).
+Deferred pool destruction calls ndo_bpf() under RTNL. system_wq is
+not frozen during system sleep, so that callback can run after a
+device has suspended and gated its clocks. Use system_freezable_wq
+so running destruction finishes before device suspend and new work
+waits until process thaw.
 
-Because the hardware descriptor processor strips this offload header
-before transmitting the packet on the wire, the wire packet length is
-smaller by sizeof(struct bcmasp_pkt_offload). The padding calculation
-must account for this extra header; otherwise, short frames are sent on
-the wire smaller than the minimum Ethernet frame size (ETH_ZLEN +
-ETH_FCS_LEN).
+Keep assigned pools visible to NETDEV_UNREGISTER independently of
+the socket list. A released socket has already left that list, but
+its final pool put can queue destruction after workqueues freeze.
+A resume-time unregister would then wait for a device reference
+whose release cannot run until the resume completes.
 
-Furthermore, small frames with payload in page fragments (such as small
-TCP segments with CHECKSUM_PARTIAL) have nr_frags > 0 and were skipping
-padding entirely because the padding check was restricted to
-nr_frags == 0.
+Track assigned pools per netdev with netdev operations locking and detach
+remaining pools after the notifier socket walk, including copy-mode pools.
+This also covers leased queues without scanning pools from unrelated
+devices or network namespaces. Remove the entry on assignment failure and
+normal teardown. The deferred worker still owns the pool and later observes
+the cleared device pointer, avoiding a second driver detach or put.
 
-Perform the padding check on skb->len before the descriptor loop using
-skb_put_padto(), adding sizeof(struct bcmasp_pkt_offload) to min_size
-when checksum offload is enabled, and re-read nr_frags after padding in
-case the skb was linearized.
+The lifetime problem was identified by code inspection of the deferred
+release and system-sleep paths.
 
-Fixes: 490cb412007d ("net: bcmasp: Add support for ASP2.0 Ethernet controller")
-Reviewed-by: Justin Chen <justin.chen@broadcom.com>
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20261013204439.3494046-6-florian.fainelli@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1c1efc2af158 ("xsk: Create and free buffer pool independently from umem")
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Reviewed-by: Björn Töpel <bjorn@kernel.org>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20261014-xsk-suspend-teardown-v4-1-27795582e4a3@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/broadcom/asp2/bcmasp_intf.c    | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ include/linux/netdevice.h   |  5 ++++
+ include/net/xsk_buff_pool.h |  3 +++
+ net/xdp/xsk.c               |  5 ++++
+ net/xdp/xsk_buff_pool.c     | 46 ++++++++++++++++++++++++++++++-------
+ 4 files changed, 51 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
-index 693e8cdfe9604..a855e637b6f01 100644
---- a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
-+++ b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
-@@ -236,7 +236,7 @@ static struct sk_buff *bcmasp_csum_offload(struct net_device *dev,
- static netdev_tx_t bcmasp_xmit(struct sk_buff *skb, struct net_device *dev)
- {
- 	struct bcmasp_intf *intf = netdev_priv(dev);
--	unsigned int total_bytes, size;
-+	unsigned int total_bytes, size, min_size;
- 	int spb_index, nr_frags, i, j;
- 	struct bcmasp_tx_cb *txcb;
- 	dma_addr_t mapping, valid;
-@@ -262,16 +262,21 @@ static netdev_tx_t bcmasp_xmit(struct sk_buff *skb, struct net_device *dev)
- 	if (!skb)
- 		return NETDEV_TX_OK;
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index 02119fa153c97..1fb51c576758c 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -2547,6 +2547,11 @@ struct net_device {
+ 	/* protected by rtnl_lock */
+ 	struct bpf_xdp_entity	xdp_state[__MAX_XDP_MODE];
  
-+	min_size = ETH_ZLEN + ETH_FCS_LEN;
-+	if (csum_hw)
-+		min_size += sizeof(struct bcmasp_pkt_offload);
++#ifdef CONFIG_XDP_SOCKETS
++	/** @xsk_pools: assigned AF_XDP pools, ops protected */
++	struct hlist_head	xsk_pools;
++#endif
 +
-+	if (skb->len < min_size) {
-+		if (skb_put_padto(skb, min_size))
-+			return NETDEV_TX_OK;
-+		nr_frags = skb_shinfo(skb)->nr_frags;
-+	}
+ 	u8 dev_addr_shadow[MAX_ADDR_LEN];
+ 	netdevice_tracker	linkwatch_dev_tracker;
+ 	netdevice_tracker	watchdog_dev_tracker;
+diff --git a/include/net/xsk_buff_pool.h b/include/net/xsk_buff_pool.h
+index a7df573784fd6..02e89350faf9a 100644
+--- a/include/net/xsk_buff_pool.h
++++ b/include/net/xsk_buff_pool.h
+@@ -48,6 +48,8 @@ struct xsk_buff_pool {
+ 	struct device *dev;
+ 	struct net_device *netdev;
+ 	struct list_head xsk_tx_list;
++	/* Assigned pools, including deferred releases; ops protected. */
++	struct hlist_node dev_node;
+ 	/* Protects modifications to the xsk_tx_list */
+ 	spinlock_t xsk_tx_list_lock;
+ 	refcount_t users;
+@@ -119,6 +121,7 @@ bool xp_put_pool(struct xsk_buff_pool *pool);
+ void xp_clear_dev(struct xsk_buff_pool *pool);
+ void xp_add_xsk(struct xsk_buff_pool *pool, struct xdp_sock *xs);
+ void xp_del_xsk(struct xsk_buff_pool *pool, struct xdp_sock *xs);
++void xp_clear_dev_all(struct net_device *dev);
+ 
+ /* AF_XDP, and XDP core. */
+ void xp_free(struct xdp_buff_xsk *xskb);
+diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
+index 33475b180ea6f..781ba46eb1525 100644
+--- a/net/xdp/xsk.c
++++ b/net/xdp/xsk.c
+@@ -2145,6 +2145,11 @@ static int xsk_notifier(struct notifier_block *this,
+ 			mutex_unlock(&xs->mutex);
+ 		}
+ 		mutex_unlock(&net->xdp.lock);
++		/*
++		 * A released socket is no longer on xdp.list. Its pool can still
++		 * hold a device reference on the frozen release workqueue.
++		 */
++		xp_clear_dev_all(dev);
+ 		break;
+ 	}
+ 	return NOTIFY_DONE;
+diff --git a/net/xdp/xsk_buff_pool.c b/net/xdp/xsk_buff_pool.c
+index e836eca469b0b..7750d2ec4ee24 100644
+--- a/net/xdp/xsk_buff_pool.c
++++ b/net/xdp/xsk_buff_pool.c
+@@ -173,7 +173,7 @@ int xp_assign_dev(struct xsk_buff_pool *pool,
+ 	u32 frame_size;
+ 	int err = 0;
+ 
+-	ASSERT_RTNL();
++	netdev_assert_locked_ops_compat(netdev);
+ 
+ 	force_zc = flags & XDP_ZEROCOPY;
+ 	force_copy = flags & XDP_COPY;
+@@ -205,6 +205,11 @@ int xp_assign_dev(struct xsk_buff_pool *pool,
+ 	pool->cached_need_wakeup = XDP_WAKEUP_TX;
+ 
+ 	dev_hold(netdev);
++	/*
++	 * Socket removal precedes the final pool put. Keep the pool visible to
++	 * NETDEV_UNREGISTER even while release work is waiting for process thaw.
++	 */
++	hlist_add_head(&pool->dev_node, &netdev->xsk_pools);
+ 
+ 	if (force_copy)
+ 		/* For copy-mode, we are done. */
+@@ -245,7 +250,6 @@ int xp_assign_dev(struct xsk_buff_pool *pool,
+ 	bpf.xsk.pool = pool;
+ 	bpf.xsk.queue_id = queue_id;
+ 
+-	netdev_assert_locked_ops_compat(netdev);
+ 	err = netdev->netdev_ops->ndo_bpf(netdev, &bpf);
+ 	if (err)
+ 		goto err_unreg_pool;
+@@ -267,6 +271,8 @@ int xp_assign_dev(struct xsk_buff_pool *pool,
+ 	if (err) {
+ 		pool->umem->flags = umem_flags;
+ 		xsk_clear_pool_at_qid(netdev, queue_id);
++		hlist_del(&pool->dev_node);
++		pool->netdev = NULL;
+ 		dev_put(netdev);
+ 	}
+ 	return err;
+@@ -289,19 +295,39 @@ int xp_assign_dev_shared(struct xsk_buff_pool *pool, struct xdp_sock *umem_xs,
+ 	return xp_assign_dev(pool, dev, queue_id, flags);
+ }
+ 
++static void __xp_clear_dev(struct xsk_buff_pool *pool)
++{
++	struct net_device *netdev = pool->netdev;
 +
- 	spb_index = intf->tx_spb_index;
- 	valid = intf->tx_spb_dma_valid;
- 	for (i = 0; i <= nr_frags; i++) {
- 		if (!i) {
- 			size = skb_headlen(skb);
--			if (!nr_frags && size < (ETH_ZLEN + ETH_FCS_LEN)) {
--				if (skb_put_padto(skb, ETH_ZLEN + ETH_FCS_LEN))
--					return NETDEV_TX_OK;
--				size = skb->len;
--			}
- 			mapping = dma_map_single(kdev, skb->data, size,
- 						 DMA_TO_DEVICE);
- 		} else {
++	netdev_assert_locked_ops_compat(netdev);
++	xp_disable_drv_zc(pool);
++	xsk_clear_pool_at_qid(netdev, pool->queue_id);
++	hlist_del(&pool->dev_node);
++	pool->netdev = NULL;
++	dev_put(netdev);
++}
++
+ void xp_clear_dev(struct xsk_buff_pool *pool)
+ {
+ 	struct net_device *netdev = pool->netdev;
+ 
+-	if (!pool->netdev)
++	if (!netdev)
+ 		return;
+ 
+ 	netdev_lock_ops(netdev);
+-	xp_disable_drv_zc(pool);
+-	xsk_clear_pool_at_qid(pool->netdev, pool->queue_id);
+-	pool->netdev = NULL;
++	__xp_clear_dev(pool);
+ 	netdev_unlock_ops(netdev);
+-	dev_put(netdev);
++}
++
++void xp_clear_dev_all(struct net_device *dev)
++{
++	struct xsk_buff_pool *pool;
++	struct hlist_node *next;
++
++	netdev_lock_ops(dev);
++	hlist_for_each_entry_safe(pool, next, &dev->xsk_pools, dev_node)
++		__xp_clear_dev(pool);
++	netdev_unlock_ops(dev);
+ }
+ 
+ static void xp_release_deferred(struct work_struct *work)
+@@ -339,7 +365,11 @@ bool xp_put_pool(struct xsk_buff_pool *pool)
+ 
+ 	if (refcount_dec_and_test(&pool->users)) {
+ 		INIT_WORK(&pool->work, xp_release_deferred);
+-		schedule_work(&pool->work);
++		/*
++		 * Teardown calls ndo_bpf(), which may need powered hardware.
++		 * RTNL alone does not exclude the device's system PM callbacks.
++		 */
++		queue_work(system_freezable_wq, &pool->work);
+ 		return true;
+ 	}
+ 
 -- 
 2.53.0
 
