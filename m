@@ -1,52 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050800;
-	b=GEOpdAS1bUThTLM7as+YYHtkJfURbCIKHsai7yMaZti2p0OlPh6Czo6LYon7hVRyofds
-	 3AgSoLGhblLjK2L+cuAdkhDgE9ZOYF/Qa4exCICz5ZPvK1zZgv32n8EKCGb2TVpEne6Oh
-	 Uc9HphSRhIO6R8xAC2oxlNp54w+mNn7zCxMNAplPUm4e74+8JqOAsmd4xNKocp1+qCW3F
-	 HK9lncDj22DhyDrBHM9tT3ay/ARZj8jT86JadtRbH6pbh0i38awKqosq881r9M6Izies0
-	 R3WojNKMaqB/Uncla4kGb01GGQpCFKsPOdpdiVRHFOG+B9c9Qa7r/sVK4M6tIRs2Bcg==
+	t=1795050803;
+	b=RkBgKAxs4N8j7eh1FclxDJspB1Lxuk7FTg2r9do6yM72Pw1wOAJf2+90s80F1P1Ng8xg
+	 hBLxJZbBVasTzX7S2hFymjIDXD+kgTEi4I4Dz/Y1HX8QZGyI3uESzLJBr69bWPH2Hkf3w
+	 63NF/Hu3UnH7A7tKZntPCI0UtxbvSQr6gHBjbk8XGQo6w0wCSDkcc45JtVLSvUFc8kjZT
+	 HAPejCn1K6WCkO6C3NAuAJIRf8wAC+2orE/WlcjKW0g34vqHnSERyOLAvr8aMgJZHSWjt
+	 oGxoGZiMAlwKnMkMVfirOSqCLV5snnRWkHW49MxXt/5xGRqkMY24HbZ83k04LtIxzVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050800;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050803;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Cw0oJnLh+0QX/ySyYR5n7FKF4HHdJQc0L/HrzcOHxBs=;
-	b=ePVsvZLQ3tZ9Yyblk4fp/JMAotzh2WUyNX+kSTMyb3Snftsv2uJci7usZ1gPWT4XkbVM
-	 siOZIu7gKaz0ISiHqQH16uT4uu5OCaho5wX5NtiGMhKEB1ReUxMQ2IG3VC6LpOFROVjXh
-	 hK8NYCZpbZ9yGNjhuKGF750BXplKlbsznwV/+FbYDVMdHmvIcoOKBFtOGV7tVuqZCVeIx
-	 yj/5L3XECcjbbTloOXUf/KNoxlVgzmyJZswN9n7BDlMh5YxtEv74gWPagfklvdC4G+oIh
-	 q5CgwsvlApZu4Ylpzs4LRwPhB3xNl7iiy6khD1F/M4qGNoq2iLMnAJ8nD1RzQYFxqsw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=wyl+ov1+aVoGVuANptcMgeEZOq0BLZ6znHypt8i1POQ=;
+	b=ShqKXgJJIu/+8PLRSR5kh0Bk08DUgD4PgPnF5iQlO2S3cR6ZSchtoGg1rvHIRQUrBzU0
+	 KNHxntRGixzQsXjuOvkNOZBaKf3xGvJqtfkDUEOumYp95aza2NoZ3EasTgSUwJufPl0+u
+	 P6cqmKuSrR7D2W+MbvKyol+l+Uygy4M6dv9GJUylhfHg95iFG9a4Fiav9Tj7JrLQCoIxo
+	 dpuX5Dkl5KSVK9IBTu8pN9d2/HFFH6Tz/tlcSO8mIg9cUmYV+n8TYU19dbiIjtFiIP03L
+	 g1CzWoVtS+fI5ZPK3pkwzf3222/G97HzaAXXQsBbX1P0JxRNLiZYD91a3z+VSAHnRxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nTSDwUek;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="qFW/Urwp";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7828F606A31C;
-	Thu, 19 Nov 2026 01:13:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312EB606A32C;
+	Thu, 19 Nov 2026 01:13:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nTSDwUek
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB3E71F000C4;
-	Thu, 19 Nov 2026 01:13:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qFW/Urwp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EAD41F000C4;
+	Thu, 19 Nov 2026 01:13:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050800;
-	bh=Cw0oJnLh+0QX/ySyYR5n7FKF4HHdJQc0L/HrzcOHxBs=;
+	s=korg; t=1795050803;
+	bh=wyl+ov1+aVoGVuANptcMgeEZOq0BLZ6znHypt8i1POQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nTSDwUekLG3M4u5ziJaz5lwE7RIOsvRxESjTDTVtp+KNPWhd3C11abtmeC5gojPvI
-	 cHIYn03H667FZy8HnR1nvOyMbzP9MeHzchOcM2+2peaLz/R1lehzSe+XhjvxbUhGyR
-	 ddwD19K3RZyCHig9a65SJtn4+NVwV2x1yIwdGcsc=
+	b=qFW/UrwpsbknOLNsDsT+6s39TPs9+by1vKB9zXk8fY7TYLZB+6DlYx8yjyZL4k/PD
+	 Hd31x20B9wDFxf3bfRVYRLBL3kOSPFNqgJn+2HE8WdwsnDBnEuiEMAbZ3b2U3fIguH
+	 OkHmj2Y2r1WbjkzqZOWeZ5lpzdc5lkjECkAdIRC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Hans Holmberg <hans.holmberg@wdc.com>,
+	Dennis Maisenbacher <dennis.maisenbacher@wdc.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2836/2857] PCI/sysfs: Decouple acpi_index from the optional device name element
-Date: Wed, 18 Nov 2026 16:04:30 +0100
-Message-ID: <20261118150343.688937094@linuxfoundation.org>
+Subject: [PATCH 6.1 2801/2857] block: Allow using bio_attempt_back_merge() internally
+Date: Wed, 18 Nov 2026 16:03:55 +0100
+Message-ID: <20261118150342.444119824@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -62,124 +69,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Wilczyński <kwilczynski@kernel.org>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 337bdf853101a0ee66eadf668f0fef21f8276b52 ]
+[ Upstream commit dd850ff3eee428b4e1276bd51263dd937643ba19 ]
 
-The "_DSM for Naming a PCI or PCI Express Device Under Operating Systems"
-(PCI Firmware r3.3, sec 4.6.7) returns a package of two elements:
+Remove "static" from the definition of bio_attempt_back_merge() and
+declare this function in block/blk.h to allow using it internally from
+other block layer files. The definition of enum bio_merge_status is
+also moved to block/blk.h.
 
-  1) Instance number (mandatory Integer)
-  2) String name (optional String, null string if not populated)
-
-These are exposed as sysfs 'acpi_index' and 'label'. Previously, if
-the name was malformed, reads of 'acpi_index' failed unnecessarily.
-
-Validate each element only for the attribute that exports it.  So
-"acpi_index" now depends on the instance number alone, and "label" reads
-fail with -EIO when the name element is neither a string nor a buffer.  The
-package elements pointer is read only after the object type has been
-checked.
-
-On platforms with a valid instance number and a malformed name element the
-"acpi_index" attribute starts returning data.  Because udev derives the
-onboard interface name from "acpi_index", an interface on such a platform
-may be renamed once, on the first boot after this change.  That is the
-attribute assuming the value the firmware always provided.
-
-Link: https://github.com/pciutils/pciutils/issues/175
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-[bhelgaas: commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260814070522.2327975-3-kwilczynski@kernel.org
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Tested-by: Hans Holmberg <hans.holmberg@wdc.com>
+Tested-by: Dennis Maisenbacher <dennis.maisenbacher@wdc.com>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Link: https://lore.kernel.org/r/20240408014128.205141-6-dlemoal@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 9531230ee1fc ("blk-mq: don't bring back flags of a completed request")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci-label.c | 53 +++++++++++++++++++++++++----------------
- 1 file changed, 33 insertions(+), 20 deletions(-)
+ block/blk-merge.c | 8 +-------
+ block/blk.h       | 8 ++++++++
+ 2 files changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/pci/pci-label.c b/drivers/pci/pci-label.c
-index f81248a11a18e..08c461f1142d7 100644
---- a/drivers/pci/pci-label.c
-+++ b/drivers/pci/pci-label.c
-@@ -157,7 +157,7 @@ static int dsm_get_label(struct device *dev, char *buf,
- {
- 	acpi_handle handle = ACPI_HANDLE(dev);
- 	union acpi_object *obj, *tmp;
--	int len = 0;
-+	int len;
- 
- 	if (!handle)
- 		return -ENODEV;
-@@ -167,30 +167,43 @@ static int dsm_get_label(struct device *dev, char *buf,
- 	if (!obj)
- 		return -EIO;
- 
-+	if (obj->type != ACPI_TYPE_PACKAGE || obj->package.count != 2) {
-+		len = -EIO;
-+		goto out;
-+	}
-+
- 	tmp = obj->package.elements;
--	if (obj->type == ACPI_TYPE_PACKAGE && obj->package.count == 2 &&
--	    tmp[0].type == ACPI_TYPE_INTEGER &&
--	    (tmp[1].type == ACPI_TYPE_STRING ||
--	     tmp[1].type == ACPI_TYPE_BUFFER)) {
--		/*
--		 * The second string element is optional even when
--		 * this _DSM is implemented; when not implemented,
--		 * this entry must return a null string.
--		 */
--		if (attr == ACPI_ATTR_INDEX_SHOW) {
--			len = sysfs_emit(buf, "%llu\n", tmp->integer.value);
--		} else if (attr == ACPI_ATTR_LABEL_SHOW) {
--			if (tmp[1].type == ACPI_TYPE_STRING)
--				len = sysfs_emit(buf, "%s\n",
--						 tmp[1].string.pointer);
--			else if (tmp[1].type == ACPI_TYPE_BUFFER)
--				len = dsm_label_utf16s_to_utf8s(tmp + 1, buf);
--		}
-+	if (tmp[0].type != ACPI_TYPE_INTEGER) {
-+		len = -EIO;
-+		goto out;
- 	}
- 
-+	if (attr == ACPI_ATTR_INDEX_SHOW) {
-+		len = sysfs_emit(buf, "%llu\n", tmp[0].integer.value);
-+		goto out;
-+	}
-+
-+	/*
-+	 * Per PCI Firmware r3.3, sec 4.6.7, the device name is optional
-+	 * even when this _DSM is implemented. When not implemented, this
-+	 * entry must return a NULL string.
-+	 */
-+	switch (tmp[1].type) {
-+	case ACPI_TYPE_STRING:
-+		len = sysfs_emit(buf, "%s\n", tmp[1].string.pointer);
-+		break;
-+	case ACPI_TYPE_BUFFER:
-+		len = dsm_label_utf16s_to_utf8s(&tmp[1], buf);
-+		break;
-+	default:
-+		len = -EIO;
-+		break;
-+	}
-+
-+out:
- 	ACPI_FREE(obj);
- 
--	return len > 0 ? len : -EIO;
-+	return len;
+diff --git a/block/blk-merge.c b/block/blk-merge.c
+index b90c413c83c44..e72ddcc0e7d60 100644
+--- a/block/blk-merge.c
++++ b/block/blk-merge.c
+@@ -974,13 +974,7 @@ static void blk_account_io_merge_bio(struct request *req)
+ 	part_stat_unlock();
  }
  
- static ssize_t label_show(struct device *dev, struct device_attribute *attr,
+-enum bio_merge_status {
+-	BIO_MERGE_OK,
+-	BIO_MERGE_NONE,
+-	BIO_MERGE_FAILED,
+-};
+-
+-static enum bio_merge_status bio_attempt_back_merge(struct request *req,
++enum bio_merge_status bio_attempt_back_merge(struct request *req,
+ 		struct bio *bio, unsigned int nr_segs)
+ {
+ 	const blk_opf_t ff = bio_failfast(bio);
+diff --git a/block/blk.h b/block/blk.h
+index 75316eab02470..db6232c5be60f 100644
+--- a/block/blk.h
++++ b/block/blk.h
+@@ -251,6 +251,14 @@ unsigned long blk_rq_timeout(unsigned long timeout);
+ void blk_add_timer(struct request *req);
+ const char *blk_status_to_str(blk_status_t status);
+ 
++enum bio_merge_status {
++	BIO_MERGE_OK,
++	BIO_MERGE_NONE,
++	BIO_MERGE_FAILED,
++};
++
++enum bio_merge_status bio_attempt_back_merge(struct request *req,
++		struct bio *bio, unsigned int nr_segs);
+ bool blk_attempt_plug_merge(struct request_queue *q, struct bio *bio,
+ 		unsigned int nr_segs);
+ bool blk_bio_list_merge(struct request_queue *q, struct list_head *list,
 -- 
 2.53.0
 
