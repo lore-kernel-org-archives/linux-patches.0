@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038554;
-	b=YO2mNLhfGq8PoFlyT0ESbALd1Rc36SZnTi829/g4/xPl5V4Vo4jRAwKMljRaBkDJKJ+5
-	 6hZH1c+JRSovEWfWmjya+MfQqM0bWKUIQRTp4OuotSqAJO4kWEf2XG4zJAM4QF5xt1pCA
-	 dVz2tCsiJH+XWBhZ2gPk70Ovc21btzCTSYbXqqZ8CWrcWHR4S5jGXGjL8LTgX5gnuAySW
-	 gZCM/hwBABf3fOvaRRO1CJ1oMRRN2HNhQHIDwfys2DBjzvdncniEwQZFBPgByJe2X/AGv
-	 KuW8V9oiN5FN5t54N+CdpakZ+7QZRnNCiODb9tjArSklLvc+BeApggY97zo23U4fIkA==
+	t=1795038557;
+	b=hS9kx19HFALuwS5FiUz+VojnaxlFI9DqaakZoIVRSvikx45DUqOadr9ce87E82ZaBeUP
+	 8FwsOgsezoM4cfUd663Vt7n7yPIqWZWmyCnN8Iig8ZbCEwSqZPCWlSo1I41ba8THCplzs
+	 dnualTm0ard+joSlduoeAZyI0Sv70WuRTUoCyRxweVaDZw7Rh8mjnajUgdEi8XizNiVoG
+	 fDWVMARJyLbwI9pUHehM99iHw+YeAU7PckWuNV/pVgV9cW1ZV+QXFOKvV8is5e/t9rFXn
+	 mGqLyevwSI6oTTy8o3zAOjaK+XZmQzAgLXp7YMBGW2LHHWCTbCHiMlKsWTob3fUklBw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038554;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038557;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LLMwxSPNKlSOjE0tkjG14ZbYZA9GpC951z+LNbnPYXw=;
-	b=t5lp8XFEammHIKoCDQ2fGCcYR9NS5UILYQZDz0qSdSoHn7+UQ2JHzAcQoUCJBb+aryij
-	 0DOz77qu5vjoOwOL1AJaKkGjJYT8bjK8myRAc14rkTLGTpiSMi77ExtHUXA2Hsw4vW7Nk
-	 OLKx79Ko/5D8U9NSL/sNULg2q3vzzlD5lWWUuxJpq5Lp76JMxMNOQvZ2zUKe+10U3ndng
-	 Y5pS1yx/PHG+0Mz7kZNr5CdxdFu05ih74R7OTOv1LtdPGD6gmOjewF4eKkD0dpssnLpWM
-	 qCjzr+ZPpSKNHGRNYcQ0F3S/iKy2pna6mk9TT7rMjp0lVrP949d2LiC3oGslOriLYTw==
+	bh=kmC4Pe0RL20oQCKA5rHWF8I2+fMdRpz81Jp330x5RVg=;
+	b=s8UW153Ji4Q4zUNC/WJHRYTInsmt3a8tLlchYJ170W/YOpGO1iwW3gNqP8b+pVEZpbgd
+	 2vxuCqRy3r9aOWZ9KAF9uD73Q3vjtqiQu9A9KRIti7eOMEyNdrPoGAeehFS5Ex3b8GDTE
+	 9S8Aj0BhP4ekmmf1X+DDDRQZCLhTIsSpkG7Ml7+rcab+Zz8G0akwwK6ureVmi+ip8wZiH
+	 RkQLUGmgecj6WMsATm2NFQu/dXbyzutU3yAKTJJQL+hBL8TX8TlwSe87nkRsweOmcuN9Y
+	 MipEAO195AciRKVA/LkN1UXrpidYWzs5YrFFyD4oF8jFvKKjHqII2Xg2WsMfAroE/1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RpwkDXSy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="y9IVRK9/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8EB606A339;
-	Wed, 18 Nov 2026 21:49:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 567B9606A320;
+	Wed, 18 Nov 2026 21:49:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RpwkDXSy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D21ED1F000C5;
-	Wed, 18 Nov 2026 21:49:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y9IVRK9/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 903361F000C4;
+	Wed, 18 Nov 2026 21:49:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038554;
-	bh=LLMwxSPNKlSOjE0tkjG14ZbYZA9GpC951z+LNbnPYXw=;
+	s=korg; t=1795038557;
+	bh=kmC4Pe0RL20oQCKA5rHWF8I2+fMdRpz81Jp330x5RVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RpwkDXSylNXkcLCxF0SZx6Okz0CXxqHP3D8Ladwx5NdfwJmnEzXBiPRAj5mJAojK/
-	 9TTtAIRyW+gz3Nl70GzCZdWuS0E6iJC176BL14ku3z0gztWT+lif7Q/0K2UjyhH9z1
-	 gUYsKvqN/HSPao0YX9m9aTQzFKjJD3eH+AATTGXk=
+	b=y9IVRK9/9g7tF0OGbqk1Of7/07lQDmWEZ+0KkAaebxvBwjAekW17TP0fUTWwCQV9w
+	 R/46dmhCa1uRy/EH8ZBF6vXBMEgmLT6zo68StcU4oZN1sxlEobb29tnkG6OeD3wypv
+	 MlSfYrSycJa3RG/NIBpdOZO8MzUiOgDcdmpNtBUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Kaixuan Li <kaixuanli0131@gmail.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Christoph Hellwig <hch@infradead.org>,
+	Tal Zussman <tz2294@columbia.edu>,
+	Jan Kara <jack@suse.cz>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1742/3318] f2fs: bound the SIT/NAT bitmaps by the checkpoint pack
-Date: Wed, 18 Nov 2026 15:39:24 +0100
-Message-ID: <20261118150414.122329265@linuxfoundation.org>
+Subject: [PATCH 6.6 1743/3318] block: introduce bio_in_atomic()
+Date: Wed, 18 Nov 2026 15:39:25 +0100
+Message-ID: <20261118150414.151369418@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,81 +71,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaixuan Li <kaixuanli0131@gmail.com>
+From: Tal Zussman <tz2294@columbia.edu>
 
-[ Upstream commit 080833a32fd5dc10b3acf2fa9af9b3213e6cb617 ]
+[ Upstream commit 8ed0831b5263e1aa48d99063795a1f20e4e69b50 ]
 
-sit_ver_bitmap_bytesize and nat_ver_bitmap_bytesize are used as memcpy
-lengths into and out of sbi->ckpt, which is sized from cp_payload alone,
-and nothing compares either length against that allocation.
+Move the atomic context detection logic from erofs's z_erofs_in_atomic()
+into the block layer as bio_in_atomic(). This helper returns true when
+the current context is unsafe for sleeping bio completion handlers (e.g.,
+hard/soft IRQ, preempt-disabled).
 
-sanity_check_ckpt() has checked these two fields since c77ec61ca0a4, which
-added them after a crafted image overran build_sit_info(). That check ties
-each length to a segment count; it never compares either against the
-allocation, which is the half this adds.
+The logic was originally added to erofs in commit c99fab6e80b7 ("erofs:
+fix atomic context detection when !CONFIG_DEBUG_LOCK_ALLOC"). A
+subsequent patch will use it in the block layer's bio completion
+infrastructure, so move it to include/linux/bio.h where both subsystems
+can share it.
 
-Mounting over-reads in build_sit_info() and build_node_manager(), and the
-first checkpoint writes the same lengths back through the same pointers,
-so the over-read's contents reach the on-disk checkpoint. An unmount is
-enough; the filesystem does not have to be used.
+Convert erofs to call the new bio_in_atomic() directly.
 
-Bound both ends the way __bitmap_ptr() lays them out. The three branches
-differ, so a single sum of the two lengths would still admit a small
-overflow when cp_payload is non-zero.
-
-Fixes: 39a53e0ce0df ("f2fs: add superblock and major in-memory structure")
-Cc: stable@kernel.org
-Signed-off-by: Kaixuan Li <kaixuanli0131@gmail.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ sashal: Replaced F2FS_BLKSIZE(sbi) with the constant macro F2FS_BLKSIZE in two expressions. ]
+Suggested-by: Christoph Hellwig <hch@infradead.org>
+Signed-off-by: Tal Zussman <tz2294@columbia.edu>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260730-blk-dontcache-v7-1-3e8e6850068d@columbia.edu
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: a605d5d71a6d ("f2fs: fix to use bio_in_atomic() in f2fs_read_end_io()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ fs/erofs/zdata.c    | 11 +----------
+ include/linux/bio.h | 15 +++++++++++++++
+ 2 files changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 433506ea5738c..a7c35c1cf76cf 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -3649,6 +3649,7 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
- 	block_t avail_node_count, valid_node_count;
- 	unsigned int nat_blocks, nat_bits_bytes, nat_bits_blocks;
- 	unsigned int sit_blk_cnt;
-+	unsigned long long ckpt_size, sit_end, nat_end;
- 	int i, j;
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index ede86dd93b5dd..1a8c4a068db8e 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -1404,15 +1404,6 @@ static void z_erofs_decompressqueue_kthread_work(struct kthread_work *work)
+ }
+ #endif
  
- 	total = le32_to_cpu(raw_super->segment_count);
-@@ -3780,6 +3781,29 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
- 		return 1;
- 	}
+-/* Use (kthread_)work in atomic contexts to minimize scheduling overhead */
+-static inline bool z_erofs_in_atomic(void)
+-{
+-	if (IS_ENABLED(CONFIG_PREEMPTION) && rcu_preempt_depth())
+-		return true;
+-	if (!IS_ENABLED(CONFIG_PREEMPT_COUNT))
+-		return true;
+-	return !preemptible();
+-}
  
-+	/*
-+	 * Nothing above ties the bitmap lengths to sbi->ckpt, which is
-+	 * (1 + cp_payload) blocks. Bound both ends the way __bitmap_ptr()
-+	 * lays them out.
-+	 */
-+	ckpt_size = (unsigned long long)(cp_payload + 1) * F2FS_BLKSIZE;
-+	if (__is_set_ckpt_flags(ckpt, CP_LARGE_NAT_BITMAP_FLAG)) {
-+		nat_end = CP_MIN_CHKSUM_OFFSET + sizeof(__le32) + nat_bitmap_size;
-+		sit_end = nat_end + sit_bitmap_size;
-+	} else if (cp_payload > 0) {
-+		nat_end = CP_MIN_CHKSUM_OFFSET + nat_bitmap_size;
-+		sit_end = F2FS_BLKSIZE + sit_bitmap_size;
-+	} else {
-+		sit_end = CP_MIN_CHKSUM_OFFSET + sit_bitmap_size;
-+		nat_end = sit_end + nat_bitmap_size;
-+	}
+ static void z_erofs_decompress_kickoff(struct z_erofs_decompressqueue *io,
+ 				       int bios)
+@@ -1429,7 +1420,7 @@ static void z_erofs_decompress_kickoff(struct z_erofs_decompressqueue *io,
+ 
+ 	if (atomic_add_return(bios, &io->pending_bios))
+ 		return;
+-	if (z_erofs_in_atomic()) {
++	if (bio_in_atomic()) {
+ 		/* See `sync_decompress` in sysfs-fs-erofs for more details */
+ 		if (sbi->opt.sync_decompress == EROFS_SYNC_DECOMPRESS_AUTO)
+ 			sbi->opt.sync_decompress = EROFS_SYNC_DECOMPRESS_FORCE_ON;
+diff --git a/include/linux/bio.h b/include/linux/bio.h
+index f193aef4fac08..089008d1d21ef 100644
+--- a/include/linux/bio.h
++++ b/include/linux/bio.h
+@@ -438,6 +438,21 @@ static inline struct bio *bio_alloc(struct block_device *bdev,
+ 
+ void submit_bio(struct bio *bio);
+ 
++/**
++ * bio_in_atomic - check if the current context is unsafe for bio completion
++ *
++ * Return: %true in atomic contexts (e.g. hard/soft IRQ, preempt-disabled);
++ * %false when a bio can be safely completed in the current context.
++ */
++static inline bool bio_in_atomic(void)
++{
++	if (IS_ENABLED(CONFIG_PREEMPTION) && rcu_preempt_depth())
++		return true;
++	if (!IS_ENABLED(CONFIG_PREEMPT_COUNT))
++		return true;
++	return !preemptible();
++}
 +
-+	if (sit_end > ckpt_size || nat_end > ckpt_size) {
-+		f2fs_err(sbi, "Bitmaps do not fit the checkpoint pack: sit ends at %llu, nat at %llu, pack is %llu bytes",
-+			 sit_end, nat_end, ckpt_size);
-+		return 1;
-+	}
-+
- 	if (__is_set_ckpt_flags(ckpt, CP_LARGE_NAT_BITMAP_FLAG) &&
- 		le32_to_cpu(ckpt->checksum_offset) != CP_MIN_CHKSUM_OFFSET) {
- 		f2fs_warn(sbi, "using deprecated layout of large_nat_bitmap, "
+ extern void bio_endio(struct bio *);
+ 
+ static inline void bio_io_error(struct bio *bio)
 -- 
 2.53.0
 
