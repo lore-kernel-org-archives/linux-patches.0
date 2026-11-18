@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016640;
-	b=a75mnUOYzeHA9dp5I7oeUkt0wVuF7ms67W+6TWddyng4tKDLkf2C6rP74OWTAE3trgNQ
-	 rbu6yN/90qRnf5uwZuydjmq93u+k530rN7UaGcR1rB54+GyJ8xTRWx5LemiZmyKMTREXf
-	 PCoNdxtdpIyRhHpJu0iIZmPLIN1epVeo35IGzrK+8Dn06aKAD+mE3LpZUZc4YHgHBADON
-	 ZweKgT4DLTP1kozpPDkL1LzqATIrJ4Ul1Ui8ntDv4+b1BDNja5yQ0ZdsBqGakMjBwYlbE
-	 z6a2/0KnvYe5mZd/80uZVoJxinDPGwvvG+nqlnuhkXB2LC5K8sXm3ON8Z+zjvYb5NbQ==
+	t=1795016643;
+	b=qraFcBorVLG72MxulCkVWOV59EaRi5gARupuZSfg/Bs8QUBldHTQHwHO3VpI0B0sz3Xn
+	 Os4iIeu6K0p7GVGsMCJlM4WTzwWGH3e3nBsLJ/d/D/pkj0ATS1yVNvN9tbbe4JupSi2oL
+	 bgeJPRzOBtqBEtVRqG4tRP+/kc9XdmLpNsgXC/+zwKjyHajKiJKLxIIPs3gzU4+rnydn9
+	 2S1rmV+fDg1rZGZfEoNDyyDdc+bT+TuE8xD4vNGuJAyLEgNuvPGUbNhemcdi0gwklVsRX
+	 AM4GwZ5X4cERonMkvGhuUEintFE5qyNTvzIJSxaVGdnmpEW6zK3tR1DodiTw3I9BY/Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016640;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016643;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uLuizLw4qYJj/xHrZ8lXmtoDSy6vnRK3zWaxSGfQcYw=;
-	b=dV8diJlQ12uoLbPU6hVT/In/I6qxgDnEsNjddoUigd2xx7n2qKpA0178hdmjhAaxnPJE
-	 SRbfdOpdaREs2ydp7ixKybhZJX2JJVddmy2l/x1IUBRsKfQHBN5JxsOP1Zn0EjJgxn/pX
-	 W+rcd7qydtUJU1tGtk/72q+Nqqzc4nKyi2kPHxdWpFbQrxmrge+wV0kZzxwduYJuO+24d
-	 5yPSAUvikHOrc0M58YlV1zGZlhi8ocvCKryA908ICoXhyCTYP6P8/Zsm3IGVn8KQlM5NE
-	 o/+nc/megbndTN/shJfa5PQEn3oEYhvjG1O0kNHjsJve62crStT2qzyvIf94IaUwHhQ==
+	bh=lWyhzAUzGA8EBJ3NdyK5AC2dISKMm8pAsd0SGQM4yQs=;
+	b=yIZzNLGVpFlwwN60WeLUWavrWD5yko86DuX3iiEL252tuqtEM98vLOv2NAb0cccglLyT
+	 JZGPHW3eeNgFMWPo0OLhEKY1855QJ5UpiVEpY5zm6B06bW6sIE4t5BZ0Zkeg2d8/vGVtS
+	 xlshUhfFfJrKhqBQrZMIdEJ9BBst9UW5RzrMtNocZ/HNQu9fpna/0J3P74jSaP4QStyl/
+	 g6Tw5YJ7ehLkInVLznb3PylhIkCN7bNHp+wpdg+3RKVeV2EZqOJVhXW5+SIfAfXLALyve
+	 8p4BN7Er4L1WwegDOU/69SZh6ibe0YgMeBhPPwW+huxmWUX47Tc6QdNI+rh3FLrsVhA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XjRpo+Yv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aT8ICaAA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84578606A31C;
-	Wed, 18 Nov 2026 15:44:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB03606A31C;
+	Wed, 18 Nov 2026 15:44:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XjRpo+Yv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0811F000C4;
-	Wed, 18 Nov 2026 15:43:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aT8ICaAA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 797E81F000C4;
+	Wed, 18 Nov 2026 15:44:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016640;
-	bh=uLuizLw4qYJj/xHrZ8lXmtoDSy6vnRK3zWaxSGfQcYw=;
+	s=korg; t=1795016643;
+	bh=lWyhzAUzGA8EBJ3NdyK5AC2dISKMm8pAsd0SGQM4yQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XjRpo+YvOZmxY9DuKv7H8D4P97I9+P0u8+jPAm42buIhpiMDc7iMGKvN10j1M/ARX
-	 uwrAEDzJskQOxZXupbn0PwqrCmFkEB7vR/n9CAaCM/7h5AlquZVOfgLCmTwhfHGIdJ
-	 N4PGUqOAfIvqWf5SU63eWhvnTYFwUqXYOjAepOdw=
+	b=aT8ICaAA15d1+mmpkeI7cgXjZiXfNbwzwtZUhG2HzFv6LB6VnFkGK+JHUTb0PNsWl
+	 vCMtCNAPgYukNHdb9860K6Z1rfv5BWTo28PStcElbdXHQxUqJaS0T12JsEUcWa3adi
+	 leLqcImtgVnB/sNBbwHuqrpRemRqnzWUN4ICFWy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Linus Walleij <linusw@kernel.org>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0563/2651] cxl/pci: Skip reset detection for DVSEC emulated decoders
-Date: Wed, 18 Nov 2026 15:30:03 +0100
-Message-ID: <20261118150308.008582437@linuxfoundation.org>
+Subject: [PATCH 7.3 0599/2651] clk: versatile: clk-icst: Fix node reference leak in of_syscon_icst_setup()
+Date: Wed, 18 Nov 2026 15:30:39 +0100
+Message-ID: <20261118150309.289069910@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,57 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 17ff3a9fd8669ea53fe83a7013871f30214d5537 ]
+[ Upstream commit c90a50d07f0c38c62ce13a60806ab5e3b841f70f ]
 
-HDM decoders are emulated from the DVSEC range registers in two cases:
-(a) the component registers expose no HDM decoder capability, or (b) the
-capability is present but the DVSEC ranges were the ones in use at driver
-load.
+of_get_parent() takes a reference on the syscon parent node. The
+reference is intentionally kept on the success path, but the error paths
+return without dropping it, leaking the node reference. Release the
+reference before returning on the error paths.
 
-After an FLR or SBR, __cxl_endpoint_decoder_reset_detected() reads the HDM
-decoder Committed bit for every decoder marked enabled, emulated ones
-included. In case (a) regs.hdm_decoder is NULL and the read oopses. In case
-(b) the Committed bit was never set, so a reset gets reported that never
-happened.
-
-Use the absence of cxld->commit to elide the check for emulated decoders.
-
-Case (b) tested under QEMU: a reset on an endpoint driven down the DVSEC
-emulation path no longer reports a reset or strips the decoder flags.
-
-Fixes: 934edcd436dc ("cxl: Add post-reset warning if reset results in loss of previously committed HDM decoders")
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Link: https://lore.kernel.org/linux-cxl/20260811113608.2815625-1-kanie@linux.alibaba.com/
-Link: https://patch.msgid.link/20260831110449.719086-1-kanie@linux.alibaba.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Fixes: d430819d69a5 ("clk: versatile-icst: add device tree support")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/pci.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/clk/versatile/clk-icst.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/cxl/core/pci.c b/drivers/cxl/core/pci.c
-index bb6ad0753a421..2f90184d10689 100644
---- a/drivers/cxl/core/pci.c
-+++ b/drivers/cxl/core/pci.c
-@@ -683,6 +683,15 @@ static int __cxl_endpoint_decoder_reset_detected(struct device *dev, void *data)
- 	if ((cxld->flags & CXL_DECODER_F_ENABLE) == 0)
- 		return 0;
+diff --git a/drivers/clk/versatile/clk-icst.c b/drivers/clk/versatile/clk-icst.c
+index 6bd3db54dd229..8c84377f3ec1b 100644
+--- a/drivers/clk/versatile/clk-icst.c
++++ b/drivers/clk/versatile/clk-icst.c
+@@ -516,16 +516,19 @@ static void __init of_syscon_icst_setup(struct device_node *np)
+ 	map = syscon_node_to_regmap(parent);
+ 	if (IS_ERR(map)) {
+ 		pr_err("no regmap for syscon ICST clock parent\n");
++		of_node_put(parent);
+ 		return;
+ 	}
  
-+	/*
-+	 * Decoders emulated from the DVSEC range registers have no commit
-+	 * callback and no HDM decoder registers to consult.
-+	 */
-+	if (!cxld->commit) {
-+		dev_warn(dev, "DVSEC emulated decode may have been cleared by reset\n");
-+		return 0;
-+	}
-+
- 	cxlhdm = dev_get_drvdata(&port->dev);
- 	hdm = cxlhdm->regs.hdm_decoder;
- 	ctrl = readl(hdm + CXL_HDM_DECODER0_CTRL_OFFSET(cxld->id));
+ 	if (of_property_read_u32(np, "reg", &icst_desc.vco_offset) &&
+ 	    of_property_read_u32(np, "vco-offset", &icst_desc.vco_offset)) {
+ 		pr_err("no VCO register offset for ICST clock\n");
++		of_node_put(parent);
+ 		return;
+ 	}
+ 	if (of_property_read_u32(np, "lock-offset", &icst_desc.lock_offset)) {
+ 		pr_err("no lock register offset for ICST clock\n");
++		of_node_put(parent);
+ 		return;
+ 	}
+ 
+@@ -552,6 +555,7 @@ static void __init of_syscon_icst_setup(struct device_node *np)
+ 		ctype = ICST_INTEGRATOR_CP_CM_MEM;
+ 	} else {
+ 		pr_err("unknown ICST clock %pOF\n", np);
++		of_node_put(parent);
+ 		return;
+ 	}
+ 
 -- 
 2.53.0
 
