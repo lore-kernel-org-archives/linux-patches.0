@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015490;
-	b=Ute/3Rlj8Wiol3uoE/Fcg3ICVAJnMLtnhT5z/StWyUEjBcXW8Yh1kp3ANiiSuAI/cSMq
-	 osaKnocyzFLKeiXU6gkOAolJWNziVXioa9ve9NrRyrU9ZCWLlc1SiMxRN/ZM31C/pEPgV
-	 g8hDDEWiy5Q8rRiGNg7Nqzo41bjhjnxgKb8kxaVYiiTml8iody3vrIgqEO0gpWSLrNnbF
-	 cvZZzDZRO6046xCpSx8++STbaqGlVAvKROY60dBSs+xEOgHmSgOOasH03htyowJ2rxe4i
-	 r0O4We/1a1hoelg+ObyPLbObIR+CjlGqNlbjSBQo9+nb67U6hGUJzd5T6flLJ843/FA==
+	t=1795015493;
+	b=Wf6RMIB0mRwZXCdegGRnhd+eQQdCAsWiOgmnokp8ZffQEQ0FXQMP/GJPY0NxLHuh63i7
+	 +/rRH+IdYQ18/ZbjsuSnbQps6zVCDLK1LHxVov/myLg7O38o3Qna45+rgHvWOqKPBFmZM
+	 AYyOX9NKIi1tm0YhpQX6Qgf6XumGnAQWyxpIdgWZuT5Z51Tf23quh70aKRe8ngFwM19yE
+	 W1BSj+WddfJyeTKKS3n5fqDfR+AT82KGP3egSYHo6L8ldhs9ZjzcSw14StW6gKxXkxq4D
+	 th0AL9GtJ4e2YT3UzMFZicVfTWATltxjJAZ0Vud7YC6aYmlOUzqllfG28x2/2Ce5DyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015490;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015493;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ay2Uo90r8OpJN/wpWdfWnrBPdPa8Vo2m2pK26wF+gk4=;
-	b=aXYBTKjDyBvUjBa3ijMjSxP6oJEqxo9FJxoL80UChdhB7kwpd5UMzWAMkQ6NdREvALPf
-	 n0VvrDMhoz/Kp9kmTlpURxGJXz63u8NQiiXv8ABxyoOX5tDN1nJbN31YCpaMsGuVwg1CH
-	 laEwdL93vXDyMmvsa/8nnZcFdKYgeUQ38rFJl/u0Fr5m7XFmb5ObPrP96bllvvTiYfrN7
-	 HAiWi7bEiZn+3hUs2iUlr69rFJoKyXeXe0Kl2cEJdNhE/hRwpPMZhjguAXP0SwF/AxIzo
-	 dp5uDmJL9N09ivgsYN1QJmM9hnFumd8acbKH0w8/F+J223tBKNN9mL1MWcWob7PaHdg==
+	bh=M8dVWgFSzNlpO7wFjMyVlKQfmjoZAEGy0QsqcmGYtT0=;
+	b=vb0pAJDkmiP8dBPA5AlySbKxwS4UL8AdHecfvgRJjgvM54kVVg4dLLq9NlQlB3hCo0hy
+	 OdUqXxnZSaFAFOIPS5ULFX4trVTuruLV3ixrH/0I4iq7O8JvSnIGzk96kYwCptHT1CP4Q
+	 Sz8zK6WEWd9O9zx3KMaP+wJpOFmb7rHy2xAh+n3faHNySbx5LB1MxtmnSAR/t1XCAk43U
+	 jhPCKVhgi9gIgQUhY1sdEroin2BYnZBWeVVUPn6vxPo2j7oi9sf847+bx6aku95hIDtnt
+	 IO+l7ToCL2qnDnNbV9c8G527fc37noNQ/BsLBEUCKdeUCw62x310MFMN873u85GB7ng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hGaB+Azq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sAR2BoTx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1619606A31C;
-	Wed, 18 Nov 2026 15:24:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88C96606A31C;
+	Wed, 18 Nov 2026 15:24:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hGaB+Azq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F7F41F000C4;
-	Wed, 18 Nov 2026 15:24:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sAR2BoTx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAE571F000C4;
+	Wed, 18 Nov 2026 15:24:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015490;
-	bh=Ay2Uo90r8OpJN/wpWdfWnrBPdPa8Vo2m2pK26wF+gk4=;
+	s=korg; t=1795015493;
+	bh=M8dVWgFSzNlpO7wFjMyVlKQfmjoZAEGy0QsqcmGYtT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hGaB+AzqCgK8OcCwqp94MW/Yj18qaxdc7zd0b83PNG8Sblass0d/Zo3Y1pUnWVsFp
-	 BUhhJu5swuBYjBPy75EotxsB/SBxc7HUu0ikhAuSKzPRsr04K//S7i+khze55gRQWQ
-	 ra/9S9pPyqgXzBDanuI/cH/h9ojqtFw7IiaNn9m4=
+	b=sAR2BoTxI8WtfAKsPkk/VLqgFpU9U/jJMxWfn8r6P1Lc+V9W8GBHIT/kHB/qkgyG1
+	 7mIWh1u2/pghnq3Ye+RIWq3z3s77wfe2yFIqTH52/NDdjf20O9eDxDSobuOAWJZr04
+	 UUyqXEkfUrg5LosEBtQpjuU51RaIZRJwro092OFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Alex Elder <elder@riscstar.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Manush Prajwal <manushprajwal555@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0191/2651] arm64: dts: qcom: qcs8550-rb5gen2: clean up PCI function nodes
-Date: Wed, 18 Nov 2026 15:23:51 +0100
-Message-ID: <20261118150254.739436135@linuxfoundation.org>
+Subject: [PATCH 7.3 0192/2651] leds: max77705: Use fwnode_for_each_child_node_scoped() in max77705_add_led()
+Date: Wed, 18 Nov 2026 15:23:52 +0100
+Message-ID: <20261118150254.775297767@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,70 +70,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Elder <elder@riscstar.com>
+From: Manush Prajwal <manushprajwal555@gmail.com>
 
-[ Upstream commit 3f7d46aaf5565471f65b2e21fbb649cedc55e6b8 ]
+[ Upstream commit 4805e5ec50d0b355370e3d1ea906af4fc758accf ]
 
-The Qualcomm RB5gen2 devicetree source file defines a node representing
-a TC956x chip which contains a PCIe switch and an embedded endpoint that
-implements two PCIe functions.
+Rework the subled loop in max77705_add_led() around
+fwnode_for_each_child_node_scoped() instead of adding a manual
+fwnode_handle_put(child) before the early return on a
+max77705_parse_subled() failure, so the reference on the current
+child fwnode is released automatically on every exit path from the
+loop. child is never used outside the loop, so the now-unused outer
+child declaration is dropped along with it.
 
-The devicetree nodes erroneously include a "pci" device_type property
-for the two PCIe functions.  That property should only be used for a
-PCI device "that implements a PCI bus".  Remove this property for the
-two function nodes.
-
-In addition, only PCI bridge nodes should be named "pci@" (or "pcie@").
-PCI endpoint nodes are typically named based on the functionality they
-implement (e.g., "ethernet@").  In this case, the role of these PCI
-functions is not (yet) specified, and furthermore they will be used
-with PCI endpoint buses.  Rename these to use "dev@", following the
-convention used in of_pci_make_dev_node() for dynamically-created
-devicetree nodes.
-
-Finally, these nodes define #address-cells, #size-cells, and ranges
-properties, which are not normally defined for PCIe endpoints.  Remove
-these properties as well; they can be added back once they are actually
-needed/used.
-
-Fixes: 33cae252054a6 ("arm64: dts: qcom: qcs8550: add QCS8550 RB5Gen2 board support")
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Alex Elder <elder@riscstar.com>
-Link: https://lore.kernel.org/r/20260902214321.1721477-7-elder@riscstar.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Suggested-by: Krzysztof Kozlowski <krzk@kernel.org>
+Fixes: 3b6eaa3db567 ("leds: Use fwnode_for_each_child_node() instead")
+Signed-off-by: Manush Prajwal <manushprajwal555@gmail.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://patch.msgid.link/6a914e1e.7d702ed2.1273e8.2a52@mx.google.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qcs8550-rb5gen2.dts | 12 ++----------
- 1 file changed, 2 insertions(+), 10 deletions(-)
+ drivers/leds/leds-max77705.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs8550-rb5gen2.dts b/arch/arm64/boot/dts/qcom/qcs8550-rb5gen2.dts
-index 9df8dcd6c62b6..e6340f7d30dd8 100644
---- a/arch/arm64/boot/dts/qcom/qcs8550-rb5gen2.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs8550-rb5gen2.dts
-@@ -1126,20 +1126,12 @@ pcie@3,0 {
- 			ranges;
- 			bus-range = <0x5 0xff>;
+diff --git a/drivers/leds/leds-max77705.c b/drivers/leds/leds-max77705.c
+index 1e2054c1bf80b..4fd803c959890 100644
+--- a/drivers/leds/leds-max77705.c
++++ b/drivers/leds/leds-max77705.c
+@@ -160,7 +160,6 @@ static int max77705_add_led(struct device *dev, struct regmap *regmap, struct fw
+ 	struct max77705_led *led;
+ 	struct led_classdev *cdev;
+ 	struct mc_subled *info;
+-	struct fwnode_handle *child;
+ 	struct led_init_data init_data = {};
  
--			pci@0,0 {
-+			dev@0,0 {
- 				reg = <0x50000 0x0 0x0 0x0 0x0>;
--				#address-cells = <3>;
--				#size-cells = <2>;
--				device_type = "pci";
--				ranges;
- 			};
+ 	led = devm_kzalloc(dev, sizeof(*led), GFP_KERNEL);
+@@ -191,7 +190,7 @@ static int max77705_add_led(struct device *dev, struct regmap *regmap, struct fw
+ 		cdev->brightness_set_blocking = max77705_led_brightness_set_multi;
+ 		cdev->blink_set = max77705_rgb_blink;
  
--			pci@0,1 {
-+			dev@0,1 {
- 				reg = <0x50100 0x0 0x0 0x0 0x0>;
--				#address-cells = <3>;
--				#size-cells = <2>;
--				device_type = "pci";
--				ranges;
- 			};
- 		};
- 	};
+-		fwnode_for_each_child_node(np, child) {
++		fwnode_for_each_child_node_scoped(np, child) {
+ 			ret = max77705_parse_subled(dev, child, &info[i]);
+ 			if (ret < 0)
+ 				return ret;
 -- 
 2.53.0
 
