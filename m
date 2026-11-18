@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019343;
-	b=X+7dXI0T8LpoeoYwrT+iUSeVRB1qbF6YFQRvwE/4NkjV0zOuP3WRyFzi/7Yzx+KpFWNM
-	 sAavcc3TC7pX5T+8dJ/Y9cg79OqeW4I3iph7X5Um+q/6dQckbuQyyKkfpPnUuLpXvEf6z
-	 Q6be9v1FRmT6P2r2YyNgsjkfHtrwUbiOq6yh7zttVtzMmoGXfriU4Ew5Jd0/gpNkYJo7k
-	 +P34uLJssgH7Lci6Ohg5efbnBAwt5ERUr9BZWPf1+zN+CKNvSzQyxka09TabGFu7fezrk
-	 owZn8KeCkNrr3Sj4wMpZYZTWcWU4Qc03Hm+8CcXVzkANcdwpG0hiu4jHfnoHbbEtPzQ==
+	t=1795019347;
+	b=Uo4cCgGhASPIm3SE7zt6qmcOM2/QHamZv8HSRyCOJnEyUz7w/6DnFkTOECH1surIwBsU
+	 lYvj6mNtgA+bK1ZNjat/vSgK16nDj19So2aR3dD4hvkkdccXpW7ABAjTH3v2jRfnwUyde
+	 VLwKKVMHEWSdEQlPVZZhoXbJpR3yfbB/vg6jlXUcueKa1P7XsAJDkIpL+e+Cmx2B3xnfP
+	 vn+HZvcJ2uC0HU9c8/0PHFLwkEOwSpyzQjf5aY61g45BdE7LtcIstBMsO37/mvXC4Uwsw
+	 zqRVdJtpn3D5qZY0duD8MAmhnZP4w6j9Zqm8AyK0q3WNzPYxHltERur+daSRTq9gnLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019343;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019347;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=D1zPn5wB8IrSNyvbO5kK2H7CLUESwRzh+Uw3eTs+B2E=;
-	b=enwlEIvPSERYAs9Abjx6LX0KX7LAATSIYmUrxhhIX5YFpkdVc+uWQTCOI8bGrRvszqvz
-	 MmU+J8apGs6s3rHaGxNUuC3L1DduYE9vogVnAv8wLY5FwJupadVfCkRZxrFsV4bNbwt0b
-	 nTxd33Ovz5ZjPLbQ2SftLGbcvFFkkFkUGL8nNvhtVuqXM2EYtbek+ZrfYd4F82cts0lcA
-	 MCpMZzVqULYNhsQlhJYvsuQ+Au1Kj1luvO8+7gPHygmT+MbLzgyT8tkMuZkbt4NjzK7ry
-	 jyRPQU5mEz5MdJzUWEROYHoaLOjrpY0W6YEIHfAIf2ubPOEu2ElOXpHx9Du6Q2Z4Vpw==
+	bh=UJSLE5AlFFToK5Iiduq+KhU6N/g0TH9uaBViJuM79Qs=;
+	b=2ptQG+sGsGQYubNfROXbYlR9nMdLxBgPI4xoP2wY+6SGNFfG1FsD0iWJOdGl6bZUGzJB
+	 Xk8ez4/N7U7NH2hn/NX6sXF1D2DUBzdFpcKGVLHZMzeIwZpV5j7iB8VJJnY3QBfu55TXs
+	 RgFy0eJaTfWmY47ceFq251wHaidgNM3ijRcVNhaFlowA8JElmuMr9dtnVQNgiXuNurFh8
+	 b78KfetBlR9heHrfIR43xuC/Vw3Q2Jmak3adTjdXxwkY5o2blf7MR2RXxnbQcIoG/APl2
+	 VPZ0/YwIXyv+AoEkTMfdW/n156HQYDErXsu1xEE7FQBD+t8Kbfaxv0Dc7UB1sStT7yw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZlWTQVoq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dJ43Mvcm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3119606A335;
-	Wed, 18 Nov 2026 16:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E682160A2618;
+	Wed, 18 Nov 2026 16:29:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZlWTQVoq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30A671F000C4;
-	Wed, 18 Nov 2026 16:29:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dJ43Mvcm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3D911F000C4;
+	Wed, 18 Nov 2026 16:29:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019343;
-	bh=D1zPn5wB8IrSNyvbO5kK2H7CLUESwRzh+Uw3eTs+B2E=;
+	s=korg; t=1795019346;
+	bh=UJSLE5AlFFToK5Iiduq+KhU6N/g0TH9uaBViJuM79Qs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZlWTQVoq3+ETp/I8V++ARMKJAVgB2bWUae6HdtNH3fPJ6oOdesdXha8i9kNDZ+Ahr
-	 SG2kxU3eiYa5qLVMBNGM6q0UICZB5EmFj4U8mTAnQa9MiZv9xgXAgxWxfvKHyPuYJQ
-	 JCfs4lSagMw7uj5tjiQxPw/wrPds0Q5I0WDCwZ9E=
+	b=dJ43MvcmSuiO89+/DtaxqCpWchw6E6gi9HZFCLEEkd80+/YzfeeI1l54b3IQ7pF3R
+	 X57wjuId4lKVn4mAvNxoXb0tnE/YxTMT53tTsfzyPtq2uvldF7P/lsuifq3Sug7p+W
+	 SvGkbYtsgGZ715baVF1We64sSaGLc/Oysv6QK698=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1561/2651] wifi: mac80211: fix mbssid/rnr allocation in beacon data
-Date: Wed, 18 Nov 2026 15:46:41 +0100
-Message-ID: <20261118150344.151776842@linuxfoundation.org>
+Subject: [PATCH 7.3 1562/2651] wifi: cfg80211: reg: protect regdb pointer with RCU
+Date: Wed, 18 Nov 2026 15:46:42 +0100
+Message-ID: <20261118150344.185124026@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,111 +69,204 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit baf0d4feed2f0fed8e045f948534a4bd43ae464e ]
+[ Upstream commit 298618f28bd3d1da677828354b504c12e2f375e4 ]
 
-These structs are placed after the tail, but that can make
-them unaligned. Change the order so the structs are after
-one another, and then followed by the head/tail/elements.
+reg_query_regdb_wmm() is only used by iwlwifi, but even when
+it was introduced was already broken, as it reads the global
+db without any locking (drivers can't really guarantee any).
+Certainly iwlwifi doesn't since it calls it for FW messages.
+Therefore, it can race against regdb updates. The function
+uses a local pointer, but doesn't help.
 
-Assisted-by: LLM
-Fixes: 2b3171c6fe0a ("mac80211: MBSSID beacon handling in AP mode")
-Link: https://patch.msgid.link/20261005224950.2f554b2c7c10.Ie961eb6b1435f956446e052936258758b966c67f@changeid
+Use RCU to protect the regdb pointer to fix that, and update
+the documentation to mention this (and do some cleanups).
+
+Fixes: 19d3577e35e0 ("cfg80211: Add API to allow querying regdb for wmm_rule")
+Link: https://patch.msgid.link/20261006120655.7c261d237cae.If21cf0af3b0d7e8c62c45ece5dc654b30c9d7757@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/cfg.c | 53 +++++++++++++++++++++++++++-------------------
- 1 file changed, 31 insertions(+), 22 deletions(-)
+ include/net/cfg80211.h | 12 ++++++------
+ net/wireless/reg.c     | 41 +++++++++++++++++++++++++----------------
+ 2 files changed, 31 insertions(+), 22 deletions(-)
 
-diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index bfdfc018a185d..7cbd3a3c2ebdf 100644
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -1477,6 +1477,7 @@ ieee80211_assign_beacon(struct ieee80211_sub_if_data *sdata,
- 	struct beacon_data *new, *old;
- 	int new_head_len, new_tail_len;
- 	int size, err;
-+	u8 *pos;
- 	u64 _changed = BSS_CHANGED_BEACON;
- 	struct ieee80211_bss_conf *link_conf = link->conf;
+diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
+index 74466f559252d..0be755acb79d0 100644
+--- a/include/net/cfg80211.h
++++ b/include/net/cfg80211.h
+@@ -8205,20 +8205,20 @@ bool regulatory_pre_cac_allowed(struct wiphy *wiphy);
+  */
  
-@@ -1504,20 +1505,16 @@ ieee80211_assign_beacon(struct ieee80211_sub_if_data *sdata,
- 	/* new or old multiple BSSID elements? */
- 	if (params->mbssid_ies) {
- 		mbssid = params->mbssid_ies;
--		size += struct_size(new->mbssid_ies, elem, mbssid->cnt);
--		if (params->rnr_ies) {
--			rnr = params->rnr_ies;
--			size += struct_size(new->rnr_ies, elem, rnr->cnt);
--		}
--		size += ieee80211_get_mbssid_beacon_len(mbssid, rnr,
--							mbssid->cnt);
-+		rnr = params->rnr_ies;
- 	} else if (old && old->mbssid_ies) {
- 		mbssid = old->mbssid_ies;
-+		rnr = old->rnr_ies;
-+	}
+ /**
+- * reg_query_regdb_wmm -  Query internal regulatory db for wmm rule
+- * Regulatory self-managed driver can use it to proactively
+- *
++ * reg_query_regdb_wmm -  Query internal regulatory db for WMM rules
+  * @alpha2: the ISO/IEC 3166 alpha2 wmm rule to be queried.
+  * @freq: the frequency (in MHz) to be queried.
+- * @rule: pointer to store the wmm rule from the regulatory db.
++ * @rule: pointer to store the WMM rule from the regulatory db.
+  *
+- * Self-managed wireless drivers can use this function to  query
++ * Self-managed wireless drivers can use this function to query
+  * the internal regulatory database to check whether the given
+- * ISO/IEC 3166 alpha2 country and freq have wmm rule limitations.
++ * ISO/IEC 3166 alpha2 country and freq have WMM rule limitations.
+  *
+  * Drivers should check the return value, its possible you can get
+  * an -ENODATA.
+  *
++ * This uses RCU internally so can be called in just about any context.
++ *
+  * Return: 0 on success. -ENODATA.
+  */
+ int reg_query_regdb_wmm(char *alpha2, int freq,
+diff --git a/net/wireless/reg.c b/net/wireless/reg.c
+index 44226687349e5..bd83743fb35d0 100644
+--- a/net/wireless/reg.c
++++ b/net/wireless/reg.c
+@@ -590,7 +590,7 @@ static inline int call_crda(const char *alpha2)
+ #endif /* CONFIG_CFG80211_CRDA_SUPPORT */
+ 
+ /* code to directly load a firmware database through request_firmware */
+-static const struct fwdb_header *regdb;
++static const struct fwdb_header __rcu *global_regdb;
+ 
+ struct fwdb_country {
+ 	u8 alpha2[2];
+@@ -895,16 +895,19 @@ static int __regdb_query_wmm(const struct fwdb_header *db,
+ 
+ int reg_query_regdb_wmm(char *alpha2, int freq, struct ieee80211_reg_rule *rule)
+ {
+-	const struct fwdb_header *hdr = regdb;
+ 	const struct fwdb_country *country;
++	const struct fwdb_header *regdb;
+ 
++	guard(rcu)();
 +
-+	if (mbssid) {
- 		size += struct_size(new->mbssid_ies, elem, mbssid->cnt);
--		if (old->rnr_ies) {
--			rnr = old->rnr_ies;
-+		if (rnr)
- 			size += struct_size(new->rnr_ies, elem, rnr->cnt);
--		}
- 		size += ieee80211_get_mbssid_beacon_len(mbssid, rnr,
- 							mbssid->cnt);
- 	}
-@@ -1529,26 +1526,38 @@ ieee80211_assign_beacon(struct ieee80211_sub_if_data *sdata,
- 	/* start filling the new info now */
++	regdb = rcu_dereference(global_regdb);
+ 	if (!regdb)
+ 		return -ENODATA;
  
- 	/*
--	 * pointers go into the block we allocated,
--	 * memory is | beacon_data | head | tail | mbssid_ies | rnr_ies
-+	 * pointers go into the block we allocated, the order in memory is
-+	 *  - struct beacon_data
-+	 *  - struct mbssid_ies (including variable array)
-+	 *  - struct rnr_ies (including variable array)
-+	 *  - beacon head
-+	 *  - beacon tail
-+	 *  - mbssid/rnr elements
-+	 * so that the structs (which contain pointers) are all aligned
- 	 */
--	new->head = ((u8 *) new) + sizeof(*new);
--	new->tail = new->head + new_head_len;
--	new->head_len = new_head_len;
--	new->tail_len = new_tail_len;
--	/* copy in optional mbssid_ies */
-+	pos = (u8 *)(new + 1);
- 	if (mbssid) {
--		u8 *pos = new->tail + new->tail_len;
+ 	if (IS_ERR(regdb))
+ 		return PTR_ERR(regdb);
+ 
+-	country = &hdr->country[0];
++	country = &regdb->country[0];
+ 	while (country->coll_ptr) {
+ 		if (alpha2_equal(alpha2, country->alpha2))
+ 			return __regdb_query_wmm(regdb, country, freq, rule);
+@@ -973,15 +976,13 @@ static int regdb_query_country(const struct fwdb_header *db,
+ 
+ static int query_regdb(const char *alpha2)
+ {
+-	const struct fwdb_header *hdr = regdb;
++	const struct fwdb_header *regdb = rtnl_dereference(global_regdb);
+ 	const struct fwdb_country *country;
+ 
+-	ASSERT_RTNL();
 -
- 		new->mbssid_ies = (void *)pos;
- 		pos += struct_size(new->mbssid_ies, elem, mbssid->cnt);
--		pos += ieee80211_copy_mbssid_beacon(pos, new->mbssid_ies,
--						    mbssid);
- 		if (rnr) {
- 			new->rnr_ies = (void *)pos;
- 			pos += struct_size(new->rnr_ies, elem, rnr->cnt);
--			ieee80211_copy_rnr_beacon(pos, new->rnr_ies, rnr);
- 		}
+ 	if (IS_ERR(regdb))
+ 		return PTR_ERR(regdb);
+ 
+-	country = &hdr->country[0];
++	country = &regdb->country[0];
+ 	while (country->coll_ptr) {
+ 		if (alpha2_equal(alpha2, country->alpha2))
+ 			return regdb_query_country(regdb, country);
+@@ -993,6 +994,7 @@ static int query_regdb(const char *alpha2)
+ 
+ static void regdb_fw_cb(const struct firmware *fw, void *context)
+ {
++	const struct fwdb_header *regdb;
+ 	int set_error = 0;
+ 	bool restore = true;
+ 	void *db;
+@@ -1006,6 +1008,7 @@ static void regdb_fw_cb(const struct firmware *fw, void *context)
+ 	}
+ 
+ 	rtnl_lock();
++	regdb = rtnl_dereference(global_regdb);
+ 	if (regdb && !IS_ERR(regdb)) {
+ 		/* negative case - a bug
+ 		 * positive case - can happen due to race in case of multiple cb's in
+@@ -1014,11 +1017,11 @@ static void regdb_fw_cb(const struct firmware *fw, void *context)
+ 		 * Either case, just restore and free new db.
+ 		 */
+ 	} else if (set_error) {
+-		regdb = ERR_PTR(set_error);
++		rcu_assign_pointer(global_regdb, ERR_PTR(set_error));
+ 	} else if (fw) {
+ 		db = kmemdup(fw->data, fw->size, GFP_KERNEL);
+ 		if (db) {
+-			regdb = db;
++			rcu_assign_pointer(global_regdb, db);
+ 			restore = context && query_regdb(context);
+ 		} else {
+ 			restore = true;
+@@ -1043,7 +1046,7 @@ static int query_regdb_file(const char *alpha2)
+ 
+ 	ASSERT_RTNL();
+ 
+-	if (regdb)
++	if (rcu_access_pointer(global_regdb))
+ 		return query_regdb(alpha2);
+ 
+ 	alpha2 = kmemdup(alpha2, 2, GFP_KERNEL);
+@@ -1061,8 +1064,8 @@ static int query_regdb_file(const char *alpha2)
+ 
+ int reg_reload_regdb(void)
+ {
++	const struct fwdb_header *db, *old;
+ 	const struct firmware *fw;
+-	void *db;
+ 	int err;
+ 	const struct ieee80211_regdomain *current_regdomain;
+ 	struct regulatory_request *request;
+@@ -1083,9 +1086,7 @@ int reg_reload_regdb(void)
+ 	}
+ 
+ 	rtnl_lock();
+-	if (!IS_ERR_OR_NULL(regdb))
+-		kfree(regdb);
+-	regdb = db;
++	old = rcu_replace_pointer_rtnl(global_regdb, db);
+ 
+ 	/* reset regulatory domain */
+ 	current_regdomain = get_cfg80211_regdom();
+@@ -1106,6 +1107,11 @@ int reg_reload_regdb(void)
+ 
+ out_unlock:
+ 	rtnl_unlock();
++
++	if (!IS_ERR_OR_NULL(old)) {
++		synchronize_rcu();
++		kfree(old);
 +	}
-+
-+	new->head = pos;
-+	new->head_len = new_head_len;
-+	pos += new_head_len;
-+	new->tail = pos;
-+	new->tail_len = new_tail_len;
-+	pos += new_tail_len;
-+
-+	/* copy in optional mbssid_ies */
-+	if (mbssid) {
-+		pos += ieee80211_copy_mbssid_beacon(pos, new->mbssid_ies,
-+						    mbssid);
-+		if (rnr)
-+			ieee80211_copy_rnr_beacon(pos, new->rnr_ies, rnr);
- 		/* update bssid_indicator */
- 		if (new->mbssid_ies->cnt && new->mbssid_ies->elem[0].len > 2)
- 			link_conf->bssid_indicator =
+  out:
+ 	release_firmware(fw);
+ 	return err;
+@@ -4388,6 +4394,7 @@ void regulatory_exit(void)
+ {
+ 	struct regulatory_request *reg_request, *tmp;
+ 	struct reg_beacon *reg_beacon, *btmp;
++	const struct fwdb_header *db;
+ 
+ 	cancel_work_sync(&reg_work);
+ 	cancel_crda_timeout_sync();
+@@ -4417,8 +4424,10 @@ void regulatory_exit(void)
+ 		kfree(reg_request);
+ 	}
+ 
+-	if (!IS_ERR_OR_NULL(regdb))
+-		kfree(regdb);
++	/* RCU is irrelevant on the way out */
++	db = rcu_dereference_protected(global_regdb, true);
++	if (!IS_ERR_OR_NULL(db))
++		kfree(db);
+ 	if (!IS_ERR_OR_NULL(cfg80211_user_regdom))
+ 		kfree(cfg80211_user_regdom);
+ 
 -- 
 2.53.0
 
