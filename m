@@ -1,55 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057825;
-	b=edbzzTiYsLWCtrX4yl7OuAainwBk7Y1aJss6iF0/jM4y8ZVAKVtYpRE8jAZMO8dUZue6
-	 0Va7Zmuz2hLM3kNV/QMpMSR8xCEZLX+uDi7+GCY/F1UiBgGd5pEde0ZZ0h+X/U1x3tGpW
-	 nw/RLPdG7P5jZ8YGpgEh9wavGCJpB1Kpra13BPKPKxMgsD5Szv2RzLQrEXlKWH2YFAGdD
-	 1UnByeXHBk8WmcuqDYOkPcRPCffADp4RevoR4q8OEZKtCTGfJ8gKsQq25EBwAhsYkAiAB
-	 N9wj4yZTHyzAD1/wthKkpOXD/4E8vQ80gl/F5HLPIEU1IWnGix6tITNV8ompoX/uBAQ==
+	t=1795057827;
+	b=F6Jh34ryyJsu+UTVFD0k0/vi2T2+i20cxqo4OjhAcyKZX15U6me+N5bu2jiAF4GPDds0
+	 qDeHyuRwnXJDG/SWgH36VxI1olWIsuN/DNoT/Uf2tBAmxXqzGgYhHqb8706yEg5FefCiS
+	 M27q67y7f1+9VGDuOfQOCbIVPRBSCAD167F/fdTeDFKjIHJxm5spLgxMVeWMpVLTjk2ID
+	 eV/kCWkaO1uteQB2fpUS6qF0MkZoJNtOW+h5g5x+Zgpg7QxzZDDJMv3ZaIdQDGddNQb56
+	 nq2EPc8xdHg5QYRKhbScE78wG3eugvwi8o7rO3wyv5YMLzMIMO0l5lkG/53+vUTo7mg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057825;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057827;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cKcOc2qsCVyIEtuuYqtedCOX2fz20C9wRhjHyUMvTC8=;
-	b=u/Pri1SJe9bKTlHJaMSjLpMvjB7T2n7kbV8/scRjQvuXSB9pRq+5DstQchPP/dUveiYu
-	 8ieZmCxvrqHEA1dcDWUMzkZHFMO9/D1LE5RCuq20NZN4oDjYTC3QkvAtsDsO7O6TxTgw/
-	 tK/tDDfGO/lzQsGz5uhcH+IKNQHaWZ8ATr0Ievk4ekEw3mpzc4V91UNgKzMauYcQXeuW3
-	 VMXwfqxx+Pw7g9ESOuTQ8kqQCGFYah+e0vIAalg3t4u5zVz7gRd4A40pWsP0ERDujGnWs
-	 RZu6fhAnsqufFBq+bvS+iRGginfynJbNKt4hqe4umRNDFR9ElQuCUU3Oz3TrNs3mPoA==
+	bh=UxxbaacC0zpi6qyMM09QkakcHDFurkNgo45iD3oTaGs=;
+	b=C9MMntoLUiY2l5DC3MUc3A2+C6lk4aveVBdNJ07E+oRrc76T7Xpwfqgv9BpJsjjAF+Da
+	 ZR6Tg7eiSaa35W8My/vi7UHso8iXgi6HOQPoYfFJTzULADsVAXs4FBvIyLyaOvhkgJPON
+	 R+e5gpEPv7d3MliLruIv98XLyzO4p4HyvSG1ViD0msuJsOccjU35D9/V72ZzKZ/wJiBD1
+	 rJf2VYh/cSrwITpEXnn7rfDV61JQT6aKxbmj3jaJHe5alwzs4mPkAu5LNeSQhHMxqqwpT
+	 ktQbCTTR4j/Z6XJprdfmYF3OjI8CMx38pMqkb7E13XN2gUwG7RGYiwzJrvD8/X5ODuQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b1DtEpJ0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CSo2UDFp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED441606A31C;
-	Thu, 19 Nov 2026 03:10:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADA32606A31C;
+	Thu, 19 Nov 2026 03:10:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b1DtEpJ0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E0EB1F000C8;
-	Thu, 19 Nov 2026 03:10:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CSo2UDFp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED1361F000C4;
+	Thu, 19 Nov 2026 03:10:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057824;
-	bh=cKcOc2qsCVyIEtuuYqtedCOX2fz20C9wRhjHyUMvTC8=;
+	s=korg; t=1795057827;
+	bh=UxxbaacC0zpi6qyMM09QkakcHDFurkNgo45iD3oTaGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b1DtEpJ08GkK7ipHV6QbdxJ5tAfl779RqgI91WRlKZ3TVi52+P0EwAinqBDtRv1Mh
-	 CeOg+T3+QeZ5r8XISfJKm/KYw4Ax+ZVfsLwNQCirJ5xwEhktX9MAuubxk77U98VihE
-	 PIS3w+QJpFIe9jQuUE6PGD8XoHpq56QnaPS1sjY4=
+	b=CSo2UDFpntK1f9D7+KrZEKghvSmwfFFACPu9pGe+Y/Suuf885wuuWVizRgeQ+pSWQ
+	 eNnl5Xo/B1SqcmHIcXrN+LIlPQRZ7Wa+zo/9AD0zPgfEAIkfxJX2xdy9b+m1zGfFoB
+	 xuCX19GNGXcPqyvXrPcNCc9cY2Li/pqTA3MSt7uw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qing Luo <luoqing@kylinos.cn>,
-	Xin Long <lucien.xin@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <tanyuan98@outlook.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Yuhang Zheng <z1652074432@gmail.com>,
+	Yucheng Lu <kanolyc@gmail.com>,
+	Stephen Hemminger <stephen@networkplumber.org>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Harshvardhan Jha <harshvardhan.j.jha@oracle.com>,
+	Wengang Wang <wen.gang.wang@oracle.com>,
 	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0226/1848] sctp: auth: discard auth_chunk when skb_clone fails
-Date: Wed, 18 Nov 2026 15:37:44 +0100
-Message-ID: <20261118145921.424570737@linuxfoundation.org>
+Subject: [PATCH 5.10 0227/1848] net/sched: sch_netem: fix out-of-bounds access in packet corruption
+Date: Wed, 18 Nov 2026 15:37:45 +0100
+Message-ID: <20261118145921.501561002@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,62 +76,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qing Luo <luoqing@kylinos.cn>
+From: Yucheng Lu <kanolyc@gmail.com>
 
-[ Upstream commit 9ae7ed101cf28613071ebfbc42668c8917a670cf ]
+[ Upstream commit d64cb81dcbd54927515a7f65e5e24affdc73c14b ]
 
-When processing AUTH + COOKIE-ECHO packets, if skb_clone() fails
-due to memory pressure, chunk->auth_chunk is NULL. The original
-code still sets chunk->auth = 1 and continues, leaving the
-COOKIE-ECHO to be processed without a valid auth_chunk for
-deferred verification.
+In netem_enqueue(), the packet corruption logic uses
+get_random_u32_below(skb_headlen(skb)) to select an index for
+modifying skb->data. When an AF_PACKET TX_RING sends fully non-linear
+packets over an IPIP tunnel, skb_headlen(skb) evaluates to 0.
 
-Discard the AUTH chunk early via pdiscard when skb_clone() fails,
-so that the receive loop can continue processing remaining chunks
-in the inqueue instead of stalling the entire packet.
+Passing 0 to get_random_u32_below() takes the variable-ceil slow path
+which returns an unconstrained 32-bit random integer. Using this
+unconstrained value as an offset into skb->data results in an
+out-of-bounds memory access.
 
-Signed-off-by: Qing Luo <luoqing@kylinos.cn>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260723061107.384106-1-l1138897701@163.com
+Fix this by verifying skb_headlen(skb) is non-zero before attempting
+to corrupt the linear data area. Fully non-linear packets will silently
+bypass the corruption logic.
+
+Fixes: c865e5d99e25 ("[PKT_SCHED] netem: packet corruption option")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
+Signed-off-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Yuhang Zheng <z1652074432@gmail.com>
+Signed-off-by: Yucheng Lu <kanolyc@gmail.com>
+Reviewed-by: Stephen Hemminger <stephen@networkplumber.org>
+Link: https://patch.msgid.link/45435c0935df877853a81e6d06205ac738ec65fa.1774941614.git.kanolyc@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Harshvardhan Jha <harshvardhan.j.jha@oracle.com>
+(cherry picked from commit d64cb81dcbd54927515a7f65e5e24affdc73c14b)
+
+Conflicts:
+	net/sched/sch_netem.c
+Signed-off-by: Wengang Wang <wen.gang.wang@oracle.com>
 Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/associola.c   | 4 ++++
- net/sctp/endpointola.c | 4 ++++
- 2 files changed, 8 insertions(+)
+ net/sched/sch_netem.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/sctp/associola.c b/net/sctp/associola.c
-index ad1a7368f6ab0..13a3cb5c95ae0 100644
---- a/net/sctp/associola.c
-+++ b/net/sctp/associola.c
-@@ -1019,6 +1019,10 @@ static void sctp_assoc_bh_rcv(struct work_struct *work)
- 			if (next_hdr->type == SCTP_CID_COOKIE_ECHO) {
- 				chunk->auth_chunk = skb_clone(chunk->skb,
- 							      GFP_ATOMIC);
-+				if (!chunk->auth_chunk) {
-+					chunk->pdiscard = 1;
-+					continue;
-+				}
- 				chunk->auth = 1;
- 				continue;
- 			}
-diff --git a/net/sctp/endpointola.c b/net/sctp/endpointola.c
-index efffde7f2328e..2313ea9fbe065 100644
---- a/net/sctp/endpointola.c
-+++ b/net/sctp/endpointola.c
-@@ -362,6 +362,10 @@ static void sctp_endpoint_bh_rcv(struct work_struct *work)
- 			if (next_hdr->type == SCTP_CID_COOKIE_ECHO) {
- 				chunk->auth_chunk = skb_clone(chunk->skb,
- 								GFP_ATOMIC);
-+				if (!chunk->auth_chunk) {
-+					chunk->pdiscard = 1;
-+					continue;
-+				}
- 				chunk->auth = 1;
- 				continue;
- 			}
+diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
+index 3e3bced82c564..6c206c97759a7 100644
+--- a/net/sched/sch_netem.c
++++ b/net/sched/sch_netem.c
+@@ -508,8 +508,9 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 			goto finish_segs;
+ 		}
+ 
+-		skb->data[prandom_u32() % skb_headlen(skb)] ^=
+-			1<<(prandom_u32() % 8);
++		if (skb_headlen(skb))
++			skb->data[prandom_u32() % skb_headlen(skb)] ^=
++				1 << (prandom_u32() % 8);
+ 	}
+ 
+ 	if (unlikely(sch->q.qlen >= sch->limit)) {
 -- 
 2.53.0
 
