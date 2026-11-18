@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042099;
-	b=io52itDXLqRDVBb7aZkGXhB10RJpCkfkKNicBoiqGEGy9wUfCTF3luF36wKtkUnV+kFp
-	 Fz1LO5IKk0ZBt9qYpSSPiIazPRKIHPtCEFyafTQjFIrSqXCHf5OmkfFjAG4N0fFCYhzPj
-	 ELLEik6bLVka1xHjJk+WKEuyIzJIr2L7GdBrJw4WhSyJY1b3HBt1MWXm78075GLgW6NsF
-	 LkT5ZFIGIPtGZpsFNlL7zcys3hE2K+Kxosqkj1MOOCzwVnlwlnIIZEiAHwEmP8WhDsrv8
-	 OjpX+Za97lilJZbq61jP4MN9mR0+k2BsA4rIaym5szdG/4MyqzG9/vD6Ss0ghX5l8Ww==
+	t=1795042102;
+	b=MvwjIiuAG7/HA1lkyoWxEzeWzn6+Xxp9/Phn5uUfulJkFmtf/tu+pCG5PyfGPSLlqG1O
+	 lU4OQa6lYbS4cZa0IzwGgiw2urg49AIS/6YF+4K+1IK3EIntnu7wTNKf4yWijzu3hO0Jd
+	 78kgz4hHeWmWl4o3TwUA+cjoEOxxkTJUe6wY40yQna8aYpCxpGldTnyiQO/Tu4C1dZzqB
+	 EhrIF5T9/Pl7rqj3S3fvEwbbIJpnTjkKReOPpNVNdmDpEXq2KvP2dyqyAFcX6t4HtWLGJ
+	 b2TGW6VLovLyWjKCyU1uJcZ4SKTQ5UuYEXiQPwEXmqeCmJ7f+0VxACY9okaOl3Y14bg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042099;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042102;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ib8oC3nqy7Ob8cRverWngAnmeUONoaE5QWqVBuWTN68=;
-	b=q9oyLgqN8lj9jmmOzfSwcTnUiPWzPsVJ7RlUZabUJwLAFW/kPohI5AohS1na2FaMnp3C
-	 HeyxADfftBrs2Y1iae3Db4u5Iqecca/+lzg69DqVJTRC+t4zXQlx8M5Q4fr3frNSqEJYe
-	 SK3zBbFOKASIycw9Qdk7066KNKKcAdIas7RJP/F+/u7+zvN2sLaRHlo6FbKD+DauykD1U
-	 Zgkt5mMWTOwzmNkbqGUnmaGIGBTONytKlkTU5HcOJxI/ASpD4446S4mFgqIHoSvjBaEVO
-	 1LYWmnraS9LZt5R1KWqTQYKjKZ2nyJNMQt0TFv3TwLlsCli4OO0JXGbp9eLRFBAdYMw==
+	bh=OsBYlYGmyMR4WimAB0FsMqm8Re1bMt4A9viy8Zggz8c=;
+	b=sGzKwEu/EH2fdRE4Kfet/IpXFop49/70f/hGSGEY0MobpyT0gtNwjq4b6UI8zm2/+wUG
+	 fmtoDTCRq5trK90NZ5xbaOpwVc1vMfRHkHjHzFBIp/DQ5n4VYa81l06jRN+ZvzDyVsI6Z
+	 xNFmFKRj4iAK2MIgjLxMpnJZWAG42e88YOW0wgycbDPtBoe4UW0Rp63d7/ucAnMDGWNxq
+	 rKoZL3JGDrLdZWtZDA+WZnKtfEm3W/61UBPMD/oH2LBK5LQg/Ho3ixWinuXFc9AHBEbOD
+	 Ct/V9H/jn8j/InHxNBiXlTA2A7trfkcsy1dZQU7mdEwm6c+/faDKuEC5OgZF/CaXGOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bbAmdPtr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="NkbRY/sw";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1781D606A31C;
-	Wed, 18 Nov 2026 22:48:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFA1D606A31C;
+	Wed, 18 Nov 2026 22:48:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bbAmdPtr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CA751F000C4;
-	Wed, 18 Nov 2026 22:48:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NkbRY/sw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D401F000C4;
+	Wed, 18 Nov 2026 22:48:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042098;
-	bh=Ib8oC3nqy7Ob8cRverWngAnmeUONoaE5QWqVBuWTN68=;
+	s=korg; t=1795042101;
+	bh=OsBYlYGmyMR4WimAB0FsMqm8Re1bMt4A9viy8Zggz8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bbAmdPtrK3aR11G4PlVLVtfHCBeXSGFbS0/r9J7DnVSv7smqcvjOiTvJxyn5VX1BL
-	 yNzU2avl5t3S9TNKTVj3yDH/4C73yHSZS9Vhq5pdx96nu6OuD/vxHQ8jUTHjohuDW3
-	 6gNnj8Mh2Gta78oGIPhV8Sj0ZeWDovndC2a8ErX4=
+	b=NkbRY/swc+mk9zYc80g+xYZJ4pH+wku6Mf/K0b08ZNc4L5HZp2FztobB/oPn6eoZq
+	 9Xs0MS/bFdm4/ad49utrbV5hHaWVVd1HTg1XiVrglJC5rpWz5hUfeDs98L2yeRukXk
+	 u6ez8+gdLsJBHiDeb41iPcioURooZDIpBtNi9DRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cen Zhang <zzzccc427@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3049/3318] ALSA: pcm: Remove channel-map controls before freeing substreams
-Date: Wed, 18 Nov 2026 16:01:11 +0100
-Message-ID: <20261118150451.622909433@linuxfoundation.org>
+Subject: [PATCH 6.6 3050/3318] ALSA: pcm: Protect channel-map reads against runtime detach
+Date: Wed, 18 Nov 2026 16:01:12 +0100
+Message-ID: <20261118150451.653991966@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,86 +70,88 @@ Content-Transfer-Encoding: 8bit
 
 From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit d5dd05c1f72a95d8ab06828d7272a185ad2b9185 ]
+[ Upstream commit bb4834d5242c4829c0d8467ee68eb25a9bafc38d ]
 
-A late HDA codec bind on an already registered card builds new PCMs
-before registering them. add_std_chmaps() publishes generic channel-map
-controls during this BUILD stage. If an earlier chmap succeeds and a
-later allocation fails, probe cleanup frees the BUILD PCM while the
-card's control device remains accessible.
+Channel-map controls remain accessible between PCM opens. In-tree HDA
+code publishes the generic controls through add_std_chmaps(), so a
+SNDRV_CTL_IOCTL_ELEM_READ can overlap the final close of the same PCM
+substream.
 
-These generic controls are added directly by snd_pcm_add_chmap_ctls();
-snd_hda_ctls_clear() only removes codec-tracked mixer controls. BUILD
-devices also skip dev_disconnect. snd_pcm_free_stream() then frees the
-substreams before free_chmap() withdraws their generic control:
+pcm_chmap_ctl_get() checks substream->runtime and later reads its channel
+count. Final close clears and frees that runtime under pcm->open_mutex,
+while the control callback holds only controls_rwsem:
 
-  Late HDA codec bind / rollback        Control GET on the live card
-  ------------------------------       ----------------------------
-  hda_codec_driver_probe()
-    snd_hda_codec_build_pcms()
-      PCM is BUILD
-    snd_hda_codec_build_controls()
-      add_std_chmaps()
-        publish an earlier chmap
-        later allocation: -ENOMEM
-    snd_hda_codec_cleanup_for_unbind()
-      snd_hda_ctls_clear()
-        generic chmap remains
-      codec_release_pcms()
-        snd_device_free()
-          BUILD: skip dev_disconnect
-          snd_pcm_free_stream()
-            kfree(substream)
-                                       snd_ctl_elem_read()
-                                         down_read(controls_rwsem)
-                                         pcm_chmap_ctl_get()
-                                           walk freed substream
-            free_chmap()
-              snd_ctl_remove()
-                wait for GET
-                                         up_read(controls_rwsem)
+  Control GET                         Final PCM close
+  -----------                         ---------------
+  snd_ctl_elem_read()
+    down_read(controls_rwsem)
+    pcm_chmap_ctl_get()
+      check substream->runtime
+                                      lock(pcm->open_mutex)
+                                      snd_pcm_release_substream()
+                                        snd_pcm_detach_substream()
+                                          substream->runtime = NULL
+                                          kfree(runtime)
+                                      unlock(pcm->open_mutex)
+      substream->runtime->channels
+        NULL or freed-pointer access
+    up_read(controls_rwsem)
 
-The control read lock cannot protect a substream already freed before
-control removal starts. The failure above occurs before
-snd_card_register(), so the PCM has not transitioned out of BUILD.
+Reloading the cleared field can fault through NULL, while retaining the
+old pointer can access freed storage. controls_rwsem keeps the control
+alive, but does not serialize the matching PCM close.
 
-Move free_chmap() before the substream free loop. Its snd_ctl_remove()
-withdraws the control and drains readers under controls_rwsem before any
-substream is released. Normal registered-device disconnect already
-removes the control, so the later call remains harmless on that path.
+Copy the channel count under open_mutex and use that scalar for the map
+lookup. Use trylock with -EBUSY because snd_pcm_dev_disconnect() takes
+open_mutex before removing controls under controls_rwsem; blocking in
+the reverse order from GET could deadlock.
 
 Fixes: 2d3391ec0ecc ("ALSA: PCM: channel mapping API implementation")
 Assisted-by: LLM
 Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/pm-pmb-4a207d9ef3a3597a74a4-v4-80b0113669b1a62fbbe9@gmail.com
+Link: https://patch.msgid.link/pm-pmb-0b5d6bc7124d0b921f2c-v4-b9738bdeab8823999181@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/core/pcm_lib.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/sound/core/pcm.c b/sound/core/pcm.c
-index fa2f0bcbb63dc..cda9f608e0308 100644
---- a/sound/core/pcm.c
-+++ b/sound/core/pcm.c
-@@ -836,6 +836,9 @@ static void snd_pcm_free_stream(struct snd_pcm_str * pstr)
- 	/* free all proc files under the stream */
- 	snd_pcm_stream_proc_done(pstr);
+diff --git a/sound/core/pcm_lib.c b/sound/core/pcm_lib.c
+index 459c1be526391..0d17b66266336 100644
+--- a/sound/core/pcm_lib.c
++++ b/sound/core/pcm_lib.c
+@@ -2466,6 +2466,7 @@ static int pcm_chmap_ctl_get(struct snd_kcontrol *kcontrol,
+ 	unsigned int idx = snd_ctl_get_ioffidx(kcontrol, &ucontrol->id);
+ 	struct snd_pcm_substream *substream;
+ 	const struct snd_pcm_chmap_elem *map;
++	unsigned int channels;
  
-+	/* Drain channel-map callbacks before freeing the substreams. */
-+	free_chmap(pstr);
+ 	if (!info->chmap)
+ 		return -EINVAL;
+@@ -2474,11 +2475,20 @@ static int pcm_chmap_ctl_get(struct snd_kcontrol *kcontrol,
+ 		return -ENODEV;
+ 	memset(ucontrol->value.integer.value, 0,
+ 	       sizeof(long) * info->max_channels);
+-	if (!substream->runtime)
+-		return 0; /* no channels set */
++	/*
++	 * PCM disconnect takes open_mutex before removing controls.
++	 * Use trylock to avoid a deadlock with controls_rwsem.
++	 */
++	scoped_cond_guard(mutex_try, return -EBUSY,
++			  &info->pcm->open_mutex) {
++		if (!substream->runtime)
++			return 0; /* no channels set */
++		channels = substream->runtime->channels;
++	}
+ 	for (map = info->chmap; map->channels; map++) {
+ 		int i;
+-		if (map->channels == substream->runtime->channels &&
 +
- 	substream = pstr->substream;
- 	while (substream) {
- 		substream_next = substream->next;
-@@ -850,7 +853,6 @@ static void snd_pcm_free_stream(struct snd_pcm_str * pstr)
- 		kfree(setup);
- 	}
- #endif
--	free_chmap(pstr);
- 	if (pstr->substream_count)
- 		put_device(pstr->dev);
- }
++		if (map->channels == channels &&
+ 		    valid_chmap_channels(info, map->channels)) {
+ 			for (i = 0; i < map->channels; i++)
+ 				ucontrol->value.integer.value[i] = map->map[i];
 -- 
 2.53.0
 
