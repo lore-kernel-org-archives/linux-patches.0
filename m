@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046578;
-	b=NqSZCtkjhWE02WF8tIOxSAA6w0y+3ty4eh2NYNTfRN+A6IKM7PVmWMaxg2UuPwIKO2pc
-	 61Q+pGt0EDO5JP8tOcV+znEi1VnMDL1deMyKCa4cat6Xne5SVBDjqn9aDfIX/MIjLhE2q
-	 EuTfHR8AIkOonOQy6CvXzRLGSKnDq0gIcT6l2VV4FbQppDkUvKXAI1pOS3H/2mPctdXZP
-	 +Vb5VcT30jyRctnDima0xnu+nlsH2I35qt6k3VnEftDn8+S5ZLqURlzvMWQjMYOmf8exG
-	 NAMu08wq4q7SbjOL512zoVcTfPU2zqNzIlPIwh4IHdmTWFi8a1FSyDC85GomWx6MM3Q==
+	t=1795046581;
+	b=eqvvYuZPgeqik96yZbph17IaPqtgzYskrQu8Z56cmz/7o92sxFr0xt7vwJ4hR+rjZKYG
+	 L+JVuMZjrBUoR1Al8u7QZd4H3BLQNj+dESR1KrvGBjQaWG6Hu4KUnPSotpWJBsq0Vj+DO
+	 9tuCNpL0ztOVwLQZkIFjcUp1paXzdnXab5J3cgqWI4Fwx0i1FIMPYHNvbtqh3GTyp6RJE
+	 YeADsZYC2PEMaUMZPCAt5yBXw/ZLE35pNjtKCccAQNCS1YNWM1h8xi6My/f6FANHH8jKq
+	 rRZOnybIEzKsWuu3eCtFlt4Orcn+RsXhHlzeGU9eJG1EFioluOPuv+3a+OC7yVSX7ig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046578;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046581;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=REoydpm47hQvNN4jz++njiZk4OsiWgX9cxlBsOHGSVg=;
-	b=dFD+e2g4Lerudpt1tv6SvdbCgP2JPBuAmba0EFuHZqqtnDx/2f0lEJUVpQ103TOqcA9m
-	 oUp81WLf2V18DGmdG+NngY3Tt6idiQX2EDM+SH+yrCZRk6YqBjyoCnbMs1iyjWFw4uS97
-	 PtxnahTqr1VZ1JzrfExK9wSNo1YSnGtWp3zV4JWxrQaTEjtP4r0DWPhiuGzqpZAjG5Mjv
-	 +bwbbuwbm5aXhd8plzEH+ziRRxAnJDuuAD6oKD0B6ipyZAP+wuCCjMmChbcY5msF8j9JY
-	 IE4SeCtS8T2oTtb7WUHSRgrCGm0SRAaGbnizUbr4WTz8VOFxh2YdD+DaeG0gfFFXQIw==
+	bh=gk8Bl3YMlyg2x+c919wp53GydikkQuEV2yHWIJNwyAs=;
+	b=E8+3tSolg8X82y+jMd8mvE34EGt7N1t0z2k5vMJ+fyw2L/vI2JK1yZPYh8aXLyeVR9UT
+	 JKZc6lg2LWluHTTIMsWxZCSwk0dH2NF8FK+fsLaOQ0206JXU06oOWLvxDT6FvW1RdbziV
+	 C9UqHPMkhNOHzahgGzpAL5K1b3zJf6er8GHEI19frKsbEROhHOL/ZwXY15Grq3d2UMvH1
+	 bvXHvigUzCHfMXgiuQeq0QVZoqMJrHh4txnXqcnToKtVBKcXcxBCl56LDKy4O6WL5ZnRo
+	 r4tr3CgVdROX1GBpA3LqpK4dnOrpHHxv388PShWQgh82uUsN3Im8HWfgZYFqLrHVnOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V8DcyU8V;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d28Ws0WB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E871606A325;
-	Thu, 19 Nov 2026 00:02:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0DC606A325;
+	Thu, 19 Nov 2026 00:03:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V8DcyU8V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2FD41F000C4;
-	Thu, 19 Nov 2026 00:02:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d28Ws0WB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99A231F000C4;
+	Thu, 19 Nov 2026 00:03:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046578;
-	bh=REoydpm47hQvNN4jz++njiZk4OsiWgX9cxlBsOHGSVg=;
+	s=korg; t=1795046581;
+	bh=gk8Bl3YMlyg2x+c919wp53GydikkQuEV2yHWIJNwyAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V8DcyU8V7tIWFjigkAoK+qXIwkQDr0DQfCa/YJ5mDN4glLNQAk5MBaiX4Ox86BBMy
-	 q5lkMFzAu1fBOLfairQYiPmpNOHZAxAzuP3VXIrGNx9e0cU3HoLtmKl5Tg53CVSqsd
-	 OuslWIfXkmdpomBmeXLqM7B9zRe5OGbv/eJeQyEg=
+	b=d28Ws0WB3F4k067a1GBWO/j6SvzUh8bi2UJkZeShfOuuPK6JjijKZDt8kfO4UxG0C
+	 D3D8QM3hNTwYTPAm4PcY4S/ZIke6yObSV6vdEA7/kmX3/jx4/9EEyOFRNenFJtNMMi
+	 vixCj2+hX1VT7irTxKuGcBftuJBJv9Ql4ed9+afs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Gongyi <zhaogongyi@bytedance.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Igor Velkov <iav@iav.lv>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1329/2857] ata: libata-scsi: reject data-in commands with a data-out buffer
-Date: Wed, 18 Nov 2026 15:39:23 +0100
-Message-ID: <20261118150249.290374458@linuxfoundation.org>
+Subject: [PATCH 6.1 1330/2857] genirq/kexec: Do not take the bus lock of an interrupt chip on the crash path
+Date: Wed, 18 Nov 2026 15:39:24 +0100
+Message-ID: <20261118150249.327138577@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,92 +68,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Gongyi <zhaogongyi@bytedance.com>
+From: Igor Velkov <iav@iav.lv>
 
-[ Upstream commit a4845f077415ef32fe672c841e2fc58ae9e28273 ]
+commit 717862eac6eff0eea8ac30a0c0de0bed84922aab upstream.
 
-SG_IO can submit a data-in SCSI command with DMA_TO_DEVICE. The
-scatterlist can then contain pages pinned without write access.
-ata_scsi_rbuf_fill() writes simulated replies to that scatterlist;
-in the reported case, the copy tried to write the shared zero page
-and faulted in the kernel.
+machine_kexec_mask_interrupts() calls irq_set_irqchip_state() for every
+started interrupt. That function takes the bus lock of the chip and
+desc->lock, and syncs the chip when it drops them. On the crash path
+interrupts are off and the other CPUs are stopped, so a chip whose bus
+transfer is completed by an interrupt never returns from the sync.
 
-The same mismatch can affect SG_IO commands translated by libata.
-ZBC IN and GET PHYSICAL ELEMENT STATUS completion handlers can modify
-the receive buffer even if the drive aborts the command. For ATAPI,
-the successful INQUIRY completion also rewrites the buffer in
-atapi_fixup_inquiry().
+On RK3399 boards with an RK808 PMIC the RTC alarm interrupt belongs to
+the regmap-irq chip of the RK808, which sits on I2C. rk808_irq_chip sets
+init_ack_masked, so regmap_irq_sync_unlock() writes the ack register on
+every unlock, and the I2C controller needs its own interrupt to finish
+the transfer. A panic with a crash kernel loaded prints
 
-Reject these mismatched commands before the buffer is written or the
-command is issued. Report ABORTED COMMAND / DATA IN BUFFER ERROR because
-the CDB itself can be valid; the supplied transfer direction is wrong.
+  SMP: stopping secondary CPUs
 
-Backport notes: Use the older five-argument ata_scsi_set_sense()
-interface and spell DATA IN BUFFER ERROR as ASC/ASCQ 0x4b/0x0a.
-The older ata_scsi_rbuf_fill() takes struct ata_scsi_args;
-get the device and command from args, and reject before copying.
+and then nothing until the watchdog resets the board.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://lore.kernel.org/r/20261104130638.37882-1-zhaogongyi@bytedance.com
+machine_kexec_mask_interrupts() takes neither lock for the other
+operations on the descriptor. Move the search for the chip that
+implements irq_set_irqchip_state() into __irq_set_irqchip_state(), which
+takes no locks, and call it from machine_kexec_mask_interrupts().
+
+Fixes: 78fd584cdec0 ("arm64: kdump: implement machine_crash_shutdown()")
+Suggested-by: Thomas Gleixner <tglx@kernel.org>
+Signed-off-by: Igor Velkov <iav@iav.lv>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhao Gongyi <zhaogongyi@bytedance.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Link: https://patch.msgid.link/20261015-kexec-irq-bus-lock-v2-1-2af15f0757b6@iav.lv
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ arch/arm64/kernel/machine_kexec.c |  2 +-
+ include/linux/interrupt.h         |  1 +
+ kernel/irq/manage.c               | 49 ++++++++++++++++---------------
+ 3 files changed, 27 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index ed15d11cf9fcd..87ef473d22791 100644
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -1911,6 +1911,18 @@ static int ata_scsi_translate(struct ata_device *dev, struct scsi_cmnd *cmd,
- 	if (xlat_func(qc))
- 		goto done;
+diff --git a/arch/arm64/kernel/machine_kexec.c b/arch/arm64/kernel/machine_kexec.c
+index f660648cbceee..906bd97eeeb68 100644
+--- a/arch/arm64/kernel/machine_kexec.c
++++ b/arch/arm64/kernel/machine_kexec.c
+@@ -234,7 +234,7 @@ static void machine_kexec_mask_interrupts(void)
+ 		 * First try to remove the active state. If this
+ 		 * fails, try to EOI the interrupt.
+ 		 */
+-		ret = irq_set_irqchip_state(i, IRQCHIP_STATE_ACTIVE, false);
++		ret = __irq_set_irqchip_state(desc, IRQCHIP_STATE_ACTIVE, false);
  
-+	/*
-+	 * A data-out request may contain pages pinned without write access.
-+	 * Reject a translated data-in command before issuing it, since its
-+	 * completion handler may write to the buffer even if the device fails.
-+	 */
-+	if (unlikely(cmd->sc_data_direction == DMA_TO_DEVICE &&
-+		     ata_is_data(qc->tf.protocol) &&
-+		     !(qc->tf.flags & ATA_TFLAG_WRITE))) {
-+		ata_scsi_set_sense(dev, cmd, ABORTED_COMMAND, 0x4b, 0x0a);
-+		goto done;
-+	}
+ 		if (ret && irqd_irq_inprogress(&desc->irq_data) &&
+ 		    chip->irq_eoi)
+diff --git a/include/linux/interrupt.h b/include/linux/interrupt.h
+index a42191c6a0e87..2d1dd4a86e49c 100644
+--- a/include/linux/interrupt.h
++++ b/include/linux/interrupt.h
+@@ -507,6 +507,7 @@ extern int irq_get_irqchip_state(unsigned int irq, enum irqchip_irq_state which,
+ 				 bool *state);
+ extern int irq_set_irqchip_state(unsigned int irq, enum irqchip_irq_state which,
+ 				 bool state);
++extern int __irq_set_irqchip_state(struct irq_desc *desc, enum irqchip_irq_state which, bool val);
+ 
+ #ifdef CONFIG_IRQ_FORCED_THREADING
+ # ifdef CONFIG_PREEMPT_RT
+diff --git a/kernel/irq/manage.c b/kernel/irq/manage.c
+index 873e5f869584e..824a43b64d98b 100644
+--- a/kernel/irq/manage.c
++++ b/kernel/irq/manage.c
+@@ -2855,6 +2855,28 @@ int irq_get_irqchip_state(unsigned int irq, enum irqchip_irq_state which,
+ }
+ EXPORT_SYMBOL_GPL(irq_get_irqchip_state);
+ 
++int __irq_set_irqchip_state(struct irq_desc *desc, enum irqchip_irq_state which, bool val)
++{
++	struct irq_data *data = irq_desc_get_irq_data(desc);
++	struct irq_chip *chip;
 +
- 	return ata_scsi_qc_issue(ap, qc);
- 
- done:
-@@ -1947,6 +1959,12 @@ static void ata_scsi_rbuf_fill(struct ata_scsi_args *args,
- 	struct scsi_cmnd *cmd = args->cmd;
++	do {
++		chip = irq_data_get_irq_chip(data);
++
++		if (WARN_ON_ONCE(!chip))
++			return -ENODEV;
++
++		if (chip->irq_set_irqchip_state)
++			break;
++
++		data = irqd_get_parent_data(data);
++	} while (data);
++
++	if (data)
++		return chip->irq_set_irqchip_state(data, which, val);
++	return -EINVAL;
++}
++
+ /**
+  *	irq_set_irqchip_state - set the state of a forwarded interrupt.
+  *	@irq: Interrupt line that is forwarded to a VM
+@@ -2871,36 +2893,15 @@ int irq_set_irqchip_state(unsigned int irq, enum irqchip_irq_state which,
+ 			  bool val)
+ {
+ 	struct irq_desc *desc;
+-	struct irq_data *data;
+-	struct irq_chip *chip;
  	unsigned long flags;
+-	int err = -EINVAL;
++	int err;
  
-+	/* A data-out request may contain pages pinned without write access. */
-+	if (cmd->sc_data_direction == DMA_TO_DEVICE) {
-+		ata_scsi_set_sense(args->dev, cmd, ABORTED_COMMAND, 0x4b, 0x0a);
-+		return;
-+	}
-+
- 	spin_lock_irqsave(&ata_scsi_rbuf_lock, flags);
+ 	desc = irq_get_desc_buslock(irq, &flags, 0);
+ 	if (!desc)
+-		return err;
+-
+-	data = irq_desc_get_irq_data(desc);
+-
+-	do {
+-		chip = irq_data_get_irq_chip(data);
+-		if (WARN_ON_ONCE(!chip)) {
+-			err = -ENODEV;
+-			goto out_unlock;
+-		}
+-		if (chip->irq_set_irqchip_state)
+-			break;
+-#ifdef CONFIG_IRQ_DOMAIN_HIERARCHY
+-		data = data->parent_data;
+-#else
+-		data = NULL;
+-#endif
+-	} while (data);
++		return -EINVAL;
  
- 	memset(ata_scsi_rbuf, 0, ATA_SCSI_RBUF_SIZE);
-@@ -2772,6 +2790,13 @@ static unsigned int atapi_xlat(struct ata_queued_cmd *qc)
+-	if (data)
+-		err = chip->irq_set_irqchip_state(data, which, val);
++	err = __irq_set_irqchip_state(desc, which, val);
  
- 	qc->complete_fn = atapi_qc_complete;
- 
-+	/* atapi_fixup_inquiry() writes to the buffer on successful completion. */
-+	if (scmd->sc_data_direction == DMA_TO_DEVICE &&
-+	    scmd->cmnd[0] == INQUIRY) {
-+		ata_scsi_set_sense(dev, scmd, ABORTED_COMMAND, 0x4b, 0x0a);
-+		return 1;
-+	}
-+
- 	qc->tf.flags |= ATA_TFLAG_ISADDR | ATA_TFLAG_DEVICE;
- 	if (scmd->sc_data_direction == DMA_TO_DEVICE) {
- 		qc->tf.flags |= ATA_TFLAG_WRITE;
+-out_unlock:
+ 	irq_put_desc_busunlock(desc, flags);
+ 	return err;
+ }
 -- 
 2.53.0
 
