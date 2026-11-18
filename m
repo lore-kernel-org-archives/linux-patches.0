@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032854;
-	b=ZYR2vWkAJ+mVb2/gRucZVPSm7OalrhuqrKyF1AqW5s+iXvwIfKIrLkypDFHrYvQxfSsu
-	 git+n9T4fOq52T5KFDS2OAZl6rQ0jTv0OdxQ8pha/tiJFMGyUExfdZufQX/PEo6Q3fqEl
-	 tJO3CHQ8jng1vVRjZoaEIGcwF+wpbHBkqC8VRvcvdVuTejRHbli/azgLArQfDgEdQSb9V
-	 LdhAG0rYaVpne8x6x6H3lsvAXay7xuMNMBNOcU/NwysqHKp7Bsg+ecQidXvM08NoL+mkl
-	 ebkWC95Bx2W5vUl6otpNk80ZUSm3Gy0j4pFyzJ8RKVKz/t2ltmErHxD4xBJ7H6zi4Kg==
+	t=1795032856;
+	b=gphrM/Lk4/4i7Prwo/SpiaOvfy+ZbOjK2RE0aW+DKcOL7lgP0C1ZC8arc1bjEv7cLMzO
+	 v4OcneqzZWZyJcGDAqkmCzBSmPhELO7M9RigWGRfH1LFIKehY+j1dWKy58+ql/jZwxR0l
+	 Hi3cS7jgj7qxzUsymzj2MvVc67dgqcM+OR5oQeaFPAAV650J776lxMkybFDdDzbR5sRVw
+	 g9hRF3zyzK61/oaP3MYL00aR0uJ8v5BlIetkpDgceH0e2sUESVWR/Ljr9Rj0DubcAaA2b
+	 DEf8o9bpWPaTb+382GoDAJBN8xCgAHr2VPWGez98FA8GD1QMWdlk+i8V4bk+NPJemGQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032854;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032856;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rK45GBzHh0uA0d4Ksol4rrMszbqCdirofnBnQ9aVEeg=;
-	b=y/3VRY2w9vX0+Mp/ikqjDM0nSAkHyn9oO+1HuJqSz7tRE0T3XDYf/BENAdg55MQNBm2S
-	 uL64uV9wdtkgtxw+G/unuWFBh5OXObap8M/jYbhevMc+wi6BxrN19o3mo3IU7n3ZeWrWY
-	 O3Kn1UiSX1FXS8xGr0cHM6tsKH3YW50x6xmIMEo0g8tyhjgUzvq7axKiikE1yHgwHl74K
-	 aCUnlzGp/ZbfllOyE87RAhoTHwaxNTl/ecobXk/v03oZCtjlmYaZEol4OUOUWZMPatA7t
-	 zUlcvodsles1iFrr1Dje1QcwnHtwO2gFRenPHM8mX7f3P6LfUWN9/gKL7amSV5N00OA==
+	bh=s6BSp8GGqCwSIiABmzI4GGBR+MpfS8lGe6UkJt724j8=;
+	b=H9gfjx1rA4Dge6btqQB7C67tqwJKiDcT+0oiakoOY/dtnRYkZGxhPYADf2cxy2Jpuqgi
+	 U3uo6qe8es5WyBrdtxn6G8N7BvUwPVRYc/SG5HsKmut3+xGc5N214QATyDyYnGM+2SQiU
+	 g/zUg9c4abegMT23akWcmDtADlY/Ax1ZkPmQUaxOmeFBbHIEnIm/h44074DyrhWQ7V2Dj
+	 qf0ZG+hU+yRpMDHuZKj+MYt0H60fHhQU2C3SiP7CJTkZsGa3Y0F4CuUxZdzL6mZffSsI/
+	 bAZzkoK8gPZC0a+1gGm2NAxfvnizKFVlucTgqK2BYZZAfX3I4XkgBGjcBdgYWk3VgCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PNGuTo0b;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="SQd/ezSZ";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E089D606A32F;
-	Wed, 18 Nov 2026 20:14:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCDF260A263C;
+	Wed, 18 Nov 2026 20:14:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PNGuTo0b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E41BB1F000C8;
-	Wed, 18 Nov 2026 20:14:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SQd/ezSZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCE671F000C4;
+	Wed, 18 Nov 2026 20:14:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032853;
-	bh=rK45GBzHh0uA0d4Ksol4rrMszbqCdirofnBnQ9aVEeg=;
+	s=korg; t=1795032856;
+	bh=s6BSp8GGqCwSIiABmzI4GGBR+MpfS8lGe6UkJt724j8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PNGuTo0bg1ehYeGMMWSBLEXvVtXjmnZB/mLNjsEvgdtxuKAR9c6RBxb2L2KdT4rMs
-	 h0tJ192tAgJyPhW5uM0R2oK+qwWFHW6Vlyt+QQGr4aTdB1lPZXKAdvBAnEH+v9DWeq
-	 hhD0V9rcaJPOclV5T+RkTacsUFqAm/1EXn0nHtTI=
+	b=SQd/ezSZdTvup6vw7uiYQGYxY5W6nOHfSU25C5N0Q6NbSZbRbI24+20rOL8jyJ857
+	 afR+sL3L3Qe+iNlj80+9GYvdMlbiqnWswsQLOUv9kzDWrxdMTv0dp0LBBfMEF3OIIc
+	 xk7yq4yzXcV4tSrSJbMKyXL8lIFx1J88M4/QhPa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rand Deeb <rand.sec96@gmail.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Binbin Deng <18983559317@163.com>,
+	Simon Horman <horms@kernel.org>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1516/1756] ata: libata-core: Ignore forced transfer modes the host does not support
-Date: Wed, 18 Nov 2026 16:00:43 +0100
-Message-ID: <20261118150109.221678213@linuxfoundation.org>
+Subject: [PATCH 6.12 1517/1756] tipc: fix use-after-free of broadcast reception link at node release
+Date: Wed, 18 Nov 2026 16:00:44 +0100
+Message-ID: <20261118150109.260802041@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,77 +70,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rand Deeb <rand.sec96@gmail.com>
+From: Binbin Deng <18983559317@163.com>
 
-[ Upstream commit ea5a5af9159cc89e8bcb7a95336e02c8b70aa3d2 ]
+[ Upstream commit 473167593f42551ce6b00c05cee8cd20309d45ac ]
 
-The libata.force parameter can force a transfer mode (pio0-6, mwdma0-4,
-udma0-7) for a port or device. ata_force_xfermask() applies it in
-ata_do_set_mode() right after ata_dev_xfermask() has limited the device
-masks to what the host supports. It replaces those masks with the forced
-mode without checking the host masks, so a mode the controller does not
-support is passed to the driver's ->set_piomode() or ->set_dmamode().
+When the last reference to a tipc_node is dropped, the node itself is
+deferred to the RCU callback tipc_node_free(), but the nested broadcast
+reception link, n->bc_entry.link, is kfree()d synchronously in
+tipc_node_kref_release(), before call_rcu(), and the pointer is never
+cleared.  Readers that obtained the node from node_list and then
+dereference bc_entry.link deep into the link (tipc_link_name() in
+tipc_nl_node_reset_link_stats(), bcl->name/stats in
+tipc_nl_add_bc_link() on the link dump path) therefore touch freed
+memory although the enclosing node stays alive for a full grace period.
+The sibling per-bearer links get "kfree + NULL" under the node write
+lock in tipc_node_clear_links(); the broadcast entry was missed.
 
-Several PATA drivers rely on the host masks to keep the mode number in
-range when indexing their timing tables. ata_piix, pata_efar,
-pata_it8213, pata_oldpiix, pata_radisys and pata_rdc declare ATA_PIO4
-and ATA_MWDMA12_ONLY, index a five-entry PIO timing table with
-pio_mode - XFER_PIO_0, and index a three-entry needed_pio[] table with
-dma_mode - XFER_MW_DMA_0. Booting with libata.force=pio5, pio6, mwdma3
-or mwdma4 makes them read past those tables, use the values read as
-further indices into the timing table, and write the result to the
-controller's timing registers.
+The race is reachable through the node cleanup timer: once a peer has
+been unreachable for NODE_CLEANUP_AFTER (300 s), tipc_node_timeout() ->
+tipc_node_cleanup() unlinks the node under the write lock, and the
+final tipc_node_put() at the caller runs outside node_list_lock, so the
+kfree executes in timer softirq context, concurrently with genl dump/
+reset walkers that hold only rcu_read_lock().  (A netlink "peer remove"
+cannot race those walkers itself: tipc_genl_family has no parallel_ops,
+so all doit/dumpit calls serialize on the global genl lock.)
 
-Make ata_force_xfermask() skip, with a warning, a forced transfer mode
-that is not in the port's PIO, MWDMA or UDMA mask, and keep looking for
-an earlier matching libata.force entry, as it already does for entries
-that do not apply to the device. With libata.force=pio4,1.0:pio5 on a
-PIO4 host, device 1.0 now gets pio4 instead of pio5. Forcing a mode the
-host supports still works as before, including a mode that
-ata_dev_xfermask() removed for the device or cable.
+Reproduced in a QEMU/KVM guest running v7.3.0 with KASAN and
+PREEMPT(full): 10 TIPC peer namespaces on veth bearers, bearer removal
+staggered so the 300 s node cleanup timers expire while other tasks
+loop link dumps with the broadcast filter and reset-link-stats lookups.
+KASAN hit within two cleanup cycles:
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+  BUG: KASAN: slab-use-after-free in strlen+0x85/0xa0
+  Read of size 1 at addr ffff88800b54a004 by task poc_eth/371
+   strlen+0x85/0xa0
+   tipc_nl_add_bc_link+0x2f9/0xd40
+   __tipc_nl_add_node_links+0x10c/0x140
+   tipc_nl_node_dump_link+0x8d5/0xd50
+  Freed by task 0:
+   kfree+0x121/0x380
+   tipc_node_timeout+0xa33/0xcf0
+   run_timer_softirq+0x144/0x250
+   sysvec_apic_timer_interrupt
 
-Fixes: 332673257056 ("libata: implement libata.force module parameter")
-Signed-off-by: Rand Deeb <rand.sec96@gmail.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20261015194935.1497-1-rand.sec96@gmail.com
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+with the freed object being the kmalloc-1k tipc_link allocated by
+tipc_link_bc_create() during peer discovery.  The same defect fires in
+strcmp() called from tipc_nl_node_reset_link_stats().
+
+Move the kfree of n->bc_entry.link into the tipc_node_free() RCU
+callback so the broadcast link lives exactly as long as the enclosing
+node.  All readers are covered: the netlink walkers are inside
+rcu_read_lock(), and the packet reception path reaches the node via
+tipc_node_find(), whose kref defers kref_release itself.
+
+Found during a static-analysis-assisted audit: candidate sites were
+surfaced by a Coccinelle rule, and the reader/writer paths were
+confirmed by LLM-assisted (GLM-5.3) code inspection.
+
+Fixes: d25a01257e42 ("tipc: fix crash during node removal")
+Assisted-by: GLM-5.3 coccinelle
+Signed-off-by: Binbin Deng <18983559317@163.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20261019104352.488347-1-18983559317@163.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-core.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ net/tipc/node.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
-index 65fb2cfc0e291..b1947e4e534f6 100644
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -432,6 +432,7 @@ static void ata_force_link_limits(struct ata_link *link)
-  */
- static void ata_force_xfermask(struct ata_device *dev)
- {
-+	struct ata_port *ap = dev->link->ap;
- 	int devno = dev->link->pmp + dev->devno;
- 	int alt_devno = devno;
- 	int i;
-@@ -456,6 +457,17 @@ static void ata_force_xfermask(struct ata_device *dev)
+diff --git a/net/tipc/node.c b/net/tipc/node.c
+index 8807fd60e800f..f813ca2a39513 100644
+--- a/net/tipc/node.c
++++ b/net/tipc/node.c
+@@ -303,6 +303,7 @@ static void tipc_node_free(struct rcu_head *rp)
+ #ifdef CONFIG_TIPC_CRYPTO
+ 	tipc_crypto_stop(&n->crypto_rx);
+ #endif
++	kfree(n->bc_entry.link);
+ 	kfree(n);
+ }
  
- 		ata_unpack_xfermask(fe->param.xfer_mask,
- 				    &pio_mask, &mwdma_mask, &udma_mask);
-+
-+		/* Make sure that the port supports the specified xfer modes. */
-+		if (!(pio_mask & ap->pio_mask) &&
-+		    !(mwdma_mask & ap->mwdma_mask) &&
-+		    !(udma_mask & ap->udma_mask)) {
-+			ata_dev_warn(dev,
-+				     "FORCE: ignoring unsupported xfer_mask %s\n",
-+				     fe->param.name);
-+			continue;
-+		}
-+
- 		if (udma_mask)
- 			dev->udma_mask = udma_mask;
- 		else if (mwdma_mask) {
+@@ -310,7 +311,6 @@ static void tipc_node_kref_release(struct kref *kref)
+ {
+ 	struct tipc_node *n = container_of(kref, struct tipc_node, kref);
+ 
+-	kfree(n->bc_entry.link);
+ 	call_rcu(&n->rcu, tipc_node_free);
+ }
+ 
 -- 
 2.53.0
 
