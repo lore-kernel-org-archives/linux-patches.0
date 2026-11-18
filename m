@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054608;
-	b=vk86mk0IVQWP2nBF6pPZ6VgmJtqWuIVNjzgDvlx66BeZAoYioGmnBy1jvsZ+7UFqHXMc
-	 Rv01EvTaZLKcIz2GjBCVusaPu4wylpsaAgFqupOFf+qJe4mKSRW1G+o4ADSBiL+PyV0na
-	 LQO6eW0SEgn/+qkPZyALMDF/PC543ZzEL//T3e+cBG74Au2Ym5R0a9knR2voY4u7Ygplc
-	 VMml97VGKaLn/aqHMOEQ60aCyhB4HVzf0VODDJIb+rRlL51uz/T7RHuVyzigRoYyVV/3C
-	 lLWeN++BgAG0zyoK2YSnZDJpekIwNBX5UitCOt7b9Ui+SFvd9Gu7Lx5hUC1zCpj9tRQ==
+	t=1795054610;
+	b=EidGY5mb9o7CnUwvxrslkWXk5Eisjllt1vAnExYlyDjYFBhl4gzs1ImvCxeBwGO6uSeI
+	 STdqZAhdLS30ymLNmJzDRn7v6B6l6vbpixjoTs6BvW0lyHExGvXO8GDcBytfX3ktZ5YF+
+	 A2XrfzjrnAKcfsonyRUs5rTAqTl1Fc76G9YVXwtai2cDo3Bwrd75Mz6IA1hBieyJ3BgXs
+	 nO/3cK/ha8K89y18p3T606HVbQA5D4xEXIT6qSLqw6xFJcwj5BBfRyyJLjctMBmHGu914
+	 SD3Wsy2YXaT+7q+mWIy4VkzDbRIJxjNfWp9h/EWaJcYd9Op2vPFimWDb/z7cj3PHPnQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054608;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054610;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0whBlp3XpnvltcDSVncdTfq/R/iO8EE9J9F4Ze8VGoA=;
-	b=p3GVY+5G1BSXsw37KPyTbUf9IKEvcSyRNh6GM6sCYbOIR+AfMMxx0DPN2sXPL/vnIB/E
-	 RUuWjXsPsq97Ukw1pmQr/fgiVFHJc4Nw/JbmojwlrUDkpkqk47Q3legIX2JhZukpyDwk4
-	 3H3isJh9YFC97Qqqhyqc/PRbwKTXZkCJk0BCp8gpleQZ/fFf97li7innDT9fftYhAI7rG
-	 vXSEShyyT74EPantB3uV3bpC+cD9UbKbF8PIvGhKQDSHD3sfTP2jS72d4rKd1f2D/119Q
-	 XZ50yQMqgVhjE2jw1Ujfq5l32MJkgAAiSBLVbHOuR09vVlp1uJHRJgV+IQiftDLxssA==
+	bh=+cckoNewQhIHW1SYaOMSAS1dfa0PKBsidcdELdDpu/g=;
+	b=oQYNdvEF3iRnMKxRtW5p0NCVAWFvksOsBjxAr6/uuPtqyfd5Bq7Vr5My2dJQ4gBnh0eN
+	 VthwePkakcOdwc3MoDIEIuacRMi/gx3BQhO0M4Vejo31sAVRLCFlfFOiPrTCbkLJc08sZ
+	 a/9ppVXfs9nMFLSxK7nK4JqpQw2LPRmF290z/fhQE0/tRTtKGaZNt/Zl4MCVu1hWINcwQ
+	 hu3KxPhePw/1his3n65gpL//mMvzR8e/J+ns+LUzISYe7b7jzGMnHMWKN79bTGyr+9qZG
+	 +SRdbgEyRpDXY57602vBT0+B/ymTXzLc579Gs0y/Agwy3nQbMUNChbkxO+HrqTx3RZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2afI3zKC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HnvCfHM0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02EA2606A320;
-	Thu, 19 Nov 2026 02:16:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D289E606A339;
+	Thu, 19 Nov 2026 02:16:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2afI3zKC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5467E1F000C4;
-	Thu, 19 Nov 2026 02:16:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HnvCfHM0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E39B1F000C5;
+	Thu, 19 Nov 2026 02:16:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054607;
-	bh=0whBlp3XpnvltcDSVncdTfq/R/iO8EE9J9F4Ze8VGoA=;
+	s=korg; t=1795054610;
+	bh=+cckoNewQhIHW1SYaOMSAS1dfa0PKBsidcdELdDpu/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2afI3zKCvhyuoc+cnvl46SSO5IxetpQ1SHs9996K2aCCdMc1sNjz/BxhrggRkOh/B
-	 oBL+YliODaZu6NbZ6eQOBMtLS/qUEkr/qz2z4TUZOMr5hLl6KAqUqMVmMpstgkKrqg
-	 ngmKudkekTWMnKdtaqEd2sQISM+9myCAX676sJtE=
+	b=HnvCfHM0QNJGk/+hl9+l8x9UKhlTOnJ0VskPkr3y6xC6zCxlh97lFMJ6sSbvoqiHi
+	 4b69Px242fkqCPlAqdir40LKKSiTublV7ugNyWH/rU/L2ZDeOxs2uP4//7O0vt4IsY
+	 B+uWr8SzxPia+BCd/fbKJ6oSmeXycyPs6T2J2xs8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xie Yongji <xieyongji@bytedance.com>,
-	"chenglong.ma" <longpareto@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Claude Code <noreply@anthropic.com>
-Subject: [PATCH 5.15 1295/2214] vduse: fix VA/PA confusion in the coherent page fault path
-Date: Wed, 18 Nov 2026 15:49:31 +0100
-Message-ID: <20261118150103.341905936@linuxfoundation.org>
+	Chris Mason <mason@kernel.org>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 1296/2214] mm/filemap: finish fault cleanup before dropping the fault lock
+Date: Wed, 18 Nov 2026 15:49:32 +0100
+Message-ID: <20261118150103.379633188@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,87 +70,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: chenglong.ma <longpareto@gmail.com>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit bb2e6f166547838fd7c320b01c90918b736f76e2 ]
+[ Upstream commit 97156a6c355c21f7122421915f05461bd11699a4 ]
 
-vduse_domain_get_coherent_page() assumes that iotlb entries above
-bounce_size were installed by vduse_domain_alloc_coherent(), so it
-treats map->addr as a physical address. But vduse registers with
-use_va = true, and when the device is bound to vhost_vdpa,
-vhost_vdpa_va_map() stores a userspace virtual address in map->addr,
-which vduse_domain_set_map() then copies into the same iotlb. A
-process holding the domain file descriptor across a rebind can
-therefore fault in an arbitrary physical page with read/write
-access, ignoring the entry permissions.
+On a retried fault, a fatal signal interrupting the folio lock wait
+makes lock_folio_maybe_drop_mmap() drop the fault lock without pinning
+the file. However, filemap_fault() may still need to release
+mapping->invalidate_lock. A concurrent munmap() can release the last
+file reference and free the mapping before that unlock.
 
-Additionally, since the domain file mmap lacks VM_IO, the domain
-file itself can be mapped and passed to vhost_vdpa_va_map(),
-producing self-referential entries that bypass the coherent path
-check.
+Defer dropping the fault lock to filemap_fault()'s retry cleanup, after
+releasing invalidate_lock. If the fault lock was already dropped for
+I/O, release the existing file reference instead. Keep the fault lock
+held for FAULT_FLAG_RETRY_NOWAIT as before.
 
-To fix, only translate entries whose backing file is the domain
-file itself in vduse_domain_get_coherent_page(), reject such
-entries in vduse_domain_set_map() since only external mappings
-should be imported, and set VM_IO on the domain file mmap so
-vhost_vdpa_va_map() refuses to map it in the first place.
-
-Fixes: 8c773d53fb7b ("vduse: Implement an MMU-based software IOTLB")
-Cc: Xie Yongji <xieyongji@bytedance.com>
+Fixes: 730633f0b7f9 ("mm: Protect operations adding pages to page cache with invalidate_lock")
 Cc: stable@vger.kernel.org
-Reported-by: chenglong.ma <longpareto@gmail.com>
-Signed-off-by: chenglong.ma <longpareto@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Co-Authored-By: Claude Code <noreply@anthropic.com>
-[ sashal: Replaced vm_flags_set() with a direct vma->vm_flags |= update because the helper is unavailable. ]
+Reported-by: Chris Mason <mason@kernel.org>
+Reviewed-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-8-d6437171ecc3@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: adapted folio-based fault handling to page-based APIs using mmap_read_unlock() instead of release_fault_lock() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_user/iova_domain.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ mm/filemap.c | 36 ++++++++++++++----------------------
+ 1 file changed, 14 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/vdpa/vdpa_user/iova_domain.c b/drivers/vdpa/vdpa_user/iova_domain.c
-index 783319f160761..e7f1ed339b206 100644
---- a/drivers/vdpa/vdpa_user/iova_domain.c
-+++ b/drivers/vdpa/vdpa_user/iova_domain.c
-@@ -70,6 +70,10 @@ int vduse_domain_set_map(struct vduse_iova_domain *domain,
- 	for (map = vhost_iotlb_itree_first(iotlb, start, last); map;
- 	     map = vhost_iotlb_itree_next(map, start, last)) {
- 		map_file = (struct vdpa_map_file *)map->opaque;
-+		if (!map_file || map_file->file == domain->file) {
-+			ret = -EINVAL;
-+			goto err;
-+		}
- 		ret = vduse_iotlb_add_range(domain, map->start, map->last,
- 					    map->addr, map->perm,
- 					    map_file->file,
-@@ -216,6 +220,7 @@ vduse_domain_get_coherent_page(struct vduse_iova_domain *domain, u64 iova)
- {
- 	u64 start = iova & PAGE_MASK;
- 	u64 last = start + PAGE_SIZE - 1;
-+	struct vdpa_map_file *map_file;
- 	struct vhost_iotlb_map *map;
- 	struct page *page = NULL;
+diff --git a/mm/filemap.c b/mm/filemap.c
+index eccc5318b6644..b0d046f0d3b27 100644
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -2911,10 +2911,11 @@ loff_t mapping_seek_hole_data(struct address_space *mapping, loff_t start,
+  * @page - the page to lock.
+  * @fpin - the pointer to the file we may pin (or is already pinned).
+  *
+- * This works similar to lock_page_or_retry in that it can drop the mmap_lock.
+- * It differs in that it actually returns the page locked if it returns 1 and 0
+- * if it couldn't lock the page.  If we did have to drop the mmap_lock then fpin
+- * will point to the pinned file and needs to be fput()'ed at a later point.
++ * Returns 1 with the page locked, or 0 if locking failed.
++ *
++ * On both entry and return, a non-NULL *fpin means the fault lock has
++ * already been dropped and the caller must eventually fput() the file.
++ * Otherwise the fault lock is still held, including on failure.
+  */
+ static int lock_page_maybe_drop_mmap(struct vm_fault *vmf, struct page *page,
+ 				     struct file **fpin)
+@@ -2931,20 +2932,10 @@ static int lock_page_maybe_drop_mmap(struct vm_fault *vmf, struct page *page,
+ 		return 0;
  
-@@ -224,6 +229,10 @@ vduse_domain_get_coherent_page(struct vduse_iova_domain *domain, u64 iova)
- 	if (!map)
- 		goto out;
- 
-+	map_file = (struct vdpa_map_file *)map->opaque;
-+	if (!map_file || map_file->file != domain->file)
-+		goto out;
+ 	*fpin = maybe_unlock_mmap_for_io(vmf, *fpin);
+-	if (vmf->flags & FAULT_FLAG_KILLABLE) {
+-		if (__lock_page_killable(page)) {
+-			/*
+-			 * We didn't have the right flags to drop the mmap_lock,
+-			 * but all fault_handlers only check for fatal signals
+-			 * if we return VM_FAULT_RETRY, so we need to drop the
+-			 * mmap_lock here and return 0 if we don't have a fpin.
+-			 */
+-			if (*fpin == NULL)
+-				mmap_read_unlock(vmf->vma->vm_mm);
+-			return 0;
+-		}
+-	} else
+-		__lock_page(page);
++	if (vmf->flags & FAULT_FLAG_KILLABLE)
++		return !__lock_page_killable(page);
++	__lock_page(page);
 +
- 	page = pfn_to_page((map->addr + iova - map->start) >> PAGE_SHIFT);
- 	get_page(page);
- out:
-@@ -461,7 +470,7 @@ static int vduse_domain_mmap(struct file *file, struct vm_area_struct *vma)
- {
- 	struct vduse_iova_domain *domain = file->private_data;
+ 	return 1;
+ }
  
--	vma->vm_flags |= VM_DONTDUMP | VM_DONTEXPAND;
-+	vma->vm_flags |= VM_IO | VM_DONTDUMP | VM_DONTEXPAND;
- 	vma->vm_private_data = domain;
- 	vma->vm_ops = &vduse_domain_mmap_ops;
+@@ -3044,7 +3035,7 @@ static struct file *do_async_mmap_readahead(struct vm_fault *vmf,
+  * vma->vm_mm->mmap_lock must be held on entry.
+  *
+  * If our return value has VM_FAULT_RETRY set, it's because the mmap_lock
+- * may be dropped before doing I/O or by lock_page_maybe_drop_mmap().
++ * may be dropped before doing I/O or when aborting an interrupted wait.
+  *
+  * If our return value does not have VM_FAULT_RETRY set, the mmap_lock
+  * has not been released.
+@@ -3188,9 +3179,8 @@ vm_fault_t filemap_fault(struct vm_fault *vmf)
  
+ out_retry:
+ 	/*
+-	 * We dropped the mmap_lock, we need to return to the fault handler to
+-	 * re-find the vma and come back and find our hopefully still populated
+-	 * page.
++	 * With fpin set, the fault lock was already dropped. Otherwise it is
++	 * still held. Release invalidate_lock before dropping either protection.
+ 	 */
+ 	if (page)
+ 		put_page(page);
+@@ -3198,6 +3188,8 @@ vm_fault_t filemap_fault(struct vm_fault *vmf)
+ 		filemap_invalidate_unlock_shared(mapping);
+ 	if (fpin)
+ 		fput(fpin);
++	else if (!(vmf->flags & FAULT_FLAG_RETRY_NOWAIT))
++		mmap_read_unlock(vmf->vma->vm_mm);
+ 	return ret | VM_FAULT_RETRY;
+ }
+ EXPORT_SYMBOL(filemap_fault);
 -- 
 2.53.0
 
