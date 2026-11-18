@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046334;
-	b=uzGr7zx19ftpCI8RU1qlHLHTNSnobVtlu2h4ZT03K+knc3qQcXUYe8EBUZmkcfDB6mTr
-	 9XBgXQR9qyxMeA8JYUeUGCoMk3MVFRyCaM93HCX/ilapu4KBeitm+OCcrJSPPgQbpPtdc
-	 CXNJk5sht+DST1D1LSVvkbefbn5oVY/ExkfRg41JY9ewO6ELS7RFcgIlD50rqigHW59Xa
-	 lItiDeRaxA5SU1QEKg/G8jLrq5LcArRsTbmTaZ2ajVxmg02vEREFumegy/RN9a621eC9G
-	 CtG89mI6mXZNtzyTWWnysuIcvx0fNgttvlvA/tQh5YzzIVsFYikNnTMVPlw5YsJFBRw==
+	t=1795046337;
+	b=3n35d7F3fc83an6MTiRd27Z2LIDITmahX6RFqO4VIE+DfPoV4273yaOEsUWXdwW32s2S
+	 z5ThizZxZz6U4CGjzKbMfCz48ym/dU/MYRNUX46K6SxDHL3ZoLhikBkKYABXzgcxugZHn
+	 rX4irBBZoQlw3Nib7LusXmgvxTjxD/yQyZr0tCnmjdSxHLspeEKP0ESXCWobYv29lEOT5
+	 LdSVQjYr7xlnUI5IA5J0wJRGyE3iGbztosdmTxHDOeL1fUCaggj43hlG7vZ4jPO4m+NWw
+	 QUnlnTvevwEjqpSxQAaw2zk5uAAD19BZwclaHExOtCKcY5A9j02/qMn7DKRe1VMsHdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046334;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046337;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vPAHvZ0LIcYFyp2X0TJWF3COzKgm83DuHpACh0rEOKs=;
-	b=CqFMH5AtE1gOx0El9VNbOMnq5IFl/2MHnr0/csMt6VEKvsFqzSe0/cUhGHjiqXPjM/Wv
-	 NFZftCGtdq0/Jd1L8E0KtYbSaWKJl5k0e3LB8KSaQWcZAMHEf10awzZGAZPTDutOoOe/R
-	 5mPaLSoWpHKkOXyZVwUsufh7mcQPADnzDbM8EaCDkN3PDWatGdNOdB3EdGB1hCOydBCYx
-	 nmxRbCtyyiMiFu8RQPCelVfagTNzuI9VeFo9VrLcc2kXzLr09LblBhARqUCEFKlpOglAC
-	 6j0M6arHOJfFQBFDKiALnqlkO1GmLJM1h2N6BHFhllxjsOFlV3lr/FhnbRiPBfphy3A==
+	bh=drLRx7xkz+M12rafK+5lprHjWrm1sLsH4t+wUp5ZF2s=;
+	b=Jmt8+8ByeA9rdFqX132F2wkW5dNL8kBDcMfP9BZifGsUbSkFB/rPUI+AVPdnammx6OQK
+	 GVK5ORwPbT2u6WmCxCKSipRxtfhrkp9dV5fWbJltUmyZgyEyxiOV+n5ZymNKjkaqR2CSW
+	 AseQa1hqwVP65gqz+fac2q92Nk0a/CdhDEUhiyes6JD+QyXycyF85wPyYAhkM0CyMDwJm
+	 iJji5yxm7d0j0yH5oxbKbpUB2Jk8Jd8YKCz3KKntLmK+rXH2tSwfPlcyaHnxWWGIw6iA5
+	 Lp1r5HY6+7Zoq8U5RCWzEzCVtscN2FSv0F0D8uR3X0BR4oYRI2xyd/yYNSaNWVyYuxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="YnD/Uk7k";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ixMb1ZKL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27DF6606A325;
-	Wed, 18 Nov 2026 23:58:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6D4606A320;
+	Wed, 18 Nov 2026 23:58:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YnD/Uk7k
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 791F91F000C4;
-	Wed, 18 Nov 2026 23:58:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ixMb1ZKL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59AF41F000C4;
+	Wed, 18 Nov 2026 23:58:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046334;
-	bh=vPAHvZ0LIcYFyp2X0TJWF3COzKgm83DuHpACh0rEOKs=;
+	s=korg; t=1795046336;
+	bh=drLRx7xkz+M12rafK+5lprHjWrm1sLsH4t+wUp5ZF2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YnD/Uk7kCkTNROC19cuz3DedsvhygTI0a24EeoMXrBo5e139AsHwy3dSvP3s6B4YL
-	 yl2q7jH+mxWzzcDPUkbgWrk6RbdOPRDID9DJALcXcPcJCQSBb9nQmytX8dBNZymMhh
-	 f3kGCSa0Yac0WfNfzl4q8d6ZlHUl6JY0mNxHi+6Q=
+	b=ixMb1ZKLFB4wNrievp2CKmVxgcCh57QoWVRsyZCQ5D3cJQLPyXToSIWyxq8b4ByWC
+	 HtXdO2wEfmkTQ94AGZP6NSN7KXhJqfExPVU6FgkzdREHshr5xL6rg/SaE7sxnsyi8k
+	 yGgYNU0Y9MdpvDOC4MXCvPbZxLBFd2kqOlyc9Ky4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1242/2857] hwmon: (pmbus/q54sj108a2) Add missing NULL pointer check
-Date: Wed, 18 Nov 2026 15:37:56 +0100
-Message-ID: <20261118150246.269866921@linuxfoundation.org>
+Subject: [PATCH 6.1 1243/2857] hwmon: (pmbus) Release devres allocated memory after devm_thermal_of_zone_register error
+Date: Wed, 18 Nov 2026 15:37:57 +0100
+Message-ID: <20261118150246.304089201@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,48 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit a5802c587da97a4ff85c04aad6043fa26640fc9b ]
+[ Upstream commit 9aa6cc563e881c3cad96ea36926cadceee151f32 ]
 
-When CONFIG_DEBUG_FS is enabled and per-client PMBus debugfs directory
-creation fails during pmbus_do_probe(), q54sj108a2_probe() passes the NULL
-pointer returned by pmbus_get_debugfs_dir() to debugfs_create_dir()
-without validation, creating its debugfs directory at the debugfs root
-instead of under the client directory.
+In pmbus_thermal_add_sensor(), a devres memory leak occurs when a PMBus
+temperature sensor is initialized but no thermal zone is configured for
+it.
+The function allocates a pmbus_thermal_data structure using
+devm_kzalloc(). It then attempts to register the sensor with the thermal
+subsystem via devm_thermal_of_zone_register(). If this registration
+returns -ENODEV (e.g., when no thermal zone is mapped in the Device Tree
+or CONFIG_THERMAL_OF is disabled), the function intentionally catches the
+error and returns 0 to allow device probing to continue.
 
-If pmbus_init_debugfs() fails to create the client directory, data->debugfs
-is left as NULL or an ERR_PTR, which pmbus_get_debugfs_dir() converts to
-NULL. Passing a NULL parent to debugfs_create_dir() places q54sj108a2_dir
-in the root of the debugfs filesystem and populates it with attribute files
-whose private data pointers reference psu->debugfs_entries. Because this
-root-level directory is outside the client debugfs hierarchy, PMBus core
-cleanup does not remove it on device unbind, leaking the debugfs entries
-and causing a use-after-free of the devm-allocated struct q54sj108a2_data
-if the orphaned files are accessed via q54sj108a2_debugfs_read() or
-q54sj108a2_debugfs_write() after device removal.
+Because devm_kfree() is not called on the -ENODEV path, the unused tdata
+structure remains allocated on the device's managed resource list. Since
+most PMBus temperature sensors are not attached to thermal zones, this
+results in an accumulation of unused objects that needlessly consume kernel
+memory for the lifetime of the PMBus device.
 
-Fix the problem by adding the missing NULL pointer check.
+Add the missing call to devm_kfree() to fix the problem.
 
-Fixes: d014538aa385 ("hwmon: (pmbus) Driver for Delta power supplies Q54SJ108A2")
+Fixes: 3aa74796cfd0 ("hwmon: (pmbus) Register with thermal for PSC_TEMPERATURE")
 Cc: stable@vger.kernel.org
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/q54sj108a2.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hwmon/pmbus/pmbus_core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/pmbus/q54sj108a2.c b/drivers/hwmon/pmbus/q54sj108a2.c
-index ca492b922705d..1021c3b29d3da 100644
---- a/drivers/hwmon/pmbus/q54sj108a2.c
-+++ b/drivers/hwmon/pmbus/q54sj108a2.c
-@@ -342,6 +342,8 @@ static int q54sj108a2_probe(struct i2c_client *client)
- 	psu->client = client;
+diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
+index 44e4d47372a6f..fd7d353e99762 100644
+--- a/drivers/hwmon/pmbus/pmbus_core.c
++++ b/drivers/hwmon/pmbus/pmbus_core.c
+@@ -1328,8 +1328,10 @@ static int pmbus_thermal_add_sensor(struct pmbus_data *pmbus_data,
+ 	 * If CONFIG_THERMAL_OF is disabled, this returns -ENODEV,
+ 	 * so ignore that error but forward any other error.
+ 	 */
+-	if (IS_ERR(tzd) && (PTR_ERR(tzd) != -ENODEV))
++	if (IS_ERR(tzd) && (PTR_ERR(tzd) != -ENODEV)) {
++		devm_kfree(dev, tdata);
+ 		return PTR_ERR(tzd);
++	}
  
- 	debugfs = pmbus_get_debugfs_dir(client);
-+	if (!debugfs)
-+		return 0;
- 
- 	q54sj108a2_dir = debugfs_create_dir(client->name, debugfs);
- 
+ 	return 0;
+ }
 -- 
 2.53.0
 
