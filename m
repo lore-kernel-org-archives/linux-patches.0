@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017160;
-	b=qUEYKVlyMTDOQHEL41BOef5yWIWvJw/HpyNfhWaot8DmOGd2nYHK2hz66wuf+47GjY1X
-	 K8mVhgtbF+lwj8Nh1ZQJepxx90P/VJd+bpD1O3n8qa00v55Dm79pyDUEHgjd81yipOYGC
-	 8dbKepLEXPsj/6xyPi5WlqLOPTuLlPgUF1FXhftJWdO6xBJ5ox7TegY4TJ4kE+FmsPas4
-	 DHkNnMEHEo92bjHanbj7fiDOi/bmcFaXfGfp/brYfzIcmIOBaayQGrw6/rOn5eRLAAhJK
-	 RNPUDEhoDj5Dx6s9usFm3YwN3OdtxWrC95PCA5DXuE+uxoh+Ch6qf9tDcb7WD9o4jMQ==
+	t=1795017162;
+	b=shWiVOaoISh4Mu2snVZsq9M1y+dgyBrOSLX3xD8gSUIBEH510pQLr/s90M9zXVIhO5ST
+	 rs6GPnfZjy9ghtpm5ODtJ5SNQgO31NxpjWtwaW1G8iSN9lx9gFOEfpdg6T0t0IjeIviV1
+	 ApTqTfyDAH4JyN7atdHkhrBy83X3JKRbxbO1veFlq40CccrwGaAyUphAMUTsmzVLg3Gsz
+	 TxxCus4JWnXOQEsvMf8KoO7WfSkZtYRrVM9IJ/gT2AsxsRuPaINlAmVJIw/WEt9WnAHzr
+	 oU0DNKUf7uEDB0w3zcDS17oH0fL9xpZPDnFNmDs1p0qrldMKmHp9L0DqLPxxjV3Z2NA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017160;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017162;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/poLV3tX3zno12QBa03GqMVim/4pxwv78oty3kBkhbc=;
-	b=uaMq3owXKUUQD1balZ1M4jw8J0t9fEYCYJ5TpoaeyLONowHDlLeG9FTBF8m8cLBf4U4O
-	 vrnCAAIN7QvSiLaXPiVTRqdDOyw3B2kLdaMZuH6IfMoeJtevTBINU3KXkar7eaYj+ybtt
-	 6Vt9lEDTwpGVKDeZhkkFekKnGnLKGODvDHNqhZGFPK3TUOazth6Kz+OUoWvtdbRqIZFKG
-	 7aVWRSwksxVmLPVWkex8mEaZGOwKpJUyUUXSGQew9drUtUiqfWceDELz+2d2ct6PL+X4T
-	 1IaQaIkh9wvxNEDGMsys09SRdZpXIOl4JRPeNgCX21IS9v5xS1UTu5fTkgN5vTRRg+g==
+	bh=l/kCSb+XzAPEEzYkva4zOziuXOQfd+Y9ngRuJwBwOSI=;
+	b=bBHkcPTIxZkKMUAKg3sCcmgLHceHzEPEGwf+f3UElDYced8uoZwUPtAxpQGcU4Qs9syx
+	 /zDCmkgsJxNmojWnvV0EKW2OKoKFJIW0/fd8WcmCS/2BV3CTP2at4BCbckMxc3jwJEaIE
+	 KdwsO8T9ZNnxcMlms0D86Mgv8c8dYkrGbTrnTvrGiA5DTdhVB6lrkOvEHM0qSyuijfE3X
+	 iL+Xp9NZyj3PsWduHyuLMRHYP/2gUrUyWIDyLzHnOL5rbzX5ccNhCFo7j6+WUJMAoWxcH
+	 vtWj2Em08ASKQO49ymepgPvoBYXIArkFqzFr8WcMm6l4O9XHXhWhVfRrjoGfyCGZz/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vo5Spp+S;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QPaFknw3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC0A5606A31C;
-	Wed, 18 Nov 2026 15:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B52D4606A32A;
+	Wed, 18 Nov 2026 15:52:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vo5Spp+S
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A7B31F000C4;
-	Wed, 18 Nov 2026 15:52:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QPaFknw3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 166961F000C4;
+	Wed, 18 Nov 2026 15:52:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017159;
-	bh=/poLV3tX3zno12QBa03GqMVim/4pxwv78oty3kBkhbc=;
+	s=korg; t=1795017162;
+	bh=l/kCSb+XzAPEEzYkva4zOziuXOQfd+Y9ngRuJwBwOSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vo5Spp+SAxS8NSaJhHBJk7sTqeaM9AStjScFzkY2KRdVaK/r33DpJjEhqKa9JegxW
-	 lgi++qkWTLNxxWGbqniac0Y7x16+B6TwezB8Dh2bZ9NyKbyumYTntW1NiypoxZIIxK
-	 xtUZubmK/8Y2PyovY/qhzanibaJ0JBHqCE/CgViQ=
+	b=QPaFknw3qwqFRal8kUOEjUdwO0Moo2dZ3MoIqvqMoVsJe8AnBpCJbdmGAubdoLDYC
+	 W9LaHq4r/diiZwNoednzpNjGuhBiO+b4euR0+PagjWfSs3CkP48KdqCnLtVOdjG8Q5
+	 /JufU3lYJRrCLFYMTVVkezJ+wZ/XRbNOwhk/ZX1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Li RongQing <lirongqing@baidu.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0743/2651] drm/amdgpu: Add workaround to enable GCv12.1 MGCG
-Date: Wed, 18 Nov 2026 15:33:03 +0100
-Message-ID: <20261118150314.632492812@linuxfoundation.org>
+Subject: [PATCH 7.3 0734/2651] RDMA/mlx5: Use DEFINE_RAW_FLEX for leftovers flow attributes
+Date: Wed, 18 Nov 2026 15:32:54 +0100
+Message-ID: <20261118150314.297579360@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,126 +68,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit 67f7737a13de7fecab9726cff58229af25ffed71 ]
+[ Upstream commit e43913aabd35eef837edef29e93f15e15bdeeacd ]
 
-A workaround sequence which toggles MGCG override is required to enable
-hardware MGCG. As this is not the final solution, don't change the CGCG
-flags.
+Commit e91fb8b9d0ed ("RDMA/mlx5: Avoid flexible array warning") split
+the leftovers_specs[] array into two separate structs to silence the
+sparse "array of flexible structures" warning, but in doing so reversed
+the member order: eth_flow was placed before flow_attr.
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 52a484f3ef5b ("drm/amdgpu: Move GC v12.1 spm vmid init to hw init")
+_create_flow_rule() locates the flow specs with:
+
+    ib_flow = (void *)flow_attr + sizeof(*flow_attr);
+
+which expects the spec data to immediately follow the ib_flow_attr.
+With the reversed order, flow_attr is the last member, so ib_flow
+points past the end of the struct and the num_of_specs = 1 loop reads
+out-of-bounds memory (whatever static data follows in the .data
+section), producing incorrect flow rules or a crash.
+
+Rebuild the leftovers attributes with DEFINE_RAW_FLEX(), which declares
+an on-stack struct ib_flow_attr with a properly sized trailing flows[]
+array.  The ETH spec lives in flows[0].eth at exactly the offset
+_create_flow_rule() expects, so no layout-dependent composite struct is
+needed.  This also avoids embedding a structure that contains a flexible
+array member as a non-last member, which would trigger
+-Wflex-array-member-not-at-end once the warning is enabled.
+
+Fixes: e91fb8b9d0ed ("RDMA/mlx5: Avoid flexible array warning")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Link: https://patch.msgid.link/20260918092337.2338-1-lirongqing@baidu.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c | 53 ++++++++++++++++----------
- 1 file changed, 32 insertions(+), 21 deletions(-)
+ drivers/infiniband/hw/mlx5/fs.c | 45 +++++++++++++++------------------
+ 1 file changed, 21 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c b/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c
-index 78d64f2ed31fd..61f89fcc3407b 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c
-@@ -214,6 +214,8 @@ static void gfx_v12_1_update_perf_clk(struct amdgpu_device *adev,
- static void gfx_v12_1_xcc_update_perf_clk(struct amdgpu_device *adev,
- 					 bool enable, int xcc_id);
- static int gfx_v12_1_init_cp_compute_microcode_bo(struct amdgpu_device *adev);
-+static void gfx_v12_1_xcc_update_medium_grain_clock_gating(
-+	struct amdgpu_device *adev, bool enable, int xcc_id, bool force);
- 
- static void gfx_v12_1_kiq_set_resources(struct amdgpu_ring *kiq_ring,
- 					uint64_t queue_mask)
-@@ -2817,6 +2819,8 @@ static int gfx_v12_1_xcc_cp_resume(struct amdgpu_device *adev, uint16_t xcc_mask
- 				return r;
- 		}
- 
-+		gfx_v12_1_xcc_update_medium_grain_clock_gating(adev, false,
-+							       xcc_id, true);
- 		/* GFX CGCG and LS is disabled by rlc fw */
- 		gfx_v12_1_xcc_enable_gui_idle_interrupt(adev, false, xcc_id);
- 
-@@ -2850,6 +2854,8 @@ static int gfx_v12_1_xcc_cp_resume(struct amdgpu_device *adev, uint16_t xcc_mask
- 			if (r)
- 				return r;
- 		}
-+		gfx_v12_1_xcc_update_medium_grain_clock_gating(adev, true,
-+							       xcc_id, true);
- 	}
- 
- 	return 0;
-@@ -3489,37 +3495,41 @@ static void gfx_v12_1_xcc_update_coarse_grain_clock_gating(struct amdgpu_device
- 	}
- }
- 
--static void gfx_v12_1_xcc_update_medium_grain_clock_gating(struct amdgpu_device *adev,
--							   bool enable, int xcc_id)
-+static void gfx_v12_1_xcc_update_medium_grain_clock_gating(
-+	struct amdgpu_device *adev, bool enable, int xcc_id, bool force)
+diff --git a/drivers/infiniband/hw/mlx5/fs.c b/drivers/infiniband/hw/mlx5/fs.c
+index 98cdc5c571557..e63fdb4bc3e3f 100644
+--- a/drivers/infiniband/hw/mlx5/fs.c
++++ b/drivers/infiniband/hw/mlx5/fs.c
+@@ -17,6 +17,7 @@
+ #include <linux/mlx5/fs.h>
+ #include <linux/mlx5/fs_helpers.h>
+ #include <linux/mlx5/eswitch.h>
++#include <linux/overflow.h>
+ #include <net/inet_ecn.h>
+ #include "mlx5_ib.h"
+ #include "counters.h"
+@@ -1647,36 +1648,32 @@ static struct mlx5_ib_flow_handler *create_leftovers_rule(struct mlx5_ib_dev *de
+ 							  struct ib_flow_attr *flow_attr,
+ 							  struct mlx5_flow_destination *dst)
  {
- 	uint32_t data, def;
--	if (!(adev->cg_flags & (AMD_CG_SUPPORT_GFX_MGCG | AMD_CG_SUPPORT_GFX_MGLS)))
-+	bool support_mgcg;
++	DEFINE_RAW_FLEX(struct ib_flow_attr, flow_attr_wc, flows, 1);
++	DEFINE_RAW_FLEX(struct ib_flow_attr, flow_attr_uc, flows, 1);
 +
-+	support_mgcg = force || (adev->cg_flags & AMD_CG_SUPPORT_GFX_MGCG);
+ 	struct mlx5_ib_flow_handler *handler_ucast = NULL;
+ 	struct mlx5_ib_flow_handler *handler = NULL;
+ 
+-	static struct {
+-		struct ib_flow_spec_eth eth_flow;
+-		struct ib_flow_attr	flow_attr;
+-	} leftovers_wc = { .flow_attr = { .num_of_specs = 1,
+-					  .size = sizeof(leftovers_wc) },
+-			   .eth_flow = {
+-				   .type = IB_FLOW_SPEC_ETH,
+-				   .size = sizeof(struct ib_flow_spec_eth),
+-				   .mask = { .dst_mac = { 0x1 } },
+-				   .val = { .dst_mac = { 0x1 } } } };
+-
+-	static struct {
+-		struct ib_flow_spec_eth eth_flow;
+-		struct ib_flow_attr	flow_attr;
+-	} leftovers_uc = { .flow_attr = { .num_of_specs = 1,
+-					  .size = sizeof(leftovers_uc) },
+-			   .eth_flow = {
+-				   .type = IB_FLOW_SPEC_ETH,
+-				   .size = sizeof(struct ib_flow_spec_eth),
+-				   .mask = { .dst_mac = { 0x1 } },
+-				   .val = { .dst_mac = {} } } };
+-
+-	handler = create_flow_rule(dev, ft_prio, &leftovers_wc.flow_attr, dst);
++	flow_attr_wc->num_of_specs = 1;
++	flow_attr_wc->size = sizeof(struct ib_flow_attr) +
++			      sizeof(struct ib_flow_spec_eth);
++	flow_attr_wc->flows[0].eth.type = IB_FLOW_SPEC_ETH;
++	flow_attr_wc->flows[0].eth.size = sizeof(struct ib_flow_spec_eth);
++	flow_attr_wc->flows[0].eth.mask.dst_mac[0] = 0x1;
++	flow_attr_wc->flows[0].eth.val.dst_mac[0] = 0x1;
 +
-+	if (!support_mgcg)
- 		return;
- 
- 	/* It is disabled by HW by default */
- 	if (enable) {
--		if (adev->cg_flags & AMD_CG_SUPPORT_GFX_MGCG) {
--			/* 1 - RLC_CGTT_MGCG_OVERRIDE */
--			def = data = RREG32_SOC15(GC, GET_INST(GC, xcc_id), regRLC_CGTT_MGCG_OVERRIDE);
-+		/* 1 - RLC_CGTT_MGCG_OVERRIDE */
-+		def = data = RREG32_SOC15(GC, GET_INST(GC, xcc_id),
-+					  regRLC_CGTT_MGCG_OVERRIDE);
- 
--			data &= ~(RLC_CGTT_MGCG_OVERRIDE__GRBM_CGTT_SCLK_OVERRIDE_MASK |
--				  RLC_CGTT_MGCG_OVERRIDE__RLC_CGTT_SCLK_OVERRIDE_MASK |
--				  RLC_CGTT_MGCG_OVERRIDE__GFXIP_MGCG_OVERRIDE_MASK);
-+		data &= ~(RLC_CGTT_MGCG_OVERRIDE__GRBM_CGTT_SCLK_OVERRIDE_MASK |
-+			  RLC_CGTT_MGCG_OVERRIDE__RLC_CGTT_SCLK_OVERRIDE_MASK |
-+			  RLC_CGTT_MGCG_OVERRIDE__GFXIP_MGCG_OVERRIDE_MASK);
- 
--			if (def != data)
--				WREG32_SOC15(GC, GET_INST(GC, xcc_id), regRLC_CGTT_MGCG_OVERRIDE, data);
--		}
-+		if (def != data)
-+			WREG32_SOC15(GC, GET_INST(GC, xcc_id),
-+				     regRLC_CGTT_MGCG_OVERRIDE, data);
- 	} else {
--		if (adev->cg_flags & AMD_CG_SUPPORT_GFX_MGCG) {
--			def = data = RREG32_SOC15(GC, GET_INST(GC, xcc_id), regRLC_CGTT_MGCG_OVERRIDE);
-+		def = data = RREG32_SOC15(GC, GET_INST(GC, xcc_id),
-+					  regRLC_CGTT_MGCG_OVERRIDE);
- 
--			data |= (RLC_CGTT_MGCG_OVERRIDE__RLC_CGTT_SCLK_OVERRIDE_MASK |
--				 RLC_CGTT_MGCG_OVERRIDE__GRBM_CGTT_SCLK_OVERRIDE_MASK |
--				 RLC_CGTT_MGCG_OVERRIDE__GFXIP_MGCG_OVERRIDE_MASK);
-+		data |= (RLC_CGTT_MGCG_OVERRIDE__RLC_CGTT_SCLK_OVERRIDE_MASK |
-+			 RLC_CGTT_MGCG_OVERRIDE__GRBM_CGTT_SCLK_OVERRIDE_MASK |
-+			 RLC_CGTT_MGCG_OVERRIDE__GFXIP_MGCG_OVERRIDE_MASK);
- 
--			if (def != data)
--				WREG32_SOC15(GC, GET_INST(GC, xcc_id), regRLC_CGTT_MGCG_OVERRIDE, data);
--		}
-+		if (def != data)
-+			WREG32_SOC15(GC, GET_INST(GC, xcc_id),
-+				     regRLC_CGTT_MGCG_OVERRIDE, data);
- 	}
- }
- 
-@@ -3589,7 +3599,8 @@ static int gfx_v12_1_xcc_update_gfx_clock_gating(struct amdgpu_device *adev,
- 
- 	gfx_v12_1_xcc_update_coarse_grain_clock_gating(adev, enable, xcc_id);
- 
--	gfx_v12_1_xcc_update_medium_grain_clock_gating(adev, enable, xcc_id);
-+	gfx_v12_1_xcc_update_medium_grain_clock_gating(adev, enable, xcc_id,
-+						       false);
- 
- 	gfx_v12_1_xcc_update_repeater_fgcg(adev, enable, xcc_id);
- 
++	flow_attr_uc->num_of_specs = 1;
++	flow_attr_uc->size = sizeof(struct ib_flow_attr) +
++			      sizeof(struct ib_flow_spec_eth);
++	flow_attr_uc->flows[0].eth.type = IB_FLOW_SPEC_ETH;
++	flow_attr_uc->flows[0].eth.size = sizeof(struct ib_flow_spec_eth);
++	flow_attr_uc->flows[0].eth.mask.dst_mac[0] = 0x1;
++
++	handler = create_flow_rule(dev, ft_prio, flow_attr_wc, dst);
+ 	if (!IS_ERR(handler) &&
+ 	    flow_attr->type == IB_FLOW_ATTR_ALL_DEFAULT) {
+ 		handler_ucast = create_flow_rule(dev, ft_prio,
+-						 &leftovers_uc.flow_attr, dst);
++						 flow_attr_uc, dst);
+ 		if (IS_ERR(handler_ucast)) {
+ 			mlx5_del_flow_rules(handler->rule);
+ 			ft_prio->refcount--;
 -- 
 2.53.0
 
