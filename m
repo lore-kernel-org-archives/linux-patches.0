@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022076;
-	b=Lf4ZYmfYTmUoRrSeGRqR1djb0jAnzJppmJpzmZymfEU0sckuId20o7rticXiV7dYYhOZ
-	 YXZa1xkQBP/U08qsvju9ZzcThC2ccaChsXTUxwafI2p+ovW/2iQ/I9ZXEUeglIPf4png5
-	 RyGH5iZAHpidH6di6UjFhquJD2s1EpVqFaK0TEvwECO4Z5dOFmobcu23n6GoqJwyetI67
-	 M6AswNDve8nyo9hMoDdfQnoboLgxPHR3sKTmVvJd2ppYzEK0D/JA7LcDF5fdodKBjnjKy
-	 j/yw99y99NrFOPE3kWg8aQ6L6wtJxk5KDPTP2eqwXmRAYm/090Hgl6j/KC9j+/6zC6w==
+	t=1795022079;
+	b=Dy1JS9h79lw+5MQwsgB1QtxC6azWB80W/R2pvbLLDxkZu6hLoX49PaDmpB5oAbpvaN2/
+	 lZchOctH4bJjZtNIkuMKAdzFcd560zD8jksbcISQKdYz48Oxx8xULBIL+EbtTdWufJDV6
+	 0vGeGt7+rXJZUzcna4QJMBsE+cYReChYwdGq67eXzM/IPqV5izMJd+wpQ+nsGg0wTH6CA
+	 wZurvko06sJgvxy7fBUTOG2Kwx5V1VP2ScLXYxBA4eMNP4CgwmOR5pqmV7ZX04Fjltk9K
+	 15gvlvDfIdpwdwO4A3B3wgeZkgbdolG5BGPaF64F2bZDvOFqMhgJnrjWq+WuE8QIZfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022076;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022079;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YK9WAdRX4Z7HXSMoAGnO5B7wId2Koi0aN0c0HG3TNes=;
-	b=lmLOCFmvYQA50IBI0u5AjldXkQA/lp7NRBexs3M3mE6WpGk5cPdZmx+eUF+PYRq9D+hK
-	 gQd8HFEu4Zsi3bhGGuic2R+4Dpybf9SOBI9U3q21iKj9ydUlw5Q7jdMhFWdtaIRJO0+fF
-	 SqlqXqAgAztaeg1ItNq1IC+qns470TV9gL49t1Y9+G/cIo0s1zKdFh+PgbW1QCxBecF79
-	 aFQoVGfcUf9XMmKJ7hIBWIUj+kl1WP7Cpzwmo+R2qt3pxwI30vFg87IX75cLz05A2++J7
-	 Pw63yJvtf06OGr+m2IdGwYvtEkxz/Y4eWgRnslE+Jw8Z4G/7d6OY9BbTuSuS1No7kpw==
+	bh=+RGYfmGWuvNOoCiYuGSxvCYbGgEjXNYxTwbThD4MZmk=;
+	b=gfR874JNLwkx+4dDyt821RfEMXJA+0XfE5N/GowiWxM1TLF4C31TYVY9i1uBFsmd2Vln
+	 amzBjmaLXIJ+eVrBUAe0KKo/MfeCgezEyCqOI12tzOW2Rm3mFUGI2gei65eN5kYIx2JQa
+	 PpqhMy/U0rXWu4v1hsjVWMK2ZmMfy4XAQex/kMCZmGlr2aAszTAe/sLwszWxqCEwrPgGL
+	 ZlK7lIA0cMiwcXlSE+RYmLOPTMgISey4zvN8B2KcPxA+/O99KdrzZxJHZ+U/ZWdDlof8T
+	 55vFo9iSXTF1Rd88CPg0PsCRe/wsMESLPlxyW54HDaUxnaCB0itJzrslGJFjbbHyIxw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sz9s4zcP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tWRqt3jP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69A0D606A32A;
-	Wed, 18 Nov 2026 17:14:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44766606A32A;
+	Wed, 18 Nov 2026 17:14:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sz9s4zcP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B984D1F000C4;
-	Wed, 18 Nov 2026 17:14:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tWRqt3jP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95DDC1F000C4;
+	Wed, 18 Nov 2026 17:14:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022076;
-	bh=YK9WAdRX4Z7HXSMoAGnO5B7wId2Koi0aN0c0HG3TNes=;
+	s=korg; t=1795022079;
+	bh=+RGYfmGWuvNOoCiYuGSxvCYbGgEjXNYxTwbThD4MZmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sz9s4zcPyDNeqiOfBZct/nW5Ty1gRt+soZoWYOB7ghgBg6wfvzzhpmozOXJ4e1BfM
-	 IfFvYcj/DJ2xuh4HYeFmjWzmBOwSZnZsz8v7OKeGN99RwalQjxlVRWFDlRMDDF6RWo
-	 O97C6iY4MMPBBu8SFbSVs4kugv3/BaKYXHYAZJzg=
+	b=tWRqt3jPEwVI4lFi2rEtNMsgN9BEvYS0ZrC6gdU383e5e8cE1P0iZOyeSd5tFSZO6
+	 01nQ9Xy8bBC7TBVX3bZ49xn5bDoTcpNXlMCVr/job6inOwlJFHKVegc/pITiOsSTJW
+	 rMNKbn90O27hw3MQPgEbnzRAcjfK+nYBMi5DEF4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Surabhi Gogte <sgogte@purestorage.com>,
-	Hannes Reinecke <hare@kernel.org>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Keith Busch <kbusch@kernel.org>,
+	Naveen Kumar Chaudhary <naveen.osdev@gmail.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Daniel Thompson <daniel@riscstar.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2531/2651] nvme-tcp: refactor I/O queue setup path
-Date: Wed, 18 Nov 2026 16:02:51 +0100
-Message-ID: <20261118150415.738206531@linuxfoundation.org>
+Subject: [PATCH 7.3 2532/2651] kdb: fix memory leak in kdb_setenv() when environment is full
+Date: Wed, 18 Nov 2026 16:02:52 +0100
+Message-ID: <20261118150415.768121108@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,94 +69,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Surabhi Gogte <sgogte@purestorage.com>
+From: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
 
-[ Upstream commit c58465c1e3d6f6fa720c922781cad4330a573cfb ]
+[ Upstream commit 22d59ccad2935b7dea7f818793b739343de433a8 ]
 
-Split the I/O queue setup helpers apart so that the individual steps can
-be called directly from nvme_tcp_configure_io_queues():
+When kdb_setenv() fails to find a free slot in __env[], the function
+returns KDB_ENVFULL without freeing the previously allocated string
+buffer 'ep', leaking memory on every failed call.
 
-- Queue count negotiation moves out of nvme_tcp_alloc_io_queues() into a
-  new nvme_tcp_set_io_queue_count(), leaving the allocator with just the
-  per-queue allocation loop.
-- TLS PSK validation moves out of __nvme_tcp_alloc_io_queues() into a
-  new nvme_tcp_tls_check_psk().
-- nvme_tcp_configure_io_queues() now calls the three steps directly in
-  the same order as before.
+Add the missing kfree(ep) before returning KDB_ENVFULL.
 
-Signed-off-by: Surabhi Gogte <sgogte@purestorage.com>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Stable-dep-of: 12c20e290356 ("nvme-tcp: skip TLS control records while waiting for the ICResp")
+Fixes: a30d4ff8193e ("kdb: remove usage of static environment buffer")
+Signed-off-by: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/mbwhul34esbxkdbmlbjaquv5lgyzznn6pdapohry3lsiidbz6n@zucvm5os363q
+Signed-off-by: Daniel Thompson <daniel@riscstar.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/tcp.c | 25 +++++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ kernel/debug/kdb/kdb_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index edb41cb3a7a15..6204943ea404c 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -2335,10 +2335,8 @@ static int nvme_tcp_alloc_admin_queue(struct nvme_ctrl *ctrl)
- 	return ret;
- }
- 
--static int __nvme_tcp_alloc_io_queues(struct nvme_ctrl *ctrl)
-+static int nvme_tcp_tls_check_psk(struct nvme_ctrl *ctrl)
- {
--	int i, ret;
--
- 	if (nvme_tcp_tls_configured(ctrl)) {
- 		if (ctrl->opts->concat) {
- 			/*
-@@ -2360,6 +2358,13 @@ static int __nvme_tcp_alloc_io_queues(struct nvme_ctrl *ctrl)
+diff --git a/kernel/debug/kdb/kdb_main.c b/kernel/debug/kdb/kdb_main.c
+index ddce56b47b25a..31abaea5454e6 100644
+--- a/kernel/debug/kdb/kdb_main.c
++++ b/kernel/debug/kdb/kdb_main.c
+@@ -338,6 +338,7 @@ static int kdb_setenv(const char *var, const char *val)
  		}
  	}
  
-+	return 0;
-+}
-+
-+static int __nvme_tcp_alloc_io_queues(struct nvme_ctrl *ctrl)
-+{
-+	int i, ret;
-+
- 	for (i = 1; i < ctrl->queue_count; i++) {
- 		ret = nvme_tcp_alloc_queue(ctrl, i,
- 				ctrl->tls_pskid);
-@@ -2376,7 +2381,7 @@ static int __nvme_tcp_alloc_io_queues(struct nvme_ctrl *ctrl)
- 	return ret;
++	kfree(ep);
+ 	return KDB_ENVFULL;
  }
- 
--static int nvme_tcp_alloc_io_queues(struct nvme_ctrl *ctrl)
-+static int nvme_tcp_set_io_queue_count(struct nvme_ctrl *ctrl)
- {
- 	unsigned int nr_io_queues;
- 	int ret;
-@@ -2398,14 +2403,22 @@ static int nvme_tcp_alloc_io_queues(struct nvme_ctrl *ctrl)
- 
- 	nvmf_set_io_queues(ctrl->opts, nr_io_queues,
- 			   to_tcp_ctrl(ctrl)->io_queues);
--	return __nvme_tcp_alloc_io_queues(ctrl);
-+	return 0;
- }
- 
- static int nvme_tcp_configure_io_queues(struct nvme_ctrl *ctrl, bool new)
- {
- 	int ret, nr_queues;
- 
--	ret = nvme_tcp_alloc_io_queues(ctrl);
-+	ret = nvme_tcp_set_io_queue_count(ctrl);
-+	if (ret)
-+		return ret;
-+
-+	ret = nvme_tcp_tls_check_psk(ctrl);
-+	if (ret)
-+		return ret;
-+
-+	ret = __nvme_tcp_alloc_io_queues(ctrl);
- 	if (ret)
- 		return ret;
  
 -- 
 2.53.0
