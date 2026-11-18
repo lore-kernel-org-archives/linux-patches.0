@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028168;
-	b=4M0oKlV4ryahuZbM6ThAW700PxfFj6PHf4cboqrUePJzf6k3lKYX/KZ1PK59K/CZw/TL
-	 6N672yRavVceSIm1gOL4GrFfXDbod2b406LFWy8KwgvngWKNz/n6iOHhxDMRrPdbyBBUk
-	 X/eQ4uak5bnnH60nZft0bzgD+0QvnQB7hSBkIYy95o8Mi8zzyyfg23+sKJeXZpiLMx0UU
-	 dAyCsaCrpFZh7o+EsVW7bR92ND8WKobW97hpeivYGbUwKb7JBw1Tu4656HU3l8yIO9IDN
-	 pLJeTSbmMiesmm6EyT0NWkkg35vi3t1yy9wkxJPGLWkxFJXCKY0jV1prI/muwPWkuUw==
+	t=1795028171;
+	b=skmdHz+Fe+AOqBc+C5MNIq3CQsKAUAQ9C5pMyDaJMaNaoWB4ifbV6Z6DfjbMWZcvOBWF
+	 aqhqHkYi7dmsAq45jMGTRe7Cel9rx51DwQbIBn+EyVdp0zgyPs7kjtzLStThMP2aZPvrs
+	 BnRNX6jXPsUJSEhhHss/DKwIeP+2EB7mOJ52FIDdbzLCxsOROPaWdFaGIsMU9Glyn6J9f
+	 5mgVfoVLRNLdRJy2G4/1R/4Oihr3DuI7pk1fOtfTyzmD4jaeCbHjcAO98lQyc/jVwsjzA
+	 AuT7UKAbUUVMo8wFG1M6OiGaVnonKmWE0qhbZvNJXw5br4heXIcnZlIeYGtzF0nGtdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028168;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028171;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=h2PUD/dXLJmNJmYgxZ0tEtRO0kI7b9/TyBeMIs8fndM=;
-	b=3VfEWF46WetOU9lKDT0Nw5Laz8rCRdyAwNFXO50NLu/mC70FUmmZC3CN7fPRJ7DRYVwy
-	 KTXErU5uvieTikbdfVEsLZ2u2CJmOSFrdFO/0DYdTrOqa5dB3Zk4xSqSU3kT3FMoTrrY7
-	 AeNCj0M/N+yffbNVNsUVM7WIjBw/4m2w6JkjJESD6TNE1Sk5VvUPogEBYMVdsPwslyVs5
-	 FWc/ROehyajvaIXYDYBfz705PTvfiYU5D5RdPkU6QxamwcVcqwB1Zn0IOyEEJ3rfqWS7d
-	 xgtWBZSMoVKBFcI0emndlh9JGi99V0APmpuwN7Uqj2H5Hc3UabmTHqNzU6sp/hLJHWA==
+	bh=rulNhpIBRUxG797qfrxPsAUvYYVDyQJAA/+xHOCEf5Q=;
+	b=ElFnq0TR9ZI27lyQg8gNyIWT7utX4h5vqUoMmy8/2yVV/foOgskD/dr3H6+8a/5w4QF6
+	 IW+SOLQYMsJBjPhYjPMW+QDC/B9dBi2GqywFLOIWU2i0rcqEmAoiWxoJlhLIWRyhkMaU1
+	 9mJ+rLyVji3CUimWhnVE8U7QcG/ddlcUU/UMCZ8czj+qH2VREXlmuLNEdqULOby1ukMGb
+	 VACyCjXNYGFJdaJkQ1MyfQq9TcYnck608Lbly1TtE2pBvOqinenvF1FBHgAOMIKj+AKeG
+	 yTfSWgQVhKYhGMAZBT+ZGLtH1HpCli0E0zQUmJ20H1wOc34snJN2m9ngfuD+MwTJhSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s8RaXtgM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DQwKFpJF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4F1606A330;
-	Wed, 18 Nov 2026 18:56:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A53606A320;
+	Wed, 18 Nov 2026 18:56:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s8RaXtgM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 498831F000C4;
-	Wed, 18 Nov 2026 18:56:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DQwKFpJF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E110C1F000C4;
+	Wed, 18 Nov 2026 18:56:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028168;
-	bh=h2PUD/dXLJmNJmYgxZ0tEtRO0kI7b9/TyBeMIs8fndM=;
+	s=korg; t=1795028171;
+	bh=rulNhpIBRUxG797qfrxPsAUvYYVDyQJAA/+xHOCEf5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s8RaXtgM6wrgUo2rJwkHQ2HhIipAwUE6J4BqWKmaKsw535RVKDr9oFFnfx83SaYgS
-	 TzX+pkA5ZBulRyHPryGVSOa9ldf73JoC47zTghDOgD3Pif8KAULUXW4iEAhfCaYcdG
-	 s58zsV9Jgob+y5qrQ5Vmdbuo4mM2A4pvqZN7hY+A=
+	b=DQwKFpJFCs7/OK9suN+rGxwbicjrpfVP3rWItzZSTifxtBR5Si8h9jSREj4sxj/Vi
+	 /WPOBfuLDtsPLwH2xQQFXiZ2Ut8Mw8UCGdUBUvR2Ggcpv6ihOX515q0GqI1u5y2B+b
+	 NvB3V6mZARW9XBxbkL7Hj87rLMwQ7q6C99MAS9IQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+bd975ef54294bec73f0e@syzkaller.appspotmail.com,
-	Tal Zussman <tz2294@columbia.edu>,
-	Julian Sun <sunjunchao@bytedance.com>,
-	Zhenxian Ma <mzx199711@gmail.com>,
-	Bart Van Assche <bvanassche@acm.org>,
+	Tejun Heo <tj@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1998/2151] block: fix recursive i_rwsem locking in blkdev_write_iter()
-Date: Wed, 18 Nov 2026 16:02:13 +0100
-Message-ID: <20261118150234.506398906@linuxfoundation.org>
+Subject: [PATCH 6.18 2043/2151] blk-throttle: make blkio.reset_stats reset I/O counts
+Date: Wed, 18 Nov 2026 16:02:58 +0100
+Message-ID: <20261118150236.147997104@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -72,68 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhenxian Ma <mzx199711@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 21b88cc8bafceee6c6c82503e3b2cc6f1d0c78bf ]
+[ Upstream commit ac81a07a0bd5e75e8edc0eb5be563be1b2d56554 ]
 
-Commit 2fec4fd97cc3 ("block: take i_rwsem for the direct I/O write
-fallback") takes i_rwsem around blkdev_buffered_write() in the direct
-write fallback to close a race with set_blocksize().  Commit
-1b1be9ea4e34 ("block: take the inode lock for buffered write fallback")
-fixes the same race by taking i_rwsem inside blkdev_buffered_write()
-instead.  With both commits applied, the fallback path takes i_rwsem
-recursively:
+blkio.throttle.io_service_bytes and io_serviced were reset by
+blkcg_reset_stats() while the counters were part of the blkg. Now that
+they live in the throtl_grp, add a pd_reset_stats_fn for them.
 
-  blkdev_write_iter()
-    inode_lock_shared(bd_inode)
-    blkdev_buffered_write()
-      inode_lock_shared(inode)
-
-syzbot reports this as:
-
-  WARNING: possible recursive locking detected
-  syz.0.40/6005 is trying to acquire lock:
-  ffff888024956f68 (&sb->s_type->i_mutex_key#10){++++}-{4:4}, at: blkdev_buffered_write+0xd7/0x160 block/fops.c:738
-  but task is already holding lock:
-  ffff888024956f68 (&sb->s_type->i_mutex_key#10){++++}-{4:4}, at: blkdev_write_iter+0x6c5/0x810 block/fops.c:815
-
-rw_semaphore read locks are not recursive: once a writer is queued,
-new readers block behind it.  If set_blocksize() calls inode_lock()
-between the two acquisitions, it waits for the first read lock to be
-released, while the second inode_lock_shared() waits behind
-set_blocksize(), and the task deadlocks.
-
-Drop the outer locking in the fallback.
-
-Fixes: 1b1be9ea4e34 ("block: take the inode lock for buffered write fallback")
-Reported-by: syzbot+bd975ef54294bec73f0e@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=bd975ef54294bec73f0e
-Cc: Tal Zussman <tz2294@columbia.edu>
-Cc: Julian Sun <sunjunchao@bytedance.com>
-Assisted-by: LLM
-Signed-off-by: Zhenxian Ma <mzx199711@gmail.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20261022062513.77372-1-mzx199711@gmail.com
+Fixes: 7ca464383aec ("blk-throtl: stop using blkg->stat_bytes and ->stat_ios")
+Cc: Tejun Heo <tj@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://patch.msgid.link/20261028164415.1262013-27-axboe@kernel.dk
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/fops.c | 2 --
- 1 file changed, 2 deletions(-)
+ block/blk-throttle.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/block/fops.c b/block/fops.c
-index 68b55d3c0876e..64e8017cce431 100644
---- a/block/fops.c
-+++ b/block/fops.c
-@@ -845,9 +845,7 @@ static ssize_t blkdev_write_iter(struct kiocb *iocb, struct iov_iter *from)
- 			} else {
- 				ssize_t ret2;
+diff --git a/block/blk-throttle.c b/block/blk-throttle.c
+index 43d33adf21d69..36f8dc324d79f 100644
+--- a/block/blk-throttle.c
++++ b/block/blk-throttle.c
+@@ -1690,6 +1690,14 @@ static void throtl_pd_offline(struct blkg_policy_data *pd)
+ 	}
+ }
  
--				inode_lock_shared(bd_inode);
- 				ret2 = blkdev_buffered_write(iocb, from);
--				inode_unlock_shared(bd_inode);
- 				ret = direct_write_fallback(iocb, from, ret,
- 							    ret2);
- 				need_sync = true;
++static void throtl_pd_reset_stats(struct blkg_policy_data *pd)
++{
++	struct throtl_grp *tg = pd_to_tg(pd);
++
++	blkg_rwstat_reset(&tg->stat_bytes);
++	blkg_rwstat_reset(&tg->stat_ios);
++}
++
+ struct blkcg_policy blkcg_policy_throtl = {
+ 	.dfl_cftypes		= throtl_files,
+ 	.legacy_cftypes		= throtl_legacy_files,
+@@ -1699,6 +1707,7 @@ struct blkcg_policy blkcg_policy_throtl = {
+ 	.pd_online_fn		= throtl_pd_online,
+ 	.pd_offline_fn		= throtl_pd_offline,
+ 	.pd_free_fn		= throtl_pd_free,
++	.pd_reset_stats_fn	= throtl_pd_reset_stats,
+ };
+ 
+ void blk_throtl_cancel_bios(struct gendisk *disk)
 -- 
 2.53.0
 
