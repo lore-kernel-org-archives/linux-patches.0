@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037730;
-	b=0E8RLvYq95Iv+le4OX9oCN1X5Yq+fhmk04W3vRIvNEwInsnsoYBs+T9hlXrt4FF0TXk8
-	 czWPYch7+C/zPt6Kn5fmb+m4AX/SPcVkZVWmEzAvJ109jXpogPG6aGs79WKBzOrZYt6bg
-	 ITZCK8/DQe1vYmpPM5kcg0eC8rDuLpmqDTQR+szg/r58aOewgdF0rMEgPxCpGsaWoWGIF
-	 NBVfyMdATlGlsJo+OC8Vb9q8QXBEkqt4lMYhMlpF3oWXyvn8Z9l9UzOQuB+UFRXqjU+N8
-	 8zJwS7Os/ApUUO5TuzOyMxX8qTSx6ZGHomRWa8hJNUjSMs9awYGWbhRKQFB+Wfmm/tw==
+	t=1795037732;
+	b=RvkyqtevxrM6/B2MgySWpncun6fM2CGfFKZlMROyyPdxUQfTAabkuoZKvnPlA8CXAmnL
+	 MkabYLg9kHkw0mN0H+F3MtQRAu8XuX1z7KBPPg4/W3r1OAKynT4cNbrmul3vaK7tqYgCe
+	 GDrh7xsFLQGtcUtwtisms94XcUh4r2WkwYV0Rdv78t5brzo1a3rgCUIXUfuMlg4k5mTDx
+	 JMx0+PuaNEJCRZAK0UBgnxgAbWG9UVDrlDSm4YJ+yzq2qG+bVeq9z5OkHooCzLxFVPe4L
+	 BIqI70yrbpIUSwp2jHwcgabAWdLJI+uXVIdIRb+1wqi2zkQ9XzB+PK/ZMdywmOh6C8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037730;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037732;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HIu26SZZfUtG/2jbNUk5NFLzbpUl5yjsWqjvQHiWv7s=;
-	b=3su3zWOItag24K6EoGZKYyKK8lGL9kEfGiYwCdT5gljxEDpd4DSuby8h5lCZy+G05IoQ
-	 4xQLBfgtmbWl5P/Np0q2I9umuyxUuk2Yl4lJrcD2Fw0/6916Wfx/VK2cVu4NnDJxQtWqC
-	 LrxtLORh/asrWDU2H0YLrZmSgPqSBTPZsjFbw10TQkzt9NK2b86RFCG2dk7ZY5lfJcA72
-	 62riyX/2fALuDfh3Us3ShQ7ChaH8V4lgNr0LSrcvt7IJytNnQeY7l+lOFSeh7+HbPM/Ul
-	 JDFF/5mKrQSPMlvuNa28Ga6T/qZ/bXCGnACvnr6ztU1/idSaf6kkVccrIy1L1vlM14w==
+	bh=TBExPVjpunpx1HHsvomBGXqt8avFZ9G8EofYGVbv7HM=;
+	b=iuZtW6l/W8YO9y5xOdyK0dujyY5xcQxpbdBHw0Ze6MA5IBFb1I1jp21BY/jiBwWCEwNo
+	 NVVFSffkCYIiuR6ACaIsViShO6/dg81b0PiqQOlfXMHo0W5iHx/A534KmnEXRyxmd5C6R
+	 vtMcPw7fHWwpBx+/JNNSn45k0WYaUB+NrO9khDrL+TdoUdPGhAFIiPM44FhVO+MESx9bo
+	 oaCWNE6hYAnXSeyQR43vbHOfnHl23JthtO7h8pwYqYisxB+Z6UuqB1Q3IXpiyl3UNME+e
+	 HLJg7vJ9+BkCNMOv8/P3VgRyNbd4W0ZQA7ADHogeY69+ZoAYfKhwLYPTPzd7f+ZbEoQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RtVDlyID;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="EmC/nUDG";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D021606A31C;
-	Wed, 18 Nov 2026 21:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8AB3606A320;
+	Wed, 18 Nov 2026 21:35:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RtVDlyID
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691481F000C4;
-	Wed, 18 Nov 2026 21:35:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EmC/nUDG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38D6B1F000C4;
+	Wed, 18 Nov 2026 21:35:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037730;
-	bh=HIu26SZZfUtG/2jbNUk5NFLzbpUl5yjsWqjvQHiWv7s=;
+	s=korg; t=1795037732;
+	bh=TBExPVjpunpx1HHsvomBGXqt8avFZ9G8EofYGVbv7HM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RtVDlyID/unsVCHbVFvzPvg7C3VPhQtrQrPKt6Z7MPq7sU7XrWlDOMDPbo+zjwvHy
-	 EYG9m+Y+UZ8ZWreeoICml22xObkbyEv6pkDNAQeO3GpbZaagjUj5BONubSWA6ace+b
-	 sdTE1+74POuNkDxbIMPBTGCRK2WgDMgfgKNfA7QM=
+	b=EmC/nUDG2Rqhu6LzOZK14pcykwYfGIae0OXpyWaJViJfOsKrBO986SF1ZGqq6qC8P
+	 6uYpvSJKx1cWt/2odjmMh4m/rydFS26Srs/hy4lV+kgOg3oxj9io7eeE1/gcSHHvSJ
+	 HQ+i11XhSuHU48SevB9CJQc4/EQrBRFSnqyevFyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Esben Haabendal <esben@geanix.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1498/3318] drm/bridge: nwl-dsi: Limit LCDIF specific sync override
-Date: Wed, 18 Nov 2026 15:35:20 +0100
-Message-ID: <20261118150405.855375419@linuxfoundation.org>
+	Xie Yongji <xieyongji@bytedance.com>,
+	"chenglong.ma" <longpareto@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Claude Code <noreply@anthropic.com>
+Subject: [PATCH 6.6 1499/3318] vduse: fix VA/PA confusion in the coherent page fault path
+Date: Wed, 18 Nov 2026 15:35:21 +0100
+Message-ID: <20261118150405.885170481@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,45 +70,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Esben Haabendal <esben@geanix.com>
+From: chenglong.ma <longpareto@gmail.com>
 
-[ Upstream commit 54a88d9afcca66221d14f438d0960472984968ec ]
+[ Upstream commit bb2e6f166547838fd7c320b01c90918b736f76e2 ]
 
-When using DCSS with NWL, overriding the mode flags to enforce active high
-sync is preventing the use of active low with downstream bridges, such as
-ti-sn65dsi83, which will not see such mode flags set by the panel.
+vduse_domain_get_coherent_page() assumes that iotlb entries above
+bounce_size were installed by vduse_domain_alloc_coherent(), so it
+treats map->addr as a physical address. But vduse registers with
+use_va = true, and when the device is bound to vhost_vdpa,
+vhost_vdpa_va_map() stores a userspace virtual address in map->addr,
+which vduse_domain_set_map() then copies into the same iotlb. A
+process holding the domain file descriptor across a rebind can
+therefore fault in an arbitrary physical page with read/write
+access, ignoring the entry permissions.
 
-Fixes: 44cfc6233447 ("drm/bridge: Add NWL MIPI DSI host controller support")
+Additionally, since the domain file mmap lacks VM_IO, the domain
+file itself can be mapped and passed to vhost_vdpa_va_map(),
+producing self-referential entries that bypass the coherent path
+check.
+
+To fix, only translate entries whose backing file is the domain
+file itself in vduse_domain_get_coherent_page(), reject such
+entries in vduse_domain_set_map() since only external mappings
+should be imported, and set VM_IO on the domain file mmap so
+vhost_vdpa_va_map() refuses to map it in the first place.
+
+Fixes: 8c773d53fb7b ("vduse: Implement an MMU-based software IOTLB")
+Cc: Xie Yongji <xieyongji@bytedance.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Signed-off-by: Esben Haabendal <esben@geanix.com>
-Link: https://patch.msgid.link/20261027-nwl-dsi-fixes-v5-2-b6d1d3d2d356@geanix.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Reported-by: chenglong.ma <longpareto@gmail.com>
+Signed-off-by: chenglong.ma <longpareto@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Co-Authored-By: Claude Code <noreply@anthropic.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/nwl-dsi.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/vdpa/vdpa_user/iova_domain.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/bridge/nwl-dsi.c b/drivers/gpu/drm/bridge/nwl-dsi.c
-index f92e1808f069c..06c0a9b12087d 100644
---- a/drivers/gpu/drm/bridge/nwl-dsi.c
-+++ b/drivers/gpu/drm/bridge/nwl-dsi.c
-@@ -824,10 +824,13 @@ static int nwl_dsi_bridge_atomic_check(struct drm_bridge *bridge,
- 				       struct drm_connector_state *conn_state)
+diff --git a/drivers/vdpa/vdpa_user/iova_domain.c b/drivers/vdpa/vdpa_user/iova_domain.c
+index cc230af339e53..c069eb315815d 100644
+--- a/drivers/vdpa/vdpa_user/iova_domain.c
++++ b/drivers/vdpa/vdpa_user/iova_domain.c
+@@ -76,6 +76,10 @@ int vduse_domain_set_map(struct vduse_iova_domain *domain,
+ 	for (map = vhost_iotlb_itree_first(iotlb, start, last); map;
+ 	     map = vhost_iotlb_itree_next(map, start, last)) {
+ 		map_file = (struct vdpa_map_file *)map->opaque;
++		if (!map_file || map_file->file == domain->file) {
++			ret = -EINVAL;
++			goto err;
++		}
+ 		ret = vduse_iotlb_add_range(domain, map->start, map->last,
+ 					    map->addr, map->perm,
+ 					    map_file->file,
+@@ -222,6 +226,7 @@ vduse_domain_get_coherent_page(struct vduse_iova_domain *domain, u64 iova)
  {
- 	struct drm_display_mode *adjusted_mode = &crtc_state->adjusted_mode;
-+	struct nwl_dsi *dsi = bridge_to_dsi(bridge);
+ 	u64 start = iova & PAGE_MASK;
+ 	u64 last = start + PAGE_SIZE - 1;
++	struct vdpa_map_file *map_file;
+ 	struct vhost_iotlb_map *map;
+ 	struct page *page = NULL;
  
- 	/* At least LCDIF + NWL needs active high sync */
--	adjusted_mode->flags |= (DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_PVSYNC);
--	adjusted_mode->flags &= ~(DRM_MODE_FLAG_NHSYNC | DRM_MODE_FLAG_NVSYNC);
-+	if (dsi->endpoint == NWL_DSI_ENDPOINT_LCDIF) {
-+		adjusted_mode->flags |= (DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_PVSYNC);
-+		adjusted_mode->flags &= ~(DRM_MODE_FLAG_NHSYNC | DRM_MODE_FLAG_NVSYNC);
-+	}
+@@ -230,6 +235,10 @@ vduse_domain_get_coherent_page(struct vduse_iova_domain *domain, u64 iova)
+ 	if (!map)
+ 		goto out;
  
- 	/*
- 	 * Do a full modeset if crtc_state->active is changed to be true.
++	map_file = (struct vdpa_map_file *)map->opaque;
++	if (!map_file || map_file->file != domain->file)
++		goto out;
++
+ 	page = pfn_to_page((map->addr + iova - map->start) >> PAGE_SHIFT);
+ 	get_page(page);
+ out:
+@@ -565,7 +574,7 @@ static int vduse_domain_mmap(struct file *file, struct vm_area_struct *vma)
+ {
+ 	struct vduse_iova_domain *domain = file->private_data;
+ 
+-	vm_flags_set(vma, VM_DONTDUMP | VM_DONTEXPAND);
++	vm_flags_set(vma, VM_IO | VM_DONTDUMP | VM_DONTEXPAND);
+ 	vma->vm_private_data = domain;
+ 	vma->vm_ops = &vduse_domain_mmap_ops;
+ 
 -- 
 2.53.0
 
