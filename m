@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032286;
-	b=UVSdEMy3tI4IWlIuNIil1gp+TIoyPVXwdAgW8C8AbHg+eA1gWSOKsgbAKsrcIHVYdRgL
-	 U+vRxohKfiRxPBbqrNXGwuwpnTNpo+4azQlywQ7GB8aA15p488QSHzWELAFLuzWisUZtA
-	 sRDAMfOVGwZ8KVVaX/kFDvvumlT5DfDjWecnIWh1pa7dWqzw90CaR4cYYbVvSaCARyQgD
-	 8jQqMg044V6Tq5S4aRdjRJXaP+FiaP8UH+kXV+qvKQfqw+2lv5z3PYSrAn1v6m/QD6Ndu
-	 kiDeT+qLnn7zTJwrnF1V7FPce2itJgzoskeGG0iR47zfGpvw64yctwIGrfwdP2vZnTw==
+	t=1795032289;
+	b=VpCmf9w4R64mAd/Pfjx6iFmpceY4vjeV/K1RJdrhY4dMtAS80rpqdACtVRn0unCNVLIG
+	 SCTD1Czm6Zsj+ejt2dJs/Av3NyALo2QxfoAl3/g8eKErX1WZtY5EsiUn0FOpCZAYhPSFD
+	 kn+pjpW6UbVSI4c2YsqWfNrbRWijIukDVEcoIjAAxkdcC8ZNIISpadEiPHPc49UlhSexh
+	 bdvbh7FiwhXk1AMG8QDSlOdQYnRiZ3BxTuDfpm5vnssIMiYwt6TtnYurczE8mOLiCF0Gk
+	 ULTdj5B/xq4E9ju1zkO/MGAoJpfG2rEkharOLRQdyzQ0W1jlBw0VSszFfYmjFDFAwWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032286;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032289;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gxIpvL1tHGWuYcFYaWC0USv+gYrfVN5a98EKeU6gVm4=;
-	b=BAgdtxuaNTftAp8+GnJMnBEGUH9+stQ4V3uNre1VF1MoBfOgzo83ie/P9AyAO36jMl6W
-	 uCL89UDnnrr9qGFXqSFKbxqeY7gf29C8beI00DQ3uNWKCP3e69QZLU2jrPZa6MFpni692
-	 DIRNQPD7oGvl7imE0C2AwOSkjPZGShlgfNHmiUSzDpQTibhvu+YAa4GjdhXaiz9LOAl9L
-	 euZ4b+DPLNbkpdZ8msn1EHCVdkeB8fZGYFzERWxVgFq4/Ulg05tqbVOju2neNmdgWQUlJ
-	 smfpYkkXOinmKFyw/LsX2bAHsuIDvzlVkzogssTn/OJ4TQ1vW+uoA8XSaaVfeCaTNvQ==
+	bh=pQa1N7qfa5JqAk5jF54fEEjT8Wp/eZhmcglVVhicl+8=;
+	b=3jIWMfb6HgjfvaOWEzW0MYvZRVJM0SdBIyZ82PrOB9m2mOS7Au6JlWC/4R3/sIhvCsM3
+	 9AqCpNx7fGQPibXIg2g/2/IIsfrn+ZSvaSnEZo32ieIvc8HKopwTIPCVV7ugQPlNQ5NMC
+	 WelXm4Xc52Pqf6Qa87Z+jRgiA2VtUjsogbNXLp3QduIm9MYUUbJJQjPM3sgvD02nTDFWl
+	 QxXS2zQJHiNvW5/8klUifN7MmwOX6CktvoVooho7ut7LKSgxK+lekB2upA4yLA608dIkf
+	 zPi0zhOpDCmFZY2uR4OJoQ5ZIzaW4Ow1bi7DzwT42b7I0gxczam4vkr9D8UwOv+exlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YxZfK0Qz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VWI+4lVU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E90606A31C;
-	Wed, 18 Nov 2026 20:04:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C355606A32C;
+	Wed, 18 Nov 2026 20:04:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YxZfK0Qz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F8AC1F000C6;
-	Wed, 18 Nov 2026 20:04:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VWI+4lVU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 335BE1F000C4;
+	Wed, 18 Nov 2026 20:04:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032286;
-	bh=gxIpvL1tHGWuYcFYaWC0USv+gYrfVN5a98EKeU6gVm4=;
+	s=korg; t=1795032288;
+	bh=pQa1N7qfa5JqAk5jF54fEEjT8Wp/eZhmcglVVhicl+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YxZfK0QzLgmmJD1DgdsX35spexK33nakCNrioiRk9yCCRZCDF6B1PqCm+/oEb0hUu
-	 JGOf2DHiMH7uhYj97uMmmUmitqD0bqccTTHrUPf9+DcTLe31Lvc4TaP7S7RCQQRBel
-	 TWjEeWrbhOtzZBIVmg5Lny/Gu8SaNmrBwUpaSmSA=
+	b=VWI+4lVUQ0Mx+SxKGxMylLevt6K2WdWojTBna3WQGRoeiSS7mNEg+muKACAuVeG0p
+	 YI/s1+xlMo0y04KHhatUw74cpP0I7Pierl2W7W/yn4aNYolcQsnypj/K4Nr34w2dSa
+	 mVbQVb68yJZthOVBqk8MskW2UDK9yIRpKfX3r3Bk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
-	Joonhoe Kim <26rote@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1357/1756] power: supply: qcom_battmgr: report the USB type from USB_ADAP_TYPE
-Date: Wed, 18 Nov 2026 15:58:04 +0100
-Message-ID: <20261118150103.309512957@linuxfoundation.org>
+Subject: [PATCH 6.12 1358/1756] bpf: Reject sleepable programs for task_vma iterator
+Date: Wed, 18 Nov 2026 15:58:05 +0100
+Message-ID: <20261118150103.344647262@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,62 +68,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joonhoe Kim <26rote@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit a49f86cd1333c6e12fd37bc0b3234ace10072553 ]
+[ Upstream commit dfcd1765911223df60845e288ad392d5237f47a3 ]
 
-On SM8350 and SM8550 class firmware the USB power supply reads its
-usb_type from the USB_TYPE property. On a Kaanapali (SM8850) tablet that
-property is 1 (SDP) whatever is plugged in, while USB_ADAP_TYPE reports
-the adapter, using the same numbering as POWER_SUPPLY_USB_TYPE_*:
+A sleepable "iter.s/task_vma" program can be attached, but its ->show()
+callback runs with the mmap_lock of the iterated mm held for read. As soon
+as the program runs, bpf_iter_run_prog() calls might_fault(), and any
+bpf_copy_from_user() or bpf_copy_from_user_task() it does may really fault
+or take mmap_lock again. With lockdep this is reported as recursive
+locking of mmap_lock. Without lockdep, a fault on the reader's own mm, or
+access_process_vm() on the iterated mm, has to take mmap_lock for read
+again. If a writer queued up in the meantime that blocks behind the
+writer, which in turn waits for the read lock the iterator already holds,
+and the read() hangs:
 
-  PC port                  USB_TYPE 1   USB_ADAP_TYPE 1 (SDP)
-  USB-C dock, 5 V PD       USB_TYPE 1   USB_ADAP_TYPE 6 (PD)
-  65 W PPS charger         USB_TYPE 1   USB_ADAP_TYPE 8 (PD_PPS)
+    reader (iter.s/task_vma)        other thread of the same mm
+    task_vma_seq_get_next()
+      mmap_read_lock(mm)
+                                    mmap_write_lock(mm)  <- waits
+    bpf prog: copy_from_user()
+      page fault
+        mmap_read_lock(mm)          <- queued behind the writer
 
-Qualcomm's downstream qti_battery_charger driver also maps
-USB_ADAP_TYPE to POWER_SUPPLY_PROP_USB_TYPE.
+The reader waits killable, so the hang lasts until it gets a fatal signal.
 
-Request USB_ADAP_TYPE for POWER_SUPPLY_PROP_USB_TYPE instead.
+bpf_iter_link_attach() allows sleepable programs for the targets that set
+BPF_ITER_RESCHED, and task_vma sets it because cond_resched() between VMAs
+is fine with mmap_lock held. Rescheduling between objects and running a
+sleepable program inside ->show() are different properties, though, and
+task_vma only has the first one. The open-coded task_vma iterator does not
+have this problem since it hands out a snapshot of the VMA and holds no
+lock when it returns to the program.
 
-Tested on a Lenovo Legion Tab Y700 gen 5 (qcom,kaanapali-pmic-glink,
-which uses the SM8550 path). Only tested on this device; the SM8350
-variant shares the property map and was not tested.
+The vma handed to the program is only stable under mmap_lock, so the lock
+can't be dropped around ->show(). Add a feature flag BPF_ITER_NOSLEEP for
+targets which can't run sleepable programs although they can reschedule,
+and set it for task_vma.
 
-Fixes: 29e8142b5623 ("power: supply: Introduce Qualcomm PMIC GLINK power supply")
-Reviewed-by: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
-Assisted-by: LLM
-Signed-off-by: Joonhoe Kim <26rote@gmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261012130053.442-1-26rote@gmail.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+The check at attach time is not enough. BPF_LINK_UPDATE replaces the
+program of a link, and bpf_iter_link_replace() only compares the type, the
+attach type and the BTF id of the two programs, which are the same for a
+sleepable and a non-sleepable one. Do the check there as well. That also
+closes this way around the existing rule: so far a sleepable program could
+be put on a link of a target that doesn't set BPF_ITER_RESCHED, like the
+hash map element iterator, which runs it under rcu_read_lock().
+
+BPF_LINK_CREATE of a sleepable program for the task_vma target, and
+BPF_LINK_UPDATE to one, now fail with -EINVAL, also for programs that
+don't touch user memory and have been working since sleepable iterator
+programs exist. The programs can still be loaded. They have to be
+loaded as non-sleepable programs, or use the open-coded iterator.
+
+Fixes: b77fb25dcb34 ("bpf: Add support for bpf iterator programs to use sleepable helpers")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261017163745.3341787-6-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/qcom_battmgr.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/bpf.h    |  3 ++-
+ kernel/bpf/bpf_iter.c  | 17 ++++++++++++++---
+ kernel/bpf/task_iter.c |  6 +++++-
+ 3 files changed, 21 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
-index 3674afb0d49d0..0cb66b131e3f1 100644
---- a/drivers/power/supply/qcom_battmgr.c
-+++ b/drivers/power/supply/qcom_battmgr.c
-@@ -721,7 +721,7 @@ static const u8 sm8350_usb_prop_map[] = {
- 	[POWER_SUPPLY_PROP_CURRENT_NOW] = USB_CURR_NOW,
- 	[POWER_SUPPLY_PROP_CURRENT_MAX] = USB_CURR_MAX,
- 	[POWER_SUPPLY_PROP_INPUT_CURRENT_LIMIT] = USB_INPUT_CURR_LIMIT,
--	[POWER_SUPPLY_PROP_USB_TYPE] = USB_TYPE,
-+	[POWER_SUPPLY_PROP_USB_TYPE] = USB_ADAP_TYPE,
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index f43aa1cd1b0b3..c144ae94290fa 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -2493,7 +2493,8 @@ typedef const struct bpf_func_proto *
+ 			     const struct bpf_prog *prog);
+ 
+ enum bpf_iter_feature {
+-	BPF_ITER_RESCHED	= BIT(0),
++	BPF_ITER_RESCHED	= BIT(0),	/* may cond_resched() between objects */
++	BPF_ITER_NOSLEEP	= BIT(1),	/* ->show() can't run sleepable progs */
  };
  
- static int qcom_battmgr_usb_sm8350_update(struct qcom_battmgr *battmgr,
-@@ -1242,7 +1242,7 @@ static void qcom_battmgr_sm8350_callback(struct qcom_battmgr *battmgr,
- 		case USB_INPUT_CURR_LIMIT:
- 			battmgr->usb.current_limit = le32_to_cpu(resp->intval.value);
- 			break;
--		case USB_TYPE:
-+		case USB_ADAP_TYPE:
- 			battmgr->usb.usb_type = le32_to_cpu(resp->intval.value);
- 			break;
- 		default:
+ #define BPF_ITER_CTX_ARG_MAX 2
+diff --git a/kernel/bpf/bpf_iter.c b/kernel/bpf/bpf_iter.c
+index d5c30594c40a0..f5df115059bde 100644
+--- a/kernel/bpf/bpf_iter.c
++++ b/kernel/bpf/bpf_iter.c
+@@ -73,6 +73,15 @@ static inline bool bpf_iter_target_support_resched(const struct bpf_iter_target_
+ 	return tinfo->reg_info->feature & BPF_ITER_RESCHED;
+ }
+ 
++/* Only allow sleepable program for resched-able iterator that can run one */
++static bool bpf_iter_target_support_prog(const struct bpf_iter_target_info *tinfo,
++					 const struct bpf_prog *prog)
++{
++	return !prog->sleepable ||
++	       (bpf_iter_target_support_resched(tinfo) &&
++		!(tinfo->reg_info->feature & BPF_ITER_NOSLEEP));
++}
++
+ static bool bpf_iter_support_resched(struct seq_file *seq)
+ {
+ 	struct bpf_iter_priv_data *iter_priv;
+@@ -411,6 +420,8 @@ static int bpf_iter_link_replace(struct bpf_link *link,
+ 				 struct bpf_prog *new_prog,
+ 				 struct bpf_prog *old_prog)
+ {
++	struct bpf_iter_link *iter_link =
++		container_of(link, struct bpf_iter_link, link);
+ 	int ret = 0;
+ 
+ 	mutex_lock(&link_mutex);
+@@ -421,7 +432,8 @@ static int bpf_iter_link_replace(struct bpf_link *link,
+ 
+ 	if (link->prog->type != new_prog->type ||
+ 	    link->prog->expected_attach_type != new_prog->expected_attach_type ||
+-	    link->prog->aux->attach_btf_id != new_prog->aux->attach_btf_id) {
++	    link->prog->aux->attach_btf_id != new_prog->aux->attach_btf_id ||
++	    !bpf_iter_target_support_prog(iter_link->tinfo, new_prog)) {
+ 		ret = -EINVAL;
+ 		goto out_unlock;
+ 	}
+@@ -546,8 +558,7 @@ int bpf_iter_link_attach(const union bpf_attr *attr, bpfptr_t uattr,
+ 	if (!tinfo)
+ 		return -ENOENT;
+ 
+-	/* Only allow sleepable program for resched-able iterator */
+-	if (prog->sleepable && !bpf_iter_target_support_resched(tinfo))
++	if (!bpf_iter_target_support_prog(tinfo, prog))
+ 		return -EINVAL;
+ 
+ 	link = kzalloc(sizeof(*link), GFP_USER | __GFP_NOWARN);
+diff --git a/kernel/bpf/task_iter.c b/kernel/bpf/task_iter.c
+index 1b36cbc3d25c0..6fbb4d7d03883 100644
+--- a/kernel/bpf/task_iter.c
++++ b/kernel/bpf/task_iter.c
+@@ -741,7 +741,11 @@ static const struct bpf_iter_seq_info task_vma_seq_info = {
+ static struct bpf_iter_reg task_vma_reg_info = {
+ 	.target			= "task_vma",
+ 	.attach_target		= bpf_iter_attach_task,
+-	.feature		= BPF_ITER_RESCHED,
++	/*
++	 * ->show() runs with the mmap_lock of the iterated mm held, which a
++	 * sleepable program takes again when it faults on user memory.
++	 */
++	.feature		= BPF_ITER_RESCHED | BPF_ITER_NOSLEEP,
+ 	.ctx_arg_info_size	= 2,
+ 	.ctx_arg_info		= {
+ 		{ offsetof(struct bpf_iter__task_vma, task),
 -- 
 2.53.0
 
