@@ -1,59 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041871;
-	b=FAiU7z5gt/YX7ekBQYOKbFzAgkUj/58JIgGMQ8BcbY6C5WWZyOdwzKKalHEfns0o7bkf
-	 PtLgk+5tfWz5LkqMk1Ms2GvzVSBr0chuMUPusWqbs4bgvfKlrr6mFk7Auf0zld97nYiTu
-	 oLJ6iNMqaRWeZrBxe2GGUCwvY/irRS8XUzxdhVDbBMkWEhh4fKDRJ9ho78jXe0cvyDX2q
-	 +SBV0SbnLtEocY906ZxzE5+r/RQnz0yJzI+tVP9lZBw2CMsmvvbtkRhaEUn4V5Qf7TaXd
-	 6KwN9iS+eYM20Ny4SW3IKL3Pqe9k1HkwL72JIINJ+Vzz5DzNMWAw9o6lfn4sTWzvxyA==
+	t=1795041874;
+	b=1YeUMPFNa+JLfK9n/khdsIu4bzVvd3Jf0aX/Dd9zznPOBqJ8XsTMeYCXBWLp2tY+QRVC
+	 Oim0rT33jp7GtRJ0+XQ5zvWUiSidfLfLAhZeQ0y3QD5QuYFt2K5Vf6EjEfUD0WpV0MDCj
+	 7844L9ne7Yvf6CCp6xMsRgpJdEsD0gFZ6+igOLkhaNnunU0CW+y15UUsaMI+YznJa7CXy
+	 REV90922/hxidC+pPJHxtlf0y3mEmrYR/IoQrsYlUQADsREfw8T1r6/6nkZL4wWiwnieT
+	 9j7RLe7g61+VNFrfWCJ0GILyJ2VXq8XIgRCpPKFkK366oHxnthexmpbmhw17Da+U7RA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041871;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041874;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lB80gSEuuQvBJeuq2kcdzcgLb+l1FRAr8QPBye+mdPQ=;
-	b=ITH86DaiRRjoj9AoRYW0bhdKOlH/mF3zNXfHON7PeG3QSnhD4peTijCtiaouqY8vi0H9
-	 5Zwe3zFVdXgh2Jo/Hq8DBVc0fzXGGApAWssYxfVtog+0JfCMZzST2laaQnmTM6FBvtZFF
-	 WXgEu7drYm8WjX/PMLSnDAs898i6FYGyI/CL+jKxQZ/3Tir7kABY8fQ0Hvu51TJPi3I9q
-	 OFNgMb0fhk2lGaTCVp3CNPBhWpFjHXvptwtFd2BTJ6mlzLSQCN3ML3ZtcKuztBxRQW6se
-	 7WmaaJroNTCxYrSnNr6QqjIYQikbkwn1P75oOwceZBrU5XTYtqId9Ti++njE7X1BYag==
+	bh=zHdx0xWqRtSMvkxBp8GPZ7F1vZWURJROIJj5yyLw/OE=;
+	b=H91tZ2WbwyaZGJthiIwdsmvnXY2pgRoSmBxUDhp+CQGHgCL5XG5gQZ4WYD7V3CtYdAxn
+	 o5Wyc2ILXy6XPFVCM51hvoWyXlh3mAgKswyLkxxd/wqkEmbIDzi/k9g7JmyGFW5IsSudp
+	 1rzmDAdKr2qo89fDovyRZXwuE6I4Ag0MArsi+MzMVtubW1SXbY8DNJy2J3Ji2AToJl2zy
+	 myny//7ZFB9KEqCCVkpJVlinrEdWyqf+70MuTdiAXx8YWxmlSzSLPU649F4ivvj0gSDU7
+	 i87APYyr4e8r4DfSYDEPa0WLhXxWeNzXhru0yLzBPJseqAq+1HKaYbLBSTaSiTJvZRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WNv9Zhs6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=trYEQ4Yk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1347606A31C;
-	Wed, 18 Nov 2026 22:44:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16C8606A336;
+	Wed, 18 Nov 2026 22:44:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WNv9Zhs6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1DE91F000C4;
-	Wed, 18 Nov 2026 22:44:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=trYEQ4Yk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C82831F000C4;
+	Wed, 18 Nov 2026 22:44:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041871;
-	bh=lB80gSEuuQvBJeuq2kcdzcgLb+l1FRAr8QPBye+mdPQ=;
+	s=korg; t=1795041874;
+	bh=zHdx0xWqRtSMvkxBp8GPZ7F1vZWURJROIJj5yyLw/OE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WNv9Zhs6F5WPqxCmlajJgaPR0rtpqQ9Jc92DmikIptCmFwpsc1Sa+3BgQoXDBrQ+p
-	 fEkaKOlE0Ym8auCmD7+UyDcZ8rS3P6JGPPCJUkxQiUfRTvMUAOXv+w4JbO6dzpgkEQ
-	 zJGCeMdXYMDT/QbliVmdAk0AxE2VFAWjRk26bVmk=
+	b=trYEQ4YkHkJ2uZAZP7Hw2QANiJoQzTsPmIh0bghaKZQcuBnwl+w3M1cqNv9KDIAiV
+	 4ZlM+fbSWGdFWbZt25Xz7IVG3+ECLvWQzG5Vv14Us4Q/0N6SGol2LUHAZ/mpvnvaDg
+	 emfh7YTILcibZnNgQAHgHgD/LJOLl1BF8H/Gv6I8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	Dust Li <dust.li@linux.alibaba.com>,
-	Sidraya Jayagond <sidraya@linux.ibm.com>,
-	Mahanta Jambigi <mjambigi@linux.ibm.com>,
-	Tony Lu <tonylu@linux.alibaba.com>,
-	Wen Gu <guwen@linux.alibaba.com>,
-	Willy Tarreau <w@1wt.eu>,
-	Atharva Vartak <atharva.a.vartak@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2967/3318] net/smc: hold a reference on net_device returned by pnet_find_base_ndev()
-Date: Wed, 18 Nov 2026 15:59:49 +0100
-Message-ID: <20261118150449.300598233@linuxfoundation.org>
+Subject: [PATCH 6.6 2968/3318] tracing: Print a signed histogram key as signed
+Date: Wed, 18 Nov 2026 15:59:50 +0100
+Message-ID: <20261118150449.328563088@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -75,145 +68,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Atharva Vartak <atharva.a.vartak@gmail.com>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-[ Upstream commit e6435b2cc5fdf008cdb67ad9a811a266e8ac9c1e ]
+[ Upstream commit d3e0dfc1ba49a0ab6aeddbb4bcde4bfc0e171a02 ]
 
-pnet_find_base_ndev() resolves the base net_device for stacked devices
-under RTNL, then drops the lock and returns the raw pointer without
-taking a reference.  All three callers dereference the pointer after
-RTNL has been released, creating a use-after-free window if the device
-is concurrently unregistered.
+A histogram sorts its rows by the key named in sort=, and for a key over a
+signed event field it sorts them signed: create_tracing_map_fields() picks
+the comparison function with
 
-Take a reference with netdev_hold() before dropping RTNL and add the
-matching netdev_put() in every return path of the three callers:
+	else
+		cmp_fn = tracing_map_cmp_num(field->size,
+					     field->is_signed);
 
-  - smc_pnet_add_eth()
-  - smc_pnet_find_roce_by_pnetid()
-  - smc_pnet_find_ism_by_pnetid()
+hist_trigger_print_key() does not look at is_signed at all. Every numeric
+key is printed with %llu, so a sorted histogram over a signed field comes
+out looking unsorted. syscalls/sys_exit_lseek carries "long ret", which
+SYSCALL_FIELD() marks signed and which is negative on every error:
 
-Found by code analysis, confirmed with a proof-of-concept that triggers
-a KASAN slab-use-after-free report.
+  # echo 'hist:keys=ret:sort=ret' > events/syscalls/sys_exit_lseek/trigger
+  # echo 1 > events/syscalls/sys_exit_lseek/enable
+  # (five lseek(2) calls returning -ESPIPE, -EINVAL, -EBADF, 0 and 100)
+  # cat events/syscalls/sys_exit_lseek/hist
 
-Fixes: 0afff91c6f5e ("net/smc: add pnetid support")
-Fixes: 1619f770589a ("net/smc: add pnetid support for SMC-D and ISM")
-Cc: "D. Wythe" <alibuda@linux.alibaba.com>
-Cc: Dust Li <dust.li@linux.alibaba.com>
-Cc: Sidraya Jayagond <sidraya@linux.ibm.com>
-Cc: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Cc: Tony Lu <tonylu@linux.alibaba.com>
-Cc: Wen Gu <guwen@linux.alibaba.com>
-Cc: Willy Tarreau <w@1wt.eu>
-Signed-off-by: Atharva Vartak <atharva.a.vartak@gmail.com>
-Link: https://patch.msgid.link/20261007040009.137568-1-atharva.a.vartak@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  { ret: 18446744073709551587 } hitcount:          1
+  { ret: 18446744073709551594 } hitcount:          1
+  { ret: 18446744073709551607 } hitcount:          1
+  { ret:          0 } hitcount:          1
+  { ret:        100 } hitcount:          1
+
+The rows are in ascending order and the numbers are not, because the three
+leading ones are -29, -22 and -9 rendered as their two's complement.
+
+Take the rendering from the same place the sort order comes from: the event
+field when the key has one, and the hist_field itself when it does not. The
+same histogram then reads
+
+  { ret:        -29 } hitcount:          1
+  { ret:        -22 } hitcount:          1
+  { ret:         -9 } hitcount:          1
+  { ret:          0 } hitcount:          1
+  { ret:        100 } hitcount:          1
+
+A ".buckets" key stays unsigned here, and not because it is right.
+hist_field_bucket() divides as unsigned, so the group holding S64_MAX also
+holds S64_MIN, reported at
+
+  https://lore.kernel.org/all/20260914054614.82A9B1F000FF@smtp.kernel.org/
+
+Printing that group signed would name a range that does not contain
+S64_MIN, so the grouping has to be fixed with it, in a patch of its own.
+
+Link: https://patch.msgid.link/20260917045918.370993-1-donggeunyoo.kernel@gmail.com
+Fixes: 7ef224d1d0e3 ("tracing: Add 'hist' event trigger command")
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_pnet.c | 29 ++++++++++++++++++++++-------
- 1 file changed, 22 insertions(+), 7 deletions(-)
+ kernel/trace/trace_events_hist.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/net/smc/smc_pnet.c b/net/smc/smc_pnet.c
-index 0081d1c6ce466..68d6654a445b2 100644
---- a/net/smc/smc_pnet.c
-+++ b/net/smc/smc_pnet.c
-@@ -30,7 +30,8 @@
- #include "smc_core.h"
- 
- static struct net_device *__pnet_find_base_ndev(struct net_device *ndev);
--static struct net_device *pnet_find_base_ndev(struct net_device *ndev);
-+static struct net_device *pnet_find_base_ndev(struct net_device *ndev,
-+					      netdevice_tracker *tracker);
- 
- static const struct nla_policy smc_pnet_policy[SMC_PNETID_MAX + 1] = {
- 	[SMC_PNETID_NAME] = {
-@@ -348,6 +349,7 @@ static int smc_pnet_add_eth(struct smc_pnettable *pnettable, struct net *net,
- 	struct smc_pnetentry *tmp_pe, *new_pe;
- 	struct net_device *ndev, *base_ndev;
- 	u8 ndev_pnetid[SMC_MAX_PNETID_LEN];
-+	netdevice_tracker base_tracker;
- 	bool new_netdev;
- 	int rc;
- 
-@@ -357,10 +359,13 @@ static int smc_pnet_add_eth(struct smc_pnettable *pnettable, struct net *net,
- 	rc = -EEXIST;
- 	ndev = dev_get_by_name(net, eth_name);	/* dev_hold() */
- 	if (ndev) {
--		base_ndev = pnet_find_base_ndev(ndev);
-+		base_ndev = pnet_find_base_ndev(ndev, &base_tracker);
- 		if (!smc_pnetid_by_dev_port(base_ndev->dev.parent,
--					    base_ndev->dev_port, ndev_pnetid))
-+					    base_ndev->dev_port, ndev_pnetid)) {
-+			netdev_put(base_ndev, &base_tracker);
- 			goto out_put;
-+		}
-+		netdev_put(base_ndev, &base_tracker);
- 	}
- 
- 	/* add a new netdev entry to the pnet table if there isn't one */
-@@ -943,10 +948,13 @@ static struct net_device *__pnet_find_base_ndev(struct net_device *ndev)
-  * (for instance with bonding slaves), just the first device
-  * is used to reach a base device.
-  */
--static struct net_device *pnet_find_base_ndev(struct net_device *ndev)
-+static struct net_device *pnet_find_base_ndev(struct net_device *ndev,
-+					      netdevice_tracker *tracker)
- {
- 	rtnl_lock();
- 	ndev = __pnet_find_base_ndev(ndev);
-+	/* keep ndev alive after dropping RTNL, callers must netdev_put() */
-+	netdev_hold(ndev, tracker, GFP_KERNEL);
- 	rtnl_unlock();
- 	return ndev;
- }
-@@ -1085,17 +1093,20 @@ static void smc_pnet_find_roce_by_pnetid(struct net_device *ndev,
- {
- 	u8 ndev_pnetid[SMC_MAX_PNETID_LEN];
- 	struct net_device *base_ndev;
-+	netdevice_tracker base_tracker;
- 	struct net *net;
- 
--	base_ndev = pnet_find_base_ndev(ndev);
-+	base_ndev = pnet_find_base_ndev(ndev, &base_tracker);
- 	net = dev_net(ndev);
- 	if (smc_pnetid_by_dev_port(base_ndev->dev.parent, base_ndev->dev_port,
- 				   ndev_pnetid) &&
- 	    smc_pnet_find_ndev_pnetid_by_table(base_ndev, ndev_pnetid) &&
- 	    smc_pnet_find_ndev_pnetid_by_table(ndev, ndev_pnetid)) {
- 		smc_pnet_find_rdma_dev(base_ndev, ini);
-+		netdev_put(base_ndev, &base_tracker);
- 		return; /* pnetid could not be determined */
- 	}
-+	netdev_put(base_ndev, &base_tracker);
- 	_smc_pnet_find_roce_by_pnetid(ndev_pnetid, ini, NULL, net);
+diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
+index 1c8e42716b76d..35cec5a87dbb7 100644
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -272,6 +272,14 @@ static u64 hist_field_pstring(struct hist_field *hist_field,
+ 	return (u64)(unsigned long)*addr;
  }
  
-@@ -1103,13 +1114,16 @@ static void smc_pnet_find_ism_by_pnetid(struct net_device *ndev,
- 					struct smc_init_info *ini)
- {
- 	u8 ndev_pnetid[SMC_MAX_PNETID_LEN];
-+	netdevice_tracker base_tracker;
- 	struct smcd_dev *ismdev;
- 
--	ndev = pnet_find_base_ndev(ndev);
-+	ndev = pnet_find_base_ndev(ndev, &base_tracker);
- 	if (smc_pnetid_by_dev_port(ndev->dev.parent, ndev->dev_port,
- 				   ndev_pnetid) &&
--	    smc_pnet_find_ndev_pnetid_by_table(ndev, ndev_pnetid))
-+	    smc_pnet_find_ndev_pnetid_by_table(ndev, ndev_pnetid)) {
-+		netdev_put(ndev, &base_tracker);
- 		return; /* pnetid could not be determined */
-+	}
- 
- 	mutex_lock(&smcd_dev_list.mutex);
- 	list_for_each_entry(ismdev, &smcd_dev_list.list, list) {
-@@ -1123,6 +1137,7 @@ static void smc_pnet_find_ism_by_pnetid(struct net_device *ndev,
++static bool hist_field_is_signed(struct hist_field *hist_field)
++{
++	if (hist_field->field)
++		return hist_field->field->is_signed;
++
++	return hist_field->is_signed;
++}
++
+ static u64 hist_field_log2(struct hist_field *hist_field,
+ 			   struct tracing_map_elt *elt,
+ 			   struct trace_buffer *buffer,
+@@ -5561,7 +5569,11 @@ static void hist_trigger_print_key(struct seq_file *m,
+ 				   (char *)(key + key_field->offset));
+ 		} else {
+ 			uval = *(u64 *)(key + key_field->offset);
+-			seq_printf(m, "%s: %10llu", field_name, uval);
++			if (hist_field_is_signed(key_field))
++				seq_printf(m, "%s: %10lld", field_name,
++					   (s64)uval);
++			else
++				seq_printf(m, "%s: %10llu", field_name, uval);
  		}
  	}
- 	mutex_unlock(&smcd_dev_list.mutex);
-+	netdev_put(ndev, &base_tracker);
- }
  
- /* PNET table analysis for a given sock:
 -- 
 2.53.0
 
