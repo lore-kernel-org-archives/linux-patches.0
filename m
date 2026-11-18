@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046631;
-	b=V6Kqc5Lubdew4cKUZwM9wKWX5jqh3Zocsj3/mrOn9iQwvN4cnDqDqx0HmMnAuc785yYF
-	 KUvJw0r6V+iZkH8LCPQ9uW360Bx4ahQ37v+zvksTAW/8FsXaMdC3hsGoDot5ptUZlU0c3
-	 BLn9VgEdo73nbI+QkHVbF9vhPQB+S3NbZECr0A0An2jMHV7isYvQDbPx2fpgrelK0whWV
-	 zDFdBCqN5WNmWk2VSiXtrA0BGze/PZRBGzRDZRZrYy8GcWMo7whhXiLUjMLS5JDTfG3d0
-	 nTgv5+T4HOcI0qowO/QbIfA5LjpWNZdGyKSBc6p1AXddsb8O7sac2fBYtYmEfpxfs4g==
+	t=1795046634;
+	b=LJGx2zO8+JK7jKusYOsEq1wgt8DMMILNR6Ybf7VHw1rVb3qf7cxxaDQMdVpNTgNT4OLg
+	 xcpzvvOXcodTOwY1oj6d0aqPlKpwyS2A2ITs94iQxa3fK+KIcmqNkDYCn4wXnxePoziJ9
+	 aZbn87DPIIa2m6f2h16rMeOzFJPkPIojWdUlZKJBhs+qkzh2J1L4ghrgjY9QBapY2tl9j
+	 SbPD3OUQw6MdktBQzDYf17FLVVulZvzRtTwEYYddNQChHUoJ8S6nb8tdjiGjZvNrO6CJL
+	 7ROiKfmwAqYbm5c39/4BMONKf5yRtEKxB3Xq7Ae6Dtvk21azWNLy4G3inAkLqet3/RQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046631;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046634;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RAvVN9Jr/Txult3pujvIIc0w3tARcyaUWKzZ/aAHx8A=;
-	b=bW83Lf51xhPU1D1RVyAPTtxUBT7JsSY/PpZx5xCEvfn1ZY7GjDqlXBPg4Dn20AWFzD2R
-	 CHALZeqJk4/lrFe4lvwhYNukdtFUbkXOCPSYCHfjhvt+HAginRv0NytOHDNZEXytA3Kc1
-	 nLUnzdc3VAGZLieOSEeRsuQqhnvvoglItXBZ6atAy8wYnDcJWdInqMzWaUvoYwlmbg/5X
-	 uwJWpzqh2ItcH6epjUdMO1ydcFrg6lA9i4rqvS7qedGvhyBb88JyRUP+7Q07GXlO0Mbrm
-	 vc4XqCelxdCZW0bUOHoQxObBNKc+8fF8zOC1ruPu079NyB4R8ZWWpRVRFdGQyhVn3yQ==
+	bh=sKblxi+Og98OMKviW8s6NJAs0KCYQJuG4N5W7qJoNKg=;
+	b=w/XUJnMnTqXTpmu7IIlR5+nQ1m/4JMkBPV1xM66N//M/Zm81tdcdANulfyQ2HzIsgVis
+	 d1eX4br1o998EoXqH3jQPbXamvlGg3BG1OPiwwwQAo8FfKNLsMeV81/uhK2xP7wfuPhp7
+	 omnCAkFw3hExD5vsYPJ/uoiAKN0g80OrRz9ROej2DKaDPTf2JhUgmQmGl+2D4m+LxIrl6
+	 RshMJXzGDzOq+WHz6OK6Pf4c/xD8CsFTr0qOJhyoB1/YPIOuQPeMZv93EFC2nfuwZdNaq
+	 svQOudoM3k9OhOqTJ2t2Uo/xf8ckniRDptH4SKdU2BgPtD2z3wIJcTavgC3mhU2z8Xg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="jvchKe/k";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eOx9pwDt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF34606A32C;
-	Thu, 19 Nov 2026 00:03:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2316606A31C;
+	Thu, 19 Nov 2026 00:03:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jvchKe/k
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96E961F000C4;
-	Thu, 19 Nov 2026 00:03:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eOx9pwDt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54AD71F000C4;
+	Thu, 19 Nov 2026 00:03:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046631;
-	bh=RAvVN9Jr/Txult3pujvIIc0w3tARcyaUWKzZ/aAHx8A=;
+	s=korg; t=1795046633;
+	bh=sKblxi+Og98OMKviW8s6NJAs0KCYQJuG4N5W7qJoNKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jvchKe/kdRO5pwjR9ab2NWLe02JCCJtGmD/jY/I5PhJRZSIPEA99sOKkg3StHyXKQ
-	 vPRkHDOSKrUcYSSL0qqq1/fvjV+NZIFwnx74BvHWvuEOnZjuw6BthZLAZhxjeCxVCG
-	 hUUUytKCRcz45MGEmpdUcHQn04duWXLbABTWvuUo=
+	b=eOx9pwDt9VR3k+xMwWP4NHmFfQTsVIg2cccqPfkemYXEQSsGuveJhWHdq4fx+KLKr
+	 QOlCrPofKX8YfZqzz+FHuBHzO9mhuhzlDMpq9Xr43ZpbIXTlcW9gRFy/j+L+FgkcBF
+	 zFQouJCjkhxHx0VQeih399JdKPkYItQ0iwK00upQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Bin Yu <byu@xidian.edu.cn>,
+	Cheng Wen <wencheng@xidian.edu.cn>,
+	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1351/2857] blk-mq: end the request if getting a keyslot fails
-Date: Wed, 18 Nov 2026 15:39:45 +0100
-Message-ID: <20261118150250.059910452@linuxfoundation.org>
+Subject: [PATCH 6.1 1352/2857] ALSA: usx2y: Refuse a retried DSP load after a failure
+Date: Wed, 18 Nov 2026 15:39:46 +0100
+Message-ID: <20261118150250.095248079@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,55 +70,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
 
-commit e67cb6ed40e7f45912b63d7d575f18dfd2ebc98a upstream.
+[ Upstream commit 1f8101b6adc87a3ddbd51fcb6609251591758026 ]
 
-When blk_crypto_rq_get_keyslot() fails, blk_mq_submit_bio() ends the bio
-by hand and frees the request. By then blk_mq_bio_to_request() has done
-the IO accounting, which blk_mq_free_request() doesn't undo, so the
-in_flight counter never drops and iostat shows a device that is 100%
-busy. If the bio went through zone write plugging the zone stays plugged
-as well, and every later write to it waits forever.
+snd_usx2y_hwdep_dsp_load() sets up the asynchronous sequence URBs and
+the interrupt URB when the FPGA firmware image with index 1 is loaded,
+and then creates the ALSA devices.  If usx2y_in04_init() or
+usx2y_create_alsa_devices() fails, the URBs that were already set up
+are left in place.
 
-Use blk_mq_end_request() like the dispatch path does for a request the
-driver rejected, after marking it for zone write plugging.
+The core keeps the index unloaded when the callback fails, so user
+space may issue the same request again.  The second attempt then enters
+usx2y_async_seq04_init() or usx2y_in04_init() with the URBs still
+allocated and trips WARN_ON(usx2y->as04.buffer) or
+WARN_ON(usx2y->in04_urb).
 
-Move the call to blk_zone_write_plug_init_request() before
-blk_crypto_rq_get_keyslot() so that it doesn't need to be duplicated.
-It doesn't depend on the keyslot.
+The URBs cannot be released at this point: the card may already have
+registered PCM devices that user space can still open, and the
+disconnect handler accesses the URBs without holding the DSP lock.
+Mark the chip as hung instead, so that a retried request is refused
+with -ENODEV and the assertions keep their meaning.  The URBs are
+released by snd_usx2y_card_private_free() when the card is freed.
 
-Fixes: 99dc422335d8 ("block: support to account io_ticks precisely")
-Fixes: dd291d77cc90 ("block: Introduce zone write plugging")
+A failing usx2y_async_seq04_init() still releases its own URBs, so that
+path remains retryable.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20261029200110.1328103-1-ebiggers@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[ Backport to 6.1.y: dropped the part related to
-  bio_zone_write_plugging(), which doesn't exist on this branch. ]
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Co-developed-by: Bin Yu <byu@xidian.edu.cn>
+Signed-off-by: Bin Yu <byu@xidian.edu.cn>
+Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+Link: https://patch.msgid.link/20261031191557.8460-1-25031212351@stu.xidian.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ sound/usb/usx2y/usX2Yhwdep.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index db8a0d852d993..25dfedc77fbba 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -3030,9 +3030,7 @@ void blk_mq_submit_bio(struct bio *bio)
+diff --git a/sound/usb/usx2y/usX2Yhwdep.c b/sound/usb/usx2y/usX2Yhwdep.c
+index c0293af448fe7..89c7ff597a442 100644
+--- a/sound/usb/usx2y/usX2Yhwdep.c
++++ b/sound/usb/usx2y/usX2Yhwdep.c
+@@ -185,6 +185,9 @@ static int snd_usx2y_hwdep_dsp_load(struct snd_hwdep *hw,
+ 	int lret, err;
+ 	char *buf;
  
- 	ret = blk_crypto_rq_get_keyslot(rq);
- 	if (ret != BLK_STS_OK) {
--		bio->bi_status = ret;
--		bio_endio(bio);
--		blk_mq_free_request(rq);
-+		blk_mq_end_request(rq, ret);
- 		return;
- 	}
++	if (priv->chip_status & USX2Y_STAT_CHIP_HUP)
++		return -ENODEV;
++
+ 	snd_printdd("dsp_load %s\n", dsp->name);
  
+ 	buf = memdup_user(dsp->image, dsp->length);
+@@ -209,11 +212,13 @@ static int snd_usx2y_hwdep_dsp_load(struct snd_hwdep *hw,
+ 		err = usx2y_in04_init(priv);
+ 		if (err) {
+ 			snd_printk(KERN_ERR "usx2y_in04_init error\n");
++			priv->chip_status |= USX2Y_STAT_CHIP_HUP;
+ 			return err;
+ 		}
+ 		err = usx2y_create_alsa_devices(hw->card);
+ 		if (err) {
+ 			snd_printk(KERN_ERR "usx2y_create_alsa_devices error %i\n", err);
++			priv->chip_status |= USX2Y_STAT_CHIP_HUP;
+ 			return err;
+ 		}
+ 		priv->chip_status |= USX2Y_STAT_CHIP_INIT;
 -- 
 2.53.0
 
