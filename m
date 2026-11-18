@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024110;
-	b=jCj1IxFtMCZgsbUBQRZhuSrY47H8zu1x6JhJVsRzeBvU2P3ze7vPVsxsn8wxVucMRDVS
-	 tnAFq6thvpmJUE9TWJdg4leUHHnNyQzGI8hVZF+ZuhXJoYqs73RyLcwV+/tlFVANUiBTJ
-	 uqGWXdkPvUvrHSiJsOSE7bc3zNIMwcDityzkBEmumjjKJ+QFIms8I1fPQYUwrb7gLiK2J
-	 eBiiC+2af0EF0Ph3gEYgL08CUidBQjTU68SEjmAjoyAChyHVrwoU47q5ABBRcqfuH5jd1
-	 rFqK8c5jKL4TmQDfiXtyYyLGFKgf8/dCZLu2wWtKqmpVMZPlO8E3w+LW0qN0dXK3//w==
+	t=1795024113;
+	b=Yxaqk43p45gEEw4c+13356CN/cwcQUxWhMn2QDleVWFDqCQaDfS0Lv/BJ3k/Eem2NZNr
+	 ToxAYwk/BQqESX5rZQpkwAtDH79KJ3B1gt3bh0hIPLJ7jTcxQlHsbCyG1MTsQWIpVwisT
+	 PGTBosrN7Di+stqe5SYpwlVP7eEXK+fFIg076Ws8jhOY7tIeUGtTidsoBpDLg9i15aPJ6
+	 nXeAX6j0eBv9v9NOD91rF6JyrKBpzQS1S4CsEk4jCnjX/h19NL2u3dl+ZIcWbbO1WpHp3
+	 tdTbqd79wh7BCBra590wmQS5k7JMytONvXET4YqtvEu7T7qR5mq7StXlhF15JB39SqQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024110;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024113;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9Aipl1wJckoRmcxJfK4rWv83o7gcNHy567e/qGB4h7Y=;
-	b=j6jzmxVRmdaxzfcLyDW/qMP7EWEF2O+sNpL3i84OTiFMpZAcCNVTVseNMrs1HV4DVZ03
-	 v8n9Kch/ukp1jdKF3WCaPv6bXE+5vNWPc2p3KEyRE6CmxdNTy400UlJCSGQPjAAows/4o
-	 R+hxmLgUWgEuNu96igeXyFPadjVkbQB7fZgvJcT5ZY2NZne+eREi1CbO5qiTuSucR2Pio
-	 Ij3es4WtYnL7vkgG9S1u2pa0KDVAwyHqr6J8r22A4KzjENRL8DbbwvWnGRXrkQwUEXFDW
-	 7EwQUzCBCsG5JuVhe0S2C7UC4Az4HuActkgzHM3q5TgyUxQjLn4ObGLzxcKu0W0swwA==
+	bh=T25L+Fw+rsZGI8tVjU1LNqHu88g0HEXSD53NAcuvdVU=;
+	b=izJjfd8Wcstu0YUvsSgZTvJDAJBzaygV7IDZk4b+u/ptGGHAunADI44k9bIJqLVC4/TU
+	 Gvt45xl34UkrRxy0bYFxnw5uXmrG/O5moqD6stW9U/0Fj+f+kYKTMq3/++j8jXXAwjU0x
+	 D3jyd3NiIUVx/s2PrIMn0ukPZEfGb5I6rOOOMZVBGbXApV36xeQukSFuL4gN5xu5I2Ao4
+	 NzX7fuzLWBXC+aXzILhNsPv/WTyKfZzlDXu8ujMhvPsJttc6yXZiKsYKXYtqhGNNsAQip
+	 a2VhjrXlRJIhYawRP8tKc/jbL9dT1CA8W2ZZKKOhUD8c3DMXSZcMECmwfPGb/SznbTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kHBaTY2P;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lxdrvoet;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D0C606A32F;
-	Wed, 18 Nov 2026 17:48:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE998606A31C;
+	Wed, 18 Nov 2026 17:48:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kHBaTY2P
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8761F000C4;
-	Wed, 18 Nov 2026 17:48:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lxdrvoet
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 173101F000C4;
+	Wed, 18 Nov 2026 17:48:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024110;
-	bh=9Aipl1wJckoRmcxJfK4rWv83o7gcNHy567e/qGB4h7Y=;
+	s=korg; t=1795024113;
+	bh=T25L+Fw+rsZGI8tVjU1LNqHu88g0HEXSD53NAcuvdVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kHBaTY2PVlm4+puDyt21iJF0H8TFG3XR5tsy9EAYQuN88aaIkwpG0rytxea9s1Sgk
-	 8EfWwOMj4EFbmQ8z4kUyYzRO5vkct1CQnM5mIZ9NHjaxz3WGAi/Pvm7NRCP23JG9oW
-	 tMtpi8aILhILBn8SsRmh9JHvoFvt5ZV+B3SM4dGI=
+	b=LxdrvoetuPlqOQns5OJFhWc4ulje2sRq/1FnH9G2kz4lSOEBFFh3rvUnSvxN92TDH
+	 dc9x1G1MeXJ3DF7BUaCg2f9mA+VqpRCKMbB4yxGbHl30EfkK0A4e7Z1O75k5STIxgF
+	 toSboB8NoxEhJVTWK01V9w0su/qCTq3zirs8Ib1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Madieu <john.madieu.xa@bp.renesas.com>,
-	Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0558/2151] thermal: renesas: rzg3e: make calibration value retrieval per-chip
-Date: Wed, 18 Nov 2026 15:38:13 +0100
-Message-ID: <20261118150142.281551888@linuxfoundation.org>
+Subject: [PATCH 6.18 0603/2151] regulator: mp886x: fix pontential division by zero
+Date: Wed, 18 Nov 2026 15:38:58 +0100
+Message-ID: <20261118150143.910137279@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,184 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
+From: Jisheng Zhang <jszhang@kernel.org>
 
-[ Upstream commit c33edd8f936ccf2e47eb1883f6b6944643d325c7 ]
+[ Upstream commit d16ef5debccc4289c1f25309a2cccfbbe879601a ]
 
-The Renesas RZ/T2H (R9A09G077) and RZ/N2H (R9A09G087) SoCs expose the
-temperature calibration data via SMC SIP calls.
+If the "mps,fb-voltage-divider" 2nd var is 0, there will be division
+by zero bug.
 
-To prepare for supporting these SoCs, do the following changes.
-
-Rename rzg3e_thermal_parse_dt() to rzg3e_thermal_get_syscon_trim().
-
-Move the syscon usage out of rzg3e_thermal_get_calibration() and into
-rzg3e_thermal_get_syscon_trim() and remove single-use variables from the
-private state.
-
-Place a pointer to rzg3e_thermal_get_syscon_trim() into the
-chip-specific struct, and use it in the probe function to retrieve the
-calibration values.
-
-Now that syscon usage has been moved out of
-rzg3e_thermal_get_calibration(), remove it and inline the calibration
-validation into the probe function.
-
-Also, reuse the TSU_CODE_MAX macro to mask the calibration values, as
-GEMASK(11, 0) and 0xFFF are equivalent, and replace the hardcoded 0xFFF
-with TSU_CODE_MAX in the calibration validation.
-
-Reviewed-by: John Madieu <john.madieu.xa@bp.renesas.com>
-Tested-by: John Madieu <john.madieu.xa@bp.renesas.com>
-Signed-off-by: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260108195223.193531-4-cosmin-gabriel.tanislav.xa@renesas.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Stable-dep-of: aa1bc39e45f2 ("thermal/drivers/renesas/rzg3e: Fix runtime PM handling of compare irq")
+Fixes: 97be82880b61 ("regulator: add support for MP8869 regulator")
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260901043123.5401-1-jszhang@kernel.org?part=1
+Link: https://patch.msgid.link/20260909143957.9284-3-jszhang@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/renesas/rzg3e_thermal.c | 71 ++++++++++---------------
- 1 file changed, 29 insertions(+), 42 deletions(-)
+ drivers/regulator/mp886x.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/thermal/renesas/rzg3e_thermal.c b/drivers/thermal/renesas/rzg3e_thermal.c
-index 53fabda23244a..fc42be7f91355 100644
---- a/drivers/thermal/renesas/rzg3e_thermal.c
-+++ b/drivers/thermal/renesas/rzg3e_thermal.c
-@@ -70,7 +70,10 @@
- #define TSU_POLL_DELAY_US	10	/* Polling interval */
- #define TSU_MIN_CLOCK_RATE	24000000  /* TSU_PCLK minimum 24MHz */
- 
-+struct rzg3e_thermal_priv;
-+
- struct rzg3e_thermal_info {
-+	int (*get_trim)(struct rzg3e_thermal_priv *priv);
- 	int temp_d_mc;
- 	int temp_e_mc;
- };
-@@ -91,13 +94,11 @@ struct rzg3e_thermal_info {
- struct rzg3e_thermal_priv {
- 	void __iomem *base;
- 	struct device *dev;
--	struct regmap *syscon;
- 	struct thermal_zone_device *zone;
- 	struct reset_control *rstc;
- 	const struct rzg3e_thermal_info *info;
- 	u16 trmval0;
- 	u16 trmval1;
--	u32 trim_offset;
- 	struct mutex lock;
- };
- 
-@@ -339,51 +340,33 @@ static const struct thermal_zone_device_ops rzg3e_tz_ops = {
- 	.set_trips = rzg3e_thermal_set_trips,
- };
- 
--static int rzg3e_thermal_get_calibration(struct rzg3e_thermal_priv *priv)
-+static int rzg3e_thermal_get_syscon_trim(struct rzg3e_thermal_priv *priv)
- {
--	u32 val;
-+	struct device_node *np = priv->dev->of_node;
-+	struct regmap *syscon;
-+	u32 offset;
- 	int ret;
-+	u32 val;
-+
-+	syscon = syscon_regmap_lookup_by_phandle_args(np, "renesas,tsu-trim", 1, &offset);
-+	if (IS_ERR(syscon))
-+		return dev_err_probe(priv->dev, PTR_ERR(syscon),
-+				     "Failed to parse renesas,tsu-trim\n");
- 
- 	/* Read calibration values from syscon */
--	ret = regmap_read(priv->syscon, priv->trim_offset, &val);
-+	ret = regmap_read(syscon, offset, &val);
- 	if (ret)
- 		return ret;
--	priv->trmval0 = val & GENMASK(11, 0);
-+	priv->trmval0 = val & TSU_CODE_MAX;
- 
--	ret = regmap_read(priv->syscon, priv->trim_offset + 4, &val);
-+	ret = regmap_read(syscon, offset + 4, &val);
- 	if (ret)
- 		return ret;
--	priv->trmval1 = val & GENMASK(11, 0);
--
--	/* Validate calibration data */
--	if (!priv->trmval0 || !priv->trmval1 ||
--	    priv->trmval0 == priv->trmval1 ||
--	    priv->trmval0 == 0xFFF || priv->trmval1 == 0xFFF) {
--		dev_err(priv->dev, "Invalid calibration: b=0x%03x, c=0x%03x\n",
--			priv->trmval0, priv->trmval1);
--		return -EINVAL;
--	}
--
--	dev_dbg(priv->dev, "Calibration: b=0x%03x (%u), c=0x%03x (%u)\n",
--		priv->trmval0, priv->trmval0, priv->trmval1, priv->trmval1);
-+	priv->trmval1 = val & TSU_CODE_MAX;
- 
- 	return 0;
- }
- 
--static int rzg3e_thermal_parse_dt(struct rzg3e_thermal_priv *priv)
--{
--	struct device_node *np = priv->dev->of_node;
--	u32 offset;
--
--	priv->syscon = syscon_regmap_lookup_by_phandle_args(np, "renesas,tsu-trim", 1, &offset);
--	if (IS_ERR(priv->syscon))
--		return dev_err_probe(priv->dev, PTR_ERR(priv->syscon),
--				     "Failed to parse renesas,tsu-trim\n");
--
--	priv->trim_offset = offset;
--	return 0;
--}
--
- static int rzg3e_thermal_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
-@@ -407,11 +390,20 @@ static int rzg3e_thermal_probe(struct platform_device *pdev)
- 	if (IS_ERR(priv->base))
- 		return PTR_ERR(priv->base);
- 
--	/* Parse device tree for trim register info */
--	ret = rzg3e_thermal_parse_dt(priv);
-+	ret = priv->info->get_trim(priv);
+diff --git a/drivers/regulator/mp886x.c b/drivers/regulator/mp886x.c
+index 6bad7ff40aa9d..99450398c19ff 100644
+--- a/drivers/regulator/mp886x.c
++++ b/drivers/regulator/mp886x.c
+@@ -317,6 +317,9 @@ static int mp886x_i2c_probe(struct i2c_client *client)
  	if (ret)
  		return ret;
  
-+	if (!priv->trmval0 || !priv->trmval1 ||
-+	    priv->trmval0 == priv->trmval1 ||
-+	    priv->trmval0 == TSU_CODE_MAX || priv->trmval1 == TSU_CODE_MAX)
-+		return dev_err_probe(priv->dev, -EINVAL,
-+				     "Invalid calibration: b=0x%03x, c=0x%03x\n",
-+				     priv->trmval0, priv->trmval1);
++	if (di->r[1] == 0)
++		return -EINVAL;
 +
-+	dev_dbg(priv->dev, "Calibration: b=0x%03x (%u), c=0x%03x (%u)\n",
-+		priv->trmval0, priv->trmval0, priv->trmval1, priv->trmval1);
-+
- 	/* Get clock to verify frequency - clock is managed by power domain */
- 	clk = devm_clk_get(dev, NULL);
- 	if (IS_ERR(clk))
-@@ -428,12 +420,6 @@ static int rzg3e_thermal_probe(struct platform_device *pdev)
- 		return dev_err_probe(dev, PTR_ERR(priv->rstc),
- 				     "Failed to get/deassert reset control\n");
- 
--	/* Get calibration data */
--	ret = rzg3e_thermal_get_calibration(priv);
--	if (ret)
--		return dev_err_probe(dev, ret,
--				     "Failed to get valid calibration data\n");
--
- 	/* Get comparison interrupt */
- 	irq = platform_get_irq_byname(pdev, "adcmpi");
- 	if (irq < 0)
-@@ -538,6 +524,7 @@ static const struct dev_pm_ops rzg3e_thermal_pm_ops = {
- };
- 
- static const struct rzg3e_thermal_info rzg3e_thermal_info = {
-+	.get_trim = rzg3e_thermal_get_syscon_trim,
- 	.temp_d_mc = -41000,
- 	.temp_e_mc = 126000,
- };
+ 	di->en_gpio = devm_gpiod_get(dev, "enable", GPIOD_OUT_HIGH);
+ 	if (IS_ERR(di->en_gpio))
+ 		return PTR_ERR(di->en_gpio);
 -- 
 2.53.0
 
