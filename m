@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027815;
-	b=OEsLYj42rCDM0EC5OUaXjnnRBJQ1vEqyRrj5x2TzkB+qZIQWR5Czp1/q4HConpan+cHa
-	 UCoQVY6bCTWoMhwKrRZHnIKJZ1m7b3K7L+ZBjDJUeCelvpXM9CyjI/7YIjiBmtgYWvJDw
-	 iTakMW2QhHTU8z6EBiLXNwfmYBQSWMYhCZklemSe5lIoAHF0dtmZLSsz4eCZ05izpa2pA
-	 Hx4DCvrBASiQwXS3WkqFziCeHfjnsarQXSzpgtcWIORQTokAkEj9ZQ1zpGQN2ZNtSE1L0
-	 F7lBtrTu4IgJ+Njx7DkAjprYrdGUuvH2b0+69CAH9FtRLArNwA1maxZ2CaF8rtOy6xA==
+	t=1795027817;
+	b=R1DW3ZCXEPvlcYg6j49EiR2/ptsUCLQ4guPdCXwmkYR+PSErhmExYE2yBhOYLrAyybgd
+	 ZCWCtei9NoKrrDexL+y5t0tTRPP7Dv4P6ALPJeUkm1oMwfanFZkm5VXxuK7U+eEMi1o44
+	 soLMTRNsU+zMI1iJIAYbElBB+gF4WY72EM4FAyjn7k35AX1B8ARwFwz0RT3ryc6RDl1pw
+	 5aorF1KQ1B5pgSERYTrsnGK0gBG2y37WV/dv6w/AAUfIqUaIWJWI1snc2loVneR7Rzizn
+	 ZKm9thETwXTkCt3XhCAs1fj0ePKFlGqrteBD6U+Mp8a+vWSg5NNd6kcaJGWyIgHaqFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027815;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027817;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=778XnexGBELl+4CRcpm7oL6EfAHC5DUP74Aj1iICO0Y=;
-	b=fxr8u0/h+FU5Nh5H/WjyVgtwmhW2Yhpq2X5pt4dkZL0xJUqg34NPTlC1UrMPDjdJaKxZ
-	 zK8DZbcmiLluzOXzpiBCMnYtxJASQTYKhkiONueuUPny6ODowOU1IMDWjWbhG9D7MtgH5
-	 gXag8NPfblsB4INjKRXIIv/eJudKgEI/e6iNzz1B3l80gcOq+qUVddoUo1wOZrDJFMOiT
-	 R7gHDLPApPsLcEVJe8V7nJSzsRygzbJwGVcFdji8bcxXf89fKe7EjkF7yh1VYIkN4eHLW
-	 /7ZVFl4jhz6Hz8z06lra7mj4KxyBeHDEh3CrTYoxSuI+3CT4ZYQOAK7HP9nVzpXFy2A==
+	bh=QTTg6yA04+2kz5hoRYHisco+QaHkdvPHUMjtRskN0q4=;
+	b=3/zGWcyGcGI1A+Q9AhzhsxYk3j7Mf/xRyHOgdeV7MbvG/J7DS99lVtO8gEMPU/ilkH+7
+	 4HMM5sXzJVQpBm72B3QNVjnK6F+di1mA3+1JkPY9+a7NMpvACSp8g1Q3WoB/K6NGzVmMV
+	 p5qs7Uzu/HWi0v2H2t6pee/vYwOcgJOy08MhtH8LiuUnHm1hEkaara6BdAdXfeNfJXJ8r
+	 YhPLh/0WsU3N+JhRM5SGtue6xiduMNxq/B0japrALx/a5zDt6y5j7VvI9EcxKKpzJLNgz
+	 ro9jPFeRWAFb9vtAiGZAm/6SHW+7ymWuAn7fL+XSye0ev7HtKGQwSTQw3p0Pr73sVcg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rnSKeosK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MTG9dNOG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48FB606A320;
-	Wed, 18 Nov 2026 18:50:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E07606A325;
+	Wed, 18 Nov 2026 18:50:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rnSKeosK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 458051F000C5;
-	Wed, 18 Nov 2026 18:50:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MTG9dNOG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B6861F000C4;
+	Wed, 18 Nov 2026 18:50:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027814;
-	bh=778XnexGBELl+4CRcpm7oL6EfAHC5DUP74Aj1iICO0Y=;
+	s=korg; t=1795027817;
+	bh=QTTg6yA04+2kz5hoRYHisco+QaHkdvPHUMjtRskN0q4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rnSKeosKXmCSYPPQUltXcMFaz+i78KnzIGs1YvsCU4Q+qznBFVOPff5JI7H77m7d4
-	 Zp2OlioJ9TIXPpwmY2f8Qh7/vJbnGNvfyJ+DJ7VFhGfwUpVE3vTxRtRxD792gbYuWL
-	 GlsU5X6FGRwO5QRnvBC9z+aM2FnPPZz3BTYw1zrU=
+	b=MTG9dNOGTlfrjnRTFEvzhqThqse1nEoMvM8BTcQhwLy+yg1Tb/tGTaTlYr5b3h/Xu
+	 z3GJX17Jw2nygbEF1Tu2PPrWkRi360cunptb599LSyUCUhwDuc4Cfl2hvohIzOFww0
+	 AF0G0Fv5SHVAUkges/w4FIoR21fUQdHlaRdJAN0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Simon Horman <horms@kernel.org>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Simon Polack <spolack+git@mailbox.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Wang Zhan <wang.zhan@smartx.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1924/2151] net: sparx5: fix tx DCB index drift in fdma xmit
-Date: Wed, 18 Nov 2026 16:00:59 +0100
-Message-ID: <20261118150231.866859696@linuxfoundation.org>
+Subject: [PATCH 6.18 1925/2151] net: fix frag_list leak in skb_segment_list() error path
+Date: Wed, 18 Nov 2026 16:01:00 +0100
+Message-ID: <20261118150231.903607104@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,64 +72,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Machon <daniel.machon@microchip.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit 1df26063ab9ba64f5fb11049fa4be686b7fc309e ]
+[ Upstream commit 546daf344420b5dce27eded3ad15be12628dd185 ]
 
-sparx5_fdma_xmit() advances dcb_index before checking that the FDMA is
-done with the DCB, and does not undo the advance when the check fails.
-Before commit f4aa7e361ae2 ("net: sparx5: use FDMA library for adding
-DCB's in the tx path") the next DCB was always the one after last_dcb.
-Since then dcb_index drifts one DCB further away from last_dcb on every
-failed transmit.
+skb_segment_list() detaches the frag_list from the head skb and moves
+its members one by one to the skb->next chain. On error, err_linearize
+frees that chain with kfree_skb_list(skb->next), relying on the members
+not yet processed to still be linked after the current one.
 
-While the ring is full, this drops frames even though completed DCBs
-sit behind dcb_index. After a run of failures, dcb_index can also land
-on last_dcb itself. Re-adding last_dcb loses the frame, because the
-FDMA has already passed the tail of the chain, and that DCB is never
-completed again.
+This does not hold when the current member was shared: it is replaced
+by skb_clone(), and __skb_clone() clears ->next. If __skb_linearize()
+then fails on that clone, the remaining members are no longer reachable
+from skb->next nor from skb_shinfo(skb)->frag_list, and they leak.
 
-Fix this by making dcb_index the next DCB to use, and advancing it only
-after the DCB has been added, as the rx path does. dcb_index and
-last_dcb now only move together, so dcb_index always points at the DCB
-after last_dcb.
+The skb_shared() error branch already relinks nskb->next to list_skb
+before jumping to err_linearize. Do it unconditionally right after nskb
+is added to the chain, so every error exit sees the remaining members.
+On the last member list_skb is NULL, which still terminates the chain.
 
-The issue was found by an AI code review agent. It was reproduced on a
-sparx5 PCB135 board with a modified kernel that forces 63 consecutive
-transmit failures. Afterwards, about 1 in 64 frames is lost for good.
-With the fix, the same test loses no frames.
-
-Fixes: f4aa7e361ae2 ("net: sparx5: use FDMA library for adding DCB's in the tx path")
-Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261021-sparx5-fdma-last-dcb-v2-1-7b8fabdb9239@microchip.com
+Fixes: 53475c5dd856 ("net: fix use-after-free when UDP GRO with shared fraglist")
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Cc: Simon Polack <spolack+git@mailbox.org>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Wang Zhan <wang.zhan@smartx.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20261021161858.761205-1-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/sparx5/sparx5_fdma.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/core/skbuff.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_fdma.c b/drivers/net/ethernet/microchip/sparx5/sparx5_fdma.c
-index dbe86f937b210..15ec9b053824f 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_fdma.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_fdma.c
-@@ -217,7 +217,6 @@ int sparx5_fdma_xmit(struct sparx5 *sparx5, u32 *ifh, struct sk_buff *skb,
- 	struct fdma *fdma = &tx->fdma;
- 	void *virt_addr;
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 5993b2b4beb99..e28802a46fd29 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -4685,10 +4685,13 @@ struct sk_buff *skb_segment_list(struct sk_buff *skb,
+ 		else
+ 			tail->next = nskb;
  
--	fdma_dcb_advance(fdma);
- 	if (!fdma_db_is_done(fdma_db_get(fdma, fdma->dcb_index, 0)))
- 		return -EINVAL;
- 
-@@ -235,6 +234,8 @@ int sparx5_fdma_xmit(struct sparx5 *sparx5, u32 *ifh, struct sk_buff *skb,
- 		     FDMA_DCB_STATUS_BLOCKO(0) |
- 		     FDMA_DCB_STATUS_BLOCKL(skb->len + IFH_LEN * 4 + 4));
- 
-+	fdma_dcb_advance(fdma);
+-		if (unlikely(err)) {
+-			nskb->next = list_skb;
++		/* nskb may be a clone with a NULL ->next: keep the remaining
++		 * members linked so that err_linearize frees them.
++		 */
++		nskb->next = list_skb;
 +
- 	sparx5_fdma_reload(sparx5, fdma);
++		if (unlikely(err))
+ 			goto err_linearize;
+-		}
  
- 	return NETDEV_TX_OK;
+ 		tail = nskb;
+ 
 -- 
 2.53.0
 
