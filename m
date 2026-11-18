@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017146;
-	b=XQuHPl+rF22AhbpjwpnkRbNxs86wD36hSliSPtQmbWyDzK2Ty+FmTAmyAS4DwbeWw57w
-	 viYcgtcax3Lx0kuUf/oMv1TEiiI6tMeUx3h0KQbZ0q1CyGF3ApBSbz/AcA+9D1AbkzHbj
-	 6EdJ21nxPlJUFKMJl8L0pKUXihdF5Su6E4+6xbkh8JxEUA/02lFXTWpQZni93Nn6woNJf
-	 iTUSAf9J+6qEFd27NdPgIGmYKnrW0qD5rxhbpYq0g7REZ14cfixB9klLU/jsItvxt0816
-	 oZUGmlVFHCpvj0FHmUYzz0ApHs5YNrtnHGqNMPgO2+xW85YpPiNuns2eL+7jWHX5sDQ==
+	t=1795017149;
+	b=IkiV8kYHo3rxWj6G9uFaC4v3aaHX2SILTw7MdPo3qLx7QUxmtrY1iGYmmZB/1wGuPlTe
+	 CGI+Dft9rfJ9S/uk2NXQtM8wYIFgS5wgnS5YcFpHPxL6YXgUwrrKmI7h2yWUZIKV6Zpyl
+	 0Qzb4s4pqhLJ6t4nAOGewqYDmtZQ/c3zXGxaY7x6FSwfCwORSrmG35ovdQn2T8Wu3Z/IG
+	 NsAFPSvFqaDjBoW5McbmdN5EosI7kBdGWCuOfWoYQpoLvE+krIS6TU6GFYxWX7+lblqKZ
+	 sNjT/U7keWywl924OXPhtr+iGZLizk7oi0ZPa3spY/msxHy7z5PjKWgDslM+zDbPebQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017146;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017149;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=sA8EyHe81BAjr2Ff5wsMhyOTUVpvbD3pkpNRbyaYdNU=;
-	b=lPABM+ZorUrG0zpTd6EnTYMb8EDbIGaTtbbfq3zRNONxwIquUXmd3+/JVKQq9N2/ItJ0
-	 UvCrH+RWkchELHUyVB2G4RNcBw9b1T//c4mJ/dbK6DmgymqJEqScx4pyn5m0SuPI/xcGh
-	 SEba7IfiQqGdUFOX1UK9AoFK370DC8Y4D5TTQiRtwxj1ZgTU5zjONGlN5rzVL0/hdrdya
-	 BdTvtn2hq5RrkKwyJEBCG9kjgbrvg0um3+1W34tDYE99iMJyhrSkbu/by1KZnhJyNMHbZ
-	 lS1NwNDRWCdJyi8+0VaP0xP+OZ0zt4K32SPKBKzCXaehJtsvMHY8ZABHToOWj2oPyQQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=VRuu5UPi6sUF9j/5dlf02hQTNAG2n+VFVsChetT8F3U=;
+	b=SXOyDUKENnZYZIGnjZPNd0I7xvIaUh2apj+tNQheyCjs20ujzhzfMOFHUeYFoBjvssCi
+	 TUaiUa9EnQAKm0TIA+VXuSPM9fJNMBggGf2GiTnNJkgPhl0jdLEwfe5v+KQu1SxAYtDVO
+	 SwRZOLfxVHDLNL7zwM7jkpL2XuY1QbPikBeTK3pYgW1ELpfz4tVWwVyEeGYdgFSKSOnD3
+	 tZCmtjIiRLttSxiO69mZ6wXXaMv3uXmSMxffwjw36f8V63yhuW5eZvsYIAa+BYBsfJ0TD
+	 jqEBwZp3aFcL0x3uewAihf7PC11aYNmJQAEXTLzbwJxGihzupmVVQxg8NUIwNv9UVdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rb8gPqs8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1j6m42pv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36291606A33D;
-	Wed, 18 Nov 2026 15:52:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED3E606A31C;
+	Wed, 18 Nov 2026 15:52:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rb8gPqs8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA581F000C6;
-	Wed, 18 Nov 2026 15:52:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1j6m42pv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50FE01F000C6;
+	Wed, 18 Nov 2026 15:52:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017146;
-	bh=sA8EyHe81BAjr2Ff5wsMhyOTUVpvbD3pkpNRbyaYdNU=;
+	s=korg; t=1795017148;
+	bh=VRuu5UPi6sUF9j/5dlf02hQTNAG2n+VFVsChetT8F3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rb8gPqs8RGFl8tWM8VQByj/H2ZpyW10HJ/R0Z3ZyjxdNsdfp6Reluz/NOLp0Sfrcs
-	 RVYsDZ6LQPgfd51k+wsB8VXfLVuZVvPipM9hsK0f8cEoznKY4glZggL5ubzFSacrVd
-	 oXUN4wvvOzYBNrvsU87pa6MuJoOpQ4Bdk0EuKP0k=
+	b=1j6m42pv/pxr4wbFtOuuf0861mX6wQdnFNdM9SVJDQ5o9hq5TSQKFy4+LI8OSEarB
+	 OrAUz3oWHHmDieZ4x/3hjsiBqluamHFKbwH26FD7uotgSt9OrcHR7LbdSVMPCnhn3s
+	 YPPji2D1gwTuigjyI3ZI9eta4UwQkkefyYmalPs8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jonghyuk Kim(MalHyuk)" <malhyuk97@gmail.com>,
-	Max Zhen <max.zhen@amd.com>,
-	Lizhi Hou <lizhi.hou@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0778/2651] accel/amdxdna: Preallocate hardware context schedulers
-Date: Wed, 18 Nov 2026 15:33:38 +0100
-Message-ID: <20261118150315.897857874@linuxfoundation.org>
+	Varun Gupta <varun.gupta@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Maxime Ripard <mripard@kernel.org>
+Subject: [PATCH 7.3 0739/2651] drm/pagemap: Drop ratelimiting from dev_unhold_work debug trace
+Date: Wed, 18 Nov 2026 15:32:59 +0100
+Message-ID: <20261118150314.481629998@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,338 +63,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lizhi Hou <lizhi.hou@amd.com>
+From: Varun Gupta <varun.gupta@intel.com>
 
-[ Upstream commit f7afecd54296cf7ad6fa36f692d2a7427e32f25d ]
+[ Upstream commit 0a6310dde13dca8252a48ec8e2e65752c0fced86 ]
 
-The hardware context scheduler fence is exposed through
-drm_syncobj_add_point(). After a hardware context is destroyed,
-userspace can still call drm_sched_fence_get_timeline_name() on the
-fence through SYNC_IOC_FILE_INFO. This results in a use-after-free
-when accessing fence->sched->name.
+Reference-drop trace in drm_pagemap_dev_unhold_work() was changed
+from drm_dbg() to drm_dbg_ratelimited() to reduce serial console
+bottlenecks.
+However, when the ratelimit kicks in, the kernel's ratelimiting subsystem
+logs a "callbacks suppressed" notification at the KERN_WARNING level.
+Revert the trace macro back to drm_dbg()
 
-Preallocate hardware context schedulers and free them during device
-teardown instead. A destroyed hardware context no longer frees its
-scheduler, ensuring that the scheduler remains valid while its fences
-are still accessible.
-
-Fixes: aac243092b70 ("accel/amdxdna: Add command execution")
-Reported-by: Jonghyuk Kim(MalHyuk) <malhyuk97@gmail.com>
-Link: https://lore.kernel.org/dri-devel/20260902012712.880520-1-malhyuk97@gmail.com/
-Reviewed-by: Max Zhen <max.zhen@amd.com>
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260923200501.281208-1-lizhi.hou@amd.com
+Fixes: b66b036c959f ("drm/pagemap: Prevent CPU stalls during unbounded pagemap teardown")
+Signed-off-by: Varun Gupta <varun.gupta@intel.com>
+Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Acked-by: Maxime Ripard <mripard@kernel.org> # For merging through drm-xe only. (IRC)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Link: https://patch.msgid.link/20260921062648.1166903-2-varun.gupta@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/amdxdna/aie2_ctx.c | 117 +++++++++++++++++++++++--------
- drivers/accel/amdxdna/aie2_pci.c |  15 +++-
- drivers/accel/amdxdna/aie2_pci.h |   6 +-
- 3 files changed, 105 insertions(+), 33 deletions(-)
+ drivers/gpu/drm/drm_pagemap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/accel/amdxdna/aie2_ctx.c b/drivers/accel/amdxdna/aie2_ctx.c
-index 164441e439406..d927c8c9d557a 100644
---- a/drivers/accel/amdxdna/aie2_ctx.c
-+++ b/drivers/accel/amdxdna/aie2_ctx.c
-@@ -7,6 +7,7 @@
- #include <drm/drm_device.h>
- #include <drm/drm_gem.h>
- #include <drm/drm_gem_shmem_helper.h>
-+#include <drm/drm_managed.h>
- #include <drm/drm_print.h>
- #include <drm/drm_syncobj.h>
- #include <linux/hmm.h>
-@@ -99,9 +100,9 @@ static void aie2_job_put(struct amdxdna_sched_job *job)
- static void aie2_hwctx_stop(struct amdxdna_dev *xdna, struct amdxdna_hwctx *hwctx,
- 			    struct drm_sched_job *bad_job)
- {
--	drm_sched_stop(&hwctx->priv->sched, bad_job);
-+	drm_sched_stop(hwctx->priv->sched, bad_job);
- 	aie2_destroy_context(xdna->dev_handle, hwctx);
--	drm_sched_start(&hwctx->priv->sched, 0);
-+	drm_sched_start(hwctx->priv->sched, 0);
- }
+diff --git a/drivers/gpu/drm/drm_pagemap.c b/drivers/gpu/drm/drm_pagemap.c
+index c66c58f85c345..743988036a5f8 100644
+--- a/drivers/gpu/drm/drm_pagemap.c
++++ b/drivers/gpu/drm/drm_pagemap.c
+@@ -1102,7 +1102,7 @@ static void drm_pagemap_dev_unhold_work(struct work_struct *work)
+ 		struct drm_device *drm = dev_hold->drm;
+ 		struct module *module = drm->driver->fops->owner;
  
- static int aie2_hwctx_restart(struct amdxdna_dev *xdna, struct amdxdna_hwctx *hwctx)
-@@ -659,10 +660,19 @@ static void aie2_ctx_syncobj_destroy(struct amdxdna_hwctx *hwctx)
- 	drm_syncobj_put(hwctx->priv->syncobj);
- }
- 
--int aie2_hwctx_init(struct amdxdna_hwctx *hwctx)
-+void aie2_hwctx_sched_fini(struct amdxdna_dev_hdl *ndev)
- {
--	struct amdxdna_client *client = hwctx->client;
--	struct amdxdna_dev *xdna = client->xdna;
-+	int i;
-+
-+	for (i = 0; i < ndev->priv->hwctx_limit; i++)
-+		drm_sched_fini(&ndev->hwctx_sched[i]);
-+
-+	ida_destroy(&ndev->hwctx_sched_ida);
-+}
-+
-+int aie2_hwctx_sched_init(struct amdxdna_dev_hdl *ndev)
-+{
-+	struct amdxdna_dev *xdna = ndev->aie.xdna;
- 	const struct drm_sched_init_args args = {
- 		.ops = &sched_ops,
- 		.num_rqs = DRM_SCHED_PRIORITY_COUNT,
-@@ -673,7 +683,55 @@ int aie2_hwctx_init(struct amdxdna_hwctx *hwctx)
- 		.name = "amdxdna_js",
- 		.dev = xdna->ddev.dev,
- 	};
--	struct drm_gpu_scheduler *sched;
-+	int i, ret;
-+
-+	ndev->hwctx_sched = drmm_kcalloc(&xdna->ddev, ndev->priv->hwctx_limit,
-+					 sizeof(*ndev->hwctx_sched), GFP_KERNEL);
-+	if (!ndev->hwctx_sched)
-+		return -ENOMEM;
-+
-+	for (i = 0; i < ndev->priv->hwctx_limit; i++) {
-+		ret = drm_sched_init(&ndev->hwctx_sched[i], &args);
-+		if (ret) {
-+			XDNA_ERR(xdna, "Failed to init DRM scheduler. ret %d", ret);
-+			goto fini_sched;
-+		}
-+	}
-+
-+	ida_init(&ndev->hwctx_sched_ida);
-+
-+	return 0;
-+
-+fini_sched:
-+	while (--i >= 0)
-+		drm_sched_fini(&ndev->hwctx_sched[i]);
-+
-+	return ret;
-+}
-+
-+static struct drm_gpu_scheduler *aie2_hwctx_sched_alloc(struct amdxdna_dev_hdl *ndev)
-+{
-+	int ret;
-+
-+	ret = ida_alloc_range(&ndev->hwctx_sched_ida, 0,
-+			      ndev->priv->hwctx_limit - 1, GFP_KERNEL);
-+	if (ret < 0)
-+		return ERR_PTR(ret);
-+
-+	return &ndev->hwctx_sched[ret];
-+}
-+
-+static void aie2_hwctx_sched_free(struct amdxdna_dev_hdl *ndev,
-+				  struct drm_gpu_scheduler *sched)
-+{
-+	ida_free(&ndev->hwctx_sched_ida, sched - ndev->hwctx_sched);
-+}
-+
-+int aie2_hwctx_init(struct amdxdna_hwctx *hwctx)
-+{
-+	struct amdxdna_client *client = hwctx->client;
-+	struct amdxdna_dev *xdna = client->xdna;
-+	struct amdxdna_dev_hdl *ndev = xdna->dev_handle;
- 	struct amdxdna_hwctx_priv *priv;
- 	struct amdxdna_gem_obj *heap;
- 	int i, ret;
-@@ -683,13 +741,26 @@ int aie2_hwctx_init(struct amdxdna_hwctx *hwctx)
- 		return -ENOMEM;
- 	hwctx->priv = priv;
- 
-+	priv->sched = aie2_hwctx_sched_alloc(ndev);
-+	if (IS_ERR(priv->sched)) {
-+		ret = PTR_ERR(priv->sched);
-+		goto free_priv;
-+	}
-+
-+	ret = drm_sched_entity_init(&priv->entity, DRM_SCHED_PRIORITY_NORMAL,
-+				    &priv->sched, 1, NULL);
-+	if (ret) {
-+		XDNA_ERR(xdna, "Failed to initial sched entity. ret %d", ret);
-+		goto free_sched;
-+	}
-+
- 	mutex_lock(&client->mm_lock);
- 	heap = xa_load(&client->dev_heap_xa, 0);
- 	if (!heap) {
- 		XDNA_ERR(xdna, "The client dev heap object not exist");
- 		mutex_unlock(&client->mm_lock);
- 		ret = -ENOENT;
--		goto free_priv;
-+		goto free_entity;
- 	}
- 	drm_gem_object_get(to_gobj(heap));
- 	mutex_unlock(&client->mm_lock);
-@@ -722,30 +793,16 @@ int aie2_hwctx_init(struct amdxdna_hwctx *hwctx)
- 		priv->cmd_buf[i] = abo;
- 	}
- 
--	sched = &priv->sched;
- 	mutex_init(&priv->io_lock);
- 
- 	fs_reclaim_acquire(GFP_KERNEL);
- 	might_lock(&priv->io_lock);
- 	fs_reclaim_release(GFP_KERNEL);
- 
--	ret = drm_sched_init(sched, &args);
--	if (ret) {
--		XDNA_ERR(xdna, "Failed to init DRM scheduler. ret %d", ret);
--		goto free_cmd_bufs;
--	}
--
--	ret = drm_sched_entity_init(&priv->entity, DRM_SCHED_PRIORITY_NORMAL,
--				    &sched, 1, NULL);
--	if (ret) {
--		XDNA_ERR(xdna, "Failed to initial sched entiry. ret %d", ret);
--		goto free_sched;
--	}
--
- 	ret = aie2_hwctx_col_list(hwctx);
- 	if (ret) {
- 		XDNA_ERR(xdna, "Create col list failed, ret %d", ret);
--		goto free_entity;
-+		goto free_cmd_bufs;
- 	}
- 
- 	ret = amdxdna_pm_resume_get_locked(xdna);
-@@ -791,10 +848,6 @@ int aie2_hwctx_init(struct amdxdna_hwctx *hwctx)
- 	amdxdna_pm_suspend_put(xdna);
- free_col_list:
- 	kfree(hwctx->col_list);
--free_entity:
--	drm_sched_entity_destroy(&priv->entity);
--free_sched:
--	drm_sched_fini(&priv->sched);
- free_cmd_bufs:
- 	for (i = 0; i < ARRAY_SIZE(priv->cmd_buf); i++) {
- 		if (!priv->cmd_buf[i])
-@@ -805,6 +858,10 @@ int aie2_hwctx_init(struct amdxdna_hwctx *hwctx)
- 	amdxdna_gem_unpin(heap);
- put_heap:
- 	drm_gem_object_put(to_gobj(heap));
-+free_entity:
-+	drm_sched_entity_destroy(&priv->entity);
-+free_sched:
-+	aie2_hwctx_sched_free(ndev, priv->sched);
- free_priv:
- 	kfree(priv);
- 	return ret;
-@@ -812,18 +869,20 @@ int aie2_hwctx_init(struct amdxdna_hwctx *hwctx)
- 
- void aie2_hwctx_fini(struct amdxdna_hwctx *hwctx)
- {
-+	struct amdxdna_dev_hdl *ndev;
- 	struct amdxdna_dev *xdna;
- 	int idx;
- 
- 	xdna = hwctx->client->xdna;
-+	ndev = xdna->dev_handle;
- 
- 	XDNA_DBG(xdna, "%s sequence number %lld", hwctx->name, hwctx->priv->seq);
- 	aie2_hwctx_wait_for_idle(hwctx);
- 
- 	/* Request fw to destroy hwctx and cancel the rest pending requests */
--	drm_sched_stop(&hwctx->priv->sched, NULL);
-+	drm_sched_stop(hwctx->priv->sched, NULL);
- 	aie2_release_resource(hwctx);
--	drm_sched_start(&hwctx->priv->sched, 0);
-+	drm_sched_start(hwctx->priv->sched, 0);
- 
- 	mutex_unlock(&xdna->dev_lock);
- 	drm_sched_entity_destroy(&hwctx->priv->entity);
-@@ -834,7 +893,7 @@ void aie2_hwctx_fini(struct amdxdna_hwctx *hwctx)
- 		   atomic64_read(&hwctx->job_free_cnt));
- 	mutex_lock(&xdna->dev_lock);
- 
--	drm_sched_fini(&hwctx->priv->sched);
-+	aie2_hwctx_sched_free(ndev, hwctx->priv->sched);
- 	aie2_ctx_syncobj_destroy(hwctx);
- 
- 	for (idx = 0; idx < ARRAY_SIZE(hwctx->priv->cmd_buf); idx++) {
-diff --git a/drivers/accel/amdxdna/aie2_pci.c b/drivers/accel/amdxdna/aie2_pci.c
-index daec1f6b49079..7a4314ca843bc 100644
---- a/drivers/accel/amdxdna/aie2_pci.c
-+++ b/drivers/accel/amdxdna/aie2_pci.c
-@@ -503,10 +503,16 @@ static int aie2_init(struct amdxdna_dev *xdna)
- 	ndev->priv = xdna->dev_info->dev_priv;
- 	ndev->aie.xdna = xdna;
- 
-+	ret = aie2_hwctx_sched_init(ndev);
-+	if (ret)
-+		return ret;
-+
- 	for (i = 0; i < ARRAY_SIZE(npu_fw); i++) {
- 		fw_full_path = kasprintf(GFP_KERNEL, "%s%s", ndev->priv->fw_path, npu_fw[i]);
--		if (!fw_full_path)
--			return -ENOMEM;
-+		if (!fw_full_path) {
-+			ret = -ENOMEM;
-+			goto free_hwctx_sched;
-+		}
- 
- 		ret = firmware_request_nowarn(&fw, fw_full_path, &pdev->dev);
- 		kfree(fw_full_path);
-@@ -519,7 +525,7 @@ static int aie2_init(struct amdxdna_dev *xdna)
- 	if (ret) {
- 		XDNA_ERR(xdna, "failed to request_firmware %s, ret %d",
- 			 ndev->priv->fw_path, ret);
--		return ret;
-+		goto free_hwctx_sched;
- 	}
- 
- 	ret = pcim_enable_device(pdev);
-@@ -623,6 +629,8 @@ static int aie2_init(struct amdxdna_dev *xdna)
- 	aie2_hw_stop(xdna);
- release_fw:
- 	release_firmware(fw);
-+free_hwctx_sched:
-+	aie2_hwctx_sched_fini(ndev);
- 
- 	return ret;
- }
-@@ -631,6 +639,7 @@ static void aie2_fini(struct amdxdna_dev *xdna)
- {
- 	amdxdna_pm_fini(xdna);
- 	aie2_hw_stop(xdna);
-+	aie2_hwctx_sched_fini(xdna->dev_handle);
- }
- 
- static int aie2_get_aie_status(struct amdxdna_client *client,
-diff --git a/drivers/accel/amdxdna/aie2_pci.h b/drivers/accel/amdxdna/aie2_pci.h
-index ea1dac1064004..2c7019bd26b5e 100644
---- a/drivers/accel/amdxdna/aie2_pci.h
-+++ b/drivers/accel/amdxdna/aie2_pci.h
-@@ -107,7 +107,7 @@ struct amdxdna_hwctx_priv {
- 	struct amdxdna_gem_obj		*heap;
- 	void				*mbox_chann;
- 
--	struct drm_gpu_scheduler	sched;
-+	struct drm_gpu_scheduler	*sched;
- 	struct drm_sched_entity		entity;
- 
- 	struct mutex			io_lock; /* protect seq and cmd order */
-@@ -152,6 +152,8 @@ struct amdxdna_dev_hdl {
- 	u32				total_col;
- 	struct amdxdna_drm_query_aie_version version;
- 	struct aie2_exec_msg_ops	*exec_msg_ops;
-+	struct drm_gpu_scheduler	*hwctx_sched;
-+	struct ida			hwctx_sched_ida;
- 
- 	/* power management and clock*/
- 	enum amdxdna_power_mode_type	pw_mode;
-@@ -294,6 +296,8 @@ int aie2_update_prop_time_quota(struct amdxdna_dev_hdl *ndev, u32 us);
- /* aie2_hwctx.c */
- int aie2_hwctx_init(struct amdxdna_hwctx *hwctx);
- void aie2_hwctx_fini(struct amdxdna_hwctx *hwctx);
-+int aie2_hwctx_sched_init(struct amdxdna_dev_hdl *ndev);
-+void aie2_hwctx_sched_fini(struct amdxdna_dev_hdl *ndev);
- int aie2_hwctx_config(struct amdxdna_hwctx *hwctx, u32 type, u64 value, void *buf, u32 size);
- int aie2_hwctx_sync_debug_bo(struct amdxdna_hwctx *hwctx, u32 debug_bo_hdl);
- void aie2_hwctx_suspend(struct amdxdna_client *client);
+-		drm_dbg_ratelimited(drm, "Releasing reference on provider device and module.\n");
++		drm_dbg(drm, "Releasing reference on provider device and module.\n");
+ 		drm_dev_put(drm);
+ 		module_put(module);
+ 		kfree(dev_hold);
 -- 
 2.53.0
 
