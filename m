@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021528;
-	b=n55edGriGnIHAkQgVjjELSc7RH0MDAjp4COwUYWXPQyzhqHs4KGTmvAwYHqouaNjakXv
-	 3w3IVLnMFd+oNlDBjMpN35aD4OjIYT5U1F1F/jlGXtiDzPvwb2AnhLLVZi03OcKhOtI1W
-	 iGmQsve41Lnj/aG+MY2Ajt6tkGBaZ+4OR91vR1T2LgJNSencDg2tFNYw5oFstPZwiusGM
-	 5XO4NZO7/rP420jvKRMiuZ53/W7uKFNAxQZ0KkKbWZCfjQavilZ+kEA4KySFJMtfK2zVt
-	 syyYI8hWr0D1XWBvqDlfEyeYniw5XnY+iqcC7AEqScKKB3ngElYypJ/EZXlfhvPyXuQ==
+	t=1795021530;
+	b=QOuLkRWx5rKB+Bi52h7EyJyw5dJzagk41PBehBaapH6sNCPNupHR3ifHSyU6URTZDIdM
+	 R0MCrFyC9yWUSqQ2Q0sClPd1cjwOe390rnv1wub6jXvGitvnLMy0ewKCQy+PKageeFyyO
+	 sa+SlYAYu6QKZ4CV9SI1uAwYHDSUVDPcUPlS5XYTE23E0QutMLX67dM22ONRPxVhgaA1O
+	 ydIlILj5BRJfEilMZVAja3rbyko9fWWtA4y/8SDghvBTO0ktrikeTtsqvUfJ8pV2KxA8o
+	 7BCjHQTSdRry54wyaQDOXLcWynpn7XOKRxSKsNpKpaeOFoS5n+U/8JYdIlXF/7Ffy9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021528;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021530;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bCvNvVZrISLaTb5V7YZuHFckYjfSED4XpCAqDHqv/w0=;
-	b=XdSfoY0hqugQYSVvamSD6hD4qNIMkUn2UYbcr/FnE1Jwb2FSDoPfR0eeB43eWg3bXKLO
-	 iCxkaeOo6yYBfcEvB7gKIVKzXFCVwDf5EtqrWv0AIefBqrpuwenopARLwarFjBBDAA3/Z
-	 3WZIsjpBA4w7uT48pyblgAGjPiB3cgmM5um03VBc0588FVDzi7OGLR5qJMoMlPKNLPJC8
-	 98YUzbkMCaaUGo4NzhCqYffUUswr3fCySINmhyk1cjtQCCg9Z6lJhUszYM7HpGjDdM5fu
-	 bB5IhSlOUKxCE7Udei1rrKksGmkzw00vh9xaZnKOizah3WB/8i8hzkF4aLkWnkpHe4A==
+	bh=Dnp0dE3ij5DS6h9PxXmlEAfIOfKnyK+HLnhrldmkmXE=;
+	b=EGcNfzkdh3253jrTkX66G4cb7sdhTOPy9fUPC+n3XR8IJ5qKBWDvB5R0ibRWmagS/D2Y
+	 RZ1HQfhcjHJuPQ1R9T+WHxcFx/u4ixt2k6mhU6g0utGK+JLqW/OXcn5LqUdcvaHWUmri2
+	 vGNEY0NLEWz9GBtCAYHv/g2JU63S3gC9whZ2NZTY9n/7jkTfQBTBto31GExK60gNnCd32
+	 xlbAcQ9vtGyRe8ZENtrYROxorTvnNg6n1QiGfmqAf9YIFXBIWRecr0yICEg3LxeykvEk/
+	 IIA3ZlWoDfhQLTPk7paQtjPWIMG5GLEGB0cca6OK0pNdhRy6nyDB0De+bSblj8EXwcQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vgELZwzs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y7hjWLq8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 165A8606A320;
-	Wed, 18 Nov 2026 17:05:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB012606A31C;
+	Wed, 18 Nov 2026 17:05:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vgELZwzs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70D481F000C4;
-	Wed, 18 Nov 2026 17:05:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y7hjWLq8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38FC61F000C4;
+	Wed, 18 Nov 2026 17:05:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021527;
-	bh=bCvNvVZrISLaTb5V7YZuHFckYjfSED4XpCAqDHqv/w0=;
+	s=korg; t=1795021530;
+	bh=Dnp0dE3ij5DS6h9PxXmlEAfIOfKnyK+HLnhrldmkmXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vgELZwzsLKGr7oai0zT+ipy8OkzSpEBvWq7dAXY+r7i6FZN716tiKsPkNGrkSbptD
-	 kMkhTHCpH0Bm4b3h9uUU+rViqzEUkA3Z4FwpPCmXQ2OISnZbT7+CvUByyPR0yKr9yd
-	 j6oLpaXLVSVuOTc3CXRyo8b8+bTeNAkExDVwmvLk=
+	b=y7hjWLq81Z0Dq6J0gV+8vF5rFQMZF3jDRT++K+SHzn7u4y3U0QX2+7bP1vxBW8Ct3
+	 9R3rr0X6sBkUo8qgnm+J0kExvGciGoIR28v9KsxE1q/yxlZk4PrErs+OO17K+ZPRRV
+	 gKuwYOatWAARi+v8nzObG62Q+kYxYqYVHk1o62CQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Daniel Machon <daniel.machon@microchip.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2339/2651] net: lan969x: fix DSM calendar for empty taxis
-Date: Wed, 18 Nov 2026 15:59:39 +0100
-Message-ID: <20261118150409.308055037@linuxfoundation.org>
+Subject: [PATCH 7.3 2340/2651] net: sparx5/lan969x: do not clobber the PSFP cycle timer update period
+Date: Wed, 18 Nov 2026 15:59:40 +0100
+Message-ID: <20261118150409.339960308@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,74 +70,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Machon <daniel.machon@microchip.com>
 
-[ Upstream commit a031ec9ff5a2e55867430e74e9b497fe844116ba ]
+[ Upstream commit 5a3dcad8e101ddcd3a886907c8992df54472f749 ]
 
-lan969x_dsm_calendar_calc() computes the DSM calendar schedule of one
-taxi. sparx5_config_dsm_calendar() calls it for each taxi, reusing the
-same sparx5_calendar_data.
+sparx5_psfp_init() enables the periodic stream gate cycle timer update,
+which keeps the cycle start time of each stream gate within one cycle
+time of the current time. SG_CT_CLKS sets the update period, in system
+clock cycles.
 
-Before this patch, the schedule is only cleared after the n_devs == 0
-early return. For a taxi with no active ports, the function writes
-SPX5_DSM_CAL_EMPTY only to schedule[0] and leaves the remaining slots
-at whatever they held before. For the first taxi that is zero from
-kzalloc(), so sparx5_dsm_cal_len() returns a bogus length and
-sparx5_dsm_calendar_check() fails, which fails the probe:
+Before this patch, the update is enabled with a full register write of
+SG_CT_UPDATE_ENA only, which also sets SG_CT_CLKS to zero. That is below
+the documented minimum, the number of stream gates (1024 on sparx5 and
+256 on lan969x).
 
-  Port 0: distance 20 above limit 0
+Write both fields, and set the period to the recommended 10 us,
+computed from the core clock since it differs per target (6250 cycles
+at 625 MHz, 3280 at 328 MHz).
 
-A later empty taxi inherits the previous taxi's schedule instead, which
-passes the check, so only an empty taxi 0 triggers the failure.
+Found by an AI code review agent, and confirmed on lan969x and sparx5
+by reading the register back as 0x80000000.
 
-Clear the full schedule up front on every path, and on the empty path
-place a single idle marker (SPX5_DSM_CAL_MAX_DEVS_PER_TAXI) in slot 0,
-so the update step sees a calendar length of one and programs one idle
-slot into the hardware, matching what sparx5_dsm_calendar_calc() does.
-
-Reported by a customer whose DT enables none of the ports in a taxi.
-Reproduced on lan969x by disabling all taxi 0 ports in the DT.
-
-Fixes: 5d2ba3941016 ("net: lan969x: add function for calculating the DSM calendar")
+Fixes: e116b19db202 ("net: microchip: sparx5: initialize PSFP")
 Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261020-lan969x-dsm-empty-taxi-v1-1-14790f1e7430@microchip.com
+Link: https://patch.msgid.link/20261020-sparx5-psfp-cycle-timer-v1-1-00f2908f096a@microchip.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/microchip/sparx5/lan969x/lan969x_calendar.c  | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/microchip/sparx5/sparx5_psfp.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/microchip/sparx5/lan969x/lan969x_calendar.c b/drivers/net/ethernet/microchip/sparx5/lan969x/lan969x_calendar.c
-index e857640df185e..4442c0c1a957b 100644
---- a/drivers/net/ethernet/microchip/sparx5/lan969x/lan969x_calendar.c
-+++ b/drivers/net/ethernet/microchip/sparx5/lan969x/lan969x_calendar.c
-@@ -82,6 +82,9 @@ int lan969x_dsm_calendar_calc(struct sparx5 *sparx5, u32 taxi,
- 	struct lan969x_dsm_cal_dev_speed *speed;
- 	int err;
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_psfp.c b/drivers/net/ethernet/microchip/sparx5/sparx5_psfp.c
+index 83b37f95ee467..fa19a48f941d1 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_psfp.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_psfp.c
+@@ -322,6 +322,7 @@ void sparx5_psfp_init(struct sparx5 *sparx5)
+ {
+ 	const struct sparx5_ops *ops = sparx5->data->ops;
+ 	const struct sparx5_sdlb_group *group;
++	u32 sg_ct_clks;
+ 	int i;
  
-+	for (u32 i = 0; i < SPX5_DSM_CAL_LEN; i++)
-+		data->schedule[i] = SPX5_DSM_CAL_EMPTY;
+ 	for (i = 0; i < sparx5->data->consts->n_lb_groups; i++) {
+@@ -330,7 +331,14 @@ void sparx5_psfp_init(struct sparx5 *sparx5)
+ 				       group->min_burst, group->frame_size, i);
+ 	}
+ 
+-	spx5_wr(ANA_AC_SG_CYCLETIME_UPDATE_PERIOD_SG_CT_UPDATE_ENA_SET(1),
++	/* Poll the stream gate cycle start times every 10 us. The core clock
++	 * period is in picoseconds.
++	 */
++	sg_ct_clks = 10 * NSEC_PER_USEC * PSEC_PER_NSEC /
++		     sparx5_clk_period(sparx5->coreclock);
 +
- 	/* Maximum bandwidth for this taxi */
- 	taxi_bw = (128 * 1000000) / sparx5_clk_period(sparx5->coreclock);
++	spx5_wr(ANA_AC_SG_CYCLETIME_UPDATE_PERIOD_SG_CT_CLKS_SET(sg_ct_clks) |
++		ANA_AC_SG_CYCLETIME_UPDATE_PERIOD_SG_CT_UPDATE_ENA_SET(1),
+ 		sparx5, ANA_AC_SG_CYCLETIME_UPDATE_PERIOD);
  
-@@ -125,7 +128,7 @@ int lan969x_dsm_calendar_calc(struct sparx5 *sparx5, u32 taxi,
- 	}
- 
- 	if (n_devs == 0) {
--		data->schedule[0] = SPX5_DSM_CAL_EMPTY;
-+		data->schedule[0] = SPX5_DSM_CAL_MAX_DEVS_PER_TAXI;
- 		return 0;
- 	}
- 
-@@ -167,9 +170,6 @@ int lan969x_dsm_calendar_calc(struct sparx5 *sparx5, u32 taxi,
- 		return -EINVAL;
- 	}
- 
--	for (u32 i = 0; i < SPX5_DSM_CAL_LEN; i++)
--		data->schedule[i] = SPX5_DSM_CAL_EMPTY;
--
- 	/* Place the remaining devices */
- 	for (u32 i = 0; i < DSM_CAL_DEV_MAX; i++) {
- 		speed = &dev_speeds[i];
+ 	spx5_rmw(ANA_L2_FWD_CFG_ISDX_LOOKUP_ENA_SET(1),
 -- 
 2.53.0
 
