@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021791;
-	b=fAp/uUokOxTHqx1XfOwPB8A/ekznTM93uu6TicpEldfKIw/J1G0WM0WFUlYp42TiCeuP
-	 kqoKwiZBul3xvM9FzO8OnHx4I9wV2DlLxkIjeXPMUXptQCJFaQqn1jdPulhrccOE+4jTR
-	 iOxI8/Bc8dz+an/iVREDpUXcI0kA5RZ6Mh++2G46otpzps+p4fb3eJufUSn9MipYpybLJ
-	 ucZfi0CFJJsZ3QHNVsxo5KwLYOiFXHG9D1ED+l2npjh7X8NmW7A7Z5EKp4CXGzo6YZyMd
-	 XLw9jObhX/f/QgFS+9vwMkjOFkjtAXj+cQ3UzsK5yvCNh6x7nYcAWn7RuAh86jtgSJQ==
+	t=1795021794;
+	b=1TcBpN/fsgre2tHiWC1CKSkJ5rDfCrPAMiRklt6kGTOLKtvMsPzQRyXUIqZcp25l2bml
+	 F37nLbHjP+psTQbn1P7Coq5jg5ewpP/4bBt2M4G9u2fsM+IuHHeXrnG08qRflu32zDgBh
+	 kaDkjC7e6a6JvTHiMuRNOqumXVM2QeMkct9FUNNyKe/9UXKIg1xbqb2gNAW+4mLfgSdwj
+	 wtE2QRUgA4obK8WrOT0TydSVMunObsAz41YXJ0JFjEDqK7gd5y3noRO9RE1xMxg2rB6I0
+	 znPyKA/uxChvflDLiDCodU+FLexc3H6sZl6cUJe4Un8iQiSApezTquP/PF2JaVnmEPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021791;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021794;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=92rjo9alVJ/iBxoC7wcho9NYp8gjgCaQre+/z5BBBSE=;
-	b=iHypg6AvGcpNkrKZTCJl2sPCeZGPx7LPdf4V0JyFflhy1CnPvm7BK2zLV6sZ6d18Bo9F
-	 aZawwTSwSXm51GEGd/4K5XUu+/+0+hQvvaG0DaGrE0W5zoYRbdOPO/prDLFmPbjIJt1FK
-	 /o3URT3hhTyCHXr71hqioBVAYERFOegJRuG2YEpcym4uts8+AIPNI7hApQRN5Nca+FS9M
-	 EBMBNvecstQSwnxBj6cm5Dv85ZZGpS4bRxFkbfWL9O2WxhiceuuKmdX/JmtZijaLZseZU
-	 05L3/VztuYl2zt/rHxwp5Y/wlz9d2WaLUFjH0nVSQzv/GTe6Ag9qZulDOAt1JffNz5w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=Fb1QZOmmsmuKmLikBFJC5SbCrkkXO/u7J8hUQvGmJeA=;
+	b=aQojyHXBMTqjMyDb27qX/zTtow/3yefV+pyjW7Eyw9hUL920KQVr2i+02+J7+BKdw0ja
+	 6IeWg0czG1t9m2FsDetLYBERa8gAHg8Na4z38YIQOGrqTsiAEyvIAkskt4mSTG3pPIULz
+	 jq03FfDFu0XUQ5nBsqYPI5jBYuKhlK8AXg5vs1ifdhKPQNlWslyo8CaIGvqgdnuEed2vh
+	 Sw88ewHf6F6l8d/jjogxC+mvW+cQ6HSO5ApHL72zZTRUihYl9okaWU9qEsOCCXJmk6LwP
+	 RL/BcNyCEt0G+itxTKi2B7nulok7zT91gUsQ9KQg/1V+Tz+2bU2THF+ro558pYl4F7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tKiiydLg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q9bK3g0c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44799606A325;
-	Wed, 18 Nov 2026 17:09:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A806606A33B;
+	Wed, 18 Nov 2026 17:09:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tKiiydLg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 969AF1F000C5;
-	Wed, 18 Nov 2026 17:09:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q9bK3g0c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CF7B1F000C4;
+	Wed, 18 Nov 2026 17:09:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021791;
-	bh=92rjo9alVJ/iBxoC7wcho9NYp8gjgCaQre+/z5BBBSE=;
+	s=korg; t=1795021794;
+	bh=Fb1QZOmmsmuKmLikBFJC5SbCrkkXO/u7J8hUQvGmJeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tKiiydLgidMV17eKpapzkTLvpmr9DubFz7ae9HRHEVtDRJqH1w0/rVhbAcArrzZ2z
-	 xkfvQUzEz/H4zn3LtW+L8INyWXie55b9BaXLgnTcQIdJNS3kTThE8FoJWsqle4s7Bo
-	 1cJpie5aKochQcvJQ2+s6zNRl89mT7HMLnEUj+Ds=
+	b=Q9bK3g0cy9BcR7etIpsHrwRaimoFF7+gQ1qf7NT1rDOKG4D2euDnJtIq+rBE/XqlC
+	 N4wjJXmEpf9+TJGxKpO3gEl0lVQ2OkOC4lejwgNqSdwKRefLCiLCy6UqyUviuIU2qR
+	 3LNoTq+vScdlJotucCL9sGQp92Zfclx3C4BYt5+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9mie=20Rodon?= <jeremie.rodon@gmail.com>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Hui Su <sh_def@163.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2432/2651] spi: cs42l43: Add speaker ID quirk for Dell XPS 13 DX13260 SKU 0E54
-Date: Wed, 18 Nov 2026 16:01:12 +0100
-Message-ID: <20261118150412.755182261@linuxfoundation.org>
+Subject: [PATCH 7.3 2406/2651] hrtimer: Add cleanup class for on-stack timers
+Date: Wed, 18 Nov 2026 16:00:46 +0100
+Message-ID: <20261118150411.945024649@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,54 +62,100 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémie Rodon <jeremie.rodon@gmail.com>
+From: Hui Su <sh_def@163.com>
 
-[ Upstream commit 7da2aca123754c0e06092bbe179d58078b58d8d4 ]
+[ Upstream commit 064bcd117e8a1a266bb92b840f63862999b7cb87 ]
 
-The Dell XPS 13 DX13260 is also sold with SKU 0E54, which has the same
-ACPI speaker ID layout as SKU 0E53: two pins in one GpioIo() while the
-spk-id-gpios _DSD property references only the first. Without the quirk
-the speaker ID is wrong (0), so there is no speaker audio and no amp
-firmware is loaded.
+hrtimer_setup_on_stack() requires callers to destroy the timer before its
+backing stack storage goes out of scope, but the setup interface does not
+encode the required teardown pairing.
 
-Add a DMI entry for SKU 0E54 using the same handler.
+Add an hrtimer_on_stack cleanup class that pairs on-stack setup with
+destroy_hrtimer_on_stack(). Document the existing setup API's lifetime
+requirement.
 
-Fixes: cad16d850e37 ("spi: cs42l43: Workaround for wrong speaker ID on Dell XPS 13 DX13260")
-Signed-off-by: Jérémie Rodon <jeremie.rodon@gmail.com>
-Reviewed-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20261025095037.18891-1-jeremie.rodon@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The cleanup class provides debug-object teardown, not timer
+cancellation. Callers must ensure that no hrtimer operation can still
+access the timer before the scope ends; in particular, the timer must
+no longer be queued and any running callback must have completed.
+
+Signed-off-by: Hui Su <sh_def@163.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/5f48c32490d19f51035e4209174f9cfe44472c71.1792083743.git.sh_def@163.com
+Stable-dep-of: bd091346971c ("sched/idle: Use hrtimer cleanup class in play_idle_precise()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-cs42l43.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ include/linux/hrtimer.h | 24 ++++++++++++++++++++++++
+ kernel/time/hrtimer.c   |  8 ++++++--
+ 2 files changed, 30 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-cs42l43.c b/drivers/spi/spi-cs42l43.c
-index 6772abb483dd3..46eeb44130dd5 100644
---- a/drivers/spi/spi-cs42l43.c
-+++ b/drivers/spi/spi-cs42l43.c
-@@ -301,6 +301,14 @@ static const struct dmi_system_id cs42l43_spk_id_quirks[] = {
- 		},
- 		.driver_data = cs42l43_get_2bit_speaker_id_from_one_gpioio,
- 	},
-+	{
-+		.ident = "Dell XPS 13 DX13260",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0E54"),
-+		},
-+		.driver_data = cs42l43_get_2bit_speaker_id_from_one_gpioio,
-+	},
- 	{ }
- };
+diff --git a/include/linux/hrtimer.h b/include/linux/hrtimer.h
+index 29072d89e5cb3..1877beb81d5c2 100644
+--- a/include/linux/hrtimer.h
++++ b/include/linux/hrtimer.h
+@@ -12,6 +12,7 @@
+ #ifndef _LINUX_HRTIMER_H
+ #define _LINUX_HRTIMER_H
  
++#include <linux/cleanup.h>
+ #include <linux/hrtimer_rearm.h>
+ #include <linux/hrtimer_types.h>
+ #include <linux/init.h>
+@@ -201,6 +202,29 @@ extern void destroy_hrtimer_on_stack(struct hrtimer *timer);
+ static inline void destroy_hrtimer_on_stack(struct hrtimer *timer) { }
+ #endif
+ 
++/*
++ * The cleanup class pairs on-stack setup with debug-object teardown. Callers
++ * using it must not call destroy_hrtimer_on_stack() manually.
++ *
++ * This class provides debug-object teardown, not timer cancellation. Callers
++ * must ensure that no hrtimer operation can still access the timer before
++ * leaving the scope. In particular, the timer must no longer be queued and
++ * any running callback must have completed.
++ *
++ * Callers using hrtimer_setup_on_stack() without this class retain
++ * responsibility for destroying the timer before its backing storage leaves
++ * scope.
++ */
++DEFINE_CLASS(hrtimer_on_stack, struct hrtimer *,
++	     destroy_hrtimer_on_stack(_T),
++	     ({
++		hrtimer_setup_on_stack(timer, function, clock_id, mode);
++		timer;
++	     }),
++	     struct hrtimer *timer,
++	     enum hrtimer_restart (*function)(struct hrtimer *),
++	     clockid_t clock_id, enum hrtimer_mode mode)
++
+ /* Basic timer operations: */
+ extern void hrtimer_start_range_ns(struct hrtimer *timer, ktime_t tim,
+ 				   u64 range_ns, const enum hrtimer_mode mode);
+diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
+index cbf1693c86b38..12e136d5691f4 100644
+--- a/kernel/time/hrtimer.c
++++ b/kernel/time/hrtimer.c
+@@ -1975,8 +1975,12 @@ EXPORT_SYMBOL_GPL(hrtimer_setup);
+  * @clock_id:	The clock to be used
+  * @mode:       The timer mode
+  *
+- * Similar to hrtimer_setup(), except that this one must be used if struct hrtimer is in stack
+- * memory.
++ * Similar to hrtimer_setup(), except that this one must be used if struct
++ * hrtimer is in stack memory.
++ *
++ * Callers that do not use the hrtimer_on_stack cleanup class must call
++ * destroy_hrtimer_on_stack() before the stack storage goes out of scope. The
++ * cleanup class pairs setup and destruction automatically.
+  */
+ void hrtimer_setup_on_stack(struct hrtimer *timer,
+ 			    enum hrtimer_restart (*function)(struct hrtimer *),
 -- 
 2.53.0
 
