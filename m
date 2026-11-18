@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048454;
-	b=l/HMBSfVA0XLLUayCoI+ROEmwTu5+PMVdXhhMJ0tQBFbD0tWSSrNhEFIjopH01E5OCT6
-	 o+N9KpJ+LIHdFEa3hxQXZU++paYt2B34r9Y7Vd1/uLdWl0hrsq7gX0hbE2putgVlVTQJU
-	 gNDXUS/GRLvy2j+iGxUKh7QOyhy/l19Lvx0nzIYntZSQHvzk04hsNxUzJoo3A7hI+KkRt
-	 7P96eSdaj+6RnqR91Tno0kICpvrWxNtlbXRo811/j5e8C47dzsiq8AE5207NuRPwgGKLI
-	 YXwTkshkq38yvGHCR9vm9qJ/69l7P4FHOBa1IvpLNXw3X2/Q3anELU2YwCmh/VpbE3w==
+	t=1795048457;
+	b=HlmYzQoKBnGqytKlho1tBEZE9y9ic4Cd51LXQX5PB8wxse/tfdboknuSsnRl0qQwwbQR
+	 PympG9HvcdqQyRWg3CWteGi54mpB1h/GOxxHUQzA590Onk5f1lCuzXYgCWV+6srzniTC6
+	 6Zptui5GTfcLj8jCjaMYPzB+0tmnwkrYBWkj+syqW7v3GR22JJJ6ByH4SxZuazYC1bgt7
+	 GoRdUDPgJuJKyE2YbGSF/nNs5vae6xyXVv6gXg6drIz/s5fJvuC398ufeR4JYjYZxPLS6
+	 N16iKCluTvvPkw84MXesQI5TFyPKkltnIbSVmsh8owv58X6En32pavCuKI/sOpOyQYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048454;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048457;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=k3YJg3T6tQ9wWq+f2g/s5qorUYUPIqlsud8tpmv/g5Y=;
-	b=hX6WFm1BDiIv3VU9zUBp4/9DrfmGRwPUaam0GUMfFfTdKiWUeAOkMAnfuJ+YEn5stTab
-	 wK17+Aze7xUxUHY2bGDBESQFwCYOh0t/Yy2VgxufErpyFly8Ikez4zASqQHdQl0wztThS
-	 LGKK535EbhZbWf9x7z61HPVnJR09aMOcVbWmQIzt04YZUso5D1f0/I/DPeWRL+X5sJJ8S
-	 A5kv8GvxoZE6z7tlErqHOsu8afvZQobNjBKL0eG2MD1kbt95mAbugetke/mK16Q8pDl1m
-	 Ym9X1A9qEt1KaBkID1irozYwI64Zc6ZFLLmvQrZsEvsfhbA3kEqqEKa7A/Q4GjGTisw==
+	bh=SiC05LDzZ8NmHxpoxtka+gpqIC5EqFuWvEH8yOuwNEY=;
+	b=CZWhaa8RCEqlPHF7+ieLeQsUN4R+YZQNvosk8TMIFBhYXVoppGsYs3TLembVPIY6l/Ss
+	 nuaHKoaoPDOVnULHAVUnUvpNllqNSm5m2mOlY6E+gKVl6c3KFUjXu/35OxULV/Qk0cKu3
+	 UPfvjAJX6S59KRubFgQwPUtn6cnqMf52up0abSxIH6Qfd5K5SKu0LGhyFm/DfNax2YPGv
+	 FNJwGjal/KGdo/QJixsNP8upzuRvevhpfGATIRCLwI+AUUs5q/oRxlHDlD/iAcWR+eX+o
+	 rWwNiMiAdzahQqA7XSYjVRjFDTKk4TnKT63XQR900t6t4Gf3Sxhr8v7qo9c6BPcYHZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q+taQFm0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Stm8Jw8i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24625606A336;
-	Thu, 19 Nov 2026 00:34:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6360606A331;
+	Thu, 19 Nov 2026 00:34:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q+taQFm0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6191F000C4;
-	Thu, 19 Nov 2026 00:34:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Stm8Jw8i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 461961F000C4;
+	Thu, 19 Nov 2026 00:34:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048454;
-	bh=k3YJg3T6tQ9wWq+f2g/s5qorUYUPIqlsud8tpmv/g5Y=;
+	s=korg; t=1795048456;
+	bh=SiC05LDzZ8NmHxpoxtka+gpqIC5EqFuWvEH8yOuwNEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q+taQFm0esHRXpfcuemYww1pMgPcMrc1Pv25Nxmv2mypBSZGmRJR4hrERO2grYTXF
-	 dXNVjsf+3RNz4LfJ+h8Rd65HW3oMUHPnQe3UoCs/U2hTIipdrBZ2mVvFB0lm8HjH34
-	 rrIKqPAnRWRjIz5Vci8yCywL4YxIyn5r/XEuLFgU=
+	b=Stm8Jw8iU7LSjUvMQRkS5miZDKvDWSBUF90b/kffKLtJV6CjKdC2X1Ik3qH8lvGPm
+	 rVt6A49KAVsTEesKFnevrS0GLXAKJQiG/nyD3Bfj8zKAacRPaoPKk8ms3VFHcP5Gew
+	 qWGN2pmI3dXjezDdwh1NtN4CG6DEtGHqnmARQThU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kim Wooseok <5mghybrid@khu.ac.kr>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2001/2857] wifi: rtl8xxxu: free RX skb when URB submission fails
-Date: Wed, 18 Nov 2026 15:50:35 +0100
-Message-ID: <20261118150313.409501459@linuxfoundation.org>
+Subject: [PATCH 6.1 2002/2857] RDMA/cxgb4: Fix neigh reference leak in rx_pkt()
+Date: Wed, 18 Nov 2026 15:50:36 +0100
+Message-ID: <20261118150313.444456506@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,91 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kim Wooseok <5mghybrid@khu.ac.kr>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 9f7edf4e8584c87e3c478c6dd87c08d51b5157c2 ]
+[ Upstream commit 5fb3051aa4611ae18e304814fb1b74a30065fd85 ]
 
-When usb_submit_urb() fails, rtl8xxxu_submit_rx_urb() unanchors the URB
-but leaves the newly allocated skb in urb.context. For ENOMEM/EAGAIN,
-the RX worker puts the request back on the pending list. The next
-submission allocates another skb and overwrites that pointer, leaking
-the previous buffer. Stopping before the retry also leaks it, because
-pending-list cleanup frees only the URB.
+If ip_dev_find() fails on the loopback path the code jumps to
+free_dst without releasing the neighbour reference taken by
+dst_neigh_lookup_skb(), leaking one neigh reference.
 
-Free the skb and clear urb.context in rtl8xxxu_submit_rx_urb() when
-submission fails. This keeps buffer allocation and failure cleanup in
-the same function, so a request returned for retry or teardown no longer
-owns an skb. Remove the corresponding cleanup from start and the RX
-worker; they only need to decide whether to retry or free the URB.
+Release the neighbour before jumping to free_dst.
 
-Fixes: 26f1fad29ad9 ("New driver: rtl8xxxu (mac80211)")
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Assisted-by: GPT-6 Astra
-Signed-off-by: Kim Wooseok <5mghybrid@khu.ac.kr>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260921-codex-rtl-rx-v3-submit-v4-1-eeb09fe8f791@khu.ac.kr
+Fixes: ef42520240aa ("RDMA/cxgb4: add null-ptr-check after ip_dev_find()")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260916183530.2092534-1-vulab@iscas.ac.cn
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/realtek/rtl8xxxu/rtl8xxxu_core.c    | 16 +++++-----------
- 1 file changed, 5 insertions(+), 11 deletions(-)
+ drivers/infiniband/hw/cxgb4/cm.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-index 19eadfd65a980..4a7f48f10b304 100644
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-@@ -5291,7 +5291,6 @@ static void rtl8xxxu_rx_urb_work(struct work_struct *work)
- 	struct rtl8xxxu_priv *priv;
- 	struct rtl8xxxu_rx_urb *rx_urb, *tmp;
- 	struct list_head local;
--	struct sk_buff *skb;
- 	unsigned long flags;
- 	int ret;
- 
-@@ -5323,8 +5322,6 @@ static void rtl8xxxu_rx_urb_work(struct work_struct *work)
- 		default:
- 			dev_warn(&priv->udev->dev,
- 				 "failed to requeue urb with error %i\n", ret);
--			skb = (struct sk_buff *)rx_urb->urb.context;
--			dev_kfree_skb(skb);
- 			usb_free_urb(&rx_urb->urb);
+diff --git a/drivers/infiniband/hw/cxgb4/cm.c b/drivers/infiniband/hw/cxgb4/cm.c
+index 8d753e6e0c719..07cf0026cf1e3 100644
+--- a/drivers/infiniband/hw/cxgb4/cm.c
++++ b/drivers/infiniband/hw/cxgb4/cm.c
+@@ -4156,6 +4156,7 @@ static int rx_pkt(struct c4iw_dev *dev, struct sk_buff *skb)
+ 		pdev = ip_dev_find(&init_net, iph->daddr);
+ 		if (!pdev) {
+ 			pr_err("%s - failed to find device!\n", __func__);
++			neigh_release(neigh);
+ 			goto free_dst;
  		}
- 	}
-@@ -5874,8 +5871,11 @@ static int rtl8xxxu_submit_rx_urb(struct rtl8xxxu_priv *priv,
- 			  skb_size, rtl8xxxu_rx_complete, skb);
- 	usb_anchor_urb(&rx_urb->urb, &priv->rx_anchor);
- 	ret = usb_submit_urb(&rx_urb->urb, GFP_ATOMIC);
--	if (ret)
-+	if (ret) {
- 		usb_unanchor_urb(&rx_urb->urb);
-+		dev_kfree_skb(skb);
-+		rx_urb->urb.context = NULL;
-+	}
- 	return ret;
- }
- 
-@@ -6436,7 +6436,6 @@ static int rtl8xxxu_start(struct ieee80211_hw *hw)
- 	struct rtl8xxxu_priv *priv = hw->priv;
- 	struct rtl8xxxu_rx_urb *rx_urb;
- 	struct rtl8xxxu_tx_urb *tx_urb;
--	struct sk_buff *skb;
- 	unsigned long flags;
- 	int ret, i;
- 
-@@ -6487,13 +6486,8 @@ static int rtl8xxxu_start(struct ieee80211_hw *hw)
- 		rx_urb->hw = hw;
- 
- 		ret = rtl8xxxu_submit_rx_urb(priv, rx_urb);
--		if (ret) {
--			if (ret != -ENOMEM) {
--				skb = (struct sk_buff *)rx_urb->urb.context;
--				dev_kfree_skb(skb);
--			}
-+		if (ret)
- 			rtl8xxxu_queue_rx_urb(priv, rx_urb);
--		}
- 	}
- 
- 	schedule_delayed_work(&priv->ra_watchdog, 2 * HZ);
+ 		e = cxgb4_l2t_get(dev->rdev.lldi.l2t, neigh,
 -- 
 2.53.0
 
