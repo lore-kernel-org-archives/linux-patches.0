@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016924;
-	b=0DS5JnwKYQ7Mbfd1ZFVxAgvLc2mMKZkaiTXe9OrHNFh/zYaFle6ZpWC1C/seNaMM5yoR
-	 ouqrsgzXeIr2kerPI3VeIYwnLxU7H2nAO25Uy/dr98nodHKj3XXza2rQxJvCOB5RLU9Vc
-	 aV30L3OIP4byt41D10uaoEpI+2vqcbAmK3gbBpBDHVWc/H8Ufr7kxnHR8gHh/cXmSFkY6
-	 4dhwBF7QJfZa7COLel1RiorWtlhZ2Utahd9nPpGhc5M4s/QZ4NoK18lPrECbj7U0eQMY+
-	 luHMOlpC6/g8DPMg50qL7Z0XraBmNi4aeUEJJ13a5PW6+NEIzQPYSCN2mSIGesNPSug==
+	t=1795016926;
+	b=dNpObuLe68ycOYbb97KMaAB7TZW/1PfkDr6r4eKtfBONc1VgAuuWNHw9zw3sWPE0VR/c
+	 I33tU8hofOC1PCOkk0Qnu+g5etGBU5j7PyKzKMOyW7jjp3iia+bkUdY+3tWl8uirVAUsA
+	 +VZQOvAprco11+7kQx/21zivPRtYdDIt7FSIyJhMz8dc5o02WKoD/4eRonrQuEWQFxag2
+	 4KuV3mBQzqMee6pkw7J8eAA+jIPSeFcp138X0Ae75IJIMgRsmiIc1QMyAlHQ7HENRdt41
+	 U3NjR7rpL5Z4N7oSd524odVZ3n2gLRxDGAOxwNXkAF3tDWkww9rg+ILqz/xTtzQwV9A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016924;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016926;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kosDrwWf+pIDk9Boj4R5pS+YXw7OGAwNDO9ILYqvzWI=;
-	b=qWyn3hUACO03LZ/3xvY0FkStPWAhx6CyFvs8nGW1JrteqCF9xs1jTB5GN5eoJm/1QQTu
-	 0+t6GeWEESI/hjqOlsP/FbxDgbbIprNVywtOBsxiZhIo2wxCffPj0svQDXaFwtYp/kipe
-	 FmOpzHYgZESGJU4Cf9yVZ68YZwMVXScHBID9GVciLImV5nNVfKfRce2OPYDg6khuIfxhO
-	 VNNOaE7SknkmT5t3bZ1DML5pDkpPCz6lVjQ33zFpQw5ZHUaOxM9deZaCe/NydLzBwLpEm
-	 1b738RlthKvfDQBCcwTYunkKMKKI6LyoyZGAk/pu43vB6y/4eUo0ZJfcS5srwoB9c8g==
+	bh=VWDNwued9IzZcqLCOuxGyMps9xOmJuzlkoOVI9DCD5k=;
+	b=GyEqfN4m1bbRpZl4uu2UPdOko7rQnidkqWuC22XGdHESHxT90mDp+EkQlqSN/nDN5SqY
+	 JW8OmR+7exKI4PaHcQ0tmVNRCGHCdj18ukz7WYM00ofRz7i1JZZCoiNtdM9L+fRkZSGAF
+	 eSIaTximKbPnU54kKgR+gmd3y4tFUEGJwf/ZyXlppVdfqRwz04EbGs1dsV2AQBD1p+pjw
+	 Z4dpwm34hzeQsBaPBMlI/LR8dfa8MFWFzEwd0YfDNg3s0feDrpqgm7CjRODlzQg1g2nWc
+	 U7nUL+z02So0AkVyIXRSGPhuNPfttkYWoVIsH7ChX3xxn+eThFw653uYUSMpfc2734w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GQBiNr4A;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ElXCiteP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5CE606A31C;
-	Wed, 18 Nov 2026 15:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F7B606A32A;
+	Wed, 18 Nov 2026 15:48:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GQBiNr4A
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 456541F000C6;
-	Wed, 18 Nov 2026 15:48:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ElXCiteP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09E0B1F000C6;
+	Wed, 18 Nov 2026 15:48:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016923;
-	bh=kosDrwWf+pIDk9Boj4R5pS+YXw7OGAwNDO9ILYqvzWI=;
+	s=korg; t=1795016926;
+	bh=VWDNwued9IzZcqLCOuxGyMps9xOmJuzlkoOVI9DCD5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GQBiNr4AcBiz2v7Rvh4OVot37XUhE7/IkLqtE4TbX8FCroPvxef4XubyW7gpTYKeM
-	 ik5arypesvUOUCD+5WApHeoiZnbfULfazl+Z0I8Wtr/G0s0zAICMbM+parNPBWR29d
-	 qw1zvieHERmWjn0ucqcMQOLxQEHiA/IF55Ka3kC8=
+	b=ElXCitePcqSAuFPnFpMYkxXFJpfhFhuK1UOAhmgtddgcaEyAVQXDlBG3tdRH4SVjK
+	 5jUxL9fgilSY5UrvXdP2BPg9mMl8dLM6XEYcaYl6XLAtRVIvoohuCR6KrtSo1cOigu
+	 YoQDaF1wEbdvptirw4p4pKrew9DJrcLqzHVELcKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stan Johnson <userm57@yahoo.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0702/2651] swim: Enable the drive when probing
-Date: Wed, 18 Nov 2026 15:32:22 +0100
-Message-ID: <20261118150313.103812967@linuxfoundation.org>
+Subject: [PATCH 7.3 0703/2651] swim: Dont disable drive after every sector
+Date: Wed, 18 Nov 2026 15:32:23 +0100
+Message-ID: <20261118150313.141028215@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,92 +72,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit 57d88c8f4ea34a4dd7c5351bd026e225c7283f3f ]
+[ Upstream commit 05a7c4b197279cfb3ec3df26146ce085a2438aec ]
 
-According to the ISM spec, the MOTON bit "causes the Enable 1 and Enable 2
-signals to be turned on to the drive." It doesn't actually turn on the
-motor. When selecting a drive, enable MOTON. Disable it upon eject or
-release. This fixes detection of the Sony FDHD drive.
+This fixes multi-sector reads on a Sony drive. The Mitsubishi drive
+doesn't seem to care either way.
 
 Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
 Signed-off-by: Finn Thain <fthain@linux-m68k.org>
 Tested-by: Stan Johnson <userm57@yahoo.com>
-Link: https://patch.msgid.link/f5bf5b596a33a801faaaaa6dc2844c30d3ee82b2.1788513996.git.fthain@linux-m68k.org
+Link: https://patch.msgid.link/fc511e72753ae18b6f021701aa00d480335b0caf.1788513996.git.fthain@linux-m68k.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/swim.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/block/swim.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
 diff --git a/drivers/block/swim.c b/drivers/block/swim.c
-index 4721e073a8740..4ddb87977fe1f 100644
+index 4ddb87977fe1f..3f92677ad127a 100644
 --- a/drivers/block/swim.c
 +++ b/drivers/block/swim.c
-@@ -154,8 +154,9 @@ struct iwm {
- /*----------------------------------------------------------------------------*/
+@@ -473,8 +473,6 @@ static inline int swim_read_sector(struct floppy_state *fs,
+ 	short i;
  
- enum drive_location {
--	INTERNAL_DRIVE = 0x02,
--	EXTERNAL_DRIVE = 0x04,
-+	NO_DRIVE = 0,
-+	INTERNAL_DRIVE = BIT(1),
-+	EXTERNAL_DRIVE = BIT(2),
- };
+ 	swim_track(fs, track);
+-
+-	swim_write(base, mode1, MOTON);
+ 	swim_head(base, side);
+ 	swim_write(base, mode0, side);
  
- enum media_type {
-@@ -311,9 +312,15 @@ static inline void swim_drive(struct swim __iomem *base,
- 	if (location == INTERNAL_DRIVE) {
- 		swim_write(base, mode0, EXTERNAL_DRIVE); /* clear drive 1 bit */
- 		swim_write(base, mode1, INTERNAL_DRIVE); /* set drive 0 bit */
-+		swim_write(base, mode1, MOTON);
- 	} else if (location == EXTERNAL_DRIVE) {
- 		swim_write(base, mode0, INTERNAL_DRIVE); /* clear drive 0 bit */
- 		swim_write(base, mode1, EXTERNAL_DRIVE); /* set drive 1 bit */
-+		swim_write(base, mode1, MOTON);
-+	} else {
-+		swim_write(base, mode0, INTERNAL_DRIVE);
-+		swim_write(base, mode0, EXTERNAL_DRIVE);
-+		swim_write(base, mode0, MOTON);
+@@ -490,8 +488,6 @@ static inline int swim_read_sector(struct floppy_state *fs,
  	}
- }
+ 	local_irq_restore(flags);
  
-@@ -447,6 +454,7 @@ static int floppy_eject(struct floppy_state *fs)
- 	swim_drive(base, fs->location);
- 	swim_motor(base, OFF);
- 	swim_eject(base);
-+	swim_drive(base, NO_DRIVE);
- 
- 	fs->disk_in = 0;
- 	fs->ejected = 1;
-@@ -652,8 +660,10 @@ static int floppy_open(struct gendisk *disk, blk_mode_t mode)
- 	else if (fs->ref_count > 0)
- 		--fs->ref_count;
- 
--	if (fs->ref_count == 0)
-+	if (fs->ref_count == 0) {
- 		swim_motor(base, OFF);
-+		swim_drive(base, NO_DRIVE);
-+	}
- 	return err;
- }
- 
-@@ -682,6 +692,7 @@ static void floppy_release(struct gendisk *disk)
- 	if (fs->ref_count == 0) {
- 		swim_drive(base, fs->location);
- 		swim_motor(base, OFF);
-+		swim_drive(base, NO_DRIVE);
- 	}
- 	mutex_unlock(&swim_mutex);
- }
-@@ -804,6 +815,7 @@ static int swim_floppy_init(struct swim_priv *swd)
- 	if (swim_readbit(base, DRIVE_PRESENT) &&
- 	    !swim_readbit(base, ONEMEG_DRIVE))
- 		swim_add_floppy(swd, EXTERNAL_DRIVE);
-+	swim_drive(base, NO_DRIVE);
- 
- 	/* register floppy drives */
- 
+-	swim_write(base, mode0, MOTON);
+-
+ 	if ((header.side != side)  || (header.track != track) ||
+ 	     (header.sector != sector))
+ 		return 0;
 -- 
 2.53.0
 
