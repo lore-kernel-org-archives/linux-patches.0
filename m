@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015783;
-	b=p4Jc14SuQ+HU4stYlsVOrZYWDFMmMHGXgbuswjKnKhDKmw92AAs7nZdtpmRTSdhqhrM8
-	 +R7erc47wU5Plyw0Woqszn/jIrVKCHD/9AimOHF4ywO3o3Nz2RWf72ggvXFp1P1tfcSF2
-	 0TvZhj2zXFflZDc4eiCubRotA+BxVG5S/7+4hlnMzwMT763srgUs7UhiDifU8JI4fzcDP
-	 14tzgp6IA0LBeEJ9YbuwDisH8z6qGxLM8nmSsN4496eAoLtrai41JnUBa6PaNsggLz1to
-	 BkRzi41zPKt2GTv+B2PPdtmBo2MFTixpYbLKU7VKIXUqC/QOBk6+TTHjIrKk4km1J2g==
+	t=1795015786;
+	b=KnCXeoU4nZQTG5xvQMxpbhV5xGU/PJBNcV/GBrJRY3bJJVWFC5wm/mGUQ5HQQjb5Gnru
+	 kogkDKJMFwRqDKCe9qpj3x8Tb4L/cMiaH2DmtZmlXq2sWn1enSbETPjpGMrmpu66Pee0j
+	 8m7HWHPiT8MxH/JCPeSa7AsjRq3Jre+F3Nyrv0XF4QbbnpEv8yktm466v8JyOkOt71EsJ
+	 /uUOTzKMKWXN1tOgMOaOnqBQsQK2GA8juhlyzuHz0n1cOhllcFP/PDoB8W+wZrh+4Zq1p
+	 YxLhO8GGaXsasYGl5uSSUj5JqbhBbmCv2eKNhi+gxfbx3TPrpighd9l1FGT1BANPd0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015783;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015786;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=hGnEW3m7PFvv2w0n0ZrIYFxYc4kQ/QqPE1ZmtXlUcWg=;
-	b=BacnYZRlxdFD8BgiZqB/CDUExG51dJDOQ/C2+sECLY3Z2lpaA9ZFUBIE3M1h92quvYik
-	 Oz6gtXjKTlwU8BH+0bcNFit9QLbQaLEnlg6GR47xFbNAni07ODYpp5RC3BY8YP2JyIuMu
-	 elA2WW06ZUABivwgUocyhY3QTLQR89fj3LalpQJMcqq8lOvwct6Q6k+KQRyM2twC6uNF3
-	 zd8UNwI6j8iM46DgxCdh/jYOEdWq0LATUPOO+YIZqGNT/S3/ns48H53ljnyD9Gq95nzlq
-	 cVfnyQKgMfMm48d/r8UIy3690TfQWq43uqynT2dlw/Y6Pjc8VvlVtdIfEcjJ0O5iLPw==
+	bh=gczulTgXNVjpCoi9izEn1Pmj4aTs3IQhDgX0YLkx9B4=;
+	b=g6MuiEu35pdG6lRHpQBkWfdiV9Hv/9GY9CMFdEz9edjP9rTiT4MLiQQym8dybadRtL0V
+	 OUAErPbPuye8fFbe/OFWS8kvzXQxnHrLvX7C8icEpl1f6BCC4+kc1q2wyY5Ar4TS6SmUi
+	 BXidAeerNwD8yiZaSaXEk86FcSFrc95QDuVzQehdM3R6ZE9G11vCtCp2DT3BN0QsB+DF7
+	 ziHNqAnKp8+qxbUFMyikwP7nUmn6meg8+8bxDo8/pioAcviRwX3LQn5aQ+JDzlpCN+4W7
+	 TR2tfAN/CPdmXFRRCMrDZ95afyyaHnkfYS8M5n2ebXSxmsuCTbz8Ufdv5RJlIFu++Ww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="e2/6L3/W";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pW1xIUse;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA63606A33A;
-	Wed, 18 Nov 2026 15:29:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7008C606A31C;
+	Wed, 18 Nov 2026 15:29:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e2/6L3/W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08E0B1F000C4;
-	Wed, 18 Nov 2026 15:29:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pW1xIUse
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7C0C1F000C8;
+	Wed, 18 Nov 2026 15:29:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015783;
-	bh=hGnEW3m7PFvv2w0n0ZrIYFxYc4kQ/QqPE1ZmtXlUcWg=;
+	s=korg; t=1795015786;
+	bh=gczulTgXNVjpCoi9izEn1Pmj4aTs3IQhDgX0YLkx9B4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e2/6L3/W2ICfkuvQ7CTjhgDB8ih205jNkejNTrYBkkHJMh72ZWsyUSmwnLOKYcdv5
-	 mYy6lwItjBxxLmpxyHv2LYg55A+JwGP6UhSV+uSODVSWbXqGBDLAMmu9CTSGoHqcA2
-	 wstHPr85G0d3DyFp5QEqMnv0UhMZrr4zzTyoNGCc=
+	b=pW1xIUseMvSXR+2h485Ix/Td737Z67cH4bmErwW+4LtqfFQWbngRwBS/cB2B+O44o
+	 m5wYaqQ33ZfhcLcrG6HlICUhPbRFsNNWKyBmoWvtchLkYwf+z68kr3uL/BjYLI5eyH
+	 pGGbxtmzbdDWn9T7zM/o3yEeH1ghqU3Kd7qvxIYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Surendra Singh Chouhan <kr494167@gmail.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Varun Gupta <varun.gupta@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Tejas Upadhyay <tejas.upadhyay@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0254/2651] pwm: ipq: Prevent potential 32-bit integer overflow in hi_div calculation
-Date: Wed, 18 Nov 2026 15:24:54 +0100
-Message-ID: <20261118150257.005833803@linuxfoundation.org>
+Subject: [PATCH 7.3 0255/2651] drm/xe: Guard page-fault worker with runtime PM check
+Date: Wed, 18 Nov 2026 15:24:55 +0100
+Message-ID: <20261118150257.041285143@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,44 +70,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Surendra Singh Chouhan <kr494167@gmail.com>
+From: Varun Gupta <varun.gupta@intel.com>
 
-[ Upstream commit a662d944da1e9236a99355aa3e8a93735d8b3521 ]
+[ Upstream commit fcc2431d2213dc4d04250c4f1ae87d9c3ae0d455 ]
 
-In ipq_pwm_get_state(), hi_div was calculated as:
-  hi_div = hi_dur * (pre_div + 1);
+During VM teardown, the VM's runtime PM reference is dropped
+asynchronously, allowing the device to autosuspend while stale page
+faults belonging to the now-dead VM are still queued. When the
+page-fault worker later tries to ack one of these, it calls into
+guc_ct_send_locked() on an already-suspended device, tripping:
 
-hi_dur and (pre_div + 1) are both unsigned int (32-bit) values.
-Evaluating their multiplication using 32-bit arithmetic before assigning to
-the 64-bit u64 hi_div variable can overflow 32-bit unsigned math.
+  Assertion `!xe_pm_runtime_suspended(xe)` failed!
+  WARNING at xe_device.c:1267 xe_device_assert_mem_access+0x11c/0x140 [xe]
 
-While effective_div explicitly uses (u64)(pwm_div + 1) * (pre_div + 1) to
-prevent overflow, hi_div was missing the (u64) cast.
+A live VM/exec queue always holds a PM reference while it has
+outstanding work, so if the device is suspended at ack time, the
+owning context is already gone and the fault is stale.
 
-Fix this by casting hi_dur to (u64) before multiplication, matching the
-precision used for effective_div.
+Take a runtime PM reference across the entire pagefault
+queue worker to safely deliver acks for torn-down VMs.
 
-Fixes: c436e3e9c265 ("pwm: Driver for qualcomm ipq6018 pwm block")
-Signed-off-by: Surendra Singh Chouhan <kr494167@gmail.com>
-Link: https://patch.msgid.link/20260724044854.33274-1-kr494167@gmail.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+v3:
+ - Move PM ref to the generic xe_pagefault_queue_work using
+   guard(xe_pm_runtime)(xe) instead of tracking it in the GuC
+   backend(Matt Brost).
+
+v2:
+ - Hold PM ref across the entire batch (begin/end) instead of per-ack.
+   This prevents the device from autosuspending mid-batch, which would
+   leave write_only acks written but the end flush skipped, and skip
+   counter++, desyncing the cadence check.(Himal)
+ - Add a comment explaining stale faults.(Himal)
+
+Fixes: f289f7807119 ("drm/xe: Add xe_guc_pagefault layer")
+Signed-off-by: Varun Gupta <varun.gupta@intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
+Link: https://patch.msgid.link/20260907050011.497181-2-varun.gupta@intel.com
+Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-ipq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_pagefault.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/pwm/pwm-ipq.c b/drivers/pwm/pwm-ipq.c
-index 6b7aec566f7eb..3e1231b212b10 100644
---- a/drivers/pwm/pwm-ipq.c
-+++ b/drivers/pwm/pwm-ipq.c
-@@ -186,7 +186,7 @@ static int ipq_pwm_get_state(struct pwm_chip *chip, struct pwm_device *pwm,
- 	state->period = DIV64_U64_ROUND_UP(effective_div * NSEC_PER_SEC,
- 					   ipq_chip->clk_rate);
+diff --git a/drivers/gpu/drm/xe/xe_pagefault.c b/drivers/gpu/drm/xe/xe_pagefault.c
+index a4986df8328d6..7a0ea4d414ca6 100644
+--- a/drivers/gpu/drm/xe/xe_pagefault.c
++++ b/drivers/gpu/drm/xe/xe_pagefault.c
+@@ -304,6 +304,13 @@ static void xe_pagefault_queue_work(struct work_struct *w)
+ 	 */
+ 	guard(xe_pm_runtime)(xe);
  
--	hi_div = hi_dur * (pre_div + 1);
-+	hi_div = (u64)hi_dur * (pre_div + 1);
- 	state->duty_cycle = DIV64_U64_ROUND_UP(hi_div * NSEC_PER_SEC,
- 					       ipq_chip->clk_rate);
++	/*
++	 * A live VM holds a PM reference, but a torn-down VM does not.
++	 * Guard the entire worker loop to safely drain stale faults and
++	 * prevent autosuspends from desyncing batched CT flushes.
++	 */
++	guard(xe_pm_runtime)(xe);
++
+ #define USM_QUEUE_MAX_RUNTIME_MS      20
+ 	threshold = jiffies + msecs_to_jiffies(USM_QUEUE_MAX_RUNTIME_MS);
  
 -- 
 2.53.0
