@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019467;
-	b=KrLU4CL3mUv/yNtl920Ty5VQ6ZnxLMU44FmA0OzLAskXEJiLKHeeYSbvUk0uI9efwi3I
-	 csFl3eWAwPHkG8AprVeky+hMJaiYzMNJXyoYzu0DYGTMi5io95QIjhLxCY4+xydN8IGbm
-	 x1kJKq1+CnL5bs7j0Epk0W1bYqkuPJZCZbIqh5TQ8WtY2SLha6XdSW/BZdcqowiGsSRz9
-	 DWQgeEjrSUP+47supeHE4HuRZkZw4U4SqT69d1UMwLnJrozdCWkrVGhF9InRn73ebEQs6
-	 eT6gkpy2Vx5OafLj4KXQl5ojeKbyO/5aCqH/1ZMhTXLff7f/bKcKsjUXLfycMw6ii/A==
+	t=1795019469;
+	b=rmny0IaHXh3THsELFhpSYS0g7hFLd3gcFn+JCSvzOZqDEoqYyjyWofTEtlYnQlZyB4Wy
+	 S1th8lDtXIC4pgo1idoOIDexT5/yAmYwIefDsuwTdERqAZ587ZoDRJSyANSuNJJdiqQtg
+	 UeWtirzgHMXxaI8j4hciyxtOo+xiotIRFMGj+hnNUETObXmFJUE0hANidsYvkImrV9dJO
+	 cMXsWt6n3l/YH+iZ61wDH0pfw8VvrwbvqBqI3DS5HVfOobGXoRTFJwJ5PyTHOrlEr89Zz
+	 5NIb/zrlYDP/TXRk8HMY8X/kgnu0WznSYJCePjPplve7KeSenKN1EqTiUbKlsuSfKkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019467;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019469;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eayJHqeLiY5TQtBUiSyV2AAdkYk3af3l1UpAIUZfU8w=;
-	b=A4yEs+GJv7lJ8caW50SV54wKPUXtQi42vfyf2rwnX1PZZEjIRtKPT+q35iCHzi0zSB6I
-	 diBqMXQ9AqjQd2gED8PhXw82RTCVkhP5L2atXnZj9ihz8oqSmt4wCesG6VW3wzt7Wc95Z
-	 hbp8WcDkmp/xmwyjuoYYspy1Jn6jugLVGyxknhRxTDScwMF0ClcFxvg84by5olmr2bsQX
-	 zZeKJ3ylIwR9TTM4v28he3DS2y5TtPh2PuFr/iXKzvB2tHzNx4d/y4IQmsJf54b0kpwYR
-	 mJtjQugXgeo6VPt1iE7l1D/9PiSq8IBeVann5Fkzi5paQxtYYyNds788d4XEnMhg4Ew==
+	bh=sgNMCgE12ADJBjnpvgHtBe/SpZQPDca3kcdzv1BqbVs=;
+	b=k0C6FAkERyzxtfwicvI07v4LB2SRby/GOkZD8DX1Sn5IIi0eoEBI23lVdg+nVa3y/GVr
+	 b9U4+VOqCRUeWktNS+Key6MM02ubqSnjMvHZ34luffNxnBhqBDBN/EIlgL11RyZljTjFh
+	 WAJzltPAM6Ye87MwUXsohpWYF/yRQzuGZm+Nf50V4GcdnOKmcp1pxpq+Kv7skTLvUYqU5
+	 z5ToRCgUbAnMGADFPRI5wXzxtt1e/cIyLtJkp6OU0TFwFb33EW7sIobCSWAMrHkCVLANJ
+	 F1nXuEH/odmswfJS7u+jdmQygmOkquQwC39sxG9HhJJclWk+LpjVBMv2mwOY89Wzidg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SSyeEd+v;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jjD4k+Lf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4A2606A7C9;
-	Wed, 18 Nov 2026 16:31:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AC41606A7C6;
+	Wed, 18 Nov 2026 16:31:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SSyeEd+v
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DE4C1F000C9;
-	Wed, 18 Nov 2026 16:31:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jjD4k+Lf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 008DA1F000C5;
+	Wed, 18 Nov 2026 16:31:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019466;
-	bh=eayJHqeLiY5TQtBUiSyV2AAdkYk3af3l1UpAIUZfU8w=;
+	s=korg; t=1795019469;
+	bh=sgNMCgE12ADJBjnpvgHtBe/SpZQPDca3kcdzv1BqbVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SSyeEd+vMAAohM+/fMA4WQWtUC9SYgqovviLo/Dovd7fhK03lS7VH3SboDM2WiWV+
-	 VTdWEWPliQxrOGF1Q5wrTyRRVyqMMJgVXDyx2Qn/gp3dprAa41+MnQ0qSbusM2x5Ii
-	 24npnVS3xI6zAkhQytcMre+kF+YEf5ngU1iBYgUo=
+	b=jjD4k+Lfw7RnveLM5maICev6r6k3/0MBQSs5q6jy3dPZC/gwUDA5+ANVubvLRjZ6j
+	 f8bLnliFsJpMrBVEHJIz3ymY3COft6sdAJnF6Jrs/nSEC7ElYZWdQRUAO2x92e517G
+	 n9t/qpvpi1cq9sJXTfYv1wvXOmiEjfdNq3jt6kyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Swark Yang <syang@axiado.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
 	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1605/2651] mailbox: axiado: fix debugfs name truncation warning
-Date: Wed, 18 Nov 2026 15:47:25 +0100
-Message-ID: <20261118150345.618002364@linuxfoundation.org>
+Subject: [PATCH 7.3 1606/2651] mailbox: pcc: Free the channel before unmapping the shared memory
+Date: Wed, 18 Nov 2026 15:47:26 +0100
+Message-ID: <20261118150345.651354787@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,48 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Swark Yang <syang@axiado.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 5cefa9bc518f187106c6bba4600e5c6dd61de91f ]
+[ Upstream commit 4ac21f3fac3e8584fd395c59044a8e99ac618572 ]
 
-kernel test robot reported a format-truncation warning for the
-snprintf() that builds each channel's debugfs entry name:
+I am seeing a crash on PCC that is related to a an shared memory being
+unmapped before the IRQ is disabled, and the IRQ kicks in and hits the
+unmapped (NULL) address. This is a summary of what I see on my box:
 
-  drivers/mailbox/axiado-mailbox.c:325:39: warning: '-errors'
-  directive output may be truncated writing 7 bytes into a region
-  of size between 2 and 11 [-Wformat-truncation=]
+	scmi_protocol scmi_dev.1: Message for 1 type 0 is not expected!
+	Unable to handle kernel NULL pointer dereference at virtual address 0000000000000004
+	 __handle_irq_event_percpu+0x1c4/0x9e0
+	 handle_irq_event+0x98/0x218
+	 handle_fasteoi_irq+0x230/0x750
+	 generic_handle_domain_irq+0xac/0x138
+	 gic_handle_irq+0x344/0x740
+	 call_on_irq_stack+0x30/0x48
 
-AX3005 exposes 16 mailbox channels, so the longest name generated at
-runtime is "chan15-errors" and already fits in the original buffer.
-However, the compiler cannot infer that bound from
-drv_data->num_chans and therefore assumes the unsigned channel index
-may require up to 10 decimal digits. Widen the buffer to 32 bytes,
-which removes the -Wformat-truncation warning with no functional
-change.
+The trapping store is iowrite32(SCMI_SHMEM_FLAG_INTR_ENABLED,
+&shmem->header.flags), a write of 1 at offset 4 of a NULL base.
 
-Fixes: 14af7a96afa3 ("mailbox: add Axiado AX3005 mailbox driver")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202608250447.gGkRwNAl-lkp@intel.com/
-Signed-off-by: Swark Yang <syang@axiado.com>
+But, back to the problem, pcc_mbox_free_channel() unmaps the shared
+memory and clears pchan->chan.shmem *before* freeing the IRQ (aka
+calling mbox_free_channel()).
+
+The interrupt is still live when the mapping goes away.
+
+Free the channel first, before the memory unmap. mbox_free_channel()
+calls pcc_shutdown(), which frees the platform interrupt, and then unmap
+shared memory.
+
+Fixes: 7f9e19f207be ("mailbox: pcc: Check before sending MCTP PCC response ACK")
+Reviewed-by: Sudeep Holla <sudeep.holla@kernel.org>
+Signed-off-by: Breno Leitao <leitao@debian.org>
 Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/axiado-mailbox.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mailbox/pcc.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mailbox/axiado-mailbox.c b/drivers/mailbox/axiado-mailbox.c
-index aa1dcc1b267d7..a87693c639dcf 100644
---- a/drivers/mailbox/axiado-mailbox.c
-+++ b/drivers/mailbox/axiado-mailbox.c
-@@ -379,7 +379,7 @@ static int axiado_mbox_probe(struct platform_device *pdev)
- 		return ret;
+diff --git a/drivers/mailbox/pcc.c b/drivers/mailbox/pcc.c
+index 9888dab646398..db30812c50511 100644
+--- a/drivers/mailbox/pcc.c
++++ b/drivers/mailbox/pcc.c
+@@ -438,12 +438,13 @@ void pcc_mbox_free_channel(struct pcc_mbox_chan *pchan)
+ 		return;
+ 	pchan_info = chan->con_priv;
+ 	pcc_mbox_chan = &pchan_info->chan;
++
++	mbox_free_channel(chan);
++
+ 	if (pcc_mbox_chan->shmem) {
+ 		iounmap(pcc_mbox_chan->shmem);
+ 		pcc_mbox_chan->shmem = NULL;
+ 	}
+-
+-	mbox_free_channel(chan);
+ }
+ EXPORT_SYMBOL_GPL(pcc_mbox_free_channel);
  
- 	for (i = 0; i < drv_data->num_chans; i++) {
--		char name[16];
-+		char name[32];
- 
- 		ch_data[i].channel_num = i;
- 		ch_data[i].chan = &mb->mbox.chans[i];
 -- 
 2.53.0
 
