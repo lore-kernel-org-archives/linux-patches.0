@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018365;
-	b=bU2LJH9no83a4yoWHaFKsdXz60GxRfcUc87vs04ls4rUGC8HKG2ndIXArzUAaPoIxl49
-	 QWVqa/DeCuJzcOny8uqoR4QfCCpetEn1Xav56mYZj8jao436Q3+ZJKov2rl0LzFO7CSo8
-	 FFR9pVKet/aHz0OWnIAvWm7pIS5EZkUldVyJGH+K6QYIk43T4At2npLFzO/uKca6h7bOj
-	 bkxnQLXmEeKgDKcomqQgPrXaLdJr6NE2J9W/MkGeTEApBda9tkqGov4FoJRUipoNMRXHl
-	 oCffils+sCzsm9XV+oQ1IFrVh/8BbfaFV/6HkhbqwPupqQFg6GaZbV9BuX3I4B++H0Q==
+	t=1795018368;
+	b=lG/sXu/HaUbkBEKJnabT+EPdC++bkA7b0CSy+NiaNWf/iRoiA5Ua6IDsGHaqEFjoWHL2
+	 NOvSExg/zFbNxpaHre/bcN19nQpcAwS0K6O8vrwV6tPqgpULZh99wEjIayaH6UyDHBMXj
+	 4xigK1UPR4n8GA/wA7u2+iVxV+ENKPAO8CwI2K4xFPb9dcl6p7RMRz/eVdfcoxJi+uxXf
+	 qXg/pQnOcNCk7AuABpuLxlAb+cDkXhjLCiEuUhKSSXynNH6zG1SrTvAla/Qf53XwBrFP/
+	 xhSr5Zf98HrK9P2DXMN7wh6n7CUzWG/F+LSzpdww/1lnE41YAYXVD9YaTtdYpW4iyBA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018365;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018368;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zyNTiW6ptaDmCG/OxMtfRElgmuSth4lJ6R+T/MD5Fyo=;
-	b=qlHNcZ/jHyt2pEilcO/s3lX1WVhb+Q6JinPJI5bg9TSiaiiI9b8U7UbpFVvVyGqE1Dyv
-	 3CR0BKRHf95QyPILF0bhri6AzrNdjAtTSW82769Yca1vfSBfPhuzC3cJBHV7ftUqDwz2W
-	 CD3pyZpClZKgNG8PX0HfWEeow6PvuWKluh2pvIS5yz9T3RwykGDxc6BG+CPFSKhDtbeVw
-	 S5rH0N4P4G+buDEjNMOLg13yWCkHEjlR+dtQs9bVITrZreoriefU2p9nkRUUgqeN80msG
-	 caLaOSmPwNKe0rGvZwGpyXH4Cuf+7wKXuDcZ/PIMP1wmaBKwQ8M9HztWpKUuB93v30Q==
+	bh=1YNshP8imJzG3UThh5tsvuF6k4uK0aXCQTHmWBgErR4=;
+	b=WOyFomjL4+0PfFZar2PlQht4X9pMb3bvmp2P+dxoTua6t75EKgvU3gLtWhmR153LibBH
+	 tODCAO70vKq8Oxa0kXGgBxhquvT9QxM2bQE1RueS+PVc5GIyu3I2SIRSvgxLSQ0uCLdWQ
+	 Tic4ndVvVb0hSKBaoAQyM2aehXzs8To4fvln1uuY6GREpyKDkzPSkfE2ypTGR4JjDejWF
+	 4T6xy4tWjzUCaPgId8nbJdULqv+h3hQJTxwttejzwls85jtgHd4Dt953iGUbONStF2GAl
+	 BKobE9oB0WQ45LS2wVCW4HrMOAogwAdWlN1PgcziceeKIWhpczF5INxlphQeeoI5Lhg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r7WC86Q+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=txdyR3I3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56664606A32F;
-	Wed, 18 Nov 2026 16:12:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3440C606A31C;
+	Wed, 18 Nov 2026 16:12:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r7WC86Q+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B740A1F000C4;
-	Wed, 18 Nov 2026 16:12:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=txdyR3I3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 889121F000C4;
+	Wed, 18 Nov 2026 16:12:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018365;
-	bh=zyNTiW6ptaDmCG/OxMtfRElgmuSth4lJ6R+T/MD5Fyo=;
+	s=korg; t=1795018368;
+	bh=1YNshP8imJzG3UThh5tsvuF6k4uK0aXCQTHmWBgErR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r7WC86Q+0DcwX+DhSIlE5qdd2EvK30P0jGQrZYeP8LwJA2gpOkptHjz4eFY8zMh8o
-	 2EwHb2pFI2pe3HzFYZscdPmUPyXFXGWRKywzTTOg5Ta5QK//19mt5rBXm3hlE6gN/d
-	 QGjxmzpQYlQvZyzSHMhFRLEQM1zwxTQhePqIQavY=
+	b=txdyR3I3Y+n2iqWIi9w1ao8hQP8YswGrKeWyK0OYK7SfsWTlSdQ2JuuVM3T5hkJXT
+	 XT8NH5TrnpoFUzj2YgIYG/1HG4gSN+slRcCEDYxcsSkyjrN6VYSK9MlEOaj7M5DZxw
+	 V0Lffcm7p1efO6WMW8mn06brakczk1fpx00KKvHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Mostafa Saleh <smostafa@google.com>,
-	Pranjal Shrivastava <praan@google.com>,
-	Will Deacon <will@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1177/2651] iommu/arm-smmu-v3-test: Fix UBSAN error
-Date: Wed, 18 Nov 2026 15:40:17 +0100
-Message-ID: <20261118150330.384308605@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Igor Paunovic <royalnet026@gmail.com>
+Subject: [PATCH 7.3 1213/2651] phy: rockchip: usbdp: Hold mutex in DP PHY configure
+Date: Wed, 18 Nov 2026 15:40:53 +0100
+Message-ID: <20261118150331.666435204@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,97 +71,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mostafa Saleh <smostafa@google.com>
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit b370a5e979f8bb8f34e30ad126ade734d8f128c0 ]
+[ Upstream commit 619233ce6b2329529c9f0ff9682d6e22d160ebd6 ]
 
-struct arm_smmu_invs marks its flexible array member inv[] with the
-__counted_by(max_invs).
+rk_udphy_dp_phy_configure() accesses some variables from the struct
+rk_udphy, which are updated independently from the USB-C framework.
 
-arm_smmu_v3_invs_test() uses invs1 to invs5 which has num_invs = 3
-but omit max_invs.
+The USB-C mux/orientation switch functions already hold a mutex to
+ensure mutual exclusive access to the struct rk_udphy states, so
+simply hold the same one in the DP PHY configuration function.
 
-This causes the following UBSAN error:
-[    2.333240] UBSAN: array-index-out-of-bounds in drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c:1116:21
-[    2.333604]     # arm_smmu_v3_invs_test: lib/ubsan.c:228: array-index-out-of-bounds in drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-[    2.334129] index 1 is out of range for type 'struct arm_smmu_inv[] __counted_by(max_invs)' (aka 'struct arm_smmu_inv[]')
-[    2.335375] CPU: 6 UID: 0 PID: 155 Comm: kunit_try_catch Tainted: G                 N  7.2.0-g8dcb331fbb72 #2 PREEMPT
-[    2.335759] Tainted: [N]=TEST
-[    2.335791] Hardware name: linux,dummy-virt (DT)
-[    2.336254] Call trace:
-[    2.336932]  show_stack+0x18/0x24 (C)
-[    2.338443]  __dump_stack+0x28/0x38
-[    2.338494]  dump_stack_lvl+0x54/0x6c
-[    2.338518]  dump_stack+0x18/0x24
-[    2.338541]  ubsan_epilogue+0x10/0x44
-[    2.338565]  __ubsan_handle_out_of_bounds+0xb8/0xbc
-[    2.338834]  arm_smmu_invs_merge+0x688/0x8ac
-[    2.338862]  arm_smmu_v3_invs_test+0xd4/0x598
-[    2.338890]  kunit_try_run_case+0x64/0x160
-[    2.338914]  kunit_generic_run_threadfn_adapter+0x28/0x4c
-[    2.338955]  kthread+0x10c/0x12c
-[    2.338984]  ret_from_fork+0x10/0x20
-[    2.339433] ---[ end trace ]---
+Reproducing problems due to this on real hardware would be really hard,
+but could be possible when quickly re-connecting the USB-C connector.
 
-Explicitly set max_invs = 3 on the test arrays to match the number of
-elements.
-
-Fixes: 15a2a5645ad7 ("iommu/arm-smmu-v3: Introduce a per-domain arm_smmu_invs array")
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Mostafa Saleh <smostafa@google.com>
-Reviewed-by: Pranjal Shrivastava <praan@google.com>
-Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 2f70bbddeb45 ("phy: rockchip: add usbdp combo phy driver")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/linux-phy/20260612164627.23D391F000E9@smtp.kernel.org/
+Tested-by: Igor Paunovic <royalnet026@gmail.com> # Orange Pi 5 Plus
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260915-rockchip-usbdp-cleanup-part2-v15-7-8d507cb1174f@collabora.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/phy/rockchip/phy-rockchip-usbdp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c
-index 244cf34e5a0b8..e52a7d95c919d 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c
-@@ -654,6 +654,7 @@ static void arm_smmu_v3_invs_test_verify(struct kunit *test,
- }
+diff --git a/drivers/phy/rockchip/phy-rockchip-usbdp.c b/drivers/phy/rockchip/phy-rockchip-usbdp.c
+index 572c76f2c2126..13c74d62b7266 100644
+--- a/drivers/phy/rockchip/phy-rockchip-usbdp.c
++++ b/drivers/phy/rockchip/phy-rockchip-usbdp.c
+@@ -1135,6 +1135,8 @@ static int rk_udphy_dp_phy_configure(struct phy *phy,
+ 	u32 i, val, lane;
+ 	int ret;
  
- static struct arm_smmu_invs invs1 = {
-+	.max_invs = 3,
- 	.num_invs = 3,
- 	.inv = { { .type = INV_TYPE_S2_VMID, .id = 1, },
- 		 { .type = INV_TYPE_S2_VMID_S1_CLEAR, .id = 1, },
-@@ -661,6 +662,7 @@ static struct arm_smmu_invs invs1 = {
- };
- 
- static struct arm_smmu_invs invs2 = {
-+	.max_invs = 3,
- 	.num_invs = 3,
- 	.inv = { { .type = INV_TYPE_S2_VMID, .id = 1, }, /* duplicated */
- 		 { .type = INV_TYPE_ATS, .id = 4, },
-@@ -668,6 +670,7 @@ static struct arm_smmu_invs invs2 = {
- };
- 
- static struct arm_smmu_invs invs3 = {
-+	.max_invs = 3,
- 	.num_invs = 3,
- 	.inv = { { .type = INV_TYPE_S2_VMID, .id = 1, }, /* duplicated */
- 		 { .type = INV_TYPE_ATS, .id = 5, }, /* recover a trash */
-@@ -675,6 +678,7 @@ static struct arm_smmu_invs invs3 = {
- };
- 
- static struct arm_smmu_invs invs4 = {
-+	.max_invs = 3,
- 	.num_invs = 3,
- 	.inv = { { .type = INV_TYPE_ATS, .id = 10, .ssid = 1 },
- 		 { .type = INV_TYPE_ATS, .id = 10, .ssid = 3 },
-@@ -682,6 +686,7 @@ static struct arm_smmu_invs invs4 = {
- };
- 
- static struct arm_smmu_invs invs5 = {
-+	.max_invs = 3,
- 	.num_invs = 3,
- 	.inv = { { .type = INV_TYPE_ATS, .id = 10, .ssid = 2 },
- 		 { .type = INV_TYPE_ATS, .id = 10, .ssid = 3 }, /* duplicate */
++	guard(mutex)(&udphy->mutex);
++
+ 	if (dp->set_rate) {
+ 		ret = rk_udphy_dp_phy_verify_link_rate(udphy, dp);
+ 		if (ret)
 -- 
 2.53.0
 
