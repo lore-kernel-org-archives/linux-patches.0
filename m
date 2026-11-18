@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044172;
-	b=TAoNoRiyqBP1BMQXjNrR76v5RA/sMpIzUCkRA4ajF75Obj3zvCYijE8SGfvMj0E4jK+0
-	 MlIdVfbQTOS6tc71/d6+otZGi2o6sx5NhZYGeNAJV8voWmcNWm8FC3BQja86hGZYiKRIi
-	 hh7P/OhjzxcuDCJpcbi+e9vOVoPEZD1CQung3IybheZqmENJRYRppyD5mGBmLtSrTOQgv
-	 qKD3KRUPtmkXYqzVMO6jZVLmeoRyapOvq7Sv5WzVHUvlck1+DoXsFNUI5QZPW7C6XhGJL
-	 Btl1Z53Qhl0nhRymIaCQQXSto59+ylr1ci0io1JPuBvDchcl2OtSxVZd/K23uE6AprA==
+	t=1795044175;
+	b=4DCPCtwb/1W+R0F0XMwesDwvWRLDvnEJ0gFDYSE8lBe7f7BfiV1jwB5qT5Dq/NBYOBcK
+	 MsyPPcPBcNGz1tYFRvqSWI3B76Hqs95U/pW6CPlWts5CUEA3MvKq8XvHZ+47ffQ0f4Exz
+	 wmfbgkYChTN2hwWnWAfkifaFV0aNrQxk3TkiyG1BsJ7akbKnJp8fdx6KpTmiBSfjqPQBU
+	 BfYc4plozmfL1r1weQUZLf3jVeS1cbuSsKTGCIpAwvxDMCicqOXiBFQSDt60GdtdjBfNt
+	 VslSMuIVtbs5l9elVCfdVO8JAatl1C5Tlbs6x3yaYXjXFgNUqzFtmipqOM9BEi+EKyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044172;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044175;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qkLuD2IDo1ytrw6OxAXVj0f/KGuIRzWvNVEa69aGLzs=;
-	b=mclQ1qYNE6nbTvbhrz8oC2Xq9J8OUW8CngkJYmyjzGVyu/ma64EoVuCEgKUy5tmYy6Kt
-	 IwtQ0pzBVctPaJPAV94xtiSbSaiJzBze3X6JIFWxLqDiBNEcwF57n27siEypmFmDjO4+D
-	 fOnQlAOh8HkphDDozHu7o5e6Skc7aNkGtojIPSbm60DFBaZ9XZiZsiXaNoPJoRopGf9z6
-	 eqU+xaPljNlZcW67ilfhTYsepi/32WuKrdwH3qaLklhFjUqRdpq0lwfJFI54V1NsPB3an
-	 zJbAxDO2eQ/zqmYPKEKsfxuNB4cOsoriBnbK1ipTjTef9yFDq/pVmd5N4rP0o0x8BOw==
+	bh=shp6ZVicYdHbRTcUYxptLoF5qVoqsRcpvh+4Hl7yfk0=;
+	b=OxvxcMoekrCbEjV9ZwG2hRC6SogAqwuqJUqpRlyPS81m1a50dVgOG0DXxve5xZR79ivn
+	 /Iy/awtbOWBCNLIUSMAsgEq3yizA5nW/qf++lSjG+06kYTuK/GEmOWeRVk87eZJYMRuwq
+	 s1w1TvqXDy7/0mP052v5qV/EIEANzv2gvoOKu19zbyhIfuZwtDJSxNeKnOpVE4N7U2U4K
+	 w8OE/5vRskwaTl7+4fvmYYCgSKGLDwPBmvunumxz0q6glrIcQMuqXZQZnKfa85E2z/ysZ
+	 yrV7HXKPyiRwVQjvLXMZuYCVVHbRp3zp/UI5clu5/wZvuW76WLIxHyj5qdKyO52IRKQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lkmennk7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hnFvJNXM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F609606A320;
-	Wed, 18 Nov 2026 23:22:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E10606A31C;
+	Wed, 18 Nov 2026 23:22:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lkmennk7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1381F000C4;
-	Wed, 18 Nov 2026 23:22:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hnFvJNXM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61DA81F000C4;
+	Wed, 18 Nov 2026 23:22:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044172;
-	bh=qkLuD2IDo1ytrw6OxAXVj0f/KGuIRzWvNVEa69aGLzs=;
+	s=korg; t=1795044174;
+	bh=shp6ZVicYdHbRTcUYxptLoF5qVoqsRcpvh+4Hl7yfk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lkmennk7R/ZwAL68A0SP0aDt6Db63vS5WZNUwyzSRMeetC/iK55mzovN9RdYFmp4y
-	 sQd242u30PqXCuQTETgpG5JvAfEsErQmBuFpI2ldw4+EnB7/MStcqrpcaAftiQFB5t
-	 79fzq4kmEwMsKxZ0q7PfSyhueAOkeTEVEOEhakB4=
+	b=hnFvJNXMXKoo7FCmHgSqo502WMDTHFFKWhdGxO1DZ8A8IdsNSXQDKphosBpqFiRN5
+	 CKlVOFNv0N3KBWh/gIBIWti87f/vytTKzgp+bsDFz10yrPlhl0dFANN8ooli5D56Tr
+	 Br2oWpVRBdOP2QW9nh2l9bluMU6Mk/GjzgelKnHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -51,9 +51,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tom Talpey <tom@talpey.com>,
 	Bharath SM <bharathsm@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0474/2857] smb: client: flush dirty data before zeroing a range
-Date: Wed, 18 Nov 2026 15:25:08 +0100
-Message-ID: <20261118150218.511838264@linuxfoundation.org>
+Subject: [PATCH 6.1 0475/2857] smb: client: drain and invalidate before server-side copy/clone
+Date: Wed, 18 Nov 2026 15:25:09 +0100
+Message-ID: <20261118150218.546000100@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -77,28 +77,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit 8f8d32c1044f70e46e87550e039a15ff20a4b21c ]
+[ Upstream commit c9b1194e8ec99d95db25db45edd2fbf690f043ab ]
 
-smb3_zero_range() emulates FALLOC_FL_ZERO_RANGE by invalidating the
-page cache over the target range with truncate_pagecache_range() and
-then issuing FSCTL_SET_ZERO_DATA to the server.
+cifs_file_copychunk_range() and the clone (FICLONE) path of
+cifs_remap_file_range() do not serialise the destination page cache
+against the server-side copy the way the other server-side range
+operations (smb3_zero_range(), smb3_punch_hole(), smb3_collapse_range()
+and smb3_insert_range()) do.
 
-Dirty data was only flushed conditionally, when the range reached or
-extended EOF.  For a purely interior zero range that does not reach
-EOF, no flush happened, so a dirty folio overlapping the range could
-be written back to the server after the FSCTL and refill the range
-that was just zeroed with stale data.
+cifs_file_copychunk_range() invalidates the destination range with
+filemap_invalidate_inode(), which takes and drops the mapping's
+invalidate_lock internally, so the lock is no longer held when the
+copychunk ioctl is issued.  It also never drains in-flight netfs I/O on
+the target.  The clone path never takes the invalidate_lock at all (only
+i_rwsem), uses a bare truncate_inode_pages_range() and likewise does not
+drain outstanding I/O.
 
-Fix this by unconditionally flushing and waiting for dirty data in the
-range before invalidating the page cache and issuing
-FSCTL_SET_ZERO_DATA, exactly as was done for smb3_punch_hole() in
-commit d7d2adcd022b ("smb/client: flush dirty data before punching a
-hole"); the two paths are structurally identical here.
+As a result an asynchronous destination writeback can complete after the
+server-side copy/clone has run and reinstate stale data over the region
+just written by the server, corrupting the file.  This is the same class
+of corruption as commit d7d2adcd022b ("smb/client: flush dirty data
+before punching a hole") and has been seen randomly in generic/363
+against Windows Server.
 
-This is observed as generic/363 randomly reading stale data where a
-zeroed range is expected against Windows Server.
+Fix both paths to follow the established ordering: hold the target
+mapping's invalidate_lock across the flush and invalidation of the
+destination and the server ioctl, and call netfs_wait_for_outstanding_io()
+on the target to drain in-flight writes before the ioctl is issued.  Only
+the target inode's invalidate_lock is required, as the source is merely
+flushed and not invalidated; i_rwsem (already held via
+lock_two_nondirectories()) is acquired before the invalidate_lock,
+matching the VFS lock ordering.  Since filemap_invalidate_inode() takes
+that same lock internally, replace it with its own unmap/flush/invalidate
+steps instead of calling it, and return early on a zero-length copy to
+avoid a range underflow.
 
-Fixes: 91d1dfae4649 ("cifs: Fix FALLOC_FL_ZERO_RANGE to preflush buffered part of target region")
+Fixes: 8101d6e112e2 ("cifs: Fix copy offload to flush destination region")
+Fixes: c54fc3a4f375 ("cifs: Fix flushing, invalidation and file size with FICLONE")
 Reviewed-by: David Howells <dhowells@redhat.com>
 Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
@@ -109,45 +124,58 @@ Cc: Shyam Prasad N <sprasad@microsoft.com>
 Cc: Tom Talpey <tom@talpey.com>
 Cc: Bharath SM <bharathsm@microsoft.com>
 Cc: stable@vger.kernel.org
-[ sashal: Kept this tree's direct i_size_read() size handling instead of netfs_read_sizes(), and dropped the now-unused ictx and remote_size declarations after removing the conditional flush. ]
+[ sashal: Dropped the netfs_wait_for_outstanding_io() drain and the filemap_invalidate_inode() block, which don't exist in this tree, keeping only the invalidate_lock and zero-length guard on the older flush/truncate code. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ fs/smb/client/cifsfs.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index db3924bb21d6d..b9039f917c545 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -3515,8 +3515,7 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
- 	struct inode *inode = file_inode(file);
- 	struct cifsInodeInfo *cifsi = CIFS_I(inode);
- 	struct cifsFileInfo *cfile = file->private_data;
--	struct netfs_inode *ictx = netfs_inode(inode);
--	unsigned long long i_size, new_size, remote_size;
-+	unsigned long long i_size, new_size;
- 	long rc;
- 	unsigned int xid;
- 	__le64 eof;
-@@ -3530,14 +3529,11 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
- 	filemap_invalidate_lock(inode->i_mapping);
+diff --git a/fs/smb/client/cifsfs.c b/fs/smb/client/cifsfs.c
+index 01b4f34a23ad0..d369528532c39 100644
+--- a/fs/smb/client/cifsfs.c
++++ b/fs/smb/client/cifsfs.c
+@@ -1317,6 +1317,7 @@ static loff_t cifs_remap_file_range(struct file *src_file, loff_t off,
+ 	 * server could even support copy of range where source = target
+ 	 */
+ 	lock_two_nondirectories(target_inode, src_inode);
++	filemap_invalidate_lock(target_inode->i_mapping);
  
- 	i_size = i_size_read(inode);
--	remote_size = ictx->remote_i_size;
--	if (offset + len >= remote_size && offset < i_size) {
--		unsigned long long top = umin(offset + len, i_size);
+ 	if (len == 0) {
+ 		loff_t src_size = i_size_read(src_inode);
+@@ -1409,6 +1410,7 @@ static loff_t cifs_remap_file_range(struct file *src_file, loff_t off,
+ 	   that target is updated on the server */
+ 	CIFS_I(target_inode)->time = 0;
+ unlock:
++	filemap_invalidate_unlock(target_inode->i_mapping);
+ 	/* although unlocking in the reverse order from locking is not
+ 	   strictly necessary here it is a little cleaner to be consistent */
+ 	unlock_two_nondirectories(src_inode, target_inode);
+@@ -1432,6 +1434,9 @@ ssize_t cifs_file_copychunk_range(unsigned int xid,
+ 	unsigned long long destend, fstart, fend;
+ 	ssize_t rc;
  
--		rc = filemap_write_and_wait_range(inode->i_mapping, offset, top - 1);
--		if (rc < 0)
--			goto zero_range_exit;
--	}
-+	rc = filemap_write_and_wait_range(inode->i_mapping, offset,
-+					  offset + len - 1);
-+	if (rc < 0)
-+		goto zero_range_exit;
++	if (len == 0)
++		return 0;
++
+ 	cifs_dbg(FYI, "copychunk range\n");
  
- 	/*
- 	 * We zero the range through ioctl, so we need remove the page caches
+ 	if (!src_file->private_data || !dst_file->private_data) {
+@@ -1461,6 +1466,7 @@ ssize_t cifs_file_copychunk_range(unsigned int xid,
+ 	 * server could even support copy of range where source = target
+ 	 */
+ 	lock_two_nondirectories(target_inode, src_inode);
++	filemap_invalidate_lock(target_inode->i_mapping);
+ 
+ 	cifs_dbg(FYI, "about to flush pages\n");
+ 
+@@ -1513,6 +1519,7 @@ ssize_t cifs_file_copychunk_range(unsigned int xid,
+ 	CIFS_I(target_inode)->time = 0;
+ 
+ unlock:
++	filemap_invalidate_unlock(target_inode->i_mapping);
+ 	/* although unlocking in the reverse order from locking is not
+ 	 * strictly necessary here it is a little cleaner to be consistent
+ 	 */
 -- 
 2.53.0
 
