@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032542;
-	b=nS4BN08TTKM7KdGWeJUM+LhJcuLYhbD/WU2eO9LwVFtO2DQkjHZEah+VNbCm23wmAZ00
-	 whUAv46g5ScwCNa5Q9xaZxVQsMZcRZtsgU5ql37mKfKbILO0ra0FbLqqpXR6lHd+lqOTb
-	 vKH2TY300pzkvOUesS70+ttyRsr5oB/dOPuRodBa2mxVzKKcRPM0JvZLgmIUE3/uT4eWR
-	 8CCaI+VM4QOcqD02MDtEbo8I0uJfDuGoM2TZkEryb+OjiABueexrnggR0qXVrEFgzCrrk
-	 iFXuRW4BnCsk9nEhaoUZ0HWqJCoOUjZ8bUWtO+AUpjoYBRAe4mFE16qBqlBEs66SIUw==
+	t=1795032545;
+	b=vlkZW6oaSCtFOmX4IbgT/C3zGna461bSqf0xJsMhcJZU8BlMDfAXT5ZZtOASd1HBfTiC
+	 0S1/X4kKs7yKm9iL0LgMJJKWFtghBMmgTyMm2E7mX+VqzlsiS9zxbke7URckZ/0o+ZmHF
+	 I58uu9YT2MoLuFwZtFQWrq6qywtr+PZVCf/VgqfhY9rDVlEVquiZUnu/MlABA/w0PNv2u
+	 kroK7dyCOm1Z8Ikvb0ls6pDMfRKC9EwVANwMRX6w7qPMGKLgBS06SGUp2fGps7h49HlKl
+	 F3yLy/bCpr4bpTOdnipgzvzBoPmkkH1ExrQs0xUz3OKVxCzy2RAE0nkrRkOsFb097vw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032542;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032545;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DPz7j/IV5zHZdvIcEo6cluf1j3Gph4d1atbzQ94s9TE=;
-	b=EqRyZU8mRCz/r6mOPElamKDJrbG1rv9CLne0vx07jp5PIQqHtSGW81LCNndTXXT144St
-	 fL5D7VlXhRCK95G1/cRTFPIcdecz32vPFkI9m1QuWAre6fqcPrswsSoo/aWLFoJkDK36N
-	 X3b+FG0lyOxTo93t5kPdzn7xQ+HcAtu6Gh2DWituQq5gk16KQfunkTCiMeoWdGoofUdSk
-	 qwflxPWcxl7GVZ9x+SMY40dJkA8GZ2EQjSgC5XI9pAeFw5ydFh1QiP3p4Ip5GbU4OrGNH
-	 oboDQ4rLXghVG3gNn5imqUnlweYhPqcDw6FA91SOjCrvADmSn1/014n4BzLU2WkJ20Q==
+	bh=FPg+rjbSbJRryC2C1CiekFyA+yMwhUYS6LhXhYrzZ48=;
+	b=mV3xh3EkidWVOVfmVEdBz7jnarEI/biTu758EZkuyx69Sn/WvdsWyZEa3B1Rmy9qYwsb
+	 suJCygs6mMguel3VgxJw7jylmkYZAIoNYfRAg/o1NdCzBGDJ1AeWOTZ+uJSr07W7Y16qQ
+	 xrgI9w9eSow9502TsmtQW1RvOGvn9BJ4BmjZrLLa1olltJjrJo/XlzxmWCMFRH+DQBFfk
+	 YGYjBO7mWlyWkaJbYYsfyhcKCEW7eysG8cKfsVpxoOQ7nayeoQoPX9noWPzx9o/7H4xbP
+	 7tZkvDJ5ADFfvkByRIOOyNjMxrS30G7/rl94uBZUG6SLKv/5zCLZbqCdEUyAChschYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ameVLq5o;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lm3diWYH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D82606A31C;
-	Wed, 18 Nov 2026 20:09:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E764606A330;
+	Wed, 18 Nov 2026 20:09:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ameVLq5o
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C42541F000C4;
-	Wed, 18 Nov 2026 20:09:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lm3diWYH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E4D51F000C5;
+	Wed, 18 Nov 2026 20:09:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032542;
-	bh=DPz7j/IV5zHZdvIcEo6cluf1j3Gph4d1atbzQ94s9TE=;
+	s=korg; t=1795032545;
+	bh=FPg+rjbSbJRryC2C1CiekFyA+yMwhUYS6LhXhYrzZ48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ameVLq5oiwRl9nFV3ldT6Bp8XkYzT6YMPFs7TiOFy1Cf4RDOoIsxw1g/BSFzQ+rDI
-	 IQcjiW7G6E2oSd2JRt65aLGsPa4ud+2+nmooP2AMGZ/+7EJ8CzgeKHuX5oVvGkSf4a
-	 5D0MR+JdgpfYQoD/g+deLabzIqHqyY5FyEOhMNws=
+	b=lm3diWYHr8mdAVc/UY3dlcDUTlRoq/6xv8ZxRdlFzNVIb+F9lYibqpuCb+yl/lADe
+	 zlLtEuhDJMi6LYJY0NWzJXh8gcWjaUVVqtSh6fJmkIOYrscprWRLrzZ+4cvccpoF8Q
+	 kcwBBW6jx9+hbngfkGWm521i8CaVLqWuSG5x8qj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marek.vasut@mailbox.org>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1447/1756] net: phy: realtek: Avoid PHYCR2 access if PHYCR2 not present
-Date: Wed, 18 Nov 2026 15:59:34 +0100
-Message-ID: <20261118150106.719109738@linuxfoundation.org>
+Subject: [PATCH 6.12 1448/1756] net: phy: realtek: create rtl8211f_config_rgmii_delay()
+Date: Wed, 18 Nov 2026 15:59:35 +0100
+Message-ID: <20261118150106.756412621@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,70 +69,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marek.vasut@mailbox.org>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 2c67301584f2671e320236df6bbe75ae09feb4d0 ]
+[ Upstream commit 8e982441ba601d982dd0739972115d85ae01d99b ]
 
-The driver is currently checking for PHYCR2 register presence in
-rtl8211f_config_init(), but it does so after accessing PHYCR2 to
-disable EEE. This was introduced in commit bfc17c165835 ("net:
-phy: realtek: disable PHY-mode EEE"). Move the PHYCR2 presence
-test before the EEE disablement and simplify the code.
+The control flow in rtl8211f_config_init() has some pitfalls which were
+probably unintended. Specifically it has an early return:
 
-Fixes: bfc17c165835 ("net: phy: realtek: disable PHY-mode EEE")
-Signed-off-by: Marek Vasut <marek.vasut@mailbox.org>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://patch.msgid.link/20251011110309.12664-1-marek.vasut@mailbox.org
+	switch (phydev->interface) {
+	...
+	default: /* the rest of the modes imply leaving delay as is. */
+		return 0;
+	}
+
+which exits the entire config_init() function. This means it also skips
+doing things such as disabling CLKOUT or disabling PHY-mode EEE.
+
+For the RTL8211FS, which uses PHY_INTERFACE_MODE_SGMII, this might be a
+problem. However, I don't know that it is, so there is no Fixes: tag.
+The issue was observed through code inspection.
+
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20251117234033.345679-2-vladimir.oltean@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 20c0c6773624 ("net: phy: realtek: restore RTL8211F RGMII delays on resume")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/realtek/realtek_main.c | 23 +++++++++++------------
- 1 file changed, 11 insertions(+), 12 deletions(-)
+ drivers/net/phy/realtek/realtek_main.c | 65 +++++++++++++++-----------
+ 1 file changed, 39 insertions(+), 26 deletions(-)
 
 diff --git a/drivers/net/phy/realtek/realtek_main.c b/drivers/net/phy/realtek/realtek_main.c
-index 8ea6f68795c38..613c3df083414 100644
+index 613c3df083414..72afa280c939f 100644
 --- a/drivers/net/phy/realtek/realtek_main.c
 +++ b/drivers/net/phy/realtek/realtek_main.c
-@@ -521,26 +521,25 @@ static int rtl8211f_config_init(struct phy_device *phydev)
- 			str_enabled_disabled(val_rxdly));
- 	}
- 
-+	if (!priv->has_phycr2)
-+		return 0;
-+
- 	/* Disable PHY-mode EEE so LPI is passed to the MAC */
- 	ret = phy_modify_paged(phydev, RTL8211F_PHYCR_PAGE, RTL8211F_PHYCR2,
- 			       RTL8211F_PHYCR2_PHY_EEE_ENABLE, 0);
- 	if (ret)
- 		return ret;
- 
--	if (priv->has_phycr2) {
--		ret = phy_modify_paged(phydev, RTL8211F_PHYCR_PAGE,
--				       RTL8211F_PHYCR2, RTL8211F_CLKOUT_EN,
--				       priv->phycr2);
--		if (ret < 0) {
--			dev_err(dev, "clkout configuration failed: %pe\n",
--				ERR_PTR(ret));
--			return ret;
--		}
--
--		return genphy_soft_reset(phydev);
-+	ret = phy_modify_paged(phydev, RTL8211F_PHYCR_PAGE,
-+			       RTL8211F_PHYCR2, RTL8211F_CLKOUT_EN,
-+			       priv->phycr2);
-+	if (ret < 0) {
-+		dev_err(dev, "clkout configuration failed: %pe\n",
-+			ERR_PTR(ret));
-+		return ret;
- 	}
- 
--	return 0;
-+	return genphy_soft_reset(phydev);
+@@ -448,22 +448,11 @@ static int rtl8211c_config_init(struct phy_device *phydev)
+ 			    CTL1000_ENABLE_MASTER | CTL1000_AS_MASTER);
  }
  
- static int rtl821x_suspend(struct phy_device *phydev)
+-static int rtl8211f_config_init(struct phy_device *phydev)
++static int rtl8211f_config_rgmii_delay(struct phy_device *phydev)
+ {
+-	struct rtl821x_priv *priv = phydev->priv;
+-	struct device *dev = &phydev->mdio.dev;
+ 	u16 val_txdly, val_rxdly;
+ 	int ret;
+ 
+-	ret = phy_modify_paged_changed(phydev, RTL8211F_PHYCR_PAGE, RTL8211F_PHYCR1,
+-				       RTL8211F_ALDPS_PLL_OFF | RTL8211F_ALDPS_ENABLE | RTL8211F_ALDPS_XTAL_OFF,
+-				       priv->phycr1);
+-	if (ret < 0) {
+-		dev_err(dev, "aldps mode  configuration failed: %pe\n",
+-			ERR_PTR(ret));
+-		return ret;
+-	}
+-
+ 	switch (phydev->interface) {
+ 	case PHY_INTERFACE_MODE_RGMII:
+ 		val_txdly = 0;
+@@ -493,34 +482,58 @@ static int rtl8211f_config_init(struct phy_device *phydev)
+ 				       RTL8211F_TXCR, RTL8211F_TX_DELAY,
+ 				       val_txdly);
+ 	if (ret < 0) {
+-		dev_err(dev, "Failed to update the TX delay register\n");
++		phydev_err(phydev, "Failed to update the TX delay register: %pe\n",
++			   ERR_PTR(ret));
+ 		return ret;
+ 	} else if (ret) {
+-		dev_dbg(dev,
+-			"%s 2ns TX delay (and changing the value from pin-strapping RXD1 or the bootloader)\n",
+-			str_enable_disable(val_txdly));
++		phydev_dbg(phydev,
++			   "%s 2ns TX delay (and changing the value from pin-strapping RXD1 or the bootloader)\n",
++			   str_enable_disable(val_txdly));
+ 	} else {
+-		dev_dbg(dev,
+-			"2ns TX delay was already %s (by pin-strapping RXD1 or bootloader configuration)\n",
+-			str_enabled_disabled(val_txdly));
++		phydev_dbg(phydev,
++			   "2ns TX delay was already %s (by pin-strapping RXD1 or bootloader configuration)\n",
++			   str_enabled_disabled(val_txdly));
+ 	}
+ 
+ 	ret = phy_modify_paged_changed(phydev, RTL8211F_RGMII_PAGE,
+ 				       RTL8211F_RXCR, RTL8211F_RX_DELAY,
+ 				       val_rxdly);
+ 	if (ret < 0) {
+-		dev_err(dev, "Failed to update the RX delay register\n");
++		phydev_err(phydev, "Failed to update the RX delay register: %pe\n",
++			   ERR_PTR(ret));
+ 		return ret;
+ 	} else if (ret) {
+-		dev_dbg(dev,
+-			"%s 2ns RX delay (and changing the value from pin-strapping RXD0 or the bootloader)\n",
+-			str_enable_disable(val_rxdly));
++		phydev_dbg(phydev,
++			   "%s 2ns RX delay (and changing the value from pin-strapping RXD0 or the bootloader)\n",
++			   str_enable_disable(val_rxdly));
+ 	} else {
+-		dev_dbg(dev,
+-			"2ns RX delay was already %s (by pin-strapping RXD0 or bootloader configuration)\n",
+-			str_enabled_disabled(val_rxdly));
++		phydev_dbg(phydev,
++			   "2ns RX delay was already %s (by pin-strapping RXD0 or bootloader configuration)\n",
++			   str_enabled_disabled(val_rxdly));
+ 	}
+ 
++	return 0;
++}
++
++static int rtl8211f_config_init(struct phy_device *phydev)
++{
++	struct rtl821x_priv *priv = phydev->priv;
++	struct device *dev = &phydev->mdio.dev;
++	int ret;
++
++	ret = phy_modify_paged_changed(phydev, RTL8211F_PHYCR_PAGE, RTL8211F_PHYCR1,
++				       RTL8211F_ALDPS_PLL_OFF | RTL8211F_ALDPS_ENABLE | RTL8211F_ALDPS_XTAL_OFF,
++				       priv->phycr1);
++	if (ret < 0) {
++		dev_err(dev, "aldps mode  configuration failed: %pe\n",
++			ERR_PTR(ret));
++		return ret;
++	}
++
++	ret = rtl8211f_config_rgmii_delay(phydev);
++	if (ret)
++		return ret;
++
+ 	if (!priv->has_phycr2)
+ 		return 0;
+ 
 -- 
 2.53.0
 
