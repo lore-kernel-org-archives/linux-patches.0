@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043643;
-	b=3xGAcq6Q5u8L3vu5qX2xaedriY9XoRiUIquHRMCA4ReaVXf6NqA8b9u4LZjBQyzyMBgX
-	 QFEAF7WZxdf88qbwQVrAZfqgtm7Wwu8DELG/gYcC1kQnwCVZ+z+z+BMUxN2y8eWdEsiHf
-	 XOuGkXjVKRPBTJNoLzlG2MkqSRMJST4Nbp/fdC9rnXN1zMb4obG/sJGevNmIKd91nSVT2
-	 NVX9TwWkZJ6dGJNTRHxwl/VKRPy5VzyznGB6dAJ+n8Im2lgZ+uACWaEMjdccBsDfR6chR
-	 k5LieCygV3t0CaI0k5+0ZEjiJFBLGhpG+DD3MSL9uK4AdeWgT7EmmwFBDa+EOPkmlaw==
+	t=1795043646;
+	b=mUUr3g8GyXr9XS8CsCPotyzZADRP6teGagVr2GrUMXEb8HGMDd9wq1cdiNWDRUhVIB2U
+	 XV5TYcMh1LubaBFfz5JnA39rj+EPY0KTG6e+PWKHxZoLeMQynCUa9sUtC07dTLiIR9l88
+	 99rcZFAA2AsHQrPPPE3kHlnn5I+qLRupXdjM4le6PF+xycfjWe3J1rKGfx37+sWwRSaBs
+	 cggbnpkbyDB+rNWYyJKJG1XqTj8db9evqGraYQGuwFKDXfNCnCWHYzU4IBlG6bJhygdZk
+	 D/tFkGBIsOil4IqbZbNwjrI+5TxF/8LGqEuvbDlmxie/b4Hs9LhZf7nUFFwHTmPgsuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043643;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043646;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mC1ZRPeYhPG9Yq8vrx+fzv0uOGbEWUAdcGVjP2v88sU=;
-	b=W++0ANwVx53pEG+yg0QymwIQCWxPORI9Q98eri3sVjg3fF4wy9cvVDzitksLi9EJ2s6i
-	 BREqzEvsREy4YC73b0PxvCKWRnAacAfs6oTb7po3qM87L0pQlc0+WQQILMZPA8KzktTDV
-	 RHNfSlDYiyWMUz8l+wnr24/sQwrkufZXg+jEgmsPOARgNij/tvN4+ITLMXZ9HqRJytMpH
-	 SR8stz0OGGk1u2I7aMbO3vHTScExgfFWtWfXnIyELwehwTBwKYXT0gsHJZvVzzsKekT1a
-	 GMY2SiBU+OSmDpINp6j7I7Nf7chkD+wl8vo7KK2DYhgmdbg1Bsrow1IvoH1bIDwcrdQ==
+	bh=ziZV/uqvPxMjWD14+rDD+rJ/gN9QcQSLdXdLqWz8IXY=;
+	b=WnK2V4sJ+x2J6d7gl4/rrWhrnlIsCVIkuKCFYzpjegFl6q8u5vjG1TNXxVbJDFfDDTrM
+	 LTV4cUJL1KMr991JrExCCy6fcNxWylnFDxGsFMjC+YtcHbIKVjytl5TusRZQ2tUsXFae6
+	 GTA1ljQ/pu/42BcT6v78fpGGhZcmUjGguSQ01nVhJom4NRs+1YljTnKVqPBj+Oq51bikg
+	 QRHt5qeBp45wc5peBmwj0fVK2EkWiYAqvW05C9LvgTFUn3HxfOm7SAL2O+glmtu58UTxP
+	 5P6EqQAntfq1oAnrTWsCBblWiD6AvGxcf3je/+QUS0uJzGEK9/cUNODiBrwubasqwxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oYkb9A2K;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oN2fseK7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5F3606A320;
-	Wed, 18 Nov 2026 23:14:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A5F606A320;
+	Wed, 18 Nov 2026 23:14:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oYkb9A2K
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FF311F000C4;
-	Wed, 18 Nov 2026 23:14:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oN2fseK7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65D091F000C4;
+	Wed, 18 Nov 2026 23:14:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043643;
-	bh=mC1ZRPeYhPG9Yq8vrx+fzv0uOGbEWUAdcGVjP2v88sU=;
+	s=korg; t=1795043645;
+	bh=ziZV/uqvPxMjWD14+rDD+rJ/gN9QcQSLdXdLqWz8IXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oYkb9A2KZIIAyQtgPjTOtbK+oL4UqVH10Wxf4f+bZhhyczN9RfQkTYYh/JmZaTsOU
-	 ljjuK5TRY77gGUPYJHr+zxrqvZNvvKl478GIJXE0W8jOFRcFs6zrd/wzdhrkimyScg
-	 TC13LebOkknWIFvCJGmILmHaJL5j+9d/mkBeKWPc=
+	b=oN2fseK7EHs7IzP7a937oB6Vi0ozesyDmgZmzjKkxTRCMDZTcerHlRAxolexfPPHs
+	 28INrPz46x2x26jxJ7gXxvxxArj5zLxYfyHlxOLMENcrPPP9oEbqmn1l5gE96yj6Yq
+	 IB7oMazuyjYbY8l0Q0mia1nBbKezVkceeu7q09WA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Heng <zhangheng@kylinos.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Daniel Wagner <dwagner@suse.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0276/2857] ASoC: amd: yc: Add DMI entry for Alienware m18 R1 AMD
-Date: Wed, 18 Nov 2026 15:21:50 +0100
-Message-ID: <20261118150211.363054734@linuxfoundation.org>
+Subject: [PATCH 6.1 0285/2857] nvme-fc: do not warn on controller removal race
+Date: Wed, 18 Nov 2026 15:21:59 +0100
+Message-ID: <20261118150211.686274872@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,40 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Heng <zhangheng@kylinos.cn>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit fd8ed52ecea6b93e23d52cb2758fb4fb4029067f ]
+[ Upstream commit 62b70e6c87121ae5b79ca20c3a5b005590336ec5 ]
 
-Add DMI entry so the YC machine driver probes on this model and
-the internal DMIC works.
+In nvme_fc_reconnect_or_delete(), the system attempts to remove
+the controller when reconnect limits are reached by calling
+nvme_delete_ctrl(). This call is currently wrapped in a WARN_ON().
 
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221485
-Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
-Link: https://patch.msgid.link/20260824130302.553419-1-zhangheng@kylinos.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+If a user concurrently deletes the controller via sysfs, the
+controller's state may have already transitioned out of the
+CONNECTING state. When this happens, nvme_delete_ctrl() correctly
+rejects the operation and returns -EBUSY. Because of the WARN_ON()
+wrapper, this race condition triggers an unnecessary kernel warning
+stack trace.
+
+Remove the WARN_ON() macro around nvme_delete_ctrl();
+this allows the system to safely ignore the -EBUSY return value
+if the controller is already being deleted.
+
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reviewed-by: Daniel Wagner <dwagner@suse.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/nvme/host/fc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index 64c217adfe1f9..1ba845212eae0 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -409,6 +409,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Alienware m17 R5 AMD"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "Alienware"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Alienware m18 R1 AMD"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
+index 914e480408553..d18b2dae1ba8c 100644
+--- a/drivers/nvme/host/fc.c
++++ b/drivers/nvme/host/fc.c
+@@ -3332,7 +3332,7 @@ nvme_fc_reconnect_or_delete(struct nvme_fc_ctrl *ctrl, int status)
+ 				ctrl->cnum, min_t(int, portptr->dev_loss_tmo,
+ 					(ctrl->ctrl.opts->max_reconnects *
+ 					 ctrl->ctrl.opts->reconnect_delay)));
+-		WARN_ON(nvme_delete_ctrl(&ctrl->ctrl));
++		nvme_delete_ctrl(&ctrl->ctrl);
+ 	}
+ }
+ 
 -- 
 2.53.0
 
