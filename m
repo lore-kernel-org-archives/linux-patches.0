@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021480;
-	b=HGDT5q5DzoAinU/kTZBzpXZaAGctga/eLfxCQ4Hf07BMDuabAsSHI9uOs8rp9hirJRZU
-	 Fn5keT4UhHAMZ36UUmZpIbbnYDYuWTbnyVCpwkUI1avOjb9PPWei82uK6R1zB/2I22ni8
-	 bexzBgeFN/iiaV+hz3OGhJoyfuRxqsi7rgJnBz7N3+Yl3IkcgKjyw5y0yf2Xh+kXoIh1B
-	 z92PUgVkEJ4WniXlcaUjzmHDfb6d1MqAUESqf+b/qBZAreIq3v7fqJJFOvpTe5vajB8fG
-	 fo1vZz3x7AKY3fYXqA9FpfkoGGjqT5sr/0FFz9Y2U+88j3vsR5IXxLFv17V7gEOSXRg==
+	t=1795021483;
+	b=SMrGQ/5vi67aDrF+JJfqDEnfUbu/ADzfGny1TNkjAr7/JX9DUf6Acd1yOQ135pBAumEZ
+	 MFJSOhBsDfqHxkdkd+n9lLieCy8ynpIxXG1rUcjoGvpYSwBsvipLdNvpor3pQiiQAngQq
+	 CQaa8/ihOGgwIVzAxKW1+/7CLWGfXxbNW0U6+X42Cc/hKtb/fvGP/U8l3YKBBM23TGeYi
+	 a3XCBqeHhYwGRjETF5d8S4Hh0TSaJGDOBU/xk/3um1ejSB4zOcWFdKAB4ieDZMm4Rkm+x
+	 dHsN/O5aY9iHRmEgbdRMdYQgmzc0MRismQUKyhRuvyxPJZeWxrLCqtdW72bsZftgJvA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021480;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021483;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OCQCTx71EQNs6VJKgwKv/zXKO+bH6EMWO0e+5L+JFKE=;
-	b=tdbcLEu4r92ZG4+I0r4UG2DGinIEKpxsL3bSnTo2w3Rp/RrZHjhtinNqf0X4HxCRbvgc
-	 hrp6IO9QAYPSN4uiiwpIEHERwVOZqvlyhXc9UIhOVX6nu2gWhaIDfBumC5LoIccboEp1b
-	 EUAL0DzcmezdUgraLW+sweM1NumIGJxmI07DrO8sFvqnYVrfJ245n9Kjnh+dJUm6iLmQg
-	 knpLEt0g+FFCek5Jh/6zyCD8areEkzX8QF3S9CisNPkHIU3ydFiSVTDAuvCq5GxdhJjl4
-	 RT8/a0Wp77+vovdLErpwFext1XKPeEiqhr/2QatHwxcT/O94qtx5MrGBUkUK5dJdxQg==
+	bh=4SuHjFeTte20wRewldtQFD4itVhCWsSfmCwA0q2M1kk=;
+	b=QpNfNdR/fm0MiFaGDjpiGoPuXpxkb3gfnuqorv0onw4p7gG5spGJAw6VjE2wsmyedVPD
+	 pVJJPyKzLnSL9Y4wmfAgcbMORiuRCLoTcvT+3tfq2CWLGBKo4zXg5+yEV+dy1bRdckqQG
+	 3/B8JheSCE8KNy+bKuGrAiQmSpvIHa1yW/SPOXUY/DXQxISfM6k++/e7mbZxHzeF23N3D
+	 IKF74uV4kliZMSoRXXAsoXnFe/vi4/6+ChNpzgq8tkiRZ2yGQl3dUASkwjN9tjdrtTgPZ
+	 EYrfsGbIYhvUPMD5jzXM3KFAmsqottxkflWMYujlNMMDcHPmbKMZ0IjMNsjLWKJbO7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KIxHAkP4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sw5Vzm59;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86504606A32A;
-	Wed, 18 Nov 2026 17:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6128560A2602;
+	Wed, 18 Nov 2026 17:04:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KIxHAkP4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17651F000C4;
-	Wed, 18 Nov 2026 17:04:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sw5Vzm59
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD4251F000C4;
+	Wed, 18 Nov 2026 17:04:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021480;
-	bh=OCQCTx71EQNs6VJKgwKv/zXKO+bH6EMWO0e+5L+JFKE=;
+	s=korg; t=1795021483;
+	bh=4SuHjFeTte20wRewldtQFD4itVhCWsSfmCwA0q2M1kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KIxHAkP4kgFRxiJwYW8dtEIb+ckheIecXK4rNg2iuuRl2HmcFbd7cm86e3vRQ2qtI
-	 UUBckTFGM3tYz43SBOixWCp0QYES4U3Ml8klNiufeR7djEktrmRXdfExzkvqM3pn8J
-	 aph/L1Cqfs3stCEKXdheyNygqQQ2cpncW+wJ4asE=
+	b=Sw5Vzm59EWBU06AvtixXZppS11AFpXiAgK0RrWxrr9FQxiclmhi6o51aSKHdgfGRB
+	 r4yFZIyjV/RsXpX46oksUzgR2sZEdlhF5C2mXNjzSMy1/ScDaRjvqmvMpkFNaoBSYj
+	 zUc0pMB+8zsnk0Db7ldj9brDJYwAuDzhuSfeCf2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingming Cao <mmc@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alexandre Cassen <acassen@corp.free.fr>,
+	Yevgeny Kliteynik <kliteyn@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2271/2651] ibmveth: disable the reset work before unregister in remove
-Date: Wed, 18 Nov 2026 15:58:31 +0100
-Message-ID: <20261118150407.111317603@linuxfoundation.org>
+Subject: [PATCH 7.3 2316/2651] net/mlx5: HWS, fix modify header pool match for copy actions
+Date: Wed, 18 Nov 2026 15:59:16 +0100
+Message-ID: <20261118150408.575088581@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,47 +69,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingming Cao <mmc@linux.ibm.com>
+From: Alexandre Cassen <acassen@corp.free.fr>
 
-[ Upstream commit 1412235447869922eb0ee041a31fab6176e60ab0 ]
+[ Upstream commit d425ec9bb9371d52d492ac4d09f0da6e26561684 ]
 
-ibmveth_remove() cancels the reset work before unregister_netdev(),
-but NAPI keeps running until unregister closes the device and can
-queue the reset again, on an interrupt enable failure, a bad
-free_map entry or a bad RX slot. The reset can then run on the
-adapter after free_netdev(), or reopen the device during unregister.
+mlx5_fs_hws_mh_pool_match() compares a single dword of each action
+since rules pass their values as arguments. Copy and add_field actions
+keep their destination in the second dword and HWS reads them from the
+pattern alone. Two modify headers whose copies differ only in
+destination then share a pool and the second rule writes to the wrong
+field.
 
-Use disable_work_sync(), which waits for a running reset and keeps
-the work from being queued again. A bad RX slot also makes poll
-spin, which can stall unregister; a later patch in this series
-fixes that.
+Use the HWS core comparison that checks these actions in full.
 
-Found in review of the ibmveth multi-queue RX series and confirmed by
-code inspection; it was not reproduced. Tested on a POWER10 LPAR with
-unbind and bind cycles under traffic. No kernel selftests cover ibmveth.
+Found while checking a Sashiko AI review report and confirmed against
+the HWS pattern code. Not reproduced. No in-kernel user puts such
+actions on the FDB but RDMA flow actions can. Tested for regressions on
+ConnectX-7 with firmware 28.48.1000 on a little-endian host.
 
-Fixes: 2c91e2319ed9 ("net: ibmveth: Reset the adapter when unexpected states are detected")
-Signed-off-by: Mingming Cao <mmc@linux.ibm.com>
-Link: https://patch.msgid.link/20261013182926.30417-4-mmc@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b36315ca69cb ("net/mlx5: fs, add HWS modify header API function")
+Signed-off-by: Alexandre Cassen <acassen@corp.free.fr>
+Reviewed-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
+Link: https://patch.msgid.link/20261019133159.1742411-3-acassen@corp.free.fr
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/ibmveth.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../mellanox/mlx5/core/steering/hws/fs_hws_pools.c    | 11 ++++-------
+ .../mellanox/mlx5/core/steering/hws/pat_arg.c         |  8 ++++----
+ .../mellanox/mlx5/core/steering/hws/pat_arg.h         |  5 +++++
+ 3 files changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/ibm/ibmveth.c b/drivers/net/ethernet/ibm/ibmveth.c
-index 4665447997eaa..cee0e9783b2ab 100644
---- a/drivers/net/ethernet/ibm/ibmveth.c
-+++ b/drivers/net/ethernet/ibm/ibmveth.c
-@@ -1956,7 +1956,7 @@ static void ibmveth_remove(struct vio_dev *dev)
- 	struct ibmveth_adapter *adapter = netdev_priv(netdev);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws_pools.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws_pools.c
+index 86828e329187d..05aa143fa088c 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws_pools.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws_pools.c
+@@ -3,6 +3,7 @@
+ 
+ #include <mlx5_core.h>
+ #include "fs_hws_pools.h"
++#include "internal.h"
+ 
+ #define MLX5_FS_HWS_DEFAULT_BULK_LEN 65536
+ #define MLX5_FS_HWS_POOL_MAX_THRESHOLD BIT(18)
+@@ -389,7 +390,7 @@ bool mlx5_fs_hws_mh_pool_match(struct mlx5_fs_pool *mh_pool,
+ 			       struct mlx5hws_action_mh_pattern *pattern)
+ {
+ 	struct mlx5hws_action_mh_pattern *pool_pattern;
+-	int num_actions, i;
++	int num_actions;
+ 
+ 	pool_pattern = mh_pool->pool_ctx;
+ 	if (WARN_ON_ONCE(!pool_pattern))
+@@ -398,12 +399,8 @@ bool mlx5_fs_hws_mh_pool_match(struct mlx5_fs_pool *mh_pool,
+ 	if (pattern->sz != pool_pattern->sz)
+ 		return false;
+ 	num_actions = pattern->sz / MLX5_UN_SZ_BYTES(set_add_copy_action_in_auto);
+-	for (i = 0; i < num_actions; i++) {
+-		if ((__force __be32)pattern->data[i] !=
+-		    (__force __be32)pool_pattern->data[i])
+-			return false;
+-	}
+-	return true;
++	return mlx5hws_pat_compare_pattern(num_actions, pool_pattern->data,
++					   num_actions, pattern->data);
+ }
+ 
+ struct mlx5hws_action *mlx5_fc_get_hws_action(struct mlx5hws_context *ctx,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/pat_arg.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/pat_arg.c
+index 512299b59fd0d..a49115f040251 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/pat_arg.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/pat_arg.c
+@@ -96,10 +96,10 @@ void mlx5hws_pat_uninit_pattern_cache(struct mlx5hws_pattern_cache *cache)
+ 	kfree(cache);
+ }
+ 
+-static bool mlx5hws_pat_compare_pattern(int cur_num_of_actions,
+-					__be64 cur_actions[],
+-					int num_of_actions,
+-					__be64 actions[])
++bool mlx5hws_pat_compare_pattern(int cur_num_of_actions,
++				 __be64 cur_actions[],
++				 int num_of_actions,
++				 __be64 actions[])
+ {
  	int i;
  
--	cancel_work_sync(&adapter->work);
-+	disable_work_sync(&adapter->work);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/pat_arg.h b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/pat_arg.h
+index 7fbd8dc7aa186..2be7787104e10 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/pat_arg.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/pat_arg.h
+@@ -49,6 +49,11 @@ int mlx5hws_pat_init_pattern_cache(struct mlx5hws_pattern_cache **cache);
  
- 	for (i = 0; i < IBMVETH_NUM_BUFF_POOLS; i++)
- 		kobject_put(&adapter->rx_buff_pool[i].kobj);
+ void mlx5hws_pat_uninit_pattern_cache(struct mlx5hws_pattern_cache *cache);
+ 
++bool mlx5hws_pat_compare_pattern(int cur_num_of_actions,
++				 __be64 cur_actions[],
++				 int num_of_actions,
++				 __be64 actions[]);
++
+ bool mlx5hws_pat_verify_actions(struct mlx5hws_context *ctx, __be64 pattern[], size_t sz);
+ 
+ int mlx5hws_arg_create(struct mlx5hws_context *ctx,
 -- 
 2.53.0
 
