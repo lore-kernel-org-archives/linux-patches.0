@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036221;
-	b=dZZcjrickKxCbxK2/O+/gaWVhYLnZ+SOqF9b1bXvWO929iH7rg/xnJInzmp5fAmIuoNK
-	 q8fByxJkMOVmCjkCAPRt1xhsVOWzd+RCzqbFTg+bQOVQlFJ718snjpONWXtc0v4MvMntd
-	 N/s5LnKIVIUTSzeo6Ww9in+uNnVFmBZwMup8845YA57YJniXQjtSsOp8UwjPL73vSBKVZ
-	 +J+4A1NFHCYfGYWKrGM0Mgsg3qdpvkzb238NBQHOJ2AdU6DMtdcJoIHhfVv25MsiuW79I
-	 vRAVbK10l5Y7vJSFn5LS93SE+lYP5oh3wHJs4stYiFBabhdOLhTcB5Isg8Mz+YTTQyA==
+	t=1795036224;
+	b=vHH7U/S+ipvXCrntMKuhDgz67zDvinryWs3Wq5CU7yMisxSSznHVxn/bRTD2DjehGyAs
+	 TooFeCMLK9lBbXZJS8Z8y7OnMQEUSu673ijdhlJSwqQzh5hNPIXaMI0xaXMOTOafq0zWg
+	 Wt1Q3n+vzyRLZ2+bgoPCbbgsO/iVuB1SYli6SaWNjpwGCAgUj+5BhbxeGdwylg3LgQW2I
+	 Q8r5eT8hUdmXTtxzTuBWUK5/GV3E/5Kwb/5rmVQuEtslLpG5oiyD1JbskfsjXmzPXN1gz
+	 lI1hUWsXKcabQagvBG3GZ5TNKJpg2hj3V5/T4zjwVD4p+bF15pN+9U/i9gN2dVcEPsg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036221;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036224;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1e7cS3msKnuglqS6Inmdh1rQkKhEhbQ7mwZl6d13wlA=;
-	b=CMxcLH6zXweY0N7eWyVint9VQsouxPrAUZAecA4p4o6KylTjJw3h/kacYekHMohycqPK
-	 ivn0jIHt1lE+ynCllKBG+s5Hlyu0gYSuH/VicueSE45rqm4ydJcW0+CKQyHBIz9Z2+taD
-	 zKts9BJIm/p+j/a0mHuD2nD+46WMHtwRKPuZjMILJBLB87pjiAAZAlAbR/D74VIP58Juo
-	 vKbDCvPRIK/U7cJtY2oBdWwjd5cPt/8ygdjEa4yIiKINbtAKstYl5geQH/zefYEKFdKua
-	 BiCgT/haV5Szp26Ah6IzNVBDnyB+lGpBGKA5y3gXvXsVTcj827lmYtZ1B8urH5PNBPQ==
+	bh=2Amm1UgoQECYBd51Bs78KFxnuK/yAdsLYPkhFBgwQh8=;
+	b=LqRZi9KF39OGfee/Bq02Zu/7xBQU5oAul13G05H+6Q7NwCKm1k/SW1WFm602aoAwECVl
+	 eSiCSM5X2c/rtFkwFm4psu+jWVDT/GfovqageTeCa6OXqOEJNCLzUzpx6Dh6RsnEZ66/u
+	 /4uNd6WtS22BvgJJ4bjWEe1iX7AHQFKJHkqBCZQ3fQE93YJXDoLdem2kXlRkuOhxbAYFI
+	 V9LEa26vwsaA0L+vDz4n2oyarfpbhx/t5oJBwoIBrSzesjCdBL81Yq+6a+HapSjAsmGSd
+	 a+NOITEb5t7azLDqkoneBMadEiupojd2BBziseT3FXE4zkdRUtZV/+NI6dliGg3VpIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="q/0YGnXa";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AB3qmHnu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94003606A320;
-	Wed, 18 Nov 2026 21:10:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66259606A320;
+	Wed, 18 Nov 2026 21:10:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q/0YGnXa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98D951F000C4;
-	Wed, 18 Nov 2026 21:10:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AB3qmHnu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EABA1F000C4;
+	Wed, 18 Nov 2026 21:10:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036221;
-	bh=1e7cS3msKnuglqS6Inmdh1rQkKhEhbQ7mwZl6d13wlA=;
+	s=korg; t=1795036224;
+	bh=2Amm1UgoQECYBd51Bs78KFxnuK/yAdsLYPkhFBgwQh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q/0YGnXaC6gdMU3P+uRcT7sqPrMAn9a4UKI/SVMPVC4/ggCR0z6G8FODeiIpr6rPp
-	 t4ILony4opCb2anhPJinM31/1E7+TTcSSBqD5Z7HfPjP11h8xFhLq3OWldjXNKDHtT
-	 aD/PnaBkUSPgLQ3kEOFfEkj6loQCMGc4XssVtku0=
+	b=AB3qmHnugGfvu+EjfWma70hHt5ZkyJNIzYQ3PmxhxiwoeHbl+Hk1wlfUEkKGY9JBd
+	 iGVX1o247AYKm/0a0u4Eafaj004jI83ym7cE+l9RS9WVhonFmLgR4Z/IRk2G9P5wZj
+	 URrMLNaFHeXeRLjnxw/XYnacgTxtJRG5/yb761/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Imre Kaloz <kaloz@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0983/3318] dm-writecache: fix REQ_FUA processing
-Date: Wed, 18 Nov 2026 15:26:45 +0100
-Message-ID: <20261118150349.250416338@linuxfoundation.org>
+Subject: [PATCH 6.6 0984/3318] PCI: Disable MSI for ULi M1575 EHCI controller
+Date: Wed, 18 Nov 2026 15:26:46 +0100
+Message-ID: <20261118150349.283319756@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,160 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Imre Kaloz <kaloz@kernel.org>
 
-[ Upstream commit c0df022cb0fa2bbee74bd9b90c66790bcd4e3050 ]
+[ Upstream commit 5f30217ec296fb5742f6fd306586dbca5b81b4eb ]
 
-REQ_FUA did not flush metadata in SSD mode, this commit fixes it.
+With MSI, the ULi M1575 EHCI controller (10b9:5239) intermittently stops
+executing its asynchronous schedule. Control transfers time out ("device
+not accepting address", "device descriptor read/64"), the port is handed to
+the companion OHCI controller, and the device ends up at full speed. On a
+configured hub the stall shows up as hub descriptor and status read
+failures. Only re-initializing the controller recovers it.
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+On a Sun Ultra 45, 65 of 800 controller initializations stalled with MSI
+and none of 200 with INTx. Each initialization is an unbind and bind of
+ehci-pci on the EHCI function, with MSI or INTx selected through its
+msi_bus attribute; with this quirk, 0 of 100 cycles of the same loop
+stalled. The stall reproduces on a kernel that already contains commit
+0b60557230ad ("usb: ehci: Prevent missed ehci interrupts with
+edge-triggered MSI").
+
+The OHCI functions (10b9:5237) keep MSI. They showed no stall, and the hub
+enumerated through them on MSI during the EHCI failures, so only the EHCI
+function is quirked.
+
+The illumos EHCI driver also disables MSI on this chip, in
+ehci_register_intrs_and_init_mutex() in
+usr/src/uts/common/io/usb/hcd/ehci/ehci_util.c.
+
+Until USB HCDs started trying MSI first in v5.9, the controller always used
+INTx. Disable MSI so it uses INTx again on this chipset.
+
+Fixes: 306c54d0edb6 ("usb: hcd: Try MSI interrupts on PCI devices")
+Signed-off-by: Imre Kaloz <kaloz@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Cc: stable@vger.kernel.org
-Fixes: c1005322ff02 ("dm writecache: handle REQ_FUA")
-Assisted-by: Claude:claude-opus-5
-Assisted-by: Codex:gpt-6-sol
+Link: https://patch.msgid.link/20260930191100.6127-1-kaloz@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-writecache.c | 45 +++++++++++++++++++++++++++++---------
- 1 file changed, 35 insertions(+), 10 deletions(-)
+ drivers/pci/quirks.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/md/dm-writecache.c b/drivers/md/dm-writecache.c
-index 4765f151b48d0..f306aee372e1f 100644
---- a/drivers/md/dm-writecache.c
-+++ b/drivers/md/dm-writecache.c
-@@ -195,6 +195,7 @@ struct dm_writecache {
- 	struct task_struct *endio_thread;
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 6fd425ef7f8cd..6bef92be41f91 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -1934,6 +1934,8 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x4388, quirk_no_msi);
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x4389, quirk_no_msi);
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x438a, quirk_no_msi);
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x438b, quirk_no_msi);
++/* ULi M1575 EHCI (10b9:5239): MSI stalls the async schedule */
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AL, 0x5239, quirk_no_msi);
  
- 	struct task_struct *flush_thread;
-+	spinlock_t flush_list_lock;
- 	struct bio_list flush_list;
- 
- 	struct dm_kcopyd_client *dm_kcopyd;
-@@ -1287,9 +1288,11 @@ static int writecache_flush_thread(void *data)
- 		struct bio *bio;
- 
- 		wc_lock(wc);
-+		spin_lock_irq(&wc->flush_list_lock);
- 		bio = bio_list_pop(&wc->flush_list);
- 		if (!bio) {
- 			set_current_state(TASK_INTERRUPTIBLE);
-+			spin_unlock_irq(&wc->flush_list_lock);
- 			wc_unlock(wc);
- 
- 			if (unlikely(kthread_should_stop())) {
-@@ -1300,6 +1303,7 @@ static int writecache_flush_thread(void *data)
- 			schedule();
- 			continue;
- 		}
-+		spin_unlock_irq(&wc->flush_list_lock);
- 
- 		if (bio_op(bio) == REQ_OP_DISCARD) {
- 			writecache_discard(wc, bio->bi_iter.bi_sector,
-@@ -1321,9 +1325,12 @@ static int writecache_flush_thread(void *data)
- 
- static void writecache_offload_bio(struct dm_writecache *wc, struct bio *bio)
+ static void quirk_pcie_mch(struct pci_dev *pdev)
  {
-+	unsigned long flags;
-+	spin_lock_irqsave(&wc->flush_list_lock, flags);
- 	if (bio_list_empty(&wc->flush_list))
- 		wake_up_process(wc->flush_thread);
- 	bio_list_add(&wc->flush_list, bio);
-+	spin_unlock_irqrestore(&wc->flush_list_lock, flags);
- }
- 
- enum wc_map_op {
-@@ -1435,6 +1442,8 @@ static void writecache_bio_copy_ssd(struct dm_writecache *wc, struct bio *bio,
- static enum wc_map_op writecache_map_write(struct dm_writecache *wc, struct bio *bio)
- {
- 	struct wc_entry *e;
-+	enum wc_map_op ret = WC_MAP_SUBMIT;
-+	bool need_flush = false;
- 
- 	do {
- 		bool found_entry = false;
-@@ -1471,7 +1480,8 @@ static enum wc_map_op writecache_map_write(struct dm_writecache *wc, struct bio
- 				writecache_map_remap_origin(wc, bio, e);
- 				wc->stats.writes_around += bio->bi_iter.bi_size >> wc->block_size_bits;
- 				wc->stats.writes += bio->bi_iter.bi_size >> wc->block_size_bits;
--				return WC_MAP_REMAP_ORIGIN;
-+				ret = WC_MAP_REMAP_ORIGIN;
-+				goto flush_pmem_and_ret;
- 			}
- 			wc->stats.writes_blocked_on_freelist++;
- 			writecache_wait_on_freelist(wc);
-@@ -1485,21 +1495,25 @@ static enum wc_map_op writecache_map_write(struct dm_writecache *wc, struct bio
- 		if (WC_MODE_PMEM(wc)) {
- 			bio_copy_block(wc, bio, memory_data(wc, e));
- 			wc->stats.writes++;
-+			need_flush = true;
- 		} else {
- 			writecache_bio_copy_ssd(wc, bio, e, search_used);
- 			return WC_MAP_REMAP;
- 		}
- 	} while (bio->bi_iter.bi_size);
- 
--	if (unlikely(bio->bi_opf & REQ_FUA || wc->uncommitted_blocks >= wc->autocommit_blocks)) {
--		writecache_flush(wc);
--		if (writecache_has_error(wc))
--			bio->bi_status = BLK_STS_IOERR;
--	} else {
--		writecache_schedule_autocommit(wc);
-+flush_pmem_and_ret:
-+	if (need_flush) {
-+		if (unlikely(bio->bi_opf & REQ_FUA || wc->uncommitted_blocks >= wc->autocommit_blocks)) {
-+			writecache_flush(wc);
-+			if (writecache_has_error(wc))
-+				ret = WC_MAP_ERROR;
-+		} else {
-+			writecache_schedule_autocommit(wc);
-+		}
- 	}
- 
--	return WC_MAP_SUBMIT;
-+	return ret;
- }
- 
- static enum wc_map_op writecache_map_flush(struct dm_writecache *wc, struct bio *bio)
-@@ -1589,7 +1603,10 @@ static int writecache_map(struct dm_target *ti, struct bio *bio)
- 
- 	case WC_MAP_REMAP:
- 		/* make sure that writecache_end_io decrements bio_in_progress: */
--		bio->bi_private = (void *)1;
-+		if (unlikely(bio->bi_opf & REQ_FUA) && bio_op(bio) == REQ_OP_WRITE)
-+			bio->bi_private = (void *)3;
-+		else
-+			bio->bi_private = (void *)1;
- 		atomic_inc(&wc->bio_in_progress[bio_data_dir(bio)]);
- 		wc_unlock(wc);
- 		return DM_MAPIO_REMAPPED;
-@@ -1619,12 +1636,19 @@ static int writecache_end_io(struct dm_target *ti, struct bio *bio, blk_status_t
- {
- 	struct dm_writecache *wc = ti->private;
- 
--	if (bio->bi_private == (void *)1) {
-+	if (bio->bi_private == (void *)1 || bio->bi_private == (void *)3) {
- 		int dir = bio_data_dir(bio);
-+		bool fua = bio->bi_private == (void *)3;
- 
- 		if (atomic_dec_and_test(&wc->bio_in_progress[dir]))
- 			if (unlikely(waitqueue_active(&wc->bio_in_progress_wait[dir])))
- 				wake_up(&wc->bio_in_progress_wait[dir]);
-+
-+		if (fua && likely(*status == BLK_STS_OK)) {
-+			bio->bi_private = NULL;
-+			writecache_offload_bio(wc, bio);
-+			return DM_ENDIO_INCOMPLETE;
-+		}
- 	} else if (bio->bi_private == (void *)2) {
- 		dm_iot_io_end(&wc->iot, 1);
- 	}
-@@ -2529,6 +2553,7 @@ static int writecache_ctr(struct dm_target *ti, unsigned int argc, char **argv)
- 
- 		wc->memory_map_size -= (uint64_t)wc->start_sector << SECTOR_SHIFT;
- 
-+		spin_lock_init(&wc->flush_list_lock);
- 		bio_list_init(&wc->flush_list);
- 		wc->flush_thread = kthread_run(writecache_flush_thread, wc, "dm_writecache_flush");
- 		if (IS_ERR(wc->flush_thread)) {
 -- 
 2.53.0
 
