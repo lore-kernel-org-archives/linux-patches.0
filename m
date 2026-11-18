@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040185;
-	b=hi3BenKMCo0HvNsWLoMoHpq5CevNUWLBKW7LVKf/J2r7kHYYkv5oFAF8eoZKg1qL5DIO
-	 2SUnyCju/N0rmQnBRK1RIIuQvvhwt4HXtSye0VNJ9RHcgSkbvbKI7Q5aN4fkhR/ZLAr7n
-	 3Yn5S/lZtyu7VhWIU+P4lPtXQ2BlGWColjG4Urr7lUflRU+12U0lOT/0YRgOBSLRWevF9
-	 4FvPwExMl5getj6VKOkfBLHjlnVCmGtuEnBfCN8z0v75fFbkRxiWxpADW+e1+r9XxWZyo
-	 52VlSEmYbJB/meDU0Q9YaHYoBD27Tp4NmrHoy8cgrwEsIMHJg/Vmzm6jdmNHHF9qMeA==
+	t=1795040188;
+	b=P1MaWUGACjTL0Gt5FcgPEMJ5hlK3v5pyRFZMAaUIQHBTnIZqlQeWcVn1i/T7R65v2fgr
+	 0S1lB68J4nUPlQK2elZPXcqUQicwcW7NxpRirVd4bZF3pTxYxRjaePK0TJa+rOU2Ok7Ht
+	 xYZSvBIYoF+r1Jhf4uwndxm7/8NvZVRvKj124FourLFuJL0hKM6h1Vdt3T28MpJF1zXV1
+	 pjuWwU97RsaFRj5QjjNNB97ZgT1T8GZXTveGwbnaeOc0J9Doy8t72DIAPDEezj9x9eWB2
+	 RfI8dsgv7oItgv3AjLxWGQCzt5GcUM/b0NeOutj5mD+fj5V7Y5a80o6Q064BjJhy/Gw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040185;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040188;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9AsXHlMM+D1+RTLtQpztg9kh3Zh6FmaxeW3E8SKK9hI=;
-	b=bDSc+/2RmoIas6/l4Jy7Lmkf4qcaFIa3QDh/iWPdFxpfjpHam34CmKXVcxtjjY1FHkt7
-	 SayupDvE7HodAt557aaSwGzjnPHHLW8Mo0BdQprW3Lhxu1whKjgw/Nl/kONnMctMdoc+b
-	 k5jCJkfxqQZVO820hz9wwzXm25iJ+cuZsu3nlR3gmgG0zvjtgSwvqmr7lnqZfSvNsjjFY
-	 lfzAq91eoDRmT1jm6EqBikkTkPyIZTfaLYU7Wl9Yh+9Disiqs3+n3X9y4dBFNPILxdTs1
-	 Y9KsZF6oZeTVFOWTz8Ej2RRoBKsckUt5qX6JQuR9wXSbVPbGUsydNE/T4KHXxjCtNkQ==
+	bh=Alx/HidKo1qTEc5EUKsvtwsZLZsWknW5kLOEqq89GqU=;
+	b=ziYwUfJGuvTzt5wHTFxiuFPtp/YSOLbBhMchRfBKYTuyffARp/qKgOn5joFLRyOnM/H5
+	 UCplAye/0amFTCVNmfa3jnJgV++LPvC9K2Q0SHPJMOmawTpwNrwZ05uPsQw/AcNF2HtVQ
+	 3PvNnQh3at3mz6v5OR7ZuZTSydAobi1UGDf2U1qHmduNba6sSJG0ksN9eUGODnowiKMQr
+	 OmUhoXPfB0lvfkGlYcJih/JTWmqp7DTFdaa2EkWqb393r60aM+36gxztNT/VY/phTQeZN
+	 GPgk0GCNWrvi2/oobHHmeBruR1L8i9iB+pszolV02T57hLfrAgT1MXH3xUuSiJ2EsGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vg5DJMMU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=15hJLOON;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9030C606A31C;
-	Wed, 18 Nov 2026 22:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D67C606A320;
+	Wed, 18 Nov 2026 22:16:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vg5DJMMU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96C011F000C4;
-	Wed, 18 Nov 2026 22:16:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=15hJLOON
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE3E1F000C4;
+	Wed, 18 Nov 2026 22:16:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040185;
-	bh=9AsXHlMM+D1+RTLtQpztg9kh3Zh6FmaxeW3E8SKK9hI=;
+	s=korg; t=1795040188;
+	bh=Alx/HidKo1qTEc5EUKsvtwsZLZsWknW5kLOEqq89GqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vg5DJMMUqjXXrPRhxoeoigZy1wyUlU3HKhCVPhiAqIEZ8388Mz1fRqy/xC+hkYmcZ
-	 p/K4jDG+tYqVC93F4W9riuhjRj+92PYVZ6EqVPRfmmDFskY+fg66OAI21tqrvYEUNO
-	 0E8F41IiskoYseE1DT9VbVuz1Yi/PUpVjSu57pwo=
+	b=15hJLOONbe5tsbiDN0S8LIoRW4jk4z5L3RFsqXKRGbjDmZsA1kw9OSRrc2TSsckSU
+	 iYW7DC8N56jVoxY7BSWQqjsxHXGCkjRgQknVplEE2fuu+addqh7fdKzN4BOaRNoJ+5
+	 wkpx++iyp/gXxtXLHSdXBscN7r6KL9cwLBD/QD74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2360/3318] ASoC: mediatek: mt8188: mt8188-afe-clk: Handle clock enable errors
-Date: Wed, 18 Nov 2026 15:49:42 +0100
-Message-ID: <20261118150432.387901750@linuxfoundation.org>
+Subject: [PATCH 6.6 2369/3318] ACPICA: Fix PCC OperationRegion command offsets
+Date: Wed, 18 Nov 2026 15:49:51 +0100
+Message-ID: <20261118150432.636417738@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,138 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit 1b65c13d1af99170e2a855ca9212a03daa3e7f04 ]
+[ Upstream commit 888dab4b04ea8725168c6d50d0bfb8057fccca18 ]
 
-Clock enable errors are currently ignored by several AFE clock
-control functions.
+ACPI 6.3, section 5.5.2.4.7.3, states that the PCC Operation
+Region is associated with the region of shared memory that follows the
+PCC signature.
 
-Check the return values and roll back previously enabled clocks when
-a subsequent clock enable fails.
+The generic and extended PCC shared memory layouts include the 4-byte
+signature at offset 0, so their raw shared memory COMMAND fields are at
+offsets 4 and 12 respectively. Since AML field offsets for the PCC
+OperationRegion are relative to the region after that signature, ACPICA
+must look for those COMMAND fields at OperationRegion offsets 0 and 8.
 
-Fixes: f6b026479b13 ("ASoC: mediatek: mt8188: support audio clock control")
-Fixes: 9be0213a6858 ("ASoC: mediatek: mt8188: refine APLL control")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patch.msgid.link/20260907120310.135693-5-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Adjust the generic and master subspace command checks to use those
+OperationRegion-relative offsets. Otherwise writes to the COMMAND field
+can fail to invoke the PCC address space handler at the offset described
+by the PCC OperationRegion definition.
+
+Link: https://github.com/open-acpica/acpica/pull/1205
+Fixes: aa6ec56b574d ("ACPICA: ACPI 6.3: add PCC operation region support for AML interpreter")
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+[ rjw: Fixed the Fixes: tag ]
+Link: https://patch.msgid.link/20260922144302.3847593-2-sudeep.holla@kernel.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8188/mt8188-afe-clk.c | 69 ++++++++++++++++++----
- 1 file changed, 58 insertions(+), 11 deletions(-)
+ drivers/acpi/acpica/exfield.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8188/mt8188-afe-clk.c b/sound/soc/mediatek/mt8188/mt8188-afe-clk.c
-index 516b9b4ee0339..94f21cb15d23e 100644
---- a/sound/soc/mediatek/mt8188/mt8188-afe-clk.c
-+++ b/sound/soc/mediatek/mt8188/mt8188-afe-clk.c
-@@ -589,22 +589,47 @@ static int mt8188_afe_disable_top_cg(struct mtk_base_afe *afe, unsigned int cg_t
- int mt8188_afe_enable_reg_rw_clk(struct mtk_base_afe *afe)
- {
- 	struct mt8188_afe_private *afe_priv = afe->platform_priv;
--
-+	int ret;
- 	/* bus clock for AFE external access, like DRAM */
--	mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_TOP_AUDIO_LOCAL_BUS_SEL]);
-+	ret = mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_TOP_AUDIO_LOCAL_BUS_SEL]);
-+	if (ret)
-+		goto err_local_bus;
+diff --git a/drivers/acpi/acpica/exfield.c b/drivers/acpi/acpica/exfield.c
+index 61ff36189acea..eb44d06134b6e 100644
+--- a/drivers/acpi/acpica/exfield.c
++++ b/drivers/acpi/acpica/exfield.c
+@@ -45,12 +45,13 @@ static const u8 acpi_protocol_lengths[] = {
  
- 	/* bus clock for AFE internal access, like AFE SRAM */
--	mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_TOP_AUD_INTBUS_SEL]);
-+	ret = mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_TOP_AUD_INTBUS_SEL]);
-+	if (ret)
-+		goto err_intbus;
+ /*
+  * The following macros determine a given offset is a COMD field.
+- * According to the specification, generic subspaces (types 0-2) contains a
+- * 2-byte COMD field at offset 4 and master subspaces (type 3) contains a 4-byte
+- * COMD field starting at offset 12.
++ * According to the specification, the PCC OperationRegion begins after
++ * the PCC signature. The raw shared memory COMD offsets of 4 for generic
++ * subspaces (types 0-2) and 12 for master subspaces (type 3) therefore
++ * appear at OperationRegion offsets 0 and 8.
+  */
+-#define GENERIC_SUBSPACE_COMMAND(a)     (4 == a || a == 5)
+-#define MASTER_SUBSPACE_COMMAND(a)      (12 <= a && a <= 15)
++#define GENERIC_SUBSPACE_COMMAND(a)     (0 == a || a == 1)
++#define MASTER_SUBSPACE_COMMAND(a)      (8 <= a && a <= 11)
  
- 	/* audio 26m clock source */
--	mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_ADSP_AUDIO_26M]);
-+	ret = mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_ADSP_AUDIO_26M]);
-+	if (ret)
-+		goto err_26m;
- 
- 	/* AFE hw clock */
--	mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_AFE]);
--	mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_A1SYS_HP]);
--	mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_A1SYS]);
-+	ret = mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_AFE]);
-+	if (ret)
-+		goto err_afe;
-+	ret = mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_A1SYS_HP]);
-+	if (ret)
-+		goto err_a1sys_hp;
-+	ret = mt8188_afe_enable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_A1SYS]);
-+	if (ret)
-+		goto err_a1sys;
- 
- 	return 0;
-+
-+err_a1sys:
-+	mt8188_afe_disable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_A1SYS_HP]);
-+err_a1sys_hp:
-+	mt8188_afe_disable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_AFE]);
-+err_afe:
-+	mt8188_afe_disable_clk(afe, afe_priv->clk[MT8188_CLK_ADSP_AUDIO_26M]);
-+err_26m:
-+	mt8188_afe_disable_clk(afe, afe_priv->clk[MT8188_CLK_TOP_AUD_INTBUS_SEL]);
-+err_intbus:
-+	mt8188_afe_disable_clk(afe, afe_priv->clk[MT8188_CLK_TOP_AUDIO_LOCAL_BUS_SEL]);
-+err_local_bus:
-+	return ret;
- }
- 
- int mt8188_afe_disable_reg_rw_clk(struct mtk_base_afe *afe)
-@@ -640,7 +665,13 @@ static int mt8188_afe_enable_a1sys(struct mtk_base_afe *afe)
- 	if (ret)
- 		return ret;
- 
--	return mt8188_afe_enable_top_cg(afe, MT8188_TOP_CG_A1SYS_TIMING);
-+	ret = mt8188_afe_enable_top_cg(afe, MT8188_TOP_CG_A1SYS_TIMING);
-+	if (ret) {
-+		mt8188_afe_disable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_A1SYS]);
-+		return ret;
-+	}
-+
-+	return 0;
- }
- 
- static int mt8188_afe_disable_a1sys(struct mtk_base_afe *afe)
-@@ -661,7 +692,13 @@ static int mt8188_afe_enable_a2sys(struct mtk_base_afe *afe)
- 	if (ret)
- 		return ret;
- 
--	return mt8188_afe_enable_top_cg(afe, MT8188_TOP_CG_A2SYS_TIMING);
-+	ret = mt8188_afe_enable_top_cg(afe, MT8188_TOP_CG_A2SYS_TIMING);
-+	if (ret) {
-+		mt8188_afe_disable_clk(afe, afe_priv->clk[MT8188_CLK_AUD_A2SYS]);
-+		return ret;
-+	}
-+
-+	return 0;
- }
- 
- static int mt8188_afe_disable_a2sys(struct mtk_base_afe *afe)
-@@ -749,8 +786,18 @@ int mt8188_apll2_disable(struct mtk_base_afe *afe)
- 
- int mt8188_afe_enable_main_clock(struct mtk_base_afe *afe)
- {
--	mt8188_afe_enable_top_cg(afe, MT8188_TOP_CG_26M_TIMING);
--	mt8188_afe_enable_afe_on(afe);
-+	int ret;
-+
-+	ret = mt8188_afe_enable_top_cg(afe, MT8188_TOP_CG_26M_TIMING);
-+	if (ret)
-+		return ret;
-+
-+	ret = mt8188_afe_enable_afe_on(afe);
-+	if (ret) {
-+		mt8188_afe_disable_top_cg(afe, MT8188_TOP_CG_26M_TIMING);
-+		return ret;
-+	}
-+
- 	return 0;
- }
- 
+ /*******************************************************************************
+  *
 -- 
 2.53.0
 
