@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020303;
-	b=dfFEVD75r/Vb6gYvmxS7D/oV+zcig4hCstiaeLc+0LmeiIYSTjWd/nYZQKOQqCndo3aR
-	 WIAymetW0xjCtHQcCQtnc8S2rbZvbAUFwudsUNcMZlMHod6b221GQXC1gJEYRokwzfeYi
-	 EZEYm9qR2qv/DA9jQ/UJlaWEYAPQSw4H8JpyYrQY7s7/S3bIYG9RyLOcQIYYO46qb5U+O
-	 jaS1gHwWwHU+fK5ep2mBW/2RoEyc6NXC+B+Et+BmLwSzP3qSah0wVsu+yJ0emHUKpj0jD
-	 BA3uGC5kX3O2t3edr+otmxZqWdo2/7oB4ub5PQXFUzE+vAbOmguQmu3G3pm2xvvIVig==
+	t=1795020305;
+	b=1aLeyTxExRQyTTj80nam3Brt6JhcLMCp07cnG7md8VHYGQYf3d/SlXbjmbrspF4H6MDM
+	 l5ICliHrhqgNju1Nn8L2hQl88IbKcOKTDJcve+kjeEXcQQIU58jOKg/mrRwEMBaxIHHTE
+	 hDsbisk5bBFghPixCz898aiz8jy/7aJw7om9x8d87pSBtRmRyGCARrG+Z3+DXba+F84Pp
+	 4lLvDZg7QVEnTRH7DsRLI1nAoJ2grjKLWEdiEA4Cu+3kCYi1CnpuYZFrhpVlqVmGzoM+J
+	 pYWwzQLFFA3aQnrr7rEXBAqgaI4DKtoSPmByxyOe4SUfgerQsrHxofFQmE1xpy8AE7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020303;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020305;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ldmrU91OTO0WEb1WOcWqf0U0dpLXjWAh+06OV+NXkFo=;
-	b=0r0tVEBtN7hgCxNe/QO2urPqzjzAzak508McXEJxIQPeaGcyTZSlPxpbksFor4z2X492
-	 2SbBmhCDU33zThNdXd8Ne1LWjyy0A5TRXMNfeJz+kxry9rC1PMS96Uml/+nXg9kh30cID
-	 vFItHz6JwoI3LjZKqXgHps4Oie9RXFD1SUJwmJHxPxwvxhfDkDwepuROKdTX8fqk7Ma8A
-	 X0+6UJ93L6kRgrSiGFaF42KuAWHih6vVfrRTDnlIrLb5a4vismiA7mlYzvXXbE5YKH4Na
-	 7vQd+Jcj43rBk2e/wbDEBoeCACdUT/1PNosvGql4ehdq9UIFsUoNs+l2i+z4Ngx0qgg==
+	bh=bPP788t3HxN7KFGpw5pLMw7nkBUJzvalWnVery5aUkU=;
+	b=uw4CS2/4tgv/plhhsYXQvtpqrKpvg9sd0gWcS1hqpFeBfLoun7iS+0MJami3rAtHA3i1
+	 nZQ2mioPYDxFDaWTNY+YaEmn5joaJvaiNJFefWyJwqvrBIhhugdpxKix2CMY+9LNG4DgP
+	 UwCgN38Ae0L1aEoTRObALrZ8K8+0lZ6bsHu292T+BLbw8qGOJ4Yta53l08AOZpgW/c2Dd
+	 iMlGSrbYwKf3RG/aPN5YWemG7fIhvVv3o7NWNFwmoAoYmcm5EVAZXSX2kOMw2pnO8egks
+	 if0/qau1h2zNDM25wGj54/bCJKzhZhLhSFxtUsSNZ5ZJ/vZujt+xnf8krAty74Jm7dw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qCOJmRkn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bgw23y42;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656D6606A31C;
-	Wed, 18 Nov 2026 16:45:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3C0606A325;
+	Wed, 18 Nov 2026 16:45:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qCOJmRkn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 459C61F000C4;
-	Wed, 18 Nov 2026 16:45:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bgw23y42
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E6711F000C4;
+	Wed, 18 Nov 2026 16:45:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020302;
-	bh=ldmrU91OTO0WEb1WOcWqf0U0dpLXjWAh+06OV+NXkFo=;
+	s=korg; t=1795020305;
+	bh=bPP788t3HxN7KFGpw5pLMw7nkBUJzvalWnVery5aUkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qCOJmRknAH2PEk5Hq47ZOQE3yNE9T9NPCgypVN4pdLOBXHs1uPqPVWpKs+BRYzFnu
-	 x9DtmGnANWSNqBCEzsPvOJTPpXfLszdr53BXxPJTPpZZdXXJPNleSSZ8Co9MhT4Iws
-	 ap0RpJLa1bsb7DBZI4++hyNvTX/a5GWnoToEZfIY=
+	b=bgw23y42CnSxFpK1bNLfroDRfrvZMY6s0xx7T9JU+O5tQMlwgkIK4y0td2DBS38nh
+	 0+uLIJOu68mMhVUyDsKs0smrz9iJxhrzpmqiLj483FtfFQd/BZeK+PMQ4QWcV7xGyN
+	 QKyTfKmrloa9LNrxm/H7lHBYsaq/COn0UJOyM35g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kiran K <kiran.k@intel.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1903/2651] Bluetooth: btintel: Zero version data before parsing TLVs
-Date: Wed, 18 Nov 2026 15:52:23 +0100
-Message-ID: <20261118150355.333043116@linuxfoundation.org>
+Subject: [PATCH 7.3 1904/2651] Bluetooth: MGMT: Allow connection rate request as peripheral
+Date: Wed, 18 Nov 2026 15:52:24 +0100
+Message-ID: <20261118150355.363501667@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,41 +67,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiran K <kiran.k@intel.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit cf87709d7ff83b4de5d42b61e4a9806fe374cb9d ]
+[ Upstream commit 47493e62e8a8522a250537ed2ce026dd7d9163b1 ]
 
-Firmware may omit optional TLVs, leaving their corresponding fields
-unset in the caller-supplied struct intel_version_tlv. Since the
-structure is typically stack-allocated and not cleared beforehand,
-fields for which no TLV is received retain uninitialized stack
-memory. This stale data can be logged via btintel_version_info_tlv()
-and copied back to the caller, leaking kernel stack contents.
+Load Connection Subrate only issues the LE Connection Rate Request when
+connected as central, but either role can initiate the Connection Rate
+Update procedure, e.g. a HID device, which is the peripheral, does it
+once the HID host requests a HID SCI mode with the HID Control Point.
 
-Clear the structure in btintel_read_version_tlv() before parsing so
-that fields with no corresponding TLV are deterministically zero
-instead of containing garbage.
+Issue it regardless of the role.
 
-Fixes: 57375beef71a ("Bluetooth: btintel: Add infrastructure to read controller information")
-Signed-off-by: Kiran K <kiran.k@intel.com>
+Fixes: 19129d7037be ("Bluetooth: Add MGMT Load Connection Subrate command")
+Assisted-by: OpenCode:claude-opus-5.5
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/mgmt.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-index cf109d79569a2..4871a552d3aa0 100644
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -751,6 +751,7 @@ static int btintel_read_version_tlv(struct hci_dev *hdev,
- 		return -EIO;
- 	}
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 23b65ceea8955..11f01b8d53f80 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -8334,8 +8334,10 @@ static int load_conn_subrate(struct sock *sk, struct hci_dev *hdev, void *data,
+ 		hci_param->cont_num = cont_num;
+ 		hci_param->rate_supv_timeout = supv_timeout;
  
-+	memset(version, 0, sizeof(*version));
- 	err = btintel_parse_version_tlv(hdev, version, skb);
- 
- 	kfree_skb(skb);
+-		/* If the device is connected as central check if the
+-		 * connection rate parameters need to be updated.
++		/* If the device is connected check if the connection rate
++		 * parameters need to be updated, either role can initiate the
++		 * Connection Rate Update procedure, e.g. a HID device acting
++		 * as peripheral once the HID host requests a HID SCI mode.
+ 		 */
+ 		if (!i && param_count == 1) {
+ 			struct hci_conn *conn;
+@@ -8344,7 +8346,6 @@ static int load_conn_subrate(struct sock *sk, struct hci_dev *hdev, void *data,
+ 						       &hci_param->addr,
+ 						       addr_type);
+ 			if (conn && conn->state == BT_CONNECTED &&
+-			    conn->role == HCI_ROLE_MASTER &&
+ 			    (conn->le_rate_interval < min ||
+ 			     conn->le_rate_interval > max ||
+ 			     conn->le_subrate < subrate_min ||
 -- 
 2.53.0
 
