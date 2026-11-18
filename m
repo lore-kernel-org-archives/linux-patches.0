@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026438;
-	b=sbd0gZuwCeoL+jJM1zbhb/dSc9v/x2bvm3KfvhimKP6os5fJ3XBEsyNI7YXsayqLvkGS
-	 gbm84jRQoONmuYKjkhSiwtTlnyUn0PTvT0Sh8KsmCKMhhReKbtMHL2yuSHePwcV1PixXj
-	 Z4wIAbOK3fx4DrHQsy2sj5EukwbSUCd7PWLinntHoQ/ZCdK6srqX6w44JUnRz9Sg2fZUo
-	 EmE0424Z40uSpv/SfgZyETJtOaCkjG/auPatYc6BisvgaK8Zz23/Qmmf/BUBrZ+UWyoBU
-	 YQnIUBnhm/8ImW7VOLOvT8EMLY9KZnCl2ksF/fvh6KI+C1DESiCR5zvCLe+2PcvMaTQ==
+	t=1795026440;
+	b=j8X7lgbQaJZrkh01CAb+SM8vto5wKPBcj6S27MEB3u2QUXmWo9Vo/xYzo6lvfEGGR355
+	 U6wa/EEteCgZRy36Hlr4WFSIy8Bf/NUdWL8O+am3eSmqCjKA99htuIEUehftnMwYGI8uZ
+	 av+blLC2H37WUZie1p3WvdrFZfuQt+n+owkBDDt8apE0Px5yvmpcaQl7SqgGN71U6kC/l
+	 JyF0i1C8YEDIROCfLGyTmfiNO+Lx8Ppu1LIMOTagrSq7kaC4ZOSozJrTIHUpV+SL1sw3t
+	 CzvaDVkb8Y1TLe+YQbwkk74IZMV6kJAOGCxWuNr2vdXsXsptNHy8E1tSWN9QXlzThxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026438;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026440;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/xJR7jXlScfh1Zf4y8KEOoR0UoOjMrwsMbMXKlaZyb8=;
-	b=LqLraV+GDhXNpa3CQCgwT8b5mv5D6Zo+jy231gRWua0TWHlfUtcCwYpPQl/tZ5meJhza
-	 L9ahPciB/Q78qBzJNQFzT7+C1cUqCnsMQbkVA83xhhJqlUKsZVIdWfglcWujJic9aS56A
-	 6ReIq+1X5WXvGzc7WjfD9XlGcM78djYUa5QeVDrOqkj69gPeiqYYPVIfLdkcGQ4oRDQtn
-	 yAZgIsBfI67M4dKrh4LJ9RHzMcHIbMizik4pfCW/MXahXcV3CJ18771uEEK7mzx+jEf6g
-	 /Xp4s65a6BecIuMxG4rF7rdJddJSxg9Jh/bqdUElwBrz/6i/mKitLJg/xemW7VVIaHA==
+	bh=pGAK8ITRjRBNtg7eSirXfCZDag7cR9ryT7Z52N/DWME=;
+	b=qFaTZ10rZGgVTdZ2PKly38NMtzhDJ8mqd4Qw3gNdF7dqTaQ1bV06hUVC2Smw6ppNoqJc
+	 cv977B0xGTf7pYZL4DzMg2rGSLxgZJqrWK7v0zhAw87jJPyjkd3svc93Gz8Yby4iSiTC6
+	 ba8jK8RXJ6BuJ0QMygzY7NWLXV/ZLXgXsM/bMoakvhudS1SF7l+frDX4F/RzTky54frGP
+	 vedUnN7sBvYNhztjWm+rUhCjWPis5RItHGtrhgh6t0YfhnTLRW3/cuv/xA2jkOhzvaR58
+	 zRn4bWhPu1N/qfw33a8Et+Pak3n3voNCCnugRsEFTryLNusTbf48Y+b86wHX/Iy4NyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GJ7c3W0H;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DsuXtyx0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8B4606A32A;
-	Wed, 18 Nov 2026 18:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE82606A32C;
+	Wed, 18 Nov 2026 18:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GJ7c3W0H
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 478A21F000C4;
-	Wed, 18 Nov 2026 18:27:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DsuXtyx0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 115331F000C4;
+	Wed, 18 Nov 2026 18:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026437;
-	bh=/xJR7jXlScfh1Zf4y8KEOoR0UoOjMrwsMbMXKlaZyb8=;
+	s=korg; t=1795026440;
+	bh=pGAK8ITRjRBNtg7eSirXfCZDag7cR9ryT7Z52N/DWME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GJ7c3W0H7x45URBORs5lhGrm8zuGQJRJ3bO4DWSqBiQvsrC2RkseKtP2CXX1Voc5E
-	 vx9JCe+VJ6nmPdPg6S5lQsk0eMkXkN7kE4TTKoboUqlzDsdLduM+MuZ2/NV+6S0Sfj
-	 UfkRlJX5S1X/nxru2Ex9MQHEMh/fA7VK8VNC7XUI=
+	b=DsuXtyx0FMMlcBgyJFpgfE+SIyAXGlSKI7xUawJqg8wBJ+zpC78AEGyT5IO2Hxd7N
+	 0YBi8hLUG3U/B9+tNOWCRbAuyci3vPUmYKumYdOFsF3gMhXyjpWg98vm2HjUp5DnoG
+	 c015bi79elfhC8YQlo7hcs3YMMoKZStVnqJ5CnWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1436/2151] clk: qcom: rcg2: Propagate force-enable status errors
-Date: Wed, 18 Nov 2026 15:52:51 +0100
-Message-ID: <20261118150214.249179727@linuxfoundation.org>
+Subject: [PATCH 6.18 1437/2151] clk: qcom: rcg2: Clear force enable after rate failure
+Date: Wed, 18 Nov 2026 15:52:52 +0100
+Message-ID: <20261118150214.284620548@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,44 +71,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit 8c0f93e10fa9e34009817bd37bb75c1b5a691fa2 ]
+[ Upstream commit d4e8c6b9aef42d06cf5755543ad10097b2217990 ]
 
-clk_rcg2_is_enabled() returns either a hardware status or a negative
-regmap error. The force-enable polling loop treats every nonzero return as
-an enabled clock, so a failed status read is incorrectly reported as
-success and clock reconfiguration can continue with unknown hardware
-state.
+Shared RCG rate changes assert force-enable before programming the new
+configuration. If programming fails, the function returns without
+clearing force-enable, leaving the root running while CCF can release
+temporary parent and resource references.
 
-Check for negative returns before testing the enabled status and propagate
-the read error to the caller.
+Attempt to clear force-enable on the configuration error path before
+returning the original programming error. This restores the same cleanup
+performed after a successful configuration while preserving the primary
+failure for callers.
 
 Fixes: 7ef6f11887bd ("clk: qcom: Configure the RCGs to a safe source as needed")
 Assisted-by: LLM
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260917-topic-qc_clk_fixes-v1-2-5531cb00514b@oss.qualcomm.com
+Link: https://patch.msgid.link/20260917-topic-qc_clk_fixes-v1-3-5531cb00514b@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/clk-rcg2.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/clk-rcg2.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index b6e30985deab6..a7d4dfc107e53 100644
+index a7d4dfc107e53..33b9cef509781 100644
 --- a/drivers/clk/qcom/clk-rcg2.c
 +++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -1330,7 +1330,10 @@ static int clk_rcg2_set_force_enable(struct clk_hw *hw)
+@@ -1362,8 +1362,10 @@ clk_rcg2_shared_force_enable_clear(struct clk_hw *hw, const struct freq_tbl *f)
+ 		return ret;
  
- 	/* wait for RCG to turn ON */
- 	for (count = 500; count > 0; count--) {
--		if (clk_rcg2_is_enabled(hw))
-+		ret = clk_rcg2_is_enabled(hw);
-+		if (ret < 0)
-+			return ret;
-+		if (ret)
- 			return 0;
+ 	ret = clk_rcg2_configure(rcg, f);
+-	if (ret)
++	if (ret) {
++		clk_rcg2_clear_force_enable(hw);
+ 		return ret;
++	}
  
- 		udelay(1);
+ 	return clk_rcg2_clear_force_enable(hw);
+ }
 -- 
 2.53.0
 
