@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021494;
-	b=SXR2RRakoa3YwGz5+srpP30i9sVpQzAVp7fJPjXtmcCCPKrtRmJSe9PgCisb0WdP+sf5
-	 0Q5b3VPKAk4npsX0MGdi0340WUQvn50Dcr5vJgqYhkoFHtFR6UvRW/73V/E92vET7MZA7
-	 q5oSI2f2FSyi5bYzwG6UVP7UUdZ8mUUrfBc1KSrus9krR/RoNaYVCzYSezmGJy7wKReWZ
-	 M82Tu1rhccxKncT+9LxLzpaoQlp7770+9mnO4B0S8aCroJzeQpOWHI0c4tpdqMVT5qhwj
-	 S53UiDpZe45W1bE6qXwcRtjbzwZfP2FBCMHIxBulbWJ4gozl7hq1Uu83BD/Gz5T5oDQ==
+	t=1795021497;
+	b=iLWZH41NkB5hMsusEv6xrIzY8RxT0nYDP0LXiZkHfihHvaSAQL54mrs9zD09rlKP10Zu
+	 hWLPsvCYcrer8f59SCpt6/2UJVB06qh8cfLIRA6qn2HOyZtNqxUveJiIX+n6KyskXn0T5
+	 Bo8EqPdnJOOVncOQE550l4Gt7NYIX89/KDT6V+uF23SLJPg9c5IPtXs89vZ8fKcisOqRX
+	 mUdFtCVUDBOiXpTbeA5oNzDGwxzEU3xKdffoAN4w9aLGxIRlpfSVEelrgJzgjzPkxbkv6
+	 hmZSQysVCsbftYGQ4UJ1IIyNinjmv2IuxRFme2OhG5A4HObRiBt+D6UQ2nkQhx3jgOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021494;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021497;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6x6wKI5WsKQVsMJRLTjP/FzaxFtz/I/KNVU8jlEVOSE=;
-	b=RCBECfX1NClwxh+bPVj+Wzqo27C8ioQ/1hRfdvOtRFYsS+HFRgyvJcRkIpd0V4UdrpGD
-	 2Ff8WojcY7PUGGz5vVrkd51mnIlMXRYogLYALtsltAU9+FY4oofC14MyXm7d4pKrEAfkX
-	 zGl3Pvo17KrDRNwGiTSPzN/rbrW/6Yu6k+MMmCC8k/EqJZsZ9A3B7M+IF7ajuK6tU6NRE
-	 pHBkDAjL3Rq9NRyLXYfxm+G7yOIEEm/TGcC4G7OIzvcN+MdUTz2ndfgsx/jCX9Vc0zahk
-	 9lgxXrJ01CRT/7ruDi5TR3Y2W4eoNrGH6QvoKc2XivgfHvqLS5DqN8lRGH2ZIH+8hnQ==
+	bh=ImhgGux/yvlGJTd+GJUWAmdunVS1PwfCS6P4H86L+og=;
+	b=OQKyXtVI+RsfOj1H5fOZLxArX/cO2EIY3WflromKgKIlghiKYPysWXEJqDLQ3SQZ9auv
+	 va1e75bbBw1xrIQyCKiHv5Lj3pui3vz35cDj994g8gv0ZPj2OdqzjqiCyjPIRSm2VkJvB
+	 VnaAW+BAw0N4H0fuTLye42dVrxuriC6AmV5/2dl7uyOdioyhdFFO3hrQ03ny4u+mUS7LU
+	 7CZNOPGeMRk3KhXk+67s1BoyZ4B2KWpuGi+tbP9dB+cef4N/Kvgxx46snC+FrEx2pqx6r
+	 Qr7o4eCSb7ycQpSdAb4SJb3hDQen6UbXfpsUVElqb7S8G0v5BNpIkPNt5m+fBvajr4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="UKY/y009";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hh1BULeD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA8D60A260D;
-	Wed, 18 Nov 2026 17:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47ECC60A260A;
+	Wed, 18 Nov 2026 17:04:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UKY/y009
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C969D1F000C4;
-	Wed, 18 Nov 2026 17:04:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hh1BULeD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A7D71F000C4;
+	Wed, 18 Nov 2026 17:04:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021494;
-	bh=6x6wKI5WsKQVsMJRLTjP/FzaxFtz/I/KNVU8jlEVOSE=;
+	s=korg; t=1795021497;
+	bh=ImhgGux/yvlGJTd+GJUWAmdunVS1PwfCS6P4H86L+og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UKY/y009Y9J22dmWGZVWtFtcKB3VeyhmJh/kkPy3+bB0PG2E83tskFx4TinfJnzqr
-	 9rbBO3FH17PCQXwR1f0Fub0rI/cez46r9V52rGhq3TFGMqHUuhkuU/V0rvfhD2CtJ6
-	 GreQjRDf5bWk3BKjn/cEjKmzgfS4K7YYxhMpEIQU=
+	b=Hh1BULeDItKyppjDX6KS7KWuoXCCMQBQl80wZsTCSgPF+bsglvh48vGdZh2qR3z/2
+	 m99/NO0/Tmo4EMzIk6N7c94ZxP4CdMVTcKpAjjZtoqGkYIBk76X/W3dl/Gmjjs8+rJ
+	 sjqIO1iM615OJZqsJrjCTsvPOkCRIWwCYTG+PXac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	James Clark <james.clark@linaro.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Daniel Wagner <wagi@kernel.org>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2328/2651] perf cs-etm: Dont add global v0 HW_IDs to unformatted queues
-Date: Wed, 18 Nov 2026 15:59:28 +0100
-Message-ID: <20261118150408.950326863@linuxfoundation.org>
+Subject: [PATCH 7.3 2329/2651] nvme-fabrics: reset io_queues before computing the queue mapping
+Date: Wed, 18 Nov 2026 15:59:29 +0100
+Message-ID: <20261118150408.984499689@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,67 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@linaro.org>
+From: Daniel Wagner <wagi@kernel.org>
 
-[ Upstream commit 31627cfb63ae4af5a233dc6ced04e5172789aa92 ]
+[ Upstream commit 9588769af5fc8ac12290d48ce1014a78916681fc ]
 
-In the case of mixed formatted and unformatted trace with v0 HW_IDs, or
-no HW_IDs at all resulting in the cs_etm__map_trace_ids_metadata()
-fallback, formatted queues will write their HW_IDs to unformatted
-queues. This will result in an assert because of multiple decoders on an
-unformatted queue.
+nvmf_set_io_queues only sets the io_queues entries of the queue types it
+hands out, but the array is reused on every reconnect.  When the
+controller grants fewer queues on a reconnect, stale entries survive and
+nvmf_map_queues maps CPUs to hardware contexts that don't exist anymore,
+which crashes blk_mq_map_swqueue with a NULL pointer dereference.  E.g.
+with nr_io_queues=8, nr_write_queues=8 and nr_poll_queues=8, 24 queues
+are mapped 8/8/8 (default/read/poll).  If the controller grants only 16
+queues on the reconnect, the poll map still starts at hardware context
+16.
 
-Fix it by not inserting trace ID nodes on other unformatted queues. This
-isn't an issue for v0.1 HW_IDs because they aren't global so will only
-add to their own queue.
+Clear the array before computing the new mapping.
 
-Fixes: 19c3e4db38c5bf30 ("perf: cs-etm: Create decoders based on the trace ID mappings")
-Reviewed-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 6486199378a5 ("nvme-tcp: fix queue mapping when queue count is limited")
+Fixes: 5651cd3c4336 ("nvme-rdma: fix queue mapping when queue count is limited")
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Tested-by: Maurizio Lombardi <mlombard@redhat.com>
+Signed-off-by: Daniel Wagner <wagi@kernel.org>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/cs-etm.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/nvme/host/fabrics.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
-index 114b3cd2da495..1ac627d339828 100644
---- a/tools/perf/util/cs-etm.c
-+++ b/tools/perf/util/cs-etm.c
-@@ -309,27 +309,27 @@ static int cs_etm__map_trace_id_v0(struct cs_etm_auxtrace *etm, u8 trace_chan_id
+diff --git a/drivers/nvme/host/fabrics.c b/drivers/nvme/host/fabrics.c
+index 59f823dfbbccb..571de549fbafc 100644
+--- a/drivers/nvme/host/fabrics.c
++++ b/drivers/nvme/host/fabrics.c
+@@ -1125,6 +1125,8 @@ static int nvmf_parse_options(struct nvmf_ctrl_options *opts,
+ void nvmf_set_io_queues(struct nvmf_ctrl_options *opts, u32 nr_io_queues,
+ 			u32 io_queues[HCTX_MAX_TYPES])
  {
- 	struct cs_etm_queue *etmq;
- 
--	/*
--	 * If the queue is unformatted then only save one mapping in the
--	 * queue associated with that CPU so only one decoder is made.
--	 */
- 	etmq = cs_etm__get_queue(etm, cpu_metadata[CS_ETM_CPU]);
- 	if (!etmq)
- 		return -EINVAL;
- 
-+	/*
-+	 * If the queue is unformatted then only save one mapping in the
-+	 * queue associated with that CPU so only one decoder is made.
-+	 */
- 	if (etmq->format == UNFORMATTED)
- 		return cs_etm__insert_trace_id_node(etmq, trace_chan_id,
- 						    cpu_metadata);
- 
- 	/*
- 	 * Otherwise, version 0 trace IDs are global so save them into every
--	 * queue.
-+	 * formatted queue.
- 	 */
- 	for (unsigned int i = 0; i < etm->queues.nr_queues; ++i) {
- 		int ret;
- 
- 		etmq = etm->queues.queue_array[i].priv;
--		if (!etmq)
-+		if (!etmq || etmq->format == UNFORMATTED)
- 			continue;
- 
- 		ret = cs_etm__insert_trace_id_node(etmq, trace_chan_id,
++	memset(io_queues, 0, sizeof(*io_queues) * HCTX_MAX_TYPES);
++
+ 	if (opts->nr_write_queues && opts->nr_io_queues < nr_io_queues) {
+ 		/*
+ 		 * separate read/write queues
 -- 
 2.53.0
 
