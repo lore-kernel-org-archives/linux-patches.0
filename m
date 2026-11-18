@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036777;
-	b=vP4NJ5L+PA/f2Q7upkFh2dtf0sVAYa2FObmLT/0fyRDzgGnao0vq04NbvlxJdxyOpdOi
-	 vwp/bHmZFJhp8xrZarUZxTiD7NbA4nzkqihhIoH1WNi+PQpLyzcdQD1HlwvIqHNLWRp2c
-	 h1JBhcIURiA4bCBuGBCCiPFbpDikIiBP/XoppDuspXllLlGc6x9W3aS+P++wShsUocNPl
-	 uS9N/iZ/DMK49ZKIT9KxdjQvsSw3UzOlBfwTkRjvNfz8P9rkw+Zc9ujHo8gq60Hrr1hL6
-	 h1znJozYmrESo3K2qr0opEjoHHEHhISvkYPmoftm9lqZpcjp4Jw7qRrGnXVs9IFBp5A==
+	t=1795036780;
+	b=wB2Nevm0jppJt0S1N5eX2y7ob2tiijSumn7goQ9gBaGev//VJTJa4lx8IbVoT01T12m9
+	 5sWjKj2BgmEEhkl0LzK4gtZ1W5SMpGCbqRaLkB1tjVrfypUBM0hHQ+zHq2qOFpIJTBLai
+	 f30f2lB/RjdE8LEgKGhzCj0u428i9MDR0NsDC9W1CnG8hVrUjxu6sxDtp02gqAX6t9ljx
+	 QGKumi5+mp75sn75Wa9CyBQ7NNmASU07/Kbpieb01uxDZufGJhMfC169Clu8CisEl6fAm
+	 rGxKb7YMPqYVdiMcDgQENhBDZP9eo2OTsojoSs0M5M+SrMYmlvEF/d725N/ENX+JPWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036777;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036780;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5P1ID2EDAsRcqveULf5iBWbpe6wT+7N64HDVrOYwHtw=;
-	b=zZu2s9GrmKFE8QcJxGwoqcjs743lKyweYIAnHvJghFYfGJFjG24zWP14J+VsrqZ6NKfb
-	 ObmJEddVbgb1CDjrXii372fIw7pZ9QUbTDJ+wjGlLbTowc/V0usTIXCu5eeyiWOkGL+pY
-	 i44dK7RCIPc9kUEW+cP5aW3dezKHsL0Ej23lE9rcxc1o5V9FQcgI1zdbo3XeVaTFe3NJm
-	 UWIyplUSGrgkNDPQ0S8xvqaEBuB8XjanVtPiPioM8ZV92/nAp7AMcJtLV2NGm1Nf7P3oS
-	 HU9GT4TH0WHuqh/ualzXZZWG3ek6mWCGAV70/sLBn31GHKipzmHXRFsr6pN0ABGykCQ==
+	bh=VKW0xN11rhpj0SNox5NDtpJ6iq8JPLMCgo951TDKOzc=;
+	b=LZllffDiK7sKWf66XvzPqFKx/8KZIgmfGF3Gly01MR55FRuksVsksfc5VoA0Er/20eua
+	 c+os9KmWBxyLucrJ9jJjhQfeXjZ7eAzmFW9YHZ18NRcqSwbm/0XvWZjjvz5CVoPCkGirE
+	 S4YsBniWFSDi/pS2udN7R5ai29DzYSVKyFXwhEF5NB4GFdx/T8w95zAYvRE7T258lsuzT
+	 z66XQm7/GPL5AfYBkIW15AWlAkMnQFwm2M5qiwG1nyVfQhdSmsjR2JwdKN2UgTA5nRl1J
+	 nmWwmZxpuTJ5h3flYCS7qUoVNJeutmO8/LkUthJtxKRHVkgrcYAOfwqgLDCl/m/Ms7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="IQ1LcN/N";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xFZegZlL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 684D4606A32A;
-	Wed, 18 Nov 2026 21:19:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4F6606A32A;
+	Wed, 18 Nov 2026 21:19:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IQ1LcN/N
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B62F01F000C4;
-	Wed, 18 Nov 2026 21:19:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xFZegZlL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A3431F000C4;
+	Wed, 18 Nov 2026 21:19:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036777;
-	bh=5P1ID2EDAsRcqveULf5iBWbpe6wT+7N64HDVrOYwHtw=;
+	s=korg; t=1795036780;
+	bh=VKW0xN11rhpj0SNox5NDtpJ6iq8JPLMCgo951TDKOzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IQ1LcN/NrLE+w98uMZQtvD6PDz8ZpviLLWMlyqitT75pjbw7NGhnGcyHft4OqYVnS
-	 hZUVzEMxEErdc7YSE5TdWRCz7KlnIq8eFfAmEK6uPqfMljri9kA8uPx1d6FPHkafhW
-	 A8gyASJK2MrOqNyNnNq+qtWNvWIHfsTdm6R/icCg=
+	b=xFZegZlLubcESRjMwWXnLN0JNQ6mUIrB++qx5PJxWFK5pnIv7HourJj5UpW2M7Tvs
+	 lyLJ+ZnJss3Vqof6PUtxh/A/+g81Bg9po/AeLel7EFpsi4GzmflJWHDLu8K8sqPGis
+	 Lmw/xDFzZURyFqNiIqvoDONQizNHwSj5sczbRmG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c3741bb338b5c6d6a4aa@syzkaller.appspotmail.com,
-	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
+	Yingjie Wang <1075151112@qq.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1180/3318] net/rds: ib: dont enable IRQs in rds_ib_conn_free()
-Date: Wed, 18 Nov 2026 15:30:02 +0100
-Message-ID: <20261118150355.542723632@linuxfoundation.org>
+Subject: [PATCH 6.6 1181/3318] net: unix: reject negative max_dgram_qlen values
+Date: Wed, 18 Nov 2026 15:30:03 +0100
+Message-ID: <20261118150355.575881208@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,66 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+From: Yingjie Wang <1075151112@qq.com>
 
-[ Upstream commit f6fa1d60ec3ceb7e6c26aa91eadfef34f94014e1 ]
+[ Upstream commit 1a4e7bc6e3457ad95515a9d2c042452c3161bb2c ]
 
-__rds_conn_create() calls trans->conn_free() with rds_conn_lock held
-and IRQs disabled when it loses the race to insert a connection.
-rds_ib_conn_free() takes the device list lock with spin_lock_irq() and
-releases it with spin_unlock_irq(), so IRQs are turned on while
-rds_conn_lock is still held:
+net.unix.max_dgram_qlen is parsed as a signed int and copied to the u32
+sock::sk_max_ack_backlog when an AF_UNIX socket is created.  Consequently,
+a negative value such as -1 is accepted and converted to UINT_MAX.  Since
+the receive queue length is also u32, its fullness check cannot become true
+for that limit.
 
-  raw_local_irq_restore() called with IRQs enabled
-  WARNING: kernel/locking/irqflag-debug.c:10 at warn_bogus_irq_restore+0xc/0x20
-   _raw_spin_unlock_irqrestore+0x67/0x80
-   __rds_conn_create+0x1de5/0x2290
-   rds_conn_create_outgoing+0x43/0x60
-   rds_sendmsg+0xfca/0x20e0
-   __sys_sendto+0x408/0x5a0
+max_dgram_qlen has no documented negative sentinel.  Its existing signed
+interface represents nonnegative values only through INT_MAX; negative bit
+patterns are not a supported encoding for the upper half of the u32
+consumer range.
 
-It needs an RDS socket bound to an address on an RDMA device (e.g. rxe)
-and two concurrent sendto() calls to the same new destination.
+Switch to proc_dointvec_minmax and make the established 0..INT_MAX input
+range explicit.  This rejects negative values without adding new accepted
+values or changing the default and zero-value behavior.  Very large valid
+values can still make the queue limit impractical to reach; this change
+corrects the input domain rather than imposing a new resource ceiling.
 
-The TCP and loopback ->conn_free() callbacks already use irqsave, so
-do the same here.
-
-Fixes: 745cbccac3fe ("RDS: Rewrite connection cleanup, fixing oops on rmmod")
-Reported-by: syzbot+c3741bb338b5c6d6a4aa@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c3741bb338b5c6d6a4aa
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+Signed-off-by: Yingjie Wang <1075151112@qq.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/tencent_A643419B56079E9A448D97922763FF069F08@qq.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/ib_cm.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ Documentation/networking/ip-sysctl.rst | 3 ++-
+ net/unix/sysctl_net_unix.c             | 4 +++-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/rds/ib_cm.c b/net/rds/ib_cm.c
-index 1c6e3b3f39d00..c8771aa7df53a 100644
---- a/net/rds/ib_cm.c
-+++ b/net/rds/ib_cm.c
-@@ -1271,6 +1271,7 @@ void rds_ib_conn_free(void *arg)
- {
- 	struct rds_ib_connection *ic = arg;
- 	spinlock_t	*lock_ptr;
-+	unsigned long flags;
+diff --git a/Documentation/networking/ip-sysctl.rst b/Documentation/networking/ip-sysctl.rst
+index e21743445e4cc..64fb384dc197e 100644
+--- a/Documentation/networking/ip-sysctl.rst
++++ b/Documentation/networking/ip-sysctl.rst
+@@ -3226,5 +3226,6 @@ l3mdev_accept - BOOLEAN
+ max_dgram_qlen - INTEGER
+ 	The maximum length of dgram socket receive queue
  
- 	rdsdebug("ic %p\n", ic);
+-	Default: 10
++	Possible values: 0 - INT_MAX
  
-@@ -1281,9 +1282,10 @@ void rds_ib_conn_free(void *arg)
- 	 */
- 	lock_ptr = ic->rds_ibdev ? &ic->rds_ibdev->spinlock : &ib_nodev_conns_lock;
- 
--	spin_lock_irq(lock_ptr);
-+	/* May be called with IRQs already disabled (see __rds_conn_create()) */
-+	spin_lock_irqsave(lock_ptr, flags);
- 	list_del(&ic->ib_node);
--	spin_unlock_irq(lock_ptr);
-+	spin_unlock_irqrestore(lock_ptr, flags);
- 
- 	rds_ib_recv_free_caches(ic);
- 
++	Default: 10
+diff --git a/net/unix/sysctl_net_unix.c b/net/unix/sysctl_net_unix.c
+index 44996af61999b..91b6448fb290a 100644
+--- a/net/unix/sysctl_net_unix.c
++++ b/net/unix/sysctl_net_unix.c
+@@ -17,7 +17,9 @@ static struct ctl_table unix_table[] = {
+ 		.data		= &init_net.unx.sysctl_max_dgram_qlen,
+ 		.maxlen		= sizeof(int),
+ 		.mode		= 0644,
+-		.proc_handler	= proc_dointvec
++		.proc_handler	= proc_dointvec_minmax,
++		.extra1		= SYSCTL_ZERO,
++		.extra2		= SYSCTL_INT_MAX,
+ 	},
+ 	{ }
+ };
 -- 
 2.53.0
 
