@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030395;
-	b=uV9YaYaAIMwmzlXpG40xqgToH6mAXuLLeUvx72wrDBfaLaIBvXMVw9IyFWUbpIw8Xubh
-	 naVCZFzRpfhhueeXCxbCXG3O6vyajgxtvW+UBkllSNaj/oUXOJqgYMJzgFQdnaUiW84Wk
-	 u0422fDM7AkW2WjXZ4YKkjFW6OtjMgKB9Aic97nc7edZf1obiUXOAsC7C1EDNoTs7m1jT
-	 TpyD1zDy6BNHZMA0thlQnfN95g2ahUcICx8B6KJPP8oZ4cq+b/eeL9LLtQGV8Z0/lz9E5
-	 Ky+50T5+GypyCGDuekp9HMcxXmfOdCEspUfpUWDVBBldbsq6hIE02Cy1SfVF4d4D+vA==
+	t=1795030398;
+	b=YXYV0P9A4yuOMt2jEGuVT0rL6uzxlHeAquAZp14ZfCqHeNcV29jbynEkW0BqHxG5u6XU
+	 vnjfH3mScxm3oJJZF96O5vPFs9tlSPVLmeYqiy3OdfzwbjTl3va8Sexzi5N/Plaeq17Ug
+	 akniTt8S93vF5xhbmSXAepUpM7UxzSwg9w3MaHSg0qsUsOcwYiPqHczhBcsHm+D+Pe0FS
+	 41BREdj1/lU80f8OE4YEbGpbaJxQinb5Qql7lGNxRDG/LGd0BCWHQJ3bMerciTak3cEYp
+	 rfkneIa9w05H3hmtp4Dr1ll9jblRioaS+j9jZTeKvrmKUUHJhyHhWUi0S5f6LNrnbLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030395;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030398;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4TONxrtuQhYqREzLp3v6l1CnlBDnJ+tcG7S3ShsxhvA=;
-	b=Md3m3cgdxNcEnBzinwIHAl9b8RS29JiosKeXbH/N2qxN7/DrVtBvC99/TdrLMdBYqjqV
-	 AYNeaQuURuC1zahRdDZEwmzpP/WNGgR5UxJlGavx2wMWB9tCgsgTkttJT1PTh1aIlqlSq
-	 AiMYHc+H3ex2nDlUiY2Fdc8tHEmF2H66lb2++k7FKTFzLCDFDfvnrnP9muHUyoTNwW7VQ
-	 og0tW3qgaTcND12qv4qUwoggUTpWZowoqxztkuiEWLYt0FOvv6ZXbHCw+9qt17VOezLzU
-	 ADZbXCtr+ALCLr3YjJyHB+zgAn4SI2qcJn/H84R9LXRG8Ply9OaMmZ5rSIoSFscX+nw==
+	bh=t+H915xg53HaCnpl8EuLcxjJvqJehRxI2mDYqHmV1pU=;
+	b=D4SJkpluRTuOqWu62LHbvchuiOCWgV6bsAYsmhYPwmKiSbWLAB/pbVrFGFqAfXGTK0fE
+	 ZwPvcxEhbQ1G+N6tQKiQ4fJJLoINW6sNij9+5YwsROKohuUqh+yb/W1SN0F4L4HZ+wILE
+	 jLcDcu7+ohtYRtE9LtmCAP+47YrUUsUXfs+Ump5xRGuIkVXFXiAybhvXGMM8+QiEfgs//
+	 FptNf69ANrGMEODg704ckwWfMQtagsnsnKWQD8O9fAERI3wAfThkeC+JwozkyYtcu0gZV
+	 bwIDNX0s2pG3gnxT1+p9pKADXlObIdPNbQyvDsklBW+awUVwCQs3hN9lDhA5ueKaFug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F3HA4MVG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vs1wKMQy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8C1606A339;
-	Wed, 18 Nov 2026 19:33:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34BD2606A336;
+	Wed, 18 Nov 2026 19:33:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F3HA4MVG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0B231F000C4;
-	Wed, 18 Nov 2026 19:33:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vs1wKMQy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B4911F000C4;
+	Wed, 18 Nov 2026 19:33:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030395;
-	bh=4TONxrtuQhYqREzLp3v6l1CnlBDnJ+tcG7S3ShsxhvA=;
+	s=korg; t=1795030398;
+	bh=t+H915xg53HaCnpl8EuLcxjJvqJehRxI2mDYqHmV1pU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F3HA4MVGV8XbAAOXZujq0P4KBVFf1RwYHLIwWc2oTC1TuyHJNPSAg2mo+mtQEcmxH
-	 414slApXTHUWmd92e/u4BZQaebaXnAWE/hBZVHpC3oT7748zm/7ZN86V8GIxp9nUQP
-	 9F1a6IrGCyspnjyf5ZR1kxnILW+aiqPc3F7jNHwE=
+	b=Vs1wKMQyCuXrCzzB8vddhdpUHfzSG7NnfTcaSfXwVHv2Iy14BSdPSs5bJw2QFwc3y
+	 f5wAeznpeJsFKQPCmTFqzXY3tAC4NUCw2JlKwFF4OMUQxVTIYqP+VFbcCkSLrdgia1
+	 Qk7h/hGtUisTakmrgdG61UtZW8NjWsJJSPVLUVbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
 	Selvin Xavier <selvin.xavier@broadcom.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0687/1756] RDMA/bnxt_re: Fix the PD and DPI table size
-Date: Wed, 18 Nov 2026 15:46:54 +0100
-Message-ID: <20261118150036.573984036@linuxfoundation.org>
+Subject: [PATCH 6.12 0688/1756] RDMA/bnxt_re: Use bnxt_ext_stats_supported for counter count selection
+Date: Wed, 18 Nov 2026 15:46:55 +0100
+Message-ID: <20261118150036.607459583@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,64 +71,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Selvin Xavier <selvin.xavier@broadcom.com>
 
-[ Upstream commit aa6c2ef821a6ba7f3fd58cfcc031b2d16f3811c6 ]
+[ Upstream commit 7cc8ccb157a4769c8fbce8296532dcb8a8ea0d5e ]
 
-The PD and DPI bitmaps were sized as max >> 3 (bytes),
-but bitmap ops (set_bit(), clear_bit(), find_first_bit(),
-test_and_set_bit()) operate on whole unsigned long words,
-so whenever max isn't a multiple of BITS_PER_LONG,
-the buffer under-allocates and the top word's bitops
-read/write past the end of the kmalloc()'d buffer.
-Most exposed on the DPI table, since dpit->max comes from the
-firmware-reported dev_attr->max_dpi with no alignment guarantee.
+Selecting between BNXT_RE_NUM_EXT_COUNTERS and
+BNXT_RE_NUM_STD_COUNTERS relied only on
+bnxt_qplib_is_chip_gen_p5_p7(), which doesn't account for the
+extended stats capability flag or the PF/VF restriction. Use
+bnxt_ext_stats_supported() instead, matching the check already
+used to populate the extended stats, so the counter count stays
+consistent with what gets filled in.
 
-Fix the size of both allocations with
-BITS_TO_LONGS(max) * sizeof(unsigned long).
-
-Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
+Fixes: 8238c7bd8420 ("RDMA/bnxt_re: Fix the statistics for Gen P7 VF")
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_res.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/bnxt_re/hw_counters.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-index 5a99fa8e9be39..d43cbb953750c 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-@@ -45,6 +45,7 @@
- #include <linux/dma-mapping.h>
- #include <linux/if_vlan.h>
- #include <linux/vmalloc.h>
-+#include <linux/bitops.h>
- #include <rdma/ib_verbs.h>
- #include <rdma/iter.h>
+diff --git a/drivers/infiniband/hw/bnxt_re/hw_counters.c b/drivers/infiniband/hw/bnxt_re/hw_counters.c
+index f51adb0a97e66..699ef8537e4eb 100644
+--- a/drivers/infiniband/hw/bnxt_re/hw_counters.c
++++ b/drivers/infiniband/hw/bnxt_re/hw_counters.c
+@@ -371,7 +371,8 @@ int bnxt_re_ib_get_hw_stats(struct ib_device *ibdev,
+ 	}
  
-@@ -684,9 +685,9 @@ static int bnxt_qplib_alloc_pd_tbl(struct bnxt_qplib_res *res,
- {
- 	u32 bytes;
+ done:
+-	return bnxt_qplib_is_chip_gen_p5_p7(rdev->chip_ctx) ?
++	return bnxt_ext_stats_supported(rdev->chip_ctx, rdev->dev_attr->dev_cap_flags,
++					 rdev->is_virtfn) ?
+ 		BNXT_RE_NUM_EXT_COUNTERS : BNXT_RE_NUM_STD_COUNTERS;
+ }
  
--	bytes = max >> 3;
-+	bytes = BITS_TO_LONGS(max) * sizeof(unsigned long);
- 	if (!bytes)
--		bytes = 1;
-+		bytes = sizeof(unsigned long);
- 	pdt->tbl = kmalloc(bytes, GFP_KERNEL);
- 	if (!pdt->tbl)
- 		return -ENOMEM;
-@@ -821,9 +822,9 @@ static int bnxt_qplib_alloc_dpi_tbl(struct bnxt_qplib_res *res,
- 	if (!dpit->app_tbl)
- 		return -ENOMEM;
+@@ -381,7 +382,8 @@ struct rdma_hw_stats *bnxt_re_ib_alloc_hw_port_stats(struct ib_device *ibdev,
+ 	struct bnxt_re_dev *rdev = to_bnxt_re_dev(ibdev, ibdev);
+ 	int num_counters = 0;
  
--	bytes = dpit->max >> 3;
-+	bytes = BITS_TO_LONGS(dpit->max) * sizeof(unsigned long);
- 	if (!bytes)
--		bytes = 1;
-+		bytes = sizeof(unsigned long);
- 
- 	dpit->tbl = kmalloc(bytes, GFP_KERNEL);
- 	if (!dpit->tbl) {
+-	if (bnxt_qplib_is_chip_gen_p5_p7(rdev->chip_ctx))
++	if (bnxt_ext_stats_supported(rdev->chip_ctx, rdev->dev_attr->dev_cap_flags,
++				     rdev->is_virtfn))
+ 		num_counters = BNXT_RE_NUM_EXT_COUNTERS;
+ 	else
+ 		num_counters = BNXT_RE_NUM_STD_COUNTERS;
 -- 
 2.53.0
 
