@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026586;
-	b=VMg8/X0adUEEEhzfARekLhDnlBRlXhDsZVL5BuUfsEAL8G8NCe37LXONfmBlGW4T+YkW
-	 NuG4ieJ5CM8NwOJm8hcTB6GqADdUL0gYP1qEVKuEOzUGuyKUHGsLcJJiScJt6jIuQ2Pvn
-	 2633cogLTpNMLzBO84lPGn/i/ADkcofBxv4BgsAChZyrJVnwMWcuhxMY0x6zIBq9YZZdC
-	 VdFNidRLYKjYXrTnYgTlbzZuFNo1lxsw60CTP/mHFtCeNJTAofqPmcUmuUdlp/HP5qbtT
-	 0UG3XDnseL7fF25aUvAP4NZqarD7PHqpOpz4TXnl0GzN6Fn+r5A6y9ARBiBkNEsoliA==
+	t=1795026588;
+	b=a71uivqIP9MifSjQ97j7X/BzNVDzCos/uByIYpvv0XgxRdfX9LP3e5rHmPFRQVKKZTc+
+	 ypj9O9w4VvL+6vhcZ5/xin6ZvAuPFCCOnrY0g9jRu6J1o4ewjpHanwW1AV/G6m8fo6qaS
+	 ZY6xTx24G9Aig2hsSOmrvFBuPuzoxh56Kf7ruM3LwP6d80joBCzjRDpjMwMcAdS002fwS
+	 Z578RfL23OX9pZuPoAn7YEq78gbXDi0SPcd8UsrUTDP5mfWCJ3VX5/fGbtURA3HnjMb/2
+	 zk3lRsR2PmfB/71y956dGfcSsU6eLf36OThZv/ECu8S91QGvh+ZERs/cBnatIXKoZSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026586;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026588;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8h+wv3FqBs6jRGvCkHrCBAcdRmTyr9tcX5fI8cmqcT0=;
-	b=f3aumCj+CinNQ8R8XQf4TzLkkJpl3EMcu6aNYwAUzs6kKAdWUqpxQ22v8pIJxQSlhyQY
-	 BzBo7ZB+HGo2kW1XamiseJKtfpJcxEbWFwezPwZx3hAigWm1RW0y0esqYRrRj3pLZBQuL
-	 0aYVbof89YGteuEd4bEga40x19bo/7WgJYwkvqr6k3Ge8NoSFA25ylXgly5lOl9HojUVz
-	 3JnJup3gPTWRMzJ3HHsc11AO08qR4rd0Ajj1v9q8XRjFWmYGYdbnQiPVGMH8cMlyR6vZI
-	 q1HnOBfsc10deFUzZ0hpO0DX5CY4gSrI5LMTP06r5EX4uvkJfCgLYVywa0EiBGY2BEg==
+	bh=KVgj81zL8ZvV9ITY5dXEMSJf0KvhF9QzKze8lfNXNWo=;
+	b=rd/psWFCar/VvjQu5m0f2pdigMiyhVKykm2+yB50UKCplgX24hQKa+VF8CWFscx0fdDF
+	 DPGkAgJ6fNCp+OAt+QdzUJ8he4BUXGtNfXeUlkBiFpvAmgs3Z1UBdoB92tiUovA82b8/D
+	 aLIZC0IgoVvpaH5thHgEVl3oSArUYUbM/eU81mhDWONq0HjUvmGgYG6xXM+N1MqPhPqAO
+	 iqlLqm9RUc83qPj0QJaPykYjRY6brhGpg48fmWeFDwK2mILWWgpvpAcvIi5JzvTL7zQ2I
+	 RKKJMcfErDYNq+HCsllNk8Qh2Dg4IY6NZ9FslQO/3TKsaUPbaUgc7GtK8oHLR6CF9/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WYQx5lys;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X7neW9gB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03873606A320;
-	Wed, 18 Nov 2026 18:29:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2965606A31C;
+	Wed, 18 Nov 2026 18:29:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WYQx5lys
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 151271F000C4;
-	Wed, 18 Nov 2026 18:29:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X7neW9gB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E025C1F000C4;
+	Wed, 18 Nov 2026 18:29:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026585;
-	bh=8h+wv3FqBs6jRGvCkHrCBAcdRmTyr9tcX5fI8cmqcT0=;
+	s=korg; t=1795026588;
+	bh=KVgj81zL8ZvV9ITY5dXEMSJf0KvhF9QzKze8lfNXNWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WYQx5lyscv5i2IJFwKWxBJZCglK6cgkv06JmhvdVHK23oAxhmOlSaZb8M8aTImgCK
-	 vK3LAaU5cqJTPU+YnlTXkCqlqTeVK89nLQt0AEXlL7xgcC3LmFfOp8uBGu2/mWL35E
-	 JVISve1Yci4D1ID4oAjz/9CWgZACIlO0usXIfsyM=
+	b=X7neW9gBHLHzJRWjzcYOtlGdqTkaUK8bbF729EjePH4jMAjg9fWwArMND27IxsqUJ
+	 BQDvyRkzl3nuS0gIEpIF0Lyd3OA+vS9VTtWUvs4X+D1VRMhwmeSiLLStr+NTvlkk1d
+	 LylK8PdC/G3SjlM9yvpLNv6ja0uy3K1Z9BEm9hyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <hppiscas@163.com>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	"Harry Yoo (Meta)" <harry@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Hao Li <hao.li@linux.dev>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1488/2151] thermal/drivers/rzg3e: Propagate reset assertion failure from suspend
-Date: Wed, 18 Nov 2026 15:53:43 +0100
-Message-ID: <20261118150216.083845522@linuxfoundation.org>
+Subject: [PATCH 6.18 1489/2151] mm/slab: Mark the kmem_buckets_create() context as a Context: section
+Date: Wed, 18 Nov 2026 15:53:44 +0100
+Message-ID: <20261118150216.119099291@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,59 +71,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <hppiscas@163.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 2dc1f296b5754dd2441fc8b6613a362a47f6b98f ]
+[ Upstream commit 655668f0caf32a42fef10aaf31137e52f46a0260 ]
 
-rzg3e_thermal_suspend() powers off an active sensor and then ignores
-failure to assert its reset. System sleep can therefore continue without
-the clean reset state expected by resume.
+kmem_buckets_create() had the same sentence about calling context as
+kmem_cache_create(), but lacked the "Context:" prefix, so kernel-doc
+rendered in the body instead of as a "context" section.
 
-Return the reset error and, when the sensor had been active, try to
-restore power before failing suspend. This is best-effort recovery:
-reset assertion failure may leave partial hardware state, so restoring
-power is not guaranteed to succeed. Preserve the original reset error.
+Give it the missing prefix. Additionally fix the "a interrupt" typo
+__kmem_cache_create_args() had.
 
-The issue was found by our static-analysis tool and manually reviewed.
-
-Fixes: dc67521c20b7 ("thermal/drivers/renesas/rzg3e: Fix add thermal driver for the Renesas RZ/G3E SoC")
-Assisted-by: gpt 5
-Signed-off-by: Pengpeng Hou <hppiscas@163.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Reviewed-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Link: https://patch.msgid.link/20261014031814.7230-1-hppiscas@163.com
+Fixes: b32801d1255be ("mm/slab: Introduce kmem_buckets_create() and family")
+Reviewed-by: Harry Yoo (Meta) <harry@kernel.org>
+Acked-by: Pedro Falcato <pfalcato@suse.de>
+Reviewed-by: Hao Li <hao.li@linux.dev>
+Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Signed-off-by: Kees Cook <kees@kernel.org>
+Link: https://patch.msgid.link/20261014052344.384723-1-kees@kernel.org
+Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/renesas/rzg3e_thermal.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ mm/slab_common.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/thermal/renesas/rzg3e_thermal.c b/drivers/thermal/renesas/rzg3e_thermal.c
-index 94ac1935c64d4..057303a244c53 100644
---- a/drivers/thermal/renesas/rzg3e_thermal.c
-+++ b/drivers/thermal/renesas/rzg3e_thermal.c
-@@ -501,15 +501,19 @@ static int rzg3e_thermal_runtime_resume(struct device *dev)
- static int rzg3e_thermal_suspend(struct device *dev)
- {
- 	struct rzg3e_thermal_priv *priv = dev_get_drvdata(dev);
-+	bool active = pm_runtime_active(dev);
-+	int ret;
- 
- 	/* If device is active, power it off */
--	if (pm_runtime_active(dev))
-+	if (active)
- 		rzg3e_thermal_power_off(priv);
- 
- 	/* Assert reset to ensure clean state after resume */
--	reset_control_assert(priv->rstc);
-+	ret = reset_control_assert(priv->rstc);
-+	if (ret && active)
-+		rzg3e_thermal_power_on(priv);
- 
--	return 0;
-+	return ret;
- }
- 
- static int rzg3e_thermal_resume(struct device *dev)
+diff --git a/mm/slab_common.c b/mm/slab_common.c
+index 0058d1f25905c..9a95bed7ca39b 100644
+--- a/mm/slab_common.c
++++ b/mm/slab_common.c
+@@ -308,7 +308,7 @@ __kmem_cache_alias(const char *name, unsigned int size, slab_flags_t flags,
+  * &SLAB_TYPESAFE_BY_RCU - Slab page (not individual objects) freeing delayed
+  * by a grace period - see the full description before using.
+  *
+- * Context: Cannot be called within a interrupt, but can be interrupted.
++ * Context: Cannot be called within an interrupt, but can be interrupted.
+  *
+  * Return: a pointer to the cache on success, NULL on failure.
+  */
+@@ -405,7 +405,7 @@ static struct kmem_cache *kmem_buckets_cache __ro_after_init;
+  *		to/from userspace.
+  * @ctor: A constructor for the objects, run when new allocations are made.
+  *
+- * Cannot be called within an interrupt, but can be interrupted.
++ * Context: Cannot be called within an interrupt, but can be interrupted.
+  *
+  * Return: a pointer to the cache on success, NULL on failure. When
+  * CONFIG_SLAB_BUCKETS is not enabled, ZERO_SIZE_PTR is returned, and
 -- 
 2.53.0
 
