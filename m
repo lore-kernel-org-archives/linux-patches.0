@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026205;
-	b=ukplZ7V2ZHy/Nsqqyyxh7LnZslWuqqYY5/TbQDVCRXZxge6ZWh/799eku2MtdsiqxaoC
-	 om1DERidfgY6Gv5tdyA+NnOaC9S7Ze6LXKpaEk7rF91f89Wu2LojuQvrXbBS8vZ/SEwTW
-	 KQl1S82goHKVNA8T8BPom4oJpHQAvhgyH0pEx9SqruZoVuBDyEEe4zB5qWl7zELM84Cnh
-	 l1UfefloBbZMEE+zaQtrTjaimrHFyQ55iFGSm3k1ZPAole+hN+o4yx4zkOEcNrLwImt1I
-	 cP2eLEHa6te1wkFGDUYSLifGoDSkgr4fB7jQdvt36pCVuWlnqB4z6YrqgzUeqPnkq6g==
+	t=1795026208;
+	b=NhJWhMG/f8qDnZ+X6+ZLPVzY7xHIRJqXN2fQCDDwqQqazCYbWToVYbWcpPO6BqYGMofv
+	 ADQRrhW1DZgSqEfZdAW4pdABh8E6DxRh3RWOPnrzqB1/SDGCC+TOELbd36LBenZuxYdUv
+	 Se0a8YRIw8GLLgtnkAKT7iWwz4oXk524hmXibbhYfW2vI8/8avgMUqjKGI2uAxsO8dQqK
+	 zRNGrFInqCd5AI9o8nnufxq31rvdyYMsP+c1xrHvy42Al4w4XjQbW7I87eAwh2YwSQiZS
+	 +FxXBjJpXrrfrcoPG002cvbjO+lXxEQRCFT3t25RxIrqchVIixeEp0weVwoCp+6kFDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026205;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026208;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Xkk8ZMJrkfIdF8w5qFDRuPCT99RDqQoNODgNqJSvpQI=;
-	b=YdVcelqsRq6uwImAFD15jT6bQ9r4glJlHKfGCP+oMKcn/9Zu0LBdOqOVVnaYE0B9Y06G
-	 +Lp8g1qvPGVY9j3/vv7/fntmkuCn8SykrinxRU7Bh0XBvM5drQM/u4BhdmXNQOws6Z4ou
-	 eigA9t3BXlardIBG6H89+WJx1TmMQfgl3zjnA5hIjTAwljlPlWzYKDvy0yNkeu6wgoHrp
-	 dbV89cj3UWYdJHy5Pxoa0/P+a1A361sy2/78AJXCHqZAWuHq0qFKn10aKhtVx0W3lX2+I
-	 1lVaW1lL2Uw6e0Q1sZcxHyIt8LlqYt+mcT7wkZdfRWqgJYHsvKzkg8xMCodJn8mdWkw==
+	bh=6MnUZXSkD4zS2/RijQcw5/vSyewlmNHvNUkrjh1goXA=;
+	b=ReNEPAhItvJcLJJesv4e9u57KDeTwkdM5X8YPbpN9KZwbZ1EOmS1+IHegdRqNwRAydww
+	 a+LgGv5TZB7ZLpSukwPogVCHiVepDcjy01c9/rpJMzxJ/ZgrK78znfhv+l37pFLOUZs6l
+	 9Xwl7ww23gdQgS34qRsuaR3g053P8/fjKNIuQnTGepnTTaGckKCa78Hf3AxmGmz0Okfy1
+	 luAucDcAPLxFCVzy7FGjXk+3yyMgx97Qdw+T9zuztPFh8QxlO12fOO6y/bB+2lPmOwXk0
+	 ISTtVj+8a7uGi0CMaEeahw/ZlMbOvhGoQQQ+JwOinHFE5VSlRffHeGVw7HJIM1nFv5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wfAgM31J;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BqgLWHTA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 223D760A381B;
-	Wed, 18 Nov 2026 18:23:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F68A606A331;
+	Wed, 18 Nov 2026 18:23:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wfAgM31J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 787A11F000C4;
-	Wed, 18 Nov 2026 18:23:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BqgLWHTA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CBF21F000C4;
+	Wed, 18 Nov 2026 18:23:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026205;
-	bh=Xkk8ZMJrkfIdF8w5qFDRuPCT99RDqQoNODgNqJSvpQI=;
+	s=korg; t=1795026207;
+	bh=6MnUZXSkD4zS2/RijQcw5/vSyewlmNHvNUkrjh1goXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wfAgM31JKAxvwrxr2rDovAZIUEwjJOCYrrw8ePrl2xvR/s2iAOJxbOsmf2XD9IRFf
-	 vC6L/0+2ChMeHlKe3wcvEDBGm10K4ElAAkVqj773k9C8xfBdsIFdy7eH2+0oyCes8D
-	 ATUnzuTE4E76erqBYYiQkkeZEuQfndOsX+jTJNjA=
+	b=BqgLWHTAQCX9fFusADd3awncYAmvA6IYI+cc6J6hia2jDK2T71VydDeQ1GWi2B/uD
+	 nsSTLDHa3Ak0F2FpB4kcz+PcGSmeu3hY2F+23BF6uMQEM2Sd/dgZ197EGQdou1vShi
+	 0jYWujzFAVTo12houYIOIMNm/rQKZFTdvQGxvH7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1352/2151] btrfs: introduce the device layout aware per-profile available space
-Date: Wed, 18 Nov 2026 15:51:27 +0100
-Message-ID: <20261118150211.285338478@linuxfoundation.org>
+Subject: [PATCH 6.18 1353/2151] btrfs: update per-profile available estimation
+Date: Wed, 18 Nov 2026 15:51:28 +0100
+Message-ID: <20261118150211.319513880@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,127 +71,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 52fead5eb8a743384bab24ca8c3695257c755f0f ]
+[ Upstream commit c84053d9f7f758c79320716caa098cafc70a74da ]
 
-[BUG]
-There is a long known bug that if metadata is using RAID1 on two disks
-with unbalanced sizes, there is a very high chance to hit ENOSPC related
-transaction abort.
+This involves the following timing:
 
-[CAUSE]
-The root cause is in the available space estimation code:
+- Chunk allocation
+- Chunk removal
+- After Mount
+- New device
+- Device removal
+- Device shrink
+- Device enlarge
 
-- Factor based calculation
-  Just use all unallocated space, divide by the profile factor
-  One obvious user is can_overcommit().
+And since the function btrfs_update_per_profile_avail() will not return
+an error, this won't cause new error handling path.
 
-This can not handle the following example:
+Although when btrfs_update_per_profile_avail() failed (only ENOSPC
+possible) it will mark the per-profile available estimation as
+unreliable, so later btrfs_get_per_profile_avail() will return false and
+require the caller to have a fallback solution.
 
-  devid 1 unallocated:	1GiB
-  devid 2 unallocated:	50GiB
-  metadata type:	RAID1
+The function btrfs_update_per_profile_avail() will be executed with
+chunk_mutex hold, thus it will slightly slow down those involved
+functions, but not a lot.
 
-If using factor based estimation, we can use (1GiB + 50GiB) / 2 = 25.5GiB
-free space for metadata.
-Thus we can continue allocating metadata (over-commit) way beyond the
-1GiB limit.
+As all the core workload is just various u64 calculations inside a loop,
+without any tree search, the overhead should be acceptable even for all
+supported 9 profiles.
 
-But this estimation is completely wrong, in reality we can only allocate
-one single 1GiB RAID1 block group, thus if we continue over-commit, at
-one time we will hit ENOSPC at some critical path and flips the fs
-read-only.
-
-[SOLUTION]
-This patch will introduce per-profile available space estimation,
-which can provide chunk-allocator like behavior to give a (mostly)
-accurate result, with under-estimate corner cases.
-
-There are some differences between the estimation and real chunk
-allocator:
-
-- No consideration on hole size
-  It's fine for most cases, as all data/metadata strips are in 1GiB size
-  thus there should not be any hole wasting much space.
-
-  And chunk allocator is able to use smaller stripes when there is
-  really no other choice.
-
-  Although in theory this means it can lead to some over-estimation, it
-  should not cause too much hassle in the real world.
-
-  The other benefit of such behavior is, we avoid dev-extent tree search
-  completely, thus the overhead is very small.
-
-- No true balance for certain cases
-  If we have 3 disks RAID1, and each device has 2GiB unallocated space,
-  we can load balance the chunk allocation so that we can allocate 3GiB
-  RAID1 chunks, and that's what chunk allocator will do.
-
-  But this current estimation code is using the largest available space
-  to do a single allocation. Meaning the estimation will be 2GiB, thus
-  under estimate.
-
-  Such under estimation is fine and after the first chunk allocation, the
-  estimation will be updated and still give a correct 2GiB
-  estimation.
-  So this only means the estimation will be a little conservative, which
-  is safer for call sites like metadata over-commit check.
-
-With that facility, for above 1GiB + 50GiB case, it will give a RAID1
-estimation of 1GiB, instead of the incorrect 25.5GiB.
-
-Or for a more complex example:
-  devid 1 unallocated:	1T
-  devid 2 unallocated:  1T
-  devid 3 unallocated:	10T
-
-We will get an array of:
-  RAID10:	2T
-  RAID1:	2T
-  RAID1C3:	1T
-  RAID1C4:	0  (not enough devices)
-  DUP:		6T
-  RAID0:	3T
-  SINGLE:	12T
-  RAID5:	2T
-  RAID6:	1T
-
-[IMPLEMENTATION]
-And for the each profile , we go chunk allocator level calculation:
-The pseudo code looks like:
-
-  clear_virtual_used_space_of_all_rw_devices();
-  do {
-  	/*
-  	 * The same as chunk allocator, despite used space,
-  	 * we also take virtual used space into consideration.
-  	 */
-  	sort_device_with_virtual_free_space();
-
-  	/*
-  	 * Unlike chunk allocator, we don't need to bother hole/stripe
-  	 * size, so we use the smallest device to make sure we can
-  	 * allocated as many stripes as regular chunk allocator
-  	 */
-  	stripe_size = device_with_smallest_free->avail_space;
-	stripe_size = min(stripe_size, to_alloc / ndevs);
-
-  	/*
-  	 * Allocate a virtual chunk, allocated virtual chunk will
-  	 * increase virtual used space, allow next iteration to
-  	 * properly emulate chunk allocator behavior.
-  	 */
-  	ret = alloc_virtual_chunk(stripe_size, &allocated_size);
-  	if (ret == 0)
-  		avail += allocated_size;
-  } while (ret == 0)
-
-This minimal available space based calculation is not perfect, but the
-important part is, the estimation is never exceeding the real available
-space.
-
-This patch just introduces the infrastructure, no hooks are executed
-yet.
+For 4 disks (which exercises all 9 profiles), the execution time of that
+function will still be less than 10 us.
 
 Reviewed-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: Qu Wenruo <wqu@suse.com>
@@ -199,258 +108,110 @@ Signed-off-by: David Sterba <dsterba@suse.com>
 Stable-dep-of: f5166f53b60b ("btrfs: roll back sprout setup after device add failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/volumes.c | 164 +++++++++++++++++++++++++++++++++++++++++++++
- fs/btrfs/volumes.h |  34 ++++++++++
- 2 files changed, 198 insertions(+)
+ fs/btrfs/volumes.c | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
 diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index 0f5c3d1606a48..ebf9132a295b6 100644
+index ebf9132a295b6..a0984d6332dca 100644
 --- a/fs/btrfs/volumes.c
 +++ b/fs/btrfs/volumes.c
-@@ -388,6 +388,7 @@ static struct btrfs_fs_devices *alloc_fs_devices(const u8 *fsid)
- 	INIT_LIST_HEAD(&fs_devs->alloc_list);
- 	INIT_LIST_HEAD(&fs_devs->fs_list);
- 	INIT_LIST_HEAD(&fs_devs->seed_list);
-+	spin_lock_init(&fs_devs->per_profile_lock);
+@@ -2339,6 +2339,7 @@ int btrfs_rm_device(struct btrfs_fs_info *fs_info,
+ 		mutex_lock(&fs_info->chunk_mutex);
+ 		list_del_init(&device->dev_alloc_list);
+ 		device->fs_devices->rw_devices--;
++		btrfs_update_per_profile_avail(fs_info);
+ 		mutex_unlock(&fs_info->chunk_mutex);
+ 	}
  
- 	if (fsid) {
- 		memcpy(fs_devs->fsid, fsid, BTRFS_FSID_SIZE);
-@@ -5209,6 +5210,169 @@ static int btrfs_cmp_device_info(const void *a, const void *b)
- 	return 0;
+@@ -2450,6 +2451,7 @@ int btrfs_rm_device(struct btrfs_fs_info *fs_info,
+ 		list_add(&device->dev_alloc_list,
+ 			 &fs_devices->alloc_list);
+ 		device->fs_devices->rw_devices++;
++		btrfs_update_per_profile_avail(fs_info);
+ 		mutex_unlock(&fs_info->chunk_mutex);
+ 	}
+ 	return ret;
+@@ -2937,6 +2939,7 @@ int btrfs_init_new_device(struct btrfs_fs_info *fs_info, const char *device_path
+ 	 */
+ 	btrfs_clear_space_info_full(fs_info);
+ 
++	btrfs_update_per_profile_avail(fs_info);
+ 	mutex_unlock(&fs_info->chunk_mutex);
+ 
+ 	/* Add sysfs device entry */
+@@ -2947,6 +2950,7 @@ int btrfs_init_new_device(struct btrfs_fs_info *fs_info, const char *device_path
+ 	if (seeding_dev) {
+ 		mutex_lock(&fs_info->chunk_mutex);
+ 		ret = init_first_rw_device(trans);
++		btrfs_update_per_profile_avail(fs_info);
+ 		mutex_unlock(&fs_info->chunk_mutex);
+ 		if (unlikely(ret)) {
+ 			btrfs_abort_transaction(trans, ret);
+@@ -3033,6 +3037,7 @@ int btrfs_init_new_device(struct btrfs_fs_info *fs_info, const char *device_path
+ 				    orig_super_total_bytes);
+ 	btrfs_set_super_num_devices(fs_info->super_copy,
+ 				    orig_super_num_devices);
++	btrfs_update_per_profile_avail(fs_info);
+ 	mutex_unlock(&fs_info->chunk_mutex);
+ 	mutex_unlock(&fs_info->fs_devices->device_list_mutex);
+ error_trans:
+@@ -3126,6 +3131,7 @@ int btrfs_grow_device(struct btrfs_trans_handle *trans,
+ 	if (list_empty(&device->post_commit_list))
+ 		list_add_tail(&device->post_commit_list,
+ 			      &trans->transaction->dev_update_list);
++	btrfs_update_per_profile_avail(fs_info);
+ 	mutex_unlock(&fs_info->chunk_mutex);
+ 
+ 	btrfs_reserve_chunk_metadata(trans, false);
+@@ -3495,6 +3501,7 @@ int btrfs_remove_chunk(struct btrfs_trans_handle *trans, u64 chunk_offset)
+ 		}
+ 	}
+ 
++	btrfs_update_per_profile_avail(fs_info);
+ 	mutex_unlock(&fs_info->chunk_mutex);
+ 	trans->removing_chunk = false;
+ 
+@@ -5023,6 +5030,7 @@ int btrfs_shrink_device(struct btrfs_device *device, u64 new_size)
+ 		atomic64_sub(free_diff, &fs_info->free_chunk_space);
+ 	}
+ 
++	btrfs_update_per_profile_avail(fs_info);
+ 	/*
+ 	 * Once the device's size has been set to the new size, ensure all
+ 	 * in-memory chunks are synced to disk so that the loop below sees them
+@@ -5138,6 +5146,7 @@ int btrfs_shrink_device(struct btrfs_device *device, u64 new_size)
+ 	WARN_ON(diff > old_total);
+ 	btrfs_set_super_total_bytes(super_copy,
+ 			round_down(old_total - diff, fs_info->sectorsize));
++	btrfs_update_per_profile_avail(fs_info);
+ 	mutex_unlock(&fs_info->chunk_mutex);
+ 
+ 	btrfs_reserve_chunk_metadata(trans, false);
+@@ -5850,6 +5859,8 @@ static struct btrfs_block_group *create_chunk(struct btrfs_trans_handle *trans,
+ 	check_raid56_incompat_flag(info, type);
+ 	check_raid1c34_incompat_flag(info, type);
+ 
++	btrfs_update_per_profile_avail(info);
++
+ 	return block_group;
  }
  
-+/*
-+ * Return 0 if we allocated any virtual(*) chunk, and restore the size to
-+ * @allocated.
-+ * Return -ENOSPC if we have no more space to allocate virtual chunk
-+ *
-+ * *: A virtual chunk is a chunk that only exists during per-profile available
-+ *    estimation.
-+ *    Those numbers won't really take on-disk space, but only to emulate
-+ *    chunk allocator behavior to get accurate estimation on available space.
-+ *
-+ *    Another difference is, a virtual chunk has no size limit and doesn't care
-+ *    about holes in the device tree, allowing us to exhaust device space
-+ *    much faster.
-+ */
-+static int alloc_virtual_chunk(struct btrfs_fs_info *fs_info,
-+			       struct btrfs_device_info *devices_info,
-+			       enum btrfs_raid_types type,
-+			       u64 *allocated)
-+{
-+	const struct btrfs_raid_attr *raid_attr = &btrfs_raid_array[type];
-+	struct btrfs_fs_devices *fs_devices = fs_info->fs_devices;
-+	struct btrfs_device *device;
-+	u64 stripe_size;
-+	int ndevs = 0;
-+
-+	lockdep_assert_held(&fs_info->chunk_mutex);
-+
-+	/* Go through devices to collect their unallocated space. */
-+	list_for_each_entry(device, &fs_devices->alloc_list, dev_alloc_list) {
-+		u64 avail;
-+
-+		if (!test_bit(BTRFS_DEV_STATE_IN_FS_METADATA,
-+					&device->dev_state) ||
-+		    test_bit(BTRFS_DEV_STATE_REPLACE_TGT, &device->dev_state))
-+			continue;
-+
-+		if (device->total_bytes > device->bytes_used +
-+				device->per_profile_allocated)
-+			avail = device->total_bytes - device->bytes_used -
-+				device->per_profile_allocated;
-+		else
-+			avail = 0;
-+
-+		avail = round_down(avail, fs_info->sectorsize);
-+
-+		/* And exclude the [0, 1M) reserved space. */
-+		if (avail > BTRFS_DEVICE_RANGE_RESERVED)
-+			avail -= BTRFS_DEVICE_RANGE_RESERVED;
-+		else
-+			avail = 0;
-+
-+		/*
-+		 * Not enough to support a single stripe, this device
-+		 * can not be utilized for chunk allocation.
-+		 */
-+		if (avail < BTRFS_STRIPE_LEN)
-+			continue;
-+
-+		/*
-+		 * Unlike chunk allocator, we don't care about stripe or hole
-+		 * size, so here we use @avail directly.
-+		 */
-+		devices_info[ndevs].dev_offset = 0;
-+		devices_info[ndevs].total_avail = avail;
-+		devices_info[ndevs].max_avail = avail;
-+		devices_info[ndevs].dev = device;
-+		++ndevs;
-+	}
-+	sort(devices_info, ndevs, sizeof(struct btrfs_device_info),
-+	     btrfs_cmp_device_info, NULL);
-+	ndevs = rounddown(ndevs, raid_attr->devs_increment);
-+	if (ndevs < raid_attr->devs_min)
-+		return -ENOSPC;
-+	if (raid_attr->devs_max)
-+		ndevs = min(ndevs, (int)raid_attr->devs_max);
-+	else
-+		ndevs = min(ndevs, (int)BTRFS_MAX_DEVS(fs_info));
-+
-+	/*
-+	 * Stripe size will be determined by the device with the least
-+	 * unallocated space.
-+	 */
-+	stripe_size = devices_info[ndevs - 1].total_avail;
-+
-+	for (int i = 0; i < ndevs; i++)
-+		devices_info[i].dev->per_profile_allocated += stripe_size;
-+	*allocated = div_u64(stripe_size * (ndevs - raid_attr->nparity),
-+			     raid_attr->ncopies);
-+	return 0;
-+}
-+
-+static int calc_one_profile_avail(struct btrfs_fs_info *fs_info,
-+				  enum btrfs_raid_types type,
-+				  u64 *result_ret)
-+{
-+	struct btrfs_device_info *devices_info = NULL;
-+	struct btrfs_fs_devices *fs_devices = fs_info->fs_devices;
-+	struct btrfs_device *device;
-+	u64 allocated;
-+	u64 result = 0;
-+	int ret = 0;
-+
-+	lockdep_assert_held(&fs_info->chunk_mutex);
-+	ASSERT(type >= 0 && type < BTRFS_NR_RAID_TYPES);
-+
-+	/* Not enough devices, quick exit, just update the result. */
-+	if (fs_devices->rw_devices < btrfs_raid_array[type].devs_min) {
-+		ret = -ENOSPC;
-+		goto out;
-+	}
-+
-+	devices_info = kcalloc(fs_devices->rw_devices, sizeof(*devices_info),
-+			       GFP_NOFS);
-+	if (!devices_info) {
-+		ret = -ENOMEM;
-+		goto out;
-+	}
-+	/* Clear virtual chunk used space for each device. */
-+	list_for_each_entry(device, &fs_devices->alloc_list, dev_alloc_list)
-+		device->per_profile_allocated = 0;
-+
-+	while (!alloc_virtual_chunk(fs_info, devices_info, type, &allocated))
-+		result += allocated;
-+
-+out:
-+	kfree(devices_info);
-+	if (ret < 0 && ret != -ENOSPC)
+@@ -8389,7 +8400,14 @@ int btrfs_verify_dev_extents(struct btrfs_fs_info *fs_info)
+ 	}
+ 
+ 	/* Ensure all chunks have corresponding dev extents */
+-	return verify_chunk_dev_extent_mapping(fs_info);
++	ret = verify_chunk_dev_extent_mapping(fs_info);
++	if (ret < 0)
 +		return ret;
-+	*result_ret = result;
++
++	mutex_lock(&fs_info->chunk_mutex);
++	btrfs_update_per_profile_avail(fs_info);
++	mutex_unlock(&fs_info->chunk_mutex);
 +	return 0;
-+}
-+
-+/* Update the per-profile available space array. */
-+void btrfs_update_per_profile_avail(struct btrfs_fs_info *fs_info)
-+{
-+	u64 results[BTRFS_NR_RAID_TYPES];
-+	int ret;
-+
-+	/*
-+	 * Zoned is more complex as we can not simply get the amount of
-+	 * available space for each device.
-+	 */
-+	if (btrfs_is_zoned(fs_info))
-+		goto error;
-+
-+	for (int i = 0; i < BTRFS_NR_RAID_TYPES; i++) {
-+		ret = calc_one_profile_avail(fs_info, i, &results[i]);
-+		if (ret < 0)
-+			goto error;
-+	}
-+
-+	spin_lock(&fs_info->fs_devices->per_profile_lock);
-+	for (int i = 0; i < BTRFS_NR_RAID_TYPES; i++)
-+		fs_info->fs_devices->per_profile_avail[i] = results[i];
-+	spin_unlock(&fs_info->fs_devices->per_profile_lock);
-+	return;
-+error:
-+	spin_lock(&fs_info->fs_devices->per_profile_lock);
-+	for (int i = 0; i < BTRFS_NR_RAID_TYPES; i++)
-+		fs_info->fs_devices->per_profile_avail[i] = U64_MAX;
-+	spin_unlock(&fs_info->fs_devices->per_profile_lock);
-+}
-+
- static void check_raid56_incompat_flag(struct btrfs_fs_info *info, u64 type)
- {
- 	if (!(type & BTRFS_BLOCK_GROUP_RAID56_MASK))
-diff --git a/fs/btrfs/volumes.h b/fs/btrfs/volumes.h
-index ed900ce46e1fd..b3b9329f4cf9a 100644
---- a/fs/btrfs/volumes.h
-+++ b/fs/btrfs/volumes.h
-@@ -22,6 +22,7 @@
- #include <uapi/linux/btrfs_tree.h>
- #include "messages.h"
- #include "extent-io-tree.h"
-+#include "fs.h"
- 
- struct block_device;
- struct bdev_handle;
-@@ -204,6 +205,12 @@ struct btrfs_device {
- 
- 	/* Bandwidth limit for scrub, in bytes */
- 	u64 scrub_speed_max;
-+
-+	/*
-+	 * A temporary number of allocated space during per-profile
-+	 * available space calculation.
-+	 */
-+	u64 per_profile_allocated;
- };
+ }
  
  /*
-@@ -471,6 +478,15 @@ struct btrfs_fs_devices {
- 	/* Checksum mode - offload it or do it synchronously. */
- 	enum btrfs_offload_csum_mode offload_csum_mode;
- #endif
-+
-+	/*
-+	 * Each value indicates the available space for that profile.
-+	 * U64_MAX means the estimation is unavailable.
-+	 *
-+	 * Protected by per_profile_lock;
-+	 */
-+	u64 per_profile_avail[BTRFS_NR_RAID_TYPES];
-+	spinlock_t per_profile_lock;
- };
- 
- #define BTRFS_MAX_DEVS(info) ((BTRFS_MAX_ITEM_SIZE(info)	\
-@@ -893,6 +909,24 @@ int btrfs_bg_type_to_factor(u64 flags);
- const char *btrfs_bg_type_to_raid_name(u64 flags);
- int btrfs_verify_dev_extents(struct btrfs_fs_info *fs_info);
- bool btrfs_verify_dev_items(const struct btrfs_fs_info *fs_info);
-+void btrfs_update_per_profile_avail(struct btrfs_fs_info *fs_info);
-+
-+static inline bool btrfs_get_per_profile_avail(struct btrfs_fs_info *fs_info,
-+					       u64 profile, u64 *avail_ret)
-+{
-+	enum btrfs_raid_types index = btrfs_bg_flags_to_raid_index(profile);
-+	struct btrfs_fs_devices *fs_devices = fs_info->fs_devices;
-+	bool uptodate = false;
-+
-+	spin_lock(&fs_devices->per_profile_lock);
-+	if (fs_devices->per_profile_avail[index] != U64_MAX) {
-+		uptodate = true;
-+		*avail_ret = fs_devices->per_profile_avail[index];
-+	}
-+	spin_unlock(&fs_info->fs_devices->per_profile_lock);
-+	return uptodate;
-+}
-+
- bool btrfs_repair_one_zone(struct btrfs_fs_info *fs_info, u64 logical);
- 
- bool btrfs_pinned_by_swapfile(struct btrfs_fs_info *fs_info, void *ptr);
 -- 
 2.53.0
 
