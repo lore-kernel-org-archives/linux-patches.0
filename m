@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029109;
-	b=zARnsAK/ITkWPABDKg3i+I1BBsCOS9JvH9lEvWqA0YWrmbCyBOJTXIHBFIvKjhVLC/92
-	 yjs2zREDbhPO1tW5QxZP5/wKswXLbmJZPm2EtP85uq0dDldihWKIqBcPgDP7t6Eg4ZyE5
-	 ipHbJstWt64Um1LQpwFT83iCJxj5suXDwBv0a+tG7gm4YUsFUjMN72M1V3cZFjI1Is4XI
-	 GhewTrd+gpS4lm1pHaVG1hiprcrKCjwQ53dSyhoC000zpS95WxHD4idqE9Ym8T6fHUxeJ
-	 9t9HPwyutgaUTsa8gPAsR4BAn+fHSFwCEzmNEBI5XqUb2rZyY83KzUToYLMVnuT/ViQ==
+	t=1795029112;
+	b=VGOLXygTJeHRvl6mbbTq5UeVmy1eI+Swdz/zicjic3tJ6sDMBiCqj+lSixWTkjEtwtyK
+	 3/PvhBXtFV1tU5zLGpSXJyXvLL7i7y1hO7gnOcQSkiDAqnTNxBLxDsOBdYr3psHUbsU1j
+	 7xx5kAD+JOYDIyzYLAvxq/0GCO/AyEGqfHdvQqDfYR4Y2mEKwKH2QRl+P5n1SbdIHnKQT
+	 6dH8z3Z74F+OXEhO8MvrApK6PpgQCHtsxY7N1o6+abn9zOeNa+q/i9xrX0CvwU7ex2wmS
+	 Hfz+x+lXgS9xxv7e5KPp1tO+/OXItuYmHlRT3u0E53SejvHAsOY71zcm63izT8hH7iA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029109;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029112;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yR0S3wgSLeFDvwtnKtmlKekFToPOEkFtontRKu/vf6w=;
-	b=M9wWqFimI9cfrDDus4HIGeAOcOECCy95QnZjXpl09v5Uw2KVsLtF0iOI7/ppQuSANB+J
-	 r3Unag8l/ElwNVsfrBmOHmnoTafbRcjDXuby1mgcsS6VlOxbYbD/8pNoiApQbg0bwhzE4
-	 purPFkfCZTgnRn2byUI0dvSRGOWaue0C9/2eI0vbKE7pB1CrnSXDmZRnQMRfF9MULai/i
-	 O8riDcL8OPFDtQ+OA2gT55rLAfH+XXFHY8PFZd4Z/8douDMkw2/hUudE8UlXcV67lCezQ
-	 BWKVRnpM2NFb9FmYRY5YVuAIkTjbqFGMwmImQwpluvUou1lmANhlaq0nO1TQe6MsDag==
+	bh=xxkzzn9IqxMUpJ7vCw3Cu59ExXYLE1yLO+OiSCRcrLQ=;
+	b=uGkRvA6ereWsn/p/KijxCBueyoklsaI3DbqRj2D+7rrSV/Zf2Bq9aeZVkYHfFb8l9jnj
+	 Ly0BEKDAouaN8yWKc3+LY4cE80MRpQCuFcQw1WnGGncE15Mv8o+167BHWCc1vkuFCi3cY
+	 PLoQoB1wypQIxOsLkVMVfLbtQLi0j50vto3ub90CS5pc+N0RrvlUqnLLZrWKvbzTXluf2
+	 EWt+sNsFjb7hIb16H1ksg2MUyALGVyHkgw7PQmi607YiiDAM0vAasvWrqJ/NMHUaSQHte
+	 K7cNKfLDi27xm5jvnynQn+pFwIGgsmrpkXQh4lRHaDnpWxUhUmUoL1VVaGvK5GQRyRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="bCYDrrj/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WTFZRN9i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F3D2606A31C;
-	Wed, 18 Nov 2026 19:11:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6955E606A31C;
+	Wed, 18 Nov 2026 19:11:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bCYDrrj/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B42331F000C4;
-	Wed, 18 Nov 2026 19:11:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WTFZRN9i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 823701F000C4;
+	Wed, 18 Nov 2026 19:11:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029109;
-	bh=yR0S3wgSLeFDvwtnKtmlKekFToPOEkFtontRKu/vf6w=;
+	s=korg; t=1795029112;
+	bh=xxkzzn9IqxMUpJ7vCw3Cu59ExXYLE1yLO+OiSCRcrLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bCYDrrj/u7HqJA+nllrf0ql0hFonG4+pyEmv9GA9JjhMBnzXhlV/PD/7AB+lyDgYd
-	 jz2Z4ZJQuVKTsXVHa/eLClwCnV5EqP/LleRc/rPKHin12IeGy+K27NoL8csNz4OgbO
-	 /AZjgdQbtpvJIpIzp+3s6ZAP5P2hOwdtCre5r0kA=
+	b=WTFZRN9i/7I4fNY4G+Cn3p8dzOmZ3nnBx8++CTuCsgZEA/VLxaUHhlUqWtAC/nNrU
+	 hhUbds/n8Eob/mT2eWD5JbubjmTxcWFtkXgeXvG2vwRR91kpzK0WGd6tBtrNdNVEol
+	 odJFgCBdOZrOaVybZ70uT2yq9+yrktDEVMnYKnGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yemike Abhilash Chandra <y-abhilashchandra@ti.com>,
-	Udit Kumar <u-kumar1@ti.com>,
-	Nishanth Menon <nm@ti.com>,
+	Roger Quadros <rogerq@kernel.org>,
+	Chintan Vankar <c-vankar@ti.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0233/1756] arm64: dts: ti: j722s-evm: Add MUX to control CSI2RX
-Date: Wed, 18 Nov 2026 15:39:20 +0100
-Message-ID: <20261118150017.535709430@linuxfoundation.org>
+Subject: [PATCH 6.12 0234/1756] arm64: dts: ti: k3-j722s-evm: Add bootph-all property to enable Ethernet boot
+Date: Wed, 18 Nov 2026 15:39:21 +0100
+Message-ID: <20261118150017.571729282@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,49 +69,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yemike Abhilash Chandra <y-abhilashchandra@ti.com>
+From: Chintan Vankar <c-vankar@ti.com>
 
-[ Upstream commit 2e8861103a08e4220e99b673ab247aff108ddef5 ]
+[ Upstream commit ab9ec669cf74b6499c0de4f42a6dd756a4e4e2a1 ]
 
-J722S EVM has the CSI2RX routed to a MIPI CSI connector and to 22-pin RPi
-camera connector through an analog mux with GPIO control, model mux so
-that an overlay can control the mux state according to connected cameras.
+Ethernet boot requires CPSW nodes to be present starting from R5 SPL
+stage. Add bootph-all property to required nodes to enable Ethernet boot
+for J722S-EVM.
 
-Signed-off-by: Yemike Abhilash Chandra <y-abhilashchandra@ti.com>
-Reviewed-by: Udit Kumar <u-kumar1@ti.com>
-Link: https://lore.kernel.org/r/20250509091911.2442934-3-y-abhilashchandra@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Reviewed-by: Roger Quadros <rogerq@kernel.org>
+Signed-off-by: Chintan Vankar <c-vankar@ti.com>
+Link: https://lore.kernel.org/r/20250709105326.232608-4-c-vankar@ti.com
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Stable-dep-of: 432bfc86fe62 ("arm64: dts: ti: k3-j722s-evm: Switch audio codec clock from audio_refclk1 to external clock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-j722s-evm.dts | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ arch/arm64/boot/dts/ti/k3-j722s-evm.dts | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/ti/k3-j722s-evm.dts b/arch/arm64/boot/dts/ti/k3-j722s-evm.dts
-index 4504912512b41..b8464082fa492 100644
+index b8464082fa492..ccc04548d3b9a 100644
 --- a/arch/arm64/boot/dts/ti/k3-j722s-evm.dts
 +++ b/arch/arm64/boot/dts/ti/k3-j722s-evm.dts
-@@ -244,6 +244,20 @@ transceiver2: can-phy2 {
- 		max-bitrate = <5000000>;
- 		standby-gpios = <&exp1 17 GPIO_ACTIVE_HIGH>;
+@@ -260,6 +260,14 @@ csi23_mux: mux-controller-1 {
  	};
-+
-+	csi01_mux: mux-controller-0 {
-+		compatible = "gpio-mux";
-+		#mux-state-cells = <1>;
-+		mux-gpios = <&exp1 6 GPIO_ACTIVE_HIGH>;
-+		idle-state = <0>;
-+	};
-+
-+	csi23_mux: mux-controller-1 {
-+		compatible = "gpio-mux";
-+		#mux-state-cells = <1>;
-+		mux-gpios = <&exp1 7 GPIO_ACTIVE_HIGH>;
-+		idle-state = <0>;
-+	};
  };
  
++&cpsw_mac_syscon {
++	bootph-all;
++};
++
++&phy_gmii_sel {
++	bootph-all;
++};
++
  &main_pmx0 {
+ 
+ 	main_mcan0_pins_default: main-mcan0-default-pins {
+@@ -317,6 +325,7 @@ mdio_pins_default: mdio-default-pins {
+ 			J722S_IOPAD(0x0160, PIN_OUTPUT, 0) /* (AC24) MDIO0_MDC */
+ 			J722S_IOPAD(0x015c, PIN_INPUT, 0) /* (AD25) MDIO0_MDIO */
+ 		>;
++		bootph-all;
+ 	};
+ 
+ 	ospi0_pins_default: ospi0-default-pins {
+@@ -351,6 +360,7 @@ J722S_IOPAD(0x0140, PIN_OUTPUT, 0) /* (AF24) RGMII1_TD3 */
+ 			J722S_IOPAD(0x0130, PIN_OUTPUT, 0) /* (AG26) RGMII1_TXC */
+ 			J722S_IOPAD(0x012c, PIN_OUTPUT, 0) /* (AF25) RGMII1_TX_CTL */
+ 		>;
++		bootph-all;
+ 	};
+ 
+ 	main_usb1_pins_default: main-usb1-default-pins {
+@@ -395,6 +405,7 @@ &cpsw3g_mdio {
+ 
+ 	cpsw3g_phy0: ethernet-phy@0 {
+ 		reg = <0>;
++		bootph-all;
+ 		ti,rx-internal-delay = <DP83867_RGMIIDCTL_2_00_NS>;
+ 		ti,fifo-depth = <DP83867_PHYCR_FIFO_DEPTH_4_B_NIB>;
+ 		ti,min-output-impedance;
+@@ -405,6 +416,7 @@ &cpsw_port1 {
+ 	phy-mode = "rgmii-rxid";
+ 	phy-handle = <&cpsw3g_phy0>;
+ 	status = "okay";
++	bootph-all;
+ };
+ 
+ &main_gpio1 {
 -- 
 2.53.0
 
