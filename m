@@ -1,59 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018887;
-	b=YOuRs0PxegRMMSTsUSTB8Tull2s5lLfOFyudrtWZW8f5D7ZNNjAmqqm0saTQMia78+Cz
-	 rs1haLHRJdlwaDcOKkM7LW20qF1u5uJBeARyy+R8eM4CNX1DvvyJugLoNlo2VQ0jDElnc
-	 0U6upSrafO0/nPDyztzf7evWzNs3UwCl59xgOeA1i95ArE0kfu8mCNWV4bbIrhEwlQ7He
-	 RxaLYyLs8yXmFh0os2cpq9s4GnFuuxu7WIn9xmZx9JEtsJXbKj2pIe3Y3UQLth4bzPY+h
-	 bkAlkrznZIn1C2tWdhJcr5TGC5aEe4QUzDtrSgHBaQmRGSdIr2EBJoJs4jU2W45u2jw==
+	t=1795018890;
+	b=jPD2VXA2KhzIGncb8lxDZyEFEzVR1edwc8va+rJWyy0zPLmt44eV1nS0yjxkCPZd2kXc
+	 QUepJ3kLdqLJmKBncuVGECQSxrUG963Gi/y5VO9ZnWAkIa8bP3VjeYjamnJ1vkHW0EP+H
+	 OoYxQSKXXy0d5C/DLMu0Y9vjSvHyljJ6Q1N2wyk/FLvWzVuGTOv6vyXwHSLWcHI6FEIX/
+	 DLBDRgB3opbpQVYid3++O0Hz2qNERH43SHJtpwZKDxntQeAit43TJ1KoCTjl6AtzcUTXu
+	 R+WyEXk7yf4O8sDq6AMGzdEISvyj1ALCSkGCOPUlmix9cypZwOZn/OlZoTvPUomjPRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018887;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018890;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MLc9k1oL08eobwEFWlzAsULtDSB2gWGxf2I+fjiXLh0=;
-	b=SuPdOqiNBwpiojzQrN3IUpAsPx5QSk84dl1vFmb8ChbxtC74ndzZkbZnA3bbLVVfjNWP
-	 qI/wZi5kjKYKV63flTElpIJhIM9Mu91k6cd+q0ycA4/8d4aQR//HGyySlKEIB5FrvTVGf
-	 m9sB7KdFXWEUnxw0ZcrX8f6iZ33og4BRCg2N4b5WDLbG+KblqBJunEtozulOCg0Mr8jRz
-	 9s7Cm5IcL3SWA4EFh2Z3onlW7MWsFPnbEoW9LRZ1OkRabKmhl4OrEvbDDX3EBNMDoXFsb
-	 Z0+ekpdFXF8KB9Iff+1BVdhXXFBtmA9uEvNS+fHLd2hOpo9In6M2+9KLWN2EN+3IkdQ==
+	bh=269Wl2Y73U+zqiesW6jVPLULzCIKPmlS3Rptdzr7HWE=;
+	b=k8Ols/pMyyw5CjPgftopR69XkN2EnSegkWJyxsHT8QgkbAol3c2FwiKp9IcGaNgyok2R
+	 8t7aSMwxUjBf1UbVGuxt/LsmbIcFBbsYTLGv2vgknRRo05mnZKh/IvkyRAU9nXU4yYN81
+	 rSWy7iK8l2+kDW3UAmgoR039PeRMDr3WfsATzDteY4mxbd6ZKjCoE4y5ncNM8EoTxg+Rh
+	 41U8Y0HCpNUXX/nhRvmQ/O1IGqfWCAQJvyodRsqNUAO7gPcq/UmxaYCDKbSCwPQIqyh7J
+	 5xhNSGTCLnSBT2RlB5e1a+oo6QDAoBGPny3/NOftdDL9ZiqUtxKrkpfze06T+a7LX3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pjHC3OUa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HEu2vY7L;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B48606A320;
-	Wed, 18 Nov 2026 16:21:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50063606A320;
+	Wed, 18 Nov 2026 16:21:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pjHC3OUa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06D341F000C4;
-	Wed, 18 Nov 2026 16:21:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HEu2vY7L
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB5CC1F000C5;
+	Wed, 18 Nov 2026 16:21:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018887;
-	bh=MLc9k1oL08eobwEFWlzAsULtDSB2gWGxf2I+fjiXLh0=;
+	s=korg; t=1795018890;
+	bh=269Wl2Y73U+zqiesW6jVPLULzCIKPmlS3Rptdzr7HWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pjHC3OUaR4qf6IUsJvQjvnj9CJ+V+D0bTT5oOMS2gWCYyikyvBY0zqeu6K5QGg/dI
-	 eDKEUmeXXkY5q8ni1KjA/ypOXK/IemTpXyMc0zTvUJK7BDJQ4gAgXpanPgFZiOFIxS
-	 UvMCPoszfjxmwhSSJM3ISPWxkd7GJr3e0AoVSOWk=
+	b=HEu2vY7L8v103OypSXzsyRCpuMNHSovga/2BxbcnDWi2CtRCyX119rCUD8W8lHmqk
+	 8tXO5/DBDURDuvEovAlkXV7kURR9EnKNAmyVwkkFF7SrnFitigeb4WnDJZgU1jkkZp
+	 Qkp1Kt+hwNHrzPJDeTSLHgJydnsZ2l1gDRaeG7GQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	ZhengYuan Huang <gality369@gmail.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
+	Samuele Yang <samuele.yang@morsemicro.com>,
+	Lachlan Hodges <lachlan.hodges@morsemicro.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1393/2651] ocfs2: fix deadlock in inline-data truncate transactions
-Date: Wed, 18 Nov 2026 15:43:53 +0100
-Message-ID: <20261118150338.167566601@linuxfoundation.org>
+Subject: [PATCH 7.3 1402/2651] wifi: mm81x: start beaconing on beacon enable not interface add
+Date: Wed, 18 Nov 2026 15:44:02 +0100
+Message-ID: <20261118150338.487419779@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -75,305 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Samuele Yang <samuele.yang@morsemicro.com>
 
-[ Upstream commit c204bf5ac3eeb66648904d0374d6f7b84d843aac ]
+[ Upstream commit 54b96109768276fa6dd0bad8e5701ad55643412a ]
 
-Updating an inode xattr can cause an ABBA deadlock with inline file
-truncation:
+Currently we only initialise and start the beaconing process when the
+AP interface is first added. If the BSS alone is reconfigured and
+beaconing is temporarily stopped, the subsequent call to re-enable
+the beacon via BSS_CHANGED_BEACON_ENABLED is ignored and beaconing will
+be permanently stopped until the interface is completely re-added.
 
-  ocfs2_truncate_file()
-    down_write(&oi->ip_alloc_sem)
-    ocfs2_truncate_inline()
-      ocfs2_start_trans()
+To fix, move the beaconing start/stop to mm81x_mac_ops_bss_info_changed
+and react accordingly to info->enable_beacon and just keep the per-vif
+work item init in the add_interface callback.
 
-  ocfs2_xattr_set()
-    ocfs2_start_trans()
-    ocfs2_xattr_ibody_set()
-      down_write(&oi->ip_alloc_sem)
-
-The xattr set path starts the merged transaction before the inode-body
-xattr helper acquires ip_alloc_sem, reversing the ip_alloc_sem ->
-transaction order used by the allocation and truncate paths.  The
-transaction merge in commit 85db90e77806 ("ocfs2/xattr: Merge xattr set
-transaction.") introduced this ordering.
-
-Fix it by acquiring ip_alloc_sem once in ocfs2_xattr_set(), before xattr
-preparation, allocation reservations and ocfs2_start_trans(), and removing
-the per-helper acquisition from ocfs2_xattr_ibody_find(),
-ocfs2_xattr_ibody_set() and ocfs2_xattr_create_index_block().  These
-helpers now assert via lockdep that the caller holds ip_alloc_sem.
-
-ocfs2_xattr_set_handle(), which only sets initial ACL or security xattrs
-on unpublished inodes inside the create transaction, takes ip_alloc_sem
-under a dedicated lockdep subclass so that the assertions hold without
-creating a transaction -> ip_alloc_sem cycle against the ip_alloc_sem ->
-transaction order.  The inode is unpublished, so the acquisition can never
-contend.
-
-This keeps the established ip_alloc_sem -> transaction order and makes the
-locking unconditional, so lockdep can verify a single plain ordering
-instead of conditional acquisitions.
-
-Link: https://lore.kernel.org/20260826112659.246574-1-joseph.qi@linux.alibaba.com
-Fixes: 85db90e77806 ("ocfs2/xattr: Merge xattr set transaction.")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: ZhengYuan Huang <gality369@gmail.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
+Fixes: b1906cea00b0 ("wifi: mm81x: add mm81x Wi-Fi HaLow driver")
+Signed-off-by: Samuele Yang <samuele.yang@morsemicro.com>
+Link: https://patch.msgid.link/20260929033408.69266-1-samuele.yang@morsemicro.com
+Signed-off-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/xattr.c | 79 ++++++++++++++++++++++++++++++++----------------
- 1 file changed, 53 insertions(+), 26 deletions(-)
+ drivers/net/wireless/morsemicro/mm81x/mac.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
-index 4d00a26ece3c1..ac7e18de81986 100644
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -2933,6 +2933,9 @@ static int ocfs2_xattr_has_space_inline(struct inode *inode,
-  *
-  * Find extended attribute in inode block and
-  * fill search info into struct ocfs2_xattr_search.
-+ *
-+ * The inline free-space check races with truncate and allocation, so
-+ * callers must hold ip_alloc_sem for writing.
-  */
- static int ocfs2_xattr_ibody_find(struct inode *inode,
- 				  int name_index,
-@@ -2944,13 +2947,13 @@ static int ocfs2_xattr_ibody_find(struct inode *inode,
- 	int ret;
- 	int has_space = 0;
+diff --git a/drivers/net/wireless/morsemicro/mm81x/mac.c b/drivers/net/wireless/morsemicro/mm81x/mac.c
+index 2760e9389518b..e3740ba0f91e1 100644
+--- a/drivers/net/wireless/morsemicro/mm81x/mac.c
++++ b/drivers/net/wireless/morsemicro/mm81x/mac.c
+@@ -1319,11 +1319,10 @@ static void mm81x_mac_beacon_work(struct work_struct *work)
+ 	mm81x_skbq_skb_tx(mq, &beacon, &tx_info, MM81X_SKB_CHAN_BEACON);
+ }
  
-+	lockdep_assert_held_write(&oi->ip_alloc_sem);
-+
- 	if (inode->i_sb->s_blocksize == OCFS2_MIN_BLOCKSIZE)
- 		return 0;
+-static void mm81x_mac_beacon_init(struct mm81x_vif *mors_vif)
++static void mm81x_mac_beacon_start(struct mm81x_vif *mors_vif)
+ {
+ 	struct mm81x *mors = mm81x_vif_to_mors(mors_vif);
  
- 	if (!(oi->ip_dyn_features & OCFS2_INLINE_XATTR_FL)) {
--		down_read(&oi->ip_alloc_sem);
- 		has_space = ocfs2_xattr_has_space_inline(inode, di);
--		up_read(&oi->ip_alloc_sem);
- 		if (!has_space)
- 			return 0;
- 	}
-@@ -3031,6 +3034,7 @@ static int ocfs2_xattr_ibody_init(struct inode *inode,
-  *
-  * Set, replace or remove an extended attribute into inode block.
-  *
-+ * Callers must hold ip_alloc_sem for writing.
-  */
- static int ocfs2_xattr_ibody_set(struct inode *inode,
- 				 struct ocfs2_xattr_info *xi,
-@@ -3041,16 +3045,17 @@ static int ocfs2_xattr_ibody_set(struct inode *inode,
- 	struct ocfs2_inode_info *oi = OCFS2_I(inode);
- 	struct ocfs2_xa_loc loc;
+-	INIT_WORK(&mors_vif->u.ap.beacon_work, mm81x_mac_beacon_work);
+ 	mm81x_mac_beacon_irq_enable(mors_vif, true);
+ 	atomic_inc(&mors->num_bcn_vifs);
+ }
+@@ -1546,7 +1545,9 @@ static void mm81x_mac_ops_bss_info_changed(struct ieee80211_hw *hw,
+ 		mm81x_cmd_config_beacon_timer(mors, mors_vif,
+ 					      info->enable_beacon);
  
-+	lockdep_assert_held_write(&oi->ip_alloc_sem);
-+
- 	if (inode->i_sb->s_blocksize == OCFS2_MIN_BLOCKSIZE)
- 		return -ENOSPC;
- 
--	down_write(&oi->ip_alloc_sem);
- 	if (!(oi->ip_dyn_features & OCFS2_INLINE_XATTR_FL)) {
- 		ret = ocfs2_xattr_ibody_init(inode, xs->inode_bh, ctxt);
- 		if (ret) {
- 			if (ret != -ENOSPC)
- 				mlog_errno(ret);
--			goto out;
-+			return ret;
- 		}
+-		if (!info->enable_beacon)
++		if (info->enable_beacon)
++			mm81x_mac_beacon_start(mors_vif);
++		else
+ 			mm81x_mac_beacon_finish(mors_vif);
  	}
  
-@@ -3060,13 +3065,10 @@ static int ocfs2_xattr_ibody_set(struct inode *inode,
+@@ -2214,7 +2215,7 @@ static int mm81x_mac_ops_add_interface(struct ieee80211_hw *hw,
+ 	rcu_assign_pointer(mors->vifs[mors_vif->id], vif);
+ 
+ 	if (vif->type == NL80211_IFTYPE_AP)
+-		mm81x_mac_beacon_init(mors_vif);
++		INIT_WORK(&mors_vif->u.ap.beacon_work, mm81x_mac_beacon_work);
+ 
+ 	ret = mm81x_cmd_get_capabilities(mors, mors_vif->id, &mors->fw_caps);
  	if (ret) {
- 		if (ret != -ENOSPC)
- 			mlog_errno(ret);
--		goto out;
-+		return ret;
- 	}
- 	xs->here = loc.xl_entry;
- 
--out:
--	up_write(&oi->ip_alloc_sem);
--
- 	return ret;
- }
- 
-@@ -3724,6 +3726,18 @@ static int __ocfs2_xattr_set_handle(struct inode *inode,
- 	return ret;
- }
- 
-+/*
-+ * ip_alloc_sem subclass for inodes being initialized before publication.
-+ * ocfs2_xattr_set_handle() runs inside the create transaction, so taking
-+ * ip_alloc_sem there adds a transaction -> ip_alloc_sem order that would
-+ * form a lockdep cycle with the ip_alloc_sem -> transaction order used
-+ * elsewhere, if not for this separate subclass.  The inode is unpublished
-+ * so the acquisition can never contend.
-+ */
-+enum {
-+	OCFS2_IP_ALLOC_SEM_UNPUBLISHED = 1,
-+};
-+
- /*
-  * This helper is only for setting initial ACL or security xattrs on an inode
-  * that is still unpublished, unhashed, and unattached to a dentry.
-@@ -3785,6 +3799,13 @@ int ocfs2_xattr_set_handle(handle_t *handle,
- 	xis.inode_bh = xbs.inode_bh = di_bh;
- 	di = (struct ocfs2_dinode *)di_bh->b_data;
- 
-+	/*
-+	 * The inode is unpublished and cannot contend, but take the
-+	 * semaphore anyway so the helpers' lockdep assertions hold.
-+	 */
-+	down_write_nested(&OCFS2_I(inode)->ip_alloc_sem,
-+			  OCFS2_IP_ALLOC_SEM_UNPUBLISHED);
-+
- 	ret = ocfs2_xattr_ibody_find(inode, name_index, name, &xis);
- 	if (ret)
- 		goto cleanup;
-@@ -3797,6 +3818,7 @@ int ocfs2_xattr_set_handle(handle_t *handle,
- 	ret = __ocfs2_xattr_set_handle(inode, di, &xi, &xis, &xbs, &ctxt);
- 
- cleanup:
-+	up_write(&OCFS2_I(inode)->ip_alloc_sem);
- 	brelse(xbs.xattr_bh);
- 	ocfs2_xattr_bucket_free(xbs.bucket);
- 
-@@ -3865,30 +3887,38 @@ int ocfs2_xattr_set(struct inode *inode,
- 	di = (struct ocfs2_dinode *)di_bh->b_data;
- 
- 	down_write(&OCFS2_I(inode)->ip_xattr_sem);
-+	/*
-+	 * The allocation and truncate paths take ip_alloc_sem before
-+	 * starting a transaction, so take it here before xattr
-+	 * preparation, allocation reservations and ocfs2_start_trans()
-+	 * to keep that order.  The xattr helpers below no longer take
-+	 * it themselves.
-+	 */
-+	down_write(&OCFS2_I(inode)->ip_alloc_sem);
- 	/*
- 	 * Scan inode and external block to find the same name
- 	 * extended attribute and collect search information.
- 	 */
- 	ret = ocfs2_xattr_ibody_find(inode, name_index, name, &xis);
- 	if (ret)
--		goto cleanup;
-+		goto out_free_ac;
- 	if (xis.not_found) {
- 		ret = ocfs2_xattr_block_find(inode, name_index, name, &xbs);
- 		if (ret)
--			goto cleanup;
-+			goto out_free_ac;
- 	}
- 
- 	if (xis.not_found && xbs.not_found) {
- 		ret = -ENODATA;
- 		if (flags & XATTR_REPLACE)
--			goto cleanup;
-+			goto out_free_ac;
- 		ret = 0;
- 		if (!value)
--			goto cleanup;
-+			goto out_free_ac;
- 	} else {
- 		ret = -EEXIST;
- 		if (flags & XATTR_CREATE)
--			goto cleanup;
-+			goto out_free_ac;
- 	}
- 
- 	/* Check whether the value is refcounted and do some preparation. */
-@@ -3899,7 +3929,7 @@ int ocfs2_xattr_set(struct inode *inode,
- 						   &ref_meta, &ref_credits);
- 		if (ret) {
- 			mlog_errno(ret);
--			goto cleanup;
-+			goto out_free_ac;
- 		}
- 	}
- 
-@@ -3910,7 +3940,7 @@ int ocfs2_xattr_set(struct inode *inode,
- 		if (ret < 0) {
- 			inode_unlock(tl_inode);
- 			mlog_errno(ret);
--			goto cleanup;
-+			goto out_free_ac;
- 		}
- 	}
- 	inode_unlock(tl_inode);
-@@ -3919,7 +3949,7 @@ int ocfs2_xattr_set(struct inode *inode,
- 					&xbs, &ctxt, ref_meta, &credits);
- 	if (ret) {
- 		mlog_errno(ret);
--		goto cleanup;
-+		goto out_free_ac;
- 	}
- 
- 	/* we need to update inode's ctime field, so add credit for it. */
-@@ -3937,6 +3967,7 @@ int ocfs2_xattr_set(struct inode *inode,
- 	ocfs2_commit_trans(osb, ctxt.handle);
- 
- out_free_ac:
-+	up_write(&OCFS2_I(inode)->ip_alloc_sem);
- 	if (ctxt.data_ac)
- 		ocfs2_free_alloc_context(ctxt.data_ac);
- 	if (ctxt.meta_ac)
-@@ -3945,7 +3976,6 @@ int ocfs2_xattr_set(struct inode *inode,
- 		ocfs2_schedule_truncate_log_flush(osb, 1);
- 	ocfs2_run_deallocs(osb, &ctxt.dealloc);
- 
--cleanup:
- 	if (ref_tree)
- 		ocfs2_unlock_refcount_tree(osb, ref_tree, 1);
- 	up_write(&OCFS2_I(inode)->ip_xattr_sem);
-@@ -4646,6 +4676,10 @@ static void ocfs2_xattr_update_xattr_search(struct inode *inode,
- 	xs->here = xs->header->xh_entries;
- }
- 
-+/*
-+ * Caller must hold ip_alloc_sem for writing, since a new xattr block
-+ * is allocated and the xattr block header is rewritten.
-+ */
- static int ocfs2_xattr_create_index_block(struct inode *inode,
- 					  struct ocfs2_xattr_info *xi,
- 					  struct ocfs2_xattr_search *xs,
-@@ -4662,19 +4696,14 @@ static int ocfs2_xattr_create_index_block(struct inode *inode,
- 	struct ocfs2_xattr_tree_root *xr;
- 	u16 xb_flags = le16_to_cpu(xb->xb_flags);
- 
-+	lockdep_assert_held_write(&oi->ip_alloc_sem);
-+
- 	trace_ocfs2_xattr_create_index_block_begin(
- 				(unsigned long long)xb_bh->b_blocknr);
- 
- 	BUG_ON(xb_flags & OCFS2_XATTR_INDEXED);
- 	BUG_ON(!xs->bucket);
- 
--	/*
--	 * XXX:
--	 * We can use this lock for now, and maybe move to a dedicated mutex
--	 * if performance becomes a problem later.
--	 */
--	down_write(&oi->ip_alloc_sem);
--
- 	ret = ocfs2_journal_access_xb(handle, INODE_CACHE(inode), xb_bh,
- 				      OCFS2_JOURNAL_ACCESS_WRITE);
- 	if (ret) {
-@@ -4736,8 +4765,6 @@ static int ocfs2_xattr_create_index_block(struct inode *inode,
- 	ocfs2_journal_dirty(handle, xb_bh);
- 
- out:
--	up_write(&oi->ip_alloc_sem);
--
- 	return ret;
- }
- 
 -- 
 2.53.0
 
