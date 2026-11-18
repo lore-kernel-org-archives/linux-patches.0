@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017278;
-	b=XkViDYnVb8Vz5TB+ORoH+NxhIdh04MUUeJC3RrWtohGewqc4FgiD+fwc8WTalrDCYyGO
-	 mhhIShmHaaXpZvyL2d8Yrw1dSKffAhFkOh/sV/AXy5aBOOLpos4IEELhjNy1DKWvSLBT8
-	 5wjQf6p7ZJEhbGOQpLOboCyWfN/MB7HAk/4kUP0Bd01/I0wgD0fdDVrDAG/laSfEUGM4I
-	 lkPHjubu4Y2dcl/vPyxdEFiea2AiE4ZDPcLz2/jyFZ1pyZjbN/oSXCs6ZHh71WEiOB6i/
-	 KOBfJVuncZEOYNtFJE139h/7S/GRdJXp4JTREID86dhZHLk9hqrc3guH793bT4r+20Q==
+	t=1795017281;
+	b=U9usVQrusZ9j2bZptyQbo4eJX5BPWPJRZODm0kieSKgVAZuclLy8/I3ZJxf92Ke7N0qz
+	 QTGbFFy/KW+UIkRTngX/DL7BJU3OPlVZCCdHh0B+wBvDfUkTvJ+ht16S2iwf0ez5U9aSm
+	 DXDH24mU8+KwfVgw56z5DLPYErpzwu8PucXnYvtB5FLAuPdDfKpOiGSd6UTyfmaqU9bNN
+	 hK/Q0P1bhVHtmYbgQb8PQH1OpCT0xlWYBkhE2T7jQCPN+FvCCWNTQP8Qvg5IHEck4CX4J
+	 DspjM+nUes7uVIHoEpjLwkKGsPybRGex+DIXsKaklWbgMZAV0dn2VMtYSt8Fsm0993A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017278;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017281;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Hc9OxtTTRPb8kIeIVaZ1Q1Rwx6Xu4kJ7CjFDEgCy1tg=;
-	b=FPiOGnnKB0NZkWYIUMw0TU+QPdlaexUxrCIeDZ3TUFd4b7CA1tu08xrFsUnyUeAluXed
-	 ebRbVLnvKKWMk4lhpeCWeXktKdY82qRmfTYXYTVUmXsihGeaZKVXDxwvusy4yUi6bVWvK
-	 Tx+EzXIWAXtG8eSSn9j8e/od1d8ke+PRIt9AAoT/AWg5J6bzxRT0QEZiaKKw8BFSSF95s
-	 Qv3bxDDSA1PvuZ6rogtVxPflOthdujx0znSSAX0HbJrCK5+dAN7NxAYC9nTZRIypi5ob5
-	 ubP7n5XrIZBRR//ZkJPM2ZHDfr5T1w0MCdbP5x66qk6CWDAwHhk88lNNN7NhUX1mfvA==
+	bh=oU1j8obGRfFl1qqGF332vBk+MD02OoCNFNYhNSj9y6k=;
+	b=JNojEaNeywtDItsSF3vLQCgJ6RCbSV/8e19mJQB1r/K00L9O+EXjCr++K8x75CkScqym
+	 zlu/uTNmFccYIWYnwXzWAalFWzwO3DAZg65aiyFDfupZBmglMglTqL/OmESe1BwXRTjxx
+	 dlK0tfoRemc8wtS3DXpEOPzCk2wyMkuQU3j38TAh+PrCZnSQKGLFnm2rgMqhAWgosRsfm
+	 HEpDiLpUvgdVbWkv5YP1DeOB3jngkITrY3oEJlyw7GfsxdIx1hfVlUprfyPv6bebY9icN
+	 IXnQL+40lmxj+pbVqrAnAWvmvHfKDJDga6SoM3gJkrJtRX/5P4+GbQvWxwJ/pVYCiTw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EtnwvUXO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=omy0Tfiv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B15606A325;
-	Wed, 18 Nov 2026 15:54:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B24606A31C;
+	Wed, 18 Nov 2026 15:54:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EtnwvUXO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 840541F000C4;
-	Wed, 18 Nov 2026 15:54:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=omy0Tfiv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53D5C1F000C4;
+	Wed, 18 Nov 2026 15:54:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017278;
-	bh=Hc9OxtTTRPb8kIeIVaZ1Q1Rwx6Xu4kJ7CjFDEgCy1tg=;
+	s=korg; t=1795017280;
+	bh=oU1j8obGRfFl1qqGF332vBk+MD02OoCNFNYhNSj9y6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EtnwvUXOdLTVvn0MIZjWF6t6fsb6SKsFbhksgm4hp72d4S+a8RU742r52EKsIgs70
-	 a2Ryy3/bW3bcOXKb+XzZuzBkhrT4gWqoDScVcrjboS6No9WF1fWiAL8dyoOHmIKEQU
-	 ee+0vUbLvycRrzbnYxn9LV8zcoIXJqQRbXeDRf6s=
+	b=omy0TfivA7p572buP4S3R3BIFghm4FV6cOXWA5N8rdNuyc+0mryS531G6LEA1yWV6
+	 GIF3fud8QXRLibA/RTBYKlitOyUtn4BG+I1Q72q8UXbWcUUCrg0POMFxyjz++HxHW1
+	 F6xOpWCN+GwhZsvbap03eYRX2Qb66zcOB4N5dTAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Huang <wei.huang2@amd.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Puranjay Mohan <puranjay@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0786/2651] PCI/TPH: Validate the firmware Steering Tag response
-Date: Wed, 18 Nov 2026 15:33:46 +0100
-Message-ID: <20261118150316.185638097@linuxfoundation.org>
+Subject: [PATCH 7.3 0787/2651] bpf: Look at frame 0 when telling async callback entries apart
+Date: Wed, 18 Nov 2026 15:33:47 +0100
+Message-ID: <20261118150316.219131124@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,48 +68,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Huang <wei.huang2@amd.com>
+From: Puranjay Mohan <puranjay@kernel.org>
 
-[ Upstream commit 5c382ef425c875bf854d411fb0a45909878a233a ]
+[ Upstream commit e55220162aae99622d9e80d4700e51c13a6f2a16 ]
 
-TPH _DSM returns an eight-byte Steering Tag information buffer.  Checking
-only the ACPI object type allows a short firmware response to be read
-beyond the end of its buffer.
+push_async_cb() sets in_async_callback_fn and async_entry_cnt on the
+callback's own frame, which is frame 0 of the fresh state it starts, and
+setup_func_entry() copies neither, so a subprog called by the callback
+carries neither. Two places read them from the innermost frame instead.
 
-For safety, require a non-NULL buffer containing the complete value before
-copying it. Use memcpy() so that reading the response does not depend on
-the alignment of the firmware buffer.
+is_state_visited() skips the infinite loop check when two states differ
+in async_entry_cnt, because seeing the same state on a second entry into
+an async callback is not a loop. A callback which re-arms itself and
+calls a subprog therefore compares the two entries at a loop inside that
+subprog, where the innermost frame is the subprog's and has no flag set,
+and the state is rejected:
 
-Fixes: d2e8a34876ce ("PCI/TPH: Add Steering Tag support")
-Signed-off-by: Wei Huang <wei.huang2@amd.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260924190543.3424792-1-wei.huang2@amd.com
+  infinite loop detected at insn 60
+
+push_callback_call() numbers a new entry as the caller's count plus one.
+When the callback re-arms itself from a subprog, the caller is that
+subprog's frame with a count of 0, so every entry is numbered 1, the
+check above never sees a difference, and a loop anywhere in such a
+callback is rejected the same way.
+
+Read the flag and the count from frame 0 in both places. A loop within a
+single entry still has a matching count and is still caught, and frame 0
+of a non-async state does not have the flag set, so nothing else changes.
+
+The two other readers are already correct: check_return_code() reads
+frame[0], and the one in do_check() is reached only after an early return
+for curframe != 0.
+
+Fixes: bfc6bb74e4f1 ("bpf: Implement verifier support for validation of async callbacks.")
+Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20260924162609.1746610-2-puranjay@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/tph.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ kernel/bpf/states.c   | 4 ++--
+ kernel/bpf/verifier.c | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pci/tph.c b/drivers/pci/tph.c
-index 655ffd60e62f6..4d064b86befcc 100644
---- a/drivers/pci/tph.c
-+++ b/drivers/pci/tph.c
-@@ -119,12 +119,14 @@ static acpi_status tph_invoke_dsm(acpi_handle handle, u32 cpu_uid,
- 	if (!out_obj)
- 		return AE_ERROR;
+diff --git a/kernel/bpf/states.c b/kernel/bpf/states.c
+index 012b82513a3bc..3c5f1dc80220e 100644
+--- a/kernel/bpf/states.c
++++ b/kernel/bpf/states.c
+@@ -1275,10 +1275,10 @@ int bpf_is_state_visited(struct bpf_verifier_env *env, int insn_idx)
+ 			continue;
  
--	if (out_obj->type != ACPI_TYPE_BUFFER) {
-+	if (out_obj->type != ACPI_TYPE_BUFFER ||
-+	    out_obj->buffer.length < sizeof(st_out->value) ||
-+	    !out_obj->buffer.pointer) {
- 		ACPI_FREE(out_obj);
- 		return AE_ERROR;
- 	}
+ 		if (sl->state.branches) {
+-			struct bpf_func_state *frame = sl->state.frame[sl->state.curframe];
++			struct bpf_func_state *frame = sl->state.frame[0];
  
--	st_out->value = *((u64 *)(out_obj->buffer.pointer));
-+	memcpy(&st_out->value, out_obj->buffer.pointer, sizeof(st_out->value));
+ 			if (frame->in_async_callback_fn &&
+-			    frame->async_entry_cnt != cur->frame[cur->curframe]->async_entry_cnt) {
++			    frame->async_entry_cnt != cur->frame[0]->async_entry_cnt) {
+ 				/* Different async_entry_cnt means that the verifier is
+ 				 * processing another entry into async callback.
+ 				 * Seeing the same state is not an indication of infinite
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 07ac0986f1449..1a16546c2937d 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -9923,7 +9923,7 @@ static int push_callback_call(struct bpf_verifier_env *env, struct bpf_insn *ins
+ 		if (IS_ERR(async_cb))
+ 			return PTR_ERR(async_cb);
+ 		callee = async_cb->frame[0];
+-		callee->async_entry_cnt = caller->async_entry_cnt + 1;
++		callee->async_entry_cnt = state->frame[0]->async_entry_cnt + 1;
  
- 	ACPI_FREE(out_obj);
- 
+ 		/* Convert bpf_timer_set_callback() args into timer callback args */
+ 		err = set_callee_state_cb(env, caller, callee, insn_idx);
 -- 
 2.53.0
 
