@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060033;
-	b=P8nASTGUkI5qPgUuIZMOT/tBIzaDln+BIVD+B35nHot9wrRGwWCGjWI+GZGmFu7wCvTu
-	 nvKfQj3L7HKy8GlssxLWCjLAf/4daeuXSFoZJDpFy0iRDT22JLq89pKR9egAffZpc+8t7
-	 4UAgvTmNly0be2YyrPS0k9E8RdhRRYL+26hgTOYpdxblkqoakGrd13M7n+rV6b/XfT/6u
-	 Q2Jkd1HONBta87oTfcyEAzc+vVJLbEeFOlQE2T7ao8F0iSg9Nbvya5Lt1po0O+qbR3WJo
-	 Yh4WV//Qmk/ni84rwuOPUZNEtsw9K1fSq45qfScvneZjfmY0j26uEt6NsgxRtm963gg==
+	t=1795060036;
+	b=rtU9QRk0EcQO4PRiMy14YdE+DraqT0lIXpMGtuBgHiGQc4fcQfd2y8CccWojl240+rs/
+	 YxUNY/Jd0gVVBy2NfIIU9wY3RhsSLJPHrX9960ujJ85tdczbSizNjV4Yy3LUrITqR4MB6
+	 LfMlP8/kQBhKFmuNsCMj803eFW4OI2cjRyfDGcRzOISBgUZ0csKZDrhtVVivat5zJJqDD
+	 KXFbm/b+PyCZfiZDps+cOiVfPsOXEgXzPo3sSabS26Dok6dR5P2l3Nxnk0CVzbCqae1yA
+	 eaaE4Srhp7A9mlhYhFOfK2KcEF46qZru2T0BtCk5mdyr/ClA/itwRf47Ro1yiXf0Yag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060033;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060036;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=R4m/E4ncX6suWjVBCtFMTCe0ume6TVAWL04DsNfE5Rw=;
-	b=oPV7NHJp2HjHWlxaOBthINOVe8G1IC/LRcxVe11whaRUl1apSB9/h4xsBrk5gNztYWMG
-	 Kx4svVPBHiNP1EwAMOxgX5HajMM4MSUicVkgdAhSEDFpCZpeGgnaoxHobihlZz8ruDGor
-	 1B7txs6Qq/9MJGVwoxYRfgb5Al74Q7EAFvCMbZMx85h9ETUL2qOhIuefSlVhPIX+iL/Qx
-	 nwyHI6ycGK9+j2tOMmXKOzzbRGZiNFsjtuIBA2r2HM+xoyPVj0bIvd8jJL2lR7pPIWbZD
-	 F+oqj52v8r5GdvzcBPprV5YWAeinsO41gKF5zUg8v3/D1XlhaxqmrWxf+z+2SRtIJ9g==
+	bh=dU2igYKQgprvPmT62HmPx8FjnVLKNka3ZIfnXKJJ6PM=;
+	b=GEdPe/DoOL47CSmpmxBD84SUWncs+so+6yB0ToDVgOJMBAHhTofShZdQq/spCfz6SDPm
+	 fJ8zVLbjpPSf7HYvTV8mB+hqkc87kTTZqyZWnOSz1QllfbxwXhw+WLSLSRn+9meWAHwbG
+	 fYjUfzx9w/1P0U+ZLyJE3X3Fn+bKJK2YDkUezAOhus+7f9Qbb5VgPr17VA2TvFLnXvYvo
+	 cUe/PO0/Eu5Opk1tc6zDqMc0hb2TIDT4yELy2/s8XXOaG8zAf2mDxiS7wb663w/7ZMCBf
+	 1dPglSQTVoV97tqmUARcW5dnNmVkXRSB2DUMWx17tiK2braF42WxCI7DnQiqoFb3GtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NIjBXDeg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JjEbyg9s;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AA28606A325;
-	Thu, 19 Nov 2026 03:47:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085A7606A325;
+	Thu, 19 Nov 2026 03:47:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NIjBXDeg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C58E1F000C4;
-	Thu, 19 Nov 2026 03:47:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JjEbyg9s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5834B1F000C4;
+	Thu, 19 Nov 2026 03:47:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060033;
-	bh=R4m/E4ncX6suWjVBCtFMTCe0ume6TVAWL04DsNfE5Rw=;
+	s=korg; t=1795060035;
+	bh=dU2igYKQgprvPmT62HmPx8FjnVLKNka3ZIfnXKJJ6PM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NIjBXDegDliYz/3AkgGTqxFzFHb7icMffILi1qjO7xGix5TrjWNFe3CroLZlrC1Tg
-	 pX6CLIwlX8qt9PCopKvRU2xSr7pBiTagzwmj0q58bB8XxDZSuznC6vdSgq5NEohBaY
-	 fwVzojceyQFBDlnOIJcHDFmK1x9o5Fkrd/FPxa9k=
+	b=JjEbyg9s88qUcoue2/kC0EYgVKLwz2ccSJ8Q0GOAIYAAguxz/wWDj9DegTC7WPwhW
+	 wVjb0i5yvMFZltFUOXkj7sVUJ58efe32FtHjGNZ1E6GPWDCxezmSxXCjN49//4xiG3
+	 /xvm/aaG7rW4CSTm3v1sVbOswj3qLlM0FK+/OO1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Yifei Gao <gyf161023@gmail.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1053/1848] mm/mremap: fix moving PUD leaves
-Date: Wed, 18 Nov 2026 15:51:31 +0100
-Message-ID: <20261118150001.378730730@linuxfoundation.org>
+Subject: [PATCH 5.10 1054/1848] 9p/xen: fix refcount leak in p9_xen_response() on wrong tag
+Date: Wed, 18 Nov 2026 15:51:32 +0100
+Message-ID: <20261118150001.417685931@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -72,75 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Yifei Gao <gyf161023@gmail.com>
 
-[ Upstream commit 440c8779757f09f290770b1d361dc1516a9d0b3e ]
+[ Upstream commit 4d183e6f153245aca2534e372152583b868dd925 ]
 
-pud_none_or_clear_bad() only really works on page tables. PUD leaves
-confuse the check and make us clear the page table entry and print a
-warning.
+p9_xen_response() looks up the request for an incoming reply with
+p9_tag_lookup(), which takes a reference on the returned p9_req_t. When
+the tag does not resolve to a request in REQ_STATUS_SENT, the function
+warns and continues the loop without dropping that reference, permanently
+leaking the p9_req_t and its msize buffers. The reply header, including
+the tag, is supplied by the backend, so a malicious or buggy 9P backend
+can leak kernel memory on every crafted response.
 
-Since commit aed877c2b4257 ("device/dax: properly refcount device dax pages
-when mapping"), this also leaks device-DAX folio references, mapcounts
-and RSS accounting, resulting in "Bad rss-counter state" warnings on exit.
+Drop the reference before continuing.
 
-Allow PUD leaves in get_old_pud(). If a PUD leaf cannot be moved as a
-whole or the move fails, split it. This unmaps it with proper accounting
-instead of treating the leaf entry as a PMD table.
-
-Keep using pud_trans_huge() for now, in the future this code should be
-cleaned up to just check for PUD leaves.
-
-Fix generated by an LLM and sent by Josef Bacik in private.
-
-Fixes: a00cc7d9dd93 ("mm, x86: add support for PUD-sized transparent hugepages")
+Fixes: 728356dedeff ("9p: Add refcount to p9_req_t")
 Cc: stable@vger.kernel.org
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-[ david: fallthrough after splitting ]
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-32-d6437171ecc3@kernel.org
-Reviewed-by: Lance Yang <lance.yang@linux.dev>
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: applied split_huge_pud() directly in get_old_pmd() because get_old_pud() and whole-PUD move support are absent ]
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Yifei Gao <gyf161023@gmail.com>
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+Message-ID: <20260806144255.4167019-1-gyf161023@gmail.com>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+[ sashal: changed p9_req_put(priv->client, req) to p9_req_put(req) to match the one-argument API ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mremap.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/9p/trans_xen.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/mm/mremap.c b/mm/mremap.c
-index 79beead5af830..eca03a9789049 100644
---- a/mm/mremap.c
-+++ b/mm/mremap.c
-@@ -30,8 +30,9 @@
- 
- #include "internal.h"
- 
--static pmd_t *get_old_pmd(struct mm_struct *mm, unsigned long addr)
-+static pmd_t *get_old_pmd(struct vm_area_struct *vma, unsigned long addr)
- {
-+	struct mm_struct *mm = vma->vm_mm;
- 	pgd_t *pgd;
- 	p4d_t *p4d;
- 	pud_t *pud;
-@@ -46,6 +47,7 @@ static pmd_t *get_old_pmd(struct mm_struct *mm, unsigned long addr)
- 		return NULL;
- 
- 	pud = pud_offset(p4d, addr);
-+	split_huge_pud(vma, pud, addr);
- 	if (pud_none_or_clear_bad(pud))
- 		return NULL;
- 
-@@ -280,7 +282,7 @@ unsigned long move_page_tables(struct vm_area_struct *vma,
- 		next = (new_addr + PMD_SIZE) & PMD_MASK;
- 		if (extent > next - new_addr)
- 			extent = next - new_addr;
--		old_pmd = get_old_pmd(vma->vm_mm, old_addr);
-+		old_pmd = get_old_pmd(vma, old_addr);
- 		if (!old_pmd)
- 			continue;
- 		new_pmd = alloc_new_pmd(vma->vm_mm, vma, new_addr);
+diff --git a/net/9p/trans_xen.c b/net/9p/trans_xen.c
+index 45a16494bd79f..3a41984275256 100644
+--- a/net/9p/trans_xen.c
++++ b/net/9p/trans_xen.c
+@@ -233,6 +233,8 @@ static void p9_xen_response(struct work_struct *work)
+ 		req = p9_tag_lookup(priv->client, h.tag);
+ 		if (!req || req->status != REQ_STATUS_SENT) {
+ 			dev_warn(&priv->dev->dev, "Wrong req tag=%x\n", h.tag);
++			if (req)
++				p9_req_put(req);
+ 			cons += h.size;
+ 			virt_mb();
+ 			ring->intf->in_cons = cons;
 -- 
 2.53.0
 
