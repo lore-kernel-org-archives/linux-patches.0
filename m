@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795062008;
-	b=aL7nEVtPU5KlVyuM/JZ5VN+hue2CIM9MT+8ZQPyLh1W68Y06GwS0Q3G7CaWFRGAhkx2G
-	 jQa/s3rWL/rfUNrU5HM9lz1pDEBzgbJu/tSpm7J4eo1ToiMZMZSMYpd3eaPG54aZ5kXl2
-	 rh9tPJ08M75nTldNeY5lOGeKop74G1zJSMrh3aMdLYaeT5/7QfXTb9IcGX2R8FpXQgTLs
-	 tVqI2fiVX3WMzSxDhNEN5tRhK4k6DgAB8lc2jKFOVV9iDw3OxuNbSIFjbwA10oFN6KnsW
-	 oX+rHW9ro7sZ1D0egH4/fAhSmA+VGmheShKSeo3EuKqTUHXxeJcUcrZpVWBgrg2tMWQ==
+	t=1795062011;
+	b=S8f1iKFTYTWmkLoMbqgsWpD4WAmtGCg7+Cqx/jcxeBaFwngrYM2IOiOnlBq2ONMAgvVN
+	 dOlDJDm89YJlPcrt8037ZeF7wKdXw0SL5e3mukUdBv/i5fQiLprBJuCJutjsGqap1pcOh
+	 jxF4+JRyw3CzgB7kUaw7RMgsG7kGxgdQNluDj8JM/KsZ8YklysTGx6gpDM3mkkqMXIyPD
+	 CRFsKsEoC5UaqL2ziVj91HXzVrPRjahyx0z52EGLedM3iT5UvpxVfy7FXeDxmF4vxnhNO
+	 JI3zaGqT+iBRQHTdfgU2QRvNJw9fSJQqbaxiP8iklXUELskEvp1uCtBXhJauojH0l9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795062008;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062011;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WqKLj8wlmEMZpikjnU0h32wXmg4j0FB6jXpLu/u/J3I=;
-	b=hSQoZ1HQFr8Aki7r0ES4KjHcPM8rBDbKAamfuWB+Cq+7/Dl5rGq4tfWQMek0t7U6KJHD
-	 Zy7sEfgGpJscg36ibSuK8As4qtfKGDUizLMElZpZj9In7OoxYB8fwEU3pU8ClupBXdIsV
-	 MCgJWL/9E2ILEBl8b9ueGj5qcgsW88IfRjI1KsaNXG4e+024Qcg8aPZA/5e2eqEwIlAYS
-	 nZtq9CROVI3qU51GRWwf3tSyNF3xp4/09l5mBf8bUXy3MFFogb+nP9ZlMuSEWhYkOmVCE
-	 bsPl1HbBQb4TZcY5SOb5EB05sONjkeTfMOmqxh4qWwfH9XnlwOEp8CmFDr+craOWGWg==
+	bh=3YXxmZX4l1kyP5HTX3h8KNOkMGQG7NHNYCtSDOi4q+s=;
+	b=ag84JUEfzy7c36EFYFtuiEGqY5jEbc0hbjTZW+qs9GAfJlxvUcXwUqcjD3pfb/jJMnD1
+	 NaPnurAYGlNaKxOhQJ4ce3c6P1k628xx6KsyJ6pen3eNlHAxTS5Ajq+Ernb538j9Tr9Q7
+	 ZZ+OLJuP8ahxoEQA3SAybq6vhx2aU+R+T6JOhVyhsSXW1ubXULuRiF7238Czt1WFiJkA9
+	 8eVUkWgdjNcOzX5yx3TK7qhAmKvs7c9rKjbGava8RPDMBGWSRzHviEK09wGnaFntZKCBv
+	 AtgTLN8MJvxSra1bwMvMou9oCVQZB/60vnAPzqjSd5Tu2FbrHuQi3/EOHzBM2lxDuiA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iJMJZFCf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jj4T5i4V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4507606A32A;
-	Thu, 19 Nov 2026 04:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A6FE606A326;
+	Thu, 19 Nov 2026 04:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iJMJZFCf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11BE71F000C4;
-	Thu, 19 Nov 2026 04:20:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jj4T5i4V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9EF01F000C5;
+	Thu, 19 Nov 2026 04:20:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795062008;
-	bh=WqKLj8wlmEMZpikjnU0h32wXmg4j0FB6jXpLu/u/J3I=;
+	s=korg; t=1795062011;
+	bh=3YXxmZX4l1kyP5HTX3h8KNOkMGQG7NHNYCtSDOi4q+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iJMJZFCfX/JdWLiwglr+PPEEtnNXU+nUndNwElvUJNqLVVR0JAroa3DllvjZSJSRl
-	 0n1aPYewzZvKm45C2vgF+FEfVbovQ77p6kKjcDu/Ma5CyJoqZCTo/8RSL+3kplwk4b
-	 VCc+ynqwgkDfYlWlS+GXgJFLHTlXj7WHBmadN774=
+	b=Jj4T5i4VMuy+pF3ZHnk/t4m69uGoxabI8Crhiu4V4QIFIRp93gzPX3o9pXM6fiwqk
+	 MSyufi8JjQM//7/neD8N+QhwQ/3bSY4tKcGBLjMkymWkQ1Wq4ee9Ktxju73g+RUXdr
+	 PyPMkhbVRq409w7ZD6M/FGvDay74qI/kR0quPD+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianyi Chen <hi@tychen.cc>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	tangmeng <tangmeng@uniontech.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1757/1848] eventpoll: propagate wakeup source creation failure in ep_modify()
-Date: Wed, 18 Nov 2026 16:03:15 +0100
-Message-ID: <20261118150033.004903465@linuxfoundation.org>
+Subject: [PATCH 5.10 1731/1848] timers: Move timer sysctl into the timer code
+Date: Wed, 18 Nov 2026 16:02:49 +0100
+Message-ID: <20261118150032.050795140@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,75 +68,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianyi Chen <hi@tychen.cc>
+From: tangmeng <tangmeng@uniontech.com>
 
-[ Upstream commit 9f2b8f4a452db79741c06e6ea91448347f4a975c ]
+[ Upstream commit efaa0227f6c6a5073951b20cf2f8c63c4155306c ]
 
-When EPOLL_CTL_MOD adds EPOLLWAKEUP, ep_modify() ignores the return
-value of ep_create_wakeup_source(). If allocation fails, it returns
-success with EPOLLWAKEUP set but no per-item wakeup source, so the
-requested suspend protection is missing.
+This is part of the effort to reduce kernel/sysctl.c to only contain the
+core logic.
 
-This can happen without fault injection on SELinux systems: creating
-the wakeup source's sysfs nodes can require GFP_KERNEL_ACCOUNT
-allocations for security.selinux xattrs, which can fail when the
-caller's memory cgroup is over its limit.
-
-Create the wakeup source before updating the event mask and data, and
-return the error if creation fails. Leave any newly created per-epoll
-source in place until ep_free(), as ep_insert() does on failure.
-
-Fixes: 4d7e30d98939 ("epoll: Add a flag, EPOLLWAKEUP, to prevent suspend while epoll events are ready")
-Signed-off-by: Tianyi Chen <hi@tychen.cc>
-Link: https://patch.msgid.link/179240281988.1700986.8309527041821666235@tychen.cc
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: tangmeng <tangmeng@uniontech.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20220215065019.7520-1-tangmeng@uniontech.com
+Stable-dep-of: e7cad586d732 ("timers: Clear pending_map on CPU hotplug")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/eventpoll.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ include/linux/timer.h |  8 -------
+ kernel/sysctl.c       | 11 ---------
+ kernel/time/timer.c   | 53 +++++++++++++++++++++++++++++++------------
+ 3 files changed, 38 insertions(+), 34 deletions(-)
 
-diff --git a/fs/eventpoll.c b/fs/eventpoll.c
-index 8962ac6eeef47..8cf4354e22e77 100644
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -1635,11 +1635,22 @@ static int ep_modify(struct eventpoll *ep, struct epitem *epi,
- {
- 	int pwake = 0;
- 	poll_table pt;
-+	int error;
+diff --git a/include/linux/timer.h b/include/linux/timer.h
+index a3d04c4f1263a..cdfd7d138da6a 100644
+--- a/include/linux/timer.h
++++ b/include/linux/timer.h
+@@ -205,14 +205,6 @@ extern void run_local_timers(void);
+ struct hrtimer;
+ extern enum hrtimer_restart it_real_fn(struct hrtimer *);
  
- 	lockdep_assert_irqs_enabled();
+-#if defined(CONFIG_SMP) && defined(CONFIG_NO_HZ_COMMON)
+-struct ctl_table;
+-
+-extern unsigned int sysctl_timer_migration;
+-int timer_migration_handler(struct ctl_table *table, int write,
+-			    void *buffer, size_t *lenp, loff_t *ppos);
+-#endif
+-
+ unsigned long __round_jiffies(unsigned long j, int cpu);
+ unsigned long __round_jiffies_relative(unsigned long j, int cpu);
+ unsigned long round_jiffies(unsigned long j);
+diff --git a/kernel/sysctl.c b/kernel/sysctl.c
+index c2870c9cae14a..2bad36c33c1b2 100644
+--- a/kernel/sysctl.c
++++ b/kernel/sysctl.c
+@@ -2735,17 +2735,6 @@ static struct ctl_table kern_table[] = {
+ 		.extra1		= SYSCTL_ZERO,
+ 		.extra2		= SYSCTL_ONE,
+ 	},
+-#if defined(CONFIG_SMP) && defined(CONFIG_NO_HZ_COMMON)
+-	{
+-		.procname	= "timer_migration",
+-		.data		= &sysctl_timer_migration,
+-		.maxlen		= sizeof(unsigned int),
+-		.mode		= 0644,
+-		.proc_handler	= timer_migration_handler,
+-		.extra1		= SYSCTL_ZERO,
+-		.extra2		= SYSCTL_ONE,
+-	},
+-#endif
+ #ifdef CONFIG_BPF_SYSCALL
+ 	{
+ 		.procname	= "unprivileged_bpf_disabled",
+diff --git a/kernel/time/timer.c b/kernel/time/timer.c
+index f12201988af47..2b1afc00e3184 100644
+--- a/kernel/time/timer.c
++++ b/kernel/time/timer.c
+@@ -44,6 +44,7 @@
+ #include <linux/slab.h>
+ #include <linux/compat.h>
+ #include <linux/random.h>
++#include <linux/sysctl.h>
  
- 	init_poll_funcptr(&pt, NULL);
+ #include <linux/uaccess.h>
+ #include <asm/unistd.h>
+@@ -223,7 +224,7 @@ static void timer_update_keys(struct work_struct *work);
+ static DECLARE_WORK(timer_update_work, timer_update_keys);
  
-+	/*
-+	 * Create the wakeup source before committing the new event mask.
-+	 * Leave the old mask and data unchanged if allocation fails.
-+	 */
-+	if ((event->events & EPOLLWAKEUP) && !ep_has_wakeup_source(epi)) {
-+		error = ep_create_wakeup_source(epi);
-+		if (error)
-+			return error;
-+	}
+ #ifdef CONFIG_SMP
+-unsigned int sysctl_timer_migration = 1;
++static unsigned int sysctl_timer_migration = 1;
+ 
+ DEFINE_STATIC_KEY_FALSE(timers_migration_enabled);
+ 
+@@ -234,7 +235,42 @@ static void timers_update_migration(void)
+ 	else
+ 		static_branch_disable(&timers_migration_enabled);
+ }
+-#else
 +
- 	/*
- 	 * Set the new event interest mask before calling f_op->poll();
- 	 * otherwise we might miss an event that happens between the
-@@ -1647,12 +1658,9 @@ static int ep_modify(struct eventpoll *ep, struct epitem *epi,
- 	 */
- 	epi->event.events = event->events; /* need barrier below */
- 	epi->event.data = event->data; /* protected by mtx */
--	if (epi->event.events & EPOLLWAKEUP) {
--		if (!ep_has_wakeup_source(epi))
--			ep_create_wakeup_source(epi);
--	} else if (ep_has_wakeup_source(epi)) {
-+	if (!(epi->event.events & EPOLLWAKEUP) &&
-+	    ep_has_wakeup_source(epi))
- 		ep_destroy_wakeup_source(epi);
--	}
++#ifdef CONFIG_SYSCTL
++static int timer_migration_handler(struct ctl_table *table, int write,
++			    void *buffer, size_t *lenp, loff_t *ppos)
++{
++	int ret;
++
++	mutex_lock(&timer_keys_mutex);
++	ret = proc_dointvec_minmax(table, write, buffer, lenp, ppos);
++	if (!ret && write)
++		timers_update_migration();
++	mutex_unlock(&timer_keys_mutex);
++	return ret;
++}
++
++static struct ctl_table timer_sysctl[] = {
++	{
++		.procname	= "timer_migration",
++		.data		= &sysctl_timer_migration,
++		.maxlen		= sizeof(unsigned int),
++		.mode		= 0644,
++		.proc_handler	= timer_migration_handler,
++		.extra1		= SYSCTL_ZERO,
++		.extra2		= SYSCTL_ONE,
++	},
++	{}
++};
++
++static int __init timer_sysctl_init(void)
++{
++	register_sysctl("kernel", timer_sysctl);
++	return 0;
++}
++device_initcall(timer_sysctl_init);
++#endif /* CONFIG_SYSCTL */
++#else /* CONFIG_SMP */
+ static inline void timers_update_migration(void) { }
+ #endif /* !CONFIG_SMP */
  
- 	/*
- 	 * The following barrier has two effects:
+@@ -251,19 +287,6 @@ void timers_update_nohz(void)
+ 	schedule_work(&timer_update_work);
+ }
+ 
+-int timer_migration_handler(struct ctl_table *table, int write,
+-			    void *buffer, size_t *lenp, loff_t *ppos)
+-{
+-	int ret;
+-
+-	mutex_lock(&timer_keys_mutex);
+-	ret = proc_dointvec_minmax(table, write, buffer, lenp, ppos);
+-	if (!ret && write)
+-		timers_update_migration();
+-	mutex_unlock(&timer_keys_mutex);
+-	return ret;
+-}
+-
+ static inline bool is_timers_nohz_active(void)
+ {
+ 	return static_branch_unlikely(&timers_nohz_active);
 -- 
 2.53.0
 
