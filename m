@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018968;
-	b=i6ZM40Im43RFhMmc2vQl6IDYX2zHgvSVGj1mT8zKGvFwyVsXuIU70NmIKiFTcmR7c2+c
-	 ZAbnJfF2Ene5FVneqZuHbZMgrpnido6EvT/fIlpGG3UC+/kach5gVUWyqVpzXNQ9pI3R5
-	 G3o8woZHSvx/eMXu12sD6hRfh/IX6eL58zsKNIvC5NiZoxxHHH7OuwGPgZdT9XmRvQTK0
-	 lj50wldHmHFsp2YhToyj+0DUbJ5aJPg4Ikw2t/VPKW8jnnx4qMoWJDq/tnXNgTPO4r+PC
-	 sqnkaiZSXhI2wdkQT+pJGIxez5g4GVt0v4w+OBCuPRiqAF+uGeRMylJjQzn2BH8cNAQ==
+	t=1795018970;
+	b=cdc7dVc51GWp+PsM4xcrxybk6+DI7tO1bmRhy1/49IzI0Teu/9X2O1rwZQRK5xndSPlT
+	 fzwDC5MZnsPQbiyQSL1tP1iPiJpsAw1YMJhlZsWaXMENhFVbteeOZ4aEhthTnjsheWOlE
+	 Y8tW4MBHpqc5dRg/LWuKbKQJoLP9qWchtPp1sbDY6iqP1qBVQFQTS460RWdlBU+FmnnDl
+	 oy1k46iPyPOUAWO2z1ZMeWVwLTmlIdWzse87BoPW/JM5L0IkV6QYsCCfMO5926SeTLoRR
+	 PmKro/WMQ3KypQ8IdipH5II2gVHCwHSo0CGH/2nF4XlSThthr4CGgr4IRhrAcaKbyUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018968;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018970;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9mUgfS+rGrclPFtQkcoFpFLUSEBqJanSk+v0GGhiXLc=;
-	b=zz2L7ilu/laujtsIty4RjK08i7G/E7lBW0U2ggAIwh/q5H1NdLKon9A82O9eBO2gy2jz
-	 D/Re5UzwA3tXfAu4CJWNWCnSnMX52VhcXXkk/i9O7vXokCtH1KFiSiKRUx9TuSeM8J/4d
-	 gmkrk6vpbigONVYe+ir9p1i+WQgidZM7VZqdQFWDTlY9zZngZ5BLCqW97FzU5WMkII9yk
-	 ni6y/yaSy0tvNLwFvg6ZZ8M9oN0OBHNEf/6UKPMtyhIQgK6YgY8kCl5mQc0SFDMR9h9N8
-	 dj3sKP2vcUVLpDEuXReq0ghihuekL0yk3KOIeOIrIDs/FENqVRbkpLgEht5awWLTK3g==
+	bh=qPryGyIGdw57ucl4yAtPbwZukF32HrNZh4USMt9LV+A=;
+	b=GTnvL8335mnlMVFQh+60FyJRhMTbwrW5/gENuS/j1E729GkE1dgwZpmZInOru3kEau2J
+	 /EYOkooq0nUAOBa+Rzr07VMihFebGLVDfkq1snlyzZjOwpsPMwFpaegLyTpi0jVzFEbZM
+	 Tp5x6p2mGHQysfsE5O5GwNR6MVpZ6g0FYELPsuLp2frcIgO3hB3bv7d/RfxjI/muOqq4A
+	 MHE7n4nxMGLmvDsaQu/XBozFMI+7gmI6WOC58FCtZiGvd6rdpvgK3yoDeQQTef7bo0l8c
+	 0rDPXM0uRJhzpH+RR4n0UxOVue4aTssVjLitZAguj41DlfdhCrw77JCEFmyvCY+HiCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gwfc55kX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mMZaNccj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E412E606A325;
-	Wed, 18 Nov 2026 16:22:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCFD7606A320;
+	Wed, 18 Nov 2026 16:22:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gwfc55kX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EBA11F000C8;
-	Wed, 18 Nov 2026 16:22:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mMZaNccj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CCAF1F000C4;
+	Wed, 18 Nov 2026 16:22:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018967;
-	bh=9mUgfS+rGrclPFtQkcoFpFLUSEBqJanSk+v0GGhiXLc=;
+	s=korg; t=1795018970;
+	bh=qPryGyIGdw57ucl4yAtPbwZukF32HrNZh4USMt9LV+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gwfc55kXTrrs0AJ0hrA2Ux8oa7s8glDF5+2DXpwR8L5kIQlobt/QouqchYalslT9X
-	 wHYEfPTn3kPtLcCQUAVDQRh7Pd9iPRQdw8DqJ3/TStT9b591g3Et2BSTq1wxA5FP6l
-	 sViv3M95N72fNLH9EdlnURwXHZNvzjGvEASrThEs=
+	b=mMZaNccjg0jfAXJmg8uoVTmC4Kp1D8jOoIy+Z2Fo4NB2/qHKj4HlaaVW/ObcRKfh9
+	 uCP3457DWzUedfjOWyrCLW4oSgk4H8Nc0DaweWw9KEK09S8O85iNCqWcMQ0Xz3g/CM
+	 DhyBTNMi1oS32Ux4ikgJqrAL7szJ+2LttfPFGqg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stella Liu <yu-ching.liu@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1427/2651] wifi: mt76: mt7925: fill all DW intervals in NAN avail_map
-Date: Wed, 18 Nov 2026 15:44:27 +0100
-Message-ID: <20261118150339.424482675@linuxfoundation.org>
+Subject: [PATCH 7.3 1428/2651] wifi: mt76: mt7925: clear CRB before deactivating NAN peer record
+Date: Wed, 18 Nov 2026 15:44:28 +0100
+Message-ID: <20261118150339.457171039@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,113 +71,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Stella Liu <yu-ching.liu@mediatek.com>
 
-[ Upstream commit 4489c66f64289cdf07a396f5edc7487af584b2db ]
+[ Upstream commit f0793ef2f7d48fa32d11e1b0915d9989ceb1de9a ]
 
-Fill avail_map for all DW intervals instead of only DW index 0.
-FW requires the bitmap to be set across all 16 DW intervals for
-correct NAN scheduling. Without this, NDP ping latency is extremely
-high (~200ms) because FW only schedules data in the first DW interval.
-
-Also set ch_type = 1 for new channel entries to indicate
-channel-based (non-band) availability.
+Send a zero avail_map CRB TLV before the peer record deactivation
+command. This ensures FW clears the committed schedule slots for
+the departing peer, preventing stale CRB entries from affecting
+subsequent NDP connections.
 
 Fixes: a5487a682406 ("wifi: mt76: mt7925: add NAN MCU helpers")
 Co-developed-by: Sean Wang <sean.wang@mediatek.com>
 Signed-off-by: Sean Wang <sean.wang@mediatek.com>
 Signed-off-by: Stella Liu <yu-ching.liu@mediatek.com>
-Link: https://patch.msgid.link/20260824195227.12589-11-sean.wang@kernel.org
+Link: https://patch.msgid.link/20260824195227.12589-12-sean.wang@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7925/nan.c   | 27 ++++++++++++++-----
- .../net/wireless/mediatek/mt76/mt7925/nan.h   |  3 +++
- 2 files changed, 23 insertions(+), 7 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7925/nan.c   | 25 ++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/nan.c b/drivers/net/wireless/mediatek/mt76/mt7925/nan.c
-index 8194e7678131c..79e57bae566d7 100644
+index 79e57bae566d7..16f3e40c75e7a 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt7925/nan.c
 +++ b/drivers/net/wireless/mediatek/mt76/mt7925/nan.c
-@@ -491,9 +491,14 @@ static u32 mt7925_nan_slot_to_bitmap(struct ieee80211_vif *vif,
+@@ -809,18 +809,18 @@ int mt792x_nan_set_peer_schedule(struct mt792x_dev *dev,
+ int mt792x_nan_set_peer_rec(struct mt76_dev *mdev,
+ 			    struct ieee80211_sta *sta)
+ {
++	struct mt7925_nan_sched_update_crb_tlv *crb_tlv;
+ 	struct mt7925_nan_common_hdr *hdr;
+ 	struct mt792x_sta *msta;
+ 	struct mt792x_nan *nan;
+ 	struct sk_buff *skb;
++	struct tlv *tlv;
+ 	int ret;
  
- 			if (FIELD_GET(NAN_CH_CTRL_PRIMARY_CH, raw) ==
- 			    slot_chan->chan->hw_value) {
--				u32 map = le32_to_cpu(ch_list[j].avail_map[0]);
-+				u32 dw;
+ 	if (!mdev || !sta)
+ 		return -EINVAL;
  
--				ch_list[j].avail_map[0] = cpu_to_le32(map | BIT(i));
-+				for (dw = 0; dw < NAN_TOTAL_DW; dw++) {
-+					u32 map = le32_to_cpu(ch_list[j].avail_map[dw]);
-+
-+					ch_list[j].avail_map[dw] =
-+						cpu_to_le32(map | BIT(i));
-+				}
- 				le32_add_cpu(&ch_list[j].num, 1);
- 				is_found = true;
- 				break;
-@@ -501,12 +506,18 @@ static u32 mt7925_nan_slot_to_bitmap(struct ieee80211_vif *vif,
- 		}
+-	skb = mt76_mcu_msg_alloc(mdev, NULL,
+-				 sizeof(struct mt7925_nan_common_hdr) +
+-				 sizeof(struct mt7925_nan_sched_manage_peer_rec_tlv));
++	skb = mt76_mcu_msg_alloc(mdev, NULL, MT7925_NAN_PEER_MAX_SIZE);
+ 	if (!skb)
+ 		return -ENOMEM;
  
- 		if (!is_found && num_channels < NAN_TIMELINE_MGMT_CHNL_LIST_NUM) {
-+			u32 dw;
-+
- 			ch_list[num_channels].ch_info =
--				cpu_to_le32(FIELD_PREP(NAN_CH_CTRL_OP_CLASS,
-+				cpu_to_le32(FIELD_PREP(NAN_CH_CTRL_CH_TYPE,
-+						       NAN_BAND_CHANNEL_ENTRY_LIST_TYPE_CHANNEL) |
-+					    FIELD_PREP(NAN_CH_CTRL_OP_CLASS,
- 						       slot->channel_entry[0]) |
- 					    FIELD_PREP(NAN_CH_CTRL_PRIMARY_CH,
- 						       slot_chan->chan->hw_value));
--			ch_list[num_channels].avail_map[0] = cpu_to_le32(BIT(i));
-+			for (dw = 0; dw < NAN_TOTAL_DW; dw++)
-+				ch_list[num_channels].avail_map[dw] =
-+					cpu_to_le32(BIT(i));
- 			le32_add_cpu(&ch_list[num_channels].num, 1);
- 			ch_list[num_channels].is_valid++;
- 			num_channels++;
-@@ -681,17 +692,19 @@ mt7925_nan_fill_crb_committed(struct mt7925_nan_sched_update_crb_tlv *crb_tlv,
- 
- 		/*
- 		 * Convert peer schedule slots to FW avail_map bitmap.
--		 * Each bit in avail_map[0] represents one time slot where
--		 * the peer has committed availability.
-+		 * Each bit represents one time slot where the peer has
-+		 * committed availability. Fill all DW intervals the same.
- 		 */
- 		for (slot = 0; slot < CFG80211_NAN_SCHED_NUM_TIME_SLOTS;
- 		     slot++) {
- 			struct ieee80211_nan_channel *ch = map->slots[slot];
-+			u32 dw;
- 
- 			if (!ch || !ch->chanctx_conf)
- 				continue;
- 
--			tl->avail_map[0] |= cpu_to_le32(BIT(slot));
-+			for (dw = 0; dw < NAN_TOTAL_DW; dw++)
-+				tl->avail_map[dw] |= cpu_to_le32(BIT(slot));
- 		}
+@@ -835,6 +835,25 @@ int mt792x_nan_set_peer_rec(struct mt76_dev *mdev,
+ 		return 0;
  	}
- }
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/nan.h b/drivers/net/wireless/mediatek/mt76/mt7925/nan.h
-index 4b424e0ece527..eadb07e34b3eb 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/nan.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/nan.h
-@@ -118,12 +118,15 @@ enum nan_peer_supported_bands {
- 	NAN_SUPPORTED_BN_NUM
- };
  
-+#define NAN_CH_CTRL_CH_TYPE		BIT(0)
- #define NAN_CH_CTRL_OP_CLASS		GENMASK(15, 8)
- #define NAN_CH_CTRL_PRIMARY_CH		GENMASK(23, 16)
- 
- #define NAN_CRB_USE_DATA_PATH		BIT(0)
- #define NAN_CRB_AVAIL_6G_FORMAT		GENMASK(2, 1)
- 
-+#define NAN_BAND_CHANNEL_ENTRY_LIST_TYPE_CHANNEL	1
++	/* Send a zero-avail_map CRB TLV before deactivating the peer record so
++	 * firmware clears the committed schedule slots for this peer.  Without
++	 * this, stale CRB entries linger and cause scheduling conflicts for
++	 * subsequent NDP connections that reuse the same sch_idx.
++	 */
++	tlv = mt76_connac_mcu_add_tlv(skb, NAN_UNI_CMD_UPDATE_CRB,
++				      sizeof(struct mt7925_nan_sched_update_crb_tlv));
++	if (!tlv) {
++		dev_kfree_skb(skb);
++		return -ENOMEM;
++	}
++	crb_tlv = (struct mt7925_nan_sched_update_crb_tlv *)tlv;
++	crb_tlv->sch_idx = cpu_to_le32(msta->nan_sched.sch_idx);
++	crb_tlv->flags = NAN_CRB_USE_DATA_PATH;
++	crb_tlv->is_use_ranging = false;
++	crb_tlv->comm_ndc_ctrl.is_valid = false;
++	/* avail_map is zero-initialised by mt76_connac_mcu_add_tlv */
 +
- struct mt7925_nan_social_ch_scan_params {
- 	u8 dwell_time[NAN_MAX_SOCIAL_CHANNELS];
- 	__le16 scan_period[NAN_MAX_SOCIAL_CHANNELS];
++	/* Deactivate peer record and release connection index */
+ 	if (mt7925_nan_peer_rec_tlv(skb, sta, msta, false)) {
+ 		dev_kfree_skb(skb);
+ 		return -ENOMEM;
 -- 
 2.53.0
 
