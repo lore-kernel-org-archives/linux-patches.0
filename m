@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060639;
-	b=bYvC2tqgW4VWti2SoOyi8wHgvVPPFXr6fmi8Asybi9O7IoYngQ2hozVpjNBrOpJtFopH
-	 1AK8bPNIx2HHEXQIoQ0M7ahSLTnn//4XmIOF5LlY1ccO6PYkIeWEhzvzacq0onlZE5JI4
-	 KbyX9FEZvKb8c2L7bDQU7LgNGto/xrGN1AnKwD2IZD/m2CsFIQTn+0amd+YD/VBR/ndki
-	 SnaDs3hPSdiDJ/Gm8BC707pvsm6oh1bQLeGi7/Ys8jPNwtPmIu25Dz/x91BVlcY6G+E1/
-	 6rGctHNZpwUWfRGrkzSZwRoT61i+BsMW7bMLN7nQtGnkfqI5Sp3eYOQclfBlk3k3urw==
+	t=1795060642;
+	b=RGrIS3mW6nelpjFZYTqqQ+YzYacdd01qa5DF4LPBD8iKjNjm58euXi05cikYVQ72Wzin
+	 5Rxt8Ig/VW08XTZV+IbI3dEB03cCjb/flEMwpcCYGZRztxUgvSVwUMK+FA7E8QpR2f98x
+	 NfEwE6PPA/Q9t4lnheTLY6M5HfRld7z9cs1pI6cmo0CNZqwM1LVHOUHI6VyyTYdEFIS/U
+	 aQts3WHgxVN2vVUeWDAXQKFlzGS2W2NTjT1cA0ULuXSbiXeXU5qF+XsxN95fAGnwkZsBK
+	 TJ94MSjidNMkBSeRowz7noZ2A5cXum/BwHNpRIOs5loc/iSvWP5wvr7KQeT7xI1Bi+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060639;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060642;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xEDjxSQDBGj9PfEz5DgCh7SJXu6SjWIWztqs1nGtuQA=;
-	b=gNUl4f7ELvKqxaTLFarOhhqCKat15RJEpWwntPo1iM+IT8wFRCHZdYGlEt+dcP6NBN+Y
-	 u+wCgDNGlYZLJNC4e+1x8vcuuwrDi6BamZ/M6Poh2MYhfBN7PSBAXglVE3BNs+Wu7j5hn
-	 5f7MSLwa/y11LjjqzdpwBV5JvTXSADtuW7KroTU/Kl1T91/2mcCfuG+j61nadouPenZx7
-	 mNi6jp2x1ysH0uWdBEfJ6UQOAdDgZ5+fx9j4ZrVnT+ea4KOxAZ/cW0tKU87Vf2wTE8rik
-	 cfI+iE9EW9b5hEVkyHz460DgBOV7nOrL+HaktAKd6B6407EmWscsWRpFvOoP4a1BVUA==
+	bh=qOW/7nnVI4YewiGCv9CoLv71KudVD0dbtdj+6AXYBUA=;
+	b=IWYxljvpidBoKnOSYCOoF1A7ySFOfWhHymuW4O681842tLyyw5S0sULjCaxq40LPXyJg
+	 EYF5tF9kIJluNyp36+I27EIR7mHe/kbWD5t4/c2fwVwpjwOfOqM1+jS5yhLu5UjgPdMpQ
+	 0fqgLrnhj4na60ZuxlrG+0zfUi7YiKBvHZlE40VxnWkziu39yGl+IlkeSAZvcpO2aWYWw
+	 IWlt3l4Scp8AObjtdoTF/AR08lqm9kTMMnLl8KCKizB9m0FwKBWR0X6R/86ppiqo0uycY
+	 YwcZvjFX3heo+SNEN9vi4r96Bl2pdiMtCvSpcuENcg5wWgqXcXPoRysRjHp+W7e4RlQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vGCcYVUS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EMqRA7kX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8804E606A325;
-	Thu, 19 Nov 2026 03:57:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465EA606A330;
+	Thu, 19 Nov 2026 03:57:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vGCcYVUS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D32CF1F000C4;
-	Thu, 19 Nov 2026 03:57:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EMqRA7kX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C0E21F000C4;
+	Thu, 19 Nov 2026 03:57:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060639;
-	bh=xEDjxSQDBGj9PfEz5DgCh7SJXu6SjWIWztqs1nGtuQA=;
+	s=korg; t=1795060642;
+	bh=qOW/7nnVI4YewiGCv9CoLv71KudVD0dbtdj+6AXYBUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vGCcYVUSMGUEhGHo3PaJa0bQ5uUJyCu+kqmU/kzLPGG7+0tMBRJI4oDDjpvYQ9bZX
-	 yzoojztMBfnM3vi7XRKzRcseoBBNHsz0TeWcnMN7+L8dwwOjfZCYuyTh8MSRYqFZUW
-	 uM0I6sbXRvOTEbzrHGXZssr2cE99HGRrQl35VN2I=
+	b=EMqRA7kXIsOlAEf6TN6wWIKocZUUZxDIGQBzCPFCsepV6GiTZZoYSQIb+MijyGtpV
+	 WjH1wHlXQLC8w1Q0kBPieglYAo4FLHhfHFVvyiyUj4XMa0VSD/j/l5fap5PK7N0m/7
+	 FFj7UkmmKPcmlofQZICIohB3X1ZFbIvcCteTOwvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari Mishal <harimishal1@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1270/1848] drm/amd/pm: bound SCLK FCW range entries to the table size
-Date: Wed, 18 Nov 2026 15:55:08 +0100
-Message-ID: <20261118150012.822487904@linuxfoundation.org>
+Subject: [PATCH 5.10 1271/1848] ata: sata_dwc_460ex: Use devm_platform_*ioremap_resource() APIs
+Date: Wed, 18 Nov 2026 15:55:09 +0100
+Message-ID: <20261118150012.856688304@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,47 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hari Mishal <harimishal1@gmail.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit f35aa5c77f5fca20fc269d6221df19c7b96704a5 ]
+[ Upstream commit f713961de5057765bc663db72b7e540f27827750 ]
 
-atomctrl_get_smc_sclk_range_table() copies ucSclkEntryNum entries from
-the VBIOS SMU_Info table into pp_atom_ctrl_sclk_range_table. Both the
-source (asSclkFcwRangeEntry[]) and destination (table->entry[]) arrays
-are fixed at MAX_SCLK_RANGE (8) entries, but ucSclkEntryNum is an
-unchecked u8 read straight from the VBIOS, so it can be up to 255. The
-destination is stack-allocated in both callers
-(polaris10_get_sclk_range_table(), vegam_get_sclk_range_table()), so a
-count above 8 overflows a stack buffer, not just a heap read.
+Use devm_platform_get_and_ioremap_resource() and
+devm_platform_ioremap_resource() APIs instead of their
+open coded analogues.
 
-Reject counts above MAX_SCLK_RANGE rather than clamping to it. Only
-one version of this VBIOS struct (ATOM_SMU_INFO_V2_1) has ever
-existed, so a count above 8 corresponds to no legitimate table format
-and means either a corrupted or a tampered VBIOS.
-
-Fixes: a23eefa2f461 ("drm/amd/powerplay: enable dpm for baffin.")
-Assisted-by: gkh_clanker_t1000
-Signed-off-by: Hari Mishal <harimishal1@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Stable-dep-of: e137035fcd66 ("ata: sata_dwc_460ex: Don't enable interrupt if libATA core registration fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/ata/sata_dwc_460ex.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
-index 0e9d33846114f..fe5764350af2d 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
-@@ -1379,6 +1379,9 @@ int atomctrl_get_smc_sclk_range_table(struct pp_hwmgr *hwmgr, struct pp_atom_ctr
- 	if (!psmu_info)
- 		return -EINVAL;
+diff --git a/drivers/ata/sata_dwc_460ex.c b/drivers/ata/sata_dwc_460ex.c
+index 26c3b287ac1f6..296ced0098b75 100644
+--- a/drivers/ata/sata_dwc_460ex.c
++++ b/drivers/ata/sata_dwc_460ex.c
+@@ -241,7 +241,6 @@ static int sata_dwc_dma_init_old(struct platform_device *pdev,
+ 				 struct sata_dwc_device *hsdev)
+ {
+ 	struct device_node *np = pdev->dev.of_node;
+-	struct resource *res;
  
-+	if (psmu_info->ucSclkEntryNum > MAX_SCLK_RANGE)
-+		return -EINVAL;
-+
- 	for (i = 0; i < psmu_info->ucSclkEntryNum; i++) {
- 		table->entry[i].ucVco_setting = psmu_info->asSclkFcwRangeEntry[i].ucVco_setting;
- 		table->entry[i].ucPostdiv = psmu_info->asSclkFcwRangeEntry[i].ucPostdiv;
+ 	hsdev->dma = devm_kzalloc(&pdev->dev, sizeof(*hsdev->dma), GFP_KERNEL);
+ 	if (!hsdev->dma)
+@@ -258,8 +257,7 @@ static int sata_dwc_dma_init_old(struct platform_device *pdev,
+ 	}
+ 
+ 	/* Get physical SATA DMA register base address */
+-	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
+-	hsdev->dma->regs = devm_ioremap_resource(&pdev->dev, res);
++	hsdev->dma->regs = devm_platform_ioremap_resource(pdev, 1);
+ 	if (IS_ERR(hsdev->dma->regs))
+ 		return PTR_ERR(hsdev->dma->regs);
+ 
+@@ -1214,8 +1212,7 @@ static int sata_dwc_probe(struct platform_device *ofdev)
+ 	host->private_data = hsdev;
+ 
+ 	/* Ioremap SATA registers */
+-	res = platform_get_resource(ofdev, IORESOURCE_MEM, 0);
+-	base = devm_ioremap_resource(&ofdev->dev, res);
++	base = devm_platform_get_and_ioremap_resource(ofdev, 0, &res);
+ 	if (IS_ERR(base))
+ 		return PTR_ERR(base);
+ 	dev_dbg(&ofdev->dev, "ioremap done for SATA register address\n");
 -- 
 2.53.0
 
