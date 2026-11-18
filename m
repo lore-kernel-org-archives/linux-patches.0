@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032443;
-	b=iiry7+Myrv5/shFZk2QJNW7nqRu1PLtZx+YGH6HNuHrCmm91bPdT87pObVhLpGwcMt29
-	 RPnv7glSKZ9UFQ7IJpQKpclan4JXAwPDSEOMwld2i7TO9C6oavgTIxPdfgjQ+zzJNSQfA
-	 OXe0QYBD6eukTQ7Xlo/RrjGpGyLAtEAjHyzFBvc8qFnpxm6Ix49QAWYUeJSCS4G5sWOic
-	 QpwvkVn7QhOZGAY1gsJVsUa9oJmhWc9o2IvrjmROqCakqH4R/FjRb2Lx6FVSbtOB7fXHh
-	 p8MnA2v1oY+Xl3tnm3AH6qfui7UwxHFqLfW6IBw9mkvhRF1PbVtBwsaa4fjSug+zlBQ==
+	t=1795032445;
+	b=Lzyn+oiPC3Yv8R4DDANVHUiinpkXXoW9OQjh8vLZcTvniUB+uq1FE2iO1BH6IXFf0T9c
+	 BkN5LGPnQlKCjjCdibTQePD4Pud+ns323ZVxBb7EvZdoLTuG6FPrfZNjRHkkGyFBW5MAc
+	 MLrVEycJshEOnU7J+AGYUu4IixiZ9xft+63MayJeK5DThZogTcDaC5KiSJZXLm/C3s56C
+	 EmUywCz0XvT4z6NgJHs+D67kHoAxBQfK5YiReyFnMULCzBUZyyVHbIRbdr3CTopG4T8c5
+	 KoSR+6J/7rs7Uxm7+9GWlVZenk+vFMnTfrqN9O2J1eQTB70RwA6+g0AWxG9jIt3oNaw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032443;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032445;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/tPn/gf4y3ltIamEou/rxBBWEhNJBO1IWgokaAhba2k=;
-	b=sZ+o1t1hfhEbBt9diPJdoYnujebDBwpxdgCYYf9ovBsP5v1bZY4/Wvb+G5CaPe1Eu9NQ
-	 tpqNXD6sfUJ77vl3vFBv+dmZk/u7cUchrW1h8HF2vzKW+r+AkDlv1aN7irjpRxFZpWd3B
-	 4NAxZ2c9+UuiHGOloDnMPumKbfevH+opOx1lmUL+H3GJUvuQOIKerC4ZAdBAE+HqRDqEI
-	 kqp9GZhLPcEAWujNH1HgP6hWPpbpDUbTesZoFsc1qEGrdwm7YWxdVmZGuDZ+Ct5tXXoQx
-	 OKCz0rCG0KBSVv2DWI3I/k0+nQQ9rtitaQBsnJ1ZScVFBMdQiynMizU7dpgZaG4fMUA==
+	bh=FAKfTM4Ik6oxknM/8CqYiixI9o5hO8iSWORcZis85Zg=;
+	b=2kdn2yRrhKXraLd3hNtSvmKwV2/l3dSU/fxxUVrixwcq4SVwMvpuHvZIKN4lVAHdOr0Q
+	 PHPItRIE4dGs5TkAOK78lZqmiYF7yVZA7iu+zCFSUFD/SrC6ZOyCl+oxnQjZS6nIpkkzN
+	 ic40nKhZvB7hsg72nDJ6nxee+5TV+tHdOVAiWTZ+WbredBzKaHP9jf9ADfr8S3yp1MoNz
+	 f8QhVoxpOw4b/u6USXCb1N97ehbETMZCw/7Qi21b7u2l8k19V8XXsR3wswIo8t3CrA+Ew
+	 8YHXdze2jm30pm6SitwiPN84sCyWtEHUutcjda4wn/ZahCi/AFYUtDN9+lRRkfvaK0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZJ4PO4Kz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hfmq7E51;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4731A606A33F;
-	Wed, 18 Nov 2026 20:07:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8BCA606CB2C;
+	Wed, 18 Nov 2026 20:07:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZJ4PO4Kz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52C1E1F000C7;
-	Wed, 18 Nov 2026 20:07:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hfmq7E51
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ABE71F000C5;
+	Wed, 18 Nov 2026 20:07:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032442;
-	bh=/tPn/gf4y3ltIamEou/rxBBWEhNJBO1IWgokaAhba2k=;
+	s=korg; t=1795032445;
+	bh=FAKfTM4Ik6oxknM/8CqYiixI9o5hO8iSWORcZis85Zg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZJ4PO4KzVlyzu51aR4DqIi6OqlbsbnJTlWq+0y7NPPDqSVuKR5RY/Zm1DFkijH3pH
-	 kotNYchXQzR7b/9qOnH+faNLJ3117LjGmtVbFN+QcOQJrgyFw23P0CodYcXEpDt6ZB
-	 fSQuSywBuVD5DpZXOempwVWTQ6dwziF3WGS+PvvE=
+	b=hfmq7E51JhvmMkNToKbie7GpGiU/usonuZmM5+avYGWwgTttXDZhhLRHGT4WyjOoL
+	 hc/Ed2PqFrz1ILycNEanOjN85YuRS0S5epaezQ1aGse8BSyCuH6KfwZVUM6hfsxVkX
+	 su5XMtDbp4YQK/26AXa5MN4acZxIjwvcH+t9J8aY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cen Zhang <zzzccc427@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1412/1756] ALSA: pcmtest: Pin the module while pattern files are open
-Date: Wed, 18 Nov 2026 15:58:59 +0100
-Message-ID: <20261118150105.416052653@linuxfoundation.org>
+Subject: [PATCH 6.12 1413/1756] ALSA: pcm: Remove channel-map controls before freeing substreams
+Date: Wed, 18 Nov 2026 15:59:00 +0100
+Message-ID: <20261118150105.453074287@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,68 +70,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 069003afab42b5a9394faa6985a3d76bd4700e72 ]
+[ Upstream commit d5dd05c1f72a95d8ab06828d7272a185ad2b9185 ]
 
-The fill_pattern_fops table must remain alive until the final release
-of each pattern debugfs file. It has no .owner, so the fops_get() call
-in full_proxy_open_regular() does not take a PCMTest module reference.
+A late HDA codec bind on an already registered card builds new PCMs
+before registering them. add_std_chmaps() publishes generic channel-map
+controls during this BUILD stage. If an earlier chmap succeeds and a
+later allocation fails, probe cleanup frees the BUILD PCM while the
+card's control device remains accessible.
 
-With snd-pcmtest loaded as a module, a user with permission to open a
-fill_patternN file and unload the module can retain the descriptor
-across normal unload, provided no PCM file or other module reference
-prevents it. The following ordering is possible:
+These generic controls are added directly by snd_pcm_add_chmap_ctls();
+snd_hda_ctls_clear() only removes codec-tracked mixer controls. BUILD
+devices also skip dev_disconnect. snd_pcm_free_stream() then frees the
+substreams before free_chmap() withdraws their generic control:
 
-  Pattern file user                   Module unload
-  -----------------                   -------------
-  open(fill_patternN)
-    full_proxy_open_regular()
-      fops_get(fill_pattern_fops)
-        owner == NULL: no module pin
-  keep the descriptor open
-                                      mod_exit()
-                                        clear_debug_files()
-                                          debugfs_remove_recursive()
-                                          drain active operations
-                                      return from mod_exit()
-                                      free_module()
-                                        free the module image
-  close(fd)
-    full_proxy_release()
-      read real_fops->release -> UAF
-      fops_put(real_fops)
-        read real_fops->owner
-      access freed module memory
+  Late HDA codec bind / rollback        Control GET on the live card
+  ------------------------------       ----------------------------
+  hda_codec_driver_probe()
+    snd_hda_codec_build_pcms()
+      PCM is BUILD
+    snd_hda_codec_build_controls()
+      add_std_chmaps()
+        publish an earlier chmap
+        later allocation: -ENOMEM
+    snd_hda_codec_cleanup_for_unbind()
+      snd_hda_ctls_clear()
+        generic chmap remains
+      codec_release_pcms()
+        snd_device_free()
+          BUILD: skip dev_disconnect
+          snd_pcm_free_stream()
+            kfree(substream)
+                                       snd_ctl_elem_read()
+                                         down_read(controls_rwsem)
+                                         pcm_chmap_ctl_get()
+                                           walk freed substream
+            free_chmap()
+              snd_ctl_remove()
+                wait for GET
+                                         up_read(controls_rwsem)
 
-Even though the table has no release callback, reading those fields
-is a use-after-free and can fault. The retained dentry keeps the
-proxy's bookkeeping alive, but does not retain the module storage.
+The control read lock cannot protect a substream already freed before
+control removal starts. The failure above occurs before
+snd_card_register(), so the PCM has not transitioned out of BUILD.
 
-Set .owner to THIS_MODULE so the existing fops_get()/fops_put() pair
-pins PCMTest until final release has finished accessing the table.
-Normal module unload is then blocked while any pattern file is open.
+Move free_chmap() before the substream free loop. Its snd_ctl_remove()
+withdraws the control and drains readers under controls_rwsem before any
+substream is released. Normal registered-device disconnect already
+removes the control, so the later call remains harmless on that path.
 
-Fixes: 315a3d57c64c ("ALSA: Implement the new Virtual PCM Test Driver")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Fixes: 2d3391ec0ecc ("ALSA: PCM: channel mapping API implementation")
 Assisted-by: LLM
-Link: https://patch.msgid.link/pm-pmb-1ce354e709dbab28e563-v2-6b2ea0aa16ec39442f6d@gmail.com
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/pm-pmb-4a207d9ef3a3597a74a4-v4-80b0113669b1a62fbbe9@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/drivers/pcmtest.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/core/pcm.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/drivers/pcmtest.c b/sound/drivers/pcmtest.c
-index 4a53dd84b19af..25f21255b0651 100644
---- a/sound/drivers/pcmtest.c
-+++ b/sound/drivers/pcmtest.c
-@@ -683,6 +683,7 @@ static ssize_t pattern_read(struct file *file, char __user *u_buff, size_t len,
- }
+diff --git a/sound/core/pcm.c b/sound/core/pcm.c
+index fbaac30ab32e3..0309deb7213d6 100644
+--- a/sound/core/pcm.c
++++ b/sound/core/pcm.c
+@@ -823,6 +823,9 @@ static void snd_pcm_free_stream(struct snd_pcm_str * pstr)
+ 	/* free all proc files under the stream */
+ 	snd_pcm_stream_proc_done(pstr);
  
- static const struct file_operations fill_pattern_fops = {
-+	.owner = THIS_MODULE,
- 	.read = pattern_read,
- 	.write = pattern_write,
- };
++	/* Drain channel-map callbacks before freeing the substreams. */
++	free_chmap(pstr);
++
+ 	substream = pstr->substream;
+ 	while (substream) {
+ 		substream_next = substream->next;
+@@ -837,7 +840,6 @@ static void snd_pcm_free_stream(struct snd_pcm_str * pstr)
+ 		kfree(setup);
+ 	}
+ #endif
+-	free_chmap(pstr);
+ 	if (pstr->substream_count)
+ 		put_device(pstr->dev);
+ }
 -- 
 2.53.0
 
