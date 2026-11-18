@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039334;
-	b=l+dLNLGeX0a9PhDaB04x0oVKyjvKYhsjfdnxKV7DVL3Grpoe6V5pIDQR8dEEntGolyR/
-	 AXLr+XnEHUzVT6X1EsMDBnLGyDApug9jUeVWItFq8Z+somSc/Vcq7NMh8hfgJrf2FmBP7
-	 WVyiZXR2OHVLRtV0AFFdr5Ipe8S3YoEL9Pctn429b+giAh2YnTKmktA+Vq1bO88pD+3xN
-	 ZGLT9LvlDVHEXgODWV61qHbyCOLMSm5gc5ooQYNgPLhMW57oSRNn+n9FkoMshlfptHP8J
-	 aPj2TdEKOGqasyU4M6Q9+WtmbaN96lNLFkb/X4CmUhHDWLopd4LYt/Ekn3SIkE4buPQ==
+	t=1795039337;
+	b=f7RtcUBbVsZXihJVXY7g05pnPDQXO+8xtBcOO26C+fBjOxixjXoMLZYFDlDQkec09bpe
+	 3nKAZol1vCGb9bwG2A7+Ym6YGMA63hMS6OKeCbAdbhB4ikMdgDqN9PXG0dic35RTo8+9l
+	 4dnH686rrtkKpX7VMMpZRLl8PfDkRJ+Lx3HItWQqxTvSOdD0udpRW+jxLh8OuFrozcm+b
+	 5EtW4UkwEpk+lmqml4wq+gZHCLe6xIMbakAYBQw2xDjwMO8ONQelqQT7OQh5FCyV/jVo6
+	 q1lhgqc1yhDc5dwr001mQoS8QbzypHrhNWTJfywiDCEpKHIqFU7qHVh5l38q3Q3mG/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039334;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039337;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6+1cbTtKjzYbytoyojlUsdwP5Pdze51sDkGTDzp7Bao=;
-	b=LzGwMXc53aW8lShm8TFujczWd3lpAP9lWN5vsyyUbIYJ1CUd7AhIoLRFQBN/wUP6JuNt
-	 JjR6ddoSRPtE95Y9nzyAQE1QLxrnZlyxdvAwiNyOuNiw8JKKCnQUPfufL9xFWRf0dLn8R
-	 lRLmpxxqDWfjKgiyx+e5vP4dzgr5Soxxpp2djr5k8Zl9PxZTNuqW4fzc3jmLJu6kjvAyI
-	 G1SZscfkxu6O02mai8EdD0HNAYt0TQyiGCviZ7OIIISfpYYnL1Dn/kn/mUlVSn3vaUKP+
-	 h6YnM31TSiSwyL8l2KWi/Uf55dIvcje2yEnL5xRiLYPfC+v0C3mlNxN8ALNa0S5igrA==
+	bh=vn3mQFqosrPND46DyQ6POiH+9MDO+kPSqZsEGKWRc7w=;
+	b=om/RbcyvTPP1Ba+vJMdZun+Xy/YG9KrHaajeybZL0HzmhTADehzfPmIbWccOO+BR3xKD
+	 hwUJL/QVCgPz+9EiR0h3c6yYnuCQhvgySGem4KYTWlfAW5cOZaezoLS+Ks1aleZCmbvk5
+	 k0/0ZMNRs//aAdgbKOhEcjbxoeky4qQ3UtlhuJ4WrJrzzKSLXm/2oR7oY2a+SBiPmY9f+
+	 wwZi3JSTratU17Ytxh1VXM2HgW3ZQt0G4TvtOKN2EktdTAEVlddKSe0LRkaNCihtFYq2x
+	 H8oqcNyo7edYn9/RN/NqDK8dEYaJKjh8kFjKusLlDJFB8xwM+71G683t1XENfwqqPeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rs9bOVXn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N1sZxvOe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA84A60A260F;
-	Wed, 18 Nov 2026 22:02:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7A360A2631;
+	Wed, 18 Nov 2026 22:02:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rs9bOVXn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7331F000CF;
-	Wed, 18 Nov 2026 22:02:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N1sZxvOe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C801F000CA;
+	Wed, 18 Nov 2026 22:02:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039334;
-	bh=6+1cbTtKjzYbytoyojlUsdwP5Pdze51sDkGTDzp7Bao=;
+	s=korg; t=1795039337;
+	bh=vn3mQFqosrPND46DyQ6POiH+9MDO+kPSqZsEGKWRc7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rs9bOVXnUS4jXRaL9Y0qAU3SHXbn8wCdmEmoC7JUhJo+V/YpN1wHsPZkQ8Fzs9oSB
-	 jLgPbWkHzCEmD9Pg1VadUT7RMJPBmo0Ag8B3Oxp/XDC2Q+ZWtO8xp/0HuNeti5kMI4
-	 NKmoe3K9heFkg4tipyGn2nyrH3DZzCDoBOVW7sgU=
+	b=N1sZxvOeR0Pnia7ebsjDVf49dsy7yJug0lWCRbzl6YkZbGpG5CF5HALdq9kj5Md0c
+	 DJB0SKyNLjQGtXFxnw5XTHiGn77o0SaJAn3UrRupCNPGgqRag4mPLXN89oXIrjjdIM
+	 KqA3CBrveuzZAchV8+77NbiI1goTd01sFYo3vz4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Mark Amirkan <markdamirkan@gmail.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Jacob Moroni <jmoroni@google.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2064/3318] perf evsel: Validate RAW sample before byte swapping
-Date: Wed, 18 Nov 2026 15:44:46 +0100
-Message-ID: <20261118150423.994544975@linuxfoundation.org>
+Subject: [PATCH 6.6 2065/3318] RDMA/irdma: Preserve fast-registration IOVA on 32-bit
+Date: Wed, 18 Nov 2026 15:44:47 +0100
+Message-ID: <20261118150424.025651183@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,153 +68,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Amirkan <markdamirkan@gmail.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 02f6847e1822714a4201b87e42f92b0d43e8549d ]
+[ Upstream commit c470050f2a7a7748ce35367e828885a8e658d712 ]
 
-For an opposite-endian RAW sample, __evsel__parse_sample() passes the
-input-controlled size to mem_bswap_64() before checking whether the
-payload fits in the event. A truncated record can therefore make the helper
-read and write past the event boundary.
+ib_mr::iova is u64, but the fast-registration path passes it through
+void * and uintptr_t. These conversions truncate the upper 32 bits on
+32-bit kernels before the WQE is built.
 
-A crafted perf.data file makes perf report crash with SIGSEGV. ASan
-reports the out-of-bounds access. A regression test puts backed data past
-the declared end and shows that it is changed before the parser returns
--EFAULT.
+Store the IOVA as u64 and write it directly to the WQE. The sole caller
+always uses VA-based addressing, so remove the unused FBO selection and
+set the VA-based bit unconditionally.
 
-Move the bounds checks before mem_bswap_64(). Check the rounded length too,
-because the helper accesses complete 64-bit words. Complete records are
-handled as before.
-
-Fixes: f9d8adb345d7adbb ("perf evsel: Fix swap for samples with raw data")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Assisted-by: Symbolic
-Signed-off-by: Mark Amirkan <markdamirkan@gmail.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
+Link: https://patch.msgid.link/20260903-64-bit-iova-is-silently-truncated-to-v1-1-96e878ea6873@nvidia.com
+Reviewed-by: Jacob Moroni <jmoroni@google.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/sample-parsing.c | 61 +++++++++++++++++++++++++++++++
- tools/perf/util/evsel.c           | 17 +++++----
- 2 files changed, 70 insertions(+), 8 deletions(-)
+ drivers/infiniband/hw/irdma/ctrl.c  | 6 ++----
+ drivers/infiniband/hw/irdma/type.h  | 4 +---
+ drivers/infiniband/hw/irdma/verbs.c | 3 +--
+ 3 files changed, 4 insertions(+), 9 deletions(-)
 
-diff --git a/tools/perf/tests/sample-parsing.c b/tools/perf/tests/sample-parsing.c
-index 95d204f908f0f..eaac9a8b9a25a 100644
---- a/tools/perf/tests/sample-parsing.c
-+++ b/tools/perf/tests/sample-parsing.c
-@@ -410,6 +410,55 @@ static int test_truncated_branch_stack(void)
- 	return 0;
- }
+diff --git a/drivers/infiniband/hw/irdma/ctrl.c b/drivers/infiniband/hw/irdma/ctrl.c
+index ebbece4f09a22..c63772d50cf78 100644
+--- a/drivers/infiniband/hw/irdma/ctrl.c
++++ b/drivers/infiniband/hw/irdma/ctrl.c
+@@ -1320,9 +1320,7 @@ int irdma_sc_mr_fast_register(struct irdma_sc_qp *qp,
+ 		  info->wr_id, wqe_idx,
+ 		  &qp->qp_uk.sq_wrtrk_array[wqe_idx].wrid);
  
-+static int test_truncated_swapped_raw(u16 event_size, u32 raw_size)
-+{
-+	struct perf_event_attr attr = {
-+		.sample_type = PERF_SAMPLE_RAW,
-+	};
-+	struct {
-+		struct perf_event_header header;
-+		union {
-+			u64 value;
-+			u32 words[2];
-+		} raw;
-+		u64 canary;
-+	} input = {
-+		.header = {
-+			.type = PERF_RECORD_SAMPLE,
-+			.size = event_size,
-+		},
-+		/* Parsing a pre-swapped word exchanges these two u32 values. */
-+		.raw.words = { 0x12345678, raw_size },
-+		.canary = 0x8877665544332211ULL,
-+	};
-+	struct perf_sample sample;
-+	struct evsel *evsel;
-+	u64 raw = input.raw.value;
-+	u64 canary = input.canary;
-+	int err;
-+
-+	evsel = evsel__new(&attr);
-+	if (!evsel)
-+		return -1;
-+
-+	evsel->sample_size = __evsel__sample_size(attr.sample_type);
-+	err = __evsel__parse_sample(evsel, (union perf_event *)&input,
-+				    &sample, /*needs_swap=*/true);
-+	perf_sample__exit(&sample);
-+	evsel__put(evsel);
-+
-+	if (err != -EFAULT) {
-+		pr_debug("truncated swapped RAW sample (size %u, raw %u) returned %d, expected -EFAULT\n",
-+			 event_size, raw_size, err);
-+		return -1;
-+	}
-+	if (input.raw.value != raw || input.canary != canary) {
-+		pr_debug("truncated swapped RAW sample modified data before validation\n");
-+		return -1;
-+	}
-+	return 0;
-+}
-+
- /**
-  * test__sample_parsing - test sample parsing.
-  *
-@@ -430,6 +479,18 @@ static int test__sample_parsing(struct test_suite *test __maybe_unused, int subt
- 	if (err)
- 		return err;
+-	temp = (info->addr_type == IRDMA_ADDR_TYPE_VA_BASED) ?
+-		(uintptr_t)info->va : info->fbo;
+-	set_64bit_val(wqe, 0, temp);
++	set_64bit_val(wqe, 0, info->va);
  
-+	/* The declared RAW payload extends past an otherwise aligned event. */
-+	err = test_truncated_swapped_raw(sizeof(struct perf_event_header) +
-+					 sizeof(u64), 16);
-+	if (err)
-+		return err;
-+
-+	/* The final complete word touched by mem_bswap_64() extends past it. */
-+	err = test_truncated_swapped_raw(sizeof(struct perf_event_header) +
-+					 sizeof(u32) + 9, 9);
-+	if (err)
-+		return err;
-+
- 	/*
- 	 * Fail the test if it has not been updated when new sample format bits
- 	 * were added.  Please actually update the test rather than just change
-diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
-index c02178eb3b1b3..b2be92bc7c5e7 100644
---- a/tools/perf/util/evsel.c
-+++ b/tools/perf/util/evsel.c
-@@ -2515,7 +2515,10 @@ int evsel__parse_sample(struct evsel *evsel, union perf_event *event,
- 	}
- 
- 	if (type & PERF_SAMPLE_RAW) {
-+		const __u64 *raw;
-+
- 		OVERFLOW_CHECK_u64(array);
-+		raw = array;
- 		u.val64 = *array;
- 
- 		/*
-@@ -2531,16 +2534,14 @@ int evsel__parse_sample(struct evsel *evsel, union perf_event *event,
- 		}
- 		data->raw_size = u.val32[0];
- 
--		/*
--		 * The raw data is aligned on 64bits including the
--		 * u32 size, so it's safe to use mem_bswap_64.
--		 */
--		if (swapped)
--			mem_bswap_64((void *) array, data->raw_size);
--
- 		array = (void *)array + sizeof(u32);
--
- 		OVERFLOW_CHECK(array, data->raw_size, max_size);
-+		if (swapped) {
-+			/* mem_bswap_64() accesses complete 64-bit words. */
-+			sz = roundup((u64)data->raw_size, sizeof(u64));
-+			OVERFLOW_CHECK(raw, sz, max_size);
-+			mem_bswap_64((void *)raw, data->raw_size);
-+		}
- 		data->raw_data = (void *)array;
- 		array = (void *)array + data->raw_size;
- 	}
+ 	temp = FIELD_GET(IRDMAQPSQ_FIRSTPMPBLIDXHI,
+ 			 info->first_pm_pbl_index >> 16);
+@@ -1339,7 +1337,7 @@ int irdma_sc_mr_fast_register(struct irdma_sc_qp *qp,
+ 	      FIELD_PREP(IRDMAQPSQ_LPBLSIZE, info->chunk_size) |
+ 	      FIELD_PREP(IRDMAQPSQ_HPAGESIZE, page_size) |
+ 	      FIELD_PREP(IRDMAQPSQ_STAGRIGHTS, info->access_rights) |
+-	      FIELD_PREP(IRDMAQPSQ_VABASEDTO, info->addr_type) |
++	      IRDMAQPSQ_VABASEDTO |
+ 	      FIELD_PREP(IRDMAQPSQ_READFENCE, info->read_fence) |
+ 	      FIELD_PREP(IRDMAQPSQ_LOCALFENCE, info->local_fence) |
+ 	      FIELD_PREP(IRDMAQPSQ_SIGCOMPL, info->signaled) |
+diff --git a/drivers/infiniband/hw/irdma/type.h b/drivers/infiniband/hw/irdma/type.h
+index c84ec4dd8536d..d545288c2d1e0 100644
+--- a/drivers/infiniband/hw/irdma/type.h
++++ b/drivers/infiniband/hw/irdma/type.h
+@@ -1005,13 +1005,11 @@ struct irdma_reg_ns_stag_info {
+ struct irdma_fast_reg_stag_info {
+ 	u64 wr_id;
+ 	u64 reg_addr_pa;
+-	u64 fbo;
+-	void *va;
++	u64 va;
+ 	u64 total_len;
+ 	u32 page_size;
+ 	u32 chunk_size;
+ 	u32 first_pm_pbl_index;
+-	enum irdma_addressing_type addr_type;
+ 	irdma_stag_index stag_idx;
+ 	u16 access_rights;
+ 	u32 pd_id;
+diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+index a02c551052dc4..bb4f2e314b8f6 100644
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -3564,8 +3564,7 @@ static int irdma_post_send(struct ib_qp *ibqp,
+ 			stag_info.stag_idx = reg_wr(ib_wr)->key >> 8;
+ 			stag_info.page_size = reg_wr(ib_wr)->mr->page_size;
+ 			stag_info.wr_id = ib_wr->wr_id;
+-			stag_info.addr_type = IRDMA_ADDR_TYPE_VA_BASED;
+-			stag_info.va = (void *)(uintptr_t)iwmr->ibmr.iova;
++			stag_info.va = iwmr->ibmr.iova;
+ 			stag_info.total_len = iwmr->ibmr.length;
+ 			stag_info.reg_addr_pa = *palloc->level1.addr;
+ 			stag_info.first_pm_pbl_index = palloc->level1.idx;
 -- 
 2.53.0
 
