@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016416;
-	b=b5mzX05el9Jcd6WVDJC0XLTaQWwUBE1dzMRBhQUQdyQkcWwPJ5nQcQMZVXUb2k/vgSmM
-	 qlJMJBTwfLSEQ1wxRgDUXoOcqA/lkS0W1raud1BMUhCtXPSCn92G6JCfAsGLIXNf7bkeL
-	 B2+t2J03TyoZYaTTi3DR7Pc8epCbcPemNy3TQ6MkAE+b/M8mrzIv6LbzyOZDLH+7lAp4k
-	 Gb4nLBJmyyYxajuYfdygmRGotLz5rW8l1AZsQST44thg7zl/iTH4pusWpFA8hi/yZI1i7
-	 JrV38j8joxkVbfgr0MvQBBxvk2JuuNHhGHDdh11VQsCDHKliOz0vc/6CFF/mFjSZLEg==
+	t=1795016419;
+	b=hA0gUwYr7Upymekz4Xxe+vxxYV9qldRn713PNMZ+NjFY9h5dZh5Cbhos3Y+S3t9XXrwf
+	 /TsEqZclfFVee9Hf/9EuoXrx0DaX03AcILyIq/2vf4H1ry1VPFoikkb/R/N9T43ONORj5
+	 b5Et4emDlB/+SC2XPnJVLvCu0uOZ783mGSNsFDLa1XJkmoUAZkkJJGD06BMWwPLcl6QhL
+	 rfj14M7CymJF/PdRHO31XgB0HgNsCupKL07INUoIjyPnQwLCM4lAeXOJqgiZkSyh/DZvj
+	 p8XT/f3STWYJonYWVI92QIawMmwnJtXoyvw6sErTp9CtycNsVTUk3P5eMAP0XuA5XXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016416;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016419;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=K2IvhZLvgW7GYDP+7qtsfgZkfGTXlNdmYUzyXEUZ+bs=;
-	b=YiI0IVSWVimzFhK0ZiMQTrrQGDe/JU8omOZCzhYOPMVhD2xRfGl+Bis8d3MNr/oo6+xE
-	 9AU86ZQeBQwhWdejpB01y2N7bpv82g6DEUOFEDY83HDV3Y/pme1J22mBlWdhfa9ipG0mo
-	 YDCxXG1O59wPGwjp73E8vmU8xhcbnzR/k5JSHewfOd6Yu2jgruc3sG4lrFk+WU6QkqtWm
-	 q67QwYP2Wr9gM4ZZpcn52Hb1Rf3ldKYveoJLCp7exqVPpcNf6Dd9lJq3wwCk91Q5w5C05
-	 +xe6MrPM2qPDhNOnHVCWOWpkA1fNdbk1HWVefrIVXUHEvR5/gyd39otgaKQzWCYYCgg==
+	bh=+n3/Q2aNxsAkhb6gCAO2vg/1BwOOAxzhG6ZqH3khh/U=;
+	b=g7A4Rm1dtmXBFZK2MFFk3oshEtZq8TlAkAF+JOJTVP/C+dHe3k42+tkoDvKI6rszrO4B
+	 ClvPrwuMAOHnJVQ7VjRCtjoN1VfYBSkwxLcctJ/VoIMnlbYY99WX0BtIN/6m39IU3HblI
+	 UcdgMbklRen0z9UQmJlBTdIKwcvA6ngPzY8G3h9LCaopO7xEYBte/8ifv8HOUB0R1vODC
+	 oaVmwN2ayc0cAZXBJ4W45PxDBnkZM8uepyirKm4fPyDBhxjxAyJ1lDQUFi7CqwsGBWXKP
+	 gLvWhs5HlV+A8gqA9uby1+ylWgFdJOSRsjPE6GpGimQbo/wIMJadMjfvOwjqh7Do3ew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zNYVWz4n;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="bY/Zvso/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E63160A260A;
-	Wed, 18 Nov 2026 15:40:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2055C60A2608;
+	Wed, 18 Nov 2026 15:40:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zNYVWz4n
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7222C1F000C4;
-	Wed, 18 Nov 2026 15:40:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bY/Zvso/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 310BA1F000C4;
+	Wed, 18 Nov 2026 15:40:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016415;
-	bh=K2IvhZLvgW7GYDP+7qtsfgZkfGTXlNdmYUzyXEUZ+bs=;
+	s=korg; t=1795016418;
+	bh=+n3/Q2aNxsAkhb6gCAO2vg/1BwOOAxzhG6ZqH3khh/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zNYVWz4nD4T9nrHoATXQ4FYzcLjx8QklFSdZ4ha5QGTmrmuRxvmfIzBCJBT/PFKZ1
-	 UYbtM3l5r4+HTnD8SoDX8S7D4jNAYI1+Cx1DJvZvQDBfPAk/ZkUWIXP1pHSTQKWjcW
-	 uesPLIrKVMNbumq2sO8iOhurf/3es9Nc5jSDfQbU=
+	b=bY/Zvso/m9lir/GKLASVBtpzerZ6UuOBPWRwpH6edHV0b5cqqMqs5sXEMcBNfVWdw
+	 Dc678TvRPvtPTkv2rwO3xe56qCaZ8hJMGdXAT2iG6EOwdp05YD0cpc3K++7LGOoWXH
+	 Y9WnLtVdlcJXJbns3RRZ2Rjzcl7lyXgJjq3xxssM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a32ff75e417c0f49a8e9@syzkaller.appspotmail.com,
-	Chandradhar Kumar <chandradhar.2003@gmail.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0514/2651] md/raid0: validate device count before allocating devlist
-Date: Wed, 18 Nov 2026 15:29:14 +0100
-Message-ID: <20261118150306.254027144@linuxfoundation.org>
+Subject: [PATCH 7.3 0523/2651] ASoC: SOF: amd: fix amd_sof_acp_remove() teardown ordering
+Date: Wed, 18 Nov 2026 15:29:23 +0100
+Message-ID: <20261118150306.572917845@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,67 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chandradhar Kumar <chandradhar.2003@gmail.com>
+From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 
-[ Upstream commit cf5963d6781ddee4c59a61debc459fcc7580f7b6 ]
+[ Upstream commit db2167f2e3f72db64d01356cc9f2924d32fd5a51 ]
 
-create_strip_zones() allocates conf->devlist based on mddev->raid_disks
-before verifying that number of devices matches raid_disks. Move the
-existing device count validation before allocation to reject invalid
-configurations before attempting a potentially excessive allocation.
+Call free_irq() before amd_sof_sdw_exit() in amd_sof_acp_remove().
+amd_sof_sdw_exit() sets adata->sdw to NULL; if an IRQ fires between
+that point and the subsequent free_irq(), acp_irq_handler() may
+dereference the now-NULL pdev[] pointer, causing a use-after-free.
 
-Fixes: 078d1d8e688d ("md/raid0: use kvzalloc/kvfree for strip_zone and devlist allocations")
-Reported-by: syzbot+a32ff75e417c0f49a8e9@syzkaller.appspotmail.com
-Closes: https://syzbot.org/bug?extid=a32ff75e417c0f49a8e9
-Signed-off-by: Chandradhar Kumar <chandradhar.2003@gmail.com>
-Link: https://patch.msgid.link/20260907132936.6677-1-chandradhar.2003@gmail.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Fixes: d948218424bf ("ASoC: SOF: amd: add code for invoking soundwire manager helper functions")
+Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+Link: https://patch.msgid.link/20260910132251.1171943-3-Vijendar.Mukunda@amd.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid0.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ sound/soc/sof/amd/acp.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/md/raid0.c b/drivers/md/raid0.c
-index 35e103f0c2c3e..453e8abda22ba 100644
---- a/drivers/md/raid0.c
-+++ b/drivers/md/raid0.c
-@@ -79,7 +79,10 @@ static int create_strip_zones(struct mddev *mddev, struct r0conf **private_conf)
- 	*private_conf = ERR_PTR(-ENOMEM);
- 	if (!conf)
- 		return -ENOMEM;
-+
-+	cnt = 0;
- 	rdev_for_each(rdev1, mddev) {
-+		cnt++;
- 		pr_debug("md/raid0:%s: looking at %pg\n",
- 			 mdname(mddev),
- 			 rdev1->bdev);
-@@ -144,6 +147,14 @@ static int create_strip_zones(struct mddev *mddev, struct r0conf **private_conf)
- 	}
+diff --git a/sound/soc/sof/amd/acp.c b/sound/soc/sof/amd/acp.c
+index 688df7acd2e21..e4cdb74c075db 100644
+--- a/sound/soc/sof/amd/acp.c
++++ b/sound/soc/sof/amd/acp.c
+@@ -1048,12 +1048,12 @@ void amd_sof_acp_remove(struct snd_sof_dev *sdev)
+ {
+ 	struct acp_dev_data *adata = sdev->pdata->hw_pdata;
  
- 	err = -ENOMEM;
+-	if (adata->sdw)
+-		amd_sof_sdw_exit(sdev);
+-
+ 	if (sdev->ipc_irq)
+ 		free_irq(sdev->ipc_irq, sdev);
+ 
++	if (adata->sdw)
++		amd_sof_sdw_exit(sdev);
 +
-+	if (cnt != mddev->raid_disks) {
-+		pr_warn("md/raid0:%s: too few disks (%d of %d) - aborting!\n",
-+			mdname(mddev), cnt, mddev->raid_disks);
-+		err = -EINVAL;
-+		goto abort;
-+	}
-+
- 	conf->strip_zone = kvzalloc_objs(struct strip_zone, conf->nr_strip_zones);
- 	if (!conf->strip_zone)
- 		goto abort;
-@@ -200,11 +211,6 @@ static int create_strip_zones(struct mddev *mddev, struct r0conf **private_conf)
- 			smallest = rdev1;
- 		cnt++;
- 	}
--	if (cnt != mddev->raid_disks) {
--		pr_warn("md/raid0:%s: too few disks (%d of %d) - aborting!\n",
--			mdname(mddev), cnt, mddev->raid_disks);
--		goto abort;
--	}
- 	zone->nb_dev = cnt;
- 	zone->zone_end = smallest->sectors * cnt;
+ 	if (adata->dmic_dev)
+ 		platform_device_unregister(adata->dmic_dev);
  
 -- 
 2.53.0
