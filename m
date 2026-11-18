@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019088;
-	b=YvVje1LWLNp5glmY+5yGHkof8/ovBpoHTBeIRZj9RyF4WNpuKSbZljivuSHyW0ABlNh4
-	 Q8KoFIo8bb1t4gI5jKOo68f9nNWkNZBkX9dgu+xjajkhlIzcUAEcopa8s9SLy0gF2t+1z
-	 qSRzzG/sMpqWVE7KRYj8+EIEzOsopvl8v/Ov15iiyVi71db3/z1GGjKsMqmUku/+gqi8K
-	 bBnl+HxZvNvSaQsZkax+E/i60nE7R7+ELGDEjD2VqX9yOTJUiLLkMfAvtLhgtD46Rb1JQ
-	 tkzuY9mdUiBPmX4ZmScelJfYBNPDyq1ChAbgZBg4IPj51HjGI0L6o/cR/91+TA346ow==
+	t=1795019091;
+	b=j+0W193mdog61O8Kk2g1kOOI1wfAf/1FOce8195ie4GnLjEGBJe22pnw4XNlMYsdSesY
+	 jVCEoqLTY3qrwJ3pORIbZFAuIcNEF9CDQssjiWaWw28kNBuwcJFU8bzH/Y3g+cH9TvqEX
+	 9+jowkKbNxqE5XJ0ZPRzMNNcbjqH+SMhICaZ1awB80zkbmEcOdvNNDi5AsOW5EZqK3oRp
+	 vXDsqdlpM6IgyZ3ecXgS+dLu+gfsQyAReW+HwNpvB1M3URAVsyHazimCTVpUQQFPJEcJu
+	 BcJPVWBB/iJoVm2dlZq3ZradNBlVuFTmzrjzfWCP3XqdqWtFXzng7OAdeGjQ9kk3jsA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019088;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019091;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sKLSijjOHnrDO2oLktMmh6DzJbkUOXZBpA32YxQD7hk=;
-	b=S+N1oTPx9r/bfPz071GswEuATQthcpA5TdjUoVg1yCj8BAMAaLnSUo1Squq8pP68iF+W
-	 WTraA4NaucUpgS4mZp1ZtlfcBlc+PF6VJRO9Nv2r1BIoGaTFELkphGHzTyLn5wUAxju8K
-	 J9WdeYt7lgekuo+8m2oUkw5t64+exINBGCwqhVQKw4rzZh1Suon/Hkb/KGqWrroyC2bhs
-	 wS4b4XkfRq7BMKLStxmPvV5ZR/8510dmk3ijSWyVHy5bMefHzo4DkQVWkn2iJDCRCHbV9
-	 4z89J89FcUGshRqWaJYa3ZjrMWxW26ySipLvndgqetF/X2fQG+S8keFD0EPqAStHgzA==
+	bh=zKqwVZ51JvPoS7cT0yxih09nziZIG4kCPLzzWElS/kw=;
+	b=Hwp2seWjvNpOoKXAk5m0d0MrwNXSPOE6k7oqsYF+oiJ8NdFjsK+vBCRxJZsqLuMtgFjj
+	 Ws01Qk3vQLYjdQkH+jpVWuYFlIgjnC0R9pTplI9NAEDhb8XlgKP4GaSptNAuAOLHBc6RS
+	 d0OX8BwjQu5TW5brWbXeMb9MFFdWHJwKNMbRLKCUGkH7ACuI03Dp5uHE4iKatffMVtDc1
+	 gdltnLZCrQNsRt6jAkxMCz1fJR3wQp1IUQfNyYKn8hj4UtlSQOAGxVckMicQrmAoXu7Fq
+	 wbtF7FsONs8Js6RQjXZ4gzTz+xuvUNWlO7XympyGIU4t8AiXQcGV/2TEMvvoImnxbag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yT06j87R;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DbwDo6x9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3504D606A31C;
-	Wed, 18 Nov 2026 16:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 197E1606A31C;
+	Wed, 18 Nov 2026 16:24:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yT06j87R
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 899341F000C4;
-	Wed, 18 Nov 2026 16:24:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DbwDo6x9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A5EB1F000C4;
+	Wed, 18 Nov 2026 16:24:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019088;
-	bh=sKLSijjOHnrDO2oLktMmh6DzJbkUOXZBpA32YxQD7hk=;
+	s=korg; t=1795019091;
+	bh=zKqwVZ51JvPoS7cT0yxih09nziZIG4kCPLzzWElS/kw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yT06j87R3WRsdB2rOd3P86ySisZx0QJ+9bOEPR1xzpQ5h5M96h3R1lgMitzMFJCSj
-	 +2Eth6G/7g+CFSLz5p5X/hLurR+N/1377dHRrAstLiOjznjIMbqFqsib5ZzTJwPNoA
-	 mye6T/NZGI9O170bGw6RHPI6TTUc+LTvtdZVppq8=
+	b=DbwDo6x9oFEahPpDs0obeNdgUs92YeG90rMvrI4qaD4AJtLabqXyEmgePZluoBzJX
+	 okSXlicYLZ+sfo0Tfyy4dWy3O/gfCALQUFv7161Ss+tIHspTMDEISmrH9PjKFXkMXi
+	 wHk90dF4lJaNaWpcv6Isi3xgUa6S7t78rncEpPOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1470/2651] wifi: mt76: mt7996: size the MLD setup TLV by the links it describes
-Date: Wed, 18 Nov 2026 15:45:10 +0100
-Message-ID: <20261118150340.954019793@linuxfoundation.org>
+Subject: [PATCH 7.3 1471/2651] wifi: mt76: mt7996: find the last MLD link among the links torn down
+Date: Wed, 18 Nov 2026 15:45:11 +0100
+Message-ID: <20261118150340.989593002@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,147 +69,122 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 24cc6d911e1d2f6ada086402f07b30b42fe6b545 ]
+[ Upstream commit 90abe74d274fad080dffaf3c671e5f31cee53a5b ]
 
-mt7996_mcu_sta_mld_setup_tlv() sets link_num and the TLV length from
-hweight16(sta->valid_links), but fills an entry only for active links
-that have driver state. On a station interface mac80211 activates only
-the association link at first, and drv_change_sta_links() masks the
-other links with vif->active_links, so the driver has no state for
-them. A station with valid_links 0x3 and active_links 0x2 thus sends
-STA_REC_MLD with link_num 2 and a second entry of zeroes, at
-association and again at authorization. The zeroed entry names WTBL
-index 0 and BSS index 0 as a link of the MLD.
+On disassociation, mt7996_mac_sta_event() sends STA_REC_MLD_OFF when
+the link it handles is the last of sta->valid_links, but it handles
+only active links with driver state. On a station interface with one
+active link out of two valid links, no link is ever the last one, so
+the firmware never gets STA_REC_MLD_OFF for the MLD.
 
-Count the links with driver state first and describe exactly those,
-with the secondary id taken from them. A link removed without flush
-keeps its mt7996_sta_link but is no longer valid, so leave it out as
-well.
+Walk the same set of links that mt7996_mcu_sta_mld_setup_tlv()
+describes, and detect the last link within that set. The per-link
+event handling moves into a helper that takes the set of links, so
+that a later change can bring up links that became active after
+association.
 
-Fixes: 00cef41d9d8f ("wifi: mt76: mt7996: Add mt7996_mcu_sta_mld_setup_tlv() and mt7996_mcu_sta_eht_mld_tlv()")
-Link: https://patch.msgid.link/20261006205936.669125-5-nbd@nbd.name
+Fixes: c1d6dd5d03eb ("wifi: mt76: mt7996: Add mt7996_mcu_teardown_mld_sta rouine")
+Link: https://patch.msgid.link/20261006205936.669125-6-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7996/main.c  | 30 +++++++++++++++++++
- .../net/wireless/mediatek/mt76/mt7996/mcu.c   | 26 +++++++---------
- .../wireless/mediatek/mt76/mt7996/mt7996.h    |  2 ++
- 3 files changed, 42 insertions(+), 16 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7996/main.c  | 47 ++++++++++---------
+ 1 file changed, 26 insertions(+), 21 deletions(-)
 
 diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-index 0ec919dda036e..f8d294b691ba9 100644
+index f8d294b691ba9..cfdb2c4c7771e 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
 +++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-@@ -1262,6 +1262,36 @@ void mt7996_mac_sta_remove_link(struct mt7996_dev *dev,
- 	}
+@@ -1406,34 +1406,26 @@ mt7996_mac_sta_add(struct mt7996_dev *dev, struct ieee80211_vif *vif,
  }
  
-+u16 mt7996_mac_sta_links(struct mt7996_dev *dev, struct ieee80211_vif *vif,
-+			 struct ieee80211_sta *sta)
-+{
-+	struct mt7996_sta *msta = (struct mt7996_sta *)sta->drv_priv;
-+	struct ieee80211_link_sta *link_sta;
-+	unsigned int link_id;
-+	u16 links = 0;
-+
-+	for_each_sta_active_link(vif, sta, link_sta, link_id) {
-+		struct mt7996_sta_link *msta_link;
-+
-+		msta_link = mt7996_sta_link_protected(dev, msta, link_id);
-+		if (!msta_link)
-+			continue;
-+
-+		if (sta->valid_links && !msta_link->wcid.link_valid)
-+			continue;
-+
-+		if (!link_conf_dereference_protected(vif, link_id))
-+			continue;
-+
-+		if (!mt7996_vif_link(dev, vif, link_id))
-+			continue;
-+
-+		links |= BIT(link_id);
-+	}
-+
-+	return links;
-+}
-+
- static void
- mt7996_mac_sta_remove_links(struct mt7996_dev *dev, struct ieee80211_vif *vif,
- 			    struct ieee80211_sta *sta, unsigned long links,
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-index 310ce18ec12c8..02f9bcfdf5d98 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-@@ -2759,18 +2759,20 @@ mt7996_mcu_sta_mld_setup_tlv(struct mt7996_dev *dev, struct sk_buff *skb,
- 			     struct ieee80211_sta *sta)
+ static int
+-mt7996_mac_sta_event(struct mt7996_dev *dev, struct ieee80211_vif *vif,
+-		     struct ieee80211_sta *sta, enum mt76_sta_event ev)
++mt7996_mac_sta_links_event(struct mt7996_dev *dev, struct ieee80211_vif *vif,
++			   struct ieee80211_sta *sta, unsigned long links,
++			   enum mt76_sta_event ev)
  {
  	struct mt7996_sta *msta = (struct mt7996_sta *)sta->drv_priv;
--	unsigned int nlinks = hweight16(sta->valid_links);
-+	unsigned long links = mt7996_mac_sta_links(dev, vif, sta);
-+	unsigned int nlinks = hweight16(links);
- 	struct mld_setup_link *mld_setup_link;
+-	unsigned long links = sta->valid_links;
 -	struct ieee80211_link_sta *link_sta;
- 	struct sta_rec_mld_setup *mld_setup;
- 	struct mt7996_sta_link *msta_link;
-+	u8 seclink_id = msta->deflink_id;
++	unsigned long iter_links = links;
  	unsigned int link_id;
- 	struct tlv *tlv;
+-	int err = 0;
+-
+-	mutex_lock(&dev->mt76.mutex);
++	int err;
  
--	msta_link = mt7996_sta_link_protected(dev, msta, msta->deflink_id);
--	if (!msta_link)
-+	if (!(links & BIT(msta->deflink_id)))
- 		return;
- 
-+	msta_link = mt7996_sta_link_protected(dev, msta, msta->deflink_id);
-+
- 	tlv = mt76_connac_mcu_add_tlv(skb, STA_REC_MLD,
- 				      sizeof(struct sta_rec_mld_setup) +
- 				      sizeof(struct mld_setup_link) * nlinks);
-@@ -2780,26 +2782,18 @@ mt7996_mcu_sta_mld_setup_tlv(struct mt7996_dev *dev, struct sk_buff *skb,
- 	mld_setup->setup_wcid = cpu_to_le16(msta_link->wcid.idx);
- 	mld_setup->primary_id = cpu_to_le16(msta_link->wcid.idx);
- 
--	if (nlinks > 1) {
--		msta_link = mt7996_sta_link_protected(dev, msta,
--						      msta->seclink_id);
--		if (!msta_link)
--			return;
--	}
-+	if (links & BIT(msta->seclink_id))
-+		seclink_id = msta->seclink_id;
-+	msta_link = mt7996_sta_link_protected(dev, msta, seclink_id);
- 	mld_setup->seconed_id = cpu_to_le16(msta_link->wcid.idx);
- 	mld_setup->link_num = nlinks;
- 
- 	mld_setup_link = (struct mld_setup_link *)mld_setup->link_info;
 -	for_each_sta_active_link(vif, sta, link_sta, link_id) {
-+	for_each_set_bit(link_id, &links, IEEE80211_MLD_MAX_NUM_LINKS) {
++	for_each_set_bit(link_id, &iter_links, IEEE80211_MLD_MAX_NUM_LINKS) {
+ 		struct ieee80211_bss_conf *link_conf;
++		struct ieee80211_link_sta *link_sta;
+ 		struct mt7996_sta_link *msta_link;
  		struct mt7996_vif_link *link;
+ 		int i;
  
+ 		link_conf = link_conf_dereference_protected(vif, link_id);
+-		if (!link_conf)
+-			continue;
+-
+-		link = mt7996_vif_link(dev, vif, link_id);
+-		if (!link)
+-			continue;
+-
++		link_sta = link_sta_dereference_protected(sta, link_id);
  		msta_link = mt7996_sta_link_protected(dev, msta, link_id);
 -		if (!msta_link)
 -			continue;
--
- 		link = mt7996_vif_link(dev, vif, link_id);
--		if (!link)
--			continue;
++		link = mt7996_vif_link(dev, vif, link_id);
  
- 		mld_setup_link->wcid = cpu_to_le16(msta_link->wcid.idx);
- 		mld_setup_link->bss_idx = link->mt76.idx;
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-index dcfdcd5975c3c..82a2a8a5db69e 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-@@ -894,6 +894,8 @@ void mt7996_mac_twt_teardown_flow(struct mt7996_dev *dev,
- void mt7996_mac_sta_remove_link(struct mt7996_dev *dev,
- 				struct ieee80211_sta *sta,
- 				unsigned int link_id, bool flush);
-+u16 mt7996_mac_sta_links(struct mt7996_dev *dev, struct ieee80211_vif *vif,
-+			 struct ieee80211_sta *sta);
- void mt7996_mac_add_twt_setup(struct ieee80211_hw *hw,
- 			      struct ieee80211_sta *sta,
- 			      struct ieee80211_twt_setup *twt);
+ 		switch (ev) {
+ 		case MT76_STA_EVENT_ASSOC:
+@@ -1441,12 +1433,12 @@ mt7996_mac_sta_event(struct mt7996_dev *dev, struct ieee80211_vif *vif,
+ 						 link, msta_link,
+ 						 CONN_STATE_CONNECT, true);
+ 			if (err)
+-				goto unlock;
++				return err;
+ 
+ 			err = mt7996_mcu_add_rate_ctrl(dev, msta_link->sta, vif,
+ 						       link_id, false);
+ 			if (err)
+-				goto unlock;
++				return err;
+ 
+ 			msta_link->wcid.tx_info |= MT_WCID_TX_INFO_SET;
+ 			break;
+@@ -1455,7 +1447,7 @@ mt7996_mac_sta_event(struct mt7996_dev *dev, struct ieee80211_vif *vif,
+ 						 link, msta_link,
+ 						 CONN_STATE_PORT_SECURE, false);
+ 			if (err)
+-				goto unlock;
++				return err;
+ 			break;
+ 		case MT76_STA_EVENT_DISASSOC:
+ 			for (i = 0; i < ARRAY_SIZE(msta_link->twt.flow); i++)
+@@ -1476,7 +1468,20 @@ mt7996_mac_sta_event(struct mt7996_dev *dev, struct ieee80211_vif *vif,
+ 			break;
+ 		}
+ 	}
+-unlock:
++
++	return 0;
++}
++
++static int
++mt7996_mac_sta_event(struct mt7996_dev *dev, struct ieee80211_vif *vif,
++		     struct ieee80211_sta *sta, enum mt76_sta_event ev)
++{
++	int err;
++
++	mutex_lock(&dev->mt76.mutex);
++	err = mt7996_mac_sta_links_event(dev, vif, sta,
++					 mt7996_mac_sta_links(dev, vif, sta),
++					 ev);
+ 	mutex_unlock(&dev->mt76.mutex);
+ 
+ 	return err;
 -- 
 2.53.0
 
