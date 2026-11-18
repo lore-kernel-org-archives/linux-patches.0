@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025292;
-	b=Il+oDfrg2rGH/H+n/logoZ3HZ09Ux4QZDd/6BgYogkCs+kYoqj1qLeCSnHFjFkhD240t
-	 Rai92OfBNGuO7xb/E9kRVlPAQnvW2KX4XUTtzt96au/ej7/JoaRj7QE6mi0L9XLAXXTsL
-	 OmtGjGSAv4cg9ErWoOszn1cVn+YQgKugR1DiUdfmbM8/VK1+zoB1SP7UdZDucXkaCBDU4
-	 CdwZPE9OY8WC6JOJ7iGLTay7w/oJhaJtY+qljZ7oca1zhsyIVODWeZaFwLXBsj/C4bqPQ
-	 e+QPzA7m8fvyvAeDtfXDYEDnoQIMAQf3VEZOzpBve2/Y87mOEjry2ULfQFBHaj/jQrA==
+	t=1795025295;
+	b=K/n111gPA1Vp/X/xK51aKk+363rRS4wjmX2aObNB00zdgWgrnC3aNn2TeLk0ee+Gm2ps
+	 z3EJiaKN6u/M5JqAueSFRa53TK7Enhjp4bKBlOpPskXr76kszwb1+weqhFfsfasLl8XXO
+	 j8VrO3JhVDzcKgN7K7LDOZSolbiJSho9b6er068PmRAlW28D0jYiV/HLDKaAQf8N6ivnu
+	 H/npE0VPqes+qPQrvSas/TnL0B2fz7RyTAuei2a7A1SvVyborH1KQdZ4Phtk+dnFIeca7
+	 9R4YcnvPUT+PqpK+W4P1HDFSXGO21XtssIKZeSvbCwINby7NOCKIeI5GDKZcIDX7ulw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025292;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025295;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kopvyYy8hISqS7ccHIE2/PvtUyTaZgmG/+tgJEMYm5o=;
-	b=Z9vsWKrQ3cRDvAqNBdvSIKSjE3lXsvGBQXX0qVsnO5TqoTNIJX3YDBsNetT5Qv1jaZVl
-	 uyhcuKaFptYlYkqWWJgN48XWUU4RTOWVD3GBBg+xDr5bBcUhT0gwe/55uECye7E0WZa1p
-	 fzg2KUsGva6lFSNqrG/AoikEJwZ2RrxyCaqiSBMsbW351RA3Kj1xuu2MM2FmH05x8gp6z
-	 iZ9e1bBmSF6xAzMRdRebhyerNcbh9Ju52XBYJX7S7s+eha2kVLnCmoBafce0H1+B7EuRl
-	 mksze4pw5pIa4OTJVIWCS2OZwZmbncGScPKc4D24JwBj/tsScRL0Ua5rTla2ZWFRLYQ==
+	bh=HIFEaThH5M7cM41ffWjEv4Ywpf6r2iKvQu+EsKIBDUY=;
+	b=aoofgY19A0WLYb9EzOzAWKu6UWUj66TkY3LvT4I2BPXhet2OC/9LthUXLAlhjAp2KXOk
+	 fTbRb9lK4iuh06ls/vUgbomXakh3dBOqaemQHqzVR/3un+uBnRUJ5cyihSUYkLeZq7qB2
+	 tUYd/lH9/vZOzdt02HVWYm8Ry96M+S9V8jvmRuvJ7hw5OdRjf/eUFmlSVHtHcM47bJlwk
+	 x52rfZsmWLbd9LJUh6GOB1c8VrwYdffTSl57mbXLcbnb9dr9VSCffw5WtmjQQxWkXD7ah
+	 nGct0XMC3Chxv9Hogb/nPTaEmxGpvNNGpllnkQ8HlDlrY/YnXM0221awnl41PS263vw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xuZ+VGjo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AhPz7zl9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC8DA60A262F;
-	Wed, 18 Nov 2026 18:08:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C307A60A262B;
+	Wed, 18 Nov 2026 18:08:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xuZ+VGjo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A47F1F000D2;
-	Wed, 18 Nov 2026 18:08:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AhPz7zl9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D4311F000C7;
+	Wed, 18 Nov 2026 18:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025292;
-	bh=kopvyYy8hISqS7ccHIE2/PvtUyTaZgmG/+tgJEMYm5o=;
+	s=korg; t=1795025295;
+	bh=HIFEaThH5M7cM41ffWjEv4Ywpf6r2iKvQu+EsKIBDUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xuZ+VGjoZtbMjdFNILAYazggV6SHXzaRdqAVoatpqZAGIc4AuuY5zoHIb/f3mouqn
-	 YkVSECEXe+Saz2D+JYeVSGo3Z0BIcu+pSIMlM7Z332oQJMOawAZt22er/ImyWTCONc
-	 gt4LiSVrbvd/YL3s0HN5i0EucRkc3hF5SpAOvvOE=
+	b=AhPz7zl9b5kHdJ/L+0FYC1CdL7dw1QxZbyU0l9ba5J23khC4BoGaB4UeRcZqDa0oD
+	 2iP+a9tuu6WBz9vcMMD3e1UmysGkTkrkcn0wDzInO2u/BHAcidFCb3M88BxLAoQ6Hi
+	 N273RWuPZ9o31k2YuPi9jM2CiDh4YIH/FoQ/Rf08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linkai Gong <gonglinkai@kylinos.cn>,
-	Peng Fan <peng.fan@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Sang-Hoon Choi <csh0052@gmail.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1029/2151] clk: imx: composite-93: return timeout from gate enable
-Date: Wed, 18 Nov 2026 15:46:04 +0100
-Message-ID: <20261118150159.862201535@linuxfoundation.org>
+Subject: [PATCH 6.18 1030/2151] md/raid5: protect big_stripe_tree lookup with RCU
+Date: Wed, 18 Nov 2026 15:46:05 +0100
+Message-ID: <20261118150159.895249456@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,68 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linkai Gong <gonglinkai@kylinos.cn>
+From: Sang-Hoon Choi <csh0052@gmail.com>
 
-[ Upstream commit 246d9fa6b83d2d3c524aad28de1ab5db5cecf048 ]
+[ Upstream commit 73b0df929494522acf9ccc8dafea4f721166965b ]
 
-imx93_clk_composite_wait_ready() already reports a busy timeout, but
-imx93_clk_composite_gate_enable() ignores that and always returns 0.
-The clk framework then marks the clock enabled and lets consumers run
-while the CCM slice is still busy.
+big_stripe_tree is updated under tree_lock, and deleted radix-tree
+nodes are freed after an RCU grace period.  r5c_big_stripe_cached()
+used to run under an RCU read-side critical section, but that protection
+was removed together with unrelated rdev lookup protection.
 
-Propagate the timeout so enable fails instead of looking successful.
+The lookup can now be preempted while walking the tree, allowing a
+concurrent deletion and grace period to complete before the walk
+resumes.  Protect the lookup locally with rcu_read_lock().  Only the
+presence of the entry is used after unlocking.
 
-Fixes: 4a3de5aa7743 ("clk: imx: clk-composite-93: check slice busy")
-Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260907022214.1076402-1-gonglinkai@kylinos.cn
-Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Fixes: ad8606702f26 ("md/raid5: remove rcu protection to access rdev from conf")
+Assisted-by: LLM
+Signed-off-by: Sang-Hoon Choi <csh0052@gmail.com>
+Link: https://patch.msgid.link/179070265341.12871.12495446593114993799.idr-bug-88@gmail.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-composite-93.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/md/raid5-cache.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clk/imx/clk-composite-93.c b/drivers/clk/imx/clk-composite-93.c
-index 513d74a39d3bd..7c89df9327199 100644
---- a/drivers/clk/imx/clk-composite-93.c
-+++ b/drivers/clk/imx/clk-composite-93.c
-@@ -43,11 +43,12 @@ static int imx93_clk_composite_wait_ready(struct clk_hw *hw, void __iomem *reg)
- 	return ret;
+diff --git a/drivers/md/raid5-cache.c b/drivers/md/raid5-cache.c
+index b3e2582a39d03..3b51e8b4425af 100644
+--- a/drivers/md/raid5-cache.c
++++ b/drivers/md/raid5-cache.c
+@@ -2970,7 +2970,9 @@ bool r5c_big_stripe_cached(struct r5conf *conf, sector_t sect)
+ 		return false;
+ 
+ 	tree_index = r5c_tree_index(conf, sect);
++	rcu_read_lock();
+ 	slot = radix_tree_lookup(&log->big_stripe_tree, tree_index);
++	rcu_read_unlock();
+ 	return slot != NULL;
  }
  
--static void imx93_clk_composite_gate_endisable(struct clk_hw *hw, int enable)
-+static int imx93_clk_composite_gate_endisable(struct clk_hw *hw, int enable)
- {
- 	struct clk_gate *gate = to_clk_gate(hw);
- 	unsigned long flags;
- 	u32 reg;
-+	int ret;
- 
- 	if (gate->lock)
- 		spin_lock_irqsave(gate->lock, flags);
-@@ -61,17 +62,17 @@ static void imx93_clk_composite_gate_endisable(struct clk_hw *hw, int enable)
- 
- 	writel(reg, gate->reg);
- 
--	imx93_clk_composite_wait_ready(hw, gate->reg);
-+	ret = imx93_clk_composite_wait_ready(hw, gate->reg);
- 
- 	if (gate->lock)
- 		spin_unlock_irqrestore(gate->lock, flags);
-+
-+	return ret;
- }
- 
- static int imx93_clk_composite_gate_enable(struct clk_hw *hw)
- {
--	imx93_clk_composite_gate_endisable(hw, 1);
--
--	return 0;
-+	return imx93_clk_composite_gate_endisable(hw, 1);
- }
- 
- static void imx93_clk_composite_gate_disable(struct clk_hw *hw)
 -- 
 2.53.0
 
