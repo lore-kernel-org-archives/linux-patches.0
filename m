@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021256;
-	b=pE9PTr5gWuMSjaPr8HaVoObmbGN4YmcXPlhAYtsiHTu0WDAZcSSSS2V/fC9JtOq6/cnr
-	 +mSCy65fAQDiuhyU+qYnn+lXLzJGoXYuD6HPnCNB9ai70GSPx6MtyGZf0ZYKM04+89E9F
-	 je3HpIaxI5hUQsqRuMdzpNwBo1rdd/Y3ZLalkJXb1PJv9gXvK7AmgkvVdjlXGtIxvmyrR
-	 KGbHKsFP+ck7pUpmyttvK3Mjajtp5BBgzBNHV1QeChKi0znYx5rKObEQsQIMEEg8xvyXY
-	 deDhuiS+dTUHhqLh8HQSK9DhW4x1kXwfdAZ86xX1NWL5XwOfgs1BF8HeMs2k3TplJgA==
+	t=1795021259;
+	b=2jZlkawVdWvEJ9U4dzxGHaHe0w2d9p2NQoryOif6fVbIDMHlengv0aC1t9BvCbgw09p7
+	 Pvy3O2LWPhB1lbjsRLMjtp0hmCU1o6PqPkuDx/L/AKEIquWkUMDu9Y4mKK7XQ1ik8fOX/
+	 7hXUodLrYru6ThzBIX2SwJ3xJg0WK2FEzyTL617JFa0YOJ/PozdepNg0Bqk83sX3Irt6B
+	 izU/tZvQZDC5KZV1hPnO2RPWztV0w4Xx/MMiWiJJLDrEMp2kvE0zpUPSOjl7amFCzbSv4
+	 AlUgex5e5N/efhwhqztQVkHFyEoJwYFKBVs1pXHiRmkE96UtKfTkYzZ+O6bJ3hZCl1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021256;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021259;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=45TVSooXwRkYYFJIyquh3pmnR5WfKhyeczlXd0qIuzU=;
-	b=Nedj3MKPZNg8CmPR5zOgFdvqXno2r44YS4DS9A5OzUkVCRLI2H8Ft5FjjEbO2FaA9HEs
-	 p41FvRjBNsx61elXL/dT7BulaXdBk+V6FB7mGoxjdiYkHYh7mfPlP+VV2AgAfKJytRokI
-	 oZx8IT8x4f+MW205KZrCzGqdmHETcdERrkzjZfSSokH4Eg/OT5bXG+QYjsIzDX4qUg8PY
-	 DQS55A5cPM+QlO0KZ2/nElAxz2m99DGuqLipVPYRX6blssGrC7xB+IfwhSIfxyp4Gwc8l
-	 yhkkNbkajqkcXnveWfOmoSNLDg5pk2UN2BkCz+tAzWQuZbUEBuX3JXEDVRl7h97HzxA==
+	bh=utbtSA3KbtgNLamLjgyYRdWSBbxQTvBo4zKtf9bUOL0=;
+	b=0jmObFBRcQwvcbIp0/Tw5JtjyyxVPtl7pStL3I8m/plg/nNT8rycqirZbCpniD5F3P0J
+	 EMS6+sWm6ZzpkSDTd60KcpP1plD8BOqvNcU3GjMSB4uwuUid5LaPLDdkMW645fnRPS+mm
+	 fApzRiyG4BLVAAN8HEIxdZ72HwUCpkFAAiq61myyiDJcihz5H08zdCYNOcwaIIozmQDy6
+	 5IPPLjOL2IrFPGz90LtRCH76Ao04UNqI6g5pAK6SR6R8zSNHDIPQN2fYA4crW6EGBoofk
+	 xD5eq4ISbmQXeDXscRhgF0NkT728uS47Unnx1gLu/s7r25l95fYhqDjUDNNYVhrv+lw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mGXv8tJ9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SdnPFvs9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC163606A32C;
-	Wed, 18 Nov 2026 17:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A30606A320;
+	Wed, 18 Nov 2026 17:00:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mGXv8tJ9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B7D71F000C4;
-	Wed, 18 Nov 2026 17:00:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SdnPFvs9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 282291F000C4;
+	Wed, 18 Nov 2026 17:00:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021255;
-	bh=45TVSooXwRkYYFJIyquh3pmnR5WfKhyeczlXd0qIuzU=;
+	s=korg; t=1795021258;
+	bh=utbtSA3KbtgNLamLjgyYRdWSBbxQTvBo4zKtf9bUOL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mGXv8tJ90E1RFLyr9ZMgIcUJpMRVLkZLk+u1wn0A5L+RjgjGYSyJ8pO5vtCwbUd6D
-	 kaudks9gAkVmAbrQRLXGUsNuXqlNH2wLl+VIXtxDO/CkmCAdm1q417IT/ypEiwEMQj
-	 9EZrEyjSgZ1nOuIYtP/RtEJ1k4pv9qVyFhduSubE=
+	b=SdnPFvs9e1X8XE/NFwlfWxNV0ZIGrCBd4cbZ5886mK+WXTYJt/0KK9oaCJgg4wQJc
+	 Ut0QVCM3tVwSQoStqLNAjE4wMldv37MtuHmsuIw017SEW1s57S1pBjzdzs77k4NHz1
+	 T11Gmi11GeZEl+t0DeMBr/kYHBNeWArq5wXxDwB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Andrea Righi <arighi@nvidia.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2243/2651] sched_ext: Use irq_work for deferred actions with proxy execution
-Date: Wed, 18 Nov 2026 15:58:03 +0100
-Message-ID: <20261118150406.224473023@linuxfoundation.org>
+Subject: [PATCH 7.3 2244/2651] net: openvswitch: skip IPv4 later fragments on TCP/UDP set actions
+Date: Wed, 18 Nov 2026 15:58:04 +0100
+Message-ID: <20261118150406.254539537@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,57 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Righi <arighi@nvidia.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 9b5ce4345bf4d01dbf9ae5f6f6b1fb9cfdfc7b48 ]
+[ Upstream commit 14c0350142ab0a10ebeefed03b779df23749e16a ]
 
-maybe_queue_balance_callback() clears SCX_RQ_BAL_CB_PENDING when it
-queues the deferred callback. Proxy resolution can then zap the callback
-without running it, leaving the deferred actions unscheduled until a
-later wakeup or deferred request.
+An IPv4 later fragment carries no L4 header, but key extraction leaves
+ip.proto set to the real protocol and the flow may wildcard the frag
+field, so validate_set() accepts such packets. set_tcp() and set_udp()
+then treat the first bytes of the fragment payload as an L4 header,
+rewrite them as ports and patch the bytes at the checksum offset,
+corrupting the packet.
 
-Use the existing irq_work fallback for dispatch-time deferred requests
-when proxy execution is enabled. This keeps the work scheduled even if
-proxy resolution retries the pick or falls back to idle, without relying
-on another SCX dispatch to restore a discarded callback.
+Skip these actions for OVS_FRAG_TYPE_LATER. IPv6 later fragments are not
+affected, since their ip.proto is NEXTHDR_FRAGMENT and validate_set()
+rejects L4 set actions for them.
 
-Fixes: a8ad873113d3 ("sched_ext: defer queue_balance_callback() until after ops.dispatch")
-Reported-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/08cac02c604dd73ef96fc92eb29d692b@kernel.org
-Signed-off-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: ccb1352e76cf ("net: Add Open vSwitch kernel components.")
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Link: https://patch.msgid.link/20261015124749.4694-1-fmancera@suse.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext/ext.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ net/openvswitch/actions.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 30198a4db2b9d..b1c28516ff2cb 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -1059,9 +1059,10 @@ static void schedule_deferred_locked(struct rq *rq)
- 		return;
+diff --git a/net/openvswitch/actions.c b/net/openvswitch/actions.c
+index 27152bca8a8ce..4aade471afc45 100644
+--- a/net/openvswitch/actions.c
++++ b/net/openvswitch/actions.c
+@@ -595,6 +595,9 @@ static int set_udp(struct sk_buff *skb, struct sw_flow_key *flow_key,
+ 	__be16 src, dst;
+ 	int err;
  
- 	/*
--	 * If in dispatch, the balance callbacks will be called before rq lock
--	 * is released. Schedule one.
--	 *
-+	 * If in dispatch without proxy execution, the balance callbacks will
-+	 * be called before rq lock is released. Schedule one. With proxy
-+	 * execution, proxy resolution can zap the callbacks without another
-+	 * SCX dispatch to requeue them, so use irq_work instead.
- 	 *
- 	 * We can't directly insert the callback into the
- 	 * rq's list: The call can drop its lock and make the pending balance
-@@ -1069,7 +1070,7 @@ static void schedule_deferred_locked(struct rq *rq)
- 	 *
- 	 * Just let dispatch_one() know that it must do it itself.
- 	 */
--	if (rq->scx.flags & SCX_RQ_IN_DISPATCH) {
-+	if ((rq->scx.flags & SCX_RQ_IN_DISPATCH) && !sched_proxy_exec()) {
- 		rq->scx.flags |= SCX_RQ_BAL_CB_PENDING;
- 		return;
- 	}
++	if (flow_key->ip.frag == OVS_FRAG_TYPE_LATER)
++		return 0;
++
+ 	err = skb_ensure_writable(skb, skb_transport_offset(skb) +
+ 				  sizeof(struct udphdr));
+ 	if (unlikely(err))
+@@ -638,6 +641,9 @@ static int set_tcp(struct sk_buff *skb, struct sw_flow_key *flow_key,
+ 	__be16 src, dst;
+ 	int err;
+ 
++	if (flow_key->ip.frag == OVS_FRAG_TYPE_LATER)
++		return 0;
++
+ 	err = skb_ensure_writable(skb, skb_transport_offset(skb) +
+ 				  sizeof(struct tcphdr));
+ 	if (unlikely(err))
 -- 
 2.53.0
 
