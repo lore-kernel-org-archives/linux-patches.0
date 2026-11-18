@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021080;
-	b=f587mS7l17Nrywkp2LEnQ9rGDu5ZqSyFfe/XwIUwGyWoFzInQE0BhJXZdGiDINVM+TTU
-	 lSHi2DKfivdCSBpl/FbR33//g8kIOZ+QdO8XiXIfqFkj2TMsHdOcFyMKBFlHQP+mMUxE0
-	 xSNypW7ZW6I/dnjQdoT7xptBQJqdzy0PCzPBBKDc2ey57/l96YiljfF/08XQLqkeCy22D
-	 ZGox15iyE9K7ATCGg8FUkmxycphCeJg0FMNwxCsYQ2xGMsusLCRUVFAqdb1VnRXx8D1Ek
-	 Vi9Xa5lziCTZJ/ZrOgfYoYArMn0m7qiWk4t2NVNbWDqPOx1phi+x40SFmg/c5BZR0bQ==
+	t=1795021083;
+	b=YrN7gCeeQccyeA5cgCt7eGFrbA0VWIgfmDoV064Fze7tUgpCsfMZszH1mIOGzyTUzm6B
+	 1XINhSQZykYKL7xMdQOGecPahKWqNfOlmIWtV3wEWio01O0gPeUTlRaDf1R8Ahn9QtK4I
+	 lZ9J97eyFf84CXRbG6ji7j5i8Qd6++vTSrUvjY2vQOpLaKJUbAhWs+iHQLxJhCvNIMBRW
+	 NCTKet3uoG7DMuDAAa/iZ5pd1eDSlonmA7xJn7MEvg13dIe6YJUw9peNbkdyG8Q/ES1+5
+	 FsfL09/nbNNzyGFz2bdLCEQGRmMYKiI0cw9I3YN38aD7hFJj76rxOWCB7mc2WNtQEgg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021080;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021083;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aACPd2xh+vYq4x6HwKdgjpJwrs5LlSlU6wg2oDTWTQA=;
-	b=gMa6l3UhCN64MDSYqiYWfr3/kZXBhjdBLKXmBwsmVsAgGAWok3/B9WbWfnZcLMEyfYzB
-	 kV8Lp86GJ2fAwl9u+IKjVfKSKaXS2bDKp5LkQ4hygRuQpzU81F+xNPkvB4v9UPAA3pqPs
-	 sH5LkLDf7T10JayRh5N6m8QWUCy5y7xavQzD6wUt6/4eA/eeA6n0KKg+LP3v9T1XGd7Zz
-	 AIidNdZvh5sVSkQCAsJRd6fMF5vUJbr7VXAmJfFyA1eCM/lXONwKbe+L4ZooRRTenpaTy
-	 +euuOC6SvwircH3z/Y1dSNjxUitGCg7KTMVNHQ4gjnZLjx9IeMxgS4fqp0HmDHZ51Xw==
+	bh=XxPLoKen4FAixbAkD3U14FyCsB0tXZB/YmYsAGtEdtw=;
+	b=vtZTN+V16zwDkYKYPHdkVR2fXrWwPGfF8BmSaqk1KLvZk+BvUBhCXaGbyYlOY0zTCQyw
+	 pt0d3461YzCJxfWCP94k/y7pRrcktEfNrO2UprwBN7my0Vy/sibe+dl0HK80YsxCtk1OP
+	 qvkh6oJsP6O2IdALou2vrDEbiLGZWg268mKTpmVwCHlk+CpL/SzZVrinIYNIElUJLtorF
+	 LmxCHOXHFMgZOLmh0/fSjXTCinJ+8xfBAMIt+5XytXAkNu3hle2TtWPRjSN6vY5Q4utO5
+	 6i0p5jhWCK9LLk/sDZYNKnwBBL1E5f1yXW2VBa8cG8U5jWlLcW1zy3mR6bvGQ7mIaXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xMkQneSm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kIGmsZsr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387A6606A32A;
-	Wed, 18 Nov 2026 16:58:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01886606A31C;
+	Wed, 18 Nov 2026 16:58:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xMkQneSm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A491F000C4;
-	Wed, 18 Nov 2026 16:57:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kIGmsZsr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57B561F000C4;
+	Wed, 18 Nov 2026 16:58:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021080;
-	bh=aACPd2xh+vYq4x6HwKdgjpJwrs5LlSlU6wg2oDTWTQA=;
+	s=korg; t=1795021082;
+	bh=XxPLoKen4FAixbAkD3U14FyCsB0tXZB/YmYsAGtEdtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xMkQneSmV/zWOLgJVrEMx0R4gHcz+FERtxIpxpt8tIq7dFghGaJ68+WJ8GHYZN4y+
-	 N6xumfTdEBjKyvCQmrm7sQp9ijhpHPVaDdceiDa/yC9HMNLfZmLvRdLtfNhitrj/xo
-	 ugKQaloLuSHnD1dZALuNrXOTl+XA5rqSXirZWHGQ=
+	b=kIGmsZsrLRZXr6+UNWh8dIPk2MVptdXQOAB5IEyXJS4ZzJ4Fo3z34CZj73R9f09Ee
+	 1NdQSpa2QM/M+uR4I31WSQzx9Mb3uakkWuN5ZTZxJiUfZpVwh8RuLsfTV8cIUjHof5
+	 En0rbVvel8qbxV+gLxWFxoVHzPpE+NNrqYLq8Bno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serhat Kumral <serhatkumral1@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2143/2651] RDMA/usnic: Bound buffer size to sizeof(buf) in flowinfo_read()
-Date: Wed, 18 Nov 2026 15:56:23 +0100
-Message-ID: <20261118150403.003911665@linuxfoundation.org>
+Subject: [PATCH 7.3 2179/2651] ALSA: aloop: Keep the timer source alive until card release
+Date: Wed, 18 Nov 2026 15:56:59 +0100
+Message-ID: <20261118150404.230381655@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,37 +68,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Serhat Kumral <serhatkumral1@gmail.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 9dd8b9a337af844291edcd9139c927d0f7958dbe ]
+[ Upstream commit 762ef425cf0ac9c4b9e9e61e0da0950e16e6fbea ]
 
-In flowinfo_read(), 'left' tracks the remaining space in the 512-byte
-stack buffer 'buf', but it is initialized to 'count'.
+The timer_source string must remain valid while PCM opens can select
+and parse it. loopback_set_timer_source() allocates the string with
+parent-device devres, which can release it while the card is still
+registered.
 
-Initialize 'left' to sizeof(buf) instead of 'count'.
+A successful nonempty proc replacement after snd_card_register() adds
+the string allocation after trigger_card_free. Unbinding the platform
+device while snd_aloop remains loaded releases devres in reverse order.
+An open for an unused cable can run after the string is freed and before
+the card-free action disconnects the card:
 
-Fixes: 9f637f793602 ("IB/usnic: Expose flows via debugfs")
-Signed-off-by: Serhat Kumral <serhatkumral1@gmail.com>
-Link: https://patch.msgid.link/20261017185028.1019445-1-serhatkumral1@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+  Device unbind                      PCM open
+  devres_release_all()
+    free replacement string
+                                     snd_pcm_open()
+                                       snd_card_file_add()
+                                       loopback_open()
+                                         loopback_snd_timer_open()
+                                           loopback_parse_timer_id()
+    trigger_card_free()
+      snd_card_free()
+        snd_card_disconnect()
+
+The parser can then read freed memory. KASAN has reported a one-byte
+use-after-free read in strchr() from loopback_snd_timer_open(). The
+cable_lock mutex serializes explicit replacements with opens, but
+implicit devres release does not take it. The card and module references
+held by PCM open do not retain this separate devres allocation.
+
+Use kstrdup() and release the current string from card->private_free.
+PCM admission already retains the card until each file is removed, and
+card disconnect drains proc callbacks before final card release. This
+keeps the string alive across admitted PCM opens and preserves the
+cable_lock serialization of replacements. Install the callback before
+the initial allocation so probe failures also release the string.
+
+Fixes: b072e65aadd6 ("ALSA: aloop: Allocate resources with device-managed APIs")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Assisted-by: LLM
+Link: https://patch.msgid.link/pm-pmb-71a33a26d68356e3ade7-v1-108d86919c5c92fe1ea8@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/usnic/usnic_debugfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/drivers/aloop.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/infiniband/hw/usnic/usnic_debugfs.c b/drivers/infiniband/hw/usnic/usnic_debugfs.c
-index 10a8cd5ba076e..ece7c6e714997 100644
---- a/drivers/infiniband/hw/usnic/usnic_debugfs.c
-+++ b/drivers/infiniband/hw/usnic/usnic_debugfs.c
-@@ -76,7 +76,7 @@ static ssize_t flowinfo_read(struct file *f, char __user *data,
+diff --git a/sound/drivers/aloop.c b/sound/drivers/aloop.c
+index 4d05accb838ca..824d320b665bf 100644
+--- a/sound/drivers/aloop.c
++++ b/sound/drivers/aloop.c
+@@ -1905,13 +1905,10 @@ static int loopback_cable_proc_new(struct loopback *loopback, int cidx)
+ static void loopback_set_timer_source(struct loopback *loopback,
+ 				      const char *value)
+ {
+-	if (loopback->timer_source) {
+-		devm_kfree(loopback->card->dev, loopback->timer_source);
+-		loopback->timer_source = NULL;
+-	}
++	kfree(loopback->timer_source);
++	loopback->timer_source = NULL;
+ 	if (value && *value)
+-		loopback->timer_source = devm_kstrdup(loopback->card->dev,
+-						      value, GFP_KERNEL);
++		loopback->timer_source = kstrdup(value, GFP_KERNEL);
+ }
  
- 	qp_flow = f->private_data;
- 	ptr = buf;
--	left = count;
-+	left = sizeof(buf);
+ static void print_timer_source_info(struct snd_info_entry *entry,
+@@ -1942,6 +1939,13 @@ static int loopback_timer_source_proc_new(struct loopback *loopback)
+ 				    change_timer_source_info);
+ }
  
- 	if (*ppos > 0)
- 		return 0;
++static void loopback_private_free(struct snd_card *card)
++{
++	struct loopback *loopback = card->private_data;
++
++	kfree(loopback->timer_source);
++}
++
+ static int loopback_probe(struct platform_device *devptr)
+ {
+ 	struct snd_card *card;
+@@ -1967,6 +1971,7 @@ static int loopback_probe(struct platform_device *devptr)
+ 		pcm_substreams[dev] = MAX_PCM_SUBSTREAMS;
+ 	
+ 	loopback->card = card;
++	card->private_free = loopback_private_free;
+ 	loopback_set_timer_source(loopback, timer_source[dev]);
+ 
+ 	mutex_init(&loopback->cable_lock);
 -- 
 2.53.0
 
