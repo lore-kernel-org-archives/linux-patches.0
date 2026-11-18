@@ -1,56 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056816;
-	b=SJEwjSCGYhr+hdMuvzjxkfhkXOQrmbHc+AM6/WGFTOMCLnASD4IrZQPkLta15FD3ucQG
-	 5728/rgeXzRT7q83MI9hRz/VoO8cje+BpIrm/UwijPPNovWCRcQvnZcvV+zRgUZ5kNpWP
-	 WYR8wZ0Fw5M03i+O3kIX4rWAyxW66PawPt3FwyKpwxy4xSjxrjY9C/0xrqpfudWTlnfyv
-	 LXYgGT8jjig0+BSDGghLhoQFKjJDUDjox/tWmag8Mahx2YuDgjbD9xE6nfw+n3iblFcAd
-	 yA0afPHI7+SFcU7NsbdOpCYXpMLD+QjrK4u38bATim8k3U3eb3v0SCoD3CKqpi3H7tQ==
+	t=1795056818;
+	b=giHG3akP5h0h2jVT1Y7p5xKgOx1NmVEWV6xzFsUpLdw2lUh5mxDz7aLdi+8cw4DMLiya
+	 4/CBrHp0i+oxwahz/eokyuQoqCQsCkyiPBw2djsvDAh+FGszdOV2HYTA8xdASC/606qRb
+	 bh64oflNUDimbilPbcduzjVw/28M9ZeFhezexk8uLeYqtEtxi022GQzylNDXeWgi84/La
+	 F+KHoRFbH94/TfsXTiEmfN5GqZymA8w69S/LcNQCq6EDLxF9pEEPBe4E+b6SZXqhXZ69y
+	 vL8S9ZHccfo9WAQp9TGywWJtj+HuTtJgWFT1DahuHAH84Uy/lluGX3/CkyuE5SGA2Qg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056816;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056818;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sXEBWo+L+mUV29lVKtU/LehqNZZTmhg25Ka0BbwdAx4=;
-	b=edlF1p8kxa+He013hIorJwVIsvy+YtnVUk42DSJVn/havUUdE/ZVhK/zrxUhGFg0XLEN
-	 mSDGYmWsWjT+0QvbqY87rRYEOc7Wz3+BSQLqNoR+cl1zKrEeRYuncNm9Ok7VbJyu4hD6d
-	 zdbRcXE7Rcg8iw8qJsKNAt99DXvKg/BKjjKthptrJslHNj9S/9Pxl96NjmTCzqSExLvqI
-	 dVD/I/FdiGzEqiD8MVEwx3i4DrXxe4G0kjSq1D1VNRc/8tfvWdmdRt1Cf/Uk6BRpQAa2K
-	 SfUaigGMVUz8bUch8TOE4KND8TOU+iJIOjcS7IvMH6EsShoJqsazaQtMnkqtoZEFjhA==
+	bh=BDJNFI453z5igTqzve1GP76gyzWU+pj2ANWaqYV46zw=;
+	b=mAd14BMEI8jXvFtH5xfm51NQjGnWAziqCswHoupTSfhhdaXulwjU5bpjDWXv7pO0p6Ko
+	 IOBekAYkOeD6DK3hcFbv7mnJq/I1xJ2jWnmACX2SHaS2PYgZzv7twufaKFBoZaeEBjRre
+	 EUg5fZh+LqPntWzggLW1+qJ9f3F3bTBg2RdQj2lAwGPSex4lpxcrrhvaF5fQUcfuCpDHn
+	 qqE1Q4cMOob7++Q69BwMUY8xri7MojUfSP47RwSEQ1xGSpGlEVEisq2+ka9CeY2omL+p0
+	 +H7QirVN+R/3S7RAdv7teoK/RKfwMfgDeeMp7vdkOrQ4g73YXHbZ/HX1/BpdTYcWNMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=09pwqZT2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HzFH0eSy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE03A606A31C;
-	Thu, 19 Nov 2026 02:53:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A92606A325;
+	Thu, 19 Nov 2026 02:53:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=09pwqZT2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 390791F000C4;
-	Thu, 19 Nov 2026 02:53:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HzFH0eSy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC1401F000C4;
+	Thu, 19 Nov 2026 02:53:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056815;
-	bh=sXEBWo+L+mUV29lVKtU/LehqNZZTmhg25Ka0BbwdAx4=;
+	s=korg; t=1795056818;
+	bh=BDJNFI453z5igTqzve1GP76gyzWU+pj2ANWaqYV46zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=09pwqZT2awBjvC7cljZt/HvEm5Txa8mbZjC0JUTQqm6nPlyfwyfebHYrcbhBSjp+m
-	 ULDY1BajNdXkDtnLYCXtb3IeeYF8owWuAYHvfz54Xk1SYKsXkzWSxnY4aKgE+OuXa/
-	 HiXTvZUdB+1VB1Nj8vW2LmwTPh2jFE/mpVX4q47s=
+	b=HzFH0eSyCRqSkJ2drqCnADyqncVZtcAjX6AGZJkuRarQ4ppwDibC87qRf750vjCiF
+	 HwTyISt29mCIHvXh+n5roQIhp7tHIxNfr2XaNKICPBd3RN1y6OQZc43UToECzwRtF7
+	 gIvwMtUK0PwFQmYlQl56ZaIlTo41M95xBoEFKbA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@sina.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	syzbot+1f0fbc2561b3e5d51b91@syzkaller.appspotmail.com,
-	Bradley Morgan <brads@mainlining.org>,
-	Pingfan Liu <kernelfans@gmail.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Kees Cook <kees@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Kurt Hackel <kurt.hackel@oracle.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2120/2214] kernel/reboot: avoid potential deadlocks during suspension
-Date: Wed, 18 Nov 2026 16:03:16 +0100
-Message-ID: <20261118150135.387251872@linuxfoundation.org>
+Subject: [PATCH 5.15 2082/2214] ocfs2: initialize status waiters before publishing them
+Date: Wed, 18 Nov 2026 16:02:38 +0100
+Message-ID: <20261118150133.929345804@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -72,78 +76,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@sina.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 66644b992f25f6a33775788c8b69a8bb3d41ad67 ]
+[ Upstream commit f6bfa6c458288d72948af95391b205f3eb775721 ]
 
-Invoking reboot with LINUX_REBOOT_CMD_SW_SUSPEND causes kernel/reboot.c
-to acquire system_transition_mutex and invoke hibernate(). hibernate()
-calls lock_system_sleep(), which sets PF_NOFREEZE on current and attempts
-to acquire system_transition_mutex again, potentially hitting:
+o2net_prep_nsw() publishes its stack waiter in nn_status_idr and
+nn_status_list under nn_lock, then initializes the wait queue and
+completion status after releasing the lock.  A concurrent disconnect can
+find that waiter through o2net_complete_nodes_nsw() and call wake_up()
+before the wait queue has a valid lock and list head.  The sender can also
+overwrite a completion status with its initial value.
 
-WARNING: possible recursive locking detected
---------------------------------------------
-syz.3.5755/5950 is trying to acquire lock:
-ffffffff8fc04760 (system_transition_mutex){+.+.}-{4:4}, at: lock_system_sleep+0x49/0x70 kernel/power/main.c:71
+Initialize the wait queue and status before publishing the waiter.
+nn_lock then orders publication against completion, and no reader can
+observe a partially initialized object.  Leave the IDR allocation and its
+failure handling unchanged.
 
-but task is already holding lock:
-ffffffff8fc04760 (system_transition_mutex){+.+.}-{4:4}, at: __do_sys_reboot kernel/reboot.c:774 [inline]
-ffffffff8fc04760 (system_transition_mutex){+.+.}-{4:4}, at: __se_sys_reboot+0x223/0x460 kernel/reboot.c:738
+A controlled case-modified test kernel used a synthetic connection to
+enter the real send path and overlap publication with disconnect.  The
+candidate completion and wake-up code were unchanged.  Its Oops includes:
 
-other info that might help us debug this:
- Possible unsafe locking scenario:
+  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+  RIP: 0010:__wake_up_common+0xa0/0x1f0
+  Call Trace:
+   <TASK>
+   __wake_up+0x36/0x60
+   o2net_complete_nsw_locked+0x222/0x370
+   o2net_set_nn_state+0x917/0xea0
+   o2net_disconnect_node+0xd0/0x190
+   o2net_validate_control_write+0x454/0x500
+   full_proxy_write+0x11f/0x180
+   vfs_write+0x25a/0x1010
+   ksys_write+0x111/0x200
+   do_syscall_64+0x114/0x620
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   </TASK>
+  Modules linked in:
 
-       CPU0
-       ----
-  lock(system_transition_mutex);
-  lock(system_transition_mutex);
-
- *** DEADLOCK ***
-
- May be due to missing lock nesting notation
-
-locks held by syz.3.5755/5950: 1, last CPU#0:
- #0: ffffffff8fc04760 (system_transition_mutex){+.+.}-{4:4}, at: __do_sys_reboot kernel/reboot.c:774 [inline]
- #0: ffffffff8fc04760 (system_transition_mutex){+.+.}-{4:4}, at: __se_sys_reboot+0x223/0x460 kernel/reboot.c:738
-
-Call Trace:
- lock_system_sleep+0x49/0x70 kernel/power/main.c:71
- hibernate+0x162/0x680 kernel/power/hibernate.c:784
- __do_sys_reboot kernel/reboot.c:816 [inline]
-
-Move the suspension operation outside the scope protected by lock
-system_transition_mutex.
-
-Link: https://lore.kernel.org/20261020010559.23031-1-eadavis@sina.com
-Fixes: 55f2503c3b69 ("PM / reboot: Eliminate race between reboot and suspend")
-Signed-off-by: Edward Adam Davis <eadavis@sina.com>
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0066-v1-437a0422801b292a2879@gmail.com
+Fixes: 98211489d414 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: <syzbot+1f0fbc2561b3e5d51b91@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=1f0fbc2561b3e5d51b91
-Tested-by: <syzbot+1f0fbc2561b3e5d51b91@syzkaller.appspotmail.com>
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Cc: Pingfan Liu <kernelfans@gmail.com>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Kurt Hackel <kurt.hackel@oracle.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/reboot.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ocfs2/cluster/tcp.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/reboot.c b/kernel/reboot.c
-index c0271417dbed5..6fb3230d36e53 100644
---- a/kernel/reboot.c
-+++ b/kernel/reboot.c
-@@ -386,8 +386,8 @@ SYSCALL_DEFINE4(reboot, int, magic1, int, magic2, unsigned int, cmd,
+diff --git a/fs/ocfs2/cluster/tcp.c b/fs/ocfs2/cluster/tcp.c
+index edc2976aa3c56..3558bbdb5bff4 100644
+--- a/fs/ocfs2/cluster/tcp.c
++++ b/fs/ocfs2/cluster/tcp.c
+@@ -293,6 +293,11 @@ static int o2net_prep_nsw(struct o2net_node *nn, struct o2net_status_wait *nsw)
+ {
+ 	int ret;
  
- #ifdef CONFIG_HIBERNATION
- 	case LINUX_REBOOT_CMD_SW_SUSPEND:
--		ret = hibernate();
--		break;
-+		mutex_unlock(&system_transition_mutex);
-+		return hibernate();
- #endif
++	/* Initialize all completion-visible state before publishing the waiter. */
++	init_waitqueue_head(&nsw->ns_wq);
++	nsw->ns_sys_status = O2NET_ERR_NONE;
++	nsw->ns_status = 0;
++
+ 	spin_lock(&nn->nn_lock);
+ 	ret = idr_alloc(&nn->nn_status_idr, nsw, 0, 0, GFP_ATOMIC);
+ 	if (ret >= 0) {
+@@ -303,9 +308,6 @@ static int o2net_prep_nsw(struct o2net_node *nn, struct o2net_status_wait *nsw)
+ 	if (ret < 0)
+ 		return ret;
  
- 	default:
+-	init_waitqueue_head(&nsw->ns_wq);
+-	nsw->ns_sys_status = O2NET_ERR_NONE;
+-	nsw->ns_status = 0;
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
