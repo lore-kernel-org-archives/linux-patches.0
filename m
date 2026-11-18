@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041081;
-	b=N13rpey515WwkZ92KnvljXhiMJnDZZSoAsziLu9EzzSxK+wZ65LQAUJ/3lQLt/bA3S7I
-	 WUc4nZHPb5wFDH8bzPGIwhoSvW3kvP3ETLlDSo9Kqr6AV5AnxzfgsPp+Y3TkoiBVKOzUL
-	 coyE30BiW+q6NVKNjoqAQacoQ7V3ScvC32/NaBg3A0WIRoQE2SkTqWsPwrBKm3sBzTmgN
-	 K/q3975aiThvEtGpUjDNZF5OeBegZoDHm5yMGdGVHgAkQAgD8wX4/63D0Fe/awLoRveMD
-	 6vrnSX2YHdwnI+PHWDYxP1grRalUpXeNJZscIWLeXASTdT0B+5bXsj+Z6pcwGgk5LNw==
+	t=1795041084;
+	b=SOapiu0BdO+yUctFvr0HZrxMs7ntnusQAynQ1H2futa8ftOZukJyhVbhtzb/t4Je1u6e
+	 eyUze1sOPAhGrv5JEf4w0nOnEj17NnpzXJDN068zX+l8rkxT2jDndy8zLnOA31gULTEd5
+	 K/EaDdXfN4+sNybIg8ELvcze3UXpHNgvTGdwiRmXG7/BbpwxqsuDYN63Z4Iv0TyjnTO8v
+	 B4mz4Pw9A6jIn6uHBKKJ8WH0UauU4TnqkHOOfQfqaTsXyHeGJiE8BSLhPOdcsg+dHQxbH
+	 ucAiMpdA1ymnXHZbud9cuEpQnP168HuFPRdhPfex4uGvsnaYN66zRlqTK49+WlEHdjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041081;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041084;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vOpAli3i3QlqQHq1+sb/Ic0RTR7Xq+2khb/qNyarR4E=;
-	b=Ufyhn6ykctXEDm14baqkM/hiNPMTm5zCEtK8o4sv9YO5f0+0P/B2Vhg+zkjC2+VNMBaM
-	 +F0eoN7q5GjTmHTqkh0KiMwAEbx1a+d5tFh3OI4mNkk2QN5jTyQ+apau6gN6WidCjywKp
-	 RECSSjcaKtucbBRGeSVNUNQ+sbDD0eHX9Dr7AOiIZOl73+/TqWmrdeRWekscirfea1LSo
-	 5VjgR5Bd9JoCYsokRXh4nh0xG/pqqofFodBfWFr818yBaITps5SFXxsJapjjIDAKMJ2yp
-	 uxyWC4/3Al5uBtrNaQamhD7xh5aNGnq6vNeZ7ruAKjg7bHDaK8X3YxITmEILIC2L4Ag==
+	bh=dXCLUDPDA6d/gGoMU++0buiPiKq+AZSVKmmg0WkUuGY=;
+	b=NINr0xUnRvUCt7VtFJHko2aWQobZN8iOy/0c9je130y6y/uFGpklOftZc+0II12JZLLP
+	 PtEmGHXePvfsPCTWPE1Rfg/ZfuOfBygfuS85q2KpTzp25tyuPu6ZUPiAMcn/yLoLIRZAU
+	 dqPfyIYMIYhT8r+v82wzR+r6JpDD9bpDYSv6FiY3KURzbhUMaY6WLCf08DEcNnpFgOIXN
+	 yS61zcLT/0WhayjmNuJUlDrOEJ6DX9R2qCmDAJHse61RWRWoAxhrpyFEuEhWJ748iH053
+	 e0kkFg06bhv4rDQCpFqdmfcGHhSVJi2sMjIWTFW3dETeSSsCkdNzBvsBZP95YH8FbXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=erK7DrSW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mWIQoJBH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4345B606A325;
-	Wed, 18 Nov 2026 22:31:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B90A606A31C;
+	Wed, 18 Nov 2026 22:31:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=erK7DrSW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AD8F1F000C4;
-	Wed, 18 Nov 2026 22:31:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mWIQoJBH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73FC21F000C4;
+	Wed, 18 Nov 2026 22:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041081;
-	bh=vOpAli3i3QlqQHq1+sb/Ic0RTR7Xq+2khb/qNyarR4E=;
+	s=korg; t=1795041084;
+	bh=dXCLUDPDA6d/gGoMU++0buiPiKq+AZSVKmmg0WkUuGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=erK7DrSWoFOjKMvaIOcHyOOhGyN1n6CMbjFmioAQq2YQFyVNEdb59ZEAI1rkntVSw
-	 VrHRexEWvju4s6ednGgwYDluLdLHLJyAcWTA9WWCQsofeKuWFdP5gc1bI/kRy1F2nV
-	 dK5P/xsnnjOa+e9Pik6YI9k4mgBASzICvN6UWdI8=
+	b=mWIQoJBHmcAMgtoL6zzc0un35T9InujQY8pPSsD8DrKYYaxIUhZtLSbgIq7aplATL
+	 RyPojbg/yNdXPqLsacBGp6XCaf+pi2crrFC0iBC+6zXZUsIyBzjiEEZ6WickwCfZSb
+	 7LnU8qTybM1x952Eyk2QTflM6iC3Q0l5eU/ckq4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2687/3318] ALSA: hda: Fix potential UAF for gating jack
-Date: Wed, 18 Nov 2026 15:55:09 +0100
-Message-ID: <20261118150441.576132706@linuxfoundation.org>
+Subject: [PATCH 6.6 2688/3318] ALSA: usb-audio: Check mixer matrix size for UAC2/3 at parsing
+Date: Wed, 18 Nov 2026 15:55:10 +0100
+Message-ID: <20261118150441.603484318@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,49 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 27cee4141c8de82cf051104ca830c3a209816033 ]
+[ Upstream commit 22185ffd7b31885d03fdeb20055a8707779a70f9 ]
 
-snd_hda_jack_set_gating_jack() assigns gated and gating variables from
-the succeeding calls of snd_hda_jack_tbl_get().  This works normally,
-but the second call might kick off the reallocation of the jack table,
-hence the first pointer might become invalid, which leads to a UAF.
+The matrix of input/output channels specified in a UAC2/3 mixer unit
+must fit to the upper limit 256.  Add a sanity check and returns an
+error if an invalid size is detected.
 
-For avoiding that pitfall, this patch changes the code to two phases:
-the first to only create two entries, and the second phase to get the
-pointers from the table, so that no relocation can happen any longer.
-
-Fixes: 0619ba8c17b1 ("ALSA: hda - Allow jack state to depend on another jack")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/d46fcac6-bd7e-4fc4-95e1-4e8d39f92ad3@zipdox.net
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261007172051.13240-4-tiwai@suse.de
+Link: https://patch.msgid.link/20260930155356.348608-2-tiwai@suse.de
+Stable-dep-of: c01fb2ed90c0 ("ALSA: usb-audio: Fix invalid UAC2/3 mixer unit matrix evaluation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_jack.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ sound/usb/mixer.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/sound/pci/hda/hda_jack.c b/sound/pci/hda/hda_jack.c
-index 7d7786df60ea7..8c25c7d81128b 100644
---- a/sound/pci/hda/hda_jack.c
-+++ b/sound/pci/hda/hda_jack.c
-@@ -383,12 +383,15 @@ EXPORT_SYMBOL_GPL(snd_hda_jack_detect_enable);
- int snd_hda_jack_set_gating_jack(struct hda_codec *codec, hda_nid_t gated_nid,
- 				 hda_nid_t gating_nid)
- {
--	struct hda_jack_tbl *gated = snd_hda_jack_tbl_new(codec, gated_nid, 0);
--	struct hda_jack_tbl *gating =
--		snd_hda_jack_tbl_new(codec, gating_nid, 0);
-+	struct hda_jack_tbl *gated, *gating;
+diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
+index e70853cfec65a..5f0a122fde8c9 100644
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -2284,6 +2284,16 @@ static int parse_audio_mixer_unit(struct mixer_build *state, int unitid,
+ 	num_outs = err;
+ 	input_pins = desc->bNrInPins;
  
- 	WARN_ON(codec->dp_mst);
-+	if (!snd_hda_jack_tbl_new(codec, gated_nid, 0) ||
-+	    !snd_hda_jack_tbl_new(codec, gating_nid, 0))
-+		return -ENOMEM;
- 
-+	gated = snd_hda_jack_tbl_get_mst(codec, gated_nid, 0);
-+	gating = snd_hda_jack_tbl_get_mst(codec, gating_nid, 0);
- 	if (!gated || !gating)
- 		return -EINVAL;
- 
++	if (state->mixer->protocol == UAC_VERSION_2 ||
++	    state->mixer->protocol == UAC_VERSION_3) {
++		if (input_pins * num_outs > 256) {
++			usb_audio_err(state->chip,
++				      "invalid channels for MIXER UNIT %d: input=%d, output=%d\n",
++				      unitid, input_pins, num_outs);
++			return -EINVAL;
++		}
++	}
++
+ 	num_ins = 0;
+ 	ich = 0;
+ 	for (pin = 0; pin < input_pins; pin++) {
 -- 
 2.53.0
 
