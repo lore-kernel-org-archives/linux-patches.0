@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021220;
-	b=0szoQuY+JrNUJF52Vf6D8lqNH+6bjT5K0NKzOESg+fECZVqyCL2FTD3RFXVyjGQTYpPt
-	 J7EAgeIpndjq7jALW1tydEqC778dv8tscGALAhzQGvTdC9f7zep0hK7gBPtPRv6RgYoqP
-	 NyXzosxb2L19khJ9x8zIltG7ivP2XRErDHLOQZqp9aUY6Qw192c4rYkpTgwA46mVvLiVt
-	 2uD+JUM0UMc1dgqYI1z9jQ2Frjlfimzws5ebKBw/bfa87VYDBnupGSacjQr0qj7scijXw
-	 WObuHK4B2uD6jsiZvwck+1TtCMD94YecoFPvaPXr8691k+qQYor9T51mcgwJUjtNarQ==
+	t=1795021223;
+	b=baH2jzDmEIHiVDGi7lGtz2wlUmxyJ997iR32m3ngWrKIDF5rotAIjZmNdn/yiH3MYeGM
+	 TZi6i4VAsT86ynn+mHQJIrX8aqXVCHMsOT/DQ2cvYvVKt1DymqliyHqEegVE6mAy5qDlX
+	 Xqf+8XvqD2ozW4tuRvjpiBP1vlZTmWMip95Zy/kf5G8F8tyxbM/++Ch+/xKymswFAm9as
+	 x1U3qtWJjeJ8CpV+tvMzKMQmJvHL+qNnkE5nPKc2/eec7WNqUgxYl4yPWxSzmJrcWsuKP
+	 cUV7aygmSwqcm/xjvdBOidtw8/mYtg2eLxtJwSGbAGIJD09XZkcQhNBfEmukkbJxn0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021220;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021223;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eQPbqGvZtxeyPCd76vJcFREQwiM6oh/wVS4+bfdvEUo=;
-	b=c7rtztqKrUjpTOrUSBc9ftBoQUS3KdkQ/Wlyr0iiJa0HDD2i/hoYXG6BVfqYhVUkcSov
-	 cAUiOS93klFLrHpfdUo8GrxkrhSAlF7rV5tn+p5+6WowENkOBBFLXyiD9B6zURDqy7n0S
-	 CkKGjdM19/41FUy/yeeRnFURET1GXKkWGNrG1BuwQ8atdapOWjPKleZchcIBvQERw3ue7
-	 eVjqgbXjNMUqeE2km+FQIqG8E0KBk8cHGQrx9V1T7/QIfkNlsgQgrbN1kIEQGoNfMh01U
-	 DIFRdvVFUcb6P9AeLPscWRCaO+C9JZcYNDrmWNYtOj7O414cSKdZCxGkJ8eNcYm6qhA==
+	bh=VL3qYv6uRGdX+vGZPzueiq1My9fs1VDzJGDxe5WsJEc=;
+	b=zsURxDfL7hkjuDuNWnHjPuHbCAsG+ivt5FRLd9xUcrwpco8+3i7F8gAp5XNUu9U73Sv6
+	 /UjHdqSuUXj6s8AP4jgKUDyCSyro3b+NoHV6LBBiMD5LqcPk0rAaMokOOVU1YZLFMjGuB
+	 +7MNIorL9xoIU5/ra9HA8gqb6eDaFZAlBoh2Y7i1Qxt1srDTQ3XvoGoiooudUN103kq8Z
+	 Kl0SPUvi3w4B8I38Tg7ZW6OIwjwblw0OW+9PLXi5FXnAih40jsZvrgS//RVHDAxthgjOa
+	 GPHUqzMYe44JegvsWiPNNUNdi2y8X+LAaebFdHaX/cD0lOlepSknmrfYpGZdOuq6MVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YsBeYl8W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HswEC13d;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7D9606A330;
-	Wed, 18 Nov 2026 17:00:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2EFF606A31C;
+	Wed, 18 Nov 2026 17:00:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YsBeYl8W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 488A91F000C4;
-	Wed, 18 Nov 2026 17:00:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HswEC13d
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A4521F000C4;
+	Wed, 18 Nov 2026 17:00:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021219;
-	bh=eQPbqGvZtxeyPCd76vJcFREQwiM6oh/wVS4+bfdvEUo=;
+	s=korg; t=1795021222;
+	bh=VL3qYv6uRGdX+vGZPzueiq1My9fs1VDzJGDxe5WsJEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YsBeYl8WX6VOGo3TLzioHOND80fz8SQ1DNIylo8avaZNHUJ6/xKw/PNzIP9I3DrxA
-	 nddjz/CcLKKqgQ3ec8s0NbzDOvVvzGJwDgyvenjisquPBHB0xeohOq33rlXM5kXYQL
-	 S8im8wp6eNygApenxbJxe87eWdFhQ4ZNzKYNUcl8=
+	b=HswEC13dgtpaEQQ7vylaMYFCLwx5OQC1u+0uyMRlt/Aq8IzG2I0n5KpUEd0oojeIn
+	 /pvJbGZCPMYGUykLcQMLZyivkTGneQjoCZbTiETRTBWLrkfX5rz8ngI81GkEd4L1xV
+	 9vjIeCf6/pU+BSej16d62cI7yNM5WcEkagA4Gv/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>,
 	Alexei Starovoitov <ast@kernel.org>,
-	Mahe Tardy <mahe.tardy@gmail.com>
-Subject: [PATCH 7.3 2188/2651] bpf: Fix ksock build with BPF_LSM=y and SECURITY_NETWORK=n
-Date: Wed, 18 Nov 2026 15:57:08 +0100
-Message-ID: <20261118150404.546166450@linuxfoundation.org>
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 2189/2651] bpf: Revalidate faulted arena pages before installing user mappings
+Date: Wed, 18 Nov 2026 15:57:09 +0100
+Message-ID: <20261118150404.573934040@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,51 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-[ Upstream commit a81bd9262cde4b002b95e652453ce5b815c79a62 ]
+From: Emil Tsalapatis <emil@etsalapatis.com>
 
-bpf_ksock.c references bpf_lsm_socket_sendmsg() whenever
-CONFIG_BPF_LSM=y, but the socket LSM hooks, and with them the BPF LSM
-socket_sendmsg hook, only exist with CONFIG_SECURITY_NETWORK=y. Without
-it resolve_btfids warns:
+[ Upstream commit 05bee0638bacf4e9298bbf0bfef749b6a8ff4478 ]
 
-  WARN: resolve_btfids: unresolved symbol bpf_lsm_socket_sendmsg
+A user fault on an arena pins the page that the kernel arena maps,
+drops the arena spinlock and returns the page to the core fault code,
+which then locks the folio and installs the user PTE. A concurrent
+free can clear the kernel mapping in that window. The page reference
+prevents a use-after-free, but the fault can still install a user PTE
+for a page the arena has already released. User space and BPF programs
+then see different memory at the same arena offset.
 
-and since commit 201a454df948 ("resolve_btfids: Fix the --fatal_warnings
-exit status") that fails the build with CONFIG_WERROR=y.
+Close the window from the fault side. Lock the page, recheck that the
+kernel mapping still points to it, and return it with VM_FAULT_LOCKED so
+that it stays locked until the core fault code has installed the user
+PTE. If a free removed the page, drop it and return VM_FAULT_NOPAGE so
+that the fault starts over. Return VM_FAULT_HWPOISON for a poisoned
+page.
 
-Only reference the hook with CONFIG_SECURITY_NETWORK=y, and use
-BTF_ID_UNUSED otherwise. The ID stays zero, as it was when unresolved,
-so bpf_ksock_kfunc_filter() keeps allowing LSM programs: none can be
-attached to socket_sendmsg without CONFIG_SECURITY_NETWORK.
+This change alone does not close the race, because the free path does
+not yet wait for the page lock. The following change makes frees wait
+for in-flight faults before zapping user mappings.
 
-Fixes: 7ae4eb14c5f9 ("bpf: Add ksock kfuncs")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 317460317a02 ("bpf: Introduce bpf_arena.")
+Suggested-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Emil Tsalapatis <emil@etsalapatis.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Acked-by: Mahe Tardy <mahe.tardy@gmail.com>
-Link: https://patch.msgid.link/20261019211006.2574350-4-sashal@kernel.org
+Link: https://patch.msgid.link/20261019201108.4552-2-emil@etsalapatis.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/bpf_ksock.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ kernel/bpf/arena.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/bpf_ksock.c b/net/core/bpf_ksock.c
-index e9943aeeadd32..6fbbd5745d649 100644
---- a/net/core/bpf_ksock.c
-+++ b/net/core/bpf_ksock.c
-@@ -274,7 +274,12 @@ BTF_ID_FLAGS(func, bpf_ksock_send, KF_SLEEPABLE)
- BTF_KFUNCS_END(ksock_kfunc_btf_ids)
+diff --git a/kernel/bpf/arena.c b/kernel/bpf/arena.c
+index 0ff707707da04..5e0e0837980b4 100644
+--- a/kernel/bpf/arena.c
++++ b/kernel/bpf/arena.c
+@@ -584,8 +584,22 @@ static vm_fault_t arena_vm_fault(struct vm_fault *vmf)
+ 	raw_res_spin_unlock_irqrestore(&arena->spinlock, flags);
+ 	if (new_page)
+ 		free_pages_nolock(new_page, 0);
+-	vmf->page = page;
+-	return 0;
++
++	/*
++	 * A free clears the kernel pte and then takes the page lock before it
++	 * zaps user vma-s. Either it waits for this fault and zaps its pte, or
++	 * the page is gone from here.
++	 */
++	lock_page(page);
++	if (vmalloc_to_page((void *)kaddr) == page && !PageHWPoison(page)) {
++		vmf->page = page;
++		return VM_FAULT_LOCKED;
++	}
++	/* The page was freed meanwhile. Let the fault start over. */
++	fault_ret = PageHWPoison(page) ? VM_FAULT_HWPOISON : VM_FAULT_NOPAGE;
++	unlock_page(page);
++	put_page(page);
++	return fault_ret;
  
- #ifdef CONFIG_BPF_LSM
--BTF_ID_LIST_SINGLE(bpf_lsm_socket_sendmsg_id, func, bpf_lsm_socket_sendmsg)
-+BTF_ID_LIST(bpf_lsm_socket_sendmsg_id)
-+#ifdef CONFIG_SECURITY_NETWORK
-+BTF_ID(func, bpf_lsm_socket_sendmsg)
-+#else
-+BTF_ID_UNUSED
-+#endif
- #endif
- 
- static int bpf_ksock_kfunc_filter(const struct bpf_prog *prog, u32 kfunc_id)
+ out_err_locked_memcg:
+ 	bpf_map_memcg_exit(old_memcg, new_memcg);
 -- 
 2.53.0
 
