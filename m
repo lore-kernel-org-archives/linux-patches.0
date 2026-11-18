@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026824;
-	b=WYU/Bo/fh0NDa4hiQA+I8ngGDo5FfkG2bY+Fqawrn/6zRAqwcGbYGeRjkE4T6+Z9rKrc
-	 ApHzE3mJw0wEKKyWqpwYGnEyQ2qTD74qyO9wKxxUOXPNRF3JbAPX0E3H/RUabDOJNEfEj
-	 //pFxDpXFHSzXSZ/l5bQboiGPPPEWwQ7qGyPFe4NUA4KrVVaZ4QqD9eNoS49NsWmuyD1L
-	 18d209PoF/Gw/TnQC6BmaSTv1LU3J+rBUTdcuMJoI/Q0sP3L3TUgFlSEurB3W+R7NIMI1
-	 /qvThDRYMnulA4+iqixfnBoux9hdOxL/mQi7qZ4ofdNY/jrWbAXIQislJ4SffRNlmIQ==
+	t=1795026827;
+	b=MbHbkzWC9gzMEEsOHYpi8VfGMATfC2WnteeEMkIdkn33C68PS2Ca1J5ywRk5cqV/rId9
+	 nF8hyQjf73oujjhBsc5XsbkhLmvQsXWsSQqq3+mFLlhKGDO4fYvDBnSOfFVXlwplZ0YjK
+	 dVbv3xNFeaMdZtUhBu5pVpNW3l1RNMp52JXWu8x9+V6+E2YS3j1+PAWblpe0q7IeXD3yH
+	 lcFv9UXM6sjlI+REhwfMxTeSd+ktnrpRVRnvuBYMiNDr7ATa02HvP3CVOgCOji6bn20aw
+	 qYT8ptxUYlrFrqMeJq6YMNCODA84XEwjiws01C+mP2vcoBIVhKkD4FioHs9GveKxRLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026824;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026827;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=dlHzgPK5qPb1ETbsZSirL6vyA2BwRcNC85+g6wT8yvA=;
-	b=3kPSNVpDOje05DqMSjzczY20pQooiVnOcNkP1ZVBUNTlyE+ECzVg/vc2Tx1Lx+qQ/HUk
-	 EkHZWFT0U064vIi0EwMTHyCxatEqLDw33dqECM4hClm4YrOy1IMlawvPVWQUOSJM5NT6u
-	 EEgtNhprzu+zqdXxpmTZgmWkPSnx7lG/n6ixWpzJvlB4slieWnZRCPIPcHWI8JrYTkkW2
-	 DENTxfdRhI5qv9h8qOM7DsFGYwiPiZOybc4/ZPo6jLB2ocgSLtAqyPMaTR3eY0tSibA6Y
-	 fPqH3ouLCv7A9IBENxDt/NJ5Ix9TKxx3an2eYZ0Fr5z6Qyu+DBn1CMCQGT8EVKi7SOw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=KWIP5l1Q5jULetmQ5bY2atIOFkIT8SzjDFX/5husaak=;
+	b=H1qBgzvxLIUz/5moKI/2OvfB0EQb93udIfQadz8CmHmzpSE58/FbUwUkpeYGX+wnhc6Y
+	 SNyBKPeVA5uYwed3Yyg5mMH91zmgPqpNW8RHvXhp7EKqlXRIPyJjSZ31WYhJ99HIhcbfG
+	 4xVhX01nEA2Q0ewoMVXCkWwM054Icrb+d2CdDYy7PxXevhI+qqvO49G5UukYbWLk2bGiF
+	 fGFIBMzGaX0TBZyHhKamhktXvsG5t7ufAw3vPc9NuZ1BPLN2XRxCCZawwcG8IOfIW6y+5
+	 aHH38SjB7MRodIf6TYIdI4eS9hoSg2xOGVz4JoaVpv6xIP1l58r+iTsoJLvlpPwnOxw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J+xVEzJZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I6rUk2pD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D425606A331;
-	Wed, 18 Nov 2026 18:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644CB60A2606;
+	Wed, 18 Nov 2026 18:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J+xVEzJZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B19401F000C5;
-	Wed, 18 Nov 2026 18:33:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I6rUk2pD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 961631F000C4;
+	Wed, 18 Nov 2026 18:33:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026824;
-	bh=dlHzgPK5qPb1ETbsZSirL6vyA2BwRcNC85+g6wT8yvA=;
+	s=korg; t=1795026827;
+	bh=KWIP5l1Q5jULetmQ5bY2atIOFkIT8SzjDFX/5husaak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J+xVEzJZ/1+kYAqNvVFf9kngFUjLfITM1bsfDia5PxU0dIo0FGncM3b9Dy0XstY9D
-	 pvv2NwZyQj2CXCPjjN+BApbVfi53gMfLEKOszgARnpWhQwxhFW1o6yGFxn++MTCj75
-	 FlMJ8V3m2wf1TCwN1vytF5w9F8nel0wnmEPCE+9w=
+	b=I6rUk2pD5ZDUaTMHzsVO0UiMOhLLk8yqwU8qdRFa1ImBW8XMJMpI98Y3T+2olN6Bl
+	 4jPR1tfwu+lYtRMBMxNJKalbW5OdfM5NdZXuNu7wo+Wxa45g0fBCQ9MBoYoxt6gvPa
+	 2GCEUgetY6Nu+xuIGeeyYGqIeDi0DdFQJERXTxFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1573/2151] ata: libata-core: Fix NO_FUA quirks shadowed by earlier quirk entries
-Date: Wed, 18 Nov 2026 15:55:08 +0100
-Message-ID: <20261118150219.184226106@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>
+Subject: [PATCH 6.18 1556/2151] selftests/nolibc: use the configured kernel header directory
+Date: Wed, 18 Nov 2026 15:54:51 +0100
+Message-ID: <20261118150218.576465304@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -62,92 +61,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+[ Upstream commit f9532b372e415e8198287ce010efa22f337857b5 ]
 
-[ Upstream commit 4153718a215eeb5bab3df50417bbd9602e84658c ]
+The freestanding build hardcodes the source tree's usr/include even when
+selftests exports KHDR_INCLUDES for an output-directory build. Use the
+exported header location while preserving -nostdlib, -nostdinc and static
+linkage. GCC 14 and Clang 21 builds then find the generated UAPI headers.
 
-ata_dev_quirks() uses the first entry in __ata_dev_quirks[] that
-matches the device and ignores all later entries. Commit 38d431229bfb
-("ata: libata: exclude FUA support for known buggy drives") appended
-three ATA_QUIRK_NO_FUA entries to the end of the table, with model
-patterns meant to cover whole product lines. Earlier entries already
-match some or all of these drives, so NO_FUA is not always applied:
-
-- "INTEL*SSDSC2CT*" never takes effect. Every model it matches also
-  matches the earlier "INTEL*SSD*" entry, so these drives only get
-  ATA_QUIRK_ZERO_AFTER_TRIM.
-
-- "WDC*WD2500J*" does not take effect for "WDC WD2500JD-*" drives,
-  which match the earlier ATA_QUIRK_WD_BROKEN_LPM entry.
-
-- "OCZ-VERTEX*" does not take effect for "OCZ-VERTEX" drives with
-  firmware "1.30", which match the earlier ATA_QUIRK_BROKEN_HPA entry.
-
-Move the Intel entry in front of "INTEL*SSD*" and keep
-ATA_QUIRK_ZERO_AFTER_TRIM in it, so these drives stay on the
-ZERO_AFTER_TRIM whitelist. Add ATA_QUIRK_NO_FUA to the WD2500JD and
-OCZ Vertex 1.30 entries. The quirks of all other drives are unchanged.
-
-libata only uses FUA when it is enabled with libata.fua=1, so systems
-using the default setting are not affected.
-
-Fixes: 38d431229bfb ("ata: libata: exclude FUA support for known buggy drives")
-Assisted-by: LLM
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20261013193915.174460-2-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Fixes: eb1353110831 ("selftests/nolibc: integrate with kselftests")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://patch.msgid.link/20261014200142.1364761-1-sashal@kernel.org
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-core.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ tools/testing/selftests/nolibc/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
-index a4f50f7910964..9b373830a7c40 100644
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -4250,7 +4250,8 @@ static const struct ata_dev_quirks_entry __ata_dev_quirks[] = {
- 	{ "MAXTOR 6L080L4",	"A93.0500",	ATA_QUIRK_BROKEN_HPA },
+diff --git a/tools/testing/selftests/nolibc/Makefile b/tools/testing/selftests/nolibc/Makefile
+index 43f0b608c7960..e3c66f568ddca 100644
+--- a/tools/testing/selftests/nolibc/Makefile
++++ b/tools/testing/selftests/nolibc/Makefile
+@@ -10,7 +10,7 @@ cc-option = $(call __cc-option, $(CC),,$(1),$(2))
+ include Makefile.include
  
- 	/* this one allows HPA unlocking but fails IOs on the area */
--	{ "OCZ-VERTEX",		    "1.30",	ATA_QUIRK_BROKEN_HPA },
-+	{ "OCZ-VERTEX",		    "1.30",	ATA_QUIRK_BROKEN_HPA |
-+						ATA_QUIRK_NO_FUA },
- 
- 	/* Devices which report 1 sector over size HPA */
- 	{ "ST340823A",		NULL,		ATA_QUIRK_HPA_SIZE },
-@@ -4386,6 +4387,8 @@ static const struct ata_dev_quirks_entry __ata_dev_quirks[] = {
- 	{ "Crucial*",			NULL,	ATA_QUIRK_ZERO_AFTER_TRIM },
- 	{ "INTEL SSDSC2KG480G8", "XCV10120",	ATA_QUIRK_ZERO_AFTER_TRIM |
- 						ATA_QUIRK_MAX_SEC },
-+	{ "INTEL*SSDSC2CT*",		NULL,	ATA_QUIRK_ZERO_AFTER_TRIM |
-+						ATA_QUIRK_NO_FUA },
- 	{ "INTEL*SSD*",			NULL,	ATA_QUIRK_ZERO_AFTER_TRIM },
- 	{ "SSD*INTEL*",			NULL,	ATA_QUIRK_ZERO_AFTER_TRIM },
- 	{ "Samsung*SSD*",		NULL,	ATA_QUIRK_ZERO_AFTER_TRIM },
-@@ -4406,7 +4409,8 @@ static const struct ata_dev_quirks_entry __ata_dev_quirks[] = {
- 	{ "WDC WD1200JD-*",		NULL,	ATA_QUIRK_WD_BROKEN_LPM },
- 	{ "WDC WD1600JD-*",		NULL,	ATA_QUIRK_WD_BROKEN_LPM },
- 	{ "WDC WD2000JD-*",		NULL,	ATA_QUIRK_WD_BROKEN_LPM },
--	{ "WDC WD2500JD-*",		NULL,	ATA_QUIRK_WD_BROKEN_LPM },
-+	{ "WDC WD2500JD-*",		NULL,	ATA_QUIRK_WD_BROKEN_LPM |
-+						ATA_QUIRK_NO_FUA },
- 	{ "WDC WD3000JD-*",		NULL,	ATA_QUIRK_WD_BROKEN_LPM },
- 	{ "WDC WD3200JD-*",		NULL,	ATA_QUIRK_WD_BROKEN_LPM },
- 
-@@ -4431,7 +4435,6 @@ static const struct ata_dev_quirks_entry __ata_dev_quirks[] = {
- 	{ "Maxtor",		"BANC1G10",	ATA_QUIRK_NO_FUA },
- 	{ "WDC*WD2500J*",	NULL,		ATA_QUIRK_NO_FUA },
- 	{ "OCZ-VERTEX*",	NULL,		ATA_QUIRK_NO_FUA },
--	{ "INTEL*SSDSC2CT*",	NULL,		ATA_QUIRK_NO_FUA },
- 
- 	/* End Marker */
- 	{ }
+ $(OUTPUT)/nolibc-test: CFLAGS = -nostdlib -nostdinc -static \
+-	 -isystem $(top_srcdir)/tools/include/nolibc -isystem $(top_srcdir)/usr/include \
++	 -isystem $(top_srcdir)/tools/include/nolibc $(KHDR_INCLUDES) \
+ 	 $(CFLAGS_NOLIBC_TEST)
+ $(OUTPUT)/nolibc-test: LDLIBS = $(if $(LLVM),,-lgcc)
+ $(OUTPUT)/nolibc-test: nolibc-test.c nolibc-test-linkage.c | headers
 -- 
 2.53.0
 
