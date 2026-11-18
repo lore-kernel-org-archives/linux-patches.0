@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021143;
-	b=wEKzzj864RfXD1kG6ackEeg6MlsiGDUdNRuXRfyuiNbIuxL4b5AVJ2OkeJr7IfGJX0hG
-	 1YGkL13ki1v9Yl6hm/zptj5imWSJL5mGe4bFQ/q1OZUsUWgP+Ck4KVc5L54pvl3QVvzFV
-	 bLc6MWDmqqwUafMGzAndhQGakgHcKqNecWFAizS0zCK6GFHdvt67PD6jflZONvpztYgzz
-	 cvHesKBAFH9w/oE//9nfElbPJ0i35+drHKJt/EHixjCq1aK8b51lpiQph1f9tyM7okFDo
-	 llYxjBBs/EU/o+MWo9pmP0YjQ+Sh1WTx2TPl1UcwboiEh5HrdjRquzLVJiANnuIAgPQ==
+	t=1795021146;
+	b=RWFAwQ4jQIQyEHFS4ZVnsOApZ08xeGHa4fVkA3iiA6Y5FTFMTkFqGx+umz3HkuB90BCT
+	 AJh/p/9MmINdJmypyGz3I0KCFgmn/S6lWKYSJGfK54jVCiAT/s32RZeVnXHM2HIs3p+FE
+	 bJ0NxEj/xSrrQTPOordUq2sqWrCzJj54Vn3s9R2m0ncF3ezf7l42HvCX6PY4N4ajhuWXt
+	 3PULuP1eZfzjLCBPOVHhK/fwtMP2bYfVJcwoTTMEjffs3Zt9COwuSXdV7g4gsVwTdtUfP
+	 7JSKlsdwLcGIJbsd8u7uaxTvLIdIvLo+zF7pNugS6XHYbsTnPnDthVPY8euUU6WT5KA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021143;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021146;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xCU8cucHwr3l0XgNijdldNotn60yU/oxVRAuCzJoS0k=;
-	b=tQcG/X0OKh+FTW97dxUwKblOpmXtka6/LQG+kzQH0xoGzOjXHAO5+RzwIc51LPqwTqvD
-	 tZ6AuBGOdNBe6Zp/bYRgnYtilhfZZeMz1TkxiKKFVunwVEsrAw0e5CB42NhYsE5cIPQWI
-	 yNUiX6hk9TdKdu1tYy4mAy7PFTtHK+McMvpbYzevjRlmoZMl91BX4dgUXAFFukihYPV60
-	 sVQRJ+1gjQh9ifpjnKKU0QVciY8K29I4wRqEs7zVAsPjUprCCIaPOyXqNNZM5aJGMD9+J
-	 Cbln+uccjXSkfJWJPXPmABV5dotg9lzpxa6+0JmUN+BNNx0/ER3Zw8wE4MfgnM/ZvZA==
+	bh=rd+YS4P+IrxuVvtocKR3O+vQAG33KiI8qfyToVcx7u4=;
+	b=Kj0jZXYluzP+FlJEhL4O/CENwlABhhz0DGdcuzRiJzoOrjKwDQmzUpuJohgiBh+N+DlR
+	 PvnRyQOjrh54Bh4CXmWJosQI/jLKT1sPg9kJXojhyuyeyXjLFtAyqgYysMJ/mLel2WEKh
+	 nEkRRyA7fGYBHLLGKl73Po+XdoIvX2hPYTG/+zgH4uVp+o+vTGjvR5NJkcwheYsP6u6P5
+	 XIYL72Im4e6tYKb8boyHo4jiJO2rVVP8qocg53CnZ0BXpFakA0dzpHAZXWMBPhzkAHZ1e
+	 LShvVOh86iAv1LAptTWglgiNRVo3uiBph4cL/Xp8UMp6q7B/YQdfFB0HiM349Trcmrw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="wshpU0/6";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ywmmXSMp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1C1606A31C;
-	Wed, 18 Nov 2026 16:59:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50677606A31C;
+	Wed, 18 Nov 2026 16:59:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wshpU0/6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 011331F000C5;
-	Wed, 18 Nov 2026 16:59:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ywmmXSMp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC25C1F000C4;
+	Wed, 18 Nov 2026 16:59:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021143;
-	bh=xCU8cucHwr3l0XgNijdldNotn60yU/oxVRAuCzJoS0k=;
+	s=korg; t=1795021146;
+	bh=rd+YS4P+IrxuVvtocKR3O+vQAG33KiI8qfyToVcx7u4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wshpU0/6Ol9pI6TfKToLS20qdRTxX3yzsmlVyW1ynFJIpXEdXBxfQfYXGE8C48S4z
-	 pSVH1YpH+mwhzYpxda2FXUbJPNSWr8qWq3vnZMJ/PEOLt8fVS25h4KsNswIBgOmMD4
-	 fJl8yflyfawbRjLA89Rj1Egu+U38RsoB4EuMkjb4=
+	b=ywmmXSMpaRlLFz2mqjbrNZAekiiuidBrweQDO09Ev0fRYJu5A4VMWlgPQKawJSVd4
+	 IB+BgEzBiILoVoNpEQmTozAaj2ituygV/GeMVUDhC22bWDcB1g4dXj36BdcbVTOrUc
+	 RWXQ9O6fXyQUD/Iz/DRS69ium5YCMx8H37stSnMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
+	Xuewen Wang <wangxuewen@kylinos.cn>,
+	Baolin Liu <liubaolin@kylinos.cn>,
+	Hyunchul Lee <hyc.lee@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2185/2651] cgroup/cpuset: Consider all the exclusive CPUs when doing housekeeping check
-Date: Wed, 18 Nov 2026 15:57:05 +0100
-Message-ID: <20261118150404.421511564@linuxfoundation.org>
+Subject: [PATCH 7.3 2203/2651] ntfs: preserve the 64-bit FITRIM minimum length
+Date: Wed, 18 Nov 2026 15:57:23 +0100
+Message-ID: <20261118150405.000279084@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,159 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Xuewen Wang <wangxuewen@kylinos.cn>
 
-[ Upstream commit 9527ff78a413e2b4089e78953926af77b98fd43f ]
+[ Upstream commit 406747e46dc8eb73b0976b1e459830927d6022b9 ]
 
-When prstate_housekeeping_conflict() is called to perform housekeeping
-check with cpumask changes, the cpumask changes are passed in via add_cpus
-and del_cpus parameters. With this arrangement, the exclusive CPUs owned
-by the child partitions and not affected by the cpumask change, if any,
-are excluded in the analysis. The only places where there are separate
-add and delete masks are when the cpuset.cpus or cpuset.cpus.exclusive
-is being changed. In both cases, partition_cpus_change() is a good place
-to perform the housekeeping check.
+The minlen member of struct fstrim_range is a 64-bit byte count, but
+ntfs_ioctl_fitrim() uses max_t(u32, ...) to compare it with the device's
+discard granularity. This truncates the requested minimum length before
+passing it to ntfs_trim_fs().
 
-If we allow a root partition to be created under an isolated partition,
-it is possible the cpumask change will still leave active housekeeping
-CPUs but then no housekeeping CPUs will be left when the child partitions
-are disabled or invalidated.
+For example, a minimum length of 4 GiB is reduced to the discard
+granularity, allowing smaller free extents to be discarded. The truncated
+minimum length is also copied back to userspace.
 
-As a first step to protect against this possibility, all the exclusive
-CPUs of the cpuset should be considered to be owned by the current cpuset
-when doing housekeeping check. At the same time, we do want to know if
-some housekeeping CPUs are going to be removed from the isolated partition
-that there will be no danger of losing all the active housekeeping CPUs.
-So the current add_cpus paremeter is renamed as new_cpus to indicate
-that it includes the complete set of effective xcpus.
+Use max_t(u64, ...) to preserve the requested minimum length. The bitmap
+scan already compares the aligned extent length against range->minlen
+using 64-bit values.
 
-With the new check in partition_cpus_change(), the housekeeping check
-in update_parent_effective_cpumask() with partcmd_update and newmask
-is now duplicative and can be removed. The housekeeping check in
-remote_cpus_update(), however, will still be useful as this function can
-be called directly from update_cpumasks_hier() without going through
-partition_cpus_change(). The update_parent_effective_cpumask() call
-from update_cpumasks_hier() is partcmd_update with no cpumask which
-still have the housekeeping check and so is covered.
-
-Fixes: 103b08709e8a ("cgroup/cpuset: Fail if isolated and nohz_full don't leave any housekeeping")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 9c87959601e8 ("ntfs: update file operations")
+Signed-off-by: Xuewen Wang <wangxuewen@kylinos.cn>
+Reviewed-by: Baolin Liu <liubaolin@kylinos.cn>
+Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c | 46 +++++++++++++++++++++++++-----------------
- 1 file changed, 27 insertions(+), 19 deletions(-)
+ fs/ntfs/file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index b763d9a182ba4..4080e08428c4e 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -1381,19 +1381,19 @@ static void partition_xcpus_del(int old_prs, struct cpuset *parent,
-  * prstate_housekeeping_conflict - check for partition & housekeeping conflicts
-  * @new_prs: new partition root state to be checked
-  * @parent_prs: Parent partition root state
-- * @add_cpus: additional CPUs to be added to current cpuset
-- * @del_cpus: CPUs to be removed from current cpuset, can be NULL
-+ * @new_cpus: the set of new effective xcpus in the current cpuset
-+ * @del_cpus: old CPUs going to be removed from current cpuset, can be NULL
-  * Return: true if there is conflict, false otherwise
-  *
-  * There are two different housekeeping conflicts to be checked:
-- * 1) If new_prs is PRS_ROOT, none of the @add_cpus can be a boot-time isolated
-- *    CPU. IOW, the whole @add_cpus must be a subset of HK_TYPE_DOMAIN_BOOT.
-+ * 1) If new_prs is PRS_ROOT, none of the @new_cpus can be a boot-time isolated
-+ *    CPU. IOW, the whole @new_cpus must be a subset of HK_TYPE_DOMAIN_BOOT.
-  * 2) If nohz_full is enabled and we have isolated CPUs, their combination must
-  *    still leave housekeeping CPUs. This check is only needed if new_prs
-  *    differs from parent_prs and one of them is PRS_ISOLATED.
-  */
- static bool prstate_housekeeping_conflict(int new_prs, int parent_prs,
--					  struct cpumask *add_cpus,
-+					  struct cpumask *new_cpus,
- 					  struct cpumask *del_cpus)
- {
- 	cpumask_var_t full_hk_cpus;
-@@ -1418,7 +1418,7 @@ static bool prstate_housekeeping_conflict(int new_prs, int parent_prs,
- 		new_prs = -new_prs;
+diff --git a/fs/ntfs/file.c b/fs/ntfs/file.c
+index f8f4418cbcda8..bb8b5613c7a5f 100644
+--- a/fs/ntfs/file.c
++++ b/fs/ntfs/file.c
+@@ -888,7 +888,7 @@ static int ntfs_ioctl_fitrim(struct ntfs_volume *vol, unsigned long arg)
+ 	if (range.len < vol->cluster_size)
+ 		return -EINVAL;
  
- 	if (housekeeping_enabled(HK_TYPE_DOMAIN_BOOT) && (new_prs == PRS_ROOT) &&
--	    !cpumask_subset(add_cpus, housekeeping_cpumask(HK_TYPE_DOMAIN_BOOT)))
-+	    !cpumask_subset(new_cpus, housekeeping_cpumask(HK_TYPE_DOMAIN_BOOT)))
- 		return true;
+-	range.minlen = max_t(u32, range.minlen, bdev_discard_granularity(dev));
++	range.minlen = max_t(u64, range.minlen, bdev_discard_granularity(dev));
  
- 	/*
-@@ -1434,12 +1434,12 @@ static bool prstate_housekeeping_conflict(int new_prs, int parent_prs,
- 		return false;
- 
- 	/*
--	 * Now make sure that @add_cpus contains new CPUs to be isolated and
-+	 * Now make sure that @new_cpus contains new CPUs to be isolated and
- 	 * @del_cpus contains isolated CPUs to be un-isolated.
--	 * With the guards above, @add_cpus can't be NULL after the swap.
-+	 * With the guards above, @new_cpus can't be NULL after the swap.
- 	 */
- 	if (parent_prs == PRS_ISOLATED)
--		swap(add_cpus, del_cpus);
-+		swap(new_cpus, del_cpus);
- 
- 	if (del_cpus &&
- 	   (cpumask_first_and_and(del_cpus, housekeeping_cpumask(HK_TYPE_KERNEL_NOISE),
-@@ -1453,7 +1453,7 @@ static bool prstate_housekeeping_conflict(int new_prs, int parent_prs,
- 		    housekeeping_cpumask(HK_TYPE_DOMAIN));
- 	cpumask_andnot(full_hk_cpus, full_hk_cpus, isolated_cpus);
- 	cpumask_and(full_hk_cpus, full_hk_cpus, cpu_active_mask);
--	res = !cpumask_weight_andnot(full_hk_cpus, add_cpus);
-+	res = !cpumask_weight_andnot(full_hk_cpus, new_cpus);
- 
- 	free_cpumask_var(full_hk_cpus);
- 	return res;
-@@ -1743,7 +1743,7 @@ static void remote_cpus_update(struct cpuset *cs, struct cpumask *xcpus,
- 			 cpumask_subset(top_cpuset.effective_cpus, tmp->addmask))
- 			WRITE_ONCE(cs->prs_err, PERR_NOCPUS);
- 		else if (prstate_housekeeping_conflict(prs, PRS_ROOT,
--						       tmp->addmask, tmp->delmask))
-+						       excpus, tmp->delmask))
- 			WRITE_ONCE(cs->prs_err, PERR_HKEEPING);
- 		if (cs->prs_err)
- 			goto invalidate;
-@@ -1957,14 +1957,6 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
- 					       parent->effective_xcpus);
- 		}
- 
--		/*
--		 * Check for housekeeping conflicts
--		 */
--		if (is_partition_valid(cs) &&
--		    prstate_housekeeping_conflict(old_prs, parent_prs,
--						  tmp->delmask, tmp->addmask))
--			part_error = PERR_HKEEPING;
--
- 		/*
- 		 * The new CPUs to be removed from parent's effective CPUs
- 		 * must be present.
-@@ -2513,6 +2505,22 @@ static void partition_cpus_change(struct cpuset *cs, struct cpuset *trialcs,
- 		return;
- 
- 	prs_err = validate_partition(cs, trialcs);
-+	if (!prs_err && !cpumask_empty(trialcs->effective_xcpus)) {
-+		int prs = cs->partition_root_state;
-+		int parent_prs = is_remote_partition(cs)
-+			       ? PRS_ROOT : parent_cs(cs)->partition_root_state;
-+		/*
-+		 * Check for housekeeping conflict by passing the whole
-+		 * effective_xcpus as well as those CPUs that are to be
-+		 * removed from cs as delmask.
-+		 */
-+		cpumask_andnot(tmp->delmask, cs->effective_xcpus, trialcs->effective_xcpus);
-+		if (parent_prs > 0 &&
-+		    prstate_housekeeping_conflict(prs, parent_prs,
-+						  trialcs->effective_xcpus, tmp->delmask))
-+			prs_err = PERR_HKEEPING;
-+	}
-+
- 	if (prs_err) {
- 		WRITE_ONCE(cs->prs_err, prs_err);
- 		trialcs->prs_err = prs_err;
+ 	err = ntfs_trim_fs(vol, &range);
+ 	if (err < 0)
 -- 
 2.53.0
 
