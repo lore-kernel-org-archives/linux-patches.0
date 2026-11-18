@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057059;
-	b=MgN0xDdd6R8RAnMHN/Q7b2M7MZS2m8f1Krp3NbsIW8gXuXVRQdeoLqlsDSbp/Nr54lHh
-	 6dMHApYziX01WSK+8ZAbSKKQg1jT/ZwL7eX+cAtHGLtvITuvYrkR1sQS835piYiaYrptF
-	 Aex60TXSO5iu1hMEX7jpeBY7pyws4RwXwgKeWQWwQKAXdOkLYD5p/POfQ4X2xvHjgASh2
-	 Lw6vkFyANC+G8cNdNEMwZdprXkDyMTSw3OZwTBg2qc5fqmnkVrwxjAyY7c/Jfghhl7obk
-	 O/NKsfgWy0Br16RPCS1+XuUDgIb5XGHd+bKPvTQbZBebsgv+IVFYHAVS43ufKY9jPGg==
+	t=1795057061;
+	b=p/v+LlFIARlOBulxA99E97v1XNsQ/x9oEWvTz9xdxsCbgPuvLbTIlK+30yGkJSQEq5/C
+	 lzNmR/3s8ATFloQZEDgMKdff53RbfDZ7XsL6IQ4hF0aRITZgiv6ZEzELXCOJS9CAqhgC3
+	 Dwoldn4B9+Zvftr24+n4XgoOBOF8zbaoiusCr6jWWlj6GM+4E2CC6ILTJvxq4C7G2Uvkq
+	 wZRALSRoa0SIUMYXD2rehxfxQVMgziOKTNYyQLUGM5KzJhTlc5TBogk/Yyhgx8FEyK4l/
+	 t+UZO1ynWWkkVbNnK5KkyA+ViZI6Hgfl8QeExsq6x1aHjnGjNQmjmWfKzix3H8mtSJw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057059;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057061;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GuGmbwNSxXn1QzTMD7kscFut3J3xkDwqipeujD+o7Aw=;
-	b=wHSoYwZ3zMb4m/Nf/hFOVF/UixuMFs0zNNuBYh1XrsWZVQ8LOYGkjT9FVw4vljmq83L/
-	 up9uRsjywdj2TArlUdoFSRlV4PVzcT4vv3QLM36waley5pol7+zV1idYLYMB2gwxrWe1H
-	 +/mBK21NPsuasgPCXYVk0sCgMxAHEID07bxiRaPzsrp98Hkdt01y+pInMTIwuhGhcRyA4
-	 XIccUwaelJP4LjfT1BtbgRKBbsotycLKPgNFF0xCRD3r5T9KTJXANudFs0zFjws5qQ8nf
-	 E4RqC2dnmLnILXsp1nfFPMtfZvMq4hMb0tzhwsrfn1keBC0Tsg6gl2q1DSJaZPzdObw==
+	bh=LRLEkaXAYW7F9W7r92ivyf8i4I3A6oPoiZnFDr52Akg=;
+	b=0XSyjejDWa30BXISwA2iki/Pdij9iDqCCwgCcdCgCiboIs7hFgpPP7Fl1dKFn7mLl9RJ
+	 NNGs9w4SN8unon7o8e8SOKXJvwT9fPZHx0vpuZjyBWj+OP7jj6VShptf9D85uHvrWU34y
+	 a/FN7ut07OFWIBzNALZciuWwoulQtRJrMOooag+VOuvmdF6DkcZqA7iDZfXV9PDfuRaaU
+	 80dkzyskXo+73va8nv6ZPPLUFw0N0gP5u5EcJtiF4U+NjoyGZ/viRhSC3G75ddkAmPoKt
+	 mqC5pzx+nGDqvJGlyTTKFXoNkGZg7dn0RoALtM9TievnhpkNzqf8+bYhQYzv6vjK9hg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="OFj/md3B";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WmfQpdwa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00FE1606A31C;
-	Thu, 19 Nov 2026 02:57:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCAB9606A325;
+	Thu, 19 Nov 2026 02:57:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OFj/md3B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A3581F000C4;
-	Thu, 19 Nov 2026 02:57:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WmfQpdwa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33B171F000C4;
+	Thu, 19 Nov 2026 02:57:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057058;
-	bh=GuGmbwNSxXn1QzTMD7kscFut3J3xkDwqipeujD+o7Aw=;
+	s=korg; t=1795057061;
+	bh=LRLEkaXAYW7F9W7r92ivyf8i4I3A6oPoiZnFDr52Akg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OFj/md3BTVBhcCkw9vn/R7Vhbmy+WLIGuJ/hwnyst91+xoQDzrC4YpzmtYZwoFnw0
-	 s4hdhELMoNpOaXWRigSaRjVOtxOGjfBjvUnoAPMfXUsGBktB0C7Ucla0VsSGglHjkc
-	 Mwtaee4Bv0psAinzea8KeO12TqVxPzoikeWRzfgo=
+	b=WmfQpdwajrb7cIpktFRLoYDN2plAW4xC+c2F0pLz4LheuSdSDk8apijkHW1i9LZrR
+	 8Mbw27Fl4X/Yrx2TskevoaZctMrOSkIY9QI6peZdeKiJq+I+MHO9h/KJxoQ6Dn0VOQ
+	 WvxR4uVXlBDYdv/58RfaoM0TW/s1OG2xYogwScR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Radu Rendec <radu@rendec.net>
-Subject: [PATCH 5.15 2207/2214] irqchip/gic-v3-its: Fix its node leak in gic_acpi_parse_madt_its()
-Date: Wed, 18 Nov 2026 16:04:43 +0100
-Message-ID: <20261118150138.552900459@linuxfoundation.org>
+	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Tim Gardner <tim.gardner@canonical.com>
+Subject: [PATCH 5.15 2208/2214] dmaengine: dw-axi-dmac: Fix uninitialized variable in axi_chan_block_xfer_start()
+Date: Wed, 18 Nov 2026 16:04:44 +0100
+Message-ID: <20261118150138.586054740@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,40 +70,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Tim Gardner <tim.gardner@canonical.com>
 
-commit 698a8648ca8051d34722b09b8a8088c741120ac3 upstream.
+commit 885633075847f475f26a29249d772cc0da85d8cd upstream.
 
-Fix its node leak when its_probe_one() failed in
-gic_acpi_parse_madt_its().
+Coverity complains of an uninitialized variable:
 
-Fixes: 9585a495ac936 ("irqchip/gic-v3-its: Split allocation from initialisation of its_node")
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Radu Rendec <radu@rendec.net>
-Link: https://patch.msgid.link/20260702033050.1583-3-shikemeng@huaweicloud.com
+5. uninit_use_in_call: Using uninitialized value config.dst_per when calling axi_chan_config_write. [show details]
+6. uninit_use_in_call: Using uninitialized value config.hs_sel_src when calling axi_chan_config_write. [show details]
+CID 121164 (#1-3 of 3): Uninitialized scalar variable (UNINIT)
+7. uninit_use_in_call: Using uninitialized value config.src_per when calling axi_chan_config_write. [show details]
+418        axi_chan_config_write(chan, &config);
+
+Fix this by initializing the structure to 0 which should at least be benign in axi_chan_config_write(). Also fix
+what looks like a cut-n-paste error when initializing config.hs_sel_dst.
+
+Fixes: 824351668a413 ("dmaengine: dw-axi-dmac: support DMAX_NUM_CHANNELS > 8")
+Cc: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: dmaengine@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Tim Gardner <tim.gardner@canonical.com>
+Link: https://lore.kernel.org/r/20211025181656.31658-1-tim.gardner@canonical.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -5627,9 +5627,13 @@ static int __init gic_acpi_parse_madt_it
- 	}
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -375,7 +375,7 @@ static void axi_chan_block_xfer_start(st
+ 				      struct axi_dma_desc *first)
+ {
+ 	u32 priority = chan->chip->dw->hdata->priority[chan->id];
+-	struct axi_dma_chan_config config;
++	struct axi_dma_chan_config config = {};
+ 	u32 irq_mask;
+ 	u8 lms = 0; /* Select AXI0 master for LLI fetching */
  
- 	err = its_probe_one(its);
--	if (!err)
--		return 0;
-+	if (err)
-+		goto probe_err;
- 
-+	return 0;
-+
-+probe_err:
-+	its_node_destroy(its);
- node_err:
- 	iort_deregister_domain_token(its_entry->translation_id);
- dom_err:
+@@ -393,7 +393,7 @@ static void axi_chan_block_xfer_start(st
+ 	config.tt_fc = DWAXIDMAC_TT_FC_MEM_TO_MEM_DMAC;
+ 	config.prior = priority;
+ 	config.hs_sel_dst = DWAXIDMAC_HS_SEL_HW;
+-	config.hs_sel_dst = DWAXIDMAC_HS_SEL_HW;
++	config.hs_sel_src = DWAXIDMAC_HS_SEL_HW;
+ 	switch (chan->direction) {
+ 	case DMA_MEM_TO_DEV:
+ 		dw_axi_dma_set_byte_halfword(chan, true);
 
 
