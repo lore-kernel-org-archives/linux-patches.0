@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043156;
-	b=5Kw/rjPkrP1Kvb87b3O8VQiIujqqhvlNgQpgzovQOWZ1spKnhs5zPkfmicKZttYEGfYD
-	 r8RIHnDlm+p8RSzoirJyVr/8x2oJK2OOScM4jrmOy1D29ydcHqXO46ZarcQACnIs5kT1P
-	 AeVyP/6NZ+4t+uwtDvRclQLWaAoNcmVv1SaNiRClA2wve5Z+ZyhJWKVrcfAivbE8oInDn
-	 upCYS3+/AwmbIiBTARYHrt2smpcJw/WT/i24DRuVuMftRS22qja/FVAQkguFw4AxgfaP7
-	 09OySjWdfkBJFDOGZrnIC4EfAUpO/u629bO0Fe8bE5UmIJpVbgz9eVZAdz4i9YK44yw==
+	t=1795043158;
+	b=wz9AK4RNDzta0E5TYWf27JrMZRHIw4uICt75UcWm6Qc7eNOi6WXdcx04q4HwcXlXgVd7
+	 +fnHx+OZnDgrUS5tuU1zUSZd8ZEk16r+lElcHk9PlfJfryi5f1goP1wotE8cH004L0auW
+	 05VUVHV+c+qxCX4wDJFM9vj9M5EXstMkFiTdpdpEP0NAjxq6U4Aq2E6isjA7wSQQpNPw+
+	 PaA9IKvFvXuwR/OIIOzOBYW562aBTsPcGE9GWgCFHuX9x6xFzRvP9zaoWo45tdWDvhjHM
+	 inJLaBFqoVe/9W6JaJkLIJtFRET32PqQMdAn2etomDFcBqwb0/lpshDjk33EDslNzgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043156;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043158;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y3wmmcjg/1EAvl6uwN96YqwEnnIgnKUeQHenRTfA7ys=;
-	b=LKKKkK7WoA6Mvr45MMLfGrxaLOLFTxUBoIhDY3xgVIcubxgN1bVTu75mxD1Ww9T4zGky
-	 r4EA8ArYWYfHdDjMxGEXKr6lpRO2PlKQN94f4IBWSyTmMgd8GxAqAFK+MUO97ULEmJ3Wi
-	 9+fSnS9TtEEfmXkbcYa8JZe0QAHpnCxFjHfFVS7Kme0uK3Klfwkxdsz4sVO5bUfIB9RWW
-	 LP+NvfaOgBLNavlY6I4CljAXGIUoNHGT5Xh0LKMigKd4WtQlmLIGuzDAzchOqngVdRcQA
-	 fD9KmkQD1ABusEKPn0bmxp0J5+FIkyvcSDZ2KmKvka3efiq+/uD6knu8hhFzytLK+nA==
+	bh=hi3xWWOIkRFhKEHCwzHIL+neTARh0OZlTDL0Ne97xto=;
+	b=CCbMNi1mV3eeCTlPnVe6EHzbvrfAOluOnizcClhHj8i7khFG9RVOnHuxczRt/04vO2w0
+	 oLQgENW/0duqqXPAhmN/4m6kJmR7jSCdpjpiBLAtCAgNKajQyphzqXCXs446EWVkhrbrh
+	 IlCU+6eLoYKe3m2i9/oc8i+wUGJhR9Cy+JZYMBZjBx2uvfaqHiCD5rJMntuGen6gwQm4V
+	 vEzAJ3/MKJyQSUR9eJzdG8iLVJ384VJEoMXP3HjIEVaZOo5v+te84OP7c3L0UF2Z9QjhE
+	 x8RRJacgLZRkygwRFLEuwz4q98fZj4mNiDgmvjlBwnza5E5klbHFv2rFKpOWZPjG3Yw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dOX+sI5r;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q8xHfY6z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598C4606A32A;
-	Wed, 18 Nov 2026 23:05:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7350606A31C;
+	Wed, 18 Nov 2026 23:05:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dOX+sI5r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C1C1F000C6;
-	Wed, 18 Nov 2026 23:05:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q8xHfY6z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BED91F000C4;
+	Wed, 18 Nov 2026 23:05:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043155;
-	bh=Y3wmmcjg/1EAvl6uwN96YqwEnnIgnKUeQHenRTfA7ys=;
+	s=korg; t=1795043158;
+	bh=hi3xWWOIkRFhKEHCwzHIL+neTARh0OZlTDL0Ne97xto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dOX+sI5rlbhik33/gnXt8UwZKLGuHvBaKP4KanM4iZ3Dt+7aKDrJO0iTDyykuHNjB
-	 mG5aNMFIMEue8LTmVcCm8Vpe011ng0jQ9AdMwByPeXMHnlyBNqEzE8U9WQQN+pFKqD
-	 Nwg7CAuydbV1au+NHpi/S24mLPfeEH5bcANzuesE=
+	b=Q8xHfY6zXJRg4tLKUkVVWtYl1KV/b16Lk/8vkrL1If2WzvdYQwWgH034ykSTi4FNp
+	 ASRfEd0d0Kc8aE3lRSCiHGSlS7hqEX96wD16bdOpRiZnGSde54un3w2hFdMmeQExS6
+	 k8i/d3Y/mYEoVxi2Tm0fm5U3O7k3/uE9IALLxp7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Dooks <ben.dooks@codethink.co.uk>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulfh@kernel.org>,
+	Jaeyoung Chung <jjy600901@snu.ac.kr>,
+	Sangyun Kim <sangyun.kim@snu.ac.kr>,
+	Kyungwook Boo <bookyungwook@gmail.com>,
+	Ian Abbott <abbotti@mev.co.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0058/2857] mmc: cqhci: fix to missed endian conversions
-Date: Wed, 18 Nov 2026 15:18:12 +0100
-Message-ID: <20261118150203.395907939@linuxfoundation.org>
+Subject: [PATCH 6.1 0104/2857] comedi: ni_atmio16d: Add sanity check to interrupt handler
+Date: Wed, 18 Nov 2026 15:18:58 +0100
+Message-ID: <20261118150205.005503517@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,67 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Dooks <ben.dooks@codethink.co.uk>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-[ Upstream commit 0aae2c73175821a71c0e20607f8e333be5b71940 ]
+[ Upstream commit 13f4796223489a5349b466ce54bb868f46c9fefd ]
 
-Fix two places where the wrong type or conversion of little-endian
-types to fix the following sparse warnings:
+The driver requests an interrupt handler for the device, after setting
+device registers to disable interrupt generation.  The interrupt handler
+should not be called prematurely unless the user-configured I/O port
+base address and/or IRQ number are incorrect or the hardware is bad.
 
-drivers/mmc/host/cqhci-core.c:487:15: warning: incorrect type in assignment (different base types)
-drivers/mmc/host/cqhci-core.c:487:15:    expected restricted __le32 [usertype]
-drivers/mmc/host/cqhci-core.c:487:15:    got int
-drivers/mmc/host/cqhci-core.c:566:19: warning: incorrect type in assignment (different base types)
-drivers/mmc/host/cqhci-core.c:566:19:    expected unsigned long long [usertype] *task_desc
-drivers/mmc/host/cqhci-core.c:566:19:    got restricted __le64 [usertype] *
+For safety, check the dev->attached flag in the interrupt handler to
+ensure the device has been fully set up, avoiding a possible null
+pointer dereference of dev->read_subdev.
 
-Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
+Link: https://lore.kernel.org/lkml/20260610115912.780131-1-jjy600901@snu.ac.kr/
+Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
+Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20260618102949.26607-6-abbotti@mev.co.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/cqhci-core.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/comedi/drivers/ni_atmio16d.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/mmc/host/cqhci-core.c b/drivers/mmc/host/cqhci-core.c
-index fe7a4eac9595c..d942f3fe95abe 100644
---- a/drivers/mmc/host/cqhci-core.c
-+++ b/drivers/mmc/host/cqhci-core.c
-@@ -479,11 +479,11 @@ static void cqhci_set_tran_desc(u8 *desc, dma_addr_t addr, int len, bool end,
- {
- 	__le32 *attr = (__le32 __force *)desc;
+diff --git a/drivers/comedi/drivers/ni_atmio16d.c b/drivers/comedi/drivers/ni_atmio16d.c
+index e01ab5311d235..b4c25a8b8d40e 100644
+--- a/drivers/comedi/drivers/ni_atmio16d.c
++++ b/drivers/comedi/drivers/ni_atmio16d.c
+@@ -223,6 +223,9 @@ static irqreturn_t atmio16d_interrupt(int irq, void *d)
+ 	struct comedi_subdevice *s = dev->read_subdev;
+ 	unsigned short val;
  
--	*attr = (CQHCI_VALID(1) |
--		 CQHCI_END(end ? 1 : 0) |
--		 CQHCI_INT(0) |
--		 CQHCI_ACT(0x4) |
--		 CQHCI_DAT_LENGTH(len));
-+	*attr = cpu_to_le32((CQHCI_VALID(1) |
-+			     CQHCI_END(end ? 1 : 0) |
-+			     CQHCI_INT(0) |
-+			     CQHCI_ACT(0x4) |
-+			     CQHCI_DAT_LENGTH(len)));
- 
- 	if (dma64) {
- 		__le64 *dataddr = (__le64 __force *)(desc + 4);
-@@ -532,7 +532,7 @@ static int cqhci_prep_tran_desc(struct mmc_request *mrq,
- static void cqhci_prep_dcmd_desc(struct mmc_host *mmc,
- 				   struct mmc_request *mrq)
- {
--	u64 *task_desc = NULL;
-+	__le64 *task_desc = NULL;
- 	u64 data = 0;
- 	u8 resp_type;
- 	u8 *desc;
-@@ -564,7 +564,7 @@ static void cqhci_prep_dcmd_desc(struct mmc_host *mmc,
- 		 CQHCI_CMD_TIMING(timing) | CQHCI_RESP_TYPE(resp_type));
- 	if (cq_host->ops->update_dcmd_desc)
- 		cq_host->ops->update_dcmd_desc(mmc, mrq, &data);
--	*task_desc |= data;
-+	*task_desc |= cpu_to_le64(data);
- 	desc = (u8 *)task_desc;
- 	pr_debug("%s: cqhci: dcmd: cmd: %d timing: %d resp: %d\n",
- 		 mmc_hostname(mmc), mrq->cmd->opcode, timing, resp_type);
++	if (!dev->attached)
++		return IRQ_NONE;
++
+ 	val = inw(dev->iobase + AD_FIFO_REG);
+ 	comedi_buf_write_samples(s, &val, 1);
+ 	comedi_handle_events(dev, s);
 -- 
 2.53.0
 
