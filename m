@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020470;
-	b=LeN46pCE51HEmfRAXDkUpLILTevmPgh7JRpieYb2TnBSD6uoA2eaPKVW9ho1qQzkgPxl
-	 B0lA0x8Tatwf8gcVqyWpZe5ZnHpO0QoLvKZg0bXsel4j9Ebg2zAGJddqC1vpJ6/3AzLxX
-	 zTn6OKs97FyccPtx8ZsUpuWSvlER/uOXrS1mhHoC68/ZHL3QtlY7xYMmo8IjpgfBFUPuV
-	 iy55ZB3E+fclJdtXxzoHcDhARtRw40LfVXNikyjOPUg4ytLtyGjk4mwtJ/j37ZX0nXlPd
-	 1ZCtTtlFYzh+bveAetCI2B3iCLB/fD/zXFqxEJhuETV+6Ke1fU58B5bf/3bX85c1k4Q==
+	t=1795020472;
+	b=XC173KuSV+vSAa2fgxboiaMq0zK3UAL4pADwY4BcyN5bgOcRluak17K9aT3/cNcPmeav
+	 lPixaehim9oQW/nShpztQTtTHFF9gTjbN66RbuNpDmDgHo8LUL14E2PsXDG3AQZJ6sQ8h
+	 4XB3n4FrCTnycsBRu1/AfzkFNfMKclDD2oFKV/I2xKlRHgOaMUfOJMDjnjHXeq8PDfgYf
+	 5ltcfJ2zHRrSMOF9kNaeg5d14T170hNjnowWVoySDcuFpxaydOGA9KkI/bLU2nRO4QXxY
+	 mJe/czXIMOaBQUwXkPRSXSsHbS9vB7TEs1wZvWL3buOHXz+mMR+5ZlN+wLIIdEnfOPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020470;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020472;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LrZSj6fvZMuRSISdxUX41QPLlvZkisHgIxPHKdIDZNI=;
-	b=wFZGXQhTSBWLN03muUIGBOV4BfOKPQdEuhzYVp8XpIOMKNkcFZFTJIfnyIbc895LDjHh
-	 YAc20TKkOR3eJ/kJhnn9r5TKmfdxulFmjLpxTh9VDBi/RxTHBiy/zDmV1egjR6IVqN+W0
-	 aOAl23GAhLSWkiO4h+MFPSDpFhcRJnErZBRrDLYnBpxlYcfWtjKaCHwFn4zG6gQmkL15t
-	 eHsWc2pTA5mi4hSWXzOkiwaTtXxrQTG4/we80rnnLWdk+iaYMjlfB+rTZDqNvlMg2+G8v
-	 nh/T+OsB8Bk/01kCbK7PyQyrBBYvzaQYqakNrGu0N9ZYH7lrdEzU2D2AXWi7QNXLfgw==
+	bh=41wpBNM2h7DrieYJyNty6cVLszPIBsUO6gpwav6xU/w=;
+	b=vt3A7zdZK0UBL8OpoP8nnar3IWKLhXsxpkIvj70cqAN7Eymzp0hSywMR/xaxeVLfxaB1
+	 q3Y+T/yUgma8oqle2bt+L3+c2ykFtEXtpOtLawZQLVtD832dM6pYAFpwz0o07R+AgXhQX
+	 ZeOXJi1mT+n5/AVHJ915HdJ81N8MJNPRKRRZg2fKbplZz7Ald9Wo76osZAx6rCf81RKH9
+	 nvmTEBxv/JHjfv9Kv9yGLpbqxH8CpHLn/WynttHVJIkQs5qEy4mBmQOXE2RgAid7PosF4
+	 86eLh7a8tQ0VR4nUaSk40u73KFe7Jpc1e5wddW6FKKP3V48Qv8T8da82wqijd7Janjw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TlU0SFNX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UwXImrY6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE9C606A31C;
-	Wed, 18 Nov 2026 16:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E73A606A320;
+	Wed, 18 Nov 2026 16:47:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TlU0SFNX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45A3A1F000C5;
-	Wed, 18 Nov 2026 16:47:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UwXImrY6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 026DE1F000C4;
+	Wed, 18 Nov 2026 16:47:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020469;
-	bh=LrZSj6fvZMuRSISdxUX41QPLlvZkisHgIxPHKdIDZNI=;
+	s=korg; t=1795020472;
+	bh=41wpBNM2h7DrieYJyNty6cVLszPIBsUO6gpwav6xU/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TlU0SFNX89jitjhUck9WBoFqOfk2cRsp2LVlGNNhbuJAH5+iniYfn+XBgkO/RDcfS
-	 XMht1HwFXqH5P66CQxaG7DPuXWuM8jiPrW3KUG/MOdpnFxMw5E7cCeCG7nLY8g+GFg
-	 tO/uGIAiaVupTNuwVZO1r9xn4eHiDxOaDCwEt2Cs=
+	b=UwXImrY6FEvVptl+XZjiRo9VNt2KInZ5zLJxLUeeGxTKKRnwKaKhxjK44B3PBgauX
+	 JfeNxcqUTywzqPtPdeDxOPwlQjuI39vxCae6Lz0KelEeSko5fSygkgxZM+4773+gtI
+	 mSc9Nz4xG8WsRRLR3pDcvLxsniQAd8k6PoYKtyPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youngsung Ahn <ays511.kr@gmail.com>,
+	xiongweimin <xiongweimin@kylinos.cn>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1961/2651] RDMA/rxe: validate inline sge_offset in finish_packet() before indexing inline_data[]
-Date: Wed, 18 Nov 2026 15:53:21 +0100
-Message-ID: <20261118150357.124071579@linuxfoundation.org>
+Subject: [PATCH 7.3 1962/2651] RDMA/rxe: Hold netdev reference for transmit skbs
+Date: Wed, 18 Nov 2026 15:53:22 +0100
+Message-ID: <20261118150357.153841113@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,60 +69,209 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Youngsung Ahn <ays511.kr@gmail.com>
+From: xiongweimin <xiongweimin@kylinos.cn>
 
-[ Upstream commit 47a9c0338f2e0d4178d77b0d2f529fe1fde84642 ]
+[ Upstream commit 19881618ffa454c63e6b6bf34acd7cac28c695dc ]
 
-For a user QP, rxe_post_send() takes the qp->is_user branch and
-never runs init_send_wqe(), so
-dma.length/resid/num_sge/cur_sge/sge_offset all come straight from
-the mmap'd SQ ring. In the inline send path finish_packet() uses
-sge_offset directly as an index:
+rxe_init_packet() assigns skb->dev from an RCU-protected GID attribute
+without holding a netdev reference. If the netdev is unregistered before
+the skb is freed, subsequent accesses to skb->dev are unsafe.
 
-	u8 *tmp = &wqe->dma.inline_data[wqe->dma.sge_offset];
-	memcpy(payload_addr(pkt), tmp, payload);
+Hold a reference with dev_hold() when the skb is initialized and release
+it from the transmit destructor or via rxe_put_skb() on error paths that
+run before the destructor is installed.
 
-inline_data is a flex array whose capacity is qp->sq.max_inline, but
-sge_offset is a u32 from user space, so the source pointer is
-displaced arbitrarily past the WQE and the memcpy reads out of
-bounds.
-commit 126c757e4cd4 ("RDMA/rxe: Validate num_sge/cur_sge before indexing wqe->dma.sge[]")
-added num_sge/cur_sge checks on the send path but not sge_offset, the
-third attacker-controlled index in the same struct.
+skb->dev can change on the TX path (VLAN/bond/tunnel, ip_finish_output2,
+etc.), so put must use the same netdev that was held. Stash that pointer
+in skb_shinfo()->destructor_arg: skb->cb is already used by
+rxe_pkt_info and is rewritten by IP control blocks.
 
-Read sge_offset once with READ_ONCE() and bound it (and the payload
-that follows it) by qp->sq.max_inline before indexing, so the value
-that is validated is the value that is used.
+To avoid blocking netdev unregistration on held skbs, flush all QPs to
+the error state on NETDEV_GOING_DOWN and NETDEV_UNREGISTER so pending TX
+work is drained and references can be dropped.
 
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Signed-off-by: Youngsung Ahn <ays511.kr@gmail.com>
-Link: https://patch.msgid.link/20261001152433.3259573-1-ays511.kr@gmail.com
+Signed-off-by: xiongweimin <xiongweimin@kylinos.cn>
+Link: https://patch.msgid.link/20260716055255.157674-1-xiongwm2026@163.com
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: 56a27df6cedd ("RDMA/rxe: Fix out-of-range unsigned-to-signed conversion for RDMA message in 2GiB size")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_req.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/infiniband/sw/rxe/rxe_loc.h  |  1 +
+ drivers/infiniband/sw/rxe/rxe_net.c  | 68 ++++++++++++++++++++++++++--
+ drivers/infiniband/sw/rxe/rxe_req.c  |  2 +-
+ drivers/infiniband/sw/rxe/rxe_resp.c |  4 +-
+ 4 files changed, 68 insertions(+), 7 deletions(-)
 
+diff --git a/drivers/infiniband/sw/rxe/rxe_loc.h b/drivers/infiniband/sw/rxe/rxe_loc.h
+index 64d636bf80fd2..7c3cc48e845c4 100644
+--- a/drivers/infiniband/sw/rxe/rxe_loc.h
++++ b/drivers/infiniband/sw/rxe/rxe_loc.h
+@@ -92,6 +92,7 @@ void rxe_mw_cleanup(struct rxe_pool_elem *elem);
+ /* rxe_net.c */
+ struct sk_buff *rxe_init_packet(struct rxe_dev *rxe, struct rxe_av *av,
+ 				int paylen, struct rxe_pkt_info *pkt);
++void rxe_put_skb(struct sk_buff *skb);
+ int rxe_prepare(struct rxe_av *av, struct rxe_pkt_info *pkt,
+ 		struct sk_buff *skb);
+ int rxe_xmit_packet(struct rxe_qp *qp, struct rxe_pkt_info *pkt,
+diff --git a/drivers/infiniband/sw/rxe/rxe_net.c b/drivers/infiniband/sw/rxe/rxe_net.c
+index fc597e02c85ca..9f1c7f21d88d9 100644
+--- a/drivers/infiniband/sw/rxe/rxe_net.c
++++ b/drivers/infiniband/sw/rxe/rxe_net.c
+@@ -429,6 +429,29 @@ int rxe_prepare(struct rxe_av *av, struct rxe_pkt_info *pkt,
+ 	return err;
+ }
+ 
++/*
++ * skb->dev may be rewritten on the TX path (VLAN/bond/tunnel, etc.).
++ * The netdev we held in rxe_init_packet() is kept in destructor_arg so
++ * that put always matches hold. skb->cb cannot be used: it is already
++ * occupied by struct rxe_pkt_info and rewritten by IP control blocks.
++ */
++static void rxe_skb_set_held_ndev(struct sk_buff *skb, struct net_device *ndev)
++{
++	dev_hold(ndev);
++	skb->dev = ndev;
++	skb_shinfo(skb)->destructor_arg = ndev;
++}
++
++static void rxe_skb_put_held_ndev(struct sk_buff *skb)
++{
++	struct net_device *ndev = skb_shinfo(skb)->destructor_arg;
++
++	if (ndev) {
++		skb_shinfo(skb)->destructor_arg = NULL;
++		dev_put(ndev);
++	}
++}
++
+ static void rxe_skb_tx_dtor(struct sk_buff *skb)
+ {
+ 	struct rxe_qp *qp = skb->sk->sk_user_data;
+@@ -441,6 +464,18 @@ static void rxe_skb_tx_dtor(struct sk_buff *skb)
+ 
+ 	rxe_put(qp);
+ 	sock_put(skb->sk);
++	rxe_skb_put_held_ndev(skb);
++}
++
++/*
++ * Free an skb that still holds a netdev reference from rxe_init_packet()
++ * and does not yet have rxe_skb_tx_dtor() installed. Once the TX
++ * destructor is set, callers must use kfree_skb() instead.
++ */
++void rxe_put_skb(struct sk_buff *skb)
++{
++	rxe_skb_put_held_ndev(skb);
++	kfree_skb(skb);
+ }
+ 
+ static int rxe_send(struct sk_buff *skb, struct rxe_pkt_info *pkt)
+@@ -529,7 +564,7 @@ int rxe_xmit_packet(struct rxe_qp *qp, struct rxe_pkt_info *pkt,
+ 	goto done;
+ 
+ drop:
+-	kfree_skb(skb);
++	rxe_put_skb(skb);
+ 	err = 0;
+ done:
+ 	return err;
+@@ -574,8 +609,7 @@ struct sk_buff *rxe_init_packet(struct rxe_dev *rxe, struct rxe_av *av,
+ 
+ 	skb_reserve(skb, hdr_len + LL_RESERVED_SPACE(ndev));
+ 
+-	/* FIXME: hold reference to this netdev until life of this skb. */
+-	skb->dev	= ndev;
++	rxe_skb_set_held_ndev(skb, ndev);
+ 	rcu_read_unlock();
+ 
+ 	if (av->network_type == RXE_NETWORK_TYPE_IPV4)
+@@ -709,6 +743,28 @@ void rxe_set_port_state(struct rxe_dev *rxe)
+ 	dev_put(ndev);
+ }
+ 
++/*
++ * Move all QPs to the error state so pending send/recv work is drained and
++ * in-flight TX skbs (which hold a netdev reference) can be released. Called
++ * from the netdev notifier so unregister cannot stall on held skbs.
++ */
++static void rxe_flush_qps(struct rxe_dev *rxe)
++{
++	struct rxe_pool_elem *elem;
++	struct rxe_qp *qp;
++	unsigned long index;
++
++	rcu_read_lock();
++	xa_for_each(&rxe->qp_pool.xa, index, elem) {
++		if (!elem || !kref_get_unless_zero(&elem->ref_cnt))
++			continue;
++		qp = elem->obj;
++		rxe_qp_error(qp);
++		rxe_put(qp);
++	}
++	rcu_read_unlock();
++}
++
+ static int rxe_notify(struct notifier_block *not_blk,
+ 		      unsigned long event,
+ 		      void *arg)
+@@ -720,7 +776,12 @@ static int rxe_notify(struct notifier_block *not_blk,
+ 		return NOTIFY_OK;
+ 
+ 	switch (event) {
++	case NETDEV_GOING_DOWN:
++		/* Start draining TX queues before the netdev disappears. */
++		rxe_flush_qps(rxe);
++		break;
+ 	case NETDEV_UNREGISTER:
++		rxe_flush_qps(rxe);
+ 		ib_unregister_device_queued(&rxe->ib_dev);
+ 		rxe_net_del(&rxe->ib_dev);
+ 		break;
+@@ -734,7 +795,6 @@ static int rxe_notify(struct notifier_block *not_blk,
+ 			rxe_counter_inc(rxe, RXE_CNT_LINK_DOWNED);
+ 		break;
+ 	case NETDEV_REBOOT:
+-	case NETDEV_GOING_DOWN:
+ 	case NETDEV_CHANGEADDR:
+ 	case NETDEV_CHANGENAME:
+ 	case NETDEV_FEAT_CHANGE:
 diff --git a/drivers/infiniband/sw/rxe/rxe_req.c b/drivers/infiniband/sw/rxe/rxe_req.c
-index 24f5c044363f7..152f02eed0ff1 100644
+index 152f02eed0ff1..4f353abd76f55 100644
 --- a/drivers/infiniband/sw/rxe/rxe_req.c
 +++ b/drivers/infiniband/sw/rxe/rxe_req.c
-@@ -510,7 +510,14 @@ static int finish_packet(struct rxe_qp *qp, struct rxe_av *av,
+@@ -818,7 +818,7 @@ int rxe_requester(struct rxe_qp *qp)
+ 			wqe->status = IB_WC_LOC_PROT_ERR;
+ 		else
+ 			wqe->status = IB_WC_LOC_QP_OP_ERR;
+-		kfree_skb(skb);
++		rxe_put_skb(skb);
+ 		if (ah)
+ 			rxe_put(ah);
+ 		goto err;
+diff --git a/drivers/infiniband/sw/rxe/rxe_resp.c b/drivers/infiniband/sw/rxe/rxe_resp.c
+index cd51042857d62..ba3b2d23b36b7 100644
+--- a/drivers/infiniband/sw/rxe/rxe_resp.c
++++ b/drivers/infiniband/sw/rxe/rxe_resp.c
+@@ -868,7 +868,7 @@ static struct sk_buff *prepare_ack_packet(struct rxe_qp *qp,
  
- 	if (pkt->mask & RXE_WRITE_OR_SEND_MASK) {
- 		if (wqe->wr.send_flags & IB_SEND_INLINE) {
--			u8 *tmp = &wqe->dma.inline_data[wqe->dma.sge_offset];
-+			u32 sge_offset = READ_ONCE(wqe->dma.sge_offset);
-+			u8 *tmp;
-+
-+			if (unlikely(sge_offset > (u32)qp->sq.max_inline ||
-+				     payload > (u32)qp->sq.max_inline - sge_offset))
-+				return -EINVAL;
-+
-+			tmp = &wqe->dma.inline_data[sge_offset];
+ 	err = rxe_prepare(&qp->pri_av, ack, skb);
+ 	if (err) {
+-		kfree_skb(skb);
++		rxe_put_skb(skb);
+ 		return NULL;
+ 	}
  
- 			memcpy(payload_addr(pkt), tmp, payload);
- 
+@@ -996,7 +996,7 @@ static enum resp_states read_reply(struct rxe_qp *qp,
+ 	err = rxe_mr_copy(mr, res->read.va, payload_addr(&ack_pkt),
+ 			  payload, RXE_FROM_MR_OBJ);
+ 	if (err) {
+-		kfree_skb(skb);
++		rxe_put_skb(skb);
+ 		state = RESPST_ERR_RKEY_VIOLATION;
+ 		goto err_out;
+ 	}
 -- 
 2.53.0
 
