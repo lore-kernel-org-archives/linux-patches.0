@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020244;
-	b=0sf38ClMGFIGiYwz/sjTkdC7kmikUUyDGLuL4xJswWdMeWUaGcEyVKCdxsH3Gc9NOVH5
-	 dRRQ9Q3x9dWsBcWY8ugcBFec8lHFyGKHUdX6r4BZUShzo8EOecsR4hA5KoBXv+DlvGSEY
-	 r1Jvmx35gzr3DgvFWUhToRbo1C/9NhZ9oX2D41oSLfdmmhXJm2Km/fxJBjUjPY/YtsfAb
-	 czPWOyNhxWjupe3+5dx2IVw9aTJiioE2NWkbuUJIBVN3RNqzfWVf3TXMeDer0lmnx2kg1
-	 FH+9QAWrFwn/Hv1kJ0bvSSwKcgv98ZOmkwp/tRqszGcYbCZYY8x4gB5AyDGU84QIfXg==
+	t=1795020247;
+	b=Ww3zwppkoa5P/oavu4076qTz1R6CaO5XNpZ/2c99BeAR5Bm/wmflUcYOIKu8uKaovkH7
+	 NWXYCbIUbN3v0kAbMqeeDtJtefh58Jw6AVaItIMqzDrIkTwikD2SnA0A+U8X2z2muoNnT
+	 GDxeaRGScoGwE6xMrrlpyHAHpTTG2LUpORsehWhxP+F8Tkbse/MNwfa+x37yRdc2S807K
+	 nIC9d1E8LxQd2otOMNm0xlgxy/1eKNRow/gDKM0T8MGPov8wkpOhQK9L3BW0WNynZGqMk
+	 bNfRQMhmJlqNh9kn0pBhDWxFCTPH7MqroAGTU2ENzNyOrxRZ1wbeMtZil60/dwRI4cw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020244;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020247;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5NkBbGXTyKs4f2X2nu6ZlT7rd9htzG+RtPElCuRVZQ0=;
-	b=SkJPaZ4PNdmOACozMsB6N2o3XifJ6CJrpVL3by/u4vzg5O4EZOzfqtrAGMh3USLHmki+
-	 zra4eFHH9lYp3D9aTwrsHoGfHQF2hmhsD+RVVgXXUgYnZbgfkj1wQZeV/Tb7dfFA/U/Z3
-	 MBRvpyQmQI7wlhw6AjPLrLAV9edkrynyLFbn2br48Ze0H46ypwjFDesF1rJw3m4CvxdiM
-	 b5uOTQTHLC394qSa7LfL8HuYsiKryydbH5nicualZmwVvsjh8MDSkZww/2SjrBEF8Vqnd
-	 fGVoty6XajrQNsP8omSTxIUakj2g1sXrlxhHKS1mrFcXo8NLlH43rePQQy4AvEYamsw==
+	bh=/EhKtKwAZce/XvQ412r1dGcgD58HwA5mszP9zZ1y7rA=;
+	b=fypQi7BJN6kJ6hJGeknHmwzluebJDXk0CA7Sg/I9hXnijnD5xuNlOsxP/f3yoWPwpC9G
+	 nPHRAJ2B1WSfDEWlKSUdbc+UtJHQVhGUi30l0mb602iGYa7T2QJQmQYxNa0hSmE7+jhvF
+	 iQU36zDNSbIfsTy6PzhAKLZDw2cW+T219W+hXLA3FX7IVVnI1F4hYJgI1QDyetFYyVp2i
+	 88+Hya1DBKiOGgDElfVv2fvdCKMJA33u08O+vxYbukjMbpwZQfuU4tJ0LXu06dDd1bTY2
+	 QuGAKDKhhQDSyF/TDT1olcKvPx/H2+wvBA11ndSJ/OhxxJvQZIswqN6/a+HaWzdM2fg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pCnArjRE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WCDKmqBD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C42A606A31C;
-	Wed, 18 Nov 2026 16:44:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C86606A320;
+	Wed, 18 Nov 2026 16:44:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pCnArjRE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B20691F000C4;
-	Wed, 18 Nov 2026 16:44:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WCDKmqBD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7591C1F000C4;
+	Wed, 18 Nov 2026 16:44:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020244;
-	bh=5NkBbGXTyKs4f2X2nu6ZlT7rd9htzG+RtPElCuRVZQ0=;
+	s=korg; t=1795020247;
+	bh=/EhKtKwAZce/XvQ412r1dGcgD58HwA5mszP9zZ1y7rA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pCnArjRE5g6Eu+Bn5+7KnZ8rDmG/nA7Snv1GE6Ke1muIi8q0/fveM0Qk/x8dLrIam
-	 lNSjHzj7wYXTDJ+kNMXeQlThVO1IjqAVQ5F3zrFFRaNdWH4fO9j9OpY0D3WuxMw3hE
-	 6y3R9XnaJbod6+l70C2Rp4ubnuju9xz0QE+VWS8A=
+	b=WCDKmqBDDYHLkBWDfb1ArSRMvaWyerAkNq72nMqYrOpYChfmPK6+k4f79M4/UNaQl
+	 1QnumJzH3wgMpNx/ww3Mv/cuU60cDXm5VcD8cKbyR7KD3gwJoCN4OBVMU81Ph2/jlO
+	 96Xq7GyP/vPxlHQ/duNxtQ7xpYQUsK5ig5SaNx+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Cen Zhang <zzzccc427@gmail.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1840/2651] ALSA: pcm: Unlink substreams before releasing them
-Date: Wed, 18 Nov 2026 15:51:20 +0100
-Message-ID: <20261118150353.327123819@linuxfoundation.org>
+Subject: [PATCH 7.3 1841/2651] dma-debug: Skip cacheline tracking for MMIO mappings
+Date: Wed, 18 Nov 2026 15:51:21 +0100
+Message-ID: <20261118150353.356596034@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,164 +69,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit d1e57f8fb7a6b6d32a4aaa31fd6fc4c77339608f ]
+[ Upstream commit 4733f2966433b7f926f70c9dc461c33cd5c10835 ]
 
-A closing PCM substream can remain in its linked group after the
-driver close callback has freed its private data. With two configured
-dummy capture substreams on the same PCM device, linked with LINK,
-PREPARE on the surviving substream can still visit the closing member:
+Mapping one MMIO dma-buf for many RDMA importers overflows dma-debug's
+cacheline overlap counter and triggers a warning. DMA_ATTR_MMIO mappings
+must never be CPU-cacheable, so CPU cacheline overlap tracking does not
+apply to them.
 
-  Final close of A                   PREPARE on linked B
-  ----------------                   -------------------
-  snd_pcm_drop(): group -> SETUP
-  do_hw_free(A)
-  dummy_pcm_close(A): free dpcm
-                                     Take snd_pcm_link_rwsem for reading
-                                     Walk the group, including A
-                                     dummy_pcm_prepare(A)
-                                       Read freed timer_ops
-  pcm_release_private(A)
-    snd_pcm_unlink(A)
+Skip MMIO entries in both cacheline insertion and removal. Keep them in
+the DMA entry hash so mapping and unmapping checks still run.
 
-Unlink at the start of final substream release, before dropping the
-stream or releasing driver resources. The link write lock waits for
-an existing group PREPARE, and unlink removes the closing member from
-later group actions. Keep the existing stop synchronization in
-do_hw_free() before the driver resources are freed.
+The reported warning was:
+ ------------[ cut here ]------------
+DMA-API: exceeded 7 overlapping mappings of cacheline 0x000000e040000400
+WARNING: kernel/dma/debug.c:465 at add_dma_entry+0x3b5/0x470, CPU#58: dtr/5264
+Modules linked in: xt_conntrack xt_MASQUERADE ip6table_nat ip6table_filter ip6_tables iptable_nat nf_nat xt_addrtype rpcsec_gss_krb5 krb5 auth_rpcgss oid_registry overlay rpcrdma rdma_ucm ib_uverbs ib_iser libiscsi scsi_transport_iscsi ib_umad rdma_cm ib_ipoib iw_cm ib_cm nvidia(O) mlx5_fwctl nvidia_drm(O) mlx5_ib ib_uverbs_support ib_core zram zsmalloc fuse mlx5_core
+CPU: 58 UID: 0 PID: 5264 Comm: dtr Tainted: G           O      J 7.3.0-rc6_for_upstream_debug_2026_10_08_13_46 #1.fc40 PREEMPTLAZY
+Tainted: [O]=OOT_MODULE, [J]=FWCTL
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+RIP: 0010:add_dma_entry+0x3bf/0x470
+Code: ac e8 f5 89 6e 00 e9 47 fe ff ff 41 f7 c6 00 18 00 00 75 9f 83 fb 07 7e 9a 48 8d 3d eb 02 5f 04 be 07 00 00 00 48 8d 54 24 30 <67> 48 0f b9 3a eb 82 0f 0b 48 c7 c7 80 d3 2a 85 4c 89 e6 e8 a9 1f
+RSP: 0018:ff110001bcb7f230 EFLAGS: 00010002
+RAX: 0000000000000006 RBX: 0000000000000008 RCX: 0000000000000000
+RDX: ff110001bcb7f260 RSI: 0000000000000007 RDI: ffffffff85cfd070
+RBP: 000000e040000400 R08: 0000000000000000 R09: ffe21c0044b8abf5
+R10: ff11000225c55faf R11: 0000000000000000 R12: 0000000000000246
+R13: 1fe220003796fe48 R14: 0000000000000400 R15: 00000000ffffffff
+FS:  00007fa8f91e6b80(0000) GS:ff11000eb81cc000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fa8f5ca80f0 CR3: 0000000164871004 CR4: 0000000000373eb0
+Call Trace:
+ <TASK>
+ ? check_sync+0x2070/0x2070
+ ? find_held_lock+0x2b/0x80
+ ? debug_dma_map_phys+0x588/0x840
+ debug_dma_map_phys+0x267/0x840
+ ? dma_debug_add_bus+0xd0/0xd0
+ ? __sg_alloc_table+0x2b7/0x4d0
+ dma_map_phys+0x10a/0x330
+ ? sg_miter_start+0x130/0x130
+ dma_buf_phys_vec_to_sgt+0x565/0xed0
+ uverbs_dmabuf_map+0x158/0x340 [ib_uverbs]
+ ? uverbs_dmabuf_unpin+0x10/0x10 [ib_uverbs]
+ dma_buf_map_attachment+0x138/0x690
+ ib_umem_dmabuf_map_pages+0x249/0xc90 [ib_core]
+ pagefault_dmabuf_mr+0x172/0xf80 [mlx5_ib]
+ ? do_raw_spin_unlock+0x54/0x210
+ mlx5_ib_init_dmabuf_mr+0x13e/0x200 [mlx5_ib]
+[... '?' frames and user-space registers omitted ...]
+ reg_user_mr_dmabuf+0x3bf/0x760 [mlx5_ib]
+ mlx5_ib_reg_user_mr_dmabuf+0x2dd/0x13b0 [mlx5_ib]
+ ib_uverbs_handler_UVERBS_METHOD_REG_MR+0x76d/0xd90 [ib_uverbs]
+ ib_uverbs_cmd_verbs+0x2337/0x31c0 [ib_uverbs]
+ ib_uverbs_ioctl+0x1c7/0x350 [ib_uverbs]
+ __x64_sys_ioctl+0x72c/0x11f0
+ do_syscall_64+0xa1/0x4f0
+ entry_SYSCALL_64_after_hwframe+0x4b/0x53
+ </TASK>
+ ---[ end trace 0000000000000000 ]---
 
-Make unlink independent of the pcm_release callback so OSS substreams
-are covered too. Remove the native-only unlink callback and its
-registration, while retaining the callback hook for OSS cleanup.
-
-The existing KASAN report below records the freed timer_ops read in
-dummy_pcm_prepare().
-
-KASAN report as below:
-
-    BUG: KASAN: slab-use-after-free in dummy_pcm_prepare+0xb7/0xc0
-    Read of size 8 at addr ffff888106b35f00 by task alsa_pcm_fixtur/491
-
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x93/0xd0
-     print_report+0xce/0x630
-     ? dummy_pcm_prepare+0xb7/0xc0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __virt_addr_valid+0x20d/0x410
-     ? dummy_pcm_prepare+0xb7/0xc0
-     kasan_report+0xe0/0x110
-     ? dummy_pcm_prepare+0xb7/0xc0
-     dummy_pcm_prepare+0xb7/0xc0
-     snd_pcm_do_prepare+0x71/0xb0
-     snd_pcm_action_group+0x505/0xb30
-     snd_pcm_action_nonatomic+0xab/0x150
-     snd_pcm_common_ioctl+0x1bf5/0x3a50
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? do_vfs_ioctl+0x1f5/0x1280
-     ? __pfx_do_vfs_ioctl+0x10/0x10
-     ? ioctl_has_perm.constprop.0.isra.0+0x34f/0x500
-     ? __pfx_snd_pcm_common_ioctl+0x10/0x10
-     ? __fput+0x5ba/0xa60
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     snd_pcm_ioctl+0x76/0xb0
-     ? __pfx_snd_pcm_ioctl+0x10/0x10
-     __x64_sys_ioctl+0x163/0x1d0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-    RIP: 0033:0x41ee8d
-    Code: 04 25 28 00 00 00 48 89 45 c8 31 c0 48 8d 45 10 c7 45 b0 10 00 00 00 48 89 45 b8 48 8d 45 d0 48 89 45 c0 b8 10 00 00 00 0f 05 <89> c2 3d 00 f0 ff ff 77 1a 48 8b 45 c8 64 48 2b 04 25 28 00 00 00
-    RSP: 002b:00007ffcfa72fb60 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-    RAX: ffffffffffffffda RBX: 0000000000000004 RCX: 000000000041ee8d
-    RDX: 0000000000000000 RSI: 0000000000004140 RDI: 0000000000000004
-    RBP: 00007ffcfa72fbb0 R08: 00007ffcfa72fb98 R09: 0000000000000110
-    R10: 0000000000000001 R11: 0000000000000246 R12: 00007ffcfa72fcd8
-    R13: 00007ffcfa72fcf0 R14: 00000000004a8f28 R15: 0000000000000001
-     </TASK>
-
-    Allocated by task 488:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     __kasan_kmalloc+0xaa/0xb0
-     __kmalloc_cache_noprof+0x251/0x610
-     dummy_hrtimer_create+0x4a/0x170
-     dummy_pcm_open+0xe7/0x730
-     snd_pcm_open_substream+0x926/0x1580
-     snd_pcm_open+0x28d/0x6d0
-     snd_pcm_capture_open+0x82/0xe0
-     snd_open+0x1ec/0x3e0
-     chrdev_open+0x21f/0x660
-     do_dentry_open+0x5c8/0x1300
-     vfs_open+0x87/0x390
-     path_openat+0x2460/0x3cd0
-     do_file_open+0x21e/0x470
-     do_sys_openat2+0xf4/0x1b0
-     __x64_sys_openat+0x136/0x1e0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    Freed by task 490:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     kasan_save_free_info+0x3b/0x60
-     __kasan_slab_free+0x5f/0x80
-     kfree+0x307/0x580
-     dummy_hrtimer_free+0x72/0xe0
-     dummy_pcm_close+0x9f/0xd0
-     snd_pcm_release_substream.part.0+0x104/0x310
-     snd_pcm_release+0x106/0x240
-     __fput+0x39f/0xa60
-     fput_close_sync+0xff/0x200
-     __x64_sys_close+0x8c/0xf0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-    ==================================================================
-
-Fixes: 1576274d3028 ("[ALSA] Fix Oops of PCM OSS emulation")
-Suggested-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/pm-pmb-9c80f858ccc13b3de84d-v7-fcd8c7aa0e837bf0b036@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Fixes: 3aa31a8bb11e ("dma-buf: provide phys_vec to scatter-gather mapping routine")
+Link: https://lore.kernel.org/r/20261013-dma-debug-fixes-v1-1-1ad1f471cc61@nvidia.com
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm_native.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ kernel/dma/debug.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
-index e36737ef53aed..62034c4c297ea 100644
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -2786,18 +2786,14 @@ static int snd_pcm_hw_constraints_complete(struct snd_pcm_substream *substream)
- 	return 0;
- }
+diff --git a/kernel/dma/debug.c b/kernel/dma/debug.c
+index 026d50de340e2..36c1f7cbb2ae9 100644
+--- a/kernel/dma/debug.c
++++ b/kernel/dma/debug.c
+@@ -489,8 +489,10 @@ static int active_cacheline_insert(struct dma_debug_entry *entry,
+ 	/* If the device is not writing memory then we don't have any
+ 	 * concerns about the cpu consuming stale data.  This mitigates
+ 	 * legitimate usages of overlapping mappings.
++	 * MMIO mappings are never CPU-cacheable and do not need tracking either.
+ 	 */
+-	if (entry->direction == DMA_TO_DEVICE)
++	if (entry->direction == DMA_TO_DEVICE ||
++	    entry->attrs & DMA_ATTR_MMIO)
+ 		return 0;
  
--static void pcm_release_private(struct snd_pcm_substream *substream)
--{
--	if (snd_pcm_stream_linked(substream))
--		snd_pcm_unlink(substream);
--}
--
- void snd_pcm_release_substream(struct snd_pcm_substream *substream)
- {
- 	substream->ref_count--;
- 	if (substream->ref_count > 0)
+ 	spin_lock_irqsave(&radix_lock, flags);
+@@ -519,7 +521,8 @@ static void active_cacheline_remove(struct dma_debug_entry *entry)
+ 	unsigned long flags;
+ 
+ 	/* ...mirror the insert case */
+-	if (entry->direction == DMA_TO_DEVICE)
++	if (entry->direction == DMA_TO_DEVICE ||
++	    entry->attrs & DMA_ATTR_MMIO)
  		return;
  
-+	snd_pcm_unlink(substream);
-+
- 	snd_pcm_drop(substream);
- 	if (substream->hw_opened) {
- 		if (substream->runtime->state != SNDRV_PCM_STATE_OPEN)
-@@ -2881,8 +2877,6 @@ static int snd_pcm_open_file(struct file *file,
- 		return -ENOMEM;
- 	}
- 	pcm_file->substream = substream;
--	if (substream->ref_count == 1)
--		substream->pcm_release = pcm_release_private;
- 	file->private_data = pcm_file;
- 
- 	return 0;
+ 	spin_lock_irqsave(&radix_lock, flags);
 -- 
 2.53.0
 
