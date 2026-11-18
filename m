@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041641;
-	b=N2+GkQbZwVCZiC3xltzPYCZbh5ryDc9c75WIIff3KYpd4o40Hy2aIGvqsKCCE5eYl/fT
-	 BwK7xV0QMPcn4CdVV7xR3hBKhsOnZnC8SWz2H7ru3TpToEwuKtL/2VeO031BCpvBWne1u
-	 OfubXlUgyIQ60NK8EXjS2Mb6Gk3Kcd6m/Pb7WUFaJkP/mJ4pTe9vWpaATUJx8HTB3xVAo
-	 6aExVgnviW5OFpLU9JaEDMfBMa9ikA9r6E13xRJM1R4jEbJ1PrPmcmC9wITYk6zY+7J8g
-	 TyGv6/1xOAyoUky/Nun3HHyTh9fH7ch72Y/1KwskwGyxpAxAPvvGPxR33m4vMeJ50YQ==
+	t=1795041644;
+	b=yV55+mApGib75TB3UF244Zg/Y9GIUW+vwomSfZnDEIX6MItbOho/ZvhYRK2tWxyxvndp
+	 4p4nbuxasQpMzR2CueggIAPnwdl3M9GSLFcbDT7lkiB1WifSWyVD2VGlszRMim0Im0uRN
+	 ibTySjsQJwAzD03CtgujSkb39FOnBmGLv6KQGxrgZXGP+qySd1RNjzk7JInImiyHvrh7i
+	 Jo/2PMKrwfzkZ0Kd1eenG3l13/pHfo6t0SxOooSUBpq6UjiNTYqqPgTsLMvAe5uesXWrU
+	 z7BR1Ye4pjFJIIHnjBEInaA8PMbqxULciMKJRR0sY3zY4wGFXy1E9Bf8MCbZl7BMXQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041641;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041644;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KThIKAdhLm6Dlchyq6ne8LKnLcYgKdj55P+balPur4k=;
-	b=Su42X9/Iw4Jzy5n8bxRx1rpnHX/mZg/XQ1HEjfyz7Ik7pCSS4vwN1RnmJH0HLI0bw/KL
-	 zl/OM1CKF+Sxn0TjmF/Z0oMc1VajBsSiR1E3WG1tSW7h8mnxH26D58kfXQPZ6sJazS58+
-	 ZRqJcLplP+4xpOPdF7L0S5g/25A1hZeJ3h/Th3scDWdisStfXk/LoIjiJjmBeqLruEkG3
-	 zOSK9oYnpmJ0aaF8IciU22W1VJncJrlyQGtgXQ1b1dNklQAHRCYBBJT7SkTGBqdEd3KHt
-	 fiADuAxCYhwL2zrs5XUYUTeKOPS3CfwNRI9BTP07xB00bYBWYBenhP8YjyZ5URglcSQ==
+	bh=Of4MTPvMLuO8qdMBXp0lrYH00VkA7Lz4tOzIBwvWDoM=;
+	b=A5nfJAGOH7Mm4AnGMcsV16GuWx5hMEvHPTKzHFMM9ts7ARclBSoYqwpHhrNoRv0q+qEj
+	 ucXZxjVFj9UrenJv3fHpURtZT3bbBRfyVldtUqSVm/RSModDjAqUEdiFjWanmNnqGL6Ex
+	 RUT7Kj4Ao54PlkLDAXAXmNg6n1osgh6TeATafOzujcCrT2v/yIUIWwH2WbjT6eTAWQX7B
+	 qzlZ+xIJYFtKLmEWMqkSkXcxCJttiIhzfbMX3v2DhG5LseQ2XtqYeM1hXwkMqOYHkjlF0
+	 GFXwx4GegjJQSUXZy0dyi3Zmg8EDxWg6XKiPNgL96Aa+zOhVmZdX0bLgnOyElNHwBUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="HW/w5wwF";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LosyYiA2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15D1D606A320;
-	Wed, 18 Nov 2026 22:40:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02DE3606A320;
+	Wed, 18 Nov 2026 22:40:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HW/w5wwF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65C451F000C4;
-	Wed, 18 Nov 2026 22:40:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LosyYiA2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F3861F000C4;
+	Wed, 18 Nov 2026 22:40:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041640;
-	bh=KThIKAdhLm6Dlchyq6ne8LKnLcYgKdj55P+balPur4k=;
+	s=korg; t=1795041643;
+	bh=Of4MTPvMLuO8qdMBXp0lrYH00VkA7Lz4tOzIBwvWDoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HW/w5wwFcpAGUHHjsUfKMnhvP9COmTowWlUY/PNTCYCoVx+Qjl9GPDmtTySoQLXpv
-	 Ix317Wi9v5n4Cdv2sKBYcJjnnax2tfJqlVWgg5QaSSDkrCDN2QRzn8EzHxbPPV8fKT
-	 p05rtD1o0qxrNvPG01wMlq3gfKPFn2djdeyoca8s=
+	b=LosyYiA2lGr6QzdBhZHEWqzhKmm25WGpJ/orzbsh/oghnJCMkXNRwWq0SabVU7gqY
+	 I8ehxIk8bxyrIvJO0ydsyhI26igMaqy14ysTQV4E9Rz8CykUY7+bq+h+3cDb5CdtDS
+	 mTKU5eMpdZHqWcKJYIZ9pQX0gN03Z4QEP52/iSDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
 	Cen Zhang <zzzccc427@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2849/3318] ALSA: pcm: Unlink substreams before releasing them
-Date: Wed, 18 Nov 2026 15:57:51 +0100
-Message-ID: <20261118150446.073646684@linuxfoundation.org>
+Subject: [PATCH 6.6 2885/3318] Bluetooth: hci_core: Keep RCU protection through LTK filtering
+Date: Wed, 18 Nov 2026 15:58:27 +0100
+Message-ID: <20261118150447.076467003@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,162 +70,129 @@ Content-Transfer-Encoding: 8bit
 
 From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit d1e57f8fb7a6b6d32a4aaa31fd6fc4c77339608f ]
+[ Upstream commit 817cbcab91fe870e5b69c835cbd708242c9f8c8e ]
 
-A closing PCM substream can remain in its linked group after the
-driver close callback has freed its private data. With two configured
-dummy capture substreams on the same PCM device, linked with LINK,
-PREPARE on the surviving substream can still visit the closing member:
+The LTK selected by hci_find_ltk() must remain allocated while its
+value is checked against the blocked-key list. The finder releases RCU
+before passing k->val to hci_is_blocked_key(). The helper's own RCU
+section protects the blocked-key list, but the selected LTK may already
+have been reclaimed before that section starts.
 
-  Final close of A                   PREPARE on linked B
-  ----------------                   -------------------
-  snd_pcm_drop(): group -> SETUP
-  do_hw_free(A)
-  dummy_pcm_close(A): free dpcm
-                                     Take snd_pcm_link_rwsem for reading
-                                     Walk the group, including A
-                                     dummy_pcm_prepare(A)
-                                       Read freed timer_ops
-  pcm_release_private(A)
-    snd_pcm_unlink(A)
+An LE ATT socket security request can reach smp_ltk_encrypt() without
+holding hdev->lock. With a matching stored LTK and an LTK-type
+blocked-key entry present, a concurrent MGMT_OP_LOAD_LONG_TERM_KEYS can
+remove the selected LTK in the following order:
 
-Unlink at the start of final substream release, before dropping the
-stream or releasing driver resources. The link write lock waits for
-an existing group PREPARE, and unlink removes the closing member from
-later group actions. Keep the existing stop synchronization in
-do_hw_free() before the driver resources are freed.
+  Socket security                 Management / RCU reclamation
+  hci_find_ltk()
+    rcu_read_lock()
+    select k
+    rcu_read_unlock()
+                                  load_long_term_keys()
+                                    hci_dev_lock(hdev)
+                                    hci_smp_ltks_clear(hdev)
+                                      list_del_rcu(&k->list)
+                                      kfree_rcu(k, rcu)
+                                  grace period ends; k is freed
+    hci_is_blocked_key(..., k->val)
+      memcmp(b->val, val, ...)
 
-Make unlink independent of the pcm_release callback so OSS substreams
-are covered too. Remove the native-only unlink callback and its
-registration, while retaining the callback hook for OSS cleanup.
+The final comparison reads freed LTK bytes. Entering a new RCU section
+in hci_is_blocked_key() cannot protect a pointer obtained before the
+completed grace period.
 
-The existing KASAN report below records the freed timer_ops read in
-dummy_pcm_prepare().
+Keep the finder's RCU read-side section active through the blocked-key
+comparison and the warning that reads k->bdaddr. Release it before
+returning on either matched-key path. This delays reclamation until the
+finder has finished using the selected record, following the existing
+IRK lookup pattern.
 
-KASAN report as below:
+KFENCE report as below:
 
-    BUG: KASAN: slab-use-after-free in dummy_pcm_prepare+0xb7/0xc0
-    Read of size 8 at addr ffff888106b35f00 by task alsa_pcm_fixtur/491
+    ==================================================================
+    BUG: KFENCE: use-after-free read in hci_is_blocked_key+0xdf/0x240
 
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x93/0xd0
-     print_report+0xce/0x630
-     ? dummy_pcm_prepare+0xb7/0xc0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __virt_addr_valid+0x20d/0x410
-     ? dummy_pcm_prepare+0xb7/0xc0
-     kasan_report+0xe0/0x110
-     ? dummy_pcm_prepare+0xb7/0xc0
-     dummy_pcm_prepare+0xb7/0xc0
-     snd_pcm_do_prepare+0x71/0xb0
-     snd_pcm_action_group+0x505/0xb30
-     snd_pcm_action_nonatomic+0xab/0x150
-     snd_pcm_common_ioctl+0x1bf5/0x3a50
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? do_vfs_ioctl+0x1f5/0x1280
-     ? __pfx_do_vfs_ioctl+0x10/0x10
-     ? ioctl_has_perm.constprop.0.isra.0+0x34f/0x500
-     ? __pfx_snd_pcm_common_ioctl+0x10/0x10
-     ? __fput+0x5ba/0xa60
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     snd_pcm_ioctl+0x76/0xb0
-     ? __pfx_snd_pcm_ioctl+0x10/0x10
-     __x64_sys_ioctl+0x163/0x1d0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-    RIP: 0033:0x41ee8d
-    Code: 04 25 28 00 00 00 48 89 45 c8 31 c0 48 8d 45 10 c7 45 b0 10 00 00 00 48 89 45 b8 48 8d 45 d0 48 89 45 c0 b8 10 00 00 00 0f 05 <89> c2 3d 00 f0 ff ff 77 1a 48 8b 45 c8 64 48 2b 04 25 28 00 00 00
-    RSP: 002b:00007ffcfa72fb60 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-    RAX: ffffffffffffffda RBX: 0000000000000004 RCX: 000000000041ee8d
-    RDX: 0000000000000000 RSI: 0000000000004140 RDI: 0000000000000004
-    RBP: 00007ffcfa72fbb0 R08: 00007ffcfa72fb98 R09: 0000000000000110
-    R10: 0000000000000001 R11: 0000000000000246 R12: 00007ffcfa72fcd8
-    R13: 00007ffcfa72fcf0 R14: 00000000004a8f28 R15: 0000000000000001
-     </TASK>
-
-    Allocated by task 488:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     __kasan_kmalloc+0xaa/0xb0
-     __kmalloc_cache_noprof+0x251/0x610
-     dummy_hrtimer_create+0x4a/0x170
-     dummy_pcm_open+0xe7/0x730
-     snd_pcm_open_substream+0x926/0x1580
-     snd_pcm_open+0x28d/0x6d0
-     snd_pcm_capture_open+0x82/0xe0
-     snd_open+0x1ec/0x3e0
-     chrdev_open+0x21f/0x660
-     do_dentry_open+0x5c8/0x1300
-     vfs_open+0x87/0x390
-     path_openat+0x2460/0x3cd0
-     do_file_open+0x21e/0x470
-     do_sys_openat2+0xf4/0x1b0
-     __x64_sys_openat+0x136/0x1e0
+    Use-after-free read at 0x00000000b9ee38e4 (in kfence-#249):
+     hci_is_blocked_key+0xdf/0x240
+     blocked_key_wrapper+0xc5/0x140 [pmbd_ltk_probe]
+     hci_find_ltk+0x1aa/0x3e0
+     smp_ltk_encrypt.isra.0+0xad/0x340
+     smp_conn_security+0x3b8/0x8c0
+     l2cap_sock_setsockopt+0x1c4b/0x2270
+     do_sock_setsockopt+0x1fb/0x430
+     __sys_setsockopt+0x106/0x180
+     __x64_sys_setsockopt+0xc2/0x160
      do_syscall_64+0x115/0x6a0
      entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-    Freed by task 490:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     kasan_save_free_info+0x3b/0x60
-     __kasan_slab_free+0x5f/0x80
-     kfree+0x307/0x580
-     dummy_hrtimer_free+0x72/0xe0
-     dummy_pcm_close+0x9f/0xd0
-     snd_pcm_release_substream.part.0+0x104/0x310
-     snd_pcm_release+0x106/0x240
-     __fput+0x39f/0xa60
-     fput_close_sync+0xff/0x200
-     __x64_sys_close+0x8c/0xf0
+    kfence-#249: 0x00000000121f2ad9-0x000000005b5bfb3d, size=72, cache=kmalloc-96
+
+    allocated by task 495 on cpu 0 at 36.722380s (2.603973s ago):
+     hci_add_ltk+0x1f5/0x3a0
+     load_long_term_keys+0x6d0/0x860
+     hci_sock_sendmsg+0x128b/0x22e0
+     __sys_sendto+0x425/0x470
+     __x64_sys_sendto+0xe5/0x1c0
      do_syscall_64+0x115/0x6a0
      entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    freed by task 533 on cpu 0 at 36.993097s (2.339769s ago):
+     __rcu_free_sheaf_prepare+0x261/0x2a0
+     rcu_free_sheaf+0x1f/0xe0
+     rcu_core+0x661/0x1d10
+     handle_softirqs+0x201/0x930
+     __irq_exit_rcu+0x110/0x1e0
+     irq_exit_rcu+0xe/0x20
+     sysvec_apic_timer_interrupt+0x6c/0x80
+     asm_sysvec_apic_timer_interrupt+0x1a/0x20
+     srso_alias_return_thunk+0x0/0xfbef5
+     __asan_memcpy+0x23/0x60
+     create_monitor_ctrl_event+0x1a2/0x460
+     mgmt_cmd_complete+0x2da/0x580
+     load_long_term_keys+0x741/0x860
+     hci_sock_sendmsg+0x128b/0x22e0
+     __sys_sendto+0x425/0x470
+     __x64_sys_sendto+0xe5/0x1c0
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    CPU: 1 UID: 0 PID: 495 Comm: python3 Tainted: G           O        7.2.0-rc6-pmb-bt-functional-v1+ #1 PREEMPT(lazy)
+    Tainted: [O]=OOT_MODULE
+    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
     ==================================================================
 
-Fixes: 1576274d3028 ("[ALSA] Fix Oops of PCM OSS emulation")
-Suggested-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 600a87490ff9 ("Bluetooth: Implementation of MGMT_OP_SET_BLOCKED_KEYS.")
+Assisted-by: LLM
 Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/pm-pmb-9c80f858ccc13b3de84d-v7-fcd8c7aa0e837bf0b036@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm_native.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ net/bluetooth/hci_core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
-index 44b5ef55b03aa..bc0d818fa430b 100644
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -2741,18 +2741,14 @@ static int snd_pcm_hw_constraints_complete(struct snd_pcm_substream *substream)
- 	return 0;
- }
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 84d9a445e08d1..5f58b24ec900b 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -1183,16 +1183,16 @@ struct smp_ltk *hci_find_ltk(struct hci_dev *hdev, bdaddr_t *bdaddr,
+ 			continue;
  
--static void pcm_release_private(struct snd_pcm_substream *substream)
--{
--	if (snd_pcm_stream_linked(substream))
--		snd_pcm_unlink(substream);
--}
+ 		if (smp_ltk_is_sc(k) || ltk_role(k->type) == role) {
+-			rcu_read_unlock();
 -
- void snd_pcm_release_substream(struct snd_pcm_substream *substream)
- {
- 	substream->ref_count--;
- 	if (substream->ref_count > 0)
- 		return;
+ 			if (hci_is_blocked_key(hdev, HCI_BLOCKED_KEY_TYPE_LTK,
+ 					       k->val)) {
+ 				bt_dev_warn_ratelimited(hdev,
+ 							"LTK blocked for %pMR",
+ 							&k->bdaddr);
++				rcu_read_unlock();
+ 				return NULL;
+ 			}
  
-+	snd_pcm_unlink(substream);
-+
- 	snd_pcm_drop(substream);
- 	if (substream->hw_opened) {
- 		if (substream->runtime->state != SNDRV_PCM_STATE_OPEN)
-@@ -2836,8 +2832,6 @@ static int snd_pcm_open_file(struct file *file,
- 		return -ENOMEM;
++			rcu_read_unlock();
+ 			return k;
+ 		}
  	}
- 	pcm_file->substream = substream;
--	if (substream->ref_count == 1)
--		substream->pcm_release = pcm_release_private;
- 	file->private_data = pcm_file;
- 
- 	return 0;
 -- 
 2.53.0
 
