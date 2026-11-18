@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053850;
-	b=IswN+45mR9zcymqZ8fdsQhRE5rDecCNVJHPhHOmDZHT+VS4BWNjerqD7vQO5z43cLaqB
-	 eBblgOBtHbiDxgT38YXLmzBfR/HIeQ0WFJVt8DhONs4j1srrvJXlCRfw/Z5Yh/2QtTv4+
-	 wipqrOpOzkzqSmzfwhileWDF4wWtYEoNb8fuy9Rm5wO11Rk/d5bhEuU0pDp3LNnh6fyOq
-	 JvcuVhxmTEfXTXkc62aSRexZVCrDR4TheG2Aqcz1ukI0YAyG8V24qegQkxmvavJ2JhsX5
-	 6DjBHIBwReTYGokQ0MborktBpyXUiXOsgQT/wFWZG2lMa++D/smthFRH++TopHV4uoA==
+	t=1795053853;
+	b=gUI7g1pSylzCn1v5hdPMaaIzpzvCIaWWgprYLQG6tTPLs2hOCg3PQcbRCLU1Ys9EdRDm
+	 M+bVNxfxGhWBtLbcrYhGwCfZpsUpbzgJo5gih2wzU9bXvErO7wA22mZOYubT7vzPEywUs
+	 FBkXW/1U8EV/TwNlWU++DU6FsEjl2JBzyBIAmeDLQhLzv+dx+Bh6ll2t9DAnqmAKBBp5Y
+	 5bmD/kga/VAmdvivJuWGHiBuV8x7LDaB9We0um/3mBS20ZVaXFdWs3oivHyS2VS81K94r
+	 iM1yikckOTAlbQkbbBQN/B+16LRuLWVxHyIkUhyWQ9kX+2yVAE7Oa2mo1OzBzk71u5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053850;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053853;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=I59n0YhSix6FVcbvHvZcxm0clMI0c42k/sHk7EJ/oZE=;
-	b=KZwNvf/v8dtT62p7qFMwk7ZqOi5NS+UEUSCJNqZ5sOzQjxSvja4+9H1soRSdndEnLPur
-	 y/4IJAFN3ViR+MRGDB6mjY1mmaeLHk6CYyhsVtCv2VVWl1N8iBlVR8B2KXcNDqXRLeQ82
-	 c1PMhH3XjMfHCwTxSN3B6sR0GlNUfCdaEvgLK3jwr9BqU5YiuiYcFzj81MryS0EHnZzsL
-	 n9Da+alpRhn/qNJHmYyLMPKN1sYFs7SIfmXFpHeIUYnxsnYkTvrcIgncCO2uxH6Up4Vpj
-	 fjvV11I/lydfpKpC3bHFYgduF0J9/ebPTfbCBQxLd4gj3mGWiChRxdpXF/pt8623n+w==
+	bh=oHcykKdbWCCf6KXfotvmo/7+xKu39VwDXCAK77zuqkY=;
+	b=r9lHylWN95WWCHjQ4FZfmTTwD/ri+UyA26WTr7i2NZAWZ7Hq4xjMS1Mb7KnC0og1Vbpg
+	 MwXjzi7igtzxNYpmqE2XXs3Y3c09CFXnRtp9k5hIML+ga3k+Y1+5Yr+jL3wFpMoM0Fy9B
+	 vd97a5WDne3EGasH0EiyP6RJf0M9YE+7zToPSC+gyKsjZVk3JHr2mpjxHeJ/3r8uisIXu
+	 1WJUE64vr7wSUAG6QbNCJK0OM97bI1/mI8Sw9nF/W5MheLEK+9GlILySy4mexp4YbUTse
+	 KzwdyJuL4cRjCcQuY3LGvhqHwGnIK8XboruO7aW/3EZImQ9dLHKgHymAYNngkE9Eepg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nw25JBdG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JcWYWNMR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F63606A32C;
-	Thu, 19 Nov 2026 02:04:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96D0606A325;
+	Thu, 19 Nov 2026 02:04:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nw25JBdG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97A2E1F000C4;
-	Thu, 19 Nov 2026 02:04:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JcWYWNMR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DDCC1F000C5;
+	Thu, 19 Nov 2026 02:04:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053850;
-	bh=I59n0YhSix6FVcbvHvZcxm0clMI0c42k/sHk7EJ/oZE=;
+	s=korg; t=1795053852;
+	bh=oHcykKdbWCCf6KXfotvmo/7+xKu39VwDXCAK77zuqkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nw25JBdGxOVCKSEGdyOxsBicbEqqHVjQtHnHQ4K6dUqDyoFXs9CK4B88W4/59zfVY
-	 WrN0wkkkG4UnTClrSMZdMG2xzammgfQw2biPeN3vAtHt/t/Ent6jCghVBkttPGIwm7
-	 PvSpa5laCzyg/sfKUOAmE0dYf3wrXSuaowycioRY=
+	b=JcWYWNMRAY2ceh7v3Vzb71RvIgG8GGCQyTNAAbT4ihRpowXijJ87g0kdlb5Es8+EU
+	 0Db0WnYInB/NBubP/6ktnQ62/i7m1xBSJzmQ513EZyb0op2YZaL6cwv01ud1eSd0Y2
+	 CDVYR12Ye7o8fFhrEA6GCu9O996lVcOKXPmIbU4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Misiurov <andrey.misyrov@gmail.com>,
-	Helge Deller <deller@gmx.de>,
+	Tobias Schumacher <ts@linux.ibm.com>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1063/2214] fbdev: core: Initialize modelist in framebuffer_alloc()
-Date: Wed, 18 Nov 2026 15:45:39 +0100
-Message-ID: <20261118150054.818776329@linuxfoundation.org>
+Subject: [PATCH 5.15 1064/2214] s390/pci: Add error cleanup in zpci_directed_irq_init()
+Date: Wed, 18 Nov 2026 15:45:40 +0100
+Message-ID: <20261118150054.852347805@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,78 +69,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrey Misiurov <andrey.misyrov@gmail.com>
+From: Tobias Schumacher <ts@linux.ibm.com>
 
-[ Upstream commit 0c9cb9321cb3863b52bdea4b8ae5a27705762c9e ]
+[ Upstream commit 769f66f595c11185c66913ea5d96420504bfebc3 ]
 
-framebuffer_alloc() returns zeroed memory, so info->modelist starts out
-with NULL next and prev pointers. The list head is initialized only
-later, by fb_videomode_to_modelist() or by do_register_framebuffer().
+If per-CPU airq_iv allocation fails in the loop, previously allocated
+vectors and arrays leak. Add proper error path to release all resources
+on failure.
 
-The "fix potential memory leak" commits listed below added
-fb_destroy_modelist(&info->modelist) to the probe error paths of s3fb,
-tdfxfb, tridentfb, i740fb and carminefb. These paths can run before
-the list head is initialized:
+The error path frees zpci_sbv, but SIC_IRQ_MODE_DIRECT has already
+programmed its address into the hardware. Set the directed interrupt
+mode only after all allocations have succeeded, so a failed init leaves
+no freed memory registered with the hardware.
 
- - s3fb, tdfxfb, tridentfb and i740fb call fb_videomode_to_modelist()
-   only after a successful EDID read, and tridentfb can also hit the
-   error path on an ioremap() or kmalloc() failure before that;
- - carminefb jumps to the error path when fb_find_mode() fails, before
-   its fb_videomode_to_modelist() call.
-
-fb_destroy_modelist() then dereferences the NULL head. Reproduced on
-Debian 12 (6.1.180) by binding s3fb to a VGA device without EDID and
-forcing fb_alloc_cmap() to fail:
-
-  s3fb 0000:00:03.0: cannot allocate colormap
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  RIP: 0010:fb_destroy_modelist+0x10/0x80
-  Call Trace:
-   s3_pci_probe.cold+0x12b/0x2bf [s3fb]
-   local_pci_probe+0x41/0x80
-   pci_device_probe+0xc3/0x240
-   really_probe+0xde/0x380
-   __driver_probe_device+0x84/0x150
-   driver_probe_device+0x1f/0x90
-   __driver_attach+0xce/0x1c0
-   bus_for_each_dev+0x87/0xd0
-   bus_add_driver+0x1ae/0x200
-   driver_register+0x89/0xe0
-   do_one_initcall+0x59/0x220
-   do_init_module+0x4a/0x1f0
-
-Initialize the list head in framebuffer_alloc(), so info->modelist is
-always a valid, possibly empty, list and fb_destroy_modelist() is safe
-on every error path. Keep the lazy initialization in
-do_register_framebuffer(), as drivers that embed struct fb_info rather
-than calling framebuffer_alloc() still depend on it.
-
-Fixes: 3b0ed04bc852 ("fbdev: s3fb: fix potential memory leak in s3_pci_probe()")
-Fixes: bb019d755366 ("fbdev: tdfxfb: fix potential memory leak in tdfxfb_probe()")
-Fixes: 7a35ec619d9a ("fbdev: tridentfb: fix potential memory leak in trident_pci_probe()")
-Fixes: 5936063409af ("fbdev: i740fb: fix potential memory leak in i740fb_probe()")
-Fixes: 6fcca16a2b19 ("fbdev: carminefb: fix potential memory leak in alloc_carmine_fb()")
+Fixes: e979ce7bced2 ("s390/pci: provide support for CPU directed interrupts")
 Cc: stable@vger.kernel.org
-Signed-off-by: Andrey Misiurov <andrey.misyrov@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-[ sashal: adjusted framebuffer_alloc() context due to the missing info->blank assignment ]
+Signed-off-by: Tobias Schumacher <ts@linux.ibm.com>
+Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+[ sashal: adapted the changes to existing zpci_ibv naming and older s390 allocation and IRQ-control interfaces ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/fbsysfs.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/s390/pci/pci_irq.c | 26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/video/fbdev/core/fbsysfs.c b/drivers/video/fbdev/core/fbsysfs.c
-index 09ee27e7fc25f..1117127402e82 100644
---- a/drivers/video/fbdev/core/fbsysfs.c
-+++ b/drivers/video/fbdev/core/fbsysfs.c
-@@ -56,6 +56,7 @@ struct fb_info *framebuffer_alloc(size_t size, struct device *dev)
+diff --git a/arch/s390/pci/pci_irq.c b/arch/s390/pci/pci_irq.c
+index 3823e159bf749..5281772424e86 100644
+--- a/arch/s390/pci/pci_irq.c
++++ b/arch/s390/pci/pci_irq.c
+@@ -411,15 +411,10 @@ static int __init zpci_directed_irq_init(void)
+ 	if (!zpci_sbv)
+ 		return -ENOMEM;
  
- 	info->device = dev;
- 	info->fbcon_rotate_hint = -1;
-+	INIT_LIST_HEAD(&info->modelist);
+-	iib.diib.isc = PCI_ISC;
+-	iib.diib.nr_cpus = num_possible_cpus();
+-	iib.diib.disb_addr = (u64) zpci_sbv->vector;
+-	__zpci_set_irq_ctrl(SIC_IRQ_MODE_DIRECT, 0, &iib);
+-
+ 	zpci_ibv = kcalloc(num_possible_cpus(), sizeof(*zpci_ibv),
+ 			   GFP_KERNEL);
+ 	if (!zpci_ibv)
+-		return -ENOMEM;
++		goto out_free_sbv;
  
- #if IS_ENABLED(CONFIG_FB_BACKLIGHT)
- 	mutex_init(&info->bl_curve_mutex);
+ 	for_each_possible_cpu(cpu) {
+ 		/*
+@@ -431,13 +426,30 @@ static int __init zpci_directed_irq_init(void)
+ 					       AIRQ_IV_CACHELINE |
+ 					       (!cpu ? AIRQ_IV_ALLOC : 0));
+ 		if (!zpci_ibv[cpu])
+-			return -ENOMEM;
++			goto out_free_ibv;
+ 	}
++
++	iib.diib.isc = PCI_ISC;
++	iib.diib.nr_cpus = num_possible_cpus();
++	iib.diib.disb_addr = (u64) zpci_sbv->vector;
++	__zpci_set_irq_ctrl(SIC_IRQ_MODE_DIRECT, 0, &iib);
+ 	on_each_cpu(cpu_enable_directed_irq, NULL, 1);
+ 
+ 	zpci_irq_chip.irq_set_affinity = zpci_set_irq_affinity;
+ 
+ 	return 0;
++
++out_free_ibv:
++	for_each_possible_cpu(cpu) {
++		if (zpci_ibv[cpu])
++			airq_iv_release(zpci_ibv[cpu]);
++	}
++	kfree(zpci_ibv);
++	zpci_ibv = NULL;
++out_free_sbv:
++	airq_iv_release(zpci_sbv);
++	zpci_sbv = NULL;
++	return -ENOMEM;
+ }
+ 
+ static int __init zpci_floating_irq_init(void)
 -- 
 2.53.0
 
