@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055191;
-	b=vDvnRo9VcAlgpgzJAe+MNAcKMFo59QDeuyanOf/8x/IS3eLCA8oLnA9hVKgI7Bsd65lz
-	 LE59+UwR6Zuwr3Boh7+gmVPi38GyrFN5V4V50dThc3Sx5Cw7ApnfUJ4i4zlOUw+BOaodS
-	 wYOhdtU9AygfYMwVpeAyVV9VLK2Gg7Fzz08exeHkaYTa1U4Tduek/N/5HI8mKXl5ran5P
-	 GWnzgGEfO3rV0b8k3mbEeHqlHLAGtAUn4YLdfqh0M3yHW27lNPiJvoJ7KEcXZS0Pb68FC
-	 G59TQbog1ZYyZATt1i2UrnJkSGWtJsuajEQY1wJkph/c2hn2tRAmzehSIf0gobHVgqQ==
+	t=1795055194;
+	b=hCP1aEMYzkWxOWLcEwASCeDiGdueGvP6TkzPaCVM8TlUx9OEp4yKG/k/Q4yfd9gXUjjv
+	 0WOZN0NV4x0O/qU4ELSSShyT633XijxuzTg/phOGZm2mPwWFsGwh97GIypU2ueA1HO2t8
+	 2aeFCMXxpl+rWSLU6KCgbP14/ehE3bl99gEcHD0nKGhl0Srzr4sLxSQFFjUnQKAzxTq4b
+	 +r2gNzjz1dglYslSPH6LPk3p/ux4WNVQRWMO9HsiUYnhE1V30OEWE1ohJ4yeyobnPgQ3D
+	 wBj45tFWWY9od6jWMVCoFFbk0bjsZM7WucJoQZzFGbaknl/m4tbWOsfF5bLdrPX2Mag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055191;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055194;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mwtHV3/cwyvvv1W5+VhLxWV3mFOvByrIJMWtsAn/RdY=;
-	b=RfHCdYLdemS+UmnDVF7/+agzNf/rwCzf9jn07numx5m96vHg8ySaybL3NkJqBhH5E6kJ
-	 WNyZUAlTRh27wwsxnqgE5K0ErKd6BNIhCpnzGNGOr25G2xBuDu6BsrewEQPstau7hymOI
-	 XHjSpKAlkoCu3QFk0Bsb3n24vBfIliqZt1VZRgTXrwXVPf+0piWnlIBmNHO8LbeuC9EVx
-	 IPctb8ktRTVYfdJd6zNR/a3H1SfQZC6edR4Bjje9KMUOiAFGD/deJ1JR5/fwZPO6sO8Pb
-	 WOsasBZMh3cdeD68l7uqUdlQG/QQbHaT8E0IhdZciWrBP+iko2/DW6mBK/hKOZxeteg==
+	bh=zHAj16kY74KugsgajIL2/yegySUezbeoxZPzJ0nBFS4=;
+	b=tWXdnvQs0Zv48Pd0TCVh7VXe9ohSWADU9enwZ35hLEcLUhorCtp1lyl3ukbY5kwcho1A
+	 Vm6VjsixijSz0Q75plNebvK/9NYjhrCjymvYYXUTQ6lhSuUDTvf+nxIdfJPFwXWWf7iqf
+	 OSVmfBt4VhW+BoZleI42nlKz3OLBqYVFRkWC9h1HQ7S/suGF3ckYij/rK4XLF5nE0+Gji
+	 b50d3BXhPAILwb0qz2SaVTSrKHRwro5N4Ueey55iQg91qE18ZDg8RhKXqmXpgvzTblKLT
+	 DY56lCuRLjgj70CBYveUi+onGSNKst+EnDp95fUYY5xrJoGPYef/bSmpNdYnyVuDWJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OVPaBQKr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xTBek7kF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DED6606A32F;
-	Thu, 19 Nov 2026 02:26:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D08606A31C;
+	Thu, 19 Nov 2026 02:26:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OVPaBQKr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B33C01F000C4;
-	Thu, 19 Nov 2026 02:26:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xTBek7kF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CB981F000C6;
+	Thu, 19 Nov 2026 02:26:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055191;
-	bh=mwtHV3/cwyvvv1W5+VhLxWV3mFOvByrIJMWtsAn/RdY=;
+	s=korg; t=1795055193;
+	bh=zHAj16kY74KugsgajIL2/yegySUezbeoxZPzJ0nBFS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OVPaBQKr8k/c9Pnf+Nb148bUrTGuDaGu06N1W6fgXQ3O+XG+bSHXj9Gurk3tVXmAf
-	 Te4sukHSvmPwhA7p9tAZEx0+frBjIWTxoOeAcdR9j/McCoPuQyRQElAb/t6mnXrZvv
-	 EEJEZmAeUgTenF+SlieOn6TPfnex8F0KAgjTEdv4=
+	b=xTBek7kFz/JKh7JFNodmbOsW0860DRDT8qI+g7JocuyXO4G8GQBF+o0/bHjpSkX3U
+	 Wf8SKUORnOX0YSOCCXrDvjV1xmhs0IJ+xAtBqlEB0c6mdlZQm8y6Li8sDDPO5pWCpI
+	 8ODtXVT5Q+qyT9pgQKJjVpJ0hFfQluCl6E/C2LQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <hppiscas@163.com>,
-	Ulf Hansson <ulfh@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1542/2214] pmdomain: imx: Propagate SCU provider registration failures
-Date: Wed, 18 Nov 2026 15:53:38 +0100
-Message-ID: <20261118150113.831091079@linuxfoundation.org>
+Subject: [PATCH 5.15 1543/2214] dt-bindings: vendor-prefixes: add vendor prefix for Nexperia B.V.
+Date: Wed, 18 Nov 2026 15:53:39 +0100
+Message-ID: <20261118150113.867647629@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,56 +68,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <hppiscas@163.com>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit d3efba7921f3ebebd91fc481910a428c78414fd8 ]
+[ Upstream commit 819a3e62d37a2fe73c1e7f241f2ac086042e7757 ]
 
-imx_scu_init_pm_domains() ignores of_genpd_add_provider_onecell() and
-returns success even when none of the initialized domains are published to
-DT consumers.
+Document the vendor prefix for the semiconductor company Nexperia B.V.
 
-Return the provider error and remove the initialized domains in reverse
-order before devm releases their backing storage on probe failure.
+The company website is https://www.nexperia.com/
 
-The issue was found by our static-analysis tool and manually reviewed.
-
-Fixes: c800cd7824bd ("firmware: imx: add SCU power domain driver")
-Assisted-by: gpt 5
-Signed-off-by: Pengpeng Hou <hppiscas@163.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260921-topic-sm8x50-nex10000ub-v2-1-eeeaf9b0c913@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/imx/scu-pd.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/firmware/imx/scu-pd.c b/drivers/firmware/imx/scu-pd.c
-index a0fc352a79936..f684168a14bd2 100644
---- a/drivers/firmware/imx/scu-pd.c
-+++ b/drivers/firmware/imx/scu-pd.c
-@@ -348,7 +348,7 @@ static int imx_scu_init_pm_domains(struct device *dev,
- 	struct genpd_onecell_data *pd_data;
- 	struct imx_sc_pm_domain *sc_pd;
- 	u32 count = 0;
--	int i, j;
-+	int i, j, ret;
- 
- 	for (i = 0; i < pd_soc->num_ranges; i++)
- 		count += pd_ranges[i].num;
-@@ -377,7 +377,13 @@ static int imx_scu_init_pm_domains(struct device *dev,
- 	pd_data->num_domains = count;
- 	pd_data->xlate = imx_scu_pd_xlate;
- 
--	of_genpd_add_provider_onecell(dev->of_node, pd_data);
-+	ret = of_genpd_add_provider_onecell(dev->of_node, pd_data);
-+	if (ret) {
-+		while (count)
-+			pm_genpd_remove(domains[--count]);
-+
-+		return ret;
-+	}
- 
- 	return 0;
- }
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index 2ca68ee8602cf..fd2d25d7fa51b 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -802,6 +802,8 @@ patternProperties:
+     description: Guangdong Neweast Optoelectronics CO., LTD
+   "^nexbox,.*":
+     description: Nexbox
++  "^nexperia,.*":
++    description: Nexperia B.V.
+   "^nextthing,.*":
+     description: Next Thing Co.
+   "^newhaven,.*":
 -- 
 2.53.0
 
