@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052188;
-	b=DP0ioLFYbfXga07AStEqIJvup0G6Z92APg/kG3Ohh8DIsQ5bpHZt/NweRFdjA5tjVD/j
-	 OvYWn1g+0E3ZcthuKjXBdyid1o+1bMXwJPENNizd8zQQm7zrF7IFb/FHqZj95K7sM5C8a
-	 YoBGhw5vbW95539jVKIMs0Ia+gXeYFCBMxfipOAE0ZdYTTK/4TlgtCS5VlNiYNA1LKmwi
-	 7WKfIubRe8OybDpqn2iZAm/j4X/UkeEQXnmY6AitKlL45ZUW5rGpB/UKK/JkfpeY8cyDS
-	 u6OFWRqnCRaRM4BMNjEIwGgAHqqH2uTA1n0Bq47K9XrmLs5tlsfWL58F8rluCwxS7IA==
+	t=1795052191;
+	b=GqWuhqqKqv8VZyJrtA3tTiy3WiBXutoV3b+MJDLotB7O9IqR3MUIEAo5AWFlpGLvwK/K
+	 Xv5PWWNI6Fjkz5RgPEmnzfcC1abDMFvf8i/AaHCjqScJV9bfZ3PZ1zXr9HdYOpg5uRNJZ
+	 hfKhBem+6oRQvBQz2eaXhpBInC5EGI9Th0Mvurlk2vhB+Dzz6/ot4VVYxoG1Xyb2kWYg6
+	 Iq487GC2kIfBHembc4yeqGaeYXb7Cf+NsRk1UcvnnQfR2/wDc0a1ts2/efWcZPQUVWQ1w
+	 rIoMHjuM8Ulx2e8v5z7ayQmYhtf3ykiyDWQUlch57g/SDr5cSywhs8QqiQx+s2tiLHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052188;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052191;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mpEghRKknv6eN7FcrfVGsms5VET26UJJH2LFU745HEA=;
-	b=B1OeQ4CAJOEzd2NSOtMs0pczY8Udv7lAESPcsdhIjcRtzchBnOwnNfrCfsctYptq0gy9
-	 f5ja4NM+TeYSZgHHUIhX9Ia+ZZ6iLuuLKZIDWYOZn+SbzZnw/hthtT1IzFlIKS+3tblqG
-	 8i0LjexkcCz8sr07sGSxQ1vO8Bqk4lX0qKLU9SvxADTE6yI5uZ6GrKPKwLFTYC2XP30OX
-	 eBO0AQ0aRs2Zhz8n2UmFqIZuFdkkgM2Kvf5Zd2112zmgFceaH2AjG5rHeUs+nQ4AeEz5F
-	 U7cqfmt8jYPZZrFnFdGWXulN62wfK6E1NbkKbIOqNo/Na7xF3faatRULDuvAiQBdN+g==
+	bh=rPZm5l5XE6YXaKATuScNveyDqn+wWj8Ec3S3Y5ddbUM=;
+	b=b8YtcV7n8AmD92mYU8yFjmqBNb4GA4LybT8B+FQrK2mNbbcnLE/iwbon0XeJ0LyWHuP5
+	 Cmrv/p42IOIsE0+uZHhgBoakVyka7zc33/lpiIssMzgTdxRv5VArCJQNONeVGXoeJ0UZ9
+	 D6fCyIORG7OcnI3/Tio8OiIGTysducnliqAxn0f3KP0VKPB8Nv3wsqvxg2bNlJPo7nLxD
+	 WKpKgQIczfS3Ql3w1bXXMrcMV5g6ZafTIb9duI6wmDXH+vm96FcO0z4z6xoTLEoKli/rH
+	 jc3WIogjvth+LbzlxtlqJxdZOLl0yQpr0afCGP0FpxvkmTeGyI1napT6Ne53qU3XBGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bylZUYBA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vs6XYmNB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE49606A32A;
-	Thu, 19 Nov 2026 01:36:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EF7B606A320;
+	Thu, 19 Nov 2026 01:36:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bylZUYBA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9AE91F000C4;
-	Thu, 19 Nov 2026 01:36:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vs6XYmNB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFB641F000C4;
+	Thu, 19 Nov 2026 01:36:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052188;
-	bh=mpEghRKknv6eN7FcrfVGsms5VET26UJJH2LFU745HEA=;
+	s=korg; t=1795052191;
+	bh=rPZm5l5XE6YXaKATuScNveyDqn+wWj8Ec3S3Y5ddbUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bylZUYBAAJMmVZfQPWE7o0ACTNh3kP9IUhskmt1YJeknraBLIOG+0WpNjZ9zVFcPJ
-	 h2Kq9C5289tibJIkBldBIra3usibmbT0dbs/QZznIA1MYpN+exqLdcxwpsaXJnbdrH
-	 L7JK4M+GIspXihxP2DIKuJkQHhnmtINZ+oNrT7nI=
+	b=Vs6XYmNBB9PaqU5OdpEMTz0avmm100JFKDPGXGE+hhhqOm6EvefNfd3WdvL702nyK
+	 jJZWrUoxFiLD4WSCh4qU6tW2xKGDJWgoraxUCikXHAavZnQBtwygRfyBDY3jD/yf7v
+	 QIN8joPrJF82NDt5dhaMUHEvLz1CyMRnWcgIQz6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Metzmacher <metze@samba.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 5.15 0415/2214] smb: smbdirect: fix buffer length underflow in RDMA transfers
-Date: Wed, 18 Nov 2026 15:34:51 +0100
-Message-ID: <20261118150027.452802445@linuxfoundation.org>
+	Julian Braha <julianbraha@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 0469/2214] media: marvell-cam: fix unmet dependency for VIDEO_MMP_CAMERA
+Date: Wed, 18 Nov 2026 15:35:45 +0100
+Message-ID: <20261118150029.961770940@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,51 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Julian Braha <julianbraha@gmail.com>
 
-[ Upstream commit 7193241a49c958782ba4b8df06da3734d1e317d2 ]
+[ Upstream commit 1179929b3abd4adb6ca7fae91d649c64a7293aca ]
 
-When a remote buffer descriptor is larger than the remaining local
-buffer, smbdirect_connection_rdma_xmit() clamps its length and sets
-buf_len to zero. The common accounting code then subtracts the clamped
-length from buf_len, causing it to underflow. If another descriptor
-follows, the loop processes it with a wrapped remaining length and
-includes memory beyond the local buffer in the RDMA transfer.
+VIDEO_MMP_CAMERA selects I2C_GPIO without ensuring
+'GPIOLIB || COMPILE_TEST' is enabled, despite I2C_GPIO depending on it.
 
-A client can trigger an out-of-bounds kernel write with an SMB WRITE
-request, or an out-of-bounds kernel read with an SMB READ request, by
-supplying multiple RDMA buffer descriptors with an oversized descriptor
-before the last one.
+Let's add the same dependency to VIDEO_MMP_CAMERA.
 
-Remove the premature assignment to buf_len. Subtracting the clamped length
-already consumes the remaining buffer, so the next iteration stops and
-only descriptors within the local buffer are used to build work requests.
+This unmet dependency bug was found by kconfirm, a static analysis tool for
+Kconfig.
 
-Fixes: e628bf939aaf ("ksmbd: reduce descriptor size if remaining bytes is less than request size")
+Fixes: 67a8dbbc4e04 ("[media] marvell-cam: Basic working MMP camera driver")
 Cc: stable@vger.kernel.org
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-33549
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ metze: in 5.15 the code is smb_direct_rdma_xmit() in
-  fs/ksmbd/transport_rdma.c ]
-Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Julian Braha <julianbraha@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/transport_rdma.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/media/platform/marvell-ccic/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ksmbd/transport_rdma.c b/fs/ksmbd/transport_rdma.c
-index 6ea73fe6de6c5..9986e191e7019 100644
---- a/fs/ksmbd/transport_rdma.c
-+++ b/fs/ksmbd/transport_rdma.c
-@@ -1361,7 +1361,6 @@ static int smb_direct_rdma_xmit(struct smb_direct_transport *t,
- 		if (desc_buf_len > buf_len) {
- 			desc_buf_len = buf_len;
- 			desc[i].length = cpu_to_le32(desc_buf_len);
--			buf_len = 0;
- 		}
- 
- 		credits_needed += calc_rw_credits(t, desc_buf, desc_buf_len);
+diff --git a/drivers/media/platform/marvell-ccic/Kconfig b/drivers/media/platform/marvell-ccic/Kconfig
+index 3e3f862647624..c342779607373 100644
+--- a/drivers/media/platform/marvell-ccic/Kconfig
++++ b/drivers/media/platform/marvell-ccic/Kconfig
+@@ -16,6 +16,7 @@ config VIDEO_MMP_CAMERA
+ 	tristate "Marvell Armada 610 integrated camera controller support"
+ 	depends on I2C && VIDEO_V4L2
+ 	depends on ARCH_MMP || COMPILE_TEST
++	depends on GPIOLIB || COMPILE_TEST
+ 	depends on COMMON_CLK
+ 	select VIDEO_OV7670
+ 	select I2C_GPIO
 -- 
 2.53.0
 
