@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043804;
-	b=aBMQmoZ5K6/9xbLwSYJ3LCIq5LqsdHvymNJayc4/m15wYqmOaHlE4LINwebzgmHqHJNy
-	 CVCm0fpISI82462BvcmjvQUoymmgwemNHJ2Y3ai/AU8qWnLMCoulZMa5w7jn1TbakbbN8
-	 J61YJbTIEpJgWW90nrB5Wiluyq7QSoojQdFl4sEhZs8+oKrtmhpIHlxbJWEt5/dumNiz/
-	 xoQ0RJHpdwLRqS0A9iimiRYbsKKPlIEnOBZHPGIVKc0Y1dp5ukv81L5svUtNulv/Fj4rM
-	 9Vl9Fq9G4d1AB1a686MH6i9/emkvlrC0ZToapKQSRyuAUCKzzBuobO3j6wxcztZDxZw==
+	t=1795043807;
+	b=zmiJHNjp78VNjAkym3QjjaNZ3SBCGUVGPNpChiIv2tVbM5ngQC5eL6EHmXHodlwlLVDE
+	 R2PVCq8EKiqH6mN7xcWAvu0gy+4BW/Ky2/a5XAvG/fIKEKrLWdMolme51w+41/U2ghAnz
+	 uNeRscNBq+24DxkSsCePcpERFDEcrEgpqlPJ6xq/OIEkTXXw2rNsnt+T2WRNn8hSIMhI6
+	 oBWl6bK93bbq2l5bmVyv66lY2s1+6B5bFsZMvBRFJJq/soYCgGwmUu8lfsGQnxH4nRpX6
+	 E9bwAjW4+gCeteey+p3Cpsr0hd8CU/n5wmB+zrSDwzLESmaIvNj3JhNtcV2ZCrT3nWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043804;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043807;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=ciHJilwnb0uzR9x7sItObW6Z+JZpuDSiFCG7OstSSYc=;
-	b=JJUiUDiQ6HQ4FF+SQCt2BIzs7NTNnK298HrH3e/vSYdXzr0mCLR0ePqMp4dgqJHbUkkD
-	 ch4AIQRKQBAJh+229UuCe48FqYhxyJjP8Zfbvjw51Dtela00GQN0/cwOJ2GE9VtV9jNpI
-	 hR9EO6458tlqUkTvhfy9699+Uv/2M32GvYIKOkv6W4VfZqgaIoQ0jAe7V07x1VtyGqygm
-	 xNKCK8/i6F93en08SQugYB51lnaBLInVlxGmuwpQ0C60KVgBRHOcIerAmht3/lhtqXoCd
-	 jsg+GhiFEsU9AZVV7GyNCmvZ0Oz/LJZp7lF+ymqaz3IMIzyTqTLSjvdEJGetitW0X7A==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=cVCoJZsCruGV7mz5qJaSMxGiDuIt8Wjgu5nFsHxjeV4=;
+	b=RBXNRH1qzmgwBEsej5yWLrBx91S8EQjUucbtaKNLlbXzhfbxDGiL+g0Iod6s+k4Y/VAP
+	 RKIMfdnGDBnXEktjgf1y7Vp0Tuc6QDMq8TJyyf/Ge7r88wikpioObahwfBGvHzmrC6TA0
+	 jMeYY/Uz8CKafN2F5JMIU/VFy/z7quYDPc1CEVCxOoJT5yPKr4eQ7VP2oxBKr9xzHvaB7
+	 NnHiqnKCcKZICRp+WjisNjxfY7ASCVLeQs7u1tM9Md8b2vTgY/UDrtsYchSptn+3GApcB
+	 VET3tene30qQ3UElnmtJtxrOKrS5lRDKBOmWGLMUUAhJM3HAbMCT4WH29RV4LNfV4zQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XQwdOi2z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hlU8hoM2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763F0606A330;
-	Wed, 18 Nov 2026 23:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A89F606A32A;
+	Wed, 18 Nov 2026 23:16:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XQwdOi2z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F8F1F000C4;
-	Wed, 18 Nov 2026 23:16:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hlU8hoM2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81D021F000C4;
+	Wed, 18 Nov 2026 23:16:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043804;
-	bh=ciHJilwnb0uzR9x7sItObW6Z+JZpuDSiFCG7OstSSYc=;
+	s=korg; t=1795043807;
+	bh=cVCoJZsCruGV7mz5qJaSMxGiDuIt8Wjgu5nFsHxjeV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XQwdOi2zFCdcVBdF9Al3E8oyre1zAg+gAhBb7z7Lv52TPDDT4naMjiYNUziWrjT0+
-	 /EFZZBjy1eBA3ngLq6s8Gea8/iv88QvxlORqy2gCJdCkUyjRaLegtmDhR8jsCSGlvd
-	 w2R7gi9zpjTMp+29Jw+pQFNm3eqO1byG1lmlyl7U=
+	b=hlU8hoM2HYmogjQv33Q8Os095ZuHyWe3/QyLprbAVLukOWE+X5oCgv6igA453ANq9
+	 sJ8tRUmXFvP+S1EETR9N+ohTOEDQduvgQSCA5Y485Plq0GIVZkyfgkw/S0aLbMtbcX
+	 Au0Zb1ebXFwL/sGM9i95cNhZwi2wG6OlSRy6CGPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jose=20Villase=C3=B1or=20Montfort?= <pepemontfort@gmail.com>,
-	Alec Hall <signshop.alec@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Joanne Chang <joannechien@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0341/2857] HID: input: read battery capacity from its actual report offset
-Date: Wed, 18 Nov 2026 15:22:55 +0100
-Message-ID: <20261118150213.721467896@linuxfoundation.org>
+Subject: [PATCH 6.1 0342/2857] f2fs: dirty directory inodes on mtime/ctime update
+Date: Wed, 18 Nov 2026 15:22:56 +0100
+Message-ID: <20261118150213.755707628@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,129 +63,119 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jose Villaseñor Montfort <pepemontfort@gmail.com>
+From: Joanne Chang <joannechien@google.com>
 
-[ Upstream commit d07644524b6511b622ee7b0e2e68c9ee43d522a4 ]
+[ Upstream commit 9ec09d5f4b317a417c8655c14056f70cbe71eb6c ]
 
-hidinput_query_battery_capacity() assumes the state-of-charge value is
-the first byte following the report ID (buf[1]) and ignores where the
-battery field actually sits within the report.
+Xfstests generic/547 sometimes fail with mismatched directory metadata
+before and after a power failure. This happens because when a directory
+entry is added, renamed, or deleted, its mtime and ctime are updated and
+the inode is marked dirty via
+f2fs_mark_inode_dirty_sync(dir, sync=false). The sync=false flag means
+the dirty inode is not added to the global DIRTY_META list. Therefore,
+subsequent checkpoints skip flushing these updated directory blocks,
+causing directory timestamps to revert to stale values after a sudden
+power failure.
 
-An Apple Magic Trackpad 2 precedes the AbsoluteStateOfCharge byte with a
-byte of status flags in its battery reports, so this query returns the
-flags byte instead of the charge level.
+Address this by changing the dirtying parameter to sync=true during
+directory entry mutations and renames. This forces F2FS to immediately
+queue the updated directory blocks on the global DIRTY_META list,
+ensuring timestamps are committed to checkpoints.
 
-The device happens to make that easy to observe, because it exposes the
-same cell twice: its report descriptor declares AbsoluteStateOfCharge in
-two reports (0x90 and 0x9b), so hidinput_setup_battery() registers two
-power supplies. Only the first one is refreshed by hid-magicmouse -- it
-uses hid_get_battery(), which returns the first battery of the list --
-and that refresh goes through the report event path, which parses the
-field correctly. Nothing ever reports the second one, so every read of
-its capacity takes the query path above. On a USB-C Magic Trackpad over
-USB, on an unpatched 7.1.5:
-
-  hid-<serial>-battery-144 = 100%  (Charging)      <- report event path
-  hid-<serial>-battery-155 =   3%  (Discharging)   <- query path
-
-Both are the same physical battery. A raw HIDIOCGINPUT of the two
-reports at that same moment:
-
-  report 0x90 -> [90 03 64]
-  report 0x9b -> [9b 03 64 64 00 00 10 00 00 00 00 00 00 00]
-                     ^flags ^SoC = 0x64 = 100%
-
-The device answers correctly in both cases; only the offset the kernel
-reads the capacity from is wrong. 0x03 is the flags byte (present,
-charging), reported as "3%".
-
-Bluetooth takes the same query path for its capacity, where the trackpad
-reported a bogus near-constant ~4% -- 0b100, the FullyCharged flag --
-regardless of the real charge.
-
-Store the battery field's offset within the report at setup time and use
-it when querying, so the capacity is read from its real position. The
-report event path already parses the field correctly through the HID
-core; only the explicit GET_REPORT query was wrong.
-
-Devices whose capacity field is the first field in the report have a
-report_offset of 0 and are unaffected (buf[1 + 0] == buf[1]).
-
-Fixes: 581c4484769e ("HID: input: map digitizer battery usage")
+Fixes: 7c45729a4d6d ("f2fs: keep dirty inodes selectively for checkpoint")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jose Villaseñor Montfort <pepemontfort@gmail.com>
-Reviewed-by: Alec Hall <signshop.alec@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-[ sashal: Adapted to the older flat battery_* fields on struct hid_device (new battery_report_offset field, plain kmalloc/kfree instead of __free(kfree)) since struct hid_battery doesn't exist here. ]
+Signed-off-by: Joanne Chang <joannechien@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[ sashal: Kept this tree's older page and i_mtime APIs in the context lines and applied only the false to true change to f2fs_mark_inode_dirty_sync(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-input.c | 17 +++++++++++++----
- include/linux/hid.h     |  1 +
- 2 files changed, 14 insertions(+), 4 deletions(-)
+ fs/f2fs/dir.c    | 6 +++---
+ fs/f2fs/inline.c | 2 +-
+ fs/f2fs/namei.c  | 6 +++---
+ 3 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
-index c7bea3868114c..1ab196d51e421 100644
---- a/drivers/hid/hid-input.c
-+++ b/drivers/hid/hid-input.c
-@@ -437,19 +437,27 @@ static int hidinput_query_battery_capacity(struct hid_device *dev)
- {
- 	u8 *buf;
- 	int ret;
-+	/*
-+	 * The capacity field may not be the first field in the report: some
-+	 * devices (e.g. the Apple Magic Trackpad 2 over Bluetooth) precede it
-+	 * with status flags. Read it from its actual byte offset in the report
-+	 * (report_offset is in bits; the leading byte is the report id).
-+	 */
-+	int offset = 1 + dev->battery_report_offset / 8;
-+	int len = offset + 1;
+diff --git a/fs/f2fs/dir.c b/fs/f2fs/dir.c
+index cadc32959a23f..a48838a306525 100644
+--- a/fs/f2fs/dir.c
++++ b/fs/f2fs/dir.c
+@@ -514,7 +514,7 @@ void f2fs_set_link(struct inode *dir, struct f2fs_dir_entry *de,
+ 	set_page_dirty(page);
  
--	buf = kmalloc(4, GFP_KERNEL);
-+	buf = kmalloc(max(len, 4), GFP_KERNEL);
- 	if (!buf)
- 		return -ENOMEM;
- 
--	ret = hid_hw_raw_request(dev, dev->battery_report_id, buf, 4,
-+	ret = hid_hw_raw_request(dev, dev->battery_report_id, buf, max(len, 4),
- 				 dev->battery_report_type, HID_REQ_GET_REPORT);
--	if (ret < 2) {
-+	if (ret < len) {
- 		kfree(buf);
- 		return -ENODATA;
- 	}
- 
--	ret = hidinput_scale_battery_capacity(dev, buf[1]);
-+	ret = hidinput_scale_battery_capacity(dev, buf[offset]);
- 	kfree(buf);
- 	return ret;
+ 	dir->i_mtime = dir->i_ctime = current_time(dir);
+-	f2fs_mark_inode_dirty_sync(dir, false);
++	f2fs_mark_inode_dirty_sync(dir, true);
+ 	f2fs_put_page(page, 1);
  }
-@@ -567,6 +575,7 @@ static int hidinput_setup_battery(struct hid_device *dev, unsigned report_type,
- 	dev->battery_max = max;
- 	dev->battery_report_type = report_type;
- 	dev->battery_report_id = field->report->id;
-+	dev->battery_report_offset = field->report_offset;
- 	dev->battery_charge_status = POWER_SUPPLY_STATUS_DISCHARGING;
  
- 	/*
-diff --git a/include/linux/hid.h b/include/linux/hid.h
-index 09f6ba66f1db2..01c58f4860b4b 100644
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -645,6 +645,7 @@ struct hid_device {							/* device report descriptor */
- 	__s32 battery_max;
- 	__s32 battery_report_type;
- 	__s32 battery_report_id;
-+	__s32 battery_report_offset;
- 	__s32 battery_charge_status;
- 	enum hid_battery_status battery_status;
- 	bool battery_avoid_query;
+@@ -668,7 +668,7 @@ void f2fs_update_parent_metadata(struct inode *dir, struct inode *inode,
+ 		clear_inode_flag(inode, FI_NEW_INODE);
+ 	}
+ 	dir->i_mtime = dir->i_ctime = current_time(dir);
+-	f2fs_mark_inode_dirty_sync(dir, false);
++	f2fs_mark_inode_dirty_sync(dir, true);
+ 
+ 	if (F2FS_I(dir)->i_current_depth != current_depth)
+ 		f2fs_i_depth_write(dir, current_depth);
+@@ -984,7 +984,7 @@ void f2fs_delete_entry(struct f2fs_dir_entry *dentry, struct page *page,
+ 	f2fs_put_page(page, 1);
+ 
+ 	dir->i_ctime = dir->i_mtime = current_time(dir);
+-	f2fs_mark_inode_dirty_sync(dir, false);
++	f2fs_mark_inode_dirty_sync(dir, true);
+ 
+ 	if (inode)
+ 		f2fs_drop_nlink(dir, inode);
+diff --git a/fs/f2fs/inline.c b/fs/f2fs/inline.c
+index e2dddced55afb..62eab8af0234d 100644
+--- a/fs/f2fs/inline.c
++++ b/fs/f2fs/inline.c
+@@ -711,7 +711,7 @@ void f2fs_delete_inline_entry(struct f2fs_dir_entry *dentry, struct page *page,
+ 	f2fs_put_page(page, 1);
+ 
+ 	dir->i_ctime = dir->i_mtime = current_time(dir);
+-	f2fs_mark_inode_dirty_sync(dir, false);
++	f2fs_mark_inode_dirty_sync(dir, true);
+ 
+ 	if (inode)
+ 		f2fs_drop_nlink(dir, inode);
+diff --git a/fs/f2fs/namei.c b/fs/f2fs/namei.c
+index a374017baddb6..f304692ad91a2 100644
+--- a/fs/f2fs/namei.c
++++ b/fs/f2fs/namei.c
+@@ -1021,7 +1021,7 @@ static int f2fs_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
+ 	f2fs_up_write(&F2FS_I(old_inode)->i_sem);
+ 
+ 	old_inode->i_ctime = current_time(old_inode);
+-	f2fs_mark_inode_dirty_sync(old_inode, false);
++	f2fs_mark_inode_dirty_sync(old_inode, true);
+ 
+ 	f2fs_delete_entry(old_entry, old_page, old_dir, NULL);
+ 	old_page = NULL;
+@@ -1193,7 +1193,7 @@ static int f2fs_cross_rename(struct inode *old_dir, struct dentry *old_dentry,
+ 		f2fs_i_links_write(old_dir, old_nlink > 0);
+ 		f2fs_up_write(&F2FS_I(old_dir)->i_sem);
+ 	}
+-	f2fs_mark_inode_dirty_sync(old_dir, false);
++	f2fs_mark_inode_dirty_sync(old_dir, true);
+ 
+ 	/* update directory entry info of new dir inode */
+ 	f2fs_set_link(new_dir, new_entry, new_page, old_inode);
+@@ -1212,7 +1212,7 @@ static int f2fs_cross_rename(struct inode *old_dir, struct dentry *old_dentry,
+ 		f2fs_i_links_write(new_dir, new_nlink > 0);
+ 		f2fs_up_write(&F2FS_I(new_dir)->i_sem);
+ 	}
+-	f2fs_mark_inode_dirty_sync(new_dir, false);
++	f2fs_mark_inode_dirty_sync(new_dir, true);
+ 
+ 	if (F2FS_OPTION(sbi).fsync_mode == FSYNC_MODE_STRICT) {
+ 		f2fs_add_ino_entry(sbi, old_dir->i_ino, TRANS_DIR_INO);
 -- 
 2.53.0
 
