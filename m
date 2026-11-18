@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023721;
-	b=lEh577LCMhG94wVBiL8ndI6eoxkiMAoEY1irpDRG+4T+P+YCz4Pra9ThMvB/xKzFIro2
-	 iiXPw2dlAeuX6XU/PCHblhp7sBBfMGsH1LT7tLipWFXAUAAqdN1TptQypV2jWXpVXPlNJ
-	 RBrDhVNApNOwnPZYGWmTAWXtuU5I12Qny3ebjFUVVcrVFl6a7ea7lPutLgC+vV+7xhf20
-	 KgmnUP5G/ZN4IUdFszZEKBxOnBjdbPSFh7KkTAqbfo1qEmoZChM67h40o/IwZs9JFeX8w
-	 TRX8QsSRYfczQz6PEUTNeoa0oJYnykaRVBC8xc19KVYaVgoOUzak/5vEwq4l26MegIQ==
+	t=1795023724;
+	b=YQlIEY5qHYY2M2RI4pAK8y5LHFJKfDHl9VQ7i++D+kGy8Xt2qp6s7Sa63qLEESZK76Hb
+	 5P8d2glLDueRMZSoveEqXa4BoLLzROtRzY896SKQr1lThvPdzUVP4n+P3vT+/1mZQC70l
+	 E3hvPgJqD8rf8SkVVixD5hGs9nKwfokhTr4J7uXg059Qgu9aX1LyLP40lbYu97Br7iP0U
+	 zAQNO5KCAcAgAxzLkwkBsBl+d+I1xgGmSbrEvBA4QkBfPrDfI9dgYCcFihezRVmO7ePQe
+	 CSxVGwbYNGIXOL9pZCzVQJ5OG4uq4Z8ELgJFp/mP4JqBhrNthra8S32qvJ3rI5J33lg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023721;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023724;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=V12o9OqkcuiLlAJYwdSSDIMUM0CHJLPq8TOScbWIIo4=;
-	b=adCq5qCfMLQVjxE/Y7KyesC9WllJs2C5XAeW+hOKwS5IQonuqKNlA/+VQMlbdAkNktwI
-	 ZryXFAIeRclx41BRPdzi9jk/7wg9DbkQ36f7ktsCI4JwFyrutqsUW8+RwrHfamkCG6D2z
-	 DYVsIibjCo1C5jEW6llDlfEGXEJ0AmxbQa9bxXvbIb1vNmE1tzT83EZ795q5zTu6pKyxK
-	 nyrk200CtoGEQ4fGr6BFBu/0bFTaLN4PZ4DXMZv+jmRolAWLqDwqpMQj9ruetvewoOXp4
-	 xSJ+fhgJEAf6TFRNGjcKenuhcV/vFby1BSo7EawkPRA34RjgAp/Yl3ut0ehR7HpsLuA==
+	bh=owWfpOHQBEW0KAzuqDSCYN42FINU8fqafMJlbN3ftwE=;
+	b=XaNd7SDQPYHILPDP7t4Yl8Mu2lpu/a+01cdSz9FSHi+gQO2h9nJFGgFDpkfTvwQbHesi
+	 8XrpFhT0TS4GBqAf9+Jkj0xdhOHapFrpJnH7UzOE9pVEMmYY/RBK76B7Ua6kY9P65vRy5
+	 EXiZDPJlrIAdrLGgub1ILRIiphrv25/9gejnaoHsK7xXflGivo0Shp5XQs3qpPm5tpwlU
+	 KqexDDyCsTi09cVxKa6yi0omlBorflKSRPtJV+WQ4+rbgIxWnhlwxS52AxuTOIE9L1cSK
+	 sUi125PQcsbY3LuCEBv4LG1+Kaj85132T48rYvnLqX7zd8CdI7bs0FBmfJl7Ex9NE3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N3TbSjo8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=km1IKuGm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C068606A320;
-	Wed, 18 Nov 2026 17:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C3EA606A31C;
+	Wed, 18 Nov 2026 17:42:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N3TbSjo8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A86C61F000C4;
-	Wed, 18 Nov 2026 17:42:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=km1IKuGm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37DED1F000C4;
+	Wed, 18 Nov 2026 17:42:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023721;
-	bh=V12o9OqkcuiLlAJYwdSSDIMUM0CHJLPq8TOScbWIIo4=;
+	s=korg; t=1795023723;
+	bh=owWfpOHQBEW0KAzuqDSCYN42FINU8fqafMJlbN3ftwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N3TbSjo8/ELJPY0QNxwkGG0dEh55S0f7JX5U65Bx7bkeDnVSL9NI9YnnhoI5RNATq
-	 2juOzVyU4fFcBFjNqOEcB6SOqHBc2HxbIxO991J5D0BPIn4vu0fXy9TdjRE6Fkgt4K
-	 BjPykKo60u1tMjly0K2/LkfLjgaUVWxsDKudvzFg=
+	b=km1IKuGmfuCKDDd84Jm6nprhHkV7YAzGhubgQzH5bBXJBn4Eas2LAkvx6rBWIZj6o
+	 ZUgAGg8+DIOdhwN11IuD/1qAcqeFOt7aGD2+qd0erKKNFN/NVZyRsgNtI6TM66ahsd
+	 3+9HpgGmYQQi3nvpsxgchBbZJenBRfQJWpgi1XY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alison Schofield <alison.schofield@intel.com>,
-	Li Ming <ming.li@zohomail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Dave Jiang <dave.jiang@intel.com>,
+	Li Ming <ming.li@zohomail.com>,
+	Richard Cheng <icheng@nvidia.com>,
+	Alison Schofield <alison.schofield@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0468/2151] cxl/hdm: Make switch decoder target parsing endian-safe
-Date: Wed, 18 Nov 2026 15:36:43 +0100
-Message-ID: <20261118150139.057370355@linuxfoundation.org>
+Subject: [PATCH 6.18 0469/2151] cxl/hdm: Restore commit_end when decoder enumeration fails
+Date: Wed, 18 Nov 2026 15:36:44 +0100
+Message-ID: <20261118150139.096179972@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,76 +73,94 @@ Content-Transfer-Encoding: 8bit
 
 From: Alison Schofield <alison.schofield@intel.com>
 
-[ Upstream commit 3f846646b3d3b5699139e686e1107d231a725860 ]
+[ Upstream commit 7dae18c39e99813461db6ef3fc13f077452109ce ]
 
-Switch decoder target IDs are stored one per byte, starting with
-target 0 in the least significant byte. The current code accesses
-those bytes in memory order, which only matches register order on
-little-endian hosts.
+commit_end tracks the highest committed decoder on a port. It gets
+advanced before decoder enumeration is complete, so a later failure
+leaves it pointing at a decoder that was never added. The next probe
+then rejects decoder0 as out of order and enumeration fails.
 
-On big-endian hosts, the target IDs are reversed and the decoder is
-associated with the wrong downstream ports.
+Reset commit_end to the uncommitted baseline once the decoders are
+torn down, so a subsequent probe rebuilds it from scratch. Register
+the reset before the decoders are added so that on unwind it runs
+after every decoder has been unregistered. This prevents commit_end
+from dropping below the highest committed decoder still registered and
+exposing an inconsistent value to a concurrent reader.
 
-Place the register values in a byte array in little-endian order and
-index the target IDs from there, so the target mapping is independent
-of host endianness.
+Protect the commit_end advance in the DVSEC emulation path against
+concurrent readers, matching the register-programmed path.
 
-Fixes: d17d0540a0db ("cxl/core/hdm: Add CXL standard decoder enumeration to the core")
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Fixes: 176baefb2eb5 ("cxl/hdm: Commit decoder state to hardware")
+Fixes: b777e9bec960 ("cxl/hdm: Emulate HDM decoder from DVSEC range registers")
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
 Reviewed-by: Li Ming <ming.li@zohomail.com>
-Link: https://patch.msgid.link/b0526825b3c3ffdb78837563e178d9aa27b6bbb8.1786143520.git.alison.schofield@intel.com
+Reviewed-by: Richard Cheng <icheng@nvidia.com>
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/4802c5abc906b858a4754bfc4fa3e4c2c455d0c3.1786143520.git.alison.schofield@intel.com
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/hdm.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/cxl/core/hdm.c | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
-index f49e3139c8281..16cf4f116a97b 100644
+index 16cf4f116a97b..c43b14533ffe0 100644
 --- a/drivers/cxl/core/hdm.c
 +++ b/drivers/cxl/core/hdm.c
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /* Copyright(c) 2022 Intel Corporation. All rights reserved. */
- #include <linux/seq_file.h>
-+#include <linux/unaligned.h>
- #include <linux/device.h>
- #include <linux/delay.h>
+@@ -953,7 +953,8 @@ static int cxl_setup_hdm_decoder_from_dvsec(
+ 	 * change the range registers at run time.
+ 	 */
+ 	cxld->flags |= CXL_DECODER_F_ENABLE | CXL_DECODER_F_LOCK;
+-	port->commit_end = cxld->id;
++	scoped_guard(rwsem_write, &cxl_rwsem.region)
++		port->commit_end = cxld->id;
  
-@@ -972,15 +973,12 @@ static int init_hdm_decoder(struct cxl_port *port, struct cxl_decoder *cxld,
- 			    u64 *dpa_base, struct cxl_endpoint_dvsec_info *info)
+ 	rc = devm_cxl_dpa_reserve(cxled, *dpa_base, len, 0);
+ 	if (rc) {
+@@ -1156,6 +1157,14 @@ static void cxl_settle_decoders(struct cxl_hdm *cxlhdm)
+ 		msleep(20);
+ }
+ 
++static void cxl_reset_commit_end(void *data)
++{
++	struct cxl_port *port = data;
++
++	guard(rwsem_write)(&cxl_rwsem.region);
++	port->commit_end = -1;
++}
++
+ /**
+  * devm_cxl_enumerate_decoders - add decoder objects per HDM register set
+  * @cxlhdm: Structure to populate with HDM capabilities
+@@ -1166,8 +1175,8 @@ static int devm_cxl_enumerate_decoders(struct cxl_hdm *cxlhdm,
  {
- 	struct cxl_endpoint_decoder *cxled = NULL;
-+	u8 target_id[CXL_HDM_DECODER0_TL_TARGETS];
- 	u64 size, base, skip, dpa_size, lo, hi;
- 	bool committed;
- 	u32 remainder;
- 	int i, rc;
- 	u32 ctrl;
--	union {
--		u64 value;
--		unsigned char target_id[8];
--	} target_list;
+ 	void __iomem *hdm = cxlhdm->regs.hdm_decoder;
+ 	struct cxl_port *port = cxlhdm->port;
+-	int i;
+ 	u64 dpa_base = 0;
++	int i, rc;
  
- 	if (should_emulate_decoders(info))
- 		return cxl_setup_hdm_decoder_from_dvsec(port, cxld, dpa_base,
-@@ -1093,11 +1091,12 @@ static int init_hdm_decoder(struct cxl_port *port, struct cxl_decoder *cxld,
- 			return -ENXIO;
- 		}
+ 	/*
+ 	 * Per CXL 4.0 8.2.4.20.1 Target Count is the number of target ports
+@@ -1183,8 +1192,16 @@ static int devm_cxl_enumerate_decoders(struct cxl_hdm *cxlhdm,
  
--		lo = readl(hdm + CXL_HDM_DECODER0_TL_LOW(which));
--		hi = readl(hdm + CXL_HDM_DECODER0_TL_HIGH(which));
--		target_list.value = (hi << 32) + lo;
-+		put_unaligned_le32(readl(hdm + CXL_HDM_DECODER0_TL_LOW(which)),
-+				   &target_id[0]);
-+		put_unaligned_le32(readl(hdm + CXL_HDM_DECODER0_TL_HIGH(which)),
-+				   &target_id[4]);
- 		for (i = 0; i < cxld->interleave_ways; i++)
--			cxld->target_map[i] = target_list.target_id[i];
-+			cxld->target_map[i] = target_id[i];
+ 	cxl_settle_decoders(cxlhdm);
  
- 		return 0;
- 	}
++	/*
++	 * Reset commit_end after all decoders have been torn down so a
++	 * subsequent probe rebuilds it from scratch.
++	 */
++	rc = devm_add_action(&port->dev, cxl_reset_commit_end, port);
++	if (rc)
++		return rc;
++
+ 	for (i = 0; i < cxlhdm->decoder_count; i++) {
+-		int rc, target_count = cxlhdm->target_count;
++		int target_count = cxlhdm->target_count;
+ 		struct cxl_decoder *cxld;
+ 
+ 		if (is_cxl_endpoint(port)) {
 -- 
 2.53.0
 
