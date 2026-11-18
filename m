@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035412;
-	b=BZGwVyxN7hnRUQvMAaaMHXeBO7gV9TLrVfpWTXPVwatuIOc1z5+XRDhRxVeSywECWIr3
-	 cLTIh9fLLglMvp4AbPiMqI8eHEVF+8UufSsSFcrc1yixs8RdRE+klKUUdGnFM/2EgxRUx
-	 +1te5YyYrht/yrKonn4inUJSLibSLpyIh7K8seJGxsusalilUSAwDx+xilBlma+5EhYk8
-	 ErsKPiIJcqhViVkyqg8AZKmmadbSpbWze40G1R7THNCO/EhHTAnd2swSLWaKhelAPzcHx
-	 VJPLjAZ5UegsKVO9R7XXQ6jjbxxAb7x70VWyvCXsgPMAK6Txg3VNvqKZ9HjeI6YBeSg==
+	t=1795035415;
+	b=vX/r5OdvNsxOphj5CVSRy7K8YonpDROTWaccyKhWWGK7IsFLd6MwXok+yYYbzLSkwpaJ
+	 WMJ0X9JGhr50o2rjCO7RqsjR6dF+mknt+6daNQ7D01VO2vYk915I9KWhttep6WYLEWAzU
+	 H5o/Kcev3e4Us/vD1gkTWf+YpEVu2AS9xChHHEeb2nqsVUb7LUD7fouWhWVky2eh/Dxb8
+	 hWONIbt6W7gFW2tR1c3P0IUpIv1BejWRvXFNVC+ZcPiTkvCI45TOSILFGyEzqsGstunzf
+	 hqhhLHOM64ModOTuNVBSagdIKL4nwCfa9xrV2/rZFc/IrgBsIOVfZ+NbzNUADIl5trA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035412;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035415;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QDMsceB+T9OyhaqB3ZXUb74hci6axTyb/TihULMjiro=;
-	b=Pm1pFDfHNRau0rPRzGIVuJ3hFsPkW27Gf8AU7RlfFnnANIJ9P+wvUPRIYbBJeLp7KGs1
-	 csUqQq6ZO4gNG9/CMmzAD7tV2gYnvp0of6LOPKGI0WjPV1Ka20QpeQHbjFQAHO1y0YYmg
-	 hdZ3sWvFRj7DUIYfaxB9kcJHi5jdH0GiTk0yctOZgoqofYjBryfiSMbP63DzNjHNVnTM7
-	 5nOGxYyxZ6vP2RKwpcCy49lSH/irR8csth3abT0llfxwsvvrLA4jaVxEspZ1lPUdv64us
-	 Nxmmo8XvZss7YzL5mpsgbOb/piiwNn5QGnN5KXcPwHphzHt/LxR7Krh8UPY72KO3SmQ==
+	bh=1+yK84jys2fQqMkUGkNRqKr/3LUlhkMOYxDR1IasM5E=;
+	b=Pxd8mRK3XhzFPTWYcIjs0WJXHNdTStECZiX5Henzjh6HGtqrKjVpNfIiYGbY635IRCSA
+	 FE3FP5YJrV7ZnkP0uhpJ964eZxZqj4NOiGN5+K0ACQ+oESZNazbVrco4EDgYM65+2uWH1
+	 qg8htSshFw9UMDttBK8WoN1E7LOymOAaP6RrsHFbiodoYY+FRz4KMiYCee8uLcXta/3zT
+	 MzVMtJ/CWeYY34W4ADlIMrPvUci+Bf4sFx0PQiUou60YIlIYBi3EBjfGwDotkppMh/3m4
+	 N2lRlJtyauWBEccypUOXsvNQFKm61FjS4g6GSdxSTe7bJ8fhhFx6cAGAqSe01NzXknQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DxzV4hsx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JHIsOPPU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80AE606A330;
-	Wed, 18 Nov 2026 20:56:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E653606A325;
+	Wed, 18 Nov 2026 20:56:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DxzV4hsx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C0B51F000C4;
-	Wed, 18 Nov 2026 20:56:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JHIsOPPU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E45A01F000C4;
+	Wed, 18 Nov 2026 20:56:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035412;
-	bh=QDMsceB+T9OyhaqB3ZXUb74hci6axTyb/TihULMjiro=;
+	s=korg; t=1795035415;
+	bh=1+yK84jys2fQqMkUGkNRqKr/3LUlhkMOYxDR1IasM5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DxzV4hsxlLDcps0nOkIKfgIvPuVZgMirUwjW9taMGSi87iRg5TzG9chwNda5oF0LF
-	 kSN7mQUSH1Z/U0m55YV3uwN724mhykUP0Cr8HnNvI+wpX+YRu77zN0htcjESEqd4w7
-	 MJVNg9swxl+Fe/6vQAE1fOKYZrMX9DkHvvZiBMOg=
+	b=JHIsOPPUZeY7c9hhRb6YhQdeH6tNG69c2YHCOxAYfxtrRbqh8EjwWBOck94pmC0Q6
+	 AX6IHw9oWPIgU59hOQZkODsJZ9Supy+A6CWI5fjX9aOwZlbQXHE9OdkNaPbJrrkH+P
+	 DmufNGBhuKZedLsPP6XS+79iYGQRDg/2f0LKVD+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	AutonomousCodeSecurity@microsoft.com,
-	"Cen Zhang (Microsoft Security FORGE Labs)" <blbllhy@gmail.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	NeilBrown <neil@brown.name>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.6 0692/3318] nfsd: hold cl_lock in client_has_openowners()
-Date: Wed, 18 Nov 2026 15:21:54 +0100
-Message-ID: <20261118150339.033500662@linuxfoundation.org>
+Subject: [PATCH 6.6 0693/3318] nfsd: honour client-provided attributes for NFS4_CREATE_EXCLUSIVE4_1
+Date: Wed, 18 Nov 2026 15:21:55 +0100
+Message-ID: <20261118150339.076712857@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,60 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft Security FORGE Labs) <blbllhy@gmail.com>
+From: NeilBrown <neil@brown.name>
 
-commit 5336899b5491eaa2ac22c2925d87daab2b140eb3 upstream.
+commit ddfabbc7840891e09cd500ab97c9cd36b650ec24 upstream.
 
-client_has_openowners() walks clp->cl_openowners and reads so_stateids
-without clp->cl_lock. nfs4_put_stateowner() unhashes that openowner under
-cl_lock and then frees it, so a concurrent EXCHANGE_ID with mismatched
-creds can use-after-free the nfs4_openowner.
+When a file is created with a v4.1 OPEN which requests
+NFS4_CREATE_EXCLUSIVE4_1, the request can include attributes to be set.
+However when the mtime/atime are set to hold the verifier, the other
+ia_valid flags are cleared, so no attributes requested by the client are
+used.
 
-BUG: KASAN: slab-use-after-free in client_has_state+0x10a/0x140
-  fs/nfsd/nfs4state.c:3718 client_has_openowners()
-  nfsd4_exchange_id
-  nfsd4_proc_compound
-  nfsd_dispatch
-  svc_process
+This code was originally written for NFSv3 where NFS3_CREATE_EXCLUSIVE
+never includes attributes.  When it was updated for v4.1, the fact that an
+exclusive create CAN include attributes was not handled properly.
 
-Take clp->cl_lock while client_has_openowners() walks the openowner
-list.
-
-Fixes: 4eaea1342507 ("nfsd: improve client_has_state to check for unused openowners")
+Fixes: ac6721a13e5b ("nfsd41: make sure nfs server process OPEN with EXCLUSIVE4_1 correctly")
 Cc: stable@vger.kernel.org
-Reported-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Cc: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Cen Zhang (Microsoft Security FORGE Labs) <blbllhy@gmail.com>
-Link: https://patch.msgid.link/20260828041925.36758-1-blbllhy@gmail.com
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: NeilBrown <neil@brown.name>
+Link: https://patch.msgid.link/20260717093001.1972119-2-neilb@ownmail.net
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ fs/nfsd/nfs4proc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -3349,12 +3349,18 @@ nfsd4_set_ex_flags(struct nfs4_client *n
- static bool client_has_openowners(struct nfs4_client *clp)
- {
- 	struct nfs4_openowner *oo;
-+	bool found = false;
- 
-+	spin_lock(&clp->cl_lock);
- 	list_for_each_entry(oo, &clp->cl_openowners, oo_perclient) {
--		if (!list_empty(&oo->oo_owner.so_stateids))
--			return true;
-+		if (!list_empty(&oo->oo_owner.so_stateids)) {
-+			found = true;
-+			break;
-+		}
- 	}
--	return false;
-+	spin_unlock(&clp->cl_lock);
-+
-+	return found;
- }
- 
- static bool client_has_state(struct nfs4_client *clp)
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -358,8 +358,8 @@ nfsd4_create_file(struct svc_rqst *rqstp
+ 	if ((iap->ia_valid & ATTR_SIZE) && (iap->ia_size == 0))
+ 		iap->ia_valid &= ~ATTR_SIZE;
+ 	if (nfsd4_create_is_exclusive(open->op_createmode)) {
+-		iap->ia_valid = ATTR_MTIME | ATTR_ATIME |
+-				ATTR_MTIME_SET|ATTR_ATIME_SET;
++		iap->ia_valid |= ATTR_MTIME | ATTR_ATIME |
++				 ATTR_MTIME_SET|ATTR_ATIME_SET;
+ 		iap->ia_mtime.tv_sec = v_mtime;
+ 		iap->ia_atime.tv_sec = v_atime;
+ 		iap->ia_mtime.tv_nsec = 0;
 
 
