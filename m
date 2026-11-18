@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037953;
-	b=gOsaIkWRQLBX1FP711Wr3pE4Iol73cgNafKpzL/8PxITggh0wJs+kKKXTlCpm6A7zc7y
-	 eHBpnbP4A4ZSFfz8naHZ2gC4/i5q/fJe8L8k6lLXvJTOul3LOYLxl+38HeL7rvAcEFqXK
-	 W04v6p8pCu9Fv167H/CDm9DdHeFXIA7YPL+eYeE2zA87Qom0vBBrf5+VbJTmSgZGVyXcQ
-	 YoBrzVMtbMOJO19VRn1vbR5ZtHpbIhY4YRwUgJuHxuvhYLTqgaa2ZdQag1QNxqUCJNpJE
-	 WMnyaQgLerVHo9Z0TpRO8tnenc6EBXjhV7Cfj55SyZIgXgZeInlSj4pQQQiUXtVGKpQ==
+	t=1795037955;
+	b=Og6Obo9bNptl+ZNX7axEv4KqdzsDWdPlH5YXjyIu0HMpqW7xMXGJINoSph1ahuRYmiyr
+	 mYN61az1TZliTp8IxVk7g/5AqqPFOjmmOBfNRT6C8/dfKfkRqoNx3zDfwVS/EoHIO/c18
+	 FyaTycttz+F/P71cBrUG+KODFui0QanvWqHS6ksb4rin8ZWRQw0Nk/Jlp2ZEO+hWe6wG8
+	 NFfwl4rGC86zZTSTtQR43G+17a+16eSS4wusaT/jgCz5a/ijg1pVQuPaNuteCfh9kLQ1D
+	 bEilMQwhNKCzpoy94ZUKgo30wuM7p+llg1EPEtIy1Obhl2PyVZRtK3V2JIvLnBRCWEA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037953;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037955;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x2jNtTP5lGRFJpUvcWjPK0TF7l9WyP1nvKUXYoIuV74=;
-	b=gHpxpRy9nUxrivYYfLSU5JbfftmYWQlH6euzCwIv2SK+sffBqjWN6ke8b/Rfxt15Yk8r
-	 4Z7kAZhvKphOhsrGHdKFe7EZGduZRh9wqcL4WMDGiaJAdYgK9zL0Ldky5m8fTT+oqm0Sa
-	 ekp28zyJwsiY+Wl4y4msb8v7H0CQY/BfwmCc7/493y3LHct7O5YjdS5GmB87Tv0Uhhddj
-	 veC5voIGeAU6JzDJPOqQQiBNzHReStAFuhmUxL/ZZE1JGiWPXScW3KQVqh9FamNql1cIj
-	 oWwqoWUbV+g2PxnQiVt9bj6My2i19+WMf/0sDFGagr/BWOtdgsbZ+VM9UH0lkXI+2NA==
+	bh=Far86TA/54XF1GAOpdRuOOcRPEuvzUP0H4yAKh5Z/QI=;
+	b=mCeC8RP+dysePAsUix6O21UFAH5MuOVpsmzD3CZPKyI+TWTR3IgJLSU8dHK2TlvXJ00X
+	 JFI+BTQAgY1BkpIRETW9c7x5cFzIroCP3RtbzdhtPZymsqsuZmC0JClPQIpSJ311adK/8
+	 Gp9zFuPSEP0FvBNZJ/+QQ1Rd8pYT8qeCK6erKcUB03AD1pJ3yqpqvimVWw1HMA5TjJuxv
+	 NaXd1vXXN2R+uoBJEcxbjjxd9RjDzAVAVI4ZxTRirgp0daFLSWu3EjwFvGnX8aTdmFdzM
+	 keSpXKsEKKQwSn+ZDn8XfG61Twfez0ijsXYv8xCei+CjMoLMa9QW80fIBuTKPhC5yJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OJGjNoUF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TS+EnZD7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A15B606A31C;
-	Wed, 18 Nov 2026 21:39:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA455606A31C;
+	Wed, 18 Nov 2026 21:39:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OJGjNoUF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 354031F000C4;
-	Wed, 18 Nov 2026 21:39:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TS+EnZD7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AC301F000C4;
+	Wed, 18 Nov 2026 21:39:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037952;
-	bh=x2jNtTP5lGRFJpUvcWjPK0TF7l9WyP1nvKUXYoIuV74=;
+	s=korg; t=1795037955;
+	bh=Far86TA/54XF1GAOpdRuOOcRPEuvzUP0H4yAKh5Z/QI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OJGjNoUFXkGSaZg0nN/QjzOLX+Invm4K7DYdDtUztuH1HutR3EKaJyxbZRQgsjj8C
-	 j1/fxFxgNoS4Bod7P7U9AG6MqSelVhZWjiR+pp5u7DurLqxtl5vKwiBw4mSfgOiQV7
-	 zGogn6e84G9cyjsd5I0EwG1mif5qw6akPgvFwUvg=
+	b=TS+EnZD7HiwEYiYBuzX7TbsP6rlLwUEBHikybP0khY5YesE14idTCVqb1ph0leWJD
+	 llO/mBWtSMwrcohhW4iJw5YrU8Ol3/nNvNUCmNIxyrPmaWAW4iU8UDJTBKwkUjlKkr
+	 jH/WtQ8V9kUcSpDT0fFl0sk4OenQnFIbL7OwHAPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Fernand Sieber <sieberf@amazon.com>,
-	SeongJae Park <sjpark@amazon.de>,
+	Imre Kaloz <kaloz@kernel.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1576/3318] mm/damon/core: move static variable last_nr_regions to damon_ctx
-Date: Wed, 18 Nov 2026 15:36:38 +0100
-Message-ID: <20261118150408.396144098@linuxfoundation.org>
+Subject: [PATCH 6.6 1559/3318] MIPS: sgi-ip32: Mask MACE PCI interrupts in CRIME only
+Date: Wed, 18 Nov 2026 15:36:21 +0100
+Message-ID: <20261118150407.799360827@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,85 +68,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Imre Kaloz <kaloz@kernel.org>
 
-[ Upstream commit 26ae50a0901a44f7d50053f87dc38abd9f9a269c ]
+[ Upstream commit 4e65c502b8975e7c3c3d84aba59cd04af1dd6b8a ]
 
-kdamond_split_regions() uses a static variable last_nr_regions, to infer
-if the region boundaries are too stable.  If it looks too stable, it
-does a more aggressive region split because it might be a fake stability
-coming from non-aggressive split.  Because the variable is static, the
-inference can be racy and wrong when multiple kdamonds are running in
-parallel.
+Masking PCI interrupts in the MACE PCI control register overwrites the
+error and arbitration enables set at init, and a read-modify-write can
+hang CRIME 1.1 machines under DMA load. Enable the slot interrupts once
+and mask them in CRIME.
 
-The user impact is not critical.  No crash, no leak.  DAMON's
-best-effort monitoring accuracy can be degraded when multiple kdamonds
-are used in parallel and the workload has certain access patterns. Still
-it is a bug that is better to fix.
-
-Move the variable into the damon_ctx struct to fix the problem.
-
-Link: https://lore.kernel.org/20261025164808.152048-3-sj@kernel.org
-Fixes: 75c1c2b53c78 ("mm/damon/dbgfs: support multiple contexts")
-Signed-off-by: SJ Park <sj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Closes: https://sashiko.dev/#/bug/linux-eebfcdde-2881-48ef-8df1-e2019d2a47f2
-Cc: Fernand Sieber <sieberf@amazon.com>
-Cc: SeongJae Park <sjpark@amazon.de>
-Cc: <stable@vger.kernel.org> # 5.15.x
-Signed-off-by: SJ Park <sj@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Imre Kaloz <kaloz@kernel.org>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/damon.h | 6 ++++++
- mm/damon/core.c       | 5 ++---
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ arch/mips/pci/pci-ip32.c      |  7 ++++--
+ arch/mips/sgi-ip32/ip32-irq.c | 45 +++--------------------------------
+ 2 files changed, 8 insertions(+), 44 deletions(-)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 16d28a190dae0..8186f7c0f597f 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -557,6 +557,12 @@ struct damon_ctx {
+diff --git a/arch/mips/pci/pci-ip32.c b/arch/mips/pci/pci-ip32.c
+index 7ae89d0c70990..30aca6f76563d 100644
+--- a/arch/mips/pci/pci-ip32.c
++++ b/arch/mips/pci/pci-ip32.c
+@@ -125,10 +125,13 @@ static int __init mace_init(void)
+ {
+ 	PCIBIOS_MIN_IO = 0x1000;
  
- 	struct list_head adaptive_targets;
- 	struct list_head schemes;
-+/* private: */
+-	/* Clear any outstanding errors and enable interrupts */
 +	/*
-+	 * number of regions after last merge.  Read kdamond_split_regions()
-+	 * for more details.
++	 * Clear any outstanding errors and enable interrupts.  PCI interrupts
++	 * are masked in CRIME, so the per-slot enables stay on.
 +	 */
-+	unsigned long last_nr_regions;
+ 	mace->pci.error_addr = 0;
+ 	mace->pci.error = 0;
+-	mace->pci.control = 0xff008500;
++	mace->pci.control = 0xff0085ff;
+ 
+ 	printk("MACE PCI rev %d\n", mace->pci.rev);
+ 
+diff --git a/arch/mips/sgi-ip32/ip32-irq.c b/arch/mips/sgi-ip32/ip32-irq.c
+index e21ea1de05e31..5bf3c4796527d 100644
+--- a/arch/mips/sgi-ip32/ip32-irq.c
++++ b/arch/mips/sgi-ip32/ip32-irq.c
+@@ -162,38 +162,6 @@ static struct irq_chip crime_edge_interrupt = {
+ 	.irq_unmask	= crime_enable_irq,
  };
  
- static inline struct damon_region *damon_next_region(struct damon_region *r)
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 8fcb8356101b3..3176b97fe3a23 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1360,7 +1360,6 @@ static void kdamond_split_regions(struct damon_ctx *ctx)
- {
- 	struct damon_target *t;
- 	unsigned int nr_regions = 0;
--	static unsigned int last_nr_regions;
- 	int nr_subregions = 2;
+-/*
+- * This is for MACE PCI interrupts.  We can decrease bus traffic by masking
+- * as close to the source as possible.	This also means we can take the
+- * next chunk of the CRIME register in one piece.
+- */
+-
+-static unsigned long macepci_mask;
+-
+-static void enable_macepci_irq(struct irq_data *d)
+-{
+-	macepci_mask |= MACEPCI_CONTROL_INT(d->irq - MACEPCI_SCSI0_IRQ);
+-	mace->pci.control = macepci_mask;
+-	crime_mask |= 1 << (d->irq - CRIME_IRQ_BASE);
+-	crime->imask = crime_mask;
+-}
+-
+-static void disable_macepci_irq(struct irq_data *d)
+-{
+-	crime_mask &= ~(1 << (d->irq - CRIME_IRQ_BASE));
+-	crime->imask = crime_mask;
+-	flush_crime_bus();
+-	macepci_mask &= ~MACEPCI_CONTROL_INT(d->irq - MACEPCI_SCSI0_IRQ);
+-	mace->pci.control = macepci_mask;
+-	flush_mace_bus();
+-}
+-
+-static struct irq_chip ip32_macepci_interrupt = {
+-	.name = "IP32 MACE PCI",
+-	.irq_mask = disable_macepci_irq,
+-	.irq_unmask = enable_macepci_irq,
+-};
+-
+ /* This is used for MACE ISA interrupts.  That means bits 4-6 in the
+  * CRIME register.
+  */
+@@ -301,8 +269,8 @@ static struct irq_chip ip32_maceisa_edge_interrupt = {
+ 	.irq_unmask	= enable_maceisa_irq,
+ };
  
- 	damon_for_each_target(t, ctx)
-@@ -1370,14 +1369,14 @@ static void kdamond_split_regions(struct damon_ctx *ctx)
- 		return;
+-/* This is used for regular non-ISA, non-PCI MACE interrupts.  That means
+- * bits 0-3 and 7 in the CRIME register.
++/* This is used for regular non-ISA MACE interrupts.  That means bits 0-3
++ * and 7-15 in the CRIME register.
+  */
  
- 	/* Maybe the middle of the region has different access frequency */
--	if (last_nr_regions == nr_regions &&
-+	if (ctx->last_nr_regions == nr_regions &&
- 			nr_regions < ctx->attrs.max_nr_regions / 3)
- 		nr_subregions = 3;
+ static void enable_mace_irq(struct irq_data *d)
+@@ -438,20 +406,13 @@ void __init arch_init_irq(void)
+ 	mips_cpu_irq_init();
+ 	for (irq = CRIME_IRQ_BASE; irq <= IP32_IRQ_MAX; irq++) {
+ 		switch (irq) {
+-		case MACE_VID_IN1_IRQ ... MACE_PCI_BRIDGE_IRQ:
++		case MACE_VID_IN1_IRQ ... MACEPCI_SHARED2_IRQ:
+ 			irq_set_chip_and_handler_name(irq,
+ 						      &ip32_mace_interrupt,
+ 						      handle_level_irq,
+ 						      "level");
+ 			break;
  
- 	damon_for_each_target(t, ctx)
- 		damon_split_regions_of(t, nr_subregions);
- 
--	last_nr_regions = nr_regions;
-+	ctx->last_nr_regions = nr_regions;
- }
- 
- /*
+-		case MACEPCI_SCSI0_IRQ ...  MACEPCI_SHARED2_IRQ:
+-			irq_set_chip_and_handler_name(irq,
+-						      &ip32_macepci_interrupt,
+-						      handle_level_irq,
+-						      "level");
+-			break;
+-
+ 		case CRIME_CPUERR_IRQ:
+ 		case CRIME_MEMERR_IRQ:
+ 			irq_set_chip_and_handler_name(irq,
 -- 
 2.53.0
 
