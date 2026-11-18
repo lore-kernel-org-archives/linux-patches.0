@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043649;
-	b=bIMMzn5Avz/EIpUH9/8LPOQRK/yXoa8qoBJdrvB2oMIax6adgkQqBQZPhG84qEjaRB26
-	 an4qdiD1XTEEdowmkmJ1uqdfFoK/VzShGoWQwulTJzeGQ9A15gp1Kd2Kc62jWe2iiNrwv
-	 86D5e+mY4XO/60s42WHZ9PnXqcjmX9lEdQbYyquWcglFmoohU7GRaaTMPC3Yv0BtnNa0A
-	 1lONxF7QRyYpJVE3VElxuHaxi2bPTO8OwcsJdWKC954yu0xP4ydmsiQE2CfdQVQ+ebfMH
-	 I5ArBvO4uzj1pFVMPHhEw9Y5HzgWA3CYijuH28Sb5sRJaIU4XlOJVIIWPe0FLXoR/MQ==
+	t=1795043651;
+	b=m48Q77NOQqgvUtP2nSj4aKhXkMBG/uttiRm63//xLR7/HwnPPGZJCccD21vVeq2kcBbJ
+	 tQqqyjuXVx6nL1VkdKvNIIG813rKgFNjQfnqJdH9R/ETchz0lCIOldFdgaW0LHoCF/D6u
+	 H+QwUfPIsTL+74L7b48HeTWXsEC9SSAZAan7CGOaqjSkb51K1lSlaV9uRF6iSLNIlQdQT
+	 DhMlFeSh9eumzrrNpD0GWimWOPsCtbh8sU90fcc9WlEH1egfB5dtE7UiePmAgC5YsftnY
+	 T1R5P8SPB8fKGFT1oUwf8AJGbVFKGYiAO2TfULOczLqN08JqkxsMhnnC7c/yFpabPNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043649;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043651;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2pH0UqHt2sZ92rH2gdeHQpIukIRSzLdtzfkDsIkH9zU=;
-	b=uVKXYAODtp1V/mxcfWCascxUfragNz5OiTBi4znbI51n2zO8W2HSejc0ZJ3UtZC3kyV7
-	 2wzj1tU00NgSk3SQMlqob3nURlv3G+yc9sVKJN2lUVkz8UHFGwWKUKA1xb+6vWd0844SV
-	 vS0yV16weZynCktDZTGGjS47IZpxiLTF17WoOQOeZNaHIOkO5KZxwbll+Ie1lhqMp0dB3
-	 snlCpHX+c9g0NAv/XFShvET3TaAFP8lx3/F47fVyf2BArrTjB1D4UeDTDfHyQJuWexBf4
-	 xG4gc3FsPK21j3fhE+dgf8/vyIvhW1uOQstezhjDQjeqc3ULgdugF5JfnCtKO+sB5AQ==
+	bh=AwIKPT9O0QLDK/looF4QSt16K/5kwNJjIyWlsGD2xoc=;
+	b=BXZsY3wjKAYFo9r/L96VKcgFSoXqZQ4+NmmK2neIL0hLTglfwEYtTQHYs8GorZxjb6ro
+	 adpnTUvsAU4u3f255bBf4JHRQrA174DlcDa6Sw2zKU4+EELa+0k6DYsmj6JRiJMTDNmp9
+	 HWEykQ3KCJ10pWNeeqS1Kga7DGFEUi1QtNElWP2qt3u3xKQRENy6ZQYCmB6TO4vi0EE2h
+	 DvXkAZJ6CtNOdp373SMrHNU9A6mv7aXHVT2nlA1GxLa6Uq7fgCOzuKL1AXPJky4PgIue/
+	 ow13toqFcrd+ubn9rMPUOCzU1k1oTRBi+ZnFzngRnCPUv4Vx09fSPSpmOn67gp4XkpQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JyOTAl6q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hhvP5GZB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3565606A333;
-	Wed, 18 Nov 2026 23:14:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69D5606A320;
+	Wed, 18 Nov 2026 23:14:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JyOTAl6q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 407A01F000C4;
-	Wed, 18 Nov 2026 23:14:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hhvP5GZB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 148C21F000C4;
+	Wed, 18 Nov 2026 23:14:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043648;
-	bh=2pH0UqHt2sZ92rH2gdeHQpIukIRSzLdtzfkDsIkH9zU=;
+	s=korg; t=1795043651;
+	bh=AwIKPT9O0QLDK/looF4QSt16K/5kwNJjIyWlsGD2xoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JyOTAl6qX5xK3ikKfRLvIGpA1tXtsFMTTkTsmR1hk495sdVTZxzesswq/PC+yvNEe
-	 +UmtFEqk1uO8erKMB33x4NA9myJHSkEvlVh3AZeNa8wR6LJEDaO1w+oCfYR00du2X6
-	 hp/ZeNeF+hOY5a8T7o+pmB8AMod0vCTI11bS0em0=
+	b=hhvP5GZBIYSaa78NftCfmTLFf/NWjt1CvWhZXc3TokCBPCl2B+7FAtYJCWmSwZt2Y
+	 ZG3tISvYCiu8tf/xPQqiqgcTapAwhGg5cI77TW52fG/vc/AIp/MwFuwC+axR+jg1I9
+	 r3CGfp8fPOTnAjel4rQ+1S/+lnNFtbeaDXRDLgGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Jiri Kosina <jkosina@suse.com>,
+	Seiji Adachi <seiji_adachi@yahoo.co.jp>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0286/2857] HID: roccat: fix locking in roccat_connect() and roccat_disconnect()
-Date: Wed, 18 Nov 2026 15:22:00 +0100
-Message-ID: <20261118150211.718101877@linuxfoundation.org>
+Subject: [PATCH 6.1 0287/2857] ASoC: amd: yc: Add Lenovo ThinkPad E16 Gen 2 (21JN) to quirks
+Date: Wed, 18 Nov 2026 15:22:01 +0100
+Message-ID: <20261118150211.751858981@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,68 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Seiji Adachi <seiji_adachi@yahoo.co.jp>
 
-[ Upstream commit d76994443eed0af297cb82bd038ae9d76327ef90 ]
+[ Upstream commit 4cae4ca34992d210d115e8e891f1e88c9df5f24c ]
 
-Extend critical section in roccat_connect() to ensure that partially
-initialized 'struct roccat_device' is never exposed in 'devices' list,
-and do the same in roccat_disconnect() to avoid racy 'devices' access
-against roccat_release().
-
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Seiji Adachi <seiji_adachi@yahoo.co.jp>
+Link: https://patch.msgid.link/20260917131851.2122144-1-seiji_adachi@yahoo.co.jp
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-roccat.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/hid/hid-roccat.c b/drivers/hid/hid-roccat.c
-index a73cafa3869f7..b203ee39c9ea1 100644
---- a/drivers/hid/hid-roccat.c
-+++ b/drivers/hid/hid-roccat.c
-@@ -344,8 +344,6 @@ int roccat_connect(struct class *klass, struct hid_device *hid, int report_size)
- 		return temp;
- 	}
- 
--	mutex_unlock(&devices_lock);
--
- 	init_waitqueue_head(&device->wait);
- 	INIT_LIST_HEAD(&device->readers);
- 	mutex_init(&device->readers_lock);
-@@ -356,6 +354,7 @@ int roccat_connect(struct class *klass, struct hid_device *hid, int report_size)
- 	device->cbuf_end = 0;
- 	device->report_size = report_size;
- 
-+	mutex_unlock(&devices_lock);
- 	return minor;
- }
- EXPORT_SYMBOL_GPL(roccat_connect);
-@@ -369,15 +368,12 @@ void roccat_disconnect(int minor)
- 
- 	mutex_lock(&devices_lock);
- 	device = devices[minor];
--	mutex_unlock(&devices_lock);
- 
- 	device->exist = 0; /* TODO exist maybe not needed */
- 
- 	device_destroy(device->dev->class, MKDEV(roccat_major, minor));
- 
--	mutex_lock(&devices_lock);
- 	devices[minor] = NULL;
--	mutex_unlock(&devices_lock);
- 
- 	if (device->open) {
- 		hid_hw_close(device->hid);
-@@ -385,6 +381,8 @@ void roccat_disconnect(int minor)
- 	} else {
- 		roccat_free_device(device);
- 	}
-+
-+	mutex_unlock(&devices_lock);
- }
- EXPORT_SYMBOL_GPL(roccat_disconnect);
- 
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 1ba845212eae0..8046030dc9576 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -234,6 +234,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "21J6"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "21JN"),
++		}
++	},
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
 -- 
 2.53.0
 
