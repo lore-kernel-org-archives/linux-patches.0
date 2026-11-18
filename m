@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057975;
-	b=uEM3x3b1ip2ZsgCilSMZ9o4xZMaPz6pkjVVPPLlMRY8mcgO5mDiaqn16rXM7+2w4b4Be
-	 xY0wsIEXfXGclv2+hoc8usqmpmSvdcPWkA6jpye+GPSx6IMySs68koOyh6dngwFfel/uv
-	 zUOUUMVSImJd9VnFasBrILx7yuMMfjhD2JUOVQxpVfBjx6zOUv9vAnHm2wuCkT2wlBlah
-	 /CL9r/eSEuqI349UFcn66pH+76rehYyGohNxosCmQbD2+GF+Jkh+lpxlT3Sv6VdsV5zhN
-	 Eg6Mz/D3hgwRMey/NZAq//XtDNhyW4u/7D+EUp/Pj4XpWM7eOou2uXxiY96AptztCYw==
+	t=1795057978;
+	b=J5laytsx4mdjYW87CKj4imIEcqfImimZnPi+H9wTYXPOFKw2J54dxo4xTRISL2hJ4mEH
+	 ZYL6Hn3MKtHe0zO8OlOkszUh9Hl9QS8A+FlUb2zZalSWdXah6p8r+tlH9qUFtDgBWhzip
+	 agULEN+2I69+3bZf734V6QAFmEqSyugSVGpDNpMHUOswLPkLGQP8t6XwbQeniEx7rRH5B
+	 LijcQGiuVe9hH4w5njWM37br7H2zKIdG4q01+HmRUPR78ImkVxWMuW3+lSiMOkz/1KW1m
+	 4bsL95cFoYBFGYixjr+cBmad07+NylXux+Vm7j9mUiIYEfMka/lRa30yEBR7B+nQBig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057975;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057978;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=00ZeRX8RiWTBPSDDd2l30FZ91JjOdb8XgF7E35LFHmg=;
-	b=gB4tB9epyRaCLlz4/6BzD0yzMGS7LXUpV0hOJex06jQK/3BTSXSROQqOyXywYwUYVfEw
-	 DWQeCveHRfKC3LfncNyAXfHVuWYxXg8pIoM4avMBIvpv2b6HjjeupZDu2iCmZwxVvzSSF
-	 HFHnwyRk8fmAnba/ITuGSbGWIvQLzAAylYwhyV6omfhUmAoSGfGjzBCn3hb7p5eeXpMHd
-	 VUgGg78ZuPPHDMsT+pBmVe5MDidfuFdzxabktiOE1UongnU85LS9l02WBVcrxbhWRRNuU
-	 G1qv9TjtkpjPoyEaBb5/nHyW+2987+zRRUeW8ePn4BeBHT6HtHj06ZKm6athscwB6tA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=D7mcsbLPqeuwhSAfa3mkP0Q31aUVvch1u8fkeZ+0sM0=;
+	b=cvTybwU1pYRL7Xj200xKSBQaXUe+82YfsK4czZntXMivay23bXGOiRVW5bHOjNe2PAym
+	 9UiPxHdEQlO005K2aJN7Fd6ZkvxWAeMmoHmt7kg47CICaHzvO/AFLRXrJk/OoRVcHV9Yp
+	 WJCB/JPhgwE/HHU+BqdZkZXRIPiTxDyki1nDrUi94a+Qcoq5wTdlrF4FyMhjxubiv25aP
+	 4x+C6V137RmpWssvKOXlj4kzJMbNjrsjigowdS6+FRy89Q0ixJEJYFfhZ6Wb7URNVr0zY
+	 YtzOAA1iWhqFmlOmmAeYL/5x175EpyQzpK0SYsyFtSkeFzRtFMf57556Wh0iK4Xcw4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AwQNgr1a;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="rX08/GAD";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 879CF606A32A;
-	Thu, 19 Nov 2026 03:12:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D0B606A32A;
+	Thu, 19 Nov 2026 03:12:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AwQNgr1a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D81981F000C4;
-	Thu, 19 Nov 2026 03:12:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rX08/GAD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DB331F000C4;
+	Thu, 19 Nov 2026 03:12:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057975;
-	bh=00ZeRX8RiWTBPSDDd2l30FZ91JjOdb8XgF7E35LFHmg=;
+	s=korg; t=1795057978;
+	bh=D7mcsbLPqeuwhSAfa3mkP0Q31aUVvch1u8fkeZ+0sM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AwQNgr1a6mHCehjsykJG4/JGS3QWJToJVtPUbvqMlq7CVMZxlTWfov+4mjoh4xUEE
-	 XRY06vBTYXpB5PtKbSDx4/VO+QU2IJEiSz10owmJj1ptXbD2wKVBn0tX6TYID3e3VZ
-	 E6DL9mcuE6EPa1+ssT78V3lspFghy6HP1QyYeb5k=
+	b=rX08/GAD/XgrhlwcYm8K9P9QmMM/5sadAwZeuF0OPfppGnzRveIGMRVSIUAlC7xvh
+	 A1c/pjAGQumQbdPs2WwZ5zFHVzOtdVJlpaxGteJbps63T1Y0NJiOk5hfqllNVCR8du
+	 OpIW/P2kNPggwJaCWtDFRBXUyzSCEvsCZT2z9ZxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lutomirski <luto@kernel.org>,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 0322/1848] tun: Require CAP_NET_ADMIN to attach to an ownerless device
-Date: Wed, 18 Nov 2026 15:39:20 +0100
-Message-ID: <20261118145925.639105072@linuxfoundation.org>
+	Fredric Cover <fredric.cover.lkernel@gmail.com>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 0323/1848] smb: client: fix early procfs exposure race
+Date: Wed, 18 Nov 2026 15:39:21 +0100
+Message-ID: <20261118145925.670639539@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -63,124 +62,138 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+From: Fredric Cover <fredric.cover.lkernel@gmail.com>
 
-commit ffdf678dd16610e3f006dac904bd37c09684673c upstream.
+[ Upstream commit 7b1afb631395c958993cda4631002258ef4151ea ]
 
-Twenty years ago I made creating a tuntap device require CAP_NET_ADMIN
-in commit ca6bb5d7ab22 ("[NET]: Require CAP_NET_ADMIN to create tuntap
-devices.")
+Currently, init_cifs() calls cifs_proc_init() near the beginning of
+the function, before INIT_LIST_HEAD, leading to a momentarily
+uninitialized, but exposed, procfs. If a userspace process reads this
+empty procfs, iterating over a zeroed list_head leads to a NULL
+pointer dereference and a kernel oops/panic.
 
-The idea was to allow the permissions on /dev/net/tun to be relaxed to
-0666 and thus allow owners of tun devices assigned with TUNSETOWNER to
-actually open it and get at their devices.
+For example, if a delay is added between cifs_proc_init() and
+INIT_LIST_HEAD, and a userspace process is polling
+/proc/fs/cifs/DebugData, the following oops occurs:
 
-What we missed at the time was that persistent devices with *no* owner
-were already essentially world-consumable, and anyone who could open
-the device node could also attach to those.
+BUG: kernel NULL pointer dereference, address: 0000000000000608
+Oops: Oops: 0000 [#1] SMP PTI
+CPU: 0 UID: 0 PID: 3477 Comm: cat Not tainted
+7.3.0-02212-g4df4d2a577db-dirty #6 PREEMPT(lazy)
+RIP: 0010:cifs_debug_data_proc_show+0x103/0xd80 [cifs]
+Call Trace:
+<TASK>
+ ? seq_read_iter+0x86/0x400
+ ? seq_read_iter+0x86/0x400
+ seq_read_iter+0x183/0x400
+ proc_reg_read_iter+0x62/0x90
+ copy_splice_read+0x215/0x310
+ splice_file_to_pipe+0xec/0x1c0
+ do_splice+0x4b8/0x780
+ __se_sys_splice+0x18f/0x250
+ do_syscall_64+0x109/0x330
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+</TASK>
 
-Even then, using persistent devices with no explicitly set owner — on
-the (false) presumption that CAP_NET_ADMIN would be required to open
-them — wasn't an egregious userspace bug. There are cases where it does
-make sense to separate the creation/configuration of the netdevice, from
-the process which shovels packets into it.
+Fix this by moving cifs_proc_init() down in init_cifs(), ensuring it runs
+only after all internal lists, locks, counters, and workqueues are fully
+ready, but before registering the filesystem. Update the error cleanup
+ladder and exit_cifs() to maintain proper LIFO order.
 
-Since then, TUNSETGROUP was added a year later in commit 8c644623fe7e
-("[NET]: Allow group ownership of TUN/TAP devices."). Its commit message
-noted that if both uid and gid are set, both have to match (in itself a
-bizarre choice) — but still not that with *neither* set, no permission
-at all was required.
-
-Then in 2012 commit c8d68e6be1c3 ("tuntap: multiqueue support") allowed
-new queues to be attached to a device from the moment of its creation,
-with no way for userspace to close the race between creation and a
-subsequent TUNSET{OWNER,GROUP}.
-
-In 2024, commit 3ca459eaba1bf ("tun: fix group permission check") tried
-to fix things to be saner: only require the user *or* the group to
-match, in line with standard POSIX permissions, and require
-CAP_NET_ADMIN if neither the user nor group authorised the access
-(although it put the CAP_NET_ADMIN check first, and would wrongly have
-reported the capability as having been used even when it was not).
-
-That fix was reverted in commit a70c7b3cbc06 ("tun: revert fix group
-permission check") due to allegedly causing a regression in an selinux
-test suite which *expected* the attachment to succeed when authorised
-by none of user, group, nor CAP_NET_ADMIN:
-https://lore.kernel.org/netdev/CAFqZXNtkCBT4f+PwyVRmQGoT3p1eVa01fCG_aNtpt6dakXncUg@mail.gmail.com/
-
-We should not break UAPI. But we don't have to consider an selinux test
-case which deliberately exercises a security flaw to be UAPI worth
-preserving either. To which end, I have fixed it in selinux-testsuite
-commit b2f894f0016b ("tests/tun_tap: set an owner on the device for the
-relabel tests").
-
-So: fix the lack of CAP_NET_ADMIN check on devices which *haven't* been
-assigned an owner or group, while leaving the weird tun ownership model
-as it was (user *and* group have to match, if both are set). If someone
-still wants to fix the latter (which wasn't actually the reason the
-previous attempt was reverted), they can do it under separate cover.
-
-Permit attaching to an existing device only if an owner and/or group was
-set and the caller matches all that were set, or if the caller has
-CAP_NET_ADMIN. The only behavioural change is that a device with no
-owner or group now requires CAP_NET_ADMIN to attach — precisely the
-loophole we want to close.
-
-And put the CAP_NET_ADMIN check in the right place this time.
-
-Fixes: ca6bb5d7ab22 ("[NET]: Require CAP_NET_ADMIN to create tuntap devices.")
-Reported-by: Andrew Lutomirski <luto@kernel.org>
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/3c77f88acff5b3c2617b22d64faad15f6212619c.camel@infradead.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+[ sashal: Adjusted context to match the existing CIFS initialization and cleanup sequence. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c |   14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ fs/cifs/cifsfs.c | 20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -586,14 +586,18 @@ static u16 tun_select_queue(struct net_d
- 	return ret;
- }
- 
--static inline bool tun_not_capable(struct tun_struct *tun)
-+static inline bool tun_permitted(struct tun_struct *tun)
+diff --git a/fs/cifs/cifsfs.c b/fs/cifs/cifsfs.c
+index 228087c90de25..e90792dd60e5d 100644
+--- a/fs/cifs/cifsfs.c
++++ b/fs/cifs/cifsfs.c
+@@ -1536,7 +1536,6 @@ static int __init
+ init_cifs(void)
  {
- 	const struct cred *cred = current_cred();
- 	struct net *net = dev_net(tun->dev);
+ 	int rc = 0;
+-	cifs_proc_init();
+ 	INIT_LIST_HEAD(&cifs_tcp_ses_list);
+ #ifdef CONFIG_CIFS_DNOTIFY_EXPERIMENTAL /* unused temporarily */
+ 	INIT_LIST_HEAD(&GlobalDnotifyReqList);
+@@ -1582,10 +1581,8 @@ init_cifs(void)
+ 	}
  
--	return ((uid_valid(tun->owner) && !uid_eq(cred->euid, tun->owner)) ||
--		(gid_valid(tun->group) && !in_egroup_p(tun->group))) &&
--		!ns_capable(net->user_ns, CAP_NET_ADMIN);
-+	/* If both uid and gid are set, *both* must match */
-+	if ((uid_valid(tun->owner) || gid_valid(tun->group)) &&
-+	    (!uid_valid(tun->owner) || uid_eq(cred->euid, tun->owner)) &&
-+	    (!gid_valid(tun->group) || in_egroup_p(tun->group)))
-+		return true;
+ 	cifsiod_wq = alloc_workqueue("cifsiod", WQ_FREEZABLE|WQ_MEM_RECLAIM, 0);
+-	if (!cifsiod_wq) {
+-		rc = -ENOMEM;
+-		goto out_clean_proc;
+-	}
++	if (!cifsiod_wq)
++		return -ENOMEM;
+ 
+ 	/*
+ 	 * Consider in future setting limit!=0 maybe to min(num_of_cores - 1, 3)
+@@ -1646,19 +1643,22 @@ init_cifs(void)
+ 	if (rc)
+ 		goto out_register_key_type;
+ 
++	cifs_proc_init();
 +
-+	return ns_capable(net->user_ns, CAP_NET_ADMIN);
+ 	rc = register_filesystem(&cifs_fs_type);
+ 	if (rc)
+-		goto out_init_cifs_idmap;
++		goto out_clean_proc;
+ 
+ 	rc = register_filesystem(&smb3_fs_type);
+ 	if (rc) {
+ 		unregister_filesystem(&cifs_fs_type);
+-		goto out_init_cifs_idmap;
++		goto out_clean_proc;
+ 	}
+ 
+ 	return 0;
+ 
+-out_init_cifs_idmap:
++out_clean_proc:
++	cifs_proc_clean();
+ 	exit_cifs_idmap();
+ out_register_key_type:
+ #ifdef CONFIG_CIFS_UPCALL
+@@ -1684,8 +1684,6 @@ init_cifs(void)
+ 	destroy_workqueue(decrypt_wq);
+ out_destroy_cifsiod_wq:
+ 	destroy_workqueue(cifsiod_wq);
+-out_clean_proc:
+-	cifs_proc_clean();
+ 	return rc;
  }
  
- static void tun_set_real_num_queues(struct tun_struct *tun)
-@@ -2786,7 +2790,7 @@ static int tun_set_iff(struct net *net,
- 		    !!(tun->flags & IFF_MULTI_QUEUE))
- 			return -EINVAL;
+@@ -1695,6 +1693,7 @@ exit_cifs(void)
+ 	cifs_dbg(NOISY, "exit_smb3\n");
+ 	unregister_filesystem(&cifs_fs_type);
+ 	unregister_filesystem(&smb3_fs_type);
++	cifs_proc_clean();
+ 	cifs_dfs_release_automount_timer();
+ 	exit_cifs_idmap();
+ #ifdef CONFIG_CIFS_UPCALL
+@@ -1711,7 +1710,6 @@ exit_cifs(void)
+ 	destroy_workqueue(decrypt_wq);
+ 	destroy_workqueue(fileinfo_put_wq);
+ 	destroy_workqueue(cifsiod_wq);
+-	cifs_proc_clean();
+ }
  
--		if (tun_not_capable(tun))
-+		if (!tun_permitted(tun))
- 			return -EPERM;
- 		err = security_tun_dev_open(tun->security);
- 		if (err < 0)
+ MODULE_AUTHOR("Steve French");
+-- 
+2.53.0
+
 
 
