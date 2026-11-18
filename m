@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028816;
-	b=iWOupX1x6LFKQ3jhAvyuDWUt6WJ2PCU8S5Hz7pPD8oJ0JtYlktgb8vzlK4O5R12bGbyD
-	 9RwngMUwvwOLlH+W72YyfRSJlLSi5PzZapylj8XjuFh8CGxt2T5GKh+0IICUk/zY4q359
-	 Z2UD08VO+w/xYVNfDzpcvQXrIF/5ppQWYXUkGXtRhrjmsJln2BVoTRO3EyXQdLsYbm6NQ
-	 5ASmbFuE8zq6cM6oQ4mIz5jYl2M15Wd205ynDJEtPI0i2/z3JG/vDwwxNovBCmHmGB38/
-	 DGT/am54EPLcCEYTOL4P5mam7DOszYswXaNu46oLjp768mK7U4rfN4z8MLHkyQI56BQ==
+	t=1795028818;
+	b=461qY4felAecUVsOI/iJyWiNo30fPujgZQ5gfjgQspXzxXhWFF9GGwPcC75C8jaVmV23
+	 8LZnjQAtY2HW7CR3q8k71Dqctrb6Z0IMDQXljy/Lp1XnePXK9hkm05eW4V/1AIcsnWFUs
+	 +dTs5eyHbLCYxkPCKTaKZxK7AqXkFhUZaJHXzuKxqToQ3FFkyV5cKZ9jwRUTxyyrjfVlX
+	 uI24fqH015/ms1cUniXmXiIvpchziWHMpuioUHSsw2E7waH+2iEOJxZpx22/WEgvXRS6M
+	 oeOiBG0Gn0RNj4GuwjLJtOCegb8IGd0Z0VCDr+j6G88LFZFBbGQQTzy9O60SmRRj6PQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028816;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028818;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=s5OHZ1w7P1rVcrCDUmJPqe1fVStxg1abSgHB8kZSCJI=;
-	b=TpvTL/g/hxvD1Y7F7I+kBLHCfgXp9k8LV26CtWXSL22eE05k5SCpMp/vAonF1bZKvr4X
-	 yNKjFDjtBk9rDiSq+kKf8qnn7zUPxrMDXPGIzecVfJPycvYlnq4Rek+tqpC0wZkETHJn5
-	 Ri1IPFIzEdtzxdMU4SZZqpeePtfG5M7wfs3eMz1qEQ1yvszmKQqar0LKw+T5FaLECpxaV
-	 HK+YrVX3wI72YmK3E3k2/zNZTRKHySCtTfaxAn4wC7Oc9nnY0EDOPY9O+Oz1aBLPBIvDY
-	 /qinxLugmwWw/EY93yhykK7nnX7QsQFQZn27NO4xYXPQOP2Co3YGqdq5tdwJ8xfgmOA==
+	bh=zi7Cfkc381DFpzcjSRzd1qk3kiUqck/P3BMx4fCECNs=;
+	b=2iXag/2HZZHpoeonnADk/LhmhQVK/TRuDbi/3WxWCiXAAmszyCUzD+IpVIhwKgl85Nj3
+	 8e59OUh7q2N6gt0/32mxPVZrpKlSSYIL9LPG5OwCVSSCq2vQQo+JaJmkZ+oiMpgh1UZZt
+	 VGmV4WtF0WjIe+AQJcm6nMfdZMOilc9O5EI6knJYZlHyqhlsen9jXw35tVRCl7e/7xe/r
+	 f1HPL/RMOP370dKv/ON+1XmynzLDdoFGlz8fRb3KgDKTPFLrcNU3BwAb+JAd6+AU9LM6q
+	 dF1mmN3QStLs/3r+fMEWmcW5ypAiEqlTP0r2BZG7wmIWkkC5vAcNz6Z+a5jU59wOgbw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k1JUcHly;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zohWi2bZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED267606A33A;
-	Wed, 18 Nov 2026 19:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB6F0606A33F;
+	Wed, 18 Nov 2026 19:06:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k1JUcHly
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AE211F000C6;
-	Wed, 18 Nov 2026 19:06:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zohWi2bZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23C821F000CA;
+	Wed, 18 Nov 2026 19:06:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028815;
-	bh=s5OHZ1w7P1rVcrCDUmJPqe1fVStxg1abSgHB8kZSCJI=;
+	s=korg; t=1795028818;
+	bh=zi7Cfkc381DFpzcjSRzd1qk3kiUqck/P3BMx4fCECNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k1JUcHlyLUq+3KWgP2L383Daj2u30avSpUYONwacUvj+/LhvgBk0GDaXTlWfKY9Kb
-	 JHcZfq85ik0ZYo/Pqf9QGbpPqSFGaWA/vR04ZAEAXJyVIHOXO+CAbVqwmsh1nczX1O
-	 RMaJDWQkv8WBSj0ID+WtnIcQ6MgacqQDdyAWRcTg=
+	b=zohWi2bZSskkUk+LUmd2qUY61A0v9LGoz3yvGHzM8pPBwkGB6WiYV5P3Z4Z+KDoEb
+	 6sMMIwQ9d/nVE/y8L4tWSqmnCTbVhE1pEjChVbpS+enqZdi5j2XY37CKh+F4plHph3
+	 fKQXeIpEjPbl1z/xeFx/HyICSwamZ1V7iKDrr6N8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0129/1756] x86/microcode/AMD: Move the no-revision fixup to get_patch_level()
-Date: Wed, 18 Nov 2026 15:37:36 +0100
-Message-ID: <20261118150013.330426929@linuxfoundation.org>
+	Su Hui <suhui@nfschina.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Petr Vaganov <petrvaganoff@gmail.com>
+Subject: [PATCH 6.12 0130/1756] fs/stat.c: avoid harmless garbage value problem in vfs_statx_path()
+Date: Wed, 18 Nov 2026 15:37:37 +0100
+Message-ID: <20261118150013.365797961@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -67,59 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 098bcea71b8d257d80b0037b97b66070806600a5 ]
+commit 0fac3ed473dd2955053be6671cdd747807f5e488 upstream.
 
-On machines which don't have microcode applied yet, the revision is 0.
-However, this doesn't work with the Zen family/model/stepping patch
-arithmetic. So move the fixup to the patch level getter function and
-this way make sure the patch level is always proper and thus the
-arithmetic always works.
+Clang static checker(scan-build) warning:
+fs/stat.c:287:21: warning: The left expression of the compound assignment is
+an uninitialized value. The computed value will also be garbage.
+  287 |                 stat->result_mask |= STATX_MNT_ID_UNIQUE;
+      |                 ~~~~~~~~~~~~~~~~~ ^
+fs/stat.c:290:21: warning: The left expression of the compound assignment is
+an uninitialized value. The computed value will also be garbage.
+  290 |                 stat->result_mask |= STATX_MNT_ID;
 
-And now that it can be called on any family, make this Zen-only.
+When vfs_getattr() failed because of security_inode_getattr(), 'stat' is
+uninitialized. In this case, there is a harmless garbage problem in
+vfs_statx_path(). It's better to return error directly when
+vfs_getattr() failed, avoiding garbage value and more clearly.
 
-Assisted-by: claude/claude-opus-4-6
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20260530024213.86137-1-bp@kernel.org
-[ sashal: get_patch_level() here lacks the upstream debug/hypervisor branch; the fixup goes right after native_rdmsr() ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Link: https://lore.kernel.org/r/20250119025946.1168957-1-suhui@nfschina.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 98d2b4308197 ("add unique mount ID")
+Signed-off-by: Petr Vaganov <petrvaganoff@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/microcode/amd.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ fs/stat.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/cpu/microcode/amd.c b/arch/x86/kernel/cpu/microcode/amd.c
-index 24709a5589633..a846864ba89f8 100644
---- a/arch/x86/kernel/cpu/microcode/amd.c
-+++ b/arch/x86/kernel/cpu/microcode/amd.c
-@@ -221,11 +221,6 @@ static bool need_sha_check(u32 cur_rev)
+--- a/fs/stat.c
++++ b/fs/stat.c
+@@ -253,6 +253,8 @@ static int vfs_statx_path(struct path *p
+ 			  u32 request_mask)
  {
- 	u32 cutoff;
+ 	int error = vfs_getattr(path, stat, request_mask, flags);
++	if (error)
++		return error;
  
--	if (!cur_rev) {
--		cur_rev = cpuid_to_ucode_rev(bsp_cpuid_1_eax);
--		pr_info_once("No current revision, generating the lowest one: 0x%x\n", cur_rev);
--	}
--
- 	cutoff = get_cutoff_revision(cur_rev);
- 	if (cutoff)
- 		return cur_rev <= cutoff;
-@@ -297,6 +292,13 @@ static u32 get_patch_level(void)
- 	u32 rev, dummy __always_unused;
+ 	if (request_mask & STATX_MNT_ID_UNIQUE) {
+ 		stat->mnt_id = real_mount(path->mnt)->mnt_id_unique;
+@@ -274,7 +276,7 @@ static int vfs_statx_path(struct path *p
+ 	if (S_ISBLK(stat->mode))
+ 		bdev_statx(path, stat, request_mask);
  
- 	native_rdmsr(MSR_AMD64_PATCH_LEVEL, rev, dummy);
-+	if (!rev) {
-+		if (x86_family(bsp_cpuid_1_eax) < 0x17)
-+			return rev;
-+
-+		rev = cpuid_to_ucode_rev(bsp_cpuid_1_eax);
-+		pr_info_once("No current revision, generating the lowest one: 0x%x\n", rev);
-+	}
- 
- 	return rev;
+-	return error;
++	return 0;
  }
--- 
-2.53.0
-
+ 
+ static int vfs_statx_fd(int fd, int flags, struct kstat *stat,
 
 
