@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059949;
-	b=Ys/2z6IpkT1y1/br7E6zHi1GQV+fZcC+IwpRnM8sxzB1ZevODhUUBHfFkLWc/CdLwXLZ
-	 p0RtlEq5ezp5WnSE58UqftmtLyAXMW67+ZLnFkQNhryszvbARAKXN/lD4SQSC7EvOtZNO
-	 YmW95bqV7b7u415nicnaLAYPm7GK24lEv6Nkbni+feUa8AK1R+7mUBQkkembjCAuUs5Is
-	 +UeUdUilUQqmpM9enxZtti8MArKWhy1DIz80ti5SuutXRAZHb9sX4xRkAVI+s4Q4xfI5m
-	 PT2/alGBBkzRJDEtnEMJmuqf+W126H6oXSfHgNr7qE4iDmljE2dbgoe1dwUBzsWKvJg==
+	t=1795059952;
+	b=cwvgoWC1mEUrg2ddQO1mzNqXVlDghkIGRRYLYZ7ZLWvbv5L0EOopVnOF2tGegBYL8a0a
+	 PsVEALljNKnAdrTiOc7S5Pa8l8USFHK711NxnO7SgbK17xOak6OyKRErnzYM32wdkuhy3
+	 5qIu45vlbvFX03J2nPg417J72X4ER1yRDuOz2GS3gE8Ip7Djk16jPebmJ2fiuWC1blynY
+	 2z8PSyoZMBKQR3YLDPkEEh+4gPRq5+NihwPi5o1N1ua5onWx5IXTiE25qbVnoo7GZJC0W
+	 WgjAN5gG+H4varuJ/GsUrVaPmlKVWQi78550+CmzCIm9ljhup4iq4u2AVlq0144QR3w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059949;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059952;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZSet2p2vLi+pmyBfmIhh8JJsAUzAAtpWwovrS3nHyb4=;
-	b=IeNFrdJxEDVKHkLAFl41JFxtdve35ofOp9wOC3J4FhNCzODovquAL2aR8YC+vqOSgcDE
-	 HP5bz3/rK+vM39l44LECWF1JnQ8Ppv8jGsc0UKfXMY+RSe7OkiRHZ86GgiGiiEBdgOAVw
-	 o19qm81Yu6U1DZ+oPzGEiVDO4ZcKbLaTk6l7D9yTRtZ2/lKrGjuznoPNAxtKo2nqFfz9j
-	 v2UMgxwT+OCJ2hk2+TsfFRBsvnBOJFH19Gxd+8nniG5Dw6yacV6lZoetaDwcMCE/Vat+Q
-	 YPXs10LN/n0pKFK/5z9cGRbSeevLpBZpE5bPN4BvEo+yFqSP0FJBmsbvYQCK8rDnKkg==
+	bh=OYLzz/8xK5Ae5XxJ0w9pAsHWAKze74o8mMT+7SfMEHY=;
+	b=H61FO+Eno5CO4f41KfYaFxXqodDTsu9Go3pQ089kpbwNidln3bfa9MsLkFKxXsqQ5RV9
+	 DbCYB6Da+5Y5TMMA/mOgHpD2fLeGRBpFlrNG9JnVsHcJY4J6JjD30cc/08J2FLw0NlPYU
+	 YcAbHLnDzH3D01u0BrIQXuPZfUOIM4MbgZMiQLHKVcBLAtnP2ALQkEfrBj5cpqodfA/mt
+	 +s4eAeMy0vHP2J39V5nLILtZPatVo6Yd7MRzfXrb8dLnzHyoaKIDWZzgIfsnCN6zg4fxw
+	 Kl4b3+S8VHxtPnqsPj8kUC4UFNwnNVv5u4kJFPN6i37IZqxMf/tlrMTR5T15Xe3Kdkw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FWH5AxoK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BotHAOBr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7236D606A325;
-	Thu, 19 Nov 2026 03:45:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6094860A2609;
+	Thu, 19 Nov 2026 03:45:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FWH5AxoK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C83351F000C4;
-	Thu, 19 Nov 2026 03:45:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BotHAOBr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86D161F000C4;
+	Thu, 19 Nov 2026 03:45:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059949;
-	bh=ZSet2p2vLi+pmyBfmIhh8JJsAUzAAtpWwovrS3nHyb4=;
+	s=korg; t=1795059952;
+	bh=OYLzz/8xK5Ae5XxJ0w9pAsHWAKze74o8mMT+7SfMEHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FWH5AxoKvAwx1hfIqIxrT6qLyuhnHEh4y36AL+qXoZNvxZWniJ8M2dSr5M68DIeSy
-	 0ltfgtz5R9AMyCvQRnVbsQenAUXHxsWqNmeaY/hQf8SMoLnik+bUUcOeuKpPg8kEOD
-	 WBolcdXenBxgw7/ZRT7Sf38nafo7Udwq95XL//6A=
+	b=BotHAOBr20kVvvMxXtlIqNuCckmdgx4r4zIkJp6oPgXH0e49Hbr2w1gVxQydsSAbA
+	 0FC5lkUxjVlxitkmTRwCRwAPoI2Zz0EToCainwpUIYoygTvybs0vJVHQ7ZQfpJv1Ga
+	 l1dE3XLMUPj77tQO4QsVaCHldmHZ8lEHefoEkzSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	Kyle Zeng <kylebot@openai.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Bjoern Doebel <doebel@amazon.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0973/1848] drm/msm/hdmi_phy: Cleanup after msm_hdmi_phy_resource_enable() failure
-Date: Wed, 18 Nov 2026 15:50:11 +0100
-Message-ID: <20261118145957.695560056@linuxfoundation.org>
+Subject: [PATCH 5.10 1018/1848] net/packet: check TX_RING fragments before memory accounting
+Date: Wed, 18 Nov 2026 15:50:56 +0100
+Message-ID: <20261118145959.619065003@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,63 +72,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit d27f831aaf20aaf06e41ceb1b260e10672269155 ]
+[ Upstream commit dc4dd12f80e499dc034710cd8195489abcf0b059 ]
 
-If msm_hdmi_phy_resource_enable() fails, e.g. when enabling regulators,
-it should reverse the state of things already changed.
-msm_hdmi_phy_resource_enable() is used also in probe path, thus such
-failure, which could be simple deferred probe, would leave these
-resources permanently enabled for the rest of the runtime.
+tpacket_fill_skb() adds the full non-linear payload length to
+skb->truesize and sk_wmem_alloc before checking MAX_SKB_FRAGS. With
+PACKET_VNET_HDR, userspace can submit a ring-sized frame even when it
+greatly exceeds the device MTU.
 
-Cc: <stable@vger.kernel.org>
-Fixes: 15b4a4523859 ("drm/msm/hdmi: Create a separate HDMI PHY driver")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/752654/
-Link: https://lore.kernel.org/r/20260911-drm-msm-hdmi-fixes-before-eliza-v4-1-87bdb9f1987f@oss.qualcomm.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+A near-INT_MAX frame can saturate sk_wmem_alloc before the fragment
+loop rejects it. A subsequent refcount_add(0x40000001) can temporarily
+turn REFCOUNT_SATURATED into 1. A concurrent TX completion can then
+drop that apparent last reference and free the still-live packet
+socket before refcount_warn_saturate() restores the counter.
+
+Check that the remaining payload fits in MAX_SKB_FRAGS pages before
+accounting it. Include the initial page offset in the calculation,
+and move the existing -EFAULT handling out of the fragment loop.
+This preserves the accepted packet sizes and error code while
+preventing an invalid frame from injecting an oversized byte charge.
+
+Fixes: 69e3c75f4d54 ("net: TX_RING and packet mmap")
+Cc: stable@vger.kernel.org
+Cc: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+[edumazet: use net_warn_ratelimited() instead of pr_err(), add a Fixes: tag]
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20261028181450.2221013-1-edumazet@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ 5.10: adjust for context in kernels lacking 3948b05950fd ("net:
+  introduce a config option to tweak MAX_SKB_FRAGS") ]
+Signed-off-by: Bjoern Doebel <doebel@amazon.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/hdmi/hdmi_phy.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ net/packet/af_packet.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-index 326b43c803f09..1bdaa1f94c29b 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-@@ -62,16 +62,28 @@ int msm_hdmi_phy_resource_enable(struct hdmi_phy *phy)
- 	ret = regulator_bulk_enable(cfg->num_regs, phy->regs);
- 	if (ret) {
- 		DRM_DEV_ERROR(dev, "failed to enable regulators: (%d)\n", ret);
--		return ret;
-+		goto err_pm_put;
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index 94853ddd0bc9d..be1ad7bce1588 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -2642,6 +2642,12 @@ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
  	}
  
- 	for (i = 0; i < cfg->num_clks; i++) {
- 		ret = clk_prepare_enable(phy->clks[i]);
--		if (ret)
-+		if (ret) {
- 			DRM_DEV_ERROR(dev, "failed to enable clock: %s (%d)\n",
- 				cfg->clk_names[i], ret);
-+			goto err_clk_unprepare;
-+		}
- 	}
+ 	offset = offset_in_page(data);
++	if (unlikely(to_write > MAX_SKB_FRAGS * PAGE_SIZE - offset)) {
++		net_warn_ratelimited("Packet exceed the number of skb frags(%u)\n",
++				     (unsigned int)MAX_SKB_FRAGS);
++		return -EFAULT;
++	}
++
+ 	len_max = PAGE_SIZE - offset;
+ 	len = ((to_write > len_max) ? len_max : to_write);
  
-+	return 0;
-+
-+err_clk_unprepare:
-+	for (; i > 0; i--)
-+		clk_disable_unprepare(phy->clks[i - 1]);
-+	regulator_bulk_disable(cfg->num_regs, phy->regs);
-+
-+err_pm_put:
-+	pm_runtime_put_sync(dev);
-+
- 	return ret;
- }
+@@ -2653,12 +2659,6 @@ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
+ 	while (likely(to_write)) {
+ 		nr_frags = skb_shinfo(skb)->nr_frags;
  
+-		if (unlikely(nr_frags >= MAX_SKB_FRAGS)) {
+-			pr_err("Packet exceed the number of skb frags(%lu)\n",
+-			       MAX_SKB_FRAGS);
+-			return -EFAULT;
+-		}
+-
+ 		page = pgv_to_page(data);
+ 		data += len;
+ 		flush_dcache_page(page);
 -- 
 2.53.0
 
