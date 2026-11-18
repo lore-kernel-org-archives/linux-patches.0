@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054195;
-	b=TlGi/0ShTECdJKqa2TAyhVgs5qQmpa0o8DKWPiRNCNHgIjXv47H67X77DcqmfXvjo0NZ
-	 lnVH/wpJUVC3xRYjMmOR+xUGDMngi3+Qx0J1+Yihu6al2IYDkGuRc2DGy2Q0nXtuQfbwS
-	 +YYL18sMc+64qxHyp+cLtZ40XoGJcc3I5AoJC3IDnbuJqn+7ZbJRevpeg0co9MtE3AcYf
-	 U3z9Q6SgEPT4ygFVoExaMmahkWBkXc/kEM4Pt1IlGwyiNKRAFnWZRBkE7c7iOsdAHlxYC
-	 t1CGxJMs78jwEC9dpAX7E/CWxUmJto4cF79k0Okp76El9mvwnidtqMM86VSLYWlpQ1Q==
+	t=1795054197;
+	b=zSRpcupf6R9n3yJNoXc5fRh94Iv3ZyyAm3zvfE4QWByQaEfpJ0aUZuzggA/ARBZW/CSW
+	 Bep+fqfunxjio4y0hXxuQhh+tp8JAjAEJ01LzYM4XiOMVYT47l6BwgIhR1xZWLO+fUBmC
+	 kPSBDdItfUQPoavLuCkeVIli5QZwKoIKAzxF8D7cXK/mJqjc9bDcxjRsd7weZnTtUactN
+	 0Cf5ybK8aJ+nqDi5D8AMG4fvVCCIg1INkXg/w6n9pagT0UO7mM99onGxXhXWnxgCQ3iH4
+	 NorU3rMqBFrxY+pFywpun5awlKP8+tDJ4d3RKvgryWy+BJmLUZuNexWbJLavBsmPO/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054195;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054197;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zs8Idcot8mHN9bk5TKLYZk5gfhjR1jwbok2ttTdZxIo=;
-	b=YPG5HEBxeu4IHggVfEYtOerHN1hmK3JG6Lzi5Sv5BnZRFHaZ1EBRRuPo3xQVNfeG1Y7Q
-	 zcM5X8W8v5Km7gyrPMmKbgBfef6gjFi/hoeYe6tsvifpP6x4Mn079pOkhwgEKzYPPm09+
-	 Eksm34B1sBTp+tB52SeZT1dDVOSEDP0M2kFvAB100IXfvMRM0fdfgv5xPnqV4JgpS/YR7
-	 LSdFYmZvC6JhKwR90LHdyeRwIHseIqqCGjN1gKgrZng8C82gmBhkz1C96pZjsCIXlrz+y
-	 AtRyDlyGzIQcyfArrNFF2P+VMK+eqgtEuOkl6NKvnaLLn2Y8HXWQ8PPdnSRnOzVlPKw==
+	bh=OPiVy7QymOIzh/sjhm5eUz514D9yaEjVHw4nJaadjAk=;
+	b=4s1NOzuC4YseFL+6GPyAAR7zhzqllSKm6j/+v2j8NZFH+HDI7amg1U7Eqesgv4wZaF3Z
+	 j86nw7X6n/NsAuB0CGGo9IJc5h1j48/aKR5atCm2xc43YaHkIsjDO8lbG78YTHLz0LcA4
+	 2pPYtvKek5spwZw6kE5Ga+1dWDsm1iEr1E1EGMf5UjOSJMofSSYD1aAvYzyDxlq2YUf+k
+	 NjvQ/fek1vjdo1fEKB4PyDThZmD3oE29sAei8nOK6zhn+zP9XjXOv8GYIlSFRtrHwpjiP
+	 YquiLeXM3IYS5tt95E1MQioQEz+q53gGNHLPDdncpSX5L+vkAwUnzb3eFv9RtOav6Ag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uwl1fMKA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zAKHY7EB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44544606A325;
-	Thu, 19 Nov 2026 02:09:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C400A606A325;
+	Thu, 19 Nov 2026 02:09:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uwl1fMKA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CAA61F000C4;
-	Thu, 19 Nov 2026 02:09:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zAKHY7EB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 211541F000C4;
+	Thu, 19 Nov 2026 02:09:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054194;
-	bh=zs8Idcot8mHN9bk5TKLYZk5gfhjR1jwbok2ttTdZxIo=;
+	s=korg; t=1795054197;
+	bh=OPiVy7QymOIzh/sjhm5eUz514D9yaEjVHw4nJaadjAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uwl1fMKA71OjefmVLxyr9xVkt8fl72Vx2fyDlanN5L3dnnrzTof57RMjMvFv5ZK1F
-	 UfcA/JFw2AnZ4ekXD2xMDBVP3xtH4h6N8lEwb3Qj4sdb9/KwoifVGQj1yHDzGBS6tP
-	 4SPwFmIEGNOc8u2TjpNg46OkbzGv/6Gwtc7cKgJA=
+	b=zAKHY7EBIscrvD98QJFlXwYeZB5lC4OpxknLdrvhKx3kEkCW/0Lze58nCQFyHbXxR
+	 mrGbEkp3p6OuvA6G6G1ZwWxfoKvfjsWuYemZ168/e4Sj18ByldlnORrQ5V4F3nX/sR
+	 e17JhrP5iqbaCoOcNRx81Eu31Sr0YbO+KW0vfeaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Orlando <francesco.orlando99@libero.it>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Maurizio Casciano <mauriziocasciano7@gmail.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1187/2214] Input: xpad - add GameSir Nova Lite support
-Date: Wed, 18 Nov 2026 15:47:43 +0100
-Message-ID: <20261118150059.398821697@linuxfoundation.org>
+Subject: [PATCH 5.15 1188/2214] power: supply: core: Honor supplied-from with CONFIG_OF=y
+Date: Wed, 18 Nov 2026 15:47:44 +0100
+Message-ID: <20261118150059.434325287@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,43 +68,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francesco Orlando <francesco.orlando99@libero.it>
+From: Maurizio Casciano <mauriziocasciano7@gmail.com>
 
-[ Upstream commit 2e6f2e5799f328ca0879dad14d7f3709c7f7496b ]
+[ Upstream commit 6bd80f22c764fe8c56c62c118387f86a3ca98cff ]
 
-Add vendor and product ID for GameSir Nova Lite (0x3537:0x1040) in
-XInput mode to enable force feedback rumble support.
+The supplied-from device property is the name-based counterpart to
+firmware-node power-supplies references. It was added for non-DT platforms,
+but its parser is compiled only when CONFIG_OF is disabled. CONFIG_OF is
+a global kernel option, so x86 systems commonly enable it even when
+individual power supplies are described by software nodes.
 
-Signed-off-by: Francesco Orlando <francesco.orlando99@libero.it>
-Link: https://patch.msgid.link/20261011165821.72698-1-francesco.orlando99@libero.it
+Consequently, these consumers never populate supplied_from and supplier
+notifications do not reach their external_power_changed() callbacks. On a
+Lenovo Yoga Book YB1-X91L, ftrace showed the Whiskey Cove supplier
+notification running without invoking the BQ25892 callback, leaving the
+input current limit at its boot-time value.
+
+Use a single power_supply_check_supplies() implementation for all
+configurations. Preserve firmware-node power-supplies references as the
+preferred firmware description and use the name-based supplied-from
+property only when no references are specified. Continue to honor an
+explicitly provided supplied_from list first and propagate errors from
+specified firmware references.
+
+With the fix, ftrace shows the BQ25892 callback on hotplug. A boot-offline
+test changes its input current limit from 500 mA to 2 A.
+
+Fixes: 58a36bb06891 ("power: supply: core: Add support for supplied-from device-property")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-[ sashal: added the missing XPAD_XBOX360_VENDOR(0x3537) entry to the USB device ID table ]
+Assisted-by: LLM
+Signed-off-by: Maurizio Casciano <mauriziocasciano7@gmail.com>
+Link: https://patch.msgid.link/20260924225152.985489-1-mauriziocasciano7@gmail.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+[ sashal: Replaced generic firmware-node reference parsing with of_parse_phandle_with_fixed_args() to fit the existing device-tree model. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/joystick/xpad.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/power/supply/power_supply_core.c | 81 +++++++++++-------------
+ 1 file changed, 38 insertions(+), 43 deletions(-)
 
-diff --git a/drivers/input/joystick/xpad.c b/drivers/input/joystick/xpad.c
-index 4417cd8fa6d31..32f5d9ef34cd5 100644
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -363,6 +363,7 @@ static const struct xpad_device {
- 	{ 0x31e3, 0x1300, "Wooting 60HE (AVR)", 0, XTYPE_XBOX360 },
- 	{ 0x31e3, 0x1310, "Wooting 60HE (ARM)", 0, XTYPE_XBOX360 },
- 	{ 0x3285, 0x0607, "Nacon GC-100", 0, XTYPE_XBOX360 },
-+	{ 0x3537, 0x1040, "GameSir Nova Lite", 0, XTYPE_XBOX360 },
- 	{ 0x3767, 0x0101, "Fanatec Speedster 3 Forceshock Wheel", 0, XTYPE_XBOX },
- 	{ 0xffff, 0xffff, "Chinese-made Xbox Controller", 0, XTYPE_XBOX },
- 	{ 0x0000, 0x0000, "Generic X-Box pad", 0, XTYPE_UNKNOWN }
-@@ -493,6 +494,7 @@ static const struct usb_device_id xpad_table[] = {
- 	XPAD_XBOX360_VENDOR(0x2f24),		/* GameSir Controllers */
- 	XPAD_XBOX360_VENDOR(0x31e3),		/* Wooting Keyboards */
- 	XPAD_XBOX360_VENDOR(0x3285),		/* Nacon GC-100 */
-+	XPAD_XBOX360_VENDOR(0x3537),		/* GameSir Controllers */
- 	{ }
- };
+diff --git a/drivers/power/supply/power_supply_core.c b/drivers/power/supply/power_supply_core.c
+index 2ebf838fbf9d3..0701bf34e850e 100644
+--- a/drivers/power/supply/power_supply_core.c
++++ b/drivers/power/supply/power_supply_core.c
+@@ -154,7 +154,6 @@ static void power_supply_deferred_register_work(struct work_struct *work)
+ 		mutex_unlock(&psy->dev.parent->mutex);
+ }
  
+-#ifdef CONFIG_OF
+ static int __power_supply_populate_supplied_from(struct device *dev,
+ 						 void *data)
+ {
+@@ -229,71 +228,68 @@ static int power_supply_find_supply_from_node(struct device_node *supply_node)
+ 
+ static int power_supply_check_supplies(struct power_supply *psy)
+ {
+-	struct device_node *np;
+-	int cnt = 0;
++	struct device *parent = psy->dev.parent;
++	struct of_phandle_args args;
++	int cnt, nval, ret;
+ 
+ 	/* If there is already a list honor it */
+ 	if (psy->supplied_from && psy->num_supplies > 0)
+ 		return 0;
+ 
+-	/* No device node found, nothing to do */
+-	if (!psy->of_node)
+-		return 0;
+-
+-	do {
+-		int ret;
++	for (cnt = 0; psy->of_node; cnt++) {
++		ret = of_parse_phandle_with_fixed_args(psy->of_node,
++						       "power-supplies", 0, cnt,
++						       &args);
++		if (ret) {
++			if (ret != -ENOENT)
++				return ret;
+ 
+-		np = of_parse_phandle(psy->of_node, "power-supplies", cnt++);
+-		if (!np)
+ 			break;
++		}
+ 
+-		ret = power_supply_find_supply_from_node(np);
+-		of_node_put(np);
++		ret = power_supply_find_supply_from_node(args.np);
++		of_node_put(args.np);
+ 
+ 		if (ret) {
+ 			dev_dbg(&psy->dev, "Failed to find supply!\n");
+ 			return ret;
+ 		}
+-	} while (np);
+-
+-	/* Missing valid "power-supplies" entries */
+-	if (cnt == 1)
+-		return 0;
+-
+-	/* All supplies found, allocate char ** array for filling */
+-	psy->supplied_from = devm_kzalloc(&psy->dev, sizeof(psy->supplied_from),
+-					  GFP_KERNEL);
+-	if (!psy->supplied_from)
+-		return -ENOMEM;
+-
+-	*psy->supplied_from = devm_kcalloc(&psy->dev,
+-					   cnt - 1, sizeof(char *),
+-					   GFP_KERNEL);
+-	if (!*psy->supplied_from)
+-		return -ENOMEM;
++	}
+ 
+-	return power_supply_populate_supplied_from(psy);
+-}
+-#else
+-static int power_supply_check_supplies(struct power_supply *psy)
+-{
+-	int nval, ret;
++	if (cnt) {
++		/* All supplies found, allocate char ** array for filling */
++		psy->supplied_from = devm_kzalloc(&psy->dev,
++						  sizeof(psy->supplied_from),
++						  GFP_KERNEL);
++		if (!psy->supplied_from)
++			return -ENOMEM;
++
++		*psy->supplied_from = devm_kcalloc(&psy->dev,
++						   cnt, sizeof(char *),
++						   GFP_KERNEL);
++		if (!*psy->supplied_from)
++			return -ENOMEM;
++
++		return power_supply_populate_supplied_from(psy);
++	}
+ 
+-	if (!psy->dev.parent)
++	/* Fall back to the name-based property if no references were specified. */
++	if (!parent)
+ 		return 0;
+ 
+-	nval = device_property_read_string_array(psy->dev.parent,
+-						 "supplied-from", NULL, 0);
++	nval = device_property_string_array_count(parent, "supplied-from");
+ 	if (nval <= 0)
+ 		return 0;
+ 
+ 	psy->supplied_from = devm_kmalloc_array(&psy->dev, nval,
+-						sizeof(char *), GFP_KERNEL);
++						sizeof(*psy->supplied_from),
++						GFP_KERNEL);
+ 	if (!psy->supplied_from)
+ 		return -ENOMEM;
+ 
+-	ret = device_property_read_string_array(psy->dev.parent,
+-		"supplied-from", (const char **)psy->supplied_from, nval);
++	ret = device_property_read_string_array(parent, "supplied-from",
++						(const char **)psy->supplied_from,
++						nval);
+ 	if (ret < 0)
+ 		return ret;
+ 
+@@ -301,7 +297,6 @@ static int power_supply_check_supplies(struct power_supply *psy)
+ 
+ 	return 0;
+ }
+-#endif
+ 
+ struct psy_am_i_supplied_data {
+ 	struct power_supply *psy;
 -- 
 2.53.0
 
