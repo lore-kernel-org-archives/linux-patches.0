@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031196;
-	b=b6SiHInrQTlXW3JPm1bF89RlJcqBPoeGwU3g00BLh/pLr/baii4oHHT+elBhfuGveReL
-	 jfBtKElPrP0TA2/4Spf9fHjFn8rmuuVl141cheseNf4MkvDBQSv4pjLVzpz17gKD/hdbN
-	 /wiCEBkmo86XBoxR4dBWwRsG4x8l6ITHMrJ7vGLvuLeA3fKEZ1MUaRaEcpBqmgvA08oVL
-	 wiGgRAwfBk5b/o/sYMp4qCLKXAIH/VItmqa9GgF11QL0egNeuZSmNxb88UwKzgkLCvbUL
-	 U/HBQYWiJCiV5zqqL6CWY6qXkuG0cmJOdfPdBTr9O83iYbdLQGadcJQeGMpRBbR0N9w==
+	t=1795031199;
+	b=cLSxaC2IV3iMMwLIH6IdHKX/JKF/OBxxxJ2jqr/AMeblNbuZfNamYJZHQupmzHAnF2qX
+	 jbAZVW9l/6XnHEF72wUhxX3vglOZ30X8ffAuV/JBAnvclvY8uF/UvFT7cOixClMJoewiJ
+	 fNPPyQ4kw/kD2JSeT6luY6Ob41cNwu4FkV2fK2ZBiCA9aDVlKTX2SIhoW+CWY1AG7dcoi
+	 WzG8IUq6nkjY3EHBcLVXwjTi1aMObzBhsydWzVR7do5XT+kmeW4ZRZc9GZ25lP5CIzjuv
+	 cG3kEl9XRa7ls6UHCzeBSkG8hziN15nBWQd02oLV5sL+MV7q0tgo2OT+GujZ3AO6pcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031196;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031199;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7SHTnr8kf+2fo9BJf3X0IB7unL7QbyAqz8bnMN2+l3Q=;
-	b=1xJiJ5S1EAmFWHp0wC2reeCMEDlR/kCvlm2ejWLsAuB8vjge9TaLQaEa/bFMTKMWYdrF
-	 tDtSXRCqgxJyVJoGiUI+1bB/jXNIFOiAj7skvbSiDLivoKAsdRRf1pN9fP6axYhORzvw0
-	 453S0DvMgVjpqUJ1eE5FM8mGUlqaKnAZ4I1AHBiEuh7g88Kj3r7rKIqNWIi48SB3vd0Fn
-	 EZGrNkWFPGVTUNMft8DvyFHuB4znQBZ9dRoD0+CYVhHLVuz9BaHzGXxkZPUvr4OEeJwt+
-	 Ck/2p+iFJ6qQpaqScY75kQgixT1Xl00Z91f1ID1+By3Qkw+0B1GLPNsjhCmLwOlJggA==
+	bh=hsKnxL2xQcA4eKZdlyGhxRfXnqzY22Ku9y/D2W0sU14=;
+	b=SOZdyqvoaDWcM3mfUZG/5hzPuYgPlGSizRMgXFm3KJ3kQdXMvJEoZehhDXqODP1dXayT
+	 qa/7d9XnCk3no5C23Br/BANsK+NC++o0fU32yj/9mBDlyPTT3gb8TF7MipFB2HBMv5aVF
+	 chO5QYDovxwo4yPRh6tPX+zeujKBuKyUaw9VQpBIJRmxN5aeCMRiPJM2cfkGL1WT22T8X
+	 U3xaEDHt2//45SelDG8xGCSccQNO3TiMb5ue+nlH/L8K8rhIeWB7jl3TJcSfTo6XfCFux
+	 awvU65hqs3MHIYuPtgRN+yDk7ger0F/meYS/P0+YO4I3JTpjGXseeZ3v30bpNPPpVxw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ojvVMq/g";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yDYLwisy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BCE606A320;
-	Wed, 18 Nov 2026 19:46:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB05606A320;
+	Wed, 18 Nov 2026 19:46:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ojvVMq/g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A52461F000C4;
-	Wed, 18 Nov 2026 19:46:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yDYLwisy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717471F000CA;
+	Wed, 18 Nov 2026 19:46:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031196;
-	bh=7SHTnr8kf+2fo9BJf3X0IB7unL7QbyAqz8bnMN2+l3Q=;
+	s=korg; t=1795031199;
+	bh=hsKnxL2xQcA4eKZdlyGhxRfXnqzY22Ku9y/D2W0sU14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ojvVMq/gBUXwH/C3oQ19JmjNdaCX4+GsYnhiIMJAwWC1FxxZOUOBBZc7Ze/mQYPQT
-	 aOuK3MLXORoV4XFQBd7uh5HBry/GRiMcJGK0J1yBUoq6PykpBW6kZguDOUjIHO9Iro
-	 gQHBlZcMaLFRjJSyIG9rMGwnR9/g5/BLcTLJUlCI=
+	b=yDYLwisyV1QUpvoDyVD+/zk4zj/WFacpX28F97Nn2oppnu3CkhL0b7jYPExGUAfco
+	 BIlOZNEc4W1gQ4lyQd48CDfdRrqXG7gp+/UDSZA2LKUCH+DE2nXxWPMi/12QPSghjn
+	 Q1TYl1YpzCNTtjgEzb+bjHfjVBD/01KWMSFtZ5v4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Jiale Yao <yaojiale02@163.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0921/1756] efi/libstub: Free cmdline_ptr in efi_pe_entry
-Date: Wed, 18 Nov 2026 15:50:48 +0100
-Message-ID: <20261118150046.644870698@linuxfoundation.org>
+Subject: [PATCH 6.12 0967/1756] wifi: mt76: usb: fix source overread in mt76u_copy
+Date: Wed, 18 Nov 2026 15:51:34 +0100
+Message-ID: <20261118150048.633508172@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,42 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 8ea857a2bb547e388e86ca42c58a97e162e09f83 ]
+[ Upstream commit d435130cdd064b901d8ce5ada0322298e6a86a49 ]
 
-Sashiko points out that efi_handle_cmdline() allocates this memory and
-hands it over to the caller. If efi_pe_entry() ever returns it should be
-freed. Add a __free annotation.
+mt76u_copy() rounds up len to a multiple of four and uses the rounded
+length as the bound for memcpy() from the source buffer. When the
+caller's length is not four-byte aligned, the final copy reads up to
+three bytes past the source buffer.
 
-Fixes: 42c8ea3dca09 ("efi: libstub: Factor out EFI stub entrypoint into separate file")
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Keep the original length for the source copy and zero the remaining
+bytes in the transmit buffer so that the hardware access width remains
+four-byte aligned.
+
+Fixes: 9446248669968 ("mt76: speed up usb bulk copy")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Link: https://patch.msgid.link/20260925150556.2304003-2-yaojiale02@163.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/libstub/efi-stub-entry.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/usb.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/firmware/efi/libstub/efi-stub-entry.c b/drivers/firmware/efi/libstub/efi-stub-entry.c
-index 2ebb81fd9f42a..06934278677d6 100644
---- a/drivers/firmware/efi/libstub/efi-stub-entry.c
-+++ b/drivers/firmware/efi/libstub/efi-stub-entry.c
-@@ -36,7 +36,6 @@ efi_status_t __efiapi efi_pe_entry(efi_handle_t handle,
- 	unsigned long image_addr;
- 	unsigned long image_size = 0;
- 	/* addr/point and size pairs for memory management*/
--	char *cmdline_ptr = NULL;
- 	unsigned long reserve_addr = 0;
- 	unsigned long reserve_size = 0;
+diff --git a/drivers/net/wireless/mediatek/mt76/usb.c b/drivers/net/wireless/mediatek/mt76/usb.c
+index b39dbf22dfc1d..317b3ee648ea8 100644
+--- a/drivers/net/wireless/mediatek/mt76/usb.c
++++ b/drivers/net/wireless/mediatek/mt76/usb.c
+@@ -160,8 +160,10 @@ static void mt76u_copy(struct mt76_dev *dev, u32 offset,
+ {
+ 	struct mt76_usb *usb = &dev->usb;
+ 	const u8 *val = data;
+-	int ret;
+ 	int current_batch_size;
++	int len_aligned;
++	int copy_len;
++	int ret;
+ 	int i = 0;
  
-@@ -58,6 +57,7 @@ efi_status_t __efiapi efi_pe_entry(efi_handle_t handle,
- 		return status;
- 	}
+ 	/* Assure that always a multiple of 4 bytes are copied,
+@@ -169,12 +171,16 @@ static void mt76u_copy(struct mt76_dev *dev, u32 offset,
+ 	 * See: "mt76: round up length on mt76_wr_copy"
+ 	 * Commit 850e8f6fbd5d0003b0
+ 	 */
+-	len = round_up(len, 4);
++	len_aligned = round_up(len, 4);
  
-+	char *cmdline_ptr __free(efi_pool) = NULL;
- 	status = efi_handle_cmdline(image, &cmdline_ptr);
- 	if (status != EFI_SUCCESS)
- 		return status;
+ 	mutex_lock(&usb->usb_ctrl_mtx);
+-	while (i < len) {
+-		current_batch_size = min_t(int, usb->data_len, len - i);
+-		memcpy(usb->data, val + i, current_batch_size);
++	while (i < len_aligned) {
++		current_batch_size = min_t(int, usb->data_len, len_aligned - i);
++		copy_len = min_t(int, current_batch_size, len - i);
++		memcpy(usb->data, val + i, copy_len);
++		if (copy_len < current_batch_size)
++			memset(usb->data + copy_len, 0,
++			       current_batch_size - copy_len);
+ 		ret = __mt76u_vendor_request(dev, MT_VEND_MULTI_WRITE,
+ 					     USB_DIR_OUT | USB_TYPE_VENDOR,
+ 					     0, offset + i, usb->data,
 -- 
 2.53.0
 
