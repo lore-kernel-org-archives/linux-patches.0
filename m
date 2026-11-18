@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056363;
-	b=BNXIFA7P7rDlUerUzH93mcIxlREpupViGwt0wf2C2mLh0xJa4yKy1i4DfS+0lgYgkXmp
-	 lC2+ovWiBU7KXtEcjXrHoidjJ9IkIqnywVrGO0unTSfHOi72GHqPOtHOQQ2N965iJHEEH
-	 KckwTApKlAWJhq0tTdkm28DbOnnybvMI4c/4neBBLluPlCNYYfquQt2f/9lIEjumqYyYm
-	 99fshcgthi3fXOyh/OIrH3ZjYA4t+cK1tNqAF9PgGBT10QpU5fjHdLMm3zI7Z4atYWwJQ
-	 M38wNauV7tD2J2YsQtSqBPLZ9bUCVqtdrk4lWkU6n3QzXKDffBbu2xv4rlcUZLE/zAQ==
+	t=1795056365;
+	b=SnK//XSTVVNrzpU0WrC4dVMkLrkwB5jnunA1mP0GoO1KaEcknFoMgjQWWV0UfmU0Vzwn
+	 1RjZTnOrCHIQzHdV+1W17ONuVC2MSOSE+CQiu37IkXQFTLD9NTaMRebnGks6c0Lbic1s0
+	 ytiUWLWG7p9Cy9MgT0F+flo+Znv0SRA4Ghf7DuFOrr3P21W6n5WsIqo/1uBryORaOqnTF
+	 eydD1QLQOM29aQZ1xMqSB1KOAnXGPGt37nKPPFaoJ+J8YKbfMclYGI4QLdgc/gm0dzbd6
+	 dNspyiMf4PC5RwKvtY4kCEWG5BWq8pQ62xItfxHg65LibQHp5txXSRUrxySfR6leVcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056363;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056365;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IfYxlQpLjGlJArMbFgiU0i/YhXNEVL+mlVG3RfdCG70=;
-	b=GyI5X4D155NTr5eFEJjcTsIWb4B0AB+df1cwIPcmh3zdwB4CF4JakBqVAPIotzZHjrwD
-	 PSAjZbBFrb375wi0Xl31hkOQzpJrA7/HqEZ9+FrWEjWwG6N8RAzJJY3yguOHPdZ5VD2yI
-	 phgxBSZ9S4QvuClnftVZj7bQ4jFJPkDFuVu1BZ7723QKhiePLLjYFimfnZjAyXYAvV6i/
-	 19EeUUD65aST9pQ8jQkMbp8WMtCUja9tJsQ0ZdTDQNZCXShJgYLXfeIK+73oXoj8m0D1B
-	 E292kw0BjsbpFsZ+w8TMmdZbE/gvf0NCr7Kvmti5IMv+3Id7A1LfGESibJL3/DXjesQ==
+	bh=m2cvRYXJoVYRK+0f5ngQwWRK36jjzzRLez3OmZ98EPs=;
+	b=ufQ7RTEuTAagZ4WohQdsNpcvr/w0YkRVt1j+F/6vdg0ebM7W2fynURWNlSjJAqHaLUMC
+	 jVFNsbBrX1JYKgzZgvaYq+cL47BP9P9QhZhcVgrqtLGIXnLEKaQeZzFVATE2pnOJpizVk
+	 TgaKTSGpHL3YqorWqmfyM+vp3GND+2KP8r6o7QHDC+MbIQaOjAHC5nsVW3Nc9m9TkE3QX
+	 tBP07jvX1KAdX8d/yBqXErrAJQ2263nDVA8bpz/2nrzlB7tRG5BAO9gg47uANkueEkOVr
+	 6G3dcTErVSoOt2ijbQz/PKvi+Jk5sk47ug9vlRegSR+vlDehlS9rWIZ7QIDxykAL9/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FLlrpMUM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kPDxORXt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC8C606A320;
-	Thu, 19 Nov 2026 02:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E0D606A32F;
+	Thu, 19 Nov 2026 02:46:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FLlrpMUM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 748541F000C5;
-	Thu, 19 Nov 2026 02:46:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kPDxORXt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D5741F000C6;
+	Thu, 19 Nov 2026 02:46:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056363;
-	bh=IfYxlQpLjGlJArMbFgiU0i/YhXNEVL+mlVG3RfdCG70=;
+	s=korg; t=1795056365;
+	bh=m2cvRYXJoVYRK+0f5ngQwWRK36jjzzRLez3OmZ98EPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FLlrpMUMkWyUBOzrtawEZZ1FZkvE69BG1q9XZnf+FlMUBB5iyd+hcEar5pAkkxLuM
-	 X6uuHmfI2i2CNK6mXXpAOpVKloFBA0mQHqAOm/bGC+XyIe2Q1PIPgTrfkSs4joRvo3
-	 esH/0P42XQJtn6S/lbf3pGu0ztlGAFNb3AUsDZ6c=
+	b=kPDxORXt5WXj8QTIQXzBt1b9N0b9b28EztVoqrcsKQPWaUYdrRpiHejOLuVu6xZgs
+	 HQdqqyai9glpa5UwL8RP5FLgRRTQ1q+piqAEjTCODSgnFBWhlL4ksI7spNDMD19qw8
+	 vQq0xzB/aoDFeO5CbjcO4ynjZeU0Ruo5frcXF5xM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youngsung Ahn <ays511.kr@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Bob Pearson <rpearsonhpe@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1962/2214] RDMA/rxe: reject IB_WR_REG_MR from user QPs in rxe_reg_fast_mr()
-Date: Wed, 18 Nov 2026 16:00:38 +0100
-Message-ID: <20261118150129.435493225@linuxfoundation.org>
+Subject: [PATCH 5.15 1963/2214] RDMA/rxe: Move AV from rxe_send_wqe to rxe_send_wr
+Date: Wed, 18 Nov 2026 16:00:39 +0100
+Message-ID: <20261118150129.471273385@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,56 +68,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Youngsung Ahn <ays511.kr@gmail.com>
+From: Bob Pearson <rpearsonhpe@gmail.com>
 
-[ Upstream commit 33afe9909f213d8bb8e80f0b93382dde0f56e2c7 ]
+[ Upstream commit cfc0312d9c83a5bbb66fa73ba47dd1301d75b2e8 ]
 
-IB_WR_REG_MR is documented as kernel-only ("can not be issued by
-userspace"), but nothing enforces it.
-rxe_wr_opcode_info[IB_WR_REG_MR] sets WR_LOCAL_OP_MASK for IB_QPT_RC,
-a QP type userspace can create, so a user QP that writes
-opcode = IB_WR_REG_MR into its mmap'd SQ ring reaches
-rxe_do_local_ops() -> rxe_reg_fast_mr(). That function then trusts
-the ring-supplied fields:
+Move the struct rxe_av av from struct rxe_send_wqe to struct rxe_send_wr
+placing it in wr.ud at the same offset as it was previously. This has the
+effect of increasing the size of struct rxe_send_wr while keeping the size
+of struct rxe_send_wqe the same. This better reflects the use of this
+field which is only used for UD sends. This change has no effect on ABI
+compatibility so the modified rxe driver will operate with older versions
+of rdma-core.
 
-	struct rxe_mr *mr = to_rmr(wqe->wr.wr.reg.mr);
-	...
-	if (unlikely(mr->state != RXE_MR_STATE_FREE))    /* deref */
-	...
-	mr->access = access;                             /* write */
-
-For a user QP wqe->wr.wr.reg.mr is a fully attacker-chosen pointer,
-so this is an arbitrary-kernel-address dereference (arbitrary read
-confirmed, oops). No existing check distinguishes a user QP on this
-path.
-
-Reject IB_WR_REG_MR for user QPs before dereferencing the supplied
-pointer.
-
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Signed-off-by: Youngsung Ahn <ays511.kr@gmail.com>
-Link: https://patch.msgid.link/20261001152426.3259522-1-ays511.kr@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Link: https://lore.kernel.org/r/20211007204051.10086-2-rpearsonhpe@gmail.com
+Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Stable-dep-of: 47a9c0338f2e ("RDMA/rxe: validate inline sge_offset in finish_packet() before indexing inline_data[]")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_mr.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/infiniband/sw/rxe/rxe_av.c    | 2 +-
+ drivers/infiniband/sw/rxe/rxe_verbs.c | 3 ++-
+ include/uapi/rdma/rdma_user_rxe.h     | 4 +++-
+ 3 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_mr.c b/drivers/infiniband/sw/rxe/rxe_mr.c
-index 7c2e7b291b653..a16e2d24c3249 100644
---- a/drivers/infiniband/sw/rxe/rxe_mr.c
-+++ b/drivers/infiniband/sw/rxe/rxe_mr.c
-@@ -571,6 +571,10 @@ int rxe_reg_fast_mr(struct rxe_qp *qp, struct rxe_send_wqe *wqe)
- 	u32 key = wqe->wr.wr.reg.key;
- 	u32 access = wqe->wr.wr.reg.access;
+diff --git a/drivers/infiniband/sw/rxe/rxe_av.c b/drivers/infiniband/sw/rxe/rxe_av.c
+index da2e867a1ed93..85580ea5eed0d 100644
+--- a/drivers/infiniband/sw/rxe/rxe_av.c
++++ b/drivers/infiniband/sw/rxe/rxe_av.c
+@@ -107,5 +107,5 @@ struct rxe_av *rxe_get_av(struct rxe_pkt_info *pkt)
+ 	if (qp_type(pkt->qp) == IB_QPT_RC || qp_type(pkt->qp) == IB_QPT_UC)
+ 		return &pkt->qp->pri_av;
  
-+	/* IB_WR_REG_MR is a kernel-only op; a user QP must not reach here. */
-+	if (qp->is_user)
-+		return -EOPNOTSUPP;
-+
- 	/* user can only register MR in free state */
- 	if (unlikely(mr->state != RXE_MR_STATE_FREE)) {
- 		pr_warn("%s: mr->lkey = 0x%x not free\n",
+-	return (pkt->wqe) ? &pkt->wqe->av : NULL;
++	return (pkt->wqe) ? &pkt->wqe->wr.wr.ud.av : NULL;
+ }
+diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.c b/drivers/infiniband/sw/rxe/rxe_verbs.c
+index e40927cf5772e..d3aef42aaa38f 100644
+--- a/drivers/infiniband/sw/rxe/rxe_verbs.c
++++ b/drivers/infiniband/sw/rxe/rxe_verbs.c
+@@ -584,7 +584,8 @@ static void init_send_wqe(struct rxe_qp *qp, const struct ib_send_wr *ibwr,
+ 	if (qp_type(qp) == IB_QPT_UD ||
+ 	    qp_type(qp) == IB_QPT_SMI ||
+ 	    qp_type(qp) == IB_QPT_GSI)
+-		memcpy(&wqe->av, &to_rah(ud_wr(ibwr)->ah)->av, sizeof(wqe->av));
++		memcpy(&wqe->wr.wr.ud.av, &to_rah(ud_wr(ibwr)->ah)->av,
++		       sizeof(struct rxe_av));
+ 
+ 	if (unlikely(ibwr->send_flags & IB_SEND_INLINE))
+ 		copy_inline_data_to_wqe(wqe, ibwr);
+diff --git a/include/uapi/rdma/rdma_user_rxe.h b/include/uapi/rdma/rdma_user_rxe.h
+index e283c2220abaf..2f1ebbe964345 100644
+--- a/include/uapi/rdma/rdma_user_rxe.h
++++ b/include/uapi/rdma/rdma_user_rxe.h
+@@ -98,6 +98,9 @@ struct rxe_send_wr {
+ 			__u32	remote_qpn;
+ 			__u32	remote_qkey;
+ 			__u16	pkey_index;
++			__u16	reserved;
++			__u32	pad[5];
++			struct rxe_av av;
+ 		} ud;
+ 		struct {
+ 			__aligned_u64	addr;
+@@ -148,7 +151,6 @@ struct rxe_dma_info {
+ 
+ struct rxe_send_wqe {
+ 	struct rxe_send_wr	wr;
+-	struct rxe_av		av;
+ 	__u32			status;
+ 	__u32			state;
+ 	__aligned_u64		iova;
 -- 
 2.53.0
 
