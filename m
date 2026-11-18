@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047967;
-	b=nVpj6Fj2ALRRYjy3dmjJxR63m/tVZVECvXkCcw+ikcOz4I/9UlDe9S0gMetWENKSG5e1
-	 fml+Tzgsd0zxTvQVtiTQKmdMOcalRsgc3sm0GSYXTo68na5BVFFtE0qlnzQbqt+1IoYg3
-	 XQAeq45xrZLqVQ/oXZumJjpU1oNpuS068Zfvff704EbqMOxAqu83DXdpXSDMfVebsVhnb
-	 zatZhBC3cNMuct9sBYaJnemYyiD3KITaaBj7rU0HEwrg3/zwl3ZOA7E4bg1IacriC+ARD
-	 E5aaBNOsmJ6pDIyzAa+KQZeLJdxAlC5ewmcjHPs+4xR590I1LFcz4r1afA6zQMzgH/g==
+	t=1795047970;
+	b=x9V/ITO5kuK3oY7F6wnsWjqM0gdSP8sga8v6jeVL/EDaBSHKcG6EHQ9Vj4NVu87Avgra
+	 3mvuf988jjLJd3JjY2cV6Z4Px9Drd3x3PobmQAxOLtoagE/IqmlZPYv37r76yzRPfruRw
+	 VhXgvxYxWkRCVu1aN92YDM/YZ/a8Q1dVpUME9hbYZE0NRj7HfPtr/GqSGCfOGUGpMicjd
+	 Hyi7Yo71pP3VwoaBWSnhWsgzBsrP5rllWTwAcMygDgkvZ1PxPXHwPPLGkhs3N6KkRm89r
+	 9SjKWaYZdJ3lVBKexnMcwTa0kwhwNtbaqtpRjytI92SC8Cq760XNuKK8zeoom8YJ4yg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047967;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047970;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fVoh38mvSTxRVtRQZXrWAiUznZ6Dv8PSmybPTyFQD5Y=;
-	b=Qdcx7kz9JUS66qDCWYEkl1Ga6fKr+pVV8bhjgcXTI6+mu/0E+1UKqZMcg/JaVF+kGfaf
-	 qNEWCx+QUkkn7mQxFMk1Uhj7ST6iRo7YLy8bGU34m5ljdOLcT29TFqxdGoeTEbvGEHKdB
-	 TabHMuJzVZfPluOkvb3+JatB9ZoflEL+oeJ1p/cqc9JND2Zq9wbzu0Cj8IDqzUyZ/wFhn
-	 KdJv8lq14V5eoblH9iJlPh40RPC417ZpxZ6njdEgdngzl6OwnrGTrCjqD2Kfpfpg2GWpq
-	 3DbWe5G6HbN9eTHFsFVdVmilY0PkNYICZrAMKtReOThp47wSHnnF0QHzP/xCPvJylXg==
+	bh=UaB0jVA5X9OnFqv/IXy3MyNnhAQOjy0DaoiU1CpqTf4=;
+	b=DMdDCyAQ1Q2HoqkzvsL1H468G0bn2YK50hkobVSpXUymC2gLho/1Gk9xPPRt2eXP4f39
+	 +FhBSW9cv2wMHaLlrpbD1MTEAaM8zf8EMLLLTS8cSdBloQluqy88UGUP0fBs9REGcJ5bu
+	 gPLAHlW6zDZfCqFPDTiY340cq5r5OW4KcQQidvGZOVdEr6ifhYCY4jXP2fDUZCiNsypFt
+	 sPzNkhXRxHbltCnkbqkTVpgDb/UHGKNLIci/ULcECjskFKdiFuzQ3/XQ/rr0uT2ftfZIm
+	 T+2bJHN9XZV6J3PiZiOPQzB8np64Qysy+DLadMvkAh6Wv+oCtsIrbQ7X7DJJ626J3jQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C5aZOTGc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uz6gbQlC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 756D1606A31C;
-	Thu, 19 Nov 2026 00:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E93A606A32A;
+	Thu, 19 Nov 2026 00:26:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C5aZOTGc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6BB91F000C4;
-	Thu, 19 Nov 2026 00:26:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uz6gbQlC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91F311F000C4;
+	Thu, 19 Nov 2026 00:26:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047967;
-	bh=fVoh38mvSTxRVtRQZXrWAiUznZ6Dv8PSmybPTyFQD5Y=;
+	s=korg; t=1795047970;
+	bh=UaB0jVA5X9OnFqv/IXy3MyNnhAQOjy0DaoiU1CpqTf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C5aZOTGcI1NDEdy9IED44wgndtM9GE2qkRwv+HCDVcsLHDjBnci/e1JTF22TY6y9U
-	 a2dJTzQJzT3YQEXe+a8kNulaK+gf3oALhNPwSbjuNbAA20LYJNIaUcgLTzTdpqz+dH
-	 suG+cbTXb42se4GpxI0rZ8rESAHhZ6yLttoXX7Iw=
+	b=uz6gbQlCOPBnl5kGq1LEY9vzuFJi8t3k+2hFbvlbqxYBnzlYULzyS0YSwXTS4qZAz
+	 13eU4UrACs8bbsa3exLgdOz3wwFV5erGhCFBKr7RkFtDOvyAhhyJdZwDv1I6jqua8t
+	 xAlnNJ6K6a0AhyQn1+WBnjuvWCaIRjqGr/urDGxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chaithanya Lagisetty <nagachaithanya9911@gmail.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Srinivas Neeli <srinivas.neeli@amd.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1828/2857] dmaengine: dw-axi-dmac: convert clock handling to clk_bulk API
-Date: Wed, 18 Nov 2026 15:47:42 +0100
-Message-ID: <20261118150307.075801224@linuxfoundation.org>
+Subject: [PATCH 6.1 1829/2857] dmaengine: xilinx_dma: Fix MCDMA descriptor fields based on DMA direction
+Date: Wed, 18 Nov 2026 15:47:43 +0100
+Message-ID: <20261118150307.109140442@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,109 +70,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
+From: Srinivas Neeli <srinivas.neeli@amd.com>
 
-[ Upstream commit c843417e6d6b55e24318e2edf405566e70786d3b ]
+[ Upstream commit b70ab341088b2114dcbc7be868588f3e97893e6a ]
 
-The driver managed its two mandatory clocks (core-clk and cfgr-clk)
-individually. This was error prone: axi_dma_resume() enabled cfgr_clk
-and then core_clk, and if enabling core_clk failed it returned the
-error without disabling cfgr_clk, leaving the clock refcount
-unbalanced.
+The MCDMA BD format differs between memory-to-device (MM2S) and
+device-to-memory (S2MM) directions, but the driver was using generic
+'status' and 'sideband_status' fields for both. This led to incorrect
+residue calculations when the hardware updates direction-specific fields.
 
-Convert the driver to the clk_bulk API. The two clocks are always
-acquired, enabled and disabled together, so a clk_bulk_data array
-expresses this naturally and shrinks the get/enable/disable paths.
-clk_bulk_prepare_enable() also unwinds any clock it already enabled
-when a later one fails, which fixes the resume imbalance.
+Refactor the descriptor structure to use unions with direction-specific
+field mappings, and update the residue calculation logic to select the
+correct status field based on DMA direction.
 
-Fixes: 1fe20f1b8454 ("dmaengine: Introduce DW AXI DMAC driver")
-Signed-off-by: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
-Link: https://lore.kernel.org/all/20260813105432.2577322-1-nagachaithanya9911@gmail.com/
+This matches the hardware descriptor layout and fixes incorrect
+residue reporting.
+
+Fixes: 6ccd692bfb7f ("dmaengine: xilinx_dma: Add Xilinx AXI MCDMA Engine driver support")
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Signed-off-by: Srinivas Neeli <srinivas.neeli@amd.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260816054858.2667380-1-nagachaithanya9911@gmail.com
+Link: https://patch.msgid.link/20260818174151.1608971-2-srinivas.neeli@amd.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 28 ++++++++-----------
- drivers/dma/dw-axi-dmac/dw-axi-dmac.h         |  3 +-
- 2 files changed, 13 insertions(+), 18 deletions(-)
+ drivers/dma/xilinx/xilinx_dma.c | 26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index 04d96f7403fc7..c9571c248f4a6 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -1249,8 +1249,7 @@ static int axi_dma_suspend(struct axi_dma_chip *chip)
- 	axi_dma_irq_disable(chip);
- 	axi_dma_disable(chip);
+diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+index d1f83e315be7d..a2f4f94ee8144 100644
+--- a/drivers/dma/xilinx/xilinx_dma.c
++++ b/drivers/dma/xilinx/xilinx_dma.c
+@@ -219,6 +219,7 @@
+ #define XILINX_MCDMA_IRQ_ERR_MASK		BIT(7)
+ #define XILINX_MCDMA_BD_EOP			BIT(30)
+ #define XILINX_MCDMA_BD_SOP			BIT(31)
++#define XILINX_MCDMA_BD_HW_SIZE			64
  
--	clk_disable_unprepare(chip->core_clk);
--	clk_disable_unprepare(chip->cfgr_clk);
-+	clk_bulk_disable_unprepare(ARRAY_SIZE(chip->clks), chip->clks);
+ /**
+  * struct xilinx_vdma_desc_hw - Hardware Descriptor
+@@ -273,8 +274,10 @@ struct xilinx_axidma_desc_hw {
+  * @buf_addr_msb: MSB of Buffer address @0x0C
+  * @rsvd: Reserved field @0x10
+  * @control: Control Information field @0x14
+- * @status: Status field @0x18
+- * @sideband_status: Status of sideband signals @0x1C
++ * @mm2s_ctrl_sideband: Sideband control info for mm2s @0x18
++ * @s2mm_status: Status field for s2mm @0x18
++ * @mm2s_status: Status field for mm2s @0x1C
++ * @s2mm_sideband_status: Sideband status for s2mm @0x1C
+  * @app: APP Fields @0x20 - 0x30
+  */
+ struct xilinx_aximcdma_desc_hw {
+@@ -284,10 +287,17 @@ struct xilinx_aximcdma_desc_hw {
+ 	u32 buf_addr_msb;
+ 	u32 rsvd;
+ 	u32 control;
+-	u32 status;
+-	u32 sideband_status;
++	union {
++		u32 mm2s_ctrl_sideband;
++		u32 s2mm_status;
++	};
++	union {
++		u32 mm2s_status;
++		u32 s2mm_sideband_status;
++	};
+ 	u32 app[XILINX_DMA_NUM_APP_WORDS];
+ } __aligned(64);
++static_assert(sizeof(struct xilinx_aximcdma_desc_hw) == XILINX_MCDMA_BD_HW_SIZE);
  
- 	return 0;
- }
-@@ -1259,11 +1258,7 @@ static int axi_dma_resume(struct axi_dma_chip *chip)
- {
- 	int ret;
- 
--	ret = clk_prepare_enable(chip->cfgr_clk);
--	if (ret < 0)
--		return ret;
--
--	ret = clk_prepare_enable(chip->core_clk);
-+	ret = clk_bulk_prepare_enable(ARRAY_SIZE(chip->clks), chip->clks);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -1428,13 +1423,11 @@ static int dw_probe(struct platform_device *pdev)
- 
- 	chip->dw->hdata->use_cfg2 = !!(flags & AXI_DMA_FLAG_USE_CFG2);
- 
--	chip->core_clk = devm_clk_get(chip->dev, "core-clk");
--	if (IS_ERR(chip->core_clk))
--		return PTR_ERR(chip->core_clk);
--
--	chip->cfgr_clk = devm_clk_get(chip->dev, "cfgr-clk");
--	if (IS_ERR(chip->cfgr_clk))
--		return PTR_ERR(chip->cfgr_clk);
-+	chip->clks[0].id = "core-clk";
-+	chip->clks[1].id = "cfgr-clk";
-+	ret = devm_clk_bulk_get(chip->dev, ARRAY_SIZE(chip->clks), chip->clks);
-+	if (ret)
-+		return dev_err_probe(chip->dev, ret, "failed to get clocks\n");
- 
- 	ret = parse_device_properties(chip);
- 	if (ret)
-@@ -1546,10 +1539,13 @@ static int dw_remove(struct platform_device *pdev)
- 	struct dw_axi_dma *dw = chip->dw;
- 	struct axi_dma_chan *chan, *_chan;
- 	u32 i;
-+	int ret;
- 
- 	/* Enable clk before accessing to registers */
--	clk_prepare_enable(chip->cfgr_clk);
--	clk_prepare_enable(chip->core_clk);
-+	ret = clk_bulk_prepare_enable(ARRAY_SIZE(chip->clks), chip->clks);
-+	if (ret)
-+		dev_warn(chip->dev, "failed to enable clocks before remove: %d\n",
-+			 ret);
- 	axi_dma_irq_disable(chip);
- 	for (i = 0; i < dw->hdata->nr_channels; i++) {
- 		axi_chan_disable(&chip->dw->chan[i]);
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-index 8521530a34ec4..2b49ba6355525 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-@@ -68,8 +68,7 @@ struct axi_dma_chip {
- 	int			irq;
- 	void __iomem		*regs;
- 	void __iomem		*apb_regs;
--	struct clk		*core_clk;
--	struct clk		*cfgr_clk;
-+	struct clk_bulk_data	clks[2];
- 	struct dw_axi_dma	*dw;
- };
+ /**
+  * struct xilinx_cdma_desc_hw - Hardware Descriptor
+@@ -996,9 +1006,11 @@ static u32 xilinx_dma_get_residue(struct xilinx_dma_chan *chan,
+ 					   struct xilinx_aximcdma_tx_segment,
+ 					   node);
+ 			aximcdma_hw = &aximcdma_seg->hw;
+-			residue +=
+-				(aximcdma_hw->control & chan->xdev->max_buffer_len) -
+-				(aximcdma_hw->status & chan->xdev->max_buffer_len);
++			residue += aximcdma_hw->control & chan->xdev->max_buffer_len;
++			if (chan->direction == DMA_DEV_TO_MEM)
++				residue -= aximcdma_hw->s2mm_status & chan->xdev->max_buffer_len;
++			else
++				residue -= aximcdma_hw->mm2s_status & chan->xdev->max_buffer_len;
+ 		}
+ 	}
  
 -- 
 2.53.0
