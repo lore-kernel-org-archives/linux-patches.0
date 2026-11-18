@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023864;
-	b=M/PWF0YHWPTkO5a4OpviQJXkaPXWBPa49jjIrMyRaHKLyvNwIGMFVdhuERVhgFR2PEaa
-	 gSd06TGyq0g/sHITLuKAI5m9mMS57D5Eo9f9xOx8fe5JzS0FnwEAbOn2n0tCE2KMAe6/Q
-	 lkBz5/p34Tn3vvBNXl0GMacJz+TJJkJ7Ov+AU//pDllaaWnBZ5t0udGl1ii7F8Z0dhpYy
-	 9Y+Xh5vdIL/Sue7eZT9kFm/rNJhwOgphPahhK75ljZPwZs9Cl5nmc2syLK/NOY9/jsMYT
-	 BzIeXXI1tJVID/cXQM60nF15rBrCuCk/31ra9VXpkytXXfeXs5RE1j9BlFa1pCArvCA==
+	t=1795023868;
+	b=bJFVmo9lWwp5HKEFKhVKJ3xkZHOrALOAuN9H3zhDnRyFH6xXaUtqMmWs948F5O4ph/1W
+	 l42Dn2XYSfTP/cbKC4TPEYnqBp18kOvvWHdq5dEcS3WCt3aHaHJYMzH4oQqe50A8myYLx
+	 ylHpJ3T+wT8wZWzQGDy80AT7bhbtIx7CBpVkXHW+VAiCnaL3HnOxNyvI7oEfhN2jS6uMI
+	 ZmjjYc8ZYXgcUae9hYdmtBhyI4FowWk3gJviuXEYSuQ3vot45Q3mDgJbXTguuTt2jWBse
+	 YF0KF6YG91pFf0WGV2uj6AGaK42xZ9EhbS9OArDkuza0Boosa3ShpLxkCVq4ZesNu9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023864;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023868;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3JCCLARrWlVCJssGX3IVaJcT1SYONTWWpAY7daCvYtM=;
-	b=bGbFwqYjVIdgjQtpSZEYbsxMHpGfMmEHurICHS7omS7w6pPjwSZFlD5NmL6AxgjgPPH3
-	 ZTVxbyKl49y0KIRdYQC+DH83ME0jckGeFA3pPrJT3OLhsbL1sUbPBQ34ulj3marXOGLvg
-	 AasEkxbwsbG1S6JKAVMYrHnFsQamMecPCf+T0CPw7uqAs75XoKortpHEOoffdW5S94AqG
-	 R7+q+PL5nqTTmRidpdv1bTpGOJ2MNQKqUeblzGMwd6p0YbaJ9b/BnE+zpRSeRNCgIPs0J
-	 qMpM12fbV7HeMbBOcroxT4oEicr7KdQ20xWaYDpMbV8TnnqQSzS3g9wzscx0YPLSLrw==
+	bh=LjJtyh9LA5kkdJI2Eo0/ihz4LtwyqF9im3Es3p5zTsE=;
+	b=SBhw/88h/YPXj6XlQbkb2yyGAAlS68xg6hMNpJyJjY65FPv1ly4V+sf0AiuE034zu1li
+	 1pFf1Nt46Hk+ILPTsVh8WNkdOsWOLST/1ScsTd7EbRGjKomuguUTnb0RmtvHreLVf9PGk
+	 c5pjdhd/ugvYRxQA89uMWOADz8H5FJf+2DqKp7ED0NhSw32Si53cpJyLQgl/2x7LdqZ24
+	 npaH9dt4xxs8vewzydQs1wGLhs3uFp4RrogoZqwP7olKIh5wRFO2MtEYFN2jxfgUuHCZw
+	 3rhXEVyUuwC9FMEP5G7vEmTj0s/E50x8yqV4ktaVHN7hNkEMKlxziM2Lvo0QnAaykoQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nTgK4oby;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vERyj2VY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2EE606A32C;
-	Wed, 18 Nov 2026 17:44:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54CAA606A332;
+	Wed, 18 Nov 2026 17:44:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nTgK4oby
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8959C1F000C4;
-	Wed, 18 Nov 2026 17:44:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vERyj2VY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 894E51F000C6;
+	Wed, 18 Nov 2026 17:44:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023864;
-	bh=3JCCLARrWlVCJssGX3IVaJcT1SYONTWWpAY7daCvYtM=;
+	s=korg; t=1795023868;
+	bh=LjJtyh9LA5kkdJI2Eo0/ihz4LtwyqF9im3Es3p5zTsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nTgK4obycSQyEsHVYWYT+ZbEjbF2L+krmOgQcpDOVhWRCroYviustZ2BHlwCbdLbt
-	 Hwj+Te0b5y9I8OUy3QxCHBu2x5JMl1HopwbqvIwH2cuuGiitTVyfoDr0SWIa2Nxjyl
-	 zTdYEbSlb6JueRfO4I941ZzwRQ6hoxIv8R3dCm4M=
+	b=vERyj2VYSIGpGvDPl91mYRzr5xSzmGjj2SSMlIh9tj6cogGpiWy63aE5bZQcpqnJ5
+	 YsoF3ij5IZGbxxZbkg5p5b8Smy6OWNkHTdLPKljKHVJkMhU1reJT2kArFj7fKyQqw/
+	 a49VrfpC+9+eYNXs0FhZKK3BcIqykOMSY+wUVCvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alison Schofield <alison.schofield@intel.com>,
-	Li Ming <ming.li@zohomail.com>,
 	Dave Jiang <dave.jiang@intel.com>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Terry Bowman <terry.bowman@amd.com>,
+	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0470/2151] cxl/port: Bound switch decoder target array access by nr_targets
-Date: Wed, 18 Nov 2026 15:36:45 +0100
-Message-ID: <20261118150139.130682319@linuxfoundation.org>
+Subject: [PATCH 6.18 0515/2151] cxl/port: Move decoder setup before dport creation
+Date: Wed, 18 Nov 2026 15:37:30 +0100
+Message-ID: <20261118150140.813180010@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,113 +70,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alison Schofield <alison.schofield@intel.com>
+From: Dan Williams <dan.j.williams@intel.com>
 
-[ Upstream commit 4e42c398af136d62fac8c19c9f410ec83a8dd34a ]
+[ Upstream commit 86e756715db22cd79a9726c22644415c46b6b149 ]
 
-Switch decoder target lookups walk the target array using interleave
-ways as the bound. The array is allocated with nr_targets entries, so a
-decoder whose interleave ways exceeds nr_targets reads and writes past
-the end of it. That happens during dport activation, during decoder
-target population, and when userspace reads the target_list attribute.
+There are port setup actions that run on first dport arrival, and there are
+setup actions that run per dport.
 
-Bounding by nr_targets alone is not correct either. Commit d6488fee6647
-("cxl/port: Fix decoder initialization when nr_targets > interleave_ways")
-moved target population to interleave ways precisely so that targets a
-decoder does not use are left unpopulated. Neither field alone is a safe
-bound, so add a helper that returns the minimum of the two and use it at
-every walk of the target array.
+RAS register setup is a future additional setup action to run per-port
+(once the first dport arrives), and each dport also has RAS registers to
+map.
 
-Valid configurations keep interleave ways within nr_targets, so this is
-not a behavior change for them.
+Before adding that, flip the order of "first dport" and "per-dport"
+actions. This makes allocation symmetric with teardown, "first dport"
+actions unwind after last dport removed. It also allows for using a devres
+group to collect the unrelated decoder, RAS, and dport setup actions into
+one group release action.
 
-Fixes: 40ba17afdfab ("cxl/acpi: Introduce cxl_decoder objects")
-Fixes: d6488fee6647 ("cxl/port: Fix decoder initialization when nr_targets > interleave_ways")
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Li Ming <ming.li@zohomail.com>
-Link: https://patch.msgid.link/d7577652cc6d414e1de0ee4045d4d6b2808172ce.1786143520.git.alison.schofield@intel.com
+The new cxl_port_open_group() collects "first dport" and "per-dport" into
+one group that can be released on any failure. This group's lifetime only
+needs to span the short duration of cxl_port_add_dport() to cleanup all
+potential damage from failing to add a dport. Contrast that to the "dport"
+devres group that is called upon to destruct fully formed dport objects.
+
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Tested-by: Terry Bowman <terry.bowman@amd.com>
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Link: https://patch.msgid.link/20260131000403.2135324-5-dan.j.williams@intel.com
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Stable-dep-of: 0de71a1ab211 ("cxl/core: Fix dport use-after-free via the einj_inject debugfs file")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/port.c | 25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ drivers/cxl/core/port.c | 33 +++++++++++++++++++++------------
+ 1 file changed, 21 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
-index 67dfebe123ca4..2416a72e38ac0 100644
+index c7b46eeedb093..441c49bb8e595 100644
 --- a/drivers/cxl/core/port.c
 +++ b/drivers/cxl/core/port.c
-@@ -147,20 +147,29 @@ static ssize_t target_type_show(struct device *dev,
+@@ -1697,10 +1697,14 @@ static bool dport_exists(struct cxl_port *port, struct device *dport_dev)
+ 	return false;
  }
- static DEVICE_ATTR_RO(target_type);
  
-+/*
-+ * Interleave ways selects how many targets a decoder uses, but the target
-+ * array is only nr_targets long. Bound array access by both.
-+ */
-+static int cxlsd_nr_used_targets(struct cxl_switch_decoder *cxlsd)
-+{
-+	return min(cxlsd->cxld.interleave_ways, cxlsd->nr_targets);
-+}
+-DEFINE_FREE(del_cxl_dport, struct cxl_dport *, if (!IS_ERR_OR_NULL(_T)) del_dport(_T))
++/* note this implicitly casts the group back to its @port */
++DEFINE_FREE(cxl_port_release_dr_group, struct cxl_port *,
++	    if (_T) devres_release_group(&_T->dev, _T))
 +
- static ssize_t emit_target_list(struct cxl_switch_decoder *cxlsd, char *buf)
+ static struct cxl_dport *cxl_port_add_dport(struct cxl_port *port,
+ 					    struct device *dport_dev)
  {
--	struct cxl_decoder *cxld = &cxlsd->cxld;
-+	int nr_used = cxlsd_nr_used_targets(cxlsd);
- 	ssize_t offset = 0;
- 	int i, rc = 0;
- 
--	for (i = 0; i < cxld->interleave_ways; i++) {
-+	for (i = 0; i < nr_used; i++) {
- 		struct cxl_dport *dport = cxlsd->target[i];
- 		struct cxl_dport *next = NULL;
- 
- 		if (!dport)
- 			break;
- 
--		if (i + 1 < cxld->interleave_ways)
-+		if (i + 1 < nr_used)
- 			next = cxlsd->target[i + 1];
- 		rc = sysfs_emit_at(buf, offset, "%d%s", dport->port_id,
- 				   next ? "," : "");
-@@ -1602,7 +1611,7 @@ static int update_decoder_targets(struct device *dev, void *data)
- 	struct cxl_dport *dport = data;
- 	struct cxl_switch_decoder *cxlsd;
- 	struct cxl_decoder *cxld;
--	int i;
-+	int i, nr_used;
- 
- 	if (!is_switch_decoder(dev))
- 		return 0;
-@@ -1610,8 +1619,9 @@ static int update_decoder_targets(struct device *dev, void *data)
- 	cxlsd = to_cxl_switch_decoder(dev);
- 	cxld = &cxlsd->cxld;
- 	guard(rwsem_write)(&cxl_rwsem.region);
-+	nr_used = cxlsd_nr_used_targets(cxlsd);
- 
--	for (i = 0; i < cxld->interleave_ways; i++) {
-+	for (i = 0; i < nr_used; i++) {
- 		if (cxld->target_map[i] == dport->port_id) {
- 			cxlsd->target[i] = dport;
- 			dev_dbg(dev, "dport%d found in target list, index %d\n",
-@@ -1914,7 +1924,7 @@ static int decoder_populate_targets(struct cxl_switch_decoder *cxlsd,
- 				    struct cxl_port *port)
- {
- 	struct cxl_decoder *cxld = &cxlsd->cxld;
--	int i;
-+	int i, nr_used;
++	struct cxl_dport *dport;
+ 	int rc;
  
  	device_lock_assert(&port->dev);
+@@ -1710,14 +1714,13 @@ static struct cxl_dport *cxl_port_add_dport(struct cxl_port *port,
+ 	if (dport_exists(port, dport_dev))
+ 		return ERR_PTR(-EBUSY);
  
-@@ -1922,7 +1932,8 @@ static int decoder_populate_targets(struct cxl_switch_decoder *cxlsd,
- 		return 0;
+-	struct cxl_dport *dport __free(del_cxl_dport) =
+-		devm_cxl_add_dport_by_dev(port, dport_dev);
+-	if (IS_ERR(dport))
+-		return dport;
+-
+-	cxl_switch_parse_cdat(dport);
++	/* Temp group for all "first dport" and "per dport" setup actions */
++	void *port_dr_group __free(cxl_port_release_dr_group) =
++		devres_open_group(&port->dev, port, GFP_KERNEL);
++	if (!port_dr_group)
++		return ERR_PTR(-ENOMEM);
  
- 	guard(rwsem_write)(&cxl_rwsem.region);
--	for (i = 0; i < cxlsd->cxld.interleave_ways; i++) {
-+	nr_used = cxlsd_nr_used_targets(cxlsd);
-+	for (i = 0; i < nr_used; i++) {
- 		struct cxl_dport *dport = find_dport(port, cxld->target_map[i]);
+-	if (port->nr_dports == 1) {
++	if (port->nr_dports == 0) {
+ 		/*
+ 		 * Some host bridges are known to not have component regsisters
+ 		 * available until a root port has trained CXL. Perform that
+@@ -1730,18 +1733,24 @@ static struct cxl_dport *cxl_port_add_dport(struct cxl_port *port,
+ 		rc = devm_cxl_switch_port_decoders_setup(port);
+ 		if (rc)
+ 			return ERR_PTR(rc);
+-		dev_dbg(&port->dev, "first dport%d:%s added with decoders\n",
+-			dport->port_id, dev_name(dport_dev));
+-		return no_free_ptr(dport);
+ 	}
  
- 		if (!dport) {
++	dport = devm_cxl_add_dport_by_dev(port, dport_dev);
++	if (IS_ERR(dport))
++		return dport;
++
++	/* This group was only needed for early exit above */
++	devres_remove_group(&port->dev, no_free_ptr(port_dr_group));
++
++	cxl_switch_parse_cdat(dport);
++
+ 	/* New dport added, update the decoder targets */
+ 	device_for_each_child(&port->dev, dport, update_decoder_targets);
+ 
+ 	dev_dbg(&port->dev, "dport%d:%s added\n", dport->port_id,
+ 		dev_name(dport_dev));
+ 
+-	return no_free_ptr(dport);
++	return dport;
+ }
+ 
+ static struct cxl_dport *devm_cxl_create_port(struct device *ep_dev,
 -- 
 2.53.0
 
