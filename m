@@ -1,54 +1,61 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054610;
-	b=EidGY5mb9o7CnUwvxrslkWXk5Eisjllt1vAnExYlyDjYFBhl4gzs1ImvCxeBwGO6uSeI
-	 STdqZAhdLS30ymLNmJzDRn7v6B6l6vbpixjoTs6BvW0lyHExGvXO8GDcBytfX3ktZ5YF+
-	 A2XrfzjrnAKcfsonyRUs5rTAqTl1Fc76G9YVXwtai2cDo3Bwrd75Mz6IA1hBieyJ3BgXs
-	 nO/3cK/ha8K89y18p3T606HVbQA5D4xEXIT6qSLqw6xFJcwj5BBfRyyJLjctMBmHGu914
-	 SD3Wsy2YXaT+7q+mWIy4VkzDbRIJxjNfWp9h/EWaJcYd9Op2vPFimWDb/z7cj3PHPnQ==
+	t=1795054613;
+	b=lJDIldryQED8/BNSvPrAch7lqbDNnIEmclP5hyaf3x1kqIVKByoOY6fWSCBrryBRh7b1
+	 6ujPUrY8jT2My6wpw3vQfK+IgAY3CxbsuALXuXTlAMWq5wUHR1ELO13h1OxgRtLe4pJ/j
+	 xhDwei/qd2RTBqEYDB19HqeS4BDpwWQ0pjgdMYI9EM05JuO2O7BctshQJXjM9ZAXawxxf
+	 eRoFfwSemLzcOFI4BTt6hE/iBNNdG4j2E2o1XddtYukqOB6nmqwadHd42pU1VM22UT+hV
+	 gaw3rN2IhIzcZXgjWJ4+l2Uo4/+rYFj/kPvld+9o3OivXg7IkZBN41SHOlOrPkASPDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054610;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054613;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+cckoNewQhIHW1SYaOMSAS1dfa0PKBsidcdELdDpu/g=;
-	b=oQYNdvEF3iRnMKxRtW5p0NCVAWFvksOsBjxAr6/uuPtqyfd5Bq7Vr5My2dJQ4gBnh0eN
-	 VthwePkakcOdwc3MoDIEIuacRMi/gx3BQhO0M4Vejo31sAVRLCFlfFOiPrTCbkLJc08sZ
-	 a/9ppVXfs9nMFLSxK7nK4JqpQw2LPRmF290z/fhQE0/tRTtKGaZNt/Zl4MCVu1hWINcwQ
-	 hu3KxPhePw/1his3n65gpL//mMvzR8e/J+ns+LUzISYe7b7jzGMnHMWKN79bTGyr+9qZG
-	 +SRdbgEyRpDXY57602vBT0+B/ymTXzLc579Gs0y/Agwy3nQbMUNChbkxO+HrqTx3RZQ==
+	bh=3d0GjGdWpSEJJyW0HuVhgS+W41VxKzqJ3N81K/GLMQE=;
+	b=nOOxCwl7DjIJ3v9qFH4DaqcOLMYHEBIQnP8+5Pmfu3GcilCORnkVgQ/FY6nKSaq1NfxD
+	 PKJwD03zGxisxwp01CpJqhggtc8utyvzfe/3ts2tzsgP3PtmTH+KULy5iyi0ZpidJNnAq
+	 wXBKqLvLieDIPoEPcGWzKR71JRk5aJbo3wefrKEgSqeJ3/6Mx4hw5CFhZmazqwePiMJM2
+	 pew4O1Gt+MBo+FXA/V97s6tWVk0IKUMyPZd44myQpP5j76tuW8Qzc/VqsB92hFnKT0Abu
+	 l3sDBerOE/FBZ0avszYmvNwf064ZNwfiYR8GbVIvVZq0puEDmFmC9AGskKxe4UvMhjw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HnvCfHM0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zv4eUX0l;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D289E606A339;
-	Thu, 19 Nov 2026 02:16:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76434606A31C;
+	Thu, 19 Nov 2026 02:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HnvCfHM0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E39B1F000C5;
-	Thu, 19 Nov 2026 02:16:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zv4eUX0l
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD101F000C4;
+	Thu, 19 Nov 2026 02:16:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054610;
-	bh=+cckoNewQhIHW1SYaOMSAS1dfa0PKBsidcdELdDpu/g=;
+	s=korg; t=1795054613;
+	bh=3d0GjGdWpSEJJyW0HuVhgS+W41VxKzqJ3N81K/GLMQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HnvCfHM0QNJGk/+hl9+l8x9UKhlTOnJ0VskPkr3y6xC6zCxlh97lFMJ6sSbvoqiHi
-	 4b69Px242fkqCPlAqdir40LKKSiTublV7ugNyWH/rU/L2ZDeOxs2uP4//7O0vt4IsY
-	 B+uWr8SzxPia+BCd/fbKJ6oSmeXycyPs6T2J2xs8=
+	b=zv4eUX0l4ggM162yEKNjzeSk8XdGQeBgi/7O5zunWR6b9k0dx3Zux+P++AoLyyL60
+	 FacvDBHLb5Ri3xDzaqvoxAIMxzcQvtu0IEV6olX+R/+zcfZi1CnOcHZo6nXbYFaOnH
+	 qI9Py3Y+FXl+iJiTZMGx7E2UWQ5XJtQEdfNRUi1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Rik van Riel <riel@surriel.com>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Barry Song <baohua@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"Harry Yoo (Meta)" <harry@kernel.org>,
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	SJ Park <sj@kernel.org>,
 	Muhammad Usama Anjum <usama.anjum@arm.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1296/2214] mm/filemap: finish fault cleanup before dropping the fault lock
-Date: Wed, 18 Nov 2026 15:49:32 +0100
-Message-ID: <20261118150103.379633188@linuxfoundation.org>
+Subject: [PATCH 5.15 1287/2214] fork: take mmap_lock before copying mm_struct
+Date: Wed, 18 Nov 2026 15:49:23 +0100
+Message-ID: <20261118150103.060392377@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -72,107 +79,124 @@ Content-Transfer-Encoding: 8bit
 
 From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit 97156a6c355c21f7122421915f05461bd11699a4 ]
+[ Upstream commit ef694e2d210111cc08c52fd25da9ab130170bfa3 ]
 
-On a retried fault, a fatal signal interrupting the folio lock wait
-makes lock_folio_maybe_drop_mmap() drop the fault lock without pinning
-the file. However, filemap_fault() may still need to release
-mapping->invalidate_lock. A concurrent munmap() can release the last
-file reference and free the mapping before that unlock.
+dup_mm() copies the parent's mm_struct before dup_mmap() takes the
+mmap_lock. A concurrent brk() can leave the child with a stale mm->brk
+and newer heap mappings, causing later brk() requests to fail.
 
-Defer dropping the fault lock to filemap_fault()'s retry cleanup, after
-releasing invalidate_lock. If the fault lock was already dropped for
-I/O, release the existing file reference instead. Keep the fault lock
-held for FAULT_FLAG_RETRY_NOWAIT as before.
+Other operations (e.g., PR_SET_MM) on the parent's mm_struct can similarly
+cause inconsistencies.
 
-Fixes: 730633f0b7f9 ("mm: Protect operations adding pages to page cache with invalidate_lock")
+As a simple and robust fix, grab the parent's mmap_lock earlier. This
+way we don't need to update individual mm fields in dup_mmap() and
+keep missing ones. Stop updating the 4 existing members (total_vm, data_vm,
+exec_vm, stack_vm), as that is now no longer required.
+
+Keep releasing the parent's mmap_lock in dup_mmap(), before
+userfaultfd completion, to avoid moving the userfaultfd handling into the
+caller. This should get cleaned up later.
+
+Move uprobe_start_dup_mmap() to preserve the lock ordering.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Reported-by: Chris Mason <mason@kernel.org>
-Reviewed-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Reported-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Rik van Riel <riel@surriel.com>
+Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Reviewed-by: Barry Song <baohua@kernel.org>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Reviewed-by: Harry Yoo (Meta) <harry@kernel.org>
+Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Reviewed-by: SJ Park <sj@kernel.org>
 Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-8-d6437171ecc3@kernel.org
+Link: https://patch.msgid.link/20261031-fixes_core-v3-2-d6437171ecc3@kernel.org
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: adapted folio-based fault handling to page-based APIs using mmap_read_unlock() instead of release_fault_lock() ]
+[ sashal: Adjusted caller cleanup to avoid a second uprobe release after dup_mmap() has already released it. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/filemap.c | 36 ++++++++++++++----------------------
- 1 file changed, 14 insertions(+), 22 deletions(-)
+ kernel/fork.c | 29 +++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 14 deletions(-)
 
-diff --git a/mm/filemap.c b/mm/filemap.c
-index eccc5318b6644..b0d046f0d3b27 100644
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -2911,10 +2911,11 @@ loff_t mapping_seek_hole_data(struct address_space *mapping, loff_t start,
-  * @page - the page to lock.
-  * @fpin - the pointer to the file we may pin (or is already pinned).
-  *
-- * This works similar to lock_page_or_retry in that it can drop the mmap_lock.
-- * It differs in that it actually returns the page locked if it returns 1 and 0
-- * if it couldn't lock the page.  If we did have to drop the mmap_lock then fpin
-- * will point to the pinned file and needs to be fput()'ed at a later point.
-+ * Returns 1 with the page locked, or 0 if locking failed.
-+ *
-+ * On both entry and return, a non-NULL *fpin means the fault lock has
-+ * already been dropped and the caller must eventually fput() the file.
-+ * Otherwise the fault lock is still held, including on failure.
-  */
- static int lock_page_maybe_drop_mmap(struct vm_fault *vmf, struct page *page,
- 				     struct file **fpin)
-@@ -2931,20 +2932,10 @@ static int lock_page_maybe_drop_mmap(struct vm_fault *vmf, struct page *page,
- 		return 0;
+diff --git a/kernel/fork.c b/kernel/fork.c
+index 87c08297fbee6..1f7f0f9c821c8 100644
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -501,11 +501,7 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
+ 	unsigned long charge;
+ 	LIST_HEAD(uf);
  
- 	*fpin = maybe_unlock_mmap_for_io(vmf, *fpin);
--	if (vmf->flags & FAULT_FLAG_KILLABLE) {
--		if (__lock_page_killable(page)) {
--			/*
--			 * We didn't have the right flags to drop the mmap_lock,
--			 * but all fault_handlers only check for fatal signals
--			 * if we return VM_FAULT_RETRY, so we need to drop the
--			 * mmap_lock here and return 0 if we don't have a fpin.
--			 */
--			if (*fpin == NULL)
--				mmap_read_unlock(vmf->vma->vm_mm);
--			return 0;
--		}
--	} else
--		__lock_page(page);
-+	if (vmf->flags & FAULT_FLAG_KILLABLE)
-+		return !__lock_page_killable(page);
-+	__lock_page(page);
-+
- 	return 1;
- }
- 
-@@ -3044,7 +3035,7 @@ static struct file *do_async_mmap_readahead(struct vm_fault *vmf,
-  * vma->vm_mm->mmap_lock must be held on entry.
-  *
-  * If our return value has VM_FAULT_RETRY set, it's because the mmap_lock
-- * may be dropped before doing I/O or by lock_page_maybe_drop_mmap().
-+ * may be dropped before doing I/O or when aborting an interrupted wait.
-  *
-  * If our return value does not have VM_FAULT_RETRY set, the mmap_lock
-  * has not been released.
-@@ -3188,9 +3179,8 @@ vm_fault_t filemap_fault(struct vm_fault *vmf)
- 
- out_retry:
+-	uprobe_start_dup_mmap();
+-	if (mmap_write_lock_killable(oldmm)) {
+-		retval = -EINTR;
+-		goto fail_uprobe_end;
+-	}
++	mmap_assert_write_locked(oldmm);
+ 	flush_cache_dup_mm(oldmm);
+ 	uprobe_dup_mmap(oldmm, mm);
  	/*
--	 * We dropped the mmap_lock, we need to return to the fault handler to
--	 * re-find the vma and come back and find our hopefully still populated
--	 * page.
-+	 * With fpin set, the fault lock was already dropped. Otherwise it is
-+	 * still held. Release invalidate_lock before dropping either protection.
- 	 */
- 	if (page)
- 		put_page(page);
-@@ -3198,6 +3188,8 @@ vm_fault_t filemap_fault(struct vm_fault *vmf)
- 		filemap_invalidate_unlock_shared(mapping);
- 	if (fpin)
- 		fput(fpin);
-+	else if (!(vmf->flags & FAULT_FLAG_RETRY_NOWAIT))
-+		mmap_read_unlock(vmf->vma->vm_mm);
- 	return ret | VM_FAULT_RETRY;
+@@ -516,11 +512,6 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
+ 	/* No ordering required: file already has been exposed. */
+ 	dup_mm_exe_file(mm, oldmm);
+ 
+-	mm->total_vm = oldmm->total_vm;
+-	mm->data_vm = oldmm->data_vm;
+-	mm->exec_vm = oldmm->exec_vm;
+-	mm->stack_vm = oldmm->stack_vm;
+-
+ 	rb_link = &mm->mm_rb.rb_node;
+ 	rb_parent = NULL;
+ 	pprev = &mm->mmap;
+@@ -628,7 +619,6 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
+ 	flush_tlb_mm(oldmm);
+ 	mmap_write_unlock(oldmm);
+ 	dup_userfaultfd_complete(&uf);
+-fail_uprobe_end:
+ 	uprobe_end_dup_mmap();
+ 	return retval;
+ fail_nomem_anon_vma_fork:
+@@ -656,7 +646,7 @@ static inline void mm_free_pgd(struct mm_struct *mm)
+ #else
+ static int dup_mmap(struct mm_struct *mm, struct mm_struct *oldmm)
+ {
+-	mmap_write_lock(oldmm);
++	mmap_assert_write_locked(oldmm);
+ 	dup_mm_exe_file(mm, oldmm);
+ 	mmap_write_unlock(oldmm);
+ 	return 0;
+@@ -1467,10 +1457,18 @@ static struct mm_struct *dup_mm(struct task_struct *tsk,
+ 	if (!mm)
+ 		goto fail_nomem;
+ 
++	uprobe_start_dup_mmap();
++	if (mmap_write_lock_killable(oldmm)) {
++		free_mm(mm);
++		goto fail_uprobe;
++	}
++
+ 	memcpy(mm, oldmm, sizeof(*mm));
+ 
+-	if (!mm_init(mm, tsk, mm->user_ns))
+-		goto fail_nomem;
++	if (!mm_init(mm, tsk, mm->user_ns)) {
++		mmap_write_unlock(oldmm);
++		goto fail_uprobe;
++	}
+ 
+ 	err = dup_mmap(mm, oldmm);
+ 	if (err)
+@@ -1489,7 +1487,10 @@ static struct mm_struct *dup_mm(struct task_struct *tsk,
+ 	mm->binfmt = NULL;
+ 	mm_init_owner(mm, NULL);
+ 	mmput(mm);
++	return NULL;
+ 
++fail_uprobe:
++	uprobe_end_dup_mmap();
+ fail_nomem:
+ 	return NULL;
  }
- EXPORT_SYMBOL(filemap_fault);
 -- 
 2.53.0
 
