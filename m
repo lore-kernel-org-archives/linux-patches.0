@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017535;
-	b=lsLck7fol9mTmjGiuEvrPfKbMLYEdfj/9plzjTqNGlbYl5RgRHiy/kp/jqaCS2+/cbDx
-	 ViU03pYkRh4WM17LUXHXLH9yqpQ7tNNZnaaFu3TQp99jESt+xJlevJyb4xyYZFD6cdCp5
-	 8yxg8nmK8p5usuu8OfXbHMVRDbbiQEPNCNXAzXZbCUPP8GFVCR1cPAUlE0yUHgDHx3Ux+
-	 X9hIpES3qZqOJjS6R2OBxPqymrFAXu2yCARs3cUCr2UkAgpcvFSVfBb2ljBEbXVEFqElP
-	 FLaoWjWTVWBJqg8khBZ3bWZSLRCIXyTVaap8D75z908jE5HjoMhPIiIrIlcaIF+JTzQ==
+	t=1795017538;
+	b=G7uIBb5IOQ3ijFHGKDIafXiSblbyJNVtyQlzVVQm13LV5gWGRg3ZLVPhWJe/4K0LMwKL
+	 WrgDNON80jEXygVLU/ljOPoJOjYW3fM+0ie7/zqHlHyb1hENqseeHVzkAOWJ3OFZfT5Pp
+	 C0cu15r7Y/SXiSXnFoI7eh9dmMCbCl7I7ysz5PhUgHSJIJYZr8hDYTrPFsg0P7dptR9d6
+	 Fnub7acezmqQ8sEPrSTWFNJoo/05AeuGiO1kUw2EQEo7nTUdLWq+z4KAwkENx0NsESziD
+	 ETLRATMjMb6oRG13JIK9otfgMlK6630qDrO2jBvE/Poisn/h/+muqvk3jSmzg0ujBXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017535;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017538;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bV0a29puUMUgFKcwx3kzLQgASGnvcTy4ZJ1c0YCykTM=;
-	b=ZOsBC8coaJvEcXRTeRyxylKoeC0XZdUdz9OOTLcc+S64SgCgR97nvMUsKx8G50TdXo8p
-	 E2wyYOeKnanIqMy8DIl5D/YN5vxdmRNBsrUkcIsSdfUL8PU6lxtCmci3gWKopMP7qkd4M
-	 BDH9nKWC2X1JbtvDsg3EpuJpw3wYoQRp/aMSzccV0O2PKGJ/kbL/A6OIf06HLcnSd9zBd
-	 oz+JkfjiGFDzLkiXT7dXTA5FEVrgdwUx3QzD9ZFUHxEku22IsBFjnKTPp0Ts2rW5dNWyG
-	 XGBKIwaMODKUbl0nShRKTgvE6niSjOgrYXU53iV9CmMbDssgiNu1xJQasAFPGT9za8w==
+	bh=wc4AyFY9edVHf59DrflA0WVKA9s6ahgqe+ZHERXy7Wc=;
+	b=zf8xjgbggZ4suq465ss0ffsCMiTA8hIbI4sxpfcdlcEFGUweO/C4xwwYr+Ra30u0sQGT
+	 LryFMofH1qjqMzap+vQM6BXcEBgkM7PCdnjU1kx7YzLmmP6qVXoHoL+Bf9BkYZHYH7w/8
+	 zxxgO+xB9BRHG8Uebq+3Vk+MZLCHUIdqPEgJvchwh3WtQbrGcUxrslOzH88/dt7a2nRbJ
+	 Jn9hd4KKTOCo5Xrv7F9uUPC/5e3vv8iNl3uYUtRxTIidxmE9V4Y5ygtsTCNN8vQRYiZsT
+	 m/zlDWg8BjJfpqoeBWgITCRwAgAQMsDkbEOkbx75WlVCtzdIhQPLMoEnztplcZ7STiw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2mpIheYh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VjcRfyu+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A51D606A339;
-	Wed, 18 Nov 2026 15:58:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576DB606A338;
+	Wed, 18 Nov 2026 15:58:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2mpIheYh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F19B11F000C9;
-	Wed, 18 Nov 2026 15:58:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VjcRfyu+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE97C1F000C9;
+	Wed, 18 Nov 2026 15:58:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017535;
-	bh=bV0a29puUMUgFKcwx3kzLQgASGnvcTy4ZJ1c0YCykTM=;
+	s=korg; t=1795017538;
+	bh=wc4AyFY9edVHf59DrflA0WVKA9s6ahgqe+ZHERXy7Wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2mpIheYhO/aEuXay9taCIpI5RKaxuJSGVa1iR66W+JcYAQ4CbfkKsJt6NmwrmRQvj
-	 jI4npDzJsnIAkYat4bQpfkAMhEaze+peu9aR7b3fYrW4l7jdg2w4pE62gMUcgCs49f
-	 Zf8p19X6zuvhZKW1IzBK1wVCu2J7lsao3dAaWpjQ=
+	b=VjcRfyu+ritjxGO0IqR4V/1OneNLMTM3xqZtYQMxc2Tv7V5nZeUyab9smcVBPF2Jn
+	 B6fzpkYKMgOiLec6ovweCpVBPYBGHrzwP+o4tXYmy1LwhJe47dvLUw8mWQhhYRYHDG
+	 q0TLcad8LMBg2e+0DvgKkR9PZBNG69ORfHJknEuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Greg Ociepka <greg@ferrisoft.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0920/2651] arm64: dts: qcom: sm8150: Use SM8150_CX for the SDHC power domain
-Date: Wed, 18 Nov 2026 15:36:00 +0100
-Message-ID: <20261118150321.014963733@linuxfoundation.org>
+Subject: [PATCH 7.3 0921/2651] arm64: dts: qcom: glymur-asus-zenbook-a16: Remove RTC-through-EFIvars
+Date: Wed, 18 Nov 2026 15:36:01 +0100
+Message-ID: <20261118150321.049429700@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,38 +70,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@oss.qualcomm.com>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit 475aab59d9870d250f521e202d191899c50a3ded ]
+[ Upstream commit 37e8a61bf7214306889777edd8bd3df53b52d287 ]
 
-Replace the raw power-domain index of SDHC2 with the SM8150_CX binding
-constant, which is the correct power domain in this case.
+This machine, unlike older Snapdragon laptops, doesn't feature an EFI
+variable to denote the system time. Remove the property that suggests
+it does.
 
-Fixes: 876644c76034 ("arm64: dts: qcom: sm8150: Add support for SDC2")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260914-qcom-tie-cx-to-gcc-v4-0-9d5a606ada33@oss.qualcomm.com?part=45
-Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260915-dts-qcom-sm8150-sdhc-use-mss-for-pd-index-v2-1-a8610199483d@oss.qualcomm.com
+Fixes: e8fbbca94db7 ("arm64: dts: qcom: glymur: Add Asus Zenbook A16 (UX3607OA)")
+Reported-by: Greg Ociepka <greg@ferrisoft.com>
+Closes: https://lore.kernel.org/linux-arm-msm/20260821181148.1642208-1-greg@ferrisoft.com/
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260911-topic-remove_uefivar_rtc_a16-v1-1-0967d8d4b3a6@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/glymur-asus-zenbook-a16-ux3607oa.dts | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index 94a3b02cb2897..e83fe8daa7c29 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -3574,7 +3574,7 @@ sdhc_2: mmc@8804000 {
- 			iommus = <&apps_smmu 0x6a0 0x0>;
- 			qcom,dll-config = <0x0007642c>;
- 			qcom,ddr-config = <0x80040868>;
--			power-domains = <&rpmhpd 0>;
-+			power-domains = <&rpmhpd SM8150_CX>;
- 			operating-points-v2 = <&sdhc2_opp_table>;
+diff --git a/arch/arm64/boot/dts/qcom/glymur-asus-zenbook-a16-ux3607oa.dts b/arch/arm64/boot/dts/qcom/glymur-asus-zenbook-a16-ux3607oa.dts
+index 40433dc2d6cf9..95da35125d754 100644
+--- a/arch/arm64/boot/dts/qcom/glymur-asus-zenbook-a16-ux3607oa.dts
++++ b/arch/arm64/boot/dts/qcom/glymur-asus-zenbook-a16-ux3607oa.dts
+@@ -861,7 +861,6 @@ nvme_reg_en: nvme-reg-en-state {
+ };
  
- 			status = "disabled";
+ &pmk8850_rtc {
+-	qcom,uefi-rtc-info;
+ 	qcom,no-alarm;
+ };
+ 
 -- 
 2.53.0
 
