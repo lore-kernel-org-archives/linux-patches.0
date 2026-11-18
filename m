@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020527;
-	b=WGPrzI7bRVgNhGyN6HsbNd+C2gTUGHvJYcYiEKU20oVPcBdPEgWJBUFW8DZXAkjBa4wO
-	 epeaiZKjBcwwYEi8P0tOGTbdr9f9GK+Q8OnkVcRi2fzikr4vPnEKLvM0B7FkKcCGJhclU
-	 JBUHlT9E3FNuuWuPvQeeMhBIws/AWnD5/v6F75Q6aIG9WSkOU5lxfADYXfWKtkusdZUB9
-	 ZoijLtIZdDKjiCzGlhuXtXfH8NGOwRQhBHcPgfs181vQyVXUbUmm+5Ubn0ovEZOuXPXLY
-	 iyBtqJfZnSVh4U+gztMCRRLu7suiUy071bpvMDHgeVJiP6MXDsvDE/vfAq8hFyhPpLA==
+	t=1795020530;
+	b=RPoxeVQOyCZiPZJG46KuvW25A4IN4TemYwVi92UOa0uV/2rbb7NYDasg/Bo0PkqAybTU
+	 lyTzQQXh8FCp8lUGc4S087NV+EJhRew+32FAykktvcfTKaLV/XgQjS94xkn84B95YieWU
+	 GHLiKCe1XFcA8kPgOEsAQh8R23CxoLq+2aBJ43MKAHT/8XjoGK9Vzi4sVwxXWyK5FHGc0
+	 Pt3BI0311Et5Twp+e5vBM/UOnNoGxmHAH4+9+1g7NZGfnjCHUclLnc9kMVpdKtwd1GDqF
+	 vRirP7ZvnCQicqPn/xZVrtc3aecBaUtQUSxsqENkJi843N8RajamiImPFMns9r3pQhw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020527;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020530;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=J/8yornjzhzUUm28nFX+bGWJtXNnrZinO+PX4LOESbM=;
-	b=zwHiB4xqhQTFwiVX00Y9ec5rUfpzgVwKNyEDY4iTkZsjKcZi+mSGqv2EiHkocsg3zyD4
-	 UKocw3t2W5mTPWeXF8rhCzb0afm1EdPv230ZUocJgcfUfy5OODdV+9NPjPFgtCTaaxcBC
-	 KXucXWEJNVzh/pHae6nbMBMTBnuFcEpRAD0y9NrCYuzvhiwEu6elx2B/kUmv8GvevuD+9
-	 rZmW4XBQJxL14yrkpCZ4uIKJoawhKKy8o1MxIFPe/Ev1SlgHb1ziXjYCQlRNZDZfetyCb
-	 7x1J3f7qm1Rh5FVjA3q6CWeOqErWzUE8ZqnyzovyCnL+nq+BHsvqwIX1foZ4G4CvPxw==
+	bh=oENP859kIKxvLWDBmwrMnFha/bQ9K6y4dZX+tEmiW7o=;
+	b=ef7XioHyk0X5Fg/ZiuxHYt6gPU7OlJzu67WO6B/Ck4FX2EbQqb0EtWJ6eRZZrGRf1T2g
+	 +G6+Kp7BOuiLArdX2JKIyspal11XW8BfIrlSennlbE4CPzPqADCA8yyNKlvJoTYIp5eba
+	 3acTNhzTFggZQ8TrDt9ldh0IIwxwtSQ1hZpZbNKoyPf9LvrCxSCS5noUpTD7LO0CBunaZ
+	 +XDU2SsJ0je5cIbO0s+YBWTOyYUCduoYxjxl8G4XpWl6wHW2wYLutohn5lBYe3TzerYyC
+	 rlGfWQO8mBVi7h10M8RqP5sxchpIUih0TSokghhcqxVBVvCZe3RwgPDtBC22oIQGgDg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TYBc6pXg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fgmg+R7f;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0A8606A31C;
-	Wed, 18 Nov 2026 16:48:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433A4606A338;
+	Wed, 18 Nov 2026 16:48:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TYBc6pXg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4BCF1F000C8;
-	Wed, 18 Nov 2026 16:48:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fgmg+R7f
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D2D31F000C7;
+	Wed, 18 Nov 2026 16:48:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020527;
-	bh=J/8yornjzhzUUm28nFX+bGWJtXNnrZinO+PX4LOESbM=;
+	s=korg; t=1795020530;
+	bh=oENP859kIKxvLWDBmwrMnFha/bQ9K6y4dZX+tEmiW7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TYBc6pXghmAjeEqL/dAm/NwKlzV4u8rPjCR4C/bvDI87mI45h7KxCHCpFz/k3nSeE
-	 B7EEsas0a3tErN3/hs8MC7mV90kdKuZi8tYqtctos0NQs+58MlIrS/7OzGFd0Z6vHU
-	 2u2SQAJHSiDIq+Nj9wSz8FkwVw47yJJ09GZsm78M=
+	b=Fgmg+R7fSlbiMVkrSaCKMqywxdmQZnZxFNmz5xpDvefIQX0l0Dy4bbS8SbKpjVbhJ
+	 409bFuGTACCXpYYcKH+tWCfxbkDSfKjMSZb1/kmBiR8fJ2AOqhIRGSZqElOiQ97V/+
+	 63nAGKbnnkw8qR2joqPelYg+s2xZZS5rqZuGi7Vw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b48868c46e62c1c4cb2c@syzkaller.appspotmail.com,
-	Paolo Bertinetti <paolobertinetti200f4@proton.me>,
-	Ming Lei <tom.leiming@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1984/2651] ublk: hold RCU read lock in ublk_try_buf_match()
-Date: Wed, 18 Nov 2026 15:53:44 +0100
-Message-ID: <20261118150357.820206021@linuxfoundation.org>
+Subject: [PATCH 7.3 1967/2651] ASoC: rt5645: Shut down the button timer on removal
+Date: Wed, 18 Nov 2026 15:53:27 +0100
+Message-ID: <20261118150357.302431403@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,59 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Bertinetti <paolobertinetti200f4@proton.me>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit aaf49023041bc1f887a028a164d3bac714b65508 ]
+[ Upstream commit f0ecc305442f20a6df2575943e9897825d80cc5d ]
 
-syzbot reports a lockdep splat when I/O is dispatched to a ublk device
-with UBLK_F_SHMEM_ZC enabled:
+jack_detect_work can rearm btn_check_timer, and the timer callback can
+queue jack_detect_work. Deleting the timer before cancelling the work
+does not break this cycle: an already running worker can rearm the timer
+after timer_delete_sync() returns. The timer can then outlive removal.
 
-  WARNING: suspicious RCU usage
-  lib/maple_tree.c:720 suspicious rcu_dereference_check() usage!
-  ...
-  Call Trace:
-   mas_root lib/maple_tree.c:720 [inline]
-   mas_start+0x3cc/0x640 lib/maple_tree.c:1250
-   mas_state_walk lib/maple_tree.c:3006 [inline]
-   mas_walk+0x1db/0x490 lib/maple_tree.c:4458
-   ublk_try_buf_match drivers/block/ublk_drv.c:5639 [inline]
-   ublk_init_iod+0x5d2/0x1120 drivers/block/ublk_drv.c:521
-   ublk_dispatch_req+0x97/0x9c0 drivers/block/ublk_drv.c:1776
-   tctx_task_work_run+0x73d/0xa80 io_uring/tw.c:96
+Use timer_shutdown_sync() before cancelling the delayed work so that
+subsequent attempts to rearm the timer are ignored. The IRQ producer has
+already been removed at this point. Keep the restartable timer deletion
+in the suspend path.
 
-ublk_try_buf_match() calls mas_walk() on the buffer tree without
-holding the RCU read lock or the tree lock. Writers are already
-excluded because ublk_lock_buf_tree() freezes the queue, so there is
-no real race, but maple tree readers must still hold one of the two.
+This issue was identified as part of our ongoing research while
+reviewing kernel code.
 
-Take the RCU read lock around the walk.
-
-Fixes: 4d4a512a1f87 ("ublk: add PFN-based buffer matching in I/O path")
-Reported-by: syzbot+b48868c46e62c1c4cb2c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b48868c46e62c1c4cb2c
+Fixes: 7ff6319e7da5 ("ASoC: rt5645: use polling to support HS button")
 Assisted-by: LLM
-Signed-off-by: Paolo Bertinetti <paolobertinetti200f4@proton.me>
-Reviewed-by: Ming Lei <tom.leiming@gmail.com>
-Link: https://patch.msgid.link/179010105967.8478.2344875677216734809@proton.me
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/179203261324.2681924.5002100194676410503.rt5645-button-timer@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/codecs/rt5645.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index 959e6594013a8..ca4cb9d760353 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -5738,6 +5738,8 @@ static bool ublk_try_buf_match(struct ublk_device *ub,
- 	unsigned long expected_offset = 0;
- 	bool first = true;
+diff --git a/sound/soc/codecs/rt5645.c b/sound/soc/codecs/rt5645.c
+index 7313ea71c9580..3c4354d885093 100644
+--- a/sound/soc/codecs/rt5645.c
++++ b/sound/soc/codecs/rt5645.c
+@@ -19,6 +19,7 @@
+ #include <linux/acpi.h>
+ #include <linux/dmi.h>
+ #include <linux/regulator/consumer.h>
++#include <linux/timer.h>
+ #include <sound/core.h>
+ #include <sound/pcm.h>
+ #include <sound/pcm_params.h>
+@@ -4292,10 +4293,10 @@ static void rt5645_i2c_remove(struct i2c_client *i2c)
+ 		free_irq(i2c->irq, rt5645);
  
-+	guard(rcu)();
-+
- 	rq_for_each_bvec(bv, rq, iter) {
- 		unsigned long pfn = page_to_pfn(bv.bv_page);
- 		unsigned long end_pfn = pfn +
+ 	/*
+-	 * Since the rt5645_btn_check_callback() can queue jack_detect_work,
+-	 * the timer need to be delted first
++	 * The timer and jack_detect_work can rearm each other. Shut down the
++	 * timer before cancelling the work.
+ 	 */
+-	timer_delete_sync(&rt5645->btn_check_timer);
++	timer_shutdown_sync(&rt5645->btn_check_timer);
+ 
+ 	cancel_delayed_work_sync(&rt5645->jack_detect_work);
+ 	cancel_delayed_work_sync(&rt5645->rcclock_work);
 -- 
 2.53.0
 
