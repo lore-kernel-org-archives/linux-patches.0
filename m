@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795062006;
-	b=GGFij3SmzJ1HStD++RRV9miDJp54J1kL+pXn04Rhe6PiXjRy4Hom/xn1AL9t3hBsNGdu
-	 aFZxjcqgScznV7G21C+Yh2nFvtNwFrxeqhlnNDIq1fuD6bGpgZoQdOpWCELvZRrOEBcql
-	 Ca1U43S6YGO7DO3wjClPgF0BpMyzotvf435If+pTWSNbrs2AgSPBJiO/48w/vJ2tsSDSr
-	 aUMCBZuOKGkaAPmQGvSeQB1YKqXkNB/M9/8J3Prr8Uwl/Rh1+edSiTBfpwpwU2dFhTphW
-	 Ix+Lne93mjoJaKNY4RU7X0jMJ/PY2EnvU/zdPrayigiQTFcrsWWdQwd8ngLV+XSfkOg==
+	t=1795062008;
+	b=aL7nEVtPU5KlVyuM/JZ5VN+hue2CIM9MT+8ZQPyLh1W68Y06GwS0Q3G7CaWFRGAhkx2G
+	 jQa/s3rWL/rfUNrU5HM9lz1pDEBzgbJu/tSpm7J4eo1ToiMZMZSMYpd3eaPG54aZ5kXl2
+	 rh9tPJ08M75nTldNeY5lOGeKop74G1zJSMrh3aMdLYaeT5/7QfXTb9IcGX2R8FpXQgTLs
+	 tVqI2fiVX3WMzSxDhNEN5tRhK4k6DgAB8lc2jKFOVV9iDw3OxuNbSIFjbwA10oFN6KnsW
+	 oX+rHW9ro7sZ1D0egH4/fAhSmA+VGmheShKSeo3EuKqTUHXxeJcUcrZpVWBgrg2tMWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795062006;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062008;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=K0k+iKEJ4e9vsgRngec160/dTTdQSmEA0fDTTkjdqak=;
-	b=QXCdAFXHp+MA29VvfVM80CRjoEVEblf+Qq5OyCENLZR7FKrPcGwg5Uhindrm5TujV5ro
-	 cdKm5jfZPYiQ9oRNshu7QHqqACfi9b/oOaeqHggKv2HZvw99G8RNPF/et7XGihZCmHI1u
-	 Dd54xtX5Ys+a2EKYWZN6kszLe/8KUR2X3oLFCRZb3K7Qt1DVS5JC60VTbq7ZIEkTdng+T
-	 mhGTZxO7o8mQ0DU8UjuxURLQO9kEiHNn2Ubv+oOE+NlIZDM4wEGq/shzMUv+PVza4rOFc
-	 CFXiud7AX0UmKyqarh5JzA9hqE9jgscYH94fuUigQW6x0aFX6ZOA+3ZHfdzIR/D58hA==
+	bh=WqKLj8wlmEMZpikjnU0h32wXmg4j0FB6jXpLu/u/J3I=;
+	b=hSQoZ1HQFr8Aki7r0ES4KjHcPM8rBDbKAamfuWB+Cq+7/Dl5rGq4tfWQMek0t7U6KJHD
+	 Zy7sEfgGpJscg36ibSuK8As4qtfKGDUizLMElZpZj9In7OoxYB8fwEU3pU8ClupBXdIsV
+	 MCgJWL/9E2ILEBl8b9ueGj5qcgsW88IfRjI1KsaNXG4e+024Qcg8aPZA/5e2eqEwIlAYS
+	 nZtq9CROVI3qU51GRWwf3tSyNF3xp4/09l5mBf8bUXy3MFFogb+nP9ZlMuSEWhYkOmVCE
+	 bsPl1HbBQb4TZcY5SOb5EB05sONjkeTfMOmqxh4qWwfH9XnlwOEp8CmFDr+craOWGWg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZibTUErZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iJMJZFCf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 440C1606A320;
-	Thu, 19 Nov 2026 04:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4507606A32A;
+	Thu, 19 Nov 2026 04:20:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZibTUErZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E7E31F000C4;
-	Thu, 19 Nov 2026 04:20:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iJMJZFCf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11BE71F000C4;
+	Thu, 19 Nov 2026 04:20:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795062005;
-	bh=K0k+iKEJ4e9vsgRngec160/dTTdQSmEA0fDTTkjdqak=;
+	s=korg; t=1795062008;
+	bh=WqKLj8wlmEMZpikjnU0h32wXmg4j0FB6jXpLu/u/J3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZibTUErZo/vzsAPoG0k0eXMCHJ8kPfJFnP33n2U7uRn9HMhTaoXVJM0dCkfBTeySa
-	 +X5wYRzr+LESQfpMcueDm5qTbSpbowf3e+3b3IO6xLBbpqsxYaTWf6quQPI0PQSyNL
-	 z1E4tzhkP4nWqAPbUsBxQCXctHx+ufQyGSSOLhVo=
+	b=iJMJZFCfX/JdWLiwglr+PPEEtnNXU+nUndNwElvUJNqLVVR0JAroa3DllvjZSJSRl
+	 0n1aPYewzZvKm45C2vgF+FEfVbovQ77p6kKjcDu/Ma5CyJoqZCTo/8RSL+3kplwk4b
+	 VCc+ynqwgkDfYlWlS+GXgJFLHTlXj7WHBmadN774=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Mark Brown <broonie@kernel.org>,
+	Tianyi Chen <hi@tychen.cc>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1756/1848] ASoC: wm8994: follow AIF clock source changes in MCLK gating
-Date: Wed, 18 Nov 2026 16:03:14 +0100
-Message-ID: <20261118150032.963609325@linuxfoundation.org>
+Subject: [PATCH 5.10 1757/1848] eventpoll: propagate wakeup source creation failure in ep_modify()
+Date: Wed, 18 Nov 2026 16:03:15 +0100
+Message-ID: <20261118150033.004903465@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,131 +68,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Tianyi Chen <hi@tychen.cc>
 
-[ Upstream commit 8731e33a3b98ea1ccade059b3a1ce06b7dd66b17 ]
+[ Upstream commit 9f2b8f4a452db79741c06e6ea91448347f4a975c ]
 
-The AIF clock source can be changed by configure_aif_clock() while the
-AIF clock is running, for example the Midas machine driver switches
-AIF1 between MCLK2 and FLL1 while AIF1CLK is kept enabled for jack
-detection. aif_mclk_set() only enables the MCLK selected at the time
-the AIF clock is turned on, so an MCLK selected later this way is never
-enabled, and the codec may run from a stopped clock.
+When EPOLL_CTL_MOD adds EPOLLWAKEUP, ep_modify() ignores the return
+value of ep_create_wakeup_source(). If allocation fails, it returns
+success with EPOLLWAKEUP set but no per-item wakeup source, so the
+requested suspend protection is missing.
 
-Track whether the AIF clock is running and, if so, enable the newly
-selected MCLK in configure_aif_clock() before switching to it, then
-release the previously enabled one.
+This can happen without fault injection on SELinux systems: creating
+the wakeup source's sysfs nodes can require GFP_KERNEL_ACCOUNT
+allocations for security.selinux xattrs, which can fail when the
+caller's memory cgroup is over its limit.
 
-Fixes: 001b83d395ab ("ASoC: wm8994: Add support for MCLKn clock gating")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://patch.msgid.link/20261022101531.775891-1-m.szyprowski@samsung.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Create the wakeup source before updating the event mask and data, and
+return the error if creation fails. Leave any newly created per-epoll
+source in place until ep_free(), as ep_insert() does on failure.
+
+Fixes: 4d7e30d98939 ("epoll: Add a flag, EPOLLWAKEUP, to prevent suspend while epoll events are ready")
+Signed-off-by: Tianyi Chen <hi@tychen.cc>
+Link: https://patch.msgid.link/179240281988.1700986.8309527041821666235@tychen.cc
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8994.c | 27 +++++++++++++++++++++++++++
- sound/soc/codecs/wm8994.h |  1 +
- 2 files changed, 28 insertions(+)
+ fs/eventpoll.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
-index 3e27166192cd5..340446a21c8aa 100644
---- a/sound/soc/codecs/wm8994.c
-+++ b/sound/soc/codecs/wm8994.c
-@@ -162,9 +162,12 @@ static void wm8958_micd_set_rate(struct snd_soc_component *component)
- static int configure_aif_clock(struct snd_soc_component *component, int aif)
+diff --git a/fs/eventpoll.c b/fs/eventpoll.c
+index 8962ac6eeef47..8cf4354e22e77 100644
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -1635,11 +1635,22 @@ static int ep_modify(struct eventpoll *ep, struct epitem *epi,
  {
- 	struct wm8994_priv *wm8994 = snd_soc_component_get_drvdata(component);
-+	struct clk *mclk = NULL;
-+	bool switch_mclk;
- 	int rate;
- 	int reg1 = 0;
- 	int offset;
-+	int ret;
+ 	int pwake = 0;
+ 	poll_table pt;
++	int error;
  
- 	if (aif)
- 		offset = 4;
-@@ -173,11 +176,13 @@ static int configure_aif_clock(struct snd_soc_component *component, int aif)
+ 	lockdep_assert_irqs_enabled();
  
- 	switch (wm8994->sysclk[aif]) {
- 	case WM8994_SYSCLK_MCLK1:
-+		mclk = wm8994->mclk[WM8994_MCLK1].clk;
- 		rate = wm8994->mclk_rate[0];
- 		break;
- 
- 	case WM8994_SYSCLK_MCLK2:
- 		reg1 |= 0x8;
-+		mclk = wm8994->mclk[WM8994_MCLK2].clk;
- 		rate = wm8994->mclk_rate[1];
- 		break;
- 
-@@ -195,6 +200,20 @@ static int configure_aif_clock(struct snd_soc_component *component, int aif)
- 		return -EINVAL;
- 	}
+ 	init_poll_funcptr(&pt, NULL);
  
 +	/*
-+	 * If the AIF clock is running, enable the new MCLK before switching
-+	 * to it and release the previous one afterwards.
++	 * Create the wakeup source before committing the new event mask.
++	 * Leave the old mask and data unchanged if allocation fails.
 +	 */
-+	switch_mclk = wm8994->aif_clk_on[aif] && mclk != wm8994->aif_mclk[aif];
-+	if (switch_mclk) {
-+		ret = clk_prepare_enable(mclk);
-+		if (ret < 0) {
-+			dev_err(component->dev,
-+				"Failed to enable MCLK for AIF%d\n", aif + 1);
-+			return ret;
-+		}
++	if ((event->events & EPOLLWAKEUP) && !ep_has_wakeup_source(epi)) {
++		error = ep_create_wakeup_source(epi);
++		if (error)
++			return error;
 +	}
 +
- 	if (rate >= 13500000) {
- 		rate /= 2;
- 		reg1 |= WM8994_AIF1CLK_DIV;
-@@ -209,6 +228,11 @@ static int configure_aif_clock(struct snd_soc_component *component, int aif)
- 			    WM8994_AIF1CLK_SRC_MASK | WM8994_AIF1CLK_DIV,
- 			    reg1);
+ 	/*
+ 	 * Set the new event interest mask before calling f_op->poll();
+ 	 * otherwise we might miss an event that happens between the
+@@ -1647,12 +1658,9 @@ static int ep_modify(struct eventpoll *ep, struct epitem *epi,
+ 	 */
+ 	epi->event.events = event->events; /* need barrier below */
+ 	epi->event.data = event->data; /* protected by mtx */
+-	if (epi->event.events & EPOLLWAKEUP) {
+-		if (!ep_has_wakeup_source(epi))
+-			ep_create_wakeup_source(epi);
+-	} else if (ep_has_wakeup_source(epi)) {
++	if (!(epi->event.events & EPOLLWAKEUP) &&
++	    ep_has_wakeup_source(epi))
+ 		ep_destroy_wakeup_source(epi);
+-	}
  
-+	if (switch_mclk) {
-+		clk_disable_unprepare(wm8994->aif_mclk[aif]);
-+		wm8994->aif_mclk[aif] = mclk;
-+	}
-+
- 	return 0;
- }
- 
-@@ -1070,6 +1094,7 @@ static int aif_mclk_set(struct snd_soc_component *component, int aif, bool enabl
- 	if (!enable) {
- 		clk_disable_unprepare(wm8994->aif_mclk[aif]);
- 		wm8994->aif_mclk[aif] = NULL;
-+		wm8994->aif_clk_on[aif] = false;
- 		return 0;
- 	}
- 
-@@ -1089,6 +1114,7 @@ static int aif_mclk_set(struct snd_soc_component *component, int aif, bool enabl
- 		clk_idx = WM8994_MCLK2;
- 		break;
- 	default:
-+		wm8994->aif_clk_on[aif] = true;
- 		return 0;
- 	}
- 
-@@ -1099,6 +1125,7 @@ static int aif_mclk_set(struct snd_soc_component *component, int aif, bool enabl
- 		return ret;
- 	}
- 	wm8994->aif_mclk[aif] = wm8994->mclk[clk_idx].clk;
-+	wm8994->aif_clk_on[aif] = true;
- 
- 	return 0;
- }
-diff --git a/sound/soc/codecs/wm8994.h b/sound/soc/codecs/wm8994.h
-index 1dc1a5d23af5e..53d5fa6669ebd 100644
---- a/sound/soc/codecs/wm8994.h
-+++ b/sound/soc/codecs/wm8994.h
-@@ -82,6 +82,7 @@ struct wm8994_priv {
- 	struct wm8994 *wm8994;
- 	struct clk_bulk_data mclk[WM8994_NUM_MCLK];
- 	struct clk *aif_mclk[2];
-+	bool aif_clk_on[2];
- 	int sysclk[2];
- 	int sysclk_rate[2];
- 	int mclk_rate[2];
+ 	/*
+ 	 * The following barrier has two effects:
 -- 
 2.53.0
 
